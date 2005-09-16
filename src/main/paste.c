@@ -203,110 +203,105 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "scientific");
     if(sci != NA_INTEGER) R_print.scipen = sci;
 
-    if ((n = LENGTH(x)) <= 0)
-	return allocVector(STRSXP, 0);
+    if ((n = LENGTH(x)) <= 0) {
+	PROTECT(y = allocVector(STRSXP, 0));
+    } else {
+	switch (TYPEOF(x)) {
 
-    switch (TYPEOF(x)) {
+	case LGLSXP:
+	    PROTECT(y = allocVector(STRSXP, n));
+	    if (trim) w = 0; else formatLogical(LOGICAL(x), n, &w);
+	    w = imax2(w, wd);
+	    for (i = 0; i < n; i++) {
+		strp = EncodeLogical(LOGICAL(x)[i], w);
+		SET_STRING_ELT(y, i, mkChar(strp));
+	    }
+	    break;
 
-    case LGLSXP:
-	PROTECT(y = allocVector(STRSXP, n));
-	if (trim) w = 0; else formatLogical(LOGICAL(x), n, &w);
-	w = imax2(w, wd);
-	for (i = 0; i < n; i++) {
-	    strp = EncodeLogical(LOGICAL(x)[i], w);
-	    SET_STRING_ELT(y, i, mkChar(strp));
-	}
-	UNPROTECT(1);
-	break;
+	case INTSXP:
+	    PROTECT(y = allocVector(STRSXP, n));
+	    if (trim) w = 0;
+	    else formatInteger(INTEGER(x), n, &w);
+	    w = imax2(w, wd);
+	    for (i = 0; i < n; i++) {
+		strp = EncodeInteger(INTEGER(x)[i], w);
+		SET_STRING_ELT(y, i, mkChar(strp));
+	    }
+	    break;
 
-    case INTSXP:
-	PROTECT(y = allocVector(STRSXP, n));
-	if (trim) w = 0;
-	else formatInteger(INTEGER(x), n, &w);
-	w = imax2(w, wd);
-	for (i = 0; i < n; i++) {
-	    strp = EncodeInteger(INTEGER(x)[i], w);
-	    SET_STRING_ELT(y, i, mkChar(strp));
-	}
-	UNPROTECT(1);
-	break;
+	case REALSXP:
+	    formatReal(REAL(x), n, &w, &d, &e, nsmall);
+	    if (trim) w = 0;
+	    w = imax2(w, wd);
+	    PROTECT(y = allocVector(STRSXP, n));
+	    for (i = 0; i < n; i++) {
+		strp = EncodeReal(REAL(x)[i], w, d, e, OutDec);
+		SET_STRING_ELT(y, i, mkChar(strp));
+	    }
+	    break;
 
-    case REALSXP:
-	formatReal(REAL(x), n, &w, &d, &e, nsmall);
-	if (trim) w = 0;
-	w = imax2(w, wd);
-	PROTECT(y = allocVector(STRSXP, n));
-	for (i = 0; i < n; i++) {
-	    strp = EncodeReal(REAL(x)[i], w, d, e, OutDec);
-	    SET_STRING_ELT(y, i, mkChar(strp));
-	}
-	UNPROTECT(1);
-	break;
+	case CPLXSXP:
+	    formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, nsmall);
+	    if (trim) wi = w = 0;
+	    w = imax2(w, wd); wi = imax2(wi, wd);
+	    PROTECT(y = allocVector(STRSXP, n));
+	    for (i = 0; i < n; i++) {
+		strp = EncodeComplex(COMPLEX(x)[i], w, d, e, wi, di, ei, OutDec);
+		SET_STRING_ELT(y, i, mkChar(strp));
+	    }
+	    break;
 
-    case CPLXSXP:
-	formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, nsmall);
-	if (trim) wi = w = 0;
-	w = imax2(w, wd); wi = imax2(wi, wd);
-	PROTECT(y = allocVector(STRSXP, n));
-	for (i = 0; i < n; i++) {
-	    strp = EncodeComplex(COMPLEX(x)[i], w, d, e, wi, di, ei, OutDec);
-	    SET_STRING_ELT(y, i, mkChar(strp));
-	}
-	UNPROTECT(1);
-	break;
+	case STRSXP:
+	{
+	    /* this has to be different from formatString/EncodeString as
+	       we don't actually want to encode here */
+	    char *s, *buff, *q;
+	    int b, b0, cnt = 0, j;
+	    SEXP s0;
 
-    case STRSXP:
-    {
-	/* this has to be different from formatString/EncodeString as
-	   we don't actually want to encode here */
-	char *s, *buff, *q;
-	int b, b0, cnt = 0, j;
-	SEXP s0;
-
-	w = wd; 
-	if (adj != Rprt_adj_none) {
+	    w = wd; 
+	    if (adj != Rprt_adj_none) {
+		for (i = 0; i < n; i++)
+		    if (STRING_ELT(x, i) != NA_STRING)
+			w = imax2(w, Rstrlen(STRING_ELT(x, i), 0));
+		    else if (na) w = imax2(w, R_print.na_width);
+	    } else w = 0;
+	    /* now calculate the buffer size needed, in bytes */
 	    for (i = 0; i < n; i++)
-		if (STRING_ELT(x, i) != NA_STRING)
-		    w = imax2(w, Rstrlen(STRING_ELT(x, i), 0));
-		else if (na) w = imax2(w, R_print.na_width);
-	} else w = 0;
-	/* now calculate the buffer size needed, in bytes */
-	for (i = 0; i < n; i++)
-	    if (STRING_ELT(x, i) != NA_STRING) {
-		il = Rstrlen(STRING_ELT(x, i), 0);
-		cnt = imax2(cnt, LENGTH(STRING_ELT(x, i)) + imax2(0, w-il));
-	    } else if (na) cnt  = imax2(cnt, R_print.na_width);
-	buff = alloca(cnt+1);
-	PROTECT(y = allocVector(STRSXP, n));
-	for (i = 0; i < n; i++) {
-	    if(!na && STRING_ELT(x, i) == NA_STRING) {
-		SET_STRING_ELT(y, i, NA_STRING);
-	    } else {
-		q = buff;
-		if(STRING_ELT(x, i) == NA_STRING) s0 = R_print.na_string;
-		else s0 = STRING_ELT(x, i) ;
-		s = CHAR(s0);
-		il = Rstrlen(s0, 0);
-		b = w - il;
-		if(b > 0 && adj != Rprt_adj_left) {
-		    b0 = (adj == Rprt_adj_centre) ? b/2 : b;
-		    for(j = 0 ; j < b0 ; j++) *q++ = ' ';
-		    b -= b0;
+		if (STRING_ELT(x, i) != NA_STRING) {
+		    il = Rstrlen(STRING_ELT(x, i), 0);
+		    cnt = imax2(cnt, LENGTH(STRING_ELT(x, i)) + imax2(0, w-il));
+		} else if (na) cnt  = imax2(cnt, R_print.na_width);
+	    buff = alloca(cnt+1);
+	    PROTECT(y = allocVector(STRSXP, n));
+	    for (i = 0; i < n; i++) {
+		if(!na && STRING_ELT(x, i) == NA_STRING) {
+		    SET_STRING_ELT(y, i, NA_STRING);
+		} else {
+		    q = buff;
+		    if(STRING_ELT(x, i) == NA_STRING) s0 = R_print.na_string;
+		    else s0 = STRING_ELT(x, i) ;
+		    s = CHAR(s0);
+		    il = Rstrlen(s0, 0);
+		    b = w - il;
+		    if(b > 0 && adj != Rprt_adj_left) {
+			b0 = (adj == Rprt_adj_centre) ? b/2 : b;
+			for(j = 0 ; j < b0 ; j++) *q++ = ' ';
+			b -= b0;
+		    }
+		    for(j = 0; j < LENGTH(s0); j++) *q++ = *s++;
+		    if(b > 0 && adj != Rprt_adj_right)
+			for(j = 0 ; j < b ; j++) *q++ = ' ';
+		    *q = '\0';
+		    SET_STRING_ELT(y, i, mkChar(buff));
 		}
-		for(j = 0; j < LENGTH(s0); j++) *q++ = *s++;
-		if(b > 0 && adj != Rprt_adj_right)
-		    for(j = 0 ; j < b ; j++) *q++ = ' ';
-		*q = '\0';
-		SET_STRING_ELT(y, i, mkChar(buff));
 	    }
 	}
-	UNPROTECT(1);
-    }
 	break;
-    default:
-	errorcall(call, _("Impossible mode ( x )")); y = R_NilValue;/* -Wall */
+	default:
+	    errorcall(call, _("Impossible mode ( x )")); y = R_NilValue;/* -Wall */
+	}
     }
-    PROTECT(y);
     if((l = getAttrib(x, R_DimSymbol)) != R_NilValue) {
 	setAttrib(y, R_DimSymbol, l);
 	if((l = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)

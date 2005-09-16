@@ -3813,3 +3813,9 @@ levels(f2) <- as.character(c(1:3, NA))
 f2
 stopifnot(nlevels(f2) == 3)
 ## dropped other attributes < 2.2.0.
+
+
+## regressed at one point in pre-2.2.0
+A <- matrix(pi, 0, 2)
+stopifnot(identical(dim(A), dim(format(A))))
+## dropped dim at one point
