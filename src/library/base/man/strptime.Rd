@@ -61,10 +61,10 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   the \code{\%} escape sequences is interpreted literally
   (and \code{\%\%} gives \code{\%}).
   \describe{
-    \item{\code{\%a}}{Abbreviated weekday name.}
-    \item{\code{\%A}}{Full weekday name.}
-    \item{\code{\%b}}{Abbreviated month name.}
-    \item{\code{\%B}}{Full month name.}
+    \item{\code{\%a}}{Abbreviated weekday name in the current locale.}
+    \item{\code{\%A}}{Full weekday name in the current locale.}
+    \item{\code{\%b}}{Abbreviated month name in the current locale.}
+    \item{\code{\%B}}{Full month name in the current locale.}
     \item{\code{\%c}}{Date and time, locale-specific.}
     \item{\code{\%d}}{Day of the month as decimal number (01--31).}
     \item{\code{\%H}}{Hours as decimal number (00--23).}
