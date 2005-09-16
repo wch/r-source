@@ -1,7 +1,0 @@
-# This file is used by Rcmd to set the R_TEXOPTS environment variable, 
-# which is passed on the command line for latex, pdflatex, etc.
-# It must be manually edited if you need to change your TeX options.
-# The default setting works with MikTeX; other TeX implementations
-# probably need it to be left blank.
-
-R_TEXOPTS=--include-directory=$R_HOME/share/texmf
