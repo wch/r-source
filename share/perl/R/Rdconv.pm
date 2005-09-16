@@ -2753,9 +2753,9 @@ sub latex_escape_name {
     $c =~ s/\\\{/\\textbraceleft{}/go;
     $c =~ s/\\\}/\\textbraceright{}/go;
     $c =~ s/\\\\\\\\/\\textbackslash{}/go;
-    ## avoid conversion to guillemots
-    $c =~ s/<</<\{\}</;
-    $c =~ s/>>/>\{\}>/;
+    ## avoid conversion to guillemets
+    $c =~ s/<</<\{\}</go;
+    $c =~ s/>>/>\{\}>/go;
     $c;
 }
 
@@ -2776,9 +2776,9 @@ sub latex_code_trans {
 	$c =~ s/\\~/\\textasciitilde{}/go;
 	$c =~ s/$BSL/\\bsl{}/go;
     }
-    ## avoid conversion to guillemots
-    $c =~ s/<</<\{\}</;
-    $c =~ s/>>/>\{\}>/;
+    ## avoid conversion to guillemets
+    $c =~ s/<</<\{\}</go;
+    $c =~ s/>>/>\{\}>/go;
     $c =~ /HYPERLINK\(([^)]*)\)/;
     my $c0 = $1;
     my $link = latex_link_trans($c0);
