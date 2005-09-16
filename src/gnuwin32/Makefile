@@ -33,7 +33,6 @@ RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 
 OPTFLAGS=-O2 -Wall -pedantic --std=gnu99
-## use FOPTFLAGS where complex*16 is used.
 FOPTFLAGS=-O2 -Wall
 ifdef DEBUG
  OPTFLAGS+=-g
@@ -158,7 +157,7 @@ endif
 
 rlibs:
 	$(MAKE) --no-print-directory -C ../extra/intl -f Makefile.win
-	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./graphapp
