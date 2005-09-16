@@ -42,4 +42,4 @@ $(RHOME)/library/tcltk/libs:
 	@$(MKDIR) $@
 
 clean:
-	$(RM) $(DLLNAME).dll *.a $(OBJS) $(DLLNAME).def tcltk_res.*
+	$(RM) $(DLLNAME).dll *.a $(OBJS) $(DLLNAME).def tcltk_res.o
