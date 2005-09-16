@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:45+0100\n"
+"POT-Creation-Date: 2005-09-16 08:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,7 @@ msgstr ""
 msgid "control must be a list"
 msgstr ""
 
-#: nls.c:77
+#: nls.c:77 port.c:510
 msgid "m must be a list"
 msgstr ""
 
@@ -182,7 +182,7 @@ msgstr ""
 msgid "`rho' must be an environment"
 msgstr ""
 
-#: port.c:362
+#: port.c:362 port.c:509
 msgid "`d' must be a nonempty numeric vector"
 msgstr ""
 
@@ -195,8 +195,31 @@ msgstr ""
 msgid "environment `rho' must contain a numeric vector `.par' of length %d"
 msgstr ""
 
-#: port.c:377
+#: port.c:377 port.c:529
 msgid "lowerb and upperb must be numeric vectors"
+msgstr ""
+
+#: port.c:423
+msgid "getElement applies only to named lists"
+msgstr ""
+
+#: port.c:444
+#, c-format
+msgid "%s$%s() not found"
+msgstr ""
+
+#: port.c:457
+#, c-format
+msgid "gradient must be a numeric matrix of dimension (%d,%d)"
+msgstr ""
+
+#: port.c:478
+#, c-format
+msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
+msgstr ""
+
+#: port.c:491
+msgid "invalid type for eval_check_store"
 msgstr ""
 
 #: qr.c:30

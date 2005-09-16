@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:45\n"
+"POT-Creation-Date: 2005-09-16 08:35\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -510,8 +510,9 @@ msgstr "有限な観測値が十分にありません"
 msgid "Cannot compute exact p-value with ties"
 msgstr "タイのため正確な p 値を計算することができません"
 
-msgid "p-values may be incorrect due to ties"
-msgstr "p 値はタイのために不正確かもしれません"
+#, fuzzy
+msgid "Cannot compute exact p-values with ties"
+msgstr "タイのため正確な p 値を計算することができません"
 
 msgid "'formula' missing or invalid"
 msgstr "モデル式('formula')が無いか不正です"
@@ -1495,6 +1496,12 @@ msgstr "setVarying: vary 長はパラメータの長さに一致しなければ�
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "パラメータの初期推定値で勾配行列が特異です"
 
+msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+msgstr ""
+
+msgid "Convergence failure:"
+msgstr ""
+
 msgid "rows with zero weights not counted"
 msgstr "重みゼロの行はカウントされません"
 
@@ -2004,6 +2011,9 @@ msgstr "'y' は数値でなければなりません"
 msgid "not enough (finite) 'x' observations"
 msgstr "(有限な) 'x' の観察値が十分ではありません"
 
+msgid "Requested conf.level not achievable"
+msgstr ""
+
 msgid "cannot compute exact confidence interval with ties"
 msgstr "タイがあるので、正確な信頼区間を計算することができません"
 
@@ -2068,6 +2078,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
 msgstr[1] "モデル式中にパラメータ(複数) %s がありません"
+
+#~ msgid "p-values may be incorrect due to ties"
+#~ msgstr "p 値はタイのために不正確かもしれません"
 
 #~ msgid "one-argument anova() not implemented for 'mlm' objects"
 #~ msgstr "one-argument anova() は mlm のオブジェクトに対してはまだ未実装です"

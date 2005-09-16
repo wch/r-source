@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:45\n"
+"POT-Creation-Date: 2005-09-16 08:35\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -519,8 +519,9 @@ msgstr "non ci sono abbastanza osservazioni finite"
 msgid "Cannot compute exact p-value with ties"
 msgstr "Impossibile calcolare p-value esatti in presenza di ties"
 
-msgid "p-values may be incorrect due to ties"
-msgstr "i p-value possono essere sbagliati a causa dei ties"
+#, fuzzy
+msgid "Cannot compute exact p-values with ties"
+msgstr "Impossibile calcolare p-value esatti in presenza di ties"
 
 msgid "'formula' missing or invalid"
 msgstr "'formula' mancante o sbagliata"
@@ -1518,6 +1519,12 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "matrice gradiente singolare per le stime iniziali dei parametri"
 
+msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+msgstr ""
+
+msgid "Convergence failure:"
+msgstr ""
+
 msgid "rows with zero weights not counted"
 msgstr "le righe con pesi zero non considerate"
 
@@ -2025,6 +2032,9 @@ msgstr "'y' deve essere numerica"
 msgid "not enough (finite) 'x' observations"
 msgstr "osservazioni 'x' (finite) insufficienti"
 
+msgid "Requested conf.level not achievable"
+msgstr ""
+
 msgid "cannot compute exact confidence interval with ties"
 msgstr ""
 "impossibile calcolare intervalli di confidenza esatti in presenza di ties"
@@ -2106,6 +2116,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "p-values may be incorrect due to ties"
+#~ msgstr "i p-value possono essere sbagliati a causa dei ties"
 
 #~ msgid "one-argument anova() not implemented for 'mlm' objects"
 #~ msgstr "anova() con un solo argomento non supportato per oggetti 'mlm'"

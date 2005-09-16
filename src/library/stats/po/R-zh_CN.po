@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:45\n"
+"POT-Creation-Date: 2005-09-16 08:35\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -508,8 +508,9 @@ msgstr "有限值的观察量不够"
 msgid "Cannot compute exact p-value with ties"
 msgstr "无法给连结計算精確的p值"
 
-msgid "p-values may be incorrect due to ties"
-msgstr "因为有连结p-值算得可能不准"
+#, fuzzy
+msgid "Cannot compute exact p-values with ties"
+msgstr "无法给连结計算精確的p值"
 
 msgid "'formula' missing or invalid"
 msgstr "'formula'遺漏或有错"
@@ -1486,6 +1487,12 @@ msgstr "setVarying : vary的长度必需同参数的长度相符"
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "参数初始估计值里有奇异梯度矩阵"
 
+msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+msgstr ""
+
+msgid "Convergence failure:"
+msgstr ""
+
 msgid "rows with zero weights not counted"
 msgstr "0重量的行不算"
 
@@ -1984,6 +1991,9 @@ msgstr "'y'必需是数值"
 msgid "not enough (finite) 'x' observations"
 msgstr "(有限)'x'观察量数目不够"
 
+msgid "Requested conf.level not achievable"
+msgstr ""
+
 msgid "cannot compute exact confidence interval with ties"
 msgstr "有连结时无法計算精確的置信区间"
 
@@ -2049,6 +2059,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid "p-values may be incorrect due to ties"
+#~ msgstr "因为有连结p-值算得可能不准"
 
 #~ msgid "one-argument anova() not implemented for 'mlm' objects"
 #~ msgstr "没有为'mlm'目标对象实现单变元的anova()功能"

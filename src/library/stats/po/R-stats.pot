@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:45\n"
+"POT-Creation-Date: 2005-09-16 08:35\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -497,7 +497,7 @@ msgstr ""
 msgid "Cannot compute exact p-value with ties"
 msgstr ""
 
-msgid "p-values may be incorrect due to ties"
+msgid "Cannot compute exact p-values with ties"
 msgstr ""
 
 msgid "'formula' missing or invalid"
@@ -1415,6 +1415,12 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr ""
 
+msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+msgstr ""
+
+msgid "Convergence failure:"
+msgstr ""
+
 msgid "rows with zero weights not counted"
 msgstr ""
 
@@ -1896,6 +1902,9 @@ msgid "'y' must be numeric"
 msgstr ""
 
 msgid "not enough (finite) 'x' observations"
+msgstr ""
+
+msgid "Requested conf.level not achievable"
 msgstr ""
 
 msgid "cannot compute exact confidence interval with ties"

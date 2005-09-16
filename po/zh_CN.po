@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-08-27 19:14+0100\n"
+"POT-Creation-Date: 2005-09-16 08:34+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -74,7 +74,7 @@ msgstr "找不到工作目录"
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam里的'tempdir'不对"
 
-#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:324
+#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:329
 msgid "cannot find unused tempfile name"
 msgstr "临时文件名都用完了"
 
@@ -109,21 +109,21 @@ msgstr "R_unlink的'names'不对"
 #: src/main/connections.c:2490 src/main/connections.c:3241
 #: src/main/connections.c:3247 src/main/connections.c:3490
 #: src/main/connections.c:3501 src/main/connections.c:3505
-#: src/main/connections.c:3509 src/main/datetime.c:522 src/main/datetime.c:587
-#: src/main/datetime.c:589 src/main/datetime.c:593 src/main/datetime.c:696
-#: src/main/datetime.c:698 src/main/datetime.c:811 src/main/dounzip.c:182
-#: src/main/dounzip.c:188 src/main/envir.c:1424 src/main/envir.c:1428
-#: src/main/envir.c:1513 src/main/envir.c:1521 src/main/envir.c:1585
-#: src/main/envir.c:1601 src/main/envir.c:1608 src/main/envir.c:1715
-#: src/main/envir.c:1723 src/main/envir.c:1731 src/main/envir.c:1746
-#: src/main/envir.c:1752 src/main/envir.c:2249 src/main/envir.c:2515
-#: src/main/envir.c:3015 src/main/eval.c:252 src/main/eval.c:1534
-#: src/main/eval.c:1558 src/main/eval.c:1562 src/main/model.c:1568
-#: src/main/model.c:1576 src/main/optim.c:224 src/main/paste.c:71
+#: src/main/connections.c:3509 src/main/datetime.c:530 src/main/datetime.c:595
+#: src/main/datetime.c:597 src/main/datetime.c:601 src/main/datetime.c:704
+#: src/main/datetime.c:706 src/main/datetime.c:819 src/main/dounzip.c:182
+#: src/main/dounzip.c:188 src/main/envir.c:1428 src/main/envir.c:1432
+#: src/main/envir.c:1517 src/main/envir.c:1525 src/main/envir.c:1589
+#: src/main/envir.c:1605 src/main/envir.c:1612 src/main/envir.c:1719
+#: src/main/envir.c:1727 src/main/envir.c:1735 src/main/envir.c:1750
+#: src/main/envir.c:1756 src/main/envir.c:2264 src/main/envir.c:2530
+#: src/main/envir.c:3030 src/main/eval.c:252 src/main/eval.c:1534
+#: src/main/eval.c:1558 src/main/eval.c:1562 src/main/model.c:1572
+#: src/main/model.c:1580 src/main/optim.c:224 src/main/paste.c:71
 #: src/main/paste.c:163 src/main/paste.c:170 src/main/paste.c:177
 #: src/main/paste.c:182 src/main/paste.c:187 src/main/paste.c:192
-#: src/main/paste.c:195 src/main/paste.c:203 src/main/paste.c:345
-#: src/main/paste.c:350 src/main/platform.c:799 src/main/platform.c:805
+#: src/main/paste.c:195 src/main/paste.c:203 src/main/paste.c:340
+#: src/main/paste.c:345 src/main/platform.c:799 src/main/platform.c:805
 #: src/main/platform.c:857 src/main/platform.c:894 src/main/platform.c:897
 #: src/main/platform.c:900 src/main/platform.c:903 src/main/platform.c:906
 #: src/main/platform.c:984 src/main/platform.c:1024 src/main/platform.c:1054
@@ -131,8 +131,8 @@ msgstr "R_unlink的'names'不对"
 #: src/main/platform.c:1429 src/main/platform.c:1464 src/main/plot3d.c:2475
 #: src/main/plot3d.c:2479 src/main/plot3d.c:2484 src/main/plot3d.c:2488
 #: src/main/plot3d.c:2492 src/main/plot3d.c:2496 src/main/print.c:172
-#: src/main/print.c:178 src/main/print.c:200 src/main/random.c:401
-#: src/main/random.c:403 src/main/random.c:405 src/main/saveload.c:2028
+#: src/main/print.c:178 src/main/print.c:200 src/main/random.c:465
+#: src/main/random.c:467 src/main/random.c:469 src/main/saveload.c:2028
 #: src/main/saveload.c:2261 src/main/sysutils.c:390 src/main/sysutils.c:392
 #: src/main/sysutils.c:394 src/main/unique.c:588 src/main/util.c:903
 #: src/main/util.c:906 src/modules/internet/internet.c:252
@@ -211,7 +211,7 @@ msgstr "savehistory只能在Rgui和Rterm里有用"
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory只能在Rgui和Rterm有用"
 
-#: src/gnuwin32/extra.c:711 src/main/datetime.c:458 src/main/datetime.c:524
+#: src/gnuwin32/extra.c:711 src/main/datetime.c:466 src/main/datetime.c:532
 #: src/main/dotcode.c:142 src/main/errors.c:710 src/main/errors.c:737
 #: src/main/errors.c:828 src/main/errors.c:853 src/main/errors.c:858
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
@@ -703,7 +703,7 @@ msgstr "'destination'太长"
 msgid "invalid multibyte format string"
 msgstr "多字节字符串不对"
 
-#: src/main/apply.c:39 src/main/envir.c:2336
+#: src/main/apply.c:39 src/main/envir.c:2351
 msgid "arguments must be symbolic"
 msgstr "变元必需为符号"
 
@@ -1058,33 +1058,33 @@ msgstr "正式变元'recursive'有重复"
 msgid "repeated formal argument 'use.names'"
 msgstr "正式变元'use.names'有重复"
 
-#: src/main/bind.c:775
+#: src/main/bind.c:776
 msgid "argument not a list"
 msgstr "变元不是串列"
 
-#: src/main/bind.c:873 src/main/eval.c:1834 src/main/eval.c:1844
+#: src/main/bind.c:874 src/main/eval.c:1834 src/main/eval.c:1844
 #: src/main/objects.c:270 src/main/objects.c:309 src/main/objects.c:663
 #: src/main/objects.c:681
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "'%s'里的类别名字太长"
 
-#: src/main/bind.c:999
+#: src/main/bind.c:1004
 msgid "cannot create a matrix from these types"
 msgstr "无法按这些种类建立矩阵"
 
-#: src/main/bind.c:1075
+#: src/main/bind.c:1079
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "矩阵的行数必需相符(见arg%d)"
 
-#: src/main/bind.c:1287
+#: src/main/bind.c:1292
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "矩阵的列数必需相符(见arg%d)"
 
-#: src/main/builtin.c:51 src/main/envir.c:1417 src/main/envir.c:1570
-#: src/main/envir.c:1701 src/main/paste.c:60 src/main/plot.c:1741
+#: src/main/builtin.c:51 src/main/envir.c:1421 src/main/envir.c:1574
+#: src/main/envir.c:1705 src/main/paste.c:60 src/main/plot.c:1741
 msgid "invalid first argument"
 msgstr "第一个变元不对"
 
@@ -1872,7 +1872,7 @@ msgstr "无法从此链结读取"
 #: src/main/connections.c:3331 src/main/dcf.c:59 src/main/deparse.c:304
 #: src/main/deparse.c:378 src/main/saveload.c:2202 src/main/scan.c:1014
 #: src/main/scan.c:1120 src/main/scan.c:1571 src/main/scan.c:1768
-#: src/main/source.c:78
+#: src/main/source.c:153
 msgid "cannot open the connection"
 msgstr "无法打开链结"
 
@@ -2155,12 +2155,12 @@ msgstr "min/max不能适用于复数"
 msgid "unknown cumxxx function"
 msgstr "没有cumxxx这个功能"
 
-#: src/main/datetime.c:391
+#: src/main/datetime.c:399
 msgid "cannot set timezones on this system"
 msgstr "无法为本系统设时差区"
 
-#: src/main/datetime.c:542 src/main/datetime.c:544 src/main/datetime.c:819
-#: src/main/datetime.c:821
+#: src/main/datetime.c:550 src/main/datetime.c:552 src/main/datetime.c:827
+#: src/main/datetime.c:829
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "非空的POSIXlt结构里含长度为0 的部件"
 
@@ -2237,7 +2237,7 @@ msgstr "只用了第一个单元作为变数名"
 msgid "invalid expression in \"%s\""
 msgstr "\"%s\"的表达式不对"
 
-#: src/main/deriv.c:903 src/main/model.c:1287
+#: src/main/deriv.c:903 src/main/model.c:1291
 msgid "invalid variable names"
 msgstr "变数名字不对"
 
@@ -2253,154 +2253,154 @@ msgstr "NULL值不能当作符号地址用"
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr "'name'要么是字符串(长度为1)要么是本机符号引用"
 
-#: src/main/dotcode.c:144 src/main/dotcode.c:768
+#: src/main/dotcode.c:144 src/main/dotcode.c:779
 msgid "too many arguments in foreign function call"
 msgstr "外接函数调用时变元太多"
 
 #: src/main/dotcode.c:178
-#, c-format
-msgid "\"%s\" function name not in DLL for package '%s'"
+#, fuzzy, c-format
+msgid "%s entry point \"%s%s\" not in DLL for package \"%s\""
 msgstr "程序包'%2$s'的DLL没有\"%1$s\"这个函数"
 
-#: src/main/dotcode.c:182
-#, c-format
-msgid "\"%s\" function name not in load table"
+#: src/main/dotcode.c:187
+#, fuzzy, c-format
+msgid "%s entry point \"%s%s\" not in load table"
 msgstr "载入表里没有这个函数\"%s\"的名字"
 
-#: src/main/dotcode.c:246
+#: src/main/dotcode.c:257
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr "调用'%s'时明确要求不要复制变元，但变元%d的种类不对(%d != %d)"
 
-#: src/main/dotcode.c:271
+#: src/main/dotcode.c:282
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "外接函数调用时不能有NA(arg%d)"
 
-#: src/main/dotcode.c:285
+#: src/main/dotcode.c:296
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "外接函数调用时不能有NA/NaN/Inf(arg%d)"
 
-#: src/main/dotcode.c:307
+#: src/main/dotcode.c:318
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "外接函数调用时不能有复数的NA/NaN/Inf(arg%d)"
 
-#: src/main/dotcode.c:319
+#: src/main/dotcode.c:330
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "在调用.C/.Fortran时字符变数必需被复制"
 
-#: src/main/dotcode.c:323
+#: src/main/dotcode.c:334
 msgid "only first string in char vector used in .Fortran"
 msgstr ".Fortran只用了字节向量中的第一个字符串"
 
-#: src/main/dotcode.c:336 src/main/dotcode.c:460
+#: src/main/dotcode.c:347 src/main/dotcode.c:471
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "不支持这个编码'%s'"
 
-#: src/main/dotcode.c:350
+#: src/main/dotcode.c:361
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "转换编码'%s'时出了问题"
 
-#: src/main/dotcode.c:357 src/main/dotcode.c:482
+#: src/main/dotcode.c:368 src/main/dotcode.c:493
 msgid "re-encoding is not supported on this system"
 msgstr "本系统不支持编码转换"
 
-#: src/main/dotcode.c:380 src/main/dotcode.c:392
+#: src/main/dotcode.c:391 src/main/dotcode.c:403
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "传给Fortran的状态出错(arg%d)"
 
-#: src/main/dotcode.c:474
+#: src/main/dotcode.c:485
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "转换编码成'%s'出了问题"
 
-#: src/main/dotcode.c:551
+#: src/main/dotcode.c:562
 msgid "NAOK used more than once"
 msgstr "NAOK只能用一次"
 
-#: src/main/dotcode.c:555
+#: src/main/dotcode.c:566
 msgid "DUP used more than once"
 msgstr "DUP只能用一次"
 
-#: src/main/dotcode.c:561
+#: src/main/dotcode.c:572
 msgid "DLL name is too long"
 msgstr "DLL的名字值太长"
 
-#: src/main/dotcode.c:564 src/main/dotcode.c:622 src/main/dotcode.c:628
+#: src/main/dotcode.c:575 src/main/dotcode.c:633 src/main/dotcode.c:639
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE只能用一次"
 
-#: src/main/dotcode.c:601
+#: src/main/dotcode.c:612
 msgid "PACKAGE argument must be a single character string"
 msgstr "PACKAGE变元必需是单个字符串"
 
-#: src/main/dotcode.c:607
+#: src/main/dotcode.c:618
 msgid "PACKAGE argument is too long"
 msgstr "PACKAGE变元值太长"
 
-#: src/main/dotcode.c:651 src/main/dotcode.c:659
+#: src/main/dotcode.c:662 src/main/dotcode.c:670
 msgid "ENCODING used more than once"
 msgstr "ENCODING只能用一次"
 
-#: src/main/dotcode.c:653 src/main/dotcode.c:661
+#: src/main/dotcode.c:664 src/main/dotcode.c:672
 msgid "ENCODING argument must be a single character string"
 msgstr "ENCODING变元必需是单个字符串"
 
-#: src/main/dotcode.c:698
+#: src/main/dotcode.c:709
 msgid "no arguments supplied"
 msgstr "没有提供变元"
 
-#: src/main/dotcode.c:699
+#: src/main/dotcode.c:710
 msgid "too many arguments"
 msgstr "变元太多"
 
-#: src/main/dotcode.c:739 src/main/dotcode.c:774 src/main/dotcode.c:1598
+#: src/main/dotcode.c:750 src/main/dotcode.c:785 src/main/dotcode.c:1609
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr "变元数目不对(%1$d), %3$s只需要%2$d个变元"
 
-#: src/main/dotcode.c:1431 src/main/dotcode.c:2228
+#: src/main/dotcode.c:1442 src/main/dotcode.c:2239
 msgid "too many arguments, sorry"
 msgstr "对不起，变元太多"
 
-#: src/main/dotcode.c:1455 src/main/dotcode.c:1477
+#: src/main/dotcode.c:1466 src/main/dotcode.c:1488
 msgid "Invalid graphics state"
 msgstr "图形狀態出错"
 
-#: src/main/dotcode.c:1553
+#: src/main/dotcode.c:1564
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "寻找DLL时DLLInfoReference的值是NULL"
 
-#: src/main/dotcode.c:1624
+#: src/main/dotcode.c:1635
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "调用%2$s时变元%1$d的种类不对"
 
-#: src/main/dotcode.c:2317
+#: src/main/dotcode.c:2328
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "多语言调用不支持这一种类\"%s\""
 
-#: src/main/dotcode.c:2329
+#: src/main/dotcode.c:2340
 msgid "invalid function in call_R"
 msgstr "call_R中的函数不对"
 
-#: src/main/dotcode.c:2331
+#: src/main/dotcode.c:2342
 msgid "invalid argument count in call_R"
 msgstr "call_R的变元数目不对"
 
-#: src/main/dotcode.c:2333
+#: src/main/dotcode.c:2344
 msgid "invalid return value count in call_R"
 msgstr "call_R的回覆值数目不对"
 
-#: src/main/dotcode.c:2378
+#: src/main/dotcode.c:2389
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R不支持'%s'型式"
@@ -2571,7 +2571,7 @@ msgstr "图形狀態不对"
 msgid "cannot change value of a locked binding"
 msgstr "无法改变锁定联编的值"
 
-#: src/main/envir.c:232 src/main/envir.c:1269
+#: src/main/envir.c:232 src/main/envir.c:1273
 msgid "cannot add bindings to a locked environment"
 msgstr "无法给锁定环境加联编"
 
@@ -2587,218 +2587,220 @@ msgstr "R_HashSizeCheck第一个变元('table')非VECSXP种类"
 msgid "first argument ('table') not of type ENVSXP, from R_HashVector2Hash"
 msgstr "R_HashVector2Hash第一个变元('table')非ENVSXP种类"
 
-#: src/main/envir.c:667
+#: src/main/envir.c:672
 msgid "invalid cached value in R_GetGlobalCache"
 msgstr "R_GetGlobalCache里的高速缓存值不对"
 
-#: src/main/envir.c:719
+#: src/main/envir.c:724
+#, fuzzy
+msgid "cannot unbind in the base namespace"
+msgstr "无法在基本环境里切断联编"
+
+#: src/main/envir.c:726
 msgid "cannot unbind in the base environment"
 msgstr "无法在基本环境里切断联编"
 
-#: src/main/envir.c:721
-msgid "cannot unbind in the NULL environment"
-msgstr "无法在NULL环境里切断联编"
-
-#: src/main/envir.c:723 src/main/envir.c:1459
+#: src/main/envir.c:728 src/main/envir.c:1463
 msgid "cannot remove bindings from a locked environment"
 msgstr "无法从锁定的环境中删除联编"
 
-#: src/main/envir.c:766
-msgid "cannot get binding from NULL environment"
+#: src/main/envir.c:771
+#, fuzzy
+msgid "cannot get binding from base environment"
 msgstr "无法从NULL环境里取得联编"
 
-#: src/main/envir.c:768
+#: src/main/envir.c:773
 msgid "cannot get binding from base namespace"
 msgstr "无法从基本名字空间取得联编"
 
-#: src/main/envir.c:1139
+#: src/main/envir.c:1144
 #, c-format
 msgid "The ... list does not contain %d elements"
 msgstr "... 串列不包含%d单元"
 
-#: src/main/envir.c:1145
+#: src/main/envir.c:1150
 #, c-format
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d所用的上下文出错, 找不到..."
 
-#: src/main/envir.c:1216 src/main/eval.c:342 src/main/eval.c:2474
+#: src/main/envir.c:1220 src/main/eval.c:342 src/main/eval.c:2474
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "缺少变元\"%s\",也没有缺省值"
 
-#: src/main/envir.c:1222
+#: src/main/envir.c:1226
 #, c-format
 msgid "couldn't find function \"%s\""
 msgstr "没有这个函数\"%s\""
 
-#: src/main/envir.c:1253
+#: src/main/envir.c:1257
 msgid "cannot assign variables to this database"
 msgstr "无法给这个数据库指定变数"
 
-#: src/main/envir.c:1313 src/main/envir.c:1465
+#: src/main/envir.c:1317 src/main/envir.c:1469
 msgid "cannot remove variables from this database"
 msgstr "无法从这个数据库中删除变数"
 
-#: src/main/envir.c:1456
+#: src/main/envir.c:1460
 msgid "cannot remove variables from base namespace"
 msgstr "无法从基本名字空间删除变数"
 
-#: src/main/envir.c:1507
+#: src/main/envir.c:1511
 msgid "invalid first argument to remove()"
 msgstr "remove()的第一个变元不对"
 
-#: src/main/envir.c:1538
+#: src/main/envir.c:1542
 #, c-format
 msgid "remove: variable \"%s\" was not found"
 msgstr "remove: 找不到\"%s\"这个变数"
 
-#: src/main/envir.c:1616
+#: src/main/envir.c:1620
 #, c-format
 msgid "variable \"%s\" was not found"
 msgstr "找不到\"%s\"这个变数"
 
-#: src/main/envir.c:1620
+#: src/main/envir.c:1624
 #, c-format
 msgid "variable \"%s\" of mode \"%s\" was not found"
 msgstr "没有状态是\"%2$s\"的变数\"%1$s\""
 
-#: src/main/envir.c:1704
+#: src/main/envir.c:1708
 #, c-format
 msgid "invalid name in position %d"
 msgstr "在%d位置的名字不对"
 
-#: src/main/envir.c:1710
+#: src/main/envir.c:1714
 msgid "second argument must be an environment"
 msgstr "第二变元必需是环境"
 
-#: src/main/envir.c:1718
+#: src/main/envir.c:1722
 msgid "wrong length for 'mode' argument"
 msgstr "'mode'变元的长度不对"
 
-#: src/main/envir.c:1726
+#: src/main/envir.c:1730
 msgid "wrong length for 'ifnotfound' argument"
 msgstr "'ifnotfound'变元的长度不对"
 
-#: src/main/envir.c:1834
+#: src/main/envir.c:1838
 msgid "invalid use of missing"
 msgstr "missing的用法不对"
 
-#: src/main/envir.c:1859
+#: src/main/envir.c:1863
 msgid "missing can only be used for arguments"
 msgstr "missing只能用于这些变元"
 
-#: src/main/envir.c:1914
+#: src/main/envir.c:1933
 msgid "attach: invalid object name"
 msgstr "attach: 目标对象名字不对"
 
-#: src/main/envir.c:1920
+#: src/main/envir.c:1939
 msgid "attach only works for lists and data frames"
 msgstr "attach只适用于串列和数据框"
 
-#: src/main/envir.c:1926
+#: src/main/envir.c:1945
 msgid "attach: all elements must be named"
 msgstr "attach: 所有的单元都必需有名字"
 
-#: src/main/envir.c:2013
+#: src/main/envir.c:2030
 msgid "detaching \"package:base\" is not allowed"
 msgstr "\"package:base\"不能被拆离"
 
-#: src/main/envir.c:2279 src/main/envir.c:2329
+#: src/main/envir.c:2294 src/main/envir.c:2344
 msgid "argument must be an environment"
 msgstr "变元必需是环境"
 
-#: src/main/envir.c:2434 src/main/random.c:34 src/main/random.c:488
+#: src/main/envir.c:2449 src/main/random.c:34 src/main/random.c:558
 msgid "invalid arguments"
 msgstr "变元不对"
 
-#: src/main/envir.c:2492
+#: src/main/envir.c:2507
 msgid "no enclosing environment"
 msgstr "没有封闭的环境"
 
-#: src/main/envir.c:2539
+#: src/main/envir.c:2554
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "寻找串列里没有\"%s\" "
 
-#: src/main/envir.c:2556
+#: src/main/envir.c:2571
 msgid "invalid object for as.environment"
 msgstr "as.environment的目标对象不对"
 
-#: src/main/envir.c:2564
+#: src/main/envir.c:2579
 msgid "locking the NULL (base) environment is not supported yet"
 msgstr "目前还不支持对NULL(base)环境进行锁定"
 
-#: src/main/envir.c:2566 src/main/envir.c:2591 src/main/envir.c:2620
-#: src/main/envir.c:2636 src/main/envir.c:2654 src/main/envir.c:2684
-#: src/main/envir.c:2700
+#: src/main/envir.c:2581 src/main/envir.c:2606 src/main/envir.c:2635
+#: src/main/envir.c:2651 src/main/envir.c:2669 src/main/envir.c:2699
+#: src/main/envir.c:2715
 msgid "not an environment"
 msgstr "不是环境"
 
-#: src/main/envir.c:2618 src/main/envir.c:2634 src/main/envir.c:2650
-#: src/main/envir.c:2682 src/main/envir.c:2698 src/main/envir.c:2790
+#: src/main/envir.c:2633 src/main/envir.c:2649 src/main/envir.c:2665
+#: src/main/envir.c:2697 src/main/envir.c:2713 src/main/envir.c:2805
 msgid "not a symbol"
 msgstr "不是符号"
 
-#: src/main/envir.c:2626 src/main/envir.c:2642 src/main/envir.c:2690
-#: src/main/envir.c:2706
+#: src/main/envir.c:2641 src/main/envir.c:2657 src/main/envir.c:2705
+#: src/main/envir.c:2721
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "没有\"%s\"联编"
 
-#: src/main/envir.c:2652
+#: src/main/envir.c:2667
 msgid "not a function"
 msgstr "不是函数"
 
-#: src/main/envir.c:2657 src/main/envir.c:2671
+#: src/main/envir.c:2672 src/main/envir.c:2686
 msgid "symbol already has a regular binding"
 msgstr "符号已经有了正式联编"
 
-#: src/main/envir.c:2751
+#: src/main/envir.c:2766
 msgid "unknown op"
 msgstr "没有这种运算符"
 
-#: src/main/envir.c:2792
+#: src/main/envir.c:2807
 msgid "cannot unbind a locked binding"
 msgstr "无法切斷已经锁定了的联编"
 
-#: src/main/envir.c:2794
+#: src/main/envir.c:2809
 msgid "cannot unbind an active binding"
 msgstr "无法切斷正在使用中的联编"
 
-#: src/main/envir.c:2854
+#: src/main/envir.c:2869
 #, c-format
 msgid "using .GlobalEnv instead of '%s'"
 msgstr "用.GlobalEnv而不用'%s'"
 
-#: src/main/envir.c:2921
+#: src/main/envir.c:2936
 msgid "namespaces not available; using .GlobalEnv"
 msgstr "名字空间没用; 用.GlobalEnv"
 
-#: src/main/envir.c:2943
+#: src/main/envir.c:2958
 msgid "bad name space name"
 msgstr "名字空间名字不对"
 
-#: src/main/envir.c:2955
+#: src/main/envir.c:2970
 msgid "name space already registered"
 msgstr "名字空间已经登记了"
 
-#: src/main/envir.c:2967
+#: src/main/envir.c:2982
 msgid "name space not registered"
 msgstr "名字空间没有登记"
 
-#: src/main/envir.c:3011
+#: src/main/envir.c:3026
 msgid "bad import environment argument"
 msgstr "引进环境变元不对"
 
-#: src/main/envir.c:3013
+#: src/main/envir.c:3028
 msgid "bad export environment argument"
 msgstr "引出环境变元不对"
 
-#: src/main/envir.c:3017
+#: src/main/envir.c:3032
 msgid "length of import and export names must match"
 msgstr "引进和引出名字的长度必需相等"
 
-#: src/main/envir.c:3040
+#: src/main/envir.c:3055
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "引出的符号’%s'没有值"
@@ -3049,7 +3051,8 @@ msgid "cannot do complex assignments in base namespace"
 msgstr "无法在基本名字空间里赋复数值"
 
 #: src/main/eval.c:1216
-msgid "cannot do complex assignments in NULL environment"
+#, fuzzy
+msgid "cannot do complex assignments in base environment"
 msgstr "无法在NULL环境里赋复数值"
 
 #: src/main/eval.c:1229 src/main/eval.c:1247
@@ -3305,35 +3308,35 @@ msgstr "读MBCS字节时遇到EOF"
 msgid "invalid multibyte character in mbcs_get_next"
 msgstr "在mbcs_get_next里不能有多字节字符"
 
-#: src/main/gram.y:356
+#: src/main/gram.y:359
 msgid "function is too long to keep source"
 msgstr "函数太长，无法保留其代码"
 
-#: src/main/gram.y:833
+#: src/main/gram.y:838
 msgid "incorrect tag type"
 msgstr "标记种类不对"
 
-#: src/main/gram.y:1524
+#: src/main/gram.y:1540
 msgid "Repeated formal argument"
 msgstr "重复正式变元"
 
-#: src/main/gram.y:1535
+#: src/main/gram.y:1551
 msgid "input buffer overflow"
 msgstr "输入缓冲区上溢"
 
-#: src/main/gram.y:1681
+#: src/main/gram.y:1697
 msgid "invalid \\u{xxxx} sequence"
 msgstr "\\u{xxxx}顺序不对"
 
-#: src/main/gram.y:1683
+#: src/main/gram.y:1699
 msgid "invalid \\uxxxx sequence"
 msgstr "\\uxxxx 顺序不对"
 
-#: src/main/gram.y:1702
+#: src/main/gram.y:1718
 msgid "invalid \\U{xxxxxxxx} sequence"
 msgstr "\\U{xxxxxxxx}顺序不对"
 
-#: src/main/gram.y:1864
+#: src/main/gram.y:1880
 msgid "functions nested too deeply in source code"
 msgstr "代码源里的函数功能嵌套太深"
 
@@ -3519,73 +3522,64 @@ msgstr "二进列运算需要两个变元"
 msgid "dummy - do not translate"
 msgstr "dummy - do not translate"
 
-#: src/main/main.c:108
-#, c-format
-msgid "syntax error: evaluating expression %d"
-msgstr "评估表达式%d时发生了语法错误"
-
 #: src/main/main.c:217
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr "错误: 本R版本不支持系统命令.\n"
 
-#: src/main/main.c:275 src/main/main.c:369
-msgid "syntax error"
-msgstr "语法错误"
-
-#: src/main/main.c:545
+#: src/main/main.c:546
 msgid "unable to open the base package\n"
 msgstr "无法打开基本程序包\n"
 
-#: src/main/main.c:584
+#: src/main/main.c:585
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "警告: 本R版本不支持UTF-8语言环境\n"
 
-#: src/main/main.c:613
+#: src/main/main.c:614
 msgid "unable to restore saved data in .RData\n"
 msgstr "无法用.Rdata来復原保存数据\n"
 
-#: src/main/main.c:660
+#: src/main/main.c:661
 msgid "During startup - "
 msgstr "在启动过程中 - "
 
-#: src/main/main.c:867
+#: src/main/main.c:868
 msgid "cannot quit from browser"
 msgstr "无法退出瀏覽器"
 
-#: src/main/main.c:871
+#: src/main/main.c:872
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "只能用\"yes\", \"no\", \"ask\"或\"default\"中的一个."
 
-#: src/main/main.c:876
+#: src/main/main.c:877
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=\"ask\"不能在非交互型状态时使用，改用命令行缺省值"
 
-#: src/main/main.c:884
+#: src/main/main.c:885
 msgid "unrecognized value of 'save'"
 msgstr "没有这种'save'值"
 
-#: src/main/main.c:887
+#: src/main/main.c:888
 msgid "invalid 'status', 0 assumed"
 msgstr "'status'不对, 假設为0"
 
-#: src/main/main.c:892
+#: src/main/main.c:893
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast'不对, 假設为FALSE"
 
-#: src/main/main.c:923
+#: src/main/main.c:924
 msgid "cannot allocate space for toplevel callback element"
 msgstr "无法为最高层回叫单元分配空间"
 
-#: src/main/main.c:1001
+#: src/main/main.c:1002
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex不能用负的索引值"
 
-#: src/main/main.c:1114
+#: src/main/main.c:1115
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "最高层任务回叫'%s'产生了警告信息\n"
 
-#: src/main/main.c:1174
+#: src/main/main.c:1175
 msgid "top-level task callback did not return a logical value"
 msgstr "最高层任务回叫没回覆逻辑值"
 
@@ -3722,113 +3716,113 @@ msgstr "在数据框里用'.'时不能有重复的名字’%s'"
 msgid "invalid model formula in EncodeVars"
 msgstr "EncodeVars中的模型公式不对"
 
-#: src/main/model.c:736
+#: src/main/model.c:738
 msgid "argument is not a valid model"
 msgstr "变元不是正确的模型"
 
-#: src/main/model.c:757
+#: src/main/model.c:759
 #, fuzzy
 msgid "'data' argument is of the wrong type"
 msgstr "数据变元种类有错"
 
-#: src/main/model.c:1014
+#: src/main/model.c:1018
 #, fuzzy
 msgid "'.' in formula and no 'data' argument"
 msgstr "'data'变元有错"
 
-#: src/main/model.c:1159
+#: src/main/model.c:1163
 msgid "invalid formula in 'update'"
 msgstr "'update'里的公式不对"
 
-#: src/main/model.c:1197
+#: src/main/model.c:1201
 msgid "formula expected"
 msgstr "需要公式"
 
-#: src/main/model.c:1285
+#: src/main/model.c:1289
 msgid "invalid variables"
 msgstr "变数不对"
 
-#: src/main/model.c:1289 src/main/model.c:1294
+#: src/main/model.c:1293 src/main/model.c:1298
 msgid "number of variables != number of variable names"
 msgstr "变数数目!= 变数名字数目"
 
-#: src/main/model.c:1292
+#: src/main/model.c:1296
 msgid "invalid extra variables"
 msgstr "額外变数不对"
 
-#: src/main/model.c:1296
+#: src/main/model.c:1300
 msgid "invalid extra variable names"
 msgstr "额外变数名字不对"
 
-#: src/main/model.c:1319
+#: src/main/model.c:1323
 #, c-format
 msgid "overlong names in '%s'"
 msgstr "'%s'里的名字太长"
 
-#: src/main/model.c:1339 src/main/model.c:1641
+#: src/main/model.c:1343 src/main/model.c:1645
 msgid "invalid variable type"
 msgstr "变数种类不对"
 
-#: src/main/model.c:1341 src/main/model.c:1605
+#: src/main/model.c:1345 src/main/model.c:1609
 msgid "variable lengths differ"
 msgstr "变数的长度不一样"
 
-#: src/main/model.c:1394
+#: src/main/model.c:1398
 msgid "invalid result from na.action"
 msgstr "na.action的结果有错"
 
-#: src/main/model.c:1587
+#: src/main/model.c:1591
 msgid "invalid model frame"
 msgstr "模型框不对"
 
-#: src/main/model.c:1589
+#: src/main/model.c:1593
 msgid "do not know how many cases"
 msgstr "案例数目不清"
 
-#: src/main/model.c:1615 src/main/model.c:1622
+#: src/main/model.c:1619 src/main/model.c:1626
 #, c-format
 msgid "variable %d has no levels"
 msgstr "变数%d没有因子层"
 
-#: src/main/model.c:1730
+#: src/main/model.c:1734
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "公式右手有反应，略过不用"
 
-#: src/main/model.c:1762
+#: src/main/model.c:1766
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "模型矩阵的%d项有问题: 没有指定的列"
 
-#: src/main/model.c:1810 src/main/model.c:1815 src/main/model.c:1821
-#: src/main/model.c:1831 src/main/model.c:1837 src/main/model.c:1843
+#: src/main/model.c:1814 src/main/model.c:1819 src/main/model.c:1825
+#: src/main/model.c:1835 src/main/model.c:1841 src/main/model.c:1847
 msgid "term names will be truncated"
 msgstr "项名字太长，被缩短了"
 
-#: src/main/names.c:918
+#: src/main/names.c:919
 msgid "string argument required"
 msgstr "需要字符串变元"
 
-#: src/main/names.c:926
+#: src/main/names.c:927
 msgid "no such primitive function"
 msgstr "没有这一原始函数"
 
-#: src/main/names.c:1039
+#: src/main/names.c:1040
 msgid "attempt to use zero-length variable name"
 msgstr "不能用0长度变数名"
 
-#: src/main/names.c:1041
+#: src/main/names.c:1042
 msgid "symbol print-name too long"
 msgstr "符号print-name太长了"
 
-#: src/main/names.c:1067
+#: src/main/names.c:1068
 msgid "invalid .Internal() argument"
 msgstr ".Internal()变元不对"
 
-#: src/main/names.c:1070
+#: src/main/names.c:1071
 msgid "invalid internal function"
 msgstr "内部函数不对"
 
-#: src/main/names.c:1072
+#: src/main/names.c:1073
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "没有\"%s\"这个内部函数"
@@ -4327,11 +4321,11 @@ msgstr "内部貼補的变元不是字符串"
 msgid "first argument must be atomic"
 msgstr "第一个变元必需是基元"
 
-#: src/main/paste.c:307
+#: src/main/paste.c:302
 msgid "Impossible mode ( x )"
 msgstr "这种状态(x)是不可能的"
 
-#: src/main/paste.c:392
+#: src/main/paste.c:387
 #, fuzzy
 msgid "atomic vector arguments only"
 msgstr "只能用向量变元"
@@ -4900,23 +4894,23 @@ msgstr "'gap'必需是正整数"
 msgid "invalid 'tryS4' internal argument"
 msgstr "'tryS4'内部变元不对"
 
-#: src/main/print.c:838
+#: src/main/print.c:840
 msgid "invalid character length in dblepr"
 msgstr "dblepr字符长度不对"
 
-#: src/main/print.c:855
+#: src/main/print.c:857
 msgid "invalid character length in intpr"
 msgstr "intpr字符长度不对"
 
-#: src/main/print.c:873
+#: src/main/print.c:875
 msgid "invalid character length in realpr"
 msgstr "realpr字符长度不对"
 
-#: src/main/print.c:883
+#: src/main/print.c:885
 msgid "memory allocation error in realpr"
 msgstr "realpr内存分配错误"
 
-#: src/main/print.c:899
+#: src/main/print.c:901
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "BLAS/LAPACK 例行程序'%6s'产生了错误%d信息"
@@ -4949,19 +4943,19 @@ msgstr "do_random2产生了内部错误"
 msgid "internal error in do_random3"
 msgstr "do_random3产生了内部错误"
 
-#: src/main/random.c:374
+#: src/main/random.c:436
 msgid "NA in probability vector"
 msgstr "机率向量中有NA"
 
-#: src/main/random.c:376
+#: src/main/random.c:438
 msgid "non-positive probability"
 msgstr "不能有非负机率"
 
-#: src/main/random.c:383
+#: src/main/random.c:445
 msgid "too few positive probabilities"
 msgstr "正值机率太少"
 
-#: src/main/random.c:407
+#: src/main/random.c:471
 msgid ""
 "cannot take a sample larger than the population\n"
 " when 'replace = FALSE'"
@@ -4969,15 +4963,15 @@ msgstr ""
 "当'replace = FALSE'时不能取比总体要大的样本\n"
 " "
 
-#: src/main/random.c:415
+#: src/main/random.c:480
 msgid "incorrect number of probabilities"
 msgstr "机率数目不对"
 
-#: src/main/random.c:444
+#: src/main/random.c:514
 msgid "invalid first argument 'n'"
 msgstr "第一变元'n'不对"
 
-#: src/main/random.c:446
+#: src/main/random.c:516
 msgid "invalid second argument 'size'"
 msgstr "第二变元'size'不对"
 
@@ -5612,13 +5606,41 @@ msgstr "'x'里有负值"
 msgid "too large a range of values in 'x'"
 msgstr "'x'里的值的范围太大"
 
-#: src/main/source.c:72 src/main/source.c:89
-msgid "parse error"
-msgstr "语法剖析错误"
-
-#: src/main/source.c:82
+#: src/main/source.c:91
 #, c-format
 msgid "syntax error on line %d"
+msgstr "%d行有语法错误"
+
+#: src/main/source.c:92
+#, fuzzy, c-format
+msgid ""
+"syntax error at\n"
+"%d: %s"
+msgstr "语法错误"
+
+#: src/main/source.c:94
+#, fuzzy, c-format
+msgid ""
+"syntax error at\n"
+"%d: %s\n"
+"%d: %s"
+msgstr "%d行有语法错误"
+
+#: src/main/source.c:100
+msgid "syntax error"
+msgstr "语法错误"
+
+#: src/main/source.c:101
+#, fuzzy, c-format
+msgid "syntax error in \"%s\""
+msgstr "%d行有语法错误"
+
+#: src/main/source.c:103
+#, fuzzy, c-format
+msgid ""
+"syntax error in:\n"
+"\"%s\n"
+"%s\""
 msgstr "%d行有语法错误"
 
 #: src/main/split.c:37
@@ -6774,27 +6796,27 @@ msgstr "没有可以保存的历史"
 msgid "Sys.sleep is not implemented on this system"
 msgstr "本系统没有实现Sys.sleep这一功能"
 
-#: src/unix/sys-unix.c:194
+#: src/unix/sys-unix.c:199
 msgid "proc.time() is not implemented on this system"
 msgstr "本系统没有实现proc.time()这一功能"
 
-#: src/unix/sys-unix.c:210
+#: src/unix/sys-unix.c:215
 msgid "non-empty character argument expected"
 msgstr "需要非空字符变元"
 
-#: src/unix/sys-unix.c:234
+#: src/unix/sys-unix.c:239
 msgid "intern=TRUE is not implemented on this platform"
 msgstr "本系统没有实现intern=TRUE这一功能"
 
-#: src/unix/sys-unix.c:275 src/unix/sys-unix.c:291
+#: src/unix/sys-unix.c:280 src/unix/sys-unix.c:296
 msgid "cannot mkdir R_TempDir"
 msgstr "无法执行mkdir R_TempDir"
 
-#: src/unix/sys-unix.c:304
+#: src/unix/sys-unix.c:309
 msgid "cannot allocate R_TempDir"
 msgstr "无法分配R_TempDir"
 
-#: src/unix/sys-unix.c:386
+#: src/unix/sys-unix.c:391
 msgid "Sys.info() is not implemented on this system"
 msgstr "本系统没有实现Sys.info()这一功能"
 
@@ -6832,6 +6854,15 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
+
+#~ msgid "cannot unbind in the NULL environment"
+#~ msgstr "无法在NULL环境里切断联编"
+
+#~ msgid "syntax error: evaluating expression %d"
+#~ msgstr "评估表达式%d时发生了语法错误"
+
+#~ msgid "parse error"
+#~ msgstr "语法剖析错误"
 
 #~ msgid "invalid 'inherits' argument"
 #~ msgstr "'inherits'变元不对"

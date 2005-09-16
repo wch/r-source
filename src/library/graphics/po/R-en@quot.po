@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-07-13 11:08\n"
-"PO-Revision-Date: 2005-07-13 11:08\n"
+"POT-Creation-Date: 2005-09-16 08:34\n"
+"PO-Revision-Date: 2005-09-16 08:34\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -89,6 +89,15 @@ msgstr "‘at’ must have same length as 'z$n', i.e."
 
 msgid "invalid boxplot widths"
 msgstr "invalid boxplot widths"
+
+msgid "`formula' should specify exactly two variables"
+msgstr "‘formula’ should specify exactly two variables"
+
+msgid "dependent variable should be a factor"
+msgstr "dependent variable should be a factor"
+
+msgid "explanatory variable should be numeric"
+msgstr "explanatory variable should be numeric"
 
 msgid "no 'z' matrix specified"
 msgstr "no ‘z’ matrix specified"
@@ -318,6 +327,9 @@ msgstr "‘figs’ must be a vector or a matrix with 4 columns"
 
 msgid "'figs' must specify at least one screen"
 msgstr "‘figs’ must specify at least one screen"
+
+msgid "a 2-way table has to be specified"
+msgstr "a 2-way table has to be specified"
 
 msgid "'x' must be a matrix or a data frame"
 msgstr "‘x’ must be a matrix or a data frame"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-07-13 11:08\n"
+"POT-Creation-Date: 2005-09-16 08:34\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -67,6 +67,16 @@ msgstr "'at'는 'z$n'와 동일 길이를 가지지 않으면 안됩니다"
 
 msgid "invalid boxplot widths"
 msgstr "boxplot의 폭이 무효입니다"
+
+msgid "`formula' should specify exactly two variables"
+msgstr ""
+
+msgid "dependent variable should be a factor"
+msgstr ""
+
+#, fuzzy
+msgid "explanatory variable should be numeric"
+msgstr "'y'의 변수에서 수치가 아닌것이 있습니다"
 
 msgid "no 'z' matrix specified"
 msgstr "'z' 행렬이 지정되어 있지 않습니다"
@@ -300,6 +310,9 @@ msgstr "'figs'는 벡터 또는 4열의 행렬이 아니면 되지 않습니다"
 
 msgid "'figs' must specify at least one screen"
 msgstr "'figs'는 적어도 하나의 screen을 지정하지 않으면 되지 않습니다"
+
+msgid "a 2-way table has to be specified"
+msgstr ""
 
 msgid "'x' must be a matrix or a data frame"
 msgstr "'x'는 행렬 또는 데이터 프레임이 아니면 되지 않습니다"

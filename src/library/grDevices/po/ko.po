@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:57+0100\n"
+"POT-Creation-Date: 2005-09-16 08:34+0100\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -25,7 +25,7 @@ msgstr "NULL 디바이스를 시작할수가 없습니다"
 msgid "unknown AFM entity encountered"
 msgstr "충돌한 AFM entity를 알수가 없습니다 "
 
-#: devPS.c:641 devPS.c:2879
+#: devPS.c:641 devPS.c:2886
 msgid "allocation failure in PS_Text"
 msgstr "PS_Text의 할당이 실패되었습니다"
 
@@ -44,84 +44,84 @@ msgstr "Unicode 문자 0x%x에는 알수 없는 font 척도입니다"
 msgid "font metrics unknown for character 0x%x"
 msgstr "문자 0x%x에는 알수 없는 font 척도입니다"
 
-#: devPS.c:774
+#: devPS.c:781
 msgid "Failed to allocate Type 1 font info"
 msgstr "유형 1 font 정보를 할당하는데 실패되었습니다"
 
-#: devPS.c:789
+#: devPS.c:796
 msgid "Failed to allocate encoding info"
 msgstr "encode 정보를 할당하는데 실패했습니다"
 
-#: devPS.c:807
+#: devPS.c:814
 msgid "Failed to allocate Type 1 font family"
 msgstr "유형 1 font 패밀리를 할당하는데 실패했습니다"
 
-#: devPS.c:836
+#: devPS.c:843
 msgid "Failed to allocate font list"
 msgstr "font 리스트를 할당하는데 실패되었습니다"
 
-#: devPS.c:871
+#: devPS.c:878
 msgid "Failed to allocated encoding list"
 msgstr "encode 리스트에 할당하는데 실패했습니다"
 
-#: devPS.c:965
+#: devPS.c:972
 msgid "Truncated string which was too long for copy"
 msgstr "복사에서 너무 긴 앞을 잘린 문자열입니다"
 
-#: devPS.c:1002
+#: devPS.c:1009
 msgid "Failed to load encoding file"
 msgstr "encode 파일을 적재하는데 실패되었습니다"
 
-#: devPS.c:1060
+#: devPS.c:1067
 msgid "Invalid font name or more than one font name"
 msgstr "무효의 font명 또는 1개를 넘는 font명 입니다"
 
-#: devPS.c:1154
+#: devPS.c:1161
 msgid "Font family not found in PostScript font database"
 msgstr "font 패밀리는 PostScript font 데이타베이스에서 검색되지 않았습니다"
 
-#: devPS.c:1189
+#: devPS.c:1196
 msgid "Font encoding not found in PostScript font database"
 msgstr "font encode는 PostScript 데이타베이스에서 검색되지 않았습니다"
 
-#: devPS.c:1299 devPS.c:1364 devPS.c:1428
+#: devPS.c:1306 devPS.c:1371 devPS.c:1435
 #, c-format
 msgid "cannot read afm file %s"
 msgstr "afm file %s를 읽을 수가 없습니다"
 
-#: devPS.c:1664
+#: devPS.c:1671
 msgid "Corrupt loaded encodings;  encoding not recorded"
 msgstr "오류가 있는 것을 적재한 encoding; 기록하지 않는 encoding 입니다"
 
-#: devPS.c:1675
+#: devPS.c:1682
 msgid "Failed to record device encoding"
 msgstr "encode 디바이스를 기록하는것을 실패했습니다"
 
-#: devPS.c:1790
+#: devPS.c:1797
 msgid "Object .ps.prolog is not a character vector"
 msgstr "오브젝트 ps.prolog는 문자 벡터가 아닙니다"
 
-#: devPS.c:1843 devPS.c:4243 devQuartz.c:1391 devWindows.c:698
+#: devPS.c:1850 devPS.c:4250 devQuartz.c:1391 devWindows.c:698
 msgid "Invalid line end"
 msgstr "무효의 라인 종점입니다"
 
-#: devPS.c:1862 devPS.c:4262 devQuartz.c:1411 devWindows.c:711
+#: devPS.c:1869 devPS.c:4269 devQuartz.c:1411 devWindows.c:711
 msgid "Invalid line join"
 msgstr "무효인 라인 조인입니다"
 
-#: devPS.c:1870 devQuartz.c:1421
+#: devPS.c:1877 devQuartz.c:1421
 msgid "Invalid line mitre"
 msgstr "무효의 라인 mitre입니다"
 
-#: devPS.c:2107
+#: devPS.c:2114
 msgid "filename too long in postscript"
 msgstr "postscript에 대해서 너무 긴 파일명입니다"
 
-#: devPS.c:2125 devPS.c:3887
+#: devPS.c:2132 devPS.c:3894
 msgid "encoding path is too long"
 msgstr "encoding 패스는 너무 깁니다"
 
-#: devPS.c:2129
+#: devPS.c:2136
 #, c-format
 msgid ""
 "Requested encoding \"%s\"\n"
@@ -132,56 +132,56 @@ msgstr ""
 "encoding = \"ISOLatin1.enc\"를 가정하는 UTF-8 locale에\n"
 "현재 허용됩니다"
 
-#: devPS.c:2155 devPS.c:3159 devPS.c:3908
+#: devPS.c:2162 devPS.c:3166 devPS.c:3915
 msgid "Failed to initialise default PostScript font"
 msgstr "default PostScript font를 초기화하는데 실패되었습니다"
 
-#: devPS.c:2187 devPS.c:3939
+#: devPS.c:2194 devPS.c:3946
 msgid "Failed to initialise additional PostScript fonts"
 msgstr "추가의 PostScript font를 초기화하는데 실패되었습니다"
 
-#: devPS.c:2203
+#: devPS.c:2210
 msgid "invalid foreground/background color (postscript)"
 msgstr "무효의 전경/배경색 (psotscript)"
 
-#: devPS.c:2211
+#: devPS.c:2218
 msgid "'command' is too long"
 msgstr "'command'는 너무 깁니다"
 
-#: devPS.c:2215
+#: devPS.c:2222
 msgid "postscript(print.it=TRUE) used with an empty print command"
 msgstr ""
 "비어 있는 print command와 함께 사용되는 postscript 입니다(print.it=TRUE)"
 
-#: devPS.c:2264
+#: devPS.c:2271
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr "무효의 페이지 유형 '%s' (postscript) 입니다"
 
-#: devPS.c:2387
+#: devPS.c:2394
 #, c-format
 msgid "unknown postscript font family, using %s"
 msgstr "%s 사용하는 알수 없는 postscript font 패밀리입니다"
 
-#: devPS.c:2477
+#: devPS.c:2484
 msgid "printing via file = \"\" is not implemented in this version"
 msgstr "파일 = \"\"에 의해 인쇄하는 것은 이 버전에서 실제로 적용되지 않습니다"
 
-#: devPS.c:2485 devPS.c:2498
+#: devPS.c:2492 devPS.c:2505
 #, c-format
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr "'%s'에 'postscript' pipe를 열 수가 없습니다"
 
-#: devPS.c:2491
+#: devPS.c:2498
 msgid "file = \"|cmd\" is not implemented in this version"
 msgstr "file =\"cmd\"는 이 버전에서 실제로 적용되지 않습니다"
 
-#: devPS.c:2509
+#: devPS.c:2516
 #, c-format
 msgid "cannot open 'postscript' file argument '%s'"
 msgstr "'postscript'의 파일 인수 '%s'를 열수가 없습니다"
 
-#: devPS.c:2640
+#: devPS.c:2647
 #, c-format
 msgid ""
 "error from postscript() in running:\n"
@@ -190,70 +190,70 @@ msgstr ""
 "실행에서 postscript()으로부터 에러입니다:\n"
 "%s"
 
-#: devPS.c:2669 devPS.c:2850
+#: devPS.c:2676 devPS.c:2857
 #, c-format
 msgid "family %s not included in PostScript device"
 msgstr "PostScript 디바이스에 포함하지 않는 family %s 입니다"
 
-#: devPS.c:2843 devPS.c:3589 devPS.c:4947
+#: devPS.c:2850 devPS.c:3596 devPS.c:4954
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "font 1과 변경할 수 있던 무효의 font %d를 사용하기 위하여 시도합니다"
 
-#: devPS.c:3010
+#: devPS.c:3017
 msgid "run out of colors in xfig()"
 msgstr "xfig() 에서 colors를 전부 소모 해주십시오"
 
-#: devPS.c:3039
+#: devPS.c:3046
 #, c-format
 msgid "unimplemented line texture %08x: using Dash-double-dotted"
 msgstr ""
 "실제 적용되어 있지 않은 라인 texture %08x: Dash-double-dotted가 사용되어지고 "
 "있습니다"
 
-#: devPS.c:3119
+#: devPS.c:3126
 msgid "filename too long in xfig"
 msgstr "xfig에 대해서 너무 긴 파일명입니다"
 
-#: devPS.c:3143
+#: devPS.c:3150
 msgid "invalid foreground/background color (xfig)"
 msgstr "무효의 foreground/background 색(xfig)"
 
-#: devPS.c:3196
+#: devPS.c:3203
 #, c-format
 msgid "invalid page type '%s' (xfig)"
 msgstr "무효의 페이지 유형 '%s'(xfig) 입니다"
 
-#: devPS.c:3204
+#: devPS.c:3211
 #, c-format
 msgid "xfig(%s, onefile=FALSE) will only return the last plot"
 msgstr "xfig(%s(onefile=FALSE)는  마지막 slot만을 돌려줄것이다"
 
-#: devPS.c:3322
+#: devPS.c:3329
 msgid "empty file name"
 msgstr "비어 있는 파일명입니다"
 
-#: devPS.c:3813
+#: devPS.c:3820
 msgid "Corrupt loaded encodings;  font not added"
 msgstr "적재한 encodings를 corrupt 시켜주십시오; font는 증가하지 않습니다"
 
-#: devPS.c:3822
+#: devPS.c:3829
 msgid "Failed to record device encoding; font not added"
 msgstr "디바이스 encode를 기록하는것이 실패했습니다;font가 추가하지 않았습니다"
 
-#: devPS.c:3851
+#: devPS.c:3858
 msgid "filename too long in pdf"
 msgstr "pdf에 대해서 너무 긴 파일명입니다"
 
-#: devPS.c:3866
+#: devPS.c:3873
 msgid "cannot allocate pd->pos"
 msgstr "pd->pos를 할당할 수가 없습니다"
 
-#: devPS.c:3871
+#: devPS.c:3878
 msgid "cannot allocate pd->pageobj"
 msgstr "pd->pageobj를 할당할 수가 없습니다"
 
-#: devPS.c:3891
+#: devPS.c:3898
 msgid ""
 "Only encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\n"
 "Assuming \"ISOLatin1.enc\""
@@ -262,34 +262,34 @@ msgstr ""
 "서\n"
 "현재 허용됩니다"
 
-#: devPS.c:3992
+#: devPS.c:3999
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr "무효의 paper 유형 '%s' (pdf) 입니다"
 
-#: devPS.c:4020
+#: devPS.c:4027
 msgid "invalid foreground/background color (pdf)"
 msgstr "무효의 foreground /background색(pdf) 입니다"
 
-#: devPS.c:4154
+#: devPS.c:4161
 msgid "Invalid alpha value in PDF"
 msgstr "PDF에서 무효의 alpha 값입니다"
 
-#: devPS.c:4482
+#: devPS.c:4489
 msgid "Corrupt encodings in PDF device"
 msgstr "PDF 디바이스에서의 Corrupt가 있는 encode 입니다"
 
-#: devPS.c:4548
+#: devPS.c:4555
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr "'pdf'파일 인수'%s'를 개시할수가 없습니다"
 
-#: devPS.c:4602
+#: devPS.c:4609
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr ""
 "page limit을 증가 시킬수 없습니다: 그 pdf 디바이스를 shutdown 해주십시오"
 
-#: devPS.c:4615
+#: devPS.c:4622
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -298,33 +298,33 @@ msgstr ""
 "'pdf'파일 인수 '%s'를 열 수가 없습니다\n"
 " PDFdevice를 shut down 헤주십시오"
 
-#: devPS.c:4927 devPS.c:5019
+#: devPS.c:4934 devPS.c:5026
 msgid "Failed to find or load PDF font"
 msgstr "PDF font를 검색 또는 적재하는데 실패되었습니다"
 
-#: devPS.c:4969
+#: devPS.c:4976
 msgid "allocation failure in PDF_Text"
 msgstr "PDF_Text에서 할당이 실패했습니다"
 
-#: devPS.c:5095 devPS.c:5099
+#: devPS.c:5102 devPS.c:5106
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s 에서 무효의 'family' 파라미터 입니다"
 
-#: devPS.c:5117 devPS.c:5254
+#: devPS.c:5124 devPS.c:5261
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s에서 무효의 'fonts' 파라미터 입니다"
 
-#: devPS.c:5133
+#: devPS.c:5140
 msgid "unable to start device PostScript"
 msgstr "디바이스 PostSscript를 시작할수 없습니다"
 
-#: devPS.c:5199
+#: devPS.c:5206
 msgid "unable to start device xfig"
 msgstr "디바이스 xfig를 시작할수 없습니다"
 
-#: devPS.c:5272
+#: devPS.c:5279
 msgid "unable to start device pdf"
 msgstr "디바이스 pdf를 시작할수가 없습니다"
 

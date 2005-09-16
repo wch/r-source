@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:45+0100\n"
-"PO-Revision-Date: 2005-08-15 11:45+0100\n"
+"POT-Creation-Date: 2005-09-16 08:35+0100\n"
+"PO-Revision-Date: 2005-09-16 08:35+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -101,7 +101,7 @@ msgstr "Burg's algorithm failed to find partial correlation"
 msgid "control must be a list"
 msgstr "control must be a list"
 
-#: nls.c:77
+#: nls.c:77 port.c:510
 msgid "m must be a list"
 msgstr "m must be a list"
 
@@ -204,7 +204,7 @@ msgstr "Hessian function must return a square numeric matrix of order %d"
 msgid "`rho' must be an environment"
 msgstr "‘rho’ must be an environment"
 
-#: port.c:362
+#: port.c:362 port.c:509
 msgid "`d' must be a nonempty numeric vector"
 msgstr "‘d’ must be a nonempty numeric vector"
 
@@ -217,9 +217,32 @@ msgstr "When Hessian defined must also have gradient defined"
 msgid "environment `rho' must contain a numeric vector `.par' of length %d"
 msgstr "environment ‘rho’ must contain a numeric vector ‘.par’ of length %d"
 
-#: port.c:377
+#: port.c:377 port.c:529
 msgid "lowerb and upperb must be numeric vectors"
 msgstr "lowerb and upperb must be numeric vectors"
+
+#: port.c:423
+msgid "getElement applies only to named lists"
+msgstr "getElement applies only to named lists"
+
+#: port.c:444
+#, c-format
+msgid "%s$%s() not found"
+msgstr "%s$%s() not found"
+
+#: port.c:457
+#, c-format
+msgid "gradient must be a numeric matrix of dimension (%d,%d)"
+msgstr "gradient must be a numeric matrix of dimension (%d,%d)"
+
+#: port.c:478
+#, c-format
+msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
+msgstr "fcn produced mode %d, length %d - wanted mode %d, length %d"
+
+#: port.c:491
+msgid "invalid type for eval_check_store"
+msgstr "invalid type for eval_check_store"
 
 #: qr.c:30
 msgid "assert failed in src/library/ts/src/carray.c"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:45\n"
-"PO-Revision-Date: 2005-08-15 11:45\n"
+"POT-Creation-Date: 2005-09-16 08:35\n"
+"PO-Revision-Date: 2005-09-16 08:35\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -528,8 +528,8 @@ msgstr "not enough finite observations"
 msgid "Cannot compute exact p-value with ties"
 msgstr "Cannot compute exact p-value with ties"
 
-msgid "p-values may be incorrect due to ties"
-msgstr "p-values may be incorrect due to ties"
+msgid "Cannot compute exact p-values with ties"
+msgstr "Cannot compute exact p-values with ties"
 
 msgid "'formula' missing or invalid"
 msgstr "‘formula’ missing or invalid"
@@ -1503,6 +1503,12 @@ msgstr "setVarying : vary length must match length of parameters"
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "singular gradient matrix at initial parameter estimates"
 
+msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+msgstr "Upper or lower bounds ignored unless algorithm = “port”"
+
+msgid "Convergence failure:"
+msgstr "Convergence failure:"
+
 msgid "rows with zero weights not counted"
 msgstr "rows with zero weights not counted"
 
@@ -2001,6 +2007,9 @@ msgstr "‘y’ must be numeric"
 
 msgid "not enough (finite) 'x' observations"
 msgstr "not enough (finite) ‘x’ observations"
+
+msgid "Requested conf.level not achievable"
+msgstr "Requested conf.level not achievable"
 
 msgid "cannot compute exact confidence interval with ties"
 msgstr "cannot compute exact confidence interval with ties"

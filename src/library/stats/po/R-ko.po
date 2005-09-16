@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:45\n"
+"POT-Creation-Date: 2005-09-16 08:35\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -510,8 +510,9 @@ msgstr "유한한 관측값이 충분히 없습니다"
 msgid "Cannot compute exact p-value with ties"
 msgstr "ties 때문에 정확한 p값을 계산할 수가 없습니다"
 
-msgid "p-values may be incorrect due to ties"
-msgstr "p-values는 ties 때문에 정확한 p값을 계산할수가 없습니다"
+#, fuzzy
+msgid "Cannot compute exact p-values with ties"
+msgstr "ties 때문에 정확한 p값을 계산할 수가 없습니다"
 
 msgid "'formula' missing or invalid"
 msgstr "모델식이 없거나 부적절합니다"
@@ -1516,6 +1517,12 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "파라미터의 초기 추정값으로 구매 행렬이 특이합니다"
 
+msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+msgstr ""
+
+msgid "Convergence failure:"
+msgstr ""
+
 msgid "rows with zero weights not counted"
 msgstr "중량감 zero의 행은 카운트 되지 않습니다"
 
@@ -2030,6 +2037,9 @@ msgstr "'y'는 수치가 아니면 되지 않습니다"
 msgid "not enough (finite) 'x' observations"
 msgstr "(유한한）'x'의 관측값이 충분하지는 않습니다"
 
+msgid "Requested conf.level not achievable"
+msgstr ""
+
 msgid "cannot compute exact confidence interval with ties"
 msgstr "time가 있으므로, 정확한 신뢰 구간을 계산할수가 없습니다 "
 
@@ -2096,6 +2106,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "p-values may be incorrect due to ties"
+#~ msgstr "p-values는 ties 때문에 정확한 p값을 계산할수가 없습니다"
 
 #~ msgid "one-argument anova() not implemented for 'mlm' objects"
 #~ msgstr ""
