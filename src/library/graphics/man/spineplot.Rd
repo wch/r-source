@@ -13,11 +13,13 @@ spineplot(x, \dots)
 \method{spineplot}{default}(x, y = NULL,
   breaks = NULL, tol.ylab = 0.05, off = NULL,
   col = NULL, main = "", xlab = NULL, ylab = NULL,
-  xaxlabels = NULL, yaxlabels = NULL, \dots)
+  xaxlabels = NULL, yaxlabels = NULL,
+  xlim = NULL, ylim = c(0, 1), \dots)
 \method{spineplot}{formula}(formula, data = list(),
   breaks = NULL, tol.ylab = 0.05, off = NULL,
   col = NULL, main = "", xlab = NULL, ylab = NULL,
-  xaxlabels = NULL, yaxlabels = NULL, \dots)
+  xaxlabels = NULL, yaxlabels = NULL,
+  xlim = NULL, ylim = c(0, 1), \dots)
 }
 \arguments{
   \item{x}{an object, the default method expects either a single variable
@@ -39,7 +41,9 @@ spineplot(x, \dots)
   \item{main, xlab, ylab}{character strings for annotation}
   \item{xaxlabels, yaxlabels}{character vectors for annotation of x and y axis.
     Default to \code{levels(y)} and \code{levels(x)}, respectively for the
-    spine plot. For \code{xaxlabels} in the spinogram, the breaks are used.}
+    spine plot. For \code{xaxlabels} in the spinogram, the breaks are
+    used.}
+  \item{xlim, ylim}{the range of x and y values with sensible defaults.}  
   \item{\dots}{additional arguments passed to \code{\link{rect}}.}
 }
 \details{
