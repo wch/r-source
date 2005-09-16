@@ -9,6 +9,3 @@
 
 # to prefer HTML help
 # options(htmlhelp=TRUE)
-
-# to prefer Windows help
-# options(winhelp=TRUE)
