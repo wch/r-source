@@ -67,8 +67,6 @@ if($OSTYPE eq "windows"){
     } else {
 	$TMPDIR = "" 
     }
-    getenv("R_TEXOPTS", "R_TEXOPTS", "");
-    $LATEX = "$LATEX $R_TEXOPTS";
 }
 else{
     if($R_HOME){

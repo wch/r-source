@@ -1738,6 +1738,26 @@ sub check_pkg {
                 ## We could also write stdout to a tempfile and replay
                 ## this in case of problems.  But does this really help?
 		my $cmd = "${R::Vars::LATEX}";
+		if($WINDOWS) {
+		    ## check if we have MiKTeX and call latex accordingly
+		    ## (can't do this in R::Vars::LATEX as we need R::Utils.)
+		    my $Rout = R_tempfile("Rlatex");
+		    my $cmd2 = "$cmd --version > ${Rout}";
+		    R_system($cmd2);
+		    my $is_miktex = 0;
+		    open ROUT, "< $Rout";
+		    while (<ROUT>) {
+			chomp;
+			$is_miktex = 1 if /^MiKTeX/;
+		    }
+		    close ROUT;
+		    unlink($Rout);
+		    $out =~ s/\w//;
+		    if($is_miktex) {
+			my $R_HOME = $ENV{"R_HOME"};
+			$cmd .= " --include-directory=$R_HOME/share/texmf";
+		    }
+		}
 		$cmd .= " '\\nonstopmode{}\\input{${pkgname}-manual.tex}'";
 		$cmd .= " >/dev/null 2>&1";
 		## </NOTE>
