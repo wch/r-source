@@ -1895,6 +1895,14 @@ function(package, dir, lib.loc = NULL)
                 if (g %in% S3_group_generics) .BaseNamespaceEnv
                 else if (typeof(genfun) == "closure") environment(genfun)
                 else .BaseNamespaceEnv
+            if(!exists(".__S3MethodsTable__.", envir = defenv,
+                       inherits = FALSE)) {
+                ## Happens e.g. if for some reason, we get "plot" as 
+                ## standardGeneric for "plot" defined from package
+                ## "graphics" with its own environment which does not
+                ## contain an S3 methods table ...
+                return(NULL)
+            }
             S3Table <- get(".__S3MethodsTable__.", envir = defenv,
                            inherits = FALSE)
             if(!exists(m, envir = S3Table)) {
