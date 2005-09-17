@@ -616,7 +616,7 @@ BUG FIXES
     o	R CMD BATCH <file> now also works when <file> does not end in a
 	newline on Unix-alike platforms.
 
-    o   terms.formula() got confused if 'data' argument was a list with
+    o   terms.formula() got confused if the 'data' argument was a list with
 	non-syntactic names.
 
     o	prompt() and hence package.skeleton() now produce *.Rd files that
@@ -629,6 +629,9 @@ BUG FIXES
     o	The default (protection pointer) stack size (the default for
 	'--max-ppsize') has been increased from 10000 to 50000 in order to
 	match the increased default options("expressions") (in R 2.1.0).
+
+    o	The R front-end was expecting --gui=tk not Tk as documented,
+	and rejecting --gui=X11.
 
     o	Rdconv -t latex protected only the first << and >> in a chunk
 	against conversion to guillemets.
