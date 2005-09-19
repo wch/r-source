@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-09-15
+@set FAQ_DATE @value{FAQ_YEAR}-09-18
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2532,6 +2532,8 @@ Mesh generation and surface tesselation, based on the Qhull library.
 @item ggm
 Functions for defining directed acyclic graphs and undirected graphs,
 finding induced graphs and fitting Gaussian Markov models.
+@item giRaph
+Data structures and algorithms for computations on graphs.
 @item gld
 Basic functions for the generalised (Tukey) lambda distribution.
 @item gllm
