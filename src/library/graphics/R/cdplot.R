@@ -84,6 +84,11 @@ function(x, y,
     x1 <- x1[x1 >= min(x) & x1 <= max(x)]
 
     if(is.null(xlim)) xlim <- range(x1)
+    if(any(ylim < 0) || any(ylim > 1)) {
+        warning("y axis is on a cumulative probability scale, 'ylim' must be in [0,1]")
+        if(min(ylim) > 1 || max(ylim) < 0) ylim <- c(0, 1)
+        else ylim <- c(max(min(ylim), 0), min(max(ylim), 1))
+    }
 
     ## plot polygons
     if(plot) {

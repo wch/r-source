@@ -103,6 +103,16 @@ function(x, y = NULL,
     yat <- rbind(0, apply(prop.table(tab, 1), 1, cumsum))
 
     if(is.null(xlim)) xlim <- c(0, 1 + off * (nx-1))
+    else if(any(xlim < 0) || any(xlim > 1)) {
+        warning("x axis is on a cumulative probability scale, 'xlim' must be in [0,1]")
+        if(min(xlim) > 1 || max(xlim) < 0) xlim <- c(0, 1)
+        else xlim <- c(max(min(xlim), 0), min(max(xlim), 1))
+    }
+    if(any(ylim < 0) || any(ylim > 1)) {
+        warning("y axis is on a cumulative probability scale, 'ylim' must be in [0,1]")
+        if(min(ylim) > 1 || max(ylim) < 0) ylim <- c(0, 1)
+        else ylim <- c(max(min(ylim), 0), min(max(ylim), 1))
+    }
     
     ## setup plot
     plot(0, 0, xlim = xlim, ylim = ylim, type = "n", axes = FALSE,
@@ -135,6 +145,7 @@ function(x, y = NULL,
     ## 3: none
     ## 4: simple numeric  
     axis(4)
+    box()
     
     ## return table visualized
     names(dimnames(tab)) <- c(xlab, ylab)
