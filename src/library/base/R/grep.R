@@ -54,6 +54,16 @@ function(pattern, text, extended = TRUE, perl = FALSE,
         .Internal(regexpr(pattern, text, extended, fixed, useBytes))
 }
 
+gregexpr <-
+function(pattern, text, extended = TRUE, perl = FALSE,
+         fixed = FALSE, useBytes = FALSE)
+{
+    if(perl)
+      .Internal(gregexpr.perl(pattern, text, useBytes))
+    else
+      .Internal(gregexpr(pattern, text, extended, fixed, useBytes))
+}
+
 agrep <-
 function(pattern, x, ignore.case = FALSE, value = FALSE,
          max.distance = 0.1)

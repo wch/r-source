@@ -4,11 +4,12 @@
 \alias{sub}
 \alias{gsub}
 \alias{regexpr}
+\alias{gregexpr}
 \description{
   \code{grep} searches for matches to \code{pattern} (its first
-  argument) within the character vector \code{x} (second
-  argument).  \code{regexpr} does too, but returns more detail in a
-  different format.
+  argument) within the character vector \code{x} (second argument).
+  \code{regexpr} and \code{gregexpr} do too, but return more detail in
+  a different format.
 
   \code{sub} and \code{gsub} perform replacement of matches determined
   by regular expression matching.
@@ -26,6 +27,9 @@ gsub(pattern, replacement, x,
      useBytes = FALSE)
 
 regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
+        useBytes = FALSE)
+
+gregexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
         useBytes = FALSE)
 }
 \arguments{
@@ -95,6 +99,10 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
   quantities are in characters rather than bytes unless
   \code{useBytes = TRUE} is used with \code{fixed = TRUE} or
   \code{perl = TRUE}.
+
+  For \code{gregexpr} a list of the same length as \code{text} each
+  element of which is an integer vector as in \code{regexpr}, except
+  that the starting positions of every match are given.
 
   If in a multi-byte locale the pattern or replacement is not a valid
   sequence of bytes, an error is thrown.  An invalid string in \code{x}
@@ -166,6 +174,8 @@ txt[gsub("g","#", txt) !=
     gsub("g","#", txt, ignore.case = TRUE)] # the "G" words
 
 regexpr("en", txt)
+
+gregexpr("e", txt)
 
 ## trim trailing white space
 str = 'Now is the time      '

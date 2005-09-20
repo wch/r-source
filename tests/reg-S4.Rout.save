@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 alpha (2005-09-20 r35617)
+Version 2.2.0 alpha (2005-09-20 r35626)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -104,7 +104,7 @@ NULL
 > (x <- new("test1", date=as.POSIXct("2003-10-09")))
 An object of class "test1"
 Slot "date":
-[1] "2003-10-09 CEST"
+[1] "2003-10-09 PDT"
 
 > stopifnot(format(x @ date) == "2003-10-09")
 > ## line 2 failed in 1.8.0 because of an extraneous space in "%in%"
