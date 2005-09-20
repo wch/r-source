@@ -135,6 +135,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 ls.diag <- function(ls.out)
 {
     resids <- as.matrix(ls.out$residuals)
+    d0 <- dim(resids)
     xnames <- colnames(ls.out$qr$qr)
     yname <- colnames(resids)
 
@@ -143,7 +144,7 @@ ls.diag <- function(ls.out)
     good <- complete.cases(resids, ls.out$wt)
     if( any(!good) ) {
 	warning("missing observations deleted")
-	resids <- as.matrix(resids)[good, ]
+	resids <- resids[good, , drop = FALSE]
     }
 
     ## adjust residuals if needed
@@ -159,7 +160,7 @@ ls.diag <- function(ls.out)
     p <- ls.out$qr$rank
     n <- nrow(resids)
     hatdiag <- rep.int(NA, n)
-    stats <- array(NA, dim = dim(resids))
+    stats <- array(NA, dim = d0)
     colnames(stats) <- yname
     stdres <- studres <- dfits <- Cooks <- stats
 

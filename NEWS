@@ -10,9 +10,6 @@
 
 
 USER-VISIBLE CHANGES
-    o   there is a new function gregexpr which generalizes regexpr
-        to search for all matches in each of the input strings
-        (not just the first match)
 
     o	plot(<lm object>) uses a new default 'which = 5'
     	for the fourth panel when 'which' is not specified.
@@ -326,9 +323,13 @@ NEW FEATURES
 	assumptions about the calendar in use).
 
     o	sprintf() now supports asterisk `*' width or precision
-	specification (but not both) as well as `*1$' to `*99$'. Also the
+	specification (but not both) as well as `*1$' to `*99$'.  Also the
 	handling of `%' as conversion specification terminator is now
 	left to the system and doesn't affect following specifications.
+
+    o	There is a new function gregexpr() which generalizes regexpr()
+        to search for all matches in each of the input strings (not
+        just the first match).
 
 
 DEPRECATED & DEFUNCT
@@ -656,7 +657,10 @@ BUG FIXES
     o	Rdconv -t latex protected only the first << and >> in a chunk
 	against conversion to guillemets.
 
-    o  callNextMethod() and callGeneric()  have fixes related to handling arguments.
+    o	callNextMethod() and callGeneric() have fixes related to
+	handling arguments.
+
+    o	ls.diag() now works for fits with missing data. (PR#8139)
 
 
 

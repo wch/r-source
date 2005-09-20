@@ -3757,3 +3757,12 @@ stopifnot(nlevels(f2) == 3)
 A <- matrix(pi, 0, 2)
 stopifnot(identical(dim(A), dim(format(A))))
 ## dropped dim at one point
+
+
+## ls.diag with missing values (PR#8139)
+x <- matrix(c(1,-1,1,-1,1,-1,1,-1,1,-1,  1,2,3,4,5,6,7,8,9,10), 10, 2)
+y <- as.matrix(c(1,2,3,NA,3,4,3,4,5,4))
+wt <- c(1,1,1,1,1,1,1,1,1,0)
+regres <- lsfit(x, y, wt=wt)
+regdiag <- ls.diag(regres)
+## failed < 2.2.0.
