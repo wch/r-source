@@ -87,7 +87,9 @@ mem.limits(nsize = NA, vsize = NA)
   The option \option{--max-ppsize} controls the maximum size of the
   pointer protection stack.  This defaults to 50000, but can be
   increased to allow deep recursion or large and complicated
-  calculations to be done.
+  calculations to be done. \emph{Note} that parts of the garbage
+  collection process goes through the full reserved pointer protection stack
+  and hence becomes slower when the size is increased.
   Currently the maximum value accepted is 500000.
 }
 
