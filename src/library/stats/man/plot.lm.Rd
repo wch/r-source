@@ -39,7 +39,7 @@
   \item{labels.id}{vector of labels, from which the labels for extreme
     points will be chosen.  \code{NULL} uses observation numbers.}
   \item{cex.id}{magnification of point labels.}
-  \item{qqline}{logical indicating if a \code{\link{qqline()}} should be
+  \item{qqline}{logical indicating if a \code{\link{qqline}()} should be
   added to the normal Q-Q plot.}
   \item{cook.levels}{levels of Cook's distance at which to draw contours.}
   \item{add.smooth}{logical indicating if a smoother should be added to
