@@ -47,6 +47,11 @@ getOption(x)
 }
 \section{Options used in base \R}{
   \describe{
+    \item{\code{add.smooth}:}{typically logical, defaulting to
+      \code{TRUE}.  Could also be set to an integer for specifying how
+      many (simulated) smooths should be added.  This is currently only
+      used by \code{\link[stats]{plot.lm}}.}
+
     \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
       true, a \link{warning} is produced whenever a \dQuote{generalized
       vector} (atomic or \code{\link{list}}) is extended, by something
@@ -220,6 +225,7 @@ getOption(x)
 
   The \sQuote{factory-fresh} default settings of some of these options are
   \tabular{ll}{
+    \code{add.smooth} \tab \code{TRUE}\cr
     \code{check.bounds} \tab \code{FALSE}\cr
     \code{continue} \tab \code{"+ "}\cr
     \code{digits} \tab \code{7}\cr

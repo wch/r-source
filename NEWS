@@ -11,9 +11,8 @@
 
 USER-VISIBLE CHANGES
 
-    o	plot(<lm object>) uses a new default for the fourth panel when
-	'which' is not specified.
-	___ may change before release ___
+    o	plot(<lm object>) uses a new default 'which = 5'
+    	for the fourth panel when 'which' is not specified.
 
     o	The SVN revision number will appear after the date in the
 	welcome message.  The date shown is now the date of the last
@@ -64,7 +63,10 @@ NEW FEATURES
 	provide residuals() and fitted() methods for smoothing splines.
 
     o	plot.lm() has two new plots (for 'which' = 5 or 6), plotting
-	residuals or cook distances versus (transformed) leverages.
+	residuals or cook distances versus (transformed) leverages - unless
+	these are constant.  Further, the new argument 'add.smooth' adds a
+	loess smoother to the point plots by default, and 'qqline = TRUE'
+	adds a qqline() to the normal plot.
 	The default for 'sub.caption' has been improved for long calls.
 
     o	[g]sub() now have a 'useBytes' argument like grep() and regexpr().
@@ -89,6 +91,9 @@ NEW FEATURES
 	as.integer() on all platforms, and as integer constants in R code.
 
     o	New option("OutDec") to set the decimal point for output conversions.
+
+    o	New option("add.smooth") to add smoothers to a plot, currently
+	only used by plot.lm().
 
     o	New functions URLencode() and URLdecode(), particularly for use
 	with file:// URLs.  These are used by e.g. browse.env(),

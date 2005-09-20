@@ -7,11 +7,13 @@
      caption = c("Residuals vs Fitted", "Normal Q-Q",
           "Scale-Location", "Cook's distance",
           "Residuals vs Leverage", "Cook's distance vs Leverage"),
-     panel = points, sub.caption = NULL, main = "",
+     panel = if(add.smooth) panel.smooth else points,
+     sub.caption = NULL, main = "",
      ask = prod(par("mfcol")) < length(which) && dev.interactive(),
      \dots,
      id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
-     cook.levels = c(0.5, 1), label.pos = c(4, 2))
+     qqline = TRUE, cook.levels = c(0.5, 1.0),
+     add.smooth = getOption("add.smooth"), label.pos = c(4,2))
 }
 \arguments{
   \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
@@ -19,8 +21,9 @@
   \item{which}{if a subset of the plots is required, specify a subset of
     the numbers \code{1:6}.}
   \item{caption}{captions to appear above the plots}
-  \item{panel}{panel function.  A useful alternative to
-    \code{\link{points}} is \code{\link{panel.smooth}}.}
+  \item{panel}{panel function.  The useful alternative to
+    \code{\link{points}}, \code{\link{panel.smooth}} can be chosen
+    by \code{add.smooth = TRUE}.}
   \item{sub.caption}{common title---above figures if there are multiple;
     used as \code{sub} (s.\code{\link{title}}) otherwise.  If \code{NULL},
     as by default, a possible shortened version of
@@ -36,7 +39,11 @@
   \item{labels.id}{vector of labels, from which the labels for extreme
     points will be chosen.  \code{NULL} uses observation numbers.}
   \item{cex.id}{magnification of point labels.}
+  \item{qqline}{logical indicating if a \code{\link{qqline()}} should be
+  added to the normal Q-Q plot.}
   \item{cook.levels}{levels of Cook's distance at which to draw contours.}
+  \item{add.smooth}{logical indicating if a smoother should be added to
+    most plots; see also \code{panel} above.}
   \item{label.pos}{positioning of labels, for the left half and right
     half of the graph respectively, for plots 1-3.}
 }
@@ -70,10 +77,14 @@
   \code{\link{influence}()}\code{$hat}, see also \code{\link{hat}}.
 
   The Residual-Leverage plot shows contours of equal Cook's distance,
-  by default for values of 0.5 and 1.  In the Cook's distance vs
-  leverage/(1-leverage) plot, contours of standardized residuals that
-  are equal in magnitude are lines through the origin.  The contour
-  lines are labeled with the magnitudes.
+  for values of \code{cook.levels}, by default 0.5 and 1.
+  If the leverages are constant, as typically in a balanced \code{\link{aov}}
+  situation, the plot uses factor level combinations instead of the
+  leverages for the x-axis.
+
+  In the Cook's distance vs leverage/(1-leverage) plot, contours of
+  standardized residuals that are equal in magnitude are lines through
+  the origin.  The contour lines are labeled with the magnitudes.
 }
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)

@@ -3,10 +3,13 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	  caption = c("Residuals vs Fitted", "Normal Q-Q",
 	  "Scale-Location", "Cook's distance",
 	  "Residuals vs Leverage", "Cook's distance vs Leverage"),
-	  panel = points, sub.caption = NULL, main = "",
+	  panel = if(add.smooth) panel.smooth else points,
+          sub.caption = NULL, main = "",
 	  ask = prod(par("mfcol")) < length(which) && dev.interactive(), ...,
 	  id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
-	  cook.levels = c(0.5, 1.0), label.pos = c(4,2))
+          qqline = TRUE, cook.levels = c(0.5, 1.0),
+          add.smooth = getOption("add.smooth"),
+          label.pos = c(4,2))
 {
     if (!inherits(x, "lm"))
 	stop("use only with \"lm\" objects")
@@ -41,8 +44,10 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	r.w <- if (is.null(w)) r else sqrt(w) * r
 	rs <- r.w/(s * sqrt(1 - hii))
     }
-    if (any(show[5:6])) {
+    if (any(show[5:6])) { # using 'leverages'
 	hatval <- hatvalues(x)
+        r.hat <- range(hatval, na.rm = TRUE) # though should never have NA
+        isConst.hat <- diff(r.hat) < 1e-10 * mean(hatval)
     }
     if (any(show[c(1, 3)]))
 	l.fit <- if (isGlm)
@@ -109,6 +114,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	ylim <- range(rs, na.rm=TRUE)
 	ylim[2] <- ylim[2] + diff(ylim) * 0.075
 	qq <- qqnorm(rs, main = main, ylab = ylab23, ylim = ylim, ...)
+	if (qqline) qqline(rs, lty = 3, col = "gray50")
 	if (one.fig)
 	    title(sub = sub.caption, ...)
 	mtext(caption[2], 3, 0.25)
@@ -141,7 +147,6 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	mtext(caption[4], 3, 0.25)
 	if(id.n > 0)
 	    text.id(show.r, cook[show.r], show.r, adj.x=FALSE)
-	##  text.id(show.r, cook[show.r] + 0.4*cex.id * strheight(" "), show.r)
     }
     if (show[5]) {
 	ylim <- range(rs, na.rm = TRUE)
@@ -149,35 +154,69 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	    ylim <- extendrange(r= ylim, f = 0.08)
 	    show.r <- order(-cook)[iid]
 	}
-        r.hat <- range(hatval, na.rm = TRUE) # though should never have NA
-	plot(hatval, rs, xlim = c(0, r.hat[2]), ylim = ylim,
-	     main = main, xlab = "Leverage", ylab = ylab23, type = "n", ...)
-	panel(hatval, rs, ...)
-        abline(h = 0, v = 0, lty = 3, col = "gray")
-	if (one.fig)
-	    title(sub = sub.caption, ...)
-	if(length(cook.levels)) {
-	    p <- length(coef(x))
-	    hh <- seq(min(r.hat[1], r.hat[2]/100), par("usr")[2], length = 101)
-	    for(crit in cook.levels) {
-		cl.h <- sqrt(crit*p*(1-hh)/hh)
-		lines(hh, cl.h, lty = 2, col = 2)
-		lines(hh,-cl.h, lty = 2, col = 2)
-	    }
-	    legend("bottomleft", legend = "Cook's distance",
-		   lty = 2, col = 2, bty = "n")
-	    xmax <- par("usr")[2]
-	    ymult <- sqrt(p*(1-xmax)/xmax)
-	    aty <- c(-sqrt(rev(cook.levels))*ymult, sqrt(cook.levels)*ymult)
-	    axis(4, at = aty, labels = paste(c(rev(cook.levels), cook.levels)),
-		 mgp = c(.25,.25,0), las = 2, tck = 0,
-		 cex.axis = cex.id, col.axis = 2)
-	}
-	mtext(caption[5], 3, 0.25)
+        if(isConst.hat) { ## leverages are all the same
+            caption[5] <- "Constant Leverage:\n Residuals vs Factor Levels"
+            ## plot against  factor-level combinations instead
+            aterms <- attributes(terms(x))
+            ## classes w/o response
+            dcl <- aterms$dataClasses[ - aterms$response ]
+            facvars <- names(dcl)[dcl %in% c("factor", "ordered")]
+            mf <- model.frame(x)[facvars]# better than x$model
+            ## now re-order the factor levels *along* factor-effects
+            ## using a "robust" method {not requiring dummy.coef}:
+            effM <- mf
+            for(j in seq(length=ncol(mf)))
+                effM[,j] <- sapply(split(yh, mf[,j]), mean)[mf[,j]]
+            dm <- data.matrix(mf)[do.call(order, effM), , drop = FALSE]
+            ## #{levels} for each of the factors:
+            nf <- length(nlev <- unlist(unname(lapply(x$xlevels, length))))
+            ff <- if(nf == 1) 1 else rev(cumprod(c(1, nlev[nf:2])))
+            xx <- facval <- (dm-1) %*% ff
+
+            plot(facval, rs, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
+                 ylim = ylim, xaxt = "n",
+                 main = main, xlab = "Factor Level Combinations",
+                 ylab = ylab23, type = "n", ...)
+            axis(1, at = ff[1]*(1:nlev[1] - 1/2) - 1/2,
+                 labels= x$xlevels[[1]][order(sapply(split(yh,mf[,1]), mean))])
+            mtext(paste(facvars[1],":"), side = 1, line = 0.25, adj=-.05)
+            abline(v = ff[1]*(0:nlev[1]) - 1/2, col="gray", lty="F4")
+            panel(facval, rs, ...)
+            abline(h = 0, lty = 3, col = "gray")
+        }
+        else { ## Residual vs Leverage
+            xx <- hatval
+            plot(hatval, rs, xlim = c(0, r.hat[2]), ylim = ylim,
+                 main = main, xlab = "Leverage", ylab = ylab23, type = "n", ...)
+            panel(hatval, rs, ...)
+            abline(h = 0, v = 0, lty = 3, col = "gray")
+            if (one.fig)
+                title(sub = sub.caption, ...)
+            if(length(cook.levels)) {
+                p <- length(coef(x))
+                usr <- par("usr")
+                hh <- seq(min(r.hat[1], r.hat[2]/100), usr[2], length = 101)
+                for(crit in cook.levels) {
+                    cl.h <- sqrt(crit*p*(1-hh)/hh)
+                    lines(hh, cl.h, lty = 2, col = 2)
+                    lines(hh,-cl.h, lty = 2, col = 2)
+                }
+                legend("bottomleft", legend = "Cook's distance",
+                       lty = 2, col = 2, bty = "n")
+                xmax <- usr[2]
+                ymult <- sqrt(p*(1-xmax)/xmax)
+                aty <- c(-sqrt(rev(cook.levels))*ymult, sqrt(cook.levels)*ymult)
+                axis(4, at = aty,
+                     labels = paste(c(rev(cook.levels), cook.levels)),
+                     mgp = c(.25,.25,0), las = 2, tck = 0,
+                     cex.axis = cex.id, col.axis = 2)
+            }
+        }# if(const h_ii) .. else ..
+        mtext(caption[5], 3, 0.25)
 	if (id.n > 0) {
 	    y.id <- rs[show.r]
 	    y.id[y.id < 0] <- y.id[y.id < 0] - strheight(" ")/3
-	    text.id(hatval[show.r], y.id, show.r)
+	    text.id(xx[show.r], y.id, show.r)
 	}
     }
     if (show[6]) {
