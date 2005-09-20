@@ -641,6 +641,8 @@ BUG FIXES
     o	Rdconv -t latex protected only the first << and >> in a chunk
 	against conversion to guillemets.
 
+    o  callNextMethod() and callGeneric()  have fixes related to handling arguments.
+
 
 
 
