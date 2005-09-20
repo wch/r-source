@@ -4,7 +4,7 @@ showMethods(where = "package:methods")
 
 ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
 setClass("test1", representation(date="POSIXct"))
-(x <- new("test1", date=as.POSIXct("2003-10-09")))
+x <- new("test1", date=as.POSIXct("2003-10-09"))
 stopifnot(format(x @ date) == "2003-10-09")
 ## line 2 failed in 1.8.0 because of an extraneous space in "%in%"
 
