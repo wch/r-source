@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 alpha (2005-09-09 r35538)
+Version 2.2.0 alpha (2005-09-20 r35617)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -97,6 +97,67 @@ object = "MethodWithNext"
 object = "genericFunction"
 object = "classRepresentation"
 NULL
+> 
+> ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
+> setClass("test1", representation(date="POSIXct"))
+[1] "test1"
+> (x <- new("test1", date=as.POSIXct("2003-10-09")))
+An object of class "test1"
+Slot "date":
+[1] "2003-10-09 CEST"
+
+> stopifnot(format(x @ date) == "2003-10-09")
+> ## line 2 failed in 1.8.0 because of an extraneous space in "%in%"
+> 
+> stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
+> 
+> ## trace (requiring methods):
+> f <- function(x, y) { c(x,y)}
+> xy <- 0
+> trace(f, quote(x <- c(1, x)), exit = quote(xy <<- x), print = FALSE)
+[1] "f"
+> fxy <- f(2,3)
+> stopifnot(identical(fxy, c(1,2,3)))
+> stopifnot(identical(xy, c(1,2)))
+> untrace(f)
+> 
+> ## a generic and its methods
+> 
+> setGeneric("f")
+[1] "f"
+> setMethod("f", c("character", "character"), function(x,	 y) paste(x,y))
+[1] "f"
+> 
+> ## trace the generic
+> trace("f", quote(x <- c("A", x)), exit = quote(xy <<- c(x, "Z")), print = FALSE)
+[1] "f"
+> 
+> ## should work for any method
+> 
+> stopifnot(identical(f(4,5), c("A",4,5)),
++           identical(xy, c("A", 4, "Z")))
+> 
+> stopifnot(identical(f("B", "C"), paste(c("A","B"), "C")),
++           identical(xy, c("A", "B", "Z")))
+> 
+> ## trace a method
+> trace("f", sig = c("character", "character"), quote(x <- c(x, "D")),
++       exit = quote(xy <<- xyy <<- c(x, "W")), print = FALSE)
+[1] "f"
+> 
+> stopifnot(identical(f("B", "C"), paste(c("A","B","D"), "C")))
+> # These two got broken by Luke's lexical scoping fix
+> #stopifnot(identical(xy, c("A", "B", "D", "W")))
+> #stopifnot(identical(xy, xyy))
+> 
+> ## but the default method is unchanged
+> stopifnot(identical(f(4,5), c("A",4,5)),
++           identical(xy, c("A", 4, "Z")))
+> 
+> removeGeneric("f")
+[1] TRUE
+> ## end of moved from trace.Rd
+> 
 > 
 > ## print/show dispatch  [moved from  ./reg-tests-2.R ]
 > setClass("bar", representation(a="numeric"))
@@ -364,7 +425,10 @@ from = "ANY", to = "single"
 from = "ANY", to = "ts"
 from = "ANY", to = "vector"
 from = "ANY", to = "NULL"
+from = "function", to = "PossibleMethod"
 from = "NULL", to = "OptionalFunction"
+from = "standardGeneric", to = "PossibleMethod"
+from = "MethodDefinition", to = "PossibleMethod"
 
 Function "initialize":
 .Object = "ANY"
@@ -391,6 +455,16 @@ Function "initialize":
     (inherited from .Object = "ANY")
 .Object = "LinearMethodsList"
     (inherited from .Object = "ANY")
+.Object = "test1"
+    (inherited from .Object = "ANY")
+.Object = "functionWithTrace"
+    (inherited from .Object = "traceable")
+.Object = "standardGenericWithTrace"
+    (inherited from .Object = "traceable")
+.Object = "EmptyMethodsList"
+    (inherited from .Object = "ANY")
+.Object = "MethodDefinitionWithTrace"
+    (inherited from .Object = "traceable")
 .Object = "numeric"
     (inherited from .Object = "ANY")
 .Object = "bar"
@@ -404,6 +478,8 @@ Function "loadMethod":
 method = "ANY"
 method = "MethodDefinition"
 method = "MethodWithNext"
+method = "MethodDefinitionWithTrace"
+    (inherited from method = "MethodDefinition")
 
 Function "rbind2":
 x = "ANY", y = "ANY"

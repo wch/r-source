@@ -739,61 +739,6 @@ stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#	 X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#	 D = U' X V
 ## end of moved from svd.Rd
 
-hasMethods <- .isMethodsDispatchOn() ## (for setting back)
-## was at end, as package `methods' once had persistent side effects
-stopifnot(require(methods))
-stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
-
-## trace (requiring methods):
-f <- function(x, y) { c(x,y)}
-xy <- 0
-
-trace(f, quote(x <- c(1, x)), exit = quote(xy <<- x), print = FALSE)
-
-fxy <- f(2,3)
-
-stopifnot(identical(fxy, c(1,2,3)))
-stopifnot(identical(xy, c(1,2)))
-
-untrace(f)
-
-## a generic and its methods
-
-setGeneric("f")
-
-setMethod("f", c("character", "character"), function(x,	 y) paste(x,y))
-
-## trace the generic
-trace("f", quote(x <- c("A", x)), exit = quote(xy <<- c(x, "Z")), print = FALSE)
-
-## should work for any method
-
-stopifnot(identical(f(4,5), c("A",4,5)))
-stopifnot(identical(xy, c("A", 4, "Z")))
-
-stopifnot(identical(f("B", "C"), paste(c("A","B"), "C")))
-stopifnot(identical(xy, c("A", "B", "Z")))
-
-## trace a method
-
-trace("f", sig = c("character", "character"), quote(x <- c(x, "D")),
-      exit = quote(xy <<- xyy <<- c(x, "W")), print = FALSE)
-
-stopifnot(identical(f("B", "C"), paste(c("A","B","D"), "C")))
-# These two got broken by Luke's lexical scoping fix
-#stopifnot(identical(xy, c("A", "B", "D", "W")))
-#stopifnot(identical(xy, xyy))
-
-## but the default method is unchanged
-
-stopifnot(identical(f(4,5), c("A",4,5)))
-stopifnot(identical(xy, c("A", 4, "Z")))
-
-removeGeneric("f")
-
-if(!hasMethods) detach("package:methods")
-## end of moved from trace.Rd
-
 
 ## Trig
 ## many of these tested for machine accuracy, which seems a bit extreme
@@ -2754,13 +2699,6 @@ ir <- regexpr("en", txt, fixed = TRUE)
 stopifnot(ir == c(1, 3, -1),
           identical(ir, regexpr("en", txt)))
 ## (*, fixed=TRUE) gave 0 2 -1 before R 1.8.1
-
-
-##-- S4 classes with S3 slots:
-setClass("test1", representation(date="POSIXct"))
-(x <- new("test1", date=as.POSIXct("2003-10-09")))
-stopifnot(format(x @ date) == "2003-10-09")
-## line 2 failed in 1.8.0 because of an extraneous space in "%in%"
 
 
 ## PR#5017: filter(init=) had the wrong time order
