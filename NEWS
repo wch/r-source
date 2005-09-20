@@ -325,7 +325,7 @@ NEW FEATURES
 	than 5000 years away from 1970-01-01 (by making dubious
 	assumptions about the calendar in use).
 
-    o	sprintf now supports asterisk `*' width or precision
+    o	sprintf() now supports asterisk `*' width or precision
 	specification (but not both) as well as `*1$' to `*99$'. Also the
 	handling of `%' as conversion specification terminator is now
 	left to the system and doesn't affect following specifications.
@@ -411,6 +411,13 @@ INSTALLATION
 	not contain the patch level (i.e. it is now 2.2 instead of 2.2.0).
 	Also it can be overridden at configure time by setting FW_VERSION
 	to the desired name.
+
+    o	Rmath stand-alone library is now correctly installed inside
+	the R.framework on OS X if R was configured as a framework. In
+	addition, make install-Rmath-framework will install a
+    	stand-alone Rmath framework in /Library/Frameworks (unless
+    	overridden by RMATH_FRAMEWORK_DIR specifying full framework
+    	path and name including the .framework extension).
 
 
 PACKAGE INSTALLATION CHANGES
