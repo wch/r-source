@@ -10,6 +10,9 @@
 
 
 USER-VISIBLE CHANGES
+    o   there is a new function gregexpr which generalizes regexpr
+        to search for all matches in each of the input strings
+        (not just the first match)
 
     o	plot(<lm object>) uses a new default 'which = 5'
     	for the fourth panel when 'which' is not specified.
