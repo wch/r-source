@@ -10,7 +10,6 @@
 \alias{.untracedFunction}
 \alias{.makeTracedFunction}
 \alias{.doTracePrint}
-\alias{.doTrace}
 \alias{.InitTraceFunctions}
 \title{Classes Used Internally to Control Tracing }
 \description{ The classes described  here are used by the R function
