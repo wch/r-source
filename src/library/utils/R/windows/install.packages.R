@@ -171,7 +171,7 @@
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
             stop(gettextf("unable to create temporary directory '%s'",
-                          normalzePath(tmpd)),
+                          normalizePath(tmpd)),
                  domain = NA)
     }
 
