@@ -149,7 +149,7 @@ case "${gui}" in
 gnome|GNOME)
   R_binary="${R_HOME}/bin/exec/Rgnome"
   ;;
-tk)
+Tk|tk|X11|x11)
   ;;
 "")
   ;;
