@@ -12,8 +12,8 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 SOURCES_C = Lapack.c @USE_VECLIB_G95FIX_TRUE@ vecLibg95c.c
-SOURCES_F = @USE_EXTERNAL_LAPACK_FALSE@ rgeev.f rsyev.f
-@USE_VECLIB_G95FIX_TRUE@SOURCES_F = vecLibg95f.f
+SOURCES_F_R = @USE_EXTERNAL_LAPACK_FALSE@ rgeev.f rsyev.f
+SOURCES_F = $(SOURCES_F_R) @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.f
 
 DEPENDS = $(SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F) @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS)
@@ -28,7 +28,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.win \
 	Rlapackrc.rc dllversion.rc \
-	$(HEADERS) $(SOURCES_C) \
+	$(HEADERS) Lapack.c \
 	vecLibg95c.c vecLibg95f.f \
 	cmplx.f cmplxblas.f \
 	dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
