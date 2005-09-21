@@ -334,6 +334,11 @@ NEW FEATURES
     o	methods() now warns if it appears to have been called on a
 	non-generic function.
 
+    o	source() closes its input file after parsing it rather than
+	after executing the commands, as used to happen prior to
+	2.1.0.  (This is probably only significant on Windows where
+	the file is locked for a much shorter time.)
+
 
 DEPRECATED & DEFUNCT
 
@@ -666,7 +671,7 @@ BUG FIXES
     o	ls.diag() now works for fits with missing data. (PR#8139)
 
     o	window.default() had an incorrect tolerance and so sometimes
-	created too short a series if start or end were zero.
+	created too short a series if 'start' or 'end' were zero.
 
 
 
