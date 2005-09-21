@@ -331,6 +331,9 @@ NEW FEATURES
         to search for all matches in each of the input strings (not
         just the first match).
 
+    o	methods() now warns if it appears to have been called on a
+	non-generic function.
+
 
 DEPRECATED & DEFUNCT
 

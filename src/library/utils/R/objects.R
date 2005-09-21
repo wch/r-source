@@ -67,8 +67,15 @@ methods <- function (generic.function, class)
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
+        else if(!exists(generic.function, mode = "function",
+                        envir = parent.frame()))
+            stop(gettextf("no function '%s' is visible", generic.function),
+                 domain = NA)
         if(!any(generic.function == knownGenerics)) {
             truegf <- findGeneric(generic.function, parent.frame())
+            if(truegf == "")
+                warning(gettextf("function '%s' appears not to be generic",
+                                 generic.function), domain = NA)
             if(nchar(truegf) && truegf != generic.function) {
                 warning(gettextf("generic function '%s' dispatches methods for generic '%s'",
                         generic.function, truegf), domain = NA)
