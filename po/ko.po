@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:34+0100\n"
+"POT-Creation-Date: 2005-09-21 14:09+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -92,7 +92,7 @@ msgstr "R_unlink의 'names'이 부적절합니다"
 #: src/gnuwin32/extra.c:639 src/gnuwin32/extra.c:790 src/gnuwin32/extra.c:874
 #: src/gnuwin32/extra.c:877 src/gnuwin32/extra.c:882 src/main/builtin.c:88
 #: src/main/builtin.c:315 src/main/builtin.c:327 src/main/character.c:129
-#: src/main/character.c:2170 src/main/character.c:2174
+#: src/main/character.c:2421 src/main/character.c:2425
 #: src/main/connections.c:764 src/main/connections.c:770
 #: src/main/connections.c:773 src/main/connections.c:777
 #: src/main/connections.c:900 src/main/connections.c:906
@@ -1201,7 +1201,7 @@ msgid "non-character argument in strsplit()"
 msgstr "strsplit 함수의 인수가 문자열이 아닙니다"
 
 #: src/main/character.c:374 src/main/pcre.c:112 src/main/pcre.c:312
-#: src/main/pcre.c:486
+#: src/main/pcre.c:486 src/main/pcre.c:585
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "per=TRUE 는 UTF-8 locales에 대해서만 실제 적용되어 있습니다"
 
@@ -1226,25 +1226,27 @@ msgstr "이름은 문자열이 아닙니다"
 msgid "invalid value of 'allow_'"
 msgstr "'allow_'의 값이 부적절합니다"
 
-#: src/main/character.c:804 src/main/character.c:1337
+#: src/main/character.c:804 src/main/character.c:1588
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "%d는 부적절한 복수 바이트 문자입니다"
 
-#: src/main/character.c:885 src/main/character.c:1225 src/main/pcre.c:114
-#: src/main/pcre.c:491
+#: src/main/character.c:885 src/main/character.c:1225
+#: src/main/character.c:1511 src/main/pcre.c:114 src/main/pcre.c:491
+#: src/main/pcre.c:590
 msgid "regular expression is invalid in this locale"
 msgstr "이 licale에서는 정규 표현은 무효입니다"
 
 #: src/main/character.c:907 src/main/character.c:1066
-#: src/main/character.c:1228 src/main/pcre.c:121 src/main/pcre.c:333
-#: src/main/pcre.c:496
+#: src/main/character.c:1228 src/main/character.c:1514 src/main/pcre.c:121
+#: src/main/pcre.c:333 src/main/pcre.c:496 src/main/pcre.c:595
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "'%s'의 정규 표현이 부적절합니다"
 
-#: src/main/character.c:917 src/main/character.c:1243 src/main/pcre.c:136
-#: src/main/pcre.c:366 src/main/pcre.c:511
+#: src/main/character.c:917 src/main/character.c:1243
+#: src/main/character.c:1531 src/main/pcre.c:136 src/main/pcre.c:366
+#: src/main/pcre.c:511 src/main/pcre.c:618
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "입력 문자열%d는 locale에서 부적절합니다"
@@ -1266,60 +1268,60 @@ msgstr "'replacement'는 현재의 locale에서 부적절합니다"
 msgid "zero-length pattern"
 msgstr "zero-length의 패턴"
 
-#: src/main/character.c:1312
+#: src/main/character.c:1563
 msgid "non-character argument to tolower()"
 msgstr "tolower()함수의 인수가 문자열이 아닙니다"
 
-#: src/main/character.c:1387
+#: src/main/character.c:1638
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "범위 지정을 축소합니다('%lc-%lc')"
 
-#: src/main/character.c:1473
+#: src/main/character.c:1724
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "범위 지정을 축소합니다('%c-%c')"
 
-#: src/main/character.c:1551
+#: src/main/character.c:1802
 msgid "invalid (NA) arguments."
 msgstr "인수가 부적절한(NA)입니다."
 
-#: src/main/character.c:1573
+#: src/main/character.c:1824
 msgid "invalid multibyte string 'old'"
 msgstr "'old'는 부적절한 복수바이트 문자입니다"
 
-#: src/main/character.c:1580
+#: src/main/character.c:1831
 msgid "invalid multibyte string 'new'"
 msgstr "'new'는 부적절한 복수바이트 문자입니다"
 
-#: src/main/character.c:1599 src/main/character.c:1661
+#: src/main/character.c:1850 src/main/character.c:1912
 msgid "'old' is longer than 'new'"
 msgstr "'old'가 'new'보다 깁니다"
 
-#: src/main/character.c:1617
+#: src/main/character.c:1868
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "부적절한 복수바이트 문자열 입력%d입니다"
 
-#: src/main/character.c:1760
+#: src/main/character.c:2011
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "부적절한 UTF-8 locale에 있어서 agrep()함수의 사용은 ASCII 문자열 이외에는 적"
 "용되지 않습니다"
 
-#: src/main/character.c:1769
+#: src/main/character.c:2020
 msgid "could not allocate memory for approximate matching"
 msgstr "근사 matching을 위한 메모리를 할당할수 없습니다"
 
-#: src/main/character.c:1793
+#: src/main/character.c:2044
 msgid "could not perform case insensitive matching"
 msgstr "대소문자를 무시한 matching를 실행할수 없습니다"
 
-#: src/main/character.c:1836 src/main/character.c:2071
+#: src/main/character.c:2087 src/main/character.c:2322
 msgid "argument must be a character vector of length 1"
 msgstr "인수는 길이 1의 문자 벡터이어야만 합니다"
 
-#: src/main/character.c:1838 src/main/character.c:2073
+#: src/main/character.c:2089 src/main/character.c:2324
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1327,46 +1329,46 @@ msgstr ""
 "인수는 길이 1의 문자 벡터이어야만 합니다\\n\n"
 "최초의 요소 이외는 무시됩니다"
 
-#: src/main/character.c:1854 src/main/character.c:1886
-#: src/main/character.c:1907
+#: src/main/character.c:2105 src/main/character.c:2137
+#: src/main/character.c:2158
 msgid "argument 'x' must be a raw vector"
 msgstr "인수 'x'는 raw 벡터이어야만 합니다"
 
-#: src/main/character.c:1857 src/main/character.c:2123
+#: src/main/character.c:2108 src/main/character.c:2374
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "인수 'multiple'는 TRUE 또는 FALSE 이어야만 합니다"
 
-#: src/main/character.c:1888
+#: src/main/character.c:2139
 msgid "argument 'shift' must be a small integer"
 msgstr "인수 'shift'는 작은 정수 벡터이어야만 합니다"
 
-#: src/main/character.c:1925
+#: src/main/character.c:2176
 msgid "argument 'x' must be a integer vector"
 msgstr "인수 'x'는 정수 벡터이어야만 합니다"
 
-#: src/main/character.c:1945
+#: src/main/character.c:2196
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "인수 'x'는 raw, 정수, 논리값이어야만 합니다"
 
-#: src/main/character.c:1947
+#: src/main/character.c:2198
 msgid "argument 'type' must be a character string"
 msgstr "인수 'type'는 문자열이어야만 합니다"
 
-#: src/main/character.c:1951
+#: src/main/character.c:2202
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "인수 'x'는 길이 %d의 정수배이어야만 합니다"
 
-#: src/main/character.c:1965 src/main/character.c:1980
+#: src/main/character.c:2216 src/main/character.c:2231
 msgid "argument 'x' must not contain NAs"
 msgstr "인수 'x'는 NA를 포함해서는 안됩니다"
 
-#: src/main/character.c:2120
+#: src/main/character.c:2371
 #, fuzzy
 msgid "argument 'x' must be an integer vector"
 msgstr "인수 'x'는 정수 벡터이어야만 합니다"
 
-#: src/main/character.c:2165
+#: src/main/character.c:2416
 msgid "strtrim() requires a character vector"
 msgstr "strtrim 함수는 문자 벡터를 요구합니다"
 
@@ -2205,7 +2207,7 @@ msgstr "C 함수 'R_AllocStringBuffer'중의 메모리를 할당할수가 없었
 #: src/main/plot.c:2054 src/main/plot.c:2144 src/main/plot.c:2433
 #: src/main/plot.c:2618 src/main/plot.c:2861 src/main/plot.c:3501
 #: src/main/plot.c:3577 src/main/plot.c:3830 src/main/plot3d.c:1381
-#: src/main/sprintf.c:117
+#: src/main/sprintf.c:138 src/main/sprintf.c:163
 msgid "too few arguments"
 msgstr "인수가 충분하지 않습니다"
 
@@ -3846,31 +3848,31 @@ msgstr ""
 msgid "term names will be truncated"
 msgstr "항의 이름은 잘라질것입니다"
 
-#: src/main/names.c:919
+#: src/main/names.c:921
 msgid "string argument required"
 msgstr "문자열 인수가 요구되어져 있습니다"
 
-#: src/main/names.c:927
+#: src/main/names.c:929
 msgid "no such primitive function"
 msgstr "그러한 원시적 함수는 없습니다"
 
-#: src/main/names.c:1040
+#: src/main/names.c:1042
 msgid "attempt to use zero-length variable name"
 msgstr "길이 0의 변수명을 사용했습니다"
 
-#: src/main/names.c:1042
+#: src/main/names.c:1044
 msgid "symbol print-name too long"
 msgstr "심벌의 표시명이 너무 깁니다"
 
-#: src/main/names.c:1068
+#: src/main/names.c:1070
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 인수가 부적절합니다"
 
-#: src/main/names.c:1071
+#: src/main/names.c:1073
 msgid "invalid internal function"
 msgstr "내부 함수가 부적절합니다"
 
-#: src/main/names.c:1073
+#: src/main/names.c:1075
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "내부 함수 \"%s \" 가 없습니다"
@@ -5757,44 +5759,53 @@ msgstr "'fmt'의 길이가 버퍼의 최대 %d 길이를 초과하였습니다"
 msgid "unrecognised format at end of string"
 msgstr "문자열의 마지막을 인식할수 없는 서식입니다"
 
-#: src/main/sprintf.c:103 src/main/sprintf.c:110
+#: src/main/sprintf.c:103 src/main/sprintf.c:110 src/main/sprintf.c:124
+#: src/main/sprintf.c:131
 #, c-format
 msgid "reference to non-existent argument %d"
 msgstr "존재하지 않는 인수%d를 참조 했습니다"
 
-#: src/main/sprintf.c:158
+#: src/main/sprintf.c:143
+msgid "at most one asterisk `*' is supported in each conversion specification"
+msgstr ""
+
+#: src/main/sprintf.c:150
+msgid "argument for `*' conversion specification must be a number"
+msgstr ""
+
+#: src/main/sprintf.c:204
 msgid "coercion has changed vector length to 0"
 msgstr "변환에 의해 벡터 길이가 0가 되었습니다"
 
-#: src/main/sprintf.c:166
+#: src/main/sprintf.c:212
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr "논리 오브젝트에는 %d 또는 %i 서식을 사용해 주십시오"
 
-#: src/main/sprintf.c:179
+#: src/main/sprintf.c:232
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr "정수 오브젝트에는  %d, %i, %x또는 %X 서식을 사용해 주십시오"
 
-#: src/main/sprintf.c:192
+#: src/main/sprintf.c:252
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr "수치 오브젝트에는 %f, %e또는 %g서식을 사용해 주십시오"
 
-#: src/main/sprintf.c:226
+#: src/main/sprintf.c:317
 #, c-format
 msgid "use format %s for character objects"
 msgstr "문자 오브젝트에는 %s서식을 사용해 주십시오"
 
-#: src/main/sprintf.c:229
+#: src/main/sprintf.c:320
 msgid "Likely truncation of character string"
 msgstr "문자열은 절단할수있는 가능성이 있습니다"
 
-#: src/main/sprintf.c:235
+#: src/main/sprintf.c:331
 msgid "unsupported type"
 msgstr "서포트되어 있지 않은 유형입니다"
 
-#: src/main/sprintf.c:251
+#: src/main/sprintf.c:349
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr "문자의 길이가 버퍼 사이즈 %d를 초과했습니다"

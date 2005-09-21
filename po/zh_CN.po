@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:34+0100\n"
+"POT-Creation-Date: 2005-09-21 14:09+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -90,7 +90,7 @@ msgstr "R_unlink的'names'不对"
 #: src/gnuwin32/extra.c:639 src/gnuwin32/extra.c:790 src/gnuwin32/extra.c:874
 #: src/gnuwin32/extra.c:877 src/gnuwin32/extra.c:882 src/main/builtin.c:88
 #: src/main/builtin.c:315 src/main/builtin.c:327 src/main/character.c:129
-#: src/main/character.c:2170 src/main/character.c:2174
+#: src/main/character.c:2421 src/main/character.c:2425
 #: src/main/connections.c:764 src/main/connections.c:770
 #: src/main/connections.c:773 src/main/connections.c:777
 #: src/main/connections.c:900 src/main/connections.c:906
@@ -1186,7 +1186,7 @@ msgid "non-character argument in strsplit()"
 msgstr "strsplit()不能用于非字符变元"
 
 #: src/main/character.c:374 src/main/pcre.c:112 src/main/pcre.c:312
-#: src/main/pcre.c:486
+#: src/main/pcre.c:486 src/main/pcre.c:585
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "perl = TRUE只适用于UTF-8语言环境"
 
@@ -1211,25 +1211,27 @@ msgstr "不能有非字符名字"
 msgid "invalid value of 'allow_'"
 msgstr "'allow_'值不对"
 
-#: src/main/character.c:804 src/main/character.c:1337
+#: src/main/character.c:804 src/main/character.c:1588
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "多字节字符串%d有错"
 
-#: src/main/character.c:885 src/main/character.c:1225 src/main/pcre.c:114
-#: src/main/pcre.c:491
+#: src/main/character.c:885 src/main/character.c:1225
+#: src/main/character.c:1511 src/main/pcre.c:114 src/main/pcre.c:491
+#: src/main/pcre.c:590
 msgid "regular expression is invalid in this locale"
 msgstr "正规表现不适用于此语言环境"
 
 #: src/main/character.c:907 src/main/character.c:1066
-#: src/main/character.c:1228 src/main/pcre.c:121 src/main/pcre.c:333
-#: src/main/pcre.c:496
+#: src/main/character.c:1228 src/main/character.c:1514 src/main/pcre.c:121
+#: src/main/pcre.c:333 src/main/pcre.c:496 src/main/pcre.c:595
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "正规表现’%s'不对"
 
-#: src/main/character.c:917 src/main/character.c:1243 src/main/pcre.c:136
-#: src/main/pcre.c:366 src/main/pcre.c:511
+#: src/main/character.c:917 src/main/character.c:1243
+#: src/main/character.c:1531 src/main/pcre.c:136 src/main/pcre.c:366
+#: src/main/pcre.c:511 src/main/pcre.c:618
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "输入的字符串%d不适用于此语言环境"
@@ -1251,103 +1253,103 @@ msgstr "'replacement'的值在本语言环境下不对"
 msgid "zero-length pattern"
 msgstr "式样长度为0"
 
-#: src/main/character.c:1312
+#: src/main/character.c:1563
 msgid "non-character argument to tolower()"
 msgstr "非字符变元不能用于tolower()"
 
-#: src/main/character.c:1387
+#: src/main/character.c:1638
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "范围设定是不能递减的('%lc-%lc')"
 
-#: src/main/character.c:1473
+#: src/main/character.c:1724
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "范围设定是不能递减的('%c-%c')"
 
-#: src/main/character.c:1551
+#: src/main/character.c:1802
 msgid "invalid (NA) arguments."
 msgstr "(NA)变元不对."
 
-#: src/main/character.c:1573
+#: src/main/character.c:1824
 msgid "invalid multibyte string 'old'"
 msgstr "多字节字符串'old'有错"
 
-#: src/main/character.c:1580
+#: src/main/character.c:1831
 msgid "invalid multibyte string 'new'"
 msgstr "多字节字符串'new'有错"
 
-#: src/main/character.c:1599 src/main/character.c:1661
+#: src/main/character.c:1850 src/main/character.c:1912
 msgid "'old' is longer than 'new'"
 msgstr "'old'比'new'要长"
 
-#: src/main/character.c:1617
+#: src/main/character.c:1868
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "输入的多字节字符串%d有错"
 
-#: src/main/character.c:1760
+#: src/main/character.c:2011
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr "在UTF-8语言环境下agrep()只能对ASCII字符串适用"
 
-#: src/main/character.c:1769
+#: src/main/character.c:2020
 msgid "could not allocate memory for approximate matching"
 msgstr "做近似比较时无法分配足够内存"
 
-#: src/main/character.c:1793
+#: src/main/character.c:2044
 msgid "could not perform case insensitive matching"
 msgstr "无法进行不区分字体大小写的比较"
 
-#: src/main/character.c:1836 src/main/character.c:2071
+#: src/main/character.c:2087 src/main/character.c:2322
 msgid "argument must be a character vector of length 1"
 msgstr "变元必需是长度为1的字符向量"
 
-#: src/main/character.c:1838 src/main/character.c:2073
+#: src/main/character.c:2089 src/main/character.c:2324
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
 msgstr "变元应当是长度为1的字节向量，除第一个单元外其他所有的单元都略过不用"
 
-#: src/main/character.c:1854 src/main/character.c:1886
-#: src/main/character.c:1907
+#: src/main/character.c:2105 src/main/character.c:2137
+#: src/main/character.c:2158
 msgid "argument 'x' must be a raw vector"
 msgstr "变元'x'必需是原始向量"
 
-#: src/main/character.c:1857 src/main/character.c:2123
+#: src/main/character.c:2108 src/main/character.c:2374
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "变元'multiple'的值要么是TRUE要么是FALSE"
 
-#: src/main/character.c:1888
+#: src/main/character.c:2139
 msgid "argument 'shift' must be a small integer"
 msgstr "变元'shift'必需数值不是太大的整数"
 
-#: src/main/character.c:1925
+#: src/main/character.c:2176
 msgid "argument 'x' must be a integer vector"
 msgstr "变元'x'必需是整数向量"
 
-#: src/main/character.c:1945
+#: src/main/character.c:2196
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "变元'x'必需是原始值, 整数值或逻辑值"
 
-#: src/main/character.c:1947
+#: src/main/character.c:2198
 msgid "argument 'type' must be a character string"
 msgstr "变元’type’必需是字符串"
 
-#: src/main/character.c:1951
+#: src/main/character.c:2202
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "变元'x'必需是%d值的整倍数"
 
-#: src/main/character.c:1965 src/main/character.c:1980
+#: src/main/character.c:2216 src/main/character.c:2231
 msgid "argument 'x' must not contain NAs"
 msgstr "变元'x'不能含NA值"
 
-#: src/main/character.c:2120
+#: src/main/character.c:2371
 #, fuzzy
 msgid "argument 'x' must be an integer vector"
 msgstr "变元'x'必需是整数向量"
 
-#: src/main/character.c:2165
+#: src/main/character.c:2416
 msgid "strtrim() requires a character vector"
 msgstr "strtrim()需要字符向量"
 
@@ -2177,7 +2179,7 @@ msgstr "无法为read.dcf分配内存"
 #: src/main/plot.c:2054 src/main/plot.c:2144 src/main/plot.c:2433
 #: src/main/plot.c:2618 src/main/plot.c:2861 src/main/plot.c:3501
 #: src/main/plot.c:3577 src/main/plot.c:3830 src/main/plot3d.c:1381
-#: src/main/sprintf.c:117
+#: src/main/sprintf.c:138 src/main/sprintf.c:163
 msgid "too few arguments"
 msgstr "变元数目太少"
 
@@ -3798,31 +3800,31 @@ msgstr "模型矩阵的%d项有问题: 没有指定的列"
 msgid "term names will be truncated"
 msgstr "项名字太长，被缩短了"
 
-#: src/main/names.c:919
+#: src/main/names.c:921
 msgid "string argument required"
 msgstr "需要字符串变元"
 
-#: src/main/names.c:927
+#: src/main/names.c:929
 msgid "no such primitive function"
 msgstr "没有这一原始函数"
 
-#: src/main/names.c:1040
+#: src/main/names.c:1042
 msgid "attempt to use zero-length variable name"
 msgstr "不能用0长度变数名"
 
-#: src/main/names.c:1042
+#: src/main/names.c:1044
 msgid "symbol print-name too long"
 msgstr "符号print-name太长了"
 
-#: src/main/names.c:1068
+#: src/main/names.c:1070
 msgid "invalid .Internal() argument"
 msgstr ".Internal()变元不对"
 
-#: src/main/names.c:1071
+#: src/main/names.c:1073
 msgid "invalid internal function"
 msgstr "内部函数不对"
 
-#: src/main/names.c:1073
+#: src/main/names.c:1075
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "没有\"%s\"这个内部函数"
@@ -5684,44 +5686,53 @@ msgstr "'fmt'长度超过了缓冲区长度的最大值%d"
 msgid "unrecognised format at end of string"
 msgstr "没有这种在字符串尾的格式"
 
-#: src/main/sprintf.c:103 src/main/sprintf.c:110
+#: src/main/sprintf.c:103 src/main/sprintf.c:110 src/main/sprintf.c:124
+#: src/main/sprintf.c:131
 #, c-format
 msgid "reference to non-existent argument %d"
 msgstr "引用不存在的变元%d"
 
-#: src/main/sprintf.c:158
+#: src/main/sprintf.c:143
+msgid "at most one asterisk `*' is supported in each conversion specification"
+msgstr ""
+
+#: src/main/sprintf.c:150
+msgid "argument for `*' conversion specification must be a number"
+msgstr ""
+
+#: src/main/sprintf.c:204
 msgid "coercion has changed vector length to 0"
 msgstr ""
 
-#: src/main/sprintf.c:166
+#: src/main/sprintf.c:212
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr "逻辑目标对象应用格式%d或%i"
 
-#: src/main/sprintf.c:179
+#: src/main/sprintf.c:232
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr "整数目标对象应用格式%d，%i，%x或%X"
 
-#: src/main/sprintf.c:192
+#: src/main/sprintf.c:252
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr "数值目标对象应用格式%f,%e或%g"
 
-#: src/main/sprintf.c:226
+#: src/main/sprintf.c:317
 #, c-format
 msgid "use format %s for character objects"
 msgstr "字符目标对象应用格式%s"
 
-#: src/main/sprintf.c:229
+#: src/main/sprintf.c:320
 msgid "Likely truncation of character string"
 msgstr "字符串很可能被缩短"
 
-#: src/main/sprintf.c:235
+#: src/main/sprintf.c:331
 msgid "unsupported type"
 msgstr "不支持这一种类"
 
-#: src/main/sprintf.c:251
+#: src/main/sprintf.c:349
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr "字符串长度超过了缓冲区的大小%d"

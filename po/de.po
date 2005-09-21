@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:34+0100\n"
+"POT-Creation-Date: 2005-09-21 14:09+0100\n"
 "PO-Revision-Date: 2005-07-20 15:00+0200\n"
 "Last-Translator: Detlef Steuer <Detlef Steuer@gmx.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -90,7 +90,7 @@ msgstr "ungültige 'names' in R_unlink"
 #: src/gnuwin32/extra.c:639 src/gnuwin32/extra.c:790 src/gnuwin32/extra.c:874
 #: src/gnuwin32/extra.c:877 src/gnuwin32/extra.c:882 src/main/builtin.c:88
 #: src/main/builtin.c:315 src/main/builtin.c:327 src/main/character.c:129
-#: src/main/character.c:2170 src/main/character.c:2174
+#: src/main/character.c:2421 src/main/character.c:2425
 #: src/main/connections.c:764 src/main/connections.c:770
 #: src/main/connections.c:773 src/main/connections.c:777
 #: src/main/connections.c:900 src/main/connections.c:906
@@ -1198,7 +1198,7 @@ msgid "non-character argument in strsplit()"
 msgstr "Nicht-Charakter Argument in strsplit()"
 
 #: src/main/character.c:374 src/main/pcre.c:112 src/main/pcre.c:312
-#: src/main/pcre.c:486
+#: src/main/pcre.c:486 src/main/pcre.c:585
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "perl = TRUE ist nur für UTF-8 locales vollständig implementiert"
 
@@ -1223,25 +1223,27 @@ msgstr "Nicht-Charakter Namen"
 msgid "invalid value of 'allow_'"
 msgstr "ungültiger Wert von 'allow_'"
 
-#: src/main/character.c:804 src/main/character.c:1337
+#: src/main/character.c:804 src/main/character.c:1588
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "ungültige multibyte Zeichenkette %d"
 
-#: src/main/character.c:885 src/main/character.c:1225 src/main/pcre.c:114
-#: src/main/pcre.c:491
+#: src/main/character.c:885 src/main/character.c:1225
+#: src/main/character.c:1511 src/main/pcre.c:114 src/main/pcre.c:491
+#: src/main/pcre.c:590
 msgid "regular expression is invalid in this locale"
 msgstr "regular expression ist in dieser Lokalisierung ungültig"
 
 #: src/main/character.c:907 src/main/character.c:1066
-#: src/main/character.c:1228 src/main/pcre.c:121 src/main/pcre.c:333
-#: src/main/pcre.c:496
+#: src/main/character.c:1228 src/main/character.c:1514 src/main/pcre.c:121
+#: src/main/pcre.c:333 src/main/pcre.c:496 src/main/pcre.c:595
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "ungültige regular expression '%s'"
 
-#: src/main/character.c:917 src/main/character.c:1243 src/main/pcre.c:136
-#: src/main/pcre.c:366 src/main/pcre.c:511
+#: src/main/character.c:917 src/main/character.c:1243
+#: src/main/character.c:1531 src/main/pcre.c:136 src/main/pcre.c:366
+#: src/main/pcre.c:511 src/main/pcre.c:618
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "Eingabezeichenkette %d ungültig in dieser locale"
@@ -1263,60 +1265,60 @@ msgstr "'replacement' ist ungültig in dieser locale"
 msgid "zero-length pattern"
 msgstr "Muster mit Länge 0"
 
-#: src/main/character.c:1312
+#: src/main/character.c:1563
 msgid "non-character argument to tolower()"
 msgstr "Nicht-Charakter Argument für tolower()"
 
-#: src/main/character.c:1387
+#: src/main/character.c:1638
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "abnehmende Bereichsspezifikation ('%lc-%lc')"
 
-#: src/main/character.c:1473
+#: src/main/character.c:1724
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "abnehmende Bereichsspezifikation ('%c-%c')"
 
-#: src/main/character.c:1551
+#: src/main/character.c:1802
 msgid "invalid (NA) arguments."
 msgstr "ungültige (NA) Argumente."
 
-#: src/main/character.c:1573
+#: src/main/character.c:1824
 msgid "invalid multibyte string 'old'"
 msgstr "ungültige multibyte Zeichenkette 'old'"
 
-#: src/main/character.c:1580
+#: src/main/character.c:1831
 msgid "invalid multibyte string 'new'"
 msgstr "ungültige multibyte Zeichenkette 'new'"
 
-#: src/main/character.c:1599 src/main/character.c:1661
+#: src/main/character.c:1850 src/main/character.c:1912
 msgid "'old' is longer than 'new'"
 msgstr "'old' ist länger als 'new'"
 
-#: src/main/character.c:1617
+#: src/main/character.c:1868
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "ungültige multibyte Eingabezeichenkette %d"
 
-#: src/main/character.c:1760
+#: src/main/character.c:2011
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "Benutzung von agrep() in einer UTF-8 Lokalisierung arbeitet wahrscheinlich "
 "nur für ASCII Zeichenketten"
 
-#: src/main/character.c:1769
+#: src/main/character.c:2020
 msgid "could not allocate memory for approximate matching"
 msgstr "konnte keinen Speicher für approximate matching zuteilen"
 
-#: src/main/character.c:1793
+#: src/main/character.c:2044
 msgid "could not perform case insensitive matching"
 msgstr "konnte case insensitive matching nicht durchführen"
 
-#: src/main/character.c:1836 src/main/character.c:2071
+#: src/main/character.c:2087 src/main/character.c:2322
 msgid "argument must be a character vector of length 1"
 msgstr "Argument muss ein Charakter-Vektor der Länge 1 sein"
 
-#: src/main/character.c:1838 src/main/character.c:2073
+#: src/main/character.c:2089 src/main/character.c:2324
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1324,45 +1326,45 @@ msgstr ""
 "Argument sollte ein Charakter-Vektor der Länge 1 sein\n"
 "alle Argumente bis auf das erste werden ignoriert"
 
-#: src/main/character.c:1854 src/main/character.c:1886
-#: src/main/character.c:1907
+#: src/main/character.c:2105 src/main/character.c:2137
+#: src/main/character.c:2158
 msgid "argument 'x' must be a raw vector"
 msgstr "Argument 'x' muss ein raw Vektor sein"
 
-#: src/main/character.c:1857 src/main/character.c:2123
+#: src/main/character.c:2108 src/main/character.c:2374
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "Argument 'multiple' muss TRUE oder FALSE sein"
 
-#: src/main/character.c:1888
+#: src/main/character.c:2139
 msgid "argument 'shift' must be a small integer"
 msgstr "Argument 'shift' muss eine kleine ganze Zahl sein"
 
-#: src/main/character.c:1925
+#: src/main/character.c:2176
 msgid "argument 'x' must be a integer vector"
 msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
 
-#: src/main/character.c:1945
+#: src/main/character.c:2196
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "Argument 'x' muss entweder raw, ganzzahlig oder logisch sein"
 
-#: src/main/character.c:1947
+#: src/main/character.c:2198
 msgid "argument 'type' must be a character string"
 msgstr "Argument 'type' muss eine Zeichenkette sein"
 
-#: src/main/character.c:1951
+#: src/main/character.c:2202
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "Länge des Argumentes 'x' muss ein Vielfaches von %d sein"
 
-#: src/main/character.c:1965 src/main/character.c:1980
+#: src/main/character.c:2216 src/main/character.c:2231
 msgid "argument 'x' must not contain NAs"
 msgstr "Argument 'x' darf keine NAs enthalten"
 
-#: src/main/character.c:2120
+#: src/main/character.c:2371
 msgid "argument 'x' must be an integer vector"
 msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
 
-#: src/main/character.c:2165
+#: src/main/character.c:2416
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() benötigt Charakter-Vektor"
 
@@ -2204,7 +2206,7 @@ msgstr "konnte Speicher in C Funktion 'R_AllocStringBuffer' nicht zuteilen"
 #: src/main/plot.c:2054 src/main/plot.c:2144 src/main/plot.c:2433
 #: src/main/plot.c:2618 src/main/plot.c:2861 src/main/plot.c:3501
 #: src/main/plot.c:3577 src/main/plot.c:3830 src/main/plot3d.c:1381
-#: src/main/sprintf.c:117
+#: src/main/sprintf.c:138 src/main/sprintf.c:163
 msgid "too few arguments"
 msgstr "zu wenig Argumente"
 
@@ -3829,31 +3831,31 @@ msgstr "Problem mit dem Term %d in model.matrix: keine Spalten zugewiesen"
 msgid "term names will be truncated"
 msgstr "Term-Namen werden abgeschnitten"
 
-#: src/main/names.c:919
+#: src/main/names.c:921
 msgid "string argument required"
 msgstr "Zeichenkettenargument benötigt"
 
-#: src/main/names.c:927
+#: src/main/names.c:929
 msgid "no such primitive function"
 msgstr "keine solche primitive Funktion"
 
-#: src/main/names.c:1040
+#: src/main/names.c:1042
 msgid "attempt to use zero-length variable name"
 msgstr "Versuch einen Variablennamen der Länge 0 zu nutzen"
 
-#: src/main/names.c:1042
+#: src/main/names.c:1044
 msgid "symbol print-name too long"
 msgstr "Print-Name eines Symbols zu lang"
 
-#: src/main/names.c:1068
+#: src/main/names.c:1070
 msgid "invalid .Internal() argument"
 msgstr "ungültiges Argument für .Internal()"
 
-#: src/main/names.c:1071
+#: src/main/names.c:1073
 msgid "invalid internal function"
 msgstr "ungültige interne Funktion"
 
-#: src/main/names.c:1073
+#: src/main/names.c:1075
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "keine interne Funktion \"%s\""
@@ -5749,44 +5751,53 @@ msgstr "'fmt' Länge überschreitet maximale Zwischenspeicherlänge %d"
 msgid "unrecognised format at end of string"
 msgstr "Format am Zeichenkettenende nicht erkannt"
 
-#: src/main/sprintf.c:103 src/main/sprintf.c:110
+#: src/main/sprintf.c:103 src/main/sprintf.c:110 src/main/sprintf.c:124
+#: src/main/sprintf.c:131
 #, c-format
 msgid "reference to non-existent argument %d"
 msgstr "Referenz auf nicht existierendes Argument %d"
 
-#: src/main/sprintf.c:158
+#: src/main/sprintf.c:143
+msgid "at most one asterisk `*' is supported in each conversion specification"
+msgstr ""
+
+#: src/main/sprintf.c:150
+msgid "argument for `*' conversion specification must be a number"
+msgstr ""
+
+#: src/main/sprintf.c:204
 msgid "coercion has changed vector length to 0"
 msgstr "Umwandlung hat Länge des Vektors zu 0 gemacht"
 
-#: src/main/sprintf.c:166
+#: src/main/sprintf.c:212
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr "benutze Format %d oder %i für boolesche Objekte"
 
-#: src/main/sprintf.c:179
+#: src/main/sprintf.c:232
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr "benutze Format %d, %i, %x oder %X für integer Objekte"
 
-#: src/main/sprintf.c:192
+#: src/main/sprintf.c:252
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr "benutze Format %f, %e oder %g für numerische Objekte"
 
-#: src/main/sprintf.c:226
+#: src/main/sprintf.c:317
 #, c-format
 msgid "use format %s for character objects"
 msgstr "benutze Format %s für Charakter-Objekte"
 
-#: src/main/sprintf.c:229
+#: src/main/sprintf.c:320
 msgid "Likely truncation of character string"
 msgstr "Wahrscheinlich wurde Zeichenkette abgeschnitten"
 
-#: src/main/sprintf.c:235
+#: src/main/sprintf.c:331
 msgid "unsupported type"
 msgstr "nicht unterstützter Typ"
 
-#: src/main/sprintf.c:251
+#: src/main/sprintf.c:349
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr "Zeichenkettenlänge überschreitet Zwischenspeichgröße %d"

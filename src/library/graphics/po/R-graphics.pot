@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:34\n"
+"POT-Creation-Date: 2005-09-21 14:10\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,13 +68,16 @@ msgstr ""
 msgid "invalid boxplot widths"
 msgstr ""
 
-msgid "`formula' should specify exactly two variables"
+msgid "'formula' should specify exactly two variables"
 msgstr ""
 
 msgid "dependent variable should be a factor"
 msgstr ""
 
 msgid "explanatory variable should be numeric"
+msgstr ""
+
+msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr ""
 
 msgid "no 'z' matrix specified"
@@ -303,6 +306,9 @@ msgid "'figs' must specify at least one screen"
 msgstr ""
 
 msgid "a 2-way table has to be specified"
+msgstr ""
+
+msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
 msgstr ""
 
 msgid "'x' must be a matrix or a data frame"
