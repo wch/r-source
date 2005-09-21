@@ -612,10 +612,10 @@ window.default <- function(x, start = NULL, end = NULL,
 	stop("'start' cannot be after 'end'")
 
     if(!extend) {
-        if(all(abs(start - xtime) > abs(start) * ts.eps))
+        if(all(abs(start - xtime) > ts.eps/xfreq))
             start <- xtime[(xtime > start) & ((start + 1/xfreq) > xtime)]
 
-        if(all(abs(end - xtime) > abs(end) * ts.eps))
+        if(all(abs(end - xtime) > ts.eps/xfreq))
             end <- xtime[(xtime < end) & ((end - 1/xfreq) < xtime)]
 
         i <- seq(trunc((start - xtsp[1]) * xfreq + 1.5),

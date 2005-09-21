@@ -665,6 +665,9 @@ BUG FIXES
 
     o	ls.diag() now works for fits with missing data. (PR#8139)
 
+    o	window.default() had an incorrect tolerance and so sometimes
+	created too short a series if start or end were zero.
+
 
 
 
