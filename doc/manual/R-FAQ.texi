@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-09-20
+@set FAQ_DATE @value{FAQ_YEAR}-09-21
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2863,6 +2863,8 @@ user-difined distributions and curves.
 A collection of tools to deal with statistical models.
 @item moments
 Moments, skewness, kurtosis and related tests.
+@item monoProc
+Strictly monotone smoothing procedure.
 @c <COMMENT>
 @c Moved to the Archive on 2005-07-27 as requested by Witold Eryk Wolski
 @c <W.E.Wolski@ncl.ac.uk> (package now in BioC).
@@ -2990,6 +2992,8 @@ Multiple imputation for multivariate panel or clustered data.
 Functions and datasets for fitting models to Panel data.
 @item papply
 Parallel apply function using MPI.
+@item partsm
+Periodic AutoRegressive Time Series Models.
 @item party
 Unbiased recursive partitioning in a conditional inference framework.
 @item pastecs
