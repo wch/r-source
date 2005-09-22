@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-15 09:06+0100\n"
+"POT-Creation-Date: 2005-09-22 12:54+0100\n"
 "PO-Revision-Date: 2005-05-20 18:16+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -284,7 +284,7 @@ msgstr ""
 "  右键菜单用来复制, 粘贴, 自己调整大小选择了的列\n"
 "\n"
 
-#: dataentry.c:1555 dataentry.c:1649 editor.c:715 rui.c:1142
+#: dataentry.c:1555 dataentry.c:1649 editor.c:720 rui.c:1142
 msgid "Help"
 msgstr "帮助"
 
@@ -313,12 +313,12 @@ msgstr "关闭"
 msgid "Data Editor"
 msgstr "数据编辑器"
 
-#: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1092
+#: dataentry.c:1639 editor.c:668 pager.c:450 rui.c:1092
 #: ../library/grDevices/src/devWindows.c:1533
 msgid "File"
 msgstr "文件"
 
-#: dataentry.c:1643 editor.c:681 pager.c:460 rui.c:1113
+#: dataentry.c:1643 editor.c:686 pager.c:460 rui.c:1113
 msgid "Edit"
 msgstr "编辑"
 
@@ -342,164 +342,160 @@ msgstr "字元格宽..."
 msgid "Data editor"
 msgstr "数据编辑器"
 
-#: editor.c:438 pager.c:170 pager.c:190
+#: editor.c:443 pager.c:170 pager.c:190
 msgid "No RGui console to paste to"
 msgstr "没有可以粘贴上的RGui控制台"
 
-#: editor.c:538
+#: editor.c:543
 msgid "R EDITOR\n"
 msgstr "R编辑器\n"
 
-#: editor.c:540
+#: editor.c:545
 msgid "A standard text editor for editing and running R code.\n"
 msgstr "一个用于编辑和执行R程序的标准文本编辑器。\n"
 
-#: editor.c:542
+#: editor.c:547
 msgid "RUNNING COMMANDS\n"
 msgstr "执行命令\n"
 
-#: editor.c:543
+#: editor.c:548
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr "要执行一行或一段R的代码, 先选择所需要的代码，然后再\n"
 
-#: editor.c:544
+#: editor.c:549
 msgid "     Press Ctrl-R\n"
 msgstr "     按Ctrl-R\n"
 
-#: editor.c:545
+#: editor.c:550
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr "     从\"Edit\"菜单中选择\"Run line or selection\"\n"
 
-#: editor.c:546
+#: editor.c:551
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr "     按工具栏上的\"Run line or selection\"按钮\n"
 
-#: editor.c:547
+#: editor.c:552
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr "这会把选择了的命令复制到控制台来执行这些命令。\n"
 
-#: editor.c:548
+#: editor.c:553
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr "如果没有选择的话，目前所在行的命令会被执行\n"
 
-#: editor.c:549
+#: editor.c:554
 msgid "the cursor by one line.\n"
 msgstr "光标一行。\n"
 
-#: editor.c:561 editor.c:636 editor.c:697
+#: editor.c:566 editor.c:641 editor.c:702
 msgid "Run line or selection"
 msgstr "执行行或选择项"
 
-#: editor.c:563 editor.c:682
+#: editor.c:568 editor.c:687
 msgid "Undo"
 msgstr "取消"
 
-#: editor.c:565 editor.c:685
+#: editor.c:570 editor.c:690
 msgid "Cut"
 msgstr "切割"
 
-#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:881 rui.c:1057
+#: editor.c:571 editor.c:692 pager.c:288 pager.c:461 rui.c:881 rui.c:1057
 #: rui.c:1114
 msgid "Copy"
 msgstr "复制"
 
-#: editor.c:567 editor.c:689 rui.c:882 rui.c:1061 rui.c:1115
+#: editor.c:572 editor.c:694 rui.c:882 rui.c:1061 rui.c:1115
 msgid "Paste"
 msgstr "粘贴"
 
-#: editor.c:568 editor.c:691
+#: editor.c:573 editor.c:696
 msgid "Delete"
 msgstr "删除"
 
-#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:888 rui.c:1119
+#: editor.c:575 editor.c:698 pager.c:291 pager.c:467 rui.c:888 rui.c:1119
 msgid "Select all"
 msgstr "选择一切"
 
-#: editor.c:628 pager.c:414 rui.c:1045
+#: editor.c:633 pager.c:414 rui.c:1045
 msgid "Open script"
 msgstr "打开程序脚本"
 
-#: editor.c:632
+#: editor.c:637
 msgid "Save script"
 msgstr "保存程序脚本"
 
-#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1501
+#: editor.c:645 pager.c:434 ../library/grDevices/src/devWindows.c:1501
 msgid "Return focus to Console"
 msgstr "集中焦点到控制台"
 
-#: editor.c:643
+#: editor.c:648
 msgid "Print script"
 msgstr "打印程序脚本"
 
-#: editor.c:645 pager.c:429 rui.c:1073
+#: editor.c:650 pager.c:429 rui.c:1073
 #: ../library/grDevices/src/devWindows.c:1495
 msgid "Print"
 msgstr "打印"
 
-#: editor.c:664 pager.c:451 rui.c:1094
+#: editor.c:669 pager.c:451 rui.c:1094
 msgid "New script"
 msgstr "建立新的程序脚本"
 
-#: editor.c:666 pager.c:452 rui.c:1095
+#: editor.c:671 pager.c:452 rui.c:1095
 msgid "Open script..."
 msgstr "打开程序脚本..."
 
-#: editor.c:668 preferences.c:513
+#: editor.c:673 preferences.c:513
 msgid "Save"
 msgstr "保存"
 
-#: editor.c:670
+#: editor.c:675
 msgid "Save as..."
 msgstr "保存为..."
 
-#: editor.c:673 pager.c:453 rui.c:1108
+#: editor.c:678 pager.c:453 rui.c:1108
 #: ../library/grDevices/src/devWindows.c:1591
 msgid "Print..."
 msgstr "打印..."
 
-#: editor.c:676
+#: editor.c:681
 msgid "Close script"
 msgstr "关闭程序脚本"
 
-#: editor.c:679 rui.c:1111
-msgid "Exit"
-msgstr "退出"
-
-#: editor.c:695 rui.c:1120
+#: editor.c:700 rui.c:1120
 msgid "Clear console"
 msgstr "清除控制台"
 
-#: editor.c:699
+#: editor.c:704
 msgid "Run all"
 msgstr "执行一切"
 
-#: editor.c:702
+#: editor.c:707
 msgid "Find..."
 msgstr "查找..."
 
-#: editor.c:704
+#: editor.c:709
 msgid "Replace..."
 msgstr "替换..."
 
-#: editor.c:707 rui.c:1124
+#: editor.c:712 rui.c:1124
 msgid "GUI preferences..."
 msgstr "GUI选项..."
 
-#: editor.c:716
+#: editor.c:721
 msgid "Editor"
 msgstr "编辑器"
 
-#: editor.c:772
+#: editor.c:777
 msgid "Maximum number of editors reached"
 msgstr "编辑器数量太多"
 
-#: editor.c:777
+#: editor.c:782
 msgid "Unable to create editor window"
 msgstr "无法建立编辑器窗口"
 
-#: editor.c:786
+#: editor.c:791
 msgid "Untitled"
 msgstr "未命名"
 
@@ -762,6 +758,10 @@ msgstr "保存历史..."
 #: rui.c:1106
 msgid "Change dir..."
 msgstr "改变当前目录..."
+
+#: rui.c:1111
+msgid "Exit"
+msgstr "退出"
 
 #: rui.c:1118
 msgid "Copy and Paste"

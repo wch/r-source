@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-15 09:06+0100\n"
+"POT-Creation-Date: 2005-09-22 12:54+0100\n"
 "PO-Revision-Date: 2005-06-02 13:28+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -298,7 +298,7 @@ msgstr ""
 "えます\n"
 "\n"
 
-#: dataentry.c:1555 dataentry.c:1649 editor.c:715 rui.c:1142
+#: dataentry.c:1555 dataentry.c:1649 editor.c:720 rui.c:1142
 msgid "Help"
 msgstr "ヘルプ"
 
@@ -327,12 +327,12 @@ msgstr "閉じる"
 msgid "Data Editor"
 msgstr "データエディタ"
 
-#: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1092
+#: dataentry.c:1639 editor.c:668 pager.c:450 rui.c:1092
 #: ../library/grDevices/src/devWindows.c:1533
 msgid "File"
 msgstr "ファイル"
 
-#: dataentry.c:1643 editor.c:681 pager.c:460 rui.c:1113
+#: dataentry.c:1643 editor.c:686 pager.c:460 rui.c:1113
 msgid "Edit"
 msgstr "編集"
 
@@ -356,170 +356,166 @@ msgstr "セルの幅 ..."
 msgid "Data editor"
 msgstr "データエディタ"
 
-#: editor.c:438 pager.c:170 pager.c:190
+#: editor.c:443 pager.c:170 pager.c:190
 msgid "No RGui console to paste to"
 msgstr "RGui コンソールにペーストできません"
 
-#: editor.c:538
+#: editor.c:543
 msgid "R EDITOR\n"
 msgstr "R エディタ\n"
 
-#: editor.c:540
+#: editor.c:545
 msgid "A standard text editor for editing and running R code.\n"
 msgstr "R コードの編集・実行用の標準テキストエディタ.\n"
 
-#: editor.c:542
+#: editor.c:547
 msgid "RUNNING COMMANDS\n"
 msgstr "コマンド実行中\n"
 
-#: editor.c:543
+#: editor.c:548
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr ""
 "カーソル行または選択中の R コードを実行するために, コードを選択してから\n"
 
-#: editor.c:544
+#: editor.c:549
 msgid "     Press Ctrl-R\n"
 msgstr "     Ctrl+R を押してください\n"
 
-#: editor.c:545
+#: editor.c:550
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr ""
 "     \"編集\" メニューから \"カーソル行または選択中の R コードを実行\" を選択"
 "して\n"
 
-#: editor.c:546
+#: editor.c:551
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr ""
 "     ツールバーの \"カーソル行または選択中の R コードを実行\" アイコンをク"
 "リックしてください\n"
 
-#: editor.c:547
+#: editor.c:552
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr ""
 "これは選択されたコマンドをコンソールにコピーし,そのコマンドを評価します\n"
 
-#: editor.c:548
+#: editor.c:553
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr "コマンドの選択がなければ現在行を実行し,\n"
 
-#: editor.c:549
+#: editor.c:554
 msgid "the cursor by one line.\n"
 msgstr "カーソルを1行進めます\n"
 
-#: editor.c:561 editor.c:636 editor.c:697
+#: editor.c:566 editor.c:641 editor.c:702
 msgid "Run line or selection"
 msgstr "カーソル行または選択中の R コードを実行"
 
-#: editor.c:563 editor.c:682
+#: editor.c:568 editor.c:687
 msgid "Undo"
 msgstr "やり直し"
 
-#: editor.c:565 editor.c:685
+#: editor.c:570 editor.c:690
 msgid "Cut"
 msgstr "カット"
 
-#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:881 rui.c:1057
+#: editor.c:571 editor.c:692 pager.c:288 pager.c:461 rui.c:881 rui.c:1057
 #: rui.c:1114
 msgid "Copy"
 msgstr "コピー"
 
-#: editor.c:567 editor.c:689 rui.c:882 rui.c:1061 rui.c:1115
+#: editor.c:572 editor.c:694 rui.c:882 rui.c:1061 rui.c:1115
 msgid "Paste"
 msgstr "ペースト"
 
-#: editor.c:568 editor.c:691
+#: editor.c:573 editor.c:696
 msgid "Delete"
 msgstr "消去"
 
-#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:888 rui.c:1119
+#: editor.c:575 editor.c:698 pager.c:291 pager.c:467 rui.c:888 rui.c:1119
 msgid "Select all"
 msgstr "全て選択"
 
-#: editor.c:628 pager.c:414 rui.c:1045
+#: editor.c:633 pager.c:414 rui.c:1045
 msgid "Open script"
 msgstr "スクリプトを開く"
 
-#: editor.c:632
+#: editor.c:637
 msgid "Save script"
 msgstr "スクリプトを保存する"
 
-#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1501
+#: editor.c:645 pager.c:434 ../library/grDevices/src/devWindows.c:1501
 msgid "Return focus to Console"
 msgstr "コンソールに戻る"
 
-#: editor.c:643
+#: editor.c:648
 msgid "Print script"
 msgstr "スクリプトを印刷する"
 
-#: editor.c:645 pager.c:429 rui.c:1073
+#: editor.c:650 pager.c:429 rui.c:1073
 #: ../library/grDevices/src/devWindows.c:1495
 msgid "Print"
 msgstr "印刷"
 
-#: editor.c:664 pager.c:451 rui.c:1094
+#: editor.c:669 pager.c:451 rui.c:1094
 msgid "New script"
 msgstr "新しいスクリプト"
 
-#: editor.c:666 pager.c:452 rui.c:1095
+#: editor.c:671 pager.c:452 rui.c:1095
 msgid "Open script..."
 msgstr "スクリプトを開く..."
 
-#: editor.c:668 preferences.c:513
+#: editor.c:673 preferences.c:513
 msgid "Save"
 msgstr "保存"
 
-#: editor.c:670
+#: editor.c:675
 msgid "Save as..."
 msgstr "別名で保存..."
 
-#: editor.c:673 pager.c:453 rui.c:1108
+#: editor.c:678 pager.c:453 rui.c:1108
 #: ../library/grDevices/src/devWindows.c:1591
 msgid "Print..."
 msgstr "印刷..."
 
-#: editor.c:676
+#: editor.c:681
 msgid "Close script"
 msgstr "スクリプトを閉じる"
 
-#: editor.c:679 rui.c:1111
-msgid "Exit"
-msgstr "終了"
-
-#: editor.c:695 rui.c:1120
+#: editor.c:700 rui.c:1120
 msgid "Clear console"
 msgstr "コンソール画面を消去"
 
-#: editor.c:699
+#: editor.c:704
 msgid "Run all"
 msgstr "全て実行"
 
-#: editor.c:702
+#: editor.c:707
 msgid "Find..."
 msgstr "検索..."
 
-#: editor.c:704
+#: editor.c:709
 msgid "Replace..."
 msgstr "置換..."
 
-#: editor.c:707 rui.c:1124
+#: editor.c:712 rui.c:1124
 msgid "GUI preferences..."
 msgstr "GUI プリファレンス..."
 
-#: editor.c:716
+#: editor.c:721
 msgid "Editor"
 msgstr "エディタ"
 
-#: editor.c:772
+#: editor.c:777
 msgid "Maximum number of editors reached"
 msgstr "エディタ範囲の最大数に達してしまいました"
 
-#: editor.c:777
+#: editor.c:782
 msgid "Unable to create editor window"
 msgstr "エディタウインドウを作成することができません"
 
-#: editor.c:786
+#: editor.c:791
 msgid "Untitled"
 msgstr "無題"
 
@@ -788,6 +784,10 @@ msgstr "履歴の保存..."
 #: rui.c:1106
 msgid "Change dir..."
 msgstr "ディレクトリの変更..."
+
+#: rui.c:1111
+msgid "Exit"
+msgstr "終了"
 
 #: rui.c:1118
 msgid "Copy and Paste"

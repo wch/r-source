@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-15 09:06+0100\n"
+"POT-Creation-Date: 2005-09-22 12:54+0100\n"
 "PO-Revision-Date: 2005-05-13 02:57-0300\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -129,20 +129,23 @@ msgstr "  Copiar e colar.\n"
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
-"     Use o mouse (segurando o botão esquerdo) para marcar (selecionar) texto.\n"
+"     Use o mouse (segurando o botão esquerdo) para marcar (selecionar) "
+"texto.\n"
 
 #: console.c:1892
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
-"     Use Shift+Del (ou Ctrl+C) para copiar o texto selecionado para a área de transferência e\n"
+"     Use Shift+Del (ou Ctrl+C) para copiar o texto selecionado para a área "
+"de transferência e\n"
 
 #: console.c:1893
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
 msgstr ""
-"     Shift+Ins (ou Ctrl+V ou Ctrl+Y) para colar o conteúdo da área de transferência (se houver algum)  \n"
+"     Shift+Ins (ou Ctrl+V ou Ctrl+Y) para colar o conteúdo da área de "
+"transferência (se houver algum)  \n"
 
 #: console.c:1894
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -180,7 +183,6 @@ msgstr ""
 "  Use Ctrl+W para alternar entre a ativação/desativação desse recurso.\n"
 "\n"
 
-
 #: console.c:1901
 msgid ""
 "Use ESC to stop the interpreter.\n"
@@ -191,7 +193,8 @@ msgstr ""
 
 #: console.c:1902
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr "Teclas de atalho padrão do Windows podem ser usadas para mudar para o\n"
+msgstr ""
+"Teclas de atalho padrão do Windows podem ser usadas para mudar para o\n"
 
 #: console.c:1903
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
@@ -282,7 +285,8 @@ msgstr ""
 "\tPgUp ou Ctrl+B: move uma tela para cima\n"
 "\tHome: move para a célula (1,1)\n"
 "\tEnd: mostra últimas linhas da última coluna.\n"
-"   Mouse: clique com o botão esquerdo em uma célula, use a(s) barra(s) de rolagem.\n"
+"   Mouse: clique com o botão esquerdo em uma célula, use a(s) barra(s) de "
+"rolagem.\n"
 "\n"
 "Edição.\n"
 "  Escreva na célula destacada atualmente\n"
@@ -292,10 +296,11 @@ msgstr ""
 "  Ctrl-L redesenha a tela, redimensionando automaticamente as colunas\n"
 "  Ctrl-C copia a célula selecionada\n"
 "  Ctrl-V cola na célula selecionada\n"
-"  Use o menu do botão direito para copiar, colar ou autodimensionar a coluna selecionada atualmente.\n"
+"  Use o menu do botão direito para copiar, colar ou autodimensionar a coluna "
+"selecionada atualmente.\n"
 "\n"
 
-#: dataentry.c:1555 dataentry.c:1649 editor.c:715 rui.c:1142
+#: dataentry.c:1555 dataentry.c:1649 editor.c:720 rui.c:1142
 msgid "Help"
 msgstr "Ajuda"
 
@@ -324,12 +329,12 @@ msgstr "Fechar"
 msgid "Data Editor"
 msgstr "Editor de dados"
 
-#: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1092
+#: dataentry.c:1639 editor.c:668 pager.c:450 rui.c:1092
 #: ../library/grDevices/src/devWindows.c:1533
 msgid "File"
 msgstr "Arquivo"
 
-#: dataentry.c:1643 editor.c:681 pager.c:460 rui.c:1113
+#: dataentry.c:1643 editor.c:686 pager.c:460 rui.c:1113
 msgid "Edit"
 msgstr "Editar"
 
@@ -353,167 +358,167 @@ msgstr "Comprimentos das células ..."
 msgid "Data editor"
 msgstr "Editor de dados"
 
-#: editor.c:438 pager.c:170 pager.c:190
+#: editor.c:443 pager.c:170 pager.c:190
 msgid "No RGui console to paste to"
 msgstr "Nenhum console RGui para colar"
 
-#: editor.c:538
+#: editor.c:543
 msgid "R EDITOR\n"
 msgstr "Editor R\n"
 
-#: editor.c:540
+#: editor.c:545
 msgid "A standard text editor for editing and running R code.\n"
 msgstr "Um editor de texto padrão para edição e execução de código em R.\n"
 
-#: editor.c:542
+#: editor.c:547
 msgid "RUNNING COMMANDS\n"
 msgstr "Executando comandos\n"
 
-#: editor.c:543
+#: editor.c:548
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr "Para executar uma linha ou seção de código R, selecione o código e "
-"use um dos seguintes comandos\n"
+msgstr ""
+"Para executar uma linha ou seção de código R, selecione o código e use um "
+"dos seguintes comandos\n"
 
-#: editor.c:544
+#: editor.c:549
 msgid "     Press Ctrl-R\n"
 msgstr "     Pressione Ctrl-R\n"
 
-#: editor.c:545
+#: editor.c:550
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr "     Seleciome \"Executar linha ou seleção\" a partir do menu \"Editar\"\n"
+msgstr ""
+"     Seleciome \"Executar linha ou seleção\" a partir do menu \"Editar\"\n"
 
-#: editor.c:546
+#: editor.c:551
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr "     Pressione o ícone \"Executar linha ou seleção\" na barra de ferramentas\n"
+msgstr ""
+"     Pressione o ícone \"Executar linha ou seleção\" na barra de "
+"ferramentas\n"
 
-#: editor.c:547
+#: editor.c:552
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr ""
 "Isso irá copiar os comandos selecionados para o console e interpretá-los.\n"
 
-#: editor.c:548
+#: editor.c:553
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr ""
 "Se não há seleção, isso irá somente copiar a linha atual e prosseguir\n"
 
-#: editor.c:549
+#: editor.c:554
 msgid "the cursor by one line.\n"
 msgstr "o cursor em uma linha.\n"
 
-#: editor.c:561 editor.c:636 editor.c:697
+#: editor.c:566 editor.c:641 editor.c:702
 msgid "Run line or selection"
 msgstr "Executar linha ou seleção"
 
-#: editor.c:563 editor.c:682
+#: editor.c:568 editor.c:687
 msgid "Undo"
 msgstr "Desfazer"
 
-#: editor.c:565 editor.c:685
+#: editor.c:570 editor.c:690
 msgid "Cut"
 msgstr "Recortar"
 
-#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:881 rui.c:1057
+#: editor.c:571 editor.c:692 pager.c:288 pager.c:461 rui.c:881 rui.c:1057
 #: rui.c:1114
 msgid "Copy"
 msgstr "Copiar"
 
-#: editor.c:567 editor.c:689 rui.c:882 rui.c:1061 rui.c:1115
+#: editor.c:572 editor.c:694 rui.c:882 rui.c:1061 rui.c:1115
 msgid "Paste"
 msgstr "Colar"
 
-#: editor.c:568 editor.c:691
+#: editor.c:573 editor.c:696
 msgid "Delete"
 msgstr "Excluir"
 
-#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:888 rui.c:1119
+#: editor.c:575 editor.c:698 pager.c:291 pager.c:467 rui.c:888 rui.c:1119
 msgid "Select all"
 msgstr "Selecionar tudo"
 
-#: editor.c:628 pager.c:414 rui.c:1045
+#: editor.c:633 pager.c:414 rui.c:1045
 msgid "Open script"
 msgstr "Abrir script"
 
-#: editor.c:632
+#: editor.c:637
 msgid "Save script"
 msgstr "Salvar script"
 
-#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1501
+#: editor.c:645 pager.c:434 ../library/grDevices/src/devWindows.c:1501
 msgid "Return focus to Console"
 msgstr "Retorna o foco para o Console"
 
-#: editor.c:643
+#: editor.c:648
 msgid "Print script"
 msgstr "Imprimir script"
 
-#: editor.c:645 pager.c:429 rui.c:1073
+#: editor.c:650 pager.c:429 rui.c:1073
 #: ../library/grDevices/src/devWindows.c:1495
 msgid "Print"
 msgstr "Imprimir"
 
-#: editor.c:664 pager.c:451 rui.c:1094
+#: editor.c:669 pager.c:451 rui.c:1094
 msgid "New script"
 msgstr "Novo script"
 
-#: editor.c:666 pager.c:452 rui.c:1095
+#: editor.c:671 pager.c:452 rui.c:1095
 msgid "Open script..."
 msgstr "Abrir script..."
 
-#: editor.c:668 preferences.c:513
+#: editor.c:673 preferences.c:513
 msgid "Save"
 msgstr "Salvar"
 
-#: editor.c:670
+#: editor.c:675
 msgid "Save as..."
 msgstr "Salvar como..."
 
-#: editor.c:673 pager.c:453 rui.c:1108
+#: editor.c:678 pager.c:453 rui.c:1108
 #: ../library/grDevices/src/devWindows.c:1591
 msgid "Print..."
 msgstr "Imprimir..."
 
-#: editor.c:676
+#: editor.c:681
 msgid "Close script"
 msgstr "Fechar script"
 
-#: editor.c:679 rui.c:1111
-msgid "Exit"
-msgstr "Sair"
-
-#: editor.c:695 rui.c:1120
+#: editor.c:700 rui.c:1120
 msgid "Clear console"
 msgstr "Limpar o console"
 
-#: editor.c:699
+#: editor.c:704
 msgid "Run all"
 msgstr "Executar tudo"
 
-#: editor.c:702
+#: editor.c:707
 msgid "Find..."
 msgstr "Localizar..."
 
-#: editor.c:704
+#: editor.c:709
 msgid "Replace..."
 msgstr "Substituir..."
 
-#: editor.c:707 rui.c:1124
+#: editor.c:712 rui.c:1124
 msgid "GUI preferences..."
 msgstr "preferências da interface gráfica"
 
-#: editor.c:716
+#: editor.c:721
 msgid "Editor"
 msgstr "Editor"
 
-#: editor.c:772
+#: editor.c:777
 msgid "Maximum number of editors reached"
 msgstr "Número máximo de editores atingido"
 
-#: editor.c:777
+#: editor.c:782
 msgid "Unable to create editor window"
 msgstr "Não foi possível criar a janela do editor"
 
-#: editor.c:786
+#: editor.c:791
 msgid "Untitled"
 msgstr "Sem nome"
 
@@ -571,7 +576,9 @@ msgstr ""
 
 #: preferences.c:259
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr "Modificações no tamanho do visualizador não se aplicam a visualizadores abertos"
+msgstr ""
+"Modificações no tamanho do visualizador não se aplicam a visualizadores "
+"abertos"
 
 #: preferences.c:265
 msgid ""
@@ -782,6 +789,10 @@ msgstr "Salvar Histórico..."
 #: rui.c:1106
 msgid "Change dir..."
 msgstr "Mudar dir..."
+
+#: rui.c:1111
+msgid "Exit"
+msgstr "Sair"
 
 #: rui.c:1118
 msgid "Copy and Paste"
@@ -1169,4 +1180,3 @@ msgstr "Esperando para confirmar mudança de página..."
 #: ../library/grDevices/src/devWindows.c:3021
 msgid "Click or hit ENTER for next page"
 msgstr "Clique com o mouse ou pressione ENTER para próxima página"
-
