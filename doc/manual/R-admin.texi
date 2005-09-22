@@ -705,7 +705,8 @@ area on @acronym{CRAN}.
 
 Another tuned BLAS which is available for some CPUs is by Kazushige
 Goto.  He does not allow redistribution: his builds are currently
-available via
+available@footnote{In mid-September 2005 they were temoorarily
+unavailable pending a formal release.} via
 @url{http://www.cs.utexas.edu/users/kgoto/signup_first.html}.  To make
 use of this, put the @file{DLL} somewhere in your path or in
 @file{@var{R_HOME}/bin}, and edit
@@ -1820,7 +1821,8 @@ use a multi-threaded ATLAS by specifying
 @end example
 
 Another tuned BLAS which is available for some processors under Linux is
-by Kazushige Goto, currently available at
+by Kazushige Goto, currently available@footnote{In mid-September 2005
+they were temoorarily unavailable pending a formal release.} at
 @url{http://www.cs.utexas.edu/users/flame/goto/}.  Once this is is
 installed, it can be used by configuring with one of
 
@@ -1907,12 +1909,18 @@ DGEBRD gave error code -10
 @end example
 
 @noindent
-(from the Debian @code{-llapack} which was current in late 2002).  Other
+(seen with both the Debian @code{-llapack} which was current in late
+2002, and Fedora Core 4 @code{-llapack} in September 2005).  Other
 potential problems are incomplete versions of the libraries: for example
 @code{libsunperf} from Sun Forte 6.x was missing the entry point for
 @code{DLANGE} and @code{vecLib} has omitted the BLAS routine
 @code{LSAME}.  For problems compiling LAPACK using recent versions of
-@samp{gcc} on @samp{ix86} Linux, see @ref{New platforms}.
+@samp{gcc} on @samp{ix86} Linux, see @ref{New platforms}: these problems
+have surfaced in Fedora Core 3's distribution, for example.
+
+Please @strong{do} bear in mind that using @option{--with-lapack} is
+`definitely @strong{not} recommended': it is provided @strong{only}
+because it is necessary on some platforms.
 
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this means
