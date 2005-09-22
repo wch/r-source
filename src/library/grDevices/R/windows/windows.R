@@ -79,7 +79,8 @@ bringToTop <- function(which = dev.cur(), stay = FALSE)
 }
 
 savePlot <- function(filename = "Rplot",
-                     type = c("wmf", "png", "jpeg", "jpg", "bmp", "ps", "pdf"),
+                     type = c("wmf", "emf", "png", "jpeg", "jpg", "bmp",
+                     "ps", "eps", "pdf"),
                      device = dev.cur())
 {
     type <- match.arg(type)

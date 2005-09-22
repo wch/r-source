@@ -2697,14 +2697,14 @@ SEXP savePlot(SEXP args)
     } else if(!strcmp(tp, "jpeg") || !strcmp(tp,"jpg")) {
       /*Default quality suggested in libjpeg*/
         SaveAsJpeg(dd, 75, fn);
-    } else if (!strcmp(tp, "wmf")) {
+    } else if (!strcmp(tp, "wmf") || !strcmp(tp, "emf")) {
 	if(strlen(fn) > 512) {
 	    askok(G_("file path selected is too long: only 512 bytes are allowed"));
 	    return R_NilValue;
 	}
 	sprintf(display, "win.metafile:%s", fn);
 	SaveAsWin(dd, display);
-    } else if (!strcmp(tp, "ps")) {
+    } else if (!strcmp(tp, "ps") || !strcmp(tp, "eps")) {
 	SaveAsPostscript(dd, fn);
     } else if (!strcmp(tp, "pdf")) {
 	SaveAsPDF(dd, fn);
