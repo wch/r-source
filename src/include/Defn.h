@@ -952,7 +952,7 @@ size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 #else /* not NLS */
 #define _(String) (String)
 #define N_(String) String
-#define P_(String, StringP, N) StringP
+#define P_(String, StringP, N) (N > 1 ? StringP: String)
 #endif
 
 
