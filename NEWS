@@ -44,198 +44,83 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	The specification of the substitutions done when processing
-	Renviron files is more liberal: see ?Startup.  It now
-	accepts forms like R_LIBS=${HOME}/Rlibrary:${WORKGRP}/R/lib .
+    o	.Platform has a new component 'path.sep', the separator used
+	between paths in environment variables such as PATH and TEXINPUTS.
 
-    o	R.home() has been expanded to return the paths to components
-	(which can as from this version be installed elsewhere).
+    o   anova.mlm() now handles the single-model case.
 
-    o	nlminb(), similar to that in S-PLUS, added to package 'stats'.
+    o	Hexadecimal values are now allowed for as.numeric() and
+	as.integer() on all platforms, and as integer constants in R code.
 
-    o	Added tclServiceMode() function to the tcltk package to allow
-	updating to be suspended.
+    o	attach() now prints an information message when objects are
+	masked on the search path by or from a newly attached database.
+
+    o	axis() now returns 'at' positions.
+
+    o   axis() has a new argument 'hadj' to control horizontal
+	adjustment of labels.
+
+    o	axis.Date() and axis.POSIXct() now accept a 'labels' argument
+	(contributed by Gavin Simpson).
 
     o	barplot() now has arguments 'log = ""' and 'add = FALSE'
 	(as in barplot2() from package 'gplots').
 
-    o	smooth.spline() has a new argument 'keep.data' which allows to
-	provide residuals() and fitted() methods for smoothing splines.
+    o	baseenv() has been added, to return the base environment.  This
+    	is currently still NULL, but will change in a future release.
 
-    o	plot.lm() has two new plots (for 'which' = 5 or 6), plotting
-	residuals or cook distances versus (transformed) leverages - unless
-	these are constant.  Further, the new argument 'add.smooth' adds a
-	loess smoother to the point plots by default, and 'qqline = TRUE'
-	adds a qqline() to the normal plot.
-	The default for 'sub.caption' has been improved for long calls.
+    o   boxplot() now responds to supplying 'yaxs' (via bxp()).
+	(Wish of PR#8072.)
 
-    o	[g]sub() now have a 'useBytes' argument like grep() and regexpr().
+    o	capabilities() has a new component 'NLS'.
+
+    o	cbind() and rbind() now react to 'deparse.level' = {0,1,2}
+	(as in another system not unlike R).
+
+    o	Experimental versions of cbind() and rbind() in methods package,
+	based on new generic function cbind2(x,y) and rbind2().	 This will
+	allow the equivalent of S4 methods for cbind() and rbind() ---
+	currently only after an explicit activation call, see ?cbind2.
+
+    o	New functions cdplot() and spineplot() for conditional density
+        plots and spine plots or spinograms.  Spine plots are now used
+        instead of bar plots for x-y scatterplots where y is a factor.
+
+    o	checkDocFiles() in package 'tools' now checks for bad \usage
+	lines (syntactically invalid R code).
+
+    o   The nonparametric variants of cor.test() now behave better in
+	the presence of ties. The "spearman" method uses the asymptotic
+	approximation in that case, and the "kendall" method likewise,
+	but adds a correction for ties (this is not necessary in the
+	Spearman case).
+
+    o	The X11 dataentry() now has support for X Input Methods
+	(contributed by Ei-ji Nakama).
 
     o	density() is now an S3 generic where density.default() {former
 	density()} has new argument 'weights' for specifying observation
 	masses different than the default 1/N -- based on a suggestion and
 	code from Adrian Baddeley.
 
-    o	The default mosaicplot() method by default draws grey boxes.
-
-    o	labels() now has a method for "dist" objects (replacing that
-	for names() which was withdrawn in 2.1.0).
-
-    o	checkDocFiles() in package 'tools' now checks for bad \usage
-	lines (syntactically invalid R code).
+    o	download.packages() now carries on if it encounters a download
+	error (e.g. a repository with a corrupt index).
 
     o	dump() now skips missing objects with a warning rather than
 	throw an error.
 
-    o	Hexadecimal values are now allowed for as.numeric() and
-	as.integer() on all platforms, and as integer constants in R code.
-
-    o	New option("OutDec") to set the decimal point for output conversions.
-
-    o	New option("add.smooth") to add smoothers to a plot, currently
-	only used by plot.lm().
-
-    o	New functions URLencode() and URLdecode(), particularly for use
-	with file:// URLs.  These are used by e.g. browse.env(),
-	download.file(), download.packages() and various help() print
-	methods.
-
-    o	[g]sub(perl = TRUE) support \L and \U in the replacement.
-
-    o	match.arg() has a new argument 'several.ok = FALSE'.
-
-    o	write() has a new argument 'sep'.
-
-    o	New functions trans3d(), the 3D -> 2D utility from persp()'s
-	example, and extendrange(), both in package 'grDevices'.
-
-    o	pie() has new optional arguments 'clockwise' and 'init.angle'.
-
-    o	axis.Date() and axis.POSIXct() now accept a 'label' argument
-	(contributed by Gavin Simpson).
-
-    o	Added recommendation that packages have an overview man page
-	<pkg>-package.Rd, and the promptPackage() function to create a
-	skeleton version.
-
-    o	Replacement indexing of a data frame by a logical matrix index
-	containing NAs is allowed in a few more cases, in particular
-	always when the replacement value has length one.
-
-    o	The X11 dataentry() now has support for X Input Methods
-	(contributed by Ei-ji Nakama).
-
-    o	identify()'s default method has additional arguments 'atpen'
-	and 'tolerance' (following S).
-
-    o	attach() now prints an information message when objects are
-	masked on the search path by or from a newly attached database.
-
-    o	scatter.smooth() now works a bit more like other plotting
-	functions (e.g., accepts a data frame for argument 'x').
-	Improvements suggested by Kevin Wright.
-
-    o	axis() now returns 'at' positions.
-
-    o	Conversion of .Rd files to latex now handles encoding more
-	comprehensively, including some support for UTF-8.
-
-    o	terms.formula() no longer allows '.' in a formula unless there
-	is a (non-empty) 'data' argument or 'allowDotAsName = TRUE' is
-	supplied.  We have found several cases where 'data' had not
-	been passed down to terms() and so '.' was interpreted as a
-	single variable leading to incorrect results.
-
-    o	Functions utf8ToInt() and intToUtf8() to work with UTF-8
-	encoded character strings (irrespective of locale or OS-level
-	UTF-8 support).
-
-    o	read.table() now passes 'allowEscapes' to scan().
+    o   Added "POSIXlt" methods for duplicated() and unique().
 
     o	Function encoded_text_to_latex() in package tools translates
 	Latin 1,2,9 and UTF-8 encoded character vectors to LaTeX
 	escape sequences where appropriate.
 
-    o	write.csv[2] now also support row.names = FALSE.
-
-    o	max.col() has a new argument for non-random behavior in the
-	case of ties.
-
-    o	New function glob2rx() for translating `wildcard' aka `globbing'
-	to regular expressions.
-
-    o	KalmanForecast() and KalmanLike() now have an optional argument
-	fast=FALSE to prevent their arguments being modified.
-
-    o	read.dcf() can now read gzipped files.
-
-    o	split(), split<-(), unsplit() now have a new argument 'drop = FALSE',
-	by default not dropping empty levels; this is *not* back compatible.
-
-    o	TukeyHSD() now returns p-values adjusted for multiple comparisons
-	(based on a patch contributed by Fernando Henrique Ferraz P. da Rosa).
-
-    o	The internal regex code has been upgraded to glibc-2.3.5.
-	Apart from a number of bug fixes, this should be somewhat
-	faster, especially in UTF-8 locales.
-
-    o	Attempting source(file, chdir=TRUE) with a URL or connection
-	for'file' now gives a warning and ignores 'chdir'.
-
-    o	The plot method for stl() now allows the colour of the range
-	bars to be set (default unchanged at "light gray").
-
-    o	Exact p-values are available in ks.test() for the one-sided and
-	two-sided one-sample Kolmogorov-Smirnov tests.
-
-    o	library() now explicitly checks for the existence of
-	directories in 'lib.loc': this avoids some warning messages.
-
-    o	loadNamespace(keep.source=) now applies only to that namespace
-	and not others it might load to satisfy imports: this is now
-	consistent with library().
-
-    o	options() now returns its result in alphabetical order, and is
-	documented more comprehensively and accurately.  (Now all
-	options used in base R are documented, including
-	platform-specific ones.)
-
-	Some options are now set in the package which makes use of
-	them (grDevices, stats or utils) if not already set when the
-	package is loaded.
-
-    o	PCRE has been updated to version 6.2.
-
-    o	zlib has been updated to version 1.2.3.
-
-    o	bzip2 has been updated to version 1.0.3.
+    o	encodeString() allows justify = "none" for consistency with
+	format.default().  Some argument names have been lengthened
+	for clarity.
 
     o	file(), fifo() and pipe() now (if possible) report a reason
         if they fail to open a connection.
-
-    o	object.size() now supports more types, including external
-	pointers and weak references.
-
-    o	Platform has a new component 'path.sep', the separator used
-	between paths in environment variables such as PATH and TEXINPUTS.
-
-    o	capabilities() has a new component 'NLS'.
-
-    o	Complex arithmetic is now done by C99 complex types where
-	supported.  This is likely to boost performance, but is
-	subject to the accuracy with which it has been implemented.
-
-    o	signif() on complex numbers now rounds jointly to give the
-	requested number of digits in the larger component, not
-	independently for each component.
-
-    o	The printing of complex numbers has changed, handling numbers
-	as a whole rather than in two parts.  So both real and
-	imaginary parts are shown to the same accuracy, with the
-	'digits' parameter referring to the accuracy of the larger
-	component, and both components are shown in fixed or
-	scientific notation (unless one is entirely zero when it is
-	always shown in fixed notation).
 
     o	format.default() now has a 'width' argument, and 'justify' can
 	now centre character strings.
@@ -248,45 +133,96 @@ NEW FEATURES
 	How format() works on a list is now documented, and uses
 	arguments consistently with their usage on an atomic vector.
 
-    o   anova.mlm() now handles the single-model case.
-
-    o	encodeString() allows justify = "none" for consistency with
-	format.default().  Some argument names have been lengthened
-	for clarity.
-
     o	format.info() now has a 'digits' argument, and is documented
 	to work for all atomic vectors (it used to work for all but
 	raw vectors.).
 
-    o   Added "POSIXlt" methods for duplicated() and unique().
+    o	New function glob2rx() for translating `wildcard' aka `globbing'
+	to regular expressions.
 
-    o	[dqp]wilcox and wilcox.test work better with one very large sample
-	size and an extreme first argument.
+    o	There is a new function gregexpr() which generalizes regexpr()
+        to search for all matches in each of the input strings (not
+        just the first match).
 
-    o   axis() has a new argument 'hadj' to control horizontal
-	adjustment of labels.
+    o	[g]sub() now have a 'useBytes' argument like grep() and regexpr().
+
+    o	[g]sub(perl = TRUE) support \L and \U in the replacement.
+
+    o   iconv() has been moved from 'utils' to 'base'.
+
+    o	identify()'s default method has additional arguments 'atpen'
+	and 'tolerance' (following S).
+
+    o	KalmanForecast() and KalmanLike() now have an optional argument
+	fast=FALSE to prevent their arguments being modified.
+
+    o	Exact p-values are available in ks.test() for the one-sided and
+	two-sided one-sample Kolmogorov-Smirnov tests.
+
+    o	labels() now has a method for "dist" objects (replacing that
+	for names() which was withdrawn in 2.1.0).
+
+    o	library() now explicitly checks for the existence of
+	directories in 'lib.loc': this avoids some warning messages.
+
+    o	loadNamespace(keep.source=) now applies only to that namespace
+	and not others it might load to satisfy imports: this is now
+	consistent with library().
+
+    o	match.arg() has a new argument 'several.ok = FALSE'.
+
+    o	max.col() has a new argument for non-random behavior in the
+	case of ties.
 
     o   memory.profile() now uses the type names returned by typeof()
 	and no longer has two unlabelled entries.
 
-    o   boxplot() now responds to supplying 'yaxs' (via bxp()).
-	(Wish of PR#8072.)
+    o	methods() now warns if it appears to have been called on a
+	non-generic function.
 
-    o	Experimental versions of cbind() and rbind() in methods package,
-	based on new generic function cbind2(x,y) and rbind2().	 This will
-	allow the equivalent of S4 methods for cbind() and rbind() ---
-	currently only after an explicit activation call, see ?cbind2.
+    o	The default mosaicplot() method by default draws grey boxes.
 
-    o   iconv() has been moved from 'utils' to 'base'.
+    o	nlminb(), similar to that in S-PLUS, added to package 'stats'.
+
+    o	New algorithm "port" (the nl2sol algorithm available in the
+	Port library on netlib) added to the nls() function in the
+	'stats' package.
+
+    o	object.size() now supports more types, including external
+	pointers and weak references.
+
+    o	options() now returns its result in alphabetical order, and is
+	documented more comprehensively and accurately.  (Now all
+	options used in base R are documented, including
+	platform-specific ones.)
+
+	Some options are now set in the package which makes use of
+	them (grDevices, stats or utils) if not already set when the
+	package is loaded.
+
+    o	New option("OutDec") to set the decimal point for output conversions.
+
+    o	New option("add.smooth") to add smoothers to a plot, currently
+	only used by plot.lm().
+
+    o	pie() has new optional arguments 'clockwise' and 'init.angle'.
+
+    o	plot.lm() has two new plots (for 'which' = 5 or 6), plotting
+	residuals or cook distances versus (transformed) leverages - unless
+	these are constant.  Further, the new argument 'add.smooth' adds a
+	loess smoother to the point plots by default, and 'qqline = TRUE'
+	adds a qqline() to the normal plot.
+	The default for 'sub.caption' has been improved for long calls.
+
+    o	R.home() has been expanded to return the paths to components
+	(which can as from this version be installed elsewhere).
 
     o   readbin() and writeBin() now support raw vectors as well as
 	filenames and connections.
 
-    o	download.packages() now carries on if it encounters a download
-	error (e.g. a repository with a corrupt index).
+    o	read.dcf() can now read gzipped files.
 
-    o	baseenv() has been added, to return the base environment.  This
-    	is currently still NULL, but will change in a future release.
+    o	read.table() now passes 'allowEscapes' to scan().
 
     o	sample(x, size, prob, replace = TRUE) now uses a faster
 	algorithm if there are many reasonably probable values.  (This
@@ -295,49 +231,115 @@ NEW FEATURES
 	'prob' is very diffuse so that thousands of distinct values
 	will be generated with an appreciable frequency.
 
+    o	scatter.smooth() now works a bit more like other plotting
+	functions (e.g., accepts a data frame for argument 'x').
+	Improvements suggested by Kevin Wright.
+
+    o	signif() on complex numbers now rounds jointly to give the
+	requested number of digits in the larger component, not
+	independently for each component.
+
     o	New generic function simulate() in the 'stats' package with
 	methods for some classes of fitted models.
 
-    o	Error messages from .C() and .Fortran(), and from parsing errors,
-	are now more informative.
+    o	smooth.spline() has a new argument 'keep.data' which allows to
+	provide residuals() and fitted() methods for smoothing splines.
 
-    o   The nonparametric variants of cor.test() now behave better in
-	the presence of ties. The "spearman" method uses the asymptotic
-	approximation in that case, and the "kendall" method likewise,
-	but adds a correction for ties (this is not necessary in the
-	Spearman case).
+    o	Attempting source(file, chdir=TRUE) with a URL or connection
+	for'file' now gives a warning and ignores 'chdir'.
 
-    o	New algorithm "port" (the nl2sol algorithm available in the
-	Port library on netlib) added to the nls() function in the
-	'stats' package.
+    o	source() closes its input file after parsing it rather than
+	after executing the commands, as used to happen prior to
+	2.1.0.  (This is probably only significant on Windows where
+	the file is locked for a much shorter time.)
 
-    o	cbind() and rbind() now react to 'deparse.level' = {0,1,2}
-	(as in another system not unlike R).
-
-    o	New functions cdplot() and spineplot() for conditional density
-        plots and spine plots or spinograms.  Spine plots are now used
-        instead of bar plots for x-y scatterplots where y is a factor.
-
-    o	The date and date-time functions work better with dates more
-	than 5000 years away from 1970-01-01 (by making dubious
-	assumptions about the calendar in use).
+    o	split(), split<-(), unsplit() now have a new argument 'drop = FALSE',
+	by default not dropping empty levels; this is *not* back compatible.
 
     o	sprintf() now supports asterisk `*' width or precision
 	specification (but not both) as well as `*1$' to `*99$'.  Also the
 	handling of `%' as conversion specification terminator is now
 	left to the system and doesn't affect following specifications.
 
-    o	There is a new function gregexpr() which generalizes regexpr()
-        to search for all matches in each of the input strings (not
-        just the first match).
+    o	The plot method for stl() now allows the colour of the range
+	bars to be set (default unchanged at "light gray").
 
-    o	methods() now warns if it appears to have been called on a
-	non-generic function.
+    o	Added tclServiceMode() function to the tcltk package to allow
+	updating to be suspended.
 
-    o	source() closes its input file after parsing it rather than
-	after executing the commands, as used to happen prior to
-	2.1.0.  (This is probably only significant on Windows where
-	the file is locked for a much shorter time.)
+    o	terms.formula() no longer allows '.' in a formula unless there
+	is a (non-empty) 'data' argument or 'allowDotAsName = TRUE' is
+	supplied.  We have found several cases where 'data' had not
+	been passed down to terms() and so '.' was interpreted as a
+	single variable leading to incorrect results.
+
+    o	New functions trans3d(), the 3D -> 2D utility from persp()'s
+	example, and extendrange(), both in package 'grDevices'.
+
+    o	TukeyHSD() now returns p-values adjusted for multiple comparisons
+	(based on a patch contributed by Fernando Henrique Ferraz P. da Rosa).
+
+    o	New functions URLencode() and URLdecode(), particularly for use
+	with file:// URLs.  These are used by e.g. browse.env(),
+	download.file(), download.packages() and various help() print
+	methods.
+
+    o	Functions utf8ToInt() and intToUtf8() to work with UTF-8
+	encoded character strings (irrespective of locale or OS-level
+	UTF-8 support).
+
+    o	[dqp]wilcox and wilcox.test work better with one very large sample
+	size and an extreme first argument.
+
+    o	write() has a new argument 'sep'.
+
+    o	write.csv[2] now also support row.names = FALSE.
+
+
+
+    o	The specification of the substitutions done when processing
+	Renviron files is more liberal: see ?Startup.  It now
+	accepts forms like R_LIBS=${HOME}/Rlibrary:${WORKGRP}/R/lib .
+
+    o	Added recommendation that packages have an overview man page
+	<pkg>-package.Rd, and the promptPackage() function to create a
+	skeleton version.
+
+    o	Replacement indexing of a data frame by a logical matrix index
+	containing NAs is allowed in a few more cases, in particular
+	always when the replacement value has length one.
+
+    o	Conversion of .Rd files to latex now handles encoding more
+	comprehensively, including some support for UTF-8.
+
+    o	The internal regex code has been upgraded to glibc-2.3.5.
+	Apart from a number of bug fixes, this should be somewhat
+	faster, especially in UTF-8 locales.
+
+    o	PCRE has been updated to version 6.2.
+
+    o	zlib has been updated to version 1.2.3.
+
+    o	bzip2 has been updated to version 1.0.3.
+
+    o	Complex arithmetic is now done by C99 complex types where
+	supported.  This is likely to boost performance, but is
+	subject to the accuracy with which it has been implemented.
+
+    o	The printing of complex numbers has changed, handling numbers
+	as a whole rather than in two parts.  So both real and
+	imaginary parts are shown to the same accuracy, with the
+	'digits' parameter referring to the accuracy of the larger
+	component, and both components are shown in fixed or
+	scientific notation (unless one is entirely zero when it is
+	always shown in fixed notation).
+
+    o	Error messages from .C() and .Fortran(), and from parsing errors,
+	are now more informative.
+
+    o	The date and date-time functions work better with dates more
+	than 5000 years away from 1970-01-01 (by making dubious
+	assumptions about the calendar in use).
 
 
 DEPRECATED & DEFUNCT
@@ -406,9 +408,6 @@ INSTALLATION
 	--with-system-bzlib and -with-system-pcre now have 'system' in
 	the name.
 
-    o	On MacOS X, --with-blas="-framework vecLib" --with-lapack and
-	--with-aqua are now the default configure options.
-
     o	If Java runtime environment is detected at configure time
 	its library path is appended to LD_LIBRARY_PATH or equivalent.
 	New Java-related variables JAVA_HOME (path to JRE/JDK), JAVA_PROG
@@ -416,20 +415,26 @@ INSTALLATION
 	and JAVA_LIBS (flags to link against JNI) are made available
 	in Makeconf.
 
-    o	On Mac OS X the default framework version name was changed to
-	not contain the patch level (i.e. it is now 2.2 instead of 2.2.0).
-	Also it can be overridden at configure time by setting FW_VERSION
+
+MAC OS X INSTALLATION
+
+    o	--with-blas="-framework vecLib" --with-lapack and
+	--with-aqua are now the default configure options.
+
+    o	The default framework version name was changed to not contain
+	the patch level (i.e. it is now 2.2 instead of 2.2.0).  Also
+	it can be overridden at configure time by setting FW_VERSION
 	to the desired name.
 
-    o	Rmath stand-alone library is now correctly installed inside
-	the R.framework on OS X if R was configured as a framework. In
-	addition, make install-Rmath-framework will install a
-    	stand-alone Rmath framework in /Library/Frameworks (unless
-    	overridden by RMATH_FRAMEWORK_DIR specifying full framework
-    	path and name including the .framework extension).
+    o	Rmath stand-alone library is now correctly installed inside the
+	R.framework if R was configured as a framework. In addition,
+	make install-Rmath-framework will install a stand-alone Rmath
+	framework in /Library/Frameworks (unless overridden by
+	RMATH_FRAMEWORK_DIR specifying full framework path and name
+	including the .framework extension).
 
 
-PACKAGE INSTALLATION CHANGES
+PACKAGE INSTALLATION
 
     o	The encoding for a packages' 00Index.html is chosen from the
 	Encoding: field (if any) of the DESCRIPTION file and from the
