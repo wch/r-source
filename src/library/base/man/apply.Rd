@@ -34,7 +34,8 @@ apply(X, MARGIN, FUN, \dots)
   the \dQuote{correct} dimension.
 
   If the calls to \code{FUN} return vectors of different lengths,
-  \code{apply} returns a list of length \code{dim(X)[MARGIN]}.
+  \code{apply} returns a list of length \code{prod(dim(X)[MARGIN])} with
+  \code{dim} set to \code{MARGIN} if this has length greater than one.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -70,6 +71,14 @@ apply(ma, 1, quantile)# 5 x n matrix with rownames
 
 stopifnot(dim(ma) == dim(apply(ma, 1:2, sum)))## wasn't ok before R 0.63.1
 
+## Example with different lengths for each call
+z <- array(1:24, dim=2:4)
+zseq <- apply(z, 1:2, function(x)seq(length=max(x)))
+zseq         ## a 2 x 3 matrix
+typeof(zseq) ## list
+dim(zseq) ## 2 3
+zseq[1,]
+apply(z, 3, function(x)seq(length=max(x))) # a list without a dim attribute
 }
 \keyword{iteration}
 \keyword{array}
