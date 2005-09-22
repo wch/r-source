@@ -1,0 +1,7262 @@
+# Traditional Chinese translations for R
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the R package.
+# 陈斐 <FeiChen@FairIsaac.com>, 2005
+# Wei-Lun Chao <chaoweilun@pcmail.com.tw>, 2005
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.1\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2005-09-21 14:09+0100\n"
+"PO-Revision-Date: 2005-09-06 17:34+0800\n"
+"Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/appl/approx.c:110
+msgid "approx(): invalid f value"
+msgstr "approx(): f 值無效"
+
+#: src/appl/approx.c:115
+msgid "approx(): invalid interpolation method"
+msgstr "approx(): 插值方法無效"
+
+#: src/appl/approx.c:121
+msgid "approx(): attempted to interpolate NA values"
+msgstr "approx(): 試圖插入 NA 值"
+
+#: src/appl/binning.c:67
+msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
+msgstr ".C(\"bincode\",... NAOK=FALSE) 中有 NA 值"
+
+#: src/appl/binning.c:104
+msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
+msgstr ".C(\"bincount\",... NAOK=FALSE) 有 NA 值"
+
+#: src/appl/pretty.c:104
+msgid "Internal(pretty()): very small range.. corrected"
+msgstr "內部(pretty()): 範圍太小.. 已修正"
+
+#: src/appl/pretty.c:107
+msgid "Internal(pretty()): very large range.. corrected"
+msgstr "內部(pretty()): 範圍太大.. 已修正"
+
+#: src/appl/rcont.c:78
+#, c-format
+msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
+msgstr "rcont2 [%d,%d]: exp 向下溢位到 0; 演算法失敗"
+
+#: src/appl/strsignif.c:109
+msgid ".C(..): Width cannot be zero"
+msgstr ".C(..): 寬度不能為零"
+
+#: src/appl/strsignif.c:123
+msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
+msgstr ".C(..):「type」如果用於 \"d\"-格式的話必須為 \"integer\""
+
+#: src/appl/strsignif.c:214
+msgid ".C(..): 'type' must be \"real\" for this format"
+msgstr ".C(..):「type」用於這種格式的話必須為 \"real\""
+
+#: src/gnuwin32/dynload.c:101
+#, c-format
+msgid "DLL attempted to change FPU control word from %x to %x"
+msgstr "DLL 試圖把 FPU 控制詞從 %x 改成 %x"
+
+#: src/gnuwin32/dynload.c:139
+msgid "cannot get working directory"
+msgstr "找不到工作目錄"
+
+#: src/gnuwin32/extra.c:50
+msgid "invalid 'tempdir' in R_tmpnam"
+msgstr "R_tmpnam 裡的 'tempdir' 無效"
+
+#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:329
+msgid "cannot find unused tempfile name"
+msgstr "暫時檔案名都用盡"
+
+#: src/gnuwin32/extra.c:96
+msgid "invalid 'names' in R_unlink"
+msgstr "R_unlink 的 'names' 無效"
+
+#: src/gnuwin32/extra.c:140 src/gnuwin32/extra.c:143 src/gnuwin32/extra.c:199
+#: src/gnuwin32/extra.c:215 src/gnuwin32/extra.c:227 src/gnuwin32/extra.c:406
+#: src/gnuwin32/extra.c:437 src/gnuwin32/extra.c:464 src/gnuwin32/extra.c:467
+#: src/gnuwin32/extra.c:516 src/gnuwin32/extra.c:553 src/gnuwin32/extra.c:564
+#: src/gnuwin32/extra.c:588 src/gnuwin32/extra.c:596 src/gnuwin32/extra.c:623
+#: src/gnuwin32/extra.c:639 src/gnuwin32/extra.c:790 src/gnuwin32/extra.c:874
+#: src/gnuwin32/extra.c:877 src/gnuwin32/extra.c:882 src/main/builtin.c:88
+#: src/main/builtin.c:315 src/main/builtin.c:327 src/main/character.c:129
+#: src/main/character.c:2421 src/main/character.c:2425
+#: src/main/connections.c:764 src/main/connections.c:770
+#: src/main/connections.c:773 src/main/connections.c:777
+#: src/main/connections.c:900 src/main/connections.c:906
+#: src/main/connections.c:911 src/main/connections.c:1086
+#: src/main/connections.c:1092 src/main/connections.c:1096
+#: src/main/connections.c:1099 src/main/connections.c:1268
+#: src/main/connections.c:1274 src/main/connections.c:1278
+#: src/main/connections.c:1948 src/main/connections.c:1952
+#: src/main/connections.c:1955 src/main/connections.c:1959
+#: src/main/connections.c:2001 src/main/connections.c:2006
+#: src/main/connections.c:2010 src/main/connections.c:2014
+#: src/main/connections.c:2018 src/main/connections.c:2024
+#: src/main/connections.c:2067 src/main/connections.c:2073
+#: src/main/connections.c:2077 src/main/connections.c:2125
+#: src/main/connections.c:2128 src/main/connections.c:2485
+#: src/main/connections.c:2490 src/main/connections.c:3241
+#: src/main/connections.c:3247 src/main/connections.c:3490
+#: src/main/connections.c:3501 src/main/connections.c:3505
+#: src/main/connections.c:3509 src/main/datetime.c:530 src/main/datetime.c:595
+#: src/main/datetime.c:597 src/main/datetime.c:601 src/main/datetime.c:704
+#: src/main/datetime.c:706 src/main/datetime.c:819 src/main/dounzip.c:182
+#: src/main/dounzip.c:188 src/main/envir.c:1428 src/main/envir.c:1432
+#: src/main/envir.c:1517 src/main/envir.c:1525 src/main/envir.c:1589
+#: src/main/envir.c:1605 src/main/envir.c:1612 src/main/envir.c:1719
+#: src/main/envir.c:1727 src/main/envir.c:1735 src/main/envir.c:1750
+#: src/main/envir.c:1756 src/main/envir.c:2264 src/main/envir.c:2530
+#: src/main/envir.c:3030 src/main/eval.c:252 src/main/eval.c:1534
+#: src/main/eval.c:1558 src/main/eval.c:1562 src/main/model.c:1572
+#: src/main/model.c:1580 src/main/optim.c:224 src/main/paste.c:71
+#: src/main/paste.c:163 src/main/paste.c:170 src/main/paste.c:177
+#: src/main/paste.c:182 src/main/paste.c:187 src/main/paste.c:192
+#: src/main/paste.c:195 src/main/paste.c:203 src/main/paste.c:340
+#: src/main/paste.c:345 src/main/platform.c:799 src/main/platform.c:805
+#: src/main/platform.c:857 src/main/platform.c:894 src/main/platform.c:897
+#: src/main/platform.c:900 src/main/platform.c:903 src/main/platform.c:906
+#: src/main/platform.c:984 src/main/platform.c:1024 src/main/platform.c:1054
+#: src/main/platform.c:1056 src/main/platform.c:1089 src/main/platform.c:1186
+#: src/main/platform.c:1429 src/main/platform.c:1464 src/main/plot3d.c:2475
+#: src/main/plot3d.c:2479 src/main/plot3d.c:2484 src/main/plot3d.c:2488
+#: src/main/plot3d.c:2492 src/main/plot3d.c:2496 src/main/print.c:172
+#: src/main/print.c:178 src/main/print.c:200 src/main/random.c:465
+#: src/main/random.c:467 src/main/random.c:469 src/main/saveload.c:2028
+#: src/main/saveload.c:2261 src/main/sysutils.c:390 src/main/sysutils.c:392
+#: src/main/sysutils.c:394 src/main/unique.c:588 src/main/util.c:903
+#: src/main/util.c:906 src/modules/internet/internet.c:252
+#: src/modules/internet/internet.c:258 src/modules/internet/internet.c:264
+#: src/modules/internet/internet.c:267 src/modules/internet/internet.c:271
+#: src/unix/sys-std.c:901 src/unix/sys-std.c:923
+#, fuzzy, c-format
+msgid "invalid '%s' argument"
+msgstr "'sub' 引數不正確"
+
+#: src/gnuwin32/extra.c:164 src/gnuwin32/extra.c:211 src/gnuwin32/extra.c:395
+#: src/gnuwin32/extra.c:418
+msgid "R_HOME not set"
+msgstr "沒有設定 R_HOME"
+
+#: src/gnuwin32/extra.c:171
+#, c-format
+msgid "%s\\doc\\html\\rwin.htm[l] not found"
+msgstr "找不到 %s\\doc\\html\\rwin.htm[l]"
+
+#: src/gnuwin32/extra.c:205
+#, c-format
+msgid "%s not found"
+msgstr "找不到%s"
+
+#: src/gnuwin32/extra.c:218 src/gnuwin32/extra.c:230
+msgid "WinHelp call failed"
+msgstr "WinHelp 呼叫失敗"
+
+#: src/gnuwin32/extra.c:221
+msgid "too many .hlp files opened"
+msgstr "已經開啟了太多 .hlp 檔案"
+
+#: src/gnuwin32/extra.c:232
+msgid "type not yet implemented"
+msgstr "類型目前還沒有實作"
+
+#: src/gnuwin32/extra.c:449
+msgid "unknown type"
+msgstr "不明的類型"
+
+#: src/gnuwin32/extra.c:488 src/gnuwin32/extra.c:512 src/gnuwin32/extra.c:550
+#: src/gnuwin32/extra.c:585
+msgid "Menu functions can only be used in the GUI"
+msgstr "選單功能只能在 GUI 中使用"
+
+#: src/gnuwin32/extra.c:520
+#, c-format
+msgid "unable to retrieve items for %s (%s)"
+msgstr "無法檢索項目 %s (%s)"
+
+#: src/gnuwin32/extra.c:558
+#, c-format
+msgid "unable to add menu (%s)"
+msgstr "無法增加選單 (%s)"
+
+#: src/gnuwin32/extra.c:570
+#, c-format
+msgid "unable to add menu item (%s)"
+msgstr "無法加入選單項 (%s)"
+
+#: src/gnuwin32/extra.c:593
+msgid "menu does not exist"
+msgstr "選單不存在"
+
+#: src/gnuwin32/extra.c:600
+#, c-format
+msgid "unable to delete menu item (%s)"
+msgstr "無法刪除選單項 (%s)"
+
+#: src/gnuwin32/extra.c:628
+msgid "savehistory can only be used in Rgui and Rterm"
+msgstr "savehistory 只能在 Rgui 和 Rterm 中使用"
+
+#: src/gnuwin32/extra.c:643
+msgid "loadhistory can only be used in Rgui and Rterm"
+msgstr "loadhistory 只能在 Rgui 和 Rterm 中使用"
+
+#: src/gnuwin32/extra.c:711 src/main/datetime.c:466 src/main/datetime.c:532
+#: src/main/dotcode.c:142 src/main/errors.c:710 src/main/errors.c:737
+#: src/main/errors.c:828 src/main/errors.c:853 src/main/errors.c:858
+#: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
+#: src/main/optimize.c:181 src/main/optimize.c:188 src/main/optimize.c:197
+#: src/main/platform.c:987 src/main/plot.c:385 src/main/plot.c:590
+#: src/main/plot.c:595 src/main/plot.c:2184 src/main/plot.c:2191
+#: src/main/plot.c:3255 src/main/plot.c:3257 src/main/plot.c:3259
+#: src/main/plot.c:3408 src/main/plot3d.c:1418 src/main/plot3d.c:2553
+#: src/main/plot3d.c:2557 src/main/plot3d.c:2559 src/main/scan.c:945
+#: src/main/scan.c:949 src/main/scan.c:951 src/main/scan.c:962
+#: src/main/scan.c:998 src/main/scan.c:1001 src/main/scan.c:1079
+#: src/main/scan.c:1083 src/main/scan.c:1093 src/main/scan.c:1256
+#: src/main/scan.c:1533 src/main/scan.c:1553 src/main/scan.c:1557
+#: src/main/scan.c:1563 src/main/scan.c:1780 src/main/scan.c:1781
+#: src/main/scan.c:1783 src/main/scan.c:1784 src/main/scan.c:1785
+#: src/main/scan.c:1786 src/main/scan.c:1787 src/main/scan.c:1788
+#: src/main/sort.c:722 src/main/sort.c:822 src/main/sysutils.c:143
+#: src/main/util.c:1094 src/main/util.c:1099 src/main/util.c:1107
+#: src/main/util.c:1110 src/modules/X11/devX11.c:2352
+#: src/modules/X11/devX11.c:2379 src/modules/X11/devX11.c:2384
+#: src/modules/X11/devX11.c:2389 src/unix/sys-std.c:973
+#, fuzzy, c-format
+msgid "invalid '%s' value"
+msgstr "'pos' 值不正確"
+
+#: src/gnuwin32/extra.c:766 src/gnuwin32/extra.c:776
+msgid "incorrect argument"
+msgstr "引數不正確"
+
+#: src/gnuwin32/extra.c:769
+msgid "don't be silly!: your machine has a 4Gb address limit"
+msgstr "別傻了!: 您的機器有 4Gb 的位址上限"
+
+#: src/gnuwin32/extra.c:772
+msgid "cannot decrease memory limit"
+msgstr "無法減少記憶體限制"
+
+#: src/gnuwin32/extra.c:1056
+msgid "argument must be a character vector"
+msgstr "引數必須為字元向量"
+
+#: src/gnuwin32/extra.c:1071 src/main/connections.c:1388
+msgid "Unable to open the clipboard"
+msgstr "無法開啟剪貼簿"
+
+#: src/gnuwin32/extra.c:1076 src/main/connections.c:1392
+msgid "Unable to write to the clipboard"
+msgstr "無法寫入剪貼簿"
+
+#: src/gnuwin32/extra.c:1202
+msgid "'default' must be a character string"
+msgstr "'default' 必須為字串"
+
+#: src/gnuwin32/extra.c:1204
+msgid "'default' is overlong"
+msgstr "'default' 太長"
+
+#: src/gnuwin32/extra.c:1213
+msgid "'caption' must be a character string"
+msgstr "'caption' 必須為字串"
+
+#: src/gnuwin32/extra.c:1215
+msgid "'multi' must be a logical value"
+msgstr "'multi' 必須為邏輯值"
+
+#: src/gnuwin32/extra.c:1217
+msgid "'filterindex' must be an integer value"
+msgstr "'filterindex' 必須為整數"
+
+#: src/gnuwin32/extra.c:1351
+msgid "'title' must be a character string"
+msgstr "'title' 必須為字串"
+
+#: src/gnuwin32/extra.c:1383
+msgid "'which' must be length 1"
+msgstr "'which' 的長度必須為 1"
+
+#: src/gnuwin32/extra.c:1413
+msgid "invalid value of 'which'"
+msgstr "'which' 的值無效"
+
+#: src/gnuwin32/extra.c:1415 src/gnuwin32/extra.c:1417
+#: src/gnuwin32/extra.c:1457
+msgid "invalid device"
+msgstr "裝置無效"
+
+#: src/gnuwin32/extra.c:1418
+msgid "requires SDI mode"
+msgstr "需要用 SDI 模式"
+
+#: src/gnuwin32/extra.c:1451
+msgid "invalid graphical device number"
+msgstr "圖形裝置號碼無效"
+
+#: src/gnuwin32/extra.c:1461
+msgid "bad device"
+msgstr "裝置不當"
+
+#: src/gnuwin32/extra.c:1700 src/gnuwin32/extra.c:1708
+msgid "invalid input in Rmbstowcs"
+msgstr "Rmbstowcs 裡的輸入無效"
+
+#: src/gnuwin32/run.c:43
+msgid "Insufficient memory (expandcmd)"
+msgstr "沒有足夠的記憶體 (expandcmd)"
+
+#: src/gnuwin32/run.c:50
+msgid "A \" is missing (expandcmd)"
+msgstr "少了一個 \" (expandcmd)"
+
+#: src/gnuwin32/run.c:88
+msgid " not found"
+msgstr "沒找到"
+
+#: src/gnuwin32/run.c:137
+msgid "Impossible to redirect input"
+msgstr "無法將輸入重新導向"
+
+#: src/gnuwin32/run.c:183
+msgid "Impossible to run "
+msgstr "無法執行 "
+
+#: src/gnuwin32/run.c:255
+msgid "Insufficient memory (rpipeOpen)"
+msgstr "沒有足夠的記憶體 (rpipeOpen)"
+
+#: src/gnuwin32/run.c:263 src/gnuwin32/run.c:281
+msgid "Impossible to create pipe"
+msgstr "無法建立管道"
+
+#: src/gnuwin32/run.c:301
+msgid "Impossible to create thread/pipe"
+msgstr "無法建立執行緒/管道"
+
+#: src/gnuwin32/run.c:432 src/main/connections.c:296 src/main/dounzip.c:318
+msgid "seek not enabled for this connection"
+msgstr "這個連結上不能使用搜索"
+
+#: src/gnuwin32/run.c:438
+msgid "truncate not enabled for this connection"
+msgstr "這個連結不能使用截短"
+
+#: src/gnuwin32/run.c:515 src/gnuwin32/run.c:519 src/gnuwin32/run.c:525
+#: src/gnuwin32/run.c:541 src/main/connections.c:855
+#: src/main/connections.c:859 src/main/connections.c:865
+#: src/main/connections.c:879
+msgid "allocation of pipe connection failed"
+msgstr "管道連結指派失敗"
+
+#: src/gnuwin32/sys-win32.c:188
+msgid "character string expected as first argument"
+msgstr "第一個引數應當是字串"
+
+#: src/gnuwin32/sys-win32.c:200
+msgid "character string expected as third argument"
+msgstr "第三個引數應當是字串"
+
+#: src/gnuwin32/system.c:122
+#, c-format
+msgid "Fatal error: %s\n"
+msgstr "嚴重錯誤：%s\n"
+
+#: src/gnuwin32/system.c:292 src/unix/sys-std.c:591
+#, c-format
+msgid "encoding '%s' is not recognised"
+msgstr "編碼 '%s' 無法確認"
+
+#: src/gnuwin32/system.c:298 src/unix/sys-std.c:597
+msgid "<ERROR: invalid input in encoding> "
+msgstr "<錯誤: 編碼裡的輸入不正確> "
+
+#: src/gnuwin32/system.c:498
+#, c-format
+msgid "Unable to open file '%s'"
+msgstr "無法開啟檔案 '%s'"
+
+#: src/gnuwin32/system.c:512
+#, c-format
+msgid "file.show(): file '%s' does not exist\n"
+msgstr "file.show(): 檔案 '%s' 不存在\n"
+
+#: src/gnuwin32/system.c:874
+msgid "WARNING: no max-mem-size given\n"
+msgstr "警告: max-mem-size 沒有定義\n"
+
+#: src/gnuwin32/system.c:880
+#, c-format
+msgid "WARNING: --max-mem-size value is invalid: ignored\n"
+msgstr "警告: --max-mem-size 值不正確: 忽略不用\n"
+
+#: src/gnuwin32/system.c:882
+#, c-format
+msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
+msgstr "警告: --max-mem-size=%lu'%c': 太大，忽略不用\n"
+
+#: src/gnuwin32/system.c:887
+#, c-format
+msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
+msgstr "警告: max-mem-size=%4.1fM 太小，忽略不用\n"
+
+#: src/gnuwin32/system.c:897 src/unix/system.c:244
+#, c-format
+msgid "WARNING: unknown option '%s'\n"
+msgstr "警告: 沒有 '%s' 這樣的選項\n"
+
+#: src/gnuwin32/system.c:922 src/unix/system.c:248
+#, c-format
+msgid "ARGUMENT '%s' __ignored__\n"
+msgstr "引數「%s」忽略不用\n"
+
+#: src/gnuwin32/system.c:940 src/unix/system.c:286
+msgid "you must specify '--save', '--no-save' or '--vanilla'"
+msgstr "您必須指定 '--save'、'--no-save' 或 '--vanilla' 其中的一個"
+
+#: src/gnuwin32/system.c:945
+msgid ""
+"impossible to create 'reader thread'; you must free some system resources"
+msgstr "無法建立「reader thread」；您必須釋放一些系統資源"
+
+#: src/include/Errormsg.h:31
+msgid "NaNs produced"
+msgstr "產生了 NaNs"
+
+#: src/include/Errormsg.h:33
+msgid "Non-numeric argument to mathematical function"
+msgstr "數學函數中使用了非數值引數"
+
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3739
+#: src/main/scan.c:1480
+msgid "invalid argument"
+msgstr "引數不正確"
+
+#: src/include/Errormsg.h:37
+msgid "first argument must be a character string"
+msgstr "第一個引數必須是字串"
+
+#: src/include/Errormsg.h:38
+msgid "first argument must be a list"
+msgstr "第一個引數必須是串列"
+
+#: src/include/Errormsg.h:39
+msgid "second argument must be a character string"
+msgstr "第二個引數必須是字串"
+
+#: src/include/Errormsg.h:40
+msgid "second argument must be a list"
+msgstr "第二個引數必須是串列"
+
+#: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:215
+#: src/main/subscript.c:320 src/main/subscript.c:323 src/main/subscript.c:417
+msgid "subscript out of bounds"
+msgstr "下標超出邊界"
+
+#: src/include/Errormsg.h:43 src/main/subassign.c:1317
+#: src/main/subassign.c:1666
+msgid "object is not subsettable"
+msgstr "目的物件不是次集合表格"
+
+#: src/include/Errormsg.h:44
+msgid "invalid 'mode' of argument"
+msgstr "'mode' 引數不正確"
+
+#: src/include/Errormsg.h:45
+msgid "applies only to lists and vectors"
+msgstr "只能用於串列和向量"
+
+#: src/main/CConverters.c:302
+msgid "no R-to-C converter found corresponding to identifier"
+msgstr "找不到與識別碼相應的 R-to-C 轉換器"
+
+#: src/main/CommandLineArgs.c:169
+msgid "WARNING: no value given for --encoding given\n"
+msgstr "警告: 沒有設定 --enconding 的值\n"
+
+#: src/main/CommandLineArgs.c:188
+#, c-format
+msgid "WARNING: option '%s' no longer supported\n"
+msgstr "警告: 本版本不再支援 '%s' 選項\n"
+
+#: src/main/CommandLineArgs.c:199
+#, c-format
+msgid "WARNING: no value given for '%s'\n"
+msgstr "警告: 沒有設定 '%s' 的值\n"
+
+#: src/main/CommandLineArgs.c:207
+#, c-format
+msgid "WARNING: '%s' value is invalid: ignored\n"
+msgstr "警告: '%s' 的值不正確: 忽略不用\n"
+
+#: src/main/CommandLineArgs.c:211
+#, c-format
+msgid "WARNING: %s=%lu'%c': too large and ignored\n"
+msgstr "警告: %s=%lu'%c': 太大，忽略不用\n"
+
+#: src/main/CommandLineArgs.c:228
+msgid "WARNING: no value given for '--max-ppsize'\n"
+msgstr "警告: 沒有設定 '--max-ppsize' 的值\n"
+
+#: src/main/CommandLineArgs.c:233
+msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
+msgstr "警告: '-max-ppsize' 的值是負數: 忽略不用\n"
+
+#: src/main/CommandLineArgs.c:235
+msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
+msgstr "警告: '-max-ppsize' 的值太小: 忽略不用\n"
+
+#: src/main/CommandLineArgs.c:238
+msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
+msgstr "警告: '-max-ppsize' 的值太大: 忽略不用\n"
+
+#: src/main/CommandLineArgs.c:249
+msgid "WARNING: no 'vsize' given\n"
+msgstr "警告: 沒有設定 'vsize' 的值\n"
+
+#: src/main/CommandLineArgs.c:255
+#, c-format
+msgid "WARNING: '--vsize' value is invalid: ignored\n"
+msgstr "警告: '--vsize' 的值不正確: 忽略不用\n"
+
+#: src/main/CommandLineArgs.c:257
+#, c-format
+msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
+msgstr "警告: --vsize=%ld'%c': 太大，忽略不用\n"
+
+#: src/main/CommandLineArgs.c:272
+msgid "WARNING: no 'nsize' given\n"
+msgstr "警告: 沒有設定 'nsize' 的值\n"
+
+#: src/main/CommandLineArgs.c:278
+#, c-format
+msgid "WARNING: '--nsize' value is invalid: ignored\n"
+msgstr "警告: '--nsize' 的值不正確: 忽略不用\n"
+
+#: src/main/CommandLineArgs.c:280
+#, c-format
+msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
+msgstr "警告: --nsize=%lu'%c': 太大，忽略不用\n"
+
+#: src/main/RNG.c:139
+#, c-format
+msgid "unif_rand: unimplemented RNG kind %d"
+msgstr "unif_rand: RNG 類型 %d 目前沒有實作"
+
+#: src/main/RNG.c:204
+#, c-format
+msgid "FixupSeeds: unimplemented RNG kind %d"
+msgstr "FixupSeeds: RNG 類型 %d 目前沒有實作"
+
+#: src/main/RNG.c:239
+msgid "'user_unif_rand' not in load table"
+msgstr "'user_unif_rand' 在載入表中並不存在"
+
+#: src/main/RNG.c:247
+msgid "cannot read seeds unless 'user_unif_nseed' is supplied"
+msgstr "只有在設定了 'user_unif_nseed' 以後才能讀隨機種子"
+
+#: src/main/RNG.c:252
+msgid "seed length must be in 0...625; ignored"
+msgstr "隨機種子的長度必須在 0 到 625 之間; 忽略不用"
+
+#: src/main/RNG.c:260
+#, c-format
+msgid "RNG_Init: unimplemented RNG kind %d"
+msgstr "RNG_Init: RNG 類型 %d 目前沒有實作"
+
+#: src/main/RNG.c:288
+msgid ".Random.seed is a missing argument with no default"
+msgstr ".Random.seed 這個引數沒有設定也沒有預設值"
+
+#: src/main/RNG.c:290
+msgid ".Random.seed is not a vector"
+msgstr ".Random.seed 不是向量"
+
+#: src/main/RNG.c:293
+msgid ".Random.seed[1] is not a valid integer"
+msgstr ".Random.seed[1]不是正確的整數"
+
+#: src/main/RNG.c:301
+msgid ".Random.seed[0] is not a valid Normal type"
+msgstr ".Random.seed[0] 不是正確的 Normal 類別"
+
+#: src/main/RNG.c:312
+msgid ".Random.seed[1] = 5 but no user-supplied generator"
+msgstr ".Random.seed[1]=5 但沒有使用者指定的產生器"
+
+#: src/main/RNG.c:315
+msgid ".Random.seed[1] is not a valid RNG kind (code)"
+msgstr ".Random.seed[1] 不是正確的 RNG 類別 (程式碼)"
+
+#: src/main/RNG.c:321
+msgid ".Random.seed has wrong length"
+msgstr ".Random.seed 的長度不正確"
+
+#: src/main/RNG.c:378
+#, c-format
+msgid "RNGkind: unimplemented RNG kind %d"
+msgstr "RNGkind: RNG 類型 %d 目前沒有實作"
+
+#: src/main/RNG.c:390
+msgid "invalid Normal type in RNGkind"
+msgstr "RNGkind 裡的 Normal 類別不正確"
+
+#: src/main/RNG.c:393
+msgid "'user_norm_rand' not in load table"
+msgstr "'user_norm_rand' 不在載入表中"
+
+#: src/main/RNG.c:435
+msgid "supplied seed is not a valid integer"
+msgstr "提供的隨機種子不是正確的整數"
+
+#: src/main/Rdynload.c:236
+msgid "R_RegisterRoutines called with invalid DllInfo object."
+msgstr "R_RegisterRoutines 呼叫時 DllInfo 目的物件不正確。"
+
+#: src/main/Rdynload.c:499
+msgid "Maximal number of DLLs reached..."
+msgstr "已達到了 DLL 數目的上限..."
+
+#: src/main/Rdynload.c:551
+msgid "could not allocate space for 'path'"
+msgstr "無法為 'path' 指派空間"
+
+#: src/main/Rdynload.c:564
+#, c-format
+msgid "DLLname '%s' is too long"
+msgstr "DLLname '%s' 太長"
+
+#: src/main/Rdynload.c:585
+msgid "could not allocate space for 'name'"
+msgstr "無法為 'name' 指派空間"
+
+#: src/main/Rdynload.c:845 src/main/Rdynload.c:861 src/main/util.c:992
+msgid "character argument expected"
+msgstr "需要字元引數"
+
+#: src/main/Rdynload.c:850 src/main/Rdynload.c:879
+#, c-format
+msgid ""
+"unable to load shared library '%s':\n"
+"  %s"
+msgstr ""
+"無法載入共享函數庫「%s」：\n"
+"  %s"
+
+#: src/main/Rdynload.c:864
+#, c-format
+msgid "dynamic/shared library '%s' was not loaded"
+msgstr "沒有載入動態/共享函數庫 '%s'"
+
+#: src/main/Rdynload.c:1010
+msgid "must pass package name or DllInfo reference"
+msgstr "必須傳給套件名稱或 DllInfo 參照"
+
+#: src/main/Rdynload.c:1091
+#, c-format
+msgid "Unimplemented type %d in createRSymbolObject"
+msgstr "createRSymbolObject 裡的類型 %d 目前沒有被實作"
+
+#: src/main/Rdynload.c:1170
+msgid "R_getRegisteredRoutines() expects a DllInfo reference"
+msgstr "R_getRegisteredRoutines() 需要 DllInfo 參考"
+
+#: src/main/Rdynload.c:1175
+msgid "NULL value passed for DllInfo"
+msgstr "傳給 DllInfo 一個 NULL 值"
+
+#: src/main/Rdynload.c:1212 src/main/Rdynload.c:1218 src/main/Rdynload.c:1225
+#: src/main/Rdynload.c:1231 src/main/Rdynload.c:1237
+msgid "no dyn.load support in this R version"
+msgstr "本 R 版本不支援 dyn.load"
+
+#: src/main/Rstrptime.h:1090
+msgid "input string is too long"
+msgstr "輸入字串太長"
+
+#: src/main/Rstrptime.h:1092
+msgid "invalid multibyte input string"
+msgstr "無效的多位元組輸入字串"
+
+#: src/main/Rstrptime.h:1095
+msgid "format string is too long"
+msgstr "格式字串太長"
+
+#: src/main/Rstrptime.h:1097
+msgid "invalid multibyte format string"
+msgstr "無效的多位元組格式字串"
+
+#: src/main/apply.c:39 src/main/envir.c:2351
+msgid "arguments must be symbolic"
+msgstr "引數必須為符號"
+
+#: src/main/apply.c:42 src/main/complex.c:887
+msgid "invalid length"
+msgstr "長度不正確"
+
+#: src/main/apply.c:78
+msgid "first argument is not a matrix"
+msgstr "第一個引數不是矩陣"
+
+#: src/main/arithmetic.c:183
+msgid "probable complete loss of accuracy in modulus"
+msgstr "係數的精確度很可能完全損失"
+
+#: src/main/arithmetic.c:301
+msgid "operator needs one or two arguments"
+msgstr "運算子需要一或兩個引數"
+
+#: src/main/arithmetic.c:318
+msgid "non-numeric argument to binary operator"
+msgstr "二元運算子中有非數值引數"
+
+#: src/main/arithmetic.c:376 src/main/relop.c:125
+msgid "non-conformable arrays"
+msgstr "非調和陣列"
+
+#: src/main/arithmetic.c:419
+msgid "non-conformable time-series"
+msgstr "非調和時間序列"
+
+#: src/main/arithmetic.c:441 src/main/logic.c:119 src/main/relop.c:163
+msgid ""
+"longer object length\n"
+"\tis not a multiple of shorter object length"
+msgstr "長的目的物件長度不是短的目的物件長度的整數倍"
+
+#: src/main/arithmetic.c:505
+msgid "invalid argument to unary operator"
+msgstr "一元運算子的引數不正確"
+
+#: src/main/arithmetic.c:529 src/main/arithmetic.c:548
+msgid "invalid unary operator"
+msgstr "一元運算子不正確"
+
+#: src/main/arithmetic.c:595
+msgid "NAs produced by integer overflow"
+msgstr "整數向上溢位產生了 NA"
+
+#: src/main/arithmetic.c:914
+msgid "unimplemented real function of 1 argument"
+msgstr "單引數的實數函數目前還沒有實作"
+
+#: src/main/arithmetic.c:1104 src/main/arithmetic.c:1382
+#: src/main/arithmetic.c:1576 src/main/arithmetic.c:1705
+#, c-format
+msgid "unimplemented real function of %d numeric arguments"
+msgstr "%d 個數值引數的實數函數目前沒有實作"
+
+#: src/main/arithmetic.c:1129
+#, c-format
+msgid "%d arguments passed to 'atan' which requires 1 or 2"
+msgstr "給了 'atan'%d 個引數，但它最多只能用兩個引數"
+
+#: src/main/arithmetic.c:1144 src/main/arithmetic.c:1163
+msgid "invalid second argument of length 0"
+msgstr "第二引數長度為 0，不正確"
+
+#: src/main/arithmetic.c:1169
+#, c-format
+msgid "%d arguments passed to 'log' which requires 1 or 2"
+msgstr "給了 'log'%d 個引數，但它最多只能用兩個引數"
+
+#: src/main/array.c:71
+msgid "matrix: invalid 'byrow' value"
+msgstr "矩陣: 'byrow' 值不正確"
+
+#: src/main/array.c:81
+msgid "non-numeric matrix extent"
+msgstr "非數值的矩陣範圍"
+
+#: src/main/array.c:86
+msgid "matrix: invalid 'nrow' value (too large or NA)"
+msgstr "矩陣: 'nrow' 值不正確 (或是太大、或為 NA)"
+
+#: src/main/array.c:88
+msgid "matrix: invalid 'nrow' value (< 0)"
+msgstr "矩陣: 'nrow' 值不正確 (< 0)"
+
+#: src/main/array.c:91 src/main/array.c:95
+msgid "matrix: invalid 'ncol' value (< 0)"
+msgstr "矩陣: 'ncol' 值不正確 (< 0)"
+
+#: src/main/array.c:93
+msgid "matrix: invalid 'ncol' value (too large or NA)"
+msgstr "矩陣: 'ncol' 值不正確 (或是太大、或為 NA)"
+
+#: src/main/array.c:101
+#, c-format
+msgid ""
+"data length [%d] is not a sub-multiple or multiple of the number of rows [%"
+"d] in matrix"
+msgstr "資料長度[%d] 不是矩陣列數[%d] 的整數倍"
+
+#: src/main/array.c:104
+#, c-format
+msgid ""
+"data length [%d] is not a sub-multiple or multiple of the number of columns "
+"[%d] in matrix"
+msgstr "資料長度[%d] 不是矩陣行數[%d] 的整數倍"
+
+#: src/main/array.c:107
+msgid "data length exceeds size of matrix"
+msgstr "資料長度超過矩陣的大小"
+
+#: src/main/array.c:112
+msgid "matrix: too many elements specified"
+msgstr "矩陣: 指定了太多的元素"
+
+#: src/main/array.c:174
+msgid "negative extents to matrix"
+msgstr "矩陣的範圍不能是負值"
+
+#: src/main/array.c:176
+msgid "allocMatrix: too many elements specified"
+msgstr "allocMatrix: 指定了太多的元素"
+
+#: src/main/array.c:198
+msgid "allocArray: too many elements specified by 'dims'"
+msgstr "allocArray: 'dims' 指定了太多的元素"
+
+#: src/main/array.c:343
+msgid "incorrect number of args to 'length'"
+msgstr "'length' 的引數數目不正確"
+
+#: src/main/array.c:362
+msgid "incorrect number of arguments to 'row/col'"
+msgstr "'row/col' 的引數數目不正確"
+
+#: src/main/array.c:364
+msgid "a matrix is required as argument to 'row/col'"
+msgstr "'row/col' 必須用矩陣引數"
+
+#: src/main/array.c:535
+msgid "requires numeric matrix/vector arguments"
+msgstr "需要數值矩陣/向量引數"
+
+#: src/main/array.c:608 src/main/array.c:612
+msgid "non-conformable arguments"
+msgstr "非調和引數"
+
+#: src/main/array.c:834
+msgid "argument is not a matrix"
+msgstr "引數不是矩陣"
+
+#: src/main/array.c:872
+msgid "invalid first argument, must be an array"
+msgstr "第一個引數不正確, 必須是陣列"
+
+#: src/main/array.c:889
+msgid "'perm' is of wrong length"
+msgstr "'perm' 的長度不正確"
+
+#: src/main/array.c:897
+msgid "value out of range in 'perm'"
+msgstr "'perm' 的值在範圍外"
+
+#: src/main/array.c:900
+msgid "invalid permutation ('perm')"
+msgstr "排列不正確 ('perm')"
+
+#: src/main/array.c:1028 src/main/connections.c:2621
+msgid "invalid value of 'n'"
+msgstr "'n' 的值不正確"
+
+#: src/main/array.c:1030
+msgid "invalid value of 'p'"
+msgstr "'p' 的值不正確"
+
+#: src/main/array.c:1031
+msgid "invalid value of 'na.rm'"
+msgstr "'na.rm' 的值不正確"
+
+#: src/main/array.c:1040
+msgid "'x' must be numeric"
+msgstr "'x' 必須為數值"
+
+#: src/main/attrib.c:89
+msgid "getAttrib: invalid type for TAG"
+msgstr "getAttrib: 標記的類型不正確"
+
+#: src/main/attrib.c:129 src/main/attrib.c:218
+msgid "attempt to set an attribute on NULL"
+msgstr "試圖在 NULL 上設定屬性"
+
+#: src/main/attrib.c:264
+msgid "invalid type for 'names': must be vector"
+msgstr "'names' 的類型不正確: 必須是向量"
+
+#: src/main/attrib.c:266
+#, c-format
+msgid "'names' attribute [%d] must be the same length as the vector [%d]"
+msgstr "'names' 屬性 [%d] 必須和向量的長度 [%d] 一樣"
+
+#: src/main/attrib.c:268
+msgid "names() applied to a non-vector"
+msgstr "names() 被用於非向量"
+
+#: src/main/attrib.c:276
+msgid "invalid time series parameters specified"
+msgstr "時間序列參數設定不正確"
+
+#: src/main/attrib.c:285
+msgid "'tsp' attribute must be numeric of length three"
+msgstr "'tsp' 屬性必須是長度為三的數值"
+
+#: src/main/attrib.c:302
+msgid "cannot assign 'tsp' to zero-length vector"
+msgstr "零長度向量不能設成 'tsp'"
+
+#: src/main/attrib.c:330
+msgid "attempt to set invalid 'comment' attribute"
+msgstr "試圖設定無效的 'comment' 屬性"
+
+#: src/main/attrib.c:366
+msgid "attempt to set invalid 'class' attribute"
+msgstr "試圖設定無效的 'class' 屬性"
+
+#: src/main/attrib.c:568
+msgid "incompatible 'names' argument"
+msgstr "不相容的 'names' 引數"
+
+#: src/main/attrib.c:620
+msgid "invalid type to set 'names' attribute"
+msgstr "以無效的類型設定 'names' 屬性"
+
+#: src/main/attrib.c:686
+msgid "'dimnames' applied to non-array"
+msgstr "'dimnames' 被應用於非陣列"
+
+#: src/main/attrib.c:690
+msgid "'dimnames' must be a list"
+msgstr "'dimnames' 必須是串列"
+
+#: src/main/attrib.c:693
+#, c-format
+msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
+msgstr "'dimnames' 的長度 [%d] 必須同 'dims' 的長度 [%d] 相等"
+
+#: src/main/attrib.c:710
+msgid "invalid type for 'dimnames' (must be a vector)"
+msgstr "設 'dimnames' 時的類型不正確 (必須為向量)"
+
+#: src/main/attrib.c:712
+#, c-format
+msgid "length of 'dimnames' [%d] not equal to array extent"
+msgstr "'dimnames' 的長度 [%d] 必須與陣列範圍相等"
+
+#: src/main/attrib.c:772
+msgid "dim<- : invalid first argument"
+msgstr "dim<-: 第一引數無效"
+
+#: src/main/attrib.c:775
+msgid "dim<- : invalid second argument"
+msgstr "dim<-: 第二引數無效"
+
+#: src/main/attrib.c:783
+msgid "dim: length-0 dimension vector is invalid"
+msgstr "dim: 零維長度的向量無效"
+
+#: src/main/attrib.c:788
+#, c-format
+msgid "dim<- : dims [product %d] do not match the length of object [%d]"
+msgstr "dim<- : dims [product %d] 與目的物件 [%d] 的長度不符"
+
+#: src/main/attrib.c:865
+msgid "attributes must be in a list"
+msgstr "屬性必須在串列裡設定"
+
+#: src/main/attrib.c:889
+msgid "attributes must be named"
+msgstr "屬性必須命名"
+
+#: src/main/attrib.c:893
+#, c-format
+msgid "all attributes must have names [%d does not]"
+msgstr "所有的屬性都必須有名稱 [%d 沒有]"
+
+#: src/main/attrib.c:936
+msgid "attribute 'name' must be of mode character"
+msgstr "'name' 屬性必須是字元"
+
+#: src/main/attrib.c:938
+msgid "exactly one attribute 'name' must be given"
+msgstr "只能給出一個 'name' 屬性"
+
+#: src/main/attrib.c:1006
+msgid "'name' must be non-null character"
+msgstr "'name' 必須為非空字元"
+
+#: src/main/attrib.c:1112 src/main/attrib.c:1151 src/main/attrib.c:1236
+msgid "invalid type or length for slot name"
+msgstr "名稱插槽的類型或長度不正確"
+
+#: src/main/attrib.c:1126
+#, c-format
+msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
+msgstr "類型 \"%2$s\" 的目的物件中沒有 \"%1$s\" 這樣一個插槽"
+
+#: src/main/attrib.c:1134
+#, c-format
+msgid "no slot of name \"%s\" for this object of class \"%s\""
+msgstr "\"%1$s\" 插槽名不存在於 \"%2$s\" 類型目的物件中"
+
+#: src/main/attrib.c:1231
+msgid "formal classes cannot be used without the methods package"
+msgstr "一定要有方法套件才能使用正式類別"
+
+#: src/main/attrib.c:1255
+#, c-format
+msgid ""
+"trying to get slot \"%s\" from an object whose class (\"%s\") is not defined "
+msgstr "目的物件的類別 (\"%2$s\") 沒有設定，因此不能從它那兒獲取插槽 \"%1$s\" "
+
+#: src/main/attrib.c:1259
+#, c-format
+msgid ""
+"trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
+"slots"
+msgstr "無法從沒有插槽的基本類別 (\"%2$s\") 的目的物件中取得 \"%1$s\" 插槽"
+
+#: src/main/attrib.c:1262
+#, c-format
+msgid ""
+"trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
+"\", ...) (not a formally defined class)"
+msgstr ""
+"無法屬於 S3 類別 c(\"%2$s\", \"%3$s\", ...) 目的物件中取得 \"%1$s\" 插槽"
+
+#: src/main/attrib.c:1280
+msgid "invalid slot type"
+msgstr "插槽的類型不正確"
+
+#: src/main/base.c:157
+msgid "Event UpdatePS requires a single numeric value"
+msgstr "UpdatePS 事件需要單一數值"
+
+#: src/main/bind.c:553
+msgid "repeated formal argument 'recursive'"
+msgstr "正式引數 'recursive' 出現重複"
+
+#: src/main/bind.c:564
+msgid "repeated formal argument 'use.names'"
+msgstr "正式引數 'use.names' 出現重複"
+
+#: src/main/bind.c:776
+msgid "argument not a list"
+msgstr "引數不是串列"
+
+#: src/main/bind.c:874 src/main/eval.c:1834 src/main/eval.c:1844
+#: src/main/objects.c:270 src/main/objects.c:309 src/main/objects.c:663
+#: src/main/objects.c:681
+#, c-format
+msgid "class name too long in '%s'"
+msgstr "'%s' 裡的類別名稱太長"
+
+#: src/main/bind.c:1004
+msgid "cannot create a matrix from these types"
+msgstr "無法從這些類型建立矩陣"
+
+#: src/main/bind.c:1079
+#, c-format
+msgid "number of rows of matrices must match (see arg %d)"
+msgstr "矩陣的列數必須相符 (參看引數 %d)"
+
+#: src/main/bind.c:1292
+#, c-format
+msgid "number of columns of matrices must match (see arg %d)"
+msgstr "矩陣的行數必須相符 (參看引數 %d)"
+
+#: src/main/builtin.c:51 src/main/envir.c:1421 src/main/envir.c:1574
+#: src/main/envir.c:1705 src/main/paste.c:60 src/main/plot.c:1741
+msgid "invalid first argument"
+msgstr "第一個引數不正確"
+
+#: src/main/builtin.c:92 src/main/errors.c:951
+msgid "invalid number of arguments"
+msgstr "引數數目不正確"
+
+#: src/main/builtin.c:186
+msgid "replacement object is not an environment"
+msgstr "替換目的物件不是環境物件"
+
+#: src/main/builtin.c:201
+msgid "'enclos' must be an environment"
+msgstr "'enclos' 必須是環境物件"
+
+#: src/main/builtin.c:214 src/main/builtin.c:224
+msgid "argument is not an environment"
+msgstr "引數不是環境物件"
+
+#: src/main/builtin.c:226
+msgid "'parent' is not an environment"
+msgstr "'parent' 不是環境物件"
+
+#: src/main/builtin.c:307 src/main/builtin.c:333 src/main/platform.c:232
+#: src/main/platform.c:281 src/main/platform.c:284 src/main/plot3d.c:2567
+#: src/main/plot3d.c:2571
+#, fuzzy, c-format
+msgid "invalid '%s' specification"
+msgstr "'sep=' 設定不正確"
+
+#: src/main/builtin.c:389
+#, c-format
+msgid "argument %d not yet handled by cat"
+msgstr "cat 目前還不能用 %d 引數"
+
+#: src/main/builtin.c:501
+msgid "vector: zero-length 'type' argument"
+msgstr "向量: 'type' 引數的長度為零"
+
+#: src/main/builtin.c:520
+#, c-format
+msgid "vector: cannot make a vector of mode \"%s\"."
+msgstr "向量: 無法建立狀態為 \"%s\" 的向量。"
+
+#: src/main/builtin.c:550
+msgid "cannot set length of non-vector"
+msgstr "不能設定非向量的長度"
+
+#: src/main/builtin.c:647
+msgid "length<- invalid first argument"
+msgstr "length<- 第一個引數不正確"
+
+#: src/main/builtin.c:649
+msgid "length<- invalid second argument"
+msgstr "length<- 第二個引數不正確"
+
+#: src/main/builtin.c:652
+msgid "length<- missing value for 'length'"
+msgstr "length<- 'length' 遺漏了設定值"
+
+#: src/main/builtin.c:678 src/main/coerce.c:1983 src/main/coerce.c:2014
+msgid "... used in an incorrect context"
+msgstr "... 的上下文用得不正確"
+
+#: src/main/builtin.c:683
+msgid "invalid parameter in 'switch()'"
+msgstr "'switch()' 的參數不正確"
+
+#: src/main/builtin.c:694
+msgid "switch: EXPR must return a length 1 vector"
+msgstr "switch: EXPR 必須回傳長度為 1 的向量"
+
+#: src/main/character.c:125
+msgid "nchar() requires a character vector"
+msgstr "nchar() 需要字元向量"
+
+#: src/main/character.c:217
+msgid "extracting substrings from a non-character object"
+msgstr "無法從非字元目的物件裡抽取子字串"
+
+#: src/main/character.c:222
+msgid "invalid substring argument(s) in substr()"
+msgstr "substr() 裡的子字串引數不正確"
+
+#: src/main/character.c:291
+msgid "replacing substrings in a non-character object"
+msgstr "無法在非字元的目的物件裡替換子字串"
+
+#: src/main/character.c:296
+msgid "invalid substring argument(s) in substr<-()"
+msgstr " substr<-() 子字串引數不正確"
+
+#: src/main/character.c:300
+msgid "invalid right-hand side in substr<-()"
+msgstr "substr<-() 函數右側表述不正確"
+
+#: src/main/character.c:366
+msgid "non-character argument in strsplit()"
+msgstr "strsplit() 不能用於非字元引數"
+
+#: src/main/character.c:374 src/main/pcre.c:112 src/main/pcre.c:312
+#: src/main/pcre.c:486 src/main/pcre.c:585
+msgid "perl = TRUE is only fully implemented in UTF-8 locales"
+msgstr "perl = TRUE 只適用於 UTF-8 語言環境"
+
+#: src/main/character.c:427 src/main/character.c:449
+#, c-format
+msgid "invalid split pattern '%s'"
+msgstr "split 的式樣 '%s' 不正確"
+
+#: src/main/character.c:715
+msgid "the first argument must be a string"
+msgstr "第一引數必須是字串"
+
+#: src/main/character.c:730
+msgid "abbreviate used with non-ASCII chars"
+msgstr "abbreviate 不適用於非 ASCII 字元"
+
+#: src/main/character.c:745
+msgid "non-character names"
+msgstr "不能有非字元名稱"
+
+#: src/main/character.c:749
+msgid "invalid value of 'allow_'"
+msgstr "'allow_' 值不正確"
+
+#: src/main/character.c:804 src/main/character.c:1588
+#, c-format
+msgid "invalid multibyte string %d"
+msgstr "多位元組字串 %d 不正確"
+
+#: src/main/character.c:885 src/main/character.c:1225
+#: src/main/character.c:1511 src/main/pcre.c:114 src/main/pcre.c:491
+#: src/main/pcre.c:590
+msgid "regular expression is invalid in this locale"
+msgstr "正規表示式不適用於此語言環境"
+
+#: src/main/character.c:907 src/main/character.c:1066
+#: src/main/character.c:1228 src/main/character.c:1514 src/main/pcre.c:121
+#: src/main/pcre.c:333 src/main/pcre.c:496 src/main/pcre.c:595
+#, c-format
+msgid "invalid regular expression '%s'"
+msgstr "正規表示式「%s」不正確"
+
+#: src/main/character.c:917 src/main/character.c:1243
+#: src/main/character.c:1531 src/main/pcre.c:136 src/main/pcre.c:366
+#: src/main/pcre.c:511 src/main/pcre.c:618
+#, c-format
+msgid "input string %d is invalid in this locale"
+msgstr "輸入的字串 %d 不適用於此語言環境"
+
+#: src/main/character.c:972 src/main/pcre.c:185
+#, c-format
+msgid "invalid backreference %d in regular expression"
+msgstr "正規表示式中向後參考 %d 不正確"
+
+#: src/main/character.c:1061 src/main/pcre.c:314
+msgid "'pattern' is invalid in this locale"
+msgstr "'pattern' 的值在本語言環境下不正確"
+
+#: src/main/character.c:1063 src/main/pcre.c:316
+msgid "'replacement' is invalid in this locale"
+msgstr "'replacement' 的值在本語言環境下不正確"
+
+#: src/main/character.c:1072
+msgid "zero-length pattern"
+msgstr "式樣長度為零"
+
+#: src/main/character.c:1563
+msgid "non-character argument to tolower()"
+msgstr "非字元引數不能用於 tolower()"
+
+#: src/main/character.c:1638
+#, c-format
+msgid "decreasing range specification ('%lc-%lc')"
+msgstr "正在遞減範圍設定 ('%lc-%lc')"
+
+#: src/main/character.c:1724
+#, c-format
+msgid "decreasing range specification ('%c-%c')"
+msgstr "正在遞減範圍設定 ('%c-%c')"
+
+#: src/main/character.c:1802
+msgid "invalid (NA) arguments."
+msgstr "(NA) 引數不正確。"
+
+#: src/main/character.c:1824
+msgid "invalid multibyte string 'old'"
+msgstr "多位元組字串 'old' 不正確"
+
+#: src/main/character.c:1831
+msgid "invalid multibyte string 'new'"
+msgstr "多位元組字串 'new' 不正確"
+
+#: src/main/character.c:1850 src/main/character.c:1912
+msgid "'old' is longer than 'new'"
+msgstr "'old' 比 'new' 要長"
+
+#: src/main/character.c:1868
+#, c-format
+msgid "invalid input multibyte string %d"
+msgstr "輸入的多位元組字串 %d 不正確"
+
+#: src/main/character.c:2011
+msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
+msgstr "在 UTF-8 語言環境下 agrep() 只能適用於 ASCII 字串"
+
+#: src/main/character.c:2020
+msgid "could not allocate memory for approximate matching"
+msgstr "做近似比較時無法指派足夠記憶體"
+
+#: src/main/character.c:2044
+msgid "could not perform case insensitive matching"
+msgstr "無法進行不區分大小寫的比較"
+
+#: src/main/character.c:2087 src/main/character.c:2322
+msgid "argument must be a character vector of length 1"
+msgstr "引數必須是長度為 1 的字元向量"
+
+#: src/main/character.c:2089 src/main/character.c:2324
+msgid ""
+"argument should be a character vector of length 1\n"
+"all but the first element will be ignored"
+msgstr "引數應當是長度為 1 的字元向量，除第一個字元外其它所有的字元都將忽略"
+
+#: src/main/character.c:2105 src/main/character.c:2137
+#: src/main/character.c:2158
+msgid "argument 'x' must be a raw vector"
+msgstr "引數 'x' 必須是常數向量"
+
+#: src/main/character.c:2108 src/main/character.c:2374
+msgid "argument 'multiple' must be TRUE or FALSE"
+msgstr "引數 'multiple' 的值必須是 TRUE 或 FALSE"
+
+#: src/main/character.c:2139
+msgid "argument 'shift' must be a small integer"
+msgstr "引數 'shift' 必須是小數值的整數"
+
+#: src/main/character.c:2176
+msgid "argument 'x' must be a integer vector"
+msgstr "引數 'x' 必須是整數向量"
+
+#: src/main/character.c:2196
+msgid "argument 'x' must be raw, integer or logical"
+msgstr "引數 'x' 必須是原始值、整數值或邏輯值"
+
+#: src/main/character.c:2198
+msgid "argument 'type' must be a character string"
+msgstr "引數「type」必須是字串"
+
+#: src/main/character.c:2202
+#, c-format
+msgid "argument 'x' must be a multiple of %d long"
+msgstr "引數 'x' 必須是 %d 值的整數倍"
+
+#: src/main/character.c:2216 src/main/character.c:2231
+msgid "argument 'x' must not contain NAs"
+msgstr "引數 'x' 不能含 NA 值"
+
+#: src/main/character.c:2371
+#, fuzzy
+msgid "argument 'x' must be an integer vector"
+msgstr "引數 'x' 必須是整數向量"
+
+#: src/main/character.c:2416
+msgid "strtrim() requires a character vector"
+msgstr "strtrim() 需要字元向量"
+
+#: src/main/coerce.c:88 src/main/errors.c:966
+msgid "NAs introduced by coercion"
+msgstr "強制變更過程中產生了 NA"
+
+#: src/main/coerce.c:90 src/main/errors.c:967
+msgid "inaccurate integer conversion in coercion"
+msgstr "強制變更造成整數不精確"
+
+#: src/main/coerce.c:92 src/main/errors.c:968
+msgid "imaginary parts discarded in coercion"
+msgstr "強制變更時丟棄了虛數部分"
+
+#: src/main/coerce.c:94
+msgid "out-of-range values treated as 0 in coercion to raw"
+msgstr "在強制變更成原始值時，任何溢位值當作 0 來處理"
+
+#: src/main/coerce.c:437
+#, c-format
+msgid "invalid data of mode \"%s\" (too short)"
+msgstr "狀態為 \"%s\" 的資料不正確 (太短)"
+
+#: src/main/coerce.c:915
+#, c-format
+msgid "'pairlist' object cannot be coerced to '%s'"
+msgstr "'pairlist' 目的物件不能被強制變更成 %s"
+
+#: src/main/coerce.c:1007
+#, c-format
+msgid "(list) object cannot be coerced to '%s'"
+msgstr "(串列) 目的物件不能強制變更成 %s"
+
+#: src/main/coerce.c:1090
+msgid "environments cannot be coerced to other types"
+msgstr "環境物件不能被強制變更成其它類型"
+
+#: src/main/coerce.c:1100
+#, c-format
+msgid "cannot coerce type %s to %s vector"
+msgstr "不能把類型 %s 強制變更成 %s 向量"
+
+#: src/main/coerce.c:1220
+msgid "cannot coerce to vector"
+msgstr "無法強制變更成向量"
+
+#: src/main/coerce.c:1311
+msgid "list argument expected"
+msgstr "需要串列引數"
+
+#: src/main/coerce.c:1315 src/main/eval.c:3382 src/main/eval.c:3385
+msgid "invalid environment"
+msgstr "環境物件不正確"
+
+#: src/main/coerce.c:1319
+msgid "argument must have length at least 1"
+msgstr "引數的長度至少要為 1"
+
+#: src/main/coerce.c:1344
+#, fuzzy
+msgid "invalid body for function"
+msgstr "內部函數不正確"
+
+#: src/main/coerce.c:1363
+msgid "invalid length 0 argument"
+msgstr "長度為 0 的引數是不正確的"
+
+#: src/main/coerce.c:1378
+msgid "invalid argument list"
+msgstr "引數串列不正確"
+
+#: src/main/coerce.c:1522
+msgid "type \"single\" unimplemented in R"
+msgstr "類型 \"single\" 目前在 R 裡還沒有實作"
+
+#: src/main/coerce.c:1524
+msgid "unimplemented predicate"
+msgstr "目前沒有實作 predicate"
+
+#: src/main/coerce.c:1660 src/main/coerce.c:1758
+#, c-format
+msgid "%s() applied to non-(list or vector)"
+msgstr "%s() 不適用於非串列或非向量"
+
+#: src/main/coerce.c:1913 src/main/coerce.c:1915
+msgid "first argument must be a character string or a function"
+msgstr "第一個引數必須是字串或函數"
+
+#: src/main/coerce.c:1952
+msgid "do.call: could not find parent environment"
+msgstr "do.call: 找不到上層環境"
+
+#: src/main/coerce.c:2052
+msgid "invalid environment specified"
+msgstr "環境設定不正確"
+
+#: src/main/coerce.c:2130
+msgid "invalid replacement object to be a class string"
+msgstr "字串類別的替換目的物件不正確"
+
+#: src/main/coerce.c:2148
+#, c-format
+msgid ""
+"\"%s\" can only be set as the class if the object has this type; found \"%s\""
+msgstr "只有在目的物件有此一類別的情況下才能設 \"%s\"；不應該有 \"%s\""
+
+#: src/main/coerce.c:2164
+#, c-format
+msgid ""
+"invalid to set the class to matrix unless the dimension attribute is of "
+"length 2 (was %d)"
+msgstr "除非維度的長度為 2(目前是 %d)，否則不能設為矩陣類別"
+
+#: src/main/coerce.c:2170
+msgid ""
+"cannot set class to \"array\" unless the dimension attribute has length > 0"
+msgstr "除非維度的長度 >0，否則不能設為 \"array\" 類別"
+
+#: src/main/colors.c:40
+#, c-format
+msgid "color intensity %g, not in [0,1]"
+msgstr "顏色強度 %g 不在 [0,1] 之間"
+
+#: src/main/colors.c:47
+#, c-format
+msgid "color intensity %d, not in 0:255"
+msgstr "顏色強度 %d 不在 0:255 之間"
+
+#: src/main/colors.c:54
+#, c-format
+msgid "alpha level %g, not in [0,1]"
+msgstr "alpha 層次 %g 不在 [0,1] 之間"
+
+#: src/main/colors.c:61
+#, c-format
+msgid "alpha level %d, not in 0:255"
+msgstr "alpha 層次 %d 不在 0:255 之間"
+
+#: src/main/colors.c:84 src/main/errors.c:952 src/main/logic.c:164
+msgid "invalid argument type"
+msgstr "引數類型不正確"
+
+#: src/main/colors.c:88
+msgid "unknown palette (need >= 2 colors)"
+msgstr "沒有這種調色盤 (需要 >= 兩種顏色)"
+
+#: src/main/colors.c:92
+msgid "maximum number of colors exceeded"
+msgstr "顏色的數目已超過最大值"
+
+#: src/main/colors.c:159
+msgid "invalid HSV color"
+msgstr "HSV 顏色不正確"
+
+#: src/main/colors.c:271
+msgid "invalid hcl color"
+msgstr "hcl 顏色不正確"
+
+#: src/main/colors.c:322
+msgid "invalid names vector"
+msgstr "names 向量不正確"
+
+#: src/main/colors.c:367
+msgid "invalid gray level, must be in [0,1]."
+msgstr "graylevel 必須在 [0,1] 之間。"
+
+#: src/main/colors.c:420
+msgid "rgb is not a matrix (internally)"
+msgstr "rgb 不是矩陣 (內部)"
+
+#: src/main/colors.c:423
+msgid "rgb must have 3 rows (internally)"
+msgstr "rgb 必須有三列 (內部)"
+
+#: src/main/complex.c:67
+msgid "invalid complex unary operator"
+msgstr "單一複數運算子不正確"
+
+#: src/main/complex.c:260
+msgid "unimplemented complex operation"
+msgstr "複數運算目前還沒有實作"
+
+#: src/main/complex.c:371
+msgid "non-numeric argument to function"
+msgstr "函數不能有非數值引數"
+
+#: src/main/complex.c:804 src/main/complex.c:876
+msgid "unimplemented complex function"
+msgstr "目前沒有實作複數功能"
+
+#: src/main/complex.c:941
+msgid "polynomial degree too high (49 max)"
+msgstr "多項式次數太高 (最多只能 49)"
+
+#: src/main/complex.c:954
+msgid "invalid polynomial coefficient"
+msgstr "多項式係數不正確"
+
+#: src/main/complex.c:959
+msgid "root finding code failed"
+msgstr "求根運算執行失敗"
+
+#: src/main/connections.c:75
+msgid "all connections are in use"
+msgstr "所有連結都已在使用"
+
+#: src/main/connections.c:85
+msgid "connection not found"
+msgstr "找不到連結"
+
+#: src/main/connections.c:96 src/main/connections.c:2611
+#: src/main/connections.c:3073 src/main/connections.c:3122
+#: src/main/connections.c:3244 src/main/connections.c:3284
+#: src/main/connections.c:3298
+msgid "invalid connection"
+msgstr "連結不正確"
+
+#: src/main/connections.c:136
+#, c-format
+msgid "conversion from encoding '%s' is unsupported"
+msgstr "不支援編碼 '%s' 的轉換"
+
+#: src/main/connections.c:151
+#, c-format
+msgid "conversion to encoding '%s' is unsupported"
+msgstr "不支援轉成編碼 '%s'"
+
+#: src/main/connections.c:164
+msgid "open/close not enabled for this connection"
+msgstr "開啟/關閉不適用於此連結"
+
+#: src/main/connections.c:180 src/main/dounzip.c:305
+msgid "printing not enabled for this connection"
+msgstr "此連結無法列印"
+
+#: src/main/connections.c:201 src/main/connections.c:1836
+msgid "printing of extremely long output is truncated"
+msgstr "截短了需要列印的特長輸出"
+
+#: src/main/connections.c:222
+msgid "invalid char string in output conversion"
+msgstr "輸出轉換字串不正確"
+
+#: src/main/connections.c:273
+#, c-format
+msgid "invalid input found on input connection '%s'"
+msgstr "輸入連結 '%s' 中的輸入不正確"
+
+#: src/main/connections.c:290
+msgid "getc not enabled for this connection"
+msgstr "getc 不適用於此連結"
+
+#: src/main/connections.c:302
+msgid "truncation not enabled for this connection"
+msgstr "此連結不能被截短"
+
+#: src/main/connections.c:313
+msgid "read not enabled for this connection"
+msgstr "不能讀取這個連結"
+
+#: src/main/connections.c:320 src/main/dounzip.c:312
+msgid "write not enabled for this connection"
+msgstr "無法寫入這個連結"
+
+#: src/main/connections.c:382
+#, fuzzy, c-format
+msgid "cannot open file '%s', reason '%s'"
+msgstr "無法開啟檔案 '%s'"
+
+#: src/main/connections.c:384 src/main/dounzip.c:101
+#, c-format
+msgid "cannot open file '%s'"
+msgstr "無法開啟檔案 '%s'"
+
+#: src/main/connections.c:480
+msgid "connection is not open for reading"
+msgstr "連結沒有開啟而不能讀"
+
+#: src/main/connections.c:485
+msgid "connection is not open for writing"
+msgstr "連結沒有開啟而不能寫"
+
+#: src/main/connections.c:523 src/main/connections.c:1443
+msgid "can only truncate connections open for writing"
+msgstr "只能截短已經開啟之可以寫入的連結"
+
+#: src/main/connections.c:528
+msgid "file truncation failed"
+msgstr "未能截短檔案"
+
+#: src/main/connections.c:530
+msgid "file truncation unavailable on this platform"
+msgstr "本平台上沒有檔案截短功能"
+
+#: src/main/connections.c:575 src/main/connections.c:579
+#: src/main/connections.c:585 src/main/connections.c:602
+msgid "allocation of file connection failed"
+msgstr "檔案連結指派失敗"
+
+#: src/main/connections.c:647
+#, fuzzy, c-format
+msgid "cannot create fifo '%s', reason '%s'"
+msgstr "無法建立先進先出 '%s'"
+
+#: src/main/connections.c:650
+#, c-format
+msgid "cannot create fifo '%s'"
+msgstr "無法建立先進先出 '%s'"
+
+#: src/main/connections.c:656
+#, c-format
+msgid "'%s' exists but is not a fifo"
+msgstr "'%s' 存在但不是先進先出"
+
+#: src/main/connections.c:669
+#, c-format
+msgid "fifo '%s' is not ready"
+msgstr "先進先出 '%s' 還沒有準備好"
+
+#: src/main/connections.c:670
+#, c-format
+msgid "cannot open fifo '%s'"
+msgstr "無法開啟先進先出 '%s'"
+
+#: src/main/connections.c:721 src/main/connections.c:725
+#: src/main/connections.c:731 src/main/connections.c:747
+msgid "allocation of fifo connection failed"
+msgstr "先進先出連結指派失敗"
+
+#: src/main/connections.c:766 src/main/connections.c:902
+#: src/main/connections.c:1088 src/main/connections.c:1270
+#: src/main/connections.c:2069 src/main/connections.c:3492
+msgid "only first element of 'description' argument used"
+msgstr "只用了 'description' 引數的第一個元素"
+
+#: src/main/connections.c:789 src/main/connections.c:930
+#: src/main/connections.c:1111 src/main/connections.c:1289
+#: src/main/connections.c:2037 src/main/connections.c:2088
+#: src/main/connections.c:2135 src/main/connections.c:3562
+msgid "unable to open connection"
+msgstr "無法開啟連結"
+
+#: src/main/connections.c:803
+msgid "fifo connections are not available on this system"
+msgstr "本系統沒有先進先出連結這個功能"
+
+#: src/main/connections.c:827
+#, fuzzy, c-format
+msgid "cannot open pipe() cmd '%s', reason '%s'"
+msgstr "無法開啟 pipe() 命令 '%s'"
+
+#: src/main/connections.c:830
+#, c-format
+msgid "cannot open pipe() cmd '%s'"
+msgstr "無法開啟 pipe() 命令 '%s'"
+
+#: src/main/connections.c:948
+msgid "pipe connections are not available on this system"
+msgstr "本系統沒有管道連結這個功能"
+
+#: src/main/connections.c:961
+#, c-format
+msgid "cannot open compressed file '%s'"
+msgstr "無法開啟壓縮檔案 '%s'"
+
+#: src/main/connections.c:1002
+msgid "whence = \"end\" is not implemented for gzfile connections"
+msgstr "whence = \"end\" 不適用於 gz 檔案連結"
+
+#: src/main/connections.c:1008
+msgid "seek on a gzfile connection returned an internal error"
+msgstr "讀取 gz 檔案連結時內部發生錯誤"
+
+#: src/main/connections.c:1042 src/main/connections.c:1046
+#: src/main/connections.c:1052 src/main/connections.c:1071
+msgid "allocation of gzfile connection failed"
+msgstr "指派 gz 檔案連結失敗"
+
+#: src/main/connections.c:1144
+#, c-format
+msgid "cannot open bzip2-ed file '%s'"
+msgstr "無法開啟 bzip2 檔案 '%s'"
+
+#: src/main/connections.c:1153 src/main/connections.c:1162
+#, c-format
+msgid "file '%s' appears not to be compressed by bzip2"
+msgstr "檔案 '%s' 看起來不象是 bzip2 類別"
+
+#: src/main/connections.c:1225 src/main/connections.c:1229
+#: src/main/connections.c:1235 src/main/connections.c:1253
+msgid "allocation of bzfile connection failed"
+msgstr "指派 bz 檔案連結失敗"
+
+#: src/main/connections.c:1344 src/modules/X11/devX11.c:2468
+msgid "memory allocation to copy clipboard failed"
+msgstr "複製剪貼簿時記憶體指派失敗"
+
+#: src/main/connections.c:1349 src/modules/X11/devX11.c:2456
+msgid "clipboard cannot be opened or contains no text"
+msgstr "打不開剪貼簿，或是剪貼簿不含文字"
+
+#: src/main/connections.c:1360
+msgid "memory allocation to open clipboard failed"
+msgstr "開啟剪貼簿時記憶體指派失敗"
+
+#: src/main/connections.c:1432
+msgid "attempt to seek outside the range of the clipboard"
+msgstr "無法檢索剪貼簿範圍外的內容"
+
+#: src/main/connections.c:1472
+msgid "clipboard connection is open for reading only"
+msgstr "開啟了唯讀剪貼簿連結"
+
+#: src/main/connections.c:1490
+msgid "clipboard buffer is full and output lost"
+msgstr "剪貼簿緩衝區已滿，輸出資料丟失"
+
+#: src/main/connections.c:1505
+msgid "'mode' for the clipboard must be 'r' or 'w'"
+msgstr "剪貼簿 'mode' 必須是 'r' 或 'w'"
+
+#: src/main/connections.c:1508
+msgid "'mode' for the clipboard must be 'r' on Unix"
+msgstr "Unix 作業系統上剪貼簿 'mode' 必須是 'r'"
+
+#: src/main/connections.c:1511 src/main/connections.c:1517
+#: src/main/connections.c:1523 src/main/connections.c:1540
+msgid "allocation of clipboard connection failed"
+msgstr "剪貼簿連結指派失敗"
+
+#: src/main/connections.c:1610 src/main/connections.c:1614
+#: src/main/connections.c:1620
+msgid "allocation of terminal connection failed"
+msgstr "終端機連結指派失敗"
+
+#: src/main/connections.c:1694
+msgid "cannot allocate memory for text connection"
+msgstr "無法給文字連結指派記憶體"
+
+#: src/main/connections.c:1739
+msgid "seek is not relevant for text connection"
+msgstr "讀取對文字連結無用"
+
+#: src/main/connections.c:1747 src/main/connections.c:1751
+#: src/main/connections.c:1757 src/main/connections.c:1770
+#: src/main/connections.c:1903 src/main/connections.c:1907
+#: src/main/connections.c:1913 src/main/connections.c:1926
+#: src/main/connections.c:1932
+msgid "allocation of text connection failed"
+msgstr "文字連結指派失敗"
+
+#: src/main/connections.c:1883
+msgid "text connection: appending to a non-existent char vector"
+msgstr "文字連結: 不能附加給不存在的字元向量"
+
+#: src/main/connections.c:1973
+msgid "unsupported mode"
+msgstr "不支援的狀態"
+
+#: src/main/connections.c:2049
+msgid "sockets are not available on this system"
+msgstr "本系統沒有插槽這個功能"
+
+#: src/main/connections.c:2115 src/main/connections.c:2169
+#: src/main/connections.c:2184 src/main/connections.c:2233
+#: src/main/connections.c:2255 src/main/connections.c:2274
+#: src/main/connections.c:2286 src/main/connections.c:2390
+#: src/main/connections.c:2487 src/main/connections.c:3868
+msgid "'con' is not a connection"
+msgstr "'con' 不是個連結"
+
+#: src/main/connections.c:2118
+msgid "cannot open standard connections"
+msgstr "無法開啟標準連結"
+
+#: src/main/connections.c:2120
+msgid "connection is already open"
+msgstr "連結已開啟"
+
+#: src/main/connections.c:2154
+msgid "unknown 'rw' value"
+msgstr "不明的 'rw' 值"
+
+#: src/main/connections.c:2235
+msgid "cannot close standard connections"
+msgstr "無法關閉標準連結"
+
+#: src/main/connections.c:2238
+msgid "cannot close output sink connection"
+msgstr "無法關閉輸出匯集連結"
+
+#: src/main/connections.c:2240
+msgid "cannot close messages sink connection"
+msgstr "無法關閉訊息匯集連結"
+
+#: src/main/connections.c:2257 src/main/connections.c:3583
+#: src/main/serialize.c:1578 src/main/serialize.c:1586
+msgid "connection is not open"
+msgstr "連結沒有開啟"
+
+#: src/main/connections.c:2346 src/main/connections.c:2358
+msgid "Line longer than buffer size"
+msgstr "列長大於緩衝區"
+
+#: src/main/connections.c:2394 src/main/context.c:488 src/main/context.c:558
+msgid "invalid value for 'n'"
+msgstr "'n' 的值不正確"
+
+#: src/main/connections.c:2397
+msgid "invalid value for 'ok'"
+msgstr "'ok' 的值不正確"
+
+#: src/main/connections.c:2399 src/main/connections.c:2631
+#: src/main/connections.c:3075 src/main/dcf.c:56 src/main/serialize.c:1580
+msgid "cannot read from this connection"
+msgstr "無法從此連結讀取"
+
+#: src/main/connections.c:2402 src/main/connections.c:2496
+#: src/main/connections.c:2634 src/main/connections.c:2837
+#: src/main/connections.c:3082 src/main/connections.c:3154
+#: src/main/connections.c:3331 src/main/dcf.c:59 src/main/deparse.c:304
+#: src/main/deparse.c:378 src/main/saveload.c:2202 src/main/scan.c:1014
+#: src/main/scan.c:1120 src/main/scan.c:1571 src/main/scan.c:1768
+#: src/main/source.c:153
+msgid "cannot open the connection"
+msgstr "無法開啟連結"
+
+#: src/main/connections.c:2412 src/main/connections.c:2431
+msgid "cannot allocate buffer in readLines"
+msgstr "無法給 readLines 指派緩衝區"
+
+#: src/main/connections.c:2448
+#, c-format
+msgid "incomplete final line found by readLines on '%s'"
+msgstr "readLines 讀 '%s' 時最後一列未完成"
+
+#: src/main/connections.c:2458
+msgid "too few lines read in readLines"
+msgstr "readLines 讀的列數不夠"
+
+#: src/main/connections.c:2492 src/main/connections.c:2824
+#: src/main/connections.c:3124 src/main/connections.c:3584
+#: src/main/scan.c:1764 src/main/serialize.c:1588
+msgid "cannot write to this connection"
+msgstr "無法寫入此連結"
+
+#: src/main/connections.c:2531
+msgid "incomplete string at end of file has been discarded"
+msgstr "忽略檔案末端不完整的字串"
+
+#: src/main/connections.c:2543
+msgid "null terminator not found: breaking string at 10000 chars"
+msgstr "沒有 null 終止符: 字串截斷於 10000 個位元組"
+
+#: src/main/connections.c:2612
+msgid "can only read from a binary connection"
+msgstr "無法讀取二進位連結"
+
+#: src/main/connections.c:2618
+msgid "invalid value of 'what'"
+msgstr "'what' 的值不正確"
+
+#: src/main/connections.c:2625
+msgid "invalid value of 'signed'"
+msgstr "'signed' 的值不正確"
+
+#: src/main/connections.c:2628 src/main/connections.c:2830
+msgid "invalid value of 'swap'"
+msgstr "'swap' 的值不正確"
+
+#: src/main/connections.c:2651 src/main/connections.c:2898
+msgid "size changing is not supported for complex vectors"
+msgstr "不支援複數向量大小的變更"
+
+#: src/main/connections.c:2676 src/main/connections.c:2694
+#: src/main/connections.c:2720 src/main/connections.c:2763
+#: src/main/connections.c:2784 src/main/connections.c:2879
+#: src/main/connections.c:2892 src/main/connections.c:2951
+#: src/main/connections.c:2980
+#, c-format
+msgid "size %d is unknown on this machine"
+msgstr "本系統沒有 %d 這樣大小的值"
+
+#: src/main/connections.c:2705
+msgid "raw is always of size 1"
+msgstr "raw 的大小只能是 1"
+
+#: src/main/connections.c:2813
+msgid "'x' is not an atomic vector type"
+msgstr "'x' 非基元向量類型"
+
+#: src/main/connections.c:2821
+msgid "can only write to a binary connection"
+msgstr "只能寫入二進位連結"
+
+#: src/main/connections.c:2858 src/main/connections.c:3008
+#: src/main/connections.c:3193
+msgid "problem writing to connection"
+msgstr "寫入連結有問題"
+
+#: src/main/connections.c:2903
+msgid "size changing is not supported for raw vectors"
+msgstr "不支援原始向量大小的變更"
+
+#: src/main/connections.c:3038 src/main/connections.c:3041
+msgid "invalid UTF-8 input in readChar()"
+msgstr "readChar() 的 UTF-8 輸入不正確"
+
+#: src/main/connections.c:3088
+msgid "supplied length is invalid"
+msgstr "長度不正確"
+
+#: src/main/connections.c:3134
+msgid "invalid value of 'sep'"
+msgstr "'sep' 的值不正確"
+
+#: src/main/connections.c:3166
+msgid ""
+"writeChar: more characters requested than are in the string - will zero-pad"
+msgstr "writeChar：字串的長度比需要的位元組數目短 - 用零來補上"
+
+#: src/main/connections.c:3218 src/main/connections.c:3221
+#: src/main/connections.c:3260 src/main/connections.c:3265
+msgid "could not allocate space for pushBack"
+msgstr "無法為 pushBack 指派空間"
+
+#: src/main/connections.c:3249
+msgid "can only push back on open readable connections"
+msgstr "只能推回已開啟的可讀連結"
+
+#: src/main/connections.c:3251
+msgid "can only push back on text-mode connections"
+msgstr "只能推回文字狀態的連結"
+
+#: src/main/connections.c:3319 src/main/connections.c:3379
+msgid "sink stack is full"
+msgstr "匯集堆疊已滿"
+
+#: src/main/connections.c:3322
+msgid "cannot switch output to stdin"
+msgstr "無法將輸出轉往stdin"
+
+#: src/main/connections.c:3339
+msgid "no sink to remove"
+msgstr "沒有可以除去的匯集"
+
+#: src/main/connections.c:3370
+msgid "invalid value for 'closeOnExit'"
+msgstr "'closeOnExit' 的值不正確"
+
+#: src/main/connections.c:3372 src/main/connections.c:3400
+msgid "invalid value for 'type'"
+msgstr "'type' 的值不正確"
+
+#: src/main/connections.c:3374
+msgid "invalid value for 'split'"
+msgstr "'split' 的值不正確"
+
+#: src/main/connections.c:3533
+msgid ""
+"file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
+msgstr "file(\"\") 只支援 open = \"w+\" 與 open = \"w+b\": 使用前者"
+
+#: src/main/connections.c:3549 src/modules/internet/internet.c:463
+msgid "unsupported URL scheme"
+msgstr "不支援這種 URL 方案"
+
+#: src/main/connections.c:3636
+msgid "file stream does not have gzip magic number"
+msgstr "檔案串流沒有 gzip 魔術數字"
+
+#: src/main/connections.c:3647
+msgid "file stream does not have valid gzip header"
+msgstr "檔案串流的 gzip 表頭不正確"
+
+#: src/main/connections.c:3713
+msgid "writing error whilst flushing 'gzcon' connection"
+msgstr "清除 'gzcon' 連結時寫入發生錯誤"
+
+#: src/main/connections.c:3813
+#, c-format
+msgid "crc error %x %x\n"
+msgstr "crc 錯誤 %x %x\n"
+
+#: src/main/connections.c:3838
+msgid "write error on 'gzcon' connection"
+msgstr "'gzcon' 連結寫入發生錯誤"
+
+#: src/main/connections.c:3872
+msgid "'level' must be one of 0 ... 9"
+msgstr "'level' 必須是 0...9 之一"
+
+#: src/main/connections.c:3875
+msgid "'allowNonCompression' must be TRUE or FALSE"
+msgstr "'allowNonCompression' 的值必須是 TRUE 或是 FALSE"
+
+#: src/main/connections.c:3878
+msgid "this is already a gzcon connection"
+msgstr "這已經是 gzcon 連結"
+
+#: src/main/connections.c:3884
+msgid "can only use read- or write- binary connections"
+msgstr "只用讀或寫的二元連結"
+
+#: src/main/connections.c:3888 src/main/connections.c:3892
+#: src/main/connections.c:3899 src/main/connections.c:3913
+msgid "allocation of 'gzcon' connection failed"
+msgstr "指派 'gzcon' 連結失敗"
+
+#: src/main/connections.c:3958
+msgid "R_compress1 requires a scalar string"
+msgstr "R_compress1 需要純量字串"
+
+#: src/main/connections.c:3965
+msgid "internal error in R_compress1"
+msgstr "內部錯誤 R_compress1"
+
+#: src/main/connections.c:3980
+msgid "R_decompress1 requires a scalar string"
+msgstr "R_decompress1 需要純量字串"
+
+#: src/main/connections.c:3985
+msgid "internal error in R_decompress1"
+msgstr "內部錯誤 R_decompress1"
+
+#: src/main/connections.c:4002
+msgid "not a list of sockets"
+msgstr "非插槽串列"
+
+#: src/main/connections.c:4007
+msgid "bad write indicators"
+msgstr "寫入指示器不正確"
+
+#: src/main/connections.c:4018
+msgid "not a socket connection"
+msgstr "非插槽連結"
+
+#: src/main/context.c:122
+msgid ""
+"bad target context--should NEVER happen;\n"
+"please bug.report() [R_run_onexits]"
+msgstr ""
+"目的上下文發生錯誤，這不應該發生；\n"
+"請用 bug.report() [R_run_onexits]"
+
+#: src/main/context.c:268
+msgid "no loop to break from, jumping to top level"
+msgstr "沒有可插斷的循環, 跳到最高層"
+
+#: src/main/context.c:276
+msgid "no function to return from, jumping to top level"
+msgstr "沒有可回返的函數, 跳到最高層"
+
+#: src/main/context.c:288
+msgid "target context is not on the stack"
+msgstr "目的上下文不在堆疊上"
+
+#: src/main/context.c:310 src/main/context.c:326 src/main/context.c:391
+#: src/main/context.c:403 src/main/context.c:415 src/main/context.c:427
+msgid "not that many frames on the stack"
+msgstr "堆疊上沒有這麼多的框格"
+
+#: src/main/context.c:343
+msgid "only positive values of 'n' are allowed"
+msgstr "'n' 只允許是正數"
+
+#: src/main/context.c:453
+msgid "no function to restart"
+msgstr "沒有重新開始的功能"
+
+#: src/main/context.c:500 src/main/context.c:504 src/main/context.c:539
+msgid "invalid value for 'which'"
+msgstr "'which' 的值不正確"
+
+#: src/main/context.c:542
+msgid "internal error in 'do_sys'"
+msgstr "內部錯誤 'do_sys'"
+
+#: src/main/cov.c:330
+msgid "missing observations in cov/cor"
+msgstr "cov/cor 中有漏失值"
+
+#: src/main/cov.c:378
+msgid "'x' is empty"
+msgstr "'x' 是空的"
+
+#: src/main/cov.c:398 src/main/cov.c:404
+msgid "incompatible dimensions"
+msgstr "不相容的維度"
+
+#: src/main/cov.c:429
+msgid "invalid 'use' (computational method)"
+msgstr "'use' 不正確 (計算方法)"
+
+#: src/main/cov.c:489
+msgid "the standard deviation is zero"
+msgstr "標準差為零"
+
+#: src/main/cum.c:140
+msgid "min/max not defined for complex numbers"
+msgstr "min/max 不能適用於複數"
+
+#: src/main/cum.c:143 src/main/cum.c:167
+msgid "unknown cumxxx function"
+msgstr "不明的 cumxxx 功能"
+
+#: src/main/datetime.c:399
+msgid "cannot set timezones on this system"
+msgstr "無法為本系統設定時區"
+
+#: src/main/datetime.c:550 src/main/datetime.c:552 src/main/datetime.c:827
+#: src/main/datetime.c:829
+msgid "zero length component in non-empty POSIXlt structure"
+msgstr "非空的 POSIXlt 結構內含長度為零的成分"
+
+#: src/main/dcf.c:67 src/main/dcf.c:71 src/main/dcf.c:112 src/main/dcf.c:161
+msgid "could not allocate memory for 'read.dcf'"
+msgstr "無法為 'read.dcf' 指派記憶體"
+
+#: src/main/deparse.c:158
+msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
+msgstr "無法為 read.dcf 指派記憶體"
+
+#: src/main/deparse.c:184 src/main/plot.c:982 src/main/plot.c:1490
+#: src/main/plot.c:1776 src/main/plot.c:1841 src/main/plot.c:1929
+#: src/main/plot.c:2054 src/main/plot.c:2144 src/main/plot.c:2433
+#: src/main/plot.c:2618 src/main/plot.c:2861 src/main/plot.c:3501
+#: src/main/plot.c:3577 src/main/plot.c:3830 src/main/plot3d.c:1381
+#: src/main/sprintf.c:138 src/main/sprintf.c:163
+msgid "too few arguments"
+msgstr "引數數目太少"
+
+#: src/main/deparse.c:191
+msgid "invalid 'cutoff' for deparse, using default"
+msgstr "deparse的 'cutoff' 值不正確，用預設值"
+
+#: src/main/deparse.c:251
+msgid "deparse may be incomplete"
+msgstr "deparse 可能不完整"
+
+#: src/main/deparse.c:313 src/main/deparse.c:386 src/main/deparse.c:392
+msgid "wrote too few characters"
+msgstr "字元寫得不夠"
+
+#: src/main/deparse.c:333
+msgid "character arguments expected"
+msgstr "需要字元引數"
+
+#: src/main/deparse.c:336
+msgid "zero length argument"
+msgstr "引數長度為零"
+
+#: src/main/deparse.c:339 src/main/saveload.c:1932 src/main/saveload.c:2199
+#: src/main/serialize.c:2130
+msgid "bad environment"
+msgstr "不當的環境"
+
+#: src/main/deparse.c:352 src/main/eval.c:2471
+#, c-format
+msgid "Object \"%s\" not found"
+msgstr "找不到這個目的物件 \"%s\""
+
+#: src/main/deparse.c:1217
+msgid "badly formed function expression"
+msgstr "不當形式的函數敘述"
+
+#: src/main/deriv.c:118
+msgid "invalid form in unary minus check"
+msgstr "檢查一元減號時發現形式不正確"
+
+#: src/main/deriv.c:484
+#, c-format
+msgid "Function '%s' is not in the derivatives table"
+msgstr "微分表裡沒有這個函數 '%s'"
+
+#: src/main/deriv.c:591
+msgid "variable must be a character string"
+msgstr "變數必須是字串"
+
+#: src/main/deriv.c:594
+msgid "only the first element is used as variable name"
+msgstr "只用了第一個元素做為變數名"
+
+#: src/main/deriv.c:607
+#, c-format
+msgid "invalid expression in \"%s\""
+msgstr "\"%s\" 的運算式不正確"
+
+#: src/main/deriv.c:903 src/main/model.c:1291
+msgid "invalid variable names"
+msgstr "變數名稱不正確"
+
+#: src/main/deriv.c:912
+msgid "invalid tag"
+msgstr "標籤不正確"
+
+#: src/main/dotcode.c:97
+msgid "NULL value passed as symbol address"
+msgstr "NULL 值被當作符號位址"
+
+#: src/main/dotcode.c:106
+msgid "'name' must be a string (of length 1) or native symbol reference"
+msgstr "'name' 必須是字串 (長度為 1) 或是原生符號參照"
+
+#: src/main/dotcode.c:144 src/main/dotcode.c:779
+msgid "too many arguments in foreign function call"
+msgstr "外接函數呼叫時引數太多"
+
+#: src/main/dotcode.c:178
+#, fuzzy, c-format
+msgid "%s entry point \"%s%s\" not in DLL for package \"%s\""
+msgstr "套件 '%2$s' 的 DLL 沒有 \"%1$s\" 這個函數"
+
+#: src/main/dotcode.c:187
+#, fuzzy, c-format
+msgid "%s entry point \"%s%s\" not in load table"
+msgstr "載入表裡沒有這個函數 \"%s\" 的名稱"
+
+#: src/main/dotcode.c:257
+#, c-format
+msgid ""
+"explicit request not to duplicate arguments in call to '%s', but argument %d "
+"is of the wrong type (%d != %d)"
+msgstr "呼叫 '%s' 時明確要求不要複製引數，但引數 %d 的類型不正確 (%d != %d)"
+
+#: src/main/dotcode.c:282
+#, c-format
+msgid "NAs in foreign function call (arg %d)"
+msgstr "外部函數呼叫時不能有 NA (引數 %d)"
+
+#: src/main/dotcode.c:296
+#, c-format
+msgid "NA/NaN/Inf in foreign function call (arg %d)"
+msgstr "外部函數呼叫時不能有 NA/NaN/Inf (引數 %d)"
+
+#: src/main/dotcode.c:318
+#, c-format
+msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
+msgstr "外部函數呼叫時不能有複數的 NA/NaN/Inf (引數 %d)"
+
+#: src/main/dotcode.c:330
+msgid "character variables must be duplicated in .C/.Fortran"
+msgstr "在呼叫 .C/.Fortran 時字元變數必須被複製"
+
+#: src/main/dotcode.c:334
+msgid "only first string in char vector used in .Fortran"
+msgstr ".Fortran 只用了位元組向量中的第一個字串"
+
+#: src/main/dotcode.c:347 src/main/dotcode.c:471
+#, c-format
+msgid "unsupported encoding '%s'"
+msgstr "不支援這個編碼 '%s'"
+
+#: src/main/dotcode.c:361
+#, c-format
+msgid "conversion problem in re-encoding to '%s'"
+msgstr "轉換編碼 '%s' 時出了問題"
+
+#: src/main/dotcode.c:368 src/main/dotcode.c:493
+msgid "re-encoding is not supported on this system"
+msgstr "本系統不支援編碼轉換"
+
+#: src/main/dotcode.c:391 src/main/dotcode.c:403
+#, c-format
+msgid "invalid mode to pass to Fortran (arg %d)"
+msgstr "傳給 Fortran 的狀態發生錯誤 (引數 %d)"
+
+#: src/main/dotcode.c:485
+#, c-format
+msgid "conversion problem in re-encoding from '%s'"
+msgstr "轉換編碼成 '%s' 出了問題"
+
+#: src/main/dotcode.c:562
+msgid "NAOK used more than once"
+msgstr "NAOK 被使用超過一次"
+
+#: src/main/dotcode.c:566
+msgid "DUP used more than once"
+msgstr "DUP 被使用超過一次"
+
+#: src/main/dotcode.c:572
+msgid "DLL name is too long"
+msgstr "DLL 的名稱太長"
+
+#: src/main/dotcode.c:575 src/main/dotcode.c:633 src/main/dotcode.c:639
+msgid "PACKAGE used more than once"
+msgstr "PACKAGE 被使用超過一次"
+
+#: src/main/dotcode.c:612
+msgid "PACKAGE argument must be a single character string"
+msgstr "PACKAGE 引數必須是單字元字串"
+
+#: src/main/dotcode.c:618
+msgid "PACKAGE argument is too long"
+msgstr "PACKAGE 引數太長"
+
+#: src/main/dotcode.c:662 src/main/dotcode.c:670
+msgid "ENCODING used more than once"
+msgstr "ENCODING 被使用超過一次"
+
+#: src/main/dotcode.c:664 src/main/dotcode.c:672
+msgid "ENCODING argument must be a single character string"
+msgstr "ENCODING 引數必須是單字元字串"
+
+#: src/main/dotcode.c:709
+msgid "no arguments supplied"
+msgstr "沒有提供引數"
+
+#: src/main/dotcode.c:710
+msgid "too many arguments"
+msgstr "引數太多"
+
+#: src/main/dotcode.c:750 src/main/dotcode.c:785 src/main/dotcode.c:1609
+#, c-format
+msgid "Incorrect number of arguments (%d), expecting %d for %s"
+msgstr "引數數目不正確 (%1$d), %3$s 只需要 %2$d 個引數"
+
+#: src/main/dotcode.c:1442 src/main/dotcode.c:2239
+msgid "too many arguments, sorry"
+msgstr "對不起，引數太多"
+
+#: src/main/dotcode.c:1466 src/main/dotcode.c:1488
+msgid "Invalid graphics state"
+msgstr "圖形狀態發生錯誤"
+
+#: src/main/dotcode.c:1564
+msgid "NULL value for DLLInfoReference when looking for DLL"
+msgstr "尋找 DLL 時 DLLInfoReference 的值是 NULL"
+
+#: src/main/dotcode.c:1635
+#, c-format
+msgid "Wrong type for argument %d in call to %s"
+msgstr "呼叫 %2$s 時引數 %1$d 的類型不正確"
+
+#: src/main/dotcode.c:2328
+#, c-format
+msgid "type \"%s\" not supported in interlanguage calls"
+msgstr "語言間呼叫不支援此一類型 \"%s\""
+
+#: src/main/dotcode.c:2340
+msgid "invalid function in call_R"
+msgstr "call_R 中的函數不正確"
+
+#: src/main/dotcode.c:2342
+msgid "invalid argument count in call_R"
+msgstr "call_R 的引數數目不正確"
+
+#: src/main/dotcode.c:2344
+msgid "invalid return value count in call_R"
+msgstr "call_R 的回傳值數目不正確"
+
+#: src/main/dotcode.c:2389
+#, c-format
+msgid "mode '%s' is not supported in call_R"
+msgstr "call_R 不支援 '%s' 型式"
+
+#: src/main/dounzip.c:172
+msgid "invalid zip name argument"
+msgstr "zip 名稱引數不正確"
+
+#: src/main/dounzip.c:175 src/main/dounzip.c:245
+msgid "zip path is too long"
+msgstr "zip 路徑太長"
+
+#: src/main/dounzip.c:191
+msgid "'destination' is too long"
+msgstr "'destination' 太長"
+
+#: src/main/dounzip.c:194
+msgid "'destination' does not exist"
+msgstr "'destination' 不存在"
+
+#: src/main/dounzip.c:204
+msgid "requested file not found in the zip file"
+msgstr "您所要求的檔案在 zip 檔案中沒有"
+
+#: src/main/dounzip.c:207
+msgid "zip file is corrupt"
+msgstr "zip 檔案有損壞"
+
+#: src/main/dounzip.c:210
+msgid "CRC error in zip file"
+msgstr "zip 檔案出現 CRC 錯誤"
+
+#: src/main/dounzip.c:214
+msgid "internal error in unz code"
+msgstr "unz 程式碼中有內部錯誤"
+
+#: src/main/dounzip.c:217
+msgid "write error in extracting from zip file"
+msgstr "抽取 zip 檔案時出了寫入錯誤"
+
+#: src/main/dounzip.c:220
+#, c-format
+msgid "error %d in extracting from zip file"
+msgstr "從 zip 檔案中解開 %d 時發生錯誤"
+
+#: src/main/dounzip.c:240
+msgid "unz connections can only be opened for reading"
+msgstr "unz 連結可讀不可寫"
+
+#: src/main/dounzip.c:251
+msgid "invalid description of unz connection"
+msgstr "unz 連結的描述不正確"
+
+#: src/main/dounzip.c:257
+#, c-format
+msgid "cannot open zip file '%s'"
+msgstr "無法開啟 zip 檔案 '%s'"
+
+#: src/main/dounzip.c:261
+#, c-format
+msgid "cannot locate file '%s' in zip file '%s'"
+msgstr "找不到在 zip 檔案 '%2$s' 裡的 %1$s 檔案"
+
+#: src/main/dounzip.c:331 src/main/dounzip.c:335 src/main/dounzip.c:341
+#: src/main/dounzip.c:358
+msgid "allocation of unz connection failed"
+msgstr "指派 unz 連結失敗"
+
+#: src/main/dstruct.c:80
+msgid "invalid formal arguments for \"function\""
+msgstr "\"function\" 的正式引數不正確"
+
+#: src/main/dstruct.c:92
+msgid ""
+"invalid body argument for \"function\"\n"
+"Should NEVER happen; please bug.report() [mkCLOSXP]"
+msgstr ""
+"\"function\" 主體引數不正確。這不應該發生，請用 bug.report() [mkCLOSXP]"
+
+#: src/main/engine.c:49
+msgid "Graphics API version mismatch"
+msgstr "圖形 API 版本不相符"
+
+#: src/main/engine.c:87
+msgid "not enough memory to allocate device (in addDevice)"
+msgstr "指派裝置記憶體不足 (於 addDevice)"
+
+#: src/main/engine.c:148 src/main/engine.c:214
+msgid "unable to allocate memory (in GEregister)"
+msgstr "無法指派記憶體 (於 GEregister)"
+
+#: src/main/engine.c:186
+msgid "too many graphics systems registered"
+msgstr "登記了太多的圖形系統"
+
+#: src/main/engine.c:236
+msgid "no graphics system to unregister"
+msgstr "沒有可以取消登記的圖形系統"
+
+#: src/main/engine.c:488 src/main/engine.c:493 src/main/engine.c:501
+#: src/main/engine.c:508 src/main/engine.c:522 src/modules/X11/devX11.c:967
+msgid "invalid line end"
+msgstr "列終點發生錯誤"
+
+#: src/main/engine.c:553 src/main/engine.c:558 src/main/engine.c:566
+#: src/main/engine.c:573 src/main/engine.c:587 src/modules/X11/devX11.c:985
+msgid "invalid line join"
+msgstr "列接合發生錯誤"
+
+#: src/main/engine.c:821
+msgid "out of memory while clipping polyline"
+msgstr "剪裁多邊形的時候記憶體不足"
+
+#: src/main/engine.c:1566
+#, c-format
+msgid "font face %d not supported for font family '%s'"
+msgstr "字模家族 '%2$s' 中沒有字模 %1$d"
+
+#: src/main/engine.c:1768
+msgid "no graphics device is active"
+msgstr "沒有活動中的圖形裝置"
+
+#: src/main/engine.c:2100
+#, c-format
+msgid "unimplemented pch value '%d'"
+msgstr "目前沒有實作pch '%d' 的值"
+
+#: src/main/engine.c:2123
+#, c-format
+msgid "invalid axis extents [GEPretty(.,.,n=%d)"
+msgstr "座標範圍不正確 [GEPretty(.,.,n=%d)"
+
+#: src/main/engine.c:2127
+#, c-format
+msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
+msgstr "無限的座標範圍值 [GEPretty(%g,%g,%d)]"
+
+#: src/main/engine.c:2165
+#, c-format
+msgid " .. GEPretty(.): new *lo = %g < %g = x1"
+msgstr " .. GEPretty(.): new *lo =%g <%g = x1"
+
+#: src/main/engine.c:2167
+#, c-format
+msgid " .. GEPretty(.): new *up = %g > %g = x2"
+msgstr " .. GEPretty(.): new *up =%g >%g = x2"
+
+#: src/main/engine.c:2434
+msgid "Display list redraw incomplete"
+msgstr "顯示串列重新整理時不完整"
+
+#: src/main/engine.c:2613
+msgid "'expr' argument must be an expression"
+msgstr "'expr' 引數必須是運算式"
+
+#: src/main/engine.c:2615
+msgid "'list' argument must be a list"
+msgstr "'list' 引數必須是串列"
+
+#: src/main/engine.c:2617
+msgid "'env' argument must be an environment"
+msgstr "'env' 引數必須是環境物件"
+
+#: src/main/engine.c:2639 src/main/graphics.c:2397
+msgid "invalid graphics state"
+msgstr "圖形狀態不正確"
+
+#: src/main/envir.c:125 src/main/envir.c:136
+msgid "cannot change value of a locked binding"
+msgstr "無法變更鎖定繫結的值"
+
+#: src/main/envir.c:232 src/main/envir.c:1273
+msgid "cannot add bindings to a locked environment"
+msgstr "無法給鎖定環境加上繫結"
+
+#: src/main/envir.c:392
+msgid "first argument ('table') not of type VECSXP,  from R_HashResize"
+msgstr "R_HashResize 第一個引數 ('table') 非 VECSXP 類型"
+
+#: src/main/envir.c:451
+msgid "first argument ('table') not of type VECSXP, R_HashSizeCheck"
+msgstr "R_HashSizeCheck 第一個引數 ('table') 非 VECSXP 類型"
+
+#: src/main/envir.c:479
+msgid "first argument ('table') not of type ENVSXP, from R_HashVector2Hash"
+msgstr "R_HashVector2Hash 第一個引數 ('table') 非 ENVSXP 類型"
+
+#: src/main/envir.c:672
+msgid "invalid cached value in R_GetGlobalCache"
+msgstr "R_GetGlobalCache 裡的快取值不正確"
+
+#: src/main/envir.c:724
+#, fuzzy
+msgid "cannot unbind in the base namespace"
+msgstr "無法在基本環境裡切斷繫結"
+
+#: src/main/envir.c:726
+msgid "cannot unbind in the base environment"
+msgstr "無法在基本環境裡切斷繫結"
+
+#: src/main/envir.c:728 src/main/envir.c:1463
+msgid "cannot remove bindings from a locked environment"
+msgstr "無法從鎖定的環境中刪除繫結"
+
+#: src/main/envir.c:771
+#, fuzzy
+msgid "cannot get binding from base environment"
+msgstr "無法從 NULL 環境裡取得繫結"
+
+#: src/main/envir.c:773
+msgid "cannot get binding from base namespace"
+msgstr "無法從基本名稱空間取得繫結"
+
+#: src/main/envir.c:1144
+#, c-format
+msgid "The ... list does not contain %d elements"
+msgstr "... 串列不包含 %d 個元素"
+
+#: src/main/envir.c:1150
+#, c-format
+msgid "..%d used in an incorrect context, no ... to look in"
+msgstr "..%d 所用的上下文發生錯誤, 找不到..."
+
+#: src/main/envir.c:1220 src/main/eval.c:342 src/main/eval.c:2474
+#, c-format
+msgid "argument \"%s\" is missing, with no default"
+msgstr "缺少引數 \"%s\"，也沒有預設值"
+
+#: src/main/envir.c:1226
+#, c-format
+msgid "couldn't find function \"%s\""
+msgstr "沒有這個函數 \"%s\""
+
+#: src/main/envir.c:1257
+msgid "cannot assign variables to this database"
+msgstr "無法給這個資料庫指定變數"
+
+#: src/main/envir.c:1317 src/main/envir.c:1469
+msgid "cannot remove variables from this database"
+msgstr "無法從這個資料庫中刪除變數"
+
+#: src/main/envir.c:1460
+msgid "cannot remove variables from base namespace"
+msgstr "無法從基本名稱空間刪除變數"
+
+#: src/main/envir.c:1511
+msgid "invalid first argument to remove()"
+msgstr "remove() 的第一個引數不正確"
+
+#: src/main/envir.c:1542
+#, c-format
+msgid "remove: variable \"%s\" was not found"
+msgstr "remove: 找不到 \"%s\" 這個變數"
+
+#: src/main/envir.c:1620
+#, c-format
+msgid "variable \"%s\" was not found"
+msgstr "找不到 \"%s\" 這個變數"
+
+#: src/main/envir.c:1624
+#, c-format
+msgid "variable \"%s\" of mode \"%s\" was not found"
+msgstr "沒有狀態是 \"%2$s\" 的變數 \"%1$s\""
+
+#: src/main/envir.c:1708
+#, c-format
+msgid "invalid name in position %d"
+msgstr "在 %d 位置的名稱不正確"
+
+#: src/main/envir.c:1714
+msgid "second argument must be an environment"
+msgstr "第二引數必須是環境物件"
+
+#: src/main/envir.c:1722
+msgid "wrong length for 'mode' argument"
+msgstr "'mode' 引數的長度不正確"
+
+#: src/main/envir.c:1730
+msgid "wrong length for 'ifnotfound' argument"
+msgstr "'ifnotfound' 引數的長度不正確"
+
+#: src/main/envir.c:1838
+msgid "invalid use of missing"
+msgstr "missing 的使用方式不正確"
+
+#: src/main/envir.c:1863
+msgid "missing can only be used for arguments"
+msgstr "missing 只能用於這些引數"
+
+#: src/main/envir.c:1933
+msgid "attach: invalid object name"
+msgstr "attach: 目的物件名稱不正確"
+
+#: src/main/envir.c:1939
+msgid "attach only works for lists and data frames"
+msgstr "attach 只適用於串列和資料框"
+
+#: src/main/envir.c:1945
+msgid "attach: all elements must be named"
+msgstr "attach: 所有的元素都必須有名稱"
+
+#: src/main/envir.c:2030
+msgid "detaching \"package:base\" is not allowed"
+msgstr "\"package:base\" 不能被拆離"
+
+#: src/main/envir.c:2294 src/main/envir.c:2344
+msgid "argument must be an environment"
+msgstr "引數必須是環境物件"
+
+#: src/main/envir.c:2449 src/main/random.c:34 src/main/random.c:558
+msgid "invalid arguments"
+msgstr "引數不正確"
+
+#: src/main/envir.c:2507
+msgid "no enclosing environment"
+msgstr "沒有封閉的環境"
+
+#: src/main/envir.c:2554
+#, c-format
+msgid "no item called \"%s\" on the search list"
+msgstr "搜尋串列中沒有所謂的 \"%s\" 項目"
+
+#: src/main/envir.c:2571
+msgid "invalid object for as.environment"
+msgstr "as.environment 的目的物件不正確"
+
+#: src/main/envir.c:2579
+msgid "locking the NULL (base) environment is not supported yet"
+msgstr "目前還不支援對 NULL (base) 環境進行鎖定"
+
+#: src/main/envir.c:2581 src/main/envir.c:2606 src/main/envir.c:2635
+#: src/main/envir.c:2651 src/main/envir.c:2669 src/main/envir.c:2699
+#: src/main/envir.c:2715
+msgid "not an environment"
+msgstr "不是環境物件"
+
+#: src/main/envir.c:2633 src/main/envir.c:2649 src/main/envir.c:2665
+#: src/main/envir.c:2697 src/main/envir.c:2713 src/main/envir.c:2805
+msgid "not a symbol"
+msgstr "不是符號"
+
+#: src/main/envir.c:2641 src/main/envir.c:2657 src/main/envir.c:2705
+#: src/main/envir.c:2721
+#, c-format
+msgid "no binding for \"%s\""
+msgstr "沒有 \"%s\" 繫結"
+
+#: src/main/envir.c:2667
+msgid "not a function"
+msgstr "不是函數"
+
+#: src/main/envir.c:2672 src/main/envir.c:2686
+msgid "symbol already has a regular binding"
+msgstr "符號已經有了正式繫結"
+
+#: src/main/envir.c:2766
+msgid "unknown op"
+msgstr "沒有這種運算子"
+
+#: src/main/envir.c:2807
+msgid "cannot unbind a locked binding"
+msgstr "無法切斷已經鎖定的繫結"
+
+#: src/main/envir.c:2809
+msgid "cannot unbind an active binding"
+msgstr "無法切斷正在使用中的繫結"
+
+#: src/main/envir.c:2869
+#, c-format
+msgid "using .GlobalEnv instead of '%s'"
+msgstr "用 .GlobalEnv 而不用 '%s'"
+
+#: src/main/envir.c:2936
+msgid "namespaces not available; using .GlobalEnv"
+msgstr "名稱空間不可用；使用 .GlobalEnv"
+
+#: src/main/envir.c:2958
+msgid "bad name space name"
+msgstr "不當的名稱空間名稱"
+
+#: src/main/envir.c:2970
+msgid "name space already registered"
+msgstr "名稱空間已經登記"
+
+#: src/main/envir.c:2982
+msgid "name space not registered"
+msgstr "名稱空間沒有登記"
+
+#: src/main/envir.c:3026
+msgid "bad import environment argument"
+msgstr "不當導入環境引數"
+
+#: src/main/envir.c:3028
+msgid "bad export environment argument"
+msgstr "不當導出環境引數"
+
+#: src/main/envir.c:3032
+msgid "length of import and export names must match"
+msgstr "導入和導出名稱的長度必須相等"
+
+#: src/main/envir.c:3055
+#, c-format
+msgid "exported symbol '%s' has no value"
+msgstr "導出的符號 '%s' 沒有值"
+
+#: src/main/errors.c:118 src/main/errors.c:153
+msgid "interrupts suspended; signal ignored"
+msgstr "暫停被中斷; 信號忽略不用"
+
+#: src/main/errors.c:227
+msgid "invalid option \"warning.expression\""
+msgstr "\"warning.expression\" 選項不正確"
+
+#: src/main/errors.c:255
+#, c-format
+msgid "(converted from warning) %s"
+msgstr "(從警告轉換成) %s"
+
+#: src/main/errors.c:260
+#, c-format
+msgid "Warning in %s : "
+msgstr "%s 中的警告: "
+
+#: src/main/errors.c:264
+msgid "Warning: "
+msgstr "警告: "
+
+#: src/main/errors.c:320 src/main/errors.c:338 src/main/errors.c:429
+msgid "Lost warning messages\n"
+msgstr "警告訊息遺失\n"
+
+#: src/main/errors.c:374
+#, c-format
+msgid "There were %d warnings (use warnings() to see them)\n"
+msgstr "共有 %d 個警告 (用 warnings() 來顯示)\n"
+
+#: src/main/errors.c:377
+msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
+msgstr "警告多於50個 (用 warnings() 來顯示最先的50個)\n"
+
+#: src/main/errors.c:420
+msgid "Error during wrapup: "
+msgstr "收捲時發生錯誤: "
+
+#: src/main/errors.c:443
+msgid "Error in "
+msgstr "錯誤在"
+
+#: src/main/errors.c:454 src/main/errors.c:457
+#, c-format
+msgid "Error: "
+msgstr "錯誤: "
+
+#: src/main/errors.c:466 src/main/errors.c:1083
+msgid "In addition: "
+msgstr "此外: "
+
+#: src/main/errors.c:600
+msgid "invalid option \"error\"\n"
+msgstr "選項 \"error\" 不正確\n"
+
+#: src/main/errors.c:676
+msgid "Execution halted\n"
+msgstr "停止執行\n"
+
+#: src/main/errors.c:796
+msgid "invalid 'n'"
+msgstr "'n' 值不正確"
+
+#: src/main/errors.c:798
+msgid "'msg1' must be a character string"
+msgstr "'msg1' 必須是字串"
+
+#: src/main/errors.c:800
+msgid "'msg2' must be a character string"
+msgstr "'msg2' 必須是字串"
+
+#: src/main/errors.c:894
+msgid " [invalid string in stop(.)]"
+msgstr " [stop(.) 裡的字串不正確]"
+
+#: src/main/errors.c:920
+msgid " [invalid string in warning(.)]"
+msgstr " [warning(.) 裡的字串不正確]"
+
+#: src/main/errors.c:936
+#, c-format
+msgid "incorrect number of arguments to \"%s\""
+msgstr "\"%s\" 裡的引數數目不正確"
+
+#: src/main/errors.c:942 src/main/errors.c:957
+#, c-format
+msgid "unimplemented feature in %s"
+msgstr "%s 裡的功能目前沒有實作"
+
+#: src/main/errors.c:954
+msgid "time-series/vector length mismatch"
+msgstr "時間序列/向量長度不等"
+
+#: src/main/errors.c:955
+msgid "incompatible arguments"
+msgstr "不相容的引數"
+
+#: src/main/errors.c:958
+msgid "unknown error (report this!)"
+msgstr "不明錯誤 (請報告!)"
+
+#: src/main/errors.c:970
+msgid "unknown warning (report this!)"
+msgstr "不明警告 (請報告!)"
+
+#: src/main/errors.c:1048
+msgid "No function to return from, jumping to top level"
+msgstr "沒有可回返的函數, 跳到最高層"
+
+#: src/main/errors.c:1064
+msgid "top level inconsistency?"
+msgstr "最高層不一致？"
+
+#: src/main/errors.c:1164
+msgid "bad handler data"
+msgstr "不當的控柄資料"
+
+#: src/main/errors.c:1312
+msgid "error message not a string"
+msgstr "錯誤訊息不是字串"
+
+#: src/main/errors.c:1386
+msgid "handler or restart stack mismatch in old restart"
+msgstr "舊重新啟動中的控柄或重新啟動堆疊不符合"
+
+#: src/main/errors.c:1412 src/main/errors.c:1428
+msgid "bad error message"
+msgstr "不當的錯誤訊息"
+
+#: src/main/errors.c:1470
+msgid "bad restart"
+msgstr "不當的重新啟動"
+
+#: src/main/errors.c:1502
+msgid "restart not on stack"
+msgstr "未在堆疊上重新啟動"
+
+#: src/main/errors.c:1520
+msgid "not in a try context"
+msgstr "不在 try 的上下文中"
+
+#: src/main/eval.c:213
+#, fuzzy, c-format
+msgid "Rprof: cannot open profile file '%s'"
+msgstr "Rprof: 打不開程式概要分析檔案 '%s'"
+
+#: src/main/eval.c:246
+msgid "can't use R profiling while byte code profiling"
+msgstr "在位元組碼程式概要分析時不能用 R 來同時進行程式概要分析"
+
+#: src/main/eval.c:265
+msgid "R profiling is not available on this system"
+msgstr "本系統沒有 R 程式概要分析這個功能"
+
+#: src/main/eval.c:291
+msgid ""
+"evaluation nested too deeply: infinite recursion / options(expressions=)?"
+msgstr "評估巢狀太深：無窮遞迴/選項(表示式=)?"
+
+#: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1380
+#: src/main/eval.c:1429 src/main/eval.c:1483 src/main/eval.c:1701
+#: src/main/eval.c:3036 src/main/eval.c:3128
+msgid "'...' used in an incorrect context"
+msgstr "'...' 的上下文用得不正確"
+
+#: src/main/eval.c:338 src/main/eval.c:784
+#, fuzzy, c-format
+msgid "object \"%s\" not found"
+msgstr "找不到這個目的物件 \"%s\""
+
+#: src/main/eval.c:344 src/main/eval.c:2475
+msgid "argument is missing, with no default"
+msgstr "缺少引數, 也沒有預設值"
+
+#: src/main/eval.c:359 src/main/eval.c:2419
+msgid "recursive default argument reference"
+msgstr "預設引數參考出現遞迴"
+
+#: src/main/eval.c:421 src/main/eval.c:2984
+msgid "attempt to apply non-function"
+msgstr "不適用於非函數"
+
+#: src/main/eval.c:712
+#, c-format
+msgid "could not find symbol \"%s\" in environment of the generic function"
+msgstr "一般函數環境裡沒有這個 \"%s\" 符號"
+
+#: src/main/eval.c:730
+#, fuzzy, c-format
+msgid "symbol \"%s\" not in environment of method"
+msgstr "方法環境裡沒有這個 \"%s\" 符號"
+
+#: src/main/eval.c:840
+msgid "the condition has length > 1 and only the first element will be used"
+msgstr "條件的長度 > 1，因此只能用其第一元素"
+
+#: src/main/eval.c:843
+msgid "missing value where TRUE/FALSE needed"
+msgstr "需要 TRUE/FALSE 值的地方有缺值"
+
+#: src/main/eval.c:844
+msgid "argument is not interpretable as logical"
+msgstr "引數無法解譯為邏輯值"
+
+#: src/main/eval.c:845
+msgid "argument is of length zero"
+msgstr "引數長度為零"
+
+#: src/main/eval.c:889
+msgid "non-symbol loop variable"
+msgstr "非符號循環變數"
+
+#: src/main/eval.c:951
+#, fuzzy
+msgid "invalid for() loop sequence"
+msgstr "不當的 for() 循環順序"
+
+#: src/main/eval.c:1080
+msgid "'...' not allowed in return"
+msgstr "'...' 不允許存於回傳值中"
+
+#: src/main/eval.c:1094
+msgid "multi-argument returns are deprecated"
+msgstr "已不再使用多引數回傳值此一功能"
+
+#: src/main/eval.c:1097
+msgid "empty expression in return value"
+msgstr "回傳值裡的運算式是空的"
+
+#: src/main/eval.c:1153
+msgid "invalid (NULL) left side of assignment"
+msgstr "賦值公式左側是無效 (NULL) 值"
+
+#: src/main/eval.c:1175
+#, fuzzy
+msgid "target of assignment expands to non-language object"
+msgstr "賦值目標擴充到非語言的物件"
+
+#: src/main/eval.c:1214
+msgid "cannot do complex assignments in base namespace"
+msgstr "無法在基本名稱空間裡賦予複數值"
+
+#: src/main/eval.c:1216
+#, fuzzy
+msgid "cannot do complex assignments in base environment"
+msgstr "無法在 NULL 環境裡賦予複數值"
+
+#: src/main/eval.c:1229 src/main/eval.c:1247
+msgid "invalid function in complex assignment"
+msgstr "複數賦值裡的函數不正確"
+
+#: src/main/eval.c:1231 src/main/eval.c:1249
+#, c-format
+msgid "overlong name in '%s'"
+msgstr "'%s' 中的名稱太長"
+
+#: src/main/eval.c:1323
+msgid "invalid (do_set) left-hand side to assignment"
+msgstr "(do_set) 賦值公式左側不正確"
+
+#: src/main/eval.c:1338
+msgid "invalid assignment left-hand side"
+msgstr "賦值公式左側不正確"
+
+#: src/main/eval.c:1513
+msgid "invalid formal argument list for \"function\""
+msgstr "\"function\" 正式引數串列不正確"
+
+#: src/main/eval.c:1555
+msgid "numeric 'envir' arg not of length one"
+msgstr "數值 'envir' 引數的長度不是 1"
+
+#: src/main/eval.c:1573 src/main/eval.c:1592
+#, fuzzy
+msgid "restarts not supported in 'eval'"
+msgstr "eval 不支援重新啟動"
+
+#: src/main/eval.c:1639
+msgid "'Recall' called from outside a closure"
+msgstr "'Recall' 從閉包外部呼叫"
+
+#: src/main/eval.c:1695
+#, fuzzy
+msgid "value in '...' is not a promise"
+msgstr "...中的值不是一個約定"
+
+#: src/main/eval.c:1887 src/main/objects.c:655
+#, c-format
+msgid "call name too long in '%s'"
+msgstr "'%s' 裡呼叫的名稱太長"
+
+#: src/main/eval.c:1908
+#, fuzzy, c-format
+msgid "generic name too long in '%s'"
+msgstr "%s 裡的一般名稱太長"
+
+#: src/main/eval.c:1940
+#, c-format
+msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
+msgstr "不相容的方法 (\"%s\", \"%s\") 用於 \"%s\""
+
+#: src/main/eval.c:2004
+msgid "dispatch error"
+msgstr "分派錯誤"
+
+#: src/main/eval.c:2383
+msgid "node stack overflow"
+msgstr "節點堆疊向上溢位"
+
+#: src/main/eval.c:2389
+msgid "integer stack overflow"
+msgstr "整數堆疊向上溢位"
+
+#: src/main/eval.c:2457
+msgid "Bad opcode"
+msgstr "不當的操作代碼"
+
+#: src/main/eval.c:2604
+msgid "not a vector object"
+msgstr "非向量目的物件"
+
+#: src/main/eval.c:2612 src/main/eval.c:2634 src/main/eval.c:2658
+#: src/main/eval.c:2682
+msgid "can only handle simple real vectors"
+msgstr "只能處理簡單的實數向量"
+
+#: src/main/eval.c:2621 src/main/eval.c:2668
+msgid "not a simple vector"
+msgstr "非簡單向量"
+
+#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:885
+#: src/main/subset.c:740
+msgid "incorrect number of subscripts"
+msgstr "下標數目不正確"
+
+#: src/main/eval.c:2649 src/main/eval.c:2700
+msgid "not a simple matrix"
+msgstr "非簡單矩陣"
+
+#: src/main/eval.c:2734
+msgid "bytecode version mismatch; using eval"
+msgstr "位元組碼版本不符；使用 eval"
+
+#: src/main/eval.c:2739
+msgid "bytecode version is too old"
+msgstr "位元組碼版本太舊"
+
+#: src/main/eval.c:2740
+msgid "bytecode version is too new"
+msgstr "位元組碼版本太新"
+
+#: src/main/eval.c:2745
+msgid "byte code version mismatch"
+msgstr "位元組碼版本不符"
+
+#: src/main/eval.c:2761
+msgid "missing value where logical needed"
+msgstr "需要邏輯值的地方有缺值"
+
+#: src/main/eval.c:2762
+msgid "argument of if(*) is not interpretable as logical"
+msgstr "if(*) 的引數不能做為邏輯值解譯"
+
+#: src/main/eval.c:2796
+msgid "invalid sequence argument in for loop"
+msgstr "迴圈裡的順序引數不正確"
+
+#: src/main/eval.c:2946 src/main/eval.c:2967 src/main/eval.c:3074
+msgid "not a BUILTIN function"
+msgstr "非 BUILTIN 函數"
+
+#: src/main/eval.c:3062
+msgid "bad function"
+msgstr "不當的函數"
+
+#: src/main/eval.c:3095
+msgid "not a SPECIAL function"
+msgstr "非 SPECIAL 函數"
+
+#: src/main/eval.c:3324
+msgid "cannot find index for threaded code address"
+msgstr "找不到執行緒程式碼位址的索引"
+
+#: src/main/eval.c:3398
+msgid "invalid symbol"
+msgstr "符號不正確"
+
+#: src/main/eval.c:3442
+msgid "argument is not a byte code object"
+msgstr "引數不是位元組碼目的物件"
+
+#: src/main/eval.c:3465
+msgid "bad file name"
+msgstr "不當的檔案名稱"
+
+#: src/main/eval.c:3469 src/main/eval.c:3490
+msgid "unable to open 'file'"
+msgstr "無法開啟 'file'"
+
+#: src/main/eval.c:3484 src/main/saveload.c:1921
+msgid "'file' must be non-empty string"
+msgstr "'file' 必須是非空字串"
+
+#: src/main/eval.c:3486 src/main/saveload.c:1923 src/main/saveload.c:2185
+#: src/main/serialize.c:1705
+msgid "'ascii' must be logical"
+msgstr "'ascii' 必須是邏輯值"
+
+#: src/main/eval.c:3515 src/main/eval.c:3522
+msgid "R_CompiledFileName: buffer too small"
+msgstr "R_CompiledFileName: 緩衝區太小"
+
+#: src/main/eval.c:3555
+msgid "code must be a generic vector"
+msgstr "程式碼必須是一般向量"
+
+#: src/main/eval.c:3594
+msgid "profile timer in use"
+msgstr "程式概要分析計時器在使用中"
+
+#: src/main/eval.c:3596
+msgid "already byte code profiling"
+msgstr "已經在進行位元組碼程式概要分析"
+
+#: src/main/eval.c:3614
+msgid "setting profile timer failed"
+msgstr "程式概要分析計時器設置失敗"
+
+#: src/main/eval.c:3631
+msgid "not byte code profiling"
+msgstr "非位元組碼程式概要分析"
+
+#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:552
+msgid "non-numeric argument"
+msgstr "非數值引數"
+
+#: src/main/fourier.c:74 src/main/fourier.c:89 src/main/fourier.c:164
+msgid "fft factorization error"
+msgstr "fft 因數分解錯誤"
+
+#: src/main/fourier.c:135
+msgid "vector-valued (multivariate) series required"
+msgstr "需要向量值序列 (多變數)"
+
+#: src/main/fourier.c:209
+msgid "no factors"
+msgstr "非因子"
+
+#: src/main/fourier.c:212
+msgid "invalid factors"
+msgstr "因子不正確"
+
+#: src/main/gevents.c:49
+msgid "graphics device does not support graphics events"
+msgstr "圖形裝置不支援這些圖形事件"
+
+#: src/main/gevents.c:52
+msgid "invalid prompt"
+msgstr "提示不正確"
+
+#: src/main/gevents.c:58
+msgid "'onMouseDown' not supported"
+msgstr "不支援 'onMouseDown'"
+
+#: src/main/gevents.c:60
+msgid "invalid 'onMouseDown' callback"
+msgstr "'onMouseDown' 回呼發生錯誤"
+
+#: src/main/gevents.c:66
+msgid "'onMouseMove' not supported"
+msgstr "不支援' onMouseMove'"
+
+#: src/main/gevents.c:68
+msgid "invalid 'onMouseMove' callback"
+msgstr "'onMouseMove' 回呼發生錯誤"
+
+#: src/main/gevents.c:74
+msgid "'onMouseUp' not supported"
+msgstr "不支援 'onMouseUp'"
+
+#: src/main/gevents.c:76
+msgid "invalid 'onMouseUp' callback"
+msgstr "'onMouseUp' 回呼不正確"
+
+#: src/main/gevents.c:82
+msgid "'onKeybd' not supported"
+msgstr "不支援 'onKeybd'"
+
+#: src/main/gevents.c:84
+msgid "invalid 'onKeybd' callback"
+msgstr "'onKeybd' 回呼不正確"
+
+#: src/main/gram.y:98 src/main/gram.y:111
+msgid "EOF whilst reading MBCS char"
+msgstr "讀取 MBCS 位元組時遇到 EOF"
+
+#: src/main/gram.y:101 src/main/gram.y:108
+msgid "invalid multibyte character in mbcs_get_next"
+msgstr "在 mbcs_get_next 裡不能有多位元組字元"
+
+#: src/main/gram.y:359
+msgid "function is too long to keep source"
+msgstr "函數太長，無法保留其程式碼"
+
+#: src/main/gram.y:838
+msgid "incorrect tag type"
+msgstr "標記類型不正確"
+
+#: src/main/gram.y:1540
+msgid "Repeated formal argument"
+msgstr "重複的正式引數"
+
+#: src/main/gram.y:1551
+msgid "input buffer overflow"
+msgstr "輸入緩衝區向上溢位"
+
+#: src/main/gram.y:1697
+msgid "invalid \\u{xxxx} sequence"
+msgstr "\\u{xxxx} 順序不正確"
+
+#: src/main/gram.y:1699
+msgid "invalid \\uxxxx sequence"
+msgstr "\\uxxxx 順序不正確"
+
+#: src/main/gram.y:1718
+msgid "invalid \\U{xxxxxxxx} sequence"
+msgstr "\\U{xxxxxxxx} 順序不正確"
+
+#: src/main/gram.y:1880
+msgid "functions nested too deeply in source code"
+msgstr "程式碼來源裡的函數功能巢狀太深"
+
+#: src/main/graphics.c:304
+#, c-format
+msgid "bad units specified in %s, please report!"
+msgstr "%s 裡的單位設定不正確，請回報!"
+
+#: src/main/graphics.c:1785
+msgid "attempt to plot on null device"
+msgstr "試圖於 null 裝置上繪圖"
+
+#: src/main/graphics.c:1818
+msgid "outer margins too large (fig.region too small)"
+msgstr "外側版邊太大 (fig.region 太小)"
+
+#: src/main/graphics.c:1820
+msgid "figure region too large"
+msgstr "圖區太大"
+
+#: src/main/graphics.c:1822
+msgid "figure margins too large"
+msgstr "圖版邊太大"
+
+#: src/main/graphics.c:1824
+msgid "plot region too large"
+msgstr "繪圖區太大"
+
+#: src/main/graphics.c:1873
+#, c-format
+msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
+msgstr "座標範圍不能無限大 [GScale(%g,%g,%d, .); log=%d]"
+
+#: src/main/graphics.c:1903
+#, c-format
+msgid "axis style \"%c\" unimplemented"
+msgstr "座標形式 \"%c\" 目前沒有實作"
+
+#: src/main/graphics.c:1975
+#, c-format
+msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
+msgstr "相對範圍值 =%4.0f * EPS太小 (座標 %d)"
+
+#: src/main/graphics.c:2197 src/main/graphics.c:2564
+msgid "No graphics device is active"
+msgstr "沒有活動中的圖形裝置"
+
+#: src/main/graphics.c:2392
+msgid "plot.new has not been called yet"
+msgstr "plot.new 還沒有被呼叫"
+
+#: src/main/graphics.c:2529
+msgid "no locator capability in device driver"
+msgstr "裝置驅動程式沒有定位器功能"
+
+#: src/main/graphics.c:2805 src/main/graphics.c:2841
+msgid "unable to allocate memory (in GPolygon)"
+msgstr "無法指派記憶體 (GPolygon)"
+
+#: src/main/graphics.c:2992
+msgid "zero-length arrow is of indeterminate angle and so skipped"
+msgstr "零長度箭頭的角度不定，因此忽略不用"
+
+#: src/main/graphics.c:3073
+#, c-format
+msgid "invalid par(\"bty\") = '%c'; no box() drawn"
+msgstr "par(\"bty\")='%c' 不正確; 取消繪製 box()"
+
+#: src/main/graphics.c:3090
+msgid "invalid argument to GBox"
+msgstr "GBox 引數不正確"
+
+#: src/main/graphics.c:3284
+msgid "bad hsv to rgb color conversion"
+msgstr "hsv 到 rgb 顏色轉換不正確"
+
+#: src/main/graphics.c:4058
+msgid "invalid hex digit in 'color' or 'lty'"
+msgstr "十六進位 'color' 設定或 'lty' 設定不正確"
+
+#: src/main/graphics.c:4099 src/main/graphics.c:4109
+msgid "invalid RGB specification"
+msgstr "RGB 設定不正確"
+
+#: src/main/graphics.c:4142
+msgid "invalid color name"
+msgstr "顏色名稱不正確"
+
+#: src/main/graphics.c:4153
+msgid "invalid color specification"
+msgstr "顏色設定不正確"
+
+#: src/main/graphics.c:4294
+msgid "Invalid color"
+msgstr "顏色不正確"
+
+#: src/main/graphics.c:4366
+msgid "invalid line type: must be length 2, 4, 6 or 8"
+msgstr "無效的列類型: 長度必須是 2, 4, 6 或 8"
+
+#: src/main/graphics.c:4377 src/main/graphics.c:4385 src/main/graphics.c:4392
+msgid "invalid line type"
+msgstr "無效的列類型"
+
+#: src/main/graphics.c:4503
+msgid "no active or default device"
+msgstr "沒有在使用中的或預設的裝置"
+
+#: src/main/graphics.c:4520
+msgid "too many open devices"
+msgstr "太多已經開啟的裝置"
+
+#: src/main/graphics.c:4664
+msgid "too many devices open"
+msgstr "太多已經開啟的裝置"
+
+#: src/main/internet.c:89
+msgid "internet routines cannot be accessed in module"
+msgstr "無法讀寫模組裡的網際網路例行程式"
+
+#: src/main/internet.c:101 src/main/internet.c:112 src/main/internet.c:123
+#: src/main/internet.c:134 src/main/internet.c:145 src/main/internet.c:156
+#: src/main/internet.c:165 src/main/internet.c:176 src/main/internet.c:187
+msgid "internet routines cannot be loaded"
+msgstr "無法載入網際網路例行程式"
+
+#: src/main/internet.c:196 src/main/internet.c:205 src/main/internet.c:214
+#: src/main/internet.c:223 src/main/internet.c:232 src/main/internet.c:241
+#: src/main/internet.c:251
+msgid "socket routines cannot be loaded"
+msgstr "無法載入插槽例行程式"
+
+#: src/main/lapack.c:58
+msgid "lapack routines cannot be accessed in module"
+msgstr "無法讀寫模組裡的 lapack 例行程式"
+
+#: src/main/lapack.c:69 src/main/lapack.c:80 src/main/lapack.c:91
+#: src/main/lapack.c:102 src/main/lapack.c:113 src/main/lapack.c:124
+#: src/main/lapack.c:135 src/main/lapack.c:146 src/main/lapack.c:157
+#: src/main/lapack.c:168 src/main/lapack.c:179 src/main/lapack.c:190
+#: src/main/lapack.c:201 src/main/lapack.c:212 src/main/lapack.c:223
+#: src/main/lapack.c:234 src/main/lapack.c:245
+msgid "lapack routines cannot be loaded"
+msgstr "無法載入 lapack 例行程式"
+
+#: src/main/logic.c:47
+msgid "binary operations require two arguments"
+msgstr "二元運算需要兩個引數"
+
+#: src/main/logic.c:64 src/main/logic.c:126
+msgid "operations are possible only for numeric or logical types"
+msgstr "此運算只適用於數值或邏輯類型"
+
+#: src/main/logic.c:74
+msgid "binary operation on non-conformable arrays"
+msgstr "二元運算不能在非調和陣列上進行"
+
+#: src/main/logic.c:100 src/main/relop.c:145
+msgid "non-conformable time series"
+msgstr "非調和時間序列"
+
+#: src/main/logic.c:208
+#, c-format
+msgid "'%s' operator requires 2 arguments"
+msgstr "'%s' 運算子需要兩個引數"
+
+#: src/main/logic.c:216
+#, c-format
+msgid "invalid 'x' type in 'x %s y'"
+msgstr "'x %s y' 裡的 'x' 類型不正確"
+
+#: src/main/logic.c:223
+#, c-format
+msgid "invalid 'y' type in 'x %s y'"
+msgstr "'x %s y' 裡的 'y' 類型不正確"
+
+#: src/main/logic.c:295
+#, fuzzy
+msgid "Unary operator `!' called with two arguments"
+msgstr "二元運算需要兩個引數"
+
+#: src/main/main.c:50
+msgid "dummy - do not translate"
+msgstr "dummy - do not translate"
+
+#: src/main/main.c:217
+msgid "error: system commands are not supported in this version of R.\n"
+msgstr "錯誤: 此 R 版本不支援系統命令。\n"
+
+#: src/main/main.c:546
+msgid "unable to open the base package\n"
+msgstr "無法開啟基本套件\n"
+
+#: src/main/main.c:585
+msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
+msgstr "警告: 此 R 編譯版本不支援 UTF-8 語言環境\n"
+
+#: src/main/main.c:614
+msgid "unable to restore saved data in .RData\n"
+msgstr "不可使用 .Rdata 來復原儲存資料\n"
+
+#: src/main/main.c:661
+msgid "During startup - "
+msgstr "於啟動期間 - "
+
+#: src/main/main.c:868
+msgid "cannot quit from browser"
+msgstr "無法離開瀏覽器"
+
+#: src/main/main.c:872
+msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
+msgstr "只能用 \"yes\"、\"no\"、\"ask\" 或 \"default\" 中的一個。"
+
+#: src/main/main.c:877
+msgid "save=\"ask\" in non-interactive use: command-line default will be used"
+msgstr "save=\"ask\" 不能在非交互狀態時使用：改用命令列預設值"
+
+#: src/main/main.c:885
+msgid "unrecognized value of 'save'"
+msgstr "沒有這種 'save' 值"
+
+#: src/main/main.c:888
+msgid "invalid 'status', 0 assumed"
+msgstr "'status' 不正確, 假定為 0"
+
+#: src/main/main.c:893
+msgid "invalid 'runLast', FALSE assumed"
+msgstr "'runLast' 不正確, 假定為 FALSE"
+
+#: src/main/main.c:924
+msgid "cannot allocate space for toplevel callback element"
+msgstr "無法為最高層回呼元素指派空間"
+
+#: src/main/main.c:1002
+msgid "negative index passed to R_removeTaskCallbackByIndex"
+msgstr "負的索引值被傳遞給 R_removeTaskCallbackByIndex"
+
+#: src/main/main.c:1115
+#, c-format
+msgid "warning messages from top-level task callback '%s'\n"
+msgstr "最高層任務回呼 '%s' 產生了警告訊息\n"
+
+#: src/main/main.c:1175
+msgid "top-level task callback did not return a logical value"
+msgstr "最高層任務回呼沒回傳邏輯值"
+
+#: src/main/match.c:110
+msgid "invalid partial string match"
+msgstr "部分字串比對不正確"
+
+#: src/main/match.c:222 src/main/match.c:273 src/main/objects.c:56
+#: src/main/objects.c:66
+#, c-format
+msgid "formal argument \"%s\" matched by multiple actual arguments"
+msgstr "正式引數 \"%s\" 有多個與之相對應的實際引數"
+
+#: src/main/match.c:228 src/main/match.c:267
+#, c-format
+msgid "argument %d matches multiple formal arguments"
+msgstr "引數 %d 有多個與之相對應的正式引數"
+
+#: src/main/match.c:366
+#, c-format
+msgid "unused argument(s) (%s ...)"
+msgstr "未使用的引數 (%s ...)"
+
+#: src/main/memory.c:920
+msgid "can only weakly reference/finalize reference objects"
+msgstr "參考物件只能被弱型參考或被終了"
+
+#: src/main/memory.c:954
+msgid "finalizer must be a function or NULL"
+msgstr "終了程式必須是函數或 NULL"
+
+#: src/main/memory.c:1004 src/main/memory.c:1012 src/main/memory.c:1023
+msgid "not a weak reference"
+msgstr "非弱型參考"
+
+#: src/main/memory.c:1132
+msgid "first argument must be environment or external pointer"
+msgstr "第一引數必須是環境或外部指標"
+
+#: src/main/memory.c:1134
+msgid "second argument must be a function"
+msgstr "第二引數必須是函數"
+
+#: src/main/memory.c:1471
+msgid "vector memory exhausted (limit reached?)"
+msgstr "向量記憶體已用完 (達到了極值?)"
+
+#: src/main/memory.c:1477
+msgid "cons memory exhausted (limit reached?)"
+msgstr "cons 記憶體已用完 (達到了極值?)"
+
+#: src/main/memory.c:1599 src/main/memory.c:1603
+#, c-format
+msgid "cannot allocate memory block of size %.0f"
+msgstr "無法分派大小為 %.0f 的記憶體區塊"
+
+#: src/main/memory.c:1816
+msgid "negative length vectors are not allowed"
+msgstr "不允許負長度的向量"
+
+#: src/main/memory.c:1836 src/main/memory.c:1847 src/main/memory.c:1858
+#: src/main/memory.c:1871
+#, c-format
+msgid "cannot allocate vector of length %d"
+msgstr "無法分派長度為 %d 的向量"
+
+#: src/main/memory.c:1884
+#, c-format
+msgid "invalid type/length (%d/%d) in vector allocation"
+msgstr "向量指派的類型/長度 (%d/%d) 不正確"
+
+#: src/main/memory.c:1946
+#, c-format
+msgid "cannot allocate vector of size %lu Kb"
+msgstr "無法指派大小為 %lu Kb 的向量"
+
+#: src/main/memory.c:2048
+msgid "gc.time() is not implemented on this system"
+msgstr "本系統沒有實作 gc.time()"
+
+#: src/main/memory.c:2212
+msgid "protect(): protection stack overflow"
+msgstr "protect()：防護堆疊向上溢位"
+
+#: src/main/memory.c:2228
+msgid "unprotect(): stack imbalance"
+msgstr "unprotect(): 堆疊不平衡"
+
+#: src/main/memory.c:2241
+msgid "unprotect_ptr: pointer not found"
+msgstr "unprotect_ptr: 找不到這個指標"
+
+#: src/main/memory.c:2284
+#, c-format
+msgid "Calloc could not allocate (%d of %d) memory"
+msgstr "Calloc 無法分派 (%d / %d) 記憶體"
+
+#: src/main/memory.c:2293
+#, c-format
+msgid "Realloc could not re-allocate (size %d) memory"
+msgstr "Realloc 無法重新分派 (大小為 %d) 的記憶體"
+
+#: src/main/memory.c:2412
+msgid "not safe to return vector pointer"
+msgstr "回傳向量指標不是安全的做法"
+
+#: src/main/memory.c:2440 src/main/memory.c:2449 src/main/memory.c:2460
+#: src/main/memory.c:2473 src/main/memory.c:2489 src/main/memory.c:2506
+msgid "bad value"
+msgstr "不當的值"
+
+#: src/main/model.c:126
+msgid "invalid term in model formula"
+msgstr "模型公式項目不正確"
+
+#: src/main/model.c:201
+msgid "invalid model formula"
+msgstr "模型公式不正確"
+
+#: src/main/model.c:227 src/main/model.c:468
+msgid "invalid power in formula"
+msgstr "公式裡的冪不正確"
+
+#: src/main/model.c:263
+msgid "invalid model formula in ExtractVars"
+msgstr "ExtractVars 裡的模型公式不正確"
+
+#: src/main/model.c:590
+#, c-format
+msgid "duplicated name '%s' in data frame using '.'"
+msgstr "在資料框裡用 '.' 時不能有重複的名稱 '%s'"
+
+#: src/main/model.c:647
+msgid "invalid model formula in EncodeVars"
+msgstr "EncodeVars 中的模型公式不正確"
+
+#: src/main/model.c:738
+msgid "argument is not a valid model"
+msgstr "引數不是正確的模型"
+
+#: src/main/model.c:759
+#, fuzzy
+msgid "'data' argument is of the wrong type"
+msgstr "資料引數類型不正確"
+
+#: src/main/model.c:1018
+#, fuzzy
+msgid "'.' in formula and no 'data' argument"
+msgstr "'data' 引數不正確"
+
+#: src/main/model.c:1163
+msgid "invalid formula in 'update'"
+msgstr "'update' 裡的公式不正確"
+
+#: src/main/model.c:1201
+msgid "formula expected"
+msgstr "需要公式"
+
+#: src/main/model.c:1289
+msgid "invalid variables"
+msgstr "變數不正確"
+
+#: src/main/model.c:1293 src/main/model.c:1298
+msgid "number of variables != number of variable names"
+msgstr "變數數目 != 變數名稱數目"
+
+#: src/main/model.c:1296
+msgid "invalid extra variables"
+msgstr "額外變數不正確"
+
+#: src/main/model.c:1300
+msgid "invalid extra variable names"
+msgstr "額外變數名稱不正確"
+
+#: src/main/model.c:1323
+#, c-format
+msgid "overlong names in '%s'"
+msgstr "'%s' 裡的名稱太長"
+
+#: src/main/model.c:1343 src/main/model.c:1645
+msgid "invalid variable type"
+msgstr "變數類型不正確"
+
+#: src/main/model.c:1345 src/main/model.c:1609
+msgid "variable lengths differ"
+msgstr "變數的長度不一樣"
+
+#: src/main/model.c:1398
+msgid "invalid result from na.action"
+msgstr "na.action 的結果不正確"
+
+#: src/main/model.c:1591
+msgid "invalid model frame"
+msgstr "模型框格不正確"
+
+#: src/main/model.c:1593
+msgid "do not know how many cases"
+msgstr "案例數目不清"
+
+#: src/main/model.c:1619 src/main/model.c:1626
+#, c-format
+msgid "variable %d has no levels"
+msgstr "變數 %d 沒有因子層"
+
+#: src/main/model.c:1734
+msgid "the response appeared on the right-hand side and was dropped"
+msgstr "公式右側有反應出現，忽略不用"
+
+#: src/main/model.c:1766
+#, c-format
+msgid "problem with term %d in model.matrix: no columns are assigned"
+msgstr "模型矩陣的 %d 項有問題: 沒有指定的行"
+
+#: src/main/model.c:1814 src/main/model.c:1819 src/main/model.c:1825
+#: src/main/model.c:1835 src/main/model.c:1841 src/main/model.c:1847
+msgid "term names will be truncated"
+msgstr "項目名稱太長，已被截短"
+
+#: src/main/names.c:921
+msgid "string argument required"
+msgstr "需要字串引數"
+
+#: src/main/names.c:929
+msgid "no such primitive function"
+msgstr "沒有此一原始函數"
+
+#: src/main/names.c:1042
+msgid "attempt to use zero-length variable name"
+msgstr "不能用零長度的變數名"
+
+#: src/main/names.c:1044
+msgid "symbol print-name too long"
+msgstr "符號 print-name 太長"
+
+#: src/main/names.c:1070
+msgid "invalid .Internal() argument"
+msgstr ".Internal() 引數不正確"
+
+#: src/main/names.c:1073
+msgid "invalid internal function"
+msgstr "內部函數不正確"
+
+#: src/main/names.c:1075
+#, c-format
+msgid "no internal function \"%s\""
+msgstr "沒有 \"%s\" 這個內部函數"
+
+#: src/main/objects.c:46
+msgid "generic 'function' is not a function"
+msgstr "一般 'function' 不是函數"
+
+#: src/main/objects.c:177
+msgid "bad generic call environment"
+msgstr "一般呼叫環境不正確"
+
+#: src/main/objects.c:179
+msgid "bad generic definition environment"
+msgstr "一般定義環境不正確"
+
+#: src/main/objects.c:225 src/main/objects.c:359
+msgid "'UseMethod' used in an inappropriate fashion"
+msgstr "'UseMethod' 不能這樣使用"
+
+#: src/main/objects.c:248
+msgid "Invalid generic function in 'usemethod'"
+msgstr "'usemethod' 裡不能用一般功能"
+
+#: src/main/objects.c:352
+msgid "corrupt internals!"
+msgstr "內部毀壞!"
+
+#: src/main/objects.c:366
+msgid "there must be a first argument"
+msgstr "必須有第一引數"
+
+#: src/main/objects.c:369
+msgid "arguments after the first two are ignored"
+msgstr "除了第一第二引數其它忽略不用"
+
+#: src/main/objects.c:380
+msgid "'UseMethod' called from outside a closure"
+msgstr "'UseMethod' 從閉包外部被呼叫"
+
+#: src/main/objects.c:389
+msgid "first argument must be a generic name"
+msgstr "第一引數必須是一般名稱"
+
+#: src/main/objects.c:399
+#, c-format
+msgid "no applicable method for \"%s\""
+msgstr "\"%s\" 沒有適用的方法"
+
+#: src/main/objects.c:459
+msgid "'NextMethod' called from outside a function"
+msgstr "'NextMethod' 不能在函數外呼叫"
+
+#: src/main/objects.c:465
+msgid "'NextMethod' called from an anonymous function"
+msgstr "'NextMethod' 不能在匿名函數內呼叫"
+
+#: src/main/objects.c:495
+msgid "no calling generic was found: was a method called directly?"
+msgstr "找不到呼叫此方法的一般函數: 是不是已經直接呼叫這個方法?"
+
+#: src/main/objects.c:497
+#, c-format
+msgid "'function' is not a function, but of type %d"
+msgstr "'function' 不是函數, 而是類型 %d"
+
+#: src/main/objects.c:573
+msgid "wrong argument ..."
+msgstr "引數不正確 ..."
+
+#: src/main/objects.c:587
+msgid "object not specified"
+msgstr "目的物件沒有指定"
+
+#: src/main/objects.c:597 src/main/objects.c:604
+msgid "generic function not specified"
+msgstr "一般功能沒有指定"
+
+#: src/main/objects.c:601
+msgid "invalid generic argument to NextMethod"
+msgstr "NextMethod 不能用一般引數"
+
+#: src/main/objects.c:616
+msgid "invalid 'group' argument found in NextMethod"
+msgstr "NextMethod 不能用 'group' 引數"
+
+#: src/main/objects.c:633
+msgid "wrong value for .Method"
+msgstr ".Method 的值不正確"
+
+#: src/main/objects.c:636 src/main/objects.c:646
+#, c-format
+msgid "method name too long in '%s'"
+msgstr "'%s' 裡的方法名稱太長"
+
+#: src/main/objects.c:650
+msgid "Incompatible methods ignored"
+msgstr "不相容方法，忽略不用"
+
+#: src/main/objects.c:714 src/main/objects.c:719
+msgid "no method to invoke"
+msgstr "沒有可以呼叫的方法"
+
+#: src/main/objects.c:758
+msgid "cannot unclass an environment"
+msgstr "無法取消環境的類別"
+
+#: src/main/objects.c:761
+msgid "cannot unclass an external pointer"
+msgstr "無法取消外部指標的類別"
+
+#: src/main/objects.c:837
+msgid "'what' must be a character vector"
+msgstr "'what' 必須是字元向量"
+
+#: src/main/objects.c:842
+msgid "'which' must be a length 1 logical vector"
+msgstr "'which' 必須是長度為 1 的邏輯向量"
+
+#: src/main/objects.c:949
+#, c-format
+msgid "unable to find a non-generic version of function \"%s\""
+msgstr "無法找到函數 \"%s\" 非一般的版本"
+
+#: src/main/objects.c:989
+msgid ""
+"standardGeneric called without methods dispatch enabled (will be ignored)"
+msgstr "standardGeneric 被呼叫，但方法分派沒有啟用 (忽略不用)"
+
+#: src/main/objects.c:996
+msgid "argument to standardGeneric must be a non-empty character string"
+msgstr "standardGeneric 的引數必須是非空字串"
+
+#: src/main/objects.c:1001
+#, c-format
+msgid ""
+"call to standardGeneric(\"%s\") apparently not from the body of that generic "
+"function"
+msgstr "不能從非同屬函數中呼叫 standardGeneric(\"%s\") "
+
+#: src/main/objects.c:1022
+msgid "argument 'code' must be a character string"
+msgstr "引數 'code' 必須是字串"
+
+#: src/main/objects.c:1061
+#, c-format
+msgid ""
+"invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
+"\"set\", or \"suppress\""
+msgstr ""
+"原始方法程式碼 (\"%s\") 不正確：應該是 \"clear\"、\"reset\"、\"set\" 或 "
+"\"suppress\""
+
+#: src/main/objects.c:1069
+msgid "invalid object: must be a primitive function"
+msgstr "目的物件不正確: 必須是原始函數"
+
+#: src/main/objects.c:1116
+#, c-format
+msgid ""
+"the formal definition of a primitive generic must be a function object (got "
+"type '%s')"
+msgstr "原始一般函數的正式定義必須是函數目的物件 (不能是 '%s' 類別)"
+
+#: src/main/objects.c:1230
+msgid "invalid primitive operation given for dispatch"
+msgstr "不能分派原始運算"
+
+#: src/main/objects.c:1259
+#, c-format
+msgid ""
+"primitive function \"%s\" has been set for methods but no generic function "
+"supplied"
+msgstr "原始函數 \"%s\" 設定了方法，但沒有一般函數 "
+
+#: src/main/objects.c:1276
+msgid "C level MAKE_CLASS macro called with NULL string pointer"
+msgstr "C 級的 MAKE_TYPE 巨集不能用 NULL 字串指標來呼叫"
+
+#: src/main/objects.c:1297
+msgid "C level NEW macro called with null class definition pointer"
+msgstr "C 級的 NEW 巨集不能用 null 類別定義指標來呼叫"
+
+#: src/main/objects.c:1301
+#, c-format
+msgid "trying to generate an object in C from a virtual class (\"%s\")"
+msgstr "無法從虛擬類別 (\"%s\") 產生 C 目的物件"
+
+#: src/main/optim.c:73 src/main/optim.c:99 src/main/optim.c:182
+msgid "non-finite value supplied by optim"
+msgstr "optim 回傳了無限值"
+
+#: src/main/optim.c:80
+#, c-format
+msgid "objective function in optim evaluates to length %d not 1"
+msgstr "optim 內的目的函數長度被評估為 %d，而不是 1"
+
+#: src/main/optim.c:106
+#, c-format
+msgid "gradient in optim evaluated to length %d not %d"
+msgstr "optim 內的梯度長度被評估為 %d，而不是 %d"
+
+#: src/main/optim.c:189
+#, c-format
+msgid "candidate point in optim evaluated to length %d not %d"
+msgstr "optim 內的候選點長度被評估為 %d，而不是 %d"
+
+#: src/main/optim.c:220 src/main/optim.c:409
+msgid "'fn' is not a function"
+msgstr "'fn' 不是函數"
+
+#: src/main/optim.c:236 src/main/optim.c:415
+msgid "'parscale' is of the wrong length"
+msgstr "'parscale' 的長度不正確"
+
+#: src/main/optim.c:250
+msgid "'maxit' is not an integer"
+msgstr "'maxit' 不是整數"
+
+#: src/main/optim.c:268
+msgid "'tmax' is not an integer"
+msgstr "'tmax' 不是整數"
+
+#: src/main/optim.c:270 src/main/optim.c:287 src/main/optim.c:312
+#: src/main/optim.c:342 src/main/optim.c:423
+msgid "'gr' is not a function"
+msgstr "'gr' 不是函數"
+
+#: src/main/optim.c:293 src/main/optim.c:318 src/main/optim.c:348
+#: src/main/optim.c:429
+msgid "'ndeps' is of the wrong length"
+msgstr "'ndeps' 長度不正確"
+
+#: src/main/optim.c:379
+msgid "unknown 'method'"
+msgstr "不明的 'method'"
+
+#: src/main/optim.c:513
+msgid "REPORT must be > 0 (method = \"BFGS\")"
+msgstr "REPORT 必須 > 0 (method = \"BFGS\")"
+
+#: src/main/optim.c:524
+msgid "initial value in 'vmmin' is not finite"
+msgstr "'vmmin' 的初始值不能為無限大"
+
+#: src/main/optim.c:672
+msgid "function cannot be evaluated at initial parameters"
+msgstr "不可使用初始參數來評估函數"
+
+#: src/main/optim.c:869
+msgid "unknown 'type' in CG method of optim"
+msgstr "optim 的 CG 方法中沒有這種 'type'"
+
+#: src/main/optim.c:882
+msgid "Function cannot be evaluated at initial parameters"
+msgstr "不可使用初始參數來評估函數"
+
+#: src/main/optim.c:937
+msgid "unknown type in CG method of optim"
+msgstr "optim 的 CG 方法中沒有此一類型"
+
+#: src/main/optim.c:1022
+msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
+msgstr "REPORT必須 > 0 (method = \"L-BFGS-B\")"
+
+#: src/main/optim.c:1046
+msgid "L-BFGS-B needs finite values of 'fn'"
+msgstr "L-BFGS-B 不能有 'fn' 的無限值"
+
+#: src/main/optimize.c:53 src/main/optimize.c:137 src/main/optimize.c:353
+msgid "NA replaced by maximum positive value"
+msgstr "NA 被換成最大的正值"
+
+#: src/main/optimize.c:61 src/main/optimize.c:145 src/main/optimize.c:361
+msgid "NA/Inf replaced by maximum positive value"
+msgstr "NA/Inf 被換成最大的正值"
+
+#: src/main/optimize.c:70
+msgid "invalid function value in 'optimize'"
+msgstr "'optimize' 裡的函數值不正確"
+
+#: src/main/optimize.c:88 src/main/optimize.c:174 src/main/optimize.c:555
+msgid "attempt to minimize non-function"
+msgstr "不能將非函數最小化"
+
+#: src/main/optimize.c:104 src/main/optimize.c:190
+msgid "'xmin' not less than 'xmax'"
+msgstr "'xmin' 不能小於 xmax"
+
+#: src/main/optimize.c:154
+msgid "invalid function value in 'zeroin'"
+msgstr "'zeroin' 函數值不正確"
+
+#: src/main/optimize.c:203
+msgid "'maxiter' must be positive"
+msgstr "'maxiter' 必須是正數"
+
+#: src/main/optimize.c:345
+msgid "non-finite value supplied by 'nlm'"
+msgstr "'nlm' 回傳了無限值"
+
+#: src/main/optimize.c:379
+msgid "invalid function value in 'nlm' optimizer"
+msgstr "'nlm' 最佳化器裡的函數值不正確"
+
+#: src/main/optimize.c:390 src/main/optimize.c:405
+msgid "function value caching for optimization is seriously confused"
+msgstr "最佳化時快取的函數值有嚴重混淆"
+
+#: src/main/optimize.c:420
+msgid "numeric parameter expected"
+msgstr "需要數值參數"
+
+#: src/main/optimize.c:424
+msgid "conflicting parameter lengths"
+msgstr "參數的長度自相矛盾"
+
+#: src/main/optimize.c:428
+msgid "invalid parameter length"
+msgstr "參數長度不正確"
+
+#: src/main/optimize.c:438 src/main/optimize.c:445
+msgid "missing value in parameter"
+msgstr "參數裡不能有缺值"
+
+#: src/main/optimize.c:450
+msgid "invalid parameter type"
+msgstr "參數類型不正確"
+
+#: src/main/optimize.c:458
+msgid "invalid NA value in parameter"
+msgstr "參數裡的 NA 值不正確"
+
+#: src/main/optimize.c:468
+msgid "non-positive number of parameters in nlm"
+msgstr "nlm 參數不能是負的"
+
+#: src/main/optimize.c:470
+msgid "nlm is inefficient for 1-d problems"
+msgstr "用 nlm 來解決一維問題效率不高"
+
+#: src/main/optimize.c:472
+msgid "invalid gradient tolerance in nlm"
+msgstr "nlm 裡的梯度容錯不正確"
+
+#: src/main/optimize.c:474
+msgid "invalid iteration limit in nlm"
+msgstr "nlm 裡的迭代極值不正確"
+
+#: src/main/optimize.c:476
+msgid "minimization function has no good digits in nlm"
+msgstr "nlm 裡的最小化函數沒有可以用的適當的數字"
+
+#: src/main/optimize.c:478
+msgid "no analytic gradient to check in nlm!"
+msgstr "nlm 裡沒有可以查的分析梯度!"
+
+#: src/main/optimize.c:480
+msgid "no analytic Hessian to check in nlm!"
+msgstr "nlm 裡沒有可以查的分析用 Hessian!"
+
+#: src/main/optimize.c:482
+msgid "probable coding error in analytic gradient"
+msgstr "分析梯度的程式碼很有可能發生錯誤"
+
+#: src/main/optimize.c:484
+msgid "probable coding error in analytic Hessian"
+msgstr "分析 Hessian 的程式碼很有可能發生錯誤"
+
+#: src/main/optimize.c:486
+#, c-format
+msgid ""
+"*** unknown error message (msg = %d) in nlm()\n"
+"*** should not happen!"
+msgstr "nlm() 產生了不明的錯誤訊息 (msg = %d)。這不應該發生!"
+
+#: src/main/optimize.c:497
+msgid "Relative gradient close to zero.\n"
+msgstr "相對梯度距離零太近。\n"
+
+#: src/main/optimize.c:498 src/main/optimize.c:502
+msgid "Current iterate is probably solution.\n"
+msgstr "目前的迭代值很可能就已經是答案了。\n"
+
+#: src/main/optimize.c:501
+msgid "Successive iterates within tolerance.\n"
+msgstr "在容錯範圍內連續迭代。\n"
+
+#: src/main/optimize.c:505
+msgid "Last global step failed to locate a point lower than x.\n"
+msgstr "最後一步的整體最佳化沒有能找到比 x 值要小的一個點。\n"
+
+#: src/main/optimize.c:506
+msgid ""
+"Either x is an approximate local minimum of the function,\n"
+"the function is too non-linear for this algorithm,\n"
+"or steptol is too large.\n"
+msgstr ""
+"要麼 x 已經是函數的本地最小值，要麼這個函數太非線性，要麼 steptol 太大。\n"
+
+#: src/main/optimize.c:511
+msgid "Iteration limit exceeded.  Algorithm failed.\n"
+msgstr "超過了迭代極值。演算法失敗。\n"
+
+#: src/main/optimize.c:514
+msgid ""
+"Maximum step size exceeded 5 consecutive times.\n"
+"Either the function is unbounded below,\n"
+"becomes asymptotic to a finite value\n"
+"from above in some direction,\n"
+"or stepmx is too small.\n"
+msgstr ""
+"最大步驟超過了 5 次。\n"
+"這個函數要麼沒有下邊界，\n"
+"從上邊界達到了漸近有限值，\n"
+"要麼是 stepmx 太小。\n"
+
+#: src/main/optimize.c:635
+msgid "hessian supplied is of the wrong length or mode, so ignored"
+msgstr "Hessian 的長度不正確或其狀態不正確，因此忽略不用"
+
+#: src/main/optimize.c:639
+msgid "gradient supplied is of the wrong length or mode, so ignored"
+msgstr "梯度的長度或其狀態不正確，因此忽略不用"
+
+#: src/main/par.c:65
+#, c-format
+msgid "invalid value specified for graphics parameter \"%s\""
+msgstr "圖形參數 \"%s\" 的值設得不正確"
+
+#: src/main/par.c:72
+#, c-format
+msgid "parameter \"%s\" has the wrong length"
+msgstr "參數 \"%s\" 的長度不正確"
+
+#: src/main/par.c:373
+msgid "parameter \"mfg\" has the wrong length"
+msgstr "參數 \"mfg\" 的長度不正確"
+
+#: src/main/par.c:381
+msgid "parameter \"i\" in \"mfg\" is out of range"
+msgstr "\"mfg\" 裡的參數 \"i\" 超出範圍"
+
+#: src/main/par.c:383
+msgid "parameter \"j\" in \"mfg\" is out of range"
+msgstr "\"mfg\" 裡的參數 \"j\" 超出範圍"
+
+#: src/main/par.c:388
+msgid "value of nr in \"mfg\" is wrong and will be ignored"
+msgstr "\"mfg\" 裡的 nr 值不正確，忽略不用"
+
+#: src/main/par.c:390
+msgid "value of nc in \"mfg\" is wrong and will be ignored"
+msgstr "\"mfg\" 裡的 nc 值不正確，忽略不用"
+
+#: src/main/par.c:428
+msgid "calling par(new=) with no plot"
+msgstr "不繪圖就不能呼叫 par(new=)"
+
+#: src/main/par.c:578
+#, c-format
+msgid "parameter \"%s\" cannot be set"
+msgstr "無法設定參數 \"%s\""
+
+#: src/main/par.c:625
+#, c-format
+msgid "parameter \"%s\" could not be set in high-level plot() function"
+msgstr "高階 plot() 函數裡不能設定參數 \"%s\""
+
+#: src/main/par.c:1084
+msgid "invalid parameter passed to par()"
+msgstr "傳給 par() 的參數錯誤"
+
+#: src/main/par.c:1154
+#, c-format
+msgid "too many rows in layout, limit %d"
+msgstr "layout 裡的列數太多, 極值為 %d"
+
+#: src/main/par.c:1160
+#, c-format
+msgid "too many columns in layout, limit %d"
+msgstr "layout 裡的行數太多, 極值為 %d"
+
+#: src/main/par.c:1162
+#, c-format
+msgid "too many cells in layout, limit %d"
+msgstr "layout 裡的元素太多, 極值為 %d"
+
+#: src/main/paste.c:64
+msgid "invalid separator"
+msgstr "分隔符號不正確"
+
+#: src/main/paste.c:80
+msgid "non-string argument to Internal paste"
+msgstr "內部貼上的引數不是字串"
+
+#: src/main/paste.c:158
+msgid "first argument must be atomic"
+msgstr "第一個引數必須是基元"
+
+#: src/main/paste.c:302
+msgid "Impossible mode ( x )"
+msgstr "這種狀態 (x) 是不可能的"
+
+#: src/main/paste.c:387
+#, fuzzy
+msgid "atomic vector arguments only"
+msgstr "只能用向量引數"
+
+#: src/main/platform.c:226
+msgid "invalid filename specification"
+msgstr "檔案名稱設定不正確"
+
+#: src/main/platform.c:228
+msgid "invalid 'headers'"
+msgstr "'headers' 不正確"
+
+#: src/main/platform.c:230
+msgid "invalid 'title'"
+msgstr "'title' 不正確"
+
+#: src/main/platform.c:351 src/main/platform.c:397
+msgid "write error during file append"
+msgstr "檔案附加時寫入發生錯誤"
+
+#: src/main/platform.c:365 src/main/platform.c:449 src/main/platform.c:478
+msgid "invalid first filename"
+msgstr "第一個檔案名稱不正確"
+
+#: src/main/platform.c:367 src/main/platform.c:480
+msgid "invalid second filename"
+msgstr "第二個檔案名稱不正確"
+
+#: src/main/platform.c:369
+msgid "nothing to append to"
+msgstr "沒有可以附加的檔案"
+
+#: src/main/platform.c:371
+msgid "'outFile' must be a single file"
+msgstr "'outfile' 必須是單一檔案"
+
+#: src/main/platform.c:426 src/main/platform.c:576
+msgid "invalid filename argument"
+msgstr "filename 引數不正確"
+
+#: src/main/platform.c:482
+msgid "nothing to link"
+msgstr "沒有可以連結的檔案"
+
+#: src/main/platform.c:511
+msgid "symlinks are not supported on this platform"
+msgstr "這個平台不支援符號連結"
+
+#: src/main/platform.c:526
+msgid "'source' must be a single string"
+msgstr "'source' 必須是單一字串"
+
+#: src/main/platform.c:529
+msgid "expanded source name too long"
+msgstr "擴充的 source 名太長"
+
+#: src/main/platform.c:533
+msgid "'destination' must be a single string"
+msgstr "'destination' 必須是單一字串"
+
+#: src/main/platform.c:536
+msgid "expanded destination name too long"
+msgstr "擴充的 destination 名太長"
+
+#: src/main/platform.c:651
+msgid "file.info() is not implemented on this system"
+msgstr "本系統還沒有實作 file.info()"
+
+#: src/main/platform.c:715
+msgid "directory/folder path name too long"
+msgstr "目錄/資料夾路徑太長"
+
+#: src/main/platform.c:717
+#, c-format
+msgid "list.files: '%s' is not a readable directory"
+msgstr "list.files: '%s' 目錄不可讀"
+
+#: src/main/platform.c:812
+msgid "'recursive = TRUE' is not supported on this platform"
+msgstr "本平台不支援 'recursive=TRUE'"
+
+#: src/main/platform.c:818
+msgid "invalid 'pattern' regular expression"
+msgstr "'pattern' 正規表示式不正確"
+
+#: src/main/platform.c:847
+msgid "unable to determine R home location"
+msgstr "無法確定 R 家目錄位置"
+
+#: src/main/platform.c:964
+msgid "file choice cancelled"
+msgstr "取消檔案選擇"
+
+#: src/main/platform.c:966
+msgid "file name too long"
+msgstr "檔案名稱太長"
+
+#: src/main/platform.c:1002
+msgid "file.access() is not implemented on this system"
+msgstr "本系統沒有實作 file.access()"
+
+#: src/main/platform.c:1081
+msgid "setting 'LC_NUMERIC' may cause R to function strangely"
+msgstr "正在設定 'LC_NUMERIC' 可能會使得 R 的運作異常"
+
+#: src/main/platform.c:1095
+msgid "OS reports request cannot be honored"
+msgstr "作業系統回報無法實現執行請求"
+
+#: src/main/platform.c:1233
+#, fuzzy
+msgid "invalid value of 'what' argument"
+msgstr "'what' 的值不正確"
+
+#: src/main/platform.c:1378
+msgid "'hostname' must be a character vector of length 1"
+msgstr "'hostname' 必須是長度為 1 的字元向量"
+
+#: src/main/platform.c:1384
+#, c-format
+msgid "nsl() was unable to resolve host '%s'"
+msgstr "nsl() 無法分辨主機 '%s'"
+
+#: src/main/platform.c:1391
+msgid "unknown format returned by gethostbyname"
+msgstr "gethostbyname 回傳了錯誤的格式"
+
+#: src/main/platform.c:1402
+msgid "nsl() is not supported on this platform"
+msgstr "本平台不支援 nsl()"
+
+#: src/main/platform.c:1446 src/main/platform.c:1483
+#, c-format
+msgid "'%s' already exists"
+msgstr "'%s' 已存在"
+
+#: src/main/plot.c:59
+msgid "Hit <Return> to see next plot: "
+msgstr "按 <return> 鍵來看下一張圖: "
+
+#: src/main/plot.c:68
+msgid "argument must have positive length"
+msgstr "引數的長度必須是正數"
+
+#: src/main/plot.c:216
+msgid "invalid multibyte char in pch=\"c\""
+msgstr "pch=\"c\" 裡的多位元組字元不正確"
+
+#: src/main/plot.c:228
+msgid "only NA allowed in logical plotting symbol"
+msgstr "邏輯繪圖符號裡只允許用 NA"
+
+#: src/main/plot.c:230
+msgid "invalid plotting symbol"
+msgstr "繪圖符號不正確"
+
+#: src/main/plot.c:314 src/modules/X11/devX11.c:1315
+msgid "invalid font specification"
+msgstr "字型設定不正確"
+
+#: src/main/plot.c:388
+msgid "invalid 'vfont' value [typeface]"
+msgstr "'vfont' 值不正確 [typeface]"
+
+#: src/main/plot.c:412
+msgid "invalid 'vfont' value [fontindex]"
+msgstr "'vfont' 值不正確 [fontindex]"
+
+#: src/main/plot.c:496
+msgid "invalid graphics parameter"
+msgstr "圖形參數不正確"
+
+#: src/main/plot.c:586
+msgid "at least 3 arguments required"
+msgstr "至少需要三個引數"
+
+#: src/main/plot.c:601
+msgid "\"log=\" specification must be character"
+msgstr "\"log=\" 必須設定成字元"
+
+#: src/main/plot.c:612
+#, c-format
+msgid "invalid \"log=%s\" specification"
+msgstr "\"log=%s\" 設定不正確"
+
+#: src/main/plot.c:626
+msgid "NAs not allowed in 'xlim'"
+msgstr "'xlim' 裡不允許 NA"
+
+#: src/main/plot.c:632
+msgid "need finite 'xlim' values"
+msgstr "'xlim' 值不能是無限的"
+
+#: src/main/plot.c:638
+msgid "NAs not allowed in 'ylim'"
+msgstr "'ylim' 裡不允許 NA"
+
+#: src/main/plot.c:644
+msgid "need finite 'ylim' values"
+msgstr "'ylim' 值不能是無限的"
+
+#: src/main/plot.c:650
+msgid "Logarithmic axis must have positive limits"
+msgstr "對數座標不能有負的極值"
+
+#: src/main/plot.c:764
+msgid "invalid type for axis labels"
+msgstr "座標標記類型不正確"
+
+#: src/main/plot.c:991
+#, c-format
+msgid "invalid axis number %d"
+msgstr "座標數目 %d 不正確"
+
+#: src/main/plot.c:1088
+#, fuzzy
+msgid "'hadj' must be of length one"
+msgstr "'which' 的長度必須為 1"
+
+#: src/main/plot.c:1095 src/main/plot.c:2486
+msgid "zero length 'padj' specified"
+msgstr "'padj' 長度不能為零"
+
+#: src/main/plot.c:1143
+msgid "'label' is supplied and not 'at'"
+msgstr ""
+
+#: src/main/plot.c:1147
+#, c-format
+msgid "'at' and 'label' lengths differ, %d != %d"
+msgstr "'at' 和 'label' 的長度不同，%d!=%d"
+
+#: src/main/plot.c:1165
+msgid "no locations are finite"
+msgstr "不存在有限的位置"
+
+#: src/main/plot.c:1506
+msgid "invalid plotting structure"
+msgstr "繪圖結構不正確"
+
+#: src/main/plot.c:1508
+#, c-format
+msgid "'x' and 'y' lengths differ in %s()"
+msgstr "%s() 裡的 'x' 和 'y' 的長度不一樣"
+
+#: src/main/plot.c:1520
+#, c-format
+msgid "plot type '%s' will be truncated to first character"
+msgstr "繪圖類型 '%s' 被截短成第一個字元"
+
+#: src/main/plot.c:1524 src/main/plot.c:3121
+msgid "invalid plot type"
+msgstr "繪圖類型不正確"
+
+#: src/main/plot.c:1700
+#, c-format
+msgid "invalid plot type '%c'"
+msgstr "繪圖類型 '%c' 不正確"
+
+#: src/main/plot.c:1747
+msgid "invalid second argument"
+msgstr "第二個引數不正確"
+
+#: src/main/plot.c:1753
+msgid "invalid third argument"
+msgstr "第三個引數不正確"
+
+#: src/main/plot.c:1759
+#, fuzzy
+msgid "invalid fourth argument"
+msgstr "第一個引數不正確"
+
+#: src/main/plot.c:1941
+msgid "invalid arrow head length"
+msgstr "箭頭長度不正確"
+
+#: src/main/plot.c:1946
+msgid "invalid arrow head angle"
+msgstr "箭頭角度不正確"
+
+#: src/main/plot.c:1951
+msgid "invalid arrow head specification"
+msgstr "箭頭設定不正確"
+
+#: src/main/plot.c:1971
+msgid "'lwd' must be numeric of length >=1"
+msgstr "'lwd' 必須是長度大於 1 的數值"
+
+#: src/main/plot.c:2156
+msgid "zero length 'labels'"
+msgstr "'labels' 的長度不能為零"
+
+#: src/main/plot.c:2234
+msgid "no coordinates were supplied"
+msgstr "沒有座標"
+
+#: src/main/plot.c:2444
+msgid "zero length 'text' specified"
+msgstr "'text' 長度不能設成零"
+
+#: src/main/plot.c:2450
+msgid "zero length 'side' specified"
+msgstr "'side' 長度不能設成零"
+
+#: src/main/plot.c:2457
+msgid "zero length 'line' specified"
+msgstr "'line' 長度不能設成零"
+
+#: src/main/plot.c:2465
+msgid "zero length 'outer' specified"
+msgstr "'outer' 長度不能設成零"
+
+#: src/main/plot.c:2472
+msgid "zero length 'at' specified"
+msgstr "'at' 長度不能設成零"
+
+#: src/main/plot.c:2479
+msgid "zero length 'adj' specified"
+msgstr "'adj' 長度不能設成零"
+
+#: src/main/plot.c:2493
+msgid "zero length 'cex' specified"
+msgstr "'cex' 長度不能設成零"
+
+#: src/main/plot.c:2501
+msgid "zero length 'col' specified"
+msgstr "'col' 長度不能設成零"
+
+#: src/main/plot.c:2508
+msgid "zero length 'font' specified"
+msgstr "'font' 長度不能設成零"
+
+#: src/main/plot.c:2902
+msgid "invalid a=, b= specification"
+msgstr "a=, b= 設定不正確"
+
+#: src/main/plot.c:2911
+msgid "'a' and 'b' must be finite"
+msgstr "'a' 和 'b' 的值必須是有限的"
+
+#: src/main/plot.c:3043
+msgid "invalid 'which' specification"
+msgstr "'which' 設定不正確"
+
+#: src/main/plot.c:3116
+msgid "invalid number of points in locator()"
+msgstr "locator() 裡點的數目不正確"
+
+#: src/main/plot.c:3251
+msgid "invalid number of points in identify()"
+msgstr "identify() 裡點的數目不正確"
+
+#: src/main/plot.c:3253
+msgid "incorrect argument type"
+msgstr "引數類型不正確"
+
+#: src/main/plot.c:3261
+msgid "different argument lengths"
+msgstr "引數長度不一樣"
+
+#: src/main/plot.c:3315
+#, c-format
+msgid "warning: no point with %.2f inches\n"
+msgstr "警告: 沒有 %.2f 英呎的點\n"
+
+#: src/main/plot.c:3321
+msgid "warning: nearest point already identified\n"
+msgstr "警告: 已經找到了最近的點\n"
+
+#: src/main/plot.c:3402
+msgid "invalid units"
+msgstr "單位不正確"
+
+#: src/main/plot.c:3561 src/main/plot.c:3670
+msgid "invalid dendrogram input"
+msgstr "dendrogram 輸入不正確"
+
+#: src/main/plot.c:3701
+msgid "cannot take snapshot of old-style device"
+msgstr "無法擷取舊式裝置快照"
+
+#: src/main/plot.c:3714
+msgid "cannot play snapshot on old-style device"
+msgstr "無法在舊式裝置上播放快照"
+
+#: src/main/plot.c:3770
+msgid "invalid graphics parameter list"
+msgstr "圖形參數串列不正確"
+
+#: src/main/plot.c:3812
+msgid "invalid symbol parameter vector"
+msgstr "符號參數向量不正確"
+
+#: src/main/plot.c:3835
+msgid "invalid symbol coordinates"
+msgstr "符號座標不正確"
+
+#: src/main/plot.c:3843
+msgid "x/y/parameter length mismatch"
+msgstr "x/y/ 參數長度不一樣"
+
+#: src/main/plot.c:3862
+msgid "invalid circles data"
+msgstr "圓形資料不正確"
+
+#: src/main/plot.c:3864 src/main/plot.c:3882 src/main/plot.c:3908
+#: src/main/plot.c:3937
+msgid "invalid symbol parameter"
+msgstr "符號參數不正確"
+
+#: src/main/plot.c:3880
+msgid "invalid squares data"
+msgstr "正方形資料不正確"
+
+#: src/main/plot.c:3906
+msgid "invalid rectangles data (need 2 columns)"
+msgstr "長方形資料不正確 (需要兩欄)"
+
+#: src/main/plot.c:3935
+msgid "invalid stars data"
+msgstr "星形資料不正確"
+
+#: src/main/plot.c:3977
+msgid "invalid thermometers data (need 3 or 4 columns)"
+msgstr "溫度計資料不正確 (需要三或四欄)"
+
+#: src/main/plot.c:3980
+#, c-format
+msgid "invalid thermometers[,%s]"
+msgstr "溫度計[,%s] 不正確"
+
+#: src/main/plot.c:3984
+#, c-format
+msgid "thermometers[,%s] not in [0,1] -- may look funny"
+msgstr "溫度計[,%s] 在 [0,1] 範圍外 -- 看起來會有點不正確"
+
+#: src/main/plot.c:3987
+msgid "invalid thermometers[,1:2]"
+msgstr "溫度計[,1:2]"
+
+#: src/main/plot.c:4026
+msgid "invalid boxplots data (need 5 columns)"
+msgstr "boxplots 資料不正確 (需要五欄)"
+
+#: src/main/plot.c:4036
+msgid "boxplots[,5] outside [0,1] -- may look funny"
+msgstr "boxplots[,5] 在 [0,1] 範圍外 -- 看起來會有點不正確"
+
+#: src/main/plot.c:4038
+msgid "invalid boxplots[, 1:4]"
+msgstr "boxplots[, 1:4] 不正確"
+
+#: src/main/plot.c:4084
+msgid "invalid symbol type"
+msgstr "符號類型不正確"
+
+#: src/main/plot3d.c:724 src/main/plot3d.c:1017
+msgid "contour(): circular/long seglist -- bug.report()!"
+msgstr "contour():圓的/長的 seglist -- bug.report()!"
+
+#: src/main/plot3d.c:805 src/main/plot3d.c:1478
+msgid "all z values are equal"
+msgstr "所有的 z 值都一樣"
+
+#: src/main/plot3d.c:807 src/main/plot3d.c:1480
+msgid "all z values are NA"
+msgstr "所有的 z 值都是 NA"
+
+#: src/main/plot3d.c:1442 src/main/plot3d.c:1694
+msgid "insufficient 'x' or 'y' values"
+msgstr "'x' 或 'y' 值大小不夠"
+
+#: src/main/plot3d.c:1445 src/main/plot3d.c:1697
+msgid "dimension mismatch"
+msgstr "維度不相符"
+
+#: src/main/plot3d.c:1448 src/main/plot3d.c:1700
+msgid "no contour values"
+msgstr "無等高值"
+
+#: src/main/plot3d.c:1452
+msgid "missing 'x' values"
+msgstr "缺少 'x' 值"
+
+#: src/main/plot3d.c:1454
+msgid "increasing 'x' values expected"
+msgstr "'x' 值應加大"
+
+#: src/main/plot3d.c:1459
+msgid "missing 'y' values"
+msgstr "缺少 'y' 值"
+
+#: src/main/plot3d.c:1461
+msgid "increasing 'y' values expected"
+msgstr "'y' 值應加大"
+
+#: src/main/plot3d.c:1466
+msgid "invalid NA contour values"
+msgstr "NA 等高值不正確"
+
+#: src/main/plot3d.c:1765 src/main/plot3d.c:1850
+msgid "invalid x / y values or limits"
+msgstr "x/y 的值或極值不正確"
+
+#: src/main/plot3d.c:1767
+msgid "invalid contour levels: must be strictly increasing"
+msgstr "等高層次不正確: 必須嚴格增加"
+
+#: src/main/plot3d.c:2021
+msgid "coordinates outsize specified range"
+msgstr "座標比設定的範圍要大"
+
+#: src/main/plot3d.c:2439 src/main/plot3d.c:2452
+msgid "Axis orientation not calculated"
+msgstr "無法計算座標方位"
+
+#: src/main/plot3d.c:2470
+msgid "too few parameters"
+msgstr "參數太少"
+
+#: src/main/plot3d.c:2502
+msgid "invalid 'x' limits"
+msgstr "'x' 極值不正確"
+
+#: src/main/plot3d.c:2504
+msgid "invalid 'y' limits"
+msgstr "'y' 極值不正確"
+
+#: src/main/plot3d.c:2506
+msgid "invalid 'z' limits"
+msgstr "'z' 極值不正確"
+
+#: src/main/plot3d.c:2527
+msgid "'xlab' must be a character vector of length 1"
+msgstr "'xlab' 必須是長度為 1 的字元向量"
+
+#: src/main/plot3d.c:2529
+msgid "'ylab' must be a character vector of length 1"
+msgstr "'ylab' 必須是長度為 1 的字元向量"
+
+#: src/main/plot3d.c:2531
+msgid "'zlab' must be a character vector of length 1"
+msgstr "'zlab' 必須是長度為 1 的字元向量"
+
+#: src/main/plot3d.c:2551
+msgid "invalid viewing parameters"
+msgstr "viewing 參數不正確"
+
+#: src/main/print.c:134 src/main/print.c:184
+msgid "invalid 'na.print' specification"
+msgstr "'na.print' 設定不正確"
+
+#: src/main/print.c:143
+msgid "invalid row labels"
+msgstr "列標記不正確"
+
+#: src/main/print.c:145
+msgid "invalid column labels"
+msgstr "行標記不正確"
+
+#: src/main/print.c:194
+msgid "'gap' must be non-negative integer"
+msgstr "'gap' 必須是正整數"
+
+#: src/main/print.c:205
+msgid "invalid 'tryS4' internal argument"
+msgstr "'tryS4' 內部引數不正確"
+
+#: src/main/print.c:840
+msgid "invalid character length in dblepr"
+msgstr "dblepr 字元長度不正確"
+
+#: src/main/print.c:857
+msgid "invalid character length in intpr"
+msgstr "intpr 字元長度不正確"
+
+#: src/main/print.c:875
+msgid "invalid character length in realpr"
+msgstr "realpr 字元長度不正確"
+
+#: src/main/print.c:885
+msgid "memory allocation error in realpr"
+msgstr "realpr 記憶體指派錯誤"
+
+#: src/main/print.c:901
+#, c-format
+msgid "BLAS/LAPACK routine '%6s' gave error code %d"
+msgstr "BLAS/LAPACK 例行程式 '%6s' 產生了錯誤碼 %d"
+
+#: src/main/printarray.c:546
+msgid "too few row labels"
+msgstr "列標記不夠"
+
+#: src/main/printarray.c:548
+msgid "too few column labels"
+msgstr "行標記不夠"
+
+#: src/main/qsort.c:50
+msgid "argument is not a numeric vector"
+msgstr "引數不是數值向量"
+
+#: src/main/random.c:96
+msgid "internal error in do_random1"
+msgstr "do_random1 產生了內部錯誤"
+
+#: src/main/random.c:99 src/main/random.c:181 src/main/random.c:259
+msgid "NAs produced"
+msgstr "產生了 NA"
+
+#: src/main/random.c:178
+msgid "internal error in do_random2"
+msgstr "do_random2 產生了內部錯誤"
+
+#: src/main/random.c:256
+msgid "internal error in do_random3"
+msgstr "do_random3 產生了內部錯誤"
+
+#: src/main/random.c:436
+msgid "NA in probability vector"
+msgstr "機率向量中有 NA"
+
+#: src/main/random.c:438
+msgid "non-positive probability"
+msgstr "出現非正值機率"
+
+#: src/main/random.c:445
+msgid "too few positive probabilities"
+msgstr "正值機率太少"
+
+#: src/main/random.c:471
+msgid ""
+"cannot take a sample larger than the population\n"
+" when 'replace = FALSE'"
+msgstr "當 'replace = FALSE' 時不能取比總體還要大的樣本"
+
+#: src/main/random.c:480
+msgid "incorrect number of probabilities"
+msgstr "機率數目不正確"
+
+#: src/main/random.c:514
+msgid "invalid first argument 'n'"
+msgstr "第一引數 'n' 不正確"
+
+#: src/main/random.c:516
+msgid "invalid second argument 'size'"
+msgstr "第二引數 'size' 不正確"
+
+#: src/main/regex.c:2579
+msgid "Success"
+msgstr "執行成功"
+
+#: src/main/regex.c:2582
+msgid "No match"
+msgstr "沒有符合的"
+
+#: src/main/regex.c:2585
+msgid "Invalid regular expression"
+msgstr "正規表示式不正確"
+
+#: src/main/regex.c:2588
+msgid "Invalid collation character"
+msgstr "排序字元不正確"
+
+#: src/main/regex.c:2591
+msgid "Invalid character class name"
+msgstr "字元類別名稱不正確"
+
+#: src/main/regex.c:2594
+msgid "Trailing backslash"
+msgstr "末端有反斜線"
+
+#: src/main/regex.c:2597
+msgid "Invalid back reference"
+msgstr "向後參考不正確"
+
+#: src/main/regex.c:2600
+msgid "Unmatched [ or [^"
+msgstr "沒有符合的 [ 或 [^"
+
+#: src/main/regex.c:2603
+msgid "Unmatched ( or \\("
+msgstr "沒有符合的 ( 或 \\("
+
+#: src/main/regex.c:2606
+msgid "Unmatched \\{"
+msgstr "沒有符合的 \\{"
+
+#: src/main/regex.c:2609
+msgid "Invalid content of \\{\\}"
+msgstr "\\{\\} 內容不正確"
+
+#: src/main/regex.c:2612
+msgid "Invalid range end"
+msgstr "範圍下限不正確"
+
+#: src/main/regex.c:2615
+msgid "Memory exhausted"
+msgstr "記憶體用盡"
+
+#: src/main/regex.c:2618
+msgid "Invalid preceding regular expression"
+msgstr "前一個正規表示式不正確"
+
+#: src/main/regex.c:2621
+msgid "Premature end of regular expression"
+msgstr "正規表示式沒有結尾"
+
+#: src/main/regex.c:2624
+msgid "Regular expression too big"
+msgstr "正規表示式太大"
+
+#: src/main/regex.c:2627
+msgid "Unmatched ) or \\)"
+msgstr "沒有符合的 ) 或 \\)"
+
+#: src/main/regex.c:3118
+msgid "No previous regular expression"
+msgstr "前一個正規表示式不存在"
+
+#: src/main/relop.c:71
+msgid ""
+"longer object length\n"
+" \tis not a multiple of shorter object length"
+msgstr "長的目的物件長度不是短的目的物件長度的整數倍"
+
+#: src/main/relop.c:100
+#, c-format
+msgid "comparison (%d) is possible only for atomic and list types"
+msgstr "只有基元或串列類型才能做比較 (%d)"
+
+#: src/main/relop.c:105
+msgid "comparison is not allowed for expressions"
+msgstr "運算式不能作比較"
+
+#: src/main/relop.c:194
+msgid "comparison of these types is not implemented"
+msgstr "這些類型的比較還沒有實作"
+
+#: src/main/relop.c:395
+msgid "invalid comparison with complex values"
+msgstr "不能與複數值進行比較"
+
+#: src/main/saveload.c:309
+msgid "a I read error occurred"
+msgstr "發生了 I 類別讀取錯誤"
+
+#: src/main/saveload.c:319
+msgid "a R read error occurred"
+msgstr "發生了 R 類別讀取錯誤"
+
+#: src/main/saveload.c:329
+msgid "a C read error occurred"
+msgstr "發生了 C 類別讀取錯誤"
+
+#: src/main/saveload.c:339
+msgid "a S read error occurred"
+msgstr "發生了 S 類別讀取錯誤"
+
+#: src/main/saveload.c:364 src/main/saveload.c:372 src/main/saveload.c:380
+#: src/main/saveload.c:1584 src/main/saveload.c:1592
+msgid "a read error occurred"
+msgstr "發生了讀取錯誤"
+
+#: src/main/saveload.c:444
+msgid "unresolved node during restore"
+msgstr "復原時遇到了無法解析的節點"
+
+#: src/main/saveload.c:465
+#, c-format
+msgid "restore compatibility error - no version %d compatibility"
+msgstr "復原相容錯誤：沒有同版本 %d 相容的功能"
+
+#: src/main/saveload.c:549 src/main/saveload.c:613
+msgid "bad SEXP type in data file"
+msgstr "資料檔案裡 SEXP 類型發生錯誤"
+
+#: src/main/saveload.c:563
+msgid "mismatch on types"
+msgstr "類型不符合"
+
+#: src/main/saveload.c:674
+msgid "cannot save file position while restoring data"
+msgstr "復原資料的時候無法儲存檔案位置"
+
+#: src/main/saveload.c:687
+msgid "cannot restore file position while restoring data"
+msgstr "復原資料的時候無法復原檔案位置"
+
+#: src/main/saveload.c:918
+msgid "base namespace is not preserved in version 1 workspaces"
+msgstr "1 號版本工作空間不能保留基本名稱空間"
+
+#: src/main/saveload.c:920
+msgid "cannot save namespace in version 1 workspaces"
+msgstr "1 號版本工作空間無法儲存名稱空間"
+
+#: src/main/saveload.c:922
+msgid ""
+"cannot save environment with locked/active bindingsin version 1 workspaces"
+msgstr "1 號版本工作空間不能儲存鎖住的或是仍在用的繫結"
+
+#: src/main/saveload.c:946
+msgid "cannot save weak references in version 1 workspaces"
+msgstr "1 號版本工作空間無法儲存弱型參考"
+
+#: src/main/saveload.c:1024
+msgid "NewWriteVec called with non-vector type"
+msgstr "NewWriteVec 不適用於非向量類型"
+
+#: src/main/saveload.c:1087
+msgid "cannot save byte code objects in version 1 workspaces"
+msgstr "1 號版本工作空間無法儲存位元組碼目的物件"
+
+#: src/main/saveload.c:1089
+#, c-format
+msgid "NewWriteItem: unknown type %i"
+msgstr "NewWriteItem: 不明類型 %i"
+
+#: src/main/saveload.c:1220
+msgid "NewReadVec called with non-vector type"
+msgstr "NewReadVec 不適用於非向量類型"
+
+#: src/main/saveload.c:1284
+msgid "cannot read byte code objects from version 1 workspaces"
+msgstr "無法從 1 號版本工作空間裡讀取位元組碼目的物件"
+
+#: src/main/saveload.c:1286
+#, c-format
+msgid "NewReadItem: unknown type %i"
+msgstr "NewReadItem: 不明類型 %i"
+
+#: src/main/saveload.c:1434
+msgid "out of memory reading ascii string"
+msgstr "讀取 ascii 字串時記憶體不足"
+
+#: src/main/saveload.c:1555
+msgid "a binary read error occurred"
+msgstr "二進位讀取時發生了錯誤"
+
+#: src/main/saveload.c:1570 src/main/saveload.c:1665
+msgid "out of memory reading binary string"
+msgstr "讀取二進位字串時記憶體不足"
+
+#: src/main/saveload.c:1575
+msgid "a binary string read error occurred"
+msgstr "讀取二進位字串時發生了錯誤"
+
+#: src/main/saveload.c:1635
+msgid "an xdr integer data write error occurred"
+msgstr "發生了 xdr 整數資料寫入錯誤"
+
+#: src/main/saveload.c:1642
+msgid "an xdr integer data read error occurred"
+msgstr "發生了 xdr 整數資料讀取錯誤"
+
+#: src/main/saveload.c:1651 src/main/saveload.c:1670
+msgid "an xdr string data write error occurred"
+msgstr "發生了 xdr 字串資料寫入錯誤"
+
+#: src/main/saveload.c:1678
+msgid "an xdr real data write error occurred"
+msgstr "發生了 xdr 實數資料寫入錯誤"
+
+#: src/main/saveload.c:1685
+msgid "an xdr real data read error occurred"
+msgstr "發生了 xdr 實數資料讀取錯誤"
+
+#: src/main/saveload.c:1692
+msgid "an xdr complex data write error occurred"
+msgstr "發生了 xdr 複數資料寫入錯誤"
+
+#: src/main/saveload.c:1699
+msgid "an xdr complex data read error occurred"
+msgstr "發生了 xdr 複數資料讀取錯誤"
+
+#: src/main/saveload.c:1890
+msgid "restore file may be empty -- no data loaded"
+msgstr "復原檔案可能是空的 -- 沒有載入任何資料"
+
+#: src/main/saveload.c:1892
+msgid "restore file may be from a newer version of R -- no data loaded"
+msgstr "復原檔案可能是由比本 R 版本要新的 R 所儲存的 -- 沒有載入任何資料"
+
+#: src/main/saveload.c:1894
+msgid "bad restore file magic number (file may be corrupted) -- no data loaded"
+msgstr "復原檔案魔術數字發生錯誤 (檔案可能有損壞)-- 沒有載入任何資料"
+
+#: src/main/saveload.c:1919 src/main/saveload.c:2179
+msgid "first argument must be a character vector"
+msgstr "第一引數必須是字元向量"
+
+#: src/main/saveload.c:1929 src/main/saveload.c:2193 src/main/serialize.c:1715
+msgid "bad version value"
+msgstr "不當的版本值"
+
+#: src/main/saveload.c:1936 src/main/saveload.c:2033 src/unix/edit.c:120
+msgid "unable to open file"
+msgstr "無法開啟檔案"
+
+#: src/main/saveload.c:1952 src/main/saveload.c:2234 src/main/serialize.c:2144
+#, c-format
+msgid "object '%s' not found"
+msgstr "找不到目的物件 '%s'"
+
+#: src/main/saveload.c:1980
+msgid "not a valid named list"
+msgstr "不是有效的具名串列"
+
+#: src/main/saveload.c:1990
+msgid "loaded data is not in pair list form"
+msgstr "載入資料不是成雙的串列形式"
+
+#: src/main/saveload.c:2021
+msgid "first argument must be a file name"
+msgstr "第一引數必須是檔案名稱"
+
+#: src/main/saveload.c:2065 src/main/saveload.c:2091
+msgid "XDR write failed"
+msgstr "XDR 寫入失敗"
+
+#: src/main/saveload.c:2078 src/main/saveload.c:2103
+msgid "XDR read failed"
+msgstr "XDR 讀取失敗"
+
+#: src/main/saveload.c:2113
+#, c-format
+msgid "cannot save data -- unable to open %s"
+msgstr "無法儲存資料 -- 無法開啟 %s"
+
+#: src/main/saveload.c:2195 src/main/serialize.c:1717
+#, c-format
+msgid "cannot save to connections in version %d format"
+msgstr "不可使用版本 %d 的格式來儲存連結"
+
+#: src/main/saveload.c:2203
+msgid "connection not open for writing"
+msgstr "無法開啟連結來進行寫入"
+
+#: src/main/saveload.c:2211
+msgid "cannot save XDR format to a text-mode connection"
+msgstr "不能將XDR格式儲存到文字狀態連結"
+
+#: src/main/saveload.c:2221 src/main/serialize.c:1633
+#: src/main/serialize.c:1647 src/main/serialize.c:1766
+#: src/main/serialize.c:1788
+msgid "error writing to connection"
+msgstr "連結寫入發生了錯誤"
+
+#: src/main/scan.c:554
+#, c-format
+msgid "scan() expected '%s', got '%s'"
+msgstr "scan() 需要 '%s'，而不是 '%s'"
+
+#: src/main/scan.c:749
+msgid "empty 'what' specified"
+msgstr "'what' 設定是空的"
+
+#: src/main/scan.c:763 src/main/scan.c:1041
+msgid "invalid 'what' specified"
+msgstr "'what' 設定不正確"
+
+#: src/main/scan.c:808
+#, c-format
+msgid "line %d did not have %d elements"
+msgstr "第 %d 列沒有 %d 個元素"
+
+#: src/main/scan.c:860
+msgid "number of items read is not a multiple of the number of columns"
+msgstr "讀取的項目數必須是行數的倍數"
+
+#: src/main/scan.c:947
+msgid "invalid 'strip.white' length"
+msgstr "'strip.white' 的長度不正確"
+
+#: src/main/scan.c:958
+msgid "invalid 'sep' value: must be one byte"
+msgstr "'sep' 值不正確: 大小只能為一個位元組"
+
+#: src/main/scan.c:971
+msgid "invalid decimal separator: must be one byte"
+msgstr "十進位分隔符號不正確: 大小只能為一個位元組"
+
+#: src/main/scan.c:976
+msgid "invalid decimal separator"
+msgstr "十進位分隔符號不正確"
+
+#: src/main/scan.c:987 src/main/scan.c:1102 src/main/scan.c:1544
+msgid "out of memory"
+msgstr "記憶體用盡"
+
+#: src/main/scan.c:993 src/main/scan.c:1108 src/main/scan.c:1550
+msgid "invalid quote symbol set"
+msgstr "引號符號集不正確"
+
+#: src/main/scan.c:1164 src/main/scan.c:1183
+msgid "string terminated by newline or EOF"
+msgstr "字串尾是新的一列或是 EOF"
+
+#: src/main/scan.c:1252
+msgid "the first argument must be of mode character"
+msgstr "第一引數的狀態必須是字元"
+
+#: src/main/scan.c:1482
+#, c-format
+msgid "Selection: "
+msgstr "選擇: "
+
+#: src/main/scan.c:1580 src/main/scan.c:1592
+msgid "cannot allocate buffer in readTableHead"
+msgstr "readTableHead 中無法指派緩衝區"
+
+#: src/main/scan.c:1602
+msgid "\\ followed by EOF"
+msgstr "EOF 緊接於 \\ 之後"
+
+#: src/main/scan.c:1646 src/main/scan.c:1649
+#, c-format
+msgid "incomplete final line found by readTableHeader on '%s'"
+msgstr "讀取 '%s' 的 TableHeader 時遇到了不完整的最後一列"
+
+#: src/main/scan.c:1761
+msgid "'file' is not a connection"
+msgstr "'file' 不是連結"
+
+#: src/main/scan.c:1793
+msgid "'dec' must be a single character"
+msgstr "'dec' 必須為單一字元"
+
+#: src/main/scan.c:1814
+#, c-format
+msgid "corrupt data frame -- length of column %d does not not match nrows"
+msgstr "資料框毀損-- 行的長度 %d 與 nrows 不相等"
+
+#: src/main/scan.c:1851
+msgid "corrupt matrix -- dims not not match length"
+msgstr "矩陣毀損 -- dims 與長度不相等"
+
+#: src/main/seq.c:88 src/main/seq.c:91
+#, c-format
+msgid "numerical expression has %d elements: only the first used"
+msgstr "數值運算式一共有 %d 個元素: 只用了第一個"
+
+#: src/main/seq.c:95
+msgid "NA/NaN argument"
+msgstr "NA/NaN 引數"
+
+#: src/main/seq.c:102
+msgid "result would be too long a vector"
+msgstr "答案向量會太長"
+
+#: src/main/seq.c:126
+msgid "unequal factor lengths"
+msgstr "因子長度不相等"
+
+#: src/main/seq.c:145 src/main/seq.c:237 src/main/seq.c:240
+msgid "invalid number of copies in rep()"
+msgstr "rep() 裡的拷貝數目不正確"
+
+#: src/main/seq.c:228
+msgid "rep() incorrect type for second argument"
+msgstr "rep() 的第二引數類型不正確"
+
+#: src/main/seq.c:231
+msgid "attempt to replicate non-vector"
+msgstr "非向量不能被複製"
+
+#: src/main/serialize.c:222 src/main/serialize.c:252 src/main/serialize.c:275
+msgid "unknown or inappropriate output format"
+msgstr "不明或不適當的輸出格式"
+
+#: src/main/serialize.c:328 src/main/serialize.c:335 src/main/serialize.c:1857
+#: src/main/serialize.c:1865
+msgid "read error"
+msgstr "讀取錯誤"
+
+#: src/main/serialize.c:511
+msgid "binary format is deprecated; using xdr instead"
+msgstr "二進位格式不再使用，替之用 xdr 格式"
+
+#: src/main/serialize.c:519
+msgid "must specify ascii, binary, or xdr format"
+msgstr "必須設定 ascii、binary 或 xdr 格式之一"
+
+#: src/main/serialize.c:520
+msgid "unknown output format"
+msgstr "不明的輸出格式"
+
+#: src/main/serialize.c:551
+msgid "unknown input format"
+msgstr "不明的輸入格式"
+
+#: src/main/serialize.c:556
+msgid "input format does not match specified format"
+msgstr "輸入格式與設定的格式不符合"
+
+#: src/main/serialize.c:743
+msgid "no restore method available"
+msgstr "沒有復原的方法"
+
+#: src/main/serialize.c:772
+msgid "names in persistent strings are currently ignored"
+msgstr "固有字串裡的名稱現在不用"
+
+#: src/main/serialize.c:824
+#, c-format
+msgid "'%s' may not be available when loading"
+msgstr "載入時 '%s' 也許不能用"
+
+#: src/main/serialize.c:831
+msgid "namespaces may not be available when loading"
+msgstr "載入時名稱空間也許不能用"
+
+#: src/main/serialize.c:924
+msgid "this version of R cannot write byte code objects"
+msgstr "本 R 版本無法寫入位元組碼目的物件"
+
+#: src/main/serialize.c:931
+#, c-format
+msgid "WriteItem: unknown type %i"
+msgstr "WriteItem：不明的類型 %i"
+
+#: src/main/serialize.c:1101
+#, c-format
+msgid "version %d not supported"
+msgstr "版本 %d 不支援"
+
+#: src/main/serialize.c:1129
+msgid "reference index out of range"
+msgstr "參照索引超出範圍"
+
+#: src/main/serialize.c:1159
+msgid "names in persistent strings are not supported yet"
+msgstr "目前不支援固有字串裡的名稱"
+
+#: src/main/serialize.c:1337
+msgid "this version of R cannot read byte code objects"
+msgstr "本 R 版本無法讀取位元組碼目的物件"
+
+#: src/main/serialize.c:1340
+msgid "this version of R cannot read class references"
+msgstr "本 R 版本無法讀取類別參照"
+
+#: src/main/serialize.c:1342
+msgid "this version of R cannot read generic function references"
+msgstr "本 R 版本無法讀取一般功能參照"
+
+#: src/main/serialize.c:1350
+#, c-format
+msgid "ReadItem: unknown type %i"
+msgstr "ReadItem：不明的類型 %i"
+
+#: src/main/serialize.c:1470
+#, c-format
+msgid ""
+"cannot read unreleased workspace version %d written by experimental R %d.%d.%"
+"d"
+msgstr ""
+"無法從由 R 實驗版本 %2$d.%3$d.%4$d 所寫入之尚未被釋放的工作空間版本 %1$d 中讀"
+"取資料"
+
+#: src/main/serialize.c:1474
+#, c-format
+msgid ""
+"cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
+"newer"
+msgstr ""
+"無法從由 R 版本 %2$d.%3$d.%4$d 所寫入之工作空間版本 %1$d 中讀取資料；需要 R "
+"版本 %5$d.%6$d.%7$d 或更新"
+
+#: src/main/serialize.c:1603 src/main/serialize.c:1616
+msgid "error reading from connection"
+msgstr "從連結讀取時發生了錯誤"
+
+#: src/main/serialize.c:1657
+msgid "only ascii format can be written to text mode connections"
+msgstr "只有 ascii 格式才能對文字狀態的連結進行寫入"
+
+#: src/main/serialize.c:1671
+msgid "only ascii format can be read from text mode connections"
+msgstr "只有 ascii 格式才能從文字狀態的連結讀取"
+
+#: src/main/serialize.c:1833
+msgid "cannot allocate buffer"
+msgstr "無法指派緩衝區"
+
+#: src/main/serialize.c:1999 src/main/serialize.c:2062
+msgid "not a proper file name"
+msgstr "檔案名稱不正確"
+
+#: src/main/serialize.c:2001
+msgid "not a proper string"
+msgstr "字串不正確"
+
+#: src/main/serialize.c:2005 src/main/serialize.c:2008
+msgid "file open failed"
+msgstr "開啟檔案失敗"
+
+#: src/main/serialize.c:2017
+msgid "write failed"
+msgstr "寫入失敗"
+
+#: src/main/serialize.c:2018
+msgid "could not determine file position"
+msgstr "無法確定檔案位置"
+
+#: src/main/serialize.c:2064
+msgid "bad offset/length argument"
+msgstr "不當的位移/長度引數"
+
+#: src/main/serialize.c:2087 src/main/serialize.c:2106
+#, c-format
+msgid "open failed on %s"
+msgstr "開啟 %s 失敗"
+
+#: src/main/serialize.c:2090 src/main/serialize.c:2098
+#: src/main/serialize.c:2109
+#, c-format
+msgid "seek failed on %s"
+msgstr "搜索 %s 失敗"
+
+#: src/main/serialize.c:2102 src/main/serialize.c:2113
+#, c-format
+msgid "read failed on %s"
+msgstr "讀取 %s 失敗"
+
+#: src/main/serialize.c:2132
+msgid "bad variable names"
+msgstr "不當的變數名稱"
+
+#: src/main/sort.c:89
+msgid "only atomic vectors can be tested to be sorted"
+msgstr "只有基元向量才能被試著排序"
+
+#: src/main/sort.c:266 src/main/sort.c:726 src/main/sort.c:825
+msgid "'decreasing' must be TRUE or FALSE"
+msgstr "'increasing' 必須是 TRUE 或是 FALSE"
+
+#: src/main/sort.c:269 src/main/sort.c:481
+msgid "only atomic vectors can be sorted"
+msgstr "只有基元向量才能被排序"
+
+#: src/main/sort.c:271 src/main/sort.c:483 src/main/sort.c:768
+msgid "raw vectors cannot be sorted"
+msgstr "無法排序原始向量"
+
+#: src/main/sort.c:490
+msgid "NA index"
+msgstr "NA 索引"
+
+#: src/main/sort.c:492
+#, c-format
+msgid "index %d outside bounds"
+msgstr "索引 %d 在界限外"
+
+#: src/main/sort.c:735
+#, c-format
+msgid "argument %d is not a vector"
+msgstr "引數 %d 不是向量"
+
+#: src/main/sort.c:737
+msgid "argument lengths differ"
+msgstr "引數長度不同"
+
+#: src/main/sort.c:766
+msgid "argument is not an atomic vector"
+msgstr "引數不是基元向量"
+
+#: src/main/sort.c:777
+msgid "invalid ties.method for rank() [should never happen]"
+msgstr "rank() 的 ties.method 不正確 [這是不應該發生的]"
+
+#: src/main/sort.c:832
+msgid "negative value in 'x'"
+msgstr "'x' 裡有負值"
+
+#: src/main/sort.c:843
+msgid "too large a range of values in 'x'"
+msgstr "'x' 裡的值的範圍太大"
+
+#: src/main/source.c:91
+#, c-format
+msgid "syntax error on line %d"
+msgstr "第 %d 列有語法錯誤"
+
+#: src/main/source.c:92
+#, fuzzy, c-format
+msgid ""
+"syntax error at\n"
+"%d: %s"
+msgstr "語法錯誤"
+
+#: src/main/source.c:94
+#, fuzzy, c-format
+msgid ""
+"syntax error at\n"
+"%d: %s\n"
+"%d: %s"
+msgstr "第 %d 列有語法錯誤"
+
+#: src/main/source.c:100
+msgid "syntax error"
+msgstr "語法錯誤"
+
+#: src/main/source.c:101
+#, fuzzy, c-format
+msgid "syntax error in \"%s\""
+msgstr "第 %d 列有語法錯誤"
+
+#: src/main/source.c:103
+#, fuzzy, c-format
+msgid ""
+"syntax error in:\n"
+"\"%s\n"
+"%s\""
+msgstr "第 %d 列有語法錯誤"
+
+#: src/main/split.c:37
+msgid "first argument must be a vector"
+msgstr "第一引數必須是向量"
+
+#: src/main/split.c:39
+msgid "second argument must be a factor"
+msgstr "第二引數必須是因子"
+
+#: src/main/split.c:46
+msgid "Group length is 0 but data length > 0"
+msgstr "Group 長度為零但資料長度 > 0"
+
+#: src/main/split.c:48
+msgid "data length is not a multiple of split variable"
+msgstr "資料長度不是 split 變數的倍數"
+
+#: src/main/sprintf.c:45
+msgid "'fmt' is not a non-empty character vector"
+msgstr "'fmt' 必須是字元向量"
+
+#: src/main/sprintf.c:48
+msgid "only 100 arguments are allowed"
+msgstr "只允許 100 個引數"
+
+#: src/main/sprintf.c:58
+msgid "zero-length argument"
+msgstr "零長度引數"
+
+#: src/main/sprintf.c:62 src/main/sprintf.c:65
+msgid "arguments cannot be recycled to the same length"
+msgstr "不是所有的引數都一樣長"
+
+#: src/main/sprintf.c:75
+#, c-format
+msgid "'fmt' length exceeds maximal buffer length %d"
+msgstr "'fmt' 長度超過了緩衝區長度的最大值 %d"
+
+#: src/main/sprintf.c:92
+msgid "unrecognised format at end of string"
+msgstr "沒有這種在字串尾的格式"
+
+#: src/main/sprintf.c:103 src/main/sprintf.c:110 src/main/sprintf.c:124
+#: src/main/sprintf.c:131
+#, c-format
+msgid "reference to non-existent argument %d"
+msgstr "參照不存在的引數 %d"
+
+#: src/main/sprintf.c:143
+msgid "at most one asterisk `*' is supported in each conversion specification"
+msgstr ""
+
+#: src/main/sprintf.c:150
+msgid "argument for `*' conversion specification must be a number"
+msgstr ""
+
+#: src/main/sprintf.c:204
+msgid "coercion has changed vector length to 0"
+msgstr "強制變更時將向量長度改為 0"
+
+#: src/main/sprintf.c:212
+#, c-format
+msgid "use format %d or %i for logical objects"
+msgstr "邏輯目的物件套用格式 %d 或 %i"
+
+#: src/main/sprintf.c:232
+#, c-format
+msgid "use format %d, %i, %x or %X for integer objects"
+msgstr "整數目的物件套用格式 %d、%i、%x 或 %X"
+
+#: src/main/sprintf.c:252
+#, c-format
+msgid "use format %f, %e or %g for numeric objects"
+msgstr "數值目的物件套用格式 %f、%e 或 %g"
+
+#: src/main/sprintf.c:317
+#, c-format
+msgid "use format %s for character objects"
+msgstr "字元目的物件套用格式 %s"
+
+#: src/main/sprintf.c:320
+msgid "Likely truncation of character string"
+msgstr "字串很可能被截短"
+
+#: src/main/sprintf.c:331
+msgid "unsupported type"
+msgstr "不支援此一類型"
+
+#: src/main/sprintf.c:349
+#, c-format
+msgid "String length exceeds buffer size of %d"
+msgstr "字串長度超過了緩衝區的大小 %d"
+
+#: src/main/startup.c:68
+msgid "R_LibraryFileName: buffer too small"
+msgstr "R_LibraryFileName: 緩衝區太小"
+
+#: src/main/summary.c:61 src/main/summary.c:410
+msgid "Integer overflow in sum(.); use sum(as.numeric(.))"
+msgstr "sum(.) 中整數上溢；請用 sum(as.numeric(.))"
+
+#: src/main/summary.c:341
+msgid "internal error ('op' in do_summary).\t Call a Guru"
+msgstr "內部錯誤 (do_summary 裡的 'op')。\t 請向專家請教"
+
+#: src/main/summary.c:496
+msgid "no finite arguments to min; returning Inf"
+msgstr "min 裡沒有有限的引數; 回傳 Inf"
+
+#: src/main/summary.c:498
+msgid "no finite arguments to max; returning -Inf"
+msgstr "max 裡沒有有限的引數；回傳 -Inf"
+
+#: src/main/summary.c:773
+msgid "not all arguments have the same length"
+msgstr "不是所有的引數都一樣長"
+
+#: src/main/subassign.c:93
+msgid "attempt to enlarge non-vector"
+msgstr "不能加大非向量"
+
+#: src/main/subassign.c:98
+#, c-format
+msgid "assignment outside vector/list limits (extending from %d to %d)"
+msgstr "不能在向量/串列極值外賦值(%d 加大到 %d)"
+
+#: src/main/subassign.c:289
+#, c-format
+msgid "incompatible types (%d) in subassignment type fix"
+msgstr "下賦值 fix 類型裡有不相容的類型 (%d)"
+
+#: src/main/subassign.c:382 src/main/subassign.c:653 src/main/subassign.c:656
+#: src/main/subassign.c:923
+msgid "NAs are not allowed in subscripted assignments"
+msgstr "下標賦值裡不允許 NA"
+
+#: src/main/subassign.c:394 src/main/subassign.c:667 src/main/subassign.c:915
+#: src/main/subassign.c:1097
+msgid "nothing to replace with"
+msgstr "沒有可以替換的東西："
+
+#: src/main/subassign.c:396 src/main/subassign.c:669 src/main/subassign.c:917
+#: src/main/subassign.c:1099
+msgid "number of items to replace is not a multiple of replacement length"
+msgstr "被替換的項目不是替換值長度的倍數"
+
+#: src/main/subassign.c:635
+msgid "incorrect number of subscripts on matrix"
+msgstr "矩陣裡的下標數目不正確"
+
+#: src/main/subassign.c:867
+#, c-format
+msgid "incompatible types (case %d) in matrix subset assignment"
+msgstr "矩陣子集賦值裡有不相容的類型 (%d)"
+
+#: src/main/subassign.c:1046
+#, c-format
+msgid "incompatible types (%d) in array subset assignment"
+msgstr "陣列子集賦值有不相容的類型 (%d)"
+
+#: src/main/subassign.c:1071
+msgid "invalid number of subscripts to list assign"
+msgstr "串列賦值裡的下標數目不正確"
+
+#: src/main/subassign.c:1216
+msgid "SubAssignArgs: invalid number of arguments"
+msgstr "SubAssignArgs: 引數數目不正確"
+
+#: src/main/subassign.c:1421
+msgid "wrong args for environment subassignment"
+msgstr "環境下賦值的引數不正確"
+
+#: src/main/subassign.c:1431 src/main/subassign.c:1453
+msgid "more elements supplied than there are to replace"
+msgstr "用來替換的元素比所要替換的值多"
+
+#: src/main/subassign.c:1433
+msgid "[[ ]] with missing subscript"
+msgstr "[[ ]] 缺少下標"
+
+#: src/main/subassign.c:1441 src/main/subset.c:772
+#, c-format
+msgid "recursive indexing failed at level %d\n"
+msgstr "遞迴索引在 %d 層失敗\n"
+
+#: src/main/subassign.c:1446 src/main/subset.c:776
+#, c-format
+msgid "no such index at level %d\n"
+msgstr "在 %d 層沒有此一索引\n"
+
+#: src/main/subassign.c:1463 src/main/subassign.c:1480
+msgid "[[ ]] subscript out of bounds"
+msgstr "[[ ]] 下標在界限外"
+
+#: src/main/subassign.c:1469 src/main/subassign.c:1644
+msgid "[[ ]] improper number of subscripts"
+msgstr "[[ ]] 下標數目不正確"
+
+#: src/main/subassign.c:1607
+#, c-format
+msgid "incompatible types (%d) in [[ assignment"
+msgstr " [[ 賦值裡有不相容的類型 (%d)"
+
+#: src/main/subassign.c:1654
+#, c-format
+msgid "[[ ]] subscript (%d) out of bounds"
+msgstr "[[ ]] 下標 (%d) 在界限外"
+
+#: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
+#: src/main/subscript.c:565 src/main/subset.c:909
+msgid "invalid subscript type"
+msgstr "下標類型不正確"
+
+#: src/main/subassign.c:1775
+msgid "Coercing LHS to a list"
+msgstr "把公式左側強迫變成串列"
+
+#: src/main/subscript.c:36 src/main/subscript.c:52 src/main/subscript.c:128
+msgid "attempt to select less than one element"
+msgstr "至少要選擇一個元素"
+
+#: src/main/subscript.c:40 src/main/subscript.c:50 src/main/subscript.c:126
+msgid "attempt to select more than one element"
+msgstr "最多只能選擇一個元素"
+
+#: src/main/subscript.c:131
+msgid "internal error in use of recursive indexing"
+msgstr "用遞迴索引時發生了內部錯誤"
+
+#: src/main/subscript.c:194
+msgid "incorrect number of columns in matrix subscript"
+msgstr "矩陣下標中行數不正確"
+
+#: src/main/subscript.c:209
+msgid "negative values are not allowed in a matrix subscript"
+msgstr "矩陣下標中不允許負值"
+
+#: src/main/subscript.c:244
+msgid "(subscript) logical subscript too long"
+msgstr "(下標) 邏輯下標太長"
+
+#: src/main/subscript.c:327
+msgid "only 0's may be mixed with negative subscripts"
+msgstr "只有負數下標裡才能有 0"
+
+#: src/main/subscript.c:391
+msgid "character vector element does not have type CHARSXP"
+msgstr "字元向量元素沒有 CHARSXP 類型"
+
+#: src/main/subscript.c:468
+msgid "no 'dimnames' attribute for array"
+msgstr "陣列中沒有 'dimnames' 此一屬性"
+
+#: src/main/subscript.c:475
+msgid "invalid subscript"
+msgstr "下標不正確"
+
+#: src/main/subscript.c:505
+msgid "subscripting on non-vector"
+msgstr "非向量不能有下標"
+
+#: src/main/subset.c:244 src/main/subset.c:271
+msgid "matrix subscripting not handled for this type"
+msgstr "此一類型不能有矩陣下標"
+
+#: src/main/subset.c:428
+#, fuzzy
+msgid "array subscripting not handled for this type"
+msgstr "此一類型不能有矩陣下標"
+
+#: src/main/subset.c:657
+msgid "incorrect number of dimensions"
+msgstr "維度數目不正確"
+
+#: src/main/subset.c:736
+msgid "no index specified"
+msgstr "沒有指定的索引"
+
+#: src/main/subset.c:745
+msgid "wrong arguments for subsetting an environment"
+msgstr "取子集環境時的引數不正確"
+
+#: src/main/sysutils.c:67
+#, c-format
+msgid "cannot determine file modification time of '%s'"
+msgstr "無法確定檔案 '%s' 的修改時間"
+
+#: src/main/sysutils.c:73
+msgid "file existence is not available on this system"
+msgstr "本系統沒有檢查檔案是否存在此一功能"
+
+#: src/main/sysutils.c:78
+msgid "file modification time is not available on this system"
+msgstr "本系統沒有檢查檔案修改時間此一功能"
+
+#: src/main/sysutils.c:141
+msgid "invalid filename pattern"
+msgstr "檔案名稱式樣不正確"
+
+#: src/main/sysutils.c:145
+msgid "no 'pattern'"
+msgstr "沒有 'pattern'"
+
+#: src/main/sysutils.c:147
+msgid "no 'tempdir'"
+msgstr "沒有 'tempdir'"
+
+#: src/main/sysutils.c:219 src/main/sysutils.c:275
+msgid "wrong type for argument"
+msgstr "引數類型不正確"
+
+#: src/main/sysutils.c:285
+msgid "'putenv' is not available on this system"
+msgstr "'putenv' 本系統沒有這個功能"
+
+#: src/main/sysutils.c:318
+msgid "failed to find symbols in iconv.dll"
+msgstr "iconv.dll 裡找不到符號"
+
+#: src/main/sysutils.c:322
+msgid "iconv.dll is not available on this system"
+msgstr "iconv.dll 本系統沒有這個功能"
+
+#: src/main/sysutils.c:388
+msgid "'x' must be a character vector"
+msgstr "'x' 必須是字元向量"
+
+#: src/main/sysutils.c:401
+msgid "unsupported conversion"
+msgstr "不支援這種轉換"
+
+#: src/main/sysutils.c:450 src/main/sysutils.c:484 src/main/sysutils.c:491
+#: src/main/sysutils.c:497
+msgid "'iconv' is not available on this system"
+msgstr "'iconv' 本系統沒有這個功能"
+
+#: src/main/unique.c:269
+#, c-format
+msgid "length %d is too large for hashing"
+msgstr "用雜亂定址法時長度 %d 太長"
+
+#: src/main/unique.c:350
+msgid "'duplicated' applies only to vectors"
+msgstr "'duplicated' 只適用於向量"
+
+#: src/main/unique.c:385
+#, c-format
+msgid "%s() applies only to vectors"
+msgstr "%s() 只適用於向量"
+
+#: src/main/unique.c:502
+msgid "'match' requires vector arguments"
+msgstr "'match' 需要向量引數"
+
+#: src/main/unique.c:591 src/main/unique.c:657
+msgid "argument is not of mode character"
+msgstr "引數不是字元狀態"
+
+#: src/main/unique.c:745
+msgid "... used in a situation where it doesn't exist"
+msgstr "... 用在它不存在的地方了"
+
+#: src/main/unique.c:784
+#, c-format
+msgid "'%s' is not a valid call"
+msgstr "'%s' 呼叫不正確"
+
+#: src/main/unique.c:841
+#, c-format
+msgid "'%s' is not a function"
+msgstr "'%s' 不是函數"
+
+#: src/main/unique.c:849
+#, c-format
+msgid "'%s' is not a logical"
+msgstr "'%s' 不是邏輯值"
+
+#: src/main/unique.c:985
+msgid "non-numeric matrix in rowsum(): this cannot happen"
+msgstr "rowsum() 裡出現了非數值矩陣：這不應該發生"
+
+#: src/main/unique.c:1016
+msgid "non-numeric data frame in rowsum"
+msgstr "rowsum 裡不能有非數值資料框"
+
+#: src/main/unique.c:1041
+msgid "this cannot happen"
+msgstr "這不可能發生"
+
+#: src/main/unique.c:1095
+msgid "'names' must be a character vector"
+msgstr "'names' 必須是字元向量"
+
+#: src/main/unique.c:1099
+msgid "'sep' must be a character string"
+msgstr "'sep' 必須是字串"
+
+#: src/main/unique.c:1165
+msgid "csduplicated not called on a STRSXP"
+msgstr "csduplicated 不能用於 STRSXP"
+
+#: src/main/util.c:247 src/main/util.c:251
+msgid "vector size cannot be NA"
+msgstr "向量大小不能是 NA"
+
+#: src/main/util.c:255
+msgid "vector size cannot be negative"
+msgstr "向量大小不能是負的"
+
+#: src/main/util.c:256
+msgid "vector size specified is too large"
+msgstr "指定的向量大小太大"
+
+#: src/main/util.c:515 src/main/util.c:533
+msgid "object is not a matrix"
+msgstr "目的物件不是矩陣"
+
+#: src/main/util.c:693
+#, c-format
+msgid "type %d is unimplemented in type2str"
+msgstr "type2str 目前沒有實作類型 %d"
+
+#: src/main/util.c:707
+#, c-format
+msgid "type %d is unimplemented in type2symbol"
+msgstr "type2symbol 目前沒有實作類型 %d"
+
+#: src/main/util.c:717
+#, c-format
+msgid "unimplemented type '%s' in '%s'\n"
+msgstr "類型 '%s'目前沒有在 '%s' 裡實作\n"
+
+#: src/main/util.c:719
+#, c-format
+msgid "unimplemented type (%d) in '%s'\n"
+msgstr "(%d) 類型目前沒有在 '%s' 裡實作\n"
+
+#: src/main/util.c:789
+msgid "invalid tag in name extraction"
+msgstr "抽取名稱的標記不正確"
+
+#: src/main/util.c:810
+#, c-format
+msgid "\"nthcdr\" list shorter than %d"
+msgstr "\"nthcdr\" 串列比 %d 要短"
+
+#: src/main/util.c:815
+msgid "\"nthcdr\" needs a list to CDR down"
+msgstr "\"nthcdr\" 需要 CDR 串列"
+
+#: src/main/util.c:908
+msgid "'all.x' must be TRUE or FALSE"
+msgstr "'all.x' 必須是 TRUE 或 FALSE"
+
+#: src/main/util.c:910
+msgid "'all.y' must be TRUE or FALSE"
+msgstr "'all.y' 必須是 TRUE 或 FALSE"
+
+#: src/main/util.c:997
+msgid "cannot change working directory"
+msgstr "無法變更工作目錄"
+
+#: src/main/util.c:1011 src/main/util.c:1045 src/main/util.c:1089
+msgid "a character vector argument expected"
+msgstr "需要字元向量引數"
+
+#: src/main/util.c:1016 src/main/util.c:1050
+msgid "path too long"
+msgstr "路徑太長"
+
+#: src/main/util.c:1104
+msgid "only the first character of 'quote' will be used"
+msgstr "只用了 'quote' 的第一個字元"
+
+#: src/main/util.c:1164
+msgid "invalid multibyte string"
+msgstr "多位元組字串不正確"
+
+#: src/main/util.c:1181
+msgid "invalid input in mbcsToLatin1"
+msgstr "mbcsToLatin1 輸入不正確"
+
+#: src/main/util.c:1186
+msgid "allocation failure in 'mbcsToLatin1'"
+msgstr "指派 'mbcsToLatin1' 失敗"
+
+#: src/main/util.c:1189
+msgid "invalid input in 'mbcsToLatin1'"
+msgstr "'mbcsToLatin1' 輸入不正確"
+
+#: src/main/util.c:1288
+msgid "error message truncated to 255 chars"
+msgstr "錯誤訊息截短到 255 個位元組"
+
+#: src/main/util.c:1301
+msgid "warning message truncated to 255 chars"
+msgstr "警告訊息截短到 255 個位元組"
+
+#: src/main/version.c:40
+msgid ""
+"R is free software and comes with ABSOLUTELY NO WARRANTY.\n"
+"You are welcome to redistribute it under certain conditions.\n"
+"Type 'license()' or 'licence()' for distribution details.\n"
+"\n"
+msgstr ""
+"R 是免費軟體，不提供任何擔保。\n"
+"在某些條件下您可以將其自由散布。\n"
+"用 'license()' 或 'licence()' 來獲得散布的詳細條件。\n"
+"\n"
+
+#: src/main/version.c:43
+msgid ""
+"R is a collaborative project with many contributors.\n"
+"Type 'contributors()' for more information and\n"
+"'citation()' on how to cite R or R packages in publications.\n"
+"\n"
+msgstr ""
+"R 是個合作計劃，有許多人為之做出了貢獻。\n"
+"用 'contributors()' 來看詳細的情況並且\n"
+"用 'citation()' 會告訴您如何在出版品中正確地參照 R 或 R 套件。\n"
+"\n"
+
+#: src/main/version.c:46
+msgid ""
+"Type 'demo()' for some demos, 'help()' for on-line help, or\n"
+"'help.start()' for a HTML browser interface to help.\n"
+"Type 'q()' to quit R.\n"
+"\n"
+msgstr ""
+"用 'demo()' 來看一些示範程式，用 'help()' 來檢視線上輔助檔案，或\n"
+"用 'help.start()' 透過 HTML 瀏覽器來看輔助檔案。\n"
+"用 'q()' 離開 R。\n"
+"\n"
+
+#: src/main/vfonts.c:71
+msgid "vfont routines cannot be accessed in module"
+msgstr "模組裡沒有 vfont 例行程式"
+
+#: src/main/vfonts.c:90
+msgid "allocation failure in GVStrWidth"
+msgstr "指派 GVStrWidth 失敗"
+
+#: src/main/vfonts.c:108 src/main/vfonts.c:145 src/main/vfonts.c:189
+msgid "Hershey fonts cannot be loaded"
+msgstr "無法載入 Hershey 字型"
+
+#: src/main/vfonts.c:127
+msgid "allocation failure in GVStrHeight"
+msgstr "指派 GVStrHeight 失敗"
+
+#: src/main/vfonts.c:171
+msgid "allocation failure in GVText"
+msgstr "指派 GVText 失敗"
+
+#: src/modules/internet/internet.c:91
+msgid "unknown URL scheme"
+msgstr "沒有這種 URL 格式"
+
+#: src/modules/internet/internet.c:160 src/modules/internet/internet.c:164
+#: src/modules/internet/internet.c:170 src/modules/internet/internet.c:182
+msgid "allocation of url connection failed"
+msgstr "url 連結指派失敗"
+
+#: src/modules/internet/internet.c:254
+msgid "only first element of 'url' argument used"
+msgstr "只用 'url' 引數的第一個元素"
+
+#: src/modules/internet/internet.c:260
+msgid "only first element of 'destfile' argument used"
+msgstr "只用 'destfile' 引數的第一個元素"
+
+#: src/modules/internet/internet.c:274
+msgid "Download progress"
+msgstr "正在下載"
+
+#: src/modules/internet/internet.c:294 src/modules/internet/internet.c:378
+#: src/modules/internet/internet.c:459
+#, c-format
+msgid "cannot open URL '%s'"
+msgstr "無法開啟 URL '%s'"
+
+#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:313
+#: src/modules/internet/internet.c:391
+#, c-format
+msgid "cannot open destfile '%s'"
+msgstr "無法開啟 destfile '%s'"
+
+#: src/modules/internet/internet.c:316 src/modules/internet/internet.c:394
+#, c-format
+msgid "trying URL '%s'\n"
+msgstr "試開URL '%s'\n"
+
+#: src/modules/internet/internet.c:323 src/modules/internet/internet.c:401
+msgid "opened URL\n"
+msgstr "開啟了 URL\n"
+
+#: src/modules/internet/internet.c:374 src/modules/internet/internet.c:455
+#, c-format
+msgid "downloaded length %d != reported length %d"
+msgstr "下載的長度 %d != 報告的長度 %d"
+
+#: src/modules/internet/internet.c:490 src/modules/internet/internet.c:716
+#, c-format
+msgid "cannot open: HTTP status was '%d %s'"
+msgstr "無法開啟: HTTP 狀態是 '%d%s'"
+
+#: src/modules/internet/internet.c:660 src/modules/internet/internet.c:816
+msgid "InternetOpenUrl timed out"
+msgstr "InternetOpenUrl 已經逾時"
+
+#: src/modules/internet/internet.c:687 src/modules/internet/internet.c:701
+#: src/modules/internet/internet.c:838 src/modules/internet/internet.c:847
+#, c-format
+msgid "InternetOpenUrl failed: '%s'"
+msgstr "InternetOpenUrl 失敗: '%s'"
+
+#: src/modules/internet/internet.c:751
+msgid "Internet read timed out"
+msgstr "網際網路讀取逾時"
+
+#: src/modules/internet/internet.c:930
+msgid "cannot allocate memory for InternetRoutines structure"
+msgstr "無法為 InternetRoutines 結構指派記憶體"
+
+#: src/modules/internet/nanoftp.c:372
+msgid "removing FTP proxy info"
+msgstr "刪除 FTP 代理主機資訊"
+
+#: src/modules/internet/nanoftp.c:374
+#, c-format
+msgid "using FTP proxy '%s'"
+msgstr "用 FTP 代理主機 '%s'"
+
+#: src/modules/internet/nanoftp.c:806
+msgid "cannot resolve host"
+msgstr "無法分辨主機"
+
+#: src/modules/internet/nanoftp.c:836
+msgid "failed to connect to server"
+msgstr "連線不上伺服器"
+
+#: src/modules/internet/nanoftp.c:847
+msgid "failed to get response from server"
+msgstr "伺服器沒有反應"
+
+#: src/modules/internet/nanoftp.c:1137
+msgid "RxmlNanoFTPGetConnection: failed to create socket"
+msgstr "RxmlNanoFTPGetConnection: 建立插槽失敗"
+
+#: src/modules/internet/nanoftp.c:1182
+msgid "failed to create a data connection"
+msgstr "建立資料連結失敗"
+
+#: src/modules/internet/nanoftp.c:1190
+msgid "failed to bind a port"
+msgstr "連線通訊埠失敗"
+
+#: src/modules/internet/nanoftp.c:1197
+#, c-format
+msgid "could not listen on port %d"
+msgstr "無法從通訊埠 %d 聽取資料"
+
+#: src/modules/internet/nanohttp.c:407
+msgid "removing HTTP proxy info"
+msgstr "刪除 HTTP 代理主機資訊"
+
+#: src/modules/internet/nanohttp.c:409
+#, c-format
+msgid "using HTTP proxy '%s'"
+msgstr "用 HTTP 代理主機 '%s'"
+
+#: src/modules/internet/nanohttp.c:980
+#, c-format
+msgid "unable to resolve '%s'."
+msgstr "無法分辨 '%s'。"
+
+#: src/modules/internet/nanohttp.c:1007
+#, c-format
+msgid "connected to '%s' on port %d."
+msgstr "透過通訊埠 %2$d 接通到 '%1$s'。"
+
+#: src/modules/internet/nanohttp.c:1012
+#, c-format
+msgid "unable to connect to '%s' on port %d."
+msgstr "無法透過通訊埠 %2$d 連線到 '%1$s'。"
+
+#: src/modules/internet/nanohttp.c:1276
+#, c-format
+msgid "redirect to: '%s'"
+msgstr "重新傳送到: '%s'"
+
+#: src/modules/internet/nanohttp.c:1285
+msgid "too many redirects, aborting ..."
+msgstr "太多重新傳送，中斷工作 ..."
+
+#: src/modules/internet/sockconn.c:176 src/modules/internet/sockconn.c:180
+#: src/modules/internet/sockconn.c:186 src/modules/internet/sockconn.c:199
+msgid "allocation of socket connection failed"
+msgstr "指派插槽連結失敗"
+
+#: src/modules/lapack/Lapack.c:47 src/modules/lapack/Lapack.c:532
+msgid "'jobu' and 'jobv' must be character strings"
+msgstr "'jobu' 和 'jobv' 必須是字元目的物件"
+
+#: src/modules/lapack/Lapack.c:49 src/modules/lapack/Lapack.c:128
+msgid "'method' must be a character string"
+msgstr "'method' 必須是字串"
+
+#: src/modules/lapack/Lapack.c:70 src/modules/lapack/Lapack.c:80
+#: src/modules/lapack/Lapack.c:94 src/modules/lapack/Lapack.c:103
+#: src/modules/lapack/Lapack.c:158 src/modules/lapack/Lapack.c:168
+#: src/modules/lapack/Lapack.c:193 src/modules/lapack/Lapack.c:211
+#: src/modules/lapack/Lapack.c:296 src/modules/lapack/Lapack.c:307
+#: src/modules/lapack/Lapack.c:411 src/modules/lapack/Lapack.c:417
+#: src/modules/lapack/Lapack.c:462 src/modules/lapack/Lapack.c:469
+#: src/modules/lapack/Lapack.c:473 src/modules/lapack/Lapack.c:507
+#: src/modules/lapack/Lapack.c:514 src/modules/lapack/Lapack.c:545
+#: src/modules/lapack/Lapack.c:554 src/modules/lapack/Lapack.c:600
+#: src/modules/lapack/Lapack.c:606 src/modules/lapack/Lapack.c:661
+#: src/modules/lapack/Lapack.c:667 src/modules/lapack/Lapack.c:827
+#: src/modules/lapack/Lapack.c:833 src/modules/lapack/Lapack.c:873
+#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:884
+#: src/modules/lapack/Lapack.c:913 src/modules/lapack/Lapack.c:920
+#: src/modules/lapack/Lapack.c:944
+#, c-format
+msgid "error code %d from Lapack routine '%s'"
+msgstr "錯誤程式碼 %d，Lapack 例行程式 '%s'"
+
+#: src/modules/lapack/Lapack.c:142 src/modules/lapack/Lapack.c:270
+#: src/modules/lapack/Lapack.c:587 src/modules/lapack/Lapack.c:640
+msgid "'x' must be a square numeric matrix"
+msgstr "'x' 必須是正方形的數值矩陣"
+
+#: src/modules/lapack/Lapack.c:144 src/modules/lapack/Lapack.c:276
+#: src/modules/lapack/Lapack.c:589 src/modules/lapack/Lapack.c:646
+msgid "invalid 'only.values'"
+msgstr "'only.values' 值不正確"
+
+#: src/modules/lapack/Lapack.c:354 src/modules/lapack/Lapack.c:397
+msgid "'A' must be a complex matrix"
+msgstr "'A' 必須是複數矩陣"
+
+#: src/modules/lapack/Lapack.c:356 src/modules/lapack/Lapack.c:448
+#: src/modules/lapack/Lapack.c:491
+msgid "'B' must be a complex matrix"
+msgstr "'B' 必須是複數矩陣"
+
+#: src/modules/lapack/Lapack.c:361 src/modules/lapack/Lapack.c:778
+msgid "'A' is 0-diml"
+msgstr "'A' 是 0-diml"
+
+#: src/modules/lapack/Lapack.c:363 src/modules/lapack/Lapack.c:780
+msgid "no right-hand side in 'B'"
+msgstr "'B' 在等號右側沒有公式"
+
+#: src/modules/lapack/Lapack.c:365 src/modules/lapack/Lapack.c:782
+#, c-format
+msgid "'A' (%d x %d) must be square"
+msgstr "'A' (%d x %d) 必須是正方形的"
+
+#: src/modules/lapack/Lapack.c:367 src/modules/lapack/Lapack.c:784
+#, c-format
+msgid "'B' (%d x %d) must be compatible with 'A' (%d x %d)"
+msgstr "'B' (%d x %d) 必須與 A (%d x %d) 相容"
+
+#: src/modules/lapack/Lapack.c:376 src/modules/lapack/Lapack.c:714
+#: src/modules/lapack/Lapack.c:748 src/modules/lapack/Lapack.c:793
+#, c-format
+msgid "argument %d of Lapack routine %s had invalid value"
+msgstr "Lapack 例行程式 %2$s 的引數 %1$d 具有不正確的值"
+
+#: src/modules/lapack/Lapack.c:383 src/modules/lapack/Lapack.c:434
+#: src/modules/lapack/Lapack.c:477 src/modules/lapack/Lapack.c:518
+#: src/modules/lapack/Lapack.c:567 src/modules/lapack/Lapack.c:623
+#: src/modules/lapack/Lapack.c:684
+msgid "Fortran complex functions are not available on this platform"
+msgstr "本平台不能使用 Fortran 複數功能"
+
+#: src/modules/lapack/Lapack.c:455 src/modules/lapack/Lapack.c:500
+#: src/modules/lapack/Lapack.c:866 src/modules/lapack/Lapack.c:906
+#, c-format
+msgid "right-hand side should have %d not %d rows"
+msgstr "公式右側應該有 %d 而不是 %d 列"
+
+#: src/modules/lapack/Lapack.c:493 src/modules/lapack/Lapack.c:899
+msgid "invalid 'trans' parameter"
+msgstr "'trans' 參數不正確"
+
+#: src/modules/lapack/Lapack.c:701 src/modules/lapack/Lapack.c:939
+msgid "'A' must be a square matrix"
+msgstr "'A' 必須是正方形矩陣"
+
+#: src/modules/lapack/Lapack.c:702
+msgid "'A' must have dims > 0"
+msgstr "'A' 必須有 dims > 0"
+
+#: src/modules/lapack/Lapack.c:712
+#, c-format
+msgid "the leading minor of order %d is not positive definite"
+msgstr "順序 %d 前置的次要符號並非肯定明確"
+
+#: src/modules/lapack/Lapack.c:720 src/modules/lapack/Lapack.c:758
+#: src/modules/lapack/Lapack.c:771 src/modules/lapack/Lapack.c:814
+#: src/modules/lapack/Lapack.c:932
+msgid "'A' must be a numeric matrix"
+msgstr "'A' 必須是數值矩陣"
+
+#: src/modules/lapack/Lapack.c:728
+msgid "'size' argument must be a positive integer"
+msgstr "'size' 引數必須是正整數"
+
+#: src/modules/lapack/Lapack.c:737
+#, c-format
+msgid "'size' cannot exceed ncol(x) = %d"
+msgstr "'size' 不能超過 ncol(x)=%d"
+
+#: src/modules/lapack/Lapack.c:738
+#, c-format
+msgid "'size' cannot exceed nrow(x) = %d"
+msgstr "'size' 不能超過 nrow(x)=%d"
+
+#: src/modules/lapack/Lapack.c:747
+#, c-format
+msgid "element (%d, %d) is zero, so the inverse cannot be computed"
+msgstr "元素 (%d,%d) 為零，因此無法逆向求值"
+
+#: src/modules/lapack/Lapack.c:773 src/modules/lapack/Lapack.c:859
+#: src/modules/lapack/Lapack.c:897
+msgid "'B' must be a numeric matrix"
+msgstr "'B' 必須是數值矩陣"
+
+#: src/modules/lapack/Lapack.c:796
+msgid "Lapack routine dgesv: system is exactly singular"
+msgstr "Lapack 例行程式 dgesv: 系統正好是獨特的"
+
+#: src/modules/lapack/Lapack.c:801
+#, c-format
+msgid "system is computationally singular: reciprocal condition number = %g"
+msgstr "系統計算上是獨特的: 互反條件數=%g"
+
+#: src/modules/lapack/Lapack.c:934
+msgid "argument 'logarithm' must be logical"
+msgstr "引數 'logarithm' 必須是邏輯值"
+
+#: src/modules/X11/devX11.c:293
+msgid "cannot set grayscale: reverting to monochrome"
+msgstr "無法設定灰階: 轉用黑白顏色"
+
+#: src/modules/X11/devX11.c:376
+msgid ""
+"X11 driver unable to obtain color cube\n"
+"  reverting to monochrome"
+msgstr "X11 驅動程式無法開啟顏色方塊，轉用黑白顏色"
+
+#: src/modules/X11/devX11.c:421
+msgid ""
+"Error: X11 cannot allocate additional graphics colors.\n"
+"Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
+msgstr ""
+"錯誤：X11 無法指派額外的圖案顏色。\n"
+"請考慮用 colortype=\"pseudo.cube\" 或 \"gray\" 選項來呼叫 X11。"
+
+#: src/modules/X11/devX11.c:816
+msgid ""
+"could not find any X11 fonts\n"
+"Check that the Font Path is correct."
+msgstr ""
+"找不到任何 X11 字型\n"
+"請檢查字型路徑設得是不是對。"
+
+#: src/modules/X11/devX11.c:880
+#, c-format
+msgid "X11 used font size %d when %d was requested"
+msgstr "X11 用字型大小 %d 但需要的是 %d"
+
+#: src/modules/X11/devX11.c:939
+#, c-format
+msgid "X11 font at size %d could not be loaded"
+msgstr "無法載入 X11 字型大小 %d"
+
+#: src/modules/X11/devX11.c:1054
+#, c-format
+msgid "X11 protocol error: %s"
+msgstr "X11 協定錯誤：%s"
+
+#: src/modules/X11/devX11.c:1071
+msgid "X11 fatal IO error: please save work and shut down R"
+msgstr "X11 致命的 IO 錯誤: 請儲存工作資料，然後重新啟動 R"
+
+#: src/modules/X11/devX11.c:1096
+msgid "locale not supported by Xlib: some X ops will operate in C locale"
+msgstr "Xlib 不支援語言環境: 某些 X 作業指令將在 C 語言環境中啟動"
+
+#: src/modules/X11/devX11.c:1097
+msgid "X cannot set locale modifiers"
+msgstr "X 無法設定語言環境修飾器"
+
+#: src/modules/X11/devX11.c:1102
+msgid "no png support in this version of R"
+msgstr "本 R 版本不支援 png"
+
+#: src/modules/X11/devX11.c:1108
+msgid "filename too long in png() call"
+msgstr "png() 呼叫時檔案名稱太長"
+
+#: src/modules/X11/devX11.c:1112 src/modules/X11/devX11.c:1554
+#, c-format
+msgid "could not open PNG file '%s'"
+msgstr "無法開啟 PNG 檔案 '%s'"
+
+#: src/modules/X11/devX11.c:1123
+msgid "no jpeg support in this version of R"
+msgstr "本 R 版本不支援 jpeg"
+
+#: src/modules/X11/devX11.c:1131
+msgid "filename too long in jpeg() call"
+msgstr "jpeg() 呼叫時檔案名稱太長"
+
+#: src/modules/X11/devX11.c:1135 src/modules/X11/devX11.c:1561
+#, c-format
+msgid "could not open JPEG file '%s'"
+msgstr "無法開啟 JPEG 檔案 '%s'"
+
+#: src/modules/X11/devX11.c:1156
+#, c-format
+msgid "unable to open connection to X11 display '%s'"
+msgstr "無法開啟連結到 X11 顯示 '%s'"
+
+#: src/modules/X11/devX11.c:1182
+msgid "jpeg() does not support transparency: using white bg"
+msgstr "jpeg() 不支援透明繪圖: 用白色的背景"
+
+#: src/modules/X11/devX11.c:1231
+msgid "unable to create X11 window"
+msgstr "無法建立 X11 視窗"
+
+#: src/modules/X11/devX11.c:1281
+msgid "unable to create pixmap"
+msgstr "無法建立像素圖"
+
+#: src/modules/X11/devX11.c:1354
+msgid "font family not found in X11 font database"
+msgstr "X11 字型資料庫裡沒有此一字型家族"
+
+#: src/modules/X11/devX11.c:2287
+msgid "invalid string argument"
+msgstr "字串引數不正確"
+
+#: src/modules/X11/devX11.c:2321
+#, c-format
+msgid "unable to start device %s"
+msgstr "無法開啟裝置 %s"
+
+#: src/modules/X11/devX11.c:2348
+#, fuzzy
+msgid "invalid 'width' or 'height'"
+msgstr "長度或寬度不正確"
+
+#: src/modules/X11/devX11.c:2355
+msgid "invalid colortype passed to X11 driver"
+msgstr "傳給 X11 驅動器的顏色類型不正確"
+
+#: src/modules/X11/devX11.c:2369
+msgid "unknown X11 color/colour model -- using monochrome"
+msgstr "沒有這種 X11 顏色/顏色模型 -- 使用黑白顏色"
+
+#: src/modules/X11/devX11.c:2432
+msgid "unable to contact X11 display"
+msgstr "無法連結到 X11 顯示"
+
+#: src/modules/X11/devX11.c:2483
+msgid "cannot allocate memory for X11Routines structure"
+msgstr "無法為 X11Routines 結構指派記憶體"
+
+#: src/nmath/bessel_i.c:64
+msgid "bessel_i allocation error"
+msgstr "bessel_i 指派錯誤"
+
+#: src/nmath/bessel_i.c:72
+#, c-format
+msgid "bessel_i(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
+msgstr "bessel_i(%g): ncalc (=%ld)!= nb (=%ld); alpha=%g. 引數在範圍外?\n"
+
+#: src/nmath/bessel_i.c:75
+#, c-format
+msgid "bessel_i(%g,nu=%g): precision lost in result\n"
+msgstr "bessel_i(%g,nu=%g): 結果的精確度有損害\n"
+
+#: src/nmath/bessel_j.c:63
+msgid "bessel_j allocation error"
+msgstr "bessel_j 指派錯誤"
+
+#: src/nmath/bessel_j.c:71
+#, c-format
+msgid "bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
+msgstr "bessel_j(%g): ncalc (=%ld)!= nb (=%ld); alpha=%g. 引數在範圍外?\n"
+
+#: src/nmath/bessel_j.c:74
+#, c-format
+msgid "bessel_j(%g,nu=%g): precision lost in result\n"
+msgstr "bessel_j(%g,nu=%g): 結果的精確度有損害\n"
+
+#: src/nmath/bessel_k.c:60
+msgid "bessel_k allocation error"
+msgstr "bessel_k 指派錯誤"
+
+#: src/nmath/bessel_k.c:68
+#, c-format
+msgid "bessel_k(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
+msgstr "bessel_k(%g): ncalc (=%ld)!= nb (=%ld); alpha=%g. 引數在範圍外?\n"
+
+#: src/nmath/bessel_k.c:71
+#, c-format
+msgid "bessel_k(%g,nu=%g): precision lost in result\n"
+msgstr "bessel_k(%g,nu=%g): 結果的精確度有損害\n"
+
+#: src/nmath/bessel_y.c:61
+msgid "bessel_y allocation error"
+msgstr "bessel_y 指派錯誤"
+
+#: src/nmath/bessel_y.c:71
+#, c-format
+msgid "bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
+msgstr "bessel_y(%g): ncalc (=%ld)!= nb (=%ld); alpha=%g. 引數在範圍外?\n"
+
+#: src/nmath/bessel_y.c:74
+#, c-format
+msgid "bessel_y(%g,nu=%g): precision lost in result\n"
+msgstr "bessel_y(%g,nu=%g): 結果的精確度有損害\n"
+
+#: src/nmath/pnchisq.c:181
+#, c-format
+msgid "pnchisq(x=%g, ..): not converged in %d iter."
+msgstr "pnchisq(x=%g, ..): %d 次循環後還沒有聚合。"
+
+#: src/nmath/polygamma.c:473
+#, c-format
+msgid "deriv = %d > %d (= n_max)"
+msgstr "deriv = %d > %d (= n_max)"
+
+#: src/nmath/rmultinom.c:74
+#, c-format
+msgid "rbinom: probability sum should be 1, but is %g"
+msgstr "rbinom: 機率和應該為 1，而不是 %g"
+
+#: src/nmath/signrank.c:77 src/nmath/signrank.c:100
+msgid "signrank allocation error"
+msgstr "signrank 指派錯誤"
+
+#: src/nmath/snorm.c:324
+#, c-format
+msgid "norm_rand(): invalid N01_kind: %d\n"
+msgstr "norm_rand(): N01_kind: %d 不正確\n"
+
+#: src/nmath/wilcox.c:75 src/nmath/wilcox.c:81 src/nmath/wilcox.c:133
+#: src/nmath/wilcox.c:294
+#, c-format
+msgid "wilcox allocation error %d"
+msgstr "wilcox 指派錯誤 %d"
+
+#: src/unix/dynload.c:149
+msgid ""
+"Explicit local dynamic loading not supported on this platform. Using default."
+msgstr "本系統不支援明確的本地動態載入。使用預設值。"
+
+#: src/unix/dynload.c:150
+msgid ""
+"Explicit global dynamic loading not supported on this platform. Using "
+"default."
+msgstr "本系統不支援明確的全局動態載入。使用預設值。"
+
+#: src/unix/dynload.c:151
+msgid ""
+"Explicit non-lazy dynamic loading not supported on this platform. Using "
+"default."
+msgstr "本系統不支援明確的非緩慢動態載入。使用預設值。"
+
+#: src/unix/dynload.c:152
+msgid ""
+"Explicit lazy dynamic loading not supported on this platform. Using default."
+msgstr "本系統不支援明確的緩慢動態載入。使用預設值。"
+
+#: src/unix/dynload.c:235
+msgid "cannot get working directory!"
+msgstr "找不到工作目錄"
+
+#: src/unix/edit.c:109
+msgid "invalid argument to edit()"
+msgstr "edit() 引數不正確"
+
+#: src/unix/edit.c:130
+msgid "argument 'editor' type not valid"
+msgstr "引數 'editor' 的類型不正確"
+
+#: src/unix/edit.c:132
+msgid "argument 'editor' is not set"
+msgstr "引數 'editor' 還沒有被設定"
+
+#: src/unix/edit.c:137
+msgid "'title' must be a string"
+msgstr "'title' 必須是字串"
+
+#: src/unix/edit.c:155
+#, c-format
+msgid "unable to run editor '%s'"
+msgstr "無法啟動編輯器 '%s'"
+
+#: src/unix/edit.c:157
+msgid "editor ran but returned error status"
+msgstr "啟動了編輯器但回傳錯誤狀態"
+
+#: src/unix/edit.c:167
+#, c-format
+msgid "problem with running editor %s"
+msgstr "啟動編輯器 %s 時出了問題"
+
+#: src/unix/edit.c:171
+msgid "unable to open file to read"
+msgstr "無法開啟檔案來讀取資料"
+
+#: src/unix/edit.c:177
+#, c-format
+msgid ""
+"an error occurred on line %d\n"
+" use a command like\n"
+" x <- edit()\n"
+" to recover"
+msgstr "第 %d 列發生錯誤，請用類似於 x <- edit() 的指令來回到原來狀態"
+
+#: src/unix/sys-std.c:120
+msgid "interrupt handler must not return"
+msgstr "插斷處置程式不能有回傳值"
+
+#: src/unix/sys-std.c:483
+msgid ""
+"An unusual circumstance has arisen in the nesting of readline input. Please "
+"report using bug.report()"
+msgstr "巢狀 readline 輸入出了不尋常的錯，請用 bug.report()"
+
+#: src/unix/sys-std.c:601
+msgid "re-encoding is not available on this system"
+msgstr "本系統沒有重新編碼這個功能"
+
+#: src/unix/sys-std.c:904 src/unix/sys-std.c:926
+msgid "'file' argument is too long"
+msgstr "'file' 引數太長"
+
+#: src/unix/sys-std.c:910 src/unix/sys-std.c:912
+msgid "no history mechanism available"
+msgstr "沒有歷史功能"
+
+#: src/unix/sys-std.c:935 src/unix/sys-std.c:937
+msgid "no history available to save"
+msgstr "沒有可以儲存的歷史紀錄"
+
+#: src/unix/sys-std.c:1002
+msgid "Sys.sleep is not implemented on this system"
+msgstr "本系統沒有實作 Sys.sleep 此一功能"
+
+#: src/unix/sys-unix.c:199
+msgid "proc.time() is not implemented on this system"
+msgstr "本系統沒有實作 proc.time() 此一功能"
+
+#: src/unix/sys-unix.c:215
+msgid "non-empty character argument expected"
+msgstr "需要非空字元引數"
+
+#: src/unix/sys-unix.c:239
+msgid "intern=TRUE is not implemented on this platform"
+msgstr "本系統沒有實作 intern=TRUE 此一功能"
+
+#: src/unix/sys-unix.c:280 src/unix/sys-unix.c:296
+msgid "cannot mkdir R_TempDir"
+msgstr "無法執行 mkdir R_TempDir"
+
+#: src/unix/sys-unix.c:309
+msgid "cannot allocate R_TempDir"
+msgstr "無法指派 R_TempDir"
+
+#: src/unix/sys-unix.c:391
+msgid "Sys.info() is not implemented on this system"
+msgstr "本系統沒有實作 Sys.info() 此一功能"
+
+#: src/unix/system.c:181
+#, c-format
+msgid "WARNING: --gui or -g without value ignored"
+msgstr "警告: --gui 或 -g 選項沒有值，因此忽略不用"
+
+#: src/unix/system.c:203
+#, c-format
+msgid "WARNING: unknown gui '%s', using X11\n"
+msgstr "警告: 沒有這種 gui '%s', 使用 X11\n"
+
+#: src/unix/system.c:206
+#, c-format
+msgid "WARNING: unknown gui '%s', using none\n"
+msgstr "警告: 沒有這種 gui '%s', 因此什麼都不用\n"
+
+#: src/unix/system.c:324
+msgid "WARNING: Only editing the first in the list of files"
+msgstr "警告: 只修改檔案串列中的第一個元素"
+
+#: src/unix/X11.c:51
+msgid "X11 module is not available under this GUI"
+msgstr "本 GUI 裡沒有 X11 模組"
+
+#: src/unix/X11.c:57
+msgid "X11 routines cannot be accessed in module"
+msgstr "模組中沒有此一 X11 例行程式"
+
+#: src/unix/X11.c:74 src/unix/X11.c:93 src/unix/X11.c:104 src/unix/X11.c:115
+msgid "X11 module cannot be loaded"
+msgstr "無法載入 X11 模組"
+
+#: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
+msgid "X11 is not available"
+msgstr "無法使用 X11"
+
+#~ msgid "invalid 'x' argument"
+#~ msgstr "'x' 引數無效"
+
+#~ msgid "invalid 'recursive' argument"
+#~ msgstr "'recursive' 引數無效"
+
+#~ msgid "invalid 'topic' argument"
+#~ msgstr "'topic' 引數無效"
+
+#~ msgid "invalid 'hlpfile' argument"
+#~ msgstr "'hlpfile' 引數無效"
+
+#~ msgid "invalid 'file' argument"
+#~ msgstr "'file' 引數無效"
+
+#~ msgid "invalid 'message' argument"
+#~ msgstr "'message' 引數無效"
+
+#~ msgid "invalid 'default' argument"
+#~ msgstr "'default' 引數無效"
+
+#~ msgid "invalid 'menuname' argument"
+#~ msgstr "'menuname' 引數無效"
+
+#~ msgid "invalid 'itemname' argument"
+#~ msgstr "'itemname' 引數無效"
+
+#~ msgid "invalid 'time' value"
+#~ msgstr "'time' 值無效"
+
+#~ msgid "invalid 'path' argument"
+#~ msgstr "'path' 引數無效"
+
+#~ msgid "invalid 'list' argument"
+#~ msgstr "'list' 引數無效"
+
+#~ msgid "invalid 'preselect' argument"
+#~ msgstr "'preselect' 引數無效"
+
+#~ msgid "class name too long in %s"
+#~ msgstr "%s 裡的類別名稱太長"
+
+#~ msgid "invalid add argument"
+#~ msgstr "增加的引數不正確"
+
+#~ msgid "invalid 'fill' argument"
+#~ msgstr "'fill' 引數不正確"
+
+#~ msgid "invalid 'label' argument"
+#~ msgstr "'label' 引數不正確"
+
+#~ msgid "invalid 'append' specification"
+#~ msgstr "'append' 設定不正確"
+
+#~ msgid "invalid 'type' arg"
+#~ msgstr "「type」引數不正確"
+
+#~ msgid "invalid 'width' argument"
+#~ msgstr "'width' 這個引數不正確"
+
+#~ msgid "invalid 'description' argument"
+#~ msgstr "'description' 引數不正確"
+
+#~ msgid "invalid 'open' argument"
+#~ msgstr "'open' 引數不正確"
+
+#~ msgid "invalid 'block' argument"
+#~ msgstr "'block' 引數不正確"
+
+#~ msgid "invalid 'encoding' argument"
+#~ msgstr "'encoding' 引數不正確"
+
+#~ msgid "invalid 'compress' argument"
+#~ msgstr "'compress' 引數不正確"
+
+#~ msgid "invalid 'text' argument"
+#~ msgstr "'text' 引數不正確"
+
+#~ msgid "invalid 'environment' argument"
+#~ msgstr "'environment' 引數不正確"
+
+#~ msgid "invalid 'host' argument"
+#~ msgstr "'host' 引數不正確"
+
+#~ msgid "invalid 'port' argument"
+#~ msgstr "'port' 引數不正確"
+
+#~ msgid "invalid 'server' argument"
+#~ msgstr "'server' 引數不正確"
+
+#~ msgid "invalid 'blocking' argument"
+#~ msgstr "'blocking' 引數不正確"
+
+#~ msgid "invalid 'sep' argument"
+#~ msgstr "'sep' 引數不正確"
+
+#~ msgid "invalid 'newLine' argument"
+#~ msgstr "'newLine' 引數不正確"
+
+#~ msgid "invalid 'tz' value"
+#~ msgstr "'tz' 的值不正確"
+
+#~ msgid "invalid 'format' argument"
+#~ msgstr "'format' 引數不正確"
+
+#~ msgid "invalid 'usetz' argument"
+#~ msgstr "'usetz' 引數不正確"
+
+#~ msgid "invalid 'naok' value"
+#~ msgstr "'naok' 值不正確"
+
+#~ msgid "invalid 'topics' argument"
+#~ msgstr "'topic' 引數不正確"
+
+#~ msgid "invalid 'destination' argument"
+#~ msgstr "'destination' 引數不正確"
+
+#~ msgid "cannot unbind in the NULL environment"
+#~ msgstr "無法在 NULL 環境裡切斷繫結"
+
+#~ msgid "invalid 'envir' argument"
+#~ msgstr "'envir' 引數不正確"
+
+#~ msgid "invalid 'inherits' argument"
+#~ msgstr "'inherits' 引數不正確"
+
+#~ msgid "invalid 'mode' argument"
+#~ msgstr "'mode' 引數不正確"
+
+#~ msgid "invalid 'ifnotfound' argument"
+#~ msgstr "'ifnotfound' 引數不正確"
+
+#~ msgid "invalid 'pos' argument"
+#~ msgstr "'pos' 引數不正確"
+
+#~ msgid "bad 'names' argument"
+#~ msgstr "'names' 引數不正確"
+
+#~ msgid "Warning message:\n"
+#~ msgid_plural "Warning messages:\n"
+#~ msgstr[0] "警告訊息：\n"
+
+#~ msgid "invalid 'string' value"
+#~ msgstr "'string' 值不正確"
+
+#~ msgid "invalid 'domain' value"
+#~ msgstr "'domain' 值不正確"
+
+#~ msgid "invalid 'dirname' value"
+#~ msgstr "'dirname' 值不正確"
+
+#~ msgid "invalid 'filename' argument"
+#~ msgstr "'filename' 引數不正確"
+
+#~ msgid "call name too long in %s"
+#~ msgstr "%s 裡呼叫的名稱太長"
+
+#~ msgid "syntax error: evaluating expression %d"
+#~ msgstr "語法錯誤：評估運算式 %d 中"
+
+#~ msgid "invalid 'terms' argument"
+#~ msgstr "'terms' 引數不正確"
+
+#~ msgid "invalid 'method' argument"
+#~ msgstr "'method' 引數不正確"
+
+#~ msgid "invalid 'xmin' value"
+#~ msgstr "'xmin' 值不正確"
+
+#~ msgid "invalid 'xmax' value"
+#~ msgstr "'xmax' 值不正確"
+
+#~ msgid "invalid 'tol' value"
+#~ msgstr "'tol' 值不正確"
+
+#~ msgid "invalid 'collapse' argument"
+#~ msgstr "'collapse' 引數不正確"
+
+#~ msgid "invalid 'nsmall' argument"
+#~ msgstr "'nsmall' 引數不正確"
+
+#~ msgid "invalid 'trim' argument"
+#~ msgstr "'trim' 引數不正確"
+
+#~ msgid "incorrect number of arguments"
+#~ msgstr "引數數目不正確"
+
+#~ msgid "invalid 'pager' specification"
+#~ msgstr "'pager' 程式設定不正確"
+
+#~ msgid "invalid 'editor' specification"
+#~ msgstr "'editor' 設定不正確"
+
+#~ msgid "invalid 'directory' argument"
+#~ msgstr "'directory' 引數不正確"
+
+#~ msgid "invalid 'pattern' argument"
+#~ msgstr "'pattern' 引數不正確"
+
+#~ msgid "invalid 'indexname' argument"
+#~ msgstr "'indexname' 引數不正確"
+
+#~ msgid "invalid 'type' argument"
+#~ msgstr "'type' 引數不正確"
+
+#~ msgid "invalid 'names' argument"
+#~ msgstr "'names' 引數不正確"
+
+#~ msgid "invalid 'mode' value"
+#~ msgstr "'mode' 值不正確"
+
+#~ msgid "invalid 'category' argument"
+#~ msgstr "'category' 引數不正確"
+
+#~ msgid "invalid 'locale' argument"
+#~ msgstr "'locale' 引數不正確"
+
+#~ msgid "invalid 'vfont' value"
+#~ msgstr "'hostname' 值不正確"
+
+#~ msgid "invalid 'xlim'"
+#~ msgstr "'xlim' 值不正確"
+
+#~ msgid "invalid 'ylim'"
+#~ msgstr "'ylim' 值不正確"
+
+#~ msgid "first argument invalid"
+#~ msgstr "第一個引數不正確"
+
+#~ msgid "second argument invalid"
+#~ msgstr "第二個引數不正確"
+
+#~ msgid "third argument invalid"
+#~ msgstr "第三個引數不正確"
+
+#~ msgid "fourth argument invalid"
+#~ msgstr "第四個引數不正確"
+
+#~ msgid "invalid 'adj' value"
+#~ msgstr "'adj' 值不正確"
+
+#~ msgid "Hershey fonts not yet implemented for mtext()"
+#~ msgstr "mtext() 還沒有實作 Hershey 字型"
+
+#~ msgid "invalid value for 'plot'"
+#~ msgstr "無效的 'plot' 值"
+
+#~ msgid "invalid 'cex' value"
+#~ msgstr "'cex' 值不正確"
+
+#~ msgid "invalid value for 'method'"
+#~ msgstr "'method' 值不正確"
+
+#~ msgid "invalid 'y' argument"
+#~ msgstr "'y' 引數不正確"
+
+#~ msgid "invalid 'z' argument"
+#~ msgstr "'z' 引數不正確"
+
+#~ msgid "invalid 'xlim' argument"
+#~ msgstr "'xlim' 引數不正確"
+
+#~ msgid "invalid 'ylim' argument"
+#~ msgstr "'ylim' 引數不正確"
+
+#~ msgid "invalid 'zlim' argument"
+#~ msgstr "'zlim' 引數不正確"
+
+#~ msgid "invalid 'expand' value"
+#~ msgstr "'z' 值不正確"
+
+#~ msgid "invalid 'nticks' value"
+#~ msgstr "'nticks' 值不正確"
+
+#~ msgid "invalid 'ticktype' value"
+#~ msgstr "'ticktype' 值不正確"
+
+#~ msgid "invalid 'col' specification"
+#~ msgstr "'col' 設定不正確"
+
+#~ msgid "invalid 'border' specification"
+#~ msgstr "'border' 設定不正確"
+
+#~ msgid "invalid 'digits' argument"
+#~ msgstr "'digits' 引數不正確"
+
+#~ msgid "invalid 'quote' argument"
+#~ msgstr "'quote' 引數不正確"
+
+#~ msgid "invalid 'right' argument"
+#~ msgstr "'right' 引數不正確"
+
+#~ msgid "allocation failure in strwidth"
+#~ msgstr "strwidth 中指派失敗"
+
+#~ msgid "invalid envir argument"
+#~ msgstr "envir 引數不正確"
+
+#~ msgid "invalid 'strip.white' value"
+#~ msgstr "'strip.white' 值不正確"
+
+#~ msgid "invalid 'na.strings' value"
+#~ msgstr "'na.strings' 值不正確"
+
+#~ msgid "invalid 'comment.char' value"
+#~ msgstr "'comment.char' 值不正確"
+
+#~ msgid "invalid 'sep' value"
+#~ msgstr "'sep' 值不正確"
+
+#~ msgid "invalid 'allowEscapes' value"
+#~ msgstr "'allowEscapes' 值不正確"
+
+#~ msgid "invalid 'nlines' value"
+#~ msgstr "'nlines' 值不正確"
+
+#~ msgid "invalid value for 'nr'"
+#~ msgstr "'nr' 值不正確"
+
+#~ msgid "invalid value for 'nc'"
+#~ msgstr "'nc' 值不正確"
+
+#~ msgid "invalid value for 'rnames'"
+#~ msgstr "'rnames' 值不正確"
+
+#~ msgid "invalid value for 'sep'"
+#~ msgstr "'sep' 值不正確"
+
+#~ msgid "invalid value for 'eol'"
+#~ msgstr "'eol' 值不正確"
+
+#~ msgid "invalid value for 'na'"
+#~ msgstr "'na' 值不正確"
+
+#~ msgid "invalid value for 'dec'"
+#~ msgstr "'dec' 值不正確"
+
+#~ msgid "invalid value for 'qmethod'"
+#~ msgstr "'qmethod' 值不正確"
+
+#~ msgid "'na.last' is invalid"
+#~ msgstr "'na.last' 不正確"
+
+#~ msgid "parse error"
+#~ msgstr "語法剖析錯誤"
+
+#~ msgid "invalid 'tempdir'"
+#~ msgstr "'tempdir' 不正確"
+
+#~ msgid "invalid 'from' argument"
+#~ msgstr "'from' 引數不正確"
+
+#~ msgid "invalid 'to' argument"
+#~ msgstr "'to' 引數不正確"
+
+#~ msgid "invalid 'duplicates.ok' argument"
+#~ msgstr "'duplicates.ok' 引數不正確"
+
+#~ msgid "%d argument passed to '%s' which requires %d"
+#~ msgid_plural "%d arguments passed to '%s' which requires %d"
+#~ msgstr[0] "%d 個引數被傳遞給 '%s'，但它需要 %d 個"
+
+#~ msgid "invalid 'xinds' argument"
+#~ msgstr "'xinds' 引數不正確"
+
+#~ msgid "invalid 'yinds' argument"
+#~ msgstr "'yinds' 引數不正確"
+
+#~ msgid "invalid value for 'w'"
+#~ msgstr "'w' 值不正確"
+
+#~ msgid "invalid value for 'quote'"
+#~ msgstr "'quote' 值不正確"
+
+#~ msgid "invalid value for 'justify'"
+#~ msgstr "'justify' 值不正確"
+
+#~ msgid "invalid 'url' argument"
+#~ msgstr "'url' 引數不正確"
+
+#~ msgid "invalid 'destfile' argument"
+#~ msgstr "'destfile' 引數不正確"
+
+#~ msgid "invalid 'quiet' argument"
+#~ msgstr "'quiet' 引數不正確"
+
+#~ msgid "invalid 'cacheOK' argument"
+#~ msgstr "'cacheOK' 引數不正確"
+
+#~ msgid "invalid gamma value"
+#~ msgstr "gamma 值不正確"
+
+#~ msgid "invalid value of 'bg'"
+#~ msgstr "'bg' 值不正確"
+
+#~ msgid "invalid value of 'canvas'"
+#~ msgstr "'canvas' 的值不正確"
+
+#~ msgid "invalid value of 'fonts'"
+#~ msgstr "'fonts' 的值不正確"
