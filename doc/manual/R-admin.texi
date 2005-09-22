@@ -705,7 +705,7 @@ area on @acronym{CRAN}.
 
 Another tuned BLAS which is available for some CPUs is by Kazushige
 Goto.  He does not allow redistribution: his builds are currently
-available@footnote{In mid-September 2005 they were temoorarily
+available@footnote{In mid-September 2005 they were temporarily
 unavailable pending a formal release.} via
 @url{http://www.cs.utexas.edu/users/kgoto/signup_first.html}.  To make
 use of this, put the @file{DLL} somewhere in your path or in
@@ -1822,7 +1822,7 @@ use a multi-threaded ATLAS by specifying
 
 Another tuned BLAS which is available for some processors under Linux is
 by Kazushige Goto, currently available@footnote{In mid-September 2005
-they were temoorarily unavailable pending a formal release.} at
+they were temporarily unavailable pending a formal release.} at
 @url{http://www.cs.utexas.edu/users/flame/goto/}.  Once this is is
 installed, it can be used by configuring with one of
 
