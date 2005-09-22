@@ -23,7 +23,8 @@ The (D)COM support has been updated, and header files and an import
 library (src/gnuwin32/librproxy.a) are now installed.  See the rcom
 package for usage.
 
-There is now a Brazilian Portuguese translations of the RGui menus.
+There are now Brazilian Portuguese and Russian translations of the 
+RGui menus.
 
 win.graph(), x11() and X11() now behave in the same way as windows()
 in respect of the xpinch, ypinch, graphics.record, gamma and
