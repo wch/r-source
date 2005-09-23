@@ -69,7 +69,11 @@ reshape <-
 
         rval <- d
 
-        if (length(times) == 1) return(rval)
+        if (length(times) == 1) {
+            if (drop.idvar)
+                rval[,idvar]<-NULL
+            return(rval)
+        }
         if (is.null(new.row.names))
             row.names(rval) <- paste(d[,idvar],times[1],sep = ".")
         else

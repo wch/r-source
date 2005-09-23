@@ -681,6 +681,9 @@ BUG FIXES
     o	window.default() had an incorrect tolerance and so sometimes
 	created too short a series if 'start' or 'end' were zero.
 
+    o   Some (fairly pointless) cases of reshape left a 
+        temporary id variable in the result (PR#8152)
+
 
 
 
