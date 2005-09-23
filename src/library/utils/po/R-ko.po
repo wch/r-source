@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:10\n"
+"POT-Creation-Date: 2005-09-23 08:54\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -716,20 +716,11 @@ msgstr "'%s'를 갱신할 수 없습니다"
 msgid "this function is intended to work with the Aqua GUI"
 msgstr "이 함수는 Aqua GUI로 작업하도록 의도됩니다"
 
-msgid "'tar' returned non-zero exit code:"
+msgid "'tar' returned non-zero exit code %d"
 msgstr "non-zero exit 코드를 반환하는 'tar' 입니다"
-
-msgid "no package '%s' on CRAN"
-msgstr "CRAN 에서 패키지 %s가 없습니다"
-
-msgid "Download of package '%s' failed"
-msgstr "패키지 '%s'의 다운로드는 실패했습니다"
 
 msgid "cannot remove prior installation of package"
 msgstr "패키지의 전의 설치를 삭제할 수 없습니다"
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "non-zero exit 코드를 반환하는 'tar' 입니다"
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
@@ -754,3 +745,12 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
+
+#~ msgid "'tar' returned non-zero exit code:"
+#~ msgstr "non-zero exit 코드를 반환하는 'tar' 입니다"
+
+#~ msgid "no package '%s' on CRAN"
+#~ msgstr "CRAN 에서 패키지 %s가 없습니다"
+
+#~ msgid "Download of package '%s' failed"
+#~ msgstr "패키지 '%s'의 다운로드는 실패했습니다"

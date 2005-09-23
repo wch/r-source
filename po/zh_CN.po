@@ -684,24 +684,20 @@ msgid "no dyn.load support in this R version"
 msgstr "本R版本不支持dyn.load"
 
 #: src/main/Rstrptime.h:1090
-#, fuzzy
 msgid "input string is too long"
-msgstr "zip路径太长"
+msgstr "输入字符串太长"
 
 #: src/main/Rstrptime.h:1092
-#, fuzzy
 msgid "invalid multibyte input string"
-msgstr "多字节字符串不对"
+msgstr "多字节输入字符串不对"
 
 #: src/main/Rstrptime.h:1095
-#, fuzzy
 msgid "format string is too long"
-msgstr "'destination'太长"
+msgstr "格式字符串太长"
 
 #: src/main/Rstrptime.h:1097
-#, fuzzy
 msgid "invalid multibyte format string"
-msgstr "多字节字符串不对"
+msgstr "多字节格式字符串不对"
 
 #: src/main/apply.c:39 src/main/envir.c:2351
 msgid "arguments must be symbolic"
@@ -1345,7 +1341,6 @@ msgid "argument 'x' must not contain NAs"
 msgstr "变元'x'不能含NA值"
 
 #: src/main/character.c:2371
-#, fuzzy
 msgid "argument 'x' must be an integer vector"
 msgstr "变元'x'必需是整数向量"
 
@@ -1410,9 +1405,8 @@ msgid "argument must have length at least 1"
 msgstr "变元的长度至少要为1"
 
 #: src/main/coerce.c:1344
-#, fuzzy
 msgid "invalid body for function"
-msgstr "内部函数不对"
+msgstr "函数定义本体不对"
 
 #: src/main/coerce.c:1363
 msgid "invalid length 0 argument"
@@ -1616,9 +1610,9 @@ msgid "write not enabled for this connection"
 msgstr "无法对这个链结书写"
 
 #: src/main/connections.c:382
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s', reason '%s'"
-msgstr "无法打开文件'%s'"
+msgstr "无法打开文件'%2$s'，因为'%1$s'"
 
 #: src/main/connections.c:384 src/main/dounzip.c:101
 #, c-format
@@ -1651,9 +1645,9 @@ msgid "allocation of file connection failed"
 msgstr "文件链结分配失败"
 
 #: src/main/connections.c:647
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create fifo '%s', reason '%s'"
-msgstr "无法建立先进先出'%s'"
+msgstr "由于'%2$s'的原因，无法建立先进先出'%1$s'"
 
 #: src/main/connections.c:650
 #, c-format
@@ -1698,9 +1692,9 @@ msgid "fifo connections are not available on this system"
 msgstr "本系统没有先进先出链结这个功能"
 
 #: src/main/connections.c:827
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open pipe() cmd '%s', reason '%s'"
-msgstr "无法打开pipe()命令'%s'"
+msgstr "由于'%2$s'的原因无法打开pipe()命令'%1$s'"
 
 #: src/main/connections.c:830
 #, c-format
@@ -2260,14 +2254,14 @@ msgid "too many arguments in foreign function call"
 msgstr "外接函数调用时变元太多"
 
 #: src/main/dotcode.c:178
-#, fuzzy, c-format
+#, c-format
 msgid "%s entry point \"%s%s\" not in DLL for package \"%s\""
-msgstr "程序包'%2$s'的DLL没有\"%1$s\"这个函数"
+msgstr "程序包'%4$s'的DLL没有\"%1$s\"登錄点\"%2$s%3$s\" "
 
 #: src/main/dotcode.c:187
-#, fuzzy, c-format
+#, c-format
 msgid "%s entry point \"%s%s\" not in load table"
-msgstr "载入表里没有这个函数\"%s\"的名字"
+msgstr "载入表里没有\"%1$s\"登錄点\"%2$s%3$s\""
 
 #: src/main/dotcode.c:257
 #, c-format
@@ -2594,9 +2588,8 @@ msgid "invalid cached value in R_GetGlobalCache"
 msgstr "R_GetGlobalCache里的高速缓存值不对"
 
 #: src/main/envir.c:724
-#, fuzzy
 msgid "cannot unbind in the base namespace"
-msgstr "无法在基本环境里切断联编"
+msgstr "无法在基本名字空间里切断联编"
 
 #: src/main/envir.c:726
 msgid "cannot unbind in the base environment"
@@ -2607,9 +2600,8 @@ msgid "cannot remove bindings from a locked environment"
 msgstr "无法从锁定的环境中删除联编"
 
 #: src/main/envir.c:771
-#, fuzzy
 msgid "cannot get binding from base environment"
-msgstr "无法从NULL环境里取得联编"
+msgstr "无法从基本环境里取得联编"
 
 #: src/main/envir.c:773
 msgid "cannot get binding from base namespace"
@@ -2950,9 +2942,9 @@ msgid "not in a try context"
 msgstr "不在try的上下文中"
 
 #: src/main/eval.c:213
-#, fuzzy, c-format
+#, c-format
 msgid "Rprof: cannot open profile file '%s'"
-msgstr "Rprof: 打不开程序概要分析文件'%s'"
+msgstr "Rprof: 无法打开程序概要分析文件'%s'"
 
 #: src/main/eval.c:246
 msgid "can't use R profiling while byte code profiling"
@@ -2970,12 +2962,11 @@ msgstr "评估嵌套太深：无穷递归/ options(expressions=)?"
 #: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1380
 #: src/main/eval.c:1429 src/main/eval.c:1483 src/main/eval.c:1701
 #: src/main/eval.c:3036 src/main/eval.c:3128
-#, fuzzy
 msgid "'...' used in an incorrect context"
-msgstr "... 的上下文用得不对"
+msgstr "'...'用在的上下文不对"
 
 #: src/main/eval.c:338 src/main/eval.c:784
-#, fuzzy, c-format
+#, c-format
 msgid "object \"%s\" not found"
 msgstr "找不到这个目标对象\"%s\""
 
@@ -2997,9 +2988,9 @@ msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "类属函数环境里没有这个\"%s\"符号"
 
 #: src/main/eval.c:730
-#, fuzzy, c-format
+#, c-format
 msgid "symbol \"%s\" not in environment of method"
-msgstr "方法环境里没有这个\"%s\"符号"
+msgstr "方法环境里没有\"%s\"这个符号"
 
 #: src/main/eval.c:840
 msgid "the condition has length > 1 and only the first element will be used"
@@ -3022,14 +3013,12 @@ msgid "non-symbol loop variable"
 msgstr "非符号循环变数"
 
 #: src/main/eval.c:951
-#, fuzzy
 msgid "invalid for() loop sequence"
 msgstr "for()循环顺序不对"
 
 #: src/main/eval.c:1080
-#, fuzzy
 msgid "'...' not allowed in return"
-msgstr "回覆值里不能有..."
+msgstr "回覆值里不能有'...'"
 
 #: src/main/eval.c:1094
 msgid "multi-argument returns are deprecated"
@@ -3044,7 +3033,6 @@ msgid "invalid (NULL) left side of assignment"
 msgstr "赋值公式左手不能是(NULL)值"
 
 #: src/main/eval.c:1175
-#, fuzzy
 msgid "target of assignment expands to non-language object"
 msgstr "赋值目标擴充到非语言目标对象"
 
@@ -3053,9 +3041,8 @@ msgid "cannot do complex assignments in base namespace"
 msgstr "无法在基本名字空间里赋复数值"
 
 #: src/main/eval.c:1216
-#, fuzzy
 msgid "cannot do complex assignments in base environment"
-msgstr "无法在NULL环境里赋复数值"
+msgstr "无法在基本环境里赋复数值"
 
 #: src/main/eval.c:1229 src/main/eval.c:1247
 msgid "invalid function in complex assignment"
@@ -3083,18 +3070,16 @@ msgid "numeric 'envir' arg not of length one"
 msgstr "数值'envir'变元的长度不是1"
 
 #: src/main/eval.c:1573 src/main/eval.c:1592
-#, fuzzy
 msgid "restarts not supported in 'eval'"
-msgstr "eval不支持重新启动"
+msgstr "'eval'不支持重新启动"
 
 #: src/main/eval.c:1639
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall'在封閉包外调用"
 
 #: src/main/eval.c:1695
-#, fuzzy
 msgid "value in '...' is not a promise"
-msgstr "...的值不是允諾"
+msgstr "'... '里的值不是允諾"
 
 #: src/main/eval.c:1887 src/main/objects.c:655
 #, c-format
@@ -3102,9 +3087,9 @@ msgid "call name too long in '%s'"
 msgstr "'%s'里调用的名字太长"
 
 #: src/main/eval.c:1908
-#, fuzzy, c-format
+#, c-format
 msgid "generic name too long in '%s'"
-msgstr "%s里的类属名字太长"
+msgstr "'%s'里的类属名字太长"
 
 #: src/main/eval.c:1940
 #, c-format
@@ -3516,9 +3501,8 @@ msgid "invalid 'y' type in 'x %s y'"
 msgstr "'x %s y'里的'y'种类不对"
 
 #: src/main/logic.c:295
-#, fuzzy
 msgid "Unary operator `!' called with two arguments"
-msgstr "二进列运算需要两个变元"
+msgstr "单进列运算`!'不能有两个变元"
 
 #: src/main/main.c:50
 msgid "dummy - do not translate"
@@ -3723,14 +3707,12 @@ msgid "argument is not a valid model"
 msgstr "变元不是正确的模型"
 
 #: src/main/model.c:759
-#, fuzzy
 msgid "'data' argument is of the wrong type"
-msgstr "数据变元种类有错"
+msgstr "'data'变元种类有错"
 
 #: src/main/model.c:1018
-#, fuzzy
 msgid "'.' in formula and no 'data' argument"
-msgstr "'data'变元有错"
+msgstr "公式里有'.'，而没有'data'这一变元"
 
 #: src/main/model.c:1163
 msgid "invalid formula in 'update'"
@@ -4328,9 +4310,8 @@ msgid "Impossible mode ( x )"
 msgstr "这种状态(x)是不可能的"
 
 #: src/main/paste.c:387
-#, fuzzy
 msgid "atomic vector arguments only"
-msgstr "只能用向量变元"
+msgstr "只能用原子向量变元"
 
 #: src/main/platform.c:226
 msgid "invalid filename specification"
@@ -4438,9 +4419,8 @@ msgid "OS reports request cannot be honored"
 msgstr "操作系统报告无法承兌执行请求"
 
 #: src/main/platform.c:1233
-#, fuzzy
 msgid "invalid value of 'what' argument"
-msgstr "'what'的值不对"
+msgstr "'what'变元的值不对"
 
 #: src/main/platform.c:1378
 msgid "'hostname' must be a character vector of length 1"
@@ -4543,9 +4523,8 @@ msgid "invalid axis number %d"
 msgstr "座标数目%d不对"
 
 #: src/main/plot.c:1088
-#, fuzzy
 msgid "'hadj' must be of length one"
-msgstr "'which'的长度必需为1"
+msgstr "'hadj'的长度必需为1"
 
 #: src/main/plot.c:1095 src/main/plot.c:2486
 msgid "zero length 'padj' specified"
@@ -4596,9 +4575,8 @@ msgid "invalid third argument"
 msgstr "第三个变元不对"
 
 #: src/main/plot.c:1759
-#, fuzzy
 msgid "invalid fourth argument"
-msgstr "第一个变元不对"
+msgstr "第四个变元不对"
 
 #: src/main/plot.c:1941
 msgid "invalid arrow head length"
@@ -5614,36 +5592,44 @@ msgid "syntax error on line %d"
 msgstr "%d行有语法错误"
 
 #: src/main/source.c:92
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "syntax error at\n"
 "%d: %s"
-msgstr "语法错误"
+msgstr ""
+"语法错误\n"
+"%d: %s"
 
 #: src/main/source.c:94
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "syntax error at\n"
 "%d: %s\n"
 "%d: %s"
-msgstr "%d行有语法错误"
+msgstr ""
+"语法错误\n"
+"%d: %s\n"
+"%d: %s"
 
 #: src/main/source.c:100
 msgid "syntax error"
 msgstr "语法错误"
 
 #: src/main/source.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "syntax error in \"%s\""
-msgstr "%d行有语法错误"
+msgstr "\"%s\"里有语法错误"
 
 #: src/main/source.c:103
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "syntax error in:\n"
 "\"%s\n"
 "%s\""
-msgstr "%d行有语法错误"
+msgstr ""
+"语法错误\n"
+"\"%s\n"
+"%s\""
 
 #: src/main/split.c:37
 msgid "first argument must be a vector"
@@ -5874,14 +5860,12 @@ msgid "internal error in use of recursive indexing"
 msgstr "用递回索引时发生了内部错误"
 
 #: src/main/subscript.c:194
-#, fuzzy
 msgid "incorrect number of columns in matrix subscript"
-msgstr "下标数目不对"
+msgstr "矩阵下标里列的数目不对"
 
 #: src/main/subscript.c:209
-#, fuzzy
 msgid "negative values are not allowed in a matrix subscript"
-msgstr "不能有负长度向量"
+msgstr "矩阵下标里不能有负数值"
 
 #: src/main/subscript.c:244
 msgid "(subscript) logical subscript too long"
@@ -5912,9 +5896,8 @@ msgid "matrix subscripting not handled for this type"
 msgstr "这一种类不能有矩阵下标"
 
 #: src/main/subset.c:428
-#, fuzzy
 msgid "array subscripting not handled for this type"
-msgstr "这一种类不能有矩阵下标"
+msgstr "这一种类不能有阵列下标"
 
 #: src/main/subset.c:657
 msgid "incorrect number of dimensions"
@@ -6129,14 +6112,12 @@ msgid "invalid input in mbcsToLatin1"
 msgstr "mbcsToLatin1输入不对"
 
 #: src/main/util.c:1186
-#, fuzzy
 msgid "allocation failure in 'mbcsToLatin1'"
-msgstr "分配mbcsToLatin1失败"
+msgstr "分配'mbcsToLatin1'里出了错"
 
 #: src/main/util.c:1189
-#, fuzzy
 msgid "invalid input in 'mbcsToLatin1'"
-msgstr "mbcsToLatin1输入不对"
+msgstr "'mbcsToLatin1'里的输入不对"
 
 #: src/main/util.c:1288
 msgid "error message truncated to 255 chars"
@@ -6602,9 +6583,8 @@ msgid "unable to start device %s"
 msgstr "无法打开设备%s"
 
 #: src/modules/X11/devX11.c:2348
-#, fuzzy
 msgid "invalid 'width' or 'height'"
-msgstr "长度或宽度不对"
+msgstr "'width'或'height'不对"
 
 #: src/modules/X11/devX11.c:2355
 msgid "invalid colortype passed to X11 driver"
