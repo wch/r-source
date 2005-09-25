@@ -237,8 +237,10 @@ foreach my $pkg (@ARGV) {
     mkdir("$tmpdir", 0755)
 	or die "Error: cannot create directory '$tmpdir'\n";
     chdir($tmpdir);
+    ## was xhf, but there are no symbolic links here and that is invalid
+    ## on FreeBSD, see http://www.freebsd.org/cgi/man.cgi?query=tar&apropos=0&sektion=0&manpath=FreeBSD+5.4-RELEASE+and+Ports&format=html
     R_system(join(" ",
-		  ("$tar xhf",
+		  ("$tar xf",
 		   &shell_quote_file_path($filepath))));
     ## Remove exclude files.
     open(EXCLUDE, "< $exclude");
