@@ -1002,7 +1002,8 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
        ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   ## </NOTE>
   then
-    output=`./conftest${ac_exeext} 2>&1`
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
     if test ${?} = 0; then
       r_cv_prog_f77_can_run=yes
     fi
@@ -1084,7 +1085,8 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
        ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   ## </NOTE>
   then
-    output=`./conftest${ac_exeext} 2>&1`
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
     if test ${?} = 0; then
       r_cv_prog_f77_cc_compat=yes
     fi
@@ -1164,7 +1166,8 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
        ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   ## </NOTE>
   then
-    output=`./conftest${ac_exeext} 2>&1`
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
     if test ${?} = 0; then
       r_cv_prog_f77_cc_compat_complex=yes
     fi
@@ -2459,7 +2462,8 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
        ${LIBM} ${BLAS_LIBS} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   ## </NOTE>
   then
-    output=`./conftest${ac_exeext} 2>&1`
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
     if test ${?} = 0; then
       r_cv_zdotu_is_usable=yes
     fi
