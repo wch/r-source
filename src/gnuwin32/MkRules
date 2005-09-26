@@ -111,7 +111,9 @@ F77=$(BINPREF)g77
 AS=$(BINPREF)as
 DLL_LDMAIN=gcc
 DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
-DLLTOOL=$(BINPREF)dlltool -k --as $(AS)
+## use version without -k for front-ends/libproxy.a
+DLLTOOL_WIN32=$(BINPREF)dlltool --as $(AS)
+DLLTOOL=$(DLLTOOL_WIN32) -k
 LINKER=$(BINPREF)gcc $(MINGW32LDFLAG)
 AR=$(BINPREF)ar
 RANLIB=$(BINPREF)ranlib
