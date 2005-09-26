@@ -32771,7 +32771,8 @@ done
     for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
 		   ccosh csinh ctanh cacosh casinh catanh
     do
-      this=`echo "ac_cv_func_$ac_func"`
+      as_ac_var=`echo "ac_cv_func_$ac_func"`
+      this=`eval echo '${'$as_ac_var'}'`
       if test "x$this" = xno; then
 	r_cv_c99_complex=no
       fi
@@ -34469,7 +34470,8 @@ fi
 done
 
   for ac_header in wchar wctype; do
-    this=`echo "ac_cv_header_$ac_header_h"`
+    as_ac_var=`echo "ac_cv_header_${ac_header}_h"`
+    this=`eval echo '${'$as_ac_var'}'`
     if test "x$this" = xno; then
       want_mbcs_support=no
     fi
@@ -34758,7 +34760,8 @@ fi
   ## can manage without wc[s]width
   for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wctrans
   do
-    this=`echo "ac_cv_func_$ac_func"`
+    as_ac_var=`echo "ac_cv_func_$ac_func"`
+    this=`eval echo '${'$as_ac_var'}'`
     if test "x$this" = xno; then
       want_mbcs_support=no
     fi

@@ -2982,7 +2982,8 @@ AC_DEFUN([R_MBCS],
 if test "$want_mbcs_support" = yes ; then
   AC_CHECK_HEADERS(wchar.h wctype.h)
   for ac_header in wchar wctype; do
-    this=`echo "ac_cv_header_$ac_header_h"`
+    as_ac_var=`echo "ac_cv_header_${ac_header}_h"`
+    this=`eval echo '${'$as_ac_var'}'`
     if test "x$this" = xno; then
       want_mbcs_support=no
     fi
@@ -2995,7 +2996,8 @@ if test "$want_mbcs_support" = yes ; then
   ## can manage without wc[s]width
   for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wctrans
   do
-    this=`echo "ac_cv_func_$ac_func"`
+    as_ac_var=`echo "ac_cv_func_$ac_func"`
+    this=`eval echo '${'$as_ac_var'}'`
     if test "x$this" = xno; then
       want_mbcs_support=no
     fi
@@ -3039,7 +3041,8 @@ AC_DEFUN([R_C99_COMPLEX],
     for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
 		   ccosh csinh ctanh cacosh casinh catanh
     do
-      this=`echo "ac_cv_func_$ac_func"`
+      as_ac_var=`echo "ac_cv_func_$ac_func"`
+      this=`eval echo '${'$as_ac_var'}'`
       if test "x$this" = xno; then
 	r_cv_c99_complex=no
       fi
