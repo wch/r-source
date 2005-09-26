@@ -50,6 +50,8 @@ the same key will be put under the HKEY_CURRENT_USER root.
 The sample R_HOME/etc/Rprofile file has been renamed to Rprofile.site
 (the documented name for such a file for some years).
 
+mingw-runtime-3.8 is now required to build R (as it contains expm1).
+
 
 
 R 2.1.1 patched

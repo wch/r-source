@@ -3244,7 +3244,8 @@ w32api-3.3.tar.gz
 
 @noindent
 and unpack these into the same directory (using @command{tar zxf
-tarball_name}).
+tarball_name}).  Note that @code{mingw-runtime-3.8.tar.gz} or later is
+required to build @R{} 2.2.0.
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop

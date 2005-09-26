@@ -215,7 +215,7 @@
 #define HAVE_ERRNO_H 1
 
 /* Define to 1 if you have the `expm1' function. */
-/* #undef HAVE_EXPM1 - in fact recent mingw-runtime >= 3.8 does have it */
+#define HAVE_EXPM1 1
 
 /* Define if your Fortran compiler appends an underscore to external names. */
 #define HAVE_F77_UNDERSCORE 1
