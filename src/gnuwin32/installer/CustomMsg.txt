@@ -87,6 +87,9 @@ no.compact=Minimal brukerinstallering
 no.full=Fullstendig installering
 no.CJK=Kinesisk/japansk/koreansk installering
 no.custom=Tilpasset installering
+no.adminprivilegesrequired=Du bør være pålogget med rettighter til administratoren under installering av R
+no.adminexplanation=Merk: Full installering av R krever administratorens rettigheter, og de er ikke tilgjengelige. Dersom du fortsetter med denne installeringen, vil du ikke kunne installere støtte for DCOM, eller knytte R til .RData-filer. Installering er kun mulig til kataloger der du har skriverettigheter.
+no.recordversion=Lagre versjonsnummer i registeret
 
 sl.regentries=Vnosi v registru:
 sl.associate=Poveži datoteke .RData z R
@@ -107,8 +110,11 @@ po.compact=Minimalna instalacja u¿ytkownika
 po.full=Pe³na instalacja
 po.CJK=Chiñska/Japoñska/Koreañska instalacja
 po.custom=Dopasowana instalacja
+po.adminprivilegesrequired=Dla instalacji R, trzeba posiadaæ uprawnienia administratora
+po.adminexplanation=Pe³na instalacja R wymaga uprawnienia administratora, które nie s¹ dostêpne. Jeœli ta instalacja bêdzie kontinuowana, instalacja wsparcia dla DCOM oraz powi¹¿ania pliki .RData z R nie bêd¹ mo¿liwe. Instalacja R jest tylko mo¿liwe w katalogu z prawem zapisu dla u¿ytkownika dokonuj¹cego instalacji.
+po.recordversion=Z³ó¿ numer wersji w rejestrze
 
-; Simplified Chinese is in code page 936, but iconv wants GB18030
+; Simplified Chinese is in code page 936 
 
 chs.regentries=µÇÓ›ƒÔ¼ÇÂ¼í—:
 chs.associate=&°ÑR³ÌÐòÍ¬.RDataÎÄ¼þÁªºÏÆðÀ´
