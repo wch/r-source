@@ -84,6 +84,7 @@ Name: pt; MessagesFile: "compiler:Languages\\Portuguese.isl"
 Name: ru; MessagesFile: "compiler:Languages\\Russian.isl"
 Name: sl; MessagesFile: "compiler:Languages\\Slovenian.isl"
 Name: chs; MessagesFile: "ChineseSimp.isl"
+Name: cht; MessagesFile: "ChineseTrad.isl"
 Name: ja; MessagesFile: "Japanese.isl"
 Name: ko; MessagesFile: "Korean.isl"
 
