@@ -3774,3 +3774,9 @@ b <- lag(a, 1)
 bb <- window(b, start = 0)
 stopifnot(length(bb) == length(a) - 1)
 ## was length(a) - 2 in 2.1.1, since the tolerance was abs(start) * ts.end
+
+
+## subassignment of length zero vector to NULL gave garbage answer (PR#8157)
+x <- NULL
+x[[1]] <- numeric(0)
+stopifnot(length(x[[1]]) == 0)

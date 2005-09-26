@@ -687,6 +687,9 @@ BUG FIXES
     o	R CMD build used 'tar xhf' which is invalid on FreeBSD systems
 	(and followed tar chf, so there could be no symbolic links in 
 	the tarball).
+	
+    o	Subassignment of length zero vectors to NULL gave garbage
+    	answers. (PR#8157)
 
 
 

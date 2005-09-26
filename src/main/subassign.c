@@ -1397,7 +1397,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    return x;
         }
         UNPROTECT(1);
-	if (length(y) <= 1)
+	if (length(y) == 1)
 	    PROTECT(x = allocVector(TYPEOF(y), 0));
 	else
 	    PROTECT(x = allocVector(VECSXP, 0));
