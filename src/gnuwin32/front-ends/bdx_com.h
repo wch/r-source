@@ -17,10 +17,6 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  ---------------------------------------------------------------------------
- *
- *  $Id: StatConnector.cpp 1.8 2003/04/15 21:05:35 baier Exp $
- *
  *  Conversion functions from VARIANT to BDX and vice versa.
  *
  ******************************************************************************/
