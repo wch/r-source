@@ -52,7 +52,8 @@ points(x, \dots)
     for 2.1.0 and are subject to change.
   }
   \item{col}{color code or name, see \code{\link{par}}.}
-  \item{bg}{background (\dQuote{fill}) color for open plot symbols}
+  \item{bg}{background (\dQuote{fill}) color for open plot symbols given by
+    \code{pch=21:25}.}
   \item{cex}{character (or symbol) expansion: a numerical vector.
     This works as a multiple of \code{\link{par}("cex")}.}
   \item{\dots}{Further graphical parameters (see \code{\link{plot.xy}}
