@@ -95,6 +95,9 @@ format(x, \dots)
   significant digits.  However, if all the elements then have trailing
   zeroes, the number of decimal places is reduced until at least one
   element has a non-zero final digit.
+
+  Raw vectors are converted to their 2-digit hexadecimal representation
+  by \code{\link{as.character}}.
 }
 \value{
   An object of similar structure to \code{x} containing character
