@@ -618,7 +618,7 @@ msgid "'weights' must not be negative"
 msgstr "'weights'不能是负数的"
 
 msgid "sum(weights) != 1  -- will not get true density"
-msgstr ""
+msgstr " sum(weights) != 1，因此无法取得真正的密度函数"
 
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "自动选择頻寬至少需要两个数据点"
@@ -1442,13 +1442,13 @@ msgid "control argument must be a named list"
 msgstr "控制变元必需是串列"
 
 msgid "unrecognized control element(s) named `"
-msgstr ""
+msgstr "没有叫这个名字的控制元素"
 
 msgid "' ignored"
-msgstr ""
+msgstr "' 略过不用"
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
-msgstr ""
+msgstr "不能有逻辑值的`hessian变元。请参考说明书。' "
 
 msgid "'params' has wrong length"
 msgstr "'params'的长度不对"
@@ -1478,10 +1478,10 @@ msgid "singular gradient matrix at initial parameter estimates"
 msgstr "参数初始估计值里有奇异梯度矩阵"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
-msgstr ""
+msgstr "除非algorithm = \"port\"，上限或下限将略过不用"
 
 msgid "Convergence failure:"
-msgstr ""
+msgstr "没有收斂："
 
 msgid "rows with zero weights not counted"
 msgstr "0重量的行不算"
@@ -1744,7 +1744,7 @@ msgid "setting df = 1  __use with care!__"
 msgstr "设定df = 1  小心使用!"
 
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
-msgstr ""
+msgstr "需要的是.spline(*, keep.data=TRUE) 的运算结果"
 
 msgid "type = \"partial\" is not yet implemented"
 msgstr "还没有实现type=\"partial\"的算法"
@@ -1977,7 +1977,7 @@ msgid "not enough (finite) 'x' observations"
 msgstr "(有限)'x'观察量数目不够"
 
 msgid "Requested conf.level not achievable"
-msgstr ""
+msgstr "无法达到所要求的conf.level"
 
 msgid "cannot compute exact confidence interval with ties"
 msgstr "有连结时无法計算精確的置信区间"

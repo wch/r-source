@@ -2006,7 +2006,7 @@ msgstr "'split'的值不对"
 #: src/main/connections.c:3533
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
-msgstr ""
+msgstr "file(\"\")只支持open = \"w+\"和open = \"w+b\"这两种模式：现在使用前者"
 
 #: src/main/connections.c:3549 src/modules/internet/internet.c:463
 msgid "unsupported URL scheme"
@@ -4412,7 +4412,7 @@ msgstr "本系统没有实现file.access()"
 
 #: src/main/platform.c:1081
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
-msgstr ""
+msgstr "设定'LC_NUMERIC'后有可能会使R运转出现问题"
 
 #: src/main/platform.c:1095
 msgid "OS reports request cannot be honored"
@@ -4532,7 +4532,7 @@ msgstr "'padj'长度不能为0"
 
 #: src/main/plot.c:1143
 msgid "'label' is supplied and not 'at'"
-msgstr ""
+msgstr "'label'的值虽然是有了，但'at'的值却不存在"
 
 #: src/main/plot.c:1147
 #, c-format
@@ -5321,7 +5321,7 @@ msgstr "读取TableHead时无法分配缓冲区"
 
 #: src/main/scan.c:1602
 msgid "\\ followed by EOF"
-msgstr ""
+msgstr "\\ 后面跟着EOF"
 
 #: src/main/scan.c:1646 src/main/scan.c:1649
 #, c-format
@@ -5680,15 +5680,15 @@ msgstr "引用不存在的变元%d"
 
 #: src/main/sprintf.c:143
 msgid "at most one asterisk `*' is supported in each conversion specification"
-msgstr ""
+msgstr "每个轉換規格里最多只支持一个`*'号"
 
 #: src/main/sprintf.c:150
 msgid "argument for `*' conversion specification must be a number"
-msgstr ""
+msgstr "轉換規格`*'的变元必需是数字"
 
 #: src/main/sprintf.c:204
 msgid "coercion has changed vector length to 0"
-msgstr ""
+msgstr "強制改变把向量的长度变成0"
 
 #: src/main/sprintf.c:212
 #, c-format

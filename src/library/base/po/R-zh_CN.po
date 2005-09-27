@@ -47,7 +47,7 @@ msgid "invalid 'row.names' specification"
 msgstr "'row.names'的设定不对"
 
 msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
+msgstr "当row.names = FALSE时col.names = NA是没有意义的"
 
 msgid "invalid 'col.names' specification"
 msgstr "'col.names'的设定不对"
@@ -83,7 +83,7 @@ msgid "second argument must be a list"
 msgstr "第二个变元必需为串列"
 
 msgid "'iconvlist' is not available on this system"
-msgstr ""
+msgstr "本系统不支持'iconvlist'"
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr "'kind' 必需是字符，而且其长度只能为1(用RNG) 。"
@@ -263,7 +263,7 @@ msgid "some row.names duplicated:"
 msgstr "某些row.names有重复："
 
 msgid ","
-msgstr ""
+msgstr "，"
 
 msgid "--> row.names NOT used"
 msgstr "--> row.names不再有用"
@@ -469,7 +469,7 @@ msgid "not defined for POSIXt objects"
 msgstr "对\"POSIXt\"对象不适用"
 
 msgid "'tzone' attributes are inconsistent"
-msgstr ""
+msgstr "'tzone'的屬性相互有矛盾"
 
 msgid "not defined for \"POSIXct\" objects"
 msgstr "对\"POSIXct\"对象不适用"
@@ -508,7 +508,7 @@ msgid "replacement diagonal has wrong length"
 msgstr "对角替换值的长度不对"
 
 msgid "MARGIN ="
-msgstr ""
+msgstr "MARGIN ="
 
 msgid "is invalid for dim ="
 msgstr "不能适用于dim="
@@ -687,7 +687,7 @@ msgid "there is no package called '%s'"
 msgstr "不存在叫'%s'这个名称的程辑包"
 
 msgid "no library trees found in 'lib.loc'"
-msgstr ""
+msgstr "在'lib.loc'里找不到常式庫	树"
 
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr "'%s'不是正当的程辑包--是不是在R版本2.0.0之前装的？"
@@ -711,7 +711,7 @@ msgid "package '%s' already present in search()"
 msgstr "程辑包'%s'已存在于search()"
 
 msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
-msgstr ""
+msgstr "'DESCRIPTION'有'Encoding'一域，但重新編碼是不可能的"
 
 msgid "%sPackages in library '%s':"
 msgstr "图书馆'%2$s'有%s程辑包："
@@ -762,7 +762,7 @@ msgid ""
 msgstr "可以在目录'%s'中的小文品内找到更多的信息"
 
 msgid "doc"
-msgstr ""
+msgstr "文件"
 
 msgid "Description:"
 msgstr "描述："
@@ -1171,10 +1171,10 @@ msgid "unable to find a plausible encoding"
 msgstr "找不到合理的编码"
 
 msgid "'chdir = TRUE' makes no sense for a URL"
-msgstr ""
+msgstr "'chdir = TRUE'对URL来说没有任何意义"
 
 msgid "'chdir = TRUE' makes no sense for a connection"
-msgstr ""
+msgstr "'chdir = TRUE'对联结来说没有任何意义"
 
 msgid "'%s' is not an existing file"
 msgstr "'%s'不是已经存在的文件"
@@ -1258,7 +1258,7 @@ msgid "argument to 'which' is not logical"
 msgstr "'which'的变元不是逻辑值"
 
 msgid "attempt to change '%s' ignored"
-msgstr ""
+msgstr "改变'%s'没有起作用"
 
 msgid "invalid 'digits'"
 msgstr "'digits'的值不对"
@@ -1273,10 +1273,10 @@ msgid "'cmd' execution failed with error code %d"
 msgstr "'cmd'运行失败，错误码为%d"
 
 msgid "package '%s' has a non-function '.First.lib'"
-msgstr ""
+msgstr "程辑包'%s'有一个非函数的'.First.lib'"
 
 msgid "cannot find name space environment"
-msgstr ""
+msgstr "找不到名字空间环境"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
@@ -1526,3 +1526,4 @@ msgstr[1] "警告信息：\n"
 
 #~ msgid "'x' must inherit from class"
 #~ msgstr "‘x’必需继承于这一类别"
+
