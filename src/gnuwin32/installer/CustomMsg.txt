@@ -34,6 +34,9 @@ dk.compact=Minimal brugerinstallation
 dk.full=Luld installation
 dk.CJK=Kinesisk/Japansk/Koreansk installation
 dk.custom=Brugerdefinet installation
+dk.adminprivilegesrequired=Du skal helst vжre logget ind som administrator for at installere R
+dk.adminexplanation=En fuld R installation krжver administratorrettigheder, og disse ser ikke ud til at vжre til stede. Hvis du fortsжtter installationen, vil du ikke kunne installere DCOM understшttelse eller kunne associere R med .RData filer. Installation skal vжre til en mappe, hvortil du har skrivetilladelse.
+dk.recordversion=Gem versionsnummer i registreringsdatabasen
 
 fr.regentries=Entrйes dans le registre:
 fr.associate=&Associer R avec les fichiers .RData
@@ -69,6 +72,9 @@ ru.compact=Минимальная пользовательская установка
 ru.full=Полная установка
 ru.CJK=Китайская/Японская/Корейская установка
 ru.custom=Выборочная установка
+ru.adminprivilegesrequired=Для установки R Вы должны войти в систему как администратор
+ru.adminexplanation=Замечание: Полная установка R требует прав администратора, но похоже, что они недоступны. Если Вы продолжите установку, то не сможете установить ни поддержки DCOM, ни связать R с файлами .RData. Установка должна быть проведена в ту папку, для которой Вы имеете права записи.
+ru.recordversion=Сохранить номер версии в системном регистре
 
 it.regentries=Valori registri:
 it.associate=Associa R ai file .RData
@@ -127,6 +133,20 @@ chs.custom=ЧФ¶ЁБx°ІЧ°
 chs.adminprivilegesrequired=ФЪ°ІЧ°RµДК±єтДг±ШРиТФ№ЬАнФ±Йн·ЭµЗд›ЎЈ
 chs.adminexplanation=ЗлЧўТвЈєФЪИ«Ії°ІЧ°RК±Дг±ШРиѕЯУР№ЬАнФ±µДМШИЁЈ¬µ«ДїЗ°їґЖрАґДгєГПуГ»УРХвСщµДИЁАыЎЈДгїЙТФјМРш°ІЧ°RЈ¬µ«Ль»бГ»УРDCOMХвТ»№¦ДЬЈ¬ТІІ»»бЧФ¶ЇЅ«.RDataОДјюН¬RПаБЄЅУЎЈДгЦ»ДЬФЪУРКйРґРнїЙµДОДјюДїВјПВ°ІЧ°RЎЈ
 chs.recordversion=°ж±ѕРЕПў±ЈґжУЪЧўІб±нДЪЎЈ
+
+; Traditional Chinese is in code page 950 (a variation on Big5)
+
+cht.regentries=µnїэЄн¶µҐШ:
+cht.associate=±Nёк®ЖАЙ°ЖАЙ¦W .R ГцБp¦Ь R
+cht.dcom=µnїэ R Єєёф®|ҐHЁС (D)COM ¦шЄAѕ№ЁПҐО
+cht.user=¤@Їл¦wёЛ
+cht.compact=іМ¤p¦wёЛ
+cht.full=§№ѕг¦wёЛ
+cht.CJK=¤¤¤е/¤й¤е/Бъ¤е ¦wёЛ
+cht.custom=¦Ы­q¦wёЛ
+cht.adminprivilegesrequired=¦wёЛ R ®Й±zҐІ¶·ҐHєЮІzЄМЁ­¤Аµn¤J
+cht.adminexplanation=»Ў©ъ: R Єє§№ѕг¦wёЛ»Э­nЁtІОєЮІzЕv­­ЎA¦э¬O¬Э°_ЁУЁГµLЄkЁъ±oЎC¦pЄG±zД~Дт¶i¦ж¦№µ{§ЗЎA±z±NµLЄk¦wёЛ DCOM Єє¤дґ©ЎA¤]µLЄk±Nёк®ЖАЙ°ЖАЙ¦W .R ГцБp¦Ь RЎC¦wёЛ§@·~ҐІ¶·¦b±z¦іјg¤JЕv­­ЄєҐШїэ¤§¤¤¶i¦жЎC
+cht.recordversion=¦bµnїэЄн¤¤Аx¦sЄ©Ґ»ё№ЅX
 
 ; Japanese is in code page 932, which extends Shift_JIS
 
