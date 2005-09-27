@@ -84,6 +84,9 @@ it.compact=Installazione utente minimale
 it.full=Installazione completa
 it.CJK=Installazione Cinese/Giapponese/Coreana
 it.custom=Installazione personalizzata
+it.adminprivilegesrequired=Sarebbe meglio installare R entrando come amministratore
+it.adminexplanation=Nota: l'installazione completa richiede i privilegi da amministratore e sembrerebbe che non siano disponibili. Se si procede con l'installazione non sarà possibile installare il supporto per DCOM o associare R ai files .RData.  L'installazione deve essere eseguita in una cartella di cui si possiedono i permessi in scrittura.
+it.recordversion=Memorizza il numero della versione nel registro
 
 no.regentries=Registernøkler:
 no.associate=Knytt R til .RData-filer
