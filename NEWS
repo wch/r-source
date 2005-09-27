@@ -246,7 +246,7 @@ NEW FEATURES
 	provide residuals() and fitted() methods for smoothing splines.
 
     o	Attempting source(file, chdir=TRUE) with a URL or connection
-	for'file' now gives a warning and ignores 'chdir'.
+	for 'file' now gives a warning and ignores 'chdir'.
 
     o	source() closes its input file after parsing it rather than
 	after executing the commands, as used to happen prior to
@@ -659,6 +659,9 @@ BUG FIXES
     o	prompt() and hence package.skeleton() now produce *.Rd files that
 	give no errors (but warnings) when not edited, much more often.
 
+    o	promptClass() and promptMethods() now also escape "%" e.g. in '%*%'
+	and the latter gives a message about the file written.
+
     o	wilcox.test() now warns when conf.level is set higher than
 	achievable, preventing errors (PR#3666) and incorrect answers
 	with extremely small sample sizes.
@@ -681,13 +684,13 @@ BUG FIXES
     o	window.default() had an incorrect tolerance and so sometimes
 	created too short a series if 'start' or 'end' were zero.
 
-    o   Some (fairly pointless) cases of reshape left a 
+    o   Some (fairly pointless) cases of reshape left a
         temporary id variable in the result (PR#8152)
 
     o	R CMD build used 'tar xhf' which is invalid on FreeBSD systems
-	(and followed tar chf, so there could be no symbolic links in 
+	(and followed tar chf, so there could be no symbolic links in
 	the tarball).
-	
+
     o	Subassignment of length zero vectors to NULL gave garbage
     	answers. (PR#8157)
 
