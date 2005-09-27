@@ -8,7 +8,7 @@
 \description{
   \code{NA} is a logical constant of length 1 which contains a missing
   value indicator.  \code{NA} can be freely coerced to any other vector
-  type.
+  type except raw.
 
   The generic function \code{is.na} indicates which elements are missing.
 
@@ -27,15 +27,14 @@ is.na(x) <- value
 }
 \details{
   %% Next par on character NAs taken from R-lang.texi:
-  The \code{NA} of character type is as from R 1.5.0 distinct from the
+  The \code{NA} of character type is distinct from the
   string \code{"NA"}.  Programmers who need to specify an explicit
   string \code{NA} should use \code{as.character(NA)} rather than
   \code{"NA"}, or set elements to \code{NA} using \code{is.na<-}.
 
   \code{is.na(x)} works elementwise when \code{x} is a
-  \code{\link{list}}. 
-  The method dispatching is C-internal, rather than via
-  \code{\link{UseMethod}}.
+  \code{\link{list}}.  It is generic: you can write methods to handle
+  specific classes of objects, see \link{InternalMethods}.
 
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.

@@ -26,7 +26,7 @@ is \code{TRUE} or \code{FALSE}.
 \value{
   A vector of the same length and attributes (including
   class) as \code{test} and data values from the values of
-  \code{yes} or \code{no}.  The mode of the answer will be coerced to
+  \code{yes} or \code{no}.  The mode of the answer will be coerced from
   logical to accommodate first any values taken from \code{yes} and then
   any values taken from \code{no}.
 }
@@ -54,6 +54,13 @@ sqrt(ifelse(x >= 0, x, NA))# no warning
 
 ## Note: the following also gives the warning !
 ifelse(x >= 0, sqrt(x), NA)
+
+## example of different return modes:
+yes <- 1:3
+no <- pi^(0:3)
+typeof(ifelse(NA, yes, no))   # logical
+typeof(ifelse(TRUE, yes, no)) # integer
+typeof(ifelse(FALSE, yes, no))# double
 }
 \keyword{logic}
 \keyword{programming}
