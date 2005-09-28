@@ -2840,6 +2840,10 @@ SHLIB_LDFLAGS=-Wl,-G
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
 
+Ei-ji Nakama has reported that @file{src/main/regex.c} has to be compiled
+with @option{-D_LINUX_SOURCE_COMPAT} in @code{CFLAGS} in AIX 5.x
+(and does not work correctly with AIX 4.x).
+
 @node New platforms,  , AIX, Platform notes
 @section New platforms
 

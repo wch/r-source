@@ -409,6 +409,14 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 # endif
 #endif
 
+/* patch from Ei-ji Nakama for Intel compilers on ix86.
+   From http://www.nakama.ne.jp/memo/ia32_linux/R-2.1.1.iccftzdaz.patch.txt
+ */
+#if defined(__i386) && defined(__INTEL_COMPILER) && __INTEL_COMPILER > 800
+#include <xmmintrin.h>
+#include <pmmintrin.h>
+#endif
+
 void fpu_setup(Rboolean start)
 {
     if (start) {
@@ -418,6 +426,10 @@ void fpu_setup(Rboolean start)
 
 #ifdef NEED___SETFPUCW
     __setfpucw(_FPU_IEEE);
+#endif
+#if defined(__i386) && defined(__INTEL_COMPILER) && __INTEL_COMPILER > 800
+    _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_OFF);
+    _MM_SET_DENORMALS_ZERO_MODE(_MM_DENORMALS_ZERO_OFF);
 #endif
     } else {
 #ifdef __FreeBSD__

@@ -418,6 +418,9 @@ INSTALLATION
 	and JAVA_LIBS (flags to link against JNI) are made available
 	in Makeconf.
 
+    o	Ei-ji Nakama was contributed a patch for FPU control with the
+	Intel compilers on ix86 Linux.
+
 
 MAC OS X INSTALLATION
 
