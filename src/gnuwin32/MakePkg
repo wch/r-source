@@ -246,7 +246,7 @@ endif
 else
 	@$(ECHO) "  running src/Makefile.win ..."
 	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
-	  -f Makefile.win
+	  -f Makefile.win DLLNAME=$(DLLNAME)
 	@$(ECHO) "  ... done"
 endif
 
