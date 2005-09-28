@@ -640,7 +640,7 @@ Slovenian.
 
 The default behaviour of R is to try to run in the language you run
 Windows in.  Apparently some users want Windows in their native language,
-but not R.  To do so, set @code{LANAGUAGE=en} as discussed in Q2.2 and Q2.15.
+but not R.  To do so, set @code{LANGUAGE=en} as discussed in Q2.2 and Q2.15.
 
 @node I want to run R in Chinese/Japanese/Korean, I selected English for Installation but R runs in Chinese, I want R in English!, Languages and Internationalization
 @section I want to run R in Chinese/Japanese/Korean
@@ -739,7 +739,7 @@ Czech characters displayed correctly.
 @node The dialog buttons are not translated,  , I don't see characters with accents at the R console, Languages and Internationalization
 @section The dialog buttons are not translated
 
-In most cases they actually are, but but Windows.  Setting the locale or
+In most cases they actually are, but by Windows.  Setting the locale or
 the @code{LANGUAGE} environment variable does not change the Windows
 setting of its `UI language'.  Under Windows XP there are three tabs on
 the @emph{Regional and Language Options} applet in the Control Panel.
