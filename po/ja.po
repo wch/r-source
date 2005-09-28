@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:09+0100\n"
+"POT-Creation-Date: 2005-09-28 14:09+0100\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -467,8 +467,8 @@ msgstr "二番目の引数はリストでなければなりません"
 msgid "subscript out of bounds"
 msgstr "添え字が許される範囲外です"
 
-#: src/include/Errormsg.h:43 src/main/subassign.c:1317
-#: src/main/subassign.c:1666
+#: src/include/Errormsg.h:43 src/main/subassign.c:1322
+#: src/main/subassign.c:1674
 msgid "object is not subsettable"
 msgstr "オブジェクトは部分代入可能ではありません"
 
@@ -484,70 +484,70 @@ msgstr "リストとベクトルのみに適用できます"
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr "識別子に対応する R-to-C コンバータがありません"
 
-#: src/main/CommandLineArgs.c:169
+#: src/main/CommandLineArgs.c:171
 msgid "WARNING: no value given for --encoding given\n"
 msgstr "警告: --encoding の値が与えられていません\n"
 
-#: src/main/CommandLineArgs.c:188
+#: src/main/CommandLineArgs.c:190
 #, c-format
 msgid "WARNING: option '%s' no longer supported\n"
 msgstr "警告: '%s' オプションはもやはサポートされていません\n"
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:201
 #, c-format
 msgid "WARNING: no value given for '%s'\n"
 msgstr "警告: ''%s' の値が与えられていません\n"
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:209
 #, c-format
 msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr "警告: '%s' 値が不正なので無視されました\n"
 
-#: src/main/CommandLineArgs.c:211
+#: src/main/CommandLineArgs.c:213
 #, c-format
 msgid "WARNING: %s=%lu'%c': too large and ignored\n"
 msgstr "警告: %s=%lu'%c': 大きすぎるので無視されました\n"
 
-#: src/main/CommandLineArgs.c:228
+#: src/main/CommandLineArgs.c:230
 msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "警告: '--max-ppsize' の値が与えられていません\n"
 
-#: src/main/CommandLineArgs.c:233
+#: src/main/CommandLineArgs.c:235
 msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
 msgstr "警告: '-max-ppsize' 値が負なので無視されました\n"
 
-#: src/main/CommandLineArgs.c:235
+#: src/main/CommandLineArgs.c:237
 msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr "警告: '-max-ppsize' 値が小さすぎるので無視されました\n"
 
-#: src/main/CommandLineArgs.c:238
+#: src/main/CommandLineArgs.c:240
 msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
 msgstr "警告: '-max-ppsize' 値が大きすぎるので無視されました\n"
 
-#: src/main/CommandLineArgs.c:249
+#: src/main/CommandLineArgs.c:251
 msgid "WARNING: no 'vsize' given\n"
 msgstr "警告: 'vsize' が与えられていません\n"
 
-#: src/main/CommandLineArgs.c:255
+#: src/main/CommandLineArgs.c:257
 #, c-format
 msgid "WARNING: '--vsize' value is invalid: ignored\n"
 msgstr "警告: '--vsize' 値が不正なので無視されました\n"
 
-#: src/main/CommandLineArgs.c:257
+#: src/main/CommandLineArgs.c:259
 #, c-format
 msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
 msgstr "警告: --vsize=%ld'%c': 大きすぎるので無視されました\n"
 
-#: src/main/CommandLineArgs.c:272
+#: src/main/CommandLineArgs.c:274
 msgid "WARNING: no 'nsize' given\n"
 msgstr "警告: 'nsize' が与えられていません\n"
 
-#: src/main/CommandLineArgs.c:278
+#: src/main/CommandLineArgs.c:280
 #, c-format
 msgid "WARNING: '--nsize' value is invalid: ignored\n"
 msgstr "警告: '--nsize' 値が不正なので無視されました\n"
 
-#: src/main/CommandLineArgs.c:280
+#: src/main/CommandLineArgs.c:282
 #, c-format
 msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
 msgstr "警告: --nsize=%lu'%c': 大きすぎるので無視されました\n"
@@ -3174,7 +3174,7 @@ msgstr "単純な実数ベクトルだけを扱えます"
 msgid "not a simple vector"
 msgstr "単一のベクトルではありません"
 
-#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:885
+#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:890
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "添え字の数が正しくありません"
@@ -5845,94 +5845,94 @@ msgstr "ベクトルでないものを拡張しようとしました"
 msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr "ベクトル/リストの範囲外への付置 (%d から %d へ拡大) "
 
-#: src/main/subassign.c:289
+#: src/main/subassign.c:294
 #, c-format
 msgid "incompatible types (%d) in subassignment type fix"
 msgstr "部分代入における型のフィックスにおいて，型 (%d) は互換性がありません"
 
-#: src/main/subassign.c:382 src/main/subassign.c:653 src/main/subassign.c:656
-#: src/main/subassign.c:923
+#: src/main/subassign.c:387 src/main/subassign.c:658 src/main/subassign.c:661
+#: src/main/subassign.c:928
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "添え字付きの付値で NA は許されていません"
 
-#: src/main/subassign.c:394 src/main/subassign.c:667 src/main/subassign.c:915
-#: src/main/subassign.c:1097
+#: src/main/subassign.c:399 src/main/subassign.c:672 src/main/subassign.c:920
+#: src/main/subassign.c:1102
 msgid "nothing to replace with"
 msgstr "置き換えるべきものがなにもありません"
 
-#: src/main/subassign.c:396 src/main/subassign.c:669 src/main/subassign.c:917
-#: src/main/subassign.c:1099
+#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:1104
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "置き換えるべき項目数が，置き換える数の倍数ではありませんでした"
 
-#: src/main/subassign.c:635
+#: src/main/subassign.c:640
 msgid "incorrect number of subscripts on matrix"
 msgstr "行列への添え字の数が正しくありません"
 
-#: src/main/subassign.c:867
+#: src/main/subassign.c:872
 #, c-format
 msgid "incompatible types (case %d) in matrix subset assignment"
 msgstr "行列への部分代入で，型 (ケース %d) は互換性がありません"
 
-#: src/main/subassign.c:1046
+#: src/main/subassign.c:1051
 #, c-format
 msgid "incompatible types (%d) in array subset assignment"
 msgstr "配列の部分代入で，型 (%d) は互換性がありません"
 
-#: src/main/subassign.c:1071
+#: src/main/subassign.c:1076
 msgid "invalid number of subscripts to list assign"
 msgstr "リストへの付値の添字の個数が不正です"
 
-#: src/main/subassign.c:1216
+#: src/main/subassign.c:1221
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "SubAssignArgs: 引数の個数が違います"
 
-#: src/main/subassign.c:1421
+#: src/main/subassign.c:1426
 msgid "wrong args for environment subassignment"
 msgstr "subassignment 環境に対する誤った引数です"
 
-#: src/main/subassign.c:1431 src/main/subassign.c:1453
+#: src/main/subassign.c:1436 src/main/subassign.c:1458
 msgid "more elements supplied than there are to replace"
 msgstr "置き換えられる個数よりも多くの要素が与えられました"
 
-#: src/main/subassign.c:1433
+#: src/main/subassign.c:1438
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]] の添え字がありません"
 
-#: src/main/subassign.c:1441 src/main/subset.c:772
+#: src/main/subassign.c:1446 src/main/subset.c:772
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "再帰的な添字操作がレベル %d で失敗しました\n"
 
-#: src/main/subassign.c:1446 src/main/subset.c:776
+#: src/main/subassign.c:1451 src/main/subset.c:776
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "レベル %d にはそのようなインデックスはありません\n"
 
-#: src/main/subassign.c:1463 src/main/subassign.c:1480
+#: src/main/subassign.c:1468 src/main/subassign.c:1485
 msgid "[[ ]] subscript out of bounds"
 msgstr "[[ ]] の添え字が範囲外です"
 
-#: src/main/subassign.c:1469 src/main/subassign.c:1644
+#: src/main/subassign.c:1474 src/main/subassign.c:1652
 msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] の添え字の個数が不適切です"
 
-#: src/main/subassign.c:1607
+#: src/main/subassign.c:1615
 #, c-format
 msgid "incompatible types (%d) in [[ assignment"
 msgstr "[[ による代入で，型 (%d) は互換性がありません"
 
-#: src/main/subassign.c:1654
+#: src/main/subassign.c:1662
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] の添え字（%d）が範囲外です"
 
-#: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
+#: src/main/subassign.c:1703 src/main/subscript.c:110 src/main/subscript.c:175
 #: src/main/subscript.c:565 src/main/subset.c:909
 msgid "invalid subscript type"
 msgstr "添え字の型が不正です"
 
-#: src/main/subassign.c:1775
+#: src/main/subassign.c:1783
 msgid "Coercing LHS to a list"
 msgstr "左辺をリストに変換しました"
 

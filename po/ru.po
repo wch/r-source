@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:09+0100\n"
+"POT-Creation-Date: 2005-09-28 14:09+0100\n"
 "PO-Revision-Date: 2005-09-26 10:56+0300\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -472,8 +472,8 @@ msgstr "второй аргумент должен быть списком"
 msgid "subscript out of bounds"
 msgstr "подгруппа выходит за пределы"
 
-#: src/include/Errormsg.h:43 src/main/subassign.c:1317
-#: src/main/subassign.c:1666
+#: src/include/Errormsg.h:43 src/main/subassign.c:1322
+#: src/main/subassign.c:1674
 msgid "object is not subsettable"
 msgstr "объект не делится на подгруппы"
 
@@ -489,70 +489,70 @@ msgstr "применимо только к спискам и векторам"
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr "не найдено R-C-конвертера, соответствующего идентификатору"
 
-#: src/main/CommandLineArgs.c:169
+#: src/main/CommandLineArgs.c:171
 msgid "WARNING: no value given for --encoding given\n"
 msgstr "ВНИМАНИЕ: для данной --encoding нет значения\n"
 
-#: src/main/CommandLineArgs.c:188
+#: src/main/CommandLineArgs.c:190
 #, c-format
 msgid "WARNING: option '%s' no longer supported\n"
 msgstr "ВНИМАНИЕ: параметр '%s' больше не поддерживается\n"
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:201
 #, c-format
 msgid "WARNING: no value given for '%s'\n"
 msgstr "ВНИМАНИЕ: не задано значение '%s'\n"
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:209
 #, c-format
 msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr "ВНИМАНИЕ: '%s' значение неправильное: пропущено\n"
 
-#: src/main/CommandLineArgs.c:211
+#: src/main/CommandLineArgs.c:213
 #, c-format
 msgid "WARNING: %s=%lu'%c': too large and ignored\n"
 msgstr "ВНИМАНИЕ: %s=%lu'%c': слишком велико и пропущено\n"
 
-#: src/main/CommandLineArgs.c:228
+#: src/main/CommandLineArgs.c:230
 msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "ВНИМАНИЕ: не задано значение '--max-ppsize'\n"
 
-#: src/main/CommandLineArgs.c:233
+#: src/main/CommandLineArgs.c:235
 msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
 msgstr "ВНИМАНИЕ: значение '-max-ppsize' отрицательное: пропущено\n"
 
-#: src/main/CommandLineArgs.c:235
+#: src/main/CommandLineArgs.c:237
 msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr "ВНИМАНИЕ: значение '-max-ppsize' слишком мало: пропущено\n"
 
-#: src/main/CommandLineArgs.c:238
+#: src/main/CommandLineArgs.c:240
 msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
 msgstr "ВНИМАНИЕ: значение '-max-ppsize' слишком велико: пропущено\n"
 
-#: src/main/CommandLineArgs.c:249
+#: src/main/CommandLineArgs.c:251
 msgid "WARNING: no 'vsize' given\n"
 msgstr "ВНИМАНИЕ: не задано 'vsize'\n"
 
-#: src/main/CommandLineArgs.c:255
+#: src/main/CommandLineArgs.c:257
 #, c-format
 msgid "WARNING: '--vsize' value is invalid: ignored\n"
 msgstr "ВНИМАНИЕ: значение '--vsize' неправильное: пропущено\n"
 
-#: src/main/CommandLineArgs.c:257
+#: src/main/CommandLineArgs.c:259
 #, c-format
 msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
 msgstr "ВНИМАНИЕ: --vsize=%ld'%c': слишком велико и пропущено\n"
 
-#: src/main/CommandLineArgs.c:272
+#: src/main/CommandLineArgs.c:274
 msgid "WARNING: no 'nsize' given\n"
 msgstr "ВНИМАНИЕ: не задано 'nsize'\n"
 
-#: src/main/CommandLineArgs.c:278
+#: src/main/CommandLineArgs.c:280
 #, c-format
 msgid "WARNING: '--nsize' value is invalid: ignored\n"
 msgstr "ВНИМАНИЕ: значение '--nsize' неправильное: пропущено\n"
 
-#: src/main/CommandLineArgs.c:280
+#: src/main/CommandLineArgs.c:282
 #, c-format
 msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
 msgstr "ВНИМАНИЕ: --nsize=%lu'%c': слишком велико и пропущено\n"
@@ -3171,7 +3171,7 @@ msgstr "могу работать только с простыми действительными векторами"
 msgid "not a simple vector"
 msgstr "не простой вектор"
 
-#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:885
+#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:890
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "неправильное количество подгрупп"
@@ -5835,94 +5835,94 @@ msgstr "попытка увеличить не-вектор"
 msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr "присвоение за пределами вектора/списка (превышение от %d до %d)"
 
-#: src/main/subassign.c:289
+#: src/main/subassign.c:294
 #, c-format
 msgid "incompatible types (%d) in subassignment type fix"
 msgstr "несовместимые типы (%d) при записи типа подгрупп присвоения"
 
-#: src/main/subassign.c:382 src/main/subassign.c:653 src/main/subassign.c:656
-#: src/main/subassign.c:923
+#: src/main/subassign.c:387 src/main/subassign.c:658 src/main/subassign.c:661
+#: src/main/subassign.c:928
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "в подгруппах присвоений NA не разрешены"
 
-#: src/main/subassign.c:394 src/main/subassign.c:667 src/main/subassign.c:915
-#: src/main/subassign.c:1097
+#: src/main/subassign.c:399 src/main/subassign.c:672 src/main/subassign.c:920
+#: src/main/subassign.c:1102
 msgid "nothing to replace with"
 msgstr "нечего заменять"
 
-#: src/main/subassign.c:396 src/main/subassign.c:669 src/main/subassign.c:917
-#: src/main/subassign.c:1099
+#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:1104
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "число единиц для замены не является произведением длины замены"
 
-#: src/main/subassign.c:635
+#: src/main/subassign.c:640
 msgid "incorrect number of subscripts on matrix"
 msgstr "неправильное число подгрупп матрицы"
 
-#: src/main/subassign.c:867
+#: src/main/subassign.c:872
 #, c-format
 msgid "incompatible types (case %d) in matrix subset assignment"
 msgstr "несовместимые типы (случай %d) в определении подгрупп матрицы"
 
-#: src/main/subassign.c:1046
+#: src/main/subassign.c:1051
 #, c-format
 msgid "incompatible types (%d) in array subset assignment"
 msgstr "несовместимые типы (%d) в определении подгрупп многомерной матрицы"
 
-#: src/main/subassign.c:1071
+#: src/main/subassign.c:1076
 msgid "invalid number of subscripts to list assign"
 msgstr "неправильное количество подгрупп присвоения списка"
 
-#: src/main/subassign.c:1216
+#: src/main/subassign.c:1221
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "'SubAssignArgs': неправильное количество аргументов"
 
-#: src/main/subassign.c:1421
+#: src/main/subassign.c:1426
 msgid "wrong args for environment subassignment"
 msgstr "неправильные аргументы в подгруппах присвоения для окружения"
 
-#: src/main/subassign.c:1431 src/main/subassign.c:1453
+#: src/main/subassign.c:1436 src/main/subassign.c:1458
 msgid "more elements supplied than there are to replace"
 msgstr "дано больше элементов, чем можно их заменить"
 
-#: src/main/subassign.c:1433
+#: src/main/subassign.c:1438
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]] с пропущенным индексом"
 
-#: src/main/subassign.c:1441 src/main/subset.c:772
+#: src/main/subassign.c:1446 src/main/subset.c:772
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "на уровне %d рекурсивная индексация не удалась\n"
 
-#: src/main/subassign.c:1446 src/main/subset.c:776
+#: src/main/subassign.c:1451 src/main/subset.c:776
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "на уровне %d нет такого индекса\n"
 
-#: src/main/subassign.c:1463 src/main/subassign.c:1480
+#: src/main/subassign.c:1468 src/main/subassign.c:1485
 msgid "[[ ]] subscript out of bounds"
 msgstr "[[ ]] индекс за пределами"
 
-#: src/main/subassign.c:1469 src/main/subassign.c:1644
+#: src/main/subassign.c:1474 src/main/subassign.c:1652
 msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] неправильное количество подгрупп"
 
-#: src/main/subassign.c:1607
+#: src/main/subassign.c:1615
 #, c-format
 msgid "incompatible types (%d) in [[ assignment"
 msgstr "несовместимые типы (%d) в [[ присвоении"
 
-#: src/main/subassign.c:1654
+#: src/main/subassign.c:1662
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] индекс (%d) за пределами"
 
-#: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
+#: src/main/subassign.c:1703 src/main/subscript.c:110 src/main/subscript.c:175
 #: src/main/subscript.c:565 src/main/subset.c:909
 msgid "invalid subscript type"
 msgstr "неправильный тип индекса"
 
-#: src/main/subassign.c:1775
+#: src/main/subassign.c:1783
 msgid "Coercing LHS to a list"
 msgstr "Преобразование 'LHS' в список"
 

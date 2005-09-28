@@ -4,21 +4,19 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the R package.
 # Alexey Shipunov <iit512@yandex.ru> 2005
+# This is a CRLF file as I cannot safely convert it-BDR
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.1\n"
+"Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-09-22 12:54+0100\n"
-"PO-Revision-Date: 2005-09-15 20:18+0300\n"
+"PO-Revision-Date: 2005-09-27 04:18+0300\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Russian\n"
-"X-Poedit-Country: RUSSIAN FEDERATION\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -180,7 +178,7 @@ msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
 msgstr ""
-"  Испольуйте Ctrl+W для включения/выключения этого свойства.\n"
+"  Используйте Ctrl+W для включения/выключения этого свойства.\n"
 "\n"
 
 #: console.c:1901
@@ -292,7 +290,7 @@ msgstr ""
 "\n"
 "Разное.\n"
 "  Ctrl-L перерисовывает экран и подбирает ширину колонок\n"
-"  Ctrl-C копипует выбранную ячейку\n"
+"  Ctrl-C копирует выбранную ячейку\n"
 "  Ctrl-V вставляет в выбранную ячейку\n"
 "  Right-click меню для копирования, вставки и подбора ширины колонки\n"
 "\n"
@@ -603,7 +601,7 @@ msgstr "Сохранить образ в"
 
 #: rui.c:159
 msgid "Load history from"
-msgstr "Загрузить историю комманд из"
+msgstr "Загрузить историю команд из"
 
 #: rui.c:173
 msgid "Save history in"
@@ -677,7 +675,7 @@ msgstr "Загрузить пакет..."
 
 #: rui.c:933
 msgid "Set CRAN mirror..."
-msgstr "Определить заркало CRAN..."
+msgstr "Определить зеркало CRAN..."
 
 #: rui.c:935
 msgid "Select repositories..."
@@ -729,7 +727,7 @@ msgstr "Подсказка команд..."
 
 #: rui.c:1008
 msgid "R Project home page"
-msgstr "Домашнаяя страница проекта R"
+msgstr "Домашняя страница проекта R"
 
 #: rui.c:1009
 msgid "CRAN home page"
@@ -1015,7 +1013,7 @@ msgstr "Остановить"
 
 #: ../library/grDevices/src/devWindows.c:1523
 msgid "Continue"
-msgstr "Прожолжить"
+msgstr "Продолжить"
 
 #: ../library/grDevices/src/devWindows.c:1527
 msgid "Next"

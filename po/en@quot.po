@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:09+0100\n"
-"PO-Revision-Date: 2005-09-21 14:09+0100\n"
+"POT-Creation-Date: 2005-09-28 14:09+0100\n"
+"PO-Revision-Date: 2005-09-28 14:09+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -488,8 +488,8 @@ msgstr "second argument must be a list"
 msgid "subscript out of bounds"
 msgstr "subscript out of bounds"
 
-#: src/include/Errormsg.h:43 src/main/subassign.c:1317
-#: src/main/subassign.c:1666
+#: src/include/Errormsg.h:43 src/main/subassign.c:1322
+#: src/main/subassign.c:1674
 msgid "object is not subsettable"
 msgstr "object is not subsettable"
 
@@ -505,70 +505,70 @@ msgstr "applies only to lists and vectors"
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr "no R-to-C converter found corresponding to identifier"
 
-#: src/main/CommandLineArgs.c:169
+#: src/main/CommandLineArgs.c:171
 msgid "WARNING: no value given for --encoding given\n"
 msgstr "WARNING: no value given for --encoding given\n"
 
-#: src/main/CommandLineArgs.c:188
+#: src/main/CommandLineArgs.c:190
 #, c-format
 msgid "WARNING: option '%s' no longer supported\n"
 msgstr "WARNING: option ‘%s’ no longer supported\n"
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:201
 #, c-format
 msgid "WARNING: no value given for '%s'\n"
 msgstr "WARNING: no value given for ‘%s’\n"
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:209
 #, c-format
 msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr "WARNING: ‘%s’ value is invalid: ignored\n"
 
-#: src/main/CommandLineArgs.c:211
+#: src/main/CommandLineArgs.c:213
 #, c-format
 msgid "WARNING: %s=%lu'%c': too large and ignored\n"
 msgstr "WARNING: %s=%lu'%c': too large and ignored\n"
 
-#: src/main/CommandLineArgs.c:228
+#: src/main/CommandLineArgs.c:230
 msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "WARNING: no value given for ‘--max-ppsize’\n"
 
-#: src/main/CommandLineArgs.c:233
+#: src/main/CommandLineArgs.c:235
 msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
 msgstr "WARNING: ‘-max-ppsize’ value is negative: ignored\n"
 
-#: src/main/CommandLineArgs.c:235
+#: src/main/CommandLineArgs.c:237
 msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr "WARNING: ‘-max-ppsize’ value is too small: ignored\n"
 
-#: src/main/CommandLineArgs.c:238
+#: src/main/CommandLineArgs.c:240
 msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
 msgstr "WARNING: ‘-max-ppsize’ value is too large: ignored\n"
 
-#: src/main/CommandLineArgs.c:249
+#: src/main/CommandLineArgs.c:251
 msgid "WARNING: no 'vsize' given\n"
 msgstr "WARNING: no ‘vsize’ given\n"
 
-#: src/main/CommandLineArgs.c:255
+#: src/main/CommandLineArgs.c:257
 #, c-format
 msgid "WARNING: '--vsize' value is invalid: ignored\n"
 msgstr "WARNING: ‘--vsize’ value is invalid: ignored\n"
 
-#: src/main/CommandLineArgs.c:257
+#: src/main/CommandLineArgs.c:259
 #, c-format
 msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
 msgstr "WARNING: --vsize=%ld'%c': too large and ignored\n"
 
-#: src/main/CommandLineArgs.c:272
+#: src/main/CommandLineArgs.c:274
 msgid "WARNING: no 'nsize' given\n"
 msgstr "WARNING: no ‘nsize’ given\n"
 
-#: src/main/CommandLineArgs.c:278
+#: src/main/CommandLineArgs.c:280
 #, c-format
 msgid "WARNING: '--nsize' value is invalid: ignored\n"
 msgstr "WARNING: ‘--nsize’ value is invalid: ignored\n"
 
-#: src/main/CommandLineArgs.c:280
+#: src/main/CommandLineArgs.c:282
 #, c-format
 msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
 msgstr "WARNING: --nsize=%lu'%c': too large and ignored\n"
@@ -3171,7 +3171,7 @@ msgstr "can only handle simple real vectors"
 msgid "not a simple vector"
 msgstr "not a simple vector"
 
-#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:885
+#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:890
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "incorrect number of subscripts"
@@ -5821,94 +5821,94 @@ msgstr "attempt to enlarge non-vector"
 msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr "assignment outside vector/list limits (extending from %d to %d)"
 
-#: src/main/subassign.c:289
+#: src/main/subassign.c:294
 #, c-format
 msgid "incompatible types (%d) in subassignment type fix"
 msgstr "incompatible types (%d) in subassignment type fix"
 
-#: src/main/subassign.c:382 src/main/subassign.c:653 src/main/subassign.c:656
-#: src/main/subassign.c:923
+#: src/main/subassign.c:387 src/main/subassign.c:658 src/main/subassign.c:661
+#: src/main/subassign.c:928
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "NAs are not allowed in subscripted assignments"
 
-#: src/main/subassign.c:394 src/main/subassign.c:667 src/main/subassign.c:915
-#: src/main/subassign.c:1097
+#: src/main/subassign.c:399 src/main/subassign.c:672 src/main/subassign.c:920
+#: src/main/subassign.c:1102
 msgid "nothing to replace with"
 msgstr "nothing to replace with"
 
-#: src/main/subassign.c:396 src/main/subassign.c:669 src/main/subassign.c:917
-#: src/main/subassign.c:1099
+#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:1104
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "number of items to replace is not a multiple of replacement length"
 
-#: src/main/subassign.c:635
+#: src/main/subassign.c:640
 msgid "incorrect number of subscripts on matrix"
 msgstr "incorrect number of subscripts on matrix"
 
-#: src/main/subassign.c:867
+#: src/main/subassign.c:872
 #, c-format
 msgid "incompatible types (case %d) in matrix subset assignment"
 msgstr "incompatible types (case %d) in matrix subset assignment"
 
-#: src/main/subassign.c:1046
+#: src/main/subassign.c:1051
 #, c-format
 msgid "incompatible types (%d) in array subset assignment"
 msgstr "incompatible types (%d) in array subset assignment"
 
-#: src/main/subassign.c:1071
+#: src/main/subassign.c:1076
 msgid "invalid number of subscripts to list assign"
 msgstr "invalid number of subscripts to list assign"
 
-#: src/main/subassign.c:1216
+#: src/main/subassign.c:1221
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "SubAssignArgs: invalid number of arguments"
 
-#: src/main/subassign.c:1421
+#: src/main/subassign.c:1426
 msgid "wrong args for environment subassignment"
 msgstr "wrong args for environment subassignment"
 
-#: src/main/subassign.c:1431 src/main/subassign.c:1453
+#: src/main/subassign.c:1436 src/main/subassign.c:1458
 msgid "more elements supplied than there are to replace"
 msgstr "more elements supplied than there are to replace"
 
-#: src/main/subassign.c:1433
+#: src/main/subassign.c:1438
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]] with missing subscript"
 
-#: src/main/subassign.c:1441 src/main/subset.c:772
+#: src/main/subassign.c:1446 src/main/subset.c:772
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "recursive indexing failed at level %d\n"
 
-#: src/main/subassign.c:1446 src/main/subset.c:776
+#: src/main/subassign.c:1451 src/main/subset.c:776
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "no such index at level %d\n"
 
-#: src/main/subassign.c:1463 src/main/subassign.c:1480
+#: src/main/subassign.c:1468 src/main/subassign.c:1485
 msgid "[[ ]] subscript out of bounds"
 msgstr "[[ ]] subscript out of bounds"
 
-#: src/main/subassign.c:1469 src/main/subassign.c:1644
+#: src/main/subassign.c:1474 src/main/subassign.c:1652
 msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] improper number of subscripts"
 
-#: src/main/subassign.c:1607
+#: src/main/subassign.c:1615
 #, c-format
 msgid "incompatible types (%d) in [[ assignment"
 msgstr "incompatible types (%d) in [[ assignment"
 
-#: src/main/subassign.c:1654
+#: src/main/subassign.c:1662
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] subscript (%d) out of bounds"
 
-#: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
+#: src/main/subassign.c:1703 src/main/subscript.c:110 src/main/subscript.c:175
 #: src/main/subscript.c:565 src/main/subset.c:909
 msgid "invalid subscript type"
 msgstr "invalid subscript type"
 
-#: src/main/subassign.c:1775
+#: src/main/subassign.c:1783
 msgid "Coercing LHS to a list"
 msgstr "Coercing LHS to a list"
 

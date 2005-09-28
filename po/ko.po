@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:09+0100\n"
+"POT-Creation-Date: 2005-09-28 14:09+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -469,8 +469,8 @@ msgstr "두번째 인수는 리스트가 되어야만 한다"
 msgid "subscript out of bounds"
 msgstr "첨자가 허용되는 범위외입니다"
 
-#: src/include/Errormsg.h:43 src/main/subassign.c:1317
-#: src/main/subassign.c:1666
+#: src/include/Errormsg.h:43 src/main/subassign.c:1322
+#: src/main/subassign.c:1674
 msgid "object is not subsettable"
 msgstr "오브젝트는 부분대입이 가능하지 않습니다"
 
@@ -486,70 +486,70 @@ msgstr "리스트 그리고 벡터에만 적용이 될수 있습니다"
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr "식별자에 대응하는 R-to-C변환기가 없습니다"
 
-#: src/main/CommandLineArgs.c:169
+#: src/main/CommandLineArgs.c:171
 msgid "WARNING: no value given for --encoding given\n"
 msgstr "경고: --인코딩의 값이 주어지고 있지 않습니다\n"
 
-#: src/main/CommandLineArgs.c:188
+#: src/main/CommandLineArgs.c:190
 #, c-format
 msgid "WARNING: option '%s' no longer supported\n"
 msgstr "경고: '%s'옵션이 현재에는 더 이상 제공하지 않습니다\n"
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:201
 #, c-format
 msgid "WARNING: no value given for '%s'\n"
 msgstr "경고: '%s'의 값이 주어지고 있지 않습니다\n"
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:209
 #, c-format
 msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr "경고:  '%s'값이 부적절해서 무시되었습니다\n"
 
-#: src/main/CommandLineArgs.c:211
+#: src/main/CommandLineArgs.c:213
 #, c-format
 msgid "WARNING: %s=%lu'%c': too large and ignored\n"
 msgstr "경고:  %s=%lu&'%c': 너무 크므로 무시되었습니다\n"
 
-#: src/main/CommandLineArgs.c:228
+#: src/main/CommandLineArgs.c:230
 msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "경고: '--max-ppsize'값이 주어지고 있지 않습니다\n"
 
-#: src/main/CommandLineArgs.c:233
+#: src/main/CommandLineArgs.c:235
 msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
 msgstr "경고: '-max-ppsize'값이 negative입니다: 무시되었습니다\n"
 
-#: src/main/CommandLineArgs.c:235
+#: src/main/CommandLineArgs.c:237
 msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr "경고: '-max-ppsize'값이 너무 작습니다: 무시되었습니다\n"
 
-#: src/main/CommandLineArgs.c:238
+#: src/main/CommandLineArgs.c:240
 msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
 msgstr "경고: '--vsize'값이 너무 큽니다: 무시되었습니다\n"
 
-#: src/main/CommandLineArgs.c:249
+#: src/main/CommandLineArgs.c:251
 msgid "WARNING: no 'vsize' given\n"
 msgstr "경고: 'vsize'가 주어지고 있지 않습니다\n"
 
-#: src/main/CommandLineArgs.c:255
+#: src/main/CommandLineArgs.c:257
 #, c-format
 msgid "WARNING: '--vsize' value is invalid: ignored\n"
 msgstr "경고:  '--vsize'값이 부적절해서 무시되었습니다\n"
 
-#: src/main/CommandLineArgs.c:257
+#: src/main/CommandLineArgs.c:259
 #, c-format
 msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
 msgstr "경고: '--vsize=%ld'%c': 너무 크고 무시되었습니다\n"
 
-#: src/main/CommandLineArgs.c:272
+#: src/main/CommandLineArgs.c:274
 msgid "WARNING: no 'nsize' given\n"
 msgstr "경고: 'nsize'이 주어지고 있지 않습니다\n"
 
-#: src/main/CommandLineArgs.c:278
+#: src/main/CommandLineArgs.c:280
 #, c-format
 msgid "WARNING: '--nsize' value is invalid: ignored\n"
 msgstr "경고:  '--nsize'값이 부적절합니다: 무시되었습니다\n"
 
-#: src/main/CommandLineArgs.c:280
+#: src/main/CommandLineArgs.c:282
 #, c-format
 msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
 msgstr "경고: '--nsize=%lu'%c': 너무 크므로 무시되었습니다\n"
@@ -3184,7 +3184,7 @@ msgstr "단순한 실수 벡터만을 취급할수가 있습니다"
 msgid "not a simple vector"
 msgstr "단일의 벡터가 아닙니다"
 
-#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:885
+#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:890
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "첨자의 수가 올바르지 않습니다"
@@ -5846,94 +5846,94 @@ msgstr "벡터가 아닌것을 확장하려 했습니다"
 msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr "벡터/리스트의 범위외에의 (%d로부터 %d에 확대)"
 
-#: src/main/subassign.c:289
+#: src/main/subassign.c:294
 #, c-format
 msgid "incompatible types (%d) in subassignment type fix"
 msgstr "부분 대입에 있어서 유형를 고정해두고, 유형(%d)는 호환성이 없습니다"
 
-#: src/main/subassign.c:382 src/main/subassign.c:653 src/main/subassign.c:656
-#: src/main/subassign.c:923
+#: src/main/subassign.c:387 src/main/subassign.c:658 src/main/subassign.c:661
+#: src/main/subassign.c:928
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "첨자 첨부의 부르는 값인 NAs는 허용하지 않습니다"
 
-#: src/main/subassign.c:394 src/main/subassign.c:667 src/main/subassign.c:915
-#: src/main/subassign.c:1097
+#: src/main/subassign.c:399 src/main/subassign.c:672 src/main/subassign.c:920
+#: src/main/subassign.c:1102
 msgid "nothing to replace with"
 msgstr "옮겨놓아야 할것이 아무것도 없습니다"
 
-#: src/main/subassign.c:396 src/main/subassign.c:669 src/main/subassign.c:917
-#: src/main/subassign.c:1099
+#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:1104
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "옮겨놓아야하는 항목수가, 옮겨놓는 수의 배수가 아니었습니다"
 
-#: src/main/subassign.c:635
+#: src/main/subassign.c:640
 msgid "incorrect number of subscripts on matrix"
 msgstr "행렬의 첨자의 수가 올바르지 않습니다"
 
-#: src/main/subassign.c:867
+#: src/main/subassign.c:872
 #, c-format
 msgid "incompatible types (case %d) in matrix subset assignment"
 msgstr "행렬의 부분의 대입으로, 유형(case %d)는 호환성이 없습니다"
 
-#: src/main/subassign.c:1046
+#: src/main/subassign.c:1051
 #, c-format
 msgid "incompatible types (%d) in array subset assignment"
 msgstr "배열의 부분 대입으로, 유형(%d)는 호환성이 없습니다"
 
-#: src/main/subassign.c:1071
+#: src/main/subassign.c:1076
 msgid "invalid number of subscripts to list assign"
 msgstr "리스트에 부르는 값인 첨자의 개수가 부적절합니다"
 
-#: src/main/subassign.c:1216
+#: src/main/subassign.c:1221
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "SubAssignArgs:  인수의 개수가 다릅니다"
 
-#: src/main/subassign.c:1421
+#: src/main/subassign.c:1426
 msgid "wrong args for environment subassignment"
 msgstr "subassignment 환경에 대한 잘못된 인수입니다"
 
-#: src/main/subassign.c:1431 src/main/subassign.c:1453
+#: src/main/subassign.c:1436 src/main/subassign.c:1458
 msgid "more elements supplied than there are to replace"
 msgstr "옮겨놓을수 있는 개수보다 많은 요소가 주어졌습니다"
 
-#: src/main/subassign.c:1433
+#: src/main/subassign.c:1438
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]]의 첨자가 없습니다"
 
-#: src/main/subassign.c:1441 src/main/subset.c:772
+#: src/main/subassign.c:1446 src/main/subset.c:772
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "재귀적인 첨자 조작이 레벨 %d로 실패했습니다\n"
 
-#: src/main/subassign.c:1446 src/main/subset.c:776
+#: src/main/subassign.c:1451 src/main/subset.c:776
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "레벨 %d에는 그와같는 인덱스가 없습니다\n"
 
-#: src/main/subassign.c:1463 src/main/subassign.c:1480
+#: src/main/subassign.c:1468 src/main/subassign.c:1485
 msgid "[[ ]] subscript out of bounds"
 msgstr "[[ ]]의 첨자가 범위외입니다"
 
-#: src/main/subassign.c:1469 src/main/subassign.c:1644
+#: src/main/subassign.c:1474 src/main/subassign.c:1652
 msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]]의 첨자의 개수가 부적절합니다"
 
-#: src/main/subassign.c:1607
+#: src/main/subassign.c:1615
 #, c-format
 msgid "incompatible types (%d) in [[ assignment"
 msgstr "[[에 의한 대입으로, 유형(%d)는 호환성이 없습니다"
 
-#: src/main/subassign.c:1654
+#: src/main/subassign.c:1662
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]]의 첨자(%d)가 범위외입니다"
 
-#: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
+#: src/main/subassign.c:1703 src/main/subscript.c:110 src/main/subscript.c:175
 #: src/main/subscript.c:565 src/main/subset.c:909
 msgid "invalid subscript type"
 msgstr "첨자의 형태가 부적절합니다"
 
-#: src/main/subassign.c:1775
+#: src/main/subassign.c:1783
 msgid "Coercing LHS to a list"
 msgstr "좌변을 리스트로 변화했습니다"
 

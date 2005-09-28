@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:09+0100\n"
+"POT-Creation-Date: 2005-09-28 14:09+0100\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -474,8 +474,8 @@ msgstr "il secondo argomento deve essere di tipo list"
 msgid "subscript out of bounds"
 msgstr "indice fuori limite"
 
-#: src/include/Errormsg.h:43 src/main/subassign.c:1317
-#: src/main/subassign.c:1666
+#: src/include/Errormsg.h:43 src/main/subassign.c:1322
+#: src/main/subassign.c:1674
 msgid "object is not subsettable"
 msgstr "questo oggetto non è indicizzabile"
 
@@ -491,72 +491,72 @@ msgstr "si applica solo a liste e vettori"
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr "nessun convertitore R-to-C associato a questo identificatore"
 
-#: src/main/CommandLineArgs.c:169
+#: src/main/CommandLineArgs.c:171
 msgid "WARNING: no value given for --encoding given\n"
 msgstr "ATTENZIONE: nessun valore specificato per --encoding\n"
 
-#: src/main/CommandLineArgs.c:188
+#: src/main/CommandLineArgs.c:190
 #, c-format
 msgid "WARNING: option '%s' no longer supported\n"
 msgstr "ATTENZIONE: l'opzione %s non è più supportata\n"
 
-#: src/main/CommandLineArgs.c:199
+#: src/main/CommandLineArgs.c:201
 #, c-format
 msgid "WARNING: no value given for '%s'\n"
 msgstr "ATTENZIONE: nessun valore specificato per %s\n"
 
-#: src/main/CommandLineArgs.c:207
+#: src/main/CommandLineArgs.c:209
 #, c-format
 msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr "ATTENZIONE: il valore %s non è valido: verrà ignorato\n"
 
-#: src/main/CommandLineArgs.c:211
+#: src/main/CommandLineArgs.c:213
 #, c-format
 msgid "WARNING: %s=%lu'%c': too large and ignored\n"
 msgstr "ATTENZIONE: %s=%lu'%c': tropo grande e quindi ingorato\n"
 
-#: src/main/CommandLineArgs.c:228
+#: src/main/CommandLineArgs.c:230
 msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "ATTENZIONE: nessun valore specificato per --max-ppsize\n"
 
-#: src/main/CommandLineArgs.c:233
+#: src/main/CommandLineArgs.c:235
 msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
 msgstr "ATTENZIONE: il valore di -max-ppsize è negativo: verrà ignorato\n"
 
-#: src/main/CommandLineArgs.c:235
+#: src/main/CommandLineArgs.c:237
 msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr ""
 "ATTENZIONE: il valore di -max-ppsize è troppo piccolo: verrà ignorato\n"
 
-#: src/main/CommandLineArgs.c:238
+#: src/main/CommandLineArgs.c:240
 msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
 msgstr ""
 "ATTENZIONE: il valore di '-max-ppsize' è troppo grande: verrà ignorato\n"
 
-#: src/main/CommandLineArgs.c:249
+#: src/main/CommandLineArgs.c:251
 msgid "WARNING: no 'vsize' given\n"
 msgstr "ATTENZIONE: non è stato specificato un valore di vsize\n"
 
-#: src/main/CommandLineArgs.c:255
+#: src/main/CommandLineArgs.c:257
 #, c-format
 msgid "WARNING: '--vsize' value is invalid: ignored\n"
 msgstr "ATTENZIONE: il valore di --vsize non è valido: verrà ignorato\n"
 
-#: src/main/CommandLineArgs.c:257
+#: src/main/CommandLineArgs.c:259
 #, c-format
 msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
 msgstr "ATTENZIONE: --vsize=%ld'%c': troppo grande e quindi ignorato\n"
 
-#: src/main/CommandLineArgs.c:272
+#: src/main/CommandLineArgs.c:274
 msgid "WARNING: no 'nsize' given\n"
 msgstr "ATTENZIONE: nessun valore di nsize specificato\n"
 
-#: src/main/CommandLineArgs.c:278
+#: src/main/CommandLineArgs.c:280
 #, c-format
 msgid "WARNING: '--nsize' value is invalid: ignored\n"
 msgstr "ATTENZIONE: il valore di --nsize non è valido: verrà ignorato\n"
 
-#: src/main/CommandLineArgs.c:280
+#: src/main/CommandLineArgs.c:282
 #, c-format
 msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
 msgstr "ATTENZIONE:  --nsize=%lu'%c': troppo grande e quindi ignorato\n"
@@ -1652,6 +1652,7 @@ msgid "write not enabled for this connection"
 msgstr "scrittura non abilitata per questa connessione"
 
 #: src/main/connections.c:382
+#, c-format
 msgid "cannot open file '%s', reason '%s'"
 msgstr "impossibile aprire il file '%s' perché '%s'"
 
@@ -1686,6 +1687,7 @@ msgid "allocation of file connection failed"
 msgstr "allocazione del 'file' della connessione fallita"
 
 #: src/main/connections.c:647
+#, c-format
 msgid "cannot create fifo '%s', reason '%s'"
 msgstr "impossibile creare fifo '%s' perché '%s'"
 
@@ -1732,6 +1734,7 @@ msgid "fifo connections are not available on this system"
 msgstr "connessioni fifo non disponibili su questo sistema"
 
 #: src/main/connections.c:827
+#, c-format
 msgid "cannot open pipe() cmd '%s', reason '%s'"
 msgstr "impossibile aprire pipe() cmd ''%s' perché '%s'"
 
@@ -2296,10 +2299,12 @@ msgid "too many arguments in foreign function call"
 msgstr "troppi argomenti nella chiamata di funzione esterna"
 
 #: src/main/dotcode.c:178
+#, c-format
 msgid "%s entry point \"%s%s\" not in DLL for package \"%s\""
 msgstr "%s nome funzione \"%s%s\" non presente nella DLL del pacchetto '%s'"
 
 #: src/main/dotcode.c:187
+#, c-format
 msgid "%s entry point \"%s%s\" not in load table"
 msgstr "%s nome funzione \"%s%s\" non presente nella tabella di caricamento"
 
@@ -2988,6 +2993,7 @@ msgid "not in a try context"
 msgstr "non è in un contesto di 'try'"
 
 #: src/main/eval.c:213
+#, c-format
 msgid "Rprof: cannot open profile file '%s'"
 msgstr "Rprof: non posso aprire il file di profile '%s'"
 
@@ -3174,7 +3180,7 @@ msgstr "può solo gestire vettori reali semplici"
 msgid "not a simple vector"
 msgstr "non è un vettore semplice"
 
-#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:885
+#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:890
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "numero di indici non corretto"
@@ -5686,18 +5692,22 @@ msgid "syntax error on line %d"
 msgstr "errore di sintassi alla linea %d"
 
 #: src/main/source.c:92
+#, c-format
 msgid ""
 "syntax error at\n"
 "%d: %s"
-msgstr "errore di sintassi in\n"
+msgstr ""
+"errore di sintassi in\n"
 "%d: %s"
 
 #: src/main/source.c:94
+#, c-format
 msgid ""
 "syntax error at\n"
 "%d: %s\n"
 "%d: %s"
-msgstr "errore di sintassi in\n"
+msgstr ""
+"errore di sintassi in\n"
 "%d: %s\n"
 "%d: %s"
 
@@ -5706,10 +5716,12 @@ msgid "syntax error"
 msgstr "errore di sintassi"
 
 #: src/main/source.c:101
+#, c-format
 msgid "syntax error in \"%s\""
 msgstr "errore di sintassi in \"%s\""
 
 #: src/main/source.c:103
+#, c-format
 msgid ""
 "syntax error in:\n"
 "\"%s\n"
@@ -5844,96 +5856,96 @@ msgstr "tentativo di ingrandire un non vettore"
 msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr "assegnazione oltre i limiti del vettore/lista (estendo da %d a %d)"
 
-#: src/main/subassign.c:289
+#: src/main/subassign.c:294
 #, c-format
 msgid "incompatible types (%d) in subassignment type fix"
 msgstr "tipi incompatibili (%d) in subassignment type fix"
 
-#: src/main/subassign.c:382 src/main/subassign.c:653 src/main/subassign.c:656
-#: src/main/subassign.c:923
+#: src/main/subassign.c:387 src/main/subassign.c:658 src/main/subassign.c:661
+#: src/main/subassign.c:928
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "NA non si possono usare in indici di assegnazione"
 
-#: src/main/subassign.c:394 src/main/subassign.c:667 src/main/subassign.c:915
-#: src/main/subassign.c:1097
+#: src/main/subassign.c:399 src/main/subassign.c:672 src/main/subassign.c:920
+#: src/main/subassign.c:1102
 msgid "nothing to replace with"
 msgstr "nulla da rimpiazzare"
 
-#: src/main/subassign.c:396 src/main/subassign.c:669 src/main/subassign.c:917
-#: src/main/subassign.c:1099
+#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:1104
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
 "il numero di elementi da sostituire non è un multiplo della lunghezza di "
 "sostituzione"
 
-#: src/main/subassign.c:635
+#: src/main/subassign.c:640
 msgid "incorrect number of subscripts on matrix"
 msgstr "numero di indici non corretto su una matrice"
 
-#: src/main/subassign.c:867
+#: src/main/subassign.c:872
 #, c-format
 msgid "incompatible types (case %d) in matrix subset assignment"
 msgstr "tipi incompatibili (caso %d) in assegnazioni per sottogruppi in matrix"
 
-#: src/main/subassign.c:1046
+#: src/main/subassign.c:1051
 #, c-format
 msgid "incompatible types (%d) in array subset assignment"
 msgstr "tipi incompatibili (%d) in assegnazioni per sottogruppi in array"
 
-#: src/main/subassign.c:1071
+#: src/main/subassign.c:1076
 msgid "invalid number of subscripts to list assign"
 msgstr "numero di indici non valido in assegnamento di lista"
 
-#: src/main/subassign.c:1216
+#: src/main/subassign.c:1221
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "SubAssignArgs: numero argomenti non valido"
 
-#: src/main/subassign.c:1421
+#: src/main/subassign.c:1426
 msgid "wrong args for environment subassignment"
 msgstr "argomenti errati in sottoassegnamenti di environment"
 
-#: src/main/subassign.c:1431 src/main/subassign.c:1453
+#: src/main/subassign.c:1436 src/main/subassign.c:1458
 msgid "more elements supplied than there are to replace"
 msgstr "più elementi forniti di quelli da sostituire"
 
-#: src/main/subassign.c:1433
+#: src/main/subassign.c:1438
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]]] con indici missing"
 
-#: src/main/subassign.c:1441 src/main/subset.c:772
+#: src/main/subassign.c:1446 src/main/subset.c:772
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "indicizzazione ricorsiva falliata a livello %d\n"
 
-#: src/main/subassign.c:1446 src/main/subset.c:776
+#: src/main/subassign.c:1451 src/main/subset.c:776
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "indice non trovato a livello %d\n"
 
-#: src/main/subassign.c:1463 src/main/subassign.c:1480
+#: src/main/subassign.c:1468 src/main/subassign.c:1485
 msgid "[[ ]] subscript out of bounds"
 msgstr "[[ ]] indice fuori limiti"
 
-#: src/main/subassign.c:1469 src/main/subassign.c:1644
+#: src/main/subassign.c:1474 src/main/subassign.c:1652
 msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] numero di indici non valido"
 
-#: src/main/subassign.c:1607
+#: src/main/subassign.c:1615
 #, c-format
 msgid "incompatible types (%d) in [[ assignment"
 msgstr "tipi incompatibili (%d) nell'assegnazione [["
 
-#: src/main/subassign.c:1654
+#: src/main/subassign.c:1662
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] indice (%d) fuori limiti"
 
-#: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
+#: src/main/subassign.c:1703 src/main/subscript.c:110 src/main/subscript.c:175
 #: src/main/subscript.c:565 src/main/subset.c:909
 msgid "invalid subscript type"
 msgstr "tipo di indice non valido"
 
-#: src/main/subassign.c:1775
+#: src/main/subassign.c:1783
 msgid "Coercing LHS to a list"
 msgstr "Trasformo il membro di sinistra in una lista"
 
