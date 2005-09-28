@@ -699,24 +699,20 @@ msgid "no dyn.load support in this R version"
 msgstr "supporto librerie dinamiche non disponibile in questa versione di R"
 
 #: src/main/Rstrptime.h:1090
-#, fuzzy
 msgid "input string is too long"
-msgstr "percorso file zip troppo lungo"
+msgstr "stringa di input troppo lunga"
 
 #: src/main/Rstrptime.h:1092
-#, fuzzy
 msgid "invalid multibyte input string"
-msgstr "stringa multibyte non valida"
+msgstr "stringa multibyte in input non valida"
 
 #: src/main/Rstrptime.h:1095
-#, fuzzy
 msgid "format string is too long"
-msgstr "'destination' è troppo lungo"
+msgstr "stringa formato troppo lunga"
 
 #: src/main/Rstrptime.h:1097
-#, fuzzy
 msgid "invalid multibyte format string"
-msgstr "stringa multibyte non valida"
+msgstr "stringa formato multibyte non valida"
 
 #: src/main/apply.c:39 src/main/envir.c:2351
 msgid "arguments must be symbolic"
@@ -755,7 +751,7 @@ msgid ""
 "longer object length\n"
 "\tis not a multiple of shorter object length"
 msgstr ""
-"lunghezza dell'oggetto più lungho\n"
+"lunghezza dell'oggetto più lungo\n"
 "\tnon è un multiplo di quella dell'oggetto più piccolo"
 
 #: src/main/arithmetic.c:505
@@ -1445,9 +1441,8 @@ msgid "argument must have length at least 1"
 msgstr "l'argometno deve avere almeno lunghezza 1"
 
 #: src/main/coerce.c:1344
-#, fuzzy
 msgid "invalid body for function"
-msgstr "functione interna non valida"
+msgstr "corpo funzione non valido"
 
 #: src/main/coerce.c:1363
 msgid "invalid length 0 argument"
@@ -1657,9 +1652,8 @@ msgid "write not enabled for this connection"
 msgstr "scrittura non abilitata per questa connessione"
 
 #: src/main/connections.c:382
-#, fuzzy, c-format
 msgid "cannot open file '%s', reason '%s'"
-msgstr "impossibile aprire il file '%s'"
+msgstr "impossibile aprire il file '%s' perché '%s'"
 
 #: src/main/connections.c:384 src/main/dounzip.c:101
 #, c-format
@@ -1692,9 +1686,8 @@ msgid "allocation of file connection failed"
 msgstr "allocazione del 'file' della connessione fallita"
 
 #: src/main/connections.c:647
-#, fuzzy, c-format
 msgid "cannot create fifo '%s', reason '%s'"
-msgstr "impossibile creare fifo '%s'"
+msgstr "impossibile creare fifo '%s' perché '%s'"
 
 #: src/main/connections.c:650
 #, c-format
@@ -1739,9 +1732,8 @@ msgid "fifo connections are not available on this system"
 msgstr "connessioni fifo non disponibili su questo sistema"
 
 #: src/main/connections.c:827
-#, fuzzy, c-format
 msgid "cannot open pipe() cmd '%s', reason '%s'"
-msgstr "impossibile aprire pipe() cmd ''%s'"
+msgstr "impossibile aprire pipe() cmd ''%s' perché '%s'"
 
 #: src/main/connections.c:830
 #, c-format
@@ -2304,14 +2296,12 @@ msgid "too many arguments in foreign function call"
 msgstr "troppi argomenti nella chiamata di funzione esterna"
 
 #: src/main/dotcode.c:178
-#, fuzzy, c-format
 msgid "%s entry point \"%s%s\" not in DLL for package \"%s\""
-msgstr "nome funzione \"%s\" non presente nella DLL del pacchetto '%s'"
+msgstr "%s nome funzione \"%s%s\" non presente nella DLL del pacchetto '%s'"
 
 #: src/main/dotcode.c:187
-#, fuzzy, c-format
 msgid "%s entry point \"%s%s\" not in load table"
-msgstr "nome funzione \"%s\" non presente nella tabella di caricamento"
+msgstr "%s nome funzione \"%s%s\" non presente nella tabella di caricamento"
 
 #: src/main/dotcode.c:257
 #, c-format
@@ -2644,9 +2634,8 @@ msgid "invalid cached value in R_GetGlobalCache"
 msgstr "valore di chache non valido in R_GetGlobalCache"
 
 #: src/main/envir.c:724
-#, fuzzy
 msgid "cannot unbind in the base namespace"
-msgstr "non posso rompere i legami nell'environment base"
+msgstr "non posso rompere i legami nel namaspace base"
 
 #: src/main/envir.c:726
 msgid "cannot unbind in the base environment"
@@ -2657,9 +2646,8 @@ msgid "cannot remove bindings from a locked environment"
 msgstr "non posso rimuovere i legami da un environment bloccato"
 
 #: src/main/envir.c:771
-#, fuzzy
 msgid "cannot get binding from base environment"
-msgstr "non posso ottenere i legami dall'environment NULL"
+msgstr "non posso ottenere i legami dall'environment di base"
 
 #: src/main/envir.c:773
 msgid "cannot get binding from base namespace"
@@ -3000,7 +2988,6 @@ msgid "not in a try context"
 msgstr "non è in un contesto di 'try'"
 
 #: src/main/eval.c:213
-#, fuzzy, c-format
 msgid "Rprof: cannot open profile file '%s'"
 msgstr "Rprof: non posso aprire il file di profile '%s'"
 
@@ -3103,9 +3090,8 @@ msgid "cannot do complex assignments in base namespace"
 msgstr "non si possono fare assegnazioni complesse nel namespace base"
 
 #: src/main/eval.c:1216
-#, fuzzy
 msgid "cannot do complex assignments in base environment"
-msgstr "non si possono fare assegnazioni complesse nell'environment NULL"
+msgstr "non si possono fare assegnazioni complesse nell'environment di base"
 
 #: src/main/eval.c:1229 src/main/eval.c:1247
 msgid "invalid function in complex assignment"
@@ -3566,9 +3552,8 @@ msgid "invalid 'y' type in 'x %s y'"
 msgstr "tipo 'y' non valido in 'x %s y'"
 
 #: src/main/logic.c:295
-#, fuzzy
 msgid "Unary operator `!' called with two arguments"
-msgstr "operazioni binarie richiedono due argomenti"
+msgstr "l'operatore `!' è stato usato con due argomenti"
 
 #: src/main/main.c:50
 msgid "dummy - do not translate"
@@ -3777,14 +3762,12 @@ msgid "argument is not a valid model"
 msgstr "l'argomento non è un modello valido"
 
 #: src/main/model.c:759
-#, fuzzy
 msgid "'data' argument is of the wrong type"
 msgstr "l'argomento 'data' è di tipo sbagliato"
 
 #: src/main/model.c:1018
-#, fuzzy
 msgid "'.' in formula and no 'data' argument"
-msgstr "argomento 'data' non valido"
+msgstr "nella formula c'è il '.' ma nessun argomento 'data'"
 
 #: src/main/model.c:1163
 msgid "invalid formula in 'update'"
@@ -4405,7 +4388,6 @@ msgid "Impossible mode ( x )"
 msgstr "modalità ( x ) impossbile"
 
 #: src/main/paste.c:387
-#, fuzzy
 msgid "atomic vector arguments only"
 msgstr "solo argomenti vettoriali"
 
@@ -4619,9 +4601,8 @@ msgid "invalid axis number %d"
 msgstr "numero asse %d non valido"
 
 #: src/main/plot.c:1088
-#, fuzzy
 msgid "'hadj' must be of length one"
-msgstr "'which' deve essere di lunghezza 1"
+msgstr "'hadj' deve essere di lunghezza 1"
 
 #: src/main/plot.c:1095 src/main/plot.c:2486
 msgid "zero length 'padj' specified"
@@ -5705,36 +5686,38 @@ msgid "syntax error on line %d"
 msgstr "errore di sintassi alla linea %d"
 
 #: src/main/source.c:92
-#, fuzzy, c-format
 msgid ""
 "syntax error at\n"
 "%d: %s"
-msgstr "errore di sintassi"
+msgstr "errore di sintassi in\n"
+"%d: %s"
 
 #: src/main/source.c:94
-#, fuzzy, c-format
 msgid ""
 "syntax error at\n"
 "%d: %s\n"
 "%d: %s"
-msgstr "errore di sintassi alla linea %d"
+msgstr "errore di sintassi in\n"
+"%d: %s\n"
+"%d: %s"
 
 #: src/main/source.c:100
 msgid "syntax error"
 msgstr "errore di sintassi"
 
 #: src/main/source.c:101
-#, fuzzy, c-format
 msgid "syntax error in \"%s\""
-msgstr "errore di sintassi alla linea %d"
+msgstr "errore di sintassi in \"%s\""
 
 #: src/main/source.c:103
-#, fuzzy, c-format
 msgid ""
 "syntax error in:\n"
 "\"%s\n"
 "%s\""
-msgstr "errore di sintassi alla linea %d"
+msgstr ""
+"errore di sintassi in:\n"
+"\"%s\n"
+"%s\""
 
 #: src/main/split.c:37
 msgid "first argument must be a vector"
@@ -5967,14 +5950,12 @@ msgid "internal error in use of recursive indexing"
 msgstr "errore interno nell'uso dell'indicizzazione ricorsiva"
 
 #: src/main/subscript.c:194
-#, fuzzy
 msgid "incorrect number of columns in matrix subscript"
-msgstr "numero di indici non corretto"
+msgstr "numero di colonne non valido nell'indice della matrice"
 
 #: src/main/subscript.c:209
-#, fuzzy
 msgid "negative values are not allowed in a matrix subscript"
-msgstr "vettori di lunghezza negativa non ammessi"
+msgstr "valori negativi non ammessi come indici di matrice"
 
 #: src/main/subscript.c:244
 msgid "(subscript) logical subscript too long"
@@ -6005,9 +5986,8 @@ msgid "matrix subscripting not handled for this type"
 msgstr "sottoindicizzazione matrice non valido per questo tipo"
 
 #: src/main/subset.c:428
-#, fuzzy
 msgid "array subscripting not handled for this type"
-msgstr "sottoindicizzazione matrice non valido per questo tipo"
+msgstr "sottoindicizzazione matrice non supportato per questo tipo"
 
 #: src/main/subset.c:657
 msgid "incorrect number of dimensions"
