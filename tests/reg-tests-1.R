@@ -3780,3 +3780,20 @@ stopifnot(length(bb) == length(a) - 1)
 x <- NULL
 x[[1]] <- numeric(0)
 stopifnot(length(x[[1]]) == 0)
+## failed < 2.2.0
+
+
+## some checks for raw in data frames and lists
+x <- charToRaw("test")
+(z <- data.frame(x))
+z$y <- x
+z[["y2"]] <- x
+z["y3"] <- x
+z
+## lists use separate code
+z <- list(x=x)
+z$y <- x
+z[["y2"]] <- x
+z["y3"] <- list(x)
+z
+## Not completely supported prior to 2.2.0

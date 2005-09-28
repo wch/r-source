@@ -226,6 +226,10 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level, SEXP call)
 	*x = coerceVector(*x, STRSXP);
 	break;
 
+	/* <FIXME> For level = 2 we convert things here to one-element
+	   lists, and then we convert them back in do_subassign2_dflt.
+	   We need to ensure duplication occurs if necessary, though.
+	*/
     case 1901:  /* vector     <- symbol   */
     case 1904:  /* vector     <- environment   */
     case 1905:  /* vector     <- promise   */
@@ -239,8 +243,9 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level, SEXP call)
 #ifdef BYTECODE
     case 1921:  /* vector     <- bytecode   */
 #endif
-    case 1922:  /* vector     <- eternal pointer */
+    case 1922:  /* vector     <- external pointer */
     case 1923:  /* vector     <- weak reference */
+    case 1924:  /* vector     <- raw */
     case 1903: case 1907: case 1908: case 1999: /* functions */
 
 	if (level == 1) {
@@ -1569,6 +1574,8 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1519:      /* complex    <- vector     */
 	case 1619:      /* character  <- vector     */
 
+	/* <FIXME> we convert things in SubassignTypeFix to
+	   one-element lists, and then we convert them back here. */
 	case 1901:  /* vector     <- symbol     */
 	case 1904:  /* vector     <- environment*/
 	case 1905:  /* vector     <- promise    */
@@ -1584,6 +1591,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	case 1922:  /* vector     <- external pointer */
 	case 1923:  /* vector     <- weak reference */
+	case 1924:  /* vector     <- raw */
 	case 1903: case 1907: case 1908: case 1999: /* functions */
 
 	    SET_VECTOR_ELT(x, offset, VECTOR_ELT(y, 0));

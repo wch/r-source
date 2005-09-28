@@ -694,6 +694,13 @@ BUG FIXES
     o	Subassignment of length zero vectors to NULL gave garbage
     	answers. (PR#8157)
 
+    o	Automatic coercion of raw vectors to lists was missing, so for a
+	list (or data frame) z, z[["a"]] <- raw_vector did not work
+	and now does.  This also affected DF$a <- raw_vector for a
+	data frame DF.
+
+    o	The internal code for commandArgs() was missing PROTECTs.
+
 
 
 
