@@ -1,15 +1,15 @@
 # translation of RGui.po to German
 # This file is distributed under the same license as the R package.
 # Copyright (C) 2005.
-# Detlef Steuer <detlef.steuer@gmx.de>, 2005.
+# Detlef Steuer <steuer@hsuhh.de>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-09-22 12:54+0100\n"
-"PO-Revision-Date: 2005-03-22 19:27+0200\n"
-"Last-Translator: Detlef Steuer <Detlef Steuer@gmx.de>\n"
+"PO-Revision-Date: 2005-09-28 19:27+0200\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -519,11 +519,11 @@ msgstr "Namenlos"
 
 #: extra.c:920 preferences.c:514
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: extra.c:921 preferences.c:515
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: pager.c:77
 msgid "Error opening file"
@@ -564,28 +564,34 @@ msgid ""
 "\n"
 "Save the preferences and restart Rgui to apply them.\n"
 msgstr ""
+"Die Eigenschaften der Konsole können nicht geändert\n"
+"werden während die Konsole läuft.\n"
+"\n"
+"Sichern Sie die Einstellungen und starten Sie Rgui neu.\n"
 
 #: preferences.c:259
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr ""
+msgstr "Änderungen bei der Größe des pagers werden nicht auf geöffnete pager angewendet"
 
 #: preferences.c:265
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
 msgstr ""
+"Bitte nicht den pager Typen ändern, wenn ein pager geöffnet ist\n"
+"Fortfahren?"
 
 #: preferences.c:284
 msgid "Select directory for file 'Rconsole'"
-msgstr ""
+msgstr "Bitte ein Verzeichnis für die Datei 'Rconsole' auswählen"
 
 #: preferences.c:400
 msgid "Rgui Configuration Editor"
-msgstr ""
+msgstr "Rgui Konfigurationseditor"
 
 #: preferences.c:512
 msgid "Apply"
-msgstr ""
+msgstr "Anwenden"
 
 #: rui.c:106
 msgid "Select file to source"
@@ -634,7 +640,7 @@ msgstr "Durchsuche Hilfe"
 
 #: rui.c:494
 msgid "Search for words in help list archives and documentation"
-msgstr ""
+msgstr "Suche nach den Worten in den Archiven von R-help und der Dokumentation"
 
 #: rui.c:509
 msgid "Apropos"
@@ -718,8 +724,8 @@ msgid "Search help..."
 msgstr "Durchsuche Hilfe..."
 
 #: rui.c:1003
-msgid "search.r-project.org ..."
-msgstr ""
+msgid "search r-project.org ..."
+msgstr "dursuche r-project.org ..."
 
 #: rui.c:1006
 msgid "Apropos..."

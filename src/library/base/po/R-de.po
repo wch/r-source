@@ -1,15 +1,15 @@
 # Translation of R-base.po to german
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <detlef.steuer@gmx.de>, 2005.
+# Detlef Steuer <detlef.steuer@hsuhh.de>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2005-08-26 09:41\n"
-"PO-Revision-Date: 2005-04-18 18:00+02:00\n"
-"Last-Translator: Detlef Steuer <detlef.steuer@gmx.de>\n"
+"PO-Revision-Date: 2005-09-28 18:00+02:00\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1295,13 +1295,11 @@ msgstr "'cmd' konnte nicht ausgeführt werden"
 msgid "'cmd' execution failed with error code %d"
 msgstr "'cmd' Ausführung mit Fehlerkode %d fehlgeschlagen"
 
-#, fuzzy
 msgid "package '%s' has a non-function '.First.lib'"
-msgstr "Paket '%s' wurde in '%s' eingebaut"
+msgstr "Paket '%s' enthält eine nicht-Funktion '.First.lib'"
 
-#, fuzzy
 msgid "cannot find name space environment"
-msgstr "kein Namensraum"
+msgstr "kann keine Namensraum-Umgebung finden"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
