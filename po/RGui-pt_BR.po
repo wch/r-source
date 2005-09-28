@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-09-22 12:54+0100\n"
-"PO-Revision-Date: 2005-05-13 02:57-0300\n"
+"PO-Revision-Date: 2005-09-27 22:46-0300\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -676,7 +676,7 @@ msgstr "Limpar janela"
 
 #: rui.c:890 rui.c:1132
 msgid "Buffered output"
-msgstr "Output com buffer"
+msgstr "Saída com buffer"
 
 #: rui.c:930
 msgid "Packages"
@@ -744,7 +744,7 @@ msgstr "Página principal do projeto R"
 
 #: rui.c:1009
 msgid "CRAN home page"
-msgstr "página principal do CRAN"
+msgstr "Página principal do CRAN"
 
 #: rui.c:1011
 msgid "About"

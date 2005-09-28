@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2005-08-26 09:41\n"
-"PO-Revision-Date: 2005-05-13 02:57-0300\n"
+"PO-Revision-Date: 2005-09-27 23:03-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -83,7 +83,7 @@ msgid "second argument must be a list"
 msgstr "segundo argumento deve ser uma lista"
 
 msgid "'iconvlist' is not available on this system"
-msgstr ""
+msgstr "'iconvlist' não está disponível neste sistema"
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr ""
@@ -289,7 +289,6 @@ msgstr "nomes de linhas contém valores faltantes"
 msgid "duplicate row.names:"
 msgstr "row.names duplicados:"
 
-#, fuzzy
 msgid "drop argument will be ignored"
 msgstr "argumento 'drop' será ignorado"
 
@@ -708,7 +707,7 @@ msgid "there is no package called '%s'"
 msgstr "não há nenhum pacote chamado '%s'"
 
 msgid "no library trees found in 'lib.loc'"
-msgstr ""
+msgstr "nenhuma biblioteca encontrada em 'lib.loc'"
 
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr "'%s' não é um pacote válido -- instalado antes do R 2.0.0?"
@@ -1202,10 +1201,10 @@ msgid "unable to find a plausible encoding"
 msgstr "não foi possível achar uma codificação plausível"
 
 msgid "'chdir = TRUE' makes no sense for a URL"
-msgstr ""
+msgstr "'chdir = TRUE' não faz sentido para uma URL"
 
 msgid "'chdir = TRUE' makes no sense for a connection"
-msgstr ""
+msgstr "'chdir = TRUE' não faz sentido para uma conexão"
 
 msgid "'%s' is not an existing file"
 msgstr "'%s' não é um arquivo existente"
