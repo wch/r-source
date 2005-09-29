@@ -1258,6 +1258,12 @@ results in using install logs and turning off weaving.
 Future versions of R will enhance this customization mechanism, and
 provide a similar scheme for @code{R CMD build}.
 
+There are other internal settings that can be changed via environment
+variables @code{_R_CHECK_*_}: see the Perl source code.  One that may be
+interesting is @code{_R_CHECK_USE_CODETOOLS_} to make use of the
+@code{codetools} package available from
+@url{http://www.stat.uiowa.edu/~luke/R/codetools}.
+
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes
 @cindex vignettes
