@@ -704,6 +704,8 @@ BUG FIXES
 
     o	The internal code for commandArgs() was missing PROTECTs.
 
+    o	The width for strwrap() was used as one less than specified.
+
 
 
 
