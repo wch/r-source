@@ -35,7 +35,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     size_t n, cur, chunk;
 
     SEXP format, ans, this, a[100], tmp;
-    int ns, maxlen, lens[100], nthis, has_star, star_arg, nstar;
+    int ns, maxlen, lens[100], nthis, has_star, star_arg = 0, nstar;
 
     /* grab the format string */
 
@@ -148,8 +148,8 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(TYPEOF(this) != INTSXP || LENGTH(this)<1 ||
 			   INTEGER(this)[ns % LENGTH(this)] == NA_INTEGER)
 			    errorcall(call, _("argument for `*' conversion specification must be a number"));
-			has_star=1;
-			star_arg=INTEGER(this)[ns % LENGTH(this)];
+			has_star = 1;
+			star_arg = INTEGER(this)[ns % LENGTH(this)];
 		    }
 
 		    if (fmt[strlen(fmt) - 1] == '%') {
