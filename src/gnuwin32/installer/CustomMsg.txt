@@ -100,6 +100,8 @@ no.adminprivilegesrequired=Du bør være pålogget med rettighter til administrator
 no.adminexplanation=Merk: Full installering av R krever administratorens rettigheter, og de er ikke tilgjengelige. Dersom du fortsetter med denne installeringen, vil du ikke kunne installere støtte for DCOM, eller knytte R til .RData-filer. Installering er kun mulig til kataloger der du har skriverettigheter.
 no.recordversion=Lagre versjonsnummer i registeret
 
+; Slovenian is in code page 1250
+
 sl.regentries=Vnosi v registru:
 sl.associate=Poveži datoteke .RData z R
 sl.dcom=Registriraj pot do R za strežnik (D)COM
@@ -108,6 +110,9 @@ sl.compact=Najmanjša uporabniška namestitev
 sl.full=Polna namestitev
 sl.CJK=Namestitev v kitajskem/japonskem/korejskem jeziku
 sl.custom=Prikrojena namestitev
+sl.adminprivilegesrequired=Namestitev programa lahko opravi le administrator
+sl.adminexplanation=Za polno namestitev R potrebujete pravice administratorja, a teh oèitno nimate. Èe boste z namestitvijo nadaljevali, ne boste mogli namestiti podporo DCOM niti povezati datoteke .RData z R. Namestitev mora biti opravljena v mapo, kjer imate dovoljenje za pisanje.
+sl.recordversion=Shrani številko verzije v register
 
 ; Polish is in code page 1250
 
