@@ -25,7 +25,7 @@ na.action(object, \dots)
 }
 \seealso{
   \code{\link{options}("na.action")}, \code{\link{na.omit}},
-  \code{\link{na.fail}}
+  \code{\link{na.fail}}, also for \code{na.exclude}, \code{na.pass}.
 }
 \examples{
 na.action(c(1, NA))

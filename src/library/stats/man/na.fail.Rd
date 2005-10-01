@@ -52,6 +52,7 @@ na.pass(object, \dots)
   \code{\link{options}} with argument \code{na.action} for setting
   \dQuote{NA actions};
   and \code{\link{lm}} and \code{\link{glm}} for functions using these.
+  \code{\link{na.contiguous}} as alternative for time series.
 }
 \examples{
 DF <- data.frame(x = c(1, 2, 3), y = c(0, 10, NA))
