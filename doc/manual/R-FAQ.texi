@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-09-27
+@set FAQ_DATE @value{FAQ_YEAR}-09-30
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2552,6 +2552,8 @@ Various functions to manipulate models.
 @item gmp
 Arithmetic ``without limitations'' using the @acronym{GNU} Multiple
 Precision library.
+@item gmt
+Interface between the GMT 4.0 map-making software and R.
 @item gnm
 Functions to specify and fit generalized nonlinear models, including
 models with multiplicative interaction terms such as the UNIDIFF model
@@ -3408,6 +3410,8 @@ Tensor product of arrays.
 Time tracking for developers.
 @item tkrplot
 Simple mechanism for placing R graphics in a Tk widget.
+@item tlnise
+Two-level normal independent sampling estimation.
 @item tree
 Classification and regression trees.
 @item treeglia
