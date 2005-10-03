@@ -3251,6 +3251,10 @@ and unpack these into the same directory (using @command{tar zxf
 tarball_name}).  Note that @code{mingw-runtime-3.8.tar.gz} or later is
 required to build @R{} 2.2.0.
 
+There is also an alpha installer @code{MinGW-5.0.0.exe}.  For this
+select the @samp{Candidate} package and add the @samp{g++} and
+@samp{g77} compilers to the @samp{MinGW base tools}.
+
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
 
