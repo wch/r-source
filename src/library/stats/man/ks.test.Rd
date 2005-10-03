@@ -20,7 +20,7 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   \item{exact}{\code{NULL} or a logical indicating whether an exact
     p-value should be computed.  See Details for the meaning of
     \code{NULL}.  Not used for the one-sided two-sample case.}
-  
+
 }
 \details{
   If \code{y} is numeric, a two-sample test of the null hypothesis
@@ -73,7 +73,7 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   Z. W. Birnbaum & Fred H. Tingey (1951),
   One-sided confidence contours for probability distribution functions.
   \emph{The Annals of Mathematical Statistics}, \bold{22}/4, 592--596.
-  
+
   William J. Conover (1971),
   \emph{Practical nonparametric statistics}.
   New York: John Wiley & Sons.
@@ -88,7 +88,7 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   Evaluating Kolmogorov's distribution.
   \emph{Journal of Statistical Software}, \bold{8}/18.
   \url{http://www.jstatsoft.org/v08/i18/}.
-  
+
 }
 \seealso{
   \code{\link{shapiro.test}} which performs the Shapiro-Wilk test for
@@ -99,7 +99,7 @@ x <- rnorm(50)
 y <- runif(30)
 # Do x and y come from the same distribution?
 ks.test(x, y)
-# Does x come from a shifted gamma distribution with shape 3 and scale 2?
+# Does x come from a shifted gamma distribution with shape 3 and rate 2?
 ks.test(x+2, "pgamma", 3, 2) # two-sided, exact
 ks.test(x+2, "pgamma", 3, 2, exact = FALSE)
 ks.test(x+2, "pgamma", 3, 2, alternative = "gr")
