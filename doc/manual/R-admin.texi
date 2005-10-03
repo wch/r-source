@@ -3208,34 +3208,13 @@ You need a recent version of the MinGW port of @code{gcc} from
 @url{http://sourceforge.net/projects/mingw/}.  See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools} for updates.
 
-A recent installer is called @file{MinGW-4.1.0.exe}, which
-downloads components for SourgeForge.  We suggest you select the core
-packages and the candidate compilers (@code{gcc-3.4.4}), and then at the
-next screen select just @code{gcc-core}, @code{gcc-g++} and
-@code{gcc-g77} (and no compilers in the code list).  The screen showing
-confirmation of the selections will then look like:
+At the time of release of @R{} 2.2.0 there was an installer
+@code{MinGW-5.0.0.exe} in the `Proposed' section.  For this select the
+@samp{Candidate} package and add the @samp{g++} and @samp{g77} compilers
+to the @samp{MinGW base tools}: components will be downloaded from
+Sourceforge and unpacked.
 
-@example
-Selected components:
-      The minimal set of packages required to build C/C++
-         Install a Current version of CORE files
-      The full set of compilers packages
-         Install a Candidate version of Compilers files
-
-Additional tasks:
-      Current
-         Install Current Version Files
-            Current/runtime
-            Current/w32api
-            Current/binutils
-      Candidate
-            Candidate/gcc-core
-            Candidate/gcc-g++
-            Candidate/gcc-g77
-@end example
-
-Users have found this did not work with @file{MinGW-4.1.1.exe}: an
-alternative is to download the components individually, currently
+An alternative is to download the components individually, currently
 
 @example
 gcc-core-3.4.4-20050522-1.tar.gz
@@ -3250,10 +3229,6 @@ w32api-3.3.tar.gz
 and unpack these into the same directory (using @command{tar zxf
 tarball_name}).  Note that @code{mingw-runtime-3.8.tar.gz} or later is
 required to build @R{} 2.2.0.
-
-There is also an alpha installer @code{MinGW-5.0.0.exe}.  For this
-select the @samp{Candidate} package and add the @samp{g++} and
-@samp{g77} compilers to the @samp{MinGW base tools}.
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
