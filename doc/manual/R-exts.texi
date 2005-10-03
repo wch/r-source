@@ -969,7 +969,7 @@ manager files by options like (lines broken for easier reading)
 @example
 R CMD INSTALL
   --configure-args='--with-odbc-include=/opt/local/include
-  --with-odbc-libs=/opt/local/lib --with-odbc-manager=iodbc'
+  --with-odbc-lib=/opt/local/lib --with-odbc-manager=iodbc'
   RODBC
 @end example
 
