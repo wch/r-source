@@ -288,8 +288,8 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         install.packages(update, lib = lib.loc[1], repos = repos,
                          method = method, available = available)
         # now check if they were installed and update 'res'
-        updated <- update[update %in%  list.files(lib.loc[1])]
-        res <- res[!res %in% update]
+        updated <- update[update %in% list.files(lib.loc[1])]
+        res <- res[!res %in% updated]
     }
     res
 }
