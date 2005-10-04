@@ -42,7 +42,7 @@ library.dynam.unload(chname, libpath,
 \details{
   \code{library.dynam} is designed to be used inside a package rather
   than at the command line, and should really only be used inside
-  \code{\link{.First.lib}} on \code{\link{.onLoad}}.  The
+  \code{\link{.First.lib}} or \code{\link{.onLoad}}.  The
   system-specific extension for shared libraries
 #ifdef unix
   (e.g., \file{.so} or \file{.sl} on Unix systems)
@@ -50,7 +50,9 @@ library.dynam.unload(chname, libpath,
 #ifdef windows
   (\file{.dll} on Windows)
 #endif
-  should not be added.
+  should not be added.  Note that to allow for versioned installs, the
+  first argument should not be set to the \code{pkgname} argument of
+  \code{.First.lib} or \code{.onLoad}.
 
   \code{library.dynam.unload} is designed for use in
   \code{\link{.Last.lib}} or \code{\link{.onUnload}}.

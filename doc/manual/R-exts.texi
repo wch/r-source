@@ -3505,7 +3505,9 @@ library.dynam("libname", package, lib.loc)
 
 @noindent
 where @code{libname} is the object/DLL name @emph{with the extension
-omitted}.
+omitted}.  Note that the first argument, @code{chname}, should
+@strong{not} be @code{package} since this will not work if the package
+is installed under another name (as it will be with a versioned install).
 
 Under some Unix systems there is a choice of how the symbols are
 resolved when the object is loaded, governed by the arguments

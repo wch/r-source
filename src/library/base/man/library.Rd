@@ -109,12 +109,13 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{\link{.onLoad}}.)  It is called with two arguments, the name of
   the library directory where the package was found (i.e., the
   corresponding element of \code{lib.loc}), and the name of the package
-  (in that order).  It is a good place to put calls to
-  \code{\link{library.dynam}} which are needed when loading a package
-  into this function (don't call \code{library.dynam} directly, as this
-  will not work if the package is not installed in a \dQuote{standard}
-  location).  \code{.First.lib} is invoked after the search path
-  interrogated by \code{search()} has been updated, so
+  (in that order, and with the package name including the version for a
+  versioned install, e.g. \code{tree_1.0-16}).  It is a good place to
+  put calls to \code{\link{library.dynam}} which are needed when loading
+  a package into this function (don't call \code{library.dynam}
+  directly, as this will not work if the package is not installed in a
+  \dQuote{standard} location).  \code{.First.lib} is invoked after the
+  search path interrogated by \code{search()} has been updated, so
   \code{as.environment(match("package:name", search()))} will return the
   environment in which the package is stored.  If calling
   \code{.First.lib} gives an error the loading of the package is
@@ -124,7 +125,6 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   the package is loaded.  This mechanism allows the user to set package
   \dQuote{load hooks} in addition to startup code as provided by the
   package maintainers, but \code{\link{setHook}} is preferred.
-  
 
   \code{.Last.lib} is called when a package is detached.  Beware
   that it might be called if \code{.First.lib} has failed, so it
@@ -182,7 +182,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   If \code{version} is not specified, \code{require} will accept any
   version that is already loaded, whereas \code{library} will look for
   an unversioned install even if a versioned install is already loaded.
-  
+
   Loading more than one version of a package into an \R session is not
   currently supported.  Support for versioned installs is patchy.
 }
