@@ -706,6 +706,9 @@ BUG FIXES
 
     o	The width for strwrap() was used as one less than specified.
 
+    o	R CMD INSTALL was not cleaning up after an unsuccessful
+	install of a non-bundle which was not already installed.
+
 
 
 
