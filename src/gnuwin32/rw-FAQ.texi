@@ -323,6 +323,12 @@ You should see a line like
                    Application can handle large (>2GB) addresses
 @end example
 
+@noindent
+Alternatively if you compile R yourself and have a recent enough
+compiler system you can uncomment some lines in
+@file{src/gnuwin32/front-ends/Makefile} and have the executables marked
+when they are made.
+
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
 @section How can I keep workspaces for different projects in different directories?

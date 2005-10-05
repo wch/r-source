@@ -53,6 +53,13 @@ Rterm-LIBS=$(LIBUNICOWS) -luser32 -L.. -lR
 Rgui-LIBS=-L.. $(LIBUNICOWS) -lR
 Rpwd-LIBS=$(LIBUNICOWS) -lkernel32
 
+## needs binutils > 2.15.90 which is what the cross-compiler toolkit has.
+## uncomment these post 2.2.0.
+ifneq ($(strip $(BUILD)),CROSS)
+# Rgui-LINKFLAGS=-Wl,--large-address-aware
+# Rterm-LINKFLAGS=-Wl,--large-address-aware
+fi
+
 Rgui.exe: graphappmain.o  rgui.o rgico.o
 
 Rterm.exe: graphappmain.o rterm.o rtico.o
