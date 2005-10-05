@@ -393,7 +393,7 @@ INSTALLATION
 	wctrans but not wctrans_t (which is required by the relevant
 	standards) .
 
-    o	Any external BLAS found is now tested to see is the complex
+    o	Any external BLAS found is now tested to see if the complex
 	routine zdotu works correctly: this provides a compatibility
 	test of compiler return conventions.
 
@@ -411,7 +411,7 @@ INSTALLATION
 	--with-system-bzlib and -with-system-pcre now have 'system' in
 	the name.
 
-    o	If Java runtime environment is detected at configure time
+    o	If a Java runtime environment is detected at configure time
 	its library path is appended to LD_LIBRARY_PATH or equivalent.
 	New Java-related variables JAVA_HOME (path to JRE/JDK), JAVA_PROG
 	(path to Java interpreter), JAVA_LD_PATH (Java library path)
@@ -432,12 +432,12 @@ MAC OS X INSTALLATION
 	it can be overridden at configure time by setting FW_VERSION
 	to the desired name.
 
-    o	Rmath stand-alone library is now correctly installed inside the
-	R.framework if R was configured as a framework. In addition,
-	make install-Rmath-framework will install a stand-alone Rmath
-	framework in /Library/Frameworks (unless overridden by
-	RMATH_FRAMEWORK_DIR specifying full framework path and name
-	including the .framework extension).
+    o	The Rmath stand-alone library is now correctly installed inside
+	the R.framework if R was configured as a framework.  In
+	addition, make install-Rmath-framework will install a
+	stand-alone Rmath framework in /Library/Frameworks (unless
+	overridden by RMATH_FRAMEWORK_DIR specifying full framework
+	path and name including the .framework extension).
 
 
 PACKAGE INSTALLATION
