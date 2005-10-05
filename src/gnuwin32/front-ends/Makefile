@@ -56,9 +56,12 @@ Rpwd-LIBS=$(LIBUNICOWS) -lkernel32
 ## needs binutils > 2.15.90 which is what the cross-compiler toolkit has.
 ## uncomment these lines post 2.2.0.
 # ifneq ($(strip $(BUILD)),CROSS)
-# Rgui-LINKFLAGS=-Wl,--large-address-aware
-# Rterm-LINKFLAGS=-Wl,--large-address-aware
+# Rgui-LINKFLAGS+=-Wl,--large-address-aware
+# Rterm-LINKFLAGS+=-Wl,--large-address-aware
 # endif
+## Increase stack size to 10Mb
+# Rgui-LINKFLAGS+=-Wl,--stack=0xA00000
+# Rterm-LINKFLAGS+=-Wl,--stack=0xA00000
 
 Rgui.exe: graphappmain.o  rgui.o rgico.o
 

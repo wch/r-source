@@ -738,6 +738,9 @@ Open a command window at @file{@var{R_HOME}/src/gnuwin32}.  Edit
 @file{MkRules} to set the appropriate paths as needed and to set the
 type(s) of help that you want built.  @strong{Beware}: @file{MkRules}
 contains tabs and some editors (e.g., WinEdt) silently remove them.
+Look at the comments in @file{front-ends/Makefile} and perhaps uncomment
+commands to increase the stack size and make the executables
+large-address-aware.
 Then run
 
 @example
@@ -967,7 +970,7 @@ please rename it to indicate that it is customized.
 
 You will need i386-mingw32 cross-compilers installed and in your path.
 There is currently a complete set of tools at
-@url{http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross4.tar.bz2} (Just
+@url{http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2} (Just
 unpack this somewhere and put its @file{bin} directory in your path.)
 
 You will need @code{Perl}, @code{zip} and @code{unzip} installed
