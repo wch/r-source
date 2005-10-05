@@ -19,6 +19,7 @@ This file contains instructions for non-standard situations:
  - Using Borland C++
  - Using other compilers and languages
  - Cross-building packages on Linux
+
  
 Using Visual C++
 ================
@@ -115,6 +116,9 @@ WARNING: DLLs made with some compilers reset the FPU in their startup
 code (Delphi has been one), and this will cause operations such as
 0./0. to crash R.  You can re-set the FPU to the correct values by a
 call to the C entry point Rwin_fpset().
+
+For some further details and Delphi examples see
+http://www.stats.uwo.ca/faculty/murdoch/software/compilingDLLs/
 
 
 Cross-building packages on Linux

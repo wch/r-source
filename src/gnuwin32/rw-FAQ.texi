@@ -1302,6 +1302,10 @@ with a DLL compiled in a Borland compiler.
 
 @end itemize
 
+See
+@uref{http://www.stats.uwo.ca/faculty/murdoch/software/debuggingR/gdb.shtml}
+for some further details.
+
 
 @node  How do I include C++ code?, The output from my C code disappears., How do I debug code that I have compiled and dyn.load-ed?, Building from Source
 @section  How do I include C++ code?
