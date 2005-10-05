@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-09-30
+@set FAQ_DATE @value{FAQ_YEAR}-10-05
 @set REL_YEAR 2005
 @set REL_MAJOR 2
-@set REL_MINOR 1
-@set REL_PATCHLEVEL 1
+@set REL_MINOR 2
+@set REL_PATCHLEVEL 0
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -1641,7 +1641,7 @@ The R distribution comes with the following packages:
 
 @table @strong
 @c <FIXME>
-@c 2.2.0
+@c 3.0.0
 @item base
 Base R functions (and datasets before R 2.0.0).
 @item datasets
@@ -1990,6 +1990,8 @@ Electrical properties of resistor networks.
 Forward Search for Multivariate Data.
 @item Rlab
 Functions and data sets for the NCSU ST370 class.
+@item Rlsf
+Interface to the LSF queuing system.
 @c <COMMENT>
 @c Moved to the Archive on 2004-08-11.
 @c @item RmSQL
@@ -2594,9 +2596,12 @@ Various functions to help manipulate data.
 @item hapassoc
 Likelihood inference of trait associations with SNP haplotypes and other 
 attributes using the EM Algorithm.
-@item haplo.score
-Score tests for association of traits with haplotypes when linkage phase
-is ambiguous.
+@c <COMMENT>
+@c Moved to Archive on 2005-10-05 as requested by the maintainer.
+@c @item haplo.score
+@c Score tests for association of traits with haplotypes when linkage phase
+@c is ambiguous.
+@c </COMMENT>
 @item haplo.stats
 Statistical analysis of haplotypes with traits and covariates when
 linkage phase is ambiguous.
@@ -3061,6 +3066,8 @@ Polychoric and polyserial correlations.
 @item polynom
 A collection of functions to implement a class for univariate polynomial
 manipulations.
+@item popgen
+Statistical and POPulation GENetics.
 @item powerpkg
 Power analyses for the affected sib pair and the TDT design.
 @item ppc
@@ -5050,7 +5057,7 @@ utils::help.start()
 @end example
 
 @c <FIXME>
-@c 2.2.0
+@c 3.0.0
 @noindent
 (@code{graphics::ps.options(horizontal = FALSE)} in R 1.9.x).
 @c </FIXME>
