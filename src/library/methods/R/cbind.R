@@ -101,22 +101,27 @@ cbind <- function(..., deparse.level = 1)
     r
 }
 
-## To be active, the above cbind() must "replace" cbind() in "base" :
+## To be active, the above cbind() must "replace" cbind() in "base".
+## This may be called on loading method, see ./zzz.R
 bind_activation <- function(on = TRUE) {
     ## 'bind' : cbind && rbind
     base.ns <- getNamespace("base")
+    saved <- exists(".__H__.cbind", envir = base.ns, inherits = FALSE)
+    if(was.on <- saved)
+        was.on <- !identical(base::cbind, base::.__H__.cbind)
     if(on) {
-	utils::assignInNamespace(".__H__.cbind", base::cbind, ns = base.ns)
+        if(!saved) {
+            utils::assignInNamespace(".__H__.cbind", base::cbind, ns = base.ns)
+            utils::assignInNamespace(".__H__.rbind", base::rbind, ns = base.ns)
+        }
 	utils::assignInNamespace("cbind", cbind, ns = base.ns)
-	utils::assignInNamespace(".__H__.rbind", base::rbind, ns = base.ns)
 	utils::assignInNamespace("rbind", rbind, ns = base.ns)
     }
-    else { # turn it off
-	if(!inherits(try(getFromNamespace(".__H__.cbind", ns = base.ns),
-			 silent = TRUE), "try-error"))
-	    utils::assignInNamespace("cbind", base::.__H__.cbind, ns = base.ns)
-	    utils::assignInNamespace("rbind", base::.__H__.rbind, ns = base.ns)
+    else if(!on && was.on) { ## turn it off
+        utils::assignInNamespace("cbind", base::.__H__.cbind, ns = base.ns)
+        utils::assignInNamespace("rbind", base::.__H__.rbind, ns = base.ns)
     }
+    was.on
 }
 
 ### cbind2 () :	 Generic and methods need to be "method-bootstrapped"

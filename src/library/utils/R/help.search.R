@@ -196,6 +196,12 @@ function(pattern, fields = c("alias", "concept", "title"),
         if(verbose)
 	    cat(ifelse(np %% 5 == 0, "\n", "\n\n"))
 
+        ## workaround methods:::rbind() misbehavior:
+	if(.isMethodsDispatchOn()) {
+	    bind_was_on <- methods:::bind_activation(FALSE)
+	    if(bind_was_on) on.exit(methods:::bind_activation(TRUE))
+	}
+
         ## Create the global base, aliases, keywords and concepts tables
         ## via calls to rbind() on the columns of the matrix used for
         ## aggregating.
