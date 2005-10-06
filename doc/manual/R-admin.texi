@@ -2772,24 +2772,6 @@ note that linker flags must be escaped using @samp{-Wl,} if
 @command{gcc} is used for linking: use @samp{MAIN_LDFLAGS="-Wl,brtl"}
 and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
 
-Harald Servat Gelabert <harald at cepba dot upc dot es> reported
-success building @R{} 1.7.0 under AIX 5.1 with
-
-@example
-CC=xlc
-F77=xlf
-CXX=xlC
-CFLAGS='-O3 -qstrict -qmaxmem=8192'
-FFLAGS='-O3 -qstrict -qmaxmem=8192'
-CXXFLAGS='-O2 -qmaxmem=8192'
-MAIN_LDFLAGS='-Wl,-brtl'
-SHLIB_LDFLAGS='-Wl,-G'
-@end example
-
-@noindent
-but was unable to use the X libraries or the native BLAS (ESSL) and so
-used @option{--without-x --without-blas}.
-
 Tim Hoar <thoar at cgd dot ucar dot edu> reported success building
 @R{} 1.9.0 under AIX 5.1 in 64-bit mode with
 
@@ -2824,9 +2806,10 @@ SHLIB_LDFLAGS=-Wl,-G
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
 
-Ei-ji Nakama has reported that @file{src/main/regex.c} has to be compiled
-with @option{-D_LINUX_SOURCE_COMPAT} in @code{CFLAGS} in AIX 5.x
-(and does not work correctly with AIX 4.x).
+Ei-ji Nakama has reported that @file{src/main/regex.c} in @R{} 2.0.0 has
+to be compiled with @option{-D_LINUX_SOURCE_COMPAT} in @code{CFLAGS} in
+AIX 5.x (and does not work correctly with AIX 4.x).  We believe that the
+patch applied since obviates the need for this.
 
 @node New platforms,  , AIX, Platform notes
 @section New platforms
