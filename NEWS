@@ -14,6 +14,10 @@ DEPRECATED & DEFUNCT
     o	The undocumented use of atan() with two arguments has been
 	removed: use atan2() as documented.
 
+    o	write.table0() is defunct in favour of write.table().
+
+    o	format.char() is defunct in favour of format.default().
+
 
 
 
