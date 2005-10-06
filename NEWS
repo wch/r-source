@@ -1,7 +1,7 @@
 			Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
-	*	       2.2 SERIES NEWS			 *
+	*	       2.3 SERIES NEWS			 *
 	*						 *
 	**************************************************
 
@@ -9,10 +9,17 @@
 		CHANGES IN R VERSION 2.3.0
 
 
+NEW FEATURES
+
+    o	arima.sim() has a new argument 'start.innov' for compatibility
+	with S-PLUS.  (If not supplied, the output is unchanged from
+	previous versions in R.)
+
+
 DEPRECATED & DEFUNCT
 
     o	The undocumented use of atan() with two arguments has been
-	removed: use atan2() as documented.
+	removed: instead use atan2() (as documented).
 
     o	write.table0() is defunct in favour of write.table().
 
