@@ -305,29 +305,9 @@ R can be compiled to use a different memory manager which might be better
 at using large amounts of memory, but is substantially slower (making R
 several times slower on some tasks).
 
-If you are running a version of Windows (see
-@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx})
-which supports more than 2Gb per process, you can let the R executables
-use it by marking their headers suitably.  If you have Visual Studio use
-@example
-editbin /LARGEADDRESSAWARE \path_to_R\bin\Rgui.exe
-editbin /LARGEADDRESSAWARE \path_to_R\bin\Rterm.exe
-@end example
-and check this by
-@example
-dumpbin /headers \path_to_R\bin\Rgui.exe
-dumpbin /headers \path_to_R\bin\Rterm.exe
-@end example
-You should see a line like
-@example
-                   Application can handle large (>2GB) addresses
-@end example
-
-@noindent
-Alternatively if you compile R yourself and have a recent enough
-compiler system you can uncomment some lines in
-@file{src/gnuwin32/front-ends/Makefile} and have the executables marked
-when they are made.
+In this version of R, the executables support more than 2Gb per process
+under suitably enabled versions of Windows (see
+@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}).
 
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
