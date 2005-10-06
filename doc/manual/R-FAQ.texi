@@ -2109,8 +2109,11 @@ Methods and data to accompany the textbook ``Applied Linear Regression''
 by S. Weisberg, 2005, Wiley.
 @item amap
 Another Multidimensional Analysis Package.
-@item anm
-Analog model for statistical/empirical downscaling.
+@c <COMMENT>
+@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
+@c @item anm
+@c Analog model for statistical/empirical downscaling.
+@c </COMMENT>
 @item aod
 Analysis of Overdispersed Data.
 @item apTreeshape
@@ -2442,8 +2445,11 @@ Analysis (ICA) and Projection Pursuit.
 @item fda
 Functional Data Analysis: analysis of data where the basic observation
 is a function of some sort.
-@item fdim
-Functions for calculating fractal dimension.
+@c <COMMENT>
+@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
+@c @item fdim
+@c Functions for calculating fractal dimension.
+@c </COMMENT>
 @item fgac
 Families of Generalized Archimedean Copulas.
 @item fields
@@ -2821,9 +2827,12 @@ Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
 additive regression splines (MARS), adaptive back-fitting splines
 (BRUTO), and penalized regression.
-@item meanscore
-Mean Score method for missing covariate data in logistic regression
-models.
+@c <COMMENT>
+@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
+@c @item meanscore
+@c Mean Score method for missing covariate data in logistic regression
+@c models.
+@c </COMMENT>
 @item merror
 Accuracy and precision of measurements.
 @item meta
@@ -2977,10 +2986,13 @@ Functions to perform the regression depth method (RDM) to binary
 regression to approximate the amount of overlap, i.e., the minimal
 number of observations that need to be removed such that the reduced
 data set has no longer overlap.
-@item npmc
-Nonparametric Multiple Comparisons:  provides simultaneous rank test
-procedures for the one-way layout without presuming a certain
-distribution.
+@c <COMMENT>
+@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
+@c @item npmc
+@c Nonparametric Multiple Comparisons:  provides simultaneous rank test
+@c procedures for the one-way layout without presuming a certain
+@c distribution.
+@c </COMMENT>
 @item nprq
 Nonparametric quantile regression.  @emph{Defunct}.
 @item odesolve
@@ -3031,9 +3043,12 @@ Some easy-to-use functions for time series analyses of (plant-)
 phenological data sets.
 @item phpSerialize
 Serialize R to PHP associative array.
-@item phyloarray
-Software to process data from phylogenetic or identification
-microarrays.
+@c <COMMENT>
+@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
+@c @item phyloarray
+@c Software to process data from phylogenetic or identification
+@c microarrays.
+@c </COMMENT>
 @item pinktoe
 Converts S trees to @HTML{}/Perl files for interactive tree traversal.
 @item pixmap
@@ -3229,10 +3244,16 @@ models, used in fisheries stock assessments.
 Plots a three dimensional (3D) point cloud perspectively.
 @item seacarb
 Calculates parameters of the seawater carbonate system.
-@item seao
-Simple Evolutionary Algorithm Optimization.
-@item seao.gui
-Simple Evolutionary Algorithm Optimization: graphical user interface.
+@c <COMMENT>
+@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
+@c @item seao
+@c Simple Evolutionary Algorithm Optimization.
+@c </COMMENT>
+@c <COMMENT>
+@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
+@c @item seao.gui
+@c Simple Evolutionary Algorithm Optimization: graphical user interface.
+@c </COMMENT>
 @item segmented
 Functions to estimate break-points of segmented relationships in
 regression models (GLMs).
@@ -3301,9 +3322,12 @@ R.
 Fault Tolerant Simple Network of Workstations.
 @item som
 Self-Organizing Maps (with application in gene clustering).
-@item sound
-A sound interface for R: Basic functions for dealing with @file{.wav}
-files and sound samples.
+@c <COMMENT>
+@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
+@c @item sound
+@c A sound interface for R: Basic functions for dealing with @file{.wav}
+@c files and sound samples.
+@c </COMMENT>
 @item sp
 A package that provides classes and methods for spatial data, including
 utility functions for plotting data as maps, spatial selection, amd much
@@ -3436,9 +3460,12 @@ Collection of tools to analyze music, handle wave files, transcription,
 etc.
 @item tweedie
 Maximum likelihood computations for Tweedie exponential family models.
-@item twostage
-Functions for optimal design of two-stage-studies using the Mean Score
-method.
+@c <COMMENT>
+@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
+@c @item twostage
+@c Functions for optimal design of two-stage-studies using the Mean Score
+@c method.
+@c </COMMENT>
 @item udunits
 Interface to Unidata's routines to convert units.
 @item ump
