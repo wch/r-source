@@ -25,7 +25,7 @@ $(DLLNAME)_res.rc:
 grDevices_res.o: grDevices_res.rc $(RHOME)/include/Rversion.h
 
 CFLAGS = -I$(RHOME)/src/include -I$(RHOME)/src/gnuwin32 -DHAVE_CONFIG_H $(DEBUGFLAG) -O2
-DLLLIBS = -L$(RHOME)/src/gnuwin32 $(LIBUNICOWS) -lR
+DLLLIBS = -L$(RHOME)/lib $(LIBUNICOWS) -lR
 ifdef SUPPORT_UTF8
 CFLAGS += -DSUPPORT_UTF8
 endif

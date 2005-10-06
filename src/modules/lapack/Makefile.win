@@ -21,7 +21,7 @@ OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 	$(CP) $< $@
 
 lapack-DLLLIBS=-L../../../lib $(LIBUNICOWS) -lRlapack
-DLLLIBS=-L../../gnuwin32 $(LIBUNICOWS) -lR -lRblas -lg2c
+DLLLIBS=-L../../../lib $(LIBUNICOWS) -lR -lRblas -lg2c
 
 $(MODULE).dll: $(OBJS)
 

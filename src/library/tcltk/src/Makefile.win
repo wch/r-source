@@ -24,7 +24,7 @@ tk$(TCL_VERSION).def: tk.def
 OBJS = init.o tcltk.o tcltk_win.o
 CFLAGS = -I$(RHOME)/include $(DEBUGFLAG) -O2 -I "$(TCL_HOME)"/include -DWin32
 
-DLLLIBS = -L$(RHOME)/src/gnuwin32 $(LIBUNICOWS) -lR -L. -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
+DLLLIBS = -L$(RHOME)/lib $(LIBUNICOWS) -lR -L. -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
 
 RESFLAGS=--include-dir $(RHOME)/include
 tcltk_res.o: tcltk_res.rc $(RHOME)/include/Rversion.h
