@@ -703,27 +703,17 @@ linear algebra routines. Prebuilt @code{Rblas.dll} for various Pentium
 and AthlonXP chips are available in the @file{windows/contrib/ATLAS}
 area on @acronym{CRAN}.
 
-Another tuned BLAS which is available for some CPUs is by Kazushige
-Goto.  He does not allow redistribution: his builds are currently
-available@footnote{In mid-September 2005 they were temporarily
-unavailable pending a formal release.} via
-@url{http://www.cs.utexas.edu/users/kgoto/signup_first.html}.  To make
-use of this, put the @file{DLL} somewhere in your path or in
-@file{@var{R_HOME}/bin}, and edit
-@file{@var{R_HOME}/src/gnuwin32/MkRules} to define @code{USE_GOTO=YES}
-and the name of the @file{DLL} (something like
-@file{libgoto_prescott-r0.99.3.dll}).
-
-Specifying a Goto BLAS takes preference over ATLAS, and seems a little
-faster.  However, as it is compiled for MSVC, we have been unable to
-make it work for complex arithmetic and so it is only used for real
-linear algebra.
-
-Dr. Goto currently supplies DLLs for P4 and Opteron/Athlon64
-processors.  Previously there were versions for PIII (that also worked
-on Athlon XP).  (@uref{http://en.wikipedia.org/wiki/Pentium_4} may help
-decipher the P4 code names used.)
-
+Another tuned BLAS which has been available for some CPUs is by
+Kazushige Goto.  This is currently (October 2005) no longer available
+for Windows, and it seems that it will in future only to be offered via
+a source-code licence.  If you have an earlier version, put the
+@file{DLL} somewhere in your path or in @file{@var{R_HOME}/bin}, and
+edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to define
+@code{USE_GOTO=YES} and the name of the @file{DLL} (something like
+@file{libgoto_prescott-r0.99.3.dll}).  Specifying a Goto BLAS takes
+preference over ATLAS, and seems a little faster.  However, as it is
+compiled for MSVC, we have been unable to make it work for complex
+arithmetic and so it is only used for real linear algebra.
 
 @end itemize
 
@@ -1823,19 +1813,11 @@ use a multi-threaded ATLAS by specifying
 @end example
 
 Another tuned BLAS which is available for some processors under Linux is
-by Kazushige Goto, currently available@footnote{In mid-September 2005
-they were temporarily unavailable pending a formal release.} at
-@url{http://www.cs.utexas.edu/users/flame/goto/}.  Once this is is
-installed, it can be used by configuring with one of
-
-@example
---with-blas=goto
---with-blas=-lgoto
-@end example
-
-Multi-threaded versions of Goto's BLAS are available (and indeed,
-version 0.99-3 seems only to be available in a multi-threaded version).
-These are likely to require
+by Kazushige Goto, currently available @emph{for academic use only}
+(after registering) via
+@uref{http://www.tacc.utexas.edu/resources/software/software.php}.
+(Recent versions are multi-threaded only.)  Once this is installed, it
+can be used by configuring with
 
 @example
 --with-blas="-lgoto -lpthread"
