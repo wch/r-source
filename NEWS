@@ -6,6 +6,24 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.3.0
+
+
+DEPRECATED & DEFUNCT
+
+    o	The undocumented use of atan() with two arguments has been
+	removed: use atan2() as documented.
+
+
+
+
+	**************************************************
+	*						 *
+	*	       2.2 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
 		CHANGES IN R VERSION 2.2.0
 
 

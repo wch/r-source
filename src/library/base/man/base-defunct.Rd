@@ -38,6 +38,8 @@
 \alias{package.description}
 \alias{loadURL}
 \alias{delay}
+\alias{write.table0}
+\alias{format.char}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -101,6 +103,9 @@ package.description(pkg, lib.loc = NULL, fields = NULL)
 loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
 delay(x, env = .GlobalEnv)
 % </Removed 2.2.0>
+% Removed in 2.3.0
+format.char(x, width = NULL, flag = "-")
+% </Removed 2.3.0>
 }
 \details{
   \code{category} has been an old-S function before there were factors;
@@ -169,6 +174,12 @@ delay(x, env = .GlobalEnv)
   
   \code{delay} has been replaced by \code{\link{delayedAssign}}. 
   As from \R 2.1.0 promises should never be visible unevaluated.
+
+  \code{write.table0} was an \R-level version of \code{write.table}
+  provided for temporary back-compatibility.
+
+  \code{format.char} was an auxiliary function for \code{\link{formatC}}
+  whose functionality (and more) is provided by \code{\link{format.default}}.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}
