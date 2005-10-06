@@ -1023,8 +1023,8 @@ binaries for MacOS X (at the time of writing only for PowerPC) for a
 base distribution and a large number of add-on packages from
 @acronym{CRAN} to run on Mac OS X version 10.2.0 or higher.
 
-The simplest way is to use @file{R.dmg.sit}.  Just double-click on the
-icon and the archive will be expanded as an image di file. Read the
+The simplest way is to use @file{R.dmg}.  Just double-click on the
+icon and the disk image file will be mounted. Read the
 @file{ReadMe.txt} inside the disk image and follow the instructions.
 
 See the @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
@@ -1054,9 +1054,9 @@ make
 @noindent
 and then sit back and wait.  The first two options are the default (and
 strongly recommended), and with some toolsets have been essential.  The
-second line of options is needed only if you want to build @R{} for use
-with @code{R.app} Console, and imply @option{--enable-R-shlib} to build
-@R{} as a shared library.
+second line of options is also default on Mac OS X, but needed only if
+you want to build @R{} for use with @code{R.app} Console, and imply
+@option{--enable-R-shlib} to build @R{} as a shared library.
 
 These options configure @R{} to be built and installed as a framework
 called @file{R.framework}.  The default path for @file{R.framework} is
@@ -1146,7 +1146,7 @@ all those it depends on that are not already installed, use e.g.
 
 
 What @code{install.packages} does by default is different on Unix and
-Windows.  On Unix-alikes (include MacOS X unless running from the `AQUA'
+Windows.  On Unix-alikes (include MacOS X unless running from the GUI
 console) it consults the list of available @emph{source} packages on
 @acronym{CRAN} (or other repository/ies), downloads the latest version
 of the package sources, and installs them (via @code{R CMD INSTALL}).
@@ -1169,20 +1169,19 @@ character vector by the argument @code{repos}: these can include a
 @acronym{CRAN} mirror, Bioconductor, Omegahat, local archives, local
 files, @dots{}).
 
-@findex install.binaries
 On Mac OS X @code{install.packages} works as it does on other Unix-like
-systems, but there is an additional function @code{install.binaries}
-that will download and install binary packages from @acronym{CRAN}.
-These Macintosh binary package files have the extension @samp{tgz}.  The
-Aqua GUI provides for installation of either binary or source packages,
-from @acronym{CRAN} or local files.
+systems, but there is an additional type @code{mac.binary} that can be
+passed to @code{install.package} in order to download and install binary
+packages from @acronym{CRAN}. These Macintosh binary package files have
+the extension @samp{tgz}.  The R GUI provides for installation of either
+binary or source packages, from @acronym{CRAN} or local files.
 
 @menu
 * Customizing compilation under Unix::  
-* Customising compilation in Windows::  
+* Customizing compilation in Windows::  
 @end menu
 
-@node Customizing compilation under Unix, Customising compilation in Windows, Installing packages, Installing packages
+@node Customizing compilation under Unix, Customizing compilation in Windows, Installing packages, Installing packages
 @subsection Customizing compilation under Unix
 
 The R system and package-specific compilation flags can be overridden or
@@ -1197,8 +1196,8 @@ reasonable amount of diagnostic messaging (``warnings'') when compiling,
 such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the Gnu
 Compiler Collection.
 
-@node Customising compilation in Windows,  , Customizing compilation under Unix, Installing packages
-@subsection Customising compilation in Windows
+@node Customizing compilation in Windows,  , Customizing compilation under Unix, Installing packages
+@subsection Customizing compilation in Windows
 @findex MakeDll
 @findex Makevars.win
 @findex HELP

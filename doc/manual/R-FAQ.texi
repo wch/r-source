@@ -463,14 +463,15 @@ Windows @acronym{FAQ}''} for more details.
 @subsection How can R be installed (Macintosh)
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
-Apple installer package named @file{RAqua.pkg.sit} compressed in Aladdin
-Stuffit format.  Once downloaded, uncompressed and executed, the
-installer will install the current non-developer release of R.  RAqua is
-a native Mac OS X Darwin version of R with an Aqua GUI.  Inside
-@file{bin/macosx/@var{x}.@var{y}} there are prebuilt binary packages to
+Apple installer package inside a disk image named @file{R.dmg}.
+Once downloaded and executed, the installer will install the current
+non-developer release of R.  RAqua is
+a native Mac OS X Darwin version of R with a R.app Mac OS X GUI.  Inside
+@file{bin/macosx/powerpc/contrib/@var{x}.@var{y}} there are prebuilt
+binary packages (for powerpc version of Mac OS X) to
 be used with RAqua corresponding to the ``@var{x}.@var{y}'' release of
 R. The installation of these packages is available through the
-``Package'' menu of the RAqua GUI.  This port of R for Mac OS X is
+``Package'' menu of the R.app GUI.  This port of R for Mac OS X is
 maintained by @email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
 @url{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
 Mac OS X @acronym{FAQ}} has more details.
