@@ -4,6 +4,18 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+R 2.2.0 patched
+===============
+
+Using the latest binutils allows us to distribute RGui.exe and Rterm.exe
+as large-address-aware (see the rw-FAQ Q2.9).
+
+The maximum C stack size for RGui.exe and Rterm.exe has been increased
+to 10Mb (from 2Mb); this is comparable with the default on Linux systems
+and may allow some larger programs to run without crashes.
+
+
+
 R 2.2.0
 =======
 
