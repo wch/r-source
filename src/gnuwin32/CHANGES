@@ -32,6 +32,9 @@ and may allow some larger programs to run without crashes.
 Overwrite mode in the console works for MBCS charsets. (Patch
 contributed by Haruki Koyanagi <koyanagi@com-one.com>.)
 
+R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the
+indices.
+
 
 
 R 2.2.0

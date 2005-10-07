@@ -70,7 +70,7 @@ foreach $pkg (@ARGV) {
 
 print("\n");
 ## re-make the HTML indices
-system("make -C $R_HOME/src/gnuwin32/help --no-print-directory RHOME=$R_HOME indices");
+system("make -f $R_HOME/src/gnuwin32/MakePkg --no-print-directory RHOME=$R_HOME DPKG='$R_HOME/library' indices");
 
 
 sub usage {
