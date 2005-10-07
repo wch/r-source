@@ -490,10 +490,13 @@ static int writeline(ConsoleData p, int i, int j)
 	    mbs_init(&mb_st);
 	    for (w0 = 0; w0 <= CURCOL; ) {
 		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		if(used == 0) break;
 		w0 += wcwidth(wc);
 		P += used;
 	    }
-	    w0 = wcwidth(wc); P -= used;
+	    /* term string '\0' box width = 1 fix */
+	    w0 = (wc == L'\0') ? 1 : wcwidth(wc); 
+	    P -= used;
 	    r = rect(BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH,
 		     w0 * FW, FH);
 	    gfillrect(p->bm, p->ufg, r);
@@ -525,6 +528,7 @@ static int writeline(ConsoleData p, int i, int j)
 	    mbs_init(&mb_st);
 	    for (w0 = 0; w0 < x0; ) {
 		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		if(used == 0) break;
 		w1 = wcwidth(wc);
 		w0 += w1;
 		P += used;
@@ -545,6 +549,7 @@ static int writeline(ConsoleData p, int i, int j)
 	    mbs_init(&mb_st);
 	    for (w0 = 0; w0 <= x1; ) {
 		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		if(used == 0) break;
 		wl = wcwidth(wc);
 		w0 += wl;
 		P += used;
@@ -1403,17 +1408,49 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
 	}
         if(chtype && (max_byte < len - 2)) { /* not a control char */
 	    int i;
-	    if(!p->overwrite) {
-		for(i = max_byte; i > cur_byte; i--) {
-		    cur_line[i] = cur_line[i - 1];
+#ifdef SUPPORT_MBCS
+	    if(mbcslocale) {
+		char s[9];
+		int clen;
+		int res;
+		wchar_t wc;
+
+		memset(s, 0, sizeof(s));
+		for(clen = 0; clen <= MB_CUR_MAX;) {
+		    s[clen++] = cur_char;
+		    mbs_init(&mb_st);
+		    res = mbrtowc(&wc, s, clen ,&mb_st);
+		    if(res >= 0) break;
+		    cur_char = consolegetc(c);
 		}
+		if( p->overwrite ==1 && cur_byte != max_byte ) {
+		    mb_len = mb_char_len(cur_line, cur_byte);
+		    for(i = cur_byte; i <= max_byte-mb_len ; i++)
+			cur_line[i] = cur_line[i + mb_len];
+		    max_byte -= mb_len;
+		}
+		for(i = max_byte; i >= cur_byte; i--) 
+		    cur_line[i+clen] = cur_line[i]; 
+		for(i = 0;  i< clen; i++) 
+		    cur_line[cur_byte + i] = s[i];
+		max_byte += clen;
+		cur_byte += clen; 
+	    } else {
+#endif /* SUPPORT_MBCS */
+		if(!p->overwrite) {
+		    for(i = max_byte; i > cur_byte; i--) {
+			cur_line[i] = cur_line[i - 1];
+		    }
+		}
+		cur_line[cur_byte] = cur_char;
+		if(!p->overwrite || cur_byte == max_byte) {
+		    max_byte += 1;
+		    cur_line[max_byte] = '\0';
+		}
+		cur_byte++;
+#if SUPPORT_MBCS /* SUPPORT_MBCS*/
 	    }
-	    cur_line[cur_byte] = cur_char;
-	    if(!p->overwrite || cur_byte == max_byte) {
-		max_byte += 1;
-		cur_line[max_byte] = '\0';
-	    }
-	    cur_byte++;
+#endif /* */
 	} else { /* a control char */
 	    /* do normal editing commands */
 	    int i;
