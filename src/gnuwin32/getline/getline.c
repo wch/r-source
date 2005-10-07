@@ -40,7 +40,7 @@ int 		(*gl_tab_hook)() = gl_tab;
 #include <R_ext/rlocale.h>
 #include <wchar.h>
 extern Rboolean mbcslocale;
-#define mbs_init(x) memset(x,0,sizeof(mbstate_t))
+#define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 #endif /* SUPPORT_MBCS */
 
 /******************** imported interface *********************************/
@@ -574,14 +574,14 @@ getline(char *prompt, char *buf, int buflen)
 #ifdef SUPPORT_MBCS
 	      case '\002': 	/* ^B */
 		if(mbcslocale) {
-		  mb_len=0;
-		  mbs_init(&mb_st);
-		  for(i = 0; i< gl_pos ;){
-		    mbrtowc(&wc,gl_buf+i,MB_CUR_MAX,&mb_st);
-		    mb_len = wcwidth(wc);
-		    i+=(wc==0)?0:mb_len;
-		  }
-		  gl_fixup(gl_prompt, -1, gl_pos - mb_len);
+		    mb_len = 0;
+		    mbs_init(&mb_st);
+		    for(i = 0; i< gl_pos ;) {
+			mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
+			mb_len = wcwidth(wc);
+			i += (wc==0) ? 0 : mb_len;
+		    }
+		    gl_fixup(gl_prompt, -1, gl_pos - mb_len);
 		} else
 		    gl_fixup(gl_prompt, -1, gl_pos-1);
 		break;
@@ -590,10 +590,10 @@ getline(char *prompt, char *buf, int buflen)
                 break;
 #endif /* SUPPORT_MBCS  */
 	      case '\003':                                      /* ^C */
-                gl_fixup(gl_prompt,-1,gl_cnt);
-		gl_puts("^C\n");
-                gl_kill(0);
-                gl_fixup(gl_prompt,-2,BUF_SIZE);
+		  gl_fixup(gl_prompt, -1, gl_cnt);
+		  gl_puts("^C\n");
+		  gl_kill(0);
+		  gl_fixup(gl_prompt, -2, BUF_SIZE);
 		break;
 	      case '\004':					/* ^D */
 		if (gl_cnt == 0) {
@@ -609,17 +609,17 @@ getline(char *prompt, char *buf, int buflen)
 		break;
 #ifdef SUPPORT_MBCS
 		case '\006': /* ^F */
-		  if(mbcslocale){ 
-		    if(gl_pos>=gl_cnt)break;
-		   mb_len=0;
-		   mbs_init(&mb_st);
-		   for(i = 0; i<=gl_pos ;){
-		     mbrtowc(&wc,gl_buf+i,MB_CUR_MAX,&mb_st);
-		     mb_len = wcwidth(wc);
-		     i+=(wc==0)?0:mb_len;
-		   }
-		   gl_fixup(gl_prompt, -1, gl_pos + mb_len);
-		}
+		  if(mbcslocale) { 
+		      if(gl_pos >= gl_cnt)break;
+		      mb_len = 0;
+		      mbs_init(&mb_st);
+		      for(i = 0; i<= gl_pos ;){
+			  mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
+			  mb_len = wcwidth(wc);
+			  i += (wc==0) ? 0 : mb_len;
+		      }
+		      gl_fixup(gl_prompt, -1, gl_pos + mb_len);
+		  }
 		else
 		  gl_fixup(gl_prompt, -1, gl_pos+1);
 		break;
@@ -695,17 +695,17 @@ getline(char *prompt, char *buf, int buflen)
 		        break;
 #ifdef SUPPORT_MBCS
 		    case 'C': /* right */
-		      if(mbcslocale){ 
-		   	 mb_len=0;
-			 mbs_init(&mb_st);
-			 for(i = 0; i<= gl_pos ;){
-			   mbrtowc(&wc,gl_buf+i,MB_CUR_MAX,&mb_st);
-			   mb_len = wcwidth(wc);
-			   i+=(wc==0)?0:mb_len;
-			 }
-			 gl_fixup(gl_prompt, -1, gl_pos + mb_len);
-		      }else
-			 gl_fixup(gl_prompt, -1, gl_pos+1);
+			if(mbcslocale) { 
+			    mb_len = 0;
+			    mbs_init(&mb_st);
+			    for(i = 0; i<= gl_pos ;){
+				mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
+				mb_len = wcwidth(wc);
+				i += (wc==0) ? 0 : mb_len;
+			    }
+			    gl_fixup(gl_prompt, -1, gl_pos + mb_len);
+			} else
+			    gl_fixup(gl_prompt, -1, gl_pos+1);
 #else
 		      case 'C': gl_fixup(gl_prompt, -1, gl_pos+1); /* right */
 #endif /* SUPPORT_MBCS */
@@ -713,15 +713,15 @@ getline(char *prompt, char *buf, int buflen)
 #ifdef SUPPORT_MBCS
 		    case 'D': /* left */
 		       if(mbcslocale) {
-			 mb_len=0;
-                       mbs_init(&mb_st);
-		        for(i = 0; i<= gl_pos ;){
-			  mbrtowc(&wc,gl_buf+i,MB_CUR_MAX,&mb_st);
-			  mb_len = wcwidth(wc);
-			  i+=(wc==0)?0:mb_len;
-		        }
-		        gl_fixup(gl_prompt, -1, gl_pos - mb_len);
-		       }else
+			   mb_len = 0;
+			   mbs_init(&mb_st);
+			   for(i = 0; i <= gl_pos ;){
+			       mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
+			       mb_len = wcwidth(wc);
+			       i += (wc==0) ? 0 :mb_len;
+			   }
+			   gl_fixup(gl_prompt, -1, gl_pos - mb_len);
+		       } else
 			 gl_fixup(gl_prompt, -1, gl_pos-1);
 #else
 		      case 'D': gl_fixup(gl_prompt, -1, gl_pos-1); /* left */
@@ -786,46 +786,46 @@ gl_addchar(int c)
     }
 #if SUPPORT_MBCS
     if(mbcslocale) {
-      int mb_len;
-      int dst_len;
-      wchar_t mb_st;
-      wchar_t wc;
-      char s[9];
-      int res;
-      int clen ;
+	int mb_len;
+	int dst_len;
+	wchar_t mb_st;
+	wchar_t wc;
+	char s[9];
+	int res;
+	int clen ;
       
-       s[0]=c;
-       clen=1;
-       res = 0;
-       if((unsigned int)c >= (unsigned int)0x80 ) {
+	s[0] = c;
+	clen = 1;
+	res = 0;
+	if((unsigned int)c >= (unsigned int)0x80) {
             while(clen <= MB_CUR_MAX) {
 	        mbs_init(&mb_st);
 	        res = mbrtowc(&wc, s, clen, &mb_st);
 	        if(res >= 0) break;
 	        if(res == -1) 
-	          gl_error("invalid multibyte character in mbcs_get_next");
+		    gl_error("invalid multibyte character in mbcs_get_next");
   	        /* so res == -2 */
 	        c = gl_getc();
 	        if(c == EOF) 
-	          gl_error("EOF whilst reading MBCS char");
+		    gl_error("EOF whilst reading MBCS char");
 	        s[clen++] = c;
-	     } /* we've tried enough, so must be complete or invalid by now */
+	    } /* we've tried enough, so must be complete or invalid by now */
 	}
-       if( res >= 0 ) {
-	   if (!(gl_overwrite == 0 || gl_pos == gl_cnt))  
-	     gl_del(0); 
-          for (i=gl_cnt; i >= gl_pos; i--)
+	if( res >= 0 ) {
+	    if (!(gl_overwrite == 0 || gl_pos == gl_cnt))  
+		gl_del(0); 
+	    for (i=gl_cnt; i >= gl_pos; i--)
                 gl_buf[i+clen] = gl_buf[i];
-          for (i=0; i<clen; i++)
+	    for (i=0; i<clen; i++)
                 gl_buf[gl_pos + i] = s[i];
-          gl_fixup(gl_prompt, gl_pos, gl_pos+clen);
-      }
+	    gl_fixup(gl_prompt, gl_pos, gl_pos+clen);
+	}
        
-    }else
+    } else
  
 #endif   /* SUPPORT_MBCS */   
     if (gl_overwrite == 0 || gl_pos == gl_cnt) {
-        for (i=gl_cnt; i >= gl_pos; i--)
+        for (i = gl_cnt; i >= gl_pos; i--)
             gl_buf[i+1] = gl_buf[i];
         gl_buf[gl_pos] = (char) c;
         gl_fixup(gl_prompt, gl_pos, gl_pos+1);
@@ -875,32 +875,32 @@ gl_transpose(void)
 
     if (gl_pos > 0 && gl_cnt > gl_pos) {
 #ifdef SUPPORT_MBCS
-      if(mbcslocale) {
-	int l_len=0;
-	int r_len=0;
-	int i=0;
-	int j=0;
-	mbstate_t mb_st;
+	if(mbcslocale) {
+	    int l_len = 0;
+	    int r_len = 0;
+	    int i = 0;
+	    int j = 0;
+	    mbstate_t mb_st;
 
-	mbs_init(&mb_st);
-	for (i=0; i<gl_pos ;) {
-	  l_len = mbrlen(gl_buf+i,MB_CUR_MAX,&mb_st);
-	  i+=l_len;
+	    mbs_init(&mb_st);
+	    for (i = 0; i < gl_pos ;) {
+		l_len = mbrlen(gl_buf+i, MB_CUR_MAX, &mb_st);
+		i += l_len;
+	    }
+	    mbs_init(&mb_st);
+	    r_len = mbrlen(gl_buf+gl_pos, MB_CUR_MAX, &mb_st);
+	    for (i=0; i<r_len; i++) {
+		for(j=0; j<l_len; j++) {
+		    c = gl_buf[gl_pos+i-j];
+		    gl_buf[gl_pos+i-j] = gl_buf[gl_pos+i-j-1];
+		    gl_buf[gl_pos+i-j-1] = (char)c;
+		}
+	    }
+	    gl_extent = l_len + r_len;
+	    gl_fixup(gl_prompt,
+		     gl_pos - l_len,
+		     gl_pos + (r_len - l_len)); 
 	}
-	mbs_init(&mb_st);
-	r_len = mbrlen(gl_buf+gl_pos,MB_CUR_MAX,&mb_st);
-	for ( i=0;i<r_len;i++) {
-	  for( j=0;j<l_len;j++) {
-	    c = gl_buf[gl_pos+i-j];
-	    gl_buf[gl_pos+i-j]=gl_buf[gl_pos+i-j-1];
-	    gl_buf[gl_pos+i-j-1]=(char)c;
-	  }
-	}
-	gl_extent = l_len + r_len;
-	gl_fixup(gl_prompt,
-		 gl_pos - l_len,
-		 gl_pos + (r_len - l_len)); 
-      }
 #else  /* SUPPORT_MBCS */
 	c = gl_buf[gl_pos-1];
 	gl_buf[gl_pos-1] = gl_buf[gl_pos];
@@ -957,22 +957,22 @@ gl_del(int loc)
        mbs_init(&mb_st);
    
        if ((loc == -1 && gl_pos > 0) || (loc == 0 && gl_pos < gl_cnt)) {
-         for(i = 0; i<= gl_pos + loc ;){
-	  mbrtowc(&wc,gl_buf+i,MB_CUR_MAX,&mb_st);
-	  mb_len = wcwidth(wc);
-	  i+=(wc==0)?0:mb_len;
-        }
-        for (i=gl_pos+(loc*mb_len); i <= gl_cnt - mb_len; i++)
-	  gl_buf[i] = gl_buf[i + mb_len];
-	  gl_fixup(gl_prompt,gl_pos+(loc * mb_len) , gl_pos+(loc * mb_len));
-      } else
-	gl_beep();
+	   for(i = 0; i<= gl_pos + loc;) {
+	       mbrtowc(&wc,gl_buf+i, MB_CUR_MAX, &mb_st);
+	       mb_len = wcwidth(wc);
+	       i += (wc==0) ? 0 : mb_len;
+	   }
+	   for (i = gl_pos+(loc*mb_len); i <= gl_cnt - mb_len; i++)
+	       gl_buf[i] = gl_buf[i + mb_len];
+	   gl_fixup(gl_prompt,gl_pos+(loc * mb_len) , gl_pos+(loc * mb_len));
+       } else
+	   gl_beep();
    } else   
 #endif /* SUPPORT_MBCS */
    if ((loc == -1 && gl_pos > 0) || (loc == 0 && gl_pos < gl_cnt)) {
-      for (i=gl_pos+loc; i < gl_cnt; i++)
-       gl_buf[i] = gl_buf[i+1];
-	gl_fixup(gl_prompt, gl_pos+loc, gl_pos+loc);
+      for (i = gl_pos+loc; i < gl_cnt; i++)
+	  gl_buf[i] = gl_buf[i+1];
+      gl_fixup(gl_prompt, gl_pos+loc, gl_pos+loc);
    } else
        gl_beep();
 }

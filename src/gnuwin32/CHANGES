@@ -7,6 +7,9 @@ See the file NEWS for changes that affect all versions of R.
 R 2.3.0
 =======
 
+There is now MBCS support in for the line editor in Rterm.exe
+(Contributed by Haruki Koyanagi <koyanagi@com-one.com>.)
+
 Import libraries are now made without -k (--kill-at).  This is not
 relevant for base R (R.dll and Rblas.dll only use cdecl entry points)
 but might be for contributed software using R's macros.
