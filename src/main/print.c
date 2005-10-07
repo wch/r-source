@@ -353,7 +353,11 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		if (taglen + strlen(CHAR(STRING_ELT(names, i))) > TAGBUFLEN)
 		    sprintf(ptag, "$...");
 		else {
-		    if( isValidName(CHAR(STRING_ELT(names, i))) )
+		    /* we need to distinguish character NA from "NA", which
+		       is a valid (if non-syntactic) name */
+		    if (STRING_ELT(names, i) == NA_STRING)
+			sprintf(ptag, "$<NA>");
+		    else if( isValidName(CHAR(STRING_ELT(names, i))) )
 			sprintf(ptag, "$%s", CHAR(STRING_ELT(names, i)));
 		    else
 			sprintf(ptag, "$\"%s\"", CHAR(STRING_ELT(names, i)));
@@ -485,7 +489,11 @@ static void printList(SEXP s, SEXP env)
 		if (taglen + strlen(CHAR(PRINTNAME(TAG(s)))) > TAGBUFLEN)
 		    sprintf(ptag, "$...");
 		else {
-		    if( isValidName(CHAR(PRINTNAME(TAG(s)))) )
+		    /* we need to distinguish character NA from "NA", which
+		       is a valid (if non-syntactic) name */
+		    if (PRINTNAME(TAG(s)) == NA_STRING)
+			sprintf(ptag, "$<NA>");
+		    else if( isValidName(CHAR(PRINTNAME(TAG(s)))) )
 			sprintf(ptag, "$%s", CHAR(PRINTNAME(TAG(s))));
 		    else
 			sprintf(ptag, "$\"%s\"", CHAR(PRINTNAME(TAG(s))));

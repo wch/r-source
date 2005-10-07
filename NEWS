@@ -6,6 +6,23 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.2.0 patched
+
+
+DEPRECATED & DEFUNCT
+
+    o	The undocumented use of atan() with two arguments is deprecated:
+	instead use atan2() (as documented).
+
+
+BUG FIXES
+
+    o	Names of list elements which are missing are now printed as
+	$<NA> and not $"NA" (which is how the non-missing name "NA" is
+	printed).
+
+
+
 		CHANGES IN R VERSION 2.2.0
 
 

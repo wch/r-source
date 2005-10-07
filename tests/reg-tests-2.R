@@ -1640,6 +1640,7 @@ DF <- data.frame(A=1:2, B=3:4)
 try(DF[2, 1:3] <- NULL)
 ## wrong error message in R < 2.2.0
 
+
 ## tests of signif
 ob <- 0:9 * 2000
 print(signif(ob, 3), digits=17) # had rounding error in 2.1.1
@@ -1648,3 +1649,13 @@ signif(1.2347e-306, 4)  # only 3 digits in 2.1.1
 signif(1.2347e-307, 4)
 ##
 
+### end of tests added in 2.2.0 patched ###
+
+
+## printing lists with NA names
+A <- list(1, 2)
+names(A) <- c("NA", NA)
+A
+## both printed as "NA" in 2.2.0
+
+### end of tests added in 2.2.0 patched ###

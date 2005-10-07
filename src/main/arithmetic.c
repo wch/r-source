@@ -1121,6 +1121,7 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 	else
 	    return math1(CAR(args), atan, call);
     case 2:
+	warning("use of atan() with 2 arguments is deprecated: use atan2()");
 	if (isComplex(CAR(args)) || isComplex(CDR(args)))
 	    return complex_math2(call, op, args, env);
 	else
