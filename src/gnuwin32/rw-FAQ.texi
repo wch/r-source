@@ -120,7 +120,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @code{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @code{@RWVER@-win32.exe} of about 25Mb.  This contains all the
+installer @code{@RWVER@-win32.exe} of about 26Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
 There are also links on that page to the @code{r-patched} and
@@ -139,7 +139,7 @@ should work.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
-takes up about 50Mb of disk space and a minimal one about 18Mb.
+takes up about 56Mb of disk space and a minimal one about 18Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
