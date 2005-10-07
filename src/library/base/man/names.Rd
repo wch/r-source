@@ -35,6 +35,11 @@ names(x) <- value
   It is possible to update just part of the names attribute via the
   general rules: see the examples.  This works because the expression
   there is evaluated as \code{z <- "names<-"(z, "[<-"(names(z), 3, "c2"))}.
+
+  The name \code{""} is special: it is used to indicate that there is no
+  name associated with an element of a (atomic or generic) vector.
+  Subscripting by \code{""} will match nothing (not even elements which
+  have no name).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
