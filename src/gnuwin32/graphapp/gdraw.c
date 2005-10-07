@@ -656,7 +656,7 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     SelectObject(dc, old);
 }
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width)
 {

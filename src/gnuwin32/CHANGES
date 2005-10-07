@@ -14,11 +14,14 @@ The maximum C stack size for RGui.exe and Rterm.exe has been increased
 to 10Mb (from 2Mb); this is comparable with the default on Linux systems
 and may allow some larger programs to run without crashes.
 
-Overwrite mode in the console works for MBCS charsets. (Patch
+Overwrite mode in the console now works for MBCS charsets.  (Patch
 contributed by Haruki Koyanagi <koyanagi@com-one.com>.)
 
 R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the
 indices.
+
+The windows() family of devices did not find the right character in
+MBCS locales for non-ASCII characters.  (Pointed out by Ei-Ji Nakama.)
 
 
 
