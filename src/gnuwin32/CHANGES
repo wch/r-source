@@ -14,7 +14,7 @@ but might be for contributed software using R's macros.
 The import libraries libR.a, libRblas.a and libproxy.a are now
 installed in R_HOME/lib (rather than R_HOME/src/gnuwin32).
 
- 
+
 
 R 2.2.0 patched
 ===============
@@ -25,6 +25,9 @@ as large-address-aware (see the rw-FAQ Q2.9).
 The maximum C stack size for RGui.exe and Rterm.exe has been increased
 to 10Mb (from 2Mb); this is comparable with the default on Linux systems
 and may allow some larger programs to run without crashes.
+
+Overwrite mode in the console works for MBCS charsets. (Patch
+contributed by Haruki Koyanagi <koyanagi@com-one.com>.)
 
 
 
