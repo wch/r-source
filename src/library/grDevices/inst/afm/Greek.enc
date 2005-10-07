@@ -1,0 +1,39 @@
+%% ISO8859-7 This should be a postscript fragment of an array of length exactly 256
+/ISOGreekEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+%%  040
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quotesingle
+/parenleft /parenright /asterisk /plus /comma /hyphen /period /slash
+%%  060
+/zero /one /two /three /four /five /six /seven
+/eight /nine /colon /semicolon /less /equal /greater /question
+%% 0100
+/at /A /B /C /D /E /F /G /H /I /J /K /L /M /N /O /P /Q /R /S /T /U /V
+/W /X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
+%% 0140
+/grave /a /b /c /d /e /f /g /h /i /j /k /l /m /n /o /p /q /r /s /t /u /v
+/w /x /y /z /braceleft /bar /braceright /asciitilde /.notdef
+%% 0200
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+%% 0240
+/uni00A0 /afii64937 /afii57929 /sterling /currency /yen /brokenbar /section
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /uni00AD /registered /afii00208
+/degree /plusminus /twosuperior /threesuperior /tonos /dieresistonos /Alphatonos /periodcentered
+/Epsilontonos /Etatonos /Iotatonos /guillemotright /Omicrontonos /onehalf /Upsilontonos /Omegatonos
+%% 0300
+/iotadieresistonos /Alpha /Beta /Gamma /uni0394 /Epsilon /Zeta /Eta
+/Theta /Iota /Kappa /Lambda /Mu /Nu /Xi /Omicron
+/Pi /Rho /Ograve /Sigma /Tau /Upsilon /Phi /Chi
+/Psi /uni03A9 /Iotadieresis /Upsilondieresis /alphatonos /epsilontonos /etatonos /iotatonos
+%% 0340
+/upsilondieresistonos /alpha /beta /gamma /delta /epsilon /zeta /eta
+/theta /iota /kappa /lambda /uni03BC /nu /xi /omicron
+/pi /rho /sigma1 /sigma /tau /upsilon /phi /chi
+/psi /omega /iotadieresis /upsilondieresis /omicrontonos /upsilontonos /omegatonos /ydieresis
+]

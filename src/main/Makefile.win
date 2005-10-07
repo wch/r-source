@@ -21,14 +21,14 @@ CSOURCES=\
 	format.c fourier.c \
 	gevents.c gram.c gram-ex.c graphics.c \
 	identical.c internet.c iosupport.c \
-	lapack.c list.c logic.c \
+	lapack.c localecharset.c list.c logic.c \
 	main.c mapply.c match.c memory.c model.c \
 	names.c \
 	objects.c optim.c optimize.c options.c \
 	par.c paste.c pcre.c platform.c \
 	plot.c plot3d.c plotmath.c \
 	print.c printarray.c printvector.c printutils.c qsort.c \
-	random.c regex.c registration.c relop.c \
+	random.c regex.c registration.c relop.c rlocale.c \
 	saveload.c scan.c seq.c serialize.c size.c sort.c source.c split.c \
 	sprintf.c startup.c subassign.c subscript.c subset.c summary.c sysutils.c \
 	unique.c util.c \
@@ -37,7 +37,7 @@ CSOURCES=\
 FSOURCES=xxxpr.f
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) 
 
-gram.c: ;
+gram.c: gram.y
 
 saveload-CFLAGS=-I../extra/xdr
 connections-CFLAGS=-I../extra/zlib -I../extra/bzip2

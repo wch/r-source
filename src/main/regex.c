@@ -85,6 +85,9 @@
 #if defined HAVE_WCTYPE_H || defined _LIBC
 # include <wctype.h>
 #endif /* HAVE_WCTYPE_H || _LIBC */
+#ifdef SUPPORT_MBCS
+# include <R_ext/rlocale.h>
+#endif
 
 /* In case that the system doesn't have isblank().  */
 #if !defined _LIBC && !defined HAVE_ISBLANK && !defined isblank

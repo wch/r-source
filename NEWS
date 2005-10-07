@@ -29,6 +29,17 @@ DEPRECATED & DEFUNCT
     o	format.char() is defunct in favour of format.default().
 
 
+INTERNATIONALIZATION
+
+	A set of patches supplied by Ei-ji Nakama is being incorporated.
+	[Work in progress.]
+
+    o	New postscript encodings for ISO Latin-7 (8859-13, Latvian, 
+	Lithuanian etc), Greek and Cyrillic.
+
+    o	Support for CID postscript fonts in pdf() and postscript().
+
+
 BUG FIXES
 
     o	Quoted arguments to the R script after --args are now

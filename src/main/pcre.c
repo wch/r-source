@@ -41,6 +41,7 @@
 #endif
 
 #ifdef SUPPORT_UTF8
+# include <R_ext/rlocale.h>
 # include <wchar.h>
 # include <wctype.h>
 #endif

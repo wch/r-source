@@ -10,6 +10,7 @@ assign(".PostScript.Options",
 	 height = 0,
 	 family = "Helvetica",
 	 encoding = "default",
+	 cidfamily = "default",
 	 pointsize  = 12,
 	 bg	= "transparent",
 	 fg	= "black",
@@ -139,8 +140,30 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
         old$encoding <- switch(.Platform$OS.type,
                                "windows" = "WinAnsi.enc",
                                "ISOLatin1.enc")
+    # CID Font
+    if(is.null(old$cidfamily) || old$cidfamily  == "default")
+        old$cidfamily <- switch(toupper(gsub("^[-\s 0-9a-zA-Z]*_",
+                                             "",
+                                             gsub("\.[-_0-9a-zA-Z]*$",
+                                                  "",
+                                                  Sys.getlocale("LC_CTYPE")))),
+                                "JAPAN"                      = "Japan1",
+                                "JP"                         = "Japan1",
+                                "KOREA"                      = "Korea1",
+                                "KR"                         = "Korea1",
+                                "TAIWAN"                     = "CNS1",
+                                "TW"                         = "CNS1",
+                                "MACAU S.A.R."               = "CNS1",
+                                "HONG KONG S.A.R."           = "CNS1",
+                                "HK"                         = "CNS1",
+                                "PEOPLE'S REPUBLIC OF CHINA" = "GB1",
+                                "CN"                         = "GB1",
+                                "SINGAPORE"                  = "GB1",
+                                "SG"                         = "GB1",
+                                "")
+
     .External("PostScript",
-              file, old$paper, old$family, old$encoding, old$bg, old$fg,
+              file, old$paper, old$family, old$encoding, old$cidfamily, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
               old$onefile, old$pagecentre, old$print.it, old$command,
               title, fonts, PACKAGE = "grDevices")
@@ -190,6 +213,27 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
         }
         old$family <- family
     }
+    # CID Font
+    if(is.null(old$cidfamily) || old$cidfamily  == "default")
+        old$cidfamily <- switch(toupper(gsub("^[-\s 0-9a-zA-Z]*_",
+                                             "",
+                                             gsub("\.[-_0-9a-zA-Z]*$",
+                                                  "",
+                                                  Sys.getlocale("LC_CTYPE")))),
+                                "JAPAN"                      = "Japan1",
+                                "JP"                         = "Japan1",
+                                "KOREA"                      = "Korea1",
+                                "KR"                         = "Korea1",
+                                "TAIWAN"                     = "CNS1",
+                                "TW"                         = "CNS1",
+                                "MACAU S.A.R."               = "CNS1",
+                                "HONG KONG S.A.R."           = "CNS1",
+                                "HK"                         = "CNS1",
+                                "PEOPLE'S REPUBLIC OF CHINA" = "GB1",
+                                "CN"                         = "GB1",
+                                "SINGAPORE"                  = "GB1",
+                                "SG"                         = "GB1",
+                                "")
     # Extract version
     versions <- c("1.1", "1.2", "1.3", "1.4")
     if (version %in% versions)
@@ -197,7 +241,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     else
         stop("invalid PDF version")
     .External("PDF",
-              file, old$paper, old$family, old$encoding, old$bg, old$fg,
+              file, old$paper, old$family, old$encoding, old$cidfamily, old$bg, old$fg,
               width, height, old$pointsize, old$onefile, old$pagecentre, title,
               fonts, version[1], version[2], PACKAGE = "grDevices")
     invisible()

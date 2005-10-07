@@ -36,6 +36,7 @@
 
 #ifdef SUPPORT_MBCS
 # include <wchar.h>
+# include <R_ext/rlocale.h>
 #endif
 
 int R_GE_getVersion()

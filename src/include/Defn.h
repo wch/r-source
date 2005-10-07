@@ -892,6 +892,11 @@ void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 #include <wchar.h>
 #endif
 
+#ifdef HAVE_ICONV
+typedef unsigned short ucs2_t;
+size_t mbcsToUcs2(char *in, ucs2_t *out);
+size_t ucs2ToMbcs(ucs2_t *in, char *out);
+#endif /* HAVE_ICONV */
 /* main/util.c */
 void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);

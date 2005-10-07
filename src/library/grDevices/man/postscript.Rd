@@ -24,14 +24,14 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \usage{
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile = TRUE,
-           paper, family, encoding, bg, fg,
+           paper, family, encoding, cidfamily, bg, fg,
            width, height, horizontal, pointsize,
            pagecentre, print.it, command,
            title = "R Graphics Output", fonts = NULL)
 
 % paper, horizontal, width, height, family, pointsize, bg, fg)
 ps.options(paper, horizontal, width, height, family, encoding,
-           pointsize, bg, fg,
+           cidfamily, pointsize, bg, fg,
            onefile = TRUE, print.it = FALSE, append = FALSE,
            reset = FALSE, override.check = FALSE)
 }
@@ -79,6 +79,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
     In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed.
 #endif
   }
+  \item{cidfamily}{the default East Asia locale set: known values are
+    \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} or \code{"GB1"}.}
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.
     If \code{"transparent"} (or an equivalent specification), no
@@ -241,11 +243,13 @@ ps.options(paper, horizontal, width, height, family, encoding,
   used as all the encodings agree over that range.  Some encodings are
   supersets of ISOLatin1, too.  However, if accented and special
   characters do not come out as you expect, you may need to change the
-  encoding.  Three other encodings are supplied with \R:
+  encoding.  Some other encodings are supplied with \R:
   \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
   encodings normally used on Windows and MacOS (at least by Adobe), and
   \code{"PDFDoc.enc"} is the first 256 characters of the Unicode
-  encoding, the standard for PDF.
+  encoding, the standard for PDF.  There are also encodings for
+  ISO Latin-7 and Latin-9, Cyrillic and Greek, and \code{"TeXtext"}
+  for the 7-bit TeX encoding.
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro

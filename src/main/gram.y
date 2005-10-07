@@ -78,8 +78,82 @@ static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
 
 #ifdef SUPPORT_MBCS
+# include <R_ext/Riconv.h>
+# include <R_ext/rlocale.h>
 # include <wchar.h>
 # include <wctype.h>
+# include <sys/param.h>
+#ifdef HAVE_LANGINFO_CODESET
+# include <langinfo.h>
+#endif
+# ifdef Win32
+static const char UNICODE[]="UCS-2LE";
+# else
+#  if BYTE_ORDER == BIG_ENDIAN
+static const char UNICODE[]="UCS-4BE";
+#  else
+static const char UNICODE[]="UCS-4LE";
+# endif
+#endif
+#include <errno.h>
+
+static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
+{
+    char     tocode[128];
+    char     buf[16];
+    void    *cd = NULL ;
+    ucs2_t   ucs2s[2];
+    wchar_t  wcs[2];
+    wchar_t *inbuf = wcs;
+    size_t   inbytesleft = sizeof( wchar_t );
+    char    *outbuf = (char *)buf;
+    size_t   outbytesleft= sizeof( buf );
+    size_t   status;
+    
+    strcpy(tocode,"");
+    memset(buf,0,sizeof(buf));
+    memset(wcs,0,sizeof(wcs));
+    memset(ucs2s,0,sizeof(ucs2s));
+    wcs[0]=wc;
+
+    if(wc == L'\0'){
+	*s='\0';
+        return(1);
+    }
+    
+    if((void *)(-1)==(cd = Riconv_open("",(char *)UNICODE))){
+#ifndef  Win32
+        /* locale set fuzzy case */
+    	strncpy(tocode,locale2charset(NULL),sizeof(tocode));
+	if((void *)(-1)==(cd = Riconv_open(tocode,(char *)UNICODE))){
+            return((size_t)(-1)); 
+	}
+#else
+        return((size_t)(-1));
+#endif
+    }
+    
+    status = Riconv(cd,
+                   (char **)&inbuf,(size_t *)&inbytesleft,
+                   (char **)&outbuf,(size_t *)&outbytesleft);
+    Riconv_close(cd);
+
+    if (status==(size_t)(-1)){
+        switch(errno){
+        case EINVAL:
+            return((size_t)-2);
+        case EILSEQ:
+            return((size_t)-1);
+        case E2BIG:
+            break;
+        default:
+            errno=EILSEQ;
+            return((size_t)-1);
+        }
+    }
+    strncpy(s,buf,sizeof(buf));
+    return(strlen(buf));
+}
 
 static int mbcs_get_next(int c, wchar_t *wc)
 {
@@ -1695,7 +1769,8 @@ static int StringValue(int c)
 		if(delim)
 		    if((c = xxgetc()) != '}')
 			error(_("invalid \\u{xxxx} sequence"));
-		res = wcrtomb(buff, val, NULL); /* should always be valid */
+		
+		res = ucstomb(buff, val, NULL); /* should always be valid */
 		if((int)res <= 0) error(_("invalid \\uxxxx sequence"));
 		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
 		c = buff[res - 1]; /* pushed below */
@@ -1716,7 +1791,7 @@ static int StringValue(int c)
 		if(delim)
 		    if((c = xxgetc()) != '}')
 			error(_("invalid \\U{xxxxxxxx} sequence"));
-		res = wcrtomb(buff, val, NULL); /* should always be valid */
+		res = ucstomb(buff, val, NULL); /* should always be valid */
 		if((int)res <= 0) error(("invalid \\Uxxxxxxxx sequence"));
 		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
 		c = buff[res - 1]; /* pushed below */

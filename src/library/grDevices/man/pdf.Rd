@@ -17,7 +17,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, family = "Helvetica",
     title = "R Graphics Output", fonts = NULL, version = "1.1",
-    paper, encoding, bg, fg, pointsize)
+    paper, encoding, cidfamily = "", bg, fg, pointsize)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -35,6 +35,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{"Palatino"} or \code{"Times"}.  \bold{Note} the other
     specifications allowed for \code{\link{postscript}} are \bold{not}
     available.}
+  \item{cidfamily}{the default East Asia locale set: known values are
+    \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} or \code{"GB1"}.}
   \item{title}{title string to embed in the file.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} and

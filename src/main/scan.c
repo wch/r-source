@@ -39,6 +39,7 @@
 
 #ifdef SUPPORT_MBCS
 #include <wchar.h> /* for btowc */
+#include <R_ext/rlocale.h> /* for btowc */
 #endif
 
 /* The size of vector initially allocated by scan */

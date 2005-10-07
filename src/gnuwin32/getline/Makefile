@@ -1,6 +1,6 @@
 include ../MkRules
 
-CFLAGS=-DWin32
+CFLAGS=-DWin32 -I../../include
 LINKFLAGS=-s
 
 ifdef DEBUG

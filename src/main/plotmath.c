@@ -33,6 +33,7 @@
 
 #include <ctype.h>
 #ifdef SUPPORT_MBCS
+# include <R_ext/rlocale.h>
 # include <wchar.h>
 # include <wctype.h>
 #endif

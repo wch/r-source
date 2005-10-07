@@ -47,6 +47,7 @@
 
 
 #ifdef SUPPORT_MBCS
+# include <R_ext/rlocale.h>
 # include <wchar.h>
 # include <wctype.h>
 #if !HAVE_DECL_WCWIDTH

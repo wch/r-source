@@ -23,6 +23,11 @@
 #include <config.h>
 #endif
 
+#ifdef SUPPORT_MBCS
+# include <R_ext/rlocale.h>
+# include <wchar.h>
+#endif /* SUPPORT_MBCS */
+
 #include "Defn.h"
 #include "Graphics.h"
 #include "Fileio.h"
@@ -466,6 +471,9 @@ static void PicTeX_Polyline(int n, double *x, double *y,
 	/* String Width in Rasters */
 	/* For the current font in pointsize fontsize */
 
+extern size_t mbcsMblen(char *in); /* fron src/main/util.c */
+
+
 static double PicTeX_StrWidth(char *str, 
 			      R_GE_gcontext *gc,
 			      NewDevDesc *dd)
@@ -478,8 +486,35 @@ static double PicTeX_StrWidth(char *str,
     size = gc->cex * gc->ps + 0.5;
     SetFont(gc->fontface, size, ptd);
     sum = 0;
+#ifdef SUPPORT_MBCS
+    /*
+     * <FIXME>
+     * is ad-hoc.
+     * substitute it in wcwidth forcibly.
+     * reference to memory is better.
+     * </FIXME>
+     */
+    for(p=str ; *p ; p++){
+	int mb_len;
+	unsigned short ucs2;
+	char buf[8];
+
+	mb_len = (int)mbcsMblen(p);
+	if (mb_len == 1 && (unsigned char)*p < 128)
+		sum += charwidth[ptd->fontface-1][(int)*p];
+	else if (mb_len > 0){
+	    memset(buf,0,sizeof(buf));
+	    strncpy(buf,p,mb_len);
+	    mbcsToUcs2(buf, &ucs2);
+	    sum += (double)wcwidth(ucs2) * 0.5; /* There are not grounds at all */
+	}
+	if (mb_len > 0)
+	    p += mb_len - 1;
+    }
+#else
     for(p=str ; *p ; p++)
 	sum += charwidth[ptd->fontface-1][(int)*p];
+#endif
     return sum * ptd->fontsize;
 }
 
@@ -589,11 +624,23 @@ static void PicTeX_Text(double x, double y, char *str,
 		"%% Writing string of length %.2f, at %.2f %.2f, xc = %.2f yc = %.2f\n",
 		(double)PicTeX_StrWidth(str, gc, dd), 
 		x, y, 0.0, 0.0);
+#if 0 /* Original */
     fprintf(ptd->texfp,"\\put ");
     textext(str, ptd);
     if (rot == 90 )
 	fprintf(ptd->texfp," [rB] <%.2fpt,%.2fpt>", xoff, yoff);
     else fprintf(ptd->texfp," [lB] <%.2fpt,%.2fpt>", xoff, yoff);
+#else /* use rotatebox */
+    if (rot == 90 ){
+	fprintf(ptd->texfp,"\\put {\\rotatebox{%d}",(int)rot);
+	textext(str, ptd);
+	fprintf(ptd->texfp,"} [rB] <%.2fpt,%.2fpt>", xoff, yoff);
+    }else{
+	fprintf(ptd->texfp,"\\put ");
+	textext(str, ptd);
+	fprintf(ptd->texfp," [lB] <%.2fpt,%.2fpt>", xoff, yoff);
+    }
+#endif
     fprintf(ptd->texfp," at %.2f %.2f\n", x, y);
 }
 

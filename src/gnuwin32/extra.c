@@ -1472,6 +1472,8 @@ Rboolean winNewFrameConfirm(void)
     return xd->newFrameConfirm();
 }
 
+#ifdef SUPPORT_MBCS
+#if 0
 /* wc[s]width -------------------------------------------------- */
 
 /* From http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c */
@@ -1603,7 +1605,8 @@ int wcswidth(wchar_t *s)
     for(i = 0; i < len; i++) w0 += wcwidth(s[i]);
     return w0;
 }
-
+#endif
+#endif
 
 /* UTF-8 support ----------------------------------------------- */
 

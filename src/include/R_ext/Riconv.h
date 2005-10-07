@@ -25,6 +25,9 @@ extern "C" {
 #endif
 
 /* from sysutils.c */
+#undef Riconv_open
+#undef Riconv
+#undef Riconv_close
 void * Riconv_open (char* tocode, char* fromcode);
 size_t Riconv (void * cd, char **inbuf, size_t *inbytesleft,
 	       char  **outbuf, size_t *outbytesleft);
