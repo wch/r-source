@@ -146,8 +146,12 @@ function(package, dir, lib.loc = NULL)
     }
 
     ## Undocumented objects?
-    if((length(code_objs) == 0) && (length(data_objs) == 0))
+    if(!missing(package)
+       && (length(code_objs) == 0)
+       && (length(data_objs) == 0))
         warning("neither code nor data objects found")
+    ## When working on the sources, we will not get any code objects in
+    ## case a package provides "just" S4 classes and methods.
 
     if(!is_base) {
         ## Code objects in add-on packages with names starting with a
