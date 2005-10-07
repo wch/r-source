@@ -639,7 +639,7 @@ static void PicTeX_Text(double x, double y, char *str,
 	fprintf(ptd->texfp,"\\put {\\rotatebox{%d}",(int)rot);
 	textext(str, ptd);
 	fprintf(ptd->texfp,"} [rB] <%.2fpt,%.2fpt>", xoff, yoff);
-    }else{
+    } else {
 	fprintf(ptd->texfp,"\\put ");
 	textext(str, ptd);
 	fprintf(ptd->texfp," [lB] <%.2fpt,%.2fpt>", xoff, yoff);
