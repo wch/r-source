@@ -9,7 +9,7 @@ browse.pkgs <- function (repos = getOption("repos"), contriburl = contrib.url(re
   i.pkgs <- as.character(x[, 1])
   i.vers <- as.character(x[, 3])
   label <- paste("(", type, ") @", contriburl)
-  y <- avaliable.packages(contriburl = contriburl)
+  y <- available.packages(contriburl = contriburl)
   c.pkgs <- as.character(y[, 1])
   c.vers <- as.character(y[, 2])
 
