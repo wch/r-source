@@ -1637,7 +1637,9 @@ names attribute of @code{x} and the resulting integers are used.  For
 @code{[[} and @code{$} partial matching is used if exact matching fails,
 so @code{x$aa} will match @code{x$aabb} if @code{x} does not a component
 named @code{"aa"} and @code{"aabb"} is the first name which has prefix
-@code{"aa"}.  However, @code{[} requires an exact match.
+@code{"aa"}.  However, @code{[} requires an exact match.  The string
+@code{""} is treated specially: it indicates `no name' and matches no
+element (not even those without a name).
 
 @item
 @strong{Factor}.  The result is identical to @code{x[as.integer(i)]}.
