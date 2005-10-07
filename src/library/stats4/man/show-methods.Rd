@@ -1,14 +1,11 @@
 \name{show-methods}
 \docType{methods}
 \alias{show-methods}
-\alias{show,ANY-method}
 \alias{show,mle-method}
 \alias{show,summary.mle-method}
 \title{Methods for Function show in Package `stats4'}
 \description{Show objects of classes \code{mle} and \code{summary.mle}}
 \section{Methods}{\describe{
-
-\item{object = "ANY"}{Generic function}
 
 \item{object = "mle"}{Print simple summary of \code{mle} object. Just
   the coefficients and the call.}
