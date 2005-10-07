@@ -788,7 +788,7 @@ gl_addchar(int c)
     if(mbcslocale) {
 	int mb_len;
 	int dst_len;
-	wchar_t mb_st;
+	mbstate_t mb_st;
 	wchar_t wc;
 	char s[9];
 	int res;
