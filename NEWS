@@ -29,6 +29,15 @@ DEPRECATED & DEFUNCT
     o	format.char() is defunct in favour of format.default().
 
 
+BUG FIXES
+
+    o	Quoted arguments to the R script after --args are now
+	passed quoted to the R executable and so will be shown as
+	expected by commandArgs().  (They were previously split at
+	whitespace even inside quotes on Unix-alikes but not on
+	Windows.)
+
+
 
 
 	**************************************************
