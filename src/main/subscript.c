@@ -145,29 +145,40 @@ int get1index(SEXP s, SEXP names, int len, Rboolean pok, int pos)
 	break;
     case STRSXP:
 	/* Try for exact match */
-	for (i = 0; i < length(names); i++)
-	    if (streql(CHAR(STRING_ELT(names, i)),
-		       CHAR(STRING_ELT(s, pos)))) {
-		indx = i;
-		break;
+	for (i = 0; i < length(names); i++) 
+	    if (STRING_ELT(names, i) == NA_STRING || 
+		STRING_ELT(s, pos) == NA_STRING) {
+		/* NA matches nothing */
+	    } else {
+		if (streql(CHAR(STRING_ELT(names, i)),
+			   CHAR(STRING_ELT(s, pos)))) {
+		    indx = i;
+		    break;
+		}
 	    }
 	/* Try for partial match */
 	if (pok && indx < 0) {
-	    len = strlen(CHAR(STRING_ELT(s, pos)));
-	    for(i = 0; i < length(names); i++) {
-		if(!strncmp(CHAR(STRING_ELT(names, i)),
-			    CHAR(STRING_ELT(s, pos)), len)) {
-		    if(indx == -1)/* first one */
-			indx = i;
-		    else
-			indx = -2;/* more than one partial match */
+	    if (STRING_ELT(names, i) == NA_STRING || 
+		STRING_ELT(s, pos) == NA_STRING) {
+		/* NA matches nothing */
+	    } else {
+		len = strlen(CHAR(STRING_ELT(s, pos)));
+		for(i = 0; i < length(names); i++) {
+		    if(!strncmp(CHAR(STRING_ELT(names, i)),
+				CHAR(STRING_ELT(s, pos)), len)) {
+			if(indx == -1)/* first one */
+			    indx = i;
+			else
+			    indx = -2;/* more than one partial match */
+		    }
 		}
 	    }
 	}
 	break;
     case SYMSXP:
 	for (i = 0; i < length(names); i++)
-	    if (streql(CHAR(STRING_ELT(names, i)), CHAR(PRINTNAME(s)))) {
+	    if (STRING_ELT(names, i) != NA_STRING &&
+		streql(CHAR(STRING_ELT(names, i)), CHAR(PRINTNAME(s)))) {
 		indx = i;
 		break;
 	    }
@@ -377,7 +388,13 @@ static SEXP stringSubscript(SEXP s, int ns, int nx, SEXP names,
 #ifdef USE_HASHING
     if(usehashing) {
 	/* must be internal, so names contains a character vector */
+	/* NB: this does not behave in the same way with respect to ""
+	   and NA names: they will match */
 	PROTECT(indx = match(names, s, 0));
+	/* second pass to correct this */
+	for (i = 0; i < ns; i++)
+	    if(STRING_ELT(s, i) == NA_STRING || !CHAR(STRING_ELT(s, i))[0])
+		INTEGER(indx)[i] = 0;
 	for (i = 0; i < ns; i++) SET_STRING_ELT(indexnames, i, R_NilValue);
     } else {
 #endif

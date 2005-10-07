@@ -40,6 +40,9 @@ names(x) <- value
   name associated with an element of a (atomic or generic) vector.
   Subscripting by \code{""} will match nothing (not even elements which
   have no name).
+
+  A name can be character \code{NA}, but such a name will never be
+  matched and is likely to lead to confusion.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

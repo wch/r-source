@@ -77,10 +77,12 @@ BUG FIXES
 
     o	Names of list elements which are missing are now printed as
 	$<NA> and not $"NA" (which is how the non-missing name "NA" is
-	printed).
+	printed).  (Brought up in discussion of PR#8161.)
 
     o	help.start() was not linking R.css for use by its front page and
 	immediate links (2.2.0 only).
+
+    o	Indexing by character NA matched the name "NA".
 
 
 

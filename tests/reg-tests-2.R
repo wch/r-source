@@ -1658,4 +1658,15 @@ names(A) <- c("NA", NA)
 A
 ## both printed as "NA" in 2.2.0
 
+
+## subscripting with both NA and "NA" names
+x <- 1:4
+names(x) <- c(NA, "NA", "a", "")
+x[names(x)]
+## 2.2.0 had the second matching the first.
+lx <- as.list(x)
+lx[[as.character(NA)]]
+lx[as.character(NA)]
+## 2.2.0 had both matching element 1
+
 ### end of tests added in 2.2.0 patched ###

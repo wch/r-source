@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-10-06 r35767)
+Version 2.3.0 Under development (unstable) (2005-10-07 r35786)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4828,6 +4828,23 @@ $<NA>
 [1] 2
 
 > ## both printed as "NA" in 2.2.0
+> 
+> 
+> ## subscripting with both NA and "NA" names
+> x <- 1:4
+> names(x) <- c(NA, "NA", "a", "")
+> x[names(x)]
+<NA>   NA    a <NA> 
+  NA    2    3   NA 
+> ## 2.2.0 had the second matching the first.
+> lx <- as.list(x)
+> lx[[as.character(NA)]]
+NULL
+> lx[as.character(NA)]
+$<NA>
+NULL
+
+> ## 2.2.0 had both matching element 1
 > 
 > ### end of tests added in 2.2.0 patched ###
 > 
