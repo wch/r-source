@@ -87,12 +87,12 @@ static int 	xxcharcount, xxcharsave;
 # include <langinfo.h>
 #endif
 # ifdef Win32
-static const char UNICODE[]="UCS-2LE";
+static const char UNICODE[] = "UCS-2LE";
 # else
 #  if BYTE_ORDER == BIG_ENDIAN
-static const char UNICODE[]="UCS-4BE";
+static const char UNICODE[] = "UCS-4BE";
 #  else
-static const char UNICODE[]="UCS-4LE";
+static const char UNICODE[] = "UCS-4LE";
 # endif
 #endif
 #include <errno.h>
@@ -110,49 +110,48 @@ static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
     size_t   outbytesleft= sizeof( buf );
     size_t   status;
     
-    strcpy(tocode,"");
-    memset(buf,0,sizeof(buf));
-    memset(wcs,0,sizeof(wcs));
-    memset(ucs2s,0,sizeof(ucs2s));
-    wcs[0]=wc;
+    strcpy(tocode, "");
+    memset(buf, 0, sizeof(buf));
+    memset(wcs, 0, sizeof(wcs));
+    memset(ucs2s, 0, sizeof(ucs2s));
+    wcs[0] = wc;
 
-    if(wc == L'\0'){
-	*s='\0';
-        return(1);
+    if(wc == L'\0') {
+	*s = '\0';
+        return 1;
     }
     
-    if((void *)(-1)==(cd = Riconv_open("",(char *)UNICODE))){
+    if((void *)(-1) == (cd = Riconv_open("", (char *)UNICODE))) {
 #ifndef  Win32
         /* locale set fuzzy case */
-    	strncpy(tocode,locale2charset(NULL),sizeof(tocode));
-	if((void *)(-1)==(cd = Riconv_open(tocode,(char *)UNICODE))){
-            return((size_t)(-1)); 
-	}
+    	strncpy(tocode, locale2charset(NULL), sizeof(tocode));
+	if((void *)(-1)==(cd = Riconv_open(tocode, (char *)UNICODE)))
+            return (size_t)(-1); 
 #else
-        return((size_t)(-1));
+        return (size_t)(-1);
 #endif
     }
     
     status = Riconv(cd,
-                   (char **)&inbuf,(size_t *)&inbytesleft,
-                   (char **)&outbuf,(size_t *)&outbytesleft);
+		    (char **)&inbuf, (size_t *)&inbytesleft,
+		    (char **)&outbuf, (size_t *)&outbytesleft);
     Riconv_close(cd);
 
-    if (status==(size_t)(-1)){
+    if (status == (size_t)(-1)) {
         switch(errno){
         case EINVAL:
-            return((size_t)-2);
+            return (size_t)-2;
         case EILSEQ:
-            return((size_t)-1);
+            return (size_t)-1;
         case E2BIG:
             break;
         default:
-            errno=EILSEQ;
-            return((size_t)-1);
+            errno = EILSEQ;
+            return (size_t)-1;
         }
     }
-    strncpy(s,buf,sizeof(buf));
-    return(strlen(buf));
+    strncpy(s, buf,sizeof(buf));
+    return strlen(buf);
 }
 
 static int mbcs_get_next(int c, wchar_t *wc)

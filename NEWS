@@ -37,7 +37,13 @@ INTERNATIONALIZATION
     o	New postscript encodings for ISO Latin-7 (8859-13, Latvian, 
 	Lithuanian etc), Greek and Cyrillic.
 
-    o	Support for CID postscript fonts in pdf() and postscript().
+    o	Support for CID fonts in pdf() and postscript().
+
+    o	Revised wide-character classification and width functions are
+	provided for use on Windows and AIX.
+
+   o	There is support for MBCS charsets in the pictex() graphics
+	device.
 
 
 BUG FIXES

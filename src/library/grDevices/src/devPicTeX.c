@@ -494,19 +494,23 @@ static double PicTeX_StrWidth(char *str,
      * reference to memory is better.
      * </FIXME>
      */
-    for(p=str ; *p ; p++){
+    for(p = str ; *p ; p++){
 	int mb_len;
 	unsigned short ucs2;
 	char buf[8];
 
-	mb_len = (int)mbcsMblen(p);
+	mb_len = (int) mbcsMblen(p);
 	if (mb_len == 1 && (unsigned char)*p < 128)
 		sum += charwidth[ptd->fontface-1][(int)*p];
 	else if (mb_len > 0){
-	    memset(buf,0,sizeof(buf));
-	    strncpy(buf,p,mb_len);
+	    memset(buf, 0, sizeof(buf));
+	    strncpy(buf, p, mb_len);
 	    mbcsToUcs2(buf, &ucs2);
+#ifdef HAVE_WCWIDTH
 	    sum += (double)wcwidth(ucs2) * 0.5; /* There are not grounds at all */
+#else
+	    sum++; /* Just assume one */
+#endif
 	}
 	if (mb_len > 0)
 	    p += mb_len - 1;

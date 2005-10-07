@@ -289,8 +289,8 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-    char family[256], encoding[256], paper[256], cidfamily[256], bg[256], fg[256],
-	**afmpaths = NULL;
+    char family[256], encoding[256], paper[256], cidfamily[256], 
+	bg[256], fg[256], **afmpaths = NULL;
 
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
@@ -340,8 +340,8 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    if(!strcmp("default",cidfamily))
-        switch(GetACP()){
+    if(!strcmp("default", cidfamily))
+        switch(GetACP()) {
         case 932:/* Japan1 */
 	    strcpy(cidfamily, "Japan1"); break;
         case 949:
@@ -416,8 +416,8 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    if(!strcmp("default",cidfamily))
-        switch(GetACP()){
+    if(!strcmp("default", cidfamily))
+        switch(GetACP()) {
         case 932:/* Japan1 */
 	    strcpy(cidfamily, "Japan1"); break;
         case 949:

@@ -240,15 +240,15 @@ ps.options(paper, horizontal, width, height, family, encoding,
   encoding in use.
 
   None of this will matter if only ASCII characters (codes 32--126) are
-  used as all the encodings agree over that range.  Some encodings are
-  supersets of ISOLatin1, too.  However, if accented and special
-  characters do not come out as you expect, you may need to change the
-  encoding.  Some other encodings are supplied with \R:
-  \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
+  used as all the encodings (except \code{"TeXtext"}) agree over that
+  range.  Some encodings are supersets of ISOLatin1, too.  However, if
+  accented and special characters do not come out as you expect, you may
+  need to change the encoding.  Some other encodings are supplied with
+  \R: \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
   encodings normally used on Windows and MacOS (at least by Adobe), and
   \code{"PDFDoc.enc"} is the first 256 characters of the Unicode
-  encoding, the standard for PDF.  There are also encodings for
-  ISO Latin-7 and Latin-9, Cyrillic and Greek, and \code{"TeXtext"}
+  encoding, the standard for PDF.  There are also encodings for ISO
+  Latin-2, Latin-7 and Latin-9, Cyrillic and Greek, and \code{"TeXtext"}
   for the 7-bit TeX encoding.
 
   If you change the encoding, it is your responsibility to ensure that

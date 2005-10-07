@@ -61,13 +61,13 @@ void Ri18n_iswctype(void)
 
 typedef void* iconv_t;
 
-static int wcwidthsearch(int wint, const struct interval_wcwidth *table, int max, int locale) {
+static int wcwidthsearch(int wint, const struct interval_wcwidth *table, 
+			 int max, int locale) {
   int min = 0;
   int mid;
   max--;
 
-  if (wint < table[0].first || wint > table[max].last)
-    return 0;
+  if (wint < table[0].first || wint > table[max].last) return 0;
   while (max >= min) {
     mid = (min + max) / 2;
     if (wint > table[mid].last)
@@ -83,92 +83,94 @@ static int wcwidthsearch(int wint, const struct interval_wcwidth *table, int max
 
 typedef struct {char *name;int locale;} cjk_locale_name_t;
 
-static cjk_locale_name_t cjk_locale_name[]={
-  {"CHINESE(SINGAPORE)_SIGNAPORE",		MB_zh_SG},
-  {"CHINESE_SIGNAPORE",				MB_zh_SG},
-  {"CHINESE(PRC)_PEOPLE'S REPUBLIC OF CHINA",	MB_zh_CN},
-  {"CHINESE_PEOPLE'S REPUBLIC OF CHINA",	MB_zh_CN},
-  {"CHINESE_MACAU S.A.R.",		  	MB_zh_HK},
-  {"CHINESE(PRC)_HONG KONG",		        MB_zh_HK},
-  {"CHINESE_HONG KONG S.A.R.",		        MB_zh_HK},
-  {"CHINESE(TAIWAN)_TAIWAN",			MB_zh_TW},
-  {"CHINESE_TAIWAN",				MB_zh_TW},
-  {"CHINESE-S",                                 MB_zh_CN},
-  {"CHINESE-T",                                 MB_zh_TW},
-  {"JAPANESE_JAPAN",				MB_ja_JP},
-  {"JAPANESE",   				MB_ja_JP},
-  {"KOREAN_KOREA",				MB_ko_KR},
-  {"KOREAN",				        MB_ko_KR},
-  {"ZH_TW",                                     MB_zh_TW},
-  {"ZH_CN",                                     MB_zh_CN},
-  {"ZH_CN.BIG5",                                MB_zh_TW},
-  {"ZH_HK",                                     MB_zh_HK},
-  {"ZH_SG",                                     MB_zh_SG},
-  {"JA_JP",        				MB_ja_JP},
-  {"KO_KR",				        MB_ko_KR},
-  {"ZH",				        MB_zh_CN},
-  {"JA",        				MB_ja_JP},
-  {"KO",				        MB_ko_KR},
-  {"",				                MB_UTF8},
+static cjk_locale_name_t cjk_locale_name[] = {
+    {"CHINESE(SINGAPORE)_SIGNAPORE",		MB_zh_SG},
+    {"CHINESE_SIGNAPORE",			MB_zh_SG},
+    {"CHINESE(PRC)_PEOPLE'S REPUBLIC OF CHINA",	MB_zh_CN},
+    {"CHINESE_PEOPLE'S REPUBLIC OF CHINA",	MB_zh_CN},
+    {"CHINESE_MACAU S.A.R.",		  	MB_zh_HK},
+    {"CHINESE(PRC)_HONG KONG",		        MB_zh_HK},
+    {"CHINESE_HONG KONG S.A.R.",		MB_zh_HK},
+    {"CHINESE(TAIWAN)_TAIWAN",			MB_zh_TW},
+    {"CHINESE_TAIWAN",				MB_zh_TW},
+    {"CHINESE-S",                               MB_zh_CN},
+    {"CHINESE-T",                               MB_zh_TW},
+    {"JAPANESE_JAPAN",				MB_ja_JP},
+    {"JAPANESE",   				MB_ja_JP},
+    {"KOREAN_KOREA",				MB_ko_KR},
+    {"KOREAN",				        MB_ko_KR},
+    {"ZH_TW",                                   MB_zh_TW},
+    {"ZH_CN",                                   MB_zh_CN},
+    {"ZH_CN.BIG5",                              MB_zh_TW},
+    {"ZH_HK",                                   MB_zh_HK},
+    {"ZH_SG",                                   MB_zh_SG},
+    {"JA_JP",        				MB_ja_JP},
+    {"KO_KR",				        MB_ko_KR},
+    {"ZH",				        MB_zh_CN},
+    {"JA",        				MB_ja_JP},
+    {"KO",				        MB_ko_KR},
+    {"",				        MB_UTF8},
 };
-int Ri18n_wcwidth(wchar_t c){
-  char lc_str[128];
-  int i;
 
-  static char *lc_cache = "";
-  static int lc = 0;
+int Ri18n_wcwidth(wchar_t c)
+{
+    char lc_str[128];
+    int i;
 
-  if (0!=strcmp(setlocale(LC_CTYPE,NULL),lc_cache)){
-    strncpy(lc_str,setlocale(LC_CTYPE,NULL),sizeof(lc_str));
-    for (i=0;i<strlen(lc_str)&&i<sizeof(lc_str);i++)
-      lc_str[i]=toupper(lc_str[i]);
-    for (i=0;i<(sizeof(cjk_locale_name)/sizeof(cjk_locale_name_t));i++){
-      if (0==strncmp(cjk_locale_name[i].name,
-		     lc_str,
-		     strlen(cjk_locale_name[i].name))){
-	lc=cjk_locale_name[i].locale;
-        break;
-      }
+    static char *lc_cache = "";
+    static int lc = 0;
+
+    if (0 != strcmp(setlocale(LC_CTYPE,NULL), lc_cache)){
+	strncpy(lc_str, setlocale(LC_CTYPE,NULL), sizeof(lc_str));
+	for (i = 0; i < strlen(lc_str) && i < sizeof(lc_str); i++)
+	    lc_str[i] = toupper(lc_str[i]);
+	for (i = 0; i < (sizeof(cjk_locale_name)/sizeof(cjk_locale_name_t)); 
+	     i++) {
+	    if (0 == strncmp(cjk_locale_name[i].name, lc_str, 
+			     strlen(cjk_locale_name[i].name))) {
+		lc = cjk_locale_name[i].locale;
+		break;
+	    }
+	}
     }
-  }
 
-  return(wcwidthsearch(c,
-		       table_wcwidth,
-		       (sizeof(table_wcwidth)/sizeof(struct interval_wcwidth)),
-		       lc));
+    return(wcwidthsearch(c, table_wcwidth,
+			 (sizeof(table_wcwidth)/sizeof(struct interval_wcwidth)),
+			 lc));
 }
 
 int Ri18n_wcswidth (const wchar_t *s, size_t n)
 {
-  int rs = 0;
-  while ((n-- > 0) && (*s != L'\0'))
+    int rs = 0;
+    while ((n-- > 0) && (*s != L'\0'))
     {
-      int now = Ri18n_wcwidth (*s);
-      if (now == -1) return -1;
-      rs += now;
-      s++;
+	int now = Ri18n_wcwidth (*s);
+	if (now == -1) return -1;
+	rs += now;
+	s++;
     }
-  return rs;
+    return rs;
 }
 
 
-static int wcsearch(int wint, const struct interval *table, int max) {
-  int min = 0;
-  int mid;
-  max--;
+static int wcsearch(int wint, const struct interval *table, int max) 
+{
+    int min = 0;
+    int mid;
+    max--;
 
-  if (wint < table[0].first || wint > table[max].last)
+    if (wint < table[0].first || wint > table[max].last)
+	return 0;
+    while (max >= min) {
+	mid = (min + max) / 2;
+	if (wint > table[mid].last)
+	    min = mid + 1;
+	else if (wint < table[mid].first)
+	    max = mid - 1;
+	else
+	    return 1;
+    }
     return 0;
-  while (max >= min) {
-    mid = (min + max) / 2;
-    if (wint > table[mid].last)
-      min = mid + 1;
-    else if (wint < table[mid].first)
-      max = mid - 1;
-    else
-      return 1;
-  }
-  return 0;
 }
 
 #ifdef Win32
@@ -202,24 +204,23 @@ static const char UNICODE[]="UCS-4BE";
   char   *_wc_buf;					    	     \
   size_t  rc ;							     \
                                                                      \
-  strncpy(fromcode,locale2charset(NULL),sizeof(fromcode));           \
-  if(0==strcmp(fromcode,"UTF-8")){				     \
+  strncpy(fromcode, locale2charset(NULL), sizeof(fromcode));         \
+  if(0 == strcmp(fromcode, "UTF-8")){				     \
     return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count);\
   }                                                                  \
   memset( mb_buf, 0, sizeof(mb_buf));				     \
   memset( ucs4_buf, 0, sizeof(ucs4_buf));			     \
   wcrtomb( mb_buf, wc, NULL);					     \
-  if((iconv_t)(-1)!=(cd = Riconv_open(UNICODE, fromcode))){	     \
-    wc_len = sizeof(ucs4_buf);			                     \
-    _wc_buf = (char *)ucs4_buf;					     \
-    mb_len = strlen(mb_buf);					     \
-    _mb_buf = (char *)mb_buf;					     \
-    rc=Riconv(cd,						     \
-	     (char **)&_mb_buf,   (size_t *)&mb_len,		     \
-	     (char **)&_wc_buf, (size_t *)&wc_len);		     \
-    Riconv_close(cd);						     \
-    wc = ucs4_buf[0];                                                \
-    return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count); \
+  if((iconv_t)(-1) != (cd = Riconv_open(UNICODE, fromcode))){	     \
+      wc_len = sizeof(ucs4_buf);		                            \
+      _wc_buf = (char *)ucs4_buf;		       		     \
+      mb_len = strlen(mb_buf);					     \
+      _mb_buf = (char *)mb_buf;					     \
+      rc = Riconv(cd,  (char **)&_mb_buf,   (size_t *)&mb_len,	     \
+	          (char **)&_wc_buf, (size_t *)&wc_len);       	     \
+      Riconv_close(cd);						     \
+      wc = ucs4_buf[0];                                              \
+      return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count); \
   }                                                                  \
   return(-1);                                                        \
 }
@@ -265,6 +266,7 @@ static const char UNICODE[]="UCS-4BE";
 
 wctype_t Ri18n_wctype(const char *);
 int Ri18n_iswctype(wint_t, wctype_t);
+
 static int Ri18n_iswalnum (wint_t wc)
 {
     return (Ri18n_iswctype(wc, Ri18n_wctype("digit")) ||
@@ -276,43 +278,43 @@ static int Ri18n_iswalnum (wint_t wc)
  * iswctype
  */
 typedef struct {
-  char * name;
-  wctype_t wctype;
-  int(*func)(wint_t);
+    char * name;
+    wctype_t wctype;
+    int(*func)(wint_t);
 } Ri18n_wctype_func_l ;
 
-static const Ri18n_wctype_func_l Ri18n_wctype_func[]={
-  {"upper",  1<<0,  Ri18n_iswupper},
-  {"lower",  1<<1,  Ri18n_iswlower},
-  {"alpha",  1<<2,  Ri18n_iswalpha},
-  {"digit",  1<<3,  Ri18n_iswdigit},
-  {"xdigit", 1<<4,  Ri18n_iswxdigit},
-  {"space",  1<<5,  Ri18n_iswspace},
-  {"print",  1<<6,  Ri18n_iswprint},
-  {"graph",  1<<7,  Ri18n_iswgraph},
-  {"blank",  1<<8,  Ri18n_iswblank},
-  {"cntrl",  1<<9,  Ri18n_iswcntrl},
-  {"punct",  1<<10, Ri18n_iswpunct},
-  {"alnum",  1<<11, Ri18n_iswalnum},
-  {NULL,     0,     NULL}
+static const Ri18n_wctype_func_l Ri18n_wctype_func[] = {
+    {"upper",  1<<0,  Ri18n_iswupper},
+    {"lower",  1<<1,  Ri18n_iswlower},
+    {"alpha",  1<<2,  Ri18n_iswalpha},
+    {"digit",  1<<3,  Ri18n_iswdigit},
+    {"xdigit", 1<<4,  Ri18n_iswxdigit},
+    {"space",  1<<5,  Ri18n_iswspace},
+    {"print",  1<<6,  Ri18n_iswprint},
+    {"graph",  1<<7,  Ri18n_iswgraph},
+    {"blank",  1<<8,  Ri18n_iswblank},
+    {"cntrl",  1<<9,  Ri18n_iswcntrl},
+    {"punct",  1<<10, Ri18n_iswpunct},
+    {"alnum",  1<<11, Ri18n_iswalnum},
+    {NULL,     0,     NULL}
 };
 
-wctype_t Ri18n_wctype(const char *name){
-  int i;
+wctype_t Ri18n_wctype(const char *name) 
+{
+    int i;
 
-  for (i=0 ; Ri18n_wctype_func[i].name != NULL &&
-	 0!=strcmp(Ri18n_wctype_func[i].name,name)
-	 ; i++ );
-  return Ri18n_wctype_func[i].wctype;
+    for (i = 0 ; Ri18n_wctype_func[i].name != NULL &&
+	     0 != strcmp(Ri18n_wctype_func[i].name, name) ; i++ );
+    return Ri18n_wctype_func[i].wctype;
 }
 
-int Ri18n_iswctype(wint_t wc, wctype_t desc){
-  int i;
+int Ri18n_iswctype(wint_t wc, wctype_t desc)
+{
+    int i;
 
-  for (i=0 ; Ri18n_wctype_func[i].wctype != 0 &&
-	 Ri18n_wctype_func[i].wctype != desc
-	 ; i++ );
-  return (*Ri18n_wctype_func[i].func)(wc);
+    for (i = 0 ; Ri18n_wctype_func[i].wctype != 0 &&
+	     Ri18n_wctype_func[i].wctype != desc ; i++ );
+    return (*Ri18n_wctype_func[i].func)(wc);
 }
 
 #endif /* SUPPORT_MBCS */
