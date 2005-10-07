@@ -73,6 +73,9 @@ BUG FIXES
 	$<NA> and not $"NA" (which is how the non-missing name "NA" is
 	printed).
 
+    o	help.start() was not liking R.css for use by its front page and
+	immediate links (2.2.0 only).
+
 
 
 		CHANGES IN R VERSION 2.2.0
