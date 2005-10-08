@@ -5410,7 +5410,7 @@ static void PDF_endfile(PDFDesc *pd)
 			"  /Type /Font\n"
 			"  /Subtype /Type0\n" 
 			"  /Name /%s_%d\n"
-			"  /BaseFont /%s\n"
+			"  /BaseFont /%s%s\n"
 			"  /DescendantFonts [\n"
 			"    <<\n"
 			"      /Type /Font\n"
@@ -5427,6 +5427,7 @@ static void PDF_endfile(PDFDesc *pd)
 			fontlist->cidfamily->fxname,             /* /Name       */
 			i+1,                                     /* - face      */
 			CIDResource[cid_id].pdffontname,         /* /BaseFont   */
+			boldslant(i),                            /* - boldslant */
 			CIDResource[cid_id].pdffontname,         /* /BaseFont   */
 			boldslant(i),                            /* - boldslant */
 			CIDResource[cid_id].pdfresource,         /* Resource    */
