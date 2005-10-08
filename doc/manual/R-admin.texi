@@ -2375,9 +2375,13 @@ Several Linux distributions have shipped unreleased versions of
 separate comments).  Some versions of @code{gcc4} (such as that in
 Fedora Core 3) produce incorrect code.  In our experiments @code{gcc
 3.4.x} always produced faster and more reliable code.  It seems that
-@code{gcc 4.0.1} cannot compile @file{src/main/plot.c} when building R
-as a shared library on @samp{ix86} unless the optimization level is
-reduced from the default @option{-O2}.
+@code{gcc 4.0.1} and @code{gcc 4.0.2} cannot compile
+@file{src/main/plot.c} when building R as a shared library on
+@samp{ix86} unless the optimization level is reduced from the default
+@option{-O2}.
+
+Intel compilers have been used under @code{ix86} and @code{x86_64}
+Linux and @R{} contains code to set the FPU options suitably.
 
 For some comments on building on an Itanium (@samp{ia64}) Linux system
 with @command{gcc} or the Intel compilers see
@@ -2913,7 +2917,8 @@ libglade-0.17
 @noindent
 It is preferable to have a complete installation of the @acronym{GNOME}
 desktop environment.  If you use Linux, then this should be provided
-with your distribution.
+with your distribution.  (Note: @samp{libglade2} is not a suitable
+version of @samp{libglade}.)
 
 Remember that some package management systems (such as @acronym{RPM} and
 deb) make a distinction between the user version of a package and the
