@@ -15,21 +15,23 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
     pointsize = 12, bg = "white", res = NA)
 }
 \arguments{
-  \item{filename}{the name of the output file, up to 511 characters.
-    The page number is substituted if an integer format is included
-    in the character string. (The result must be less than 600
-    characters long.)}
- \item{width}{the width of the device in pixels.}
- \item{height}{the height of the device in pixels.}
- \item{pointsize}{the default pointsize of plotted text, interpreted at
-   72 dpi, so one point is approximately one pixel.}
- \item{bg}{the initial background colour: can be overridden by setting
-   par("bg").}
- \item{quality}{the \sQuote{quality} of the JPEG image, as a
-   percentage. Smaller values will give more compression but also more
-   degradation of the image.}
- \item{res}{The nominal resolution in dpi which will be recorded in the
-   bitmap file, if a positive integer.}
+  \item{filename}{the name of the output file, up to 511 characters.  The
+    page number is substituted if a C integer format is included in the
+    character string, as in the default.  (The result must be less than
+    600 characters long.  See \code{\link{postscript}} for further
+    details.)
+  }
+  \item{width}{the width of the device in pixels.}
+  \item{height}{the height of the device in pixels.}
+  \item{pointsize}{the default pointsize of plotted text, interpreted at
+    72 dpi, so one point is approximately one pixel.}
+  \item{bg}{the initial background colour: can be overridden by setting
+    par("bg").}
+  \item{quality}{the \sQuote{quality} of the JPEG image, as a
+    percentage. Smaller values will give more compression but also more
+    degradation of the image.}
+  \item{res}{The nominal resolution in dpi which will be recorded in the
+    bitmap file, if a positive integer.}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
