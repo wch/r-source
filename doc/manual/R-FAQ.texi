@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-10-05
+@set FAQ_DATE @value{FAQ_YEAR}-10-08
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1528,6 +1528,15 @@ a character vector index looks only for exact matches (whereas @code{[[}
 and @code{$} allow partial matches).  In S, @code{[} allows partial
 matches.
 
+@item
+S has a two-argument version of @code{atan} and no @code{atan2}.  A call 
+in S such as @code{atan(x1, x2)} is equivalent to R's @code{atan2(x1, 
+x2)}.  However, beware of named arguments since S's @code{atan(x = a, y
+= b)} is equivalent to R's @code{atan2(y = a, x = b)} with the meanings
+of @code{x} and @code{y} interchanged.  (R used to have undocumented
+support for a two-argument @code{atan} with positional arguments, but
+this has been withdrawn to avoid further confusion.)
+
 @end itemize
 
 There are also differences which are not intentional, and result from
@@ -1777,6 +1786,10 @@ neighboors algorithm.
 Empirical Bayes thresholding and related methods.
 @item Ecdat
 Data sets from econometrics textbooks.
+@item ElemStatLearn
+Data sets, functions and examples from the book ``The Elements of
+Statistical Learning: Data Mining, Inference, and Prediction'' by Trevor
+Hastie, Robert Tibshirani and Jerome Friedman (2001), Springer.
 @item Epi
 Statistical analysis in epidemiology, with functions for demographic and
 epidemiological analysis in the Lexis diagram.
