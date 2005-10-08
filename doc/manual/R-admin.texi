@@ -1812,6 +1812,16 @@ use a multi-threaded ATLAS by specifying
 --with-blas="-lptf77blas -lpthread -latlas"
 @end example
 
+Users of Fedora Core Extras will want to use
+@example
+--with-blas="-L/usr/lib/sse2 -lf77blas -latlas"
+@end example
+
+@noindent
+replacing @samp{sse2} by @samp{sse} for older (e.g.@ PIII) CPUS and
+by @samp{atlas} for old (e.g.@ PII) CPUS.
+
+
 Another tuned BLAS which is available for some processors under Linux is
 by Kazushige Goto, currently available @emph{for academic use only}
 (after registering) via
