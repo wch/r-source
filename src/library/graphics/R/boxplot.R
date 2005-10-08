@@ -75,6 +75,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
                 add = FALSE, at = NULL, show.names = NULL, ...)
 {
     pars <- c(pars, list(...))
+    if(!missing(col))
+        warning("argument 'col' is deprecated in favour of 'boxfill'")
 
     bplt <- function(x, wid, stats, out, conf, notch, xlog, i)
     {

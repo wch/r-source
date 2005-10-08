@@ -1,6 +1,5 @@
 \name{TkCommands}
 \alias{TkCommands}
-\alias{tkcmd}
 \alias{tcl}
 \alias{tktitle}
 \alias{tktitle<-}
@@ -97,12 +96,6 @@
 \alias{tkmessageBox}  
 \alias{tkdialog}        
 \alias{tkpopup}        
-\alias{tkfile.tail}
-\alias{tkfile.dir}
-\alias{tkopen}
-\alias{tkclose}
-\alias{tkputs}        
-\alias{tkread}        
 \alias{tclfile.tail}
 \alias{tclfile.dir}
 \alias{tclopen}
@@ -117,7 +110,6 @@
 }
 \usage{
 tcl(...)
-tkcmd(...) # same as tcl(), for compatibility
 tktitle(x)
 
 tktitle(x) <- value
@@ -248,14 +240,6 @@ tclopen(...)
 tclclose(...)
 tclputs(...)
 tclread(...)
-
-## Old names, retained for compatibility
-tkfile.tail(...)
-tkfile.dir(...)
-tkopen(...)
-tkclose(...)
-tkputs(...)
-tkread(...)
 }
 \arguments{
   \item{x}{A window object}
@@ -271,12 +255,6 @@ tkread(...)
   \code{tcl} with a particular
   first argument and sometimes also a second argument giving the
   subcommand.
-  Prior to \R 2.0.0, this function was called \code{tkcmd}, which will
-  still work but will be deprecated in a later version. Also, the file
-  commands used to be \code{tkopen}, \code{tkclose}, etc., but since
-  \code{open} and \code{close} do not belong 
-  to the Tk toolkit, the preferred names are now \code{tclopen}, etc.
-  Again, the old names are temporarily preserved for compatibility.
 
   \code{tktitle} and its assignment form provides an alternate interface
   to Tk's \code{wm title}

@@ -7,8 +7,6 @@
 \alias{.Tcl.callback}
 \alias{.Tcl.args}
 \alias{.Tcl.args.objv}
-\alias{$.tclvar}
-\alias{$<-.tclvar}
 \alias{tclvar}
 \alias{tclVar}
 \alias{as.character.tclVar}

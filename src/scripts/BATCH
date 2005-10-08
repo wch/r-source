@@ -37,9 +37,6 @@ while test -n "${1}"; do
       echo "${usage}"; exit 0 ;;
     -v|--version)
       echo "${version}"; exit 0 ;;
-    --min-vsize|--min-nsize|--max-vsize|--max-nsize|--vsize|--nsize)
-      # Deprecated (hence not documented)...
-      opts="${opts} ${1}=${2}"; shift 2 ;;
     --) shift; break ;;
     -*) opts="${opts} ${1}"; shift ;;
     *)  break ;;

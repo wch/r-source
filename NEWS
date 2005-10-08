@@ -21,12 +21,21 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
-    o	The undocumented use of atan() with two arguments has been
-	removed: instead use atan2() (as documented).
+    o	The deprecated and undocumented use of atan() with two arguments
+	has been removed: instead use atan2().
 
     o	write.table0() is defunct in favour of write.table().
 
     o	format.char() is defunct in favour of format.default().
+
+    o	Support for the long-deprecated (and no longer documented)
+	arguments --min-vsize --min-nsize --max-vsize --max-nsize
+	--vsize --nsize of R CMD BATCH has been removed.
+
+    o	The re-named tcltk functions tkcmd, tkfile.tail, tkfile.dir,
+	tkopen, tkclose, tkputs, tkread are now formally deprecated.
+
+    o	Argument 'col' of bxp() is now formally deprecated. 
 
 
 INTERNATIONALIZATION
