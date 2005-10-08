@@ -10,8 +10,6 @@ dummy.coef(object, \dots)
 \alias{dummy.coef}
 \alias{dummy.coef.lm}
 \alias{dummy.coef.aovlist}
-\alias{print.dummy.coef}
-\alias{print.dummy.coef.list}
 \arguments{
   \item{object}{a linear model fit.}
   \item{use.na}{logical flag for coefficients in a singular model. If
