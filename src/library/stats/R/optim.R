@@ -29,7 +29,7 @@ optim <- function(par, fn, gr = NULL,
         warning("read the documentation for 'trace' more carefully")
     if (method == "L-BFGS-B" &&
         any(!is.na(match(c("reltol","abstol"), namc))))
-        warning("method L-BFGS-B uses 'fact' (and 'pgtol') instead of 'reltol' and 'abstol'")
+        warning("method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'")
     npar <- length(par)
     if(npar == 1 && method == "Nelder-Mead")
         warning("one-diml optimization by Nelder-Mead is unreliable: use optimize")
