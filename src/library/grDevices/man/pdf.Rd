@@ -21,8 +21,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
-    For use with \code{onefile=FALSE} give a \code{printf} format such
+    For use with \code{onefile=FALSE} give a C integer format such
     as \code{"Rplot\%03d.pdf"} (the default in that case).
+    (See \code{\link{postscript}} for further details.)
   }
   \item{width, height}{the width and height of the graphics region in
     inches.}

@@ -25,10 +25,11 @@ png(filename ="Rplot\%03d.png", width = 480, height = 480,
 }
 \arguments{
   \item{filename}{the name of the output file.
-    The page number is substituted if an integer format is included
-    in the character string. (The result must be less than \code{PATH_MAX}
-    characters long, and may be truncated if not.)
-    Tilde expansion is performed where supported by the platform.}
+    The page number is substituted if a C integer format is included in
+    the character string, as in the default.  (The result must be less
+    than \code{PATH_MAX} characters long, and may be truncated if not.
+    See \code{\link{postscript}} for further details.)  Tilde expansion
+    is performed where supported by the platform.}
   \item{width}{the width of the device in pixels.}
   \item{height}{the height of the device in pixels.}
   \item{pointsize}{the default pointsize of plotted text.}

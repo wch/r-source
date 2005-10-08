@@ -13,7 +13,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 \arguments{
   \item{side}{an integer specifying which side of the plot the axis is
     to be drawn on.  The axis is placed as follows: 1=below,
-  2=left, 3=above and 4=right.}
+    2=left, 3=above and 4=right.}
   \item{at}{the points at which tick-marks are to be drawn.  Non-finite
     (infinite, \code{NaN} or \code{NA}) values are omitted.  By default,
     when \code{NULL}, tickmark locations are computed, see Details below.}
@@ -68,17 +68,17 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 }
 \details{
   The axis line is drawn from the lowest to the highest value of
-  \code{at}, but will be clipped at the plot region. Only ticks which
+  \code{at}, but will be clipped at the plot region.  Only ticks which
   are drawn from points within the plot region (up to a tolerance for
   rounding error) are plotted, but the ticks and their labels may well
   extend outside the plot region.
 
   When \code{at = NULL}, pretty tick mark locations are computed internally
   (the same way \code{\link{axTicks}(side)} would) from
-  \code{\link{par}("usr", "lab")} and \code{\link{par}("xlog")} (or
-  \code{"ylog"}).  Note that these may change if an on-screen plot is
-  resized (for example, if \code{plot} argument
-  \code{\link[graphics:plot.window]{asp}} is set).
+  \code{\link{par}("xaxp")} or \code{"yaxp"} and
+  \code{\link{par}("xlog")} (or \code{"ylog"}).  Note that these
+  locations may change if an on-screen plot is resized (for example, if
+  \code{plot} argument \code{\link[graphics:plot.window]{asp}} is set).
 
   Several of the graphics parameters affect the way axes are drawn. The
   vertical (for sides 1 and 3) positions of the axis and the tick labels

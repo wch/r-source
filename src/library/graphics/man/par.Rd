@@ -419,6 +419,12 @@ par(\dots, no.readonly = FALSE)
 	\item{n=3}{gives marks  \eqn{k 10^j} with \eqn{k \in \{1, 2, 5\}}.}
       }
       See \code{\link{axTicks}()} for a pure \R implementation of this.
+
+      This parameter is reset when a user coordinate system is set up,
+      for example by starting a new page or by calling
+      \code{\link{plot.window}} or setting \code{par("usr")}: \code{n}
+      is taken from \code{par("lab")}.  It affects the default behaviour
+      of subsequent calls to \code{\link{axis}} for sides 1 or 3.
     }
     \item{\code{xaxs}}{The style of axis interval calculation to be used
       for the x-axis.  Possible values are \code{"r"}, \code{"i"},
