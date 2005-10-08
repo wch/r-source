@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005 R Development Core Team
+ *  Copyright (C) 2005  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,54 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/*
+ * Support CID Font family list.
+ *
+       cidfamily        postscript              pdf
+       --------------------------------------------------------------
+       Japan1           HeiseiKakuGo-W5         HeiseiKakuGo-W5-Acro
+       Japan1HeiMin     HeiseiMin-W3            HeiseiMin-W3-Acro
+       Japan1GothicBBB  GothicBBB-Medium        GothicBBB-Medium
+       Japan1Ryumin     Ryumin-Light            Ryumin-Light
+       Korea1           Baekmuk-Batang          HYGothic-Medium-Acro
+       Korea1deb        Batang-Regular          HYGothic-Medium-Acro
+       CNS1             MOESung-Regular         MHei-Medium-Acro
+       GB1              BousungEG-Light-GB      STSong-Light-Acro
+
+       Debian
+       ------------------
+       font not found case.
+       /etc/defoma/hints/ttf-*.hints
+       edit defoma hints file.
+ 
+       +++ /etc/defoma/hints/ttf-sazanami-gothic.hints
+           Family = SazanamiGothic
+           FontName = SazanamiGothic-Regular
+       +   Alias = HeiseiKakuGo-W5
+           Encoding = Unicode
+           Location = Japanese
+ 
+       +++ /etc/defoma/hints/ttf-sazanami-mincho.hints
+           Family = SazanamiMincho
+           FontName = SazanamiMincho-Regular
+       +   Alias = HeiseiMin-W3
+           Encoding = Unicode
+           Location = Japanese
+ 
+       +++ /etc/defoma/hints/ttf-baekmuk.hints
+           Family = Batang
+           FontName = Batang-Regular
+       +   Alias = Baekmuk-Batang
+           Encoding = Unicode
+           Location = Korean
+
+       Try this command.
+       $ sudo defoma-font reregister-all \
+       >     /etc/defoma/hints/ttf-sazanami-gothic.hints
+ *
+ *
  */
 
 /* to match it with afm of CID Japan1,Korea1,CNS1,GB1 */
@@ -73,26 +121,51 @@ static const struct {
       "Adobe-Japan1-UniJIS-UCS2-H.afm",
       "Adobe-Japan1-UniJIS-UCS2-H.afm",
      },
-     "Ryumin-Light",
-     "Ryumin-Light",
+     "HeiseiKakuGo-W5",
+     "HeiseiKakuGo-W5-Acro",
+     "EUC-H",
+     "EUC-JP",
+     "      /FontDescriptor\n"
+     "      <<\n"
+     "        /Type /FontDescriptor\n"
+     "        /CapHeight 737 /Ascent 752 /Descent -221 /StemV 114\n"
+     "        /FontBBox [-92 -250 1010 922]\n"
+     "        /ItalicAngle 0 /Flags 4 /XHeight 553\n"
+     "        /Style << /Panose <000001000500000000000000> >>\n"
+     "      >>\n"
+     "      /CIDSystemInfo << /Registry(Adobe) /Ordering(Japan1) /Supplement  2 >>\n"
+     "      /DW 1000\n"
+     "      /W [\n"
+     "          231   632 500 \n"
+     "         8718 [500 500] \n"
+     "      ]\n"
+    },
+    {"Japan1HeiMin",
+     {"Adobe-Japan1-UniJIS-UCS2-H.afm",
+      "Adobe-Japan1-UniJIS-UCS2-H.afm",
+      "Adobe-Japan1-UniJIS-UCS2-H.afm",
+      "Adobe-Japan1-UniJIS-UCS2-H.afm",
+     },
+     "HeiseiMin-W3",
+     "HeiseiMin-W3-Acro",
      "EUC-H",
      "EUC-JP",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
      "        /CapHeight 709 /Ascent 723 /Descent -241 /StemV 69\n"
-     "        /FontBBox [-170 -331 1024 903]\n"
-     "        /ItalicAngle 0 /Flags 6\n"
-     "        /Style << /Panose <010502020300000000000000> >>\n"
+     "        /FontBBox [-123 -257 1001 910]\n"
+     "        /ItalicAngle 0 /Flags 6 /XHeight 450\n"
+     "        /Style << /Panose <000002020500000000000000> >>\n"
      "      >>\n"
      "      /CIDSystemInfo << /Registry(Adobe) /Ordering(Japan1) /Supplement  2 >>\n"
      "      /DW 1000\n"
      "      /W [\n"
-     "          231   632 500\n"
-     "         8718 [500 500]\n"
+     "          231   632 500 \n"
+     "         8718 [500 500] \n"
      "      ]\n"
     },
-    {"Japan1Gothic",
+    {"Japan1GothicBBB",
      {"Adobe-Japan1-UniJIS-UCS2-H.afm",
       "Adobe-Japan1-UniJIS-UCS2-H.afm",
       "Adobe-Japan1-UniJIS-UCS2-H.afm",
@@ -117,10 +190,61 @@ static const struct {
      "         8718 [500 500]\n"
      "      ]\n"
     },
+    {"Japan1Ryumin",
+     {"Adobe-Japan1-UniJIS-UCS2-H.afm",
+      "Adobe-Japan1-UniJIS-UCS2-H.afm",
+      "Adobe-Japan1-UniJIS-UCS2-H.afm",
+      "Adobe-Japan1-UniJIS-UCS2-H.afm",
+     },
+     "Ryumin-Light",
+     "Ryumin-Light",
+     "EUC-H",
+     "EUC-JP",
+     "      /FontDescriptor\n"
+     "      <<\n"
+     "        /Type /FontDescriptor\n"
+     "        /CapHeight 709 /Ascent 723 /Descent -241 /StemV 69\n"
+     "        /FontBBox [-170 -331 1024 903]\n"
+     "        /ItalicAngle 0 /Flags 6\n"
+     "        /Style << /Panose <010502020300000000000000> >>\n"
+     "      >>\n"
+     "      /CIDSystemInfo << /Registry(Adobe) /Ordering(Japan1) /Supplement  2 >>\n"
+     "      /DW 1000\n"
+     "      /W [\n"
+     "          231   632 500\n"
+     "         8718 [500 500]\n"
+     "      ]\n"
+    },
 /* ============================================================================
                                          Korea1
    ============================================================================ */
     {"Korea1",
+     {"Adobe-Korea1-UniKS-UCS2-H.afm",
+      "Adobe-Korea1-UniKS-UCS2-H.afm",
+      "Adobe-Korea1-UniKS-UCS2-H.afm",
+      "Adobe-Korea1-UniKS-UCS2-H.afm",
+     },
+     "Baekmuk-Batang",
+     "HYGothic-Medium-Acro",
+     "KSCms-UHC-H",
+     "CP949",
+     "      /FontDescriptor\n"
+     "      <<\n"
+     "        /Type /FontDescriptor\n"
+     "        /CapHeight 737 /Ascent 752 /Descent -271 /StemV 58\n"
+     "        /FontBBox [-6 -145 1003 880]\n"
+     "        /ItalicAngle 0 /Flags 4 /XHeight 553\n"
+     "        /Style << /Panose <000001000600000000000000> >>\n"
+     "      >>\n"
+     "      /CIDSystemInfo << /Registry(Adobe) /Ordering(Korea1) /Supplement 1 >>\n"
+     "      /DW 1000\n"
+     "      /W [\n"
+     "            1 94 500\n"
+     "           97 [500] \n"
+     "         8094 8190 500\n"
+     "      ]\n"
+    },
+    {"Korea1deb",
      {"Adobe-Korea1-UniKS-UCS2-H.afm",
       "Adobe-Korea1-UniKS-UCS2-H.afm",
       "Adobe-Korea1-UniKS-UCS2-H.afm",
@@ -183,6 +307,7 @@ static const struct {
       "Adobe-GB1-UniGB-UCS2-H.afm",
       "Adobe-GB1-UniGB-UCS2-H.afm",
      },
+     "BousungEG-Light-GB",
      "STSong-Light-Acro",
      "GBK-EUC-H",
      "GBK",
