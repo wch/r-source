@@ -46,7 +46,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
               names = names)
     if(plot) {
 	bxp(z, width, varwidth = varwidth, notch = notch, log = log,
-            border = border, col = col, pars = pars,
+            border = border, boxfill = col, pars = pars,
             outline = outline, horizontal = horizontal, add = add, at = at)
 	invisible(z)
     }
