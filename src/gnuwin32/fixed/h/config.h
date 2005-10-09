@@ -614,9 +614,6 @@
 /* Define to 1 if you have the `wcstombs' function. */
 #define HAVE_WCSTOMBS 1
 
-/* Define to 1 if you have the `wcswidth' function. */
-#define HAVE_WCSWIDTH 1
-
 /* Define to 1 if you have the `wctrans' function. */
 #define HAVE_WCTRANS 1
 
