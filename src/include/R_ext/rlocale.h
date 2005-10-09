@@ -40,7 +40,7 @@ extern char *locale2charset(const char *);
 /*
  * Windows CJK
  * In Unicode, there is not a rule about character width. 
- * A letter of breadth is used in a CJK (Caina, Japan, Korea,
+ * A letter of breadth is used in a CJK (China, Japan, Korea,
  * Taiwan, Hong Kong, and Singapore) area, and there are a
  * letter and a standard (character width is not still prescribed)
  * of a cord in a country.
@@ -49,6 +49,18 @@ extern char *locale2charset(const char *);
  * It is generally defined as a breadth letter for a font such
  * as Japanese.
  * - Win32
+
+ *  Attempted explanation by BDR
+ *  The display widths of characters are not prescribed in Unicode.
+ *  Double-width characters are used in the CJK area: their width can
+ *  be font-specific, with different fonts in use in different parts
+ *  of the CJK area.  The tables supplied in many OSes and by Marcus
+ *  Kuhn are not do not take the exact locale into account.  The
+ *  tables supplied in rlocale_data.h allow different widths for
+ *  different parts of the CJK area, and also where needed different
+ *  widths on Windows.  (The Windows differences are in zh_CN, and
+ *  apply to European characters.)
+ *
  */
 extern int Ri18n_wcwidth(wchar_t);
 extern int Ri18n_wcswidth (const wchar_t *, size_t);
@@ -59,6 +71,7 @@ extern int Ri18n_wcswidth (const wchar_t *, size_t);
  * Japanese "a-ru" of R as a letter. 
  * Therefore Japanese "Buraian.Ripuri-" of "Brian Ripley" is
  * shown of hex-string.:-)
+ * We define alternatives to be used if
  * defined(Win32) || defined(__APPLE_CC__) || defined(_AIX)
  */
 extern wctype_t Ri18n_wctype(const char *);
@@ -71,8 +84,8 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #undef iswspace
 #undef iswprint
 #undef iswgraph
-#undef iswblank
-#undef iswcntrl
+/*#undef iswblank
+  #undef iswcntrl */
 #undef iswpunct
 #undef iswalnum
 #undef wctype
@@ -86,8 +99,10 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #define iswspace(__x)     Ri18n_iswctype(__x, Ri18n_wctype("space"))
 #define iswprint(__x)     Ri18n_iswctype(__x, Ri18n_wctype("print"))
 #define iswgraph(__x)     Ri18n_iswctype(__x, Ri18n_wctype("graph"))
+/*
 #define iswblank(__x)     Ri18n_iswctype(__x, Ri18n_wctype("blank"))
 #define iswcntrl(__x)     Ri18n_iswctype(__x, Ri18n_wctype("cntrl"))
+*/
 #define iswpunct(__x)     Ri18n_iswctype(__x, Ri18n_wctype("punct"))
 #define iswalnum(__x)     Ri18n_iswctype(__x, Ri18n_wctype("alnum"))
 #define wctype(__x)       Ri18n_wctype(__x)

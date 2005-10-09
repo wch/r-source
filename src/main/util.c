@@ -724,16 +724,16 @@ void UNIMPLEMENTED_TYPE(char *s, SEXP x)
     UNIMPLEMENTED_TYPEt(s, TYPEOF(x));
 }
 
-#ifdef HAVE_ICONV
+#if defined(SUPPORT_MBCS) && defined(HAVE_ICONV)
 # include <R_ext/Riconv.h>
 # include <sys/param.h>
 # include <errno.h>
-# ifdef HAVE_LANGINFO_CODESET
-#  include <langinfo.h>
-# endif
+/* # ifdef HAVE_LANGINFO_CODESET
+#  include <langinfoh>
+# endif */
 
-/* Previous versions (< 2.3.0) assumed wchar_t was in Unicode (and it
-   commonly is).  These functions do not. */
+/* Previous versions of R (< 2.3.0) assumed wchar_t was in Unicode
+   (and it commonly is).  These functions do not. */
 # ifdef WORDS_BIGENDIAN
 static const char UCS2ENC[] = "UCS-2BE";
 static const char UCS4ENC[] = "UCS-4BE";
@@ -753,7 +753,7 @@ size_t mbcsMblen(char *in)
 
     /* 6 == MB_LEN_MAX ? shift sequence is ignored... */
     for (i = 1 ; i <= 6 ; i++){
-	buftype = (void *)ucs4buf;
+	buftype = (void *) ucs4buf;
 	if((void*)-1 == (cd = Riconv_open((char*)UCS4ENC, ""))) {
 	    buftype = (void *)ucs2buf;
 	    if ((void*)-1 == (cd = Riconv_open((char*)UCS2ENC, ""))) {
@@ -763,21 +763,21 @@ size_t mbcsMblen(char *in)
 
 	i_buf = in;
 	i_len = i;
-	o_buf = ( buftype == (void *)ucs4buf ) ?
-	    (char *)ucs4buf : (char *)ucs2buf ;
-	o_len = ( buftype == (void *)ucs4buf ) ? 4 : 2 ;
+	o_buf = buftype == (void *) ucs4buf ?
+	    (char *) ucs4buf : (char *) ucs2buf;
+	o_len = buftype == (void *) ucs4buf ? 4 : 2;
 	memset (o_buf, 0 , o_len);
 	status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
 			(char **)&o_buf, (size_t *)&o_len);
 	Riconv_close(cd);
 	if ((size_t) -1 == status) {
 	    switch (errno){
-	    case    EINVAL:
+	    case EINVAL:
 		/* next char */
 		break;
-	    case    E2BIG:
+	    case E2BIG:
 		return (size_t) -1;
-	    case    EILSEQ:
+	    case EILSEQ:
 		return (size_t) -1;
 	    }
 	} else if ((size_t) 0 == status)
@@ -796,7 +796,7 @@ size_t ucs2Mblen(ucs2_t *in)
     char *i_buf, *o_buf;
     size_t i_len, o_len, status;
 
-    if ((void*)-1 == (cd = Riconv_open("", (char *)UCS2ENC)))
+    if ((void*) -1 == (cd = Riconv_open("", (char *)UCS2ENC)))
 	return (size_t) -1;
 
     memset(mbbuf, 0, sizeof(mbbuf));
@@ -804,19 +804,19 @@ size_t ucs2Mblen(ucs2_t *in)
     i_len = sizeof(ucs2_t);
     o_buf = mbbuf;
     o_len = sizeof(mbbuf);
-    memset ( o_buf, 0 , o_len );
+    memset(o_buf, 0 , o_len);
     status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
 		    (char **)&o_buf, (size_t *)&o_len);
     Riconv_close(cd);
     if ((size_t) -1 == status)
 	switch (errno) {
-	case    EINVAL:
+	case EINVAL:
 	    /* not case */
 	    return (size_t) -1;
-	case    E2BIG:
+	case E2BIG:
 	    /* probably few case */
 	    return (size_t) -1;
-	case    EILSEQ:
+	case EILSEQ:
 	    return (size_t) -1;
 	}
     return (size_t) strlen(mbbuf);
@@ -828,12 +828,8 @@ size_t ucs2Mblen(ucs2_t *in)
 size_t mbcsToUcs2(char *in, ucs2_t *out)
 {
     void   *cd = NULL ;
-    char   *i_buf;
-    char   *o_buf;
-    size_t  i_len;
-    size_t  o_len;
-    size_t  status;
-    size_t  wc_len;
+    char   *i_buf, *o_buf;
+    size_t  i_len, o_len, status, wc_len;
 
     /* out length */
     i_buf = in;
@@ -841,7 +837,7 @@ size_t mbcsToUcs2(char *in, ucs2_t *out)
     while(*i_buf){
 	int rc;
 	rc = (int) mbcsMblen(i_buf);
-	if ( rc < 0 ) return rc;
+	if (rc < 0) return rc;
 	i_buf += rc;
 	wc_len++;
     }
@@ -881,16 +877,13 @@ size_t ucs2ToMbcs(ucs2_t *in, char *out)
 {
     void   *cd = NULL ;
     ucs2_t *ucs = in ;
-    char   *i_buf = (char *)in ;
-    char   *o_buf;
-    size_t  i_len;
-    size_t  o_len;
-    size_t  status;
+    char   *i_buf = (char *)in, *o_buf;
+    size_t  i_len, o_len, status;
 
     /* out length */
     o_len = 0;
     i_len = 0;
-    while(*ucs){
+    while(*ucs) {
 	int rc;
 	rc = ucs2Mblen(ucs);
 	if(rc < 0) return rc;
@@ -922,7 +915,7 @@ size_t ucs2ToMbcs(ucs2_t *in, char *out)
     }
     return strlen(out);
 }
-#endif /* HAVE_ICONV */
+#endif /* SUPPORT_MBCS && HAVE_ICONV */
 
 
 #ifdef SUPPORT_MBCS

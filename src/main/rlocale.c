@@ -131,8 +131,8 @@ int Ri18n_wcwidth(wchar_t c)
     static char *lc_cache = "";
     static int lc = 0;
 
-    if (0 != strcmp(setlocale(LC_CTYPE,NULL), lc_cache)){
-	strncpy(lc_str, setlocale(LC_CTYPE,NULL), sizeof(lc_str));
+    if (0 != strcmp(setlocale(LC_CTYPE, NULL), lc_cache)) {
+	strncpy(lc_str, setlocale(LC_CTYPE, NULL), sizeof(lc_str));
 	for (i = 0; i < strlen(lc_str) && i < sizeof(lc_str); i++)
 	    lc_str[i] = toupper(lc_str[i]);
 	for (i = 0; i < (sizeof(cjk_locale_name)/sizeof(cjk_locale_name_t)); 
@@ -185,7 +185,7 @@ static int wcsearch(int wint, const struct interval *table, int max)
 }
 #endif
 
-/* what is this for ?
+/* what was this for ?
 #ifdef Win32
 # include <windows.h>
 # include <winnls.h>

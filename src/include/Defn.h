@@ -892,15 +892,17 @@ void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 #include <wchar.h>
 #endif
 
-#ifdef HAVE_ICONV
-typedef unsigned short ucs2_t;
-size_t mbcsToUcs2(char *in, ucs2_t *out);
-size_t ucs2ToMbcs(ucs2_t *in, char *out);
-#endif /* HAVE_ICONV */
 /* main/util.c */
 void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(char *str);
+#if defined(SUPPORT_MBCS) && defined(HAVE_ICONV)
+typedef unsigned short ucs2_t;
+size_t mbcsToUcs2(char *in, ucs2_t *out);
+size_t ucs2ToMbcs(ucs2_t *in, char *out);
+size_t mbcsMblen(char *in);
+size_t ucs2Mblen(ucs2_t *in);
+#endif /* HAVE_ICONV */
 #ifdef SUPPORT_MBCS
 int utf8clen(char c);
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))

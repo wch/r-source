@@ -471,9 +471,6 @@ static void PicTeX_Polyline(int n, double *x, double *y,
 	/* String Width in Rasters */
 	/* For the current font in pointsize fontsize */
 
-extern size_t mbcsMblen(char *in); /* fron src/main/util.c */
-
-
 static double PicTeX_StrWidth(char *str, 
 			      R_GE_gcontext *gc,
 			      NewDevDesc *dd)
