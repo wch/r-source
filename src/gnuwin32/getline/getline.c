@@ -578,7 +578,7 @@ getline(char *prompt, char *buf, int buflen)
 		    mbs_init(&mb_st);
 		    for(i = 0; i< gl_pos ;) {
 			mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
-			mb_len = wcwidth(wc);
+			mb_len = Ri18n_wcwidth(wc);
 			i += (wc==0) ? 0 : mb_len;
 		    }
 		    gl_fixup(gl_prompt, -1, gl_pos - mb_len);
@@ -615,7 +615,7 @@ getline(char *prompt, char *buf, int buflen)
 		      mbs_init(&mb_st);
 		      for(i = 0; i<= gl_pos ;){
 			  mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
-			  mb_len = wcwidth(wc);
+			  mb_len = Ri18n_wcwidth(wc);
 			  i += (wc==0) ? 0 : mb_len;
 		      }
 		      gl_fixup(gl_prompt, -1, gl_pos + mb_len);
@@ -700,7 +700,7 @@ getline(char *prompt, char *buf, int buflen)
 			    mbs_init(&mb_st);
 			    for(i = 0; i<= gl_pos ;){
 				mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
-				mb_len = wcwidth(wc);
+				mb_len = Ri18n_wcwidth(wc);
 				i += (wc==0) ? 0 : mb_len;
 			    }
 			    gl_fixup(gl_prompt, -1, gl_pos + mb_len);
@@ -717,7 +717,7 @@ getline(char *prompt, char *buf, int buflen)
 			   mbs_init(&mb_st);
 			   for(i = 0; i <= gl_pos ;){
 			       mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
-			       mb_len = wcwidth(wc);
+			       mb_len = Ri18n_wcwidth(wc);
 			       i += (wc==0) ? 0 :mb_len;
 			   }
 			   gl_fixup(gl_prompt, -1, gl_pos - mb_len);
@@ -959,7 +959,7 @@ gl_del(int loc)
        if ((loc == -1 && gl_pos > 0) || (loc == 0 && gl_pos < gl_cnt)) {
 	   for(i = 0; i<= gl_pos + loc;) {
 	       mbrtowc(&wc,gl_buf+i, MB_CUR_MAX, &mb_st);
-	       mb_len = wcwidth(wc);
+	       mb_len = Ri18n_wcwidth(wc);
 	       i += (wc==0) ? 0 : mb_len;
 	   }
 	   for (i = gl_pos+(loc*mb_len); i <= gl_cnt - mb_len; i++)

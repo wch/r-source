@@ -18,6 +18,11 @@
  *  Suite 330, Boston, MA  02111-1307  USA.
  */
 
+
+/*  This file was contributed by Ei-ji Nakama.
+ *  See also the comments in src/main/rlocale.c.
+ */
+
 #ifndef R_LOCALE_H
 #define R_LOCALE_H
 
@@ -47,14 +52,10 @@ extern char *locale2charset(const char *);
  */
 extern int Ri18n_wcwidth(wchar_t);
 extern int Ri18n_wcswidth (const wchar_t *, size_t);
-#undef wcwidth
-#undef wcswidth
-#define wcwidth(__wc)           Ri18n_wcwidth(__wc)
-#define wcswidth(__wcs,__n)     Ri18n_wcswidth(__wcs,__n)
 
 /* Mac OSX CJK and WindowXP(Japanese)
  * iswctypes of MacOSX calls isctypes. no i18n.
- * For example, isprint of Windows does not accept a macron of
+ * For example, iswprint of Windows does not accept a macron of
  * Japanese "a-ru" of R as a letter. 
  * Therefore Japanese "Buraian.Ripuri-" of "Brian Ripley" is
  * shown of hex-string.:-)

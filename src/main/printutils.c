@@ -224,9 +224,6 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
 # include <R_ext/rlocale.h>
 #include <wchar.h>
 #include <wctype.h>
-#if !HAVE_DECL_WCWIDTH
-extern int wcwidth(wchar_t c);
-#endif
 #endif
 /* strlen() using escaped rather than literal form,
    and allows for embedded nuls.
@@ -272,13 +269,7 @@ int Rstrwid(char *str, int slen, int quote)
 	    int res; wchar_t wc;
 	    res = mbrtowc(&wc, p, MB_CUR_MAX, NULL);
 	    if(res > 0) {
-		len += iswprint((wint_t)wc) ?
-#ifdef HAVE_WCWIDTH
-		    wcwidth(wc)
-#else
-		    1
-#endif
-		    : 
+		len += iswprint((wint_t)wc) ? Ri18n_wcwidth(wc) : 
 #ifdef Win32
 		    6;
 #else

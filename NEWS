@@ -48,8 +48,14 @@ INTERNATIONALIZATION
 
     o	Support for East Asian CID fonts in pdf() and postscript().
 
-    o	Revised wide-character classification and width functions are
-	provided for use on Windows and AIX.
+    o	Wide-character width functions wc[s]width are provided that
+	overcome discrepancies on OS-supplied ones (and those
+	previously used on Windows).  This means that double-width
+	CJK characters are now supported on all platforms.
+
+	Revised wide-character classification functions are
+	provided for use on Windows, AIX and MacOS X to replace
+	deficient OS-supplied ones.
 
    o	There is support for MBCS charsets in the pictex() graphics
 	device, and rotated (by 90 degrees) text may work better.
@@ -62,6 +68,8 @@ BUG FIXES
 	expected by commandArgs().  (They were previously split at
 	whitespace even inside quotes on Unix-alikes but not on
 	Windows.)
+
+    o	axis() now supports pars 'xaxp'/'yaxp' as inline arguments.
 
 
 

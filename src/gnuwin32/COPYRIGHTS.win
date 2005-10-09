@@ -15,12 +15,6 @@ is distributed under the Lesser GNU Public Licence (file COPYING.LIB),
 being based closely on code in the GNU C Library.
 
 
-src/gnuwin32/extra.c
-
-contains code based on http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
-by Markus Kuhn
-
-
 src/gnuwin32/getline/*
 
 /*

@@ -50,12 +50,6 @@
 # include <R_ext/rlocale.h>
 # include <wchar.h>
 # include <wctype.h>
-#if !HAVE_DECL_WCWIDTH
-extern int wcwidth(wchar_t c);
-#endif
-#if !HAVE_DECL_WCSWIDTH
-extern int wcswidth(const wchar_t *s, size_t n);
-#endif
 #endif
 
 
@@ -115,9 +109,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef SUPPORT_MBCS
     int nc;
     char *xi;
-#ifdef HAVE_WCSWIDTH
     wchar_t *wc;
-#endif
 #endif
 
     checkArity(op, args);
@@ -154,23 +146,21 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(mbcslocale) {
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
-#ifdef HAVE_WCSWIDTH
 		if(nc >= 0) {
 		    AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
 		    wc = (wchar_t *) cbuff.data;
 		    mbstowcs(wc, xi, nc + 1);
-		    INTEGER(s)[i] = wcswidth(wc, 2147483647);
+		    INTEGER(s)[i] = Ri18n_wcswidth(wc, 2147483647);
 		    if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
 		} else
-#endif
-		    INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
+		    INTEGER(s)[i] = NA_INTEGER;
 		} else
 #endif
 		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
 	    }
 	}
     }
-#if defined(SUPPORT_MBCS) && defined(HAVE_WCSWIDTH)
+#if defined(SUPPORT_MBCS)
     DeallocBuffer(&cbuff);
 #endif
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
@@ -2404,7 +2394,7 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP s, x, width;
     int i, len, nw, w, nc;
     char *this;
-#if defined(SUPPORT_MBCS) && defined(HAVE_WCWIDTH)
+#if defined(SUPPORT_MBCS)
     char *p, *q;
     int w0, wsum, k, nb;
     wchar_t wc;
@@ -2434,12 +2424,12 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
         this = CHAR(STRING_ELT(x, i));
         nc = strlen(this);
         AllocBuffer(nc, &cbuff);
-#if defined(SUPPORT_MBCS) && defined(HAVE_WCWIDTH)
+#if defined(SUPPORT_MBCS)
         wsum = 0;
         mbs_init(&mb_st);
         for(p = this, w0 = 0, q = cbuff.data; *p ;) {
             nb =  Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
-            w0 = wcwidth(wc);
+            w0 = Ri18n_wcwidth(wc);
             if(w0 < 0) { p += nb; continue; }/* skip non-printable chars */
             wsum += w0;
             if(wsum <= w) {

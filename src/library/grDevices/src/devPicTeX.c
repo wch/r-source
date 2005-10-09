@@ -506,11 +506,7 @@ static double PicTeX_StrWidth(char *str,
 	    memset(buf, 0, sizeof(buf));
 	    strncpy(buf, p, mb_len);
 	    mbcsToUcs2(buf, &ucs2);
-#ifdef HAVE_WCWIDTH
-	    sum += (double)wcwidth(ucs2) * 0.5; /* There are not grounds at all */
-#else
-	    sum++; /* Just assume one */
-#endif
+	    sum += (double)Ri18n_wcwidth(ucs2) * 0.5; /* A guess */
 	}
 	if (mb_len > 0)
 	    p += mb_len - 1;

@@ -58,24 +58,6 @@ extern UImode  CharacterMode;
 
 #ifdef SUPPORT_MBCS
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
-#if 0
-static int wcwidth(wchar_t ucs)
-{
-  return 1 +
-    (ucs >= 0x1100 &&
-     (ucs <= 0x115f ||                    /* Hangul Jamo init. consonants */
-      ucs == 0x2329 || ucs == 0x232a ||
-      (ucs >= 0x2e80 && ucs <= 0xa4cf &&
-       ucs != 0x303f) ||                  /* CJK ... Yi */
-      (ucs >= 0xac00 && ucs <= 0xd7a3) || /* Hangul Syllables */
-      (ucs >= 0xf900 && ucs <= 0xfaff) || /* CJK Compatibility Ideographs */
-      (ucs >= 0xfe30 && ucs <= 0xfe6f) || /* CJK Compatibility Forms */
-      (ucs >= 0xff00 && ucs <= 0xff60) || /* Fullwidth Forms */
-      (ucs >= 0xffe0 && ucs <= 0xffe6) /* ||
-      (ucs >= 0x20000 && ucs <= 0x2fffd) ||
-      (ucs >= 0x30000 && ucs <= 0x3fffd)*/));
-}
-#endif
 
 static mbstate_t mb_st; /* use for char transpose as well */
 
@@ -93,6 +75,7 @@ int mb_char_len(char *buf, int clength)
     return mb_len;
 }
 
+/* <FIXME> replace by Ri18n_wcswidth */
 int mbswidth(char *buf)
 {
     char *p =buf;
@@ -104,11 +87,11 @@ int mbswidth(char *buf)
 	used = mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
 	if(used < 0) return -1;
 	p += used;
-	res += wcwidth(wc);
+	res += Ri18n_wcwidth(wc);
     }
     return res;
 }
-#else
+#else /* no SUPPORT_MBCS */
 int inline mb_char_len(char *buf, int clength)
 {
     return 1;
@@ -126,7 +109,7 @@ void setCURCOL(ConsoleData p)
 	while (P < LINE(NUMLINES - 1) + prompt_len + cur_byte) {
 	    used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
 	    if(used <= 0) break;
-	    w0 += wcwidth(wc);
+	    w0 += Ri18n_wcwidth(wc);
 	    P += used;
 	}
 	CURCOL = w0 + prompt_wid;
@@ -401,7 +384,7 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 	    mbs_init(&mb_st);
 	    for (w0 = -FC; w0 < fch && *P; ) { /* should have enough ... */
 		P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-		w0 += wcwidth(wc);
+		w0 += Ri18n_wcwidth(wc);
 	    }
 	    /* Now we have got to on or just after the left edge.
 	       Possibly have a widechar hanging over.
@@ -414,7 +397,7 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 	    while (w0 < lch) {
 		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
 		if(used <= 0) break;
-		w0 += wcwidth(wc);
+		w0 += Ri18n_wcwidth(wc);
 		if(w0 > lch) break; /* char straddling the right edge
 				       is not displayed */
 		for(j = 0; j < used; j++) *q++ = *P++;
@@ -497,11 +480,11 @@ static int writeline(ConsoleData p, int i, int j)
 	    for (w0 = 0; w0 <= CURCOL; ) {
 		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
 		if(used == 0) break;
-		w0 += wcwidth(wc);
+		w0 += Ri18n_wcwidth(wc);
 		P += used;
 	    }
 	    /* term string '\0' box width = 1 fix */
-	    w0 = (wc == L'\0') ? 1 : wcwidth(wc); 
+	    w0 = (wc == L'\0') ? 1 : Ri18n_wcwidth(wc); 
 	    P -= used;
 	    r = rect(BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH,
 		     w0 * FW, FH);
@@ -535,7 +518,7 @@ static int writeline(ConsoleData p, int i, int j)
 	    for (w0 = 0; w0 < x0; ) {
 		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
 		if(used == 0) break;
-		w1 = wcwidth(wc);
+		w1 = Ri18n_wcwidth(wc);
 		w0 += w1;
 		P += used;
 	    }
@@ -556,7 +539,7 @@ static int writeline(ConsoleData p, int i, int j)
 	    for (w0 = 0; w0 <= x1; ) {
 		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
 		if(used == 0) break;
-		wl = wcwidth(wc);
+		wl = Ri18n_wcwidth(wc);
 		w0 += wl;
 		P += used;
 	    }
@@ -946,7 +929,7 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
 	    mbs_init(&mb_st);
 	    for (w0 = 0; w0 < x00 && *P; ) {
 		P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-		w0 += wcwidth(wc);
+		w0 += Ri18n_wcwidth(wc);
 	    }
 	    x00 = 0;
 	    if(i == y1) x11 = x1+1; /* cols are 0-based */
@@ -954,7 +937,7 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
 		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
 		ll += used;
 		P += used;
-		w0 += wcwidth(wc);
+		w0 += Ri18n_wcwidth(wc);
 	    }
 	    if(w0 < x11) ll += 2;  /* \r\n */
 	    i++;
@@ -992,13 +975,13 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
 	    mbs_init(&mb_st);
 	    for (w0 = 0; w0 < x00 && *P; ) {
 		P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-		w0 += wcwidth(wc);
+		w0 += Ri18n_wcwidth(wc);
 	    }
 	    x00 = 0;
 	    if(i == y1) x11 = x1+1;
 	    while (w0 < x11 && *P) {
 		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-		w0 += wcwidth(wc);
+		w0 += Ri18n_wcwidth(wc);
 		for(j = 0; j < used; j++) *s++ = *P++;
 	    }
 	    if(w0 < x11) *s++ = '\r'; *s++ = '\n';
