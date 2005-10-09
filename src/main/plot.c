@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *  Copyright (C) 2002--2004  The R Foundation
  *
@@ -143,7 +143,7 @@ void ProcessInlinePars(SEXP s, DevDesc *dd, SEXP call)
 	    if (isList(CAR(s)))
 		ProcessInlinePars(CAR(s), dd, call);
 	    else if (TAG(s) != R_NilValue)
-	    Specify2(CHAR(PRINTNAME(TAG(s))), CAR(s), dd, call);
+		Specify2(CHAR(PRINTNAME(TAG(s))), CAR(s), dd, call);
 	    s = CDR(s);
 	}
     }
@@ -1094,14 +1094,26 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     npadj = length(padj);
     if (npadj <= 0) errorcall(call, _("zero length 'padj' specified"));
 
+    /* Now we process all the remaining inline par values:
+       we need to do it now as x/yaxp are retrieved next.
+       That will set Rf_gpptr, so we update that. */
+    GSavePars(dd);
+    Rf_gpptr(dd)->xaxp[0] = Rf_dpptr(dd)->xaxp[0];
+    Rf_gpptr(dd)->xaxp[1] = Rf_dpptr(dd)->xaxp[1];
+    Rf_gpptr(dd)->xaxp[2] = Rf_dpptr(dd)->xaxp[2];
+    Rf_gpptr(dd)->yaxp[0] = Rf_dpptr(dd)->yaxp[0];
+    Rf_gpptr(dd)->yaxp[1] = Rf_dpptr(dd)->yaxp[1];
+    Rf_gpptr(dd)->yaxp[2] = Rf_dpptr(dd)->yaxp[2];
+    ProcessInlinePars(args, dd, call);
+
     /* Retrieve relevant "par" values. */
 
     switch(side) {
     case 1:
     case 3:
-	axp[0] = Rf_dpptr(dd)->xaxp[0];
-	axp[1] = Rf_dpptr(dd)->xaxp[1];
-	axp[2] = Rf_dpptr(dd)->xaxp[2];
+	axp[0] = Rf_gpptr(dd)->xaxp[0];
+	axp[1] = Rf_gpptr(dd)->xaxp[1];
+	axp[2] = Rf_gpptr(dd)->xaxp[2];
 	usr[0] = Rf_dpptr(dd)->usr[0];
 	usr[1] = Rf_dpptr(dd)->usr[1];
 	logflag = Rf_dpptr(dd)->xlog;
@@ -1109,9 +1121,9 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case 2:
     case 4:
-	axp[0] = Rf_dpptr(dd)->yaxp[0];
-	axp[1] = Rf_dpptr(dd)->yaxp[1];
-	axp[2] = Rf_dpptr(dd)->yaxp[2];
+	axp[0] = Rf_gpptr(dd)->yaxp[0];
+	axp[1] = Rf_gpptr(dd)->yaxp[1];
+	axp[2] = Rf_gpptr(dd)->yaxp[2];
 	usr[0] = Rf_dpptr(dd)->usr[2];
 	usr[1] = Rf_dpptr(dd)->usr[3];
 	logflag = Rf_dpptr(dd)->ylog;
@@ -1164,10 +1176,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     if (n == 0)
 	errorcall(call, _("no locations are finite"));
 
-    /* Ok, all systems are "GO".  Let's get to it.
-     * First we process all the remaining inline par values */
-    GSavePars(dd);
-    ProcessInlinePars(args, dd, call);
+    /* Ok, all systems are "GO".  Let's get to it. */
 
     /* At this point we know the value of "xaxt" and "yaxt",
      * so we test to see whether the relevant one is "n".

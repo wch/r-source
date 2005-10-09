@@ -55,9 +55,10 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{\dots}{other graphical parameters may also be passed as
     arguments to this function, particularly, \code{cex.axis},
     \code{col.axis} and \code{font.axis} for axis annotation, \code{mgp}
-    for positioning, \code{tck} or \code{tcl} for tick mark length and
-    direction, \code{las} for vertical/horizontal label orientation, or
-    \code{fg} instead of \code{col}, see \code{\link{par}} on these.}
+    and \code{xaxp} or \code{yaxp} for positioning, \code{tck} or
+    \code{tcl} for tick mark length and direction, \code{las} for
+    vertical/horizontal label orientation, or \code{fg} instead of
+    \code{col}, see \code{\link{par}} on these.}
 }
 \value{
   The numeric locations on the axis scale at which tick marks were drawn
@@ -105,7 +106,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-plot(1:4, rnorm(4), axes=FALSE)
+plot(1:4, rnorm(4), axes = FALSE)
 axis(1, 1:4, LETTERS[1:4])
 axis(2)
 box() #- to make it look "as usual"
@@ -116,5 +117,9 @@ axis(1, 1:7, LETTERS[1:7], col.axis = "blue")
 # unusual options:
 axis(4, col = "violet", col.axis="dark violet", lwd = 2)
 axis(3, col = "gold", lty = 2, lwd = 0.5)
+
+# one way to have a custom x axis
+plot(1:10, xaxt = "n")
+axis(1, xaxp=c(2, 9, 7))
 }
 \keyword{aplot}
