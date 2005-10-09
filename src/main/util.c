@@ -740,6 +740,8 @@ static const char UCS4ENC[] = "UCS-4BE";
 static const char UCS2ENC[] = "UCS-2LE";
 static const char UCS4ENC[] = "UCS-4LE";
 #endif
+
+/* <FIXME> These need iconv */
 size_t mbcsMblen(char *in)
 {
     unsigned int ucs4buf[1];

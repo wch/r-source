@@ -194,11 +194,6 @@ static int wcsearch(int wint, const struct interval *table, int max)
 #endif
 */
 
-/*
- * from localecharset.c
- */
-extern char * locale2charset(const char *);
-
 /*********************************************************************
  *  There is MacOS with a CSI(CodeSet Independence) system.
  *  (wchar_t != unicode)

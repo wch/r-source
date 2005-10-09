@@ -486,7 +486,7 @@ static double PicTeX_StrWidth(char *str,
     size = gc->cex * gc->ps + 0.5;
     SetFont(gc->fontface, size, ptd);
     sum = 0;
-#ifdef SUPPORT_MBCS
+#if defined(SUPPORT_MBCS) && defined(HAVE_ICONV)
     /*
      * <FIXME>
      * is ad-hoc.
@@ -494,25 +494,24 @@ static double PicTeX_StrWidth(char *str,
      * reference to memory is better.
      * </FIXME>
      */
-    for(p = str ; *p ; p++){
+    for(p = str; *p; p++) {
 	int mb_len;
 	unsigned short ucs2;
 	char buf[8];
 
-	mb_len = (int) mbcsMblen(p);
+	mb_len = (int) mbcsMblen(p);  /* uses iconv */
 	if (mb_len == 1 && (unsigned char)*p < 128)
 		sum += charwidth[ptd->fontface-1][(int)*p];
 	else if (mb_len > 0){
 	    memset(buf, 0, sizeof(buf));
 	    strncpy(buf, p, mb_len);
 	    mbcsToUcs2(buf, &ucs2);
-	    sum += (double)Ri18n_wcwidth(ucs2) * 0.5; /* A guess */
+	    sum += (double) Ri18n_wcwidth(ucs2) * 0.5; /* A guess */
 	}
-	if (mb_len > 0)
-	    p += mb_len - 1;
+	if (mb_len > 0) p += mb_len - 1;
     }
 #else
-    for(p=str ; *p ; p++)
+    for(p = str; *p; p++)
 	sum += charwidth[ptd->fontface-1][(int)*p];
 #endif
     return sum * ptd->fontsize;

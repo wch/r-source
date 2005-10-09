@@ -18,6 +18,11 @@
  *  Suite 330, Boston, MA  02111-1307  USA.
  */
 
+/*  This file was contributed by Ei-ji Nakama.
+ *  It exports locale2charset for use in rlocale.c.
+ *  Although this is quite general, it is only used on MacOS X.
+ */
+
 /* setlocale(LC_CTYPE,NULL) to encodingname cf nl_langinfo(LC_CTYPE) */
 
 
@@ -39,7 +44,7 @@
 
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <string.h>
@@ -473,57 +478,56 @@ static const name_value guess[] = {
 static const int guess_count = (sizeof(guess)/sizeof(name_value));
 
 static const name_value known[] = {
-    {"iso88591","ISO8859-1"},
-    {"iso88592","ISO8859-2"},
-    {"iso88593","ISO8859-3"},
-    {"iso88596","ISO8859-6"},
-    {"iso88597","ISO8859-7"},
-    {"iso88598","ISO8859-8"},
-    {"iso88599","ISO8859-9"},
-    {"iso885910","ISO8859-10"},
-    {"iso885913","ISO8859-13"},
-    {"iso885914","ISO8859-14"},
-    {"iso885915","ISO8859-15"},
-    {"cp1251","CP1251"},
-    {"cp1255","CP1255"},
-    {"eucjp","EUC-JP"},
-    {"euckr","EUC-KR"},
-    {"euctw","EUC-TW"},
-    {"georgianps","GEORGIAN-PS"},
-    {"koi8u","KOI8-U"},
-    {"tcvn","TCVN"},
-    {"big5","BIG5"},
-    {"gb2312","GB2312"},
-    {"gb18030","GB18030"},
-    {"gbk","GBK"},
-    {"tis-620","TIS-620"},
-    {"sjis","SHIFT_JIS"},
-    {"euccn","GB2312"},
-    {"big5-hkscs","BIG5-HKSCS"},
+    {"iso88591", "ISO8859-1"},
+    {"iso88592", "ISO8859-2"},
+    {"iso88593", "ISO8859-3"},
+    {"iso88596", "ISO8859-6"},
+    {"iso88597", "ISO8859-7"},
+    {"iso88598", "ISO8859-8"},
+    {"iso88599", "ISO8859-9"},
+    {"iso885910", "ISO8859-10"},
+    {"iso885913", "ISO8859-13"},
+    {"iso885914", "ISO8859-14"},
+    {"iso885915", "ISO8859-15"},
+    {"cp1251", "CP1251"},
+    {"cp1255", "CP1255"},
+    {"eucjp", "EUC-JP"},
+    {"euckr", "EUC-KR"},
+    {"euctw", "EUC-TW"},
+    {"georgianps", "GEORGIAN-PS"},
+    {"koi8u", "KOI8-U"},
+    {"tcvn", "TCVN"},
+    {"big5", "BIG5"},
+    {"gb2312", "GB2312"},
+    {"gb18030", "GB18030"},
+    {"gbk", "GBK"},
+    {"tis-620", "TIS-620"},
+    {"sjis", "SHIFT_JIS"},
+    {"euccn", "GB2312"},
+    {"big5-hkscs", "BIG5-HKSCS"},
 };
 static const int known_count = (sizeof(known)/sizeof(name_value));
 
 
-static char* name_value_search(const char *name, const name_value table[], const int table_count) {
-    int min;
-    int mid;
-    int max;
-
+static char* name_value_search(const char *name, const name_value table[], 
+			       const int table_count)
+{
+    int min, mid, max;
 
 #if defined(DEBUG_TEST)
     static last;
     DPRINT(last);
-    last=0;
+    last = 0;
 #endif
     
-    min=0;
+    min = 0;
     max = table_count - 1;
 
-    if ( (0 > strcmp(name,table[min].name))||
-	 (0 < strcmp(name,table[max].name))   ){
+    if ( 0 > strcmp(name,table[min].name) || 
+	 0 < strcmp(name,table[max].name) ) {
 #if defined(DEBUG_TEST) && DEBUG_TEST > 1
-	DPRINT(strcmp(name,table[min].name));
-	DPRINT(strcmp(name,table[max].name));
+	DPRINT(strcmp(name, table[min].name));
+	DPRINT(strcmp(name, table[max].name));
 #endif
 	return (NULL);
     }
@@ -535,19 +539,19 @@ static char* name_value_search(const char *name, const name_value table[], const
 #if defined(DEBUG_TEST) && DEBUG_TEST > 1
 	SPRINT(table[mid].name);
 #endif
-	if (0<strcmp(name,table[mid].name)) {
+	if (0 < strcmp(name,table[mid].name)) {
 #if defined(DEBUG_TEST) && DEBUG_TEST > 1
-	    DPRINT(strcmp(name,table[mid].name));
+	    DPRINT(strcmp(name, table[mid].name));
 #endif
 	    min = mid + 1;
-	} else if (0>strcmp(name,table[mid].name)) {
+	} else if (0 > strcmp(name, table[mid].name)) {
 #if defined(DEBUG_TEST) && DEBUG_TEST > 1
-	    DPRINT(strcmp(name,table[mid].name));
+	    DPRINT(strcmp(name, table[mid].name));
 #endif
 	    max = mid - 1;
-	}else{
+	} else {
 #if defined(DEBUG_TEST) && DEBUG_TEST > 1
-	    DPRINT(strcmp(name,table[mid].name));
+	    DPRINT(strcmp(name, table[mid].name));
 #endif
 	    return(table[mid].value);
 	}
@@ -556,7 +560,7 @@ static char* name_value_search(const char *name, const name_value table[], const
 }
 
 
-char *locale2charset(const char * locale)
+char *locale2charset(const char *locale)
 {
     static char charset[128];
 
@@ -567,30 +571,24 @@ char *locale2charset(const char * locale)
     int  cp;
     char *value;
 
+    if ((locale == NULL) || (0 == strcmp(locale, "NULL")))
+	locale = setlocale(LC_CTYPE,NULL);
 
-    if ((locale == NULL)||
-	(0==strcmp(locale,"NULL")))
-	locale=setlocale(LC_CTYPE,NULL);
-
-    if (0==strcmp(locale,"C")||
-	0==strcmp(locale,"POSIX")){
+    if (0 == strcmp(locale, "C") || 0 == strcmp(locale, "POSIX"))
 	return ("ASCII");
-    }
 
     memset(charset,0,sizeof(charset));
 
     /* separate language_locale.encoding */
-    memset(la_loc,0,sizeof(la_loc));
-    memset(enc,0,sizeof(enc));
-    for (i=0;
-	 locale[i] && locale[i]!='.' && i<sizeof(la_loc)-1;
-	 i++)
-	la_loc[i]=locale[i];
-    if(locale[i]){
+    memset(la_loc, 0, sizeof(la_loc));
+    memset(enc, 0, sizeof(enc));
+    for (i = 0; locale[i] && locale[i]!='.' && i < sizeof(la_loc) - 1; i++)
+	la_loc[i] = locale[i];
+    if(locale[i]) {
 	i++;
-	offset=i;
-	for(i=0;locale[i+offset] && i<sizeof(enc)-1;i++)
-	    enc[i]=locale[i+offset];
+	offset = i;
+	for(i = 0; locale[i+offset] && i < sizeof(enc) - 1; i++)
+	    enc[i] = locale[i+offset];
     }
 
 #ifdef Win32
@@ -605,18 +603,26 @@ char *locale2charset(const char * locale)
       ## 1256 -> ISO 8859-6
       ## 1257 -> ISO 8859-13
     */
-    switch(cp=atoi(enc)){
-    case 1250:return("ISO 8859-2");
-    case 1251:return("KOI8-U");
-    case 1252:return("ISO 8859-1");
-    case 1253:return("ISO 8859-7");
-    case 1254:return("ISO 8859-9");
-    case 1255:return("ISO 8859-8");
-    case 1256:return("ISO 8859-6");
-    case 1257:return("ISO 8859-13");
+    switch(cp = atoi(enc)) {
+    case 1250:
+	return "ISO 8859-2";
+    case 1251:
+	return "KOI8-U";
+    case 1252:
+	return "ISO 8859-1";
+    case 1253:
+	return "ISO 8859-7";
+    case 1254:
+	return "ISO 8859-9";
+    case 1255:
+	return "ISO 8859-8";
+    case 1256:
+	return "ISO 8859-6";
+    case 1257:
+	return "ISO 8859-13";
     default:
-	sprintf(charset,"CP%u",cp);
-	return(charset);
+	sprintf(charset, "CP%u", cp);
+	return charset;
     }
 #endif	
 
@@ -629,75 +635,56 @@ char *locale2charset(const char * locale)
     */
 
     /* for AIX */
-    if (0==strcmp(enc,"UTF-8")) strcpy(enc,"utf8");
+    if (0 == strcmp(enc, "UTF-8")) strcpy(enc, "utf8");
 
+    if(strcmp(enc, "") && strcmp(enc, "utf8")) {
+	for(i = 0; enc[i]; i++) enc[i] = tolower(enc[i]);
 
-    if(strcmp(enc,"")&&strcmp(enc,"utf8")){
-
-	for(i=0; enc[i]; i++) enc[i]=tolower(enc[i]);
-
-	for(i=0; i<known_count; i++){
-	    if (0==strcmp(known[i].name,enc))
-		return(known[i].value);
-	}
+	for(i = 0; i < known_count; i++)
+	    if (0 == strcmp(known[i].name,enc)) return known[i].value;
 
 	/* cut encoding old linux cp- */
-	if (0==strncmp(enc,"cp-",3)){
-	    sprintf(charset,"CP%s",enc+3);
-	    return(charset);
+	if (0 == strncmp(enc, "cp-", 3)){
+	    sprintf(charset,"CP%s", enc+3);
+	    return charset;
 	}
 	/* cut encoding IBM ibm- */
-	if (0==strncmp(enc,"ibm",3)){
-	    cp=atoi(enc+3);
-	    sprintf(charset,"IBM-%d",abs(cp));
+	if (0 == strncmp(enc, "ibm", 3)){
+	    cp = atoi(enc + 3);
+	    sprintf(charset, "IBM-%d", abs(cp));
 	    /* IBM-[0-9]+ case */
-	    if(cp!=0){
-		return(charset);
-	    }
+	    if(cp != 0) return charset;
 	    /* IBM-eucXX case */
-	    strncpy(charset,(enc[3]=='-')?enc+4:enc+3,sizeof(charset));
-	    if(strncmp(charset,"euc",3)){
-		if (charset[3]!='-'){
-		    for(i=strlen(charset)-3;0<i;i--)
-			charset[i+1]=charset[i];
-		    charset[3]='-';
+	    strncpy(charset, (enc[3] == '-') ? enc+4: enc+3, sizeof(charset));
+	    if(strncmp(charset, "euc", 3)) {
+		if (charset[3] != '-') {
+		    for(i = strlen(charset)-3; 0 < i; i--)
+			charset[i+1] = charset[i];
+		    charset[3] = '-';
 		}
-		for(i=0;charset[i];i++)
-		    charset[i]=toupper(charset[i]);
-		return(charset);
+		for(i = 0; charset[i]; i++)
+		    charset[i] = toupper(charset[i]);
+		return charset;
 	    }
 	}
 
 	/* let's hope it is a ll_* name */
-	if (0==strcmp(enc,"euc")){
-	    if(isalpha(enc[0])&&isalpha(enc[1])&&(enc[2]=='_')){
-		if (0==strncmp("ja",la_loc,2))
-		    return("EUC-JP");
-		if (0==strncmp("ko",la_loc,2))
-		    return("EUC-KR");
-		if (0==strncmp("zh",la_loc,2))
-		    return("GB2312");
+	if (0 == strcmp(enc, "euc")) {
+	    if(isalpha(enc[0]) && isalpha(enc[1]) && (enc[2] == '_')) {
+		if (0 == strncmp("ja", la_loc, 2)) return "EUC-JP";
+		if (0 == strncmp("ko", la_loc, 2)) return "EUC-KR";
+		if (0 == strncmp("zh", la_loc, 2)) return "GB2312";
 	    }
 	}
 	
     }
 
-    if(0==strcmp(enc,"utf8"))
-	return("UTF-8");
+    if(0 == strcmp(enc, "utf8")) return "UTF-8";
 
-    /*
-      for(i=0; i<guess_count; i++)
-        if (0==strcmp(guess[i].name,la_loc))
-          return(guess[i].value);
-    */
-    if( NULL == (value = name_value_search(la_loc,guess,guess_count))){
-	return("ASCII");
-    }else{
-	return(value);
-    }
-	
-    return("ASCII");
+    value = name_value_search(la_loc, guess, guess_count);
+    return value == NULL ? "ASCII" : value;
 }
+
 /*****************************************************
  * Test !!
  *****************************************************/

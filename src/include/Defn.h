@@ -928,6 +928,9 @@ size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);
 size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 #endif
 
+/* From localecharset.c */
+extern char * locale2charset(const char *);
+
 /* used in relop.c and sort.c */
 #if defined(Win32) && defined(SUPPORT_UTF8)
 #define STRCOLL Rstrcoll
