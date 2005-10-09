@@ -2991,9 +2991,7 @@ if test "$want_mbcs_support" = yes ; then
 fi
 if test "$want_mbcs_support" = yes ; then
   AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
-		 wcswidth wctrans wcwidth)
-  AC_CHECK_DECLS([wcwidth, wcswidth], , , [#include <wchar.h>])
-  ## can manage without wc[s]width
+		 wctrans)
   for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wctrans
   do
     as_ac_var=`echo "ac_cv_func_$ac_func"`

@@ -184,14 +184,6 @@
    don't. */
 #undef HAVE_DECL_VSNPRINTF
 
-/* Define to 1 if you have the declaration of `wcswidth', and to 0 if you
-   don't. */
-#undef HAVE_DECL_WCSWIDTH
-
-/* Define to 1 if you have the declaration of `wcwidth', and to 0 if you
-   don't. */
-#undef HAVE_DECL_WCWIDTH
-
 /* Define to 1 if you have the declaration of `_snprintf', and to 0 if you
    don't. */
 #undef HAVE_DECL__SNPRINTF
@@ -624,9 +616,6 @@
 /* Define to 1 if you have the `wcstombs' function. */
 #undef HAVE_WCSTOMBS
 
-/* Define to 1 if you have the `wcswidth' function. */
-#undef HAVE_WCSWIDTH
-
 /* Define to 1 if you have the `wctrans' function. */
 #undef HAVE_WCTRANS
 
@@ -635,9 +624,6 @@
 
 /* Define to 1 if you have the <wctype.h> header file. */
 #undef HAVE_WCTYPE_H
-
-/* Define to 1 if you have the `wcwidth' function. */
-#undef HAVE_WCWIDTH
 
 /* Define if you have the 'wint_t' type. */
 #undef HAVE_WINT_T
