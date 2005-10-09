@@ -5,17 +5,17 @@
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
 %%   040
-/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quotesingle
-/parenleft /parenright /asterisk /plus /comma /hyphen /period /slash
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand
+/quoteright /parenleft /parenright /asterisk /plus /comma /minus /period /slash
 %%   060
-/zero /one /two /three /four /five /six /seven
-/eight /nine /colon /semicolon /less /equal /greater /question
+/zero /one /two /three /four /five /six /seven /eight /nine
+/colon /semicolon /less /equal /greater /question
 %%  0100
 /at /A /B /C /D /E /F /G /H /I /J /K /L /M /N /O /P /Q /R /S /T /U /V
 /W /X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
 %%  0140
-/grave /a /b /c /d /e /f /g /h /i /j /k /l /m /n /o /p /q /r /s /t /u /v
-/w /x /y /z /braceleft /bar /braceright /asciitilde /.notdef
+/quoteleft /a /b /c /d /e /f /g /h /i /j /k /l /m /n /o /p /q /r /s /t
+/u /v /w /x /y /z /braceleft /bar /braceright /asciitilde /.notdef
 %%  0200
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef

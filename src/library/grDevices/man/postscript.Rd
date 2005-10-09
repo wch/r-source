@@ -248,8 +248,12 @@ ps.options(paper, horizontal, width, height, family, encoding,
   encodings normally used on Windows and MacOS (at least by Adobe), and
   \code{"PDFDoc.enc"} is the first 256 characters of the Unicode
   encoding, the standard for PDF.  There are also encodings for ISO
-  Latin-2, Latin-7 and Latin-9, Cyrillic and Greek, and \code{"TeXtext"}
-  for the 7-bit TeX encoding.
+  Latin-2, Latin-7 ISO 8859-13) and Latin-9 (ISO 8859-15), Cyrillic (ISO
+  8859-5) and Greek (ISO 8859-7), and \code{"TeXtext"} for the 7-bit TeX
+  encoding.  Note that many glyphs in these encodings are not in the
+  fonts corresponding to the standard families: the Adobe ones cover
+  little more than Latin-1, whereas the URW ones also cover Latin-2 but
+  not much of Latin-1 nor Cyrillic nor Greek.
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro
@@ -257,10 +261,14 @@ ps.options(paper, horizontal, width, height, family, encoding,
   be in the PostScript fonts.  (It is in the URW variants; it is not in
   the supplied Adobe Font Metric files.)
 
-  There is one exception.  Character 45 (\code{"-"}) is always set
+  There is an exception.  Character 45 (\code{"-"}) is always set
   as minus (its value in Adobe ISOLatin1) even though it is hyphen in
   the other encodings.  Hyphen is available as character 173 (octal
-  0255) in ISOLatin1.
+  0255) in all the Latin encodings, Cyrillic and Greek.  There are some
+  discrepancies in accounts of glyphs 39 and 96: these are treated
+  as \sQuote{quoteright} and \sQuote{quoteleft} (rather than
+  \sQuote{quotesingle}/\sQuote{acute} and \sQuote{grave}
+  respectively) as they are in all the Adobe documentation.
 
   Computer Modern fonts are encoded rather differently and should be
   used with \code{encoding = "TeXtext.enc"}, taking care that the
