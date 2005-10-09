@@ -11,8 +11,8 @@ There is now MBCS support for the line editor in Rterm.exe.
 (Contributed by Haruki Koyanagi <koyanagi@com-one.com>.)
 
 Import libraries are now made without -k (--kill-at).  This is not
-relevant for base R (R.dll and Rblas.dll only use cdecl entry points)
-but might be for contributed software using R's macros.
+relevant for base R (R.dll, Rblas.dll and Rlapack.dll only use cdecl
+entry points) but might be for contributed software using R's macros.
 
 The import libraries libR.a, libRblas.a and libproxy.a are now
 installed in R_HOME/lib (rather than R_HOME/src/gnuwin32).
@@ -30,13 +30,14 @@ to 10Mb (from 2Mb); this is comparable with the default on Linux systems
 and may allow some larger programs to run without crashes.
 
 Overwrite mode in the console now works for MBCS charsets.  (Patch
-contributed by Haruki Koyanagi <koyanagi@com-one.com>.)
+contributed by Haruki Koyanagi.)
 
 R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the
 indices.
 
-The windows() family of devices did not find the right character in
-MBCS locales for non-ASCII characters.  (Pointed out by Ei-Ji Nakama.)
+The windows() family of devices did not find the right character width
+in MBCS locales for non-ASCII characters.  (Pointed out by Ei-Ji
+Nakama.)
 
 
 
