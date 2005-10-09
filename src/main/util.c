@@ -915,6 +915,26 @@ size_t ucs2ToMbcs(ucs2_t *in, char *out)
     }
     return strlen(out);
 }
+#else
+/* we need dummy entry points in R.dll */
+typedef unsigned short ucs2_t;
+
+size_t mbcsMblen(char *in)
+{
+    return (size_t) -1;
+}
+size_t ucs2Mblen(ucs2_t *in)
+{
+    return (size_t) -1;
+}
+size_t mbcsToUcs2(char *in, ucs2_t *out)
+{
+    return (size_t) -1;
+}
+size_t ucs2ToMbcs(ucs2_t *in, char *out)
+{
+    return (size_t) -1;
+}
 #endif /* SUPPORT_MBCS && HAVE_ICONV */
 
 

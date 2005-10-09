@@ -48,9 +48,12 @@ INTERNATIONALIZATION
     o	Support for East Asian CID fonts in pdf() and postscript().
 
     o	Wide-character width functions wc[s]width are provided that
-	overcome discrepancies on OS-supplied ones (and those
-	previously used on Windows).  This means that double-width
-	CJK characters are now supported on all platforms.
+	overcome problems found with OS-supplied ones (and those
+	previously used by R on Windows).  This means that
+	double-width CJK characters are now supported on all
+	platforms.  It seems that the width of some characters (and
+	not just CJK characters) depends on which CJK locale's fonts
+	are in use and also on the OS.
 
 	Revised wide-character classification functions are
 	provided for use on Windows, AIX and MacOS X to replace

@@ -164,10 +164,8 @@ int   getcharset(void);
 void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj);
 int gwstrwidth(drawing d, font f, char *s);
 #endif
-#ifdef SUPPORT_MBCS
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width);
-#endif
 
 
 /* pixels */
