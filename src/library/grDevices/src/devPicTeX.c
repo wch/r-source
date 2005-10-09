@@ -510,10 +510,9 @@ static double PicTeX_StrWidth(char *str,
 	    if (mb_len > 0) p += mb_len - 1;
 	}
     } else
-#else
+#endif
 	for(p = str; *p; p++)
 	    sum += charwidth[ptd->fontface-1][(int)*p];
-#endif
     return sum * ptd->fontsize;
 }
 
