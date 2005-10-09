@@ -19,8 +19,7 @@
  */
 
 /*  This file was contributed by Ei-ji Nakama.
- *  It exports locale2charset for use in rlocale.c.
- *  Although this is quite general, it is only used on MacOS X.
+ *  It exports locale2charset for use in gram.y, and rlocale.c on MacOS X.
  */
 
 /* setlocale(LC_CTYPE,NULL) to encodingname cf nl_langinfo(LC_CTYPE) */

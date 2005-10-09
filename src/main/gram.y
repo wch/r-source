@@ -86,10 +86,13 @@ static int 	xxcharcount, xxcharsave;
 #ifdef HAVE_LANGINFO_CODESET
 # include <langinfo.h>
 #endif
+
+/* Previous versions (< 2.3.0) assumed wchar_t was in Unicode (and it
+   commonly is).  This version does not. */
 # ifdef Win32
 static const char UNICODE[] = "UCS-2LE";
 # else
-#  if BYTE_ORDER == BIG_ENDIAN
+#  ifdef WORDS_BIGENDIAN
 static const char UNICODE[] = "UCS-4BE";
 #  else
 static const char UNICODE[] = "UCS-4LE";
@@ -105,9 +108,9 @@ static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
     ucs2_t   ucs2s[2];
     wchar_t  wcs[2];
     wchar_t *inbuf = wcs;
-    size_t   inbytesleft = sizeof( wchar_t );
+    size_t   inbytesleft = sizeof(wchar_t);
     char    *outbuf = (char *)buf;
-    size_t   outbytesleft= sizeof( buf );
+    size_t   outbytesleft = sizeof(buf);
     size_t   status;
     
     strcpy(tocode, "");
@@ -132,22 +135,21 @@ static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
 #endif
     }
     
-    status = Riconv(cd,
-		    (char **)&inbuf, (size_t *)&inbytesleft,
+    status = Riconv(cd, (char **)&inbuf, (size_t *)&inbytesleft,
 		    (char **)&outbuf, (size_t *)&outbytesleft);
     Riconv_close(cd);
 
-    if (status == (size_t)(-1)) {
+    if (status == (size_t) -1) {
         switch(errno){
         case EINVAL:
-            return (size_t)-2;
+            return (size_t) -2;
         case EILSEQ:
-            return (size_t)-1;
+            return (size_t) -1;
         case E2BIG:
             break;
         default:
             errno = EILSEQ;
-            return (size_t)-1;
+            return (size_t) -1;
         }
     }
     strncpy(s, buf,sizeof(buf));

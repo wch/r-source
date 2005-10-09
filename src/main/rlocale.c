@@ -236,7 +236,7 @@ static const char UNICODE[] = "UCS-4BE";
 #endif
 
 /*********************************************************************
- *  iswalpha etc. does not function normally for Windows
+ *  iswalpha etc. does not function correctly for Windows
  *  iswalpha etc. does not function at all in AIX.
  *  all locale wchar_t == UNICODE
  ********************************************************************/
@@ -257,21 +257,25 @@ static const char UNICODE[] = "UCS-4BE";
 }
 #endif
 
+/* These are the functions which C99 and POSIX define.  However,
+   not all are used in R and not all are implemented in e.g. Solaris */
 
-  ISWFUNC(upper)
-  ISWFUNC(lower)
-  ISWFUNC(alpha)
-  ISWFUNC(digit)
-  ISWFUNC(xdigit)
-  ISWFUNC(space)
-  ISWFUNC(print)
-  ISWFUNC(graph)
-  ISWFUNC(blank)
-  ISWFUNC(cntrl)
-  ISWFUNC(punct)
-  /*
-  ISWFUNC(alnum)
-  */
+    ISWFUNC(upper)
+    ISWFUNC(lower)
+    ISWFUNC(alpha)
+    ISWFUNC(digit)
+    ISWFUNC(xdigit)
+    ISWFUNC(space)
+    ISWFUNC(print)
+    ISWFUNC(graph)
+    /* unused, not defined on Solaris
+       ISWFUNC(blank)
+       ISWFUNC(cntrl)
+    */
+    ISWFUNC(punct)
+    /*  defined below in terms of digit and alpha
+    ISWFUNC(alnum)
+    */
 
 wctype_t Ri18n_wctype(const char *);
 int Ri18n_iswctype(wint_t, wctype_t);
@@ -301,8 +305,10 @@ static const Ri18n_wctype_func_l Ri18n_wctype_func[] = {
     {"space",  1<<5,  Ri18n_iswspace},
     {"print",  1<<6,  Ri18n_iswprint},
     {"graph",  1<<7,  Ri18n_iswgraph},
+/*  see comments above
     {"blank",  1<<8,  Ri18n_iswblank},
     {"cntrl",  1<<9,  Ri18n_iswcntrl},
+*/
     {"punct",  1<<10, Ri18n_iswpunct},
     {"alnum",  1<<11, Ri18n_iswalnum},
     {NULL,     0,     NULL}
