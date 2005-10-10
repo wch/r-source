@@ -39,6 +39,8 @@ The windows() family of devices did not find the right character width
 in MBCS locales for non-ASCII characters.  (Pointed out by Ei-Ji
 Nakama.)
 
+The installer was missing doc/html/index.html.
+
 
 
 R 2.2.0
