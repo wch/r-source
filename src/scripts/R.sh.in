@@ -100,7 +100,6 @@ error () {
 
 ### Argument loop
 args=
-after_args=no
 debugger=
 debugger_args=
 gui=
@@ -141,16 +140,9 @@ while test -n "${1}"; do
     --version)
       echo "${version}"; exit 0 ;;
     --args)
-      args="${args} ${1}";
-      after_args=yes
-      ;;
+      break ;;
     *)
-      if test "x${after_args}" = "xyes"; then
-        args="${args} \"${1}\""
-      else
-        args="${args} ${1}"
-      fi 
-      ;;
+      args="${args} ${1}" ;;
   esac
   shift
 done
@@ -188,9 +180,7 @@ export R_SESSION_TMPDIR
 
 ## Startup
 if test -z "${debugger}"; then
-  ## used to be eval, but that ignores quotes in parsing arguments
-  eval "${R_binary}" @R_BATCHSAVE@ ${args}
-  exit ${?}
+  exec "${R_binary}" @R_BATCHSAVE@ ${args} "${@}"
 else
   ## Ideally, we would like the debugger to start R with additional
   ## ('inferior') arguments, but not all debuggers can do this.  We know
@@ -210,15 +200,13 @@ else
       args_ok=yes
       ;;
   esac
-  if test -n "${args}" && test "${args_ok}" = no; then
+  if test -n "${args}${*}" && test "${args_ok}" = no; then
     echo "*** Further command line arguments ('${args}') disregarded"
     echo "*** (maybe use 'run ${args}' from *inside* ${debugger})"
     echo ""
-    eval ${debugger} ${debugger_args} "${R_binary}"
-    exit ${?}
+    exec ${debugger} ${debugger_args} "${R_binary}"
   else
-    eval ${debugger} ${debugger_args} "${R_binary}" ${args}
-    exit ${?}
+    exec ${debugger} ${debugger_args} "${R_binary}" ${args} "${@}"
   fi
 fi
 
