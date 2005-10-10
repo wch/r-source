@@ -974,7 +974,7 @@ do_exit_on_error () {
   remove_R_package_dir=${1-yes}
   ## bundlepkg is set if this is a bundle or if the package/bundle 
   ## is already installed, but not for a new non-bundle.
-  if test -z ${bundlepkg}; then
+  if test -z "${bundlepkg}"; then
     bundlepkg=${pkg_name}
   fi
   for p in ${bundlepkg}; do
