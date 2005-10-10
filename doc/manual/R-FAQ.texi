@@ -668,8 +668,8 @@ between R and S?}).  Introductory books include
 @quotation
 P. Spector (1994), ``An introduction to S and @SPLUS{}'', Duxbury Press.
 
-A. Krause and M. Olsen (2002), ``The Basics of @SPLUS{}'' (Third
-Edition).  Springer, ISBN 0-387-95456-2
+A. Krause and M. Olsen (2005), ``The Basics of @SPLUS{}'' (Fourth
+Edition).  Springer, ISBN 0-387-26109-5.
 @end quotation
 
 The book
