@@ -201,8 +201,9 @@ else
       ;;
   esac
   if test -n "${args}${*}" && test "${args_ok}" = no; then
-    echo "*** Further command line arguments ('${args} ${*}') disregarded"
-    echo "*** (maybe use 'run ${args} ${*}' from *inside* ${debugger})"
+    args=`expr "${args} ${*}" : " *\(.*\)"`
+    echo "*** Further command line arguments ('${args}') disregarded"
+    echo "*** (maybe use 'run ${args}' from *inside* ${debugger})"
     echo ""
     exec ${debugger} ${debugger_args} "${R_binary}"
   else
