@@ -39,7 +39,8 @@ points(x, \dots)
     Values \code{pch=26:32} are currently unused, and \code{pch=32:255}
     give the text symbol in a single-byte locale.  In a multi-byte locale
     such as UTF-8, numeric values of \code{pch} greater than or equal to
-    32 specify a Unicode code point.
+    32 specify a Unicode code point (except for the symbol font as
+    selected by \code{\link{par}(font = 5)}).
     
     If \code{pch} is an integer or character \code{NA} or an empty
     character string, the point is omitted from the plot.

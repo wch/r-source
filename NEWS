@@ -95,6 +95,15 @@ BUG FIXES
 		CHANGES IN R VERSION 2.2.0 patched
 
 
+NEW FEATURES
+
+    o	Use of 'pch' (e.g. in points) in the symbol font 5 is now
+	interpreted in the single-byte encoding used by that font.
+	Similarly, strwidth now recognizes that font 5 has a different
+	encoding from that of the locale.  (These are likely to affect
+	the answer only in MBCS locales such as UTF-8.)
+
+
 DEPRECATED & DEFUNCT
 
     o	The undocumented use of atan() with two arguments is deprecated:
