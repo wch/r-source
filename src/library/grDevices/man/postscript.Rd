@@ -102,9 +102,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
     \code{\link{check.options}}.  See the Examples.}
   \item{title}{title string to embed in the file.}
   \item{fonts}{a character vector specifying R graphics
-    (device-independent)
-    font family names for fonts
-    which must be 
+    (device-independent) font family names for fonts which must be
     included in the PostScript file.}
 }
 \details{
@@ -198,12 +196,6 @@ ps.options(paper, horizontal, width, height, family, encoding,
   these easier to remember, \code{"URWHelvetica" == "NimbusSan"} and
   \code{"URWTimes" == "NimbusRom"} are also supported.
 
-  It is also possible to specify \code{family = "ComputerModern"}. This
-  is intended to use with the Type 1 versions of the TeX CM fonts.  It
-  will normally be possible to include such output in TeX or LaTeX
-  provided it is processed with \code{dvips -Ppfb -j0} or the equivalent
-  on your system. (\code{-j0} turns off font subsetting.)
-  
   If the second form of argument \code{"family"} is used, it should be a
   character vector of four or five paths to Adobe Font Metric files for
   the regular, bold, italic, bold italic and (optionally) symbol fonts to
@@ -224,11 +216,15 @@ ps.options(paper, horizontal, width, height, family, encoding,
   The \code{.afm} files for the first four fonts do not need to be in
   the correct encoding, but that for the symbol font must be.
 
-  When \code{family = "ComputerModern"} is used, the italic/bold-italic
-  fonts used are slanted fonts (\code{cmsl10} and \code{cmbxsl10}).  To
-  use text italic fonts instead, use
-  \code{family = c("CM_regular_10.afm", "CM_boldx_10.afm", "cmti10.afm",
-    "cmbxti10.afm", "CM_symbol_10.afm")}.
+  It is also possible to specify \code{family = "ComputerModern"} with
+  an appropriate encoding (see below). This is intended to use with the
+  Type 1 versions of the TeX CM fonts.  It will normally be possible to
+  include such output in TeX or LaTeX provided it is processed with
+  \code{dvips -Ppfb -j0} or the equivalent on your system. (\code{-j0}
+  turns off font subsetting.)  When \code{family = "ComputerModern"} is
+  used, the italic/bold-italic fonts used are slanted fonts
+  (\code{cmsl10} and \code{cmbxsl10}).  To use text italic fonts
+  instead, \code{family = "ComputerModernItalic"}.
 }
 
 \section{Encodings}{
@@ -245,7 +241,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   accented and special characters do not come out as you expect, you may
   need to change the encoding.  Some other encodings are supplied with
   \R: \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
-  encodings normally used on Windows and MacOS (at least by Adobe), and
+  encodings normally used on Windows and Classic MacOS (at least by Adobe), and
   \code{"PDFDoc.enc"} is the first 256 characters of the Unicode
   encoding, the standard for PDF.  There are also encodings for ISO
   Latin-2, Latin-7 ISO 8859-13) and Latin-9 (ISO 8859-15), Cyrillic (ISO
@@ -265,10 +261,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
   as minus (its value in Adobe ISOLatin1) even though it is hyphen in
   the other encodings.  Hyphen is available as character 173 (octal
   0255) in all the Latin encodings, Cyrillic and Greek.  There are some
-  discrepancies in accounts of glyphs 39 and 96: these are treated
-  as \sQuote{quoteright} and \sQuote{quoteleft} (rather than
-  \sQuote{quotesingle}/\sQuote{acute} and \sQuote{grave}
-  respectively) as they are in all the Adobe documentation.
+  discrepancies in accounts of glyphs 39 and 96: the supplied encodings
+  treat these as \sQuote{quoteright} and \sQuote{quoteleft} (rather than
+  \sQuote{quotesingle}/\sQuote{acute} and \sQuote{grave} respectively),
+  as they are in all the Adobe documentation.
 
   Computer Modern fonts are encoded rather differently and should be
   used with \code{encoding = "TeXtext.enc"}, taking care that the

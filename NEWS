@@ -21,6 +21,9 @@ NEW FEATURES
     o	chooseCRANmirror() consults the CRAN master (if accessible) to
 	find an up-to-date list of mirrors.
 
+    o	postscript() supports family="ComputerModernItalic" for
+	Computer Modern with italic (rather than slanted) faces.
+
 
 DEPRECATED & DEFUNCT
 

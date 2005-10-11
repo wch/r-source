@@ -68,6 +68,7 @@ static char PS_hyphen = 173;
 /* to match it with afm of CID Japan1,Korea1,CNS1,GB1 */
 #include "devPS_data.h"
 
+
 /* This structure gives the set of font names for each type face. */
 /* They also give the afm file names. */
 
@@ -174,6 +175,10 @@ Family [] = {
        "CM_boldx_italic_10.afm", "CM_symbol_10.afm"}
     },
 
+    { "ComputerModernItalic",
+      {"CM_regular_10.afm", "CM_boldx_10.afm", "cmti10.afm",
+       "cmbxti10.afm", "CM_symbol_10.afm"}
+    },
     { NULL }
 };
 
@@ -595,8 +600,7 @@ LoadEncoding(char *encpath, char *encname, CNAME *encnames,
 static int
 PostScriptLoadCIDFontMetrics(const char * const fontpath, 
 			     CIDFontMetricInfo *cidmetrics,
-			     char *fontname, 
-			     CNAME *charnames)
+			     char *fontname, CNAME *charnames)
 {
     char buf[BUFSIZE], *p;
     int mode, j, ii;
@@ -1848,7 +1852,7 @@ static cidfontfamily addDefaultCIDFontFromFamily(int family,
 }
 
 static type1fontfamily addDefaultFontFromFamily(char *encpath, int family,
-				      Rboolean isPDF)
+						Rboolean isPDF)
 {
     encodinginfo encoding;
     type1fontfamily fontfamily = makeFontFamily();
