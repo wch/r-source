@@ -1667,12 +1667,13 @@ void GEText(double x, double y, char *str,
 			    char *ss = sbuf;
 			    int charNum = 0;
 #ifdef SUPPORT_MBCS
-			    if(mbcslocale && !utf8strIsASCII(ss)) {
+			    /* Symbol fonts are not encoded in MBCS ever */
+			    if(gc->fontface != 5 && mbcslocale && !utf8strIsASCII(ss)) {
 				int n = strlen(ss), used;
 				wchar_t wc;
 				mbstate_t mb_st;
 				mbs_init(&mb_st);
-				while ((used=mbrtowc(&wc, ss, n, &mb_st)) > 0) {
+				while ((used = mbrtowc(&wc, ss, n, &mb_st)) > 0) {
 				    GEMetricInfo((int)wc, gc, &h, &d, &w, dd);
 				    h = fromDeviceHeight(h, GE_INCHES, dd);
 				    d = fromDeviceHeight(d, GE_INCHES, dd);
@@ -1830,7 +1831,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	} else {
 #ifdef SUPPORT_MBCS
-	    if(mbcslocale) {
+	    if(mbcslocale && gc->fontface != 5) {
 		int cnt = wcrtomb(str, pch, NULL);
 		str[cnt] = 0;
 	    } else

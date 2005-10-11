@@ -56,6 +56,12 @@
 #ifdef SUPPORT_MBCS
 /* This only uses a FontSet in a MBCS */
 # define USE_FONTSET 1
+/* In theory we should do this, but it works less well
+# ifdef X_HAVE_UTF8_STRING
+#  define HAVE_XUTF8TEXTEXTENTS 1
+#  define HAVE_XUTF8DRAWSTRING 1
+#  define HAVE_XUTF8DRAWIMAGESTRING 1
+# endif */
 #endif
 
 #ifndef HAVE_KEYSYM
@@ -2017,13 +2023,14 @@ static int textwidth(char *text, int nchar)
 {
 
 #ifdef USE_FONTSET
-    if(mbcslocale)
+    if(mbcslocale) {
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
         if (utf8locale)
 	    return Xutf8TextEscapement(font_set, text, nchar);
         else
 #endif
 	    return XmbTextEscapement(font_set, text, nchar);
+    }
 #endif
     return XTextWidth(font_info, text, nchar);
 }
