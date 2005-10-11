@@ -241,15 +241,16 @@ ps.options(paper, horizontal, width, height, family, encoding,
   accented and special characters do not come out as you expect, you may
   need to change the encoding.  Some other encodings are supplied with
   \R: \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
-  encodings normally used on Windows and Classic MacOS (at least by Adobe), and
-  \code{"PDFDoc.enc"} is the first 256 characters of the Unicode
-  encoding, the standard for PDF.  There are also encodings for ISO
-  Latin-2, Latin-7 ISO 8859-13) and Latin-9 (ISO 8859-15), Cyrillic (ISO
-  8859-5) and Greek (ISO 8859-7), and \code{"TeXtext"} for the 7-bit TeX
-  encoding.  Note that many glyphs in these encodings are not in the
-  fonts corresponding to the standard families: the Adobe ones cover
-  little more than Latin-1, whereas the URW ones also cover Latin-2 and
-  Latin-9 but not much of Latin-7 nor Cyrillic nor Greek.
+  encodings normally used on Windows and Classic MacOS (at least by
+  Adobe), and \code{"PDFDoc.enc"} is the first 256 characters of the
+  Unicode encoding, the standard for PDF.  There are also encodings for
+  ISO Latin-2, Latin-7 ISO 8859-13) and Latin-9 (ISO 8859-15), Cyrillic
+  (ISO 8859-5) and Greek (ISO 8859-7), and \code{"TeXtext"} for the
+  7-bit TeX encoding.  Note that many glyphs in these encodings are not
+  in the fonts corresponding to the standard families: the Adobe ones
+  cover little more than Latin-1, whereas the URW ones also cover
+  Latin-2 (except t and T cedilla), Latin-7, Latin-9 and Cyrillic but no
+  Greek.
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro

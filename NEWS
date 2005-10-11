@@ -24,6 +24,9 @@ NEW FEATURES
     o	postscript() supports family="ComputerModernItalic" for
 	Computer Modern with italic (rather than slanted) faces.
 
+    o	The URW font metrics have been updated to versions from late
+	2002 which cover more glyphs, including Cyrillic.
+
 
 DEPRECATED & DEFUNCT
 
