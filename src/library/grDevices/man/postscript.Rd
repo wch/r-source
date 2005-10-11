@@ -180,14 +180,13 @@ ps.options(paper, horizontal, width, height, family, encoding,
   font families that are mapped to PostScript-specific fonts via
   a font database (see \code{postscriptFonts}).  
   
-  The argument \code{family} specifies the initial/default
-  font family to be used.
-  In normal use it is one of \code{"AvantGarde"},
+  The argument \code{family} specifies the initial/default font family
+  to be used. In normal use it is one of \code{"AvantGarde"},
   \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
   \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-  \code{"Palatino"} or \code{"Times"}, and refers to the standard
-  Adobe PostScript fonts of those names which are included (or cloned)
-  in all common PostScript devices.
+  \code{"Palatino"} or \code{"Times"}, and refers to the standard Adobe
+  PostScript fonts of those names which are included (or cloned) in all
+  common PostScript devices.
 
   Many PostScript emulators (including those based on
   \code{ghostscript}) use the URW equivalents of these fonts, which are
@@ -209,8 +208,9 @@ ps.options(paper, horizontal, width, height, family, encoding,
   character vector of four or five paths to Adobe Font Metric files for
   the regular, bold, italic, bold italic and (optionally) symbol fonts to
   be used.  If these paths do not contain the file separator, they are
-  taken to refer to files in the \R directory \file{R\_HOME/afm}.  Thus the
-  default Helvetica family can be specified by \code{family =
+  taken to refer to files in directory \file{afm} of package
+  \pkg{grDevices}. Thus the default Helvetica family can be specified by
+  \code{family =
     c("hv______.afm",
     "hvb_____.afm", "hvo_____.afm", "hvbo____.afm", "sy______.afm")}.
   It is the user's responsibility to check that suitable fonts are made
@@ -253,7 +253,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   encoding.  Note that many glyphs in these encodings are not in the
   fonts corresponding to the standard families: the Adobe ones cover
   little more than Latin-1, whereas the URW ones also cover Latin-2 but
-  not much of Latin-1 nor Cyrillic nor Greek.
+  not much of Latin-7 nor Cyrillic nor Greek.
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro
