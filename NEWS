@@ -72,6 +72,12 @@ INTERNATIONALIZATION
 	wchar_t in Unicode.
 
 
+INSTALLATION CHANGES
+
+    o	The encoding files for pdf()/postscript() have been moved to
+	directory 'enc' in package 'grDevices'.
+
+
 BUG FIXES
 
     o	Quoted arguments to the R script after --args are now

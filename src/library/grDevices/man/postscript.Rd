@@ -72,7 +72,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
 #ifdef windows
 "WinAnsi.enc"
 #endif
-    in the \file{R\_HOME/afm} directory, which is used
+    in the \file{enc} directory of package \pkg{grDevices}, which is used
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.
 #ifdef unix
@@ -252,8 +252,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   8859-5) and Greek (ISO 8859-7), and \code{"TeXtext"} for the 7-bit TeX
   encoding.  Note that many glyphs in these encodings are not in the
   fonts corresponding to the standard families: the Adobe ones cover
-  little more than Latin-1, whereas the URW ones also cover Latin-2 but
-  not much of Latin-7 nor Cyrillic nor Greek.
+  little more than Latin-1, whereas the URW ones also cover Latin-2 and
+  Latin-9 but not much of Latin-7 nor Cyrillic nor Greek.
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro
