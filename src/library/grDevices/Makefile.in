@@ -53,6 +53,12 @@ all: Makefile DESCRIPTION
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/afm; \
 	  done; \
 	fi
+	@if test -d $(srcdir)/inst/enc; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/enc; \
+	  for f in `ls -d $(srcdir)/inst/enc/*`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/enc; \
+	  done; \
+	fi
 	@if test -d $(srcdir)/inst/CID; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/CID; \
 	  cp -pr  $(srcdir)/inst/CID/* $(top_builddir)/library/$(pkg)/CID; \
