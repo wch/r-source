@@ -102,8 +102,10 @@ getOption(x)
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.  Valid values are
       25\dots500000 with default 5000.  If you increase it, you may
-      also want to start \R with a larger stack; see \code{--max-ppsize}
-      in \code{\link{Memory}}.}
+      also want to start \R with a larger protection stack;
+      see \code{--max-ppsize} in \code{\link{Memory}}.  Note too that
+      you may cause a segfault from overflow of the C stack, and on OSes
+      where it is possible you may want to increase that.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored in their
