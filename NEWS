@@ -18,6 +18,9 @@ NEW FEATURES
     o	Non-syntatic names of list elements are now printed quoted by
 	backticks rather than double quotes.
 
+    o	chooseCRANmirror() consults the CRAN master (if accessible) to
+	find an up-to-date list of mirrors.
+
 
 DEPRECATED & DEFUNCT
 

@@ -99,6 +99,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 			    installWithVers = FALSE,
                             checkBuilt = FALSE, type = getOption("pkgType"))
 {
+    ask  # just a check that it is valid before we start work
     text.select <- function(old)
     {
         update <- NULL
@@ -231,6 +232,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos),
                          method, available = NULL, ask = FALSE)
 {
+    ask  # just a check that it is valid before we start work
     if(is.null(lib.loc)) lib.loc <- .libPaths()
 
     instp <- installed.packages(lib.loc = lib.loc)
@@ -491,7 +493,10 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 chooseCRANmirror <- function(graphics = TRUE)
 {
     if(!interactive()) stop("cannot choose a CRAN mirror non-interactively")
-    m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
+    m <- try(read.csv(url("http://cran.r-project.org/CRAN_mirrors.csv"),
+                      as.is=TRUE))
+    if(inherits(m, "try-error"))
+        m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
     res <- menu(m[,1], graphics, "CRAN mirror")
     if(res > 0) {
         URL <- m[res, "URL"]
