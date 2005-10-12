@@ -2990,9 +2990,11 @@ if test "$want_mbcs_support" = yes ; then
   done
 fi
 if test "$want_mbcs_support" = yes ; then
+## Solaris 8 is missing iswblank, but we can make it from iswctype.
   AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
-		 wctrans)
-  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wctrans
+		 wctrans iswblank wctype iswctype)
+  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
+                 wctrans wctype iswctype
   do
     as_ac_var=`echo "ac_cv_func_$ac_func"`
     this=`eval echo '${'$as_ac_var'}'`

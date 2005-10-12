@@ -34485,8 +34485,11 @@ if test "$want_mbcs_support" = yes ; then
 
 
 
+
+
+
 for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
-		 wctrans
+		 wctrans iswblank wctype iswctype
 do
 as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
 echo "$as_me:$LINENO: checking for $ac_func" >&5
@@ -34595,7 +34598,8 @@ _ACEOF
 fi
 done
 
-  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wctrans
+  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
+                 wctrans wctype iswctype
   do
     as_ac_var=`echo "ac_cv_func_$ac_func"`
     this=`eval echo '${'$as_ac_var'}'`

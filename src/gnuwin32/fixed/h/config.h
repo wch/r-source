@@ -317,6 +317,9 @@
 /* Define to 1 if you have the `isnan' function. */
 #define HAVE_ISNAN 1
 
+/* Define to 1 if you have the `iswblank' function. */
+#undef HAVE_ISWBLANK
+
 /* Define if you have the JPEG headers and libraries. */
 #define HAVE_JPEG 1
 
