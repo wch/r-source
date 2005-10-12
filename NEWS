@@ -24,9 +24,6 @@ NEW FEATURES
     o	postscript() supports family="ComputerModernItalic" for
 	Computer Modern with italic (rather than slanted) faces.
 
-    o	The URW font metrics have been updated to versions from late
-	2002 which cover more glyphs, including Cyrillic.
-
 
 DEPRECATED & DEFUNCT
 
@@ -51,8 +48,7 @@ INTERNATIONALIZATION
 
 	A set of patches supplied by Ei-ji Nakama has been incorporated.
 
-    o	New postscript encodings for ISO Latin-7 (8859-13, Latvian, 
-	Lithuanian etc), Greek and Cyrillic.
+    o	New postscript encodings for Greek.
 
     o	Support for East Asian CID fonts in pdf() and postscript().
 
@@ -114,6 +110,12 @@ NEW FEATURES
 	Similarly, strwidth now recognizes that font 5 has a different
 	encoding from that of the locale.  (These are likely to affect
 	the answer only in MBCS locales such as UTF-8.)
+
+    o	The URW font metrics have been updated to versions from late
+	2002 which cover more glyphs, including Cyrillic.
+
+    o	New postscript encodings for ISO Latin-7 (8859-13, Latvian, 
+	Lithuanian etc), Cyrillic (8859-5) and KOI8-R.
 
 
 DEPRECATED & DEFUNCT
