@@ -108,7 +108,7 @@ coplot <-
 		i <- seq(along = a.levels <- levels(a))
 		a <- as.numeric(a)
 		cbind(i - 0.5, i + 0.5)
-	    } else co.intervals(a,number=number[1],overlap=overlap[1])
+	    } else co.intervals(unclass(a), number=number[1], overlap=overlap[1])
 	b.intervals <-
 	    if (have.b) {
 		if(b.is.fac) {
@@ -119,7 +119,7 @@ coplot <-
 		else {
 		    if(length(number)==1) number  <- rep.int(number,2)
 		    if(length(overlap)==1)overlap <- rep.int(overlap,2)
-		    co.intervals(b,number=number[2],overlap=overlap[2])
+		    co.intervals(unclass(b), number=number[2], overlap=overlap[2])
 		}
 	    }
     } else {
@@ -218,7 +218,7 @@ coplot <-
                 lab <- axlabels(x)
                 axis(side, labels = lab, at = seq(lab), xpd = NA)
             } else
-                axis(side, xpd = NA)
+                Axis(x, side=side, xpd = NA)
         }
 	istart <- (total.rows - rows) + 1
 	i <- total.rows - ((index - 1)%/%columns)
@@ -286,7 +286,7 @@ coplot <-
 	    text(apply(a.intervals, 1, mean), 1:nint, a.levels)
         }
         else {
-            axis(3, xpd=NA)
+            Axis(a, side = 3, xpd=NA)
             axis(1, labels=FALSE)
         }
 	box()
@@ -315,7 +315,7 @@ coplot <-
                 text(1:nint, apply(b.intervals, 1, mean), b.levels, srt = 90)
             }
             else {
-                axis(4, xpd=NA)
+                Axis(b, side=4, xpd=NA)
                 axis(2, labels=FALSE)
             }
 	    box()

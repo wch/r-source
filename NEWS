@@ -24,6 +24,15 @@ NEW FEATURES
     o	postscript() supports family="ComputerModernItalic" for
 	Computer Modern with italic (rather than slanted) faces.
 
+    o	New function Axis(), a generic version of axis(), with Date and
+	POSIX[cl]t methods.  This is used by most of the standard
+	plotting functions (boxplot, contour, coplot, filled.contour,
+	pairs, plot.default, rug, stripchart) which will thus label x
+	or y axes appropriately.
+
+    o	pairs() allows a wider class of inputs, including data frames
+	with date and date-time columns.
+
 
 DEPRECATED & DEFUNCT
 
@@ -68,10 +77,10 @@ INTERNATIONALIZATION
 	device (provided there is iconv support), and rotated (by 90
 	degrees) text may work better.
 
-   o	The \u and \U notation for characters which is supported by the
-	parser in all MBCS charsets is now always interpreted as a
-	Unicode point, even on platforms which do not encode
-	wchar_t in Unicode.
+   o	The \u (and \U except on Windows) notation for characters which
+	is supported by the parser in all MBCS charsets is now always
+	interpreted as a Unicode point, even on platforms which do not
+	encode wchar_t in Unicode.
 
 
 INSTALLATION CHANGES

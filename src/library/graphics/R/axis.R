@@ -15,6 +15,17 @@ axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 }
 
 
+Axis <- function(x=NULL, at=NULL, ..., side, labels=NULL)
+{
+    if (!is.null(x)) UseMethod("Axis", x)
+    else if (!is.null(at)) UseMethod("Axis", at)
+    else axis(side=side, at=at, labels=labels, ...)
+}
+
+Axis.default <- function(x=NULL, at=NULL, ..., side, labels=NULL)
+    axis(side=side, at=at, labels=labels, ...)
+
+
 ## Note that axTicks() can be used without any graphics device
 ## when (axp, usr, log) are specified.  However, axTicks() should
 ## *really* just call .Internal(createAtVector(axp,usr,nint,log))

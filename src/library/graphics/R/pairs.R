@@ -31,11 +31,12 @@ function (x, labels, panel = points, ...,
         function(x = 0.5, y = 0.5, txt, cex, font)
             text(x, y, txt, cex = cex, font = font)
 
-    localAxis <- function(side, xpd, bg, col=NULL, main, ...) {
+    localAxis <- function(side, x, y, xpd, bg, col=NULL, main, ...) {
       ## Explicitly ignore any color argument passed in as
       ## it was most likely meant for the data points and
       ## not for the axis.
-      axis(side, xpd = NA, ...)
+        if(side %%2 == 1) Axis(x, side=side, xpd=NA, ...)
+        else Axis(y, side=side, xpd=NA, ...)
     }
 
     localPlot <- function(..., main, oma, font.main, cex.main) plot(...)
@@ -45,8 +46,15 @@ function (x, labels, panel = points, ...,
         upper.panel(...)
 
     dots <- list(...); nmdots <- names(dots)
-    if (!is.matrix(x)) x <- data.matrix(x)
-    if (!is.numeric(x)) stop("non-numeric argument to 'pairs'")
+    if (!is.matrix(x)) {
+        x <- as.data.frame(x)
+        for(i in seq(along=names(x))) {
+            if(is.factor(x[[i]]) || is.logical(x[[i]]))
+               x[[i]] <- as.numeric(x[[i]])
+            if(!is.numeric(unclass(x[[i]])))
+                stop("non-numeric argument to 'pairs'")
+        }
+    } else if (!is.numeric(x)) stop("non-numeric argument to 'pairs'")
     panel <- match.fun(panel)
     if((has.lower <- !is.null(lower.panel)) && !missing(lower.panel))
         lower.panel <- match.fun(lower.panel)
@@ -84,13 +92,13 @@ function (x, labels, panel = points, ...,
             if(i == j || (i < j && has.lower) || (i > j && has.upper) ) {
                 box()
                 if(i == 1  && (!(j %% 2) || !has.upper || !has.lower ))
-                    localAxis(1 + 2*row1attop, ...)
+                    localAxis(1 + 2*row1attop, x[, j], x[, i], ...)
                 if(i == nc && (  j %% 2  || !has.upper || !has.lower ))
-                    localAxis(3 - 2*row1attop, ...)
+                    localAxis(3 - 2*row1attop, x[, j], x[, i], ...)
                 if(j == 1  && (!(i %% 2) || !has.upper || !has.lower ))
-                    localAxis(2, ...)
+                    localAxis(2, x[, j], x[, i], ...)
                 if(j == nc && (  i %% 2  || !has.upper || !has.lower ))
-                    localAxis(4, ...)
+                    localAxis(4, x[, j], x[, i], ...)
                 mfg <- par("mfg")
                 if(i == j) {
                     if (has.diag) diag.panel(as.vector(x[, i]))

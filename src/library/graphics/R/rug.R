@@ -20,5 +20,5 @@ rug <- function(x, ticksize = 0.03, side = 1, lwd = 0.5, col,
 	if(any(x < u[1] | x > u[2]))
 	    warning("some values will be clipped")
     }
-    axis(side, at = x, lab = FALSE, lwd = lwd, ...)
+    Axis(side = side, at = x, labels = FALSE, lwd = lwd, ...)
 }

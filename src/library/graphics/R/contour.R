@@ -50,8 +50,8 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 		      col = col, lty = lty, lwd = lwd))
     if(!add) {
         if(axes) {
-            axis(1)
-            axis(2)
+            Axis(x, side=1)
+            Axis(y, side=2)
         }
         if(frame.plot) box()
     }

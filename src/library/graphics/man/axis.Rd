@@ -92,6 +92,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   See \code{\link{par}} for details.
 }
 \seealso{
+  \code{Axis} for a generic interface.
+  
   \code{\link{axTicks}} returns the axis tick locations
   corresponding to \code{at=NULL}; \code{\link{pretty}} is more flexible
   for computing pretty tick coordinates and does \emph{not} depend on

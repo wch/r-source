@@ -21,9 +21,9 @@ pairs(x, \dots)
       row1attop = TRUE, gap = 1)
 }
 \arguments{
-  \item{x}{the coordinates of points given as columns of a numeric
-    matrix.  Other objects such as data frames will if possible be
-    converted by \code{\link{data.matrix}}.
+  \item{x}{the coordinates of points given as numeric columns of a 
+    matrix or dataframe.  Logical and factor columns are converted to
+    numeric in the same way that \code{\link{data.matrix}} does.
   }
   \item{formula}{a formula, such as \code{~ x + y + z}.  Each term will
     give a separate variable in the pairs plot, so terms should be

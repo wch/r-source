@@ -1,6 +1,6 @@
 axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
 {
-    mat <- missing(at)
+    mat <- missing(at) || is.null(at)
     if(!mat) x <- as.POSIXct(at) else x <- as.POSIXct(x)
     range <- par("usr")[if(side %%2) 1:2 else 3:4]
     ## find out the scale involved
@@ -170,7 +170,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
 
 axis.Date <- function(side, x, at, format, labels = TRUE, ...)
 {
-    mat <- missing(at)
+    mat <- missing(at) || is.null(at)
     if(!mat) x <- as.Date(at) else x <- as.Date(x)
     range <- par("usr")[if(side %%2) 1:2 else 3:4]
     range[1] <- ceiling(range[1])
@@ -290,4 +290,17 @@ hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
         myplot(res, xlab, freq, format, breaks, ...)
      }
     invisible(res)
+}
+
+Axis.Date <- function(x=NULL, at=NULL, ..., side, labels=TRUE)
+    axis.Date(side=side, x=x, at=at, labels=labels, ...)
+
+Axis.POSIXct <- function(x=NULL, at=NULL, ..., side, labels=TRUE)
+    axis.POSIXct(side=side, x=x, at=at, labels=labels, ...)
+
+Axis.POSIXlt <- function(x=NULL, at=NULL, ..., side, labels=TRUE)
+{
+    if(inherits(x, "POSIXlt")) x <- as.POSIXct(x)
+    if(inherits(at, "POSIXlt")) at <- as.POSIXct(at)
+    axis.POSIXct(side=side, x=x, at=at, labels=labels, ...)
 }

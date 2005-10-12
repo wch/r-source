@@ -6,6 +6,7 @@
 \alias{as.POSIXct.dates}
 \alias{as.POSIXct.Date}
 \alias{as.POSIXlt}
+\alias{as.numeric.POSIXlt}
 
 \title{Date-time Conversion Functions}
 \description{
@@ -17,6 +18,7 @@
 as.POSIXct(x, tz = "")
 as.POSIXlt(x, tz = "")
 
+\method(as.numeric}{POSIXlt}{x}
 }
 \arguments{
   \item{x}{An object to be converted.}
@@ -44,6 +46,9 @@ as.POSIXlt(x, tz = "")
 
   Logical \code{NA}s can be converted to either of the classes, but no
   other logical vectors can be.
+
+  The \code{as.numeric} method converts \code{"POSIXlt"} objects to
+  \code{"POSIXct"}.
 }
 \value{
   \code{as.POSIXct} and \code{as.POSIXlt} return an object of the

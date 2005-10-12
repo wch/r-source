@@ -90,6 +90,8 @@ as.POSIXct.default <- function(x, tz = "")
                   deparse(substitute(x))))
 }
 
+as.numeric.POSIXlt <- function(x) as.POSIXct(x)
+
 format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
 {
     if(!inherits(x, "POSIXlt")) stop("wrong class")

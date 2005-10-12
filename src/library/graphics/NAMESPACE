@@ -1,6 +1,6 @@
 import(grDevices)
 
-export(abline, arrows, assocplot, axTicks, axis, axis.Date,
+export(abline, arrows, assocplot, axTicks, Axis, axis, axis.Date,
        axis.POSIXct, barplot, barplot, box, boxplot, bxp, "cdplot",
        close.screen, co.intervals, contour, coplot, curve, dotchart,
        erase.screen, filled.contour, fourfoldplot, frame, grid, hist,
@@ -19,6 +19,10 @@ export(barplot.default, boxplot.default, contour.default, image.default,
 #defunct
 export(piechart)
 
+S3method(Axis, default)
+S3method(Axis, Date)
+S3method(Axis, POSIXct)
+S3method(Axis, POSIXlt)
 S3method(barplot, default)
 S3method(boxplot, default)
 S3method(boxplot, formula)
