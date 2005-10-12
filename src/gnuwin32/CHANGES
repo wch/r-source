@@ -36,7 +36,7 @@ R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the
 indices.
 
 The windows() family of devices did not find the right character width
-in MBCS locales for non-ASCII characters.  (Pointed out by Ei-Ji
+in MBCS locales for non-ASCII characters.  (Pointed out by Ei-ji
 Nakama.)
 
 The installer was missing doc/html/index.html.
