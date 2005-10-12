@@ -8,7 +8,7 @@ R 2.3.0
 =======
 
 There is now MBCS support for the line editor in Rterm.exe.
-(Contributed by Haruki Koyanagi <koyanagi@com-one.com>.)
+(Contributed by Haruki Koyanagi.)
 
 Import libraries are now made without -k (--kill-at).  This is not
 relevant for base R (R.dll, Rblas.dll and Rlapack.dll only use cdecl
