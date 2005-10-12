@@ -44,7 +44,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
         }
         ct <- ct+1
     }
-    if(cl != "numeric") oldClass(stats) <- cl
+    if(length(cl) && cl != "numeric") oldClass(stats) <- cl
     z <- list(stats = stats, n = ng, conf = conf, out = out, group = group,
               names = names)
     if(plot) {
