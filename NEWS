@@ -17,6 +17,12 @@ NEW FEATURES
 	encoding from that of the locale.  (These are likely to affect
 	the answer only in MBCS locales such as UTF-8.)
 
+    o	The URW font metrics have been updated to versions from late
+	2002 which cover more glyphs, including Cyrillic.
+
+    o	New postscript encodings for ISO Latin-7 (8859-13, Latvian, 
+	Lithuanian etc), Cyrillic (8859-5) and KOI8-R.
+
 
 DEPRECATED & DEFUNCT
 
@@ -28,10 +34,12 @@ BUG FIXES
 
     o	Names of list elements which are missing are now printed as
 	$<NA> and not $"NA" (which is how the non-missing name "NA" is
-	printed).
+	printed).  (Brought up in discussion of PR#8161.)
 
     o	help.start() was not linking R.css for use by its front page and
 	immediate links (2.2.0 only).
+
+    o	Indexing by character NA matched the name "NA".
 
 
 
