@@ -135,6 +135,9 @@ BUG FIXES
 
     o	Indexing by character NA matched the name "NA".
 
+    o	The arith-true test used random inputs and did not set the seed, so
+	it could fail very occasionally.
+
 
 
 		CHANGES IN R VERSION 2.2.0
