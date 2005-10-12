@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-08-10 r35224)
+Version 2.3.0 Under development (unstable) (2005-10-12 r35861)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -25,6 +25,9 @@ Type 'q()' to quit R.
 > .proctime00 <- proc.time()
 > opt.conformance <- 0
 > Meps <- .Machine $ double.eps
+> 
+> ## this uses random inputs, so set the seed
+> set.seed(1)
 > 
 > options(rErr.eps = 1e-30)
 > rErr <- function(approx, true, eps = .Options$rErr.eps)
@@ -143,7 +146,7 @@ NaNs produced in: log(x)
 > ## gamma()
 > abs(gamma(1/2)^2 - pi) < 4* Meps
 [1] TRUE
-> r <- rlnorm(5000)
+> r <- rlnorm(5000) # NB random, and next has failed for some seed
 > all(abs(rErr(gamma(r+1), r*gamma(r))) < 500 * Meps)
 [1] TRUE
 > ## more accurate for integers n <= 50 since R 1.8.0	Sol8: perfect
@@ -300,5 +303,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.01 0.02 1.02 0 0 
+Time elapsed:  1.74 0.03 1.77 0 0 
 > 
