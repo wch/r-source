@@ -320,6 +320,9 @@
 /* Define to 1 if you have the `iswblank' function. */
 #undef HAVE_ISWBLANK
 
+/* Define to 1 if you have the `iswctype' function. */
+#define HAVE_ISWCTYPE 1
+
 /* Define if you have the JPEG headers and libraries. */
 #define HAVE_JPEG 1
 
@@ -622,6 +625,9 @@
 
 /* Define to 1 if the system has the type `wctrans_t'. */
 #define HAVE_WCTRANS_T 1
+
+/* Define to 1 if you have the `wctype' function. */
+#define HAVE_WCTYPE 1
 
 /* Define to 1 if you have the <wctype.h> header file. */
 #define HAVE_WCTYPE_H 1
