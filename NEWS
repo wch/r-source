@@ -15,7 +15,7 @@ NEW FEATURES
 	with S-PLUS.  (If not supplied, the output is unchanged from
 	previous versions in R.)
 
-    o	Non-syntatic names of list elements are now printed quoted by
+    o	Non-syntactic names of list elements are now printed quoted by
 	backticks rather than double quotes.
 
     o	chooseCRANmirror() consults the CRAN master (if accessible) to
