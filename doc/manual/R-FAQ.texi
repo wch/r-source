@@ -1842,6 +1842,9 @@ Basic functions for the hyperbolic distribution: probability density
 function, distribution function, quantile function, a routine for
 generating observations from the hyperbolic, and a function for fitting
 the hyperbolic distribution to data.
+@item ICE
+Iterated Conditional Expectation: kernel estimators for
+interval-censored data.
 @item IDPmisc
 Utilities from the Institute of Data Analyses and Process Design,
 IDP/ZHW.
@@ -1865,6 +1868,9 @@ Heat maps of linkage disequilibrium measures.
 @item LMGene
 Date transformation and identification of differentially expressed genes
 in gene expression arrays.
+@item Lmoments
+Estimation of L-moments and the parameters of normal and Cauchy
+polynomial quantile mixtures.
 @item LogicReg
 Routines for Logic Regression.
 @item MASS
