@@ -245,12 +245,12 @@ ps.options(paper, horizontal, width, height, family, encoding,
   Adobe), and \code{"PDFDoc.enc"} is the first 256 characters of the
   Unicode encoding, the standard for PDF.  There are also encodings for
   ISO Latin-2, Latin-7 ISO 8859-13) and Latin-9 (ISO 8859-15), Cyrillic
-  (ISO 8859-5), KOI8-R and Greek (ISO 8859-7), and \code{"TeXtext"} for the
-  7-bit TeX encoding.  Note that many glyphs in these encodings are not
-  in the fonts corresponding to the standard families: the Adobe ones
-  cover little more than Latin-1, whereas the URW ones also cover
-  Latin-2 (except t and T cedilla), Latin-7, Latin-9 and Cyrillic but no
-  Greek.
+  (ISO 8859-5), KOI8-R, KOI8-U and Greek (ISO 8859-7), and
+  \code{"TeXtext"} for the 7-bit TeX encoding.  Note that many glyphs in
+  these encodings are not in the fonts corresponding to the standard
+  families: the Adobe ones cover little more than Latin-1, whereas the
+  URW ones also cover Latin-2 (except t and T cedilla), Latin-7, Latin-9
+  and Cyrillic but no Greek.
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro

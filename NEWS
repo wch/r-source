@@ -57,7 +57,7 @@ INTERNATIONALIZATION
 
 	A set of patches supplied by Ei-ji Nakama has been incorporated.
 
-    o	New postscript encodings for Greek.
+    o	New postscript encodings for Greek and KOI8-U.
 
     o	Support for East Asian CID fonts in pdf() and postscript().
 
