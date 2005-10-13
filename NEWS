@@ -127,7 +127,7 @@ NEW FEATURES
 	2002 which cover more glyphs, including Cyrillic.
 
     o	New postscript encodings for ISO Latin-7 (8859-13, Latvian, 
-	Lithuanian etc), Cyrillic (8859-5) and KOI8-R.
+	Lithuanian etc), Cyrillic (8859-5), KOI8-R and CP1251.
 
 
 DEPRECATED & DEFUNCT

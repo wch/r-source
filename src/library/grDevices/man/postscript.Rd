@@ -29,7 +29,6 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            pagecentre, print.it, command,
            title = "R Graphics Output", fonts = NULL)
 
-% paper, horizontal, width, height, family, pointsize, bg, fg)
 ps.options(paper, horizontal, width, height, family, encoding,
            cidfamily, pointsize, bg, fg,
            onefile = TRUE, print.it = FALSE, append = FALSE,
@@ -37,17 +36,16 @@ ps.options(paper, horizontal, width, height, family, encoding,
 }
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
-    \code{""}, the output is piped to the command given by
-    the argument \code{command}.
+    \code{""}, the output is piped to the command given by the argument
+    \code{command}.
 #ifdef unix
-    If it is \code{"|cmd"}, the output is piped to the command given
-    by \file{cmd}.
+    If it is of the form \code{"|cmd"}, the output is piped to the
+    command given by \file{cmd}.
 #endif
 
-    For use with \code{onefile=FALSE} give a \code{printf} format such
+    For use with \code{onefile = FALSE} give a \code{printf} format such
     as \code{"Rplot\%03d.ps"} (the default in that case).
   }
-%  \item{\dots}{further options for \code{postscript()}.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} and
     \code{"executive"} (and these can be capitalized).
@@ -57,15 +55,15 @@ ps.options(paper, horizontal, width, height, family, encoding,
     papersize is taken from the option \code{"papersize"}
     if that is set and to \code{"a4"} if it is unset or empty.}
   \item{horizontal}{the orientation of the printed image, a
-    logical. Defaults to true, that is landscape orientation on paper
+    logical.  Defaults to true, that is landscape orientation on paper
     sizes with width less than height.}
   \item{width, height}{the width and height of the graphics region in
     inches.  The default is to use the entire page less a 0.25 inch
     border on each side.}
   \item{family}{the font family to be used.  EITHER a single character
-    string OR a character vector of length
-    four or five.  See the section \sQuote{Families}.}
-  \item{encoding}{the name of an encoding file. Defaults to
+    string OR a character vector of length four or five.  See the
+    section \sQuote{Families}.}
+  \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
 "ISOLatin1.enc"
 #endif
@@ -79,8 +77,9 @@ ps.options(paper, horizontal, width, height, family, encoding,
     In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed.
 #endif
   }
-  \item{cidfamily}{the default East Asia locale set: known values are
-    \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} or \code{"GB1"}.}
+  \item{cidfamily}{the default East Asian locale set: known values are
+    \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} (simplified Chinese)
+    or \code{"GB1"} (traditional Chinese).}
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.
     If \code{"transparent"} (or an equivalent specification), no
@@ -90,7 +89,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
     in one file.  If false, generate a file name containing the page
     number and use an EPSF header and no \code{DocumentMedia} comment.}
   \item{pagecentre}{logical: should the device region be centred on the
-    page: defaults to true.}
+    page? -- defaults to true.}
   \item{print.it}{logical: should the file be printed when the device is
     closed?  (This only applies if \code{file} is a real file name.)}
   \item{command}{the command to be used for \dQuote{printing}.  Defaults to
@@ -217,7 +216,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   the correct encoding, but that for the symbol font must be.
 
   It is also possible to specify \code{family = "ComputerModern"} with
-  an appropriate encoding (see below). This is intended to use with the
+  an appropriate encoding (see below).  This is intended to use with the
   Type 1 versions of the TeX CM fonts.  It will normally be possible to
   include such output in TeX or LaTeX provided it is processed with
   \code{dvips -Ppfb -j0} or the equivalent on your system. (\code{-j0}
@@ -245,7 +244,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   Adobe), and \code{"PDFDoc.enc"} is the first 256 characters of the
   Unicode encoding, the standard for PDF.  There are also encodings for
   ISO Latin-2, Latin-7 ISO 8859-13) and Latin-9 (ISO 8859-15), Cyrillic
-  (ISO 8859-5), KOI8-R, KOI8-U and Greek (ISO 8859-7), and
+  (ISO 8859-5), KOI8-R, KOI8-U, CP1251 and Greek (ISO 8859-7), and
   \code{"TeXtext"} for the 7-bit TeX encoding.  Note that many glyphs in
   these encodings are not in the fonts corresponding to the standard
   families: the Adobe ones cover little more than Latin-1, whereas the
