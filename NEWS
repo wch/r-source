@@ -11,6 +11,9 @@
 
 NEW FEATURES
 
+    o   contrib.url, for argument type="source" now also provides
+        an R version specific location
+
     o	arima.sim() has a new argument 'start.innov' for compatibility
 	with S-PLUS.  (If not supplied, the output is unchanged from
 	previous versions in R.)
