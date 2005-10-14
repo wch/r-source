@@ -244,7 +244,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   Adobe), and \code{"PDFDoc.enc"} is the first 256 characters of the
   Unicode encoding, the standard for PDF.  There are also encodings
   \code{"ISOLatin2.enc"}, \code{"CP1250.enc"}, \code{"ISOLatin7.enc"}
-  (ISO 8859-13) and \code{"ISOLatin9.enc"} (ISO 8859-15),
+  (ISO 8859-13), \code{"CP1257.enc"}, and \code{"ISOLatin9.enc"} (ISO 8859-15),
   \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
   \code{"KOI8-U.enc"}, \code{"CP1251.enc"} and \code{"Greek.enc"} (ISO
   8859-7), and \code{"TeXtext"} for the 7-bit TeX encoding.  Note that
