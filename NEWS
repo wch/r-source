@@ -150,6 +150,10 @@ BUG FIXES
     o	The arith-true test used random inputs and did not set the seed, so
 	it could fail very occasionally.
 
+    o	arima() with 'fixed' supplied and p=0 for the non-seasonal
+	part could give spurious warnings about 'some AR parameters
+	were fixed'.
+
 
 
 		CHANGES IN R VERSION 2.2.0
