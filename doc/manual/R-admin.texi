@@ -3232,7 +3232,9 @@ In this case the Help Workshop will not be needed.
 The @code{MiKTeX} (@url{http://www.miktex.org}) distribution of @LaTeX{}
 includes a suitable port of @code{pdftex}.  We have also used the
 @code{fptex} distribution (available from any CTAN node such as
-@url{http://www.ctan.org/tex-archive/systems/windows/fptex/}).
+@url{http://www.ctan.org/tex-archive/systems/windows/fptex/}).  Another
+actively-maintained version is available from
+@uref{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/}.
 
 Please read @ref{Making the manuals} about how to make @file{refman.pdf}
 and set the environment variables @code{R_RD4DVI} and @code{R_RD4PDF}
