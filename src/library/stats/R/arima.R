@@ -159,7 +159,7 @@ arima <- function(x, order = c(0, 0, 0),
     if(no.optim) transform.pars <- FALSE
     if(transform.pars) {
         ind <- arma[1] + arma[2] + seq(length=arma[3])
-        if (any(!mask[1:arma[1]]) || any(!mask[ind])) {
+        if (any(!mask[seq(length=arma[1])]) || any(!mask[ind])) {
             warning("some AR parameters were fixed: setting transform.pars = FALSE")
             transform.pars <- FALSE
         }
