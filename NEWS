@@ -60,7 +60,7 @@ INTERNATIONALIZATION
 
 	A set of patches supplied by Ei-ji Nakama has been incorporated.
 
-    o	New postscript encodings for Greek and KOI8-U.
+    o	New postscript encoding for Greek.
 
     o	Support for East Asian CID fonts in pdf() and postscript().
 
@@ -126,8 +126,9 @@ NEW FEATURES
     o	The URW font metrics have been updated to versions from late
 	2002 which cover more glyphs, including Cyrillic.
 
-    o	New postscript encodings for ISO Latin-7 (8859-13, Latvian, 
-	Lithuanian etc), Cyrillic (8859-5), KOI8-R and CP1251.
+    o	New postscript encodings for CP1250 (Windows East European),
+	ISO Latin-7 (8859-13, Latvian, Lithuanian and Maori), Cyrillic
+	(8859-5), KOI8-R, KOI8-U and CP1251.
 
 
 DEPRECATED & DEFUNCT

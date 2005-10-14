@@ -242,14 +242,16 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \R: \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
   encodings normally used on Windows and Classic MacOS (at least by
   Adobe), and \code{"PDFDoc.enc"} is the first 256 characters of the
-  Unicode encoding, the standard for PDF.  There are also encodings for
-  ISO Latin-2, Latin-7 ISO 8859-13) and Latin-9 (ISO 8859-15), Cyrillic
-  (ISO 8859-5), KOI8-R, KOI8-U, CP1251 and Greek (ISO 8859-7), and
-  \code{"TeXtext"} for the 7-bit TeX encoding.  Note that many glyphs in
-  these encodings are not in the fonts corresponding to the standard
-  families: the Adobe ones cover little more than Latin-1, whereas the
-  URW ones also cover Latin-2 (except t and T cedilla), Latin-7, Latin-9
-  and Cyrillic but no Greek.
+  Unicode encoding, the standard for PDF.  There are also encodings
+  \code{"ISOLatin2.enc"}, \code{"CP1250.enc"}, \code{"ISOLatin7.enc"}
+  (ISO 8859-13) and \code{"ISOLatin9.enc"} (ISO 8859-15),
+  \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
+  \code{"KOI8-U.enc"}, \code{"CP1251.enc"} and \code{"Greek.enc"} (ISO
+  8859-7), and \code{"TeXtext"} for the 7-bit TeX encoding.  Note that
+  many glyphs in these encodings are not in the fonts corresponding to
+  the standard families: the Adobe ones cover little more than Latin-1,
+  whereas the URW ones also cover Latin-2, Latin-7, Latin-9 and Cyrillic
+  but no Greek.
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro
@@ -262,9 +264,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
   the other encodings.  Hyphen is available as character 173 (octal
   0255) in all the Latin encodings, Cyrillic and Greek.  There are some
   discrepancies in accounts of glyphs 39 and 96: the supplied encodings
-  treat these as \sQuote{quoteright} and \sQuote{quoteleft} (rather than
-  \sQuote{quotesingle}/\sQuote{acute} and \sQuote{grave} respectively),
-  as they are in all the Adobe documentation.
+  (except CP1250 and CP1251) treat these as \sQuote{quoteright} and
+  \sQuote{quoteleft} (rather than \sQuote{quotesingle}/\sQuote{acute}
+  and \sQuote{grave} respectively), as they are in the Adobe
+  documentation.
 
   Computer Modern fonts are encoded rather differently and should be
   used with \code{encoding = "TeXtext.enc"}, taking care that the

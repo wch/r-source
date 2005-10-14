@@ -3605,28 +3605,28 @@ static void PS_TextCIDWrapper(double x, double y, char *str,
         if ((size_t)-1 != ucslen) {
 	    void *cd;
 
-            cd = (void*)Riconv_open((char*)CIDResource[cid_id].encoding,"");
+            cd = (void*)Riconv_open((char*)CIDResource[cid_id].encoding, "");
             if((void*)-1==cd) return;
 
             buf = (unsigned char *)calloc(sizeof(unsigned char),
                                           ucslen*MB_LEN_MAX+1);
             if(!buf) error(_("allocation failure in PDF_TextCIDWrapper"));
 
-            memset(buf,0,ucslen*MB_LEN_MAX+1);
+            memset(buf, 0, ucslen * MB_LEN_MAX + 1);
             i_buf = str;
             o_buf = (char *)buf;
             i_len = strlen(str);
-            o_len = ucslen*MB_LEN_MAX+1;
+            o_len = ucslen * MB_LEN_MAX + 1;
 
             status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
                             (char **)&o_buf, (size_t *)&o_len);
 
             Riconv_close(cd);
-            if((size_t)-1==status)
+            if((size_t)-1 == status)
                 warning(_("failed in text conversion of a encoding"));
             else {	    
 		SetCIDFont(translateFont(gc->fontfamily, gc->fontface, pd), 
-			   (int)floor(gc->cex * gc->ps + 0.5),dd);
+			   (int)floor(gc->cex * gc->ps + 0.5), dd);
 		if(R_OPAQUE(gc->col)) {
 		    SetColor(gc->col, dd);
 		    PostScriptHexText(pd->psfp, x, y, (char *)buf, hadj, 
@@ -3641,7 +3641,7 @@ static void PS_TextCIDWrapper(double x, double y, char *str,
 #endif
 
     SetFont(translateFont(gc->fontfamily, gc->fontface, pd), 
-	    (int)floor(gc->cex * gc->ps + 0.5),dd);
+	    (int)floor(gc->cex * gc->ps + 0.5), dd);
     if(R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
 #ifdef SUPPORT_MBCS
