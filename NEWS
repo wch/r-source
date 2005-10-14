@@ -36,6 +36,9 @@ NEW FEATURES
     o	pairs() allows a wider class of inputs, including data frames
 	with date and date-time columns.
 
+    o	scan() and write.table() now have some interruptibility, which
+	may be useful when processing very large files.
+
 
 DEPRECATED & DEFUNCT
 
@@ -60,7 +63,7 @@ INTERNATIONALIZATION
 
 	A set of patches supplied by Ei-ji Nakama has been incorporated.
 
-    o	New postscript encoding for Greek.
+    o	New postscript encodings for CP1257 and Greek.
 
     o	Support for East Asian CID fonts in pdf() and postscript().
 

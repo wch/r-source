@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-08-02 r35106)
+Version 2.3.0 Under development (unstable) (2005-10-14 r35888)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -60,7 +60,7 @@ Error in read.table("foo1") : no lines available in input
 > 
 > # wrong col.names
 > try(read.table("foo3", header=TRUE, col.names=letters[1:4]))
-Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+Error in scan(file, what, nmax, sep, dec, quote, skip, nlines, na.strings,  : 
 	line 1 did not have 4 elements
 In addition: Warning message:
 header and 'col.names' are of different lengths in: read.table("foo3", header = TRUE, col.names = letters[1:4]) 
