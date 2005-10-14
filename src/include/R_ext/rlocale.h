@@ -84,8 +84,8 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #undef iswspace
 #undef iswprint
 #undef iswgraph
-/*#undef iswblank
-  #undef iswcntrl */
+#undef iswblank
+#undef iswcntrl
 #undef iswpunct
 #undef iswalnum
 #undef wctype
@@ -99,10 +99,8 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #define iswspace(__x)     Ri18n_iswctype(__x, Ri18n_wctype("space"))
 #define iswprint(__x)     Ri18n_iswctype(__x, Ri18n_wctype("print"))
 #define iswgraph(__x)     Ri18n_iswctype(__x, Ri18n_wctype("graph"))
-/*
 #define iswblank(__x)     Ri18n_iswctype(__x, Ri18n_wctype("blank"))
 #define iswcntrl(__x)     Ri18n_iswctype(__x, Ri18n_wctype("cntrl"))
-*/
 #define iswpunct(__x)     Ri18n_iswctype(__x, Ri18n_wctype("punct"))
 #define iswalnum(__x)     Ri18n_iswctype(__x, Ri18n_wctype("alnum"))
 #define wctype(__x)       Ri18n_wctype(__x)
