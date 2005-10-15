@@ -645,8 +645,8 @@ AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h grp.h ieee754.h ieeefp.h limits.h locale.h \
   netdb.h netinet/in.h pwd.h strings.h \
-  sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
-  sys/times.h sys/utsname.h unistd.h)
+  sys/param.h sys/select.h sys/socket.h sys/stat.h sys/resource.h \
+  sys/time.h sys/times.h sys/utsname.h unistd.h)
 ## </NOTE>
 ## <NOTE>
 ## These are ANSI C headers but some C code (written to work also
@@ -1288,7 +1288,7 @@ AC_CHECK_DECLS([alloca], , ,
 # include <alloca.h>
 #endif])
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate \
-  getcwd getgrgid getpwuid getuid hypot isascii log1p \
+  getcwd getgrgid getpwuid getrlimit getuid hypot isascii log1p \
   matherr mkdtemp mkfifo popen putenv realpath rint \
   setenv strcoll stat strerror strptime symlink system times unsetenv)
 ## isfinite and isnan are in math.h but might be macros

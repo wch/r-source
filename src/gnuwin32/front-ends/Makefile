@@ -59,6 +59,7 @@ Rgui-LINKFLAGS+=-Wl,--large-address-aware
 Rterm-LINKFLAGS+=-Wl,--large-address-aware
 endif
 ## Increase stack size to 10Mb
+## If you alter this, change initialization of R_CStackLimit in ../system.c
 Rgui-LINKFLAGS+=-Wl,--stack=0xA00000
 Rterm-LINKFLAGS+=-Wl,--stack=0xA00000
 

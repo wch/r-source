@@ -32,7 +32,7 @@ extern "C" {
 #include <R_ext/Memory.h>
 #include <R_ext/PrtUtil.h>
 #include <R_ext/Utils.h>
-#include <R_ext/rlocale.h>
+/*#include <R_ext/rlocale.h> this cannot be right */
 
 #include <errno.h>
 #include <stdio.h>

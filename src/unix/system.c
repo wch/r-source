@@ -109,6 +109,10 @@ void R_setupHistory()
     }
 }
 
+#if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
+#include <sys/resource.h>
+#endif
+
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j;
@@ -118,6 +122,20 @@ int Rf_initialize_R(int ac, char **av)
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
 #endif
+
+#if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
+{
+    struct rlimit rlim;
+
+    if(getrlimit(RLIMIT_STACK, &rlim) == 0)
+        R_CStackLimit = (long)rlim.rlim_cur;
+    /* This is not the main program, but unless embedded it is near the top */
+    R_CStackStart = (long) &i;
+    R_CStackDir = ((long)&rstart > (long)&i) ? 1 : -1;
+    /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit, R_CStackStart, R_CStackDir); */
+}
+#endif
+
     Rstart Rp = &rstart;
 
     ptr_R_Suicide = Rstd_Suicide;

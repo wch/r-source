@@ -628,6 +628,11 @@ void R_setStartTime();
 
 void R_SetWin32(Rstart Rp)
 {
+    int dummy;
+
+    R_CStackLimit = 0xA00000;  /* set in front-ends/Makefile */
+    R_CStackStart = (long)&dummy;
+    R_CStackDir = 1;
     R_Home = Rp->rhome;
     if(strlen(R_Home) >= MAX_PATH) R_Suicide("Invalid R_HOME");
     sprintf(RHome, "R_HOME=%s", R_Home);
