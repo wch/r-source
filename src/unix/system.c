@@ -119,6 +119,8 @@ int Rf_initialize_R(int ac, char **av)
     Rboolean useX11 = TRUE, useTk = FALSE;
     char *p, msg[1024], **avv;
     structRstart rstart;
+    Rstart Rp = &rstart;
+
 #ifdef ENABLE_NLS
     char localedir[PATH_MAX+20];
 #endif
@@ -140,8 +142,6 @@ int Rf_initialize_R(int ac, char **av)
               R_CStackStart, R_CStackDir); */
 }
 #endif
-
-    Rstart Rp = &rstart;
 
     ptr_R_Suicide = Rstd_Suicide;
     ptr_R_ShowMessage = Rstd_ShowMessage;
