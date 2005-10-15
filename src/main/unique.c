@@ -1108,6 +1108,7 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* +2 for terminator and rounding error */
 	buf = alloca(maxlen + strlen(csep) + log((double)n)/log(10.0) + 2);
 	cnts = (int *) alloca(n * sizeof(int));
+	R_CheckStack();
 	for(i = 0; i < n; i++) cnts[i] = 1;
 	data.nomatch = 0;
 	PROTECT(newx = allocVector(STRSXP, 1));

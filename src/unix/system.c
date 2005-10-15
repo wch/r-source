@@ -113,6 +113,8 @@ void R_setupHistory()
 #include <sys/resource.h>
 #endif
 
+int R_running_as_main_program = 0;
+
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j;
@@ -129,7 +131,7 @@ int Rf_initialize_R(int ac, char **av)
 {
     struct rlimit rlim;
 
-    if(getrlimit(RLIMIT_STACK, &rlim) == 0) {
+    if(R_running_as_main_program && getrlimit(RLIMIT_STACK, &rlim) == 0) {
 	unsigned long lim1, lim2;
 	lim1 = (unsigned long) rlim.rlim_cur;
 	lim2 = (unsigned long) rlim.rlim_max; /* Usually unlimited */

@@ -193,11 +193,13 @@ static int length_adj(char *orig, char *repl, int *ovec, int nsubexpr,
 		    char *xi, *p;
 		    wchar_t *wc;
 		    p = xi = (char *) alloca((nb+1)*sizeof(char));
+		    R_CheckStack();
 		    for(j = 0; j < nb; j++) *p++ = orig[ovec[2*k]+j];
 		    *p = '\0';
 		    nc = mbstowcs(NULL, xi, 0);
 		    if(nc >= 0) {
 			wc = (wchar_t *) alloca((nc+1)*sizeof(wchar_t));
+			R_CheckStack();
 			mbstowcs(wc, xi, nc + 1);
 			for(j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 			nb = wcstombs(NULL, wc, 0);
@@ -246,11 +248,13 @@ static char *string_adj(char *target, char *orig, char *repl, int *ovec,
 		    char *xi, *p;
 		    wchar_t *wc;
 		    p = xi = (char *) alloca((nb+1)*sizeof(char));
+		    R_CheckStack();
 		    for(j = 0; j < nb; j++) *p++ = orig[ovec[2*k]+j];
 		    *p = '\0';
 		    nc = mbstowcs(NULL, xi, 0);
 		    if(nc >= 0) {
 			wc = (wchar_t *) alloca((nc+1)*sizeof(wchar_t));
+			R_CheckStack();
 			mbstowcs(wc, xi, nc + 1);
 			for(j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 			nb = wcstombs(NULL, wc, 0);
