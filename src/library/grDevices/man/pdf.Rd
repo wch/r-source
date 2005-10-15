@@ -52,7 +52,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 #ifdef windows
 \code{"WinAnsi.enc"}
 #endif
-    in the \file{R\_HOME/afm} directory, which is used if the path does
+    in the \file{afm} directory of the \pkg{grDevices} package,
+    which is used if the path does
     not contain a path separator.  An extension \code{".enc"} can be
     omitted.
 #ifdef unix
