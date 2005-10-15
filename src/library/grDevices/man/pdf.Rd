@@ -17,7 +17,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, family = "Helvetica",
     title = "R Graphics Output", fonts = NULL, version = "1.1",
-    paper, encoding, cidfamily = "", bg, fg, pointsize)
+    paper, encoding, cidfamily = "default", bg, fg, pointsize)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -36,8 +36,6 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{"Palatino"} or \code{"Times"}.  \bold{Note} the other
     specifications allowed for \code{\link{postscript}} are \bold{not}
     available.}
-  \item{cidfamily}{the default East Asia locale set: known values are
-    \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} or \code{"GB1"}.}
   \item{title}{title string to embed in the file.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} and
@@ -49,10 +47,12 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     if that is set and to \code{"a4"} if it is unset or empty.}
   \item{encoding}{the name of an encoding file.  See
     \code{\link{postscript}} for details.
-#ifdef unix
-    In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed.
-#endif
   }
+  \item{cidfamily}{the default East Asian locale set: known values are
+    \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} (simplified Chinese)
+    or \code{"GB1"} (traditional Chinese).  If this is \code{"default"}
+    (the default) an attempt is made to deduce the name from the locale
+    name.  An empty string means no CID fonts are to be used.}
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
@@ -71,8 +71,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   The default gives files \file{Rplot001.pdf}, \dots, \file{Rplot999.pdf},
   \file{Rplot1000.pdf}, \dots.
   
-  The \code{family} argument can be used to specify 
-  a PDF-specific
+  The \code{family} argument can be used to specify a PDF-specific
   font family as the initial/default font for the device.
 
   If a device-independent R graphics font family is specified (e.g., via

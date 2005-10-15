@@ -106,6 +106,63 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     else old
 }
 
+guess_encoding <- function()
+{
+    switch(.Platform$OS.type,
+           "windows" = {
+               switch(utils::localeToCharset()[1],
+                      "ISO8859-2" = "CP1250.enc",
+                      "ISO8859-7" = "CP1253.enc", # Greek
+                      "ISO8859-13" = "CP1257.enc",
+                      "CP1251" = "CP1251.enc", # Cyrillic
+                      "WinAnsi.enc")
+           },
+       { lc <- localeToCharset()
+         if(length(lc) == 1)
+             switch(lc,
+                    "ISO8859-1" = "ISOLatin1.enc",
+                    "ISO8859-2" = "ISOLatin2.enc",
+                    "ISO8859-5" = "Cyrillic.enc",
+                    "ISO8859-7" = "Greek.enc",
+                    "ISO8859-13" = "ISOLatin7.enc",
+                    "ISO8859-15" = "ISOLatin9.enc",
+                    "KOI8-R" = "KOI8-R.enc",
+                    "KOI8-U" = "KOI8-U.enc",
+                    "ISOLatin1.enc")
+         else if(lc[1] == "UTF-8" && capabilities("iconv"))
+             switch(lc[2],
+                    "ISO8859-1" = "ISOLatin1.enc", # what about Euro?
+                    "ISO8859-2" = "ISOLatin2.enc",
+                    "ISO8859-5" = "Cyrillic.enc",
+                    "ISO8859-7" = "Greek.enc",
+                    "ISO8859-13" = "ISOLatin7.enc",
+                    "ISOLatin1.enc")
+         else "ISOLatin1.enc"})
+}
+
+guess_cidfamily <- function()
+{
+    switch(toupper(gsub("^[-\s 0-9a-zA-Z]*_",
+                        "",
+                        gsub("\.[-_0-9a-zA-Z]*$",
+                             "",
+                             Sys.getlocale("LC_CTYPE")))),
+           "JAPAN"                      = "Japan1",
+           "JP"                         = "Japan1",
+           "KOREA"                      = "Korea1",
+           "KR"                         = "Korea1",
+           "TAIWAN"                     = "CNS1",
+           "TW"                         = "CNS1",
+           "MACAU S.A.R."               = "CNS1",
+           "HONG KONG S.A.R."           = "CNS1",
+           "HK"                         = "CNS1",
+           "PEOPLE'S REPUBLIC OF CHINA" = "GB1",
+           "CN"                         = "GB1",
+           "SINGAPORE"                  = "GB1",
+           "SG"                         = "GB1",
+           "")
+}
+
 ##--> source in devPS.c :
 
 postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
@@ -137,47 +194,10 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
         old$family <- family
     }
     if(is.null(old$encoding) || old$encoding  == "default")
-        old$encoding <- switch(.Platform$OS.type,
-                               "windows" = {
-                                   switch(utils::localeToCharset()[1],
-                                          "ISO8859-2" = "CP1250.enc",
-                                          "ISO8859-7" = "CP1253.enc", # Greek
-                                          "ISO8859-13" = "CP1257.enc",
-                                          "CP1251" = "CP1251.enc",    # Cyrillic
-                                          "WinAnsi.enc")
-                               },
-                           { lc <- localeToCharset()
-                             if(length(lc) == 1)
-                                 switch(lc, "ISO8859-1" = "ISOLatin1.enc",
-                                        "ISO8859-5" = "Cyrillic.enc",
-                                        "ISO8859-7" = "Greek.enc",
-                                        "ISO8859-13" = "ISOLatin7.enc",
-                                        "ISO8859-15" = "ISOLatin9.enc",
-                                        "KOI8-R" = "KOI8-R.enc",
-                                        "KOI8-U" = "KOI8-U.enc",
-                                        "ISOLatin1.enc")
-                             else "ISOLatin1.enc"})
+        old$encoding <- guess_encoding()
     # CID Font
     if(is.null(old$cidfamily) || old$cidfamily  == "default")
-        old$cidfamily <- switch(toupper(gsub("^[-\s 0-9a-zA-Z]*_",
-                                             "",
-                                             gsub("\.[-_0-9a-zA-Z]*$",
-                                                  "",
-                                                  Sys.getlocale("LC_CTYPE")))),
-                                "JAPAN"                      = "Japan1",
-                                "JP"                         = "Japan1",
-                                "KOREA"                      = "Korea1",
-                                "KR"                         = "Korea1",
-                                "TAIWAN"                     = "CNS1",
-                                "TW"                         = "CNS1",
-                                "MACAU S.A.R."               = "CNS1",
-                                "HONG KONG S.A.R."           = "CNS1",
-                                "HK"                         = "CNS1",
-                                "PEOPLE'S REPUBLIC OF CHINA" = "GB1",
-                                "CN"                         = "GB1",
-                                "SINGAPORE"                  = "GB1",
-                                "SG"                         = "GB1",
-                                "")
+        old$cidfamily <- guess_cidfamily()
 
     .External("PostScript",
               file, old$paper, old$family, old$encoding, old$cidfamily, old$bg, old$fg,
@@ -214,9 +234,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
     if(is.null(old$encoding) || old$encoding  == "default")
-        old$encoding <- switch(.Platform$OS.type,
-                               "windows" = "WinAnsi.enc",
-                               "ISOLatin1.enc")
+        old$encoding <- guess_encoding()
     if(!missing(family)) {
         if (!is.character(family) || length(family) != 1)
             stop("invalid 'family' argument")
@@ -232,25 +250,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     }
     # CID Font
     if(is.null(old$cidfamily) || old$cidfamily  == "default")
-        old$cidfamily <- switch(toupper(gsub("^[-\s 0-9a-zA-Z]*_",
-                                             "",
-                                             gsub("\.[-_0-9a-zA-Z]*$",
-                                                  "",
-                                                  Sys.getlocale("LC_CTYPE")))),
-                                "JAPAN"                      = "Japan1",
-                                "JP"                         = "Japan1",
-                                "KOREA"                      = "Korea1",
-                                "KR"                         = "Korea1",
-                                "TAIWAN"                     = "CNS1",
-                                "TW"                         = "CNS1",
-                                "MACAU S.A.R."               = "CNS1",
-                                "HONG KONG S.A.R."           = "CNS1",
-                                "HK"                         = "CNS1",
-                                "PEOPLE'S REPUBLIC OF CHINA" = "GB1",
-                                "CN"                         = "GB1",
-                                "SINGAPORE"                  = "GB1",
-                                "SG"                         = "GB1",
-                                "")
+        old$cidfamily <- guess_cidfamily()
     # Extract version
     versions <- c("1.1", "1.2", "1.3", "1.4")
     if (version %in% versions)

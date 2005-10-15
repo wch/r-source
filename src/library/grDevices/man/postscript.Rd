@@ -78,12 +78,18 @@ ps.options(paper, horizontal, width, height, family, encoding,
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.
 #ifdef unix
-    In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed.
+    In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed without
+    \code{\link{capabilities}("iconv")}.
 #endif
   }
   \item{cidfamily}{the default East Asian locale set: known values are
     \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} (simplified Chinese)
-    or \code{"GB1"} (traditional Chinese).}
+    or \code{"GB1"} (traditional Chinese).  If this is \code{"default"}
+    (the default) an attempt is made to deduce the name from the locale
+    name.  An empty string means no CID fonts are to be used.  These
+    select specific font families: see file
+    \file{src/library/grDevices/src/devPS\_data.h} for the mapping.
+  }
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.
     If \code{"transparent"} (or an equivalent specification), no
@@ -175,8 +181,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
 \section{Families}{
   Font families may be specified in several ways.  The \code{family}
   argument specifies an initial/default font family for the device.
-  This is 
-  a PostScript-specific font family specification (see below).
+  This is a PostScript-specific font family specification (see below).
   The \code{fonts} argument specifies a set of device-independent
   font families that are mapped to PostScript-specific fonts via
   a font database (see \code{postscriptFonts}).  
@@ -232,11 +237,16 @@ ps.options(paper, horizontal, width, height, family, encoding,
 
 \section{Encodings}{
   Encodings describe which glyphs are used to display the character codes
-  (in the range 0--255).  By default \R uses ISOLatin1 encoding, and
+  (in the range 0--255).  Most commonly \R uses ISOLatin1 encoding, and
   the examples for \code{\link{text}} are in that encoding.  However,
   the encoding used on machines running \R may well be different, and by
   using the \code{encoding} argument the glyphs can be matched to
-  encoding in use.
+  encoding in use.  This suffices for European and Cyrillic languages,
+  but not for CJK languages.  For the latter, composite CID fonts are
+  used when \code{cidfamily} is set (or selected from the locale
+  name). These fonts are be useful for other languages: for example they
+  may contain Greek glyphs. (The rest of this section applies only when CID
+  fonts are not used.)
 
   None of this will matter if only ASCII characters (codes 32--126) are
   used as all the encodings (except \code{"TeXtext"}) agree over that

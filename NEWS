@@ -39,6 +39,10 @@ NEW FEATURES
     o	scan() and write.table() now have some interruptibility, which
 	may be useful when processing very large files.
 
+    o	There is some basic checking for imminent C stack overflow (when
+	the evaluation depth and the user interrupts are checked).
+	This is likely to be refined before release.
+
 
 DEPRECATED & DEFUNCT
 
@@ -90,8 +94,13 @@ INTERNATIONALIZATION
 
     o	The default encoding for postscript() and pdf() is chosen to
 	be suitable for the current locale, if that is a single-byte
-	locale which is supported.  This is covers Western (including
-	Greek) and Eastern European and Cyrillic languages.
+	locale which is supported.  This covers European (including
+	Greek) and Cyrillic languages.
+
+	In UTF-8 locales, a suitable single-byte encoding is chosen
+	for postscript() and pdf(), and text translated to it
+	(provided iconv() is supported).
+	
 
 
 INSTALLATION CHANGES
