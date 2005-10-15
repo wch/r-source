@@ -65,10 +65,14 @@ ps.options(paper, horizontal, width, height, family, encoding,
     section \sQuote{Families}.}
   \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
-"ISOLatin1.enc"
+    \file{"ISOLatin1.enc"} unless the locale is recognized as using
+    ISO 8859-{5,7,13,15} or KOI8-{R,U},
 #endif
 #ifdef windows
-"WinAnsi.enc"
+    \file{"CP1250.enc"} (East European), \code{"CP1251.enc"} (Cyrillic),
+    \code{"CP1253.enc"} (Greek) or \code{"CP1257.enc"} (Baltic) if one
+    of those codepages is in use, otherwise \file{"WinAnsi.enc"}
+    (codepage 1252),
 #endif
     in the \file{enc} directory of package \pkg{grDevices}, which is used
     if the path does not contain a path separator.  An extension
@@ -244,14 +248,14 @@ ps.options(paper, horizontal, width, height, family, encoding,
   Adobe), and \code{"PDFDoc.enc"} is the first 256 characters of the
   Unicode encoding, the standard for PDF.  There are also encodings
   \code{"ISOLatin2.enc"}, \code{"CP1250.enc"}, \code{"ISOLatin7.enc"}
-  (ISO 8859-13), \code{"CP1257.enc"}, and \code{"ISOLatin9.enc"} (ISO 8859-15),
-  \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
-  \code{"KOI8-U.enc"}, \code{"CP1251.enc"} and \code{"Greek.enc"} (ISO
-  8859-7), and \code{"TeXtext"} for the 7-bit TeX encoding.  Note that
-  many glyphs in these encodings are not in the fonts corresponding to
-  the standard families: the Adobe ones cover little more than Latin-1,
-  whereas the URW ones also cover Latin-2, Latin-7, Latin-9 and Cyrillic
-  but no Greek.
+  (ISO 8859-13), \code{"CP1257.enc"}, and \code{"ISOLatin9.enc"} (ISO
+  8859-15), \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
+  \code{"KOI8-U.enc"}, \code{"CP1251.enc"}, \code{"Greek.enc"} (ISO
+  8859-7), \code{"CP1253.enc"}, and \code{"TeXtext"} for the 7-bit TeX
+  encoding.  Note that many glyphs in these encodings are not in the
+  fonts corresponding to the standard families: the Adobe ones cover
+  little more than Latin-1, whereas the URW ones also cover Latin-2,
+  Latin-7, Latin-9 and Cyrillic but no Greek.
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro

@@ -47,16 +47,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{"default"}; if this is selected, the
     papersize is taken from the option \code{"papersize"}
     if that is set and to \code{"a4"} if it is unset or empty.}
-  \item{encoding}{the name of an encoding file.  Defaults to
-#ifdef unix
-\code{"ISOLatin1.enc"}
-#endif
-#ifdef windows
-\code{"WinAnsi.enc"}
-#endif
-    in the \file{R\_HOME/afm} directory, which is used if the path does
-    not contain a path separator.  An extension \code{".enc"} can be
-    omitted.
+  \item{encoding}{the name of an encoding file.  See
+    \code{\link{postscript}} for details.
 #ifdef unix
     In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed.
 #endif

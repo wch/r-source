@@ -63,7 +63,7 @@ INTERNATIONALIZATION
 
 	A set of patches supplied by Ei-ji Nakama has been incorporated.
 
-    o	New postscript encodings for CP1257 and Greek.
+    o	New postscript encodings for CP1253, CP1257 and Greek (ISO 8859-7).
 
     o	Support for East Asian CID fonts in pdf() and postscript().
 
@@ -87,6 +87,11 @@ INTERNATIONALIZATION
 	is supported by the parser in all MBCS charsets is now always
 	interpreted as a Unicode point, even on platforms which do not
 	encode wchar_t in Unicode.
+
+    o	The default encoding for postscript() and pdf() is chosen to
+	be suitable for the current locale, if that is a single-byte
+	locale which is supported.  This is covers Western (including
+	Greek) and Eastern European and Cyrillic languages.
 
 
 INSTALLATION CHANGES

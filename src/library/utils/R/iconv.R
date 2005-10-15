@@ -46,14 +46,14 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         ## 1256 -> ISO 8859-6
         ## 1257 -> ISO 8859-13
         switch(x[2],
-               "1250" = return("ISO 8859-2"),
+               "1250" = return("ISO8859-2"),
               # this is quite wrong "1251" = return("KOI8-U"),
-               "1252" = return("ISO 8859-1"),
-               "1253" = return("ISO 8859-7"),
-               "1254" = return("ISO 8859-9"),
-               "1255" = return("ISO 8859-8"),
-               "1256" = return("ISO 8859-6"),
-               "1257" = return("ISO 8859-13")
+               "1252" = return("ISO8859-1"),
+               "1253" = return("ISO8859-7"),
+               "1254" = return("ISO8859-9"),
+               "1255" = return("ISO8859-8"),
+               "1256" = return("ISO8859-6"),
+               "1257" = return("ISO8859-13")
                )
         return(paste("CP", x[2], sep=""))
     } else {
@@ -67,16 +67,16 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
                 c("ISO8859-1", "ISO8859-2", "ISO8859-3", "ISO8859-6",
                   "ISO8859-7", "ISO8859-8", "ISO8859-9", "ISO8859-10",
                   "ISO8859-13", "ISO8859-14", "ISO8859-15",
-                  "CP1251", "CP1255", "EUC-JP",
-                  "EUC-KR", "EUC-TW", "GEORGIAN-PS", "KOI8-U", "TCVN",
+                  "CP1251", "CP1255", "EUC-JP", "EUC-KR", "EUC-TW",
+                  "GEORGIAN-PS", "KOI8-R",  "KOI8-U", "TCVN",
                   "BIG5" , "GB2312", "GB18030", "GBK",
                   "TIS-620", "SHIFT_JIS", "GB2312", "BIG5-HKSCS")
             names(known) <-
                 c("iso88591", "iso88592", "iso88593", "iso88596",
                   "iso88597", "iso88598", "iso88599", "iso885910",
                   "iso885913", "iso885914", "iso885915",
-                  "cp1251", "cp1255", "eucjp",
-                  "euckr", "euctw", "georgianps", "koi8u", "tcvn",
+                  "cp1251", "cp1255", "eucjp", "euckr", "euctw",
+                  "georgianps", "koi8r", "koi8u", "tcvn",
                   "big5" , "gb2312", "gb18030", "gbk",
                   "tis-620", "sjis", "eucn", "big5-hkscs")
             if(enc %in% names(known)) return(as.vector(known[enc]))
