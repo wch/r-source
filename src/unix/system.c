@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka
  *			      and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -127,12 +127,17 @@ int Rf_initialize_R(int ac, char **av)
 {
     struct rlimit rlim;
 
-    if(getrlimit(RLIMIT_STACK, &rlim) == 0)
-        R_CStackLimit = (long)rlim.rlim_cur;
+    if(getrlimit(RLIMIT_STACK, &rlim) == 0) {
+	unsigned long lim1, lim2;
+	lim1 = (unsigned long) rlim.rlim_cur;
+	lim2 = (unsigned long) rlim.rlim_max; /* Usually unlimited */
+        R_CStackLimit = lim1 < lim2 ? lim1 : lim2;
+    }
     /* This is not the main program, but unless embedded it is near the top */
     R_CStackStart = (long) &i;
     R_CStackDir = ((long)&rstart > (long)&i) ? 1 : -1;
-    /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit, R_CStackStart, R_CStackDir); */
+    /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit, 
+              R_CStackStart, R_CStackDir); */
 }
 #endif
 

@@ -625,13 +625,37 @@ static char UserRHome[MAX_PATH + 7];
 extern char *getRHOME(), *getRUser(); /* in rhome.c */
 void R_setStartTime();
 
+#if 0  /* Here is one way to find stackbase, but in MSVC assember */
+/* Based on http://www.opendarwin.org/pipermail/webkit-dev/2005-July/000251.html */
+typedef struct tagXTIB
+{
+	void * pvExcept; //00h Head of exception record list
+	PVOID pvStackUserTop; //04 Top of user stack
+	PVOID pvStackUserBase; //08h Base of user stack
+} xTib;
+
+static xTib* GetTIB()
+{
+    xTib* pTib;
+    __asm
+    {
+        MOV EAX , FS:[18h]
+        MOV pTib , EAX
+    }
+    return pTib;
+}
+#endif
 
 void R_SetWin32(Rstart Rp)
 {
     int dummy;
+    /* xTib *tib = GetTIB(); */
 
     R_CStackLimit = 0xA00000;  /* set in front-ends/Makefile */
-    R_CStackStart = (long)&dummy;
+    R_CStackStart = (unsigned long)&dummy;
+    /* printf("stack base %lx\n", R_CStackStart);
+       R_CStackStart = (long)tib->pvStackUserBase;
+       printf("stack base %lx\n", R_CStackStart); */
     R_CStackDir = 1;
     R_Home = Rp->rhome;
     if(strlen(R_Home) >= MAX_PATH) R_Suicide("Invalid R_HOME");

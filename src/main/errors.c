@@ -72,9 +72,19 @@ static void signalInterrupt(void);
   WarningMessage()-> warningcall (but with message from WarningDB[]).
 */
 
+void R_CheckStack(void)
+{
+    int dummy;
+    long usage = R_CStackDir * (R_CStackStart - (unsigned long)&dummy);
+
+    /* printf("usage %ld\n", usage); */
+    if(R_CStackLimit != -1 && usage > 0.95 * R_CStackLimit)
+        error(_("C stack usage is too close to the limit"));
+}
 
 void R_CheckUserInterrupt(void)
 {
+    R_CheckStack();
     /* This is the point where GUI systems need to do enough event
        processing to determine whether there is a user interrupt event
        pending.  Need to be careful not to do too much event
