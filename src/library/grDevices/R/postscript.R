@@ -148,7 +148,7 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
                                },
                            { lc <- localeToCharset()
                              if(length(lc) == 1)
-                                 switch("ISO8859-1" = "ISOLatin1.enc",
+                                 switch(lc, "ISO8859-1" = "ISOLatin1.enc",
                                         "ISO8859-5" = "Cyrillic.enc",
                                         "ISO8859-7" = "Greek.enc",
                                         "ISO8859-13" = "ISOLatin7.enc",
