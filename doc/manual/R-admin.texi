@@ -1997,7 +1997,7 @@ against the dynamic library and so such packages cannot be used from a
 @node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
 @section Internationalization support
 
-As from version 2.1.0, @R{} has some support for multi-byte character
+As from version 2.1.0, @R{} support for multi-byte character
 sets (@acronym{MBCS}), in particular for UTF-8 locales (which are
 usually identified by suffix @code{.utf8}, something like
 @code{en_GB.utf8}@footnote{AIX has to be different: it has
@@ -2005,23 +2005,22 @@ usually identified by suffix @code{.utf8}, something like
 covers all human languages simultaneously: however, a given system may
 not have fonts capable of displaying more than a few of these languages.
 
-To enable UTF-8 support, configure with default @option{--enable-mbcs}.
-This will check for a large number of features, notably support for the
-C99/UNIX98 wide character functions and for UTF-8 or MBCS support in
-X11.  If enough of these are found, @code{MBCS} will be listed as one
-of the ``Additional capabilities''.  Then if @R{} is started in a UTF-8
-locale it assumes that the terminal will supply and display
-UTF-8-encoded characters@footnote{You may have to set this with
-@code{luit}, but it should be the default in a window manager session
-started in UTF-8.}.  If run in a single-byte locale, @R{} behaves almost
-exactly as if it was configured with @option{--disable-mbcs}.
+Support for UTF-8 is seleted at @command{configure} time (unless
+disabled with @option{--disable-mbcs}).  This will check for a large
+number of features, notably support for the C99/UNIX98 wide character
+functions and for UTF-8 or MBCS support in X11.  If enough of these are
+found, @code{MBCS} will be listed as one of the ``Additional
+capabilities''.  Then if @R{} is started in a UTF-8 locale it assumes
+that the terminal will supply and display UTF-8-encoded
+characters@footnote{You may have to set this with @code{luit}, but it
+should be the default in a window manager session started in UTF-8.}.
+If run in a single-byte locale, @R{} behaves almost exactly as if it was
+configured with @option{--disable-mbcs}.
 
 A version of @R{} with MBCS support can also be run in other multi-byte
-locales, for example those using the EUC-JP, EUC-KR and EUC-TW
-encodings.  A very few parts of @R{} currently assume that ASCII
-characters never occur as part of multi-byte character sequences, which
-is true of UTF-8 and the EUC-* locales but not some Chinese and Korean
-locales.
+locales, for example those using the EUC-JP, EUC-KR and EUC-TW encodings
+on Unix-alike and the code pages for Chinese, Japanese and Korean on
+Windows.
 
 Translation of messages is supported via GNU @code{gettext} unless
 disabled by the configure option @option{--disable-nls} or the
@@ -2691,17 +2690,18 @@ version has passed @command{make check} due to a problem with time
 zones (see below).  A 64-bit executable has not been successfully
 built.
 
-It appears that some (bit not all) versions of IRIX have broken
-wide-character header files and so need @code{--disable-mbcs}.
+It appears that some (but not all) versions of IRIX have broken
+wide-character header files and so may need @code{--disable-mbcs}.
 
-To build @R{} with @command{gcc} use the following configuration flags
+To build @R{} with @command{gcc} use something like the following
+configuration flags
 
 @example
 CPPFLAGS="-I/usr/freeware/include" 
 LDFLAGS="-L/usr/freeware/lib32"
 @end example
 
-To build the Tcl/Tk package you need to add
+To build the Tcl/Tk package you will most likely need to add
 
 @example
 --with-tclconfig=/usr/freeware/lib/tclConfig.sh
@@ -2711,8 +2711,8 @@ To build the Tcl/Tk package you need to add
 @noindent
 since these configuration scripts are not on your path.
 
-To build @R{} with the native compilers, use the following configuration
-flags
+To build @R{} with the native compilers, use something like the
+following configuration flags
 
 @example
 CC=cc F77=f77 CXX=CC 
@@ -2721,7 +2721,7 @@ CFLAGS="-O2" FFLAGS="-O2" CXXFLAGS="-O2"
 --with-bzlib=yes
 @end example
 
-The MipsPro compiler will not build the bzlib library, so you must use
+The MipsPro compiler will not build the @code{bzlib} library, so you must use
 the external one provided by SGI as a freeware package.
 
 After configuration, it is necessary to use @command{gmake} instead of
@@ -2771,7 +2771,7 @@ port would be greatly appreciated.
 @section AIX
 @cindex AIX
 
-On AIX 4.3.3 and AIX 5.1, it was found that the use of ``run time
+On AIX 4.3.3 and AIX 5.1/2, it was found that the use of ``run time
 linking'' (as opposed to normal AIX style linking) was required.  For
 this, the @R{} main program must be linked to the runtime linker with
 the @option{-brtl} linker option, and shareable objects must be enabled
@@ -2820,10 +2820,11 @@ SHLIB_LDFLAGS=-Wl,-G
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
 
-Ei-ji Nakama has reported that @file{src/main/regex.c} in @R{} 2.0.0 has
+Ei-ji Nakama has reported that @file{src/main/regex.c} in @R{} 2.2.0 has
 to be compiled with @option{-D_LINUX_SOURCE_COMPAT} in @code{CFLAGS} in
 AIX 5.x (and does not work correctly with AIX 4.x).  We believe that the
 patch applied since obviates the need for this.
+
 
 @node New platforms,  , AIX, Platform notes
 @section New platforms
