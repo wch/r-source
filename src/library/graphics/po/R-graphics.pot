@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:10\n"
+"POT-Creation-Date: 2005-10-16 21:55\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -60,6 +60,9 @@ msgid "invalid first argument"
 msgstr ""
 
 msgid "'formula' missing or incorrect"
+msgstr ""
+
+msgid "argument 'col' is deprecated in favour of 'boxfill'"
 msgstr ""
 
 msgid "'at' must have same length as 'z$n', i.e."

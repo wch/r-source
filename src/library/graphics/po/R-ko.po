@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:10\n"
+"POT-Creation-Date: 2005-10-16 21:55\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -61,6 +61,9 @@ msgstr "최초의 인수가 무효입니다"
 
 msgid "'formula' missing or incorrect"
 msgstr "'formula'가 없거나 부적절합니다"
+
+msgid "argument 'col' is deprecated in favour of 'boxfill'"
+msgstr ""
 
 msgid "'at' must have same length as 'z$n', i.e."
 msgstr "'at'는 'z$n'와 동일 길이를 가지지 않으면 안됩니다"

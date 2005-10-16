@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-26 09:41\n"
+"POT-Creation-Date: 2005-10-16 21:55\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -36,30 +36,6 @@ msgstr "见help(\"Deprecated\")和help(\"%s-deprecated\")。"
 
 msgid "See help(\"Deprecated\")"
 msgstr "见help(\"Deprecated\")"
-
-msgid "invalid numbers in 'quote'"
-msgstr "'quote'里的数不对"
-
-msgid "invalid 'quote' specification"
-msgstr "'quote'的设定不对"
-
-msgid "invalid 'row.names' specification"
-msgstr "'row.names'的设定不对"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr "当row.names = FALSE时col.names = NA是没有意义的"
-
-msgid "invalid 'col.names' specification"
-msgstr "'col.names'的设定不对"
-
-msgid "'file' must be a character string or connection"
-msgstr "'file'要么是字符串，要么是连接"
-
-msgid "appending column names to file"
-msgstr "把列名附加到文件上"
-
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char：'x'被强迫转成'character'"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd'的变元必需是数值或是复数"
@@ -492,6 +468,9 @@ msgstr "'from'一定得是POSIXt对象"
 msgid "'to' must be a POSIXt object"
 msgstr "'to'一定得是POSIXt对象"
 
+msgid "'file' must be a character string or connection"
+msgstr "'file'要么是字符串，要么是连接"
+
 msgid "'x' must be a square matrix"
 msgstr "'x'必需是正方形矩阵"
 
@@ -687,7 +666,7 @@ msgid "there is no package called '%s'"
 msgstr "不存在叫'%s'这个名称的程辑包"
 
 msgid "no library trees found in 'lib.loc'"
-msgstr "在'lib.loc'里找不到常式庫	树"
+msgstr "在'lib.loc'里找不到常式庫\t树"
 
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr "'%s'不是正当的程辑包--是不是在R版本2.0.0之前装的？"
@@ -1068,6 +1047,9 @@ msgstr "as.is里有些列名不存在"
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr "'as.is'的长度不对%d  != cols = %d "
 
+msgid "invalid 'row.names' specification"
+msgstr "'row.names'的设定不对"
+
 msgid "'x' must be a vector"
 msgstr "'x'必需为向量"
 
@@ -1257,6 +1239,21 @@ msgstr "无traceback"
 msgid "argument to 'which' is not logical"
 msgstr "'which'的变元不是逻辑值"
 
+msgid "invalid numbers in 'quote'"
+msgstr "'quote'里的数不对"
+
+msgid "invalid 'quote' specification"
+msgstr "'quote'的设定不对"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr "当row.names = FALSE时col.names = NA是没有意义的"
+
+msgid "invalid 'col.names' specification"
+msgstr "'col.names'的设定不对"
+
+msgid "appending column names to file"
+msgstr "把列名附加到文件上"
+
 msgid "attempt to change '%s' ignored"
 msgstr "改变'%s'没有起作用"
 
@@ -1310,6 +1307,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "format.char: coercing 'x' to 'character'"
+#~ msgstr "format.char：'x'被强迫转成'character'"
 
 #~ msgid "x must be numeric"
 #~ msgstr "x必需为数值"
@@ -1526,4 +1526,3 @@ msgstr[1] "警告信息：\n"
 
 #~ msgid "'x' must inherit from class"
 #~ msgstr "‘x’必需继承于这一类别"
-

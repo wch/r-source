@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:35\n"
+"POT-Creation-Date: 2005-10-16 21:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1448,7 +1448,7 @@ msgstr ""
 msgid "read the documentation for 'trace' more carefully"
 msgstr ""
 
-msgid "method L-BFGS-B uses 'fact' (and 'pgtol') instead of 'reltol' and 'abstol'"
+msgid "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr ""
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
@@ -1884,6 +1884,9 @@ msgid "inconsistent specification of 'ma' order"
 msgstr ""
 
 msgid "number of differences must be a positive integer"
+msgstr ""
+
+msgid "'start.innov' is too short: need %d points"
 msgstr ""
 
 msgid "insufficient observations"

@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-26 09:41\n"
-"PO-Revision-Date: 2005-08-26 09:41\n"
+"POT-Creation-Date: 2005-10-16 21:55\n"
+"PO-Revision-Date: 2005-10-16 21:55\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -53,30 +53,6 @@ msgstr "See help(“Deprecated”) and help(“%s-deprecated”)."
 
 msgid "See help(\"Deprecated\")"
 msgstr "See help(“Deprecated”)"
-
-msgid "invalid numbers in 'quote'"
-msgstr "invalid numbers in ‘quote’"
-
-msgid "invalid 'quote' specification"
-msgstr "invalid ‘quote’ specification"
-
-msgid "invalid 'row.names' specification"
-msgstr "invalid ‘row.names’ specification"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr "col.names = NA makes no sense when row.names = FALSE"
-
-msgid "invalid 'col.names' specification"
-msgstr "invalid ‘col.names’ specification"
-
-msgid "'file' must be a character string or connection"
-msgstr "‘file’ must be a character string or connection"
-
-msgid "appending column names to file"
-msgstr "appending column names to file"
-
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char: coercing ‘x’ to ‘character’"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argument to ‘La.svd’ must be numeric or complex"
@@ -510,6 +486,9 @@ msgstr "‘from’ must be a POSIXt object"
 
 msgid "'to' must be a POSIXt object"
 msgstr "‘to’ must be a POSIXt object"
+
+msgid "'file' must be a character string or connection"
+msgstr "‘file’ must be a character string or connection"
 
 msgid "'x' must be a square matrix"
 msgstr "‘x’ must be a square matrix"
@@ -1093,6 +1072,9 @@ msgstr "not all columns named in ‘as.is’ exist"
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr "‘as.is’ has the wrong length %d  != cols = %d"
 
+msgid "invalid 'row.names' specification"
+msgstr "invalid ‘row.names’ specification"
+
 msgid "'x' must be a vector"
 msgstr "‘x’ must be a vector"
 
@@ -1281,6 +1263,21 @@ msgstr "No traceback available"
 
 msgid "argument to 'which' is not logical"
 msgstr "argument to ‘which’ is not logical"
+
+msgid "invalid numbers in 'quote'"
+msgstr "invalid numbers in ‘quote’"
+
+msgid "invalid 'quote' specification"
+msgstr "invalid ‘quote’ specification"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr "col.names = NA makes no sense when row.names = FALSE"
+
+msgid "invalid 'col.names' specification"
+msgstr "invalid ‘col.names’ specification"
+
+msgid "appending column names to file"
+msgstr "appending column names to file"
 
 msgid "attempt to change '%s' ignored"
 msgstr "attempt to change ‘%s’ ignored"

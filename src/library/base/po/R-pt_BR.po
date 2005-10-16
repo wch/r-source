@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-26 09:41\n"
+"POT-Creation-Date: 2005-10-16 21:55\n"
 "PO-Revision-Date: 2005-09-27 23:03-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -36,30 +36,6 @@ msgstr "Veja help(\"Deprecated\") e help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Veja help(\"Deprecated\")"
-
-msgid "invalid numbers in 'quote'"
-msgstr "números inválidos em 'quote'"
-
-msgid "invalid 'quote' specification"
-msgstr "especificação de 'quote' inválida"
-
-msgid "invalid 'row.names' specification"
-msgstr "especificação de 'row.names' inválida"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr "col.names = NA não faz sentido com quando row.names = FALSE"
-
-msgid "invalid 'col.names' specification"
-msgstr "especificação de 'col.names' inválida"
-
-msgid "'file' must be a character string or connection"
-msgstr "'file' deve ser uma string de caracteres ou uma conexão"
-
-msgid "appending column names to file"
-msgstr "acrescentando nomes de coluna no arquivo"
-
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char: fazendo coerção de 'x' para 'character' "
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argumento de 'La.svd' deve ser numérico ou complexo"
@@ -505,6 +481,9 @@ msgstr "'from' deve ser um objeto POSIXt"
 
 msgid "'to' must be a POSIXt object"
 msgstr "'to' deve ser um objeto POSIXt"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file' deve ser uma string de caracteres ou uma conexão"
 
 msgid "'x' must be a square matrix"
 msgstr "'x' deve ser uma matriz quadrada"
@@ -1098,6 +1077,9 @@ msgstr "nem todas as colunas nomeadas em 'as.is' existem"
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr "'as.is' tem o comprimento errado %d != cols = %d"
 
+msgid "invalid 'row.names' specification"
+msgstr "especificação de 'row.names' inválida"
+
 msgid "'x' must be a vector"
 msgstr "'x' deve ser um vetor"
 
@@ -1287,6 +1269,21 @@ msgstr "Nenhum rastreamento disponível"
 msgid "argument to 'which' is not logical"
 msgstr "argumento para 'which' não é lógico"
 
+msgid "invalid numbers in 'quote'"
+msgstr "números inválidos em 'quote'"
+
+msgid "invalid 'quote' specification"
+msgstr "especificação de 'quote' inválida"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr "col.names = NA não faz sentido com quando row.names = FALSE"
+
+msgid "invalid 'col.names' specification"
+msgstr "especificação de 'col.names' inválida"
+
+msgid "appending column names to file"
+msgstr "acrescentando nomes de coluna no arquivo"
+
 msgid "attempt to change '%s' ignored"
 msgstr "tentativa de mudar '%s' ignorada"
 
@@ -1342,3 +1339,6 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "format.char: coercing 'x' to 'character'"
+#~ msgstr "format.char: fazendo coerção de 'x' para 'character' "

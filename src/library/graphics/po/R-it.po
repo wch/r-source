@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:10\n"
+"POT-Creation-Date: 2005-10-16 21:55\n"
 "PO-Revision-Date: 2005-02-26 22:56+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -66,6 +66,9 @@ msgstr "primo argomento non valido"
 
 msgid "'formula' missing or incorrect"
 msgstr "'formula' mancante o sbagliata"
+
+msgid "argument 'col' is deprecated in favour of 'boxfill'"
+msgstr ""
 
 msgid "'at' must have same length as 'z$n', i.e."
 msgstr "'at' deve avere la stessa lunghezza di 'z$n', ovvero"

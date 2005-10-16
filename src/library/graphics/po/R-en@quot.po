@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:10\n"
-"PO-Revision-Date: 2005-09-21 14:10\n"
+"POT-Creation-Date: 2005-10-16 21:55\n"
+"PO-Revision-Date: 2005-10-16 21:55\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -83,6 +83,9 @@ msgstr "invalid first argument"
 
 msgid "'formula' missing or incorrect"
 msgstr "‘formula’ missing or incorrect"
+
+msgid "argument 'col' is deprecated in favour of 'boxfill'"
+msgstr "argument ‘col’ is deprecated in favour of ‘boxfill’"
 
 msgid "'at' must have same length as 'z$n', i.e."
 msgstr "‘at’ must have same length as 'z$n', i.e."

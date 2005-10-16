@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:35\n"
+"POT-Creation-Date: 2005-10-16 21:56\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1550,8 +1550,9 @@ msgstr "bounds는 L-BFGS-B method이라고 하는것만 사용할 수가 없습�
 msgid "read the documentation for 'trace' more carefully"
 msgstr "'trace'에 대한 해설을 보다 주의 깊게 읽어 주십시오"
 
+#, fuzzy
 msgid ""
-"method L-BFGS-B uses 'fact' (and 'pgtol') instead of 'reltol' and 'abstol'"
+"method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr ""
 "L-BFGS-B method는 'reltol' 그리고 'abstol'대신에 \n"
 "'fact (와 'pgtol')를 사용합니다"
@@ -2018,6 +2019,9 @@ msgstr "'ma' 차수가 모순된 지정입니다"
 
 msgid "number of differences must be a positive integer"
 msgstr "계차의 수는 positive 정수가 아니면 되지 않습니다"
+
+msgid "'start.innov' is too short: need %d points"
+msgstr ""
 
 msgid "insufficient observations"
 msgstr "관측값의 수가 불충분합니다 "

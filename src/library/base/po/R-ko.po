@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-26 09:41\n"
+"POT-Creation-Date: 2005-10-16 21:55\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -31,30 +31,6 @@ msgstr "help(\\\"Deprecated\\\")와 help(\\\"%s-deprecate\\\")를 보아 주십�
 
 msgid "See help(\"Deprecated\")"
 msgstr "help(\\\"Deprecated\\\")를 보아 주십시오"
-
-msgid "invalid numbers in 'quote'"
-msgstr "'quote'에서 무효인 수치가 있습니다"
-
-msgid "invalid 'quote' specification"
-msgstr "무효인 'quote' 지정입니다"
-
-msgid "invalid 'row.names' specification"
-msgstr "무효인 'row.names'의 지정입니다"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
-
-msgid "invalid 'col.names' specification"
-msgstr "무효인 'col.names' 지정입니다"
-
-msgid "'file' must be a character string or connection"
-msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
-
-msgid "appending column names to file"
-msgstr "파일에서 열명을 추가합니다"
-
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char: 'x'를 'character' 로 강제 변환합니다"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd'의 인수는 수치나 복소수가 아니면 안됩니다"
@@ -492,6 +468,9 @@ msgstr "'from'는 POSIXt 오브젝트가 아니면 되지 않습니다"
 
 msgid "'to' must be a POSIXt object"
 msgstr "'to'는  POSIXt 오브젝트가 아니면 되지 않습니다"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
 
 msgid "'x' must be a square matrix"
 msgstr "'x' 정방 행렬이 아니면 되지 않습니다"
@@ -1092,6 +1071,9 @@ msgstr "'as.is'에 이름을 들 수 있던 열에 존재하지 않는 것이 �
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr "'as.is'는 잘못된 길이 %d !=cols = %d를 가집니다"
 
+msgid "invalid 'row.names' specification"
+msgstr "무효인 'row.names'의 지정입니다"
+
 msgid "'x' must be a vector"
 msgstr "'x'는 벡터가 아니면 되지 않습니다"
 
@@ -1284,6 +1266,21 @@ msgstr "이용 할수 있는 traceback가 없습니다"
 msgid "argument to 'which' is not logical"
 msgstr "'which'에서 인수는 논리값이 아닙니다"
 
+msgid "invalid numbers in 'quote'"
+msgstr "'quote'에서 무효인 수치가 있습니다"
+
+msgid "invalid 'quote' specification"
+msgstr "무효인 'quote' 지정입니다"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
+msgid "invalid 'col.names' specification"
+msgstr "무효인 'col.names' 지정입니다"
+
+msgid "appending column names to file"
+msgstr "파일에서 열명을 추가합니다"
+
 msgid "attempt to change '%s' ignored"
 msgstr ""
 
@@ -1348,3 +1345,6 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "format.char: coercing 'x' to 'character'"
+#~ msgstr "format.char: 'x'를 'character' 로 강제 변환합니다"
