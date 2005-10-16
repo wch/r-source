@@ -7512,7 +7512,8 @@ Baier available on CRAN
 (@url{http://cran.r-project.org/other-software.html}) which works with
 @file{Rproxy.dll} (in the R distribution) and @file{R.dll} to support
 transfer of data to and from R and remote execution of R commands, as
-well as embedding of an R graphics window.
+well as embedding of an R graphics window.  The @pkg{rcom} package on
+CRAN provides a (D)COM server in a running @R{} session.
 
 @item
 Another (D)COM server, @code{RDCOMServer}, is available from
@@ -7718,6 +7719,12 @@ It is possible to run @R{} in a GUI in a single thread (as
 attempt to use only threads in the late 1990s failed to work correctly
 under Windows 95, the predominant version of Windows at that time.} to
 use multiple threads.
+
+Note that @R{}'s own front ends use a stack size of 10Mb, whereas MinGW
+executables default to 2Mb, and Visual C++ ones to 1Mb.  The latter
+stack sizes are too small for a number of @R{} applications, so
+general-purpose front-ends should use a larger stack size.
+
 
 @node R (internal) programming miscellanea, R coding standards, Linking GUIs and other front-ends to R, Top
 @appendix R (internal) programming miscellanea
