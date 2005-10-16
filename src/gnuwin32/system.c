@@ -625,32 +625,12 @@ static char UserRHome[MAX_PATH + 7];
 extern char *getRHOME(), *getRUser(); /* in rhome.c */
 void R_setStartTime();
 
-#if 0  /* Here is one way to find stackbase, but in MSVC assember */
-/* Based on http://www.opendarwin.org/pipermail/webkit-dev/2005-July/000251.html */
-typedef struct tagXTIB
-{
-	void * pvExcept; //00h Head of exception record list
-	PVOID pvStackUserTop; //04 Top of user stack
-	PVOID pvStackUserBase; //08h Base of user stack
-} xTib;
-
-static xTib* GetTIB()
-{
-    xTib* pTib;
-    __asm
-    {
-        MOV EAX , FS:[18h]
-        MOV pTib , EAX
-    }
-    return pTib;
-}
-#endif
 
 void R_SetWin32(Rstart Rp)
 {
     int dummy;
-    /* xTib *tib = GetTIB(); */
 
+#if 0
     CharacterMode = Rp->CharacterMode;
     switch(CharacterMode) {
     case RGui:
@@ -658,15 +638,30 @@ void R_SetWin32(Rstart Rp)
 	R_CStackLimit = 0xA00000;  /* set in front-ends/Makefile */
 	break;
     default:
-	R_CStackLimit = -1;  /* embedded in another front-end, so we have no idea */
+	R_CStackLimit = -1;  /* embedded in another front-end, 
+				so we have no idea */
     }
-
     R_CStackStart = (unsigned long)&dummy;
+    printf("stack base %lx\n", R_CStackStart);
+#endif
 
-    /* printf("stack base %lx\n", R_CStackStart);
-       R_CStackStart = (long)tib->pvStackUserBase;
-       printf("stack base %lx\n", R_CStackStart); */
+    {
+	/* Idea here is to ask about the memory block an automatic
+	   variable is in.  VirtualQuery rounds down to the beginning
+	   of the page, and tells us where the allocation started and
+	   how many bytes the pages go up */
 
+	MEMORY_BASIC_INFORMATION buf;
+	unsigned long bottom, top;
+
+	VirtualQuery(&dummy, &buf, sizeof(buf));
+	bottom = (unsigned long) buf.AllocationBase;
+	top = (unsigned long) buf.BaseAddress + buf.RegionSize;
+	/* printf("stackbase %lx, size %lx\n", top, top-bottom); */
+	R_CStackStart = top;
+	R_CStackLimit = top - bottom;
+    }
+    
     R_CStackDir = 1;
     R_Home = Rp->rhome;
     if(strlen(R_Home) >= MAX_PATH) R_Suicide("Invalid R_HOME");
