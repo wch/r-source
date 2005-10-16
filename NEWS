@@ -42,7 +42,8 @@ NEW FEATURES
     o	There is some basic checking for imminent C stack overflow (when
 	the evaluation depth and the user interrupts are checked).
 	This is likely to be refined before release, and is currently
-	only active when using an R front-end.
+	only active when using an R front-end except on Linux, FreeBSD
+	and Windows.
 
 
 DEPRECATED & DEFUNCT

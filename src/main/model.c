@@ -366,6 +366,8 @@ static SEXP StripTerm(SEXP term, SEXP list)
 	intercept = 0;
     if (list == R_NilValue)
 	return list;
+    /* This can be highly recursive */
+    R_CheckStack();
     tail = StripTerm(term, CDR(list));
     if (TermEqual(term, CAR(list)))
 	return tail;
@@ -380,6 +382,7 @@ static SEXP StripTerm(SEXP term, SEXP list)
 
 static SEXP TrimRepeats(SEXP list)
 {
+    /* Highly recursive, but StripTerm does the checking */
     if (list == R_NilValue)
 	return R_NilValue;
     if (TermZero(CAR(list)))

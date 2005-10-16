@@ -110,7 +110,15 @@ void R_setupHistory()
 }
 
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
-#include <sys/resource.h>
+# include <sys/resource.h>
+# ifdef linux
+extern void * __libc_stack_end;
+# endif
+# ifdef __FreeBSD__
+#  include <unistd.h>
+#  include <sys/types.h>
+#  include <sys/sysctl.h>
+# endif
 #endif
 
 int R_running_as_main_program = 0;
@@ -131,14 +139,31 @@ int Rf_initialize_R(int ac, char **av)
 {
     struct rlimit rlim;
 
-    if(R_running_as_main_program && getrlimit(RLIMIT_STACK, &rlim) == 0) {
+    if(getrlimit(RLIMIT_STACK, &rlim) == 0) {
 	unsigned long lim1, lim2;
 	lim1 = (unsigned long) rlim.rlim_cur;
 	lim2 = (unsigned long) rlim.rlim_max; /* Usually unlimited */
         R_CStackLimit = lim1 < lim2 ? lim1 : lim2;
     }
-    /* This is not the main program, but unless embedded it is near the top */
-    R_CStackStart = (long) &i;
+#if defined(linux)
+    R_CStackStart = (long) __libc_stack_end;
+#elif defined(__FreeBSD__)
+    {
+	/* Borrowed from mzscheme/gc/os_dep.c */
+	int nm[2] = {CTL_KERN, KERN_USRSTACK};
+	void * base;
+	size_t len = sizeof(void *);
+	int r = sysctl(nm, 2, &base, &len, NULL, 0);
+	R_CStackStart = (long) base;
+    }
+#else
+    if(R_running_as_main_program) {
+	/* This is not the main program, but unless embedded it is 
+	   near the top, 5540 bytes away when checked. */
+	R_CStackStart = (long) &i + 6000;
+    }
+#endif
+    
     R_CStackDir = ((long)&rstart > (long)&i) ? 1 : -1;
     /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit, 
               R_CStackStart, R_CStackDir); */
