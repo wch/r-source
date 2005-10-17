@@ -49,6 +49,9 @@ BUG FIXES
 	part could give spurious warnings about 'some AR parameters
 	were fixed'.
 
+    o	summary.matrix could give an infinite recursion on some
+	classed objects (e.g. those of class "Surv").
+
 
 
 		CHANGES IN R VERSION 2.2.0

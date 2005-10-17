@@ -3797,3 +3797,19 @@ z[["y2"]] <- x
 z["y3"] <- list(x)
 z
 ## Not completely supported prior to 2.2.0
+
+
+### end of tests added in 2.2.0 ###
+
+
+## summary.matrix failed on some classed objects
+surv <- structure(c(2.06, 2.13, 0.09, 0.27, 1, 0.36, 3.04, 0.67, 0.35,
+                    0.24, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0),
+                  .Dim = c(10, 2),
+                  .Dimnames = list(NULL, c("time", "status")),
+                  type = "right", class = "Surv")
+summary(surv)
+## Had infinite recursion (sometimes segfault) on 2.2.0.
+
+
+### end of tests added in 2.2.1 ###
