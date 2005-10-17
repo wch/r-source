@@ -124,6 +124,12 @@ BUG FIXES
 
     o	axis() now supports pars 'xaxp'/'yaxp' as inline arguments.
 
+    o	sort() now does not return inappropriate attributes such as
+	"dim" and "tsp": it only returns names
+
+	sort(x, partial=) no longer returns unsorted names, and drops
+	names (since it is supplied for efficiency).
+
 
 
 
@@ -176,6 +182,9 @@ BUG FIXES
     o	arima() with 'fixed' supplied and p=0 for the non-seasonal
 	part could give spurious warnings about 'some AR parameters
 	were fixed'.
+
+    o	summary.matrix could give an infinite recursion on some
+	classed objects (e.g. those of class "Surv").
 
 
 

@@ -61,10 +61,8 @@ summary.factor <- function(object, maxsum = 100, ...)
 }
 
 summary.matrix <- function(object, ...) {
-    ## a cautious version of unclass():
-    cl <- class(object)
-    class(object) <- if(!identical(cl, "AsIs")) cl[cl != "AsIs"]
-    summary.data.frame(data.frame(object), ...)
+    ## we do want this changed into separate columns, so use matrix method
+    summary.data.frame(as.data.frame.matrix(object), ...)
 }
 
 ## <FIXME> use encodeString here, and its justify options

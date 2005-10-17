@@ -3797,3 +3797,41 @@ z[["y2"]] <- x
 z["y3"] <- list(x)
 z
 ## Not completely supported prior to 2.2.0
+
+
+### end of tests added in 2.2.0 ###
+
+
+## summary.matrix failed on some classed objects
+surv <- structure(c(2.06, 2.13, 0.09, 0.27, 1, 0.36, 3.04, 0.67, 0.35,
+                    0.24, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0),
+                  .Dim = c(10, 2),
+                  .Dimnames = list(NULL, c("time", "status")),
+                  type = "right", class = "Surv")
+summary(surv)
+## Had infinite recursion (sometimes segfault) on 2.2.0.
+
+
+### end of tests added in 2.2.1 ###
+
+
+## sort used to preserve inappropriate attributes and not always sort names.
+x <- runif(10)
+tsp(x) <- c(1,10,1)
+(z <- sort(x))                 # kept tsp attribute
+stopifnot(is.null(attributes(z)))
+(z <- sort(x, method="quick")) # same
+stopifnot(is.null(attributes(z)))
+(z <- sort(x, partial = 1:10)) # same
+stopifnot(is.null(attributes(z)))
+
+names(x) <- letters[1:10]
+o <- sort.list(x)
+z2 <- structure(c(x)[o], names=names(x)[o])
+(z <- sort(x))                 # sorted names, dropped the tsp attribute
+stopifnot(identical(z, z2))
+(z <- sort(x, method="quick")) # sorted names, kept the tsp attribute.
+stopifnot(identical(z, z2))
+(z <- sort(x, partial = 1:10)) # did not sort names, kept tsp attribute
+stopifnot(is.null(attributes(z)))
+## fixed for 2.3.0 to sort names (ecept partial), drop all other attributes.
