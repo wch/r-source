@@ -45,6 +45,9 @@ NEW FEATURES
 	only active when using an R front-end except on Linux, FreeBSD
 	and Windows.
 
+	New function Cstack_info() reports on stack size and usage (if
+	known).
+
 
 DEPRECATED & DEFUNCT
 
