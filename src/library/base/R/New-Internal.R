@@ -228,6 +228,7 @@ iconvlist <- function()
     sort(unlist(strsplit(ext, "[[:space:]]")))
 }
 
+Cstack_info <- function() .Internal(Cstack_info())
 
 ## base has no S4 generics
 .noGenerics <- TRUE

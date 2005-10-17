@@ -18,7 +18,7 @@
 as.POSIXct(x, tz = "")
 as.POSIXlt(x, tz = "")
 
-\method{as.numeric}{POSIXlt}{x}
+\method{as.numeric}{POSIXlt}(x)
 }
 \arguments{
   \item{x}{An object to be converted.}
