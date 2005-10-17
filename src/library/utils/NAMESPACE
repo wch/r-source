@@ -85,7 +85,8 @@ export(DLL.version, Filters, choose.dir, choose.files,
        fixup.libraries.URLs, fixup.package.URLs, getIdentification,
        getWindowsHandle, getWindowTitle, link.html.help,
        make.search.html, memory.limit, memory.size, readClipboard,
-       setWindowTitle, win.version, winDialog, winDialogString,
-       winMenuAdd, winMenuAddItem, winMenuDel, winMenuDelItem,
-       winMenuNames, winMenuItems, writeClipboard, zip.unpack)
+       setWindowTitle, shortPathName, win.version, winDialog,
+       winDialogString, winMenuAdd, winMenuAddItem, winMenuDel,
+       winMenuDelItem, winMenuNames, winMenuItems, writeClipboard,
+       zip.unpack)
 }

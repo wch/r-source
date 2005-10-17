@@ -13,7 +13,7 @@ choose.files(default = "", caption = "Select files",
 
 Filters
 
-choose.dir(default = "", caption = "Select files")
+choose.dir(default = "", caption = "Select folder")
 }
 \arguments{
   \item{default}{which filename to show initially}

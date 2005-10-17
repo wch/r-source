@@ -1096,6 +1096,26 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, paths = CAR(args);
+    int i, n = LENGTH(paths);
+    char tmp[MAX_PATH];
+    
+    checkArity(op, args);
+    if(!isString(paths))
+       errorcall(call, "'path' must be a character vector");
+
+    PROTECT(ans = allocVector(STRSXP, n));
+    for (i = 0; i < n; i++) {
+	GetShortPathName(CHAR(STRING_ELT(paths, i)), tmp, MAX_PATH);
+	R_fixbackslash(tmp);
+	SET_STRING_ELT(ans, i, mkChar(tmp));
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
 SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, def, caption, filters;

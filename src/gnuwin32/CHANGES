@@ -10,6 +10,9 @@ R 2.3.0
 There is a new function choose.dir() to choose a folder (as used for
 'Change dir...' on the File menu in RGui.)
 
+New function shortPathNames() to convert names to DOS-style paths (8+3
+names and no spaces).
+
 There is now MBCS support for the line editor in Rterm.exe.
 (Contributed by Haruki Koyanagi.)
 

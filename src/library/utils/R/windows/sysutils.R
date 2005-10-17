@@ -36,3 +36,5 @@ menuShowCRAN <- function()
         CRAN <- "http://cran.r-project.org"
     shell.exec(CRAN)
 }
+
+shortPathName <- function(path) .Internal(shortPathName(path))
