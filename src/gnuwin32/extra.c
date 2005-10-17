@@ -153,95 +153,6 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
-SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    char *home, buf[MAX_PATH];
-    FILE *ff;
-
-    checkArity(op, args);
-    home = getenv("R_HOME");
-    if (home == NULL)
-	error(_("R_HOME not set"));
-    sprintf(buf, "%s\\doc\\html\\rwin.html", home);
-    ff = fopen(buf, "r");
-    if (!ff) {
-	sprintf(buf, "%s\\doc\\html\\rwin.htm", home);
-	ff = fopen(buf, "r");
-	if (!ff) {
-	    sprintf(buf, _("%s\\doc\\html\\rwin.htm[l] not found"), home);
-	    error(buf);
-	}
-    }
-    fclose(ff);
-    ShellExecute(NULL, "open", buf, NULL, home, SW_SHOW);
-    return R_NilValue;
-}
-
-static int nhfiles = 0;
-static char *hfiles[50];
-
-
-SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-/*
- * type = 1: launch html file.
- *        2: "topic", 2, Windows help file.
- *        3: notify are finished with the help file.
- */
-
-    char *item, *hfile;
-    char *home, buf[MAX_PATH];
-    FILE *ff;
-    int   type;
-
-    checkArity(op, args);
-    if (!isString(CAR(args)))
-	errorcall(call, _("invalid '%s' argument"), "topic");
-    item = CHAR(STRING_ELT(CAR(args), 0));
-    type = asInteger(CADR(args));
-    if (type == 1) {
-	ff = fopen(item, "r");
-	if (!ff) {
-	    sprintf(buf, _("%s not found"), item);
-	    error(buf);
-	}
-	fclose(ff);
-	home = getenv("R_HOME");
-	if (home == NULL)
-	    error(_("R_HOME not set"));
-	ShellExecute(NULL, "open", item, NULL, home, SW_SHOW);
-    } else if (type == 2) {
-	if (!isString(CADDR(args)))
-	    errorcall(call, _("invalid '%s' argument"), "hlpfile");
-	hfile = CHAR(STRING_ELT(CADDR(args), 0));
-	if (!WinHelp((HWND) 0, hfile, HELP_KEY, (DWORD) item))
-	    warning(_("WinHelp call failed"));
-	else {
-	    if (nhfiles >= 50)
-		error(_("too many .hlp files opened"));
-	    hfiles[nhfiles] = malloc(strlen(hfile) * sizeof(char));
-	    strcpy(hfiles[nhfiles++], hfile);
-	}
-    } else if (type == 3) {
-	if (!isString(CADDR(args)))
-	    warningcall(call, _("invalid '%s' argument"), "hlpfile");
-	hfile = CHAR(STRING_ELT(CADDR(args), 0));
-	if (!WinHelp((HWND) 0, hfile, HELP_QUIT, (DWORD) 0))
-	    error(_("WinHelp call failed"));
-    } else
-	warning(_("type not yet implemented"));
-    return R_NilValue;
-}
-
-void closeAllHlpFiles()
-{
-    int   i;
-
-    for (i = nhfiles - 1; i >= 0; i--)
-	WinHelp((HWND) 0, hfiles[i], HELP_QUIT, (DWORD) 0);
-}
-
-
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     R_FlushConsole();
@@ -1265,6 +1176,31 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     }
+    UNPROTECT(1);
+    return ans;
+}
+
+SEXP do_chooseDir(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, def, caption;
+    char *p, path[MAX_PATH];
+
+    checkArity(op, args);
+    def = CAR(args);
+    caption = CADR(args);
+    if(!isString(def) || length(def) != 1 )
+	errorcall(call, _("'default' must be a character string"));
+    p = CHAR(STRING_ELT(def, 0));
+    if(strlen(p) >= MAX_PATH) errorcall(call, _("'default' is overlong"));
+    strcpy(path, R_ExpandFileName(p));
+    R_fixbackslash(path);
+    if(!isString(caption) || length(caption) != 1 )
+	errorcall(call, _("'caption' must be a character string"));
+    p = askcdstring(CHAR(STRING_ELT(caption, 0)), path);
+    Rwin_fpset();
+
+    PROTECT(ans = allocVector(STRSXP, 1));
+    SET_STRING_ELT(ans, 0, p ? mkChar(p) : NA_STRING);
     UNPROTECT(1);
     return ans;
 }

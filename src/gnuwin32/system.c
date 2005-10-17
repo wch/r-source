@@ -72,7 +72,6 @@ static void UnLoad_Rbitmap_Dll()
 
 __declspec(dllexport) UImode  CharacterMode;
 int ConsoleAcceptCmd;
-void closeAllHlpFiles();
 void set_workspace_name(char *fn); /* ../unix/sys-common.c */
 
 /* used to avoid some flashing during cleaning up */
@@ -436,7 +435,6 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     editorcleanall();
     CleanEd();
     CleanTempDir();
-    closeAllHlpFiles();
     KillAllDevices();
     AllDevicesKilled = TRUE;
     if (R_Interactive && CharacterMode == RTerm)

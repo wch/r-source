@@ -521,7 +521,7 @@ static void menuhelpstart(control m)
 /*    if (!ConsoleAcceptCmd) return;
     consolecmd(RConsole, "help.start()");
     show(RConsole);*/
-    internal_shellexec("doc\\html\\rwin.html");
+    internal_shellexec("doc\\html\\index.html");
 }
 
 static void menuFAQ(control m)
@@ -998,7 +998,7 @@ int RguiCommonHelp(menu m)
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mhelp = newmenuitem(G_("R functions (text)..."), 0, menuhelp));
     MCHECK(mhelpstart = newmenuitem(G_("Html help"), 0, menuhelpstart));
-    if (!check_doc_file("doc\\html\\rwin.html")) disable(mhelpstart);
+    if (!check_doc_file("doc\\html\\index.html")) disable(mhelpstart);
     MCHECK(mhelpsearch = newmenuitem(G_("Search help..."), 0, menuhelpsearch));
     MCHECK(msearchRsite = newmenuitem(G_("search.r-project.org ..."), 0, 
 				      menusearchRsite));

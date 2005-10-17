@@ -7,6 +7,9 @@ See the file NEWS for changes that affect all versions of R.
 R 2.3.0
 =======
 
+There is a new function choose.dir() to choose a folder (as used for
+'Change dir...' on the File menu in RGui.)
+
 There is now MBCS support for the line editor in Rterm.exe.
 (Contributed by Haruki Koyanagi.)
 
