@@ -202,7 +202,7 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
     }
     if(!mat) z <- x[is.finite(x)] # override changes
     z <- z[z >= range[1] & z <= range[2]]
-    z <- sort(unique(z))
+    z <- sort(unique(z)); class(z) <- "Date"
     if (identical(labels, TRUE))
 	labels <- format.Date(z, format = format)
     else if (identical(labels, FALSE))

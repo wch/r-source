@@ -269,12 +269,12 @@ SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("only atomic vectors can be sorted"));
     if(TYPEOF(CAR(args)) == RAWSXP)
 	errorcall(call, _("raw vectors cannot be sorted"));
-    if (decreasing || isUnsorted(CAR(args))) { /* do not duplicate if sorted */
-	ans = duplicate(CAR(args));
-	sortVector(ans, decreasing);
-	return(ans);
-    }
-    else return(CAR(args));
+    /* we need consistent behaviour here, including dropping attibutes,
+       so as from 2.3.0 we always duplicate. */
+    ans = duplicate(CAR(args));
+    SET_ATTRIB(ans, R_NilValue);  /* this is never called with names */
+    sortVector(ans, decreasing);
+    return(ans);
 }
 
 /* faster versions of shellsort, following Sedgewick (1986) */
@@ -492,6 +492,7 @@ SEXP do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, _("index %d outside bounds"), l[i]);
     }
     SETCAR(args, duplicate(CAR(args)));
+    SET_ATTRIB(CAR(args), R_NilValue);  /* remove all attributes */
     for (i = 0; i < k; i++)
 	Psort(CAR(args), l[i] - 1);
     return CAR(args);
