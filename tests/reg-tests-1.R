@@ -3835,3 +3835,10 @@ stopifnot(identical(z, z2))
 (z <- sort(x, partial = 1:10)) # did not sort names, kept tsp attribute
 stopifnot(is.null(attributes(z)))
 ## fixed for 2.3.0 to sort names (ecept partial), drop all other attributes.
+
+
+## formatC on as.single (PR#8211)
+# not documented to work but someone tried it.
+(z <- formatC(as.single(1)))
+stopifnot(identical(z, "1"))
+## was wrong < 2.3.0

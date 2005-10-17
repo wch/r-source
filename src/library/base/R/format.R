@@ -152,6 +152,7 @@ formatC <- function (x, digits = NULL, width = NULL,
     nf <- strsplit(flag, "")[[1]]
     if(!all(nf %in% c("0", "+", "-", " ", "#")))
        stop("'flag' can contain only '0+- #'")
+    attr(x, "Csingle") <- NULL  # avoid intepreting as.single
     r <- .C("str_signif",
 	    x = x,
 	    n = n,

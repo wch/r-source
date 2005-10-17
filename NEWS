@@ -46,7 +46,10 @@ NEW FEATURES
 	and Windows.
 
 	New function Cstack_info() reports on stack size and usage (if
-	known).
+
+    o	Package tcltk does not try to initialize Tk on Unix-alikes
+	unless a DISPLAY variable is present.  This allows packages
+	dependent on tcltk to be installed without access to an X server.
 
 
 DEPRECATED & DEFUNCT
