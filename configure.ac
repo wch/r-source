@@ -1524,7 +1524,10 @@ LIBS="${LIBS1} ${LIBS2}"
 ## On OS X (Darwin) /usr/X11R6/lib shadows OpenGL framework and is not
 ## needed in DYLD_LIBRARY_PATH.
 case "${host_os}" in
-  linux* | solaris*)
+  linux*)
+    r_ld_library_defaults="/usr/lib64:/lib64:/usr/lib:/lib"
+    ;;
+  solaris*)
     r_ld_library_defaults="/usr/lib:/lib"
     ;;
   darwin*)
