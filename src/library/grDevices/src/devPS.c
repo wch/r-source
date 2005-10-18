@@ -3612,16 +3612,34 @@ static void PS_TextCIDWrapper(double x, double y, char *str,
 
 #ifdef HAVE_ICONV
     if(mbcslocale && pd->cidfonts) {
-        unsigned char *buf;
         size_t ucslen;
-        char  *i_buf, *o_buf;
-        size_t i_len,  o_len;
-        size_t status;
         int cid_id = MatchCIDFamily(pd->cidfamilyname);
-	
+
+	/*
+	 * CID convert optimize PS encoding == locale encode case
+	 */
+	if (!strcmp(locale2charset(NULL),
+		    (char*)CIDResource[cid_id].encoding)) {
+	    SetCIDFont(translateFont(gc->fontfamily, gc->fontface, pd),
+		       (int)floor(gc->cex * gc->ps + 0.5),dd);
+	    if(R_OPAQUE(gc->col)) {
+		SetColor(gc->col, dd);
+		PostScriptHexText(pd->psfp, x, y, str, hadj,
+				  0.0, rot);
+	    }
+	    return;
+	}
+
+	/*
+	 * CID convert PS encoding != locale encode case
+	 */
         ucslen = mbcsToUcs2(str,NULL);
         if ((size_t)-1 != ucslen) {
 	    void *cd;
+	    unsigned char *buf;
+	    char  *i_buf, *o_buf;
+	    size_t i_len,  o_len;
+	    size_t status;
 
             cd = (void*)Riconv_open((char*)CIDResource[cid_id].encoding, "");
             if((void*)-1 == cd) return;
@@ -5313,7 +5331,7 @@ static void PDF_startfile(PDFDesc *pd)
 #define boldslant(x) ((x==3)?",BoldItalic":((x==2)?",Italic":((x==1)?",Bold":"")))
 static void PDF_endfile(PDFDesc *pd)
 {
-    int i, startxref, tempnobj, nenc, nfonts, firstencobj;
+    int i, startxref, tempnobj, nenc, nfonts, cidnfonts, firstencobj;
     /* object 3 lists all the pages */
 
     pd->pos[3] = (int) ftell(pd->pdffp);
@@ -5358,6 +5376,7 @@ static void PDF_endfile(PDFDesc *pd)
 	    fontlist = fontlist->next;
 	}
     }
+    cidnfonts = 0;
     if (pd->cidfonts) {
 	cidfontlist fontlist = pd->cidfonts;
 	while (fontlist) {
@@ -5365,14 +5384,15 @@ static void PDF_endfile(PDFDesc *pd)
 		fprintf(pd->pdffp, "/%s_%d %d 0 R ",
 			fontlist->cidfamily->fxname,
 			i+1, ++tempnobj);	    
-	    }
+		cidnfonts++;
+ 	    }
 	    fontlist = fontlist->next;
 	}
     }
     fprintf(pd->pdffp, ">>\n");
     /* graphics state parameter dictionaries */
     fprintf(pd->pdffp, "/ExtGState << ");
-    tempnobj = pd->nobjs + nenc + nfonts;
+    tempnobj = pd->nobjs + nenc + nfonts + cidnfonts;
     for (i = 0; i < 256 && pd->colAlpha[i] >= 0; i++) {
 	fprintf(pd->pdffp, "/GS%i %d 0 R ", i + 1, ++tempnobj);
     }
@@ -5966,15 +5986,41 @@ static void PDF_TextCIDWrapper(double x, double y, char *str,
     if(mbcslocale && pd->cidfonts && face != 5) {
         unsigned char *buf = NULL /* -Wall */;
         size_t ucslen;
-	char  *i_buf, *o_buf;
-	size_t i_len,  o_len;
-	size_t status;
+	unsigned char *p;
 	int cid_id = MatchCIDFamily(pd->cidfamilyname);
 
+        /*
+         * CID convert optimize PDF encoding == locale encode case
+         */
+        if(!strcmp(locale2charset(NULL), CIDResource[cid_id].encoding)) {
+            if ((pd->versionMajor >= 1 && pd->versionMinor >= 4) ||
+                (R_OPAQUE(gc->col))) {
+                PDF_SetFill(gc->col, dd);
+                fprintf(pd->pdffp,
+                        "/%s_%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
+                        pd->cidfamilyname, face,
+                        a, b, -b, a, x, y);
+ 
+                fprintf(pd->pdffp, "<");
+                p = str;
+                while(*p)
+                    fprintf(pd->pdffp, "%02x", *p++);
+                fprintf(pd->pdffp, ">");
+                fprintf(pd->pdffp, " Tj\n");
+            }
+            return;
+        }
+ 
+        /*
+         * CID convert  PDF encoding != locale encode case
+         */
 	ucslen = mbcsToUcs2(str,NULL);
         if ((size_t)-1 != ucslen ) {
-	    unsigned char *p;
 	    void *cd;
+	    char  *i_buf, *o_buf;
+	    size_t i_len,  o_len;
+	    size_t status;
+	    unsigned char *p;
 
 	    cd = (void*)Riconv_open((char*)CIDResource[cid_id].encoding,"");
 	    if((void*)-1 == cd) return;
@@ -5983,7 +6029,7 @@ static void PDF_TextCIDWrapper(double x, double y, char *str,
 					  ucslen*MB_LEN_MAX+1);
 	    if(!buf) error(_("allocation failure in PDF_TextCIDWrapper"));
 
-	    memset(buf,0,ucslen*MB_LEN_MAX+1);
+	    memset(buf, 0, ucslen*MB_LEN_MAX+1);
 	    i_buf = str;
 	    o_buf = (char *)buf;
 	    i_len = strlen(str);
@@ -6011,9 +6057,9 @@ static void PDF_TextCIDWrapper(double x, double y, char *str,
 		    fprintf(pd->pdffp, ">");
 		    fprintf(pd->pdffp, " Tj\n");
 		}
-	    }
-	    free(buf);
-	    return;
+	}
+	free(buf);
+	return;
     }
 #endif
 
