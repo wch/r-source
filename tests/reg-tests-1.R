@@ -3842,3 +3842,9 @@ stopifnot(is.null(attributes(z)))
 (z <- formatC(as.single(1)))
 stopifnot(identical(z, "1"))
 ## was wrong < 2.3.0
+
+
+## outer on factors was broken in pre-2.3.0
+x <- factor(1:3)
+outer(x, x, "!=")
+## failed 2005-10-17
