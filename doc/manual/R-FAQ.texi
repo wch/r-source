@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-10-13
+@set FAQ_DATE @value{FAQ_YEAR}-10-16
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1997,6 +1997,8 @@ Functions implementing a standard Unit Testing framework, with
 additional code inspection and report generation tools.
 @item RWinEdt
 A plug in for using WinEdt as an editor for R.
+@item RXshrink
+Maximum Likelihood Shrinkage via Ridge or Least Angle Regression.
 @item RadioSonde
 A collection of programs for reading and plotting SKEW-T,log p diagrams
 and wind profiles for data collected by radiosondes (the typical weather
