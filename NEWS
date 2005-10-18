@@ -186,8 +186,14 @@ BUG FIXES
 	part could give spurious warnings about 'some AR parameters
 	were fixed'.
 
-    o	summary.matrix could give an infinite recursion on some
+    o	summary.matrix() could give an infinite recursion on some
 	classed objects (e.g. those of class "Surv").
+
+    o	The 255th character in an 8-bit character set was not handled
+	correctly as a letter on some platforms where C char is
+	signed: for example it was printed as \377 and not allowed in
+	variable names.  (Spotted by Alexey Shipunov in Russian
+	encodings.)
 
 
 
