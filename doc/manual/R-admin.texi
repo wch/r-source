@@ -420,21 +420,21 @@ Using standard PostScript fonts.  This works well both for on-screen
 viewing and for printing, and is the default.  The one disadvantage is
 that the Usage and Examples sections may come out rather wide.
 
-@item @code{lm}
+@item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as
 part of a @TeX{} distribution, but can obtained from
 @url{http://www.ctan.org/tex-archive/fonts/ps-type1/lm} and mirrors.
 This uses fonts rather similar to Computer Modern, but is not so good
 on-screen as @code{times}.
 
-@item @code{cm-super}
+@item cm-super
 Using type-1 versions of the Computer Modern fonts by Vladimir Volovich.
 This is a large installation, obtainable from
 @url{http://www.ctan.org/tex-archive/fonts/ps-type1/cm-super} and its
 mirrors.  These type-1 fonts have poor hinting and so are nowhere near
 so readable on-screen as the other three options.
 
-@item @code{ae}
+@item ae
 A package to use composites of Computer Modern fonts.  This works well
 most of the time, and its PDF is more readable on-screen than the
 previous two options.  There are three fonts for which it will need to
