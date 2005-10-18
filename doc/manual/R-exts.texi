@@ -1030,7 +1030,9 @@ It is possible to use the Windows build of @command{g95} from
 @uref{http://www.g95.org} to build F95 sources in a package on Windows.
 See
 @uref{https://stat.ethz.ch/pipermail/r-devel/2005-September/034811.html}
-for a suitable @file{src/Makefile.win}.
+for a suitable @file{src/Makefile.win}.  Probably this would also work
+with the Windows build of @command{gfortran} from
+@uref{http://gcc.gnu.org/wiki/GFortranBinaries}.
 
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
