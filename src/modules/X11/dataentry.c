@@ -26,7 +26,7 @@
 */
 
 /* The version for R 2.1.0 is partly based on patches by
-   Eiji Nakama <nakama@ki.rim.or.jp> for use with Japanese fonts. */
+   Ei-ji Nakama <nakama@ki.rim.or.jp> for use with Japanese fonts. */
 
 #define DPRINTS(x) printf(#x "=[%s]\n", x)
 #define DPRINTX(x) printf(#x "=%x\n", x)

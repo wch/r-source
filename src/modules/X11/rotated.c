@@ -23,7 +23,7 @@
  */
 
 /* The version for R 2.1.0 is based on patches by 
-   Eiji Nakama <nakama@ki.rim.or.jp> for use in Japanese. */
+   Ei-ji Nakama <nakama@ki.rim.or.jp> for use in Japanese. */
 
 /* ********************************************************************** */
 
