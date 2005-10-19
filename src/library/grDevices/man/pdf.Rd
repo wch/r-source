@@ -117,6 +117,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   them from multiple-master fonts.  This can be seen in imprecise
   centering of characters, for example the multiply and divide signs in
   Helvetica.
+
+  Acrobat Reader 5.x and later can be extended by support for Asian and Central
+  European fonts (the latter only for 7.x and not on UNIX), and this
+  will be needed for full use of encodings other than Latin-1.
+  See \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html}.
 }
 \seealso{
   \code{\link{postscriptFonts}},
