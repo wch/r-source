@@ -1,4 +1,4 @@
-%% ISO8859-7 This should be a postscript fragment of an array of length exactly 256
+%% ISO8859-7 (2003) This should be a postscript fragment of an array of length exactly 256
 /ISOGreekEncoding [
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
@@ -21,19 +21,18 @@
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
-%% 0240
-/space /afii64937 /afii57929 /sterling /currency /yen /brokenbar /section
+%% 0240  A5 is Drachma, not in Adobe list.
+/space /quoteleft /quoteright /sterling /Euro /.notdef /brokenbar /section
 /dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /afii00208
 /degree /plusminus /twosuperior /threesuperior /tonos /dieresistonos /Alphatonos /periodcentered
 /Epsilontonos /Etatonos /Iotatonos /guillemotright /Omicrontonos /onehalf /Upsilontonos /Omegatonos
-%% 0300
-/iotadieresistonos /Alpha /Beta /Gamma /uni0394 /Epsilon /Zeta /Eta
+/iotadieresistonos /Alpha /Beta /Gamma /Deltagreek /Epsilon /Zeta /Eta
 /Theta /Iota /Kappa /Lambda /Mu /Nu /Xi /Omicron
-/Pi /Rho /Ograve /Sigma /Tau /Upsilon /Phi /Chi
-/Psi /uni03A9 /Iotadieresis /Upsilondieresis /alphatonos /epsilontonos /etatonos /iotatonos
+/Pi /Rho /.notdef /Sigma /Tau /Upsilon /Phi /Chi
+/Psi /Omegagreek /Iotadieresis /Upsilondieresis /alphatonos /epsilontonos /etatonos /iotatonos
 %% 0340
 /upsilondieresistonos /alpha /beta /gamma /delta /epsilon /zeta /eta
-/theta /iota /kappa /lambda /uni03BC /nu /xi /omicron
+/theta /iota /kappa /lambda /mugreek /nu /xi /omicron
 /pi /rho /sigma1 /sigma /tau /upsilon /phi /chi
-/psi /omega /iotadieresis /upsilondieresis /omicrontonos /upsilontonos /omegatonos /ydieresis
+/psi /omega /iotadieresis /upsilondieresis /omicrontonos /upsilontonos /omegatonos /.notdef
 ]
