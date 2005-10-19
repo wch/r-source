@@ -47,6 +47,9 @@ NEW FEATURES
 
 	New function Cstack_info() reports on stack size and usage (if
 
+    o	options(expressions) reverts to the default of 5000 now
+	stack checking is in place.
+
     o	Package tcltk does not try to initialize Tk on Unix-alikes
 	unless a DISPLAY variable is present.  This allows packages
 	dependent on tcltk to be installed without access to an X server.
@@ -144,6 +147,13 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.2.0 patched
+
+
+USER-VISIBLE CHANGES
+
+    o	options("expressions") has been reduced to 1000: the limit
+	of 5000 introduced in 2.1.0 was liable to give crashes from C
+	stack overflow.
 
 
 NEW FEATURES

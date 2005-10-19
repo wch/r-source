@@ -155,6 +155,13 @@ is.leaf(object)
   When using \code{type = "triangle"}, \code{center = TRUE} often looks
   better.
 }
+\section{Warning}{
+  Some operations on dendrograms (including plotting) make use of
+  recursion.  For very deep trees It may be necessary to increase
+  \code{\link{options}("expressions")}: if you do you are likely to need
+  to set the C stack size larger than the OS default if possible
+  (which it is not on Windows).
+}
 \seealso{
   \code{\link{order.dendrogram}} also on the \code{\link{labels}} method
   for dendrograms.
