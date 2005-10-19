@@ -899,14 +899,12 @@ void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(char *str);
-#if defined(SUPPORT_MBCS) && defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+#ifdef SUPPORT_MBCS
 typedef unsigned short ucs2_t;
 size_t mbcsToUcs2(char *in, ucs2_t *out);
 size_t ucs2ToMbcs(ucs2_t *in, char *out);
 size_t mbcsMblen(char *in);
 size_t ucs2Mblen(ucs2_t *in);
-#endif /* HAVE_ICONV */
-#ifdef SUPPORT_MBCS
 int utf8clen(char c);
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);

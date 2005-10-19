@@ -724,7 +724,7 @@ void UNIMPLEMENTED_TYPE(char *s, SEXP x)
     UNIMPLEMENTED_TYPEt(s, TYPEOF(x));
 }
 
-#if defined(SUPPORT_MBCS) && defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+#if defined(SUPPORT_MBCS)
 # include <R_ext/Riconv.h>
 # include <sys/param.h>
 # include <errno.h>
@@ -932,7 +932,7 @@ size_t ucs2ToMbcs(ucs2_t *in, char *out)
 {
     return (size_t) -1;
 }
-#endif /* SUPPORT_MBCS && HAVE_ICONV */
+#endif /* SUPPORT_MBCS */
 
 
 #ifdef SUPPORT_MBCS

@@ -29,13 +29,10 @@
 #include <limits.h> /* required for MB_LEN_MAX */
 
 
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
-#include <R_ext/Riconv.h>
-#endif
-
 #ifdef SUPPORT_MBCS
 #include <wchar.h>
 #include <wctype.h>
+#include <R_ext/Riconv.h>
 #endif
 
 #include "Defn.h"
@@ -791,7 +788,6 @@ PostScriptStringWidth(unsigned char *str,
 
 #ifdef SUPPORT_MBCS
     char *buff;
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     if(mbcslocale && cidmetrics && (face % 5) != 0) {
 	unsigned short *ucs2s;
 	size_t ucslen;
@@ -816,7 +812,6 @@ PostScriptStringWidth(unsigned char *str,
 	    return 0.001 * sum;
 	}	
     } else
-#endif /* HAVE_ICONV */
 	if(utf8locale && !utf8strIsASCII((char *) str) && 
 	   /* 
 	    * Every fifth font is a symbol font
@@ -2726,20 +2721,12 @@ PSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     }
     strcpy(pd->enc2, "latin1");
 #ifdef SUPPORT_MBCS
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     {
 	char *p;
 	strcpy(pd->enc2, encoding);
 	p = strrchr(pd->enc2, '.');
 	if(p) *p = '\0';
     }
-#else
-    if(utf8locale && strcmp(encoding, "ISOLatin1.enc")) {
-	warning(_("Requested encoding \"%s\"\nOnly encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\nAssuming \"ISOLatin1.enc\""), 
-		encoding);
-	encoding = ISOLatin1Enc;
-    }
-#endif
 #endif
 
     pd->encodings = NULL;
@@ -3574,9 +3561,7 @@ static void PS_Text(double x, double y, char *str,
     }
 }
 
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
-# include <R_ext/Riconv.h>
-
+#ifdef SUPPORT_MBCS
 static void mbcsToSbcs(char *in, char *out, char *encoding)
 {
     void *cd = NULL;
@@ -3617,7 +3602,6 @@ static void PS_TextCIDWrapper(double x, double y, char *str,
 
     /* No symbol fonts from now on */
 
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     if(mbcslocale && pd->cidfonts) {
         size_t ucslen;
         int cid_id = MatchCIDFamily(pd->cidfamilyname);
@@ -3679,7 +3663,6 @@ static void PS_TextCIDWrapper(double x, double y, char *str,
 	    return;
 	}
     }
-#endif
 
     /* Now using single-byte non-symbol font */
     SetFont(translateFont(gc->fontfamily, gc->fontface, pd), 
@@ -3689,11 +3672,7 @@ static void PS_TextCIDWrapper(double x, double y, char *str,
 	if(utf8locale && !utf8strIsASCII(str)) {
 	    buff = alloca(strlen(str)+1); /* Output string cannot be longer */
 	    if(!buff) error(_("allocation failure in PS_Text"));
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 	    mbcsToSbcs(str, buff, pd->enc2);
-#else
-	    mbcsToLatin1(str, buff);
-#endif
 	    str1 = buff;
 	}
 	PostScriptText(pd->psfp, x, y, str1, hadj, 0.0, rot);
@@ -4739,20 +4718,12 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *paper,
 	error(_("encoding path is too long"));
     }
 #ifdef SUPPORT_MBCS
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     {
 	char *p;
 	strcpy(pd->enc2, encoding);
 	p = strrchr(pd->enc2, '.');
 	if(p) *p = '\0';
     }
-#else
-    if(utf8locale && strcmp(encoding, "ISOLatin1.enc")) {
-	warning(_("Requested encoding \"%s\"\nOnly encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\nAssuming \"ISOLatin1.enc\""), 
-		encoding);
-	encoding = ISOLatin1Enc;
-    }
-#endif
 #endif
 
     pd->encodings = NULL;
@@ -5989,7 +5960,6 @@ static void PDF_TextCIDWrapper(double x, double y, char *str,
     if(fabs(b) < 0.01) b = 0.0;
     if(!pd->inText) texton(pd);
 
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     if(mbcslocale && pd->cidfonts && face != 5) {
         unsigned char *buf = NULL /* -Wall */;
         size_t ucslen;
@@ -6068,7 +6038,6 @@ static void PDF_TextCIDWrapper(double x, double y, char *str,
 	free(buf);
 	return;
     }
-#endif
 
     /*
      * Only try to do real transparency if version at least 1.4
@@ -6082,11 +6051,7 @@ static void PDF_TextCIDWrapper(double x, double y, char *str,
 	if(utf8locale && !utf8strIsASCII(str1) && face < 5) { 
 	    buff = alloca(strlen(str)+1); /* Output string cannot be longer */
 	    if(!buff) error(_("allocation failure in PDF_Text"));
-#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 	    mbcsToSbcs(str, buff, pd->enc2);
-#else
-	    mbcsToLatin1(str, buff);
-#endif
 	    str1 = buff;
 	}
 	PostScriptWriteString(pd->pdffp, str1);
