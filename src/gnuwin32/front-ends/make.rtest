@@ -11,9 +11,9 @@ endif
 LIBS=-L../../../lib $(LIBUNICOWS) -lR
 CFLAGS=-Wall
 
-rtest-CFLAGS=-I.. -I../../include
+rtest-CFLAGS=-I.. -I../../include $(DEBUGFLAG)
 Rtest.exe: rtest.o R.dll Rblas.dll
-	$(CC) -o $@ rtest.o R.dll
+	$(CC) $(LINKFLAGS) -o $@ rtest.o R.dll
 
 rtest.c: ../../include/Rversion.h
 
