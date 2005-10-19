@@ -199,7 +199,7 @@ static int wcsearch(int wint, const struct interval *table, int max)
  *  (wchar_t != unicode)
  *  However, it is Unicode at the time of UTF-8.
  ********************************************************************/
-#if defined(HAVE_ICONV) && defined(__APPLE_CC__)
+#if defined(HAVE_ICONV) && defined(ICONV_LATIN1) && defined(__APPLE_CC__)
 /* allow for MacIntel platforms */
 #ifdef WORDS_BIGENDIAN
 static const char UNICODE[] = "UCS-4BE";

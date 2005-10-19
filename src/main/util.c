@@ -724,13 +724,10 @@ void UNIMPLEMENTED_TYPE(char *s, SEXP x)
     UNIMPLEMENTED_TYPEt(s, TYPEOF(x));
 }
 
-#if defined(SUPPORT_MBCS) && defined(HAVE_ICONV)
+#if defined(SUPPORT_MBCS) && defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 # include <R_ext/Riconv.h>
 # include <sys/param.h>
 # include <errno.h>
-/* # ifdef HAVE_LANGINFO_CODESET
-#  include <langinfoh>
-# endif */
 
 /* Previous versions of R (< 2.3.0) assumed wchar_t was in Unicode
    (and it commonly is).  These functions do not. */
