@@ -301,7 +301,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 {
     double d = *tp;
     int day;
-    int y, tmp, mon, left, diff;
+    int y, tmp, mon, left, diff, diff2;
     struct tm *res= ltm;
     time_t t;
 
@@ -343,13 +343,24 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     res->tm_mday = day + 1;
 
     if(local) {
+	int shift;
 	/*  daylight saving time is unknown */
 	res->tm_isdst = -1;
 
 	/* Try to fix up timezone differences */
-        diff = guess_offset(res);
-	res->tm_min -= diff/60;
+        diff = guess_offset(res)/60;
+	shift = res->tm_min + 60*res->tm_hour;
+	res->tm_min -= diff;
 	validate_tm(res);
+	res->tm_isdst = -1;
+	/* now this might be a different day */
+	if(shift - diff < 0) res->tm_yday--;
+	if(shift - diff > 24) res->tm_yday++;	
+	diff2 = guess_offset(res)/60;
+	if(diff2 != diff) {
+	    res->tm_min += (diff - diff2);
+	    validate_tm(res);
+	}
 	return res;
     } else {
 	res->tm_isdst = 0; /* no dst in GMT */
