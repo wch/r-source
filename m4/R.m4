@@ -3002,6 +3002,12 @@ fi
 ## locales - support for MBCS and specifically UTF-8
 AC_DEFUN([R_MBCS],
 [
+## require functional iconv
+if test "$want_mbcs_support" = yes ; then
+  if test "$r_cv_iconv_latin1" != yes ; then
+    want_mbcs_support=no
+  fi
+fi
 ## Wide character support -- first test for headers (which are assumed in code)
 if test "$want_mbcs_support" = yes ; then
   AC_CHECK_HEADERS(wchar.h wctype.h)

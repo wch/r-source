@@ -1404,11 +1404,11 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 
 AC_SUBST(R_MODULES)
 
-## UTF-8 locales - support for MBCS and specifically UTF-8
-R_MBCS
-
 ## iconv headers and function.
 R_ICONV
+
+## support for MBCS
+R_MBCS
 
 ## X11.
 R_X11

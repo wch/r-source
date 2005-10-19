@@ -119,6 +119,9 @@ INSTALLATION CHANGES
     o	The encoding files for pdf()/postscript() have been moved to
 	directory 'enc' in package 'grDevices'.
 
+    o	Support for MBCS is only enabled if iconv is found and it
+	supports enough conversions.  (libiconv does.)
+
 
 BUG FIXES
 

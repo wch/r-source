@@ -1458,6 +1458,7 @@ static SEXP gregexpr_NAInputAns(void)
     return ans;
 }
 
+#ifdef SUPPORT_MBCS
 static SEXP gregexpr_BadStringAns(void)
 {
     SEXP ans, matchlen;
@@ -1468,6 +1469,7 @@ static SEXP gregexpr_BadStringAns(void)
     UNPROTECT(2);
     return ans;
 }
+#endif
 
 SEXP do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
