@@ -500,7 +500,7 @@ LibExtern int	R_Visible;	    /* Value visibility flag */
 LibExtern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
 extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
-extern int	R_Expressions	INI_as(5000);	/* options(expressions) */
+extern int	R_Expressions	INI_as(1000);	/* options(expressions) */
 extern Rboolean	R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 extern int	R_UseNamespaceDispatch INI_as(TRUE);
 extern int	R_WarnLength	INI_as(1000);	/* Error/warning max length */

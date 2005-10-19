@@ -101,7 +101,7 @@ getOption(x)
 
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.  Valid values are
-      25\dots500000 with default 5000.  If you increase it, you may
+      25\dots500000 with default 1000.  If you increase it, you may
       also want to start \R with a larger protection stack;
       see \code{--max-ppsize} in \code{\link{Memory}}.  Note too that
       you may cause a segfault from overflow of the C stack, and on OSes

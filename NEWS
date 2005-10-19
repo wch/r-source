@@ -9,6 +9,13 @@
 		CHANGES IN R VERSION 2.2.0 patched
 
 
+USER-VISIBLE CHANGES
+
+    o	options("expressions") has been reduced to 1000: the limit
+	of 5000 introduced in 2.1.0 was liable to give crashes from C
+	stack overflow.
+
+
 NEW FEATURES
 
     o	Use of 'pch' (e.g. in points) in the symbol font 5 is now
