@@ -404,7 +404,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 #ifdef Win32 /* It seems Windows does not know what is printable! */
 	    *q++ = *p++;
 #else
-	    if(!isprint((int)*p)) {
+	    if(!isprint((int)*p & 0xff)) {
 		/* print in octal */
 		snprintf(buf, 5, "\\%03o", (unsigned char) *p);
 		for(j = 0; j < 4; j++) *q++ = buf[j];

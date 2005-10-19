@@ -773,8 +773,8 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	{
 	    if (this[0] == '.') {
-		if (l >= 1 && isdigit((int) this[1])) need_prefix = TRUE;
-	    } else if (!isalpha((int) this[0])) need_prefix = TRUE;
+		if (l >= 1 && isdigit(0xff & (int) this[1])) need_prefix = TRUE;
+	    } else if (!isalpha(0xff & (int) this[0])) need_prefix = TRUE;
 	}
 	if (need_prefix) {
 	    SET_STRING_ELT(ans, i, allocString(l + 1));
@@ -807,7 +807,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	{
 	    for (p = this; *p; p++) {
 		if (*p == '.' || (allow_ && *p == '_')) /* leave alone */;
-		else if(!isalnum((int)*p)) *p = '.';
+		else if(!isalnum(0xff & (int)*p)) *p = '.';
 		/* else leave alone */
 	    }
 	}

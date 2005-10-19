@@ -196,7 +196,6 @@ static int
 GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     int res;
-    char *p;
     char *NormalPrompt =
 	(char *) CHAR(STRING_ELT(GetOption(install("prompt"), R_BaseEnv), 0));
 
@@ -206,9 +205,6 @@ GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
     }
     ConsoleAcceptCmd = !strcmp(prompt, NormalPrompt);
     res = consolereads(RConsole, prompt, buf, len, addtohistory);
-    for (p = buf; *p; p++)
-	if (*p == EOF)
-	    *p = '\001';
     ConsoleAcceptCmd = 0;
     return !res;
 }
