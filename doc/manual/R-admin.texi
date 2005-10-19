@@ -1728,8 +1728,9 @@ the system @code{iconv} function: this is part of recent versions of
 possibly as a plug-in replacement: see
 @url{http://www.gnu.org/software/libiconv/}.  Note that the @R{} usage
 requires @code{iconv} to be able to translate between @code{"latin1"}
-and @code{"UTF-8"} and to recognize @code{""} as the current encoding --
-this is not true of most commercial Unixes.
+and @code{"UTF-8"}, to recognize @code{""} as the current encoding and
+to translate to and from the Unicode wide-character formats
+@code{"UCS-[24][BL]E"} -- this is not true of most commercial Unixes.
 
 The ability to use translated messages makes use of @code{gettext} and
 most likely needs @acronym{GNU} @code{gettext}: you do need this to

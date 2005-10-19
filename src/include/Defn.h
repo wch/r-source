@@ -899,7 +899,7 @@ void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(char *str);
-#if defined(SUPPORT_MBCS) && defined(HAVE_ICONV)
+#if defined(SUPPORT_MBCS) && defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 typedef unsigned short ucs2_t;
 size_t mbcsToUcs2(char *in, ucs2_t *out);
 size_t ucs2ToMbcs(ucs2_t *in, char *out);
