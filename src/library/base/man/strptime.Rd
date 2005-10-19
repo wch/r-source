@@ -164,6 +164,9 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 
   OS facilities will probably not print years before 1CE (aka 1AD)
   correctly.
+
+  Remember that in most timezones some times do not occur and some occur
+  twice because of transitions to/from summer time.
 }
 \references{
   International Organization for Standardization (1988, 1997, \dots)

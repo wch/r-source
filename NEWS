@@ -208,6 +208,11 @@ BUG FIXES
 	variable names.  (Spotted by Alexey Shipunov in Russian
 	encodings.)
 
+    o	Conversion from POSIXct to POSIXlt is done more accurately
+	around the change of DST in years not supported by the OS
+	(pre-1970 on Windows and some others, and in the far past or
+	future).
+
 
 
 		CHANGES IN R VERSION 2.2.0
