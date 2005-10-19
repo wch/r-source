@@ -1,4 +1,6 @@
 #-*- Makefile -*-
+## remove any .y.c rule
+.SUFFIXES:
 include ../gnuwin32/MkRules
 
 all: makeMakedeps libmain.a
