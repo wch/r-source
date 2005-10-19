@@ -38,6 +38,9 @@ and may allow some larger programs to run without crashes.
 Overwrite mode in the console now works for MBCS charsets.  (Patch
 contributed by Haruki Koyanagi.)
 
+Input from the RGui console was changing the letter 255 (ÿ in Latin-2)
+in the character set to letter 1.
+
 R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the
 indices.
 
