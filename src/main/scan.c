@@ -916,10 +916,10 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
     int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline, escapes;
     char *p, *vmax;
+    RCNTXT cntxt;
     LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE,
 		      FALSE, 0};
     data.NAstrings = R_NilValue;
-    RCNTXT cntxt;
 
     checkArity(op, args);
     vmax = vmaxget();
