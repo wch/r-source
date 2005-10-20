@@ -54,6 +54,10 @@ NEW FEATURES
 	unless a DISPLAY variable is present.  This allows packages
 	dependent on tcltk to be installed without access to an X server.
 
+    o	The code use to guess timezone offsets where not supplied by
+	the OS uses a different algorithm that is more likely to guess
+	the summer time transitions correctly.
+
 
 DEPRECATED & DEFUNCT
 

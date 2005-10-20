@@ -63,6 +63,8 @@
    run-time test.  As from 1.6.2, test the actual mktime code and cache the
    result on glibc >= 2.2. (It seems this started between 2.2.5 and 2.3,
    and RH8.0 has an unreleased version in that gap.)
+
+   Sometime in late 2004 this was reverted in glibc.
 */
 
 static Rboolean have_broken_mktime(void)
@@ -227,22 +229,43 @@ static double mktime00 (struct tm *tm)
 static double guess_offset (struct tm *tm)
 {
     double offset, offset1, offset2;
-    int oldmonth, oldyear, olddst, oldwday, oldyday;
+    int i, wday, year, oldmonth, oldyear, olddst, oldwday, oldyday, oldmday;
 
     /*
-       adjust as best we can for timezones: if isdst is unknown,
-       use the smaller offset at same day in Jan or July 2000
+       Adjust as best we can for timezones: if isdst is unknown, use
+       the smaller offset at same day in Jan or July of a valid year.
+       We don't know the timezone rules, but if we choose a year with
+       July 1 on the same day of the week we will likely get guess
+       right (since they are usually on Sunday mornings).
     */
     oldmonth = tm->tm_mon;
     oldyear = tm->tm_year;
     olddst = tm->tm_isdst;
     oldwday = tm->tm_wday;
     oldyday = tm->tm_yday;
+    oldmday = tm->tm_mday;
+
+    /* so now look for a suitable year */
+    tm->tm_mon = 6;
+    tm->tm_mday = 1;
+    tm->tm_isdst = -1;
+    mktime00(tm);  /* to get wday valid */
+    wday = tm->tm_wday;
+    for(i = 70; i < 78; i++) { /* These cover all the possibilities */
+	tm->tm_year = i;
+	mktime(tm);
+	if(tm->tm_wday == wday) break;
+    }
+    year = i;
+
+    /* Now look up offset in January */
+    tm->tm_mday = oldmday;
     tm->tm_mon = 0;
-    tm->tm_year = 100;
+    tm->tm_year = year;
     tm->tm_isdst = -1;
     offset1 = (double) mktime(tm) - mktime00(tm);
-    tm->tm_year = 100;
+    /* and in July */
+    tm->tm_year = year;
     tm->tm_mon = 6;
     tm->tm_isdst = -1;
     offset2 = (double) mktime(tm) - mktime00(tm);

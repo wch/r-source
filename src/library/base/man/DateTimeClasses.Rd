@@ -118,7 +118,8 @@
   This will usually cover the period 1970--2037, and on Unix machines
   back to 1902 (when time zones were in their infancy).  Outside those
   ranges we use our own C code.  This uses the offset from GMT in use
-  in the timezone in 2000, and uses the alternate (daylight-saving)
+  in the timezone in one of 1970 to 1978 (chosen so that the likely DST
+  transition days are Sundays), and uses the alternate (daylight-saving)
   timezone only if \code{isdst} is positive.
 
   It seems that some systems use leap seconds but most do not. This is
