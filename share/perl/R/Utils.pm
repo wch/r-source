@@ -343,13 +343,20 @@ sub get_exclude_patterns {
     ## exported.
     ## <NOTE>
     ## Has Unix-style '/' path separators hard-coded.
-    my @exclude_patterns = ("^.Rbuildignore\$", "(^|/)\\.DS_Store\$",
+    my @exclude_patterns = ("^\\.Rbuildignore\$",
+			    "(^|/)\\.DS_Store\$",
 			    "\~\$", "\\.bak\$", "\\.swp\$",
 			    "(^|/)\\.#[^/]*\$", "(^|/)#[^/]*#\$",
+			    ## Outdated ...
 			    "^TITLE\$", "^data/00Index\$",
-			    "^inst/doc/00Index.dcf\$",
+			    "^inst/doc/00Index\\.dcf\$",
+			    ## Autoconf
 			    "^config\\.(cache|log|status)\$",
-			    "^autom4te.cache\$"
+			    "^autom4te\\.cache\$",
+			    ## Windows dependency files
+			    "^src/.*\\.d\$", "^src/Makedeps\$",
+			    ## IRIX
+			    "^src/so_locations\$"
 			    );
     ## </NOTE>
     @exclude_patterns;
