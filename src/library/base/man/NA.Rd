@@ -69,6 +69,10 @@ is.na(x) <- value
 \examples{
 is.na(c(1, NA))        #> FALSE  TRUE
 is.na(paste(c(1, NA))) #> FALSE FALSE
+
+(xx <- c(0:4))
+is.na(xx) <- c(2, 4)
+xx                     #> 0 NA  2 NA  4
 }
 \keyword{NA}
 \keyword{logic}
