@@ -262,8 +262,14 @@ function(package, dir, lib.loc = NULL)
             }
             ## Exclude methods inherited from the 'appropriate' parent
             ## environment.
-            makeSigs <- function(cls)
-                unlist(lapply(cls, paste, collapse = "#"))
+            makeSigs <- function(cls) {
+                ## Note that (thanks JMC), when comparing signatures,
+                ## the signature has to be stripped of trailing "ANY"
+                ## elements (which are always implicit) or padded to a
+                ## fixed length.
+                sub("(#ANY)*$", "",
+                    unlist(lapply(cls, paste, collapse = "#")))
+            }
             penv <- .Internal(getRegisteredNamespace(as.name(package)))
             if(is.environment(penv))
                 penv <- parent.env(penv)
