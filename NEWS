@@ -70,6 +70,9 @@ BUG FIXES
 	(pre-1970 on Windows and some others, and in the far past or
 	future).
 
+    o	chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)  gave wrong
+	P-values on some platforms (PR#8224).
+
 
 
 		CHANGES IN R VERSION 2.2.0
