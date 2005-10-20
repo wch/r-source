@@ -471,7 +471,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
-            warning(gettextf("F test assumes quasi%s family", fam),
+            warning(gettextf("F test assumes 'quasi%s' family", fam),
                     domain = NA)
 	dev <- aod$Deviance
 	rms <- dev[1]/rdf
