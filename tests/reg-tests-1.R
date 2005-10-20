@@ -3848,3 +3848,9 @@ stopifnot(identical(z, "1"))
 x <- factor(1:3)
 outer(x, x, "!=")
 ## failed 2005-10-17
+
+## need fuzz even for ">=" :
+set.seed(1)
+stopifnot(all.equal(chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)$p.value,
+                    0.3368315842, tol = 1e-6))
+## some i686 platforms gave 0.00049975

@@ -75,7 +75,7 @@ DEPRECATED & DEFUNCT
     o	The re-named tcltk functions tkcmd, tkfile.tail, tkfile.dir,
 	tkopen, tkclose, tkputs, tkread are now formally deprecated.
 
-    o	Argument 'col' of bxp() is now formally deprecated. 
+    o	Argument 'col' of bxp() is now formally deprecated.
 
 
 INTERNATIONALIZATION
@@ -115,7 +115,7 @@ INTERNATIONALIZATION
 	In UTF-8 locales, a suitable single-byte encoding is chosen
 	for postscript() and pdf(), and text translated to it
 	(provided iconv() is supported).
-	
+
 
 
 INSTALLATION CHANGES
@@ -216,6 +216,9 @@ BUG FIXES
 	around the change of DST in years not supported by the OS
 	(pre-1970 on Windows and some others, and in the far past or
 	future).
+
+    o	chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)  gave wrong
+	P-values on some platforms (PR#8224).
 
 
 
