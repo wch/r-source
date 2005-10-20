@@ -4343,8 +4343,41 @@ static void PDF_Encodings(PDFDesc *pd)
 	    fprintf(pd->pdffp, "/BaseEncoding /WinAnsiEncoding\n");
 	    fprintf(pd->pdffp, "/Differences [ 45/minus 96/quoteleft\n144/dotlessi /grave /acute /circumflex /tilde /macron /breve /dotaccent\n/dieresis /.notdef /ring /cedilla /.notdef /hungarumlaut /ogonek /caron /space]\n");
 	} else {
+	    int enc_first;
+	    int c = 0;
+	    int len;
+	    char buf[128];
+	    for(enc_first=0;encoding->enccode[enc_first]!='['   &&
+			    encoding->enccode[enc_first]!='\0' ;enc_first++);
+	    if (enc_first >= strlen(encoding->enccode))
+	        enc_first=0;
 	    fprintf(pd->pdffp, "/BaseEncoding /PDFDocEncoding\n");
-	    fprintf(pd->pdffp, "/Differences [ 0 %s ]\n", encoding->enccode);
+	    fprintf(pd->pdffp, "/Differences [\n");
+	    while(encoding->enccode[enc_first]){
+		switch (encoding->enccode[enc_first]){
+		  case ' ':
+		  case '\t':
+		  case '\n':
+		  case '[':
+		  case ']':
+		    enc_first++;
+		    continue;
+		}
+		for(len=0;
+		    (encoding->enccode[enc_first+len]!=' ')   &&
+		    (encoding->enccode[enc_first+len]!=']')   &&
+		    (encoding->enccode[enc_first+len]!='\t')   &&
+		    (encoding->enccode[enc_first+len]!='\0')   &&
+		    (encoding->enccode[enc_first+len]!='\n') ;
+		    len++);
+		memcpy(buf,encoding->enccode + enc_first , len);
+		buf[len]='\0';
+		fprintf(pd->pdffp, " %d%s", c, buf);
+		if ( (c+1) % 8 == 0 ) fprintf(pd->pdffp, "\n");
+		c++;
+		enc_first+=len;
+	    }
+	    fprintf(pd->pdffp, "\n]\n");
 	}
 	fprintf(pd->pdffp, ">>\nendobj\n");
 	
