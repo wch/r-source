@@ -220,6 +220,9 @@ BUG FIXES
     o	chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)  gave wrong
 	P-values on some platforms (PR#8224).
 
+    o	pdf() was not writing details of the encoding in the file
+	correctly.  (Spotted by Alexey Shipunov in Russian encodings.)
+
 
 
 		CHANGES IN R VERSION 2.2.0

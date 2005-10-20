@@ -33,9 +33,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{family}{the font family to be used, one of \code{"AvantGarde"},
     \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
     \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-    \code{"Palatino"} or \code{"Times"}.  \bold{Note} the other
-    specifications allowed for \code{\link{postscript}} are \bold{not}
-    available.}
+    \code{"Palatino"} or \code{"Times"}.  \bold{Note} some of the other
+    specifications allowed for \code{\link{postscript}} may work.}
   \item{title}{title string to embed in the file.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} and
