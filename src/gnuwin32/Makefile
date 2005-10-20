@@ -573,7 +573,7 @@ crandir:
 	$(CP) CHANGES cran/CHANGES.$(RPREFIX)
 	$(CP) ../../NEWS cran/NEWS.$(RPREFIX)
 	(cd cran;\
-	 $(ECHO) 'cat(md5sum("$(RPREFIX).exe"),"*$(RPREFIX)-win32.exe")' \
+	 $(ECHO) 'cat(md5sum("$(RPREFIX)-win32.exe"),"*$(RPREFIX)-win32.exe")' \
          | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
 	$(CP) ../../doc/html/rw-FAQ.html cran
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
