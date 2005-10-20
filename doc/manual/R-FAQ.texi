@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-10-16
+@set FAQ_DATE @value{FAQ_YEAR}-10-19
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1755,6 +1755,8 @@ various DBMS implementations.
 @item DCluster
 A set of functions for the detection of spatial clusters of diseases
 using count data.
+@item DDHFm
+Variance stabilization by Data-Driven Haar-Fisz (for microarrays).
 @item DEoptim
 Differential Evolution Optimization.
 @item DICOM
@@ -3786,8 +3788,12 @@ class structure).
 @item Biostrings
 Class definitions and generics for biological sequences along with
 pattern matching algorithms.
+@item Category
+A collection of tools for performing category analysis.
 @item ChromoViz
 Draw gene expression profile onto chromosome using @acronym{SVG}.
+@item CoCiteStats
+A collection of software tools for dealing with co-citation data.
 @item DEDS
 Differential Expression via Distance Summary for microarray data.
 @item DNAcopy
@@ -3803,6 +3809,11 @@ across multiple conditions.
 Gain and Loss Analysis of DNA.
 @item GOstats
 Tools for manipulating GO and microarrays.
+@item GeneMeta
+A collection of meta-analysis tools for analyzing high throughput
+experimental data.
+@item GeneR
+Package manipulating nucleotidic sequences (Embl, Fasta, GenBank).
 @item GeneSpring
 Functions and class definitions to be able to read and write GeneSpring
 specific data objects and convert them to Bioconductor objects.
@@ -3813,6 +3824,9 @@ Currently, implements methods for cell cycle analysis and for inferring
 large sparse graphical Gaussian models.
 @item GeneTraffic
 GeneTraffic R integration functions.
+@item GlobalAncova
+Calculates a global test for differential gene expression between
+groups.
 @item GraphAT
 Graph theoretic Association Tests.
 @item HEM
@@ -3824,6 +3838,10 @@ Client-side SOAP access KEGG.
 @item LPE
 Significance analysis of microarray data with small number of replicates
 using the Local Pooled Error (LPE) method.
+@item MANOR
+Micro-Array NORmalization.
+@item MCRestimate
+Misclassification error estimation with cross-validation.
 @item MLInterfaces
 Uniform interfaces to machine learning code for the exprSet class from
 Bioconductor.
@@ -3832,6 +3850,8 @@ Two-stage measurement error model for correlation estimation with
 smaller bias than the usual sample correlation.
 @item MergeMaid
 Cross-study comparison of gene expression array data.
+@item MiPP
+Misclassification Penalized Posterior Classification.
 @item OLIN
 Optimized Local Intensity-dependent Normalisation of two-color
 microarrays.
@@ -3849,6 +3869,8 @@ Receiver Operating Characteristic (ROC) approach for identifying genes
 that are differentially expressed in two types of samples.
 @item RSNPper
 Interface to chip.org::SNPper for SNP-related data.
+@item RankProd
+Rank Product method for identifying differentially expressed genes.
 @item RdbiPgSQL
 Methods for accessing data stored in PostgreSQL tables.
 @item Rdbi
@@ -3862,13 +3884,20 @@ An interface with Graphviz for plotting graph objects in R.
 Creates Universally Unique ID values (UUIDs) in R.
 @item SAGElyzer
 Locates genes based on SAGE tags.
+@item SBMLR
+Systems Biology Markup Language (SBML) interface and biochemical system
+analysis tools.
 @item SNAData
 Data from the book ``Social Network Analysis'' by Wasserman & Faust,
 1999.
 @item aCGH
 Classes and functions for Array Comparative Genomic Hybridization data.
+@item affxparser
+Package for parsing Affymetrix files (CDF, CEL, CHP, BPMAP, BAR).
 @item affy
 Methods for Affymetrix Oligonucleotide Arrays.
+@item affyQCReport
+QC Report Generation for affyBatch objects.
 @item affyPLM
 For fitting Probe Level Models.
 @item affycomp
@@ -3888,6 +3917,8 @@ packages.
 Associate experimental data in real time to biological metadata from web
 databases such as GenBank, LocusLink and PubMed.  Process and store
 query results.  Generate @HTML{} reports of analyses.
+@item apComplex
+Estimate protein complex membership using AP-MS protein data.
 @item arrayMagic
 Utilities for quality control and processing for two-color cDNA
 microarray data.
@@ -3897,6 +3928,14 @@ Performing print-run and array level quality assessment.
 @c CRAN
 Bayesian interval mapping diagnostics:  functions to interpret QTLCart
 and Bmapqtl samples.
+@item bioDist
+A collection of software tools for calculating distance measures.
+@item biomaRt
+Interface to BioMart databases (e.g., Ensembl)
+@item bridge
+Bayesian Robust Inference for Differential Gene Expression.
+@item clusterStab
+Compute cluster stability scores for microarray data.
 @item convert
 Convert Microarray Data Objects.
 @item ctc
@@ -3905,13 +3944,15 @@ Tools to export and import Tree and Cluster to other programs.
 Functions for the efficient design of factorial two-color microarray
 experiments and for the statistical analysis of factorial microarray
 data.
+@item diffGeneAnalysis
+Performs differential Gene expression Analysis.
 @item ecolitk
 Metadata and tools to work with E. coli.
 @item edd
 Expression density diagnostics: graphical methods and pattern
 recognition algorithms for distribution shape classification.
-@item exprExternal
-Implementation of exprSet using externalVectors.
+@c @item exprExternal
+@c Implementation of exprSet using externalVectors.
 @item externalVector
 Basic class definitions and generics for external pointer based vector
 objects for R.
@@ -3919,10 +3960,15 @@ objects for R.
 A set of tools for analyzing data from factorial designed microarray
 experiments.  The functions can be used to evaluate appropriate tests of
 contrast and perform single outlier detection.
+@item fdrame
+FDR Adjustments of Microarray Experiments (FDR-AME).
 @item gcrma
 Background adjustment using sequence information.
 @item genArise
 A tool for dual color microarray data.
+@item geneRecommender
+A gene recommender algorithm to identify genes coexpressed with a query
+set of genes.
 @item genefilter
 Tools for sequentially filtering genes using a wide variety of filtering
 functions.  Example of filters include: number of missing value,
@@ -3933,6 +3979,8 @@ functions to genes.
 Graphical tools for genomic data, for example for plotting expression
 data along a chromosome or producing color images of expression data
 matrices.
+@item gff3Plotter
+Plotting data of experiments on the genomic layout.
 @item globaltest
 Testing globally whether a group of genes is significantly related to
 some clinical variable of interest.
@@ -3946,14 +3994,18 @@ Classification using generalized partial least squares for two-group and
 multi-group classification.
 @item graph
 Classes and tools for creating and manipulating graphs within R.
-@item gtkWidgets
-Widgets built using @strong{RGtk}.
+@c @item gtkWidgets
+@c Widgets built using @strong{RGtk}.
 @item hexbin
 Binning functions, in particular hexagonal bins for graphing.
 @item hopach
 Hierarchical Ordered Partitioning and Collapsing Hybrid (HOPACH).
+@item hypergraph
+Capabilities for representing and manipulating hypergraphs.
 @item iSPlot
 Link views that are based on the same data set.
+@item ideogram
+Plotting genomic data by chromosomal location.
 @item impute
 @c CRAN
 Imputation for microarray data (currently KNN only).
@@ -3961,6 +4013,17 @@ Imputation for microarray data (currently KNN only).
 Linear models for microarray data.
 @item limmaGUI
 Graphical User Interface for package @strong{limma}.
+@item maDB
+Microarray database and utility functions for microarray analysis.
+@item maSigPro
+Significant gene expression profile differeneces in time course
+microarray data.
+@item maanova
+Tools for analyzing micro array experiments.
+@item macat
+MicroArray Chromosome Analysis Tool.
+@item made4
+Multivariate analysis of microarray data using ADE4.
 @item makecdfenv
 Two functions.  One reads a Affymetrix chip description file (CDF) and
 creates a hash table environment containing the location/probe set
@@ -3987,6 +4050,8 @@ Exploratory analysis for two-color spotted microarray data.
 @c UCB and UCSF.
 @item matchprobes
 Tools for sequence matching of probes on arrays.
+@item mmgmos
+Multi-chip Modified Gamma Model of Oligonucleotide Signal.
 @item msbase
 Basic classes and methods for mass spectrometric mass list
 manipulation.
@@ -3999,16 +4064,27 @@ permutation procedures are available to estimate adjusted
 @item nnNorm
 Spatial and intensity based normalization of cDNA microarray data based
 on robust neural nets.
-@c @item ontoTools
-@c Graphs and sparse matrices for working with ontologies.
+@item ontoTools
+Graphs and sparse matrices for working with ontologies; formal objects
+for nomenclatures with provenance management.
 @item pairseqsim
 Pairwise sequence alignment and scoring algorithms for global, local and 
 overlap alignment with affine gap penalty.
 @item pamr
 @c CRAN
 Pam: Prediction Analysis for Microarrays.
+@item pdmclass
+CLASSification of microarray samples using Penalized Discriminant
+Methods.
+@item pgUtils
+Utility functions for PostgreSQL databases.
 @item pickgene
 Adaptive gene picking for microarray expression data analysis.
+@item plgem
+Power Law Global Error Model.
+@item plier
+Implements the Affymetrix PLIER (Probe Logarithmic Error Intensity
+Estimate) algorithm.
 @item prada
 Tools for analyzing and navigating data from high-throughput phenotyping
 experiments based on cellular assays and fluorescent detection.
@@ -4016,25 +4092,46 @@ experiments based on cellular assays and fluorescent detection.
 Q-value estimation for false discovery rate control.
 @item rama
 Robust Analysis of MicroArrays: robust estimation of cDNA microarray
-intensities with replicates using a Bayesian hierarchical model. 
+intensities with replicates using a Bayesian hierarchical model.
+@item reb
+Regional Expression Biases.
 @item reposTools
 Tools for dealing with file repositories and allow users to easily
 install, update, and distribute packages, vignettes, and other files.
-@c @item rhdf5
-@c Storage and retrieval of large datasets using the HDF5 library and file
-@c format.
+@item rfcdmin
+Data sets for RFlowCyt examples.
+@item rflowcyt
+Statistical tools and data structures for analytic flow cytometry.
+@item rhdf5
+Support for large matrix manipulation using the HDF5 storage library.
+@item safe
+Significance Analysis of Function and Expression.
+@item sagenhaft
+Functions for reading and comparing SAGE (Serial Analysis of Gene
+Expression) libraries.
 @item siggenes
 Identifying differentially expressed genes and estimating the False
 Discovery Rate (FDR) with both the Significance Analysis of Microarrays
 (SAM) and the Empirical Bayes Analyses of Microarrays (EBAM).
 @item simpleaffy
 Very simple high level analysis of Affymetrix data.
+@item simulatorAPMS
+Computationally simulates the AP-MS technology.
 @item splicegear
 A set of tools to work with alternative splicing.
+@item spotSegmentation
+Microarray spot segmentation and gridding for blocks of microarray
+spots.
+@item ssize
+Estimate microarry sample size.
 @item stam
 STructured Analysis of Microarray data.
 @item stepNorm
 Stepwise normalization functions for cDNA microarrays.
+@item tilingArray
+Analysis of tiling arrays.
+@item timecourse
+Statistical analysis for developmental microarray time course data.
 @item tkWidgets
 Widgets in Tcl/Tk that provide functionality for Bioconductor packages.
 @item twilight
@@ -4050,6 +4147,9 @@ Evaluation widgets for functions.
 @item widgetTools
 Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user
 interfaces.
+@item xcms
+LC/MS and GC/MS data analysis: framework for processing and
+visualization of chromatographically separated mass spectral data.
 @end table
 
 @c These packages will eventually also be made available via @CRAN{}
