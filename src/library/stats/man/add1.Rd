@@ -28,7 +28,7 @@ drop1(object, scope, \dots)
       k = 2, trace = FALSE, \dots)
 
 \method{drop1}{lm}(object, scope, scale = 0, all.cols = TRUE,
-      test = c("none", "Chisq", "F"),k = 2, \dots)
+      test = c("none", "Chisq", "F"), k = 2, \dots)
 
 \method{drop1}{glm}(object, scope, scale = 0, test = c("none", "Chisq", "F"),
       k = 2, \dots)
@@ -52,7 +52,7 @@ drop1(object, scope, \dots)
     terms in the upper scope.  Useful if \code{add1} is to be called
     repeatedly.  \bold{Warning:} no checks are done on its validity.}
   \item{all.cols}{(Provided for compatibility with S.)  Logical to specify
-    whether all columns of the design matrix should be used. If
+    whether all columns of the design matrix should be used.  If
     \code{FALSE} then non-estimable columns are dropped, but the result
     is not usually statistically meaningful.}
   \item{\dots}{further arguments passed to or from other methods.}
@@ -81,6 +81,10 @@ drop1(object, scope, \dots)
   with fixed scale, the constant is chosen to give Mallows' \eqn{C_p}{Cp},
   \eqn{RSS/scale + 2p - n}.  Where \eqn{C_p}{Cp} is used,
   the column is labelled as \code{Cp} rather than \code{AIC}.
+
+  The F tests for the \code{"glm"} methods are based on analysis of
+  deviance tests, so if the dispersion is estimated it is based on the
+  residual deviance, unlike the F tests of \code{\link{anova.glm}}.
 }
 \value{
   An object of class \code{"anova"} summarizing the differences in fit
