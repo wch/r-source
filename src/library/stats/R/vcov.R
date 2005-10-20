@@ -15,8 +15,7 @@ vcov.lm <- function(object, ...)
 vcov.mlm <- function(object, ...)
 {
     so <- summary(object, corr=FALSE)[[1]]
-    kronecker(estVar(object), so$cov.unscaled,
-        make.dimnames=TRUE)
+    kronecker(estVar(object), so$cov.unscaled, make.dimnames = TRUE)
 }
 
 vcov.gls <- function (object, ...) object$varBeta
