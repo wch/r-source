@@ -43,6 +43,10 @@
   Correlations are printed to two decimal places (or symbolically): to
   see the actual correlations print \code{summary(object)$correlation}
   directly.
+
+  The dispersion is taken as \code{1} in the \code{binomial} and
+  \code{Poisson} families, and otherwise estimated by the residual
+  Chisquared statistic divided by the residual degrees of freedom.
 }
 \value{
   \code{summary.glm} returns an object of class \code{"summary.glm"}, a
@@ -62,7 +66,7 @@
   \item{aliased}{named logical vector showing if the original
     coefficients are aliased.} 
   \item{dispersion}{either the supplied argument or the estimated
-    dispersion if the latter in \code{NULL}}
+    dispersion if the latter is \code{NULL}}
   \item{df}{a 3-vector of the rank of the model and the number of
     residual degrees of freedom, plus number of non-aliased coefficients.}
   \item{cov.unscaled}{the unscaled (\code{dispersion = 1}) estimated covariance
