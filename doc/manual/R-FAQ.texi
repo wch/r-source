@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-10-19
+@set FAQ_DATE @value{FAQ_YEAR}-10-21
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1707,6 +1707,10 @@ Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 @item ArDec
 Time series autoregressive decomposition.
+@item BACCO
+Bayesian Analysis of Computer Code Output.  Contains @strong{emulator}
+and @strong{emulator} for Bayesian calibration of computer models and
+emulation of computer programs. 
 @item BHH2
 Functions and data sets reproducing some examples in ``Statistics for
 Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
@@ -2005,6 +2009,8 @@ Maximum Likelihood Shrinkage via Ridge or Least Angle Regression.
 A collection of programs for reading and plotting SKEW-T,log p diagrams
 and wind profiles for data collected by radiosondes (the typical weather
 balloon-borne instrument).
+@item RandVar
+Implementation of random variables by means of S4 classes and methods.
 @item RandomFields
 Creating random fields using various methods.
 @item Rcmdr
@@ -2360,6 +2366,12 @@ Functions for modelling dispersion in GLMs.
 @item distr
 An object orientated implementation of distributions and some additional
 functionality.
+@item distrEx
+Extensions of package @strong{distr}.
+@item distrSim
+Simulation classes based on package @strong{distr}.
+@item distrTEst
+Estimation and Testing classes based on package @strong{distr}.
 @item dprep
 Data preprocessing and visualization functions for classification.
 @item dr
@@ -2665,6 +2677,8 @@ higher order inference for nonlinear heteroscedastic models.
 Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
 @item hopach
 Hierarchical Ordered Partitioning and Collapsing Hybrid (HOPACH).
+@item howmany
+A lower bound for the number of correct rejections.
 @item httpRequest
 Implements HTTP Request protocols (GET, POST, and multipart POST
 requests).
@@ -2869,6 +2883,8 @@ Multiple Fractional Polynomials.
 Routines for GAMs and other genralized ridge regression problems with
 multiple smoothing parameter selection by GCV or UBRE.
 @emph{Recommended}.
+@item micEcdat
+Data sets for micro-econometrics.
 @item micEcon
 Tools for microeconomic analysis and microeconomic modelling.
 @item mice
