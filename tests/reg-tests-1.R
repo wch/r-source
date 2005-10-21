@@ -3817,6 +3817,10 @@ stopifnot(all.equal(chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)$p.value,
                     0.3368315842, tol = 1e-6))
 ## some i686 platforms gave 0.00049975
 
+
+## PR#8228 image() failed on a matrix with all NAs
+image(z=matrix(NA, 1, 1))
+
 ### end of tests added in 2.2.1 ###
 
 

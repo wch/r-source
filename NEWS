@@ -223,6 +223,9 @@ BUG FIXES
     o	pdf() was not writing details of the encoding in the file
 	correctly.  (Spotted by Alexey Shipunov in Russian encodings.)
 
+    o	image() was failing with an error when plotting a matrix
+	of all NA values.
+
 
 
 		CHANGES IN R VERSION 2.2.0
