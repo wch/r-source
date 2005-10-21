@@ -3821,6 +3821,16 @@ stopifnot(all.equal(chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)$p.value,
 ## PR#8228 image() failed on a matrix with all NAs
 image(z=matrix(NA, 1, 1))
 
+
+## read.fwf(header=TRUE) failed (PR#8226)
+ff <- tempfile()
+cat(file=ff, "A\tB\tC", "123456", "987654", sep="\n")
+z <- read.fwf(ff, width=c(1,2,3), header=TRUE)
+stopifnot(identical(names(z), LETTERS[1:3]))
+unlink(ff)
+## failed in <= 2.2.0
+
+
 ### end of tests added in 2.2.1 ###
 
 

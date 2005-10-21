@@ -218,13 +218,20 @@ BUG FIXES
 	future).
 
     o	chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)  gave wrong
-	P-values on some platforms (PR#8224).
+	P-values on some platforms. (PR#8224)
 
     o	pdf() was not writing details of the encoding in the file
 	correctly.  (Spotted by Alexey Shipunov in Russian encodings.)
 
     o	image() was failing with an error when plotting a matrix
-	of all NA values.
+	of all NA values.  (PR#8228)
+
+    o	The plot() method for TukeyHSD() needed updating after adding
+	adjusted p-values.  (PR#8229)
+
+    o	tools::checkMD5sums was not accepting file names with spaces in.
+
+    o	read.fwf() did not work for header = TRUE.  (PR#8226)
 
 
 

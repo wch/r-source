@@ -100,7 +100,7 @@ print.TukeyHSD <- function(x, digits=getOption("digits"), ...)
 plot.TukeyHSD <- function (x, ...)
 {
     for (i in seq(along = x)) {
-        xi <- x[[i]]
+        xi <- x[[i]][, -4] # drop p-values
         yvals <- nrow(xi):1
         plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2), type = "n",
              axes = FALSE, xlab = "", ylab = "", ...)

@@ -18,9 +18,10 @@ checkMD5sums <- function(pkg, dir)
     if(!length(dir)) return(NA)
     md5file <- file.path(dir, "MD5")
     if(!file.exists(md5file)) return(NA)
-    infile <- scan(md5file, what=list(md5="", name=""), quiet = TRUE)
-    xx <- infile[[1]]
-    nmxx <- names(xx) <- sub("^\\*", "", infile[[2]])
+    inlines <- readLines(md5file)
+    ## now split on the first space.
+    xx <- sub("^([0-9a-fA-F]*)(.*)", "\\1", inlines)
+    nmxx <- names(xx) <- sub("^[0-9a-fA-F]* [ |*](.*)", "\\1", inlines)
     dot <- getwd()
     setwd(dir)
     x <- md5sum(dir(dir, recursive=TRUE))

@@ -20,11 +20,12 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
   }
   \item{widths}{integer vector, giving the widths of the fixed-width
     fields (of one line), or list of integer vectors giving widths for
-    multiline records}
+    multiline records.}
   \item{header}{a logical value indicating whether the file contains the
-    names of the variables as its first line.}
+    names of the variables as its first line.  If present, the names
+    must be delimited by \code{sep}.}
   \item{sep}{character; the separator used internally; should be a
-    character that does not occur in the file.}
+    character that does not occur in the file (except in the header).}
   \item{as.is}{see \code{\link{read.table}}.}
   \item{skip}{number of initial lines to skip; see
     \code{\link{read.table}}.}
