@@ -1,3 +1,4 @@
+postscript("reg-tests-1.ps", encoding = "ISOLatin1.enc")
 
 ## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
@@ -3819,7 +3820,7 @@ stopifnot(all.equal(chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)$p.value,
 
 
 ## PR#8228 image() failed on a matrix with all NAs
-image(z=matrix(NA, 1, 1))
+image(z=matrix(NA, 1, 1), x=0:1, y=0:1)
 
 
 ## read.fwf(header=TRUE) failed (PR#8226)
