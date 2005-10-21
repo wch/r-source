@@ -56,7 +56,7 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
 
     if (missing(breaks)) {
         nc <- length(col)
-        if (any(!is.finite(zlim)) || diff(zlim) < 0)
+        if (!missing(zlim) && (any(!is.finite(zlim)) || diff(zlim) < 0))
             stop("invalid z limits")
         if (diff(zlim) == 0)
             zlim <- if (zlim[1] == 0) c(-1, 1)

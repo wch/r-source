@@ -19,9 +19,10 @@ image(x, \dots)
     is used for \code{z}.}
   \item{z}{a matrix containing the values to be plotted (\code{NA}s are
     allowed).  Note that \code{x} can be used instead of \code{z} for
-    convenience.}
+    convenience.}    
   \item{zlim}{the minimum and maximum \code{z} values for which colors
-    should be plotted.  Each of the given colors will be used to color an
+    should be plotted, defaulting to the range of the finite values of
+    \code{z}. Each of the given colors will be used to color an
     equispaced interval of this range. The \emph{midpoints} of the
     intervals cover the range, so that values just outside the range
     will be plotted.}
