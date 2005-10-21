@@ -1365,7 +1365,7 @@ admitted to the main @acronym{CRAN} package area.
 When all the testing is done, upload the @file{.tar.gz} file to
 
 @example
-@url{ftp://ftp.ci.tuwien.ac.at/incoming}
+@url{ftp://cran.R-project.org/incoming/}
 @end example
 
 @noindent
