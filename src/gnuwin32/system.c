@@ -629,7 +629,7 @@ void R_SetWin32(Rstart Rp)
     switch(CharacterMode) {
     case RGui:
     case RTerm:
-	R_CStackLimit = 0xA00000;  /* set in front-ends/Makefile */
+	R_CStackLimit = 512*1024;  /* set in front-ends/Makefile */
 	break;
     default:
 	R_CStackLimit = -1;  /* embedded in another front-end, 

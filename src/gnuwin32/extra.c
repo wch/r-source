@@ -1439,8 +1439,9 @@ int Rstrcoll(const char *s1, const char *s2)
 {
     wchar_t *w1, *w2;
     w1 = (wchar_t *) alloca((strlen(s1)+1)*sizeof(wchar_t));
-    Rmbstowcs(w1, s1, strlen(s1));
     w2 = (wchar_t *) alloca((strlen(s2)+1)*sizeof(wchar_t));
+    R_CheckStack();
+    Rmbstowcs(w1, s1, strlen(s1));
     Rmbstowcs(w2, s2, strlen(s2));
     return wcscoll(w1, w2);
 }

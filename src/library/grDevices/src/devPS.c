@@ -4737,9 +4737,19 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *paper,
 #ifdef SUPPORT_MBCS
     {
 	char *p;
-	strcpy(pd->enc2, encoding);
-	p = strrchr(pd->enc2, '.');
-	if(p) *p = '\0';
+	if(strcmp(encoding, "ISOLatin1.enc")==0) 
+	    strcpy(pd->enc2, "latin1");
+	else if(strcmp(encoding, "ISOLatin2.enc")==0) 
+	    strcpy(pd->enc2, "latin2");
+	else if(strcmp(encoding, "ISOLatin7.enc")==0) 
+	    strcpy(pd->enc2, "latin7");
+	else if(strcmp(encoding, "ISOLatin9.enc")==0) 
+	    strcpy(pd->enc2, "latin-9");
+	else {
+	    strcpy(pd->enc2, encoding);
+	    p = strrchr(pd->enc2, '.');
+	    if(p) *p = '\0';
+	}
     }
 #endif
 
