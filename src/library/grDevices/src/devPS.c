@@ -3580,7 +3580,7 @@ static void mbcsToSbcs(char *in, char *out, char *encoding)
     char *i_buf, *o_buf;
     size_t i_len, o_len, status;
 
-    if(strcmp(encoding, "latin1") == 0) {
+    if(strcmp(encoding, "latin1") == 0 || strcmp(encoding, "ISOLatin1") == 0) {
 	mbcsToLatin1(in, out);
 	return;
     }
