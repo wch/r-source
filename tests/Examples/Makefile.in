@@ -73,6 +73,25 @@ R:
 	  echo "$(ECHO_T) OK"; \
 	fi
 
+## Need a translation step in an MBCS for graphics-Ex.Rout
+## We also need to force latin1 for 8-bit locales.
+graphics-Ex.Rout: graphics-Ex.R
+	@if test -f $@; then mv $@ $@.prev; fi
+	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@echo 'tools:::.convert_examples("graphics-Ex.R", "graphics-Ex.R-locale", "latin1")' | $(R) --slave > /dev/null 2>&1 || exit 1
+	@sed -e 's/grDevices::postscript("graphics-Ex.ps")/grDevices::postscript("graphics-Ex.ps",encoding="ISOlatin1")/' graphics-Ex.R-locale \
+	  | $(R) < graphics-Ex.R-locale  > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@rm graphics-Ex.R-locale
+	@echo "$(ECHO_T) OK"
+	@if test -f $@.prev; then \
+	  mv $@ $@.fail; \
+	  echo $(ECHO_N) "comparing '$@' to '$@.prev' ...$(ECHO_C)"; \
+	  $(RDIFF) $@.fail $@.prev $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
+	  echo "$(ECHO_T) OK"; \
+	fi
+
+
 ## <NOTE>
 ## We need to update an ex_in file if it is older than any Rd file it
 ## contains examples from, or older than massage-Examples.pl.  As we do

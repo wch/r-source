@@ -129,6 +129,11 @@ INSTALLATION CHANGES
     o	Support for MBCS is only enabled if iconv is found and it
 	supports enough conversions.  (libiconv does.)
 
+    o	In a MBCS locale, make check now translates the graphics
+	examples from Latin-1.  This ensures that they will work
+	correctly in UTF-8: it is possible that in other MBCS locales
+	they will fail (rather than work completely incorrectly).
+
 
 BUG FIXES
 

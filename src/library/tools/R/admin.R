@@ -516,7 +516,7 @@ function(dir, outDir)
         base <- basename(file_path_sans_ext(srcfile))
         texfile <- paste(base, ".tex", sep = "")
         yy <- try(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
-                                quiet = TRUE)) 
+                                quiet = TRUE))
         if(inherits(yy, "try-error"))
             stop(yy)
         ## In case of an error, do not clean up: should we point to
@@ -603,6 +603,18 @@ function(dir, packages)
     invisible()
 }
 
+### * .convert_examples
+
+.convert_examples <- function(infile, outfile, encoding)
+{
+    ## convert infile from encoding to current, if possible
+    if(capabilities("iconv") && l10n_info()[["MBCS"]]) {
+        text <- iconv(readLines(infile), encoding, "")
+        if(any(is.na(text)))
+            stop("invalid input", domain = NA)
+        writeLines(text, outfile)
+    } else file.copy(infile, outfile, TRUE)
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***
