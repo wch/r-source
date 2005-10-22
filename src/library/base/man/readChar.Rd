@@ -72,7 +72,7 @@ zz <- file("testchar", "rb")
 readChar(zz, nc)
 readChar(zz, nchar(x)+3) # need to read the terminator explicitly
 close(zz)
-unlink("testbin")
+unlink("testchar")
 }
 \keyword{file}
 \keyword{connection}
