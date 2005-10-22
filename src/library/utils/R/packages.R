@@ -99,6 +99,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 			    installWithVers = FALSE,
                             checkBuilt = FALSE, type = getOption("pkgType"))
 {
+    ask  # just a check that it is valid before we start work
     text.select <- function(old)
     {
         update <- NULL
@@ -231,6 +232,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos),
                          method, available = NULL, ask = FALSE)
 {
+    ask  # just a check that it is valid before we start work
     if(is.null(lib.loc)) lib.loc <- .libPaths()
 
     instp <- installed.packages(lib.loc = lib.loc)
@@ -285,7 +287,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                                         title = "New packages to be installed")
                             , res)]
     if(length(update)) {
-        install.packages(update, lib = lib.loc[1], repos = repos,
+        install.packages(update, lib = lib.loc[1], contriburl = contriburl,
                          method = method, available = available)
         # now check if they were installed and update 'res'
         updated <- update[update %in% list.files(lib.loc[1])]
