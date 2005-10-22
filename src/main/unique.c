@@ -1088,8 +1088,10 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n, cnt, len, maxlen = 0, *cnts, dp;
     HashData data;
     char *csep, *buf;
+    char *vmax;
 
     checkArity(op, args);
+    vmax = vmaxget();
     names = CAR(args);
     if(!isString(names))
 	errorcall(call, _("'names' must be a character vector"));
@@ -1107,7 +1109,13 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     if(n > 1) {
 	/* +2 for terminator and rounding error */
 	buf = alloca(maxlen + strlen(csep) + log((double)n)/log(10.0) + 2);
-	cnts = (int *) alloca(n * sizeof(int));
+	if(n < 10000) {
+	    cnts = (int *) alloca(n * sizeof(int));
+	} else {
+	    /* This is going to be slow so use expensive allocation
+	       that will be recovered if interrupted. */
+	    cnts = (int *) R_alloc(n,  sizeof(int));
+	}
 	for(i = 0; i < n; i++) cnts[i] = 1;
 	data.nomatch = 0;
 	PROTECT(newx = allocVector(STRSXP, 1));
@@ -1129,6 +1137,7 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(3);
     }
     UNPROTECT(1);
+    vmaxset(vmax);
     return ans;
 }
 
