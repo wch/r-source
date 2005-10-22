@@ -33,6 +33,7 @@
 #include <wchar.h>
 #include <wctype.h>
 #include <R_ext/Riconv.h>
+static void mbcsToSbcs(char *in, char *out, char *encoding);
 #endif
 
 #include "Defn.h"
@@ -48,6 +49,7 @@
 #else
 extern int errno;
 #endif
+
 
 #define INVALID_COL 0xff0a0b0c
 
@@ -779,7 +781,7 @@ static double
 PostScriptStringWidth(unsigned char *str,
 		      FontMetricInfo *metrics,
 		      CIDFontMetricInfo *cidmetrics,
-		      int face)
+		      int face, char *encoding)
 {
     int sum = 0, i;
     short wx;
@@ -821,7 +823,7 @@ PostScriptStringWidth(unsigned char *str,
 	    buff = alloca(strlen((char *)str)+1);
 	    /* Output string cannot be longer */
 	    if(!buff) error(_("allocation failure in PS_Text"));
-	    mbcsToLatin1((char *)str, buff); 
+	    mbcsToSbcs((char *)str, buff, encoding); 
 	    str1 = (unsigned char *)buff;
 	}
 #endif
@@ -3381,7 +3383,7 @@ static double PS_StrWidth(char *str,
 	PostScriptStringWidth((unsigned char *)str,
 			      metricInfo(gc->fontfamily, face, pd),
 			      cidmetricInfo(face, pd),
-			      face);
+			      face, pd->enc2);
 }
 
 static void PS_MetricInfo(int c, 
@@ -3577,6 +3579,11 @@ static void mbcsToSbcs(char *in, char *out, char *encoding)
     void *cd = NULL;
     char *i_buf, *o_buf;
     size_t i_len, o_len, status;
+
+    if(strcmp(encoding, "latin1") == 0) {
+	mbcsToLatin1(in, out);
+	return;
+    }
 
     if ((void*)-1 == (cd = Riconv_open(encoding, "")))
 	error(_("unknown encoding '%s' in 'mbcsToSbcs'"), encoding);
@@ -4456,7 +4463,7 @@ static double XFig_StrWidth(char *str,
 	PostScriptStringWidth((unsigned char *)str,
 			      &(pd->fonts->family->fonts[face-1]->metrics),
 			      NULL,
-			      face);
+			      face, "latin1");
 }
 
 static void XFig_MetricInfo(int c, 
@@ -6164,7 +6171,7 @@ static double PDF_StrWidth(char *str,
 			      PDFmetricInfo(gc->fontfamily, 
 					    gc->fontface, pd),
 			      PDFCIDmetricInfo(gc->fontface, pd),
-			      gc->fontface);
+			      gc->fontface, pd->enc2);
 }
 
 static void PDF_MetricInfo(int c, 
