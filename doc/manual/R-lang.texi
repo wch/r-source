@@ -291,8 +291,8 @@ an object is of the correct type.
 @subsection Vectors
 
 @cindex vector
-Vectors can be thought of as contiguous cells containing homogeneous
-data.  Cells are accessed through
+Vectors can be thought of as contiguous cells containing data.  Cells
+are accessed through
 @cindex index
 indexing operations such as
 @code{x[5]}.  More details are given in @ref{Indexing}.
@@ -1505,7 +1505,7 @@ supplied (see @ref{Arguments}).
 @findex NaN
 
 @cindex type
-As the elements of a vector or matrix must be of the same type there are
+As the elements of an atomic vector must be of the same type there are
 multiple types of @code{NA} values. There is one case where this is
 particularly important to the user. The default type of @code{NA} is
 @code{logical}, unless coerced to some other type, so the appearance of
@@ -1534,6 +1534,8 @@ The @code{NA} of character type is as from R 1.5.0 distinct from the
 string @code{"NA"}.  Programmers who need to specify an explicit string
 @code{NA} should use @samp{as.character(NA)} rather than @code{"NA"}, or
 set elements to @code{NA} using @code{is.na<-}.
+
+There is no @code{NA} value for raw vectors.
 
 
 @node Indexing, Scope of variables, Elementary arithmetic operations, Evaluation of expressions
