@@ -230,7 +230,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
 new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos),
-                         method, available = NULL, ask = FALSE)
+                         method, available = NULL, ask = FALSE, destdir = NULL)
 {
     ask  # just a check that it is valid before we start work
     if(is.null(lib.loc)) lib.loc <- .libPaths()
@@ -287,10 +287,20 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                                         title = "New packages to be installed")
                             , res)]
     if(length(update)) {
-        install.packages(update, lib = lib.loc[1], repos = repos,
-                         method = method, available = available)
-        # now check if they were installed and update 'res'
-        updated <- update[update %in% list.files(lib.loc[1])]
+        install.packages(update, lib = lib.loc[1], contriburl = contriburl,
+                         method = method, available = available,
+                         destdir = destdir)
+        # Now check if they were installed and update 'res'
+        dirs <- list.files(lib.loc[1])
+        updated <- update[update %in% dirs]
+        # Need to check separately for bundles
+        av <- available[update, , drop = FALSE]
+        bundles <- av[!is.na(av[, "Contains"]), , drop=FALSE]
+        for(bundle in rownames(bundles)) {
+            contains <- strsplit(bundles[bundle, "Contains"],
+                                 "[[:space:]]+")[[1]]
+            if(all(contains %in% dirs)) updated <- c(updated, bundle)
+        }
         res <- res[!res %in% updated]
     }
     res

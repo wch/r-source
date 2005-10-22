@@ -45,7 +45,7 @@ NEW FEATURES
 	only active when using an R front-end except on Linux, FreeBSD
 	and Windows.
 
-	New function Cstack_info() reports on stack size and usage (if
+	New function Cstack_info() reports on stack size and usage.
 
     o	options(expressions) reverts to the default of 5000 now
 	stack checking is in place.
@@ -57,6 +57,9 @@ NEW FEATURES
     o	The code use to guess timezone offsets where not supplied by
 	the OS uses a different algorithm that is more likely to guess
 	the summer time transitions correctly.
+
+    o	new.packages() gains a 'destdir' to pass to install.packages().
+	(Wish of PR#8239.)
 
 
 DEPRECATED & DEFUNCT
