@@ -244,6 +244,8 @@ BUG FIXES
 	adjusted p-values.  (PR#8229)
 
     o	read.fwf() did not work for header = TRUE.  (PR#8226)
+    
+    o	diag() failed when its argument had NA values in its dimnames.
 
 
 

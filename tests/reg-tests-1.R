@@ -3831,6 +3831,11 @@ stopifnot(identical(names(z), LETTERS[1:3]))
 unlink(ff)
 ## failed in <= 2.2.0
 
+## diag() failed if matrix had NA dimnames
+x <- matrix(1, 2, 2)
+dimnames(x) <- list(c("a", NA), c("a", NA))
+diag(x)
+
 
 ### end of tests added in 2.2.1 ###
 
