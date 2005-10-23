@@ -206,5 +206,5 @@ test-Ts:
 
 clean:
 	@rm -f *.Rout *.Rout.fail internet.Rout2 Rplots.ps reg-plot.ps \
-	  reg-tests-2.ps $(test-src-auto)
+	  reg-tests-?.ps $(test-src-auto)
 	@rm -rf *.Rcheck
