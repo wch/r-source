@@ -3,6 +3,7 @@
 \alias{print.octmode}
 \alias{as.character.octmode}
 \alias{[.octmode}
+\alias{octmode}
 \title{Display Numbers in Octal}
 \description{
   Convert or print integers in octal format, with as many digits as are
@@ -26,6 +27,8 @@
   \code{755}.
 }
 \seealso{
-  These are auxiliary functions for \code{\link{file.info}}
+  These are auxiliary functions for \code{\link{file.info}}.
+
+  \code{\link{hexmode}}
 }
 \keyword{print}

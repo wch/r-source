@@ -3,6 +3,7 @@
 \alias{print.hexmode}
 \alias{as.character.hexmode}
 \alias{[.hexmode}
+\alias{hexmode}
 \title{Display Numbers in Hexadecimal}
 \description{
   Convert or print integers in hexadecimal format, with as many digits
@@ -22,5 +23,8 @@
 \details{
   Class \code{"hexmode"} consists of integer vectors with that class
   attribute, used merely to ensure that they are printed in hex.
+}
+\seealso{
+  \code{\link{octmode}}
 }
 \keyword{print}
