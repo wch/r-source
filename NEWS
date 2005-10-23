@@ -66,6 +66,9 @@ NEW FEATURES
     o	Package tools contains translation tables Adobe_glyphs and
 	charset_to_Unicode.
 
+    o   On Unix-alikes, R CMD INSTALL will clean up if interrupted (e.g.
+	by ctrl-C from the keyboard).
+
 
 DEPRECATED & DEFUNCT
 

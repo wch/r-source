@@ -70,6 +70,8 @@
 
   If the attempt to install the package fails, leftovers are removed.
   If the package was already installed, the old version is restored.
+  This happens either if a command encounters an error or if the
+  install is interrupted from the keyboard.
 
   Use \code{R CMD INSTALL --help} for more usage information.
 }
