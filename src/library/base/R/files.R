@@ -105,7 +105,6 @@ dir.create <- function(path, showWarnings = TRUE, recursive = FALSE)
 
 format.octmode <- function(x, ...)
 {
-    if(!inherits(x, "octmode")) stop("calling wrong method")
     isna <- is.na(x)
     y <- x[!isna]
     class(y) <- NULL
@@ -129,6 +128,41 @@ print.octmode <- function(x, ...)
 }
 
 "[.octmode" <- function (x, i)
+{
+    cl <- oldClass(x)
+    y <- NextMethod("[")
+    oldClass(y) <- cl
+    y
+}
+
+format.hexmode <- function(x, ...)
+{
+    isna <- is.na(x)
+    y <- x[!isna]
+    class(y) <- NULL
+    ans0 <- character(length(y))
+    z <- NULL
+    while(any(y > 0) || is.null(z)) {
+        z <- y%%16
+        y <- floor(y/16)
+        ans0 <- paste(c(0:9, letters)[1+z], ans0, sep="")
+    }
+    ans <- rep.int(as.character(NA), length(x))
+    ans[!isna] <- ans0
+    dim(ans) <- dim(x)
+    dimnames(ans) <- dimnames(x)
+    names(ans) <- names(x)
+    ans
+}
+as.character.hexmode <- format.hexmode
+
+print.hexmode <- function(x, ...)
+{
+    print(format(x), ...)
+    invisible(x)
+}
+
+"[.hexmode" <- function (x, i)
 {
     cl <- oldClass(x)
     y <- NextMethod("[")

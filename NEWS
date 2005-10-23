@@ -61,6 +61,11 @@ NEW FEATURES
     o	new.packages() gains a 'destdir' to pass to install.packages().
 	(Wish of PR#8239.)
 
+    o	Added "hexmode" to parallel "octmode".
+
+    o	Package tools contains translation tables Adobe_glyphs and
+	charset_to_Unicode.
+
 
 DEPRECATED & DEFUNCT
 
