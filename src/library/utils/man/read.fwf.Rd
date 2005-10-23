@@ -50,7 +50,7 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
   Negative-width fields are used to indicate columns to be skipped, eg
   \code{-5} to skip 5 columns.  These fields are not seen by
   \code{read.table} and so should not be included in a \code{col.names}
-  or \code{colClasses} argument.
+  or \code{colClasses} argument (nor in the header line, if present).
   
   Reducing the \code{buffersize} argument may reduce memory use when
   reading large files with long lines.  Increasing \code{buffersize} may
