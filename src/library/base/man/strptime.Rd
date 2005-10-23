@@ -166,7 +166,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   correctly.
 
   Remember that in most timezones some times do not occur and some occur
-  twice because of transitions to/from summer time.
+  twice because of transitions to/from summer time.  What happens in
+  those cases is OS-specific.
 }
 \references{
   International Organization for Standardization (1988, 1997, \dots)
