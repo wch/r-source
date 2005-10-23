@@ -1811,16 +1811,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     z = INTEGER(sz);
     c = (unsigned*)INTEGER(sc);
 
-    /* Check of grid coordinates */
-    /* We want them to all be finite and in strictly ascending order */
-
-    if (nx < 1 || ny < 1) goto badxy;
-    if (!R_FINITE(x[0])) goto badxy;
-    if (!R_FINITE(y[0])) goto badxy;
-    for (i = 1; i < nx; i++)
-	if (!R_FINITE(x[i]) || x[i] <= x[i - 1]) goto badxy;
-    for (j = 1; j < ny; j++)
-	if (!R_FINITE(y[j]) || y[j] <= y[j - 1]) goto badxy;
+    /* Check of grid coordinates now done in C code */
 
     colsave = Rf_gpptr(dd)->col;
     xpdsave = Rf_gpptr(dd)->xpd;
@@ -1845,10 +1836,6 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     if (GRecording(call, dd))
 	recordGraphicOperation(op, oargs, dd);
     return R_NilValue;
-
-  badxy:
-    errorcall(call, _("invalid x / y values or limits"));
-    return R_NilValue;/* never used; to keep -Wall happy */
 }
 
 	/*  P e r s p e c t i v e   S u r f a c e   P l o t s  */
