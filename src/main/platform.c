@@ -1552,17 +1552,16 @@ SEXP do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, nms;
     
     checkArity(op, args);
-    /* Use doubles to be able to represent 64-bit addresses */
-    PROTECT(ans = allocVector(REALSXP, 4));
+    PROTECT(ans = allocVector(INTSXP, 4));
     PROTECT(nms = allocVector(STRSXP, 4));
-    REAL(ans)[0] = R_CStackStart;
-    REAL(ans)[1] = R_CStackLimit;
-    REAL(ans)[2] = R_CStackDir;
-    REAL(ans)[3] = R_CStackDir * (R_CStackStart - (unsigned long) &ans);
-    SET_STRING_ELT(nms, 0, mkChar("base"));
-    SET_STRING_ELT(nms, 1, mkChar("size"));
+    INTEGER(ans)[0] = R_CStackLimit;
+    INTEGER(ans)[1] = R_CStackDir * (R_CStackStart - (unsigned long) &ans);
+    INTEGER(ans)[2] = R_CStackDir;
+    INTEGER(ans)[3] = R_EvalDepth;
+    SET_STRING_ELT(nms, 0, mkChar("size"));
+    SET_STRING_ELT(nms, 1, mkChar("current"));
     SET_STRING_ELT(nms, 2, mkChar("direction"));
-    SET_STRING_ELT(nms, 3, mkChar("current"));
+    SET_STRING_ELT(nms, 3, mkChar("eval_depth"));
 
     UNPROTECT(2);
     setAttrib(ans, R_NamesSymbol, nms);

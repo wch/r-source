@@ -19,12 +19,12 @@ Cstack_info()
   usage could be estimated as negative.
 }
 \value{
-  A \emph{double} vector (to allow 64-bit addresses to be returned,
-  possibly inaccurately). This has named elements
-  \item{base}{The base address of the stack.}
+  An integer vector.  This has named elements
   \item{size}{The size of the stack (in bytes), or \code{-1} if unknown.}
-  \item{directioon}{\code{1} (stack grows down) or \code{-1} (stack grows up).}
   \item{current}{The estimated current usage (in bytes).}
+  \item{directioon}{\code{1} (stack grows down) or \code{-1} (stack grows up).}
+  \item{eval\_depth}{The current evaluation depth (including two calls
+    for the call to \code{Cstack_info}.}
 }
 \examples{
 Cstack_info()
