@@ -11,8 +11,8 @@ image(x, \dots)
 }
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
-    measured.  These must be in (strictly) ascending order.
-    By default, equally
+    measured.  These must be finite, non-missing and in (strictly)
+    ascending order.  By default, equally
     spaced values from 0 to 1 are used.  If \code{x} is a \code{list},
     its components \code{x$x} and \code{x$y} are used for \code{x}
     and \code{y}, respectively. If the list has component \code{z} this
