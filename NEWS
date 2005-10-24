@@ -255,6 +255,9 @@ BUG FIXES
     
     o	diag() failed when its argument had NA values in its dimnames.
 
+    o	[g]sub(pcre=TRUE) did not work correctly with \U and \L in a 
+	UTF-8 locale, even on the example on the help page.
+
 
 
 		CHANGES IN R VERSION 2.2.0
