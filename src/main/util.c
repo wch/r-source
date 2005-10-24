@@ -19,7 +19,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8> 
+/* <UTF8>
    char here is mainly either ASCII or handled as a whole.
    isBlankString has been be improved.
 */
@@ -724,6 +724,217 @@ void UNIMPLEMENTED_TYPE(char *s, SEXP x)
     UNIMPLEMENTED_TYPEt(s, TYPEOF(x));
 }
 
+#if defined(SUPPORT_MBCS)
+# include <R_ext/Riconv.h>
+# include <sys/param.h>
+# include <errno.h>
+
+/* Previous versions of R (< 2.3.0) assumed wchar_t was in Unicode
+   (and it commonly is).  These functions do not. */
+# ifdef WORDS_BIGENDIAN
+static const char UCS2ENC[] = "UCS-2BE";
+static const char UCS4ENC[] = "UCS-4BE";
+# else
+static const char UCS2ENC[] = "UCS-2LE";
+static const char UCS4ENC[] = "UCS-4LE";
+# endif
+
+size_t mbcsMblen(char *in)
+{
+    unsigned int ucs4buf[1];
+    unsigned short ucs2buf[1];
+    void *cd = NULL, *buftype;
+    char *i_buf, *o_buf;
+    size_t i_len, o_len, status;
+    int i;
+
+    /* 6 == MB_LEN_MAX ? shift sequence is ignored... */
+    for (i = 1 ; i <= 6 ; i++){
+	buftype = (void *) ucs4buf;
+	if((void*)-1 == (cd = Riconv_open((char*)UCS4ENC, ""))) {
+	    buftype = (void *)ucs2buf;
+	    if ((void*)-1 == (cd = Riconv_open((char*)UCS2ENC, ""))) {
+		return (size_t)(-1);
+	    }
+	}
+
+	i_buf = in;
+	i_len = i;
+	o_buf = buftype == (void *) ucs4buf ?
+	    (char *) ucs4buf : (char *) ucs2buf;
+	o_len = buftype == (void *) ucs4buf ? 4 : 2;
+	memset (o_buf, 0 , o_len);
+	status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
+			(char **)&o_buf, (size_t *)&o_len);
+	Riconv_close(cd);
+	if ((size_t) -1 == status) {
+	    switch (errno){
+	    case EINVAL:
+		/* next char */
+		break;
+	    case E2BIG:
+		return (size_t) -1;
+	    case EILSEQ:
+		return (size_t) -1;
+	    }
+	} else if ((size_t) 0 == status)
+	    /* normal status */
+	    return (size_t) i;
+	else
+	    return (size_t) status;
+    }
+    return (size_t) -1;
+}
+
+size_t ucs2Mblen(ucs2_t *in)
+{
+    char mbbuf[16];
+    void *cd = NULL;
+    char *i_buf, *o_buf;
+    size_t i_len, o_len, status;
+
+    if ((void*) -1 == (cd = Riconv_open("", (char *)UCS2ENC)))
+	return (size_t) -1;
+
+    memset(mbbuf, 0, sizeof(mbbuf));
+    i_buf = (char *)in;
+    i_len = sizeof(ucs2_t);
+    o_buf = mbbuf;
+    o_len = sizeof(mbbuf);
+    memset(o_buf, 0 , o_len);
+    status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
+		    (char **)&o_buf, (size_t *)&o_len);
+    Riconv_close(cd);
+    if ((size_t) -1 == status)
+	switch (errno) {
+	case EINVAL:
+	    /* not case */
+	    return (size_t) -1;
+	case E2BIG:
+	    /* probably few case */
+	    return (size_t) -1;
+	case EILSEQ:
+	    return (size_t) -1;
+	}
+    return (size_t) strlen(mbbuf);
+}
+
+/*
+ * out returns the number of the national chars in the case of NULL
+ */
+size_t mbcsToUcs2(char *in, ucs2_t *out)
+{
+    void   *cd = NULL ;
+    char   *i_buf, *o_buf;
+    size_t  i_len, o_len, status, wc_len;
+
+    /* out length */
+    i_buf = in;
+    wc_len = 0;
+    while(*i_buf){
+	int rc;
+	rc = (int) mbcsMblen(i_buf);
+	if (rc < 0) return rc;
+	i_buf += rc;
+	wc_len++;
+    }
+    if ( out == NULL ) return wc_len;
+
+    if ((void*)-1 == (cd = Riconv_open((char *)UCS2ENC, "")))
+	return (size_t) -1;
+
+    i_buf = in;
+    i_len = strlen(in);
+    o_buf = (char *)out;
+    o_len = wc_len * sizeof(ucs2_t);
+    status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
+		    (char **)&o_buf, (size_t *)&o_len);
+
+    Riconv_close(cd);
+    if (status == (size_t)-1) {
+        switch(errno){
+        case EINVAL:
+            return (size_t) -2;
+        case EILSEQ:
+            return (size_t) -1;
+        case E2BIG:
+            break;
+        default:
+	    errno = EILSEQ;
+	    return (size_t) -1;
+        }
+    }
+    return wc_len;
+}
+
+/*
+ * out returns the number of the bytes in the case of NULL
+ */
+size_t ucs2ToMbcs(ucs2_t *in, char *out)
+{
+    void   *cd = NULL ;
+    ucs2_t *ucs = in ;
+    char   *i_buf = (char *)in, *o_buf;
+    size_t  i_len, o_len, status;
+
+    /* out length */
+    o_len = 0;
+    i_len = 0;
+    while(*ucs) {
+	int rc;
+	rc = ucs2Mblen(ucs);
+	if(rc < 0) return rc;
+	o_len += rc;
+	i_len += sizeof(ucs2_t);
+    }
+    if ( out == NULL ) return o_len;
+
+    if ((void*)-1 == (cd = Riconv_open("", (char *)UCS2ENC)))
+	return((size_t)(-1));
+
+    o_buf = (char *)out;
+    status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
+		    (char **)&o_buf, (size_t *)&o_len);
+
+    Riconv_close(cd);
+    if (status == (size_t)-1){
+        switch(errno){
+        case EINVAL:
+            return (size_t) -2;
+        case EILSEQ:
+            return (size_t) -1;
+        case E2BIG:
+            break;
+        default:
+	    errno=EILSEQ;
+	    return (size_t) -1;
+        }
+    }
+    return strlen(out);
+}
+#else
+/* we need dummy entry points in R.dll */
+typedef unsigned short ucs2_t;
+
+size_t mbcsMblen(char *in)
+{
+    return (size_t) -1;
+}
+size_t ucs2Mblen(ucs2_t *in)
+{
+    return (size_t) -1;
+}
+size_t mbcsToUcs2(char *in, ucs2_t *out)
+{
+    return (size_t) -1;
+}
+size_t ucs2ToMbcs(ucs2_t *in, char *out)
+{
+    return (size_t) -1;
+}
+#endif /* SUPPORT_MBCS */
+
+
 #ifdef SUPPORT_MBCS
 #include <wctype.h>
 #endif
@@ -1100,10 +1311,10 @@ SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     cs = CHAR(STRING_ELT(s, 0));
     if(strlen(cs) > 0) quote = cs[0];
     if(strlen(cs) > 1)
-	warningcall(call, 
+	warningcall(call,
 		    _("only the first character of 'quote' will be used"));
     justify = asInteger(CADDDR(args));
-    if(justify == NA_INTEGER || justify < 0 || justify > 3) 
+    if(justify == NA_INTEGER || justify < 0 || justify > 3)
 	errorcall(call, _("invalid '%s' value"), "justify");
     if(justify == 3) w = 0;
     na = asLogical(CAD4R(args));
@@ -1183,13 +1394,14 @@ void mbcsToLatin1(char *in, char *out)
 	return;
     }
     wbuff = (wchar_t *) alloca((res+1) * sizeof(wchar_t));
+    R_CheckStack();
     if(!wbuff) error(_("allocation failure in 'mbcsToLatin1'"));
     mres = mbstowcs(wbuff, in, res+1);
     if(mres == (size_t)-1)
 	error(_("invalid input in 'mbcsToLatin1'"));
     for(i = 0; i < res; i++) {
 	/* here we do assume Unicode wchars */
-	if(wbuff[i] > 0xFF) out[i] = '.'; 
+	if(wbuff[i] > 0xFF) out[i] = '.';
 	else out[i] = (char) wbuff[i];
     }
     out[res] = '\0';

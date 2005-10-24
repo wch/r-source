@@ -14,7 +14,7 @@
     }
     untar<-function(what, where)
     {
-        xcode <- system(paste("tar zxf", what, "-C", where), intern=FALSE)
+        xcode <- system(paste("tar zxf \"", what, "\" -C \"", where, "\"", sep=''), intern=FALSE)
         if (xcode)
             warning(gettextf("'tar' returned non-zero exit code %d", ,xcode),
                     domain = NA, call. = FALSE)
@@ -163,7 +163,7 @@
                                    contriburl = contriburl, method = method,
                                    type = "mac.binary")
 
-    if(!is.null(foundpkgs)) {
+    if(length(foundpkgs)) {
         update <- unique(cbind(pkgs, lib))
         colnames(update) <- c("Package", "LibPath")
         for(lib in unique(update[,"LibPath"])) {

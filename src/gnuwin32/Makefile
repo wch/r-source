@@ -33,7 +33,6 @@ RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 
 OPTFLAGS=-O2 -Wall -pedantic --std=gnu99
-## use FOPTFLAGS where complex*16 is used.
 FOPTFLAGS=-O2 -Wall
 ifdef DEBUG
  OPTFLAGS+=-g
@@ -51,7 +50,7 @@ R-DLLFLAGS = -mwindows
 endif
 
 ## we may not need msvcp60, but no harm to include it.
-R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60 $(LIBEXTRAS)
+R-DLLLIBS =-L../../lib $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60 $(LIBEXTRAS)
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c extra.c \
@@ -90,9 +89,9 @@ rbuild:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
-	@$(MAKE) --no-print-directory libRblas.a
+	@$(MAKE) --no-print-directory ../../lib/libRblas.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
-	@$(MAKE) --no-print-directory libR.a
+	@$(MAKE) --no-print-directory ../../lib/libR.a
 	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
 
@@ -158,7 +157,7 @@ endif
 
 rlibs:
 	$(MAKE) --no-print-directory -C ../extra/intl -f Makefile.win
-	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./graphapp
@@ -204,7 +203,7 @@ endif
 
 FORCE:
 
-front-ends: libR.a
+front-ends: ../../lib/libR.a
 	$(MAKE) --no-print-directory -C front-ends
 
 R.a: $(OBJS)
@@ -217,8 +216,8 @@ R.a: $(OBJS)
 # R.dll exports all global symbols BUT import library (libR.a)
 # only (all functions) + (global vars listed in exported-vars))
 
-libR.a:  R.exp
-	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
+../../lib/libR.a:  R.exp
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib $@
 
 R.exp: R.exp1
 	@(diff R.exp R.exp1 > /dev/null 2>&1) || $(CP) R.exp1 R.exp
@@ -256,11 +255,12 @@ Rblas-clean:
 	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o \
 	  zgemm.o blasGoto.o libgoto.a
 
-Rblas-DLLLIBS=-L. $(LIBUNICOWS) -lR
+Rblas-DLLLIBS=-L../../lib $(LIBUNICOWS) -lR
 
-libRblas.a:  Rblas.def
+../../lib/libRblas.a:  Rblas.def
+	@$(MKDIR) -p ../../lib
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
-	  --def Rblas.def --output-lib libRblas.a
+	  --def Rblas.def --output-lib $@
 
 ## suppress lots of warnings: this is a dummy
 blas00.o: blas00.c
@@ -277,17 +277,17 @@ libgoto.a:  libgoto.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) --dllname $(GOTO_DLL) --def $< --output-lib $@
 ../../bin/Rblas.dll: blas00.o blasGoto.o cmplxblas.o zgemm.o dllversion.o libgoto.a
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L. $(LIBUNICOWS) -lR -lg2c -lgoto
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../lib $(LIBUNICOWS) -lR -lg2c -lgoto
 else
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
-	   -L. $(LIBUNICOWS) -lR -lg2c -lf77blas -latlas
+	   -L../../lib $(LIBUNICOWS) -lR -lg2c -lf77blas -latlas
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o zgemm.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L. $(LIBUNICOWS) -lR
+	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L../../lib $(LIBUNICOWS) -lR
 endif
 endif
 
@@ -432,7 +432,7 @@ distclean veryclean: clean clean-recommended
 	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
-	$(RM) ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
+	$(RM) ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile.site \
 	../../etc/rgb.txt ../../share/make/wintests.mk \
 	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
@@ -573,7 +573,7 @@ crandir:
 	$(CP) CHANGES cran/CHANGES.$(RPREFIX)
 	$(CP) ../../NEWS cran/NEWS.$(RPREFIX)
 	(cd cran;\
-	 $(ECHO) 'cat(md5sum("$(RPREFIX).exe"),"*$(RPREFIX)-win32.exe")' \
+	 $(ECHO) 'cat(md5sum("$(RPREFIX)-win32.exe"),"*$(RPREFIX)-win32.exe")' \
          | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
 	$(CP) ../../doc/html/rw-FAQ.html cran
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
@@ -601,7 +601,7 @@ rbuild-no-mbcs:
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
 	@$(SED) -e '/SUPPORT_MBCS/d' fixed/h/config.h > ../include/config.h
-	@$(MAKE) --no-print-directory libRblas.a
+	@$(MAKE) --no-print-directory ../../lib/libRblas.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
 	@mv ../../bin/R.dll ../../bin/Rnombcs.dll
 	@$(RM) ../include/config.h ../include/Rconfig.h

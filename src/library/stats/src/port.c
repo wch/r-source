@@ -342,9 +342,9 @@ void nlminb_iterate(double b[], double d[], double fx, double g[], double h[],
     }
 }
 
-SEXP port_ivset(SEXP iv, SEXP v)
+SEXP port_ivset(SEXP kind, SEXP iv, SEXP v)
 {
-    Rf_divset(2, INTEGER(iv), LENGTH(iv), LENGTH(v), REAL(v));
+    Rf_divset(asInteger(kind), INTEGER(iv), LENGTH(iv), LENGTH(v), REAL(v));
     return R_NilValue;
 }
 
@@ -392,3 +392,178 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
     UNPROTECT(1);
     return R_NilValue;
 }
+
+static void
+nlsb_iterate(double b[], double d[], double dr[], int iv[], int liv,
+	     int lv, int n, int nd, int p, double r[], double rd[],
+	     double v[], double x[])
+{
+    int ione = 1;
+    if (b)
+	F77_CALL(drn2gb)(b, d, dr, iv, &liv, &lv, &n, &nd,
+			 &ione, &nd, &p, r, rd, v, x);
+    else
+	F77_CALL(drn2g)(d, dr, iv, &liv, &lv, &n, &nd, &ione,
+			&nd, &p, r, rd, v, x);
+}
+
+/** 
+ * Return the element of a given name from a named list
+ * 
+ * @param list 
+ * @param nm name of desired element
+ * 
+ * @return element of list with name nm
+ */
+static R_INLINE SEXP getElement(SEXP list, char *nm)
+{
+    int i; SEXP names = getAttrib(list, R_NamesSymbol);
+
+    if (!isNewList(list) || LENGTH(names) != LENGTH(list))
+	error(_("getElement applies only to named lists"));
+    for (i = 0; i < LENGTH(list); i++)
+	if (!strcmp(CHAR(STRING_ELT(names, i)), nm))
+	    return(VECTOR_ELT(list, i));
+    return R_NilValue;
+}
+
+/** 
+ * Return the element of a given name from a named list after ensuring
+ * that it is a function
+ * 
+ * @param list 
+ * @param enm name of desired element
+ * @param lnm string version of the name of the list
+ * 
+ * @return a SEXP that points to a function
+ */
+static R_INLINE SEXP getFunc(SEXP list, char *enm, char *lnm)
+{
+    SEXP ans;
+    if (!isFunction(ans = getElement(list, enm)))
+	error(_("%s$%s() not found"), lnm, enm);
+    return ans;
+}
+
+static void neggrad(SEXP gf, SEXP rho, SEXP gg)
+{
+    SEXP val = PROTECT(eval(gf, rho));
+    int *dims = INTEGER(getAttrib(val, R_DimSymbol)),
+	*gdims = INTEGER(getAttrib(gg, R_DimSymbol));
+    int i, ntot = gdims[0] * gdims[1];
+
+    if (TYPEOF(val) != TYPEOF(gg) || !isMatrix(val) || dims[0] != gdims[0] ||
+	dims[1] != gdims[1])
+	error(_("gradient must be a numeric matrix of dimension (%d,%d)"),
+	      gdims[0], gdims[1]);
+    for (i = 0; i < ntot; i++) REAL(gg)[i] = - REAL(val)[i];
+    UNPROTECT(1);
+}
+
+/** 
+ * Evaluate an expression in an environment, check that the length and
+ * mode are as expected and store the result.
+ * 
+ * @param fcn expression to evaluate
+ * @param rho environment in which to evaluate it
+ * @param vv position to store the result
+ * 
+ * @return vv with new contents
+ */
+static
+SEXP eval_check_store(SEXP fcn, SEXP rho, SEXP vv)
+{
+    SEXP v = PROTECT(eval(fcn, rho));
+    if (TYPEOF(v) != TYPEOF(vv) || LENGTH(v) != LENGTH(vv))
+	error(_("fcn produced mode %d, length %d - wanted mode %d, length %d"),
+	      TYPEOF(v), LENGTH(v), TYPEOF(vv), LENGTH(vv));
+    switch (TYPEOF(v)) {
+    case LGLSXP:
+	Memcpy(LOGICAL(vv), LOGICAL(v), LENGTH(vv));
+	break;
+    case INTSXP:
+	Memcpy(INTEGER(vv), INTEGER(v), LENGTH(vv));
+	break;
+    case REALSXP:
+	Memcpy(REAL(vv), REAL(v), LENGTH(vv));
+	break;
+    default:
+	error(_("invalid type for eval_check_store"));
+    }
+    UNPROTECT(1);
+    return vv;
+}
+
+SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
+	       SEXP lowerb, SEXP upperb)
+{
+    int *dims = INTEGER(getAttrib(gg, R_DimSymbol));
+    int i, n = LENGTH(d), p = LENGTH(d), nd = dims[0];
+    SEXP getPars, setPars, resid, gradient,
+	rr = PROTECT(allocVector(REALSXP, nd)),
+	x = PROTECT(allocVector(REALSXP, n));
+    double *b = (double *) NULL,
+	*rd = Calloc(nd, double);
+
+    if (!isReal(d) || n < 1)
+	error(_("`d' must be a nonempty numeric vector"));
+    if(!isNewList(m)) error(_("m must be a list"));
+				/* Initialize parameter vector */
+    getPars = PROTECT(lang1(getFunc(m, "getPars", "m")));
+    eval_check_store(getPars, R_GlobalEnv, x);
+				/* Create the setPars call */
+    setPars = PROTECT(lang2(getFunc(m, "setPars", "m"), x));
+				/* Evaluate residual and gradient */
+    resid = PROTECT(lang1(getFunc(m, "resid", "m")));
+    eval_check_store(resid, R_GlobalEnv, rr);
+    gradient = PROTECT(lang1(getFunc(m, "gradient", "m")));
+    neggrad(gradient, R_GlobalEnv, gg);
+
+    if ((LENGTH(lowerb) == n) && (LENGTH(upperb) == n)) {
+	if (isReal(lowerb) && isReal(upperb)) {
+	    b = Calloc(2*n, double);
+	    for (i = 0; i < n; i++) {
+		b[2*i] = REAL(lowerb)[i];
+		b[2*i + 1] = REAL(upperb)[i];
+	    }
+	} else error(_("lowerb and upperb must be numeric vectors"));
+    }
+
+    do {
+	nlsb_iterate(b, REAL(d), REAL(gg), INTEGER(iv), LENGTH(iv),
+		     LENGTH(v), n, nd, p, REAL(rr), rd,
+		     REAL(v), REAL(x));
+	switch(INTEGER(iv)[0]) {
+	case -3:
+	    eval(setPars, R_GlobalEnv);
+	    eval_check_store(resid, R_GlobalEnv, rr);
+	    neggrad(gradient, R_GlobalEnv, gg);
+	    break;
+	case -2:
+	    eval_check_store(resid, R_GlobalEnv, rr);
+	    neggrad(gradient, R_GlobalEnv, gg);
+	    break;
+	case -1:
+	    eval(setPars, R_GlobalEnv);
+	    eval_check_store(resid, R_GlobalEnv, rr);
+	    neggrad(gradient, R_GlobalEnv, gg);
+	    break;
+	case 0:
+	    Rprintf("nlsb_iterate returned %d", INTEGER(iv)[0]);
+	    break;
+	case 1: 
+	    eval(setPars, R_GlobalEnv);
+	    eval_check_store(resid, R_GlobalEnv, rr);
+	    break;
+	case 2: 
+	    eval(setPars, R_GlobalEnv);
+	    neggrad(gradient, R_GlobalEnv, gg);
+	    break;
+	}
+    } while(INTEGER(iv)[0] < 3);
+
+    Free(rd); if (b) Free(b);
+    UNPROTECT(6);
+    return R_NilValue;
+}
+

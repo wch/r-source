@@ -31,6 +31,82 @@
 extern IoBuffer R_ConsoleIob;
 /* extern int errno; No longer used */
 
+SEXP getParseContext()
+{
+    int i, last = PARSE_CONTEXT_SIZE;
+    char context[PARSE_CONTEXT_SIZE+1];
+
+    SEXP ans = R_NilValue, ans2;
+    int nn, nnn, nread;
+    char c;
+
+    context[last] = '\0';
+    for (i=R_ParseContextLast; last>0 ; i--) {
+	i = i % PARSE_CONTEXT_SIZE;
+	context[--last] = R_ParseContext[i];
+	if (!context[last]) {
+	    last++;
+	    break;
+	}
+    }
+    
+    nn = 16; /* initially allocate space for 16 lines */
+    nnn = nn;
+    PROTECT(ans = allocVector(STRSXP, nn));
+    c = context[last];
+    nread = 0;
+    while(c) {
+        nread++;
+	if(nread >= nn) {
+	    ans2 = allocVector(STRSXP, 2*nn);
+	    for(i = 0; i < nn; i++)
+		SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+	    nn *= 2;
+	    UNPROTECT(1); /* old ans */
+	    PROTECT(ans = ans2);
+	}
+	i = last;
+	while((c = context[++i])) {
+	    if(c == '\n') break;
+	}
+	context[i] = '\0';
+	SET_STRING_ELT(ans, nread-1, mkChar(context + last));
+	last = i+1;
+    }
+    /* get rid of empty line after last newline */
+    if (nread && !length(STRING_ELT(ans, nread-1))) nread--;
+    PROTECT(ans2 = allocVector(STRSXP, nread));
+    for(i = 0; i < nread; i++)
+	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+    UNPROTECT(2);
+    return ans2;
+}    
+
+void parseError(SEXP call, int linenum)
+{
+    SEXP context = getParseContext();
+    int len = length(context);
+    if (linenum) {
+	switch (len) {
+	case 0: errorcall(call, _("syntax error on line %d"), linenum); break;
+	case 1: errorcall(call, _("syntax error at\n%d: %s"), 
+			    linenum, CHAR(STRING_ELT(context, 0))); break;
+	default: errorcall(call, _("syntax error at\n%d: %s\n%d: %s"), 
+			    linenum-1, CHAR(STRING_ELT(context, len-2)),
+			    linenum, CHAR(STRING_ELT(context, len-1))); break;
+	}
+    } else {
+	switch (len) {
+	case 0: errorcall(call, _("syntax error"), R_ParseError); break;
+	case 1: errorcall(call, _("syntax error in \"%s\""), 
+			    CHAR(STRING_ELT(context, 0))); break;
+	default: errorcall(call, _("syntax error in:\n\"%s\n%s\""), 
+			    CHAR(STRING_ELT(context, len-2)),
+			    CHAR(STRING_ELT(context, len-1))); break;
+	}   
+    }
+}
+
 /* "do_parse" - the user interface input/output to files.
 
  The internal R_Parse.. functions are defined in ./gram.y (-> gram.c)
@@ -68,8 +144,7 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (num == NA_INTEGER)
 	    num = -1;
 	s = R_ParseVector(text, num, &status);
-	if (status != PARSE_OK)
-	    errorcall(call, _("parse error"));
+	if (status != PARSE_OK) parseError(call, 0);
     }
     else if (ifile >= 3) {/* file != "" */
 	if (num == NA_INTEGER)
@@ -78,15 +153,13 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(!con->open(con)) error(_("cannot open the connection"));
 	s = R_ParseConn(con, num, &status);
 	if(!wasopen) con->close(con);
-	if (status != PARSE_OK)
-	    errorcall(call, _("syntax error on line %d"), R_ParseError);
+	if (status != PARSE_OK) parseError(call, R_ParseError);
     }
     else {
 	if (num == NA_INTEGER)
 	    num = 1;
 	s = R_ParseBuffer(&R_ConsoleIob, num, &status, prompt);
-	if (status != PARSE_OK)
-	    errorcall(call, _("parse error"));
+	if (status != PARSE_OK) parseError(call, 0);
     }
     UNPROTECT(2);
     return s;

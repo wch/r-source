@@ -120,7 +120,7 @@ typedef long R_long_t;
     The maxima and minima are in ../unix/sys-common.c */
 
 #ifndef R_PPSSIZE
-#define	R_PPSSIZE	10000L
+#define	R_PPSSIZE	50000L
 #endif
 #ifndef R_NSIZE
 #define	R_NSIZE		350000L
@@ -504,6 +504,9 @@ extern int	R_Expressions	INI_as(5000);	/* options(expressions) */
 extern Rboolean	R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 extern int	R_UseNamespaceDispatch INI_as(TRUE);
 extern int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
+extern unsigned long	R_CStackLimit	INI_as(-1);	/* C stack limit */
+extern unsigned long	R_CStackStart	INI_as(-1);	/* Initial stack address */
+extern int	R_CStackDir	INI_as(1);	/* C stack direction */
 
 /* File Input/Output */
 LibExtern Rboolean R_Interactive	INI_as(TRUE);	/* TRUE during interactive use*/
@@ -523,6 +526,9 @@ extern SEXP	R_CommentSxp;	    /* Comments accumulate here */
 extern SEXP	R_ParseText;	    /* Text to be parsed */
 extern int	R_ParseCnt;	    /* Count of lines of text to be parsed */
 extern int	R_ParseError	INI_as(0); /* Line where parse error occured */
+#define PARSE_CONTEXT_SIZE 256	    /* Recent parse context kept in a circular buffer */
+extern char	R_ParseContext[PARSE_CONTEXT_SIZE] INI_as("");
+extern int	R_ParseContextLast INI_as(0); /* last character in context buffer */
 
 /* Image Dump/Restore */
 extern int	R_DirtyImage	INI_as(0);	/* Current image dirty */
@@ -881,7 +887,7 @@ char *EncodeRaw(Rbyte);
 char *EncodeString(SEXP, int, int, Rprt_adj);
 
 /* main/sort.c */
-void orderVector1(int *indx, int n, SEXP key, Rboolean nalast, 
+void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 		  Rboolean decreasing);
 
 
@@ -894,6 +900,11 @@ void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(char *str);
 #ifdef SUPPORT_MBCS
+typedef unsigned short ucs2_t;
+size_t mbcsToUcs2(char *in, ucs2_t *out);
+size_t ucs2ToMbcs(ucs2_t *in, char *out);
+size_t mbcsMblen(char *in);
+size_t ucs2Mblen(ucs2_t *in);
 int utf8clen(char c);
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
@@ -919,6 +930,9 @@ size_t Rwcrtomb(char *s, const wchar_t wc);
 size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);
 size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 #endif
+
+/* From localecharset.c */
+extern char * locale2charset(const char *);
 
 /* used in relop.c and sort.c */
 #if defined(Win32) && defined(SUPPORT_UTF8)
@@ -949,7 +963,7 @@ size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 #else /* not NLS */
 #define _(String) (String)
 #define N_(String) String
-#define P_(String, StringP, N) StringP
+#define P_(String, StringP, N) (N > 1 ? StringP: String)
 #endif
 
 

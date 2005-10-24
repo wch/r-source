@@ -72,9 +72,38 @@ static void signalInterrupt(void);
   WarningMessage()-> warningcall (but with message from WarningDB[]).
 */
 
+static void reset_stack_limit(void *data)
+{
+    unsigned int *limit = data;
+    R_CStackLimit = *limit;
+}
+
+void R_CheckStack(void)
+{
+    int dummy;
+    long usage = R_CStackDir * (R_CStackStart - (unsigned long)&dummy);
+
+    /* printf("usage %ld\n", usage); */
+    if(R_CStackLimit != -1 && usage > 0.95 * R_CStackLimit) {
+	/* We do need some stack space to process error recovery,
+	   so temporarily raise the limit.
+	 */
+	RCNTXT cntxt;
+	unsigned int stacklimit = R_CStackLimit;
+	R_CStackLimit += 0.05*R_CStackLimit;
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		     R_NilValue, R_NilValue);
+	cntxt.cend = &reset_stack_limit;
+	cntxt.cenddata = &stacklimit;
+	
+        errorcall(R_NilValue, "C stack usage is too close to the limit");
+	/* Do not translate this, to save stack space */
+    }
+}
 
 void R_CheckUserInterrupt(void)
 {
+    R_CheckStack();
     /* This is the point where GUI systems need to do enough event
        processing to determine whether there is a user interrupt event
        pending.  Need to be careful not to do too much event
@@ -732,6 +761,7 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	if(strlen(domain)) {
 	    buf = alloca(strlen(domain)+3);
+	    R_CheckStack();
 	    sprintf(buf, "R-%s", domain);
 	    domain = buf;
 	}
@@ -746,6 +776,7 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    char *this = CHAR(STRING_ELT(string, i)), 
 		*tmp, *head = NULL, *tail = NULL, *p, *tr;
 	    tmp = alloca(strlen(this) + 1);
+	    R_CheckStack();
 	    strcpy(tmp, this);
 	    /* strip leading and trailing white spaces and 
 	       add back after translation */
@@ -754,6 +785,7 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		p++, ihead++) ;
 	    if(ihead > 0) {
 		head = alloca(ihead + 1);
+		R_CheckStack();
 		strncpy(head, tmp, ihead);
 		head[ihead] = '\0';
 		tmp += ihead;
@@ -764,6 +796,7 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    p--, itail++) ;
 	    if(itail > 0) {
 		tail = alloca(itail + 1);
+		R_CheckStack();
 		strcpy(tail, tmp+strlen(tmp)-itail);
 		tmp[strlen(tmp)-itail] = '\0';
 		}
@@ -773,6 +806,7 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 		tr = dgettext(domain, tmp);
 		tmp = alloca(strlen(tr) + ihead + itail + 1);
+		R_CheckStack();
 		tmp[0] ='\0';
 		if(ihead > 0) strcat(tmp, head);
 		strcat(tmp, tr);
@@ -823,6 +857,7 @@ SEXP do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	if(strlen(domain)) {
 	    buf = alloca(strlen(domain)+3);
+	    R_CheckStack();
 	    sprintf(buf, "R-%s", domain);
 	    domain = buf;
 	}

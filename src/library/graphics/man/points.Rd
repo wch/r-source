@@ -39,7 +39,8 @@ points(x, \dots)
     Values \code{pch=26:32} are currently unused, and \code{pch=32:255}
     give the text symbol in a single-byte locale.  In a multi-byte locale
     such as UTF-8, numeric values of \code{pch} greater than or equal to
-    32 specify a Unicode code point.
+    32 specify a Unicode code point (except for the symbol font as
+    selected by \code{\link{par}(font = 5)}).
     
     If \code{pch} is an integer or character \code{NA} or an empty
     character string, the point is omitted from the plot.
@@ -52,7 +53,8 @@ points(x, \dots)
     for 2.1.0 and are subject to change.
   }
   \item{col}{color code or name, see \code{\link{par}}.}
-  \item{bg}{background (\dQuote{fill}) color for open plot symbols}
+  \item{bg}{background (\dQuote{fill}) color for open plot symbols given by
+    \code{pch=21:25}.}
   \item{cex}{character (or symbol) expansion: a numerical vector.
     This works as a multiple of \code{\link{par}("cex")}.}
   \item{\dots}{Further graphical parameters (see \code{\link{plot.xy}}

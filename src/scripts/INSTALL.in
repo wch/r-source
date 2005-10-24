@@ -4,6 +4,9 @@
 
 # @configure_input@
 
+## Trap interrupts, most importantly 2 (^C from keyboard)
+trap do_exit_on_error 1 2 15
+
 revision='$Revision: 1.161 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
@@ -972,6 +975,11 @@ do_install () {
 
 do_exit_on_error () {
   remove_R_package_dir=${1-yes}
+  ## bundlepkg is set if this is a bundle or if the package/bundle 
+  ## is already installed, but not for a new non-bundle.
+  if test -z "${bundlepkg}"; then
+    bundlepkg=${pkg_name}
+  fi
   for p in ${bundlepkg}; do
     if ${with_package_versions}; then
       p=${p}_${version}

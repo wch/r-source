@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:45\n"
+"POT-Creation-Date: 2005-10-16 21:56\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -508,8 +508,8 @@ msgstr "有限值的观察量不够"
 msgid "Cannot compute exact p-value with ties"
 msgstr "无法给连结計算精確的p值"
 
-msgid "p-values may be incorrect due to ties"
-msgstr "因为有连结p-值算得可能不准"
+msgid "Cannot compute exact p-values with ties"
+msgstr "无法给连结計算精確的p值"
 
 msgid "'formula' missing or invalid"
 msgstr "'formula'遺漏或有错"
@@ -599,9 +599,8 @@ msgstr "'ColSideColors'必需是长度为ncol(x)的字节向量"
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
 msgstr "'RowSideColors'必需是长度为nrow(x)的字节向量"
 
-#, fuzzy
 msgid "non-matched further arguments are disregarded"
-msgstr "额外变元不用"
+msgstr "不匹配的额外变元略过不用"
 
 msgid "argument 'x' must be numeric"
 msgstr "变元'x'必需是数值"
@@ -609,20 +608,17 @@ msgstr "变元'x'必需是数值"
 msgid "'x' contains missing values"
 msgstr "'x'内含遺漏值"
 
-#, fuzzy
 msgid "'x' and 'weights' have unequal length"
-msgstr "'x'和'g'的长度必需相同"
+msgstr "'x'和'weights'的长度必需相同"
 
-#, fuzzy
 msgid "'weights' must all be finite"
-msgstr "従属変数必需都是数值"
+msgstr "'weights'的值必需都是有限的"
 
-#, fuzzy
 msgid "'weights' must not be negative"
-msgstr "'x'必需为非负数"
+msgstr "'weights'不能是负数的"
 
 msgid "sum(weights) != 1  -- will not get true density"
-msgstr ""
+msgstr " sum(weights) != 1，因此无法取得真正的密度函数"
 
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "自动选择頻寬至少需要两个数据点"
@@ -654,9 +650,8 @@ msgstr "'lag'或'differences'的值有错"
 msgid "'xi' has not the right length"
 msgstr "'xi'的长度不对"
 
-#, fuzzy
 msgid "incorrect dimensions for 'xi'"
-msgstr "'x'长度不对"
+msgstr "'xi'的尺寸不对"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x'不是向量或矩阵"
@@ -721,7 +716,6 @@ msgstr "因子分析至少需要三个变量"
 msgid "%d factors is too many for %d variables"
 msgstr "%2$d变量不能有%1$d这么多的因子"
 
-#, fuzzy
 msgid "'start' must have %d rows"
 msgstr "'start'必需有%d行"
 
@@ -953,7 +947,6 @@ msgstr "空模型里的线形従属変数值不对"
 msgid "invalid fitted means in empty model"
 msgstr "空模型的拟合平均值不对"
 
-#, fuzzy
 msgid ""
 "length of 'start' should equal %d and correspond to initial coefs for %s"
 msgstr "'start'的长度应该是%d，同%s的初始系数相一致"
@@ -1085,9 +1078,8 @@ msgstr "'m'小于1"
 msgid "'r' is less than 0"
 msgstr "'r'小于0"
 
-#, fuzzy
 msgid "'m' must be numeric with non-negative integers"
-msgstr "'x'必需是非负的整数"
+msgstr "'m'必需是非负的整数"
 
 msgid "unknown named kernel"
 msgstr "没有这样的内核名"
@@ -1446,18 +1438,17 @@ msgstr "位于极点边的f()值之正负号不相反"
 msgid "_NOT_ converged in"
 msgstr "没有聚合于"
 
-#, fuzzy
 msgid "control argument must be a named list"
-msgstr "'split' 变元必需是串列"
+msgstr "控制变元必需是串列"
 
 msgid "unrecognized control element(s) named `"
-msgstr ""
+msgstr "没有叫这个名字的控制元素"
 
 msgid "' ignored"
-msgstr ""
+msgstr "' 略过不用"
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
-msgstr ""
+msgstr "不能有逻辑值的`hessian变元。请参考说明书。' "
 
 msgid "'params' has wrong length"
 msgstr "'params'的长度不对"
@@ -1486,6 +1477,12 @@ msgstr "setVarying : vary的长度必需同参数的长度相符"
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "参数初始估计值里有奇异梯度矩阵"
 
+msgid "Upper or lower bounds ignored unless algorithm = \"port\""
+msgstr "除非algorithm = \"port\"，上限或下限将略过不用"
+
+msgid "Convergence failure:"
+msgstr "没有收斂："
+
 msgid "rows with zero weights not counted"
 msgstr "0重量的行不算"
 
@@ -1513,8 +1510,9 @@ msgstr "只有在用L-BFGS-B方法时才能定优化界限"
 msgid "read the documentation for 'trace' more carefully"
 msgstr "请小心阅读'trace'说明书"
 
+#, fuzzy
 msgid ""
-"method L-BFGS-B uses 'fact' (and 'pgtol') instead of 'reltol' and 'abstol'"
+"method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr "L-BFGS-B方法用'fact'(和'pgtol') ，而不是'reltol'和'abstol'"
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
@@ -1532,9 +1530,8 @@ msgstr "组数不够"
 msgid "use only with \"lm\" objects"
 msgstr "只对\"lm\"目标对象适用"
 
-#, fuzzy
 msgid "'which' must be in 1:6"
-msgstr "'which'必需在1:4之间"
+msgstr "'which'必需在1:6之间"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n'必需在{1,..,%d}中"
@@ -1583,18 +1580,16 @@ msgstr "PCA只适用于数值变量"
 msgid "no scores are available: refit with 'retx=TRUE'"
 msgstr "没有分数: 用'retx=TRUE'重新进行拟合"
 
-#, fuzzy
 msgid "'newdata' must be a matrix or data frame"
-msgstr "'x'必需是矩阵或是数据框"
+msgstr "'newdata'必需是矩阵或是数据框"
 
 msgid ""
 "'newdata' does not have named columns matching one or more of the original "
 "columns"
 msgstr "'newdata'同原始数据没有相同的列名"
 
-#, fuzzy
 msgid "'newdata' does not have the correct number of columns"
-msgstr "'newdata'列的的长度不对"
+msgstr "'newdata'列的数目不对"
 
 msgid "wrong number of predictors"
 msgstr "従属変数数目不对"
@@ -1680,9 +1675,8 @@ msgstr "某些恆量变量(%s) 其实在变动"
 msgid "no 'time' or 'id' specified"
 msgstr "没有设定'time'或'id'"
 
-#, fuzzy
 msgid "'k' must be positive"
-msgstr "'iter.max'必需是正数"
+msgstr "'k'必需是正数"
 
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr "'k'只能是奇数! 把'k'改成"
@@ -1751,11 +1745,10 @@ msgid "setting df = 1  __use with care!__"
 msgstr "设定df = 1  小心使用!"
 
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
-msgstr ""
+msgstr "需要的是.spline(*, keep.data=TRUE) 的运算结果"
 
-#, fuzzy
 msgid "type = \"partial\" is not yet implemented"
-msgstr "还没有为'%s'种类实现标准误的算法"
+msgstr "还没有实现type=\"partial\"的算法"
 
 msgid "not a valid \"smooth.spline\" object"
 msgstr " \"smooth.spline\"目标对象不对"
@@ -1966,6 +1959,9 @@ msgstr "'ma'度数设定有矛盾"
 msgid "number of differences must be a positive integer"
 msgstr "差異数目必需是正整数"
 
+msgid "'start.innov' is too short: need %d points"
+msgstr ""
+
 msgid "insufficient observations"
 msgstr "观察量数目不够"
 
@@ -1984,6 +1980,9 @@ msgstr "'y'必需是数值"
 msgid "not enough (finite) 'x' observations"
 msgstr "(有限)'x'观察量数目不够"
 
+msgid "Requested conf.level not achievable"
+msgstr "无法达到所要求的conf.level"
+
 msgid "cannot compute exact confidence interval with ties"
 msgstr "有连结时无法計算精確的置信区间"
 
@@ -1993,11 +1992,9 @@ msgstr "有0时无法計算精確的p值"
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "有0时无法計算精確的置信区间"
 
-#, fuzzy
 msgid "must supply either 'formula' or 'data'"
-msgstr "至少要提供一或多个向量"
+msgstr "至少要提供'formula'和'data'中间的一个"
 
-#, fuzzy
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "无法拟合渐近迴歸模型，因为相互不同的输入值太少"
 
@@ -2049,6 +2046,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid "p-values may be incorrect due to ties"
+#~ msgstr "因为有连结p-值算得可能不准"
 
 #~ msgid "one-argument anova() not implemented for 'mlm' objects"
 #~ msgstr "没有为'mlm'目标对象实现单变元的anova()功能"

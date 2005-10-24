@@ -233,6 +233,7 @@ int dummy;
 #define NoDevices		Rf_NoDevices
 #define ProcessInlinePars	Rf_ProcessInlinePars
 #define RGBpar			Rf_RGBpar
+#define col2name                Rf_col2name
 #define selectDevice		Rf_selectDevice
 #define Specify2		Rf_Specify2
 /* which of these conversions should be public? maybe all?*/
@@ -403,6 +404,8 @@ double GExpressionWidth(SEXP, GUnit, DevDesc*);
 /* Convert an R colour specification (which might be a number or */
 /* a string) into an internal colour specification. */
 unsigned int RGBpar(SEXP, int);
+    /* Convert an internal colour specification into a colour name */
+char *col2name(unsigned int col);
 
 
 /*-------------------------------------------------------------------

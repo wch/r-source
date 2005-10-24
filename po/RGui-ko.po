@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-15 09:06+0100\n"
+"POT-Creation-Date: 2005-09-22 12:54+0100\n"
 "PO-Revision-Date: 2005-05-31 10:39+0900\n"
 "Last-Translator: park ui il <uiami@hanmail.com>\n"
 "Language-Team: South Korea\n"
@@ -288,7 +288,7 @@ msgstr ""
 "을 할수 있습니다\n"
 "\n"
 
-#: dataentry.c:1555 dataentry.c:1649 editor.c:715 rui.c:1142
+#: dataentry.c:1555 dataentry.c:1649 editor.c:720 rui.c:1142
 msgid "Help"
 msgstr "도움"
 
@@ -317,12 +317,12 @@ msgstr "닫는다"
 msgid "Data Editor"
 msgstr "자료 에디터"
 
-#: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1092
+#: dataentry.c:1639 editor.c:668 pager.c:450 rui.c:1092
 #: ../library/grDevices/src/devWindows.c:1533
 msgid "File"
 msgstr "파일"
 
-#: dataentry.c:1643 editor.c:681 pager.c:460 rui.c:1113
+#: dataentry.c:1643 editor.c:686 pager.c:460 rui.c:1113
 msgid "Edit"
 msgstr "편집"
 
@@ -346,168 +346,164 @@ msgstr "셀 폭..."
 msgid "Data editor"
 msgstr "자료 에디터"
 
-#: editor.c:438 pager.c:170 pager.c:190
+#: editor.c:443 pager.c:170 pager.c:190
 msgid "No RGui console to paste to"
 msgstr "RGui 콘솔화면에 붇이기를 할수없다"
 
-#: editor.c:538
+#: editor.c:543
 msgid "R EDITOR\n"
 msgstr "R 에디터\n"
 
-#: editor.c:540
+#: editor.c:545
 msgid "A standard text editor for editing and running R code.\n"
 msgstr "R 코드의 편집,실행용의 표준텍스트 에디터.\n"
 
-#: editor.c:542
+#: editor.c:547
 msgid "RUNNING COMMANDS\n"
 msgstr "명령실행중입니다\n"
 
-#: editor.c:543
+#: editor.c:548
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr ""
 "커서행 또는 선택한 R 코드를 실행하기위해서 코드 및 어느쪽인지를 선택해주십시"
 "오\n"
 
-#: editor.c:544
+#: editor.c:549
 msgid "     Press Ctrl-R\n"
 msgstr "Ctrl-R 을 눌러 주십시오\n"
 
-#: editor.c:545
+#: editor.c:550
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr ""
 "\"편집\" 메뉴에서 \"커서행 또는 선택중의 R 코드를 실행\"을 선택해주십시오.\n"
 
-#: editor.c:546
+#: editor.c:551
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr "툴바(toolbar)에서 \"커서행 또는 선택\" 아이콘을 눌러주십시오\n"
 
-#: editor.c:547
+#: editor.c:552
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr "이것은 선택되어진 명령어를 console에 복사하여,그 명령어를 평가합니다\n"
 
-#: editor.c:548
+#: editor.c:553
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr ""
 "명령어의 선택이 없으면, 현재의 라인을 실행하고 커서를 앞으로 전진합니다.\n"
 
-#: editor.c:549
+#: editor.c:554
 msgid "the cursor by one line.\n"
 msgstr "커서를 한 라인 전진합니다.\n"
 
-#: editor.c:561 editor.c:636 editor.c:697
+#: editor.c:566 editor.c:641 editor.c:702
 msgid "Run line or selection"
 msgstr "라인 건너뛰기 또는 선택합니다"
 
-#: editor.c:563 editor.c:682
+#: editor.c:568 editor.c:687
 msgid "Undo"
 msgstr "재시도 합니다"
 
-#: editor.c:565 editor.c:685
+#: editor.c:570 editor.c:690
 msgid "Cut"
 msgstr "잘림(cut)"
 
-#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:881 rui.c:1057
+#: editor.c:571 editor.c:692 pager.c:288 pager.c:461 rui.c:881 rui.c:1057
 #: rui.c:1114
 msgid "Copy"
 msgstr "복사"
 
-#: editor.c:567 editor.c:689 rui.c:882 rui.c:1061 rui.c:1115
+#: editor.c:572 editor.c:694 rui.c:882 rui.c:1061 rui.c:1115
 msgid "Paste"
 msgstr "붙여넣기"
 
-#: editor.c:568 editor.c:691
+#: editor.c:573 editor.c:696
 msgid "Delete"
 msgstr "삭제"
 
-#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:888 rui.c:1119
+#: editor.c:575 editor.c:698 pager.c:291 pager.c:467 rui.c:888 rui.c:1119
 msgid "Select all"
 msgstr "전부 선택합니다"
 
-#: editor.c:628 pager.c:414 rui.c:1045
+#: editor.c:633 pager.c:414 rui.c:1045
 msgid "Open script"
 msgstr "스크립트(script)를 열기"
 
-#: editor.c:632
+#: editor.c:637
 msgid "Save script"
 msgstr "스크립트(script)를 저장하다"
 
-#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1501
+#: editor.c:645 pager.c:434 ../library/grDevices/src/devWindows.c:1501
 msgid "Return focus to Console"
 msgstr "Console으로 돌아가다"
 
-#: editor.c:643
+#: editor.c:648
 msgid "Print script"
 msgstr "스크립트(script)를 인쇄하다"
 
-#: editor.c:645 pager.c:429 rui.c:1073
+#: editor.c:650 pager.c:429 rui.c:1073
 #: ../library/grDevices/src/devWindows.c:1495
 msgid "Print"
 msgstr "인쇄"
 
-#: editor.c:664 pager.c:451 rui.c:1094
+#: editor.c:669 pager.c:451 rui.c:1094
 msgid "New script"
 msgstr "새로운 스크립트"
 
-#: editor.c:666 pager.c:452 rui.c:1095
+#: editor.c:671 pager.c:452 rui.c:1095
 msgid "Open script..."
 msgstr "스크립트를... 열다"
 
-#: editor.c:668 preferences.c:513
+#: editor.c:673 preferences.c:513
 msgid "Save"
 msgstr "저장"
 
-#: editor.c:670
+#: editor.c:675
 msgid "Save as..."
 msgstr "다른 이름으로 저장..."
 
-#: editor.c:673 pager.c:453 rui.c:1108
+#: editor.c:678 pager.c:453 rui.c:1108
 #: ../library/grDevices/src/devWindows.c:1591
 msgid "Print..."
 msgstr "인쇄..."
 
-#: editor.c:676
+#: editor.c:681
 msgid "Close script"
 msgstr "스크립트를 닫다"
 
-#: editor.c:679 rui.c:1111
-msgid "Exit"
-msgstr "종료"
-
-#: editor.c:695 rui.c:1120
+#: editor.c:700 rui.c:1120
 msgid "Clear console"
 msgstr "console를 소거"
 
-#: editor.c:699
+#: editor.c:704
 msgid "Run all"
 msgstr "전부를 실행"
 
-#: editor.c:702
+#: editor.c:707
 msgid "Find..."
 msgstr "검색..."
 
-#: editor.c:704
+#: editor.c:709
 msgid "Replace..."
 msgstr "치환..."
 
-#: editor.c:707 rui.c:1124
+#: editor.c:712 rui.c:1124
 msgid "GUI preferences..."
 msgstr "GUI 선택..."
 
-#: editor.c:716
+#: editor.c:721
 msgid "Editor"
 msgstr "에디터"
 
-#: editor.c:772
+#: editor.c:777
 msgid "Maximum number of editors reached"
 msgstr "에디터 범위의 최대수에 도달하였습니다"
 
-#: editor.c:777
+#: editor.c:782
 msgid "Unable to create editor window"
 msgstr "에디터 윈도우를 작성 할수가 없습니다"
 
-#: editor.c:786
+#: editor.c:791
 msgid "Untitled"
 msgstr "제목이 없음"
 
@@ -774,6 +770,10 @@ msgstr "이력을 보존..."
 #: rui.c:1106
 msgid "Change dir..."
 msgstr "디렉토리 변경..."
+
+#: rui.c:1111
+msgid "Exit"
+msgstr "종료"
 
 #: rui.c:1118
 msgid "Copy and Paste"

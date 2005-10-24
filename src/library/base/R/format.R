@@ -28,6 +28,7 @@ format.default <-
                character = .Internal(format(x, trim, digits, nsmall, width,
                                             adj, na.encode, scientific)),
                call=, expression=, "function"=, "(" = deparse(x),
+               raw = as.character(x),
                ## else: logical, numeric, complex, .. :
                prettyNum(.Internal(format(x, trim, digits, nsmall, width,
                                           3, na.encode, scientific)),
@@ -151,6 +152,7 @@ formatC <- function (x, digits = NULL, width = NULL,
     nf <- strsplit(flag, "")[[1]]
     if(!all(nf %in% c("0", "+", "-", " ", "#")))
        stop("'flag' can contain only '0+- #'")
+    attr(x, "Csingle") <- NULL  # avoid intepreting as.single
     r <- .C("str_signif",
 	    x = x,
 	    n = n,

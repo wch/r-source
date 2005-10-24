@@ -101,6 +101,9 @@
 /* Define to 1 if you have the <complex.h> header file. */
 #define HAVE_COMPLEX_H 1
 
+/* Defined if framework CoreFoundation is present */
+/* #undef HAVE_COREFOUNDATION_FW */
+
 /* Define to 1 if you have the `cpow' function. */
 #define HAVE_CPOW 1
 
@@ -179,14 +182,6 @@
    don't. */
 #define HAVE_DECL_VSNPRINTF 1
 
-/* Define to 1 if you have the declaration of `wcswidth', and to 0 if you
-   don't. */
-#define HAVE_DECL_WCSWIDTH 0
-
-/* Define to 1 if you have the declaration of `wcwidth', and to 0 if you
-   don't. */
-#define HAVE_DECL_WCWIDTH 0
-
 /* Define to 1 if you have the declaration of `_snprintf', and to 0 if you
    don't. */
 #define HAVE_DECL__SNPRINTF 1
@@ -212,7 +207,7 @@
 #define HAVE_ERRNO_H 1
 
 /* Define to 1 if you have the `expm1' function. */
-/* #undef HAVE_EXPM1 */
+#define HAVE_EXPM1 1
 
 /* Define if your Fortran compiler appends an underscore to external names. */
 #define HAVE_F77_UNDERSCORE 1
@@ -321,6 +316,12 @@
 
 /* Define to 1 if you have the `isnan' function. */
 #define HAVE_ISNAN 1
+
+/* Define to 1 if you have the `iswblank' function. */
+#undef HAVE_ISWBLANK
+
+/* Define to 1 if you have the `iswctype' function. */
+#define HAVE_ISWCTYPE 1
 
 /* Define if you have the JPEG headers and libraries. */
 #define HAVE_JPEG 1
@@ -512,7 +513,7 @@
 #define HAVE_STRDUP 1
 
 /* Define to 1 if you have the `strerror' function. */
-#define HAVE_STRERROR 1 
+#define HAVE_STRERROR 1
 
 /* Define to 1 if you have the <strings.h> header file. */
 #define HAVE_STRINGS_H 1
@@ -592,6 +593,9 @@
 /* Define if you have the 'unsigned long long' type. */
 #define HAVE_UNSIGNED_LONG_LONG 1
 
+/* Defined if framework vecLib is present */
+/* #undef HAVE_VECLIB_FW */
+
 /* Define to 1 if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1
 
@@ -616,20 +620,17 @@
 /* Define to 1 if you have the `wcstombs' function. */
 #define HAVE_WCSTOMBS 1
 
-/* Define to 1 if you have the `wcswidth' function. */
-#define HAVE_WCSWIDTH 1
-
 /* Define to 1 if you have the `wctrans' function. */
 #define HAVE_WCTRANS 1
 
 /* Define to 1 if the system has the type `wctrans_t'. */
 #define HAVE_WCTRANS_T 1
 
+/* Define to 1 if you have the `wctype' function. */
+#define HAVE_WCTYPE 1
+
 /* Define to 1 if you have the <wctype.h> header file. */
 #define HAVE_WCTYPE_H 1
-
-/* Define to 1 if you have the `wcwidth' function. */
-#define HAVE_WCWIDTH 1
 
 /* Define if you have the 'wint_t' type. */
 #define HAVE_WINT_T 1
@@ -735,13 +736,13 @@
 #define PACKAGE_NAME "R"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "R 2.2.0"
+#define PACKAGE_STRING "R 2.3.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "R"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.2.0"
+#define PACKAGE_VERSION "2.3.0"
 
 /* Define if <inttypes.h> exists and defines unusable PRI* macros. */
 /* #undef PRI_MACROS_BROKEN */
@@ -835,7 +836,7 @@
 #define VALGRIND_LEVEL 0
 
 /* Version number of package */
-#define VERSION "2.2.0"
+#define VERSION "2.3.0"
 
 /* Define to 1 if your processor stores words with the most significant byte
    first (like Motorola and SPARC, unlike Intel and VAX). */

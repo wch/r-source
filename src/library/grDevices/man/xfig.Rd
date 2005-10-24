@@ -15,8 +15,10 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
 }
 \arguments{
   \item{file}{a character string giving the name of the file.   For use
-    with \code{onefile = FALSE} give a \code{printf} format such as
-    \code{"Rplot\%d.fig"} (the default in that case).}
+    with \code{onefile = FALSE} give a C integer format such as
+    \code{"Rplot\%03d.fig"} (the default in that case).
+    (See \code{\link{postscript}} for further details.)
+  }
   \item{onefile}{logical: if true allow multiple figures
     in one file. If false, assume only one page per file and generate a
     file number containing the page number.}

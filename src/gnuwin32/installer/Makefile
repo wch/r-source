@@ -15,11 +15,10 @@ INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ NEWS README RESOURCES \
 	THANKS Y2K
 GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
-ETC_FILES = Rprofile Rconsole Rdevga rgb.txt repositories
+ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories
 
 GW32_FILES = R.exp Rblas.def MkRules MakePkg MakeDll \
-	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh man-install.sh \
-	  librproxy.a
+	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh man-install.sh
 
 # we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf
@@ -53,7 +52,7 @@ endif
 #	html copies of these are in doc/manual, and we don't have PDFs on menus
 	$(RM) $(RPREFIX)/doc/manual/R-FAQ.pdf
 	$(RM) $(RPREFIX)/doc/html/R-admin.html 
-	$(RM) $(RPREFIX)/doc/html/index.html $(RM) $(RPREFIX)/doc/html/index-default.html
+	$(RM) $(RPREFIX)/doc/html/index-default.html
 #
 	$(CP) -p $(foreach i,$(INFO_FILES),$(R_HOME)/$i) $(RPREFIX)
 	$(CP) -p $(foreach i,$(GW_INFO_FILES),../$i) $(RPREFIX)
@@ -102,7 +101,7 @@ fixups:
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
 
-R.iss: JRins.pl imagedir fixups md5sums
+R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums
 	perl JRins.pl $(RPREFIX) $(RPREFIX)
 
 $(RPREFIX).exe: R.iss

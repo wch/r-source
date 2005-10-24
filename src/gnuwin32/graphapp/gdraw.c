@@ -656,7 +656,8 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     SelectObject(dc, old);
 }
 
-#ifdef SUPPORT_UTF8
+/* need this defined even if not used for non-MBCS since grDevices
+   is compiled with SUPPORT_MBCS true */
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width)
 {
@@ -714,7 +715,7 @@ void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     }
     SelectObject(dc, old);
 }
-#endif
+
 
 font gnewfont(drawing d, char *face, int style, int size, double rot)
 {

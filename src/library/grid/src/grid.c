@@ -373,6 +373,7 @@ static SEXP findInChildren(SEXP name, SEXP strict, SEXP children, int depth)
     int count = 0;
     Rboolean found = FALSE;
     SEXP result = R_NilValue;
+    PROTECT(childnames);
     PROTECT(result);
     while (count < n && !found) {
 	result = findViewport(name, strict,
@@ -392,7 +393,7 @@ static SEXP findInChildren(SEXP name, SEXP strict, SEXP children, int depth)
 	UNPROTECT(2);
 	result = temp;
     }
-    UNPROTECT(1);
+    UNPROTECT(2);
     return result;
 }
 			   
@@ -517,6 +518,7 @@ static SEXP findvppathInChildren(SEXP path, SEXP name,
     int count = 0;
     Rboolean found = FALSE;
     SEXP result = R_NilValue;
+    PROTECT(childnames);
     PROTECT(result);
     while (count < n && !found) {
 	SEXP vp, newpathsofar;
@@ -539,7 +541,7 @@ static SEXP findvppathInChildren(SEXP path, SEXP name,
 	UNPROTECT(2);
 	result = temp;
     }
-    UNPROTECT(1);
+    UNPROTECT(2);
     return result;
 }
 			   

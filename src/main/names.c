@@ -474,10 +474,12 @@ FUNTAB R_FunTab[] =
 {"sub",		do_gsub,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"gsub",	do_gsub,	1,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"regexpr",	do_regexpr,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"gregexpr",	do_gregexpr,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"grep.perl",	do_pgrep,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"sub.perl",    do_pgsub,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"gsub.perl",	do_pgsub,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"regexpr.perl",do_pregexpr,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"gregexpr.perl",do_gpregexpr,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"agrep",	do_agrep,	1,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"tolower",	do_tolower,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"toupper",	do_tolower,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -549,8 +551,6 @@ FUNTAB R_FunTab[] =
 #endif
 #ifdef Win32
 {"unlink",	do_unlink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"help.start",	do_helpstart,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"show.help.item",do_helpitem,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"flush.console",do_flushconsole,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"win.version", do_winver,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"shell.exec",	do_shellexec,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -567,10 +567,12 @@ FUNTAB R_FunTab[] =
 {"readClipboard",do_readClipboard,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"writeClipboard",do_writeClipboard,0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"chooseFiles", do_chooseFiles, 0,  	11, 	5,  	{PP_FUNCALL, PREC_FN,   0}},
+{"chooseDir", 	do_chooseDir, 	0,  	11, 	2,  	{PP_FUNCALL, PREC_FN,   0}},
 {"getIdentification", do_getIdentification,0,11,0,	{PP_FUNCALL, PREC_FN, 	0}},
 {"getWindowHandle", do_getWindowHandle,0,11,	1,	{PP_FUNCALL, PREC_FN, 	0}},
 {"getWindowTitle",do_getWindowTitle,0,	11,	0,	{PP_FUNCALL, PREC_FN, 	0}},
 {"setWindowTitle",do_setTitle,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"shortPathName",do_shortpath, 	0,  	11, 	1,  	{PP_FUNCALL, PREC_FN,   0}},
 #endif
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 {"wsbrowser",	do_wsbrowser,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
@@ -687,6 +689,7 @@ FUNTAB R_FunTab[] =
 {"visibleflag", do_visibleflag,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 {"l10n_info", 	do_l10n_info,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
+{"Cstack_info", do_Cstack_info,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Functions To Interact with the Operating System */
 

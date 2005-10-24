@@ -167,7 +167,7 @@ install.packages <-
 
     ## at this point pkgs may contain duplicates,
     ## the same pkg in different libs
-    if(!is.null(foundpkgs)) {
+    if(length(foundpkgs)) {
         update <- unique(cbind(pkgs, lib))
         colnames(update) <- c("Package", "LibPath")
         found <- pkgs %in% foundpkgs[, 1]

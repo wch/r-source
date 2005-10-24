@@ -167,7 +167,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     }
 
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
-	data <- as.data.frame(data)
+	data <- as.data.frame(data, optional=TRUE)
     terms <- .Internal(terms.formula(x, specials, data, keep.order,
                                      allowDotAsName))
     if (simplify) {
@@ -212,6 +212,8 @@ variable.names.default <- function(object, ...) colnames(object)
 
 case.names <- function(object, ...) UseMethod("case.names")
 case.names.default <- function(object, ...) rownames(object)
+
+simulate <- function(object, nsim = 1, seed = NULL, ...) UseMethod("simulate")
 
 offset <- function(object) object
 ## ?

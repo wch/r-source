@@ -77,9 +77,84 @@ static int	xxgetc();
 static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
 
-#ifdef SUPPORT_MBCS
+#if defined(SUPPORT_MBCS)
+# include <R_ext/Riconv.h>
+# include <R_ext/rlocale.h>
 # include <wchar.h>
 # include <wctype.h>
+# include <sys/param.h>
+#ifdef HAVE_LANGINFO_CODESET
+# include <langinfo.h>
+#endif
+
+/* Previous versions (< 2.3.0) assumed wchar_t was in Unicode (and it
+   commonly is).  This version does not. */
+# ifdef Win32
+static const char UNICODE[] = "UCS-2LE";
+# else
+#  ifdef WORDS_BIGENDIAN
+static const char UNICODE[] = "UCS-4BE";
+#  else
+static const char UNICODE[] = "UCS-4LE";
+# endif
+#endif
+#include <errno.h>
+
+static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
+{
+    char     tocode[128];
+    char     buf[16];
+    void    *cd = NULL ;
+    ucs2_t   ucs2s[2];
+    wchar_t  wcs[2];
+    wchar_t *inbuf = wcs;
+    size_t   inbytesleft = sizeof(wchar_t);
+    char    *outbuf = (char *)buf;
+    size_t   outbytesleft = sizeof(buf);
+    size_t   status;
+    
+    strcpy(tocode, "");
+    memset(buf, 0, sizeof(buf));
+    memset(wcs, 0, sizeof(wcs));
+    memset(ucs2s, 0, sizeof(ucs2s));
+    wcs[0] = wc;
+
+    if(wc == L'\0') {
+	*s = '\0';
+        return 1;
+    }
+    
+    if((void *)(-1) == (cd = Riconv_open("", (char *)UNICODE))) {
+#ifndef  Win32
+        /* locale set fuzzy case */
+    	strncpy(tocode, locale2charset(NULL), sizeof(tocode));
+	if((void *)(-1)==(cd = Riconv_open(tocode, (char *)UNICODE)))
+            return (size_t)(-1); 
+#else
+        return (size_t)(-1);
+#endif
+    }
+    
+    status = Riconv(cd, (char **)&inbuf, (size_t *)&inbytesleft,
+		    (char **)&outbuf, (size_t *)&outbytesleft);
+    Riconv_close(cd);
+
+    if (status == (size_t) -1) {
+        switch(errno){
+        case EINVAL:
+            return (size_t) -2;
+        case EILSEQ:
+            return (size_t) -1;
+        case E2BIG:
+            break;
+        default:
+            errno = EILSEQ;
+            return (size_t) -1;
+        }
+    }
+    strncpy(s, buf,sizeof(buf));
+    return strlen(buf);
+}
 
 static int mbcs_get_next(int c, wchar_t *wc)
 {
@@ -349,6 +424,9 @@ static int xxgetc(void)
         EndOfFile = 1;
         return R_EOF;
     }
+    R_ParseContextLast = (R_ParseContextLast + 1) % PARSE_CONTEXT_SIZE;
+    R_ParseContext[R_ParseContextLast] = c;
+    
     if (c == '\n') R_ParseError += 1;
     if ( KeepSource && GenerateCode && FunctionLevel > 0 ) {
 	if(SourcePtr <  FunctionSource + MAXFUNSIZE)
@@ -365,6 +443,8 @@ static int xxungetc(int c)
     if ( KeepSource && GenerateCode && FunctionLevel > 0 )
 	SourcePtr--;
     xxcharcount--;
+    R_ParseContext[R_ParseContextLast--] = '\0';
+    R_ParseContextLast = R_ParseContextLast % PARSE_CONTEXT_SIZE;
     if(npush >= 16) return EOF;
     pushback[npush++] = c;
     return c;
@@ -996,8 +1076,14 @@ static void ParseInit()
     FunctionLevel=0;
     SourcePtr = FunctionSource;
     xxcharcount = 0;
-    KeepSource = *LOGICAL(GetOption(install("keep.source"), R_NilValue));
+    KeepSource = *LOGICAL(GetOption(install("keep.source"), R_BaseEnv));
     npush = 0;
+}
+
+static void ParseContextInit()
+{
+    R_ParseContextLast = 0;
+    R_ParseContext[0] = '\0';
 }
 
 static SEXP R_Parse1(ParseStatus *status)
@@ -1032,6 +1118,7 @@ static int file_getc(void)
 SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
 {
     ParseInit();
+    ParseContextInit();
     GenerateCode = gencode;
     fp_parse = fp;
     ptr_getc = file_getc;
@@ -1049,6 +1136,7 @@ static int buffer_getc()
 SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 {
     ParseInit();
+    ParseContextInit();
     GenerateCode = gencode;
     iob = buffer;
     ptr_getc = buffer_getc;
@@ -1066,6 +1154,7 @@ static int text_getc()
 SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
 {
     ParseInit();
+    ParseContextInit();
     GenerateCode = gencode;
     txtb = textb;
     ptr_getc = text_getc;
@@ -1080,6 +1169,7 @@ SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
 		     int gencode, ParseStatus *status)
 {
     ParseInit();
+    ParseContextInit();
     GenerateCode = gencode;
     ptr_getc = g_getc;
     R_Parse1(status);
@@ -1091,6 +1181,7 @@ SEXP R_Parse(int n, ParseStatus *status)
 {
     int i;
     SEXP t, rval;
+    ParseContextInit();
     if (n >= 0) {
         PROTECT(rval = allocVector(EXPRSXP, n));
         for (i = 0 ; i < n ; i++) {
@@ -1208,14 +1299,14 @@ static char *Prompt(SEXP prompt, int type)
     if(type == 1) {
 	if(length(prompt) <= 0) {
 	    return (char*)CHAR(STRING_ELT(GetOption(install("prompt"),
-						    R_NilValue), 0));
+						    R_BaseEnv), 0));
 	}
 	else
 	    return CHAR(STRING_ELT(prompt, 0));
     }
     else {
 	return (char*)CHAR(STRING_ELT(GetOption(install("continue"),
-						R_NilValue), 0));
+						R_BaseEnv), 0));
     }
 }
 
@@ -1662,7 +1753,7 @@ static int StringValue(int c)
 		}
 		c = val;
 	    }
-#ifdef SUPPORT_MBCS
+#if defined(SUPPORT_MBCS)
 	    /* Only realy valid in UTF-8, but useful shorthand elsewhere */
 	    else if(mbcslocale && c == 'u') {
 		wint_t val = 0; int i, ext; size_t res;
@@ -1679,7 +1770,8 @@ static int StringValue(int c)
 		if(delim)
 		    if((c = xxgetc()) != '}')
 			error(_("invalid \\u{xxxx} sequence"));
-		res = wcrtomb(buff, val, NULL); /* should always be valid */
+		
+		res = ucstomb(buff, val, NULL); /* should always be valid */
 		if((int)res <= 0) error(_("invalid \\uxxxx sequence"));
 		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
 		c = buff[res - 1]; /* pushed below */
@@ -1700,7 +1792,7 @@ static int StringValue(int c)
 		if(delim)
 		    if((c = xxgetc()) != '}')
 			error(_("invalid \\U{xxxxxxxx} sequence"));
-		res = wcrtomb(buff, val, NULL); /* should always be valid */
+		res = ucstomb(buff, val, NULL); /* should always be valid */
 		if((int)res <= 0) error(("invalid \\Uxxxxxxxx sequence"));
 		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
 		c = buff[res - 1]; /* pushed below */
@@ -1736,7 +1828,7 @@ static int StringValue(int c)
 		}
 	    }
 	}
-#ifdef SUPPORT_MBCS
+#if defined(SUPPORT_MBCS)
        else if(mbcslocale) {
            int i, clen;
            wchar_t wc = L'\0';
@@ -1803,7 +1895,7 @@ int isValidName(char *name)
 	if (wc != L'.' && !iswalpha(wc) ) return 0;
 	if (wc == L'.') {
 	    /* We don't care about other than ASCII digits */
-	    if(isdigit((int)*p)) return 0;
+	    if(isdigit(0xff & (int)*p)) return 0;
 	    /* Mbrtowc(&wc, p, n, NULL); if(iswdigit(wc)) return 0; */
 	}
 	while((used = Mbrtowc(&wc, p, n, NULL))) {
@@ -1814,10 +1906,10 @@ int isValidName(char *name)
     } else
 #endif
     {
-	int c = *p++;
+	int c = 0xff & *p++;
 	if (c != '.' && !isalpha(c) ) return 0;
-	if (c == '.' && isdigit((int)*p)) return 0;
-	while ( c = *p++, (isalnum(c) || c == '.' || c == '_') ) ;
+	if (c == '.' && isdigit(0xff & (int)*p)) return 0;
+	while ( c = 0xff & *p++, (isalnum(c) || c == '.' || c == '_') ) ;
 	if (c != '\0') return 0;
     }
 
@@ -1834,7 +1926,7 @@ static int SymbolValue(int c)
 {
     int kw;
     DECLARE_YYTEXT_BUFP(yyp);
-#ifdef SUPPORT_MBCS
+#if defined(SUPPORT_MBCS)
     if(mbcslocale) {
 	wchar_t wc; int i, clen;
 	clen = utf8locale ? utf8clen(c) : mbcs_get_next(c, &wc);
@@ -1883,7 +1975,7 @@ static int SymbolValue(int c)
 static int token()
 {
     int c;
-#ifdef SUPPORT_MBCS
+#if defined(SUPPORT_MBCS)
     wchar_t wc;
 #endif
 
@@ -1929,7 +2021,7 @@ static int token()
  symbol:
 
     if (c == '.') return SymbolValue(c);
-#ifdef SUPPORT_MBCS
+#if defined(SUPPORT_MBCS)
     if(mbcslocale) {
 	mbcs_get_next(c, &wc);
 	if (iswalpha(wc)) return SymbolValue(c);

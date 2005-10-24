@@ -760,15 +760,24 @@ void tcltk_init(void)
     if (code != TCL_OK)
 	error(Tcl_GetStringResult(RTcl_interp));
 
-    code = Tk_Init(RTcl_interp);  /* Load Tk into interpreter */
-    if (code != TCL_OK)
-	error(Tcl_GetStringResult(RTcl_interp));
+#if !defined(Win32) && !defined(HAVE_AQUA)
+    if(getenv("DISPLAY")) 
+#endif
+    {
+	code = Tk_Init(RTcl_interp);  /* Load Tk into interpreter */
+	if (code != TCL_OK)
+	    error(Tcl_GetStringResult(RTcl_interp));
 
-    Tcl_StaticPackage(RTcl_interp, "Tk", Tk_Init, Tk_SafeInit);
+	Tcl_StaticPackage(RTcl_interp, "Tk", Tk_Init, Tk_SafeInit);
 
-    code = Tcl_Eval(RTcl_interp, "wm withdraw .");  /* Hide window */
-    if (code != TCL_OK)
-	error(Tcl_GetStringResult(RTcl_interp));
+	code = Tcl_Eval(RTcl_interp, "wm withdraw .");  /* Hide window */
+	if (code != TCL_OK)
+	    error(Tcl_GetStringResult(RTcl_interp));
+    }
+#if !defined(Win32) && !defined(HAVE_AQUA)
+    else
+	warning("no DISPLAY variable so Tk is not available");
+#endif
 
     Tcl_CreateCommand(RTcl_interp,
 		      "R_eval",

@@ -208,6 +208,10 @@ if test "${want_R_framework}" != no; then
 	prefix="${want_R_framework}"
 	want_R_framework=yes
       fi
+      ## FW_VERSION is the sub-directory name used in R.framework/Version
+      ## By default it's the a.b form of the full a.b.c version to simplify
+      ## binary updates.
+      : ${FW_VERSION=`echo "${PACKAGE_VERSION}" | sed -e "s/[[\.]][[0-9]]$//"`}
       ;;
     *)
       want_R_framework=no
@@ -293,7 +297,12 @@ AC_ARG_WITH([readline],
 ## Aqua.
 AC_ARG_WITH([aqua],
 [AC_HELP_STRING([--with-aqua],
-                [MacOS X only: use Aqua (if available) @<:@no@:>@])],
+                [MacOS X only: use Aqua (if available) @<:@yes@:>@])],
+[if test "${withval}" = no; then
+  want_aqua=no
+else
+  want_aqua=yes
+fi],
 [want_aqua=yes])
 
 ## Tcl/Tk.
@@ -467,7 +476,7 @@ AC_PROG_RANLIB
 AC_PROG_YACC
 R_PROG_AR
 R_PROG_INSTALL
-AC_PATH_PROG(JAVAC, javac)
+
 ## we would like a POSIX sed, and need one on Solaris
 AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
 ## Make
@@ -636,8 +645,8 @@ AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h grp.h ieee754.h ieeefp.h limits.h locale.h \
   netdb.h netinet/in.h pwd.h strings.h \
-  sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
-  sys/times.h sys/utsname.h unistd.h)
+  sys/param.h sys/select.h sys/socket.h sys/stat.h sys/resource.h \
+  sys/time.h sys/times.h sys/utsname.h unistd.h)
 ## </NOTE>
 ## <NOTE>
 ## These are ANSI C headers but some C code (written to work also
@@ -1251,6 +1260,7 @@ AC_SUBST(DYLIB_EXT)
 AC_SUBST(LIBR_LDFLAGS)
 AC_SUBST(RLAPACK_LDFLAGS)
 AC_SUBST(LAPACK_LDFLAGS)
+AC_SUBST(FW_VERSION)
 
 ### Now we have found all the flags, we need to use them to test appropriately.
 ### We don't currently have any C++ tests, but future-proof.
@@ -1278,7 +1288,7 @@ AC_CHECK_DECLS([alloca], , ,
 # include <alloca.h>
 #endif])
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate \
-  getcwd getgrgid getpwuid getuid hypot isascii log1p \
+  getcwd getgrgid getpwuid getrlimit getuid hypot isascii log1p \
   matherr mkdtemp mkfifo popen putenv realpath rint \
   setenv strcoll stat strerror strptime symlink system times unsetenv)
 ## isfinite and isnan are in math.h but might be macros
@@ -1347,7 +1357,7 @@ R_C99_COMPLEX
 ## check for vecLib framework (potentially to be used for BLAS)
 ## in theory vecLib is platform-independent, in practice only
 ## Apple's Mac OS X is known to provide it
-R_CHECK_FRAMEWORK(vIsamin, vecLib)
+R_CHECK_FRAMEWORK(cblas_cdotu_sub, vecLib)
 
 ## BLAS.
 ## <NOTE>
@@ -1374,6 +1384,8 @@ fi
 if test "${use_blas}" = yes; then
   R_BLAS_LIBS
 fi
+
+AM_CONDITIONAL(USE_VECLIB_G95FIX, [test "x${use_veclib_g95fix}" = xyes])
 AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
 
 ## LAPACK.
@@ -1392,11 +1404,11 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 
 AC_SUBST(R_MODULES)
 
-## UTF-8 locales - support for MBCS and specifically UTF-8
-R_MBCS
-
 ## iconv headers and function.
 R_ICONV
+
+## support for MBCS
+R_MBCS
 
 ## X11.
 R_X11
@@ -1484,6 +1496,9 @@ AC_SUBST(R_PAPERSIZE)
 ## Saving.
 AC_SUBST(R_BATCHSAVE)
 
+## Java support
+R_JAVA
+
 ## Make sure -L terms come first in LIBS.
 LIBS1=""
 LIBS2=""
@@ -1509,7 +1524,10 @@ LIBS="${LIBS1} ${LIBS2}"
 ## On OS X (Darwin) /usr/X11R6/lib shadows OpenGL framework and is not
 ## needed in DYLD_LIBRARY_PATH.
 case "${host_os}" in
-  linux* | solaris*)
+  linux*)
+    r_ld_library_defaults="/usr/lib64:/lib64:/usr/lib:/lib"
+    ;;
+  solaris*)
     r_ld_library_defaults="/usr/lib:/lib"
     ;;
   darwin*)
@@ -1520,7 +1538,7 @@ case "${host_os}" in
     ;;
 esac
 for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
-           ${TCLTK_LIBS} ${GNOME_LIBS}; do
+           ${TCLTK_LIBS} ${GNOME_LIBS} ${JAVA_LIBS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
@@ -1547,6 +1565,7 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
   esac
 done
 ## </FIXME>
+
 AC_SUBST(R_LD_LIBRARY_PATH)
 
 ## Recommended packages.

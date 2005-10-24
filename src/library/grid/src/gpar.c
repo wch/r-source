@@ -290,16 +290,11 @@ void initGPar(GEDevDesc *dd)
     SET_STRING_ELT(gparnames, GP_LINEMITRE, mkChar("linemitre"));
     SET_STRING_ELT(gparnames, GP_LEX, mkChar("lex"));
     setAttrib(gpar, R_NamesSymbol, gparnames);
-    /* FIXME:  Need to export col2name via (probably) GraphicsEngine.h
-     * In the meantime I just have to override the device settings
-     */
     PROTECT(gpfill = allocVector(STRSXP, 1));
-    /* SET_STRING_ELT(gpfill, 0, mkChar(col2name(dev->startfill))); */
-    SET_STRING_ELT(gpfill, 0, mkChar("transparent"));
+    SET_STRING_ELT(gpfill, 0, mkChar(col2name(dev->startfill)));
     SET_VECTOR_ELT(gpar, GP_FILL, gpfill);
     PROTECT(gpcol = allocVector(STRSXP, 1));
-    /* SET_STRING_ELT(gpcol, 0, mkChar(col2name(dev->startcol))); */
-    SET_STRING_ELT(gpcol, 0, mkChar("black"));
+    SET_STRING_ELT(gpcol, 0, mkChar(col2name(dev->startcol)));
     SET_VECTOR_ELT(gpar, GP_COL, gpcol);
     PROTECT(gpgamma = allocVector(REALSXP, 1));
     REAL(gpgamma)[0] = dev->startgamma;

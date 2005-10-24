@@ -33,5 +33,8 @@ The files are as follows.
 	a concatenation of all the required files from gettext 0.14.1
 	except codeset.m4.
 
+  java.m4
+	macros for detecting Java runtime environment or JDK.
+
   libtool.m4
 	is from libtool 1.5.6.

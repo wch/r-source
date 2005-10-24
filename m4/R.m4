@@ -1002,7 +1002,8 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
        ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   ## </NOTE>
   then
-    output=`./conftest${ac_exeext} 2>&1`
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
     if test ${?} = 0; then
       r_cv_prog_f77_can_run=yes
     fi
@@ -1084,7 +1085,8 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
        ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   ## </NOTE>
   then
-    output=`./conftest${ac_exeext} 2>&1`
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
     if test ${?} = 0; then
       r_cv_prog_f77_cc_compat=yes
     fi
@@ -1164,7 +1166,8 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
        ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   ## </NOTE>
   then
-    output=`./conftest${ac_exeext} 2>&1`
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
     if test ${?} = 0; then
       r_cv_prog_f77_cc_compat_complex=yes
     fi
@@ -2399,7 +2402,9 @@ if test "${acx_blas_ok}" = no; then
                [acx_blas_ok=yes; BLAS_LIBS="-lblas"])
 fi
 
-## Now check if zdotu works (fails on AMD64 with the wrong compiler)
+## Now check if zdotu works (fails on AMD64 with the wrong compiler;
+## also fails on OS X with vecLib and gfortran; but in that case we
+## have a work-around using USE_VECLIB_G95FIX)
 if test "${acx_blas_ok}" = yes; then
   AC_MSG_CHECKING([whether double complex BLAS can be used])
   AC_CACHE_VAL([r_cv_zdotu_is_usable],
@@ -2457,7 +2462,8 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
        ${LIBM} ${BLAS_LIBS} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
   ## </NOTE>
   then
-    output=`./conftest${ac_exeext} 2>&1`
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
     if test ${?} = 0; then
       r_cv_zdotu_is_usable=yes
     fi
@@ -2469,8 +2475,18 @@ fi
     AC_MSG_RESULT([yes])
   else
     AC_MSG_RESULT([no])
-    BLAS_LIBS=
-    acx_blas_ok="no"
+    if test "${have_vecLib_fw}" = "yes"; then
+      ## for vecLib we have a work-around by using cblas_..._sub
+      use_veclib_g95fix=yes
+      ## The fix may not work with internal lapack, because
+      ## the lapack dylib won't have the fixed functions.
+      ## those are available to the lapack module only.
+      #      use_lapack=yes
+      #	     with_lapack=""
+    else
+      BLAS_LIBS=
+      acx_blas_ok="no"
+    fi
   fi
 fi
 
@@ -2900,7 +2916,7 @@ AC_CACHE_CHECK(for iconv, ac_cv_func_iconv, [
 if test "$ac_cv_func_iconv" != no; then
   AC_DEFINE(HAVE_ICONV, 1, [Define if you have the `iconv' function.])
 
-  AC_CACHE_CHECK([whether iconv() accepts "UTF-8" and "latin1"],
+  AC_CACHE_CHECK([whether iconv() accepts "UTF-8", "latin1" and "UCS-*"],
   [r_cv_iconv_latin1],
   [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include "confdefs.h"
@@ -2929,6 +2945,30 @@ int main () {
   cd = iconv_open("UTF-8","");
   if(cd == (iconv_t)(-1)) exit(1);
   iconv_close(cd);
+  cd = iconv_open("UCS-2LE","");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("", "UCS-2LE");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("UCS-2BE","");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("", "UCS-2BE");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("UCS-4LE","");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("", "UCS-4LE");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("UCS-4BE","");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("", "UCS-4BE");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
   exit(0);
 }
   ]])], [r_cv_iconv_latin1=yes], [r_cv_iconv_latin1=no], 
@@ -2936,7 +2976,7 @@ int main () {
 
   if test "$r_cv_iconv_latin1" = yes; then
     AC_DEFINE(ICONV_LATIN1, 1,
-	      [Define if `iconv' accepts "UTF-8" and "latin1".])
+	      [Define if `iconv' accepts "UTF-8", "latin1" and "UCS-*".])
   fi
 fi
 ## if the iconv we are using was in libiconv we have already included -liconv
@@ -2962,24 +3002,32 @@ fi
 ## locales - support for MBCS and specifically UTF-8
 AC_DEFUN([R_MBCS],
 [
+## require functional iconv
+if test "$want_mbcs_support" = yes ; then
+  if test "$r_cv_iconv_latin1" != yes ; then
+    want_mbcs_support=no
+  fi
+fi
 ## Wide character support -- first test for headers (which are assumed in code)
 if test "$want_mbcs_support" = yes ; then
   AC_CHECK_HEADERS(wchar.h wctype.h)
   for ac_header in wchar wctype; do
-    this=`echo "ac_cv_header_$ac_header_h"`
+    as_ac_var=`echo "ac_cv_header_${ac_header}_h"`
+    this=`eval echo '${'$as_ac_var'}'`
     if test "x$this" = xno; then
       want_mbcs_support=no
     fi
   done
 fi
 if test "$want_mbcs_support" = yes ; then
+## Solaris 8 is missing iswblank, but we can make it from iswctype.
   AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
-		 wcswidth wctrans wcwidth)
-  AC_CHECK_DECLS([wcwidth, wcswidth], , , [#include <wchar.h>])
-  ## can manage without wc[s]width
-  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wctrans
+		 wctrans iswblank wctype iswctype)
+  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
+                 wctrans wctype iswctype
   do
-    this=`echo "ac_cv_func_$ac_func"`
+    as_ac_var=`echo "ac_cv_func_$ac_func"`
+    this=`eval echo '${'$as_ac_var'}'`
     if test "x$this" = xno; then
       want_mbcs_support=no
     fi
@@ -3023,7 +3071,8 @@ AC_DEFUN([R_C99_COMPLEX],
     for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
 		   ccosh csinh ctanh cacosh casinh catanh
     do
-      this=`echo "ac_cv_func_$ac_func"`
+      as_ac_var=`echo "ac_cv_func_$ac_func"`
+      this=`eval echo '${'$as_ac_var'}'`
       if test "x$this" = xno; then
 	r_cv_c99_complex=no
       fi

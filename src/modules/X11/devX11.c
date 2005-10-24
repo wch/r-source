@@ -20,7 +20,7 @@
  */
 
 /* The version for R 2.1.0 is partly based on patches by 
-   Eiji Nakama <nakama@ki.rim.or.jp> for use in Japanese. 
+   Ei-ji Nakama <nakama@ki.rim.or.jp> for use in Japanese. 
 
    <MBCS> all the strings manipulated here like display and fonts specs 
    are probably ASCII, or at least start with ASCII in the part searched.
@@ -57,8 +57,12 @@
 #ifdef SUPPORT_MBCS
 /* This uses fontsets only in mbcslocales */
 # define USE_FONTSET 1
+/* In theory we should do this, but it works less well
+# ifdef X_HAVE_UTF8_STRING
+#  define HAVE_XUTF8TEXTESCAPEMENT 1
+#  define HAVE_XUTF8TEXTEXTENTS 1
+# endif */
 #endif
-
 
 #define R_X11_DEVICE 1
 #include "devX11.h"
@@ -697,6 +701,9 @@ static R_XFont *R_XLoadQueryFontSet(Display *display,
     int  /*i,*/ missing_charset_count;
     char **missing_charset_list, *def_string;
   
+#ifdef DEBUG_X11
+    printf("loading fontset %s\n", fontset_name);
+#endif
     fontset = XCreateFontSet(display, fontset_name, &missing_charset_list,
 			     &missing_charset_count, &def_string);
     if(!fontset) {
@@ -704,9 +711,12 @@ static R_XFont *R_XLoadQueryFontSet(Display *display,
 	return NULL;	
     }
     if (missing_charset_count) {
-	/* for(i = 0; i < missing_charset_count; i++)
-	   warning("font for charset %s is lacking.", missing_charset_list[i]);*/
+#ifdef DEBUG_X11
+	int i;
+	for(i = 0; i < missing_charset_count; i++)
+	   warning("font for charset %s is lacking.", missing_charset_list[i]);
 	XFreeStringList(missing_charset_list);
+#endif
     }
     tmp->type = Font_Set;
     tmp->fontset = fontset;
@@ -1902,15 +1912,13 @@ static void newX11_Text(double x, double y,
 			R_GE_gcontext *gc,
 			NewDevDesc *dd)
 {
-    int len, size;
-/*    double xl, yl, rot1;*/
+    int size;
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
     size = gc->cex * gc->ps + 0.5;
     SetFont(translateFontFamily(gc->fontfamily, xd), gc->fontface, size, dd);
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
-	len = strlen(str);
 	XRfRotDrawString(display, xd->font, rot, xd->window,
 			 xd->wgc, (int)x, (int)y, str);
 #ifdef XSYNC

@@ -6,8 +6,9 @@
 \title{Regular Expressions as used in R}
 \description{
   This help page documents the regular expression patterns supported by
-  \code{\link{grep}} and related functions \code{regexpr}, \code{sub}
-  and \code{gsub}, as well as by \code{\link{strsplit}}.
+  \code{\link{grep}} and related functions \code{regexpr},
+  \code{gregexpr}, \code{sub} and \code{gsub}, as well as by
+  \code{\link{strsplit}}.
 }
 \details{
   A \sQuote{regular expression} is a pattern that describes a set of
@@ -29,8 +30,8 @@
   strings from the keyboard.
 }
 \section{Extended Regular Expressions}{
-  This section covers the regular expressions allowed
-  if \code{extended = TRUE} in \code{grep}, \code{regexpr}, \code{sub},
+  This section covers the regular expressions allowed if \code{extended
+  = TRUE} in \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
   \code{gsub} and \code{strsplit}.  They use the \code{glibc 2.3.3}
   implementation of the POSIX 1003.2 standard.
 
@@ -166,8 +167,8 @@
   we no longer support it.)
 }
 \section{Basic Regular Expressions}{
-  This section covers the regular expressions allowed if
-  \code{extended = FALSE} in \code{grep}, \code{regexpr}, \code{sub},
+  This section covers the regular expressions allowed if \code{extended
+  = FALSE} in \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
   \code{gsub} and \code{strsplit}.
 
   In basic regular expressions the metacharacters \code{?}, \code{+},
@@ -177,10 +178,11 @@
   metacharacters are \code{. \\ [ ^ $ *}.
 }
 \section{Perl Regular Expressions}{
-  The \code{perl = TRUE} argument to \code{grep}, \code{regexpr}, \code{sub},
-  \code{gsub} and \code{strsplit} switches to the PCRE library that
-  \sQuote{implements regular expression pattern matching using the same
-    syntax and semantics as Perl 5.6 or later, with just a few differences}.
+  The \code{perl = TRUE} argument to \code{grep}, \code{regexpr},
+  \code{gregexpr}, \code{sub}, \code{gsub} and \code{strsplit} switches
+  to the PCRE library that \sQuote{implements regular expression pattern
+  matching using the same syntax and semantics as Perl 5.6 or later,
+  with just a few differences}.
 
   For complete details please consult the man pages for PCRE, especially
   \code{man pcrepattern} and \code{man pcreapi}) on your system or from

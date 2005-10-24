@@ -29,19 +29,26 @@ extern char *getRHOME(); /* in ../rhome.c */
 int main (int argc, char **argv)
 {
     int status = 0;
+    DWORD subkeys = 0;
   
     char *RHome, version[40];
     LONG rc;
-    HKEY hkey;
+    HKEY hkey, hkey2;
+    
+
+    sprintf(version, "%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
 
     if(argc > 1) { /* remove the keys */
 	printf("unregistering R ... ");
 	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_KEY_NAME, 0, 
 			       KEY_SET_VALUE, &hkey)) == ERROR_SUCCESS) {
-	    RegDeleteKey(hkey, "InstallPath");
-	    RegDeleteKey(hkey, "Current Version");
+	    RegDeleteValue(hkey, "InstallPath");
+	    RegDeleteValue(hkey, "Current Version");
+	    RegDeleteKey(hkey, version);
+	    RegQueryInfoKey(hkey, NULL, NULL, NULL, &subkeys, NULL, NULL, NULL, NULL, NULL,
+	                    NULL, NULL);
 	    RegCloseKey(hkey);
-	   if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\R-core", 0, 
+	   if (!subkeys && (rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\R-core", 0, 
 				  KEY_SET_VALUE, &hkey)) == ERROR_SUCCESS) {
 	       RegDeleteKey(hkey, "R");
 	       RegCloseKey(hkey);
@@ -57,8 +64,7 @@ int main (int argc, char **argv)
 	    status = 1;
 	}
     } else {
-	RHome = getRHOME();
-	sprintf(version, "%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
+    	RHome = getRHOME();
 	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_KEY_NAME, 0, 
 			       KEY_ALL_ACCESS, &hkey)) != ERROR_SUCCESS) {
 	    /* failed to open key, so try to create it */
@@ -70,7 +76,16 @@ int main (int argc, char **argv)
 	    if (rc == ERROR_SUCCESS)
 		rc = RegSetValueEx(hkey, "Current Version", 0, REG_SZ,
 				   (CONST BYTE *)version, lstrlen(version)+1);
-	    RegCloseKey(hkey);
+
+	    if (rc == ERROR_SUCCESS) 
+	    	rc = RegCreateKey(hkey, version, &hkey2);
+	    	
+	    if (rc == ERROR_SUCCESS) {
+	    	rc = RegSetValueEx(hkey2, "InstallPath", 0, REG_SZ,
+	    			(CONST BYTE *)RHome, lstrlen(RHome)+1);
+	    	RegCloseKey(hkey2);
+	    }
+	    RegCloseKey(hkey);	
 	} else {
 	    status = 1;
 	}

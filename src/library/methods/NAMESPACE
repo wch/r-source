@@ -299,5 +299,6 @@ export(validSlotNames)
 export(.ShortPrimitiveSkeletons)
 export(.EmptyPrimitiveSkeletons)
 
-## experimental
+## to allow "S4-cbind/rbind (./R/cbind-rbind.R)
 export(cbind2)
+export(rbind2)

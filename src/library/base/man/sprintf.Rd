@@ -83,6 +83,13 @@ gettextf(fmt, \dots, domain = NULL)
   formats are numbered: if not the unnumbered ones process the arguments
   in order.  See the examples.
 
+  As from \R 2.2.0, a field width or precision (but not both) may be
+  indicated by an asterisk \code{*}. In this case an argument specifies
+  the desired number. A negative field width is taken as a '-' flag
+  followed by a positive field width. A negative precision is taken as
+  if the precision were omitted. The \code{*1$} to \code{*99$} notation
+  for arguments referenced out of order is also supported.
+
   The result has a length limit, probably 8192 bytes, and attempts
   to exceed this may result in an error, or truncation with a warning.
 }
@@ -161,6 +168,12 @@ sprintf(paste("e with \%2d digits = \%.",n,"g",sep=""), n, exp(1))
 
 ## Using arguments out of order
 sprintf("second \%2$1.0f, first \%1$5.2f, third \%3$1.0f", pi, 2, 3)
+
+## Using asterisk for width or precision
+sprintf("precision \%.*f, width '\%*.3f'", 3, pi, 8, pi)
+
+## Asterisk and argument re-use, e example reiterated:
+sprintf("e with \%1$2d digits = \%2$.*1$g", n, exp(1))
 
 ## re-cycle arguments 
 sprintf("\%s \%d", "test", 1:3)

@@ -349,15 +349,15 @@ nlsModel <- function( form, data, start ) {
                           envir = thisEnv)
                }
            },
-           setPars = function( newPars )
+           setPars = function(newPars)
            {
                setPars(newPars)
-               assign( "resid",
-                      lhs - assign("rhs", getRHS(), envir = thisEnv ),
-                      envir = thisEnv )
-               assign( "dev", sum( resid^2), envir = thisEnv)
-               assign( "QR", qr( attr( rhs, "gradient")), envir = thisEnv )
-               return( QR$rank < min( dim( QR$qr ) ) )  # to catch the singular gradient matrix
+               assign("resid",
+                      lhs - assign("rhs", getRHS(), envir = thisEnv),
+                      envir = thisEnv)
+               assign("dev", sum( resid^2), envir = thisEnv)
+               assign("QR", qr( attr( rhs, "gradient")), envir = thisEnv )
+               return(QR$rank < min(dim(QR$qr)))  # to catch the singular gradient matrix
            },
            getPars = function() getPars(),
            getAllPars = function() getPars(),
@@ -378,11 +378,15 @@ nls.control <- function( maxiter = 50, tol = 0.00001, minFactor = 1/1024 ) {
 
 nls <-
   function (formula, data = parent.frame(), start, control = nls.control(),
-            algorithm = "default", trace = FALSE,
-            subset, weights, na.action, model = FALSE)
+            algorithm = c("default", "plinear", "port"), trace = FALSE,
+            subset, weights, na.action, model = FALSE,
+            lower =  - Inf, upper = Inf, ...)
 {
+    ## canonicalize the arguments
+    formula <- as.formula(formula)
+    algorithm <- match.arg(algorithm)
+
     mf <- match.call()             # for creating the model frame
-    formula <- as.formula( formula )
     varNames <- all.vars(formula)  # parameter and variable names from formula
 
     ## adjust a one-sided model formula by using 0 as the response
@@ -420,7 +424,6 @@ nls <-
     mf$formula <-                         # replace RHS by linear model formula
         as.formula(paste("~", paste( varNames[varIndex], collapse = "+")),
                    env = environment(formula))
-
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- as.list(eval(mf, parent.frame()))
@@ -429,22 +432,95 @@ nls <-
         mf[[var]] <- eval(as.name(var), data)
 
     m <- switch(algorithm,
-                plinear = nlsModel.plinear( formula, mf, start ),
-                nlsModel( formula, mf, start ) )
+                plinear = nlsModel.plinear(formula, mf, start),
+                port = nlsModel(formula, mf, start),
+                nlsModel(formula, mf, start))
+
     ctrl <- nls.control()
     if(!missing(control)) {
         control <- as.list(control)
         ctrl[names(control)] <- control
     }
-    nls.out <- list(m = .Call("nls_iter", m, ctrl, trace, PACKAGE = "stats"),
-                    data = substitute( data ), call = match.call())
-    nls.out$call$control <- ctrl
-    nls.out$call$trace <- trace
-    nls.out$na.action <- attr(mf, "na.action")
-    nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
-    if(model) nls.out$model <- mf
-    class(nls.out) <- "nls"
-    nls.out
+    if (algorithm != "port") {
+        if (!missing(lower) || !missing(upper))
+            warning('Upper or lower bounds ignored unless algorithm = "port"')
+        nls.out <- list(m = .Call("nls_iter", m, ctrl, trace, PACKAGE = "stats"),
+                        data = substitute(data), call = match.call())
+        nls.out$call$control <- ctrl
+        nls.out$call$trace <- trace
+        nls.out$na.action <- attr(mf, "na.action")
+        nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
+        if(model) nls.out$model <- mf
+        class(nls.out) <- "nls"
+        return(nls.out)
+    }
+
+    ## Establish the working vectors and check and set options
+    p <- length(par <- as.double(start))
+    iv <- integer(4*p + 82)
+    v <- double(105 + (p * (2 * p + 20)))
+    .Call("port_ivset", 1, iv, v, PACKAGE = "stats")
+    if (length(control)) {
+        control $tol <- control$minFactor <- NULL
+        nms <- names(control)
+        if (!is.list(control) || is.null(nms))
+            stop("control argument must be a named list")
+        cpos <- c(eval.max = 17, maxiter = 18, trace = 19, abs.tol = 31,
+                  rel.tol = 32, x.tol = 33, step.min = 34, step.max = 35,
+                  scale.init = 38, sing.tol = 37, diff.g = 42)
+        pos <- pmatch(nms, names(cpos))
+        if (any(nap <- is.na(pos))) {
+            warning(paste("unrecognized control element(s) named `",
+                          paste(nms[nap], collapse = ", "),
+                          "' ignored", sep = ""))
+            pos <- pos[!nap]
+            control <- control[!nap]
+        }
+        ivpars <- pos < 4
+        if (any(ivpars))
+            iv[cpos[pos[ivpars]]] <- as.integer(unlist(control[ivpars]))
+        if (any(!ivpars))
+            v[cpos[pos[!ivpars]]] <- as.double(unlist(control[!ivpars]))
+    }
+    if (trace)
+        iv[19] <- 1:1
+    scale <- 1
+    low <- upp <- NULL
+    if (any(lower != -Inf) || any(upper != Inf)) { 
+        low <- rep(as.double(lower), length = length(par))
+        upp <- rep(as.double(upper), length = length(par))
+    }
+    ## Call driver routine
+    .Call("port_nlsb", m,
+          d = rep(as.double(scale), length = length(par)),
+          df = m$gradient(), iv, v, low, upp, PACKAGE = "stats")
+    ans <- list(m = m, data = substitute(data), call = match.call())
+    ans$convergence <- as.integer(if (iv[1] %in% 3:6) 0 else 1)
+    ans$message <-
+        switch(as.character(iv[1]),
+               "3" = "X-convergence (3)",
+               "4" = "relative convergence (4)",
+               "5" = "both X-convergence and relative convergence (5)",
+               "6" = "absolute function convergence (6)",
+
+               "7" = "singular convergence (7)",
+               "8" = "false convergence (8)",
+               "9" = "function evaluation limit reached without convergence (9)",
+               "10" = "iteration limit reached without convergence (9)",
+               "14" = "storage has been allocated (?) (14)",
+
+               "15" = "LIV too small (15)",
+               "16" = "LV too small (16)",
+               "63" = "fn cannot be computed at initial par (63)",
+               "65" = "gr cannot be computed at initial par (65)")
+    if (is.null(ans$message))
+        ans$message <-
+            paste("See PORT documentation.  Code (", iv[1], ")",
+                  sep = "")
+    if (ans$convergence)
+        stop(paste("Convergence failure:", ans$message))
+    class(ans) <- "nls"
+    ans
 }
 
 coef.nls <- function( object, ... ) object$m$getAllPars()

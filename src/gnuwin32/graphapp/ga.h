@@ -163,9 +163,10 @@ int   getcharset(void);
 #ifdef SUPPORT_UTF8
 void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj);
 int gwstrwidth(drawing d, font f, char *s);
+#endif
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width);
-#endif
+
 
 /* pixels */
 int   devicewidth(drawing dev);

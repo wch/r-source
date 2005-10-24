@@ -122,8 +122,11 @@ callNextMethod <- function(...) {
         stop(gettextf("bad object found as method (class \"%s\")",
                       class(method)), domain = NA)
     subsetCase <- !is.na(match(f, .BasicSubsetFunctions))
-    if(nargs()>0)
-        eval(substitute(.nextMethod(...)), callEnv)
+    if(nargs()>0) {
+      call <- sys.call()
+      call[[1]] <- as.name(".nextMethod")
+      eval(call, callEnv)
+      }
     else {
         if(subsetCase) {
             ## don't use match.call, because missing args will screw up for "[", etc.

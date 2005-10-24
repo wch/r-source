@@ -63,6 +63,8 @@
    run-time test.  As from 1.6.2, test the actual mktime code and cache the
    result on glibc >= 2.2. (It seems this started between 2.2.5 and 2.3,
    and RH8.0 has an unreleased version in that gap.)
+
+   Sometime in late 2004 this was reverted in glibc.
 */
 
 static Rboolean have_broken_mktime(void)
@@ -192,11 +194,18 @@ static double mktime00 (struct tm *tm)
 {
     int day = 0;
     int i, year, year0;
+    double excess = 0.0;
 
     day = tm->tm_mday - 1;
     year0 = 1900 + tm->tm_year;
     /* safety check for unbounded loops */
-    if (abs(year0 - 1970) > 5000) return (double)(-1);
+    if (year0 > 3000) {
+	excess = (int)(year0/2000) - 1;
+	year0 -= excess * 2000;
+    } else if (year0 < 0) {
+	excess = -1 - (int)(-year0/2000);
+	year0 -= excess * 2000;
+    }
 
     for(i = 0; i < tm->tm_mon; i++) day += days_in_month[i];
     if (tm->tm_mon > 1 && isleap(year0)) day++;
@@ -214,28 +223,49 @@ static double mktime00 (struct tm *tm)
     if ((tm->tm_wday = (day + 4) % 7) < 0) tm->tm_wday += 7;
 
     return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
-	+ (day * 86400.0);
+	+ (day + excess * 730485) * 86400.0;
 }
 
 static double guess_offset (struct tm *tm)
 {
     double offset, offset1, offset2;
-    int oldmonth, oldyear, olddst, oldwday, oldyday;
+    int i, wday, year, oldmonth, oldyear, olddst, oldwday, oldyday, oldmday;
 
     /*
-       adjust as best we can for timezones: if isdst is unknown,
-       use the smaller offset at same day in Jan or July 2000
+       Adjust as best we can for timezones: if isdst is unknown, use
+       the smaller offset at same day in Jan or July of a valid year.
+       We don't know the timezone rules, but if we choose a year with
+       July 1 on the same day of the week we will likely get guess
+       right (since they are usually on Sunday mornings).
     */
     oldmonth = tm->tm_mon;
     oldyear = tm->tm_year;
     olddst = tm->tm_isdst;
     oldwday = tm->tm_wday;
     oldyday = tm->tm_yday;
+    oldmday = tm->tm_mday;
+
+    /* so now look for a suitable year */
+    tm->tm_mon = 6;
+    tm->tm_mday = 1;
+    tm->tm_isdst = -1;
+    mktime00(tm);  /* to get wday valid */
+    wday = tm->tm_wday;
+    for(i = 70; i < 78; i++) { /* These cover all the possibilities */
+	tm->tm_year = i;
+	mktime(tm);
+	if(tm->tm_wday == wday) break;
+    }
+    year = i;
+
+    /* Now look up offset in January */
+    tm->tm_mday = oldmday;
     tm->tm_mon = 0;
-    tm->tm_year = 100;
+    tm->tm_year = year;
     tm->tm_isdst = -1;
     offset1 = (double) mktime(tm) - mktime00(tm);
-    tm->tm_year = 100;
+    /* and in July */
+    tm->tm_year = year;
     tm->tm_mon = 6;
     tm->tm_isdst = -1;
     offset2 = (double) mktime(tm) - mktime00(tm);
@@ -279,6 +309,7 @@ static double mktime0 (struct tm *tm, const int local)
 #endif
     if(OK) {
 	res = (double) mktime(tm);
+	if (res == (double)-1) return res;
 #ifndef HAVE_POSIX_LEAPSECONDS
         for(i = 0; i < 22; i++)
             if(res > leapseconds[i]) res -= 1.0;
@@ -293,7 +324,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 {
     double d = *tp;
     int day;
-    int y, tmp, mon, left, diff;
+    int y, tmp, mon, left, diff, diff2;
     struct tm *res= ltm;
     time_t t;
 
@@ -335,13 +366,24 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     res->tm_mday = day + 1;
 
     if(local) {
+	int shift;
 	/*  daylight saving time is unknown */
 	res->tm_isdst = -1;
 
 	/* Try to fix up timezone differences */
-        diff = guess_offset(res);
-	res->tm_min -= diff/60;
+        diff = guess_offset(res)/60;
+	shift = res->tm_min + 60*res->tm_hour;
+	res->tm_min -= diff;
 	validate_tm(res);
+	res->tm_isdst = -1;
+	/* now this might be a different day */
+	if(shift - diff < 0) res->tm_yday--;
+	if(shift - diff > 24) res->tm_yday++;	
+	diff2 = guess_offset(res)/60;
+	if(diff2 != diff) {
+	    res->tm_min += (diff - diff2);
+	    validate_tm(res);
+	}
 	return res;
     } else {
 	res->tm_isdst = 0; /* no dst in GMT */
@@ -836,7 +878,10 @@ SEXP do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(tm.tm_mday == NA_INTEGER || tm.tm_mon == NA_INTEGER ||
 	   tm.tm_year == NA_INTEGER || validate_tm(&tm) < 0)
 	    REAL(ans)[i] = NA_REAL;
-	else REAL(ans)[i] = mktime00(&tm)/86400;
+	else {
+	    double tmp = mktime00(&tm);
+	    REAL(ans)[i] = (tmp==-1) ? NA_REAL : tmp/86400;
+	}
     }
 
     PROTECT(class = allocVector(STRSXP, 1));

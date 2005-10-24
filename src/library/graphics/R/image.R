@@ -4,8 +4,8 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
 		   y = seq(0, 1, len = ncol(z)),
 		   z,
 		   zlim = range(z[is.finite(z)]),
-		   xlim = range(x[is.finite(x)]),
-		   ylim = range(y[is.finite(y)]),
+		   xlim = range(x),
+		   ylim = range(y),
 		   col = heat.colors(12), add = FALSE,
 		   xaxs = "i", yaxs = "i", xlab, ylab,
                    breaks, oldstyle=FALSE, ...)
@@ -35,6 +35,8 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
 	if (missing(ylab))
 	    ylab <- if (missing(y)) "" else deparse(substitute(y))
     }
+    if (any(!is.finite(x)) || any(!is.finite(y)))
+        stop("'x' and 'y' values must be finite and non-missing")
     if (any(diff(x) <= 0) || any(diff(y) <= 0))
 	stop("increasing 'x' and 'y' values expected")
     if (!is.matrix(z))
@@ -49,14 +51,10 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
         y <- c(y[1] - dy[1], y[-length(y)]+dy,
                y[length(y)]+dy[length(y)-1])
     }
-    if (length(x) == 1) x <- par("usr")[1:2]
-    if (length(y) == 1) y <- par("usr")[3:4]
-    if (length(x) != nrow(z)+1 || length(y) != ncol(z)+1)
-        stop("dimensions of z are not length(x)(+1) times length(y)(+1)")
 
     if (missing(breaks)) {
         nc <- length(col)
-        if (any(!is.finite(zlim)) || diff(zlim) < 0)
+        if (!missing(zlim) && (any(!is.finite(zlim)) || diff(zlim) < 0))
             stop("invalid z limits")
         if (diff(zlim) == 0)
             zlim <- if (zlim[1] == 0) c(-1, 1)
@@ -78,5 +76,10 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
     if (!add)
 	plot(0, 0, xlim = xlim, ylim = ylim, type = "n", xaxs = xaxs,
 	     yaxs = yaxs, xlab = xlab, ylab = ylab, ...)
+    ## need plot set up before we do this
+    if (length(x) <= 1) x <- par("usr")[1:2]
+    if (length(y) <= 1) y <- par("usr")[3:4]
+    if (length(x) != nrow(z)+1 || length(y) != ncol(z)+1)
+        stop("dimensions of z are not length(x)(+1) times length(y)(+1)")
     .Internal(image(as.double(x), as.double(y), as.integer(zi), col))
 }

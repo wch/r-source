@@ -83,12 +83,22 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                ql <- n*(n+1)/2 - qu
                                uci <- diffs[qu]
                                lci <- diffs[ql+1]
+                               achieved.alpha<-2*psignrank(trunc(qu),n)
+                               if (achieved.alpha-alpha > (alpha)/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-signif(achieved.alpha,2)
+                               }
                                c(uci, lci)
                            },
                            "greater"= {
                                qu <- qsignrank(alpha, n)
                                if(qu == 0) qu <- 1
                                uci <- diffs[qu]
+                               achieved.alpha<-psignrank(trunc(qu),n)
+                               if (achieved.alpha-alpha > (alpha)/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-signif(achieved.alpha,2)
+                               }
                                c(uci, +Inf)
                            },
                            "less"= {
@@ -96,6 +106,11 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                if(qu == 0) qu <- 1
                                ql <- n*(n+1)/2 - qu
                                lci <- diffs[ql+1]
+                               achieved.alpha<-psignrank(trunc(qu),n)
+                               if (achieved.alpha-alpha > (alpha)/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-signif(achieved.alpha,2)
+                               }
                                c(-Inf, lci)
                            })
                 attr(cint, "conf.level") <- conf.level
@@ -131,6 +146,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 x <- x + mu
                 alpha <- 1 - conf.level
                 ## These are sample based limits for the median
+                ## [They don't work if alpha is too high]
                 mumin <- min(x)
                 mumax <- max(x)
                 ## wdiff(d, zq) returns the absolute difference between
@@ -159,7 +175,6 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 }
                 ## Here we optimize the function wdiff in d over the set
                 ## c(mumin, mumax).
-                ##
                 ## This returns a value from c(mumin, mumax) for which
                 ## the asymptotic Wilcoxon statistic is equal to the
                 ## quantile zq.  This means that the statistic is not
@@ -168,19 +183,50 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ##
                 ## As in the exact case, interchange quantiles.
                 cint <- switch(alternative, "two.sided" = {
-                    l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha/2, lower=FALSE))$root
-                    u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha/2))$root
-                    c(l, u)
+                  repeat({
+                    mindiff<-wdiff(mumin,zq=qnorm(alpha/2,lower=FALSE))
+                    maxdiff<-wdiff(mumax,zq=qnorm(alpha/2))
+                    if(mindiff<0 || maxdiff>0){
+                      alpha<-alpha*2
+                    } else break
+                    })
+                  if(1-conf.level < alpha*0.75){
+                    conf.level<-1-alpha
+                    warning("Requested conf.level not achievable")
+                  }
+                  l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                               zq=qnorm(alpha/2, lower=FALSE))$root
+                  u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                               zq=qnorm(alpha/2))$root
+                  c(l, u)
                 }, "greater"= {
-                    l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha, lower=FALSE))$root
+                  repeat({
+                    mindiff<-wdiff(mumin,zq=qnorm(alpha,lower=FALSE))
+                    if(mindiff<0){
+                      alpha<-alpha*2
+                    } else break
+                    })
+                  if(1-conf.level < alpha*0.75){
+                    conf.level<-1-alpha
+                    warning("Requested conf.level not achievable")
+                  }
+                  l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                               zq=qnorm(alpha, lower=FALSE))$root
                     c(l, +Inf)
                 }, "less"= {
-                    u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                  repeat({
+                    maxdiff<-wdiff(mumax,zq=qnorm(alpha))
+                    if(maxdiff>0){
+                      alpha<-alpha*2
+                    } else break
+                    })
+                  if(1-conf.level < alpha*0.75){
+                    conf.level<-1-alpha
+                    warning("Requested conf.level not achievable")
+                  }
+                  u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
                                   zq=qnorm(alpha))$root
-                    c(-Inf, u)
+                  c(-Inf, u)
                 })
                 attr(cint, "conf.level") <- conf.level
                 ESTIMATE <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
@@ -244,12 +290,22 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                ql <- n.x*n.y - qu
                                uci <- diffs[qu]
                                lci <- diffs[ql + 1]
+                               achieved.alpha<-2*pwilcox(trunc(qu),n.x,n.y)
+                               if (achieved.alpha-alpha > alpha/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-achieved.alpha
+                               }
                                c(uci, lci)
                            },
                            "greater"= {
                                qu <- qwilcox(alpha, n.x, n.y)
                                if(qu == 0) qu <- 1
                                uci <- diffs[qu]
+                               achieved.alpha<-2*pwilcox(trunc(qu),n.x,n.y)
+                               if (achieved.alpha-alpha > alpha/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-achieved.alpha
+                               }
                                c(uci, +Inf)
                            },
                            "less"= {
@@ -257,6 +313,11 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                if(qu == 0 ) qu <- 1
                                ql <- n.x*n.y - qu
                                lci <- diffs[ql + 1]
+                               achieved.alpha<-2*pwilcox(trunc(qu),n.x,n.y)
+                               if (achieved.alpha-alpha > alpha/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-achieved.alpha
+                               }
                                c(-Inf, lci)
                            })
                 attr(cint, "conf.level") <- conf.level

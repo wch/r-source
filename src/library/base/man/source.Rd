@@ -30,13 +30,13 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{chdir}{logical; if \code{TRUE} and \code{file} is a pathname,
     the \R working directory is temporarily changed to the directory
     containing \code{file} for evaluating.}
-  \item{encoding}{character string.  The encoding to be assumed for the
-    when \code{file} is a character string: see \code{\link{file}}.  A
+  \item{encoding}{character string.  The encoding to be assumed when
+    \code{file} is a character string: see \code{\link{file}}.  A
     possible value is \code{"unknown"}: see the Details.}
 }
 \description{
-  \code{source} causes \R to accept its input from the named file (the
-  name must be quoted) or connection.  Input is read and
+  \code{source} causes \R to accept its input from the named file or URL
+  (the name must be quoted) or connection.  Input is read and
   \code{\link{parse}}d by from that file until the end of the file is
   reached, then the parsed expressions are evaluated sequentially in the
   chosen environment.
@@ -54,10 +54,11 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   limits might take effect: if exceeded they generate an error.
 
   This paragraph applies if \code{file} is a filename (rather than a
-  connection). If \code{encoding = "unknown"}, an attempt is made to
-  guess the encoding.  The result of \code{\link{localeToCharset}} is
+  connection).  If \code{encoding = "unknown"}, an attempt is made to
+  guess the encoding.  The result of \code{\link{localeToCharset}()} is
   used a guide.  If \code{encoding} has two or more elements, they are
-  tried in turn.
+  tried in turn until the file/URL can be read without error in the
+  trial encoding.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -1120,13 +1120,10 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return complex_math1(call, op, args, env);
 	else
 	    return math1(CAR(args), atan, call);
-    case 2:
-	if (isComplex(CAR(args)) || isComplex(CDR(args)))
-	    return complex_math2(call, op, args, env);
-	else
-	    return math2(CAR(args), CADR(args), atan2, call);
+    /* prior to 2.3.0, 2 args were allowed, 
+       but this was never documented */ 
     default:
-	error(_("%d arguments passed to 'atan' which requires 1 or 2"), n);
+	error(_("%d arguments passed to 'atan' which requires 1"), n);
     }
     return s;			/* never used; to keep -Wall happy */
 }

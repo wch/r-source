@@ -52,6 +52,8 @@
 
 Rboolean NonNullStringMatch(SEXP s, SEXP t)
 {
+    /* "" or NA string matches nothing */
+    if (s == NA_STRING || t == NA_STRING) return FALSE;
     if (CHAR(s)[0] && CHAR(t)[0] && strcmp(CHAR(s), CHAR(t)) == 0)
 	return TRUE;
     else

@@ -7,18 +7,17 @@
 # This file is distributed under the same license as the R package.
 msgid ""
 msgstr ""
-"Project-Id-Version:        R 2.1.0\n"
+"Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2005-02-24 09:15\n"
-"PO-Revision-Date:          2005-03-15 00:00-0600\n"
-"Last-Translator:           Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
-"Language-Team:             Russian\n"
-"MIME-Version:              1.0\n"
-"Content-Type:              text/plain; charset=KOI8-R\n"
+"PO-Revision-Date: 2005-09-28 06:16+0300\n"
+"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"First-Translator:          Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"First-Translator: Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "must have at least 'ord' knots"
 msgstr "должно быть по крайней мере 'ord' узлов"
@@ -27,53 +26,53 @@ msgid "length of 'derivs' must match length of 'x'"
 msgstr "длина 'derivs' должна соответствовать длине 'x'"
 
 msgid "'ord' must be positive integer, at most the number of knots"
-msgstr ""
+msgstr "'ord' должен быть положительным целым, максимум количеством узлов"
 
 msgid "need at least 2*ord -1 (=%d) knots"
 msgstr "необходимо как минимум 2*ord -1 (=%d) узлов"
 
-msgid ""
-"the 'x' data must be in the range %f to %f unless you set 'outer.ok = TRUE'"
-msgstr ""
+msgid "the 'x' data must be in the range %f to %f unless you set 'outer.ok = TRUE'"
+msgstr "данные 'x' должны быть в промежутке от %f до %f, если Вы не установили 'outer.ok = TRUE'"
 
 msgid "values of 'x' must be distinct"
-msgstr ""
+msgstr "значения 'x' должны бить разными"
 
 msgid "'formula' must be of the form \"y ~ x\""
-msgstr ""
+msgstr "'formula' должна быть в виде \"y ~ x\""
 
 msgid "lengths of 'x' and 'y' must match"
-msgstr ""
+msgstr "длины 'x' и 'y' должны соответствовать"
 
 msgid "values of 'x' must be strictly increasing"
-msgstr ""
+msgstr "значения 'x' должны постоянно возрастать"
 
 msgid "'ord' must be >= 2"
-msgstr ""
+msgstr "'ord' должен быть >= 2"
 
 msgid "the range of 'x' values exceeds one period"
-msgstr ""
+msgstr "размах значений 'x' превышает один период"
 
 msgid "knot positions must be non-decreasing"
-msgstr ""
+msgstr "позиции узлов не должны убывать"
 
 msgid "lengths of 'x' and 'y' must be the same"
-msgstr ""
+msgstr "длины 'x' и 'y' должны быть одинаковы"
 
 msgid "'deriv' must be between 0 and %d"
-msgstr ""
+msgstr "'deriv' должно быть между 0 и %d"
 
 msgid "knot positions must be strictly increasing"
-msgstr ""
+msgstr "позиции узлов должны постоянно возрастать"
 
 msgid "spline must be monotone"
-msgstr ""
+msgstr "кривая должна быть монотонной"
 
 msgid "'degree' must be integer >= 1"
-msgstr ""
+msgstr "'degree' должна быть целым >= 1"
 
 msgid "'df' was too small; have used"
-msgstr ""
+msgstr "'df' был слишком мал; использован"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
-msgstr ""
+msgstr "некоторые значения 'x' за граничными узлами могут привести к неправильно обусловленным основаниям"
+

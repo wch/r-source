@@ -7,6 +7,8 @@
 \alias{.Renviron}
 \alias{.First}
 \alias{.First.sys}
+\concept{environment variable}
+
 \title{Initialization at Start of an R Session}
 \usage{
 .First <- function() { \dots\dots }
@@ -21,7 +23,7 @@
   variables.  The name of the site file is the one pointed to by the
   environment variable \env{R\_ENVIRON}; if this is unset or empty,
   \file{\$R\_HOME/etc/Renviron.site} is used (if it exists, which it
-  does not in a \dQuote{factory-fresh} installation).
+  does not in a \dQuote{factory-fresh} installation except on Windows).
   The user files searched for are \file{.Renviron} in the current or in
   the user's home directory (in that order).
   See \bold{Details} for how the files are read.
@@ -100,7 +102,8 @@
   the start-up processing.  It contains environment variables set by \R
   in the configure process.  Values in that file can be overriden in
   site or user environment files: do not change
-  \file{\$R\_HOME/etc/Renviron} itself.
+  \file{\$R\_HOME/etc/Renviron} itself.  Note that this is distinct from
+  \file{\$R\_HOME/etc/Renviron.site}.
 }
 #endif
 \section{Historical notes}{

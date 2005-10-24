@@ -537,6 +537,18 @@ function(chname, package = NULL, lib.loc = NULL,
                     domain = NA)
         return(invisible(dll_list[[ seq(along = dll_list)[ind] ]]))
     }
+    if(.Platform$OS.type == "windows") {
+        ## Make it possible to find other DLLs in the same place as
+        ## @code{file}, so that e.g. binary packages can conveniently
+        ## provide possibly missing DLL dependencies in this place
+        ## (without having to bypass the default package dynload
+        ## mechanism).  Note that this only works under Windows, and a
+        ## more general solution will have to be found eventually.
+        PATH <- Sys.getenv("PATH")
+        Sys.putenv("PATH" =
+                   paste(gsub("/", "\\\\", dirname(file)), PATH, sep=";"))
+        on.exit(Sys.putenv("PATH" = PATH))
+    }
     if(verbose)
         message(gettextf("now dyn.load(\"%s\") ...", file), domain = NA)
     dll <- dyn.load(file, ...)

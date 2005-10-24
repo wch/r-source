@@ -99,6 +99,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 			    installWithVers = FALSE,
                             checkBuilt = FALSE, type = getOption("pkgType"))
 {
+    ask  # just a check that it is valid before we start work
     text.select <- function(old)
     {
         update <- NULL
@@ -229,8 +230,9 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
 new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos),
-                         method, available = NULL, ask = FALSE)
+                         method, available = NULL, ask = FALSE, destdir = NULL)
 {
+    ask  # just a check that it is valid before we start work
     if(is.null(lib.loc)) lib.loc <- .libPaths()
 
     instp <- installed.packages(lib.loc = lib.loc)
@@ -285,11 +287,21 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                                         title = "New packages to be installed")
                             , res)]
     if(length(update)) {
-        install.packages(update, lib = lib.loc[1], repos = repos,
-                         method = method, available = available)
-        # now check if they were installed and update 'res'
-        updated <- update[update %in%  list.files(lib.loc[1])]
-        res <- res[!res %in% update]
+        install.packages(update, lib = lib.loc[1], contriburl = contriburl,
+                         method = method, available = available,
+                         destdir = destdir)
+        # Now check if they were installed and update 'res'
+        dirs <- list.files(lib.loc[1])
+        updated <- update[update %in% dirs]
+        # Need to check separately for bundles
+        av <- available[update, , drop = FALSE]
+        bundles <- av[!is.na(av[, "Contains"]), , drop=FALSE]
+        for(bundle in rownames(bundles)) {
+            contains <- strsplit(bundles[bundle, "Contains"],
+                                 "[[:space:]]+")[[1]]
+            if(all(contains %in% dirs)) updated <- c(updated, bundle)
+        }
+        res <- res[!res %in% updated]
     }
     res
 }
@@ -415,7 +427,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
         ok <- ok & !is.na(ok)
         if(!any(ok))
             warning(gettextf("no package '%s' at the repositories", p),
-                    domain = NA, immediate = TRUE)
+                    domain = NA, immediate. = TRUE)
         else {
             if(sum(ok) > 1) { # have multiple copies
                 vers <- package_version(available[ok, "Version"])
@@ -452,7 +464,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                     retval <- rbind(retval, c(p, destfile))
                 else
                     warning(gettextf("download of package '%s' failed", p),
-                            domain = NA, immediate = TRUE)
+                            domain = NA, immediate. = TRUE)
             }
         }
     }
@@ -476,14 +488,13 @@ contrib.url <- function(repos, type = getOption("pkgType"))
     }
     if("@CRAN@" %in% repos) stop("trying to use CRAN without setting a mirror")
 
-    ver <- paste(R.version$major, substring(R.version$minor, 1, 1), sep = ".")
-    res <-
-        switch(type,
-               "source" = paste(gsub("/$", "", repos), "src", "contrib", sep="/"),
-               "mac.binary" = paste(gsub("/$", "", repos), "bin", "macosx", ver, sep = "/"),
-               "win.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep="/")
+    ver <- paste(R.version$major,
+                 strsplit(R.version$minor, ".", fixed=TRUE)[[1]][1], sep = ".")
+    res <- switch(type,
+		"source" = paste(gsub("/$", "", repos), "src", "contrib", sep="/"),
+                "mac.binary" = paste(gsub("/$", "", repos), "bin", "macosx", R.version$arch, "contrib", ver, sep = "/"),
+                "win.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep="/")
                )
-    names(res) <- names(repos)
     res
 }
 
@@ -491,7 +502,10 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 chooseCRANmirror <- function(graphics = TRUE)
 {
     if(!interactive()) stop("cannot choose a CRAN mirror non-interactively")
-    m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
+    m <- try(read.csv(url("http://cran.r-project.org/CRAN_mirrors.csv"),
+                      as.is=TRUE))
+    if(inherits(m, "try-error"))
+        m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
     res <- menu(m[,1], graphics, "CRAN mirror")
     if(res > 0) {
         URL <- m[res, "URL"]

@@ -9,7 +9,7 @@ export("Rdindex",
        "texi2dvi", "buildVignettes", "pkgVignettes", "pkgDepends",
        "getDepList", "installFoundDepends", "vignetteDepends",
        "write_PACKAGES", "xgettext", "xgettext2pot", "xngettext",
-       "encoded_text_to_latex")
+       "encoded_text_to_latex", "charset_to_Unicode", "Adobe_glyphs")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 

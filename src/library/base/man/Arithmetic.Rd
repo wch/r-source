@@ -49,6 +49,16 @@ x \%/\% y
   arguments are integer, the result of \code{/} and \code{^} is numeric
   and of the other operators integer (with overflow returned as
   \code{NA} with a warning).
+
+  The rules for determining the attributes of the result are rather
+  complicated.  Most attributes are taken from the longer argument, the
+  first if they are of the same length.  Names will be copied from the
+  first if it is the same length as the answer, otherwise from the
+  second if that is.  For time series, these operations are allowed only
+  if the series are compatible, when the class and \code{\link{tsp}}
+  attribute of whichever is a time series (the same, if both are) are
+  used.  For arrays (and an array result) the dimensions and dimnames
+  are taken from first argument if it is an array, otherwise the second.
 }
 \details{
   The binary arithmetic operators are generic functions: methods can be

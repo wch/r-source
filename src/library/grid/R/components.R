@@ -196,7 +196,6 @@ editDetails.yaxis <- function(x, specs) {
     } else {
       x <- addGrob(x, make.yaxis.major(x$at, x$main))
       x <- addGrob(x, make.yaxis.ticks(x$at, x$main))
-      x <- updateYLabels(x)
       x <- updateYlabels(x)
     }
   }

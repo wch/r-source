@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:26+0100\n"
+"POT-Creation-Date: 2005-09-27 08:38+0100\n"
 "PO-Revision-Date: 2005-06-02 16:09+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -19,21 +19,21 @@ msgstr ""
 msgid "Cannot clip to rotated viewport"
 msgstr "rotated viewport は省略することが出来ません"
 
-#: grid.c:639 grid.c:644 grid.c:741 grid.c:746
+#: grid.c:641 grid.c:646 grid.c:743 grid.c:748
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 "トップレベルの viewport は pop することが出来ません（grid と グラフィックス出"
 "力を混同していませんか？）"
 
-#: grid.c:937
+#: grid.c:939
 msgid "attempt to plot on null device"
 msgstr "ヌルデバイスに作図を試みる"
 
-#: grid.c:1217
+#: grid.c:1219
 msgid "There is no layout defined"
 msgstr "layout が定義されていません"
 
-#: grid.c:1794
+#: grid.c:1796
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "不正な円の半径です（非負でなければなりません）"
 

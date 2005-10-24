@@ -420,21 +420,21 @@ Using standard PostScript fonts.  This works well both for on-screen
 viewing and for printing, and is the default.  The one disadvantage is
 that the Usage and Examples sections may come out rather wide.
 
-@item @code{lm}
+@item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as
 part of a @TeX{} distribution, but can obtained from
 @url{http://www.ctan.org/tex-archive/fonts/ps-type1/lm} and mirrors.
 This uses fonts rather similar to Computer Modern, but is not so good
 on-screen as @code{times}.
 
-@item @code{cm-super}
+@item cm-super
 Using type-1 versions of the Computer Modern fonts by Vladimir Volovich.
 This is a large installation, obtainable from
 @url{http://www.ctan.org/tex-archive/fonts/ps-type1/cm-super} and its
 mirrors.  These type-1 fonts have poor hinting and so are nowhere near
 so readable on-screen as the other three options.
 
-@item @code{ae}
+@item ae
 A package to use composites of Computer Modern fonts.  This works well
 most of the time, and its PDF is more readable on-screen than the
 previous two options.  There are three fonts for which it will need to
@@ -703,26 +703,17 @@ linear algebra routines. Prebuilt @code{Rblas.dll} for various Pentium
 and AthlonXP chips are available in the @file{windows/contrib/ATLAS}
 area on @acronym{CRAN}.
 
-Another tuned BLAS which is available for some CPUs is by Kazushige
-Goto.  He does not allow redistribution: his builds are currently
-available via
-@url{http://www.cs.utexas.edu/users/kgoto/signup_first.html}.  To make
-use of this, put the @file{DLL} somewhere in your path or in
-@file{@var{R_HOME}/bin}, and edit
-@file{@var{R_HOME}/src/gnuwin32/MkRules} to define @code{USE_GOTO=YES}
-and the name of the @file{DLL} (something like
-@file{libgoto_prescott-r0.99.3.dll}).
-
-Specifying a Goto BLAS takes preference over ATLAS, and seems a little
-faster.  However, as it is compiled for MSVC, we have been unable to
-make it work for complex arithmetic and so it is only used for real
-linear algebra.
-
-Dr. Goto currently supplies DLLs for P4 and Opteron/Athlon64
-processors.  Previously there were versions for PIII (that also worked
-on Athlon XP).  (@uref{http://en.wikipedia.org/wiki/Pentium_4} may help
-decipher the P4 code names used.)
-
+Another tuned BLAS which has been available for some CPUs is by
+Kazushige Goto.  This is currently (October 2005) no longer available
+for Windows, and it seems that it will in future only to be offered via
+a source-code licence.  If you have an earlier version, put the
+@file{DLL} somewhere in your path or in @file{@var{R_HOME}/bin}, and
+edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to define
+@code{USE_GOTO=YES} and the name of the @file{DLL} (something like
+@file{libgoto_prescott-r0.99.3.dll}).  Specifying a Goto BLAS takes
+preference over ATLAS, and seems a little faster.  However, as it is
+compiled for MSVC, we have been unable to make it work for complex
+arithmetic and so it is only used for real linear algebra.
 
 @end itemize
 
@@ -737,6 +728,9 @@ Open a command window at @file{@var{R_HOME}/src/gnuwin32}.  Edit
 @file{MkRules} to set the appropriate paths as needed and to set the
 type(s) of help that you want built.  @strong{Beware}: @file{MkRules}
 contains tabs and some editors (e.g., WinEdt) silently remove them.
+Look at the comments in @file{front-ends/Makefile} and perhaps uncomment
+commands to increase the stack size and make the executables
+large-address-aware.
 Then run
 
 @example
@@ -966,7 +960,7 @@ please rename it to indicate that it is customized.
 
 You will need i386-mingw32 cross-compilers installed and in your path.
 There is currently a complete set of tools at
-@url{http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross4.tar.bz2} (Just
+@url{http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2} (Just
 unpack this somewhere and put its @file{bin} directory in your path.)
 
 You will need @code{Perl}, @code{zip} and @code{unzip} installed
@@ -1019,8 +1013,8 @@ binaries for MacOS X (at the time of writing only for PowerPC) for a
 base distribution and a large number of add-on packages from
 @acronym{CRAN} to run on Mac OS X version 10.2.0 or higher.
 
-The simplest way is to use @file{R.dmg.sit}.  Just double-click on the
-icon and the archive will be expanded as an image di file. Read the
+The simplest way is to use @file{R.dmg}.  Just double-click on the
+icon and the disk image file will be mounted. Read the
 @file{ReadMe.txt} inside the disk image and follow the instructions.
 
 See the @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
@@ -1050,9 +1044,9 @@ make
 @noindent
 and then sit back and wait.  The first two options are the default (and
 strongly recommended), and with some toolsets have been essential.  The
-second line of options is needed only if you want to build @R{} for use
-with @code{R.app} Console, and imply @option{--enable-R-shlib} to build
-@R{} as a shared library.
+second line of options is also default on Mac OS X, but needed only if
+you want to build @R{} for use with @code{R.app} Console, and imply
+@option{--enable-R-shlib} to build @R{} as a shared library.
 
 These options configure @R{} to be built and installed as a framework
 called @file{R.framework}.  The default path for @file{R.framework} is
@@ -1142,7 +1136,7 @@ all those it depends on that are not already installed, use e.g.
 
 
 What @code{install.packages} does by default is different on Unix and
-Windows.  On Unix-alikes (include MacOS X unless running from the `AQUA'
+Windows.  On Unix-alikes (include MacOS X unless running from the GUI
 console) it consults the list of available @emph{source} packages on
 @acronym{CRAN} (or other repository/ies), downloads the latest version
 of the package sources, and installs them (via @code{R CMD INSTALL}).
@@ -1165,20 +1159,19 @@ character vector by the argument @code{repos}: these can include a
 @acronym{CRAN} mirror, Bioconductor, Omegahat, local archives, local
 files, @dots{}).
 
-@findex install.binaries
 On Mac OS X @code{install.packages} works as it does on other Unix-like
-systems, but there is an additional function @code{install.binaries}
-that will download and install binary packages from @acronym{CRAN}.
-These Macintosh binary package files have the extension @samp{tgz}.  The
-Aqua GUI provides for installation of either binary or source packages,
-from @acronym{CRAN} or local files.
+systems, but there is an additional type @code{mac.binary} that can be
+passed to @code{install.package} in order to download and install binary
+packages from @acronym{CRAN}. These Macintosh binary package files have
+the extension @samp{tgz}.  The R GUI provides for installation of either
+binary or source packages, from @acronym{CRAN} or local files.
 
 @menu
 * Customizing compilation under Unix::  
-* Customising compilation in Windows::  
+* Customizing compilation in Windows::  
 @end menu
 
-@node Customizing compilation under Unix, Customising compilation in Windows, Installing packages, Installing packages
+@node Customizing compilation under Unix, Customizing compilation in Windows, Installing packages, Installing packages
 @subsection Customizing compilation under Unix
 
 The R system and package-specific compilation flags can be overridden or
@@ -1193,8 +1186,8 @@ reasonable amount of diagnostic messaging (``warnings'') when compiling,
 such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the Gnu
 Compiler Collection.
 
-@node Customising compilation in Windows,  , Customizing compilation under Unix, Installing packages
-@subsection Customising compilation in Windows
+@node Customizing compilation in Windows,  , Customizing compilation under Unix, Installing packages
+@subsection Customizing compilation in Windows
 @findex MakeDll
 @findex Makevars.win
 @findex HELP
@@ -1418,8 +1411,8 @@ specific country and language.
 covered English and most Western European languages (if not necessarily
 their currency symbols).  What characters are valid in names was taken
 from the current locale.  In general other locales with single-byte
-encodings worked, but e.g. @code{postscript()} and @code{pdf()} need to
-be told about the encoding in use.
+encodings worked, but e.g. @code{postscript()} and @code{pdf()} needed
+to be told about the encoding in use.
 
 Full internationalization can be enabled when @R{} is built under
 Unix-alikes by the (default) @command{configure} option
@@ -1728,15 +1721,17 @@ If you want to build from the R Subversion repository you need Perl,
 @node Useful libraries and programs,  , Essential programs, Essential and useful other programs in Unix
 @section Useful libraries and programs
 
-The use of encodings and the @R{} @code{iconv} function depend on having
-the system @code{iconv} function: this is part of recent versions of
-@code{glibc} and many Unixes.  You can also install @acronym{GNU}
-@code{libiconv} (which is not the same as that in @code{glibc}),
-possibly as a plug-in replacement: see
-@url{http://www.gnu.org/software/libiconv/}.  Note that the @R{} usage
-requires @code{iconv} to be able to translate between @code{"latin1"}
-and @code{"UTF-8"} and to recognize @code{""} as the current encoding --
-this is not true of most commercial Unixes.
+The use of multi-byte characters, conversion between encodings and the
+@R{} @code{iconv} function depend on having the system @code{iconv}
+function: this is part of recent versions of @code{glibc} and many
+Unixes.  You can also install @acronym{GNU} @code{libiconv} (which is
+not the same as that in @code{glibc}), possibly as a plug-in
+replacement: see @url{http://www.gnu.org/software/libiconv/}.  Note that
+the @R{} usage requires @code{iconv} to be able to translate between
+@code{"latin1"} and @code{"UTF-8"}, to recognize @code{""} as the
+current encoding and to translate to and from the Unicode wide-character
+formats @code{"UCS-[24][BL]E"} -- this is not true of most commercial
+Unixes.
 
 The ability to use translated messages makes use of @code{gettext} and
 most likely needs @acronym{GNU} @code{gettext}: you do need this to
@@ -1819,19 +1814,22 @@ use a multi-threaded ATLAS by specifying
 --with-blas="-lptf77blas -lpthread -latlas"
 @end example
 
-Another tuned BLAS which is available for some processors under Linux is
-by Kazushige Goto, currently available at
-@url{http://www.cs.utexas.edu/users/flame/goto/}.  Once this is is
-installed, it can be used by configuring with one of
-
+Users of Fedora Core Extras will want to use
 @example
---with-blas=goto
---with-blas=-lgoto
+--with-blas="-L/usr/lib/sse2 -lf77blas -latlas"
 @end example
 
-Multi-threaded versions of Goto's BLAS are available (and indeed,
-version 0.99-3 seems only to be available in a multi-threaded version).
-These are likely to require
+@noindent
+replacing @samp{sse2} by @samp{sse} for older (e.g.@ PIII) CPUS and
+by @samp{atlas} for old (e.g.@ PII) CPUS.
+
+
+Another tuned BLAS which is available for some processors under Linux is
+by Kazushige Goto, currently available @emph{for academic use only}
+(after registering) via
+@uref{http://www.tacc.utexas.edu/resources/software/software.php}.
+(Recent versions are multi-threaded only.)  Once this is installed, it
+can be used by configuring with
 
 @example
 --with-blas="-lgoto -lpthread"
@@ -1907,12 +1905,18 @@ DGEBRD gave error code -10
 @end example
 
 @noindent
-(from the Debian @code{-llapack} which was current in late 2002).  Other
+(seen with both the Debian @code{-llapack} which was current in late
+2002, and Fedora Core 4 @code{-llapack} in September 2005).  Other
 potential problems are incomplete versions of the libraries: for example
 @code{libsunperf} from Sun Forte 6.x was missing the entry point for
 @code{DLANGE} and @code{vecLib} has omitted the BLAS routine
 @code{LSAME}.  For problems compiling LAPACK using recent versions of
-@samp{gcc} on @samp{ix86} Linux, see @ref{New platforms}.
+@samp{gcc} on @samp{ix86} Linux, see @ref{New platforms}: these problems
+have surfaced in Fedora Core 3's distribution, for example.
+
+Please @strong{do} bear in mind that using @option{--with-lapack} is
+`definitely @strong{not} recommended': it is provided @strong{only}
+because it is necessary on some platforms.
 
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this means
@@ -1995,7 +1999,7 @@ against the dynamic library and so such packages cannot be used from a
 @node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
 @section Internationalization support
 
-As from version 2.1.0, @R{} has some support for multi-byte character
+As from version 2.1.0, @R{} support for multi-byte character
 sets (@acronym{MBCS}), in particular for UTF-8 locales (which are
 usually identified by suffix @code{.utf8}, something like
 @code{en_GB.utf8}@footnote{AIX has to be different: it has
@@ -2003,23 +2007,23 @@ usually identified by suffix @code{.utf8}, something like
 covers all human languages simultaneously: however, a given system may
 not have fonts capable of displaying more than a few of these languages.
 
-To enable UTF-8 support, configure with default @option{--enable-mbcs}.
-This will check for a large number of features, notably support for the
-C99/UNIX98 wide character functions and for UTF-8 or MBCS support in
-X11.  If enough of these are found, @code{MBCS} will be listed as one
-of the ``Additional capabilities''.  Then if @R{} is started in a UTF-8
-locale it assumes that the terminal will supply and display
-UTF-8-encoded characters@footnote{You may have to set this with
-@code{luit}, but it should be the default in a window manager session
-started in UTF-8.}.  If run in a single-byte locale, @R{} behaves almost
-exactly as if it was configured with @option{--disable-mbcs}.
+Support for UTF-8 is selected at @command{configure} time (unless
+disabled with @option{--disable-mbcs}).  This will check for a large
+number of features, notably support for the C99/UNIX98 wide character
+functions, for UTF-8 or MBCS support in X11 and for @command{iconv} with
+a rich enough functionality.  If enough of these are found, @code{MBCS}
+will be listed as one of the ``Additional capabilities''.  Then if @R{}
+is started in a UTF-8 locale it assumes that the terminal will supply
+and display UTF-8-encoded characters@footnote{You may have to set this
+with @code{luit}, but it should be the default in a window manager
+session started in UTF-8.}.  If run in a single-byte locale, @R{}
+behaves almost exactly as if it was configured with
+@option{--disable-mbcs}.
 
 A version of @R{} with MBCS support can also be run in other multi-byte
-locales, for example those using the EUC-JP, EUC-KR and EUC-TW
-encodings.  A very few parts of @R{} currently assume that ASCII
-characters never occur as part of multi-byte character sequences, which
-is true of UTF-8 and the EUC-* locales but not some Chinese and Korean
-locales.
+locales, for example those using the EUC-JP, EUC-KR and EUC-TW encodings
+on Unix-alike and the code pages for Chinese, Japanese and Korean on
+Windows.
 
 Translation of messages is supported via GNU @code{gettext} unless
 disabled by the configure option @option{--disable-nls} or the
@@ -2383,16 +2387,41 @@ Several Linux distributions have shipped unreleased versions of
 separate comments).  Some versions of @code{gcc4} (such as that in
 Fedora Core 3) produce incorrect code.  In our experiments @code{gcc
 3.4.x} always produced faster and more reliable code.  It seems that
-@code{gcc 4.0.1} cannot compile @file{src/main/plot.c} when building R
-as a shared library on @samp{ix86} unless the optimization level is
-reduced from the default @option{-O2}.
+@code{gcc 4.0.1} and @code{gcc 4.0.2} cannot compile
+@file{src/main/plot.c} when building R as a shared library on
+@samp{ix86} unless the optimization level is reduced from the default
+@option{-O2}.
+
+Intel compilers have been used under @code{ix86} and @code{x86_64}
+Linux and @R{} contains code to set the FPU options suitably.
 
 For some comments on building on an Itanium (@samp{ia64}) Linux system
 with @command{gcc} or the Intel compilers see
 @uref{http://www.nakama.ne.jp/memo/ia64_linux/}.
 
-Attempts to use the Portland Group compilers on @samp{x86_64} have been
-unsuccessful: it seems their libc is not PIC.
+Jennifer Lai used the Portland Group compilers on @samp{x86_64} to build
+pre-2.2.0 with settings
+
+@example
+PG_HOME=/usr/pgi/linux86-64/6.0
+CC=$PG_HOME/bin/pgcc
+CFLAGS="-g -O2 -mieee-fp"
+CPPFLAGS="-I$PG_HOME/include -I$PG_HOME/include/CC"
+CPICFLAGS=-fpic
+F77=$PG_HOME/bin/pgf77
+FFLAGS=-O2
+FPICFLAGS=-fpic
+CXX=$PG_HOME/bin/pgCC
+CXXPICFLAGS=-fpic
+SHLIB_CXXLDFLAGS=-shared
+SHLIB_LDFLAGS=-shared
+LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
+@end example
+
+@noindent
+Note particularly the last, which is need to ensure that a shared
+version of @code{libc} is found.
+
 
 @node Mac OS X, Solaris, Linux, Platform notes
 @section Mac OS X
@@ -2664,17 +2693,18 @@ version has passed @command{make check} due to a problem with time
 zones (see below).  A 64-bit executable has not been successfully
 built.
 
-It appears that some (bit not all) versions of IRIX have broken
-wide-character header files and so need @code{--disable-mbcs}.
+It appears that some (but not all) versions of IRIX have broken
+wide-character header files and so may need @code{--disable-mbcs}.
 
-To build @R{} with @command{gcc} use the following configuration flags
+To build @R{} with @command{gcc} use something like the following
+configuration flags
 
 @example
 CPPFLAGS="-I/usr/freeware/include" 
 LDFLAGS="-L/usr/freeware/lib32"
 @end example
 
-To build the Tcl/Tk package you need to add
+To build the Tcl/Tk package you will most likely need to add
 
 @example
 --with-tclconfig=/usr/freeware/lib/tclConfig.sh
@@ -2684,8 +2714,8 @@ To build the Tcl/Tk package you need to add
 @noindent
 since these configuration scripts are not on your path.
 
-To build @R{} with the native compilers, use the following configuration
-flags
+To build @R{} with the native compilers, use something like the
+following configuration flags
 
 @example
 CC=cc F77=f77 CXX=CC 
@@ -2694,7 +2724,7 @@ CFLAGS="-O2" FFLAGS="-O2" CXXFLAGS="-O2"
 --with-bzlib=yes
 @end example
 
-The MipsPro compiler will not build the bzlib library, so you must use
+The MipsPro compiler will not build the @code{bzlib} library, so you must use
 the external one provided by SGI as a freeware package.
 
 After configuration, it is necessary to use @command{gmake} instead of
@@ -2744,7 +2774,7 @@ port would be greatly appreciated.
 @section AIX
 @cindex AIX
 
-On AIX 4.3.3 and AIX 5.1, it was found that the use of ``run time
+On AIX 4.3.3 and AIX 5.1/2, it was found that the use of ``run time
 linking'' (as opposed to normal AIX style linking) was required.  For
 this, the @R{} main program must be linked to the runtime linker with
 the @option{-brtl} linker option, and shareable objects must be enabled
@@ -2758,24 +2788,6 @@ When setting @code{MAIN_LDFLAGS} and @code{SHLIB_LDFLAGS} accordingly,
 note that linker flags must be escaped using @samp{-Wl,} if
 @command{gcc} is used for linking: use @samp{MAIN_LDFLAGS="-Wl,brtl"}
 and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
-
-Harald Servat Gelabert <harald at cepba dot upc dot es> reported
-success building @R{} 1.7.0 under AIX 5.1 with
-
-@example
-CC=xlc
-F77=xlf
-CXX=xlC
-CFLAGS='-O3 -qstrict -qmaxmem=8192'
-FFLAGS='-O3 -qstrict -qmaxmem=8192'
-CXXFLAGS='-O2 -qmaxmem=8192'
-MAIN_LDFLAGS='-Wl,-brtl'
-SHLIB_LDFLAGS='-Wl,-G'
-@end example
-
-@noindent
-but was unable to use the X libraries or the native BLAS (ESSL) and so
-used @option{--without-x --without-blas}.
 
 Tim Hoar <thoar at cgd dot ucar dot edu> reported success building
 @R{} 1.9.0 under AIX 5.1 in 64-bit mode with
@@ -2810,6 +2822,12 @@ SHLIB_LDFLAGS=-Wl,-G
 (note it is @code{Wl} (W ell) not @code{W1} (W one)).
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
+
+Ei-ji Nakama has reported that @file{src/main/regex.c} in @R{} 2.2.0 has
+to be compiled with @option{-D_LINUX_SOURCE_COMPAT} in @code{CFLAGS} in
+AIX 5.x (and does not work correctly with AIX 4.x).  We believe that the
+patch applied since obviates the need for this.
+
 
 @node New platforms,  , AIX, Platform notes
 @section New platforms
@@ -2913,7 +2931,8 @@ libglade-0.17
 @noindent
 It is preferable to have a complete installation of the @acronym{GNOME}
 desktop environment.  If you use Linux, then this should be provided
-with your distribution.
+with your distribution.  (Note: @samp{libglade2} is not a suitable
+version of @samp{libglade}.)
 
 Remember that some package management systems (such as @acronym{RPM} and
 deb) make a distinction between the user version of a package and the
@@ -3175,47 +3194,27 @@ You need a recent version of the MinGW port of @code{gcc} from
 @url{http://sourceforge.net/projects/mingw/}.  See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools} for updates.
 
-A recent installer is called @file{MinGW-4.1.0.exe}, which
-downloads components for SourgeForge.  We suggest you select the core
-packages and the candidate compilers (@code{gcc-3.4.4}), and then at the
-next screen select just @code{gcc-core}, @code{gcc-g++} and
-@code{gcc-g77} (and no compilers in the code list).  The screen showing
-confirmation of the selections will then look like:
+At the time of release of @R{} 2.2.0 there was an installer
+@code{MinGW-5.0.0.exe} in the `Proposed' section.  For this select the
+@samp{Candidate} package and add the @samp{g++} and @samp{g77} compilers
+to the @samp{MinGW base tools}: components will be downloaded from
+Sourceforge and unpacked.
 
-@example
-Selected components:
-      The minimal set of packages required to build C/C++
-         Install a Current version of CORE files
-      The full set of compilers packages
-         Install a Candidate version of Compilers files
-
-Additional tasks:
-      Current
-         Install Current Version Files
-            Current/runtime
-            Current/w32api
-            Current/binutils
-      Candidate
-            Candidate/gcc-core
-            Candidate/gcc-g++
-            Candidate/gcc-g77
-@end example
-
-Users have found this did not work with @file{MinGW-4.1.1.exe}: an
-alternative is to download the components individually, currently
+An alternative is to download the components individually, currently
 
 @example
 gcc-core-3.4.4-20050522-1.tar.gz
 gcc-g++-3.4.4-20050522-1.tar.gz
 gcc-g77-3.4.4-20050522-1.tar.gz
-binutils-2.15.94-20050118-1.tar.gz
+binutils-2.16.91-20050827-1.tar.gz
 mingw-runtime-3.8.tar.gz
 w32api-3.3.tar.gz
 @end example
 
 @noindent
 and unpack these into the same directory (using @command{tar zxf
-tarball_name}).
+tarball_name}).  Note that @code{mingw-runtime-3.8.tar.gz} or later is
+required to build @R{} 2.2.0.
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
@@ -3234,12 +3233,12 @@ In this case the Help Workshop will not be needed.
 @node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
 @section @LaTeX{}
 
-The @code{fptex} distribution of @LaTeX{} (directly from any CTAN node
-such as @url{http://www.ctan.org/tex-archive/systems/windows/fptex/})
-includes a suitable port of @code{pdftex}.  We have also used
-@code{miktex} (@url{http://www.miktex.org}), which needs some
-customization: see
-@url{http://www.murdoch-sutherland.com/Rtools/miktex.html}.
+The @code{MiKTeX} (@url{http://www.miktex.org}) distribution of @LaTeX{}
+includes a suitable port of @code{pdftex}.  We have also used the
+@code{fptex} distribution (available from any CTAN node such as
+@url{http://www.ctan.org/tex-archive/systems/windows/fptex/}).  Another
+actively-maintained version is available from
+@uref{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/}.
 
 Please read @ref{Making the manuals} about how to make @file{refman.pdf}
 and set the environment variables @code{R_RD4DVI} and @code{R_RD4PDF}

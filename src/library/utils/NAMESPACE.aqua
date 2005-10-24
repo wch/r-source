@@ -1,3 +1,2 @@
-export(CRAN.binaries, Rapp.updates, browse.pkgs, browse.update.pkgs,
-       data.manager, install.binaries, install.from.file,
-       package.manager, main.help.url)
+export(Rapp.updates, browse.pkgs,
+       data.manager, package.manager, main.help.url)

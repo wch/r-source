@@ -6906,9 +6906,9 @@ control the printing of diagnostic messages.
 
 @item --debugger=@var{name}
 @itemx -d @var{name}
-(UNIX only) Run @R{} through debugger @var{name}.  Note that in this case, further
-command line options are disregarded, and should instead be given when
-starting the @R{} executable from inside the debugger.
+(UNIX only) Run @R{} through debugger @var{name}.  Note that in this
+case, further command line options are disregarded, and should instead
+be given when starting the @R{} executable from inside the debugger.
 
 @item --gui=@var{type}
 @itemx -g @var{type}
@@ -6917,7 +6917,8 @@ also includes interactive graphics).  Currently, possible values for
 @var{type} are @samp{X11} (the default), provided that @samp{Tcl/Tk}
 support is available, @samp{Tk} and @samp{gnome} provided that package
 @pkg{gnomeGUI} is installed (@pxref{Building the GNOME console, , ,
-R-admin, R Installation and Adminstration}).
+R-admin, R Installation and Adminstration}).  (For back-compatibility,
+@samp{x11}, @samp{tk} and @samp{GNOME} are accepted.)
 
 @item --args
 This flag does nothing except cause the rest of the command line to be

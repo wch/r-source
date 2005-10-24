@@ -33,6 +33,8 @@
 
  */
 
+/* Note: the checks here for R_CheckInterrupt also do stack checking */
+
 #include "nmath.h"
 #include "dpq.h"
 

@@ -53,9 +53,9 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        rmultinom, rnbinom, rnorm, rpois, rsignrank, rstandard,
        rstandard.glm, rstandard.lm, rstudent, rstudent.glm,
        rstudent.lm, rt, runif, rweibull, rwilcox, sd, se.contrast,
-       spline, splinefun, SSD, start, stat.anova, step, summary.aov,
-       summary.aovlist, summary.glm, summary.infl, summary.lm,
-       summary.manova, summary.mlm, symnum, termplot, terms,
+       simulate, spline, splinefun, SSD, start, stat.anova, step,
+       summary.aov, summary.aovlist, summary.glm, summary.infl,
+       summary.lm, summary.manova, summary.mlm, symnum, termplot, terms,
        terms.aovlist, terms.default, terms.formula, terms.terms, time,
        ts, tsp, "tsp<-", TukeyHSD, TukeyHSD.aov, uniroot, update,
        update.default, update.formula, var, variable.names, vcov,
@@ -219,6 +219,7 @@ S3method(relevel, ordered)
 S3method(reorder, factor)
 S3method(se.contrast, aov)
 S3method(se.contrast, aovlist)
+S3method(simulate, lm)
 S3method(summary, aov)
 S3method(summary, aovlist)
 S3method(summary, glm)

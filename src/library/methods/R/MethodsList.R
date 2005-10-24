@@ -539,8 +539,7 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
     }
 }
 
-promptMethods <-
-function(f, filename = NULL, methods)
+promptMethods <- function(f, filename = NULL, methods)
 {
     ## Generate information in the style of 'prompt' for the methods of
     ## the generic named 'f'.
@@ -550,6 +549,7 @@ function(f, filename = NULL, methods)
     ## included in other printing (typically, the output from 'prompt').
 
     paste0 <- function(...) paste(..., sep = "")
+    escape <- function(txt) gsub("%", "\\\\%", txt)
     packageString <- ""
 
     if(missing(methods)) {
@@ -582,8 +582,7 @@ function(f, filename = NULL, methods)
     }
     text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")
     text <- c("\\section{Methods}{\n\\describe{", text, "}}")
-    aliasText <- c(paste0("\\alias{", fullName, "}"),
-                   gsub("%", "\\\\\%", aliases))
+    aliasText <- c(paste0("\\alias{", escape(fullName), "}"), escape(aliases))
     if(identical(filename, FALSE))
         return(c(aliasText, text))
 
@@ -606,6 +605,8 @@ function(f, filename = NULL, methods)
     if(is.na(filename)) return(Rdtxt)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
+    .message("A shell of methods documentation has been written",
+             .fileDesc(filename), ".\n")
     invisible(filename)
 }
 

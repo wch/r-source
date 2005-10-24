@@ -39,7 +39,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
     \code{"dist"} object.  For the default method, a \code{"dist"}
     object, or a matrix (of distances) or an object which can be coerced
     to such a matrix using \code{\link{as.matrix}()}.  (Only the lower
-    triangle of the matrix is used, the rest is ignored).} 
+    triangle of the matrix is used, the rest is ignored).}
   \item{digits, justify}{passed to \code{\link{format}} inside of
     \code{print()}.}
   \item{right, \dots}{further arguments, passed to the (next)
@@ -145,12 +145,17 @@ m <- as.matrix(dist(x))
 d <- as.dist(m)
 stopifnot(d == dist(x))
 
+## Use correlations between variables ``as distance''
+dd <- as.dist((1 - cor(USJudgeRatings))/2)
+round(1000 * dd) # (prints more nicely)
+plot(hclust(dd)) # to see a dendrogram of clustered variables
+
 ## example of binary and canberra distances.
 x <- c(0, 0, 1, 1, 1, 1)
 y <- c(1, 0, 1, 1, 0, 1)
-dist(rbind(x,y), method="binary")
+dist(rbind(x,y), method= "binary")
 ## answer 0.4 = 2/5
-dist(rbind(x,y), method="canberra")
+dist(rbind(x,y), method= "canberra")
 ## answer 2 * (6/5)
 
 ## To find the names

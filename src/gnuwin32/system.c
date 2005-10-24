@@ -72,7 +72,6 @@ static void UnLoad_Rbitmap_Dll()
 
 __declspec(dllexport) UImode  CharacterMode;
 int ConsoleAcceptCmd;
-void closeAllHlpFiles();
 void set_workspace_name(char *fn); /* ../unix/sys-common.c */
 
 /* used to avoid some flashing during cleaning up */
@@ -196,7 +195,6 @@ static int
 GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     int res;
-    char *p;
     char *NormalPrompt =
 	(char *) CHAR(STRING_ELT(GetOption(install("prompt"), R_BaseEnv), 0));
 
@@ -206,9 +204,6 @@ GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
     }
     ConsoleAcceptCmd = !strcmp(prompt, NormalPrompt);
     res = consolereads(RConsole, prompt, buf, len, addtohistory);
-    for (p = buf; *p; p++)
-	if (*p == EOF)
-	    *p = '\001';
     ConsoleAcceptCmd = 0;
     return !res;
 }
@@ -436,7 +431,6 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     editorcleanall();
     CleanEd();
     CleanTempDir();
-    closeAllHlpFiles();
     KillAllDevices();
     AllDevicesKilled = TRUE;
     if (R_Interactive && CharacterMode == RTerm)
@@ -628,6 +622,41 @@ void R_setStartTime();
 
 void R_SetWin32(Rstart Rp)
 {
+    int dummy;
+
+#if 0
+    CharacterMode = Rp->CharacterMode;
+    switch(CharacterMode) {
+    case RGui:
+    case RTerm:
+	R_CStackLimit = 512*1024;  /* set in front-ends/Makefile */
+	break;
+    default:
+	R_CStackLimit = -1;  /* embedded in another front-end, 
+				so we have no idea */
+    }
+    R_CStackStart = (unsigned long)&dummy;
+    printf("stack base %lx\n", R_CStackStart);
+#endif
+
+    {
+	/* Idea here is to ask about the memory block an automatic
+	   variable is in.  VirtualQuery rounds down to the beginning
+	   of the page, and tells us where the allocation started and
+	   how many bytes the pages go up */
+
+	MEMORY_BASIC_INFORMATION buf;
+	unsigned long bottom, top;
+
+	VirtualQuery(&dummy, &buf, sizeof(buf));
+	bottom = (unsigned long) buf.AllocationBase;
+	top = (unsigned long) buf.BaseAddress + buf.RegionSize;
+	/* printf("stackbase %lx, size %lx\n", top, top-bottom); */
+	R_CStackStart = top;
+	R_CStackLimit = top - bottom;
+    }
+    
+    R_CStackDir = 1;
     R_Home = Rp->rhome;
     if(strlen(R_Home) >= MAX_PATH) R_Suicide("Invalid R_HOME");
     sprintf(RHome, "R_HOME=%s", R_Home);
@@ -636,8 +665,7 @@ void R_SetWin32(Rstart Rp)
     strcat(UserRHome, Rp->home);
     putenv(UserRHome);
 
-    CharacterMode = Rp->CharacterMode;
-    switch(CharacterMode){
+    switch(CharacterMode) {
     case RGui:
 	R_GUIType = "Rgui";
 	break;

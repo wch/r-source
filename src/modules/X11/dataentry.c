@@ -26,7 +26,7 @@
 */
 
 /* The version for R 2.1.0 is partly based on patches by
-   Eiji Nakama <nakama@ki.rim.or.jp> for use with Japanese fonts. */
+   Ei-ji Nakama <nakama@ki.rim.or.jp> for use with Japanese fonts. */
 
 #define DPRINTS(x) printf(#x "=[%s]\n", x)
 #define DPRINTX(x) printf(#x "=%x\n", x)
@@ -56,6 +56,12 @@
 #ifdef SUPPORT_MBCS
 /* This only uses a FontSet in a MBCS */
 # define USE_FONTSET 1
+/* In theory we should do this, but it works less well
+# ifdef X_HAVE_UTF8_STRING
+#  define HAVE_XUTF8TEXTEXTENTS 1
+#  define HAVE_XUTF8DRAWSTRING 1
+#  define HAVE_XUTF8DRAWIMAGESTRING 1
+# endif */
 #endif
 
 #ifndef HAVE_KEYSYM
@@ -1105,6 +1111,7 @@ static void clearrect(void)
 
 /* --- Not true! E.g. ESC ends up in here... */
 #ifdef USE_FONTSET
+#include <R_ext/rlocale.h>
 #include <wchar.h>
 #include <wctype.h>
 #endif
@@ -2017,13 +2024,14 @@ static int textwidth(char *text, int nchar)
 {
 
 #ifdef USE_FONTSET
-    if(mbcslocale)
+    if(mbcslocale) {
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
         if (utf8locale)
 	    return Xutf8TextEscapement(font_set, text, nchar);
         else
 #endif
 	    return XmbTextEscapement(font_set, text, nchar);
+    }
 #endif
     return XTextWidth(font_info, text, nchar);
 }

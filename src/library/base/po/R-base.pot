@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-26 09:41\n"
+"POT-Creation-Date: 2005-10-16 21:55\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,30 +30,6 @@ msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 msgstr ""
 
 msgid "See help(\"Deprecated\")"
-msgstr ""
-
-msgid "invalid numbers in 'quote'"
-msgstr ""
-
-msgid "invalid 'quote' specification"
-msgstr ""
-
-msgid "invalid 'row.names' specification"
-msgstr ""
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
-
-msgid "invalid 'col.names' specification"
-msgstr ""
-
-msgid "'file' must be a character string or connection"
-msgstr ""
-
-msgid "appending column names to file"
-msgstr ""
-
-msgid "format.char: coercing 'x' to 'character'"
 msgstr ""
 
 msgid "argument to 'La.svd' must be numeric or complex"
@@ -483,6 +459,9 @@ msgid "'from' must be a POSIXt object"
 msgstr ""
 
 msgid "'to' must be a POSIXt object"
+msgstr ""
+
+msgid "'file' must be a character string or connection"
 msgstr ""
 
 msgid "'x' must be a square matrix"
@@ -1049,6 +1028,9 @@ msgstr ""
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr ""
 
+msgid "invalid 'row.names' specification"
+msgstr ""
+
 msgid "'x' must be a vector"
 msgstr ""
 
@@ -1236,6 +1218,21 @@ msgid "No traceback available"
 msgstr ""
 
 msgid "argument to 'which' is not logical"
+msgstr ""
+
+msgid "invalid numbers in 'quote'"
+msgstr ""
+
+msgid "invalid 'quote' specification"
+msgstr ""
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
+msgid "invalid 'col.names' specification"
+msgstr ""
+
+msgid "appending column names to file"
 msgstr ""
 
 msgid "attempt to change '%s' ignored"

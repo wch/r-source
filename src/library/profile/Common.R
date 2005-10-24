@@ -29,7 +29,8 @@ options(timeout = 60)
 options(encoding = "native.enc")
 options(show.error.messages = TRUE)
 options(scipen = 0)
-options(max.print = 10000)
+options(max.print = 10000)# not yet exercised in 'core R'
+options(add.smooth = TRUE)# currently only used in 'plot.lm'
 
 local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        if(identical(dp, "")) # marginally faster to do methods last

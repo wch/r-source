@@ -451,7 +451,7 @@ loess.smooth <-
     list(x = new.x, y = z)
 }
 
-## panel.smooth is currently defined in ../../base/R/coplot.R :
+## panel.smooth is currently defined in ../../graphics/R/coplot.R :
 ## panel.smooth <-
 ##   function(x, y, span = 2/3, degree = 1, family = c("symmetric", "gaussian"),
 ##	   zero.line = FALSE, evaluation = 50, ...)

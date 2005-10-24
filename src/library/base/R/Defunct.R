@@ -93,3 +93,13 @@ delay <- function(x, env=.GlobalEnv) .Defunct("delayedAssign")
 loadURL <- function (url, envir = parent.frame(), quiet = TRUE, ...)
     .Defunct("load(url())")
 ## </entry>
+
+## Defunct in 2.3.0
+write.table0 <-
+function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
+          eol = "\n", na = "NA", dec = ".", row.names = TRUE,
+          col.names = TRUE, qmethod = c("escape", "double"))
+    .Defunct("write.table")
+format.char <- function(x, width = NULL, flag = "-")
+    .Defunct("format.default")
+## </entry>

@@ -54,8 +54,9 @@ alist(\dots)
   constituent calls is returned.
 
   \code{is.list} returns \code{TRUE} iff its argument
-  is a \code{list} \emph{or} a \code{pairlist} of \code{length} \eqn{> 0},
-  whereas \code{is.pairlist} only returns \code{TRUE} in the latter case.
+  is a \code{list} \emph{or} a \code{pairlist} of \code{length} \eqn{> 0}.
+  \code{is.pairlist} returns \code{TRUE} iff the argument is a pairlist
+  or \code{NULL} (see below).
 
   \code{is.list} and \code{is.pairlist} are generic: you can write
   methods to handle specific classes of objects, see \link{InternalMethods}.

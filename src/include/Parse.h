@@ -43,4 +43,8 @@ typedef struct Rconn  *Rconnection;
 #endif
 SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status);
 
+	/* Report a parse error */
+	
+void parseError(SEXP call, int linenum);
+
 #endif /* not R_PARSE_H */

@@ -73,6 +73,8 @@ write.csv2(\dots)
   matrix-like column, in particular to columns protected by
   \code{\link{I}()}.  Use \code{\link{options}("OutDec")} to control
   such conversions.
+
+  These functions check for a user interrupt every 1000 lines of output.
 }
 \section{CSV files}{
   By default there is no column name for a column of row names.  If

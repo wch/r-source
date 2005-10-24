@@ -1546,3 +1546,24 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 #endif
+
+SEXP do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, nms;
+    
+    checkArity(op, args);
+    PROTECT(ans = allocVector(INTSXP, 4));
+    PROTECT(nms = allocVector(STRSXP, 4));
+    INTEGER(ans)[0] = R_CStackLimit;
+    INTEGER(ans)[1] = R_CStackDir * (R_CStackStart - (unsigned long) &ans);
+    INTEGER(ans)[2] = R_CStackDir;
+    INTEGER(ans)[3] = R_EvalDepth;
+    SET_STRING_ELT(nms, 0, mkChar("size"));
+    SET_STRING_ELT(nms, 1, mkChar("current"));
+    SET_STRING_ELT(nms, 2, mkChar("direction"));
+    SET_STRING_ELT(nms, 3, mkChar("eval_depth"));
+
+    UNPROTECT(2);
+    setAttrib(ans, R_NamesSymbol, nms);
+    return ans;    
+}

@@ -20,7 +20,7 @@ if test -d "${R_DOC_DIR}/manual"; then
   ${LN_S} "${R_DOC_DIR}/manual" "${USER_R_HOME}/doc/manual"
 fi
 
-for f in "${R_DOC_DIR}"/html/*.html "${R_DOC_DIR}"/html/*.jpg; do
+for f in "${R_DOC_DIR}"/html/*.html "${R_DOC_DIR}"/html/*.jpg "${R_DOC_DIR}"/html/R.css ; do
   if test -f "${f}"; then
     ${LN_S} "${f}" "${USER_R_HOME}/doc/html"
   fi

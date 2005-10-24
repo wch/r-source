@@ -24,30 +24,28 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \usage{
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile = TRUE,
-           paper, family, encoding, bg, fg,
+           paper, family, encoding, cidfamily, bg, fg,
            width, height, horizontal, pointsize,
            pagecentre, print.it, command,
            title = "R Graphics Output", fonts = NULL)
 
-% paper, horizontal, width, height, family, pointsize, bg, fg)
 ps.options(paper, horizontal, width, height, family, encoding,
-           pointsize, bg, fg,
+           cidfamily, pointsize, bg, fg,
            onefile = TRUE, print.it = FALSE, append = FALSE,
            reset = FALSE, override.check = FALSE)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
-    \code{""}, the output is piped to the command given by
-    the argument \code{command}.
+    \code{""}, the output is piped to the command given by the argument
+    \code{command}.
 #ifdef unix
-    If it is \code{"|cmd"}, the output is piped to the command given
-    by \file{cmd}.
+    If it is of the form \code{"|cmd"}, the output is piped to the
+    command given by \file{cmd}.
 #endif
 
-    For use with \code{onefile=FALSE} give a \code{printf} format such
+    For use with \code{onefile = FALSE} give a \code{printf} format such
     as \code{"Rplot\%03d.ps"} (the default in that case).
   }
-%  \item{\dots}{further options for \code{postscript()}.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} and
     \code{"executive"} (and these can be capitalized).
@@ -57,27 +55,40 @@ ps.options(paper, horizontal, width, height, family, encoding,
     papersize is taken from the option \code{"papersize"}
     if that is set and to \code{"a4"} if it is unset or empty.}
   \item{horizontal}{the orientation of the printed image, a
-    logical. Defaults to true, that is landscape orientation on paper
+    logical.  Defaults to true, that is landscape orientation on paper
     sizes with width less than height.}
   \item{width, height}{the width and height of the graphics region in
     inches.  The default is to use the entire page less a 0.25 inch
     border on each side.}
   \item{family}{the font family to be used.  EITHER a single character
-    string OR a character vector of length
-    four or five.  See the section \sQuote{Families}.}
-  \item{encoding}{the name of an encoding file. Defaults to
+    string OR a character vector of length four or five.  See the
+    section \sQuote{Families}.}
+  \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
-"ISOLatin1.enc"
+    \file{"ISOLatin1.enc"} unless the locale is recognized as using
+    ISO 8859-{5,7,13,15} or KOI8-{R,U},
 #endif
 #ifdef windows
-"WinAnsi.enc"
+    \file{"CP1250.enc"} (East European), \code{"CP1251.enc"} (Cyrillic),
+    \code{"CP1253.enc"} (Greek) or \code{"CP1257.enc"} (Baltic) if one
+    of those codepages is in use, otherwise \file{"WinAnsi.enc"}
+    (codepage 1252),
 #endif
-    in the \file{R\_HOME/afm} directory, which is used
+    in the \file{enc} directory of package \pkg{grDevices}, which is used
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.
 #ifdef unix
-    In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed.
+    In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed without
+    \code{\link{capabilities}("iconv")}.
 #endif
+  }
+  \item{cidfamily}{the default East Asian locale set: known values are
+    \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} (simplified Chinese)
+    or \code{"GB1"} (traditional Chinese).  If this is \code{"default"}
+    (the default) an attempt is made to deduce the name from the locale
+    name.  An empty string means no CID fonts are to be used.  These
+    select specific font families: see file
+    \file{src/library/grDevices/src/devPS\_data.h} for the mapping.
   }
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.
@@ -88,7 +99,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
     in one file.  If false, generate a file name containing the page
     number and use an EPSF header and no \code{DocumentMedia} comment.}
   \item{pagecentre}{logical: should the device region be centred on the
-    page: defaults to true.}
+    page? -- defaults to true.}
   \item{print.it}{logical: should the file be printed when the device is
     closed?  (This only applies if \code{file} is a real file name.)}
   \item{command}{the command to be used for \dQuote{printing}.  Defaults to
@@ -100,9 +111,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
     \code{\link{check.options}}.  See the Examples.}
   \item{title}{title string to embed in the file.}
   \item{fonts}{a character vector specifying R graphics
-    (device-independent)
-    font family names for fonts
-    which must be 
+    (device-independent) font family names for fonts which must be
     included in the PostScript file.}
 }
 \details{
@@ -172,21 +181,18 @@ ps.options(paper, horizontal, width, height, family, encoding,
 \section{Families}{
   Font families may be specified in several ways.  The \code{family}
   argument specifies an initial/default font family for the device.
-  This may be a device-independent R graphics font family
-  (see \code{postscriptFonts}) or
-  a PostScript-specific font family specification (see below).
+  This is a PostScript-specific font family specification (see below).
   The \code{fonts} argument specifies a set of device-independent
   font families that are mapped to PostScript-specific fonts via
   a font database (see \code{postscriptFonts}).  
   
-  The argument \code{family} specifies the initial/default
-  font family to be used.
-  In normal use it is one of \code{"AvantGarde"},
+  The argument \code{family} specifies the initial/default font family
+  to be used. In normal use it is one of \code{"AvantGarde"},
   \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
   \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-  \code{"Palatino"} or \code{"Times"}, and refers to the standard
-  Adobe PostScript fonts of those names which are included (or cloned)
-  in all common PostScript devices.
+  \code{"Palatino"} or \code{"Times"}, and refers to the standard Adobe
+  PostScript fonts of those names which are included (or cloned) in all
+  common PostScript devices.
 
   Many PostScript emulators (including those based on
   \code{ghostscript}) use the URW equivalents of these fonts, which are
@@ -198,18 +204,13 @@ ps.options(paper, horizontal, width, height, family, encoding,
   these easier to remember, \code{"URWHelvetica" == "NimbusSan"} and
   \code{"URWTimes" == "NimbusRom"} are also supported.
 
-  It is also possible to specify \code{family = "ComputerModern"}. This
-  is intended to use with the Type 1 versions of the TeX CM fonts.  It
-  will normally be possible to include such output in TeX or LaTeX
-  provided it is processed with \code{dvips -Ppfb -j0} or the equivalent
-  on your system. (\code{-j0} turns off font subsetting.)
-  
   If the second form of argument \code{"family"} is used, it should be a
   character vector of four or five paths to Adobe Font Metric files for
   the regular, bold, italic, bold italic and (optionally) symbol fonts to
   be used.  If these paths do not contain the file separator, they are
-  taken to refer to files in the \R directory \file{R\_HOME/afm}.  Thus the
-  default Helvetica family can be specified by \code{family =
+  taken to refer to files in directory \file{afm} of package
+  \pkg{grDevices}. Thus the default Helvetica family can be specified by
+  \code{family =
     c("hv______.afm",
     "hvb_____.afm", "hvo_____.afm", "hvbo____.afm", "sy______.afm")}.
   It is the user's responsibility to check that suitable fonts are made
@@ -223,30 +224,48 @@ ps.options(paper, horizontal, width, height, family, encoding,
   The \code{.afm} files for the first four fonts do not need to be in
   the correct encoding, but that for the symbol font must be.
 
-  When \code{family = "ComputerModern"} is used, the italic/bold-italic
-  fonts used are slanted fonts (\code{cmsl10} and \code{cmbxsl10}).  To
-  use text italic fonts instead, use
-  \code{family = c("CM_regular_10.afm", "CM_boldx_10.afm", "cmti10.afm",
-    "cmbxti10.afm", "CM_symbol_10.afm")}.
+  It is also possible to specify \code{family = "ComputerModern"} with
+  an appropriate encoding (see below).  This is intended to use with the
+  Type 1 versions of the TeX CM fonts.  It will normally be possible to
+  include such output in TeX or LaTeX provided it is processed with
+  \code{dvips -Ppfb -j0} or the equivalent on your system. (\code{-j0}
+  turns off font subsetting.)  When \code{family = "ComputerModern"} is
+  used, the italic/bold-italic fonts used are slanted fonts
+  (\code{cmsl10} and \code{cmbxsl10}).  To use text italic fonts
+  instead, \code{family = "ComputerModernItalic"}.
 }
 
 \section{Encodings}{
   Encodings describe which glyphs are used to display the character codes
-  (in the range 0--255).  By default \R uses ISOLatin1 encoding, and
+  (in the range 0--255).  Most commonly \R uses ISOLatin1 encoding, and
   the examples for \code{\link{text}} are in that encoding.  However,
   the encoding used on machines running \R may well be different, and by
   using the \code{encoding} argument the glyphs can be matched to
-  encoding in use.
+  encoding in use.  This suffices for European and Cyrillic languages,
+  but not for CJK languages.  For the latter, composite CID fonts are
+  used when \code{cidfamily} is set (or selected from the locale
+  name). These fonts are be useful for other languages: for example they
+  may contain Greek glyphs. (The rest of this section applies only when CID
+  fonts are not used.)
 
   None of this will matter if only ASCII characters (codes 32--126) are
-  used as all the encodings agree over that range.  Some encodings are
-  supersets of ISOLatin1, too.  However, if accented and special
-  characters do not come out as you expect, you may need to change the
-  encoding.  Three other encodings are supplied with \R:
-  \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
-  encodings normally used on Windows and MacOS (at least by Adobe), and
-  \code{"PDFDoc.enc"} is the first 256 characters of the Unicode
-  encoding, the standard for PDF.
+  used as all the encodings (except \code{"TeXtext"}) agree over that
+  range.  Some encodings are supersets of ISOLatin1, too.  However, if
+  accented and special characters do not come out as you expect, you may
+  need to change the encoding.  Some other encodings are supplied with
+  \R: \code{"WinAnsi.enc"} and \code{"MacRoman.enc"} correspond to the
+  encodings normally used on Windows and Classic MacOS (at least by
+  Adobe), and \code{"PDFDoc.enc"} is the first 256 characters of the
+  Unicode encoding, the standard for PDF.  There are also encodings
+  \code{"ISOLatin2.enc"}, \code{"CP1250.enc"}, \code{"ISOLatin7.enc"}
+  (ISO 8859-13), \code{"CP1257.enc"}, and \code{"ISOLatin9.enc"} (ISO
+  8859-15), \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
+  \code{"KOI8-U.enc"}, \code{"CP1251.enc"}, \code{"Greek.enc"} (ISO
+  8859-7), \code{"CP1253.enc"}, and \code{"TeXtext"} for the 7-bit TeX
+  encoding.  Note that many glyphs in these encodings are not in the
+  fonts corresponding to the standard families: the Adobe ones cover
+  little more than Latin-1, whereas the URW ones also cover Latin-2,
+  Latin-7, Latin-9 and Cyrillic but no Greek.
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro
@@ -254,10 +273,15 @@ ps.options(paper, horizontal, width, height, family, encoding,
   be in the PostScript fonts.  (It is in the URW variants; it is not in
   the supplied Adobe Font Metric files.)
 
-  There is one exception.  Character 45 (\code{"-"}) is always set
+  There is an exception.  Character 45 (\code{"-"}) is always set
   as minus (its value in Adobe ISOLatin1) even though it is hyphen in
   the other encodings.  Hyphen is available as character 173 (octal
-  0255) in ISOLatin1.
+  0255) in all the Latin encodings, Cyrillic and Greek.  There are some
+  discrepancies in accounts of glyphs 39 and 96: the supplied encodings
+  (except CP1250 and CP1251) treat these as \sQuote{quoteright} and
+  \sQuote{quoteleft} (rather than \sQuote{quotesingle}/\sQuote{acute}
+  and \sQuote{grave} respectively), as they are in the Adobe
+  documentation.
 
   Computer Modern fonts are encoded rather differently and should be
   used with \code{encoding = "TeXtext.enc"}, taking care that the

@@ -1,7 +1,7 @@
 \name{mle-class}
 \docType{class}
 \alias{mle-class}
-\title{Class "mle". Result of Maximum Likelihood Estimation.}
+\title{Class "mle" for Results of Maximum Likelihood Estimation}
 \description{This class encapsulates results of a generic maximum
   likelihood procedure.}
 \section{Objects from the Class}{

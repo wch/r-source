@@ -77,10 +77,12 @@ do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
     int i;
     SEXP vals;
 
-    vals = allocVector(STRSXP, NumCommandLineArgs);
+    /* need protection as mkChar allocates */
+    vals = PROTECT(allocVector(STRSXP, NumCommandLineArgs));
     for(i = 0; i < NumCommandLineArgs; i++)
 	SET_STRING_ELT(vals, i, mkChar(CommandLineArgs[i]));
-    return(vals);
+    UNPROTECT(1);
+    return vals;
 }
 
 void
@@ -207,7 +209,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 				 _("WARNING: '%s' value is invalid: ignored\n"),
 				 *av);
 		    else
-			sprintf(msg, 
+			sprintf(msg,
 				_("WARNING: %s=%lu'%c': too large and ignored\n"),
 				*av, (unsigned long) value,
 				(ierr == 1) ? 'M': ((ierr == 2) ? 'K' : 'k'));
@@ -234,7 +236,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		else if (lval < 10000)
 		    R_ShowMessage(_("WARNING: '-max-ppsize' value is too small: ignored\n"));
 
-		else if (lval > 100000)
+		else if (lval > 500000)
 		    R_ShowMessage(_("WARNING: '-max-ppsize' value is too large: ignored\n"));
 		else Rp->ppsize = lval;
 	    }

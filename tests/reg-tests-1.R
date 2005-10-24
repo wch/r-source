@@ -1,3 +1,4 @@
+postscript("reg-tests-1.ps", encoding = "ISOLatin1.enc")
 
 ## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
@@ -738,61 +739,6 @@ str(s <- svd(X)); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#	 X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#	 D = U' X V
 ## end of moved from svd.Rd
-
-hasMethods <- .isMethodsDispatchOn() ## (for setting back)
-## was at end, as package `methods' once had persistent side effects
-stopifnot(require(methods))
-stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
-
-## trace (requiring methods):
-f <- function(x, y) { c(x,y)}
-xy <- 0
-
-trace(f, quote(x <- c(1, x)), exit = quote(xy <<- x), print = FALSE)
-
-fxy <- f(2,3)
-
-stopifnot(identical(fxy, c(1,2,3)))
-stopifnot(identical(xy, c(1,2)))
-
-untrace(f)
-
-## a generic and its methods
-
-setGeneric("f")
-
-setMethod("f", c("character", "character"), function(x,	 y) paste(x,y))
-
-## trace the generic
-trace("f", quote(x <- c("A", x)), exit = quote(xy <<- c(x, "Z")), print = FALSE)
-
-## should work for any method
-
-stopifnot(identical(f(4,5), c("A",4,5)))
-stopifnot(identical(xy, c("A", 4, "Z")))
-
-stopifnot(identical(f("B", "C"), paste(c("A","B"), "C")))
-stopifnot(identical(xy, c("A", "B", "Z")))
-
-## trace a method
-
-trace("f", sig = c("character", "character"), quote(x <- c(x, "D")),
-      exit = quote(xy <<- xyy <<- c(x, "W")), print = FALSE)
-
-stopifnot(identical(f("B", "C"), paste(c("A","B","D"), "C")))
-# These two got broken by Luke's lexical scoping fix
-#stopifnot(identical(xy, c("A", "B", "D", "W")))
-#stopifnot(identical(xy, xyy))
-
-## but the default method is unchanged
-
-stopifnot(identical(f(4,5), c("A",4,5)))
-stopifnot(identical(xy, c("A", 4, "Z")))
-
-removeGeneric("f")
-
-if(!hasMethods) detach("package:methods")
-## end of moved from trace.Rd
 
 
 ## Trig
@@ -2756,13 +2702,6 @@ stopifnot(ir == c(1, 3, -1),
 ## (*, fixed=TRUE) gave 0 2 -1 before R 1.8.1
 
 
-##-- S4 classes with S3 slots:
-setClass("test1", representation(date="POSIXct"))
-(x <- new("test1", date=as.POSIXct("2003-10-09")))
-stopifnot(format(x @ date) == "2003-10-09")
-## line 2 failed in 1.8.0 because of an extraneous space in "%in%"
-
-
 ## PR#5017: filter(init=) had the wrong time order
 xx <- filter(4:8, c(1, 0.5, 0.25), method="recursive", init=3:1)
 stopifnot(identical(xx[1:3], c(8.25, 15.25, 26.125)))
@@ -3813,3 +3752,125 @@ levels(f2) <- as.character(c(1:3, NA))
 f2
 stopifnot(nlevels(f2) == 3)
 ## dropped other attributes < 2.2.0.
+
+
+## regressed at one point in pre-2.2.0
+A <- matrix(pi, 0, 2)
+stopifnot(identical(dim(A), dim(format(A))))
+## dropped dim at one point
+
+
+## ls.diag with missing values (PR#8139)
+x <- matrix(c(1,-1,1,-1,1,-1,1,-1,1,-1,  1,2,3,4,5,6,7,8,9,10), 10, 2)
+y <- as.matrix(c(1,2,3,NA,3,4,3,4,5,4))
+wt <- c(1,1,1,1,1,1,1,1,1,0)
+regres <- lsfit(x, y, wt=wt)
+regdiag <- ls.diag(regres)
+## failed < 2.2.0.
+
+
+## window.default had an inappropriate tolerance
+a <- ts(1:5000, start = 0, freq = 10)
+b <- lag(a, 1)
+bb <- window(b, start = 0)
+stopifnot(length(bb) == length(a) - 1)
+## was length(a) - 2 in 2.1.1, since the tolerance was abs(start) * ts.end
+
+
+## subassignment of length zero vector to NULL gave garbage answer (PR#8157)
+x <- NULL
+x[[1]] <- numeric(0)
+stopifnot(length(x[[1]]) == 0)
+## failed < 2.2.0
+
+
+## some checks for raw in data frames and lists
+x <- charToRaw("test")
+(z <- data.frame(x))
+z$y <- x
+z[["y2"]] <- x
+z["y3"] <- x
+z
+## lists use separate code
+z <- list(x=x)
+z$y <- x
+z[["y2"]] <- x
+z["y3"] <- list(x)
+z
+## Not completely supported prior to 2.2.0
+
+
+### end of tests added in 2.2.0 ###
+
+
+## summary.matrix failed on some classed objects
+surv <- structure(c(2.06, 2.13, 0.09, 0.27, 1, 0.36, 3.04, 0.67, 0.35,
+                    0.24, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0),
+                  .Dim = c(10, 2),
+                  .Dimnames = list(NULL, c("time", "status")),
+                  type = "right", class = "Surv")
+summary(surv)
+## Had infinite recursion (sometimes segfault) on 2.2.0.
+
+## need fuzz even for ">=" :
+set.seed(1)
+stopifnot(all.equal(chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)$p.value,
+                    0.3368315842, tol = 1e-6))
+## some i686 platforms gave 0.00049975
+
+
+## PR#8228 image() failed on a matrix with all NAs
+image(z=matrix(NA, 1, 1), x=0:1, y=0:1)
+
+
+## read.fwf(header=TRUE) failed (PR#8226)
+ff <- tempfile()
+cat(file=ff, "A\tB\tC", "123456", "987654", sep="\n")
+z <- read.fwf(ff, width=c(1,2,3), header=TRUE)
+stopifnot(identical(names(z), LETTERS[1:3]))
+unlink(ff)
+## failed in <= 2.2.0
+
+## diag() failed if matrix had NA dimnames
+x <- matrix(1, 2, 2)
+dimnames(x) <- list(c("a", NA), c("a", NA))
+diag(x)
+
+
+### end of tests added in 2.2.1 ###
+
+
+## sort used to preserve inappropriate attributes and not always sort names.
+x <- runif(10)
+tsp(x) <- c(1,10,1)
+(z <- sort(x))                 # kept tsp attribute
+stopifnot(is.null(attributes(z)))
+(z <- sort(x, method="quick")) # same
+stopifnot(is.null(attributes(z)))
+(z <- sort(x, partial = 1:10)) # same
+stopifnot(is.null(attributes(z)))
+
+names(x) <- letters[1:10]
+o <- sort.list(x)
+z2 <- structure(c(x)[o], names=names(x)[o])
+(z <- sort(x))                 # sorted names, dropped the tsp attribute
+stopifnot(identical(z, z2))
+(z <- sort(x, method="quick")) # sorted names, kept the tsp attribute.
+stopifnot(identical(z, z2))
+(z <- sort(x, partial = 1:10)) # did not sort names, kept tsp attribute
+stopifnot(is.null(attributes(z)))
+## fixed for 2.3.0 to sort names (ecept partial), drop all other attributes.
+
+
+## formatC on as.single (PR#8211)
+# not documented to work but someone tried it.
+(z <- formatC(as.single(1)))
+stopifnot(identical(z, "1"))
+## was wrong < 2.3.0
+
+
+## outer on factors was broken in pre-2.3.0
+x <- factor(1:3)
+outer(x, x, "!=")
+## failed 2005-10-17
+

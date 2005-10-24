@@ -2,7 +2,7 @@
  *  A PicTeX device, (C) 1996 Valerio Aimale, for
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2001-4  The R Development Core Team
+ *  Copyright (C) 2001-5  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,11 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+#ifdef SUPPORT_MBCS
+# include <R_ext/rlocale.h>
+# include <wchar.h>
+#endif /* SUPPORT_MBCS */
 
 #include "Defn.h"
 #include "Graphics.h"
@@ -478,8 +483,36 @@ static double PicTeX_StrWidth(char *str,
     size = gc->cex * gc->ps + 0.5;
     SetFont(gc->fontface, size, ptd);
     sum = 0;
-    for(p=str ; *p ; p++)
-	sum += charwidth[ptd->fontface-1][(int)*p];
+#if defined(SUPPORT_MBCS)
+    if(mbcslocale && ptd->fontface != 5) {
+	/* <FIXME> what happens for symbols fonts: unsupported? */
+	/*
+	 * <FIXME>
+	 * is ad-hoc.
+	 * substitute it in wcwidth forcibly.
+	 * reference to memory is better.
+	 * </FIXME>
+	 */
+	for(p = str; *p; p++) {
+	    int mb_len;
+	    unsigned short ucs2;
+	    char buf[8];
+
+	    mb_len = (int) mbcsMblen(p);  /* uses iconv */
+	    if (mb_len == 1 && (unsigned char)*p < 128)
+		sum += charwidth[ptd->fontface-1][(int)*p];
+	    else if (mb_len > 0){
+		memset(buf, 0, sizeof(buf));
+		strncpy(buf, p, mb_len);
+		mbcsToUcs2(buf, &ucs2);
+		sum += (double) Ri18n_wcwidth(ucs2) * 0.5; /* A guess */
+	    }
+	    if (mb_len > 0) p += mb_len - 1;
+	}
+    } else
+#endif
+	for(p = str; *p; p++)
+	    sum += charwidth[ptd->fontface-1][(int)*p];
     return sum * ptd->fontsize;
 }
 
@@ -589,11 +622,23 @@ static void PicTeX_Text(double x, double y, char *str,
 		"%% Writing string of length %.2f, at %.2f %.2f, xc = %.2f yc = %.2f\n",
 		(double)PicTeX_StrWidth(str, gc, dd), 
 		x, y, 0.0, 0.0);
+#if 0 /* Original */
     fprintf(ptd->texfp,"\\put ");
     textext(str, ptd);
     if (rot == 90 )
 	fprintf(ptd->texfp," [rB] <%.2fpt,%.2fpt>", xoff, yoff);
     else fprintf(ptd->texfp," [lB] <%.2fpt,%.2fpt>", xoff, yoff);
+#else /* use rotatebox */
+    if (rot == 90 ){
+	fprintf(ptd->texfp,"\\put {\\rotatebox{%d}",(int)rot);
+	textext(str, ptd);
+	fprintf(ptd->texfp,"} [rB] <%.2fpt,%.2fpt>", xoff, yoff);
+    } else {
+	fprintf(ptd->texfp,"\\put ");
+	textext(str, ptd);
+	fprintf(ptd->texfp," [lB] <%.2fpt,%.2fpt>", xoff, yoff);
+    }
+#endif
     fprintf(ptd->texfp," at %.2f %.2f\n", x, y);
 }
 

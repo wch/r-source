@@ -51,7 +51,7 @@ AppPublisherURL=http://www.r-project.org
 AppSupportURL=http://www.r-project.org
 AppUpdatesURL=http://www.r-project.org
 AppVersion=${RVER}
-DefaultDirName={pf}\\R\\${RW}
+DefaultDirName={code:UserPF}\\R\\${RW}
 DefaultGroupName=R
 AllowNoIcons=yes
 LicenseFile=${SRCDIR}\\COPYING
@@ -84,107 +84,17 @@ Name: pt; MessagesFile: "compiler:Languages\\Portuguese.isl"
 Name: ru; MessagesFile: "compiler:Languages\\Russian.isl"
 Name: sl; MessagesFile: "compiler:Languages\\Slovenian.isl"
 Name: chs; MessagesFile: "ChineseSimp.isl"
+Name: cht; MessagesFile: "ChineseTrad.isl"
 Name: ja; MessagesFile: "Japanese.isl"
 Name: ko; MessagesFile: "Korean.isl"
 
-
-[CustomMessages]
-en.regentries=Registry entries:
-en.associate=&Associate R with .RData files
-en.dcom=&Register R path for use by the (D)COM server
-en.user=User installation
-en.compact=Minimal user installation
-en.full=Full installation
-en.CJK=Chinese/Japanese/Korean installation
-en.custom=Custom installation
-
-br.regentries=Entradas no registro:
-br.associate=&Associar arquivos .RData ao R
-br.dcom=&Registrar o caminho do R para uso pelo servidor (D)COM
-br.user=Instalação modo usuário
-br.compact=Instalação modo usuário mínima
-br.full=Instalação completa
-br.CJK=Instalação em chinês/japonês/coreano
-br.custom=Instalação personalizada
-
-dk.regentries=Indgange i registreringsdatabasen:
-dk.associate=&Associere R med .Rdata filer
-dk.dcom=&Registrer R til brug for (D)COM server
-dk.user=Brugerinstallation
-dk.compact=Minimal brugerinstallation
-dk.full=Luld installation
-dk.CJK=Kinesisk/Japansk/Koreansk installation
-dk.custom=Brugerdefinet installation
-
-fr.regentries=Entrées dans le registre:
-fr.associate=&Associer R avec les fichiers .RData
-fr.dcom=&Enregistrer R pour l'utiliser avec '(D)COM server'
-fr.user=Installation utilisateur
-fr.compact=Installation utilisateur minimale
-fr.full=Installation utilisateur complète
-fr.CJK=Installation chinois/japonais/coréen
-fr.custom=Installation personnalisée
-
-de.regentries=Einträge in der Windows-Registrierung:
-de.associate=&Verknüpfe R mit .RData Dateien
-de.dcom=&Registriere den R Pfad für den (D)COM Server
-de.user=Benutzerinstallation
-de.compact=Minimale Installation
-de.full=Vollständige Installation
-de.CJK=Chinesische/Japanische/Koreanische Installation
-de.custom=Benutzerdefinierte Installation
-
-ru.regentries=Çàïèñè â ñèñòåìíîì ðåãèñòðå:
-ru.associate=Ñâÿçàòü R ñ ôàéëàìè .RData
-ru.dcom=Çàðåãèñòðèðîâàòü ïóòü ê R äëÿ èñïîëüçîâàíèÿ (D)COM-ñåðâåðîì
-ru.user=Ïîëüçîâàòåëüñêàÿ óñòàíîâêà
-ru.compact=Ìèíèìàëüíàÿ ïîëüçîâàòåëüñêàÿ óñòàíîâêà
-ru.full=Ïîëíàÿ óñòàíîâêà
-ru.CJK=Êèòàéñêàÿ/ßïîíñêàÿ/Êîðåéñêàÿ óñòàíîâêà
-ru.custom=Âûáîðî÷íàÿ óñòàíîâêà
-
-it.regentries=Valori registri:
-it.associate=Associa R ai file .RData
-it.dcom=Memorizza percorso di R per l'utilizzo tramite server (D)COM
-it.user=Installazione utente
-it.compact=Installazione utente minimale
-it.full=Installazione completa
-it.CJK=Installazione Cinese/Giapponese/Coreana
-it.custom=Installazione personalizzata
-
-no.regentries=Registernøkler:
-no.associate=Knytt R til .RData-filer
-no.dcom=Registrer R-sti for bruk med (D)COM-tjener
-no.user=Brukerinstallering
-no.compact=Minimal brukerinstallering
-no.full=Fullstendig installering
-no.CJK=Kinesisk/japansk/koreansk installering
-no.custom=Tilpasset installering
-
-sl.regentries=Vnosi v registru:
-sl.associate=Poveži datoteke .RData z R
-sl.dcom=Registriraj pot do R za strežnik (D)COM
-sl.user=Uporabniška namestitev
-sl.compact=Najmanjša uporabniška namestitev
-sl.full=Polna namestitev
-sl.CJK=Namestitev v kitajskem/japonskem/korejskem jeziku
-sl.custom=Prikrojena namestitev
-
-po.regentries=Wpisy rejestru:
-po.associate=Powi¹¿ R z plikami z rozszerzeniem .RData
-po.dcom=Zarejestruj œcie¿kê polecenia R dla serwera (D)COM
-po.user=Instalacja u¿ytkownika
-po.compact=Minimalna instalacja u¿ytkownika
-po.full=Pe³na instalacja
-po.CJK=Chiñska/Japoñska/Koreañska instalacja
-po.custom=Dopasowana instalacja
-
+#include "CustomMsg.txt"
 
 [Tasks]
 Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4
 Name: "quicklaunchicon"; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4; Flags: unchecked 
-Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 4,4
-Name: "DCOM"; Description: {cm:dcom}; GroupDescription: {cm:regentries}; MinVersion: 4,4
+Name: "recordversion"; Description: {cm:recordversion}; GroupDescription: {cm:regentries}; MinVersion: 4,4
+Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 4,4; Check: IsAdmin
 
 
 [Icons]
@@ -195,15 +105,26 @@ Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R $RVER"; File
 
 
 [Registry] 
-Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: DCOM
-Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey; Tasks: DCOM
-Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: DCOM
-Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Tasks: DCOM
+Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Check: IsAdmin
 
-Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate
-Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate 
-Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe,0"; Tasks: associate 
-Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\bin\\RGui.exe"" ""%1"""; Tasks: associate 
+Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdmin
+
+Root: HKCU; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Check: NonAdmin
+
+Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: NonAdmin
+
+Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate; Check: IsAdmin
+Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate; Check: IsAdmin
+Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe,0"; Tasks: associate; Check: IsAdmin 
+Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\bin\\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdmin
 END
 
 print insfile $lines;
@@ -235,7 +156,47 @@ Name: "latex"; Description: "Latex Help Files"; Types: full custom
 Name: "refman"; Description: "PDF Reference Manual"; Types: full custom
 Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
 
-[Files]
+[Code]
+
+var
+  NoAdminPage: TOutputMsgWizardPage;
+
+function IsAdmin: boolean;
+begin
+  Result := IsAdminLoggedOn or IsPowerUserLoggedOn;
+end;
+
+function NonAdmin: boolean;
+begin
+  Result := not IsAdmin;
+end;
+
+procedure InitializeWizard;
+begin
+  NoAdminPage := CreateOutputMsgPage(wpWelcome, SetupMessage(msgInformationTitle), 
+    CustomMessage(\'adminprivilegesrequired\'), CustomMessage(\'adminexplanation\'));
+end;
+
+function ShouldSkipPage(PageID: Integer): boolean;
+begin
+  if PageID = NoAdminPage.ID then Result := IsAdmin
+  else Result := false;
+end;
+
+function UserPF(Param:String): String;
+begin
+  Result := ExpandConstant(\'{pf}\');
+  if (not IsAdmin) then 
+  begin
+    try
+      Result := ExpandConstant('\{userdocs}\');
+    except
+    // Do nothing, user doesn't have a My Documents folder
+    end;
+  end;
+end;
+
+[Files]  
 END
 
 my %develfiles=("doc\\html\\logo.jpg" => 1,
@@ -329,6 +290,8 @@ sub listFiles {
 	} elsif ($_ eq "bin\\Rmbcs.dll") {
 	    $component = "mbcs";
 	    $newname = "R.dll";
+	} elsif (m/^library\\grDevices\\CID/) {
+	    $component = "mbcs";
 	} else {
 	    $component = "main";
 	}

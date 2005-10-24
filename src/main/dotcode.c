@@ -38,7 +38,9 @@
 #include <Graphics.h>
 
 #include <R_ext/RConverters.h>
+#ifdef HAVE_ICONV
 #include <R_ext/Riconv.h>
+#endif
 
 #ifndef max
 #define max(a, b) ((a > b)?(a):(b))
@@ -175,12 +177,23 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	if (!*fun && !(*fun = R_FindSymbol(buf, dll.DLLname, symbol))) {
 	    if(strlen(dll.DLLname))
 		errorcall(call,
-			  _("\"%s\" function name not in DLL for package '%s'"),
-			  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C",
+			  _("%s entry point \"%s%s\" not in DLL for package \"%s\""),
+			  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C", buf,
+#ifdef HAVE_F77_UNDERSCORE
+			  symbol->type == R_FORTRAN_SYM ? "_" : "",
+#else
+			  "",
+#endif
 			  dll.DLLname);
 	    else
-		errorcall(call, _("\"%s\" function name not in load table"),
-			  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C");
+		errorcall(call, _("%s entry point \"%s%s\" not in load table"),
+			  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C", buf,
+#ifdef HAVE_F77_UNDERSCORE
+			  symbol->type == R_FORTRAN_SYM ? "_" : ""
+#else
+			  ""
+#endif			  			  
+			  );
 	}
     }
 
@@ -206,8 +219,6 @@ checkNativeType(int targetType, int actualType)
 
     return(TRUE);
 }
-
-#include <R_ext/Riconv.h>
 
 static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 			const char *name, R_toCConverter **converter,

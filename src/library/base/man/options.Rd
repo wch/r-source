@@ -47,6 +47,11 @@ getOption(x)
 }
 \section{Options used in base \R}{
   \describe{
+    \item{\code{add.smooth}:}{typically logical, defaulting to
+      \code{TRUE}.  Could also be set to an integer for specifying how
+      many (simulated) smooths should be added.  This is currently only
+      used by \code{\link[stats]{plot.lm}}.}
+
     \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
       true, a \link{warning} is produced whenever a \dQuote{generalized
       vector} (atomic or \code{\link{list}}) is extended, by something
@@ -90,12 +95,17 @@ getOption(x)
       errors.  If the option is a function, a call to that function,
       with no arguments, is generated as the expression.  The default
       value is \code{NULL}: see \code{\link{stop}} for the behaviour in
-      that case.  The function \code{\link{dump.frames}} provides one
-      alternative that allows post-mortem debugging.}
+      that case.  The functions \code{\link{dump.frames}} and
+      \code{\link{recover}} provide alternatives that allow post-mortem
+      debugging.}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
-      expressions that will be evaluated.
-      Valid values are 25\dots500000 with default 5000.}
+      expressions that will be evaluated.  Valid values are
+      25\dots500000 with default 5000.  If you increase it, you may
+      also want to start \R with a larger protection stack;
+      see \code{--max-ppsize} in \code{\link{Memory}}.  Note too that
+      you may cause a segfault from overflow of the C stack, and on OSes
+      where it is possible you may want to increase that.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored in their
@@ -217,6 +227,7 @@ getOption(x)
 
   The \sQuote{factory-fresh} default settings of some of these options are
   \tabular{ll}{
+    \code{add.smooth} \tab \code{TRUE}\cr
     \code{check.bounds} \tab \code{FALSE}\cr
     \code{continue} \tab \code{"+ "}\cr
     \code{digits} \tab \code{7}\cr
@@ -430,7 +441,10 @@ options(contrasts = c("contr.helmert", "contr.poly"))
 options(error = quote(q("no", status=66, runLast=FALSE)))
 stop("test it")
 }
-\dontrun{## set an error action for debugging: see ?debugger.
+\dontrun{## Set error actions for debugging:
+## enter browser on error, see ?recover:
+options(error = recover)
+## allows to call debugger() afterwards, see ?debugger:
 options(error = dump.frames)
 ## A possible setting for non-interactive sessions
 options(error = quote({dump.frames(to.file=TRUE); q()}))

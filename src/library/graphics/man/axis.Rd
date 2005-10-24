@@ -13,7 +13,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 \arguments{
   \item{side}{an integer specifying which side of the plot the axis is
     to be drawn on.  The axis is placed as follows: 1=below,
-  2=left, 3=above and 4=right.}
+    2=left, 3=above and 4=right.}
   \item{at}{the points at which tick-marks are to be drawn.  Non-finite
     (infinite, \code{NaN} or \code{NA}) values are omitted.  By default,
     when \code{NULL}, tickmark locations are computed, see Details below.}
@@ -55,9 +55,10 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{\dots}{other graphical parameters may also be passed as
     arguments to this function, particularly, \code{cex.axis},
     \code{col.axis} and \code{font.axis} for axis annotation, \code{mgp}
-    for positioning, \code{tck} or \code{tcl} for tick mark length and
-    direction, \code{las} for vertical/horizontal label orientation, or
-    \code{fg} instead of \code{col}, see \code{\link{par}} on these.}
+    and \code{xaxp} or \code{yaxp} for positioning, \code{tck} or
+    \code{tcl} for tick mark length and direction, \code{las} for
+    vertical/horizontal label orientation, or \code{fg} instead of
+    \code{col}, see \code{\link{par}} on these.}
 }
 \value{
   The numeric locations on the axis scale at which tick marks were drawn
@@ -68,17 +69,17 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 }
 \details{
   The axis line is drawn from the lowest to the highest value of
-  \code{at}, but will be clipped at the plot region. Only ticks which
+  \code{at}, but will be clipped at the plot region.  Only ticks which
   are drawn from points within the plot region (up to a tolerance for
   rounding error) are plotted, but the ticks and their labels may well
   extend outside the plot region.
 
   When \code{at = NULL}, pretty tick mark locations are computed internally
   (the same way \code{\link{axTicks}(side)} would) from
-  \code{\link{par}("usr", "lab")} and \code{\link{par}("xlog")} (or
-  \code{"ylog"}).  Note that these may change if an on-screen plot is
-  resized (for example, if \code{plot} argument
-  \code{\link[graphics:plot.window]{asp}} is set).
+  \code{\link{par}("xaxp")} or \code{"yaxp"} and
+  \code{\link{par}("xlog")} (or \code{"ylog"}).  Note that these
+  locations may change if an on-screen plot is resized (for example, if
+  \code{plot} argument \code{\link[graphics:plot.window]{asp}} is set).
 
   Several of the graphics parameters affect the way axes are drawn. The
   vertical (for sides 1 and 3) positions of the axis and the tick labels
@@ -91,6 +92,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   See \code{\link{par}} for details.
 }
 \seealso{
+  \code{Axis} for a generic interface.
+  
   \code{\link{axTicks}} returns the axis tick locations
   corresponding to \code{at=NULL}; \code{\link{pretty}} is more flexible
   for computing pretty tick coordinates and does \emph{not} depend on
@@ -105,7 +108,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-plot(1:4, rnorm(4), axes=FALSE)
+plot(1:4, rnorm(4), axes = FALSE)
 axis(1, 1:4, LETTERS[1:4])
 axis(2)
 box() #- to make it look "as usual"
@@ -116,5 +119,9 @@ axis(1, 1:7, LETTERS[1:7], col.axis = "blue")
 # unusual options:
 axis(4, col = "violet", col.axis="dark violet", lwd = 2)
 axis(3, col = "gold", lty = 2, lwd = 0.5)
+
+# one way to have a custom x axis
+plot(1:10, xaxt = "n")
+axis(1, xaxp=c(2, 9, 7))
 }
 \keyword{aplot}

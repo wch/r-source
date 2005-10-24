@@ -14,7 +14,7 @@ as <-
     where <- .classEnv(thisClass)
     coerceFun <- getGeneric("coerce", where = where)
     coerceMethods <- getMethodsForDispatch("coerce", coerceFun)
-    asMethod = .quickCoerceSelect(thisClass, Class, coerceMethods)
+    asMethod <- .quickCoerceSelect(thisClass, Class, coerceMethods)
     if(is.null(asMethod)) {
         sig <-  c(from=thisClass, to = Class)
         packageSlot(sig) <- where
@@ -227,34 +227,36 @@ setAs <-
       ## use it as the coerce method.
       method  <- .basicCoerceMethod
       switch(what,
-                  array =, matrix = body(method, envir = environment(method)) <- substitute({
-          value <- AS(from)
-          if(strict) {
-              dm <- dim(value)
-              dn <- dimnames(value)
-              attributes(value) <- NULL
-              dim(value) <- dm
-              dimnames(value) <- dn
-          }
-          value
-          }, list(AS = as.name(paste("as.", what, sep="")))),
-                   ts = body(method, envir = environment(method)) <- quote({
-          value <- as.ts(from)
-          if(strict) {
-              attributes(value) <- NULL
-              class(value) <- "ts"
-              tsp(value) <- tsp(from)
-          }
-          value
-          }),
-             ## default: no attributes
-             body(method, envir = environment(method)) <- substitute({
-          value <- AS(from)
-          if(strict)
-              attributes(value) <- NULL
-          value
-          }, list(AS = as.name(paste("as.", what, sep=""))))
-                  )
+	     array =, matrix = body(method, envir = environment(method)) <-
+	     substitute({
+		 value <- AS(from)
+		 if(strict) {
+		     dm <- dim(value)
+		     dn <- dimnames(value)
+		     attributes(value) <- NULL
+		     dim(value) <- dm
+		     dimnames(value) <- dn
+		 }
+		 value
+	     }, list(AS = as.name(paste("as.", what, sep="")))),
+	     ##
+	     ts = body(method, envir = environment(method)) <- quote({
+		 value <- as.ts(from)
+		 if(strict) {
+		     attributes(value) <- NULL
+		     class(value) <- "ts"
+		     tsp(value) <- tsp(from)
+		 }
+		 value
+	     }),
+	     ## default: no attributes
+	     body(method, envir = environment(method)) <- substitute({
+		 value <- AS(from)
+		 if(strict)
+		     attributes(value) <- NULL
+		 value
+	     }, list(AS = as.name(paste("as.", what, sep=""))))
+	     )
       setMethod("coerce", c("ANY", what), method, where = where)
   }
   ## and some hand-coded ones

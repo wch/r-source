@@ -15,7 +15,7 @@
     the result of a call to \code{\link{glm}}, or a list of
     \code{objects} for the \code{"glmlist"} method.}
   \item{dispersion}{the dispersion parameter for the fitting family.
-    By default it is obtained from \code{glm.obj}.}
+    By default it is obtained from the object(s).}
   \item{test}{a character string, (partially) matching one of \code{"Chisq"},
     \code{"F"} or \code{"Cp"}. See \code{\link{stat.anova}}.}
 }
@@ -42,6 +42,11 @@
   deviance plus twice the estimate of \eqn{\sigma^2}{sigma^2} times
   the residual degrees of freedom, which is closely related to AIC (and
   a multiple of it if the dispersion is known).
+
+  The dispersion estimate will be taken from the largest model, using
+  the value returned by \code{\link{summary.glm}}.  As this will in most
+  cases use a Chisquared-based estimate, the F tests are not based on
+  the residual deviance in the analysis of deviance table shown.
 }
 \value{
   An object of class \code{"anova"} inheriting from class \code{"data.frame"}.

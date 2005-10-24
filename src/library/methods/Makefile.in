@@ -66,8 +66,11 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 
 RfilesLazy: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 
-$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
-	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
+## loadNamespace() depends on the NAMESPACE file.  We remove the
+## dumped copy (it is rebuilt later), and we have already installed
+## NAMESPACE in the library tree.
+$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds $@
 	@echo "dumping R code in package '$(pkg)'"
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@echo "loadNamespace(\"$(pkg)\")" | \

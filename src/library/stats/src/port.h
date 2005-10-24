@@ -66,9 +66,12 @@ extern void F77_NAME(drnsg)(double[], double[], double[], double[],
 			    int*, int*, int*, int*, int*,
 			    double[], double[]);
 
-SEXP port_ivset(SEXP iv, SEXP v);
+SEXP port_ivset(SEXP kind, SEXP iv, SEXP v);
 
 SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 		 SEXP lowerb, SEXP upperb, SEXP d, SEXP iv, SEXP v);
+
+SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
+	       SEXP lowerb, SEXP upperb);
 
 #endif

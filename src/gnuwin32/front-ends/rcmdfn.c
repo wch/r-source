@@ -268,7 +268,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	if (cmdarg > 0 && argc > cmdarg) {
 	    p = argv[cmdarg];
 	    if (strcmp(p, "Rd2dvi") == 0) {
-		strcat(cmd, "sh "); 
+		strcpy(cmd, "sh "); 
 		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh");
 	    } else {
 		if (!strcmp(".sh", p + strlen(p) - 3)) {

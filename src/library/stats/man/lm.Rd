@@ -77,7 +77,7 @@ lm(formula, data, subset, weights, na.action,
 
   If \code{response} is a matrix a linear model is fitted separately by
   least-squares to each column of the matrix.
-  
+
   See \code{\link{model.matrix}} for some further details.  The terms in
   the formula will be re-ordered so that main effects come first,
   followed by the interactions, all second-order, all third-order and so
@@ -131,7 +131,7 @@ lm(formula, data, subset, weights, na.action,
 }
 \section{Using time series}{
   Considerable care is needed when using \code{lm} with time series.
-  
+
   Unless \code{na.action = NULL}, the time series attributes are
   stripped from the variables before the regression is done.  (This is
   necessary as omitting \code{NA}s would invalidate the time series
@@ -154,7 +154,8 @@ lm(formula, data, subset, weights, na.action,
   \code{\link{residuals}}, \code{\link{fitted}}, \code{\link{vcov}}.
 
   \code{\link{predict.lm}} (via \code{\link{predict}}) for prediction,
-  including confidence and prediction intervals.
+  including confidence and prediction intervals;
+  \code{\link{confint}} for confidence intervals of \emph{parameters}.
 
   \code{\link{lm.influence}} for regression diagnostics, and
   \code{\link{glm}} for \bold{generalized} linear models.

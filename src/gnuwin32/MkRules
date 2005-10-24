@@ -41,6 +41,7 @@ TCL_VERSION = 84
 # than without it because mixed or modified revisions will be indicated)
 # USE_SVNVERSION = YES
 
+
 ## ====== configuration macros for building installers ===========
 
 # location where Inno Setup 5.1.x was installed. Spaces allowed.
@@ -58,6 +59,17 @@ endif
 # R_EXE=R
 
 ## =============== end of user-customizable parts  ===================
+
+ifneq ($(strip $(BUILD)),CROSS)
+ifeq ($(strip $(shell latex --version | grep ^MiKTeX | wc -l)),1)
+# MiKTeX
+R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
+else
+R_TEXOPTS=
+endif
+else # cross-builds
+R_TEXOPTS=
+endif
 
 ifeq ($(strip $(BUILD)),MINGW)
 BINPREF=
@@ -99,7 +111,9 @@ F77=$(BINPREF)g77
 AS=$(BINPREF)as
 DLL_LDMAIN=gcc
 DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
-DLLTOOL=$(BINPREF)dlltool -k --as $(AS)
+## use version without -k for front-ends/libproxy.a
+DLLTOOL_WIN32=$(BINPREF)dlltool --as $(AS)
+DLLTOOL=$(DLLTOOL_WIN32)
 LINKER=$(BINPREF)gcc $(MINGW32LDFLAG)
 AR=$(BINPREF)ar
 RANLIB=$(BINPREF)ranlib

@@ -47,14 +47,9 @@
 
 
 #ifdef SUPPORT_MBCS
+# include <R_ext/rlocale.h>
 # include <wchar.h>
 # include <wctype.h>
-#if !HAVE_DECL_WCWIDTH
-extern int wcwidth(wchar_t c);
-#endif
-#if !HAVE_DECL_WCSWIDTH
-extern int wcswidth(const wchar_t *s, size_t n);
-#endif
 #endif
 
 
@@ -114,9 +109,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef SUPPORT_MBCS
     int nc;
     char *xi;
-#ifdef HAVE_WCSWIDTH
     wchar_t *wc;
-#endif
 #endif
 
     checkArity(op, args);
@@ -131,8 +124,8 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++) {
 	if(strcmp(type, "bytes") == 0) {
-	    /* This works for NA strings too */
-	    INTEGER(s)[i] = length(STRING_ELT(x, i));
+	    /* This works for NA strings too */	
+    INTEGER(s)[i] = length(STRING_ELT(x, i));
 	} else if(strcmp(type, "chars") == 0) {
 	    if(STRING_ELT(x, i) == NA_STRING) {
 		INTEGER(s)[i] = 2;
@@ -153,23 +146,21 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(mbcslocale) {
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
-#ifdef HAVE_WCSWIDTH
 		if(nc >= 0) {
 		    AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
 		    wc = (wchar_t *) cbuff.data;
 		    mbstowcs(wc, xi, nc + 1);
-		    INTEGER(s)[i] = wcswidth(wc, 2147483647);
+		    INTEGER(s)[i] = Ri18n_wcswidth(wc, 2147483647);
 		    if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
 		} else
-#endif
-		    INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
+		    INTEGER(s)[i] = NA_INTEGER;
 		} else
 #endif
 		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
 	    }
 	}
     }
-#if defined(SUPPORT_MBCS) && defined(HAVE_WCSWIDTH)
+#if defined(SUPPORT_MBCS)
     DeallocBuffer(&cbuff);
 #endif
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
@@ -773,8 +764,8 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	{
 	    if (this[0] == '.') {
-		if (l >= 1 && isdigit((int) this[1])) need_prefix = TRUE;
-	    } else if (!isalpha((int) this[0])) need_prefix = TRUE;
+		if (l >= 1 && isdigit(0xff & (int) this[1])) need_prefix = TRUE;
+	    } else if (!isalpha(0xff & (int) this[0])) need_prefix = TRUE;
 	}
 	if (need_prefix) {
 	    SET_STRING_ELT(ans, i, allocString(l + 1));
@@ -797,7 +788,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 		for(wc = wstr; *wc; wc++) {
 		    if (*wc == L'.' || (allow_ && *wc == L'_')) 
 			/* leave alone */;
-		    else if(!isalnum((int)*wc)) *wc = L'.';
+		    else if(!iswalnum((int)*wc)) *wc = L'.';
 		}
 		wcstombs(this, wstr, strlen(this)+1);
 		Free(wstr);
@@ -807,7 +798,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	{
 	    for (p = this; *p; p++) {
 		if (*p == '.' || (allow_ && *p == '_')) /* leave alone */;
-		else if(!isalnum((int)*p)) *p = '.';
+		else if(!isalnum(0xff & (int)*p)) *p = '.';
 		/* else leave alone */
 	    }
 	}
@@ -1297,6 +1288,259 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+static SEXP gregexpr_Regexc(const regex_t *reg, const char *string, 
+                            int useBytes)
+{
+    int matchIndex, j, st, foundAll, foundAny, offset;
+    regmatch_t regmatch[10];
+    SEXP ans, matchlen;         /* Return vect and its attribute */
+    SEXP matchbuf, matchlenbuf; /* Buffers for storing multiple matches */
+    int bufsize = 1024;         /* Starting size for buffers */
+    PROTECT(matchbuf = allocVector(INTSXP, bufsize));
+    PROTECT(matchlenbuf = allocVector(INTSXP, bufsize));
+    matchIndex = -1;
+    foundAll = foundAny = offset = 0;
+    while (!foundAll) {
+        if(Rregexec(reg, string, 1, regmatch, 0, offset) == 0) {
+            if ((matchIndex + 1) == bufsize) {
+                /* Reallocate match buffers */
+                int newbufsize = bufsize * 2;
+                SEXP tmp;
+                tmp = allocVector(INTSXP, 2 * bufsize);
+                for (j = 0; j < bufsize; j++)
+                    INTEGER(tmp)[j] = INTEGER(matchlenbuf)[j];
+                UNPROTECT(1);
+                matchlenbuf = tmp;
+                PROTECT(matchlenbuf);
+                tmp = allocVector(INTSXP, 2 * bufsize);
+                for (j = 0; j < bufsize; j++)
+                    INTEGER(tmp)[j] = INTEGER(matchbuf)[j];
+                matchbuf = tmp;
+                UNPROTECT(2);
+                PROTECT(matchbuf);
+                PROTECT(matchlenbuf);
+                bufsize = newbufsize;
+            }
+            matchIndex++;
+            foundAny = 1;
+            st = regmatch[0].rm_so;
+            offset = regmatch[0].rm_eo;
+            INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
+            INTEGER(matchlenbuf)[matchIndex] = offset - st;
+#ifdef SUPPORT_MBCS
+            if(!useBytes && mbcslocale) {
+                int mlen = regmatch[0].rm_eo - st;
+                /* Unfortunately these are in bytes, so we need to
+                   use chars instead */
+                if(st > 0) {
+                    AllocBuffer(st, &cbuff);
+                    memcpy(cbuff.data, string, st);
+                    cbuff.data[st] = '\0';
+                    INTEGER(matchbuf)[matchIndex] = 1+mbstowcs(NULL, cbuff.data, 0);
+                    if(INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
+                        INTEGER(matchbuf)[matchIndex] = NA_INTEGER;
+                        foundAll = 1;
+                    }
+                }
+                AllocBuffer(mlen+1, &cbuff);
+                memcpy(cbuff.data, string+st, mlen);
+                cbuff.data[mlen] = '\0';
+                INTEGER(matchlenbuf)[matchIndex] = mbstowcs(NULL, cbuff.data, 0);
+                if(INTEGER(matchlenbuf)[matchIndex] < 0) { /* an invalid string */
+                    INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
+                    foundAll = 1;
+                }
+            }
+#endif
+        } else {
+            foundAll = 1;
+            if (!foundAny) {
+                matchIndex++;
+                INTEGER(matchbuf)[matchIndex] = -1;
+                INTEGER(matchlenbuf)[matchIndex] = -1;
+            }
+        }
+
+    }
+#ifdef SUPPORT_MBCS
+    DeallocBuffer(&cbuff);
+#endif
+    PROTECT(ans = allocVector(INTSXP, matchIndex + 1));
+    PROTECT(matchlen = allocVector(INTSXP, matchIndex + 1));
+    /* copy from buffers */
+    for (j = 0; j <= matchIndex; j++) {
+        INTEGER(ans)[j] = INTEGER(matchbuf)[j];
+        INTEGER(matchlen)[j] = INTEGER(matchlenbuf)[j];
+    }
+    setAttrib(ans, install("match.length"), matchlen);
+    UNPROTECT(4);
+    return ans;
+}
+
+static SEXP gregexpr_fixed(char *pattern, char *string, int useBytes)
+{
+    int patlen, matchIndex, st, foundAll, foundAny, curpos, j, ansSize;
+    SEXP ans, matchlen;         /* return vect and its attribute */
+    SEXP matchbuf, matchlenbuf; /* buffers for storing multiple matches */
+    int bufsize = 1024;         /* starting size for buffers */
+    PROTECT(matchbuf = allocVector(INTSXP, bufsize));
+    PROTECT(matchlenbuf = allocVector(INTSXP, bufsize));
+#ifdef SUPPORT_MBCS
+    if(!useBytes && mbcslocale)
+        patlen = mbstowcs(NULL, pattern, 0);
+    else
+#endif
+        patlen = strlen(pattern);
+    foundAll = curpos = st = foundAny = 0;
+    st = fgrep_one(pattern, string, useBytes);
+    matchIndex = -1;
+    if (st < 0) {
+        INTEGER(matchbuf)[0] = -1;
+        INTEGER(matchlenbuf)[0] = -1;
+    } else {
+        foundAny = 1;
+        matchIndex++;
+        INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
+        INTEGER(matchlenbuf)[matchIndex] = patlen;
+        while(!foundAll) {
+            string += st + patlen;
+            curpos += st + patlen;
+            st = fgrep_one(pattern, string, useBytes);
+            if (st >= 0) {
+                if ((matchIndex + 1) == bufsize) {
+                    /* Reallocate match buffers */
+                    int newbufsize = bufsize * 2;
+                    SEXP tmp;
+                    tmp = allocVector(INTSXP, 2 * bufsize);
+                    for (j = 0; j < bufsize; j++)
+                        INTEGER(tmp)[j] = INTEGER(matchlenbuf)[j];
+                    UNPROTECT(1);
+                    matchlenbuf = tmp;
+                    PROTECT(matchlenbuf);
+                    tmp = allocVector(INTSXP, 2 * bufsize);
+                    for (j = 0; j < bufsize; j++)
+                        INTEGER(tmp)[j] = INTEGER(matchbuf)[j];
+                    matchbuf = tmp;
+                    UNPROTECT(2);
+                    PROTECT(matchbuf);
+                    PROTECT(matchlenbuf);
+                    bufsize = newbufsize;
+                }
+                matchIndex++;
+                /* index from one */
+                INTEGER(matchbuf)[matchIndex] = curpos + st + 1; 
+                INTEGER(matchlenbuf)[matchIndex] = patlen;
+            } else 
+                foundAll = 1;
+        }
+    }
+    ansSize = foundAny ? (matchIndex + 1) : 1;
+    PROTECT(ans = allocVector(INTSXP, ansSize));
+    PROTECT(matchlen = allocVector(INTSXP, ansSize));
+    /* copy from buffers */
+    for (j = 0; j < ansSize; j++) {
+        INTEGER(ans)[j] = INTEGER(matchbuf)[j];
+        INTEGER(matchlen)[j] = INTEGER(matchlenbuf)[j];
+    }
+    setAttrib(ans, install("match.length"), matchlen);
+    UNPROTECT(4);
+    return ans;
+}
+
+static SEXP gregexpr_NAInputAns(void)
+{
+    SEXP ans, matchlen;
+    PROTECT(ans = allocVector(INTSXP, 1)); 
+    PROTECT(matchlen = allocVector(INTSXP, 1));
+    INTEGER(ans)[0] = INTEGER(matchlen)[0] = R_NaInt;
+    setAttrib(ans, install("match.length"), matchlen);
+    UNPROTECT(2);
+    return ans;
+}
+
+#ifdef SUPPORT_MBCS
+static SEXP gregexpr_BadStringAns(void)
+{
+    SEXP ans, matchlen;
+    PROTECT(ans = allocVector(INTSXP, 1)); 
+    PROTECT(matchlen = allocVector(INTSXP, 1));
+    INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
+    setAttrib(ans, install("match.length"), matchlen);
+    UNPROTECT(2);
+    return ans;
+}
+#endif
+
+SEXP do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP pat, text, ansList, ans;
+    regex_t reg;
+    int i, n, extended_opt, fixed_opt, useBytes, cflags;
+    char *spat = NULL; /* -Wall */
+
+    checkArity(op, args);
+    pat = CAR(args); args = CDR(args);
+    text = CAR(args); args = CDR(args);
+    extended_opt = asLogical(CAR(args)); args = CDR(args);
+    if (extended_opt == NA_INTEGER) extended_opt = 1;
+    fixed_opt = asLogical(CAR(args)); args = CDR(args);
+    if (fixed_opt == NA_INTEGER) fixed_opt = 0;
+    useBytes = asLogical(CAR(args)); args = CDR(args);
+    if (useBytes == NA_INTEGER || !fixed_opt) useBytes = 0;
+
+    if (length(pat) < 1 || length(text) < 1)
+	errorcall(call, R_MSG_IA);
+    if (!isString(pat)) PROTECT(pat = coerceVector(pat, STRSXP));
+    else PROTECT(pat);
+    if ( STRING_ELT(pat,0) == NA_STRING)
+	errorcall(call, R_MSG_IA);
+    if (!isString(text)) PROTECT(text = coerceVector(text, STRSXP));
+    else PROTECT(text);
+
+    cflags = extended_opt ? REG_EXTENDED : 0;
+
+#ifdef SUPPORT_MBCS
+    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+	errorcall(call, _("regular expression is invalid in this locale"));
+#endif
+    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
+	errorcall(call, _("invalid regular expression '%s'"),
+		  CHAR(STRING_ELT(pat, 0)));
+    if (fixed_opt) spat = CHAR(STRING_ELT(pat, 0));
+    n = length(text);
+    PROTECT(ansList = allocVector(VECSXP, n));
+    for (i = 0 ; i < n ; i++) {
+        int foundAll, foundAny, matchIndex, offset;
+        char *s;
+        foundAll = foundAny = offset = 0;
+        matchIndex = -1;
+        s = CHAR(STRING_ELT(text, i));
+	if (STRING_ELT(text, i) == NA_STRING) {
+            PROTECT(ans = gregexpr_NAInputAns());
+	} else {
+#ifdef SUPPORT_MBCS
+	    if(!useBytes && mbcslocale && !mbcsValid(s)) {
+		warningcall(call,
+			    _("input string %d is invalid in this locale"),
+			    i+1);
+                PROTECT(ans = gregexpr_BadStringAns());
+	    } else
+#endif
+                {
+                    if (fixed_opt)
+                        PROTECT(ans = gregexpr_fixed(spat, s, useBytes));
+                    else
+                        PROTECT(ans = gregexpr_Regexc(&reg, s, useBytes));
+                }
+        }
+        SET_VECTOR_ELT(ansList, i, ans);
+        UNPROTECT(1);
+    } 
+    if (!fixed_opt) regfree(&reg);
+    UNPROTECT(3);
+    return ansList;
+}
+
 SEXP
 do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1309,51 +1553,51 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 
     x = CAR(args);
     if(!isString(x))
-	errorcall(call, _("non-character argument to tolower()"));
+        errorcall(call, _("non-character argument to tolower()"));
     n = LENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
 #ifdef SUPPORT_MBCS
     if(mbcslocale) {
-	int nb, nc, j;
-	wctrans_t tr = wctrans(ul ? "toupper" : "tolower");
-	wchar_t * wc;
+        int nb, nc, j;
+        wctrans_t tr = wctrans(ul ? "toupper" : "tolower");
+        wchar_t * wc;
 
-	/* the translated string need not be the same length in bytes */
-	for(i = 0; i < n; i++) {
-	    if (STRING_ELT(x, i) == NA_STRING)
-		SET_STRING_ELT(y, i, NA_STRING);
-	    else {
-		xi = CHAR(STRING_ELT(x, i));
-		nc = mbstowcs(NULL, xi, 0);
-		if(nc >= 0) {
-		    AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
-		    wc = (wchar_t *) cbuff.data;
-		    mbstowcs(wc, xi, nc + 1);
-		    for(j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
-		    nb = wcstombs(NULL, wc, 0);
-		    SET_STRING_ELT(y, i, allocString(nb));
-		    wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
-		} else {
-		    errorcall(call, _("invalid multibyte string %d"), i+1);
-		}
-	    }
-	}
-	DeallocBuffer(&cbuff);
+        /* the translated string need not be the same length in bytes */
+        for(i = 0; i < n; i++) {
+            if (STRING_ELT(x, i) == NA_STRING)
+                SET_STRING_ELT(y, i, NA_STRING);
+            else {
+                xi = CHAR(STRING_ELT(x, i));
+                nc = mbstowcs(NULL, xi, 0);
+                if(nc >= 0) {
+                    AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
+                    wc = (wchar_t *) cbuff.data;
+                    mbstowcs(wc, xi, nc + 1);
+                    for(j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
+                    nb = wcstombs(NULL, wc, 0);
+                    SET_STRING_ELT(y, i, allocString(nb));
+                    wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
+                } else {
+                    errorcall(call, _("invalid multibyte string %d"), i+1);
+                }
+            }
+        }
+        DeallocBuffer(&cbuff);
     } else
 #endif
-    {
-	for(i = 0; i < n; i++) {
-	    if (STRING_ELT(x, i) == NA_STRING)
-		SET_STRING_ELT(y, i, NA_STRING);
-	    else {
-		xi = CHAR(STRING_ELT(x, i));
-		SET_STRING_ELT(y, i, allocString(strlen(xi)));
-		strcpy(CHAR(STRING_ELT(y, i)), xi);
-		for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++)
-		    *p = ul ? toupper(*p) : tolower(*p);
-	    }
-	}
-    }
+        {
+            for(i = 0; i < n; i++) {
+                if (STRING_ELT(x, i) == NA_STRING)
+                    SET_STRING_ELT(y, i, NA_STRING);
+                else {
+                    xi = CHAR(STRING_ELT(x, i));
+                    SET_STRING_ELT(y, i, allocString(strlen(xi)));
+                    strcpy(CHAR(STRING_ELT(y, i)), xi);
+                    for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++)
+                        *p = ul ? toupper(*p) : tolower(*p);
+                }
+            }
+        }
     UNPROTECT(1);
     return(y);
 }
@@ -1364,11 +1608,11 @@ struct wtr_spec {
     enum { WTR_INIT, WTR_CHAR, WTR_RANGE } type;
     struct wtr_spec *next;
     union {
-	wchar_t c;
-	struct {
-	    wchar_t first;
-	    wchar_t last;
-	} r;
+        wchar_t c;
+        struct {
+            wchar_t first;
+            wchar_t last;
+        } r;
     } u;
 };
 
@@ -1379,29 +1623,29 @@ wtr_build_spec(const wchar_t *s, struct wtr_spec *trs) {
 
     this = trs;
     for(i = 0; i < len - 2; ) {
-	new = Calloc(1, struct wtr_spec);
-	new->next = NULL;
-	if(s[i + 1] == L'-') {
-	    new->type = WTR_RANGE;
-	    if(s[i] > s[i + 2])
-		error(_("decreasing range specification ('%lc-%lc')"),
-		      s[i], s[i + 2]);
-	    new->u.r.first = s[i];
-	    new->u.r.last = s[i + 2];
-	    i = i + 3;
-	} else {
-	    new->type = WTR_CHAR;
-	    new->u.c = s[i];
-	    i++;
-	}
-	this = this->next = new;
+        new = Calloc(1, struct wtr_spec);
+        new->next = NULL;
+        if(s[i + 1] == L'-') {
+            new->type = WTR_RANGE;
+            if(s[i] > s[i + 2])
+                error(_("decreasing range specification ('%lc-%lc')"),
+                      s[i], s[i + 2]);
+            new->u.r.first = s[i];
+            new->u.r.last = s[i + 2];
+            i = i + 3;
+        } else {
+            new->type = WTR_CHAR;
+            new->u.c = s[i];
+            i++;
+        }
+        this = this->next = new;
     }
     for( ; i < len; i++) {
-	new = Calloc(1, struct wtr_spec);
-	new->next = NULL;
-	new->type = WTR_CHAR;
-	new->u.c = s[i];
-	this = this->next = new;
+        new = Calloc(1, struct wtr_spec);
+        new->next = NULL;
+        new->type = WTR_CHAR;
+        new->u.c = s[i];
+        this = this->next = new;
     }
 }
 
@@ -1410,9 +1654,9 @@ wtr_free_spec(struct wtr_spec *trs) {
     struct wtr_spec *this, *next;
     this = trs;
     while(this) {
-	next = this->next;
-	Free(this);
-	this = next;
+        next = this->next;
+        Free(this);
+        this = next;
     }
 }
 
@@ -1423,24 +1667,24 @@ wtr_get_next_char_from_spec(struct wtr_spec **p) {
 
     this = *p;
     if(!this)
-	return('\0');
+        return('\0');
     switch(this->type) {
-	/* Note: this code does not deal with the WTR_INIT case. */
+        /* Note: this code does not deal with the WTR_INIT case. */
     case WTR_CHAR:
-	c = this->u.c;
-	*p = this->next;
-	break;
+        c = this->u.c;
+        *p = this->next;
+        break;
     case WTR_RANGE:
-	c = this->u.r.first;
-	if(c == this->u.r.last) {
-	    *p = this->next;
-	} else {
-	    (this->u.r.first)++;
-	}
-	break;
+        c = this->u.r.first;
+        if(c == this->u.r.last) {
+            *p = this->next;
+        } else {
+            (this->u.r.first)++;
+        }
+        break;
     default:
-	c = L'\0';
-	break;
+        c = L'\0';
+        break;
     }
     return(c);
 }
@@ -1450,11 +1694,11 @@ struct tr_spec {
     enum { TR_INIT, TR_CHAR, TR_RANGE } type;
     struct tr_spec *next;
     union {
-	unsigned char c;
-	struct {
-	    unsigned char first;
-	    unsigned char last;
-	} r;
+        unsigned char c;
+        struct {
+            unsigned char first;
+            unsigned char last;
+        } r;
     } u;
 };
 
@@ -1465,29 +1709,29 @@ tr_build_spec(const char *s, struct tr_spec *trs) {
 
     this = trs;
     for(i = 0; i < len - 2; ) {
-	new = Calloc(1, struct tr_spec);
-	new->next = NULL;
-	if(s[i + 1] == '-') {
-	    new->type = TR_RANGE;
-	    if(s[i] > s[i + 2])
-		error(_("decreasing range specification ('%c-%c')"),
-		      s[i], s[i + 2]);
-	    new->u.r.first = s[i];
-	    new->u.r.last = s[i + 2];
-	    i = i + 3;
-	} else {
-	    new->type = TR_CHAR;
-	    new->u.c = s[i];
-	    i++;
-	}
-	this = this->next = new;
+        new = Calloc(1, struct tr_spec);
+        new->next = NULL;
+        if(s[i + 1] == '-') {
+            new->type = TR_RANGE;
+            if(s[i] > s[i + 2])
+                error(_("decreasing range specification ('%c-%c')"),
+                      s[i], s[i + 2]);
+            new->u.r.first = s[i];
+            new->u.r.last = s[i + 2];
+            i = i + 3;
+        } else {
+            new->type = TR_CHAR;
+            new->u.c = s[i];
+            i++;
+        }
+        this = this->next = new;
     }
     for( ; i < len; i++) {
-	new = Calloc(1, struct tr_spec);
-	new->next = NULL;
-	new->type = TR_CHAR;
-	new->u.c = s[i];
-	this = this->next = new;
+        new = Calloc(1, struct tr_spec);
+        new->next = NULL;
+        new->type = TR_CHAR;
+        new->u.c = s[i];
+        this = this->next = new;
     }
 }
 
@@ -1496,9 +1740,9 @@ tr_free_spec(struct tr_spec *trs) {
     struct tr_spec *this, *next;
     this = trs;
     while(this) {
-	next = this->next;
-	Free(this);
-	this = next;
+        next = this->next;
+        Free(this);
+        this = next;
     }
 }
 
@@ -1509,24 +1753,24 @@ tr_get_next_char_from_spec(struct tr_spec **p) {
 
     this = *p;
     if(!this)
-	return('\0');
+        return('\0');
     switch(this->type) {
-	/* Note: this code does not deal with the TR_INIT case. */
+        /* Note: this code does not deal with the TR_INIT case. */
     case TR_CHAR:
-	c = this->u.c;
-	*p = this->next;
-	break;
+        c = this->u.c;
+        *p = this->next;
+        break;
     case TR_RANGE:
-	c = this->u.r.first;
-	if(c == this->u.r.last) {
-	    *p = this->next;
-	} else {
-	    (this->u.r.first)++;
-	}
-	break;
+        c = this->u.r.first;
+        if(c == this->u.r.last) {
+            *p = this->next;
+        } else {
+            (this->u.r.first)++;
+        }
+        break;
     default:
-	c = '\0';
-	break;
+        c = '\0';
+        break;
     }
     return(c);
 }
@@ -1544,141 +1788,141 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(old) || (length(old) < 1) ||
        !isString(new) || (length(new) < 1) ||
        !isString(x) )
-	errorcall(call, R_MSG_IA);
+        errorcall(call, R_MSG_IA);
 
     if (STRING_ELT(old,0) == NA_STRING ||
-	STRING_ELT(new,0) == NA_STRING) {
-	errorcall(call, _("invalid (NA) arguments."));
+        STRING_ELT(new,0) == NA_STRING) {
+        errorcall(call, _("invalid (NA) arguments."));
     }
 
 #ifdef SUPPORT_MBCS
     if(mbcslocale) {
-	int j, nb, nc;
-	wchar_t xtable[65536 + 1], c_old, c_new, *wc;
-	char *xi;
-	struct wtr_spec *trs_old, **trs_old_ptr;
-	struct wtr_spec *trs_new, **trs_new_ptr;
+        int j, nb, nc;
+        wchar_t xtable[65536 + 1], c_old, c_new, *wc;
+        char *xi;
+        struct wtr_spec *trs_old, **trs_old_ptr;
+        struct wtr_spec *trs_new, **trs_new_ptr;
 
-	for(i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
+        for(i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
 
-	/* Initialize the old and new wtr_spec lists. */
-	trs_old = Calloc(1, struct wtr_spec);
-	trs_old->type = WTR_INIT;
-	trs_old->next = NULL;
-	trs_new = Calloc(1, struct wtr_spec);
-	trs_new->type = WTR_INIT;
-	trs_new->next = NULL;
-	/* Build the old and new wtr_spec lists. */
-	nc = mbstowcs(NULL, CHAR(STRING_ELT(old, 0)), 0);
-	if(nc < 0) errorcall(call, _("invalid multibyte string 'old'"));
-	AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
-	wc = (wchar_t *) cbuff.data;
-	mbstowcs(wc, CHAR(STRING_ELT(old, 0)), nc + 1);
-	wtr_build_spec(wc, trs_old);
+        /* Initialize the old and new wtr_spec lists. */
+        trs_old = Calloc(1, struct wtr_spec);
+        trs_old->type = WTR_INIT;
+        trs_old->next = NULL;
+        trs_new = Calloc(1, struct wtr_spec);
+        trs_new->type = WTR_INIT;
+        trs_new->next = NULL;
+        /* Build the old and new wtr_spec lists. */
+        nc = mbstowcs(NULL, CHAR(STRING_ELT(old, 0)), 0);
+        if(nc < 0) errorcall(call, _("invalid multibyte string 'old'"));
+        AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
+        wc = (wchar_t *) cbuff.data;
+        mbstowcs(wc, CHAR(STRING_ELT(old, 0)), nc + 1);
+        wtr_build_spec(wc, trs_old);
 
-	nc = mbstowcs(NULL, CHAR(STRING_ELT(new, 0)), 0);
-	if(nc < 0) errorcall(call, _("invalid multibyte string 'new'"));
-	AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
-	wc = (wchar_t *) cbuff.data;
-	mbstowcs(wc, CHAR(STRING_ELT(new, 0)), nc + 1);
-	wtr_build_spec(wc, trs_new);
+        nc = mbstowcs(NULL, CHAR(STRING_ELT(new, 0)), 0);
+        if(nc < 0) errorcall(call, _("invalid multibyte string 'new'"));
+        AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
+        wc = (wchar_t *) cbuff.data;
+        mbstowcs(wc, CHAR(STRING_ELT(new, 0)), nc + 1);
+        wtr_build_spec(wc, trs_new);
 
-	/* Initialize the pointers for walking through the old and new
-	   wtr_spec lists and retrieving the next chars from the lists.
-	*/
-	trs_old_ptr = Calloc(1, struct wtr_spec *);
-	*trs_old_ptr = trs_old->next;
-	trs_new_ptr = Calloc(1, struct wtr_spec *);
-	*trs_new_ptr = trs_new->next;
-	for(;;) {
-	    c_old = wtr_get_next_char_from_spec(trs_old_ptr);
-	    c_new = wtr_get_next_char_from_spec(trs_new_ptr);
-	    if(c_old == '\0')
-		break;
-	    else if(c_new == '\0')
-		errorcall(call, _("'old' is longer than 'new'"));
-	    else
-		xtable[c_old] = c_new;
-	}
-	/* Free the memory occupied by the wtr_spec lists. */
-	wtr_free_spec(trs_old);
-	wtr_free_spec(trs_new);
-	Free(trs_old_ptr); Free(trs_new_ptr);
+        /* Initialize the pointers for walking through the old and new
+           wtr_spec lists and retrieving the next chars from the lists.
+        */
+        trs_old_ptr = Calloc(1, struct wtr_spec *);
+        *trs_old_ptr = trs_old->next;
+        trs_new_ptr = Calloc(1, struct wtr_spec *);
+        *trs_new_ptr = trs_new->next;
+        for(;;) {
+            c_old = wtr_get_next_char_from_spec(trs_old_ptr);
+            c_new = wtr_get_next_char_from_spec(trs_new_ptr);
+            if(c_old == '\0')
+                break;
+            else if(c_new == '\0')
+                errorcall(call, _("'old' is longer than 'new'"));
+            else
+                xtable[c_old] = c_new;
+        }
+        /* Free the memory occupied by the wtr_spec lists. */
+        wtr_free_spec(trs_old);
+        wtr_free_spec(trs_new);
+        Free(trs_old_ptr); Free(trs_new_ptr);
 
-	n = LENGTH(x);
-	PROTECT(y = allocVector(STRSXP, n));
-	for(i = 0; i < n; i++) {
-	    if (STRING_ELT(x,i) == NA_STRING)
-		SET_STRING_ELT(y, i, NA_STRING);
-	    else {
-		xi = CHAR(STRING_ELT(x, i));
-		nc = mbstowcs(NULL, xi, 0);
-		if(nc < 0)
-		    errorcall(call, _("invalid input multibyte string %d"),
-			      i+1);
-		AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
-		wc = (wchar_t *) cbuff.data;
-		mbstowcs(wc, xi, nc + 1);
-		for(j = 0; j < nc; j++) wc[j] = xtable[wc[j]];
-		nb = wcstombs(NULL, wc, 0);
-		SET_STRING_ELT(y, i, allocString(nb));
-		wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
-	    }
-	}
-	DeallocBuffer(&cbuff);
+        n = LENGTH(x);
+        PROTECT(y = allocVector(STRSXP, n));
+        for(i = 0; i < n; i++) {
+            if (STRING_ELT(x,i) == NA_STRING)
+                SET_STRING_ELT(y, i, NA_STRING);
+            else {
+                xi = CHAR(STRING_ELT(x, i));
+                nc = mbstowcs(NULL, xi, 0);
+                if(nc < 0)
+                    errorcall(call, _("invalid input multibyte string %d"),
+                              i+1);
+                AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
+                wc = (wchar_t *) cbuff.data;
+                mbstowcs(wc, xi, nc + 1);
+                for(j = 0; j < nc; j++) wc[j] = xtable[wc[j]];
+                nb = wcstombs(NULL, wc, 0);
+                SET_STRING_ELT(y, i, allocString(nb));
+                wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
+            }
+        }
+        DeallocBuffer(&cbuff);
     } else
 #endif
-    {
-	unsigned char xtable[UCHAR_MAX + 1], *p, c_old, c_new;
-	struct tr_spec *trs_old, **trs_old_ptr;
-	struct tr_spec *trs_new, **trs_new_ptr;
+        {
+            unsigned char xtable[UCHAR_MAX + 1], *p, c_old, c_new;
+            struct tr_spec *trs_old, **trs_old_ptr;
+            struct tr_spec *trs_new, **trs_new_ptr;
 
-	for(i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
+            for(i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
 
-	/* Initialize the old and new tr_spec lists. */
-	trs_old = Calloc(1, struct tr_spec);
-	trs_old->type = TR_INIT;
-	trs_old->next = NULL;
-	trs_new = Calloc(1, struct tr_spec);
-	trs_new->type = TR_INIT;
-	trs_new->next = NULL;
-	/* Build the old and new tr_spec lists. */
-	tr_build_spec(CHAR(STRING_ELT(old, 0)), trs_old);
-	tr_build_spec(CHAR(STRING_ELT(new, 0)), trs_new);
-	/* Initialize the pointers for walking through the old and new
-	   tr_spec lists and retrieving the next chars from the lists.
-	*/
-	trs_old_ptr = Calloc(1, struct tr_spec *);
-	*trs_old_ptr = trs_old->next;
-	trs_new_ptr = Calloc(1, struct tr_spec *);
-	*trs_new_ptr = trs_new->next;
-	for(;;) {
-	    c_old = tr_get_next_char_from_spec(trs_old_ptr);
-	    c_new = tr_get_next_char_from_spec(trs_new_ptr);
-	    if(c_old == '\0')
-		break;
-	    else if(c_new == '\0')
-		errorcall(call, _("'old' is longer than 'new'"));
-	    else
-		xtable[c_old] = c_new;
-	}
-	/* Free the memory occupied by the tr_spec lists. */
-	tr_free_spec(trs_old);
-	tr_free_spec(trs_new);
-	Free(trs_old_ptr); Free(trs_new_ptr);
+            /* Initialize the old and new tr_spec lists. */
+            trs_old = Calloc(1, struct tr_spec);
+            trs_old->type = TR_INIT;
+            trs_old->next = NULL;
+            trs_new = Calloc(1, struct tr_spec);
+            trs_new->type = TR_INIT;
+            trs_new->next = NULL;
+            /* Build the old and new tr_spec lists. */
+            tr_build_spec(CHAR(STRING_ELT(old, 0)), trs_old);
+            tr_build_spec(CHAR(STRING_ELT(new, 0)), trs_new);
+            /* Initialize the pointers for walking through the old and new
+               tr_spec lists and retrieving the next chars from the lists.
+            */
+            trs_old_ptr = Calloc(1, struct tr_spec *);
+            *trs_old_ptr = trs_old->next;
+            trs_new_ptr = Calloc(1, struct tr_spec *);
+            *trs_new_ptr = trs_new->next;
+            for(;;) {
+                c_old = tr_get_next_char_from_spec(trs_old_ptr);
+                c_new = tr_get_next_char_from_spec(trs_new_ptr);
+                if(c_old == '\0')
+                    break;
+                else if(c_new == '\0')
+                    errorcall(call, _("'old' is longer than 'new'"));
+                else
+                    xtable[c_old] = c_new;
+            }
+            /* Free the memory occupied by the tr_spec lists. */
+            tr_free_spec(trs_old);
+            tr_free_spec(trs_new);
+            Free(trs_old_ptr); Free(trs_new_ptr);
 
-	n = LENGTH(x);
-	PROTECT(y = allocVector(STRSXP, n));
-	for(i = 0; i < n; i++) {
-	    if (STRING_ELT(x,i) == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
-	    else {
-	    SET_STRING_ELT(y, i, allocString(strlen(CHAR(STRING_ELT(x, i)))));
-	    strcpy(CHAR(STRING_ELT(y, i)), CHAR(STRING_ELT(x, i)));
-		for(p = (unsigned char *) CHAR(STRING_ELT(y, i));
-		    *p != '\0'; p++) *p = xtable[*p];
-	    }
-	}
-    }
+            n = LENGTH(x);
+            PROTECT(y = allocVector(STRSXP, n));
+            for(i = 0; i < n; i++) {
+                if (STRING_ELT(x,i) == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
+                else {
+                    SET_STRING_ELT(y, i, allocString(strlen(CHAR(STRING_ELT(x, i)))));
+                    strcpy(CHAR(STRING_ELT(y, i)), CHAR(STRING_ELT(x, i)));
+                    for(p = (unsigned char *) CHAR(STRING_ELT(y, i));
+                        *p != '\0'; p++) *p = xtable[*p];
+                }
+            }
+        }
 
     UNPROTECT(1);
     return(y);
@@ -1711,62 +1955,62 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     if(value_opt == NA_INTEGER) value_opt = 0;
 
     if(!isString(pat) || length(pat) < 1 || !isString(vec))
-	errorcall(call, R_MSG_IA);
+        errorcall(call, R_MSG_IA);
 
     /* NAs are removed in R code so this isn't used */
     /* it's left in case we change our minds again */
     /* special case: NA pattern matches only NAs in vector */
     if (STRING_ELT(pat,0)==NA_STRING){
-	n = length(vec);
-	nmatches=0;
-	PROTECT(ind = allocVector(LGLSXP, n));
-	for(i=0; i<n; i++){
-	    if(STRING_ELT(vec,i)==NA_STRING){
-		INTEGER(ind)[i]=1;
-		nmatches++;
-	    }
-	    else
-		INTEGER(ind)[i]=0;
-	}
-	if (value_opt) {
-	    ans = allocVector(STRSXP, nmatches);
-	    j = 0;
-	    for (i = 0 ; i < n ; i++)
-		if (INTEGER(ind)[i]) {
-		    SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
-		}
-	}
-	else {
-	    ans = allocVector(INTSXP, nmatches);
-	    j = 0;
-	    for (i = 0 ; i < n ; i++)
-		if (INTEGER(ind)[i]) INTEGER(ans)[j++] = i + 1;
-	}
-	UNPROTECT(1);
-    return ans;
+        n = length(vec);
+        nmatches=0;
+        PROTECT(ind = allocVector(LGLSXP, n));
+        for(i=0; i<n; i++){
+            if(STRING_ELT(vec,i)==NA_STRING){
+                INTEGER(ind)[i]=1;
+                nmatches++;
+            }
+            else
+                INTEGER(ind)[i]=0;
+        }
+        if (value_opt) {
+            ans = allocVector(STRSXP, nmatches);
+            j = 0;
+            for (i = 0 ; i < n ; i++)
+                if (INTEGER(ind)[i]) {
+                    SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
+                }
+        }
+        else {
+            ans = allocVector(INTSXP, nmatches);
+            j = 0;
+            for (i = 0 ; i < n ; i++)
+                if (INTEGER(ind)[i]) INTEGER(ans)[j++] = i + 1;
+        }
+        UNPROTECT(1);
+        return ans;
     }
     /* end NA pattern handling */
 
 #ifdef SUPPORT_UTF8
     /* test for non-ASCII strings */
     if(mbcslocale) {
-	Rboolean warn = !utf8strIsASCII(CHAR(STRING_ELT(pat, 0)));
-	if(!warn)
-	    for(i = 0 ; i < length(vec) ; i++)
-		if(!utf8strIsASCII(CHAR(STRING_ELT(vec, i)))) {
-		    warn = TRUE; break;
-		}
-	if(warn)
-	    warning(_("use of agrep() in a UTF-8 locale may only work for ASCII strings"));
+        Rboolean warn = !utf8strIsASCII(CHAR(STRING_ELT(pat, 0)));
+        if(!warn)
+            for(i = 0 ; i < length(vec) ; i++)
+                if(!utf8strIsASCII(CHAR(STRING_ELT(vec, i)))) {
+                    warn = TRUE; break;
+                }
+        if(warn)
+            warning(_("use of agrep() in a UTF-8 locale may only work for ASCII strings"));
     }
 #endif
 
     /* Create search pattern object. */
     str = CHAR(STRING_ELT(pat, 0));
     aps = apse_create((unsigned char *)str, (apse_size_t)strlen(str),
-		      max_distance_opt);
+                      max_distance_opt);
     if(!aps)
-	error(_("could not allocate memory for approximate matching"));
+        error(_("could not allocate memory for approximate matching"));
 
     /* Set further restrictions on search distances. */
     apse_set_deletions(aps, max_deletions_opt);
@@ -1778,45 +2022,45 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ind = allocVector(LGLSXP, n));
     nmatches = 0;
     for(i = 0 ; i < n ; i++) {
-	if (STRING_ELT(vec, i) == NA_STRING) {
-		INTEGER(ind)[i] = 0;
-		continue;
-	}
-	str = CHAR(STRING_ELT(vec, i));
-	/* Set case ignore flag for the whole string to be matched. */
-	if(!apse_set_caseignore_slice(aps, 0,
-				      (apse_ssize_t)strlen(str),
-				      (apse_bool_t)igcase_opt)) {
-	    /* Most likely, an error in apse_set_caseignore_slice()
-	     * means that allocating memory failed (as we ensure that
-	     * the slice is contained in the string) ... */
-	    errorcall(call, _("could not perform case insensitive matching"));
-	}
-	/* Perform match. */
-	if(apse_match(aps,
-		      (unsigned char *)str,
-		      (apse_size_t)strlen(str))) {
-	    INTEGER(ind)[i] = 1;
-	    nmatches++;
-	}
-	else INTEGER(ind)[i] = 0;
+        if (STRING_ELT(vec, i) == NA_STRING) {
+            INTEGER(ind)[i] = 0;
+            continue;
+        }
+        str = CHAR(STRING_ELT(vec, i));
+        /* Set case ignore flag for the whole string to be matched. */
+        if(!apse_set_caseignore_slice(aps, 0,
+                                      (apse_ssize_t)strlen(str),
+                                      (apse_bool_t)igcase_opt)) {
+            /* Most likely, an error in apse_set_caseignore_slice()
+             * means that allocating memory failed (as we ensure that
+             * the slice is contained in the string) ... */
+            errorcall(call, _("could not perform case insensitive matching"));
+        }
+        /* Perform match. */
+        if(apse_match(aps,
+                      (unsigned char *)str,
+                      (apse_size_t)strlen(str))) {
+            INTEGER(ind)[i] = 1;
+            nmatches++;
+        }
+        else INTEGER(ind)[i] = 0;
     }
     apse_destroy(aps);
 
     PROTECT(ans = value_opt
-                ? allocVector(STRSXP, nmatches)
-                : allocVector(INTSXP, nmatches));
+            ? allocVector(STRSXP, nmatches)
+            : allocVector(INTSXP, nmatches));
     if(value_opt) {
-	for(j = i = 0 ; i < n ; i++) {
-	    if(INTEGER(ind)[i])
-		SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
-	}
+        for(j = i = 0 ; i < n ; i++) {
+            if(INTEGER(ind)[i])
+                SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
+        }
     }
     else {
-	for(j = i = 0 ; i < n ; i++) {
-	    if(INTEGER(ind)[i]==1)
-		INTEGER(ans)[j++] = i + 1;
-	}
+        for(j = i = 0 ; i < n ; i++) {
+            if(INTEGER(ind)[i]==1)
+                INTEGER(ans)[j++] = i + 1;
+        }
     }
 
     UNPROTECT(2);
@@ -1833,9 +2077,9 @@ SEXP do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!isString(x) || LENGTH(x) == 0)
-	errorcall(call, _("argument must be a character vector of length 1"));
+        errorcall(call, _("argument must be a character vector of length 1"));
     if(LENGTH(x) > 1)
-	warningcall(call, _("argument should be a character vector of length 1\nall but the first element will be ignored"));
+        warningcall(call, _("argument should be a character vector of length 1\nall but the first element will be ignored"));
     nc = LENGTH(STRING_ELT(x, 0));
     ans = allocVector(RAWSXP, nc);
     memcpy(RAW(ans), CHAR(STRING_ELT(x, 0)), nc);
@@ -1851,26 +2095,26 @@ SEXP do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!isRaw(x))
-	errorcall(call, _("argument 'x' must be a raw vector"));
+        errorcall(call, _("argument 'x' must be a raw vector"));
     multiple = asLogical(CADR(args));
     if(multiple == NA_LOGICAL)
-	errorcall(call, _("argument 'multiple' must be TRUE or FALSE"));
+        errorcall(call, _("argument 'multiple' must be TRUE or FALSE"));
     if(multiple) {
-	buf[1] = '\0';
-	PROTECT(ans = allocVector(STRSXP, nc));
-	for(i = 0; i < nc; i++) {
-	    buf[0] = (char) RAW(x)[i];
-	    SET_STRING_ELT(ans, i, mkChar(buf));
-	}
-	/* do we want to copy e.g. names here? */
+        buf[1] = '\0';
+        PROTECT(ans = allocVector(STRSXP, nc));
+        for(i = 0; i < nc; i++) {
+            buf[0] = (char) RAW(x)[i];
+            SET_STRING_ELT(ans, i, mkChar(buf));
+        }
+        /* do we want to copy e.g. names here? */
     } else {
-	len = LENGTH(x);
-	PROTECT(ans = allocVector(STRSXP, 1));
-	/* String is not necessarily 0-terminated and may contain nuls
-	   so don't use mkChar */
-	c = allocString(len); /* adds zero terminator */
-	memcpy(CHAR(c), RAW(x), len);
-	SET_STRING_ELT(ans, 0, c);
+        len = LENGTH(x);
+        PROTECT(ans = allocVector(STRSXP, 1));
+        /* String is not necessarily 0-terminated and may contain nuls
+           so don't use mkChar */
+        c = allocString(len); /* adds zero terminator */
+        memcpy(CHAR(c), RAW(x), len);
+        SET_STRING_ELT(ans, 0, c);
     }
     UNPROTECT(1);
     return ans;
@@ -1883,16 +2127,16 @@ SEXP do_rawShift(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, shift = asInteger(CADR(args));
 
     if(!isRaw(x))
-	errorcall(call, _("argument 'x' must be a raw vector"));
+        errorcall(call, _("argument 'x' must be a raw vector"));
     if(shift == NA_INTEGER || shift < -8 || shift > 8)
-	errorcall(call, _("argument 'shift' must be a small integer"));
+        errorcall(call, _("argument 'shift' must be a small integer"));
     PROTECT(ans = duplicate(x));
     if (shift > 0)
-	for(i = 0; i < LENGTH(x); i++)
-	    RAW(ans)[i] <<= shift;
+        for(i = 0; i < LENGTH(x); i++)
+            RAW(ans)[i] <<= shift;
     else
-	for(i = 0; i < LENGTH(x); i++)
-	    RAW(ans)[i] >>= (-shift);
+        for(i = 0; i < LENGTH(x); i++)
+            RAW(ans)[i] >>= (-shift);
     UNPROTECT(1);
     return ans;
 }
@@ -1904,12 +2148,12 @@ SEXP do_rawToBits(SEXP call, SEXP op, SEXP args, SEXP env)
     unsigned int tmp;
 
     if(!isRaw(x))
-	errorcall(call, _("argument 'x' must be a raw vector"));
+        errorcall(call, _("argument 'x' must be a raw vector"));
     PROTECT(ans = allocVector(RAWSXP, 8*LENGTH(x)));
     for(i = 0; i < LENGTH(x); i++) {
-	tmp = (unsigned int) RAW(x)[i];
-	for(k = 0; k < 8; k++, tmp >>= 1)
-	    RAW(ans)[j++] = tmp & 0x1;
+        tmp = (unsigned int) RAW(x)[i];
+        for(k = 0; k < 8; k++, tmp >>= 1)
+            RAW(ans)[j++] = tmp & 0x1;
     }
     UNPROTECT(1);
     return ans;
@@ -1922,12 +2166,12 @@ SEXP do_intToBits(SEXP call, SEXP op, SEXP args, SEXP env)
     unsigned int tmp;
 
     if(!isInteger(x))
-	errorcall(call, _("argument 'x' must be a integer vector"));
+        errorcall(call, _("argument 'x' must be a integer vector"));
     PROTECT(ans = allocVector(RAWSXP, 32*LENGTH(x)));
     for(i = 0; i < LENGTH(x); i++) {
-	tmp = (unsigned int) INTEGER(x)[i];
-	for(k = 0; k < 32; k++, tmp >>= 1)
-	    RAW(ans)[j++] = tmp & 0x1;
+        tmp = (unsigned int) INTEGER(x)[i];
+        for(k = 0; k < 32; k++, tmp >>= 1)
+            RAW(ans)[j++] = tmp & 0x1;
     }
     UNPROTECT(1);
     return ans;
@@ -1942,47 +2186,47 @@ SEXP do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
     Rbyte btmp;
 
     if (TYPEOF(x) != RAWSXP && TYPEOF(x) != RAWSXP && TYPEOF(x) != INTSXP)
-	errorcall(call, _("argument 'x' must be raw, integer or logical"));
+        errorcall(call, _("argument 'x' must be raw, integer or logical"));
     if (!isString(stype)  || LENGTH(stype) != 1)
-	errorcall(call, _("argument 'type' must be a character string"));
+        errorcall(call, _("argument 'type' must be a character string"));
     useRaw = strcmp(CHAR(STRING_ELT(stype, 0)), "integer");
     fac = useRaw ? 8 : 32;
     if (len% fac)
-	errorcall(call, _("argument 'x' must be a multiple of %d long"), fac);
+        errorcall(call, _("argument 'x' must be a multiple of %d long"), fac);
     slen = len/fac;
     PROTECT(ans = allocVector(useRaw ? RAWSXP : INTSXP, slen));
     for(i = 0; i < slen; i++)
-	if(useRaw) {
-	    btmp = 0;
-	    for(k = 7; k >= 0; k--) {
-		btmp <<= 1;
-		if(isRaw(x))
-		    btmp |= RAW(x)[8*i + k] & 0x1;
-		else if(isLogical(x) || isInteger(x)) {
-		    j = INTEGER(x)[8*i+k];
-		    if(j == NA_INTEGER)
-			errorcall(call,
-				  _("argument 'x' must not contain NAs"));
-		    btmp |= j & 0x1;
-		}
-	    }
-	    RAW(ans)[i] = btmp;
-	} else {
-	    itmp = 0;
-	    for(k = 31; k >= 0; k--) {
-		itmp <<= 1;
-		if(isRaw(x))
-		    itmp |= RAW(x)[32*i + k] & 0x1;
-		else if(isLogical(x) || isInteger(x)) {
-		    j = INTEGER(x)[32*i+k];
-		    if(j == NA_INTEGER)
-			errorcall(call,
-				  _("argument 'x' must not contain NAs"));
-		    itmp |= j & 0x1;
-		}
-	    }
-	    INTEGER(ans)[i] = (int) itmp;
-	}
+        if(useRaw) {
+            btmp = 0;
+            for(k = 7; k >= 0; k--) {
+                btmp <<= 1;
+                if(isRaw(x))
+                    btmp |= RAW(x)[8*i + k] & 0x1;
+                else if(isLogical(x) || isInteger(x)) {
+                    j = INTEGER(x)[8*i+k];
+                    if(j == NA_INTEGER)
+                        errorcall(call,
+                                  _("argument 'x' must not contain NAs"));
+                    btmp |= j & 0x1;
+                }
+            }
+            RAW(ans)[i] = btmp;
+        } else {
+            itmp = 0;
+            for(k = 31; k >= 0; k--) {
+                itmp <<= 1;
+                if(isRaw(x))
+                    itmp |= RAW(x)[32*i + k] & 0x1;
+                else if(isLogical(x) || isInteger(x)) {
+                    j = INTEGER(x)[32*i+k];
+                    if(j == NA_INTEGER)
+                        errorcall(call,
+                                  _("argument 'x' must not contain NAs"));
+                    itmp |= j & 0x1;
+                }
+            }
+            INTEGER(ans)[i] = (int) itmp;
+        }
     UNPROTECT(1);
     return ans;
 }
@@ -1999,61 +2243,61 @@ static int mbrtoint(int *w, const char *s)
         *w = (int) byte;
         return 1;
     } else if (byte < 0xE0) {
-	if(strlen(s) < 2) return -2;
+        if(strlen(s) < 2) return -2;
         if ((s[1] & 0xC0) == 0x80) {
             *w = (int) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
             return 2;
         } else return -1;
     } else if (byte < 0xF0) {
-	if(strlen(s) < 3) return -2;
+        if(strlen(s) < 3) return -2;
         if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
             *w = (int) (((byte & 0x0F) << 12)
-                    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
-	    byte = *w;
-	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
-	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
+                        | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
+            byte = *w;
+            if(byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
+            if(byte == 0xFFFE || byte == 0xFFFF) return -1;
             return 3;
         } else return -1;
     } else if (byte < 0xF8) {
-	if(strlen(s) < 4) return -2;
+        if(strlen(s) < 4) return -2;
         if (((s[1] & 0xC0) == 0x80) 
-	    && ((s[2] & 0xC0) == 0x80)
-	    && ((s[3] & 0xC0) == 0x80)) {
+            && ((s[2] & 0xC0) == 0x80)
+            && ((s[3] & 0xC0) == 0x80)) {
             *w = (int) (((byte & 0x07) << 18)
-			| ((s[1] & 0x3F) << 12) 
-			| ((s[2] & 0x3F) << 6)
-			| (s[3] & 0x3F));
-	    byte = *w;
+                        | ((s[1] & 0x3F) << 12) 
+                        | ((s[2] & 0x3F) << 6)
+                        | (s[3] & 0x3F));
+            byte = *w;
             return 4;
         } else return -1;
     } else if (byte < 0xFC) {
-	if(strlen(s) < 5) return -2;
+        if(strlen(s) < 5) return -2;
         if (((s[1] & 0xC0) == 0x80) 
-	    && ((s[2] & 0xC0) == 0x80)
-	    && ((s[3] & 0xC0) == 0x80)
-	    && ((s[4] & 0xC0) == 0x80)) {
+            && ((s[2] & 0xC0) == 0x80)
+            && ((s[3] & 0xC0) == 0x80)
+            && ((s[4] & 0xC0) == 0x80)) {
             *w = (int) (((byte & 0x03) << 24)
-			| ((s[1] & 0x3F) << 18) 
-			| ((s[2] & 0x3F) << 12) 
-			| ((s[3] & 0x3F) << 6)
-			| (s[4] & 0x3F));
-	    byte = *w;
+                        | ((s[1] & 0x3F) << 18) 
+                        | ((s[2] & 0x3F) << 12) 
+                        | ((s[3] & 0x3F) << 6)
+                        | (s[4] & 0x3F));
+            byte = *w;
             return 5;
         } else return -1;
     } else {
-	if(strlen(s) < 6) return -2;
+        if(strlen(s) < 6) return -2;
         if (((s[1] & 0xC0) == 0x80) 
-	    && ((s[2] & 0xC0) == 0x80)
-	    && ((s[3] & 0xC0) == 0x80)
-	    && ((s[4] & 0xC0) == 0x80)
-	    && ((s[5] & 0xC0) == 0x80)) {
+            && ((s[2] & 0xC0) == 0x80)
+            && ((s[3] & 0xC0) == 0x80)
+            && ((s[4] & 0xC0) == 0x80)
+            && ((s[5] & 0xC0) == 0x80)) {
             *w = (int) (((byte & 0x01) << 30)
-			| ((s[1] & 0x3F) << 24) 
-			| ((s[2] & 0x3F) << 18) 
-			| ((s[3] & 0x3F) << 12)
-			| ((s[5] & 0x3F) << 6)
-			| (s[5] & 0x3F));
-	    byte = *w;
+                        | ((s[1] & 0x3F) << 24) 
+                        | ((s[2] & 0x3F) << 18) 
+                        | ((s[3] & 0x3F) << 12)
+                        | ((s[5] & 0x3F) << 6)
+                        | (s[5] & 0x3F));
+            byte = *w;
             return 5;
         } else return -1;
     }
@@ -2068,16 +2312,16 @@ SEXP do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!isString(x) || LENGTH(x) == 0)
-	errorcall(call, _("argument must be a character vector of length 1"));
+        errorcall(call, _("argument must be a character vector of length 1"));
     if(LENGTH(x) > 1)
-	warningcall(call, _("argument should be a character vector of length 1\nall but the first element will be ignored"));
+        warningcall(call, _("argument should be a character vector of length 1\nall but the first element will be ignored"));
     nc = LENGTH(STRING_ELT(x, 0)); /* ints will be shorter */
     ians = (int *) R_alloc(nc,  sizeof(int *));
     for(i = 0, j = 0; i < nc; i++) {
-	used = mbrtoint(&tmp, s);
-	if(used <= 0) break;
-	ians[j++] = tmp;
-	s += used;
+        used = mbrtoint(&tmp, s);
+        if(used <= 0) break;
+        ians[j++] = tmp;
+        s += used;
     }
     if(used < 0) error("invalid UTF-8 string");
     ans = allocVector(INTSXP, j);
@@ -2087,7 +2331,7 @@ SEXP do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* based on pcre.c */
 static const int utf8_table1[] =
-  { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
+    { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
 static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
 
 static size_t inttomb(char *s, const int wc)
@@ -2099,11 +2343,11 @@ static size_t inttomb(char *s, const int wc)
     b = s ? s : buf;
     if(cvalue == 0) {*b = 0; return 0;}
     for (i = 0; i < sizeof(utf8_table1)/sizeof(int); i++)
-	if (cvalue <= utf8_table1[i]) break;
+        if (cvalue <= utf8_table1[i]) break;
     b += i;
     for (j = i; j > 0; j--) {
-	*b-- = 0x80 | (cvalue & 0x3f);
-	cvalue >>= 6;
+        *b-- = 0x80 | (cvalue & 0x3f);
+        cvalue >>= 6;
     }
     *b = utf8_table2[i] | cvalue;
     return i + 1;
@@ -2117,31 +2361,31 @@ SEXP do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!isInteger(x))
-	errorcall(call, _("argument 'x' must be an integer vector"));
+        errorcall(call, _("argument 'x' must be an integer vector"));
     multiple = asLogical(CADR(args));
     if(multiple == NA_LOGICAL)
-	errorcall(call, _("argument 'multiple' must be TRUE or FALSE"));
+        errorcall(call, _("argument 'multiple' must be TRUE or FALSE"));
     if(multiple) {
-	PROTECT(ans = allocVector(STRSXP, nc));
-	for(i = 0; i < nc; i++) {
-	    used = inttomb(buf, INTEGER(x)[i]);
-	    buf[used] = '\0';
-	    SET_STRING_ELT(ans, i, mkChar(buf));
-	}
-	/* do we want to copy e.g. names here? */
+        PROTECT(ans = allocVector(STRSXP, nc));
+        for(i = 0; i < nc; i++) {
+            used = inttomb(buf, INTEGER(x)[i]);
+            buf[used] = '\0';
+            SET_STRING_ELT(ans, i, mkChar(buf));
+        }
+        /* do we want to copy e.g. names here? */
     } else {
-	for(i = 0, len = 0; i < nc; i++)
-	    len += inttomb(NULL, INTEGER(x)[i]);
-	PROTECT(ans = allocVector(STRSXP, 1));
-	/* String is not necessarily 0-terminated and may contain nuls
-	   so don't use mkChar */
-	c = allocString(len); /* adds zero terminator */
-	for(i = 0, len = 0; i < nc; i++) {
-	    used = inttomb(buf, INTEGER(x)[i]);
-	    strncpy(CHAR(c) + len, buf, used);
-	    len += used;
-	}
-	SET_STRING_ELT(ans, 0, c);
+        for(i = 0, len = 0; i < nc; i++)
+            len += inttomb(NULL, INTEGER(x)[i]);
+        PROTECT(ans = allocVector(STRSXP, 1));
+        /* String is not necessarily 0-terminated and may contain nuls
+           so don't use mkChar */
+        c = allocString(len); /* adds zero terminator */
+        for(i = 0, len = 0; i < nc; i++) {
+            used = inttomb(buf, INTEGER(x)[i]);
+            strncpy(CHAR(c) + len, buf, used);
+            len += used;
+        }
+        SET_STRING_ELT(ans, 0, c);
     }
     UNPROTECT(1);
     return ans;
@@ -2152,7 +2396,7 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP s, x, width;
     int i, len, nw, w, nc;
     char *this;
-#if defined(SUPPORT_MBCS) && defined(HAVE_WCWIDTH)
+#if defined(SUPPORT_MBCS)
     char *p, *q;
     int w0, wsum, k, nb;
     wchar_t wc;
@@ -2162,49 +2406,49 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), STRSXP));
     if (!isString(x))
-	errorcall(call, _("strtrim() requires a character vector"));
+        errorcall(call, _("strtrim() requires a character vector"));
     len = LENGTH(x);
     PROTECT(width = coerceVector(CADR(args), INTSXP));
     nw = LENGTH(width);
     if(!nw || (nw < len && len % nw))
-	errorcall(call, _("invalid '%s' argument"), "width");
+        errorcall(call, _("invalid '%s' argument"), "width");
     for(i = 0; i < nw; i++)
-	if(INTEGER(width)[i] == NA_INTEGER ||
-	   INTEGER(width)[i] < 0)
-	    errorcall(call, _("invalid '%s' argument"), "width");
+        if(INTEGER(width)[i] == NA_INTEGER ||
+           INTEGER(width)[i] < 0)
+            errorcall(call, _("invalid '%s' argument"), "width");
     PROTECT(s = allocVector(STRSXP, len));
     for (i = 0; i < len; i++) {
-	if(STRING_ELT(x, i) == NA_STRING) {
-	    SET_STRING_ELT(s, i, STRING_ELT(x, i));
-	    continue;
-	}
-	w = INTEGER(width)[i % nw];
-	this = CHAR(STRING_ELT(x, i));
-	nc = strlen(this);
-	AllocBuffer(nc, &cbuff);
-#if defined(SUPPORT_MBCS) && defined(HAVE_WCWIDTH)
-	wsum = 0;
-	mbs_init(&mb_st);
-	for(p = this, w0 = 0, q = cbuff.data; *p ;) {
-	    nb =  Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
-	    w0 = wcwidth(wc);
-	    if(w0 < 0) { p += nb; continue; }/* skip non-printable chars */
-	    wsum += w0;
-	    if(wsum <= w) {
-		for(k = 0; k < nb; k++) *q++ = *p++;
-	    } else break;
-	}
-	*q = '\0';
+        if(STRING_ELT(x, i) == NA_STRING) {
+            SET_STRING_ELT(s, i, STRING_ELT(x, i));
+            continue;
+        }
+        w = INTEGER(width)[i % nw];
+        this = CHAR(STRING_ELT(x, i));
+        nc = strlen(this);
+        AllocBuffer(nc, &cbuff);
+#if defined(SUPPORT_MBCS)
+        wsum = 0;
+        mbs_init(&mb_st);
+        for(p = this, w0 = 0, q = cbuff.data; *p ;) {
+            nb =  Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
+            w0 = Ri18n_wcwidth(wc);
+            if(w0 < 0) { p += nb; continue; }/* skip non-printable chars */
+            wsum += w0;
+            if(wsum <= w) {
+                for(k = 0; k < nb; k++) *q++ = *p++;
+            } else break;
+        }
+        *q = '\0';
 #else
-	/* <FIXME> what about non-printing chars? */
-	if(w >= nc) {
-	    SET_STRING_ELT(s, i, STRING_ELT(x, i));
-	    continue;
-	}
-	strncpy(cbuff.data, this, w);
-	cbuff.data[w] = '\0';
+        /* <FIXME> what about non-printing chars? */
+        if(w >= nc) {
+            SET_STRING_ELT(s, i, STRING_ELT(x, i));
+            continue;
+        }
+        strncpy(cbuff.data, this, w);
+        cbuff.data[w] = '\0';
 #endif
-	SET_STRING_ELT(s, i, mkChar(cbuff.data));
+        SET_STRING_ELT(s, i, mkChar(cbuff.data));
     }
     if(len > 0) DeallocBuffer(&cbuff);
     copyMostAttrib(CAR(args), s);

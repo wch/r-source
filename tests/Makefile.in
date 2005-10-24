@@ -63,6 +63,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-postscript) ps-tests.Rout.save \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) $(test-src-reg3) \
+	  reg-S4.Rout.save \
 	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
 	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-win.R encodings.R \
@@ -392,7 +393,8 @@ test-Packages-Recommended:
 	  else \
 	    echo "checking package '$${p}'"; \
 	  fi; \
-	  R_LIBS= $(top_builddir)/bin/R CMD check --install=skip \
+	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
+            $(top_builddir)/bin/R CMD check --install=skip \
 	    --library="$(top_builddir)/library" Packages/$${p} || echo; \
 	done
 
@@ -402,7 +404,7 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	-@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
-	  reg-plot.ps reg-tests-2.ps
+	  reg-plot.ps reg-tests-?.ps
 	-@rm -rf anRpackage
 distclean: clean
 	-@for d in $(SUBDIRS); do \

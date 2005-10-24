@@ -366,7 +366,6 @@ list("!" = function(e1)
             substitute(standardGeneric(FNAME), list(FNAME=f))
     }
     deflt <- .derivedDefaultMethod(deflt)
-    if (f=="+") { cat("fdef + env = "); print(environment(fdef)) }
     elNamed(funslist, f) <- makeGeneric(f, fdef, deflt, group = group, package = "base")
     funslist
 }

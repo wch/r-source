@@ -30,12 +30,12 @@
 SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, nargs, cnt, v, thislen;
-    char *formatString;
+    char *formatString, *starc;
     char fmt[MAXLINE+1], bit[MAXLINE+1], outputString[MAXLINE+1];
     size_t n, cur, chunk;
 
     SEXP format, ans, this, a[100], tmp;
-    int ns, maxlen, lens[100], nthis;
+    int ns, maxlen, lens[100], nthis, has_star, star_arg = 0, nstar;
 
     /* grab the format string */
 
@@ -87,7 +87,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		else {
 		    /* recognise selected types from Table B-1 of K&R */
 		    /* This is MBCS-OK, as we are in a format spec */
-		    chunk = strcspn(formatString + cur, "disfeEgGxX") + 1;
+		    chunk = strcspn(formatString + cur + 1, "disfeEgGxX%") + 2;
 		    if (cur + chunk > n)
 			errorcall(call, _("unrecognised format at end of string"));
 
@@ -112,130 +112,228 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    memmove(fmt+1, fmt+4, strlen(fmt)-3);
 			}
 		    }
-		
-		    if(nthis < 0) {
-			if (cnt >= nargs) errorcall(call, _("too few arguments"));
-			nthis = cnt++;
-		    }
-		    this = a[nthis];
 
-		    /* Now let us see if some minimal coercion would be sensible.
-		    */
-		    switch(tolower(fmt[strlen(fmt) - 1])) {
-		    case 'd':
-		    case 'i':
-		    case 'x':
-		    case 'X':
-			if(TYPEOF(this) == REALSXP) {
-			    double r = REAL(this)[0];
-			    if((double)((int) r) == r)
-				this = coerceVector(this, INTSXP);
+		    has_star=0;
+		    starc=strchr(fmt, '*');
+		    if (starc) { /* handle * format if present */
+			nstar=-1;
+			if (strlen(starc) > 3 && starc[1] >= '1' && starc[1] <= '9') {
+			    v = starc[1] - '0';
+			    if(starc[2] == '$') {
+				if(v > nargs)
+				    errorcall(call, _("reference to non-existent argument %d"), v);
+				nstar = v-1;
+				memmove(starc+1, starc+3, strlen(starc)-2);
+			    } else if(starc[2] >= '1' && starc[2] <= '9' 
+				      && starc[3] == '$') {
+				v = 10*v + starc[2] - '0';
+				if(v > nargs)
+				    errorcall(call, _("reference to non-existent argument %d"), v);
+				nstar = v-1;
+				memmove(starc+1, starc+4, strlen(starc)-3);
+			    }
 			}
-			break;
-		    case 'e':
-		    case 'f':
-		    case 'g':
-			if(TYPEOF(this) != REALSXP) {
-			    PROTECT(tmp = lang2(install("as.double"), this));
-			    this = eval(tmp, env);
-			    UNPROTECT(1);
-			}
-			break;
-		    case 's':
-			if(TYPEOF(this) != STRSXP) {
-			    PROTECT(tmp = 
-				    lang2(install("as.character"), this));
-			    this = eval(tmp, env);
-			    UNPROTECT(1);
-			}
-			break;
-		    default:
-			break;
-		    }
-		    PROTECT(this);
-		    thislen = length(this);
-		    if(thislen == 0)
-			error(_("coercion has changed vector length to 0"));
 
-		    switch(TYPEOF(this)) {
-		    case LGLSXP:
-		    {
-			int x = LOGICAL(this)[ns % thislen];
-			if (strcspn(fmt, "di") >= strlen(fmt))
-			    error("%s", 
-				  _("use format %d or %i for logical objects"));
-			if (x == NA_LOGICAL) {
-			    fmt[strlen(fmt)-1] = 's';
-			    sprintf(bit, fmt, "NA");
-			} else
-			    sprintf(bit, fmt, x);
-			break;
-		    }
-		    case INTSXP:
-		    {
-			int x = INTEGER(this)[ns % thislen];
-			if (strcspn(fmt, "dixX") >= strlen(fmt))
-			    error("%s",
-				  _("use format %d, %i, %x or %X for integer objects"));
-			if (x == NA_INTEGER) {
-			    fmt[strlen(fmt)-1] = 's';
-			    sprintf(bit, fmt, "NA");
-			} else
-			    sprintf(bit, fmt, x);
-			break;
-		    }
-		    case REALSXP:
-		    {
-			double x = REAL(this)[ns % thislen];
-			if (strcspn(fmt, "feEgG") >= strlen(fmt))
-			    error("%s", 
-				  _("use format %f, %e or %g for numeric objects"));
-			if (R_FINITE(x)) {
-			    sprintf(bit, fmt, x);
-			} else {
-			    char *p = strchr(fmt, '.');
-			    if (p) {
-				*p++ = 's'; *p ='\0';
-			    } else
-				fmt[strlen(fmt)-1] = 's';
-			    if (ISNA(x)) {
-				if (strcspn(fmt, " ") < strlen(fmt))
-				    sprintf(bit, fmt, " NA");
-				else
-				    sprintf(bit, fmt, "NA");
-			    } else if (ISNAN(x)) {
-				if (strcspn(fmt, " ") < strlen(fmt))
-				    sprintf(bit, fmt, " NaN");
-				else
-				    sprintf(bit, fmt, "NaN");
-			    } else if (x == R_PosInf) {
-				if (strcspn(fmt, "+") < strlen(fmt))
-				    sprintf(bit, fmt, "+Inf");
-				else if (strcspn(fmt, " ") < strlen(fmt))
-				    sprintf(bit, fmt, " Inf");
-				else
-				    sprintf(bit, fmt, "Inf");
-			    } else if (x == R_NegInf)
-				sprintf(bit, fmt, "-Inf");
+			if(nstar < 0) {
+			    if (cnt >= nargs) errorcall(call, _("too few arguments"));
+			    nstar = cnt++;
 			}
-			break;
+
+			if (strchr(starc+1, '*'))
+			    errorcall(call, _("at most one asterisk `*' is supported in each conversion specification"));
+
+			this = a[nstar];
+			if(TYPEOF(this) == REALSXP)
+			    this = coerceVector(this, INTSXP);
+			if(TYPEOF(this) != INTSXP || LENGTH(this)<1 ||
+			   INTEGER(this)[ns % LENGTH(this)] == NA_INTEGER)
+			    errorcall(call, _("argument for `*' conversion specification must be a number"));
+			has_star = 1;
+			star_arg = INTEGER(this)[ns % LENGTH(this)];
 		    }
-		    case STRSXP:
-			/* NA_STRING will be printed as `NA' */
-			if (strcspn(fmt, "s") >= strlen(fmt))
-			    error("%s", _("use format %s for character objects"));
-			if(strlen(CHAR(STRING_ELT(this, ns % thislen)))
-			   > MAXLINE)
-			    warning(_("Likely truncation of character string"));
-			snprintf(bit, MAXLINE, fmt, 
-				 CHAR(STRING_ELT(this, ns % thislen)));
-			bit[MAXLINE] = '\0';
-			break;
-		    default:
-			errorcall(call, _("unsupported type"));
-			break;
+
+		    if (fmt[strlen(fmt) - 1] == '%') {
+			/* handle % with formatting options */
+			if (has_star)
+			    sprintf(bit, fmt, star_arg);
+			else
+			    sprintf(bit, fmt);
+		    } else {
+			if(nthis < 0) {
+			    if (cnt >= nargs) errorcall(call, _("too few arguments"));
+			    nthis = cnt++;
+			}
+			this = a[nthis];
+			
+			/* Now let us see if some minimal coercion would be sensible.
+			 */
+			switch(tolower(fmt[strlen(fmt) - 1])) {
+			case 'd':
+			case 'i':
+			case 'x':
+			case 'X':
+			    if(TYPEOF(this) == REALSXP) {
+				double r = REAL(this)[0];
+				if((double)((int) r) == r)
+				    this = coerceVector(this, INTSXP);
+			    }
+			    break;
+			case 'e':
+			case 'f':
+			case 'g':
+			    if(TYPEOF(this) != REALSXP) {
+				PROTECT(tmp = lang2(install("as.double"), this));
+				this = eval(tmp, env);
+				UNPROTECT(1);
+			    }
+			    break;
+			case 's':
+			    if(TYPEOF(this) != STRSXP) {
+				PROTECT(tmp = 
+					lang2(install("as.character"), this));
+				this = eval(tmp, env);
+				UNPROTECT(1);
+			    }
+			    break;
+			default:
+			    break;
+			}
+			PROTECT(this);
+			thislen = length(this);
+			if(thislen == 0)
+			    error(_("coercion has changed vector length to 0"));
+			
+			switch(TYPEOF(this)) {
+			case LGLSXP:
+			    {
+				int x = LOGICAL(this)[ns % thislen];
+				if (strcspn(fmt, "di") >= strlen(fmt))
+				    error("%s", 
+					  _("use format %d or %i for logical objects"));
+				if (x == NA_LOGICAL) {
+				    fmt[strlen(fmt)-1] = 's';
+				    if (has_star)
+					sprintf(bit, fmt, star_arg, "NA");
+				    else
+					sprintf(bit, fmt, "NA");
+				} else {
+				    if (has_star)
+					sprintf(bit, fmt, star_arg, x);
+				    else
+					sprintf(bit, fmt, x);
+				}
+				break;
+			    }
+			case INTSXP:
+			    {
+				int x = INTEGER(this)[ns % thislen];
+				if (strcspn(fmt, "dixX") >= strlen(fmt))
+				    error("%s",
+					  _("use format %d, %i, %x or %X for integer objects"));
+				if (x == NA_INTEGER) {
+				    fmt[strlen(fmt)-1] = 's';
+				    if (has_star)
+					sprintf(bit, fmt, star_arg, "NA");
+				    else
+					sprintf(bit, fmt, "NA");
+				} else {
+				    if (has_star)
+					sprintf(bit, fmt, star_arg, x);
+				    else
+					sprintf(bit, fmt, x);
+				}
+				break;
+			    }
+			case REALSXP:
+			    {
+				double x = REAL(this)[ns % thislen];
+				if (strcspn(fmt, "feEgG") >= strlen(fmt))
+				    error("%s", 
+					  _("use format %f, %e or %g for numeric objects"));
+				if (R_FINITE(x)) {
+				    if (has_star)
+					sprintf(bit, fmt, star_arg, x);
+				    else
+					sprintf(bit, fmt, x);
+				} else {
+				    char *p = strchr(fmt, '.');
+				    if (p) {
+					*p++ = 's'; *p ='\0';
+				    } else
+					fmt[strlen(fmt)-1] = 's';
+				    if (ISNA(x)) {
+					if (strcspn(fmt, " ") < strlen(fmt)) {
+					    if (has_star)
+						sprintf(bit, fmt, star_arg, " NA");
+					    else						
+						sprintf(bit, fmt, " NA");
+					} else {
+					    if (has_star)
+						sprintf(bit, fmt, star_arg, "NA");
+					    else
+						sprintf(bit, fmt, "NA");
+					}
+				    } else if (ISNAN(x)) {
+					if (strcspn(fmt, " ") < strlen(fmt)) {
+					    if (has_star)
+						sprintf(bit, fmt, star_arg, " NaN");
+					    else
+						sprintf(bit, fmt, " NaN");
+					} else {
+					    if (has_star)
+						sprintf(bit, fmt, star_arg, "NaN");
+					    else
+						sprintf(bit, fmt, "NaN");
+					}
+				    } else if (x == R_PosInf) {
+					if (strcspn(fmt, "+") < strlen(fmt)) {
+					    if (has_star)
+						sprintf(bit, fmt, star_arg, "+Inf");
+					    else
+						sprintf(bit, fmt, "+Inf");
+					} else if (strcspn(fmt, " ") < strlen(fmt)) {
+					    if (has_star)
+						sprintf(bit, fmt, star_arg, " Inf");
+					    else
+						sprintf(bit, fmt, " Inf");
+					} else {
+					    if (has_star)
+						sprintf(bit, fmt, star_arg, "Inf");
+					    else
+						sprintf(bit, fmt, "Inf");
+					}
+				    } else if (x == R_NegInf) {
+					if (has_star)
+					    sprintf(bit, fmt, star_arg, "-Inf");
+					else
+					    sprintf(bit, fmt, "-Inf");
+				    }
+				}
+				break;
+			    }
+			case STRSXP:
+			    /* NA_STRING will be printed as `NA' */
+			    if (strcspn(fmt, "s") >= strlen(fmt))
+				error("%s", _("use format %s for character objects"));
+			    if(strlen(CHAR(STRING_ELT(this, ns % thislen)))
+			       > MAXLINE)
+				warning(_("Likely truncation of character string"));
+			    if (has_star)
+				snprintf(bit, MAXLINE, fmt, star_arg,
+					 CHAR(STRING_ELT(this, ns % thislen)));
+			    else
+				snprintf(bit, MAXLINE, fmt, 
+					 CHAR(STRING_ELT(this, ns % thislen)));
+			    bit[MAXLINE] = '\0';
+			    break;
+			    
+			default:
+			    errorcall(call, _("unsupported type"));
+			    break;
+			}
+
+			UNPROTECT(1);
 		    }
-		    UNPROTECT(1);
 		}
 	    }
 	    else { /* not '%' : handle string part */
@@ -258,3 +356,8 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
+
+/* Local Variables: */
+/* indent-tabs-mode: t */
+/* c-basic-offset: 4 */
+/* End: */

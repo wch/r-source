@@ -85,8 +85,10 @@ spec.pgram <-
     N <- N0 <- nrow(x)
     nser <- ncol(x)
     if(!is.null(spans)) # allow user to mistake order of args
-        if(is.tskernel(spans)) kernel <- spans
-        else kernel <- kernel("modified.daniell", spans %/% 2)
+        kernel <- {
+            if(is.tskernel(spans)) spans else
+            kernel("modified.daniell", spans %/% 2)
+        }
     if(!is.null(kernel) && !is.tskernel(kernel))
         stop("must specify 'spans' or a valid kernel")
     if (detrend) {
@@ -127,7 +129,7 @@ spec.pgram <-
 	    pgram[, i, j] <- kernapply(pgram[, i, j], kernel, circular = TRUE)
 	df <- df.kernel(kernel)
 	bandwidth <- bandwidth.kernel(kernel)
-    } else {
+    } else { # raw periodogram
 	df <- 2
 	bandwidth <- sqrt(1/12)
     }

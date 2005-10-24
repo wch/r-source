@@ -289,8 +289,8 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-    char family[256], encoding[256], paper[256], bg[256], fg[256],
-	**afmpaths = NULL;
+    char family[256], encoding[256], paper[256], cidfamily[256], 
+	bg[256], fg[256], **afmpaths = NULL;
 
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
@@ -308,6 +308,7 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
     /* Set default values and pad with zeroes ... */
     strncpy(family, "Helvetica", 256);
     strcpy(encoding, "ISOLatin1.enc");
+    strcpy(cidfamily, "default");
     strncpy(paper, "default", 256);
     strncpy(bg, "transparent", 256);
     strncpy(fg, "black", 256);
@@ -319,6 +320,10 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 	for (i=0, done=0; (done<4) && (i<length(s)) ; i++) {
 	    if(!strcmp("family", CHAR(STRING_ELT(names, i)))) {
 		strncpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
+		done += 1;
+	    }
+	    if(!strcmp("cidfamily", CHAR(STRING_ELT(names, i)))) {
+		strncpy(cidfamily, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
 	    }
 	    if(!strcmp("paper", CHAR(STRING_ELT(names, i)))) {
@@ -335,7 +340,21 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding, bg, fg,
+    if(!strcmp("default", cidfamily))
+        switch(GetACP()) {
+        case 932:/* Japan1 */
+	    strcpy(cidfamily, "Japan1"); break;
+        case 949:
+	    strcpy(cidfamily, "Korea1"); break;
+        case 936:
+	    strcpy(cidfamily, "GB1"); break;
+        case 950:
+    	    strcpy(cidfamily, "CNS1"); break;
+        default:
+	    strcpy(cidfamily, ""); break;
+        }
+    if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding,
+                       cidfamily, bg, fg,
 		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 				       GE_INCHES, gdd),
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
@@ -353,7 +372,7 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-    char family[256], encoding[256], bg[256], fg[256];
+    char family[256], encoding[256], cidfamily[256], bg[256], fg[256];
 
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
@@ -371,6 +390,7 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
     s = findVar(install(".PostScript.Options"), xd->psenv);
     strncpy(family, "Helvetica", 256);
     strcpy(encoding, "ISOLatin1.enc");
+    strcpy(cidfamily, "default");
     strncpy(bg, "transparent", 256);
     strncpy(fg, "black", 256);
     /* and then try to get it from .PostScript.Options */
@@ -380,6 +400,10 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 	for (i=0, done=0; (done<3) && (i<length(s)) ; i++) {
 	    if(!strcmp("family", CHAR(STRING_ELT(names, i)))) {
 		strncpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)),255);
+		done += 1;
+	    }
+	    if(!strcmp("cidfamily", CHAR(STRING_ELT(names, i)))) {
+		strncpy(cidfamily, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)),255);
 		done += 1;
 	    }
 	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
@@ -392,7 +416,21 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    if (PDFDeviceDriver(ndd, fn, "special", family, encoding, bg, fg,
+    if(!strcmp("default", cidfamily))
+        switch(GetACP()) {
+        case 932:/* Japan1 */
+	    strcpy(cidfamily, "Japan1"); break;
+        case 949:
+	    strcpy(cidfamily, "Korea1"); break;
+        case 936:
+	    strcpy(cidfamily, "GB1"); break;
+        case 950:
+    	    strcpy(cidfamily, "CNS1"); break;
+        default:
+	    strcpy(cidfamily, ""); break;
+        }
+    if (PDFDeviceDriver(ndd, fn, "special", family, encoding,
+                        cidfamily, bg, fg,
 			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
@@ -1821,7 +1859,11 @@ static double GA_StrWidth(char *str,
 	/********************************************************/
 
 	/* Character Metric Information */
-	/* Passing c == 0 gets font information */
+	/* Passing c == 0 gets font information.
+	   In a mbcslocale for a non-symbol font 
+	   we pass a Unicode point, otherwise an 8-bit char, and
+	   we don't care which for a 7-bit char.
+	 */
 
 static void GA_MetricInfo(int c,
 			  R_GE_gcontext *gc,
@@ -1833,8 +1875,8 @@ static void GA_MetricInfo(int c,
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     SetFont(gc->fontfamily, gc->fontface, size, 0.0, dd);
-#ifdef SUPPORT_UTF8
-    if(gc->fontface != 5)
+#ifdef SUPPORT_MBCS
+    if(mbcslocale && gc->fontface != 5 && c > 127)
 	gwcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
     else 
 #endif
@@ -2697,14 +2739,14 @@ SEXP savePlot(SEXP args)
     } else if(!strcmp(tp, "jpeg") || !strcmp(tp,"jpg")) {
       /*Default quality suggested in libjpeg*/
         SaveAsJpeg(dd, 75, fn);
-    } else if (!strcmp(tp, "wmf")) {
+    } else if (!strcmp(tp, "wmf") || !strcmp(tp, "emf")) {
 	if(strlen(fn) > 512) {
 	    askok(G_("file path selected is too long: only 512 bytes are allowed"));
 	    return R_NilValue;
 	}
 	sprintf(display, "win.metafile:%s", fn);
 	SaveAsWin(dd, display);
-    } else if (!strcmp(tp, "ps")) {
+    } else if (!strcmp(tp, "ps") || !strcmp(tp, "eps")) {
 	SaveAsPostscript(dd, fn);
     } else if (!strcmp(tp, "pdf")) {
 	SaveAsPDF(dd, fn);

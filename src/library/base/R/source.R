@@ -25,6 +25,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	print(envir)
     }
     ofile <- file # for use with chdir = TRUE
+    from_file <- FALSE
     if(is.character(file)) {
         if(capabilities("iconv")) {
             if(identical(encoding, "unknown")) {
@@ -51,9 +52,14 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         else {
 	    file <- file(file, "r", encoding = encoding)
 	    on.exit(close(file))
+            from_file <- TRUE
 	}
     }
     Ne <- length(exprs <- .Internal(parse(file, n = -1, NULL, "?")))
+    if (from_file) { # we are done with the file now
+        close(file)
+        on.exit()
+    }
     if (verbose)
 	cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
     if (Ne == 0)

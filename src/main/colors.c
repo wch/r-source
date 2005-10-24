@@ -266,7 +266,7 @@ SEXP do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
         C = REAL(c)[i % nc];
         L = REAL(l)[i % nl];
         A = REAL(a)[i % na];
-        if (!finite(A)) A = 1;
+        if (!R_FINITE(A)) A = 1;
         if (L < 0 || L > WHITE_Y || C < 0 || A < 0 || A > 1)
             errorcall(call, _("invalid hcl color"));
         hcl2rgb(H, C, L, &r, &g, &b);

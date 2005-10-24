@@ -439,9 +439,19 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 	dispersion <- summary(object, dispersion=dispersion)$dispersion
 	df.dispersion <- if (dispersion == 1) Inf else object$df.residual
     }
-    if(!is.null(test))
+    if(!is.null(test)) {
+        if(test == "F" && df.dispersion == Inf) {
+            fam <- object$family$family
+            if(fam == "binomial" || fam == "poisson")
+                warning(gettextf("using F test with a %s family is inappropriate",
+                                 fam),
+                        domain = NA)
+            else
+                warning("using F test with a fixed dispersion is inappropriate")
+        }
 	table <- stat.anova(table=table, test=test, scale=dispersion,
 			    df.scale=df.dispersion, n=NROW(x))
+    }
     structure(table, heading = title, class= c("anova", "data.frame"))
 }
 
@@ -494,6 +504,15 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 	bigmodel <- object[[order(resdf)[1]]]
 	dispersion <- summary(bigmodel, dispersion=dispersion)$dispersion
 	df.dispersion <- if (dispersion == 1) Inf else min(resdf)
+        if(test == "F" && df.dispersion == Inf) {
+            fam <- bigmodel$family$family
+            if(fam == "binomial" || fam == "poisson")
+                warning(gettextf("using F test with a '%s' family is inappropriate",
+                                 fam),
+                        domain = NA, call. = FALSE)
+            else
+                warning("using F test with a fixed dispersion is inappropriate")
+        }
 	table <- stat.anova(table = table, test = test,
 			    scale = dispersion, df.scale = df.dispersion,
 			    n = length(bigmodel$residuals))

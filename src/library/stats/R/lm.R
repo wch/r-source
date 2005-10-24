@@ -418,6 +418,30 @@ residuals.lm <-
     res
 }
 
+simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
+{
+    if(!exists(".Random.seed", envir = .GlobalEnv))
+        runif(1) # initialize the RNG if necessary
+    if(is.null(seed))
+        RNGstate <- .Random.seed
+    else {
+        R.seed <- .Random.seed
+	set.seed(seed)
+        RNGstate <- structure(seed, kind = as.list(RNGkind()))
+        on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    }
+    ftd <- fitted(object)
+    ans <-
+        as.data.frame(ftd +
+                      matrix(rnorm(length(ftd) * nsim,
+                                   sd = sqrt(deviance(object)/
+                                   df.residual(object))),
+                             nr = length(ftd)))
+
+    attr(ans, "seed") <- RNGstate
+    ans
+}
+
 #fitted.lm <- function(object, ...)
 #    napredict(object$na.action, object$fitted.values)
 

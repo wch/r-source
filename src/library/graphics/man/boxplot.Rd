@@ -101,7 +101,8 @@ boxplot(x, \dots)
   List with the following components:
   \item{stats}{a matrix, each column contains the extreme of the lower
     whisker, the lower hinge, the median, the upper hinge and the
-    extreme of the upper whisker for one group/plot.}
+    extreme of the upper whisker for one group/plot.  If all the inputs
+    have the same class attribute, so will this component.}
   \item{n}{a vector with the number of observations in each group.}
   \item{conf}{a matrix where each column contains the lower and upper
     extremes of the notch.}

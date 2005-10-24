@@ -612,10 +612,10 @@ window.default <- function(x, start = NULL, end = NULL,
 	stop("'start' cannot be after 'end'")
 
     if(!extend) {
-        if(all(abs(start - xtime) > abs(start) * ts.eps))
+        if(all(abs(start - xtime) > ts.eps/xfreq))
             start <- xtime[(xtime > start) & ((start + 1/xfreq) > xtime)]
 
-        if(all(abs(end - xtime) > abs(end) * ts.eps))
+        if(all(abs(end - xtime) > ts.eps/xfreq))
             end <- xtime[(xtime < end) & ((end - 1/xfreq) < xtime)]
 
         i <- seq(trunc((start - xtsp[1]) * xfreq + 1.5),
@@ -732,7 +732,8 @@ ts.plot <- function(..., gpars = list())
 }
 
 arima.sim <- function(model, n, rand.gen = rnorm,
-                      innov = rand.gen(n, ...), n.start = NA, ...)
+                      innov = rand.gen(n, ...), n.start = NA,
+                      start.innov = rand.gen(n.start, ...), ...)
 {
     if(!is.list(model)) stop("'model' must be list")
     p <- length(model$ar)
@@ -753,7 +754,10 @@ arima.sim <- function(model, n, rand.gen = rnorm,
         if(d != round(d) || d < 0)
             stop("number of differences must be a positive integer")
     }
-    x <- ts(c(rand.gen(n.start, ...), innov[1:n]), start = 1 - n.start)
+    if(!missing(start.innov) && length(start.innov) < n.start)
+        stop(gettextf("'start.innov' is too short: need %d points", n.start),
+             domain = NA)
+    x <- ts(c(start.innov[1:n.start], innov[1:n]), start = 1 - n.start)
     if(length(model$ma)) x <- filter(x, c(1, model$ma), sides = 1)
     if(length(model$ar)) x <- filter(x, model$ar, method = "recursive")
     if(n.start > 0) x <- x[-(1:n.start)]

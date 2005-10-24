@@ -34,8 +34,8 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
     and \code{outcol} options (see below).
   }
   \item{col}{character or numeric; the color within the box; recycled for
-    multiple boxes.  Is only used as default for \code{boxfill} and will
-    be deprecated.}
+    multiple boxes.  Is only used as a default for \code{boxfill} and has
+    been deprecated.}
   \item{log}{character, indicating if any axis should be drawn in
     logarithmic scale, as in \code{\link{plot.default}}.}
   \item{frame.plot}{logical, indicating if a \dQuote{frame}
@@ -73,14 +73,15 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
       \item{staplewex, outwex:}{staple and outlier line width expansion,
 	proportional to box width.}
       \item{boxlty, boxlwd, boxcol, boxfill:}{box outline type, width,
-	color, and fill color.}
+	color, and fill color (which currently defaults to \code{col} and will
+	in future default to \code{par("bg")}).}
       \item{medlty, medlwd, medpch, medcex, medcol, medbg:}{median line type,
 	line width, point character, point size expansion, color, and
 	background color.  The default \code{medpch= NA} suppresses the
 	point, and \code{medlty="blank"} does so for the line.
 	Note that (since R 2.1.0) \code{medlwd} defaults to
       \eqn{3\times}{3 *} the \dQuote{default} \code{lwd}.}
-      \item{whisklty, whisklwd, whiskco:l}{whisker line type, width, and
+      \item{whisklty, whisklwd, whiskcol:}{whisker line type, width, and
 	color.}
       \item{staplelty, staplelwd, staplecol:}{staple (= end of whisker) line
 	type, width, and color.}

@@ -120,7 +120,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @code{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @code{@RWVER@-win32.exe} of about 25Mb.  This contains all the
+installer @code{@RWVER@-win32.exe} of about 26Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
 There are also links on that page to the @code{r-patched} and
@@ -139,7 +139,7 @@ should work.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
-takes up about 50Mb of disk space and a minimal one about 18Mb.
+takes up about 56Mb of disk space and a minimal one about 18Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -305,23 +305,9 @@ R can be compiled to use a different memory manager which might be better
 at using large amounts of memory, but is substantially slower (making R
 several times slower on some tasks).
 
-If you are running a version of Windows (see
-@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx})
-which supports more than 2Gb per process, you can let the R executables
-use it by marking their headers suitably.  If you have Visual Studio use
-@example
-editbin /LARGEADDRESSAWARE \path_to_R\bin\Rgui.exe
-editbin /LARGEADDRESSAWARE \path_to_R\bin\Rterm.exe
-@end example
-and check this by
-@example
-dumpbin /headers \path_to_R\bin\Rgui.exe
-dumpbin /headers \path_to_R\bin\Rterm.exe
-@end example
-You should see a line like
-@example
-                   Application can handle large (>2GB) addresses
-@end example
+In this version of R, the executables support more than 2Gb per process
+under suitably enabled versions of Windows (see
+@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}).
 
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
@@ -483,17 +469,24 @@ Windows, and from @code{dir /X} in a @code{Command Prompt} window on
 Not itself.
 
 The installer sets some entries to allow uninstallation.  In addition
-(by default, but this can be de-selected) they set a Registry key
-@code{LOCAL_MACHINE\Software\R-core\R} giving the version and install
-path.  Again, this is not used by R itself, but it may be used by
-third-party front-ends such as Thomas Baier's (D)COM interface
-(@uref{http://cran.r-project.org/other-software.html}).  Finally, a file
+(by default, but this can be de-selected) it sets a Registry key
+@code{LOCAL_MACHINE\Software\R-core\R} giving the version and install path.
+Again, this is not used by R itself, but it may be used by third-party
+front-ends such as Thomas Baier's (D)COM interface
+(@uref{http://cran.r-project.org/other-software.html}).  As from version 2.2.0,
+a Registry key @code{LOCAL_MACHINE\Software\R-core\R\[version]} will be set
+to hold the install path; third-party utilities may use this to detect
+multiple R installations on the same machine.  Finally, a file
 association for extension @code{.RData} is set in the Registry.
 
 You can add the Registry entries by running @code{RSetReg.exe} in the
 @code{bin} folder, and remove them by running this with argument
-@code{/U}.  Note that the settings are all per machine and not per user,
+@code{/U}.  Note that these settings are all per machine and not per user,
 and that this neither sets up nor removes the file associations.
+
+In the case of a user running the installer without administrative
+privileges, the installer will set keys under the @code{CURRENT_USER} root giving
+the install path, but the other keys will not be set.  
 
 
 @node Does R support automation?, The internet download functions fail., Does R use the Registry?, Installation and Usage
@@ -610,6 +603,7 @@ than those for which R has translations), currently
 Brazilian Portuguese,
 Catalan,
 (Simplified) Chinese,
+(Traditional) Chinese,
 Czech,
 Danish,
 Dutch,
@@ -632,7 +626,7 @@ Slovenian.
 
 The default behaviour of R is to try to run in the language you run
 Windows in.  Apparently some users want Windows in their native language,
-but not R.  To do so, set @code{LANAGUAGE=en} as discussed in Q2.2 and Q2.15.
+but not R.  To do so, set @code{LANGUAGE=en} as discussed in Q2.2 and Q2.15.
 
 @node I want to run R in Chinese/Japanese/Korean, I selected English for Installation but R runs in Chinese, I want R in English!, Languages and Internationalization
 @section I want to run R in Chinese/Japanese/Korean
@@ -731,7 +725,7 @@ Czech characters displayed correctly.
 @node The dialog buttons are not translated,  , I don't see characters with accents at the R console, Languages and Internationalization
 @section The dialog buttons are not translated
 
-In most cases they actually are, but but Windows.  Setting the locale or
+In most cases they actually are, but by Windows.  Setting the locale or
 the @code{LANGUAGE} environment variable does not change the Windows
 setting of its `UI language'.  Under Windows XP there are three tabs on
 the @emph{Regional and Language Options} applet in the Control Panel.
@@ -1168,7 +1162,7 @@ compiler.
 
 Even faster hand-coded routines are available as DLLs from Dr Kazushige
 Goto for certain CPUs (Pentium III and 4 and Opteron).  He does not
-allow redistribution: they are currently available @emph{via}
+allow redistribution: they have been available @emph{via}
 @uref{http://www.cs.utexas.edu/users/kgoto/signup_first.html} and there
 is support in the R sources to build @file{R_HOME\bin\Rblas.dll} to link
 to one of his DLLs.  On the @code{svd} problem they took 6.8 sec.
@@ -1294,6 +1288,10 @@ with a DLL compiled in a Borland compiler.
 
 @end itemize
 
+See
+@uref{http://www.stats.uwo.ca/faculty/murdoch/software/debuggingR/gdb.shtml}
+for some further details.
+
 
 @node  How do I include C++ code?, The output from my C code disappears., How do I debug code that I have compiled and dyn.load-ed?, Building from Source
 @section  How do I include C++ code?
@@ -1381,14 +1379,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 August 24: comments to
+Last edited 2005 September 26: comments to
 <code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 August 24: comments to <Rwindows@@r-project.org>
+Last edited 2005 September 26: comments to <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye

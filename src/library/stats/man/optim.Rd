@@ -287,13 +287,13 @@ plot(x, y, type="n", asp=1, xlab="", ylab="",
      main="initial solution of traveling salesman problem")
 arrows(tspinit[s,1], -tspinit[s,2], tspinit[s+1,1], -tspinit[s+1,2],
        angle=10, col="green") 
-text(x, y, names(eurodist), cex=0.8)
+text(x, y, labels(eurodist), cex=0.8)
 
 plot(x, y, type="n", asp=1, xlab="", ylab="",
      main="optim() 'solving' traveling salesman problem") 
 arrows(tspres[s,1], -tspres[s,2], tspres[s+1,1], -tspres[s+1,2],
        angle=10, col="red")
-text(x, y, names(eurodist), cex=0.8)
+text(x, y, labels(eurodist), cex=0.8)
 }
 \keyword{nonlinear}
 \keyword{optimize}

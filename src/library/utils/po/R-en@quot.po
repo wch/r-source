@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-29 11:13\n"
-"PO-Revision-Date: 2005-08-29 11:13\n"
+"POT-Creation-Date: 2005-09-23 08:54\n"
+"PO-Revision-Date: 2005-09-23 08:54\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -345,6 +345,12 @@ msgstr "Enter an item from the menu, or 0 to exit"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr "‘%s’ is a formal generic function; S3 methods will not likely be found"
+
+msgid "no function '%s' is visible"
+msgstr "no function ‘%s’ is visible"
+
+msgid "function '%s' appears not to be generic"
+msgstr "function ‘%s’ appears not to be generic"
 
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr "generic function ‘%s’ dispatches methods for generic ‘%s’"
@@ -705,20 +711,11 @@ msgstr "cannot update ‘%s’"
 msgid "this function is intended to work with the Aqua GUI"
 msgstr "this function is intended to work with the Aqua GUI"
 
-msgid "'tar' returned non-zero exit code:"
-msgstr "‘tar’ returned non-zero exit code:"
-
-msgid "no package '%s' on CRAN"
-msgstr "no package ‘%s’ on CRAN"
-
-msgid "Download of package '%s' failed"
-msgstr "Download of package ‘%s’ failed"
+msgid "'tar' returned non-zero exit code %d"
+msgstr "‘tar’ returned non-zero exit code %d"
 
 msgid "cannot remove prior installation of package"
 msgstr "cannot remove prior installation of package"
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "‘tar’ returned non-zero exit code %d"
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"

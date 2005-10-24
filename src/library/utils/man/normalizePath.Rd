@@ -27,6 +27,11 @@ normalizePath(path)
 \value{
   A character vector.
 }
+#ifdef windows
+\seealso{
+  \code{\link{shortPathName}}
+}
+#endif
 \examples{
 cat(normalizePath(c(R.home(), tempdir())), sep = "\n")
 }

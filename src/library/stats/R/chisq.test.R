@@ -30,11 +30,13 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
     if ((n <- sum(x)) == 0)
 	stop("at least one entry of 'x' must be positive")
 
-    if(simulate.p.value)
+    if(simulate.p.value) {
 	setMETH <- function() # you shalt not cut_n_paste
 	    METHOD <<- paste(METHOD,
 			     "with simulated p-value\n\t (based on", B,
 			     "replicates)")
+        almost.1 <- 1 - 64 * .Machine$double.eps
+    }
     if (is.matrix(x)) {
 	METHOD <- "Pearson's Chi-squared test"
 	nr <- nrow(x)
@@ -63,7 +65,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	    STATISTIC <- sum(sort((x - E) ^ 2 / E, decreasing = TRUE))
 	    PARAMETER <- NA
 	    ## use correct significance level for a Monte Carlo test
-	    PVAL <- (1 + sum(tmp$results >= STATISTIC)) / (B + 1)
+	    PVAL <- (1 + sum(tmp$results >= almost.1 * STATISTIC)) / (B + 1)
 	}
 	else {
 	    if (simulate.p.value)
@@ -101,7 +103,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 		sum((table(factor(x, levels=1:k)) - E)^2 / E)
 	    }, E = E, k = nx)
 	    PARAMETER <- NA
-	    PVAL <- (1 + sum(ss >= STATISTIC))/(B + 1)
+	    PVAL <- (1 + sum(ss >= almost.1 * STATISTIC))/(B + 1)
 	} else {
 	    PARAMETER <- length(x) - 1
 	    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)

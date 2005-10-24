@@ -2,9 +2,10 @@
 \alias{savePlot}
 \title{Save Windows Plot to a File}
 \usage{
-savePlot(filename="Rplot",
-         type=c("wmf", "png", "jpeg", "jpg", "bmp", "ps", "pdf"),
-         device=dev.cur())
+savePlot(filename = "Rplot",
+         type = c("wmf", "emf", "png", "jpeg", "jpg", "bmp",
+                  "ps", "eps", "pdf"),
+         device = dev.cur())
 }
 \arguments{
   \item{filename}{The filename under which to save the plot, without
@@ -23,6 +24,10 @@ savePlot(filename="Rplot",
 
   Using \code{filename} as \code{"clipboard"} or \code{""} with
   \code{type = "wmf"} will copy to the clipboard.
+
+  Types \code{"eps"} and \code{"ps"} are the same thing apart from the
+  extension.  Similarly \code{"wmf"}/\code{"emf"} and
+  \code{"jpeg"}/\code{"jpg"}.
 }
 \value{
   None, but a plot file will be created.

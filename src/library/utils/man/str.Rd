@@ -8,7 +8,7 @@ str(object, \dots)
 \method{str}{default}(object, max.level = NA, vec.len = 4, digits.d = 3,
     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
     wid = getOption("width"), nest.lev = 0,
-    indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
+    indent.str = paste(rep.int(" ", max(0, nest.lev + 1)), collapse = ".."),
     comp.str="$ ", no.list = FALSE, envir = baseenv(),
     \dots)
 }

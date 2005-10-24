@@ -35,7 +35,7 @@ function(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
     if (skip) readLines(file, n=skip)
     if (header) {
         headerline <- readLines(file, n=1)
-        cat(FILE, headerline, "\n")
+        cat(file=FILE, headerline, "\n")
     }
 
     repeat({

@@ -768,7 +768,7 @@ SEXP dimgets(SEXP vec, SEXP val)
     int len, ndim, i, total;
     PROTECT(vec);
     PROTECT(val);
-    if (!isVector(vec) && !isList(vec))
+    if ((!isVector(vec) && !isList(vec)) || isFactor(vec) )
 	error(_("dim<- : invalid first argument"));
 
     if (!isVector(val) && !isList(val))

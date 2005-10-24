@@ -844,11 +844,15 @@ isGroup <-
 callGeneric <- function(...)
 {
     frame <- sys.parent()
+    envir <- parent.frame()
 
-    # the two lines below this comment do what the previous version of
+    # the  lines below this comment do what the previous version
     # did in the expression fdef <- sys.function(frame)
-    fname <- sys.call(frame)[[1]]
-    fdef <- get(as.character(fname), env = parent.frame())
+    if(exists(".Generic", envir = envir, inherits = FALSE))
+      fname <- get(".Generic", envir = envir)
+    else # but probably an error
+      fname <- sys.call(frame)[[1]]
+    fdef <- get(as.character(fname), env = envir)
 
     if(is.primitive(fdef)) {
         if(nargs() == 0)

@@ -2,7 +2,7 @@
 include ../gnuwin32/MkRules
 
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
-FFLAGS=$(OPTFLAGS)
+FFLAGS=$(FOPTFLAGS)
 CSOURCES = \
 	approx.c \
 	bakslv.c binning.c \

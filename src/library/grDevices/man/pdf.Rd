@@ -17,12 +17,13 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, family = "Helvetica",
     title = "R Graphics Output", fonts = NULL, version = "1.1",
-    paper, encoding, bg, fg, pointsize)
+    paper, encoding, cidfamily = "default", bg, fg, pointsize)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
-    For use with \code{onefile=FALSE} give a \code{printf} format such
+    For use with \code{onefile=FALSE} give a C integer format such
     as \code{"Rplot\%03d.pdf"} (the default in that case).
+    (See \code{\link{postscript}} for further details.)
   }
   \item{width, height}{the width and height of the graphics region in
     inches.}
@@ -32,9 +33,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{family}{the font family to be used, one of \code{"AvantGarde"},
     \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
     \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-    \code{"Palatino"} or \code{"Times"}.  \bold{Note} the other
-    specifications allowed for \code{\link{postscript}} are \bold{not}
-    available.}
+    \code{"Palatino"} or \code{"Times"}.  \bold{Note} some of the other
+    specifications allowed for \code{\link{postscript}} may work.}
   \item{title}{title string to embed in the file.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} and
@@ -44,20 +44,14 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{"default"}; if this is selected, the
     papersize is taken from the option \code{"papersize"}
     if that is set and to \code{"a4"} if it is unset or empty.}
-  \item{encoding}{the name of an encoding file.  Defaults to
-#ifdef unix
-\code{"ISOLatin1.enc"}
-#endif
-#ifdef windows
-\code{"WinAnsi.enc"}
-#endif
-    in the \file{R\_HOME/afm} directory, which is used if the path does
-    not contain a path separator.  An extension \code{".enc"} can be
-    omitted.
-#ifdef unix
-    In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed.
-#endif
+  \item{encoding}{the name of an encoding file.  See
+    \code{\link{postscript}} for details.
   }
+  \item{cidfamily}{the default East Asian locale set: known values are
+    \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} (simplified Chinese)
+    or \code{"GB1"} (traditional Chinese).  If this is \code{"default"}
+    (the default) an attempt is made to deduce the name from the locale
+    name.  An empty string means no CID fonts are to be used.}
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
@@ -76,22 +70,22 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   The default gives files \file{Rplot001.pdf}, \dots, \file{Rplot999.pdf},
   \file{Rplot1000.pdf}, \dots.
   
-  The \code{family} argument can be used to specify either a
-  device-independent R graphics font family (see
-  \code{postscriptFonts}) or a PDF-specific
+  The \code{family} argument can be used to specify a PDF-specific
   font family as the initial/default font for the device.
 
-  If a device-independent R graphics font family is specified
-  (e.g., via \code{par(family=)} in the graphics package),
-  the PDF device makes use of the PostScript font mappings to
-  convert the R graphics font family
-  to a PDF-specific font family description.  R does \emph{not}
-  embed fonts in the PDF file though, so it is only possible to
-  use mappings to the font families that are
-  assumed to be available in a PDF viewer: \code{"Times"} or
-  \code{"Times New Roman"},
+  If a device-independent R graphics font family is specified (e.g., via
+  \code{par(family=)} in the graphics package), the PDF device makes use
+  of the PostScript font mappings to convert the R graphics font family
+  to a PDF-specific font family description.  R does \emph{not} embed
+  fonts in the PDF file though, so it is only possible straightforward
+  to use mappings to the font families that are assumed to be available
+  in a PDF viewer: \code{"Times"} or \code{"Times New Roman"},
   \code{"Helvetica"} or \code{"Arial"}, \code{"Courier"},
-  \code{"Symbol"}, and \code{"ZapfDingbats"}.
+  \code{"Symbol"}, and \code{"ZapfDingbats"}.  Other fonts may be
+  specified, but it is the user's responsibility to ensure that these
+  fonts are available on the system and third-party software, e.g.,
+  ghostscript, may be required to embed the fonts so that the PDF can be
+  included in other documents (e.g., LaTeX).
   
   See \code{\link{postscript}} for details of encodings, as the internal
   code is shared between the drivers.  The native PDF encoding is given
@@ -122,6 +116,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   them from multiple-master fonts.  This can be seen in imprecise
   centering of characters, for example the multiply and divide signs in
   Helvetica.
+
+  Acrobat Reader 5.x and later can be extended by support for Asian and Central
+  European fonts (the latter only for 7.x and not on UNIX), and this
+  will be needed for full use of encodings other than Latin-1.
+  See \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html}.
 }
 \seealso{
   \code{\link{postscriptFonts}},
@@ -147,7 +146,9 @@ TestChars <- function(encoding="ISOLatin1", ...)
 }
 ## there will be many warnings.
 TestChars("ISOLatin2")
-## doesn't view properly in US-spec Acrobat 5.05, but gs7.04 works.
-## Lots of characters are not centred.
+## this does not view properly in older viewers.
+## Lots of characters are not centred, as the Adobe afms do not contain them.
+TestChars("ISOLatin2", family="URWHelvetica")
+## works well for viewing in gs-based viewers, and often in xpdf.
 }}
 \keyword{device}
