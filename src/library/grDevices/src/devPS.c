@@ -6395,8 +6395,8 @@ SEXP PDF(SEXP args)
     NewDevDesc *dev = NULL;
     GEDevDesc *dd;
     char *vmax;
-    char *file, *paper, *encoding, *cidfamily, *family, *bg, *fg, *title, 
-	call[] = "PDF", *afms[5];
+    char *file, *paper, *encoding, *cidfamily, *family = NULL /* -Wall */, 
+	*bg, *fg, *title, call[] = "PDF", *afms[5];
     double height, width, ps;
     int i, onefile, pagecentre, major, minor;
     SEXP fam, fonts;
