@@ -66,7 +66,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
     \file{"ISOLatin1.enc"} unless the locale is recognized as using
-    ISO 8859-{5,7,13,15} or KOI8-{R,U},
+    corresponding to a language using ISO 8859-{5,7,13,15} or KOI8-{R,U},
 #endif
 #ifdef windows
     \file{"CP1250.enc"} (East European), \code{"CP1251.enc"} (Cyrillic),
@@ -77,10 +77,6 @@ ps.options(paper, horizontal, width, height, family, encoding,
     in the \file{enc} directory of package \pkg{grDevices}, which is used
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.
-#ifdef unix
-    In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed without
-    \code{\link{capabilities}("iconv")}.
-#endif
   }
   \item{cidfamily}{the default East Asian locale set: known values are
     \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} (simplified Chinese)
