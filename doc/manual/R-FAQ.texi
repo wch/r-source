@@ -3027,13 +3027,10 @@ Functions to perform the regression depth method (RDM) to binary
 regression to approximate the amount of overlap, i.e., the minimal
 number of observations that need to be removed such that the reduced
 data set has no longer overlap.
-@c <COMMENT>
-@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
-@c @item npmc
-@c Nonparametric Multiple Comparisons:  provides simultaneous rank test
-@c procedures for the one-way layout without presuming a certain
-@c distribution.
-@c </COMMENT>
+@item npmc
+Nonparametric Multiple Comparisons:  provides simultaneous rank test
+procedures for the one-way layout without presuming a certain
+distribution.
 @item nprq
 Nonparametric quantile regression.  @emph{Defunct}.
 @item odesolve
