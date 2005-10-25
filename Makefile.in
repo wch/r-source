@@ -17,7 +17,7 @@ DISTFILES = $(INSTFILES) \
 	Makeconf.in Makefile.in \
 	config.site configure configure.ac
 SUBDIRS = m4 tools doc etc share src tests @USE_NLS_TRUE@ po
-SUBDIRS_WITH_NO_BUILD = debian
+SUBDIRS_WITH_NO_BUILD = 
 
 all: Makefile Makeconf R docs recommended
 recommended: @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
