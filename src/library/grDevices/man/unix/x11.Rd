@@ -11,14 +11,13 @@
 X11(display = "", width = 7, height = 7, pointsize = 12,
     gamma = 1, colortype = getOption("X11colortype"),
     maxcubesize = 256, bg = "transparent", canvas = "white",
-    fonts = getOption("X11fonts"))
+    fonts = getOption("X11fonts"), xpos = NA, ypos = NA)
 }
 \arguments{
   \item{display}{the display on which the graphics window will appear.
     The default is to use the value in the user's environment variable
     \env{DISPLAY}.}
-  \item{width}{the width of the plotting window in inches.}
-  \item{height}{the height of the plotting window in inches.}
+  \item{width, height}{the width and height of the plotting window, in inches.}
   \item{pointsize}{the default pointsize to be used.}
   \item{gamma}{the gamma correction factor.  This value is used
     to ensure that the colors displayed are linearly related to
@@ -27,8 +26,8 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
     for high-end displays or Macintoshs.}
   \item{colortype}{the kind of color model to be used.  The
     possibilities are \code{"mono"}, \code{"gray"}, \code{"pseudo"},
-    \code{"pseudo.cube"} and \code{"true"}. Ignored if an \code{X11} is
-    already open.}
+    \code{"pseudo.cube"} and \code{"true"}.  Ignored if an \code{X11}
+    device is already open.}
   \item{maxcubesize}{can be used to limit the size of color
     cube allocated for pseudocolor devices.}
   \item{bg}{color.  The default background color.}
@@ -37,6 +36,12 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   \item{fonts}{X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
     and the second for font 5, the symbol font.}
+  \item{xpos, ypos}{initial position of the top left corner of the
+    window, in pixels.  Negative values are from the opposite corner,
+    e.g. \code{xpos=-100} says the top right corner should be 100 pixels
+    from the right edge of the screen.
+    If \code{NA}, successive devices are cascaded in
+    20 pixel steps from the top left.}
 }
 \details{
   By default, an X11 device will use the best color rendering
@@ -76,6 +81,9 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
 
   \code{pch="."} with \code{cex = 1} corresponds to a rectangle of sides
   the larger of one pixel and 0.01 inch.
+
+  The initial size and position are only hints, and may not be acted on
+  by the window manager.
 }
 \seealso{
   \code{\link{Devices}}.

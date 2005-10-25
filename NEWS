@@ -24,7 +24,7 @@ NEW FEATURES
     o	chooseCRANmirror() consults the CRAN master (if accessible) to
 	find an up-to-date list of mirrors.
 
-    o	postscript() supports family="ComputerModernItalic" for
+    o	postscript() supports family = "ComputerModernItalic" for
 	Computer Modern with italic (rather than slanted) faces.
 
     o	New function Axis(), a generic version of axis(), with Date and
@@ -54,7 +54,7 @@ NEW FEATURES
 	unless a DISPLAY variable is present.  This allows packages
 	dependent on tcltk to be installed without access to an X server.
 
-    o	The code use to guess timezone offsets where not supplied by
+    o	The code used to guess timezone offsets where not supplied by
 	the OS uses a different algorithm that is more likely to guess
 	the summer time transitions correctly.
 
@@ -68,6 +68,9 @@ NEW FEATURES
 
     o   On Unix-alikes, R CMD INSTALL will clean up if interrupted (e.g.
 	by ctrl-C from the keyboard).
+
+    o   On Unix-alikes, X11() now has arguments to request the initial
+	position of the window.
 
 
 DEPRECATED & DEFUNCT
@@ -154,7 +157,7 @@ BUG FIXES
     o	axis() now supports pars 'xaxp'/'yaxp' as inline arguments.
 
     o	sort() now does not return inappropriate attributes such as
-	"dim" and "tsp": it only returns names
+	"dim" and "tsp": it only returns names.
 
 	sort(x, partial=) no longer returns unsorted names, and drops
 	names (since it is supplied for efficiency).
