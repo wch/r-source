@@ -250,7 +250,11 @@ par(\dots, no.readonly = FALSE)
     \item{\code{font.main}}{The font to be used for plot main titles.}
     \item{\code{font.sub}}{The font to be used for plot sub-titles.}
     \item{\code{gamma}}{the gamma correction, see argument \code{gamma}
-      to \code{\link{hsv}}.}
+      to \code{\link{hsv}}.  This is only accepted if the current device
+      has support for changing the gamma correction: currently only
+      \code{windows} and \code{quartz} do.  (\code{X11} has support for
+      setting the gamma correction when opening the device, but not for
+      changing it.)}
     \item{\code{lab}}{A numerical vector of the form \code{c(x, y, len)}
       which modifies the way that axes are annotated.  The values of
       \code{x} and \code{y} give the (approximate) number of tickmarks
