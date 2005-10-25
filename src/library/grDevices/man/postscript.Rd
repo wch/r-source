@@ -263,9 +263,11 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \code{"KOI8-U.enc"}, \code{"CP1251.enc"}, \code{"Greek.enc"} (ISO
   8859-7), \code{"CP1253.enc"}, and \code{"TeXtext"} for the 7-bit TeX
   encoding.  Note that many glyphs in these encodings are not in the
-  fonts corresponding to the standard families: the Adobe ones cover
-  little more than Latin-1, whereas the URW ones also cover Latin-2,
-  Latin-7, Latin-9 and Cyrillic but no Greek.
+  fonts corresponding to the standard families.  The Adobe ones for
+  all but Courier, Helvetica and Times cover little more than Latin-1,
+  whereas the URW ones also cover Latin-2, Latin-7, Latin-9 and Cyrillic
+  but no Greek.  (The Adobe exceptions cover the Latin character sets,
+  but not the Euro.)
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro

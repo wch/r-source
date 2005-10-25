@@ -74,6 +74,12 @@ NEW FEATURES
 	getOptions("gamma").  These changes are consistent with the
 	windows() device.
 
+    o	The font metrics for the 14 standard fonts (only, not the rest
+	of the standard 35) have been updated to versions from late
+	1999 which cover more glyphs for Helvetica and Times.  There
+	are also a few differences in the metrics and hence the output
+	might be slightly different in rare cases.
+
 
 DEPRECATED & DEFUNCT
 

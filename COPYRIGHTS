@@ -52,6 +52,16 @@ src/library/grDevices/inst/afm/*___.afm
 
 	Copyright (c) 1984 to 1992 Adobe Systems Incorporated.
 
+src/library/grDevices/inst/afm/MustRead.html
+src/library/grDevices/inst/afm/Courier*.afm
+src/library/grDevices/inst/afm/Helvetica*.afm
+src/library/grDevices/inst/afm/Times*.afm
+src/library/grDevices/inst/afm/Symbol.afm
+src/library/grDevices/inst/afm/ZapfDingbats.afm
+
+	Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems
+	Incorporated.  All Rights Reserved.
+
 src/library/grDevices/inst/afm/*l.afm
 
 	Copyright 1999 by (URW)++ Design & Development

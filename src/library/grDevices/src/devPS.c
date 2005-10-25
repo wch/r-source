@@ -79,42 +79,42 @@ Family [] = {
 
     { "AvantGarde",
       {"agw_____.afm", "agd_____.afm", "agwo____.afm", "agdo____.afm",
-       "sy______.afm"}
+       "Symbol.afm"}
     },
 
     { "Bookman",
       {"bkl_____.afm", "bkd_____.afm", "bkli____.afm", "bkdi____.afm",
-       "sy______.afm"}
+       "Symbol.afm"}
     },
 
     { "Courier",
-      {"com_____.afm", "cob_____.afm", "coo_____.afm", "cobo____.afm",
-       "sy______.afm"}
+      {"Courier.afm", "Courier-Bold.afm", "Courier-Oblique.afm", 
+       "Courier-BoldOblique.afm", "Symbol.afm"}
     },
 
     { "Helvetica",
-      {"hv______.afm", "hvb_____.afm", "hvo_____.afm", "hvbo____.afm",
-       "sy______.afm"}
+      {"Helvetica.afm", "Helvetica-Bold.afm", "Helvetica-Oblique.afm", 
+       "Helvetica-BoldOblique.afm", "Symbol.afm"}
     },
 
     { "Helvetica-Narrow",
       {"hvn_____.afm", "hvnb____.afm", "hvno____.afm", "hvnbo___.afm",
-       "sy______.afm"}
+       "Symbol.afm"}
     },
 
     { "NewCenturySchoolbook",
       {"ncr_____.afm", "ncb_____.afm", "nci_____.afm", "ncbi____.afm",
-       "sy______.afm"}
+       "Symbol.afm"}
     },
 
     { "Palatino",
       {"por_____.afm", "pob_____.afm", "poi_____.afm", "pobi____.afm",
-       "sy______.afm"}
+       "Symbol.afm"}
     },
 
     { "Times",
-      {"tir_____.afm", "tib_____.afm", "tii_____.afm", "tibi____.afm",
-       "sy______.afm"}
+      {"Times-Roman.afm", "Times-Bold.afm", "Times-Italic.afm", 
+       "Times-BoldItalic.afm", "Symbol.afm"}
     },
 
     /* URW equivalents */
@@ -256,6 +256,9 @@ enum {
     CC,
     EndComposites,
     EndFontMetrics,
+    StdHW,
+    StdVW,
+    CharacterSet,
     Unknown
 };
 
@@ -295,6 +298,9 @@ KeyWordDictionary[] = {
     { "CC ",		     CC },
     { "EndComposites",	     EndComposites },
     { "EndFontMetrics",	     EndFontMetrics },
+    { "StdHW",		     StdHW },
+    { "StdVW",		     StdVW },
+    {"CharacterSet",	     CharacterSet},
     { NULL,		     Unknown },
 };
 
@@ -313,6 +319,7 @@ static int KeyType(const char * const s)
     for (i = 0; KeyWordDictionary[i].keyword; i++)
 	if (MatchKey(s, KeyWordDictionary[i].keyword))
 	    return KeyWordDictionary[i].code;
+    printf("Unknown %s\n", s);
     return Unknown;
 }
 
