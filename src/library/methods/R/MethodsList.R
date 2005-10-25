@@ -596,7 +596,7 @@ promptMethods <- function(f, filename = NULL, methods)
              title = paste("\\title{ ~~ Methods for Function", f,
              packageString, "~~}"),
              description = paste0("\\description{\n ~~ Methods for function",
-             " \\code{", f, "} in package \\pkg{", getPackageName(where),
+             " \\code{", f, "} in package \\pkg{", packageString,
              "} ~~\n}"),
              "section{Methods}" = text,
              keywords = c("\\keyword{methods}",

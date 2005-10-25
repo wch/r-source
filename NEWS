@@ -95,6 +95,8 @@ BUG FIXES
     o	[g]sub(pcre=TRUE) did not work correctly with \U and \L in a 
 	UTF-8 locale, even on the example on the help page.
 
+    o  promptMethods() was failing if the "methods" argument was supplied.
+
 
 
 		CHANGES IN R VERSION 2.2.0
