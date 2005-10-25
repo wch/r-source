@@ -6017,6 +6017,13 @@ between the text and the plotting position.
 @item cex=1.5
 Character expansion.  The value is the desired size of text characters
 (including plotting characters) relative to the default text size.
+
+@item cex.axis
+@itemx cex.lab
+@itemx cex.main
+@itemx cex.sub
+The character expansion to be used for axis annotation, @math{x} and
+@math{y} labels, main and sub-titles, respectively.
 @end table
 
 @node Axes and tick marks, Figure margins, Graphical elements, Graphics parameters
