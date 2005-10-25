@@ -18,16 +18,17 @@ postscriptFonts(...)
     font family.}
   \item{metrics}{a vector of four or five strings giving paths
     to the afm (font metric) files for the Type 1 font.}
-  \item{encoding}{the name of an encoding file. Defaults to
+  \item{encoding}{the name of an encoding file.  Defaults to
+    \code{"default"}, which maps to
 #ifdef unix
 "ISOLatin1.enc"
 #endif
 #ifdef windows
 "WinAnsi.enc"
 #endif
-    in the \file{enc} directory of the \pkg{grDevices} package, which is
-    used if the path does not contain a path separator.  An extension
-    \code{".enc"} can be omitted.}
+    Otherwise, a file name in the \file{enc} directory of the
+    \pkg{grDevices} package, which is used if the path does not contain a
+    path separator.  An extension \code{".enc"} can be omitted.}
   \item{\dots}{either character strings naming mappings to display,
     or new (named) mappings to define.}
 }
@@ -63,7 +64,8 @@ postscriptFonts(...)
   \code{"NimbusSan"}, \code{"NimbusSanCond"}, \code{"CenturySch"},
   \code{"URWPalladio"} and \code{"NimbusRom"}.  
 
-  There is also a mapping for \code{"ComputerModern"}.
+  There are also mappings for \code{"ComputerModern"} and
+  \code{"ComputerModernItalic"}.
 
   The specification of font metrics and encodings is described in the help
   for the \code{postscript} function.
@@ -89,10 +91,12 @@ postscriptFonts(...)
 }
 \examples{
 postscriptFonts()
+## This duplicates "ComputerModernItalic".
 CMitalic <- postscriptFont("ComputerModern",
                            c("CM_regular_10.afm", "CM_boldx_10.afm",
                              "cmti10.afm", "cmbxti10.afm",
-                             "CM_symbol_10.afm"))
+                             "CM_symbol_10.afm"),
+                           encoding = "TeXtext.enc")
 postscriptFonts(CMitalic=CMitalic)
 }
 \keyword{device}

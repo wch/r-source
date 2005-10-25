@@ -400,10 +400,8 @@ postscriptFonts(# Default Serif font is Times
                     "Symbol.afm")),
                 # Default Symbol font is Symbol
                 symbol=postscriptFont("Symbol",
-                  c("Symbol.afm", "Symbol.afm",
-                    "Symbol.afm", "Symbol.afm",
-                    "Symbol.afm"),
-                  encoding="AdobeSym.enc"),
+                  c("Symbol.afm", "Symbol.afm", "Symbol.afm", "Symbol.afm",
+                    "Symbol.afm"), encoding="AdobeSym.enc"),
                 # Remainder are standard Adobe fonts that
                 # should be present on PostScript devices
                 AvantGarde=postscriptFont("AvantGarde",
@@ -483,8 +481,9 @@ postscriptFonts(# Default Serif font is Times
                 ComputerModern=postscriptFont("ComputerModern",
                   c("CM_regular_10.afm", "CM_boldx_10.afm",
                     "CM_italic_10.afm", "CM_boldx_italic_10.afm",
-                    "CM_symbol_10.afm")),
+                    "CM_symbol_10.afm"), encoding = "TeXtext.enc"),
                  ComputerModernItalic=postscriptFont("ComputerModernItalic",
-                  c("CM_regular_10.afm", "CM_boldx_10.afm",
-                    "cmti10.afm", "cmbxti10.afm", "CM_symbol_10.afm"))
+                  c("CM_regular_10.afm", "CM_boldx_10.afm", "cmti10.afm",
+                    "cmbxti10.afm", "CM_symbol_10.afm"),
+                 encoding = "TeXtext.enc")
                )
