@@ -187,8 +187,7 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
             # then map to postscript font family
             if (length(family) == 1) {
                 psFamily <- postscriptFonts(family)[[1]]
-                if (!is.null(psFamily))
-                    family <- psFamily$family
+                if (!is.null(psFamily)) family <- psFamily$family
             }
         }
         old$family <- family
@@ -235,16 +234,18 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 			 reset = FALSE, assign.opt = FALSE)
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- guess_encoding()
+    ## handle family separately as length can be 1, 4, or 5
     if(!missing(family)) {
-        if (!is.character(family) || length(family) != 1)
-            stop("invalid 'family' argument")
+        if(length(family) == 4) {
+            family <- c(family, "Symbol.afm")
+        } else {
         # If family has been defined as device-independent
         # R graphics family (i.e., it can be found in postscriptFonts)
         # then map to postscript font family
-        else {
-            psFamily <- postscriptFonts(family)[[1]]
-            if (!is.null(psFamily))
-                family <- psFamily$family
+            if (length(family) == 1) {
+                psFamily <- postscriptFonts(family)[[1]]
+                if (!is.null(psFamily)) family <- psFamily$family
+            }
         }
         old$family <- family
     }
@@ -395,8 +396,8 @@ postscriptFonts(# Default Serif font is Times
                     "Symbol.afm")),
                 # Default Monospace font is Courier
                 mono=postscriptFont("Courier",
-                  c("Courier.afm", "Courier-Boldafm",
-                    "Courier-Oblique.afm", "Courier-BoldBolique.afm",
+                  c("Courier.afm", "Courier-Bold.afm",
+                    "Courier-Oblique.afm", "Courier-BoldOblique.afm",
                     "Symbol.afm")),
                 # Default Symbol font is Symbol
                 symbol=postscriptFont("Symbol",
@@ -413,8 +414,8 @@ postscriptFonts(# Default Serif font is Times
                     "bkli____.afm", "bkdi____.afm",
                     "Symbol.afm")),
                 Courier=postscriptFont("Courier",
-                  c("Courier.afm", "Courier-Boldafm",
-                    "Courier-Oblique.afm", "Courier-BoldBolique.afm",
+                  c("Courier.afm", "Courier-Bold.afm",
+                    "Courier-Oblique.afm", "Courier-BoldOblique.afm",
                     "Symbol.afm")),
                 Helvetica=postscriptFont("Helvetica",
                   c("Helvetica.afm", "Helvetica-Bold.afm",

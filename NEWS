@@ -75,10 +75,13 @@ NEW FEATURES
 	windows() device.
 
     o	The font metrics for the 14 standard fonts (only, not the rest
-	of the standard 35) have been updated to versions from late
-	1999 which cover more glyphs for Helvetica and Times.  There
-	are also a few differences in the metrics and hence the output
-	might be slightly different in rare cases.
+	of the common 35) have been updated to versions from late 1999
+	which cover more glyphs.  There are also a few differences in
+	the metrics and hence the output might be slightly different
+	in some cases.
+
+    o	pdf() now allows 'family' to be specified in the same
+	generality as postscript().
 
 
 DEPRECATED & DEFUNCT
@@ -137,8 +140,7 @@ INTERNATIONALIZATION
 	Greek) and Cyrillic languages.
 
 	In UTF-8 locales, a suitable single-byte encoding is chosen
-	for postscript() and pdf(), and text translated to it
-	(provided iconv() is supported).
+	for postscript() and pdf(), and text translated to it.
 
 
 INSTALLATION CHANGES

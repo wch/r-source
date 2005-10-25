@@ -30,11 +30,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
     number.}
-  \item{family}{the font family to be used, one of \code{"AvantGarde"},
-    \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
-    \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-    \code{"Palatino"} or \code{"Times"}.  \bold{Note} some of the other
-    names allowed for \code{\link{postscript}} may work: see Details.}
+  \item{family}{the font family to be used, see \code{\link{postscript}}.}
   \item{title}{title string to embed in the file.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} and
