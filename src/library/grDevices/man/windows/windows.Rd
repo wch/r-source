@@ -27,8 +27,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
 }
 
 \arguments{
-  \item{width}{the (nominal) width of the plotting window in inches.}
-  \item{height}{the (nominal) height of the plotting window in inches.}
+  \item{width, height}{the (nominal) width and height of the canvas of
+    the plotting window in inches.}
   \item{pointsize}{the default pointsize of plotted text. The allowed
     range is \code{[6, 48]}: values outside that range are reset to 12.}
   \item{record}{logical: sets the initial state of the flag for
@@ -40,10 +40,10 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   \item{canvas}{color.  The color of the canvas which is visible
     when the background color is transparent.}
   \item{gamma}{the gamma correction factor.  This value is used
-    to ensure that the colors displayed are linearly related to
-    RGB values. By default this is taken from
+    to ensure that the colors perceived are linearly related to
+    RGB values (see \code{\link{hsv}}).  By default this is taken from
     \code{\link{options}("gamma")}, or is 1 (no correction) if that is
-    unset.  It sets \code{par("gamma")} for the device.}
+    unset (the usual case).}
   \item{xpos, ypos}{integer.  Position of the top left of the window, in
     pixels.  Negative values are taken from the opposite edge of the
     monitor.  Missing values meant take the default from the

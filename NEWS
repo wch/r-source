@@ -63,14 +63,16 @@ NEW FEATURES
 
     o	Added "hexmode" to parallel "octmode".
 
-    o	Package tools contains translation tables Adobe_glyphs and
-	charset_to_Unicode.
+    o	Package tools contains translation tables 'Adobe_glyphs' and
+	'charset_to_Unicode'.
 
     o   On Unix-alikes, R CMD INSTALL will clean up if interrupted (e.g.
 	by ctrl-C from the keyboard).
 
-    o   On Unix-alikes, X11() now has arguments to request the initial
-	position of the window.
+    o	On Unix-alikes, X11() now has arguments to request the initial
+	position of the window, and 'gamma' defaults to the value of
+	getOptions("gamma").  These changes are consistent with the
+	windows() device.
 
 
 DEPRECATED & DEFUNCT
@@ -131,7 +133,6 @@ INTERNATIONALIZATION
 	In UTF-8 locales, a suitable single-byte encoding is chosen
 	for postscript() and pdf(), and text translated to it
 	(provided iconv() is supported).
-
 
 
 INSTALLATION CHANGES

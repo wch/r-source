@@ -20,10 +20,10 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   \item{width, height}{the width and height of the plotting window, in inches.}
   \item{pointsize}{the default pointsize to be used.}
   \item{gamma}{the gamma correction factor.  This value is used
-    to ensure that the colors displayed are linearly related to
-    RGB values.  A value of around 0.5 is appropriate for many PC
-    displays.  A value of 1.0 (no correction) is usually appropriate
-    for high-end displays or Macintoshs.}
+    to ensure that the colors perceived are linearly related to
+    RGB values (see \code{\link{hsv}}).  By default this is taken from
+    \code{\link{options}("gamma")}, or is 1 (no correction) if that is
+    unset (which is the usual case). }
   \item{colortype}{the kind of color model to be used.  The
     possibilities are \code{"mono"}, \code{"gray"}, \code{"pseudo"},
     \code{"pseudo.cube"} and \code{"true"}.  Ignored if an \code{X11}

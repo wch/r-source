@@ -270,6 +270,10 @@ getOption(x)
 
     \item{\code{X11fonts}:}{character vector of length 2.
       See \code{\link{X11}}.}
+
+    \item{\code{gamma}:}{double.  The default value of
+      \code{gamma} for \code{\link{X11}} devices, defaulting to 1
+      if unset (the default).}
 #endif
 #ifdef windows
     \item{\code{gamma}:}{double. The default value of

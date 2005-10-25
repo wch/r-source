@@ -3,14 +3,16 @@
 .X11env <- new.env()
 
 X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
-                gamma = 1, colortype = getOption("X11colortype"),
+                gamma = getOption("gamma"),
+                colortype = getOption("X11colortype"),
                 maxcubesize = 256, bg = "transparent", canvas = "white",
                 fonts = getOption("X11fonts"), xpos = NA, ypos = NA)
 {
 
   if(display == "" && .Platform$GUI == "AQUA" && Sys.getenv("DISPLAY") == "")
       Sys.putenv(DISPLAY = ":0")
-  .Internal(X11(display, width, height, pointsize, gamma, colortype,
+  .Internal(X11(display, width, height, pointsize,
+                if(is.null(gamma)) 1 else gamma, colortype,
                 maxcubesize, bg, canvas, fonts, NA, xpos, ypos))
 }
 
