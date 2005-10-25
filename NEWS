@@ -91,6 +91,8 @@ DEPRECATED & DEFUNCT
 
     o	Argument 'col' of bxp() is now formally deprecated.
 
+    o	The 'debian' subdirectory was removed from the sources.
+
 
 INTERNATIONALIZATION
 
