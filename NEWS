@@ -272,6 +272,9 @@ BUG FIXES
     o	[g]sub(pcre=TRUE) did not work correctly with \U and \L in a 
 	UTF-8 locale, even on the example on the help page.
 
+    o	ISODateTime() mistakenly corrected non-existent times (when
+	DST was being started) in the current time zone.
+
 
 
 		CHANGES IN R VERSION 2.2.0

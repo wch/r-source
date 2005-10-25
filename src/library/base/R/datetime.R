@@ -106,8 +106,8 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
 
 strftime <- format.POSIXlt
 
-strptime <- function(x, format)
-    .Internal(strptime(as.character(x), format))
+strptime <- function(x, format, tz = "")
+    .Internal(strptime(as.character(x), format, tz))
 
 
 format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
@@ -304,7 +304,7 @@ all.equal.POSIXct <- function(target, current, ..., scale=1)
 ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
 {
     x <- paste(year, month, day, hour, min, sec, sep="-")
-    as.POSIXct(strptime(x, "%Y-%m-%d-%H-%M-%S"), tz=tz)
+    as.POSIXct(strptime(x, "%Y-%m-%d-%H-%M-%S", tz=tz), tz=tz)
 }
 
 ISOdate <- function(year, month, day, hour=12, min=0, sec=0, tz="GMT")

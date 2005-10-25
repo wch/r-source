@@ -53,6 +53,9 @@ Nakama.)
 
 The installer was missing doc/html/index.html.
 
+Windows was sometimes incorrectly labelling times on BST as on GMT,
+e.g. "1972-07-01 01:00:00 GMT Standard Time".
+
 
 
 R 2.2.0

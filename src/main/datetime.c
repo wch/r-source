@@ -729,15 +729,21 @@ static void glibc_fix(struct tm *tm, int *invalid)
 
 SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, sformat, ans, ansnames, class;
-    int i, n, m, N, invalid;
-    struct tm tm;
+    SEXP x, sformat, ans, ansnames, class, stz;
+    int i, n, m, N, invalid, isgmt = 0;
+    struct tm tm, tm2;
+    char *tz = NULL;
 
     checkArity(op, args);
     if(!isString((x= CAR(args))))
 	error(_("invalid '%s' argument"), "x");
     if(!isString((sformat = CADR(args))) || LENGTH(sformat) == 0)
 	error(_("invalid '%s' argument"), "x");
+    if(!isString((stz = CADDR(args))) || LENGTH(stz) != 1)
+	error(_("invalid '%s' value"), "tz");
+    tz = CHAR(STRING_ELT(stz, 0));
+    if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
+
     n = LENGTH(x); m = LENGTH(sformat);
     if(n > 0) N = (m > n)?m:n; else N = 0;
 
@@ -768,7 +774,13 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	       || tm.tm_year == NA_INTEGER)
 		glibc_fix(&tm, &invalid);
 	    tm.tm_isdst = -1;
-	    mktime0(&tm, 1); /* set wday, yday, isdst */
+	    /* we do want to set wday, yday, isdst, but not to
+	       adjust structure at DST boundaries */
+	    memcpy(&tm2, &tm, sizeof(struct tm));
+	    mktime0(&tm, 1-isgmt); /* set wday, yday, isdst */
+	    tm.tm_wday = tm2.tm_wday;
+	    tm.tm_yday = tm2.tm_yday;
+	    tm.tm_isdst = isgmt ? 0: tm2.tm_isdst;
 	}
 	invalid = invalid || validate_tm(&tm) != 0;
 	makelt(&tm, ans, i, !invalid);
