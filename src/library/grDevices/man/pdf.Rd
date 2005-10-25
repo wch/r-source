@@ -34,7 +34,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
     \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
     \code{"Palatino"} or \code{"Times"}.  \bold{Note} some of the other
-    specifications allowed for \code{\link{postscript}} may work.}
+    names allowed for \code{\link{postscript}} may work: see Details.}
   \item{title}{title string to embed in the file.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} and
@@ -73,19 +73,24 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   The \code{family} argument can be used to specify a PDF-specific
   font family as the initial/default font for the device.
 
-  If a device-independent R graphics font family is specified (e.g., via
+  If a device-independent \R graphics font family is specified (e.g., via
   \code{par(family=)} in the graphics package), the PDF device makes use
-  of the PostScript font mappings to convert the R graphics font family
-  to a PDF-specific font family description.  R does \emph{not} embed
-  fonts in the PDF file though, so it is only possible straightforward
-  to use mappings to the font families that are assumed to be available
-  in a PDF viewer: \code{"Times"} or \code{"Times New Roman"},
-  \code{"Helvetica"} or \code{"Arial"}, \code{"Courier"},
-  \code{"Symbol"}, and \code{"ZapfDingbats"}.  Other fonts may be
+  of the PostScript font mappings to convert the \R graphics font family
+  to a PDF-specific font family description.  (See the
+  documentation for \code{\link{postscriptFonts}}.)
+
+  \R does \emph{not} embed fonts in the PDF file though, so it is only
+  possible straightforward to use mappings to the font families that are
+  assumed to be available in any PDF viewer: \code{"Times"}
+  (equivalently \code{"serif"}), \code{"Helvetica"} (equivalently
+  \code{"sans"}), \code{"Courier"} (equivalently \code{"mono"}) and
+  \code{"Symbol"} (equivalently \code{"symbol"}).  Other families may be
   specified, but it is the user's responsibility to ensure that these
   fonts are available on the system and third-party software, e.g.,
   ghostscript, may be required to embed the fonts so that the PDF can be
-  included in other documents (e.g., LaTeX).
+  included in other documents (e.g., LaTeX).  The URW-based families
+  described for \code{\link{postscript}}  can be used with viewers such
+  as GSView which are based on URW fonts.
   
   See \code{\link{postscript}} for details of encodings, as the internal
   code is shared between the drivers.  The native PDF encoding is given
@@ -147,7 +152,6 @@ TestChars <- function(encoding="ISOLatin1", ...)
 ## there will be many warnings.
 TestChars("ISOLatin2")
 ## this does not view properly in older viewers.
-## Lots of characters are not centred, as the Adobe afms do not contain them.
 TestChars("ISOLatin2", family="URWHelvetica")
 ## works well for viewing in gs-based viewers, and often in xpdf.
 }}

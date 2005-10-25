@@ -252,7 +252,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(is.null(old$cidfamily) || old$cidfamily  == "default")
         old$cidfamily <- guess_cidfamily()
     # Extract version
-    versions <- c("1.1", "1.2", "1.3", "1.4")
+    versions <- c("1.1", "1.2", "1.3", "1.4", "1.5", "1.6")
     if (version %in% versions)
         version <- as.integer(strsplit(version, "[.]")[[1]])
     else
@@ -317,7 +317,7 @@ checkPSFont <- function(font) {
         psFontError("font metric information")
         ## Add default symbol font metric if none provided
     if (length(font$metrics) == 4)
-        font$metrics <- c(font$metrics, "sy______.afm")
+        font$metrics <- c(font$metrics, "Symbol.afm")
     if (is.null(font$encoding) || !is.character(font$encoding))
         psFontError("font encoding")
     font

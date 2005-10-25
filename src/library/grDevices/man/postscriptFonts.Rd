@@ -6,7 +6,8 @@
 \title{PostScript Fonts}
 \description{
   These functions handle the translation of a device-independent R graphics
-  font family name to a PostScript font description.
+  font family name to a PostScript font description, used by both the
+  \code{\link{postscript}} and \code{\link{pdf}} graphics devices.
 }
 \usage{
 postscriptFont(family, metrics, encoding = "default")
@@ -33,11 +34,11 @@ postscriptFonts(...)
     or new (named) mappings to define.}
 }
 \details{
-  A PostScript device is created with a default font (see
-  the documentation for \code{postscript}), but it is also possible
-  to specify a font family when drawing to the device
-  (for example, see the documentation for \code{gpar} in the
-  grid package).
+  A PostScript device is created with a default font (see the
+  documentation for \code{\link{postscript}}), but it is also possible
+  to specify a font family when drawing to the device (for example, see
+  the documentation for \code{\link{gpar}} in the grid package).
+  The font mechanism is shared with the \code{\link{pdf}} device.
 
   The font family sent to the device is a simple string name, which must be
   mapped to something more specific to PostScript fonts.  A list of
@@ -48,27 +49,26 @@ postscriptFonts(...)
   function can be used to create a new mapping.
 
   The argument \code{family} specifies the font family to be used.
-  Default mappings are provided for four
-  device-independent family names: \code{"sans"} for a
-  sans-serif font,
-  \code{"serif"} for a serif font, \code{"mono"} for a monospaced font,
-  and \code{"symbol"} for a symbol font. 
+  Default mappings are provided for four device-independent family
+  names: \code{"sans"} for a sans-serif font, \code{"serif"} for a serif
+  font, \code{"mono"} for a monospaced font, and \code{"symbol"} for a
+  symbol font.
 
-  Mappings for a number of standard Adobe fonts
-  (and URW equivalents) are also provided:
-   \code{"AvantGarde"},
+  Mappings for a number of standard Adobe fonts (and URW equivalents)
+  are also provided: \code{"AvantGarde"},
   \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
   \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-  \code{"Palatino"} and \code{"Times"}; 
+  \code{"Palatino"} and \code{"Times"};
   \code{"URWGothic"}, \code{"URWBookman"}, \code{"NimbusMon"},
-  \code{"NimbusSan"}, \code{"NimbusSanCond"}, \code{"CenturySch"},
-  \code{"URWPalladio"} and \code{"NimbusRom"}.  
-
+  \code{"NimbusSan"} (synonym \code{"URWHelvetica"}),
+  \code{"NimbusSanCond"}, \code{"CenturySch"}, \code{"URWPalladio"} and
+  \code{"NimbusRom"} (synonym \code{"URWTimes"}).
+  
   There are also mappings for \code{"ComputerModern"} and
   \code{"ComputerModernItalic"}.
 
   The specification of font metrics and encodings is described in the help
-  for the \code{postscript} function.
+  for the \code{\link{postscript}} function.
 
   The fonts are not embedded in the resulting PostScript file, so
   software including the PostScript plot
@@ -77,8 +77,7 @@ postscriptFonts(...)
   spooler to do so.
 }
 \value{
-  \code{postscriptFont} returns a PostScript
-  font description.
+  \code{postscriptFont} returns a PostScript font description.
 
   \code{postscriptFonts} returns one or more font mappings.
 }

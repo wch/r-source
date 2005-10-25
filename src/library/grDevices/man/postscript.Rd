@@ -166,8 +166,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   via \code{family}.  If other fonts are to be used when drawing to
   the PostScript device, these must be declared when the
   device is created via \code{fonts};  the font family names for this
-  argument are device-independent R graphics font family names (see the
-  documentation for \code{postscriptFonts}).
+  argument are device-independent \R graphics font family names (see the
+  documentation for \code{\link{postscriptFonts}}).
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."} with
@@ -183,12 +183,12 @@ ps.options(paper, horizontal, width, height, family, encoding,
   a font database (see \code{postscriptFonts}).  
   
   The argument \code{family} specifies the initial/default font family
-  to be used. In normal use it is one of \code{"AvantGarde"},
+  to be used.  In normal use it is one of \code{"AvantGarde"},
   \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
   \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
   \code{"Palatino"} or \code{"Times"}, and refers to the standard Adobe
-  PostScript fonts of those names which are included (or cloned) in all
-  common PostScript devices.
+  PostScript fonts families of those names which are included (or
+  cloned) in all common PostScript devices.
 
   Many PostScript emulators (including those based on
   \code{ghostscript}) use the URW equivalents of these fonts, which are
@@ -207,8 +207,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   taken to refer to files in directory \file{afm} of package
   \pkg{grDevices}. Thus the default Helvetica family can be specified by
   \code{family =
-    c("hv______.afm",
-    "hvb_____.afm", "hvo_____.afm", "hvbo____.afm", "sy______.afm")}.
+    c("Helvetica.afm", "Helvetica-Bold.afm", "Helvetica-Oblique.afm",
+    "Helvetica-BoldOblique.afm", "Symbol.afm")}.
   It is the user's responsibility to check that suitable fonts are made
   available, and that they contain the needed characters when
   re-encoded.  The fontnames used are taken from the \code{FontName}
