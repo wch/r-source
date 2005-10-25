@@ -66,8 +66,8 @@ NEW FEATURES
     o	Package tools contains translation tables 'Adobe_glyphs' and
 	'charset_to_Unicode'.
 
-    o   On Unix-alikes, R CMD INSTALL will clean up if interrupted (e.g.
-	by ctrl-C from the keyboard).
+    o	R CMD INSTALL will clean up if interrupted (e.g. by ctrl-C from
+	the keyboard).
 
     o	On Unix-alikes, X11() now has arguments to request the initial
 	position of the window, and 'gamma' defaults to the value of

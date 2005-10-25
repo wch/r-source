@@ -23,6 +23,9 @@ entry points) but might be for contributed software using R's macros.
 The import libraries libR.a, libRblas.a and libproxy.a are now
 installed in R_HOME/lib (rather than R_HOME/src/gnuwin32).
 
+R CMD INSTALL will now clean up after interruption (by ctrl-C, at
+least where supported by the shell).
+
 
 
 R 2.2.0 patched

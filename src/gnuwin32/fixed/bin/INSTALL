@@ -33,6 +33,47 @@ $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
+my $startdir = cwd();
+my $lockdir;
+my @bundlepkgs;
+my $library;
+
+$SIG{'INT'} = 'Cleanup';
+
+sub Cleanup {
+    print "*** user interrupt ***\n";
+    if(defined @bundlepkgs) {
+	if($is_bundle) { # back out the whole bundle
+	    for $pkgname (@bundlepkgs) {
+		$pkgname .= "_" . $description->{"Version"}
+		if $opt_with_package_versions;
+		rmtree($library . "/" . $pkgname);
+		$dppkg = $lockdir . "/" . $pkgname;
+		system("mv $dppkg $library") if ($safe && -d $dppkg);
+	    }
+	} else {
+	    print "Removing '$dpkg'\n";
+	    rmtree($dpkg);
+	    # move back any previously installed package
+	    $dppkg = $lockdir . "/" . $decpkgname;
+	    print "backup is $dppkg, exists is ", -d $dppkg, "\n";
+	    if ($safe && -d $dppkg) {
+		print "Restoring previous '$dpkg'\n";
+		system("mv $dppkg $library");
+	    }
+	}
+    }
+    if (defined $lockdir) {
+	print "Removing lock directory\n";
+	rmtree($lockdir);
+    }
+    chdir($startdir);
+    if (defined $tardir) {
+	print "Removing untar-ed package sources\n";
+	rmtree($tardir);
+    }
+    die "*** exiting after cleanup ***\n";
+}
 
 my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
 		    "clean|c", "docs:s", "save|s", "no-save",
@@ -80,8 +121,6 @@ if($opt_debug) {
     print "However, it does less.\n\n";
 }
 
-my $startdir = cwd();
-my $library;
 if($opt_library){
     # remove quotes around the library path
     $opt_library =~ s/^['"]//; $opt_library =~ s/['"]$//; #'"
@@ -107,7 +146,7 @@ if($opt_docs) {
     }
 }
 
-my $safe = 1;
+$safe = 1;
 $safe = 0 if $opt_unsafe;
     print " *** safe is $safe ***\n" if $opt_debug;
 
@@ -124,7 +163,7 @@ foreach $pkg (@ARGV){
     # remove misguided trailing separator (/ or \)
     $pkg =~ s/\/$//; $pkg =~ s/\\$//;
     my $pkgname = basename($pkg);
-    my $is_bundle = 0;
+    $is_bundle = 0;
 
     if (!(-e $pkg)) {
 	warn "`$pkg' does not exist: skipping\n";
@@ -140,6 +179,7 @@ foreach $pkg (@ARGV){
 	if(! -d $dir) {
 	    mkdir($dir, 0755) or die "Error: cannot create $dir\n";
 	}
+	$tardir = $dir;
 	## workaround for paths in Cygwin tar
 	$pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	if(system("tar -zxf '$pkg' -C $dir")) {
@@ -187,7 +227,7 @@ foreach $pkg (@ARGV){
 
     ## do we have a package bundle?
     my $zippkgs = $pkgname;
-    my @bundlepkgs = ($pkgname);
+    @bundlepkgs = ($pkgname);
     if($description->{"Contains"}) {
 	print "\nLooks like \`${pkg}' is a package bundle\n";
 	$is_bundle = 1;
@@ -235,7 +275,6 @@ foreach $pkg (@ARGV){
         }
     }
     ## Now we are ready to install
-    my $lockdir;
     if($safe) {
 	$lockdir = $library . "/" . "00LOCK";
 	if(-d $lockdir || -f $lockdir) {
@@ -259,7 +298,7 @@ foreach $pkg (@ARGV){
 	} else {
 	    $decpkgname = $pkgname;
 	}
-	my $dpkg = $library. "/" . $decpkgname;
+	$dpkg = $library. "/" . $decpkgname;
 	# if exists, move existing installation to $lockdir
 	system("mv $dpkg $lockdir") if ($safe && -d $dpkg);
 
