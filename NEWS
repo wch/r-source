@@ -279,6 +279,11 @@ BUG FIXES
     o	[g]sub(pcre=TRUE) did not work correctly with \U and \L in a 
 	UTF-8 locale, even on the example on the help page.
 
+    o	promptMethods() was failing if the "methods" argument was supplied.
+
+    o	is.loaded() now finds Fortran symbols whether or not the
+	registration mechanism has been used.
+
     o	ISODateTime() mistakenly corrected non-existent times (when
 	DST was being started) in the current time zone.
 

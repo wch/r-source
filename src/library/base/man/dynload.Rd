@@ -138,20 +138,24 @@ symbol.For(name)
 
   The function \code{dyn.unload} unlinks the shared library.
 
-  Functions \code{symbol.C} and \code{symbol.For} map function or
-  subroutine names to the symbol name in the compiled code.  These are
-  no longer of much use in \R, but can be used to find the symbol that
-  will be looked up in the DLL (unless the registration mechanism has
-  been used).
+  Functions \code{symbol.C} and \code{symbol.For} are for historical
+  compatibility with S.  \code{symbol.C} just returns its argument
+  unchanged, whereas \code{symbol.For} will append an underscore on
+  those platforms (almost all) which do so for Fortran symbols.
+  These are no longer of much use in \R.
 
   \code{is.loaded} checks if the symbol name is loaded and hence
   available for use in \code{.C} or \code{.Fortran} or \code{.Call} or
   \code{.Exernal}: it requires the name you would give to \code{.C} etc
-  and \strong{not} that remapped by \code{symbol.C} and
+  and \strong{not} that remapped by \code{symbol.C} or
   \code{symbol.For}.  It will succeed if any one of the four calling
   functions would succeed in using the entry point unless \code{type}
-  is specified.  It is a primitive argument so positional matching of
-  arguments is used (and names are ignored).
+  is specified: for Fortran entry points
+  \code{is.loaded(symbol.For("symbol"))} will also succeed \emph{unless}
+  the registration mechanism has been used.
+
+  \code{is.loaded} is a primitive function so positional matching of
+  arguments is used (and argument names are ignored).
 }
 \note{
   The creation of shared libraries and the runtime linking of them into
