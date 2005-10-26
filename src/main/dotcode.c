@@ -85,7 +85,7 @@ static SEXP enctrim(SEXP args, char *name, int len);
       (e.g. getNativeSymbolInfo("foo")$address)
    c) or a NativeSymbolInfo itself  (e.g. getNativeSymbolInfo("foo"))
 
-   NB: in the last two cases it set fun as well!
+   NB: in the last two cases it sets fun as well!
  */
 static void
 checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun)
@@ -703,21 +703,36 @@ SEXP do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    char *sym, *pkg= "";
+    char *sym, *pkg= "", *type="";
     int val = 1, nargs = length(args);
+    R_RegisteredNativeSymbol symbol = {R_FORTRAN_SYM, {NULL}, NULL};
 
     if (nargs < 1) errorcall(call, _("no arguments supplied"));
-    if (nargs > 2) errorcall(call, _("too many arguments"));
+    if (nargs > 3) errorcall(call, _("too many arguments"));
 
     if(!isValidString(CAR(args)))
 	errorcall(call, R_MSG_IA);
     sym = CHAR(STRING_ELT(CAR(args), 0));
-    if(nargs == 2) {
+    if(nargs >= 2) {
 	if(!isValidString(CADR(args)))
 	    errorcall(call, R_MSG_IA);
 	pkg = CHAR(STRING_ELT(CADR(args), 0));
     }
-    if (!(R_FindSymbol(sym, pkg, NULL))) val = 0;
+    if(nargs >= 3) {
+	if(!isValidString(CADDR(args)))
+	    errorcall(call, R_MSG_IA);
+	type = CHAR(STRING_ELT(CADDR(args), 0));
+	if(strcmp(type, "C") == 0) symbol.type = R_C_SYM;
+	else if(strcmp(type, "Fortran") == 0) symbol.type = R_FORTRAN_SYM;
+	else if(strcmp(type, "Call") == 0) symbol.type = R_CALL_SYM;
+	else if(strcmp(type, "External") == 0) symbol.type = R_EXTERNAL_SYM;
+    }
+    if(strlen(type)) {
+	if(!(R_FindSymbol(sym, pkg, &symbol))) val = 0;
+    } else {
+	if (!(R_FindSymbol(sym, pkg, NULL)) && 
+	    !(R_FindSymbol(sym, pkg, &symbol))) val = 0;
+    }
     ans = allocVector(LGLSXP, 1);
     LOGICAL(ans)[0] = val;
     return ans;

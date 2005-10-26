@@ -86,6 +86,10 @@ NEW FEATURES
     o	X11() and the Unix-alike data entry window can have properties
 	(including geometry) set by X resources: see their help files.
 
+    o	is.loaded() has a new argument 'type' to confine the search to
+	symbols for .C, .Fortran, .Call or .External: by default it
+	looks for a symbol which will match any of them.
+
 
 DEPRECATED & DEFUNCT
 
