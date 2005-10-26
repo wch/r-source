@@ -68,13 +68,16 @@
   \code{.External}, see the chapter on \dQuote{System and foreign language
   interfaces} in \dQuote{Writing \R Extensions} in the \file{doc/manual}
   subdirectory of the \R source tree.
-
 #ifdef windows
+  
   For Windows-specific details on producing the external code, see the
   \dQuote{R Installation and Administration} manual.
 #endif
+
+  Fortran names will need to be in the case as mapped by the compiler,
+  for all known \R platforms in lower case.  They should not include any
+  trailing underscore if one is appended by the compiler.
 }
-%%-- This note based on BDR's understanding, edited TSL
 \section{Argument types}{
   The mapping of the types of \R arguments to C or Fortran arguments
   in \code{.C} or \code{.Fortran} is
@@ -107,7 +110,8 @@
   dependent.
 
   \emph{Note:} The C types corresponding to \code{integer} and
-  \code{logical} are \code{int}, not \code{long} as in S.
+  \code{logical} are \code{int}, not \code{long} as in S.  This
+  difference matters on 64-bit platforms.
 
   The first character string of a character vector is passed as a C
   character array to Fortran: that string may be usable as

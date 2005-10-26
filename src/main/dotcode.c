@@ -83,7 +83,7 @@ static SEXP enctrim(SEXP args, char *name, int len);
       (e.g. getNativeSymbolInfo("foo")$address)
    c) or a NativeSymbolInfo itself  (e.g. getNativeSymbolInfo("foo"))
 
-   NB: in the last two cases it set fun as well!
+   NB: in the last two cases it sets fun as well!
  */
 static void
 checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun)
@@ -705,6 +705,7 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
     char *sym, *pkg= "";
     int val = 1, nargs = length(args);
+    R_RegisteredNativeSymbol symbol = {R_FORTRAN_SYM, {NULL}, NULL};
 
     if (nargs < 1) errorcall(call, _("no arguments supplied"));
     if (nargs > 2) errorcall(call, _("too many arguments"));
@@ -717,7 +718,10 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, R_MSG_IA);
 	pkg = CHAR(STRING_ELT(CADR(args), 0));
     }
-    if (!(R_FindSymbol(sym, pkg, NULL))) val = 0;
+    /* We don't know if this is for .C, .Fortran, .Call or .External.
+       So look up all, which needs Fortran done separately. */
+    if (!(R_FindSymbol(sym, pkg, NULL)) && 
+	!(R_FindSymbol(sym, pkg, &symbol))) val = 0;
     ans = allocVector(LGLSXP, 1);
     LOGICAL(ans)[0] = val;
     return ans;
