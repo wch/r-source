@@ -25,9 +25,9 @@ SUBDIRS = search
 OBJECTS = index.html
 ## <FIXME>
 ## We really should not create packages.html in *this* directory.
-CLEANFILES = packages.html packages-foot.html $(OBJECTS)
+CLEANFILES = packages.html $(OBJECTS)
 ## </FIXME>
-DISTCLEANFILES = Makefile $(NON_SVN_INSTFILES)
+DISTCLEANFILES = Makefile
 
 all: Makefile R
 
