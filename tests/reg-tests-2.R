@@ -1670,3 +1670,8 @@ lx[as.character(NA)]
 ## 2.2.0 had both matching element 1
 
 ### end of tests added in 2.2.0 patched ###
+
+
+## test of fix of trivial warning PR#8252
+pairs(iris[1:4], oma=rep(3,4))
+## warned in 2.2.0 only
