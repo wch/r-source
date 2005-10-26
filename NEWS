@@ -83,6 +83,9 @@ NEW FEATURES
     o	pdf() now allows 'family' to be specified in the same
 	generality as postscript().
 
+    o	X11() and the Unix-alike data entry window can have properties
+	(including geometry) set by X resources: see their help files.
+
 
 DEPRECATED & DEFUNCT
 

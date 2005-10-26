@@ -11,6 +11,9 @@ X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
 
   if(display == "" && .Platform$GUI == "AQUA" && Sys.getenv("DISPLAY") == "")
       Sys.putenv(DISPLAY = ":0")
+  ## we need to know internally if the user has overridden X11 resources
+  if(missing(width)) width <- as.double(NA)
+  if(missing(height)) height <- as.double(NA)
   .Internal(X11(display, width, height, pointsize,
                 if(is.null(gamma)) 1 else gamma, colortype,
                 maxcubesize, bg, canvas, fonts, NA, xpos, ypos))

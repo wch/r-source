@@ -1082,6 +1082,40 @@ static int R_X11IOErr(Display *dsp)
     return 0; /* but should never get here */
 }
 
+#define USE_Xt 1
+
+#ifdef USE_Xt
+#include <X11/StringDefs.h>
+#include <X11/Shell.h>
+typedef struct gx_device_X_s {
+    Pixel background, foreground, borderColor;
+    Dimension borderWidth;
+    String geometry;
+} gx_device_X;
+
+/* (String) casts are here to suppress warnings about discarding `const' */
+#define RINIT(a,b,t,s,o,it,n)\
+  {(String)(a), (String)(b), (String)t, sizeof(s),\
+   XtOffsetOf(gx_device_X, o), (String)it, (n)}
+#define rpix(a,b,o,n)\
+  RINIT(a,b,XtRPixel,Pixel,o,XtRString,(XtPointer)(n))
+#define rdim(a,b,o,n)\
+  RINIT(a,b,XtRDimension,Dimension,o,XtRImmediate,(XtPointer)(n))
+#define rstr(a,b,o,n)\
+  RINIT(a,b,XtRString,String,o,XtRString,(char*)(n))
+
+static XtResource x_resources[] = {
+    rpix(XtNbackground, XtCBackground, background, "XtDefaultBackground"),
+    rstr(XtNgeometry, XtCGeometry, geometry, NULL),
+};
+
+static const int x_resource_count = XtNumber(x_resources);
+
+static String x_fallback_resources[] = {
+    (String) "R_x11*Background: white",
+    NULL
+};
+#endif
 
 Rboolean
 newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
@@ -1204,10 +1238,10 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
      * I try it.
      * A button such as, maximization disappears
      * unless I give Hint for clear statement in
-     * gnome window magager.
+     * gnome window manager.
      */
 
-    memset(&attributes,0,sizeof(attributes));
+    memset(&attributes, 0, sizeof(attributes));
     attributes.background_pixel = whitepixel;
     attributes.border_pixel = blackpixel;
     attributes.backing_store = Always;
@@ -1218,8 +1252,8 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     if (type == WINDOW) {
 	int alreadyCreated = (xd->window != (Window)NULL);
 	if(alreadyCreated == 0) {
-	    xd->windowWidth = iw = w/pixelWidth();
-	    xd->windowHeight = ih = h/pixelHeight();
+	    xd->windowWidth = iw = (ISNA(w)?7:w)/pixelWidth();
+	    xd->windowHeight = ih = (ISNA(h)?7:h)/pixelHeight();
 
 	    hint = XAllocSizeHints();
 	    if(xpos == NA_INTEGER)
@@ -1233,14 +1267,70 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 		    ( DisplayHeight(display, screen) + ih - 10 );
 	    else hint->y = (ypos >= 0)? ypos :
 		DisplayHeight(display, screen) - iw - ypos;
-	    /* printf("x = %d, y = %d\n", hint->x, hint->y);*/
 	    hint->width  = iw;
 	    hint->height = ih;
 	    hint->flags  = PPosition | PSize;
+#ifdef USE_Xt
+	    {
+		XtAppContext app_con;
+		Widget toplevel;
+		Display *xtdpy;
+                int zero = 0;
+                gx_device_X xdev;
+
+		XtToolkitInitialize();
+
+		app_con = XtCreateApplicationContext();
+		XtAppSetFallbackResources(app_con, x_fallback_resources);
+		xtdpy = XtOpenDisplay(app_con, NULL, "r_x11", "R_x11",
+				      NULL, 0, &zero, NULL);
+		toplevel = XtAppCreateShell(NULL, "R_x11",
+					    applicationShellWidgetClass, 
+					    xtdpy, NULL, 0);
+		XtGetApplicationResources(toplevel, (XtPointer) &xdev,
+					  x_resources, 
+					  x_resource_count,
+					  NULL, 0);
+		XtDestroyWidget(toplevel);
+		XtCloseDisplay(xtdpy);
+		XtDestroyApplicationContext(app_con);
+		if (xdev.geometry != NULL) {
+		    char gstr[40];
+		    int bitmask;
+		    
+		    sprintf(gstr, "%dx%d+%d+%d", hint->width,
+			    hint->height, hint->x, hint->y);
+		    bitmask = XWMGeometry(display, DefaultScreen(display),
+					  xdev.geometry, gstr, 
+					  1,
+					  hint,
+					  &hint->x, &hint->y,
+					  &hint->width, &hint->height,
+					  &hint->win_gravity);
+		    
+		    if (bitmask & (XValue | YValue))
+			hint->flags |= USPosition;
+		    if (bitmask & (WidthValue | HeightValue)) 
+			hint->flags |= USSize;
+		    /* Restore user-specified settings */
+		    if(xpos != NA_INTEGER)
+			hint->x = (xpos >= 0) ? xpos : 
+			    DisplayWidth(display, screen) - iw + xpos;
+		    if(ypos != NA_INTEGER)
+			hint->y = (ypos >= 0)? ypos :
+			    DisplayHeight(display, screen) - iw - ypos;
+		    if(!ISNA(w)) hint->width = iw;
+		    if(!ISNA(h)) hint->height = ih;
+		}
+	    }
+#endif
+	    xd->windowWidth = hint->width;
+	    xd->windowHeight = hint->height;
+	    /*printf("x = %d, y = %d\n", hint->x, hint->y);*/
 	    xd->window = XCreateSimpleWindow(display,
 					     rootwin,
 					     hint->x,hint->y,
-					     hint->width,hint->height,
+					     hint->width, hint->height,
 					     1,
 					     blackpixel,
 					     whitepixel);
@@ -1249,7 +1339,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	      warning(_("unable to create X11 window"));
 	      return FALSE;
 	    }
-	    XSetWMNormalHints( display, xd->window, hint);
+	    XSetWMNormalHints(display, xd->window, hint);
 	    XFree(hint);
       	    XChangeWindowAttributes(display, xd->window,
 				    CWEventMask | CWBackPixel |

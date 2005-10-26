@@ -17,7 +17,8 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   \item{display}{the display on which the graphics window will appear.
     The default is to use the value in the user's environment variable
     \env{DISPLAY}.}
-  \item{width, height}{the width and height of the plotting window, in inches.}
+  \item{width, height}{the width and height of the plotting window, in
+    inches.  See also Resources.}
   \item{pointsize}{the default pointsize to be used.}
   \item{gamma}{the gamma correction factor.  This value is used
     to ensure that the colors perceived are linearly related to
@@ -41,7 +42,7 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
     e.g. \code{xpos=-100} says the top right corner should be 100 pixels
     from the right edge of the screen.
     If \code{NA}, successive devices are cascaded in
-    20 pixel steps from the top left.}
+    20 pixel steps from the top left.  See also Resources.}
 }
 \details{
   By default, an X11 device will use the best color rendering
@@ -84,6 +85,13 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
 
   The initial size and position are only hints, and may not be acted on
   by the window manager.
+}
+\section{Resources}{
+  The standard X11 resource \code{geometry} can be use to specify the
+  window position and/or size, but will be overridden by values
+  specified as arguments.  The class looked for is \code{R_x11}. Note
+  that the resource specifies the width and height in pixels and not in
+  inches.
 }
 \seealso{
   \code{\link{Devices}}.
