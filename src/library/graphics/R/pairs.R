@@ -31,7 +31,7 @@ function (x, labels, panel = points, ...,
         function(x = 0.5, y = 0.5, txt, cex, font)
             text(x, y, txt, cex = cex, font = font)
 
-    localAxis <- function(side, x, y, xpd, bg, col=NULL, main, ...) {
+    localAxis <- function(side, x, y, xpd, bg, col=NULL, main, oma, ...) {
       ## Explicitly ignore any color argument passed in as
       ## it was most likely meant for the data points and
       ## not for the axis.
