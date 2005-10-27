@@ -774,13 +774,10 @@ C-LEVEL FACILITIES
         gctorture(TRUE).  Level 2 makes Valgrind run extremely slowly.
 
     o	Some support for raw vectors has been added to Rdefines.h.
-<<<<<<< .working
-=======
 
     o	R_BaseEnv has been added, to refer to the base environment.
     	This is currently equal to R_NilValue, but it will change in
     	a future release.
->>>>>>> .merge-right.r35970
 
 
 BUG FIXES
