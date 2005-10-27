@@ -6,10 +6,11 @@ Rchtml-DLLLIBS= -L. $(LIBUNICOWS) -lhhctrl
 
 all: libhhctrl.a ../../../bin/Rchtml.dll
 
+## need -k as hhctrl exports HtmlHelpA
 libhhctrl.a : MkChmDll
 	$(ECHO) EXPORTS > hhctrl.def
 	$(ECHO) HtmlHelpA@16 >> hhctrl.def
-	$(DLLTOOL) --dllname hhctrl.ocx  --def hhctrl.def --output-lib libhhctrl.a
+	$(DLLTOOL) -k --dllname hhctrl.ocx  --def hhctrl.def --output-lib libhhctrl.a
 
 ../../../bin/Rchtml.dll: Rchtml.dll
 	$(CP) $^ $@
