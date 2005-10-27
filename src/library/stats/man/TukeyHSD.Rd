@@ -16,9 +16,10 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
 }
 \arguments{
  \item{x}{A fitted model object, usually an \code{\link{aov}} fit.}
- \item{which}{A list of terms in the fitted model for which the
-   intervals should be calculated.  Defaults to all the terms.}
- \item{ordered}{A logical value indicating if the levels of the factor
+ \item{which}{A character vector listing terms in the fitted model for
+   which the intervals should be calculated.  Defaults to all the
+   terms.}
+  \item{ordered}{A logical value indicating if the levels of the factor
    should be ordered according to increasing average in the sample
    before taking differences.  If \code{ordered} is true then
    the calculated differences in the means will all be positive.  The
