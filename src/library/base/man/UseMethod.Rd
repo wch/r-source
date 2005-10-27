@@ -58,6 +58,9 @@ NextMethod(generic = NULL, object = NULL, \dots)
   actual argument passed and not the current value of the object of that
   name.
 
+  \code{UseMethod} is a primitive function so positional matching is
+  used and names of supplied arguments are ignored.
+
   \code{NextMethod} invokes the next method (determined by the
   class).  It does this by creating a special call frame for that
   method.  The arguments will be the same in number, order and name as

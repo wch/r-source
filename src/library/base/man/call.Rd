@@ -22,6 +22,11 @@ as.call(x)
   the given arguments (\code{name} must be a quoted string which gives
   the name of a function to be called).
 
+  \code{call} is a primitive, so the first argument (named or not) is
+  taken as \code{name} and the remaining arguments as arguments for the
+  constructed call: \code{call(x="c", 1,3, name="foo")} is a call to
+  \code{c} and not to \code{foo}.
+  
   \code{is.call} is used to determine whether \code{x} is a call (i.e.,
   of mode \code{"call"}).
   %NO We don't differentiate between expressions and function calls.
