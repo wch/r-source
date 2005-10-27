@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-10-24
+@set FAQ_DATE @value{FAQ_YEAR}-10-27
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1865,6 +1865,8 @@ production functions.
 @item KMsurv
 Data sets and functions for ``Survival Analysis, Techniques for Censored
 and Truncated Data'' by Klein and Moeschberger, 1997, Springer.
+@item Kendall
+Kendall rank correlation and Mann-Kendall trend test.
 @item KernSmooth
 Functions for kernel smoothing (and density estimation) corresponding to
 the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
@@ -2308,6 +2310,9 @@ and fractional factorial designs.
 Classes of commonly used copulas (including elliptical and Archimedian),
 and methods for density, distribution, random number generators, and
 plotting.
+@item corpora
+Utility functions for the statistical analysis of corpus frequency
+data.
 @item corpcor
 Efficient estimation of covariance and (partial) correlation.
 @item covRobust
@@ -3495,6 +3500,8 @@ Stem analysis functions for volume increment and carbon uptake
 assessment from tree-rings.
 @item tripack
 A constrained two-dimensional Delaunay triangulation package.
+@item trust
+Local optimization using two derivatives and trust regions.
 @item tseries
 Package for time series analysis with emphasis on non-linear modelling.
 @item tseriesChaos
@@ -5571,17 +5578,18 @@ that do not appear in Bug Tracking.  (Windows users should additionally
 consult @url{https://svn.R-project.org/R/trunk/src/gnuwin32/CHANGES}.)
 Third, if possible try the current r-patched or r-devel version of R.
 If a bug has already been reported or fixed, please do not submit
-further bug reports on it.
+further bug reports on it.  Finally, check carefully whether the bug is
+with R, or a contributed package.  Bug reports on contributed packages
+should be sent first to the package maintainer, and only submitted to
+the R-bugs repository by package maintainers, mentioning the package in
+the subject line.
 
 On Unix systems a bug report can be generated using the function
 @code{bug.report()}.  This automatically includes the version
 information and sends the bug to the correct address.  Alternatively the
 bug report can be emailed to @email{R-bugs@@R-project.org} or submitted
-to the Web page at @url{http://bugs.R-project.org/}.
-
-Bug reports on contributed packages should be sent first to the package
-maintainer, and only submitted to the R-bugs repository by package
-maintainers, mentioning the package in the subject line.
+to the Web page at @url{http://bugs.R-project.org/}.  Please try
+including results of @code{sessionInfo()} in your bug report.
 
 There is a section of the bug repository for suggestions for
 enhancements for R labelled @samp{wishlist}.  Suggestions can be
