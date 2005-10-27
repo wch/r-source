@@ -1,6 +1,7 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 Under development (unstable) (2004-08-30), ISBN 3-900051-00-3
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2005-10-27 r36056)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -8,7 +9,7 @@ Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
-'citation()' on how to cite R in publications.
+'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for a HTML browser interface to help.
@@ -25,7 +26,7 @@ Type 'q()' to quit R.
 > bpos <- match("package:base",search())
 > nn <- ls(pos=bpos, all = TRUE)
 > length(nn) # 844 [R 0.62.0, March 25, 1998;  1067 R 0.64.0 March 1999]
-[1] 1063
+[1] 1082
 > 
 > is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
 > is.special <- function(obj) typeof(obj) == "special"
@@ -134,7 +135,7 @@ Type 'q()' to quit R.
 > table(ncpf)
 ncpf
  5  6  7  8  9 10 11 12 13 14 
- 1  1  6  3  8  5  4  2  2  1 
+ 1  1  6  3  7  5  4  2  2  1 
 > prim.f[ncpf <= 6]#  only is.na, is.nan
 [1] "is.na"  "is.nan"
 > 
@@ -142,10 +143,10 @@ ncpf
  [1] "is.array"       "is.atomic"      "is.call"        "is.character"  
  [5] "is.complex"     "is.double"      "is.environment" "is.expression" 
  [9] "is.finite"      "is.function"    "is.infinite"    "is.integer"    
-[13] "is.language"    "is.list"        "is.loaded"      "is.logical"    
-[17] "is.matrix"      "is.na"          "is.name"        "is.nan"        
-[21] "is.null"        "is.numeric"     "is.object"      "is.pairlist"   
-[25] "is.real"        "is.recursive"   "is.single"      "is.symbol"     
+[13] "is.language"    "is.list"        "is.logical"     "is.matrix"     
+[17] "is.na"          "is.name"        "is.nan"         "is.null"       
+[21] "is.numeric"     "is.object"      "is.pairlist"    "is.real"       
+[25] "is.recursive"   "is.single"      "is.symbol"     
 > 
 > length(prim.f2 <- prim.f[! p.isis]) # down to 87   [R 0.62.0, March 25, 1998]
 [1] 5
