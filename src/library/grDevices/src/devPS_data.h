@@ -31,12 +31,15 @@
        CNS1             MOESung-Regular         MHei-Medium-Acro
        GB1              BousungEG-Light-GB      STSong-Light-Acro
 
-       [BDR comment, Adobe give
+       [BDR comment, Adobe's UNIX fonts packs have
        chsfont.tar.gz has STSongStd-Light-Acro.otf
        chtfont.tar.gz has MSungStd-Light-Acro.otf
        jpnfont.tar.gz  has KozMinPro-Regular-Acro.otf
        korfont.tar.gz has HYSMyeongJoStd-Medium-Acro.otf
-       so CNS1 and GB1 are swapped here for PDF at least.
+       and Windows versions have
+       AdobeMingStd-Light.otf
+       AdobeMyungjoStd-Medium.otf
+       AdobeSongStd-Light.otf
        ]
 
 
@@ -289,7 +292,7 @@ static const struct {
       "Adobe-CNS1-UniCNS-UCS2-H.afm",
      },
      "MOESung-Regular",
-     "STSong-Light-Acro",
+     "MHei-Medium-Acro",
      "B5pc-H",
      "CP950",
      "      /FontDescriptor\n"
@@ -317,7 +320,7 @@ static const struct {
       "Adobe-GB1-UniGB-UCS2-H.afm",
      },
      "BousungEG-Light-GB",
-     "MSungStd-Light",
+     "STSong-Light-Acro",
      "GBK-EUC-H",
      "GBK",
      "      /FontDescriptor\n"
