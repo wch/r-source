@@ -58,8 +58,8 @@ NEW FEATURES
 	the OS uses a different algorithm that is more likely to guess
 	the summer time transitions correctly.
 
-    o	new.packages() gains a 'destdir' to pass to install.packages().
-	(Wish of PR#8239.)
+    o	new.packages() gains a ... argument to pass e.g. 'destdir' to
+	install.packages().  (Wish of PR#8239.)
 
     o	Added "hexmode" to parallel "octmode".
 
@@ -88,7 +88,9 @@ NEW FEATURES
 
     o	is.loaded() has a new argument 'type' to confine the search to
 	symbols for .C, .Fortran, .Call or .External: by default it
-	looks for a symbol which will match any of them.
+	looks for a symbol which will match any of them.  It is now
+	internal and not primitive, so argument matching works in the
+	usual way.
 
 
 DEPRECATED & DEFUNCT

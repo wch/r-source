@@ -229,8 +229,9 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 }
 
 new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
-                         contriburl = contrib.url(repos),
-                         method, available = NULL, ask = FALSE, destdir = NULL)
+                         contriburl = contrib.url(repos, type),
+                         method, available = NULL, ask = FALSE,
+                         ..., type = getOption("pkgType"))
 {
     ask  # just a check that it is valid before we start work
     if(is.null(lib.loc)) lib.loc <- .libPaths()
@@ -288,8 +289,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                             , res)]
     if(length(update)) {
         install.packages(update, lib = lib.loc[1], contriburl = contriburl,
-                         method = method, available = available,
-                         destdir = destdir)
+                         method = method, available = available, ...)
         # Now check if they were installed and update 'res'
         dirs <- list.files(lib.loc[1])
         updated <- update[update %in% dirs]

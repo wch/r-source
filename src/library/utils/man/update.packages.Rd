@@ -28,7 +28,8 @@ old.packages(lib.loc = NULL, repos = getOption("repos"),
 
 new.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos),
-             method, available = NULL, ask = FALSE, destdir = NULL)
+             method, available = NULL, ask = FALSE, \dots,
+             type = getOption("pkgType"))
 
 download.packages(pkgs, destdir, available = NULL,
                   repos = getOption("repos"),
@@ -108,6 +109,8 @@ contrib.url(repos, type = getOption("pkgType"))
     Can also be a character vector, a subset of
     \code{c("Depends", "Imports", "Suggests")}.
   }
+  \item{\dots}{(for \code{new.packages}).  Arguments such as \code{destdir}
+    and \code{dependencies} to be passed to \code{install.packages}.}
   \item{type}{character, indicating the type of package to download and
     install.
 #ifdef unix

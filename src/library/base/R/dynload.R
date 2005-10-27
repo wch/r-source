@@ -4,6 +4,9 @@ dyn.load <- function(x, local=TRUE, now=TRUE)
 dyn.unload <- function(x)
     .Internal(dyn.unload(x))
 
+is.loaded <- function(symbol, PACKAGE = "", type = "")
+    .Internal(is.loaded(symbol, PACKAGE, type))
+
 getNativeSymbolInfo <- function(name, PACKAGE)
 {
     if(missing(PACKAGE)) PACKAGE <- ""

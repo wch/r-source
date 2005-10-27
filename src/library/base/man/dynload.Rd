@@ -153,9 +153,6 @@ symbol.For(name)
   is specified: for Fortran entry points
   \code{is.loaded(symbol.For("symbol"))} will also succeed \emph{unless}
   the registration mechanism has been used.
-
-  \code{is.loaded} is a primitive function so positional matching of
-  arguments is used (and argument names are ignored).
 }
 \note{
   The creation of shared libraries and the runtime linking of them into
@@ -195,6 +192,6 @@ symbol.For(name)
 is.loaded("hcass2") #-> probably TRUE, as stats is loaded
 is.loaded("supsmu") # Fortran entry point in stats
 is.loaded("supsmu", "stats", "Fortran")
-is.loaded("PDF", "", "External") # NB, second arg cannot be omitted
+is.loaded("PDF", type = "External")
 }
 \keyword{interface}

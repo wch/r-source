@@ -612,7 +612,7 @@ FUNTAB R_FunTab[] =
 {"split",	do_split,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"symbol.C",	do_symbol,	0,	1,	1,	{PP_FOREIGN, PREC_FN,	0}},
 {"symbol.For",	do_symbol,	1,	1,	1,	{PP_FOREIGN, PREC_FN,	0}},
-{"is.loaded",	do_isloaded,	0,	1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
+{"is.loaded",	do_isloaded,	0,	11,	-1,	{PP_FOREIGN, PREC_FN,	0}},
 {".C",		do_dotCode,	0,	1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
 {".Fortran",	do_dotCode,	1,	1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
 {".External",   do_External,    0,      1,      -1,     {PP_FOREIGN, PREC_FN,	0}},
