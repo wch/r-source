@@ -104,7 +104,7 @@ static void DeallocBuffer(R_StringBuffer *cbuff)
 SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP d, s, x, stype;
-    int i, len;
+    int i, len, ntype;
     char *type;
 #ifdef SUPPORT_MBCS
     int nc;
@@ -121,12 +121,14 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(stype) || LENGTH(stype) != 1)
 	errorcall(call, _("invalid '%s' argument"), "type");
     type = CHAR(STRING_ELT(stype, 0));
+    ntype = strlen(type);
+    if(ntype == 0) errorcall(call, _("invalid '%s' argument"), "type");
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++) {
-	if(strcmp(type, "bytes") == 0) {
+	if(strncmp(type, "bytes", ntype) == 0) {
 	    /* This works for NA strings too */	
     INTEGER(s)[i] = length(STRING_ELT(x, i));
-	} else if(strcmp(type, "chars") == 0) {
+	} else if(strncmp(type, "chars", ntype) == 0) {
 	    if(STRING_ELT(x, i) == NA_STRING) {
 		INTEGER(s)[i] = 2;
 	    } else {
@@ -138,7 +140,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		    INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
 	    }
-	} else { /* display width */
+	} else if(strncmp(type, "width", ntype) == 0) {
 	    if(STRING_ELT(x, i) == NA_STRING) {
 		INTEGER(s)[i] = 2;
 	    } else {
@@ -158,7 +160,8 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
 	    }
-	}
+	} else
+	    errorcall(call, _("invalid '%s' argument"), "type");
     }
 #if defined(SUPPORT_MBCS)
     DeallocBuffer(&cbuff);
