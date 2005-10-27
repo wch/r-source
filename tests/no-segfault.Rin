@@ -44,7 +44,8 @@ misc.2 <- c("help.start", "browseEnv",
 if(.Platform$OS.type == "windows") {
     dev.int <- c(dev.int, "bmp", "windows", "win.graph", "win.print",
                 "win.metafile")
-    misc.2 <- c(misc.2, "file.choose", "choose.files", "setWindowTitle")
+    misc.2 <- c(misc.2, "file.choose", "choose.files", "choose.dir",
+                "setWindowTitle")
 }
 
 stop.list[["base"]] <-
