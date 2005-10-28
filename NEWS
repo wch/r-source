@@ -100,8 +100,11 @@ BUG FIXES
     o	is.loaded() now finds Fortran symbols whether or not the
 	registration mechanism has been used.
 
-   o	ISODateTime() mistakenly corrected non-existent times (when
+    o	ISODateTime() mistakenly corrected non-existent times (when
 	DST was being started) in the current time zone.
+
+    o	getGraphicsEvent() would cause memory corruption if passed an 
+    	empty prompt.
 
     o	Some replacement operations on data frames gave incorrect
 	answers, e.g. DF[3:4, "y"] if column "y" did not exist or was
