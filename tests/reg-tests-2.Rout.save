@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-10-25 r36032)
+Version 2.3.0 Under development (unstable) (2005-10-27 r36070)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4845,6 +4845,47 @@ $<NA>
 NULL
 
 > ## 2.2.0 had both matching element 1
+> 
+> 
+> ## data frame replacement subscripting
+> # Charles C. Berry, R-devel, 2005-10-26
+> a.frame <- data.frame( x=letters[1:5] )
+> a.frame[ 2:5, "y" ] <- letters[2:5]
+> a.frame  # added rows 1:4
+  x    y
+1 a <NA>
+2 b    b
+3 c    c
+4 d    d
+5 e    e
+> # and adding and replacing matrices failed
+> a.frame[ ,"y" ] <- matrix(1:10, 5, 2)
+> a.frame
+  x y.1 y.2
+1 a   1   6
+2 b   2   7
+3 c   3   8
+4 d   4   9
+5 e   5  10
+> a.frame[3:5 ,"y" ] <- matrix(1:6, 3, 2)
+> a.frame
+  x y.1 y.2
+1 a   1   6
+2 b   2   7
+3 c   1   4
+4 d   2   5
+5 e   3   6
+> a.frame <- data.frame( x=letters[1:5] )
+> a.frame[3:5 ,"y" ] <- matrix(1:6, 3, 2)
+> a.frame
+  x y.1 y.2
+1 a  NA  NA
+2 b  NA  NA
+3 c   1   4
+4 d   2   5
+5 e   3   6
+> ## failed/wrong ans in 2.2.0
+> 
 > 
 > ### end of tests added in 2.2.0 patched ###
 > 

@@ -1669,6 +1669,23 @@ lx[[as.character(NA)]]
 lx[as.character(NA)]
 ## 2.2.0 had both matching element 1
 
+
+## data frame replacement subscripting
+# Charles C. Berry, R-devel, 2005-10-26
+a.frame <- data.frame( x=letters[1:5] )
+a.frame[ 2:5, "y" ] <- letters[2:5]
+a.frame  # added rows 1:4
+# and adding and replacing matrices failed
+a.frame[ ,"y" ] <- matrix(1:10, 5, 2)
+a.frame
+a.frame[3:5 ,"y" ] <- matrix(1:6, 3, 2)
+a.frame
+a.frame <- data.frame( x=letters[1:5] )
+a.frame[3:5 ,"y" ] <- matrix(1:6, 3, 2)
+a.frame
+## failed/wrong ans in 2.2.0
+
+
 ### end of tests added in 2.2.0 patched ###
 
 

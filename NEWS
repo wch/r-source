@@ -256,7 +256,7 @@ BUG FIXES
 	(pre-1970 on Windows and some others, and in the far past or
 	future).
 
-    o	chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)  gave wrong
+    o	chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE) gave wrong
 	P-values on some platforms. (PR#8224)
 
     o	pdf() was not writing details of the encoding to the file
@@ -288,6 +288,10 @@ BUG FIXES
 
     o	ISODateTime() mistakenly corrected non-existent times (when
 	DST was being started) in the current time zone.
+
+    o	Some replacement operations on data frames gave incorrect
+	answers, e.g. DF[3:4, "y"] if column "y" did not exist or was
+	a matrix.
 
 
 
