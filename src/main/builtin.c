@@ -37,6 +37,10 @@ SEXP do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     expr = CAR(args);
     env = eval(CADR(args), rho);
+    if (isNull(env)) {
+	warning(_("use of NULL environment is deprecated"));
+	env = R_BaseEnv;
+    } else    
     if (!isEnvironment(env))
 	errorcall(call, R_MSG_IA);
     return mkPROMISE(expr, env);
@@ -56,11 +60,19 @@ SEXP do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     args = CDR(args);
     eenv = CAR(args);
+    if (isNull(eenv)) {
+	warning(_("use of NULL environment is deprecated"));
+	eenv = R_BaseEnv;
+    } else
     if (!isEnvironment(eenv))
 	errorcall(call, R_MSG_IA);
 	
     args = CDR(args);
     aenv = CAR(args);
+    if (isNull(aenv)) {
+	warning(_("use of NULL environment is deprecated"));
+	aenv = R_BaseEnv;
+    } else
     if (!isEnvironment(aenv))
     	errorcall(call, R_MSG_IA);
     	
@@ -197,6 +209,10 @@ SEXP do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     hash = asInteger(CAR(args));
     enclos = CADR(args);
+    if (isNull(enclos)) {
+	warning(_("use of NULL environment is deprecated"));
+	enclos = R_BaseEnv;
+    } else    
     if( !isEnvironment(enclos) )
 	errorcall(call, _("'enclos' must be an environment"));
 
@@ -219,18 +235,29 @@ SEXP do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    SEXP env, parent;
     checkArity(op, args);
 
-    if( !isEnvironment(CAR(args)) )
+    env = CAR(args);
+    if (isNull(env)) {
+	warning(_("use of NULL environment is deprecated"));
+	env = R_BaseEnv;
+    } else
+    if( !isEnvironment(env) )
 	errorcall(call, _("argument is not an environment"));
-    if( CAR(args) == R_EmptyEnv )
+    if( env == R_EmptyEnv )
     	errorcall(call, _("can not set parent of the empty environment"));
-    if( !isEnvironment(CADR(args)) )
+    parent = CADR(args);
+    if (isNull(parent)) {
+	warning(_("use of NULL environment is deprecated"));
+	parent = R_BaseEnv;
+    } else    
+    if( !isEnvironment(parent) )
 	errorcall(call, _("'parent' is not an environment"));
 
-    SET_ENCLOS(CAR(args), CADR(args));
+    SET_ENCLOS(env, parent);
 
-    return( CAR(args) );
+    return( env );
 }
 
 static void cat_newline(SEXP labels, int *width, int lablen, int ntot)

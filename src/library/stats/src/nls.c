@@ -200,6 +200,10 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho)
 
     if(!isString(theta))
 	error(_("theta should be of type character"));
+    if (isNull(rho)) {
+	warning(_("use of NULL environment is deprecated"));
+	rho = R_BaseEnv;
+    } else	
     if(!isEnvironment(rho))
 	error(_("rho should be an environment"));
 

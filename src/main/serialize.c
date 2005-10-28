@@ -1102,7 +1102,7 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
     case 2:
 	OutInteger(stream, version);
 	OutInteger(stream, R_VERSION);
-	OutInteger(stream, R_Version(2,1,0));
+	OutInteger(stream, R_Version(2,3,0));
 	break;
     default: error(_("version %d not supported"), version);
     }
@@ -2134,6 +2134,10 @@ SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
     Rboolean force;
     int i, len;
 
+    if (TYPEOF(env) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	env = R_BaseEnv;
+    } else
     if (TYPEOF(env) != ENVSXP)
         error(_("bad environment"));
     if (TYPEOF(vars) != STRSXP)

@@ -2024,6 +2024,10 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
     /* the loaded objects can be placed where desired  */
 
     aenv = CADR(args);
+    if (TYPEOF(aenv) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	aenv = R_BaseEnv;
+    } else
     if (TYPEOF(aenv) != ENVSXP)
 	error(_("invalid '%s' argument"), "envir");
 
@@ -2257,6 +2261,10 @@ SEXP do_loadFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     con = getConnection(asInteger(CAR(args)));
     aenv = CADR(args);
+    if (TYPEOF(aenv) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	aenv = R_BaseEnv;
+    } else
     if (TYPEOF(aenv) != ENVSXP)
 	error(_("invalid '%s' argument"), "envir");
 

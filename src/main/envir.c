@@ -721,7 +721,9 @@ void unbindVar(SEXP symbol, SEXP rho)
 {
     int hashcode;
     SEXP c;
-    if (rho == R_BaseNamespace || rho == R_BaseEnv)
+    if (rho == R_BaseNamespace)
+	error(_("cannot unbind in the base namespace"));
+    if (rho == R_BaseEnv)
 	error(_("cannot unbind in the base environment"));
     if (FRAME_IS_LOCKED(rho))
 	error(_("cannot remove bindings from a locked environment"));
@@ -1446,6 +1448,10 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(val = CADR(args));
     R_Visible = 0;
     aenv = CAR(CDDR(args));
+    if (TYPEOF(aenv) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	aenv = R_BaseEnv;
+    } else
     if (TYPEOF(aenv) != ENVSXP)
 	errorcall(call, _("invalid '%s' argument"), "envir");
     if (isLogical(CAR(nthcdr(args, 3))))
@@ -1536,6 +1542,10 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
 
     envarg = CAR(args);
+    if (TYPEOF(envarg) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	envarg = R_BaseEnv;
+    } else
     if (TYPEOF(envarg) != ENVSXP)
 	errorcall(call, _("invalid '%s' argument"), "envir");
     args = CDR(args);
@@ -1603,6 +1613,10 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
 	where = asInteger(CADR(args));
 	genv = R_sysframe(where,R_GlobalContext);
+    }
+    else if (TYPEOF(CADR(args)) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	genv = R_BaseEnv;
     }
     else if (TYPEOF(CADR(args)) == ENVSXP)
 	genv = CADR(args);
@@ -1731,6 +1745,10 @@ SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* FIXME: should we install them all?) */
 
     env = CADR(args);
+    if (isNull(env)) {
+	warning(_("use of NULL environment is deprecated"));
+	env = R_BaseEnv;
+    } else      
     if( !isEnvironment(env) )
       errorcall(call, _("second argument must be an environment"));
 
@@ -2326,6 +2344,10 @@ SEXP do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     env = CAR(args);
+    if (isNull(env)) {
+    	warning(_("use of NULL environment is deprecated"));
+    	env = R_BaseEnv;
+    } else
     if( !isEnvironment(env) )
         error(_("argument must be an environment"));
 
@@ -2373,6 +2395,10 @@ SEXP do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     env = eval(CAR(args), rho);
+    if (isNull(env)) {
+    	warning(_("use of NULL environment is deprecated"));
+    	env = R_BaseEnv;
+    } else 
     if( !isEnvironment(env) )
         error(_("argument must be an environment"));
 
@@ -2632,6 +2658,10 @@ void R_LockEnvironment(SEXP env, Rboolean bindings)
 
 Rboolean R_EnvironmentIsLocked(SEXP env)
 {
+    if (TYPEOF(env) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	env = R_BaseEnv;
+    } else
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv)
@@ -2661,6 +2691,10 @@ void R_LockBinding(SEXP sym, SEXP env)
 {
     if (TYPEOF(sym) != SYMSXP)
 	error(_("not a symbol"));
+    if (TYPEOF(env) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	env = R_BaseEnv;
+    } else
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
@@ -2677,6 +2711,10 @@ static void R_unLockBinding(SEXP sym, SEXP env)
 {
     if (TYPEOF(sym) != SYMSXP)
 	error(_("not a symbol"));
+    if (TYPEOF(env) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	env = R_BaseEnv;
+    } else
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
@@ -2695,6 +2733,10 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 	error(_("not a symbol"));
     if (! isFunction(fun))
 	error(_("not a function"));
+    if (TYPEOF(env) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	env = R_BaseEnv;
+    } else
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace) {
@@ -2725,6 +2767,10 @@ Rboolean R_BindingIsLocked(SEXP sym, SEXP env)
 {
     if (TYPEOF(sym) != SYMSXP)
 	error(_("not a symbol"));
+    if (TYPEOF(env) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	env = R_BaseEnv;
+    } else
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
@@ -2741,6 +2787,10 @@ Rboolean R_BindingIsActive(SEXP sym, SEXP env)
 {
     if (TYPEOF(sym) != SYMSXP)
 	error(_("not a symbol"));
+    if (TYPEOF(env) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	env = R_BaseEnv;
+    } else
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
@@ -3052,8 +3102,16 @@ SEXP do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
     expenv = CAR(args); args = CDR(args);
     expnames = CAR(args); args = CDR(args);
 
+    if (TYPEOF(impenv) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	impenv = R_BaseEnv;
+    } else
     if (TYPEOF(impenv) != ENVSXP)
 	errorcall(call, _("bad import environment argument"));
+    if (TYPEOF(expenv) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	expenv = R_BaseEnv;
+    } else
     if (TYPEOF(expenv) != ENVSXP)
 	errorcall(call, _("bad export environment argument"));
     if (TYPEOF(impnames) != STRSXP || TYPEOF(expnames) != STRSXP)

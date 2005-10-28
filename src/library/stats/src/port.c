@@ -355,7 +355,10 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
     SEXP xpt; 
     double *b = (double *) NULL, *g = (double *) NULL,
 	*h = (double *) NULL, fx = R_PosInf;
-
+    if (isNull(rho)) {
+	warning(_("use of NULL environment is deprecated"));
+	rho = R_BaseEnv;
+    } else
     if (!isEnvironment(rho))
 	error(_("`rho' must be an environment"));
     if (!isReal(d) || n < 1)
