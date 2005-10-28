@@ -690,12 +690,19 @@ data.frame <-
 	    vjj <- value[[ jvseq[[jjj]] ]]
             if(jj <= nvars) {
                 ## if a column exists, preserve its attributes
-                if(length(dim(x[jj])) != 2) x[[jj]][iseq] <- vjj
+                if(length(dim(x[[jj]])) != 2) x[[jj]][iseq] <- vjj
                 else x[[jj]][iseq, ] <- vjj
             } else {
                 ## try to make a new column match in length: may be an error
-                length(vjj) <- nrows
-                x[[jj]] <- vjj
+                x[[jj]] <- vjj[FALSE]
+                if(length(dim(vjj)) == 2) {
+                    length(x[[j]]) <- nrows * ncol(vjj)
+                    dim(x[[j]]) <- c(nrows, ncol(vjj))
+                    x[[jj]][iseq, ] <- vjj
+                } else {
+                    length(x[[j]]) <- nrows
+                    x[[jj]][iseq] <- vjj
+                }
             }
 	}
     else if(p > 0) for(jjj in p:1) { # we might delete columns with NULL
