@@ -292,6 +292,9 @@ BUG FIXES
     o	Some replacement operations on data frames gave incorrect
 	answers, e.g. DF[3:4, "y"] if column "y" did not exist or was
 	a matrix.
+	
+    o	getGraphicsEvent() would cause memory corruption if passed an 
+    	empty prompt.
 
 
 
