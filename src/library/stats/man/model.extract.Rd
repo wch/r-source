@@ -29,7 +29,7 @@ model.weights(x)
   \code{\link{glm}} fit.
 
   \code{model.offset} and \code{model.response} are equivalent to
-  \code{model.frame(, "offset")} and \code{model.frame(, "response")}
+  \code{model.extract(, "offset")} and \code{model.extract(, "response")}
   respectively.
 
   \code{model.weights} is slightly different from
