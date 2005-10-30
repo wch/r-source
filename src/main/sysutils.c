@@ -370,6 +370,9 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     
     checkArity(op, args);
+#ifdef Win32
+    iconv_Init();
+#endif
     if(isNull(x)) {  /* list locales */
 #ifdef HAVE_ICONVLIST
 	cnt = 0;
