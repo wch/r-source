@@ -26,6 +26,9 @@ installed in R_HOME/lib (rather than R_HOME/src/gnuwin32).
 R CMD INSTALL will now clean up after interruption (by ctrl-C, at
 least where supported by the shell).
 
+iconv() was not always getting the current charset ("") right,
+especially if the locale was set in a running R session.
+
 
 
 R 2.2.0 patched
