@@ -172,7 +172,7 @@ static const struct {
      },
      "HeiseiKakuGo-W5",
      "HeiseiKakuGo-W5-Acro",
-     "UniJS-UCS2-H",
+     "UniJIS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -196,7 +196,7 @@ static const struct {
      },
      "HeiseiMin-W3",
      "HeiseiMin-W3-Acro",
-     "UniJS-UCS2-H",
+     "UniJIS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -213,19 +213,19 @@ static const struct {
      "      ]\n"
     },
     {"Japan1GothicBBB",
-     {"Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
+     {"GothicBBB-Medium-UCS2-H.afm",
+      "GothicBBB-Medium-UCS2-H.afm",
+      "GothicBBB-Medium-UCS2-H.afm",
+      "GothicBBB-Medium-UCS2-H.afm",
      },
      "GothicBBB-Medium",
      "GothicBBB-Medium",
-     "UniJS-UCS2-H",
+     "UniJIS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
      "        /CapHeight 737 /Ascent 752 /Descent -271 /StemV 99\n"
-     "        /FontBBox [-174 -268 1001 944]\n"
+     "        /FontBBox [-22 -252 1000 892]\n"
      "        /ItalicAngle 0 /Flags 4\n"
      "        /Style << /Panose <0801020b0500000000000000> >>\n"
      "      >>\n"
@@ -237,10 +237,10 @@ static const struct {
      "      ]\n"
     },
     {"Japan1Ryumin",
-     {"Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
+     {"Ryumin-Light-UCS2-H.afm",
+      "Ryumin-Light-UCS2-H.afm",
+      "Ryumin-Light-UCS2-H.afm",
+      "Ryumin-Light-UCS2-H.afm",
      },
      "Ryumin-Light",
      "Ryumin-Light",
@@ -249,7 +249,7 @@ static const struct {
      "      <<\n"
      "        /Type /FontDescriptor\n"
      "        /CapHeight 709 /Ascent 723 /Descent -241 /StemV 69\n"
-     "        /FontBBox [-170 -331 1024 903]\n"
+     "        /FontBBox [-54 -305 1000 903]\n"
      "        /ItalicAngle 0 /Flags 6\n"
      "        /Style << /Panose <010502020300000000000000> >>\n"
      "      >>\n"
@@ -271,7 +271,7 @@ static const struct {
      },
      "Baekmuk-Batang",
      "HYGothic-Medium-Acro",
-     "KSCms-UHC-H",
+     "UniKS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"

@@ -50,7 +50,6 @@ static void mbcsToSbcs(char *in, char *out, char *encoding);
 extern int errno;
 #endif
 
-
 #define INVALID_COL 0xff0a0b0c
 
 /* Define this to use hyphen except in -[0-9] */
@@ -397,10 +396,11 @@ static int GetCIDCharInfo(char *buf, CIDFontMetricInfo *cidmetrics)
     cidmetrics->CharInfo[nchar].WX = WX;
     p = SkipToNextKey(p);
 
-    if (!MatchKey(p, "N ")) return 0;
-    p = SkipToNextItem(p);
-    sscanf(p, "%s", charname);
-    p = SkipToNextKey(p);
+    if (MatchKey(p, "N ")) { /* name is optional */
+	p = SkipToNextItem(p);
+	sscanf(p, "%s", charname);
+	p = SkipToNextKey(p);
+    }
 
     if (!MatchKey(p, "B ")) return 0;
     p = SkipToNextItem(p);
@@ -1385,7 +1385,7 @@ PostScriptStringWidth(unsigned char *str,
 	     font = fontlist->cidfamily;
 	 fontlist = fontlist->next;
      }
- #ifdef PS_DEBUG
+ #ifdef DEBUG_PS
      if(found)
 	 Rprintf("findDefaultLoadedCIDFont found = %s\n",family);
  #endif
@@ -1650,7 +1650,7 @@ PostScriptStringWidth(unsigned char *str,
 	     if (!PostScriptLoadCIDFontMetrics(CIDResource[family_id].cidafmfile[i],
 					       &(fontfamily->cidfonts[i]->cidmetrics),
 					       fontfamily->cidfonts[i]->name)) {
-		 warning(_("cannot read CID %s family afm files"),
+		 warning(_("cannot read CID '%s' family afm files"),
 			 CIDResource[family_id].cidfamily );
 		 freeCIDFontFamily(fontfamily);
 		 fontfamily = NULL;
@@ -1724,7 +1724,7 @@ PostScriptStringWidth(unsigned char *str,
 						     */
 						    encoding->encnames,
 						    (i < 4)?1:0)) {
-			 warning(_("cannot read afm file %s"), afmpath);
+			 warning(_("cannot read afm file '%s'"), afmpath);
 			 freeFontFamily(fontfamily);
 			 fontfamily = NULL;
 			 break;
@@ -1790,7 +1790,7 @@ PostScriptStringWidth(unsigned char *str,
 						 */
 						encoding->encnames,
 						(i < 4)?1:0)) {
-		     warning(_("cannot read afm file %s"), afmpaths[i]);
+		     warning(_("cannot read afm file '%s'"), afmpaths[i]);
 		     freeFontFamily(fontfamily);
 		     fontfamily = NULL;
 		     break;
@@ -1839,8 +1839,8 @@ PostScriptStringWidth(unsigned char *str,
 	     fontfamily->cidfonts[i] = font;
 	     if (!PostScriptLoadCIDFontMetrics(CIDResource[family].cidafmfile[i],
 					       &(fontfamily->cidfonts[i]->cidmetrics),
-					       fontfamily->cidfonts[i]->name)){
-		 warning(_("cannot read afm file %s"),
+					       fontfamily->cidfonts[i]->name)) {
+		 warning(_("cannot read CID afm file '%s'"),
 			 CIDResource[family].cidafmfile[i]);
 		 freeCIDFontFamily(fontfamily);
 		 fontfamily = NULL;
@@ -1904,7 +1904,7 @@ static type1fontfamily addDefaultFontFromFamily(char *encpath, int family,
 						*/
 					       encoding->encnames,
 					       (i < 4)?1:0)) {
-		    warning(_("cannot read afm file %s"),
+		    warning(_("cannot read afm file '%s'"),
 			    Family[family].afmfile[i]);
 		    freeFontFamily(fontfamily);
 		    fontfamily = NULL;
