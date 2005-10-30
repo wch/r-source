@@ -121,9 +121,8 @@ static const struct {
     char const *psfontname ;
     char const *pdffontname ;
     char const *cmapname ;
-    char const *encoding ;
     char const *pdfresource ;
-}CIDResource [] = {
+} CIDResource [] = {
 /* ============================================================================
                                          Japan1
    ============================================================================ */
@@ -135,8 +134,7 @@ static const struct {
      },
      "HeiseiKakuGo-W5",
      "HeiseiKakuGo-W5-Acro",
-     "EUC-H",
-     "EUC-JP",
+     "UniJS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -160,8 +158,7 @@ static const struct {
      },
      "HeiseiMin-W3",
      "HeiseiMin-W3-Acro",
-     "EUC-H",
-     "EUC-JP",
+     "UniJS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -185,8 +182,7 @@ static const struct {
      },
      "GothicBBB-Medium",
      "GothicBBB-Medium",
-     "EUC-H",
-     "EUC-JP",
+     "UniJS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -210,8 +206,7 @@ static const struct {
      },
      "Ryumin-Light",
      "Ryumin-Light",
-     "EUC-H",
-     "EUC-JP",
+     "UniJIS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -239,7 +234,6 @@ static const struct {
      "Baekmuk-Batang",
      "HYGothic-Medium-Acro",
      "KSCms-UHC-H",
-     "CP949",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -264,8 +258,7 @@ static const struct {
      },
      "Batang-Regular",
      "HYGothic-Medium-Acro",
-     "KSCms-UHC-H",
-     "CP949",
+     "UniKS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -293,8 +286,7 @@ static const struct {
      },
      "MOESung-Regular",
      "MHei-Medium-Acro",
-     "B5pc-H",
-     "CP950",
+     "UniCNS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -321,8 +313,7 @@ static const struct {
      },
      "BousungEG-Light-GB",
      "STSong-Light-Acro",
-     "GBK-EUC-H",
-     "GBK",
+     "UniGB-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"

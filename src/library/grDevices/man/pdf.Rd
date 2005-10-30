@@ -104,7 +104,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   The \code{version} argument modifies the sort of PDF code that
   gets produced.  At the moment this only concerns the production of
   transparent output.  The version must be greater than 1.4 for
-  transparent output to be produced.  Specifying a lower version
+  transparent output to be produced, and at least 1.3 if CID fonts are
+  to be just.  Specifying a lower version
   number may be useful if you want to produce PDF output that can be
   viewed on older PDF viewers.
 
