@@ -7873,7 +7873,8 @@ globalenv    pos.to.env  unclass
 
 @noindent
 (where @emph{xxx} stands for almost 30 different notions, such as
-@code{function}, @code{vector}, @code{numeric}, and so forth).
+@code{function}, @code{vector}, @code{numeric}, and so forth, but not
+@code{is.loaded}).
 
 @item
 The programming and session management utilities
@@ -7910,9 +7911,9 @@ properly:
 @example
 @group
 :          ~          c           list        unlist
-call       as.call    expression  substitute
+call       as.call    expression  substitute  as.environment
 UseMethod  invisible
-.C         .Fortran   .Call
+.C         .Fortran   .Call       .External
 @end group
 @end example
 

@@ -38,9 +38,6 @@
 
 #include <stdlib.h>
 
-/* don't use X11 function prototypes (which tend to ...): */
-#define NeedFunctionPrototypes 0
-/* XFree 4.4.0 forgets to define this if NeedFunctionPrototypes=0 */
 #ifndef _Xconst
 #define _Xconst const
 #endif
@@ -49,6 +46,9 @@
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
 #include <X11/cursorfont.h>
+#include <X11/Intrinsic.h>
+
+
 
 #include "Defn.h"
 #include "Print.h"
@@ -1628,6 +1628,39 @@ void closewin(void)
     XCloseDisplay(iodisplay);
 }
 
+#define USE_Xt 1
+
+#ifdef USE_Xt
+#include <X11/StringDefs.h>
+#include <X11/Intrinsic.h>
+#include <X11/Shell.h>
+typedef struct gx_device_X_s {
+    Pixel background, foreground, borderColor;
+    Dimension borderWidth;
+    String geometry;
+} gx_device_X;
+
+/* (String) casts are here to suppress warnings about discarding `const' */
+#define RINIT(a,b,t,s,o,it,n)\
+  {(String)(a), (String)(b), (String)t, sizeof(s),\
+   XtOffsetOf(gx_device_X, o), (String)it, (n)}
+#define rpix(a,b,o,n)\
+  RINIT(a,b,XtRPixel,Pixel,o,XtRString,(XtPointer)(n))
+#define rdim(a,b,o,n)\
+  RINIT(a,b,XtRDimension,Dimension,o,XtRImmediate,(XtPointer)(n))
+#define rstr(a,b,o,n)\
+  RINIT(a,b,XtRString,String,o,XtRString,(char*)(n))
+
+static XtResource x_resources[] = {
+    rpix(XtNforeground, XtCForeground, foreground, "XtDefaultForeground"),
+    rpix(XtNbackground, XtCBackground, background, "XtDefaultBackground"),
+    rstr(XtNgeometry, XtCGeometry, geometry, NULL),
+};
+
+static const int x_resource_count = XtNumber(x_resources);
+static gx_device_X xdev;
+#endif
+
 static int R_X11Err(Display *dsp, XErrorEvent *event)
 {
     char buff[1000];
@@ -1771,7 +1804,7 @@ static Rboolean initwin(void) /* TRUE = Error */
     ioblack = BlackPixel(iodisplay, ioscreen);
 
 
-    hint=XAllocSizeHints();
+    hint = XAllocSizeHints();
 
     hint->x = 0;
     hint->y = 0;
@@ -1785,6 +1818,51 @@ static Rboolean initwin(void) /* TRUE = Error */
     */
     root = DefaultRootWindow(iodisplay);
 
+#ifdef USE_Xt
+    {
+	XtAppContext app_con;
+	Widget toplevel;
+	Display *xtdpy;
+        int zero = 0;
+
+	XtToolkitInitialize();
+	app_con = XtCreateApplicationContext();
+	/* XtAppSetFallbackResources(app_con, x_fallback_resources);*/
+	xtdpy = XtOpenDisplay(app_con, NULL, "r_dataentry", "R_dataentry",
+			      NULL, 0, &zero, NULL);
+	toplevel = XtAppCreateShell(NULL, "R_dataentry",
+				    applicationShellWidgetClass, 
+				    xtdpy, NULL, 0);
+	XtGetApplicationResources(toplevel, (XtPointer) &xdev,
+				  x_resources, 
+				  x_resource_count,
+				  NULL, 0);
+	XtDestroyWidget(toplevel);
+	XtCloseDisplay(xtdpy);
+	XtDestroyApplicationContext(app_con);
+	if (xdev.geometry != NULL) {
+	    char gstr[40];
+	    int bitmask;
+	    
+	    sprintf(gstr, "%dx%d+%d+%d", hint->width,
+		    hint->height, hint->x, hint->y);
+	    bitmask = XWMGeometry(iodisplay, DefaultScreen(iodisplay),
+				  xdev.geometry, gstr, 
+				  1,
+				  hint,
+				  &hint->x, &hint->y,
+				  &hint->width, &hint->height,
+				  &hint->win_gravity);
+	    
+	    if (bitmask & (XValue | YValue))
+		hint->flags |= USPosition;
+	    if (bitmask & (WidthValue | HeightValue)) 
+		hint->flags |= USSize;
+	}
+	ioblack = xdev.foreground;
+	iowhite = xdev.background;
+    }
+#endif
     if ((iowindow = XCreateSimpleWindow(
 	     iodisplay,
 	     root,
@@ -1877,8 +1955,7 @@ static Rboolean initwin(void) /* TRUE = Error */
 #endif
 	XSetFont(iodisplay, iogc, font_info->fid);
     XSetBackground(iodisplay, iogc, iowhite);
-    XSetForeground(iodisplay, iogc, BlackPixel(iodisplay,
-					       DefaultScreen(iodisplay)));
+    XSetForeground(iodisplay, iogc, ioblack);
     XSetLineAttributes(iodisplay, iogc, 1, LineSolid, CapRound, JoinRound);
 
     /*
@@ -1987,12 +2064,19 @@ static void drawline(int fromx, int fromy, int tox, int toy)
 static void drawrectangle(int xpos, int ypos, int width, int height,
 			  int lwd, int fore)
 {
+#ifdef USE_Xt
+    if (fore == 0)
+	XSetForeground(iodisplay, iogc, xdev.background);
+    else
+	XSetForeground(iodisplay, iogc, xdev.foreground);
+#else
     if (fore == 0)
 	XSetForeground(iodisplay, iogc, WhitePixel(iodisplay,
 						   DefaultScreen(iodisplay)));
     else
 	XSetForeground(iodisplay, iogc, BlackPixel(iodisplay,
 						   DefaultScreen(iodisplay)));
+#endif
     XSetLineAttributes(iodisplay, iogc, lwd, LineSolid, CapRound, JoinRound);
     XDrawRectangle(iodisplay, iowindow, iogc, xpos, ypos, width, height);
 }

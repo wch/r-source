@@ -180,15 +180,14 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
     ## handle family separately as length can be 1, 4, or 5
     if(!missing(family)) {
         if(length(family) == 4) {
-            family <- c(family, "sy______.afm")
+            family <- c(family, "Symbol.afm")
         } else {
             # If family has been defined as device-independent
             # R graphics family (i.e., it can be found in postscriptFonts)
             # then map to postscript font family
             if (length(family) == 1) {
                 psFamily <- postscriptFonts(family)[[1]]
-                if (!is.null(psFamily))
-                    family <- psFamily$family
+                if (!is.null(psFamily)) family <- psFamily$family
             }
         }
         old$family <- family
@@ -235,16 +234,18 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 			 reset = FALSE, assign.opt = FALSE)
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- guess_encoding()
+    ## handle family separately as length can be 1, 4, or 5
     if(!missing(family)) {
-        if (!is.character(family) || length(family) != 1)
-            stop("invalid 'family' argument")
+        if(length(family) == 4) {
+            family <- c(family, "Symbol.afm")
+        } else {
         # If family has been defined as device-independent
         # R graphics family (i.e., it can be found in postscriptFonts)
         # then map to postscript font family
-        else {
-            psFamily <- postscriptFonts(family)[[1]]
-            if (!is.null(psFamily))
-                family <- psFamily$family
+            if (length(family) == 1) {
+                psFamily <- postscriptFonts(family)[[1]]
+                if (!is.null(psFamily)) family <- psFamily$family
+            }
         }
         old$family <- family
     }
@@ -252,7 +253,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(is.null(old$cidfamily) || old$cidfamily  == "default")
         old$cidfamily <- guess_cidfamily()
     # Extract version
-    versions <- c("1.1", "1.2", "1.3", "1.4")
+    versions <- c("1.1", "1.2", "1.3", "1.4", "1.5", "1.6")
     if (version %in% versions)
         version <- as.integer(strsplit(version, "[.]")[[1]])
     else
@@ -317,7 +318,7 @@ checkPSFont <- function(font) {
         psFontError("font metric information")
         ## Add default symbol font metric if none provided
     if (length(font$metrics) == 4)
-        font$metrics <- c(font$metrics, "sy______.afm")
+        font$metrics <- c(font$metrics, "Symbol.afm")
     if (is.null(font$encoding) || !is.character(font$encoding))
         psFontError("font encoding")
     font
@@ -385,59 +386,57 @@ postscriptFont <- function(family, metrics, encoding="default") {
 
 postscriptFonts(# Default Serif font is Times
                 serif=postscriptFont("Times",
-                  c("tir_____.afm", "tib_____.afm",
-                    "tii_____.afm", "tibi____.afm",
-                    "sy______.afm")),
+                  c("Times-Roman.afm", "Times-Bold.afm",
+                    "Times-Italic.afm", "Times-BoldItalic.afm",
+                    "Symbol.afm")),
                 # Default Sans Serif font is Helvetica
                 sans=postscriptFont("Helvetica",
-                  c("hv______.afm", "hvb_____.afm",
-                    "hvo_____.afm", "hvbo____.afm",
-                    "sy______.afm")),
+                  c("Helvetica.afm", "Helvetica-Bold.afm",
+                    "Helvetica-Oblique.afm", "Helvetica-BoldOblique.afm",
+                    "Symbol.afm")),
                 # Default Monospace font is Courier
                 mono=postscriptFont("Courier",
-                  c("com_____.afm", "cob_____.afm",
-                    "coo_____.afm", "cobo____.afm",
-                    "sy______.afm")),
+                  c("Courier.afm", "Courier-Bold.afm",
+                    "Courier-Oblique.afm", "Courier-BoldOblique.afm",
+                    "Symbol.afm")),
                 # Default Symbol font is Symbol
                 symbol=postscriptFont("Symbol",
-                  c("sy______.afm", "sy______.afm",
-                    "sy______.afm", "sy______.afm",
-                    "sy______.afm"),
-                  encoding="AdobeSym.enc"),
+                  c("Symbol.afm", "Symbol.afm", "Symbol.afm", "Symbol.afm",
+                    "Symbol.afm"), encoding="AdobeSym.enc"),
                 # Remainder are standard Adobe fonts that
                 # should be present on PostScript devices
                 AvantGarde=postscriptFont("AvantGarde",
                   c("agw_____.afm", "agd_____.afm",
                     "agwo____.afm", "agdo____.afm",
-                    "sy______.afm")),
+                    "Symbol.afm")),
                 Bookman=postscriptFont("Bookman",
                   c("bkl_____.afm", "bkd_____.afm",
                     "bkli____.afm", "bkdi____.afm",
-                    "sy______.afm")),
+                    "Symbol.afm")),
                 Courier=postscriptFont("Courier",
-                  c("com_____.afm", "cob_____.afm",
-                    "coo_____.afm", "cobo____.afm",
-                    "sy______.afm")),
+                  c("Courier.afm", "Courier-Bold.afm",
+                    "Courier-Oblique.afm", "Courier-BoldOblique.afm",
+                    "Symbol.afm")),
                 Helvetica=postscriptFont("Helvetica",
-                  c("hv______.afm", "hvb_____.afm",
-                    "hvo_____.afm", "hvbo____.afm",
-                    "sy______.afm")),
+                  c("Helvetica.afm", "Helvetica-Bold.afm",
+                    "Helvetica-Oblique.afm", "Helvetica-BoldOblique.afm",
+                    "Symbol.afm")),
                 HelveticaNarrow=postscriptFont("Helvetica-Narrow",
                   c("hvn_____.afm", "hvnb____.afm",
                     "hvno____.afm", "hvnbo___.afm",
-                    "sy______.afm")),
+                    "Symbol.afm")),
                 NewCenturySchoolbook=postscriptFont("NewCenturySchoolbook",
                   c("ncr_____.afm", "ncb_____.afm",
                     "nci_____.afm", "ncbi____.afm",
-                    "sy______.afm")),
+                    "Symbol.afm")),
                 Palatino=postscriptFont("Palatino",
                   c("por_____.afm", "pob_____.afm",
                     "poi_____.afm", "pobi____.afm",
-                    "sy______.afm")),
+                    "Symbol.afm")),
                 Times=postscriptFont("Times",
-                  c("tir_____.afm", "tib_____.afm",
-                    "tii_____.afm", "tibi____.afm",
-                    "sy______.afm")),
+                  c("Times-Roman.afm", "Times-Bold.afm",
+                    "Times-Italic.afm", "Times-BoldItalic.afm",
+                    "Symbol.afm")),
                 # URW equivalents
                 URWGothic=postscriptFont("URWGothic",
                   c("a010013l.afm", "a010015l.afm",
@@ -483,8 +482,9 @@ postscriptFonts(# Default Serif font is Times
                 ComputerModern=postscriptFont("ComputerModern",
                   c("CM_regular_10.afm", "CM_boldx_10.afm",
                     "CM_italic_10.afm", "CM_boldx_italic_10.afm",
-                    "CM_symbol_10.afm")),
+                    "CM_symbol_10.afm"), encoding = "TeXtext.enc"),
                  ComputerModernItalic=postscriptFont("ComputerModernItalic",
-                  c("CM_regular_10.afm", "CM_boldx_10.afm",
-                    "cmti10.afm", "cmbxti10.afm", "CM_symbol_10.afm"))
+                  c("CM_regular_10.afm", "CM_boldx_10.afm", "cmti10.afm",
+                    "cmbxti10.afm", "CM_symbol_10.afm"),
+                 encoding = "TeXtext.enc")
                )

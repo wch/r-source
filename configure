@@ -36704,7 +36704,7 @@ fi
 			# standard X11 search macro
 if test -z "${no_x}"; then
   ## We force the use of -lX11 (perhaps this is not necessary?).
-  X_LIBS="${X_LIBS} -lX11"
+  X_LIBS="${X_LIBS} -lX11 -lXt"
   use_X11="yes"
 
 cat >>confdefs.h <<\_ACEOF

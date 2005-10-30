@@ -66,7 +66,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
     \file{"ISOLatin1.enc"} unless the locale is recognized as using
-    ISO 8859-{5,7,13,15} or KOI8-{R,U},
+    corresponding to a language using ISO 8859-{5,7,13,15} or KOI8-{R,U},
 #endif
 #ifdef windows
     \file{"CP1250.enc"} (East European), \code{"CP1251.enc"} (Cyrillic),
@@ -77,10 +77,6 @@ ps.options(paper, horizontal, width, height, family, encoding,
     in the \file{enc} directory of package \pkg{grDevices}, which is used
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.
-#ifdef unix
-    In a UTF-8 locale only \code{"ISOLatin1.enc"} is allowed without
-    \code{\link{capabilities}("iconv")}.
-#endif
   }
   \item{cidfamily}{the default East Asian locale set: known values are
     \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} (simplified Chinese)
@@ -170,8 +166,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   via \code{family}.  If other fonts are to be used when drawing to
   the PostScript device, these must be declared when the
   device is created via \code{fonts};  the font family names for this
-  argument are device-independent R graphics font family names (see the
-  documentation for \code{postscriptFonts}).
+  argument are device-independent \R graphics font family names (see the
+  documentation for \code{\link{postscriptFonts}}).
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."} with
@@ -187,12 +183,12 @@ ps.options(paper, horizontal, width, height, family, encoding,
   a font database (see \code{postscriptFonts}).  
   
   The argument \code{family} specifies the initial/default font family
-  to be used. In normal use it is one of \code{"AvantGarde"},
+  to be used.  In normal use it is one of \code{"AvantGarde"},
   \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
   \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
   \code{"Palatino"} or \code{"Times"}, and refers to the standard Adobe
-  PostScript fonts of those names which are included (or cloned) in all
-  common PostScript devices.
+  PostScript fonts families of those names which are included (or
+  cloned) in all common PostScript devices.
 
   Many PostScript emulators (including those based on
   \code{ghostscript}) use the URW equivalents of these fonts, which are
@@ -211,8 +207,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   taken to refer to files in directory \file{afm} of package
   \pkg{grDevices}. Thus the default Helvetica family can be specified by
   \code{family =
-    c("hv______.afm",
-    "hvb_____.afm", "hvo_____.afm", "hvbo____.afm", "sy______.afm")}.
+    c("Helvetica.afm", "Helvetica-Bold.afm", "Helvetica-Oblique.afm",
+    "Helvetica-BoldOblique.afm", "Symbol.afm")}.
   It is the user's responsibility to check that suitable fonts are made
   available, and that they contain the needed characters when
   re-encoded.  The fontnames used are taken from the \code{FontName}
@@ -263,9 +259,11 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \code{"KOI8-U.enc"}, \code{"CP1251.enc"}, \code{"Greek.enc"} (ISO
   8859-7), \code{"CP1253.enc"}, and \code{"TeXtext"} for the 7-bit TeX
   encoding.  Note that many glyphs in these encodings are not in the
-  fonts corresponding to the standard families: the Adobe ones cover
-  little more than Latin-1, whereas the URW ones also cover Latin-2,
-  Latin-7, Latin-9 and Cyrillic but no Greek.
+  fonts corresponding to the standard families.  The Adobe ones for
+  all but Courier, Helvetica and Times cover little more than Latin-1,
+  whereas the URW ones also cover Latin-2, Latin-7, Latin-9 and Cyrillic
+  but no Greek.  (The Adobe exceptions cover the Latin character sets,
+  but not the Euro.)
 
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro

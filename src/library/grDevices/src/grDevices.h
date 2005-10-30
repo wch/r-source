@@ -49,7 +49,7 @@ PSDeviceDriver(NewDevDesc*, char*, char*, char*, char**,
 	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP);
 
 Rboolean
-PDFDeviceDriver(NewDevDesc*, char *, char *, char *, char *, 
+PDFDeviceDriver(NewDevDesc*, char *, char *, char *, char**, char *, 
 		char *, char *, char *, double, double, double,
 		int, int, char*, SEXP, int, int);
 

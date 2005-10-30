@@ -79,42 +79,42 @@ Family [] = {
 
     { "AvantGarde",
       {"agw_____.afm", "agd_____.afm", "agwo____.afm", "agdo____.afm",
-       "sy______.afm"}
+       "Symbol.afm"}
     },
 
     { "Bookman",
       {"bkl_____.afm", "bkd_____.afm", "bkli____.afm", "bkdi____.afm",
-       "sy______.afm"}
+       "Symbol.afm"}
     },
 
     { "Courier",
-      {"com_____.afm", "cob_____.afm", "coo_____.afm", "cobo____.afm",
-       "sy______.afm"}
+      {"Courier.afm", "Courier-Bold.afm", "Courier-Oblique.afm", 
+       "Courier-BoldOblique.afm", "Symbol.afm"}
     },
 
     { "Helvetica",
-      {"hv______.afm", "hvb_____.afm", "hvo_____.afm", "hvbo____.afm",
-       "sy______.afm"}
+      {"Helvetica.afm", "Helvetica-Bold.afm", "Helvetica-Oblique.afm", 
+       "Helvetica-BoldOblique.afm", "Symbol.afm"}
     },
 
     { "Helvetica-Narrow",
       {"hvn_____.afm", "hvnb____.afm", "hvno____.afm", "hvnbo___.afm",
-       "sy______.afm"}
+       "Symbol.afm"}
     },
 
     { "NewCenturySchoolbook",
       {"ncr_____.afm", "ncb_____.afm", "nci_____.afm", "ncbi____.afm",
-       "sy______.afm"}
+       "Symbol.afm"}
     },
 
     { "Palatino",
       {"por_____.afm", "pob_____.afm", "poi_____.afm", "pobi____.afm",
-       "sy______.afm"}
+       "Symbol.afm"}
     },
 
     { "Times",
-      {"tir_____.afm", "tib_____.afm", "tii_____.afm", "tibi____.afm",
-       "sy______.afm"}
+      {"Times-Roman.afm", "Times-Bold.afm", "Times-Italic.afm", 
+       "Times-BoldItalic.afm", "Symbol.afm"}
     },
 
     /* URW equivalents */
@@ -256,6 +256,9 @@ enum {
     CC,
     EndComposites,
     EndFontMetrics,
+    StdHW,
+    StdVW,
+    CharacterSet,
     Unknown
 };
 
@@ -295,6 +298,9 @@ KeyWordDictionary[] = {
     { "CC ",		     CC },
     { "EndComposites",	     EndComposites },
     { "EndFontMetrics",	     EndFontMetrics },
+    { "StdHW",		     StdHW },
+    { "StdVW",		     StdVW },
+    {"CharacterSet",	     CharacterSet},
     { NULL,		     Unknown },
 };
 
@@ -313,6 +319,7 @@ static int KeyType(const char * const s)
     for (i = 0; KeyWordDictionary[i].keyword; i++)
 	if (MatchKey(s, KeyWordDictionary[i].keyword))
 	    return KeyWordDictionary[i].code;
+    printf("Unknown %s\n", s);
     return Unknown;
 }
 
@@ -4674,7 +4681,7 @@ static Rboolean addPDFfont(type1fontfamily family,
 
 Rboolean
 PDFDeviceDriver(NewDevDesc* dd, char *file, char *paper,
-		char *family, char *encoding,
+		char *family, char **afmpaths, char *encoding,
 		char *cidfamily,
 		char *bg, char *fg, double width, double height,
 		double ps, int onefile, int pagecentre, 
@@ -4759,8 +4766,12 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *paper,
     strcpy(pd->cidfamilyname, cidfamily);
 
     gotFont = 0;
-    if (!(font = findDefaultLoadedFont(encoding, family, 0))) {
-	font = addDefaultFontFromFamily(encoding, MatchFamily(family), 0);
+    if (!strcmp(family, "User")) {
+	font = addDefaultFontFromAFMs(encoding, afmpaths, 0);
+    } else { 
+	if (!(font = findDefaultLoadedFont(encoding, family, 0))) {
+	    font = addDefaultFontFromFamily(encoding, MatchFamily(family), 0);
+	}
     }
     if (font)
 	addPDFfont(font, pd, &gotFont);
@@ -6384,16 +6395,25 @@ SEXP PDF(SEXP args)
     NewDevDesc *dev = NULL;
     GEDevDesc *dd;
     char *vmax;
-    char *file, *paper, *encoding, *cidfamily, *family, *bg, *fg, *title, call[] = "PDF";
+    char *file, *paper, *encoding, *cidfamily, *family = NULL /* -Wall */, 
+	*bg, *fg, *title, call[] = "PDF", *afms[5];
     double height, width, ps;
-    int onefile, pagecentre, major, minor;
-    SEXP fonts;
+    int i, onefile, pagecentre, major, minor;
+    SEXP fam, fonts;
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
     file = CHAR(asChar(CAR(args)));  args = CDR(args);
     paper = CHAR(asChar(CAR(args))); args = CDR(args);    
-    family = CHAR(asChar(CAR(args)));  args = CDR(args);
+    fam = CAR(args); args = CDR(args);
+    if(length(fam) == 1) 
+	family = CHAR(asChar(fam));
+    else if(length(fam) == 5) {
+	if(!isString(fam)) error(_("invalid 'family' parameter in %s"), call);
+	family = "User";
+	for(i = 0; i < 5; i++) afms[i] = CHAR(STRING_ELT(fam, i));
+    } else 
+	error(_("invalid 'family' parameter in %s"), call);
     encoding = CHAR(asChar(CAR(args)));  args = CDR(args);
     cidfamily = CHAR(asChar(CAR(args)));  args = CDR(args);
     bg = CHAR(asChar(CAR(args)));    args = CDR(args);
@@ -6420,8 +6440,8 @@ SEXP PDF(SEXP args)
 	 * This (and displayList) get protected during GC
 	 */
 	dev->savedSnapshot = R_NilValue;
-	if(!PDFDeviceDriver(dev, file, paper, family, encoding, cidfamily,
-			    bg, fg, 
+	if(!PDFDeviceDriver(dev, file, paper, family, afms, encoding, 
+			    cidfamily, bg, fg, 
 			    width, height, ps, onefile, pagecentre,
 			    title, fonts, major, minor)) {
 	    /* free(dev); PDFDeviceDriver now frees */

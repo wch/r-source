@@ -612,7 +612,7 @@ FUNTAB R_FunTab[] =
 {"split",	do_split,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"symbol.C",	do_symbol,	0,	1,	1,	{PP_FOREIGN, PREC_FN,	0}},
 {"symbol.For",	do_symbol,	1,	1,	1,	{PP_FOREIGN, PREC_FN,	0}},
-{"is.loaded",	do_isloaded,	0,	1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
+{"is.loaded",	do_isloaded,	0,	11,	-1,	{PP_FOREIGN, PREC_FN,	0}},
 {".C",		do_dotCode,	0,	1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
 {".Fortran",	do_dotCode,	1,	1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
 {".External",   do_External,    0,      1,      -1,     {PP_FOREIGN, PREC_FN,	0}},
@@ -737,7 +737,7 @@ FUNTAB R_FunTab[] =
 /* Device Drivers */
 
 #ifdef Unix
-{"X11",		do_X11,		0,	111,	11,	{PP_FUNCALL, PREC_FN,	0}},
+{"X11",		do_X11,		0,	111,	13,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 
 /* Graphics */
@@ -830,7 +830,7 @@ FUNTAB R_FunTab[] =
 {"as.POSIXct",	do_asPOSIXct,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"as.POSIXlt",	do_asPOSIXlt,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"format.POSIXlt",do_formatPOSIXlt,0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"strptime",	do_strptime,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"strptime",	do_strptime,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"Date2POSIXlt",do_D2POSIXlt,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"POSIXlt2Date",do_POSIXlt2D,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 

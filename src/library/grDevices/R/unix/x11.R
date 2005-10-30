@@ -3,18 +3,43 @@
 .X11env <- new.env()
 
 X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
-                gamma = 1, colortype = getOption("X11colortype"),
+                gamma = getOption("gamma"),
+                colortype = getOption("X11colortype"),
                 maxcubesize = 256, bg = "transparent", canvas = "white",
-                fonts = getOption("X11fonts"))
+                fonts = getOption("X11fonts"), xpos = NA, ypos = NA)
 {
 
   if(display == "" && .Platform$GUI == "AQUA" && Sys.getenv("DISPLAY") == "")
       Sys.putenv(DISPLAY = ":0")
-  .Internal(X11(display, width, height, pointsize, gamma, colortype,
-                maxcubesize, bg, canvas, fonts, NA))
+  ## we need to know internally if the user has overridden X11 resources
+  if(missing(width)) width <- as.double(NA)
+  if(missing(height)) height <- as.double(NA)
+  .Internal(X11(display, width, height, pointsize,
+                if(is.null(gamma)) 1 else gamma, colortype,
+                maxcubesize, bg, canvas, fonts, NA, xpos, ypos))
 }
 
 x11 <- X11
+
+
+png <- function(filename = "Rplot%03d.png",
+                width=480, height=480, pointsize=12,
+                gamma = 1, colortype = getOption("X11colortype"),
+                maxcubesize = 256, bg = "white",
+                fonts = getOption("X11fonts"), res = NA)
+    .Internal(X11(paste("png::", filename, sep=""),
+                  width, height, pointsize, gamma,
+                  colortype, maxcubesize, bg, bg, fonts, res, 0, 0))
+
+jpeg <- function(filename = "Rplot%03d.jpeg",
+                 width=480, height=480, pointsize=12,
+                 quality = 75,
+                 gamma = 1, colortype = getOption("X11colortype"),
+                 maxcubesize = 256, bg = "white",
+                 fonts = getOption("X11fonts"), res = NA)
+    .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
+                  width, height, pointsize, gamma,
+                  colortype, maxcubesize, bg, bg, fonts, res, 0, 0))
 
 ####################
 # X11 font database

@@ -31,6 +31,18 @@
        CNS1             MOESung-Regular         MHei-Medium-Acro
        GB1              BousungEG-Light-GB      STSong-Light-Acro
 
+       [BDR comment, Adobe's UNIX fonts packs have
+       chsfont.tar.gz has STSongStd-Light-Acro.otf
+       chtfont.tar.gz has MSungStd-Light-Acro.otf
+       jpnfont.tar.gz  has KozMinPro-Regular-Acro.otf
+       korfont.tar.gz has HYSMyeongJoStd-Medium-Acro.otf
+       and Windows versions have
+       AdobeMingStd-Light.otf
+       AdobeMyungjoStd-Medium.otf
+       AdobeSongStd-Light.otf
+       ]
+
+
        Debian
        ------------------
        font not found case.
@@ -281,7 +293,7 @@ static const struct {
      },
      "MOESung-Regular",
      "MHei-Medium-Acro",
-     "B5-H",
+     "B5pc-H",
      "CP950",
      "      /FontDescriptor\n"
      "      <<\n"

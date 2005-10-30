@@ -183,7 +183,7 @@ extern OSDynSymbol Rf_osDynSymbol, *R_osDynSymbol;
    */
 typedef struct {
     char pkg[21];
-    char name[21];
+    char name[41];
     DL_FUNC func;
 } R_CPFun;
 

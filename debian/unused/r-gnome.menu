@@ -1,4 +1,0 @@
-?package(r-gnome):needs="x11"	\
-	section="Apps/Math"	\
-	title="GNU R (Gnome)"	\
-	command="/usr/bin/R --gui=GNOME --no-save"

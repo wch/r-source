@@ -1,7 +1,7 @@
 \name{nchar}
 \title{Count the Number of Characters (Bytes)}
 \usage{
-nchar(x, type = c("bytes", "chars", "width"))
+nchar(x, type = "bytes")
 }
 \alias{nchar}
 \description{
@@ -12,7 +12,8 @@ nchar(x, type = c("bytes", "chars", "width"))
 \arguments{
   \item{x}{character vector, or a vector to be coerced to a character
     vector.}
-  \item{type}{character string: partial matching is allowed.  See Details.}
+  \item{type}{character string: partial matching to one of
+    \code{c("bytes", "chars", "width")}.  See Details.}
 }
 \details{
   The \sQuote{size} of a character string can be measured in one of

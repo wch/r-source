@@ -1683,7 +1683,7 @@ AC_DEFUN([R_X11],
 [AC_PATH_XTRA			# standard X11 search macro
 if test -z "${no_x}"; then
   ## We force the use of -lX11 (perhaps this is not necessary?).
-  X_LIBS="${X_LIBS} -lX11"
+  X_LIBS="${X_LIBS} -lX11 -lXt"
   use_X11="yes"
   AC_DEFINE(HAVE_X11, 1,
             [Define if you have the X11 headers and libraries, and want
