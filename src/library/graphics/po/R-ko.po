@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:55\n"
+"POT-Creation-Date: 2005-10-30 08:51\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -187,11 +187,11 @@ msgstr "'x'는 부적절한 구조를 가집니다"
 msgid "argument must be matrix-like"
 msgstr "인수는 행렬의 형태가 아니면 되지 않습니다"
 
+msgid "'x' and 'y' values must be finite and non-missing"
+msgstr ""
+
 msgid "'z' must be a matrix"
 msgstr "'z'는 행렬이 아니면 되지 않습니다"
-
-msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
-msgstr "z의 차원이 length(x)(+1) x length(y)(+1)가 아닙니다"
 
 msgid "invalid z limits"
 msgstr "무효인 z의 한계입니다"
@@ -201,6 +201,9 @@ msgstr "분할점의 수는 색의 수보다 하나가 많지 않으면 안됩�
 
 msgid "breaks must all be finite"
 msgstr "분할점은 모두 유한하지 않으면 되지 않습니다"
+
+msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
+msgstr "z의 차원이 length(x)(+1) x length(y)(+1)가 아닙니다"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""

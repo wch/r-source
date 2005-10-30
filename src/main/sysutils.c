@@ -462,7 +462,7 @@ void * Riconv_open (char* tocode, char* fromcode)
     else if(strcmp(fromcode, "") == 0) return iconv_open(tocode, cp);
     else return iconv_open(tocode, fromcode);
 #else
-    iconv_open(tocode, fromcode);
+    return iconv_open(tocode, fromcode);
 #endif
 }
 

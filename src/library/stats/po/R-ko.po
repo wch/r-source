@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:56\n"
+"POT-Creation-Date: 2005-10-30 08:52\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -105,6 +105,10 @@ msgstr "scope는 label항의 부분 집합이 아닙니다"
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "메소드 'drop1'는 mlm 모델에서 실제 적용되어 있지 않습니다"
+
+#, fuzzy
+msgid "F test assumes 'quasi%s' family"
+msgstr "F test는 동일한 %s패밀리입니다"
 
 msgid "lower scope is not included in model"
 msgstr "하위의 scpoe는 모델에서 포함하고 되지 않습니다"
@@ -1028,6 +1032,12 @@ msgstr "'anova.glm'에의 다음의 인수는 무효이고, 제거 되었습니�
 msgid ","
 msgstr ","
 
+msgid "using F test with a %s family is inappropriate"
+msgstr ""
+
+msgid "using F test with a fixed dispersion is inappropriate"
+msgstr ""
+
 msgid "models with response"
 msgstr "응답"
 
@@ -1036,6 +1046,9 @@ msgstr "응답이 모델 1과 다르므로 제거해졌습니다"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr "model는 모두 동일 사이즈의 데이터 세트에 적용시킬수 없습니다"
+
+msgid "using F test with a '%s' family is inappropriate"
+msgstr ""
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "중량감이 0의 관측값이 표준편차의 계산으로 사용되지 않습니다"

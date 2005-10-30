@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:55\n"
+"POT-Creation-Date: 2005-10-30 08:51\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -576,9 +576,6 @@ msgstr "リンクすべきファイルがありません"
 
 msgid "no files/directory to link to"
 msgstr "リンクすべきファイルもしくはディレクトリがありません"
-
-msgid "calling wrong method"
-msgstr "間違ったメソッドの呼出しです"
 
 msgid "'package' must be of length 1"
 msgstr "'package' は長さ 1 でなければなりません"
@@ -1348,6 +1345,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
 msgstr[1] "警告メッセージ(複数)：\n"
+
+#~ msgid "calling wrong method"
+#~ msgstr "間違ったメソッドの呼出しです"
 
 #~ msgid "format.char: coercing 'x' to 'character'"
 #~ msgstr "format.char: 'x' を強 'character' へ強制変換します"

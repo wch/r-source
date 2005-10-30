@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-07-13 11:08\n"
+"POT-Creation-Date: 2005-10-30 08:51\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -114,9 +114,6 @@ msgstr "opzioni non valide in"
 
 msgid "NOT changing"
 msgstr "NON cambio"
-
-msgid "invalid 'family' argument"
-msgstr "argomento 'family' non valido"
 
 msgid "invalid PDF version"
 msgstr "versione PDF non valida"
@@ -251,6 +248,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+
+#~ msgid "invalid 'family' argument"
+#~ msgstr "argomento 'family' non valido"
 
 #~ msgid "invalid arguments in"
 #~ msgstr "argomenti non validi in"

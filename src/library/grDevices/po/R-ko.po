@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-07-13 11:08\n"
+"POT-Creation-Date: 2005-10-30 08:51\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -112,9 +112,6 @@ msgstr "이하의 부적절한 옵션입니다"
 
 msgid "NOT changing"
 msgstr "변경하지 않습니다"
-
-msgid "invalid 'family' argument"
-msgstr "부적절한 'family' 인수입니다"
 
 msgid "invalid PDF version"
 msgstr "부적절한 PDF의 버전입니다"
@@ -245,3 +242,6 @@ msgstr[0] "%d개의 올바르지 않는 y의 값이 대수 plot로부터 제외�
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d개의 올바르지 않는 x의 값이 대수 plot로부터 제외해졌습니다"
+
+#~ msgid "invalid 'family' argument"
+#~ msgstr "부적절한 'family' 인수입니다"

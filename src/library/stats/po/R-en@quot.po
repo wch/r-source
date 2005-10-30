@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:56\n"
-"PO-Revision-Date: 2005-10-16 21:56\n"
+"POT-Creation-Date: 2005-10-30 08:52\n"
+"PO-Revision-Date: 2005-10-30 08:52\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -125,6 +125,9 @@ msgstr "scope is not a subset of term labels"
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "no ‘drop1’ method for “mlm” models"
+
+msgid "F test assumes 'quasi%s' family"
+msgstr "F test assumes ‘quasi%s’ family"
 
 msgid "lower scope is not included in model"
 msgstr "lower scope is not included in model"
@@ -1029,6 +1032,12 @@ msgstr "the following arguments to ‘anova.glm’ are invalid and dropped:"
 msgid ","
 msgstr ","
 
+msgid "using F test with a %s family is inappropriate"
+msgstr "using F test with a %s family is inappropriate"
+
+msgid "using F test with a fixed dispersion is inappropriate"
+msgstr "using F test with a fixed dispersion is inappropriate"
+
 msgid "models with response"
 msgstr "models with response"
 
@@ -1037,6 +1046,9 @@ msgstr "removed because response differs from model 1"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr "models were not all fitted to the same size of dataset"
+
+msgid "using F test with a '%s' family is inappropriate"
+msgstr "using F test with a ‘%s’ family is inappropriate"
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "observations with zero weight not used for calculating dispersion"

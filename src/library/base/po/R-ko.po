@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:55\n"
+"POT-Creation-Date: 2005-10-30 08:51\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -573,9 +573,6 @@ msgstr "link 해야할 파일이 없습니다"
 
 msgid "no files/directory to link to"
 msgstr "link 해야할 파일 또는 디렉토리가 없습니다"
-
-msgid "calling wrong method"
-msgstr "잘못된 메소드의 호출입니다"
 
 msgid "'package' must be of length 1"
 msgstr "'package'는 길이 1이 나오지 않으면 되지 않습니다"
@@ -1345,6 +1342,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "calling wrong method"
+#~ msgstr "잘못된 메소드의 호출입니다"
 
 #~ msgid "format.char: coercing 'x' to 'character'"
 #~ msgstr "format.char: 'x'를 'character' 로 강제 변환합니다"

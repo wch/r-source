@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:56\n"
+"POT-Creation-Date: 2005-10-30 08:52\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -108,6 +108,10 @@ msgstr "範疇不是项标记集的子集"
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "\"mlm\" 模型没有'drop1'方法"
+
+#, fuzzy
+msgid "F test assumes 'quasi%s' family"
+msgstr "F检验假設quasi%s家族"
 
 msgid "lower scope is not included in model"
 msgstr "模型里没有下範疇"
@@ -1006,6 +1010,12 @@ msgstr "以下'anova.glm'的变元不对因此略过不用:"
 msgid ","
 msgstr ","
 
+msgid "using F test with a %s family is inappropriate"
+msgstr ""
+
+msgid "using F test with a fixed dispersion is inappropriate"
+msgstr ""
+
 msgid "models with response"
 msgstr "模型带反应"
 
@@ -1014,6 +1024,9 @@ msgstr "被删除了，因为反应同模型1不相对"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr "模型拟合时没有用同样大小的数据集"
+
+msgid "using F test with a '%s' family is inappropriate"
+msgstr ""
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "计算离散度时0重量的观察量略过不用"

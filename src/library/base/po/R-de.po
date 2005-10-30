@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:55\n"
+"POT-Creation-Date: 2005-10-30 08:51\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -580,9 +580,6 @@ msgstr "keine Dateien, um davon zu linken"
 
 msgid "no files/directory to link to"
 msgstr "keine Dateien/Verzeichnis, um dorthin zu linken"
-
-msgid "calling wrong method"
-msgstr "falsche Methode aufgerufen"
 
 msgid "'package' must be of length 1"
 msgstr "'package' muss Länge 1 haben"
@@ -1332,6 +1329,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "calling wrong method"
+#~ msgstr "falsche Methode aufgerufen"
 
 #~ msgid "format.char: coercing 'x' to 'character'"
 #~ msgstr "format.char: wandle 'x' in 'character' um"
