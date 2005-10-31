@@ -727,15 +727,15 @@ Czech characters displayed correctly.
 
 In most cases they actually are, but by Windows.  Setting the locale or
 the @code{LANGUAGE} environment variable does not change the Windows
-setting of its `UI language'.  Under Windows XP there are three tabs on
-the @emph{Regional and Language Options} applet in the Control Panel.
-The first tab controls the locale, the second the UI and the third the
-fonts used for `non-Unicode' programs (but apparently also for Unicode
-ones in may cases): see Q3.3.
+setting of its `UI language'.  Under (international) Windows XP there
+are three tabs on the @emph{Regional and Language Options} applet in the
+Control Panel.  The first tab controls the locale, the second the UI and
+the third the fonts used for `non-Unicode' programs (but apparently also
+for Unicode ones in many cases): see Q3.3.
 
 If you have Windows running completely in say French or Chinese these
 settings are likely to be consistent.  However, if you try to run
-Windows in one language and R in another, you may find the way Windoes
+Windows in one language and R in another, you may find the way Windows
 handles internationalization slightly odd.
 
 @newchap{}
