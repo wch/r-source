@@ -32,8 +32,7 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 			 ann=par("ann"), axes=TRUE, frame.plot=axes,
 			 panel.first=NULL, panel.last=NULL,
 			 col=par("col"), bg=NA, pch=par("pch"),
-			 cex = 1, lty=par("lty"), lab=par("lab"),
-			 lwd=par("lwd"), asp=NA, ...)
+			 cex = 1, lty=par("lty"), lwd=par("lwd"), asp=NA, ...)
 {
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))

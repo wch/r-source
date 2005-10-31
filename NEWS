@@ -302,6 +302,9 @@ BUG FIXES
     o	example(points) omitted pch=0, although it was valid and
 	said in the text to be illustrated.
 
+    o	plot.default() had an unused 'lab' argument, thereby preventing
+	the 'lab' graphics parameter being passed through '...' .
+
 
 
 		CHANGES IN R VERSION 2.2.0
