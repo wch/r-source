@@ -33,7 +33,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 \seealso{
   \code{\link{col2rgb}} the \dQuote{inverse} for translating \R colors
   to RGB vectors;
-  \code{\link{rainbow}}, \code{\link{hsv}}, \code{\link{gray}}.
+  \code{\link{rainbow}}, \code{\link{hsv}}, \code{\link{hcl}}, \code{\link{gray}}.
 }
 \examples{
 rgb(0,1,0)

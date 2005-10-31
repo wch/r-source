@@ -51,9 +51,9 @@ cm.colors(n)
   in graphics functions or in \code{par}.
 }
 \seealso{
-  \code{\link{colors}}, \code{\link{palette}},  \code{\link{hsv}},
-  \code{\link{rgb}}, \code{\link{gray}} and \code{\link{col2rgb}} for
-  translating to RGB numbers.
+  \code{\link{colors}}, \code{\link{palette}}, \code{\link{hsv}},
+  \code{\link{hcl}}, \code{\link{rgb}}, \code{\link{gray}} and
+  \code{\link{col2rgb}} for translating to RGB numbers.
 }
 \examples{
 require(graphics)
