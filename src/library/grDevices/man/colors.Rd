@@ -23,7 +23,7 @@ colours()
 \seealso{
   \code{\link{palette}} for setting the \dQuote{palette} of colors for
   \code{par(col=}\emph{<num>}\code{)};
-  \code{\link{rgb}}, \code{\link{hsv}}, \code{\link{gray}};
+  \code{\link{rgb}}, \code{\link{hsv}}, \code{\link{hcl}}, \code{\link{gray}};
   \code{\link{rainbow}} for a nice example;
   and \code{\link{heat.colors}}, \code{\link{topo.colors}} for images.
 

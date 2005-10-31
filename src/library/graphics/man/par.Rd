@@ -114,28 +114,34 @@ par(\dots, no.readonly = FALSE)
   which are \emph{readonly}.
 
   \emph{\bold{R.O.}} indicates \emph{\bold{read-only arguments}}: These
-  may only be used in queries, i.e., they do \emph{not} set anything.
+  may only be used in queries, i.e., they do \emph{not} set anything,
+  and cannot be set.
 
-  All but these \emph{\bold{R.O.}} and the following
-  \emph{\bold{low-level parameters}} can be set as well in high-level and
-  mid-level plot functions, such as \code{\link{plot}},
-  \code{\link{points}}, \code{\link{lines}}, \code{\link{axis}},
-  \code{\link{title}}, \code{\link{text}}, \code{\link{mtext}}:
+  There are several parameters can only be set by a call to \code{par()}:
   \itemize{
     \item \code{"ask"}
     \item \code{"family"}, \code{"fig"}, \code{"fin"}
     \item \code{"lend"}, \code{"lheight"}, \code{"ljoin"}, \code{"lmitre"}
-    \item \code{"mai"}, \code{"mar"}, \code{"mex"}
-    \item \code{"mfrow"}, \code{"mfcol"}, \code{"mfg"}
+    \item \code{"mai"}, \code{"mar"}, \code{"mex"},
+    \code{"mfcol"}, \code{"mfrow"}, \code{"mfg"}
     \item \code{"new"}
     \item \code{"oma"}, \code{"omd"}, \code{"omi"}
     \item \code{"pin"}, \code{"plt"}, \code{"ps"}, \code{"pty"}
     \item \code{"usr"}
     \item \code{"xlog"}, \code{"ylog"}
   }
-  However, see the comments on \code{bg} and \code{cex}, which may be
-  taken as arguments to certain plot functions rather than as
-  graphical parameters.
+  The remaining parameters can also be set as arguments (often via
+  \code{\dots}) to high-level plot functions such as
+  \code{\link{plot.default}}, \code{\link{plot.window}},
+  \code{\link{points}}, \code{\link{lines}}, \code{\link{abline}},
+  \code{\link{axis}}, \code{\link{title}}, \code{\link{text}},
+  \code{\link{mtext}}, \code{\link{segments}}, \code{\link{symbols}},
+  \code{\link{arrows}}, \code{\link{polygon}}, \code{\link{rect}},
+  \code{\link{box}}, \code{\link{contour}}, \code{\link{filled.contour}}
+  and \code{\link{image}}.  Such settings will be active during the
+  execution of the function, only.  However, see the comments on
+  \code{bg} and \code{cex}, which may be taken as arguments to certain
+  plot functions rather than as graphical parameters.
 }
 
 \value{
@@ -230,8 +236,10 @@ par(\dots, no.readonly = FALSE)
       completely.}
     \item{\code{fg}}{The color to be used for the foreground of plots.
       This is the default color used for things like axes and boxes
-      around plots.  A description of how colors are specified is given
-      below.}
+      around plots.  When called from \code{par()} this also sets
+      parameter \code{col} to the same value.
+
+      A description of how colors are specified is given below.}
     \item{\code{fig}}{A numerical vector of the form \code{c(x1, x2, y1,
 	y2)} which gives the (NDC) coordinates of the figure region in
       the display region of the device. If you set this, unlike S, you
@@ -489,12 +497,13 @@ par(\dots, no.readonly = FALSE)
   \emph{transparent}, useful for filled areas (such as the background!),
   and just invisible for things like lines or text.
 
-  The functions \code{rgb}, \code{hsv}, \code{gray} and \code{rainbow}
+  The functions \code{\link{rgb}}, \code{\link{hsv}}, \code{\link{hcl}},
+  \code{\link{gray}} and \code{\link{rainbow}}
   provide additional ways of generating colors.}
 
 \section{Line Type Specification}{
   Line types can either be specified by giving an index into a small
-  built in table of line types (1 = solid, 2 = dashed, etc, see
+  built-in table of line types (1 = solid, 2 = dashed, etc, see
   \code{lty} above) or directly as the lengths of on/off stretches of
   line.  This is done with a string of an even number (up to eight)
   of characters, namely non-zero
@@ -528,8 +537,7 @@ par(\dots, no.readonly = FALSE)
 }
 \seealso{
   \code{\link{plot.default}} for some high-level plotting parameters;
-  \code{\link{colors}}, \code{\link{gray}}, \code{\link{rainbow}},
-  \code{\link{rgb}};
+  \code{\link{colors}};
   \code{\link{options}} for other setup parameters;
   graphic devices \code{\link{x11}}, \code{\link{postscript}} and
   setting up device regions by \code{\link{layout}} and
