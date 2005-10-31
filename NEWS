@@ -109,10 +109,13 @@ BUG FIXES
     o	Some replacement operations on data frames gave incorrect
 	answers, e.g. DF[3:4, "y"] if column "y" did not exist or was
 	a matrix.
-	
+
+    o	getGraphicsEvent() would cause memory corruption if passed an 
+    	empty prompt.
+
     o	qr() and chol() now pivot the colnames of the result when
-	pivoting is used.
-	
+	pivoting is used.  (PR#8258)
+
     o	example(points) omitted pch=0, although it was valid and
 	said in the text to be illustrated.
 
