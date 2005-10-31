@@ -135,8 +135,7 @@ INTERNATIONALIZATION
 	deficient OS-supplied ones.
 
    o	There is support for MBCS charsets in the pictex() graphics
-	device (provided there is iconv support), and rotated (by 90
-	degrees) text may work better.
+	device, and rotated (by 90 degrees) text may work better.
 
    o	The \u (and \U except on Windows) notation for characters which
 	is supported by the parser in all MBCS charsets is now always
@@ -164,7 +163,7 @@ INSTALLATION CHANGES
     o	In a MBCS locale, make check now translates the graphics
 	examples from Latin-1.  This ensures that they will work
 	correctly in UTF-8: it is possible that in other MBCS locales
-	they will fail (rather than work completely incorrectly).
+	they will now fail (rather than work completely incorrectly).
 
 
 BUG FIXES
@@ -293,13 +292,13 @@ BUG FIXES
     o	Some replacement operations on data frames gave incorrect
 	answers, e.g. DF[3:4, "y"] if column "y" did not exist or was
 	a matrix.
-	
+
     o	getGraphicsEvent() would cause memory corruption if passed an 
     	empty prompt.
-	
+
     o	qr() and chol() now pivot the colnames of the result when
-	pivoting is used.
-	
+	pivoting is used.  (PR#8258)
+
     o	example(points) omitted pch=0, although it was valid and
 	said in the text to be illustrated.
 
