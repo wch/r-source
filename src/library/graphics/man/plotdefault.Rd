@@ -11,7 +11,7 @@
      ann = par("ann"), axes = TRUE, frame.plot = axes,
      panel.first = NULL, panel.last = NULL,
      col = par("col"), bg = NA, pch = par("pch"),
-     cex = 1, lty = par("lty"), lab = par("lab"),
+     cex = 1, lty = par("lty"),
      lwd = par("lwd"), asp = NA, \dots)
 }
 \arguments{
@@ -65,8 +65,6 @@
     as a multiple of \code{\link{par}("cex")}.  \code{NULL} and \code{NA}
     are equivalent to \code{1.0}.}
   \item{lty}{the line type, see \code{\link{par}}.}
-  \item{lab}{the specification for the (approximate) numbers of tick
-    marks on the x and y axes, see \code{\link{par}}.}
   \item{lwd}{the line width, see \code{\link{par}}.}
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
   \item{\dots}{other graphical parameters as in \code{\link{par}}
