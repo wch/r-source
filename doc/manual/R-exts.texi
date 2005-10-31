@@ -7905,12 +7905,11 @@ dimnames    dimnames<-
 
 @item
 The following few @math{N}-argument functions are ``primitive'' for
-efficiency reasons.  Care is taken in order to treat named arguments
-properly:
+efficiency reasons:
 
 @example
 @group
-:          ~          c           list        unlist
+:          ~          c           list
 call       as.call    expression  substitute  as.environment
 UseMethod  invisible
 .C         .Fortran   .Call       .External
