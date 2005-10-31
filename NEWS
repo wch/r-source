@@ -141,7 +141,8 @@ INTERNATIONALIZATION
    o	The \u (and \U except on Windows) notation for characters which
 	is supported by the parser in all MBCS charsets is now always
 	interpreted as a Unicode point, even on platforms which do not
-	encode wchar_t in Unicode.
+	encode wchar_t in Unicode.  These are now a syntax error in
+	single-byte locales.
 
     o	The default encoding for postscript() and pdf() is chosen to
 	be suitable for the current locale, if that is a single-byte
