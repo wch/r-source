@@ -587,12 +587,12 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 
     xlim = CAR(args);
     if (!isNumeric(xlim) || LENGTH(xlim) != 2)
-	errorcall(call, _("invalid '%s' value"), "ylim");
+	errorcall(call, _("invalid '%s' value"), "xlim");
     args = CDR(args);
 
     ylim = CAR(args);
     if (!isNumeric(ylim) || LENGTH(ylim) != 2)
-	errorcall(call, _("invalid '%s' value"), "xlim");
+	errorcall(call, _("invalid '%s' value"), "ylim");
     args = CDR(args);
 
     logscale = FALSE;
@@ -656,7 +656,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	xdelta = fabs(xmax - xmin) / asp;
 	ydelta = fabs(ymax - ymin);
 	if(xdelta == 0.0 && ydelta == 0.0) {
-	    /* We really do mean zero: small non-zero values work
+	    /* We really do mean zero: small non-zero values work.
 	       Mimic the behaviour of GScale for the x axis. */
 	    xadd = yadd = ((xmin == 0.0) ? 1 : 0.4) * asp;
 	    xadd *= asp;
@@ -676,8 +676,10 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	GScale(xmin, xmax, 1, dd);
 	GScale(ymin, ymax, 2, dd);
     }
+    /* GScale set the [xy]axp parameters */
     GMapWin2Fig(dd);
     GRestorePars(dd);
+    /* This has now clobbered the Rf_ggptr settings for coord system */
     /* NOTE: the operation is only recorded if there was no "error" */
     if (GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);
@@ -1096,7 +1098,8 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Now we process all the remaining inline par values:
        we need to do it now as x/yaxp are retrieved next.
-       That will set Rf_gpptr, so we update that. */
+       That will set Rf_gpptr, so we update that first - do_plotwindow
+       clobbered the Rf_gpptr settings. */
     GSavePars(dd);
     Rf_gpptr(dd)->xaxp[0] = Rf_dpptr(dd)->xaxp[0];
     Rf_gpptr(dd)->xaxp[1] = Rf_dpptr(dd)->xaxp[1];
