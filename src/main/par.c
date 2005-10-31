@@ -154,7 +154,8 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
  *	this list is in \details{.} of ../library/base/man/par.Rd
  *	------------------------
  *	"ask",
- *	"fig", "fin",
+ *	"family", "fig", "fin",
+ *      "lend", lheight", "ljoin", "lmitre",
  *	"mai", "mar", "mex",
  *	"mfrow", "mfcol", "mfg",
  *	"new",
@@ -617,6 +618,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 	/*	naIntCheck(ix, what); */
 	R_DEV__(fg) = ix;
     }
+#if 0 /* warning removed in 2.3.0 */
     else if (streql(what, "asp")) {
 	/* this is not a parameter, but let it through as if it were */
     }
@@ -624,6 +626,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
     else warning(
 	_("parameter \"%s\" could not be set in high-level plot() function"),
 	what);
+#endif
 } /* Specify2 */
 
 
