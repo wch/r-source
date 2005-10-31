@@ -299,6 +299,9 @@ BUG FIXES
 	
     o	qr() and chol() now pivot the colnames of the result when
 	pivoting is used.
+	
+    o	example(points) omitted pch=0, although it was valid and
+	said in the text to be illustrated.
 
 
 
