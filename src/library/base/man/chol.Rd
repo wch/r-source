@@ -13,8 +13,8 @@ La.chol(x)
 \arguments{
   \item{x}{a real symmetric, positive-definite matrix}
   \item{pivot}{Should pivoting be used?}
-  \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
-    \R < 1.7.0)?}
+  \item{LINPACK}{logical. Should LINPACK be used in the non-pivoting
+    case (for compatibility with \R < 1.7.0)?}
 }
 \value{
   The upper triangular factor of the Choleski decomposition, i.e., the

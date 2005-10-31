@@ -165,7 +165,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 }
 \details{
   A field or line is \sQuote{blank} if it contains nothing (except
-  whitespace is no separator is specified) before a comment character or
+  whitespace if no separator is specified) before a comment character or
   the end of the field or line.
   
   If \code{row.names} is not specified and the header line has one less
