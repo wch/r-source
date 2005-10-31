@@ -620,7 +620,11 @@ PostScriptLoadCIDFontMetrics(const char * const fontpath,
     Rprintf("cidafmpath is %s\n", buf);
 #endif
 
-    if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) return 0;
+    if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) {
+	warning(_("afm file '%s' could not be opened"),
+		R_ExpandFileName(buf));
+	return 0;
+    }
 
     mode = 0;
     for (ii = 0; ii < 65536; ii++) {
@@ -640,13 +644,18 @@ PostScriptLoadCIDFontMetrics(const char * const fontpath,
 	    break;
 
 	case FontBBox:
-	    if (!GetCIDFontBBox(buf, cidmetrics)) goto pserror;
+	    if (!GetCIDFontBBox(buf, cidmetrics)) {
+		warning(_("FontBBox could not be parsed"));
+		goto pserror;
+	    }
 	    break;
 
 	case CH:
 	    if (mode != StartFontMetrics) goto pserror;
-	    if (!GetCIDCharInfo(buf, cidmetrics))
+	    if (!GetCIDCharInfo(buf, cidmetrics)) {
+		warning(_("CharInfo could not be parsed"));
 		goto pserror;
+	    }
 	    break;
 
 	case Unknown:
@@ -692,7 +701,11 @@ PostScriptLoadFontMetrics(const char * const fontpath,
     Rprintf("reencode is %d\n", reencode);
 #endif
 
-    if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) return 0;
+    if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) {
+	warning(_("afm file '%s' could not be opened"),
+		R_ExpandFileName(buf));
+	return 0;
+    }
 
     metrics->KernPairs = NULL;
     mode = 0;
@@ -713,13 +726,18 @@ PostScriptLoadFontMetrics(const char * const fontpath,
 	    break;
 
 	case FontBBox:
-	    if (!GetFontBBox(buf, metrics)) goto pserror;
+	    if (!GetFontBBox(buf, metrics)) {
+		warning(_("FontBBox could not be parsed"));		
+		goto pserror;
+	    }
 	    break;
 
 	case C:
 	    if (mode != StartFontMetrics) goto pserror;
-	    if (!GetCharInfo(buf, metrics, charnames, encnames, reencode))
+	    if (!GetCharInfo(buf, metrics, charnames, encnames, reencode)) {
+		warning(_("CharInfo could not be parsed"));
 		goto pserror;
+	    }
 	    break;
 
 	case StartKernData:
@@ -824,14 +842,14 @@ PostScriptStringWidth(unsigned char *str,
 		}
 		/* printf("width for U+%04x is %d\n", ucs2s[i], wx);*/
 		sum += wx;
-	     }
-	     return 0.001 * sum;
-	 } else {
+	    }
+	    return 0.001 * sum;
+	} else {
 	     warning(_("invalid string in '%s'"), "PostScriptStringWidth");
 	     return 0;
-	 }
-     } else
-	 if(utf8locale && !utf8strIsASCII((char *) str) &&
+	}
+    } else
+	if(utf8locale && !utf8strIsASCII((char *) str) &&
 	    /*
 	     * Every fifth font is a symbol font
 	     * See postscriptFonts()
@@ -842,32 +860,32 @@ PostScriptStringWidth(unsigned char *str,
 	     R_CheckStack();
 	     mbcsToSbcs((char *)str, buff, encoding);
 	     str1 = (unsigned char *)buff;
-	 }
+	}
  #endif
 
-     for (p = str1; *p; p++) {
- #ifdef USE_HYPHEN
-	 if (*p == '-' && !isdigit(p[1]))
-	     wx = metrics->CharInfo[(int)PS_hyphen].WX;
-	 else
- #endif
-	     wx = metrics->CharInfo[*p].WX;
-	 if(wx == NA_SHORT)
-	     warning(_("font width unknown for character 0x%x"), *p);
-	 else sum += wx;
+    for (p = str1; *p; p++) {
+#ifdef USE_HYPHEN
+	if (*p == '-' && !isdigit(p[1]))
+	    wx = metrics->CharInfo[(int)PS_hyphen].WX;
+	else
+#endif
+	    wx = metrics->CharInfo[*p].WX;
+	if(wx == NA_SHORT)
+	    warning(_("font width unknown for character 0x%x"), *p);
+	else sum += wx;
 
-	 /* check for kerning adjustment */
-	 p1 = p[0]; p2 = p[1];
-	 for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
-	     /* second test is a safety check: should all start with p1  */
-	     if(metrics->KernPairs[i].c2 == p2 &&
-		metrics->KernPairs[i].c1 == p1) {
-		 sum += metrics->KernPairs[i].kern;
-		 break;
-	     }
-     }
-     return 0.001 * sum;
- }
+	/* check for kerning adjustment */
+	p1 = p[0]; p2 = p[1];
+	for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
+	    /* second test is a safety check: should all start with p1  */
+	    if(metrics->KernPairs[i].c2 == p2 &&
+	       metrics->KernPairs[i].c1 == p1) {
+		sum += metrics->KernPairs[i].kern;
+		break;
+	    }
+    }
+    return 0.001 * sum;
+}
 
  /* <FIXME> use cidmetrics or metrics, not a mixture */
  static void
@@ -1650,7 +1668,7 @@ PostScriptStringWidth(unsigned char *str,
 	     if (!PostScriptLoadCIDFontMetrics(CIDResource[family_id].cidafmfile[i],
 					       &(fontfamily->cidfonts[i]->cidmetrics),
 					       fontfamily->cidfonts[i]->name)) {
-		 warning(_("cannot read CID '%s' family afm files"),
+		 warning(_("failed to load CID afm file '%s'"),
 			 CIDResource[family_id].cidfamily );
 		 freeCIDFontFamily(fontfamily);
 		 fontfamily = NULL;
@@ -1724,7 +1742,7 @@ PostScriptStringWidth(unsigned char *str,
 						     */
 						    encoding->encnames,
 						    (i < 4)?1:0)) {
-			 warning(_("cannot read afm file '%s'"), afmpath);
+			 warning(_("failed to load afm file '%s'"), afmpath);
 			 freeFontFamily(fontfamily);
 			 fontfamily = NULL;
 			 break;
@@ -1790,7 +1808,7 @@ PostScriptStringWidth(unsigned char *str,
 						 */
 						encoding->encnames,
 						(i < 4)?1:0)) {
-		     warning(_("cannot read afm file '%s'"), afmpaths[i]);
+		     warning(_("failed to load afm file '%s'"), afmpaths[i]);
 		     freeFontFamily(fontfamily);
 		     fontfamily = NULL;
 		     break;
@@ -1840,7 +1858,7 @@ PostScriptStringWidth(unsigned char *str,
 	     if (!PostScriptLoadCIDFontMetrics(CIDResource[family].cidafmfile[i],
 					       &(fontfamily->cidfonts[i]->cidmetrics),
 					       fontfamily->cidfonts[i]->name)) {
-		 warning(_("cannot read CID afm file '%s'"),
+		 warning(_("failed to load CID afm file '%s'"),
 			 CIDResource[family].cidafmfile[i]);
 		 freeCIDFontFamily(fontfamily);
 		 fontfamily = NULL;
@@ -1904,7 +1922,7 @@ static type1fontfamily addDefaultFontFromFamily(char *encpath, int family,
 						*/
 					       encoding->encnames,
 					       (i < 4)?1:0)) {
-		    warning(_("cannot read afm file '%s'"),
+		    warning(_("failed to load afm file '%s'"),
 			    Family[family].afmfile[i]);
 		    freeFontFamily(fontfamily);
 		    fontfamily = NULL;

@@ -3837,6 +3837,30 @@ dimnames(x) <- list(c("a", NA), c("a", NA))
 diag(x)
 
 
+## colnames in pivoted decompositions (PR#8258)
+A <- 1:10
+X <- cbind(A,B=A^2, C=A^2-A, D=1)
+qrX <- qr(X)
+oo <- order(qrX$pivot)
+Q <- qr.Q(qrX)
+R <- qr.R(qrX)
+(z <- (Q%*%R)[,oo])
+stopifnot(identical(colnames(X), colnames(z)))
+
+qrX <- qr(X, LAPACK=TRUE)
+oo <- order(qrX$pivot)
+Q <- qr.Q(qrX)
+R <- qr.R(qrX)
+(z <- (Q%*%R)[,oo])
+stopifnot(identical(colnames(X), colnames(z)))
+
+Y <- crossprod(X)
+U <- chol(Y, pivot=TRUE)
+oo <- order(attr(U, "pivot"))
+(z <- t(U[,oo])%*% U[,oo])
+stopifnot(identical(colnames(X), colnames(z)))
+## unpivoted colnames in R <= 2.2.0
+
 ### end of tests added in 2.2.1 ###
 
 

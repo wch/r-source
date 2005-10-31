@@ -295,6 +295,9 @@ BUG FIXES
 	
     o	getGraphicsEvent() would cause memory corruption if passed an 
     	empty prompt.
+	
+    o	qr() and chol() now pivot the colnames of the result when
+	pivoting is used.
 
 
 
