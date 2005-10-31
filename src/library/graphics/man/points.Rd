@@ -102,11 +102,11 @@ par(op)
 
 ##-------- Showing all the extra & some char graphics symbols ------------
 Pex <- 3 ## good for both .Device=="postscript" and "x11"
-ipch <- 1:(np <- 25+11); k <- floor(sqrt(np)); dd <- c(-1,1)/2
-rx <- dd + range(ix <- (ipch-1) \%/\% k)
-ry <- dd + range(iy <- 3 + (k-1)-(ipch-1) \%\% k)
+ipch <- 0:35; np <- length(ipch); k <- floor(sqrt(np)); dd <- c(-1,1)/2
+rx <- dd + range(ix <- ipch \%/\% k)
+ry <- dd + range(iy <- 3 + (k-1)- ipch \%\% k)
 pch <- as.list(ipch)
-pch[25+ 1:11] <- as.list(c("*",".", "o","O","0","+","-",":","|","\%","#"))
+pch[26+ 1:10] <- as.list(c("*",".", "o","O","0","+","-","|","\%","#"))
 plot(rx, ry, type="n", axes = FALSE, xlab = "", ylab = "",
      main = paste("plot symbols :  points (...  pch = *, cex =", Pex,")"))
 abline(v = ix, h = iy, col = "lightgray", lty = "dotted")

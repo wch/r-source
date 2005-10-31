@@ -170,8 +170,9 @@ par(\dots, no.readonly = FALSE)
       allows \code{adj = c(x, y)} for different adjustment in x- and y-
       direction.}
     \item{\code{ann}}{If set to \code{FALSE}, high-level plotting
-      functions do not annotate the plots they produce with axis and
-      overall titles.  The default is to do annotation.}
+      functions calling \code{\link{plot.default}} do not annotate the
+      plots they produce with axis titles and overall titles.  The
+      default is to do annotation.}
     \item{\code{ask}}{logical.  If \code{TRUE}, the user is asked for
       input, before a new figure is drawn.}
     \item{\code{bg}}{The color to be used for the background of plots.
@@ -180,7 +181,7 @@ par(\dots, no.readonly = FALSE)
       \code{\link{plot.default}} and \code{\link{points}} have an
       \emph{argument} of this name with a different meaning.}
     \item{\code{bty}}{A character string which determined the type of
-      box which is drawn about plots.  If \code{bty} is one of
+      \code{\link{box}} which is drawn about plots.  If \code{bty} is one of
       \code{"o"}, \code{"l"}, \code{"7"}, \code{"c"}, \code{"u"}, or
       \code{"]"} the resulting box resembles the corresponding upper
       case letter.  A value of \code{"n"} suppresses the box.}
@@ -383,7 +384,10 @@ par(\dots, no.readonly = FALSE)
     \item{\code{plt}}{A vector of the form \code{c(x1, x2, y1, y2)}
       giving the coordinates of the plot region as fractions of the
       current figure region.}
-    \item{\code{ps}}{integer; the pointsize of text and symbols.}
+    \item{\code{ps}}{integer; the pointsize of text (but not symbols).  Unlike
+      the \code{pointsize} argument of most devices, this does not change
+      the relationship between \code{mar} and \code{mai} (nor \code{oma}
+      and \code{omi}), but it does scale \code{cin} and \code{csi}.}
     \item{\code{pty}}{A character specifying the type of plot region to
       be used; \code{"s"} generates a square plotting region and
       \code{"m"} generates the maximal plotting region.}
@@ -398,15 +402,18 @@ par(\dots, no.readonly = FALSE)
       smaller of the width or height of the plotting region.
       If \code{tck >= 0.5} it is interpreted as a fraction of the
       relevant side, so if
-      \code{tck=1} grid lines are drawn.  The default setting
+      \code{tck = 1} grid lines are drawn.  The default setting
       (\code{tck = NA}) is to use \code{tcl = -0.5} (see below).}
     \item{\code{tcl}}{The length of tick marks as a fraction of the
       height of a line of text.  The default value is \code{-0.5};
       setting \code{tcl = NA} sets \code{tck = -0.01} which is S' default.}
     \item{\code{tmag}}{A number specifying the enlargement of text of
-      the main title relative to the other annotating text of the plot.}
+      the main title relative to the other annotating text of the plot.
+      Defaults to 1.2.}
     \item{\code{type}}{character;  the default plot type desired, see
-      \code{\link{plot.default}(type=\dots)}, defaulting to \code{"p"}.}
+      \code{\link{plot.default}(type=\dots)}, defaulting to \code{"p"}.
+      \strong{NB:} This is currently used -- the default for
+      \code{\link{plot.default}} does not depend on this par.}
     \item{\code{usr}}{A vector of the form \code{c(x1, x2, y1, y2)}
       giving the extremes of the user coordinates of the plotting
       region.  When a logarithmic scale is in use (i.e.,
@@ -461,7 +468,7 @@ par(\dots, no.readonly = FALSE)
       plotted.  The standard value is \code{"s"}: for compatibility with
       S values \code{"l"} and \code{"e"} are accepted but are equivalent
       to \code{"s"}.}
-    \item{\code{xlog}}{logical value (see \code{log} in
+    \item{\code{xlog}}{A logical value (see \code{log} in
       \code{\link{plot.default}}).  If \code{TRUE}, a logarithmic scale
       is in use (e.g., after \code{plot(*, log = "x")}).
       For a new device, it defaults to \code{FALSE}, i.e., linear scale.}
@@ -477,7 +484,7 @@ par(\dots, no.readonly = FALSE)
       for the y-axis.  See \code{xaxs} above.}
     \item{\code{yaxt}}{A character which specifies the axis type.
       Specifying \code{"n"} causes an axis to be set up, but not plotted.}
-    \item{\code{ylog}}{a logical value; see \code{xlog} above.}
+    \item{\code{ylog}}{A logical value; see \code{xlog} above.}
   }
 }
 
