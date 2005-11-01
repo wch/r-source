@@ -11,9 +11,6 @@
 
 NEW FEATURES
 
-    o   contrib.url, for argument type="source" now also provides
-        an R version specific location
-
     o	arima.sim() has a new argument 'start.innov' for compatibility
 	with S-PLUS.  (If not supplied, the output is unchanged from
 	previous versions in R.)
@@ -91,6 +88,11 @@ NEW FEATURES
 	looks for a symbol which will match any of them.  It is now
 	internal and not primitive, so argument matching works in the
 	usual way.
+
+    o	plot.xy() now takes its default arguments from the
+	corresponding par() setting, so points(type="l") and
+	lines(type="p") behave in the same way (and more obviously,
+	also for type="b").
 
 
 DEPRECATED & DEFUNCT

@@ -26,14 +26,14 @@ plot.function <- function(x, from = 0, to = 1, xlim = NULL, ...) {
     curve(x, from, to, xlim = xlim, ...)
 }
 
-## NOTE: cex = 1 is correct, cex = par("cex") gives *square* of intended!
 plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 			 log="", main=NULL, sub=NULL, xlab=NULL, ylab=NULL,
 			 ann=par("ann"), axes=TRUE, frame.plot=axes,
 			 panel.first=NULL, panel.last=NULL,
-			 col=par("col"), bg=NA, pch=par("pch"),
-			 cex = 1, lty=par("lty"), lwd=par("lwd"), asp=NA, ...)
+			 asp=NA, ...)
 {
+    localAxis <- function(..., col, lty, lwd) Axis(...)
+    localBox <- function(..., col, lty, lwd) box(...)
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel, log)
@@ -44,16 +44,14 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
     plot.new()
     plot.window(xlim, ylim, log, asp, ...)
     panel.first # eval() is wrong here {Ross I.}
-    plot.xy(xy, type, col=col, pch=pch, cex=cex, bg=bg, lty=lty, lwd=lwd, ...)
+    plot.xy(xy, type, ...)
     panel.last
     if (axes) {
-	Axis(x, side=1, ...)
-	Axis(y, side=2, ...)
+	localAxis(x, side=1, ...)
+	localAxis(y, side=2, ...)
     }
-    if (frame.plot)
-	box(...)
-    if (ann)
-	title(main=main, sub=sub, xlab=xlab, ylab=ylab, ...)
+    if (frame.plot) localBox(...)
+    if (ann) title(main=main, sub=sub, xlab=xlab, ylab=ylab, ...)
     invisible()
 }
 
@@ -258,10 +256,11 @@ function(formula, data = parent.frame(), ..., subset)
 	stop("must have a response variable")
 }
 
-plot.xy <- function(xy, type, pch = 1, lty = "solid", col = par("fg"),
-		    bg = NA, cex = 1, lwd = par("lwd"), ...) {
+plot.xy <- function(xy, type, pch = par("pch"), lty = par("lty"),
+                    col = par("col"), bg = NA, cex = 1, lwd = par("lwd"),
+                    ...)
     .Internal(plot.xy(xy, type, pch, lty, col, bg, cex, lwd, ...))
-}
+
 
 plot.new <- function()
 {
