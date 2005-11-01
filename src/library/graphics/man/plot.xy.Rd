@@ -31,7 +31,8 @@ plot.xy(xy, type, pch = par("pch"), lty = par("lty"),
 \details{
   The arguments \code{pch, col, bg, cex, lwd} may be vectors and
   may be recycled, depending on \code{type}: see \code{\link{points}} and
-  \code{\link{lines}} for specifics.
+  \code{\link{lines}} for specifics.  In particular note that \code{lwd}
+  is treated as a vector for points and as a single (first) value for lines.
 }
 \seealso{
   \code{\link{plot}},

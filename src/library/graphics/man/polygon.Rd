@@ -7,7 +7,7 @@
 }
 \usage{
 polygon(x, y = NULL, density = NULL, angle = 45,
-        border = NULL, col = NA, lty = NULL, xpd = NULL, \dots)
+        border = NULL, col = NA, lty = NULL, \dots)
 }
 \arguments{
   \item{x,y}{vectors containing the coordinates of the vertices
@@ -29,10 +29,8 @@ polygon(x, y = NULL, density = NULL, angle = 45,
     and \code{TRUE} is equivalent to \code{NULL} (use the foreground colour),
   }
   \item{lty}{the line type to be used, as in \code{\link{par}}.}
-  \item{xpd}{(where) should clipping take place?  Defaults to
-    \code{\link{par}("xpd")}.}
-  \item{\dots}{graphical parameters can be given as arguments to
-    \code{polygon}.}
+  \item{\dots}{graphical parameters such as \code{xpd} can be given as
+    arguments to \code{polygon}.}
 }
 \details{
   The coordinates can be passed in a plotting structure

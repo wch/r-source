@@ -6,7 +6,7 @@ text(x, \dots)
 
 \method{text}{default} (x, y = NULL, labels = seq(along = x), adj = NULL,
      pos = NULL, offset = 0.5, vfont = NULL,
-     cex = 1, col = NULL, font = NULL, xpd = NULL, \dots)
+     cex = 1, col = NULL, font = NULL, \dots)
 }
 \alias{text}
 \alias{text.default}
@@ -38,9 +38,8 @@ text(x, \dots)
     \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
   \item{col, font}{the color and font to be used; these default to the
     values of the global graphical parameters in \code{\link{par}()}.}
-  \item{xpd}{(where) should clipping take place?  Defaults to
-    \code{\link{par}("xpd")}.}
-  \item{\dots}{further graphical parameters (from \code{\link{par}}).}
+  \item{\dots}{further graphical parameters (from \code{\link{par}}),
+    such as \code{xpd}.}
 %% such as ???, etc.
 }
 \description{

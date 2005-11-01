@@ -1198,9 +1198,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     Rf_gpptr(dd)->lty = lty;
     Rf_gpptr(dd)->lwd = lwd;
 
-    /* Override par("xpd") and force clipping to figure region.
-     * NOTE: don't override to _reduce_ clipping region */
-
+    /* Override par("xpd") and force clipping to device region. */
     Rf_gpptr(dd)->xpd = 2;
 
     Rf_gpptr(dd)->adj = R_FINITE(hadj) ? hadj : 0.5;
@@ -1843,10 +1841,10 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* rect(xl, yb, xr, yt, col, border, lty, lwd, xpd, ...) */
-    SEXP sxl, sxr, syb, syt, sxpd, col, lty, lwd, border;
+    /* rect(xl, yb, xr, yt, col, border, lty, ...) */
+    SEXP sxl, sxr, syb, syt, col, lty, lwd, border;
     double *xl, *xr, *yb, *yt, x0, y0, x1, y1;
-    int i, n, nxl, nxr, nyb, nyt, ncol, nlty, nlwd, nborder, xpd;
+    int i, n, nxl, nxr, nyb, nyt, ncol, nlty, nlwd, nborder;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -1875,20 +1873,8 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     nlwd = length(lwd);
     args = CDR(args);
 
-    sxpd = CAR(args);
-    if (sxpd != R_NilValue)
-	xpd = asInteger(sxpd);
-    else
-	xpd = Rf_gpptr(dd)->xpd;
-    args = CDR(args);
-
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
-
-    if (xpd == NA_INTEGER)
-	Rf_gpptr(dd)->xpd = 2;
-    else
-	Rf_gpptr(dd)->xpd = xpd;
 
     xl = REAL(sxl);
     xr = REAL(sxr);
@@ -1928,13 +1914,13 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* arrows(x0, y0, x1, y1, length, angle, code, col, lty, lwd, xpd) */
-    SEXP sx0, sx1, sy0, sy1, sxpd, col, rawcol, lty, lwd;
+    /* arrows(x0, y0, x1, y1, length, angle, code, col, lty, lwd, ...) */
+    SEXP sx0, sx1, sy0, sy1, col, rawcol, lty, lwd;
     double *x0, *x1, *y0, *y1;
     double xx0, yy0, xx1, yy1;
     double hlength, angle;
     int code;
-    int nx0, nx1, ny0, ny1, i, n, ncol, nlty, nlwd, xpd;
+    int nx0, nx1, ny0, ny1, i, n, ncol, nlty, nlwd;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -1975,31 +1961,14 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty));
     nlty = length(lty);
     args = CDR(args);
-    /* use FixupLwd, as segments() does too! */
-#ifdef R_1_x_y
-    PROTECT(lwd = CAR(args));
-    nlwd = length(lwd);
-    if (nlwd == 0)
-	errorcall(call, _("'lwd' must be numeric of length >=1"));
-#else
+
     PROTECT(lwd = FixupLwd(CAR(args), Rf_gpptr(dd)->lwd));
     nlwd = length(lwd);
-#endif
     args = CDR(args);
 
-    sxpd = CAR(args);
-    if (sxpd != R_NilValue)
-	xpd = asInteger(sxpd);
-    else
-	xpd = Rf_gpptr(dd)->xpd;
-    args = CDR(args);
 
     GSavePars(dd);
-
-    if (xpd == NA_INTEGER)
-	Rf_gpptr(dd)->xpd = 2;
-    else
-	Rf_gpptr(dd)->xpd = xpd;
+    ProcessInlinePars(args, dd, call);
 
     x0 = REAL(sx0);
     y0 = REAL(sy0);
@@ -2051,10 +2020,10 @@ static void drawPolygon(int n, double *x, double *y,
 
 SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* polygon(x, y, col, border, lty, xpd, ...) */
-    SEXP sx, sy, col, border, lty, sxpd;
+    /* polygon(x, y, col, border, lty, ...) */
+    SEXP sx, sy, col, border, lty;
     int nx;
-    int ncol, nborder, nlty, xpd, i, start=0;
+    int ncol, nborder, nlty, i, start=0;
     int num = 0;
     double *x, *y, xx, yy, xold, yold;
 
@@ -2072,26 +2041,14 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(col = FixupCol(CAR(args), R_TRANWHITE));	args = CDR(args);
     ncol = LENGTH(col);
 
-    PROTECT(border = FixupCol(CAR(args), Rf_gpptr(dd)->fg));	args = CDR(args);
+    PROTECT(border = FixupCol(CAR(args), Rf_gpptr(dd)->fg)); args = CDR(args);
     nborder = LENGTH(border);
 
-    PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty));	args = CDR(args);
+    PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty)); args = CDR(args);
     nlty = length(lty);
-
-    sxpd = CAR(args);
-    if (sxpd != R_NilValue)
-	xpd = asInteger(sxpd);
-    else
-	xpd = Rf_gpptr(dd)->xpd;
-    args = CDR(args);
 
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
-
-    if (xpd == NA_INTEGER)
-	Rf_gpptr(dd)->xpd = 2;
-    else
-	Rf_gpptr(dd)->xpd = xpd;
 
     GMode(1, dd);
 
@@ -2140,10 +2097,10 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* text(xy, labels, adj, pos, offset,
- *	vfont, cex, col, font, xpd, ...)
+ *	vfont, cex, col, font, ...)
  */
-    SEXP sx, sy, sxy, sxpd, txt, adj, pos, cex, col, rawcol, font, vfont;
-    int i, n, npos, ncex, ncol, nfont, ntxt, xpd;
+    SEXP sx, sy, sxy, txt, adj, pos, cex, col, rawcol, font, vfont;
+    int i, n, npos, ncex, ncol, nfont, ntxt;
     double adjx = 0, adjy = 0, offset = 0.5;
     double *x, *y;
     double xx, yy;
@@ -2224,13 +2181,6 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     nfont = LENGTH(font);
     args = CDR(args);
 
-    sxpd = CAR(args); /* xpd: NULL -> par("xpd") */
-    if (sxpd != R_NilValue)
-	xpd = asInteger(sxpd);
-    else
-	xpd = Rf_gpptr(dd)->xpd;
-    args = CDR(args);
-
     x = REAL(sx);
     y = REAL(sy);
     /* n = LENGTH(sx) = LENGTH(sy) */
@@ -2238,8 +2188,6 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
-
-    Rf_gpptr(dd)->xpd = (xpd == NA_INTEGER)? 2 : xpd;
 
     GMode(1, dd);
     if (n == 0 && ntxt > 0)

@@ -58,7 +58,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     and \code{xaxp} or \code{yaxp} for positioning, \code{tck} or
     \code{tcl} for tick mark length and direction, \code{las} for
     vertical/horizontal label orientation, or \code{fg} instead of
-    \code{col}, see \code{\link{par}} on these.}
+    \code{col}, see \code{\link{par}} on these.  Note that \code{xpd} is
+    not accepted as clipping is always to the device region.}
 }
 \value{
   The numeric locations on the axis scale at which tick marks were drawn

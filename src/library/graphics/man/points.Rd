@@ -65,13 +65,15 @@ points(x, \dots)
       symbols given by \code{pch=21:25}.}
     \item{\code{cex}}{character (or symbol) expansion: a numerical vector.
       This works as a multiple of \code{\link{par}("cex")}.}
+    \item{\code{lwd}}{line width for drawing symbols see \code{\link{par}}.}
   }
   Others less commonly used are \code{lty} and \code{lwd} for
-  types \code{"b"} and \code{"l"}.
+  types such as \code{"b"} and \code{"l"}.
   
   Graphical parameters \code{pch}, \code{col}, \code{bg}, \code{cex} and
   \code{lwd} can be vectors (which will be recycled as needed) giving a
-  value for each point plotted.
+  value for each point plotted.  If lines are to be plotted (e.g. for
+  \code{type = "b"} the first element of \code{lwd} is used.
 
   Points whose \code{x}, \code{y}, \code{pch}, \code{col} or \code{cex}
   value is \code{NA} are omitted from the plot.

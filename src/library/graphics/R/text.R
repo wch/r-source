@@ -3,7 +3,7 @@ text <- function(x, ...) UseMethod("text")
 text.default <-
 function(x, y = NULL, labels = seq(along = x),
          adj = NULL, pos = NULL, offset = 0.5,
-         vfont = NULL, cex = 1, col = NULL, font = NULL, xpd = NULL, ...)
+         vfont = NULL, cex = 1, col = NULL, font = NULL, ...)
 {
     if (!missing(y) && (is.character(y) || is.expression(y))) {
 	labels <- y; y <- NULL
@@ -14,5 +14,5 @@ function(x, y = NULL, labels = seq(along = x),
                    fontindex= pmatch(vfont[2], Hershey$fontindex))
     .Internal(text(xy.coords(x,y, recycle = TRUE),
 		   labels, adj, pos, offset, vfont,
-		   cex, col, font, xpd, ...))
+		   cex, col, font, ...))
 }

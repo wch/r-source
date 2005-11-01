@@ -1,7 +1,6 @@
 rect <-
   function (xleft, ybottom, xright, ytop, density = NULL, angle = 45,
-            col = NULL, border = NULL,
-            lty = NULL, lwd = par("lwd"), xpd = NULL, ...)
+            col = NULL, border = NULL, lty = NULL, lwd = par("lwd"), ...)
 {
     if (is.numeric(density) && all(is.na(density) | density < 0))
         density <- NULL
@@ -17,12 +16,12 @@ rect <-
         n <- n[2]
         x <- rbind(rep.int(NA, n), xleft, xright, xright, xleft)[-1]
         y <- rbind(rep.int(NA, n), ybottom, ybottom, ytop, ytop)[-1]
-        polygon(x, y, col=col, border=border, lty=lty, lwd=lwd, xpd=xpd,
-                density=density, angle=angle, ...)
+        polygon(x, y, col = col, border = border, lty = lty, lwd = lwd,
+                density = density, angle = angle, ...)
     }
     else
         .Internal(rect(as.double(xleft), as.double(ybottom),
                        as.double(xright), as.double(ytop),
                        col = col, border = border,
-                       lty = lty, lwd = lwd, xpd = xpd, ...))
+                       lty = lty, lwd = lwd, ...))
 }

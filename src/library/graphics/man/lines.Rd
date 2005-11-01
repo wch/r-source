@@ -32,6 +32,9 @@ lines(x, \dots)
 
   For \code{type = "h"}, \code{col} can be a vector and will be recycled
   as needed.
+
+  \code{lwd} can be a vector: its first element will apply to lines but
+  the whole vector to symbols (recycled as necessary).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

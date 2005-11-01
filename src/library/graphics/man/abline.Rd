@@ -17,12 +17,12 @@ abline(coef=, untf = FALSE, \dots)
 abline(reg=, untf = FALSE, \dots)
 }
 \arguments{
-  \item{a,b}{the intercept and slope.}
-  \item{untf}{logical asking to \emph{untransform}.  See Details.}
-  \item{h}{the y-value for a horizontal line.}
-  \item{v}{the x-value for a vertical line.}
+  \item{a, b}{the intercept and slope, single values.}
+  \item{untf}{logical asking whether to \emph{untransform}.  See Details.}
+  \item{h}{the y-value(s) for horizontal line(s).}
+  \item{v}{the x-value(s) for vertical line(s).}
   \item{coef}{a vector of length two giving the intercept and slope.}
-  \item{reg}{an object with a \code{coef} component. See Details.}
+  \item{reg}{an object with a \code{coef} component.  See Details.}
   \item{\dots}{graphical parameters.}
 }
 \details{
@@ -46,8 +46,10 @@ abline(reg=, untf = FALSE, \dots)
   otherwise a line is drawn in the transformed coordinate system. The
   \code{h} and \code{v} parameters always refer to original coordinates.
 
-  The graphical parameters \code{col} and \code{lty} can be specified as
-  arguments to \code{abline}; see \code{\link{par}} for details.
+  The graphical parameters \code{col}, \code{lty} and \code{lwd}
+  can be specified; see \code{\link{par}} for details.  For the
+  \code{h=} and \code{v=} cases they can be vectors of length greater
+  than one, recycled as necessary.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

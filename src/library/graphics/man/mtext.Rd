@@ -1,8 +1,14 @@
 \name{mtext}
 \title{Write Text into the Margins of a Plot}
+% mtext is defined via do_mtext(.) in  src/main/plot.c ---
+\description{
+  Text is written in one of the four margins of the current figure region
+  or one of the outer margins of the device region.
+}
 \usage{
 mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
-      adj = NA, padj = NA, cex = NA, col = NA, font = NA, vfont = NULL, \dots)
+      adj = NA, padj = NA, cex = NA, col = NA,
+      font = NA, vfont = NULL, \dots)
 }
 \alias{mtext}
 \arguments{
@@ -13,34 +19,33 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   \item{at}{give location in user-coordinates.  If \code{length(at)==0}
     (the default), the location will be determined by \code{adj}.
   }
-  \item{adj}{adjustment for each string in reading direction. For strings parallel
-    to the axes, \code{adj=0} means left or bottom alignment, and
-    \code{adj=1} means right or top alignment.
+  \item{adj}{adjustment for each string in reading direction.  For
+    strings parallel to the axes, \code{adj = 0} means left or bottom
+    alignment, and \code{adj = 1} means right or top alignment.
+
     If \code{adj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     parallel to the axis the default is to centre the string.}
-  \item{padj}{adjustment for each string perpendicular to the reading direction 
-    (which is controlled by \code{adj}). For strings parallel
-    to the axes, \code{padj=0} means right or top alignment, 
-        and \code{padj=1} means left or bottom alignment.
+  \item{padj}{adjustment for each string perpendicular to the reading
+    direction (which is controlled by \code{adj}).  For strings parallel
+    to the axes, \code{padj = 0} means right or top alignment, 
+    and \code{padj = 1} means left or bottom alignment.
     
     If \code{padj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     perpendicular to the axis the default is to centre the string.}
-  \item{\dots}{Further graphical parameters (see \code{\link{text}} and
-    \code{\link{par}}) ; currently supported are:}
   \item{cex}{character expansion factor.  \code{NULL} and \code{NA}
     are equivalent to \code{1.0}.  This is an absolute measure, not
     scaled by \code{par("cex")} or by setting \code{par("mfrow")}
     or \code{par("mfcol")}.}
-  \item{col}{color to use.}
-  \item{font}{font for text.}
-  \item{vfont}{vector font for text.}
-}
-% mtext is defined via do_mtext(.) in  src/main/plot.c ---
-\description{
-  Text is written in one of the four margins of the current figure region
-  or one of the outer margins of the device region.
+  \item{col}{color to use.  Can be a vector.}
+  \item{font}{font for text.  Can be a vector.}
+  \item{vfont}{vector font for text.  Not supported: will give a message
+    to use \code{\link{par}(family=)} instead.)
+  \item{\dots}{Further graphical parameters (see \code{\link{par}}), including
+    \code{xpd}.  (This defaults to the figure region unless
+    \code{outer = TRUE}, otherwise the device region.  It can only be
+    increased.)}
 }
 \details{
   The \dQuote{user coordinates} in the outer margins always range from zero to
@@ -91,5 +96,3 @@ plot(1:10, exp(1:10), log='y', main="log='y'", xlab="xlab")
 for(s in 1:4) mtext(paste("mtext(...,side=",s,")"), side=s)
 }
 \keyword{aplot}
-
-

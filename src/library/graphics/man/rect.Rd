@@ -3,7 +3,7 @@
 \usage{
 rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
      col = NULL, border = NULL, lty = NULL, lwd = par("lwd"),
-     xpd = NULL, \dots)
+     \dots)
 }
 \alias{rect}
 \arguments{
@@ -24,9 +24,8 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
     to suppress the border, or \code{TRUE} in which case \code{col} is used.}
   \item{lty}{line type for borders and shading; defaults to \code{"solid"}.}
   \item{lwd}{line width for borders and shading.}
-  \item{xpd}{logical (\dQuote{e\bold{xp}an\bold{d}}); defaults to
-    \code{par("xpd")}.  See \code{\link{par}(xpd= )}.}
-  \item{\dots}{other graphical parameters can be given as arguments.}
+  \item{\dots}{other graphical parameters such as \code{xpd}
+    can be given as arguments.}
 }
 \description{
   \code{rect} draws a rectangle (or sequence of rectangles) with the
