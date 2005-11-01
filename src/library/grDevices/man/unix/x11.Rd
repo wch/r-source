@@ -9,7 +9,7 @@
 }
 \usage{
 X11(display = "", width = 7, height = 7, pointsize = 12,
-    gamma = 1, colortype = getOption("X11colortype"),
+    gamma = getOption("gamma"), colortype = getOption("X11colortype"),
     maxcubesize = 256, bg = "transparent", canvas = "white",
     fonts = getOption("X11fonts"), xpos = NA, ypos = NA)
 }
