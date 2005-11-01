@@ -28,9 +28,8 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
   \code{code=3} a head is drawn at both ends of the arrow.  Unless
   \code{length = 0}, when no head is drawn.
 
-  The graphical parameters \code{col} and \code{lty} can be used
-  to specify a color and line texture for the line segments which
-  make up the arrows (\code{col} may be a vector).
+  The graphical parameters \code{col}, \code{lty} and \code{lwd} can be
+  vectors of length greater than one and will be recycled if ncessary.
 
   The direction of a zero-length arrow is indeterminate, and hence so is
   the direction of the arrowheads.  To allow for rounding error,

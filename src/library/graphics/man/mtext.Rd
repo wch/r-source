@@ -13,16 +13,17 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   \item{at}{give location in user-coordinates.  If \code{length(at)==0}
     (the default), the location will be determined by \code{adj}.
   }
-  \item{adj}{adjustment for each string in reading direction. For strings parallel
-    to the axes, \code{adj=0} means left or bottom alignment, and
-    \code{adj=1} means right or top alignment.
+  \item{adj}{adjustment for each string in reading direction.  For
+    strings parallel to the axes, \code{adj = 0} means left or bottom
+    alignment, and \code{adj = 1} means right or top alignment.
+
     If \code{adj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     parallel to the axis the default is to centre the string.}
-  \item{padj}{adjustment for each string perpendicular to the reading direction 
-    (which is controlled by \code{adj}). For strings parallel
-    to the axes, \code{padj=0} means right or top alignment, 
-        and \code{padj=1} means left or bottom alignment.
+  \item{padj}{adjustment for each string perpendicular to the reading
+    direction (which is controlled by \code{adj}).  For strings parallel
+    to the axes, \code{padj = 0} means right or top alignment, 
+    and \code{padj = 1} means left or bottom alignment.
     
     If \code{padj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
@@ -32,10 +33,13 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   \item{cex}{character expansion factor.  \code{NULL} and \code{NA}
     are equivalent to \code{1.0}.  This is an absolute measure, not
     scaled by \code{par("cex")} or by setting \code{par("mfrow")}
-    or \code{par("mfcol")}.}
-  \item{col}{color to use.}
-  \item{font}{font for text.}
-  \item{vfont}{vector font for text.}
+    or \code{par("mfcol")}.  Can be a vector.}
+  \item{col}{color to use.  Can be a vector.  \code{NA} values (the
+    default) mean use \code{par("col")}.}
+  \item{font}{font for text.  Can be a vector.  \code{NA} values (the
+    default) mean use \code{par("font")}.}
+  \item{vfont}{vector font for text.  Deprecated: will give a message
+    to use \code{\link{par}(family=)} instead (and does nothing).}
 }
 % mtext is defined via do_mtext(.) in  src/main/plot.c ---
 \description{
@@ -91,5 +95,3 @@ plot(1:10, exp(1:10), log='y', main="log='y'", xlab="xlab")
 for(s in 1:4) mtext(paste("mtext(...,side=",s,")"), side=s)
 }
 \keyword{aplot}
-
-

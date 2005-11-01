@@ -1,5 +1,10 @@
 \name{box}
 \title{Draw a Box around a Plot}
+\description{
+  This function draws a box around the current plot in the given color
+  and linetype.  The \code{bty} parameter determines
+  the type of box drawn.  See \code{\link{par}} for details.
+}
 \usage{
 box(which = "plot", lty = "solid", \dots)
 }
@@ -8,13 +13,10 @@ box(which = "plot", lty = "solid", \dots)
 \item{which}{character, one of \code{"plot"}, \code{"figure"},
   \code{"inner"} and \code{"outer"}.}
 \item{lty}{line type of the box.}
-\item{\dots}{further graphical parameters, such as
-  \code{bty}, \code{col}, or \code{lwd}, see \code{\link{par}}.}
-}
-\description{
-This function draws a box around the current plot in the given color
-and linetype.  The \code{bty} parameter determines
-the type of box drawn.  See \code{\link{par}} for details.
+\item{\dots}{further graphical parameters, such as \code{bty},
+  \code{col}, or \code{lwd}, see \code{\link{par}}.  Note that
+  \code{xpd} is not accepted as clipping is always to the device
+  region.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

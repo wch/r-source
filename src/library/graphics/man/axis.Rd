@@ -34,7 +34,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     drawn in the outer plot margin, rather than the standard plot
     margin.}
   \item{font}{font for text.}
-  \item{vfont}{vector font for text.}
+  \item{vfont}{vector font for text.  Deprecated: will give a message
+    to use \code{\link{par}(family=)} instead (and do nothing).}
   \item{lty, lwd}{line type, width for the axis line and the tick marks.}
   \item{col}{color for the axis line and the tick marks.  The default
     \code{NULL} means to use \code{par("fg")}.}
@@ -57,7 +58,9 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     \code{col.axis} and \code{font.axis} for axis annotation, \code{mgp}
     for positioning, \code{tck} or \code{tcl} for tick mark length and
     direction, \code{las} for vertical/horizontal label orientation, or
-    \code{fg} instead of \code{col}, see \code{\link{par}} on these.}
+    \code{fg} instead of \code{col}, see \code{\link{par}} on these.
+    Note that \code{xpd} is
+    not accepted as clipping is always to the device region.}
 }
 \value{
   The numeric locations on the axis scale at which tick marks were drawn

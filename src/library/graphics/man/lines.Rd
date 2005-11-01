@@ -17,11 +17,12 @@ lines(x, \dots)
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot}}.}
   \item{col}{color to use. This can be vector of length greater than
-    one, but only the first value will be used.}
+    one, but only the first value will be used for lines (but all will
+    be used for symbols).}
   \item{lty}{line type to use.}
   \item{\dots}{Further graphical parameters (see \code{\link{par}}) may
-    also be supplied as arguments, particularly, line type, \code{lty} and
-    line width, \code{lwd}.}
+    also be supplied as arguments, particularly, line width, \code{lwd}
+    and, for \code{type = "b"}, \code{pch}.}
 }
 \details{
   The coordinates can be passed to \code{lines} in a plotting structure
@@ -35,6 +36,9 @@ lines(x, \dots)
 
   For \code{type = "h"}, \code{col} can be a vector and will be recycled
   as needed.
+
+  \code{lwd} can be a vector: its first element will apply to lines but
+  the whole vector to symbols (recycled as necessary).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

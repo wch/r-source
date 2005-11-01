@@ -15,7 +15,7 @@
      lwd = par("lwd"), asp = NA, \dots)
 }
 \arguments{
-  \item{x,y}{the \code{x} and \code{y} arguments provide the x and y
+  \item{x, y}{the \code{x} and \code{y} arguments provide the x and y
     coordinates for the plot.  Any reasonable way of defining the
     coordinates is acceptable.  See the function \code{\link{xy.coords}}
     for details.}
@@ -35,8 +35,8 @@
 
   \item{main}{a main title for the plot.}
   \item{sub}{a sub title for the plot.}
-  \item{xlab}{a label for the x axis.}
-  \item{ylab}{a label for the y axis.}
+  \item{xlab}{a label for the x axis, defaults to a description of \code{x}.}
+  \item{ylab}{a label for the y axis, defaults to a description of \code{y}.}
 
   \item{ann}{a logical value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot.}

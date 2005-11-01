@@ -19,9 +19,12 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
     from the plot.}
   \item{outer}{a logical value.  If \code{TRUE}, the titles are
     placed in the outer margins of the plot.}
-  \item{\dots}{further graphical parameters from
-    \code{\link{par}}.  Use e.g., \code{col.main} or \code{cex.sub}
-    instead of just \code{col} or \code{cex}.}
+  \item{\dots}{further graphical parameters from \code{\link{par}}.  Use
+    e.g., \code{col.main} or \code{cex.sub} instead of just \code{col}
+    or \code{cex}.  \code{xpd} can be used to set the clipping region:
+    this defaults to the figure region unless \code{outer = TRUE},
+    otherwise the device region and can only be increased.
+  }
 }
 \description{
   This function can be used to add labels to a plot.  Its first four
