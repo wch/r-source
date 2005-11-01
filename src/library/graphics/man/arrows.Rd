@@ -29,7 +29,8 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
   \code{length = 0}, when no head is drawn.
 
   The graphical parameters \code{col}, \code{lty} and \code{lwd} can be
-  vectors of length greater than one and will be recycled if ncessary.
+  vectors of length greater than one and will be recycled if necessary.
+  \code{NA} values of \code{col} are replaced by \code{par("col")}.
 
   The direction of a zero-length arrow is indeterminate, and hence so is
   the direction of the arrowheads.  To allow for rounding error,

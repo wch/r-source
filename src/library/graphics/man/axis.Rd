@@ -38,7 +38,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     to use \code{\link{par}(family=)} instead (and do nothing).}
   \item{lty, lwd}{line type, width for the axis line and the tick marks.}
   \item{col}{color for the axis line and the tick marks.  The default
-    \code{NULL} means to use \code{par("fg")}.}
+    \code{NULL} means to use \code{par("fg")}, possibly specified inline.}
   \item{hadj}{adjustment (see \code{\link{par}("adj")} for all labels
     \emph{parallel} (\sQuote{horizontal}) to the reading direction.  If
     this is not a finite value, the default is used (centring for

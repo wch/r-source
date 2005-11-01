@@ -10,16 +10,17 @@ segments(x0, y0, x1, y1,
          \dots)
 }
 \arguments{
-  \item{x0,y0}{coordinates of points \bold{from} which to draw.}
-  \item{x1,y1}{coordinates of points \bold{to} which to draw.}
+  \item{x0, y0}{coordinates of points \bold{from} which to draw.}
+  \item{x1, y1}{coordinates of points \bold{to} which to draw.}
   \item{col, lty, lwd}{usual graphical parameters as in
-    \code{\link{par}}, possibly vectors.}
+    \code{\link{par}}, possibly vectors.  \code{NA} values in \code{col}
+    cause the segment to be omitted.}
   \item{\dots}{further graphical parameters (from \code{\link{par}}),
     such as \code{xpd}.}
 }
 \details{
   For each \code{i}, a line segment is drawn between the point
-  \code{(x0[i], y0[i])} and the point \code{(x1[i],y1[i])}.
+  \code{(x0[i], y0[i])} and the point \code{(x1[i], y1[i])}.
 
   The graphical parameters \code{col}, \code{lty} and \code{lwd} can be
   vectors of length greater than one and will be recycled if ncessary.
