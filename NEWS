@@ -118,6 +118,9 @@ DEPRECATED & DEFUNCT
 
     o	The 'debian' subdirectory was removed from the sources.
 
+    o	The 'vfont' argument of axis() and mtext() has been removed:
+	use par(family=) instead.
+
 
 INTERNATIONALIZATION
 

@@ -955,9 +955,9 @@ static double ComputePAdjValue(double padj, int side, int las)
 SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* axis(side, at, labels, tick, line, pos,
-     *	    outer, font, vfont, lty, lwd, col, padj, ...) */
+     *	    outer, font, lty, lwd, col, padj, ...) */
 
-    SEXP at, lab, vfont, padj;
+    SEXP at, lab, padj;
     int col, font, lty, npadj;
     int i, n, nint = 0, ntmp, side, *ind, outer, lineoff = 0;
     int istart, iend, incr;
@@ -975,7 +975,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* This is a builtin function, so it should always have */
     /* the correct arity, but it doesn't hurt to be defensive. */
 
-    if (length(args) < 9)
+    if (length(args) < 12)
 	errorcall(call, _("too few arguments"));
     GCheckState(dd);
 
@@ -1058,14 +1058,6 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Optional argument: "font" */
     font = asInteger(FixupFont(CAR(args), NA_INTEGER));
-    args = CDR(args);
-
-    /* Optional argument: "vfont" */
-    /* Allows Hershey vector fonts to be used */
-    PROTECT(vfont = FixupVFont(CAR(args)));
-    if (!isNull(vfont)) {
-      warning("vfont not supported for axis();  use par(family) instead");
-    }
     args = CDR(args);
 
     /* Optional argument: "lty" */
@@ -1183,7 +1175,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     if (((side == 1 || side == 3) && Rf_gpptr(dd)->xaxt == 'n') ||
 	((side == 2 || side == 4) && Rf_gpptr(dd)->yaxt == 'n')) {
 	GRestorePars(dd);
-	UNPROTECT(5);
+	UNPROTECT(4);
 	return R_NilValue;
     }
 
@@ -1470,7 +1462,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* NOTE: only record operation if no "error"  */
     if (GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);
-    UNPROTECT(5); /* lab, vfont, at, lab, padj again */
+    UNPROTECT(4); /* lab, at, lab, padj again */
     return at;
 }/* do_axis */
 
@@ -2356,12 +2348,11 @@ static double ComputeAtValue(double at, double adj,
 	 cex = NA,
 	 col = NA,
 	 font = NA,
-	 vfont = NULL,
 	 ...) */
 
 SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP text, side, line, outer, at, adj, padj, cex, col, font, vfont, string;
+    SEXP text, side, line, outer, at, adj, padj, cex, col, font, string;
     SEXP rawcol;
     int ntext, nside, nline, nouter, nat, nadj, npadj, ncex, ncol, nfont;
     Rboolean dirtyplot = FALSE, gpnewsave = FALSE, dpnewsave = FALSE;
@@ -2452,13 +2443,6 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     if (n < nfont) n = nfont;
     args = CDR(args);
 
-    /* Arg11 : vfont */
-    PROTECT(vfont = FixupVFont(CAR(args)));
-    if (!isNull(vfont)) {
-      warning("vfont not supported for mtext();  use par(family) instead");
-    }
-    args = CDR(args);
-
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
 
@@ -2532,7 +2516,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rf_gpptr(dd)->new = gpnewsave;
 	Rf_dpptr(dd)->new = dpnewsave;
     }
-    UNPROTECT(11);
+    UNPROTECT(10);
 
     /* NOTE: only record operation if no "error"  */
     if (GRecording(call, dd))

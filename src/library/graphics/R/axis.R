@@ -1,17 +1,14 @@
 axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
-                 pos = NA, outer = FALSE, font = NA, vfont = NULL,
+                 pos = NA, outer = FALSE, font = NA,
                  lty = "solid", lwd = 1, col = NULL,
                  hadj = NA, padj = NA, ...)
 {
-    if (!is.null(vfont))
-	vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface) - 1,
-		   fontindex= pmatch(vfont[2], Hershey$fontindex))
     ## we need to do this as the C code processes 'col' before '...'
     if(is.null(col) && length(list(...)) && !is.null(fg <- list(...)$fg)) {
         ## help(par) 'fg' says this should work
         col <- fg
     }
-    .Internal(axis(side, at, labels, tick, line, pos, outer, font, vfont,
+    .Internal(axis(side, at, labels, tick, line, pos, outer, font,
                    lty, lwd, col, hadj, padj, ...))
 }
 

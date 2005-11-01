@@ -7,8 +7,7 @@
 }
 \usage{
 mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
-      adj = NA, padj = NA, cex = NA, col = NA,
-      font = NA, vfont = NULL, \dots)
+      adj = NA, padj = NA, cex = NA, col = NA, font = NA, \dots)
 }
 \alias{mtext}
 \arguments{
@@ -42,8 +41,6 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
     default) mean use \code{par("col")}.}
   \item{font}{font for text.  Can be a vector.  \code{NA} values (the
     default) mean use \code{par("font")}.}
-  \item{vfont}{vector font for text.  Deprecated: will give a message
-    to use \code{\link{par}(family=)} instead (and does nothing).}
   \item{\dots}{Further graphical parameters (see \code{\link{par}}), including
     \code{xpd}.  (This defaults to the figure region unless
     \code{outer = TRUE}, otherwise the device region.  It can only be
