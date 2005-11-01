@@ -37,11 +37,13 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   \item{cex}{character expansion factor.  \code{NULL} and \code{NA}
     are equivalent to \code{1.0}.  This is an absolute measure, not
     scaled by \code{par("cex")} or by setting \code{par("mfrow")}
-    or \code{par("mfcol")}.}
-  \item{col}{color to use.  Can be a vector.}
-  \item{font}{font for text.  Can be a vector.}
-  \item{vfont}{vector font for text.  Not supported: will give a message
-    to use \code{\link{par}(family=)} instead.)
+    or \code{par("mfcol")}.  Can be a vector.}
+  \item{col}{color to use.  Can be a vector.  \code{NA} values (the
+    default) mean use \code{par("col")}.}
+  \item{font}{font for text.  Can be a vector.  \code{NA} values (the
+    default) mean use \code{par("font")}.}
+  \item{vfont}{vector font for text.  Deprecated: will give a message
+    to use \code{\link{par}(family=)} instead (and does nothing).}
   \item{\dots}{Further graphical parameters (see \code{\link{par}}), including
     \code{xpd}.  (This defaults to the figure region unless
     \code{outer = TRUE}, otherwise the device region.  It can only be

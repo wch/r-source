@@ -225,6 +225,9 @@ DEPRECATED & DEFUNCT
     o	The undocumented use of atan() with two arguments is deprecated:
 	instead use atan2() (as documented).
 
+    o	The 'vfont' argument of axis() and mtext() is deprecated
+	(it currently warns and does nothing).
+
 
 BUG FIXES
 
