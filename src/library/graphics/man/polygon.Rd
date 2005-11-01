@@ -19,10 +19,13 @@ polygon(x, y = NULL, density = NULL, angle = 45,
     color filling).}
   \item{angle}{the slope of shading lines, given as an angle
      in degrees (counter-clockwise).}
-  \item{col}{the color for filling the polygon.
-    The default, \code{NA}, is to leave polygons unfilled.}
+   \item{col}{the color for filling the polygon. The default,
+     \code{NA}, is to leave polygons unfilled, unless \code{density} is
+     specified.  (For back-compatibiility, \code{NULL} is equivalent to
+     \code{NA}.}
   \item{border}{the color to draw the border.  The default, \code{NULL},
-    uses \code{\link{par}("fg")}.  Use \code{border = NA} to omit borders.
+    means to use \code{\link{par}("fg")}.  Use \code{border = NA} to
+    omit borders.
     
     For compatibility with S, \code{border} can also be logical, in
     which case \code{FALSE} is equivalent to \code{NA} (borders omitted)

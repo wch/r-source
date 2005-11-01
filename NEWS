@@ -37,6 +37,9 @@ DEPRECATED & DEFUNCT
     o	The undocumented use of atan() with two arguments is deprecated:
 	instead use atan2() (as documented).
 
+    o	The 'vfont' argument of axis() and mtext() is deprecated
+	(it currently warns and does nothing).
+
 
 BUG FIXES
 
@@ -103,9 +106,6 @@ BUG FIXES
     o	ISODateTime() mistakenly corrected non-existent times (when
 	DST was being started) in the current time zone.
 
-    o	getGraphicsEvent() would cause memory corruption if passed an 
-    	empty prompt.
-
     o	Some replacement operations on data frames gave incorrect
 	answers, e.g. DF[3:4, "y"] if column "y" did not exist or was
 	a matrix.
@@ -121,6 +121,10 @@ BUG FIXES
 
     o	plot.default() had an unused 'lab' argument, thereby preventing
 	the 'lab' graphics parameter being passed through '...' .
+
+    o	Although polygon(col = NA) was the stated default, specifying
+	NA was not equivalent to omitting the argument (but col=NULL
+	was equivalent).
 
 
 
