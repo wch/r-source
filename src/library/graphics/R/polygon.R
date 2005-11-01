@@ -5,7 +5,7 @@
 
 polygon <-
   function(x, y = NULL, density = NULL, angle = 45,
-           border = NULL, col = NA, lty = NULL, ...)
+           border = NULL, col = NA, lty = par("lty"), ...)
 {
     ## FIXME: remove this eventually
     ..debug.hatch <- FALSE
@@ -197,7 +197,7 @@ polygon <-
         ## end of hatch helper functions
 
 
-        if (missing(col) || is.null(col)) col <- par("fg")
+        if (missing(col) || is.null(col) || is.na(col)) col <- par("fg")
         if (is.null(border)) border <- col
         if (is.logical(border)) {
             if (!is.na(border) && border) border <- col

@@ -94,6 +94,9 @@ NEW FEATURES
 	lines(type="p") behave in the same way (and more obviously,
 	also for type="b").
 
+    o	arrows() has been changed to be more similar to segments():
+	for example col=NA omits the arrow.
+
 
 DEPRECATED & DEFUNCT
 
@@ -309,6 +312,10 @@ BUG FIXES
 
     o	plot.default() had an unused 'lab' argument, thereby preventing
 	the 'lab' graphics parameter being passed through '...' .
+
+    o	Although polygon(col = NA) was the stated default, specifying
+	NA was not equivalent to omitting the argument (but col=NULL
+	was equivalent).
 
 
 
