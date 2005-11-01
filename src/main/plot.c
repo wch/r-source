@@ -1073,7 +1073,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     /* Optional argument: "lwd" */
-    lwd = asReal(FixupLwd(CAR(args), Rf_gpptr(dd)->lwd));
+    lwd = asReal(FixupLwd(CAR(args), 1));
     args = CDR(args);
 
     /* Optional argument: "col" */
@@ -1910,7 +1910,7 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* arrows(x0, y0, x1, y1, length, angle, code, col, lty, lwd, ...) */
-    SEXP sx0, sx1, sy0, sy1, col, rawcol, lty, lwd;
+    SEXP sx0, sx1, sy0, sy1, col, lty, lwd;
     double *x0, *x1, *y0, *y1;
     double xx0, yy0, xx1, yy1;
     double hlength, angle;
@@ -1944,12 +1944,7 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid arrow head specification"));
     args = CDR(args);
 
-    /*
-     * Need raw colours to be able to check for NAs
-     * FixupCol converts NAs to fully transparent
-     */
-    rawcol = CAR(args);
-    PROTECT(col = FixupCol(rawcol, R_TRANWHITE));
+    PROTECT(col = FixupCol(CAR(args), R_TRANWHITE));
     ncol = LENGTH(col);
     args = CDR(args);
 
@@ -1960,7 +1955,6 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(lwd = FixupLwd(CAR(args), Rf_gpptr(dd)->lwd));
     nlwd = length(lwd);
     args = CDR(args);
-
 
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
@@ -1979,14 +1973,8 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	GConvert(&xx0, &yy0, USER, DEVICE, dd);
 	GConvert(&xx1, &yy1, USER, DEVICE, dd);
 	if (R_FINITE(xx0) && R_FINITE(yy0) && R_FINITE(xx1) && R_FINITE(yy1)) {
-	    if (isNAcol(rawcol, i, ncol))
-		Rf_gpptr(dd)->col = Rf_dpptr(dd)->col;
-	    else
-		Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
-	    if (nlty == 0 || INTEGER(lty)[i % nlty] == NA_INTEGER)
-		Rf_gpptr(dd)->lty = Rf_dpptr(dd)->lty;
-	    else
-		Rf_gpptr(dd)->lty = INTEGER(lty)[i % nlty];
+	    Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
+	    Rf_gpptr(dd)->lty = INTEGER(lty)[i % nlty];
 	    Rf_gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
 	    GArrow(xx0, yy0, xx1, yy1, DEVICE,
 		   hlength, angle, code, dd);

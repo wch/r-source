@@ -14,7 +14,8 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
     arrow head.}
   \item{code}{integer code, determining \emph{kind} of arrows to be
     drawn.}
-  \item{col, lty, lwd}{graphical parameters, possible vectors.}
+  \item{col, lty, lwd}{graphical parameters, possible vectors.
+    \code{NA} values in \code{col} cause the arrow to be omitted.}
   \item{\dots}{usual graphical parameters such as \code{xpd}: see
     \code{\link{par}}.}
 }
@@ -31,7 +32,8 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
   \code{length = 0}, when no head is drawn.
 
   The graphical parameters \code{col}, \code{lty} and \code{lwd} can be
-  vectors of length greater than one and will be recycled if ncessary.
+  vectors of length greater than one and will be recycled if necessary.
+
 
   The direction of a zero-length arrow is indeterminate, and hence so is
   the direction of the arrowheads.  To allow for rounding error,

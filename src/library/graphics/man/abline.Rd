@@ -7,7 +7,7 @@
 \synopsis{
 abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
        coef = NULL, untf = FALSE, col = par("col"),
-       lty = par("lty"), lwd = NULL, ...)
+       lty = par("lty"), lwd = par("lwd"), ...)
 }
 \usage{
 abline(a, b, untf = FALSE, \dots)

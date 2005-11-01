@@ -6,6 +6,7 @@ axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     if (!is.null(vfont))
 	vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface) - 1,
 		   fontindex= pmatch(vfont[2], Hershey$fontindex))
+    ## we need to do this as the C code processes 'col' before '...'
     if(is.null(col) && length(list(...)) && !is.null(fg <- list(...)$fg)) {
         ## help(par) 'fg' says this should work
         col <- fg

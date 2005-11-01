@@ -1,5 +1,5 @@
-grid <- function (nx = NULL, ny = nx, col="lightgray", lty="dotted", lwd = NULL,
-                  equilogs = TRUE)
+grid <- function (nx = NULL, ny = nx, col="lightgray", lty="dotted",
+                  lwd = par("lwd"), equilogs = TRUE)
 {
     if(is.null(nx) || (!is.na(nx) && nx >= 1)) {
         log <- par("xlog")

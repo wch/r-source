@@ -1,6 +1,6 @@
 rect <-
   function (xleft, ybottom, xright, ytop, density = NULL, angle = 45,
-            col = NULL, border = NULL, lty = NULL, lwd = par("lwd"), ...)
+            col = NA, border = NULL, lty = par("lty"), lwd = par("lwd"), ...)
 {
     if (is.numeric(density) && all(is.na(density) | density < 0))
         density <- NULL
