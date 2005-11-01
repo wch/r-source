@@ -1,8 +1,9 @@
 ## tests of the fonts in the postscript() device.
 
-testit <- function(family)
-{
-    postscript("ps-tests.ps", height=7, width=7, family=family)
+testit <- function(family, encoding="default")
+{ 
+    postscript("ps-tests.ps", height=7, width=7, family=family,
+               encoding=encoding)
     plot(1:10, type="n")
     text(5, 9, "Some text")
     text(5, 8 , expression(italic("italic")))
@@ -33,6 +34,6 @@ testit("NimbusRom")
 testit("URWHelvetica")
 testit("URWTimes")
 
-testit("ComputerModern")
+testit("ComputerModern", "TeXtext.enc")
 
 unlink("ps-tests.ps")
