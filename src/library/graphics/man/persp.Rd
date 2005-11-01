@@ -52,7 +52,8 @@ persp(x, \dots)
   \item{col}{the color(s) of the surface facets.  Transparent colours are
     ignored.  This is recycled to the \eqn{(nx-1)(ny-1)} facets.}
   \item{border}{the color of the line drawn around the surface facets.
-    A value of \code{NA} will disable the drawing of borders.  This is
+    The default, \code{NULL}, corresponds to \code{par("fg")}.
+    A value of \code{NA} will disable the drawing of borders: this is
     sometimes useful when the surface is shaded.}
   \item{ltheta, lphi}{if finite values are specified for \code{ltheta}
     and \code{lphi}, the surface is shaded as though it was being
