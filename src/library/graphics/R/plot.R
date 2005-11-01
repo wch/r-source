@@ -26,14 +26,18 @@ plot.function <- function(x, from = 0, to = 1, xlim = NULL, ...) {
     curve(x, from, to, xlim = xlim, ...)
 }
 
-plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
-			 log="", main=NULL, sub=NULL, xlab=NULL, ylab=NULL,
-			 ann=par("ann"), axes=TRUE, frame.plot=axes,
-			 panel.first=NULL, panel.last=NULL,
-			 asp=NA, ...)
+plot.default <-
+    function(x, y = NULL, type = "p", xlim = NULL, ylim = NULL,
+             log = "", main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
+             ann = par("ann"), axes = TRUE, frame.plot = axes,
+             panel.first = NULL, panel.last = NULL, asp = NA, ...)
 {
-    localAxis <- function(..., col, lty, lwd) Axis(...)
-    localBox <- function(..., col, lty, lwd) box(...)
+    ## These col, bg, pch, cex can be vectors, so exclude them
+    ## Also, axis and box accept some of these
+    localAxis <- function(..., col, bg, pch, cex, lty, lwd) Axis(...)
+    localBox <- function(..., col, bg, pch, cex, lty, lwd) box(...)
+    localWindow <- function(..., col, bg, pch, cex, lty, lwd) plot.window(...)
+    localTitle <- function(..., col, bg, pch, cex, lty, lwd) title(...)
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel, log)
@@ -42,16 +46,16 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
     xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
     ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
     plot.new()
-    plot.window(xlim, ylim, log, asp, ...)
+    localWindow(xlim, ylim, log, asp, ...)
     panel.first # eval() is wrong here {Ross I.}
     plot.xy(xy, type, ...)
     panel.last
     if (axes) {
-	localAxis(x, side=1, ...)
-	localAxis(y, side=2, ...)
+	localAxis(x, side = 1, ...)
+	localAxis(y, side = 2, ...)
     }
     if (frame.plot) localBox(...)
-    if (ann) title(main=main, sub=sub, xlab=xlab, ylab=ylab, ...)
+    if (ann) localTitle(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
     invisible()
 }
 
