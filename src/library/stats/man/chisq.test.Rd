@@ -76,9 +76,7 @@ chisq.test(x, y = NULL, correct = TRUE,
     performed, and whether Monte Carlo simulation or continuity
     correction was used.}
   \item{data.name}{a character string giving the name(s) of the data.}
-  \item{observed}{the observed x <- matrix(c(12, 5, 7, 7), nc = 2)
-chisq.test(x)$p.value		# 0.4233
-chisq.test(x, simulate.p.value = TRUE, B = 10000counts.}
+  \item{observed}{the observed counts.}
   \item{expected}{the expected counts under the null hypothesis.}
   \item{residuals}{the Pearson residuals, \code{(observed - expected)
       / sqrt(expected)}.}
