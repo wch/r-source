@@ -3861,6 +3861,11 @@ oo <- order(attr(U, "pivot"))
 stopifnot(identical(colnames(X), colnames(z)))
 ## unpivoted colnames in R <= 2.2.0
 
+
+## Im(-1) (PR#8272)
+stopifnot(all.equal(Im(c(1, 0, -1)), rep(0, 3)))
+## R <= 2.2.0 had Im and Arg the same for non-complex numbers
+
 ### end of tests added in 2.2.1 ###
 
 

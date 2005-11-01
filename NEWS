@@ -320,6 +320,10 @@ BUG FIXES
 	NA was not equivalent to omitting the argument (but col=NULL
 	was equivalent).
 
+    o	Im(-1) was pi. (PR#8272, a side effect from all previous
+	versions of R returning the same value for Im and Arg of
+	non-complex numbers.)
+
 
 
 		CHANGES IN R VERSION 2.2.0
