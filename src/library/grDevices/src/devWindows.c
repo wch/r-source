@@ -322,10 +322,6 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 		strncpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
 	    }
-	    if(!strcmp("cidfamily", CHAR(STRING_ELT(names, i)))) {
-		strncpy(cidfamily, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
-		done += 1;
-	    }
 	    if(!strcmp("paper", CHAR(STRING_ELT(names, i)))) {
 		strncpy(paper, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
@@ -353,8 +349,9 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
         default:
 	    strcpy(cidfamily, ""); break;
         }
+    /* <FIXME> work out how to deal with this */
     if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding,
-                       cidfamily, bg, fg,
+                       bg, fg,
 		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 				       GE_INCHES, gdd),
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
@@ -403,10 +400,6 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 		strncpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)),255);
 		done += 1;
 	    }
-	    if(!strcmp("cidfamily", CHAR(STRING_ELT(names, i)))) {
-		strncpy(cidfamily, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)),255);
-		done += 1;
-	    }
 	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
 		strncpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
@@ -431,7 +424,7 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 	    strcpy(cidfamily, ""); break;
         }
     if (PDFDeviceDriver(ndd, fn, "special", family, afmpaths, encoding,
-                        cidfamily, bg, fg,
+                        bg, fg,
 			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),

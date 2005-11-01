@@ -449,6 +449,7 @@ static int GetNextItem(FILE *fp, char *dest, int c, EncodingInputState *state)
  *         Also assumes that encpath has ".enc" suffix supplied
  *         (not required by R interface)
  */
+#ifdef SUPPORT_MBCS
 static int pathcmp(char *encpath, char *comparison) {
     char pathcopy[PATH_MAX]; 
     char *p1, *p2;
@@ -468,6 +469,7 @@ static int pathcmp(char *encpath, char *comparison) {
 	*p2 = '\0';
     return strcmp(p1, comparison);
 }
+#endif
 
 static void seticonvName(char *encpath, char *convname) {
     /* 
@@ -2845,7 +2847,7 @@ PSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     encodinginfo enc;
     encodinglist enclist;
     type1fontfamily font;
-    cidfontfamily cidfont;
+    cidfontfamily cidfont = NULL;
     int gotFont;
 
     PostScriptDesc *pd;
@@ -3738,7 +3740,7 @@ static int translateFont(char* family, int style, PostScriptDesc *pd)
     if (fontfamily) {
 	result = (fontIndex - 1)*5 + style;
     } else {
-	warning(_("family %s not included in PostScript device"), family);
+	warning(_("family '%s' not included in PostScript device"), family);
     }
     return result;
 }
@@ -3752,6 +3754,7 @@ static int numFonts(type1fontlist fonts) {
     return i;
 }
 
+#ifdef SUPPORT_MBCS
 static int translateCIDFont(char* family, int style, PostScriptDesc *pd) 
 {
     int result = style;
@@ -3768,10 +3771,11 @@ static int translateCIDFont(char* family, int style, PostScriptDesc *pd)
 	 */
 	result = (numFonts(pd->fonts)*5) + (fontIndex - 1)*4 + style;
     } else {
-	warning(_("family %s not included in PostScript device"), family);
+	warning(_("family '%s' not included in PostScript device"), family);
     }
     return result;
 }
+#endif
 
 /* Only used for symbol fonts and on non-MBCS platforms */
 static void PS_Text(double x, double y, char *str,
@@ -4976,7 +4980,7 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *paper,
     encodinginfo enc;
     encodinglist enclist;
     type1fontfamily font;
-    cidfontfamily cidfont;
+    cidfontfamily cidfont = NULL;
 
     PDFDesc *pd;
 
