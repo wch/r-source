@@ -55,7 +55,7 @@ CIDFont(family, metrics, cmap, encoding, pdfresource = "")
 CMitalic <- Type1Font("ComputerModern",
                       c("CM_regular_10.afm", "CM_boldx_10.afm",
                         "cmti10.afm", "cmbxti10.afm",
-                        "CM_symbol_10.afm")
+                        "CM_symbol_10.afm"),
                       encoding = "TeXtext.enc")
 }
 \keyword{device}
