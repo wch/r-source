@@ -79,13 +79,6 @@ contour(x, \dots)
   number and the y axis to column number, with column 1 at the bottom,
   i.e. a 90 degree clockwise rotation of the conventional textual layout.
 }
-\value{
-  \code{contourLines} returns a list of contours.
-  Each contour is a list with elements:
-  \item{level }{The contour level.}
-  \item{x }{The x-coordinates of the contour.}
-  \item{y }{The y-coordinates of the contour.}
-}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
