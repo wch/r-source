@@ -9,13 +9,10 @@
 \method{plot}{default}(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
      log = "", main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
      ann = par("ann"), axes = TRUE, frame.plot = axes,
-     panel.first = NULL, panel.last = NULL,
-     col = par("col"), bg = NA, pch = par("pch"),
-     cex = 1, lty = par("lty"),
-     lwd = par("lwd"), asp = NA, \dots)
+     panel.first = NULL, panel.last = NULL, asp = NA, \dots)
 }
 \arguments{
-  \item{x,y}{the \code{x} and \code{y} arguments provide the x and y
+  \item{x, y}{the \code{x} and \code{y} arguments provide the x and y
     coordinates for the plot.  Any reasonable way of defining the
     coordinates is acceptable.  See the function \code{\link{xy.coords}}
     for details.}
@@ -35,8 +32,8 @@
 
   \item{main}{a main title for the plot.}
   \item{sub}{a sub title for the plot.}
-  \item{xlab}{a label for the x axis.}
-  \item{ylab}{a label for the y axis.}
+  \item{xlab}{a label for the x axis, defaults to a description of \code{x}.}
+  \item{ylab}{a label for the y axis, defaults to a description of \code{y}.}
 
   \item{ann}{a logical value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot.}
@@ -51,24 +48,28 @@
   \item{panel.last}{an expression to be evaluated after plotting has
     taken place.}
 
-  \item{col}{The colors for lines and points.  Multiple colors can be
-    specified so that each point can be given its own color.  If there
-    are fewer colors than points they are recycled in the standard
-    fashion.  Lines will all be plotted in the first colour specified.}
-  \item{bg}{a vector of background colors for open plot symbols, see
-    \code{\link{points}}.  Note: this is \bold{not} the same setting
-    as \code{\link{par}("bg")}.}
-  \item{pch}{a vector of plotting characters or symbols:
-    see \code{\link{points}}.}
-  \item{cex}{a numerical vector giving the amount by which plotting text
-    and symbols should be scaled relative to the default.  This works
-    as a multiple of \code{\link{par}("cex")}.  \code{NULL} and \code{NA}
-    are equivalent to \code{1.0}.}
-  \item{lty}{the line type, see \code{\link{par}}.}
-  \item{lwd}{the line width, see \code{\link{par}}.}
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
-  \item{\dots}{other graphical parameters as in \code{\link{par}}
-    may also be passed as arguments.}
+  \item{\dots}{other graphical parameters (see\code{\link{par}}).}
+}
+\details{
+  Commonly used graphical parameters are:
+  \describe{
+    \item{\code{col}}{The colors for lines and points.  Multiple colors can be
+      specified so that each point can be given its own color.  If there
+      are fewer colors than points they are recycled in the standard
+      fashion.  Lines will all be plotted in the first colour specified.}
+    \item{\code{bg}}{a vector of background colors for open plot symbols, see
+      \code{\link{points}}.  Note: this is \bold{not} the same setting
+      as \code{\link{par}("bg")}.}
+    \item{\code{pch}}{a vector of plotting characters or symbols:
+      see \code{\link{points}}.}
+    \item{\code{cex}}{a numerical vector giving the amount by which
+      plotting text and symbols should be scaled relative to the
+      default.  This works as a multiple of \code{\link{par}("cex")}.
+      \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
+    \item{\code{lty}}{the line type, see \code{\link{par}}.}
+    \item{\code{lwd}}{the line width, see \code{\link{par}}.}
+  }
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

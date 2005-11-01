@@ -34,10 +34,10 @@ text(x, \dots)
     vector fonts are used.  The first element of the vector
     selects a typeface and the second element selects a style.}
   \item{cex}{numeric \bold{c}haracter \bold{ex}pansion factor; multiplied
-    by \code{\link{par}("cex")} yields the final character size.}
-  \item{col, font}{the color and font to be used; these default to the
-    values of the global graphical parameters in \code{\link{par}()}.
+    by \code{\link{par}("cex")} yields the final character size.
     \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
+  \item{col, font}{the color and font to be used; these default to the
+    values of the global graphical parameters in \code{\link{par}()}.}
   \item{xpd}{(where) should clipping take place?  Defaults to
     \code{\link{par}("xpd")}.}
   \item{\dots}{further graphical parameters (from \code{\link{par}}).}

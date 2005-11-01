@@ -8,7 +8,8 @@
   arguments.
 }
 \usage{
-plot.xy(xy, type, pch = 1, lty = "solid", col = par("fg"), bg = NA,
+plot.xy(xy, type, pch = par("pch"), lty = par("lty"),
+        col = par("col"), bg = NA,
         cex = 1, lwd = par("lwd"), \dots)
 }
 \arguments{
