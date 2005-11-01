@@ -1,54 +1,38 @@
 \name{postscriptFonts}
-\alias{postscriptFont}
 \alias{postscriptFonts}
+\alias{pdfFonts}
 \concept{fonts}
 \concept{encoding}
 \title{PostScript Fonts}
 \description{
   These functions handle the translation of a device-independent R graphics
-  font family name to a PostScript font description, used by both the
-  \code{\link{postscript}} and \code{\link{pdf}} graphics devices.
+  font family name to a PostScript or PDF font description, used by the
+  \code{\link{postscript}} or \code{\link{pdf}} graphics devices.
 }
 \usage{
-postscriptFont(family, metrics, encoding = "default")
-
-postscriptFonts(...)	   
+postscriptFonts(...)
+pdfFonts(...)
 }
 \arguments{
-  \item{family}{a character string giving the name of an Adobe Type 1
-    font family.}
-  \item{metrics}{a vector of four or five strings giving paths
-    to the afm (font metric) files for the Type 1 font.}
-  \item{encoding}{the name of an encoding file.  Defaults to
-    \code{"default"}, which maps to
-#ifdef unix
-"ISOLatin1.enc"
-#endif
-#ifdef windows
-"WinAnsi.enc"
-#endif
-    Otherwise, a file name in the \file{enc} directory of the
-    \pkg{grDevices} package, which is used if the path does not contain a
-    path separator.  An extension \code{".enc"} can be omitted.}
   \item{\dots}{either character strings naming mappings to display,
     or new (named) mappings to define.}
 }
 \details{
-  A PostScript device is created with a default font (see the
+  A PostScript or PDF device is created with a default font (see the
   documentation for \code{\link{postscript}}), but it is also possible
   to specify a font family when drawing to the device (for example, see
   the documentation for \code{\link{gpar}} in the grid package).
-  The font mechanism is shared with the \code{\link{pdf}} device.
 
   The font family sent to the device is a simple string name, which must be
-  mapped to something more specific to PostScript fonts.  A list of
+  mapped to something more specific to PostScript or PDF fonts.  A list of
   mappings is maintained and can be modified by the user.
 
-  The \code{postscriptFonts} function can be used to list existing
-  translations and to define new mappings.  The \code{postscriptFont}
-  function can be used to create a new mapping.
+  The \code{postscriptFonts} and \code{pdfFonts} functions
+  can be used to list existing
+  translations and to define new mappings.  The \code{\link{Type1Font}}
+  and \code{\link{CIDFont}} 
+  functions can be used to create new mappings.
 
-  The argument \code{family} specifies the font family to be used.
   Default mappings are provided for four device-independent family
   names: \code{"sans"} for a sans-serif font, \code{"serif"} for a serif
   font, \code{"mono"} for a monospaced font, and \code{"symbol"} for a
@@ -67,22 +51,28 @@ postscriptFonts(...)
   There are also mappings for \code{"ComputerModern"} and
   \code{"ComputerModernItalic"}.
 
+  Finally, there are some default mappings for East Asian locales:
+  \code{"Japan1"}, \code{"Japan1HeiMin"}, \code{"Japan1GothicBBB"},
+  and \code{"Japan1Ryumin"} for the Japan;
+  \code{"Korea1"} and \code{"Korea1deb"} for Korea;
+  \code{"CNS1"} for China and Singapore;
+  \code{"GB1"} for Hong Kong and Taiwan.
+                
   The specification of font metrics and encodings is described in the help
   for the \code{\link{postscript}} function.
 
-  The fonts are not embedded in the resulting PostScript file, so
-  software including the PostScript plot
+  The fonts are not embedded in the resulting PostScript or PDF file, so
+  software including the PostScript or PDF plot
   file should either embed the font outlines (usually from \file{.pfb}
   or \file{.pfa} files) or use DSC comments to instruct the print
   spooler to do so.
 }
 \value{
-  \code{postscriptFont} returns a PostScript font description.
-
-  \code{postscriptFonts} returns one or more font mappings.
+  One or more font mappings.
 }
 \seealso{
-  \code{\link{postscript}}
+  \code{\link{postscript}} and \code{\link{pdf}};  \code{\link{Type1Font}}
+  and \cide{\link{CIDFont}} for specifying new font mappings.
 }
 \author{
   Support for Computer Modern fonts is based on a contribution by

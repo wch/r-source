@@ -3,23 +3,6 @@
 ## and also to hide the variable.
 .PSenv <- new.env()
 
-assign(".PostScript.Options",
-    list(paper	= "default",
-	 horizontal = TRUE,
-	 width	= 0,
-	 height = 0,
-	 family = "Helvetica",
-	 encoding = "default",
-	 cidfamily = "default",
-	 pointsize  = 12,
-	 bg	= "transparent",
-	 fg	= "black",
-	 onefile    = TRUE,
-	 print.it   = FALSE,
-	 append	    = FALSE,
-	 pagecentre = TRUE,
-	 command    = "default"), envir = .PSenv)
-
 check.options <-
     function(new, name.opt, reset = FALSE, assign.opt = FALSE,
 	     envir = .GlobalEnv, check.attributes = c("mode", "length"),
@@ -106,7 +89,7 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     else old
 }
 
-guess_encoding <- function()
+guessEncoding <- function()
 {
     switch(.Platform$OS.type,
            "windows" = {
@@ -140,7 +123,10 @@ guess_encoding <- function()
          else "ISOLatin1.enc"})
 }
 
-guess_cidfamily <- function()
+# Attempt to provide a sensible default font for a PostScript
+# or PDF device
+# In particular, use an "Asian" CID font if in an "Asian" locale
+guessFamily <- function()
 {
     switch(toupper(gsub("^[-\s 0-9a-zA-Z]*_",
                         "",
@@ -160,7 +146,8 @@ guess_cidfamily <- function()
            "CN"                         = "GB1",
            "SINGAPORE"                  = "GB1",
            "SG"                         = "GB1",
-           "")
+           # Assume that everywhere else, Helvetica is sensible
+           "Helvetica")
 }
 
 ##--> source in devPS.c :
@@ -177,29 +164,30 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
 
     if(is.null(old$command) || old$command == "default")
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
+    
+    if(is.null(old$encoding) || old$encoding  == "default")
+        old$encoding <- guessEncoding()
+    
     ## handle family separately as length can be 1, 4, or 5
     if(!missing(family)) {
+        # Case where family is a set of AFMs
         if(length(family) == 4) {
             family <- c(family, "Symbol.afm")
         } else {
-            # If family has been defined as device-independent
-            # R graphics family (i.e., it can be found in postscriptFonts)
-            # then map to postscript font family
+            # If family has been specified, match with a font in the
+            # font database (see postscriptFonts())
+            # and pass in a device-independent font name.
+            # NOTE that in order to match, we need both family name
+            # and encoding to match.
             if (length(family) == 1) {
-                psFamily <- postscriptFonts(family)[[1]]
-                if (!is.null(psFamily)) family <- psFamily$family
+                 matchFont(postscriptFonts(family)[[1]], old$encoding)
             }
         }
         old$family <- family
     }
-    if(is.null(old$encoding) || old$encoding  == "default")
-        old$encoding <- guess_encoding()
-    # CID Font
-    if(is.null(old$cidfamily) || old$cidfamily  == "default")
-        old$cidfamily <- guess_cidfamily()
 
     .External("PostScript",
-              file, old$paper, old$family, old$encoding, old$cidfamily, old$bg, old$fg,
+              file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
               old$onefile, old$pagecentre, old$print.it, old$command,
               title, fonts, PACKAGE = "grDevices")
@@ -233,25 +221,24 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
     if(is.null(old$encoding) || old$encoding  == "default")
-        old$encoding <- guess_encoding()
+        old$encoding <- guessEncoding()
     ## handle family separately as length can be 1, 4, or 5
     if(!missing(family)) {
+        # Case where family is a set of AFMs
         if(length(family) == 4) {
             family <- c(family, "Symbol.afm")
         } else {
-        # If family has been defined as device-independent
-        # R graphics family (i.e., it can be found in postscriptFonts)
-        # then map to postscript font family
+            # If family has been specified, match with a font in the
+            # font database (see postscriptFonts())
+            # and pass in a device-independent font name.
+            # NOTE that in order to match, we need both family name
+            # and encoding to match.
             if (length(family) == 1) {
-                psFamily <- postscriptFonts(family)[[1]]
-                if (!is.null(psFamily)) family <- psFamily$family
+                matchFont(postscriptFonts(family)[[1]], old$encoding)
             }
         }
         old$family <- family
     }
-    # CID Font
-    if(is.null(old$cidfamily) || old$cidfamily  == "default")
-        old$cidfamily <- guess_cidfamily()
     # Extract version
     versions <- c("1.1", "1.2", "1.3", "1.4", "1.5", "1.6")
     if (version %in% versions)
@@ -259,7 +246,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     else
         stop("invalid PDF version")
     .External("PDF",
-              file, old$paper, old$family, old$encoding, old$cidfamily, old$bg, old$fg,
+              file, old$paper, old$family, old$encoding, old$bg, old$fg,
               width, height, old$pointsize, old$onefile, old$pagecentre, title,
               fonts, version[1], version[2], PACKAGE = "grDevices")
     invisible()
@@ -298,53 +285,107 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 
 ####################
 # PostScript font database
+#
+# PostScript fonts may be either Type1 or CID-keyed fonts
+# (the latter provides support for CJK fonts)
 ####################
 
-# Each font family has a name, plus a vector of 4 or 5 directories
-# for font metric afm files
 assign(".PostScript.Fonts", list(), envir = .PSenv)
 
-psFontError <- function(errDesc) {
-    stop("invalid ", errDesc, " in PostScript font specification")
+fontError <- function(errDesc) {
+    stop("invalid ", errDesc, " in font specification")
 }
+
+checkFont <- function(font) {
+    UseMethod("checkFont")
+}
+
+checkFont.default <- function(font) {
+    stop("Invalid font type")
+}
+
+# A Type1 font family has a name, plus a vector of 4 or 5 directories
+# for font metric afm files, plus an encoding
 
 # Check that the font has the correct structure and information
 # Already checked that it had a name
-checkPSFont <- function(font) {
+checkFont.Type1Font <- function(font) {
     if (is.null(font$family) || !is.character(font$family))
-        psFontError("font family name")
+        fontError("font family name")
     if (is.null(font$metrics) || !is.character(font$metrics) ||
         length(font$metrics) < 4)
-        psFontError("font metric information")
+        fontError("font metric information")
         ## Add default symbol font metric if none provided
     if (length(font$metrics) == 4)
         font$metrics <- c(font$metrics, "Symbol.afm")
     if (is.null(font$encoding) || !is.character(font$encoding))
-        psFontError("font encoding")
+        fontError("font encoding")
     font
 }
 
-checkFontInUse <- function(names) {
+# A CID-keyed font family has a name, four afm files,
+# a CMap name, an encoding, and (for now at least) a
+# PDF chunk
+# (I really hope we can dispense with the latter!)
+checkFont.CIDFont <- function(font) {
+    if (!inherits(font, "CIDFont"))
+        stop("Not a CID font")
+    if (is.null(font$family) || !is.character(font$family))
+        fontError("font family name")
+    if (is.null(font$metrics) || !is.character(font$metrics) ||
+        length(font$metrics) < 4)
+        fontError("font metric information")
+    if (is.null(font$cmap) || !is.character(font$cmap))
+        fontError("CMap name")    
+    if (is.null(font$encoding) || !is.character(font$encoding))
+        fontError("font encoding")
+    if (is.null(font$pdfresource) || !is.character(font$pdfresource))
+        fontError("PDF resource")
+    font  
+}
+
+isPDF <- function(fontDBname) {
+  switch(fontDBname,
+         .PostScript.Fonts=FALSE,
+         .PDF.Fonts=TRUE,
+         stop("Invalid font database name"))
+}
+
+checkFontInUse <- function(names, fontDBname) {
     for (i in names)
-        if (.Call("Type1FontInUse", i, PACKAGE = "grDevices"))
+        if (.Call("Type1FontInUse", i, isPDF(fontDBname),
+                  PACKAGE = "grDevices") ||
+            .Call("CIDFontInUse", i, isPDF(fontDBname),
+                  PACKAGE = "grDevice"))
             stop("font" , i, " already in use")
 }
 
-setPSFonts <- function(fonts, fontNames) {
-    fonts <- lapply(fonts, checkPSFont)
-    fontDB <- get(".PostScript.Fonts", envir=.PSenv)
+setFonts <- function(fonts, fontNames, fontDBname) {
+    fonts <- lapply(fonts, checkFont)
+    fontDB <- get(fontDBname, envir=.PSenv)
     existingFonts <- fontNames %in% names(fontDB)
     if (sum(existingFonts) > 0) {
-        checkFontInUse(fontNames[existingFonts])
+        checkFontInUse(fontNames[existingFonts], fontDBname)
         fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
     }
     if (sum(existingFonts) < length(fontNames))
         fontDB <- c(fontDB, fonts[!existingFonts])
-    assign(".PostScript.Fonts", fontDB, envir=.PSenv)
+    assign(fontDBname, fontDB, envir=.PSenv)
 }
 
 printFont <- function(font) {
-    paste(font$family, "\n    (", paste(font$metrics, collapse=" "), ")\n",
+    UseMethod("printFont")
+}
+
+printFont.Type1Font <- function(font) {
+    paste(font$family, "\n    (", paste(font$metrics, collapse=" "), 
+          "\n    ", font$encoding, "\n",
+          sep="")
+}
+
+printFont.CIDFont <- function(font) {
+    paste(font$family, "\n    (", paste(font$metrics, collapse=" "),
+          ")\n    ", font$CMap, "\n    ", font$encoding, "\n",
           sep="")
 }
 
@@ -374,117 +415,461 @@ postscriptFonts <- function(...) {
         } else {
             if (ndots != nnames)
                 stop("invalid arguments in postscriptFonts (need named args)")
-            setPSFonts(fonts, fontNames)
+            setFonts(fonts, fontNames, ".PostScript.Fonts")
         }
     }
 }
 
 # Create a valid postscript font description
-postscriptFont <- function(family, metrics, encoding="default") {
-    checkPSFont(list(family=family, metrics=metrics, encoding=encoding))
+Type1Font <- function(family, metrics, encoding="default") {
+    font <- list(family=family, metrics=metrics, encoding=encoding)
+    class(font) <- "Type1Font"
+    checkFont(font)
 }
 
+CIDFont <- function(family, metrics, cmap, encoding, pdfresource="") {
+    font <- list(family=family, metrics=metrics, cmap=cmap,
+                 encoding=encoding, pdfresource=pdfresource)
+    class(font) <- "CIDFont"
+    checkFont(font)
+}
+
+# Deprecated in favour of Type1Font()
+postscriptFont <- function(family, metrics, encoding="default") {
+    .Deprecated("Type1Font")
+    Type1Font(family, metrics, encoding)
+}
+
+
+####################
+# PDF font database
+#
+# PDF fonts may be either Type1 or CID-keyed fonts
+# (the latter provides support for CJK fonts)
+#
+# PDF font database separate from PostScript one because
+# some standard CID fonts are different
+####################
+
+assign(".PDF.Fonts", list(), envir = .PSenv)
+
+pdfFonts <- function(...) {
+    ndots <- length(fonts <- list(...))
+    if (ndots == 0)
+        get(".PDF.Fonts", envir=.PSenv)
+    else {
+        fontNames <- names(fonts)
+        nnames <- length(fontNames)
+        if (nnames == 0) {
+            if (!all(sapply(fonts, is.character)))
+                stop("invalid arguments in pdfFonts (must be font names)")
+            else
+                get(".PDF.Fonts", envir=.PSenv)[unlist(fonts)]
+        } else {
+            if (ndots != nnames)
+                stop("invalid arguments in pdfFonts (need named args)")
+            setFonts(fonts, fontNames, ".PDF.Fonts")
+        }
+    }
+}
+
+# Match an encoding
+# NOTE that if encoding in font database is "default", that is a match
+matchEncoding <- function(font, encoding) {
+    UseMethod("matchEncoding")
+}
+
+matchEncoding.Type1Font <- function(font, encoding) {
+    font$encoding %in% c("default", encoding)
+}
+
+# Users should not be specifying a CID font AND an encoding
+# when starting a new device
+matchEncoding.CIDFont <- function(font, encoding) {
+    TRUE
+}
+
+# Match a font name (and an encoding) 
+matchFont <- function(font, encoding) {
+    if (is.null(font))
+        stop("Unknown font")
+    if (!matchEncoding(font, encoding))
+        stop("Font name/encoding mismatch")
+}
+
+# Function to initialise default PostScript and PDF fonts
+# Called in .onLoad
+# NOTE that this is in .onLoad
+#   a) because that's a sensible place to do initialisation of package globals
+#   b) because it does not work to do it BEFORE then.  In particular,
+#      if the body of this function is evaluated when the R code of the
+#      package is sourced, then the method dispatch on checkFont() does
+#      not work because when the R code is sourced, the S3 methods in
+#      this package have not yet been registered.
+
+initPSandPDFfonts <- function() {
+
+assign(".PostScript.Options",
+    list(paper	= "default",
+	 horizontal = TRUE,
+	 width	= 0,
+	 height = 0,
+	 family = guessFamily(),
+	 encoding = "default",
+	 pointsize  = 12,
+	 bg	= "transparent",
+	 fg	= "black",
+	 onefile    = TRUE,
+	 print.it   = FALSE,
+	 append	    = FALSE,
+	 pagecentre = TRUE,
+	 command    = "default"), envir = .PSenv)
+
 postscriptFonts(# Default Serif font is Times
-                serif=postscriptFont("Times",
+                serif=Type1Font("Times",
                   c("Times-Roman.afm", "Times-Bold.afm",
                     "Times-Italic.afm", "Times-BoldItalic.afm",
                     "Symbol.afm")),
                 # Default Sans Serif font is Helvetica
-                sans=postscriptFont("Helvetica",
+                sans=Type1Font("Helvetica",
                   c("Helvetica.afm", "Helvetica-Bold.afm",
                     "Helvetica-Oblique.afm", "Helvetica-BoldOblique.afm",
                     "Symbol.afm")),
                 # Default Monospace font is Courier
-                mono=postscriptFont("Courier",
+                mono=Type1Font("Courier",
                   c("Courier.afm", "Courier-Bold.afm",
                     "Courier-Oblique.afm", "Courier-BoldOblique.afm",
                     "Symbol.afm")),
                 # Default Symbol font is Symbol
-                symbol=postscriptFont("Symbol",
+                symbol=Type1Font("Symbol",
                   c("Symbol.afm", "Symbol.afm", "Symbol.afm", "Symbol.afm",
                     "Symbol.afm"), encoding="AdobeSym.enc"),
                 # Remainder are standard Adobe fonts that
                 # should be present on PostScript devices
-                AvantGarde=postscriptFont("AvantGarde",
+                AvantGarde=Type1Font("AvantGarde",
                   c("agw_____.afm", "agd_____.afm",
                     "agwo____.afm", "agdo____.afm",
                     "Symbol.afm")),
-                Bookman=postscriptFont("Bookman",
+                Bookman=Type1Font("Bookman",
                   c("bkl_____.afm", "bkd_____.afm",
                     "bkli____.afm", "bkdi____.afm",
                     "Symbol.afm")),
-                Courier=postscriptFont("Courier",
+                Courier=Type1Font("Courier",
                   c("Courier.afm", "Courier-Bold.afm",
                     "Courier-Oblique.afm", "Courier-BoldOblique.afm",
                     "Symbol.afm")),
-                Helvetica=postscriptFont("Helvetica",
+                Helvetica=Type1Font("Helvetica",
                   c("Helvetica.afm", "Helvetica-Bold.afm",
                     "Helvetica-Oblique.afm", "Helvetica-BoldOblique.afm",
                     "Symbol.afm")),
-                HelveticaNarrow=postscriptFont("Helvetica-Narrow",
+                "Helvetica-Narrow"=Type1Font("Helvetica-Narrow",
                   c("hvn_____.afm", "hvnb____.afm",
                     "hvno____.afm", "hvnbo___.afm",
                     "Symbol.afm")),
-                NewCenturySchoolbook=postscriptFont("NewCenturySchoolbook",
+                NewCenturySchoolbook=Type1Font("NewCenturySchoolbook",
                   c("ncr_____.afm", "ncb_____.afm",
                     "nci_____.afm", "ncbi____.afm",
                     "Symbol.afm")),
-                Palatino=postscriptFont("Palatino",
+                Palatino=Type1Font("Palatino",
                   c("por_____.afm", "pob_____.afm",
                     "poi_____.afm", "pobi____.afm",
                     "Symbol.afm")),
-                Times=postscriptFont("Times",
+                Times=Type1Font("Times",
                   c("Times-Roman.afm", "Times-Bold.afm",
                     "Times-Italic.afm", "Times-BoldItalic.afm",
                     "Symbol.afm")),
                 # URW equivalents
-                URWGothic=postscriptFont("URWGothic",
+                URWGothic=Type1Font("URWGothic",
                   c("a010013l.afm", "a010015l.afm",
                     "a010033l.afm", "a010035l.afm",
                     "s050000l.afm")),
-                URWBookman=postscriptFont("URWBookman",
+                URWBookman=Type1Font("URWBookman",
                   c("b018012l.afm", "b018015l.afm",
                     "b018032l.afm", "b018035l.afm",
                     "s050000l.afm")),
-                NimbusMon=postscriptFont("NimbusMon",
+                NimbusMon=Type1Font("NimbusMon",
                   c("n022003l.afm", "n022004l.afm",
                     "n022023l.afm", "n022024l.afm",
                     "s050000l.afm")),
-                NimbusSan=postscriptFont("NimbusSan",
+                NimbusSan=Type1Font("NimbusSan",
                   c("n019003l.afm", "n019004l.afm",
                     "n019023l.afm", "n019024l.afm",
                     "s050000l.afm")),
-                URWHelvetica=postscriptFont("URWHelvetica",
+                URWHelvetica=Type1Font("URWHelvetica",
                   c("n019003l.afm", "n019004l.afm",
                     "n019023l.afm", "n019024l.afm",
                     "s050000l.afm")),
-                NimbusSanCond=postscriptFont("NimbusSanCond",
+                NimbusSanCond=Type1Font("NimbusSanCond",
                   c("n019043l.afm", "n019044l.afm",
                     "n019063l.afm", "n019064l.afm",
                     "s050000l.afm")),
-                CenturySch=postscriptFont("CenturySch",
+                CenturySch=Type1Font("CenturySch",
                   c("c059013l.afm", "c059016l.afm",
                     "c059033l.afm", "c059036l.afm",
                     "s050000l.afm")),
-                URWPalladio=postscriptFont("URWPalladio",
+                URWPalladio=Type1Font("URWPalladio",
                   c("p052003l.afm", "p052004l.afm",
                     "p052023l.afm", "p052024l.afm",
                     "s050000l.afm")),
-                NimbusRom=postscriptFont("NimbusRom",
+                NimbusRom=Type1Font("NimbusRom",
                   c("n021003l.afm", "n021004l.afm",
                     "n021023l.afm", "n021024l.afm",
                     "s050000l.afm")),
-                URWTimes=postscriptFont("URWTimes",
+                URWTimes=Type1Font("URWTimes",
                   c("n021003l.afm", "n021004l.afm",
                     "n021023l.afm", "n021024l.afm",
                     "s050000l.afm")),
                 # Computer Modern as recoded by Brian D'Urso
-                ComputerModern=postscriptFont("ComputerModern",
+                ComputerModern=Type1Font("ComputerModern",
                   c("CM_regular_10.afm", "CM_boldx_10.afm",
                     "CM_italic_10.afm", "CM_boldx_italic_10.afm",
                     "CM_symbol_10.afm"), encoding = "TeXtext.enc"),
-                 ComputerModernItalic=postscriptFont("ComputerModernItalic",
+                 ComputerModernItalic=Type1Font("ComputerModernItalic",
                   c("CM_regular_10.afm", "CM_boldx_10.afm", "cmti10.afm",
                     "cmbxti10.afm", "CM_symbol_10.afm"),
                  encoding = "TeXtext.enc")
                )
+
+# All of the Type1 fonts are the same for PostScript and PDF
+do.call("pdfFonts", postscriptFonts())
+
+# CJK fonts
+postscriptFonts(Japan1=CIDFont("HeiseiKakuGo-W5",
+                  c("Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+                  "EUC-H",
+                  "EUC-JP"),
+                Japan1HeiMin=CIDFont("HeiseiMin-W3",
+                  c("Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+                  "EUC-H",
+                  "EUC-JP"),
+                Japan1GothicBBB=CIDFont("GothicBBB-Medium",
+                  c("Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+                  "EUC-H",
+                  "EUC-JP"),
+                Japan1Ryumin=CIDFont("Ryumin-Light",
+                c("Adobe-Japan1-UniJIS-UCS2-H.afm",
+                  "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                  "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                  "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+                  "EUC-H",
+                  "EUC-JP"),
+                Korea1=CIDFont("Baekmuk-Batang",
+                  c("Adobe-Korea1-UniKS-UCS2-H.afm",
+                    "Adobe-Korea1-UniKS-UCS2-H.afm",
+                    "Adobe-Korea1-UniKS-UCS2-H.afm",
+                    "Adobe-Korea1-UniKS-UCS2-H.afm"),
+                  "KSCms-UHC-H",
+                  "CP949"),
+                Korea1deb=CIDFont("Batang-Regular",
+                  c("Adobe-Korea1-UniKS-UCS2-H.afm",
+                    "Adobe-Korea1-UniKS-UCS2-H.afm",
+                    "Adobe-Korea1-UniKS-UCS2-H.afm",
+                    "Adobe-Korea1-UniKS-UCS2-H.afm"),
+                  "KSCms-UHC-H",
+                  "CP949"),
+                CNS1=CIDFont("MOESung-Regular",
+                  c("Adobe-CNS1-UniCNS-UCS2-H.afm",
+                    "Adobe-CNS1-UniCNS-UCS2-H.afm",
+                    "Adobe-CNS1-UniCNS-UCS2-H.afm",
+                    "Adobe-CNS1-UniCNS-UCS2-H.afm"),
+                  "B5pc-H",
+                  "CP950"),
+                GB1=CIDFont("BousungEG-Light-GB",
+                  c("Adobe-GB1-UniGB-UCS2-H.afm",
+                    "Adobe-GB1-UniGB-UCS2-H.afm",
+                    "Adobe-GB1-UniGB-UCS2-H.afm",
+                    "Adobe-GB1-UniGB-UCS2-H.afm"),
+                  "GBK-EUC-H",
+                  "GBK"))
+                  
+pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
+           c("Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+           "EUC-H",
+           "EUC-JP",
+           paste("/FontDescriptor",
+                 "<<",
+                 "  /Type /FontDescriptor",
+                 "  /CapHeight 737 /Ascent 752 /Descent -221 /StemV 114",
+                 "  /FontBBox [-92 -250 1010 922]",
+                 "  /ItalicAngle 0 /Flags 4 /XHeight 553",
+                 "  /Style << /Panose <000001000500000000000000> >>",
+                 ">>",
+                 "/CIDSystemInfo << /Registry(Adobe) /Ordering(Japan1) /Supplement  2 >>",
+                 "/DW 1000",
+                 "/W [",
+                 "    231   632 500 ",
+                 "   8718 [500 500] ",
+                 "]\n",
+                 sep="\n      ")),
+         Japan1HeiMin=CIDFont("HeiseiMin-W3-Acro",
+           c("Adobe-Japan1-UniJIS-UCS2-H.afm",
+                 "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                 "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                 "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+           "EUC-H",
+           "EUC-JP",
+           paste("/FontDescriptor",
+                 "<<",
+                 "  /Type /FontDescriptor",
+                 "  /CapHeight 709 /Ascent 723 /Descent -241 /StemV 69",
+                 "  /FontBBox [-123 -257 1001 910]",
+                 "  /ItalicAngle 0 /Flags 6 /XHeight 450",
+                 "  /Style << /Panose <000002020500000000000000> >>",
+                 ">>",
+                 "/CIDSystemInfo << /Registry(Adobe) /Ordering(Japan1) /Supplement  2 >>",
+                 "/DW 1000",
+                 "/W [",
+                 "    231   632 500 ",
+                 "   8718 [500 500] ",
+                 "]\n",
+                 sep="\n      ")),
+         Japan1GothicBBB=CIDFont("GothicBBB-Medium",
+           c("Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+           "EUC-H",
+           "EUC-JP",
+           paste("/FontDescriptor",
+                 "<<",
+                 "  /Type /FontDescriptor",
+                 "  /CapHeight 737 /Ascent 752 /Descent -271 /StemV 99",
+                 "  /FontBBox [-174 -268 1001 944]",
+                 "  /ItalicAngle 0 /Flags 4",
+                 "  /Style << /Panose <0801020b0500000000000000> >>",
+                 ">>",
+                 "/CIDSystemInfo << /Registry(Adobe) /Ordering(Japan1) /Supplement  2 >>",
+                 "/DW 1000",
+                 "/W [",
+                 "    231   632 500",
+                 "   8718 [500 500]",
+                 "]\n",
+                 sep="\n      ")),
+         Japan1Ryumin=CIDFont("Ryumin-Light",
+           c("Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+           "EUC-H",
+           "EUC-JP",
+           paste("/FontDescriptor",
+                 "<<",
+                 "  /Type /FontDescriptor",
+                 "  /CapHeight 709 /Ascent 723 /Descent -241 /StemV 69",
+                 "  /FontBBox [-170 -331 1024 903]",
+                 "  /ItalicAngle 0 /Flags 6",
+                 "  /Style << /Panose <010502020300000000000000> >>",
+                 ">>",
+                 "/CIDSystemInfo << /Registry(Adobe) /Ordering(Japan1) /Supplement  2 >>",
+                 "/DW 1000",
+                 "/W [",
+                 "    231   632 500",
+                 "   8718 [500 500]",
+                 "]\n",
+                 sep="\n      ")),
+         Korea1=CIDFont("HYGothic-Medium-Acro",
+           c("Adobe-Korea1-UniKS-UCS2-H.afm",
+             "Adobe-Korea1-UniKS-UCS2-H.afm",
+             "Adobe-Korea1-UniKS-UCS2-H.afm",
+             "Adobe-Korea1-UniKS-UCS2-H.afm"),
+           "KSCms-UHC-H",
+           "CP949",
+           paste("/FontDescriptor",
+                 "<<",
+                 "  /Type /FontDescriptor",
+                 "  /CapHeight 737 /Ascent 752 /Descent -271 /StemV 58",
+                 "  /FontBBox [-6 -145 1003 880]",
+                 "  /ItalicAngle 0 /Flags 4 /XHeight 553",
+                 "  /Style << /Panose <000001000600000000000000> >>",
+                 ">>",
+                 "/CIDSystemInfo << /Registry(Adobe) /Ordering(Korea1) /Supplement 1 >>",
+                 "/DW 1000",
+                 "/W [",
+                 "      1 94 500",
+                 "     97 [500] ",
+                 "   8094 8190 500",
+                 "]\n",
+                 sep="\n      ")),
+         Korea1deb=CIDFont("HYGothic-Medium-Acro",
+           c("Adobe-Korea1-UniKS-UCS2-H.afm",
+             "Adobe-Korea1-UniKS-UCS2-H.afm",
+             "Adobe-Korea1-UniKS-UCS2-H.afm",
+             "Adobe-Korea1-UniKS-UCS2-H.afm"),
+           "KSCms-UHC-H",
+           "CP949",
+           paste("/FontDescriptor",
+                 "<<",
+                 "  /Type /FontDescriptor",
+                 "  /CapHeight 737 /Ascent 752 /Descent -271 /StemV 58",
+                 "  /FontBBox [-6 -145 1003 880]",
+                 "  /ItalicAngle 0 /Flags 4 /XHeight 553",
+                 "  /Style << /Panose <000001000600000000000000> >>",
+                 ">>",
+                 "/CIDSystemInfo << /Registry(Adobe) /Ordering(Korea1) /Supplement 1 >>",
+                 "/DW 1000",
+                 "/W [",
+                 "      1 94 500",
+                 "     97 [500] ",
+                 "   8094 8190 500",
+                 "]\n",
+                 sep="\n      ")),
+         CNS1=CIDFont("AdobeMingStd-Light", # "MHei-Medium-Acro",
+           c("Adobe-CNS1-UniCNS-UCS2-H.afm",
+             "Adobe-CNS1-UniCNS-UCS2-H.afm",
+             "Adobe-CNS1-UniCNS-UCS2-H.afm",
+             "Adobe-CNS1-UniCNS-UCS2-H.afm"),
+           "B5pc-H",
+           "CP950",
+           paste("/FontDescriptor",
+                 "<<",
+                 "  /Type /FontDescriptor",
+                 "  /CapHeight 737 /Ascent 752 /Descent -271 /StemV 58",
+                 "  /FontBBox [-45 -250 1015 887]",
+                 "  /ItalicAngle 0 /Flags 4 /XHeight 553",
+                 "  /Style << /Panose <000001000600000000000000> >>",
+                 ">>",
+                 "/CIDSystemInfo << /Registry(Adobe) /Ordering(CNS1) /Supplement  0 >>",
+                 "/DW 1000",
+                 "/W [",
+                 "     13648 13742 500",
+                 "     17603 [500]",
+                 "]\n",
+                 sep="\n      ")),
+         GB1=CIDFont("STSong-Light-Acro",
+           c("Adobe-GB1-UniGB-UCS2-H.afm",
+             "Adobe-GB1-UniGB-UCS2-H.afm",
+             "Adobe-GB1-UniGB-UCS2-H.afm",
+             "Adobe-GB1-UniGB-UCS2-H.afm"),
+           "GBK-EUC-H",
+           "GBK",
+           paste("/FontDescriptor",
+                 "<<",
+                 "  /Type /FontDescriptor",
+                 "  /CapHeight 857 /Ascent 857 /Descent -143 /StemV 91",
+                 "  /FontBBox [-250 -143 600 857]",
+                 "  /ItalicAngle 0 /Flags 6 /XHeight 599",
+                 "  /Style << /Panose <000000000400000000000000> >>",
+                 ">>",
+                 "/CIDSystemInfo << /Registry(Adobe) /Ordering(GB1) /Supplement  2 >>",
+                 "/DW 1000",
+                 "/W [",
+                 "     814 939 500",
+                 "     7716 [500]",
+                 "     22355 [500 500]",
+                 "     22357 [500]",
+                 "]\n",
+                 sep="\n      ")))
+}
+           

@@ -1,6 +1,7 @@
 useDynLib(grDevices)
 
 export(Hershey, boxplot.stats, check.options, chull,
+       CIDFont, 
        col2rgb, colors, colours, cm, colorRamp,
        colorRampPalette, contourLines,
        convertColor, colorConverter, colorspaces,
@@ -10,15 +11,25 @@ export(Hershey, boxplot.stats, check.options, chull,
        getGraphicsEvent, graphics.off, gray, grey,
        gray.colors, grey.colors, heat.colors, hsv, hcl, make.rgb, n2mfrow,
        nclass.Sturges, nclass.FD, nclass.scott,
-       palette, pdf, pictex, postscript, postscriptFont,
-       postscriptFonts, ps.options, rainbow, recordGraphics, recordPlot,
+       palette,
+       pdf, pdfFonts,
+       pictex,
+       postscript, postscriptFont, postscriptFonts, 
+       ps.options, rainbow, recordGraphics, recordPlot,
        replayPlot, rgb, rgb2hsv, terrain.colors, topo.colors, trans3d,
+       Type1Font, 
        xfig, xy.coords, xyz.coords)
 export(X11, x11, bitmap, dev2bitmap, jpeg, png)
 
 S3method(print, recordedplot)
 S3method(print, colorConverter)
 S3method(print, RGBcolorConverter)
+
+S3method("checkFont", "default")
+S3method("checkFont", "Type1Font")
+S3method("checkFont", "CIDFont")
+S3method("matchEncoding", "Type1Font")
+S3method("matchEncoding", "CIDFont")
 
 if(tools:::.OStype() == "unix") {
 export(X11Font, X11Fonts, quartz, quartzFont, quartzFonts)
