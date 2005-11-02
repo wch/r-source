@@ -6,6 +6,8 @@
   Creates a bar plot with vertical or horizontal bars.
 }
 \usage{
+barplot(height, \dots)
+
 \method{barplot}{default}(height, width = 1, space = NULL,
         names.arg = NULL, legend.text = NULL, beside = FALSE,
         horiz = FALSE, density = NULL, angle = 45,

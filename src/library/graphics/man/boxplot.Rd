@@ -73,7 +73,8 @@ boxplot(x, \dots)
     boxplots.  The values in \code{border} are recycled if the
     length of \code{border} is less than the number of plots.}
   \item{col}{if \code{col} is non-null it is assumed to contain colors
-    to be used to colour the bodies of the box plots.}
+    to be used to colour the bodies of the box plots. By default they
+    are in the background colour.}
   \item{log}{character indicating if x or y or both coordinates should
     be plotted in log scale.}
   \item{pars}{a list of (potentially many) more graphical parameters,

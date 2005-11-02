@@ -13,8 +13,7 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
     arrow head.}
   \item{code}{integer code, determining \emph{kind} of arrows to be
     drawn.}
-  \item{col, lty, lwd, xpd}{usual graphical parameters as in
-    \code{\link{par}}.}
+  \item{col, lty, lwd, xpd}{graphical parameters as in \code{\link{par}}.}
 }
 \description{
   Draw arrows between pairs of points.

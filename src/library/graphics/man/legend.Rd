@@ -14,7 +14,7 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
-  to the function \code{\link{locator}} can be used in place of the \code{x}
+  to the function \code{\link{locator}(1)} can be used in place of the \code{x}
   and \code{y} arguments.
 }
 \arguments{

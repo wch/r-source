@@ -21,7 +21,7 @@ box(which = "plot", lty = "solid", \dots)
 \details{
   The choice of colour is complicated.  If \code{col} was supplied
   and is not \code{NA}, it is used.  Otherwise, if \code{fg} was supplied
-  and idnot \code{NA}, it is used.  The final default is \code{par("col")}.
+  and is not \code{NA}, it is used.  The final default is \code{par("col")}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

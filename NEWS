@@ -130,6 +130,9 @@ BUG FIXES
 	versions of R returning the same value for Im and Arg of
 	non-complex numbers.)
 
+    o	symbols(fg) defaulted to colour 1, not par("col") as documented.
+	It does now defaults to par("col").
+
 
 
 		CHANGES IN R VERSION 2.2.0
