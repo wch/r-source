@@ -34,6 +34,7 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 			 col=par("col"), bg=NA, pch=par("pch"),
 			 cex = 1, lty=par("lty"), lwd=par("lwd"), asp=NA, ...)
 {
+    localAxis <- function(..., lab) axis(...) # avoid partial match for labels
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel, log)
@@ -47,8 +48,8 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
     plot.xy(xy, type, col=col, pch=pch, cex=cex, bg=bg, lty=lty, lwd=lwd, ...)
     panel.last
     if (axes) {
-	axis(1, ...)
-	axis(2, ...)
+	localAxis(1, ...)
+	localAxis(2, ...)
     }
     if (frame.plot)
 	box(...)
