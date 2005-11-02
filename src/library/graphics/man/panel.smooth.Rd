@@ -11,8 +11,8 @@ panel.smooth(x, y, col = par("col"), bg = NA, pch = par("pch"),
              \dots)
 }
 \arguments{
-  \item{x,y}{numeric vectors of the same length}
-  \item{col,bg,pch,cex}{numeric or character codes for the color(s),
+  \item{x, y}{numeric vectors of the same length}
+  \item{col, bg, pch, cex}{numeric or character codes for the color(s),
     point type and size of \code{\link{points}}; see also
     \code{\link{par}}.}
   \item{col.smooth}{color to be used by \code{lines} for drawing the
@@ -25,7 +25,7 @@ panel.smooth(x, y, col = par("col"), bg = NA, pch = par("pch"),
 \seealso{
   \code{\link{coplot}} and \code{\link{pairs}} where \code{panel.smooth}
   is typically used;
-  \code{\link{lowess}}.
+  \code{\link{lowess}} which does the smoothing.
 }
 \examples{
 pairs(swiss, panel = panel.smooth, pch = ".")# emphasize the smooths

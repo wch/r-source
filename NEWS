@@ -97,6 +97,11 @@ NEW FEATURES
     o	arrows() has been changed to be more similar to segments():
 	for example col=NA omits the arrow.
 
+    o	The 'col' argument of legend() now defaults to par("col")
+	(which defaults to "black", the previous default), so that
+	the lines/symbols are shown in the legend in the colour that
+	is used on the plot.
+
 
 DEPRECATED & DEFUNCT
 
@@ -120,6 +125,10 @@ DEPRECATED & DEFUNCT
 
     o	The 'vfont' argument of axis() and mtext() has been removed:
 	use par(family=) instead.
+
+    o	The unused graphical parameter "type" has been removed: it
+	invited confusion with the 'type' argument to default methods
+	of plot(), points() and lines().
 
 
 INTERNATIONALIZATION
@@ -323,6 +332,9 @@ BUG FIXES
     o	Im(-1) was pi. (PR#8272, a side effect from all previous
 	versions of R returning the same value for Im and Arg of
 	non-complex numbers.)
+
+    o	symbols(fg) defaulted to colour 1, not par("col") as documented.
+	It does now defaults to par("col").
 
 
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2002 Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997-2005 Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -62,14 +62,15 @@ void RecordGraphicsCall(SEXP call)
 
 static void par_error(char *what)
 {
-    error(_("invalid value specified for graphics parameter \"%s\""),  what);
+    error(_("invalid value specified for graphical parameter \"%s\""),  what);
 }
 
 
 static void lengthCheck(char *what, SEXP v, int n, SEXP call)
 {
     if (length(v) != n)
-	errorcall(call, _("parameter \"%s\" has the wrong length"), what);
+	errorcall(call, _("graphical parameter \"%s\" has the wrong length"), 
+		  what);
 }
 
 
@@ -386,9 +387,9 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	    posIntCheck(INTEGER(value)[2], what);
 	    posIntCheck(INTEGER(value)[3], what);
 	    if(nrow != INTEGER(value)[2])
-		warningcall(call, _("value of nr in \"mfg\" is wrong and will be ignored"));
+		warning(_("value of nr in \"mfg\" is wrong and will be ignored"));
 	    if(ncol != INTEGER(value)[3])
-		warningcall(call, _("value of nc in \"mfg\" is wrong and will be ignored"));
+		warning(_("value of nc in \"mfg\" is wrong and will be ignored"));
 	}
 	R_DEV_2(lastFigure) = nrow*ncol;
 	/*R_DEV__(mfind) = 1;*/
@@ -575,8 +576,17 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	    par_error(what);
 	R_DEV__(ylog) = (ix != 0);
     }
-
-    else warningcall(call, _("parameter \"%s\" cannot be set"), what);
+    else if (streql(what, "cin") || streql(what, "cra") || 
+	     streql(what, "csi") || streql(what, "cxy") ||
+	     streql(what, "din")) {
+	warning(_("graphical parameter \"%s\" cannot be set"), what);
+    }
+    /* We do not need these as Query will already have warned.
+    else if (streql(what, "type")) {
+	warning(_("graphical parameter \"%s\" is obsolete"), what);
+    }
+    else warning(_("unknown graphical parameter \"%s\""), what);
+    */
 
     return;
 } /* Specify */
@@ -618,13 +628,18 @@ void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 	/*	naIntCheck(ix, what); */
 	R_DEV__(fg) = ix;
     }
+    else if (streql(what, "cin") || streql(what, "cra") || 
+	     streql(what, "csi") || streql(what, "cxy") ||
+	     streql(what, "din")) {
+	warning(_("graphical parameter \"%s\" cannot be set"), what);
+    }
 #if 0 /* warning removed in 2.3.0 */
     else if (streql(what, "asp")) {
 	/* this is not a parameter, but let it through as if it were */
     }
 
     else warning(
-	_("parameter \"%s\" could not be set in high-level plot() function"),
+	_("graphical parameter \"%s\" can not be set in high-level plot() function"),
 	what);
 #endif
 } /* Specify2 */
@@ -946,14 +961,6 @@ static SEXP Query(char *what, DevDesc *dd)
 	value = allocVector(REALSXP, 1);
 	REAL(value)[0] = Rf_dpptr(dd)->tmag;
     }
-    else if (streql(what, "type")) {
-	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
-	buf[0] = Rf_dpptr(dd)->type;
-	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
-    }
     else if (streql(what, "usr")) {
 	value = allocVector(REALSXP, 4);
 	if (Rf_gpptr(dd)->xlog) {
@@ -1032,8 +1039,14 @@ static SEXP Query(char *what, DevDesc *dd)
 	value = allocVector(LGLSXP, 1);
 	INTEGER(value)[0] = Rf_dpptr(dd)->ylog;
     }
-    else
+    else if (streql(what, "type")) {
+	warning(_("graphical parameter \"%s\" is obsolete"), what);
 	value = R_NilValue;
+    }
+    else {
+	warning(_("unknown graphical parameter \"%s\""), what);
+	value = R_NilValue;
+    }
     return value;
 }
 
@@ -1084,7 +1097,7 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(2);
     }
     else {
-	errorcall(call, _("invalid parameter passed to par()"));
+	error(_("invalid argument passed to par()"));
 	return R_NilValue/* -Wall */;
     }
     /* should really only do this if specifying new pars ?  yes! [MM] */

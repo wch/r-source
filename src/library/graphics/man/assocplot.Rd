@@ -17,10 +17,10 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   \item{space}{the amount of space (as a fraction of the average
     rectangle width and height) left between each rectangle.}
   \item{main}{overall title for the plot.}
-  \item{xlab}{a label for the x axis.  Defaults to the name of the row
-    variable in \code{x} if non-\code{NULL}.}
-  \item{ylab}{a label for the y axis.  Defaults to the column names of
-    the column variable in \code{x} if non-\code{NULL}.}
+  \item{xlab}{a label for the x axis.  Defaults to the name (if any) of
+    the row dimension in \code{x}.}
+  \item{ylab}{a label for the y axis.  Defaults to the name (if any) of
+    the column dimension in \code{x}.}
 }
 \details{
   For a two-way contingency table, the signed contribution to Pearson's

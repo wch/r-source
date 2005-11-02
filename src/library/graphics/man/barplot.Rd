@@ -6,6 +6,8 @@
   Creates a bar plot with vertical or horizontal bars.
 }
 \usage{
+barplot(height, \dots)
+
 \method{barplot}{default}(height, width = 1, space = NULL,
         names.arg = NULL, legend.text = NULL, beside = FALSE,
         horiz = FALSE, density = NULL, angle = 45,
@@ -95,7 +97,9 @@
     relative to the x axis.}
   \item{add}{logical specifying if bars should be added to an already
     existing plot; defaults to \code{FALSE}.}
-  \item{\dots}{further graphical parameters (\code{\link{par}}) are
+  \item{\dots}{arguments to be passed to/from other methods.  For the
+    default methods these can include
+    further graphical parameters (see \code{\link{par}}) which are
     passed to \code{\link{plot.window}()}, \code{\link{title}()} and
     \code{\link{axis}}.}
 }

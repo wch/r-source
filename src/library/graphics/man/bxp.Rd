@@ -1,6 +1,6 @@
 \name{bxp}
 \alias{bxp}
-\title{Box Plots from Summaries}
+\title{Draw Box Plots from Summaries}
 \description{
   \code{bxp} draws box plots based on the given summaries in \code{z}.
   It is usually called from within \code{\link{boxplot}}, but can be

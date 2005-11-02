@@ -17,7 +17,8 @@ curve(expr, from, to, n = 101, add = FALSE, type = "l",
   \item{add}{logical; if \code{TRUE} add to already existing plot.}
   \item{xlim}{numeric of length 2; if specified, it serves as default
     for \code{c(from, to)}.}
-  \item{type, ylab, log, \dots}{graphical parameters can also be
+  \item{type}{plot type: see \code{\link{plot.default}}.}
+  \item{ylab, log, \dots}{labels and graphical parameters can also be
     specified as arguments.
     \code{plot.function} passes all these to \code{curve}.}
 }

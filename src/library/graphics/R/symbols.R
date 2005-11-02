@@ -1,7 +1,7 @@
 symbols <-
 function (x, y = NULL, circles, squares, rectangles, stars,
 	  thermometers, boxplots, inches = TRUE, add = FALSE,
-	  fg = 1, bg = NA, xlab = NULL, ylab = NULL, main = NULL,
+	  fg = par("col"), bg = NA, xlab = NULL, ylab = NULL, main = NULL,
 	  xlim=NULL, ylim=NULL, ...)
 {
     count <- 0

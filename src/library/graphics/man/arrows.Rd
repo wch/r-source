@@ -16,8 +16,7 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
     drawn.}
   \item{col, lty, lwd}{graphical parameters, possible vectors.
     \code{NA} values in \code{col} cause the arrow to be omitted.}
-  \item{\dots}{usual graphical parameters such as \code{xpd}: see
-    \code{\link{par}}.}
+  \item{\dots}{graphical parameters such as \code{xpd}: see \code{\link{par}}.}
 }
 \description{
   Draw arrows between pairs of points.

@@ -44,7 +44,7 @@ lines(x, \dots)
 \seealso{
   \code{\link{points}}, particularly for \code{type \%in\% c("p","b","o")},
   \code{\link{plot}},
-  and the underlying \dQuote{primitive} \code{\link{plot.xy}}.
+  and the workhorse function \code{\link{plot.xy}}.
 
   \code{\link{par}} for how to specify colors.
 }

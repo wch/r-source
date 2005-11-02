@@ -1,6 +1,6 @@
 /* <UTF8> char here is either ASCII or handled as a whole */
 
-/* Graphical parameters treated identically from
+/* Graphical parameters which are treated identically by
  * par( <nam> = <value> )  and	highlevel  plotfun (..., <nam> = <value> ).
  *
  * This is #included both from Specify() and Specify2() into ./par.c
@@ -122,7 +122,7 @@
 	if (((GEDevDesc*) dd)->dev->canChangeGamma)
 	    R_DEV__(gamma) = x;
 	else
-	    warningcall(call, "gamma cannot be modified on this device");
+	    warningcall(call, _("'gamma' cannot be modified on this device"));
     }
     else if (streql(what, "lab")) {
 	value = coerceVector(value, INTSXP);
@@ -211,31 +211,10 @@
 	else if (!R_FINITE(Rf_dpptr(dd)->tck))
 	    R_DEV__(tck) = -0.01; /* S Default -- was 0.02 till R 1.5.x */
     }
-
     else if (streql(what, "tmag")) {
 	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	R_DEV__(tmag) = x;
-    }
-    else if (streql(what, "type")) {
-	if (!isString(value) || LENGTH(value) < 1)
-	    par_error(what);
-	ix = CHAR(STRING_ELT(value, 0))[0];
-	switch (ix) {
-	case 'p':
-	case 'l':
-	case 'b':
-	case 'o':
-	case 'c':
-	case 's':
-	case 'S':
-	case 'h':
-	case 'n':
-	    R_DEV__(type) = ix;
-	    break;
-	default:
-	    par_error(what);
-	}
     }
     else if (streql(what, "xaxp")) {
 	value = coerceVector(value, REALSXP);

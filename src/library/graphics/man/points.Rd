@@ -16,7 +16,8 @@ points(x, \dots)
   \item{x, y}{coordinate vectors of points to plot.}
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot.default}}.}
-  \item{\dots}{Further graphical parameters may also be supplied as arguments.}
+  \item{\dots}{Further graphical parameters may also be supplied as
+    arguments.  See Details.}
 }
 \details{
   The coordinates can be passed in a plotting structure
@@ -57,11 +58,10 @@ points(x, \dots)
       side 0.01 inch (scaled by \code{cex}).  In addition, if \code{cex =
 	1} (the default), each side is at least one pixel (1/72 inch on
       the \code{\link{pdf}}, \code{\link{postscript}} and
-      \code{\link{xfig}} devices).  The details here have been changed
-      for 2.1.0 and are subject to change.
+      \code{\link{xfig}} devices).  (The details were changed for \R 2.1.0.)
     }
     \item{\code{col}}{color code or name, see \code{\link{par}}.}
-    \item{\code{bg}}{background (\dQuote{fill}) color for open plot
+    \item{\code{bg}}{background (\dQuote{fill}) color for the open plot
       symbols given by \code{pch=21:25}.}
     \item{\code{cex}}{character (or symbol) expansion: a numerical vector.
       This works as a multiple of \code{\link{par}("cex")}.}
@@ -91,7 +91,7 @@ points(x, \dots)
 }
 \seealso{
   \code{\link{plot}}, \code{\link{lines}}, and the underlying
-  \dQuote{primitive} \code{\link{plot.xy}}.
+  workhorse function \code{\link{plot.xy}}.
 }
 \examples{
 plot(-4:4, -4:4, type = "n")# setting up coord. system

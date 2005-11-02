@@ -2,7 +2,7 @@
 \alias{legend}
 \title{Add Legends to Plots}
 \usage{
-legend(x, y = NULL, legend, fill = NULL, col = "black",
+legend(x, y = NULL, legend, fill = NULL, col = par("col"),
        lty, lwd, pch,
        angle = 45, density = NULL, bty = "o", bg = par("bg"),
        pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
@@ -14,7 +14,7 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
-  to the function \code{\link{locator}} can be used in place of the \code{x}
+  to the function \code{\link{locator}(1)} can be used in place of the \code{x}
   and \code{y} arguments.
 }
 \arguments{

@@ -16,7 +16,7 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   \item{ylab}{Y axis label, same font attributes as \code{xlab}.}
   \item{line}{specifying a value for \code{line} overrides the
     default placement of labels, and places them this many lines
-    from the plot.}
+    from the plot edge.}
   \item{outer}{a logical value.  If \code{TRUE}, the titles are
     placed in the outer margins of the plot.}
   \item{\dots}{further graphical parameters from \code{\link{par}}.  Use

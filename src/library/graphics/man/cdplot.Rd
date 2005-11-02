@@ -10,11 +10,13 @@
 }
 \usage{
 cdplot(x, \dots)
+
 \method{cdplot}{default}(x, y,
   plot = TRUE, tol.ylab = 0.05,
   bw = "nrd0", n = 512, from = NULL, to = NULL,
   col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
   yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), \dots)
+
 \method{cdplot}{formula}(formula, data = list(),
   plot = TRUE, tol.ylab = 0.05,
   bw = "nrd0", n = 512, from = NULL, to = NULL,

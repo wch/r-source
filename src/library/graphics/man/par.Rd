@@ -1,7 +1,6 @@
 \name{par}
 \alias{par}
 \alias{.Pars}
-\alias{.Pars.readonly}
 \concept{adj}
 \concept{ann}
 \concept{ask}
@@ -64,7 +63,6 @@
 \concept{tck}
 \concept{tcl}
 \concept{tmag}
-\concept{type}
 \concept{usr}
 \concept{xaxp}
 \concept{xaxs}
@@ -109,13 +107,12 @@ par(\dots, no.readonly = FALSE)
 
   \code{par()} (no arguments) or \code{par(no.readonly=TRUE)} is used to
   get \emph{all} the graphical parameters (as a named list).  Their
-  names are currently taken from the variable \code{.Pars}.
-  \code{.Pars.readonly} contains the names of the \code{par} arguments
-  which are \emph{readonly}.
+  names are currently taken from the unexported variable \code{.Pars}.
 
   \emph{\bold{R.O.}} indicates \emph{\bold{read-only arguments}}: These
-  may only be used in queries, i.e., they do \emph{not} set anything,
-  and cannot be set.
+  may only be used in queries and cannot be set.  (\code{"cin"},
+  \code{"cra"}, \code{"csi"}, \code{"cxy"} and \code{"din"} are always
+  read-only, and \code{"gamma"} is on most devices.)
 
   There are several parameters can only be set by a call to \code{par()}:
   \itemize{
@@ -409,11 +406,7 @@ par(\dots, no.readonly = FALSE)
       setting \code{tcl = NA} sets \code{tck = -0.01} which is S' default.}
     \item{\code{tmag}}{A number specifying the enlargement of text of
       the main title relative to the other annotating text of the plot.
-      Defaults to 1.2.}
-    \item{\code{type}}{character;  the default plot type desired, see
-      \code{\link{plot.default}(type=\dots)}, defaulting to \code{"p"}.
-      \strong{NB:} This is currently used -- the default for
-      \code{\link{plot.default}} does not depend on this par.}
+      Defaults to \code{1.2}.}
     \item{\code{usr}}{A vector of the form \code{c(x1, x2, y1, y2)}
       giving the extremes of the user coordinates of the plotting
       region.  When a logarithmic scale is in use (i.e.,
