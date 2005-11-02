@@ -155,6 +155,7 @@ static char *CIDBoldFontStr = "/%s-Bold\n"
     "/CIDFont defineresource pop\n";
 #endif
 
+#if 0
 static const struct {
     char const *cidfamily;
     char const *cidafmfile[4];
@@ -377,3 +378,4 @@ static const struct {
     { NULL }
 };
 
+#endif
