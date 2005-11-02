@@ -822,8 +822,11 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* ngettext(n, msg1, msg2, domain) */
 SEXP do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+#ifdef ENABLE_NLS
     char *domain = "", *buf;
-    SEXP ans, sdom = CADDDR(args), msg1 = CADR(args), msg2 = CADDR(args);
+    SEXP ans, sdom = CADDDR(args);
+#endif
+    SEXP msg1 = CADR(args), msg2 = CADDR(args);
     int n = asInteger(CAR(args));
     
     checkArity(op, args);
