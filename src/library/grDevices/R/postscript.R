@@ -164,10 +164,10 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
 
     if(is.null(old$command) || old$command == "default")
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
-    
+
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- guessEncoding()
-    
+
     ## handle family separately as length can be 1, 4, or 5
     if(!missing(family)) {
         # Case where family is a set of AFMs
@@ -292,17 +292,13 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 
 assign(".PostScript.Fonts", list(), envir = .PSenv)
 
-fontError <- function(errDesc) {
+fontError <- function(errDesc)
     stop("invalid ", errDesc, " in font specification")
-}
 
-checkFont <- function(font) {
-    UseMethod("checkFont")
-}
+checkFont <- function(font) UseMethod("checkFont")
 
-checkFont.default <- function(font) {
-    stop("Invalid font type")
-}
+
+checkFont.default <- function(font) stop("Invalid font type")
 
 # A Type1 font family has a name, plus a vector of 4 or 5 directories
 # for font metric afm files, plus an encoding
@@ -336,12 +332,12 @@ checkFont.CIDFont <- function(font) {
         length(font$metrics) < 4)
         fontError("font metric information")
     if (is.null(font$cmap) || !is.character(font$cmap))
-        fontError("CMap name")    
+        fontError("CMap name")
     if (is.null(font$encoding) || !is.character(font$encoding))
         fontError("font encoding")
     if (is.null(font$pdfresource) || !is.character(font$pdfresource))
         fontError("PDF resource")
-    font  
+    font
 }
 
 isPDF <- function(fontDBname) {
@@ -373,26 +369,19 @@ setFonts <- function(fonts, fontNames, fontDBname) {
     assign(fontDBname, fontDB, envir=.PSenv)
 }
 
-printFont <- function(font) {
-    UseMethod("printFont")
-}
+printFont <- function(font) UseMethod("printFont")
 
-printFont.Type1Font <- function(font) {
-    paste(font$family, "\n    (", paste(font$metrics, collapse=" "), 
-          "\n    ", font$encoding, "\n",
-          sep="")
-}
-
-printFont.CIDFont <- function(font) {
+printFont.Type1Font <- function(font)
     paste(font$family, "\n    (", paste(font$metrics, collapse=" "),
-          ")\n    ", font$CMap, "\n    ", font$encoding, "\n",
-          sep="")
-}
+          "\n    ", font$encoding, "\n", sep="")
 
-printFonts <- function(fonts) {
+printFont.CIDFont <- function(font)
+    paste(font$family, "\n    (", paste(font$metrics, collapse=" "),
+          ")\n    ", font$CMap, "\n    ", font$encoding, "\n", sep="")
+
+printFonts <- function(fonts)
     cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
               sep="", collapse=""))
-}
 
 # If no arguments specified, return entire font database
 # If no named arguments specified, all args should be font names
@@ -400,7 +389,8 @@ printFonts <- function(fonts) {
 # Else, must specify new fonts to enter into database (all
 # of which must be valid PostScript font descriptions and
 # all of which must be named args)
-postscriptFonts <- function(...) {
+postscriptFonts <- function(...)
+{
     ndots <- length(fonts <- list(...))
     if (ndots == 0)
         get(".PostScript.Fonts", envir=.PSenv)
@@ -421,13 +411,15 @@ postscriptFonts <- function(...) {
 }
 
 # Create a valid postscript font description
-Type1Font <- function(family, metrics, encoding="default") {
+Type1Font <- function(family, metrics, encoding="default")
+{
     font <- list(family=family, metrics=metrics, encoding=encoding)
     class(font) <- "Type1Font"
     checkFont(font)
 }
 
-CIDFont <- function(family, metrics, cmap, encoding, pdfresource="") {
+CIDFont <- function(family, metrics, cmap, encoding, pdfresource="")
+{
     font <- list(family=family, metrics=metrics, cmap=cmap,
                  encoding=encoding, pdfresource=pdfresource)
     class(font) <- "CIDFont"
@@ -435,7 +427,8 @@ CIDFont <- function(family, metrics, cmap, encoding, pdfresource="") {
 }
 
 # Deprecated in favour of Type1Font()
-postscriptFont <- function(family, metrics, encoding="default") {
+postscriptFont <- function(family, metrics, encoding="default")
+{
     .Deprecated("Type1Font")
     Type1Font(family, metrics, encoding)
 }
@@ -453,7 +446,8 @@ postscriptFont <- function(family, metrics, encoding="default") {
 
 assign(".PDF.Fonts", list(), envir = .PSenv)
 
-pdfFonts <- function(...) {
+pdfFonts <- function(...)
+{
     ndots <- length(fonts <- list(...))
     if (ndots == 0)
         get(".PDF.Fonts", envir=.PSenv)
@@ -475,26 +469,24 @@ pdfFonts <- function(...) {
 
 # Match an encoding
 # NOTE that if encoding in font database is "default", that is a match
-matchEncoding <- function(font, encoding) {
-    UseMethod("matchEncoding")
-}
+matchEncoding <- function(font, encoding) UseMethod("matchEncoding")
 
 matchEncoding.Type1Font <- function(font, encoding) {
-    font$encoding %in% c("default", encoding)
+    ## the trailing .enc is optional
+    font$encoding %in% c("default", encoding, paste(encoding, ".enc", sep=""))
 }
 
 # Users should not be specifying a CID font AND an encoding
 # when starting a new device
-matchEncoding.CIDFont <- function(font, encoding) {
-    TRUE
-}
+matchEncoding.CIDFont <- function(font, encoding) TRUE
 
-# Match a font name (and an encoding) 
+# Match a font name (and an encoding)
 matchFont <- function(font, encoding) {
     if (is.null(font))
-        stop("Unknown font")
+        stop("unknown font")
     if (!matchEncoding(font, encoding))
-        stop("Font name/encoding mismatch")
+        stop(gettextf("font encoding mismatch '%s'/'%s'",
+                      font$encoding, encoding), domain=NA)
 }
 
 # Function to initialise default PostScript and PDF fonts
@@ -649,17 +641,17 @@ postscriptFonts(Japan1=CIDFont("HeiseiKakuGo-W5",
                   "EUC-H",
                   "EUC-JP"),
                 Japan1GothicBBB=CIDFont("GothicBBB-Medium",
-                  c("Adobe-Japan1-UniJIS-UCS2-H.afm",
-                    "Adobe-Japan1-UniJIS-UCS2-H.afm",
-                    "Adobe-Japan1-UniJIS-UCS2-H.afm",
-                    "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+                  c("GothicBBB-Medium-UCS2-H.afm",
+                    "GothicBBB-Medium-UCS2-H.afm",
+                    "GothicBBB-Medium-UCS2-H.afm",
+                    "GothicBBB-Medium-UCS2-H.afm"),
                   "EUC-H",
                   "EUC-JP"),
                 Japan1Ryumin=CIDFont("Ryumin-Light",
-                c("Adobe-Japan1-UniJIS-UCS2-H.afm",
-                  "Adobe-Japan1-UniJIS-UCS2-H.afm",
-                  "Adobe-Japan1-UniJIS-UCS2-H.afm",
-                  "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+                c("Ryumin-Light-UCS2-H.afm",
+                  "Ryumin-Light-UCS2-H.afm",
+                  "Ryumin-Light-UCS2-H.afm",
+                  "Ryumin-Light-UCS2-H.afm"),
                   "EUC-H",
                   "EUC-JP"),
                 Korea1=CIDFont("Baekmuk-Batang",
@@ -690,8 +682,8 @@ postscriptFonts(Japan1=CIDFont("HeiseiKakuGo-W5",
                     "Adobe-GB1-UniGB-UCS2-H.afm"),
                   "GBK-EUC-H",
                   "GBK"))
-                  
-pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
+
+pdfFonts(Japan1=CIDFont("KozMinPro-Regular-Acro",
            c("Adobe-Japan1-UniJIS-UCS2-H.afm",
              "Adobe-Japan1-UniJIS-UCS2-H.afm",
              "Adobe-Japan1-UniJIS-UCS2-H.afm",
@@ -701,9 +693,9 @@ pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
            paste("/FontDescriptor",
                  "<<",
                  "  /Type /FontDescriptor",
-                 "  /CapHeight 737 /Ascent 752 /Descent -221 /StemV 114",
-                 "  /FontBBox [-92 -250 1010 922]",
-                 "  /ItalicAngle 0 /Flags 4 /XHeight 553",
+                 "  /CapHeight 740 /Ascent 1075 /Descent -272 /StemV 72",
+                 "  /FontBBox [-195 -272 1110 1075]",
+                 "  /ItalicAngle 0 /Flags 4 /XHeight 502",
                  "  /Style << /Panose <000001000500000000000000> >>",
                  ">>",
                  "/CIDSystemInfo << /Registry(Adobe) /Ordering(Japan1) /Supplement  2 >>",
@@ -715,9 +707,9 @@ pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
                  sep="\n      ")),
          Japan1HeiMin=CIDFont("HeiseiMin-W3-Acro",
            c("Adobe-Japan1-UniJIS-UCS2-H.afm",
-                 "Adobe-Japan1-UniJIS-UCS2-H.afm",
-                 "Adobe-Japan1-UniJIS-UCS2-H.afm",
-                 "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+             "Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm",
+             "Adobe-Japan1-UniJIS-UCS2-H.afm"),
            "EUC-H",
            "EUC-JP",
            paste("/FontDescriptor",
@@ -736,17 +728,17 @@ pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
                  "]\n",
                  sep="\n      ")),
          Japan1GothicBBB=CIDFont("GothicBBB-Medium",
-           c("Adobe-Japan1-UniJIS-UCS2-H.afm",
-             "Adobe-Japan1-UniJIS-UCS2-H.afm",
-             "Adobe-Japan1-UniJIS-UCS2-H.afm",
-             "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+           c("GothicBBB-Medium-UCS2-H.afm",
+             "GothicBBB-Medium-UCS2-H.afm",
+             "GothicBBB-Medium-UCS2-H.afm",
+             "GothicBBB-Medium-UCS2-H.afm"),
            "EUC-H",
            "EUC-JP",
            paste("/FontDescriptor",
                  "<<",
                  "  /Type /FontDescriptor",
                  "  /CapHeight 737 /Ascent 752 /Descent -271 /StemV 99",
-                 "  /FontBBox [-174 -268 1001 944]",
+                 "  /FontBBox [-22 -252 1000 892]",
                  "  /ItalicAngle 0 /Flags 4",
                  "  /Style << /Panose <0801020b0500000000000000> >>",
                  ">>",
@@ -758,17 +750,17 @@ pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
                  "]\n",
                  sep="\n      ")),
          Japan1Ryumin=CIDFont("Ryumin-Light",
-           c("Adobe-Japan1-UniJIS-UCS2-H.afm",
-             "Adobe-Japan1-UniJIS-UCS2-H.afm",
-             "Adobe-Japan1-UniJIS-UCS2-H.afm",
-             "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+           c("Ryumin-Light-UCS2-H.afm",
+             "Ryumin-Light-UCS2-H.afm",
+             "Ryumin-Light-UCS2-H.afm",
+             "Ryumin-Light-UCS2-H.afm"),
            "EUC-H",
            "EUC-JP",
            paste("/FontDescriptor",
                  "<<",
                  "  /Type /FontDescriptor",
                  "  /CapHeight 709 /Ascent 723 /Descent -241 /StemV 69",
-                 "  /FontBBox [-170 -331 1024 903]",
+                 "  /FontBBox [-54 -305 1000 903]",
                  "  /ItalicAngle 0 /Flags 6",
                  "  /Style << /Panose <010502020300000000000000> >>",
                  ">>",
@@ -779,7 +771,7 @@ pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
                  "   8718 [500 500]",
                  "]\n",
                  sep="\n      ")),
-         Korea1=CIDFont("HYGothic-Medium-Acro",
+         Korea1=CIDFont("HYSMyeongJoStd-Medium-Acro",
            c("Adobe-Korea1-UniKS-UCS2-H.afm",
              "Adobe-Korea1-UniKS-UCS2-H.afm",
              "Adobe-Korea1-UniKS-UCS2-H.afm",
@@ -789,9 +781,9 @@ pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
            paste("/FontDescriptor",
                  "<<",
                  "  /Type /FontDescriptor",
-                 "  /CapHeight 737 /Ascent 752 /Descent -271 /StemV 58",
-                 "  /FontBBox [-6 -145 1003 880]",
-                 "  /ItalicAngle 0 /Flags 4 /XHeight 553",
+                 "  /CapHeight 720 /Ascent 880 /Descent -148 /StemV 59",
+                 "  /FontBBox [-28 -148 1001 880]",
+                 "  /ItalicAngle 0 /Flags 4 /XHeight 468",
                  "  /Style << /Panose <000001000600000000000000> >>",
                  ">>",
                  "/CIDSystemInfo << /Registry(Adobe) /Ordering(Korea1) /Supplement 1 >>",
@@ -825,7 +817,7 @@ pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
                  "   8094 8190 500",
                  "]\n",
                  sep="\n      ")),
-         CNS1=CIDFont("AdobeMingStd-Light", # "MHei-Medium-Acro",
+         CNS1=CIDFont("MSungStd-Light-Acro",
            c("Adobe-CNS1-UniCNS-UCS2-H.afm",
              "Adobe-CNS1-UniCNS-UCS2-H.afm",
              "Adobe-CNS1-UniCNS-UCS2-H.afm",
@@ -835,9 +827,9 @@ pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
            paste("/FontDescriptor",
                  "<<",
                  "  /Type /FontDescriptor",
-                 "  /CapHeight 737 /Ascent 752 /Descent -271 /StemV 58",
-                 "  /FontBBox [-45 -250 1015 887]",
-                 "  /ItalicAngle 0 /Flags 4 /XHeight 553",
+                 "  /CapHeight 662 /Ascent 1071 /Descent -249 /StemV 66",
+                 "  /FontBBox [-160 -249 1015 1071]",
+                 "  /ItalicAngle 0 /Flags 4 /XHeight 400",
                  "  /Style << /Panose <000001000600000000000000> >>",
                  ">>",
                  "/CIDSystemInfo << /Registry(Adobe) /Ordering(CNS1) /Supplement  0 >>",
@@ -857,9 +849,9 @@ pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
            paste("/FontDescriptor",
                  "<<",
                  "  /Type /FontDescriptor",
-                 "  /CapHeight 857 /Ascent 857 /Descent -143 /StemV 91",
-                 "  /FontBBox [-250 -143 600 857]",
-                 "  /ItalicAngle 0 /Flags 6 /XHeight 599",
+                 "  /CapHeight 626 /Ascent 905 /Descent -254 /StemV 48",
+                 "  /FontBBox [-134 -254 1001 905]",
+                 "  /ItalicAngle 0 /Flags 6 /XHeight 416",
                  "  /Style << /Panose <000000000400000000000000> >>",
                  ">>",
                  "/CIDSystemInfo << /Registry(Adobe) /Ordering(GB1) /Supplement  2 >>",
@@ -872,4 +864,3 @@ pdfFonts(Japan1=CIDFont("HeiseiKakuGo-W5-Acro",
                  "]\n",
                  sep="\n      ")))
 }
-           

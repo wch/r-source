@@ -6,15 +6,15 @@ EncodingScheme FontSpecific
 FullName CMBXSL10
 FamilyName Computer Modern
 Weight Bold
-ItalicAngle -9.46
+ItalicAngle -9
 IsFixedPitch false
 Version 1.00B
 Comment Computer Modern fonts were designed by Donald E. Knuth
 FontBBox -247 -250 1278 946
-CapHeight 686.109
-XHeight 444.444
-Ascender 694.444
-Descender -194.444
+CapHeight 686
+XHeight 444
+Ascender 694
+Descender -194
 Comment FontID CMBXSL
 Comment DesignSize 10 (pts)
 Comment CharacterCodingScheme TeX text
