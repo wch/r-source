@@ -72,7 +72,7 @@ pdfFonts(...)
 }
 \seealso{
   \code{\link{postscript}} and \code{\link{pdf}};  \code{\link{Type1Font}}
-  and \cide{\link{CIDFont}} for specifying new font mappings.
+  and \code{\link{CIDFont}} for specifying new font mappings.
 }
 \author{
   Support for Computer Modern fonts is based on a contribution by
@@ -81,11 +81,11 @@ pdfFonts(...)
 \examples{
 postscriptFonts()
 ## This duplicates "ComputerModernItalic".
-CMitalic <- postscriptFont("ComputerModern",
-                           c("CM_regular_10.afm", "CM_boldx_10.afm",
-                             "cmti10.afm", "cmbxti10.afm",
-                             "CM_symbol_10.afm"),
-                           encoding = "TeXtext.enc")
+CMitalic <- Type1Font("ComputerModern",
+                      c("CM_regular_10.afm", "CM_boldx_10.afm",
+                        "cmti10.afm", "cmbxti10.afm",
+                         "CM_symbol_10.afm"),
+                      encoding = "TeXtext.enc")
 postscriptFonts(CMitalic=CMitalic)
 }
 \keyword{device}
