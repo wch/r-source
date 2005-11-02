@@ -115,6 +115,7 @@
  *
  */
 
+#ifdef SUPPORT_MBCS
 /* to match it with afm of CID Japan1,Korea1,CNS1,GB1 */
 static char *CIDBoldFontStr = "/%s-Bold\n"
     "/%s /CIDFont findresource\n"
@@ -152,6 +153,7 @@ static char *CIDBoldFontStr = "/%s-Bold\n"
     "  currentdict\n"
     "end\n"
     "/CIDFont defineresource pop\n";
+#endif
 
 static const struct {
     char const *cidfamily;
