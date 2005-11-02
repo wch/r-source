@@ -27,7 +27,7 @@ old.packages(lib.loc = NULL, repos = getOption("repos"),
              method, available = NULL, checkBuilt = FALSE)
 
 new.packages(lib.loc = NULL, repos = getOption("repos"),
-             contriburl = contrib.url(repos),
+             contriburl = contrib.url(repos, type),
              method, available = NULL, ask = FALSE, \dots,
              type = getOption("pkgType"))
 
