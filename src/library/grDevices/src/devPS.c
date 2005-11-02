@@ -1620,6 +1620,10 @@ static cidfontfamily findDeviceCIDFont(char *name, cidfontlist fontlist,
     return font;    
 }
 
+/*
+ * Must only be called once a device has at least one font added
+ * (i.e., after the default font has been added)
+ */
 static type1fontfamily findDeviceFont(char *name, type1fontlist fontlist,
 				      int *index) 
 {

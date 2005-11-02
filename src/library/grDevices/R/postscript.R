@@ -89,38 +89,46 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     else old
 }
 
-guessEncoding <- function()
+guessEncoding <- function(family)
 {
-    switch(.Platform$OS.type,
-           "windows" = {
-               switch(utils::localeToCharset()[1],
-                      "ISO8859-2" = "CP1250.enc",
-                      "ISO8859-7" = "CP1253.enc", # Greek
-                      "ISO8859-13" = "CP1257.enc",
-                      "CP1251" = "CP1251.enc", # Cyrillic
-                      "WinAnsi.enc")
-           },
-       { lc <- localeToCharset()
-         if(length(lc) == 1)
-             switch(lc,
-                    "ISO8859-1" = "ISOLatin1.enc",
-                    "ISO8859-2" = "ISOLatin2.enc",
-                    "ISO8859-5" = "Cyrillic.enc",
-                    "ISO8859-7" = "Greek.enc",
-                    "ISO8859-13" = "ISOLatin7.enc",
-                    "ISO8859-15" = "ISOLatin9.enc",
-                    "KOI8-R" = "KOI8-R.enc",
-                    "KOI8-U" = "KOI8-U.enc",
-                    "ISOLatin1.enc")
-         else if(lc[1] == "UTF-8" && capabilities("iconv"))
-             switch(lc[2],
-                    "ISO8859-1" = "ISOLatin1.enc", # what about Euro?
-                    "ISO8859-2" = "ISOLatin2.enc",
-                    "ISO8859-5" = "Cyrillic.enc",
-                    "ISO8859-7" = "Greek.enc",
-                    "ISO8859-13" = "ISOLatin7.enc",
-                    "ISOLatin1.enc")
-         else "ISOLatin1.enc"})
+    # Two special families have special encodings, regardless of locale
+    if (!missing(family) &&
+        family %in% c("symbol", "ComputerModern")) {
+        switch(family,
+               "symbol" = "AdobeSym.enc",
+               "ComputerModern" = "TeXtext.enc")
+    }  else {
+        switch(.Platform$OS.type,
+               "windows" = {
+                   switch(utils::localeToCharset()[1],
+                          "ISO8859-2" = "CP1250.enc",
+                          "ISO8859-7" = "CP1253.enc", # Greek
+                          "ISO8859-13" = "CP1257.enc",
+                          "CP1251" = "CP1251.enc", # Cyrillic
+                          "WinAnsi.enc")
+               },
+               { lc <- localeToCharset()
+                 if(length(lc) == 1)
+                     switch(lc,
+                            "ISO8859-1" = "ISOLatin1.enc",
+                            "ISO8859-2" = "ISOLatin2.enc",
+                            "ISO8859-5" = "Cyrillic.enc",
+                            "ISO8859-7" = "Greek.enc",
+                            "ISO8859-13" = "ISOLatin7.enc",
+                            "ISO8859-15" = "ISOLatin9.enc",
+                            "KOI8-R" = "KOI8-R.enc",
+                            "KOI8-U" = "KOI8-U.enc",
+                            "ISOLatin1.enc")
+                 else if(lc[1] == "UTF-8" && capabilities("iconv"))
+                     switch(lc[2],
+                            "ISO8859-1" = "ISOLatin1.enc", # what about Euro?
+                            "ISO8859-2" = "ISOLatin2.enc",
+                            "ISO8859-5" = "Cyrillic.enc",
+                            "ISO8859-7" = "Greek.enc",
+                            "ISO8859-13" = "ISOLatin7.enc",
+                            "ISOLatin1.enc")
+                 else "ISOLatin1.enc"})
+    }
 }
 
 # Attempt to provide a sensible default font for a PostScript
@@ -166,7 +174,7 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
 
     if(is.null(old$encoding) || old$encoding  == "default")
-        old$encoding <- guessEncoding()
+        old$encoding <- guessEncoding(family)
 
     ## handle family separately as length can be 1, 4, or 5
     if(!missing(family)) {
