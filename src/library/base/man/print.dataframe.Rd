@@ -15,7 +15,7 @@
   \item{quote}{logical, indicating whether or not entries should be
     printed with surrounding quotes.}
   \item{right}{logical, indicating whether or not strings should be
-    right-aligned.  The default is left-alignment.}
+    right-aligned.  The default is right-alignment.}
 }
 \details{
   This calls \code{\link{format}} which formats the data frame
