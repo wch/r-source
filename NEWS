@@ -101,6 +101,8 @@ NEW FEATURES
 	(which defaults to "black", the previous default), so that
 	the lines/symbols are shown in the legend in the colour that
 	is used on the plot.
+	
+    o	Added Vectorize() function, a wrapper for mapply().
 
 
 DEPRECATED & DEFUNCT
