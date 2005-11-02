@@ -426,10 +426,10 @@ Type1Font <- function(family, metrics, encoding="default")
     checkFont(font)
 }
 
-CIDFont <- function(family, metrics, cmap, encoding, pdfresource="")
+CIDFont <- function(family, metrics, cmap, cmapEncoding, pdfresource="")
 {
     font <- list(family=family, metrics=metrics, cmap=cmap,
-                 encoding=encoding, pdfresource=pdfresource)
+                 encoding=cmapEncoding, pdfresource=pdfresource)
     class(font) <- "CIDFont"
     checkFont(font)
 }

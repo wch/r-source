@@ -24,13 +24,13 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \usage{
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile = TRUE,
-           paper, family, encoding, cidfamily, bg, fg,
+           paper, family, encoding, bg, fg,
            width, height, horizontal, pointsize,
            pagecentre, print.it, command,
            title = "R Graphics Output", fonts = NULL)
 
 ps.options(paper, horizontal, width, height, family, encoding,
-           cidfamily, pointsize, bg, fg,
+           pointsize, bg, fg,
            onefile = TRUE, print.it = FALSE, append = FALSE,
            reset = FALSE, override.check = FALSE)
 }
@@ -60,8 +60,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \item{width, height}{the width and height of the graphics region in
     inches.  The default is to use the entire page less a 0.25 inch
     border on each side.}
-  \item{family}{the font family to be used.  EITHER a single character
-    string OR a character vector of length four or five.  See the
+  \item{family}{the initial font family to be used.  See the
     section \sQuote{Families}.}
   \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
@@ -77,14 +76,6 @@ ps.options(paper, horizontal, width, height, family, encoding,
     in the \file{enc} directory of package \pkg{grDevices}, which is used
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.
-  }
-  \item{cidfamily}{the default East Asian locale set: known values are
-    \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} (simplified Chinese)
-    or \code{"GB1"} (traditional Chinese).  If this is \code{"default"}
-    (the default) an attempt is made to deduce the name from the locale
-    name.  An empty string means no CID fonts are to be used.  These
-    select specific font families: see file
-    \file{src/library/grDevices/src/devPS\_data.h} for the mapping.
   }
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.
@@ -106,9 +97,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \item{reset, override.check}{logical arguments passed to
     \code{\link{check.options}}.  See the Examples.}
   \item{title}{title string to embed in the file.}
-  \item{fonts}{a character vector specifying R graphics
-    (device-independent) font family names for fonts which must be
-    included in the PostScript file.}
+  \item{fonts}{a character vector specifying additional \R graphics font
+    family names for font families whose declarations will be included
+    in the PostScript file and are available for use with the device.
+    See Details.}
 }
 \details{
   \code{postscript} opens the file \code{file} and the PostScript
@@ -162,12 +154,12 @@ ps.options(paper, horizontal, width, height, family, encoding,
   and the default values it sets can be overridden by supplying
   arguments to \code{postscript}.
 
-  A PostScript device has a default font, which can be set by the user
-  via \code{family}.  If other fonts are to be used when drawing to
-  the PostScript device, these must be declared when the
-  device is created via \code{fonts};  the font family names for this
-  argument are device-independent \R graphics font family names (see the
-  documentation for \code{\link{postscriptFonts}}).
+  A PostScript device has a default family, which can be set by the user
+  via \code{family}.  If other font families are to be used when drawing
+  to the PostScript device, these must be declared when the device is
+  created via \code{fonts};  the font family names for this argument are
+  \R graphics font family names (see the documentation for
+  \code{\link{postscriptFonts}}).
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."} with
@@ -175,12 +167,18 @@ ps.options(paper, horizontal, width, height, family, encoding,
 }
 
 \section{Families}{
-  Font families may be specified in several ways.  The \code{family}
-  argument specifies an initial/default font family for the device.
-  This is a PostScript-specific font family specification (see below).
-  The \code{fonts} argument specifies a set of device-independent
-  font families that are mapped to PostScript-specific fonts via
-  a font database (see \code{postscriptFonts}).  
+  Font families are collections of fonts covering the five font faces,
+  (conventionally plain, bold, italic, bold-italic and symbol) selected
+  by the graphics parameter \code{\link{par}(font=)} or the grid
+  parameter \code{\link{gpar}(fontface=)}.  Font families can be
+  specified either as an an initial/default font family for the device
+  via the \code{family} argument or after the device is opened by
+  the graphics parameter \code{\link{par}(family=)} or the grid
+  parameter \code{\link{gpar}(fontfamily=)}.  Families which will be
+  used in addition to the initial family must be specified in the
+  \code{fonts} argument when the device is opened.
+
+  Font families are declared via a call to \code{\link{postscriptFonts}}.
   
   The argument \code{family} specifies the initial/default font family
   to be used.  In normal use it is one of \code{"AvantGarde"},
@@ -200,26 +198,6 @@ ps.options(paper, horizontal, width, height, family, encoding,
   these easier to remember, \code{"URWHelvetica" == "NimbusSan"} and
   \code{"URWTimes" == "NimbusRom"} are also supported.
 
-  If the second form of argument \code{"family"} is used, it should be a
-  character vector of four or five paths to Adobe Font Metric files for
-  the regular, bold, italic, bold italic and (optionally) symbol fonts to
-  be used.  If these paths do not contain the file separator, they are
-  taken to refer to files in directory \file{afm} of package
-  \pkg{grDevices}. Thus the default Helvetica family can be specified by
-  \code{family =
-    c("Helvetica.afm", "Helvetica-Bold.afm", "Helvetica-Oblique.afm",
-    "Helvetica-BoldOblique.afm", "Symbol.afm")}.
-  It is the user's responsibility to check that suitable fonts are made
-  available, and that they contain the needed characters when
-  re-encoded.  The fontnames used are taken from the \code{FontName}
-  fields of the afm files.  The software including the PostScript plot
-  file should either embed the font outlines (usually from \file{.pfb}
-  or \file{.pfa} files) or use DSC comments to instruct the print
-  spooler to do so.
-
-  The \code{.afm} files for the first four fonts do not need to be in
-  the correct encoding, but that for the symbol font must be.
-
   It is also possible to specify \code{family = "ComputerModern"} with
   an appropriate encoding (see below).  This is intended to use with the
   Type 1 versions of the TeX CM fonts.  It will normally be possible to
@@ -228,7 +206,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
   turns off font subsetting.)  When \code{family = "ComputerModern"} is
   used, the italic/bold-italic fonts used are slanted fonts
   (\code{cmsl10} and \code{cmbxsl10}).  To use text italic fonts
-  instead, \code{family = "ComputerModernItalic"}.
+  instead, set \code{family = "ComputerModernItalic"}.
+
+  Another type of family makes use of CID-keyed fonts for East Asian
+  languages -- see \code{\link{postscriptFonts}}.
 }
 
 \section{Encodings}{
@@ -239,8 +220,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   using the \code{encoding} argument the glyphs can be matched to
   encoding in use.  This suffices for European and Cyrillic languages,
   but not for CJK languages.  For the latter, composite CID fonts are
-  used when \code{cidfamily} is set (or selected from the locale
-  name). These fonts are be useful for other languages: for example they
+  used.  These fonts are be useful for other languages: for example they
   may contain Greek glyphs. (The rest of this section applies only when CID
   fonts are not used.)
 

@@ -17,7 +17,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, family = "Helvetica",
     title = "R Graphics Output", fonts = NULL, version = "1.1",
-    paper, encoding, cidfamily = "default", bg, fg, pointsize)
+    paper = "special", encoding, bg, fg, pointsize)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -43,17 +43,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{encoding}{the name of an encoding file.  See
     \code{\link{postscript}} for details.
   }
-  \item{cidfamily}{the default East Asian locale set: known values are
-    \code{"Japan1"}, \code{"Korea1"}, \code{"CNS1"} (simplified Chinese)
-    or \code{"GB1"} (traditional Chinese).  If this is \code{"default"}
-    (the default) an attempt is made to deduce the name from the locale
-    name.  An empty string means no CID fonts are to be used.}
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
-  \item{fonts}{a character vector specifying device-independent
-    R graphics font family names for fonts
-    which will be included in the PDF file.}
+  \item{fonts}{a character vector specifying \R graphics font family
+    names for fonts which will be included in the PDF file.}
   \item{version}{a string describing the PDF version that will be
     used to produce output.}
 }
@@ -73,7 +67,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{par(family=)} in the graphics package), the PDF device makes use
   of the PostScript font mappings to convert the \R graphics font family
   to a PDF-specific font family description.  (See the
-  documentation for \code{\link{postscriptFonts}}.)
+  documentation for \code{\link{pdfFonts}}.)
 
   \R does \emph{not} embed fonts in the PDF file though, so it is only
   possible straightforward to use mappings to the font families that are
@@ -105,9 +99,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   gets produced.  At the moment this only concerns the production of
   transparent output.  The version must be greater than 1.4 for
   transparent output to be produced, and at least 1.3 if CID fonts are
-  to be just.  Specifying a lower version
-  number may be useful if you want to produce PDF output that can be
-  viewed on older PDF viewers.
+  to be used.  Specifying a lower version number may be useful if you
+  want to produce PDF output that can be viewed on older PDF viewers.
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96inch.  Multiples less than 1 are allowed.  \code{pch="."} with
@@ -125,7 +118,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   See \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html}.
 }
 \seealso{
-  \code{\link{postscriptFonts}},
+  \code{\link{pdfFonts}},
   \code{\link{Devices}},
   \code{\link{postscript}}
 }

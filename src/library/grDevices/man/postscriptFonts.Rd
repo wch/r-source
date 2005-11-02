@@ -3,9 +3,9 @@
 \alias{pdfFonts}
 \concept{fonts}
 \concept{encoding}
-\title{PostScript Fonts}
+\title{PostScript and PDF Font Families}
 \description{
-  These functions handle the translation of a device-independent R graphics
+  These functions handle the translation of a \R graphics
   font family name to a PostScript or PDF font description, used by the
   \code{\link{postscript}} or \code{\link{pdf}} graphics devices.
 }
@@ -18,20 +18,26 @@ pdfFonts(...)
     or new (named) mappings to define.}
 }
 \details{
-  A PostScript or PDF device is created with a default font (see the
+  If these functions are called with no argument they list the existing
+  mappings, whereas if they are called with named arguments they add
+  mappings.
+  
+  A PostScript or PDF device is created with a default font family (see the
   documentation for \code{\link{postscript}}), but it is also possible
   to specify a font family when drawing to the device (for example, see
-  the documentation for \code{\link{gpar}} in the grid package).
+  the documentation for \code{"family"} in \code{\link{par}} and for
+  \code{"fontfamily"} in \code{\link{gpar}} in the grid package).
 
   The font family sent to the device is a simple string name, which must be
-  mapped to something more specific to PostScript or PDF fonts.  A list of
-  mappings is maintained and can be modified by the user.
+  mapped to a set of PostScript fonts.  Separate lists of mappings for
+  \code{postscript} and \code{pdf} devices are  maintained for the
+  current \R session and can be added to by the user.
 
-  The \code{postscriptFonts} and \code{pdfFonts} functions
-  can be used to list existing
-  translations and to define new mappings.  The \code{\link{Type1Font}}
-  and \code{\link{CIDFont}} 
-  functions can be used to create new mappings.
+  The \code{postscriptFonts} and \code{pdfFonts} functions can be used
+  to list existing mappings and to define new mappings.  The
+  \code{\link{Type1Font}} and \code{\link{CIDFont}} functions can be
+  used to create new mappings, when the \code{xxxFonts} function is used
+  to add them to the database.  See the examples.
 
   Default mappings are provided for four device-independent family
   names: \code{"sans"} for a sans-serif font, \code{"serif"} for a serif
@@ -53,19 +59,18 @@ pdfFonts(...)
 
   Finally, there are some default mappings for East Asian locales:
   \code{"Japan1"}, \code{"Japan1HeiMin"}, \code{"Japan1GothicBBB"},
-  and \code{"Japan1Ryumin"} for the Japan;
-  \code{"Korea1"} and \code{"Korea1deb"} for Korea;
-  \code{"CNS1"} for China and Singapore;
-  \code{"GB1"} for Hong Kong and Taiwan.
+  and \code{"Japan1Ryumin"} for Japanese;
+  \code{"Korea1"} and \code{"Korea1deb"} for Korean;
+  \code{"GB1"} (Simplified Chinese) for China and Singapore;
+  \code{"CNS1"} (Traditional Chinese) for Hong Kong and Taiwan.
                 
   The specification of font metrics and encodings is described in the help
   for the \code{\link{postscript}} function.
 
   The fonts are not embedded in the resulting PostScript or PDF file, so
-  software including the PostScript or PDF plot
-  file should either embed the font outlines (usually from \file{.pfb}
-  or \file{.pfa} files) or use DSC comments to instruct the print
-  spooler to do so.
+  software including the PostScript or PDF plot file should either embed
+  the font outlines (usually from \file{.pfb} or \file{.pfa} files) or
+  use DSC comments to instruct the print spooler to do so.
 }
 \value{
   One or more font mappings.
@@ -86,6 +91,15 @@ CMitalic <- Type1Font("ComputerModern",
                         "cmti10.afm", "cmbxti10.afm",
                          "CM_symbol_10.afm"),
                       encoding = "TeXtext.enc")
-postscriptFonts(CMitalic=CMitalic)
+postscriptFonts(CMitalic = CMitalic)
+
+`Jp_UCS-2` <- CIDFont("TestUCS2",
+                  c("Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm",
+                    "Adobe-Japan1-UniJIS-UCS2-H.afm"),
+                  "UniJIS-UCS2-H", "UCS-2")
+pdfFonts(`Jp_UCS-2` = `Jp_UCS-2`)
+names(pdfFonts())
 }
 \keyword{device}
