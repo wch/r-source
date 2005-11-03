@@ -16,7 +16,9 @@ CIDFont(family, metrics, cmap, cmapEncoding, pdfresource = "")
 }
 \arguments{
   \item{family}{a character string giving the name to be used internally
-    for a Type 1 or CID-keyed font family.}
+    for a Type 1 or CID-keyed font family.  This needs to uniquely
+    identify each family, so if you modify a family you need to change
+    the family name.}
   \item{metrics}{a character vector of four or five strings giving paths
     to the afm (Adobe Font Metric) files for the font.}
   \item{cmap}{the name of a CMap file for a CID-keyed font.}
@@ -47,13 +49,13 @@ CIDFont(family, metrics, cmap, cmapEncoding, pdfresource = "")
   relative to the directory \file{R\_HOME/library/grDevices/afm}.
   The fifth (symbol) font must be in \code{AdobeSym} encoding.
   However, the glyphs in the first four fonts are referenced by name
-  and the encoding of the \code{.afm} files is not used.
+  and any encoding given within the \code{.afm} files is not used.
 
   Glyphs in CID-keyed fonts are accessed by ID (number) and not by name.
   The CMap file maps encoded strings (usually in a MBCS) to IDs, so
-  \code{cmap} and \code{cmapEncoding} names must match.  Currrent four
-  \code{.afm} files are expected, with paths relative to the directory
-  \file{R\_HOME/library/grDevices/CID}. 
+  \code{cmap} and \code{cmapEncoding} specifications must match.
+  Currently four \code{.afm} files are expected, with paths relative to
+  the directory \file{R\_HOME/library/grDevices/CID}.
 }
 \value{
   A list of class \code{"Type1Font"} or \code{"CIDFont"}.
@@ -75,6 +77,6 @@ CMitalic <- Type1Font("ComputerModern2",
 postscript(family=CMitalic)
 ## or
 postscriptFonts(CMitalic = CMitalic)
-postscript(family="CMitalic")
+postscript(family="CMitalic", encoding = "TeXtext.enc")
 }}
 \keyword{device}

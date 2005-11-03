@@ -338,7 +338,7 @@ checkFont <- function(font) UseMethod("checkFont")
 checkFont.default <- function(font) stop("Invalid font type")
 
 # A Type1 font family has a name, plus a vector of 4 or 5 directories
-# for font metric afm files, plus an encoding
+# for font metric afm files, plus an encoding file
 
 # Check that the font has the correct structure and information
 # Already checked that it had a name
@@ -357,7 +357,7 @@ checkFont.Type1Font <- function(font) {
 }
 
 # A CID-keyed font family has a name, four afm files,
-# a CMap name, an encoding, and (for now at least) a
+# a CMap name, a CMap encoding, and (for now at least) a
 # PDF chunk
 # (I really hope we can dispense with the latter!)
 checkFont.CIDFont <- function(font) {
@@ -370,8 +370,8 @@ checkFont.CIDFont <- function(font) {
         fontError("font metric information")
     if (is.null(font$cmap) || !is.character(font$cmap))
         fontError("CMap name")
-    if (is.null(font$encoding) || !is.character(font$encoding))
-        fontError("font encoding")
+    if (is.null(font$cmapEncoding) || !is.character(font$cmapEncoding))
+        fontError("font cmapEncoding")
     if (is.null(font$pdfresource) || !is.character(font$pdfresource))
         fontError("PDF resource")
     font
@@ -458,7 +458,7 @@ Type1Font <- function(family, metrics, encoding="default")
 CIDFont <- function(family, metrics, cmap, cmapEncoding, pdfresource="")
 {
     font <- list(family=family, metrics=metrics, cmap=cmap,
-                 encoding=cmapEncoding, pdfresource=pdfresource)
+                 cmapEncoding=cmapEncoding, pdfresource=pdfresource)
     class(font) <- "CIDFont"
     checkFont(font)
 }
