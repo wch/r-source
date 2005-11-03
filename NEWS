@@ -97,14 +97,20 @@ NEW FEATURES
 	also for type="b").
 
     o	arrows() has been changed to be more similar to segments():
-	for example col=NA omits the arrow.
+	for example col=NA omits the arrow rather than as previously
+	(undocumented) using par("col").
 
     o	The 'col' argument of legend() now defaults to par("col")
 	(which defaults to "black", the previous default), so that
 	the lines/symbols are shown in the legend in the colour that
 	is used on the plot.
 	
-    o	Added Vectorize() function, a wrapper for mapply().
+    o	New Vectorize() function, a wrapper for mapply().
+
+    o	The way families can be specified for postscript() and pdf()
+	has been expanded to include CID-keyed fonts, with new
+	functions Type1Font() and CIDFont() to set up such fonts
+	families.
 
 
 DEPRECATED & DEFUNCT
@@ -134,6 +140,9 @@ DEPRECATED & DEFUNCT
 	invited confusion with the 'type' argument to default methods
 	of plot(), points() and lines().
 
+    o	postscriptFont() is deprecated in favour of Type1Font() (which
+	is just a change of name).
+
 
 INTERNATIONALIZATION
 
@@ -141,7 +150,7 @@ INTERNATIONALIZATION
 
     o	New postscript encodings for CP1253, CP1257 and Greek (ISO 8859-7).
 
-    o	Support for East Asian CID fonts in pdf() and postscript().
+    o	Support for East Asian CID-keyed fonts in pdf() and postscript().
 
     o	Wide-character width functions wc[s]width are provided that
 	overcome problems found with OS-supplied ones (and those
