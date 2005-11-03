@@ -64,7 +64,7 @@ CIDFont(family, metrics, cmap, cmapEncoding, pdfresource = "")
 }
 \examples{
 ## This duplicates "ComputerModernItalic".
-CMitalic <- Type1Font("ComputerModern",
+CMitalic <- Type1Font("ComputerModern2",
                       c("CM_regular_10.afm", "CM_boldx_10.afm",
                         "cmti10.afm", "cmbxti10.afm",
                         "CM_symbol_10.afm"),

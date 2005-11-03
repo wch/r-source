@@ -60,11 +60,14 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \item{width, height}{the width and height of the graphics region in
     inches.  The default is to use the entire page less a 0.25 inch
     border on each side.}
-  \item{family}{the initial font family to be used.  See the
-    section \sQuote{Families}.}
+  \item{family}{the initial font family to be used, normally as a
+    character string.  See the section \sQuote{Families}.  This defaults
+    to the value given by a call to \code{grDevices:::guessFamily()}
+    when the \pkg{grDevices} namespace is loaded, which guess a suitable
+    family for the locale in use at the time.}
   \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
-    \file{"ISOLatin1.enc"} unless the locale is recognized as using
+    \file{"ISOLatin1.enc"} unless the locale is recognized as
     corresponding to a language using ISO 8859-{5,7,13,15} or KOI8-{R,U},
 #endif
 #ifdef windows
@@ -104,7 +107,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
 }
 \details{
   \code{postscript} opens the file \code{file} and the PostScript
-  commands needed to plot any graphics requested are stored in that
+  commands needed to plot any graphics requested are written to that
   file.  This file can then be printed on a suitable device to obtain
   hard copy.
 
@@ -112,9 +115,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \enumerate{
     \item Setting \code{print.it = TRUE} causes the command given in
     argument \code{command} to be called with argument \code{"file"}
-    when the device is closed.
-    Note that the plot file is not deleted unless \code{command} arranges to
-    delete it.
+    when the device is closed.  Note that the plot file is not deleted
+    unless \code{command} arranges to delete it.
 
     \item \code{file=""} or \code{file="|cmd"} can be used to print
     using a pipe on systems that support \file{popen}.  Failure to open the
@@ -124,13 +126,13 @@ ps.options(paper, horizontal, width, height, family, encoding,
   }
 #ifdef windows
   Only the first of these will work on Windows, and the default
-  \code{"printcmd"} is empty and will give an error if \code{print.it=TRUE}
-  is used.  Suitable commands to spool a PostScript file to a printer
-  can be found in \file{RedMon} suite available from
-  \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be run
-  in a minimized window.   GSView 4.x provides
-  \file{gsprint.exe} which may be even more convenient (it requires
-  GhostScript version 6.0 or later).
+  \code{"printcmd"} is empty and will give an error if
+  \code{print.it=TRUE} is used.  Suitable commands to spool a PostScript
+  file to a printer can be found in \file{RedMon} suite available from
+  \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be
+  run in a minimized window.   GSView 4.x provides \file{gsprint.exe}
+  which may be even more convenient (it requires GhostScript version 6.0
+  or later).
 #endif
 
   The \code{file} argument is interpreted as a C integer format as used
@@ -138,11 +140,11 @@ ps.options(paper, horizontal, width, height, family, encoding,
   The default gives files \file{Rplot001.ps}, \dots, \file{Rplot999.ps},
   \file{Rplot1000.ps}, \dots.
 
-  The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
-  compatible, and can be included into other documents, e.g., into
-  LaTeX, using \code{\includegraphics{<filename>}}.  For use in this way
-  you will probably want to set \code{horizontal = FALSE, onefile = FALSE,
-    paper = "special"}.
+  The postscript produced for a single \R plot is EPS (\emph{Encapsulated
+    PostScript}) compatible, and can be included into other documents,
+  e.g., into LaTeX, using \code{\includegraphics{<filename>}}.  For use
+  in this way you will probably want to set \code{horizontal = FALSE,
+    onefile = FALSE, paper = "special"}.
 
   Most of the PostScript prologue used is taken from the \R character
   vector \code{.ps.prolog}.  This is marked in the output, and can be
@@ -162,7 +164,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \code{\link{postscriptFonts}}).
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
-  1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."} with
+  1/96 inch: nultiples less than 1 are allowed.  \code{pch="."} with
   \code{cex = 1} corresponds to a square of side 1/72 inch.
 }
 
@@ -198,18 +200,14 @@ ps.options(paper, horizontal, width, height, family, encoding,
   these easier to remember, \code{"URWHelvetica" == "NimbusSan"} and
   \code{"URWTimes" == "NimbusRom"} are also supported.
 
-  It is also possible to specify \code{family = "ComputerModern"} with
-  an appropriate encoding (see below).  This is intended to use with the
-  Type 1 versions of the TeX CM fonts.  It will normally be possible to
-  include such output in TeX or LaTeX provided it is processed with
-  \code{dvips -Ppfb -j0} or the equivalent on your system. (\code{-j0}
-  turns off font subsetting.)  When \code{family = "ComputerModern"} is
-  used, the italic/bold-italic fonts used are slanted fonts
-  (\code{cmsl10} and \code{cmbxsl10}).  To use text italic fonts
-  instead, set \code{family = "ComputerModernItalic"}.
-
   Another type of family makes use of CID-keyed fonts for East Asian
   languages -- see \code{\link{postscriptFonts}}.
+
+  The \code{family} argument is normally a character string naming a
+  font family, but family objects generated by \code{\link{Type1Font}}
+  and \code{\link{CIDFont}} are also accepted.
+  For compatibiility with earlier versions of \R, the initial family can
+  also be specified as a vector of four or five afm files.
 }
 
 \section{Encodings}{
@@ -237,15 +235,14 @@ ps.options(paper, horizontal, width, height, family, encoding,
   (ISO 8859-13), \code{"CP1257.enc"}, and \code{"ISOLatin9.enc"} (ISO
   8859-15), \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
   \code{"KOI8-U.enc"}, \code{"CP1251.enc"}, \code{"Greek.enc"} (ISO
-  8859-7), \code{"CP1253.enc"}, and \code{"TeXtext"} for the 7-bit TeX
-  encoding.  Note that many glyphs in these encodings are not in the
-  fonts corresponding to the standard families.  The Adobe ones for
-  all but Courier, Helvetica and Times cover little more than Latin-1,
-  whereas the URW ones also cover Latin-2, Latin-7, Latin-9 and Cyrillic
-  but no Greek.  (The Adobe exceptions cover the Latin character sets,
-  but not the Euro.)
+  8859-7) and \code{"CP1253.enc"}.  Note that many glyphs in these
+  encodings are not in the fonts corresponding to the standard families.
+  (The Adobe ones for all but Courier, Helvetica and Times cover little
+  more than Latin-1, whereas the URW ones also cover Latin-2, Latin-7,
+  Latin-9 and Cyrillic but no Greek.  The Adobe exceptions cover the
+  Latin character sets, but not the Euro.)
 
-  If you change the encoding, it is your responsibility to ensure that
+  If you specify the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used.  One issue here is the Euro
   symbol which is in the WinAnsi and MacRoman encodings but may well not
   be in the PostScript fonts.  (It is in the URW variants; it is not in
@@ -260,10 +257,23 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \sQuote{quoteleft} (rather than \sQuote{quotesingle}/\sQuote{acute}
   and \sQuote{grave} respectively), as they are in the Adobe
   documentation.
+}
+\section{TeX fonts}{
+  TeX has traditionally made use of fonts such as Computer Modern which
+  are encoded rather differently, in a 7-bit encoding.  This encoding
+  can be specified by \code{encoding = "TeXtext.enc"}, taking care that
+  the ASCII characters \code{< > \\ _ \{ \}} are not available in those
+  fonts.
 
-  Computer Modern fonts are encoded rather differently and should be
-  used with \code{encoding = "TeXtext.enc"}, taking care that the
-  symbols \code{< > \\ _ \{ \}} are not available in those fonts.
+  There are supplied families \code{"ComputerModern"} and
+  \code{"ComputerModernItalic"} which use this encoding. They are
+  intended to use with the Type 1 versions of the TeX CM fonts.  It will
+  normally be possible to include such output in TeX or LaTeX provided
+  it is processed with \code{dvips -Ppfb -j0} or the equivalent on your
+  system. (\code{-j0} turns off font subsetting.)  When \code{family =
+    "ComputerModern"} is used, the italic/bold-italic fonts used are
+  slanted fonts (\code{cmsl10} and \code{cmbxsl10}).  To use text italic
+  fonts instead, set \code{family = "ComputerModernItalic"}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

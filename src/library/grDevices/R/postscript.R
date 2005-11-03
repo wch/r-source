@@ -93,10 +93,11 @@ guessEncoding <- function(family)
 {
     # Two special families have special encodings, regardless of locale
     if (!missing(family) &&
-        family %in% c("symbol", "ComputerModern")) {
+        family %in% c("symbol", "ComputerModern", "ComputerModernItalic")) {
         switch(family,
                "symbol" = "AdobeSym.enc",
-               "ComputerModern" = "TeXtext.enc")
+               "ComputerModern" = "TeXtext.enc",
+               "ComputerModernItalic" = "TeXtext.enc")
     }  else {
         switch(.Platform$OS.type,
                "windows" = {
@@ -173,6 +174,14 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
     if(is.null(old$command) || old$command == "default")
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
 
+    # need to handle this before encoding
+    if(inherits(family, "Type1Font") || inherits(family, "CIDFont")) {
+        nm <- family$family
+        ll <- list(family)
+        names(ll) <- nm
+        do.call("postscriptFonts", ll)
+        family <- nm
+    }
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- guessEncoding(family)
 
@@ -181,16 +190,17 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
         # Case where family is a set of AFMs
         if(length(family) == 4) {
             family <- c(family, "Symbol.afm")
-        } else {
-            # If family has been specified, match with a font in the
-            # font database (see postscriptFonts())
-            # and pass in a device-independent font name.
-            # NOTE that in order to match, we need both family name
-            # and encoding to match.
-            if (length(family) == 1) {
-                 matchFont(postscriptFonts(family)[[1]], old$encoding)
-            }
-        }
+        } else if (length(family) == 5) {
+            ## nothing to do
+        } else if (length(family) == 1) {
+            ## If family has been specified, match with a font in the
+            ## font database (see postscriptFonts())
+            ## and pass in a device-independent font name.
+            ## NOTE that in order to match, we need both family name
+            ## and encoding to match.
+            matchFont(postscriptFonts(family)[[1]], old$encoding)
+        } else
+            stop("invalid 'family' argument")
         old$family <- family
     }
 
@@ -228,6 +238,14 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
+    # need to handle this before encoding
+    if(inherits(family, "Type1Font") || inherits(family, "CIDFont")) {
+        nm <- family$family
+        ll <- list(family)
+        names(ll) <- nm
+        do.call("pdftFonts", ll)
+        family <- nm
+    }
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- guessEncoding()
     ## handle family separately as length can be 1, 4, or 5
@@ -235,16 +253,17 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
         # Case where family is a set of AFMs
         if(length(family) == 4) {
             family <- c(family, "Symbol.afm")
-        } else {
-            # If family has been specified, match with a font in the
-            # font database (see postscriptFonts())
-            # and pass in a device-independent font name.
-            # NOTE that in order to match, we need both family name
-            # and encoding to match.
-            if (length(family) == 1) {
-                matchFont(postscriptFonts(family)[[1]], old$encoding)
-            }
-        }
+        } else if (length(family) == 5) {
+            ## nothing to do
+        } else if (length(family) == 1) {
+            ## If family has been specified, match with a font in the
+            ## font database (see postscriptFonts())
+            ## and pass in a device-independent font name.
+            ## NOTE that in order to match, we need both family name
+            ## and encoding to match.
+            matchFont(postscriptFonts(family)[[1]], old$encoding)
+        } else
+            stop("invalid 'family' argument")
         old$family <- family
     }
     # Extract version
@@ -506,6 +525,7 @@ matchFont <- function(font, encoding) {
 #      package is sourced, then the method dispatch on checkFont() does
 #      not work because when the R code is sourced, the S3 methods in
 #      this package have not yet been registered.
+#      Also, we want the run-time locale not the install-time locale.
 
 initPSandPDFfonts <- function() {
 
