@@ -557,13 +557,27 @@ unit.length.unit.arithmetic <- function(unit) {
 #########################
 
 stringWidth <- function(string) {
-  string <- as.character(string)
-  unit(rep(1, length(string)), "strwidth", data=as.list(string))
+    n <- length(string)
+    if (is.language(string)) {
+        data <- vector("list", n)
+        for (i in 1:n)
+            data[[i]] <- string[i]
+    } else {
+        data <- as.list(as.character(string))
+    }
+    unit(rep(1, n), "strwidth", data=data)
 }
 
 stringHeight <- function(string) {
-  string <- as.character(string)
-  unit(rep(1, length(string)), "strheight", data=as.list(string))
+    n <- length(string)
+    if (is.language(string)) {
+        data <- vector("list", n)
+        for (i in 1:n)
+            data[[i]] <- string[i]
+    } else {
+        data <- as.list(as.character(string))
+    }
+    unit(rep(1, n), "strheight", data=data)
 }
 
 grobWidth <- function(x) {
