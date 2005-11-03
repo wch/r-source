@@ -288,7 +288,7 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* Unfortunately glibc and Solaris diff in the const in the iconv decl.
+/* Unfortunately glibc and Solaris differ in the const in the iconv decl.
    libiconv agrees with Solaris here.
  */
 #ifdef HAVE_ICONV_H
@@ -361,7 +361,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     SEXP ans, x = CAR(args);
-    iconv_t obj;
+    void * obj;
     int i, j;
     char *inbuf; /* Solaris headers have const char*  here */
     char *outbuf;
@@ -395,8 +395,8 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(STRING_ELT(CADDDR(args), 0) == NA_STRING) sub = NULL;
 	else sub = CHAR(STRING_ELT(CADDDR(args), 0));
 
-	obj = iconv_open(CHAR(STRING_ELT(CADDR(args), 0)),
-			 CHAR(STRING_ELT(CADR(args), 0)));
+	obj = Riconv_open(CHAR(STRING_ELT(CADDR(args), 0)),
+			  CHAR(STRING_ELT(CADR(args), 0)));
 	if(obj == (iconv_t)(-1))
 	    errorcall(call, _("unsupported conversion"));
 	PROTECT(ans = duplicate(x));
@@ -406,7 +406,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    inbuf = CHAR(STRING_ELT(x, i)); inb = strlen(inbuf);
 	    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
 	    /* First initialize output */
-	    iconv (obj, NULL, NULL, &outbuf, &outb);
+	    Riconv (obj, NULL, NULL, &outbuf, &outb);
         next_char:
 	    /* Then convert input  */
 	    res = iconv(obj, &inbuf , &inb, &outbuf, &outb);
@@ -441,7 +441,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(ans, i, mkChar(cbuff.data));
 	    else SET_STRING_ELT(ans, i, NA_STRING);
 	}
-	iconv_close(obj);
+	Riconv_close(obj);
 	R_FreeStringBuffer(&cbuff);
     }
     UNPROTECT(1);
@@ -456,13 +456,14 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 void * Riconv_open (char* tocode, char* fromcode)
 {
 #ifdef Win32
+    char *cp = "UTF-8";
     iconv_Init();
-#ifdef SUPPORT_UTF8
-    if(!strcmp(tocode, ""))  return iconv_open("UTF-8", fromcode);
-    else if(!!strcmp(fromcode, "")) return iconv_open(tocode, "UTF-8");
-    else
+#ifndef SUPPORT_UTF8
+    cp = locale2charset(NULL);
 #endif
-	return iconv_open(tocode, fromcode);
+    if(strcmp(tocode, "") == 0)  return iconv_open(cp, fromcode);
+    else if(strcmp(fromcode, "") == 0) return iconv_open(tocode, cp);
+    else return iconv_open(tocode, fromcode);
 #else
     return iconv_open(tocode, fromcode);
 #endif

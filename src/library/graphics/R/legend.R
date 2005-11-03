@@ -1,5 +1,5 @@
 legend <-
-function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
+function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	 angle = 45, density = NULL, bty = "o", bg = par("bg"),
 	 pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
 	 xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),

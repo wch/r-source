@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:56\n"
+"POT-Creation-Date: 2005-10-30 08:52\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,6 +102,9 @@ msgid "scope is not a subset of term labels"
 msgstr ""
 
 msgid "no 'drop1' method for \"mlm\" models"
+msgstr ""
+
+msgid "F test assumes 'quasi%s' family"
 msgstr ""
 
 msgid "lower scope is not included in model"
@@ -956,6 +959,12 @@ msgstr ""
 msgid ","
 msgstr ""
 
+msgid "using F test with a %s family is inappropriate"
+msgstr ""
+
+msgid "using F test with a fixed dispersion is inappropriate"
+msgstr ""
+
 msgid "models with response"
 msgstr ""
 
@@ -963,6 +972,9 @@ msgid "removed because response differs from model 1"
 msgstr ""
 
 msgid "models were not all fitted to the same size of dataset"
+msgstr ""
+
+msgid "using F test with a '%s' family is inappropriate"
 msgstr ""
 
 msgid "observations with zero weight not used for calculating dispersion"

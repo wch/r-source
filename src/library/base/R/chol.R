@@ -9,13 +9,13 @@ chol <- function(x, pivot = FALSE, LINPACK = pivot)
 	if(nrow(x) != ncol(x))
 	    stop("non-square matrix in 'chol'")
 	n <- nrow(x)
-    }
-    else {
+    } else {
 	if(length(x) != 1)
 	    stop("non-matrix argument to 'chol'")
 	n <- as.integer(1)
     }
-    if(!pivot && !LINPACK) return(.Call("La_chol", as.matrix(x), PACKAGE = "base"))
+    if(!pivot && !LINPACK)
+        return(.Call("La_chol", as.matrix(x), PACKAGE = "base"))
 
     if(!is.double(x)) storage.mode(x) <- "double"
 
@@ -37,6 +37,8 @@ chol <- function(x, pivot = FALSE, LINPACK = pivot)
         if (pivot) {
             attr(robj, "pivot") <- z$piv
             attr(robj, "rank") <- z$rank
+            if(!is.null(cn <- colnames(x)))
+                colnames(robj) <- cn[z$piv]
         }
         robj
     } else {

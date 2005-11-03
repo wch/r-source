@@ -9,6 +9,8 @@ qr <- function(x, tol = 1e-07, LAPACK = FALSE)
         return(structure(.Call("La_zgeqp3", x, PACKAGE = "base"), class="qr"))
     if(LAPACK) {
         res <- .Call("La_dgeqp3", x, PACKAGE = "base")
+        if(!is.null(cn <- colnames(x)))
+            colnames(res$qr) <- cn[res$pivot]
         attr(res, "useLAPACK") <- TRUE
         class(res) <- "qr"
         return(res)
@@ -29,6 +31,8 @@ qr <- function(x, tol = 1e-07, LAPACK = FALSE)
 	     pivot = as.integer(1:p),
 	     double(2*p),
 	     PACKAGE="base")[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
+    if(!is.null(cn <- colnames(x)))
+        colnames(res$qr) <- cn[res$pivot]
     class(res) <- "qr"
     res
 }

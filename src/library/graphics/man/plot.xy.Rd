@@ -8,7 +8,8 @@
   arguments.
 }
 \usage{
-plot.xy(xy, type, pch = 1, lty = "solid", col = par("fg"), bg = NA,
+plot.xy(xy, type, pch = par("pch"), lty = par("lty"),
+        col = par("col"), bg = NA,
         cex = 1, lwd = par("lwd"), \dots)
 }
 \arguments{
@@ -19,7 +20,7 @@ plot.xy(xy, type, pch = 1, lty = "solid", col = par("fg"), bg = NA,
     \code{\link{points.default}}.}
   \item{lty}{line type code, see \code{\link{lines}}.}
   \item{col}{color code or name, see \code{\link{colors}},
-    \code{\link{palette}}.}
+    \code{\link{palette}}.  Here \code{NULL} means colour 0.}
   \item{bg}{background (\dQuote{fill}) color for the open plot symbols 21:25:
     see \code{\link{points.default}}.}
   \item{cex}{character expansion.}
@@ -30,7 +31,8 @@ plot.xy(xy, type, pch = 1, lty = "solid", col = par("fg"), bg = NA,
 \details{
   The arguments \code{pch, col, bg, cex, lwd} may be vectors and
   may be recycled, depending on \code{type}: see \code{\link{points}} and
-  \code{\link{lines}} for specifics.
+  \code{\link{lines}} for specifics.  In particular note that \code{lwd}
+  is treated as a vector for points and as a single (first) value for lines.
 }
 \seealso{
   \code{\link{plot}},

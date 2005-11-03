@@ -6,7 +6,7 @@ text(x, \dots)
 
 \method{text}{default} (x, y = NULL, labels = seq(along = x), adj = NULL,
      pos = NULL, offset = 0.5, vfont = NULL,
-     cex = 1, col = NULL, font = NULL, xpd = NULL, \dots)
+     cex = 1, col = NULL, font = NULL, \dots)
 }
 \alias{text}
 \alias{text.default}
@@ -34,13 +34,12 @@ text(x, \dots)
     vector fonts are used.  The first element of the vector
     selects a typeface and the second element selects a style.}
   \item{cex}{numeric \bold{c}haracter \bold{ex}pansion factor; multiplied
-    by \code{\link{par}("cex")} yields the final character size.}
-  \item{col, font}{the color and font to be used; these default to the
-    values of the global graphical parameters in \code{\link{par}()}.
+    by \code{\link{par}("cex")} yields the final character size.
     \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
-  \item{xpd}{(where) should clipping take place?  Defaults to
-    \code{\link{par}("xpd")}.}
-  \item{\dots}{further graphical parameters (from \code{\link{par}}).}
+  \item{col, font}{the color and font to be used; these default to the
+    values of the global graphical parameters in \code{\link{par}()}.}
+  \item{\dots}{further graphical parameters (from \code{\link{par}}),
+    such as \code{xpd}.}
 %% such as ???, etc.
 }
 \description{
@@ -72,7 +71,8 @@ text(x, \dots)
 
   Graphical parameters \code{col}, \code{cex} and \code{font} can be
   vectors and will then be applied cyclically to the \code{labels} (and
-  extra values will be ignored).
+  extra values will be ignored).  \code{NA} values of \code{col} are
+  replaced by \code{par("col")}.
 
   Labels whose \code{x}, \code{y}, \code{labels}, \code{cex} or \code{col}
   value is \code{NA} are omitted from the plot.

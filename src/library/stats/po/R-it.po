@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:56\n"
+"POT-Creation-Date: 2005-10-30 08:52\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -107,6 +107,10 @@ msgstr "scope non è un sottoinsieme delle etichette dei termini"
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "nessun metodo 'drop1' per modelli \"mlm\""
+
+#, fuzzy
+msgid "F test assumes 'quasi%s' family"
+msgstr "il test F assume una famiglia quasi%s"
 
 msgid "lower scope is not included in model"
 msgstr "scope inferiore non incluso nel modello"
@@ -1035,6 +1039,12 @@ msgstr "gli argomenti seguenti di 'anova.glm' sono sbagliati o ignorati:"
 msgid ","
 msgstr ""
 
+msgid "using F test with a %s family is inappropriate"
+msgstr ""
+
+msgid "using F test with a fixed dispersion is inappropriate"
+msgstr ""
+
 msgid "models with response"
 msgstr "modelli con risposta"
 
@@ -1043,6 +1053,9 @@ msgstr "eliminato perché la risposta è diversa da quella del modello 1"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr "i modelli sono stati stimati per differenti ampiezze campaionarie"
+
+msgid "using F test with a '%s' family is inappropriate"
+msgstr ""
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr ""

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:55\n"
-"PO-Revision-Date: 2005-10-16 21:55\n"
+"POT-Creation-Date: 2005-10-30 08:51\n"
+"PO-Revision-Date: 2005-10-30 08:51\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -204,11 +204,11 @@ msgstr "‘x’ is wrongly structured"
 msgid "argument must be matrix-like"
 msgstr "argument must be matrix-like"
 
+msgid "'x' and 'y' values must be finite and non-missing"
+msgstr "‘x’ and ‘y’ values must be finite and non-missing"
+
 msgid "'z' must be a matrix"
 msgstr "‘z’ must be a matrix"
-
-msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
-msgstr "dimensions of z are not length(x)(+1) times length(y)(+1)"
 
 msgid "invalid z limits"
 msgstr "invalid z limits"
@@ -218,6 +218,9 @@ msgstr "must have one more break than colour"
 
 msgid "breaks must all be finite"
 msgstr "breaks must all be finite"
+
+msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
+msgstr "dimensions of z are not length(x)(+1) times length(y)(+1)"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr "‘respect’ must be logical or matrix with same dimension as ‘mat’"

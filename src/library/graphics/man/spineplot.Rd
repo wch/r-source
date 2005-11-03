@@ -10,24 +10,27 @@
 }
 \usage{
 spineplot(x, \dots)
+
 \method{spineplot}{default}(x, y = NULL,
-  breaks = NULL, tol.ylab = 0.05, off = NULL,
-  col = NULL, main = "", xlab = NULL, ylab = NULL,
-  xaxlabels = NULL, yaxlabels = NULL,
-  xlim = NULL, ylim = c(0, 1), \dots)
+          breaks = NULL, tol.ylab = 0.05, off = NULL,
+          col = NULL, main = "", xlab = NULL, ylab = NULL,
+          xaxlabels = NULL, yaxlabels = NULL,
+          xlim = NULL, ylim = c(0, 1), \dots)
+
 \method{spineplot}{formula}(formula, data = list(),
-  breaks = NULL, tol.ylab = 0.05, off = NULL,
-  col = NULL, main = "", xlab = NULL, ylab = NULL,
-  xaxlabels = NULL, yaxlabels = NULL,
-  xlim = NULL, ylim = c(0, 1), \dots,
-  subset = NULL)
+          breaks = NULL, tol.ylab = 0.05, off = NULL,
+          col = NULL, main = "", xlab = NULL, ylab = NULL,
+          xaxlabels = NULL, yaxlabels = NULL,
+          xlim = NULL, ylim = c(0, 1), \dots,
+          subset = NULL)
 }
 \arguments{
   \item{x}{an object, the default method expects either a single variable
-    (interpreted to be the explanatory variable) or a 2-way table. See details.}
+    (interpreted to be the explanatory variable) or a 2-way table.  See
+    details.}
   \item{y}{a \code{"factor"} interpreted to be the dependent variable}
-  \item{formula}{a \code{"formula"} of type \code{y ~ x} with a single dependent
-    \code{"factor"} and a single explanatory variable.}    
+  \item{formula}{a \code{"formula"} of type \code{y ~ x} with a single
+    dependent \code{"factor"} and a single explanatory variable.}    
   \item{data}{an optional data frame.}
   \item{breaks}{if the explantory variable is numeric, this controls how
     it is discretized. \code{breaks} is passed to \code{\link{hist}} and can

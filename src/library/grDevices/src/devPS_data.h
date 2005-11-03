@@ -31,16 +31,54 @@
        CNS1             MOESung-Regular         MHei-Medium-Acro
        GB1              BousungEG-Light-GB      STSong-Light-Acro
 
-       [BDR comment, Adobe's UNIX fonts packs have
-       chsfont.tar.gz has STSongStd-Light-Acro.otf
-       chtfont.tar.gz has MSungStd-Light-Acro.otf
-       jpnfont.tar.gz  has KozMinPro-Regular-Acro.otf
-       korfont.tar.gz has HYSMyeongJoStd-Medium-Acro.otf
+       [BDR comment, 
+
+        Adobe's UNIX fonts packs have
+
+	 chsfont.tar.gz has STSongStd-Light-Acro.otf
+	 chtfont.tar.gz has MSungStd-Light-Acro.otf
+	 jpnfont.tar.gz  has KozMinPro-Regular-Acro.otf
+	 korfont.tar.gz has HYSMyeongJoStd-Medium-Acro.otf
+
        and Windows versions have
-       AdobeMingStd-Light.otf
-       AdobeMyungjoStd-Medium.otf
-       AdobeSongStd-Light.otf
-       ]
+
+	 AdobeMingStd-Light.otf
+	 AdobeMyungjoStd-Medium.otf (Korean)
+	 AdobeSongStd-Light.otf
+	 KozMinProVI-Regular.otf    (Japanese)
+	 KozGoPro-Medium.otf        (Japanese)
+
+       gs installed on Windows (and hence GSView) will optionally have
+
+         MingLiU PMingLiU (CNS1)
+         NSimSum SimHei (GB1)
+         MS-Gothic MS-Mincho MS-PGothic MS-PMincho (Japan1)
+         Batang BatangChe Dotum DotumChe Gulim GulimChe Gungsuh (Korea1)
+
+       via WIndows ttf fonts.
+
+       ftp://ftp.oreilly.com/pub/examples/nutshell/cjkv/adobe/samples/
+       provides PS Type 1 fonts (no extensions) and corresponding .afm
+       files (but not the format expected with no CH field).
+
+	 Munhwa-Regular            (Adobe-Korea1-0 subset: 8193 CIDs)
+	 Munhwa-Bold               (Adobe-Korea1-0 subset: 2549 CIDs)
+	 MunhwaGothic-Regular      (Adobe-Korea1-0 subset: 8193 CIDs)
+	 MunhwaGothic-Bold         (Adobe-Korea1-0 subset: 2549 CIDs)
+	 MunhwaGungSeo-Bold        (Adobe-Korea1-0 subset: 2549 CIDs)
+	 MunhwaGungSeo-Light       (Adobe-Korea1-0 subset: 2549 CIDs)
+	 MunhwaGungSeoHeulim-Bold  (Adobe-Korea1-0 subset: 2549 CIDs)
+	 MunhwaGungSeoHeulim-Light (Adobe-Korea1-0 subset: 2549 CIDs)
+	 MunhwaHoonMin-Regular     (Adobe-Korea1-0 subset: 2549 CIDs)
+	 WadaMin-Regular           (Adobe-Japan1-1 subset: 6998 CIDs
+	 WadaMin-Bold              (Adobe-Japan1-1 subset: 6996 CIDs)
+	 WadaGo-Bold               (Adobe-Japan1-1 subset: 6998 CIDs)
+	 WadaMaruGo-Regular        (Adobe-Japan1-1 subset: 6998 CIDs)
+	 WadaMin-RegularH          (Adobe-Japan2-0 complete: 6068 CIDs)
+	 WadaMaruGo-RegularH       (Adobe-Japan2-0 complete: 6068 CIDs)
+	 MOESung-Regular           (Adobe-CNS1-0 subset: 13699 CIDs)
+	 MOEKai-Regular            (Adobe-CNS1-0 subset: 13699 CIDs)
+      ]
 
 
        Debian
@@ -77,6 +115,7 @@
  *
  */
 
+#ifdef SUPPORT_MBCS
 /* to match it with afm of CID Japan1,Korea1,CNS1,GB1 */
 static char *CIDBoldFontStr = "/%s-Bold\n"
     "/%s /CIDFont findresource\n"
@@ -114,16 +153,17 @@ static char *CIDBoldFontStr = "/%s-Bold\n"
     "  currentdict\n"
     "end\n"
     "/CIDFont defineresource pop\n";
+#endif
 
+#if 0
 static const struct {
     char const *cidfamily;
     char const *cidafmfile[4];
     char const *psfontname ;
     char const *pdffontname ;
     char const *cmapname ;
-    char const *encoding ;
     char const *pdfresource ;
-}CIDResource [] = {
+} CIDResource [] = {
 /* ============================================================================
                                          Japan1
    ============================================================================ */
@@ -135,8 +175,7 @@ static const struct {
      },
      "HeiseiKakuGo-W5",
      "HeiseiKakuGo-W5-Acro",
-     "EUC-H",
-     "EUC-JP",
+     "UniJIS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -160,8 +199,7 @@ static const struct {
      },
      "HeiseiMin-W3",
      "HeiseiMin-W3-Acro",
-     "EUC-H",
-     "EUC-JP",
+     "UniJIS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -178,20 +216,19 @@ static const struct {
      "      ]\n"
     },
     {"Japan1GothicBBB",
-     {"Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
+     {"GothicBBB-Medium-UCS2-H.afm",
+      "GothicBBB-Medium-UCS2-H.afm",
+      "GothicBBB-Medium-UCS2-H.afm",
+      "GothicBBB-Medium-UCS2-H.afm",
      },
      "GothicBBB-Medium",
      "GothicBBB-Medium",
-     "EUC-H",
-     "EUC-JP",
+     "UniJIS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
      "        /CapHeight 737 /Ascent 752 /Descent -271 /StemV 99\n"
-     "        /FontBBox [-174 -268 1001 944]\n"
+     "        /FontBBox [-22 -252 1000 892]\n"
      "        /ItalicAngle 0 /Flags 4\n"
      "        /Style << /Panose <0801020b0500000000000000> >>\n"
      "      >>\n"
@@ -203,20 +240,19 @@ static const struct {
      "      ]\n"
     },
     {"Japan1Ryumin",
-     {"Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
-      "Adobe-Japan1-UniJIS-UCS2-H.afm",
+     {"Ryumin-Light-UCS2-H.afm",
+      "Ryumin-Light-UCS2-H.afm",
+      "Ryumin-Light-UCS2-H.afm",
+      "Ryumin-Light-UCS2-H.afm",
      },
      "Ryumin-Light",
      "Ryumin-Light",
-     "EUC-H",
-     "EUC-JP",
+     "UniJIS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
      "        /CapHeight 709 /Ascent 723 /Descent -241 /StemV 69\n"
-     "        /FontBBox [-170 -331 1024 903]\n"
+     "        /FontBBox [-54 -305 1000 903]\n"
      "        /ItalicAngle 0 /Flags 6\n"
      "        /Style << /Panose <010502020300000000000000> >>\n"
      "      >>\n"
@@ -238,8 +274,7 @@ static const struct {
      },
      "Baekmuk-Batang",
      "HYGothic-Medium-Acro",
-     "KSCms-UHC-H",
-     "CP949",
+     "UniKS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -264,8 +299,7 @@ static const struct {
      },
      "Batang-Regular",
      "HYGothic-Medium-Acro",
-     "KSCms-UHC-H",
-     "CP949",
+     "UniKS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -293,8 +327,7 @@ static const struct {
      },
      "MOESung-Regular",
      "MHei-Medium-Acro",
-     "B5pc-H",
-     "CP950",
+     "UniCNS-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -321,8 +354,7 @@ static const struct {
      },
      "BousungEG-Light-GB",
      "STSong-Light-Acro",
-     "GBK-EUC-H",
-     "GBK",
+     "UniGB-UCS2-H",
      "      /FontDescriptor\n"
      "      <<\n"
      "        /Type /FontDescriptor\n"
@@ -346,3 +378,4 @@ static const struct {
     { NULL }
 };
 
+#endif

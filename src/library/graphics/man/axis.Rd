@@ -6,7 +6,7 @@
 }
 \usage{
 axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
-     pos = NA, outer = FALSE, font = NA, vfont = NULL,
+     pos = NA, outer = FALSE, font = NA,
      lty = "solid", lwd = 1, col = NULL, hadj = NA, padj = NA,
      \dots)
 }
@@ -25,19 +25,19 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{tick}{a logical value specifying whether tickmarks should be
     drawn}.
   \item{line}{the number of lines into the margin which the axis will
-    be drawn.  This overrides the value of the graphical parameter
-    \code{mgp[3]}.  The relative placing of tickmarks and tick labels
-    is unchanged.}
+    be drawn.  If not \code{NA} this overrides the value of the
+    graphical parameter \code{mgp[3]}.  The relative placing of
+    tickmarks and tick labels is unchanged.}
   \item{pos}{the coordinate at which the axis line is to be drawn:
-    this overrides the values of both \code{line} and \code{mgp[3]}.}
+    if not \code{NA} this overrides the values of both \code{line} and
+    \code{mgp[3]}.}
   \item{outer}{a logical value indicating whether the axis should be
     drawn in the outer plot margin, rather than the standard plot
     margin.}
-  \item{font}{font for text.}
-  \item{vfont}{vector font for text.}
+  \item{font}{font for text.  Defaults to \code{par("font")}.}
   \item{lty, lwd}{line type, width for the axis line and the tick marks.}
-  \item{col}{color for the axis line and the tick marks.  The default
-    \code{NULL} means to use \code{par("fg")}.}
+  \item{col}{color for the axis line and the tick marks.  Here
+    \code{NULL} means to use \code{par("fg")}, possibly specified inline.}
   \item{hadj}{adjustment (see \code{\link{par}("adj")} for all labels
     \emph{parallel} (\sQuote{horizontal}) to the reading direction.  If
     this is not a finite value, the default is used (centring for
@@ -58,7 +58,11 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     and \code{xaxp} or \code{yaxp} for positioning, \code{tck} or
     \code{tcl} for tick mark length and direction, \code{las} for
     vertical/horizontal label orientation, or \code{fg} instead of
-    \code{col}, see \code{\link{par}} on these.}
+    \code{col}, see \code{\link{par}} on these.
+
+    Note that \code{xpd} is not accepted as clipping is always to the
+    device region, and that \code{lab} will partial match to argument
+    \code{labels} unless the latter is also supplied.}
 }
 \value{
   The numeric locations on the axis scale at which tick marks were drawn
@@ -92,7 +96,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   See \code{\link{par}} for details.
 }
 \seealso{
-  \code{Axis} for a generic interface.
+  \code{\link{Axis}} for a generic interface.
   
   \code{\link{axTicks}} returns the axis tick locations
   corresponding to \code{at=NULL}; \code{\link{pretty}} is more flexible

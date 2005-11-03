@@ -35,7 +35,7 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
   \item{bg}{the background color of plotting characters or symbols to be
     used; use \code{\link{par}(bg= *)} to set the background color of
     the whole plot.}
-  \item{color}{the color(s) to be used for points an labels.}
+  \item{color}{the color(s) to be used for points and labels.}
   \item{gcolor}{the single color to be used for group labels and
     values.}
   \item{lcolor}{the color(s) to be used for the horizontal lines.}

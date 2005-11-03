@@ -26,6 +26,7 @@ grey(level)
 \seealso{
   \code{\link{rainbow}},
   \code{\link{hsv}},
+  \code{\link{hcl}},
   \code{\link{rgb}}.
 }
 \examples{

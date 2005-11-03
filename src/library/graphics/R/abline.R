@@ -1,6 +1,6 @@
 abline <-
     function(a=NULL, b=NULL, h=NULL, v=NULL, reg=NULL, coef=NULL,
-	     untf=FALSE, col=par("col"), lty=par("lty"), lwd=NULL, ...)
+	     untf=FALSE, col=par("col"), lty=par("lty"), lwd=par("lwd"), ...)
 {
     if(!is.null(reg)) a <- reg
     if(!is.null(a) && is.list(a)) {

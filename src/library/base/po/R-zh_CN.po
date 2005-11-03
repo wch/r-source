@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:55\n"
+"POT-Creation-Date: 2005-10-30 08:51\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -567,9 +567,6 @@ msgstr "鏈結时没有可以读的文件"
 
 msgid "no files/directory to link to"
 msgstr "鏈結时没有可以写的文件/目錄"
-
-msgid "calling wrong method"
-msgstr "调用的方法不对"
 
 msgid "'package' must be of length 1"
 msgstr "'package'的长度必需为1"
@@ -1307,6 +1304,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "calling wrong method"
+#~ msgstr "调用的方法不对"
 
 #~ msgid "format.char: coercing 'x' to 'character'"
 #~ msgstr "format.char：'x'被强迫转成'character'"

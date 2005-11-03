@@ -349,6 +349,10 @@ SEXP do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 		REAL(y)[i] = REAL(x)[i];
 	    break;
 	case 2:	/* Im */
+	    y = allocVector(REALSXP, n);
+	    for(i = 0 ; i < n ; i++)
+		REAL(y)[i] = 0.0;
+	    break;
 	case 4:	/* Arg */
 	    y = allocVector(REALSXP, n);
 	    for(i = 0 ; i < n ; i++)

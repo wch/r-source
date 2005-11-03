@@ -26,4 +26,7 @@
     op.utils <- c(list(locatorBell = TRUE), extras, device=device)
     toset <- !(names(op.utils) %in% names(op))
     if(any(toset)) options(op.utils[toset])
+
+    initPSandPDFfonts()
 }
+

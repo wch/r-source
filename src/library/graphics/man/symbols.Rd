@@ -18,7 +18,7 @@
 \usage{
 symbols(x, y = NULL, circles, squares, rectangles, stars,
         thermometers, boxplots, inches = TRUE, add = FALSE,
-        fg = 1, bg = NA, xlab = NULL, ylab = NULL, main = NULL,
+        fg = par("col"), bg = NA, xlab = NULL, ylab = NULL, main = NULL,
         xlim = NULL, ylim = NULL, \dots)
 }
 \arguments{
@@ -50,8 +50,7 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
     make largest symbol this height in inches.}
   \item{add}{if \code{add} is \code{TRUE}, the symbols are added to
     an existing plot, otherwise a new plot is created.}
-  \item{fg}{colors the symbols are to be drawn in (the default is
-    the value of the \code{col} graphics parameter).}
+  \item{fg}{color(s) the symbols are to be drawn in.}
   \item{bg}{if specified, the symbols are filled with this color.
     The default is to leave the symbols unfilled. }
   \item{xlab}{the x label of the plot if \code{add} is not true; this

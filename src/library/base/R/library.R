@@ -590,7 +590,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 }
 
 require <-
-function(package, quietly = FALSE, warn.conflicts = TRUE,
+function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
          keep.source = getOption("keep.source.pkgs"),
          character.only = FALSE, version, save = TRUE)
 {
@@ -609,9 +609,9 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     if (!loaded) {
 	if (!quietly)
             cat(gettextf("Loading required package: %s\n", package))
-	value <- library(package, character.only = TRUE, logical = TRUE,
-		warn.conflicts = warn.conflicts, keep.source = keep.source,
-                version = version)
+	value <- library(package, lib.loc = lib.loc, character.only = TRUE,
+                         logical = TRUE, warn.conflicts = warn.conflicts,
+                         keep.source = keep.source, version = version)
     } else value <- TRUE
 
     if(identical(save, FALSE)) {}

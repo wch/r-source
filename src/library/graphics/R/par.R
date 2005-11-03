@@ -12,7 +12,7 @@
            "lty", "lwd",
            "mai", "mar", "mex", "mfcol", "mfg", "mfrow", "mgp", "mkh",
 	   "new", "oma", "omd", "omi", "pch", "pin", "plt", "ps", "pty",
-	   "smo", "srt", "tck", "tcl", "tmag", "type", "usr",
+	   "smo", "srt", "tck", "tcl", "tmag", "usr",
 	   "xaxp", "xaxs", "xaxt",  "xpd",
 	   "yaxp", "yaxs", "yaxt"
 	   )

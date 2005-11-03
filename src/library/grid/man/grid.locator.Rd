@@ -16,7 +16,8 @@ grid.locator(unit = "native")
         See the \code{\link{unit}} function for valid coordinate systems.}
 }
 \details{
-  This function is modal (like the base function \code{locator}) so
+  This function is modal (like the graphics package
+  function \code{locator}) so
   the command line and graphics drawing is blocked until
   the use has clicked the mouse  in the current device.
 }
@@ -29,7 +30,10 @@ grid.locator(unit = "native")
 }
 \author{ Paul Murrell }
 \seealso{ \code{\link{viewport}}, \code{\link{unit}},
-  \code{\link{locator}} }
+  \code{locator} in package graphics, and for an application
+  see \code{trellis.focus} and \code{trellis.identify} in
+  package lattice.
+}
 \examples{
 if (interactive()) {
   ## Need to write a more sophisticated unit as.character method

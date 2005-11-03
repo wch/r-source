@@ -167,7 +167,7 @@ typedef struct {
     double tck;		/* Tick size as in S */
     double tcl;		/* Tick size in "lines" */
     double tmag;	/* **R ONLY** Title Magnification */
-    int	type;		/* type of plot desired */
+    /* int	type;	    type of plot desired -- removed in 2.3.0 */
     double xaxp[3];	/* X Axis annotation */
 			/* [0] = coordinate of lower tick */
 			/* [1] = coordinate of upper tick */

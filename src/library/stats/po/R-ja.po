@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:56\n"
+"POT-Creation-Date: 2005-10-30 08:52\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -104,6 +104,10 @@ msgstr "スコープは項ラベルの部分集合ではありません"
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "'drop1' は mlm モデルには実装されていません"
+
+#, fuzzy
+msgid "F test assumes 'quasi%s' family"
+msgstr "F テストは疑似%sファミリ"
 
 msgid "lower scope is not included in model"
 msgstr "下位のスコープはモデル中に含まれません"
@@ -1019,6 +1023,12 @@ msgstr "'anova.glm' への次の引数は無効であり、除去されました
 msgid ","
 msgstr ","
 
+msgid "using F test with a %s family is inappropriate"
+msgstr ""
+
+msgid "using F test with a fixed dispersion is inappropriate"
+msgstr ""
+
 msgid "models with response"
 msgstr "応答"
 
@@ -1027,6 +1037,9 @@ msgstr "応答がモデル 1 と異なるので取除かれました"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr "モデルは全て同じサイズのデータセットに当てはめられませんでした"
+
+msgid "using F test with a '%s' family is inappropriate"
+msgstr ""
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "重みが 0 の観測値は標準偏差の計算で使われません"

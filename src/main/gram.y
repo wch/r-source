@@ -105,7 +105,6 @@ static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
     char     tocode[128];
     char     buf[16];
     void    *cd = NULL ;
-    ucs2_t   ucs2s[2];
     wchar_t  wcs[2];
     wchar_t *inbuf = wcs;
     size_t   inbytesleft = sizeof(wchar_t);
@@ -116,7 +115,6 @@ static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
     strcpy(tocode, "");
     memset(buf, 0, sizeof(buf));
     memset(wcs, 0, sizeof(wcs));
-    memset(ucs2s, 0, sizeof(ucs2s));
     wcs[0] = wc;
 
     if(wc == L'\0') {
@@ -152,7 +150,7 @@ static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
             return (size_t) -1;
         }
     }
-    strncpy(s, buf,sizeof(buf));
+    strncpy(s, buf, sizeof(buf) - 1); /* ensure 0-terminated */
     return strlen(buf);
 }
 
@@ -1753,52 +1751,73 @@ static int StringValue(int c)
 		}
 		c = val;
 	    }
+	    else if(c == 'u') {
+		if(!mbcslocale) 
+		     error(_("\\uxxxx sequences are only valid in multibyte locales"));
 #if defined(SUPPORT_MBCS)
-	    /* Only realy valid in UTF-8, but useful shorthand elsewhere */
-	    else if(mbcslocale && c == 'u') {
-		wint_t val = 0; int i, ext; size_t res;
-		char buff[5]; Rboolean delim = FALSE;
-		if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
-		for(i = 0; i < 4; i++) {
-		    c = xxgetc();
-		    if(c >= '0' && c <= '9') ext = c - '0';
-		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
-		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
-		    else {xxungetc(c); break;}
-		    val = 16*val + ext;
-		}
-		if(delim)
-		    if((c = xxgetc()) != '}')
-			error(_("invalid \\u{xxxx} sequence"));
+		else {	
+		    wint_t val = 0; int i, ext; size_t res;
+		    char buff[5]; Rboolean delim = FALSE;
+		    if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
+		    for(i = 0; i < 4; i++) {
+			c = xxgetc();
+			if(c >= '0' && c <= '9') ext = c - '0';
+			else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
+			else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
+			else {xxungetc(c); break;}
+			val = 16*val + ext;
+		    }
+		    if(delim)
+			if((c = xxgetc()) != '}')
+			    error(_("invalid \\u{xxxx} sequence"));
 		
-		res = ucstomb(buff, val, NULL); /* should always be valid */
-		if((int)res <= 0) error(_("invalid \\uxxxx sequence"));
-		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
-		c = buff[res - 1]; /* pushed below */
-	    }
-#ifndef Win32
-	    else if(mbcslocale && c == 'U') {
-		wint_t val = 0; int i, ext; size_t res;
-		char buff[9]; Rboolean delim = FALSE;
-		if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
-		for(i = 0; i < 8; i++) {
-		    c = xxgetc();
-		    if(c >= '0' && c <= '9') ext = c - '0';
-		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
-		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
-		    else {xxungetc(c); break;}
-		    val = 16*val + ext;
+		    res = ucstomb(buff, val, NULL);
+		    if((int)res <= 0) {
+			if(delim)
+			    error(_("invalid \\u{xxxx} sequence"));
+			else
+			    error(_("invalid \\uxxxx sequence"));
+		    }
+		    for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
+		    c = buff[res - 1]; /* pushed below */
 		}
-		if(delim)
-		    if((c = xxgetc()) != '}')
-			error(_("invalid \\U{xxxxxxxx} sequence"));
-		res = ucstomb(buff, val, NULL); /* should always be valid */
-		if((int)res <= 0) error(("invalid \\Uxxxxxxxx sequence"));
-		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
-		c = buff[res - 1]; /* pushed below */
+#endif
 	    }
+	    else if(c == 'U') {
+#ifdef Win32
+		error(_("\\Uxxxxxxxx sequences are not supported on Windows"));
+#else
+		if(!mbcslocale) 
+		     error(_("\\Uxxxxxxxx sequences are only valid in multibyte locales"));
+#ifdef SUPPORT_MBCS
+		else {
+		    wint_t val = 0; int i, ext; size_t res;
+		    char buff[9]; Rboolean delim = FALSE;
+		    if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
+		    for(i = 0; i < 8; i++) {
+			c = xxgetc();
+			if(c >= '0' && c <= '9') ext = c - '0';
+			else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
+			else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
+			else {xxungetc(c); break;}
+			val = 16*val + ext;
+		    }
+		    if(delim)
+			if((c = xxgetc()) != '}')
+			    error(_("invalid \\U{xxxxxxxx} sequence"));
+		    res = ucstomb(buff, val, NULL);
+		    if((int)res <= 0) {
+			if(delim)
+			    error(_("invalid \\U{xxxxxxxx} sequence"));
+			else
+			    error(("invalid \\Uxxxxxxxx sequence"));
+		    }
+		    for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
+		    c = buff[res - 1]; /* pushed below */
+		}
 #endif
-#endif
+#endif /* Win32 */
+	    }
 	    else {
 		switch (c) {
 		case 'a':

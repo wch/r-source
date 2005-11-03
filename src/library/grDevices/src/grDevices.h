@@ -37,7 +37,8 @@ SEXP PicTeX(SEXP);
 SEXP PostScript(SEXP);
 SEXP XFig(SEXP);
 SEXP PDF(SEXP);
-SEXP Type1FontInUse(SEXP);
+SEXP Type1FontInUse(SEXP, SEXP);
+SEXP CIDFontInUse(SEXP, SEXP);
 
 SEXP Quartz(SEXP);
 
@@ -45,12 +46,12 @@ SEXP L_nullDevice();
 
 Rboolean 
 PSDeviceDriver(NewDevDesc*, char*, char*, char*, char**,
-	       char*, char*, char*, char*, double, double, Rboolean, double, 
+	       char*, char*, char*, double, double, Rboolean, double, 
 	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP);
 
 Rboolean
 PDFDeviceDriver(NewDevDesc*, char *, char *, char *, char**, char *, 
-		char *, char *, char *, double, double, double,
+		char *, char *, double, double, double,
 		int, int, char*, SEXP, int, int);
 
 #ifdef WIN32

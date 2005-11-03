@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:55\n"
+"POT-Creation-Date: 2005-10-30 08:51\n"
 "PO-Revision-Date: 2005-02-26 22:56+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -190,11 +190,11 @@ msgstr "'x' è strutturata in modo errato"
 msgid "argument must be matrix-like"
 msgstr "l'argomento deve essere una matrice o simile"
 
+msgid "'x' and 'y' values must be finite and non-missing"
+msgstr ""
+
 msgid "'z' must be a matrix"
 msgstr "'z' deve essere una matrice"
-
-msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
-msgstr "le dimensioni di z non sono length(z)(+1) volte length(y)(+1)"
 
 msgid "invalid z limits"
 msgstr "limits di z non validi"
@@ -204,6 +204,9 @@ msgstr "deve avere un break in più di colour"
 
 msgid "breaks must all be finite"
 msgstr "i breaks devono essere tutti finiti"
+
+msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
+msgstr "le dimensioni di z non sono length(z)(+1) volte length(y)(+1)"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
