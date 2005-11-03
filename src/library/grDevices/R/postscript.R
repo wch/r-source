@@ -368,6 +368,9 @@ checkFont.CIDFont <- function(font) {
     if (is.null(font$metrics) || !is.character(font$metrics) ||
         length(font$metrics) < 4)
         fontError("font metric information")
+        ## Add default symbol font metric if none provided
+    if (length(font$metrics) == 4)
+        font$metrics <- c(font$metrics, "Symbol.afm")
     if (is.null(font$cmap) || !is.character(font$cmap))
         fontError("CMap name")
     if (is.null(font$cmapEncoding) || !is.character(font$cmapEncoding))
