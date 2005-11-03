@@ -23,7 +23,7 @@ double pnbeta(double x, double a, double b, double lambda,
     /* change errmax and itrmax if desired */
 
     const static double errmax = 1.0e-9;
-    const int    itrmax = 100;
+    const int    itrmax = 1000;  /* 100 is not enough for pf(ncp=200) */
 
     double a0, ans, ax, lbeta, c, errbd, gx, q, sumq, temp, x0;
     int j;

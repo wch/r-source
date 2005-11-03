@@ -212,6 +212,8 @@ BUG FIXES
 	sort(x, partial=) no longer returns unsorted names, and drops
 	names (since it is supplied for efficiency).
 
+    o   non-central F gives accurate values for larger ncp
+
 
 
 
