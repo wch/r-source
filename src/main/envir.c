@@ -1337,7 +1337,7 @@ SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 	    error(_("cannot remove variables from this database"));
         return(table->assign(CHAR(PRINTNAME(symbol)), value, table));      
     }
-    
+
     if (rho == R_BaseNamespace) {
 #ifdef USE_GLOBAL_CACHE
 	R_FlushGlobalCache(symbol);

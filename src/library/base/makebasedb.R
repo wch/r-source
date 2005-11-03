@@ -75,10 +75,7 @@ local({
             if (length(vars) != length(from) || any(nchar(vars) == 0))
                 stop("source list must have names for all elements")
         }
-        else {
-            print(sys.calls())   # DJM debugging
-            stop("source must be an environment or a list")
-        }
+        else stop("source must be an environment or a list");
 
         for (i in seq(along = vars)) {
             if (is.environment(from))
