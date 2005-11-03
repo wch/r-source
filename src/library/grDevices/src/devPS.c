@@ -3074,8 +3074,11 @@ PSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
 	/*
 	 * At this point the font is loaded, so add it to the
 	 * device's list of fonts.
+	 *
+	 * If the user specified a vector of AFMs, it is a Type 1 font
 	 */
-	if (isType1Font(family, PostScriptFonts, NULL)) {
+	if (!strcmp(family, "User") || 
+	    isType1Font(family, PostScriptFonts, NULL)) {
 	    pd->fonts = addDeviceFont(font, pd->fonts, &gotFont);
 	    pd->defaultFont = pd->fonts->family;
 	    pd->defaultCIDFont = NULL;
@@ -5231,7 +5234,8 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *paper,
 	 * At this point the font is loaded, so add it to the
 	 * device's list of fonts.
 	 */
-	if (isType1Font(family, PDFFonts, NULL)) {
+	if (!strcmp(family, "User") || 
+	    isType1Font(family, PostScriptFonts, NULL)) {
 	    addPDFDevicefont(font, pd, &gotFont);
 	    pd->defaultFont = pd->fonts->family;
 	    pd->defaultCIDFont = NULL;
