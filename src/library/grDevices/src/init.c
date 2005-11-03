@@ -37,7 +37,8 @@ static R_CMethodDef CEntries [] = {
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static R_CallMethodDef CallEntries[] = {
-    CALLDEF(Type1FontInUse, 1),
+    CALLDEF(Type1FontInUse, 2),
+    CALLDEF(CIDFontInUse, 2),
     {"L_nullDevice", (DL_FUNC) &L_nullDevice, 0},
     {NULL, NULL, 0}
 };
