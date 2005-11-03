@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-10-27
+@set FAQ_DATE @value{FAQ_YEAR}-11-02
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2100,6 +2100,9 @@ demonstrate statistical concepts, or on your own to better understand
 the concepts or the programming.
 @item UNF
 Tools for creating universal numeric fingerprints for data.
+@item USPS
+Unsupervised and Supervised methods of Propensity Score adjustment for
+bias.
 @item UsingR
 Data sets to accompany the textbook ``Using R for Introductory
 Statistics'' by J. Verzani, 2005, Chapman & Hall/CRC.
@@ -2108,6 +2111,8 @@ Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
 @item VaR
 Methods for calculation of Value at Risk (VaR).
+@item WhatIf
+Software for evaluating counterfactuals.
 @item XML
 Tools for reading @XML{} documents and DTDs.
 @item Zelig
@@ -3046,6 +3051,8 @@ ODEs are expressed as R functions.
 @item onion
 A collection of routines to manipulate and visualize quaternions and
 octonions.
+@item optmatch
+Functions to perform optimal matching, particularly full matching.
 @item orientlib
 Representations, conversions and display of orientation SO(3) data.
 @item ouch
@@ -3086,6 +3093,8 @@ groups.
 Perturbation analysis for evaluating collinearity.
 @item pgam
 Poisson-Gamma Additive Models.
+@item pgirmess
+Functions for analysis and display of ecological and spatial data.
 @item pheno
 Some easy-to-use functions for time series analyses of (plant-)
 phenological data sets.
@@ -3550,6 +3559,9 @@ Construction of test suites using verify objects.
 @item vioplot
 Violin plots, which are a combination of a box plot and a kernel density
 plot.
+@item wavelets
+Functions for computing wavelet filters, wavelet transforms and
+multiresolution analyses.
 @item waveslim
 Basic wavelet routines for time series analysis.
 @item wavethresh
