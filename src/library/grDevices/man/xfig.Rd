@@ -40,7 +40,8 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
 	of \code{"AvantGarde"}, \code{"Bookman"}, \code{"Courier"},
 	\code{"Helvetica"}, \code{"Helvetica-Narrow"},
 	\code{"NewCenturySchoolbook"}, \code{"Palatino"} or
-	\code{"Times"}.}
+	\code{"Times"}.  Any other value is replaced by
+	\code{"Helvetica"} with a warning.}
       \item{\code{pointsize}}{the default point size to be used.}
       \item{\code{bg}}{the default background color to be used.}
       \item{\code{fg}}{the default foreground color to be used.}

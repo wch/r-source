@@ -15,12 +15,12 @@ pdfFonts(...)
 }
 \arguments{
   \item{\dots}{either character strings naming mappings to display,
-    or new (named) mappings to define.}
+    or named arguments specifying mappings to add or change.}
 }
 \details{
-  If these functions are called with no argument they list the existing
-  mappings, whereas if they are called with named arguments they add
-  mappings.
+  If these functions are called with no argument they list all the
+  existing mappings, whereas if they are called with named arguments
+  they add (or change) mappings.
   
   A PostScript or PDF device is created with a default font family (see the
   documentation for \code{\link{postscript}}), but it is also possible
@@ -71,9 +71,20 @@ pdfFonts(...)
   software including the PostScript or PDF plot file should either embed
   the font outlines (usually from \file{.pfb} or \file{.pfa} files) or
   use DSC comments to instruct the print spooler to do so.
+
+  A font family has both an \R-level name, the argument name used when
+  \code{postscriptFonts} was called, and an internal name, the
+  \code{family} component.  These two names are the same for all the
+  pre-defined font families.
+
+  Once a font family is in use it cannot be changed.  \sQuote{In use}
+  means that it has been specified \emph{via} a \code{family} or
+  \code{fonts} argument to an invocation of the same graphics device
+  already in the \R session.  (For these purposes \code{xfig} counts the
+  same as \code{postscript} but only uses some of the predefined mappings.)
 }
 \value{
-  One or more font mappings.
+  A list of one or more font mappings.
 }
 \seealso{
   \code{\link{postscript}} and \code{\link{pdf}};  \code{\link{Type1Font}}
@@ -86,13 +97,15 @@ pdfFonts(...)
 \examples{
 postscriptFonts()
 ## This duplicates "ComputerModernItalic".
-CMitalic <- Type1Font("ComputerModern",
+CMitalic <- Type1Font("ComputerModern2",
                       c("CM_regular_10.afm", "CM_boldx_10.afm",
                         "cmti10.afm", "cmbxti10.afm",
                          "CM_symbol_10.afm"),
                       encoding = "TeXtext.enc")
 postscriptFonts(CMitalic = CMitalic)
 
+## A CID font for Japanese using a different CMap and
+## corresponding cmapEncoding. 
 `Jp_UCS-2` <- CIDFont("TestUCS2",
                   c("Adobe-Japan1-UniJIS-UCS2-H.afm",
                     "Adobe-Japan1-UniJIS-UCS2-H.afm",

@@ -1170,7 +1170,7 @@ static type1fontfamily makeFontFamily()
  * Used by global font list to free all fonts loaded in session
  * (should not be used by devices; else may free fonts more than once)
  *
- * Encodings a freed using the global encoding list
+ * Encodings are freed using the global encoding list
  * (to ensure that each encoding is only freed once)
  */
 static void freeCIDFontFamily(cidfontfamily family)
@@ -1306,6 +1306,12 @@ static char PDFFonts[] = ".PDF.Fonts";
  * NOTE that freeing the font families does NOT free the encodings
  * Hence we free all encodings first.
  */
+
+/* NB this is exported, and was at some point used by KillAllDevices
+   in src/main/graphics.c.  That would be a problem now it is in a 
+   separate DLL.
+*/
+#if 0
 void freeType1Fonts() 
 {
     encodinglist enclist = loadedEncodings;
@@ -1344,6 +1350,7 @@ void freeType1Fonts()
 	PDFloadedCIDFonts = pdfcidfl;
     }
 }
+#endif
 
 /*
  * Given a path to an encoding file, 
@@ -4336,6 +4343,8 @@ XFigDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     strcpy(pd->filename, file);
     strcpy(pd->papername, paper);
     pd->fontnum = XFigBaseNum(family);
+    /* this might have changed the family, so update */
+    if(pd->fontnum == 16) family = "Helvetica";
     pd->bg = str2col(bg);
     pd->col = str2col(fg);
     pd->fill = R_TRANWHITE;
@@ -4355,8 +4364,7 @@ XFigDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     pd->encodings = NULL;
     if (!(enc = findEncoding("ISOLatin1.enc", pd->encodings)))
 	enc = addEncoding("ISOLatin1.enc", 0);
-    if (enc && (enclist = addDeviceEncoding(enc, 
-					    pd->encodings))) {
+    if (enc && (enclist = addDeviceEncoding(enc, pd->encodings))) {
 	pd->encodings = enclist;
     } else {
 	free(dd);

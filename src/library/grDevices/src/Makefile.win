@@ -10,7 +10,7 @@ ifdef DEBUG
   DEBUGFLAG=-g -Wall
 else
   DLLFLAGS=-s
-  DEBUGFLAG=-Wall
+  DEBUGFLAG=-Wall -pedantic
 endif
 
 SOURCES_C = chull.c devNull.c devPicTeX.c devPS.c devWindows.c init.c
