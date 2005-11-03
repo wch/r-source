@@ -140,7 +140,7 @@ matplot(x, y, type = "l", xaxt = "n",
         xlab = expression(paste("Phase Angle ", phi)),
         col.main = "blue")
 axis(1, at = c(-pi, -pi/2, 0, pi/2, pi),
-     lab = expression(-pi, -pi/2, 0, pi/2, pi))
+     labels = expression(-pi, -pi/2, 0, pi/2, pi))
 
 
 ## How to combine "math" and numeric variables :

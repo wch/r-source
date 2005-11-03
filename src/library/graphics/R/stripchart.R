@@ -47,12 +47,12 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	plot(xlim, ylim, type="n", ann=FALSE, axes=FALSE, log=log)
 	box()
 	if(vertical) {
-	    if(n > 1) axis(1, at=at, lab=names(groups))
+	    if(n > 1) axis(1, at=at, labels=names(groups))
 	    Axis(x, side = 2)
 	}
 	else {
 	    Axis(x, side = 1)
-	    if(n > 1) axis(2, at=at, lab=names(groups))
+	    if(n > 1) axis(2, at=at, labels=names(groups))
 	}
     }
     csize <- cex*
