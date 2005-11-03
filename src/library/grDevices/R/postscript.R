@@ -91,7 +91,7 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
 
 guessEncoding <- function(family)
 {
-    # Two special families have special encodings, regardless of locale
+    # Three special families have special encodings, regardless of locale
     if (!missing(family) &&
         family %in% c("symbol", "ComputerModern", "ComputerModernItalic")) {
         switch(family,
@@ -175,11 +175,16 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
 
     # need to handle this before encoding
-    if(inherits(family, "Type1Font") || inherits(family, "CIDFont")) {
+    if(!missing(family) &&
+       (inherits(family, "Type1Font") || inherits(family, "CIDFont"))) {
         nm <- family$family
+        enc <- family$encoding
         ll <- list(family)
         names(ll) <- nm
         do.call("postscriptFonts", ll)
+        if(inherits(family, "Type1Font") &&!is.null(enc) && enc != "default"
+           && (is.null(old$encoding) || old$encoding  == "default"))
+            old$encoding <- enc
         family <- nm
     }
     if(is.null(old$encoding) || old$encoding  == "default")
@@ -239,11 +244,16 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
     # need to handle this before encoding
-    if(inherits(family, "Type1Font") || inherits(family, "CIDFont")) {
+    if(!missing(family) &&
+       (inherits(family, "Type1Font") || inherits(family, "CIDFont"))) {
         nm <- family$family
+        enc <- family$encoding
         ll <- list(family)
         names(ll) <- nm
         do.call("pdftFonts", ll)
+        if(inherits(family, "Type1Font") &&!is.null(enc) && enc != "default"
+           && (is.null(old$encoding) || old$encoding  == "default"))
+            old$encoding <- enc
         family <- nm
     }
     if(is.null(old$encoding) || old$encoding  == "default")
@@ -379,7 +389,7 @@ checkFontInUse <- function(names, fontDBname) {
         if (.Call("Type1FontInUse", i, isPDF(fontDBname),
                   PACKAGE = "grDevices") ||
             .Call("CIDFontInUse", i, isPDF(fontDBname),
-                  PACKAGE = "grDevice"))
+                  PACKAGE = "grDevices"))
             stop("font" , i, " already in use")
 }
 

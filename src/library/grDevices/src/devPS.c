@@ -1496,6 +1496,7 @@ static type1fontfamily findLoadedFont(char *name, char *encoding,
     type1fontfamily font = NULL;
     char *fontdbname;
     int found = 0;
+
     if (isPDF) {
 	fontlist = PDFloadedFonts;
 	fontdbname = PDFFonts;
@@ -1524,11 +1525,11 @@ static type1fontfamily findLoadedFont(char *name, char *encoding,
 SEXP Type1FontInUse(SEXP name, SEXP isPDF)
 {
     SEXP result;
+
     if (!isString(name) || LENGTH(name) > 1)
 	error(_("Invalid font name or more than one font name"));
     PROTECT(result = allocVector(LGLSXP, 1));
-    if (findLoadedFont(CHAR(STRING_ELT(name, 0)), NULL, 
-		       LOGICAL(asLogical(isPDF))[0]))
+    if (findLoadedFont(CHAR(STRING_ELT(name, 0)), NULL, asLogical(isPDF)))
 	LOGICAL(result)[0] = TRUE;
     else
 	LOGICAL(result)[0] = FALSE;
@@ -1541,14 +1542,14 @@ static cidfontfamily findLoadedCIDFont(char* family, Rboolean isPDF)
     cidfontlist fontlist;
     cidfontfamily font = NULL;
     int found = 0;
+
     if (isPDF) {
 	fontlist = PDFloadedCIDFonts;
     } else {
 	fontlist = loadedCIDFonts;
     }
     while (fontlist && !found) {
-	found = 
-	    !strcmp(family, fontlist->cidfamily->cidfonts[0]->name);
+	found = !strcmp(family, fontlist->cidfamily->cidfonts[0]->name);
 	if (found)
 	    font = fontlist->cidfamily;
 	fontlist = fontlist->next;
@@ -1566,8 +1567,7 @@ SEXP CIDFontInUse(SEXP name, SEXP isPDF)
     if (!isString(name) || LENGTH(name) > 1)
 	error(_("Invalid font name or more than one font name"));
     PROTECT(result = allocVector(LGLSXP, 1));
-    if (findLoadedCIDFont(CHAR(STRING_ELT(name, 0)),
-			  LOGICAL(asLogical(isPDF))[0]))
+    if (findLoadedCIDFont(CHAR(STRING_ELT(name, 0)), asLogical(isPDF)))
 	LOGICAL(result)[0] = TRUE;
     else
 	LOGICAL(result)[0] = FALSE;

@@ -69,5 +69,12 @@ CMitalic <- Type1Font("ComputerModern2",
                         "cmti10.afm", "cmbxti10.afm",
                         "CM_symbol_10.afm"),
                       encoding = "TeXtext.enc")
-}
+
+\dontrun{
+## This could be used by
+postscript(family=CMitalic)
+## or
+postscriptFonts(CMitalic = CMitalic)
+postscript(family="CMitalic")
+}}
 \keyword{device}
