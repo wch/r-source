@@ -250,7 +250,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
         enc <- family$encoding
         ll <- list(family)
         names(ll) <- nm
-        do.call("pdftFonts", ll)
+        do.call("pdfFonts", ll)
         if(inherits(family, "Type1Font") &&!is.null(enc) && enc != "default"
            && (is.null(old$encoding) || old$encoding  == "default"))
             old$encoding <- enc
@@ -393,7 +393,7 @@ checkFontInUse <- function(names, fontDBname) {
                   PACKAGE = "grDevices") ||
             .Call("CIDFontInUse", i, isPDF(fontDBname),
                   PACKAGE = "grDevices"))
-            stop("font" , i, " already in use")
+            stop("font " , i, " already in use")
 }
 
 setFonts <- function(fonts, fontNames, fontDBname) {
