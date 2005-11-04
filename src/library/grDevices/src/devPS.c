@@ -852,7 +852,8 @@ PostScriptStringWidth(unsigned char *str,
 
 #ifdef SUPPORT_MBCS
     char *buff;
-    if(mbcslocale && cidmetrics && (face % 5) != 0) {
+    /* We need to remap even if we are in a SBCS */
+    if(cidmetrics && (face % 5) != 0) {
 	unsigned short *ucs2s;
 	size_t ucslen;
 	ucslen = mbcsToUcs2((char *)str, NULL);
@@ -968,6 +969,11 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
     }
 }
 
+/*
+   <FIXME> This could be called in a SBCS. The assumption made here is
+   that is Latin1 and so we have a match for the first two planes of
+   Unicode.
+*/
 static void
 PostScriptCIDMetricInfo(int c, double *ascent, double *descent,
 			double *width,

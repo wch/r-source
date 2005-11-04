@@ -80,7 +80,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.
   }
-  \item{pointsize}{the default point size to be used.}
+  \item{pointsize}{the default point size to be used.  Strictly
+    speaking, in bp, that is 1/72 of an inch, but approximately in points.}
   \item{bg}{the default background color to be used.
     If \code{"transparent"} (or an equivalent specification), no
     background is painted.}

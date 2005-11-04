@@ -43,7 +43,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{encoding}{the name of an encoding file.  See
     \code{\link{postscript}} for details.
   }
-  \item{pointsize}{the default point size to be used.}
+  \item{pointsize}{the default point size to be used.  Strictly
+    speaking, in bp, that is 1/72 of an inch, but approximately in points.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
   \item{fonts}{a character vector specifying \R graphics font family
