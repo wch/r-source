@@ -264,6 +264,9 @@
 /* Define to 1 if you have the `getpwuid' function. */
 /* #undef HAVE_GETPWUID */
 
+/* Define to 1 if you have the `getrlimit' function. */
+/* #undef HAVE_GETRLIMIT */
+
 /* Define if the GNU gettext() function is already present or preinstalled. */
 /* #undef HAVE_GETTEXT */
 
@@ -318,7 +321,7 @@
 #define HAVE_ISNAN 1
 
 /* Define to 1 if you have the `iswblank' function. */
-#undef HAVE_ISWBLANK
+/* #undef HAVE_ISWBLANK */
 
 /* Define to 1 if you have the `iswctype' function. */
 #define HAVE_ISWCTYPE 1
@@ -368,8 +371,14 @@
 /* Define to 1 if you have the <locale.h> header file. */
 #define HAVE_LOCALE_H 1
 
+/* Define to 1 if you have the `log10' function. */
+#define HAVE_LOG10 1
+
 /* Define to 1 if you have the `log1p' function. */
 #define HAVE_LOG1P 1
+
+/* Define to 1 if you have the `log2' function. */
+#define HAVE_LOG2 1
 
 /* Define if you have the 'long double' type. */
 #define HAVE_LONG_DOUBLE 1
@@ -547,6 +556,9 @@
 /* Define to 1 if you have the <sys/param.h> header file. */
 #define HAVE_SYS_PARAM_H 1
 
+/* Define to 1 if you have the <sys/resource.h> header file. */
+/* #undef HAVE_SYS_RESOURCE_H */
+
 /* Define to 1 if you have the <sys/select.h> header file. */
 /* #undef HAVE_SYS_SELECT_H */
 
@@ -705,7 +717,7 @@
 /* Define as const if the declaration of iconv() needs const. */
 /* #undef ICONV_CONST */
 
-/* Define if `iconv' accepts "UTF-8" and "latin1". */
+/* Define if `iconv' accepts "UTF-8", "latin1" and "UCS-*". */
 #define ICONV_LATIN1 1
 
 /* Define if you have IEEE 754 floating point arithmetic. */
