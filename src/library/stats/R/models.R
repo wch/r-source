@@ -61,7 +61,7 @@ as.formula <- function(object,env=parent.frame()){
            object
     else{
         rval<-formula(object,env=baseenv())
-        if (is.null(environment(rval)) || !missing(env))
+        if (identical(environment(rval), baseenv()) || !missing(env))
             environment(rval)<-env
         rval
     }
