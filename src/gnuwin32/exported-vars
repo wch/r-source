@@ -6,6 +6,7 @@ R_PosInf
 R_NaString
 R_BlankString
 R_EvalDepth
+R_EmptyEnv
 R_BaseEnv
 R_GlobalEnv
 R_HistoryFile

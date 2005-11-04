@@ -1232,6 +1232,8 @@ static void RunGenCollect(R_size_t size_needed)
     FORWARD_NODE(R_CommentSxp);
 
     FORWARD_NODE(R_GlobalEnv);	           /* Global environment */
+    FORWARD_NODE(R_BaseEnv);
+    FORWARD_NODE(R_EmptyEnv);
     FORWARD_NODE(R_Warnings);	           /* Warnings, if any */
 
 #ifdef NEW_CONDITION_HANDLING

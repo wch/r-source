@@ -3,6 +3,7 @@
 \alias{environment<-}
 \alias{.GlobalEnv}
 \alias{globalenv}
+\alias{emptyenv}
 \alias{baseenv}
 \alias{is.environment}
 \alias{new.env}
@@ -22,6 +23,8 @@ is.environment(obj)
 .GlobalEnv
 globalenv()
 .BaseNamespaceEnv
+
+emptyenv()
 baseenv()
 
 new.env(hash = FALSE, parent = parent.frame())
@@ -80,12 +83,12 @@ parent.env(env) <- value
 
   The object \code{.BaseNamespaceEnv} is the namespace environment for
   the base package.  The environment of the base package itself is
-  available as \code{baseenv()}, currently \code{NULL}, the ultimate enclosure of any environment:
+  available as \code{baseenv()}.  The ultimate enclosure of any environment
+  is the empty environment \code{emptyenv()}, to which nothing may
+  be assigned.
   If one follows the \code{parent.env()} chain of enclosures back far
-  enough from any environment, eventually one reaches \code{baseenv()}.
-  This means that arithmetic operators and the base package functions
-  will be always be found by \code{\link{eval}()} or \code{\link{get}(...,
-  inherits = TRUE)}.
+  enough from any environment, eventually one reaches the empty
+  environment.
 
   The replacement function \code{parent.env<-} is extremely dangerous as
   it can be used to destructively change environments in ways that

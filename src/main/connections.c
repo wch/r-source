@@ -1955,7 +1955,11 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     error(_("invalid '%s' argument"), "open");
     open = CHAR(STRING_ELT(sopen, 0));
     venv = CADDDR(args);
-    if (!isEnvironment(venv) && venv != R_BaseEnv)
+    if (isNull(venv)) {
+	warning(_("use of NULL environment is deprecated"));
+	venv = R_BaseEnv;
+    } else      
+    if (!isEnvironment(venv))
 	error(_("invalid '%s' argument"), "environment");
     ncon = NextConnection();
     if(!strlen(open) || strncmp(open, "r", 1) == 0)

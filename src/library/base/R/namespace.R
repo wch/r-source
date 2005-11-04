@@ -397,10 +397,11 @@ saveNamespaceImage <- function (package, rdafile, lib.loc = NULL,
 
 topenv <- function(envir = parent.frame(),
                    matchThisEnv = getOption("topLevelEnvironment")) {
-    while (! identical(envir, baseenv())) {
+    while (! identical(envir, emptyenv())) {
         if (! is.null(attr(envir, "name")) ||
             identical(envir, matchThisEnv) ||
             identical(envir, .GlobalEnv) ||
+            identical(envir, baseenv()) ||
             .Internal(isNamespaceEnv(envir)) ||
             exists(".packageName", envir = envir, inherits = FALSE))
             return(envir)

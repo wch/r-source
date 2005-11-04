@@ -344,8 +344,6 @@ non-square matrix in: as.dist.default(x)
 [1] TRUE
 > res <- try(as.environment( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.environment(res))
-[1] FALSE
-Error: x is not TRUE
 > res <- try(as.expression( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.expression(res))
 [1] TRUE
@@ -430,8 +428,6 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.environment(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
-[1] FALSE
-Error: x is not TRUE
 > res <- try(as.expression( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.expression(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -550,7 +546,6 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.environment( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.environment( f )))
-[1] TRUE
 > f <- try(as.expression( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.expression( f )))
 [1] TRUE

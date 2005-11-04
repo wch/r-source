@@ -65,7 +65,7 @@ local({
             }
         }
 
-        if (is.null(from) || is.environment(from)) {
+        if (is.environment(from)) {
             if (! missing(variables))
                 vars <- variables
             else vars <- ls(from, all = TRUE)
@@ -78,7 +78,7 @@ local({
         else stop("source must be an environment or a list");
 
         for (i in seq(along = vars)) {
-            if (is.null(from) || is.environment(from))
+            if (is.environment(from))
                 key <- lazyLoadDBinsertVariable(vars[i], from, datafile,
                                                 ascii, compress,  envhook)
             else key <- lazyLoadDBinsertListElement(from, i, datafile, ascii,

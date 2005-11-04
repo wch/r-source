@@ -106,6 +106,10 @@ NEW FEATURES
 	is used on the plot.
 	
     o	New Vectorize() function, a wrapper for mapply().
+    
+    o	Changed environment tree to be rooted in an empty environment,
+	available as emptyenv().  baseenv() modified to return an
+	environment with emptyenv() as parent, rather than NULL.  
 
     o	The way families can be specified for postscript() and pdf()
 	has been expanded to include CID-keyed fonts, with new
@@ -139,6 +143,8 @@ DEPRECATED & DEFUNCT
     o	The unused graphical parameter "type" has been removed: it
 	invited confusion with the 'type' argument to default methods
 	of plot(), points() and lines().
+	
+    o	Use of NULL as an environment now gives a warning.
 
     o	postscriptFont() is deprecated in favour of Type1Font() (which
 	is just a change of name).

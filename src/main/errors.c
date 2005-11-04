@@ -748,7 +748,7 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		rho = cptr->cloenv;
 		break;
 	    }
-	while(rho != R_BaseEnv) {
+	while(rho != R_EmptyEnv) {
 	    if (rho == R_GlobalEnv) break;
 	    else if (R_IsNamespaceEnv(rho)) {
 		domain = CHAR(STRING_ELT(R_NamespaceEnvSpec(rho), 0));
@@ -847,7 +847,7 @@ SEXP do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		rho = cptr->cloenv;
 		break;
 	    }
-	while(rho != R_BaseEnv) {
+	while(rho != R_EmptyEnv) {
 	    if (rho == R_GlobalEnv) break;
 	    else if (R_IsNamespaceEnv(rho)) {
 		domain = CHAR(STRING_ELT(R_NamespaceEnvSpec(rho), 0));

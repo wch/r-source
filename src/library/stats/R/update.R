@@ -21,9 +21,7 @@ update.default <-
 }
 
 update.formula <- function (old, new, ...) {
-    env <- environment(as.formula(old))
     tmp <- .Internal(update.formula(as.formula(old), as.formula(new)))
     out <- formula(terms.formula(tmp, simplify = TRUE))
-    environment(out) <- env
     return(out)
 }

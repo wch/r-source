@@ -400,8 +400,8 @@ lsf.str <- function(pos = 1, ..., envir = as.environment(pos))
 
 print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
 {
-    E <- attr(x, "envir") # can be NULL for "package:base"
-    if(!is.null(E)) stopifnot(is.environment(E))
+    E <- attr(x, "envir") 
+    stopifnot(is.environment(E))
     M <- attr(x, "mode")
     for(nam in x) {
 	cat(nam, ": ")

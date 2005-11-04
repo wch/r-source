@@ -17,7 +17,10 @@ formula.formula <- function(x, ...) x
 formula.terms <- function(x, ...) {
     env<- environment(x)
     attributes(x) <- list(class="formula")
-    environment(x) <- env
+    if (!is.null(env))
+    	environment(x) <- env
+    else
+    	environment(x) <- globalenv()
     x
 }
 

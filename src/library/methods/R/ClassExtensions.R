@@ -194,7 +194,7 @@ makeExtends <- function(Class, to,
             if(exists(what, where, inherits = FALSE))
                 value <- c(value, list(where))
             ## two forms of test for the end of the parent env. chain
-            if(isBaseNamespace(where) || identical(where, baseenv()))
+            if(isBaseNamespace(where) || identical(where, emptyenv()))
                 break
             where <- parent.env(where)
         }

@@ -658,6 +658,7 @@ FUNTAB R_FunTab[] =
 {"formals",	do_formals,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"body",	do_body,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"bodyCode",	do_bodyCode,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"emptyenv", 	do_emptyenv, 	0,	1,	0,	{PP_FUNCALL, PREC_FN, 	0}},
 {"baseenv", 	do_baseenv, 	0,	1,	0,	{PP_FUNCALL, PREC_FN, 	0}},
 {"globalenv",	do_globalenv,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"environment",	do_envir,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},

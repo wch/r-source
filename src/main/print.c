@@ -548,6 +548,8 @@ static void PrintEnvir(SEXP rho)
 	Rprintf("<environment: R_GlobalEnv>\n");
     else if (rho == R_BaseEnv)
     	Rprintf("<environment: base>\n");	
+    else if (rho == R_EmptyEnv)
+    	Rprintf("<environment: R_EmptyEnv>\n");
     else if (R_IsPackageEnv(rho))
 	Rprintf("<environment: %s>\n",
 		CHAR(STRING_ELT(R_PackageEnvName(rho), 0)));

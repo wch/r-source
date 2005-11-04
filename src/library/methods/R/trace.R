@@ -368,11 +368,7 @@ trySilent <- function(expr) {
     else {
         whereF <- .genEnv(what, where)
     }
-    if(is.null(whereF)) { ## stupid convention that NULL == base package
-        whereF <- .BaseNamespaceEnv
-        pname <- "base"
-    }
-    else if(!is.null(attr(whereF, "name")))
+    if(!is.null(attr(whereF, "name")))
         pname <- gsub("^.*:", "", attr(whereF, "name"))
     else if(isNamespace(whereF))
         pname <- .searchNamespaceNames(whereF)

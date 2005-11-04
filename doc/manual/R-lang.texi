@@ -578,15 +578,19 @@ arguments that do not match a formal argument are matched with
 @cindex environment
 Environments can be thought of as consisting of two things.  A
 @emph{frame}, consisting of a set of symbol-value pairs, and an
-@emph{enclosure}, a pointer to an enclosing environment.  When @R{}
+@emph{enclosure}, a pointer to an enclosing environment. When @R{}
 looks up the value for a symbol the frame is examined and if a
 matching symbol is found its value will be returned.  If not, the
 enclosing environment is then accessed and the process repeated.
 Environments form a tree structure in which the enclosures play the
-role of parents. The environment of the base package is available
-through the @code{baseenv()} function.  It forms the root of the tree
-of environments.  Currently it has the special value @code{NULL}, but
-this will change in the next major release.
+role of parents.  The tree of environments is rooted in an empty
+@findex emptyenv 
+environment, available through @code{emptyenv()}, which has no parent.
+It is the direct parent of the environment of the base package
+@findex baseenv 
+(available through the @code{baseenv()} function). Formerly
+@code{baseenv()} had the special value @code{NULL}, but as from
+version 2.3.0, the use of @code{NULL} as an environment is deprecated.
 
 Environments are created implicitly by function calls, as described
 in @ref{Function objects} and @ref{Lexical environment}.  In this case
@@ -1966,7 +1970,7 @@ environment is the root of the user workspace.  An
 assignment operation from the command line will cause the relevant
 object to belong to the global environment.  Its enclosing environment
 is the next environment on the search path, and so on back to the
-environment of the base package.
+empty environment that is the enclosure of the base environment.
 
 @node Lexical environment, Stacks, Global environment, Scope of variables
 @subsection Lexical environment
@@ -2006,7 +2010,9 @@ evaluation environment, then in the enclosure, the enclosure of
 the enclosure, etc.; once the global environment or the environment of
 a package is reached, the
 search continues up the search path
-to the environment of the base package.
+to the environment of the base package.  If the variable is not
+found there, the search will proceed next to the empty environment, and
+will fail.
 
 @node Stacks, Search path, Lexical environment, Scope of variables
 @subsection The call stack
@@ -3286,7 +3292,7 @@ substitute act as @code{quote}.
 
 The rule of promise substitution is slightly different from that of
 @Sl{} if the local variable is modified before @code{substitute} is
-used.  @R{} will then use the new value of the variable, where as @Sl{}
+used.  @R{} will then use the new value of the variable, whereas @Sl{}
 will unconditionally use the argument expression---unless it was a
 constant, which has the curious consequence that @code{f((1))} may be
 very different from @code{f(1)} in @Sl{}.  The @R{} rule is considerably
