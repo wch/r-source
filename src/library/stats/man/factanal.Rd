@@ -121,7 +121,8 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \item{factors}{The argument \code{factors}.}
   \item{dof}{The number of degrees of freedom of the factor analysis model.}
   \item{method}{The method: always \code{"mle"}.}
-  \item{scores}{If requested, a matrix of scores.}
+  \item{scores}{If requested, a matrix of scores.  \code{napredict} is
+    applied to handle the treatment of values omitted by the \code{na.action}.}
   \item{n.obs}{The number of observations if available, or \code{NA}.}
   \item{call}{The matched call.}
   \item{na.action}{If relevant.}

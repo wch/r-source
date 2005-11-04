@@ -37,7 +37,7 @@ lm(formula, data, subset, weights, na.action,
     the \code{na.action} setting of \code{\link{options}}, and is
     \code{\link{na.fail}} if that is unset.  The \dQuote{factory-fresh}
     default is \code{\link{na.omit}}.  Another possible value is
-    \code{NULL}, no action.}
+    \code{NULL}, no action.  Value \code{\link{na.exclude}} can be useful.}
 
   \item{method}{the method to be used; for fitting, currently only
     \code{method = "qr"} is supported; \code{method = "model.frame"} returns

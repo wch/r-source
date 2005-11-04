@@ -42,7 +42,15 @@
   If the fit is rank-deficient, some of the columns of the design matrix
   will have been dropped.  Prediction from such a fit only makes sense
   if \code{newdata} is contained in the same subspace as the original
-  data. That cannot be checked accurately, so a warning is issued.
+  data.  That cannot be checked accurately, so a warning is issued.
+
+  If \code{newdata} is omitted the predictions are based on the data
+  used for the fit.  In that case how cases with missing values in the
+  original fit is determined by the \code{na.action} argument of that
+  fit.  If \code{na.action = na.omit} omitted cases will not appear in
+  the residuals, whereas if \code{na.action = na.exclude} they will
+  appear (in predictions, standard errors or interval limits),
+  with residual value \code{NA}.  See also \code{\link{napredict}}.
 }
 \value{
   \code{predict.lm} produces a vector of predictions or a matrix of

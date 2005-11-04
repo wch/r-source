@@ -33,6 +33,9 @@ lm.influence(model, do.coef = TRUE)
   \code{sigma} and \code{coefficients} are \code{NaN}.  (Dropping such a
   case would normally result in a variable being dropped, so it is not
   possible to give simple drop-one diagnostics.)
+
+  \code{\link{naresid}} is applied to the results and so will fill in
+  with \code{NA}s it the fit had \code{na.action = na.exclude}.
 }
 \value{
   A list containing the following components of the same length or

@@ -51,7 +51,8 @@ glm.fit(x, y, weights = rep(1, nobs),
     when the data contain \code{NA}s.  The default is set by
     the \code{na.action} setting of \code{\link{options}}, and is
     \code{\link{na.fail}} if that is unset.  The \dQuote{factory-fresh}
-    default is \code{\link{na.omit}}.}
+    default is \code{\link{na.omit}}.  Another possible value is
+    \code{NULL}, no action.  Value \code{\link{na.exclude}} can be useful.}
 
   \item{start}{starting values for the parameters in the linear predictor.}
 
