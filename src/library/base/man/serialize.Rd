@@ -11,7 +11,7 @@
 serialize(object, connection, ascii = FALSE, refhook = baseenv())
 unserialize(connection, refhook = baseenv())
 .saveRDS(object, file = "", ascii = FALSE, version = NULL,
-         compress = FALSE, refhook = baseenv())
+         compress = FALSE, refhook = NULL)
 .readRDS(file, refhook = NULL)
 }
 \arguments{
