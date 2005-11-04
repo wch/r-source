@@ -189,11 +189,17 @@ SEXP do_envir(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    SEXP env;
     checkArity(op, args);
-    if (TYPEOF(CAR(args)) == CLOSXP && isEnvironment(CADR(args)))
-	SET_CLOENV(CAR(args), CADR(args));
-    else if (isEnvironment(CADR(args)))
-	setAttrib(CAR(args), R_DotEnvSymbol, CADR(args));
+    env = CADR(args);
+    if (isNull(env)) {
+	warning(_("use of NULL environment is deprecated"));
+	env = R_BaseEnv;
+    } 
+    if (TYPEOF(CAR(args)) == CLOSXP && isEnvironment(env))
+	SET_CLOENV(CAR(args), env);
+    else if (isEnvironment(env))
+	setAttrib(CAR(args), R_DotEnvSymbol, env);
     else
 	errorcall(call, _("replacement object is not an environment"));
     return CAR(args);
