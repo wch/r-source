@@ -267,6 +267,12 @@ double R_pow_di(double x, int n)
 
 static double logbase(double x, double base)
 {
+#if defined(HAVE_WORKING_LOG)  && defined(HAVE_LOG10)
+    if(base == 10) return log10(x);
+#endif
+#if defined(HAVE_WORKING_LOG)  && defined(HAVE_LOG2)
+    if(base == 2) return log2(x);
+#endif
     return R_log(x) / log(base);
 }
 

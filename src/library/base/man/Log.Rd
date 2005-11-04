@@ -5,8 +5,10 @@ log(x, base = exp(1))
 logb(x, base = exp(1))
 log10(x)
 log2(x)
+
 exp(x)
 expm1(x)
+
 log1p(x)
 }
 \alias{log}
@@ -26,7 +28,7 @@ log1p(x)
   \code{log10} computes common (i.e., base 10) logarithms, and
   \code{log2} computes binary (i.e., base 2) logarithms.
   The general form \code{logb(x, base)} computes logarithms with base
-  \code{base} (\code{log10} and \code{log2} are only special cases).
+  \code{base}.
 
   \code{log1p(x)} computes \eqn{\log(1+x)}{log(1+x)} accurately also for
   \eqn{|x| \ll 1}{|x| << 1} (and less accurately when \eqn{x \approx
@@ -48,6 +50,9 @@ log1p(x)
 \details{
   \code{exp} and \code{log} are generic functions: methods can be defined
   for them individually or via the \code{\link{Math}} group generic.
+
+  \code{log10} and \code{log2} are only special cases, but will be computed
+  more efficiently and accurately where supported by the OS.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -373,8 +373,14 @@
 /* Define to 1 if you have the <locale.h> header file. */
 #undef HAVE_LOCALE_H
 
+/* Define to 1 if you have the `log10' function. */
+#undef HAVE_LOG10
+
 /* Define to 1 if you have the `log1p' function. */
 #undef HAVE_LOG1P
+
+/* Define to 1 if you have the `log2' function. */
+#undef HAVE_LOG2
 
 /* Define if you have the 'long double' type. */
 #undef HAVE_LONG_DOUBLE

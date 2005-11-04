@@ -116,6 +116,10 @@ NEW FEATURES
 	functions Type1Font() and CIDFont() to set up such fonts
 	families.
 
+    o	log2() and log10() call C functions of the same name if
+	available, and will then be more likely to be precise to
+	machine accuracy.
+
 
 DEPRECATED & DEFUNCT
 
