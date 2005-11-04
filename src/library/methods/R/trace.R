@@ -5,7 +5,7 @@
         fromPackage <- getPackageName(where)
     }
     else fromPackage <- ""
-    whereF <- baseenv()
+    whereF <- NULL
     pname <- character()
     def <- NULL
     if(is.function(what)) {
@@ -56,7 +56,7 @@
     }
     if(nargs() == 1)
         return(.primTrace(what)) # for back compatibility
-    if(identical(whereF, baseenv())) {
+    if(is.null(whereF)) {
         allWhere <- findFunction(what, where = where)
         if(length(allWhere)==0)
             stop(gettextf("no function definition for '%s' found", what),
@@ -127,7 +127,7 @@
     if(!global) {
         action <- if(untrace)"Untracing" else "Tracing"
         location <- if(.identC(fromPackage, "")) {
-            if(length(pname)==0  && !identical(whereF, baseenv()))
+            if(length(pname)==0  && !is.null(whereF))
                 pname <- getPackageName(whereF)
             if(length(pname)==0)
                 "\""
