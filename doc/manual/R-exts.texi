@@ -7096,7 +7096,7 @@ can take over a function in the base package and make it generic by
 @example
 @group
 foo <- function(object, ...) UseMethod("foo")
-foo.default <- get("foo", pos = NULL, mode = "function")
+foo.default <- base::foo
 @end group
 @end example
 
@@ -7105,15 +7105,7 @@ foo.default <- get("foo", pos = NULL, mode = "function")
 argument list, one can e.g.@: use @code{formals(foo.default) <-
 c(formals(foo.default), alist(... = ))}.)
 
-Note that this cannot be used for functions in another package, as the
-order of packages on the search path cannot be controlled, except that
-all precede the base package.  Where the name of the package is known
-and it is in a namespace another way to access the original form is
-
-@example
-foo.default <- base::foo
-@end example
-
+The same idea can be applied for functions in other packages with namespaces.
 
 @node Linking GUIs and other front-ends to R, R (internal) programming miscellanea, Generic functions and methods, Top
 @chapter Linking GUIs and other front-ends to R
