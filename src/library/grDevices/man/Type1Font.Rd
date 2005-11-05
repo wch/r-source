@@ -17,8 +17,8 @@ CIDFont(family, metrics, cmap, cmapEncoding, pdfresource = "")
 \arguments{
   \item{family}{a character string giving the name to be used internally
     for a Type 1 or CID-keyed font family.  This needs to uniquely
-    identify each family, so if you modify a family you need to change
-    the family name.}
+    identify each family, so if you modify a family which is in use
+    (see \code{\link{postscriptFonts}}) you need to change the family name.}
   \item{metrics}{a character vector of four or five strings giving paths
     to the afm (Adobe Font Metric) files for the font.}
   \item{cmap}{the name of a CMap file for a CID-keyed font.}
@@ -76,7 +76,7 @@ CMitalic <- Type1Font("ComputerModern2",
 ## This could be used by
 postscript(family=CMitalic)
 ## or
-postscriptFonts(CMitalic = CMitalic)
+postscriptFonts(CMitalic = CMitalic)  # once in a session
 postscript(family="CMitalic", encoding = "TeXtext.enc")
 }}
 \keyword{device}

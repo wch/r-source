@@ -18,9 +18,6 @@ check.options <-
 	if(exists(name.opt, envir=envir, inherits=FALSE)) {
 	    if(length(utils::find(name.opt)) > 1)
 		rm(list=name.opt, envir=envir)
-##-	    else
-##-		stop(paste("Cannot reset '", name.opt,
-##-			"'  since it exists only once in search()!\n", sep=""))
 
 	} else stop(gettextf("cannot reset non-existent '%s'", name.opt),
                     domain = NA)
@@ -39,11 +36,6 @@ check.options <-
                                collapse=", "),
                          deparse(sys.call(sys.parent()))),
                  domain = NA)
-##-- This does not happen: ambiguities are plain "NA" here:
-##-	else if(any(matches==0))
-##-	    stop(paste("ambiguous argument name(s) '",
-##-			   paste(newnames[matches == 0], collapse=", "),
-##-			   "' in \"", deparse(sys.call(sys.parent())),"\"",sep=""))
 	else { #- match(es) found:  substitute if appropriate
 	    i.match <- oldnames[matches]
 	    prev <- old[i.match]
@@ -174,18 +166,14 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
     if(is.null(old$command) || old$command == "default")
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
 
-    # need to handle this before encoding
+    # need to handle this case before encoding
     if(!missing(family) &&
        (inherits(family, "Type1Font") || inherits(family, "CIDFont"))) {
-        nm <- family$family
         enc <- family$encoding
-        ll <- list(family)
-        names(ll) <- nm
-        do.call("postscriptFonts", ll)
         if(inherits(family, "Type1Font") &&!is.null(enc) && enc != "default"
            && (is.null(old$encoding) || old$encoding  == "default"))
             old$encoding <- enc
-        family <- nm
+        family <- family$metrics
     }
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- guessEncoding(family)
@@ -246,15 +234,11 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     # need to handle this before encoding
     if(!missing(family) &&
        (inherits(family, "Type1Font") || inherits(family, "CIDFont"))) {
-        nm <- family$family
         enc <- family$encoding
-        ll <- list(family)
-        names(ll) <- nm
-        do.call("pdfFonts", ll)
         if(inherits(family, "Type1Font") &&!is.null(enc) && enc != "default"
            && (is.null(old$encoding) || old$encoding  == "default"))
             old$encoding <- enc
-        family <- nm
+        family <- family$metrics
     }
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- guessEncoding()
