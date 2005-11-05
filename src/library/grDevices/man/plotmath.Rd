@@ -26,6 +26,7 @@
 
   \tabular{ll}{
     \bold{Syntax} \tab \bold{Meaning} \cr
+
     \code{x + y}   \tab x plus y   \cr
     \code{x - y}   \tab x minus y \cr
     \code{x*y}    \tab juxtapose x and y \cr
@@ -82,6 +83,8 @@
     \code{x \%dbldown\% y} \tab x double-down-arrow y \cr
     \code{alpha} -- \code{omega} \tab Greek symbols \cr
     \code{Alpha} -- \code{Omega} \tab uppercase Greek symbols \cr
+    \code{phi1} \tab cursive phi\cr
+    \code{Upsilon1} \tab cursive capital upsilon\cr
     \code{infinity}   \tab infinity symbol \cr
     \code{partialdiff} \tab partial differential symbol \cr
     \code{32*degree}   \tab 32 degrees \cr
