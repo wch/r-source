@@ -148,7 +148,7 @@ DEPRECATED & DEFUNCT
 	invited confusion with the 'type' argument to default methods
 	of plot(), points() and lines().
 	
-    o	Use of NULL as an environment now gives a warning.
+    o	Use of NULL as an environment is deprecated and gives a warning.
 
     o	postscriptFont() is deprecated in favour of Type1Font() (which
 	is just a change of name).
