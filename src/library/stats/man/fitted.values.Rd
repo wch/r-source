@@ -25,8 +25,8 @@ fitted.values(object, \dots)
   \code{fitted} and not \code{fitted.values}.)
 
   Methods can make use of \code{\link{napredict}} methods to compensate
-  for the omission of missing values.  The default, \code{lm} and
-  \code{glm} methods do.
+  for the omission of missing values.  The default and \code{\link{nls}}
+  methods do.
 }
 \value{
   Fitted values extracted from the object \code{x}.

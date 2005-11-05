@@ -79,7 +79,9 @@ prcomp(x, \dots)
   \item{x}{if \code{retx} is true the value of the rotated data (the
     centred (and scaled if requested) data multiplied by the
     \code{rotation} matrix) is returned.  Hence, \code{cov(x)} is the
-    diagonal matrix \code{diag(sdev^2)}.}
+    diagonal matrix \code{diag(sdev^2)}.  For the formula method,
+    \code{napredict} is applied to handle the treatment of values
+    omitted by the \code{na.action}.}
   \item{center, scale}{the centering and scaling used, or \code{FALSE}.}
 }
 \details{

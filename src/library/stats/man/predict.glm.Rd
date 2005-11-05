@@ -37,6 +37,15 @@
   Obtains predictions and optionally estimates standard errors of those
   predictions from a fitted generalized linear model object.
 }
+\details{
+  If \code{newdata} is omitted the predictions are based on the data
+  used for the fit.  In that case how cases with missing values in the
+  original fit is determined by the \code{na.action} argument of that
+  fit.  If \code{na.action = na.omit} omitted cases will not appear in
+  the residuals, whereas if \code{na.action = na.exclude} they will
+  appear (in predictions and standard errors), with residual value
+  \code{NA}.  See also \code{\link{napredict}}.
+}
 \value{
   If \code{se = FALSE}, a vector or matrix of predictions.  If \code{se
     = TRUE}, a list with components

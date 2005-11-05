@@ -42,6 +42,12 @@ weights(object, \dots)
   to the standardized \code{\link{rstudent}} residuals, and the
   \code{\link{weighted.residuals}}).
 
+  How \code{residuals} treats cases with missing values in the original
+  fit is determined by the \code{na.action} argument of that fit.
+  If \code{na.action = na.omit} omitted cases will not appear in the
+  residuals, whereas if \code{na.action = na.exclude} they will appear,
+  with residual value \code{NA}.  See also \code{\link{naresid}}.
+
   The \code{"lm"} method for generic \code{\link{labels}} returns the
   term labels for estimable terms, that is the names of the terms with
   an least one estimable coefficient.

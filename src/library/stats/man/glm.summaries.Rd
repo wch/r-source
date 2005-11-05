@@ -26,6 +26,13 @@
   
   The partial residuals are a matrix of working residuals, with each
   column formed by omitting a term from the model.
+
+  How \code{residuals} treats cases with missing values in the original
+  fit is determined by the \code{na.action} argument of that fit.
+  If \code{na.action = na.omit} omitted cases will not appear in the
+  residuals, whereas if \code{na.action = na.exclude} they will appear,
+  with residual value \code{NA}.  See also \code{\link{naresid}}.
+
 }
 \seealso{
   \code{\link{glm}} for computing \code{glm.obj}, \code{\link{anova.glm}};
