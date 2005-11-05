@@ -249,8 +249,9 @@ par(\dots, no.readonly = FALSE)
     \item{\code{font}}{An integer which specifies which font to use for
       text.  If possible, device drivers arrange so that 1 corresponds
       to plain text, 2 to bold face, 3 to italic and 4 to bold
-      italic. Also, font 5 is expected to be the symbol font, in Adobe
-      symbol encoding.}
+      italic.  Also, font 5 is expected to be the symbol font, in Adobe
+      symbol encoding.  On some devices font families can be selected by
+      \code{family} to choose different sets of 5 fonts.}
     \item{\code{font.axis}}{The font to be used for axis annotation.}
     \item{\code{font.lab}}{The font to be used for x and y labels.}
     \item{\code{font.main}}{The font to be used for plot main titles.}
@@ -384,7 +385,11 @@ par(\dots, no.readonly = FALSE)
     \item{\code{ps}}{integer; the pointsize of text (but not symbols).  Unlike
       the \code{pointsize} argument of most devices, this does not change
       the relationship between \code{mar} and \code{mai} (nor \code{oma}
-      and \code{omi}), but it does scale \code{cin} and \code{csi}.}
+      and \code{omi}), but it does scale \code{cin} and \code{csi}.
+
+      What is meant by \sQuote{pointsize} is device-specific, but most
+      devices mean a multiple of 1bp, that is 1/72 of an inch.
+    }
     \item{\code{pty}}{A character specifying the type of plot region to
       be used; \code{"s"} generates a square plotting region and
       \code{"m"} generates the maximal plotting region.}
