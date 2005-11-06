@@ -2222,7 +2222,7 @@ static int	collabsave;	/* col.lab */
 static int	colsubsave;	/* col.sub */
 static int	colaxissave;	/* col.axis */
 static double	crtsave;	/* character rotation */
-static char     familysave[201];
+static char     familysave[50];
 static int	fontsave;	/* font */
 static int	fontmainsave;	/* font.main */
 static int	fontlabsave;	/* font.lab */
@@ -2273,7 +2273,7 @@ void GSavePars(DevDesc *dd)
     colaxissave = Rf_gpptr(dd)->colaxis;
     crtsave = Rf_gpptr(dd)->crt;
     errsave = Rf_gpptr(dd)->err;
-    strncpy(familysave, Rf_gpptr(dd)->family, 201);
+    strncpy(familysave, Rf_gpptr(dd)->family, 50);
     fontsave = Rf_gpptr(dd)->font;
     fontmainsave = Rf_gpptr(dd)->fontmain;
     fontlabsave = Rf_gpptr(dd)->fontlab;
@@ -2333,7 +2333,7 @@ void GRestorePars(DevDesc *dd)
     Rf_gpptr(dd)->colaxis = colaxissave;
     Rf_gpptr(dd)->crt = crtsave;
     Rf_gpptr(dd)->err = errsave;
-    strncpy(Rf_gpptr(dd)->family, familysave, 201);
+    strncpy(Rf_gpptr(dd)->family, familysave, 50);
     Rf_gpptr(dd)->font = fontsave;
     Rf_gpptr(dd)->fontmain = fontmainsave;
     Rf_gpptr(dd)->fontlab = fontlabsave;
@@ -2498,7 +2498,7 @@ void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd)
     gc->ps = (double) Rf_gpptr(dd)->ps * Rf_gpptr(dd)->scale;
     gc->lineheight = Rf_gpptr(dd)->lheight;
     gc->fontface = Rf_gpptr(dd)->font;
-    strncpy(gc->fontfamily, Rf_gpptr(dd)->family, 201);
+    strncpy(gc->fontfamily, Rf_gpptr(dd)->family, 50);
 }
 
 /* Draw a line. */

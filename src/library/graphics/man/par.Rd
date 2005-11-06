@@ -223,7 +223,7 @@ par(\dots, no.readonly = FALSE)
       outside the plot region are \emph{not} plotted.)
       The degree of error reporting desired.}
     \item{\code{family}}{The name of a font family for drawing text.
-      The maximum allowed length is 200 bytes.
+      The maximum allowed length is 49 bytes.
       This name gets mapped by each graphics device to device-specific
       font descriptions.
       The default value is \code{""} which means that the
