@@ -218,7 +218,7 @@ typedef struct {
     double ps;           /* Font size in points */
     double lineheight;   /* Line height (multiply by font size) */
     int fontface;        /* Font face (plain, italic, bold, ...) */
-    char fontfamily[50]; /* Font family */
+    char fontfamily[201]; /* Font family */
 } R_GE_gcontext;
 
 GEDevDesc* GEcreateDevDesc(NewDevDesc* dev);

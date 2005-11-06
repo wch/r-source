@@ -369,6 +369,9 @@ BUG FIXES
     o	symbols(fg) defaulted to colour 1, not par("col") as documented.
 	It does now defaults to par("col").
 
+    o	par("family") did not check the length of the value (up to 49
+	bytes) and so could segfault.
+
 
 
 		CHANGES IN R VERSION 2.2.0

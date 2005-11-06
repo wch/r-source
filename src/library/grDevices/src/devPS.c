@@ -925,39 +925,73 @@ PostScriptStringWidth(unsigned char *str,
     return 0.001 * sum;
 }
 
+
 /* Be careful about the assumptions here.  In an 8-bit locale 0 <= c < 256
    and it is in the encoding in use.  As it is not going to be
    re-encoded when text is output, it is correct not to re-encode here.
-   If called from PostscriptStringWidth, it will be called
-   on a 8-bit string in the locale assumed for output.
 
-   If called from PS_MetricInfo, in an MBCS locale and font != 5,
-   chars < 128 are sent as is (we assume that is ASCII) and others are
-   re-encoded to Unicode in GEText (and interpreted as Unicode in
-   GESymbol).
-
-   <FIXME> the assumption made here is that the corresponding 8-bit
-   encoding is Latin1 (it was < 2.3.0) and so we have a match for the
-   first two planes of Unicode and no info otherwise (and these are
-   chars that would not be printed).
+   When called in an MBCS locale and font != 5, chars < 128 are sent
+   as is (we assume that is ASCII) and others are re-encoded to
+   Unicode in GEText (and interpreted as Unicode in GESymbol).
 */
-static void
-PostScriptMetricInfo(int c, double *ascent, double *descent,
-		     double *width,
-		     FontMetricInfo *metrics)
-{
-    short wx;
+# ifdef WORDS_BIGENDIAN
+static const char UCS2ENC[] = "UCS-2BE";
+# else
+static const char UCS2ENC[] = "UCS-2LE";
+# endif
 
+static void
+PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
+		     FontMetricInfo *metrics, 
+		     Rboolean isSymbol,
+		     char *encoding)
+{
     if (c == 0) {
 	*ascent = 0.001 * metrics->FontBBox[3];
 	*descent = -0.001 * metrics->FontBBox[1];
 	*width = 0.001 * (metrics->FontBBox[2] - metrics->FontBBox[0]);
-    } else if (c > 255) { /* Unicode */
+	return;
+    }
+
+#ifdef SUPPORT_MBCS
+    if(mbcslocale && !isSymbol && c >= 128 && c < 65536) { /* Unicode */
+	void *cd = NULL;
+	char *i_buf, *o_buf, out[2];
+	size_t i_len, o_len, status;
+	unsigned short w[2];
+	
+	if ((void*)-1 == (cd = Riconv_open(encoding, (char *)UCS2ENC)))
+	    error(_("unknown encoding '%s' in 'PostScriptMetricInfo'"),
+		  encoding);
+
+	w[0] = c; w[1] = 0;
+	i_buf = (char *)w;
+	i_len = 4;
+	o_buf = out;
+	o_len = 1;
+	status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
+			(char **)&o_buf, (size_t *)&o_len);
+	Riconv_close(cd);
+	if (status == (size_t)-1) {
+	    *ascent = 0;
+	    *descent = 0;
+	    *width = 0;
+	    warning(_("font metrics unknown for Unicode character U+%04x"), c);
+	    return;
+	} else {
+	    c = out[0];
+	}
+    }
+#endif
+
+    if (c > 255) { /* Unicode */
 	*ascent = 0;
 	*descent = 0;
 	*width = 0;
 	warning(_("font metrics unknown for Unicode character U+%04x"), c);
     } else {
+	short wx;
+
 	*ascent = 0.001 * metrics->CharInfo[c].BBox[3];
 	*descent = -0.001 * metrics->CharInfo[c].BBox[1];
 	wx = metrics->CharInfo[c].WX;
@@ -969,21 +1003,33 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
     }
 }
 
-/*
-   <FIXME> This could be called in a SBCS. The assumption made here is
-   that is Latin1 and so we have a match for the first two planes of
-   Unicode.
-*/
 static void
 PostScriptCIDMetricInfo(int c, double *ascent, double *descent,
 			double *width,
 			CIDFontMetricInfo *cidmetrics)
 {
-    /* We should assume that c is always Unicode */
-    short wx;
     /* Shoudn't happen, but a precaution */
     if (!cidmetrics)
 	error("trying to use unknown face in a CID family");
+
+    /* calling in a SBCS is probably not intentional, but we should try to
+       cope sensibly. */
+#ifdef SUPPORT_MBCS
+    if(!mbcslocale && c > 0) {
+	if (c > 255)
+	    error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"));
+	else {
+	    /* convert to UCS-2 to match the assumptions for the AFMs */
+	    char str[2];
+	    ucs2_t out[2];
+	    str[0] = c;
+	    str[1] = '\0';
+	    if(mbcsToUcs2(str, out) == (size_t)-1)
+		error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"));
+	    c = out[0];
+	}
+    }
+#endif
 
     if (c == 0) {
 	*ascent = 0.001 * cidmetrics->FontBBox[3];
@@ -996,6 +1042,8 @@ PostScriptCIDMetricInfo(int c, double *ascent, double *descent,
 	*descent = -0.001 * cidmetrics->FontBBox[1];
 	*width = 1; /* That is, 1000 */
     } else {
+	short wx;
+
 	*ascent = 0.001 * cidmetrics->CharInfo[c].BBox[3];
 	*descent = -0.001 * cidmetrics->CharInfo[c].BBox[1];
 	wx = cidmetrics->CharInfo[c].WX;
@@ -3799,14 +3847,16 @@ static void PS_MetricInfo(int c,
 
     if (isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont)) {
 	PostScriptMetricInfo(c, ascent, descent, width,
-			     metricInfo(gc->fontfamily, face, pd));
+			     metricInfo(gc->fontfamily, face, pd), 
+			     face != 5, convname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily, PostScriptFonts) */
         if (face < 5) {
 	    PostScriptCIDMetricInfo(c, ascent, descent, width,
 				    CIDmetricInfo(gc->fontfamily, face, pd));
 	} else {
  	    PostScriptMetricInfo(c, ascent, descent, width,
-				 CIDsymbolmetricInfo(gc->fontfamily, pd));
+				 CIDsymbolmetricInfo(gc->fontfamily, pd), 
+				 TRUE, "");
 	}
     }
     *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
@@ -4012,7 +4062,6 @@ static void drawSimpleText(double x, double y, char *str,
     }
 }
 
-/* Only used for symbol fonts and on non-MBCS platforms */
 #ifndef SUPPORT_MBCS
 static void PS_Text(double x, double y, char *str,
 		    double rot, double hadj,
@@ -4998,7 +5047,8 @@ static void XFig_MetricInfo(int c,
     if(face < 1 || face > 5) face = 1;
 
     PostScriptMetricInfo(c, ascent, descent, width,
-			 &(pd->fonts->family->fonts[face-1]->metrics));
+			 &(pd->fonts->family->fonts[face-1]->metrics), 
+			 face != 5, "");
     *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
     *descent = floor(gc->cex * gc->ps + 0.5) * *descent;
     *width = floor(gc->cex * gc->ps + 0.5) * *width;
@@ -6919,7 +6969,8 @@ static void PDF_MetricInfo(int c,
     if (isType1Font(gc->fontfamily, PDFFonts, pd->defaultFont)) {
 	PostScriptMetricInfo(c, ascent, descent, width,
 			     PDFmetricInfo(gc->fontfamily, 
-					   gc->fontface, pd));
+					   gc->fontface, pd),
+			     face != 5, PDFconvname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily) */
         if (face < 5) {
 	    PostScriptCIDMetricInfo(c, ascent, descent, width,
@@ -6927,8 +6978,8 @@ static void PDF_MetricInfo(int c,
 						     gc->fontface, pd));
 	} else {
 	    PostScriptMetricInfo(c, ascent, descent, width,
-				 PDFCIDsymbolmetricInfo(gc->fontfamily, 
-							pd));     
+				 PDFCIDsymbolmetricInfo(gc->fontfamily, pd),
+				 TRUE, "");
 	}
     }
     *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;

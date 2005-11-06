@@ -137,7 +137,7 @@ typedef struct {
     double din[2];	/* device size in inches */
     int	err;		/* Error repporting level */
     rcolor fg;		/* **R ONLY** Foreground Color */
-    char family[50];    /* **R ONLY** Font family 
+    char family[201];  /* **R ONLY** Font family 
 			   Simple name which is mapped by device-specific
 			   font database to device-specific name.
 			   Only used if not "".

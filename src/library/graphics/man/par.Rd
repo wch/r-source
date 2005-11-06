@@ -118,7 +118,7 @@ par(\dots, no.readonly = FALSE)
   \itemize{
     \item \code{"ask"},
     \item \code{"family"}, \code{"fig"}, \code{"fin"},
-    \item \code{"lend"}, \code{"lheight"}, \code{"ljoin"}, \code{"lmitre"},
+    \item \code{"lheight"},
     \item \code{"mai"}, \code{"mar"}, \code{"mex"},
     \code{"mfcol"}, \code{"mfrow"}, \code{"mfg"},
     \item \code{"new"},
@@ -224,10 +224,11 @@ par(\dots, no.readonly = FALSE)
       outside the plot region are \emph{not} plotted.)
       The degree of error reporting desired.}
     \item{\code{family}}{The name of a font family for drawing text.
-      This name is device-independent and gets mapped by each
-      graphics device to a device-specific font description.
+      The maximum allowed length is 200 bytes.
+      This name gets mapped by each graphics device to device-specific
+      font descriptions.
       The default value is \code{""} which means that the
-      default device font will be used.
+      default device fonts will be used.
       Standard values are \code{"serif"}, \code{"sans"},
       \code{"mono"}, and \code{"symbol"} and the \link{Hershey}
       font families are also available.  Different devices
