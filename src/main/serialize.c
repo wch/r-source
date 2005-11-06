@@ -1253,6 +1253,8 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 		SET_OBJECT(s, 1);
 	    R_RestoreHashCount(s);
 	    if (locked) R_LockEnvironment(s, FALSE);
+	    /* Convert a NULL enclosure to baseenv() */
+	    if (ENCLOS(s) == R_NilValue) SET_ENCLOS(s, R_BaseEnv);
 	    UNPROTECT(1);
 	    return s;
 	}
@@ -1276,6 +1278,9 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	SET_TAG(s, hastag ? ReadItem(ref_table, stream) : R_NilValue);
 	SETCAR(s, ReadItem(ref_table, stream));
 	SETCDR(s, ReadItem(ref_table, stream));
+	/* For reading closures and promises stored in earlier versions, convert NULL env to baseenv() */
+	if      (type == CLOSXP && CLOENV(s) == R_NilValue) SET_CLOENV(s, R_BaseEnv);
+	else if (type == PROMSXP && PRENV(s) == R_NilValue) SET_PRENV(s, R_BaseEnv);
 	UNPROTECT(1); /* s */
 	return s;
     default:
