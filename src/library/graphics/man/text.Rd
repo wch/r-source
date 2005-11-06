@@ -72,8 +72,8 @@ text(x, \dots)
 
   Graphical parameters \code{col}, \code{cex} and \code{font} can be
   vectors and will then be applied cyclically to the \code{labels} (and
-  extra values will be ignored).  \code{NA} values of \code{col} are
-  replaced by \code{par("col")}.
+  extra values will be ignored).  \code{NA} values of \code{font} are
+  replaced by \code{par("font")}.
 
   Labels whose \code{x}, \code{y}, \code{labels}, \code{cex} or \code{col}
   value is \code{NA} are omitted from the plot.
