@@ -1,23 +1,26 @@
 
-R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-11-22)
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2005-11-06 r36200)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ## tests of the fonts in the postscript() device.
 > 
-> testit <- function(family)
-+ {
-+     postscript("ps-tests.ps", height=7, width=7, family=family)
+> testit <- function(family, encoding="default")
++ { 
++     postscript("ps-tests.ps", height=7, width=7, family=family,
++                encoding=encoding)
 +     plot(1:10, type="n")
 +     text(5, 9, "Some text")
 +     text(5, 8 , expression(italic("italic")))
@@ -84,7 +87,7 @@ null device
 null device 
           1 
 > 
-> testit("ComputerModern")
+> testit("ComputerModern", "TeXtext.enc")
 null device 
           1 
 > 
