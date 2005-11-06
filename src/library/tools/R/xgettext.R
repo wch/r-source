@@ -126,7 +126,7 @@ xgettext2pot <- function(dir, potFile)
     writeLines(con=con,
                c('msgid ""',
                  'msgstr ""',
-                 '"Project-Id-Version: R 2.1.0\\n"',
+                 '"Project-Id-Version: R 2.3.0\\n"',
                  '"Report-Msgid-Bugs-To: bugs@r-project.org\\n"',
                  paste('"POT-Creation-Date: ',
                        format(Sys.time(), "%Y-%m-%d %H:%M"), # %z is not portable

@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-30 08:51\n"
+"POT-Creation-Date: 2005-11-06 09:26\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -795,6 +795,9 @@ msgstr "[原来保存的工作空间已还原]"
 
 msgid "invalid 'category' argument"
 msgstr "'category'变元有错"
+
+msgid "must specify formal argument names to vectorize"
+msgstr ""
 
 msgid "'arg' should be one of"
 msgstr "'arg'应当是这些其中的一个"

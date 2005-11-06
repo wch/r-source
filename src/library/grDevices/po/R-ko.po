@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-30 08:51\n"
+"POT-Creation-Date: 2005-11-06 09:26\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -113,14 +113,27 @@ msgstr "이하의 부적절한 옵션입니다"
 msgid "NOT changing"
 msgstr "변경하지 않습니다"
 
+msgid "invalid 'family' argument"
+msgstr "부적절한 'family' 인수입니다"
+
 msgid "invalid PDF version"
 msgstr "부적절한 PDF의 버전입니다"
 
 msgid "invalid"
 msgstr "부적절함"
 
-msgid "in PostScript font specification"
-msgstr "PostScript 폰트의 지정중에 있었습니다"
+#, fuzzy
+msgid "in font specification"
+msgstr "부적절한 X11 폰트의 지정방법입니다"
+
+msgid "Invalid font type"
+msgstr ""
+
+msgid "Not a CID font"
+msgstr ""
+
+msgid "Invalid font database name"
+msgstr ""
 
 msgid "font"
 msgstr "폰트"
@@ -133,6 +146,20 @@ msgstr "postscriptFonts에서 부적절한 인수입니다(폰트명이 필요�
 
 msgid "invalid arguments in postscriptFonts (need named args)"
 msgstr "postscriptFonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
+
+#, fuzzy
+msgid "invalid arguments in pdfFonts (must be font names)"
+msgstr "X11Fonts에서 부적절한 인수입니다(폰트명이 필요합니다)"
+
+#, fuzzy
+msgid "invalid arguments in pdfFonts (need named args)"
+msgstr "X11Fonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
+
+msgid "unknown font"
+msgstr ""
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr ""
 
 msgid "no current device to record from"
 msgstr "현재 이하의 것으로부터 기록할수가 있는 디바이스는 없습니다:"
@@ -243,5 +270,5 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d개의 올바르지 않는 x의 값이 대수 plot로부터 제외해졌습니다"
 
-#~ msgid "invalid 'family' argument"
-#~ msgstr "부적절한 'family' 인수입니다"
+#~ msgid "in PostScript font specification"
+#~ msgstr "PostScript 폰트의 지정중에 있었습니다"

@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-30 08:51\n"
+"POT-Creation-Date: 2005-11-06 09:26\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -115,14 +115,27 @@ msgstr "opzioni non valide in"
 msgid "NOT changing"
 msgstr "NON cambio"
 
+msgid "invalid 'family' argument"
+msgstr "argomento 'family' non valido"
+
 msgid "invalid PDF version"
 msgstr "versione PDF non valida"
 
 msgid "invalid"
 msgstr "non valido"
 
-msgid "in PostScript font specification"
-msgstr "nella specificazione del font PostScript"
+#, fuzzy
+msgid "in font specification"
+msgstr "specificazione font X11 non valida"
+
+msgid "Invalid font type"
+msgstr ""
+
+msgid "Not a CID font"
+msgstr ""
+
+msgid "Invalid font database name"
+msgstr ""
 
 msgid "font"
 msgstr "font"
@@ -135,6 +148,20 @@ msgstr "argomenti non validi in postscriptFonts (deve essere 'font names')"
 
 msgid "invalid arguments in postscriptFonts (need named args)"
 msgstr "argomenti non validi in postscriptFonts (necessari argomenti con nome)"
+
+#, fuzzy
+msgid "invalid arguments in pdfFonts (must be font names)"
+msgstr "argomenti non validi in X11Fonts (deve essere 'font names')"
+
+#, fuzzy
+msgid "invalid arguments in pdfFonts (need named args)"
+msgstr "argomenti non valid in X11Fonts (necessita argomenti con nome)"
+
+msgid "unknown font"
+msgstr ""
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr ""
 
 msgid "no current device to record from"
 msgstr "nessun dispositivo da cui registrare"
@@ -249,8 +276,8 @@ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
 
-#~ msgid "invalid 'family' argument"
-#~ msgstr "argomento 'family' non valido"
+#~ msgid "in PostScript font specification"
+#~ msgstr "nella specificazione del font PostScript"
 
 #~ msgid "invalid arguments in"
 #~ msgstr "argomenti non validi in"

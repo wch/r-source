@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-30 08:51\n"
+"POT-Creation-Date: 2005-11-06 09:26\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -813,6 +813,9 @@ msgstr "[Vorher gesicherter Workspace wiederhergestellt]"
 
 msgid "invalid 'category' argument"
 msgstr "ungültiges Argument für 'category'"
+
+msgid "must specify formal argument names to vectorize"
+msgstr ""
 
 msgid "'arg' should be one of"
 msgstr "'arg' sollte eines sein von"

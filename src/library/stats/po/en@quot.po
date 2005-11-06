@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:35+0100\n"
-"PO-Revision-Date: 2005-09-16 08:35+0100\n"
+"POT-Creation-Date: 2005-11-06 09:27+0000\n"
+"PO-Revision-Date: 2005-11-06 09:27+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -101,7 +101,7 @@ msgstr "Burg's algorithm failed to find partial correlation"
 msgid "control must be a list"
 msgstr "control must be a list"
 
-#: nls.c:77 port.c:510
+#: nls.c:77 port.c:513
 msgid "m must be a list"
 msgstr "m must be a list"
 
@@ -159,11 +159,15 @@ msgstr "number of iterations exceeded maximum of %d"
 msgid "theta should be of type character"
 msgstr "theta should be of type character"
 
-#: nls.c:204
+#: nls.c:204 port.c:359
+msgid "use of NULL environment is deprecated"
+msgstr "use of NULL environment is deprecated"
+
+#: nls.c:208
 msgid "rho should be an environment"
 msgstr "rho should be an environment"
 
-#: nls.c:221 nls.c:243
+#: nls.c:225 nls.c:247
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Missing value or an infinity produced when evaluating the model"
 
@@ -200,49 +204,53 @@ msgstr "gradient function must return a numeric vector of length %d"
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr "Hessian function must return a square numeric matrix of order %d"
 
-#: port.c:360
+#: port.c:363
 msgid "`rho' must be an environment"
 msgstr "‘rho’ must be an environment"
 
-#: port.c:362 port.c:509
+#: port.c:365 port.c:512
 msgid "`d' must be a nonempty numeric vector"
 msgstr "‘d’ must be a nonempty numeric vector"
 
-#: port.c:364
+#: port.c:367
 msgid "When Hessian defined must also have gradient defined"
 msgstr "When Hessian defined must also have gradient defined"
 
-#: port.c:367
+#: port.c:370
 #, c-format
 msgid "environment `rho' must contain a numeric vector `.par' of length %d"
 msgstr "environment ‘rho’ must contain a numeric vector ‘.par’ of length %d"
 
-#: port.c:377 port.c:529
-msgid "lowerb and upperb must be numeric vectors"
-msgstr "lowerb and upperb must be numeric vectors"
+#: port.c:380
+msgid "'lowerb' and 'upperb' must be numeric vectors"
+msgstr "‘lowerb’ and ‘upperb’ must be numeric vectors"
 
-#: port.c:423
+#: port.c:426
 msgid "getElement applies only to named lists"
 msgstr "getElement applies only to named lists"
 
-#: port.c:444
+#: port.c:447
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() not found"
 
-#: port.c:457
+#: port.c:460
 #, c-format
 msgid "gradient must be a numeric matrix of dimension (%d,%d)"
 msgstr "gradient must be a numeric matrix of dimension (%d,%d)"
 
-#: port.c:478
+#: port.c:481
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn produced mode %d, length %d - wanted mode %d, length %d"
 
-#: port.c:491
+#: port.c:494
 msgid "invalid type for eval_check_store"
 msgstr "invalid type for eval_check_store"
+
+#: port.c:532
+msgid "lowerb and upperb must be numeric vectors"
+msgstr "lowerb and upperb must be numeric vectors"
 
 #: qr.c:30
 msgid "assert failed in src/library/ts/src/carray.c"

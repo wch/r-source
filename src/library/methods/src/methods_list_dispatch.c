@@ -863,7 +863,7 @@ static char *check_single_string(SEXP obj, Rboolean nonEmpty, char *what) {
     char *string = "<unset>"; /* -Wall */
     if(isString(obj)) {
 	if(length(obj) != 1)
-	    error(_("'%s' must be a single string (got a character vector of length %d))"),
+	    error(_("'%s' must be a single string (got a character vector of length %d)"),
 		  what, length(obj));
 	string = CHAR(asChar(obj));
 	if(nonEmpty && (! string || !string[0]))

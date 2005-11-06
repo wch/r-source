@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-30 08:52\n"
+"POT-Creation-Date: 2005-11-06 09:27\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -732,8 +732,9 @@ msgstr "无法用这些初始值进行最佳化运算"
 msgid "link not recognised"
 msgstr "没有这样的鏈結"
 
+#, fuzzy
 msgid ""
-"link \"%s\" not available for poisson family; available links are \"identity"
+"link \"%s\" not available for Poisson family; available links are \"identity"
 "\", \"log\" and \"sqrt\""
 msgstr ""
 "poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log\"和"

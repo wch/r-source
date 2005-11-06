@@ -1,0 +1,76 @@
+# Portuguese translations for R package.
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the R package.
+# Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.2.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2005-09-27 08:38+0100\n"
+"PO-Revision-Date: 2005-11-05 17:02-0200\n"
+"Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
+"Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: grid.c:209
+msgid "Cannot clip to rotated viewport"
+msgstr "Não é possível cortar sobre uma viewport rotacionada"
+
+#: grid.c:641 grid.c:646 grid.c:743 grid.c:748
+msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+msgstr ""
+"Não é possível mostrar a viewport de nível máximo (saidas gráficas e grid "
+"misturadas?) "
+
+#: grid.c:939
+msgid "attempt to plot on null device"
+msgstr "tentativa de fazer um gráfico no dispositivo nulo"
+
+#: grid.c:1219
+msgid "There is no layout defined"
+msgstr "Não há layout definido"
+
+#: grid.c:1796
+msgid "Invalid circle radius (must be non-negative)"
+msgstr "Raio de círculo inválido (deve ser não negativo)"
+
+#: layout.c:520
+msgid "invalid layout.pos.row"
+msgstr "layout.pos.row inválido"
+
+#: layout.c:524
+msgid "invalid layout.pos.col"
+msgstr "layout.pos.col inválido"
+
+#: state.c:178
+msgid "Unable to store grid state.  Too many devices open?"
+msgstr ""
+"Não foi possível guardar o estado do grid. Muitos dispositivos abertos?"
+
+#: unit.c:258 unit.c:408 unit.c:1075 unit.c:1155 unit.c:1235 unit.c:1315
+msgid "Unimplemented unit function"
+msgstr "Função unidade não implementada"
+
+#: unit.c:768 unit.c:1508
+msgid "Illegal unit or unit not yet implemented"
+msgstr "Unidade inválida ou unidade ainda não implementada"
+
+#: unit.c:1638
+msgid "Invalid unit"
+msgstr "Unidade inválida"
+
+#: unit.c:1654
+msgid "Units must be character"
+msgstr "Unidades devem ser do tipo caractere"
+
+#: unit.c:1657
+msgid "Units must be of length > 0"
+msgstr "Unidades devem ter comprimento > 0"
+
+#: viewport.c:317
+msgid "Non-finite location and/or size for viewport"
+msgstr "Localização e/ou tamanhos não finitos para viewport"

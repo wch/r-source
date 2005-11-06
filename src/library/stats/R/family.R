@@ -135,7 +135,7 @@ poisson <- function (link = "log")
     }
     if (any(linktemp == c("log", "identity", "sqrt")))
 	stats <- make.link(linktemp)
-    else stop(gettextf('link "%s" not available for poisson family; available links are "identity", "log" and "sqrt"', linktemp), domain = NA)
+    else stop(gettextf('link "%s" not available for Poisson family; available links are "identity", "log" and "sqrt"', linktemp), domain = NA)
     variance <- function(mu) mu
     validmu <- function(mu) all(mu>0)
     dev.resids <- function(y, mu, wt)

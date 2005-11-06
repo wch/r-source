@@ -18,7 +18,7 @@ msgstr ""
 
 #: grid.c:209
 msgid "Cannot clip to rotated viewport"
-msgstr "Impossibile tagliare su una viewpoer ruotata"
+msgstr "Impossibile tagliare su una viewport ruotata"
 
 #: grid.c:641 grid.c:646 grid.c:743 grid.c:748
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"

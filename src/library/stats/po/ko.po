@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:35+0100\n"
+"POT-Creation-Date: 2005-11-06 09:27+0000\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -80,7 +80,7 @@ msgstr "Burg의 알고니즘의 편상관을 검색되어서 결손시켰습니�
 msgid "control must be a list"
 msgstr "control는 리스트가 아니면 되지 않습니다"
 
-#: nls.c:77 port.c:510
+#: nls.c:77 port.c:513
 msgid "m must be a list"
 msgstr "m는 리스트가 아니면 되지 않습니다"
 
@@ -138,11 +138,15 @@ msgstr "반복수가 최대치 %d를 넘었습니다"
 msgid "theta should be of type character"
 msgstr "theta는 문자 유형이 아니면 되지 않습니다"
 
-#: nls.c:204
+#: nls.c:204 port.c:359
+msgid "use of NULL environment is deprecated"
+msgstr ""
+
+#: nls.c:208
 msgid "rho should be an environment"
 msgstr "rho는 환경이 나오지 않으면 되지 않습니다"
 
-#: nls.c:221 nls.c:243
+#: nls.c:225 nls.c:247
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "model를 평가할때 결손값 또는 무한대가 생성되었습니다"
 
@@ -179,49 +183,53 @@ msgstr ""
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 
-#: port.c:360
+#: port.c:363
 #, fuzzy
 msgid "`rho' must be an environment"
 msgstr "rho는 환경이 나오지 않으면 되지 않습니다"
 
-#: port.c:362 port.c:509
+#: port.c:365 port.c:512
 msgid "`d' must be a nonempty numeric vector"
 msgstr ""
 
-#: port.c:364
+#: port.c:367
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 
-#: port.c:367
+#: port.c:370
 #, c-format
 msgid "environment `rho' must contain a numeric vector `.par' of length %d"
 msgstr ""
 
-#: port.c:377 port.c:529
-msgid "lowerb and upperb must be numeric vectors"
+#: port.c:380
+msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 
-#: port.c:423
+#: port.c:426
 msgid "getElement applies only to named lists"
 msgstr ""
 
-#: port.c:444
+#: port.c:447
 #, c-format
 msgid "%s$%s() not found"
 msgstr ""
 
-#: port.c:457
+#: port.c:460
 #, c-format
 msgid "gradient must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
-#: port.c:478
+#: port.c:481
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 
-#: port.c:491
+#: port.c:494
 msgid "invalid type for eval_check_store"
+msgstr ""
+
+#: port.c:532
+msgid "lowerb and upperb must be numeric vectors"
 msgstr ""
 
 #: qr.c:30

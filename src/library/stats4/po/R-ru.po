@@ -7,7 +7,7 @@
 # This file is distributed under the same license as the R package.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2005-02-05 17:29\n"
 "PO-Revision-Date: 2005-09-28 06:08+0300\n"

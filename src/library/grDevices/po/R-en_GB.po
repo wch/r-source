@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-30 08:51\n"
+"POT-Creation-Date: 2005-11-06 09:26\n"
 "PO-Revision-Date: 2005-08-15 11:43+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -109,13 +109,25 @@ msgstr ""
 msgid "NOT changing"
 msgstr ""
 
+msgid "invalid 'family' argument"
+msgstr ""
+
 msgid "invalid PDF version"
 msgstr ""
 
 msgid "invalid"
 msgstr ""
 
-msgid "in PostScript font specification"
+msgid "in font specification"
+msgstr ""
+
+msgid "Invalid font type"
+msgstr ""
+
+msgid "Not a CID font"
+msgstr ""
+
+msgid "Invalid font database name"
 msgstr ""
 
 msgid "font"
@@ -128,6 +140,18 @@ msgid "invalid arguments in postscriptFonts (must be font names)"
 msgstr ""
 
 msgid "invalid arguments in postscriptFonts (need named args)"
+msgstr ""
+
+msgid "invalid arguments in pdfFonts (must be font names)"
+msgstr ""
+
+msgid "invalid arguments in pdfFonts (need named args)"
+msgstr ""
+
+msgid "unknown font"
+msgstr ""
+
+msgid "font encoding mismatch '%s'/'%s'"
 msgstr ""
 
 msgid "no current device to record from"

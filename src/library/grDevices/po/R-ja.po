@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-30 08:51\n"
+"POT-Creation-Date: 2005-11-06 09:26\n"
 "PO-Revision-Date: 2005-03-31 08:00+0009\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -113,14 +113,27 @@ msgstr "以下は不正なオプションです: "
 msgid "NOT changing"
 msgstr "変更しません"
 
+msgid "invalid 'family' argument"
+msgstr "不正な 'family' 引数です"
+
 msgid "invalid PDF version"
 msgstr "不正な PDF のバージョンです"
 
 msgid "invalid"
 msgstr "不正な"
 
-msgid "in PostScript font specification"
-msgstr "が PostScript フォントの指定中にありました"
+#, fuzzy
+msgid "in font specification"
+msgstr "不正な X11 フォントの指定方法です"
+
+msgid "Invalid font type"
+msgstr ""
+
+msgid "Not a CID font"
+msgstr ""
+
+msgid "Invalid font database name"
+msgstr ""
 
 msgid "font"
 msgstr "フォント"
@@ -133,6 +146,20 @@ msgstr "postscriptFonts 中の不正な引数です（フォント名が必要�
 
 msgid "invalid arguments in postscriptFonts (need named args)"
 msgstr "postscriptFonts 中の不正な引数です（名前がついた引数が必要です）"
+
+#, fuzzy
+msgid "invalid arguments in pdfFonts (must be font names)"
+msgstr "X11Fonts 中の不正な引数です（フォント名が必要です）"
+
+#, fuzzy
+msgid "invalid arguments in pdfFonts (need named args)"
+msgstr "X11Fonts 中の不正な引数です（名前がついた引数が必要です）"
+
+msgid "unknown font"
+msgstr ""
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr ""
 
 msgid "no current device to record from"
 msgstr "現在，以下のものから記録することが出来るデバイスはありません: "
@@ -247,5 +274,5 @@ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
 msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
 
-#~ msgid "invalid 'family' argument"
-#~ msgstr "不正な 'family' 引数です"
+#~ msgid "in PostScript font specification"
+#~ msgstr "が PostScript フォントの指定中にありました"
