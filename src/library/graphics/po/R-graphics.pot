@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:10\n"
+"POT-Creation-Date: 2005-11-06 08:21\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,9 +182,6 @@ msgstr ""
 msgid "'z' must be a matrix"
 msgstr ""
 
-msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
-msgstr ""
-
 msgid "invalid z limits"
 msgstr ""
 
@@ -192,6 +189,9 @@ msgid "must have one more break than colour"
 msgstr ""
 
 msgid "breaks must all be finite"
+msgstr ""
+
+msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
 msgstr ""
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"

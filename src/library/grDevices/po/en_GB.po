@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:58+0100\n"
+"POT-Creation-Date: 2005-11-06 08:08+0000\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -188,7 +188,7 @@ msgstr ""
 msgid "family %s not included in PostScript device"
 msgstr ""
 
-#: devPS.c:2850 devPS.c:3596 devPS.c:4954
+#: devPS.c:2850 devPS.c:3596 devPS.c:4987
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr ""
@@ -263,53 +263,53 @@ msgstr "invalid foreground/background colour (pdf)"
 msgid "Invalid alpha value in PDF"
 msgstr ""
 
-#: devPS.c:4489
+#: devPS.c:4522
 msgid "Corrupt encodings in PDF device"
 msgstr ""
 
-#: devPS.c:4555
+#: devPS.c:4588
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr ""
 
-#: devPS.c:4609
+#: devPS.c:4642
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr ""
 
-#: devPS.c:4622
+#: devPS.c:4655
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
 "  please shut down the PDFdevice"
 msgstr ""
 
-#: devPS.c:4934 devPS.c:5026
+#: devPS.c:4967 devPS.c:5059
 msgid "Failed to find or load PDF font"
 msgstr ""
 
-#: devPS.c:4976
+#: devPS.c:5009
 msgid "allocation failure in PDF_Text"
 msgstr ""
 
-#: devPS.c:5102 devPS.c:5106
+#: devPS.c:5135 devPS.c:5139
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr ""
 
-#: devPS.c:5124 devPS.c:5261
+#: devPS.c:5157 devPS.c:5294
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr ""
 
-#: devPS.c:5140
+#: devPS.c:5173
 msgid "unable to start device PostScript"
 msgstr ""
 
-#: devPS.c:5206
+#: devPS.c:5239
 msgid "unable to start device xfig"
 msgstr ""
 
-#: devPS.c:5279
+#: devPS.c:5312
 msgid "unable to start device pdf"
 msgstr ""
 

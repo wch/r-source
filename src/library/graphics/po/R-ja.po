@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-09-21 14:10\n"
+"POT-Creation-Date: 2005-11-06 08:08\n"
 "PO-Revision-Date: 2005-06-02 15:33+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -186,9 +186,6 @@ msgstr "引数は行列の形でなければなりません"
 msgid "'z' must be a matrix"
 msgstr "'z' は行列でなければなりません"
 
-msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
-msgstr "z の次元が length(x)(+1) × length(y)(+1) ではありません"
-
 msgid "invalid z limits"
 msgstr "無効な z の限界です"
 
@@ -197,6 +194,9 @@ msgstr "分割点の数は色の数よりも一つ多くなければなりませ
 
 msgid "breaks must all be finite"
 msgstr "分割点はすべて有限でなければなりません"
+
+msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
+msgstr "z の次元が length(x)(+1) × length(y)(+1) ではありません"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr "'respect' は 'mat' と同じ次元の、論理値または行列でなければなりません"

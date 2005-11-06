@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:58+0100\n"
+"POT-Creation-Date: 2005-11-06 08:08+0000\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -194,7 +194,7 @@ msgstr ""
 msgid "family %s not included in PostScript device"
 msgstr "famiglia %s non inclusa nel dispositivo PostScript"
 
-#: devPS.c:2850 devPS.c:3596 devPS.c:4954
+#: devPS.c:2850 devPS.c:3596 devPS.c:4987
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "tentativo di usare il font %d non valido sostituito con il font 1"
@@ -272,21 +272,21 @@ msgstr "colore foreground/background non valido (pdf)"
 msgid "Invalid alpha value in PDF"
 msgstr "valore alpha non valido in PDF"
 
-#: devPS.c:4489
+#: devPS.c:4522
 msgid "Corrupt encodings in PDF device"
 msgstr "Encoding danneggiato nel dispositivo PDF"
 
-#: devPS.c:4555
+#: devPS.c:4588
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr "non posso aprire il file '%s' in 'pdf'"
 
-#: devPS.c:4609
+#: devPS.c:4642
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr ""
 "non posso aumentare il limite pagina: si prega di chiudere il dispositivo pdf"
 
-#: devPS.c:4622
+#: devPS.c:4655
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -295,33 +295,33 @@ msgstr ""
 "non posso aprire il file '%s' in 'pdf'\n"
 "  si prega di chiudere il dispositivo PDF"
 
-#: devPS.c:4934 devPS.c:5026
+#: devPS.c:4967 devPS.c:5059
 msgid "Failed to find or load PDF font"
 msgstr "Impossibile caricare o trovare il font PDF"
 
-#: devPS.c:4976
+#: devPS.c:5009
 msgid "allocation failure in PDF_Text"
 msgstr "allocazione memoria non riuscita in PDF_Text"
 
-#: devPS.c:5102 devPS.c:5106
+#: devPS.c:5135 devPS.c:5139
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "parametro 'family' non valido in %s"
 
-#: devPS.c:5124 devPS.c:5261
+#: devPS.c:5157 devPS.c:5294
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "parametro 'fonts' non valido in %s"
 
-#: devPS.c:5140
+#: devPS.c:5173
 msgid "unable to start device PostScript"
 msgstr "impossibile aprire dispositivo PostScript"
 
-#: devPS.c:5206
+#: devPS.c:5239
 msgid "unable to start device xfig"
 msgstr "impossibile aprire dispositivo xfig"
 
-#: devPS.c:5279
+#: devPS.c:5312
 msgid "unable to start device pdf"
 msgstr "impossibile aprire dispositivo pdf"
 
