@@ -117,7 +117,7 @@ par(\dots, no.readonly = FALSE)
   There are several parameters can only be set by a call to \code{par()}:
   \itemize{
     \item \code{"ask"},
-    \item \code{"family"}, \code{"fig"}, \code{"fin"},
+    \item \code{"fig"}, \code{"fin"},
     \item \code{"lheight"},
     \item \code{"mai"}, \code{"mar"}, \code{"mex"},
     \code{"mfcol"}, \code{"mfrow"}, \code{"mfg"},
@@ -139,6 +139,12 @@ par(\dots, no.readonly = FALSE)
   execution of the function, only.  However, see the comments on
   \code{bg} and \code{cex}, which may be taken as arguments to certain
   plot functions rather than as graphical parameters.
+
+  The meaning of \sQuote{character size} is not well-defined: this is
+  set up for the device taking \code{pointsize} into account but often
+  not the actual font family in use.  It can be considered to be an
+  estimate of the size of character \code{M} in a proportionally-spaced
+  font.
 }
 
 \value{
@@ -197,7 +203,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{cex.sub}}{The magnification to be used for sub-titles
       relative to the current setting of \code{cex}.}
     \item{\code{cin}}{\emph{\bold{R.O.}}; character size
-      \code{(width,height)} in inches.}
+      \code{(width, height)} in inches.}
     \item{\code{col}}{A specification for the default plotting color.  A
       description of how colors are specified is given below.}
     \item{\code{col.axis}}{The color to be used for axis annotation.}
@@ -205,7 +211,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{col.main}}{The color to be used for plot main titles.}
     \item{\code{col.sub}}{The color to be used for plot sub-titles.}
     \item{\code{cra}}{\emph{\bold{R.O.}}; size of default character
-      \code{(width,height)} in \dQuote{rasters} (pixels).}
+      \code{(width, height)} in \dQuote{rasters} (pixels).}
     \item{\code{crt}}{A numerical value specifying (in degrees) how
       single characters should be rotated.  It is unwise to expect
       values other than multiples of 90 to work.  Compare with
@@ -213,7 +219,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{csi}}{\emph{\bold{R.O.}}; height of (default sized)
       characters in inches.}
     \item{\code{cxy}}{\emph{\bold{R.O.}}; size of default character
-      \code{(width,height)} in user coordinate units.
+      \code{(width, height)} in user coordinate units.
       \code{par("cxy")} is \code{par("cin")/par("pin")} scaled to user
       coordinates.
       Note that \code{c(\link{strwidth}(ch), \link{strheight}(ch))} for
@@ -282,7 +288,7 @@ par(\dots, no.readonly = FALSE)
     }
     \item{\code{lend}}{The line end style.
       This can be specified as an integer or string:
-      0 and \code{"round"} mean rounded line caps;
+      0 and \code{"round"} mean rounded line caps [\emph{default}];
       1 and \code{"butt"} mean butt line caps;
       2 and \code{"square"} mean square line caps.
     }
@@ -293,7 +299,7 @@ par(\dots, no.readonly = FALSE)
       line height multiplier.  Default value is 1.}
     \item{\code{ljoin}}{The line join style.
       This can be specified as an integer or string:
-      0 and \code{"round"} mean rounded line joins;
+      0 and \code{"round"} mean rounded line joins [\emph{default}];
       1 and \code{"mitre"} mean mitred line joins;
       2 and \code{"bevel"} mean bevelled line joins.}  
     \item{\code{lmitre}}{The line mitre limit.

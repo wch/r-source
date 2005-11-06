@@ -18,7 +18,8 @@ lines(x, \dots)
   \item{\dots}{Further graphical parameters (see \code{\link{par}}) may
     also be supplied as arguments, particularly, line type, \code{lty},
     line width, \code{lwd}, color, \code{col} and for \code{type = "b"},
-    \code{pch}.}
+    \code{pch}.  Also the line characteristics \code{lend}, \code{ljoin}
+    and \code{lmitre}.}
 }
 \details{
   The coordinates can be passed to \code{lines} in a plotting structure

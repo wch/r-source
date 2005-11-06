@@ -140,6 +140,22 @@
 	    R_DEV__(las) = ix;
 	else par_error(what);
     }
+    else if (streql(what, "lend")) {
+	lengthCheck(what, value, 1, call);
+	R_DEV__(lend) = LENDpar(value, 0);
+    }
+    else if (streql(what, "ljoin")) {
+	lengthCheck(what, value, 1, call);
+	R_DEV__(ljoin) = LJOINpar(value, 0);
+    }
+    else if (streql(what, "lmitre")) {
+	lengthCheck(what, value, 1, call);
+	x = asReal(value);
+	posRealCheck(x, what);
+	if (x < 1)
+	    par_error(what);
+	R_DEV__(lmitre) = x;
+    }
     else if (streql(what, "lty")) {
 	lengthCheck(what, value, 1, call);
 	R_DEV__(lty) = LTYpar(value, 0);

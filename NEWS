@@ -124,6 +124,9 @@ NEW FEATURES
 	informative error messages, distinguishing between
 	non-existent pars and inappropriate use of valid pars.
 
+	Graphical parameters 'family', 'lend', 'ljoin' and 'lmitre'
+	can now be set in-line.
+
 	There is no longer a warning if non-settable pars are used
 	in-line, but there is an appropriate warning if unknown pars
 	are passed.

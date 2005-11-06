@@ -81,7 +81,7 @@ ParTable[] = {
     { "cxy",		 2 },
     { "din",		 2 },
     { "err",		 0 },
-    { "family",		 1 },
+    { "family",		 0 },
     { "fg",		 0 },
     { "fig",		 1 },
     { "fin",		 1 },
@@ -93,10 +93,10 @@ ParTable[] = {
     { "gamma",		 0 },
     { "lab",		 0 },
     { "las",		 0 },
-    { "lend",		 1 },
+    { "lend",		 0 },
     { "lheight",	 1 },
-    { "ljoin",		 1 },
-    { "lmitre",		 1 },
+    { "ljoin",		 0 },
+    { "lmitre",		 0 },
     { "lty",		 0 },
     { "lwd",		 0 },
     { "mai",		 1 },
@@ -236,6 +236,7 @@ static void BoundsCheck(double x, double a, double b, char *s)
 /* the transformations between coordinate systems */
 
 /* These will be defined differently for Specify() and Specify2() : */
+/* <FIXME>  do not need separate macros for a = b = c and b = a = c */
 #define R_DEV__(_P_) Rf_dpptr(dd)->_P_ = Rf_gpptr(dd)->_P_
 #define R_DEV_2(_P_) Rf_gpptr(dd)->_P_ = Rf_dpptr(dd)->_P_
 /* In Emacs : -- only inside Specify() :
@@ -363,27 +364,11 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	GReset(dd);
     }
     /* -- */
-    else if (streql(what, "lend")) {
-	lengthCheck(what, value, 1, call);
-	R_DEV__(lend) = LENDpar(value, 0);
-    }
     else if (streql(what, "lheight")) {
 	lengthCheck(what, value, 1, call);
 	x = asReal(value);
 	posRealCheck(x, what);
 	R_DEV__(lheight) = x;
-    }
-    else if (streql(what, "ljoin")) {
-	lengthCheck(what, value, 1, call);
-	R_DEV__(ljoin) = LJOINpar(value, 0);
-    }
-    else if (streql(what, "lmitre")) {
-	lengthCheck(what, value, 1, call);
-	x = asReal(value);
-	posRealCheck(x, what);
-	if (x < 1)
-	    par_error(what);
-	R_DEV__(lmitre) = x;
     }
     else if (streql(what, "mai")) {
 	value = coerceVector(value, REALSXP);
@@ -747,7 +732,13 @@ void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 	R_DEV__(cex) = x;
 	/* not setting cexbase here (but in Specify()) */
     }
-
+    else if (streql(what, "family")) {
+	value = coerceVector(value, STRSXP);
+	lengthCheck(what, value, 1, call);
+	if(strlen(CHAR(STRING_ELT(value, 0))) > 200)
+	    error(_("graphical parameter 'family' has a maximum length of 200 bytes"));
+	strncpy(Rf_gpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 201);
+    }
     else if (streql(what, "fg")) {
 	/* highlevel arg `fg = ' does *not* set `col' (as par(fg=.) does!*/
 	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);

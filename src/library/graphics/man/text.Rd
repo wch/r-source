@@ -36,11 +36,11 @@ text(x, \dots)
   \item{cex}{numeric \bold{c}haracter \bold{ex}pansion factor; multiplied
     by \code{\link{par}("cex")} yields the final character size.
     \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
-  \item{col, font}{the color and font to be used; these default to the
-    values of the global graphical parameters in \code{\link{par}()}.}
+  \item{col, font}{the color and font to be used, possibly vectors.
+    These default to the values of the global graphical parameters in
+    \code{\link{par}()}.}
   \item{\dots}{further graphical parameters (from \code{\link{par}}),
-    such as \code{xpd}.}
-%% such as ???, etc.
+    such as \code{family} and \code{xpd}.}
 }
 \description{
   \code{text} draws the strings given in the vector \code{labels} at the
@@ -71,8 +71,8 @@ text(x, \dots)
 
   Graphical parameters \code{col}, \code{cex} and \code{font} can be
   vectors and will then be applied cyclically to the \code{labels} (and
-  extra values will be ignored).  \code{NA} values of \code{col} are
-  replaced by \code{par("col")}.
+  extra values will be ignored).  \code{NA} values of \code{font} are
+  replaced by \code{par("font")}.
 
   Labels whose \code{x}, \code{y}, \code{labels}, \code{cex} or \code{col}
   value is \code{NA} are omitted from the plot.
