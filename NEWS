@@ -120,6 +120,14 @@ NEW FEATURES
 	available, and will then be more likely to be precise to
 	machine accuracy.
 
+    o	par() and the in-line use of graphical parameters produce more
+	informative error messages, distinguishing between
+	non-existent pars and inappropriate use of valid pars.
+
+	There is no longer a warning if non-settable pars are used
+	in-line, but there is an appropriate warning if unknown pars
+	are passed.
+
 
 DEPRECATED & DEFUNCT
 

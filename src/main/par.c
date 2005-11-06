@@ -49,6 +49,110 @@
 #include <Graphics.h>		/* "GPar" structure + COMMENTS */
 #include <Rdevices.h>
 
+typedef struct {
+    char *name;
+    int code; /* 0 normal, 1 not inline, 2 read-only 
+		 -1 unknown, -2 obselete, -3 graphical args
+	       */
+} ParTab;
+
+static ParTab
+ParTable[] = {
+    { "adj",		 0 },
+    { "ann",		 0 },
+    { "ask",		 1 },
+    { "bg",		 0 },
+    { "bty",		 0 },
+    { "cex",		 0 },
+    { "cex.axis",	 0 },
+    { "cex.lab",	 0 },
+    { "cex.main",	 0 },
+    { "cex.sub",	 0 },
+    { "cin",		 2 },
+    { "col",		 0 },
+    { "col.axis",	 0 },
+    { "col.lab",	 0 },
+    { "col.main",	 0 },
+    { "col.sub",	 0 },
+    { "cra",		 2 },
+    { "crt",		 0 },
+    { "csi",		 2 },
+    { "csy",		 0 },
+    { "cxy",		 2 },
+    { "din",		 2 },
+    { "err",		 0 },
+    { "family",		 1 },
+    { "fg",		 0 },
+    { "fig",		 1 },
+    { "fin",		 1 },
+    { "font",		 0 },
+    { "font.axis",	 0 },
+    { "font.lab",	 0 },
+    { "font.main",	 0 },
+    { "font.sub",	 0 },
+    { "gamma",		 0 },
+    { "lab",		 0 },
+    { "las",		 0 },
+    { "lend",		 1 },
+    { "lheight",	 1 },
+    { "ljoin",		 1 },
+    { "lmitre",		 1 },
+    { "lty",		 0 },
+    { "lwd",		 0 },
+    { "mai",		 1 },
+    { "mar",		 1 },
+    { "mex",		 1 },
+    { "mfcol",		 1 },
+    { "mfg",		 1 },
+    { "mfrow",		 1 },
+    { "mgp",		 0 },
+    { "mkh",		 0 },
+    { "new",		 1 },
+    { "oma",		 1 },
+    { "omd",		 1 },
+    { "omi",		 1 },
+    { "pch",		 0 },
+    { "pin",		 1 },
+    { "plt",		 1 },
+    { "ps",		 1 },
+    { "pty",		 1 },
+    { "smo",		 0 },
+    { "srt",		 0 },
+    { "tck",		 0 },
+    { "tcl",		 0 },
+    { "tmag",		 0 },
+    { "usr",		 1 },
+    { "xaxp",		 0 },
+    { "xaxs",		 0 },
+    { "xaxt",		 0 },
+    { "xlog",		 1 },
+    { "xpd",		 0 },
+    { "yaxp",		 0 },
+    { "yaxs",		 0 },
+    { "yaxt",		 0 },
+    { "ylog",		 1 },
+    /* Obselete pars */
+    { "type",		-2},
+    /* Mon-pars that might get passed to Specify2 */
+    { "asp",		-3},
+    { "main",		-3},
+    { "sub",		-3},
+    { "xlab",		-3},
+    { "ylab",		-3},
+    { "xlim",		-3},
+    { "ylim",		-3},
+    { NULL,		-1}
+};
+
+
+static int ParCode(char *what)
+{
+    int i;
+    for (i = 0; ParTable[i].name; i++)
+	if (!strcmp(what, ParTable[i].name)) return ParTable[i].code;
+    return -1;
+}
+
 
 /* par(.)'s call */
 
@@ -167,7 +271,13 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
  */
     double x;
     int ix = 0;
+    
+    /* If we get here, Query has already checked that 'what' is valid */
 
+    if (ParCode(what) == 2) {
+	warning(_("graphical parameter \"%s\" cannot be set"), what);
+	return;
+    }
 #include "par-common.c"
 /*	  ------------
  *--- now, these are *different* from  "Specify2() use" : */
@@ -576,11 +686,6 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	    par_error(what);
 	R_DEV__(ylog) = (ix != 0);
     }
-    else if (streql(what, "cin") || streql(what, "cra") || 
-	     streql(what, "csi") || streql(what, "cxy") ||
-	     streql(what, "din")) {
-	warning(_("graphical parameter \"%s\" cannot be set"), what);
-    }
     /* We do not need these as Query will already have warned.
     else if (streql(what, "type")) {
 	warning(_("graphical parameter \"%s\" is obsolete"), what);
@@ -605,7 +710,26 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 {
     double x;
-    int ix = 0;
+    int ix = 0, ptype = ParCode(what);
+
+    if (ptype == -2) {
+	warningcall(call, _("graphical parameter \"%s\" is obsolete"), what);
+	return;
+    }
+    if (ptype < 0) {
+	warningcall(call, _("\"%s\" is not a graphical parameter"), what);
+	return;
+    }
+    if (ptype == 1 || ptype == -3) {
+	/* 1: these are valid, but not settable inline 
+	   3: arguments, not pars
+	*/
+	return;
+    }
+    if (ptype == 2) {
+	warningcall(call, _("graphical parameter \"%s\" cannot be set"), what);
+	return;
+    }
 
 #include "par-common.c"
 /*	  ------------
@@ -628,12 +752,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 	/*	naIntCheck(ix, what); */
 	R_DEV__(fg) = ix;
     }
-    else if (streql(what, "cin") || streql(what, "cra") || 
-	     streql(what, "csi") || streql(what, "cxy") ||
-	     streql(what, "din")) {
-	warning(_("graphical parameter \"%s\" cannot be set"), what);
-    }
-#if 0 /* warning removed in 2.3.0 */
+#if 0 /* done better in 2.3.0 */
     else if (streql(what, "asp")) {
 	/* this is not a parameter, but let it through as if it were */
     }
@@ -1044,7 +1163,7 @@ static SEXP Query(char *what, DevDesc *dd)
 	value = R_NilValue;
     }
     else {
-	warning(_("unknown graphical parameter \"%s\""), what);
+	warning(_("\"%s\" is not a graphical parameter"), what);
 	value = R_NilValue;
     }
     return value;

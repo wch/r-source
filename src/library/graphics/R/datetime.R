@@ -59,7 +59,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
 plot.POSIXct <- function(x, y, xlab = "", ...)
 {
     ## trick to remove arguments intended for title() or plot.default()
-    axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd,
+    axisInt <- function(x, type, main, sub, xlab, ylab, col, lty, lwd,
                         xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
         axis.POSIXct(1, x, ...)
 
@@ -77,7 +77,7 @@ plot.POSIXct <- function(x, y, xlab = "", ...)
 plot.POSIXlt <- function(x, y, xlab = "", ...)
 {
     ## trick to remove arguments intended for title() or plot.default()
-    axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd,
+    axisInt <- function(x, type, main, sub, xlab, ylab, col, lty, lwd,
                         xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
         axis.POSIXct(1, x, ...)
     dots <- list(...)
@@ -213,7 +213,7 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
 plot.Date <- function(x, y, xlab = "", ...)
 {
     ## trick to remove arguments intended for title() or plot.default()
-    axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd,
+    axisInt <- function(x, type, main, sub, xlab, ylab, col, lty, lwd,
                         xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
         axis.Date(1, x, ...)
 

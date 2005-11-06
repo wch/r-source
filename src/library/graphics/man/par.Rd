@@ -116,15 +116,15 @@ par(\dots, no.readonly = FALSE)
 
   There are several parameters can only be set by a call to \code{par()}:
   \itemize{
-    \item \code{"ask"}
-    \item \code{"family"}, \code{"fig"}, \code{"fin"}
-    \item \code{"lend"}, \code{"lheight"}, \code{"ljoin"}, \code{"lmitre"}
+    \item \code{"ask"},
+    \item \code{"family"}, \code{"fig"}, \code{"fin"},
+    \item \code{"lend"}, \code{"lheight"}, \code{"ljoin"}, \code{"lmitre"},
     \item \code{"mai"}, \code{"mar"}, \code{"mex"},
-    \code{"mfcol"}, \code{"mfrow"}, \code{"mfg"}
-    \item \code{"new"}
-    \item \code{"oma"}, \code{"omd"}, \code{"omi"}
-    \item \code{"pin"}, \code{"plt"}, \code{"ps"}, \code{"pty"}
-    \item \code{"usr"}
+    \code{"mfcol"}, \code{"mfrow"}, \code{"mfg"},
+    \item \code{"new"},
+    \item \code{"oma"}, \code{"omd"}, \code{"omi"},
+    \item \code{"pin"}, \code{"plt"}, \code{"ps"}, \code{"pty"},
+    \item \code{"usr"},
     \item \code{"xlog"}, \code{"ylog"}
   }
   The remaining parameters can also be set as arguments (often via
@@ -173,6 +173,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{ask}}{logical.  If \code{TRUE}, the user is asked for
       input, before a new figure is drawn.}
     \item{\code{bg}}{The color to be used for the background of plots.
+      When called from \code{par()} it also sets \code{new=FALSE}.
       A description of how colors are specified is given below.
       Note that some graphics functions such as
       \code{\link{plot.default}} and \code{\link{points}} have an
