@@ -226,10 +226,10 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
     else if (streql(what, "family")) {
 	value = coerceVector(value, STRSXP);
 	lengthCheck(what, value, 1, call);
-	if(strlen(CHAR(STRING_ELT(value, 0))) > 200)
-	    error(_("graphical parameter 'family' has a maximum length of 200 bytes"));
-	strncpy(Rf_dpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 201);
-	strncpy(Rf_gpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 201);
+	if(strlen(CHAR(STRING_ELT(value, 0))) > 49)
+	    error(_("graphical parameter 'family' has a maximum length of 49 bytes"));
+	strncpy(Rf_dpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 50);
+	strncpy(Rf_gpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 50);
     }
     else if (streql(what, "fin")) {
 	value = coerceVector(value, REALSXP);

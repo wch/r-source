@@ -4848,7 +4848,7 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->err = Rf_dpSavedptr(dd)->err;
     Rf_dpptr(dd)->fg = Rf_dpSavedptr(dd)->fg;
     Rf_dpptr(dd)->font = Rf_dpSavedptr(dd)->font;
-    strncpy(Rf_dpptr(dd)->family, Rf_dpSavedptr(dd)->family, 201);
+    strncpy(Rf_dpptr(dd)->family, Rf_dpSavedptr(dd)->family, 50);
     Rf_dpptr(dd)->gamma = Rf_dpSavedptr(dd)->gamma;
     Rf_dpptr(dd)->lab[0] = Rf_dpSavedptr(dd)->lab[0];
     Rf_dpptr(dd)->lab[1] = Rf_dpSavedptr(dd)->lab[1];
