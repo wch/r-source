@@ -127,6 +127,8 @@ draw.plotmath.cell(expression(x %dbldown% y), i, nr); i <- i + 1
 draw.title.cell("Symbolic Names", i, nr); i <- i + 1
 draw.plotmath.cell(expression(Alpha - Omega), i, nr); i <- i + 1
 draw.plotmath.cell(expression(alpha - omega), i, nr); i <- i + 1
+draw.plotmath.cell(expression(phi1 + sigma1), i, nr); i <- i + 1
+draw.plotmath.cell(expression(Upsilon1), i, nr); i <- i + 1
 draw.plotmath.cell(expression(infinity), i, nr); i <- i + 1
 draw.plotmath.cell(expression(32 * degree), i, nr); i <- i + 1
 draw.plotmath.cell(expression(60 * minute), i, nr); i <- i + 1
