@@ -51,8 +51,9 @@ aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
 
     if(nfrequency == ofrequency)
         return(x)
-    if(abs(ofrequency %% nfrequency) > ts.eps)
-        stop(gettextf("cannot change frequency from %d to %d",
+    ratio <- ofrequency /nfrequency
+    if(abs(ratio - round(ratio)) > ts.eps)
+        stop(gettextf("cannot change frequency from %g to %g",
                       ofrequency, nfrequency), domain = NA)
     ## The desired result is obtained by applying FUN to blocks of
     ## length ofrequency/nfrequency, for each of the variables in x.
