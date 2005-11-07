@@ -3866,6 +3866,11 @@ stopifnot(identical(colnames(X), colnames(z)))
 stopifnot(all.equal(Im(c(1, 0, -1)), rep(0, 3)))
 ## R <= 2.2.0 had Im and Arg the same for non-complex numbers
 
+## rounding errors in aggregate.ts
+aggregate(as.ts(c(1,2,3,4,5,6,7,8,9,10)),1/5,mean)
+## failed in 2.2.0
+
+
 ### end of tests added in 2.2.1 ###
 
 

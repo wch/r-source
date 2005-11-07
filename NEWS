@@ -383,6 +383,9 @@ BUG FIXES
     o	par("family") did not check the length of the value (up to 49
 	bytes) and so could segfault.
 
+    o	aggregate.ts() did not allow for rounding in frequencies such
+	as 1/5.
+
 
 
 		CHANGES IN R VERSION 2.2.0
