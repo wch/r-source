@@ -734,6 +734,7 @@ SymbolTable[] = {
     { "eta",		104 },
     { "iota",		105 },
     { "phi1",		106 },
+    { "varphi",		106 },
     { "kappa",		107 },
     { "lambda",		108 },
     { "mu",		109 },

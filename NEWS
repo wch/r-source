@@ -131,6 +131,13 @@ NEW FEATURES
 	in-line, but there is an appropriate warning if unknown pars
 	are passed.
 
+	The length limit for the 'family' parameter has been increased
+	to 200 bytes, to allow for the names of some CID-keyed fonts
+	in multi-bute locales.
+
+    o	Plotmath allows 'varphi' as a synonym for 'phi1', and the help
+	page has a note for TeX users.
+
 
 DEPRECATED & DEFUNCT
 
