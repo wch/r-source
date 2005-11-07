@@ -275,6 +275,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
     "ComputerModern"} is used, the italic/bold-italic fonts used are
   slanted fonts (\code{cmsl10} and \code{cmbxsl10}).  To use text italic
   fonts instead, set \code{family = "ComputerModernItalic"}.
+
+  These families use the TeX symbol fonts for a comprehensive but
+  incomplete coverage of the glyphs covered by the Adobe symbol font in
+  other families.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
