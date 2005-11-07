@@ -135,8 +135,9 @@ NEW FEATURES
 	to 200 bytes, to allow for the names of some CID-keyed fonts
 	in multi-bute locales.
 
-    o	Plotmath allows 'varphi' as a synonym for 'phi1', and the help
-	page has a note for TeX users.
+    o	Plotmath allows 'vartheta', 'varphi' and 'varsigma' as synonyms
+	for 'theta1', 'phi1' and 'sigma1', and the help page has a
+	note for TeX users.
 
 
 DEPRECATED & DEFUNCT
