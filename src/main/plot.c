@@ -613,6 +613,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     asp = (logscale) ? NA_REAL : asReal(CAR(args));;
     args = CDR(args);
 
+    /* This reads [xy]axs and lab, used in GScale */
     GSavePars(dd);
     ProcessInlinePars(args, dd, call);
 
@@ -675,6 +676,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     GMapWin2Fig(dd);
     GRestorePars(dd);
     /* This has now clobbered the Rf_ggptr settings for coord system */
+
     /* NOTE: the operation is only recorded if there was no "error" */
     if (GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);

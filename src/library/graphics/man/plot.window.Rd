@@ -14,7 +14,9 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
     ranges.}
   \item{log}{character; indicating which axes should be in log scale.}
   \item{asp}{numeric, giving the \bold{asp}ect ratio y/x.}
-  \item{\dots}{further graphical parameters as in \code{\link{par}}.}
+  \item{\dots}{further graphical parameters as in \code{\link{par}}.
+    Relevant ones are \code{xaxs}, \code{yaxs} and \code{lab}.
+  }
 }
 \details{
   Note that if \code{asp} is a finite positive value then the window is
@@ -34,6 +36,10 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   \code{\link{plot}}, \code{\link{hist}}, \code{\link{image}}, \dots,
   instead and refer to their help pages for explanation of the
   arguments.
+
+  A side-effect of the call is to set up the \code{usr}, \code{xaxp} and
+  \code{yaxp} graphical parameters.  (It is for the latter two that
+  \code{lab} is used.)
 }
 \seealso{
   \code{\link{xy.coords}},
