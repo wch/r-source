@@ -1,10 +1,11 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000	The R Development Core Team
+ *  Copyright (C) 1998-2005	The R Development Core Team
  *
  *  This source code module:
  *  Copyright (C) 1997, 1998 Paul Murrell and Ross Ihaka
+ *  Copyright (C) 1998-2005	The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -714,6 +715,7 @@ SymbolTable[] = {
     { "Upsilon",	 85 },
     { "sigma1",		 86 },
     { "varsigma",	 86 },
+    { "stigma",		 86 },
     { "Omega",		 87 },
     { "Xi",		 88 },
     { "Psi",		 89 },
