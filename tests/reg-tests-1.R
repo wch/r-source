@@ -3893,7 +3893,7 @@ stopifnot(identical(z, z2))
 stopifnot(identical(z, z2))
 (z <- sort(x, partial = 1:10)) # did not sort names, kept tsp attribute
 stopifnot(is.null(attributes(z)))
-## fixed for 2.3.0 to sort names (ecept partial), drop all other attributes.
+## fixed for 2.3.0 to sort names (except partial), drop all other attributes.
 
 
 ## formatC on as.single (PR#8211)
@@ -3908,3 +3908,10 @@ x <- factor(1:3)
 outer(x, x, "!=")
 ## failed 2005-10-17
 
+
+## add tests for < 0 shape in [dpqr]gamma
+dgamma(1, -2)
+pgamma(1, -2)
+qgamma(0.95, -2)
+rgamma(3, -20)
+## all errors < 2.3.0, now NaNs

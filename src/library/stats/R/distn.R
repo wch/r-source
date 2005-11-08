@@ -32,27 +32,16 @@ rcauchy <-
     function(n, location=0, scale=1) .Internal(rcauchy(n, location, scale))
 
 dgamma <- function(x, shape, rate = 1, scale = 1/rate, log = FALSE)
-{
-    if(any(shape <= 0)) stop("'shape' must be strictly positive")
     .Internal(dgamma(x, shape, scale, log))
-}
 pgamma <- function(q, shape, rate = 1, scale = 1/rate,
                    lower.tail = TRUE, log.p = FALSE)
-{
-    if(any(shape <= 0)) stop("'shape' must be strictly positive")
     .Internal(pgamma(q, shape, scale, lower.tail, log.p))
-}
+
 qgamma <- function(p, shape, rate = 1, scale = 1/rate,
                    lower.tail = TRUE, log.p = FALSE)
-{
-    if(any(shape <= 0)) stop("'shape' must be strictly positive")
     .Internal(qgamma(p, shape, scale, lower.tail, log.p))
-}
 rgamma <- function(n, shape, rate = 1, scale = 1/rate)
-{
-    if(any(shape <= 0)) stop("'shape' must be strictly positive")
     .Internal(rgamma(n, shape, scale))
-}
 
 dlnorm <- function(x, meanlog=0, sdlog=1, log=FALSE)
     .Internal(dlnorm(x, meanlog, sdlog, log))

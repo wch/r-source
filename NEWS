@@ -141,6 +141,10 @@ NEW FEATURES
 
     o	poly() has a new argument 'raw', mainly for pedagogical purposes.
 
+    o	[dpqr]gamma now returns NaN for an invalid 'shape' parameter
+	(rather than throw an error), for consistency with other
+	distribution functions.
+
 
 DEPRECATED & DEFUNCT
 
@@ -227,6 +231,11 @@ INSTALLATION CHANGES
 	they will now fail (rather than work completely incorrectly).
 
 
+C-LEVEL FACILITIES
+
+    o	rgamma in Rmath.h now checks for non-positive arguments.
+
+
 BUG FIXES
 
     o	Quoted arguments to the R script after --args are now
@@ -243,7 +252,7 @@ BUG FIXES
 	sort(x, partial=) no longer returns unsorted names, and drops
 	names (since it is supplied for efficiency).
 
-    o   non-central F gives accurate values for larger ncp
+    o   Use of non-central F in pf() gives accurate values for larger ncp.
 
 
 
