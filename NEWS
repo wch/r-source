@@ -307,6 +307,9 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
+    o	The malloc's of AIX and OSF/1 which return NULL for size 0
+	are now catered for in src/main/regex.c.
+
     o	Names of list elements which are missing are now printed as
 	$<NA> and not $"NA" (which is how the non-missing name "NA" is
 	printed).  (Brought up in discussion of PR#8161.)
