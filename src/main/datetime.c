@@ -425,7 +425,6 @@ SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 	{
 	    SYSTEMTIME st;
 	    GetSystemTime(&st);
-	    printf("adjustment %d\n", st.wMilliseconds);
 	    tmp += 1e-3 * st.wMilliseconds;
 	}
 #endif
