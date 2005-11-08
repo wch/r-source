@@ -4262,6 +4262,7 @@ typedef struct {
 
     Rboolean onefile;
     int ymax;            /* used to invert coord system */
+    char encoding[50];   /* for writing text */
 
     /*
      * Fonts and encodings used on the device
@@ -4451,7 +4452,7 @@ XFigDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
 		 char *bg, char *fg,
 		 double width, double height,
 		 Rboolean horizontal, double ps,
-		 Rboolean onefile, Rboolean pagecentre)
+		 Rboolean onefile, Rboolean pagecentre, char *encoding)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -4655,6 +4656,7 @@ XFigDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     dd->canClip = 0;
     dd->canHAdj = 1; /* 0, 0.5, 1 */
     dd->canChangeGamma = FALSE;
+    strncpy(pd->encoding, encoding, 50);
 
     XF_resetColors(pd);
 
@@ -4672,24 +4674,24 @@ XFigDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
 
     dd->newDevStruct = 1;
 
-    dd->open	      = XFig_Open;
+    dd->open       = XFig_Open;
     dd->close      = XFig_Close;
     dd->activate   = XFig_Activate;
     dd->deactivate = XFig_Deactivate;
-    dd->size     = XFig_Size;
+    dd->size       = XFig_Size;
     dd->newPage    = XFig_NewPage;
-    dd->clip	      = XFig_Clip;
-    dd->text	      = XFig_Text;
+    dd->clip	   = XFig_Clip;
+    dd->text	   = XFig_Text;
     dd->strWidth   = XFig_StrWidth;
     dd->metricInfo = XFig_MetricInfo;
-    dd->rect	      = XFig_Rect;
+    dd->rect	   = XFig_Rect;
     dd->circle     = XFig_Circle;
-    dd->line	      = XFig_Line;
+    dd->line	   = XFig_Line;
     dd->polygon    = XFig_Polygon;
     dd->polyline   = XFig_Polyline;
     dd->locator    = XFig_Locator;
-    dd->mode	      = XFig_Mode;
-    dd->hold	      = XFig_Hold;
+    dd->mode	   = XFig_Mode;
+    dd->hold	   = XFig_Hold;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
@@ -4966,6 +4968,7 @@ static void XFig_Text(double x, double y, char *str,
     FILE *fp = pd->tmpfp;
     int fontnum, style = gc->fontface;
     double size = floor(gc->cex * gc->ps + 0.5);
+    char *str1 = str, *buf;
 
     if(style < 1 || style > 5) {
 	warning(_("attempt to use invalid font %d replaced by font 1"), style);
@@ -5002,7 +5005,37 @@ static void XFig_Text(double x, double y, char *str,
 				       GetDevice(devNumber((DevDesc*) dd)))
 		      +0.5));
 	fprintf(fp, "%d %d ", (int)x, (int)y);
-	XF_WriteString(fp, str);
+	if(strcmp(pd->encoding, "none") != 0) {
+#ifdef HAVE_ICONV
+	    /* reencode the text */
+	    void *cd;
+	    char  *i_buf, *o_buf;
+	    int i_len,  o_len, buflen = 6*strlen(str);
+	    size_t status;
+
+	    cd = (void*)Riconv_open(pd->encoding, "");
+	    if((void*)-1 == cd) {
+		warning(_("unable to use encoding '%s'"), pd->encoding);
+	    } else {
+		buf = (char *) alloca(buflen);
+		R_CheckStack();
+		i_buf = str;
+		o_buf = (char *)buf;
+		i_len = strlen(str);
+		o_len = buflen;
+		status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
+				(char **)&o_buf, (size_t *)&o_len);
+		Riconv_close(cd);
+		if((size_t)-1==status)
+		    warning(_("failed in text conversion to encoding '%s'"),
+			    pd->encoding);
+		else str1 = buf;
+	    }
+#else
+	    warning(_("re-encoding is not possible on this system"))
+#endif
+	}
+	XF_WriteString(fp, str1);
 	fprintf(fp, "\\001\n");
     }
 }
@@ -7093,6 +7126,7 @@ SEXP PostScript(SEXP args)
  *  ps		= pointsize
  *  onefile     = {TRUE: normal; FALSE: single EPSF page}
  *  pagecentre  = centre plot region on paper?
+ *  encoding
  */
 
 SEXP XFig(SEXP args)
@@ -7100,7 +7134,7 @@ SEXP XFig(SEXP args)
     NewDevDesc *dev = NULL;
     GEDevDesc *dd;
     char *vmax;
-    char *file, *paper, *family, *bg, *fg;
+    char *file, *paper, *family, *bg, *fg, *encoding;
     int horizontal, onefile, pagecentre;
     double height, width, ps;
 
@@ -7118,7 +7152,8 @@ SEXP XFig(SEXP args)
 	horizontal = 1;
     ps = asReal(CAR(args));	      args = CDR(args);
     onefile = asLogical(CAR(args));   args = CDR(args);
-    pagecentre = asLogical(CAR(args));
+    pagecentre = asLogical(CAR(args));args = CDR(args);
+    encoding = CHAR(asChar(CAR(args)));
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
@@ -7131,7 +7166,8 @@ SEXP XFig(SEXP args)
 	 */
 	dev->savedSnapshot = R_NilValue;
 	if(!XFigDeviceDriver(dev, file, paper, family, bg, fg, width, height,
-			     (double) horizontal, ps, onefile, pagecentre)) {
+			     (double) horizontal, ps, onefile, pagecentre,
+			     encoding)) {
 	    /* free(dev); No, freed inside XFigDeviceDriver */
 	    error(_("unable to start device xfig"));
 	}

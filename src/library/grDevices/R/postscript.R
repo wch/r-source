@@ -207,7 +207,7 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
 }
 
 xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
-                  onefile = FALSE, ...)
+                  onefile = FALSE, encoding="none", ...)
 {
     new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, envir = .PSenv,
@@ -217,7 +217,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
     .External("XFig",
               file, old$paper, old$family, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
-              old$onefile, old$pagecentre, PACKAGE = "grDevices")
+              old$onefile, old$pagecentre, encoding, PACKAGE = "grDevices")
     invisible()
 }
 
