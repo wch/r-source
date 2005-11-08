@@ -16,14 +16,15 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   \item{ylab}{Y axis label, same font attributes as \code{xlab}.}
   \item{line}{specifying a value for \code{line} overrides the
     default placement of labels, and places them this many lines
-    from the plot edge.}
+    outwards from the plot edge.}
   \item{outer}{a logical value.  If \code{TRUE}, the titles are
     placed in the outer margins of the plot.}
   \item{\dots}{further graphical parameters from \code{\link{par}}.  Use
     e.g., \code{col.main} or \code{cex.sub} instead of just \code{col}
     or \code{cex}.  \code{xpd} can be used to set the clipping region:
     this defaults to the figure region unless \code{outer = TRUE},
-    otherwise the device region and can only be increased.
+    otherwise the device region and can only be increased.  \code{mgp}
+    controls the default placing of the axis titles.
   }
 }
 \description{
@@ -38,7 +39,7 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   The labels passed to title can be simple strings or expressions,
   or they can be a list containing the string to be plotted, and
   a selection of the optional modifying graphical parameters
-  \code{cex=}, \code{col=}, \code{font=}.
+  \code{cex=}, \code{col=} and \code{font=}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

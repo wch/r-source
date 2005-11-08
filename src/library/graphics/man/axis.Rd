@@ -62,7 +62,9 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 
     Note that \code{xpd} is not accepted as clipping is always to the
     device region, and that \code{lab} will partial match to argument
-    \code{labels} unless the latter is also supplied.}
+    \code{labels} unless the latter is also supplied.  (Since the
+    default axes has already been set up by \code{\link{plot.window}},
+    \code{lab} will not be acted on by \code{axis}.)}
 }
 \value{
   The numeric locations on the axis scale at which tick marks were drawn

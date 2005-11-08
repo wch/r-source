@@ -41,24 +41,22 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
     default) mean use \code{par("col")}.}
   \item{font}{font for text.  Can be a vector.  \code{NA} values (the
     default) mean use \code{par("font")}.}
-  \item{\dots}{Further graphical parameters (see \code{\link{par}}), including
-    \code{xpd}.  (This defaults to the figure region unless
-    \code{outer = TRUE}, otherwise the device region.  It can only be
-    increased.)}
+  \item{\dots}{Further graphical parameters (see \code{\link{par}}),
+    including \code{family}, \code{las} and \code{xpd}.  (This defaults
+    to the figure region unless \code{outer = TRUE}, otherwise the
+    device region.  It can only be increased.)}
 }
 \details{
   The \dQuote{user coordinates} in the outer margins always range from zero to
   one, and are not affected by the user coordinates in the figure
   region(s) --- \R is differing here from other implementations of S.
 
-  The arguments \code{side}, \code{line}, \code{at}, \code{at},
-  \code{adj}, the further graphical parameters and even \code{outer} can
-  be vectors, and recycling will take place to plot as many strings as
-  the longest of the vector arguments.  Note that a vector \code{adj}
-  has a different meaning from \code{\link{text}}.
+  All of the named arguments can be vectors, and recycling will take
+  place to plot as many strings as the longest of the vector arguments.
 
-  \code{adj = 0.5} will centre the string, but for \code{outer=TRUE} on
-  the device region rather than the plot region.
+  Note that a vector \code{adj} has a different meaning from
+  \code{\link{text}}.  \code{adj = 0.5} will centre the string, but for
+  \code{outer=TRUE} on the device region rather than the plot region.
 
   Parameter \code{las} will determine the orientation of the string(s).
   For strings plotted perpendicular to the axis the default justification

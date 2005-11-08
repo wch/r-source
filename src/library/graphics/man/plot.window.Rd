@@ -15,7 +15,7 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   \item{log}{character; indicating which axes should be in log scale.}
   \item{asp}{numeric, giving the \bold{asp}ect ratio y/x.}
   \item{\dots}{further graphical parameters as in \code{\link{par}}.
-    Relevant ones are \code{xaxs}, \code{yaxs} and \code{lab}.
+    The relevant ones are \code{xaxs}, \code{yaxs} and \code{lab}.
   }
 }
 \details{
