@@ -395,6 +395,9 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 #ifdef HAVE_SYS_TIME_H
 # include <sys/time.h>
 #endif
+#ifdef Win32
+# include <windows.h>
+#endif
 
 SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -413,11 +416,21 @@ SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 #else
     time_t res = time(NULL);
+    double tmp = res;
+    if(res != (time_t)(-1)) {
 #ifndef HAVE_POSIX_LEAPSECONDS
-    res -= 22;
+	tmp -= 22;
 #endif
-    if(res != (time_t)(-1)) REAL(ans)[0] = (double) res;
-    else REAL(ans)[0] = NA_REAL;
+#ifdef Win32
+	{
+	    SYSTEMTIME st;
+	    GetSystemTime(&st);
+	    printf("adjustment %d\n", st.wMilliseconds);
+	    tmp += 1e-3 * st.wMilliseconds;
+	}
+#endif
+	REAL(ans)[0] = tmp;
+    }
     return ans;
 #endif
 }

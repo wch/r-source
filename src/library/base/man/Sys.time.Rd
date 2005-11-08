@@ -24,6 +24,9 @@ Sys.timezone()
   \code{Sys.time} returns an object of class \code{"POSIXct"} (see
   \link{DateTimeClasses}).  On some systems it will have sub-second
   accuracy, but on others it will increment in seconds.
+#ifdef windows
+  On Windows, it increments in clock ticks, 1/60 of a second.
+#endif
 
   \code{Sys.Date} returns an object of class \code{"Date"} (see \link{Date}).
 
@@ -33,7 +36,7 @@ Sys.timezone()
 \seealso{
   \code{\link{date}} for the system time in a fixed-format character
   string; the elapsed time component of \code{\link{proc.time}} 
-  for (possibly) finer resolution in changes in time.
+  for possibly finer resolution in changes in time.
 }
 \examples{
 Sys.time()
