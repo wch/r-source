@@ -145,6 +145,9 @@ NEW FEATURES
 	(rather than throw an error), for consistency with other
 	distribution functions.
 
+    o	Sys.time() now has sub-millisecond accuracy on systems supporting
+	the POSIX call gettimeofday.  (Not Windows.)
+
 
 DEPRECATED & DEFUNCT
 

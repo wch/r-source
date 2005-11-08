@@ -392,17 +392,34 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 }
 
 
+#ifdef HAVE_SYS_TIME_H
+# include <sys/time.h>
+#endif
 
 SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    time_t res = time(NULL);
     SEXP ans = allocVector(REALSXP, 1);
+#ifdef HAVE_GETTIMEOFDAY
+    struct timeval tv;
+    int res = gettimeofday(&tv, NULL);
+    if(res == 0) {
+	double tmp = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
+#ifndef HAVE_POSIX_LEAPSECONDS
+	tmp -= 22;
+#endif
+	REAL(ans)[0] = tmp;
+    } else 
+	REAL(ans)[0] = NA_REAL;
+    return ans;
+#else
+    time_t res = time(NULL);
 #ifndef HAVE_POSIX_LEAPSECONDS
     res -= 22;
 #endif
     if(res != (time_t)(-1)) REAL(ans)[0] = (double) res;
     else REAL(ans)[0] = NA_REAL;
     return ans;
+#endif
 }
 
 
