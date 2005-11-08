@@ -29,6 +29,10 @@ least where supported by the shell).
 iconv() was not always getting the current charset ("") right,
 especially if the locale was set in a running R session.
 
+gzfile() now always ensures that the underlying file is opened in
+binary mode (this is only an issue on Windows).  This solves some
+problems with reading compressed data files via gzfile().
+
 
 
 R 2.2.0 patched

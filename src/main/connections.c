@@ -955,8 +955,12 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 static Rboolean gzfile_open(Rconnection con)
 {
     gzFile fp;
+    char mode[6];
+    
+    strcpy(mode, con->mode);
+    if(!strchr(mode, 'b')) strcat(mode, "b");
 
-    fp = gzopen(R_ExpandFileName(con->description), con->mode);
+    fp = gzopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
 	warning(_("cannot open compressed file '%s'"),
 	      R_ExpandFileName(con->description));
