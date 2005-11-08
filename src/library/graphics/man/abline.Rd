@@ -23,7 +23,8 @@ abline(reg=, untf = FALSE, \dots)
   \item{v}{the x-value(s) for vertical line(s).}
   \item{coef}{a vector of length two giving the intercept and slope.}
   \item{reg}{an object with a \code{coef} component.  See Details.}
-  \item{\dots}{graphical parameters.}
+  \item{\dots}{graphical parameters such as \code{col}, \code{lty} and
+    \code{lwd} (possibly as vectors: see Details).}
 }
 \details{
   The first form specifies the line in intercept/slope form

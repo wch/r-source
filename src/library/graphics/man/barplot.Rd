@@ -97,7 +97,9 @@ barplot(height, \dots)
     relative to the x axis.}
   \item{add}{logical specifying if bars should be added to an already
     existing plot; defaults to \code{FALSE}.}
-  \item{\dots}{further graphical parameters (\code{\link{par}}) are
+  \item{\dots}{arguments to be passed to/from other methods.  For the
+    default methods these can include
+    further graphical parameters (see \code{\link{par}}) which are
     passed to \code{\link{plot.window}()}, \code{\link{title}()} and
     \code{\link{axis}}.}
 }
