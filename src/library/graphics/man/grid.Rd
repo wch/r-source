@@ -31,6 +31,9 @@ grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted",
   \code{\link{plot}}, \code{\link{abline}}, \code{\link{lines}},
   \code{\link{points}}.
 }
+\references{
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
+}
 \examples{
 plot(1:3)
 grid(NA, 5, lwd = 2) # grid only in y-direction

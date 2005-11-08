@@ -27,8 +27,9 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
     which case \code{col} is used.}
   \item{lty}{line type for borders and shading; defaults to \code{"solid"}.}
   \item{lwd}{line width for borders and shading.}
-  \item{\dots}{other graphical parameters such as \code{xpd}
-    can be given as arguments.}
+  \item{\dots}{graphical parameters such as \code{xpd}, \code{lend},
+    \code{ljoin} and \code{lmitre} can be given as
+    arguments.}
 }
 \description{
   \code{rect} draws a rectangle (or sequence of rectangles) with the

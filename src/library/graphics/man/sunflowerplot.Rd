@@ -78,6 +78,8 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   Schilling, M. F. and Watkins, A. E. (1994)
   A suggestion for sunflower plots.
   \emph{The American Statistician}, \bold{48}, 303--305.
+
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \author{
   Andreas Ruckstuhl, Werner Stahel, Martin Maechler, Tim Hesterberg,

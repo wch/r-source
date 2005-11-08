@@ -59,6 +59,8 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
   Cleveland, W. S. (1985)
   \emph{The Elements of Graphing Data.}
   Monterey, CA: Wadsworth.
+
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \examples{
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940")

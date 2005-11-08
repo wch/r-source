@@ -121,6 +121,8 @@ boxplot(x, \dots)
   Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
   \emph{Graphical Methods for Data Analysis.}  Wadsworth \& Brooks/Cole.
 
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
+
   See also \code{\link{boxplot.stats}}.
 }
 \seealso{

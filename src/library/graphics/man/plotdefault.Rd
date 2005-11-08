@@ -79,6 +79,8 @@
   Cleveland, W. S. (1985)
   \emph{The Elements of Graphing Data.}
   Monterey, CA: Wadsworth.
+
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \seealso{
   \code{\link{plot}}, \code{\link{plot.window}}, \code{\link{xy.coords}}.
