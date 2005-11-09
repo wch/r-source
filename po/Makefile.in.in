@@ -360,7 +360,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla
 	      echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
 	      ($${cdcmd} && $(MSGMERGE_UPDATE) $${tr} $${pkg}.pot); \
 	      mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
-	      ($${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/$${pkg}.mo $${tr}) ; \
+	      ($${cdcmd} && $(MSGFMT) -c --statistics -o ../inst/po/$$lang/LC_MESSAGES/$${pkg}.mo $${tr}) ; \
 	    done; \
 	  fi ; \
 	  lang=en@quot; \
@@ -409,7 +409,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla
 	    echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
 	    ($${cdcmd} && $(MSGMERGE_UPDATE) $${tr} R-$${pkg}.pot); \
 	    mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
-	    ($${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/R-$${pkg}.mo $${tr}) ; \
+	    ($${cdcmd} && $(MSGFMT) -c --statistics -o ../inst/po/$$lang/LC_MESSAGES/R-$${pkg}.mo $${tr}) ; \
 	  done; \
 	fi ; \
 	lang=en@quot; \
