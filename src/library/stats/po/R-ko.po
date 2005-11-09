@@ -131,9 +131,8 @@ msgstr "'by'는 list가 아니면 되지 않습니다"
 msgid "'FUN' must always return a scalar"
 msgstr "'FUN'는 항상 sclalar를 돌려주지 않으면 되지 않습니다"
 
-#, fuzzy
 msgid "cannot change frequency from %g to %g"
-msgstr "빈도를 %d로부터 %d까지 변경 할수 없습니다"
+msgstr "빈도를 %g로부터 %g까지 변경 할수 없습니다"
 
 msgid "'x' must be coefficient matrix/data frame"
 msgstr "'x' 계수 행렬/데이터 프레임이 아니면 되지 않습니다"
@@ -1562,12 +1561,11 @@ msgstr "bounds는 L-BFGS-B method이라고 하는것만 사용할 수가 없습�
 msgid "read the documentation for 'trace' more carefully"
 msgstr "'trace'에 대한 해설을 보다 주의 깊게 읽어 주십시오"
 
-#, fuzzy
 msgid ""
 "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr ""
 "L-BFGS-B method는 'reltol' 그리고 'abstol'대신에 \n"
-"'fact (와 'pgtol')를 사용합니다"
+"'factr' (와 'pgtol')를 사용합니다"
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
 msgstr ""
@@ -1586,7 +1584,6 @@ msgstr "그룹이 너무 적습니다"
 msgid "use only with \"lm\" objects"
 msgstr "\"lm\" 오브젝트에 대해서만 사용해주십시오"
 
-#, fuzzy
 msgid "'which' must be in 1:6"
 msgstr "'which'는 1:4에서 없으면 되지 않습니다"
 

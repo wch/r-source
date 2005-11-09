@@ -132,9 +132,8 @@ msgstr "'by' はリストでなければなりません"
 msgid "'FUN' must always return a scalar"
 msgstr "'FUN' は常にスカラを返さねばなりません"
 
-#, fuzzy
 msgid "cannot change frequency from %g to %g"
-msgstr "頻度を%dから%dに変更できません"
+msgstr "頻度を%gから%gに変更できません"
 
 msgid "'x' must be coefficient matrix/data frame"
 msgstr "'x' は係数行列/データフレームでなければなりません"
@@ -1541,11 +1540,10 @@ msgstr "bounds は L-BFGS-B 法としか使用することができません"
 msgid "read the documentation for 'trace' more carefully"
 msgstr "'trace' に対する解説をより注意深く読んでください"
 
-#, fuzzy
 msgid ""
 "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
 msgstr ""
-"L-BFGS-B 法は、'reltol' そして 'abstol' の代わりに 'fact'(と 'pgtol')を使用し"
+"L-BFGS-B 法は、'reltol' そして 'abstol' の代わりに 'factr'(と 'pgtol')を使用し"
 "ます"
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
@@ -1564,9 +1562,8 @@ msgstr "グループが少なすぎます"
 msgid "use only with \"lm\" objects"
 msgstr "\"lm\" オブジェクトに対してだけ使用してください"
 
-#, fuzzy
 msgid "'which' must be in 1:6"
-msgstr "'which' は 1:4 中になければなりません"
+msgstr "'which' は 1:6 中になければなりません"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' は {1,..,%d} 中になければなりません"

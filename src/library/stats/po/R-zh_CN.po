@@ -109,9 +109,8 @@ msgstr "範疇不是项标记集的子集"
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "\"mlm\" 模型没有'drop1'方法"
 
-#, fuzzy
 msgid "F test assumes 'quasi%s' family"
-msgstr "F检验假設quasi%s家族"
+msgstr "F检验假設'quasi%s'家族"
 
 msgid "lower scope is not included in model"
 msgstr "模型里没有下範疇"
@@ -135,9 +134,8 @@ msgstr "'by' 必需是串列"
 msgid "'FUN' must always return a scalar"
 msgstr "'FUN'必需回覆纯量"
 
-#, fuzzy
 msgid "cannot change frequency from %g to %g"
-msgstr "无法将頻率从%d改到%d"
+msgstr "无法将頻率从%g改到%g"
 
 msgid "'x' must be coefficient matrix/data frame"
 msgstr "'x'必需是係數矩阵/数据框"
@@ -730,12 +728,11 @@ msgstr "无法用这些初始值进行最佳化运算"
 msgid "link not recognised"
 msgstr "没有这样的鏈結"
 
-#, fuzzy
 msgid ""
 "link \"%s\" not available for Poisson family; available links are \"identity"
 "\", \"log\" and \"sqrt\""
 msgstr ""
-"poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log\"和"
+"Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log\"和"
 "\"sqrt\""
 
 msgid "negative values not allowed for the Poisson family"
@@ -1522,10 +1519,9 @@ msgstr "只有在用L-BFGS-B方法时才能定优化界限"
 msgid "read the documentation for 'trace' more carefully"
 msgstr "请小心阅读'trace'说明书"
 
-#, fuzzy
 msgid ""
 "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
-msgstr "L-BFGS-B方法用'fact'(和'pgtol') ，而不是'reltol'和'abstol'"
+msgstr "L-BFGS-B方法用'factr'(和'pgtol') ，而不是'reltol'和'abstol'"
 
 msgid "one-diml optimization by Nelder-Mead is unreliable: use optimize"
 msgstr "用Nelder-Mead方法来算1维优化不很可靠，用optimize"
