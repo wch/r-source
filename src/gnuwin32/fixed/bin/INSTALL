@@ -56,7 +56,6 @@ sub Cleanup {
 	    rmtree($dpkg);
 	    # move back any previously installed package
 	    $dppkg = $lockdir . "/" . $decpkgname;
-	    print "backup is $dppkg, exists is ", -d $dppkg, "\n";
 	    if ($safe && -d $dppkg) {
 		print "Restoring previous '$dpkg'\n";
 		system("mv $dppkg $library");
