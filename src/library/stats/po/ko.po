@@ -180,9 +180,8 @@ msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 
 #: port.c:360
-#, fuzzy
 msgid "`rho' must be an environment"
-msgstr "rho는 환경이 나오지 않으면 되지 않습니다"
+msgstr "'rho'는 환경이 나오지 않으면 되지 않습니다"
 
 #: port.c:362 port.c:509
 msgid "`d' must be a nonempty numeric vector"

@@ -136,9 +136,8 @@ msgstr "'by' deve ser uma lista"
 msgid "'FUN' must always return a scalar"
 msgstr "'FUN' deve sempre retornar um escalar"
 
-#, fuzzy
 msgid "cannot change frequency from %g to %g"
-msgstr "não é possível mudar a freqüência de %d para %d"
+msgstr "não é possível mudar a freqüência de %g para %g"
 
 msgid "'x' must be coefficient matrix/data frame"
 msgstr "'x' deve ser uma matriz/data frame de coeficientes"

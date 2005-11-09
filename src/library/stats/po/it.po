@@ -179,9 +179,8 @@ msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 
 #: port.c:360
-#, fuzzy
 msgid "`rho' must be an environment"
-msgstr "rho deve essere un environment"
+msgstr "'rho' deve essere un environment"
 
 #: port.c:362 port.c:509
 msgid "`d' must be a nonempty numeric vector"
