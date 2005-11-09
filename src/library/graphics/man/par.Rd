@@ -272,11 +272,13 @@ par(\dots, no.readonly = FALSE)
       setting the gamma correction when opening the device, but not for
       changing it.)}
     \item{\code{lab}}{A numerical vector of the form \code{c(x, y, len)}
-      which modifies the way that axes are annotated.  The values of
+      which modifies the default way that axes are annotated.  The values of
       \code{x} and \code{y} give the (approximate) number of tickmarks
-      on the x and y axes and \code{len} specifies the label size.  The
-      default is \code{c(5, 5, 7)}.
-      \emph{Currently} \code{len} \emph{is unimplemented}.}
+      on the x and y axes and \code{len} specifies the label length.  The
+      default is \code{c(5, 5, 7)}.  Note that this only affects the way
+      the parameters \code{xaxp} and \code{yaxp} are set when the user
+      coordinate system is set up, and is not consulted when axes are drawn.
+      \code{len} \emph{is unimplemented} in \R.}
     \item{\code{las}}{numeric in \{0,1,2,3\}; the style of axis labels.
       \describe{
 	\item{0:}{always parallel to the axis [\emph{default}],}
