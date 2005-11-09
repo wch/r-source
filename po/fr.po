@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:58+0100\n"
+"POT-Creation-Date: 2005-11-09 11:07+0000\n"
 "PO-Revision-Date: 2005-06-10 09:59+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -111,9 +111,9 @@ msgstr "'names' incorrect dans R_unlink"
 #: src/main/connections.c:2490 src/main/connections.c:3239
 #: src/main/connections.c:3245 src/main/connections.c:3488
 #: src/main/connections.c:3499 src/main/connections.c:3503
-#: src/main/connections.c:3507 src/main/datetime.c:530 src/main/datetime.c:595
-#: src/main/datetime.c:597 src/main/datetime.c:601 src/main/datetime.c:704
-#: src/main/datetime.c:706 src/main/datetime.c:819 src/main/dounzip.c:182
+#: src/main/connections.c:3507 src/main/datetime.c:541 src/main/datetime.c:606
+#: src/main/datetime.c:608 src/main/datetime.c:612 src/main/datetime.c:716
+#: src/main/datetime.c:718 src/main/datetime.c:842 src/main/dounzip.c:182
 #: src/main/dounzip.c:188 src/main/envir.c:1428 src/main/envir.c:1432
 #: src/main/envir.c:1517 src/main/envir.c:1525 src/main/envir.c:1589
 #: src/main/envir.c:1605 src/main/envir.c:1612 src/main/envir.c:1719
@@ -215,26 +215,26 @@ msgstr "savehistory peut seulement être utilisé dans Rgui et Rterm"
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory peut seulement être utilisé dans Rgui et Rterm"
 
-#: src/gnuwin32/extra.c:711 src/main/datetime.c:466 src/main/datetime.c:532
-#: src/main/dotcode.c:142 src/main/errors.c:710 src/main/errors.c:737
-#: src/main/errors.c:828 src/main/errors.c:853 src/main/errors.c:858
-#: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
-#: src/main/optimize.c:181 src/main/optimize.c:188 src/main/optimize.c:197
-#: src/main/platform.c:987 src/main/plot.c:385 src/main/plot.c:590
-#: src/main/plot.c:595 src/main/plot.c:2184 src/main/plot.c:2191
-#: src/main/plot.c:3255 src/main/plot.c:3257 src/main/plot.c:3259
-#: src/main/plot.c:3408 src/main/plot3d.c:1418 src/main/plot3d.c:2553
-#: src/main/plot3d.c:2557 src/main/plot3d.c:2559 src/main/scan.c:945
-#: src/main/scan.c:949 src/main/scan.c:951 src/main/scan.c:962
-#: src/main/scan.c:998 src/main/scan.c:1001 src/main/scan.c:1079
-#: src/main/scan.c:1083 src/main/scan.c:1093 src/main/scan.c:1256
-#: src/main/scan.c:1533 src/main/scan.c:1553 src/main/scan.c:1557
-#: src/main/scan.c:1563 src/main/scan.c:1780 src/main/scan.c:1781
-#: src/main/scan.c:1783 src/main/scan.c:1784 src/main/scan.c:1785
-#: src/main/scan.c:1786 src/main/scan.c:1787 src/main/scan.c:1788
-#: src/main/sort.c:722 src/main/sort.c:822 src/main/sysutils.c:143
-#: src/main/util.c:1094 src/main/util.c:1099 src/main/util.c:1107
-#: src/main/util.c:1110 src/modules/X11/devX11.c:2360
+#: src/gnuwin32/extra.c:711 src/main/datetime.c:477 src/main/datetime.c:543
+#: src/main/datetime.c:720 src/main/dotcode.c:142 src/main/errors.c:710
+#: src/main/errors.c:737 src/main/errors.c:828 src/main/errors.c:853
+#: src/main/errors.c:858 src/main/optimize.c:95 src/main/optimize.c:102
+#: src/main/optimize.c:111 src/main/optimize.c:181 src/main/optimize.c:188
+#: src/main/optimize.c:197 src/main/platform.c:987 src/main/plot.c:385
+#: src/main/plot.c:590 src/main/plot.c:595 src/main/plot.c:2184
+#: src/main/plot.c:2191 src/main/plot.c:3255 src/main/plot.c:3257
+#: src/main/plot.c:3259 src/main/plot.c:3408 src/main/plot3d.c:1418
+#: src/main/plot3d.c:2553 src/main/plot3d.c:2557 src/main/plot3d.c:2559
+#: src/main/scan.c:945 src/main/scan.c:949 src/main/scan.c:951
+#: src/main/scan.c:962 src/main/scan.c:998 src/main/scan.c:1001
+#: src/main/scan.c:1079 src/main/scan.c:1083 src/main/scan.c:1093
+#: src/main/scan.c:1256 src/main/scan.c:1533 src/main/scan.c:1553
+#: src/main/scan.c:1557 src/main/scan.c:1563 src/main/scan.c:1780
+#: src/main/scan.c:1781 src/main/scan.c:1783 src/main/scan.c:1784
+#: src/main/scan.c:1785 src/main/scan.c:1786 src/main/scan.c:1787
+#: src/main/scan.c:1788 src/main/sort.c:722 src/main/sort.c:822
+#: src/main/sysutils.c:143 src/main/util.c:1094 src/main/util.c:1099
+#: src/main/util.c:1107 src/main/util.c:1110 src/modules/X11/devX11.c:2360
 #: src/modules/X11/devX11.c:2387 src/modules/X11/devX11.c:2392
 #: src/modules/X11/devX11.c:2397 src/unix/sys-std.c:973
 #, c-format
@@ -380,59 +380,59 @@ msgstr "chaîne de caractères attendue comme troisième argument"
 msgid "Fatal error: %s\n"
 msgstr "Erreur fatale : %s\n"
 
-#: src/gnuwin32/system.c:292 src/unix/sys-std.c:591
+#: src/gnuwin32/system.c:288 src/unix/sys-std.c:591
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr "l'encodage '%s' n'est pas reconnu"
 
-#: src/gnuwin32/system.c:298 src/unix/sys-std.c:597
+#: src/gnuwin32/system.c:294 src/unix/sys-std.c:597
 msgid "<ERROR: invalid input in encoding> "
 msgstr "<ERREUR : entrée incorrecte dans l'encodage>"
 
-#: src/gnuwin32/system.c:498
+#: src/gnuwin32/system.c:494
 #, c-format
 msgid "Unable to open file '%s'"
 msgstr "Impossible d'ouvrir le fichier '%s'"
 
-#: src/gnuwin32/system.c:512
+#: src/gnuwin32/system.c:508
 #, c-format
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show() : fichier '%s' inexistant\n"
 
-#: src/gnuwin32/system.c:874
+#: src/gnuwin32/system.c:870
 msgid "WARNING: no max-mem-size given\n"
 msgstr "AVIS : max-mem-size absent\n"
 
-#: src/gnuwin32/system.c:880
+#: src/gnuwin32/system.c:876
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "AVIS : valeur --max-mem-size incorrecte : ignorée\n"
 
-#: src/gnuwin32/system.c:882
+#: src/gnuwin32/system.c:878
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
 msgstr "AVIS : --max-mem-size=%lu'%c' : trop grande et ignorée\n"
 
-#: src/gnuwin32/system.c:887
+#: src/gnuwin32/system.c:883
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "AVIS : max-mem-size = %4.1fM trop petite et ignorée\n"
 
-#: src/gnuwin32/system.c:897 src/unix/system.c:244
+#: src/gnuwin32/system.c:893 src/unix/system.c:244
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "AVIS : option inconnue '%s'\n"
 
-#: src/gnuwin32/system.c:922 src/unix/system.c:248
+#: src/gnuwin32/system.c:918 src/unix/system.c:248
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENT '%s' __ignoré__\n"
 
-#: src/gnuwin32/system.c:940 src/unix/system.c:286
+#: src/gnuwin32/system.c:936 src/unix/system.c:286
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "vous devez spécifier '--save', '--no-save' ou '--vanilla'"
 
-#: src/gnuwin32/system.c:945
+#: src/gnuwin32/system.c:941
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -725,7 +725,7 @@ msgstr ""
 msgid "arguments must be symbolic"
 msgstr "les arguments doivent être symboliques"
 
-#: src/main/apply.c:42 src/main/complex.c:887
+#: src/main/apply.c:42 src/main/complex.c:891
 msgid "invalid length"
 msgstr "taille incorrecte"
 
@@ -1219,8 +1219,8 @@ msgstr "membre de droite incorrect dans substr<-()"
 msgid "non-character argument in strsplit()"
 msgstr "l'argument n'est pas une chaîne de charactères dans strsplit()"
 
-#: src/main/character.c:374 src/main/pcre.c:112 src/main/pcre.c:312
-#: src/main/pcre.c:486 src/main/pcre.c:585
+#: src/main/character.c:374 src/main/pcre.c:112 src/main/pcre.c:311
+#: src/main/pcre.c:485 src/main/pcre.c:584
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr ""
 "perl = TRUE n'est complètement implémenté que dans les environnements UTF-8"
@@ -1252,21 +1252,21 @@ msgid "invalid multibyte string %d"
 msgstr "chaîne de charactères multioctets incorrecte %d"
 
 #: src/main/character.c:885 src/main/character.c:1225
-#: src/main/character.c:1511 src/main/pcre.c:114 src/main/pcre.c:491
-#: src/main/pcre.c:590
+#: src/main/character.c:1511 src/main/pcre.c:114 src/main/pcre.c:490
+#: src/main/pcre.c:589
 msgid "regular expression is invalid in this locale"
 msgstr "expression régulière incorrecte dans cet environnement linguistique"
 
 #: src/main/character.c:907 src/main/character.c:1066
 #: src/main/character.c:1228 src/main/character.c:1514 src/main/pcre.c:121
-#: src/main/pcre.c:333 src/main/pcre.c:496 src/main/pcre.c:595
+#: src/main/pcre.c:332 src/main/pcre.c:495 src/main/pcre.c:594
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "expression régulière incorrecte '%s'"
 
 #: src/main/character.c:917 src/main/character.c:1243
-#: src/main/character.c:1531 src/main/pcre.c:136 src/main/pcre.c:366
-#: src/main/pcre.c:511 src/main/pcre.c:618
+#: src/main/character.c:1531 src/main/pcre.c:136 src/main/pcre.c:365
+#: src/main/pcre.c:510 src/main/pcre.c:617
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr ""
@@ -1278,11 +1278,11 @@ msgstr ""
 msgid "invalid backreference %d in regular expression"
 msgstr "référence arrière %d incorrecte dans l'expression régulière"
 
-#: src/main/character.c:1061 src/main/pcre.c:314
+#: src/main/character.c:1061 src/main/pcre.c:313
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' est incorrect dans cet environnement linguistique"
 
-#: src/main/character.c:1063 src/main/pcre.c:316
+#: src/main/character.c:1063 src/main/pcre.c:315
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' est incorrect dans cet environnement linguistique"
 
@@ -1582,23 +1582,23 @@ msgstr "opérateur complexe unitaire incorrect"
 msgid "unimplemented complex operation"
 msgstr "opération complexe non implémentée"
 
-#: src/main/complex.c:371
+#: src/main/complex.c:375
 msgid "non-numeric argument to function"
 msgstr "argument non numérique pour une fonction"
 
-#: src/main/complex.c:804 src/main/complex.c:876
+#: src/main/complex.c:808 src/main/complex.c:880
 msgid "unimplemented complex function"
 msgstr "fonction complexe non implémentée"
 
-#: src/main/complex.c:941
+#: src/main/complex.c:945
 msgid "polynomial degree too high (49 max)"
 msgstr "degré du polynôme trop élevé (49 max)"
 
-#: src/main/complex.c:954
+#: src/main/complex.c:958
 msgid "invalid polynomial coefficient"
 msgstr "coefficient de polynôme incorrect"
 
-#: src/main/complex.c:959
+#: src/main/complex.c:963
 msgid "root finding code failed"
 msgstr "le code de recherche de zéro a échoué"
 
@@ -2222,12 +2222,12 @@ msgstr "min / max non défini pour les nombres complexes"
 msgid "unknown cumxxx function"
 msgstr "fonction cumxxx inconnue"
 
-#: src/main/datetime.c:399
+#: src/main/datetime.c:410
 msgid "cannot set timezones on this system"
 msgstr "impossible de définir le fuseau horaire sur ce système"
 
-#: src/main/datetime.c:550 src/main/datetime.c:552 src/main/datetime.c:827
-#: src/main/datetime.c:829
+#: src/main/datetime.c:561 src/main/datetime.c:563 src/main/datetime.c:850
+#: src/main/datetime.c:852
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "composante de longueur nulle dans une structure POSIXlt non vide"
 
@@ -2323,7 +2323,7 @@ msgstr ""
 "'name' doit être une chaîne de caractères (de longueur 1) ou une référence à "
 "un symbole natif"
 
-#: src/main/dotcode.c:144 src/main/dotcode.c:779
+#: src/main/dotcode.c:144 src/main/dotcode.c:783
 msgid "too many arguments in foreign function call"
 msgstr "trop d'arguments dans l'appel de fonction externe"
 
@@ -2428,54 +2428,54 @@ msgstr "ENCODING utilisé plus d'une fois"
 msgid "ENCODING argument must be a single character string"
 msgstr "l'argument ENCODING doit être une chaîne de caractères unique"
 
-#: src/main/dotcode.c:709
+#: src/main/dotcode.c:710
 msgid "no arguments supplied"
 msgstr "aucun argument fourni"
 
-#: src/main/dotcode.c:710
+#: src/main/dotcode.c:711
 msgid "too many arguments"
 msgstr "trop d'arguments"
 
-#: src/main/dotcode.c:750 src/main/dotcode.c:785 src/main/dotcode.c:1609
+#: src/main/dotcode.c:754 src/main/dotcode.c:789 src/main/dotcode.c:1613
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr "Nombre d'arguments incorrect (%d), attendu %d pour %s"
 
-#: src/main/dotcode.c:1442 src/main/dotcode.c:2239
+#: src/main/dotcode.c:1446 src/main/dotcode.c:2243
 msgid "too many arguments, sorry"
 msgstr "trop d'arguments, désolé"
 
-#: src/main/dotcode.c:1466 src/main/dotcode.c:1488
+#: src/main/dotcode.c:1470 src/main/dotcode.c:1492
 msgid "Invalid graphics state"
 msgstr "État des graphiques incorrect"
 
-#: src/main/dotcode.c:1564
+#: src/main/dotcode.c:1568
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "valeur NULL pour DLLInfoReference lors de la recherche de la DLL"
 
-#: src/main/dotcode.c:1635
+#: src/main/dotcode.c:1639
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Mauvais type pour l'argument %d dans l'appel à %s"
 
-#: src/main/dotcode.c:2328
+#: src/main/dotcode.c:2332
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "type \"%s\" indisponible dans les appels entre langages"
 
-#: src/main/dotcode.c:2340
+#: src/main/dotcode.c:2344
 msgid "invalid function in call_R"
 msgstr "fonction incorrecte dans call_R"
 
-#: src/main/dotcode.c:2342
+#: src/main/dotcode.c:2346
 msgid "invalid argument count in call_R"
 msgstr "mauvais nombre d'arguments dans call_R"
 
-#: src/main/dotcode.c:2344
+#: src/main/dotcode.c:2348
 msgid "invalid return value count in call_R"
 msgstr "mauvais nombre de valeurs renvoyées par call_R"
 
-#: src/main/dotcode.c:2389
+#: src/main/dotcode.c:2393
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "mode '%s' non supporté dans call_R"
@@ -4385,57 +4385,61 @@ msgstr "valeur spécifiée pour le paramètre graphique \"%s\" incorrect"
 msgid "parameter \"%s\" has the wrong length"
 msgstr "le paramètre \"%s\" est de la mauvaise longueur"
 
-#: src/main/par.c:373
+#: src/main/par.c:230
+msgid "graphical parameter 'family' has a maximum length of 49 bytes"
+msgstr ""
+
+#: src/main/par.c:375
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "le paramètre \"mfg\" est de la mauvaise longueur"
 
-#: src/main/par.c:381
+#: src/main/par.c:383
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "le paramètre \"i\" dans \"mfg\" est hors échelle"
 
-#: src/main/par.c:383
+#: src/main/par.c:385
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "le paramètre \"j\" dans \"mfg\" est hors échelle"
 
-#: src/main/par.c:388
+#: src/main/par.c:390
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
 msgstr "la valeur de nr dans \"mfg\" est mauvaise et sera ignorée"
 
-#: src/main/par.c:390
+#: src/main/par.c:392
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
 msgstr "la valeur de nc dans \"mfg\" est mauvaise et sera ignorée"
 
-#: src/main/par.c:428
+#: src/main/par.c:430
 msgid "calling par(new=) with no plot"
 msgstr "appel de par(new=) sans graphe"
 
-#: src/main/par.c:578
+#: src/main/par.c:580
 #, c-format
 msgid "parameter \"%s\" cannot be set"
 msgstr "le paramètre \"%s\" ne peut être changé"
 
-#: src/main/par.c:625
+#: src/main/par.c:627
 #, c-format
 msgid "parameter \"%s\" could not be set in high-level plot() function"
 msgstr ""
 "le paramètre \"%s\" ne peut être changé dans la fonction plot() de haut "
 "niveau"
 
-#: src/main/par.c:1084
+#: src/main/par.c:1086
 msgid "invalid parameter passed to par()"
 msgstr "paramètre passé à par() incorrect"
 
-#: src/main/par.c:1154
+#: src/main/par.c:1156
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "trop de lignes dans la mise en page, limité à %d"
 
-#: src/main/par.c:1160
+#: src/main/par.c:1162
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "trop de colonnes dans la mise en page, limité à %d"
 
-#: src/main/par.c:1162
+#: src/main/par.c:1164
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "trop de cellules dans la mise en page, limité à %d"
@@ -6196,15 +6200,15 @@ msgstr "tableau de données non numériques dans rowsum"
 msgid "this cannot happen"
 msgstr "cela ne peut se produire"
 
-#: src/main/unique.c:1095
+#: src/main/unique.c:1097
 msgid "'names' must be a character vector"
 msgstr "'names' doit être un vecteur de caractères"
 
-#: src/main/unique.c:1099
+#: src/main/unique.c:1101
 msgid "'sep' must be a character string"
 msgstr "'sep' doit être une chaîne de caractères"
 
-#: src/main/unique.c:1165
+#: src/main/unique.c:1174
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated n'est pas appelé avec un argument STRSXP"
 

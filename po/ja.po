@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:58+0100\n"
+"POT-Creation-Date: 2005-11-09 11:07+0000\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -111,9 +111,9 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/connections.c:2490 src/main/connections.c:3239
 #: src/main/connections.c:3245 src/main/connections.c:3488
 #: src/main/connections.c:3499 src/main/connections.c:3503
-#: src/main/connections.c:3507 src/main/datetime.c:530 src/main/datetime.c:595
-#: src/main/datetime.c:597 src/main/datetime.c:601 src/main/datetime.c:704
-#: src/main/datetime.c:706 src/main/datetime.c:819 src/main/dounzip.c:182
+#: src/main/connections.c:3507 src/main/datetime.c:541 src/main/datetime.c:606
+#: src/main/datetime.c:608 src/main/datetime.c:612 src/main/datetime.c:716
+#: src/main/datetime.c:718 src/main/datetime.c:842 src/main/dounzip.c:182
 #: src/main/dounzip.c:188 src/main/envir.c:1428 src/main/envir.c:1432
 #: src/main/envir.c:1517 src/main/envir.c:1525 src/main/envir.c:1589
 #: src/main/envir.c:1605 src/main/envir.c:1612 src/main/envir.c:1719
@@ -213,26 +213,26 @@ msgstr "savehistory は Rgui または Rterm でのみ使えます"
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory は Rgui と Rterm の中でだけ使えます"
 
-#: src/gnuwin32/extra.c:711 src/main/datetime.c:466 src/main/datetime.c:532
-#: src/main/dotcode.c:142 src/main/errors.c:710 src/main/errors.c:737
-#: src/main/errors.c:828 src/main/errors.c:853 src/main/errors.c:858
-#: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
-#: src/main/optimize.c:181 src/main/optimize.c:188 src/main/optimize.c:197
-#: src/main/platform.c:987 src/main/plot.c:385 src/main/plot.c:590
-#: src/main/plot.c:595 src/main/plot.c:2184 src/main/plot.c:2191
-#: src/main/plot.c:3255 src/main/plot.c:3257 src/main/plot.c:3259
-#: src/main/plot.c:3408 src/main/plot3d.c:1418 src/main/plot3d.c:2553
-#: src/main/plot3d.c:2557 src/main/plot3d.c:2559 src/main/scan.c:945
-#: src/main/scan.c:949 src/main/scan.c:951 src/main/scan.c:962
-#: src/main/scan.c:998 src/main/scan.c:1001 src/main/scan.c:1079
-#: src/main/scan.c:1083 src/main/scan.c:1093 src/main/scan.c:1256
-#: src/main/scan.c:1533 src/main/scan.c:1553 src/main/scan.c:1557
-#: src/main/scan.c:1563 src/main/scan.c:1780 src/main/scan.c:1781
-#: src/main/scan.c:1783 src/main/scan.c:1784 src/main/scan.c:1785
-#: src/main/scan.c:1786 src/main/scan.c:1787 src/main/scan.c:1788
-#: src/main/sort.c:722 src/main/sort.c:822 src/main/sysutils.c:143
-#: src/main/util.c:1094 src/main/util.c:1099 src/main/util.c:1107
-#: src/main/util.c:1110 src/modules/X11/devX11.c:2360
+#: src/gnuwin32/extra.c:711 src/main/datetime.c:477 src/main/datetime.c:543
+#: src/main/datetime.c:720 src/main/dotcode.c:142 src/main/errors.c:710
+#: src/main/errors.c:737 src/main/errors.c:828 src/main/errors.c:853
+#: src/main/errors.c:858 src/main/optimize.c:95 src/main/optimize.c:102
+#: src/main/optimize.c:111 src/main/optimize.c:181 src/main/optimize.c:188
+#: src/main/optimize.c:197 src/main/platform.c:987 src/main/plot.c:385
+#: src/main/plot.c:590 src/main/plot.c:595 src/main/plot.c:2184
+#: src/main/plot.c:2191 src/main/plot.c:3255 src/main/plot.c:3257
+#: src/main/plot.c:3259 src/main/plot.c:3408 src/main/plot3d.c:1418
+#: src/main/plot3d.c:2553 src/main/plot3d.c:2557 src/main/plot3d.c:2559
+#: src/main/scan.c:945 src/main/scan.c:949 src/main/scan.c:951
+#: src/main/scan.c:962 src/main/scan.c:998 src/main/scan.c:1001
+#: src/main/scan.c:1079 src/main/scan.c:1083 src/main/scan.c:1093
+#: src/main/scan.c:1256 src/main/scan.c:1533 src/main/scan.c:1553
+#: src/main/scan.c:1557 src/main/scan.c:1563 src/main/scan.c:1780
+#: src/main/scan.c:1781 src/main/scan.c:1783 src/main/scan.c:1784
+#: src/main/scan.c:1785 src/main/scan.c:1786 src/main/scan.c:1787
+#: src/main/scan.c:1788 src/main/sort.c:722 src/main/sort.c:822
+#: src/main/sysutils.c:143 src/main/util.c:1094 src/main/util.c:1099
+#: src/main/util.c:1107 src/main/util.c:1110 src/modules/X11/devX11.c:2360
 #: src/modules/X11/devX11.c:2387 src/modules/X11/devX11.c:2392
 #: src/modules/X11/devX11.c:2397 src/unix/sys-std.c:973
 #, c-format
@@ -376,59 +376,59 @@ msgstr "三番目の引数には文字列が期待されています"
 msgid "Fatal error: %s\n"
 msgstr "致命的なエラーです： %s\n"
 
-#: src/gnuwin32/system.c:292 src/unix/sys-std.c:591
+#: src/gnuwin32/system.c:288 src/unix/sys-std.c:591
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr "'%s' というエンコーディングは認識できません"
 
-#: src/gnuwin32/system.c:298 src/unix/sys-std.c:597
+#: src/gnuwin32/system.c:294 src/unix/sys-std.c:597
 msgid "<ERROR: invalid input in encoding> "
 msgstr "<エラー : エンコード中の不正な入力>"
 
-#: src/gnuwin32/system.c:498
+#: src/gnuwin32/system.c:494
 #, c-format
 msgid "Unable to open file '%s'"
 msgstr "'%s' を開くことができません"
 
-#: src/gnuwin32/system.c:512
+#: src/gnuwin32/system.c:508
 #, c-format
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show()：ファイル '%s' は存在しません\n"
 
-#: src/gnuwin32/system.c:874
+#: src/gnuwin32/system.c:870
 msgid "WARNING: no max-mem-size given\n"
 msgstr "警告: max-mem-size が与えられていません\n"
 
-#: src/gnuwin32/system.c:880
+#: src/gnuwin32/system.c:876
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "警告: --max-mem-size 値が不正なので無視されました\n"
 
-#: src/gnuwin32/system.c:882
+#: src/gnuwin32/system.c:878
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
 msgstr "警告: --max-mem-size =%lu'%c' は大きすぎるので無視されました\n"
 
-#: src/gnuwin32/system.c:887
+#: src/gnuwin32/system.c:883
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "警告: max-mem-size =%4.1fM は小さすぎるので無視されました\n"
 
-#: src/gnuwin32/system.c:897 src/unix/system.c:244
+#: src/gnuwin32/system.c:893 src/unix/system.c:244
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 未知の '%s' オプション\n"
 
-#: src/gnuwin32/system.c:922 src/unix/system.c:248
+#: src/gnuwin32/system.c:918 src/unix/system.c:248
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引数 '%s' は無視されました\n"
 
-#: src/gnuwin32/system.c:940 src/unix/system.c:286
+#: src/gnuwin32/system.c:936 src/unix/system.c:286
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'--save' ,  '--no-save',  '--vanilla' のいずれかを指定してください"
 
-#: src/gnuwin32/system.c:945
+#: src/gnuwin32/system.c:941
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr "'reader thread' を作れません。システムのリソースを幾らか解放すべきです"
@@ -708,7 +708,7 @@ msgstr "マルチバイト文字列が不正です"
 msgid "arguments must be symbolic"
 msgstr "引数はシンボルでなくてはいけません"
 
-#: src/main/apply.c:42 src/main/complex.c:887
+#: src/main/apply.c:42 src/main/complex.c:891
 msgid "invalid length"
 msgstr "長さが不正です"
 
@@ -1202,8 +1202,8 @@ msgstr "substr <- () において右辺が不正です"
 msgid "non-character argument in strsplit()"
 msgstr "strplit 関数の引数が文字列ではありません"
 
-#: src/main/character.c:374 src/main/pcre.c:112 src/main/pcre.c:312
-#: src/main/pcre.c:486 src/main/pcre.c:585
+#: src/main/character.c:374 src/main/pcre.c:112 src/main/pcre.c:311
+#: src/main/pcre.c:485 src/main/pcre.c:584
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "perl=TRUE は UTF-8 ロケールに対してのみ完全実装されています"
 
@@ -1234,21 +1234,21 @@ msgid "invalid multibyte string %d"
 msgstr "%d は不正なマルチバイト文字です"
 
 #: src/main/character.c:885 src/main/character.c:1225
-#: src/main/character.c:1511 src/main/pcre.c:114 src/main/pcre.c:491
-#: src/main/pcre.c:590
+#: src/main/character.c:1511 src/main/pcre.c:114 src/main/pcre.c:490
+#: src/main/pcre.c:589
 msgid "regular expression is invalid in this locale"
 msgstr "このロケールでは，正規表現は無効です"
 
 #: src/main/character.c:907 src/main/character.c:1066
 #: src/main/character.c:1228 src/main/character.c:1514 src/main/pcre.c:121
-#: src/main/pcre.c:333 src/main/pcre.c:496 src/main/pcre.c:595
+#: src/main/pcre.c:332 src/main/pcre.c:495 src/main/pcre.c:594
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "'%s' の正規表現が不正です"
 
 #: src/main/character.c:917 src/main/character.c:1243
-#: src/main/character.c:1531 src/main/pcre.c:136 src/main/pcre.c:366
-#: src/main/pcre.c:511 src/main/pcre.c:618
+#: src/main/character.c:1531 src/main/pcre.c:136 src/main/pcre.c:365
+#: src/main/pcre.c:510 src/main/pcre.c:617
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "入力文字列 %d はこのロケールでは不適切です"
@@ -1258,11 +1258,11 @@ msgstr "入力文字列 %d はこのロケールでは不適切です"
 msgid "invalid backreference %d in regular expression"
 msgstr "正規表現における後方参照 %d が不正です"
 
-#: src/main/character.c:1061 src/main/pcre.c:314
+#: src/main/character.c:1061 src/main/pcre.c:313
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' は現在のロケールでは不正です"
 
-#: src/main/character.c:1063 src/main/pcre.c:316
+#: src/main/character.c:1063 src/main/pcre.c:315
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' は現在のロケールでは不正です"
 
@@ -1556,23 +1556,23 @@ msgstr "不正な複素単項演算子です"
 msgid "unimplemented complex operation"
 msgstr "未実装の複素演算です"
 
-#: src/main/complex.c:371
+#: src/main/complex.c:375
 msgid "non-numeric argument to function"
 msgstr "関数の引数が数値ではありません"
 
-#: src/main/complex.c:804 src/main/complex.c:876
+#: src/main/complex.c:808 src/main/complex.c:880
 msgid "unimplemented complex function"
 msgstr "未実装の複素関数です"
 
-#: src/main/complex.c:941
+#: src/main/complex.c:945
 msgid "polynomial degree too high (49 max)"
 msgstr "多項式の次数が高すぎます（49 までです）"
 
-#: src/main/complex.c:954
+#: src/main/complex.c:958
 msgid "invalid polynomial coefficient"
 msgstr "多項式の係数が不正です"
 
-#: src/main/complex.c:959
+#: src/main/complex.c:963
 msgid "root finding code failed"
 msgstr "根を見つけるコードが失敗しました"
 
@@ -2183,12 +2183,12 @@ msgstr "複素数に対しては min/max は定義されていません"
 msgid "unknown cumxxx function"
 msgstr "未知の cumxxx 関数です"
 
-#: src/main/datetime.c:399
+#: src/main/datetime.c:410
 msgid "cannot set timezones on this system"
 msgstr "このシステムではタイムゾーンは設定できません"
 
-#: src/main/datetime.c:550 src/main/datetime.c:552 src/main/datetime.c:827
-#: src/main/datetime.c:829
+#: src/main/datetime.c:561 src/main/datetime.c:563 src/main/datetime.c:850
+#: src/main/datetime.c:852
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "空ではない POSIXlt 構造の中に長さゼロの成分があります"
 
@@ -2282,7 +2282,7 @@ msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr ""
 "'name' は（長さ1の）文字列またはネイティブなシンボル参照でなければなりません"
 
-#: src/main/dotcode.c:144 src/main/dotcode.c:779
+#: src/main/dotcode.c:144 src/main/dotcode.c:783
 msgid "too many arguments in foreign function call"
 msgstr "外部関数の呼び出しで引数が多すぎます"
 
@@ -2384,54 +2384,54 @@ msgstr "ENCODING が二回以上使われました"
 msgid "ENCODING argument must be a single character string"
 msgstr "ENCODING 引数は単一の文字列でなければなりません"
 
-#: src/main/dotcode.c:709
+#: src/main/dotcode.c:710
 msgid "no arguments supplied"
 msgstr "引数が提供されていません"
 
-#: src/main/dotcode.c:710
+#: src/main/dotcode.c:711
 msgid "too many arguments"
 msgstr "引数の数が多すぎます"
 
-#: src/main/dotcode.c:750 src/main/dotcode.c:785 src/main/dotcode.c:1609
+#: src/main/dotcode.c:754 src/main/dotcode.c:789 src/main/dotcode.c:1613
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr "引数の個数(%d)が不正です。%d 個が %s に対しては必要です"
 
-#: src/main/dotcode.c:1442 src/main/dotcode.c:2239
+#: src/main/dotcode.c:1446 src/main/dotcode.c:2243
 msgid "too many arguments, sorry"
 msgstr "引数が多すぎます（すみません…）"
 
-#: src/main/dotcode.c:1466 src/main/dotcode.c:1488
+#: src/main/dotcode.c:1470 src/main/dotcode.c:1492
 msgid "Invalid graphics state"
 msgstr "無効なグラフィックス状態です"
 
-#: src/main/dotcode.c:1564
+#: src/main/dotcode.c:1568
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "DLL を探している際に，DLLInfoReference に NULL 値が見つかりました"
 
-#: src/main/dotcode.c:1635
+#: src/main/dotcode.c:1639
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "%d 引数の型が不正です（%s の呼び出しにおいて）"
 
-#: src/main/dotcode.c:2328
+#: src/main/dotcode.c:2332
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "言語間の関数呼び出しにおいて \"%s\" 型はサポートされていません"
 
-#: src/main/dotcode.c:2340
+#: src/main/dotcode.c:2344
 msgid "invalid function in call_R"
 msgstr "call_R 中の関数が不正です"
 
-#: src/main/dotcode.c:2342
+#: src/main/dotcode.c:2346
 msgid "invalid argument count in call_R"
 msgstr "call_R の引数の個数が不正です"
 
-#: src/main/dotcode.c:2344
+#: src/main/dotcode.c:2348
 msgid "invalid return value count in call_R"
 msgstr "call_R の戻り値の個数が不正です"
 
-#: src/main/dotcode.c:2389
+#: src/main/dotcode.c:2393
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R では \"%s\" というモードはサポートされていません"
@@ -4315,55 +4315,59 @@ msgstr "グラフィックスパラメータ \"%s\" に不正な値が設定さ�
 msgid "parameter \"%s\" has the wrong length"
 msgstr "パラメータ \"%s\" の長さが不正です"
 
-#: src/main/par.c:373
+#: src/main/par.c:230
+msgid "graphical parameter 'family' has a maximum length of 49 bytes"
+msgstr ""
+
+#: src/main/par.c:375
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "\"mfg\" の パラメータの長さが不正です"
 
-#: src/main/par.c:381
+#: src/main/par.c:383
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "\"mfg\" の パラメータ \"i\" が範囲外です"
 
-#: src/main/par.c:383
+#: src/main/par.c:385
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "\"mfg\" の パラメータ \"j\" が範囲外です"
 
-#: src/main/par.c:388
+#: src/main/par.c:390
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" の中の nr の値は不正で無視されます"
 
-#: src/main/par.c:390
+#: src/main/par.c:392
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" の中の nc の値は不正で無視されます"
 
-#: src/main/par.c:428
+#: src/main/par.c:430
 msgid "calling par(new=) with no plot"
 msgstr "プロットなしで par(new=) を呼び出しました"
 
-#: src/main/par.c:578
+#: src/main/par.c:580
 #, c-format
 msgid "parameter \"%s\" cannot be set"
 msgstr "パラメータ \"%s\" を設定できません"
 
-#: src/main/par.c:625
+#: src/main/par.c:627
 #, c-format
 msgid "parameter \"%s\" could not be set in high-level plot() function"
 msgstr "高水準 plot 関数で，パラメータ \"%s\" を設定できません"
 
-#: src/main/par.c:1084
+#: src/main/par.c:1086
 msgid "invalid parameter passed to par()"
 msgstr "par 関数に不正なパラメータが渡されました"
 
-#: src/main/par.c:1154
+#: src/main/par.c:1156
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "layout の列数が多すぎます（限界値は %d）"
 
-#: src/main/par.c:1160
+#: src/main/par.c:1162
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "layout の列が多すぎます（限界は %d）"
 
-#: src/main/par.c:1162
+#: src/main/par.c:1164
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "layout のセルが多すぎます（限界は %d）"
@@ -6108,15 +6112,15 @@ msgstr "rowsum の引数が数値データフレームではありません"
 msgid "this cannot happen"
 msgstr "このようなことは起き得ないはずです"
 
-#: src/main/unique.c:1095
+#: src/main/unique.c:1097
 msgid "'names' must be a character vector"
 msgstr "'names' は文字ベクトルでなければなりません"
 
-#: src/main/unique.c:1099
+#: src/main/unique.c:1101
 msgid "'sep' must be a character string"
 msgstr "'sep' は文字列でなければなりません"
 
-#: src/main/unique.c:1165
+#: src/main/unique.c:1174
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated は STRSXP に対して呼び出されていません"
 

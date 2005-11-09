@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-16 21:59\n"
+"POT-Creation-Date: 2005-11-09 11:08\n"
 "PO-Revision-Date: 2005-11-05 18:35-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -136,7 +136,8 @@ msgstr "'by' deve ser uma lista"
 msgid "'FUN' must always return a scalar"
 msgstr "'FUN' deve sempre retornar um escalar"
 
-msgid "cannot change frequency from %d to %d"
+#, fuzzy
+msgid "cannot change frequency from %g to %g"
 msgstr "não é possível mudar a freqüência de %d para %d"
 
 msgid "'x' must be coefficient matrix/data frame"
