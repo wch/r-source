@@ -122,9 +122,10 @@ function(x, ...)
 
 getCallingDLLe <- function(e)
 {
-    if(exists("DLLs", envir = e$".__NAMESPACE__.") &&
-       length(e$".__NAMESPACE__."$DLLs))
-        return(e$".__NAMESPACE__."$DLLs[[1]])
+    if (is.null(env <- e$".__NAMESPACE__.")) env <- baseenv()
+    if(exists("DLLs", envir = env) &&
+       length(env$DLLs))
+        return(env$DLLs[[1]])
     NULL
 }
 
@@ -141,8 +142,9 @@ function(f = sys.function(-1), doStop = FALSE)
     }
 
        # Please feel free to replace with a more encapsulated way to do this.
-    if(exists("DLLs", envir = e$".__NAMESPACE__.") && length(e$".__NAMESPACE__."$DLLs))
-        return(e$".__NAMESPACE__."$DLLs[[1]])
+    if (is.null(env <- e$".__NAMESPACE__.")) env <- baseenv()       
+    if(exists("DLLs", envir = env) && length(env$DLLs))
+        return(env$DLLs[[1]])
     else {
         if(doStop)
             stop("looking for DLL for native routine call, but no DLLs in namespace of call")
