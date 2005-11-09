@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:27\n"
+"POT-Creation-Date: 2005-11-09 12:06\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -132,7 +132,8 @@ msgstr "'by' はリストでなければなりません"
 msgid "'FUN' must always return a scalar"
 msgstr "'FUN' は常にスカラを返さねばなりません"
 
-msgid "cannot change frequency from %d to %d"
+#, fuzzy
+msgid "cannot change frequency from %g to %g"
 msgstr "頻度を%dから%dに変更できません"
 
 msgid "'x' must be coefficient matrix/data frame"
@@ -677,9 +678,6 @@ msgstr "曖昧な距離法です"
 
 msgid "non-square matrix"
 msgstr "正方行列ではありません"
-
-msgid "'shape' must be strictly positive"
-msgstr "'shape' パラメータは正でなければなりません"
 
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] と prob[] は等しい長さのベクトルでなければなりません"
@@ -2096,6 +2094,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
 msgstr[1] "モデル式中にパラメータ(複数) %s がありません"
+
+#~ msgid "'shape' must be strictly positive"
+#~ msgstr "'shape' パラメータは正でなければなりません"
 
 #~ msgid "p-values may be incorrect due to ties"
 #~ msgstr "p 値はタイのために不正確かもしれません"

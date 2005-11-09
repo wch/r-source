@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:27\n"
+"POT-Creation-Date: 2005-11-09 12:06\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -135,7 +135,8 @@ msgstr "'by' 必需是串列"
 msgid "'FUN' must always return a scalar"
 msgstr "'FUN'必需回覆纯量"
 
-msgid "cannot change frequency from %d to %d"
+#, fuzzy
+msgid "cannot change frequency from %g to %g"
 msgstr "无法将頻率从%d改到%d"
 
 msgid "'x' must be coefficient matrix/data frame"
@@ -668,9 +669,6 @@ msgstr "距离方法不明确"
 
 msgid "non-square matrix"
 msgstr "非正方形矩阵"
-
-msgid "'shape' must be strictly positive"
-msgstr "'shape'必需是正数"
 
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[]和prob[]必需是长度相等的向量。"
@@ -2060,6 +2058,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid "'shape' must be strictly positive"
+#~ msgstr "'shape'必需是正数"
 
 #~ msgid "p-values may be incorrect due to ties"
 #~ msgstr "因为有连结p-值算得可能不准"

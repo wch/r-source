@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:27+0000\n"
+"POT-Creation-Date: 2005-11-09 12:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,11 +183,11 @@ msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 
 #: port.c:363
-msgid "`rho' must be an environment"
+msgid "'rho' must be an environment"
 msgstr ""
 
 #: port.c:365 port.c:512
-msgid "`d' must be a nonempty numeric vector"
+msgid "'d' must be a nonempty numeric vector"
 msgstr ""
 
 #: port.c:367
@@ -196,7 +196,7 @@ msgstr ""
 
 #: port.c:370
 #, c-format
-msgid "environment `rho' must contain a numeric vector `.par' of length %d"
+msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
 #: port.c:380

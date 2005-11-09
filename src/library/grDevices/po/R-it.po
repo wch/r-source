@@ -149,13 +149,11 @@ msgstr "argomenti non validi in postscriptFonts (deve essere 'font names')"
 msgid "invalid arguments in postscriptFonts (need named args)"
 msgstr "argomenti non validi in postscriptFonts (necessari argomenti con nome)"
 
-#, fuzzy
 msgid "invalid arguments in pdfFonts (must be font names)"
-msgstr "argomenti non validi in X11Fonts (deve essere 'font names')"
+msgstr "argomenti non validi in pdfFonts (deve essere 'font names')"
 
-#, fuzzy
 msgid "invalid arguments in pdfFonts (need named args)"
-msgstr "argomenti non valid in X11Fonts (necessita argomenti con nome)"
+msgstr "argomenti non valid in pdfFonts (necessita argomenti con nome)"
 
 msgid "unknown font"
 msgstr ""

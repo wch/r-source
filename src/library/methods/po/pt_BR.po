@@ -186,7 +186,7 @@ msgid "error in evaluating a 'primitive' next method"
 msgstr "erro na avaliação de um próximo método 'primitive'"
 
 #: methods_list_dispatch.c:866
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 "'%s' deve ser uma única string (foi especificado um vetor de caracteres de "

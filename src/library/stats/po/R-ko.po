@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:27\n"
+"POT-Creation-Date: 2005-11-09 12:06\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -131,7 +131,8 @@ msgstr "'by'는 list가 아니면 되지 않습니다"
 msgid "'FUN' must always return a scalar"
 msgstr "'FUN'는 항상 sclalar를 돌려주지 않으면 되지 않습니다"
 
-msgid "cannot change frequency from %d to %d"
+#, fuzzy
+msgid "cannot change frequency from %g to %g"
 msgstr "빈도를 %d로부터 %d까지 변경 할수 없습니다"
 
 msgid "'x' must be coefficient matrix/data frame"
@@ -678,9 +679,6 @@ msgstr "애매한 거리 method입니다"
 
 msgid "non-square matrix"
 msgstr "non-square 행렬이 아닙니다"
-
-msgid "'shape' must be strictly positive"
-msgstr "'shape' 파라미터는 positive가 아니면 되지 않습니다"
 
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] 그리고 prob[]는 동일한 길이가 벡터가 아니면 되지 않습니다"
@@ -2124,6 +2122,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "'shape' must be strictly positive"
+#~ msgstr "'shape' 파라미터는 positive가 아니면 되지 않습니다"
 
 #~ msgid "p-values may be incorrect due to ties"
 #~ msgstr "p-values는 ties 때문에 정확한 p값을 계산할수가 없습니다"

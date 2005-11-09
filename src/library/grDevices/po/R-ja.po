@@ -147,13 +147,11 @@ msgstr "postscriptFonts 中の不正な引数です（フォント名が必要�
 msgid "invalid arguments in postscriptFonts (need named args)"
 msgstr "postscriptFonts 中の不正な引数です（名前がついた引数が必要です）"
 
-#, fuzzy
 msgid "invalid arguments in pdfFonts (must be font names)"
-msgstr "X11Fonts 中の不正な引数です（フォント名が必要です）"
+msgstr "pdfFonts 中の不正な引数です（フォント名が必要です）"
 
-#, fuzzy
 msgid "invalid arguments in pdfFonts (need named args)"
-msgstr "X11Fonts 中の不正な引数です（名前がついた引数が必要です）"
+msgstr "pdfFonts 中の不正な引数です（名前がついた引数が必要です）"
 
 msgid "unknown font"
 msgstr ""

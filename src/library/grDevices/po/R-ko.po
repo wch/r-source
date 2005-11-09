@@ -147,13 +147,11 @@ msgstr "postscriptFonts에서 부적절한 인수입니다(폰트명이 필요�
 msgid "invalid arguments in postscriptFonts (need named args)"
 msgstr "postscriptFonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
 
-#, fuzzy
 msgid "invalid arguments in pdfFonts (must be font names)"
-msgstr "X11Fonts에서 부적절한 인수입니다(폰트명이 필요합니다)"
+msgstr "pdfFonts에서 부적절한 인수입니다(폰트명이 필요합니다)"
 
-#, fuzzy
 msgid "invalid arguments in pdfFonts (need named args)"
-msgstr "X11Fonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
+msgstr "pdfFonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
 
 msgid "unknown font"
 msgstr ""
