@@ -360,14 +360,14 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 	rho = R_BaseEnv;
     } else
     if (!isEnvironment(rho))
-	error(_("`rho' must be an environment"));
+	error(_("'rho' must be an environment"));
     if (!isReal(d) || n < 1)
-	error(_("`d' must be a nonempty numeric vector"));
+	error(_("'d' must be a nonempty numeric vector"));
     if (hs != R_NilValue && gr == R_NilValue)
 	error(_("When Hessian defined must also have gradient defined"));
     if (R_NilValue == PROTECT(xpt = findVarInFrame(rho, install(".par"))) ||
 	!isReal(xpt) || LENGTH(xpt) != n)
-	error(_("environment `rho' must contain a numeric vector `.par' of length %d"),
+	error(_("environment 'rho' must contain a numeric vector '.par' of length %d"),
 	      n);
 
     if ((LENGTH(lowerb) == n) && (LENGTH(upperb) == n)) {
@@ -509,7 +509,7 @@ SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
 	*rd = Calloc(nd, double);
 
     if (!isReal(d) || n < 1)
-	error(_("`d' must be a nonempty numeric vector"));
+	error(_("'d' must be a nonempty numeric vector"));
     if(!isNewList(m)) error(_("m must be a list"));
 				/* Initialize parameter vector */
     getPars = PROTECT(lang1(getFunc(m, "getPars", "m")));
