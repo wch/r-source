@@ -65,7 +65,11 @@ polym(\dots, degree = 1), raw = FALSE
   \emph{Statistical Computing} Marcel Dekker.
 }
 
-\seealso{\code{\link{contr.poly}}}
+\seealso{
+  \code{\link{contr.poly}}.
+
+  \code{\link{cars}} for an example of polynomial regression.
+}
 
 \examples{
 (z <- poly(1:10, 3))
