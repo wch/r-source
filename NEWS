@@ -11,8 +11,6 @@
 
 NEW FEATURES
 
-    o   require now takes a lib.loc argument
-
     o	arima.sim() has a new argument 'start.innov' for compatibility
 	with S-PLUS.  (If not supplied, the output is unchanged from
 	previous versions in R.)
@@ -139,6 +137,8 @@ NEW FEATURES
 	as synonyms for 'theta1', 'phi1' and 'sigma1', and the help
 	page has a note for TeX users.
 
+    o   require() now takes a 'lib.loc' argument.
+
     o	poly() has a new argument 'raw', mainly for pedagogical purposes.
 
     o	[dpqr]gamma now returns NaN for an invalid 'shape' parameter
@@ -239,7 +239,7 @@ INSTALLATION CHANGES
 
 C-LEVEL FACILITIES
 
-    o	rgamma in Rmath.h now checks for non-positive arguments.
+    o	qgamma and rgamma in Rmath.h now check for non-positive arguments.
 
 
 BUG FIXES
