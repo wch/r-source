@@ -1166,10 +1166,16 @@ sub check_pkg {
     if($R_check_use_codetools && $opt_install && (-d "R")) {
 	$log->checking("R code for possible problems");
 
-	my $Rcmd = "tools:::.check_code_usage_in_package(package = \"${pkgname}\")\n";
+	my $Rcmd = "options(warn=1)\n";
+	$Rcmd .= "tools:::.check_code_usage_in_package(package = \"${pkgname}\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
                          "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	@out = grep(!/^\>/, @out);
+	## <FIXME>
+	## Temporarily work around R 2.3.0 NULL environment changes.
+        @out = grep(!/^Warning: use of NULL environment is deprecated/,
+		    @out);
+	## </FIXME>
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
