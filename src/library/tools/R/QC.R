@@ -1685,7 +1685,7 @@ function(package, dir, file, lib.loc = NULL,
     bad_exprs <- list()
     FF_funs <- c(".C", ".Fortran", ".Call", ".External",
                  ".Call.graphics", ".External.graphics")
-    find_bad_exprs <- function(e, level) {
+    find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             ## <NOTE>
             ## This picks up all calls, e.g. a$b, and they may convert
@@ -1695,17 +1695,15 @@ function(package, dir, file, lib.loc = NULL,
             ## </NOTE>
             if(as.character(e[[1]])[1] %in% FF_funs) {
                 parg <- if(!is.null(e[["PACKAGE"]])) "OK"
-                ## level 0 will be setMethod calls etc
                 else if(!hasNamespace) {
                     bad_exprs <<- c(bad_exprs, e)
                     "MISSING"
                 } else "MISSING but in a function in a namespace"
-                if(verbose) {
+                if(verbose)
                     cat(e[[1]], "(", deparse(e[[2]]), ", ...): ", parg,
                         "\n", sep = "")
-                }
             }
-            for(i in seq(along = e)) Recall(e[[i]], level+1)
+            for(i in seq(along = e)) Recall(e[[i]])
         }
     }
 
@@ -1757,16 +1755,14 @@ function(package, dir, file, lib.loc = NULL,
                 exprs <- c(exprs, bodies)
             }
         }
-        base_level <- 0
     }
     else {
         exprs <- try(parse(file = file, n = -1))
         if(inherits(exprs, "try-error"))
             stop(gettextf("parse error in file '%s'", file),
                  domain = NA)
-        base_level <- -2
     }
-    for(i in seq(along = exprs)) find_bad_exprs(exprs[[i]], base_level)
+    for(i in seq(along = exprs)) find_bad_exprs(exprs[[i]])
     class(bad_exprs) <- "checkFF"
     if(verbose)
         invisible(bad_exprs)
@@ -1907,7 +1903,7 @@ function(package, dir, lib.loc = NULL)
                 else .BaseNamespaceEnv
             if(!exists(".__S3MethodsTable__.", envir = defenv,
                        inherits = FALSE)) {
-                ## Happens e.g. if for some reason, we get "plot" as 
+                ## Happens e.g. if for some reason, we get "plot" as
                 ## standardGeneric for "plot" defined from package
                 ## "graphics" with its own environment which does not
                 ## contain an S3 methods table ...
@@ -2053,7 +2049,7 @@ function(package, dir, lib.loc = NULL)
             ## Find registered methods for generic g.
             methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
         }
-        
+
         for(m in methods)
             ## both all() and all.equal() are generic.
             bad_methods <- if(g == "all") {
@@ -3125,7 +3121,7 @@ function(x, ...)
         writeLines(strwrap(x, indent = 0, exdent = 2))
     invisible(x)
 }
-    
+
 ### * as.alist.call
 
 as.alist.call <-
