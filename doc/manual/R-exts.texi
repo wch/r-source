@@ -1091,7 +1091,14 @@ The R files are checked for syntax errors.
 The R files are checked for correct calls to @code{library.dynam} (with
 no extension).  In addition, it is checked whether methods have all
 arguments of the corresponding generic, and whether the final argument
-of replacement functions is called @samp{value}.
+of replacement functions is called @samp{value}.  All foreign function
+calls (@code{.C}, @code{.Fortran}, @code{.Call} and @code{.External}
+calls) are tested to see if they have a @code{PACKAGE} argument, and if
+not, whether the appropriate DLL might be deduced from the namespace of
+the package.  Any other calls are reported.  (The check is generous, and
+users may want to supplement this by examining the output of
+@code{tools::checkFF("mypkg", verbose=TRUE)}, especially if the
+intention were to always use a @code{PACKAGE} argument)
 
 @item
 The Rd files are checked for correct syntax and meta data, including the
@@ -3424,9 +3431,9 @@ specific shared object (or use @code{"base"} for code compiled into
 @R{}).  Its use is highly desirable, as there is no way to avoid two
 package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
-the call is from a function is defined in a package with a namespace,
-the shared object loaded by the first (if any) @code{useDynLib}
-directive will be used.)
+the call is from the body of a function defined in a package with a
+namespace, the shared object loaded by the first (if any)
+@code{useDynLib} directive will be used.)
 
 For @code{.C} only you can specify an @code{ENCODING} argument: this
 requests that (unless @code{DUP = FALSE}) character vectors be
