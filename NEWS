@@ -151,6 +151,11 @@ NEW FEATURES
 
     o	read.table() gains a 'flush' argument passed to scan().
 
+    o	fisher.test() now uses computed via hypergeometric distributions
+	for all 2 by 2 tables.  This might the slightly slower for a
+	few cases, but works much better for tables with some large
+	counts.
+
 
 DEPRECATED & DEFUNCT
 
