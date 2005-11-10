@@ -64,13 +64,12 @@ static menubar RMenuBar;
 static popup RConsolePopup;
 static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mpastecmds, mcopy, mcopypaste, mlazy, mconfig,
-    mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
-    mmanext, mmanlang, mmanadmin, mman0, mapropos, mhelpstart, mhelpsearch, 
-    msearchRsite, mFAQ, mrwFAQ, mpkgl, mpkgm, mpkgi, mpkgil, mpkgu,
-    mde, mCRAN, mrepos;
+    mls, mrm, msearch, mde;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext, lmanadmin;
-static menu m, mman;
+static menu m;
 static char cmd[1024];
+static HelpMenuItems hmenu;
+static PkgMenuItems pmenu;
 
 #include "editor.h"
 
@@ -559,6 +558,42 @@ static void menuCRAN(control m)
 
 
 /* some menu commands can be issued only if R is waiting for input */
+void helpmenuact(HelpMenuItems hmenu)
+{
+    if (ConsoleAcceptCmd) {
+	enable(hmenu->mhelp);
+	enable(hmenu->mhelpsearch);
+	enable(hmenu->msearchRsite);
+	enable(hmenu->mapropos);    
+	enable(hmenu->mCRAN);
+    } else {
+	disable(hmenu->mhelp);
+	disable(hmenu->mhelpsearch);
+	disable(hmenu->msearchRsite);
+	disable(hmenu->mapropos);    
+        disable(hmenu->mCRAN);
+    }
+}
+
+void pkgmenuact(PkgMenuItems pmenu)
+{
+    if (ConsoleAcceptCmd) {
+	enable(pmenu->mpkgl);
+	enable(pmenu->mpkgm);
+	enable(pmenu->mpkgi);
+	enable(pmenu->mpkgil);
+	enable(pmenu->mpkgu);
+	enable(pmenu->mrepos);
+    } else {
+	disable(pmenu->mpkgl);
+	disable(pmenu->mpkgm);
+	disable(pmenu->mpkgi);
+	disable(pmenu->mpkgil);
+	disable(pmenu->mpkgu);
+	disable(pmenu->mrepos);
+    }
+}
+
 static void menuact(control m)
 {
     if (consolegetlazy(RConsole)) check(mlazy); else uncheck(mlazy);
@@ -573,18 +608,7 @@ static void menuact(control m)
 	enable(mls);
 	enable(mrm);
 	enable(msearch);
-	enable(mhelp);
-	enable(mhelpsearch);
-	enable(msearchRsite);
-	enable(mapropos);
-	enable(mpkgl);
-	enable(mpkgm);
-	enable(mpkgi);
-	enable(mpkgil);
-	enable(mpkgu);
-	enable(mde);
-	enable(mCRAN);
-	enable(mrepos);
+
     } else {
 	disable(msource);
 	disable(mload);
@@ -592,18 +616,6 @@ static void menuact(control m)
 	disable(mls);
 	disable(mrm);
 	disable(msearch);
-	disable(mhelp);
-	disable(mhelpsearch);
-	disable(msearchRsite);
-	disable(mapropos);
-	disable(mpkgl);
-	disable(mpkgm);
-	disable(mpkgi);
-	disable(mpkgil);
-	disable(mpkgu);
-	disable(mde);
-	disable(mCRAN);
-	disable(mrepos);
     }
 
     if (consolecancopy(RConsole)) {
@@ -622,6 +634,9 @@ static void menuact(control m)
 	disable(mpaste);
 	disable(mpastecmds);
     }
+    
+    helpmenuact(hmenu);
+    pkgmenuact(pmenu);
 
     draw(RMenuBar);
 }
@@ -925,21 +940,21 @@ static void popupact(control m)
 
 /* Package management menu is common to all R windows */
 
-int RguiPackageMenu()
+int RguiPackageMenu(PkgMenuItems pmenu)
 {
     MCHECK(newmenu(G_("Packages")));
-    MCHECK(mpkgl = newmenuitem(G_("Load package..."), 0, menupkgload));
+    MCHECK(pmenu->mpkgl = newmenuitem(G_("Load package..."), 0, menupkgload));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mpkgm = newmenuitem(G_("Set CRAN mirror..."), 0,
+    MCHECK(pmenu->mpkgm = newmenuitem(G_("Set CRAN mirror..."), 0,
 			       menupkgcranmirror));
-    MCHECK(mrepos = newmenuitem(G_("Select repositories..."), 0,
+    MCHECK(pmenu->mrepos = newmenuitem(G_("Select repositories..."), 0,
 				menupkgrepos));
-    MCHECK(mpkgi = newmenuitem(G_("Install package(s)..."), 0,
+    MCHECK(pmenu->mpkgi = newmenuitem(G_("Install package(s)..."), 0,
 			       menupkginstallpkgs));
-    MCHECK(mpkgu = newmenuitem(G_("Update packages..."), 0,
+    MCHECK(pmenu->mpkgu = newmenuitem(G_("Update packages..."), 0,
 			       menupkgupdate));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mpkgil = newmenuitem(G_("Install package(s) from local zip files..."),
+    MCHECK(pmenu->mpkgil = newmenuitem(G_("Install package(s) from local zip files..."),
 				0, menupkginstalllocal));
 /*    MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgb = newmenuitem(G_("Install package(s) from Bioconductor..."),
@@ -949,69 +964,73 @@ int RguiPackageMenu()
     return 0;
 }
 
-/* Help functions common to all R windows. 
-   These should be appended to each context-specific help menu */
-
-int RguiCommonHelp(menu m)
+static void CheckForManuals()
 {
-    addto(m);
-
-    MCHECK(mFAQ = newmenuitem(G_("FAQ on R"), 0, menuFAQ));
-    if (!check_doc_file("doc\\manual\\R-FAQ.html")) disable(mFAQ);
-    MCHECK(mrwFAQ = newmenuitem(G_("FAQ on R for &Windows"), 0, menurwFAQ));
-    if (!check_doc_file("doc\\html\\rw-FAQ.html")) disable(mrwFAQ);
-
     lmanintro = check_doc_file("doc\\manual\\R-intro.pdf");
     lmanref = check_doc_file("doc\\manual\\refman.pdf");
     lmandata = check_doc_file("doc\\manual\\R-data.pdf");
     lmanlang = check_doc_file("doc\\manual\\R-lang.pdf");
     lmanext = check_doc_file("doc\\manual\\R-exts.pdf");
     lmanadmin = check_doc_file("doc\\manual\\R-admin.pdf");
+}
+
+/* Help functions common to all R windows. 
+   These should be appended to each context-specific help menu */
+
+int RguiCommonHelp(menu m, HelpMenuItems hmenu)
+{
+    addto(m);
+
+    MCHECK(hmenu->mFAQ = newmenuitem(G_("FAQ on R"), 0, menuFAQ));
+    if (!check_doc_file("doc\\manual\\R-FAQ.html")) disable(hmenu->mFAQ);
+    MCHECK(hmenu->mrwFAQ = newmenuitem(G_("FAQ on R for &Windows"), 0, menurwFAQ));
+    if (!check_doc_file("doc\\html\\rw-FAQ.html")) disable(hmenu->mrwFAQ);
+
+
     if (!lmanintro && !lmanref && !lmandata && !lmanlang && !lmanext 
        && !lmanadmin) {
-	MCHECK(mman0 = newmenuitem(G_("Manuals (in PDF)"), 0, NULL));
-	disable(mman0);
+	MCHECK(hmenu->mman0 = newmenuitem(G_("Manuals (in PDF)"), 0, NULL));
+	disable(hmenu->mman0);
     } else {
-	MCHECK(mman = newsubmenu(m, G_("Manuals (in PDF)")));
-	MCHECK(mmanintro = newmenuitem("An &Introduction to R", 0, 
+	MCHECK(hmenu->mman = newsubmenu(m, G_("Manuals (in PDF)")));
+	MCHECK(hmenu->mmanintro = newmenuitem("An &Introduction to R", 0, 
 				       menumainman));
-	if (!lmanintro) disable(mmanintro);
-	MCHECK(mmanref = newmenuitem("R &Reference Manual", 0, 
+	if (!lmanintro) disable(hmenu->mmanintro);
+	MCHECK(hmenu->mmanref = newmenuitem("R &Reference Manual", 0, 
 				     menumainref));
-	if (!lmanref) disable(mmanref);
-	MCHECK(mmandata = newmenuitem("R Data Import/Export", 0, 
+	if (!lmanref) disable(hmenu->mmanref);
+	MCHECK(hmenu->mmandata = newmenuitem("R Data Import/Export", 0, 
 				      menumaindata));
-	if (!lmandata) disable(mmandata);
-	MCHECK(mmanlang = newmenuitem("R Language Definition", 0, 
+	if (!lmandata) disable(hmenu->mmandata);
+	MCHECK(hmenu->mmanlang = newmenuitem("R Language Definition", 0, 
 				      menumainlang));
-	if (!lmanlang) disable(mmanlang);
-	MCHECK(mmanext = newmenuitem("Writing R Extensions", 0, 
+	if (!lmanlang) disable(hmenu->mmanlang);
+	MCHECK(hmenu->mmanext = newmenuitem("Writing R Extensions", 0, 
 				     menumainext));
-	if (!lmanext) disable(mmanext);
-	MCHECK(mmanadmin = newmenuitem("R Installation and Administration", 0, 
+	if (!lmanext) disable(hmenu->mmanext);
+	MCHECK(hmenu->mmanadmin = newmenuitem("R Installation and Administration", 0, 
 				       menumainadmin));	
-	if (!lmanadmin) disable(mmanadmin);
+	if (!lmanadmin) disable(hmenu->mmanadmin);
     }
     
 
     addto(m);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mhelp = newmenuitem(G_("R functions (text)..."), 0, menuhelp));
-    MCHECK(mhelpstart = newmenuitem(G_("Html help"), 0, menuhelpstart));
-    if (!check_doc_file("doc\\html\\rwin.html")) disable(mhelpstart);
-    MCHECK(mhelpsearch = newmenuitem(G_("Search help..."), 0, menuhelpsearch));
-    MCHECK(msearchRsite = newmenuitem(G_("search.r-project.org ..."), 0, 
+    MCHECK(hmenu->mhelp = newmenuitem(G_("R functions (text)..."), 0, menuhelp));
+    MCHECK(hmenu->mhelpstart = newmenuitem(G_("Html help"), 0, menuhelpstart));
+    if (!check_doc_file("doc\\html\\rwin.html")) disable(hmenu->mhelpstart);
+    MCHECK(hmenu->mhelpsearch = newmenuitem(G_("Search help..."), 0, menuhelpsearch));
+    MCHECK(hmenu->msearchRsite = newmenuitem(G_("search.r-project.org ..."), 0, 
 				      menusearchRsite));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mapropos = newmenuitem(G_("Apropos..."), 0, menuapropos));
+    MCHECK(hmenu->mapropos = newmenuitem(G_("Apropos..."), 0, menuapropos));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem(G_("R Project home page"), 0, menuRhome));
-    MCHECK(mCRAN = newmenuitem(G_("CRAN home page"), 0, menuCRAN));
+    MCHECK(hmenu->mCRAN = newmenuitem(G_("CRAN home page"), 0, menuCRAN));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem(G_("About"), 0, menuabout));
     return 0;
 }
-
 
 int setupui()
 {
@@ -1135,14 +1154,17 @@ int setupui()
     MCHECK(mrm = newmenuitem(G_("Remove all objects"), 0, menurm));
     MCHECK(msearch = newmenuitem(G_("List &search path"), 0, menusearch));
 
-    RguiPackageMenu();
+    pmenu = (PkgMenuItems) malloc(sizeof(struct structPkgMenuItems));
+    RguiPackageMenu(pmenu);
 #ifdef USE_MDI
     newmdimenu();
 #endif
     MCHECK(m = newmenu(G_("Help")));
     MCHECK(newmenuitem(G_("Console"), 0, menuconsolehelp));
     MCHECK(newmenuitem("-", 0, NULL));
-    RguiCommonHelp(m);
+    CheckForManuals();
+    hmenu = (HelpMenuItems) malloc(sizeof(struct structHelpMenuItems));
+    RguiCommonHelp(m, hmenu);
     consolesetbrk(RConsole, menukill, ESC, 0);
     gl_hist_init(R_HistorySize, 0);
     if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);
