@@ -62,7 +62,10 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
         ## Note that it is more efficient to compute p-values in C for
         ## the two-sided 2-by-2 case with odds ratio 1
         if(hybrid) {
-            warning("p-values may be incorrect")
+            if(nr != 2 || nc != 2)
+                warning("p-values may be incorrect")
+            else
+                warning("hybrid is ignored for a 2 x 2 table")
             PVAL <- .C("fexact",
                        nr,
                        nc,

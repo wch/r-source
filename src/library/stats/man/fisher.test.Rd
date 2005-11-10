@@ -15,12 +15,16 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     or a factor object.}
   \item{y}{a factor object; ignored if \code{x} is a matrix.}
   \item{workspace}{an integer specifying the size of the workspace
-    used in the network algorithm.}
-  \item{hybrid}{a logical indicating whether the exact probabilities
+    used in the network algorithm.  In units of 4 bytes.}
+  \item{hybrid}{a logical. Only used for larger than 2 by 2 tables, in
+    which cases it indicated whether the exact probabilities
     (default) or a hybrid approximation thereof should be computed.
-    In the hybrid case, asymptotic chi-squared probabilities are only
-    used provided that the \dQuote{Cochran} conditions are satisfied.}
-  \item{control}{a list with named components for low level algorithm control.}
+    See Details.}
+  \item{control}{a list with named components for low level algorithm
+    control.  At present the only one used is \code{"mult"}, a positive
+    integer \eqn{>= 2} with default 30.  This says how many times as
+    much space should be allocated to paths as to keys: see file
+    \file{fexact.c} in the sources of this package.}
   \item{or}{the hypothesized odds ratio.  Only used in the 2 by 2 case.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.
@@ -55,23 +59,37 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   length.  Incomplete cases are removed, the vectors are coerced into
   factor objects, and the contingency table is computed from these.
 
-  In the one-sided 2 by 2 cases, p-values are obtained directly using
-  the hypergeometric distribution.  Otherwise, computations are based on
-  a C version of the FORTRAN subroutine FEXACT which implements the
-  network developed by Mehta and Patel (1986) and improved by Clarkson,
-  Fan & Joe (1993).  The FORTRAN code can be obtained from
-  \url{http://www.netlib.org/toms/643}.  Note this fails (with an error
-  message) when the entries of the table are too large.
+  In the one-sided 2 by 2 cases (and where \code{or} is specified),
+  p-values are obtained directly using the hypergeometric distribution.
+  Otherwise, computations are based on a C version of the FORTRAN
+  subroutine FEXACT which implements the network developed by Mehta and
+  Patel (1986) and improved by Clarkson, Fan & Joe (1993).  The FORTRAN
+  code can be obtained from \url{http://www.netlib.org/toms/643}.  Note
+  this fails (with an error message) when the entries of the table are
+  too large.  (It transposes the table if necessary so it has no more
+  rows than columns.  One constraint is that the product of the row
+  marginals be less than \eqn{2^{31} - 1}{2^31 - 1}.)
 
   In the 2 by 2 case, the null of conditional independence is equivalent
   to the hypothesis that the odds ratio equals one.  Exact inference can
   be based on observing that in general, given all marginal totals
   fixed, the first element of the contingency table has a non-central
   hypergeometric distribution with non-centrality parameter given by the
-  odds ratio (Fisher, 1935).
+  odds ratio (Fisher, 1935).  The alternative for a one-sided test is
+  based on the odds ratio, so \code{alternative = "greater"} is a test
+  of the odd-ratio being bigger than \code{or}.  Two-sided tests are based on
+  the probabilities of the finite set of values for the first element
+  (or equivalently of observed odds ratios), and take as \sQuote{more
+    extreme} all values with probabilities less than or equal to that of
+  the observed value, the p-value being the sum of such probabilities.
+
+  For larger tables and \code{hybrid = TRUE}, asymptotic chi-squared
+  probabilities are only used if the \dQuote{Cochran conditions} are
+  satisfied, that is if no cell has count zero, and more than 80\% of
+  the cells have counts at least 5.
 }
 \references{
-  Alan Agresti (1990).
+  Agresti, A. (1990).
   \emph{Categorical data analysis}.
   New York: Wiley.
   Pages 59--66.
@@ -81,17 +99,20 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \emph{Journal of the Royal Statistical Society Series A} \bold{98},
   39--54.
 
+  Fisher, R. A. (1950).
+  \emph{Statistical Methods for Research Workers.}  Oliver & Boyd.
+
   Fisher, R. A. (1962).
   Confidence limits for a cross-product ratio.
   \emph{Australian Journal of Statistics} \bold{4}, 41.
 
-  Cyrus R. Mehta & Nitin R. Patel (1986).
+  Cyrus R. Mehta and Nitin R. Patel (1986).
   Algorithm 643. FEXACT: A Fortran subroutine for Fisher's exact test
   on unordered \eqn{r*c} contingency tables.
   \emph{ACM Transactions on Mathematical Software}, \bold{12},
   154--161.
 
-  Douglas B. Clarkson, Yuan-an Fan & Harry Joe (1993).
+  Douglas B. Clarkson, Yuan-an Fan and Harry Joe (1993).
   A Remark on Algorithm 643: FEXACT: An Algorithm for Performing
   Fisher's Exact Test in \eqn{r \times c}{r x c} Contingency Tables.
   \emph{ACM Transactions on Mathematical Software}, \bold{19},
@@ -116,7 +137,7 @@ matrix(c(3, 1, 1, 3),
 fisher.test(TeaTasting, alternative = "greater")
 ## => p=0.2429, association could not be established
 
-## Fisher (1962), Convictions of like-sex twins in criminals
+## Fisher (1950, 1962), Convictions of like-sex twins in criminals
 Convictions <-
 matrix(c(2, 10, 15, 3),
        nr = 2,
