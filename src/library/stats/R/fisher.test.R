@@ -65,7 +65,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             if(nr != 2 || nc != 2)
                 warning("p-values may be incorrect")
             else
-                warning("hybrid is ignored for a 2 x 2 table")
+                warning("'hybrid' is ignored for a 2 x 2 table")
             PVAL <- .C("fexact",
                        nr,
                        nc,
