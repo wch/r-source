@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-11-03
+@set FAQ_DATE @value{FAQ_YEAR}-11-10
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2292,6 +2292,8 @@ in competing risks.
 @item cobs
 Constrained B-splines: qualitatively constrained (regression) smoothing
 via linear programming.
+@item cocorresp
+Co-correspondence analysis ordination methods for community ecology.
 @item coda
 Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
