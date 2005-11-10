@@ -635,8 +635,14 @@ postscriptFonts(# Default Serif font is Times
                 URWTimes=Type1Font("URWTimes",
                   c("n021003l.afm", "n021004l.afm",
                     "n021023l.afm", "n021024l.afm",
-                    "s050000l.afm")),
-                # Computer Modern as recoded by Brian D'Urso
+                    "s050000l.afm"))
+                )
+
+## All of the above Type1 fonts are the same for PostScript and PDF
+do.call("pdfFonts", postscriptFonts())
+
+## add ComputerModern to postscript only
+postscriptFonts(# Computer Modern as recoded by Brian D'Urso
                 ComputerModern=Type1Font("ComputerModern",
                   c("CM_regular_10.afm", "CM_boldx_10.afm",
                     "CM_italic_10.afm", "CM_boldx_italic_10.afm",
@@ -645,10 +651,8 @@ postscriptFonts(# Default Serif font is Times
                   c("CM_regular_10.afm", "CM_boldx_10.afm", "cmti10.afm",
                     "cmbxti10.afm", "CM_symbol_10.afm"),
                  encoding = "TeXtext.enc")
-               )
+                )
 
-# All of the Type1 fonts are the same for PostScript and PDF
-do.call("pdfFonts", postscriptFonts())
 
 # CJK fonts
 postscriptFonts(Japan1=CIDFont("HeiseiKakuGo-W5",

@@ -267,7 +267,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   fonts.
 
   There are supplied families \code{"ComputerModern"} and
-  \code{"ComputerModernItalic"} which use this encoding. They are
+  \code{"ComputerModernItalic"} which use this encoding, and which are
+  only supported for \code{postscript} (and not \code{pdf}).  They are
   intended to use with the Type 1 versions of the TeX CM fonts.  It will
   normally be possible to include such output in TeX or LaTeX provided
   it is processed with \code{dvips -Ppfb -j0} or the equivalent on your
@@ -276,9 +277,11 @@ ps.options(paper, horizontal, width, height, family, encoding,
   slanted fonts (\code{cmsl10} and \code{cmbxsl10}).  To use text italic
   fonts instead, set \code{family = "ComputerModernItalic"}.
 
-  These families use the TeX symbol fonts for a comprehensive but
-  incomplete coverage of the glyphs covered by the Adobe symbol font in
-  other families.
+  These families use the TeX math italic and  symbol fonts for a
+  comprehensive but incomplete coverage of the glyphs covered by the
+  Adobe symbol font in other families.  This is achieved by
+  special-casing the postscript code generated from the supplied
+  \file{CM_symbol_10.afm}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
