@@ -791,11 +791,11 @@ int Rgui_Edit(char *filename, char *title, int stealconsole)
 	editor_set_title(c, G_("Untitled"));
     }
     show(c);
-    if (stealconsole) {
-	p = getdata(getdata(c));
-	p->stealconsole = TRUE;
-	fix_editor_up = TRUE;
-	eventloop(c);
-    }
+    
+    p = getdata(getdata(c));
+    p->stealconsole = stealconsole;
+    fix_editor_up = stealconsole;
+    if (stealconsole) eventloop(c);
+
     return 0;
 }
