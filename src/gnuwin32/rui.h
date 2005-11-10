@@ -46,6 +46,20 @@ typedef struct {
   Uitem *mItems;
 } menuItems;
 
+struct structHelpMenuItems {
+  menuitem mhelp, mmanintro, mmanref, mmandata,
+    mmanext, mmanlang, mmanadmin, mman0, mapropos, mhelpstart, mhelpsearch, 
+    msearchRsite, mFAQ, mrwFAQ, mCRAN;
+  menu mman;
+};
+typedef struct structHelpMenuItems *HelpMenuItems;
+
+struct structPkgMenuItems {
+  menuitem mpkgl, mpkgm, mpkgi, mpkgil, mpkgu,
+    mrepos;
+};
+typedef struct structPkgMenuItems *PkgMenuItems;
+
 #include <R_ext/Error.h> /* for R_ShowMessage */
 int check_doc_file(char *);
 void internal_shellexec(char *);
@@ -78,5 +92,7 @@ int RgetMDIheight();
 void menuconfig();
 void menuclear(control m);
 int RguiPackageMenu();
+void pkgmenuact(PkgMenuItems pmenu);
 int RguiCommonHelp();
+void helpmenuact(HelpMenuItems hmenu);
 void closeconsole(control m);
