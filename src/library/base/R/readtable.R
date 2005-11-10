@@ -25,7 +25,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
          nrows = -1, skip = 0,
          check.names = TRUE, fill = !blank.lines.skip,
          strip.white = FALSE, blank.lines.skip = TRUE,
-         comment.char = "#", allowEscapes = FALSE)
+         comment.char = "#", allowEscapes = FALSE, flush = FALSE)
 {
     if(is.character(file)) {
         file <- file(file, "r")
@@ -140,7 +140,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 		 na.strings = na.strings, quiet = TRUE, fill = fill,
                  strip.white = strip.white,
                  blank.lines.skip = blank.lines.skip, multi.line = FALSE,
-                 comment.char = comment.char, allowEscapes = allowEscapes)
+                 comment.char = comment.char, allowEscapes = allowEscapes,
+                 flush = flush)
 
     nlines <- length(data[[ which(keep)[1] ]])
 

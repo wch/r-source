@@ -12,10 +12,10 @@
 \usage{
 read.table(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
            row.names, col.names, as.is = FALSE, na.strings = "NA",
-           colClasses = NA, nrows = -1,
-           skip = 0, check.names = TRUE, fill = !blank.lines.skip,
-           strip.white = FALSE, blank.lines.skip = TRUE,
-           comment.char = "#", allowEscapes = FALSE)
+           colClasses = NA, nrows = -1, skip = 0, check.names = TRUE,
+           fill = !blank.lines.skip, strip.white = FALSE,
+           blank.lines.skip = TRUE, comment.char = "#",
+           allowEscapes = FALSE, flush = FALSE)
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, \dots)
@@ -152,6 +152,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     \code{\n} be processed or read verbatim (the default)?   Note that if
     not within quotes these could be interpreted as a delimiter (but not
     as a comment character).  For more details see \code{\link{scan}}.}
+
+  \item{flush}{logical: if \code{TRUE}, \code{scan} will flush to the
+    end of the line after reading the last of the fields requested.
+    This allows putting comments after the last field.}
 
   \item{\dots}{Further arguments to \code{read.table}.}
 }

@@ -149,6 +149,8 @@ NEW FEATURES
 	supporting the POSIX call gettimeofday, and to clock-tick
 	accuracy on Windows.
 
+    o	read.table() gains a 'flush' argument passed to scan().
+
 
 DEPRECATED & DEFUNCT
 
