@@ -592,8 +592,7 @@ plot(1 : 12, log = "y")
 par("ylog") # TRUE
 
 plot(1:2, xaxs = "i") # 'inner axis' w/o extra space
-stopifnot(par("xaxp")[1:2] == 1:2 &&
-          par("usr") [1:2] == 1:2)
+par(c("usr", "xaxp"))
 
 ( nr.prof <-
   c(prof.pilots=16,lawyers=11,farmers=10,salesmen=9,physicians=9,
