@@ -322,7 +322,6 @@ lines(density(eruptions, bw=0.1))
 rug(eruptions) # show the actual data points
 ## dev.off() <IMG/>
 
-library(stepfun)
 plot(ecdf(eruptions), do.points=FALSE, verticals=TRUE)
 
 ## <IMG> postscript("images/ecdf.eps", ...)
@@ -341,7 +340,6 @@ qqnorm(x); qqline(x)
 qqplot(qt(ppoints(250), df=5), x, xlab="Q-Q plot for t dsn")
 qqline(x)
 
-library(ctest)
 shapiro.test(long)
 
 ks.test(long, "pnorm", mean=mean(long), sd=sqrt(var(long)))
@@ -371,7 +369,6 @@ t.test(A, B, var.equal=TRUE)
 
 wilcox.test(A, B)
 
-library(stepfun)
 plot(ecdf(A), do.points=FALSE, verticals=TRUE, xlim=range(A, B))
 plot(ecdf(B), do.points=FALSE, verticals=TRUE, add=TRUE)
 
@@ -426,7 +423,7 @@ rm(fm, fm1, lrf, x, dummy)
 
 ## This is added in order to work have the file >> MM: FIX *.texi!
 oldwd <- getwd()
-setwd(system.file("data"))
+setwd(system.file("data", package="datasets"))
 
 file.show("morley.tab")
 mm <- read.table("morley.tab")
