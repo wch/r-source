@@ -5031,7 +5031,7 @@ static void XFig_Text(double x, double y, char *str,
 		else str1 = buf;
 	    }
 #else
-	    warning(_("re-encoding is not possible on this system"))
+	    warning(_("re-encoding is not possible on this system"));
 #endif
 	}
 	XF_WriteString(fp, str1);
