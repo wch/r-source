@@ -8,12 +8,15 @@ prcomp.default <-
     cen <- attr(x, "scaled:center")
     sc <- attr(x, "scaled:scale")
     s <- svd(x, nu = 0)
-    if (!is.null(tol)) {
-        rank <- sum(s$d > (s$d[1]*tol))
-        if (rank < ncol(x))
-            s$v <- s$v[, 1:rank, drop = FALSE]
-    }
     s$d <- s$d / sqrt(max(1, nrow(x) - 1))
+    if (!is.null(tol)) {
+        ## we get rank at least one even for a 0 matrix.
+        rank <- sum(s$d > (s$d[1]*tol))
+        if (rank < ncol(x)) {
+            s$v <- s$v[, 1:rank, drop = FALSE]
+            s$d <- s$d[1:rank]
+        }
+    }
     dimnames(s$v) <-
         list(colnames(x), paste("PC", seq(len = ncol(s$v)), sep = ""))
     r <- list(sdev = s$d, rotation = s$v,
