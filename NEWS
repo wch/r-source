@@ -420,6 +420,11 @@ BUG FIXES
     o	prcomp(tol=) was not dropping the sdev's corresponding to
 	dropped columns.
 
+    o	Subassignment of a vector which increased the length of the
+	vector _and_ had the wrong length of replacement could
+	occasionally segfault.  (This has been there since at least
+	mid 1997.)
+
 
 
 		CHANGES IN R VERSION 2.2.0
