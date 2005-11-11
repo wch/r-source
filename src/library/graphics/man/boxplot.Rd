@@ -110,8 +110,8 @@ boxplot(x, \dots)
   \item{out}{the values of any data points which lie beyond the
     extremes of the whiskers.}
   \item{group}{a vector of the same length as \code{out} whose elements
-    indicate which group the outlier belongs to}
-  \item{names}{a vector of names for the groups}
+    indicate to which group the outlier belongs.}
+  \item{names}{a vector of names for the groups.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
