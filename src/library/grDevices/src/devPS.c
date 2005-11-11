@@ -5010,8 +5010,8 @@ static void XFig_Text(double x, double y, char *str,
 	    /* reencode the text */
 	    void *cd;
 	    char  *i_buf, *o_buf;
-	    int i_len,  o_len, buflen = 6*strlen(str);
-	    size_t status;
+	    size_t i_len, o_len, status;
+	    int buflen = 6*strlen(str);
 
 	    cd = (void*)Riconv_open(pd->encoding, "");
 	    if((void*)-1 == cd) {
@@ -5020,11 +5020,10 @@ static void XFig_Text(double x, double y, char *str,
 		buf = (char *) alloca(buflen);
 		R_CheckStack();
 		i_buf = str;
-		o_buf = (char *)buf;
+		o_buf = buf;
 		i_len = strlen(str);
 		o_len = buflen;
-		status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
-				(char **)&o_buf, (size_t *)&o_len);
+		status = Riconv(cd, &i_buf, &i_len, &o_buf, &o_len);
 		Riconv_close(cd);
 		if((size_t)-1==status)
 		    warning(_("failed in text conversion to encoding '%s'"),

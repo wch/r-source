@@ -281,7 +281,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   comprehensive but incomplete coverage of the glyphs covered by the
   Adobe symbol font in other families.  This is achieved by
   special-casing the postscript code generated from the supplied
-  \file{CM_symbol_10.afm}.
+  \file{CM\_symbol\_10.afm}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
