@@ -424,7 +424,7 @@ rm(fm, fm1, lrf, x, dummy)
 
 
 filepath <- system.file("data", "morley.tab" , package="datasets")
-file.show(filepath)
+if(interactive()) file.show(filepath)
 mm <- read.table(filepath)
 mm
 mm$Expt <- factor(mm$Expt)

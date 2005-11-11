@@ -80,7 +80,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout
 
 all-basic-tests = Specific Reg Internet
-all-devel-tests = IsAs Lapack Nafns Postscript Random Demo Segfault \
+all-devel-tests = Docs IsAs Lapack Nafns Postscript Random Demo Segfault \
    Standalone Packages
 
 all check: test-all-basics
@@ -148,6 +148,11 @@ test-Packages:
 	  $(RHOME)/bin/R CMD check ../src/library/$${p} || echo; \
 	done
 
+test-Docs:
+	@echo "running tests of documentation examples"
+	@cp ../doc/manual/R-intro.R .
+	@$(MAKE) -f Makefile.win R-intro.Rout RVAL_IF_DIFF=1
+
 test-Demo:
 	@echo "running demos from base and stats"
 	@$(MAKE) -f Makefile.win $(test-out-demo) RVAL_IF_DIFF=0
@@ -206,6 +211,6 @@ test-Ts:
 
 clean:
 	@rm -f *.Rout *.Rout.fail internet.Rout2 Rplots.ps reg-plot.ps \
-	  reg-tests-?.ps $(test-src-auto)
+	  reg-tests-?.ps $(test-src-auto) R-intro.R
 	@rm -rf *.Rcheck
 	@rm -f FALSE* .R .tex mirrors.html
