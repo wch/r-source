@@ -42,6 +42,7 @@ s4 <- seq(length=51, from=-5, by=.2)
 all.equal(s3,s4)
 
 s5 <- rep(x, times=5)
+s6 <- rep(x, each=5)
 
 temp <- x > 13
 
@@ -159,6 +160,7 @@ all(N == table(blocks,varieties))
 
 h <- 1:17
 Z <- array(h, dim=c(3,4,2))
+dim(Z) <- c(3,4,2)
 Z <- array(0, c(3,4,2))
 
 ## So if @code{A}, @code{B} and @code{C} are all similar arrays
@@ -305,7 +307,6 @@ str(accountants)
 ## upper 1% point for an F(2, 7)  distribution
 qf(0.99, 2, 7)
 
-data(faithful)
 attach(faithful)
 summary(eruptions)
 
@@ -322,7 +323,6 @@ lines(density(eruptions, bw=0.1))
 rug(eruptions) # show the actual data points
 ## dev.off() <IMG/>
 
-library(stepfun)
 plot(ecdf(eruptions), do.points=FALSE, verticals=TRUE)
 
 ## <IMG> postscript("images/ecdf.eps", ...)
@@ -332,19 +332,18 @@ x <- seq(3, 5.4, 0.01)
 lines(x, pnorm(x, mean=mean(long), sd=sqrt(var(long))), lty=3)
 ## dev.off() <IMG/>
 
-par(pty="s")
+par(pty="s")       # arrange for a square figure region
 qqnorm(long); qqline(long)
 
 x <- rt(250, df = 5)
 qqnorm(x); qqline(x)
 
-qqplot(qt(ppoints(250), df=5), x, xlab="Q-Q plot for t dsn")
+qqplot(qt(ppoints(250), df = 5), x, xlab = "Q-Q plot for t dsn")
 qqline(x)
 
-library(ctest)
 shapiro.test(long)
 
-ks.test(long, "pnorm", mean=mean(long), sd=sqrt(var(long)))
+ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long)))
 
 ##@section One- and two-sample tests
 
@@ -371,7 +370,6 @@ t.test(A, B, var.equal=TRUE)
 
 wilcox.test(A, B)
 
-library(stepfun)
 plot(ecdf(A), do.points=FALSE, verticals=TRUE, xlim=range(A, B))
 plot(ecdf(B), do.points=FALSE, verticals=TRUE, add=TRUE)
 
@@ -401,7 +399,7 @@ ls()
 rm(x, y)
 x <- 1:20
 w <- 1 + sqrt(x)/2
-dummy <- data.frame(x=x, y= x + rnorm(x)*w)
+dummy <- data.frame(x = x, y = x + rnorm(x)*w)
 dummy
 fm <- lm(y ~ x, data=dummy)
 summary(fm)
@@ -424,12 +422,9 @@ qqnorm(resid(fm), main="Residuals Rankit Plot")
 rm(fm, fm1, lrf, x, dummy)
 
 
-## This is added in order to work have the file >> MM: FIX *.texi!
-oldwd <- getwd()
-setwd(system.file("data"))
-
-file.show("morley.tab")
-mm <- read.table("morley.tab")
+filepath <- system.file("data", "morley.tab" , package="datasets")
+file.show(filepath)
+mm <- read.table(filepath)
 mm
 mm$Expt <- factor(mm$Expt)
 mm$Run <- factor(mm$Run)
@@ -441,7 +436,6 @@ fm0 <- update(fm, . ~ . - Run)
 anova(fm0, fm)
 detach()
 rm(fm, fm0)
-setwd(oldwd) # reset working directory to what it was
 
 x <- seq(-pi, pi, len=50)
 y <- x
