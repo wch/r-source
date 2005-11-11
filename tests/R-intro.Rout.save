@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-11-11 r36271)
+Version 2.3.0 Under development (unstable) (2005-11-11 r36281)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -77,6 +77,7 @@ NaNs produced in: sqrt(-17)
 [1] TRUE
 > 
 > s5 <- rep(x, times=5)
+> s6 <- rep(x, each=5)
 > 
 > temp <- x > 13
 > 
@@ -259,6 +260,7 @@ blocks 1 2 3 4 5 6
 > 
 > h <- 1:17
 > Z <- array(h, dim=c(3,4,2))
+> dim(Z) <- c(3,4,2)
 > Z <- array(0, c(3,4,2))
 > 
 > ## So if @code{A}, @code{B} and @code{C} are all similar arrays
@@ -474,7 +476,6 @@ incomef   act nsw nt qld sa tas vic wa
 > qf(0.99, 2, 7)
 [1] 9.5466
 > 
-> data(faithful)
 > attach(faithful)
 > summary(eruptions)
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -654,7 +655,7 @@ cannot compute exact p-value with ties in: wilcox.test.default(A, B)
 > rm(x, y)
 > x <- 1:20
 > w <- 1 + sqrt(x)/2
-> dummy <- data.frame(x=x, y= x + rnorm(x)*w)
+> dummy <- data.frame(x = x, y = x + rnorm(x)*w)
 > dummy
     x        y
 1   1 -0.06561
@@ -844,12 +845,9 @@ F-statistic:  214 on 1 and 18 DF,  p-value: 1.94e-11
 > rm(fm, fm1, lrf, x, dummy)
 > 
 > 
-> ## This is added in order to work have the file >> MM: FIX *.texi!
-> oldwd <- getwd()
-> setwd(system.file("data", package="datasets"))
-> 
-> file.show("morley.tab")
-> mm <- read.table("morley.tab")
+> filepath <- system.file("data", "morley.tab" , package="datasets")
+> file.show(filepath)
+> mm <- read.table(filepath)
 > mm
     Expt Run Speed
 001    1   1   850
@@ -975,7 +973,6 @@ Model 2: Speed ~ Run + Expt
 2     76 410166 19    113344 1.11   0.36
 > detach()
 > rm(fm, fm0)
-> setwd(oldwd) # reset working directory to what it was
 > 
 > x <- seq(-pi, pi, len=50)
 > y <- x
@@ -990,8 +987,8 @@ Model 2: Speed ~ Run + Expt
 > image(x, y, f)
 > image(x, y, fa)
 > objects(); rm(x, y, f, fa)
-[1] "f"      "fa"     "mm"     "oldpar" "oldwd"  "w"     
-[7] "x"      "y"     
+[1] "f"        "fa"       "filepath" "mm"       "oldpar"  
+[6] "w"        "x"        "y"       
 > th <- seq(-pi, pi, len=100)
 > z <- exp(1i*th)
 > par(pty="s")

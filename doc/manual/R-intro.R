@@ -42,6 +42,7 @@ s4 <- seq(length=51, from=-5, by=.2)
 all.equal(s3,s4)
 
 s5 <- rep(x, times=5)
+s6 <- rep(x, each=5)
 
 temp <- x > 13
 
@@ -159,6 +160,7 @@ all(N == table(blocks,varieties))
 
 h <- 1:17
 Z <- array(h, dim=c(3,4,2))
+dim(Z) <- c(3,4,2)
 Z <- array(0, c(3,4,2))
 
 ## So if @code{A}, @code{B} and @code{C} are all similar arrays
@@ -305,7 +307,6 @@ str(accountants)
 ## upper 1% point for an F(2, 7)  distribution
 qf(0.99, 2, 7)
 
-data(faithful)
 attach(faithful)
 summary(eruptions)
 
@@ -399,7 +400,7 @@ ls()
 rm(x, y)
 x <- 1:20
 w <- 1 + sqrt(x)/2
-dummy <- data.frame(x=x, y= x + rnorm(x)*w)
+dummy <- data.frame(x = x, y = x + rnorm(x)*w)
 dummy
 fm <- lm(y ~ x, data=dummy)
 summary(fm)
@@ -422,12 +423,9 @@ qqnorm(resid(fm), main="Residuals Rankit Plot")
 rm(fm, fm1, lrf, x, dummy)
 
 
-## This is added in order to work have the file >> MM: FIX *.texi!
-oldwd <- getwd()
-setwd(system.file("data", package="datasets"))
-
-file.show("morley.tab")
-mm <- read.table("morley.tab")
+filepath <- system.file("data", "morley.tab" , package="datasets")
+file.show(filepath)
+mm <- read.table(filepath)
 mm
 mm$Expt <- factor(mm$Expt)
 mm$Run <- factor(mm$Run)
@@ -439,7 +437,6 @@ fm0 <- update(fm, . ~ . - Run)
 anova(fm0, fm)
 detach()
 rm(fm, fm0)
-setwd(oldwd) # reset working directory to what it was
 
 x <- seq(-pi, pi, len=50)
 y <- x
