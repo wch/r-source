@@ -417,6 +417,9 @@ BUG FIXES
     o	aggregate.ts() did not allow for rounding in frequencies such
 	as 1/5.
 
+    o	prcomp(tol=) was not dropping the sdev's corresponding to
+	dropped columns.
+
 
 
 		CHANGES IN R VERSION 2.2.0
