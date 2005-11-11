@@ -394,6 +394,8 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     ny = length(y);
     nx = length(x);
 
+    PROTECT(x);
+
     if ((TYPEOF(x) != VECSXP && TYPEOF(x) != EXPRSXP) || y != R_NilValue) {
 	if (n > 0 && ny == 0)
 	    errorcall(call, _("nothing to replace with"));
@@ -401,8 +403,6 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    warning(_("number of items to replace is not a multiple of replacement length"));
     }
 
-
-    PROTECT(x);
 
     /* When array elements are being permuted the RHS */
     /* must be duplicated or the elements get trashed. */
