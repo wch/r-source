@@ -478,17 +478,17 @@ par(\dots, no.readonly = FALSE)
       Style \code{"s"} (standard) finds an axis with pretty labels
       within which the original data range fits.
       Style \code{"e"} (extended) is like style \code{"s"}, except that
-      it is also ensured that there is room for plotting symbols within
+      it is also ensures that there is room for plotting symbols within
       the bounding box.
       Style \code{"d"} (direct) specifies that the current axis should
       be used on subsequent plots.
       (\emph{Only \code{"r"} and \code{"i"} styles are currently
 	implemented})}
-    \item{\code{xaxt}}{A character which specifies the axis type.
-      Specifying \code{"n"} causes an axis to be set up, but not
-      plotted.  The standard value is \code{"s"}: for compatibility with
-      S values \code{"l"} and \code{"e"} are accepted but are equivalent
-      to \code{"s"}.}
+    \item{\code{xaxt}}{A character which specifies the x axis type.
+      Specifying \code{"n"} suppresses plotting of the axis.  The
+      standard value is \code{"s"}: for compatibility with S values
+      \code{"l"} and \code{"t"} are accepted but are equivalent to
+      \code{"s"}: any value other than \code{"n"} implies plotting.}
     \item{\code{xlog}}{A logical value (see \code{log} in
       \code{\link{plot.default}}).  If \code{TRUE}, a logarithmic scale
       is in use (e.g., after \code{plot(*, log = "x")}).
@@ -503,8 +503,8 @@ par(\dots, no.readonly = FALSE)
       \code{xaxp} above.}
     \item{\code{yaxs}}{The style of axis interval calculation to be used
       for the y-axis.  See \code{xaxs} above.}
-    \item{\code{yaxt}}{A character which specifies the axis type.
-      Specifying \code{"n"} causes an axis to be set up, but not plotted.}
+    \item{\code{yaxt}}{A character which specifies the y axis type.
+      Specifying \code{"n"} suppresses plotting.}
     \item{\code{ylog}}{A logical value; see \code{xlog} above.}
   }
 }

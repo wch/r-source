@@ -37,8 +37,9 @@
 
   \item{ann}{a logical value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot.}
-  \item{axes}{a logical value indicating whether axes should be drawn on
-    the plot.}
+  \item{axes}{a logical value indicating whether both axes should be drawn on
+    the plot.  Use graphical parameter \code{"xaxt"} or \code{"yaxt"}
+    to suppress just one of the axes.}
   \item{frame.plot}{a logical indicating whether a box should be drawn
     around the plot.}
 

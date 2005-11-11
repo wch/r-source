@@ -52,6 +52,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     If \code{padj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     perpendicular to the axis the default is to centre the string.}
+
   \item{\dots}{other graphical parameters may also be passed as
     arguments to this function, particularly, \code{cex.axis},
     \code{col.axis} and \code{font.axis} for axis annotation, \code{mgp}
@@ -59,6 +60,9 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     \code{tcl} for tick mark length and direction, \code{las} for
     vertical/horizontal label orientation, or \code{fg} instead of
     \code{col}, see \code{\link{par}} on these.
+
+    Parameters \code{xaxt} (sides 1 and 3) and \code{yaxt} (sides 2 and
+    4) control if the axis is plotted at all.
 
     Note that \code{xpd} is not accepted as clipping is always to the
     device region, and that \code{lab} will partial match to argument
