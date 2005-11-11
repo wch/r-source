@@ -5006,7 +5006,7 @@ static void XFig_Text(double x, double y, char *str,
 		      +0.5));
 	fprintf(fp, "%d %d ", (int)x, (int)y);
 	if(strcmp(pd->encoding, "none") != 0) {
-#ifdef HAVE_ICONV
+#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 	    /* reencode the text */
 	    void *cd;
 	    char  *i_buf, *o_buf;
