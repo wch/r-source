@@ -331,18 +331,18 @@ x <- seq(3, 5.4, 0.01)
 lines(x, pnorm(x, mean=mean(long), sd=sqrt(var(long))), lty=3)
 ## dev.off() <IMG/>
 
-par(pty="s")
+par(pty="s")       # arrange for a square figure region
 qqnorm(long); qqline(long)
 
 x <- rt(250, df = 5)
 qqnorm(x); qqline(x)
 
-qqplot(qt(ppoints(250), df=5), x, xlab="Q-Q plot for t dsn")
+qqplot(qt(ppoints(250), df = 5), x, xlab = "Q-Q plot for t dsn")
 qqline(x)
 
 shapiro.test(long)
 
-ks.test(long, "pnorm", mean=mean(long), sd=sqrt(var(long)))
+ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long)))
 
 ##@section One- and two-sample tests
 
@@ -387,6 +387,7 @@ plot(ecdf(B), do.points=FALSE, verticals=TRUE, add=TRUE)
 
 ## "Simulate starting a new R session, by
 rm(list=ls(all=TRUE))
+set.seed(123) # for repeatability
 
 if(interactive())
     help.start()

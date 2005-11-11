@@ -70,7 +70,8 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-ts) \
 	gct-foot.R \
 	nanbug.rda \
-	WinUnicode.dat
+	WinUnicode.dat \
+	R-intro.Rout.save
 SUBDIRS = Embedding Examples Native
 
 R = LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
@@ -104,7 +105,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
 all-basic-tests = Examples Specific Reg Internet
-all-devel-tests = IsAs Lapack Nafns Postscript Random Demo Segfault \
+all-devel-tests = Docs IsAs Lapack Nafns Postscript Random Demo Segfault \
    Standalone Packages
 
 all check: Makefile test-all-basics
@@ -233,6 +234,11 @@ test-Packages:
 test-Gct: $(test-out-gct)
 
 test-Vgct: $(test-out-valgct)
+
+test-Docs:
+	@echo "running tests of documentation examples"
+	@cp ${top_srcdir}/doc/manual/R-intro.R .
+	@$(MAKE) R-intro.Rout RVAL_IF_DIFF=1
 
 test-Demo:
 	@echo "running demos from base and stats"
@@ -404,7 +410,7 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	-@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
-	  reg-plot.ps reg-tests-?.ps
+	  reg-plot.ps reg-tests-?.ps R-intro.R
 	-@rm -rf anRpackage
 distclean: clean
 	-@for d in $(SUBDIRS); do \
