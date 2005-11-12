@@ -287,7 +287,7 @@ ifeq ($(strip $(USE_ATLAS)),YES)
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o zgemm.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L../../lib $(LIBUNICOWS) -lR
+	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L../../lib $(LIBUNICOWS) -lR -lg2c
 endif
 endif
 

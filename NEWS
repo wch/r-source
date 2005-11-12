@@ -252,6 +252,9 @@ C-LEVEL FACILITIES
 
     o	qgamma and rgamma in Rmath.h now check for non-positive arguments.
 
+    o	The BLAS which ships with R now contains the complete set of
+	double-complex BLAS routines, rather than just those used in R.
+
 
 BUG FIXES
 
