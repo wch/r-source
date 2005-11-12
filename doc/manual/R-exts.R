@@ -1,8 +1,7 @@
 ## R code to run the .Call/.External examples in
 ##    `Writing R extensions'
 
-## Alter to suit your platform
-dyn.load("R-exts.so")
+dyn.load(paste("R-exts", .Platform$dynlib.ext, sep=""))
 
 ## ----- outer products example -----
 
