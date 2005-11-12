@@ -237,8 +237,12 @@ test-Vgct: $(test-out-valgct)
 
 test-Docs:
 	@echo "running tests of documentation examples"
-	@cp ${top_srcdir}/doc/manual/R-intro.R .
+	@cp ${top_srcdir}/doc/manual/*.R .
 	@$(MAKE) R-intro.Rout RVAL_IF_DIFF=1
+	@cp ${top_srcdir}/doc/manual/R-exts.c .
+	@$(top_builddir)/bin/R CMD SHLIB R-exts.c
+	@$(MAKE) R-exts.Rout
+	@rm R-exts.*
 
 test-Demo:
 	@echo "running demos from base and stats"
@@ -410,7 +414,7 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	-@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
-	  reg-plot.ps reg-tests-?.ps R-intro.R
+	  reg-plot.ps reg-tests-?.ps R-exts.* R-intro.R
 	-@rm -rf anRpackage
 distclean: clean
 	-@for d in $(SUBDIRS); do \

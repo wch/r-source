@@ -245,7 +245,7 @@ INSTALLATION CHANGES
 
     o	There is a new test, 'test-Docs', which as part of 'make
 	check-devel' tests the code in the documentation.  Currently
-	it runs doc/manual/R-intro.R.
+	it runs doc/manual/R-{exts,intro}.R.
 
 
 C-LEVEL FACILITIES
