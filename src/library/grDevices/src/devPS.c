@@ -32,8 +32,10 @@
 #ifdef SUPPORT_MBCS
 #include <wchar.h>
 #include <wctype.h>
-#include <R_ext/Riconv.h>
 static void mbcsToSbcs(char *in, char *out, char *encoding);
+#endif
+#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+#include <R_ext/Riconv.h>
 #endif
 
 #include "Defn.h"
