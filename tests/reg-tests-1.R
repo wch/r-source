@@ -608,7 +608,7 @@ for(p in list(c(1,2,5), 1:3, 3:1, 2:0, 0:2, c(1,2,1), c(0,0,1))) {
 # which=4 failed in R 1.0.1
 par(mfrow=c(1,1), oma= rep(0,4))
 summary(lm.fm2 <- lm(Employed ~ . - Population - GNP.deflator, data = longley))
-for(wh in 1:4) plot(lm.fm2, which = wh)
+for(wh in 1:6) plot(lm.fm2, which = wh)
 ## end of moved from plot.lm.Rd
 
 
@@ -755,7 +755,7 @@ stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * .Machine$double.eps)
 
 x <- 1:99/100
 stopifnot(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 10 * .Machine$double.eps)
-## error is about 650* are x=0.01
+## error is about 650* at x=0.01:
 stopifnot(abs(1 - x / acos(cos(x))) < 1000 * .Machine$double.eps)
 stopifnot(abs(1 - x / asin(sin(x))) <= 10 * .Machine$double.eps)
 stopifnot(abs(1 - x / atan(tan(x))) <= 10 *.Machine$double.eps)
