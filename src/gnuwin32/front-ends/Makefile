@@ -12,6 +12,9 @@ else
 endif
 CFLAGS=$(OPTFLAGS) -I../../include
 
+## <FIXME> remove references to librproxy.a and remove rproxy.df
+## once package rcom links to rproxy.dll
+
 all: $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
      $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
      $(R_HOME)/bin/Rproxy.dll $(R_HOME)/bin/R.exe \
