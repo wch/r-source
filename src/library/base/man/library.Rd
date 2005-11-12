@@ -23,8 +23,8 @@ library(package, help, pos = 2, lib.loc = NULL,
         version)
 
 require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
-        keep.source = getOption("keep.source.pkgs"), character.only = FALSE,
-         version, save = TRUE)
+        keep.source = getOption("keep.source.pkgs"),
+        character.only = FALSE, version, save = TRUE)
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
@@ -84,15 +84,16 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   \code{library(package)} and \code{require(package)} both load the
   package with name \code{package}.  \code{require} is designed for use
   inside other functions; it returns \code{FALSE} and gives a warning
-  (rather than an error as \code{library()} does) if the package does
-  not exist.  Both functions check and update the list of currently
-  loaded packages and do not reload code that is already loaded.
+  (rather than an error as \code{library()} does by default) if the
+  package does not exist.  Both functions check and update the list of
+  currently loaded packages and do not reload a package which is already
+  loaded.
 
   If \code{library} is called with no \code{package} or \code{help}
   argument, it lists all available packages in the libraries specified
   by \code{lib.loc}, and returns the corresponding information in an
   object of class \code{"libraryIQR"}.  The structure of this class may
-  change in future versions.  In earlier versions of R, only the names
+  change in future versions.  In earlier versions of \R, only the names
   of all available packages were returned; use \code{.packages(all =
     TRUE)} for obtaining these.  Note that
   \code{\link{installed.packages}()}
@@ -138,6 +139,9 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   package is available.
 }
 \section{Packages that require other packages}{
+  \bold{NB:} This mechanism has been almost entirely superseded by
+  using the \code{Depends:} field in the \file{DESCRIPTION} file of a package.
+  
   The source code for a
   package that requires one or more other packages should have a call
   to \code{require}, preferably near the beginning of the source, and
@@ -146,7 +150,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   save the names of all required packages in the environment of the
   new package.  The saved package names are used by
   \code{\link{detach}} when a package is detached to warn if other
-  packages still require the detached package.  Also, if a package is
+  packages still require the to-be-detached package.  Also, if a package is
   installed with saved image (see \link{INSTALL}), the saved package
   names are used to require these packages when the new package is
   attached.
