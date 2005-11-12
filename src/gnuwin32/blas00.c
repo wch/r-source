@@ -53,13 +53,13 @@ void blas_dummy()
     zcopy_();
     zdotc_();
     zdotu_();
-    zdrot_();
+    /*zdrot_();*/
     zdscal_();
     zgbmv_();
     zgemm_();
     zgemv_();
     zgerc_();
-    zgeru_();
+    /*zgeru_();*/
     zhbmv_();
     zhemm_();
     zhemv_();
