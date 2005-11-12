@@ -53,8 +53,8 @@ else
 endif
 
 libR:
-	@$(MAKE) -s --no-print-directory -C $(RHOME)/src/gnuwin32 libR.a
-	@$(MAKE) -s --no-print-directory -C $(RHOME)/src/gnuwin32 libRblas.a
+	@$(MAKE) -s --no-print-directory -C $(RHOME)/src/gnuwin32 ../../lib/libR.a
+	@$(MAKE) -s --no-print-directory -C $(RHOME)/src/gnuwin32 ../../lib/libRblas.a
 
 $(DLLNAME)_res.rc:
 	@PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@

@@ -186,7 +186,7 @@ dllversion.o: ../include/Rversion.h
 
 R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
-Rdll: makeMakedeps libRblas.a ../../bin/R.dll
+Rdll: makeMakedeps ../../lib/libRblas.a ../../bin/R.dll
 
 ../../bin/R.dll: FORCE
 	@$(MAKE) --no-print-directory fixfiles
