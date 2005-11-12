@@ -2257,7 +2257,7 @@ searched for an item whose name matches exactly.  It is an error to have
 the same formal argument match several actuals or vice versa.
 
 @item @strong{Partial matching on tags}.
-Each named supplied argument is compared to the remaining formal
+Each remaining named supplied argument is compared to the remaining formal
 arguments using partial matching.  If the name of the supplied argument
 matches exactly with the first part of a formal argument then the two
 arguments are considered to be matched.  It is an error to have multiple

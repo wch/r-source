@@ -1369,16 +1369,18 @@ warnings that you understand and have reasons not to eliminate.  In
 principle, packages must pass @code{R CMD check} without warnings to be
 admitted to the main @acronym{CRAN} package area.
 
-When all the testing is done, upload the @file{.tar.gz} file to
+When all the testing is done, upload the @file{.tar.gz} file, using
+@code{anonymous} as log-in name and your e-mail address as password, to
 
 @example
 @url{ftp://cran.R-project.org/incoming/}
 @end example
 
 @noindent
-and send a message to @url{cran@@r-project.org} about it.  The
-@acronym{CRAN} maintainers will run these tests before putting a
-submission in the main archive.
+(note: use @code{ftp} and not @code{sftp} to connect to this server) and
+send a message to @url{mailto:cran@@r-project.org,,cran@@r-project.org}
+about it.  The @acronym{CRAN} maintainers will run these tests before
+putting a submission in the main archive.
 
 Currently, packages containing compiled code should contain at most one
 dot in their name to work smoothly under Windows.
