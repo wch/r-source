@@ -846,10 +846,10 @@ may need to be included in @code{PKG_LIBS}.
 
 @item BLAS_LIBS
 @vindex BLAS_LIBS
-A macro containing the BLAS libraries used when building @R{}.  This
-may need to be included in @code{PKG_LIBS}.  Beware that if it is
-empty then the @R{} executable will contain all the double-precision
-BLAS routines, but no single-precision, complex nor double-complex
+A macro containing the BLAS libraries used when building @R{}.  This may
+need to be included in @code{PKG_LIBS}.  Beware that if it is empty then
+the @R{} executable will contain all the double-precision and
+double-complex BLAS routines, but no single-precision or complex
 routines.  If @code{BLAS_LIBS} is included, then @code{FLIBS} also needs
 to be, as most BLAS libraries are written in FORTRAN.
 
