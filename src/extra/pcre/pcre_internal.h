@@ -42,6 +42,8 @@ POSSIBILITY OF SUCH DAMAGE.
 modules, but which are not relevant to the exported API. This includes some
 functions whose names all begin with "_pcre_". */
 
+#ifndef PCRE_INTERNAL_H
+#define PCRE_INTERNAL_H
 
 /* Define DEBUG to get debugging output on stdout. */
 
@@ -70,7 +72,7 @@ all, it had only been about 10 years then... */
 #define LINK_SIZE 2
 #define POSIX_MALLOC_THRESHOLD 10
 #define MATCH_LIMIT 10000000
-#define EXPORT
+#define PCRE_EXPORT
 #endif
 
 /* Standard C headers plus the external interface definition. The only time
@@ -120,14 +122,10 @@ Unix, where it is defined in sys/types, so use "uschar" instead. */
 
 typedef unsigned char uschar;
 
-/* Include the public PCRE header */
+/* Include the public PCRE header and the definitions of UCP character property
+values. */
 
 #include "pcre.h"
-
-/* Include the (copy of) the public ucp header, changing the external name into
-a private one. This does no harm, even if we aren't compiling UCP support. */
-
-#define ucp_findchar _pcre_ucp_findchar
 #include "ucp.h"
 
 /* When compiling for use with the Virtual Pascal compiler, these functions
@@ -870,7 +868,7 @@ total length. */
 #define tables_length (ctypes_offset + 256)
 
 /* Layout of the UCP type table that translates property names into codes for
-ucp_findchar(). */
+pcre_ucp_findchar(). */
 
 typedef struct {
   const char *name;
@@ -903,11 +901,12 @@ one of the exported public functions. They have to be "external" in the C
 sense, but are not part of the PCRE public API. */
 
 extern int         _pcre_ord2utf8(int, uschar *);
-extern void        _pcre_printint(pcre *, FILE *);
 extern real_pcre * _pcre_try_flipped(const real_pcre *, real_pcre *,
                      const pcre_study_data *, pcre_study_data *);
 extern int         _pcre_ucp_findchar(const int, int *, int *);
 extern int         _pcre_valid_utf8(const uschar *, int);
 extern BOOL        _pcre_xclass(int, const uschar *);
+
+#endif
 
 /* End of pcre_internal.h */

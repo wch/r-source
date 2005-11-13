@@ -63,7 +63,7 @@ Returns:       < 0    if the string is a valid UTF-8 string
                >= 0   otherwise; the value is the offset of the bad byte
 */
 
-EXPORT int
+PCRE_EXPORT int
 _pcre_valid_utf8(const uschar *string, int length)
 {
 register const uschar *p;

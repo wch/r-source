@@ -33,6 +33,10 @@ gzfile() now always ensures that the underlying file is opened in
 binary mode (this is only an issue on Windows).  This solves some
 problems with reading compressed data files via gzfile().
 
+This version of R expects a complete double-complex BLAS to be
+available, and so customized (e.g. ATLAS and Goto) versions of
+Rblas.dll needs to be rebuilt.
+
 
 
 R 2.2.0 patched

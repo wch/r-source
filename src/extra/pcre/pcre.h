@@ -43,13 +43,32 @@ POSSIBILITY OF SUCH DAMAGE.
 make changes to pcre.in. */
 
 #define PCRE_MAJOR          6
-#define PCRE_MINOR          2
-#define PCRE_DATE           01-Aug-2005
+#define PCRE_MINOR          4
+#define PCRE_DATE           05-Sep-2005
 
 /* Win32 uses DLL by default, but not for R */
 
+/*
+#ifdef _WIN32
+#  ifdef PCRE_DEFINITION
+#    ifdef DLL_EXPORT
+#      define PCRE_DATA_SCOPE __declspec(dllexport)
+#    endif
+#  else
+#    ifndef PCRE_STATIC
+#      define PCRE_DATA_SCOPE extern __declspec(dllimport)
+#    endif
+#  endif
+#endif
+*/
+
+/* For other operating systems, we use the standard "extern". */
 #ifndef PCRE_DATA_SCOPE
-#  define PCRE_DATA_SCOPE     extern
+#  ifdef __cplusplus
+#    define PCRE_DATA_SCOPE     extern "C"
+#  else
+#    define PCRE_DATA_SCOPE     extern
+#  endif
 #endif
 
 /* Have to include stdlib.h in order to ensure that size_t is defined;

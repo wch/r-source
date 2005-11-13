@@ -1863,7 +1863,10 @@ with ATLAS on some platforms as it is not by default built with
 position-independent code.
 
 You will need double-precision and double-complex versions of the BLAS,
-but not single-precision nor complex routines.
+but not single-precision nor complex routines.  This is checked by
+@command{configure}, as some incomplete BLAS libraries have been found
+(e.g., that supplied with Fedora Core 3 is missing @code{drotm},
+@code{drotmg} and @code{zdrot}).
 
 On some systems it is necessary that an external BLAS was built with the
 same FORTRAN compiler used to build @R{}: known problems are with @R{}

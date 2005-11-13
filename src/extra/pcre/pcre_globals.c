@@ -49,6 +49,7 @@ differently, and global variables are not used (see pcre.in). */
 
 #include "pcre_internal.h"
 
+
 #ifndef VPCOMPAT
 #ifdef __cplusplus
 extern "C" void *(*pcre_malloc)(size_t) = malloc;
