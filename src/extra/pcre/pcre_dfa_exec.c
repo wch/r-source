@@ -288,7 +288,9 @@ const uschar *start_subject = md->start_subject;
 const uschar *end_subject = md->end_subject;
 const uschar *start_code = md->start_code;
 
+#ifdef SUPPORT_UTF8
 BOOL utf8 = (md->poptions & PCRE_UTF8) != 0;
+#endif
 
 rlevel++;
 offsetcount &= (-2);
