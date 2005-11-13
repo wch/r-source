@@ -2304,8 +2304,8 @@ LIBS="${FLIBS} ${LIBS}"
 if test "${acx_blas_ok}" = no; then
   if test "x${BLAS_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${BLAS_LIBS} ${LIBS}"
-    AC_MSG_CHECKING([for ${sgemm} in ${BLAS_LIBS}])
-    AC_TRY_LINK([void ${xerbla}(char *srname, int *info){}], ${sgemm}(),
+    AC_MSG_CHECKING([for ${dgemm} in ${BLAS_LIBS}])
+    AC_TRY_LINK([void ${xerbla}(char *srname, int *info){}], ${dgemm}(),
       [acx_blas_ok=yes], [BLAS_LIBS=""])
     AC_MSG_RESULT([${acx_blas_ok}])
     LIBS="${r_save_LIBS}"
@@ -2314,13 +2314,13 @@ fi
 
 ## BLAS linked to by default?  (happens on some supercomputers)
 if test "${acx_blas_ok}" = no; then
-  AC_CHECK_FUNC(${sgemm}, [acx_blas_ok=yes])
+  AC_CHECK_FUNC(${dgemm}, [acx_blas_ok=yes])
 fi
 
 ## BLAS in ATLAS library?  (http://math-atlas.sourceforge.net/)
 if test "${acx_blas_ok}" = no; then
   AC_CHECK_LIB(atlas, ATL_xerbla,
-               [AC_CHECK_LIB(f77blas, ${sgemm},
+               [AC_CHECK_LIB(f77blas, ${dgemm},
                              [acx_blas_ok=yes
                               BLAS_LIBS="-lf77blas -latlas"],
 			     [], [-latlas])])
@@ -2328,7 +2328,7 @@ fi
 
 ## BLAS in PhiPACK libraries?  (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
-  AC_CHECK_LIB(blas, ${sgemm},
+  AC_CHECK_LIB(blas, ${dgemm},
 	       [AC_CHECK_LIB(dgemm, $dgemm,
 		             [AC_CHECK_LIB(sgemm, ${sgemm},
 			                   [acx_blas_ok=yes
@@ -2358,10 +2358,10 @@ fi
 ## Not sure whether -lsunmath is required, but it helps anyway
 if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
-     AC_MSG_CHECKING([for ${sgemm} in -lsunperf])
+     AC_MSG_CHECKING([for ${dgemm} in -lsunperf])
      r_save_LIBS="${LIBS}"
      LIBS="-xlic_lib=sunperf -lsunmath ${LIBS}"
-     AC_TRY_LINK_FUNC([${sgemm}], [R_sunperf=yes], [R_sunperf=no])
+     AC_TRY_LINK_FUNC([${dgemm}], [R_sunperf=yes], [R_sunperf=no])
      if test "${R_sunperf}" = yes; then
         BLAS_LIBS="-xlic_lib=sunperf -lsunmath"
 	acx_blas_ok=yes
@@ -2389,8 +2389,8 @@ fi
 
 ## BLAS in IBM ESSL library? (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
-  AC_CHECK_LIB(blas, ${sgemm},
-	       [AC_CHECK_LIB(essl, ${sgemm},
+  AC_CHECK_LIB(blas, ${dgemm},
+	       [AC_CHECK_LIB(essl, ${dgemm},
 			     [acx_blas_ok=yes
                               BLAS_LIBS="-lessl -lblas"],
 			     [], [-lblas ${FLIBS}])])
@@ -2398,7 +2398,7 @@ fi
 
 ## Generic BLAS library?
 if test "${acx_blas_ok}" = no; then
-  AC_CHECK_LIB(blas, ${sgemm},
+  AC_CHECK_LIB(blas, ${dgemm},
                [acx_blas_ok=yes; BLAS_LIBS="-lblas"])
 fi
 
@@ -2488,6 +2488,133 @@ fi
       acx_blas_ok="no"
     fi
   fi
+fi
+if test "${acx_blas_ok}" = yes; then
+  AC_MSG_CHECKING([whether the BLAS is complete])
+  AC_CACHE_VAL([r_cv_complete_blas],
+[[cat > conftest.c <<EOF
+#include <stdlib.h>
+#include "confdefs.h"
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_SYMBOL(x)   x ## _
+#else
+# define F77_SYMBOL(x)   x
+#endif
+void F77_SYMBOL(xerbla)(char *srname, int *info)
+{}
+void blas_set () {
+  F77_SYMBOL(dasum)();
+  F77_SYMBOL(daxpy)();
+  F77_SYMBOL(dcopy)();
+  F77_SYMBOL(ddot)();
+  F77_SYMBOL(dgbmv)();
+  F77_SYMBOL(dgemm)();
+  F77_SYMBOL(dgemv)();
+  F77_SYMBOL(dger)();
+  F77_SYMBOL(dnrm2)();
+  F77_SYMBOL(drot)();
+  F77_SYMBOL(drotg)();
+  F77_SYMBOL(drotm)();
+  F77_SYMBOL(drotmg)();
+  F77_SYMBOL(dsbmv)();
+  F77_SYMBOL(dscal)();
+  F77_SYMBOL(dspmv)();
+  F77_SYMBOL(dspr)();
+  F77_SYMBOL(dspr2)();
+  F77_SYMBOL(dspmv)();
+  F77_SYMBOL(dsymm)();
+  F77_SYMBOL(dsymv)();
+  F77_SYMBOL(dsyr)();
+  F77_SYMBOL(dsyr2)();
+  F77_SYMBOL(dsyr2k)();
+  F77_SYMBOL(dsyrk)();
+  F77_SYMBOL(dtbmv)();
+  F77_SYMBOL(dtrsm)();
+  F77_SYMBOL(idamax)();
+  /* F77_SYMBOL(lsame)(); */
+  F77_SYMBOL(dcabs1)();
+  F77_SYMBOL(dgemv)();
+  F77_SYMBOL(dger)();
+  F77_SYMBOL(dsymv)();
+  F77_SYMBOL(dsyr2)();
+  F77_SYMBOL(dsyr2k)();
+  F77_SYMBOL(dsyrk)();
+  F77_SYMBOL(dtbmv)();
+  F77_SYMBOL(dtbsv)();
+  F77_SYMBOL(dtpmv)();
+  F77_SYMBOL(dtpsv)();
+  F77_SYMBOL(dtrmm)();
+  F77_SYMBOL(dtrmv)();
+  F77_SYMBOL(dtrsv)();
+  F77_SYMBOL(dtrsm)();
+  F77_SYMBOL(dtrsv)();
+/* cmplblas */
+  F77_SYMBOL(dzasum)();
+  F77_SYMBOL(dznrm2)();
+  F77_SYMBOL(izamax)();
+  F77_SYMBOL(zaxpy)();
+  F77_SYMBOL(zcopy)();
+  F77_SYMBOL(zdotc)();
+  F77_SYMBOL(zdotu)();
+  F77_SYMBOL(zdrot)();
+  F77_SYMBOL(zdscal)();
+  F77_SYMBOL(zgbmv)();
+  F77_SYMBOL(zgemm)();
+  F77_SYMBOL(zgemv)();
+  F77_SYMBOL(zgerc)();
+  F77_SYMBOL(zgeru)();
+  F77_SYMBOL(zhbmv)();
+  F77_SYMBOL(zhemm)();
+  F77_SYMBOL(zhemv)();
+  F77_SYMBOL(zher)();
+  F77_SYMBOL(zherk)();
+  F77_SYMBOL(zher2)();
+  F77_SYMBOL(zher2k)();
+  F77_SYMBOL(zhpmv)();
+  F77_SYMBOL(zhpr)();
+  F77_SYMBOL(zhpr2)();
+  F77_SYMBOL(zrotg)();
+  F77_SYMBOL(zscal)();
+  F77_SYMBOL(zswap)();
+  F77_SYMBOL(zsymm)();
+  F77_SYMBOL(zsyr2k)();
+  F77_SYMBOL(zsyrk)();
+  F77_SYMBOL(ztbmv)();
+  F77_SYMBOL(ztbsv)();
+  F77_SYMBOL(ztpmv)();
+  F77_SYMBOL(ztpsv)();
+  F77_SYMBOL(ztrmm)();
+  F77_SYMBOL(ztrmv)();
+  F77_SYMBOL(ztrsm)();
+  F77_SYMBOL(ztrsv)();
+}
+int main ()
+{
+  exit(0);
+}
+EOF]
+if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
+  ## <NOTE>
+  ## This should really use MAIN_LD, and hence come after this is
+  ## determined (and necessary additions to MAIN_LDFLAGS were made).
+  ## But it seems that we currently can always use the C compiler.
+  ## Also, to be defensive there should be a similar test with SHLIB_LD
+  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## use ld for SHLIB_LD) ...
+  if ${CC} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+       conftest.${ac_objext} ${FLIBS} \
+       ${LIBM} ${BLAS_LIBS} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
+  ## </NOTE>
+  then
+    r_cv_complete_blas=yes
+  fi
+fi
+])
+  if test x"${r_cv_complete_blas}" != xyes; then
+    acx_blas_ok="no"
+    r_cv_complete_blas=no
+  fi
+  AC_MSG_RESULT([${r_cv_complete_blas}])
 fi
 
 LIBS="${acx_blas_save_LIBS}"
