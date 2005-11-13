@@ -1854,6 +1854,20 @@ can be used by
 with the same caveat on multi-threading.  (Thanks to Andy Liaw for the
 information.)
 
+For AMD64 processors under Linux there is the AMD Core Math Library (ACML)
+@url{http://www.amd.com/acml}.  For the @code{gcc} version (which is
+single-threaded only) we could use
+
+@example
+--with-blas="-lacml"
+@end example
+
+@noindent
+if the appropriate library directory such as
+@file{/opt/acml2.7.0/gnu64/lib} is in the @samp{LD_LIBRRARY_PATH}.
+For other compilers, see the ACML documentation.
+
+
 Note that the BLAS library will be used for several add-on packages as
 well as for @R{} itself.  This means that it is better to use a shared
 BLAS library, as most of a static library will be compiled into the @R{}
