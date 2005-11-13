@@ -4970,7 +4970,10 @@ static void XFig_Text(double x, double y, char *str,
     FILE *fp = pd->tmpfp;
     int fontnum, style = gc->fontface;
     double size = floor(gc->cex * gc->ps + 0.5);
-    char *str1 = str, *buf;
+    char *str1 = str;
+#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+    char *buf;
+#endif
 
     if(style < 1 || style > 5) {
 	warning(_("attempt to use invalid font %d replaced by font 1"), style);
