@@ -24,11 +24,11 @@ x = value
   There are three different assignment operators: two of them
   have leftwards and rightwards forms.
 
-  The operators \code{<-} and \code{=} assign into the
-  environment in which they are evaluated.  The \code{<-} can be used
-  anywhere, but the \code{=} is only allowed at the top level (that
-  is, in the complete expression typed by the user) or as one of the
-  subexpressions in a braced list of expressions.
+  The operators \code{<-} and \code{=} assign into the environment in
+  which they are evaluated.  The  operator\code{<-} can be used
+  anywhere, whereas the operator \code{=} is only allowed at the top
+  level (e.g., in the complete expression typed at the command prompt)
+  or as one of the subexpressions in a braced list of expressions.
 
   The operators \code{<<-} and \code{->>} cause a search to made through
   the environment for an existing definition of the variable being
