@@ -253,7 +253,7 @@ Rblas: ../../bin/Rblas.dll
 
 Rblas-clean:
 	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o \
-	  zgemm.o blasGoto.o libgoto.a
+	  blasGoto.o libgoto.a
 
 Rblas-DLLLIBS=-L../../lib $(LIBUNICOWS) -lR
 
@@ -267,15 +267,13 @@ blas00.o: blas00.c
 	$(CC) -O2  -c $< -o $@
 blas.o: ../appl/blas.f
 	$(F77) $(FFLAGS) -c $< -o $@
-zgemm.o: ../appl/zgemm.f
-	$(F77) $(FOPTFLAGS) -c $< -o $@
-cmplxblas.o: ../modules/lapack/cmplxblas.f
+cmplxblas.o: ../appl/cmplxblas.f
 	$(F77) $(FOPTFLAGS) -c $< -o $@
 
 ifeq ($(strip $(USE_GOTO)),YES)
 libgoto.a:  libgoto.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) --dllname $(GOTO_DLL) --def $< --output-lib $@
-../../bin/Rblas.dll: blas00.o blasGoto.o cmplxblas.o zgemm.o dllversion.o libgoto.a
+../../bin/Rblas.dll: blas00.o blasGoto.o cmplxblas.o dllversion.o libgoto.a
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../lib $(LIBUNICOWS) -lR -lg2c -lgoto
 else
@@ -285,7 +283,7 @@ ifeq ($(strip $(USE_ATLAS)),YES)
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
 	   -L../../lib $(LIBUNICOWS) -lR -lg2c -lf77blas -latlas
 else
-../../bin/Rblas.dll: blas.o cmplxblas.o zgemm.o dllversion.o
+../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L../../lib $(LIBUNICOWS) -lR -lg2c
 endif
