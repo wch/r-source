@@ -74,6 +74,11 @@ library.dynam.unload(chname, libpath,
   invisibly.  For packages that have namespaces, a list of these objects
   is stored in the namespace's environment for use at run-time.
 
+  Note that the class \code{DLLInfo} has an overloaded method for
+  \code{$} which can be used to resolve native symbols within that
+  DLL.
+
+  
   \code{library.dynam.unload} invisibly returns an object of class
   \code{"DLLInfo"} identifying the DLL successfully unloaded.
 }
@@ -84,7 +89,7 @@ library.dynam.unload(chname, libpath,
   \code{\link{.First.lib}}, \code{\link{library}},
   \code{\link{dyn.load}}, \code{\link{.packages}},
   \code{\link{.libPaths}}
-
+  
 #ifdef unix
   \code{\link{SHLIB}} for how to create suitable shared libraries.
 #endif

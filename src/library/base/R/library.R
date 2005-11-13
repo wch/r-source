@@ -530,7 +530,7 @@ function(chname, package = NULL, lib.loc = NULL,
     }
     if(file == "")
         stop(gettextf("shared library '%s' not found", chname), domain = NA)
-    ind <- sapply(dll_list, function(x) x$path == file)
+    ind <- sapply(dll_list, function(x) x[["path"]] == file)
     if(any(ind)) {
         if(verbose)
             message(gettextf("shared library '%s' already loaded", chname),
@@ -575,7 +575,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 
     file <- file.path(libpath, "libs",
                       paste(chname, file.ext, sep = ""))
-    pos <- which(sapply(dll_list, function(x) x$path == file))
+    pos <- which(sapply(dll_list, function(x) x[["path"]] == file))
     if(!length(pos))
         stop(gettextf("shared library '%s' was not loaded", chname),
              domain = NA)

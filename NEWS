@@ -158,6 +158,14 @@ NEW FEATURES
 
     o	PCRE has been updated to version 6.4.
 
+    o	getNativeSymbolInfo() is vectorized for the name argument.  It
+	returns a named list of NativeSymbolInfo objects, but is
+	backward compatabile by default when called with a character
+	vector of length 1, returning the NativeSymbolInfo object.
+
+    o	The method $.DLLInfo resolves the specified symbol in the DLL,
+	returning a NativeSymbolInfo object. Use [[ to access the actual
+	values in the DLLInfo object.
 
 DEPRECATED & DEFUNCT
 

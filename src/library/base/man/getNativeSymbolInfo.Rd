@@ -1,10 +1,10 @@
 \name{getNativeSymbolInfo}
 \alias{getNativeSymbolInfo}
-\title{Obtain a description of a native (C/Fortran) symbol}
+\title{Obtain a description of one or more native (C/Fortran) symbols}
 \description{
-  This finds and returns as comprehensive a description of a
+  This finds and returns as comprehensive a description of one or more
   dynamically loaded or \dQuote{exported} built-in native
-  symbol. It returns information about the
+  symbols. For each name, it returns information about the
   name of the symbol, the library in which it is located
   and, if available, the number of arguments it expects
   and by which interface it should be called (i.e
@@ -17,6 +17,10 @@
   Also, it provides a way to query where symbols were resolved,
   and aids diagnosing strange behavior associated with dynamic
   resolution.
+
+  This is now vectorized in the \code{name} argument so can process
+  multiple symbols in a single call. The result is a list that can be
+  indexed by the given symbol names.
 }
 \usage{
 getNativeSymbolInfo(name, PACKAGE)
@@ -29,6 +33,17 @@ getNativeSymbolInfo(name, PACKAGE)
   \item{PACKAGE}{an optional argument that specifies to which
     dynamically loaded library we restrict the search for this symbol.
     If this is \code{"base"}, we search in the R executable itself.}
+  \item{unlist}{a logical value which controls how the result is
+    returned if the function is called with the name of a single symbol.
+    If \code{unlist} is \code{TRUE} and the number of symbol names in
+    \code{name} is one, then the \code{NativeSymbolInfo} object
+    is returned. If it is \code{FALSE}, then the list
+    of \code{NativeSymbolInfo} objects is returned.
+    This is ignored if the number of symbols passed in \code{name} is
+    more than one. 
+    To be compatible with earlier versions of this function, this
+    defaults to \code{TRUE}.
+  }
 }
 \details{
   This uses the same mechanism for resolving symbols as is used
@@ -39,8 +54,10 @@ getNativeSymbolInfo(name, PACKAGE)
   Otherwise, a generic native symbol object is returned.
 }
 \value{
-  If the symbol is not found, an error is raised.
-  Otherwise, the value is a list containing the following elements:
+  Generally, a list of \code{NativeSymbolInfo} elements
+  whose elements can be indexed by the elements of
+  \code{name}  in the call.
+  Each \code{NativeSymbolInfo} object is a list containing the following elements:
   \item{name}{the name of the symbol, as given by the
   \code{name} argument.}
   \item{address}{the native memory address of the symbol which can
@@ -58,7 +75,6 @@ getNativeSymbolInfo(name, PACKAGE)
 	or only registered routines can be located.}
     }    
   }
-  The class of this list object is \code{NativeSymbolInfo}.
   If the routine was explicitly registered by the dynamically
   loaded library, the list contains a fourth field
   \item{numParameters}{the number of arguments that should be passed
@@ -67,7 +83,12 @@ getNativeSymbolInfo(name, PACKAGE)
   being \code{CRoutine},   \code{CallRoutine},
   \code{FortranRoutine} or \code{ExternalRoutine}
   corresponding to the R interface by which it should be invoked.
-  
+
+  If any of the symbols is not found, an error is immediately raised.
+
+  If \code{name} contains only one symbol name and \code{unlist} is
+  \code{TRUE}, then the single \code{NativeSymbolInfo} is returned
+  rather than the list containing that one element.
 }
 \references{
   For information about registering native routines,
