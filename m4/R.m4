@@ -2613,6 +2613,7 @@ fi
   if test x"${r_cv_complete_blas}" != xyes; then
     acx_blas_ok="no"
     r_cv_complete_blas=no
+    BLAS_LIBS=""
   fi
   AC_MSG_RESULT([${r_cv_complete_blas}])
 fi
