@@ -69,6 +69,9 @@ e.g. "1972-07-01 01:00:00 GMT Standard Time".
 
 Closing the script editor could leave Rgui in an unstable state. (PR#8288)
 
+Support has been added for the ACML optimized BLAS: see the 'R
+Installation and Administration Manual'.
+
 
 
 R 2.2.0
