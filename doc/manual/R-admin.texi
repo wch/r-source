@@ -719,8 +719,7 @@ Another possibility is to use AMD's AMD Core Math Library (ACML)
 @url{http://www.amd.com/acml}.  To use this you need either the Cygwin
 DLL in your path (the version in our @file{tools.zip} works) or to have
 Compaq's Visual Fortran installed.  To use the Cygwin version, install
-@file{acml-2-7-0-win32-g77.exe} (or later), put @file{libacml.dll}
-somewhere in your path or in @file{@var{R_HOME}/bin}, and edit
+@file{acml-2-7-0-win32-g77.exe} (or later) and edit
 @file{@var{R_HOME}/src/gnuwin32/MkRules} to define @code{USE_ACML=YES}
 and set @code{ACML_PATH} to the path to @file{libacml.a}.
 

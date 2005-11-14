@@ -22,7 +22,8 @@ LEA_MALLOC=YES
 USE_ATLAS=NO
 ATLAS_PATH=/R/ATLAS/lib/WinNT_PIIISSE1
 
-# Set to YES and specify the path if you want to use the AMD's ACML BLAS.
+# Set to YES and specify the path to libacml.a 
+# if you want to use the AMD's ACML BLAS.
 USE_ACML=NO
 ACML_PATH=c:/packages/AMD/acml2.7.0/gnu32/lib
 
