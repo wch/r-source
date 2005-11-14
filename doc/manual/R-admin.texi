@@ -716,7 +716,8 @@ compiled for MSVC, we have been unable to make it work for complex
 arithmetic and so it is only used for real linear algebra.
 
 Another possibility is to use AMD's AMD Core Math Library (ACML)
-@url{http://www.amd.com/acml}.  To use the Cygwin version, install
+@url{http://www.amd.com/acml}.  To use the Cygwin-compiled version
+(Cygwin itself is not needed, at least currently), install
 @file{acml-2-7-0-win32-g77.exe} (or later) and edit
 @file{@var{R_HOME}/src/gnuwin32/MkRules} to define @code{USE_ACML=YES}
 and set @code{ACML_PATH} to the path to @file{libacml.a}.
@@ -1872,7 +1873,9 @@ single-threaded only) we could use
 @noindent
 if the appropriate library directory such as
 @file{/opt/acml2.7.0/gnu64/lib} is in the @samp{LD_LIBRRARY_PATH}.
-For other compilers, see the ACML documentation.
+For other compilers, see the ACML documentation.  Although the
+documentation is unclear, 32-bit versions of ACML do run on other
+@code{ia32} chips such as AthlonMP and P4.
 
 
 Note that the BLAS library will be used for several add-on packages as
