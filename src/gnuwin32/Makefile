@@ -274,8 +274,8 @@ cmplxblas.o: ../modules/lapack/cmplxblas.f
 ifeq ($(strip $(USE_ACML)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
-	   -L. $(LIBUNICOWS) -lR -L$(ACML_PATH) -lacml -lg2c
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ACML_PATH) \
+	   -L. $(LIBUNICOWS) -lR -lacml -lg2c
 else
 ifeq ($(strip $(USE_GOTO)),YES)
 libgoto.a:  libgoto.def
