@@ -200,6 +200,20 @@ loadNamespace <- function (package, lib.loc = NULL,
             bindtextdomain(pkgname, popath)
             bindtextdomain(paste("R", pkgname, sep="-"), popath)
         }
+
+        assignNativeRoutines <- function(dll, lib, env) {
+            if(length(nsInfo$nativeRoutines) == 0 ||
+                length(symNames <- nsInfo$nativeRoutines[[lib]]) == 0)
+               return(NULL)
+            
+            symbols <- getNativeSymbolInfo(symNames, dll)
+            sapply(1:length(symNames),
+                    function(i) 
+                        assign(names(symNames)[i], symbols[[i]], envir = env))
+
+            return(symbols)
+        }
+        
         # find package and check it has a name space
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if (length(pkgpath) == 0)
@@ -248,7 +262,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                                                      c(lib.loc, .libPaths())),
                                    imp[[2]])
 
-
+       
+        
         # dynamic variable to allow/disable .Import and friends
         "__NamespaceDeclarativeOnly__" <- declarativeOnly
 
@@ -288,6 +303,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             dlls = list()
             for (lib in nsInfo$dynlibs) {
                dlls[[lib]]  = library.dynam(lib, package, package.lib)
+               assignNativeRoutines(dlls[[lib]], lib, env)
             }
             setNamespaceInfo(env, "DLLs", dlls)
         }
@@ -764,6 +780,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
     importClasses <- list()
     dynlibs <- character(0)
     S3methods <- matrix(as.character(NA), 500, 3)
+    nativeRoutines <- list()
     nS3 <- 0
     parseDirective <- function(e) {
         switch(as.character(e[[1]]),
@@ -811,8 +828,21 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                    importMethods <<- c(importMethods, list(imp))
                },
                useDynLib = {
-                   dyl <- e[-1]
-                   dynlibs <<- c(dynlibs, as.character(dyl))
+                   dyl <- as.character(e[2])
+                   dynlibs <<- c(dynlibs, dyl)
+                   if(length(e) > 2) {
+                     tmp <- as.character(e[-c(1, 2)])
+                     names(tmp) <- names(e[-c(1, 2)])
+                     if(length(names(tmp)) == 0)
+                       names(tmp) = tmp
+                     else if(any(w <- names(tmp) == "")) {
+                       names(tmp)[w] = tmp[w]
+                     }
+                       # We ave separate collections for different DLLs.
+                       # E.g. if we have useDynLib(foo, a, b, c) and useDynLib(bar, a, x, y)
+                       # we would maintain and resolve them separately.
+                     nativeRoutines[[ dyl ]] <<-  tmp
+                   }
                },
                S3method = {
                    spec <- e[-1]
@@ -833,7 +863,8 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
     list(imports=imports, exports=exports, exportPatterns = exportPatterns,
          importClasses=importClasses, importMethods=importMethods,
          exportClasses=exportClasses, exportMethods=exportMethods,
-         dynlibs=dynlibs, S3methods = S3methods[seq(len=nS3), ,drop=FALSE])
+         dynlibs=dynlibs, nativeRoutines = nativeRoutines,
+         S3methods = S3methods[seq(len=nS3), ,drop=FALSE])
 }
 
 registerS3method <- function(genname, class, method, envir = parent.frame()) {

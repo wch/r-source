@@ -167,6 +167,15 @@ NEW FEATURES
 	returning a NativeSymbolInfo object. Use [[ to access the actual
 	values in the DLLInfo object.
 
+    o	The useDynLib() directive in the NAMESPACE file now accepts the
+	names of the native/foreign symbols that are to be resolved in
+	the DLL for use in .C/.Call/.Fortran/.Externa calls. These can
+	be used as regular R variables instead of the (routine name,
+	PACKAGE) pairs currently recommended.  Alternative names can
+	be given for the R variables mapping to these symbols.  See
+	Writing R Extensions manual for more details.
+
+
 DEPRECATED & DEFUNCT
 
     o	The deprecated and undocumented use of atan() with two arguments

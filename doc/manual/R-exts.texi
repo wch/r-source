@@ -1608,6 +1608,68 @@ object can use the @code{useDynLib} directive instead.
 User-level hooks are also available: see the help on function
 @code{setHook}.
 
+The @code{useDynLib} directive also accepts the names of the native
+routines that are to be used in R via the @code{.C}, @code{.Call},
+@code{.Fortran} and @code{.External} interface functions.  These are given as
+additional arguments to the directive, for example, 
+
+@example
+useDynLib(foo, myRoutine, myOtherRoutine)
+@end example
+
+By specifying these names in the @code{useDynLib} directive, the
+native symbols are resolved when the package is loaded and R variables
+identifying these symbols are added to the package's name space with
+these names.  These can be used in the @code{.C}, @code{.Call},
+@code{.Fortran} and @code{.External} calls in place of the
+name of the routine and the @code{PACKAGE} argument.
+For instance, we can call the routine @code{myRoutine} from R
+with the code
+
+@example
+ .Call(myRoutine, x, y)
+@end example
+
+@noindent
+rather than
+
+@example
+ .Call("myRoutine", x, y, PACKAGE = "foo")
+@end example
+
+There are at least two benefits to this approach.  Firstly, the symbol
+lookup is done just once for each symbol rather than each time it the
+routine is invoked. Secondly, this removes any ambiguity in resolving
+symbols that might be present in several compiled libraries.  In
+particular, it allows for correctly resolving routines when different
+versions of the same package are loaded concurrently in the same R
+session.
+
+In some circumstances, there will already be an R variable in the
+package with the same name as a native symbol. For example, we may
+have an R function in the package named @code{myRoutine}.  In this
+case, it is necessary to map the native symbol to a different R
+variable name. This can be done in the @code{useDynLib} directive by
+using named arguments. For instance, to map the native symbol name
+@code{myRoutine} to the R variable @code{myRoutine_sym}, we would use
+
+@example
+useDynLib(foo, myRoutine_sym = myRoutine, myOtherRoutine)
+@end example
+
+We could then call that routine from R using the command
+
+@example
+ .Call(myRoutine_sym, x, y)
+@end example
+
+Symbols without explicit names are assigned to the R variable with
+that name.
+
+More information about this symbol lookup, along with some approaches
+for customizing it, is available from
+@url{http://www.omegahat.org/example/RDotCall}.
+
 @node An example, Summary -- converting an existing package, Load hooks, Package name spaces
 @subsection An example
 
