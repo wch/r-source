@@ -215,6 +215,6 @@ test-Ts:
 
 clean:
 	@rm -f *.Rout *.Rout.fail internet.Rout2 Rplots.ps reg-plot.ps \
-	  reg-tests-?.ps $(test-src-auto) R-exts.* R-intro.R
+	  reg-tests-?.ps $(test-src-auto) R-exts.* R-intro.R Makedeps
 	@rm -rf *.Rcheck
 	@rm -f FALSE* .R .tex mirrors.html
