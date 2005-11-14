@@ -2966,7 +2966,7 @@ and to simulate from the distribution.
 @item Cauchy @tab @code{cauchy} @tab @code{location, scale}
 @item chi-squared @tab @code{chisq} @tab @code{df, ncp}
 @item exponential @tab @code{exp} @tab @code{rate}
-@item F @tab @code{f} @tab @code{df1, df1, ncp}
+@item F @tab @code{f} @tab @code{df1, df2, ncp}
 @item gamma @tab @code{gamma} @tab @code{shape, scale}
 @item geometric @tab @code{geom} @tab @code{prob}
 @item hypergeometric @tab @code{hyper} @tab @code{m, n, k}
