@@ -1755,6 +1755,38 @@ void GEText(double x, double y, char *str,
 }
 
 /****************************************************************
+ * GEXspline
+ ****************************************************************
+ */
+
+#include "xspline.c"
+
+void GEXspline(int n, double *x, double *y, double *s,
+	       Rboolean open,
+	       R_GE_gcontext *gc,
+	       GEDevDesc *dd)
+{
+    /*
+     * Use xspline.c code to generate points to draw
+     * Draw polygon or polyline from points
+     */
+    /* 
+     * Save (and reset below) the heap pointer to clean up
+     * after any R_alloc's done by functions I call.
+     */
+    char *vmaxsave = vmaxget();
+    if (open) {
+      compute_open_spline(n, x, y, s, HIGH_PRECISION, dd);
+      GEPolyline(npoints, xpoints, ypoints, gc, dd);
+    } else {
+      compute_closed_spline(n, x, y, s, HIGH_PRECISION, dd);
+      GEPolygon(npoints, xpoints, ypoints, gc, dd);
+    }
+    vmaxset(vmaxsave);
+}
+
+
+/****************************************************************
  * GEMode
  ****************************************************************
  */

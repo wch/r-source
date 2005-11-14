@@ -1406,6 +1406,84 @@ SEXP L_lines(SEXP x, SEXP y)
     return R_NilValue;
 }
 
+/* We are assuming here that the R code has checked that x and y 
+ * are unit objects and that vp is a viewport
+ */
+SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP index) 
+{
+    int i, j, nx, np, start=0;
+    double *xx, *yy, *ss;
+    double xold, yold;
+    double vpWidthCM, vpHeightCM;
+    double rotationAngle;
+    LViewportContext vpc;
+    R_GE_gcontext gc;
+    LTransform transform;
+    SEXP currentvp, currentgp;
+    /* Get the current device 
+     */
+    GEDevDesc *dd = getDevice();
+    currentvp = gridStateElement(dd, GSS_VP);
+    currentgp = gridStateElement(dd, GSS_GPAR);
+    getViewportTransform(currentvp, dd, 
+			 &vpWidthCM, &vpHeightCM, 
+			 transform, &rotationAngle);
+    getViewportContext(currentvp, &vpc);
+    gcontextFromgpar(currentgp, 0, &gc, dd);
+    /* 
+     * Number of xsplines
+     */
+    np = LENGTH(index);
+    for (i=0; i<np; i++) {
+	char *vmax;
+	SEXP indices = VECTOR_ELT(index, i);
+	gcontextFromgpar(currentgp, i, &gc, dd);
+	/* 
+	 * Number of vertices
+	 *
+	 * Check in R code that x and y same length
+	 */
+	nx = LENGTH(indices); 
+	/* Convert the x and y values to CM locations */
+	vmax = vmaxget();
+	GEMode(1, dd);
+	xx = (double *) R_alloc(nx, sizeof(double));
+	yy = (double *) R_alloc(nx, sizeof(double));
+	ss = (double *) R_alloc(nx, sizeof(double));
+	xold = NA_REAL;
+	yold = NA_REAL;
+	for (j=0; j<nx; j++) {
+	    ss[j] = REAL(s)[(INTEGER(indices)[j] - 1) % LENGTH(s)];
+	    transformLocn(x, y, INTEGER(indices)[j] - 1, vpc, &gc,
+			  vpWidthCM, vpHeightCM,
+			  dd,
+			  transform,
+			  &(xx[j]), &(yy[j]));
+	    /* The graphics engine only takes device coordinates
+	     */
+	    xx[j] = toDeviceX(xx[j], GE_INCHES, dd);
+	    yy[j] = toDeviceY(yy[j], GE_INCHES, dd);
+	    if ((R_FINITE(xx[j]) && R_FINITE(yy[j])) &&
+		!(R_FINITE(xold) && R_FINITE(yold)))
+		start = j;
+	    else if ((R_FINITE(xold) && R_FINITE(yold)) &&
+		     !(R_FINITE(xx[j]) && R_FINITE(yy[j]))) {
+		if (j-start > 1)
+		    GEXspline(j-start, xx+start, yy+start, ss+start, 
+			      LOGICAL(o)[0], &gc, dd);
+	    }
+	    else if ((R_FINITE(xold) && R_FINITE(yold)) &&
+		     (j == nx-1))
+		GEXspline(nx-start, xx+start, yy+start, ss+start, 
+			  LOGICAL(o)[0], &gc, dd);
+	    xold = xx[j];
+	    yold = yy[j];
+	}
+    }
+    GEMode(0, dd);
+    return R_NilValue;
+}
+
 SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1) 
 {
     int i, nx0, ny0, nx1, ny1, maxn;

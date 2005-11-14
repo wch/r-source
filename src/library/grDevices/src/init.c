@@ -39,7 +39,7 @@ static R_CMethodDef CEntries [] = {
 static R_CallMethodDef CallEntries[] = {
     CALLDEF(Type1FontInUse, 2),
     CALLDEF(CIDFontInUse, 2),
-    {"L_nullDevice", (DL_FUNC) &L_nullDevice, 0},
+    {"R_GD_nullDevice", (DL_FUNC) &R_GD_nullDevice, 0},
     {NULL, NULL, 0}
 };
 

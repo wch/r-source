@@ -193,7 +193,7 @@ static Rboolean nullDeviceDriver(NewDevDesc *dev) {
 }
 
 /* formerly in grid.c */
-SEXP L_nullDevice() {
+SEXP R_GD_nullDevice() {
     GEnullDevice();
     return R_NilValue;
 }

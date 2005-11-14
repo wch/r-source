@@ -62,6 +62,7 @@ static const R_CallMethodDef callMethods[] = {
     {"L_segments", (DL_FUNC) &L_segments, 4}, 
     {"L_arrows", (DL_FUNC) &L_arrows, 12}, 
     {"L_polygon", (DL_FUNC) &L_polygon, 3},
+    {"L_xspline", (DL_FUNC) &L_xspline, 5},
     {"L_circle", (DL_FUNC) &L_circle, 3},
     {"L_rect", (DL_FUNC) &L_rect, 6},
     {"L_text", (DL_FUNC) &L_text, 7},

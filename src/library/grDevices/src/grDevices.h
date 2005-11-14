@@ -42,7 +42,7 @@ SEXP CIDFontInUse(SEXP, SEXP);
 
 SEXP Quartz(SEXP);
 
-SEXP L_nullDevice();
+SEXP R_GD_nullDevice();
 
 Rboolean 
 PSDeviceDriver(NewDevDesc*, char*, char*, char*, char**,

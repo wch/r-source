@@ -442,6 +442,78 @@ grid.polygon <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
 }
 
 ######################################
+# XSPLINE primitive
+######################################
+
+validDetails.xspline <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y))
+    stop("x and y must be units")
+  if (!is.null(x$id) && !is.null(x$id.lengths))
+    stop("It is invalid to specify both 'id' and 'id.lengths")
+  if (unit.length(x$x) != unit.length(x$y))
+    stop("'x' and 'y' must be same length")
+  if (!is.null(x$id) && (length(x$id) != unit.length(x$x)))
+    stop("'x' and 'y' and 'id' must all be same length")
+  if (!is.null(x$id))
+    x$id <- as.integer(x$id)
+  if (!is.null(x$id.lengths) && (sum(x$id.lengths) != unit.length(x$x)))
+    stop("'x' and 'y' and 'id.lengths' must specify same overall length")
+  if (!is.null(x$id.lengths))
+    x$id.lengths <- as.integer(x$id.lengths)
+  if (any(x$shape < -1 || x$shape > 1))
+    stop("shape must be between -1 and 1")
+  x$open <- as.logical(x$open)
+  if (x$open &&
+      (x$shape[1] != 0 ||
+       x$shape[length(x$shape)] != 0)) {
+    warning("First and last shape set to 0")
+    x$shape[c(1, length(x$shape))] <- 0
+  }
+  x
+}
+
+drawDetails.xspline <- function(x, recording=TRUE) {
+  if (is.null(x$id) && is.null(x$id.lengths))
+      grid.Call.graphics("L_xspline", x$x, x$y, x$shape, x$open, 
+                         list(as.integer(1:length(x$x))))
+  else {
+    if (is.null(x$id)) {
+      n <- length(x$id.lengths)
+      id <- rep(1:n, x$id.lengths)
+    } else {
+      n <- length(unique(x$id))
+      id <- x$id
+    }
+    index <- vector("list", n)
+    count <- 1
+    for (i in unique(id)) {
+      index[[count]] <- as.integer((1:length(x$x))[id == i])
+      count <- count + 1
+    }
+    grid.Call.graphics("L_xspline", x$x, x$y, x$shape, x$open, index)
+  }
+}
+
+xsplineGrob <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
+                        shape=0, open=TRUE,
+                        id=NULL, id.lengths=NULL,
+                        default.units="npc",
+                        name=NULL, gp=gpar(), vp=NULL) {
+  if (!is.unit(x))
+    x <- unit(x, default.units)
+  if (!is.unit(y))
+    y <- unit(y, default.units)
+  grob(x=x, y=y, shape=shape, open=open,
+       id=id, id.lengths=id.lengths,
+       name=name, gp=gp, vp=vp, cl="xspline")
+}
+
+grid.xspline <- function(...) {
+  grid.draw(xsplineGrob(...))
+}
+
+######################################
 # CIRCLE primitive
 ######################################
 
