@@ -271,6 +271,12 @@ zgemm.o: ../appl/zgemm.f
 cmplxblas.o: ../modules/lapack/cmplxblas.f
 	$(F77) $(FOPTFLAGS) -c $< -o $@
 
+ifeq ($(strip $(USE_ACML)),YES)
+../../bin/Rblas.dll: blas00.o dllversion.o
+	@$(ECHO) -------- Building $@ --------
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
+	   -L. $(LIBUNICOWS) -lR -L$(ACML_PATH) -lacml -lg2c
+else
 ifeq ($(strip $(USE_GOTO)),YES)
 libgoto.a:  libgoto.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) --dllname $(GOTO_DLL) --def $< --output-lib $@
@@ -287,6 +293,7 @@ else
 ../../bin/Rblas.dll: blas.o cmplxblas.o zgemm.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L. $(LIBUNICOWS) -lR
+endif
 endif
 endif
 
