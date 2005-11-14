@@ -133,8 +133,7 @@ static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
 #endif
     }
     
-    status = Riconv(cd, (char **)&inbuf, (size_t *)&inbytesleft,
-		    (char **)&outbuf, (size_t *)&outbytesleft);
+    status = Riconv(cd, (char **)&inbuf, &inbytesleft, &outbuf, &outbytesleft);
     Riconv_close(cd);
 
     if (status == (size_t) -1) {
