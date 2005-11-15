@@ -77,16 +77,17 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   hypergeometric distribution with non-centrality parameter given by the
   odds ratio (Fisher, 1935).  The alternative for a one-sided test is
   based on the odds ratio, so \code{alternative = "greater"} is a test
-  of the odd-ratio being bigger than \code{or}.  Two-sided tests are based on
-  the probabilities of the finite set of values for the first element
-  (or equivalently of observed odds ratios), and take as \sQuote{more
-    extreme} all values with probabilities less than or equal to that of
-  the observed value, the p-value being the sum of such probabilities.
+  of the odds ratio being bigger than \code{or}.
 
-  For larger tables and \code{hybrid = TRUE}, asymptotic chi-squared
-  probabilities are only used if the \dQuote{Cochran conditions} are
-  satisfied, that is if no cell has count zero, and more than 80\% of
-  the cells have counts at least 5.
+  Two-sided tests are based on the probabilities of the tables, and take
+  as \sQuote{more extreme} all tables with probabilities less than or
+  equal to that of the observed table, the p-value being the sum of such
+  probabilities.
+
+  For larger then 2 by 2 tables and \code{hybrid = TRUE}, asymptotic
+  chi-squared probabilities are only used if the \dQuote{Cochran
+    conditions} are satisfied, that is if no cell has count zero, and
+  more than 80\% of the cells have counts at least 5.
 }
 \references{
   Agresti, A. (1990).
