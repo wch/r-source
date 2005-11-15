@@ -156,6 +156,9 @@ NEW FEATURES
 	few cases, but works much better for tables with some large
 	counts.
 
+	There is a new option to simulate the p-value for larger than
+	2 x 2 tables.
+
     o	PCRE has been updated to version 6.4.
 
     o	getNativeSymbolInfo() is vectorized for the name argument.  It

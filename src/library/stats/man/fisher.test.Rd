@@ -8,7 +8,8 @@
 \usage{
 fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
             control = list(), or = 1, alternative = "two.sided",
-            conf.int = TRUE, conf.level = 0.95)
+            conf.int = TRUE, conf.level = 0.95,
+            simulate.p.value = FALSE, B = 2000)
 }
 \arguments{
   \item{x}{either a two-dimensional contingency table in matrix form,
@@ -16,7 +17,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \item{y}{a factor object; ignored if \code{x} is a matrix.}
   \item{workspace}{an integer specifying the size of the workspace
     used in the network algorithm.  In units of 4 bytes.  Only used for
-    larger than \eqn{2 \times 2}{2 by 2} tables.}
+    non-simulated p-values larger than \eqn{2 \times 2}{2 by 2} tables.}
   \item{hybrid}{a logical. Only used for larger than \eqn{2 \times 2}{2 by 2}
     tables, in which cases it indicated whether the exact probabilities
     (default) or a hybrid approximation thereof should be computed.
@@ -38,6 +39,11 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \item{conf.level}{confidence level for the returned confidence
     interval.  Only used in the \eqn{2 \times 2}{2 by 2} case if
     \code{conf.int = TRUE}.}
+  \item{simulate.p.value}{a logical indicating whether to compute
+    p-values by Monte Carlo simulation, in larger than \eqn{2 \times
+      2}{2 by 2} tables.}
+  \item{B}{an integer specifying the number of replicates used in the
+    Monte Carlo test.}
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -84,16 +90,22 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   non-centrality parameter given by the odds ratio (Fisher, 1935).  The
   alternative for a one-sided test is based on the odds ratio, so
   \code{alternative = "greater"} is a test of the odd-ratio being bigger
-  than \code{or}.  Two-sided tests are based on the probabilities of the
+  than \code{or}.
+
+  In all sizes. two-sided tests are based on the probabilities of the
   finite set of values for the first element (or equivalently of
   observed odds ratios), and take as \sQuote{more extreme} all values
   with probabilities less than or equal to that of the observed value,
   the p-value being the sum of such probabilities.
 
-  For larger tables and \code{hybrid = TRUE}, asymptotic chi-squared
-  probabilities are only used if the \dQuote{Cochran conditions} are
-  satisfied, that is if no cell has count zero, and more than 80\% of
-  the cells have counts at least 5.
+  For larger than  \eqn{2 \times 2}{2 by 2} tables and \code{hybrid =
+    TRUE}, asymptotic chi-squared probabilities are only used if the
+  \dQuote{Cochran conditions} are satisfied, that is if no cell has
+  count zero, and more than 80\% of the cells have counts at least 5.
+
+  Simulation is done conditional on the row and column marginals, and
+  works only if the marginals are strictly positive.  (A C translation
+  of the algorithm of Patefield (1981) is used.)
 }
 \references{
   Agresti, A. (1990)
@@ -124,6 +136,11 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   Fisher's Exact Test in \eqn{r \times c}{r x c} Contingency Tables.
   \emph{ACM Transactions on Mathematical Software}, \bold{19},
   484--488.
+  
+  Patefield, W. M. (1981)
+  Algorithm AS159.  An efficient method of generating r x c tables
+  with given row and column totals.
+  \emph{Applied Statistics} \bold{30}, 91--97.
 }
 \seealso{
   \code{\link{chisq.test}}
@@ -156,5 +173,12 @@ fisher.test(Convictions, alternative = "less")
 fisher.test(Convictions, conf.int = FALSE)
 fisher.test(Convictions, conf.level = 0.95)$conf.int
 fisher.test(Convictions, conf.level = 0.99)$conf.int
+
+## A r x c table  Agresti (2002, p. 57) Job Satisfaction
+Job <- matrix(c(1,2,1,0, 3,3,6,1, 10,10,14,9, 6,7,12,11), 4, 4,
+dimnames = list(income=c("< 15k", "15-25k", "25-40k", "> 40k"),
+                satisfaction=c("VeryD", "LittleD", "ModerateS", "VeryS")))
+fisher.test(Job)
+fisher.test(Job, simulate=TRUE, B=1e5)
 }
 \keyword{htest}

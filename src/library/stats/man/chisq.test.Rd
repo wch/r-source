@@ -57,7 +57,9 @@ chisq.test(x, y = NULL, correct = TRUE,
   from the set of all contingency tables with given marginals, and works
   only if the marginals are strictly positive.  (A C translation of the
   algorithm of Patefield (1981) is used.)  Continuity correction is
-  never used, and the statistic is quoted without it.
+  never used, and the statistic is quoted without it.  Note that this is
+  not the usual sampling situation for the chi-squared test but rather
+  that for Fisher's exact test.
 
   In the goodness-of-fit case simulation is done by random sampling from
   the discrete distribution specified by \code{p}, each sample being

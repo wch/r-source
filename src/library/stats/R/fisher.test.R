@@ -1,10 +1,11 @@
 fisher.test <-
 function(x, y = NULL, workspace = 200000, hybrid = FALSE,
          control = list(), or = 1, alternative = "two.sided",
-         conf.int = TRUE, conf.level = 0.95)
+         conf.int = TRUE, conf.level = 0.95,
+         simulate.p.value = FALSE, B = 2000)
 {
     DNAME <- deparse(substitute(x))
-
+    METHOD <- "Fisher's Exact Test for Count Data"
     if(is.data.frame(x))
         x <- as.matrix(x)
     if(is.matrix(x)) {
@@ -58,7 +59,39 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
 
     PVAL <- NULL
     if(nr != 2  ||  nc != 2) {
-        if(hybrid) {
+        if(simulate.p.value) {
+            ## we drop all-zero rows and columns
+            sr <- rowSums(x)
+            sc <- colSums(x)
+            x <- x[sr > 0, sc > 0, drop = FALSE]
+            nr <- nrow(x)
+            nc <- ncol(x)
+            if(nr <= 1)
+                stop("need 2 or more non-zero row marginals")
+            if(nc <= 1)
+                stop("need 2 or more non-zero column marginals")
+            METHOD <- paste(METHOD, "with simulated p-value\n\t (based on", B,
+			     "replicates)")
+            sr <- rowSums(x)
+            sc <- colSums(x)
+            n <- sum(sc)
+            STATISTIC <- -sum(lfactorial(x))
+	    tmp <- .C("fisher_sim",
+		      as.integer(nr),
+		      as.integer(nc),
+		      as.integer(sr),
+		      as.integer(sc),
+		      as.integer(n),
+		      as.integer(B),
+		      integer(nr * nc),
+		      double(n + 1),
+		      integer(nc),
+		      results = double(B),
+		      PACKAGE = "stats")$results
+	    ## use correct significance level for a Monte Carlo test
+            almost.1 <- 1 + 64 * .Machine$double.eps
+	    PVAL <- (1 + sum(tmp <= almost.1 * STATISTIC)) / (B + 1)
+        } else if(hybrid) {
             warning("'hybrid' is ignored for a 2 x 2 table")
             PVAL <- .C("fexact",
                        nr,
@@ -236,7 +269,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
 
     RVAL <- c(RVAL,
               alternative = alternative,
-              method = "Fisher's Exact Test for Count Data",
+              method = METHOD,
               data.name = DNAME)
     attr(RVAL, "class") <- "htest"
     return(RVAL)
