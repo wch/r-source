@@ -30,7 +30,7 @@ as.POSIXlt(x, tz = "")
 \details{
   The \code{as.POSIX*} functions convert an object to one of the two
   classes used to represent date/times (calendar dates plus time to the
-  nearest second).  They can take convert a wide variety of objects,
+  nearest second).  They can convert a wide variety of objects,
   including objects of the other class and of classes \code{"Date"},
   \code{"date"} (from package \pkg{\link[date:as.date]{date}} or
   \pkg{\link[survival:as.date]{survival}}), \code{"chron"} and
