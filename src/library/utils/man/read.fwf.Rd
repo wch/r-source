@@ -36,7 +36,7 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
   \item{buffersize}{Maximum number of lines to read at one time}
   \item{\dots}{further arguments to be passed to
     \code{\link{read.table}}.  Useful further arguments include
-    \code{na.strings, \code{colClasses} and \code{strip.white}.}
+    \code{na.strings}, \code{colClasses} and \code{strip.white}.}
     % PR#8083 mentions strip.white
 }
 \value{
