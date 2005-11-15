@@ -29,7 +29,6 @@ void blas_dummy()
     dtrsm_();
     idamax_();
     lsame_();
-    dcabs1_();
     dgemv_();
     dger_();
     dsymv_();
@@ -45,7 +44,8 @@ void blas_dummy()
     dtrsv_();
     dtrsm_();
     dtrsv_();
-/* cmplblas.o */
+/* cmplxblas.o */
+    dcabs1_();
     dzasum_();
     dznrm2_();
     izamax_();
