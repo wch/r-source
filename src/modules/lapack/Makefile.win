@@ -20,8 +20,8 @@ OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 	$(MKDIR) -p ../../../modules
 	$(CP) $< $@
 
-lapack-DLLLIBS=-L../../../lib $(LIBUNICOWS) -lRlapack
-DLLLIBS=-L../../../lib $(LIBUNICOWS) -lR -lRblas -lg2c
+lapack-DLLLIBS=-L../../../lib -lRlapack -lRblas -lR
+Rlapack-DLLLIBS=-L../../../lib -lR -lRblas -lg2c
 
 $(MODULE).dll: $(OBJS)
 
@@ -39,7 +39,7 @@ Rlapack.dll: dlamc.o dlapack0.o dlapack1.o dlapack2.o dlapack3.o cmplx.o Rlapack
 	@$(NM) $^ > Defs
 	@$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
 	@$(RM) Defs
-	$(DLL) --shared $(DLLFLAGS) -o $@ Rlapack.def $^ $(DLLLIBS)
+	$(DLL) --shared $(DLLFLAGS) -o $@ Rlapack.def $^ $(Rlapack-DLLLIBS)
 
 libRlapack.a: Rlapack.def
 
