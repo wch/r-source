@@ -1,16 +1,15 @@
-\name{reorder}
-\alias{reorder}
+\name{reorder.dendrogram}
 \alias{reorder.dendrogram}
-\title{ Reorder a dendrogram }
+\title{Reorder a Dendrogram}
 \description{
+  A method for the generic function \code{\link{reorder}}.
+
   There are many different orderings of a dendrogram that are consistent
   with the structure imposed.  This function takes a dendrogram and a
   vector of values and reorders the dendrogram in the order of the
   supplied vector, maintaining the constraints on the dendrogram.
 }
 \usage{
-reorder(x, \dots)
-
 \method{reorder}{dendrogram}(x, wts, agglo.FUN = sum, \dots)
 }
 \arguments{
@@ -28,11 +27,14 @@ reorder(x, \dots)
   weight of the \eqn{j}-th sub branch).
 }
 \value{
-  From \code{reorder.dendrogram}, a dendrogram where each node has a
-  further attribute \code{value} with its corresponding weight.
+  A dendrogram where each node has a further attribute \code{value} with
+  its corresponding weight.
 }
 \author{R. Gentleman and M. Maechler}
-\seealso{\code{\link{rev.dendrogram}} which simply reverses the nodes'
+\seealso{
+  \code{\link{reorder}}.
+
+  \code{\link{rev.dendrogram}} which simply reverses the nodes'
   order; \code{\link{heatmap}}, \code{\link{cophenetic}}.
 }
 \examples{
