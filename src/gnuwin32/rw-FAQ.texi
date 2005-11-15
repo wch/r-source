@@ -1160,12 +1160,13 @@ libraries are located.  You will need to make the libraries yourself:
 none of the binaries we have seen are compiled for the correct
 compiler.
 
-Even faster hand-coded routines are available as DLLs from Dr Kazushige
-Goto for certain CPUs (Pentium III and 4 and Opteron).  He does not
-allow redistribution: they have been available @emph{via}
-@uref{http://www.cs.utexas.edu/users/kgoto/signup_first.html} and there
-is support in the R sources to build @file{R_HOME\bin\Rblas.dll} to link
-to one of his DLLs.  On the @code{svd} problem they took 6.8 sec.
+An alternative for those building from sources is to use AMD's Core Math
+Library (ACML) @url{http://www.amd.com/acml}.  See the
+@emph{R Installation and Administration Manual} for details.
+
+Hand-coded routines used to be available as DLLs from Dr Kazushige
+Goto for certain CPUs, but these have been withdrawn (as has the support
+in R).
 
 
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
@@ -1379,14 +1380,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 September 26: comments to
+Last edited 2005 November 14: comments to
 <code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 September 26: comments to <Rwindows@@r-project.org>
+Last edited 2005 November 14: comments to <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye
