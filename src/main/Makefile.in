@@ -41,7 +41,7 @@ EXTRA_SOURCES_C = \
 	Rmain.c Rembedded.c \
 	alloca.c acosh.c asinh.c atanh.c \
 	snprintf.c strdup.c strncasecmp.c \
-	vsnprintf.c
+	vsnprintf.c xspline.c
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
