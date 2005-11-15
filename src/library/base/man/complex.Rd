@@ -39,7 +39,7 @@ Conj(x)
   specified either by giving its length, its real and imaginary parts, or
   modulus and argument.  (Giving just the length generates a vector of
   complex zeroes.)
-  
+
   \code{as.complex} attempts to coerce its argument to be of complex
   type: like \code{\link{as.vector}} it strips attributes including names.
 
@@ -50,10 +50,9 @@ Conj(x)
   \code{Conj} have their usual interpretation as returning the real
   part, imaginary part, modulus, argument and complex conjugate for
   complex values.  Modulus and argument are also called the \emph{polar
-      coordinates}.  If \eqn{z = x + i y} with real \eqn{x} and \eqn{y},
-  \code{Mod}\eqn{(z) = \sqrt{x^2 + y^2}}, and for
-  \eqn{\phi= \code{Arg}(z)}, \eqn{x = \code{Mod}(z)\cos(\phi)} and
-  \eqn{y = \code{Mod}(z)\sin(\phi)}.
+    coordinates}.  If \eqn{z = x + i y} with real \eqn{x} and \eqn{y},
+  for \eqn{r = \code{Mod}(z) = \sqrt{x^2 + y^2}}, and
+  \eqn{\phi = \code{Arg}(z)}, \eqn{x = r*\cos(\phi)} and \eqn{y = r*\sin(\phi)}.
   They are all generic functions: methods can be defined
   for them individually or via the \code{\link{Complex}} group generic.
 
