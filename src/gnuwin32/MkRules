@@ -20,12 +20,12 @@ LEA_MALLOC=YES
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
 USE_ATLAS=NO
-ATLAS_PATH=/R/ATLAS/lib/WinNT_PIIISSE1
+ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 
 # Set to YES and specify the path to libacml.a 
 # if you want to use the AMD's ACML BLAS.
-USE_ACML=
-ACML_PATH=c:/packages/AMD/acml2.7.0/gnu32/lib
+USE_ACML=NO
+ACML_PATH=c:/Program Files/AMD/acml2.7.0/gnu32/lib
 
 # Support for the Goto BLAS has been withdrawn: see R-admin.html
 
