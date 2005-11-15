@@ -145,7 +145,7 @@ function(x, y = NULL,
     ## 3: none
     ## 4: simple numeric  
     axis(4)
-    box()
+    if(!x.categorical) box()
     
     ## return table visualized
     names(dimnames(tab)) <- c(xlab, ylab)
