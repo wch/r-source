@@ -7,6 +7,19 @@ Changes from grid_2.2.0 to grid_2.3.0:
     These used to always convert the argument to "character".
     Now they let language objects (e.g., expressions) pass through.
 
+2.  New grid.xspline() function to draw X-splines (a general curve
+    approximated or interpolated relative to control points).
+
+3.  New 'arrow' argument to grid.line.to(), grid.lines(), and
+    grid.segments().  This provides a new way to specify arrow
+    heads on either end of a line.
+
+    grid.arrows() has been deprecated.
+
+    NOTE: that the new 'arrow' arguments have been added BEFORE
+    the name, gp and vp arguments so existing code that specifies
+    any of these arguments *by position* (not by name) will fail.
+
 
 Changes from grid_2.1.0 to grid_2.2.0:
 ------------------------------------

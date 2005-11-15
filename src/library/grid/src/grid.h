@@ -132,6 +132,14 @@
  */
 #define GP_FONTFACE 15
 
+/*
+ * Structure of an arrow description
+ */
+#define GRID_ARROWANGLE 0
+#define GRID_ARROWLENGTH 1
+#define GRID_ARROWENDS 2
+#define GRID_ARROWTYPE 3
+
 typedef double LTransform[3][3];
 
 typedef double LLocation[3];
@@ -270,14 +278,14 @@ SEXP L_initViewportStack();
 SEXP L_initDisplayList();
 SEXP L_convertToNative(SEXP x, SEXP what); 
 SEXP L_moveTo(SEXP x, SEXP y);
-SEXP L_lineTo(SEXP x, SEXP y);
-SEXP L_lines(SEXP x, SEXP y); 
-SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1); 
+SEXP L_lineTo(SEXP x, SEXP y, SEXP arrow);
+SEXP L_lines(SEXP x, SEXP y, SEXP arrow); 
+SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow); 
 SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn, 
 	      SEXP y1, SEXP y2, SEXP ynm1, SEXP yn, 
 	      SEXP angle, SEXP length, SEXP ends, SEXP type);
 SEXP L_polygon(SEXP x, SEXP y, SEXP index);
-SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP index);
+SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index);
 SEXP L_circle(SEXP x, SEXP y, SEXP r);
 SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust); 
 SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust, 

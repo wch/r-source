@@ -3,23 +3,22 @@
 \alias{xsplineGrob}
 \title{ Draw an Xspline }
 \description{
-  These functions create and draw an xspline.
+  These functions create and draw an xspline, a curve drawn
+  relative to control points.
 }
 \usage{
 grid.xspline(...)
-xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0), shape = 0,
-            open = TRUE, id = NULL, id.lengths = NULL,
-            default.units = "npc", name = NULL, gp = gpar(), vp = NULL)
+xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
+            id = NULL, id.lengths = NULL,
+            default.units = "npc",
+            shape = 0, open = TRUE, arrow = NULL,
+            name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-locations of
     spline control points.}
   \item{y}{A numeric vector or unit object specifying y-locations of
     spline control points.}
-  \item{shape}{A numeric vector of values between -1 and 1, which
-    control the shape of the spline relative to the control points.}
-  \item{open}{A logical value indicating whether the spline is 
-    a line or a closed shape.}
   \item{id}{A numeric vector used to separate locations in \code{x} and
     \code{y} into multiple xsplines.  All locations with the same
     \code{id} belong to the same xspline.}
@@ -29,6 +28,12 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0), shape = 0,
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y}
     are only given as numeric vectors.}  
+  \item{shape}{A numeric vector of values between -1 and 1, which
+    control the shape of the spline relative to the control points.}
+  \item{open}{A logical value indicating whether the spline is 
+    a line or a closed shape.}
+  \item{arrow}{A list describing arrow heads to place at either end
+    of the xspline, as produced by the \code{arrow} function.}
   \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
@@ -59,7 +64,10 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0), shape = 0,
   discontinuous at that control point.
 
   For open xsplines, the start and end control points must have a shape
-  of 0.
+  of 0 (and non-zero values are converted to zero with a warning).
+
+  Missing values are not allowed for \code{x} and \code{y}
+  (i.e., it is not valid for a control point to be missing).
 
   For closed xsplines, the final point is automatically
   connected to the initial point.
@@ -71,7 +79,8 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0), shape = 0,
 }
 \seealso{
   \link{Grid},
-  \code{\link{viewport}}
+  \code{\link{viewport},
+  \code{\link{arrow}}}
 }
 \examples{
 x <- c(0.25, 0.25, 0.75, 0.75)

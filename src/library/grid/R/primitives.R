@@ -1,4 +1,21 @@
 
+# Function that creates a description of an arrow head
+# to add to a line
+arrow <- function(angle=30, length=unit(0.25, "inches"),
+                  ends="last", type="open") {
+    angle <- as.numeric(angle)
+    if (!is.unit(length))
+        stop("'length' must be a unit object")
+    ends <- as.integer(match(ends, c("first", "last", "both")))
+    type <- as.integer(match(type, c("open", "closed")))
+    if (any(is.na(ends)) || any(is.na(type)))
+        stop("Invalid 'ends' or 'type' argument")
+    a <- list(angle=angle, length=length,
+              ends=ends, type=type)
+    class(a) <- "arrow"
+    a
+}                        
+
 ######################################
 # move-to and line-to primitives
 ######################################
@@ -44,28 +61,32 @@ validDetails.line.to <- function(x) {
   # Make sure that x and y are of length 1
   if (unit.length(x$x) > 1 | unit.length(x$y) > 1)
     stop("'x' and 'y' must have length 1")
+  if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
+      stop("invalid 'arrow' argument")
   x
 }
 
 drawDetails.line.to <- function(x, recording=TRUE) {
-  grid.Call.graphics("L_lineTo", x$x, x$y)
+  grid.Call.graphics("L_lineTo", x$x, x$y, x$arrow)
 }
 
 lineToGrob <- function(x=1, y=1,
                        default.units="npc",
+                       arrow=NULL,
                        name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  grob(x=x, y=y,
+  grob(x=x, y=y, arrow=arrow,
        name=name, gp=gp, vp=vp, cl="line.to")
 }
 
 grid.line.to <- function(x=1, y=1,
                          default.units="npc",
+                         arrow=NULL,
                          name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
-  ltg <- lineToGrob(x=x, y=y, default.units=default.units,
+  ltg <- lineToGrob(x=x, y=y, default.units=default.units, arrow=arrow,
                     name=name, gp=gp, vp=vp)
   if (draw)
     grid.draw(ltg)
@@ -79,11 +100,13 @@ validDetails.lines <- function(x) {
   if (!is.unit(x$x) ||
       !is.unit(x$y))
     stop("'x' and 'y' must be units")
+  if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
+      stop("invalid 'arrow' argument")
   x
 }
 
 drawDetails.lines <- function(x, recording=TRUE) {
-  grid.Call.graphics("L_lines", x$x, x$y)
+  grid.Call.graphics("L_lines", x$x, x$y, x$arrow)
 }
 
 widthDetails.lines <- function(x) {
@@ -105,22 +128,24 @@ heightDetails.lines <- function(x) {
 linesGrob <- function(x=unit(c(0, 1), "npc", units.per.obs),
                       y=unit(c(0, 1), "npc", units.per.obs),
                       default.units="npc", units.per.obs=FALSE,
+                      arrow=NULL,
                       name=NULL, gp=gpar(), vp=NULL) {
   # Allow user to specify unitless vector;  add default units
   if (!is.unit(x))
     x <- unit(x, default.units, units.per.obs)
   if (!is.unit(y))
     y <- unit(y, default.units, units.per.obs)
-  grob(x=x, y=y, name=name, gp=gp, vp=vp, cl="lines")
+  grob(x=x, y=y, arrow=arrow, name=name, gp=gp, vp=vp, cl="lines")
 }
 
 # Specify "units.per.obs=TRUE" to give a unit or units per (x, y) pair
 grid.lines <- function(x=unit(c(0, 1), "npc", units.per.obs),
                        y=unit(c(0, 1), "npc", units.per.obs),
                        default.units="npc", units.per.obs=FALSE,
+                       arrow=NULL,
                        name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
   lg <- linesGrob(x=x, y=y, default.units=default.units,
-                  units.per.obs=units.per.obs,
+                  units.per.obs=units.per.obs, arrow=arrow,
                   name=name, gp=gp, vp=vp)
   if (draw)
     grid.draw(lg)
@@ -134,11 +159,13 @@ validDetails.segments <- function(x) {
   if (!is.unit(x$x0) || !is.unit(x$x1) ||
       !is.unit(x$y0) || !is.unit(x$y1))
     stop("'x0', 'y0', 'x1', and 'y1' must be units")
+  if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
+      stop("invalid 'arrow' argument")
   x
 }
 
 drawDetails.segments <- function(x, recording=TRUE) {
-  grid.Call.graphics("L_segments", x$x0, x$y0, x$x1, x$y1)
+  grid.Call.graphics("L_segments", x$x0, x$y0, x$x1, x$y1, x$arrow)
 }
 
 widthDetails.segments <- function(x) {
@@ -165,6 +192,7 @@ heightDetails.segments <- function(x) {
 segmentsGrob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
                          x1=unit(1, "npc"), y1=unit(1, "npc"),
                          default.units="npc", units.per.obs=FALSE,
+                         arrow=NULL,
                          name=NULL, gp=gpar(), vp=NULL) {
   # Allow user to specify unitless vector;  add default units
   if (!is.unit(x0))
@@ -175,17 +203,19 @@ segmentsGrob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
     y0 <- unit(y0, default.units, units.per.obs)
   if (!is.unit(y1))
     y1 <- unit(y1, default.units, units.per.obs)
-  grob(x0=x0, y0=y0, x1=x1, y1=y1, name=name, gp=gp, vp=vp,
+  grob(x0=x0, y0=y0, x1=x1, y1=y1, arrow=arrow, name=name, gp=gp, vp=vp,
        cl="segments")
 }
 
 grid.segments <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
-                      x1=unit(1, "npc"), y1=unit(1, "npc"),
-                      default.units="npc", units.per.obs=FALSE,
-                      name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
+                          x1=unit(1, "npc"), y1=unit(1, "npc"),
+                          default.units="npc", units.per.obs=FALSE,
+                          arrow=NULL,
+                          name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
   sg <- segmentsGrob(x0=x0, y0=y0, x1=x1, y1=y1,
                      default.units=default.units,
                      units.per.obs=units.per.obs,
+                     arrow=arrow,
                      name=name, gp=gp, vp=vp)
   if (draw)
     grid.draw(sg)
@@ -196,6 +226,8 @@ grid.segments <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
 # ARROWS primitive
 ######################################
 
+# Superceded by 'arrow' arg to line-drawing primitives
+# which contains an "arrow" object
 validDetails.arrows <- function(x) {
   if ((!is.null(x$x) && !is.unit(x$x)) ||
       (!is.null(x$y) && !is.unit(x$y)))
@@ -270,7 +302,7 @@ drawDetails.arrows <- function(x, recording=TRUE) {
     yy <- unit.rep(x$y, length=n)
     ynm1 <- yy[n - 1]
     yn <- yy[n]
-    grid.Call.graphics("L_lines", x$x, x$y)
+    grid.Call.graphics("L_lines", x$x, x$y, NULL)
   }
   grid.Call.graphics("L_arrows", x1, x2, xnm1, xn, y1, y2, ynm1, yn,
                      x$angle, x$length, x$ends, x$type)
@@ -312,6 +344,7 @@ arrowsGrob <- function(x=c(0.25, 0.75), y=0.5,
                         angle=30, length=unit(0.25, "inches"),
                         ends="last", type="open",
                         name=NULL, gp=gpar(), vp=NULL) {
+    warning("grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions.")
   if (is.null(grob)) {
     if (!is.unit(x))
       x <- unit(x, default.units)
@@ -461,6 +494,8 @@ validDetails.xspline <- function(x) {
     stop("'x' and 'y' and 'id.lengths' must specify same overall length")
   if (!is.null(x$id.lengths))
     x$id.lengths <- as.integer(x$id.lengths)
+  if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
+      stop("invalid 'arrow' argument")
   if (any(x$shape < -1 || x$shape > 1))
     stop("shape must be between -1 and 1")
   x$open <- as.logical(x$open)
@@ -475,7 +510,7 @@ validDetails.xspline <- function(x) {
 
 drawDetails.xspline <- function(x, recording=TRUE) {
   if (is.null(x$id) && is.null(x$id.lengths))
-      grid.Call.graphics("L_xspline", x$x, x$y, x$shape, x$open, 
+      grid.Call.graphics("L_xspline", x$x, x$y, x$shape, x$open, x$arrow,
                          list(as.integer(1:length(x$x))))
   else {
     if (is.null(x$id)) {
@@ -491,21 +526,21 @@ drawDetails.xspline <- function(x, recording=TRUE) {
       index[[count]] <- as.integer((1:length(x$x))[id == i])
       count <- count + 1
     }
-    grid.Call.graphics("L_xspline", x$x, x$y, x$shape, x$open, index)
+    grid.Call.graphics("L_xspline", x$x, x$y, x$shape, x$open, x$arrow, index)
   }
 }
 
 xsplineGrob <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
-                        shape=0, open=TRUE,
                         id=NULL, id.lengths=NULL,
-                        default.units="npc",
+                        default.units="npc", 
+                        shape=0, open=TRUE, arrow=NULL,
                         name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
   grob(x=x, y=y, shape=shape, open=open,
-       id=id, id.lengths=id.lengths,
+       id=id, id.lengths=id.lengths, arrow=arrow,
        name=name, gp=gp, vp=vp, cl="xspline")
 }
 

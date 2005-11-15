@@ -14,17 +14,20 @@ grid.move.to(x = 0, y = 0, default.units = "npc", name = NULL,
 
 moveToGrob(x = 0, y = 0, default.units = "npc", name = NULL, vp = NULL)
 
-grid.line.to(x = 1, y = 1, default.units = "npc", name = NULL,
+grid.line.to(x = 1, y = 1, default.units = "npc",
+             arrow = NULL, name = NULL,
              gp = gpar(), draw = TRUE, vp = NULL)
 
-lineToGrob(x = 1, y = 1, default.units = "npc", name = NULL,
-           gp = gpar(), vp = NULL)
+lineToGrob(x = 1, y = 1, default.units = "npc", arrow = NULL,
+           name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{x}{A numeric value or a unit object specifying an x-value.}
   \item{y}{A numeric value or a unit object specifying a y-value.}
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y} are only given as numeric values.}  
+  \item{arrow}{A list describing arrow heads to place at either end
+    of the line, as produced by the \code{arrow} function.}
   \item{name}{ A character identifier. }
   \item{draw}{A logical value indicating whether graphics output
     should be produced.}
@@ -45,7 +48,8 @@ lineToGrob(x = 1, y = 1, default.units = "npc", name = NULL,
 \author{Paul Murrell}
 \seealso{
   \link{Grid},
-  \code{\link{viewport}}
+  \code{\link{viewport}},
+  \code{\link{arrow}}}
 }
 
 \examples{

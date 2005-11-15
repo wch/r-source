@@ -1761,15 +1761,18 @@ void GEText(double x, double y, char *str,
 
 #include "xspline.c"
 
-void GEXspline(int n, double *x, double *y, double *s,
-	       Rboolean open,
-	       R_GE_gcontext *gc,
-	       GEDevDesc *dd)
+/*
+ * Draws a "curve" through the specified control points.
+ * Return the vertices of the line that gets drawn.
+ */
+SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
+	       R_GE_gcontext *gc, GEDevDesc *dd)
 {
     /*
      * Use xspline.c code to generate points to draw
      * Draw polygon or polyline from points
      */
+    SEXP result = R_NilValue;
     /* 
      * Save (and reset below) the heap pointer to clean up
      * after any R_alloc's done by functions I call.
@@ -1782,7 +1785,22 @@ void GEXspline(int n, double *x, double *y, double *s,
       compute_closed_spline(n, x, y, s, HIGH_PRECISION, dd);
       GEPolygon(npoints, xpoints, ypoints, gc, dd);
     }
+    if (npoints > 1) {
+	SEXP xpts, ypts;
+	int i;
+	PROTECT(xpts = allocVector(REALSXP, npoints));
+	PROTECT(ypts = allocVector(REALSXP, npoints));
+	for (i=0; i<npoints; i++) {
+	    REAL(xpts)[i] = xpoints[i];
+	    REAL(ypts)[i] = ypoints[i];
+	}
+	PROTECT(result = allocVector(VECSXP, 2));
+	SET_VECTOR_ELT(result, 0, xpts);
+	SET_VECTOR_ELT(result, 1, ypts);
+	UNPROTECT(3);
+    } 
     vmaxset(vmaxsave);
+    return result;
 }
 
 

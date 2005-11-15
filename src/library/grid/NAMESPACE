@@ -3,6 +3,7 @@ useDynLib("grid")
 import(grDevices)
 
 export(
+       "arrow",
        # Conversion of units
        "convertUnit", "convertX", "convertY",
        "convertWidth", "convertHeight",

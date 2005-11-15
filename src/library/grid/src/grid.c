@@ -1251,6 +1251,130 @@ SEXP L_layoutRegion(SEXP layoutPosRow, SEXP layoutPosCol) {
  ***************************
  */
 
+/*
+ * Draw an arrow head, given the vertices of the arrow head.
+ * Assume vertices are in DEVICE coordinates.
+ */
+static void drawArrow(double *x, double *y, SEXP type, int i,
+		      R_GE_gcontext *gc, GEDevDesc *dd) 
+{
+    int nt = LENGTH(type);
+    switch (INTEGER(type)[i % nt]) {
+    case 1:
+	GEPolyline(3, x, y, gc, dd);
+	break;
+    case 2:
+	GEPolygon(3, x, y, gc, dd);
+	break;
+    }
+}
+
+/*
+ * Calculate vertices for drawing an arrow head.
+ * Assumes that x and y locations are in INCHES.
+ * Returns vertices in DEVICE coordinates.
+ */
+static void calcArrow(double x1, double y1,
+		      double x2, double y2,
+		      SEXP angle, SEXP length, int i,
+		      LViewportContext vpc,
+		      double vpWidthCM, double vpHeightCM,
+		      double *vertx, double *verty,
+		      R_GE_gcontext *gc, GEDevDesc *dd) 
+{
+    int na = LENGTH(angle);
+    int nl = LENGTH(length);
+    double xc, yc, rot;
+    double l1, l2, l, a;
+    l1 = transformWidthtoINCHES(length, i % nl, vpc, gc,
+				vpWidthCM, vpHeightCM,
+				dd);
+    l2 = transformHeighttoINCHES(length, i % nl, vpc, gc,
+				 vpWidthCM, vpHeightCM,
+				 dd);
+    l = fmin2(l1, l2);
+    a = DEG2RAD * REAL(angle)[i % na];
+    xc = x2 - x1;
+    yc = y2 - y1;
+    rot= atan2(yc, xc);
+    vertx[0] = toDeviceX(x1 + l * cos(rot+a),
+			 GE_INCHES, dd);
+    verty[0] = toDeviceY(y1 + l * sin(rot+a),
+			 GE_INCHES, dd);
+    vertx[1] = toDeviceX(x1, 
+			 GE_INCHES, dd);
+    verty[1] = toDeviceY(y1,
+			 GE_INCHES, dd);
+    vertx[2] = toDeviceX(x1 + l * cos(rot-a),
+			 GE_INCHES, dd);
+    verty[2] = toDeviceY(y1 + l * sin(rot-a),
+			 GE_INCHES, dd);
+}
+
+/*
+ * Assumes x and y are at least length 2
+ * Also assumes x and y are in DEVICE coordinates
+ */
+static void arrows(double *x, double *y, int n,
+		   SEXP arrow, int i,
+		   /*
+		    * Which ends we are allowed to draw arrow heads on
+		    * (we may be drawing a line segment that has been
+		    *  broken by NAs)
+		    */
+		   Rboolean start, Rboolean end,
+		   LViewportContext vpc,
+		   double vpWidthCM, double vpHeightCM,
+		   R_GE_gcontext *gc, GEDevDesc *dd) 
+{
+    /*
+     * Write a checkArrow() function to make
+     * sure 'a' is a valid arrow description ?
+     * If someone manages to sneak in a
+     * corrupt arrow description ... BOOM!
+     */			
+    SEXP ends = VECTOR_ELT(arrow, GRID_ARROWENDS);
+    int ne = LENGTH(ends);
+    double vertx[3], verty[3];
+    Rboolean first, last;
+    if (n < 2)
+	error(_("Require at least two points to draw arrow"));
+    first = TRUE;
+    last = TRUE;
+    switch (INTEGER(ends)[i % ne]) {
+    case 2: 
+	first = FALSE;
+	break;
+    case 1:
+	last = FALSE;
+	break;
+    }
+    if (first && start) {
+	calcArrow(fromDeviceX(x[0], GE_INCHES, dd),
+		  fromDeviceY(y[0], GE_INCHES, dd),
+		  fromDeviceX(x[1], GE_INCHES, dd),
+		  fromDeviceY(y[1], GE_INCHES, dd),
+		  VECTOR_ELT(arrow, GRID_ARROWANGLE), 
+		  VECTOR_ELT(arrow, GRID_ARROWLENGTH),
+		  i, vpc, vpWidthCM, vpHeightCM, vertx, verty, gc, dd);
+	drawArrow(vertx, verty, 
+		  VECTOR_ELT(arrow, GRID_ARROWTYPE), i, 
+		  gc, dd);
+    } 
+    if (last && end) {
+	calcArrow(fromDeviceX(x[n - 1], GE_INCHES, dd),
+		  fromDeviceY(y[n - 1], GE_INCHES, dd),
+		  fromDeviceX(x[n - 2], GE_INCHES, dd),
+		  fromDeviceY(y[n - 2], GE_INCHES, dd),
+		  VECTOR_ELT(arrow, GRID_ARROWANGLE), 
+		  VECTOR_ELT(arrow, GRID_ARROWLENGTH),
+		  i, vpc, vpWidthCM, vpHeightCM, vertx, verty, gc, dd);
+	drawArrow(vertx, verty, 
+		  VECTOR_ELT(arrow, GRID_ARROWTYPE), i, 
+		  gc, dd);
+    }
+}
+
 SEXP L_moveTo(SEXP x, SEXP y)
 {    
     double xx, yy;
@@ -1292,7 +1416,7 @@ SEXP L_moveTo(SEXP x, SEXP y)
     return R_NilValue;
 }
 
-SEXP L_lineTo(SEXP x, SEXP y)
+SEXP L_lineTo(SEXP x, SEXP y, SEXP arrow)
 {
     double xx0, yy0, xx1, yy1;
     double xx, yy;
@@ -1335,6 +1459,16 @@ SEXP L_lineTo(SEXP x, SEXP y)
 	R_FINITE(xx1) && R_FINITE(yy1)) {
 	GEMode(1, dd);
 	GELine(xx0, yy0, xx1, yy1, &gc, dd);
+	if (!isNull(arrow)) {
+	    double ax[2], ay[2];
+	    ax[0] = xx0;
+	    ax[1] = xx1;
+	    ay[0] = yy0;
+	    ay[1] = yy1;
+	    arrows(ax, ay, 2,
+		   arrow, 0, TRUE, TRUE, 
+		   vpc, vpWidthCM, vpHeightCM, &gc, dd);
+	}
 	GEMode(0, dd);
     }
     UNPROTECT(2);
@@ -1344,7 +1478,7 @@ SEXP L_lineTo(SEXP x, SEXP y)
 /* We are assuming here that the R code has checked that x and y 
  * are unit objects and that vp is a viewport
  */
-SEXP L_lines(SEXP x, SEXP y) 
+SEXP L_lines(SEXP x, SEXP y, SEXP arrow) 
 {
     int i, nx, ny, start=0;
     double *xx, *yy;
@@ -1392,12 +1526,35 @@ SEXP L_lines(SEXP x, SEXP y)
 	    start = i;
 	else if ((R_FINITE(xold) && R_FINITE(yold)) &&
 		 !(R_FINITE(xx[i]) && R_FINITE(yy[i]))) {
-	    if (i-start > 1)
+	    if (i-start > 1) {
 		GEPolyline(i-start, xx+start, yy+start, &gc, dd);
+		if (!isNull(arrow)) {
+		    /*
+		     * Can draw an arrow at the start if the points
+		     * include the first point.
+		     * CANNOT draw an arrow at the end point 
+		     * because we have just broken the line for an NA.
+		     */
+		    arrows(xx+start, yy+start, i-start,
+			   arrow, 0, start == 0, FALSE,
+			   vpc, vpWidthCM, vpHeightCM, &gc, dd);
+		}
+	    }
 	}
 	else if ((R_FINITE(xold) && R_FINITE(yold)) &&
-		 (i == nx-1))
+		 (i == nx-1)) {
 	    GEPolyline(nx-start, xx+start, yy+start, &gc, dd);
+	    if (!isNull(arrow)) {
+		/*
+		 * Can draw an arrow at the start if the points
+		 * include the first point.
+		 * Can draw an arrow at the end point.
+		 */
+		arrows(xx+start, yy+start, nx-start, 
+		       arrow, 0, start == 0, TRUE,
+		       vpc, vpWidthCM, vpHeightCM, &gc, dd);
+	    }
+	} 
 	xold = xx[i];
 	yold = yy[i];
     }
@@ -1407,13 +1564,12 @@ SEXP L_lines(SEXP x, SEXP y)
 }
 
 /* We are assuming here that the R code has checked that x and y 
- * are unit objects and that vp is a viewport
+ * are unit objects 
  */
-SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP index) 
+SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index) 
 {
     int i, j, nx, np, start=0;
     double *xx, *yy, *ss;
-    double xold, yold;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
@@ -1437,6 +1593,7 @@ SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP index)
     for (i=0; i<np; i++) {
 	char *vmax;
 	SEXP indices = VECTOR_ELT(index, i);
+	SEXP points;
 	gcontextFromgpar(currentgp, i, &gc, dd);
 	/* 
 	 * Number of vertices
@@ -1450,8 +1607,6 @@ SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP index)
 	xx = (double *) R_alloc(nx, sizeof(double));
 	yy = (double *) R_alloc(nx, sizeof(double));
 	ss = (double *) R_alloc(nx, sizeof(double));
-	xold = NA_REAL;
-	yold = NA_REAL;
 	for (j=0; j<nx; j++) {
 	    ss[j] = REAL(s)[(INTEGER(indices)[j] - 1) % LENGTH(s)];
 	    transformLocn(x, y, INTEGER(indices)[j] - 1, vpc, &gc,
@@ -1463,28 +1618,29 @@ SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP index)
 	     */
 	    xx[j] = toDeviceX(xx[j], GE_INCHES, dd);
 	    yy[j] = toDeviceY(yy[j], GE_INCHES, dd);
-	    if ((R_FINITE(xx[j]) && R_FINITE(yy[j])) &&
-		!(R_FINITE(xold) && R_FINITE(yold)))
-		start = j;
-	    else if ((R_FINITE(xold) && R_FINITE(yold)) &&
-		     !(R_FINITE(xx[j]) && R_FINITE(yy[j]))) {
-		if (j-start > 1)
-		    GEXspline(j-start, xx+start, yy+start, ss+start, 
-			      LOGICAL(o)[0], &gc, dd);
+	    if (!(R_FINITE(xx[j]) && R_FINITE(yy[j]))) {
+		error(_("Non-finite control point in Xspline"));
 	    }
-	    else if ((R_FINITE(xold) && R_FINITE(yold)) &&
-		     (j == nx-1))
-		GEXspline(nx-start, xx+start, yy+start, ss+start, 
-			  LOGICAL(o)[0], &gc, dd);
-	    xold = xx[j];
-	    yold = yy[j];
 	}
+	PROTECT(points = GEXspline(nx, xx, yy, ss,
+				   LOGICAL(o)[0], &gc, dd));
+	if (!isNull(a) && !isNull(points)) {
+	    /*
+	     * Can draw an arrow at the either end.
+	     */
+	    arrows(REAL(VECTOR_ELT(points, 0)), 
+		   REAL(VECTOR_ELT(points, 1)), 
+		   LENGTH(VECTOR_ELT(points, 0)),
+		   a, i, TRUE, TRUE,
+		   vpc, vpWidthCM, vpHeightCM, &gc, dd);
+	}
+	UNPROTECT(1);
     }
     GEMode(0, dd);
     return R_NilValue;
 }
 
-SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1) 
+SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow) 
 {
     int i, nx0, ny0, nx1, ny1, maxn;
     double vpWidthCM, vpHeightCM;
@@ -1534,23 +1690,20 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1)
 	if (R_FINITE(xx0) && R_FINITE(yy0) &&
 	    R_FINITE(xx1) && R_FINITE(yy1)) {
 	    GELine(xx0, yy0, xx1, yy1, &gc, dd);
+	    if (!isNull(arrow)) {
+		double ax[2], ay[2];
+		ax[0] = xx0;
+		ax[1] = xx1;
+		ay[0] = yy0;
+		ay[1] = yy1;
+		arrows(ax, ay, 2,
+		       arrow, i, TRUE, TRUE,
+		       vpc, vpWidthCM, vpHeightCM, &gc, dd);
+	    }
 	}
     }
     GEMode(0, dd);
     return R_NilValue;
-}
-
-static void drawArrow(double *x, double *y, int type, 
-		      R_GE_gcontext *gc, int i, GEDevDesc *dd) 
-{
-    switch (type) {
-    case 1:
-	GEPolyline(3, x, y, gc, dd);
-	break;
-    case 2:
-	GEPolygon(3, x, y, gc, dd);
-	break;
-    }
 }
 
 static int getArrowN(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn, 
@@ -1604,7 +1757,7 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 	      SEXP angle, SEXP length, SEXP ends, SEXP type) 
 {
     int i, maxn;
-    int na, nl, ne, nt;
+    int ne;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     Rboolean first, last;
@@ -1624,29 +1777,15 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
     getViewportContext(currentvp, &vpc);
     maxn = getArrowN(x1, x2, xnm1, xn,
 		     y1, y2, ynm1, yn);
-    na = LENGTH(angle);
-    nl = unitLength(length);
     ne = LENGTH(ends);
-    nt = LENGTH(type);
     /* Convert the x and y values to INCHES locations */
     /* FIXME:  Need to check for NaN's and NA's
      */
     GEMode(1, dd);
     for (i=0; i<maxn; i++) {
-	double xc, yc, rot;
 	double xx1, xx2, xxnm1, xxn, yy1, yy2, yynm1, yyn;
 	double vertx[3];
 	double verty[3];
-	double l1, l2, l, a, t;
-	gcontextFromgpar(currentgp, i, &gc, dd);
-	l1 = transformWidthtoINCHES(length, i % nl, vpc, &gc,
-				    vpWidthCM, vpHeightCM,
-				    dd);
-	l2 = transformHeighttoINCHES(length, i % nl, vpc, &gc,
-				      vpWidthCM, vpHeightCM,
-				      dd);
-	l = fmin2(l1, l2);
-	a = DEG2RAD * REAL(angle)[i % na];
 	first = TRUE;
 	last = TRUE;
 	switch (INTEGER(ends)[i % ne]) {
@@ -1657,7 +1796,7 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 	    last = FALSE;
 	    break;
 	}
-	t = INTEGER(type)[i % nt];
+	gcontextFromgpar(currentgp, i, &gc, dd);
 	/*
 	 * If we're adding arrows to a line.to
 	 * x1 will be NULL
@@ -1675,21 +1814,9 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 	    transformLocn(x2, y2, i, vpc, &gc,
 			  vpWidthCM, vpHeightCM,
 			  dd, transform, &xx2, &yy2);
-	    xc = xx2 - xx1;
-	    yc = yy2 - yy1;
-	    rot= atan2(yc, xc);
-	    vertx[0] = toDeviceX(xx1 + l * cos(rot+a),
-				 GE_INCHES, dd);
-	    verty[0] = toDeviceY(yy1 + l * sin(rot+a),
-				 GE_INCHES, dd);
-	    vertx[1] = toDeviceX(xx1, 
-				 GE_INCHES, dd);
-	    verty[1] = toDeviceY(yy1,
-				 GE_INCHES, dd);
-	    vertx[2] = toDeviceX(xx1 + l * cos(rot-a),
-				 GE_INCHES, dd);
-	    verty[2] = toDeviceY(yy1 + l * sin(rot-a),
-				 GE_INCHES, dd);
+	    calcArrow(xx1, yy1, xx2, yy2, angle, length, i,
+		      vpc, vpWidthCM, vpHeightCM,
+		      vertx, verty, &gc, dd);
 	    /* 
 	     * Only draw arrow if both ends of first segment 
 	     * are not non-finite
@@ -1697,7 +1824,7 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 	    if (R_FINITE(toDeviceX(xx2, GE_INCHES, dd)) &&
 		R_FINITE(toDeviceY(yy2, GE_INCHES, dd)) &&
 		R_FINITE(vertx[1]) && R_FINITE(verty[1]))
-		drawArrow(vertx, verty, t, &gc, i, dd);
+		drawArrow(vertx, verty, type, i, &gc, dd);
 	}
 	if (last) {
 	    if (isNull(xnm1)) {
@@ -1710,21 +1837,9 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 	    transformLocn(xn, yn, i, vpc, &gc,
 			  vpWidthCM, vpHeightCM,
 			  dd, transform, &xxn, &yyn);
-	    xc = xxnm1 - xxn;
-	    yc = yynm1 - yyn;
-	    rot= atan2(yc, xc);
-	    vertx[0] = toDeviceX(xxn + l * cos(rot+a),
-				 GE_INCHES, dd);
-	    verty[0] = toDeviceY(yyn + l * sin(rot+a),
-				 GE_INCHES, dd);
-	    vertx[1] = toDeviceX(xxn, 
-				 GE_INCHES, dd);
-	    verty[1] = toDeviceY(yyn,
-				 GE_INCHES, dd);
-	    vertx[2] = toDeviceX(xxn + l * cos(rot-a),
-				 GE_INCHES, dd);
-	    verty[2] = toDeviceY(yyn + l * sin(rot-a),
-				 GE_INCHES, dd);
+	    calcArrow(xxn, yyn, xxnm1, yynm1, angle, length, i,
+		      vpc, vpWidthCM, vpHeightCM,
+		      vertx, verty, &gc, dd);
 	    /* 
 	     * Only draw arrow if both ends of laste segment are
 	     * not non-finite
@@ -1732,7 +1847,7 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 	    if (R_FINITE(toDeviceX(xxnm1, GE_INCHES, dd)) &&
 		R_FINITE(toDeviceY(yynm1, GE_INCHES, dd)) &&
 		R_FINITE(vertx[1]) && R_FINITE(verty[1]))
-		drawArrow(vertx, verty, t, &gc, i, dd);
+		drawArrow(vertx, verty, type, i, &gc, dd);
 	}
 	if (isNull(x1))
 	    UNPROTECT(1);

@@ -6,6 +6,9 @@
   Functions to create and draw arrows at either end of a line, or at
   either end of a 
   line.to, lines, or segments grob.
+
+  These functions have been deprecated in favour of \code{arrow}
+  arguments to the line-related primitives.
 }
 \usage{
 grid.arrows(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
@@ -61,6 +64,7 @@ arrowsGrob(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
   \code{\link{grid.segments}}
 }
 \examples{
+\dontrun{## to avoid lots of deprecation warnings
 pushViewport(viewport(layout=grid.layout(2, 4)))
 pushViewport(viewport(layout.pos.col=1,
                        layout.pos.row=1))
@@ -125,5 +129,6 @@ glt <- lineToGrob(x=0.5, y=0.2, gp=gpar(lwd=3))
 grid.arrows(grob=glt, ends="first", gp=gpar(lwd=3))
 popViewport(2)
 grid.edit(gPath("arrowOnLine", "curve"), y=unit((0:80/100)^3, "npc"))
+}
 }
 \keyword{dplot}
