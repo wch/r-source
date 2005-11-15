@@ -866,6 +866,7 @@ static int SymbolCode(SEXP expr)
     return 0;
 }
 
+/* this is the one really used: */
 static int TranslatedSymbol(SEXP expr)
 {
     int code = SymbolCode(expr);
@@ -1036,7 +1037,7 @@ static BBOX RenderSymbolStr(char *str, int draw, mathContext *mc,
 	    wchar_t wc;
 	    mbstate_t mb_st;
 	    size_t res;
-	    
+
 	    memset(&mb_st, 0, sizeof(mb_st));
 	    while (*s) {
 		wc = 0;
