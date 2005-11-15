@@ -37,7 +37,7 @@ Conj(x)
 \details{
   Complex vectors can be created with \code{complex}.  The vector can be
   specified either by giving its length, its real and imaginary parts, or
-  modulus and argument. (Giving just the length generates a vector of
+  modulus and argument.  (Giving just the length generates a vector of
   complex zeroes.)
   
   \code{as.complex} attempts to coerce its argument to be of complex
@@ -49,10 +49,11 @@ Conj(x)
   The functions \code{Re}, \code{Im}, \code{Mod}, \code{Arg} and
   \code{Conj} have their usual interpretation as returning the real
   part, imaginary part, modulus, argument and complex conjugate for
-  complex values. Modulus and argument are also called the \emph{polar
-      coordinates}. If \eqn{z = x + i y} with real \eqn{x} and \eqn{y},
+  complex values.  Modulus and argument are also called the \emph{polar
+      coordinates}.  If \eqn{z = x + i y} with real \eqn{x} and \eqn{y},
   \code{Mod}\eqn{(z) = \sqrt{x^2 + y^2}}, and for
-  \eqn{\phi= Arg(z)}, \eqn{x = \cos(\phi)} and \eqn{y = \sin(\phi)}.
+  \eqn{\phi= \code{Arg}(z)}, \eqn{x = \code{Mod}(z)\cos(\phi)} and
+  \eqn{y = \code{Mod}(z)\sin(\phi)}.
   They are all generic functions: methods can be defined
   for them individually or via the \code{\link{Complex}} group generic.
 

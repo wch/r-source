@@ -6,7 +6,7 @@
 \alias{.isMethodsDispatchOn}
 \description{
   \R possesses a simple generic function mechanism which can be used for
-  an object-oriented style of programming.  Method despatch takes place
+  an object-oriented style of programming.  Method dispatch takes place
   based on the class of the first argument to the generic function or on
   the object supplied as an argument to \code{UseMethod} or \code{NextMethod}.
 }
@@ -28,11 +28,11 @@ NextMethod(generic = NULL, object = NULL, \dots)
   If the object does not have a class attribute, it has an implicit
   class.  Matrices and arrays have class \code{"matrix"}
   or\code{"array"} followed by the class of the underlying vector.
-  Most vectors have class the result of \code{\link{mode}(x)}, expect
+  Most vectors have class the result of \code{\link{mode}(x)}, except
   that integer vectors have class \code{c("integer", "numeric")} and
   real vectors have class \code{c("double", "numeric")}.
 
-  When a generic function \code{fun} is applied to an object with class
+  When a generic function \code{fun} is applies to an object with class
   attribute \code{c("first", "second")}, the system searches for a
   function called \code{fun.first} and, if it finds it, applied it to
   the object.  If no such function is found a function called

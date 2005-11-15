@@ -1,12 +1,16 @@
 \name{reorder.factor}
+\alias{reorder}
 \alias{reorder.factor}
-\title{Reorder levels of a factor}
+\title{Reorder Levels of a Factor}
 \description{
-  Reorders the levels of a factor depending on values of a second
+  \code{reorder} is a generic function.  Its \code{"factor"} method
+  reorders the levels of a factor depending on values of a second
   variable, usually numeric.
 }
 
 \usage{
+reorder(x, \dots)
+
 \method{reorder}{factor}(x, X, FUN = mean, \dots,
         order = is.ordered(x))
 }
@@ -41,6 +45,10 @@
 }
 
 \author{Deepayan Sarkar \email{deepayan@stat.wisc.edu}}
+
+\seealso{
+  \code{\link{reorder.dendrogram}}.
+}
 
 \examples{
 bymedian <- with(InsectSprays, reorder(spray, count, median))

@@ -3,6 +3,7 @@
 \alias{Rprofile}
 \alias{.Rprofile}
 \alias{Rprofile.site}
+\alias{Renviron}
 \alias{Renviron.site}
 \alias{.Renviron}
 \alias{.First}
@@ -96,16 +97,22 @@
   the outermost level of (single or double) quotes is stripped, and
   backslashes are removed except inside quotes.
 }
-#ifdef unix
 \note{
+#ifdef unix
   The file \file{\$R\_HOME/etc/Renviron} is always read very early in
   the start-up processing.  It contains environment variables set by \R
   in the configure process.  Values in that file can be overriden in
   site or user environment files: do not change
   \file{\$R\_HOME/etc/Renviron} itself.  Note that this is distinct from
   \file{\$R\_HOME/etc/Renviron.site}.
-}
 #endif
+#ifdef windows
+  Unix versions of \R have a file \file{\$R\_HOME/etc/Renviron} which is
+  read very early in the start-up processing.  It contains environment
+  variables set by \R in the configure process, and is not used on \R
+  for Windows.
+#endif
+}
 \section{Historical notes}{
   Prior to \R version 1.4.0, the environment files searched were
   \file{.Renviron} in the current directory, the file pointed to by
