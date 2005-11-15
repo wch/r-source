@@ -30,6 +30,9 @@ model.tables(x, \dots)
 
   For \code{type = "means"} give tables of the mean response for each
   combinations of levels of the factors in a term.
+
+  The \code{"aov"} method cannot be applied to components of a
+  \code{"aovlist"} fit.
 }
 \value{
   An object of class \code{"tables.aov"}, as list which may contain components
