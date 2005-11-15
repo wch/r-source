@@ -623,7 +623,7 @@ distribution:
 ## ============= End of maintainer targets ========================
 
 # Dependencies : blas00.c malloc.c don't have any
-CSOURCES=$(SOURCES) blasGoto.c
+CSOURCES=$(SOURCES)
 DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
