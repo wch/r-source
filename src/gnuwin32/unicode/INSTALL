@@ -1,3 +1,6 @@
+*This is no currently operational*
+==================================
+
 For UTF-8 support in Win9x and WinME, R needs a Unicode
 support layer.  
 
