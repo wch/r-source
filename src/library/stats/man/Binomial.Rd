@@ -54,8 +54,8 @@ rbinom(n, size, prob)
 }
 \references{
   Catherine Loader (2000). \emph{Fast and Accurate Computation of
-    Binomial Probabilities}; manuscript available from
-  \url{http://cm.bell-labs.com/cm/ms/departments/sia/catherine/dbinom}
+    Binomial Probabilities}; manuscript and C listing available from
+  \url{http://www.herine.net/stat/software/dbinom.html}
 }
 \examples{
 # Compute P(45 < X < 55) for X Binomial(100,0.5)
