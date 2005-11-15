@@ -467,6 +467,9 @@ BUG FIXES
 	occasionally segfault.  (This has been there since at least
 	mid 1997.)
 
+    o	The registration of .Fortran symbols was broken: these could
+	only be looked up if there were also .Call symbols registered!
+
 
 
 		CHANGES IN R VERSION 2.2.0
