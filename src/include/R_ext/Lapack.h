@@ -2714,6 +2714,9 @@ F77_NAME(dtzrzf)(int *m, int *n, double *a, int *
 	lda, double *tau, double *work, int *lwork, int *info);
  
 
+extern int
+F77_NAME(lsame)(char *ca, char *cb);
+
 void
 F77_NAME(zbdsqr)(char *uplo, int *n, int *ncvt, int *
 	nru, int *ncc, double *d, double *e, Rcomplex *vt, 

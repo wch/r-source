@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003 The R Development Core Team.
+ *  Copyright (C) 2003-5 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -50,6 +50,12 @@ F77_NAME(drot)(const int *n, double *dx, const int *incx,
 	       double *dy, const int *incy, const double *c, const double *s);
 void   /* DROTG - generate a Given's rotation */
 F77_NAME(drotg)(const double *a, const double *b, double *c, double *s);
+void   /* DROTM - apply a modified Given's rotation */
+F77_NAME(drotm)(const int *n, double *dx, const int *incx,
+		double *dy, const int *incy, const double *dparam);
+void   /* DROTMG - generate a modified Given's rotation */
+F77_NAME(drotmg)(const double *dd1, const double *dd2, const double *dx1, 
+		 const double *dy1, double *param);
 void   /* DSCAL - scale a one-dimensional array */
 F77_NAME(dscal)(const int *n, const double *alpha, double *dx, const int *incx);
 void   /* DSWAP - interchange one-dimensional arrays */
@@ -215,10 +221,9 @@ F77_NAME(dsyr2k)(const char *uplo, const char *trans,
 		 const double *b, const int *ldb,
 		 const double *beta, double *c, const int *ldc);
 
-/*  LSAME returns .TRUE. if CA is the same letter as CB regardless of
-    case. */
-extern int
-F77_NAME(lsame)(char *ca, char *cb);
+/*
+  LSAME is a LAPACK support routine, not part of BLAS
+*/
 
 #ifdef  __cplusplus
 }
