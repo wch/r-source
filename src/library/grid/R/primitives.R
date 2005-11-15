@@ -530,6 +530,24 @@ drawDetails.xspline <- function(x, recording=TRUE) {
   }
 }
 
+widthDetails.xspline <- function(x) {
+  bounds <- grid.Call("L_xsplineBounds", x$x, x$y, x$shape, x$open, x$arrow,
+                      list(as.integer(1:length(x$x))))
+  if (is.null(bounds))
+    unit(0, "inches")
+  else
+    unit(bounds[2] - bounds[1], "inches")
+}
+
+heightDetails.xspline <- function(x) {
+  bounds <- grid.Call("L_xsplineBounds", x$x, x$y, x$shape, x$open, x$arrow,
+                      list(as.integer(1:length(x$x))))
+  if (is.null(bounds))
+    unit(0, "inches")
+  else
+    unit(bounds[4] - bounds[3], "inches")
+}
+
 xsplineGrob <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
                         id=NULL, id.lengths=NULL,
                         default.units="npc", 

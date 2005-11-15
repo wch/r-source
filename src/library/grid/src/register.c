@@ -78,6 +78,7 @@ static const R_CallMethodDef callMethods[] = {
     {"L_locnBounds", (DL_FUNC) &L_locnBounds, 2},
     {"L_rectBounds", (DL_FUNC) &L_rectBounds, 6},
     {"L_textBounds", (DL_FUNC) &L_textBounds, 6},
+    {"L_xsplineBounds", (DL_FUNC) &L_xsplineBounds, 6},
     { NULL, NULL, 0 }
 };
 

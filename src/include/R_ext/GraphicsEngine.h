@@ -295,6 +295,7 @@ void GEPolyline(int n, double *x, double *y,
 void GEPolygon(int n, double *x, double *y, 
 	       R_GE_gcontext *gc, GEDevDesc *dd);
 SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open, 
+	       Rboolean draw,
 	       R_GE_gcontext *gc, GEDevDesc *dd);
 void GECircle(double x, double y, double radius,
 	      R_GE_gcontext *gc, GEDevDesc *dd);

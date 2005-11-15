@@ -1566,9 +1566,10 @@ SEXP L_lines(SEXP x, SEXP y, SEXP arrow)
 /* We are assuming here that the R code has checked that x and y 
  * are unit objects 
  */
-SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index) 
+SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index,
+		 Rboolean draw) 
 {
-    int i, j, nx, np, start=0;
+    int i, j, nx, np, nloc;
     double *xx, *yy, *ss;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
@@ -1576,6 +1577,11 @@ SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index)
     R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
+    SEXP result = R_NilValue;
+    double xmin = DOUBLE_XMAX;
+    double xmax = DOUBLE_XMIN;
+    double ymin = DOUBLE_XMAX;
+    double ymax = DOUBLE_XMIN;
     /* Get the current device 
      */
     GEDevDesc *dd = getDevice();
@@ -1590,6 +1596,7 @@ SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index)
      * Number of xsplines
      */
     np = LENGTH(index);
+    nloc = 0;
     for (i=0; i<np; i++) {
 	char *vmax;
 	SEXP indices = VECTOR_ELT(index, i);
@@ -1603,7 +1610,8 @@ SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index)
 	nx = LENGTH(indices); 
 	/* Convert the x and y values to CM locations */
 	vmax = vmaxget();
-	GEMode(1, dd);
+	if (draw)
+	    GEMode(1, dd);
 	xx = (double *) R_alloc(nx, sizeof(double));
 	yy = (double *) R_alloc(nx, sizeof(double));
 	ss = (double *) R_alloc(nx, sizeof(double));
@@ -1623,8 +1631,8 @@ SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index)
 	    }
 	}
 	PROTECT(points = GEXspline(nx, xx, yy, ss,
-				   LOGICAL(o)[0], &gc, dd));
-	if (!isNull(a) && !isNull(points)) {
+				   LOGICAL(o)[0], draw, &gc, dd));
+	if (draw && !isNull(a) && !isNull(points)) {
 	    /*
 	     * Can draw an arrow at the either end.
 	     */
@@ -1634,10 +1642,56 @@ SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index)
 		   a, i, TRUE, TRUE,
 		   vpc, vpWidthCM, vpHeightCM, &gc, dd);
 	}
+	if (!draw && !isNull(points)) {
+	    /*
+	     * Update bounds
+	     */
+	    int j, n = LENGTH(VECTOR_ELT(points, 0));
+	    double *px = REAL(VECTOR_ELT(points, 0));
+	    double *py = REAL(VECTOR_ELT(points, 1));
+	    for (j=0; j<n; j++) {
+		double pxx = fromDeviceX(px[j], GE_INCHES, dd);
+		double pyy = fromDeviceY(py[j], GE_INCHES, dd);
+		if (R_FINITE(pxx) && R_FINITE(pyy)) {
+		    if (pxx < xmin)
+			xmin = pxx;
+		    if (pxx > xmax)
+			xmax = pxx;
+		    if (pyy < ymin)
+			ymin = pyy;
+		    if (pyy > ymax)
+			ymax = pyy;
+		    nloc++;
+		}
+	    }
+	}
 	UNPROTECT(1);
+	if (draw)
+	    GEMode(0, dd);
     }
-    GEMode(0, dd);
+    if (nloc > 0) {
+	result = allocVector(REALSXP, 4);
+	/*
+	 * Reverse the scale adjustment (zoom factor)
+	 * when calculating physical value to return to user-level
+	 */
+	REAL(result)[0] = xmin / REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[1] = xmax / REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[2] = ymin / REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[3] = ymax / REAL(gridStateElement(dd, GSS_SCALE))[0];
+    } 
+    return result;
+}
+
+SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index) 
+{
+    gridXspline(x, y, s, o, a, index, TRUE);
     return R_NilValue;
+}
+
+SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index) 
+{
+    return gridXspline(x, y, s, o, a, index, FALSE);
 }
 
 SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow) 
@@ -2675,7 +2729,7 @@ SEXP L_locnBounds(SEXP x, SEXP y)
 			  dd,
 			  transform,
 			  &xx, &yy);
-	    if (R_FINITE(xx) & R_FINITE(yy)) {
+	    if (R_FINITE(xx) && R_FINITE(yy)) {
 		if (xx < xmin)
 		    xmin = xx;
 		if (xx > xmax)
