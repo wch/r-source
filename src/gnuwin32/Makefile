@@ -252,8 +252,7 @@ htmldocs:
 Rblas: ../../bin/Rblas.dll
 
 Rblas-clean:
-	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o \
-	  blasGoto.o libgoto.a
+	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o
 
 Rblas-DLLLIBS=-L../../lib $(LIBUNICOWS) -lR
 
@@ -270,29 +269,22 @@ blas.o: ../appl/blas.f
 cmplxblas.o: ../appl/cmplxblas.f
 	$(F77) $(FOPTFLAGS) -c $< -o $@
 
+## Rblas.dll imports xerbla_ from R.dll
 ifeq ($(strip $(USE_ACML)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ACML_PATH) \
-	   -L../../lib $(LIBUNICOWS) -lR -lacml -lg2c
-else
-ifeq ($(strip $(USE_GOTO)),YES)
-libgoto.a:  libgoto.def
-	$(DLLTOOL) $(DLLTOOLFLAGS) --dllname $(GOTO_DLL) --def $< --output-lib $@
-../../bin/Rblas.dll: blas00.o blasGoto.o cmplxblas.o dllversion.o libgoto.a
-	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../lib $(LIBUNICOWS) -lR -lg2c -lgoto
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L"$(ACML_PATH)" \
+	   -L../../lib -lR -lacml -lg2c
 else
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
-	   -L../../lib $(LIBUNICOWS) -lR -lg2c -lf77blas -latlas
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L"$(ATLAS_PATH)" \
+	   -L../../lib -lR -lf77blas -latlas
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L../../lib $(LIBUNICOWS) -lR -lg2c
-endif
+	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L../../lib -lR -lg2c
 endif
 endif
 

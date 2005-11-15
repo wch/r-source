@@ -34,8 +34,12 @@ binary mode (this is only an issue on Windows).  This solves some
 problems with reading compressed data files via gzfile().
 
 This version of R expects a complete double-complex BLAS to be
-available, and so customized (e.g. ATLAS and Goto) versions of
-Rblas.dll needs to be rebuilt.
+available, and so customized (e.g. ATLAS and ACML) versions of
+Rblas.dll needs to be rebuilt.  (The pre-compiled ones available on
+CRAN have been updated.)
+
+Since the Goto BLAS is no longer available for Windows, support for it
+has been withdrawn.
 
 
 

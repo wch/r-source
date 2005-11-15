@@ -24,12 +24,10 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_PIIISSE1
 
 # Set to YES and specify the path to libacml.a 
 # if you want to use the AMD's ACML BLAS.
-USE_ACML=NO
+USE_ACML=
 ACML_PATH=c:/packages/AMD/acml2.7.0/gnu32/lib
 
-# Set to YES and specify the DLL name if you want to use K. Goto's BLAS.
-USE_GOTO=NO
-GOTO_DLL=libgoto_p4_512-r0.9.dll
+# Support for the Goto BLAS has been withdrawn: see R-admin.html
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
