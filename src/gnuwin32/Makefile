@@ -274,7 +274,7 @@ cmplxblas.o: ../modules/lapack/cmplxblas.f
 ifeq ($(strip $(USE_ACML)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ACML_PATH) \
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L"$(ACML_PATH)" \
 	   -L. $(LIBUNICOWS) -lR -lacml -lg2c
 else
 ifeq ($(strip $(USE_GOTO)),YES)
@@ -287,7 +287,7 @@ else
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L"$(ATLAS_PATH)" \
 	   -L. $(LIBUNICOWS) -lR -lg2c -lf77blas -latlas
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o zgemm.o dllversion.o
