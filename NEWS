@@ -479,6 +479,9 @@ BUG FIXES
     o	R CMD build was incorrectly rejecting the recommended form of
 	name for a translation package, 'Translation-ll'.  (PR#8314)
 
+    o	numericDeriv() gave nonsense results unless the variables were
+	real, which was not checked.
+
 
 
 		CHANGES IN R VERSION 2.2.0

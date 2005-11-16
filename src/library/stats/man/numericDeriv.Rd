@@ -10,13 +10,16 @@ numericDeriv(expr, theta, rho = parent.frame())
 \arguments{
   \item{expr}{The expression to be differentiated.  The value of this
     expression should be a numeric vector.}
-  \item{theta}{A character vector of names of variables used in \code{expr}}
+  \item{theta}{A character vector of names of numeric variables
+    used in \code{expr}.}
   \item{rho}{An environment containing all the variables needed to
-    evaluate \code{expr}}
+    evaluate \code{expr}.}
 }
 \details{
   This is a front end to the C function \code{numeric_deriv}, which is
   described in \emph{Writing R Extensions}.
+
+  The numeric variables must be of type \code{real} and not \code{integer}.
 }
 \value{
   The value of \code{eval(expr, envir = rho)} plus a matrix
