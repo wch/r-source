@@ -2853,8 +2853,8 @@ function(dfile)
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
         tmp <- character()
-        if(regexpr(sprintf("^%s$", valid_package_name_regexp),
-                   val) == -1)
+        if(regexpr(sprintf("^%s$", valid_package_name_regexp), val) == -1
+           && regexpr("^Translation-[[:alnum:].]+$", val) == -1)
             tmp <- c(tmp, gettext("Malformed package name"))
         ## <FIXME>
         ## Not clear if we really want to do this.  The Perl code still
