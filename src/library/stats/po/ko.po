@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:35+0100\n"
+"POT-Creation-Date: 2005-11-16 22:59+0000\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -142,9 +142,19 @@ msgstr "theta는 문자 유형이 아니면 되지 않습니다"
 msgid "rho should be an environment"
 msgstr "rho는 환경이 나오지 않으면 되지 않습니다"
 
-#: nls.c:221 nls.c:243
+#: nls.c:220 nls.c:248
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "model를 평가할때 결손값 또는 무한대가 생성되었습니다"
+
+#: nls.c:226
+#, c-format
+msgid "variable '%s' is integer, not numeric"
+msgstr ""
+
+#: nls.c:228
+#, c-format
+msgid "variable '%s' is not numeric"
+msgstr ""
 
 #: pacf.c:72
 msgid "bad Starma struct"

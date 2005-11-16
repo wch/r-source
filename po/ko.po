@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-09 11:07+0000\n"
+"POT-Creation-Date: 2005-11-16 22:58+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -5860,12 +5860,12 @@ msgstr "부분 대입에 있어서 유형를 고정해두고, 유형(%d)는 호�
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "첨자 첨부의 부르는 값인 NAs는 허용하지 않습니다"
 
-#: src/main/subassign.c:399 src/main/subassign.c:672 src/main/subassign.c:920
+#: src/main/subassign.c:401 src/main/subassign.c:672 src/main/subassign.c:920
 #: src/main/subassign.c:1102
 msgid "nothing to replace with"
 msgstr "옮겨놓아야 할것이 아무것도 없습니다"
 
-#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:922
 #: src/main/subassign.c:1104
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "옮겨놓아야하는 항목수가, 옮겨놓는 수의 배수가 아니었습니다"

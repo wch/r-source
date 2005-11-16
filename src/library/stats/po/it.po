@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:35+0100\n"
+"POT-Creation-Date: 2005-11-16 22:59+0000\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -141,9 +141,19 @@ msgstr "theta deve essere di tipo character"
 msgid "rho should be an environment"
 msgstr "rho deve essere un environment"
 
-#: nls.c:221 nls.c:243
+#: nls.c:220 nls.c:248
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Valore mancante o infinito generato durante il calcolo del modello"
+
+#: nls.c:226
+#, c-format
+msgid "variable '%s' is integer, not numeric"
+msgstr ""
+
+#: nls.c:228
+#, c-format
+msgid "variable '%s' is not numeric"
+msgstr ""
 
 #: pacf.c:72
 msgid "bad Starma struct"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-09 11:07+0000\n"
+"POT-Creation-Date: 2005-11-16 22:58+0000\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -5859,12 +5859,12 @@ msgstr "部分代入における型のフィックスにおいて，型 (%d) は
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "添え字付きの付値で NA は許されていません"
 
-#: src/main/subassign.c:399 src/main/subassign.c:672 src/main/subassign.c:920
+#: src/main/subassign.c:401 src/main/subassign.c:672 src/main/subassign.c:920
 #: src/main/subassign.c:1102
 msgid "nothing to replace with"
 msgstr "置き換えるべきものがなにもありません"
 
-#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:922
 #: src/main/subassign.c:1104
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "置き換えるべき項目数が，置き換える数の倍数ではありませんでした"

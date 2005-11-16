@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:35+0100\n"
+"POT-Creation-Date: 2005-11-16 22:59+0000\n"
 "PO-Revision-Date: 2005-09-27 23:08-0300\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -144,9 +144,19 @@ msgstr "theta deve ser do tipo caractere"
 msgid "rho should be an environment"
 msgstr "rho deve ser um ambiente"
 
-#: nls.c:221 nls.c:243
+#: nls.c:220 nls.c:248
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Obtido valor faltante ou infinito quando avaliando o modelo"
+
+#: nls.c:226
+#, c-format
+msgid "variable '%s' is integer, not numeric"
+msgstr ""
+
+#: nls.c:228
+#, c-format
+msgid "variable '%s' is not numeric"
+msgstr ""
 
 #: pacf.c:72
 msgid "bad Starma struct"
@@ -191,7 +201,8 @@ msgstr "`d' deve ser um vetor numérico não-vazio"
 
 #: port.c:364
 msgid "When Hessian defined must also have gradient defined"
-msgstr "quando a hessiana for definida o gradiente também deve ser especificado"
+msgstr ""
+"quando a hessiana for definida o gradiente também deve ser especificado"
 
 #: port.c:367
 #, c-format
@@ -219,7 +230,8 @@ msgstr "função gradiente deve ser uma matriz numérica de dimensão (%d,%d)"
 #: port.c:478
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr "fcn retornou modo %d, comprimento %d - necessário modo %d, comprimento %d"
+msgstr ""
+"fcn retornou modo %d, comprimento %d - necessário modo %d, comprimento %d"
 
 #: port.c:491
 msgid "invalid type for eval_check_store"

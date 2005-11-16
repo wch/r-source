@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-09 11:07+0000\n"
+"POT-Creation-Date: 2005-11-16 22:58+0000\n"
 "PO-Revision-Date: 2005-09-27 22:42-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -5863,12 +5863,12 @@ msgstr "tipos incompatíveis (%d) em correção de tipo subatribuição "
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "NAs não são permitidos em atribuições por subscritos"
 
-#: src/main/subassign.c:399 src/main/subassign.c:672 src/main/subassign.c:920
+#: src/main/subassign.c:401 src/main/subassign.c:672 src/main/subassign.c:920
 #: src/main/subassign.c:1102
 msgid "nothing to replace with"
 msgstr "nada para colocar no lugar"
 
-#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:922
 #: src/main/subassign.c:1104
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""

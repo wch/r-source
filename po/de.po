@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-09 11:07+0000\n"
+"POT-Creation-Date: 2005-11-16 22:58+0000\n"
 "PO-Revision-Date: 2005-09-28 15:00+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -5850,12 +5850,12 @@ msgstr "inkompatible Typen (%d) in subassignment Typ fix"
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "NAs nicht zugelassen in Teilbereichszuweisungen"
 
-#: src/main/subassign.c:399 src/main/subassign.c:672 src/main/subassign.c:920
+#: src/main/subassign.c:401 src/main/subassign.c:672 src/main/subassign.c:920
 #: src/main/subassign.c:1102
 msgid "nothing to replace with"
 msgstr "nichts zu ersetzen"
 
-#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:922
 #: src/main/subassign.c:1104
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""

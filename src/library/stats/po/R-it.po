@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-09 11:08\n"
+"POT-Creation-Date: 2005-11-16 22:59\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -880,6 +880,9 @@ msgstr "'or' deve essere un solo numero tra 0 e Inf"
 msgid "p-values may be incorrect"
 msgstr "i p-value potrebbero essere non corretti"
 
+msgid "'hybrid' is ignored for a 2 x 2 table"
+msgstr ""
+
 msgid "all groups must contain data"
 msgstr "tutti i gruppi devono contenere dati"
 
@@ -1390,6 +1393,9 @@ msgstr "'model.tables' non è implementato per risposte multiple"
 
 msgid "type '%s' is not implemented yet"
 msgstr "tipo '%s' non ancora implementato"
+
+msgid "this fit does not inherit from \"lm\""
+msgstr ""
 
 msgid "'cterms' argument must match terms in model object"
 msgstr "l'argomento 'cterms' deve far coincidre 'terms' nell'oggetto model"

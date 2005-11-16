@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-09 11:07+0000\n"
+"POT-Creation-Date: 2005-11-16 22:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5748,12 +5748,12 @@ msgstr ""
 msgid "NAs are not allowed in subscripted assignments"
 msgstr ""
 
-#: src/main/subassign.c:399 src/main/subassign.c:672 src/main/subassign.c:920
+#: src/main/subassign.c:401 src/main/subassign.c:672 src/main/subassign.c:920
 #: src/main/subassign.c:1102
 msgid "nothing to replace with"
 msgstr ""
 
-#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:922
 #: src/main/subassign.c:1104
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""

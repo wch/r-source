@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-16 08:35+0100\n"
+"POT-Creation-Date: 2005-11-16 22:59+0000\n"
 "PO-Revision-Date: 2005-06-02 16:10+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -140,9 +140,19 @@ msgstr "theta は文字型でなければなりません"
 msgid "rho should be an environment"
 msgstr "rho は環境(environment)でなければなりません"
 
-#: nls.c:221 nls.c:243
+#: nls.c:220 nls.c:248
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "モデルを評価する際，欠損値または無限大が生成されました"
+
+#: nls.c:226
+#, c-format
+msgid "variable '%s' is integer, not numeric"
+msgstr ""
+
+#: nls.c:228
+#, c-format
+msgid "variable '%s' is not numeric"
+msgstr ""
 
 #: pacf.c:72
 msgid "bad Starma struct"
