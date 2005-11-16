@@ -1667,6 +1667,41 @@ We could then call that routine from R using the command
 Symbols without explicit names are assigned to the R variable with
 that name.
 
+In some cases, it may be preferable not to create R variables in the
+package's name space that identify the native routines.  It may be too
+costly to compute these for many routines when the package is loaded
+if many of these routines are not likely to be used.  In this case, 
+one can still perform the symbol resolution correctly using the DLL,
+but do this each time the routine is called.  Given a reference to the
+DLL as an R variable, say @code{dll}, we can call the routine
+@code{myRoutine} using the expression
+
+@example
+ .Call(dll$myRoutine, x, y)
+@end example
+
+The @code{$} operator resolves the routine with the given name in the
+DLL using a call to @code{getNativeSymbol}.  This is the same
+computation as above where we resolve the symbol when the package is
+loaded. The only difference is that this is done each time in the case
+of @code{dll$myRoutine}.
+
+In order to use this dynamic approach (e.g. @code{dll$myRoutine}), one
+needs the reference to the DLL as an R variable in the package.  The
+DLL can be assigned to a variable by using the @code{variable =
+dllName} format used above for mapping symbols to R variables.  For
+example, if we wanted to assign the DLL reference for the DLL
+@code{foo} in the example above to the variable @code{myDLL}, we would
+use the following directive in the @file{NAMESPACE} file:
+
+@example
+useDynLib(myDLL = foo, myRoutine_sym = myRoutine, myOtherRoutine)
+@end example
+
+Then, the R variable @code{myDLL} is in the package's name space and
+available for calls such as @code{myDLL$dynRoutine} to access routines
+that are not explicitly resolved at load time.
+
 More information about this symbol lookup, along with some approaches
 for customizing it, is available from
 @url{http://www.omegahat.org/example/RDotCall}.
