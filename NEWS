@@ -190,6 +190,9 @@ NEW FEATURES
 	be given for the R variables mapping to these symbols.  See
 	Writing R Extensions manual for more details.
 
+    o	R CMD check works for packages whose package name is different
+	from the directory name in which it is located.
+
 
 DEPRECATED & DEFUNCT
 

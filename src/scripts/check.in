@@ -555,7 +555,11 @@ sub check_pkg {
 	chdir($pkg)
 	  or die "Error: cannot change to directory '$pkg'\n";
 	$pkgdir = R_cwd();
-	$pkgname = basename($pkgdir);
+	if($in_bundle) {
+	    $pkgname = basename($pkgdir);
+	} else {
+	    $pkgname = $description->{"Package"};
+	}
     }
     else {
 	$log->error();
