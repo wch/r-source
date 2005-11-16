@@ -473,6 +473,9 @@ BUG FIXES
     o	The registration of .Fortran symbols was broken: these could
 	only be looked up if there were also .Call symbols registered!
 
+    o	R CMD build was incorrectly rejecting the recommended form of
+	name for a translation package, 'Translation-ll'.  (PR#8314)
+
 
 
 		CHANGES IN R VERSION 2.2.0
