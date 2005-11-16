@@ -292,7 +292,10 @@ C-LEVEL FACILITIES
 	<R_ext/BLAS.h> has been corrected to add the missing
 	double-precision BLAS functions drotmg and drotm, and to
 	exclude lsame (which is a Lapack auxiliary function and is now
-	declared in <R_ext/Lapack.h>).
+	declared in <R_ext/Lapack.h>).  It also includes the
+
+    o	<R_ext/BLAS.h> and <R_ext/Lapack.h> now declare all the entry
+	points as 'extern'.
 
 
 BUG FIXES
