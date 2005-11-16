@@ -28,9 +28,9 @@ x$name
     indices specifying elements to extract or replace.  \code{i, j} are
     \code{numeric} or \code{character} or empty whereas \code{name} must be
     character or an (unquoted) name.  Numeric values are coerced to
-    integer as by \code{\link{as.integer}}.  For \code{[[} and \code{$}
-    character strings are normally partially matched to the names of the
-    object if exact matching does not succeed.
+    integer as by \code{\link{as.integer}}.  For extraction with
+    \code{[[} and \code{$} character strings are normally partially
+    matched to the names of the object if exact matching does not succeed.
 
     For \code{[}-indexing only: \code{i, j, \dots} can be
     logical vectors, indicating elements/slices to select.  Such vectors
@@ -45,14 +45,17 @@ x$name
   }
   \item{drop}{For matrices and arrays.  If \code{TRUE} the
     result is coerced to the lowest possible dimension (see examples
-    below). This only works for extracting elements, not for the
+    below).  This only works for extracting elements, not for the
     replacement forms.}
 }
 \details{
   These operators are generic.  You can write methods to handle subsetting
   of specific classes of objects, see \link{InternalMethods} as well as
   \code{\link{[.data.frame}} and \code{\link{[.factor}}.  The
-  descriptions here apply only to the default methods.
+  descriptions here apply only to the default methods.  Note that
+  separate methods are required for the replacement functions
+  \code{[<-}, \code{[[<-} and \code{$<-} for use when indexing occurs on
+  the assignment side of an expression.
 
   The most important distinction between \code{[}, \code{[[} and
   \code{$} is that the \code{[} can select more than one element whereas
@@ -67,7 +70,7 @@ x$name
   extraction, or on the left-hand-side for replacement.
   When an index expression appears on the left side of an assignment
   then that part of \code{x} is set to the value of the right hand side
-  of the assignment.
+  of the assignment.  In this case no partial matching of indices is done.
 }
 \section{Atomic vectors}{
   The usual form of indexing is \code{"["}.  \code{"[["} can be used to
@@ -148,9 +151,9 @@ x$name
   When extracting, a numerical, logical or character \code{NA} picks
   an unknown element and so returns \code{NA} in the corresponding
   element of a logical, integer, numeric, complex or character result,
-  and \code{NULL} for a list.
+  and \code{NULL} for a list.  (It returns \code{00} for a raw result.]
 
-  When replacing (that is using subscripting on the lhs of an
+  When replacing (that is using indexing on the lhs of an
   assignment) \code{NA} does not select any element to be replaced.  As
   there is ambiguity as to whether an element of the rhs should
   be used or not (and \R handled this inconsistently prior to \R 2.0.0),
@@ -169,6 +172,10 @@ x$name
 
   To avoid confusion, do not name index arguments (but \code{drop} must
   be named).
+}
+\note{
+  S uses partial matching when extracting by \code{[}
+  (Becker \emph{et al} p. 358) whereas \R does not.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
