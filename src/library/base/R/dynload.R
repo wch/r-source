@@ -51,11 +51,11 @@ getLoadedDLLs <- function()
 }
 
 
-getDLLRegisteredRoutines <- function(dll)
+getDLLRegisteredRoutines <- function(dll, addNames = TRUE)
     UseMethod("getDLLRegisteredRoutines")
 
 
-getDLLRegisteredRoutines.character <- function(dll)
+getDLLRegisteredRoutines.character <- function(dll, addNames = TRUE)
 {
     dlls <- getLoadedDLLs()
     w <- sapply(dlls, function(x) x[["name"]] == dll || x[["path"]] == dll)
@@ -68,11 +68,11 @@ getDLLRegisteredRoutines.character <- function(dll)
         warning(gettextf("multiple DLLs match '%s'. Using '%s'",
                          dll, dll[["path"]]), domain = NA)
 
-    getDLLRegisteredRoutines(dlls[[dll]])
+    getDLLRegisteredRoutines(dlls[[dll]], addNames)
 }
 
 
-getDLLRegisteredRoutines.DLLInfo <- function(dll)
+getDLLRegisteredRoutines.DLLInfo <- function(dll, addNames = TRUE)
 {
     ## Provide methods for the different types.
     if(!inherits(dll, "DLLInfo"))
@@ -81,11 +81,13 @@ getDLLRegisteredRoutines.DLLInfo <- function(dll)
     info <- dll[["info"]]
     els <- .Call("R_getRegisteredRoutines", info, PACKAGE = "base")
     ## Put names on the elements by getting the names from each element.
-    els <- lapply(els, function(x) {
-        if(length(x))
-            names(x) <- sapply(x, function(z) z$name)
-        x
-    })
+    if(addNames) {
+      els <- lapply(els, function(x) {
+                              if(length(x))
+                                 names(x) <- sapply(x, function(z) z$name)
+                              x
+                         })
+    }
     class(els) <- "DLLRegisteredRoutines"
     els
 }

@@ -23,7 +23,7 @@
   indexed by the given symbol names.
 }
 \usage{
-getNativeSymbolInfo(name, PACKAGE)
+getNativeSymbolInfo(name, PACKAGE, unlist = TRUE)
 }
 \arguments{
   \item{name}{the name of the native symbol as used in a call

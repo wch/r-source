@@ -207,18 +207,37 @@ loadNamespace <- function (package, lib.loc = NULL,
                return(NULL)
 
 
+            idx = match(".registration", names(symNames))
+            if(!is.na(idx) && symNames[idx] == "TRUE") {
+               # Use the registration information to register ALL the symbols
+               #
+               routines = getDLLRegisteredRoutines.DLLInfo(dll, addNames = FALSE)
+               lapply(routines,
+                      function(type) {
+                          lapply(type,
+                                 function(sym) {
+                                     assign(sym$name, sym, envir = env)
+                                 })
+                      })
+               if(length(symNames) == 1)
+                 return(routines)
+
+               symNames = symNames[-idx]                        
+             }
+            
             symbols <- getNativeSymbolInfo(symNames, dll)
             sapply(seq(along = symNames),
                     function(i) {
-                        origVarName = symNames[i]                        
                         varName = names(symNames)[i]
+                        origVarName = symNames[i]                                                
                         if(exists(varName, envir = env))
                            warning("failed to assign NativeSymbolInfo for ", origVarName,
-                                     ifelse(origVarName != varName, paste(" to", varName), ""),
-                                     " since ", varName, " is already defined in the ", package, " namespace")
-                        else
-                           assign(varName, symbols[[origVarName]], envir = env)
+                                   ifelse(origVarName != varName, paste(" to", varName), ""),
+                                   " since ", varName, " is already defined in the ", package, " namespace")
+                           else
+                              assign(varName, symbols[[origVarName]], envir = env)
                     })
+                   
 
 
             symbols
@@ -806,6 +825,16 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                       else if (length(e) == 4)
                           parseDirective(e[[4]]),
                "{" =  for (ee in as.list(e[-1])) parseDirective(ee),
+               "=" = {
+                   parseDirective(e[[3]])
+                   if(as.character(e[[3]][[1]]) == "useDynLib") 
+                       names(dynlibs)[length(dynlibs)] <<- as.character(e[[2]])
+               },
+               "<-" = {
+                   parseDirective(e[[3]])
+                   if(as.character(e[[3]][[1]]) == "useDynLib") 
+                       names(dynlibs)[length(dynlibs)] <<- as.character(e[[2]])
+               },               
                export = {
                    exp <- e[-1]
                    exp <- structure(as.character(exp), names=names(exp))

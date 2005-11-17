@@ -187,7 +187,9 @@ NEW FEATURES
 	the DLL for use in .C/.Call/.Fortran/.Externa calls.  These can
 	be used as regular R variables instead of the (routine name,
 	PACKAGE) pairs currently recommended.  Alternative names can
-	be given for the R variables mapping to these symbols.  See
+	be given for the R variables mapping to these symbols.  The
+	native routine registration information can also be used
+	directly via useDynLib(name, .registration = TRUE). See the
 	Writing R Extensions manual for more details.
 
     o	R CMD check works for packages whose package name is different

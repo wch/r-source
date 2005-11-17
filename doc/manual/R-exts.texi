@@ -1695,12 +1695,64 @@ example, if we wanted to assign the DLL reference for the DLL
 use the following directive in the @file{NAMESPACE} file:
 
 @example
-useDynLib(myDLL = foo, myRoutine_sym = myRoutine, myOtherRoutine)
+myDLL = useDynLib(foo, myRoutine_sym = myRoutine, myOtherRoutine)
 @end example
 
 Then, the R variable @code{myDLL} is in the package's name space and
 available for calls such as @code{myDLL$dynRoutine} to access routines
 that are not explicitly resolved at load time.
+
+If the package has registration information (see @ref{Registering
+native routines}), then we can use that directly rather than
+specifying the list of symbols again in the @code{useDynLib} directive
+in the @file{NAMESPACE} file.  Each routine in the registration
+information is specified by giving a name by which the routine is to
+be specified along with the address of the routine and any information
+about the number and type of the parameters.  Using the
+@code{.registration} argument of @code{useDynLib}, we can instruct the
+name space mechanism to create R variables for these symbols.  For example,
+suppose we have the following registration information for a DLL named
+@code{myDLL}:
+
+@example
+R_CMethodDef cMethods[] = {
+   {"foo", &foo, 4, {REALSXP, INTSXP, STRSXP, LGLSXP}},
+   {"bar_sym", &bar, 0},
+   {NULL, NULL, 0}
+};
+
+R_CallMethodDef callMethods[] = {
+   {"R_call_sym", &R_call, 4},
+   {"R_version_sym", &R_version, 0},
+   {NULL, NULL, 0}
+};
+@endexample
+
+Then, the directive in the @file{NAMESPACE} file
+
+@example
+useDynLib(myDLL, .registration = TRUE)
+@endexample
+
+causes the DLL to be loaded and also for the R variables @code{foo},
+@code{bar_sym}, @code{R_call_sym} and @code{R_version_sym} to be
+defined in the package's name space.
+
+Note that the names for the R variables are taken from the entry in
+the registration information and do not need to be the same as the
+name of the native routine. This allows the creator of the
+registration information to map the native symbols to non-conflicting
+variable names in R, e.g. @code{R_version} to @code{R_version_sym}
+for use in an R function such as
+
+@example
+R_version =
+function()
+{
+  .Call(R_version_sym)
+}
+@endexample
+
 
 More information about this symbol lookup, along with some approaches
 for customizing it, is available from

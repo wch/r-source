@@ -16,11 +16,18 @@
   and \code{\link{.External}}.
 }
 \usage{
-getDLLRegisteredRoutines(dll)
+getDLLRegisteredRoutines(dll, addNames = TRUE)
 }
 \arguments{
   \item{dll}{a character string or \code{DLLInfo} object (as returned by
     \code{\link{getLoadedDLLs}}).
+  }
+  \item{addNames}{a logical value. If this is \code{TRUE}, the elements
+    of the returned lists are named using the names of the routines (as
+    seen by R via registration or raw name).  If \code{FALSE},
+    these names are not computed and assigned to the lists.  As a
+    result, the call should be quicker.  The name information is also
+    available in the \code{NativeSymbolInfo} objects in the lists.
   }
 }
 \details{
