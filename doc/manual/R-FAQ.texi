@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-11-15
+@set FAQ_DATE @value{FAQ_YEAR}-11-17
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1939,6 +1939,9 @@ obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
 @item PK
 Estimation of pharmacokinetic parameters.
+@item PKfit
+A nonlinear regression (including a genetic algorithm) program designed
+to deal with curve fitting for pharmacokinetics.
 @item POT
 Generalized Pareto distribution and Peaks Over Threshold.
 @item PTAk
@@ -2359,6 +2362,10 @@ control, and full keyboard input.
 @item deldir
 Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
 tesselation (with respect to the entire plane) of a planar point set.
+@item denpro
+Visualization of multivariate density functions and estimates with level 
+set trees and shape trees, and visualization of multivariate data with
+tail trees.
 @item depmix
 Dependent Mixture Models: fit (multi-group) mixtures of latent Markov
 models on mixed categorical and continuous (time series) data.
@@ -3149,6 +3156,8 @@ A collection of functions to implement a class for univariate polynomial
 manipulations.
 @item popgen
 Statistical and POPulation GENetics.
+@item portfolio
+Classes for analyzing and implementing portfolios.
 @item powerpkg
 Power analyses for the affected sib pair and the TDT design.
 @item ppc
