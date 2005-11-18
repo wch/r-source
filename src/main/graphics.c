@@ -4269,7 +4269,8 @@ unsigned int RGBpar(SEXP x, int i)
 	if(indx < 0) return Rf_dpptr(CurrentDevice())->bg;
 	else return R_ColorTable[indx % R_ColorTableSize];
     }
-    return 0;		/* should not occur */
+    warning("supplied color is not numeric nor character");
+    return 0;
 }
 
 /*

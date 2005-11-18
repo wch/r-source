@@ -30,9 +30,9 @@ local(expr, envir = new.env())
 \details{
   \code{eval} evaluates the expression \code{expr} argument in the
   environment specified by \code{envir} and returns the computed value.
-  If \code{envir} is not specified, then
-  \code{\link{sys.frame}(\link{sys.parent}())}, the environment where
-  the call to \code{eval} was made is used.
+  If \code{envir} is not specified, then the default is
+  \code{\link{parent.frame}()} (the environment where the call to
+  \code{eval} was made).
 
   The \code{evalq} form is equivalent to \code{eval(quote(expr), \dots)}.
 
