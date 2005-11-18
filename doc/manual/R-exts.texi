@@ -1215,13 +1215,12 @@ you need @env{R_LIBS} set (to find packages in a non-standard library)
 you will need to set it in the environment.
 @end quotation
 
-@quotation
-@strong{Note to Windows users}: @code{R CMD check} and @code{R CMD build}
-work well under Windows NT4/2000/XP but may not work correctly on Windows
-95/98/ME because of problems with some versions of Perl on those limited
-OSes.  Experiences vary.
-To use them you will need to have installed the files for building
-source packages.
+@quotation Note to Windows users
+@code{R CMD check} and @code{R CMD build} work well under Windows
+NT4/2000/XP but may not work correctly on Windows 95/98/ME because of
+problems with some versions of Perl on those limited OSes.  Experiences
+vary.  To use them you will need to have installed the files for
+building source packages (which is the default).
 @end quotation
 
 @node Customizing checking and building,  , Building packages, Checking and building packages
