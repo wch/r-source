@@ -106,7 +106,7 @@ predict.prcomp <- function(object, newdata, ...)
     if(!is.null(nm)) {
         if(!all(nm %in% colnames(newdata)))
             stop("'newdata' does not have named columns matching one or more of the original columns")
-        newdata <- newdata[, nm]
+        newdata <- newdata[, nm, drop = FALSE]
     } else {
         if(NCOL(newdata) != p)
             stop("'newdata' does not have the correct number of columns")
