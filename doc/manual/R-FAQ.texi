@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-11-17
+@set FAQ_DATE @value{FAQ_YEAR}-11-18
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -3291,6 +3291,8 @@ APIs, and examples and documentation for its use.
 @item rstream
 Unified object oriented interface for multiple independent streams of
 random numbers from different sources.
+@item rv
+Simulation-based random variable object class.
 @item rwt
 Rice Wavelet Toolbox wrapper, providing a set of functions for
 performing digital signal processing.
@@ -3485,6 +3487,8 @@ Supervised principal components.
 @item survBayes
 Fits a proportional hazards model to time to event data by a Bayesian
 approach.
+@item surveillance
+Outbreak detection algorithms for surveillance data.
 @item survey
 Summary statistics, generalized linear models, and general maximum
 likelihood estimation for stratified, cluster-sampled, unequally
