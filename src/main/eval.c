@@ -1531,11 +1531,8 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     expr = CAR(args);
     env = CADR(args);
     encl = CADDR(args);
-    if (isNull(encl)) {
-    	warning(_("use of NULL environment is deprecated"));
-    	encl = R_BaseEnv;
-    } else
-    if ( !isEnvironment(encl) )
+    if (isNull(encl)) encl = R_BaseEnv;
+    else if ( !isEnvironment(encl) )
 	errorcall(call, _("invalid '%s' argument"), "enclos");
     switch(TYPEOF(env)) {
     case NILSXP:
