@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:45+0000\n"
+"POT-Creation-Date: 2005-11-18 18:56+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -96,31 +96,31 @@ msgstr "R_unlink의 'names'이 부적절합니다"
 #: src/main/connections.c:770 src/main/connections.c:773
 #: src/main/connections.c:777 src/main/connections.c:900
 #: src/main/connections.c:906 src/main/connections.c:911
-#: src/main/connections.c:1086 src/main/connections.c:1092
-#: src/main/connections.c:1096 src/main/connections.c:1099
-#: src/main/connections.c:1268 src/main/connections.c:1274
-#: src/main/connections.c:1278 src/main/connections.c:1948
-#: src/main/connections.c:1952 src/main/connections.c:1955
-#: src/main/connections.c:1963 src/main/connections.c:2005
-#: src/main/connections.c:2010 src/main/connections.c:2014
-#: src/main/connections.c:2018 src/main/connections.c:2022
-#: src/main/connections.c:2028 src/main/connections.c:2071
-#: src/main/connections.c:2077 src/main/connections.c:2081
-#: src/main/connections.c:2129 src/main/connections.c:2132
-#: src/main/connections.c:2489 src/main/connections.c:2494
-#: src/main/connections.c:3243 src/main/connections.c:3249
-#: src/main/connections.c:3492 src/main/connections.c:3503
-#: src/main/connections.c:3507 src/main/connections.c:3511
-#: src/main/datetime.c:564 src/main/datetime.c:629 src/main/datetime.c:631
-#: src/main/datetime.c:635 src/main/datetime.c:739 src/main/datetime.c:741
-#: src/main/datetime.c:865 src/main/dounzip.c:182 src/main/dounzip.c:188
+#: src/main/connections.c:1090 src/main/connections.c:1096
+#: src/main/connections.c:1100 src/main/connections.c:1103
+#: src/main/connections.c:1272 src/main/connections.c:1278
+#: src/main/connections.c:1282 src/main/connections.c:1952
+#: src/main/connections.c:1956 src/main/connections.c:1959
+#: src/main/connections.c:1967 src/main/connections.c:2009
+#: src/main/connections.c:2014 src/main/connections.c:2018
+#: src/main/connections.c:2022 src/main/connections.c:2026
+#: src/main/connections.c:2032 src/main/connections.c:2075
+#: src/main/connections.c:2081 src/main/connections.c:2085
+#: src/main/connections.c:2133 src/main/connections.c:2136
+#: src/main/connections.c:2493 src/main/connections.c:2498
+#: src/main/connections.c:3247 src/main/connections.c:3253
+#: src/main/connections.c:3496 src/main/connections.c:3507
+#: src/main/connections.c:3511 src/main/connections.c:3515
+#: src/main/datetime.c:593 src/main/datetime.c:658 src/main/datetime.c:660
+#: src/main/datetime.c:664 src/main/datetime.c:768 src/main/datetime.c:770
+#: src/main/datetime.c:894 src/main/dounzip.c:182 src/main/dounzip.c:188
 #: src/main/envir.c:1456 src/main/envir.c:1460 src/main/envir.c:1550
 #: src/main/envir.c:1556 src/main/envir.c:1624 src/main/envir.c:1640
 #: src/main/envir.c:1647 src/main/envir.c:1758 src/main/envir.c:1766
 #: src/main/envir.c:1774 src/main/envir.c:1789 src/main/envir.c:1795
 #: src/main/envir.c:2318 src/main/envir.c:2586 src/main/envir.c:3121
-#: src/main/eval.c:252 src/main/eval.c:1539 src/main/eval.c:1563
-#: src/main/eval.c:1567 src/main/model.c:1577 src/main/model.c:1585
+#: src/main/eval.c:252 src/main/eval.c:1536 src/main/eval.c:1560
+#: src/main/eval.c:1564 src/main/model.c:1577 src/main/model.c:1585
 #: src/main/optim.c:224 src/main/paste.c:71 src/main/paste.c:163
 #: src/main/paste.c:170 src/main/paste.c:177 src/main/paste.c:182
 #: src/main/paste.c:187 src/main/paste.c:192 src/main/paste.c:195
@@ -190,15 +190,15 @@ msgstr "savehistory은 Rgui 또는 Rterm에서만 사용할수 있습니다"
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory은 Rgui과 Rterm에서만 사용할수 있습니다"
 
-#: src/gnuwin32/extra.c:622 src/main/datetime.c:500 src/main/datetime.c:566
-#: src/main/datetime.c:743 src/main/dotcode.c:144 src/main/errors.c:739
+#: src/gnuwin32/extra.c:622 src/main/datetime.c:529 src/main/datetime.c:595
+#: src/main/datetime.c:772 src/main/dotcode.c:144 src/main/errors.c:739
 #: src/main/errors.c:767 src/main/errors.c:866 src/main/errors.c:891
 #: src/main/errors.c:896 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:181 src/main/optimize.c:188
 #: src/main/optimize.c:197 src/main/platform.c:987 src/main/plot.c:385
-#: src/main/plot.c:585 src/main/plot.c:590 src/main/plot.c:2128
-#: src/main/plot.c:2135 src/main/plot.c:3182 src/main/plot.c:3184
-#: src/main/plot.c:3186 src/main/plot.c:3335 src/main/plot3d.c:1418
+#: src/main/plot.c:585 src/main/plot.c:590 src/main/plot.c:2130
+#: src/main/plot.c:2137 src/main/plot.c:3184 src/main/plot.c:3186
+#: src/main/plot.c:3188 src/main/plot.c:3337 src/main/plot3d.c:1418
 #: src/main/plot3d.c:2540 src/main/plot3d.c:2544 src/main/plot3d.c:2546
 #: src/main/scan.c:953 src/main/scan.c:957 src/main/scan.c:959
 #: src/main/scan.c:970 src/main/scan.c:1006 src/main/scan.c:1009
@@ -232,11 +232,11 @@ msgstr "메모리 한계를 줄일수가 없습니다"
 msgid "argument must be a character vector"
 msgstr "인수는 문자벡터가 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:982 src/main/connections.c:1388
+#: src/gnuwin32/extra.c:982 src/main/connections.c:1392
 msgid "Unable to open the clipboard"
 msgstr "clipboard를 열수가 없습니다"
 
-#: src/gnuwin32/extra.c:987 src/main/connections.c:1392
+#: src/gnuwin32/extra.c:987 src/main/connections.c:1396
 msgid "Unable to write to the clipboard"
 msgstr "clipborad를 쓰기 위해서 열수가 없습니다"
 
@@ -420,7 +420,7 @@ msgstr "NANs가 작성되었습니다"
 msgid "Non-numeric argument to mathematical function"
 msgstr "수학 함수에 비수치(non-numeric)인수를 건네 받았습니다"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3666
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3668
 #: src/main/scan.c:1495
 msgid "invalid argument"
 msgstr "부적절한 인수입니다"
@@ -441,7 +441,7 @@ msgstr "두번째 인수는 문자열가 되어야만 합니다"
 msgid "second argument must be a list"
 msgstr "두번째 인수는 리스트가 되어야만 한다"
 
-#: src/include/Errormsg.h:42 src/main/eval.c:2607 src/main/subscript.c:226
+#: src/include/Errormsg.h:42 src/main/eval.c:2604 src/main/subscript.c:226
 #: src/main/subscript.c:331 src/main/subscript.c:334 src/main/subscript.c:434
 msgid "subscript out of bounds"
 msgstr "첨자가 허용되는 범위외입니다"
@@ -654,16 +654,16 @@ msgstr "패키지 이름 또는 DllInfo 참조를 건네주어야만 합니다"
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "createRSymbolObject에서 유형%d는 실제 적용되지 않습니다"
 
-#: src/main/Rdynload.c:1171
+#: src/main/Rdynload.c:1175
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
 msgstr "R_getRegisteredRoutines()에서 DllInfo의 참조가 예측됩니다"
 
-#: src/main/Rdynload.c:1176
+#: src/main/Rdynload.c:1180
 msgid "NULL value passed for DllInfo"
 msgstr "DllInfd에서 Null값이 건네 받았습니다"
 
-#: src/main/Rdynload.c:1213 src/main/Rdynload.c:1219 src/main/Rdynload.c:1226
-#: src/main/Rdynload.c:1232 src/main/Rdynload.c:1238
+#: src/main/Rdynload.c:1217 src/main/Rdynload.c:1223 src/main/Rdynload.c:1230
+#: src/main/Rdynload.c:1236 src/main/Rdynload.c:1242
 msgid "no dyn.load support in this R version"
 msgstr "이 버전 R는 dyn.load를 서포트하고 있지 않습니다"
 
@@ -833,47 +833,47 @@ msgstr "'row/col'에서의 인수 개수가 올바르지 않습니다"
 msgid "a matrix is required as argument to 'row/col'"
 msgstr "'row/col'함수의 인수는 행렬이어야만 합니다"
 
-#: src/main/array.c:535
+#: src/main/array.c:524
 msgid "requires numeric matrix/vector arguments"
 msgstr "수치 행렬 또는 벡터가 요구됩니다"
 
-#: src/main/array.c:608 src/main/array.c:612
+#: src/main/array.c:597 src/main/array.c:601
 msgid "non-conformable arguments"
 msgstr "적절한 인수가 아닙니다"
 
-#: src/main/array.c:834
+#: src/main/array.c:823
 msgid "argument is not a matrix"
 msgstr "인수가 행렬이 아닙니다"
 
-#: src/main/array.c:872
+#: src/main/array.c:861
 msgid "invalid first argument, must be an array"
 msgstr "첫번째의 인수가 부적절합니다. 배열이어야만 합니다"
 
-#: src/main/array.c:889
+#: src/main/array.c:878
 msgid "'perm' is of wrong length"
 msgstr "'perm'의 길이가 이상합니다"
 
-#: src/main/array.c:897
+#: src/main/array.c:886
 msgid "value out of range in 'perm'"
 msgstr "'perm'안의 값이 범위를 초과하고 있습니다"
 
-#: src/main/array.c:900
+#: src/main/array.c:889
 msgid "invalid permutation ('perm')"
 msgstr "부적절한 치환입니다('perm')"
 
-#: src/main/array.c:1028 src/main/connections.c:2623
+#: src/main/array.c:1017 src/main/connections.c:2627
 msgid "invalid value of 'n'"
 msgstr "'n'의 값이 부적절합니다"
 
-#: src/main/array.c:1030
+#: src/main/array.c:1019
 msgid "invalid value of 'p'"
 msgstr "'p'의 값이 부적절합니다"
 
-#: src/main/array.c:1031
+#: src/main/array.c:1020
 msgid "invalid value of 'na.rm'"
 msgstr "'na.rm'의 값이 부적절합니다"
 
-#: src/main/array.c:1040
+#: src/main/array.c:1029
 msgid "'x' must be numeric"
 msgstr "'x'는 수치이어야만 합니다"
 
@@ -1054,7 +1054,7 @@ msgstr "'use.names'의 가인수가 반복해졌습니다"
 msgid "argument not a list"
 msgstr "인수는 리스트가 아닙니다"
 
-#: src/main/bind.c:874 src/main/eval.c:1839 src/main/eval.c:1849
+#: src/main/bind.c:874 src/main/eval.c:1836 src/main/eval.c:1846
 #: src/main/objects.c:278 src/main/objects.c:317 src/main/objects.c:671
 #: src/main/objects.c:689
 #, c-format
@@ -1077,20 +1077,19 @@ msgstr "행렬의 열수는 일치하여야만 합니다(%d번째의 인수를 �
 
 #: src/main/builtin.c:41 src/main/builtin.c:64 src/main/builtin.c:73
 #: src/main/builtin.c:199 src/main/builtin.c:222 src/main/builtin.c:252
-#: src/main/builtin.c:261 src/main/coerce.c:1315 src/main/connections.c:1959
-#: src/main/engine.c:2619 src/main/envir.c:1452 src/main/envir.c:1546
+#: src/main/builtin.c:261 src/main/coerce.c:1315 src/main/connections.c:1963
+#: src/main/engine.c:2672 src/main/envir.c:1452 src/main/envir.c:1546
 #: src/main/envir.c:1618 src/main/envir.c:1749 src/main/envir.c:2348
 #: src/main/envir.c:2399 src/main/envir.c:2665 src/main/envir.c:2698
 #: src/main/envir.c:2718 src/main/envir.c:2740 src/main/envir.c:2774
 #: src/main/envir.c:2794 src/main/envir.c:3109 src/main/envir.c:3115
-#: src/main/eval.c:1535 src/main/eval.c:3390 src/main/objects.c:177
-#: src/main/objects.c:183 src/main/saveload.c:2028 src/main/saveload.c:2265
-#: src/main/serialize.c:2143
+#: src/main/eval.c:3387 src/main/objects.c:177 src/main/objects.c:183
+#: src/main/saveload.c:2028 src/main/saveload.c:2265 src/main/serialize.c:2143
 msgid "use of NULL environment is deprecated"
 msgstr ""
 
 #: src/main/builtin.c:55 src/main/envir.c:1445 src/main/envir.c:1605
-#: src/main/envir.c:1740 src/main/paste.c:60 src/main/plot.c:1738
+#: src/main/envir.c:1740 src/main/paste.c:60 src/main/plot.c:1740
 msgid "invalid first argument"
 msgstr "첫번째의 인수가 부적절합니다"
 
@@ -1421,7 +1420,7 @@ msgstr "벡터로 변환할수 없습니다"
 msgid "list argument expected"
 msgstr "리스트 인수가 예측되어 있습니다"
 
-#: src/main/coerce.c:1319 src/main/eval.c:3387 src/main/eval.c:3394
+#: src/main/coerce.c:1319 src/main/eval.c:3384 src/main/eval.c:3391
 msgid "invalid environment"
 msgstr "부적절한 환경입니다"
 
@@ -1584,10 +1583,10 @@ msgstr "모든 connections는 사용중 입니다"
 msgid "connection not found"
 msgstr "연결이 없습니다"
 
-#: src/main/connections.c:96 src/main/connections.c:2613
-#: src/main/connections.c:3075 src/main/connections.c:3124
-#: src/main/connections.c:3246 src/main/connections.c:3286
-#: src/main/connections.c:3300
+#: src/main/connections.c:96 src/main/connections.c:2617
+#: src/main/connections.c:3079 src/main/connections.c:3128
+#: src/main/connections.c:3250 src/main/connections.c:3290
+#: src/main/connections.c:3304
 msgid "invalid connection"
 msgstr "부적절한 연결입니다"
 
@@ -1609,7 +1608,7 @@ msgstr "open/close는 이 연결에서 유효하게 되어 있지 않습니다"
 msgid "printing not enabled for this connection"
 msgstr "이 연결에 대해서는 프린트를 이용 가능하게 되어있지 않습니다"
 
-#: src/main/connections.c:201 src/main/connections.c:1836
+#: src/main/connections.c:201 src/main/connections.c:1840
 msgid "printing of extremely long output is truncated"
 msgstr "출력이 너무 길므로 인쇄는 잘라 졌습니다"
 
@@ -1656,7 +1655,7 @@ msgstr "연결은 읽기위해서  열려져있지 않습니다"
 msgid "connection is not open for writing"
 msgstr "연결은 쓰기위해서 열려있지 않습니다"
 
-#: src/main/connections.c:523 src/main/connections.c:1443
+#: src/main/connections.c:523 src/main/connections.c:1447
 msgid "can only truncate connections open for writing"
 msgstr "쓰기 위해서 열려 있는 연결만이 잘라집니다"
 
@@ -1704,15 +1703,15 @@ msgid "allocation of fifo connection failed"
 msgstr "fifo 접속의 할당에 실패했습니다"
 
 #: src/main/connections.c:766 src/main/connections.c:902
-#: src/main/connections.c:1088 src/main/connections.c:1270
-#: src/main/connections.c:2073 src/main/connections.c:3494
+#: src/main/connections.c:1092 src/main/connections.c:1274
+#: src/main/connections.c:2077 src/main/connections.c:3498
 msgid "only first element of 'description' argument used"
 msgstr "'description' 인수의 최초 요소만이 사용 되었습니다"
 
 #: src/main/connections.c:789 src/main/connections.c:930
-#: src/main/connections.c:1111 src/main/connections.c:1289
-#: src/main/connections.c:2041 src/main/connections.c:2092
-#: src/main/connections.c:2139 src/main/connections.c:3564
+#: src/main/connections.c:1115 src/main/connections.c:1293
+#: src/main/connections.c:2045 src/main/connections.c:2096
+#: src/main/connections.c:2143 src/main/connections.c:3568
 msgid "unable to open connection"
 msgstr "connection를 열수가 없습니다"
 
@@ -1734,386 +1733,386 @@ msgstr "pipe() cmd '%s'를 열수가 없습니다"
 msgid "pipe connections are not available on this system"
 msgstr "이 시스템에서 pipe 연결은 이용할수가 없습니다"
 
-#: src/main/connections.c:961
+#: src/main/connections.c:965
 #, c-format
 msgid "cannot open compressed file '%s'"
 msgstr "압축된 파일'%s'를 열수가 없습니다"
 
-#: src/main/connections.c:1002
+#: src/main/connections.c:1006
 msgid "whence = \"end\" is not implemented for gzfile connections"
 msgstr "gzfile connection에 대해서 whence = \"end\"는 실제 적용 되지않습니다"
 
-#: src/main/connections.c:1008
+#: src/main/connections.c:1012
 msgid "seek on a gzfile connection returned an internal error"
 msgstr "gzfile connection의 seek에서 내부 에러를 검색되었습니다"
 
-#: src/main/connections.c:1042 src/main/connections.c:1046
-#: src/main/connections.c:1052 src/main/connections.c:1071
+#: src/main/connections.c:1046 src/main/connections.c:1050
+#: src/main/connections.c:1056 src/main/connections.c:1075
 msgid "allocation of gzfile connection failed"
 msgstr "gzfile connection의 할당에 실패했습니다"
 
-#: src/main/connections.c:1144
+#: src/main/connections.c:1148
 #, c-format
 msgid "cannot open bzip2-ed file '%s'"
 msgstr "bzip2 bz 파일 '%s'를 열리지 않습니다"
 
-#: src/main/connections.c:1153 src/main/connections.c:1162
+#: src/main/connections.c:1157 src/main/connections.c:1166
 #, c-format
 msgid "file '%s' appears not to be compressed by bzip2"
 msgstr "파일'%s'는 bzip2으로 압축되어있지 않은것 같습니다"
 
-#: src/main/connections.c:1225 src/main/connections.c:1229
-#: src/main/connections.c:1235 src/main/connections.c:1253
+#: src/main/connections.c:1229 src/main/connections.c:1233
+#: src/main/connections.c:1239 src/main/connections.c:1257
 msgid "allocation of bzfile connection failed"
 msgstr "bzfile 접속의 할당에 실패했습니다"
 
-#: src/main/connections.c:1344 src/modules/X11/devX11.c:2581
+#: src/main/connections.c:1348 src/modules/X11/devX11.c:2581
 msgid "memory allocation to copy clipboard failed"
 msgstr "clipboard의 복사로 메모리 확보에 실패했습니다"
 
-#: src/main/connections.c:1349 src/modules/X11/devX11.c:2569
+#: src/main/connections.c:1353 src/modules/X11/devX11.c:2569
 msgid "clipboard cannot be opened or contains no text"
 msgstr "clipboard를 열수가 없거나, 내용이 없습니다"
 
-#: src/main/connections.c:1360
+#: src/main/connections.c:1364
 msgid "memory allocation to open clipboard failed"
 msgstr "clipboard의 open으로 메모리 확보에 실패했습니다"
 
-#: src/main/connections.c:1432
+#: src/main/connections.c:1436
 msgid "attempt to seek outside the range of the clipboard"
 msgstr "clipboard의 범위가 초과되어 검색하려고 했습니다"
 
-#: src/main/connections.c:1472
+#: src/main/connections.c:1476
 msgid "clipboard connection is open for reading only"
 msgstr "clipboard connection는 읽기만 하는것으로 열려졌습니다"
 
-#: src/main/connections.c:1490
+#: src/main/connections.c:1494
 msgid "clipboard buffer is full and output lost"
 msgstr "clipborad의 버퍼가 가득차 있고 출력기능이 잃게 되었습니다"
 
-#: src/main/connections.c:1505
+#: src/main/connections.c:1509
 msgid "'mode' for the clipboard must be 'r' or 'w'"
 msgstr "clipboard의 모드는 'r' 또는 'w'가 나오지 않으면 안됩니다"
 
-#: src/main/connections.c:1508
+#: src/main/connections.c:1512
 msgid "'mode' for the clipboard must be 'r' on Unix"
 msgstr "Unix에서 clipboard의 'mode'는 'r'으로 나오지 않으면 안됩니다"
 
-#: src/main/connections.c:1511 src/main/connections.c:1517
-#: src/main/connections.c:1523 src/main/connections.c:1540
+#: src/main/connections.c:1515 src/main/connections.c:1521
+#: src/main/connections.c:1527 src/main/connections.c:1544
 msgid "allocation of clipboard connection failed"
 msgstr "clipboard connection의 할당에 실패했습니다"
 
-#: src/main/connections.c:1610 src/main/connections.c:1614
-#: src/main/connections.c:1620
+#: src/main/connections.c:1614 src/main/connections.c:1618
+#: src/main/connections.c:1624
 msgid "allocation of terminal connection failed"
 msgstr "터미널 접속의 할당에 실패했습니다"
 
-#: src/main/connections.c:1694
+#: src/main/connections.c:1698
 msgid "cannot allocate memory for text connection"
 msgstr "text connection 때문에 메모리를 할당할수가 없습니다"
 
-#: src/main/connections.c:1739
+#: src/main/connections.c:1743
 msgid "seek is not relevant for text connection"
 msgstr "text connection 때문에 seek는 부적절합니다"
 
-#: src/main/connections.c:1747 src/main/connections.c:1751
-#: src/main/connections.c:1757 src/main/connections.c:1770
-#: src/main/connections.c:1903 src/main/connections.c:1907
-#: src/main/connections.c:1913 src/main/connections.c:1926
-#: src/main/connections.c:1932
+#: src/main/connections.c:1751 src/main/connections.c:1755
+#: src/main/connections.c:1761 src/main/connections.c:1774
+#: src/main/connections.c:1907 src/main/connections.c:1911
+#: src/main/connections.c:1917 src/main/connections.c:1930
+#: src/main/connections.c:1936
 msgid "allocation of text connection failed"
 msgstr "text 접속의 할당에 실패했습니다"
 
-#: src/main/connections.c:1883
+#: src/main/connections.c:1887
 msgid "text connection: appending to a non-existent char vector"
 msgstr ""
 "text connection: 존재하지 않는 문자 벡터에 추가(append) 하려고 했습니다"
 
-#: src/main/connections.c:1977
+#: src/main/connections.c:1981
 msgid "unsupported mode"
 msgstr "서포트되어 있지 않은 모드입니다"
 
-#: src/main/connections.c:2053
+#: src/main/connections.c:2057
 msgid "sockets are not available on this system"
 msgstr "이 시스템에서 소켓(socket)은 사용할수가 없습니다"
 
-#: src/main/connections.c:2119 src/main/connections.c:2173
-#: src/main/connections.c:2188 src/main/connections.c:2237
-#: src/main/connections.c:2259 src/main/connections.c:2278
-#: src/main/connections.c:2290 src/main/connections.c:2394
-#: src/main/connections.c:2491 src/main/connections.c:3870
+#: src/main/connections.c:2123 src/main/connections.c:2177
+#: src/main/connections.c:2192 src/main/connections.c:2241
+#: src/main/connections.c:2263 src/main/connections.c:2282
+#: src/main/connections.c:2294 src/main/connections.c:2398
+#: src/main/connections.c:2495 src/main/connections.c:3874
 msgid "'con' is not a connection"
 msgstr "'con'는 연결이 아닙니다"
 
-#: src/main/connections.c:2122
+#: src/main/connections.c:2126
 msgid "cannot open standard connections"
 msgstr "표준 연결을 열 수가 없습니다"
 
-#: src/main/connections.c:2124
+#: src/main/connections.c:2128
 msgid "connection is already open"
 msgstr "connection는 이미 열려져 있습니다"
 
-#: src/main/connections.c:2158
+#: src/main/connections.c:2162
 msgid "unknown 'rw' value"
 msgstr "알수 없는 'rw' 값입니다"
 
-#: src/main/connections.c:2239
+#: src/main/connections.c:2243
 msgid "cannot close standard connections"
 msgstr "표준 연결을 닫을 수가 없습니다"
 
-#: src/main/connections.c:2242
+#: src/main/connections.c:2246
 msgid "cannot close output sink connection"
 msgstr "출력 sink 연결을 닫을 수가 없습니다"
 
-#: src/main/connections.c:2244
+#: src/main/connections.c:2248
 msgid "cannot close messages sink connection"
 msgstr "메시지 sink 연결을 닫을수가 없습니다"
 
-#: src/main/connections.c:2261 src/main/connections.c:3585
+#: src/main/connections.c:2265 src/main/connections.c:3589
 #: src/main/serialize.c:1591 src/main/serialize.c:1599
 msgid "connection is not open"
 msgstr "연결은 열려져 있지 않습니다"
 
-#: src/main/connections.c:2350 src/main/connections.c:2362
+#: src/main/connections.c:2354 src/main/connections.c:2366
 msgid "Line longer than buffer size"
 msgstr "행이 버퍼 사이즈보다 길어지고 있습니다"
 
-#: src/main/connections.c:2398 src/main/context.c:488 src/main/context.c:558
+#: src/main/connections.c:2402 src/main/context.c:488 src/main/context.c:558
 msgid "invalid value for 'n'"
 msgstr "'n'의 값이 부적절합니다"
 
-#: src/main/connections.c:2401
+#: src/main/connections.c:2405
 msgid "invalid value for 'ok'"
 msgstr "'ok'값이 부적절합니다"
 
-#: src/main/connections.c:2403 src/main/connections.c:2633
-#: src/main/connections.c:3077 src/main/dcf.c:56 src/main/serialize.c:1593
+#: src/main/connections.c:2407 src/main/connections.c:2637
+#: src/main/connections.c:3081 src/main/dcf.c:56 src/main/serialize.c:1593
 msgid "cannot read from this connection"
 msgstr "이 연결로부터 열수가 없습니다"
 
-#: src/main/connections.c:2406 src/main/connections.c:2500
-#: src/main/connections.c:2636 src/main/connections.c:2839
-#: src/main/connections.c:3084 src/main/connections.c:3156
-#: src/main/connections.c:3333 src/main/dcf.c:59 src/main/deparse.c:304
+#: src/main/connections.c:2410 src/main/connections.c:2504
+#: src/main/connections.c:2640 src/main/connections.c:2843
+#: src/main/connections.c:3088 src/main/connections.c:3160
+#: src/main/connections.c:3337 src/main/dcf.c:59 src/main/deparse.c:304
 #: src/main/deparse.c:378 src/main/saveload.c:2206 src/main/scan.c:1022
 #: src/main/scan.c:1135 src/main/scan.c:1586 src/main/scan.c:1800
 #: src/main/source.c:153
 msgid "cannot open the connection"
 msgstr "연결로부터 열수가 없습니다"
 
-#: src/main/connections.c:2416 src/main/connections.c:2435
+#: src/main/connections.c:2420 src/main/connections.c:2439
 msgid "cannot allocate buffer in readLines"
 msgstr "readLine에 버퍼를 할당할수가 없습니다"
 
-#: src/main/connections.c:2452
+#: src/main/connections.c:2456
 #, c-format
 msgid "incomplete final line found by readLines on '%s'"
 msgstr "'%s'에 관한 readLines로 불완전한 맨 마지막 행이 보이지 않습니다"
 
-#: src/main/connections.c:2462
+#: src/main/connections.c:2466
 msgid "too few lines read in readLines"
 msgstr "readLines로 읽어들이는 행이 너무 적습니다"
 
-#: src/main/connections.c:2496 src/main/connections.c:2826
-#: src/main/connections.c:3126 src/main/connections.c:3586
+#: src/main/connections.c:2500 src/main/connections.c:2830
+#: src/main/connections.c:3130 src/main/connections.c:3590
 #: src/main/scan.c:1796 src/main/serialize.c:1601
 msgid "cannot write to this connection"
 msgstr "이 연결에는 써낼수가 없습니다"
 
-#: src/main/connections.c:2535
+#: src/main/connections.c:2539
 msgid "incomplete string at end of file has been discarded"
 msgstr "파일의 끝에는 불완전한 문자열이 무시되어 있습니다"
 
-#: src/main/connections.c:2547
+#: src/main/connections.c:2551
 msgid "null terminator not found: breaking string at 10000 chars"
 msgstr "문자열의 종단(null)이 없습니다, 10000의 문자에 잘라졌습니다"
 
-#: src/main/connections.c:2614
+#: src/main/connections.c:2618
 msgid "can only read from a binary connection"
 msgstr "바이너스(binary) 연결로부터만 입력할수가 있습니다"
 
-#: src/main/connections.c:2620
+#: src/main/connections.c:2624
 msgid "invalid value of 'what'"
 msgstr "what의 값이 부적절합니다"
 
-#: src/main/connections.c:2627
+#: src/main/connections.c:2631
 msgid "invalid value of 'signed'"
 msgstr "'signed'의 값이 부적절합니다"
 
-#: src/main/connections.c:2630 src/main/connections.c:2832
+#: src/main/connections.c:2634 src/main/connections.c:2836
 msgid "invalid value of 'swap'"
 msgstr "'swap'의 값이 부적절합니다"
 
-#: src/main/connections.c:2653 src/main/connections.c:2900
+#: src/main/connections.c:2657 src/main/connections.c:2904
 msgid "size changing is not supported for complex vectors"
 msgstr "복소수 벡터의 사이즈의 변경은 서포트 되어있지 않습니다"
 
-#: src/main/connections.c:2678 src/main/connections.c:2696
-#: src/main/connections.c:2722 src/main/connections.c:2765
-#: src/main/connections.c:2786 src/main/connections.c:2881
-#: src/main/connections.c:2894 src/main/connections.c:2953
-#: src/main/connections.c:2982
+#: src/main/connections.c:2682 src/main/connections.c:2700
+#: src/main/connections.c:2726 src/main/connections.c:2769
+#: src/main/connections.c:2790 src/main/connections.c:2885
+#: src/main/connections.c:2898 src/main/connections.c:2957
+#: src/main/connections.c:2986
 #, c-format
 msgid "size %d is unknown on this machine"
 msgstr "이 machine %d 라고하는 사이즈는 사용되고 있지 않습니다"
 
-#: src/main/connections.c:2707
+#: src/main/connections.c:2711
 msgid "raw is always of size 1"
 msgstr "raw 형태 오브젝트의 사이즈는 항상 1 입니다"
 
-#: src/main/connections.c:2815
+#: src/main/connections.c:2819
 msgid "'x' is not an atomic vector type"
 msgstr "'x'가 atomic 벡터 유형이 아닙니다"
 
-#: src/main/connections.c:2823
+#: src/main/connections.c:2827
 msgid "can only write to a binary connection"
 msgstr "바이너리 연결에만 기입할수가 있습니다"
 
-#: src/main/connections.c:2860 src/main/connections.c:3010
-#: src/main/connections.c:3195
+#: src/main/connections.c:2864 src/main/connections.c:3014
+#: src/main/connections.c:3199
 msgid "problem writing to connection"
 msgstr "연결의 기입에는 문제가 있습니다"
 
-#: src/main/connections.c:2905
+#: src/main/connections.c:2909
 msgid "size changing is not supported for raw vectors"
 msgstr "raw 벡터 사이즈의 변경은 서포트 되어있지 않습니다"
 
-#: src/main/connections.c:3040 src/main/connections.c:3043
+#: src/main/connections.c:3044 src/main/connections.c:3047
 msgid "invalid UTF-8 input in readChar()"
 msgstr "readChart()함수에서 부적절한 UTF-8 입력입니다"
 
-#: src/main/connections.c:3090
+#: src/main/connections.c:3094
 msgid "supplied length is invalid"
 msgstr "주어진 길이가 부적절합니다"
 
-#: src/main/connections.c:3136
+#: src/main/connections.c:3140
 msgid "invalid value of 'sep'"
 msgstr "'sep'의 값이 부적절합니다"
 
-#: src/main/connections.c:3168
+#: src/main/connections.c:3172
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar:  문자열에서 현재 있는 이상의 문자가 요구 되어 있습니다 - zero-pad "
 "입니다"
 
-#: src/main/connections.c:3220 src/main/connections.c:3223
-#: src/main/connections.c:3262 src/main/connections.c:3267
+#: src/main/connections.c:3224 src/main/connections.c:3227
+#: src/main/connections.c:3266 src/main/connections.c:3271
 msgid "could not allocate space for pushBack"
 msgstr "pushBack 때문에 영역을 할당할수가 없었습니다"
 
-#: src/main/connections.c:3251
+#: src/main/connections.c:3255
 msgid "can only push back on open readable connections"
 msgstr "열려 있는 read 가능한 연결에만 밀어낼수가 있습니다"
 
-#: src/main/connections.c:3253
+#: src/main/connections.c:3257
 msgid "can only push back on text-mode connections"
 msgstr "text모드 연결에만 밀어낼수가 있습니다"
 
-#: src/main/connections.c:3321 src/main/connections.c:3381
+#: src/main/connections.c:3325 src/main/connections.c:3385
 msgid "sink stack is full"
 msgstr "sink의 스택이 넘쳤습니다"
 
-#: src/main/connections.c:3324
+#: src/main/connections.c:3328
 msgid "cannot switch output to stdin"
 msgstr "출력을 stdin에 변경할수가 없습니다"
 
-#: src/main/connections.c:3341
+#: src/main/connections.c:3345
 msgid "no sink to remove"
 msgstr "제거해야 할 sink가 없습니다"
 
-#: src/main/connections.c:3372
+#: src/main/connections.c:3376
 msgid "invalid value for 'closeOnExit'"
 msgstr "'closeOnExit'의 값이 부적절합니다"
 
-#: src/main/connections.c:3374 src/main/connections.c:3402
+#: src/main/connections.c:3378 src/main/connections.c:3406
 msgid "invalid value for 'type'"
 msgstr "'type'의 값이 부적절합니다"
 
-#: src/main/connections.c:3376
+#: src/main/connections.c:3380
 msgid "invalid value for 'split'"
 msgstr "'split'의 값이 부적절합니다"
 
-#: src/main/connections.c:3535
+#: src/main/connections.c:3539
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "파일(\"\")단지 open = \"w+\" 그리고 open = \"w+b\"를 지원합니다: 전자의 사용"
 
-#: src/main/connections.c:3551 src/modules/internet/internet.c:463
+#: src/main/connections.c:3555 src/modules/internet/internet.c:463
 msgid "unsupported URL scheme"
 msgstr "서포트 되어있지 않는 URL scheme입니다"
 
-#: src/main/connections.c:3638
+#: src/main/connections.c:3642
 msgid "file stream does not have gzip magic number"
 msgstr "파일 흐름에는 gzip magic수를 가지고 있지 않습니다"
 
-#: src/main/connections.c:3649
+#: src/main/connections.c:3653
 msgid "file stream does not have valid gzip header"
 msgstr "파일 흐름에는 적절한 gzip 헤더(header)를 가지고 있지 않습니다"
 
-#: src/main/connections.c:3715
+#: src/main/connections.c:3719
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "'gzcon' 연결이 접해 있을때 기입해서 에러가 발생되었습니다"
 
-#: src/main/connections.c:3815
+#: src/main/connections.c:3819
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc 에러 %x %x\n"
 
-#: src/main/connections.c:3840
+#: src/main/connections.c:3844
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon' 연결에서 기입해 애러가 발생되었습니다"
 
-#: src/main/connections.c:3874
+#: src/main/connections.c:3878
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level'는 0...9의 사이의 어느것중에 나오지 안됩니다"
 
-#: src/main/connections.c:3877
+#: src/main/connections.c:3881
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression'는 TRUE 또는 FALSE가 아니면 되지 않습니다"
 
-#: src/main/connections.c:3880
+#: src/main/connections.c:3884
 msgid "this is already a gzcon connection"
 msgstr "이것은 이미 gzcon 연결입니다"
 
-#: src/main/connections.c:3886
+#: src/main/connections.c:3890
 msgid "can only use read- or write- binary connections"
 msgstr ""
 "읽어들여거나 또는 다른이름으로 저장하기위한것은 바이너리 연결에서만 사용할수"
 "가 있습니다"
 
-#: src/main/connections.c:3890 src/main/connections.c:3894
-#: src/main/connections.c:3901 src/main/connections.c:3915
+#: src/main/connections.c:3894 src/main/connections.c:3898
+#: src/main/connections.c:3905 src/main/connections.c:3919
 msgid "allocation of 'gzcon' connection failed"
 msgstr "'gzcon' 연결으로 할당에 실패했습니다"
 
-#: src/main/connections.c:3960
+#: src/main/connections.c:3964
 msgid "R_compress1 requires a scalar string"
 msgstr "R_compress1는 scalar 문자열을 요구합니다"
 
-#: src/main/connections.c:3967
+#: src/main/connections.c:3971
 msgid "internal error in R_compress1"
 msgstr "R_compress1에 내부 에러가 발생했습니다"
 
-#: src/main/connections.c:3982
+#: src/main/connections.c:3986
 msgid "R_decompress1 requires a scalar string"
 msgstr "R_decompress1는 scalar 문자를 요구합니다"
 
-#: src/main/connections.c:3987
+#: src/main/connections.c:3991
 msgid "internal error in R_decompress1"
 msgstr "R_decompress1에 내부 에러가 발생했습니다"
 
-#: src/main/connections.c:4004
+#: src/main/connections.c:4008
 msgid "not a list of sockets"
 msgstr "sockets의 리스트가 아닙니다"
 
-#: src/main/connections.c:4009
+#: src/main/connections.c:4013
 msgid "bad write indicators"
 msgstr "부적절한 기입 지시자입니다"
 
-#: src/main/connections.c:4020
+#: src/main/connections.c:4024
 msgid "not a socket connection"
 msgstr "socket 연결이 아닙니다"
 
@@ -2186,12 +2185,12 @@ msgstr "복소수에 대해서 min/max는 정의 되어 있지 않습니다"
 msgid "unknown cumxxx function"
 msgstr "알수 없는 cumxxx 함수입니다"
 
-#: src/main/datetime.c:433
+#: src/main/datetime.c:462
 msgid "cannot set timezones on this system"
 msgstr "이 시스템에서 timezones은 설정 할수가 없습니다"
 
-#: src/main/datetime.c:584 src/main/datetime.c:586 src/main/datetime.c:873
-#: src/main/datetime.c:875
+#: src/main/datetime.c:613 src/main/datetime.c:615 src/main/datetime.c:902
+#: src/main/datetime.c:904
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "비어있지 않는 POSIXlt 구조에는 길이 0의 요소가 있습니다"
 
@@ -2203,11 +2202,11 @@ msgstr "'read.dcf'에 위한 메모리를 할당할수가 없었습니다"
 msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
 msgstr "C 함수 'R_AllocStringBuffer'중의 메모리를 할당할수가 없었습니다"
 
-#: src/main/deparse.c:184 src/main/plot.c:979 src/main/plot.c:1487
-#: src/main/plot.c:1773 src/main/plot.c:1838 src/main/plot.c:1914
-#: src/main/plot.c:2010 src/main/plot.c:2088 src/main/plot.c:2367
-#: src/main/plot.c:2545 src/main/plot.c:2788 src/main/plot.c:3428
-#: src/main/plot.c:3504 src/main/plot.c:3757 src/main/plot3d.c:1381
+#: src/main/deparse.c:184 src/main/plot.c:981 src/main/plot.c:1489
+#: src/main/plot.c:1775 src/main/plot.c:1840 src/main/plot.c:1916
+#: src/main/plot.c:2012 src/main/plot.c:2090 src/main/plot.c:2369
+#: src/main/plot.c:2547 src/main/plot.c:2790 src/main/plot.c:3430
+#: src/main/plot.c:3506 src/main/plot.c:3759 src/main/plot3d.c:1381
 #: src/main/sprintf.c:138 src/main/sprintf.c:163
 msgid "too few arguments"
 msgstr "인수가 충분하지 않습니다"
@@ -2237,7 +2236,7 @@ msgstr "길이 zero의 인수입니다"
 msgid "bad environment"
 msgstr "부적절한 환경입니다"
 
-#: src/main/deparse.c:352 src/main/eval.c:2476
+#: src/main/deparse.c:352 src/main/eval.c:2473
 #, c-format
 msgid "Object \"%s\" not found"
 msgstr "오브젝트 \"%s\"는 존재하지 않습니다"
@@ -2557,52 +2556,52 @@ msgstr "polyline를 자르고 있는 동안에 메모리가 전부 소모 되었
 msgid "font face %d not supported for font family '%s'"
 msgstr "font 페이스 %d는 font 패밀리 '%s'에서 서포트 되어있지 않습니다"
 
-#: src/main/engine.c:1770
+#: src/main/engine.c:1823
 msgid "no graphics device is active"
 msgstr "유효한 graphics 디바이스가 없습니다"
 
-#: src/main/engine.c:2102
+#: src/main/engine.c:2155
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "pch의 값'%d'는 실제 적용되지 않습니다"
 
-#: src/main/engine.c:2125
+#: src/main/engine.c:2178
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "부적절한 축범위입니다 [GEPretty(..,n=%d)"
 
-#: src/main/engine.c:2129
+#: src/main/engine.c:2182
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "무한하게 축이 펴지고 있습니다 [GEPretty(%g, %g, %d)]"
 
-#: src/main/engine.c:2167
+#: src/main/engine.c:2220
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr "GEPretty(.):  new  * lo = %g < %g = x1"
 
-#: src/main/engine.c:2169
+#: src/main/engine.c:2222
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr "GEPretty(.):  new *up = %g > %g =  x2"
 
-#: src/main/engine.c:2436
+#: src/main/engine.c:2489
 msgid "Display list redraw incomplete"
 msgstr "디스플레이 리스트가 불완전하게 재묘화 되었습니다"
 
-#: src/main/engine.c:2615
+#: src/main/engine.c:2668
 msgid "'expr' argument must be an expression"
 msgstr "'expr' 인수는 식이 아니면 안됩니다"
 
-#: src/main/engine.c:2617
+#: src/main/engine.c:2670
 msgid "'list' argument must be a list"
 msgstr "'list' 인수는 리스트가 아니면 안됩니다"
 
-#: src/main/engine.c:2623
+#: src/main/engine.c:2676
 msgid "'env' argument must be an environment"
 msgstr "'env' 인수는 환경이 아니면 안됩니다"
 
-#: src/main/engine.c:2645 src/main/graphics.c:2396
+#: src/main/engine.c:2698 src/main/graphics.c:2396
 msgid "invalid graphics state"
 msgstr "graphics의 상태가 부적절합니다"
 
@@ -2663,7 +2662,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr ""
 "..%d 는 올바르지 않는 문맥으로 사용되고 있습니다,참조해야할 ...가 없습니다"
 
-#: src/main/envir.c:1237 src/main/eval.c:343 src/main/eval.c:2479
+#: src/main/envir.c:1237 src/main/eval.c:343 src/main/eval.c:2476
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "인수 \"%s\"가 없고,생략시 기정값도 없습니다"
@@ -3027,8 +3026,8 @@ msgstr ""
 "(expressions =)?"
 
 #: src/main/eval.c:333 src/main/eval.c:426 src/main/eval.c:1381
-#: src/main/eval.c:1430 src/main/eval.c:1484 src/main/eval.c:1706
-#: src/main/eval.c:3041 src/main/eval.c:3133
+#: src/main/eval.c:1430 src/main/eval.c:1484 src/main/eval.c:1703
+#: src/main/eval.c:3038 src/main/eval.c:3130
 #, fuzzy
 msgid "'...' used in an incorrect context"
 msgstr "...가 부적절한 문맥으로 사용되었습니다"
@@ -3038,15 +3037,15 @@ msgstr "...가 부적절한 문맥으로 사용되었습니다"
 msgid "object \"%s\" not found"
 msgstr "오브젝트 \"%s\"는 존재하지 않습니다"
 
-#: src/main/eval.c:345 src/main/eval.c:2480
+#: src/main/eval.c:345 src/main/eval.c:2477
 msgid "argument is missing, with no default"
 msgstr "인수가 없고, 생략할때 기정값도 없습니다"
 
-#: src/main/eval.c:360 src/main/eval.c:2424
+#: src/main/eval.c:360 src/main/eval.c:2421
 msgid "recursive default argument reference"
 msgstr "기정 인수의 재귀적 참조입니다"
 
-#: src/main/eval.c:422 src/main/eval.c:2989
+#: src/main/eval.c:422 src/main/eval.c:2986
 msgid "attempt to apply non-function"
 msgstr "함수가 아닌것을 적용하려고 했습니다"
 
@@ -3137,168 +3136,168 @@ msgstr "좌변에 대입이 부적절합니다"
 msgid "invalid formal argument list for \"function\""
 msgstr "\"function\"의 가인수 리스트가 부적절합니다"
 
-#: src/main/eval.c:1560
+#: src/main/eval.c:1557
 msgid "numeric 'envir' arg not of length one"
 msgstr "수치의 'envir 인수의 길이가 1이 아닙니다"
 
-#: src/main/eval.c:1578 src/main/eval.c:1597
+#: src/main/eval.c:1575 src/main/eval.c:1594
 #, fuzzy
 msgid "restarts not supported in 'eval'"
 msgstr "재실행 기능은 eval함수에 대해서 서포트 되어있지 않습니다"
 
-#: src/main/eval.c:1644
+#: src/main/eval.c:1641
 msgid "'Recall' called from outside a closure"
 msgstr "closure의 외부로부터 'Recall'가 불려졌습니다"
 
-#: src/main/eval.c:1700
+#: src/main/eval.c:1697
 #, fuzzy
 msgid "value in '...' is not a promise"
 msgstr "...의 값은 promise가 아닙니다"
 
-#: src/main/eval.c:1892 src/main/objects.c:663
+#: src/main/eval.c:1889 src/main/objects.c:663
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "'%s'안의 호출명이 너무 깁니다"
 
-#: src/main/eval.c:1913
+#: src/main/eval.c:1910
 #, fuzzy, c-format
 msgid "generic name too long in '%s'"
 msgstr "%s의 generic 이름이 너무 깁니다"
 
-#: src/main/eval.c:1945
+#: src/main/eval.c:1942
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr ""
 "메소드 (\"%s \\ \", \"%s \\  \")는  \"%s\"에 대해서는 모순이 되고 있습니다"
 
-#: src/main/eval.c:2009
+#: src/main/eval.c:2006
 msgid "dispatch error"
 msgstr "메소드 할당의 에러입니다"
 
-#: src/main/eval.c:2388
+#: src/main/eval.c:2385
 msgid "node stack overflow"
 msgstr "node 스택이 오버플로우되었습니다"
 
-#: src/main/eval.c:2394
+#: src/main/eval.c:2391
 msgid "integer stack overflow"
 msgstr "정수 스택이 오버플로우되었습니다"
 
-#: src/main/eval.c:2462
+#: src/main/eval.c:2459
 msgid "Bad opcode"
 msgstr "opcode가 부적절합니다"
 
-#: src/main/eval.c:2609
+#: src/main/eval.c:2606
 msgid "not a vector object"
 msgstr "벡터 오브젝트가 아닙니다"
 
-#: src/main/eval.c:2617 src/main/eval.c:2639 src/main/eval.c:2663
-#: src/main/eval.c:2687
+#: src/main/eval.c:2614 src/main/eval.c:2636 src/main/eval.c:2660
+#: src/main/eval.c:2684
 msgid "can only handle simple real vectors"
 msgstr "단순한 실수 벡터만을 취급할수가 있습니다"
 
-#: src/main/eval.c:2626 src/main/eval.c:2673
+#: src/main/eval.c:2623 src/main/eval.c:2670
 msgid "not a simple vector"
 msgstr "단일의 벡터가 아닙니다"
 
-#: src/main/eval.c:2643 src/main/eval.c:2691 src/main/subassign.c:892
+#: src/main/eval.c:2640 src/main/eval.c:2688 src/main/subassign.c:892
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "첨자의 수가 올바르지 않습니다"
 
-#: src/main/eval.c:2654 src/main/eval.c:2705
+#: src/main/eval.c:2651 src/main/eval.c:2702
 msgid "not a simple matrix"
 msgstr "단일의 행렬이 아닙니다"
 
-#: src/main/eval.c:2739
+#: src/main/eval.c:2736
 msgid "bytecode version mismatch; using eval"
 msgstr "바이트 코드의 버전이 일치하지 않습니다;  eval를 사용합니다"
 
-#: src/main/eval.c:2744
+#: src/main/eval.c:2741
 msgid "bytecode version is too old"
 msgstr "바이트 코드의 버전이 너무 오래되었습니다"
 
-#: src/main/eval.c:2745
+#: src/main/eval.c:2742
 msgid "bytecode version is too new"
 msgstr "바이트 코드의 버전이 너무 새롭습니다"
 
-#: src/main/eval.c:2750
+#: src/main/eval.c:2747
 msgid "byte code version mismatch"
 msgstr "바이트 코드의 버전이 일치하지 않습니다"
 
-#: src/main/eval.c:2766
+#: src/main/eval.c:2763
 msgid "missing value where logical needed"
 msgstr "논리값이 필요한 곳에 결손값입니다"
 
-#: src/main/eval.c:2767
+#: src/main/eval.c:2764
 msgid "argument of if(*) is not interpretable as logical"
 msgstr "if(*) 문장의 조건 부분이 논리값으로서 해석할수가 없습니다"
 
-#: src/main/eval.c:2801
+#: src/main/eval.c:2798
 msgid "invalid sequence argument in for loop"
 msgstr "for 루프의 범위 인수가 부적절합니다"
 
-#: src/main/eval.c:2951 src/main/eval.c:2972 src/main/eval.c:3079
+#: src/main/eval.c:2948 src/main/eval.c:2969 src/main/eval.c:3076
 msgid "not a BUILTIN function"
 msgstr "BUILTIN 함수가 아닙니다"
 
-#: src/main/eval.c:3067
+#: src/main/eval.c:3064
 msgid "bad function"
 msgstr "부적절한 함수입니다"
 
-#: src/main/eval.c:3100
+#: src/main/eval.c:3097
 msgid "not a SPECIAL function"
 msgstr "SPECIAL 함수가 아닙니다"
 
-#: src/main/eval.c:3329
+#: src/main/eval.c:3326
 msgid "cannot find index for threaded code address"
 msgstr "threaded code address의 인덱스를 검색할수가 없습니다"
 
-#: src/main/eval.c:3407
+#: src/main/eval.c:3404
 msgid "invalid symbol"
 msgstr "심벌이 부적절합니다"
 
-#: src/main/eval.c:3451
+#: src/main/eval.c:3448
 msgid "argument is not a byte code object"
 msgstr "인수가 바이트 코드 오브젝트가 아닙니다"
 
-#: src/main/eval.c:3474
+#: src/main/eval.c:3471
 msgid "bad file name"
 msgstr "부적절한 파일이름 입니다"
 
-#: src/main/eval.c:3478 src/main/eval.c:3499
+#: src/main/eval.c:3475 src/main/eval.c:3496
 msgid "unable to open 'file'"
 msgstr "'file'를 열수가 없습니다"
 
-#: src/main/eval.c:3493 src/main/saveload.c:1921
+#: src/main/eval.c:3490 src/main/saveload.c:1921
 msgid "'file' must be non-empty string"
 msgstr "'file'는 비어있지 않는 문자열 이어야만 합니다"
 
-#: src/main/eval.c:3495 src/main/saveload.c:1923 src/main/saveload.c:2189
+#: src/main/eval.c:3492 src/main/saveload.c:1923 src/main/saveload.c:2189
 #: src/main/serialize.c:1718
 msgid "'ascii' must be logical"
 msgstr "'ascii'는 논리값 이어야만 합니다"
 
-#: src/main/eval.c:3524 src/main/eval.c:3531
+#: src/main/eval.c:3521 src/main/eval.c:3528
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName:  버퍼가 너무 작습니다"
 
-#: src/main/eval.c:3564
+#: src/main/eval.c:3561
 msgid "code must be a generic vector"
 msgstr "코드는 generic 벡터이어야만 합니다"
 
-#: src/main/eval.c:3603
+#: src/main/eval.c:3600
 msgid "profile timer in use"
 msgstr "profile timer는 사용중입니다"
 
-#: src/main/eval.c:3605
+#: src/main/eval.c:3602
 msgid "already byte code profiling"
 msgstr "이미 바이트 코드는 분석되어 있습니다"
 
-#: src/main/eval.c:3623
+#: src/main/eval.c:3620
 msgid "setting profile timer failed"
 msgstr "profile timer의 설정에 실패했습니다"
 
-#: src/main/eval.c:3640
+#: src/main/eval.c:3637
 msgid "not byte code profiling"
 msgstr "바이트 코드의 profiling가 아닙니다"
 
@@ -3362,55 +3361,55 @@ msgstr "'onKeybd'는 서포트 되어있지 않습니다"
 msgid "invalid 'onKeybd' callback"
 msgstr "'onKeybd'의 callback이 부적절합니다"
 
-#: src/main/gram.y:171 src/main/gram.y:184
+#: src/main/gram.y:170 src/main/gram.y:183
 msgid "EOF whilst reading MBCS char"
 msgstr "MBCS 문자를 읽고있는 도중에 EOF에 도달했습니다"
 
-#: src/main/gram.y:174 src/main/gram.y:181
+#: src/main/gram.y:173 src/main/gram.y:180
 msgid "invalid multibyte character in mbcs_get_next"
 msgstr "mbcs_get_next중에 부적절한 multibyte 문자열이 있습니다"
 
-#: src/main/gram.y:432
+#: src/main/gram.y:431
 msgid "function is too long to keep source"
 msgstr "함수가 너무 크므로 source를 보관할수가 없습니다"
 
-#: src/main/gram.y:911
+#: src/main/gram.y:910
 msgid "incorrect tag type"
 msgstr "tag의 유형가 올바르지 않습니다"
 
-#: src/main/gram.y:1613
+#: src/main/gram.y:1612
 msgid "Repeated formal argument"
 msgstr "동일 이름의 가인수가 복수개입니다"
 
-#: src/main/gram.y:1624
+#: src/main/gram.y:1623
 msgid "input buffer overflow"
 msgstr "입력 버퍼가 오버플로우되었습니다"
 
-#: src/main/gram.y:1756
+#: src/main/gram.y:1755
 msgid "\\uxxxx sequences are only valid in multibyte locales"
 msgstr ""
 
-#: src/main/gram.y:1772 src/main/gram.y:1777
+#: src/main/gram.y:1771 src/main/gram.y:1776
 msgid "invalid \\u{xxxx} sequence"
 msgstr "부당한 \\u(xxxx) 계열입니다"
 
-#: src/main/gram.y:1779
+#: src/main/gram.y:1778
 msgid "invalid \\uxxxx sequence"
 msgstr "부적절한  \\uxxxx 계열입니다"
 
-#: src/main/gram.y:1788
+#: src/main/gram.y:1787
 msgid "\\Uxxxxxxxx sequences are not supported on Windows"
 msgstr ""
 
-#: src/main/gram.y:1791
+#: src/main/gram.y:1790
 msgid "\\Uxxxxxxxx sequences are only valid in multibyte locales"
 msgstr ""
 
-#: src/main/gram.y:1807 src/main/gram.y:1811
+#: src/main/gram.y:1806 src/main/gram.y:1810
 msgid "invalid \\U{xxxxxxxx} sequence"
 msgstr "부적절한  \\Uxxxxxxxx 계열입니다"
 
-#: src/main/gram.y:1975
+#: src/main/gram.y:1974
 msgid "functions nested too deeply in source code"
 msgstr "함수가 source 코드에 두고 과도하게 네스트하고 있습니다"
 
@@ -3503,28 +3502,32 @@ msgstr "색의 이름이 부적절합니다"
 msgid "invalid color specification"
 msgstr "색의 지정이 부적절합니다"
 
-#: src/main/graphics.c:4293
+#: src/main/graphics.c:4271
+msgid "supplied color is not numeric nor character"
+msgstr ""
+
+#: src/main/graphics.c:4294
 msgid "Invalid color"
 msgstr "무효인 색입니다"
 
-#: src/main/graphics.c:4365
+#: src/main/graphics.c:4366
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr ""
 "행이 유형이 부적절합니다: 행의 길이 2, 4, 6 8 의 어느 쪽인가에 해 주십시오"
 
-#: src/main/graphics.c:4376 src/main/graphics.c:4384 src/main/graphics.c:4391
+#: src/main/graphics.c:4377 src/main/graphics.c:4385 src/main/graphics.c:4392
 msgid "invalid line type"
 msgstr "행의 유형이 부적절합니다"
 
-#: src/main/graphics.c:4502
+#: src/main/graphics.c:4503
 msgid "no active or default device"
 msgstr "active 또는 default 디바이스가 없습니다"
 
-#: src/main/graphics.c:4519
+#: src/main/graphics.c:4520
 msgid "too many open devices"
 msgstr "열려있는 디바이스가 너무 많습니다"
 
-#: src/main/graphics.c:4663
+#: src/main/graphics.c:4664
 msgid "too many devices open"
 msgstr "열린 디바이스가 너무 많습니다"
 
@@ -4340,76 +4343,81 @@ msgstr ""
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "제공된 기울기는 부적절한 길이 또는 모드이었기때문에 무시되었습니다"
 
-#: src/main/par.c:65
+#: src/main/par.c:169
 #, fuzzy, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
 msgstr "graphics 파라미터 \"%s\"에 부적절한 값이 설정되었습니다"
 
-#: src/main/par.c:72
+#: src/main/par.c:176
 #, fuzzy, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "파라미터 \"%s\\의 길이가 부적절합니다"
 
-#: src/main/par.c:375
-msgid "parameter \"mfg\" has the wrong length"
-msgstr "mfg\"의 파라미터의 길이가 부적절합니다"
-
-#: src/main/par.c:383
-msgid "parameter \"i\" in \"mfg\" is out of range"
-msgstr "\"mfg\"의 파라미터 \"i\"가 범위외입니다"
-
-#: src/main/par.c:385
-msgid "parameter \"j\" in \"mfg\" is out of range"
-msgstr "\"mfg\"의 파라미터  \"j\"가 범위외입니다"
-
-#: src/main/par.c:390
-msgid "value of nr in \"mfg\" is wrong and will be ignored"
-msgstr "\"mfg\" 안의 nr의 값은 부적절하고 무시됩니다"
-
-#: src/main/par.c:392
-msgid "value of nc in \"mfg\" is wrong and will be ignored"
-msgstr "\"mfg\"안의  nc의 값은 부적절하고 무시됩니다"
-
-#: src/main/par.c:430
-msgid "calling par(new=) with no plot"
-msgstr "plot이 없는채  par(new =)를 호출했습니다"
-
-#: src/main/par.c:582 src/main/par.c:634
+#: src/main/par.c:279 src/main/par.c:717
 #, fuzzy, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "파라미터 \"%s\"를 설정할수가 없습니다"
 
-#: src/main/par.c:642
-#, fuzzy, c-format
-msgid "graphical parameter \"%s\" can not be set in high-level plot() function"
-msgstr "높은 레벨의 plot()함수로,파라미터 \"%s\"를 설정할수가 없습니다"
+#: src/main/par.c:343 src/main/par.c:739
+#, fuzzy
+msgid "graphical parameter 'family' has a maximum length of 200 bytes"
+msgstr "파라미터 \"%s\\의 길이가 부적절합니다"
 
-#: src/main/par.c:1043
+#: src/main/par.c:472
+msgid "parameter \"mfg\" has the wrong length"
+msgstr "mfg\"의 파라미터의 길이가 부적절합니다"
+
+#: src/main/par.c:480
+msgid "parameter \"i\" in \"mfg\" is out of range"
+msgstr "\"mfg\"의 파라미터 \"i\"가 범위외입니다"
+
+#: src/main/par.c:482
+msgid "parameter \"j\" in \"mfg\" is out of range"
+msgstr "\"mfg\"의 파라미터  \"j\"가 범위외입니다"
+
+#: src/main/par.c:487
+msgid "value of nr in \"mfg\" is wrong and will be ignored"
+msgstr "\"mfg\" 안의 nr의 값은 부적절하고 무시됩니다"
+
+#: src/main/par.c:489
+msgid "value of nc in \"mfg\" is wrong and will be ignored"
+msgstr "\"mfg\"안의  nc의 값은 부적절하고 무시됩니다"
+
+#: src/main/par.c:527
+msgid "calling par(new=) with no plot"
+msgstr "plot이 없는채  par(new =)를 호출했습니다"
+
+#: src/main/par.c:703 src/main/par.c:1155
 #, fuzzy, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "graphics 파라미터 리스트가 부적절합니다"
 
-#: src/main/par.c:1047
+#: src/main/par.c:707 src/main/par.c:1159
 #, fuzzy, c-format
-msgid "unknown graphical parameter \"%s\""
-msgstr "graphics 파라미터 리스트가 부적절합니다"
+msgid "\"%s\" is not a graphical parameter"
+msgstr "graphics 파라미터가 부적절합니다"
 
-#: src/main/par.c:1100
+#: src/main/par.c:754
+#, fuzzy, c-format
+msgid "graphical parameter \"%s\" can not be set in high-level plot() function"
+msgstr "높은 레벨의 plot()함수로,파라미터 \"%s\"를 설정할수가 없습니다"
+
+#: src/main/par.c:1212
 #, fuzzy
 msgid "invalid argument passed to par()"
 msgstr "par()함수에 부적절한 파라미터가 건네받았습니다"
 
-#: src/main/par.c:1170
+#: src/main/par.c:1282
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "layout의 행수가 너무 많습니다(한계값은 %d)"
 
-#: src/main/par.c:1176
+#: src/main/par.c:1288
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "layout의 열수가 너무 많습니다(한계값은 %d)"
 
-#: src/main/par.c:1178
+#: src/main/par.c:1290
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "layout의 셀이 너무 많습니다(한계은 %d)"
@@ -4616,270 +4624,270 @@ msgstr "\"log = \" 의 지정은 문자이어야만 합니다"
 msgid "invalid \"log=%s\" specification"
 msgstr "\"log=%s \"의 지정이 부적절합니다"
 
-#: src/main/plot.c:621
+#: src/main/plot.c:622
 msgid "NAs not allowed in 'xlim'"
 msgstr "'xlim'에 NA는 허용 되어져 있지 않습니다"
 
-#: src/main/plot.c:627
+#: src/main/plot.c:628
 msgid "need finite 'xlim' values"
 msgstr "유한 'xlim'의 값이 필요합니다"
 
-#: src/main/plot.c:633
+#: src/main/plot.c:634
 msgid "NAs not allowed in 'ylim'"
 msgstr "'ylim'에 NA는 허용 되어져 있지 않습니다"
 
-#: src/main/plot.c:639
+#: src/main/plot.c:640
 msgid "need finite 'ylim' values"
 msgstr "유한한 'ylim'의 값이 필요합니다"
 
-#: src/main/plot.c:645
+#: src/main/plot.c:646
 msgid "Logarithmic axis must have positive limits"
 msgstr "대수축는 정의 한계를 가지지 않으면 안됩니다"
 
-#: src/main/plot.c:761
+#: src/main/plot.c:763
 msgid "invalid type for axis labels"
 msgstr "축 라벨의 유형이 부적절합니다"
 
-#: src/main/plot.c:988
+#: src/main/plot.c:990
 #, c-format
 msgid "invalid axis number %d"
 msgstr "축의 번호 %d가 부적절합니다"
 
-#: src/main/plot.c:1077
+#: src/main/plot.c:1079
 #, fuzzy
 msgid "'hadj' must be of length one"
 msgstr "'which'는 길이 1 이 되어야만 합니다"
 
-#: src/main/plot.c:1084 src/main/plot.c:2420
+#: src/main/plot.c:1086 src/main/plot.c:2422
 msgid "zero length 'padj' specified"
 msgstr "길이 zero의 'padj'가 지정되어 있습니다"
 
-#: src/main/plot.c:1145
+#: src/main/plot.c:1147
 msgid "'label' is supplied and not 'at'"
 msgstr ""
 
-#: src/main/plot.c:1149
+#: src/main/plot.c:1151
 #, c-format
 msgid "'at' and 'label' lengths differ, %d != %d"
 msgstr "'at' 그리고 'label'의 길이가 다릅니다. %d ! =  %d"
 
-#: src/main/plot.c:1167
+#: src/main/plot.c:1169
 msgid "no locations are finite"
 msgstr "어느 위치도 유한하지는 않습니다"
 
-#: src/main/plot.c:1503
+#: src/main/plot.c:1505
 msgid "invalid plotting structure"
 msgstr "부적절한 플롯 구조입니다"
 
-#: src/main/plot.c:1505
+#: src/main/plot.c:1507
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
 msgstr "%s()에 두고 'x'와 'y'의 길이가 다릅니다"
 
-#: src/main/plot.c:1517
+#: src/main/plot.c:1519
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
 msgstr "plot타입 '%s'는 최초의 한 문자에 잘라집니다"
 
-#: src/main/plot.c:1521 src/main/plot.c:3048
+#: src/main/plot.c:1523 src/main/plot.c:3050
 msgid "invalid plot type"
 msgstr "plot의 유형이 부적절합니다"
 
-#: src/main/plot.c:1697
+#: src/main/plot.c:1699
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "plot의 타입 '%c'가 부적절합니다"
 
-#: src/main/plot.c:1744
+#: src/main/plot.c:1746
 msgid "invalid second argument"
 msgstr "두번째의 인수가 부적절합니다"
 
-#: src/main/plot.c:1750
+#: src/main/plot.c:1752
 msgid "invalid third argument"
 msgstr "세번째의 인수가 부적절합니다"
 
-#: src/main/plot.c:1756
+#: src/main/plot.c:1758
 #, fuzzy
 msgid "invalid fourth argument"
 msgstr "첫번째의 인수가 부적절합니다"
 
-#: src/main/plot.c:1926
+#: src/main/plot.c:1928
 msgid "invalid arrow head length"
 msgstr "화살표 헤드부분의 길이가 부적절합니다"
 
-#: src/main/plot.c:1931
+#: src/main/plot.c:1933
 msgid "invalid arrow head angle"
 msgstr "화살표 헤드부분의 각도가 부적절합니다"
 
-#: src/main/plot.c:1936
+#: src/main/plot.c:1938
 msgid "invalid arrow head specification"
 msgstr "화살표 헤드부분의 지정이 부적절합니다"
 
-#: src/main/plot.c:2100
+#: src/main/plot.c:2102
 msgid "zero length 'labels'"
 msgstr "길이 zero의 'labels'가 지정되어 있습니다"
 
-#: src/main/plot.c:2169
+#: src/main/plot.c:2171
 msgid "no coordinates were supplied"
 msgstr "좌표가 제공되어 있지 않습니다"
 
-#: src/main/plot.c:2378
+#: src/main/plot.c:2380
 msgid "zero length 'text' specified"
 msgstr "길이 zero 'text'가 지정되어 있습니다"
 
-#: src/main/plot.c:2384
+#: src/main/plot.c:2386
 msgid "zero length 'side' specified"
 msgstr "길이 zero의 'side'가 지정되어 있습니다"
 
-#: src/main/plot.c:2391
+#: src/main/plot.c:2393
 msgid "zero length 'line' specified"
 msgstr "길이 zero의 'line'가 지정되어 있습니다"
 
-#: src/main/plot.c:2399
+#: src/main/plot.c:2401
 msgid "zero length 'outer' specified"
 msgstr "길이 zero의 'outer'가 지정되어 있습니다"
 
-#: src/main/plot.c:2406
+#: src/main/plot.c:2408
 msgid "zero length 'at' specified"
 msgstr "길이 zero의 'at'가 지정되어 있습니다"
 
-#: src/main/plot.c:2413
+#: src/main/plot.c:2415
 msgid "zero length 'adj' specified"
 msgstr "길이 zero의 'adj'지정되어 있습니다"
 
-#: src/main/plot.c:2427
+#: src/main/plot.c:2429
 msgid "zero length 'cex' specified"
 msgstr "길이 zero의 'cex'가 지정되어 있습니다"
 
-#: src/main/plot.c:2435
+#: src/main/plot.c:2437
 msgid "zero length 'col' specified"
 msgstr "길이 zero의 'col'가 지정되어 있습니다"
 
-#: src/main/plot.c:2442
+#: src/main/plot.c:2444
 msgid "zero length 'font' specified"
 msgstr "길이 zero의 'font'가 지정되어 있습니다"
 
-#: src/main/plot.c:2829
+#: src/main/plot.c:2831
 msgid "invalid a=, b= specification"
 msgstr "a =, b =지정이 부적절합니다"
 
-#: src/main/plot.c:2838
+#: src/main/plot.c:2840
 msgid "'a' and 'b' must be finite"
 msgstr "'a'와 'b'는 유한하지 않으면 되지 않습니다"
 
-#: src/main/plot.c:2970
+#: src/main/plot.c:2972
 msgid "invalid 'which' specification"
 msgstr "'which'의 지정이 부적절합니다"
 
-#: src/main/plot.c:3043
+#: src/main/plot.c:3045
 msgid "invalid number of points in locator()"
 msgstr "locator()함수로 점의 개수가 부적절합니다"
 
-#: src/main/plot.c:3178
+#: src/main/plot.c:3180
 msgid "invalid number of points in identify()"
 msgstr "identify()함수로 점의 개수가 부적절합니다"
 
-#: src/main/plot.c:3180
+#: src/main/plot.c:3182
 msgid "incorrect argument type"
 msgstr "정확하지 않는 인수의 유형입니다"
 
-#: src/main/plot.c:3188
+#: src/main/plot.c:3190
 msgid "different argument lengths"
 msgstr "인수의 길이가 다릅니다"
 
-#: src/main/plot.c:3242
+#: src/main/plot.c:3244
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "경고:  %.2f inches내에 점은 없습니다\n"
 
-#: src/main/plot.c:3248
+#: src/main/plot.c:3250
 msgid "warning: nearest point already identified\n"
 msgstr "경고:  근방점이 이미 분류(identify)되어 있습니다\n"
 
-#: src/main/plot.c:3329
+#: src/main/plot.c:3331
 msgid "invalid units"
 msgstr "단위가 적절하지 않는다"
 
-#: src/main/plot.c:3488 src/main/plot.c:3597
+#: src/main/plot.c:3490 src/main/plot.c:3599
 msgid "invalid dendrogram input"
 msgstr "dendrogram 입력이 적절하지 않는다"
 
-#: src/main/plot.c:3628
+#: src/main/plot.c:3630
 msgid "cannot take snapshot of old-style device"
 msgstr "오래된 디바이스에서 snapshot를 사용할수가 없습니다"
 
-#: src/main/plot.c:3641
+#: src/main/plot.c:3643
 msgid "cannot play snapshot on old-style device"
 msgstr "오래된 디바이스에서 snapshot표시는 할수가 없습니다"
 
-#: src/main/plot.c:3697
+#: src/main/plot.c:3699
 msgid "invalid graphics parameter list"
 msgstr "graphics 파라미터 리스트가 부적절합니다"
 
-#: src/main/plot.c:3739
+#: src/main/plot.c:3741
 msgid "invalid symbol parameter vector"
 msgstr "심벌 파라미터 벡터가 부적절합니다"
 
-#: src/main/plot.c:3762
+#: src/main/plot.c:3764
 msgid "invalid symbol coordinates"
 msgstr "심벌의 좌표가 부적절합니다"
 
-#: src/main/plot.c:3770
+#: src/main/plot.c:3772
 msgid "x/y/parameter length mismatch"
 msgstr "x/y 또는 파라미터의 길이가 부적절합니다"
 
-#: src/main/plot.c:3789
+#: src/main/plot.c:3791
 msgid "invalid circles data"
 msgstr "엔의 데이터가 부적절합니다"
 
-#: src/main/plot.c:3791 src/main/plot.c:3809 src/main/plot.c:3835
-#: src/main/plot.c:3864
+#: src/main/plot.c:3793 src/main/plot.c:3811 src/main/plot.c:3837
+#: src/main/plot.c:3866
 msgid "invalid symbol parameter"
 msgstr "심벌 파라미터가 부적절합니다"
 
-#: src/main/plot.c:3807
+#: src/main/plot.c:3809
 msgid "invalid squares data"
 msgstr "정방형 데이터가 부적절합니다"
 
-#: src/main/plot.c:3833
+#: src/main/plot.c:3835
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "직사각형 데이터가 부적절합니다 (2열이 필요합니다)"
 
-#: src/main/plot.c:3862
+#: src/main/plot.c:3864
 msgid "invalid stars data"
 msgstr "성형데이터가 부적절합니다"
 
-#: src/main/plot.c:3904
+#: src/main/plot.c:3906
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "thermometers 데이터가 부적절합니다 (3또는 4열 필요합니다)"
 
-#: src/main/plot.c:3907
+#: src/main/plot.c:3909
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "thermometers[, %s]가 부적절합니다"
 
-#: src/main/plot.c:3911
+#: src/main/plot.c:3913
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "thermometers[, %s]가 [0,1] 범위외 -- 이상하게 보일지도 모릅니다"
 
-#: src/main/plot.c:3914
+#: src/main/plot.c:3916
 msgid "invalid thermometers[,1:2]"
 msgstr "thermometers[,1:2]가 부적절합니다"
 
-#: src/main/plot.c:3953
+#: src/main/plot.c:3955
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "boxplots의 데이터가 부적절합니다(5열이 필요합니다)"
 
-#: src/main/plot.c:3963
+#: src/main/plot.c:3965
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[, 5]가 [0,1]의 범위외에 있는것이 이상합니다"
 
-#: src/main/plot.c:3965
+#: src/main/plot.c:3967
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplots[, 1:4]가 부적절합니다"
 
-#: src/main/plot.c:4011
+#: src/main/plot.c:4013
 msgid "invalid symbol type"
 msgstr "심벌의 유형이 부적절합니다"
 
@@ -5891,12 +5899,12 @@ msgstr "부분 대입에 있어서 유형를 고정해두고, 유형(%d)는 호�
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "첨자 첨부의 부르는 값인 NAs는 허용하지 않습니다"
 
-#: src/main/subassign.c:401 src/main/subassign.c:674 src/main/subassign.c:922
+#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:922
 #: src/main/subassign.c:1104
 msgid "nothing to replace with"
 msgstr "옮겨놓아야 할것이 아무것도 없습니다"
 
-#: src/main/subassign.c:403 src/main/subassign.c:676 src/main/subassign.c:924
+#: src/main/subassign.c:405 src/main/subassign.c:676 src/main/subassign.c:924
 #: src/main/subassign.c:1106
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "옮겨놓아야하는 항목수가, 옮겨놓는 수의 배수가 아니었습니다"
@@ -7005,6 +7013,10 @@ msgstr "X11 모듈은 적재할수가 없습니다"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11를 이용할수가 없습니다"
+
+#, fuzzy
+#~ msgid "unknown graphical parameter \"%s\""
+#~ msgstr "graphics 파라미터 리스트가 부적절합니다"
 
 #~ msgid "'lwd' must be numeric of length >=1"
 #~ msgstr "'lwd'는 길이 1이상의 수치가 아니면 안됩니다"
