@@ -1685,6 +1685,22 @@ function(package, dir, file, lib.loc = NULL,
     bad_exprs <- list()
     FF_funs <- c(".C", ".Fortran", ".Call", ".External",
                  ".Call.graphics", ".External.graphics")
+    ## As pointed out by DTL, packages could use non-base FF calls for
+    ## which missing 'PACKAGE' arguments are not necessarily a problem.
+    if(!missing(package)) {
+        is_FF_fun_from_base <-
+            sapply(FF_funs,
+                   function(f) {
+                       e <- .find_owner_env(f, code_env)
+                       (identical(e, baseenv())
+                        || identical(e, .BaseNamespaceEnv))
+                   })
+        FF_funs <- FF_funs[is_FF_fun_from_base]
+    }
+    ## <FIXME>
+    ## Also, need to handle base::.Call() etc ...
+    ## </FIXME>
+    
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             ## <NOTE>
@@ -1694,7 +1710,8 @@ function(package, dir, file, lib.loc = NULL,
             ## BDR 2002-11-28
             ## </NOTE>
             if(as.character(e[[1]])[1] %in% FF_funs) {
-                parg <- if(!is.null(e[["PACKAGE"]])) "OK"
+                parg <- e[["PACKAGE"]]
+                parg <- if(!is.null(parg) && (parg != "")) "OK"
                 else if(!hasNamespace) {
                     bad_exprs <<- c(bad_exprs, e)
                     "MISSING"
