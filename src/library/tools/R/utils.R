@@ -222,6 +222,18 @@ function(x, ...)
     out
 }
 
+### ** .find_owner_env
+
+.find_owner_env <-
+function(v, env, last = NA, default = NA) {
+    while(!identical(env, last))
+        if(exists(v, env = env, inherits = FALSE))
+            return(env)
+        else
+            env <- parent.env(env)
+    default
+}
+
 ### ** .get_internal_S3_generics
 
 .get_internal_S3_generics <-
