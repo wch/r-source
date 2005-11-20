@@ -1239,7 +1239,7 @@ The following configuration variables are currently available.
 If true, record the output from installing a package as part of its
 check to a log file (@file{00install.out} by default), even when running
 interactively.
-Default: false.
+Default: true.
 @item $R_check_all_non_ISO_C
 If true, do not ignore compiler (typically GCC) warnings about non ISO C
 code in @emph{system} headers.

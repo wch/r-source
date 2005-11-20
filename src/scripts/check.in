@@ -100,7 +100,7 @@ $ENV{"R_DEFAULT_PACKAGES"} = "";
 
 ### Configurable variables
 my $R_check_use_install_log =
-    &R_getenv("_R_CHECK_USE_INSTALL_LOG_", "FALSE");
+    &R_getenv("_R_CHECK_USE_INSTALL_LOG_", "TRUE");
 my $R_check_subdirs_nocase =
     &R_getenv("_R_CHECK_SUBDIRS_NOCASE_", "FALSE");
 my $R_check_all_non_ISO_C =
@@ -426,6 +426,10 @@ foreach my $pkg (@ARGV) {
 			    " 2>&1";
 			$install_error = &R_system($cmd);
 		    }
+		    ## <FIXME>
+		    ## Possibly tidy up the install log here.
+		    ## E.g., MS HHC gives lines terminated by CRCRLF.
+		    ## </FIXME>
 		    if($install_error) {
 			$log->error();
 			$log->print("Installation failed.\n");
