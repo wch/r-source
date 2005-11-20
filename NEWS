@@ -491,6 +491,8 @@ BUG FIXES
 	
     o	predict.prcomp() would sometimes give an error when predicting
 	a single observation.  (PR#8324)
+	
+    o	mapply() could segfault if MoreArgs was not a list.  (PR#8332)
 
 
 

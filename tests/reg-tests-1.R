@@ -3879,6 +3879,10 @@ stopifnot(length(s$sdev) == ncol(s$rotation))
 summary(s)
 ## last failed in 2.2.0
 
+## mapply did not test type of MoreArgs
+try(mapply(rep,times=1:4, MoreArgs=42))
+## segfaulted in 2.2.0
+
 
 ### end of tests added in 2.2.1 ###
 
