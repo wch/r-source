@@ -592,7 +592,7 @@ that is causing the error.
 @end menu
 
 @node The installer does not offer my language, I want R in English!, Languages and Internationalization, Languages and Internationalization
-@section The installer does not offer my language
+@section The installer does not offer my language.
 
 Two things may be happening.  First, only languages which can be
 displayed using the current codepage are offered so you cannot install
@@ -602,8 +602,7 @@ Second, only a limited range of languages is supported (but still wider
 than those for which R has translations), currently
 Brazilian Portuguese,
 Catalan,
-(Simplified) Chinese,
-(Traditional) Chinese,
+both Simplified and Traditional Chinese,
 Czech,
 Danish,
 Dutch,
@@ -614,7 +613,7 @@ Hungarian,
 Italian,
 Japanese,
 Korean,
-Norwegian
+Norwegian,
 Polish,
 Portuguese,
 Russian
@@ -629,7 +628,7 @@ Windows in.  Apparently some users want Windows in their native language,
 but not R.  To do so, set @code{LANGUAGE=en} as discussed in Q2.2 and Q2.15.
 
 @node I want to run R in Chinese/Japanese/Korean, I selected English for Installation but R runs in Chinese, I want R in English!, Languages and Internationalization
-@section I want to run R in Chinese/Japanese/Korean
+@section I want to run R in Chinese/Japanese/Korean.
 
 This is possible by installing R with support for `East Asian' languages
 (with a suitable version of Windows -- Western installations of Windows
@@ -639,16 +638,14 @@ and is often installed by other programs.  So if it is not found
 automatically it is worth searching your machine and copying it from
 another program's directory to R's @file{bin} directory.
 
-In such locales @file{Rterm.exe} should be used for batch use only, but
-@file{RGui.exe} will support single- and double-width characters.
-
-It will be necessary to select suitable fonts in @file{Rconsole} and
-@file{Rdevga} (see @code{?Rconsole} or the comments in the files: the
-system versions are in the @file{etc} folder); in the latter you can
-replace @code{Arial} by @code{Arial Unicode MS}, and we tried
-@code{FixedSys} and @code{MS Mincho} in @file{Rconsole}.  (Note that
-@file{Rdevga} only applies to Windows graphics devices and not, say, to
-@code{pdf}.)
+As from R 2.3.0 both @file{Rterm.exe} and @file{RGui.exe} support
+single- and double-width characters.  It will be necessary to select
+suitable fonts in @file{Rconsole} and @file{Rdevga} (see
+@code{?Rconsole} or the comments in the files: the system versions are
+in the @file{etc} folder); in the latter you can replace @code{Arial} by
+@code{Arial Unicode MS}, and we tried @code{FixedSys} and @code{MS
+Mincho} in @file{Rconsole}.  (Note that @file{Rdevga} only applies to
+Windows graphics devices and not, say, to @code{pdf}.)
 
 You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out.  (CJK users may be used to their
@@ -665,8 +662,11 @@ Options' part of the control panel, and the appropriate language has to
 be set under @emph{both} the `Regional Options' and `Advanced' tabs.
 (The @code{RGui} menus may be corrupted if this is not done.)
 
+When using @code{Rterm} the window in which it is run has to be set up
+to use a suitable font and a suitable codepage.
+
 @node I selected English for Installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
-@section I selected English for Installation but R runs in Chinese
+@section I selected English for Installation but R runs in Chinese.
 
 Precisely, you selected English @strong{for installation}!  The language
 of the installer has nothing to do with the language used to run R: this
@@ -680,7 +680,7 @@ ensure that R uses English messages by appending @code{LANGUAGE=en} to
 the shortcut you use to start R.
 
 @node I would like to be able to use Japanese fonts, I don't see characters with accents at the R console, I selected English for Installation but R runs in Chinese, Languages and Internationalization
-@section I would like to be able to use Japanese fonts
+@section I would like to be able to use Japanese fonts.
 
 for example, in the console and to annotate graphs.  Similar comments
 apply to any non-Western European language.
@@ -700,7 +700,7 @@ In addition, the Hershey vector fonts (see @code{?Hershey},
 @code{?Japanese} and @code{demo(Japanese)}) can be used on any graphics
 device to display Japanese characters.
 
-To use non-Latin 1 characters in the @code{postscript} graphics device,
+To use non-Latin-1 characters in the @code{postscript} graphics device,
 see its help page.
 
 @node I don't see characters with accents at the R console, The dialog buttons are not translated, I would like to be able to use Japanese fonts, Languages and Internationalization
@@ -716,14 +716,14 @@ Support for these characters within @code{Rterm} depends on the
 environment (the terminal window and shell, including locale settings)
 within which it is run as well as the font used by the terminal window.
 
-If you are using a non-Latin 1 language, you do need to ensure that the
+If you are using a non-Latin-1 language, you do need to ensure that the
 fonts you selected support the language.  For example, it was found by
 one Czech user (under Windows 98) that he had to select @code{Times New
 Roman CE} or @code{Courier} (not @code{Courier New}) to get certain
 Czech characters displayed correctly.
 
 @node The dialog buttons are not translated,  , I don't see characters with accents at the R console, Languages and Internationalization
-@section The dialog buttons are not translated
+@section The dialog buttons are not translated.
 
 In most cases they actually are, but by Windows.  Setting the locale or
 the @code{LANGUAGE} environment variable does not change the Windows
@@ -907,7 +907,7 @@ Currently links to the @code{base}, @code{datasets}, @code{utils},
 
 
 @node update.packages() fails, How do I add to the list of repositories?, Hyperlinks in HTML do not work., Packages
-@section @code{update.packages()} fails
+@section @code{update.packages()} fails.
 
 You may not be able to update a package which is in use: Windows `locks'
 the package's DLL when it is loaded.  So use @code{update.packages()}
@@ -1011,7 +1011,7 @@ can be used to edit the file @file{Rconsole}.
 
 
 @node Circles appear as ovals on screen, How do I move focus to a graphics window or the console?, I hear about some nifty features., Windows Features
-@section Circles appear as ovals on screen
+@section Circles appear as ovals on screen.
 
 The graphics system asks Windows for the number of pixels per inch in
 the X and Y directions, and uses that to size graphics (which in R are
