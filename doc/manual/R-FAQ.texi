@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-11-18
+@set FAQ_DATE @value{FAQ_YEAR}-11-20
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -3090,6 +3090,8 @@ Periodic AutoRegressive Time Series Models.
 Unbiased recursive partitioning in a conditional inference framework.
 @item pastecs
 Package for Analysis of Space-Time Ecological Series.
+@item pbatR
+Frontend to PBAT to run within R.
 @item pcurve
 Fits a principal curve to a numeric multivariate dataset in arbitrary
 dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis and
