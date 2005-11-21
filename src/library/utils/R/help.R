@@ -128,15 +128,14 @@ function(x, ...)
             chm.dll <- file.path(R.home("bin"), "Rchtml.dll")
             if(!file.exists(chm.dll))
                 stop("Compiled HTML is not installed")
-            if(!is.loaded(symbol.C("Rchtml")))
-                dyn.load(chm.dll)
+            if(!is.loaded("Rchtml")) dyn.load(chm.dll)
             wfile <- sub("/chm/([^/]*)$", "", file)
             thispkg <- sub(".*/([^/]*)/chm/([^/]*)$", "\\1", file)
             thispkg <- sub("_.*$", "", thispkg) # versioned installs.
             hlpfile <- paste(wfile, "/chtml/", thispkg, ".chm", sep = "")
             if(file.exists(hlpfile)) {
                 err <- .C("Rchtml", hlpfile, basename(file),
-                          err = integer(1), PACKAGE = "")$err
+                          err = integer(1), PACKAGE = "Rchtml")$err
                 if(err) stop("CHM file could not be displayed")
             } else
                 stop(gettextf("No CHM help for '%s' in package '%s' is available:\nthe CHM file is for the package is missing", topic, thispkg), domain = NA)
