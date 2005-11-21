@@ -53,6 +53,7 @@ src/main/internet.c
 src/main/lapack.c
 src/main/logic.c
 src/main/main.c
+src/main/mapply.c
 src/main/match.c
 src/main/memory.c
 src/main/model.c
@@ -90,6 +91,7 @@ src/main/unique.c
 src/main/util.c
 src/main/version.c
 src/main/vfonts.c
+src/main/xsplines.c
 src/modules/internet/internet.c
 src/modules/internet/nanoftp.c
 src/modules/internet/nanohttp.c

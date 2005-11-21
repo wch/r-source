@@ -96,7 +96,7 @@ SEXP do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 
     for(j = 0; j < m; j++) {
 	if (counters[j] != lengths[j])
-	    warning("longer argument not a multiple of length of shorter");
+	    warning(_("longer argument not a multiple of length of shorter"));
     }
 
     UNPROTECT(5);

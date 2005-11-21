@@ -55,7 +55,7 @@ add_point(double x, double y, GEDevDesc *dd)
 	tmp_n = max_points + 200;
 	/* too many points, return false */
 	if (tmp_n > MAXNUMPTS) {
-	    error("add_point - reached MAXNUMPTS (%d)\n",tmp_n);
+	    error(_("add_point - reached MAXNUMPTS (%d)"),tmp_n);
 	}
 	if (max_points == 0) {
 	    tmp_px = (double *) R_alloc(tmp_n, sizeof(double));
@@ -69,7 +69,7 @@ add_point(double x, double y, GEDevDesc *dd)
 					  sizeof(double));
 	}
 	if (tmp_px == NULL || tmp_py == NULL) {
-	    error("insufficient memory to allocate point array\n");
+	    error(_("insufficient memory to allocate point array"));
 	}
 	xpoints = tmp_px;
 	ypoints = tmp_py;
@@ -410,7 +410,7 @@ compute_open_spline(int n, double *x, double *y, double *s,
   ypoints = NULL;
 
   if (n < 2)
-      error("There must be at least two control points");
+      error(_("There must be at least two control points"));
 
   COPY_CONTROL_POINT(0, 0, n);
   COPY_CONTROL_POINT(1, 0, n);
@@ -460,7 +460,7 @@ compute_closed_spline(int n, double *x, double *y, double *s,
   ypoints = NULL;
 
   if (n < 3)
-      error("There must be at least three control points");
+      error(_("There must be at least three control points"));
 
   INIT_CONTROL_POINTS(n);
 
