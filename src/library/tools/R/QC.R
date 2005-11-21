@@ -262,28 +262,24 @@ function(package, dir, lib.loc = NULL)
             }
             ## Exclude methods inherited from the 'appropriate' parent
             ## environment.
-            makeSigs <- function(cls) {
-                ## Note that (thanks JMC), when comparing signatures,
-                ## the signature has to be stripped of trailing "ANY"
-                ## elements (which are always implicit) or padded to a
-                ## fixed length.
-                sub("(#ANY)*$", "",
-                    unlist(lapply(cls, paste, collapse = "#")))
-            }
+            ## <NOTE>
+            ## Keep this in sync with similar code in checkFF().
             penv <- .Internal(getRegisteredNamespace(as.name(package)))
             if(is.environment(penv))
                 penv <- parent.env(penv)
             else
                 penv <- parent.env(code_env)
-            mlistFromPenv <- methods::getMethodsMetaData(f, penv)
-            if(!is.null(mlistFromPenv)) {
-                classesFromPenv <-
-                    methods::slot(methods::linearizeMlist(mlistFromPenv),
+            if((f %in% methods::getGenerics(penv))
+               && !is.null(mlist_from_penv <-
+                           methods::getMethodsMetaData(f, penv))) {
+                classes_from_penv <-
+                    methods::slot(methods::linearizeMlist(mlist_from_penv),
                                   "classes")
-                ind <- is.na(match(makeSigs(classes),
-                                   makeSigs(classesFromPenv)))
+                ind <- is.na(match(.make_signatures(classes),
+                                   .make_signatures(classes_from_penv)))
                 classes <- classes[ind]
             }
+            ## </NOTE>
             sigs <- sapply(classes, paste, collapse = ",")
             if(length(sigs))
                 paste(f, ",", sigs, sep = "")
@@ -1683,8 +1679,8 @@ function(package, dir, file, lib.loc = NULL,
     ## </FIXME>
 
     bad_exprs <- list()
-    FF_funs <- c(".C", ".Fortran", ".Call", ".External",
-                 ".Call.graphics", ".External.graphics")
+    FF_funs <- FF_fun_names <- c(".C", ".Fortran", ".Call", ".External",
+                                 ".Call.graphics", ".External.graphics")
     ## As pointed out by DTL, packages could use non-base FF calls for
     ## which missing 'PACKAGE' arguments are not necessarily a problem.
     if(!missing(package)) {
@@ -1697,9 +1693,8 @@ function(package, dir, file, lib.loc = NULL,
                    })
         FF_funs <- FF_funs[is_FF_fun_from_base]
     }
-    ## <FIXME>
     ## Also, need to handle base::.Call() etc ...
-    ## </FIXME>
+    FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
     
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
@@ -1709,7 +1704,7 @@ function(package, dir, file, lib.loc = NULL,
             ## the calls we are interested in.
             ## BDR 2002-11-28
             ## </NOTE>
-            if(as.character(e[[1]])[1] %in% FF_funs) {
+            if(deparse(e[[1]]) %in% FF_funs) {
                 parg <- e[["PACKAGE"]]
                 parg <- if(!is.null(parg) && (parg != "")) "OK"
                 else if(!hasNamespace) {
@@ -1717,8 +1712,8 @@ function(package, dir, file, lib.loc = NULL,
                     "MISSING"
                 } else "MISSING but in a function in a namespace"
                 if(verbose)
-                    cat(e[[1]], "(", deparse(e[[2]]), ", ...): ", parg,
-                        "\n", sep = "")
+                    cat(deparse(e[[1]]), "(", deparse(e[[2]]),
+                        ", ...): ", parg, "\n", sep = "")
             }
             for(i in seq(along = e)) Recall(e[[i]])
         }
@@ -1743,32 +1738,29 @@ function(package, dir, file, lib.loc = NULL,
                 bodies <- lapply(methods::slot(meths, "methods"), body)
                 ## Exclude methods inherited from the 'appropriate'
                 ## parent environment.
-                ## <FIXME>
-                ## Basically the same as in undoc(), unify the exclusion
-                ## into a helper function.
+                ## <NOTE>
+                ## Keep this in sync with similar code in undoc().
                 ## Note that direct comparison of
-                ##   lapply(methods::slot(meths, "methods"),
-                ##          environment)
+                ##   lapply(methods::slot(meths, "methods"), environment)
                 ## to code_env is not quite right ...
-                make_sigs <- function(cls)
-                    unlist(lapply(cls, paste, collapse = "#"))
                 penv <- .Internal(getRegisteredNamespace(as.name(package)))
                 if(is.environment(penv))
                     penv <- parent.env(penv)
                 else
                     penv <- parent.env(code_env)
                 if((f %in% methods::getGenerics(penv))
-                    && !is.null(mlistFromPenv <-
+                    && !is.null(mlist_from_penv <-
                                 methods::getMethodsMetaData(f, penv))) {
                     classes_from_cenv <-
                         methods::slot(meths, "classes")
                     classes_from_penv <-
-                        methods::slot(methods::linearizeMlist(mlistFromPenv),
+                        methods::slot(methods::linearizeMlist(mlist_from_penv),
                                       "classes")
-                    ind <- is.na(match(make_sigs(classes_from_cenv),
-                                       make_sigs(classes_from_penv)))
+                    ind <- is.na(match(.make_signatures(classes_from_cenv),
+                                       .make_signatures(classes_from_penv)))
                     bodies <- bodies[ind]
                 }
+                ## </NOTE>
                 exprs <- c(exprs, bodies)
             }
         }
@@ -3232,6 +3224,17 @@ function(x)
      && (identical(x[[1]], as.symbol("<-")))
      && (length(x[[2]]) > 1)
      && is.symbol(x[[3]]))
+}
+
+### * .make_signatures
+
+.make_signatures <-
+function(cls)
+{
+    ## Note that (thanks JMC), when comparing signatures, the signature
+    ## has to be stripped of trailing "ANY" elements (which are always
+    ## implicit) or padded to a fixed length.
+    sub("(#ANY)*$", "", unlist(lapply(cls, paste, collapse = "#")))
 }
 
 ### * .package_env
