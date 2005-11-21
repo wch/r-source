@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-18 18:56+0000\n"
+"POT-Creation-Date: 2005-11-21 08:22+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -3589,6 +3589,14 @@ msgstr ""
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 
+#: src/main/mapply.c:61
+msgid "argument 'MoreArgs' of 'mapply' is not a list"
+msgstr ""
+
+#: src/main/mapply.c:99
+msgid "longer argument not a multiple of length of shorter"
+msgstr ""
+
 #: src/main/match.c:112
 msgid "invalid partial string match"
 msgstr ""
@@ -6187,6 +6195,23 @@ msgstr ""
 
 #: src/main/vfonts.c:174
 msgid "allocation failure in GVText"
+msgstr ""
+
+#: src/main/xspline.c:58
+#, c-format
+msgid "add_point - reached MAXNUMPTS (%d)"
+msgstr ""
+
+#: src/main/xspline.c:72
+msgid "insufficient memory to allocate point array"
+msgstr ""
+
+#: src/main/xspline.c:413
+msgid "There must be at least two control points"
+msgstr ""
+
+#: src/main/xspline.c:463
+msgid "There must be at least three control points"
 msgstr ""
 
 #: src/modules/internet/internet.c:91

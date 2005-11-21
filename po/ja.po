@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-18 18:56+0000\n"
+"POT-Creation-Date: 2005-11-21 08:22+0000\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -3654,6 +3654,18 @@ msgstr "トップレベルの task callback '%s' からの警告メッセージ\
 msgid "top-level task callback did not return a logical value"
 msgstr "トップレベルの task callback が論理値を返していません"
 
+#: src/main/mapply.c:61
+#, fuzzy
+msgid "argument 'MoreArgs' of 'mapply' is not a list"
+msgstr "引数 'editor' が設定されていません"
+
+#: src/main/mapply.c:99
+#, fuzzy
+msgid "longer argument not a multiple of length of shorter"
+msgstr ""
+"長いオブジェクトの長さが\n"
+"\t 短いオブジェクトの長さの倍数になっていません"
+
 #: src/main/match.c:112
 msgid "invalid partial string match"
 msgstr "文字列の部分的マッチが不正です"
@@ -6320,6 +6332,24 @@ msgstr "GVStrHeight で割り当てに失敗しました"
 #: src/main/vfonts.c:174
 msgid "allocation failure in GVText"
 msgstr "GVTextで割り当てに失敗しました"
+
+#: src/main/xspline.c:58
+#, c-format
+msgid "add_point - reached MAXNUMPTS (%d)"
+msgstr ""
+
+#: src/main/xspline.c:72
+msgid "insufficient memory to allocate point array"
+msgstr ""
+
+#: src/main/xspline.c:413
+msgid "There must be at least two control points"
+msgstr ""
+
+#: src/main/xspline.c:463
+#, fuzzy
+msgid "There must be at least three control points"
+msgstr "最初の引数がなければなりません"
 
 #: src/modules/internet/internet.c:91
 msgid "unknown URL scheme"

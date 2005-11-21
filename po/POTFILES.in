@@ -91,7 +91,7 @@ src/main/unique.c
 src/main/util.c
 src/main/version.c
 src/main/vfonts.c
-src/main/xsplines.c
+src/main/xspline.c
 src/modules/internet/internet.c
 src/modules/internet/nanoftp.c
 src/modules/internet/nanohttp.c
