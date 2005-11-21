@@ -8,8 +8,8 @@
   A simple low level interface for serializing to connections.
 }
 \usage{
-serialize(object, connection, ascii = FALSE, refhook = baseenv())
-unserialize(connection, refhook = baseenv())
+serialize(object, connection, ascii = FALSE, refhook = NULL)
+unserialize(connection, refhook = NULL)
 .saveRDS(object, file = "", ascii = FALSE, version = NULL,
          compress = FALSE, refhook = NULL)
 .readRDS(file, refhook = NULL)

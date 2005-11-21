@@ -31,7 +31,7 @@ function(file, refhook = NULL)
     .Internal(unserializeFromConn(con, refhook))
 }
 
-serialize <- function(object, connection, ascii = FALSE, refhook = baseenv()) {
+serialize <- function(object, connection, ascii = FALSE, refhook = NULL) {
     if (! is.null(connection)) {
         if (!inherits(connection, "connection"))
             stop("'connection' must be a connection")
@@ -44,7 +44,7 @@ serialize <- function(object, connection, ascii = FALSE, refhook = baseenv()) {
               PACKAGE="base")
 }
 
-unserialize <- function(connection, refhook = baseenv()) {
+unserialize <- function(connection, refhook = NULL) {
     if (! is.character(connection) && !inherits(connection, "connection"))
         stop("'connection' must be a connection")
     .Call("R_unserialize", connection, refhook, PACKAGE="base")

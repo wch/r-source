@@ -3928,3 +3928,8 @@ pgamma(1, -2)
 qgamma(0.95, -2)
 rgamma(3, -20)
 ## all errors < 2.3.0, now NaNs
+
+## Make sure reference to local environment is serialized 
+f <- function() { function(){} }
+serialize(f(), NULL)
+##
