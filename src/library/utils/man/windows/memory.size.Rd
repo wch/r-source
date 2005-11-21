@@ -18,17 +18,22 @@ memory.limit(size = NA)
   \item{max}{logical. If true the maximum amount of memory obtained from
     the OS is reported, otherwise the amount currently in use.}
   \item{size}{numeric. If \code{NA} report the memory size, otherwise
-    request a new limit, in Mb.}
+    request a new limit, in Mb.  Values of up to 4096 are allowed, but
+    see Details.}
 }
 \details{
   Command-line flag \code{--max-mem-size} sets the maximum value of
   obtainable memory (including a very small amount of housekeeping
-  overhead).
+  overhead).  This cannot exceed 3Gb on Windows, and most versions of
+  Windows are limited to 2Gb.
 
   Memory limits can only be increased.
 }
 \value{
   Size in bytes.
+}
+\seealso{
+  \link{Memory-limits} for other limits.
 }
 \examples{
 memory.size()
