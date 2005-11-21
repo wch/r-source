@@ -17,17 +17,20 @@
     usually not imposed.
 #ifdef unix
     \item There is a limit on the address space of a single process such
-    as the \R executable.  This is system-specific, but for 32-bit OSes
-    imposes a limit of no more than 4Gb.  It is often 3Gb or less.
+    as the \R executable.  This is system-specific, but 32-bit OSes
+    imposes a limit of no more than 4Gb: it is often 3Gb or less.
     \item The environment may impose limitations on the resources
     available to a single process -- see the OS/shell's help on commands such
     as \code{limit} or \code{ulimit}.
 #endif
 #ifdef windows
     \item There is a limit on the address space of a single process such
-    as the \R executable.  This is 2Gb under 32-bit Windows unless both the OS
-    and the \R executable have been changed to allow more (up to 3Gb?).
-    See the \file{rw-FAQ} for how to do so.
+    as the \R executable.  This is 2Gb under 32-bit Windows unless
+    the OS's default has been changed to allow more (up to 3Gb).
+    See
+    \url{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}.
+    (\R can be run under Win64 but the 2GB limit applies there and it
+    cannot be increased to 3GB.)
     \item Under Windows, \R does impose limits on the total memory
     allocation available to a single run, as the OS provides no way to
     do so.  See \code{\link{memory.size}} and \code{\link{memory.limit}}.
@@ -36,7 +39,9 @@
   Error messages beginning \code{cannot allocate vector of size}
   indicate a failure to obtain memory, either because the size exceeded
   the address-space limit for a process or, more likely, because the
-  system was unable to provide the memory.
+  system was unable to provide the memory.  Note that on a 32-bit OS
+  there may well be enough free memory available, but not a large enough
+  contiguous block of address space into which to map it.
 
   There are also limits on individual objects.  On all versions of \R,
   the maximum length (number of elements) of a vector is

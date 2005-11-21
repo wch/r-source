@@ -294,8 +294,7 @@ Indeed there is.  It is set by the command-line flag
 defaults to the smaller of the amount of physical RAM in the machine and
 1Gb.  It can be set to any amount over 16M. (R will not run in less.)
 Be aware though that Windows has (in most versions) a maximum amount of
-user virtual memory of 2Gb, and parts of this can be reserved by
-processes but not used.
+user virtual memory of 2Gb.
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a
@@ -305,7 +304,7 @@ R can be compiled to use a different memory manager which might be better
 at using large amounts of memory, but is substantially slower (making R
 several times slower on some tasks).
 
-In this version of R, the executables support more than 2Gb per process
+In this version of R, the executables support up to 3Gb per process
 under suitably enabled versions of Windows (see
 @uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}).
 
