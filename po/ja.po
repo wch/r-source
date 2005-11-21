@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-16 22:58+0000\n"
+"POT-Creation-Date: 2005-11-21 08:22+0000\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -3467,27 +3467,27 @@ msgstr "色の名前が不正です"
 msgid "invalid color specification"
 msgstr "色の指定が不正です"
 
-#: src/main/graphics.c:4294
+#: src/main/graphics.c:4295
 msgid "Invalid color"
 msgstr "無効な色です"
 
-#: src/main/graphics.c:4366
+#: src/main/graphics.c:4367
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "行のタイプが不正です : 行の長さは 2,4,6,8 のいずれかにして下さい"
 
-#: src/main/graphics.c:4377 src/main/graphics.c:4385 src/main/graphics.c:4392
+#: src/main/graphics.c:4378 src/main/graphics.c:4386 src/main/graphics.c:4393
 msgid "invalid line type"
 msgstr "行のタイプが不正です"
 
-#: src/main/graphics.c:4503
+#: src/main/graphics.c:4504
 msgid "no active or default device"
 msgstr "アクティブまたはデフォルトデバイスがありません"
 
-#: src/main/graphics.c:4520
+#: src/main/graphics.c:4521
 msgid "too many open devices"
 msgstr "開いたデバイスが多すぎます"
 
-#: src/main/graphics.c:4664
+#: src/main/graphics.c:4665
 msgid "too many devices open"
 msgstr "開いたデバイスが多すぎます"
 
@@ -3622,6 +3622,18 @@ msgstr "トップレベルの task callback '%s' からの警告メッセージ\
 #: src/main/main.c:1175
 msgid "top-level task callback did not return a logical value"
 msgstr "トップレベルの task callback が論理値を返していません"
+
+#: src/main/mapply.c:61
+#, fuzzy
+msgid "argument 'MoreArgs' of 'mapply' is not a list"
+msgstr "引数 'editor' が設定されていません"
+
+#: src/main/mapply.c:99
+#, fuzzy
+msgid "longer argument not a multiple of length of shorter"
+msgstr ""
+"長いオブジェクトの長さが\n"
+"\t 短いオブジェクトの長さの倍数になっていません"
 
 #: src/main/match.c:110
 msgid "invalid partial string match"

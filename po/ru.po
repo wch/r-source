@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-16 22:58+0000\n"
+"POT-Creation-Date: 2005-11-21 08:22+0000\n"
 "PO-Revision-Date: 2005-09-26 10:56+0300\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -3462,27 +3462,27 @@ msgstr "неправильное имя цвета"
 msgid "invalid color specification"
 msgstr "неправильный указание цвета"
 
-#: src/main/graphics.c:4294
+#: src/main/graphics.c:4295
 msgid "Invalid color"
 msgstr "Неправильный цвет"
 
-#: src/main/graphics.c:4366
+#: src/main/graphics.c:4367
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "неправильный тип линии: должен быть длиной 2, 4, 6 или 8"
 
-#: src/main/graphics.c:4377 src/main/graphics.c:4385 src/main/graphics.c:4392
+#: src/main/graphics.c:4378 src/main/graphics.c:4386 src/main/graphics.c:4393
 msgid "invalid line type"
 msgstr "неправильный тип линии"
 
-#: src/main/graphics.c:4503
+#: src/main/graphics.c:4504
 msgid "no active or default device"
 msgstr "нет активного или умалчиваемого устройства"
 
-#: src/main/graphics.c:4520
+#: src/main/graphics.c:4521
 msgid "too many open devices"
 msgstr "слишком много открытых устройств"
 
-#: src/main/graphics.c:4664
+#: src/main/graphics.c:4665
 msgid "too many devices open"
 msgstr "слишком много устройств открыто"
 
@@ -3617,6 +3617,18 @@ msgstr ""
 #: src/main/main.c:1175
 msgid "top-level task callback did not return a logical value"
 msgstr "обратный вызов задачи верхнего уровня не вернул логического значения"
+
+#: src/main/mapply.c:61
+#, fuzzy
+msgid "argument 'MoreArgs' of 'mapply' is not a list"
+msgstr "аргумент 'editor' не определен"
+
+#: src/main/mapply.c:99
+#, fuzzy
+msgid "longer argument not a multiple of length of shorter"
+msgstr ""
+"длина большего объекта\n"
+"\tне является произведением длины меньшего объекта"
 
 #: src/main/match.c:110
 msgid "invalid partial string match"

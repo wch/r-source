@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-16 22:58+0000\n"
+"POT-Creation-Date: 2005-11-21 08:22+0000\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -3473,27 +3473,27 @@ msgstr "nome colore non valido"
 msgid "invalid color specification"
 msgstr "specificazione colore non valida"
 
-#: src/main/graphics.c:4294
+#: src/main/graphics.c:4295
 msgid "Invalid color"
 msgstr "colore non valido"
 
-#: src/main/graphics.c:4366
+#: src/main/graphics.c:4367
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "line type non valido: deve avere lunghezza 2, 4, 6 o 8"
 
-#: src/main/graphics.c:4377 src/main/graphics.c:4385 src/main/graphics.c:4392
+#: src/main/graphics.c:4378 src/main/graphics.c:4386 src/main/graphics.c:4393
 msgid "invalid line type"
 msgstr "line type non valido"
 
-#: src/main/graphics.c:4503
+#: src/main/graphics.c:4504
 msgid "no active or default device"
 msgstr "nessun dispositivo attivo o di default"
 
-#: src/main/graphics.c:4520
+#: src/main/graphics.c:4521
 msgid "too many open devices"
 msgstr "troppi dispositivi aperti"
 
-#: src/main/graphics.c:4664
+#: src/main/graphics.c:4665
 msgid "too many devices open"
 msgstr "troppi dispositivi aperti"
 
@@ -3629,6 +3629,18 @@ msgstr "messaggio di avviso dal processo callback di livello superiore '%s'\n"
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 "il processo callback di livello superiore restituisce un valore non logico"
+
+#: src/main/mapply.c:61
+#, fuzzy
+msgid "argument 'MoreArgs' of 'mapply' is not a list"
+msgstr "argomento 'editor' non specificato"
+
+#: src/main/mapply.c:99
+#, fuzzy
+msgid "longer argument not a multiple of length of shorter"
+msgstr ""
+"lunghezza dell'oggetto più lungo\n"
+"\tnon è un multiplo di quella dell'oggetto più piccolo"
 
 #: src/main/match.c:110
 msgid "invalid partial string match"

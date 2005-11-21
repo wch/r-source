@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-16 22:58+0000\n"
+"POT-Creation-Date: 2005-11-21 08:22+0000\n"
 "PO-Revision-Date: 2005-06-10 09:59+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -3520,27 +3520,27 @@ msgstr "nom de couleur incorrect"
 msgid "invalid color specification"
 msgstr "spécification de couleur incorrecte"
 
-#: src/main/graphics.c:4294
+#: src/main/graphics.c:4295
 msgid "Invalid color"
 msgstr "Couleur incorrecte"
 
-#: src/main/graphics.c:4366
+#: src/main/graphics.c:4367
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "type de ligne incorrect : doit être de longueur 2, 4, 6 ou 8"
 
-#: src/main/graphics.c:4377 src/main/graphics.c:4385 src/main/graphics.c:4392
+#: src/main/graphics.c:4378 src/main/graphics.c:4386 src/main/graphics.c:4393
 msgid "invalid line type"
 msgstr "type de ligne incorrect"
 
-#: src/main/graphics.c:4503
+#: src/main/graphics.c:4504
 msgid "no active or default device"
 msgstr "pas de périphérique actif ou par défaut"
 
-#: src/main/graphics.c:4520
+#: src/main/graphics.c:4521
 msgid "too many open devices"
 msgstr "trop de périphériques ouverts"
 
-#: src/main/graphics.c:4664
+#: src/main/graphics.c:4665
 msgid "too many devices open"
 msgstr "trop de périphériques sont ouverts"
 
@@ -3685,6 +3685,18 @@ msgstr ""
 #: src/main/main.c:1175
 msgid "top-level task callback did not return a logical value"
 msgstr "la tâche de niveau le plus haut n'a pas renvoyé une valeur logique"
+
+#: src/main/mapply.c:61
+#, fuzzy
+msgid "argument 'MoreArgs' of 'mapply' is not a list"
+msgstr "argument 'editor' non fixé"
+
+#: src/main/mapply.c:99
+#, fuzzy
+msgid "longer argument not a multiple of length of shorter"
+msgstr ""
+"la longueur de l'objet le plus long\n"
+"\tn'est pas un multiple de la longueur de l'objet le plus court"
 
 #: src/main/match.c:110
 msgid "invalid partial string match"

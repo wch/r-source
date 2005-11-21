@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-16 22:58+0000\n"
+"POT-Creation-Date: 2005-11-21 08:22+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -3410,27 +3410,27 @@ msgstr ""
 msgid "invalid color specification"
 msgstr ""
 
-#: src/main/graphics.c:4294
+#: src/main/graphics.c:4295
 msgid "Invalid color"
 msgstr ""
 
-#: src/main/graphics.c:4366
+#: src/main/graphics.c:4367
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr ""
 
-#: src/main/graphics.c:4377 src/main/graphics.c:4385 src/main/graphics.c:4392
+#: src/main/graphics.c:4378 src/main/graphics.c:4386 src/main/graphics.c:4393
 msgid "invalid line type"
 msgstr ""
 
-#: src/main/graphics.c:4503
+#: src/main/graphics.c:4504
 msgid "no active or default device"
 msgstr ""
 
-#: src/main/graphics.c:4520
+#: src/main/graphics.c:4521
 msgid "too many open devices"
 msgstr ""
 
-#: src/main/graphics.c:4664
+#: src/main/graphics.c:4665
 msgid "too many devices open"
 msgstr ""
 
@@ -3561,6 +3561,14 @@ msgstr ""
 
 #: src/main/main.c:1175
 msgid "top-level task callback did not return a logical value"
+msgstr ""
+
+#: src/main/mapply.c:61
+msgid "argument 'MoreArgs' of 'mapply' is not a list"
+msgstr ""
+
+#: src/main/mapply.c:99
+msgid "longer argument not a multiple of length of shorter"
 msgstr ""
 
 #: src/main/match.c:110

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-16 22:58+0000\n"
+"POT-Creation-Date: 2005-11-21 08:22+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -3475,28 +3475,28 @@ msgstr "색의 이름이 부적절합니다"
 msgid "invalid color specification"
 msgstr "색의 지정이 부적절합니다"
 
-#: src/main/graphics.c:4294
+#: src/main/graphics.c:4295
 msgid "Invalid color"
 msgstr "무효인 색입니다"
 
-#: src/main/graphics.c:4366
+#: src/main/graphics.c:4367
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr ""
 "행이 유형이 부적절합니다: 행의 길이 2, 4, 6 8 의 어느 쪽인가에 해 주십시오"
 
-#: src/main/graphics.c:4377 src/main/graphics.c:4385 src/main/graphics.c:4392
+#: src/main/graphics.c:4378 src/main/graphics.c:4386 src/main/graphics.c:4393
 msgid "invalid line type"
 msgstr "행의 유형이 부적절합니다"
 
-#: src/main/graphics.c:4503
+#: src/main/graphics.c:4504
 msgid "no active or default device"
 msgstr "active 또는 default 디바이스가 없습니다"
 
-#: src/main/graphics.c:4520
+#: src/main/graphics.c:4521
 msgid "too many open devices"
 msgstr "열려있는 디바이스가 너무 많습니다"
 
-#: src/main/graphics.c:4664
+#: src/main/graphics.c:4665
 msgid "too many devices open"
 msgstr "열린 디바이스가 너무 많습니다"
 
@@ -3631,6 +3631,18 @@ msgstr "top level의 task callback '%s'로부터 경고 메세지\n"
 #: src/main/main.c:1175
 msgid "top-level task callback did not return a logical value"
 msgstr "top level의 task callback가 논리값을 돌려주고 있지 않습니다"
+
+#: src/main/mapply.c:61
+#, fuzzy
+msgid "argument 'MoreArgs' of 'mapply' is not a list"
+msgstr "인수'editor'가 설정되어 있지 않습니다"
+
+#: src/main/mapply.c:99
+#, fuzzy
+msgid "longer argument not a multiple of length of shorter"
+msgstr ""
+"긴 오브젝트의 길이는\n"
+"짧은 오브젝트의 길이의 배수가 되지않습니다"
 
 #: src/main/match.c:110
 msgid "invalid partial string match"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-16 22:58+0000\n"
+"POT-Creation-Date: 2005-11-21 08:22+0000\n"
 "PO-Revision-Date: 2005-09-27 22:42-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -3465,27 +3465,27 @@ msgstr "nome de cor inválido"
 msgid "invalid color specification"
 msgstr "especificação de cor inválida"
 
-#: src/main/graphics.c:4294
+#: src/main/graphics.c:4295
 msgid "Invalid color"
 msgstr "Cor inválida"
 
-#: src/main/graphics.c:4366
+#: src/main/graphics.c:4367
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "linha de tipo inválida: deve ter comprimento 2, 4, 6 ou 8"
 
-#: src/main/graphics.c:4377 src/main/graphics.c:4385 src/main/graphics.c:4392
+#: src/main/graphics.c:4378 src/main/graphics.c:4386 src/main/graphics.c:4393
 msgid "invalid line type"
 msgstr "linha de tipo inválido"
 
-#: src/main/graphics.c:4503
+#: src/main/graphics.c:4504
 msgid "no active or default device"
 msgstr "nenhum dispositivo ativo ou padrão"
 
-#: src/main/graphics.c:4520
+#: src/main/graphics.c:4521
 msgid "too many open devices"
 msgstr "muitos dispositivos abertos"
 
-#: src/main/graphics.c:4664
+#: src/main/graphics.c:4665
 msgid "too many devices open"
 msgstr "muitos dispositivos abertos"
 
@@ -3621,6 +3621,18 @@ msgstr "mensagens de aviso da chamada de tarefa de nível superior '%s'\n"
 #: src/main/main.c:1175
 msgid "top-level task callback did not return a logical value"
 msgstr "chamada de tarefa de nível superior não retornou um valor lógico"
+
+#: src/main/mapply.c:61
+#, fuzzy
+msgid "argument 'MoreArgs' of 'mapply' is not a list"
+msgstr "argumento 'editor' não definido"
+
+#: src/main/mapply.c:99
+#, fuzzy
+msgid "longer argument not a multiple of length of shorter"
+msgstr ""
+"objeto de comprimento maior\n"
+"\tnão é múltiplo do objeto de comprimento menor"
 
 #: src/main/match.c:110
 msgid "invalid partial string match"
