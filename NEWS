@@ -11,13 +11,13 @@
 
 USER-VISIBLE CHANGES
 
-    o   In the grid package there are new 'arrow' arguments to 
+    o   In the grid package there are new 'arrow' arguments to
 	grid.line.to(), grid.lines(), and grid.segments()
 	(grid.arrows() has been deprecated).
 
 	The new 'arrow' arguments have been added BEFORE
-	the 'name', 'gp' and 'vp' arguments so existing code that 
-	specifies any of these arguments *by position* (not by name) 
+	the 'name', 'gp' and 'vp' arguments so existing code that
+	specifies any of these arguments *by position* (not by name)
 	will fail.
 
 
@@ -114,12 +114,12 @@ NEW FEATURES
 	(which defaults to "black", the previous default), so that
 	the lines/symbols are shown in the legend in the colour that
 	is used on the plot.
-	
+
     o	New Vectorize() function, a wrapper for mapply().
-    
+
     o	Changed environment tree to be rooted in an empty environment,
 	available as emptyenv().  baseenv() modified to return an
-	environment with emptyenv() as parent, rather than NULL.  
+	environment with emptyenv() as parent, rather than NULL.
 
     o	The way families can be specified for postscript() and pdf()
 	has been expanded to include CID-keyed fonts, with new
@@ -145,7 +145,7 @@ NEW FEATURES
 	to 200 bytes, to allow for the names of some CID-keyed fonts
 	in multi-byte locales.
 
-    o	Plotmath allows 'vartheta', 'varphi' and 'varsigma' (or 'stigma') 
+    o	Plotmath allows 'vartheta', 'varphi' and 'varsigma' (or 'stigma')
 	as synonyms for 'theta1', 'phi1' and 'sigma1', and the help
 	page has a note for TeX users.
 
@@ -195,6 +195,9 @@ NEW FEATURES
     o	R CMD check works for packages whose package name is different
 	from the directory name in which it is located.
 
+    o	cov.wt() is more efficient for 'cor = TRUE' and has a new 'method'
+	argument which allows 'Maximum Likelihood'.
+
 
 DEPRECATED & DEFUNCT
 
@@ -222,7 +225,7 @@ DEPRECATED & DEFUNCT
     o	The unused graphical parameter "type" has been removed: it
 	invited confusion with the 'type' argument to default methods
 	of plot(), points() and lines().
-	
+
     o	Use of NULL as an environment is deprecated and gives a warning.
 
     o	postscriptFont() is deprecated in favour of Type1Font() (which
@@ -425,10 +428,10 @@ BUG FIXES
 	adjusted p-values.  (PR#8229)
 
     o	read.fwf() did not work for header = TRUE.  (PR#8226)
-    
+
     o	diag() failed when its argument had NA values in its dimnames.
 
-    o	[g]sub(pcre=TRUE) did not work correctly with \U and \L in a 
+    o	[g]sub(pcre=TRUE) did not work correctly with \U and \L in a
 	UTF-8 locale, even on the example on the help page.
 
     o	promptMethods() was failing if the "methods" argument was supplied.
@@ -443,7 +446,7 @@ BUG FIXES
 	answers, e.g. DF[3:4, "y"] if column "y" did not exist or was
 	a matrix.
 
-    o	getGraphicsEvent() would cause memory corruption if passed an 
+    o	getGraphicsEvent() would cause memory corruption if passed an
     	empty prompt.
 
     o	qr() and chol() now pivot the colnames of the result when
@@ -488,10 +491,10 @@ BUG FIXES
 
     o	numericDeriv() gave nonsense results unless the variables were
 	real, which was not checked.
-	
+
     o	predict.prcomp() would sometimes give an error when predicting
 	a single observation.  (PR#8324)
-	
+
     o	mapply() could segfault if MoreArgs was not a list.  (PR#8332)
 
 

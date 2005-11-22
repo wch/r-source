@@ -1,5 +1,5 @@
-cov.wt <- function(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE,
-		   center = TRUE)
+cov.wt <- function(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE, center = TRUE,
+                   method = c("unbiased", "ML"))
 {
     if (is.data.frame(x))
 	x <- as.matrix(x)
@@ -16,21 +16,23 @@ cov.wt <- function(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE,
 	wt <- wt / s
     }
     if (is.logical(center)) {
-	center <- if (center)
-	    colSums(wt * x)
-	else 0
+	center <- if (center) colSums(wt * x) else 0
     } else {
 	if (length(center) != ncol(x))
 	    stop("length of 'center' must equal the number of columns in 'x'")
     }
     x <- sqrt(wt) * sweep(x, 2, center)
-    cov <- (t(x) %*% x) / (1 - sum(wt^2))
-
+    cov <-
+        switch(match.arg(method),
+               "unbiased" = crossprod(x) / (1 - sum(wt^2)),
+               "ML" = crossprod(x))
     y <- list(cov = cov, center = center, n.obs = n)
     if (with.wt) y$wt <- wt
-    if (cor) {
-	sdinv <- diag(1 / sqrt(diag(cov)), nrow(cov))
-	y$cor <- sdinv %*% cov %*% sdinv
+    if (cor) { ## as cov2cor():
+        Is <- 1 / sqrt(diag(cov))
+        R <- cov
+        R[] <- Is * cov * rep(Is, each = nrow(cov))
+	y$cor <- R
     }
     y
 }
