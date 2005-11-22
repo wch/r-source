@@ -1704,7 +1704,7 @@ function(package, dir, file, lib.loc = NULL,
             ## the calls we are interested in.
             ## BDR 2002-11-28
             ## </NOTE>
-            if(deparse(e[[1]]) %in% FF_funs) {
+            if(deparse(e[[1]])[1] %in% FF_funs) {
                 parg <- e[["PACKAGE"]]
                 parg <- if(!is.null(parg) && (parg != "")) "OK"
                 else if(!hasNamespace) {
