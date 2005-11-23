@@ -2411,16 +2411,14 @@ Fedora Core 3) produce incorrect code.  In our experiments @code{gcc
 @samp{ix86} unless the optimization level is reduced from the default
 @option{-O2}.
 
-Intel compilers have been used under @code{ix86} and @code{x86_64}
-Linux and @R{} contains code to set the FPU options suitably.  Brian
-Ripley tried version 9.0 of the compilers via
+Intel compilers have been used under @code{ix86} and @code{x86_64} Linux
+and @R{} contains code to set the FPU options suitably.  Brian Ripley
+tried version 9.0 of the compilers for @code{ix86} @emph{via}
 
 @example
 CC=icc
-CFLAGS=-g
 F77=ifort
 CXX=icc
-CXXFLAGS=-g
 ICC_LIBS=/opt/compilers/intel/cc/9.0/lib
 IFC_LIBS=/opt/compilers/intel/fc/9.0/lib
 LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
@@ -2429,9 +2427,25 @@ LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
 @noindent
 and adding optimization flags failed: at least @file{src/main/regex.c}
 and @file{src/modules/lapack/dlamc.f} need to be compiled without
-optimization.  Note that it is necessary to set @code{CFLAGS} and
-@code{CXXFLAGS} as @samp{icc} sets @code{__GNUC__} and so the builtin
-defaults for @samp{gcc} are selected.
+optimization.  For @code{x86_64} he used
+
+@example
+CC=icc
+CFLAGS="-mp -g -O2"
+F77=ifort
+FFLAGS="-mp -g -O2"
+CXX=icc
+CXXFLAGS="-mp -g -O2"
+ICC_LIBS=/opt/compilers/intel/cce/9.0/lib
+IFC_LIBS=/opt/compilers/intel/fce/9.0/lib
+LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
+@end example
+
+@noindent
+Note the use of @code{-mp} to maintain correct IEC60559 arithmetic:
+these are the default flags selected by @command{configure} if none are
+supplied.
+
 
 For some comments on building on an Itanium (@samp{ia64}) Linux system
 with @command{gcc} or the Intel compilers see

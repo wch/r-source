@@ -1051,12 +1051,36 @@ case "${host_os}" in
     ;;
   linux*)			# GNU Linux/ELF
     case  "${CC}" in
-      ## Intel compiler (this will be picked up from imake, but to be sure)
-      icc)
+      ## Intel compiler
+      *icc)
         cpicflags="-fPIC"
+	## icc declares __GNUC__, so it picks up CFLAGS intended for gcc.
+	if test "$ac_test_CFLAGS" != set; then
+          if test $ac_cv_prog_cc_g = yes; then
+	    case "${host_cpu}" in
+	      x86_64)
+	        ## need -mp for IEC60559 compliance
+	        CFLAGS="-mp -g -O2"
+		;;
+	      *)
+	        ## on ix86 optimization fails
+                CFLAGS="-g"
+		;;
+	    esac
+          else
+	    case "${host_cpu}" in
+	      x86_64)
+	        CFLAGS="-mp -O2"
+		;;
+	      *)
+                CFLAGS=
+		;;
+	    esac
+          fi
+        fi
         ;;
       ## Portland Group (information from Jennifer Lai)
-      pgcc)
+      *pgcc)
         cpicflags="-fpic"
         R_PROG_CC_FLAG([-mieee-with-fp],
                        R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
@@ -1064,21 +1088,64 @@ case "${host_os}" in
     esac
     case  "${F77}" in
       ## Intel compilers
-      ifc|ifort)
+      *ifc|*ifort)
         fpicflags="-fPIC"
+	if test "$ac_test_FFLAGS" != set; then
+          if test $ac_cv_prog_f77_g = yes; then
+	    case "${host_cpu}" in
+	      x86_64)
+	        FFLAGS="-mp -g -O2"
+		;;
+	      *)
+                FFLAGS="-g"
+		;;
+	    esac
+          else
+	    case "${host_cpu}" in
+	      x86_64)
+	        FFLAGS="-mp -O2"
+		;;
+	      *)
+	        ## on ix86 optimization of dlamc.f fails
+                FFLAGS=
+		;;
+	    esac
+          fi
+        fi
         ;;
       ## Portland Group
-      pgf77)
+      *pgf77)
         fpicflags="-fpic"
         ;;
     esac
     case  "${CXX}" in
-      ## Intel compilers (this will be picked up from imake, but to be sure)
-      icpc|icc)
+      ## Intel compilers
+      *icpc|*icc)
         cxxpicflags="-fPIC"
+	if test "$ac_test_CXXFLAGS" != set; then
+          if test $ac_cv_prog_cxx_g = yes; then
+	    case "${host_cpu}" in
+	      x86_64)
+	        CXXFLAGS="-mp -g -O2"
+		;;
+	      *)
+                CXXFLAGS="-g"
+		;;
+	    esac
+          else
+	    case "${host_cpu}" in
+	      x86_64)
+	        CXXFLAGS="-mp -O2"
+		;;
+	      *)
+                CXXFLAGS=
+		;;
+	    esac
+          fi
+        fi
         ;;
       ## Portland Group
-      pgCC)
+      *pgCC)
         cxxpicflags="-fpic"
         ;;
     esac
