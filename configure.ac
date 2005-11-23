@@ -1050,6 +1050,38 @@ case "${host_os}" in
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
   linux*)			# GNU Linux/ELF
+    case  "${CC}" in
+      ## Intel compiler (this will be picked up from imake, but to be sure)
+      icc)
+        cpicflags="-fPIC"
+        ;;
+      ## Portland Group (information from Jennifer Lai)
+      pgcc)
+        cpicflags="-fpic"
+        R_PROG_CC_FLAG([-mieee-with-fp],
+                       R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
+	;;
+    esac
+    case  "${F77}" in
+      ## Intel compilers
+      ifc|ifort)
+        fpicflags="-fPIC"
+        ;;
+      ## Portland Group
+      pgf77)
+        fpicflags="-fpic"
+        ;;
+    esac
+    case  "${CXX}" in
+      ## Intel compilers (this will be picked up from imake, but to be sure)
+      icpc|icc)
+        cxxpicflags="-fPIC"
+        ;;
+      ## Portland Group
+      pgCC)
+        cxxpicflags="-fpic"
+        ;;
+    esac
     ## Luke Tierney says that just '-export-dynamic' does not work for
     ## Intel compilers (icc).
     main_ldflags="-Wl,--export-dynamic"

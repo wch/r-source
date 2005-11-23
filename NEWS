@@ -364,6 +364,9 @@ NEW FEATURES
 	ISO Latin-7 (8859-13, Latvian, Lithuanian and Maori), Cyrillic
 	(8859-5), KOI8-R, KOI8-U and CP1251.
 
+    o	configure has more support for the Intel and Portland Group
+	compilers on ix86 and x86_64 Linux.
+
 
 DEPRECATED & DEFUNCT
 

@@ -2412,7 +2412,26 @@ Fedora Core 3) produce incorrect code.  In our experiments @code{gcc
 @option{-O2}.
 
 Intel compilers have been used under @code{ix86} and @code{x86_64}
-Linux and @R{} contains code to set the FPU options suitably.
+Linux and @R{} contains code to set the FPU options suitably.  Brian
+Ripley tried version 9.0 of the compilers via
+
+@example
+CC=icc
+CFLAGS=-g
+F77=ifort
+CXX=icc
+CXXFLAGS=-g
+ICC_LIBS=/opt/compilers/intel/cc/9.0/lib
+IFC_LIBS=/opt/compilers/intel/fc/9.0/lib
+LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
+@end example
+
+@noindent
+and adding optimization flags failed: at least @file{src/main/regex.c}
+and @file{src/modules/lapack/dlamc.f} need to be compiled without
+optimization.  Note that it is necessary to set @code{CFLAGS} and
+@code{CXXFLAGS} as @samp{icc} sets @code{__GNUC__} and so the builtin
+defaults for @samp{gcc} are selected.
 
 For some comments on building on an Itanium (@samp{ia64}) Linux system
 with @command{gcc} or the Intel compilers see
@@ -2423,14 +2442,14 @@ pre-2.2.0 with settings
 
 @example
 PG_HOME=/usr/pgi/linux86-64/6.0
-CC=$PG_HOME/bin/pgcc
+CC=pgcc
 CFLAGS="-g -O2 -mieee-fp"
 CPPFLAGS="-I$PG_HOME/include -I$PG_HOME/include/CC"
 CPICFLAGS=-fpic
-F77=$PG_HOME/bin/pgf77
+F77=pgf77
 FFLAGS=-O2
 FPICFLAGS=-fpic
-CXX=$PG_HOME/bin/pgCC
+CXX=pgCC
 CXXPICFLAGS=-fpic
 SHLIB_CXXLDFLAGS=-shared
 SHLIB_LDFLAGS=-shared
@@ -2439,7 +2458,17 @@ LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
 
 @noindent
 Note particularly the last, which is need to ensure that a shared
-version of @code{libc} is found.
+version of @code{libc} is found.  If the compilers are named as here and
+in the path, as from 2.3.0 this can be simplified to
+@example
+PG_HOME=/usr/pgi/linux86-64/6.0
+CC=pgcc
+CPPFLAGS="-I$PG_HOME/include -I$PG_HOME/include/CC"
+F77=pgf77
+CXX=pgCC
+LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
+@end example
+
 
 
 @node Mac OS X, Solaris, Linux, Platform notes
@@ -2740,7 +2769,7 @@ following configuration flags
 CC=cc F77=f77 CXX=CC 
 CPPFLAGS="-I/usr/freeware/include" LDFLAGS="-L/usr/freeware/lib32" 
 CFLAGS="-O2" FFLAGS="-O2" CXXFLAGS="-O2" 
---with-bzlib=yes
+--with-system-bzlib=yes
 @end example
 
 The MipsPro compiler will not build the @code{bzlib} library, so you must use
@@ -2894,7 +2923,8 @@ may need to be compiled without optimization.  If configure detects
 @acronym{GNU} Fortran or the use of @command{f2c} it adds flag
 @option{-ffloat-store} which suffices, but it is possible that
 @file{src/modules/lapack/Makefile} will need to be edited to remove
-optimization on other platforms.
+optimization on other platforms.  (This is true when using @samp{icc}
+on @samp{ix86} Linux, for example.)
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include

@@ -29166,6 +29166,129 @@ fi ;;
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
   linux*)			# GNU Linux/ELF
+    case  "${CC}" in
+      ## Intel compiler (this will be picked up from imake, but to be sure)
+      icc)
+        cpicflags="-fPIC"
+        ;;
+      ## Portland Group (information from Jennifer Lai)
+      pgcc)
+        cpicflags="-fpic"
+        ac_safe=_mieee_with_fp
+echo "$as_me:$LINENO: checking whether ${CC} accepts -mieee-with-fp" >&5
+echo $ECHO_N "checking whether ${CC} accepts -mieee-with-fp... $ECHO_C" >&6
+if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+r_save_CFLAGS="${CFLAGS}"
+CFLAGS="${CFLAGS} -mieee-with-fp"
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  eval "r_cv_prog_cc_flag_${ac_safe}=yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+eval "r_cv_prog_cc_flag_${ac_safe}=no"
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+CFLAGS="${r_save_CFLAGS}"
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+
+fi
+
+if eval "test \"`echo '$r_cv_prog_cc_flag_'$ac_safe`\" = yes"; then
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+  separator=""
+test -z "${separator}" && separator=" "
+if test -z "${R_XTRA_CFLAGS}"; then
+  R_XTRA_CFLAGS="-mieee-fp"
+else
+  R_XTRA_CFLAGS="${R_XTRA_CFLAGS}${separator}-mieee-fp"
+fi
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
+	;;
+    esac
+    case  "${F77}" in
+      ## Intel compilers
+      ifc|ifort)
+        fpicflags="-fPIC"
+        ;;
+      ## Portland Group
+      pgf77)
+        fpicflags="-fpic"
+        ;;
+    esac
+    case  "${CXX}" in
+      ## Intel compilers (this will be picked up from imake, but to be sure)
+      icpc|icc)
+        cxxpicflags="-fPIC"
+        ;;
+      ## Portland Group
+      pgCC)
+        cxxpicflags="-fpic"
+        ;;
+    esac
     ## Luke Tierney says that just '-export-dynamic' does not work for
     ## Intel compilers (icc).
     main_ldflags="-Wl,--export-dynamic"
