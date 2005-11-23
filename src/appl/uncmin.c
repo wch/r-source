@@ -2228,7 +2228,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
  *	rnf		 relative noise in optimization function fcn.
  *			      noise=10.**(-ndigit)
  */
-    Rboolean mxtake, noupdt;
+    Rboolean mxtake = FALSE, noupdt;
     int i, iretcd, icscmx;
     double dltp = 0., epsm, phip0 = 0., f, analtl;
     double dlpsav = 0., phisav = 0., dltsav = 0.;/* -Wall */
