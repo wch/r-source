@@ -25,7 +25,7 @@ winMenuItems(menuname)
 }
 \details{
   User menus are added to the right of existing menus, and items are
-  added at the bottom of the menu.  Up to 16 menus or sub-menus can be
+  added at the bottom of the menu.  Up to 50 menus or sub-menus can be
   added with up to 500 items.
 
   By default the action character string is treated as \R input, being
