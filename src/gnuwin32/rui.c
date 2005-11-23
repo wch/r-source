@@ -1208,8 +1208,8 @@ int DialogSelectFile(char *buf, int len)
     return (strlen(buf));
 }
 
-static menu usermenus[10];
-static char usermenunames[10][51];
+static menu usermenus[16];
+static char usermenunames[16][51];
 
 static Uitem  umitems[500];
 
