@@ -125,8 +125,9 @@ all.equal(digamma(n + 1/2),
 all.equal(psigamma(1, deriv=c(1,3,5)),
           pi^(2*(1:3)) * c(1/6, 1/15, 8/63), tol=32*Meps)
 x <- c(-100,-3:2, -99.9, -7.7, seq(-3,3, length=61), 5.1, 77)
-stopifnot(identical( digamma(x), psigamma(x,0)),
-          identical(trigamma(x), psigamma(x,1)))# TRUE (+ NaN warnings)
+## Intel icc showed a < 1ulp difference in the second.
+stopifnot(all.equal( digamma(x), psigamma(x,0), 2*Meps),
+          all.equal(trigamma(x), psigamma(x,1), 2*Meps))# TRUE (+ NaN warnings)
 
 ## fft():
 ok <- TRUE

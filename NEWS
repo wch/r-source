@@ -500,6 +500,10 @@ BUG FIXES
 
     o	mapply() could segfault if MoreArgs was not a list.  (PR#8332)
 
+    o	The arith-true test used identical() on floating-point results,
+	and this allowed a failure when the relative difference was
+	less than .Machine$double.eps but non-zero.
+
 
 
 		CHANGES IN R VERSION 2.2.0
