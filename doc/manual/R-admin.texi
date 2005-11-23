@@ -2343,10 +2343,12 @@ sources is normally straightforward with the standard compilers.
 Remember that some package management systems (such as @acronym{RPM} and
 deb) make a distinction between the user version of a package and the
 developer version.  The latter usually has the same name but with the
-extension @samp{-devel} or  @samp{-dev}: you need both versions
+extension @samp{-devel} or @samp{-dev}: you need both versions
 installed.  So please check the @code{configure} output to see if the
 expected features are detected: if for example @samp{readline} is
-missing add the package containing its headers.
+missing add the developer package.  (On most systems you will also need
+@samp{ncurses} and its developer package, although these should be
+dependencies of the @samp{readline} package(s).)
 
 When @R{} has been installed from a binary distribution there are
 sometimes problems with missing components such as the Fortran
