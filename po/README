@@ -62,3 +62,6 @@ and then startup RGui.exe in an appropriate locale, or set LANGUAGE=ll
 on the command line.  (All RGui-*.gmo files will installed to the
 right places when 'make -f Makefile.win' is run in this directory,
 which is part of the main 'make' process.)
+
+To re-make all the translations use 'make update-RGui', after updating
+RGui.pot (see above).
