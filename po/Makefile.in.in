@@ -318,7 +318,6 @@ update-po: Makefile
 	$(MAKE) $(DOMAIN).pot-update
 	test -z "$(UPDATEPOFILES)" || $(MAKE) $(UPDATEPOFILES)
 	$(MAKE) update-gmo
-	#$(MAKE) RGui.pot-update
 
 ## NB datasets does not have any po, tcltk has src but no tcltk.pot
 R_PKGS_PO = base grDevices graphics grid methods splines stats stats4 tcltk tools utils
@@ -477,6 +476,20 @@ Makefile: Makefile.in.in $(top_builddir)/config.status @POMAKEFILEDEPS@
 	@cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@.in CONFIG_HEADERS= \
 	       $(SHELL) ./config.status
+
+update-RGui: Makefile remove-potcdate.sed 
+	@trs=`cd $(srcdir) && ls RGui-*.po 2> /dev/null`; \
+	if test -n "$${trs}"; then \
+	  for tr in $${trs}; do \
+	    lang=`echo $${tr} | sed -e 's/^RGui-//' -e 's/.po$$//'`; \
+	    echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
+	    (cd $(srcdir) && $(MSGMERGE_UPDATE) $${tr} RGui.pot); \
+	    (cd $(srcdir) && $(MSGFMT) -c --statistics -o $${pkg}.gmo $${tr}) ; \
+	  done; \
+	fi
+
+
+
 
 force:
 
