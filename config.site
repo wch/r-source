@@ -48,9 +48,9 @@
 ## Debugging and optimization options for the C compiler.
 ## Use this to specify CFLAGS for the version of the C compiler
 ## specified above.
-## If unspecified, defaults to '-g -O2' for gcc, and '-g' in all other
-## cases.
-## CFLAGS="-g -DVALGRIND_LEVEL=2"
+## If unspecified, defaults to '-g -O2 -std=c99' for gcc, 
+## and '-g' in all other cases except icc (for which see R-admin.html).
+## CFLAGS=
 
 ## The following additional CFLAGS to be used only in the main
 ## compilation and only in building shared libraries respectively.
@@ -60,7 +60,7 @@
 ## SHLIB_CFLAGS=
 
 ## Header file search directory ('-IDIR') and any other miscellaneous
-## options for the C preprocessor and compiler.
+## options (such as defines) for the C preprocessor and compiler.
 ## If unset defaults to '-I/usr/local/include', with '-I/sw/include'
 ## prepended on systems using Fink with root '/sw'.
 ## CPPFLAGS=

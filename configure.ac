@@ -706,6 +706,12 @@ AC_CHECK_SIZEOF(long, 4)
 AC_CHECK_SIZEOF(long long, 0)
 AC_CHECK_SIZEOF(long double, 0)
 
+if test "$ac_test_CFLAGS" != set; then
+  if test "$GCC" = yes; then
+    R_PROG_CC_FLAG([-std=c99], R_SH_VAR_ADD(CFLAGS, [-std=c99]))
+  fi
+fi
+
 R_PROG_CC_MAKEFRAG
 
 ### *** Fortran 77 compiler.
@@ -851,20 +857,20 @@ case "${host_os}" in
 	    case "${host_cpu}" in
 	      x86_64)
 	        ## need -mp for IEC60559 compliance
-	        CFLAGS="-mp -g -O2"
+	        CFLAGS="-mp -g -O2 -std=c99"
 		;;
 	      *)
 	        ## on ix86 optimization fails
-                CFLAGS="-g"
+                CFLAGS="-g -std=c99"
 		;;
 	    esac
           else
 	    case "${host_cpu}" in
 	      x86_64)
-	        CFLAGS="-mp -O2"
+	        CFLAGS="-mp -O2 -std=c99"
 		;;
 	      *)
-                CFLAGS=
+                CFLAGS="-std=c99"
 		;;
 	    esac
           fi

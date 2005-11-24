@@ -1685,6 +1685,9 @@ installed.
 
 You need a means of compiling C and FORTRAN 77 (see @ref{Using
 FORTRAN}).  Some add-on packages also need a C++ compiler.
+Your C compiler should be IEC60059 -and C99-compliant if at all possible.
+@R{} tries to choose suitable flags for the C compilers it knows about,
+but you may have to set @code{CFLAGS} suitably.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora Core
@@ -2559,7 +2562,7 @@ this disables @acronym{IEEE} arithmetic and @command{make check} will
 fail.  The maximal set of optimization options known to work is
 
 @example
--xlibmil -xO5 -dalign
+-xlibmil -xO5 -dalign -xc99
 @end example
 
 We have found little performance difference between @command{gcc} and
@@ -2582,7 +2585,7 @@ compilers we used
 
 @example
 CC="cc -xarch=v9"
-CFLAGS="-xO5 -xlibmil -dalign"
+CFLAGS="-xO5 -xlibmil -dalign -xc99"
 F77="f95 -xarch=v9"
 FFLAGS="-xO5 -xlibmil -dalign"
 CXX="CC -xarch=v9"
