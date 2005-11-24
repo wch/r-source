@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000, 2002 The R Development Core Team
+ *  Copyright (C) 2000, 2002, 2005 The R Development Core Team
  *  Copyright (C) 2003--2004 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -33,7 +33,6 @@
 #include "nmath.h"
 #include "dpq.h"
 
-
 double qbinom(double p, double n, double pr, int lower_tail, int log_p)
 {
     double q, mu, sigma, gamma, z, y;
@@ -42,7 +41,10 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(n) || ISNAN(pr))
 	return p + n + pr;
 #endif
-    if(!R_FINITE(p) || !R_FINITE(n) || !R_FINITE(pr))
+    if(!R_FINITE(n) || !R_FINITE(pr))
+	ML_ERR_return_NAN;
+    /* if log_p is true, p = -Inf is a legitimate value */
+    if(!R_FINITE(p) && !log_p)
 	ML_ERR_return_NAN;
 
     if(n != floor(n + 0.5)) ML_ERR_return_NAN;
