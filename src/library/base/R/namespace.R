@@ -225,7 +225,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                symNames = symNames[-idx]                        
              }
             
-            symbols <- getNativeSymbolInfo(symNames, dll)
+            symbols <- getNativeSymbolInfo(symNames, dll, unlist = FALSE)
             sapply(seq(along = symNames),
                     function(i) {
                         varName = names(symNames)[i]
