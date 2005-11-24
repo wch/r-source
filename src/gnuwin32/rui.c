@@ -1016,12 +1016,14 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
 
     addto(m);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(hmenu->mhelp = newmenuitem(G_("R functions (text)..."), 0, menuhelp));
+    MCHECK(hmenu->mhelp = newmenuitem(G_("R functions (text)..."), 0,
+				      menuhelp));
     MCHECK(hmenu->mhelpstart = newmenuitem(G_("Html help"), 0, menuhelpstart));
     if (!check_doc_file("doc\\html\\index.html")) disable(hmenu->mhelpstart);
-    MCHECK(hmenu->mhelpsearch = newmenuitem(G_("Search help..."), 0, menuhelpsearch));
-    MCHECK(hmenu->msearchRsite = newmenuitem(G_("search.r-project.org ..."), 0, 
-				      menusearchRsite));
+    MCHECK(hmenu->mhelpsearch = newmenuitem(G_("Search help..."), 0, 
+					    menuhelpsearch));
+    MCHECK(hmenu->msearchRsite = newmenuitem("search.r-project.org ...", 0, 
+					     menusearchRsite));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(hmenu->mapropos = newmenuitem(G_("Apropos..."), 0, menuapropos));
     MCHECK(newmenuitem("-", 0, NULL));
