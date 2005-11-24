@@ -841,6 +841,95 @@ case "${host_os}" in
     fi
     ## </NOTE>
     ;;
+  linux*)
+    case  "${CC}" in
+      ## Intel compiler
+      *icc)
+	## icc declares __GNUC__, so it picks up CFLAGS intended for gcc.
+	if test "$ac_test_CFLAGS" != set; then
+          if test $ac_cv_prog_cc_g = yes; then
+	    case "${host_cpu}" in
+	      x86_64)
+	        ## need -mp for IEC60559 compliance
+	        CFLAGS="-mp -g -O2"
+		;;
+	      *)
+	        ## on ix86 optimization fails
+                CFLAGS="-g"
+		;;
+	    esac
+          else
+	    case "${host_cpu}" in
+	      x86_64)
+	        CFLAGS="-mp -O2"
+		;;
+	      *)
+                CFLAGS=
+		;;
+	    esac
+          fi
+        fi
+        ;;
+      ## Portland Group (information from Jennifer Lai)
+      *pgcc)
+        R_PROG_CC_FLAG([-mieee-fp],
+                       R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
+	;;
+    esac
+    case  "${F77}" in
+      ## Intel compilers
+      *ifc|*ifort)
+	if test "$ac_test_FFLAGS" != set; then
+          if test $ac_cv_prog_f77_g = yes; then
+	    case "${host_cpu}" in
+	      x86_64)
+	        FFLAGS="-mp -g -O2"
+		;;
+	      *)
+                FFLAGS="-g"
+		;;
+	    esac
+          else
+	    case "${host_cpu}" in
+	      x86_64)
+	        FFLAGS="-mp -O2"
+		;;
+	      *)
+	        ## on ix86 optimization of dlamc.f fails
+                FFLAGS=
+		;;
+	    esac
+          fi
+        fi
+        ;;
+    esac
+    case  "${CXX}" in
+      ## Intel compilers
+      *icpc|*icc)
+	if test "$ac_test_CXXFLAGS" != set; then
+          if test $ac_cv_prog_cxx_g = yes; then
+	    case "${host_cpu}" in
+	      x86_64)
+	        CXXFLAGS="-mp -g -O2"
+		;;
+	      *)
+                CXXFLAGS="-g"
+		;;
+	    esac
+          else
+	    case "${host_cpu}" in
+	      x86_64)
+	        CXXFLAGS="-mp -O2"
+		;;
+	      *)
+                CXXFLAGS=
+		;;
+	    esac
+          fi
+        fi
+        ;;
+    esac
+    ;;
   openbsd*)
     if test -z "`echo __ELF__ | $CC -E - | grep __ELF__`"; then
       AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
@@ -1054,35 +1143,11 @@ case "${host_os}" in
       ## Intel compiler
       *icc)
         cpicflags="-fPIC"
-	## icc declares __GNUC__, so it picks up CFLAGS intended for gcc.
-	if test "$ac_test_CFLAGS" != set; then
-          if test $ac_cv_prog_cc_g = yes; then
-	    case "${host_cpu}" in
-	      x86_64)
-	        ## need -mp for IEC60559 compliance
-	        CFLAGS="-mp -g -O2"
-		;;
-	      *)
-	        ## on ix86 optimization fails
-                CFLAGS="-g"
-		;;
-	    esac
-          else
-	    case "${host_cpu}" in
-	      x86_64)
-	        CFLAGS="-mp -O2"
-		;;
-	      *)
-                CFLAGS=
-		;;
-	    esac
-          fi
-        fi
         ;;
       ## Portland Group (information from Jennifer Lai)
       *pgcc)
         cpicflags="-fpic"
-        R_PROG_CC_FLAG([-mieee-with-fp],
+        R_PROG_CC_FLAG([-mieee-fp],
                        R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
 	;;
     esac
@@ -1090,28 +1155,6 @@ case "${host_os}" in
       ## Intel compilers
       *ifc|*ifort)
         fpicflags="-fPIC"
-	if test "$ac_test_FFLAGS" != set; then
-          if test $ac_cv_prog_f77_g = yes; then
-	    case "${host_cpu}" in
-	      x86_64)
-	        FFLAGS="-mp -g -O2"
-		;;
-	      *)
-                FFLAGS="-g"
-		;;
-	    esac
-          else
-	    case "${host_cpu}" in
-	      x86_64)
-	        FFLAGS="-mp -O2"
-		;;
-	      *)
-	        ## on ix86 optimization of dlamc.f fails
-                FFLAGS=
-		;;
-	    esac
-          fi
-        fi
         ;;
       ## Portland Group
       *pgf77)
@@ -1122,27 +1165,6 @@ case "${host_os}" in
       ## Intel compilers
       *icpc|*icc)
         cxxpicflags="-fPIC"
-	if test "$ac_test_CXXFLAGS" != set; then
-          if test $ac_cv_prog_cxx_g = yes; then
-	    case "${host_cpu}" in
-	      x86_64)
-	        CXXFLAGS="-mp -g -O2"
-		;;
-	      *)
-                CXXFLAGS="-g"
-		;;
-	    esac
-          else
-	    case "${host_cpu}" in
-	      x86_64)
-	        CXXFLAGS="-mp -O2"
-		;;
-	      *)
-                CXXFLAGS=
-		;;
-	    esac
-          fi
-        fi
         ;;
       ## Portland Group
       *pgCC)
