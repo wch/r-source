@@ -1082,7 +1082,7 @@ case "${host_os}" in
       ## Portland Group (information from Jennifer Lai)
       *pgcc)
         cpicflags="-fpic"
-        R_PROG_CC_FLAG([-mieee-with-fp],
+        R_PROG_CC_FLAG([-mieee-fp],
                        R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
 	;;
     esac
