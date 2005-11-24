@@ -3323,7 +3323,7 @@ sub Ssgm_unescape_codes {
 	    # <s-expression cannot contain <s-function>
 	    $text =~ s/$ECODE$id/$ec/;
 	} else {
-	    $text =~ s/$ECODE$id/<s-expression>$ec<\/s-expression>/;
+	    $text =~ s/$ECODE$id/<code>$ec<\/code>/;
 	}
     }
 
