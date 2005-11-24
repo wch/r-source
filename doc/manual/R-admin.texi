@@ -716,7 +716,8 @@ compiled for MSVC, we have been unable to make it work for complex
 arithmetic and so it is only used for real linear algebra.
 
 Another possibility is to use AMD's AMD Core Math Library (ACML)
-@url{http://www.amd.com/acml}.  To use the Cygwin version, install
+@url{http://www.amd.com/acml}.  To use the Cygwin-compiled version
+(Cygwin itself is not needed, at least currently), install
 @file{acml-2-7-0-win32-g77.exe} (or later) and edit
 @file{@var{R_HOME}/src/gnuwin32/MkRules} to define @code{USE_ACML=YES}
 and set @code{ACML_PATH} to the path to @file{libacml.a}.
@@ -1860,7 +1861,9 @@ single-threaded only) we could use
 @noindent
 if the appropriate library directory such as
 @file{/opt/acml2.7.0/gnu64/lib} is in the @samp{LD_LIBRRARY_PATH}.
-For other compilers, see the ACML documentation.
+For other compilers, see the ACML documentation.  Although the
+documentation is unclear, 32-bit versions of ACML do run on other
+@code{ia32} chips such as AthlonMP and P4.
 
 
 Note that the BLAS library will be used for several add-on packages as
@@ -1868,8 +1871,8 @@ well as for @R{} itself.  This means that it is better to use a shared
 BLAS library, as most of a static library will be compiled into the @R{}
 executable and each BLAS-using package.  In any case, the BLAS library
 must be usable with dynamically-loadable code: this can be a problem
-with ATLAS on some platforms as it is not by default built with
-position-independent code.
+with ATLAS on some platforms (including AMD64) as it is not by default
+built with position-independent code.
 
 You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.
@@ -2008,13 +2011,13 @@ against the dynamic library and so such packages cannot be used from a
 @node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
 @section Internationalization support
 
-As from version 2.1.0, @R{} support for multi-byte character
-sets (@acronym{MBCS}), in particular for UTF-8 locales (which are
-usually identified by suffix @code{.utf8}, something like
-@code{en_GB.utf8}@footnote{AIX has to be different: it has
-@code{EN_US.UTF-8}!}.  UTF-8 is an encoding of Unicode and in principle
-covers all human languages simultaneously: however, a given system may
-not have fonts capable of displaying more than a few of these languages.
+@R{} supports multi-byte character sets (@acronym{MBCS}), in particular
+for UTF-8 locales (which are usually identified by suffix @code{.utf8},
+something like @code{en_GB.utf8}@footnote{AIX has to be different: it
+has @code{EN_US.UTF-8}!}.  UTF-8 is an encoding of Unicode and in
+principle covers all human languages simultaneously: however, a given
+system may not have fonts capable of displaying more than a few of these
+languages.
 
 Support for UTF-8 is selected at @command{configure} time (unless
 disabled with @option{--disable-mbcs}).  This will check for a large
@@ -2030,7 +2033,7 @@ configured with @option{--disable-mbcs}.
 
 A version of @R{} with MBCS support can also be run in other multi-byte
 locales, for example those using the EUC-JP, EUC-KR and EUC-TW encodings
-on Unix-alike and the code pages for Chinese, Japanese and Korean on
+on Unix-alikes and the code pages for Chinese, Japanese and Korean on
 Windows.
 
 Translation of messages is supported via GNU @code{gettext} unless
@@ -2192,9 +2195,10 @@ sure that all libraries are on this path.
 You must set whatever compilation flags (if any) are needed to ensure
 that FORTRAN @code{integer} is equivalent to a C @code{int} pointer and
 FORTRAN @code{double precision} is equivalent to a C @code{double}
-pointer.  This is checked during the configuration process.  Because
-of this, f2c will not be accepted on a 64-bit platform as it produces
-64-bit integers, incompatible with C's @code{int} on such platforms.
+pointer.  This is checked during the configuration process.  Because of
+this, @code{f2c} will not be accepted on a 64-bit platform as it
+produces 64-bit integers, incompatible with C's @code{int} on such
+platforms.
 
 Some of the FORTRAN code makes use of @code{COMPLEX*16} variables, which
 is a FORTRAN 90 extension.  This is checked for at configure
@@ -2435,7 +2439,7 @@ LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
 @noindent
 Note the use of @code{-mp} to maintain correct IEC60559 arithmetic:
 these are the default flags selected by @command{configure} if none are
-supplied.
+supplied.  (@code{-mieee-fp} is an alternative name for @code{-mp}.)
 
 
 For some comments on building on an Itanium (@samp{ia64}) Linux system
@@ -2556,9 +2560,9 @@ fail.  The maximal set of optimization options known to work is
 We have found little performance difference between @command{gcc} and
 @command{cc} but considerable benefit from using a SunPro Fortran
 compiler: the @command{gcc}/@command{f77} combination works well.  For
-many C++ applications (e.g.@: package @pkg{Matrix}) Forte 7 requires
-@code{-lCstd}, which the configure script will add to
-@code{SHLIB_CXXLDFLAGS} if it identifies the compiler correctly.
+many C++ applications Forte 7 requires @code{-lCstd}, which the
+configure script will add to @code{SHLIB_CXXLDFLAGS} if it identifies
+the compiler correctly.
 
 A 32-bit version of R is built without large file support and so can
 only handle files up to 2Gb (unlike 64-bit versions).  According to
