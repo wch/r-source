@@ -115,7 +115,7 @@ write.csv <- function(...)
         if(!is.null(Call[[argname]]))
             warning(gettextf("attempt to change '%s' ignored", argname),
                     domain = NA)
-    rn <- Call$row.names
+    rn <- eval.parent(Call$row.names)
     Call$col.names <- if(is.logical(rn) && !rn) TRUE else NA
     Call$sep <- ","
     Call$dec <- "."
@@ -131,7 +131,7 @@ write.csv2 <- function(...)
         if(!is.null(Call[[argname]]))
             warning(gettextf("attempt to change '%s' ignored", argname),
                     domain = NA)
-    rn <- Call$row.names
+    rn <- eval.parent(Call$row.names)
     Call$col.names <- if(is.logical(rn) && !rn) TRUE else NA
     Call$sep <- ";"
     Call$dec <- ","
