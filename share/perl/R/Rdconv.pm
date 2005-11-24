@@ -404,12 +404,12 @@ sub get_arguments {
 
     if($text =~ /\\($command)(\[[^\]]+\])?($ID)/){
 	$id = $3;
-	$text =~ /$id(.*)$id/s;
+	$text =~ s/$id(.*)$id/$id/s;
 	$retval[1] = $1;
 	my $k=2;
 	while(($k<=$nargs) && ($text =~ /$id($ID)/)){
 	    $id = $1;
-	    $text =~ /$id\s*(.*)$id/s;
+	    $text =~ s/$id\s*(.*)$id/$id/s;
 	    $retval[$k++] = $1;
 	}
     }
