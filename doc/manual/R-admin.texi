@@ -2444,7 +2444,7 @@ LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
 @noindent
 Note the use of @code{-mp} to maintain correct IEC60559 arithmetic:
 these are the default flags selected by @command{configure} if none are
-supplied.
+supplied.  (@code{-mieee-fp} is an alternative name for @code{-mp}.)
 
 
 For some comments on building on an Itanium (@samp{ia64}) Linux system
@@ -2471,18 +2471,9 @@ LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
 @end example
 
 @noindent
-Note particularly the last, which is need to ensure that a shared
-version of @code{libc} is found.  If the compilers are named as here and
-in the path, as from 2.3.0 this can be simplified to
-@example
-PG_HOME=/usr/pgi/linux86-64/6.0
-CC=pgcc
-CPPFLAGS="-I$PG_HOME/include -I$PG_HOME/include/CC"
-F77=pgf77
-CXX=pgCC
-LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
-@end example
-
+Note particularly the last, which is needed to ensure that a shared
+version of @code{libc} is found.  @R{} will now include @code{mieee-fp}
+amongst the @code{CFLAGS}.
 
 
 @node Mac OS X, Solaris, Linux, Platform notes
