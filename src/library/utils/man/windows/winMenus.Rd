@@ -18,15 +18,14 @@ winMenuNames()
 winMenuItems(menuname)
 }
 \arguments{
-  \item{menuname}{a character string naming a menu, of up to 50 bytes.}
+  \item{menuname}{a character string naming a menu.}
   \item{itemname}{a character string naming a menu item on an existing menu.}
   \item{action}{a character string describing the action when that menu
     is selected, or \code{"enable"} or \code{"disable"}.}
 }
 \details{
   User menus are added to the right of existing menus, and items are
-  added at the bottom of the menu.  Up to 50 menus or sub-menus can be
-  added with up to 500 items.
+  added at the bottom of the menu.
 
   By default the action character string is treated as \R input, being
   echoed on the command line and parsed and executed as usual.
@@ -67,7 +66,7 @@ winMenuItems(menuname)
   and submenus.  \code{winMenuDelItem} just deletes one menu item.
 
   The total path to an item (menu string plus item string) cannot exceed
-  100 bytes.
+  1000 bytes, and the menu string cannot exceed 500 bytes.
 }
 \value{
   \code{NULL}, invisibly.  If an error occurs, an informative error

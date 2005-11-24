@@ -41,7 +41,8 @@ CRAN have been updated.)
 Since the Goto BLAS is no longer available for Windows, support for it
 has been withdrawn.
 
-winMenuAdd() now has a limit of 50 additional menus.
+winMenuAdd() now has no limits on the number of menus or items, and names
+are now limited to 500 (not 50) bytes.
 
 
 
