@@ -3879,9 +3879,16 @@ stopifnot(length(s$sdev) == ncol(s$rotation))
 summary(s)
 ## last failed in 2.2.0
 
+
 ## mapply did not test type of MoreArgs
 try(mapply(rep,times=1:4, MoreArgs=42))
 ## segfaulted in 2.2.0
+
+
+## qbinom had incorrect test for p with log=TRUE
+(z <- qbinom(-Inf, 1, 0.5, log.p = TRUE))
+stopifnot(is.finite(z))
+## was NaN in 2.2.0
 
 
 ### end of tests added in 2.2.1 ###
@@ -3929,7 +3936,7 @@ qgamma(0.95, -2)
 rgamma(3, -20)
 ## all errors < 2.3.0, now NaNs
 
-## Make sure reference to local environment is serialized 
+## Make sure reference to local environment is serialized
 f <- function() { function(){} }
 serialize(f(), NULL)
 ##

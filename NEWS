@@ -504,6 +504,9 @@ BUG FIXES
 	and this allowed a failure when the relative difference was
 	less than .Machine$double.eps but non-zero.
 
+    o	qbinom() was not accepting p = -Inf when log.p = TRUE, although
+	it is a legitimate value.
+
 
 
 		CHANGES IN R VERSION 2.2.0
