@@ -2472,7 +2472,7 @@ LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
 
 @noindent
 Note particularly the last, which is needed to ensure that a shared
-version of @code{libc} is found.  @R{} will now include @code{mieee-fp}
+version of @code{libc} is found.  @R{} will now include @code{-mieee-fp}
 amongst the @code{CFLAGS}.
 
 
