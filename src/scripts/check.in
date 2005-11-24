@@ -425,11 +425,21 @@ foreach my $pkg (@ARGV) {
 			    &shell_quote_file_path($out) .
 			    " 2>&1";
 			$install_error = &R_system($cmd);
+			if($WINDOWS) { 
+			    ## MS Html Help Compiler gives lines terminated
+			    ## by CRCRLF, so we clean up the log file.
+			    my $line;
+			    ## read_lines does chomp.
+			    @lines = &read_lines($out);
+			    open(FILE, "> $out")
+				or die "Error: cannot open file '$out' for re-writing\n";
+			    foreach $line (@lines) {
+				$line =~ s/\r$//;
+				print FILE $line, "\n";
+			    }
+			    close(FILE);
+			}
 		    }
-		    ## <FIXME>
-		    ## Possibly tidy up the install log here.
-		    ## E.g., MS HHC gives lines terminated by CRCRLF.
-		    ## </FIXME>
 		    if($install_error) {
 			$log->error();
 			$log->print("Installation failed.\n");
