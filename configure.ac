@@ -1414,6 +1414,7 @@ AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate \
   setenv strcoll stat strerror strptime symlink system times unsetenv)
 ## isfinite and isnan are in math.h but might be macros
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
+AC_CHECK_DECLS([log2, log10], , , [#include <math.h>])
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.

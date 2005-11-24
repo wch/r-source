@@ -164,6 +164,14 @@
    */
 #undef HAVE_DECL_ISNAN
 
+/* Define to 1 if you have the declaration of `log10', and to 0 if you don't.
+   */
+#undef HAVE_DECL_LOG10
+
+/* Define to 1 if you have the declaration of `log2', and to 0 if you don't.
+   */
+#undef HAVE_DECL_LOG2
+
 /* Define to 1 if you have the declaration of `SIZE_MAX', and to 0 if you
    don't. */
 #undef HAVE_DECL_SIZE_MAX
