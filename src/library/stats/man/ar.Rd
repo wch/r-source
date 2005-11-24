@@ -152,7 +152,8 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 }
 
 \seealso{
-  \code{\link{ar.ols}}, \code{\link{arima0}} for ARMA models.
+  \code{\link{ar.ols}}, \code{\link{arima0}} for ARMA models;
+  \code{\link{acf2AR}}, for AR construction from the ACF.
 }
 
 \references{
