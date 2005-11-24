@@ -162,6 +162,14 @@
    */
 #define HAVE_DECL_ISNAN 1
 
+/* Define to 1 if you have the declaration of `log10', and to 0 if you don't.
+   */
+#define HAVE_DECL_LOG10 1
+
+/* Define to 1 if you have the declaration of `log2', and to 0 if you don't.
+   */
+#define HAVE_DECL_LOG2 1
+
 /* Define to 1 if you have the declaration of `SIZE_MAX', and to 0 if you
    don't. */
 #define HAVE_DECL_SIZE_MAX 1
