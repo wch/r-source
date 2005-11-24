@@ -614,6 +614,7 @@ sub sub4 {
     $text =~ s+<bf>(.*?)</bf>+\\bold{$1}+go;
     $text =~ s+<tt>(.*?)</tt>+\\code{$1}+go;
     $text =~ s+<url>(.*?)</url>+\\url{$1}+go;
+    $text =~ s+<code>(.*?)</code>+\\code{$1}+go;
     $text =~ s/\n*<p>\n*/\n\n/go;
     $text =~ s/(<br>\n*)+/\n/go;
     $text =~ s/\$/\\\$/go;
