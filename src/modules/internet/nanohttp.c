@@ -108,6 +108,10 @@ extern void R_FlushConsole(void);
 
 #define BAD_CAST (unsigned char *)
 
+#if defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
+extern char *strdup(const char *s1);
+#endif
+
 #define xmlFree free
 #define xmlMalloc malloc
 #define xmlRealloc realloc
