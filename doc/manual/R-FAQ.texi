@@ -2841,6 +2841,8 @@ Functions that solve general linear/integer problems, assignment
 problems, and transportation problems via interfacing Lp_solve.
 @item lpridge
 Local polynomial (ridge) regression.
+@item lsa
+Latent Semantic Analysis.
 @item ltm
 Analysis of multivariate Bernoulli data using latent trait models
 (including the Rasch model) under the Item Response Theory approach.
