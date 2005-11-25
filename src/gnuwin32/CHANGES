@@ -82,6 +82,9 @@ Installation and Administration Manual'.
 winMenuAdd had a limit of 16 additional menus but only allocated 10: it
 now has the limit of 16 as intended.
 
+Clicking on the left part of the MDI radiobutton in the preferences
+dialog failed.
+
 
 
 R 2.2.0
