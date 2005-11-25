@@ -708,7 +708,7 @@ AC_CHECK_SIZEOF(long double, 0)
 
 if test "$ac_test_CFLAGS" != set; then
   if test "$GCC" = yes; then
-    R_PROG_CC_FLAG([-std=c99], R_SH_VAR_ADD(CFLAGS, [-std=c99]))
+    R_PROG_CC_FLAG([-std=gnu99], R_SH_VAR_ADD(CFLAGS, [-std=gnu99]))
   fi
 fi
 

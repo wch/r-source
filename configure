@@ -25717,9 +25717,9 @@ _ACEOF
 
 if test "$ac_test_CFLAGS" != set; then
   if test "$GCC" = yes; then
-    ac_safe=_std_c99
-echo "$as_me:$LINENO: checking whether ${CC} accepts -std=c99" >&5
-echo $ECHO_N "checking whether ${CC} accepts -std=c99... $ECHO_C" >&6
+    ac_safe=_std_gnu99
+echo "$as_me:$LINENO: checking whether ${CC} accepts -std=gnu99" >&5
+echo $ECHO_N "checking whether ${CC} accepts -std=gnu99... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -25730,7 +25730,7 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 r_save_CFLAGS="${CFLAGS}"
-CFLAGS="${CFLAGS} -std=c99"
+CFLAGS="${CFLAGS} -std=gnu99"
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -25793,9 +25793,9 @@ echo "${ECHO_T}yes" >&6
   separator=""
 test -z "${separator}" && separator=" "
 if test -z "${CFLAGS}"; then
-  CFLAGS="-std=c99"
+  CFLAGS="-std=gnu99"
 else
-  CFLAGS="${CFLAGS}${separator}-std=c99"
+  CFLAGS="${CFLAGS}${separator}-std=gnu99"
 fi
 else
   echo "$as_me:$LINENO: result: no" >&5
