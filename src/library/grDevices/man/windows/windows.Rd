@@ -16,14 +16,14 @@ windows(width = 7, height = 7, pointsize = 12,
         rescale = c("R", "fit", "fixed"), xpinch, ypinch,
         bg = "transparent", canvas = "white",
         gamma = getOption("gamma"), xpos = NA, ypos = NA,
-        buffered = getOption("windowsBuffered"))
+        buffered = getOption("windowsBuffered"), restoreConsole = TRUE)
 
-win.graph(width = 7, height = 7, pointsize = 12)
-x11(width = 7, height = 7, pointsize = 12)
-X11(width = 7, height = 7, pointsize = 12)
+win.graph(width = 7, height = 7, pointsize = 12, restoreConsole = TRUE)
+x11(width = 7, height = 7, pointsize = 12, restoreConsole = TRUE)
+X11(width = 7, height = 7, pointsize = 12, restoreConsole = TRUE)
 
-win.metafile(filename = "", width = 7, height = 7, pointsize = 12)
-win.print(width = 7, height = 7, pointsize = 12, printer = "")
+win.metafile(filename = "", width = 7, height = 7, pointsize = 12, restoreConsole = TRUE)
+win.print(width = 7, height = 7, pointsize = 12, printer = "", restoreConsole = TRUE)
 }
 
 \arguments{
@@ -31,6 +31,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
     the plotting window in inches.}
   \item{pointsize}{the default pointsize of plotted text. The allowed
     range is \code{[6, 48]}: values outside that range are reset to 12.}
+  \item{restoreConsole}{logical:  see the Details below.}
   \item{record}{logical: sets the initial state of the flag for
     recording plots.}
   \item{rescale}{controls the action for resizing plots.}
@@ -152,6 +153,13 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   For \code{win.metafile} only one plot is allowed per file, and Windows
   seems to disallow reusing the file.  So the \emph{only} way to allow
   multiple plots is to use a parametrized \code{filename} as in the example.
+  
+  The \code{restoreConsole} argument is a temporary fix for a problem
+  in the current implementation of \code{win.metafile}, and is likely
+  to be removed in an upcoming release.  If set to \code{FALSE}, the 
+  console will not be repainted and will not receive the focus after the 
+  \code{win.metafile} call.  This should only be used in cases where
+  some other interface (e.g. a menu-driven one) is handling user input.
 }
 
 \value{
