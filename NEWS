@@ -507,6 +507,12 @@ BUG FIXES
     o	qbinom() was not accepting p = -Inf when log.p = TRUE, although
 	it is a legitimate value.
 
+    o	write.csv[2] only accepts logical constants for 'row.names', and 
+	now accepts variables.
+
+    o	Conversion of .Rd files did not correctly match braces
+	enclosing a whole argument, e.g. \eqn{{\bf a}}{a}.
+
 
 
 		CHANGES IN R VERSION 2.2.0
