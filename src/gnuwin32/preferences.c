@@ -90,6 +90,7 @@ static button bApply, bSave, bOK, bCancel;
 static label l_mdi, l_mwin, l_font, l_point, l_style, l_crows, l_ccols,
     l_cx, l_cy, l_prows, l_pcols, l_grx, l_gry,
     l_cols, l_bgcol, l_fgcol, l_usercol, l_highlightcol, l_cbb, l_cbl;
+static radiogroup g_mwin;
 static radiobutton rb_mdi, rb_sdi, rb_mwin, rb_swin;
 static listbox f_font, f_style, d_point, bgcol, fgcol, usercol, highlightcol;
 static checkbox toolbar, statusbar, tt_font, c_resize;
@@ -159,7 +160,7 @@ static void cleanup()
     hide(wconfig);
     delobj(l_mdi); delobj(rb_mdi); delobj(rb_sdi);
     delobj(toolbar); delobj(statusbar);
-    delobj(l_mwin); delobj(rb_mwin); delobj(rb_swin);
+    delobj(l_mwin); delobj(g_mwin); delobj(rb_mwin); delobj(rb_swin);
     delobj(l_font); delobj(f_font); delobj(tt_font);
     delobj(l_point); delobj(d_point);
     delobj(l_style); delobj(f_style);
@@ -401,7 +402,7 @@ void Rgui_configure()
 			Titlebar | Centered | Modal);
     setbackground(wconfig, dialog_bg());
     l_mdi = newlabel("Single or multiple windows",
-		      rect(10, 10, 150, 20), AlignLeft);
+		      rect(10, 10, 140, 20), AlignLeft);
     rb_mdi = newradiobutton("MDI", rect(150, 10 , 70, 20), cMDI);
     rb_sdi = newradiobutton("SDI", rect(220, 10 , 70, 20), cSDI);
 
@@ -417,7 +418,7 @@ void Rgui_configure()
     }
 
     l_mwin = newlabel("Pager style", rect(10, 50, 90, 20), AlignLeft);
-    newradiogroup();
+    g_mwin = newradiogroup();
     rb_mwin = newradiobutton("multiple windows", rect(150, 50, 150, 20), NULL);
     rb_swin = newradiobutton("single window", rect(320, 50 , 150, 20), NULL);
     if(pagerMultiple) check(rb_mwin); else check(rb_swin);
