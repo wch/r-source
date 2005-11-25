@@ -145,6 +145,7 @@ extern double atanh(double x);
 extern int snprintf (char *s, size_t n, const char *format, ...);
 #endif
 #if defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
+#undef strdup
 extern char *strdup(const char *s1);
 #endif
 #if defined(HAVE_DECL_STRNCASECMP) && !HAVE_DECL_STRNCASECMP

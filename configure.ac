@@ -1414,13 +1414,16 @@ AC_CHECK_DECLS([alloca], , ,
 [#ifdef HAVE_ALLOCA_H
 # include <alloca.h>
 #endif])
-AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate \
+AC_CHECK_FUNCS(access chdir expm1 fcntl fdopen finite fseeko ftello ftruncate \
   getcwd getgrgid getpwuid getrlimit gettimeofday getuid hypot isascii \
   log1p log2 log10 matherr mkdtemp mkfifo popen putenv realpath rint \
   setenv strcoll stat strerror strptime symlink system times unsetenv)
 ## isfinite and isnan are in math.h but might be macros
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
+## log2 and log10 are C99 and might need suitable compiler flags
 AC_CHECK_DECLS([log2, log10], , , [#include <math.h>])
+## glibc has this conditionally defined
+AC_CHECK_DECLS([fdopen], , , [#include <stdio.h>])
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.

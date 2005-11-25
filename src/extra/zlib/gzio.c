@@ -7,7 +7,15 @@
 
 /* @(#) $Id$ */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <stdio.h>
+
+#if defined(HAVE_DECL_FDOPEN) && !HAVE_DECL_FDOPEN
+  FILE *fdopen(int fildes, const char *mode);
+#endif
 
 #include "zutil.h"
 

@@ -23162,6 +23162,156 @@ rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
 echo "$as_me:$LINENO: result: $r_cv_header_setjmp_posix" >&5
 echo "${ECHO_T}$r_cv_header_setjmp_posix" >&6
+echo "$as_me:$LINENO: checking whether sigsetjmp is declared" >&5
+echo $ECHO_N "checking whether sigsetjmp is declared... $ECHO_C" >&6
+if test "${ac_cv_have_decl_sigsetjmp+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <setjmp.h>
+
+int
+main ()
+{
+#ifndef sigsetjmp
+  char *p = (char *) sigsetjmp;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_have_decl_sigsetjmp=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_have_decl_sigsetjmp=no
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: $ac_cv_have_decl_sigsetjmp" >&5
+echo "${ECHO_T}$ac_cv_have_decl_sigsetjmp" >&6
+if test $ac_cv_have_decl_sigsetjmp = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_SIGSETJMP 1
+_ACEOF
+
+
+else
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_SIGSETJMP 0
+_ACEOF
+
+
+fi
+echo "$as_me:$LINENO: checking whether siglongjmp is declared" >&5
+echo $ECHO_N "checking whether siglongjmp is declared... $ECHO_C" >&6
+if test "${ac_cv_have_decl_siglongjmp+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <setjmp.h>
+
+int
+main ()
+{
+#ifndef siglongjmp
+  char *p = (char *) siglongjmp;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_have_decl_siglongjmp=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_have_decl_siglongjmp=no
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: $ac_cv_have_decl_siglongjmp" >&5
+echo "${ECHO_T}$ac_cv_have_decl_siglongjmp" >&6
+if test $ac_cv_have_decl_siglongjmp = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_SIGLONGJMP 1
+_ACEOF
+
+
+else
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_SIGLONGJMP 0
+_ACEOF
+
+
+fi
+
+
+if test "$ac_cv_have_decl_sigsetjmp" = no; then
+  r_cv_header_setjmp_posix=no
+fi
+if test "$ac_cv_have_decl_siglongjmp" = no; then
+  r_cv_header_setjmp_posix=no
+fi
 if test "${r_cv_header_setjmp_posix}" = yes; then
 
 cat >>confdefs.h <<\_ACEOF
@@ -25957,7 +26107,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:25960: \"$ac_link\") >&5
+(eval echo $as_me:26110: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26035,7 +26185,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:26038: \"$ac_link\") >&5
+(eval echo $as_me:26188: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26281,7 +26431,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26284: \"$ac_link\") >&5
+(eval echo $as_me:26434: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26363,7 +26513,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26366: \"$ac_link\") >&5
+(eval echo $as_me:26516: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -30410,7 +30560,8 @@ fi
 
 
 
-for ac_func in access chdir expm1 fcntl finite fseeko ftello ftruncate \
+
+for ac_func in access chdir expm1 fcntl fdopen finite fseeko ftello ftruncate \
   getcwd getgrgid getpwuid getrlimit gettimeofday getuid hypot isascii \
   log1p log2 log10 matherr mkdtemp mkfifo popen putenv realpath rint \
   setenv strcoll stat strerror strptime symlink system times unsetenv
@@ -30683,6 +30834,7 @@ _ACEOF
 fi
 
 
+## log2 and log10 are C99 and might need suitable compiler flags
 echo "$as_me:$LINENO: checking whether log2 is declared" >&5
 echo $ECHO_N "checking whether log2 is declared... $ECHO_C" >&6
 if test "${ac_cv_have_decl_log2+set}" = set; then
@@ -30837,6 +30989,88 @@ _ACEOF
 else
   cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_LOG10 0
+_ACEOF
+
+
+fi
+
+
+## glibc has this conditionally defined
+echo "$as_me:$LINENO: checking whether fdopen is declared" >&5
+echo $ECHO_N "checking whether fdopen is declared... $ECHO_C" >&6
+if test "${ac_cv_have_decl_fdopen+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <stdio.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef fdopen
+  char *p = (char *) fdopen;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_have_decl_fdopen=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ac_cv_have_decl_fdopen=no
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: $ac_cv_have_decl_fdopen" >&5
+echo "${ECHO_T}$ac_cv_have_decl_fdopen" >&6
+if test $ac_cv_have_decl_fdopen = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_FDOPEN 1
+_ACEOF
+
+
+else
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_FDOPEN 0
 _ACEOF
 
 

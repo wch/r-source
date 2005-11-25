@@ -1589,6 +1589,13 @@ sigsetjmp(b, 0);
 siglongjmp(b, 1);]])],
                    [r_cv_header_setjmp_posix=yes],
                    [r_cv_header_setjmp_posix=no])])
+AC_CHECK_DECLS([sigsetjmp, siglongjmp], , , [#include <setjmp.h>])
+if test "$ac_cv_have_decl_sigsetjmp" = no; then
+  r_cv_header_setjmp_posix=no
+fi
+if test "$ac_cv_have_decl_siglongjmp" = no; then
+  r_cv_header_setjmp_posix=no
+fi
 if test "${r_cv_header_setjmp_posix}" = yes; then
   AC_DEFINE(HAVE_POSIX_SETJMP, 1,
             [Define if you have POSIX.1 compatible sigsetjmp/siglongjmp.])
