@@ -1539,6 +1539,11 @@ AC_SUBST(R_MODULES)
 R_ICONV
 
 ## support for MBCS
+case "${host_os}" in
+  mingw*)
+    r_cv_iconv_latin1=yes
+    ;;
+esac
 R_MBCS
 
 ## X11.
@@ -1720,14 +1725,17 @@ AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 ### * Win32 overrides
 case "${host_os}" in
   mingw*)
+    AC_DEFINE(HAVE_ICONV, 1)
+    AC_DEFINE(HAVE_ICONVLIST, 1)
+    AC_DEFINE(HAVE_ICONV_H, 1)
     AC_DEFINE(HAVE_INTERNET, 1)
     AC_DEFINE(HAVE_JPEG, 1)
-    AC_DEFINE(SUPPORT_LIBXML, 1)
     AC_DEFINE(HAVE_PNG, 1)
     AC_DEFINE(HAVE_POSIX_SETJMP, 1)
     AC_DEFINE(HAVE_SOCKETS, 1)
     AC_DEFINE(HAVE_TCLTK, 1)
     AC_DEFINE(HAVE_TIMES, 1)
+    AC_DEFINE(ICONV_LATIN1, 1)
     want_R_profiling=yes
     AC_DEFINE(R_PROFILING, 1)
     AC_DEFINE(SUPPORT_LIBXML, 1)

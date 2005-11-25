@@ -35716,6 +35716,11 @@ fi
 
 
 ## support for MBCS
+case "${host_os}" in
+  mingw*)
+    r_cv_iconv_latin1=yes
+    ;;
+esac
 
 if test "$want_mbcs_support" = yes ; then
   if test "$r_cv_iconv_latin1" != yes ; then
@@ -47376,15 +47381,23 @@ fi
 case "${host_os}" in
   mingw*)
     cat >>confdefs.h <<\_ACEOF
+#define HAVE_ICONV 1
+_ACEOF
+
+    cat >>confdefs.h <<\_ACEOF
+#define HAVE_ICONVLIST 1
+_ACEOF
+
+    cat >>confdefs.h <<\_ACEOF
+#define HAVE_ICONV_H 1
+_ACEOF
+
+    cat >>confdefs.h <<\_ACEOF
 #define HAVE_INTERNET 1
 _ACEOF
 
     cat >>confdefs.h <<\_ACEOF
 #define HAVE_JPEG 1
-_ACEOF
-
-    cat >>confdefs.h <<\_ACEOF
-#define SUPPORT_LIBXML 1
 _ACEOF
 
     cat >>confdefs.h <<\_ACEOF
@@ -47405,6 +47418,10 @@ _ACEOF
 
     cat >>confdefs.h <<\_ACEOF
 #define HAVE_TIMES 1
+_ACEOF
+
+    cat >>confdefs.h <<\_ACEOF
+#define ICONV_LATIN1 1
 _ACEOF
 
     want_R_profiling=yes

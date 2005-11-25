@@ -142,6 +142,10 @@
    */
 #define HAVE_DECL_ATANH 1
 
+/* Define to 1 if you have the declaration of `fdopen', and to 0 if you don't.
+   */
+#define HAVE_DECL_FDOPEN 1
+
 /* Define to 1 if you have the declaration of `feof_unlocked', and to 0 if you
    don't. */
 #define HAVE_DECL_FEOF_UNLOCKED 0
@@ -169,6 +173,14 @@
 /* Define to 1 if you have the declaration of `log2', and to 0 if you don't.
    */
 #define HAVE_DECL_LOG2 1
+
+/* Define to 1 if you have the declaration of `siglongjmp', and to 0 if you
+   don't. */
+#define HAVE_DECL_SIGLONGJMP 1
+
+/* Define to 1 if you have the declaration of `sigsetjmp', and to 0 if you
+   don't. */
+#define HAVE_DECL_SIGSETJMP 1
 
 /* Define to 1 if you have the declaration of `SIZE_MAX', and to 0 if you
    don't. */
@@ -225,6 +237,9 @@
 
 /* Define to 1 if you have the <fcntl.h> header file. */
 #define HAVE_FCNTL_H 1
+
+/* Define to 1 if you have the `fdopen' function. */
+#define HAVE_FDOPEN 1
 
 /* Define to 1 if you have the `finite' function. */
 #define HAVE_FINITE 1

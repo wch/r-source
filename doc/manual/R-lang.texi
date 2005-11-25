@@ -592,11 +592,11 @@ It is the direct parent of the environment of the base package
 @code{baseenv()} had the special value @code{NULL}, but as from
 version 2.3.0, the use of @code{NULL} as an environment is deprecated.
 
-Environments are created implicitly by function calls, as described
-in @ref{Function objects} and @ref{Lexical environment}.  In this case
-the environment contains the variables local to the function, and its
-enclosure is the environment of the enclosing function.  They
-may also be created directly by @code{new.env}.
+Environments are created implicitly by function calls, as described in
+@ref{Function objects} and @ref{Lexical environment}.  In this case the
+environment contains the variables local to the function (including the
+arguments), and its enclosure is the environment of the currently called
+function.  Environments may also be created directly by @code{new.env}.
 @findex new.env
 The frame content of an environment can be accessed and manipulated by
 use of @code{ls}, @code{get} and @code{assign} as well as @code{eval} and

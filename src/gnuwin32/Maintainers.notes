@@ -10,19 +10,19 @@ sources)
 
 sh /R/R-2.3.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no
 
-This ran fairly slowly, producing a src/include/config.h that differs
-only in that
+This ran fairly slowly, currently producing a src/include/config.h
+that differs only in that
 
- - it found R_PRINTCMD = lpr on my system, but that is not used under 
-   Windows, so the actual setting is irrelevant.
+ - it does not find the declarations of siglongjmp/sigsetjmp (in
+   psignal.h)
 
- - It found libreadline, not used under Windows.  
+ - SUPPORT_UTF8 is defined, but that is not true on Windows.
 
 Also, watch out for versions of the header files.  For example,
 <strings.h> was in mingw-runtime-1.2 and later, but not in the
-Mingw-1.1 bundle.
+Mingw-1.1 bundle.  These days we tend to insist on a current MinGW.
 
-BDR 2002-04-15, 2003-02-10, 2004-06-28
+BDR 2002-04-15, 2003-02-10, 2004-06-28, 2005-11-25
 
 2) The Makefiles for building a distribution have been reorganized.  Now
 all of the decisions about what files go into the distributables are made
