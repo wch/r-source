@@ -164,7 +164,7 @@ NEW FEATURES
     o	read.table() gains a 'flush' argument passed to scan().
 
     o	fisher.test() now uses p-values computed via hypergeometric
-	distributions for all 2 by 2 tables.  This might the slightly
+	distributions for all 2 by 2 tables.  This might be slightly
 	slower for a few cases, but works much better for tables with
 	some large counts.
 
@@ -173,9 +173,9 @@ NEW FEATURES
 
     o	PCRE has been updated to version 6.4.
 
-    o	getNativeSymbolInfo() is vectorized for the name argument.  It
+    o	getNativeSymbolInfo() is vectorized for the 'name' argument.  It
 	returns a named list of NativeSymbolInfo objects, but is
-	backward compatabile by default when called with a character
+	backward compatible by default when called with a character
 	vector of length 1, returning the NativeSymbolInfo object.
 
     o	The method $.DLLInfo resolves the specified symbol in the DLL,
@@ -184,11 +184,11 @@ NEW FEATURES
 
     o	The useDynLib() directive in the NAMESPACE file now accepts the
 	names of the native/foreign symbols that are to be resolved in
-	the DLL for use in .C/.Call/.Fortran/.Externa calls.  These can
-	be used as regular R variables instead of the (routine name,
-	PACKAGE) pairs currently recommended.  Alternative names can
-	be given for the R variables mapping to these symbols.  The
-	native routine registration information can also be used
+	the DLL for use in .C/.Call/.Fortran/.External calls.  These
+	can be used as regular R variables instead of the (routine
+	name, PACKAGE) pairs currently recommended.  Alternative names
+	can be given for the R variables mapping to these symbols.
+	The native routine registration information can also be used
 	directly via useDynLib(name, .registration = TRUE). See the
 	Writing R Extensions manual for more details.
 
@@ -217,7 +217,7 @@ DEPRECATED & DEFUNCT
 
     o	Argument 'col' of bxp() is now formally deprecated.
 
-    o	The 'debian' subdirectory was removed from the sources.
+    o	The 'debian' subdirectory has been removed from the sources.
 
     o	The 'vfont' argument of axis() and mtext() has been removed:
 	use par(family=) instead.
@@ -305,7 +305,8 @@ C-LEVEL FACILITIES
 	<R_ext/BLAS.h> has been corrected to add the missing
 	double-precision BLAS functions drotmg and drotm, and to
 	exclude lsame (which is a Lapack auxiliary function and is now
-	declared in <R_ext/Lapack.h>).  It also includes the
+	declared in <R_ext/Lapack.h>).  It also includes the double
+	complex routines added for this release of R.
 
     o	<R_ext/BLAS.h> and <R_ext/Lapack.h> now declare all the entry
 	points as 'extern'.
