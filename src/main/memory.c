@@ -2078,7 +2078,7 @@ static void gc_end_timing(void)
 #endif /* _R_HAVE_TIMING_ */
 }
 
-#define MAX(a,b) (a) < (b) ? (b) : (a)
+#define R_MAX(a,b) (a) < (b) ? (b) : (a)
 
 static void R_gc_internal(R_size_t size_needed)
 {
@@ -2090,8 +2090,8 @@ static void R_gc_internal(R_size_t size_needed)
 
     gc_count++;
 
-    R_N_maxused = MAX(R_N_maxused, R_NodesInUse);
-    R_V_maxused = MAX(R_V_maxused, R_VSize - VHEAP_FREE());
+    R_N_maxused = R_MAX(R_N_maxused, R_NodesInUse);
+    R_V_maxused = R_MAX(R_V_maxused, R_VSize - VHEAP_FREE());
 
     BEGIN_SUSPEND_INTERRUPTS {
       gc_start_timing();
