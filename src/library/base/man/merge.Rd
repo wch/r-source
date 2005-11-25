@@ -2,6 +2,7 @@
 \alias{merge}
 \alias{merge.default}
 \alias{merge.data.frame}
+\concept{join}
 \title{Merge Two Data Frames}
 \description{
   Merge two data frames by common columns or row names, or do other
