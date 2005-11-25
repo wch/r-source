@@ -306,7 +306,8 @@ C-LEVEL FACILITIES
 	double-precision BLAS functions drotmg and drotm, and to
 	exclude lsame (which is a Lapack auxiliary function and is now
 	declared in <R_ext/Lapack.h>).  It also includes the double
-	complex routines added for this release of R.
+	complex routines added for this release of R provided Fortran
+	doublecomplex is usuable on the platform.
 
     o	<R_ext/BLAS.h> and <R_ext/Lapack.h> now declare all the entry
 	points as 'extern'.
