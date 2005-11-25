@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-11-20
+@set FAQ_DATE @value{FAQ_YEAR}-11-25
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1864,6 +1864,8 @@ Functions for computing the NPMLE for censored and truncated data.
 @item JLLprod
 Nonparametric estimation of homothetic and generalized homothetic
 production functions.
+@item JointGLM
+Joint modeling of mean and dispersion through two interlinked GLM's.
 @item KMsurv
 Data sets and functions for ``Survival Analysis, Techniques for Censored
 and Truncated Data'' by Klein and Moeschberger, 1997, Springer.
