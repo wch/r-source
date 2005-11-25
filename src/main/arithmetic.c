@@ -24,6 +24,13 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_GLIBC2
+/* for definition of "struct exception" etc in math.h */
+# define _SVID_SOURCE
+# include <math.h>
+# undef _SVID_SOURCE
+#endif
+
 #ifdef __OpenBSD__
 /* for definition of "struct exception" in math.h */
 # define __LIBM_PRIVATE
@@ -266,11 +273,11 @@ double R_pow_di(double x, int n)
 /* General Base Logarithms */
 
 /* it seems some systems have these functions but not their declarations */
-#ifndef HAVE_DECL_LOG2
+#if defined(HAVE_DECL_LOG2) && !HAVE_DECL_LOG2
 extern double log2(double x);
 #endif
 
-#ifndef HAVE_DECL_LOG10
+#if defined(HAVE_DECL_LOG10) && !HAVE_DECL_LOG10
 extern double log10(double x);
 #endif
 
