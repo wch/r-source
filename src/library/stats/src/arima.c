@@ -489,10 +489,6 @@ SEXP ARIMA_transPars(SEXP sin, SEXP sarma, SEXP strans)
 }
 
 
-#ifdef WIN32
-extern double atanh(double);
-#endif
-
 static void invpartrans(int p, double *phi, double *new)
 {
     int j, k;
