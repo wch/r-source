@@ -227,23 +227,7 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
     return val;
 }
 
-void spline_init(char **path)
-{
-#ifdef ENABLE_NLS
-    char localedir[PATH_MAX];
-
-    strcpy(localedir, path[0]);
-    strcat(localedir, "/po");
-    bindtextdomain("splines", localedir);
-#endif   
-}
-
 #include <R_ext/Rdynload.h>
-
-static const R_CMethodDef CEntries[]  = {
-    {"spline_init", (DL_FUNC) &spline_init, 1},
-    {NULL, NULL, 0}
-};
 
 const static R_CallMethodDef R_CallDef[] = {
    {"spline_basis", (DL_FUNC)&spline_basis, 4},
@@ -255,6 +239,6 @@ const static R_CallMethodDef R_CallDef[] = {
 void
 R_init_splines(DllInfo *dll)
 {
-    R_registerRoutines(dll, CEntries, R_CallDef, NULL, NULL);
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }
