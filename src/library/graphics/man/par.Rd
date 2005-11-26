@@ -148,9 +148,10 @@ par(\dots, no.readonly = FALSE)
   Use \code{par(no.readonly = TRUE)} for the full list of parameters
   that can be restored.
 
-  When just one parameter is queried, the value is a character string.
-  When two or more parameters are queried, the result is a list of
-  character strings, with the list names giving the parameters.
+  When just one parameter is queried, the value of that parameter
+  is returned as (atomic) vector.  When two or more parameters are
+  queried, their values are returned in a list, with the list names
+  giving the parameters.
 
   Note the inconsistency: setting one parameter returns a list, but
   querying one parameter returns a vector.
@@ -296,10 +297,10 @@ par(\dots, no.readonly = FALSE)
       This can be specified as an integer or string:
       0 and \code{"round"} mean rounded line joins;
       1 and \code{"mitre"} mean mitred line joins;
-      2 and \code{"bevel"} mean bevelled line joins.}  
+      2 and \code{"bevel"} mean bevelled line joins.}
     \item{\code{lmitre}}{The line mitre limit.
       This controls when mitred line joins are automatically
-      converted into bevelled line joins.  The 
+      converted into bevelled line joins.  The
       value must be larger than 1 and the default is 10.  Not all
       devices will honour this setting.
     }
