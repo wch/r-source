@@ -21,6 +21,7 @@
 
 #include <R.h>
 #include "tools.h"
+#define ROL_UNUSED
 #include "md5.h"
 
 SEXP Rmd5(SEXP files)

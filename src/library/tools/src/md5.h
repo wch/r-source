@@ -143,6 +143,7 @@ extern int md5_stream __P ((FILE *stream, void *resblock));
    digest.  */
 extern void *md5_buffer __P ((const char *buffer, size_t len, void *resblock));
 
+#ifndef ROL_UNUSED
 /* The following is from gnupg-1.0.2's cipher/bithelp.h.  */
 /* Rotate a 32 bit integer by n bytes */
 #if defined __GNUC__ && defined __i386__
@@ -156,6 +157,7 @@ rol(md5_uint32 x, int n)
 }
 #else
 # define rol(x,n) ( ((x) << (n)) | ((x) >> (32-(n))) )
+#endif
 #endif
 
 #endif /* R_MD5_H */
