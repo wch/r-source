@@ -171,7 +171,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    R_ShowMessage(_("WARNING: no value given for --encoding given\n"));
 		} else {
 		    strncpy(R_StdinEnc, p, 30);
-		    R_StdinEnc[31] = '\0';
+		    R_StdinEnc[30] = '\0';
 		    break;
 		}
 	    }

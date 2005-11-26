@@ -168,8 +168,9 @@ double pythag(double a, double b)
 	r = tmp * tmp;
 	for(;;) {
 	    t = 4.0 + r;
-	    if (t == 4.0)
-		break;
+	    /* This was a test of 4.0 + r == 4.0, but optimizing
+		compilers nowadays infinite loop on that. */
+	    if(fabs(r) < 2*DBL_EPSILON) break;
 	    s = r / t;
 	    u = 1. + 2. * s;
 	    p *= u ;

@@ -1690,7 +1690,7 @@ static SEXP getOneVal(SEXP vec, int i)
 SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, env, x, mode, ifnotfound, ifnfnd;
-    SEXPTYPE gmode;
+    SEXPTYPE gmode; /* is unsigned int */
     int ginherits = 0, nvals, nmode, nifnfnd, i;
 
     checkArity(op, args);
@@ -1703,7 +1703,7 @@ SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* It must be present and a string */
     if (!isString(x) )
       errorcall(call, _("invalid first argument"));
-    for(i=0; i<nvals; i++) 
+    for(i = 0; i < nvals; i++) 
       if( isNull(STRING_ELT(x, i)) || !CHAR(STRING_ELT(x, 0))[0] )
 	errorcall(call, _("invalid name in position %d"), i+1);
 
@@ -1739,20 +1739,19 @@ SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* now for each element of x, we look for it, using the inherits,
        etc */
 
-    for(i=0; i<nvals; i++) {
+    for(i = 0; i < nvals; i++) {
       if (isString(mode)) {
-	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )),"function"))
+	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )), "function"))
 	  gmode = FUNSXP;
 	else
 	  gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )));
-      } 
-      else {
+      } else {
 	errorcall(call, _("invalid '%s' argument"), "mode");
-	gmode = FUNSXP;/* -Wall */
+	gmode = FUNSXP; /* -Wall */
       }
 
       /* is the mode provided one of the real modes */
-      if( gmode < 0 ) 
+      if( gmode == (SEXPTYPE) (-1)) 
 	errorcall(call, _("invalid '%s' argument"), "mode");
 
 

@@ -1560,7 +1560,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (INTEGER(lty)[0] != NA_INTEGER)
 	Rf_gpptr(dd)->lty = INTEGER(lty)[0];
-    if (R_FINITE(thislwd = REAL(lwd)[0]))
+    if (R_FINITE( (thislwd = REAL(lwd)[0]) ))
 	Rf_gpptr(dd)->lwd = thislwd; /* but do recycle for "p" etc */
 
     GMode(1, dd);
@@ -1708,13 +1708,13 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
 	    if (R_FINITE(xx) && R_FINITE(yy)) {
-		if (R_FINITE(thiscex = REAL(cex)[i % ncex])
+		if (R_FINITE( (thiscex = REAL(cex)[i % ncex]) )
 		    && (thispch = INTEGER(pch)[i % npch]) != NA_INTEGER
 		    && !R_TRANSPARENT(thiscol = INTEGER(col)[i % ncol]))
 		{
 		    Rf_gpptr(dd)->cex = thiscex * Rf_gpptr(dd)->cexbase;
 		    Rf_gpptr(dd)->col = thiscol;
-		    if(nlwd > 1 && R_FINITE(thislwd = REAL(lwd)[i % nlwd]))
+		    if(nlwd > 1 && R_FINITE((thislwd = REAL(lwd)[i % nlwd])))
 			Rf_gpptr(dd)->lwd = thislwd;
 		    Rf_gpptr(dd)->bg = INTEGER(bg)[i % nbg];
 		    GSymbol(xx, yy, DEVICE, thispch, dd);
@@ -3404,7 +3404,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 									\
     if (isNull(CAR(args)))						\
 	cex = Rf_gpptr(dd)->cex;					\
-    else if (!R_FINITE(cex = asReal(CAR(args))) || cex <= 0.0)		\
+    else if (!R_FINITE((cex = asReal(CAR(args)))) || cex <= 0.0)       	\
 	errorcall(call, _("invalid '%s' value"), "cex");	       	\
 									\
     n = LENGTH(str);							\

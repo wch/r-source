@@ -1032,7 +1032,7 @@ static size_t gzfile_write(const void *ptr, size_t size, size_t nitems,
 			   Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
-    return gzwrite(fp, (const voidp)ptr, size*nitems)/size;
+    return gzwrite(fp, (voidp)ptr, size*nitems)/size;
 }
 
 static Rconnection newgzfile(char *description, char *mode, int compress)
@@ -1213,7 +1213,7 @@ static size_t bzfile_write(const void *ptr, size_t size, size_t nitems,
     BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
     int bzerror;
 
-    BZ2_bzWrite(&bzerror, bfp, (const voidp)ptr, size*nitems);
+    BZ2_bzWrite(&bzerror, bfp, (voidp)ptr, size*nitems);
     if(bzerror != BZ_OK) return 0;
     else return nitems;
 }
