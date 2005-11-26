@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2003	    The R Development Core Team.
+ *  Copyright (C) 1998--2005	    The R Development Core Team.
  *  Copyright (C) 2003-4       	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -47,7 +47,9 @@
 
 #ifdef HAVE_MATHERR
 
-/* Override the SVID matherr function */
+/* Override the SVID matherr function:
+   the main difference here is not to print warnings.
+ */
 
 int matherr(struct exception *exc)
 {
@@ -62,6 +64,11 @@ int matherr(struct exception *exc)
     case UNDERFLOW:
 	exc->retval = 0.0;
 	break;
+	/* 
+	   There are cases TLOSS and PLOSS which are ignored here.
+	   According to the Solaris man page, there are for
+	   trigonometric algorithms and not needed for good ones.
+	 */
     }
     return 1;
 }
