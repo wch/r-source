@@ -614,6 +614,7 @@ int ZEXPORT gzwrite (file, buf, len)
 }
 
 
+#ifdef UNUSED
 /* ===========================================================================
      Converts, formats, and writes the args to the compressed file under
    control of the format string, as in fprintf. gzprintf returns the number of
@@ -692,6 +693,7 @@ int ZEXPORTVA gzprintf (file, format, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,
     return gzwrite(file, buf, len);
 }
 #endif
+#endif /* UNUSED */
 
 /* ===========================================================================
       Writes c, converted to an unsigned char, into the compressed file.
