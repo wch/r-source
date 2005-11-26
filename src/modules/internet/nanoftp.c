@@ -32,6 +32,10 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_GLIBC2
+# define _BSD_SOURCE /* for snprintf in stdio.h */
+#endif
+
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) gettext (String)
@@ -91,8 +95,13 @@ extern void R_ProcessEvents(void);
 
 
 #if defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
+#undef strdup
 extern char *strdup(const char *s1);
 #endif
+#if defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
+extern int snprintf (char *s, size_t n, const char *format, ...);
+#endif
+
 
 #define xmlFree free
 #define xmlMalloc malloc
