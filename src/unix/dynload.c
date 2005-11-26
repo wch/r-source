@@ -30,12 +30,12 @@
 #include <config.h>
 #endif
 
+#include <Defn.h>
+#include <Rdynpriv.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-
-#include <Defn.h>
-#include <Rdynpriv.h>
 
 #ifdef __APPLE_CC__
 /* # ifdef HAVE_DL_H */

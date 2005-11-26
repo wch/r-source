@@ -17,10 +17,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+/* do this first to get the right options for math.h */
+#include <R_ext/Arith.h>
+
 #include <R.h>
 #include "ts.h"
 
-#include <math.h>
 
 #ifndef max
 #define max(a,b) ((a < b)?(b):(a))

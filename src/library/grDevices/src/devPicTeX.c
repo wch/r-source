@@ -23,12 +23,13 @@
 #include <config.h>
 #endif
 
+#include <Defn.h>
+
 #ifdef SUPPORT_MBCS
 # include <R_ext/rlocale.h>
 # include <wchar.h>
 #endif /* SUPPORT_MBCS */
 
-#include "Defn.h"
 #include "Graphics.h"
 #include "Fileio.h"
 #include <Rdevices.h>

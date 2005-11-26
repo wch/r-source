@@ -29,6 +29,8 @@
 # include <config.h>
 #endif
 
+#include <Defn.h>
+
 /* On most systems libintl.h includes this, but not Fedora Core 1 */
 #ifdef HAVE_LOCALE_H
 # include <locale.h>
@@ -47,7 +49,6 @@
 # include <unistd.h>		/* isatty() */
 #endif
 
-#include "Defn.h"
 #include "Fileio.h"
 #include <Rdevices.h>		/* KillAllDevices() [nothing else?] */
 

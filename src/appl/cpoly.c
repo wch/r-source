@@ -57,8 +57,7 @@
 #include <config.h>
 #endif
 
-
-#include <float.h>
+#include <float.h> /* for FLT_RADIX */
 
 #include <Rmath.h> /* for R_pow_di */
 #include <R_ext/Arith.h>

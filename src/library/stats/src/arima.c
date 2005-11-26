@@ -17,6 +17,17 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#if defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
+extern double atanh(double x);
+#endif
+
+/* do this first to get the right options for math.h */
+#include <R_ext/Arith.h>
+
 #include <R.h>
 #include "ts.h"
 

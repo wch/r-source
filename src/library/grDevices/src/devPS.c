@@ -24,6 +24,8 @@
 #include <config.h>
 #endif
 
+#include <Defn.h>
+
 #include <stdio.h>
 #include <ctype.h>
 #include <limits.h> /* required for MB_LEN_MAX */
@@ -38,7 +40,6 @@ static void mbcsToSbcs(char *in, char *out, char *encoding);
 #include <R_ext/Riconv.h>
 #endif
 
-#include "Defn.h"
 #include <Rmath.h>		/* for rround */
 #include "Graphics.h"
 #include <R_ext/Error.h>

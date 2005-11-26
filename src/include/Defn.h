@@ -21,6 +21,17 @@
 #ifndef DEFN_H_
 #define DEFN_H_
 
+#if defined(HAVE_GLIBC2)
+/* The first three are the default, according to features.h */
+# define _SVID_SOURCE 1
+# define _BSD_SOURCE 1
+# define _POSIX_SOURCE 1
+/* add latest POSIX 1003.1 and C99 support */
+# define _POSIX_C_SOURCE 200112L
+# define _ISOC99_SOURCE 1
+#endif
+
+
 #define COUNTING
 
 #define BYTECODE

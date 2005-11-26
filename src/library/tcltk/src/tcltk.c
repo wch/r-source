@@ -1,5 +1,9 @@
 
 #include "tcltk.h" /* declarations of our `public' interface */
+#ifndef Win32
+#include <R_ext/eventloop.h>
+#endif
+
 #ifndef TCL80
 # define SUPPORT_MBCS 1
 /* Includes Nakama's internationalization patches */

@@ -36,6 +36,7 @@
 #include <config.h>
 #endif
 
+#include <Defn.h>
 #include <stdlib.h>
 
 #ifndef _Xconst
@@ -48,9 +49,6 @@
 #include <X11/cursorfont.h>
 #include <X11/Intrinsic.h>
 
-
-
-#include "Defn.h"
 #include "Print.h"
 
 #ifdef SUPPORT_MBCS

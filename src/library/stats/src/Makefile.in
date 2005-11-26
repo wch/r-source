@@ -30,6 +30,9 @@ SOURCES_F = bsplvd.f bvalue.f bvalus.f loessf.f ppr.f qsbart.f sbart.f \
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 
+# need config.h
+PKG_CPPFLAGS =-I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H
+
 SHLIB = $(pkg)@SHLIB_EXT@
 
 ## <FIXME>

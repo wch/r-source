@@ -22,6 +22,18 @@
 #ifndef MATHLIB_PRIVATE_H
 #define MATHLIB_PRIVATE_H
 
+
+#ifndef MATHLIB_STANDALONE
+/* Mathlib in R */
+# ifdef HAVE_CONFIG_H
+#  include <config.h>
+# endif
+# if defined(HAVE_GLIBC2) && !defined(_BSD_SOURCE)
+/* ensure that finite and isnan are declared */
+#  define _BSD_SOURCE 1
+# endif
+#endif
+
 #include <Rconfig.h>
 #define MATHLIB_PRIVATE
 #include <Rmath.h>

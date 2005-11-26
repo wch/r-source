@@ -21,6 +21,10 @@
 #ifndef R_ARITH_H_
 #define R_ARITH_H_
 
+#if defined(HAVE_GLIBC2) && !defined(_BSD_SOURCE)
+/* ensure that finite and isnan are declared */
+# define _BSD_SOURCE 1
+#endif
 #include <math.h>
 
 #include <R_ext/libextern.h>
