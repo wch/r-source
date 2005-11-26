@@ -30,6 +30,8 @@
 # include <config.h>
 #endif
 
+#include <Defn.h>
+
 #ifdef HAVE_RINT
 #define R_rint(x) rint(x)
 #else
@@ -45,7 +47,6 @@
 #include <X11/Intrinsic.h>	/*->	Xlib.h	Xutil.h Xresource.h .. */
 
 
-#include "Defn.h"
 #include "Graphics.h"
 #include "Fileio.h"		/* R_fopen */
 #include "rotated.h"		/* 'Public' routines from here */

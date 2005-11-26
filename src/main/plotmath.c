@@ -31,6 +31,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#include <Defn.h>
 
 #include <ctype.h>
 #ifdef SUPPORT_MBCS
@@ -40,7 +41,6 @@
 #endif
 
 
-#include <Defn.h>
 #include <Rmath.h>
 #include <Graphics.h>
 

@@ -29,10 +29,11 @@
 # include <config.h>
 #endif
 
+#include <Defn.h>
+
 #include <string.h>
 #include <stdlib.h>
 
-#include <Defn.h>
 #include <Rmath.h>
 
 #include <Graphics.h>
