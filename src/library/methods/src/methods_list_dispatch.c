@@ -2,12 +2,21 @@
    Does byte-level handling in primitive_case, but only of ASCII chars
 */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <R.h>
 #include <Rdefines.h>
 #include <Rinternals.h>
 
 #include "RSMethods.h"
 #include "methods.h"
+
+#if defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
+extern int snprintf (char *s, size_t n, const char *format, ...);
+#endif
+
 
 /* from Defn.h */
 #define type2str		Rf_type2str
