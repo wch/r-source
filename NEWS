@@ -515,6 +515,9 @@ BUG FIXES
     o	Conversion of .Rd files did not correctly match braces
 	enclosing a whole argument, e.g. \eqn{{\bf a}}{a}.
 
+    o	The C function pythag (used if hypot was not available) would
+	infinite-loop on systems with effective optimizing compilers.
+
 
 
 		CHANGES IN R VERSION 2.2.0
