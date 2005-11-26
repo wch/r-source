@@ -44,6 +44,11 @@ has been withdrawn.
 winMenuAdd() now has no limits on the number of menus or items, and names
 are now limited to 500 (not 50) bytes.
 
+Added workaround to Windows graphics devices (windows(),
+win.metafile(), etc.) to allow callers to choose not to restore the
+focus to the console.  The interface to this will likely change in a
+future release.
+
 
 
 R 2.2.0 patched

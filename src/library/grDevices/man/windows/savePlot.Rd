@@ -5,7 +5,8 @@
 savePlot(filename = "Rplot",
          type = c("wmf", "emf", "png", "jpeg", "jpg", "bmp",
                   "ps", "eps", "pdf"),
-         device = dev.cur())
+         device = dev.cur(),
+         restoreConsole = TRUE)
 }
 \arguments{
   \item{filename}{The filename under which to save the plot, without
@@ -14,6 +15,7 @@ savePlot(filename = "Rplot",
     (Windows bitmap format), PostScript or PDF.}
   \item{device}{A device number of a \code{windows} device, by default
     the current device.}
+  \item{restoreConsole}{See the Details section of \code{\link{windows}}.}
 }
 \description{
   Saves the current plot on a \code{windows} device to a file.

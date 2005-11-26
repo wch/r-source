@@ -8,11 +8,11 @@
 }
 \usage{
 bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480,
-    pointsize = 12, bg = "white", res = NA)
+    pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
 jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480,
-     pointsize = 12, quality = 75, bg = "white", res = NA)
+     pointsize = 12, quality = 75, bg = "white", res = NA, restoreConsole = TRUE)
 png(filename = "Rplot\%03d.png", width = 480, height = 480,
-    pointsize = 12, bg = "white", res = NA)
+    pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
 }
 \arguments{
   \item{filename}{the name of the output file, up to 511 characters.  The
@@ -32,6 +32,7 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
     degradation of the image.}
   \item{res}{The nominal resolution in dpi which will be recorded in the
     bitmap file, if a positive integer.}
+  \item{restoreConsole}{See the Details section of \code{\link{windows}}}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
