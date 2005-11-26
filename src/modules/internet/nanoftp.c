@@ -32,10 +32,6 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_GLIBC2
-# define _BSD_SOURCE /* for snprintf in stdio.h */
-#endif
-
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) gettext (String)
