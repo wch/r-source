@@ -320,7 +320,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		break;
 	    }
 	    UNPROTECT(1); /* tmp */
-	    pbuf[115] = '\0';
+	    pbuf[114] = '\0';
 	    SET_STRING_ELT(t, i, mkChar(pbuf));
 	}
 	if (LENGTH(dims) == 2) {

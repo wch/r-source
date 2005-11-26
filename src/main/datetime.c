@@ -40,23 +40,19 @@
 # include <config.h>
 #endif
 
-#if defined(HAVE_GLIBC2) && !defined(__USE_BSD)
-# define __USE_BSD		/* so that we get unsetenv() */
-# include <stdlib.h>
-# undef __USE_BSD		/* used later */
-#else
-# include <stdlib.h>
-#endif
+#include <Defn.h>  /* This sets suitable glibc features */
 
-#if defined(HAVE_WORKING_STRPTIME) && defined(HAVE_GLIBC2) && !defined(__USE_XOPEN)
-# define __USE_XOPEN		/* so that we get strptime() */
+
+/* _XOPEN_SOURCE is not normally defined */
+#if defined(HAVE_WORKING_STRPTIME) && defined(HAVE_GLIBC2) && !defined(_XOPEN_SOURCE)
+# define _XOPEN_SOURCE		/* so that we get strptime() */
 # include <time.h>
-# undef __USE_XOPEN		/* just to make sure */
+# undef _XOPEN_SOURCE		/* just to make sure */
 #else
 # include <time.h>
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
 
 /* The glibc in RH8.0 is broken and assumes that dates before 1970-01-01
    do not exist. So does Windows, but at least there we do not need a

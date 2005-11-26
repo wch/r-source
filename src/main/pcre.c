@@ -29,9 +29,8 @@
 # include <config.h>
 #endif
 
-#include <sys/types.h>
-
-#include "Defn.h"
+#include <Defn.h>
+#include <sys/types.h>		/* probably not needed */
 #include <Rmath.h>		/* imax2 */
 
 #ifdef HAVE_PCRE_PCRE_H

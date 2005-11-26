@@ -85,15 +85,15 @@
 #include <config.h>
 #endif
 
+#include <Defn.h>
+
 #include <string.h>
 #include <stdlib.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <Defn.h>
 #include <Rmath.h>
-
 #include <Rdynpriv.h>
 
 #ifdef Unix

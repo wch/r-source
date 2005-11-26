@@ -24,13 +24,6 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_GLIBC2
-/* for definition of "struct exception" etc in math.h */
-# define _SVID_SOURCE
-# include <math.h>
-# undef _SVID_SOURCE
-#endif
-
 #ifdef __OpenBSD__
 /* for definition of "struct exception" in math.h */
 # define __LIBM_PRIVATE
