@@ -5,6 +5,10 @@
  * Uses reservoir sampling to break ties at random.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <R_ext/Arith.h>	/* NA handling */
 #include <Rmath.h>		/* fmax2 */
 #include <R_ext/Random.h>	/* ..RNGstate */
