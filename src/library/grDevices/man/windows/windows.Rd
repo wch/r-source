@@ -155,11 +155,13 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "", restoreConsole = 
   multiple plots is to use a parametrized \code{filename} as in the example.
   
   The \code{restoreConsole} argument is a temporary fix for a problem
-  in the current implementation of \code{win.metafile}, and is likely
-  to be removed in an upcoming release.  If set to \code{FALSE}, the 
-  console will not be repainted and will not receive the focus after the 
-  \code{win.metafile} call.  This should only be used in cases where
-  some other interface (e.g. a menu-driven one) is handling user input.
+  in the current implementation of several Windows graphics devices,
+  and is likely to be removed in an upcoming release.  If set to
+  \code{FALSE}, the console will not be repainted and will not receive
+  the focus after the new device is opened.  This should only be used
+  in cases where some other interface (e.g. a menu-driven one) is
+  handling user input, as it may leave the console with an incomplete
+  display.  
 }
 
 \value{

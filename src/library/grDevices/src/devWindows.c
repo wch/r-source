@@ -55,7 +55,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 			double height, double pointsize,
 			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
-			SEXP psenv);
+			SEXP psenv, Rboolean restoreConsole);
 
 
 /* a colour used to represent the background on png if transparent
@@ -2709,6 +2709,7 @@ SEXP savePlot(SEXP args)
     char *fn, *tp, display[550];
     int device;
     NewDevDesc* dd;
+    Rboolean restoreConsole;
 
     args = CDR(args); /* skip entry point name */
     device = asInteger(CAR(args));
