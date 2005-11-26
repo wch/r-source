@@ -109,6 +109,7 @@ extern void R_FlushConsole(void);
 #define BAD_CAST (unsigned char *)
 
 #if defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
+#undef strdup
 extern char *strdup(const char *s1);
 #endif
 
