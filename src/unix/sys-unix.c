@@ -32,6 +32,15 @@
 # include <config.h>
 #endif
 
+#ifdef HAVE_GLIBC2
+/* avoid setting CLK_TCK = 60 */
+# include <features.h>
+# define __USE_BSD 1
+# define __USE_POSIX 1
+# define __USE_SVID 1
+# undef _POSIX_C_SOURCE
+#endif
+
 #include "Defn.h"
 #include "Fileio.h"
 #include "Runix.h"
@@ -166,6 +175,7 @@ static struct tms timeinfo;
 
 void R_setStartTime(void)
 {
+    /* printf("CLK_TCK = %d\n", CLK_TCK); */
     StartTime = times(&timeinfo);
 }
 
