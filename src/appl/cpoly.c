@@ -57,10 +57,11 @@
 #include <config.h>
 #endif
 
+#include <R_ext/Arith.h> /* for declaration of hypot */
+
 #include <float.h> /* for FLT_RADIX */
 
 #include <Rmath.h> /* for R_pow_di */
-#include <R_ext/Arith.h>
 #include <R_ext/Applic.h>
 
 
