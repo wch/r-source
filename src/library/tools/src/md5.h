@@ -18,8 +18,8 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-#ifndef _MD5_H
-#define _MD5_H 1
+#ifndef R_MD5_H
+#define R_MD5_H 1
 
 #include <stdio.h>
 
@@ -143,10 +143,11 @@ extern int md5_stream __P ((FILE *stream, void *resblock));
    digest.  */
 extern void *md5_buffer __P ((const char *buffer, size_t len, void *resblock));
 
+#idef UNUSED
 /* The following is from gnupg-1.0.2's cipher/bithelp.h.  */
 /* Rotate a 32 bit integer by n bytes */
 #if defined __GNUC__ && defined __i386__
-static md5_uint32
+static inline md5_uint32
 rol(md5_uint32 x, int n)
 {
   __asm__("roll %%cl,%0"
@@ -157,5 +158,6 @@ rol(md5_uint32 x, int n)
 #else
 # define rol(x,n) ( ((x) << (n)) | ((x) >> (32-(n))) )
 #endif
-
 #endif
+
+#endif /* R_MD5_H */
