@@ -1685,7 +1685,7 @@ installed.
 
 You need a means of compiling C and FORTRAN 77 (see @ref{Using
 FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
-compiler should be IEC60059\footnote{also known as @acronym{IEEE} 754},
+compiler should be IEC60059@footnote{also known as @acronym{IEEE} 754},
 POSIX 1003.1 and C99-compliant if at all possible.  @R{} tries to choose
 suitable flags for the C compilers it knows about, but you may have to
 set @code{CFLAGS} suitably.  For recent versions of @code{gcc} with
