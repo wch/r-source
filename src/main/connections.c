@@ -181,30 +181,25 @@ static int null_vfprintf(Rconnection con, const char *format, va_list ap)
     return 0;			/* -Wall */
 }
 
-#define BUFSIZE 1000
+/* On some systems the first call to vsnprintf can change ap.
+   The C99 solution is to use va_copy, which we will do for 2.3.0.
+*/
+#define BUFSIZE 100000
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 {
-    char buf[BUFSIZE], *b = buf, *vmax = vmaxget();
-    int res, usedRalloc = FALSE;
+    char buf[BUFSIZE];
+    int res;
 
     res = vsnprintf(buf, BUFSIZE, format, ap);
-    if(res >= BUFSIZE) { /* res is the desired output length */
-	usedRalloc = TRUE;
-	b = R_alloc(res + 1, sizeof(char));
-	vsprintf(b, format, ap);
-    } else if(res < 0) { /* just a failure indication -- e.g. Windows */
-	usedRalloc = TRUE;
-	b = R_alloc(100*BUFSIZE, sizeof(char));
-	res = vsnprintf(b, 100*BUFSIZE, format, ap);
-	if (res < 0) {
-	    *(b + 100*BUFSIZE - 1) = '\0';
+    if(res >= BUFSIZE || res < 0) { 
+	/* res is the desired output length or just a failure indication */
+	    buf[BUFSIZE - 1] = '\0';
 	    warning(_("printing of extremely long output is truncated"));
-	    res = 100*BUFSIZE;
-	}
+	    res = BUFSIZE;
     }
 #ifdef HAVE_ICONV
     if(con->outconv) { /* translate the buffer */
-	char outbuf[BUFSIZE+1], *ib = b, *ob;
+	char outbuf[BUFSIZE+1], *ib = buf, *ob;
 	size_t inb = res, onb, ires;
 	Rboolean again = FALSE;
 	int ninit = strlen(con->init_out);
@@ -225,8 +220,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	} while(again);
     } else
 #endif
-	con->write(b, 1, res, con);
-    if(usedRalloc) vmaxset(vmax);
+	con->write(buf, 1, res, con);
     return res;
 }
 
