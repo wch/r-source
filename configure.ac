@@ -1424,6 +1424,7 @@ AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 AC_CHECK_DECLS([log2, log10], , , [#include <math.h>])
 ## glibc has this conditionally defined
 AC_CHECK_DECLS([fdopen], , , [#include <stdio.h>])
+AC_CHECK_DECLS([va_copy, __va_copy], , , [#include <stdarg.h>])
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.

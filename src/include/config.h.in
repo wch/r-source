@@ -200,6 +200,10 @@
    don't. */
 #undef HAVE_DECL_STRNCASECMP
 
+/* Define to 1 if you have the declaration of `va_copy', and to 0 if you
+   don't. */
+#undef HAVE_DECL_VA_COPY
+
 /* Define to 1 if you have the declaration of `vsnprintf', and to 0 if you
    don't. */
 #undef HAVE_DECL_VSNPRINTF
@@ -211,6 +215,10 @@
 /* Define to 1 if you have the declaration of `_snwprintf', and to 0 if you
    don't. */
 #undef HAVE_DECL__SNWPRINTF
+
+/* Define to 1 if you have the declaration of `__va_copy', and to 0 if you
+   don't. */
+#undef HAVE_DECL___VA_COPY
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */

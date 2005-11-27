@@ -181,27 +181,58 @@ static int null_vfprintf(Rconnection con, const char *format, va_list ap)
     return 0;			/* -Wall */
 }
 
-#define BUFSIZE 1000
+/* va_copy is C99, but a draft standard had __va_copy.  Glibc has
+   __va_copy declared uncondiitonally */
+
+#if HAVE_DECL_VA_COPY
+# define HAVE_VA_COPY 1
+#endif
+
+#if !HAVE_DECL_VA_COPY && HAVE_DECL___VA_COPY
+# define va_copy __va_copy
+# define HAVE_VA_COPY 1
+#endif
+
+#ifdef HAVE_VA_COPY
+# define BUFSIZE 10000
+#else
+# define BUFSIZE 100000
+#endif
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 {
-    char buf[BUFSIZE], *b = buf, *vmax = vmaxget();
-    int res, usedRalloc = FALSE;
+    char buf[BUFSIZE], *b = buf;
+    int res;
+#ifdef HAVE_VA_COPY
+    char *vmax = vmaxget();
+    int usedRalloc = FALSE;
+    va_list aq;
 
-    res = vsnprintf(buf, BUFSIZE, format, ap);
+    va_copy(aq, ap);
+    res = vsnprintf(buf, BUFSIZE, format, aq);
+    va_end(aq);
     if(res >= BUFSIZE) { /* res is the desired output length */
 	usedRalloc = TRUE;
 	b = R_alloc(res + 1, sizeof(char));
 	vsprintf(b, format, ap);
     } else if(res < 0) { /* just a failure indication -- e.g. Windows */
 	usedRalloc = TRUE;
-	b = R_alloc(100*BUFSIZE, sizeof(char));
-	res = vsnprintf(b, 100*BUFSIZE, format, ap);
+	b = R_alloc(10*BUFSIZE, sizeof(char));
+	res = vsnprintf(b, 10*BUFSIZE, format, ap);
 	if (res < 0) {
-	    *(b + 100*BUFSIZE - 1) = '\0';
+	    b[10*BUFSIZE - 1] = '\0';
 	    warning(_("printing of extremely long output is truncated"));
-	    res = 100*BUFSIZE;
+	    res = 10*BUFSIZE;
 	}
     }
+#else
+    res = vsnprintf(buf, BUFSIZE, format, ap);
+    if(res >= BUFSIZE || res < 0) { 
+	/* res is the desired output length or just a failure indication */
+	    buf[BUFSIZE - 1] = '\0';
+	    warning(_("printing of extremely long output is truncated"));
+	    res = BUFSIZE;
+    }
+#endif
 #ifdef HAVE_ICONV
     if(con->outconv) { /* translate the buffer */
 	char outbuf[BUFSIZE+1], *ib = b, *ob;
@@ -226,7 +257,9 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
     } else
 #endif
 	con->write(b, 1, res, con);
+#ifdef HAVE_VA_COPY
     if(usedRalloc) vmaxset(vmax);
+#endif
     return res;
 }
 

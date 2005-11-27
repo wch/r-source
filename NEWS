@@ -198,6 +198,10 @@ NEW FEATURES
     o	cov.wt() is more efficient for 'cor = TRUE' and has a new 'method'
 	argument which allows 'Maximum Likelihood'.
 
+    o	On systems with va_copy and a vsnprintf which reports the size
+	of buffer required, connections such as gzfile() and bzfile()
+	can now write arbitrarily long lines, not just 100000 chars.
+
 
 DEPRECATED & DEFUNCT
 
@@ -509,7 +513,7 @@ BUG FIXES
     o	qbinom() was not accepting p = -Inf when log.p = TRUE, although
 	it is a legitimate value.
 
-    o	write.csv[2] only accepts logical constants for 'row.names', and 
+    o	write.csv[2] only accepts logical constants for 'row.names', and
 	now accepts variables.
 
     o	Conversion of .Rd files did not correctly match braces
@@ -517,6 +521,10 @@ BUG FIXES
 
     o	The C function pythag (used if hypot was not available) would
 	infinite-loop on systems with effective optimizing compilers.
+
+    o	Writing long (more than 1000 bytes) with connections that use
+	dummy_vfprintf could fail on some systems.  The limit has been
+	changed to 100000 pending a more complete fix in R 2.3.0.
 
 
 

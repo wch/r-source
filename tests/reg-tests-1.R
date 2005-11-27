@@ -3940,3 +3940,12 @@ rgamma(3, -20)
 f <- function() { function(){} }
 serialize(f(), NULL)
 ##
+
+
+## dummy_vfprintf with overlong format
+xx <- paste(rep("a", 10000), collapse="+")
+con <- gzfile("test.gz", "w")
+writeLines(xx, con)
+close(con)
+unlink("test.gz")
+## segfaulted in 2.2.0 on some x86_64 systems.
