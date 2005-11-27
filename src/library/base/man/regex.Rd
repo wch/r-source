@@ -32,7 +32,7 @@
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed if \code{extended
   = TRUE} in \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
-  \code{gsub} and \code{strsplit}.  They use the \code{glibc 2.3.3}
+  \code{gsub} and \code{strsplit}.  They use the \code{glibc 2.3.6}
   implementation of the POSIX 1003.2 standard.
 
   Regular expressions are constructed analogously to arithmetic
@@ -45,7 +45,7 @@
   a backslash.  The metacharacters are \code{. \\ | ( ) [ \{ ^ $ * + ?}.
 
   A \emph{character class} is a list of characters enclosed by \code{[}
-  and \code{]} matches any single character in that list; if the first
+  and \code{]} which matches any single character in that list; if the first
   character of the list is the caret \code{^}, then it matches any
   character \emph{not} in the list.  For example, the regular expression
   \code{[0123456789]} matches any single digit, and \code{[^abc]} matches
@@ -188,8 +188,8 @@
   \code{man pcrepattern} and \code{man pcreapi}) on your system or from
   the sources at
   \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}. If PCRE
-  support was compiled from the sources within \R, the PCRE version is 4.5
-  as described here (version \eqn{\ge}{>=} 4.0 is required even if \R is
+  support was compiled from the sources within \R, the PCRE version is 6.4
+  as described here (version \eqn{\ge}{>=} 4.0 is required if \R is
   configured to use the system's PCRE library).
 
   All the regular expressions described for extended regular expressions
