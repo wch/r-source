@@ -60,18 +60,19 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   factor objects, and the contingency table is computed from these.
 
   In the one-sided 2 by 2 cases (and where \code{or} is specified),
-  p-values are obtained directly using the hypergeometric distribution.
-  Otherwise, computations are based on a C version of the FORTRAN
-  subroutine FEXACT which implements the network developed by Mehta and
-  Patel (1986) and improved by Clarkson, Fan & Joe (1993).  The FORTRAN
-  code can be obtained from \url{http://www.netlib.org/toms/643}.  Note
-  this fails (with an error message) when the entries of the table are
-  too large.  (It transposes the table if necessary so it has no more
-  rows than columns.  One constraint is that the product of the row
-  marginals be less than \eqn{2^{31} - 1}{2^31 - 1}.)
+  p-values are obtained directly using the hypergeometric
+  distribution. Otherwise, computations are based on a C version of the
+  FORTRAN subroutine FEXACT which implements the network developed by
+  Mehta and Patel (1986) and improved by Clarkson, Fan & Joe (1993).
+  The FORTRAN code can be obtained from
+  \url{http://www.netlib.org/toms/643}.  Note this fails (with an error
+  message) when the entries of the table are too large.  (It transposes
+  the table if necessary so it has no more rows than columns.  One
+  constraint is that the product of the row marginals be less than
+  \eqn{2^{31} - 1}{2^31 - 1}.)
 
   In the 2 by 2 case, the null of conditional independence is equivalent
-  to the hypothesis that the odds ratio equals one.  Exact inference can
+  to the hypothesis that the odds ratio equals one.  \sQuote{Exact} inference can
   be based on observing that in general, given all marginal totals
   fixed, the first element of the contingency table has a non-central
   hypergeometric distribution with non-centrality parameter given by the

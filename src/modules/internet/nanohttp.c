@@ -154,7 +154,7 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
 #if defined(HAVE_STRINGS_H) && !defined(Win32)
 # include <strings.h>
 #endif
-#if defined(HAVE_DECL_STRNCASECMP) || !HAVE_DECL_STRNCASECMP
+#if defined(HAVE_DECL_STRNCASECMP) && !HAVE_DECL_STRNCASECMP
 extern int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 #define xmlStrncasecmp(a, b, n) strncasecmp((char *)a, (char *)b, n)

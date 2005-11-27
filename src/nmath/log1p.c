@@ -98,7 +98,7 @@ double log1p(double x)
 	-.33410026677731010351377066666666e-30,
 	+.63533936180236187354180266666666e-31,
     };
-    const static double xmin = -1 + sqrt(1/DBL_EPSILON);/*was sqrt(d1mach(4)); */
+    const static double xmin = -1 + sqrt(DBL_EPSILON);/*was sqrt(d1mach(4)); */
 
 #ifdef NOMORE_FOR_THREADS
     static int nlnrel = 0;
@@ -129,7 +129,7 @@ double log1p(double x)
     /* else */
     if (x < xmin) {
 	/* answer less than half precision because x too near -1 */
-	ML_ERROR(ME_PRECISION);
+	ML_ERROR(ME_PRECISION);  /* which currently does nothing */
     }
     return log(1 + x);
 }
