@@ -98,16 +98,17 @@ double log1p(double x)
 	-.33410026677731010351377066666666e-30,
 	+.63533936180236187354180266666666e-31,
     };
-    const static double xmin = -1 + sqrt(1/DBL_EPSILON);/*was sqrt(d1mach(4)); */
 
 #ifdef NOMORE_FOR_THREADS
     static int nlnrel = 0;
+    static double xmin = 0.0;
 
-    if (nlnrel == 0) {/* initialize chebychev coefficients */
+    if (xmin == 0.0) xmin = -1 + sqrt(DBL_EPSILON);/*was sqrt(d1mach(4)); */
+    if (nlnrel == 0) /* initialize chebychev coefficients */
 	nlnrel = chebyshev_init(alnrcs, 43, DBL_EPSILON/20);/*was .1*d1mach(3)*/
-    }
 #else
 # define nlnrel 22
+    const static double xmin = -0.999999985;
 /* 22: for IEEE double precision where DBL_EPSILON =  2.22044604925031e-16 */
 #endif
 
@@ -129,7 +130,7 @@ double log1p(double x)
     /* else */
     if (x < xmin) {
 	/* answer less than half precision because x too near -1 */
-	ML_ERROR(ME_PRECISION);
+	ML_ERROR(ME_PRECISION);  /* which surrently does nothing */
     }
     return log(1 + x);
 }
