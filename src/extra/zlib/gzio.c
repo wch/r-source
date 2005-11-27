@@ -13,7 +13,7 @@
 
 #include <stdio.h>
 
-#if defined(HAVE_DECL_FDOPEN) && !HAVE_DECL_FDOPEN
+#if !defined(fdopen) && defined(HAVE_DECL_FDOPEN) && !HAVE_DECL_FDOPEN
   FILE *fdopen(int fildes, const char *mode);
 #endif
 

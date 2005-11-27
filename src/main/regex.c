@@ -18,9 +18,9 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
-/* constructed from glibc 2.3.5 via
-   cat regec.c regex_internal.h regex_internal.c regcomp.c regexec.c > Rregex.c
-   and hand-editing */
+/* constructed from glibc 2.3.6/posix via
+   cat regex.c regex_internal.h regex_internal.c regcomp.c regexec.c > Rregex.c
+   pasng through protoize and hand-editing */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -5866,7 +5866,7 @@ build_charclass (unsigned char *trans, re_bitset_ptr_t sbcset,
 		 re_charset_t *mbcset, int *char_class_alloc, 
 		 const unsigned char *class_name, reg_syntax_t syntax)
 #else /* not RE_ENABLE_I18N */
-build_charclass (unsigned char *trans, re_bitset_ptr_t sbcset, 
+build_charclass (unsigned RE_TRANSLATE_TYPE trans, re_bitset_ptr_t sbcset, 
 		 const unsigned char *class_name, reg_syntax_t syntax)
 #endif /* not RE_ENABLE_I18N */
 {
@@ -5938,7 +5938,7 @@ build_charclass (unsigned char *trans, re_bitset_ptr_t sbcset,
 }
 
 static bin_tree_t *
-build_charclass_op (re_dfa_t *dfa, unsigned char *trans, 
+build_charclass_op (re_dfa_t *dfa, unsigned RE_TRANSLATE_TYPE trans, 
 		    const unsigned char *class_name, 
 		    const unsigned char *extra, int non_match, 
 		    reg_errcode_t *err)

@@ -13,7 +13,7 @@
 #include "RSMethods.h"
 #include "methods.h"
 
-#if defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
+#if !defined(snprintf) && defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
 extern int snprintf (char *s, size_t n, const char *format, ...);
 #endif
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -583,7 +583,7 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	}
 	/* translate if necessary */
 	if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
-#ifdef HAVE_DECL_ICONV
+#if HAVE_DECL_ICONV
 	    size_t res, inb = strlen((char *)buf), onb = len;
 	    char obuf[1001];
 	    char *ib = (char *)buf, *ob = obuf;

@@ -90,11 +90,10 @@ extern void R_ProcessEvents(void);
 #endif
 
 
-#if defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
-#undef strdup
+#if !defined(strdup) && defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
 extern char *strdup(const char *s1);
 #endif
-#if defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
+#if !defined(snprintf) && defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
 extern int snprintf (char *s, size_t n, const char *format, ...);
 #endif
 

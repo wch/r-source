@@ -42,8 +42,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
-#if defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
-#undef strdup
+#if i!defined(strdup) && defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
 extern char *strdup(const char *s1);
 #endif
 

@@ -21,7 +21,7 @@
 # include <config.h>
 #endif
 
-#if defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
+#if !defined(atanh) && defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
 extern double atanh(double x);
 #endif
 

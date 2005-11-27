@@ -143,26 +143,25 @@ typedef long R_long_t;
 #include <math.h>
 
 /* declare substitutions */
-#if defined(HAVE_DECL_ACOSH) && !HAVE_DECL_ACOSH
+#if !defined(acosh) && defined(HAVE_DECL_ACOSH) && !HAVE_DECL_ACOSH
 extern double acosh(double x);
 #endif
-#if defined(HAVE_DECL_ASINH) && !HAVE_DECL_ASINH
+#if !defined(asinh) && defined(HAVE_DECL_ASINH) && !HAVE_DECL_ASINH
 extern double asinh(double x);
 #endif
-#if defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
+#if !defined(atanh) && defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
 extern double atanh(double x);
 #endif
-#if defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
+#if !defined(snprintf) && defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
 extern int snprintf (char *s, size_t n, const char *format, ...);
 #endif
-#if defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
-#undef strdup
+#if !defined(strdup) && defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
 extern char *strdup(const char *s1);
 #endif
-#if defined(HAVE_DECL_STRNCASECMP) && !HAVE_DECL_STRNCASECMP
+#if !defined(strncascmp) && defined(HAVE_DECL_STRNCASECMP) && !HAVE_DECL_STRNCASECMP
 extern int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
-#if defined(HAVE_DECL_VSNPRINTF) && !HAVE_DECL_VSNPRINTF
+#if !defined(vsnprintf) && defined(HAVE_DECL_VSNPRINTF) && !HAVE_DECL_VSNPRINTF
 extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 #endif
 
