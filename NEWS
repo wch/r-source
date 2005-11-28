@@ -522,9 +522,13 @@ BUG FIXES
     o	The C function pythag (used if hypot was not available) would
 	infinite-loop on systems with effective optimizing compilers.
 
-    o	Writing long (more than 1000 bytes) with connections that use
-	dummy_vfprintf could fail on some systems.  The limit has been
-	changed to 100000 pending a more complete fix in R 2.3.0.
+    o	Writing long formats (more than 1000 bytes) with connections
+	that use dummy_vfprintf could fail on some systems.  The limit
+	has been changed to 100000 pending a more complete fix in R
+	2.3.0.
+
+    o	Making in src/nmath/standalone without making R was not
+	making Rmath.h.
 
 
 
