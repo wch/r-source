@@ -6179,7 +6179,8 @@ to access a FORTRAN common block from C
 @end table
 
 On most current platforms these are all the same, but it is unwise to
-rely on this.
+rely on this.  Note that names with underscores are not legal in FORTRAN
+77, and are not portably handled by the above macros.
 
 For example, suppose we want to call R's normal random numbers from
 FORTRAN.  We need a C wrapper along the lines of
