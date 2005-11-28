@@ -37,7 +37,7 @@
 #endif
 
 /* necessary for some (older, i.e., ~ <= 1997) Linuxen, and apparently
-   also some AIX systems.
+   also some AIX systems.  NB, included unconditionally later on.
    */
 #ifndef FD_SET
 # ifdef HAVE_SYS_TIME_H
@@ -111,6 +111,10 @@ void R_setupHistory()
 }
 
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
+/* on MacOS X it seems sys/resource.h needs sys/time.h first */
+# ifdef HAVE_SYS_TIME_H
+#  include <sys/time.h>
+# endif
 # include <sys/resource.h>
 # ifdef linux
 extern void * __libc_stack_end;
