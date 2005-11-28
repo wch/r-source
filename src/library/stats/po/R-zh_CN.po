@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-09 12:06\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -854,8 +854,14 @@ msgstr "必需在\"two.sided\", \"less\"或\"greater\"中选一个"
 msgid "'or' must be a single number between 0 and Inf"
 msgstr "'or'必需是在0和Inf之间的一个数值"
 
-msgid "p-values may be incorrect"
-msgstr "p-值可能有错"
+msgid "need 2 or more non-zero row marginals"
+msgstr ""
+
+msgid "need 2 or more non-zero column marginals"
+msgstr ""
+
+msgid "'hybrid' is ignored for a 2 x 2 table"
+msgstr ""
 
 msgid "all groups must contain data"
 msgstr "所有的组都必需包含数据"
@@ -1363,6 +1369,9 @@ msgstr "'model.tables'没有为多反应实现"
 
 msgid "type '%s' is not implemented yet"
 msgstr "还没有实现'%s'种类"
+
+msgid "this fit does not inherit from \"lm\""
+msgstr ""
 
 msgid "'cterms' argument must match terms in model object"
 msgstr "'cterms'变元必需同模型目标对象里的项相配"
@@ -2054,6 +2063,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid "p-values may be incorrect"
+#~ msgstr "p-值可能有错"
 
 #~ msgid "'shape' must be strictly positive"
 #~ msgstr "'shape'必需是正数"

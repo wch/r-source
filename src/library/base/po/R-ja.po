@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.o\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:26\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -900,6 +900,22 @@ msgstr "%s は '%s' のための 'loadNamespace' に失敗しました"
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "名前空間 '%s' は既に loadNamespace 中に密封さ れる"
 
+msgid "failed to assign NativeSymbolInfo for"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "since"
+msgstr ""
+
+msgid "is already defined in the"
+msgstr ""
+
+#, fuzzy
+msgid "namespace"
+msgstr "名前空間ではありません"
+
 msgid "package '%s' does not have a name space"
 msgstr "パッケージ '%s' は名前空間を持っていません"
 
@@ -966,6 +982,16 @@ msgstr "未定義のエクスポートです："
 
 msgid "package '%s' has no NAMESPACE file"
 msgstr "パッケージ '%s' は名前空間ファイルを持っていません"
+
+#, fuzzy
+msgid "duplicated symbol names"
+msgstr "重複したインポート名です"
+
+msgid "in useDynLib("
+msgstr ""
+
+msgid ")"
+msgstr ""
 
 msgid "bad 'S3method' directive: %s"
 msgstr "誤った 'S3method' 指令です：%s"

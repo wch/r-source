@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-09 12:06\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -877,8 +877,14 @@ msgstr "l'alternativa deve essere \"two.sided\", \"less\" o \"greater\""
 msgid "'or' must be a single number between 0 and Inf"
 msgstr "'or' deve essere un solo numero tra 0 e Inf"
 
-msgid "p-values may be incorrect"
-msgstr "i p-value potrebbero essere non corretti"
+msgid "need 2 or more non-zero row marginals"
+msgstr ""
+
+msgid "need 2 or more non-zero column marginals"
+msgstr ""
+
+msgid "'hybrid' is ignored for a 2 x 2 table"
+msgstr ""
 
 msgid "all groups must contain data"
 msgstr "tutti i gruppi devono contenere dati"
@@ -1399,6 +1405,9 @@ msgstr "'model.tables' non è implementato per risposte multiple"
 
 msgid "type '%s' is not implemented yet"
 msgstr "tipo '%s' non ancora implementato"
+
+msgid "this fit does not inherit from \"lm\""
+msgstr ""
 
 msgid "'cterms' argument must match terms in model object"
 msgstr "l'argomento 'cterms' deve far coincidre 'terms' nell'oggetto model"
@@ -2129,6 +2138,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "p-values may be incorrect"
+#~ msgstr "i p-value potrebbero essere non corretti"
 
 #~ msgid "'shape' must be strictly positive"
 #~ msgstr "'shape' deve essere strettamente positivo"

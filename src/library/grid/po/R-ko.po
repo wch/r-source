@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-08 07:39\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -256,11 +256,21 @@ msgstr "'respect'는 논리값 또는 'ncol * 'nrow' 행렬이 아니면 되지 
 msgid "Invalid 'origin'"
 msgstr "부적절한 'origin'입니다"
 
+msgid "'length' must be a unit object"
+msgstr "'length'는 unit 오브젝트가 아니면 되지 않습니다"
+
+msgid "Invalid 'ends' or 'type' argument"
+msgstr "부적절한 'ends' 인수 또는 'type' 인수입니다"
+
 msgid "'x' and 'y' must be units"
 msgstr "'x'그리고 'y'는 units가 나오지 않으면 되지 않습니다"
 
 msgid "'x' and 'y' must have length 1"
 msgstr "'x' 그리고 'y'는 길이 1이 아니면 안됩니다"
+
+#, fuzzy
+msgid "invalid 'arrow' argument"
+msgstr "부적절한 'rot' 값입니다"
 
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr "'x0', 'y0', 'x1' 그리고 'y1'는 units가 나오지 않으면 되지 않습니다"
@@ -268,14 +278,13 @@ msgstr "'x0', 'y0', 'x1' 그리고 'y1'는 units가 나오지 않으면 되지 �
 msgid "'x' and 'y' must be units or NULL"
 msgstr "'x' 그리고 'y'는 units 또는 NULL가 나오지 않으면 되지 않습니다"
 
-msgid "'length' must be a unit object"
-msgstr "'length'는 unit 오브젝트가 아니면 되지 않습니다"
-
-msgid "Invalid 'ends' or 'type' argument"
-msgstr "부적절한 'ends' 인수 또는 'type' 인수입니다"
-
 msgid "Corrupt 'arrows' object"
 msgstr "파손된 'arrows'오브젝트입니다"
+
+msgid ""
+"grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
+"functions."
+msgstr ""
 
 msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr ""
@@ -294,6 +303,16 @@ msgstr "'x' 그리고  'y', 'id'는 모두 동일 길이가 나오지 않으면 
 msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
 msgstr ""
 "'x' 그리고 'y', 'id.lengths'는 모두 동일 길이를 지정하지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "x and y must be units"
+msgstr "'x'그리고 'y'는 units가 나오지 않으면 되지 않습니다"
+
+msgid "shape must be between -1 and 1"
+msgstr ""
+
+msgid "First and last shape set to 0"
+msgstr ""
 
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y' 그리고 'r'는 모두 units가 나오지 않으면 되지 않습니다"

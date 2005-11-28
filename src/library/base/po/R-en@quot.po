@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:26\n"
-"PO-Revision-Date: 2005-11-06 09:26\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
+"PO-Revision-Date: 2005-11-28 07:35\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -901,6 +901,21 @@ msgstr "%s failed in ‘loadNamespace’ for ‘%s’"
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "namespace ‘%s’ is already sealed in loadNamespace"
 
+msgid "failed to assign NativeSymbolInfo for"
+msgstr "failed to assign NativeSymbolInfo for"
+
+msgid "to"
+msgstr "to"
+
+msgid "since"
+msgstr "since"
+
+msgid "is already defined in the"
+msgstr "is already defined in the"
+
+msgid "namespace"
+msgstr "namespace"
+
 msgid "package '%s' does not have a name space"
 msgstr "package ‘%s’ does not have a name space"
 
@@ -963,6 +978,15 @@ msgstr "undefined exports :"
 
 msgid "package '%s' has no NAMESPACE file"
 msgstr "package ‘%s’ has no NAMESPACE file"
+
+msgid "duplicated symbol names"
+msgstr "duplicated symbol names"
+
+msgid "in useDynLib("
+msgstr "in useDynLib("
+
+msgid ")"
+msgstr ")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "bad ‘S3method’ directive: %s"

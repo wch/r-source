@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-09 12:06\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
 "PO-Revision-Date: 2005-11-05 18:35-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -873,8 +873,14 @@ msgstr "alternative deve ser \"two.sided\", \"less\" ou \"greater\""
 msgid "'or' must be a single number between 0 and Inf"
 msgstr "'or' deve ser um único número entre 0 e Inf"
 
-msgid "p-values may be incorrect"
-msgstr "níveis descritivos podem estar incorretos"
+msgid "need 2 or more non-zero row marginals"
+msgstr ""
+
+msgid "need 2 or more non-zero column marginals"
+msgstr ""
+
+msgid "'hybrid' is ignored for a 2 x 2 table"
+msgstr ""
 
 msgid "all groups must contain data"
 msgstr "todos os grupos devem conter dados"
@@ -1397,6 +1403,9 @@ msgstr "'model.tables' não implementado para múltiplas respostas"
 
 msgid "type '%s' is not implemented yet"
 msgstr "tipo '%s' ainda não implementado"
+
+msgid "this fit does not inherit from \"lm\""
+msgstr ""
 
 msgid "'cterms' argument must match terms in model object"
 msgstr "argumento 'cterms' deve corresponder aos termos do objeto do modelo"
@@ -2125,6 +2134,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "parâmetro %s não ocorre na fórmula do modelo"
 msgstr[1] "parâmetros %s não ocorrem na fórmula do modelo"
+
+#~ msgid "p-values may be incorrect"
+#~ msgstr "níveis descritivos podem estar incorretos"
 
 #~ msgid "'shape' must be strictly positive"
 #~ msgstr "'shape' deve ser estritamente positivo"

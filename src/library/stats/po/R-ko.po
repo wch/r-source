@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-09 12:06\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -874,8 +874,14 @@ msgstr ""
 msgid "'or' must be a single number between 0 and Inf"
 msgstr "'or'는 단일의 수치 또는 0 과 inf 간의 단일의 수가 아니면 되지 않습니다"
 
-msgid "p-values may be incorrect"
-msgstr "p 값은 올바르지 않을지도 모릅니다"
+msgid "need 2 or more non-zero row marginals"
+msgstr ""
+
+msgid "need 2 or more non-zero column marginals"
+msgstr ""
+
+msgid "'hybrid' is ignored for a 2 x 2 table"
+msgstr ""
 
 msgid "all groups must contain data"
 msgstr "모든 group는 데이터를 포함하지 않으면 안됩니다"
@@ -1399,6 +1405,9 @@ msgstr "'model.tables'는 다중 응답에 대해서 실제 적용되지 않습�
 
 msgid "type '%s' is not implemented yet"
 msgstr "유형 '%s'는 실제 적용되지 않습니다"
+
+msgid "this fit does not inherit from \"lm\""
+msgstr ""
 
 msgid "'cterms' argument must match terms in model object"
 msgstr ""
@@ -2119,6 +2128,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "p-values may be incorrect"
+#~ msgstr "p 값은 올바르지 않을지도 모릅니다"
 
 #~ msgid "'shape' must be strictly positive"
 #~ msgstr "'shape' 파라미터는 positive가 아니면 되지 않습니다"

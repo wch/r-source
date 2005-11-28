@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-08 07:39\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
 "PO-Revision-Date: 2005-03-31 08:00+0009\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -255,11 +255,21 @@ msgstr "'respect' は論理値か 'ncol' * 'nrow' 行列でなければなりま
 msgid "Invalid 'origin'"
 msgstr "不正な 'origin' です"
 
+msgid "'length' must be a unit object"
+msgstr "'length' は単位(units)オブジェクトでなければなりません"
+
+msgid "Invalid 'ends' or 'type' argument"
+msgstr "不正な 'ends' 引数か 'type' 引数です"
+
 msgid "'x' and 'y' must be units"
 msgstr "'x' と 'y' は単位(units)でなければなりません"
 
 msgid "'x' and 'y' must have length 1"
 msgstr "'x' と 'y' は長さ 1 でなければならない"
+
+#, fuzzy
+msgid "invalid 'arrow' argument"
+msgstr "不正な 'rot' 値です"
 
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr "'x0', 'y0', 'x1', 'y1' は単位(units)でなければなりません"
@@ -267,14 +277,13 @@ msgstr "'x0', 'y0', 'x1', 'y1' は単位(units)でなければなりません"
 msgid "'x' and 'y' must be units or NULL"
 msgstr "'x' と 'y' は単位(units)または NULL でなければなりません"
 
-msgid "'length' must be a unit object"
-msgstr "'length' は単位(units)オブジェクトでなければなりません"
-
-msgid "Invalid 'ends' or 'type' argument"
-msgstr "不正な 'ends' 引数か 'type' 引数です"
-
 msgid "Corrupt 'arrows' object"
 msgstr "壊れた 'arrows' オブジェクトです"
+
+msgid ""
+"grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
+"functions."
+msgstr ""
 
 msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr ""
@@ -292,6 +301,16 @@ msgstr "'x', 'y', 'id' は全て同じ長さでなければなりません"
 
 msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
 msgstr "'x', 'y', 'id.lengths' は全て同じ長さを指定しなければなりません"
+
+#, fuzzy
+msgid "x and y must be units"
+msgstr "'x' と 'y' は単位(units)でなければなりません"
+
+msgid "shape must be between -1 and 1"
+msgstr ""
+
+msgid "First and last shape set to 0"
+msgstr ""
 
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y', 'r' は全て単位(units)でなければなりません"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-09 12:06\n"
-"PO-Revision-Date: 2005-11-09 12:06\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
+"PO-Revision-Date: 2005-11-28 07:35\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -875,8 +875,14 @@ msgstr "alternative must be “two.sided”, “less” or “greater”"
 msgid "'or' must be a single number between 0 and Inf"
 msgstr "‘or’ must be a single number between 0 and Inf"
 
-msgid "p-values may be incorrect"
-msgstr "p-values may be incorrect"
+msgid "need 2 or more non-zero row marginals"
+msgstr "need 2 or more non-zero row marginals"
+
+msgid "need 2 or more non-zero column marginals"
+msgstr "need 2 or more non-zero column marginals"
+
+msgid "'hybrid' is ignored for a 2 x 2 table"
+msgstr "‘hybrid’ is ignored for a 2 x 2 table"
 
 msgid "all groups must contain data"
 msgstr "all groups must contain data"
@@ -1389,6 +1395,9 @@ msgstr "‘model.tables’ is not implemented for multiple responses"
 
 msgid "type '%s' is not implemented yet"
 msgstr "type ‘%s’ is not implemented yet"
+
+msgid "this fit does not inherit from \"lm\""
+msgstr "this fit does not inherit from “lm”"
 
 msgid "'cterms' argument must match terms in model object"
 msgstr "‘cterms’ argument must match terms in model object"

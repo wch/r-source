@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-09 13:15+0000\n"
+"POT-Creation-Date: 2005-11-28 07:35+0000\n"
 "PO-Revision-Date: 2005-09-27 23:08-0300\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -27,23 +27,23 @@ msgstr "largura de banda/vão das medianas móveis é maior que n"
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "probabilidades fora do intervalo [0,1] em qansari()"
 
-#: arima.c:60 arima.c:167 arima.c:343
+#: arima.c:71 arima.c:178 arima.c:354
 msgid "invalid argument type"
 msgstr "tipo de argumento inválido"
 
-#: arima.c:402 arima.c:490 pacf.c:302 pacf.c:342
+#: arima.c:413 arima.c:497 pacf.c:311 pacf.c:351
 msgid "can only transform 100 pars in arima0"
 msgstr "pode-se transformar apenas 100 pares em arima0"
 
-#: distance.c:145
+#: distance.c:151
 msgid "dist(.,\"binary\"): treating non-finite values as NA"
 msgstr "dist(.,\"binary\"): considerando valores não-finitos como NA"
 
-#: distance.c:214
+#: distance.c:220
 msgid "distance(): invalid p"
 msgstr "distance(): p inválido"
 
-#: distance.c:217
+#: distance.c:223
 msgid "distance(): invalid distance"
 msgstr "distance(): distância inválida"
 
@@ -148,25 +148,35 @@ msgstr ""
 msgid "rho should be an environment"
 msgstr "rho deve ser um ambiente"
 
-#: nls.c:225 nls.c:247
+#: nls.c:224 nls.c:252
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Obtido valor faltante ou infinito quando avaliando o modelo"
 
-#: pacf.c:72
+#: nls.c:230
+#, c-format
+msgid "variable '%s' is integer, not numeric"
+msgstr ""
+
+#: nls.c:232
+#, c-format
+msgid "variable '%s' is not numeric"
+msgstr ""
+
+#: pacf.c:81
 msgid "bad Starma struct"
 msgstr "estrutura Starma inválida"
 
-#: pacf.c:218
+#: pacf.c:227
 #, c-format
 msgid "starma error code %d"
 msgstr "starma erro código %d"
 
-#: pacf.c:281
+#: pacf.c:290
 #, c-format
 msgid "forkal error code %d"
 msgstr "erro forkal código %d"
 
-#: pacf.c:445
+#: pacf.c:454
 msgid "invalid value of lag.max"
 msgstr "valor inválido para lag.max"
 
@@ -264,7 +274,7 @@ msgstr "erro na alocação em smooth(*, '3RSS')."
 msgid "allocation error in smooth(*, '3R')."
 msgstr "erro na alocação em smooth(*, '3R')."
 
-#: starma.c:361
+#: starma.c:366
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valor faltante nas últimas %d observações"

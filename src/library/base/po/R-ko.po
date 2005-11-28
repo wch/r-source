@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:26\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -896,6 +896,22 @@ msgstr "%s는 '%s'때문에 'loadNamespace'에 실패했습니다"
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "%s는 '%s'때문에 'loadNamespace'에 이미 밀폐되었습니다"
 
+msgid "failed to assign NativeSymbolInfo for"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "since"
+msgstr ""
+
+msgid "is already defined in the"
+msgstr ""
+
+#, fuzzy
+msgid "namespace"
+msgstr "이름 공간이 아닙니다"
+
 msgid "package '%s' does not have a name space"
 msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
 
@@ -960,6 +976,16 @@ msgstr "정의하지 않는 export입니다 :"
 
 msgid "package '%s' has no NAMESPACE file"
 msgstr "패키지 '%s'는 NAMESPACE 파일을 가지고 있지 않습니다"
+
+#, fuzzy
+msgid "duplicated symbol names"
+msgstr "중복한 import명입니다"
+
+msgid "in useDynLib("
+msgstr ""
+
+msgid ")"
+msgstr ""
 
 msgid "bad 'S3method' directive: %s"
 msgstr "잘못한 'S3method' 지령입니다: %s"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-09-27 08:38+0100\n"
+"POT-Creation-Date: 2005-11-28 07:35+0000\n"
 "PO-Revision-Date: 2005-11-05 17:02-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -34,7 +34,15 @@ msgstr "tentativa de fazer um gráfico no dispositivo nulo"
 msgid "There is no layout defined"
 msgstr "Não há layout definido"
 
-#: grid.c:1796
+#: grid.c:1341
+msgid "Require at least two points to draw arrow"
+msgstr ""
+
+#: grid.c:1630
+msgid "Non-finite control point in Xspline"
+msgstr ""
+
+#: grid.c:2043
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "Raio de círculo inválido (deve ser não negativo)"
 

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:27\n"
-"PO-Revision-Date: 2005-11-06 09:27\n"
+"POT-Creation-Date: 2005-11-28 07:35\n"
+"PO-Revision-Date: 2005-11-28 07:35\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -271,11 +271,20 @@ msgstr "‘respect’ must be logical or an ‘nrow’ by ‘ncol’ matrix"
 msgid "Invalid 'origin'"
 msgstr "Invalid ‘origin’"
 
+msgid "'length' must be a unit object"
+msgstr "‘length’ must be a unit object"
+
+msgid "Invalid 'ends' or 'type' argument"
+msgstr "Invalid ‘ends’ or ‘type’ argument"
+
 msgid "'x' and 'y' must be units"
 msgstr "‘x’ and ‘y’ must be units"
 
 msgid "'x' and 'y' must have length 1"
 msgstr "‘x’ and ‘y’ must have length 1"
+
+msgid "invalid 'arrow' argument"
+msgstr "invalid ‘arrow’ argument"
 
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr "'x0', 'y0', 'x1', and ‘y1’ must be units"
@@ -283,14 +292,15 @@ msgstr "'x0', 'y0', 'x1', and ‘y1’ must be units"
 msgid "'x' and 'y' must be units or NULL"
 msgstr "‘x’ and ‘y’ must be units or NULL"
 
-msgid "'length' must be a unit object"
-msgstr "‘length’ must be a unit object"
-
-msgid "Invalid 'ends' or 'type' argument"
-msgstr "Invalid ‘ends’ or ‘type’ argument"
-
 msgid "Corrupt 'arrows' object"
 msgstr "Corrupt ‘arrows’ object"
+
+msgid ""
+"grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
+"functions."
+msgstr ""
+"grid.arrows() has been deprecated;  use ‘arrow’ arguments to line drawing "
+"functions."
 
 msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr "The ‘grob’ argument must be a 'line.to', 'lines', or ‘segments’ grob"
@@ -306,6 +316,15 @@ msgstr "‘x’ and ‘y’ and ‘id’ must all be same length"
 
 msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
 msgstr "‘x’ and ‘y’ and ‘id.lengths’ must specify same overall length"
+
+msgid "x and y must be units"
+msgstr "x and y must be units"
+
+msgid "shape must be between -1 and 1"
+msgstr "shape must be between -1 and 1"
+
+msgid "First and last shape set to 0"
+msgstr "First and last shape set to 0"
 
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y', and ‘r’ must be units"
