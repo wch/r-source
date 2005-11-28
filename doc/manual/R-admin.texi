@@ -3265,11 +3265,13 @@ You need a recent version of the MinGW port of @code{gcc} from
 @url{http://sourceforge.net/projects/mingw/}.  See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools} for updates.
 
-At the time of release of @R{} 2.2.0 there was an installer
-@code{MinGW-5.0.0.exe} in the `Proposed' section.  For this select the
-@samp{Candidate} package and add the @samp{g++} and @samp{g77} compilers
-to the @samp{MinGW base tools}: components will be downloaded from
-Sourceforge and unpacked.
+In late 2005 there was an installer @code{MinGW-5.0.0.exe} in the
+`Proposed' section.  Using this, select the @samp{Candidate} package and
+add the @samp{g++} and @samp{g77} compilers to the @samp{MinGW base
+tools}: components will be downloaded from Sourceforge and unpacked.
+Note that you do need the @samp{Candidate} compilers (@code{gcc-3.4.4})
+to compile some contributed packages correctly, although
+@code{gcc-3.4.2} suffices to build @R{} itself.
 
 An alternative is to download the components individually, currently
 
@@ -3278,14 +3280,14 @@ gcc-core-3.4.4-20050522-1.tar.gz
 gcc-g++-3.4.4-20050522-1.tar.gz
 gcc-g77-3.4.4-20050522-1.tar.gz
 binutils-2.16.91-20050827-1.tar.gz
-mingw-runtime-3.8.tar.gz
-w32api-3.3.tar.gz
+mingw-runtime-3.9.tar.gz
+w32api-3.5.tar.gz
 @end example
 
 @noindent
 and unpack these into the same directory (using @command{tar zxf
 tarball_name}).  Note that @code{mingw-runtime-3.8.tar.gz} or later is
-required to build @R{} 2.2.0.
+required to build @R{}.
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
@@ -3295,8 +3297,9 @@ Microsoft @HTML{} Help Workshop, currently available for download at
 @url{http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp}
 and @url{http://www.microsoft.com/office/ork/xp/appndx/appa06.htm}.
 
-You may need this on the same drive as the other tools. (Although we
-have successfully used it elsewhere, others have reported problems).
+You may need this on the same drive as the other tools.  (Although we
+regularly use it on a different, problems have been reported in the
+past.)
 
 To skip building compiled html help, set @code{WINHELP=NO} in @file{MkRules}.
 In this case the Help Workshop will not be needed.
