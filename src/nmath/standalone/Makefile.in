@@ -75,7 +75,10 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir)/.. $(CPPFLAGS) $(DEFS)
 .SUFFIXES:
 .SUFFIXES: .c .d .o .lo
 
-all: Makefile static shared
+all: Makefile inc static shared
+
+inc:
+	(cd ../../include; $(MAKE) Rmath.h)
 
 ## can't run test, as that depends on OS-specific way to set library path.
 ## clean is useful, but forces a remake each time which MM did not want
