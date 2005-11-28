@@ -13,7 +13,7 @@
   and they are used to construct the model frame:
 
   \item{factors}{A matrix of variables by terms showing which variables
-    appear in which terms. The entries are 0 if the variable does not
+    appear in which terms.  The entries are 0 if the variable does not
     occur in the term, 1 if it does occur and should be coded by
     contrasts, and 2 if it occurs and should be coded via dummy
     variables for all levels (as when an intercept or lower-order term
@@ -21,7 +21,8 @@
     this is \code{numeric(0)}.}
   \item{term.labels}{A character vector containing the labels for each
     of the terms in the model, except for offsets.  Non-syntactic names
-    will be quoted by backticks.}
+    will be quoted by backticks.  Note that these are after possible
+    re-ordering (unless argument \code{keep.order} was false).}
   \item{variables}{A call to \code{list} of the variables in the model.}
   \item{intercept}{Either 0, indicating no intercept is to be fit, or 1
     indicating that an intercept is to be fit.}
@@ -32,10 +33,11 @@
     response.}
   \item{offset}{If the model contains \code{\link{offset}} terms there
     is an \code{offset} attribute indicating which variable(s) are offsets}
-  \item{specials}{If the \code{specials} argument was given to
+  \item{specials}{If a \code{specials} argument was given to
     \code{\link{terms.formula}} there is a \code{specials} attribute, a
-    list of vectors indicating the terms that contain these special
-    functions.}
+    list of vectors (one for each specified special function) giving
+    numeric indices of the arguments of the list returned as the
+    \code{variables} attribute which contain these special functions.}
   \item{dataClasses}{optional. A named character vector giving the classes
     (as given by \code{\link{.MFclass}}) of the variables used in a fit.}
 
@@ -51,6 +53,14 @@
 }
 \seealso{
   \code{\link{terms}}, \code{\link{formula}}.
+}
+\examples{
+## use of specials (as used for gam() in packages mgcv and gam)
+(tf <- terms(y ~ x + x:z + s(x), specials = "s"))
+## Note that the "factors" attribute has variables as row names
+## and term labels as column names, both as character vectors. 
+attr(tf, "specials")    # index 's' variable(s)
+rownames(attr(tf, "factors"))[attr(tf, "specials")$s]
 }
 %%--- MM: I would really like instructive examples here...
 \keyword{models}
