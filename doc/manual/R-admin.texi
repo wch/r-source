@@ -1194,7 +1194,7 @@ Compiler Collection.
 @findex WINHELP
 
 This section describes ways to customize package compilation using the
-standard C/C++/Fortran compilers and tools.  For instructions on using
+standard C/C++/FORTRAN compilers and tools.  For instructions on using
 non-standard tools, see the @file{README.packages} file.
 
 The Makefiles can be customized: in particular the name of the DLL can
@@ -1300,7 +1300,7 @@ Some variables that may be used include:
 @item
 @code{PKG_CXXFLAGS=} to specify options to the C++ compiler.
 @item
-@code{PKG_FFLAGS=} to specify options to the Fortran compiler.
+@code{PKG_FFLAGS=} to specify options to the FORTRAN compiler.
 @item
 @code{PKG_LIBS=} to specify options to the linking step making the DLL.
 @item 
@@ -2193,7 +2193,7 @@ is to search for
 @command{g77}.}, and then for @command{f2c}, and use whichever is found
 first; if none is found, @R{} cannot be compiled.
 @c GCC_Fortran_compiler in m4/R.m4:
-However, if @command{CC} is @command{gcc}, the matching Fortran compiler
+However, if @command{CC} is @command{gcc}, the matching FORTRAN compiler
 (@command{g77} for @command{gcc 3} and @code{gfortran} for @command{gcc
 4}) is used if available.
 
@@ -2246,7 +2246,7 @@ on a 32-bit platform but not on a 64-bit platform.
 
 There was a problem with the version in the @code{gcc 4.0.0} release and
 most pre-releases.  At least on @code{ix86} and @code{x86_64} Linux and
-MacOS X the dynamic version of the Fortran runtime @code{libgfortran}
+MacOS X the dynamic version of the FORTRAN runtime @code{libgfortran}
 could not be used: if this is loaded redirection of C @file{stdin}
 (which @R{} uses in many of its scripts) becomes non-functional.  A
 workaround is to set the environment variable @env{GFORTRAN_STDIN_UNIT}
@@ -2368,7 +2368,7 @@ missing add the developer package.  (On most systems you will also need
 dependencies of the @samp{readline} package(s).)
 
 When @R{} has been installed from a binary distribution there are
-sometimes problems with missing components such as the Fortran
+sometimes problems with missing components such as the FORTRAN
 compiler.  Searching the @samp{R-help} archives will normally reveal
 what is needed.
 
@@ -2419,7 +2419,7 @@ are needed for a modern Linux (e.g.@: using @code{glibc} 2.2 or 2.3) but
 could conceivably be needed on an older version.
 
 Several Linux distributions have shipped unreleased versions of
-@code{gcc 4.0.0} and its Fortran compiler @command{gfortran} (see the
+@code{gcc 4.0.0} and its FORTRAN compiler @command{gfortran} (see the
 separate comments).  Some versions of @code{gcc4} (such as that in
 Fedora Core 3) produce incorrect code.  In our experiments @code{gcc
 3.4.x} always produced faster and more reliable code.  It seems that
@@ -2580,7 +2580,7 @@ fail.  The maximal set of optimization options known to work is
 @end example
 
 We have found little performance difference between @command{gcc} and
-@command{cc} but considerable benefit from using a SunPro Fortran
+@command{cc} but considerable benefit from using a SunPro FORTRAN
 compiler: the @command{gcc}/@command{f77} combination works well.  For
 many C++ applications Forte 7 requires @code{-lCstd}, which the
 configure script will add to @code{SHLIB_CXXLDFLAGS} if it identifies
@@ -2825,7 +2825,7 @@ At some point in the past using @command{cc} required @option{-std1} to
 be set so @samp{__STDC__} was defined.  As far as we know this is no
 longer needed, and @command{configure} no longer sets it, but it does
 set @option{-ieee_with_inexact} for the C compiler and @option{-fpe3}
-for the Fortran compiler (and @option{-mieee-with-inexact} and
+for the FORTRAN compiler (and @option{-mieee-with-inexact} and
 @option{-mieee} for @command{gcc}/@command{g77}).
 
 
@@ -2942,7 +2942,7 @@ It seems that @samp{gcc 3.4.x} and later on @samp{ix86} Linux defeat
 attempts by the LAPACK code to avoid computations entirely in
 extended-precision registers, so file @file{src/modules/lapack/dlamc.f}
 may need to be compiled without optimization.  If configure detects
-@acronym{GNU} Fortran or the use of @command{f2c} it adds flag
+@acronym{GNU} FORTRAN or the use of @command{f2c} it adds flag
 @option{-ffloat-store} which suffices, but it is possible that
 @file{src/modules/lapack/Makefile} will need to be edited to remove
 optimization on other platforms.  (This is true when using @samp{icc}
