@@ -465,27 +465,34 @@ Windows, and from @code{dir /X} in a @code{Command Prompt} window on
 @node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
 @section Does R use the Registry?
 
-Not itself.
+No, not when R itself is running.
 
-The installer sets some entries to allow uninstallation.  In addition
-(by default, but this can be de-selected) it sets a Registry key
-@code{LOCAL_MACHINE\Software\R-core\R} giving the version and install path.
-Again, this is not used by R itself, but it may be used by third-party
-front-ends such as Thomas Baier's (D)COM interface
-(@uref{http://cran.r-project.org/other-software.html}).  As from version 2.2.0,
-a Registry key @code{LOCAL_MACHINE\Software\R-core\R\[version]} will be set
-to hold the install path; third-party utilities may use this to detect
-multiple R installations on the same machine.  Finally, a file
-association for extension @code{.RData} is set in the Registry.
+When you run the R installer, there are options (under `Select Additional
+Tasks') to `Save version number in registry' and `Associate R with .RData
+files'.
 
-You can add the Registry entries by running @code{RSetReg.exe} in the
+If you tick the first option, the following string entries are added to the
+Windows registry:
+@itemize @bullet
+@item  @code{HKEY_LOCAL_MACHINE\Software\R-core\R\Current Version}  
+    contains the version number, currently @RVER@.
+@item @code{HKEY_LOCAL_MACHINE\Software\R-core\R\[version]\InstallPath}
+    (where @code{[version]} is currently @RVER@) contains the path to the R 
+    home directory.
+@end itemize
+If you do not have administrative privileges on the machine while running
+the installer, then the entries are created under the @code{HKEY_CURRENT_USER}
+root.
+
+If you tick the second option (`Associate R with .RData files') and have
+administrative privileges, then entries are created under
+@code{HKEY_CLASSES_ROOT\.RData} and @code{HKEY_CLASSES_ROOT\RWorkspace}.
+
+After installation you can add the Registry entries in
+@code{HKEY_LOCAL_MACHINE} by running @code{RSetReg.exe} in the
 @code{bin} folder, and remove them by running this with argument
-@code{/U}.  Note that these settings are all per machine and not per user,
-and that this neither sets up nor removes the file associations.
-
-In the case of a user running the installer without administrative
-privileges, the installer will set keys under the @code{CURRENT_USER} root giving
-the install path, but the other keys will not be set.  
+@code{/U}.  Note that this requires administrative privileges and
+neither sets up nor removes the file associations.
 
 
 @node Does R support automation?, The internet download functions fail., Does R use the Registry?, Installation and Usage
