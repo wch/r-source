@@ -49,6 +49,8 @@ win.metafile(), etc.) to allow callers to choose not to restore the
 focus to the console.  The interface to this will likely change in a
 future release.
 
+The assembler exponentiation code has been updated to that from glibc 2.3.6.
+
 
 
 R 2.2.0 patched
