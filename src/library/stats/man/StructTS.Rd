@@ -67,7 +67,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
  trend model with an additional seasonal component. Thus the measurement
  equation is
  \deqn{x_t = \mu_t + \gamma_t + \epsilon_t, \qquad \epsilon_t \sim  N(0, \sigma^2_\epsilon)}{%
-   x[t] = m[t] + s[t] + eps[t], exp[t] ~  N(0, sigma^2_eps)}
+   x[t] = m[t] + s[t] + eps[t], eps[t] ~  N(0, sigma^2_eps)}
  where \eqn{\gamma_t}{s[t]} is a seasonal component with dynamics
  \deqn{
    \gamma_{t+1} = -\gamma_t + \cdots + \gamma_{t-s+2} + \omega_t, \qquad
@@ -144,7 +144,7 @@ plot(log10(UKgas))
 plot(cbind(fitted(fit), resids=resid(fit)), main = "UK gas consumption")
 
 ## keep some parameters fixed; trace optimizer:
-StructTS(log10(UKgas), type = "BSM", fixed = c(0.1, 0.001,NA,NA),
+StructTS(log10(UKgas), type = "BSM", fixed = c(0.1,0.001,NA,NA),
          optim.control = list(trace=TRUE))
 }
 \keyword{ts}
