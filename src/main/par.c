@@ -699,18 +699,18 @@ void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
     double x;
     int ix = 0, ptype = ParCode(what);
 
+    if (ptype == 1 || ptype == -3) {
+	/* 1: these are valid, but not settable inline 
+	   3: arguments, not pars
+	*/
+	return;
+    }
     if (ptype == -2) {
 	warningcall(call, _("graphical parameter \"%s\" is obsolete"), what);
 	return;
     }
     if (ptype < 0) {
 	warningcall(call, _("\"%s\" is not a graphical parameter"), what);
-	return;
-    }
-    if (ptype == 1 || ptype == -3) {
-	/* 1: these are valid, but not settable inline 
-	   3: arguments, not pars
-	*/
 	return;
     }
     if (ptype == 2) {
