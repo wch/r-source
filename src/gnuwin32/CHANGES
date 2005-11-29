@@ -51,6 +51,9 @@ future release.
 
 The assembler exponentiation code has been updated to that from glibc 2.3.6.
 
+There is now support for compiling Fortran 90/95 code in packages: see
+'Writing R Extensions'.
+
 
 
 R 2.2.0 patched

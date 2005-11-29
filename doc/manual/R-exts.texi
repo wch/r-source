@@ -1027,13 +1027,18 @@ $(SHLIB): $(OBJECTS)
         $(SHLIB_LINK) -o $@@ $(OBJECTS) $(ALL_LIBS)
 @end example
 
-It is possible to use the Windows build of @command{g95} from
-@uref{http://www.g95.org} to build F95 sources in a package on Windows.
-See
-@uref{https://stat.ethz.ch/pipermail/r-devel/2005-September/034811.html}
-for a suitable @file{src/Makefile.win}.  Probably this would also work
-with the Windows build of @command{gfortran} from
-@uref{http://gcc.gnu.org/wiki/GFortranBinaries}.
+There is a MinGW build of @command{gfortran} available from
+@uref{http://gcc.gnu.org/wiki/GFortranBinaries} and a MinGW
+build@footnote{Remember to set @samp{LIBRARY_PATH} to point to your
+MinGW @file{lib} directory} of @command{g95} from
+@uref{http://www.g95.org}.  Set @code{F95} in @code{MkRules} to point to
+the installed compiler.  Then a suitable @file{Makevars.win} could be
+
+@example
+F95SOURCES=$(wildcard -f *.f95 *.f90)
+OBJS+= $(F95SOURCES:.f95=.o)
+DLL=$(F95)
+@end example
 
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages

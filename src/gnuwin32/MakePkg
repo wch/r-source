@@ -33,7 +33,7 @@ SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 SDYNLIB=$(SSPKG)/$(DLLNAME).dll
 
 LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f $(SSPKG)/*.cc \
-	$(SSPKG)/*.cpp $(SSPKG)/*.C)
+	$(SSPKG)/*.cpp $(SSPKG)/*.C $(SSPKG)/*.f90  $(SSPKG)/*.f95)
 ifeq ($(strip $(LSOURCES)),)
   LOBJS=
 else

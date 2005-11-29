@@ -9,15 +9,20 @@ RCNAME=${DLLNAME}_res
 RCOBJ=$(RCNAME).o
 
 # Don't use SOURCES as this get passed on for libR.
-CFSOURCES=$(wildcard -f *.c *.f)
+CFSOURCES=$(wildcard -f *.c *.f *.f90 *.f95)
 CSOURCES=$(wildcard -f *.c)
 CXXSOURCES=$(wildcard -f *.cc *.cpp *.C)
-OBJSA=$(foreach i,$(CFSOURCES) $(CXXSOURCES),$(basename $i).o)
+FSOURCES=$(wildcard -f *.f)
+OBJSA=$(foreach i,$(CSOURCES) $(FSOURCES) $(CXXSOURCES),$(basename $i).o)
 
 include $(RHOME)/src/gnuwin32/MkRules
 
 ifneq ($(strip $(CXXSOURCES)),)
   DLL_LDMAIN=g++
+endif
+
+ifneq ($(strip $(FSOURCES)),)
+  EXTRA_LIBS=$(FLIBS)
 endif
 
 ifdef DEBUG
@@ -32,7 +37,7 @@ CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/include
 CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
 CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
 FFLAGS=-O2 $(DEBUGFLAG) $(PKG_FFLAGS)
-DLLLIBS=-L$(RHOME)/lib $(PKG_LIBS) $(FLIBS) -lR 
+DLLLIBS=-L$(RHOME)/lib $(PKG_LIBS) $(EXTRA_LIBS) -lR
 RESFLAGS=--include-dir $(RHOME)/include
 # Note: DLLLIBS has already set -L$(RHOME)/lib
 BLAS_LIBS=-lRblas

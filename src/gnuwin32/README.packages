@@ -80,7 +80,7 @@ implib R.lib R.def
 and then add R.lib to the bcc32 command line, for example (from
 Venables & Ripley's `S Programming')
 
-bcc32 -u- -6 -O2 -WDE -I\R\rw1050\src\include VCrndR.c R.lib
+bcc32 -u- -6 -O2 -WDE -I\R\R-2.3.0\src\include VCrndR.c R.lib
 
 We believe that when referencing variables (rather than functions)
 exported from R.dll these must be declared __declspec(dllimport) just
@@ -94,6 +94,8 @@ To use C++ see the section in the R for Windows FAQ.  You can include
 C++ code in packages and the supplied Makefiles will compile with g++
 and link the DLL using g++ (and hence link against libstc++.a).  Use
 of C++ I/O may or may not work, and has been seen to crash R.
+
+To use F90 or F95, see `Writing R Extensions'.
 
 For other compilers you will need to arrange to produce a DLL with
 cdecl (also known as _cdecl or __cdecl) linkage.  The mingw port (and

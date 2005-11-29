@@ -45,10 +45,17 @@ TCL_VERSION = 84
 # USE_SVNVERSION = YES
 
 
-## ====== configuration macros for building installers ===========
+## ====== configuration macros for building installer ===========
 
 # location where Inno Setup 5.1.x was installed. Spaces allowed.
 ISDIR=C:/packages/Inno51
+
+## ====== configuration macros for building packages ================
+
+## For a package using F90/95 set the name or path of gfortran.exe 
+## or g95.exe.  No spaces.
+F95=c:/packages/gfortran/bin/gfortran
+F95FLAGS=-O2
 
 ## =================== cross-compilation settings  =================
 
@@ -124,7 +131,7 @@ NM=$(BINPREF)nm
 CPP=$(CC) -E
 RESCOMP=$(BINPREF)windres
 
-.SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d
+.SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d .f90 .f95
 
 .c.d:
 	@echo "making $@ from $<"
@@ -182,3 +189,8 @@ lib%.a: %.def
 
 %.o: %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@
+
+.f90.o:
+	$(F95) $(F95FLAGS) -c $< -o $@
+.f95.o:
+	$(F95) $(F95FLAGS) -c $< -o $@
