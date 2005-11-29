@@ -7,6 +7,12 @@
 \alias{as.table}
 \alias{as.table.default}
 \alias{is.table}
+
+\concept{counts}
+\concept{frequencies}
+\concept{occurrences}
+\concept{contingency table}
+
 \description{
   \code{table} uses the cross-classifying factors to build a contingency
   table of the counts at each combination of factor levels.
