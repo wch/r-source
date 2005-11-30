@@ -76,7 +76,15 @@ nlminb(start, objective, gradient = NULL, hessian = NULL,
   }
 }
 \references{ \url{http://netlib.bell-labs.com/netlib/port/} }
-\author{Douglas Bates, Deepayan Sarkar}
+\author{
+  (of \R port) Douglas Bates and Deepayan Sarkar.
+}
+\seealso{
+  \code{\link{optim}} and \code{\link{nlm}}.
+
+  \code{\link{optimize}} for one-dimensional minimization and
+  \code{\link{constrOptim}} for constrained optimization.
+}
 \examples{
 x <- rnbinom(100, mu = 10, size = 10)
 hdev <- function(par) {

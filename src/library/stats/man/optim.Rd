@@ -210,7 +210,12 @@ optim(par, fn, gr = NULL,
   The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
 
-\seealso{\code{\link{nlm}}, \code{\link{optimize}}, \code{\link{constrOptim}}}
+\seealso{
+  \code{\link{nlm}}, \code{\link{nlminb}}.
+
+  \code{\link{optimize}} for one-dimensional minimization and
+  \code{\link{constrOptim}} for constrained optimization.
+}
 
 \examples{
 fr <- function(x) {   ## Rosenbrock Banana function
