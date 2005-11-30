@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-11-29
+@set FAQ_DATE @value{FAQ_YEAR}-11-30
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -3249,6 +3249,8 @@ Fitting Gaussian linear models where the covariance structure is a
 linear combination of known matrices by maximising the residual log
 likelihood.  Can be used for multivariate models and random effects
 models.
+@item relaimpo
+RELAtive IMPOrtance of regressors in linear models.
 @item relax
 Functions for report writing, presentation, and programming.
 @item reldist
