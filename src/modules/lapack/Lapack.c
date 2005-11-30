@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2003  The R Development Core Team.
+ *  Copyright (C) 2001--2005  The R Development Core Team.
  *  Copyright (C) 2003-5      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,12 @@
 # include <config.h>
 #endif
 
+#ifdef Win32
+/* Windows does not need to avoid duplications with external BLAS
+   containing Lapack routines */
+# define HAVE_LAPACK 1
+#endif
+
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) gettext (String)
@@ -34,6 +40,8 @@
 #endif
 
 #include "Lapack.h"
+
+#include <Rinternals.h>
 
 static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 		      SEXP method)
@@ -981,7 +989,6 @@ static SEXP moddet_ge_real(SEXP Ain, SEXP logarithm)
 
 /* ------------------------------------------------------------ */
 
-
 #include <Rmodules/Rlapack.h>
 #include <R_ext/Rdynload.h>
 
@@ -989,7 +996,7 @@ void
 R_init_lapack(DllInfo *info)
 {
     R_LapackRoutines *tmp;
-    tmp = (R_LapackRoutines*) malloc(sizeof(R_LapackRoutines));
+    tmp = Calloc(1, R_LapackRoutines);
 
     tmp->svd = modLa_svd;
     tmp->rs = modLa_rs;
@@ -1010,16 +1017,3 @@ R_init_lapack(DllInfo *info)
     tmp->det_ge_real = moddet_ge_real;
     R_setLapackRoutines(tmp);
 }
-
-#ifdef Win32
-#include "psignal.h"
-/* force in malloc & free, so ATLAS gets the right ones */
-/* also force in signal, although what's using that is unclear */
-void lapack_dummy()
-{
-    char *foo;
-    foo = (char *) malloc(1);
-    free(foo);
-    signal(SIGBREAK, NULL);
-}
-#endif

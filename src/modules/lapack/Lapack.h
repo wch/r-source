@@ -1,6 +1,6 @@
 /* C declarations of principal Lapack routines */
 
-#include <Rinternals.h>
+#include <R_ext/Complex.h>
 #include <R_ext/RS.h>
 
 

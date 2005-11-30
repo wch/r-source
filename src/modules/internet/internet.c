@@ -917,6 +917,7 @@ void RxmlMessage(int level, const char *format, ...)
 }
 
 #include "sock.h"
+#include <R_ext/RS.h> /* for Calloc */
 
 #ifdef USE_WININET
 void R_init_internet2(DllInfo *info)
@@ -925,11 +926,7 @@ void R_init_internet(DllInfo *info)
 #endif
 {
     R_InternetRoutines *tmp;
-    tmp = (R_InternetRoutines*) malloc(sizeof(R_InternetRoutines));
-    if(!tmp) {
-	error(_("cannot allocate memory for InternetRoutines structure"));
-	return;
-    }
+    tmp = Calloc(1, R_InternetRoutines);
 
     tmp->download = in_do_download;
     tmp->newurl =  in_R_newurl;

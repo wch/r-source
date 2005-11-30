@@ -9,12 +9,17 @@ all:
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../modules/$(MODULE).dll
 
 CSOURCES = Lapack.c
-FSOURCES = rgeev.f rsyev.f
+OBJS=$(CSOURCES:.c=.o) dllversion.o
+LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f cmplx.f
+LIBOBJECTS = $(LIBSOURCES:.f=.o)
+
+# will be overridden on call from src/gnuwin32/Makefile
+OPTFLAGS=-O2 -Wall -pedantic -std=gnu99
+FOPTFLAGS=-O2
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(FOPTFLAGS)
 dlamc-FFLAGS=-ffloat-store
-OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 
 ../../../modules/$(MODULE).dll: $(MODULE).dll
 	$(MKDIR) -p ../../../modules
@@ -33,7 +38,7 @@ clean:
 
 
 # Rlapack.* section
-Rlapack.dll: dlamc.o dlapack0.o dlapack1.o dlapack2.o dlapack3.o cmplx.o Rlapackrc.o
+Rlapack.dll: $(LIBOBJECTS)
 	@$(ECHO) LIBRARY Rlapack > Rlapack.def
 	@$(ECHO) EXPORTS >> Rlapack.def
 	@$(NM) $^ > Defs
