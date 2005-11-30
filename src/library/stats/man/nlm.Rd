@@ -101,7 +101,11 @@ nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
   \emph{ACM Trans. Math. Software}, \bold{11}, 419--440.
 }
 \seealso{
-  \code{\link{optim}}.  \code{\link{optimize}} for one-dimensional
+  \code{\link{optim}} and \code{\link{nlminb}}.
+
+  
+  \code{\link{constrOptim}} for constrained optimization, 
+  \code{\link{optimize}} for one-dimensional
   minimization and \code{\link{uniroot}} for root finding.
   \code{\link{deriv}} to calculate analytical derivatives.
 
