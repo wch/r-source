@@ -127,14 +127,13 @@ Cross-building packages on Linux
 ================================
 
 It is straightforward to build a package on a ix86-linux system,
-although it is not possible (and we have tried, including using WINE)
-to cross-build .chm files.  You will need an installation of R for
-Windows, either copied from a Windows system or cross-compiled.
+although it seems not possible (and we have tried, including using
+WINE) to cross-build .chm files.  You will need an installation of R
+for Windows, either copied from a Windows system or cross-compiled.
 
-First you need to set up the cross-compilers and tools (see file
-src/gnuwin32/INSTALL in the full source distribution) and have them
-in your path.  We will assume that your Linux installation has Perl5,
-unzip and zip.
+First you need to set up the cross-compilers and tools (see the `R
+Installation and Administration' manual) and have them in your path.
+We will assume that your Linux installation has Perl5, unzip and zip.
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.
@@ -148,6 +147,10 @@ Then packages can be made as natively, for example by
 	zip -r9X /dest/mypkg.zip mypkg
 
 (Rcmd is a Windows executable, so cannot be used.)
+
+If your package has no compiled code it is possible that zipping up
+the installed package on Linux will produce an installable package on
+Windows.  (It has always worked for us, but failures have been reported.)
 
 
 Feedback
