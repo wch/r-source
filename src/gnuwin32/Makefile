@@ -254,8 +254,6 @@ Rblas: ../../bin/Rblas.dll
 Rblas-clean:
 	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o
 
-Rblas-DLLLIBS=-L../../lib $(LIBUNICOWS) -lR
-
 ../../lib/libRblas.a:  Rblas.def
 	@$(MKDIR) -p ../../lib
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
@@ -273,18 +271,18 @@ cmplxblas.o: ../appl/cmplxblas.f
 ifeq ($(strip $(USE_ACML)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L"$(ACML_PATH)" \
-	   -L../../lib -lR -lacml -lg2c
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
+	   -L../../lib -lR  -L"$(ACML_PATH)" -lacml -lg2c
 else
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L"$(ATLAS_PATH)" \
-	   -L../../lib -lR -lf77blas -latlas
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
+	   -L../../lib -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L../../lib -lR -lg2c
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../lib -lR -lg2c
 endif
 endif
 
