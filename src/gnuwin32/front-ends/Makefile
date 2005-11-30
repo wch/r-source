@@ -12,14 +12,10 @@ else
 endif
 CFLAGS=$(OPTFLAGS) -I../../include
 
-## <FIXME> remove references to librproxy.a and remove rproxy.df
-## once package rcom links to rproxy.dll
-
 all: $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
      $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
      $(R_HOME)/bin/Rproxy.dll $(R_HOME)/bin/R.exe \
-     $(R_HOME)/bin/md5check.exe \
-     $(R_HOME)/lib/librproxy.a
+     $(R_HOME)/bin/md5check.exe
 
 $(R_HOME)/bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p $(R_HOME)/bin
@@ -62,7 +58,6 @@ Rgui-LINKFLAGS+=-Wl,--large-address-aware
 Rterm-LINKFLAGS+=-Wl,--large-address-aware
 endif
 ## Increase stack size to 10Mb
-## If you alter this, change initialization of R_CStackLimit in ../system.c
 Rgui-LINKFLAGS+=-Wl,--stack=0xA00000
 Rterm-LINKFLAGS+=-Wl,--stack=0xA00000
 
@@ -97,10 +92,6 @@ rproxy-DLLFLAGS=-mwindows
 rproxy-DLLLIBS=-L../../../lib -lR -lole32 -luuid -loleaut32
 rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
 	bdx_util.o bdx_SEXP.o bdx_com.o rtico.o
-
-$(R_HOME)/lib/librproxy.a: rproxy.dll rproxy.df
-	$(DLLTOOL_WIN32) $(DLLTOOLFLAGS) $(RPROXY-DLLTOOLFLAGS) --dllname rproxy.dll --def rproxy.df --output-lib $@
-
 
 $(R_HOME)/bin/Rproxy.dll: rproxy.dll
 	$(MKDIR) -p $(R_HOME)/bin

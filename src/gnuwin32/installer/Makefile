@@ -84,7 +84,7 @@ endif
 	(cd ..; $(MAKE) --no-print-directory -C installer/$(RPREFIX)/src/gnuwin32/help clean)
 	$(CP) -pr $(R_HOME)/include $(RPREFIX)
 	$(MKDIR) -p $(RPREFIX)/lib
-	$(CP) -pr $(R_HOME)/lib/libRlapack.a $(R_HOME)/lib/librproxy.a $(RPREFIX)/lib
+	$(CP) -pr $(R_HOME)/lib/libRlapack.a $(RPREFIX)/lib
 	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library
