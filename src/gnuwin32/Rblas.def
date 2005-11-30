@@ -4,29 +4,29 @@ EXPORTS
  daxpy_
  dcopy_
  ddot_
- dgbmv_;
+ dgbmv_
  dgemm_
- dgemv_;
- dger_;
+ dgemv_
+ dger_
  dnrm2_
  drot_
  drotg_
- drotm_;
- drotmg_;
- dsbmv_;
+ drotm_
+ drotmg_
+ dsbmv_
  dscal_
  dswap_
- dspmv_;
- dspr_;
- dspr2_;
- dspmv_;
- dsymm_;
- dsymv_;
- dsyr_;
- dsyr2_;
- dsyr2k_;
- dsyrk_;
- dtbmv_;
+ dspmv_
+ dspr_
+ dspr2_
+ dspmv_
+ dsymm_
+ dsymv_
+ dsyr_
+ dsyr2_
+ dsyr2k_
+ dsyrk_
+ dtbmv_
  dtrsm_
  idamax_
  lsame_
@@ -37,50 +37,50 @@ EXPORTS
  dsyr2_
  dsyr2k_
  dsyrk_
- dtbmv_;
- dtbsv_;
- dtpmv_;
- dtpsv_;
+ dtbmv_
+ dtbsv_
+ dtpmv_
+ dtpsv_
  dtrmm_
  dtrmv_
- dtrsv_;
- dtrsm_;
+ dtrsv_
+ dtrsm_
  dtrsv_
  dzasum_
  dznrm2_
  izamax_
- zaxpy_;
- zcopy_;
- zdotc_;
- zdotu_;
- zdrot_;
- zdscal_;
- zgbmv_;
- zgemm_;
- zgemv_;
- zgerc_;
- zgeru_;
- zhbmv_;
- zhemm_;
- zhemv_;
- zher_;
- zher2_;
- zher2k_;
- zherk_;
- zhpmv_;
- zhpr_;
- zhpr2_;
- zrotg_;
- zscal_;
- zswap_;
- zsymm_;
- zsyr2k_;
- zsyrk_;
- ztbmv_;
- ztbsv_;
- ztpmv_;
- ztpsv_;
- ztrmm_;
- ztrmv_;
- ztrsm_;
- ztrsv_;
+ zaxpy_
+ zcopy_
+ zdotc_
+ zdotu_
+ zdrot_
+ zdscal_
+ zgbmv_
+ zgemm_
+ zgemv_
+ zgerc_
+ zgeru_
+ zhbmv_
+ zhemm_
+ zhemv_
+ zher_
+ zher2_
+ zher2k_
+ zherk_
+ zhpmv_
+ zhpr_
+ zhpr2_
+ zrotg_
+ zscal_
+ zswap_
+ zsymm_
+ zsyr2k_
+ zsyrk_
+ ztbmv_
+ ztbsv_
+ ztpmv_
+ ztpsv_
+ ztrmm_
+ ztrmv_
+ ztrsm_
+ ztrsv_
