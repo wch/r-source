@@ -1599,10 +1599,10 @@ prepare and install translation catalogues.
 
 Many current CPUs have both 32- and 64-bit sets of instructions: this
 has long been true for UltraSparc and more recently for MIPS, PPC and
-AMD64.   Many OSes running on such CPUs offer the choice of building a
+x86_64.   Many OSes running on such CPUs offer the choice of building a
 32-bit or a 64-bit version of R (and details are given below under
 specific OSes).  For most a 32-bit version is the default, but for some
-(e.g. AMD64) 64-bit is.
+(e.g. x86_64) 64-bit is.
 
 All current versions of @R{} use 32-bit integers and IEC
 60559@footnote{also known as IEC 559 and IEEE 754} double-precision
@@ -1639,7 +1639,7 @@ Because the pointers are larger, @R{}'s basic structure (the cons cell)
 is larger (normally twice the size).  This means that @R{} objects take
 more space and more time to manipulate, especially during garbage
 collection. So 64-bit versions of @R{} will typically run slower than
-32-bit versions. (On Sparc Solaris the difference was 15-20%, on AMD64
+32-bit versions. (On Sparc Solaris the difference was 15-20%, on x86_64
 around 10%.)
 
 @end itemize
@@ -1858,10 +1858,10 @@ can be used by
 @end example
 
 @noindent
-with the same caveat on multi-threading.  (Thanks to Andy Liaw for the
-information.)
+with the same caveat on multi-threading (but the number of threads
+defaults to 1).  (Thanks to Andy Liaw for the information.)
 
-For AMD64 processors under Linux there is the AMD Core Math Library (ACML)
+For x86_64 processors under Linux there is the AMD Core Math Library (ACML)
 @url{http://www.amd.com/acml}.  For the @code{gcc} version (which is
 single-threaded only) we could use
 
@@ -1882,7 +1882,7 @@ well as for @R{} itself.  This means that it is better to use a shared
 BLAS library, as most of a static library will be compiled into the @R{}
 executable and each BLAS-using package.  In any case, the BLAS library
 must be usable with dynamically-loadable code: this can be a problem
-with ATLAS on some platforms (including AMD64) as it is not by default
+with ATLAS on some platforms (including x86_64) as it is not by default
 built with position-independent code.
 
 You will need double-precision and double-complex versions of the BLAS,
@@ -1920,6 +1920,14 @@ for @option{--with-lapack} can be set @emph{via} the environment variable
 @env{LAPACK_LIBS}, but this will only be used if @option{--with-lapack}
 is specified (as the default value is @code{no}) and the BLAS library
 does not contain LAPACK.
+
+Since ACML contains a full LAPACK, if selected as the BLAS it can be
+used as the LAPACK @emph{via} @option{--with-lapack}.
+
+Intel's Math Kernel Library suppies a full LAPACK which can be used via
+@example
+--with-lapack="-L/path/to/libs -lmkl_lapack"
+@end example
 
 If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
@@ -2394,7 +2402,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on AMD64 we used
+on x86_64 we used
 
 @example
 CFLAGS="-m32 -O2 -g -Wall -pedantic -std=gnu99" 
@@ -3114,7 +3122,7 @@ for Debian GNU/Linux
 @url{http://www.debian.org/doc/manuals/debian-java-faq/}.
 
 Note that there appears not to be a Sun Java plugin for 64-bit browsers
-on AMD64 Linux:
+on x86_64 Linux:
 @url{http://forum.java.sun.com/thread.jspa?threadID=568127&tstart=75},
 but 32-bit browsers have been used on that platform.
 
