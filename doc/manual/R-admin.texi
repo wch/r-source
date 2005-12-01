@@ -1926,8 +1926,11 @@ used as the LAPACK @emph{via} @option{--with-lapack}.
 
 Intel's Math Kernel Library suppies a full LAPACK which can be used via
 @example
---with-lapack="-L/path/to/libs -lmkl_lapack"
+--with-lapack="-L/path/to/libs -lmkl_lapack64"
 @end example
+
+@noindent
+or @code{-lmkl_lapack32}: @code{-lmkl_lapack} is static and not PIC.
 
 If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
