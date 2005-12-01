@@ -293,6 +293,12 @@ INSTALLATION CHANGES
 	check-devel' tests the code in the documentation.  Currently
 	it runs doc/manual/R-{exts,intro}.R.
 
+    o	The workaround to allow an external LAPACK-containing BLAS
+	such as libsunperf to be used with the internal LAPACK has
+	been removed.  If you have such a library you may now need
+	to use --with-lapack.  It is no longer possible to use some
+	older versions of libsunperf, e.g. Forte 7 on 64-bit builds.
+
 
 UTILITIES
 

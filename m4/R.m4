@@ -2715,11 +2715,6 @@ fi
 
 LIBS="${acx_lapack_save_LIBS}"
 
-if test "${acx_lapack_ok}" = yes; then
-  AC_DEFINE(HAVE_LAPACK, 1,
-            [Define if external LAPACK is available.])
-fi
-
 AC_SUBST(LAPACK_LIBS)
 ])# R_LAPACK_LIBS
 

@@ -35371,14 +35371,6 @@ fi
 
 LIBS="${acx_lapack_save_LIBS}"
 
-if test "${acx_lapack_ok}" = yes; then
-
-cat >>confdefs.h <<\_ACEOF
-#define HAVE_LAPACK 1
-_ACEOF
-
-fi
-
 
 
 fi

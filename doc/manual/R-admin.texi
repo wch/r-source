@@ -708,7 +708,10 @@ Another possibility is to use AMD's AMD Core Math Library (ACML)
 (Cygwin itself is not needed, at least currently), install
 @file{acml-2-7-0-win32-g77.exe} (or later) and edit
 @file{@var{R_HOME}/src/gnuwin32/MkRules} to define @code{USE_ACML=YES}
-and set @code{ACML_PATH} to the path to @file{libacml.a}.
+and set @code{ACML_PATH} to the path to @file{libacml.a}.  If you also
+set @code{USE_ACML_LAPACK=YES}, ACML will be used to provide the LAPACK
+library for R itself and any packages using @code{$LAPACK_LIBS} built
+under that setting.
 
 There used to be support for Kazushige Goto's BLAS, but this is no
 longer available for Windows, and it seems that it will in future only
@@ -1897,15 +1900,15 @@ built with @command{gfortran}  @pxref{Using gfortran}.
 Provision is made for using an external LAPACK library, principally to
 cope with BLAS libraries which contain a copy of LAPACK (such as
 @code{libsunperf} on Solaris, @code{vecLib} on Mac OS X and ACML on
-AMD64).  However, the likely performance gains are thought to be small
-(and may be negative), and the default is not to search for a suitable
-LAPACK library, this is definitely @strong{not} recommended.  You can
-specify a specific LAPACK library or a search for a generic library by
-the configuration option @option{--with-lapack}.  The default for
-@option{--with-lapack} is to check the BLAS library and then look for an
-external library @code{-llapack}.  Sites searching for the fastest
-possible linear algebra may want to build a LAPACK library using the
-ATLAS-optimized subset of LAPACK.  To do so specify something like
+ix86/x86_64 Linux).  However, the likely performance gains are thought
+to be small (and may be negative), and the default is not to search for
+a suitable LAPACK library, this is definitely @strong{not} recommended.
+You can specify a specific LAPACK library or a search for a generic
+library by the configuration option @option{--with-lapack}.  The default
+for @option{--with-lapack} is to check the BLAS library and then look
+for an external library @code{-llapack}.  Sites searching for the
+fastest possible linear algebra may want to build a LAPACK library using
+the ATLAS-optimized subset of LAPACK.  To do so specify something like
 
 @example
 --with-lapack="-L/path/to/libs -llapack -lcblas"
@@ -1928,14 +1931,15 @@ DGEBRD gave error code -10
 @end example
 
 @noindent
-(seen with both the Debian @code{-llapack} which was current in late
-2002, and Fedora Core 4 @code{-llapack} in September 2005).  Other
-potential problems are incomplete versions of the libraries: for example
-@code{libsunperf} from Sun Forte 6.x was missing the entry point for
-@code{DLANGE} and @code{vecLib} has omitted the BLAS routine
-@code{LSAME}.  For problems compiling LAPACK using recent versions of
-@samp{gcc} on @samp{ix86} Linux, see @ref{New platforms}: these problems
-have surfaced in Fedora Core 3's distribution, for example.
+(seen with the Debian @code{-llapack} which was current in late 2002,
+Fedora Core 4 Extras @code{-llapack} in September 2005 and 64-bit
+@code{libsunperf} in Forte 7).  Other potential problems are incomplete
+versions of the libraries: for example @code{libsunperf} from Sun Forte
+6.x was missing the entry point for @code{DLANGE} and @code{vecLib} has
+omitted the BLAS routine @code{LSAME}.  For problems compiling LAPACK
+using recent versions of @samp{gcc} on @samp{ix86} Linux, see @ref{New
+platforms}: these problems have surfaced in Fedora Core 3's
+distribution, for example.
 
 Please @strong{do} bear in mind that using @option{--with-lapack} is
 `definitely @strong{not} recommended': it is provided @strong{only}
@@ -2595,7 +2599,7 @@ only handle files up to 2Gb (unlike 64-bit versions).  According to
 
 To compile for a 64-bit target on Solaris (which needs an UltraSparc
 chip and for support to be enabled in the OS) with the Forte 6 and 7
-compilers we used
+compilers we used @option{--without-blas} and 
 
 @example
 CC="cc -xarch=v9"
@@ -2627,13 +2631,14 @@ Note that @samp{/usr/local/lib/sparcv9} will need to be in the
 @cindex LAPACK library
 
 Note that using @command{f95} allows the Sun performance library
-@code{libsunperf} to be selected: it will not work with @command{f77},
-nor with @command{g77}.  @code{libsunperf} contains both BLAS and LAPACK
-code, and @option{--with-lapack} is recommended for 32-bit builds using
-@command{f95}, but not for 64-bit builds where on our test system it
-failed in both Forte 6U1 and 7, albeit in different ways.  Our
-experience has been that ATLAS's BLAS is faster than @code{libsunperf},
-especially for complex numbers.
+@code{libsunperf} to be selected: it may not work@footnote{recent
+versions have @command{f77} as a wrapper for @command{f95}, and these do
+work.} with @command{f77}, and will not with @command{g77}.
+@code{libsunperf} contains both BLAS and LAPACK code, and
+@option{--with-lapack} may be required if you use it.  On our test system
+using @code{libsunperf} failed for 64-bit builds with both Forte 6U1 and
+7, albeit in different ways.  Our experience has been that ATLAS's BLAS
+is faster than @code{libsunperf}, especially for complex numbers.
 
 Some care is needed to ensure that libraries found by
 @command{configure} are compatible with the @R{} executable and modules, as

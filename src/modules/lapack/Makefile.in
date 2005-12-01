@@ -12,8 +12,7 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 SOURCES_C = Lapack.c @USE_VECLIB_G95FIX_TRUE@ vecLibg95c.c
-SOURCES_F_R = @USE_EXTERNAL_LAPACK_FALSE@ rgeev.f rsyev.f
-SOURCES_F = $(SOURCES_F_R) @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.f
+SOURCES_F = @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.f
 
 DEPENDS = $(SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
@@ -31,8 +30,7 @@ DISTFILES = \
 	$(HEADERS) Lapack.c \
 	vecLibg95c.c vecLibg95f.f \
 	cmplx.f \
-	dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
-	rgeev.f rsyev.f
+	dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f
 
 ## <FIXME>
 ## Change to 'lapack.la' when using libtool for shlibs.
