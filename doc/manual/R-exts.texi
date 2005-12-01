@@ -2860,7 +2860,8 @@ fragment of @R{} code or the name of an @R{} object, using
 @code{typewriter} font if possible.  Only percent signs and unpaired
 braces always need to be escaped (by a backslash) inside @code{\code}:
 backslash will need to be escaped if it precedes @samp{%}, @samp{@{} or
-@samp{@}}.
+@samp{@}}.  The only markup interpreted inside @code{\code} is
+@code{\link}.
 
 @item \preformatted@{@var{text}@}
 @findex \preformatted
