@@ -774,7 +774,7 @@ make -j2
 @noindent
 but this is only likely to be worthwhile on a dual-processor (or
 perhaps a hyperthreaded P4) machine with ample (at least 384Mb) of
-memory.  On a dual AthlonXP it reduced the build time by about 30%
+memory.  On a dual AthlonMP it reduced the build time by about 30%
 whereas on a single P4HT it reduced it by 10%.  Note that this may
 sometimes stop and have to be restarted.
 
@@ -918,7 +918,7 @@ htmldocs @r{(the @acronym{HTML} documentation)}
 bitmapdll @r{(the bitmap support files)}
 recommended @r{(the recommended packages)}
 vignettes @r{(the vignettes in package @strong{grid}:}
-	  @r{ only need if building from svn checkout)}
+	  @r{ only needed if building from svn checkout)}
 manuals @r{(the PDF manuals)}
 rinstaller @r{(the install program)}
 crandir @r{(the @acronym{CRAN} distribution directory)}
@@ -1000,7 +1000,7 @@ for testing) use
 @example
 cd installer
 make imagedir
-zip -r9X R-2.0.0.zip R-2.2.0  # or something similar
+zip -r9X R-2.3.0.zip R-2.3.0  # or something similar
 @end example
 
 We have not found a reliable way to convert base to lazy-loading when
@@ -1014,7 +1014,7 @@ cross-building, so it is left in the old format.
 The @file{bin/macosx} directory of a @acronym{CRAN} site contains
 binaries for MacOS X (at the time of writing only for PowerPC) for a
 base distribution and a large number of add-on packages from
-@acronym{CRAN} to run on Mac OS X version 10.2.0 or higher.
+@acronym{CRAN} to run on Mac OS X version 10.3.0 or higher.
 
 The simplest way is to use @file{R.dmg}.  Just double-click on the
 icon and the disk image file will be mounted. Read the
@@ -1385,8 +1385,8 @@ for one or more of the following types of package distributions:
 versions @code{x.y.z} and containing @file{.zip} files.
 
 @item 
-@code{"mac.binary"}: located at @code{bin/macosx/x.y} for @R{} 
-versions @code{x.y.z} and containing @file{.tgz} files.
+@code{"mac.binary"}: located at @code{bin/macosx/powerpc/contrib/x.y}
+for @R{} versions @code{x.y.z} and containing @file{.tgz} files.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -1433,9 +1433,7 @@ multi-byte locales, in which a single character is represented by one,
 two or more consecutive bytes: examples of such locales are those using
 UTF-8 (becoming standard under Linux) and those for Chinese, Japanese
 and Korean.  Note that only some of the graphics devices can handle
-multi-byte or even non-Latin1 character sets: in particular
-@code{postscript} and @code{PDF} are in practice restricted to ISO
-Latin-1, -2 and -9.
+multi-byte or even non-Latin1 character sets.
 
 The other aspect of the internationalization is support of the
 translation of messages.  This is enabled in almost all builds of @R{}
@@ -1660,10 +1658,10 @@ several years off.
 @section Windows
 
 Currently the Windows build of @R{} is a 32-bit executable.  This runs
-happily on Windows 64 on AMD64 and EMT64, but is limited to a 2GB (or,
-see the rw-FAQ, 3GB) address space.  It will not be possible to build a
-native version for Windows 64 until suitable compilers are available,
-and currently (mid-2005) that is not in prospect.
+happily on Windows 64 on AMD64 and EM64T, but is limited to a 3GB
+address space.  It will not be possible to build a native version for
+Windows 64 until suitable compilers are available, and currently
+(mid-2005) that is not in prospect.
 
 @node Essential and useful other programs in Unix, Configuration on Unix, Choosing between 32- and 64-bit builds, Top
 @appendix Essential and useful other programs in Unix
@@ -1861,9 +1859,11 @@ can be used by
 with the same caveat on multi-threading (but the number of threads
 defaults to 1).  (Thanks to Andy Liaw for the information.)
 
-For x86_64 processors under Linux there is the AMD Core Math Library (ACML)
-@url{http://www.amd.com/acml}.  For the @code{gcc} version (which is
-single-threaded only) we could use
+For x86_64 and ix86 processors under Linux there is the AMD Core Math
+Library (ACML) @url{http://www.amd.com/acml}.  For the @code{gcc}
+version@footnote{At the time of writing version 2.7.0 was for gcc3/g77
+and version 3.0.0 for gcc4/gfortran.} (which is single-threaded only) we
+could use
 
 @example
 --with-blas="-lacml"
