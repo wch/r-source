@@ -4,8 +4,10 @@ include ../../gnuwin32/MkRules
 MODULE=lapack
 all: 
 	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
+ifneq ($(strip $(USE_ACML)),YES)
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../bin/Rlapack.dll 
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../lib/libRlapack.a
+endif
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../modules/$(MODULE).dll
 
 CSOURCES = Lapack.c
@@ -25,7 +27,12 @@ dlamc-FFLAGS=-ffloat-store
 	$(MKDIR) -p ../../../modules
 	$(CP) $< $@
 
+ifeq ($(strip $(USE_ACML_LAPACK)),YES)
+lapack-DLLLIBS=-L../../../lib -lRblas -L"$(ACML_PATH)" -lacml -lg2c -lR
+else
 lapack-DLLLIBS=-L../../../lib -lRlapack -lRblas -lR
+endif
+
 Rlapack-DLLLIBS=-L../../../lib -lR -lRblas -lg2c
 
 $(MODULE).dll: $(OBJS)

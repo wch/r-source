@@ -41,7 +41,11 @@ DLLLIBS=-L$(RHOME)/lib $(PKG_LIBS) $(EXTRA_LIBS) -lR
 RESFLAGS=--include-dir $(RHOME)/include
 # Note: DLLLIBS has already set -L$(RHOME)/lib
 BLAS_LIBS=-lRblas
-LAPACK_LIBS=-lRlapack 
+ifeq ($(strip $(USE_ACML_LAPACK)),YES)
+LAPACK_LIBS=-L"$(ACML_PATH)" -lacml -lg2c
+else
+LAPACK_LIBS=-lRlapack
+endif
 # for use by Makevars.win
 R_HOME=$(RHOME)
 

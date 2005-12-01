@@ -41,6 +41,9 @@ CRAN have been updated.)
 Since the Goto BLAS is no longer available for Windows, support for it
 has been withdrawn.
 
+The ACML optimized BLAS can be used for LAPACK: see the 'R
+Installation and Administration Manual'.
+
 winMenuAdd() now has no limits on the number of menus or items, and names
 are now limited to 500 (not 50) bytes.
 

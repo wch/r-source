@@ -26,6 +26,8 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 # if you want to use the AMD's ACML BLAS.
 USE_ACML=NO
 ACML_PATH=c:/Program Files/AMD/acml2.7.0/gnu32/lib
+## Set this to YES if you want to use ACML's LAPACK not R's.
+USE_ACML_LAPACK=NO
 
 # Support for the Goto BLAS has been withdrawn: see R-admin.html
 
