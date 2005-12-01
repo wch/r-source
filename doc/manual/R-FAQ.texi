@@ -1832,6 +1832,8 @@ large sparse graphical Gaussian models.
 @item Geneland
 MCMC inference from individual genetic data based on a spatial
 statistical model.
+@item GroupSeq
+Computations related to group-seqential boundaries.
 @item HI
 Simulation from distributions supported by nested hyperplanes.
 @item HTMLapplets
