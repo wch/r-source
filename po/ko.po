@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-02 10:32+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -76,7 +76,7 @@ msgstr "작업 디렉토리를 얻을수 없습니다"
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam에서 'tempdir'가 부적절합니다"
 
-#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:339
+#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:336
 msgid "cannot find unused tempfile name"
 msgstr "사용하지 않는 tempfile 이름을 검색할수가 없습니다"
 
@@ -228,68 +228,72 @@ msgstr "잘못되었습니다!: machine address공간의 상한은 4Gb 입니다
 msgid "cannot decrease memory limit"
 msgstr "메모리 한계를 줄일수가 없습니다"
 
-#: src/gnuwin32/extra.c:967
+#: src/gnuwin32/extra.c:905 src/unix/sys-unix.c:303
+msgid "cannot mkdir R_TempDir"
+msgstr "디렉토리  R_TempDir를 작성할수가 없습니다"
+
+#: src/gnuwin32/extra.c:952
 msgid "argument must be a character vector"
 msgstr "인수는 문자벡터가 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:982 src/main/connections.c:1425
+#: src/gnuwin32/extra.c:967 src/main/connections.c:1425
 msgid "Unable to open the clipboard"
 msgstr "clipboard를 열수가 없습니다"
 
-#: src/gnuwin32/extra.c:987 src/main/connections.c:1429
+#: src/gnuwin32/extra.c:972 src/main/connections.c:1429
 msgid "Unable to write to the clipboard"
 msgstr "clipborad를 쓰기 위해서 열수가 없습니다"
 
-#: src/gnuwin32/extra.c:1133 src/gnuwin32/extra.c:1212
+#: src/gnuwin32/extra.c:1118 src/gnuwin32/extra.c:1197
 msgid "'default' must be a character string"
 msgstr "'default'는 문자열이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1135 src/gnuwin32/extra.c:1214
+#: src/gnuwin32/extra.c:1120 src/gnuwin32/extra.c:1199
 msgid "'default' is overlong"
 msgstr "'default'가 너무 큽니다"
 
-#: src/gnuwin32/extra.c:1144 src/gnuwin32/extra.c:1218
+#: src/gnuwin32/extra.c:1129 src/gnuwin32/extra.c:1203
 msgid "'caption' must be a character string"
 msgstr "'caption'는 문자열이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1146
+#: src/gnuwin32/extra.c:1131
 msgid "'multi' must be a logical value"
 msgstr "'multi'는 논리값이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1148
+#: src/gnuwin32/extra.c:1133
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'는 정수값이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1307
+#: src/gnuwin32/extra.c:1292
 msgid "'title' must be a character string"
 msgstr "'title\"는 문자열이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1339
+#: src/gnuwin32/extra.c:1324
 msgid "'which' must be length 1"
 msgstr "'which'는 길이 1 이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1369
+#: src/gnuwin32/extra.c:1354
 msgid "invalid value of 'which'"
 msgstr "'whhich'의 값이 부적절합니다"
 
-#: src/gnuwin32/extra.c:1371 src/gnuwin32/extra.c:1373
-#: src/gnuwin32/extra.c:1413
+#: src/gnuwin32/extra.c:1356 src/gnuwin32/extra.c:1358
+#: src/gnuwin32/extra.c:1398
 msgid "invalid device"
 msgstr "부적절한 디바이스입니다"
 
-#: src/gnuwin32/extra.c:1374
+#: src/gnuwin32/extra.c:1359
 msgid "requires SDI mode"
 msgstr "SDI 모드가 요구됩니다"
 
-#: src/gnuwin32/extra.c:1407
+#: src/gnuwin32/extra.c:1392
 msgid "invalid graphical device number"
 msgstr "graphical 디바이스 번호가 부적절합니다"
 
-#: src/gnuwin32/extra.c:1417
+#: src/gnuwin32/extra.c:1402
 msgid "bad device"
 msgstr "부적절한 디바이스입니다"
 
-#: src/gnuwin32/extra.c:1525 src/gnuwin32/extra.c:1533
+#: src/gnuwin32/extra.c:1510 src/gnuwin32/extra.c:1518
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs에의 입력이 부적절합니다"
 
@@ -396,17 +400,17 @@ msgstr "경고: --max-mem-size  =%4.1fM'는 너무 작아서 무시되었습니�
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr "경고: --max-mem-size  =%4.1fM'는 너무 작아서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:928 src/unix/system.c:295
+#: src/gnuwin32/system.c:928 src/unix/system.c:299
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "경고: 알수 없는 '%s'옵션입니다\n"
 
-#: src/gnuwin32/system.c:953 src/unix/system.c:299
+#: src/gnuwin32/system.c:953 src/unix/system.c:303
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "인수'%s'는 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:971 src/unix/system.c:337
+#: src/gnuwin32/system.c:971 src/unix/system.c:341
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'-- save', '--no-save', '--vanilia' 어느쪽이든을 지정해 주십시오"
 
@@ -4405,12 +4409,12 @@ msgstr "\"mfg\"안의  nc의 값은 부적절하고 무시됩니다"
 msgid "calling par(new=) with no plot"
 msgstr "plot이 없는채  par(new =)를 호출했습니다"
 
-#: src/main/par.c:703 src/main/par.c:1155
+#: src/main/par.c:709 src/main/par.c:1155
 #, fuzzy, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "graphics 파라미터 리스트가 부적절합니다"
 
-#: src/main/par.c:707 src/main/par.c:1159
+#: src/main/par.c:713 src/main/par.c:1159
 #, fuzzy, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "graphics 파라미터가 부적절합니다"
@@ -6423,10 +6427,6 @@ msgstr "InternetOpenUrl은 실패했습니다: '%s'"
 msgid "Internet read timed out"
 msgstr "인터넷 read는 timed out"
 
-#: src/modules/internet/internet.c:930
-msgid "cannot allocate memory for InternetRoutines structure"
-msgstr "InternetRoutines 구조에 메모리를 할당할수가 없습니다"
-
 #: src/modules/internet/nanoftp.c:380
 msgid "removing FTP proxy info"
 msgstr "FTP proxy의 정보를 제거하고 있습니다"
@@ -6503,147 +6503,147 @@ msgstr "redirects의 수가 너무 많습니다. 포기합니다...."
 msgid "allocation of socket connection failed"
 msgstr "소켓 접속의 할당에 실패했습니다"
 
-#: src/modules/lapack/Lapack.c:47 src/modules/lapack/Lapack.c:532
+#: src/modules/lapack/Lapack.c:49 src/modules/lapack/Lapack.c:502
 msgid "'jobu' and 'jobv' must be character strings"
 msgstr "'jobu'와 'jobv'는 문자열이 아니면 되지 않습니다"
 
-#: src/modules/lapack/Lapack.c:49 src/modules/lapack/Lapack.c:128
+#: src/modules/lapack/Lapack.c:51 src/modules/lapack/Lapack.c:130
 msgid "'method' must be a character string"
 msgstr "'method'는 문자열이 아니면 안됩니다"
 
-#: src/modules/lapack/Lapack.c:70 src/modules/lapack/Lapack.c:80
-#: src/modules/lapack/Lapack.c:94 src/modules/lapack/Lapack.c:103
-#: src/modules/lapack/Lapack.c:158 src/modules/lapack/Lapack.c:168
-#: src/modules/lapack/Lapack.c:193 src/modules/lapack/Lapack.c:211
-#: src/modules/lapack/Lapack.c:296 src/modules/lapack/Lapack.c:307
-#: src/modules/lapack/Lapack.c:411 src/modules/lapack/Lapack.c:417
-#: src/modules/lapack/Lapack.c:462 src/modules/lapack/Lapack.c:469
-#: src/modules/lapack/Lapack.c:473 src/modules/lapack/Lapack.c:507
-#: src/modules/lapack/Lapack.c:514 src/modules/lapack/Lapack.c:545
-#: src/modules/lapack/Lapack.c:554 src/modules/lapack/Lapack.c:600
-#: src/modules/lapack/Lapack.c:606 src/modules/lapack/Lapack.c:661
-#: src/modules/lapack/Lapack.c:667 src/modules/lapack/Lapack.c:827
-#: src/modules/lapack/Lapack.c:833 src/modules/lapack/Lapack.c:873
-#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:884
-#: src/modules/lapack/Lapack.c:913 src/modules/lapack/Lapack.c:920
-#: src/modules/lapack/Lapack.c:944
+#: src/modules/lapack/Lapack.c:72 src/modules/lapack/Lapack.c:82
+#: src/modules/lapack/Lapack.c:96 src/modules/lapack/Lapack.c:105
+#: src/modules/lapack/Lapack.c:156 src/modules/lapack/Lapack.c:162
+#: src/modules/lapack/Lapack.c:180 src/modules/lapack/Lapack.c:191
+#: src/modules/lapack/Lapack.c:271 src/modules/lapack/Lapack.c:277
+#: src/modules/lapack/Lapack.c:381 src/modules/lapack/Lapack.c:387
+#: src/modules/lapack/Lapack.c:432 src/modules/lapack/Lapack.c:439
+#: src/modules/lapack/Lapack.c:443 src/modules/lapack/Lapack.c:477
+#: src/modules/lapack/Lapack.c:484 src/modules/lapack/Lapack.c:515
+#: src/modules/lapack/Lapack.c:524 src/modules/lapack/Lapack.c:570
+#: src/modules/lapack/Lapack.c:576 src/modules/lapack/Lapack.c:631
+#: src/modules/lapack/Lapack.c:637 src/modules/lapack/Lapack.c:797
+#: src/modules/lapack/Lapack.c:803 src/modules/lapack/Lapack.c:843
+#: src/modules/lapack/Lapack.c:850 src/modules/lapack/Lapack.c:854
+#: src/modules/lapack/Lapack.c:883 src/modules/lapack/Lapack.c:890
+#: src/modules/lapack/Lapack.c:914
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "Lapack 루틴 '%2$s'로부터 에러코드 %1$d가 돌려 주었습니다"
 
-#: src/modules/lapack/Lapack.c:142 src/modules/lapack/Lapack.c:270
-#: src/modules/lapack/Lapack.c:587 src/modules/lapack/Lapack.c:640
+#: src/modules/lapack/Lapack.c:144 src/modules/lapack/Lapack.c:250
+#: src/modules/lapack/Lapack.c:557 src/modules/lapack/Lapack.c:610
 msgid "'x' must be a square numeric matrix"
 msgstr "'x' 정방행렬이 아니면 되지 않습니다"
 
-#: src/modules/lapack/Lapack.c:144 src/modules/lapack/Lapack.c:276
-#: src/modules/lapack/Lapack.c:589 src/modules/lapack/Lapack.c:646
+#: src/modules/lapack/Lapack.c:146 src/modules/lapack/Lapack.c:256
+#: src/modules/lapack/Lapack.c:559 src/modules/lapack/Lapack.c:616
 msgid "invalid 'only.values'"
 msgstr "부적절한 'only.values'입니다"
 
-#: src/modules/lapack/Lapack.c:354 src/modules/lapack/Lapack.c:397
+#: src/modules/lapack/Lapack.c:324 src/modules/lapack/Lapack.c:367
 msgid "'A' must be a complex matrix"
 msgstr "'A'는 복소행렬이 아니면 되지 않습니다"
 
-#: src/modules/lapack/Lapack.c:356 src/modules/lapack/Lapack.c:448
-#: src/modules/lapack/Lapack.c:491
+#: src/modules/lapack/Lapack.c:326 src/modules/lapack/Lapack.c:418
+#: src/modules/lapack/Lapack.c:461
 msgid "'B' must be a complex matrix"
 msgstr "'B'  복소행렬이 아니면 되지 않습니다"
 
-#: src/modules/lapack/Lapack.c:361 src/modules/lapack/Lapack.c:778
+#: src/modules/lapack/Lapack.c:331 src/modules/lapack/Lapack.c:748
 msgid "'A' is 0-diml"
 msgstr "'A'의 차원이 0입니다"
 
-#: src/modules/lapack/Lapack.c:363 src/modules/lapack/Lapack.c:780
+#: src/modules/lapack/Lapack.c:333 src/modules/lapack/Lapack.c:750
 msgid "no right-hand side in 'B'"
 msgstr "'B'에 우변에 없습니다"
 
-#: src/modules/lapack/Lapack.c:365 src/modules/lapack/Lapack.c:782
+#: src/modules/lapack/Lapack.c:335 src/modules/lapack/Lapack.c:752
 #, c-format
 msgid "'A' (%d x %d) must be square"
 msgstr "'A' (%d x %d)는 정방행렬일 필요가 있습니다"
 
-#: src/modules/lapack/Lapack.c:367 src/modules/lapack/Lapack.c:784
+#: src/modules/lapack/Lapack.c:337 src/modules/lapack/Lapack.c:754
 #, c-format
 msgid "'B' (%d x %d) must be compatible with 'A' (%d x %d)"
 msgstr "'B' (%d x %d)는 'A' (%d x %d)와 정합성을 가질 것임이 틀림없습니다"
 
-#: src/modules/lapack/Lapack.c:376 src/modules/lapack/Lapack.c:714
-#: src/modules/lapack/Lapack.c:748 src/modules/lapack/Lapack.c:793
+#: src/modules/lapack/Lapack.c:346 src/modules/lapack/Lapack.c:684
+#: src/modules/lapack/Lapack.c:718 src/modules/lapack/Lapack.c:763
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "Lapack루틴 %2$s의 %1$d인수가 부적절한 값을 가지고 있습니다"
 
-#: src/modules/lapack/Lapack.c:383 src/modules/lapack/Lapack.c:434
-#: src/modules/lapack/Lapack.c:477 src/modules/lapack/Lapack.c:518
-#: src/modules/lapack/Lapack.c:567 src/modules/lapack/Lapack.c:623
-#: src/modules/lapack/Lapack.c:684
+#: src/modules/lapack/Lapack.c:353 src/modules/lapack/Lapack.c:404
+#: src/modules/lapack/Lapack.c:447 src/modules/lapack/Lapack.c:488
+#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:593
+#: src/modules/lapack/Lapack.c:654
 msgid "Fortran complex functions are not available on this platform"
 msgstr "Fortran의 복소수 함수는 이 platform에서 사용할수 없습니다"
 
-#: src/modules/lapack/Lapack.c:455 src/modules/lapack/Lapack.c:500
-#: src/modules/lapack/Lapack.c:866 src/modules/lapack/Lapack.c:906
+#: src/modules/lapack/Lapack.c:425 src/modules/lapack/Lapack.c:470
+#: src/modules/lapack/Lapack.c:836 src/modules/lapack/Lapack.c:876
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "우변은  %d개의 행을 가져야 합니다 (%d 행이 아니고)"
 
-#: src/modules/lapack/Lapack.c:493 src/modules/lapack/Lapack.c:899
+#: src/modules/lapack/Lapack.c:463 src/modules/lapack/Lapack.c:869
 msgid "invalid 'trans' parameter"
 msgstr "'trans'의 parameter이 부적절합니다"
 
-#: src/modules/lapack/Lapack.c:701 src/modules/lapack/Lapack.c:939
+#: src/modules/lapack/Lapack.c:671 src/modules/lapack/Lapack.c:909
 msgid "'A' must be a square matrix"
 msgstr "'A'는 정방 행열이 아니면 되지 않습니다"
 
-#: src/modules/lapack/Lapack.c:702
+#: src/modules/lapack/Lapack.c:672
 msgid "'A' must have dims > 0"
 msgstr "'A'의 차원은 정확한 값이 있을 필요가 있습니다"
 
-#: src/modules/lapack/Lapack.c:712
+#: src/modules/lapack/Lapack.c:682
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr "차수 %d의 주대각행렬이 정규값이 아닙니다"
 
-#: src/modules/lapack/Lapack.c:720 src/modules/lapack/Lapack.c:758
-#: src/modules/lapack/Lapack.c:771 src/modules/lapack/Lapack.c:814
-#: src/modules/lapack/Lapack.c:932
+#: src/modules/lapack/Lapack.c:690 src/modules/lapack/Lapack.c:728
+#: src/modules/lapack/Lapack.c:741 src/modules/lapack/Lapack.c:784
+#: src/modules/lapack/Lapack.c:902
 msgid "'A' must be a numeric matrix"
 msgstr "'A'는 수치 행렬이 아니면 되지 않습니다"
 
-#: src/modules/lapack/Lapack.c:728
+#: src/modules/lapack/Lapack.c:698
 msgid "'size' argument must be a positive integer"
 msgstr "'size'인수는 정확한 정수값이 아니면 되지 않습니다"
 
-#: src/modules/lapack/Lapack.c:737
+#: src/modules/lapack/Lapack.c:707
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr "'size'는 열수 ncol(x) = %d를 초과할수가 없습니다"
 
-#: src/modules/lapack/Lapack.c:738
+#: src/modules/lapack/Lapack.c:708
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr "'size'는 행수  nrow(x) = %d를 초과할수가 없습니다"
 
-#: src/modules/lapack/Lapack.c:747
+#: src/modules/lapack/Lapack.c:717
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "요소 (%d, %d)가 0이므로, 역수를 계산할 수 없습니다"
 
-#: src/modules/lapack/Lapack.c:773 src/modules/lapack/Lapack.c:859
-#: src/modules/lapack/Lapack.c:897
+#: src/modules/lapack/Lapack.c:743 src/modules/lapack/Lapack.c:829
+#: src/modules/lapack/Lapack.c:867
 msgid "'B' must be a numeric matrix"
 msgstr "'B'는 수치 행렬이 아니면 되지 않습니다"
 
-#: src/modules/lapack/Lapack.c:796
+#: src/modules/lapack/Lapack.c:766
 msgid "Lapack routine dgesv: system is exactly singular"
 msgstr "Lapack routine dgesv:  선형 방정식계는 정확하게 특이합니다"
 
-#: src/modules/lapack/Lapack.c:801
+#: src/modules/lapack/Lapack.c:771
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr "시스템은 수치적으로 특이합니다: 조건수의 역수  = %g"
 
-#: src/modules/lapack/Lapack.c:934
+#: src/modules/lapack/Lapack.c:904
 msgid "argument 'logarithm' must be logical"
 msgstr "인수 'logarithm'는 논리 형태가 아니면 안됩니다"
 
@@ -7003,34 +7003,30 @@ msgstr "비어 있지 않는 문자 인수가 예상되어 있습니다"
 msgid "intern=TRUE is not implemented on this platform"
 msgstr "이 platform에서 intern=TRUE은 실제 적용되어 있지 않습니다"
 
-#: src/unix/sys-unix.c:290 src/unix/sys-unix.c:306
-msgid "cannot mkdir R_TempDir"
-msgstr "디렉토리  R_TempDir를 작성할수가 없습니다"
-
-#: src/unix/sys-unix.c:319
+#: src/unix/sys-unix.c:316
 msgid "cannot allocate R_TempDir"
 msgstr "R_TempDir를 할당할 수가 없습니다"
 
-#: src/unix/sys-unix.c:401
+#: src/unix/sys-unix.c:398
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info()은 이 시스템에서는 실제 적용되어 있지 않습니다"
 
-#: src/unix/system.c:232
+#: src/unix/system.c:236
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "경고:  --gui 또는 - g 로, 값이 지정되어 있지 않기때문에 무시되었습니다"
 
-#: src/unix/system.c:254
+#: src/unix/system.c:258
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "경고: \"%s\"는 알수없는 gui입니다.  X11을 사용합니다\n"
 
-#: src/unix/system.c:257
+#: src/unix/system.c:261
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "경고:  \"%s\"는 알수없는 gui 입니다. 아무것도 사용하지 않습니다\n"
 
-#: src/unix/system.c:375
+#: src/unix/system.c:379
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "경고:  파일 리스트의 첫번째만을 편집합니다"
 
@@ -7049,6 +7045,9 @@ msgstr "X11 모듈은 적재할수가 없습니다"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11를 이용할수가 없습니다"
+
+#~ msgid "cannot allocate memory for InternetRoutines structure"
+#~ msgstr "InternetRoutines 구조에 메모리를 할당할수가 없습니다"
 
 #, fuzzy
 #~ msgid "unknown graphical parameter \"%s\""

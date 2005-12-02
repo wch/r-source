@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-02 10:32+0000\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -79,7 +79,7 @@ msgstr "impossibile ottenere la directory di lavoro"
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "'tempdir' non valida in R_tmpnam"
 
-#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:339
+#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:336
 msgid "cannot find unused tempfile name"
 msgstr "non è stato possibile trovare un nome tempfile non ancora utilizzato"
 
@@ -231,68 +231,72 @@ msgstr "esagerato! la tua macchina ha un limite massimo di indirizzi di 4Gb"
 msgid "cannot decrease memory limit"
 msgstr "impossibile diminuire il limite di memoria"
 
-#: src/gnuwin32/extra.c:967
+#: src/gnuwin32/extra.c:905 src/unix/sys-unix.c:303
+msgid "cannot mkdir R_TempDir"
+msgstr "non è possibile creare R_TempDir"
+
+#: src/gnuwin32/extra.c:952
 msgid "argument must be a character vector"
 msgstr "l'argomento deve essere una vettore di tipo character"
 
-#: src/gnuwin32/extra.c:982 src/main/connections.c:1425
+#: src/gnuwin32/extra.c:967 src/main/connections.c:1425
 msgid "Unable to open the clipboard"
 msgstr "Non è possibile aprire gli appunti"
 
-#: src/gnuwin32/extra.c:987 src/main/connections.c:1429
+#: src/gnuwin32/extra.c:972 src/main/connections.c:1429
 msgid "Unable to write to the clipboard"
 msgstr "Impossibile scrivere negli appunti"
 
-#: src/gnuwin32/extra.c:1133 src/gnuwin32/extra.c:1212
+#: src/gnuwin32/extra.c:1118 src/gnuwin32/extra.c:1197
 msgid "'default' must be a character string"
 msgstr "'default' deve essere una stringa di tipo character"
 
-#: src/gnuwin32/extra.c:1135 src/gnuwin32/extra.c:1214
+#: src/gnuwin32/extra.c:1120 src/gnuwin32/extra.c:1199
 msgid "'default' is overlong"
 msgstr "'default' è troppo lungo"
 
-#: src/gnuwin32/extra.c:1144 src/gnuwin32/extra.c:1218
+#: src/gnuwin32/extra.c:1129 src/gnuwin32/extra.c:1203
 msgid "'caption' must be a character string"
 msgstr "'caption' deve essere una stringa di tipo character"
 
-#: src/gnuwin32/extra.c:1146
+#: src/gnuwin32/extra.c:1131
 msgid "'multi' must be a logical value"
 msgstr "'multi' deve essere un valore logico/booleano"
 
-#: src/gnuwin32/extra.c:1148
+#: src/gnuwin32/extra.c:1133
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' deve essere un valore intero"
 
-#: src/gnuwin32/extra.c:1307
+#: src/gnuwin32/extra.c:1292
 msgid "'title' must be a character string"
 msgstr "'title' deve essere una stringa di tipo character"
 
-#: src/gnuwin32/extra.c:1339
+#: src/gnuwin32/extra.c:1324
 msgid "'which' must be length 1"
 msgstr "'which' deve essere di lunghezza 1"
 
-#: src/gnuwin32/extra.c:1369
+#: src/gnuwin32/extra.c:1354
 msgid "invalid value of 'which'"
 msgstr "valore non valido di 'which'"
 
-#: src/gnuwin32/extra.c:1371 src/gnuwin32/extra.c:1373
-#: src/gnuwin32/extra.c:1413
+#: src/gnuwin32/extra.c:1356 src/gnuwin32/extra.c:1358
+#: src/gnuwin32/extra.c:1398
 msgid "invalid device"
 msgstr "dispositivo non valido"
 
-#: src/gnuwin32/extra.c:1374
+#: src/gnuwin32/extra.c:1359
 msgid "requires SDI mode"
 msgstr "richiede modalità SDI"
 
-#: src/gnuwin32/extra.c:1407
+#: src/gnuwin32/extra.c:1392
 msgid "invalid graphical device number"
 msgstr "numero di dispositivo non valido"
 
-#: src/gnuwin32/extra.c:1417
+#: src/gnuwin32/extra.c:1402
 msgid "bad device"
 msgstr "dispositivo errato"
 
-#: src/gnuwin32/extra.c:1525 src/gnuwin32/extra.c:1533
+#: src/gnuwin32/extra.c:1510 src/gnuwin32/extra.c:1518
 msgid "invalid input in Rmbstowcs"
 msgstr "input non valido per Rmbstowcs"
 
@@ -403,17 +407,17 @@ msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr ""
 "ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi ignorato\n"
 
-#: src/gnuwin32/system.c:928 src/unix/system.c:295
+#: src/gnuwin32/system.c:928 src/unix/system.c:299
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ATTENZIONE: opzione %s sconosciuta\n"
 
-#: src/gnuwin32/system.c:953 src/unix/system.c:299
+#: src/gnuwin32/system.c:953 src/unix/system.c:303
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGOMENTO '%s' __ignorato__\n"
 
-#: src/gnuwin32/system.c:971 src/unix/system.c:337
+#: src/gnuwin32/system.c:971 src/unix/system.c:341
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "si deve specificare '--save', '--no-save' oppure '--vanilla'"
 
@@ -4406,12 +4410,12 @@ msgstr "il valore di nc in \"mfg\" è sbagliato e verrà ignorato"
 msgid "calling par(new=) with no plot"
 msgstr "stai chiamando par(new=) senza plot"
 
-#: src/main/par.c:703 src/main/par.c:1155
+#: src/main/par.c:709 src/main/par.c:1155
 #, fuzzy, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "lista parametro grafico non valida"
 
-#: src/main/par.c:707 src/main/par.c:1159
+#: src/main/par.c:713 src/main/par.c:1159
 #, fuzzy, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "parametro grafico non valido"
@@ -6431,10 +6435,6 @@ msgstr "InternetOpenUrl non riuscita: '%s'"
 msgid "Internet read timed out"
 msgstr "Lettura da Internet fuori tempo massimo"
 
-#: src/modules/internet/internet.c:930
-msgid "cannot allocate memory for InternetRoutines structure"
-msgstr "non è possibile allocare memoria per la struttura InternetRoutines"
-
 #: src/modules/internet/nanoftp.c:380
 msgid "removing FTP proxy info"
 msgstr "elimino informazione proxy FTP"
@@ -6511,149 +6511,149 @@ msgstr "troppi reindirizzamenti, annullo..."
 msgid "allocation of socket connection failed"
 msgstr "allocazione socket della connessione fallita"
 
-#: src/modules/lapack/Lapack.c:47 src/modules/lapack/Lapack.c:532
+#: src/modules/lapack/Lapack.c:49 src/modules/lapack/Lapack.c:502
 msgid "'jobu' and 'jobv' must be character strings"
 msgstr "'jobu' e 'jobv' devono essere stringhe carattere"
 
-#: src/modules/lapack/Lapack.c:49 src/modules/lapack/Lapack.c:128
+#: src/modules/lapack/Lapack.c:51 src/modules/lapack/Lapack.c:130
 msgid "'method' must be a character string"
 msgstr "'method' deve essere una stringa character"
 
-#: src/modules/lapack/Lapack.c:70 src/modules/lapack/Lapack.c:80
-#: src/modules/lapack/Lapack.c:94 src/modules/lapack/Lapack.c:103
-#: src/modules/lapack/Lapack.c:158 src/modules/lapack/Lapack.c:168
-#: src/modules/lapack/Lapack.c:193 src/modules/lapack/Lapack.c:211
-#: src/modules/lapack/Lapack.c:296 src/modules/lapack/Lapack.c:307
-#: src/modules/lapack/Lapack.c:411 src/modules/lapack/Lapack.c:417
-#: src/modules/lapack/Lapack.c:462 src/modules/lapack/Lapack.c:469
-#: src/modules/lapack/Lapack.c:473 src/modules/lapack/Lapack.c:507
-#: src/modules/lapack/Lapack.c:514 src/modules/lapack/Lapack.c:545
-#: src/modules/lapack/Lapack.c:554 src/modules/lapack/Lapack.c:600
-#: src/modules/lapack/Lapack.c:606 src/modules/lapack/Lapack.c:661
-#: src/modules/lapack/Lapack.c:667 src/modules/lapack/Lapack.c:827
-#: src/modules/lapack/Lapack.c:833 src/modules/lapack/Lapack.c:873
-#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:884
-#: src/modules/lapack/Lapack.c:913 src/modules/lapack/Lapack.c:920
-#: src/modules/lapack/Lapack.c:944
+#: src/modules/lapack/Lapack.c:72 src/modules/lapack/Lapack.c:82
+#: src/modules/lapack/Lapack.c:96 src/modules/lapack/Lapack.c:105
+#: src/modules/lapack/Lapack.c:156 src/modules/lapack/Lapack.c:162
+#: src/modules/lapack/Lapack.c:180 src/modules/lapack/Lapack.c:191
+#: src/modules/lapack/Lapack.c:271 src/modules/lapack/Lapack.c:277
+#: src/modules/lapack/Lapack.c:381 src/modules/lapack/Lapack.c:387
+#: src/modules/lapack/Lapack.c:432 src/modules/lapack/Lapack.c:439
+#: src/modules/lapack/Lapack.c:443 src/modules/lapack/Lapack.c:477
+#: src/modules/lapack/Lapack.c:484 src/modules/lapack/Lapack.c:515
+#: src/modules/lapack/Lapack.c:524 src/modules/lapack/Lapack.c:570
+#: src/modules/lapack/Lapack.c:576 src/modules/lapack/Lapack.c:631
+#: src/modules/lapack/Lapack.c:637 src/modules/lapack/Lapack.c:797
+#: src/modules/lapack/Lapack.c:803 src/modules/lapack/Lapack.c:843
+#: src/modules/lapack/Lapack.c:850 src/modules/lapack/Lapack.c:854
+#: src/modules/lapack/Lapack.c:883 src/modules/lapack/Lapack.c:890
+#: src/modules/lapack/Lapack.c:914
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "codice errore %d nella routine Lapack '%s'"
 
-#: src/modules/lapack/Lapack.c:142 src/modules/lapack/Lapack.c:270
-#: src/modules/lapack/Lapack.c:587 src/modules/lapack/Lapack.c:640
+#: src/modules/lapack/Lapack.c:144 src/modules/lapack/Lapack.c:250
+#: src/modules/lapack/Lapack.c:557 src/modules/lapack/Lapack.c:610
 msgid "'x' must be a square numeric matrix"
 msgstr "'x' deve essere una matrice quadrata di tipo numeric"
 
-#: src/modules/lapack/Lapack.c:144 src/modules/lapack/Lapack.c:276
-#: src/modules/lapack/Lapack.c:589 src/modules/lapack/Lapack.c:646
+#: src/modules/lapack/Lapack.c:146 src/modules/lapack/Lapack.c:256
+#: src/modules/lapack/Lapack.c:559 src/modules/lapack/Lapack.c:616
 msgid "invalid 'only.values'"
 msgstr "'only.values' non valido"
 
-#: src/modules/lapack/Lapack.c:354 src/modules/lapack/Lapack.c:397
+#: src/modules/lapack/Lapack.c:324 src/modules/lapack/Lapack.c:367
 msgid "'A' must be a complex matrix"
 msgstr "'A' deve essere una matrice di tipo complex"
 
-#: src/modules/lapack/Lapack.c:356 src/modules/lapack/Lapack.c:448
-#: src/modules/lapack/Lapack.c:491
+#: src/modules/lapack/Lapack.c:326 src/modules/lapack/Lapack.c:418
+#: src/modules/lapack/Lapack.c:461
 msgid "'B' must be a complex matrix"
 msgstr "'B' deve essere una matrice di tipo complex"
 
-#: src/modules/lapack/Lapack.c:361 src/modules/lapack/Lapack.c:778
+#: src/modules/lapack/Lapack.c:331 src/modules/lapack/Lapack.c:748
 msgid "'A' is 0-diml"
 msgstr "'A' è 0-diml"
 
-#: src/modules/lapack/Lapack.c:363 src/modules/lapack/Lapack.c:780
+#: src/modules/lapack/Lapack.c:333 src/modules/lapack/Lapack.c:750
 msgid "no right-hand side in 'B'"
 msgstr "nessun membro di destra in 'B'"
 
-#: src/modules/lapack/Lapack.c:365 src/modules/lapack/Lapack.c:782
+#: src/modules/lapack/Lapack.c:335 src/modules/lapack/Lapack.c:752
 #, c-format
 msgid "'A' (%d x %d) must be square"
 msgstr "'A' (%d x %d) deve essere quadrata"
 
-#: src/modules/lapack/Lapack.c:367 src/modules/lapack/Lapack.c:784
+#: src/modules/lapack/Lapack.c:337 src/modules/lapack/Lapack.c:754
 #, c-format
 msgid "'B' (%d x %d) must be compatible with 'A' (%d x %d)"
 msgstr "'B' (%d, %d) deve essere compatibile con 'A' (%d x %d)"
 
-#: src/modules/lapack/Lapack.c:376 src/modules/lapack/Lapack.c:714
-#: src/modules/lapack/Lapack.c:748 src/modules/lapack/Lapack.c:793
+#: src/modules/lapack/Lapack.c:346 src/modules/lapack/Lapack.c:684
+#: src/modules/lapack/Lapack.c:718 src/modules/lapack/Lapack.c:763
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "l'argomento %d della routie Lapack %s ha un valore non valido"
 
-#: src/modules/lapack/Lapack.c:383 src/modules/lapack/Lapack.c:434
-#: src/modules/lapack/Lapack.c:477 src/modules/lapack/Lapack.c:518
-#: src/modules/lapack/Lapack.c:567 src/modules/lapack/Lapack.c:623
-#: src/modules/lapack/Lapack.c:684
+#: src/modules/lapack/Lapack.c:353 src/modules/lapack/Lapack.c:404
+#: src/modules/lapack/Lapack.c:447 src/modules/lapack/Lapack.c:488
+#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:593
+#: src/modules/lapack/Lapack.c:654
 msgid "Fortran complex functions are not available on this platform"
 msgstr "Funzioni complesse Fortran non disponibili per questa piattaforma"
 
-#: src/modules/lapack/Lapack.c:455 src/modules/lapack/Lapack.c:500
-#: src/modules/lapack/Lapack.c:866 src/modules/lapack/Lapack.c:906
+#: src/modules/lapack/Lapack.c:425 src/modules/lapack/Lapack.c:470
+#: src/modules/lapack/Lapack.c:836 src/modules/lapack/Lapack.c:876
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "il membro di destra deve avere %d righe e non %d"
 
-#: src/modules/lapack/Lapack.c:493 src/modules/lapack/Lapack.c:899
+#: src/modules/lapack/Lapack.c:463 src/modules/lapack/Lapack.c:869
 msgid "invalid 'trans' parameter"
 msgstr "parametro 'trans' non valido"
 
-#: src/modules/lapack/Lapack.c:701 src/modules/lapack/Lapack.c:939
+#: src/modules/lapack/Lapack.c:671 src/modules/lapack/Lapack.c:909
 msgid "'A' must be a square matrix"
 msgstr "'A' deve essere una mtrice quadrata"
 
-#: src/modules/lapack/Lapack.c:702
+#: src/modules/lapack/Lapack.c:672
 msgid "'A' must have dims > 0"
 msgstr "'A' deve avere dimensioni > 0"
 
-#: src/modules/lapack/Lapack.c:712
+#: src/modules/lapack/Lapack.c:682
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr "il minore principale di ordine %d non è definito positivo"
 
-#: src/modules/lapack/Lapack.c:720 src/modules/lapack/Lapack.c:758
-#: src/modules/lapack/Lapack.c:771 src/modules/lapack/Lapack.c:814
-#: src/modules/lapack/Lapack.c:932
+#: src/modules/lapack/Lapack.c:690 src/modules/lapack/Lapack.c:728
+#: src/modules/lapack/Lapack.c:741 src/modules/lapack/Lapack.c:784
+#: src/modules/lapack/Lapack.c:902
 msgid "'A' must be a numeric matrix"
 msgstr "'A' deve essere una matrice di tipo numeric"
 
-#: src/modules/lapack/Lapack.c:728
+#: src/modules/lapack/Lapack.c:698
 msgid "'size' argument must be a positive integer"
 msgstr "l'argomento 'size' deve essere un intero positivo"
 
-#: src/modules/lapack/Lapack.c:737
+#: src/modules/lapack/Lapack.c:707
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr "'size' non può superare ncol(x) = %d"
 
-#: src/modules/lapack/Lapack.c:738
+#: src/modules/lapack/Lapack.c:708
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr "'size' non può superare nrow(x) = %d"
 
-#: src/modules/lapack/Lapack.c:747
+#: src/modules/lapack/Lapack.c:717
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "l'elemento (%d, %d) è zero, quindi l'inversa non può essere calcolata"
 
-#: src/modules/lapack/Lapack.c:773 src/modules/lapack/Lapack.c:859
-#: src/modules/lapack/Lapack.c:897
+#: src/modules/lapack/Lapack.c:743 src/modules/lapack/Lapack.c:829
+#: src/modules/lapack/Lapack.c:867
 msgid "'B' must be a numeric matrix"
 msgstr "'B' deve essere una matrice di tipo numeric"
 
-#: src/modules/lapack/Lapack.c:796
+#: src/modules/lapack/Lapack.c:766
 msgid "Lapack routine dgesv: system is exactly singular"
 msgstr "Lapack routine dgesv: is sistema è esattamente singolare"
 
-#: src/modules/lapack/Lapack.c:801
+#: src/modules/lapack/Lapack.c:771
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr ""
 "il sistema è numericamente singolare: valore di condizione di reciprocità = %"
 "g"
 
-#: src/modules/lapack/Lapack.c:934
+#: src/modules/lapack/Lapack.c:904
 msgid "argument 'logarithm' must be logical"
 msgstr "l'argomento di 'logarithm' deve essere logico"
 
@@ -7003,34 +7003,30 @@ msgstr "richiesti argomenti di tipo character non vuoti"
 msgid "intern=TRUE is not implemented on this platform"
 msgstr "intern=TRUE non è implementato per questa piattaforma"
 
-#: src/unix/sys-unix.c:290 src/unix/sys-unix.c:306
-msgid "cannot mkdir R_TempDir"
-msgstr "non è possibile creare R_TempDir"
-
-#: src/unix/sys-unix.c:319
+#: src/unix/sys-unix.c:316
 msgid "cannot allocate R_TempDir"
 msgstr "non è possibile allocare memoria per R_TempDir"
 
-#: src/unix/sys-unix.c:401
+#: src/unix/sys-unix.c:398
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() non è implementata su questo sistema"
 
-#: src/unix/system.c:232
+#: src/unix/system.c:236
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "ATTENZIONE: --gui o -g senza valore viene ignorata"
 
-#: src/unix/system.c:254
+#: src/unix/system.c:258
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "ATTENZIONE: gui '%s' sconosciuta, verrà utilizzata X11\n"
 
-#: src/unix/system.c:257
+#: src/unix/system.c:261
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "ATTENZIONE: gui '%s' sconosciuta, non ne verrà utilizzata alcuna\n"
 
-#: src/unix/system.c:375
+#: src/unix/system.c:379
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ATTENZIONE: Verrà editato solo il primo file della lista"
 
@@ -7049,6 +7045,9 @@ msgstr "il modulo X11 non può essere caricato"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 non disponibile"
+
+#~ msgid "cannot allocate memory for InternetRoutines structure"
+#~ msgstr "non è possibile allocare memoria per la struttura InternetRoutines"
 
 #, fuzzy
 #~ msgid "unknown graphical parameter \"%s\""
