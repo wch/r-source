@@ -877,22 +877,42 @@ int Rwin_rename(char *from, char *to)
     return res;
 }
 
+
+#include <sys/types.h>
+#include <sys/stat.h>
+
+static int isDir(char *path)
+{
+    struct stat sb;
+    int isdir = 0, mode;
+    if(!path) return 0;
+    if(stat(path, &sb) == 0) {
+	isdir = (sb.st_mode & S_IFDIR) > 0; /* is a directory */
+	mode = (int) sb.st_mode & 0007777;
+	isdir &= (mode & 06)>0;
+    }
+    return isdir;
+}
+
 #if !HAVE_DECL_MKDTEMP
 extern char * mkdtemp (char *template);
 #endif
 
 void InitTempDir()
 {
-    char *tmp, *tm, tmp1[MAX_PATH], tmp2[MAX_PATH], *p;
+    char *tmp, *tm, tmp1[MAX_PATH], tmp2[MAX_PATH+11], *p;
     int hasspace = 0, len;
 
     tmp = getenv("TMPDIR");
-    if (tmp && access(tmp, W_OK) != 0) tmp = NULL;
-    if (!tmp) tmp = getenv("TMP");
-    if (tmp && access(tmp, W_OK) != 0) tmp = NULL;
-    if (!tmp) tmp = getenv("TEMP");
-    if (tmp && access(tmp, W_OK) != 0) tmp = NULL;
-    if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
+    if (!isDir(tmp)) {
+	tmp = getenv("TMP");
+	if (!isDir(tmp)) { 
+	    tmp = getenv("TEMP");
+	    if (!isDir(tmp)) 
+		tmp = getenv("R_USER"); /* this one will succeed */
+	}
+    }
+    
     /* make sure no spaces in path */
     for (p = tmp; *p; p++)
 	if (isspace(*p)) { hasspace = 1; break; }

@@ -265,19 +265,40 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
+#ifdef HAVE_STAT
+# ifdef HAVE_SYS_TYPES_H
+#  include <sys/types.h>
+# endif
+# ifdef HAVE_SYS_STAT_H
+#  include <sys/stat.h>
+# endif
+
+static int isDir(char *path)
+{
+    struct stat sb;
+    int isdir = 0, mode;
+    if(!path) return 0;
+    if(stat(path, &sb) == 0) {
+	isdir = (sb.st_mode & S_IFDIR) > 0; /* is a directory */
+	mode = (int) sb.st_mode & 0007777;
+	isdir &= (mode & 06)>0;
+    }
+    return isdir;
+}
+#else
+static int isDir(char *path)
+{
+    return 1;
+}
+#endif
+
 #if !HAVE_DECL_MKDTEMP
 extern char * mkdtemp (char *template);
 #endif
 
-#ifdef HAVE_ACCESS
-# ifdef HAVE_UNISTD_H
-#  include <unistd.h>
-# endif
-#endif
-
 void InitTempDir()
 {
-    char *tmp, *tm, tmp1[PATH_MAX+10], *p;
+    char *tmp, *tm, tmp1[PATH_MAX+11], *p;
     int len;
 
     tmp = getenv("R_SESSION_TMPDIR");
@@ -287,17 +308,14 @@ void InitTempDir()
 	char *buf;
 
 	tm = getenv("TMPDIR");
-#ifdef HAVE_ACCESS
-	if (tm && access(tm, W_OK) != 0) tm = NULL;
-	if (!tm) tm = getenv("TMP");
-	if (tm && access(tm, W_OK) != 0) tm = NULL;
-	if (!tm) tm = getenv("TEMP");
-	if (tm && access(tm, W_OK) != 0) tm = NULL;
-#else
-	if (!tm) tm = getenv("TMP");
-	if (!tm) tm = getenv("TEMP");
-#endif
-	if (!tm) tm = "/tmp";
+	if (!isDir(tm)) {
+	    tm = getenv("TMP");
+	    if (!isDir(tm)) { 
+		tm = getenv("TEMP");
+		if (!isDir(tm)) 
+		    tm = "/tmp";
+	    }
+	}
 	sprintf(tmp1, "%s/RtmpXXXXXX", tm);
 	tmp = mkdtemp(tmp1);
 	if(!tmp) R_Suicide(_("cannot mkdir R_TempDir"));

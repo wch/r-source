@@ -65,7 +65,8 @@ checked for a writeable directory for the R session temporary directory:
 
 	TMPDIR TMP TEMP R_USER
 
-(the last will always succeed).
+(the last will always succeed).  The changes are that TMPDIR is checked
+first and that the values are checked to be a directory.
 
 
 

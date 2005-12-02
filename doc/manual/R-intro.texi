@@ -6755,9 +6755,9 @@ or, via the @code{R CMD} interface, as a wrapper to various @R{} tools
 (e.g., for processing files in @R{} documentation format or manipulating
 add-on packages) which are not intended to be called ``directly''.
 
-Under UNIX you do need to ensure that either the environment variable
-@env{TMPDIR} is unset or it points to a valid place to create temporary
-files and directories.
+You need to ensure that either the environment variable @env{TMPDIR} is
+unset or it points to a valid place to create temporary files and
+directories.
 
 Most options control what happens at the beginning and at the end of an
 @R{} session.  The startup mechanism is as follows (see also the on-line

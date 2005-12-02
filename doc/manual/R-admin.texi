@@ -67,6 +67,7 @@ The current version of this document is @value{VERSION}.
 * Installing R under Unix-alikes::  
 * Installing R under Windows::  
 * Installing R under Mac OS X::  
+* Running R::                   
 * Add-on packages::             
 * Internationalization::        
 * Choosing between 32- and 64-bit builds::  
@@ -1007,7 +1008,7 @@ We have not found a reliable way to convert base to lazy-loading when
 cross-building, so it is left in the old format.
 
 
-@node Installing R under Mac OS X, Add-on packages, Installing R under Windows, Top
+@node Installing R under Mac OS X, Running R, Installing R under Windows, Top
 @chapter Installing R under Mac OS X
 @cindex Mac OS X
 
@@ -1064,7 +1065,32 @@ make prefix=/where/you/want/R.framework/to/go install
 @noindent
 the @file{R.framework} has not to be specified in the path.
 
-@node Add-on packages, Internationalization, Installing R under Mac OS X, Top
+@node Running R, Add-on packages, Installing R under Mac OS X, Top
+@chapter Running R
+
+How to start @R{} and what command-line options are available is discussed
+in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
+
+@R{} makes use of a number of environment variables, the default values
+of many of are set in file @file{R_HOME/etc/Renviron} (there are none
+set by default on Windows and hence no such file).  These are set at
+@command{configure} time, and you would not normally want to change them
+-- a possible exception is @env{R_PAPERSIZE} (@pxref{Setting paper
+size}).
+
+Various environment variables can be set to determine where @R{} creates
+its per-session temporary directory.  For Unix-alike versions launched
+from the shell-script front-end, this is set by @env{TMPDIR} and
+defaults to @file{/tmp}: this is also used by a number of utilities such
+as @command{R CMD INSTALL}.  There is no check made that this points to
+an actual directory that is user-writeable.  For Windows and embedded
+Unix-alike version of @R{} (including the MacOS X console) the
+environment variables @env{TMPDIR}, @env{TMP} and @env{TEMP} are
+searched in turn and the first one which is set and points to a
+writeable area is used.  If none do, the final default is @file{/tmp} on
+Unix-alikes and the value of @env{R_USER} on Windows.
+
+@node Add-on packages, Internationalization, Running R, Top
 @chapter Add-on packages
 @cindex Packages
 
