@@ -627,6 +627,9 @@
 /* Define to 1 if you have the `times' function. */
 #undef HAVE_TIMES
 
+/* Define to 1 if you have the <time.h> header file. */
+#undef HAVE_TIME_H
+
 /* Define to 1 if you have the `tsearch' function. */
 #undef HAVE_TSEARCH
 

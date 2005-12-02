@@ -646,7 +646,7 @@ AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h grp.h ieee754.h ieeefp.h limits.h locale.h \
   netdb.h netinet/in.h pwd.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/resource.h \
-  sys/time.h sys/times.h sys/utsname.h unistd.h)
+  sys/time.h sys/times.h sys/utsname.h time.h unistd.h)
 ## </NOTE>
 ## <NOTE>
 ## These are ANSI C headers but some C code (written to work also
