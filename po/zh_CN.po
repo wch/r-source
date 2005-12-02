@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-02 10:32+0000\n"
+"POT-Creation-Date: 2005-12-02 18:06+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -74,7 +74,7 @@ msgstr "找不到工作目录"
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam里的'tempdir'不对"
 
-#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:336
+#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:354
 msgid "cannot find unused tempfile name"
 msgstr "临时文件名都用完了"
 
@@ -226,72 +226,81 @@ msgstr "愚蠢!: 你的机器有4Gb的地址上限"
 msgid "cannot decrease memory limit"
 msgstr "无法减少内存极限"
 
-#: src/gnuwin32/extra.c:905 src/unix/sys-unix.c:303
+#: src/gnuwin32/extra.c:925 src/unix/sys-unix.c:321
 msgid "cannot mkdir R_TempDir"
 msgstr "无法执行mkdir R_TempDir"
 
-#: src/gnuwin32/extra.c:952
+#: src/gnuwin32/extra.c:929 src/unix/sys-unix.c:334
+msgid "cannot allocate R_TempDir"
+msgstr "无法分配R_TempDir"
+
+#: src/gnuwin32/extra.c:972
 msgid "argument must be a character vector"
 msgstr "变元必需为字符向量"
 
-#: src/gnuwin32/extra.c:967 src/main/connections.c:1425
+#: src/gnuwin32/extra.c:987 src/main/connections.c:1425
 msgid "Unable to open the clipboard"
 msgstr "无法打开裁剪板"
 
-#: src/gnuwin32/extra.c:972 src/main/connections.c:1429
+#: src/gnuwin32/extra.c:992 src/main/connections.c:1429
 msgid "Unable to write to the clipboard"
 msgstr "无法写入裁剪板"
 
-#: src/gnuwin32/extra.c:1118 src/gnuwin32/extra.c:1197
+#: src/gnuwin32/extra.c:1092 src/gnuwin32/extra.c:1112
+#, fuzzy
+msgid "'path' must be a character vector"
+msgstr "'what'必需是字符向量"
+
+#: src/gnuwin32/extra.c:1138 src/gnuwin32/extra.c:1217
 msgid "'default' must be a character string"
 msgstr "'default'必需为字符串"
 
-#: src/gnuwin32/extra.c:1120 src/gnuwin32/extra.c:1199
+#: src/gnuwin32/extra.c:1140 src/gnuwin32/extra.c:1219
 msgid "'default' is overlong"
 msgstr "'default'太长"
 
-#: src/gnuwin32/extra.c:1129 src/gnuwin32/extra.c:1203
+#: src/gnuwin32/extra.c:1149 src/gnuwin32/extra.c:1223
 msgid "'caption' must be a character string"
 msgstr "'caption'必需为字符串"
 
-#: src/gnuwin32/extra.c:1131
+#: src/gnuwin32/extra.c:1151
 msgid "'multi' must be a logical value"
 msgstr "'multi'必需为逻辑值"
 
-#: src/gnuwin32/extra.c:1133
+#: src/gnuwin32/extra.c:1153
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'必需为正数"
 
-#: src/gnuwin32/extra.c:1292
+#: src/gnuwin32/extra.c:1312
 msgid "'title' must be a character string"
 msgstr "'title'必需为字符串"
 
-#: src/gnuwin32/extra.c:1324
+#: src/gnuwin32/extra.c:1344
 msgid "'which' must be length 1"
 msgstr "'which'的长度必需为1"
 
-#: src/gnuwin32/extra.c:1354
+#: src/gnuwin32/extra.c:1374
 msgid "invalid value of 'which'"
 msgstr "'which'的值不对"
 
-#: src/gnuwin32/extra.c:1356 src/gnuwin32/extra.c:1358
-#: src/gnuwin32/extra.c:1398
+#: src/gnuwin32/extra.c:1376 src/gnuwin32/extra.c:1378
+#: src/gnuwin32/extra.c:1418
 msgid "invalid device"
 msgstr "设备不对"
 
-#: src/gnuwin32/extra.c:1359
+#: src/gnuwin32/extra.c:1379
 msgid "requires SDI mode"
 msgstr "必需用SDI方式"
 
-#: src/gnuwin32/extra.c:1392
+#: src/gnuwin32/extra.c:1412
 msgid "invalid graphical device number"
 msgstr "图形设备号不对"
 
-#: src/gnuwin32/extra.c:1402
+#: src/gnuwin32/extra.c:1422
 msgid "bad device"
 msgstr "设备有错"
 
-#: src/gnuwin32/extra.c:1510 src/gnuwin32/extra.c:1518
+#: src/gnuwin32/extra.c:1530 src/gnuwin32/extra.c:1538
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs里的输入不对"
 
@@ -6876,11 +6885,7 @@ msgstr "需要非空字符变元"
 msgid "intern=TRUE is not implemented on this platform"
 msgstr "本系统没有实现intern=TRUE这一功能"
 
-#: src/unix/sys-unix.c:316
-msgid "cannot allocate R_TempDir"
-msgstr "无法分配R_TempDir"
-
-#: src/unix/sys-unix.c:398
+#: src/unix/sys-unix.c:416
 msgid "Sys.info() is not implemented on this system"
 msgstr "本系统没有实现Sys.info()这一功能"
 

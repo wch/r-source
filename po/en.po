@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-02 10:32+0000\n"
+"POT-Creation-Date: 2005-12-02 18:06+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -72,7 +72,7 @@ msgstr ""
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr ""
 
-#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:336
+#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:354
 msgid "cannot find unused tempfile name"
 msgstr ""
 
@@ -224,72 +224,80 @@ msgstr ""
 msgid "cannot decrease memory limit"
 msgstr ""
 
-#: src/gnuwin32/extra.c:905 src/unix/sys-unix.c:303
+#: src/gnuwin32/extra.c:925 src/unix/sys-unix.c:321
 msgid "cannot mkdir R_TempDir"
 msgstr ""
 
-#: src/gnuwin32/extra.c:952
+#: src/gnuwin32/extra.c:929 src/unix/sys-unix.c:334
+msgid "cannot allocate R_TempDir"
+msgstr ""
+
+#: src/gnuwin32/extra.c:972
 msgid "argument must be a character vector"
 msgstr ""
 
-#: src/gnuwin32/extra.c:967 src/main/connections.c:1425
+#: src/gnuwin32/extra.c:987 src/main/connections.c:1425
 msgid "Unable to open the clipboard"
 msgstr ""
 
-#: src/gnuwin32/extra.c:972 src/main/connections.c:1429
+#: src/gnuwin32/extra.c:992 src/main/connections.c:1429
 msgid "Unable to write to the clipboard"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1118 src/gnuwin32/extra.c:1197
+#: src/gnuwin32/extra.c:1092 src/gnuwin32/extra.c:1112
+msgid "'path' must be a character vector"
+msgstr ""
+
+#: src/gnuwin32/extra.c:1138 src/gnuwin32/extra.c:1217
 msgid "'default' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1120 src/gnuwin32/extra.c:1199
+#: src/gnuwin32/extra.c:1140 src/gnuwin32/extra.c:1219
 msgid "'default' is overlong"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1129 src/gnuwin32/extra.c:1203
+#: src/gnuwin32/extra.c:1149 src/gnuwin32/extra.c:1223
 msgid "'caption' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1131
+#: src/gnuwin32/extra.c:1151
 msgid "'multi' must be a logical value"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1133
+#: src/gnuwin32/extra.c:1153
 msgid "'filterindex' must be an integer value"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1292
+#: src/gnuwin32/extra.c:1312
 msgid "'title' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1324
+#: src/gnuwin32/extra.c:1344
 msgid "'which' must be length 1"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1354
+#: src/gnuwin32/extra.c:1374
 msgid "invalid value of 'which'"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1356 src/gnuwin32/extra.c:1358
-#: src/gnuwin32/extra.c:1398
+#: src/gnuwin32/extra.c:1376 src/gnuwin32/extra.c:1378
+#: src/gnuwin32/extra.c:1418
 msgid "invalid device"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1359
+#: src/gnuwin32/extra.c:1379
 msgid "requires SDI mode"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1392
+#: src/gnuwin32/extra.c:1412
 msgid "invalid graphical device number"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1402
+#: src/gnuwin32/extra.c:1422
 msgid "bad device"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1510 src/gnuwin32/extra.c:1518
+#: src/gnuwin32/extra.c:1530 src/gnuwin32/extra.c:1538
 msgid "invalid input in Rmbstowcs"
 msgstr ""
 
@@ -6832,11 +6840,7 @@ msgstr ""
 msgid "intern=TRUE is not implemented on this platform"
 msgstr ""
 
-#: src/unix/sys-unix.c:316
-msgid "cannot allocate R_TempDir"
-msgstr ""
-
-#: src/unix/sys-unix.c:398
+#: src/unix/sys-unix.c:416
 msgid "Sys.info() is not implemented on this system"
 msgstr ""
 
