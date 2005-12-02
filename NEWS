@@ -344,6 +344,9 @@ BUG FIXES
 
     o   Use of non-central F in pf() gives accurate values for larger ncp.
 
+    o   R CMD build --binary does a better job of cleaning up after
+	failure to re-make vignettes.
+
 
 
 

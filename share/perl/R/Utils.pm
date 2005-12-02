@@ -75,7 +75,7 @@ sub R_tempfile {
 			   $pat . $$ . sprintf("%05d", rand(10**5)));
 
     my $n=0;
-    while(-f $retval){
+    while(-e $retval) { # was -f, but want to be able to create such a file
 	$retval = file_path($R::Vars::TMPDIR,
 			    $pat . $$ . sprintf("%05d", rand(10**5)));
 	croak "Cannot find unused name for temporary file"

@@ -434,6 +434,8 @@ sub prepare_pkg {
 	    if($doit && R_system($cmd)) {
 		$log->error();
 		$log->print("Installation failed.\n");
+		$log->print("Removing '$libdir'\n");
+		rmtree($libdir);
 		exit(1);
 	    }
 	    my $R_LIBS = $ENV{'R_LIBS'};

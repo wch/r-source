@@ -887,10 +887,11 @@ void InitTempDir()
     int hasspace = 0, len;
 
     tmp = getenv("TMPDIR");
-    if(access(tmp, W_OK) != 0) tmp = getenv("TMP");
-    if(access(tmp, W_OK) != 0) tmp = NULL;
+    if (tmp && access(tmp, W_OK) != 0) tmp = NULL;
+    if (!tmp) tmp = getenv("TMP");
+    if (tmp && access(tmp, W_OK) != 0) tmp = NULL;
     if (!tmp) tmp = getenv("TEMP");
-    if(access(tmp, W_OK) != 0) tmp = NULL;
+    if (tmp && access(tmp, W_OK) != 0) tmp = NULL;
     if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
     /* make sure no spaces in path */
     for (p = tmp; *p; p++)
