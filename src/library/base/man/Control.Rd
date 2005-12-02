@@ -58,6 +58,17 @@ next
   used: the effect is that of \code{\link{as.integer}} not
   \code{\link{as.vector}}.
 }
+\value{
+  \code{if} returns the value of the expression evaluated, or
+  \code{NULL} if none was (which may happen if there is no \code{else}).
+
+  \code{for}, \code{while} and \code{repeat} return the value of the
+  last expression evaluated (or \code{NULL} if none was), invisibly.
+
+  \code{break} and \code{next} have value \code{NULL}, although it would
+  be strange to look for a return value.
+}
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
