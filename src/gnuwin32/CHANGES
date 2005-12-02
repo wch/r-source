@@ -60,6 +60,13 @@ There is now support for compiling Fortran 90/95 code in packages: see
 librproxy.a has been removed since linking directly to Rproxy.dll
 works in current MinGW (and package rcom will be updated to do so).
 
+For compatibiility with Unix, the following environment variables are
+checked for a writeable directory for the R session temporary directory:
+
+	TMPDIR TMP TEMP R_USER
+
+(the last will always succeed).
+
 
 
 R 2.2.0 patched

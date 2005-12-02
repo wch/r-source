@@ -877,15 +877,17 @@ int Rwin_rename(char *from, char *to)
     return res;
 }
 
+#if !HAVE_DECL_MKDTEMP
+extern char * mkdtemp (char *template);
+#endif
+
 void InitTempDir()
 {
-    char *tmp, tm[MAX_PATH], tmp1[MAX_PATH], *p;
-    unsigned int n;
-    int hasspace = 0, len, done = 0, res;
-    WIN32_FIND_DATA fd;
-    HANDLE h;
+    char *tmp, *tm, tmp1[MAX_PATH], tmp2[MAX_PATH], *p;
+    int hasspace = 0, len;
 
-    tmp = getenv("TMP");
+    tmp = getenv("TMPDIR");
+    if(access(tmp, W_OK) != 0) tmp = getenv("TMP");
     if(access(tmp, W_OK) != 0) tmp = NULL;
     if (!tmp) tmp = getenv("TEMP");
     if(access(tmp, W_OK) != 0) tmp = NULL;
@@ -897,31 +899,13 @@ void InitTempDir()
 	GetShortPathName(tmp, tmp1, MAX_PATH);
     else
 	strcpy(tmp1, tmp); /* length must be valid as access has been checked */
-    /* now try a random addition */
-    srand( (unsigned)time( NULL ) );
-    for (n = 0; n < 100; n++) {
-	/* try a random number at the end */
-        sprintf(tm, "%s\\%s%d", tmp1, "Rtmp", rand());
-        if ((h = FindFirstFile(tm, &fd)) == INVALID_HANDLE_VALUE) {
-	    done = 1;
-	    break;
-	}
-        FindClose(h);
-        tm[0] = '\0';
-    }
-    if(!done)
-	R_Suicide("cannot find unused tempdir name");
-    /* Now try to create it */
-    res = mkdir(tm);
-    if(res) {
-	char buff[2000];
-	sprintf(buff, "%s\nDoes %s exist and is it writeable?",
-		"Can't mkdir R_TempDir", tmp);
-	R_Suicide(buff);
-    }
+    sprintf(tmp2, "%s/RtmpXXXXXX", tmp1);
+    tm = mkdtemp(tmp2);
+    if(!tm) R_Suicide(_("cannot mkdir R_TempDir"));
+
     len = strlen(tm);
     p = (char *) malloc(len+1);
-    if(!p) R_Suicide("Can't allocate R_TempDir");
+    if(!p) R_Suicide("cannot allocate R_TempDir");
     else {
 	R_TempDir = p;
 	strcpy(R_TempDir, tm);

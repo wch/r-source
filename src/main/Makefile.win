@@ -23,8 +23,8 @@ CSOURCES=\
 	format.c fourier.c \
 	gevents.c gram.c gram-ex.c graphics.c \
 	identical.c internet.c iosupport.c \
-	lapack.c localecharset.c list.c logic.c \
-	main.c mapply.c match.c memory.c model.c \
+	lapack.c list.c localecharset.c logic.c \
+	main.c mapply.c match.c memory.c mkdtemp.c model.c \
 	names.c \
 	objects.c optim.c optimize.c options.c \
 	par.c paste.c pcre.c platform.c \

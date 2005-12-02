@@ -1433,7 +1433,7 @@ multi-byte locales, in which a single character is represented by one,
 two or more consecutive bytes: examples of such locales are those using
 UTF-8 (becoming standard under Linux) and those for Chinese, Japanese
 and Korean.  Note that only some of the graphics devices can handle
-multi-byte or even non-Latin1 character sets.
+multi-byte or even non-Latin-1 character sets.
 
 The other aspect of the internationalization is support of the
 translation of messages.  This is enabled in almost all builds of @R{}

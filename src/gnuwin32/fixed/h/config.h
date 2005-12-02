@@ -174,6 +174,10 @@
    */
 #define HAVE_DECL_LOG2 1
 
+/* Define to 1 if you have the declaration of `mkdtemp', and to 0 if you
+   don't. */
+#define HAVE_DECL_MKDTEMP 0
+
 /* Define to 1 if you have the declaration of `siglongjmp', and to 0 if you
    don't. */
 #define HAVE_DECL_SIGLONGJMP 1
@@ -368,9 +372,6 @@
 
 /* Define if you have <langinfo.h> and nl_langinfo(CODESET). */
 /* #undef HAVE_LANGINFO_CODESET */
-
-/* Define if external LAPACK is available. */
-/* #undef HAVE_LAPACK */
 
 /* Define if your <locale.h> file defines LC_MESSAGES. */
 /* #undef HAVE_LC_MESSAGES */
@@ -623,6 +624,9 @@
 
 /* Define to 1 if you have the `times' function. */
 #define HAVE_TIMES 1
+
+/* Define to 1 if you have the <time.h> header file. */
+#define HAVE_TIME_H 1
 
 /* Define to 1 if you have the `tsearch' function. */
 /* #undef HAVE_TSEARCH */

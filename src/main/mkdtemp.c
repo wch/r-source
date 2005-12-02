@@ -36,18 +36,18 @@
 # define TMP_MAX 238328
 #endif
 
-#if HAVE_STDINT_H
+#ifdef HAVE_STDINT_H
 # include <stdint.h>
 #endif
-#if HAVE_INTTYPES_H
+#ifdef HAVE_INTTYPES_H
 # include <inttypes.h>
 #endif
 
-#if HAVE_UNISTD_H
+#ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
 
-#if HAVE_GETTIMEOFDAY
+#ifdef HAVE_GETTIMEOFDAY
 # if HAVE_SYS_TIME_H
 #  include <sys/time.h>
 # endif
@@ -57,8 +57,9 @@
 # endif
 #endif
 
+#ifndef Win32
 #include <sys/stat.h>
-#if STAT_MACROS_BROKEN
+#ifdef STAT_MACROS_BROKEN
 # undef S_ISDIR
 #endif
 #if !defined S_ISDIR && defined S_IFDIR
@@ -82,11 +83,6 @@
 #if !S_IXUSR
 # define S_IXUSR 00100
 #endif
-
-#if !_LIBC
-# define __getpid getpid
-# define __gettimeofday gettimeofday
-# define __mkdir mkdir
 #endif
 
 /* Use the widest available unsigned type if uint64_t is not
@@ -138,14 +134,14 @@ gen_tempname (char *tmpl)
 # if HAVE_GETTIMEOFDAY
   {
     struct timeval tv;
-    __gettimeofday (&tv, NULL);
+    gettimeofday (&tv, NULL);
     random_time_bits = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
   }
 # else
   random_time_bits = time (NULL);
 # endif
 #endif
-  value += random_time_bits ^ __getpid ();
+  value += random_time_bits ^ getpid ();
 
   for (count = 0; count < TMP_MAX; value += 7777, ++count)
     {
@@ -164,7 +160,11 @@ gen_tempname (char *tmpl)
       v /= 62;
       XXXXXX[5] = letters[v % 62];
 
-      fd = __mkdir (tmpl, S_IRUSR | S_IWUSR | S_IXUSR);
+#ifdef Win32
+      fd = mkdir (tmpl);
+#else
+      fd = mkdir (tmpl, S_IRUSR | S_IWUSR | S_IXUSR);
+#endif
 
       if (fd >= 0)
         {
