@@ -1586,23 +1586,15 @@ datasets if a @acronym{URL} is provided.
 The paper ``Rweb: Web-based Statistical Analysis'', providing a detailed
 explanation of the different versions of Rweb and an overview of how
 Rweb works, was published in the Journal of Statistical Software
-(@url{http://www.stat.ucla.edu/journals/jss/v04/i01/}).
+(@url{http://www.jstatsoft.org/v04/i01/}).
 
-@email{ulfi@@cs.tu-berlin.de, Ulf Bartel} is working on
+@email{ulfi@@cs.tu-berlin.de, Ulf Bartel} has developed
 @strong{R-Online}, a simple on-line programming environment for R which
 intends to make the first steps in statistical programming with R
 (especially with time series) as easy as possible.  There is no need for
 a local installation since the only requirement for the user is a
 JavaScript capable browser.  See @url{http://osvisions.com/r-online/}
 for more information.
-
-@email{http://www.warwick.ac.uk/go/dfirth, David Firth} has written
-@strong{CGIwithR}, an R add-on package available from @CRAN{}.  It
-provides some simple extensions to R to facilitate running R scripts
-through the CGI interface to a web server.  It is easily installed using
-Apache under Linux and in principle should run on any platform that
-supports R and a web server provided that the installer has the
-necessary security permissions.
 
 @strong{Rcgi} is a CGI WWW interface to R by @email{mjr@@dsl.pipex.com,
 MJ Ray}.  It had the ability to use ``embedded code'': you could mix
@@ -1618,8 +1610,61 @@ Currently, a modified version of @strong{Rcgi} by
 (bitmap) graphics and one without) as well as the original code are
 available from @url{http://www.ms.uky.edu/~statweb/}.
 
-See also @url{http://franklin.imgen.bcm.tmc.edu/R.web.servers/} for more
-information on R web interface projects.
+CGI-based web access to R is also provided at
+@url{http://hermes.sdu.dk/cgi-bin/go/}.  There are many additional
+examples of web interfaces to R which basically allow to submit R code
+to a remote server, see for example the collection of links available from
+@url{http://biostat.mc.vanderbilt.edu/twiki/bin/view/Main/StatCompCourse}.
+
+@url{http://www.warwick.ac.uk/go/dfirth, David Firth} has written
+@strong{CGIwithR}, an R add-on package available from @CRAN{}.  It
+provides some simple extensions to R to facilitate running R scripts
+through the CGI interface to a web server, and allows submission of data
+using both GET and POST methods.  It is easily installed using Apache
+under Linux and in principle should run on any platform that supports R
+and a web server provided that the installer has the necessary security
+permissions.  David's paper ``CGIwithR: Facilities for Processing Web
+Forms Using R'' was published in the Journal of Statistical Software
+(@url{http://www.jstatsoft.org/v08/i10/}).  The package is now
+maintained by @email{duncan@@wald.ucdavis.edu, Duncan Temple Lang} and
+has a web page at @url{http://www.omegahat.org/CGIwithR/}.
+
+@url{http://www.rpad.org/Rpad, Rpad}, developed and actively maintained
+by Tom Short, provides a sophisticated environment which combines some
+of the features of the previous approaches with quite a bit of
+Javascript, allowing for a GUI-like behavior (wiht sortable tables,
+clickable graphics, editable output), etc.
+
+Jeff Horner is working on the R/Apache Integration Project which has a
+home page at
+@url{http://biostat.mc.vanderbilt.edu/twiki/bin/view/Main/RApacheProject}
+and embeds the R interpreter inside Apache 2 (and beyond).  A tutorial
+and presentation are available from the project web page.
+
+@url{http://stats.math.uni-augsburg.de/Rserve/, Rserve} is a project
+actively developed by Simon Urbanek.  It implements a TCP/IP server which
+allows other programs to use facilities of R.  Clients are available from
+the web site for Java and C++ (and could be written for other languages
+that support TCP/IP sockets).
+
+@url{http://openstatserver.org/index.html, OpenStatServer} is being
+developed by a team lead by Greg Warnes; it aims ``to provide clean access
+to computational modules defined in a variety of computational
+environments (R, SAS, Matlab, etc) via a single well-defined client
+interface'' and to turn computational services into web services.
+
+Two projects use PHP to provide a web interface to R.
+@url{http://steve-chen.net/R_PHP/, R_PHP_Online} by Steve Chen (though
+it is unclear if this project is still active) is somewhat similar to
+the above Rcgi and Rweb.  @url{http://dssm.unipa.it/R-php/?cmd=home,
+R-php} is actively developed by Alfredo Pontillo and Angelo Mineo and
+provides both a web interface to R and a set of pre-specified analyses
+that need no R code input.
+
+Finally, @url{http://www.bioconductor.org/, webbioc} is ``an integrated
+web interface for doing microarray analysis using several of the
+Bioconductor packages'' and is designed to be installed at local sites 
+as a shared computing resource.
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
@@ -2567,6 +2612,9 @@ Genetic algorithm for curve fitting.
 Functions for fitting and working with Generalized Additive Models, as
 described in chapter 7 of the White Book, and in ``Generalized Additive
 Models'' by T. Hastie and R. Tibshirani (1990).
+@item gamair
+Data sets used in the book ``Generalized Additive Models: An
+Introduction with R'' by S. Wood (2006).
 @item gamlss
 Functions to fit Generalized Additive Models for Location Scale and
 Shape.
