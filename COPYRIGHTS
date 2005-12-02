@@ -317,10 +317,12 @@ src/unix/dlfcn-darwin.[ch]
                        Peter O'Gorman <ogorman@users.sourceforge.net>
     See the headers of the files for the licence.
 
+
 src/extra/intl/*
 
 Based on gettextize from gettext 0.14.1
    Copyright (C) 1995-1999, 2000-2003 Free Software Foundation, Inc.
+
 
 src/include/memcheck.h
 src/include/valgrind.h
@@ -328,3 +330,11 @@ src/include/valgrind.h
 From valgrind,
 
    Copyright (C) 2000-2005 Julian Seward.  All rights reserved.
+
+
+src/main/mkdtemp.c
+
+From glibc via
+http://lists.gnu.org/archive/html/bug-gnulib/2003-02/msg00019.html
+
+   Copyright (C) 1999, 2001-2003 Free Software Foundation, Inc.

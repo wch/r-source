@@ -176,6 +176,10 @@
    */
 #undef HAVE_DECL_LOG2
 
+/* Define to 1 if you have the declaration of `mkdtemp', and to 0 if you
+   don't. */
+#undef HAVE_DECL_MKDTEMP
+
 /* Define to 1 if you have the declaration of `siglongjmp', and to 0 if you
    don't. */
 #undef HAVE_DECL_SIGLONGJMP

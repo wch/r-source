@@ -651,7 +651,7 @@ AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
 ## <NOTE>
 ## These are ANSI C headers but some C code (written to work also
 ## without assuming ANSI C) may need the corresponding conditionals.
-AC_CHECK_HEADERS(errno.h stdarg.h string.h)
+AC_CHECK_HEADERS(errno.h inttypes.h stdarg.h stdint.h string.h)
 ## </NOTE>
 ## <NOTE>
 ## src/main/regex.c uses HAVE_LIBINTL_H.
@@ -1463,10 +1463,10 @@ fi
 AC_SUBST(RMATH_HAVE_LOG1P)
 
 ## Do we need substitutes?
-AC_REPLACE_FUNCS(acosh asinh atanh snprintf strdup strncasecmp vsnprintf)
+AC_REPLACE_FUNCS(acosh asinh atanh mkdtemp snprintf strdup strncasecmp vsnprintf)
 ## Enable declarations in Defn.h?
 AC_CHECK_DECLS([acosh, asinh, atanh], , , [#include <math.h>])
-AC_CHECK_DECLS([snprintf, strdup, strncasecmp, vsnprintf])
+AC_CHECK_DECLS([mkdtemp, snprintf, strdup, strncasecmp, vsnprintf])
 
 AC_SEARCH_LIBS(connect, [socket])
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])

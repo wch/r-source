@@ -23,7 +23,7 @@ SOURCES_C = \
 	format.c fourier.c \
 	gevents.c gram.c gram-ex.c graphics.c \
 	identical.c internet.c iosupport.c \
-	lapack.c list.c logic.c localecharset.c \
+	lapack.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c model.c \
 	names.c \
 	objects.c optim.c optimize.c options.c \
@@ -40,6 +40,7 @@ SOURCES_F = \
 EXTRA_SOURCES_C = \
 	Rmain.c Rembedded.c \
 	alloca.c acosh.c asinh.c atanh.c \
+	mkdtemp.c \
 	snprintf.c strdup.c strncasecmp.c \
 	vsnprintf.c xspline.c
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)

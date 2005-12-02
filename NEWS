@@ -299,6 +299,9 @@ INSTALLATION CHANGES
 	to use --with-lapack.  It is no longer possible to use some
 	older versions of libsunperf, e.g. Forte 7 on 64-bit builds.
 
+    o	A substitute for mkdtemp is provided, so it is now always
+	used for R_TempDir.
+
 
 UTILITIES
 
