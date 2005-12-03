@@ -7017,6 +7017,10 @@ and environment variables @env{HOMEDRIVE} and @env{HOMEPATH} are defined
 directory.  Failing all those, the home directory is taken to be the
 starting directory.
 
+You need to ensure that either the environment variables @env{TMPDIR},
+@env{TMP} and @env{TEMP} are either unset or one of them points to a
+valid place to create temporary files and directories.
+
 Environment variables can be supplied as @samp{@var{name}=@var{value}}
 pairs at the end of the command line.
 

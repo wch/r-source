@@ -304,10 +304,8 @@ void InitTempDir()
     char *tmp, *tm, tmp1[PATH_MAX+11], *p;
     int len;
 
-    tmp = getenv("R_SESSION_TMPDIR");
+    tmp = getenv("R_SESSION_TMPDIR");  /* no longer set in R.sh */
     if (!tmp) {
-        /* This will only be called in the embedded case since this is
-           done in the R script. */
 	char *buf;
 
 	tm = getenv("TMPDIR");

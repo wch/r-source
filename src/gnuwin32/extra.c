@@ -51,7 +51,7 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
     strcpy(tmp1, tempdir);
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
-        sprintf(tm, "%s\\%s%d", tmp1, prefix, rand());
+        sprintf(tm, "%s\\%s%x", tmp1, prefix, rand());
         if ((h = FindFirstFile(tm, &fd)) == INVALID_HANDLE_VALUE) {
 	    done = 1;
 	    break;

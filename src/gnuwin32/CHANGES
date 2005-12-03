@@ -68,6 +68,9 @@ checked for a writeable directory for the R session temporary directory:
 (the last will always succeed).  The changes are that TMPDIR is checked
 first and that the values are checked to be a directory.
 
+For compatibiility with Unix, tempfile() names have a random hex
+suffix (and not a decimal one).
+
 
 
 R 2.2.0 patched

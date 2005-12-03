@@ -35,22 +35,20 @@ tempdir()
   in an \R session and across simultaneous \R sessions.  The filenames are
   guaranteed not to be currently in use.
 
-#ifdef unix
   The file name is made of the pattern and a random suffix in hex.  By
   default, the filenames will be in the directory given by
-  \code{tempdir()}.  Normally this will be a subdirectory of the
-  directory given by the environment variable \env{TMPDIR} if set,
-  otherwise \code{"/tmp"}.  (In embedded applications the environment
+  \code{tempdir()}.  This will be a subdirectory of the temporary
+  directory found by the following rule.  The environment
   variables \env{TMPDIR}, \env{TMP} and \env{TEMP} are checked in turn
-  and the first found which points to a writable directory is used.)
+  and the first found which points to a writable directory is used:
+#ifdef unix
+  if none succeeds \file{/tmp} is used.
 #endif
 #ifdef windows
-  \code{tempdir()} gives a subdirectory of the first found
-  of the environment variables \env{TMPDIR}, \env{TMP}, \env{TEMP}
-  and \env{R\_USER} (see \code{\link{Rconsole}}) which points to a
-  writable directory.  If the path to the directory contains a space in
-  any of the components, the path returned will use the shortnames
-  version of the path.
+  if none succeeds the value of \env{R\_USER} (see
+  \code{\link{Rconsole}}) is used.  If the path to the directory
+  contains a space in any of the components, the path returned will use
+  the shortnames version of the path.
 #endif
 }
 \references{

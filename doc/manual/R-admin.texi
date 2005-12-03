@@ -1079,16 +1079,11 @@ set by default on Windows and hence no such file).  These are set at
 size}).
 
 Various environment variables can be set to determine where @R{} creates
-its per-session temporary directory.  For Unix-alike versions launched
-from the shell-script front-end, this is set by @env{TMPDIR} and
-defaults to @file{/tmp}: this is also used by a number of utilities such
-as @command{R CMD INSTALL}.  There is no check made that this points to
-an actual directory that is user-writeable.  For Windows and embedded
-Unix-alike version of @R{} (including the MacOS X console) the
-environment variables @env{TMPDIR}, @env{TMP} and @env{TEMP} are
-searched in turn and the first one which is set and points to a
-writeable area is used.  If none do, the final default is @file{/tmp} on
-Unix-alikes and the value of @env{R_USER} on Windows.
+its per-session temporary directory.  The environment variables
+@env{TMPDIR}, @env{TMP} and @env{TEMP} are searched in turn and the
+first one which is set and points to a writable area is used.  If none
+do, the final default is @file{/tmp} on Unix-alikes and the value of
+@env{R_USER} on Windows.
 
 @node Add-on packages, Internationalization, Running R, Top
 @chapter Add-on packages

@@ -168,15 +168,16 @@ else
 fi
 
 ## Create a per-session dir
-: ${TMPDIR=/tmp}
-{ tmp=`(umask 077 && mktemp -d -q "${TMPDIR}/RtmpXXXXXX") 2>/dev/null` \
-    && test -n "${tmp}" && test -d "${tmp}" ; } ||
-  { test -n "${RANDOM}" && tmp=${TMPDIR}/Rtmp$$-${RANDOM} \
-      && (umask 077 && mkdir "${tmp}") ; } ||
-  { tmp=${TMPDIR}/Rtmp$$ && (umask 077 && mkdir "${tmp}") ; } ||
-  error "cannot create temporary R session directory"
-R_SESSION_TMPDIR="${tmp}"
-export R_SESSION_TMPDIR
+# now done in C code
+# : ${TMPDIR=/tmp}
+# { tmp=`(umask 077 && mktemp -d -q "${TMPDIR}/RtmpXXXXXX") 2>/dev/null` \
+#     && test -n "${tmp}" && test -d "${tmp}" ; } ||
+#   { test -n "${RANDOM}" && tmp=${TMPDIR}/Rtmp$$-${RANDOM} \
+#       && (umask 077 && mkdir "${tmp}") ; } ||
+#   { tmp=${TMPDIR}/Rtmp$$ && (umask 077 && mkdir "${tmp}") ; } ||
+#   error "cannot create temporary R session directory"
+# R_SESSION_TMPDIR="${tmp}"
+# export R_SESSION_TMPDIR
 
 ## Startup
 if test -z "${debugger}"; then
