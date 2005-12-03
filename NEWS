@@ -75,9 +75,6 @@ NEW FEATURES
     o	Package tools contains translation tables 'Adobe_glyphs' and
 	'charset_to_Unicode'.
 
-    o	R CMD INSTALL will clean up if interrupted (e.g. by ctrl-C from
-	the keyboard).
-
     o	On Unix-alikes, X11() now has arguments to request the initial
 	position of the window, and 'gamma' defaults to the value of
 	getOptions("gamma").  These changes are consistent with the
@@ -397,6 +394,9 @@ NEW FEATURES
     o	configure has more support for the Intel and Portland Group
 	compilers on ix86 and x86_64 Linux.
 
+    o	R CMD INSTALL will clean up if interrupted (e.g. by ctrl-C from
+	the keyboard).
+
 
 DEPRECATED & DEFUNCT
 
@@ -548,11 +548,17 @@ BUG FIXES
 
     o	Writing long formats (more than 1000 bytes) with connections
 	that use dummy_vfprintf could fail on some systems.  The limit
-	has been changed to 100000 pending a more complete fix in R
+	has been changed to 100000 bytes pending a more complete fix in R
 	2.3.0.
 
     o	Making in src/nmath/standalone without making R was not
 	making Rmath.h.
+
+    o	Both the R front-end and INSTALL could find the attempted
+	temporary directory name already in use on platforms without
+	mktemp (and a genuine Bourne shell /bin/sh, not bash).  Now
+	both the process ID and a timestamp are used to create the
+	directory name.
 
 
 
