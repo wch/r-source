@@ -1085,6 +1085,11 @@ first one which is set and points to a writable area is used.  If none
 do, the final default is @file{/tmp} on Unix-alikes and the value of
 @env{R_USER} on Windows.
 
+Some systems are set up to remove files and directories periodically
+from @file{/tmp}, for example by a @command{cron} job running
+@command{tmpwatch}.  Set @env{TMPDIR} to another directory before
+running long-running jobs on such a system.
+
 @node Add-on packages, Internationalization, Running R, Top
 @chapter Add-on packages
 @cindex Packages
