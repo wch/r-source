@@ -171,6 +171,7 @@ fi
     && test -n "${tmp}" && test -d "${tmp}" ; } ||
   { test -n "${RANDOM}" && tmp=${TMPDIR}/Rtmp$$-${RANDOM} \
       && (umask 077 && mkdir "${tmp}") ; } ||
+  { tmp=${TMPDIR}/Rtmp$$-`date +%m%d%H%M%S` && (${MKDIR_P} "${tmp}") ; } ||
   { tmp=${TMPDIR}/Rtmp$$ && (umask 077 && mkdir "${tmp}") ; } ||
   error "cannot create temporary R session directory"
 R_SESSION_TMPDIR="${tmp}"
