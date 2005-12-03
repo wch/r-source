@@ -99,6 +99,7 @@ startdir=`${GETWD}`
     && test -n "${tmpdir}" && test -d "${tmpdir}" ; } ||
   { test -n "${RANDOM}" && tmpdir=${TMPDIR}/R.INSTALL$$-${RANDOM} \
       && (${MKDIR_P} "${tmpdir}") ; } ||
+  { tmpdir=${TMPDIR}/R.INSTALL.$$-`date +%m%d%H%M%S` && (${MKDIR_P} "${tmpdir}") ; } ||
   { tmpdir=${TMPDIR}/R.INSTALL.$$ && (${MKDIR_P} "${tmpdir}") ; } ||
   (error "cannot create temporary directory" && exit 1)
 tmpdir=`cd "${tmpdir}" && ${GETWD}`

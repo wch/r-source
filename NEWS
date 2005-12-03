@@ -316,6 +316,9 @@ UTILITIES
 
     o	R CMD check now uses an install log by default.
 
+    o	R CMD INSTALL now uses more randomness in the temporary
+	directory even on systems without mktemp -d.
+
 
 C-LEVEL FACILITIES
 
