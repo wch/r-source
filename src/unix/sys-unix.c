@@ -276,7 +276,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 static int isDir(char *path)
 {
     struct stat sb;
-    int isdir = 0, mode;
+    int isdir = 0;
     if(!path) return 0;
     if(stat(path, &sb) == 0) {
 	isdir = (sb.st_mode & S_IFDIR) > 0; /* is a directory */
