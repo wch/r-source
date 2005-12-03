@@ -208,6 +208,9 @@ NEW FEATURES
 	TMPDIR, TMP and TEMP in turn, and checks if they point to a
 	writable directory.
 
+    o	The suffix used by tempfile() is now in hex on all platforms
+	and guaranteed to be at least 6 hex digits (usually 8).
+
 
 DEPRECATED & DEFUNCT
 

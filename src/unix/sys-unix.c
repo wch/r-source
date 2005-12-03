@@ -339,6 +339,7 @@ void InitTempDir()
     }
 }
 
+
 char * R_tmpnam(const char * prefix, const char * tempdir)
 {
     char tm[PATH_MAX], tmp1[PATH_MAX], *res;
@@ -347,8 +348,12 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
     if(!prefix) prefix = "";	/* NULL */
     strcpy(tmp1, tempdir);
     for (n = 0; n < 100; n++) {
-	/* try a random number at the end */
+	/* try a random number at the end.  Need at least 6 hex digits */
+#if RAND_MAX > 16777215
 	sprintf(tm, "%s/%s%x", tmp1, prefix, rand());
+#else
+	sprintf(tm, "%s/%s%x%x", tmp1, prefix, rand(), rand());
+#endif
         if(!R_FileExists(tm)) { done = 1; break; }
     }
     if(!done)
