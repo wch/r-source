@@ -356,6 +356,8 @@ BUG FIXES
     o   R CMD build --binary does a better job of cleaning up after
 	failure to re-make vignettes.
 
+    o	t() now longer drops dimnames 'list(NULL,NULL)' or 'list(NULL)'.
+
 
 
 

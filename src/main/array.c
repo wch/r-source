@@ -736,6 +736,7 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    nrow = len = length(a);
 	    ncol = 1;
 	    rnames = getAttrib(a, R_NamesSymbol);
+	    dimnames = rnames;/* for isNull() below*/
 	    break;
 	case 1:
 	    nrow = len = length(a);
@@ -800,7 +801,9 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     INTEGER(dims)[1] = nrow;
     setAttrib(r, R_DimSymbol, dims);
     UNPROTECT(1);
-    if(rnames != R_NilValue || cnames != R_NilValue) {
+    /* R <= 2.2.0: dropped list(NULL,NULL) dimnames :
+     * if(rnames != R_NilValue || cnames != R_NilValue) */
+    if(!isNull(dimnames)) {
 	PROTECT(dimnames = allocVector(VECSXP, 2));
 	SET_VECTOR_ELT(dimnames, 0, cnames);
 	SET_VECTOR_ELT(dimnames, 1, rnames);

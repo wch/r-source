@@ -3949,3 +3949,10 @@ writeLines(xx, con)
 close(con)
 unlink("test.gz")
 ## segfaulted in 2.2.0 on some x86_64 systems.
+
+## t(.) with NULL dimnames
+x <- diag(2)
+dimnames(x) <- list(NULL, NULL)
+stopifnot(identical(x, t(x)),
+          identical(dimnames(x), dimnames(t(array(3, 1, dimnames=list(NULL))))))
+## dropped the length-2 list till 2.2.0
