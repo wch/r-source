@@ -884,12 +884,13 @@ int Rwin_rename(char *from, char *to)
 static int isDir(char *path)
 {
     struct stat sb;
-    int isdir = 0, mode;
+    int isdir = 0;
     if(!path) return 0;
     if(stat(path, &sb) == 0) {
 	isdir = (sb.st_mode & S_IFDIR) > 0; /* is a directory */
-	mode = (int) sb.st_mode & 0007777;
-	isdir &= (mode & 06)>0;
+	/* We want to know if the directory is writable by this user,
+	   which mode does not tell us */
+	isdir &= (access(path, W_OK) == 0);
     }
     return isdir;
 }
