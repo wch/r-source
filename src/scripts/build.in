@@ -57,7 +57,7 @@ my @known_options = ("help|h", "version|v", "binary", "no-docs",
 
 if($WINDOWS) {
     die "Please set TMPDIR to a valid temporary directory\n"
-	unless (-e ${R::Vars::TMPDIR});
+	unless (-d ${R::Vars::TMPDIR});
     @known_options = ("help|h", "version|v", "binary", "docs:s",
 		      "auto-zip",
 		      "use-zip", "use-zip-help", "use-zip-data",
@@ -76,7 +76,7 @@ my $startdir = R_cwd();
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
 my $gzip = R_getenv("R_GZIPCMD", "gzip");
 my $tar = R_getenv("TAR", "tar");
-my $libdir = &file_path(${R::Vars::TMPDIR}, "Rinst.$$");
+my $libdir = R_tempfile("Rinst");
 
 my $INSTALL_opts = "";
 $INSTALL_opts .= " --use-zip" if $opt_use_zip;
@@ -156,7 +156,7 @@ foreach my $pkg (@ARGV) {
     $log->message("removing junk files");
     find(\&unlink_junk_files, $pkg);
 
-    my $exclude = &file_path(${R::Vars::TMPDIR}, "Rbuild-exclude.$$");
+    my $exclude = R_tempfile("Rbuild-exclude");
     open(EXCLUDE, "> $exclude")
 	or die "Error: cannot open file '$exclude' for writing\n";
     binmode EXCLUDE if $WINDOWS;
@@ -226,7 +226,7 @@ foreach my $pkg (@ARGV) {
 		  ("$tar chf",
 		   &shell_quote_file_path($filepath),
 		   "$pkgname")));
-    my $tmpdir = &file_path(${R::Vars::TMPDIR}, "Rbuild.$$");
+    my $tmpdir = R_tempfile("Rbuild");
     rmtree($tmpdir) if(-d $tmpdir);
     mkdir("$tmpdir", 0755)
 	or die "Error: cannot create directory '$tmpdir'\n";
