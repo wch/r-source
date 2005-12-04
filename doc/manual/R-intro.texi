@@ -6400,7 +6400,7 @@ command like
 > library(boot)
 @end example
 
-Users connected to the Internet can use the @code{CRAN.packages()}
+Users connected to the Internet can use the @code{available.packages()}
 function (available through the @code{Packages} menu in the Windows and
 RAqua GUIs) to automatically update and install packages.
 

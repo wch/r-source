@@ -4324,7 +4324,7 @@ where @var{lib} gives the path to the library tree to install to.
 
 Even more conveniently, you can install and automatically update
 packages from within R if you have access to @CRAN{}.  See the
-help page for @code{CRAN.packages()} for more information.
+help page for @code{available.packages()} for more information.
 
 You can use several library trees of add-on packages.  The easiest way
 to tell R to use these is via the environment variable @env{R_LIBS}
