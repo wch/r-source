@@ -11,7 +11,7 @@ package.dependencies(x, check = FALSE,
 }
 \arguments{
     \item{x}{A matrix of package descriptions as returned by
-	\code{\link{CRAN.packages}}.}
+	\code{\link{available.packages}}.}
     \item{check}{If \code{TRUE}, return logical vector of check results.
 	If \code{FALSE}, return parsed list of dependencies.}
     \item{depLevel}{Whether to look for \code{Depends} or

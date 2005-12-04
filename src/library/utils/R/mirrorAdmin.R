@@ -47,12 +47,12 @@ mirror2html <- function(mirrors = NULL, file="mirrors.html",
 
 checkCRAN <-function(method)
 {
-    master <- CRAN.packages(CRAN="http://cran.R-project.org", method=method)
+    master <- available.packages(contrib.url("http://cran.R-project.org"), method=method)
     m <- getCRANmirrors()
 
     z <- list()
     for(url in as.character(m$URL))
-        z[[url]] = CRAN.packages(url, method=method)
+        z[[url]] = available.packages(contrib.url(url), method=method)
 
     lapply(z, function(a) all.equal(a, master))
 }

@@ -51,7 +51,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{cacheOK = FALSE} is useful for \code{"http://"} URLs, and will
   attempt to get a copy directly from the site rather than from an
   intermediate cache.  (Not all platforms support it.)
-  It is used by \code{\link{CRAN.packages}}.
+  It is used by \code{\link{available.packages}}.
 
   The remaining details apply to method \code{"internal"} only.
 
