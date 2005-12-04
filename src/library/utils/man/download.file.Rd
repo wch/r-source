@@ -142,7 +142,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \code{\link{url}} for a finer-grained way to read data from URLs.
 
-  \code{\link{url.show}}, \code{\link{CRAN.packages}},
+  \code{\link{url.show}}, \code{\link{available.packages}},
   \code{\link{download.packages}} for applications
 }
 \keyword{utilities}
