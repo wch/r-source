@@ -68,9 +68,6 @@ checked for a writeable directory for the R session temporary directory:
 (the last will always succeed).  The changes are that TMPDIR is checked
 first and that the values are checked to be a directory.
 
-For compatibility with Unix, tempfile() names have a random hex suffix
-(and not a decimal one), and there are many more values to choose from.
-
 
 
 R 2.2.0 patched
@@ -111,6 +108,12 @@ now has the limit of 16 as intended.
 
 Clicking on the left part of the MDI radiobutton in the preferences
 dialog failed.
+
+A different algorithm is used to find the R session temporary
+directory, one that is more likely to succeed.
+
+For compatibility with Unix, tempfile() names have a random hex suffix
+(and not a decimal one), and there are many more values to choose from.
 
 
 
