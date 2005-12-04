@@ -65,7 +65,7 @@ NEW FEATURES
 
     o	The code used to guess timezone offsets where not supplied by
 	the OS uses a different algorithm that is more likely to guess
-	the summer time transitions correctly.
+	the summer-time transitions correctly.
 
     o	new.packages() gains a ... argument to pass e.g. 'destdir' to
 	install.packages().  (Wish of PR#8239.)
@@ -80,11 +80,11 @@ NEW FEATURES
 	getOptions("gamma").  These changes are consistent with the
 	windows() device.
 
-    o	The font metrics for the 14 standard fonts (only, not the rest
-	of the common 35) have been updated to versions from late 1999
-	which cover more glyphs.  There are also a few differences in
-	the metrics and hence the output might be slightly different
-	in some cases.
+    o	The postscript()/pdf() font metrics for the 14 standard fonts
+	(only, not the rest of the common 35) have been updated to
+	versions from late 1999 which cover more glyphs.  There are
+	also a few differences in the metrics and hence the output
+	might be slightly different in some cases.
 
     o	pdf() now allows 'family' to be specified in the same
 	generality as postscript().
@@ -329,7 +329,7 @@ C-LEVEL FACILITIES
 	exclude lsame (which is a Lapack auxiliary function and is now
 	declared in <R_ext/Lapack.h>).  It also includes the double
 	complex routines added for this release of R provided Fortran
-	doublecomplex is usuable on the platform.
+	doublecomplex is usable on the platform.
 
     o	<R_ext/BLAS.h> and <R_ext/Lapack.h> now declare all the entry
 	points as 'extern'.
