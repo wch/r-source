@@ -311,6 +311,9 @@ INSTALLATION CHANGES
     o	A substitute for mkdtemp is provided, so it is now always
 	used for R_TempDir.
 
+    o	Most of the functions checked for also have declarations
+	checked for in the appropriate header.
+
 
 UTILITIES
 

@@ -30528,46 +30528,13 @@ _ACEOF
 fi
 
 
+## fseeko/ftello may be macros, matherr is redefined
+## strptime is awkward since it needs _XOPEN_SOURCE before features.h
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-for ac_func in access chdir expm1 fcntl fdopen finite fseeko ftello ftruncate \
-  getcwd getgrgid getpwuid getrlimit gettimeofday getuid hypot isascii \
-  log1p log2 log10 matherr mkdtemp mkfifo popen putenv realpath rint \
-  setenv strcoll stat strerror strptime symlink system times unsetenv
+for ac_func in fseeko ftello matherr strptime
 do
 as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
 echo "$as_me:$LINENO: checking for $ac_func" >&5
@@ -30676,10 +30643,13 @@ _ACEOF
 fi
 done
 
-## isfinite and isnan are in math.h but might be macros
-echo "$as_me:$LINENO: checking whether isfinite is declared" >&5
-echo $ECHO_N "checking whether isfinite is declared... $ECHO_C" >&6
-if test "${ac_cv_have_decl_isfinite+set}" = set; then
+
+for ac_func in fcntl
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -30688,7 +30658,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-#include <math.h>
+#include <fcntl.h>
 
 #ifdef F77_DUMMY_MAIN
 
@@ -30701,8 +30671,8 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-#ifndef isfinite
-  char *p = (char *) isfinite;
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
 #endif
 
   ;
@@ -30731,34 +30701,33 @@ if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_have_decl_isfinite=yes
+  eval "$as_ac_Symbol=yes"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-ac_cv_have_decl_isfinite=no
+eval "$as_ac_Symbol=no"
 fi
 rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $ac_cv_have_decl_isfinite" >&5
-echo "${ECHO_T}$ac_cv_have_decl_isfinite" >&6
-if test $ac_cv_have_decl_isfinite = yes; then
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_ISFINITE 1
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
-
-
-else
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_ISFINITE 0
-_ACEOF
-
 
 fi
-echo "$as_me:$LINENO: checking whether isnan is declared" >&5
-echo $ECHO_N "checking whether isnan is declared... $ECHO_C" >&6
-if test "${ac_cv_have_decl_isnan+set}" = set; then
+done
+
+
+for ac_func in getgrgid
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -30767,7 +30736,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-#include <math.h>
+#include <grp.h>
 
 #ifdef F77_DUMMY_MAIN
 
@@ -30780,8 +30749,8 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-#ifndef isnan
-  char *p = (char *) isnan;
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
 #endif
 
   ;
@@ -30810,37 +30779,38 @@ if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_have_decl_isnan=yes
+  eval "$as_ac_Symbol=yes"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-ac_cv_have_decl_isnan=no
+eval "$as_ac_Symbol=no"
 fi
 rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $ac_cv_have_decl_isnan" >&5
-echo "${ECHO_T}$ac_cv_have_decl_isnan" >&6
-if test $ac_cv_have_decl_isnan = yes; then
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_ISNAN 1
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
-
-
-else
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_ISNAN 0
-_ACEOF
-
 
 fi
+done
 
 
-## log2 and log10 are C99 and might need suitable compiler flags
-echo "$as_me:$LINENO: checking whether log2 is declared" >&5
-echo $ECHO_N "checking whether log2 is declared... $ECHO_C" >&6
-if test "${ac_cv_have_decl_log2+set}" = set; then
+
+
+
+
+
+for ac_func in expm1 hypot log1p log2 log10 rint
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -30862,8 +30832,8 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-#ifndef log2
-  char *p = (char *) log2;
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
 #endif
 
   ;
@@ -30892,34 +30862,33 @@ if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_have_decl_log2=yes
+  eval "$as_ac_Symbol=yes"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-ac_cv_have_decl_log2=no
+eval "$as_ac_Symbol=no"
 fi
 rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $ac_cv_have_decl_log2" >&5
-echo "${ECHO_T}$ac_cv_have_decl_log2" >&6
-if test $ac_cv_have_decl_log2 = yes; then
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_LOG2 1
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
-
-
-else
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_LOG2 0
-_ACEOF
-
 
 fi
-echo "$as_me:$LINENO: checking whether log10 is declared" >&5
-echo $ECHO_N "checking whether log10 is declared... $ECHO_C" >&6
-if test "${ac_cv_have_decl_log10+set}" = set; then
+done
+
+
+for ac_func in getpwuid
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -30928,7 +30897,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-#include <math.h>
+#include <pwd.h>
 
 #ifdef F77_DUMMY_MAIN
 
@@ -30941,8 +30910,8 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-#ifndef log10
-  char *p = (char *) log10;
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
 #endif
 
   ;
@@ -30971,37 +30940,113 @@ if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_have_decl_log10=yes
+  eval "$as_ac_Symbol=yes"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-ac_cv_have_decl_log10=no
+eval "$as_ac_Symbol=no"
 fi
 rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $ac_cv_have_decl_log10" >&5
-echo "${ECHO_T}$ac_cv_have_decl_log10" >&6
-if test $ac_cv_have_decl_log10 = yes; then
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_LOG10 1
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
-
-
-else
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_LOG10 0
-_ACEOF
-
 
 fi
+done
 
 
-## glibc has this conditionally defined
-echo "$as_me:$LINENO: checking whether fdopen is declared" >&5
-echo $ECHO_N "checking whether fdopen is declared... $ECHO_C" >&6
-if test "${ac_cv_have_decl_fdopen+set}" = set; then
+
+for ac_func in va_copy __va_copy
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <stdarg.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  eval "$as_ac_Symbol=yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+eval "$as_ac_Symbol=no"
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+
+
+for ac_func in fdopen popen
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -31023,8 +31068,8 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-#ifndef fdopen
-  char *p = (char *) fdopen;
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
 #endif
 
   ;
@@ -31053,36 +31098,37 @@ if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_have_decl_fdopen=yes
+  eval "$as_ac_Symbol=yes"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-ac_cv_have_decl_fdopen=no
+eval "$as_ac_Symbol=no"
 fi
 rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $ac_cv_have_decl_fdopen" >&5
-echo "${ECHO_T}$ac_cv_have_decl_fdopen" >&6
-if test $ac_cv_have_decl_fdopen = yes; then
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_FDOPEN 1
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
-
-
-else
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_FDOPEN 0
-_ACEOF
-
 
 fi
+done
 
 
-echo "$as_me:$LINENO: checking whether va_copy is declared" >&5
-echo $ECHO_N "checking whether va_copy is declared... $ECHO_C" >&6
-if test "${ac_cv_have_decl_va_copy+set}" = set; then
+
+
+
+
+for ac_func in putenv realpath setenv system unsetenv
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -31091,7 +31137,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-#include <stdarg.h>
+#include <stdlib.h>
 
 #ifdef F77_DUMMY_MAIN
 
@@ -31104,8 +31150,8 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-#ifndef va_copy
-  char *p = (char *) va_copy;
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
 #endif
 
   ;
@@ -31134,34 +31180,34 @@ if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_have_decl_va_copy=yes
+  eval "$as_ac_Symbol=yes"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-ac_cv_have_decl_va_copy=no
+eval "$as_ac_Symbol=no"
 fi
 rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $ac_cv_have_decl_va_copy" >&5
-echo "${ECHO_T}$ac_cv_have_decl_va_copy" >&6
-if test $ac_cv_have_decl_va_copy = yes; then
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_VA_COPY 1
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
-
-
-else
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL_VA_COPY 0
-_ACEOF
-
 
 fi
-echo "$as_me:$LINENO: checking whether __va_copy is declared" >&5
-echo $ECHO_N "checking whether __va_copy is declared... $ECHO_C" >&6
-if test "${ac_cv_have_decl___va_copy+set}" = set; then
+done
+
+
+
+for ac_func in strcoll strerror
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -31170,7 +31216,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-#include <stdarg.h>
+#include <string.h>
 
 #ifdef F77_DUMMY_MAIN
 
@@ -31183,8 +31229,8 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-#ifndef __va_copy
-  char *p = (char *) __va_copy;
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
 #endif
 
   ;
@@ -31213,31 +31259,423 @@ if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_have_decl___va_copy=yes
+  eval "$as_ac_Symbol=yes"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-ac_cv_have_decl___va_copy=no
+eval "$as_ac_Symbol=no"
 fi
 rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $ac_cv_have_decl___va_copy" >&5
-echo "${ECHO_T}$ac_cv_have_decl___va_copy" >&6
-if test $ac_cv_have_decl___va_copy = yes; then
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
 
 cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL___VA_COPY 1
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
-
-
-else
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_DECL___VA_COPY 0
-_ACEOF
-
 
 fi
+done
+
+
+for ac_func in getrlimit
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <sys/resource.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  eval "$as_ac_Symbol=yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+eval "$as_ac_Symbol=no"
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+
+
+for ac_func in mkfifo stat
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <sys/stat.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  eval "$as_ac_Symbol=yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+eval "$as_ac_Symbol=no"
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+
+for ac_func in gettimeofday
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <sys/time.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  eval "$as_ac_Symbol=yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+eval "$as_ac_Symbol=no"
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+
+for ac_func in times
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <sys/times.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  eval "$as_ac_Symbol=yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+eval "$as_ac_Symbol=no"
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+
+
+
+
+
+
+for ac_func in access chdir ftruncate getcwd getuid symlink
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  eval "$as_ac_Symbol=yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+eval "$as_ac_Symbol=no"
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
 
 
 ## <NOTE>
@@ -33693,12 +34131,12 @@ fi
 
 
 for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
-		   ccosh csinh ctanh cacosh casinh catanh
+		  ccosh csinh ctanh cacosh casinh catanh
 do
-as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
-echo "$as_me:$LINENO: checking for $ac_func" >&5
-echo $ECHO_N "checking for $ac_func... $ECHO_C" >&6
-if eval "test \"\${$as_ac_var+set}\" = set"; then
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -33707,42 +34145,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-/* Define $ac_func to an innocuous variant, in case <limits.h> declares $ac_func.
-   For example, HP-UX 11i <limits.h> declares gettimeofday.  */
-#define $ac_func innocuous_$ac_func
-
-/* System header to define __stub macros and hopefully few prototypes,
-    which can conflict with char $ac_func (); below.
-    Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
-    <limits.h> exists even on freestanding compilers.  */
-
-#ifdef __STDC__
-# include <limits.h>
-#else
-# include <assert.h>
-#endif
-
-#undef $ac_func
-
-/* Override any gcc2 internal prototype to avoid an error.  */
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-/* We use char because int might match the return type of a gcc2
-   builtin and then its argument prototype would still apply.  */
-char $ac_func ();
-/* The GNU C library defines this for functions which it implements
-    to always fail with ENOSYS.  Some functions are actually named
-    something starting with __ and the normal name is an alias.  */
-#if defined (__stub_$ac_func) || defined (__stub___$ac_func)
-choke me
-#else
-char (*f) () = $ac_func;
-#endif
-#ifdef __cplusplus
-}
-#endif
+#include<complex.h>
 
 #ifdef F77_DUMMY_MAIN
 
@@ -33755,14 +34158,17 @@ char (*f) () = $ac_func;
 int
 main ()
 {
-return f != $ac_func;
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
   ;
   return 0;
 }
 _ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
   ac_status=$?
   grep -v '^ *+' conftest.er1 >conftest.err
   rm -f conftest.er1
@@ -33776,26 +34182,26 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
+	 { ac_try='test -s conftest.$ac_objext'
   { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  eval "$as_ac_var=yes"
+  eval "$as_ac_Symbol=yes"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-eval "$as_ac_var=no"
+eval "$as_ac_Symbol=no"
 fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_var'}'`" >&5
-echo "${ECHO_T}`eval echo '${'$as_ac_var'}'`" >&6
-if test `eval echo '${'$as_ac_var'}'` = yes; then
-  cat >>confdefs.h <<_ACEOF
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+
+cat >>confdefs.h <<_ACEOF
 #define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
 
@@ -36126,19 +36532,12 @@ if test "$want_mbcs_support" = yes ; then
 
 
 
-
-
-
-
-
-
-for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
-		 wctrans iswblank wctype iswctype
+for ac_func in mbrtowc wcrtomb wcscoll wcsftime
 do
-as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
-echo "$as_me:$LINENO: checking for $ac_func" >&5
-echo $ECHO_N "checking for $ac_func... $ECHO_C" >&6
-if eval "test \"\${$as_ac_var+set}\" = set"; then
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -36147,42 +36546,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-/* Define $ac_func to an innocuous variant, in case <limits.h> declares $ac_func.
-   For example, HP-UX 11i <limits.h> declares gettimeofday.  */
-#define $ac_func innocuous_$ac_func
-
-/* System header to define __stub macros and hopefully few prototypes,
-    which can conflict with char $ac_func (); below.
-    Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
-    <limits.h> exists even on freestanding compilers.  */
-
-#ifdef __STDC__
-# include <limits.h>
-#else
-# include <assert.h>
-#endif
-
-#undef $ac_func
-
-/* Override any gcc2 internal prototype to avoid an error.  */
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-/* We use char because int might match the return type of a gcc2
-   builtin and then its argument prototype would still apply.  */
-char $ac_func ();
-/* The GNU C library defines this for functions which it implements
-    to always fail with ENOSYS.  Some functions are actually named
-    something starting with __ and the normal name is an alias.  */
-#if defined (__stub_$ac_func) || defined (__stub___$ac_func)
-choke me
-#else
-char (*f) () = $ac_func;
-#endif
-#ifdef __cplusplus
-}
-#endif
+#include <wchar.h>
 
 #ifdef F77_DUMMY_MAIN
 
@@ -36195,14 +36559,17 @@ char (*f) () = $ac_func;
 int
 main ()
 {
-return f != $ac_func;
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
   ;
   return 0;
 }
 _ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
   ac_status=$?
   grep -v '^ *+' conftest.er1 >conftest.err
   rm -f conftest.er1
@@ -36216,26 +36583,186 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
+	 { ac_try='test -s conftest.$ac_objext'
   { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  eval "$as_ac_var=yes"
+  eval "$as_ac_Symbol=yes"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-eval "$as_ac_var=no"
+eval "$as_ac_Symbol=no"
 fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_var'}'`" >&5
-echo "${ECHO_T}`eval echo '${'$as_ac_var'}'`" >&6
-if test `eval echo '${'$as_ac_var'}'` = yes; then
-  cat >>confdefs.h <<_ACEOF
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+
+
+for ac_func in mbstowcs wcstombs
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <stdlib.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  eval "$as_ac_Symbol=yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+eval "$as_ac_Symbol=no"
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+
+cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+
+
+
+
+for ac_func in wctrans iswblank wctype iswctype
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
+if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <wctype.h>
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  eval "$as_ac_Symbol=yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+eval "$as_ac_Symbol=no"
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
+echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+
+cat >>confdefs.h <<_ACEOF
 #define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
 

@@ -272,15 +272,6 @@ double R_pow_di(double x, int n)
 
 /* General Base Logarithms */
 
-/* it seems some systems have these functions but not their declarations */
-#if !defined(log2) && defined(HAVE_DECL_LOG2) && !HAVE_DECL_LOG2
-extern double log2(double x);
-#endif
-
-#if !defined(log10) && defined(HAVE_DECL_LOG10) && !HAVE_DECL_LOG10
-extern double log10(double x);
-#endif
-
 static double logbase(double x, double base)
 {
 #if defined(HAVE_WORKING_LOG)  && defined(HAVE_LOG10)

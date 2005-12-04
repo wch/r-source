@@ -1414,17 +1414,26 @@ AC_CHECK_DECLS([alloca], , ,
 [#ifdef HAVE_ALLOCA_H
 # include <alloca.h>
 #endif])
-AC_CHECK_FUNCS(access chdir expm1 fcntl fdopen finite fseeko ftello ftruncate \
-  getcwd getgrgid getpwuid getrlimit gettimeofday getuid hypot isascii \
-  log1p log2 log10 matherr mkdtemp mkfifo popen putenv realpath rint \
-  setenv strcoll stat strerror strptime symlink system times unsetenv)
-## isfinite and isnan are in math.h but might be macros
-AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
-## log2 and log10 are C99 and might need suitable compiler flags
-AC_CHECK_DECLS([log2, log10], , , [#include <math.h>])
-## glibc has this conditionally defined
-AC_CHECK_DECLS([fdopen], , , [#include <stdio.h>])
-AC_CHECK_DECLS([va_copy, __va_copy], , , [#include <stdarg.h>])
+## fseeko/ftello may be macros, matherr is redefined
+## strptime is awkward since it needs _XOPEN_SOURCE before features.h
+AC_CHECK_FUNCS(fseeko ftello matherr strptime)
+R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
+R_CHECK_FUNCS([getgrgid], [#include <grp.h>])
+R_CHECK_FUNCS([expm1 hypot log1p log2 log10 rint], [#include <math.h>])
+R_CHECK_FUNCS([getpwuid], [#include <pwd.h>])
+R_CHECK_FUNCS([va_copy __va_copy], [#include <stdarg.h>])
+R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
+R_CHECK_FUNCS([putenv realpath setenv system unsetenv], [#include <stdlib.h>])
+R_CHECK_FUNCS([strcoll strerror], [#include <string.h>])
+R_CHECK_FUNCS([getrlimit], [#include <sys/resource.h>])
+R_CHECK_FUNCS([mkfifo stat], [#include <sys/stat.h>])
+R_CHECK_FUNCS([gettimeofday], [#include <sys/time.h>])
+R_CHECK_FUNCS([times], [#include <sys/times.h>])
+R_CHECK_FUNCS([access chdir ftruncate getcwd getuid symlink],
+[#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif])
+
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.

@@ -142,10 +142,6 @@
    */
 #define HAVE_DECL_ATANH 1
 
-/* Define to 1 if you have the declaration of `fdopen', and to 0 if you don't.
-   */
-#define HAVE_DECL_FDOPEN 1
-
 /* Define to 1 if you have the declaration of `feof_unlocked', and to 0 if you
    don't. */
 #define HAVE_DECL_FEOF_UNLOCKED 0
@@ -165,14 +161,6 @@
 /* Define to 1 if you have the declaration of `isnan', and to 0 if you don't.
    */
 #define HAVE_DECL_ISNAN 1
-
-/* Define to 1 if you have the declaration of `log10', and to 0 if you don't.
-   */
-#define HAVE_DECL_LOG10 1
-
-/* Define to 1 if you have the declaration of `log2', and to 0 if you don't.
-   */
-#define HAVE_DECL_LOG2 1
 
 /* Define to 1 if you have the declaration of `mkdtemp', and to 0 if you
    don't. */
@@ -202,10 +190,6 @@
    don't. */
 #define HAVE_DECL_STRNCASECMP 1
 
-/* Define to 1 if you have the declaration of `va_copy', and to 0 if you
-   don't. */
-#define HAVE_DECL_VA_COPY 1
-
 /* Define to 1 if you have the declaration of `vsnprintf', and to 0 if you
    don't. */
 #define HAVE_DECL_VSNPRINTF 1
@@ -217,10 +201,6 @@
 /* Define to 1 if you have the declaration of `_snwprintf', and to 0 if you
    don't. */
 #define HAVE_DECL__SNWPRINTF 1
-
-/* Define to 1 if you have the declaration of `__va_copy', and to 0 if you
-   don't. */
-#define HAVE_DECL___VA_COPY 1
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */
@@ -351,9 +331,6 @@
 /* Define if <inttypes.h> exists, doesn't clash with <sys/types.h>, and
    declares uintmax_t. */
 #define HAVE_INTTYPES_H_WITH_UINTMAX 1
-
-/* Define to 1 if you have the `isascii' function. */
-#define HAVE_ISASCII 1
 
 /* Define to 1 if you have the `isnan' function. */
 #define HAVE_ISNAN 1
@@ -643,6 +620,9 @@
 /* Define if you have the 'unsigned long long' type. */
 #define HAVE_UNSIGNED_LONG_LONG 1
 
+/* Define to 1 if you have the `va_copy' function. */
+#define HAVE_VA_COPY 1
+
 /* Defined if framework vecLib is present */
 /* #undef HAVE_VECLIB_FW */
 
@@ -751,6 +731,9 @@
 
 /* Define to 1 if you have the `__fsetlocking' function. */
 /* #undef HAVE___FSETLOCKING */
+
+/* Define to 1 if you have the `__va_copy' function. */
+#define HAVE___VA_COPY 1
 
 /* Define as const if the declaration of iconv() needs const. */
 /* #undef ICONV_CONST */

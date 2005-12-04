@@ -184,12 +184,10 @@ static int null_vfprintf(Rconnection con, const char *format, va_list ap)
 /* va_copy is C99, but a draft standard had __va_copy.  Glibc has
    __va_copy declared uncondiitonally */
 
-#if HAVE_DECL_VA_COPY
-# define HAVE_VA_COPY 1
-#endif
 
-#if !HAVE_DECL_VA_COPY && HAVE_DECL___VA_COPY
+#if !HAVE_VA_COPY && HAVE___VA_COPY
 # define va_copy __va_copy
+# undef HAVE_VA_COPY
 # define HAVE_VA_COPY 1
 #endif
 

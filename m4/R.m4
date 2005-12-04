@@ -1701,7 +1701,7 @@ if test -z "${no_x}"; then
     AC_CHECK_FUNCS(Xutf8DrawString Xutf8DrawImageString Xutf8LookupString \
                    Xutf8TextEscapement Xutf8TextExtents \
                    XmbDrawString XmbDrawImageString XmbLookupString \
-                   XmbTextEscapement XmbTextExtents)
+                   XmbTextEscapement XmbTextExtents, , , [#include <X11.h>])
     LIBS=${r_save_LIBS}
   fi
 else
@@ -1761,6 +1761,9 @@ fi
 
 ## R_IEEE_754
 ## ----------
+## According to C99, isnan and isfinite are macros in math.h, 
+## but some older systems have isnan as a function (possibly as well).
+## On the other hand, finite is a BSD function.
 AC_DEFUN([R_IEEE_754],
 [AC_CHECK_FUNCS([finite isnan])
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
@@ -3151,8 +3154,9 @@ if test "$want_mbcs_support" = yes ; then
 fi
 if test "$want_mbcs_support" = yes ; then
 ## Solaris 8 is missing iswblank, but we can make it from iswctype.
-  AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
-		 wctrans iswblank wctype iswctype)
+  R_CHECK_FUNCS([mbrtowc wcrtomb wcscoll wcsftime], [#include <wchar.h>])
+  R_CHECK_FUNCS([mbstowcs wcstombs], [#include <stdlib.h>])
+  R_CHECK_FUNCS([wctrans iswblank wctype iswctype], [#include <wctype.h>])
   for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
                  wctrans wctype iswctype
   do
@@ -3196,8 +3200,9 @@ AC_DEFUN([R_C99_COMPLEX],
                   [#include <complex.h>])
   fi
   if test "${r_cv_c99_complex}" = "yes"; then
-    AC_CHECK_FUNCS(cexp clog csqrt cpow ccos csin ctan cacos casin catan \
-		   ccosh csinh ctanh cacosh casinh catanh)
+    R_CHECK_FUNCS([cexp clog csqrt cpow ccos csin ctan cacos casin catan \
+		  ccosh csinh ctanh cacosh casinh catanh],
+		  [#include<complex.h>])
     for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
 		   ccosh csinh ctanh cacosh casinh catanh
     do
@@ -3246,6 +3251,42 @@ AC_DEFINE(HAVE_C99_COMPLEX, 1, [Define this if you have support for C99 complex 
 AC_SUBST(HAVE_C99_COMPLEX)
 fi
 ])# R_COMPLEX
+
+# R_CHECK_DECL(SYMBOL,
+#              [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND],
+#              [INCLUDES = DEFAULT-INCLUDES])
+# -------------------------------------------------------
+# Check if SYMBOL (a variable or a function) is declared.
+AC_DEFUN([R_CHECK_DECL],
+[AS_VAR_PUSHDEF([ac_Symbol], [ac_cv_have_decl_$1])dnl
+AC_CACHE_CHECK([whether $1 exists and is declared], ac_Symbol,
+[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT([$4])],
+[#ifndef $1
+  char *p = (char *) $1;
+#endif
+])],
+                   [AS_VAR_SET(ac_Symbol, yes)],
+                   [AS_VAR_SET(ac_Symbol, no)])])
+AS_IF([test AS_VAR_GET(ac_Symbol) = yes], [$2], [$3])[]dnl
+AS_VAR_POPDEF([ac_Symbol])dnl
+])# R_CHECK_DECL
+
+# R_CHECK_FUNCS(SYMBOLS,
+#              [INCLUDES = DEFAULT-INCLUDES])
+# --------------------------------------------------------
+# Defines HAVE_SYMBOL if declared.  SYMBOLS is an m4 list.
+AC_DEFUN([R_CHECK_FUNCS],
+[AC_FOREACH([AC_Func], [$1],
+  [AH_TEMPLATE(AS_TR_CPP(HAVE_[]AC_Func),
+               [Define to 1 if you have the `]AC_Func[' function.])])dnl
+for ac_func in $1
+do
+R_CHECK_DECL($ac_func,
+             [AC_DEFINE_UNQUOTED([AS_TR_CPP([HAVE_$ac_func])], 1, 
+	        [Define to 1 if you have the `]AC_Func[' function.])], , [$2])dnl
+done
+])# R_CHECK_FUNCS
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
