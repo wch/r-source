@@ -1090,10 +1090,11 @@ defaults to @file{/tmp}: this is also used by a number of utilities such
 as @command{R CMD INSTALL}.  There is no check made that this points to
 an actual directory that is user-writable.  For Windows and embedded
 Unix-alike versions of @R{} (including the MacOS X console) the
-environment variables @env{TMPDIR}, @env{TMP} and @env{TEMP} are
-searched in turn and the first one which is set (and on Windows points
-to a writable area) is used.  If none do, the final default is
-@file{/tmp} on Unix-alikes and the value of @env{R_USER} on Windows.
+environment variables @env{TMPDIR} (not Windows), @env{TMP} and
+@env{TEMP} are searched in turn and the first one which is set (and on
+Windows points to a writable area) is used.  If none do, the final
+default is @file{/tmp} on Unix-alikes and the value of @env{R_USER} on
+Windows.
 
 Some systems are set up to remove files and directories periodically
 from @file{/tmp}, for example by a @command{cron} job running

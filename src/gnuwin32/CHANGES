@@ -24,7 +24,7 @@ R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the
 indices.
 
 The windows() family of devices did not find the right character width
-in MBCS locales for non-ASCII characters.  (Pointed out by Ei-Ji
+in MBCS locales for non-ASCII characters.  (Pointed out by Ei-ji
 Nakama.)
 
 The installer was missing doc/html/index.html.
@@ -42,6 +42,12 @@ now has the limit of 16 as intended.
 
 Clicking on the left part of the MDI radiobutton in the preferences
 dialog failed.
+
+A different algorithm is used to find the R session temporary
+directory, one that is more likely to succeed.
+
+For compatibility with Unix, tempfile() names have a random hex suffix
+(and not a decimal one), and there are many more values to choose from.
 
 
 
