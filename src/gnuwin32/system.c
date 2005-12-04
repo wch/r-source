@@ -72,7 +72,7 @@ static void UnLoad_Rbitmap_Dll()
 
 __declspec(dllexport) UImode  CharacterMode;
 int ConsoleAcceptCmd;
-void set_workspace_name(char *fn); /* ../unix/sys-common.c */
+void set_workspace_name(char *fn); /* ../main/startup.c */
 
 /* used to avoid some flashing during cleaning up */
 Rboolean AllDevicesKilled = FALSE;
