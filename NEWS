@@ -208,6 +208,9 @@ NEW FEATURES
     o	The suffix used by tempfile() is now in hex on all platforms
 	and guaranteed to be at least 6 hex digits (usually 8).
 
+    o   Some of the classical tests put unnecessary restrictions on the LHS
+        in the formula interface (e.g., t.test(x+y~g) was not allowed).
+
 
 DEPRECATED & DEFUNCT
 
