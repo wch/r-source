@@ -1416,7 +1416,7 @@ AC_CHECK_DECLS([alloca], , ,
 #endif])
 ## fseeko/ftello may be macros, matherr is redefined
 ## strptime is awkward since it needs _XOPEN_SOURCE before features.h
-AC_CHECK_FUNCS(fseeko ftello matherr strptime)
+AC_CHECK_FUNCS(fseeko ftello isblank matherr strptime)
 R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
 R_CHECK_FUNCS([getgrgid], [#include <grp.h>])
 R_CHECK_FUNCS([expm1 hypot log1p log2 log10 rint], [#include <math.h>])
