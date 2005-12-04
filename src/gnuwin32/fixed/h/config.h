@@ -332,6 +332,9 @@
    declares uintmax_t. */
 #define HAVE_INTTYPES_H_WITH_UINTMAX 1
 
+/* Define to 1 if you have the `isblank' function. */
+/* #undef HAVE_ISBLANK */
+
 /* Define to 1 if you have the `isnan' function. */
 #define HAVE_ISNAN 1
 

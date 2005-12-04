@@ -583,7 +583,7 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	}
 	/* translate if necessary */
 	if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
-#if HAVE_DECL_ICONV
+#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 	    size_t res, inb = strlen((char *)buf), onb = len;
 	    char obuf[1001];
 	    char *ib = (char *)buf, *ob = obuf;

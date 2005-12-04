@@ -28,11 +28,7 @@
 
 #include <Defn.h>
 #include <Rconnections.h>
-#ifdef USE_SYSTEM_REGEX
-# include <regex.h>
-#else
-# include "Rregex.h"
-#endif
+#include "Rregex.h"
 
 static SEXP allocMatrixNA(SEXPTYPE, int, int);
 static void transferVector(SEXP s, SEXP t);

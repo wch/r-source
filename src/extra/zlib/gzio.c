@@ -13,8 +13,11 @@
 
 #include <stdio.h>
 
-#if !defined(fdopen) && defined(HAVE_DECL_FDOPEN) && !HAVE_DECL_FDOPEN
-  FILE *fdopen(int fildes, const char *mode);
+#if !defined(fdopen) && !defined(HAVE_FDOPEN)
+/* not used in R */
+static FILE *fdopen(int fildes, const char *mode)
+{
+}
 #endif
 
 #include "zutil.h"

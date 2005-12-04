@@ -319,7 +319,7 @@ SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  op = 2 is codeFiles.append.
  */
 
-#if defined(BUFSIZ) && (APPENDBUFSIZE > 512)
+#if defined(BUFSIZ) && (BUFSIZ > 512)
 /* OS's buffer size in stdio.h, probably */
 # define APPENDBUFSIZE BUFSIZ
 #else
@@ -667,11 +667,7 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <ndir.h>
 #endif
 
-#ifdef USE_SYSTEM_REGEX
-# include <regex.h>
-#else
-# include "Rregex.h"
-#endif
+#include "Rregex.h"
 
 static SEXP filename(char *dir, char *file)
 {
