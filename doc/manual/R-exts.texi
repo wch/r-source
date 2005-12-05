@@ -2593,7 +2593,9 @@ text}, and @ref{Cross-references}).
 @findex \examples
 @item \examples@{@dots{}@}
 Examples of how to use the function.  These are set as formatted in
-typewriter font: see @ref{Insertions} for when characters need to be escaped.
+typewriter font: see @ref{Insertions} for when characters need to be
+escaped.  (Markup @code{\link} and @code{\var} will be interpreted, but
+no other.)
 
 Examples are not only useful for documentation purposes, but also
 provide test code used for diagnostic checking of @R{}.  By default,
@@ -2861,7 +2863,7 @@ fragment of @R{} code or the name of an @R{} object, using
 braces always need to be escaped (by a backslash) inside @code{\code}:
 backslash will need to be escaped if it precedes @samp{%}, @samp{@{} or
 @samp{@}}.  The only markup interpreted inside @code{\code} is
-@code{\link}.
+@code{\link} and @code{\var}.
 
 @item \preformatted@{@var{text}@}
 @findex \preformatted

@@ -676,10 +676,10 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
 	$htmlout = "STDOUT";
     }
     $using_chm = 0;
-    $encoding = mime_canonical_encoding($blocks{"encoding"}) 
+    $encoding = mime_canonical_encoding($blocks{"encoding"})
 	if defined $blocks{"encoding"};
     print $htmlout (html_functionhead(html_striptitle($blocks{"title"}),
-				      $pkgname, 
+				      $pkgname,
 				      &html_escape_name($blocks{"name"}),
 				      $encoding,
 				      ));
@@ -813,7 +813,7 @@ sub text2html {
 	my $argkey = $arg;
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
-	die "\nERROR: command (e.g. \\url) inside \\link\n" 
+	die "\nERROR: command (e.g. \\url) inside \\link\n"
 	    if $arg =~ normal-bracket;
 	$htmlfile = $main::htmlindex{$argkey};
 	if($htmlfile && !length($opt)){
@@ -959,6 +959,7 @@ sub code2html {
     $text =~ s/\\dots/.../go;
 
     $text = undefine_command($text, "special");
+    $text = replace_command($text, "var", "<VAR>", "</VAR>");
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
@@ -1440,7 +1441,7 @@ sub text2txt {
     $text =~ s/$ECB/\}/go;
 
     $text = undefine_command($text, "special");
-    
+
     $text = undefine_command($text, "link");
     $text = undefine_command($text, "textbf");
     $text = undefine_command($text, "mathbf");
@@ -1549,7 +1550,8 @@ sub code2txt {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
-    $text = undefine_command($text, "special");    
+    $text = undefine_command($text, "special");
+    $text = undefine_command($text, "var");
 
     $text = undefine_command($text, "link");
     $text = replace_addnl_command($text, "dontrun",
@@ -2254,7 +2256,8 @@ sub code2nroff {
     $text =~ s/\\dots/.../go;
     $text =~ s/\\n/\\\\n/g;
 
-    $text = undefine_command($text, "special");    
+    $text = undefine_command($text, "special");
+    $text = undefine_command($text, "var");
 
     $text = undefine_command($text, "link");
     $text = replace_addnl_command($text, "dontrun",
@@ -2351,7 +2354,7 @@ sub rdoc2ex { # (filename)
 	}
 
 	$tit =~ s/\s+/ /g;
-	
+
 	if (defined $blocks{"encoding"}) {
 	    $Exout->print("### Encoding: ", $blocks{"encoding"}, "\n\n");
 	}
@@ -2391,7 +2394,7 @@ sub code2examp {
     $text =~ s/\\dots/.../go;
 
     $text = undefine_command($text, "special");
-    
+    $text = undefine_command($text, "var");
     $text = undefine_command($text, "link");
 
     $text = replace_prepend_command($text, "dontshow",
@@ -2463,7 +2466,7 @@ sub rdoc2latex {# (filename)
 	$a = latex_code_alias($c);
 	print STDERR "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
 	    if $debug;
-	printf $latexout "\\%s\{%s\}\{%s\}\{%s\}\n", $cmd, $a, 
+	printf $latexout "\\%s\{%s\}\{%s\}\{%s\}\n", $cmd, $a,
 	       $blname, latex_link_trans0($a)
 	unless /^\Q$blocks{"name"}\E$/; # Q..E : Quote (escape) Metacharacters
     }
@@ -2497,7 +2500,7 @@ sub text2latex {
     $text =~ s/$EOB/\\\{/go;
     $text =~ s/$ECB/\\\}/go;
 
-    $text = undefine_command($text, "special");   
+    $text = undefine_command($text, "special");
 
     $text =~ s/\\cite/\\Cite/go;
 
@@ -2582,7 +2585,8 @@ sub code2latex {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
-    $text = undefine_command($text, "special");    
+    $text = undefine_command($text, "special");
+    $text = undefine_command($text, "var");
 
     ##    $text =~ s/\\\\/\\bsl{}/go;
     if($hyper) {
@@ -2690,13 +2694,13 @@ sub latex_print_argblock {
 	    print $latexout "\\end\{ldescription\}\n";
 	    my $thisblock = &text2latex($text);
 	    print $latexout $thisblock;
-	    print $latexout "\n" unless 
+	    print $latexout "\n" unless
 		$thisblock =~ /\n$/ || length($thisblock) == 0;
 	}
 	else{
 	    my $thisblock = &text2latex($text);
 	    print $latexout $thisblock;
-	    print $latexout "\n" unless 
+	    print $latexout "\n" unless
 		$thisblock =~ /\n$/ || length($thisblock) == 0;
 	}
 	print $latexout "\\end\{$env\}\n";
@@ -3107,7 +3111,8 @@ sub code2Ssgm {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
-    $text = undefine_command($text, "special");    
+    $text = undefine_command($text, "special");
+    $text = undefine_command($text, "var");
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")

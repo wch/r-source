@@ -327,6 +327,11 @@ UTILITIES
 	directory even on systems without mktemp -d.
 
 
+DOCUMENTATION
+
+    o	Rd format now allows \var{} markup inside \code{} and \examples{}.
+
+
 C-LEVEL FACILITIES
 
     o	qgamma and rgamma in Rmath.h now check for non-positive arguments.
