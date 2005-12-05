@@ -11,7 +11,8 @@ system(command, intern = FALSE, ignore.stderr = FALSE)
 \arguments{
   \item{command}{the system command to be invoked, as a string.}
   \item{intern}{a logical, indicates whether to make the output of the
-    command an \R object.}
+    command an \R object.  Not available unless \code{popen} is
+    supported on the platform.}
   \item{ignore.stderr}{a logical indicating whether error messages (written
     to \file{stderr}) should be ignored.}
 }
@@ -42,9 +43,11 @@ system(command, intern = FALSE, ignore.stderr = FALSE)
 
 # t1 is a character vector, each one
 # representing a separate line of output from who
-t1 <- system("who", TRUE)
+# (if the platform has popen and who)
+t1 <- try(system("who", TRUE))
 
-system("ls fizzlipuzzli", TRUE, TRUE)# empty since file doesn't exist
+try(system("ls fizzlipuzzli", TRUE, TRUE))
+# empty since file doesn't exist
 }
 \keyword{interface}
 \keyword{file}

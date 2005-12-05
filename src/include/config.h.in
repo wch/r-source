@@ -168,6 +168,10 @@
    don't. */
 #undef HAVE_DECL_MKDTEMP
 
+/* Define to 1 if you have the declaration of `putenv', and to 0 if you don't.
+   */
+#undef HAVE_DECL_PUTENV
+
 /* Define to 1 if you have the declaration of `siglongjmp', and to 0 if you
    don't. */
 #undef HAVE_DECL_SIGLONGJMP
@@ -558,6 +562,9 @@
 
 /* Define to 1 if you have the `symlink' function. */
 #undef HAVE_SYMLINK
+
+/* Define to 1 if you have the `sysconf' function. */
+#undef HAVE_SYSCONF
 
 /* Define to 1 if you have the `system' function. */
 #undef HAVE_SYSTEM

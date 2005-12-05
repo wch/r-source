@@ -21,17 +21,6 @@
 #ifndef DEFN_H_
 #define DEFN_H_
 
-#if defined(HAVE_GLIBC2)
-/* The first three are the default, according to features.h */
-# define _SVID_SOURCE 1
-# define _BSD_SOURCE 1
-# define _POSIX_SOURCE 1
-/* add latest POSIX 1003.1 and C99 support */
-# define _POSIX_C_SOURCE 200112L
-# define _ISOC99_SOURCE 1
-#endif
-
-
 #define COUNTING
 
 #define BYTECODE
@@ -164,6 +153,12 @@ extern int strncasecmp(const char *s1, const char *s2, size_t n);
 #if !defined(vsnprintf) && defined(HAVE_DECL_VSNPRINTF) && !HAVE_DECL_VSNPRINTF
 extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 #endif
+
+/* Glibc manages to not define this in -pedantic -ansi */
+#if defined(HAVE_PUTENV) && !defined(putenv) && defined(HAVE_DECL_PUTENV) && !HAVE_DECL_PUTENV
+extern int putenv(char *string);
+#endif
+
 
 /* Getting the working directory */
 #if defined(HAVE_GETCWD)

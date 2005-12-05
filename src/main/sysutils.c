@@ -25,6 +25,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
 #include <Defn.h>
 #include <R_ext/Riconv.h>
 

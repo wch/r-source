@@ -1423,16 +1423,20 @@ R_CHECK_FUNCS([expm1 hypot log1p log2 log10 rint], [#include <math.h>])
 R_CHECK_FUNCS([getpwuid], [#include <pwd.h>])
 R_CHECK_FUNCS([va_copy __va_copy], [#include <stdarg.h>])
 R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
-R_CHECK_FUNCS([putenv realpath setenv system unsetenv], [#include <stdlib.h>])
+R_CHECK_FUNCS([realpath setenv system unsetenv], [#include <stdlib.h>])
 R_CHECK_FUNCS([strcoll strerror], [#include <string.h>])
 R_CHECK_FUNCS([getrlimit], [#include <sys/resource.h>])
 R_CHECK_FUNCS([mkfifo stat], [#include <sys/stat.h>])
 R_CHECK_FUNCS([gettimeofday], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
-R_CHECK_FUNCS([access chdir ftruncate getcwd getuid symlink],
+R_CHECK_FUNCS([access chdir ftruncate getcwd getuid symlink sysconf],
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif])
+## We really need putenv, and make check fails without it so it seems
+## everyone has it, possibly not declared.
+AC_CHECK_FUNCS(putenv)
+AC_CHECK_DECLS([putenv], , , [#include <stdlib.h>])
 
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames

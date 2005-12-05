@@ -314,6 +314,10 @@ INSTALLATION CHANGES
     o	Most of the functions checked for also have declarations
 	checked for in the appropriate header.
 
+    o	sysconf() is now used to find the number of clock ticks/second:
+	under some circumstances glibc reported 60 when the true value
+	was 100.
+
 
 UTILITIES
 
@@ -363,6 +367,9 @@ BUG FIXES
 	failure to re-make vignettes.
 
     o	t() now longer drops dimnames 'list(NULL,NULL)' or 'list(NULL)'.
+
+    o	reg-test-1.R tested system(intern=TRUE) which depends on popen
+	and so is not supported on all platforms.
 
 
 

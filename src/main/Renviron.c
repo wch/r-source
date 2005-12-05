@@ -146,7 +146,11 @@ static void Putenv(char *a, char *b)
 	*q++ = *p;
     }
     *q = '\0';
+#ifdef HAVE_PUTENV
     putenv(buf);
+#else
+    /* pretty pointless, and was not tested prior to 2.3.0 */
+#endif
     /* no free here: storage remains in use */
 }
 

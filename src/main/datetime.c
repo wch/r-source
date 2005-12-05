@@ -40,6 +40,11 @@
 # include <config.h>
 #endif
 
+#if defined(HAVE_GLIBC2)
+/* for tzset */
+# define _POSIX_SOURCE 1
+#endif
+
 #include <Defn.h>  /* This sets suitable glibc features */
 
 

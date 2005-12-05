@@ -166,6 +166,10 @@
    don't. */
 #define HAVE_DECL_MKDTEMP 0
 
+/* Define to 1 if you have the declaration of `putenv', and to 0 if you don't.
+   */
+#define HAVE_DECL_PUTENV 1
+
 /* Define to 1 if you have the declaration of `siglongjmp', and to 0 if you
    don't. */
 #define HAVE_DECL_SIGLONGJMP 1
