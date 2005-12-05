@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-11-30
+@set FAQ_DATE @value{FAQ_YEAR}-12-05
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2735,6 +2735,8 @@ linkage phase is ambiguous.
 Haplotype data simulation.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
+@item hdrcde
+Highest Density Regions and Conditional Density Estimation.
 @item hett
 Functions for the fitting and summarizing of heteroscedastic
 t-regression.
@@ -3272,6 +3274,9 @@ Q-value estimation for false discovery rate control.
 @item qvcalc
 Functions to compute quasi-variances and associated measures of
 approximation error.
+@item rJava
+Low-level R to Java interface.  Allows creation of objects, calling
+methods and accessing fields.
 @item race
 Implementation of some racing methods for the empirical selection of the
 best.
@@ -4323,8 +4328,9 @@ $ R CMD INSTALL -l @var{lib} /path/to/@var{pkg}_@var{version}.tar.gz
 where @var{lib} gives the path to the library tree to install to.
 
 Even more conveniently, you can install and automatically update
-packages from within R if you have access to @CRAN{}.  See the
-help page for @code{available.packages()} for more information.
+packages from within R if you have access to repositories such as
+@CRAN{}.  See the help page for @code{available.packages()} for more
+information.
 
 You can use several library trees of add-on packages.  The easiest way
 to tell R to use these is via the environment variable @env{R_LIBS}
