@@ -547,7 +547,7 @@ void InitTempDir()
     int hasspace = 0;
 #endif
 
-    tmp = getenv("R_SESSION_TMPDIR");  /* no longer set in R.sh */
+    tmp = NULL; /* getenv("R_SESSION_TMPDIR");   no longer set in R.sh */
     if (!tmp) {
 	tm = getenv("TMPDIR");
 	if (!isDir(tm)) {
