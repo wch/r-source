@@ -1399,9 +1399,11 @@ AC_SUBST(FW_VERSION)
 ### We don't currently have any C++ tests, but future-proof.
 ### In principle we should do this before testing for C-Fortran compatibility.
 
+CPPFLAGS_KEEP=${CPPFLAGS}
 CFLAGS_KEEP=${CFLAGS}
 FFLAGS_KEEP=${FFLAGS}
 CXXFLAGS_KEEP=${CXXFLAGS}
+CPPFLAGS="${CPPFLAGS} ${R_XTRA_CPPFLAGS}"
 if test "${want_R_shlib}" = yes; then
   CFLAGS="${CFLAGS} ${CPICFLAGS} ${R_XTRA_CFLAGS}"
   FFLAGS="${FFLAGS} ${FPICFLAGS} ${R_XTRA_FFLAGS}"
@@ -1855,6 +1857,7 @@ AC_CONFIG_COMMANDS([stamp-h],
 [test -f src/include/stamp-h || echo timestamp > src/include/stamp-h])
 
 ### now reset flags
+CPPFLAGS=${CPPFLAGS_KEEP}
 CFLAGS=${CFLAGS_KEEP}
 FFLAGS=${FFLAGS_KEEP}
 CXXFLAGS=${CXXFLAGS_KEEP}
