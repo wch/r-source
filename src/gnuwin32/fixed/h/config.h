@@ -561,6 +561,9 @@
 /* Define to 1 if you have the `symlink' function. */
 /* #undef HAVE_SYMLINK */
 
+/* Define to 1 if you have the `sysconf' function. */
+/* #undef HAVE_SYSCONF */
+
 /* Define to 1 if you have the `system' function. */
 #define HAVE_SYSTEM 1
 
