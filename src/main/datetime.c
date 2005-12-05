@@ -41,22 +41,23 @@
 #endif
 
 #if defined(HAVE_GLIBC2)
-/* for tzset */
-# define _POSIX_SOURCE 1
+#include <features.h>
+# ifndef __USE_POSIX
+#  define __USE_POSIX		/* for tzset */
+# endif
+# ifndef __USE_BSD
+#  define __USE_BSD		/* so that we get unsetenv() */
+# endif
+# ifndef __USE_XOPEN
+#  define __USE_XOPEN		/* so that we get strptime() */
+# endif
+# ifndef __USE_MISC
+#  define __USE_MISC		/* for finite */
+# endif
 #endif
 
-#include <Defn.h>  /* This sets suitable glibc features */
-
-
-/* _XOPEN_SOURCE is not normally defined */
-#if defined(HAVE_WORKING_STRPTIME) && defined(HAVE_GLIBC2) && !defined(_XOPEN_SOURCE)
-# define _XOPEN_SOURCE		/* so that we get strptime() */
-# include <time.h>
-# undef _XOPEN_SOURCE		/* just to make sure */
-#else
-# include <time.h>
-#endif
-
+#include <time.h>
+#include <stdlib.h> /* for putenv */
 #include <Defn.h>
 
 /* The glibc in RH8.0 is broken and assumes that dates before 1970-01-01

@@ -26,6 +26,7 @@
 #include <config.h>
 #endif
 
+#include <stdlib.h> /* for putenv */
 #include <Defn.h>
 #include <R_ext/Riconv.h>
 
@@ -511,6 +512,10 @@ int Riconv_close (void * cd)
 #   include <unistd.h>
 #  endif
 # endif
+
+#if !defined(S_IFDIR) && defined(__S_IFDIR)
+# define S_IFDIR __S_IFDIR
+#endif
 
 static int isDir(char *path)
 {

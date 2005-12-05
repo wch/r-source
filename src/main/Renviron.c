@@ -28,6 +28,8 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+#include <stdlib.h> /* for putenv */
 #include <Defn.h> /* for PATH_MAX */
 
 
