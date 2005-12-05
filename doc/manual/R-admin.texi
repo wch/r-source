@@ -2489,21 +2489,18 @@ optimization.  For @code{x86_64} he used
 
 @example
 CC=icc
-CFLAGS="-mp -g -O2"
+CFLAGS="-g -O2 -wd188"
 F77=ifort
-FFLAGS="-mp -g -O2"
 CXX=icc
-CXXFLAGS="-mp -g -O2"
 ICC_LIBS=/opt/compilers/intel/cce/9.0/lib
 IFC_LIBS=/opt/compilers/intel/fce/9.0/lib
 LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
 @end example
 
 @noindent
-Note the use of @code{-mp} to maintain correct IEC60559 arithmetic:
-these are the default flags selected by @command{configure} if none are
-supplied.  (@code{-mieee-fp} is an alternative name for @code{-mp}.)
-
+@R{} will add @code{-mp} to maintain correct IEC60559 arithmetic.
+The flag @option{-wd188} suppresses a large number of warnings about the
+enumeration type @samp{Rboolean}.
 
 For some comments on building on an Itanium (@samp{ia64}) Linux system
 with @command{gcc} or the Intel compilers see

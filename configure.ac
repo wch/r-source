@@ -856,8 +856,7 @@ case "${host_os}" in
           if test $ac_cv_prog_cc_g = yes; then
 	    case "${host_cpu}" in
 	      x86_64)
-	        ## need -mp for IEC60559 compliance
-	        CFLAGS="-mp -g -O2 -std=c99"
+	        CFLAGS="-g -O2 -std=c99"
 		;;
 	      *)
 	        ## on ix86 optimization fails
@@ -867,7 +866,7 @@ case "${host_os}" in
           else
 	    case "${host_cpu}" in
 	      x86_64)
-	        CFLAGS="-mp -O2 -std=c99"
+	        CFLAGS="-O2 -std=c99"
 		;;
 	      *)
                 CFLAGS="-std=c99"
@@ -875,6 +874,9 @@ case "${host_os}" in
 	    esac
           fi
         fi
+	## -mp is the preferred form of -mieee-fp
+        R_PROG_CC_FLAG([-mp],
+                       R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mp]))
         ;;
       ## Portland Group (information from Jennifer Lai)
       *pgcc)
@@ -889,7 +891,7 @@ case "${host_os}" in
           if test $ac_cv_prog_f77_g = yes; then
 	    case "${host_cpu}" in
 	      x86_64)
-	        FFLAGS="-mp -g -O2"
+	        FFLAGS="-g -O2"
 		;;
 	      *)
                 FFLAGS="-g"
@@ -898,7 +900,7 @@ case "${host_os}" in
           else
 	    case "${host_cpu}" in
 	      x86_64)
-	        FFLAGS="-mp -O2"
+	        FFLAGS="-O2"
 		;;
 	      *)
 	        ## on ix86 optimization of dlamc.f fails
@@ -907,6 +909,8 @@ case "${host_os}" in
 	    esac
           fi
         fi
+        R_PROG_CC_FLAG([-mp],
+                       R_SH_VAR_ADD(R_XTRA_FFLAGS, [-mp]))
         ;;
     esac
     case  "${CXX}" in
@@ -916,7 +920,7 @@ case "${host_os}" in
           if test $ac_cv_prog_cxx_g = yes; then
 	    case "${host_cpu}" in
 	      x86_64)
-	        CXXFLAGS="-mp -g -O2"
+	        CXXFLAGS="-g -O2"
 		;;
 	      *)
                 CXXFLAGS="-g"
@@ -925,7 +929,7 @@ case "${host_os}" in
           else
 	    case "${host_cpu}" in
 	      x86_64)
-	        CXXFLAGS="-mp -O2"
+	        CXXFLAGS="-O2"
 		;;
 	      *)
                 CXXFLAGS=
@@ -933,6 +937,8 @@ case "${host_os}" in
 	    esac
           fi
         fi
+        R_PROG_CC_FLAG([-mp],
+                       R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-mp]))
         ;;
     esac
     ;;
