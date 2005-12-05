@@ -1,8 +1,8 @@
-\name{mauchley.test}
-\alias{mauchley.test}
-\alias{mauchley.test.SSD}
-\alias{mauchley.test.mlm}
-\title{Mauchley's test of sphericity}
+\name{mauchly.test}
+\alias{mauchly.test}
+\alias{mauchly.test.SSD}
+\alias{mauchly.test.mlm}
+\title{Mauchly's test of sphericity}
 \description{
   Tests whether a Wishart-distributed covariance matrix (or
   transformation thereof) is
@@ -10,7 +10,7 @@
 }
 \usage{
 ## S3 methods for class 'SSD' or 'mlm' 
-mauchley.test(object, Sigma = diag(nrow = p),
+mauchly.test(object, Sigma = diag(nrow = p),
    T = Thin.row(proj(M) - proj(X)), M = diag(nrow = p), X = ~0,
    idata = data.frame(index = seq(length = p)), ...)
 }
@@ -26,7 +26,7 @@ mauchley.test(object, Sigma = diag(nrow = p),
   \item{...}{For consistency with generic}
 }
 \details{
-  Mauchley's test test for whether a covariance matrix can be assumed to
+  Mauchly's test test for whether a covariance matrix can be assumed to
   be proportional to a given matrix. 
   
   It is common to transform the observations prior to testing. This
@@ -59,13 +59,13 @@ Statistical Analysis. Wiley}
 example(SSD) # Brings in the mlmfit and reacttime objects
 
 ### traditional test of intrasubj. contrasts
-mauchley.test(mlmfit, X=~1) 
+mauchly.test(mlmfit, X=~1) 
 
 ### tests using intra-subject 3x2 design
 idata <- data.frame(deg=gl(3,1,6, labels=c(0,4,8)),
                     noise=gl(2,3,6, labels=c("A","P")))
-mauchley.test(mlmfit, X = ~ deg + noise, idata = idata)
-mauchley.test(mlmfit, M = ~ deg + noise, X = ~ noise, idata=idata)
+mauchly.test(mlmfit, X = ~ deg + noise, idata = idata)
+mauchly.test(mlmfit, M = ~ deg + noise, X = ~ noise, idata=idata)
 }
 \keyword{htest}
 \keyword{models}

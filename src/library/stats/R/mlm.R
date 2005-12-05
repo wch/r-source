@@ -83,18 +83,19 @@ Thin.col <- function(X, tol=1e-7) {
     X[,QR$pivot[seq(length=QR$rank)],drop=FALSE]
 }
 
-mauchley.test <- function(object, Sigma=diag(nrow=p),
+
+mauchly.test <- function(object, Sigma=diag(nrow=p),
                           T = Thin.row(proj(M)-proj(X)),
                           M = diag(nrow=p),
                           X = ~0,
                           idata=data.frame(index=seq(length=p)),...)
-	 UseMethod("mauchley.test")
+	 UseMethod("mauchly.test")
 
-mauchley.test.mlm <- function(object, ...)
- 	mauchley.test(SSD(object), ...)
+mauchly.test.mlm <- function(object, ...)
+ 	mauchly.test(SSD(object), ...)
 
 
-mauchley.test.SSD <- function(object, Sigma=diag(nrow=p),
+mauchly.test.SSD <- function(object, Sigma=diag(nrow=p),
                           T = Thin.row(proj(M)-proj(X)),
                           M = diag(nrow=p),
                           X = ~0,
