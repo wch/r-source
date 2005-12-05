@@ -32,12 +32,10 @@
 # include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Fileio.h"
+#include <Defn.h>
+#include <Fileio.h>
 #include "Runix.h"
-#include <sys/stat.h> /* for mkdir */
 
-/* HP-UX headers need this before CLK_TCK */
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
