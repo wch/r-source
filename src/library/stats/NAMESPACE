@@ -27,7 +27,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        is.empty.model, is.mts, is.ts, lines.ts, lm, lm.fit,
        lm.influence, lm.wfit, logLik, loglin, lowess, ls.diag,
        ls.print, lsfit, mad, mahalanobis, make.link, makepredictcall,
-       manova, mauchley.test, median, model.extract, model.frame,
+       manova, mauchly.test, median, model.extract, model.frame,
        model.frame.aovlist, model.frame.default, model.frame.glm,
        model.frame.lm, model.matrix, model.matrix.default,
        model.matrix.lm, model.offset, model.response, model.tables,
@@ -61,6 +61,9 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        update.default, update.formula, var, variable.names, vcov,
        weighted.mean, weighted.residuals, weights, window, "window<-",
        write.ftable, xtabs, pbirthday, qbirthday)
+
+# deprecated
+export(mauchley.test)
 
 # defunct
 export(reshapeWide, reshapeLong, print.coefmat, anovalist.lm, lm.fit.null,
@@ -149,8 +152,8 @@ S3method(logLik, glm)
 S3method(logLik, lm)
 S3method(makepredictcall, default)
 S3method(makepredictcall, poly)
-S3method(mauchley.test, SSD)
-S3method(mauchley.test, mlm)
+S3method(mauchly.test, SSD)
+S3method(mauchly.test, mlm)
 S3method(model.tables, aov)
 S3method(model.tables, aovlist)
 S3method(na.action, default)

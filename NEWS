@@ -414,6 +414,9 @@ DEPRECATED & DEFUNCT
     o	The 'vfont' argument of axis() and mtext() is deprecated
 	(it currently warns and does nothing).
 
+    o   The function mauchley.test() is deprecated (was a misspelling)
+	and replaced by mauchly.test()
+
 
 BUG FIXES
 
