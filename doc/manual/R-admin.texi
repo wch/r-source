@@ -1957,6 +1957,8 @@ Intel's Math Kernel Library suppies a full LAPACK which can be used via
 
 @noindent
 or @code{-lmkl_lapack32}: @code{-lmkl_lapack} is static and not PIC.
+However, the version 8.0.1.006 we tested failed a regression test in the
+complex LAPACK.
 
 If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
