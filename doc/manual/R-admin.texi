@@ -1077,10 +1077,10 @@ How to start @R{} and what command-line options are available is discussed
 in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
 
 @R{} makes use of a number of environment variables, the default values
-of many of are set in file @file{R_HOME/etc/Renviron} (there are none
-set by default on Windows and hence no such file).  These are set at
-@command{configure} time, and you would not normally want to change them
--- a possible exception is @env{R_PAPERSIZE} (@pxref{Setting paper
+of many of which are set in file @file{R_HOME/etc/Renviron} (there are
+none set by default on Windows and hence no such file).  These are set
+at @command{configure} time, and you would not normally want to change
+them -- a possible exception is @env{R_PAPERSIZE} (@pxref{Setting paper
 size}).
 
 Various environment variables can be set to determine where @R{} creates
@@ -1724,7 +1724,13 @@ installed.
 @section Essential programs
 
 You need a means of compiling C and FORTRAN 77 (see @ref{Using
-FORTRAN}).  Some add-on packages also need a C++ compiler.
+FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
+compiler should be IEC60059@footnote{also known as @acronym{IEEE} 754},
+POSIX 1003.1 and C99-compliant if at all possible.  @R{} tries to choose
+suitable flags for the C compilers it knows about, but you may have to
+set @code{CFLAGS} suitably.  For recent versions of @code{gcc} with
+@code{glibc} this means including @code{-std=gnu99} in @code{CFLAGS}
+(@code{-std=c99} excludes POSIX functionality).
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora Core
@@ -2269,9 +2275,10 @@ For performance reasons@footnote{e.g., to use an optimized BLAS on
 Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
 
 If you use @command{f2c} you may need to ensure that the FORTRAN type
-@code{intger} is translated to the C type @code{int}.  Normally
+@code{integer} is translated to the C type @code{int}.  Normally
 @file{f2c.h} contains @samp{typedef long int integer;}, which will work
-on a 32-bit platform but not on a 64-bit platform.
+on a 32-bit platform but not on a 64-bit platform, where @command{f2c}
+is not allowed.
 
 @node Using gfortran,  , Using FORTRAN, Using FORTRAN
 @subsection Using gfortran
@@ -2354,7 +2361,10 @@ with position-independent code.
 possible issue is the alignment of doubles, another is the way
 structures are passed.
 
-
+On some platforms @command{configure} will select additional flags for
+@code{CFLAGS}, @code{CPPFLAGS}, @code{FFLAGS}, @code{CXXFLAGS} and
+@code{LIBS} in @code{R_XTRA_CFLAGS} (and so on).  These are for options
+which are always required, for example to force IEC60559 compliance.
 
 
 @node Platform notes, Building the GNOME console, Configuration on Unix, Top
@@ -2450,7 +2460,9 @@ since about 2001.
 @R{} used to include the compiler flag @option{-mieee-fp}, but it seems
 this was really an alias for the linker flag @option{-lieee}.  Neither
 are needed for a modern Linux (e.g.@: using @code{glibc} 2.2 or 2.3) but
-could conceivably be needed on an older version.
+could conceivably be needed on an older version.  @code{glibc} 2.1
+required @option{-D__NO_MATH_INLINES} to achieve IEC60059-compliance for
+@code{exp}, and this is included in @code{R_XTRA_CFLAGS} if required.
 
 Several Linux distributions have shipped unreleased versions of
 @code{gcc 4.0.0} and its FORTRAN compiler @command{gfortran} (see the
@@ -2523,8 +2535,9 @@ LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
 
 @noindent
 Note particularly the last, which is needed to ensure that a shared
-version of @code{libc} is found.  @R{} will now include @code{-mieee-fp}
-amongst the @code{CFLAGS}.
+version of @code{libc} is found.  As from @R{} 2.2.1, we include
+@code{-mieee-fp} in @code{R_XTRA_CFLAGS} so it should not be included in
+@code{CFLAGS}.
 
 
 @node Mac OS X, Solaris, Linux, Platform notes
@@ -2661,9 +2674,11 @@ Note that @samp{/usr/local/lib/sparcv9} will need to be in the
 @cindex LAPACK library
 
 Note that using @command{f95} allows the Sun performance library
-@code{libsunperf} to be selected: it will not work with @command{f77},
-nor with @command{g77}.  @code{libsunperf} contains both BLAS and LAPACK
-code, and @option{--with-lapack} is recommended for 32-bit builds using
+@code{libsunperf} to be selected: it may not work@footnote{recent
+versions have @command{f77} as a wrapper for @command{f95}, and these do
+work.} with @command{f77}, and will not with @command{g77}.
+@code{libsunperf} contains both BLAS and LAPACK code, and
+@option{--with-lapack} is recommended for 32-bit builds using
 @command{f95}, but not for 64-bit builds where on our test system it
 failed in both Forte 6U1 and 7, albeit in different ways.  Our
 experience has been that ATLAS's BLAS is faster than @code{libsunperf},
@@ -2842,6 +2857,8 @@ tests to fail unless Arthur Olson's timezone data
 @code{-ltz} is added to the list of libraries (for example, in
 environment variable @env{LIBS}).
 
+The flag @code{-OPT:IEEE_NaN_inf=ON} is added for the native compilers.
+
 
 @node Alpha/OSF1, Alpha/FreeBSD, IRIX, Platform notes
 @section Alpha/OSF1
@@ -2860,7 +2877,8 @@ be set so @samp{__STDC__} was defined.  As far as we know this is no
 longer needed, and @command{configure} no longer sets it, but it does
 set @option{-ieee_with_inexact} for the C compiler and @option{-fpe3}
 for the FORTRAN compiler (and @option{-mieee-with-inexact} and
-@option{-mieee} for @command{gcc}/@command{g77}).
+@option{-mieee} for @command{gcc}/@command{g77}) (in the appropriate
+@code{R_XTRA_*} flags.
 
 
 @node Alpha/FreeBSD, AIX, Alpha/OSF1, Platform notes
@@ -2939,17 +2957,18 @@ patch applied since obviates the need for this.
 There are a number of sources of problems when installing @R {} on a new
 hardware/OS platform.  These include
 
-@strong{Floating Point Arithmetic}: @R{} supports the @acronym{POSIX},
-SVID and @acronym{IEEE} models for floating point arithmetic.  The
-@acronym{POSIX} and SVID models provide no problems.  The @acronym{IEEE}
-model however can be a pain.  The problem is that there is no agreement
-on how to set the signalling behaviour; Sun/Sparc, SGI/IRIX and ix86
-Linux require no special action, FreeBSD requires a call to (the macro)
-@code{fpsetmask(0)} and OSF1 requires that computation be done with a
-@option{-ieee_with_inexact} flag etc.  On a new platform you must find
-out the magic recipe and add some code to make it work.  This can often
-be done via the file @file{config.site} which resides in the top level
-directory.
+@strong{Floating Point Arithmetic}: @R{} requires arithmetic compliant
+with IEC60559, also know as IEEE 754.  This mandates the use of plus and
+minus infinity and @code{NaN} (not a number) as well as specific details
+of rounding.  Althugh almost all current FPUs can support this,
+selecting such support can be a pain.  The problem is that there is no
+agreement on how to set the signalling behaviour; Sun/Sparc, SGI/IRIX
+and ix86 Linux require no special action, FreeBSD requires a call to
+(the macro) @code{fpsetmask(0)} and OSF1 requires that computation be
+done with a @option{-ieee_with_inexact} flag etc.  On a new platform you
+must find out the magic recipe and add some code to make it work.  This
+can often be done via the file @file{config.site} which resides in the
+top level directory.
 
 Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
@@ -2987,8 +3006,9 @@ know about it so we can modify the configuration procedures to include
 that platform.
 
 If you are having trouble getting @R{} to work on your platform please
-feel free to get in touch to ask questions.  We have had a fair amount
-of practice at porting @R{} to new platforms @enddots{}
+feel free to use the @samp{R-devel} mailing list to ask questions.  We
+have had a fair amount of practice at porting @R{} to new platforms
+@enddots{}
 
 
 
@@ -3192,13 +3212,13 @@ to collect, install and test an extensive set of tools.  See
 and other updates to these instructions.
 
 Some of these tools are also necessary for building add-on packages from
-source.  (Most Windows users will not need to do that; see @ref{Add-on packages}
-for details.)  We have found that the build process for @R{} is quite
-sensitive to the choice of tools:  please follow our instructions
-@strong{exactly}, even to the choice of particular versions of the tools.
-The build process for add-on packages is somewhat more forgiving, but we
-recommend using the exact toolset at first, and only substituting other
-tools once you are familiar with the process.
+source.  (Most Windows users will not need to do that; see @ref{Add-on
+packages} for details.)  We have found that the build process for @R{}
+is quite sensitive to the choice of tools: please follow our
+instructions @strong{exactly}, even to the choice of particular versions
+of the tools.  The build process for add-on packages is somewhat more
+forgiving, but we recommend using the exact toolset at first, and only
+substituting other tools once you are familiar with the process.
 
 @emph{This section contains a lot of prescriptive comments.  They are
 here as a result of bitter experience.  Please do not report problems
