@@ -203,6 +203,10 @@ BUG FIXES
 	both the process ID and a timestamp are used to create the
 	directory name.
 
+    o	[dpqr]gamma now return NaN for an invalid 'shape' parameter
+	(rather than throw an error), for consistency with other
+	distribution functions.
+
 
 
 		CHANGES IN R VERSION 2.2.0
