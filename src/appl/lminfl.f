@@ -2,7 +2,7 @@ c-----------------------------------------------------------------------
 c
 c  R : A Computer Language for Statistical Data Analysis
 c  Copyright (C) 1996, 1997  Robert Gentleman and Ross Ihaka
-c  Copyright (C) 2003        The R Foundation
+c  Copyright (C) 2003-5      The R Foundation
 c
 c  This program is free software; you can redistribute it and/or modify
 c  it under the terms of the GNU General Public License as published by
@@ -64,6 +64,7 @@ c
 c   This version dated Aug 24, 1996.
 c   Ross Ihaka, University of Auckland.
 c   `docoef' option added Feb 17, 2003;  Martin Maechler ETH Zurich.
+c   Handle hat == 1 case, Nov 2005.
 
       subroutine lminfl(x, ldx, n, k, docoef, qraux, resid,
      +     hat, coef, sigma, tol)
@@ -90,9 +91,11 @@ c
      .       dummy, dummy, dummy, 10000, info)
         do 30 i = 1, n
           hat(i) = hat(i)+sigma(i)*sigma(i)
-          if(hat(i) .ge. 1.0d0 - tol) hat(i) = 1.0d0
    30   continue
    40 continue
+      do 45 i = 1, n
+        if(hat(i) .ge. 1.0d0 - tol) hat(i) = 1.0d0
+   45 continue
 c
 c     changes in the estimated coefficients
 c
@@ -101,10 +104,13 @@ c
             do 50 j = 1,n
                sigma(j) = 0.0d0
    50       continue
-            sigma(i) = resid(i)/(1.0d0 - hat(i))
-            call dqrsl(x, ldx, n, k, qraux, sigma, dummy, sigma,
-     .           dummy, dummy, dummy, 1000, info)
-            call dtrsl(x, ldx, k, sigma, 1, info)
+c           if hat is effectively 1, change is zero
+            if(hat(i) .lt. 1.0d0) then
+               sigma(i) = resid(i)/(1.0d0 - hat(i))
+               call dqrsl(x, ldx, n, k, qraux, sigma, dummy, sigma,
+     .                    dummy, dummy, dummy, 1000, info)
+               call dtrsl(x, ldx, k, sigma, 1, info)
+            endif
             do 60 j = 1,k
                coef(i,j) = sigma(j)
    60       continue
@@ -119,7 +125,11 @@ c
         sum = sum + resid(i)*resid(i)
    80 continue
       do 90 i = 1,n
-        sigma(i) = sqrt((sum - resid(i)*resid(i)/(1.0d0-hat(i)))/denom)
+        if(hat(i) .lt. 1.0d0) then 
+           sigma(i) = sqrt((sum-resid(i)*resid(i)/(1.0d0-hat(i)))/denom)
+        else
+           sigma(i) = sqrt(sum/denom)
+        endif
    90 continue
       return
       end

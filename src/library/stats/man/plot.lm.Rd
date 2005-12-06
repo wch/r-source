@@ -77,7 +77,8 @@
   \code{\link{influence}()}\code{$hat}, see also \code{\link{hat}}.
 
   The Residual-Leverage plot shows contours of equal Cook's distance,
-  for values of \code{cook.levels}, by default 0.5 and 1.
+  for values of \code{cook.levels} (by default 0.5 and 1) and omits
+  cases with leverage one.
   If the leverages are constant, as typically in a balanced \code{\link{aov}}
   situation, the plot uses factor level combinations instead of the
   leverages for the x-axis.

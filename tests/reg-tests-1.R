@@ -755,7 +755,7 @@ stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * .Machine$double.eps)
 
 x <- 1:99/100
 stopifnot(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 10 * .Machine$double.eps)
-## error is about 650* are x=0.01
+## error is about 650* at x=0.01:
 stopifnot(abs(1 - x / acos(cos(x))) < 1000 * .Machine$double.eps)
 stopifnot(abs(1 - x / asin(sin(x))) <= 10 * .Machine$double.eps)
 stopifnot(abs(1 - x / atan(tan(x))) <= 10 *.Machine$double.eps)
@@ -3890,12 +3890,42 @@ try(mapply(rep,times=1:4, MoreArgs=42))
 stopifnot(is.finite(z))
 ## was NaN in 2.2.0
 
+
 ## t(.) with NULL dimnames
 x <- diag(2)
 dimnames(x) <- list(NULL, NULL)
 stopifnot(identical(x, t(x)),
-          identical(dimnames(x), dimnames(t(array(3, 1, dimnames=list(NULL))))))
-## dropped the length-2 list till 2.2.0
+          identical(dimnames(x), dimnames(t(array(3, 1, dimnames=list(NULL))))))## dropped the length-2 list till 2.2.0
+
+
+## infinite influence measures (PR#8367)
+occupationalStatus <-
+    structure(as.integer(c(50, 16, 12, 11, 2, 12, 0, 0, 19, 40, 35,
+                           20, 8, 28, 6, 3, 26, 34, 65, 58, 12, 102,
+                           19, 14, 8, 18, 66, 110, 23, 162, 40, 32, 7,
+                           11, 35, 40, 25, 90, 21, 15, 11, 20, 88, 183,
+                           46, 554, 158, 126, 6, 8, 23, 64, 28, 230, 143,
+                           91, 2, 3, 21, 32, 12, 177, 71, 106)
+                         ), .Dim = as.integer(c(8, 8)), .Dimnames =
+              structure(list(origin = c("1", "2", "3", "4", "5", "6", "7", "8"),
+                             destination = c("1", "2", "3", "4", "5", "6", "7",
+                             "8")), .Names = c("origin", "destination")),
+              class = "table")
+Diag <- as.factor(diag(1:8))
+Rscore <- scale(as.numeric(row(occupationalStatus)), scale = FALSE)
+Cscore <- scale(as.numeric(col(occupationalStatus)), scale = FALSE)
+Uniform <- glm(Freq ~ origin + destination + Diag +
+               Rscore:Cscore, family = poisson, data = occupationalStatus)
+Ind <- as.logical(diag(8))
+residuals(Uniform)[Ind] #zero/near-zero
+stopifnot(is.nan(rstandard(Uniform)[Ind]))
+stopifnot(is.nan(rstudent(Uniform)[Ind]))
+stopifnot(is.nan(dffits(Uniform)[Ind]))
+stopifnot(is.nan(covratio(Uniform)[Ind]))
+stopifnot(is.nan(cooks.distance(Uniform)[Ind]))
+# had infinities in 2.2.0 on some platforms
+plot(Uniform)
+##
 
 
 ### end of tests added in 2.2.1 ###
