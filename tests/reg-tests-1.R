@@ -1872,7 +1872,7 @@ long <- paste(rep("0123456789", 20), collapse="")
 cat(long, "\n", sep="", file=tmp)
 # system(intern=TRUE) depends on popen.
 junk <- try(system(paste("cat", tmp), intern = TRUE))
-if(!inherits(junk, "try-error")) 
+if(!inherits(junk, "try-error"))
     stopifnot(length(junk) == 1, nchar(junk[1]) == 200)
 ## and split truncated on 1.6.1
 
@@ -3893,6 +3893,36 @@ stopifnot(is.finite(z))
 ## was NaN in 2.2.0
 
 
+## infinite influence measures (PR#8367)
+occupationalStatus <-
+    structure(as.integer(c(50, 16, 12, 11, 2, 12, 0, 0, 19, 40, 35,
+                           20, 8, 28, 6, 3, 26, 34, 65, 58, 12, 102,
+                           19, 14, 8, 18, 66, 110, 23, 162, 40, 32, 7,
+                           11, 35, 40, 25, 90, 21, 15, 11, 20, 88, 183,
+                           46, 554, 158, 126, 6, 8, 23, 64, 28, 230, 143,
+                           91, 2, 3, 21, 32, 12, 177, 71, 106)
+                         ), .Dim = as.integer(c(8, 8)), .Dimnames =
+              structure(list(origin = c("1", "2", "3", "4", "5", "6", "7", "8"),
+                             destination = c("1", "2", "3", "4", "5", "6", "7",
+                             "8")), .Names = c("origin", "destination")),
+              class = "table")
+Diag <- as.factor(diag(1:8))
+Rscore <- scale(as.numeric(row(occupationalStatus)), scale = FALSE)
+Cscore <- scale(as.numeric(col(occupationalStatus)), scale = FALSE)
+Uniform <- glm(Freq ~ origin + destination + Diag +
+               Rscore:Cscore, family = poisson, data = occupationalStatus)
+Ind <- as.logical(diag(8))
+residuals(Uniform)[Ind] #zero/near-zero
+stopifnot(is.nan(rstandard(Uniform)[Ind]))
+stopifnot(is.nan(rstudent(Uniform)[Ind]))
+stopifnot(is.nan(dffits(Uniform)[Ind]))
+stopifnot(is.nan(covratio(Uniform)[Ind]))
+stopifnot(is.nan(cooks.distance(Uniform)[Ind]))
+# had infinities in 2.2.0 on some platforms
+plot(Uniform)
+##
+
+
 ### end of tests added in 2.2.1 ###
 
 
@@ -3936,7 +3966,8 @@ dgamma(1, -2)
 pgamma(1, -2)
 qgamma(0.95, -2)
 rgamma(3, -20)
-## all errors < 2.3.0, now NaNs
+## all errors < 2.1.1, now NaNs
+
 
 ## Make sure reference to local environment is serialized
 f <- function() { function(){} }
@@ -3951,6 +3982,7 @@ writeLines(xx, con)
 close(con)
 unlink("test.gz")
 ## segfaulted in 2.2.0 on some x86_64 systems.
+
 
 ## t(.) with NULL dimnames
 x <- diag(2)

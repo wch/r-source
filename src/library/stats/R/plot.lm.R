@@ -43,6 +43,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	else "Standardized residuals"
 	r.w <- if (is.null(w)) r else sqrt(w) * r
 	rs <- r.w/(s * sqrt(1 - hii))
+        rs[is.infinite(rs)] <- NaN
     }
     if (any(show[5:6])) { # using 'leverages'
 	hatval <- hatvalues(x)
@@ -139,7 +140,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	if(id.n > 0) {
 	    show.r <- order(-cook)[iid]# index of largest 'id.n' ones
 	    ymx <- cook[show.r[1]] * 1.075
-	} else ymx <- max(cook)
+	} else ymx <- max(cook, na.rm = TRUE)
 	plot(cook, type = "h", ylim = c(0, ymx), main = main,
 	     xlab = "Obs. number", ylab = "Cook's distance", ...)
 	if (one.fig)
@@ -186,9 +187,13 @@ function (x, which = c(1:3,5), ## was which = 1:4,
         }
         else { ## Residual vs Leverage
             xx <- hatval
-            plot(hatval, rs, xlim = c(0, r.hat[2]), ylim = ylim,
-                 main = main, xlab = "Leverage", ylab = ylab23, type = "n", ...)
-            panel(hatval, rs, ...)
+            ## omit hatvalues of 1.
+            xx[xx >= 1] <- NA
+
+            plot(xx, rs, xlim = c(0, max(xx, na.rm = TRUE)), ylim = ylim,
+                 main = main, xlab = "Leverage", ylab = ylab23, type = "n",
+                 ...)
+            panel(xx, rs, ...)
             abline(h = 0, v = 0, lty = 3, col = "gray")
             if (one.fig)
                 title(sub = sub.caption, ...)
@@ -203,9 +208,10 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                 }
                 legend("bottomleft", legend = "Cook's distance",
                        lty = 2, col = 2, bty = "n")
-                xmax <- usr[2]
+                xmax <- min(0.99, usr[2])
                 ymult <- sqrt(p*(1-xmax)/xmax)
-                aty <- c(-sqrt(rev(cook.levels))*ymult, sqrt(cook.levels)*ymult)
+                aty <- c(-sqrt(rev(cook.levels))*ymult,
+                         sqrt(cook.levels)*ymult)
                 axis(4, at = aty,
                      labels = paste(c(rev(cook.levels), cook.levels)),
                      mgp = c(.25,.25,0), las = 2, tck = 0,
@@ -220,7 +226,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	}
     }
     if (show[6]) {
-	ymx <- max(cook)*1.025
+	ymx <- max(cook, na.rm = TRUE)*1.025
 	g <- hatval/(1-hatval)
 	plot(g, cook, xlim = c(0, max(g)), ylim = c(0, ymx),
 	     main = main, xlab = "Leverage", ylab = "Cook's distance",

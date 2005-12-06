@@ -583,6 +583,12 @@ BUG FIXES
 
     o	t() now longer drops dimnames 'list(NULL,NULL)' or 'list(NULL)'.
 
+    o	Influence measures such as rstandard() and cooks.distance()
+	could return infinite values rather than NaN for a case which
+	was fitted exactly.  Similarly, plot.lm() could fail on such
+	examples.  plot.lm(which = 5)  had to be modified to only plot
+	cases with hat < 1.  (PR#8367)
+
 
 
 		CHANGES IN R VERSION 2.2.0

@@ -69,6 +69,7 @@ lm.influence <- function (model, do.coef = TRUE)
         }
     }
     res$wt.res <- naresid(model$na.action, res$wt.res)
+    res$hat[res$hat > 1 - 10*.Machine$double.eps] <- 1 # force 1
     names(res$hat) <- names(res$sigma) <- names(res$wt.res)
     if(!do.coef) ## drop it
 	res$coefficients <- NULL
@@ -95,31 +96,43 @@ hatvalues <- function(model, ...) UseMethod("hatvalues")
 hatvalues.lm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...)
 {
     hat <- infl$hat
-    names(hat) <- names(infl $ wt.res)
+    names(hat) <- names(infl$wt.res)
     hat
 }
 
 rstandard <- function(model, ...) UseMethod("rstandard")
 rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
                          sd = sqrt(deviance(model)/df.residual(model)), ...)
-    infl$wt.res / (sd * sqrt(1 - infl$hat))
+{
+    res <- infl$wt.res / (sd * sqrt(1 - infl$hat))
+    res[is.infinite(res)] <- NaN
+    res
+}
 
 ## FIXME ! -- make sure we are following "the literature":
 rstandard.glm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...)
 {
     res <- infl$wt.res # = "dev.res"  really
-    res / sqrt(summary(model)$dispersion * (1 - infl$hat))
+    res <- res / sqrt(summary(model)$dispersion * (1 - infl$hat))
+    res[is.infinite(res)] <- NaN
+    res
 }
 
 rstudent <- function(model, ...) UseMethod("rstudent")
 rstudent.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
 			res = infl$wt.res, ...)
-    res / (infl$sigma * sqrt(1 - infl$hat))
+{
+    res <- res / (infl$sigma * sqrt(1 - infl$hat))
+    res[is.infinite(res)] <- NaN
+    res
+}
 
 rstudent.glm <- function(model, infl = influence(model, do.coef=FALSE), ...)
 {
     r <- infl$dev.res
     r <- sign(r) * sqrt(r^2 + (infl$hat * infl$pear.res^2)/(1 - infl$hat))
+    r[is.infinite(r)] <- NaN
+    r
     if (any(family(model)$family == c("binomial", "poisson")))
 	r else r/infl$sigma
 }
@@ -127,7 +140,11 @@ rstudent.glm <- function(model, infl = influence(model, do.coef=FALSE), ...)
 ### FIXME for glm (see above) ?!?
 dffits <- function(model, infl = lm.influence(model, do.coef=FALSE),
 		   res = weighted.residuals(model))
-    res * sqrt(infl$hat)/(infl$sigma*(1-infl$hat))
+{
+    res <- res * sqrt(infl$hat)/(infl$sigma*(1-infl$hat))
+    res[is.infinite(res)] <- NaN
+    res
+}
 
 
 dfbeta <- function(model, ...) UseMethod("dfbeta")
@@ -156,6 +173,7 @@ covratio <- function(model, infl = lm.influence(model, do.coef=FALSE),
     p <- model$rank
     omh <- 1-infl$hat
     e.star <- res/(infl$sigma*sqrt(omh))
+    e.star[is.infinite(e.star)] <- NaN
     1/(omh*(((n - p - 1)+e.star^2)/(n - p))^p)
 }
 
@@ -169,7 +187,9 @@ function(model, infl = lm.influence(model, do.coef=FALSE),
 	 hat = infl$hat, ...)
 {
     p <- model$rank
-    ((res/(sd * (1 - hat)))^2 * hat)/p
+    res <- ((res/(sd * (1 - hat)))^2 * hat)/p
+    res[is.infinite(res)] <- NaN
+    res
 }
 
 cooks.distance.glm <-
@@ -178,7 +198,9 @@ function(model, infl = influence(model, do.coef=FALSE),
 	 dispersion = summary(model)$dispersion, hat = infl$hat, ...)
 {
     p <- model$rank
-    (res/(1-hat))^2 * hat/(dispersion* p)
+    res <- (res/(1-hat))^2 * hat/(dispersion* p)
+    res[is.infinite(res)] <- NaN
+    res
 }
 
 ## FIXME: The following probably needs partial adapation for glm
@@ -218,7 +240,8 @@ influence.measures <- function(model)
 #    dn <- dimnames(model$qr$qr)
     infmat <- cbind(dfbetas, dffit = dffits, cov.r = cov.ratio,
 		    cook.d = cooks.d, hat=h)
-    is.inf <- is.influential(infmat, sum(h>0))
+    infmat[is.infinite(infmat)] <- NaN
+    is.inf <- is.influential(infmat, sum(h > 0))
     ans <- list(infmat = infmat, is.inf = is.inf, call = model$call)
     class(ans) <- "infl"
     ans
