@@ -3775,6 +3775,8 @@ Currently, there are the following packages.
 @table @strong
 @item Aspell
 An interface to facilities in the aspell library.
+@item CGIwithR
+Facilities for the use of R to write CGI scripts.
 @item CORBA
 Dynamic CORBA client/server facilities for R.  Connects to other
 CORBA-aware applications developed in arbitrary languages, on different
@@ -3829,6 +3831,9 @@ Gnome GUI creator.
 A collection of S functions that provide an interface to creating and
 controlling an @HTML{} widget which can be used to display @HTML{}
 documents from files or content generated dynamically in S.
+@item RGtkIPrimitives
+A collection of low-level primitives for interactive use with R graphics
+and the gtkDevice using @strong{RGtk}.
 @item RGtkViewers
 A collection of tools for viewing different S objects, databases, class
 and widget hierarchies, S source file contents, etc.
@@ -3853,6 +3858,8 @@ allowing one to call arbitrary Perl subroutines, classes and methods.
 @item RSPython
 Allows Python programs to invoke S functions, methods, etc., and S code
 to call Python functionality.
+@item Rlibstree
+Suffix Trees in R via the libstree C library.
 @item RXLisp
 An interface to call XLisp-Stat functions from within R.
 @item Rstem
