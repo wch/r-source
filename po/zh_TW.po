@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:31+0000\n"
+"POT-Creation-Date: 2005-12-06 08:33+0000\n"
 "PO-Revision-Date: 2005-09-26 17:43+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -71,25 +71,25 @@ msgstr "DLL 試圖把 FPU 控制詞從 %x 改成 %x"
 msgid "cannot get working directory"
 msgstr "找不到工作目錄"
 
-#: src/gnuwin32/extra.c:50
+#: src/gnuwin32/extra.c:51
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam 中的 'tempdir' 無效"
 
-#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:329
+#: src/gnuwin32/extra.c:64 src/unix/sys-unix.c:329
 msgid "cannot find unused tempfile name"
 msgstr "暫時檔案名都用盡"
 
-#: src/gnuwin32/extra.c:96
+#: src/gnuwin32/extra.c:97
 msgid "invalid 'names' in R_unlink"
 msgstr "R_unlink 的 'names' 無效"
 
-#: src/gnuwin32/extra.c:140 src/gnuwin32/extra.c:143 src/gnuwin32/extra.c:199
-#: src/gnuwin32/extra.c:215 src/gnuwin32/extra.c:227 src/gnuwin32/extra.c:406
-#: src/gnuwin32/extra.c:437 src/gnuwin32/extra.c:464 src/gnuwin32/extra.c:467
-#: src/gnuwin32/extra.c:516 src/gnuwin32/extra.c:553 src/gnuwin32/extra.c:564
-#: src/gnuwin32/extra.c:588 src/gnuwin32/extra.c:596 src/gnuwin32/extra.c:623
-#: src/gnuwin32/extra.c:639 src/gnuwin32/extra.c:790 src/gnuwin32/extra.c:874
-#: src/gnuwin32/extra.c:877 src/gnuwin32/extra.c:882 src/main/builtin.c:88
+#: src/gnuwin32/extra.c:141 src/gnuwin32/extra.c:144 src/gnuwin32/extra.c:200
+#: src/gnuwin32/extra.c:216 src/gnuwin32/extra.c:228 src/gnuwin32/extra.c:407
+#: src/gnuwin32/extra.c:438 src/gnuwin32/extra.c:465 src/gnuwin32/extra.c:468
+#: src/gnuwin32/extra.c:517 src/gnuwin32/extra.c:554 src/gnuwin32/extra.c:565
+#: src/gnuwin32/extra.c:589 src/gnuwin32/extra.c:597 src/gnuwin32/extra.c:624
+#: src/gnuwin32/extra.c:640 src/gnuwin32/extra.c:791 src/gnuwin32/extra.c:875
+#: src/gnuwin32/extra.c:878 src/gnuwin32/extra.c:883 src/main/builtin.c:88
 #: src/main/builtin.c:315 src/main/builtin.c:327 src/main/character.c:129
 #: src/main/character.c:2421 src/main/character.c:2425
 #: src/main/connections.c:758 src/main/connections.c:764
@@ -144,75 +144,75 @@ msgstr "R_unlink 的 'names' 無效"
 msgid "invalid '%s' argument"
 msgstr "'%s' 引數不正確"
 
-#: src/gnuwin32/extra.c:164 src/gnuwin32/extra.c:211 src/gnuwin32/extra.c:395
-#: src/gnuwin32/extra.c:418
+#: src/gnuwin32/extra.c:165 src/gnuwin32/extra.c:212 src/gnuwin32/extra.c:396
+#: src/gnuwin32/extra.c:419
 msgid "R_HOME not set"
 msgstr "沒有設定 R_HOME"
 
-#: src/gnuwin32/extra.c:171
+#: src/gnuwin32/extra.c:172
 #, c-format
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
 msgstr "找不到 %s\\doc\\html\\rwin.htm[l]"
 
-#: src/gnuwin32/extra.c:205
+#: src/gnuwin32/extra.c:206
 #, c-format
 msgid "%s not found"
 msgstr "找不到%s"
 
-#: src/gnuwin32/extra.c:218 src/gnuwin32/extra.c:230
+#: src/gnuwin32/extra.c:219 src/gnuwin32/extra.c:231
 msgid "WinHelp call failed"
 msgstr "WinHelp 呼叫失敗"
 
-#: src/gnuwin32/extra.c:221
+#: src/gnuwin32/extra.c:222
 msgid "too many .hlp files opened"
 msgstr "已經開啟了太多 .hlp 檔案"
 
-#: src/gnuwin32/extra.c:232
+#: src/gnuwin32/extra.c:233
 msgid "type not yet implemented"
 msgstr "類型目前還沒有實作"
 
-#: src/gnuwin32/extra.c:449
+#: src/gnuwin32/extra.c:450
 msgid "unknown type"
 msgstr "不明的類型"
 
-#: src/gnuwin32/extra.c:488 src/gnuwin32/extra.c:512 src/gnuwin32/extra.c:550
-#: src/gnuwin32/extra.c:585
+#: src/gnuwin32/extra.c:489 src/gnuwin32/extra.c:513 src/gnuwin32/extra.c:551
+#: src/gnuwin32/extra.c:586
 msgid "Menu functions can only be used in the GUI"
 msgstr "選單功能只能在 GUI 中使用"
 
-#: src/gnuwin32/extra.c:520
+#: src/gnuwin32/extra.c:521
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "無法檢索項目 %s (%s)"
 
-#: src/gnuwin32/extra.c:558
+#: src/gnuwin32/extra.c:559
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "無法增加選單 (%s)"
 
-#: src/gnuwin32/extra.c:570
+#: src/gnuwin32/extra.c:571
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "無法加入選單項 (%s)"
 
-#: src/gnuwin32/extra.c:593
+#: src/gnuwin32/extra.c:594
 msgid "menu does not exist"
 msgstr "選單不存在"
 
-#: src/gnuwin32/extra.c:600
+#: src/gnuwin32/extra.c:601
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "無法刪除選單項 (%s)"
 
-#: src/gnuwin32/extra.c:628
+#: src/gnuwin32/extra.c:629
 msgid "savehistory can only be used in Rgui and Rterm"
 msgstr "savehistory 只能在 Rgui 和 Rterm 中使用"
 
-#: src/gnuwin32/extra.c:643
+#: src/gnuwin32/extra.c:644
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory 只能在 Rgui 和 Rterm 中使用"
 
-#: src/gnuwin32/extra.c:711 src/main/datetime.c:477 src/main/datetime.c:543
+#: src/gnuwin32/extra.c:712 src/main/datetime.c:477 src/main/datetime.c:543
 #: src/main/datetime.c:720 src/main/dotcode.c:142 src/main/errors.c:710
 #: src/main/errors.c:737 src/main/errors.c:828 src/main/errors.c:853
 #: src/main/errors.c:858 src/main/optimize.c:95 src/main/optimize.c:102
@@ -238,80 +238,84 @@ msgstr "loadhistory 只能在 Rgui 和 Rterm 中使用"
 msgid "invalid '%s' value"
 msgstr "'%s' 值不正確"
 
-#: src/gnuwin32/extra.c:766 src/gnuwin32/extra.c:776
+#: src/gnuwin32/extra.c:767 src/gnuwin32/extra.c:777
 msgid "incorrect argument"
 msgstr "引數不正確"
 
-#: src/gnuwin32/extra.c:769
+#: src/gnuwin32/extra.c:770
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "別傻了!: 您的機器有 4Gb 的位址上限"
 
-#: src/gnuwin32/extra.c:772
+#: src/gnuwin32/extra.c:773
 msgid "cannot decrease memory limit"
 msgstr "無法減少記憶體限制"
 
-#: src/gnuwin32/extra.c:1056
+#: src/gnuwin32/extra.c:991 src/unix/sys-unix.c:280 src/unix/sys-unix.c:296
+msgid "cannot mkdir R_TempDir"
+msgstr "無法執行 mkdir R_TempDir"
+
+#: src/gnuwin32/extra.c:1038
 msgid "argument must be a character vector"
 msgstr "引數必須為字元向量"
 
-#: src/gnuwin32/extra.c:1071 src/main/connections.c:1382
+#: src/gnuwin32/extra.c:1053 src/main/connections.c:1382
 msgid "Unable to open the clipboard"
 msgstr "無法開啟剪貼簿"
 
-#: src/gnuwin32/extra.c:1076 src/main/connections.c:1386
+#: src/gnuwin32/extra.c:1058 src/main/connections.c:1386
 msgid "Unable to write to the clipboard"
 msgstr "無法寫入剪貼簿"
 
-#: src/gnuwin32/extra.c:1202
+#: src/gnuwin32/extra.c:1184
 msgid "'default' must be a character string"
 msgstr "'default' 必須為字串"
 
-#: src/gnuwin32/extra.c:1204
+#: src/gnuwin32/extra.c:1186
 msgid "'default' is overlong"
 msgstr "'default' 太長"
 
-#: src/gnuwin32/extra.c:1213
+#: src/gnuwin32/extra.c:1195
 msgid "'caption' must be a character string"
 msgstr "'caption' 必須為字串"
 
-#: src/gnuwin32/extra.c:1215
+#: src/gnuwin32/extra.c:1197
 msgid "'multi' must be a logical value"
 msgstr "'multi' 必須為邏輯值"
 
-#: src/gnuwin32/extra.c:1217
+#: src/gnuwin32/extra.c:1199
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' 必須為整數"
 
-#: src/gnuwin32/extra.c:1351
+#: src/gnuwin32/extra.c:1333
 msgid "'title' must be a character string"
 msgstr "'title' 必須為字串"
 
-#: src/gnuwin32/extra.c:1383
+#: src/gnuwin32/extra.c:1365
 msgid "'which' must be length 1"
 msgstr "'which' 的長度必須為 1"
 
-#: src/gnuwin32/extra.c:1413
+#: src/gnuwin32/extra.c:1395
 msgid "invalid value of 'which'"
 msgstr "'which' 的值無效"
 
-#: src/gnuwin32/extra.c:1415 src/gnuwin32/extra.c:1417
-#: src/gnuwin32/extra.c:1457
+#: src/gnuwin32/extra.c:1397 src/gnuwin32/extra.c:1399
+#: src/gnuwin32/extra.c:1439
 msgid "invalid device"
 msgstr "裝置無效"
 
-#: src/gnuwin32/extra.c:1418
+#: src/gnuwin32/extra.c:1400
 msgid "requires SDI mode"
 msgstr "需要用 SDI 模式"
 
-#: src/gnuwin32/extra.c:1451
+#: src/gnuwin32/extra.c:1433
 msgid "invalid graphical device number"
 msgstr "圖形裝置號碼無效"
 
-#: src/gnuwin32/extra.c:1461
+#: src/gnuwin32/extra.c:1443
 msgid "bad device"
 msgstr "裝置不當"
 
-#: src/gnuwin32/extra.c:1700 src/gnuwin32/extra.c:1708
+#: src/gnuwin32/extra.c:1682 src/gnuwin32/extra.c:1690
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs 中的輸入無效"
 
@@ -6821,10 +6825,6 @@ msgstr "需要非空字元引數"
 #: src/unix/sys-unix.c:239
 msgid "intern=TRUE is not implemented on this platform"
 msgstr "本系統沒有實作 intern=TRUE 此一功能"
-
-#: src/unix/sys-unix.c:280 src/unix/sys-unix.c:296
-msgid "cannot mkdir R_TempDir"
-msgstr "無法執行 mkdir R_TempDir"
 
 #: src/unix/sys-unix.c:309
 msgid "cannot allocate R_TempDir"

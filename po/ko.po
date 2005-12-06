@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:31+0000\n"
+"POT-Creation-Date: 2005-12-06 08:33+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -72,25 +72,25 @@ msgstr "DLL이(가) FPU의 상태어를 %x에서 %x으로 변경하도록 했습
 msgid "cannot get working directory"
 msgstr "작업 디렉토리를 얻을수 없습니다"
 
-#: src/gnuwin32/extra.c:50
+#: src/gnuwin32/extra.c:51
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam에서 'tempdir'가 부적절합니다"
 
-#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:329
+#: src/gnuwin32/extra.c:64 src/unix/sys-unix.c:329
 msgid "cannot find unused tempfile name"
 msgstr "사용하지 않는 tempfile 이름을 검색할수가 없습니다"
 
-#: src/gnuwin32/extra.c:96
+#: src/gnuwin32/extra.c:97
 msgid "invalid 'names' in R_unlink"
 msgstr "R_unlink의 'names'이 부적절합니다"
 
-#: src/gnuwin32/extra.c:140 src/gnuwin32/extra.c:143 src/gnuwin32/extra.c:199
-#: src/gnuwin32/extra.c:215 src/gnuwin32/extra.c:227 src/gnuwin32/extra.c:406
-#: src/gnuwin32/extra.c:437 src/gnuwin32/extra.c:464 src/gnuwin32/extra.c:467
-#: src/gnuwin32/extra.c:516 src/gnuwin32/extra.c:553 src/gnuwin32/extra.c:564
-#: src/gnuwin32/extra.c:588 src/gnuwin32/extra.c:596 src/gnuwin32/extra.c:623
-#: src/gnuwin32/extra.c:639 src/gnuwin32/extra.c:790 src/gnuwin32/extra.c:874
-#: src/gnuwin32/extra.c:877 src/gnuwin32/extra.c:882 src/main/builtin.c:88
+#: src/gnuwin32/extra.c:141 src/gnuwin32/extra.c:144 src/gnuwin32/extra.c:200
+#: src/gnuwin32/extra.c:216 src/gnuwin32/extra.c:228 src/gnuwin32/extra.c:407
+#: src/gnuwin32/extra.c:438 src/gnuwin32/extra.c:465 src/gnuwin32/extra.c:468
+#: src/gnuwin32/extra.c:517 src/gnuwin32/extra.c:554 src/gnuwin32/extra.c:565
+#: src/gnuwin32/extra.c:589 src/gnuwin32/extra.c:597 src/gnuwin32/extra.c:624
+#: src/gnuwin32/extra.c:640 src/gnuwin32/extra.c:791 src/gnuwin32/extra.c:875
+#: src/gnuwin32/extra.c:878 src/gnuwin32/extra.c:883 src/main/builtin.c:88
 #: src/main/builtin.c:315 src/main/builtin.c:327 src/main/character.c:129
 #: src/main/character.c:2421 src/main/character.c:2425
 #: src/main/connections.c:758 src/main/connections.c:764
@@ -145,75 +145,75 @@ msgstr "R_unlink의 'names'이 부적절합니다"
 msgid "invalid '%s' argument"
 msgstr "'%s'인수가 부적절합니다"
 
-#: src/gnuwin32/extra.c:164 src/gnuwin32/extra.c:211 src/gnuwin32/extra.c:395
-#: src/gnuwin32/extra.c:418
+#: src/gnuwin32/extra.c:165 src/gnuwin32/extra.c:212 src/gnuwin32/extra.c:396
+#: src/gnuwin32/extra.c:419
 msgid "R_HOME not set"
 msgstr "R_HOME가 설정되어있지 않습니다"
 
-#: src/gnuwin32/extra.c:171
+#: src/gnuwin32/extra.c:172
 #, c-format
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
 msgstr "%s\\doc\\html\\rwin.htm[l]가 검색할수 없습니다"
 
-#: src/gnuwin32/extra.c:205
+#: src/gnuwin32/extra.c:206
 #, c-format
 msgid "%s not found"
 msgstr "%s가 검색되지 않습니다"
 
-#: src/gnuwin32/extra.c:218 src/gnuwin32/extra.c:230
+#: src/gnuwin32/extra.c:219 src/gnuwin32/extra.c:231
 msgid "WinHelp call failed"
 msgstr "WinHelp의 호출은 실패했습니다"
 
-#: src/gnuwin32/extra.c:221
+#: src/gnuwin32/extra.c:222
 msgid "too many .hlp files opened"
 msgstr "너무 많은 hlp 파일의 수가 열려져 있습니다"
 
-#: src/gnuwin32/extra.c:232
+#: src/gnuwin32/extra.c:233
 msgid "type not yet implemented"
 msgstr "실제 적용되지 않은 유형입니다"
 
-#: src/gnuwin32/extra.c:449
+#: src/gnuwin32/extra.c:450
 msgid "unknown type"
 msgstr "알수 없는 데이타 유형입니다"
 
-#: src/gnuwin32/extra.c:488 src/gnuwin32/extra.c:512 src/gnuwin32/extra.c:550
-#: src/gnuwin32/extra.c:585
+#: src/gnuwin32/extra.c:489 src/gnuwin32/extra.c:513 src/gnuwin32/extra.c:551
+#: src/gnuwin32/extra.c:586
 msgid "Menu functions can only be used in the GUI"
 msgstr "Menu 함수는 GUI에서만 사용할수 있습니다"
 
-#: src/gnuwin32/extra.c:520
+#: src/gnuwin32/extra.c:521
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "%s (%s)에 대한 항목을 검색할수가 없습니다"
 
-#: src/gnuwin32/extra.c:558
+#: src/gnuwin32/extra.c:559
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "메뉴(%s)를 추가할수가 없습니다"
 
-#: src/gnuwin32/extra.c:570
+#: src/gnuwin32/extra.c:571
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "메뉴 항목(%s)을 추가 할수 없습니다"
 
-#: src/gnuwin32/extra.c:593
+#: src/gnuwin32/extra.c:594
 msgid "menu does not exist"
 msgstr "메뉴는 존재하지 않습니다"
 
-#: src/gnuwin32/extra.c:600
+#: src/gnuwin32/extra.c:601
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "메뉴 항목(%s)을 삭제할수 없습니다"
 
-#: src/gnuwin32/extra.c:628
+#: src/gnuwin32/extra.c:629
 msgid "savehistory can only be used in Rgui and Rterm"
 msgstr "savehistory은 Rgui 또는 Rterm에서만 사용할수 있습니다"
 
-#: src/gnuwin32/extra.c:643
+#: src/gnuwin32/extra.c:644
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory은 Rgui과 Rterm에서만 사용할수 있습니다"
 
-#: src/gnuwin32/extra.c:711 src/main/datetime.c:477 src/main/datetime.c:543
+#: src/gnuwin32/extra.c:712 src/main/datetime.c:477 src/main/datetime.c:543
 #: src/main/datetime.c:720 src/main/dotcode.c:142 src/main/errors.c:710
 #: src/main/errors.c:737 src/main/errors.c:828 src/main/errors.c:853
 #: src/main/errors.c:858 src/main/optimize.c:95 src/main/optimize.c:102
@@ -239,80 +239,84 @@ msgstr "loadhistory은 Rgui과 Rterm에서만 사용할수 있습니다"
 msgid "invalid '%s' value"
 msgstr "'%s'의 값이 부적절합니다"
 
-#: src/gnuwin32/extra.c:766 src/gnuwin32/extra.c:776
+#: src/gnuwin32/extra.c:767 src/gnuwin32/extra.c:777
 msgid "incorrect argument"
 msgstr "올바르지 않은 인수입니다"
 
-#: src/gnuwin32/extra.c:769
+#: src/gnuwin32/extra.c:770
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "잘못되었습니다!: machine address공간의 상한은 4Gb 입니다"
 
-#: src/gnuwin32/extra.c:772
+#: src/gnuwin32/extra.c:773
 msgid "cannot decrease memory limit"
 msgstr "메모리 한계를 줄일수가 없습니다"
 
-#: src/gnuwin32/extra.c:1056
+#: src/gnuwin32/extra.c:991 src/unix/sys-unix.c:280 src/unix/sys-unix.c:296
+msgid "cannot mkdir R_TempDir"
+msgstr "디렉토리  R_TempDir를 작성할수가 없습니다"
+
+#: src/gnuwin32/extra.c:1038
 msgid "argument must be a character vector"
 msgstr "인수는 문자벡터가 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1071 src/main/connections.c:1382
+#: src/gnuwin32/extra.c:1053 src/main/connections.c:1382
 msgid "Unable to open the clipboard"
 msgstr "clipboard를 열수가 없습니다"
 
-#: src/gnuwin32/extra.c:1076 src/main/connections.c:1386
+#: src/gnuwin32/extra.c:1058 src/main/connections.c:1386
 msgid "Unable to write to the clipboard"
 msgstr "clipborad를 쓰기 위해서 열수가 없습니다"
 
-#: src/gnuwin32/extra.c:1202
+#: src/gnuwin32/extra.c:1184
 msgid "'default' must be a character string"
 msgstr "'default'는 문자열이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1204
+#: src/gnuwin32/extra.c:1186
 msgid "'default' is overlong"
 msgstr "'default'가 너무 큽니다"
 
-#: src/gnuwin32/extra.c:1213
+#: src/gnuwin32/extra.c:1195
 msgid "'caption' must be a character string"
 msgstr "'caption'는 문자열이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1215
+#: src/gnuwin32/extra.c:1197
 msgid "'multi' must be a logical value"
 msgstr "'multi'는 논리값이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1217
+#: src/gnuwin32/extra.c:1199
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'는 정수값이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1351
+#: src/gnuwin32/extra.c:1333
 msgid "'title' must be a character string"
 msgstr "'title\"는 문자열이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1383
+#: src/gnuwin32/extra.c:1365
 msgid "'which' must be length 1"
 msgstr "'which'는 길이 1 이 되어야만 합니다"
 
-#: src/gnuwin32/extra.c:1413
+#: src/gnuwin32/extra.c:1395
 msgid "invalid value of 'which'"
 msgstr "'whhich'의 값이 부적절합니다"
 
-#: src/gnuwin32/extra.c:1415 src/gnuwin32/extra.c:1417
-#: src/gnuwin32/extra.c:1457
+#: src/gnuwin32/extra.c:1397 src/gnuwin32/extra.c:1399
+#: src/gnuwin32/extra.c:1439
 msgid "invalid device"
 msgstr "부적절한 디바이스입니다"
 
-#: src/gnuwin32/extra.c:1418
+#: src/gnuwin32/extra.c:1400
 msgid "requires SDI mode"
 msgstr "SDI 모드가 요구됩니다"
 
-#: src/gnuwin32/extra.c:1451
+#: src/gnuwin32/extra.c:1433
 msgid "invalid graphical device number"
 msgstr "graphical 디바이스 번호가 부적절합니다"
 
-#: src/gnuwin32/extra.c:1461
+#: src/gnuwin32/extra.c:1443
 msgid "bad device"
 msgstr "부적절한 디바이스입니다"
 
-#: src/gnuwin32/extra.c:1700 src/gnuwin32/extra.c:1708
+#: src/gnuwin32/extra.c:1682 src/gnuwin32/extra.c:1690
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs에의 입력이 부적절합니다"
 
@@ -6944,10 +6948,6 @@ msgstr "비어 있지 않는 문자 인수가 예상되어 있습니다"
 #: src/unix/sys-unix.c:239
 msgid "intern=TRUE is not implemented on this platform"
 msgstr "이 platform에서 intern=TRUE은 실제 적용되어 있지 않습니다"
-
-#: src/unix/sys-unix.c:280 src/unix/sys-unix.c:296
-msgid "cannot mkdir R_TempDir"
-msgstr "디렉토리  R_TempDir를 작성할수가 없습니다"
 
 #: src/unix/sys-unix.c:309
 msgid "cannot allocate R_TempDir"
