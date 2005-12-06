@@ -207,6 +207,8 @@ BUG FIXES
 	(rather than throw an error), for consistency with other
 	distribution functions.
 
+    o	t() now longer drops dimnames 'list(NULL,NULL)' or 'list(NULL)'.
+
 
 
 		CHANGES IN R VERSION 2.2.0

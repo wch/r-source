@@ -3890,5 +3890,12 @@ try(mapply(rep,times=1:4, MoreArgs=42))
 stopifnot(is.finite(z))
 ## was NaN in 2.2.0
 
+## t(.) with NULL dimnames
+x <- diag(2)
+dimnames(x) <- list(NULL, NULL)
+stopifnot(identical(x, t(x)),
+          identical(dimnames(x), dimnames(t(array(3, 1, dimnames=list(NULL))))))
+## dropped the length-2 list till 2.2.0
+
 
 ### end of tests added in 2.2.1 ###
