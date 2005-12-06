@@ -150,10 +150,6 @@ NEW FEATURES
 
     o	poly() has a new argument 'raw', mainly for pedagogical purposes.
 
-    o	[dpqr]gamma now returns NaN for an invalid 'shape' parameter
-	(rather than throw an error), for consistency with other
-	distribution functions.
-
     o	Sys.time() now has sub-millisecond accuracy on systems
 	supporting the POSIX call gettimeofday, and to clock-tick
 	accuracy on Windows.
@@ -582,6 +578,10 @@ BUG FIXES
 	mktemp (and a genuine Bourne shell /bin/sh, not bash).  Now
 	both the process ID and a timestamp are used to create the
 	directory name.
+
+    o	[dpqr]gamma now return NaN for an invalid 'shape' parameter
+	(rather than throw an error), for consistency with other
+	distribution functions.
 
 
 
