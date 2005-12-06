@@ -589,6 +589,10 @@ BUG FIXES
 	examples.  plot.lm(which = 5)  had to be modified to only plot
 	cases with hat < 1.  (PR#8367)
 
+	lm.influence() was incorrectly reporting 'coefficients' and
+	'sigma' as NaN for cases with hat = 1, and on some platforms
+	not detecting hat = 1 correctly.
+
 
 
 		CHANGES IN R VERSION 2.2.0
