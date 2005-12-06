@@ -3893,6 +3893,13 @@ stopifnot(is.finite(z))
 ## was NaN in 2.2.0
 
 
+## t(.) with NULL dimnames
+x <- diag(2)
+dimnames(x) <- list(NULL, NULL)
+stopifnot(identical(x, t(x)),
+          identical(dimnames(x), dimnames(t(array(3, 1, dimnames=list(NULL))))))## dropped the length-2 list till 2.2.0
+
+
 ## infinite influence measures (PR#8367)
 occupationalStatus <-
     structure(as.integer(c(50, 16, 12, 11, 2, 12, 0, 0, 19, 40, 35,
@@ -3982,11 +3989,3 @@ writeLines(xx, con)
 close(con)
 unlink("test.gz")
 ## segfaulted in 2.2.0 on some x86_64 systems.
-
-
-## t(.) with NULL dimnames
-x <- diag(2)
-dimnames(x) <- list(NULL, NULL)
-stopifnot(identical(x, t(x)),
-          identical(dimnames(x), dimnames(t(array(3, 1, dimnames=list(NULL))))))
-## dropped the length-2 list till 2.2.0
