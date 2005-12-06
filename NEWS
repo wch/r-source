@@ -367,8 +367,6 @@ BUG FIXES
     o   R CMD build --binary does a better job of cleaning up after
 	failure to re-make vignettes.
 
-    o	t() now longer drops dimnames 'list(NULL,NULL)' or 'list(NULL)'.
-
     o	reg-test-1.R tested system(intern=TRUE) which depends on popen
 	and so is not supported on all platforms.
 
@@ -582,6 +580,8 @@ BUG FIXES
     o	[dpqr]gamma now return NaN for an invalid 'shape' parameter
 	(rather than throw an error), for consistency with other
 	distribution functions.
+
+    o	t() now longer drops dimnames 'list(NULL,NULL)' or 'list(NULL)'.
 
 
 
