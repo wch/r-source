@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-12-05
+@set FAQ_DATE @value{FAQ_YEAR}-12-07
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -3284,6 +3284,8 @@ best.
 Random number generator based on AES cipher.
 @item randomForest
 Breiman's random forest classifier.
+@item rankreg
+Rank regression estimator for the AFT model with right censored data.
 @c @item ratetables
 @c US national and state mortality data (requires @strong{survival4} and
 @c @strong{date}), for use with @strong{survival4}.
@@ -3880,6 +3882,10 @@ A client interface to SOAP (Simple Object Access Protocol) servers from
 within S.
 @item SWinRegistry
 Provides access from within R to read and write the Windows registry.
+@item SWinTypeLibs
+Provides ways to extract type information from type libraries and/or
+DCOM objects that describes the methods, properties, etc., of an
+interface.
 @item SXalan
 Process @XML{} documents using @XSL{} functions implemented in R and
 dynamically substituting output from R.
