@@ -2,13 +2,6 @@
 Windows version
 ===============
 
-src/gnuwin32/R.exp
-
-is distributed under the Lesser GNU Public Licence (file COPYING.LIB)
-and the import library src/gnuwin32/libR.a made from R.exp falls under the
-same licence.
-
-
 src/gnuwin32/e_pow.S
 
 is distributed under the Lesser GNU Public Licence (file COPYING.LIB),
@@ -52,16 +45,16 @@ Based on files which are
 	http://www.ede.com/free/u2nt
 
 
-src/gnuwin32/front-ends/SC_proxy.h, bdx.[ch], rp*.[ch]
+src/gnuwin32/front-ends/SC_*.h, bdx*.[ch], com_util.[ch], rp*.[ch]
 
-	Copyright (C) 1999-2001 Thomas Baier
+	Copyright (C) 1999-2005 Thomas Baier
 
 distributed under the LGPL.
 
 
 R_HOME/Tcl:
 
-Files compiled and installed from Tcl 8.4.5 and Tk 8.4.5.
+Files compiled and installed from Tcl 8.4.11 and Tk 8.4.11.
 see R_HOME/Tcl/license.terms for the license.
 
     This software is copyrighted by the Regents of the University of
