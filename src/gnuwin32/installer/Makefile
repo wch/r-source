@@ -17,7 +17,7 @@ GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories
 
-GW32_FILES = R.exp Rblas.def MkRules MakePkg MakeDll \
+GW32_FILES = MkRules MakePkg MakeDll \
 	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh man-install.sh
 
 # we don't want share/{Makefile.in,sh} installed
@@ -37,7 +37,7 @@ endif
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 	$(RM) $(RPREFIX)/library/*/MD5
-# morley.tab is needed for R-intro Appendix A, but is now installed
+# morley.tab was needed for R-intro Appendix A, but is now installed
 #	$(CP) -p $(R_HOME)/src/library/datasets/data/morley.tab $(RPREFIX)/library/datasets/data
 	$(RM) $(RPREFIX)/*/Makefile.in
 	$(MKDIR) -p $(RPREFIX)/etc
@@ -83,8 +83,6 @@ endif
 	  $(RPREFIX)/src/gnuwin32/help/MkChmDll
 	(cd ..; $(MAKE) --no-print-directory -C installer/$(RPREFIX)/src/gnuwin32/help clean)
 	$(CP) -pr $(R_HOME)/include $(RPREFIX)
-	$(MKDIR) -p $(RPREFIX)/lib
-	$(CP) -pr $(R_HOME)/lib/libRlapack.a $(RPREFIX)/lib
 	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library

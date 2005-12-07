@@ -80,7 +80,9 @@ Rmath.h: Rmath.h0
 ## <FIXME> USE_SVNVERSION does not work if there is no 'svnversion'
 FORCE:
 $(R_HOME)/SVN-REVISION: FORCE
-	@-cp -p $(R_HOME)/SVN-REVISION $(R_HOME)/SVN-REVISION.bak
+	@if test -f  $(R_HOME)/SVN-REVISION ; then \
+	  cp -p $(R_HOME)/SVN-REVISION $(R_HOME)/SVN-REVISION.bak ; \
+	fi
 ifdef USE_SVNVERSION
 	@svnversion ../.. | sed -n 's/^/Revision: /p' > svn-tmp || rm -f svn-tmp
 	@grep -v exported svn-tmp > /dev/null || rm -f svn-tmp

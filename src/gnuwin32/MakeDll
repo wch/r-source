@@ -1,5 +1,5 @@
 #-*- Makefile -*-
-all:  libR makeMakedeps $(DLLNAME).dll
+all:  makeMakedeps $(DLLNAME).dll
 
 .PHONY : all libR makeMakedeps
 
@@ -37,9 +37,9 @@ CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/include
 CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
 CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
 FFLAGS=-O2 $(DEBUGFLAG) $(PKG_FFLAGS)
-DLLLIBS=-L$(RHOME)/lib $(PKG_LIBS) $(EXTRA_LIBS) -lR
+DLLLIBS=-L$(RHOME)/bin $(PKG_LIBS) $(EXTRA_LIBS) -lR
 RESFLAGS=--include-dir $(RHOME)/include
-# Note: DLLLIBS has already set -L$(RHOME)/lib
+# Note: DLLLIBS has already set -L$(RHOME)/bin
 BLAS_LIBS=-lRblas
 ifeq ($(strip $(USE_ACML_LAPACK)),YES)
 LAPACK_LIBS=-L"$(ACML_PATH)" -lacml -lg2c

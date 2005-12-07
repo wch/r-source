@@ -1,12 +1,16 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
+## Unfortunately, linking lapack.dll directly against Rlapack.dll
+## produces hard-to-reproduce segfaults in reg-tests-1.R.
+## Until this is resolved, we use a local import library.
+
 MODULE=lapack
 all: 
 	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
 ifneq ($(strip $(USE_ACML)),YES)
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../bin/Rlapack.dll 
-	@$(MAKE) --no-print-directory -f Makefile.win ../../../lib/libRlapack.a
+	@$(MAKE) --no-print-directory -f Makefile.win libRlapack.a
 endif
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../modules/$(MODULE).dll
 
@@ -28,12 +32,12 @@ dlamc-FFLAGS=-ffloat-store
 	$(CP) $< $@
 
 ifeq ($(strip $(USE_ACML_LAPACK)),YES)
-lapack-DLLLIBS=-L../../../lib -lRblas -L"$(ACML_PATH)" -lacml -lg2c -lR
+lapack-DLLLIBS=-L../../../bin -lRblas -L"$(ACML_PATH)" -lacml -lg2c -lR
 else
-lapack-DLLLIBS=-L../../../lib -lRlapack -lRblas -lR
+lapack-DLLLIBS=-L. -lRlapack -L../../../bin -lRblas -lR
 endif
 
-Rlapack-DLLLIBS=-L../../../lib -lR -lRblas -lg2c
+Rlapack-DLLLIBS=-L../../../bin -lR -lRblas -lg2c
 
 $(MODULE).dll: $(OBJS)
 
@@ -57,10 +61,6 @@ libRlapack.a: Rlapack.def
 
 ../../../bin/Rlapack.dll: Rlapack.dll
 	@$(MKDIR) -p ../../../bin
-	@$(CP) $< $@
-
-../../../lib/libRlapack.a: libRlapack.a
-	@$(MKDIR) -p ../../../lib
 	@$(CP) $< $@
 
 Rlapackrc.o: ../../include/Rversion.h
