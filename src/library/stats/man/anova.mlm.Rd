@@ -3,7 +3,7 @@
 \alias{anova.mlmlist}
 \title{Comparisons between Multivariate Linear Models}
 \description{
-  Compute gereralized analysis of variance table for one or more 
+  Compute a (generalized) analysis of variance table for one or more 
   multivariate linear models. 
 }
 \usage{
@@ -14,16 +14,16 @@
       idata = data.frame(index = seq(length=p)))
 }
 \arguments{
-  \item{object}{An object of class \code{"mlm"}.}
-  \item{\dots}{Further objects of class \code{"mlm"}.}
-  \item{test}{Choice of test statistic (see below).}
-  \item{Sigma}{(Only relevant if  \code{test=="Spherical"}).  Covariance
+  \item{object}{an object of class \code{"mlm"}.}
+  \item{\dots}{further objects of class \code{"mlm"}.}
+  \item{test}{choice of test statistic (see below).}
+  \item{Sigma}{(only relevant if  \code{test=="Spherical"}).  Covariance
     matrix assumed proportional to \code{Sigma}.}
-  \item{T}{Transformation matrix.  By default computed from \code{M} and
+  \item{T}{transformation matrix.  By default computed from \code{M} and
     \code{X}.} 
-  \item{M}{Formula or matrix describing the outer projection (see below).}
-  \item{X}{Formula or matrix describing the inner projection (see below).}
-  \item{idata}{Data frame describing intra-block design.}
+  \item{M}{formula or matrix describing the outer projection (see below).}
+  \item{X}{formula or matrix describing the inner projection (see below).}
+  \item{idata}{data frame describing intra-block design.}
 }
 \details{
   The \code{anova.mlm} method uses either a multivariate test statistic for
@@ -44,7 +44,7 @@
   typically involves 
   transformation to intra-block differences, but more complicated
   within-block designs can be encountered,
-  making more elaborate transformations necessary. A
+  making more elaborate transformations necessary.  A
   transformation matrix \code{T} can be given directly or specified as
   the difference between two projections onto the spaces spanned by
   \code{M} and \code{X}, which in turn can be given as matrices or as
@@ -55,7 +55,7 @@
   the largest model considered as the (generalized) denominator.
 
   Contrary to other \code{anova} methods, the intercept is not excluded
-  from the display in the single-model case. When contrast
+  from the display in the single-model case.  When contrast
   transformations are involved, it often makes good sense to test for a
   zero intercept.
 }

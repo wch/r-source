@@ -2,28 +2,25 @@
 \alias{mauchly.test}
 \alias{mauchly.test.SSD}
 \alias{mauchly.test.mlm}
-\title{Mauchly's test of sphericity}
+\title{Mauchly's Test of Sphericity}
 \description{
   Tests whether a Wishart-distributed covariance matrix (or
-  transformation thereof) is
-  proportional to a given matrix.
+  transformation thereof) is proportional to a given matrix.
 }
 \usage{
-## S3 methods for class 'SSD' or 'mlm' 
 mauchly.test(object, Sigma = diag(nrow = p),
    T = Thin.row(proj(M) - proj(X)), M = diag(nrow = p), X = ~0,
    idata = data.frame(index = seq(length = p)), ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{object}{object of class \code{SSD} or \code{mlm}}
-  \item{Sigma}{Matrix to be proportional to}
-  \item{T}{Transformation matrix. By default computed from \code{M} and
-    \code{X}}
-  \item{M}{Formula or matrix describing the outer projection (see below)}
-  \item{X}{Formula or matrix describing the inner projection (see below)}
-  \item{idata}{Data frame describing intra-block design}
-  \item{...}{For consistency with generic}
+  \item{object}{object of class \code{SSD} or \code{mlm}.}
+  \item{Sigma}{matrix to be proportional to.}
+  \item{T}{transformation matrix. By default computed from \code{M} and
+    \code{X}.}
+  \item{M}{formula or matrix describing the outer projection (see below).}
+  \item{X}{formula or matrix describing the inner projection (see below).}
+  \item{idata}{data frame describing intra-block design.}
+  \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{
   Mauchly's test test for whether a covariance matrix can be assumed to
@@ -43,16 +40,23 @@ mauchly.test(object, Sigma = diag(nrow = p),
   The common use of this test is in repeated measurements designs, with
   \code{X=~1}. This is almost, but not quite the same as testing for
   compund symmetry in the untransformed covariance matrix.
+
+  This is a generic function with methods for classes \code{"mlm"} and
+  \code{"\link{SSD}"}.
 }
 \value{An object of class \code{"htest"}} %% perhaps elaborate?
 
-\references{TW Anderson (1958). An Introduction to Multivariate
-Statistical Analysis. Wiley}
+\references{
+  T. W. Anderson (1958).  \emph{An Introduction to Multivariate
+  Statistical Analysis.} Wiley.
+}
 
 \seealso{\code{\link{SSD}}, \code{\link{anova.mlm}}}
 
-\note{The p-value differs slightly from that of SAS because a second order term
-  is included in the asymptotic approximation.}
+\note{
+  The p-value differs slightly from that of SAS because a second order term
+  is included in the asymptotic approximation in \R.
+}
 
 %% Probably use example from Baron/Li
 \examples{
