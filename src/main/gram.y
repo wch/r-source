@@ -105,34 +105,34 @@ static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
     char     buf[16];
     void    *cd = NULL ;
     wchar_t  wcs[2];
-    wchar_t *inbuf = wcs;
+    char    *inbuf = (char *) wcs;
     size_t   inbytesleft = sizeof(wchar_t);
-    char    *outbuf = (char *)buf;
+    char    *outbuf = buf;
     size_t   outbytesleft = sizeof(buf);
     size_t   status;
+    
+    if(wc == L'\0') {
+	*s = '\0';
+        return 1;
+    }
     
     strcpy(tocode, "");
     memset(buf, 0, sizeof(buf));
     memset(wcs, 0, sizeof(wcs));
     wcs[0] = wc;
 
-    if(wc == L'\0') {
-	*s = '\0';
-        return 1;
-    }
-    
     if((void *)(-1) == (cd = Riconv_open("", (char *)UNICODE))) {
 #ifndef  Win32
         /* locale set fuzzy case */
     	strncpy(tocode, locale2charset(NULL), sizeof(tocode));
-	if((void *)(-1)==(cd = Riconv_open(tocode, (char *)UNICODE)))
+	if((void *)(-1) == (cd = Riconv_open(tocode, (char *)UNICODE)))
             return (size_t)(-1); 
 #else
         return (size_t)(-1);
 #endif
     }
     
-    status = Riconv(cd, (char **)&inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    status = Riconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
     Riconv_close(cd);
 
     if (status == (size_t) -1) {
