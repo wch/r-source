@@ -3299,9 +3299,11 @@ Normally keeping the source code is a good idea, and in particular it
 avoids comments being moved around in the source.  However, we can make
 use of the ability to re-create a function listing from its parse tree
 to produce a tidy version of the function, with consistent indentation,
-spaces around operators and consistent use of the preferred assignment
-operator @samp{<-}.  This tidied version is much easier to read, not
-least by other users who are used to the standard format.
+spaces around operators.  This tidied version is much easier to read,
+not least by other users who are used to the standard format.  Although
+the deparsing cannot do so, we recommend the consistent use of the
+preferred assignment operator @samp{<-}, rather than @samp{=} for
+assignment.
 
 We can subvert the keeping of source in two ways.
 
