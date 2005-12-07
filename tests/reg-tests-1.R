@@ -1116,7 +1116,6 @@ pm <- promax(ability.FA$loadings)
 tmp1 <- as.vector(ability.FA$loadings %*% pm$rotmat)
 tmp2 <- as.vector(pm$loadings)
 stopifnot(all.equal(tmp1, tmp2))
-rm(ability.cov)
 
 
 ## PR 1155. On some systems strptime was not setting the month or mday
