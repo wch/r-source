@@ -1,0 +1,285 @@
+# Translation of stats.pot to French
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the stats R package.
+# Philippe Grosjean <phgrosjean@sciviews.org>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stats 2.2.1\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"PO-Revision-Date: 2005-12-06 23:44+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"Language-Team: French <R-core@r-project.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: Srunmed.c:60
+msgid "bandwidth/span of running medians is larger than n"
+msgstr "largeur de fenêtre de médiane mobile supérieure à n"
+
+#: ansari.c:129
+msgid "probabilities outside [0,1] in qansari()"
+msgstr "probabilités en dehors de [0,1] dans qansari()"
+
+#: arima.c:71 arima.c:178 arima.c:354
+msgid "invalid argument type"
+msgstr "type d'argument incorrect"
+
+#: arima.c:413 arima.c:497 pacf.c:311 pacf.c:351
+msgid "can only transform 100 pars in arima0"
+msgstr "impossible de transformer plus de 100 pars dans arima0"
+
+#: distance.c:151
+msgid "dist(.,\"binary\"): treating non-finite values as NA"
+msgstr "dist(.,\"binary\") : valeurs infinies traitées comme NA"
+
+#: distance.c:220
+msgid "distance(): invalid p"
+msgstr "distance() : p incorrect"
+
+#: distance.c:223
+msgid "distance(): invalid distance"
+msgstr "distance() : distance incorrecte"
+
+#: family.c:20
+#, c-format
+msgid "Value %d out of range (0, 1)"
+msgstr "Valeur %d hors plage (0, 1)"
+
+#: family.c:40 family.c:53 family.c:70
+#, c-format
+msgid "Argument %s must be a nonempty numeric vector"
+msgstr "L'argument %s doit être un vecteur numérique non vide"
+
+#: family.c:99 family.c:102
+#, c-format
+msgid "argument %s must be a numeric vector of length 1 or length %d"
+msgstr "l'argument %s doit être un vecteur numérique de longueur 1 ou %d"
+
+#: ksmooth.c:66
+msgid "only 2500 rows are allowed for sm.method=\"spline\""
+msgstr "seulement 2500 lignes autorisées pour sm.method=\"spline\""
+
+#: loessc.c:226
+msgid "span is too small"
+msgstr "fenêtre trop étroite"
+
+#: mburg.c:197
+msgid "Invalid vmethod"
+msgstr "vmethod incorrecte"
+
+#: mburg.c:333
+msgid "Burg's algorithm failed to find partial correlation"
+msgstr "l'algorithme de Burg n'a pas trouvé la correlation partielle"
+
+#: nls.c:75
+msgid "control must be a list"
+msgstr "'control' doit être une liste"
+
+#: nls.c:77 port.c:513
+msgid "m must be a list"
+msgstr "'m' doit être une liste"
+
+#: nls.c:83
+msgid "control$maxiter absent"
+msgstr "control$maxiter absent"
+
+#: nls.c:88
+msgid "control$tol absent"
+msgstr "control$tol absent"
+
+#: nls.c:93
+msgid "control$minFactor absent"
+msgstr "control$minFactor absent"
+
+#: nls.c:102
+msgid "m$conv() absent"
+msgstr "m$conv() absent"
+
+#: nls.c:107
+msgid "m$incr() absent"
+msgstr "m$incr() absent"
+
+#: nls.c:112
+msgid "m$deviance() absent"
+msgstr "m$deviance() absent"
+
+#: nls.c:117
+msgid "m$trace() absent"
+msgstr "m$trace() absent"
+
+#: nls.c:122
+msgid "m$setPars() absent"
+msgstr "m$setPars() absent"
+
+#: nls.c:127
+msgid "m$getPars() absent"
+msgstr "m$getPars() absent"
+
+#: nls.c:154
+msgid "singular gradient"
+msgstr "gradient singulier"
+
+#: nls.c:173
+#, c-format
+msgid "step factor %g reduced below 'minFactor' of %g"
+msgstr "le pas %g est devenu inférieur à 'minFactor' de %g"
+
+#: nls.c:181
+#, c-format
+msgid "number of iterations exceeded maximum of %d"
+msgstr "le nombre d'itérations a dépassé le maximum de %d"
+
+#: nls.c:202
+msgid "theta should be of type character"
+msgstr "theta doit être de type caractère"
+
+#: nls.c:204 port.c:359
+msgid "use of NULL environment is deprecated"
+msgstr ""
+
+#: nls.c:208
+msgid "rho should be an environment"
+msgstr "rho doit être un environnement"
+
+#: nls.c:224 nls.c:252
+msgid "Missing value or an infinity produced when evaluating the model"
+msgstr "Valeur manquante ou infinie obtenue au cours du calcul du modèle"
+
+#: nls.c:230
+#, c-format
+msgid "variable '%s' is integer, not numeric"
+msgstr ""
+"la variable '%s' est une valeur entière, non un nombre à virgule flottante"
+
+#: nls.c:232
+#, c-format
+msgid "variable '%s' is not numeric"
+msgstr "la variable '%s' n'est pas numérique"
+
+#: pacf.c:81
+msgid "bad Starma struct"
+msgstr "Starma struct incorrecte"
+
+#: pacf.c:227
+#, c-format
+msgid "starma error code %d"
+msgstr "code d'erreur starma %d"
+
+#: pacf.c:290
+#, c-format
+msgid "forkal error code %d"
+msgstr "code d'erreur forkal %d"
+
+#: pacf.c:454
+msgid "invalid value of lag.max"
+msgstr "valeur incorrecte de 'lag.max'"
+
+#: port.c:111
+#, c-format
+msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
+msgstr "Rf_divset : alg = %d doit être 1, 2, 3, ou 4"
+
+#: port.c:304
+#, c-format
+msgid "gradient function must return a numeric vector of length %d"
+msgstr ""
+"la fonction de gradient doit renvoyer un vecteur numérique de longueur %d"
+
+#: port.c:313
+#, c-format
+msgid "Hessian function must return a square numeric matrix of order %d"
+msgstr ""
+"la function Hessian doit renvoyer une matrice carrée numérique d'ordre %d"
+
+#: port.c:363
+#, fuzzy
+msgid "'rho' must be an environment"
+msgstr "`rho' doit être un environnement"
+
+#: port.c:365 port.c:512
+#, fuzzy
+msgid "'d' must be a nonempty numeric vector"
+msgstr "`d' doit être un vecteur numérique non vide"
+
+#: port.c:367
+msgid "When Hessian defined must also have gradient defined"
+msgstr "Qaund Hessian est défini, un gradient doit l'être aussi"
+
+#: port.c:370
+#, fuzzy, c-format
+msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
+msgstr ""
+"l'environnement `rho' doit contenir un vecteur numérique `.par' de longueur %"
+"d"
+
+#: port.c:380
+#, fuzzy
+msgid "'lowerb' and 'upperb' must be numeric vectors"
+msgstr "'lowerb' et 'upperb' doivent tous deux être des vecteurs numériques"
+
+#: port.c:426
+msgid "getElement applies only to named lists"
+msgstr "'getElement' n'est applicable que pour des listes nommées"
+
+#: port.c:447
+#, c-format
+msgid "%s$%s() not found"
+msgstr "%s$%s() introuvable"
+
+#: port.c:460
+#, c-format
+msgid "gradient must be a numeric matrix of dimension (%d,%d)"
+msgstr "le gradient doit être une matrice numérique de dimension (%d, %d)"
+
+#: port.c:481
+#, c-format
+msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
+msgstr ""
+"'fcn' a produit un mode %d de longueur %d - il fallait un mode %d de "
+"longueur %d"
+
+#: port.c:494
+msgid "invalid type for eval_check_store"
+msgstr "type incorrect pour 'eval_check_store'"
+
+#: port.c:532
+msgid "lowerb and upperb must be numeric vectors"
+msgstr "'lowerb' et 'upperb' doivent tous deux être des vecteurs numériques"
+
+#: qr.c:30
+msgid "assert failed in src/library/ts/src/carray.c"
+msgstr "échec d'assertion dans src/library/ts/src/carray.c"
+
+#: qr.c:68
+msgid "Singular matrix in qr_solve"
+msgstr "Matrice singulière dans qr_solve"
+
+#: qr.c:111
+msgid "Singular matrix in ldet"
+msgstr "Matrice singulière dans ldet"
+
+#: smooth.c:79
+#, c-format
+msgid "invalid end-rule for running median of 3: %d"
+msgstr "règle finale incorrecte pour une médiane mobile de 3 : %d"
+
+#: smooth.c:231
+msgid "allocation error in smooth(*, '3RSR')."
+msgstr "erreur d'allocation dans smooth(*, '3RSR')."
+
+#: smooth.c:242 smooth.c:252
+msgid "allocation error in smooth(*, '3RSS')."
+msgstr "erreur d'allocation dans smooth(*, '3RSS')."
+
+#: smooth.c:262
+msgid "allocation error in smooth(*, '3R')."
+msgstr "erreur d'allocation dans smooth(*, '3R')."
+
+#: starma.c:366
+#, c-format
+msgid "missing value in last %d observations"
+msgstr "valeur manquante dans les %d dernières observations"

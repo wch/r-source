@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.1.0\n"
+"Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-12-06 08:54+0000\n"
-"PO-Revision-Date: 2005-06-10 09:59+0100\n"
+"PO-Revision-Date: 2005-12-06 12:47+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -237,9 +237,8 @@ msgid "Unable to write to the clipboard"
 msgstr "Impossible d'écrire dans le presse-papier"
 
 #: src/gnuwin32/extra.c:1010 src/gnuwin32/extra.c:1030
-#, fuzzy
 msgid "'path' must be a character vector"
-msgstr "'what' doit être un vecteur de chaîne de caractères"
+msgstr "'path' doit être un vecteur de chaîne de caractères"
 
 #: src/gnuwin32/extra.c:1056 src/gnuwin32/extra.c:1135
 msgid "'default' must be a character string"
@@ -393,7 +392,7 @@ msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "AVIS : max-mem-size = %4.1fM trop petite et ignorée\n"
 
 #: src/gnuwin32/system.c:918
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr "AVIS : max-mem-size = %4.1fM trop petite et ignorée\n"
 
@@ -686,19 +685,19 @@ msgstr "utilisation de dyn.load impossible dans cette version de R"
 
 #: src/main/Rstrptime.h:1090
 msgid "input string is too long"
-msgstr ""
+msgstr "chaîne de caractères en entrée trop longue"
 
 #: src/main/Rstrptime.h:1092
 msgid "invalid multibyte input string"
-msgstr ""
+msgstr "chaîne de caractères multioctets incorrecte en entrée"
 
 #: src/main/Rstrptime.h:1095
 msgid "format string is too long"
-msgstr ""
+msgstr "chaîne de caractères de formattage trop longue"
 
 #: src/main/Rstrptime.h:1097
 msgid "invalid multibyte format string"
-msgstr ""
+msgstr "chaîne de caractères multioctets incorrecte"
 
 #: src/main/apply.c:39 src/main/envir.c:2406
 msgid "arguments must be symbolic"
@@ -1456,7 +1455,7 @@ msgstr "l'argument doit avoir une longueur d'au moins 1"
 
 #: src/main/coerce.c:1348
 msgid "invalid body for function"
-msgstr ""
+msgstr "corps de fonction incorrect"
 
 #: src/main/coerce.c:1367
 msgid "invalid length 0 argument"
@@ -1668,9 +1667,9 @@ msgid "write not enabled for this connection"
 msgstr "écriture interdite vers cette connexion"
 
 #: src/main/connections.c:418
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s', reason '%s'"
-msgstr "impossible d'ouvrir le fichier '%s'"
+msgstr "impossible d'ouvrir le fichier '%s', à cause de '%s'"
 
 #: src/main/connections.c:420 src/main/dounzip.c:101
 #, c-format
@@ -1704,9 +1703,9 @@ msgid "allocation of file connection failed"
 msgstr "l'affectation d'une connexion sur fichier a échoué"
 
 #: src/main/connections.c:685
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create fifo '%s', reason '%s'"
-msgstr "impossible de créer le fifo '%s'"
+msgstr "impossible de créer le fifo '%s', à cause de '%s'"
 
 #: src/main/connections.c:688
 #, c-format
@@ -1751,9 +1750,9 @@ msgid "fifo connections are not available on this system"
 msgstr "les connexions fifo ne sont pas disponibles sur ce système"
 
 #: src/main/connections.c:865
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open pipe() cmd '%s', reason '%s'"
-msgstr "impossible d'ouvrir la commande pipe() '%s'"
+msgstr "impossible d'ouvrir la commande pipe() '%s', à cause de '%s'"
 
 #: src/main/connections.c:868
 #, c-format
@@ -2331,14 +2330,14 @@ msgid "too many arguments in foreign function call"
 msgstr "trop d'arguments dans l'appel de fonction externe"
 
 #: src/main/dotcode.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "%s entry point \"%s%s\" not in DLL for package \"%s\""
-msgstr "nom de fonction \"%s\" absent de la DLL pour le paquetage '%s'"
+msgstr "point d'entrée %s \"%s%s\" absent de la DLL pour le package \"%s\""
 
 #: src/main/dotcode.c:190
-#, fuzzy, c-format
+#, c-format
 msgid "%s entry point \"%s%s\" not in load table"
-msgstr "nom de fonction \"%s\" absent de la table d'allocation"
+msgstr "point d'entrée %s \"%s%s\" absent de la table de chargement"
 
 #: src/main/dotcode.c:258
 #, c-format
@@ -2678,7 +2677,6 @@ msgid "invalid cached value in R_GetGlobalCache"
 msgstr "valeur cachée en mémoire incorrecte dans R_GetGlobalCache"
 
 #: src/main/envir.c:725
-#, fuzzy
 msgid "cannot unbind in the base namespace"
 msgstr "impossible de délier dans l'environnement de base"
 
@@ -2691,9 +2689,8 @@ msgid "cannot remove bindings from a locked environment"
 msgstr "impossible d'éliminer les liens d'un environnement verrouillé"
 
 #: src/main/envir.c:772
-#, fuzzy
 msgid "cannot get binding from base environment"
-msgstr "impossible d'obtenir le lien d'un environnement NULL"
+msgstr "impossible d'obtenir le lien depuis l'environnement de base"
 
 #: src/main/envir.c:774
 msgid "cannot get binding from base namespace"
@@ -3053,7 +3050,7 @@ msgid "not in a try context"
 msgstr "vous n'êtes pas dans un contexte 'try'"
 
 #: src/main/eval.c:213
-#, fuzzy, c-format
+#, c-format
 msgid "Rprof: cannot open profile file '%s'"
 msgstr "Rprof : impossible d'ouvrir le fichier '%s'"
 
@@ -3158,10 +3155,10 @@ msgstr ""
 "base"
 
 #: src/main/eval.c:1217
-#, fuzzy
 msgid "cannot do complex assignments in base environment"
 msgstr ""
-"impossible d'effectuer des assignations complexes dans l'environnement NULL"
+"impossible d'effectuer des assignations complexes dans l'environnement de "
+"base"
 
 #: src/main/eval.c:1230 src/main/eval.c:1248
 msgid "invalid function in complex assignment"
@@ -3641,9 +3638,8 @@ msgid "invalid 'y' type in 'x %s y'"
 msgstr "type 'y' incorrect dans 'x %s y'"
 
 #: src/main/logic.c:295
-#, fuzzy
 msgid "Unary operator `!' called with two arguments"
-msgstr "les opérations binaires nécessitent deux arguments"
+msgstr "L'opération unaire `!' est appelée avec deux arguments"
 
 #: src/main/main.c:50
 msgid "dummy - do not translate"
@@ -3721,16 +3717,13 @@ msgid "top-level task callback did not return a logical value"
 msgstr "la tâche de niveau le plus haut n'a pas renvoyé une valeur logique"
 
 #: src/main/mapply.c:61
-#, fuzzy
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
-msgstr "argument 'editor' non fixé"
+msgstr "l'argument 'MoreArgs' de 'mapply' n'est pas une liste"
 
 #: src/main/mapply.c:99
-#, fuzzy
 msgid "longer argument not a multiple of length of shorter"
 msgstr ""
-"la longueur de l'objet le plus long\n"
-"\tn'est pas un multiple de la longueur de l'objet le plus court"
+"l'argument le plus long n'est pas d'une longueur multiple du plus court"
 
 #: src/main/match.c:112
 msgid "invalid partial string match"
@@ -3875,7 +3868,7 @@ msgstr "l'argument 'data' est d'un mauvais type"
 
 #: src/main/model.c:1021
 msgid "'.' in formula and no 'data' argument"
-msgstr ""
+msgstr "'.' dans la formule et pas d'argument 'data'"
 
 #: src/main/model.c:1166
 msgid "invalid formula in 'update'"
@@ -4298,7 +4291,7 @@ msgstr "valeur de fonction incorrecte dnas l'optimisateur 'nlm'"
 #: src/main/optimize.c:390 src/main/optimize.c:405
 msgid "function value caching for optimization is seriously confused"
 msgstr ""
-"le chache de valeur de fonction pour l'optimisation est sérieusement perturbé"
+"le cache de valeur de fonction pour l'optimisation est sérieusement perturbé"
 
 #: src/main/optimize.c:420
 msgid "numeric parameter expected"
@@ -4422,24 +4415,23 @@ msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "le gradient fourni est de mauvaise longueur ou mode, et est ignoré"
 
 #: src/main/par.c:169
-#, fuzzy, c-format
+#, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
 msgstr "valeur spécifiée pour le paramètre graphique \"%s\" incorrect"
 
 #: src/main/par.c:176
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
-msgstr "le paramètre \"%s\" est de la mauvaise longueur"
+msgstr "le paramètre graphique \"%s\" est de la mauvaise longueur"
 
 #: src/main/par.c:279 src/main/par.c:717
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" cannot be set"
-msgstr "le paramètre \"%s\" ne peut être changé"
+msgstr "le paramètre graphique \"%s\" ne peut être changé"
 
 #: src/main/par.c:343 src/main/par.c:739
-#, fuzzy
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr "le paramètre \"%s\" est de la mauvaise longueur"
+msgstr "le paramètre graphique 'family' a une longueur maximale de 200 octets"
 
 #: src/main/par.c:472
 msgid "parameter \"mfg\" has the wrong length"
@@ -4521,9 +4513,8 @@ msgid "Impossible mode ( x )"
 msgstr "Mode impossible ( x )"
 
 #: src/main/paste.c:388
-#, fuzzy
 msgid "atomic vector arguments only"
-msgstr "arguments vectoriels seulement"
+msgstr "arguments vectoriels atomiques uniquement"
 
 #: src/main/platform.c:226
 msgid "invalid filename specification"
@@ -4632,7 +4623,7 @@ msgstr "la requête de reporting de l'OS ne peut être honorée"
 
 #: src/main/platform.c:1229
 msgid "invalid value of 'what' argument"
-msgstr "valeur de 'what' incorrecte"
+msgstr "valeur de l'argument 'what' incorrecte"
 
 #: src/main/platform.c:1374
 msgid "'hostname' must be a character vector of length 1"
@@ -4737,7 +4728,7 @@ msgstr "nombre d'axes %d incorrect"
 
 #: src/main/plot.c:1079
 msgid "'hadj' must be of length one"
-msgstr ""
+msgstr "'hadj' doit être de longueur unitaire"
 
 #: src/main/plot.c:1086 src/main/plot.c:2422
 msgid "zero length 'padj' specified"
@@ -4745,7 +4736,7 @@ msgstr "'padj' de longueur nulle spécifié"
 
 #: src/main/plot.c:1147
 msgid "'label' is supplied and not 'at'"
-msgstr ""
+msgstr "'label' est fournit, mais pas 'at'"
 
 #: src/main/plot.c:1151
 #, c-format
@@ -5830,36 +5821,44 @@ msgid "syntax error on line %d"
 msgstr "erreur de syntaxe à la ligne %d"
 
 #: src/main/source.c:92
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "syntax error at\n"
 "%d: %s"
-msgstr "erreur de syntaxe"
+msgstr ""
+"erreur de syntaxe à\n"
+"%d: %s"
 
 #: src/main/source.c:94
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "syntax error at\n"
 "%d: %s\n"
 "%d: %s"
-msgstr "erreur de syntaxe à la ligne %d"
+msgstr ""
+"erreur de syntaxe à la ligne\n"
+"%d: %s\n"
+"%d: %s"
 
 #: src/main/source.c:100
 msgid "syntax error"
 msgstr "erreur de syntaxe"
 
 #: src/main/source.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "syntax error in \"%s\""
-msgstr "erreur de syntaxe à la ligne %d"
+msgstr "erreur de syntaxe dans \"%s\""
 
 #: src/main/source.c:103
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "syntax error in:\n"
 "\"%s\n"
 "%s\""
-msgstr "erreur de syntaxe à la ligne %d"
+msgstr ""
+"erreur de syntaxe dans :\n"
+"\"%s\n"
+"%s\""
 
 #: src/main/split.c:37
 msgid "first argument must be a vector"
@@ -5911,10 +5910,12 @@ msgstr "référence à un argument %d inexistant"
 #: src/main/sprintf.c:143
 msgid "at most one asterisk `*' is supported in each conversion specification"
 msgstr ""
+"un maximu d'une astérisque `*' est supportée dans chaque spécification de "
+"conversion"
 
 #: src/main/sprintf.c:150
 msgid "argument for `*' conversion specification must be a number"
-msgstr ""
+msgstr "l'argument pour la spécification de conversion `*' doit être un nombre"
 
 #: src/main/sprintf.c:204
 msgid "coercion has changed vector length to 0"
@@ -6131,7 +6132,6 @@ msgid "matrix subscripting not handled for this type"
 msgstr "indiçage matriciel non géré pour ce type"
 
 #: src/main/subset.c:428
-#, fuzzy
 msgid "array subscripting not handled for this type"
 msgstr "indiçage matriciel non géré pour ce type"
 
@@ -7133,16 +7133,6 @@ msgstr "impossible de charger le module X11"
 msgid "X11 is not available"
 msgstr "X11 indisponible"
 
-#~ msgid "cannot allocate memory for InternetRoutines structure"
-#~ msgstr "affectation mémoire impossible pour la structure InternetRoutines"
-
-#, fuzzy
-#~ msgid "unknown graphical parameter \"%s\""
-#~ msgstr "liste de paramètres graphiques incorrecte"
-
-#~ msgid "'lwd' must be numeric of length >=1"
-#~ msgstr "'lwd' doit être une valeur numérique >=1"
-
 #~ msgid "%s\\doc\\html\\rwin.htm[l] not found"
 #~ msgstr "%s\\doc\\html\\rwin.htm[l] introuvable"
 
@@ -7158,417 +7148,8 @@ msgstr "X11 indisponible"
 #~ msgid "type not yet implemented"
 #~ msgstr "type non encore implémenté"
 
-#~ msgid "cannot unbind in the NULL environment"
-#~ msgstr "impossible de délier dans l'environnement NULL"
-
-#~ msgid "syntax error: evaluating expression %d"
-#~ msgstr "erreur de syntaxe : évaluation de l'expression %d"
-
-#~ msgid "parse error"
-#~ msgstr "erreur d'analyse de code (parsing)"
-
-#~ msgid "invalid 'inherits' argument"
-#~ msgstr "argument 'inherits' incorrect"
-
-#~ msgid "Warning message:\n"
-#~ msgid_plural "Warning messages:\n"
-#~ msgstr[0] "Message d'avis :\n"
-#~ msgstr[1] "Messages d'avis :\n"
-
-#~ msgid "%d argument passed to '%s' which requires %d"
-#~ msgid_plural "%d arguments passed to '%s' which requires %d"
-#~ msgstr[0] "%d argument passé à '%s' qui en requiert %d"
-#~ msgstr[1] "%d arguments passés à '%s' qui en requiert %d"
-
-#~ msgid "class name too long in %s"
-#~ msgstr "nom de classe trop long dans %s"
-
-#~ msgid "call name too long in %s"
-#~ msgstr "nom d'appel trop long dans %s"
-
-#~ msgid "invalid 'xlim'"
-#~ msgstr "'xlim' incorrect"
-
-#~ msgid "invalid 'ylim'"
-#~ msgstr "'ylim' incorrect"
-
-#~ msgid "first argument invalid"
-#~ msgstr "premier argument incorrect"
-
-#~ msgid "second argument invalid"
-#~ msgstr "second argument incorrect"
-
-#~ msgid "third argument invalid"
-#~ msgstr "troisième argument incorrect"
-
-#~ msgid "fourth argument invalid"
-#~ msgstr "quatrième argument incorrect"
-
-#~ msgid "invalid value for 'tolerance'"
-#~ msgstr "valeur de 'tolerance' incorrect"
-
-#~ msgid "invalid value for 'plot'"
-#~ msgstr "valeur de 'plot' incorrect"
-
-#~ msgid "invalid value for 'atpen'"
-#~ msgstr "valeur de 'atpen' incorrecte"
-
-#~ msgid "invalid value for 'method'"
-#~ msgstr "valeur incorrecte pour 'method'"
-
-#~ msgid "invalid value for 'nr'"
-#~ msgstr "valeur incorrecte pour 'nr'"
-
-#~ msgid "invalid value for 'nc'"
-#~ msgstr "valeur incorrecte pour 'nc'"
-
-#~ msgid "invalid value for 'rnames'"
-#~ msgstr "valeur incorrecte pour 'rnames'"
-
-#~ msgid "invalid value for 'sep'"
-#~ msgstr "valeur incorrecte pour 'sep'"
-
-#~ msgid "invalid value for 'eol'"
-#~ msgstr "valeur incorrecte pour 'eol'"
-
-#~ msgid "invalid value for 'na'"
-#~ msgstr "valeur incorrecte pour 'na'"
-
-#~ msgid "invalid value for 'dec'"
-#~ msgstr "valeur incorrecte pour 'dec'"
-
-#~ msgid "invalid value for 'qmethod'"
-#~ msgstr "valeur incorrecte pour 'qmethod'"
-
-#~ msgid "'na.last' is invalid"
-#~ msgstr "'na.last' est incorrect"
-
-#~ msgid "invalid 'tempdir'"
-#~ msgstr "'tempdir' incorrect"
-
-#~ msgid "invalid value for 'w'"
-#~ msgstr "valeur incorrecte pour 'w'"
-
-#~ msgid "invalid value for 'quote'"
-#~ msgstr "valeur incorrecte pour 'quote'"
-
-#~ msgid "invalid value for 'justify'"
-#~ msgstr "valeur incorrecte pour 'justify'"
-
-#~ msgid "invalid gamma value"
-#~ msgstr "valeur de gamma incorrecte"
-
-#~ msgid "invalid value of 'bg'"
-#~ msgstr "valeur de 'bg' incorrecte"
-
-#~ msgid "invalid value of 'canvas'"
-#~ msgstr "valeur de 'canvas' incorrecte"
-
-#~ msgid "invalid value of 'fonts'"
-#~ msgstr "valeur de 'fonts' incorrecte"
-
-#~ msgid "invalid 'x' argument"
-#~ msgstr "argument 'x' incorrect"
-
-#~ msgid "invalid 'recursive' argument"
-#~ msgstr "argument 'recursive' incorrect"
-
-#~ msgid "invalid 'topic' argument"
-#~ msgstr "argument 'topic' incorrect"
-
-#~ msgid "invalid 'hlpfile' argument"
-#~ msgstr "argument 'hlpfile' incorrect"
-
-#~ msgid "invalid 'file' argument"
-#~ msgstr "argument 'file' incorrect"
-
-#~ msgid "invalid 'message' argument"
-#~ msgstr "argument 'message' incorrect"
-
-#~ msgid "invalid 'default' argument"
-#~ msgstr "argument 'default' incorrect"
-
-#~ msgid "invalid 'menuname' argument"
-#~ msgstr "argument 'menuname' incorrect"
-
-#~ msgid "invalid 'itemname' argument"
-#~ msgstr "argument 'itemname' incorrect"
-
-#~ msgid "invalid 'time' value"
-#~ msgstr "valeur 'time' incorrect"
-
-#~ msgid "invalid 'path' argument"
-#~ msgstr "argument 'path' incorrect"
-
-#~ msgid "invalid 'list' argument"
-#~ msgstr "argument 'list' incorrect"
-
-#~ msgid "invalid 'preselect' argument"
-#~ msgstr "argument 'preselect' incorrect"
-
-#~ msgid "invalid add argument"
-#~ msgstr "argument additionel incorrect"
-
-#~ msgid "invalid 'tz' value"
-#~ msgstr "valeur 'tz' incorrecte"
-
-#~ msgid "invalid 'naok' value"
-#~ msgstr "valeur 'naok' incorrecte"
-
-#~ msgid "bad 'names' argument"
-#~ msgstr "argument 'names' incorrect"
-
-#~ msgid "invalid 'string' value"
-#~ msgstr "valeur 'string' incorrecte"
-
-#~ msgid "invalid 'domain' value"
-#~ msgstr "valeur 'domain' incorrecte"
-
-#~ msgid "invalid 'dirname' value"
-#~ msgstr "valeur 'dirname' incorrecte"
-
-#~ msgid "invalid 'filename' argument"
-#~ msgstr "argument 'filename' incorrect"
-
-#~ msgid "invalid 'xmin' value"
-#~ msgstr "valeur 'xmin' incorrecte"
-
-#~ msgid "invalid 'xmax' value"
-#~ msgstr "valeur 'xmax' incorrecte"
-
-#~ msgid "invalid 'tol' value"
-#~ msgstr "valeur 'tol' incorrecte"
-
-#~ msgid "invalid 'mode' value"
-#~ msgstr "valeur 'mode' incorrecte"
-
-#~ msgid "invalid 'vfont' value"
-#~ msgstr "valeur 'vfont' incorrecte"
-
-#~ msgid "invalid 'adj' value"
-#~ msgstr "valeur 'adj' incorrecte"
-
-#~ msgid "invalid 'cex' value"
-#~ msgstr "valeur 'cex' incorrecte"
-
-#~ msgid "invalid 'expand' value"
-#~ msgstr "valeur 'expand' incorrecte"
-
-#~ msgid "invalid 'nticks' value"
-#~ msgstr "valeur 'nticks' incorrecte"
-
-#~ msgid "invalid 'ticktype' value"
-#~ msgstr "valeur 'ticktype' incorrecte"
-
-#~ msgid "invalid envir argument"
-#~ msgstr "argument 'envir' incorrect"
-
-#~ msgid "invalid 'strip.white' value"
-#~ msgstr "valeur 'strip.white' incorrecte"
-
-#~ msgid "invalid 'na.strings' value"
-#~ msgstr "valeur 'na.strings' incorrecte"
-
-#~ msgid "invalid 'comment.char' value"
-#~ msgstr "valeur 'comment.char' incorrecte"
-
-#~ msgid "invalid 'sep' value"
-#~ msgstr "valeur 'sep' incorrecte"
-
-#~ msgid "invalid 'allowEscapes' value"
-#~ msgstr "valeur 'allowEscapes' incorrecte"
-
-#~ msgid "invalid 'nlines' value"
-#~ msgstr "valeur 'nlines' incorrecte"
-
-#~ msgid "invalid 'url' argument"
-#~ msgstr "argument 'url' incorrect"
-
-#~ msgid "invalid 'destfile' argument"
-#~ msgstr "argument 'destfile' incorrect"
-
-#~ msgid "invalid 'quiet' argument"
-#~ msgstr "argument 'quiet' incorrect"
-
-#~ msgid "invalid 'mode' argument"
-#~ msgstr "argument 'mode' incorrect"
-
-#~ msgid "invalid 'cacheOK' argument"
-#~ msgstr "argument 'cacheOK' incorrect"
-
-#~ msgid "invalid 'fill' argument"
-#~ msgstr "argument 'fill' incorrect"
-
-#~ msgid "invalid 'label' argument"
-#~ msgstr "argument 'label' incorrect"
-
-#~ msgid "invalid 'append' specification"
-#~ msgstr "spécification de 'append' incorrecte"
-
-#~ msgid "invalid 'type' arg"
-#~ msgstr "argument 'type' incorrect"
-
-#~ msgid "invalid 'width' argument"
-#~ msgstr "argument 'width' incorrect"
-
-#~ msgid "invalid 'description' argument"
-#~ msgstr "argument 'description' incorrect"
-
-#~ msgid "invalid 'open' argument"
-#~ msgstr "argument 'open' incorrect"
-
-#~ msgid "invalid 'block' argument"
-#~ msgstr "argument 'block' incorrect"
-
-#~ msgid "invalid 'encoding' argument"
-#~ msgstr "argument 'encoding' incorrect"
-
-#~ msgid "invalid 'compress' argument"
-#~ msgstr "argument 'compress' incorrect"
-
-#~ msgid "invalid 'text' argument"
-#~ msgstr "argument 'text' incorrect"
-
-#~ msgid "invalid 'environment' argument"
-#~ msgstr "argument 'environment' incorrect"
-
-#~ msgid "invalid 'host' argument"
-#~ msgstr "argument 'host' incorrect"
-
-#~ msgid "invalid 'port' argument"
-#~ msgstr "argument 'port' incorrect"
-
-#~ msgid "invalid 'server' argument"
-#~ msgstr "argument 'server' incorrect"
-
-#~ msgid "invalid 'blocking' argument"
-#~ msgstr "argument 'blocking' incorrect"
-
-#~ msgid "invalid 'sep' argument"
-#~ msgstr "argument 'sep' incorrect"
-
-#~ msgid "invalid 'data' argument"
-#~ msgstr "argument 'data' incorrect"
-
-#~ msgid "invalid 'newLine' argument"
-#~ msgstr "argument 'newline' incorrect"
-
-#~ msgid "invalid 'format' argument"
-#~ msgstr "argument 'format' incorrect"
-
-#~ msgid "invalid 'usetz' argument"
-#~ msgstr "argument 'usetz' incorrect"
-
-#~ msgid "invalid 'topics' argument"
-#~ msgstr "argument 'topics' incorrect"
-
-#~ msgid "invalid 'destination' argument"
-#~ msgstr "argument 'destination' incorrect"
-
-#~ msgid "invalid 'envir' argument"
-#~ msgstr "argument 'envir' incorrect"
-
-#~ msgid "invalid 'ifnotfound' argument"
-#~ msgstr "argument 'ifnotfound' incorrect"
-
-#~ msgid "invalid 'pos' argument"
-#~ msgstr "argument 'pos' incorrect"
-
-#~ msgid "invalid 'terms' argument"
-#~ msgstr "argument 'terms' incorrect"
-
-#~ msgid "invalid 'method' argument"
-#~ msgstr "argument 'method' incorrect"
-
-#~ msgid "invalid 'collapse' argument"
-#~ msgstr "argument 'collapse' incorrect"
-
-#~ msgid "invalid 'nsmall' argument"
-#~ msgstr "argument 'nsmall' incorrect"
-
-#~ msgid "invalid 'trim' argument"
-#~ msgstr "argument 'trim' incorrect"
-
-#~ msgid "incorrect number of arguments"
-#~ msgstr "nombre d'arguments incorrect"
-
-#~ msgid "invalid 'pager' specification"
-#~ msgstr "choix de 'pager' incorrect"
-
-#~ msgid "invalid 'editor' specification"
-#~ msgstr "choix de 'editor' incorrect"
-
-#~ msgid "invalid 'directory' argument"
-#~ msgstr "argument 'directory' incorrect"
-
-#~ msgid "invalid 'pattern' argument"
-#~ msgstr "argument 'pattern' incorrect"
-
-#~ msgid "invalid 'indexname' argument"
-#~ msgstr "argument 'indexname' incorrect"
-
-#~ msgid "invalid 'type' argument"
-#~ msgstr "argument 'type' incorrect"
-
-#~ msgid "invalid 'names' argument"
-#~ msgstr "argument 'names' incorrect"
-
-#~ msgid "invalid 'category' argument"
-#~ msgstr "argument 'category' incorrect"
-
-#~ msgid "invalid 'locale' argument"
-#~ msgstr "argument 'locale' incorrect"
-
-#~ msgid "invalid 'y' argument"
-#~ msgstr "argument 'y' incorrect"
-
-#~ msgid "invalid 'z' argument"
-#~ msgstr "argument 'z' incorrect"
-
-#~ msgid "invalid 'xlim' argument"
-#~ msgstr "argument 'xlim' incorrect"
-
-#~ msgid "invalid 'ylim' argument"
-#~ msgstr "argument 'ylim' incorrect"
-
-#~ msgid "invalid 'zlim' argument"
-#~ msgstr "argument 'zlim' incorrect"
-
-#~ msgid "invalid 'col' specification"
-#~ msgstr "choix de 'col' incorrect"
-
-#~ msgid "invalid 'border' specification"
-#~ msgstr "choix de 'border' incorrect"
-
-#~ msgid "invalid 'digits' argument"
-#~ msgstr "argument 'digits' incorrect"
-
-#~ msgid "invalid 'quote' argument"
-#~ msgstr "argument 'quote' incorrect"
-
-#~ msgid "invalid 'right' argument"
-#~ msgstr "argument 'right' incorrect"
-
-#~ msgid "invalid 'from' argument"
-#~ msgstr "argument 'from' incorrect"
-
-#~ msgid "invalid 'to' argument"
-#~ msgstr "argument 'to' incorrect"
-
-#~ msgid "invalid 'duplicates.ok' argument"
-#~ msgstr "argument 'duplicates.ok' incorrect"
-
-#~ msgid "invalid 'xinds' argument"
-#~ msgstr "argument 'xinds' incorrect"
-
-#~ msgid "invalid 'yinds' argument"
-#~ msgstr "argument 'yinds' incorrect"
-
-#~ msgid "Hershey fonts not yet implemented for mtext()"
-#~ msgstr "fontes Hershey non encore implémentées pour mtext()"
-
-#~ msgid "cannot resolve native routine"
-#~ msgstr "impossible de résoudre la procédure native"
-
-#~ msgid "allocation failure in strwidth"
-#~ msgstr "échec d'affectation mémoire dans strwidth"
+#~ msgid "'lwd' must be numeric of length >=1"
+#~ msgstr "'lwd' doit être une valeur numérique >=1"
+
+#~ msgid "cannot allocate memory for InternetRoutines structure"
+#~ msgstr "affectation mémoire impossible pour la structure InternetRoutines"
