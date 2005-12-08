@@ -6310,7 +6310,7 @@ msgstr ""
 #: src/main/version.c:46
 msgid ""
 "Type 'demo()' for some demos, 'help()' for on-line help, or\n"
-"'help.start()' for a HTML browser interface to help.\n"
+"'help.start()' for an HTML browser interface to help.\n"
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""
