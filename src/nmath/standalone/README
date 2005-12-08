@@ -11,6 +11,10 @@ just one of them.
 Under Windows, use make -f Makefile.win.  This makes Rmath.dll with
 import library libRmath.a, and static library Rmath.a.
 
+NB: certain compilers are unable to do compile-time IEEE-754
+arithmetic and so cannot compile mlutils.c.  The known example is
+Sun's cc.  Use gcc for mlutils.c (or the whole library).
+
 
 To use the routines in your own C or C++ programs, include
 
