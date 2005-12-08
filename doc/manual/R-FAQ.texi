@@ -3810,6 +3810,8 @@ per-record, aggregate and trigger functions.
 @item REventLoop
 An abstract event loop mechanism that is toolkit independent and can be
 used to to replace the R event loop.
+@item Rexif
+Extract meta-information from @acronym{JPEG} files.
 @item RGdkPixbuf
 S language functions to access the facilities in the GdkPixbuf library
 for manipulating images.
