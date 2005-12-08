@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-06 08:33+0000\n"
+"POT-Creation-Date: 2005-12-08 14:15+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -873,39 +873,39 @@ msgstr "수치 행렬 또는 벡터가 요구됩니다"
 msgid "non-conformable arguments"
 msgstr "적절한 인수가 아닙니다"
 
-#: src/main/array.c:834
+#: src/main/array.c:837
 msgid "argument is not a matrix"
 msgstr "인수가 행렬이 아닙니다"
 
-#: src/main/array.c:872
+#: src/main/array.c:875
 msgid "invalid first argument, must be an array"
 msgstr "첫번째의 인수가 부적절합니다. 배열이어야만 합니다"
 
-#: src/main/array.c:889
+#: src/main/array.c:892
 msgid "'perm' is of wrong length"
 msgstr "'perm'의 길이가 이상합니다"
 
-#: src/main/array.c:897
+#: src/main/array.c:900
 msgid "value out of range in 'perm'"
 msgstr "'perm'안의 값이 범위를 초과하고 있습니다"
 
-#: src/main/array.c:900
+#: src/main/array.c:903
 msgid "invalid permutation ('perm')"
 msgstr "부적절한 치환입니다('perm')"
 
-#: src/main/array.c:1028 src/main/connections.c:2613
+#: src/main/array.c:1031 src/main/connections.c:2613
 msgid "invalid value of 'n'"
 msgstr "'n'의 값이 부적절합니다"
 
-#: src/main/array.c:1030
+#: src/main/array.c:1033
 msgid "invalid value of 'p'"
 msgstr "'p'의 값이 부적절합니다"
 
-#: src/main/array.c:1031
+#: src/main/array.c:1034
 msgid "invalid value of 'na.rm'"
 msgstr "'na.rm'의 값이 부적절합니다"
 
-#: src/main/array.c:1040
+#: src/main/array.c:1043
 msgid "'x' must be numeric"
 msgstr "'x'는 수치이어야만 합니다"
 
@@ -6274,7 +6274,7 @@ msgstr ""
 #: src/main/version.c:46
 msgid ""
 "Type 'demo()' for some demos, 'help()' for on-line help, or\n"
-"'help.start()' for a HTML browser interface to help.\n"
+"'help.start()' for an HTML browser interface to help.\n"
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""

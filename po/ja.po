@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-06 08:33+0000\n"
+"POT-Creation-Date: 2005-12-08 14:15+0000\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -873,39 +873,39 @@ msgstr "数値行列またはベクトルが要求されます"
 msgid "non-conformable arguments"
 msgstr "適切な引数ではありません"
 
-#: src/main/array.c:834
+#: src/main/array.c:837
 msgid "argument is not a matrix"
 msgstr "引数が行列ではありません"
 
-#: src/main/array.c:872
+#: src/main/array.c:875
 msgid "invalid first argument, must be an array"
 msgstr "一番目の引数が不正です。配列でなくてはなりません"
 
-#: src/main/array.c:889
+#: src/main/array.c:892
 msgid "'perm' is of wrong length"
 msgstr "'perm' の長さが誤っています"
 
-#: src/main/array.c:897
+#: src/main/array.c:900
 msgid "value out of range in 'perm'"
 msgstr "'perm' 中の値が範囲を超えています"
 
-#: src/main/array.c:900
+#: src/main/array.c:903
 msgid "invalid permutation ('perm')"
 msgstr "不正な置換です ('perm') "
 
-#: src/main/array.c:1028 src/main/connections.c:2613
+#: src/main/array.c:1031 src/main/connections.c:2613
 msgid "invalid value of 'n'"
 msgstr "'n' の値が不正です"
 
-#: src/main/array.c:1030
+#: src/main/array.c:1033
 msgid "invalid value of 'p'"
 msgstr "'p' の値が不正です"
 
-#: src/main/array.c:1031
+#: src/main/array.c:1034
 msgid "invalid value of 'na.rm'"
 msgstr "'na.rm' の値が不正です"
 
-#: src/main/array.c:1040
+#: src/main/array.c:1043
 msgid "'x' must be numeric"
 msgstr "'x' は数値でなければなりません"
 
@@ -6273,7 +6273,7 @@ msgstr ""
 #: src/main/version.c:46
 msgid ""
 "Type 'demo()' for some demos, 'help()' for on-line help, or\n"
-"'help.start()' for a HTML browser interface to help.\n"
+"'help.start()' for an HTML browser interface to help.\n"
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""

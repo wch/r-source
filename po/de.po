@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-06 08:33+0000\n"
+"POT-Creation-Date: 2005-12-08 14:15+0000\n"
 "PO-Revision-Date: 2005-09-28 15:00+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -868,39 +868,39 @@ msgstr "verlangt numerische Matrix/Vektor Arguments"
 msgid "non-conformable arguments"
 msgstr "nicht passende Argumente"
 
-#: src/main/array.c:834
+#: src/main/array.c:837
 msgid "argument is not a matrix"
 msgstr "Argument ist keine Matrix"
 
-#: src/main/array.c:872
+#: src/main/array.c:875
 msgid "invalid first argument, must be an array"
 msgstr "ungültiges erstes Argument, muss ein Array sein"
 
-#: src/main/array.c:889
+#: src/main/array.c:892
 msgid "'perm' is of wrong length"
 msgstr "'perm' hat falsche Länge"
 
-#: src/main/array.c:897
+#: src/main/array.c:900
 msgid "value out of range in 'perm'"
 msgstr "Wert außerhalb des Bereichs in 'perm'"
 
-#: src/main/array.c:900
+#: src/main/array.c:903
 msgid "invalid permutation ('perm')"
 msgstr "ungültige Permutation ('perm')"
 
-#: src/main/array.c:1028 src/main/connections.c:2613
+#: src/main/array.c:1031 src/main/connections.c:2613
 msgid "invalid value of 'n'"
 msgstr "ungültiger Wert von 'n'"
 
-#: src/main/array.c:1030
+#: src/main/array.c:1033
 msgid "invalid value of 'p'"
 msgstr "ungültiger Wert von 'p'"
 
-#: src/main/array.c:1031
+#: src/main/array.c:1034
 msgid "invalid value of 'na.rm'"
 msgstr "ungültiger Wert für 'na.rm'"
 
-#: src/main/array.c:1040
+#: src/main/array.c:1043
 msgid "'x' must be numeric"
 msgstr "'x' muss numerisch sein"
 
@@ -6261,7 +6261,7 @@ msgstr ""
 #: src/main/version.c:46
 msgid ""
 "Type 'demo()' for some demos, 'help()' for on-line help, or\n"
-"'help.start()' for a HTML browser interface to help.\n"
+"'help.start()' for an HTML browser interface to help.\n"
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""
