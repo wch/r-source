@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-16 22:59\n"
+"POT-Creation-Date: 2005-12-08 17:08\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -685,9 +685,6 @@ msgstr "metodo distanza ambiguo"
 
 msgid "non-square matrix"
 msgstr "matrice non quadrata"
-
-msgid "'shape' must be strictly positive"
-msgstr "'shape' deve essere strettamente positivo"
 
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] e prob[] devono essere vettore della stessa lunghezza."
@@ -2121,6 +2118,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'shape' must be strictly positive"
+#~ msgstr "'shape' deve essere strettamente positivo"
 
 #~ msgid "p-values may be incorrect due to ties"
 #~ msgstr "i p-value possono essere sbagliati a causa dei ties"

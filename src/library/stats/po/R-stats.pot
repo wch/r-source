@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-16 22:59\n"
+"POT-Creation-Date: 2005-12-08 17:08\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -648,9 +648,6 @@ msgid "ambiguous distance method"
 msgstr ""
 
 msgid "non-square matrix"
-msgstr ""
-
-msgid "'shape' must be strictly positive"
 msgstr ""
 
 msgid "x[] and prob[] must be equal length vectors."

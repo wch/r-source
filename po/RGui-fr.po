@@ -1,14 +1,14 @@
 # Translation of RGui.po to French
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the R package.
-# Philippe Grosjean <phgrosjean@sciviews.org> 2005.
+# Philippe Grosjean <phgrosjean@sciviews.org>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: RGui\n"
+"Project-Id-Version: RGui 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-11-24 08:59+0000\n"
-"PO-Revision-Date: 2005-06-10 08:42+0100\n"
+"PO-Revision-Date: 2005-12-06 16:49+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -1168,23 +1168,3 @@ msgstr "Changement de page : attente de confirmation..."
 msgid "Click or hit ENTER for next page"
 msgstr "Cliquez ou appuyez ENTREE pour la page suivante"
 
-#~ msgid "search.r-project.org ..."
-#~ msgstr "search.r-project.org ..."
-
-#~ msgid "An &Introduction to R"
-#~ msgstr "Introduction à R"
-
-#~ msgid "R &Reference Manual"
-#~ msgstr "Manuel de référence de R"
-
-#~ msgid "R Data Import/Export"
-#~ msgstr "Importation/exportation de données dans R"
-
-#~ msgid "R Language Definition"
-#~ msgstr "Définition du langage R"
-
-#~ msgid "Writing R Extensions"
-#~ msgstr "Ecrire des extensions pour R"
-
-#~ msgid "R Installation and Administration"
-#~ msgstr "Installation et administration de R"

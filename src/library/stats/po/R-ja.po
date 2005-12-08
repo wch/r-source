@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-16 22:59\n"
+"POT-Creation-Date: 2005-12-08 17:08\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -673,9 +673,6 @@ msgstr "曖昧な距離法です"
 
 msgid "non-square matrix"
 msgstr "正方行列ではありません"
-
-msgid "'shape' must be strictly positive"
-msgstr "'shape' パラメータは正でなければなりません"
 
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] と prob[] は等しい長さのベクトルでなければなりません"
@@ -2083,6 +2080,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
 msgstr[1] "モデル式中にパラメータ(複数) %s がありません"
+
+#~ msgid "'shape' must be strictly positive"
+#~ msgstr "'shape' パラメータは正でなければなりません"
 
 #~ msgid "p-values may be incorrect due to ties"
 #~ msgstr "p 値はタイのために不正確かもしれません"
