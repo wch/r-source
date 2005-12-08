@@ -44,7 +44,7 @@ Type 'license()' or 'licence()' for distribution details.\n\n"));
 Type 'contributors()' for more information and\n\
 'citation()' on how to cite R or R packages in publications.\n\n"));
     Rprintf(_("Type 'demo()' for some demos, 'help()' for on-line help, or\n\
-'help.start()' for a HTML browser interface to help.\n\
+'help.start()' for an HTML browser interface to help.\n\
 Type 'q()' to quit R.\n\n"));
 }
 
