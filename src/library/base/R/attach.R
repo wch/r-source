@@ -23,7 +23,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
             gen <- gen[from != ".GlobalEnv"]
             ob <- ob[!(ob %in% gen)]
         }
-        ipos <- seq(along = sp)[-c(db.pos, match("Autoloads", sp))]
+        ipos <- seq(along = sp)[-c(db.pos, match(c("Autoloads", "CheckExEnv"), sp, 0))]
         for (i in ipos) {
             obj.same <- match(objects(i, all = TRUE), ob, nomatch = 0)
             if (any(obj.same > 0)) {

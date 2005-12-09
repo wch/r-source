@@ -86,7 +86,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ob <- ob[!(ob %in% gen)]
         }
         fst <- TRUE
-        ipos <- seq(along = sp)[-c(lib.pos, match("Autoloads", sp))]
+        ipos <- seq(along = sp)[-c(lib.pos, match(c("Autoloads", "CheckExEnv"), sp, 0))]
         for (i in ipos) {
             obj.same <- match(objects(i, all = TRUE), ob, nomatch = 0)
             if (any(obj.same > 0)) {
