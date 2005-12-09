@@ -49,6 +49,10 @@ extern "C" {
 @RMATH_HAVE_WORKING_LOG1P@
 #endif
 
+#ifndef HAVE_WORKING_LOG
+@RMATH_HAVE_WORKING_LOG@
+#endif
+
 #include <errno.h>
 #include <limits.h>
 #include <float.h>
@@ -331,7 +335,11 @@ double  Rlog1p(double);
 
 	/* R's versions with !R_FINITE checks */
 
+#if defined(MATHLIB_STANDALONE) && defined(HAVE_WORKING_LOG)
+#define R_log log
+#else
 double R_log(double x);
+#endif
 double R_pow(double x, double y);
 double R_pow_di(double, int);
 

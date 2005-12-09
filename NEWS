@@ -602,6 +602,9 @@ BUG FIXES
 	'sigma' as NaN for cases with hat = 1, and on some platforms
 	not detecting hat = 1 correctly.
 
+    o	Rmath.h for standalone Rmath was not recording HAVE_WORKING_LOG, 
+        so R_log was not available on platforms defining it.
+
 
 
 		CHANGES IN R VERSION 2.2.0
