@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-12-07
+@set FAQ_DATE @value{FAQ_YEAR}-12-09
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -3334,6 +3334,9 @@ R version of GENetic Optimization Using Derivatives.
 @item rimage
 Functions for image processing, including Sobel filter, rank filters,
 fft, histogram equalization, and reading @acronym{JPEG} files.
+@item riv
+Robust Instrumental Variables estimators using high breakpoint point
+S-estimators of multivariate location and scatter matrices.
 @item rlecuyer
 R interface to RNG with multiple streams.
 @item rmeta
