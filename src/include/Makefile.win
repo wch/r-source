@@ -69,6 +69,7 @@ Rmath.h0: Rmath.h0.in $(R_HOME)/VERSION
 	@$(SED) -e 's/@RMATH_HAVE_LOG1P@/# define HAVE_LOG1P 1/'  \
 	  -e /@RMATH_HAVE_EXPM1@/d  \
 	  -e  's/@RMATH_HAVE_WORKING_LOG1P@/# define HAVE_WORKING_LOG1P 1/' \
+	  -e  's/@RMATH_HAVE_WORKING_LOG@/# define HAVE_WORKING_LOG 1/' \
 	  -e "s/@PACKAGE_VERSION@/`sed 's/\([^ ]*\).*/\1/' < $(R_HOME)/VERSION`/" $< > Rmath.h0
 
 Rmath.h: Rmath.h0
