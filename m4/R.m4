@@ -1457,7 +1457,11 @@ int main () {
 if test "x${r_cv_func_log_works}" = xyes; then
   AC_DEFINE(HAVE_WORKING_LOG, 1,
             [Define if log() is correct for 0/-1.])
+  RMATH_HAVE_WORKING_LOG="# define HAVE_WORKING_LOG 1"
+else
+  RMATH_HAVE_WORKING_LOG="# undef HAVE_WORKING_LOG"
 fi
+AC_SUBST(RMATH_HAVE_WORKING_LOG)
 ])# R_FUNC_LOG
 
 ## R_FUNC_LOG1P
