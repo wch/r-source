@@ -52,7 +52,10 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
     \code{TRUE} is returned to indicate success.}
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the new
-    package, unless that package contains an object \code{.conflicts.OK}.}
+    package, unless that package contains an object
+    \code{.conflicts.OK}.  A conflict is a function masking a function,
+    or a non-function masking a non-function.
+  }
   \item{keep.source}{logical.  If \code{TRUE}, functions
     \dQuote{keep their source} including comments, see argument
     \code{keep.source} to \code{\link{options}}.  This applies only to

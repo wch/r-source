@@ -13,7 +13,10 @@ attach(what, pos = 2, name = deparse(substitute(what)), warn.conflicts=TRUE)
   \item{name}{alternative way to specify the database to be attached.}
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the database,
-    unless that database contains an object \code{.conflicts.OK}.}
+    unless that database contains an object \code{.conflicts.OK}.  A
+    conflict is a function masking a function, or a non-function masking
+    a non-function.
+  }
 }
 \description{
   The database is attached to the \R search path.  This means that the

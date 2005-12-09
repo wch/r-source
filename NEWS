@@ -151,7 +151,7 @@ NEW FEATURES
     o	poly() has a new argument 'raw', mainly for pedagogical purposes.
 
     o	Sys.time() now has sub-millisecond accuracy on systems
-	supporting the POSIX call gettimeofday, and to clock-tick
+	supporting the POSIX call gettimeofday, and clock-tick
 	accuracy on Windows.
 
     o	read.table() gains a 'flush' argument passed to scan().
@@ -183,9 +183,9 @@ NEW FEATURES
 	can be given for the R variables mapping to these symbols.
 	The native routine registration information can also be used
 	directly via useDynLib(name, .registration = TRUE). See the
-	Writing R Extensions manual for more details.
+	'Writing R Extensions' manual for more details.
 
-    o	R CMD check works for packages whose package name is different
+    o	'R CMD check' works for packages whose package name is different
 	from the directory name in which it is located.
 
     o	cov.wt() is more efficient for 'cor = TRUE' and has a new 'method'
@@ -204,8 +204,13 @@ NEW FEATURES
     o	The suffix used by tempfile() is now in hex on all platforms
 	and guaranteed to be at least 6 hex digits (usually 8).
 
-    o   Some of the classical tests put unnecessary restrictions on the LHS
-        in the formula interface (e.g., t.test(x+y~g) was not allowed).
+    o	Some of the classical tests put unnecessary restrictions on the
+        LHS in the formula interface (e.g., t.test(x+y ~ g) was not
+        allowed).
+
+    o	The 'masked' warnings given by attach() and library() now only
+	warn for functions masking functions or non-functions masking
+	non-functions.
 
 
 DEPRECATED & DEFUNCT
@@ -307,8 +312,8 @@ INSTALLATION CHANGES
     o	A substitute for mkdtemp is provided, so it is now always
 	used for R_TempDir.
 
-    o	Most of the functions checked for also have declarations
-	checked for in the appropriate header.
+    o	Most of the functions checked for by 'configure' also have
+	declarations checked for in the appropriate header.
 
     o	sysconf() is now used to find the number of clock ticks/second:
 	under some circumstances glibc reported 60 when the true value
@@ -320,7 +325,7 @@ UTILITIES
     o	R CMD check now uses an install log by default.
 
     o	R CMD INSTALL now uses more randomness in the temporary
-	directory even on systems without mktemp -d.
+	directory name even on systems without mktemp -d.
 
 
 DOCUMENTATION
@@ -369,6 +374,8 @@ BUG FIXES
 
     o	reg-test-1.R tested system(intern=TRUE) which depends on popen
 	and so is not supported on all platforms.
+
+    o	Changed apparent mis-spelling of "Gibraltar" in dataset 'eurodist'.
 
 
 

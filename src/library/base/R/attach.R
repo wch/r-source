@@ -1,4 +1,4 @@
-attach <- function(what, pos=2, name=deparse(substitute(what)),
+attach <- function(what, pos = 2, name = deparse(substitute(what)),
                    warn.conflicts = TRUE)
 {
     checkConflicts <- function(env)
@@ -31,6 +31,15 @@ attach <- function(what, pos=2, name=deparse(substitute(what)),
                 same <- same[!(same %in% dont.mind)]
                 Classobjs <- grep("^\\.__", same)
                 if(length(Classobjs)) same <- same[-Classobjs]
+                ## report only objects which are both functions or
+                ## both non-functions.
+                is_fn1 <- sapply(same, function(x)
+                                 exists(x, where = i, mode = "function",
+                                        inherits = FALSE))
+                is_fn2 <- sapply(same, function(x)
+                                 exists(x, where = db.pos, mode = "function",
+                                        inherits = FALSE))
+                same <- same[is_fn1 == is_fn2]
                 if(length(same)) {
                     cat("\n\tThe following object(s) are masked",
                         if (i < db.pos) "_by_" else "from", sp[i],

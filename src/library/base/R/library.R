@@ -94,6 +94,15 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 same <- same[!(same %in% dont.mind)]
                 Classobjs <- grep("^\\.__", same)
                 if(length(Classobjs)) same <- same[-Classobjs]
+                ## report only objects which are both functions or
+                ## both non-functions.
+                is_fn1 <- sapply(same, function(x)
+                                 exists(x, where = i, mode = "function",
+                                        inherits = FALSE))
+                is_fn2 <- sapply(same, function(x)
+                                 exists(x, where = lib.pos, mode = "function",
+                                        inherits = FALSE))
+                same <- same[is_fn1 == is_fn2]
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE
