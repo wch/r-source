@@ -16,10 +16,6 @@ names and no spaces).
 There is now MBCS support for the line editor in Rterm.exe.
 (Contributed by Haruki Koyanagi.)
 
-Import libraries are now made without -k (--kill-at).  This is not
-relevant for base R (R.dll, Rblas.dll and Rlapack.dll only use cdecl
-entry points) but might be for contributed software using R's macros.
-
 R CMD INSTALL will now clean up after interruption (by ctrl-C, at
 least where supported by the shell).
 
@@ -54,9 +50,6 @@ The assembler exponentiation code has been updated to that from glibc 2.3.6.
 There is now support for compiling Fortran 90/95 code in packages: see
 'Writing R Extensions'.
 
-librproxy.a has been removed since linking directly to Rproxy.dll
-works in current MinGW (and package rcom will be updated to do so).
-
 For compatibility with Unix, the following environment variables are
 checked for a writeable directory for the R session temporary directory:
 
@@ -67,6 +60,14 @@ first and that the values are checked to be a directory.
 
 The import libraries libR.a, libRblas.a, libRlapack.a and libproxy.a
 are no longer used, as we now link directly to the corresponding DLL.
+
+The import library librproxy.a has been removed since linking directly
+to Rproxy.dll works in current MinGW (and package rcom will be updated
+to do so).
+
+Import libraries are now made by default without -k (--kill-at).  This
+might be relevant for contributed software using R's macros.
+
 
 
 

@@ -133,13 +133,13 @@ release.
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-You need Windows 95 or later: Windows 3.11+win32s will not work.  There
-is no specific version for Windows64, but the standard 32-bit version
-should work.
+You need Windows 95 or later.  There is no specific version for
+Windows64, but the standard 32-bit version should work.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
-takes up about 56Mb of disk space and a minimal one about 18Mb.
+@c East Asian is larger that `Full'
+takes up about 60Mb of disk space and a minimal one about 19Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
