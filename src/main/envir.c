@@ -1593,18 +1593,16 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP rval, genv, t1;
+    SEXP rval, genv, t1 = R_NilValue;
     SEXPTYPE gmode;
     int ginherits = 0, where;
     checkArity(op, args);
 
     /* The first arg is the object name */
-    /* It must be present and a string */
+    /* It must be present and a non-empty string */
 
-    if (!isValidStringF(CAR(args))) {
+    if (!isValidStringF(CAR(args)))
 	errorcall(call, _("invalid first argument"));
-	t1 = R_NilValue;
-    }
     else
 	t1 = install(CHAR(STRING_ELT(CAR(args), 0)));
 
