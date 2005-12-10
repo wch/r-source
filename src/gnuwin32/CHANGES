@@ -16,6 +16,9 @@ names and no spaces).
 There is now MBCS support for the line editor in Rterm.exe.
 (Contributed by Haruki Koyanagi.)
 
+The import libraries libR.a, libRblas.a and libproxy.a are now
+installed in R_HOME/lib (rather than R_HOME/src/gnuwin32).
+
 R CMD INSTALL will now clean up after interruption (by ctrl-C, at
 least where supported by the shell).
 
@@ -58,8 +61,6 @@ checked for a writeable directory for the R session temporary directory:
 (the last will always succeed).  The changes are that TMPDIR is checked
 first and that the values are checked to be a directory.
 
-The import libraries libR.a, libRblas.a, libRlapack.a and libproxy.a
-are no longer used, as we now link directly to the corresponding DLL.
 
 The import library librproxy.a has been removed since linking directly
 to Rproxy.dll works in current MinGW (and package rcom will be updated
@@ -67,7 +68,6 @@ to do so).
 
 Import libraries are now made by default without -k (--kill-at).  This
 might be relevant for contributed software using R's macros.
-
 
 
 

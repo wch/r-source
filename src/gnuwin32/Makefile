@@ -50,7 +50,7 @@ R-DLLFLAGS = -mwindows
 endif
 
 ## we may not need msvcp60, but no harm to include it.
-R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60 $(LIBEXTRAS)
+R-DLLLIBS =-L../../lib $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60 $(LIBEXTRAS)
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c extra.c \
@@ -89,8 +89,9 @@ rbuild:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
-	@$(MAKE) --no-print-directory libRblas.a
+	@$(MAKE) --no-print-directory ../../lib/libRblas.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
+	@$(MAKE) --no-print-directory ../../lib/libR.a
 	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
 
@@ -183,9 +184,9 @@ fixed/fixdesc:
 
 dllversion.o: ../include/Rversion.h
 
-R.dll: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
+R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
-Rdll: makeMakedeps libRblas.a ../../bin/R.dll
+Rdll: makeMakedeps ../../lib/libRblas.a ../../bin/R.dll
 
 ../../bin/R.dll: FORCE
 	@$(MAKE) --no-print-directory fixfiles
@@ -202,8 +203,31 @@ endif
 
 FORCE:
 
-front-ends:
+front-ends: ../../lib/libR.a
 	$(MAKE) --no-print-directory -C front-ends
+
+R.a: $(OBJS)
+	@$(ECHO) -------- Building $@ --------
+	@$(RM) R.a
+	$(AR) cr R.a $^
+	$(RANLIB) R.a
+
+
+# R.dll exports all global symbols BUT import library (libR.a)
+# only (all functions) + (global vars listed in exported-vars))
+
+../../lib/libR.a:  R.exp
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib $@
+
+R.exp: R.exp1
+	@(diff R.exp R.exp1 > /dev/null 2>&1) || $(CP) R.exp1 R.exp
+
+R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
+	@$(ECHO) EXPORTS > $@
+	@$(NM) R.a $(MAINLIBS) $(EXTRALIBS) > RDefs
+	@$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
+	@$(CAT) exported-vars >> $@
+	@$(RM) RDefs
 
 ../../library/R.css: ../../doc/html/R.css
 	$(CP) $< $@
@@ -230,7 +254,8 @@ Rblas: ../../bin/Rblas.dll
 Rblas-clean:
 	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o
 
-libRblas.a:  Rblas.def
+../../lib/libRblas.a:  Rblas.def
+	@$(MKDIR) -p ../../lib
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
 	  --def Rblas.def --output-lib $@
 
@@ -247,17 +272,17 @@ ifeq ($(strip $(USE_ACML)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../bin -lR  -L"$(ACML_PATH)" -lacml -lg2c
+	   -L../../lib -lR  -L"$(ACML_PATH)" -lacml -lg2c
 else
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../bin -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas
+	   -L../../lib -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../bin -lR -lg2c
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../lib -lR -lg2c
 endif
 endif
 
@@ -398,7 +423,7 @@ distclean veryclean: clean clean-recommended
 	$(RM) -r ../library/*/check
 	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
 	../library/tcltk//src/tk$(TCL_VERSION).def
-	$(RM) R.exp COPYRIGHTS
+	$(RM) R.exp Rm.exp COPYRIGHTS
 	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
@@ -422,7 +447,7 @@ distclean veryclean: clean clean-recommended
 	$(RM) Rpwd.exe # do this last of all
 
 cleanwin:
-	$(RM) *.o *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 \
+	$(RM) *.o *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 Rm.exp1\
 	   .RData .Rhistory Makedeps *.d
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
@@ -570,8 +595,8 @@ rbuild-no-mbcs:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
-	@$(MAKE) --no-print-directory libRblas.a
 	@$(SED) -e '/SUPPORT_MBCS/d' fixed/h/config.h > ../include/config.h
+	@$(MAKE) --no-print-directory ../../lib/libRblas.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
 	@mv ../../bin/R.dll ../../bin/Rnombcs.dll
 	@$(RM) ../include/config.h ../include/Rconfig.h

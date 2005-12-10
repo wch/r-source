@@ -9,7 +9,7 @@ CSOURCES2=nanoftp.c nanohttp.c
 
 CFLAGS=$(OPTFLAGS) -I../../include -I../../gnuwin32 -DHAVE_CONFIG_H
 
-DLLLIBS=-L../../../bin -lR -lwsock32
+DLLLIBS=-L../../../lib -lR -lwsock32
 internet2-DLLLIBS=-lwininet
 
 ../../../modules/internet.dll: internet.dll

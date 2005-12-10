@@ -1,0 +1,4 @@
+LIBRARY tk@VER@.dll
+EXPORTS
+  Tk_Init
+  Tk_SafeInit

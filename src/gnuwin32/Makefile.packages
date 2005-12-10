@@ -24,7 +24,15 @@ RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 
 
-all:
+all: ../../lib/libR.a ../../lib/libRblas.a
+
+../../lib/libR.a:  R.exp
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib $@
+
+../../lib/libRblas.a:  Rblas.def
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
+	  --def Rblas.def --output-lib $@
+
 
 #                          ===== Packages ======
 

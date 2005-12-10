@@ -15,7 +15,7 @@ OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 	$(MKDIR) -p ../../../modules
 	$(CP) $< $@
 
-DLLLIBS=-L../../../bin -lR
+DLLLIBS=-L../../../lib -lR
 $(MODULE).dll: $(OBJS)
 
 dllversion.o: ../../include/Rversion.h
