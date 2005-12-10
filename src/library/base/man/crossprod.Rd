@@ -12,7 +12,8 @@ crossprod(x, y = NULL)
 }
 \arguments{
   \item{x, y}{matrices: \code{y = NULL} is taken to be the
-    same matrix as \code{x}.}
+    same matrix as \code{x}.  Vectors are promoted to single-column
+    matrices.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

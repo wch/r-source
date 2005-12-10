@@ -567,7 +567,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
 	else { /* crossprod */
-	    if (LENGTH(x) == nry) {	/* x is a row vector */
+	    if (LENGTH(x) == nry) {	/* x is a col vector */
 		nrx = LENGTH(x);
 		ncx = 1;
 	    }
@@ -589,7 +589,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
 	else {
-	    if (LENGTH(y) == nrx) {	/* y is a row vector */
+	    if (LENGTH(y) == nrx) {	/* y is a col vector */
 		nry = LENGTH(y);
 		ncy = 1;
 	    }
