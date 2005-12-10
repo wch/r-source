@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-06 08:54+0000\n"
+"POT-Creation-Date: 2005-12-10 17:00+0000\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -110,10 +110,10 @@ msgstr "'names' non valido in R_unlink"
 #: src/main/datetime.c:666 src/main/datetime.c:770 src/main/datetime.c:772
 #: src/main/datetime.c:896 src/main/dounzip.c:182 src/main/dounzip.c:188
 #: src/main/envir.c:1456 src/main/envir.c:1460 src/main/envir.c:1550
-#: src/main/envir.c:1556 src/main/envir.c:1624 src/main/envir.c:1640
-#: src/main/envir.c:1647 src/main/envir.c:1758 src/main/envir.c:1766
-#: src/main/envir.c:1774 src/main/envir.c:1788 src/main/envir.c:1794
-#: src/main/envir.c:2317 src/main/envir.c:2585 src/main/envir.c:3120
+#: src/main/envir.c:1556 src/main/envir.c:1622 src/main/envir.c:1638
+#: src/main/envir.c:1645 src/main/envir.c:1756 src/main/envir.c:1764
+#: src/main/envir.c:1772 src/main/envir.c:1786 src/main/envir.c:1792
+#: src/main/envir.c:2315 src/main/envir.c:2583 src/main/envir.c:3118
 #: src/main/eval.c:252 src/main/eval.c:1536 src/main/eval.c:1560
 #: src/main/eval.c:1564 src/main/model.c:1577 src/main/model.c:1585
 #: src/main/optim.c:224 src/main/paste.c:71 src/main/paste.c:163
@@ -694,7 +694,7 @@ msgstr "stringa formato troppo lunga"
 msgid "invalid multibyte format string"
 msgstr "stringa formato multibyte non valida"
 
-#: src/main/apply.c:39 src/main/envir.c:2406
+#: src/main/apply.c:39 src/main/envir.c:2404
 msgid "arguments must be symbolic"
 msgstr "l'argomento deve essere simbolico"
 
@@ -844,47 +844,47 @@ msgstr "numero di argomenti non ammissibile per 'row/col'"
 msgid "a matrix is required as argument to 'row/col'"
 msgstr "'row/col' richiedono come argomento un oggetto matrix"
 
-#: src/main/array.c:524
+#: src/main/array.c:569
 msgid "requires numeric matrix/vector arguments"
 msgstr "richiesti argomenti numerici per matrix/vector"
 
-#: src/main/array.c:597 src/main/array.c:601
+#: src/main/array.c:642 src/main/array.c:646 src/main/array.c:650
 msgid "non-conformable arguments"
 msgstr "gli argomenti non sono compatibili"
 
-#: src/main/array.c:826
+#: src/main/array.c:934
 msgid "argument is not a matrix"
 msgstr "l'argomento non è di tipo matrix"
 
-#: src/main/array.c:864
+#: src/main/array.c:972
 msgid "invalid first argument, must be an array"
 msgstr "primo argomento non valido, deve essere di tipo array"
 
-#: src/main/array.c:881
+#: src/main/array.c:989
 msgid "'perm' is of wrong length"
 msgstr "'perm' ha una lunghezza non ammissibile"
 
-#: src/main/array.c:889
+#: src/main/array.c:997
 msgid "value out of range in 'perm'"
 msgstr "valore fuori limite in 'perm'"
 
-#: src/main/array.c:892
+#: src/main/array.c:1000
 msgid "invalid permutation ('perm')"
 msgstr "permutazione non valida ('perm')"
 
-#: src/main/array.c:1020 src/main/connections.c:2665
+#: src/main/array.c:1128 src/main/connections.c:2665
 msgid "invalid value of 'n'"
 msgstr "valore non valido per 'n'"
 
-#: src/main/array.c:1022
+#: src/main/array.c:1130
 msgid "invalid value of 'p'"
 msgstr "valore non valido per 'p'"
 
-#: src/main/array.c:1023
+#: src/main/array.c:1131
 msgid "invalid value of 'na.rm'"
 msgstr "valore non valido per 'na.rm'"
 
-#: src/main/array.c:1032
+#: src/main/array.c:1140
 msgid "'x' must be numeric"
 msgstr "'x' deve essere di tipo numeric"
 
@@ -1094,17 +1094,17 @@ msgstr "il numero di colonne delle matrici deve coincidere (si veda arg %d)"
 #: src/main/builtin.c:199 src/main/builtin.c:222 src/main/builtin.c:252
 #: src/main/builtin.c:261 src/main/coerce.c:1315 src/main/connections.c:2001
 #: src/main/engine.c:2672 src/main/envir.c:1452 src/main/envir.c:1546
-#: src/main/envir.c:1618 src/main/envir.c:1749 src/main/envir.c:2347
-#: src/main/envir.c:2398 src/main/envir.c:2664 src/main/envir.c:2697
-#: src/main/envir.c:2717 src/main/envir.c:2739 src/main/envir.c:2773
-#: src/main/envir.c:2793 src/main/envir.c:3108 src/main/envir.c:3114
+#: src/main/envir.c:1616 src/main/envir.c:1747 src/main/envir.c:2345
+#: src/main/envir.c:2396 src/main/envir.c:2662 src/main/envir.c:2695
+#: src/main/envir.c:2715 src/main/envir.c:2737 src/main/envir.c:2771
+#: src/main/envir.c:2791 src/main/envir.c:3106 src/main/envir.c:3112
 #: src/main/eval.c:3387 src/main/objects.c:177 src/main/objects.c:183
 #: src/main/saveload.c:2028 src/main/saveload.c:2265 src/main/serialize.c:2143
 msgid "use of NULL environment is deprecated"
 msgstr ""
 
 #: src/main/builtin.c:55 src/main/envir.c:1445 src/main/envir.c:1605
-#: src/main/envir.c:1740 src/main/paste.c:60 src/main/plot.c:1740
+#: src/main/envir.c:1738 src/main/paste.c:60 src/main/plot.c:1740
 msgid "invalid first argument"
 msgstr "primo argomento non valido"
 
@@ -2713,158 +2713,158 @@ msgstr "primo argomento di remove() non valido"
 msgid "remove: variable \"%s\" was not found"
 msgstr "remove: variabile \"%s\" non trovata"
 
-#: src/main/envir.c:1655
+#: src/main/envir.c:1653
 #, c-format
 msgid "variable \"%s\" was not found"
 msgstr "variabile \"%s\" non trovata"
 
-#: src/main/envir.c:1659
+#: src/main/envir.c:1657
 #, c-format
 msgid "variable \"%s\" of mode \"%s\" was not found"
 msgstr "variabile \"%s\" in modalità \"%s\" non trovata"
 
-#: src/main/envir.c:1743
+#: src/main/envir.c:1741
 #, c-format
 msgid "invalid name in position %d"
 msgstr "nome non valido in posizione %d"
 
-#: src/main/envir.c:1753
+#: src/main/envir.c:1751
 msgid "second argument must be an environment"
 msgstr "il secondo argomento deve essere un environment"
 
-#: src/main/envir.c:1761
+#: src/main/envir.c:1759
 msgid "wrong length for 'mode' argument"
 msgstr "lunghezza sbgliata dell'argomento 'mode'"
 
-#: src/main/envir.c:1769
+#: src/main/envir.c:1767
 msgid "wrong length for 'ifnotfound' argument"
 msgstr "lunghezza argomento 'ifnotfound' non valida"
 
-#: src/main/envir.c:1876
+#: src/main/envir.c:1874
 msgid "invalid use of missing"
 msgstr "uso di 'missing' non valido"
 
-#: src/main/envir.c:1901
+#: src/main/envir.c:1899
 msgid "missing can only be used for arguments"
 msgstr "missing si può usare solo sugli argomenti"
 
-#: src/main/envir.c:1986
+#: src/main/envir.c:1984
 msgid "attach: invalid object name"
 msgstr "attach: nmoe oggetto non valido"
 
-#: src/main/envir.c:1992
+#: src/main/envir.c:1990
 msgid "attach only works for lists and data frames"
 msgstr "attach funziona solo per liste e data frames"
 
-#: src/main/envir.c:1998
+#: src/main/envir.c:1996
 msgid "attach: all elements must be named"
 msgstr "attach: tutti gli elementi devono avere un nome"
 
-#: src/main/envir.c:2083
+#: src/main/envir.c:2081
 msgid "detaching \"package:base\" is not allowed"
 msgstr "il detach di \"package:base\" non è permesso"
 
-#: src/main/envir.c:2351 src/main/envir.c:2402
+#: src/main/envir.c:2349 src/main/envir.c:2400
 msgid "argument must be an environment"
 msgstr "l'argomento deve essere di tipo environment"
 
-#: src/main/envir.c:2504 src/main/random.c:34 src/main/random.c:559
+#: src/main/envir.c:2502 src/main/random.c:34 src/main/random.c:559
 msgid "invalid arguments"
 msgstr "argomenti non validi"
 
-#: src/main/envir.c:2562
+#: src/main/envir.c:2560
 msgid "no enclosing environment"
 msgstr "nessun environment di inclusione"
 
-#: src/main/envir.c:2609
+#: src/main/envir.c:2607
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "nessun termine chiamato \"%s\" nella lista di ricerca"
 
-#: src/main/envir.c:2626
+#: src/main/envir.c:2624
 msgid "using 'as.environment(NULL)' is deprecated"
 msgstr ""
 
-#: src/main/envir.c:2629
+#: src/main/envir.c:2627
 msgid "invalid object for as.environment"
 msgstr "oggetto non valido per 'as.environment'"
 
-#: src/main/envir.c:2637
+#: src/main/envir.c:2635
 #, fuzzy
 msgid "locking the base environment is not supported yet"
 msgstr "blocco dell'envirnoment NULL (base) non ancora supportato"
 
-#: src/main/envir.c:2639 src/main/envir.c:2668 src/main/envir.c:2701
-#: src/main/envir.c:2721 src/main/envir.c:2743 src/main/envir.c:2777
-#: src/main/envir.c:2797
+#: src/main/envir.c:2637 src/main/envir.c:2666 src/main/envir.c:2699
+#: src/main/envir.c:2719 src/main/envir.c:2741 src/main/envir.c:2775
+#: src/main/envir.c:2795
 msgid "not an environment"
 msgstr "non è un environment"
 
-#: src/main/envir.c:2695 src/main/envir.c:2715 src/main/envir.c:2735
-#: src/main/envir.c:2771 src/main/envir.c:2791 src/main/envir.c:2887
+#: src/main/envir.c:2693 src/main/envir.c:2713 src/main/envir.c:2733
+#: src/main/envir.c:2769 src/main/envir.c:2789 src/main/envir.c:2885
 msgid "not a symbol"
 msgstr "non è un simbolo"
 
-#: src/main/envir.c:2707 src/main/envir.c:2727 src/main/envir.c:2783
-#: src/main/envir.c:2803
+#: src/main/envir.c:2705 src/main/envir.c:2725 src/main/envir.c:2781
+#: src/main/envir.c:2801
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "nessun collegamento per \"%s\""
 
-#: src/main/envir.c:2737
+#: src/main/envir.c:2735
 msgid "not a function"
 msgstr "non è una funzione"
 
-#: src/main/envir.c:2746 src/main/envir.c:2760
+#: src/main/envir.c:2744 src/main/envir.c:2758
 msgid "symbol already has a regular binding"
 msgstr "il simbolo ha già un collegamento regolare"
 
-#: src/main/envir.c:2848
+#: src/main/envir.c:2846
 msgid "unknown op"
 msgstr "op sconosciuto"
 
-#: src/main/envir.c:2889
+#: src/main/envir.c:2887
 msgid "cannot unbind a locked binding"
 msgstr "non posso sbloccare un collegamento bloccato"
 
-#: src/main/envir.c:2891
+#: src/main/envir.c:2889
 msgid "cannot unbind an active binding"
 msgstr "non posso scollegare un collegamento attivo"
 
-#: src/main/envir.c:2951
+#: src/main/envir.c:2949
 #, c-format
 msgid "using .GlobalEnv instead of '%s'"
 msgstr "uso .GlobalEnv al posto di '%s'"
 
-#: src/main/envir.c:3018
+#: src/main/envir.c:3016
 msgid "namespaces not available; using .GlobalEnv"
 msgstr "namaspace non disponibili; uso .GlobalEnv"
 
-#: src/main/envir.c:3040
+#: src/main/envir.c:3038
 msgid "bad name space name"
 msgstr "nome namespace non valido"
 
-#: src/main/envir.c:3052
+#: src/main/envir.c:3050
 msgid "name space already registered"
 msgstr "namespace già registrato"
 
-#: src/main/envir.c:3064
+#: src/main/envir.c:3062
 msgid "name space not registered"
 msgstr "namespace non registrato"
 
-#: src/main/envir.c:3112
+#: src/main/envir.c:3110
 msgid "bad import environment argument"
 msgstr "argoment importazione environment sbagliato"
 
-#: src/main/envir.c:3118
+#: src/main/envir.c:3116
 msgid "bad export environment argument"
 msgstr "argomento esportazione environment sbagliato"
 
-#: src/main/envir.c:3122
+#: src/main/envir.c:3120
 msgid "length of import and export names must match"
 msgstr "le lunghezze dei nomi di import e export devono conincidere"
 
-#: src/main/envir.c:3145
+#: src/main/envir.c:3143
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "il simbolo esportato '%s' non ha un valore"

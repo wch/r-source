@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-06 08:54+0000\n"
+"POT-Creation-Date: 2005-12-10 17:00+0000\n"
 "PO-Revision-Date: 2005-09-26 17:43+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -106,10 +106,10 @@ msgstr "R_unlink 的 'names' 無效"
 #: src/main/datetime.c:666 src/main/datetime.c:770 src/main/datetime.c:772
 #: src/main/datetime.c:896 src/main/dounzip.c:182 src/main/dounzip.c:188
 #: src/main/envir.c:1456 src/main/envir.c:1460 src/main/envir.c:1550
-#: src/main/envir.c:1556 src/main/envir.c:1624 src/main/envir.c:1640
-#: src/main/envir.c:1647 src/main/envir.c:1758 src/main/envir.c:1766
-#: src/main/envir.c:1774 src/main/envir.c:1788 src/main/envir.c:1794
-#: src/main/envir.c:2317 src/main/envir.c:2585 src/main/envir.c:3120
+#: src/main/envir.c:1556 src/main/envir.c:1622 src/main/envir.c:1638
+#: src/main/envir.c:1645 src/main/envir.c:1756 src/main/envir.c:1764
+#: src/main/envir.c:1772 src/main/envir.c:1786 src/main/envir.c:1792
+#: src/main/envir.c:2315 src/main/envir.c:2583 src/main/envir.c:3118
 #: src/main/eval.c:252 src/main/eval.c:1536 src/main/eval.c:1560
 #: src/main/eval.c:1564 src/main/model.c:1577 src/main/model.c:1585
 #: src/main/optim.c:224 src/main/paste.c:71 src/main/paste.c:163
@@ -679,7 +679,7 @@ msgstr "格式字串太長"
 msgid "invalid multibyte format string"
 msgstr "無效的多位元組格式字串"
 
-#: src/main/apply.c:39 src/main/envir.c:2406
+#: src/main/apply.c:39 src/main/envir.c:2404
 msgid "arguments must be symbolic"
 msgstr "引數必須為符號"
 
@@ -823,47 +823,47 @@ msgstr "'row/col' 的引數數目不正確"
 msgid "a matrix is required as argument to 'row/col'"
 msgstr "'row/col' 必須用矩陣引數"
 
-#: src/main/array.c:524
+#: src/main/array.c:569
 msgid "requires numeric matrix/vector arguments"
 msgstr "需要數值矩陣/向量引數"
 
-#: src/main/array.c:597 src/main/array.c:601
+#: src/main/array.c:642 src/main/array.c:646 src/main/array.c:650
 msgid "non-conformable arguments"
 msgstr "非調和引數"
 
-#: src/main/array.c:826
+#: src/main/array.c:934
 msgid "argument is not a matrix"
 msgstr "引數不是矩陣"
 
-#: src/main/array.c:864
+#: src/main/array.c:972
 msgid "invalid first argument, must be an array"
 msgstr "第一個引數不正確, 必須是陣列"
 
-#: src/main/array.c:881
+#: src/main/array.c:989
 msgid "'perm' is of wrong length"
 msgstr "'perm' 的長度不正確"
 
-#: src/main/array.c:889
+#: src/main/array.c:997
 msgid "value out of range in 'perm'"
 msgstr "'perm' 的值在範圍外"
 
-#: src/main/array.c:892
+#: src/main/array.c:1000
 msgid "invalid permutation ('perm')"
 msgstr "排列不正確 ('perm')"
 
-#: src/main/array.c:1020 src/main/connections.c:2665
+#: src/main/array.c:1128 src/main/connections.c:2665
 msgid "invalid value of 'n'"
 msgstr "'n' 的值不正確"
 
-#: src/main/array.c:1022
+#: src/main/array.c:1130
 msgid "invalid value of 'p'"
 msgstr "'p' 的值不正確"
 
-#: src/main/array.c:1023
+#: src/main/array.c:1131
 msgid "invalid value of 'na.rm'"
 msgstr "'na.rm' 的值不正確"
 
-#: src/main/array.c:1032
+#: src/main/array.c:1140
 msgid "'x' must be numeric"
 msgstr "'x' 必須為數值"
 
@@ -1064,17 +1064,17 @@ msgstr "矩陣的行數必須相符 (參看引數 %d)"
 #: src/main/builtin.c:199 src/main/builtin.c:222 src/main/builtin.c:252
 #: src/main/builtin.c:261 src/main/coerce.c:1315 src/main/connections.c:2001
 #: src/main/engine.c:2672 src/main/envir.c:1452 src/main/envir.c:1546
-#: src/main/envir.c:1618 src/main/envir.c:1749 src/main/envir.c:2347
-#: src/main/envir.c:2398 src/main/envir.c:2664 src/main/envir.c:2697
-#: src/main/envir.c:2717 src/main/envir.c:2739 src/main/envir.c:2773
-#: src/main/envir.c:2793 src/main/envir.c:3108 src/main/envir.c:3114
+#: src/main/envir.c:1616 src/main/envir.c:1747 src/main/envir.c:2345
+#: src/main/envir.c:2396 src/main/envir.c:2662 src/main/envir.c:2695
+#: src/main/envir.c:2715 src/main/envir.c:2737 src/main/envir.c:2771
+#: src/main/envir.c:2791 src/main/envir.c:3106 src/main/envir.c:3112
 #: src/main/eval.c:3387 src/main/objects.c:177 src/main/objects.c:183
 #: src/main/saveload.c:2028 src/main/saveload.c:2265 src/main/serialize.c:2143
 msgid "use of NULL environment is deprecated"
 msgstr ""
 
 #: src/main/builtin.c:55 src/main/envir.c:1445 src/main/envir.c:1605
-#: src/main/envir.c:1740 src/main/paste.c:60 src/main/plot.c:1740
+#: src/main/envir.c:1738 src/main/paste.c:60 src/main/plot.c:1740
 msgid "invalid first argument"
 msgstr "第一個引數不正確"
 
@@ -2664,158 +2664,158 @@ msgstr "remove() 的第一個引數不正確"
 msgid "remove: variable \"%s\" was not found"
 msgstr "remove: 找不到 \"%s\" 這個變數"
 
-#: src/main/envir.c:1655
+#: src/main/envir.c:1653
 #, c-format
 msgid "variable \"%s\" was not found"
 msgstr "找不到 \"%s\" 這個變數"
 
-#: src/main/envir.c:1659
+#: src/main/envir.c:1657
 #, c-format
 msgid "variable \"%s\" of mode \"%s\" was not found"
 msgstr "沒有狀態是 \"%2$s\" 的變數 \"%1$s\""
 
-#: src/main/envir.c:1743
+#: src/main/envir.c:1741
 #, c-format
 msgid "invalid name in position %d"
 msgstr "在 %d 位置的名稱不正確"
 
-#: src/main/envir.c:1753
+#: src/main/envir.c:1751
 msgid "second argument must be an environment"
 msgstr "第二引數必須是環境物件"
 
-#: src/main/envir.c:1761
+#: src/main/envir.c:1759
 msgid "wrong length for 'mode' argument"
 msgstr "'mode' 引數的長度不正確"
 
-#: src/main/envir.c:1769
+#: src/main/envir.c:1767
 msgid "wrong length for 'ifnotfound' argument"
 msgstr "'ifnotfound' 引數的長度不正確"
 
-#: src/main/envir.c:1876
+#: src/main/envir.c:1874
 msgid "invalid use of missing"
 msgstr "missing 的使用方式不正確"
 
-#: src/main/envir.c:1901
+#: src/main/envir.c:1899
 msgid "missing can only be used for arguments"
 msgstr "missing 只能用於這些引數"
 
-#: src/main/envir.c:1986
+#: src/main/envir.c:1984
 msgid "attach: invalid object name"
 msgstr "attach: 目的物件名稱不正確"
 
-#: src/main/envir.c:1992
+#: src/main/envir.c:1990
 msgid "attach only works for lists and data frames"
 msgstr "attach 只適用於串列和資料框"
 
-#: src/main/envir.c:1998
+#: src/main/envir.c:1996
 msgid "attach: all elements must be named"
 msgstr "attach: 所有的元素都必須有名稱"
 
-#: src/main/envir.c:2083
+#: src/main/envir.c:2081
 msgid "detaching \"package:base\" is not allowed"
 msgstr "\"package:base\" 不能被拆離"
 
-#: src/main/envir.c:2351 src/main/envir.c:2402
+#: src/main/envir.c:2349 src/main/envir.c:2400
 msgid "argument must be an environment"
 msgstr "引數必須是環境物件"
 
-#: src/main/envir.c:2504 src/main/random.c:34 src/main/random.c:559
+#: src/main/envir.c:2502 src/main/random.c:34 src/main/random.c:559
 msgid "invalid arguments"
 msgstr "引數不正確"
 
-#: src/main/envir.c:2562
+#: src/main/envir.c:2560
 msgid "no enclosing environment"
 msgstr "沒有封閉的環境"
 
-#: src/main/envir.c:2609
+#: src/main/envir.c:2607
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "搜尋串列中沒有所謂的 \"%s\" 項目"
 
-#: src/main/envir.c:2626
+#: src/main/envir.c:2624
 msgid "using 'as.environment(NULL)' is deprecated"
 msgstr ""
 
-#: src/main/envir.c:2629
+#: src/main/envir.c:2627
 msgid "invalid object for as.environment"
 msgstr "as.environment 的目的物件不正確"
 
-#: src/main/envir.c:2637
+#: src/main/envir.c:2635
 #, fuzzy
 msgid "locking the base environment is not supported yet"
 msgstr "目前還不支援對 NULL (base) 環境進行鎖定"
 
-#: src/main/envir.c:2639 src/main/envir.c:2668 src/main/envir.c:2701
-#: src/main/envir.c:2721 src/main/envir.c:2743 src/main/envir.c:2777
-#: src/main/envir.c:2797
+#: src/main/envir.c:2637 src/main/envir.c:2666 src/main/envir.c:2699
+#: src/main/envir.c:2719 src/main/envir.c:2741 src/main/envir.c:2775
+#: src/main/envir.c:2795
 msgid "not an environment"
 msgstr "不是環境物件"
 
-#: src/main/envir.c:2695 src/main/envir.c:2715 src/main/envir.c:2735
-#: src/main/envir.c:2771 src/main/envir.c:2791 src/main/envir.c:2887
+#: src/main/envir.c:2693 src/main/envir.c:2713 src/main/envir.c:2733
+#: src/main/envir.c:2769 src/main/envir.c:2789 src/main/envir.c:2885
 msgid "not a symbol"
 msgstr "不是符號"
 
-#: src/main/envir.c:2707 src/main/envir.c:2727 src/main/envir.c:2783
-#: src/main/envir.c:2803
+#: src/main/envir.c:2705 src/main/envir.c:2725 src/main/envir.c:2781
+#: src/main/envir.c:2801
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "沒有 \"%s\" 繫結"
 
-#: src/main/envir.c:2737
+#: src/main/envir.c:2735
 msgid "not a function"
 msgstr "不是函數"
 
-#: src/main/envir.c:2746 src/main/envir.c:2760
+#: src/main/envir.c:2744 src/main/envir.c:2758
 msgid "symbol already has a regular binding"
 msgstr "符號已經有了正式繫結"
 
-#: src/main/envir.c:2848
+#: src/main/envir.c:2846
 msgid "unknown op"
 msgstr "沒有這種運算子"
 
-#: src/main/envir.c:2889
+#: src/main/envir.c:2887
 msgid "cannot unbind a locked binding"
 msgstr "無法切斷已經鎖定的繫結"
 
-#: src/main/envir.c:2891
+#: src/main/envir.c:2889
 msgid "cannot unbind an active binding"
 msgstr "無法切斷正在使用中的繫結"
 
-#: src/main/envir.c:2951
+#: src/main/envir.c:2949
 #, c-format
 msgid "using .GlobalEnv instead of '%s'"
 msgstr "用 .GlobalEnv 而不用 '%s'"
 
-#: src/main/envir.c:3018
+#: src/main/envir.c:3016
 msgid "namespaces not available; using .GlobalEnv"
 msgstr "名稱空間不可用；使用 .GlobalEnv"
 
-#: src/main/envir.c:3040
+#: src/main/envir.c:3038
 msgid "bad name space name"
 msgstr "不當的名稱空間名稱"
 
-#: src/main/envir.c:3052
+#: src/main/envir.c:3050
 msgid "name space already registered"
 msgstr "名稱空間已經登記"
 
-#: src/main/envir.c:3064
+#: src/main/envir.c:3062
 msgid "name space not registered"
 msgstr "名稱空間沒有登記"
 
-#: src/main/envir.c:3112
+#: src/main/envir.c:3110
 msgid "bad import environment argument"
 msgstr "不當導入環境引數"
 
-#: src/main/envir.c:3118
+#: src/main/envir.c:3116
 msgid "bad export environment argument"
 msgstr "不當導出環境引數"
 
-#: src/main/envir.c:3122
+#: src/main/envir.c:3120
 msgid "length of import and export names must match"
 msgstr "導入和導出名稱的長度必須相等"
 
-#: src/main/envir.c:3145
+#: src/main/envir.c:3143
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "導出的符號 '%s' 沒有值"
