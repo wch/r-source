@@ -1,18 +1,20 @@
 \name{crossprod}
 \alias{crossprod}
+\alias{tcrossprod}
 \title{Matrix Crossproduct}
 \description{
-  Given matrices \code{x} and \code{y} as arguments,
-  \code{crossprod} returns their matrix cross-product.
-  This is formally equivalent to, but faster than, the
-  call \code{t(x) \%*\% y}.
+  Given matrices \code{x} and \code{y} as arguments, return a matrix
+  cross-product. This is formally equivalent to (but faster than) the
+  call \code{t(x) \%*\% y} (\code{crossprod}) or \code{x \%*\% t(y)}
+  (\code{tcrossprod}).
 }
 \usage{
 crossprod(x, y = NULL)
 }
 \arguments{
   \item{x, y}{matrices: \code{y = NULL} is taken to be the
-    same matrix as \code{x}.}
+    same matrix as \code{x}.  Vectors are promoted to single-column
+    matrices.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

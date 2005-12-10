@@ -212,6 +212,9 @@ NEW FEATURES
 	warn for functions masking functions or non-functions masking
 	non-functions.
 
+    o	New function tcrossprod() for efficiently computing x %*% t(x)
+	and x %*% t(y).
+
 
 DEPRECATED & DEFUNCT
 

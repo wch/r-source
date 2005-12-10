@@ -482,8 +482,7 @@ static void crossprod(double *x, int nrx, int ncx,
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
         F77_CALL(dgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
 			x, &nrx, y, &nry, &zero, z, &ncx);
-    }
-    else { /* zero-extent operations should return zeroes */
+    } else { /* zero-extent operations should return zeroes */
 	int i;
 	for(i = 0; i < ncx*ncy; i++) z[i] = 0;
     }
@@ -499,13 +498,59 @@ static void ccrossprod(Rcomplex *x, int nrx, int ncx,
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
         F77_CALL(zgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
 			x, &nrx, y, &nry, &zero, z, &ncx);
-    }
-    else { /* zero-extent operations should return zeroes */
+    } else { /* zero-extent operations should return zeroes */
 	int i;
 	for(i = 0; i < ncx*ncy; i++) z[i].r = z[i].i = 0;
     }
 }
-/* "%*%" (op = 0)  or  crossprod (op = 1) : */
+
+static void symtcrossprod(double *x, int nr, int nc, double *z)
+{
+    char *trans = "N", *uplo = "U";
+    double one = 1.0, zero = 0.0;
+    int i, j;
+    if (nr > 0 && nc > 0) {
+        F77_CALL(dsyrk)(uplo, trans, &nr, &nc, &one, x, &nr, &zero, z, &nr);
+	for (i = 1; i < nr; i++)
+	    for (j = 0; j < i; j++) z[i + nr *j] = z[j + nr * i];
+    } else { /* zero-extent operations should return zeroes */
+	for(i = 0; i < nr*nr; i++) z[i] = 0;
+    }
+
+}
+
+static void tcrossprod(double *x, int nrx, int ncx,
+		      double *y, int nry, int ncy, double *z)
+{
+    char *transa = "N", *transb = "T";
+    double one = 1.0, zero = 0.0;
+    if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
+        F77_CALL(dgemm)(transa, transb, &nrx, &nry, &ncx, &one,
+			x, &nrx, y, &nry, &zero, z, &nrx);
+    } else { /* zero-extent operations should return zeroes */
+	int i;
+	for(i = 0; i < nrx*nry; i++) z[i] = 0;
+    }
+}
+
+static void tccrossprod(Rcomplex *x, int nrx, int ncx,
+			Rcomplex *y, int nry, int ncy, Rcomplex *z)
+{
+    char *transa = "N", *transb = "T";
+    Rcomplex one, zero;
+
+    one.r = 1.0; one.i = zero.r = zero.i = 0.0;
+    if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
+        F77_CALL(zgemm)(transa, transb, &nrx, &nry, &ncx, &one,
+			x, &nrx, y, &nry, &zero, z, &nrx);
+    } else { /* zero-extent operations should return zeroes */
+	int i;
+	for(i = 0; i < nrx*nry; i++) z[i].r = z[i].i = 0;
+    }
+}
+
+
+/* "%*%" (op = 0), crossprod (op = 1) or tcrossprod (op = 2) */
 SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int ldx, ldy, nrx, ncx, nry, ncy, mode;
@@ -519,7 +564,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     sym = isNull(y);
-    if (sym && (PRIMVAL(op) == 1)) y = x;
+    if (sym && (PRIMVAL(op) > 0)) y = x;
     if ( !(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y)) )
 	errorcall(call, _("requires numeric matrix/vector arguments"));
 
@@ -556,7 +601,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
 	else { /* crossprod */
-	    if (LENGTH(x) == nry) {	/* x is a row vector */
+	    if (LENGTH(x) == nry) {	/* x is a col vector */
 		nrx = LENGTH(x);
 		ncx = 1;
 	    }
@@ -578,7 +623,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
 	else {
-	    if (LENGTH(y) == nrx) {	/* y is a row vector */
+	    if (LENGTH(y) == nrx) {	/* y is a col vector */
 		nry = LENGTH(y);
 		ncy = 1;
 	    }
@@ -596,8 +641,12 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (ncx != nry)
 	    errorcall(call, _("non-conformable arguments"));
     }
-    else {
+    else if (PRIMVAL(op) == 1) {
 	if (nrx != nry)
+	    errorcall(call, _("non-conformable arguments"));
+    }
+    else {
+	if (ncx != ncy)
 	    errorcall(call, _("non-conformable arguments"));
     }
 
@@ -668,7 +717,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
-    else {					/* op == 1: crossprod() */
+    else if (PRIMVAL(op) == 1) {	/* op == 1: crossprod() */
 
 	PROTECT(ans = allocMatrix(mode, ncx, ncy));
 	if (mode == CPLXSXP)
@@ -710,6 +759,65 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 
 	    YDIMS_ET_CETERA;
+	}
+
+    }
+    else {					/* op == 2: tcrossprod() */
+
+	PROTECT(ans = allocMatrix(mode, nrx, nry));
+	if (mode == CPLXSXP)
+	    if(sym)
+		tccrossprod(COMPLEX(CAR(args)), nrx, ncx,
+			    COMPLEX(CAR(args)), nry, ncy, COMPLEX(ans));
+	    else
+		tccrossprod(COMPLEX(CAR(args)), nrx, ncx,
+			    COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
+	else {
+	    if(sym)
+		symtcrossprod(REAL(CAR(args)), nrx, ncx, REAL(ans));
+	    else
+		tcrossprod(REAL(CAR(args)), nrx, ncx,
+			   REAL(CADR(args)), nry, ncy, REAL(ans));
+	}
+
+	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
+	if (sym)
+	    PROTECT(ydims = xdims);
+	else
+	    PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
+
+	if (xdims != R_NilValue || ydims != R_NilValue) {
+	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
+
+	    /* allocate dimnames and dimnamesnames */
+
+	    PROTECT(dimnames = allocVector(VECSXP, 2));
+	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
+
+	    if (xdims != R_NilValue) {
+		if (ldx == 2) {
+		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
+		    dnx = getAttrib(xdims, R_NamesSymbol);
+		    if(!isNull(dnx))
+			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 0));
+		}
+	    }
+	    if (ydims != R_NilValue) {
+		if (ldy == 2) {
+		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 0));
+		    dny = getAttrib(ydims, R_NamesSymbol);
+		    if(!isNull(dny))
+			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0));
+		}
+	    }
+	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||
+		VECTOR_ELT(dimnames,1) != R_NilValue) {
+		if (dnx != R_NilValue || dny != R_NilValue)
+		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
+		setAttrib(ans, R_DimNamesSymbol, dimnames);
+	    }
+
+	    UNPROTECT(2);
 	}
     }
     UNPROTECT(3);
