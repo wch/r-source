@@ -1,10 +1,10 @@
-### $Id: nls.R,v 1.5 2004/06/10 11:25:28 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
 ### Copyright 1999-1999 Saikat DebRoy <saikat$stat.wisc.edu>,
 ###                     Douglas M. Bates <bates$stat.wisc.edu>,
 ###                     Jose C. Pinheiro <jcp$research.bell-labs.com>
+### Copyright 2005      The R Development Core Team
 ###
 ### This file is part of the nls library for R and related languages.
 ### It is made available under the terms of the GNU General Public
@@ -389,6 +389,9 @@ nls <-
     mf <- match.call()             # for creating the model frame
     varNames <- all.vars(formula)  # parameter and variable names from formula
 
+    if(!missing(weights))
+        warning("argument 'weights' is currently ignored")
+
     ## adjust a one-sided model formula by using 0 as the response
     if (length(formula) == 2) {
         formula[[3]] <- formula[[2]]
@@ -486,7 +489,7 @@ nls <-
         iv[19] <- 1:1
     scale <- 1
     low <- upp <- NULL
-    if (any(lower != -Inf) || any(upper != Inf)) { 
+    if (any(lower != -Inf) || any(upper != Inf)) {
         low <- rep(as.double(lower), length = length(par))
         upp <- rep(as.double(upper), length = length(par))
     }
