@@ -3,14 +3,15 @@
 \alias{nlsModel.plinear}
 \title{Create an nlsModel Object}
 \usage{
-nlsModel(form, data, start)
+nlsModel(form, data, start, wts)
 }
 \arguments{
- \item{form}{a nonlinear model formula}
+ \item{form}{a nonlinear model formula.}
  \item{data}{a data frame or a list in which to evaluate the variables
-     from the model formula}
+     from the model formula.}
  \item{start}{a named list or named numeric vector of starting
-   estimates for the parameters in the model}
+   estimates for the parameters in the model.}
+ \item{wts}{case weights.  If missing, assumed to be 1.}
 }
 \description{
   This is the constructor for \code{nlsModel} objects, which are

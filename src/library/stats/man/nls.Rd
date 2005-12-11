@@ -47,8 +47,7 @@ nls(formula, data, start, control, algorithm,
  \item{subset}{an optional vector specifying a subset of observations
    to be used in the fitting process.}
  \item{weights}{an optional numeric vector of (fixed) weights.  When
-   present, the objective function is weighted least squares. \emph{not
-     yet implemented}}
+   present, the objective function is weighted least squares.}
 \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
     the \code{na.action} setting of \code{\link{options}}, and is
@@ -96,6 +95,15 @@ nls(formula, data, start, control, algorithm,
   \item{data}{the expression that was passed to \code{nls} as the data
     argument.  The actual data values are present in the environment of
     the \code{m} component.}
+  \item{call}{the matched call.}
+  \item{na.action}{the \code{"na.action"} attribute (if any) of the
+    model frame.}
+  \item{dataClasses}{the \code{"dataClasses"} attribute (if any) of the
+    \code{"terms"} attribute of the model frame.}
+  \item{model}{if \code{model = TRUE}, the model frame.}
+  \item{weights}{if \code{weights} is supplied, the weights.}
+  \item{convergence, message}{for an \code{algorithm="port"} fit only,
+    a convergence code (0 or 1} and message.}
 }
 \references{
   Bates, D.M. and Watts, D.G. (1988)
@@ -154,12 +162,13 @@ Pur.wt <- nls( ~ weighted.MM(rate, conc, Vm, K), data = Treated,
               start = list(Vm = 200, K = 0.1),
               trace = TRUE)
 
+
 ## The two examples below show that you can fit a model to
 ## artificial data with noise but not to artificial data
 ## without noise.
-x = 1:10
-y = x                                  # perfect fit
-yeps = y + rnorm(length(y), sd = 0.01) # added noise
+x <- 1:10
+y <- x                                  # perfect fit
+yeps <- y + rnorm(length(y), sd = 0.01) # added noise
 nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
      trace = TRUE)
 \dontrun{

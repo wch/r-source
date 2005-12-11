@@ -3988,3 +3988,24 @@ writeLines(xx, con)
 close(con)
 unlink("test.gz")
 ## segfaulted in 2.2.0 on some x86_64 systems.
+
+
+## weighted nls fit
+y <- x <- 1:10
+yeps <- y + rnorm(length(y), sd = 0.01)
+wts <- rep(c(1, 2), length = 10)
+fit0 <- lm(yeps~x, weights=wts)
+summary(fit0, cor = TRUE)
+cf0 <- coef(summary(fit0))[, 1:2]
+fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
+           weights = wts, trace = TRUE)
+summary(fit)
+cf1 <- coef(summary(fit))[, 1:2]
+fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
+            weights = wts, trace = TRUE, algorithm = "port")
+summary(fit2)
+cf2 <- coef(summary(fit2))[, 1:2]
+rownames(cf0) <- c("a", "b")
+# expect relative errors ca 2e-08
+stopifnot(all.equal(cf1, cf0, 1e-6),  all.equal(cf1, cf0, 1e-6))
+## weights unsupported < 2.3.0

@@ -215,6 +215,8 @@ NEW FEATURES
     o	New function tcrossprod() for efficiently computing x %*% t(x)
 	and x %*% t(y).
 
+    o	nls() now supports 'weights'.
+
 
 DEPRECATED & DEFUNCT
 
