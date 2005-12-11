@@ -5,9 +5,6 @@ include MkRules
 
 RVER = @RVER@
 
-HELP = YES
-WINHELP = NO # Use one of NO, CHM
-
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
 RHOME = $(shell ./Rpwd.exe ../..)
