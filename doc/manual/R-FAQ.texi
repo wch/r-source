@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-12-09
+@set FAQ_DATE @value{FAQ_YEAR}-12-11
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2559,11 +2559,8 @@ Analysis (ICA) and Projection Pursuit.
 @item fda
 Functional Data Analysis: analysis of data where the basic observation
 is a function of some sort.
-@c <COMMENT>
-@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
-@c @item fdim
-@c Functions for calculating fractal dimension.
-@c </COMMENT>
+@item fdim
+Functions for calculating fractal dimension.
 @item fgac
 Families of Generalized Archimedean Copulas.
 @item fields
