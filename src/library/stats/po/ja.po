@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-12 09:29+0000\n"
 "PO-Revision-Date: 2005-06-02 16:10+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -46,17 +46,17 @@ msgstr "distance(): 不正な距離"
 #: family.c:20
 #, c-format
 msgid "Value %d out of range (0, 1)"
-msgstr ""
+msgstr "値 %d は範囲 (0, 1) 外です"
 
 #: family.c:40 family.c:53 family.c:70
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
-msgstr ""
+msgstr "引数 %s は空でない数値ベクトルでなければなりません "
 
 #: family.c:99 family.c:102
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
-msgstr ""
+msgstr "引数 %s は長さが 1 か %d の数値ベクトルでなければなりません"
 
 #: ksmooth.c:66
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
@@ -75,27 +75,33 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg のアルゴリズムが偏相関を見つけ損ないました"
 
 #: nls.c:75
-msgid "control must be a list"
+#, fuzzy
+msgid "'control' must be a list"
 msgstr "control はリストでなければなりません"
 
-#: nls.c:77 port.c:513
-msgid "m must be a list"
+#: nls.c:77
+#, fuzzy
+msgid "'m' must be a list"
 msgstr "m はリストでなければなりません"
 
 #: nls.c:83
-msgid "control$maxiter absent"
+#, fuzzy
+msgid "'control$maxiter' absent"
 msgstr "control$maxiter がありません"
 
 #: nls.c:88
-msgid "control$tol absent"
+#, fuzzy
+msgid "'control$tol' absent"
 msgstr "control$tol がありません"
 
 #: nls.c:93
-msgid "control$minFactor absent"
+#, fuzzy
+msgid "'control$minFactor' absent"
 msgstr "control$minFactor がありません"
 
 #: nls.c:102
-msgid "m$conv() absent"
+#, fuzzy
+msgid "'m$conv()' absent"
 msgstr "m$conv() がありません"
 
 #: nls.c:107
@@ -103,19 +109,23 @@ msgid "m$incr() absent"
 msgstr "m$incr() がありません"
 
 #: nls.c:112
-msgid "m$deviance() absent"
+#, fuzzy
+msgid "'m$deviance()' absent"
 msgstr "m$deviance() がありません"
 
 #: nls.c:117
-msgid "m$trace() absent"
+#, fuzzy
+msgid "'m$trace()' absent"
 msgstr "m$trace() がありません"
 
 #: nls.c:122
-msgid "m$setPars() absent"
+#, fuzzy
+msgid "'m$setPars()' absent"
 msgstr "m$setPars() がありません"
 
 #: nls.c:127
-msgid "m$getPars() absent"
+#, fuzzy
+msgid "'m$getPars()' absent"
 msgstr "m$getPars() がありません"
 
 #: nls.c:154
@@ -151,12 +161,12 @@ msgstr "モデルを評価する際，欠損値または無限大が生成され
 #: nls.c:230
 #, c-format
 msgid "variable '%s' is integer, not numeric"
-msgstr ""
+msgstr "変数 '%s' は整数です、数値ではありません"
 
 #: nls.c:232
 #, c-format
 msgid "variable '%s' is not numeric"
-msgstr ""
+msgstr "変数 '%s' は数値ではありません"
 
 #: pacf.c:81
 msgid "bad Starma struct"
@@ -179,17 +189,17 @@ msgstr "不正な lag.max 値です"
 #: port.c:111
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
-msgstr ""
+msgstr "Rf_divset: alg = %d は 1, 2, 3, または 4 でなければなりません"
 
 #: port.c:304
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
-msgstr ""
+msgstr "グラディエント関数は長さ %d の数値ベクトルを返さなければなりません"
 
 #: port.c:313
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr ""
+msgstr "ヘッシアン関数は次数 %d の正方数値行列を返さなければなりません"
 
 #: port.c:363
 msgid "'rho' must be an environment"
@@ -197,47 +207,49 @@ msgstr "'rho' は環境(environment)でなければなりません"
 
 #: port.c:365 port.c:512
 msgid "'d' must be a nonempty numeric vector"
-msgstr ""
+msgstr "`d' は空でない数値ベクトルでなければなりません"
 
 #: port.c:367
 msgid "When Hessian defined must also have gradient defined"
-msgstr ""
+msgstr "ヘッシアンを定義した際は、グラディエントも定義しなければなりません"
 
 #: port.c:370
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr ""
+msgstr "環境 `rho' は長さが %d の数値ベクトル `.par' を含まねばなりません"
 
-#: port.c:380
+#: port.c:380 port.c:532
 msgid "'lowerb' and 'upperb' must be numeric vectors"
-msgstr ""
+msgstr "lowerb と upperb は数値ベクトルでなければなりません"
 
 #: port.c:426
-msgid "getElement applies only to named lists"
-msgstr ""
+#, fuzzy
+msgid "'getElement' applies only to named lists"
+msgstr "getElement は名前つきリストにだけ適用されます"
 
 #: port.c:447
 #, c-format
 msgid "%s$%s() not found"
-msgstr ""
+msgstr "%s$%s() が見つかりません"
 
 #: port.c:460
-#, c-format
-msgid "gradient must be a numeric matrix of dimension (%d,%d)"
-msgstr ""
+#, fuzzy, c-format
+msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
+msgstr "グラディエントは次元 (%d,%d) の数値行列でなければなりません"
 
 #: port.c:481
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
+"モード %d, 長さ %d の fcn が作られました - モード %d, 長さ %d が必要でした"
 
 #: port.c:494
 msgid "invalid type for eval_check_store"
-msgstr ""
+msgstr "eval_check_store に対する不正なタイプです"
 
-#: port.c:532
-msgid "lowerb and upperb must be numeric vectors"
-msgstr ""
+#: port.c:513
+msgid "m must be a list"
+msgstr "m はリストでなければなりません"
 
 #: qr.c:30
 msgid "assert failed in src/library/ts/src/carray.c"

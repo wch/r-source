@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-12 09:29+0000\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -76,27 +76,33 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr "l'alrgoritmo di Burg non è riuscito a trovare correlazione parziale"
 
 #: nls.c:75
-msgid "control must be a list"
+#, fuzzy
+msgid "'control' must be a list"
 msgstr "control deve essere di tipo list"
 
-#: nls.c:77 port.c:513
-msgid "m must be a list"
+#: nls.c:77
+#, fuzzy
+msgid "'m' must be a list"
 msgstr "m deve essere di tipo list"
 
 #: nls.c:83
-msgid "control$maxiter absent"
+#, fuzzy
+msgid "'control$maxiter' absent"
 msgstr "control$maxiter assente"
 
 #: nls.c:88
-msgid "control$tol absent"
+#, fuzzy
+msgid "'control$tol' absent"
 msgstr "control$tol assente"
 
 #: nls.c:93
-msgid "control$minFactor absent"
+#, fuzzy
+msgid "'control$minFactor' absent"
 msgstr "control$minFactor assente"
 
 #: nls.c:102
-msgid "m$conv() absent"
+#, fuzzy
+msgid "'m$conv()' absent"
 msgstr "m$conv() assente"
 
 #: nls.c:107
@@ -104,19 +110,23 @@ msgid "m$incr() absent"
 msgstr "m$incr() assente"
 
 #: nls.c:112
-msgid "m$deviance() absent"
+#, fuzzy
+msgid "'m$deviance()' absent"
 msgstr "m$deviance() assente"
 
 #: nls.c:117
-msgid "m$trace() absent"
+#, fuzzy
+msgid "'m$trace()' absent"
 msgstr "m$trace() assente"
 
 #: nls.c:122
-msgid "m$setPars() absent"
+#, fuzzy
+msgid "'m$setPars()' absent"
 msgstr "m$setPars() assente"
 
 #: nls.c:127
-msgid "m$getPars() absent"
+#, fuzzy
+msgid "'m$getPars()' absent"
 msgstr "m$getPars() assente"
 
 #: nls.c:154
@@ -209,12 +219,12 @@ msgstr ""
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
-#: port.c:380
+#: port.c:380 port.c:532
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 
 #: port.c:426
-msgid "getElement applies only to named lists"
+msgid "'getElement' applies only to named lists"
 msgstr ""
 
 #: port.c:447
@@ -224,7 +234,7 @@ msgstr ""
 
 #: port.c:460
 #, c-format
-msgid "gradient must be a numeric matrix of dimension (%d,%d)"
+msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
 #: port.c:481
@@ -236,9 +246,9 @@ msgstr ""
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:532
-msgid "lowerb and upperb must be numeric vectors"
-msgstr ""
+#: port.c:513
+msgid "m must be a list"
+msgstr "m deve essere di tipo list"
 
 #: qr.c:30
 msgid "assert failed in src/library/ts/src/carray.c"

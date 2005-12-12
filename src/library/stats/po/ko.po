@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-12 09:29+0000\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -77,27 +77,33 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg의 알고니즘의 편상관을 검색되어서 결손시켰습니다"
 
 #: nls.c:75
-msgid "control must be a list"
+#, fuzzy
+msgid "'control' must be a list"
 msgstr "control는 리스트가 아니면 되지 않습니다"
 
-#: nls.c:77 port.c:513
-msgid "m must be a list"
+#: nls.c:77
+#, fuzzy
+msgid "'m' must be a list"
 msgstr "m는 리스트가 아니면 되지 않습니다"
 
 #: nls.c:83
-msgid "control$maxiter absent"
+#, fuzzy
+msgid "'control$maxiter' absent"
 msgstr "control$maxiter가 결여 되었습니다"
 
 #: nls.c:88
-msgid "control$tol absent"
+#, fuzzy
+msgid "'control$tol' absent"
 msgstr "control$tol가 결여 되었습니다"
 
 #: nls.c:93
-msgid "control$minFactor absent"
+#, fuzzy
+msgid "'control$minFactor' absent"
 msgstr "contril$minFactor가 결여 되었습니다"
 
 #: nls.c:102
-msgid "m$conv() absent"
+#, fuzzy
+msgid "'m$conv()' absent"
 msgstr "m$conv()가  걸여 되었습니다"
 
 #: nls.c:107
@@ -105,19 +111,23 @@ msgid "m$incr() absent"
 msgstr "m$incr()가 걸여 되었습니다"
 
 #: nls.c:112
-msgid "m$deviance() absent"
+#, fuzzy
+msgid "'m$deviance()' absent"
 msgstr "m$deviance()가 걸여 되었습니다"
 
 #: nls.c:117
-msgid "m$trace() absent"
+#, fuzzy
+msgid "'m$trace()' absent"
 msgstr "m$trace()가 걸여 되었습니다"
 
 #: nls.c:122
-msgid "m$setPars() absent"
+#, fuzzy
+msgid "'m$setPars()' absent"
 msgstr "m$setPars()가 없습니다"
 
 #: nls.c:127
-msgid "m$getPars() absent"
+#, fuzzy
+msgid "'m$getPars()' absent"
 msgstr "m$getPars()가 없습니다"
 
 #: nls.c:154
@@ -210,12 +220,12 @@ msgstr ""
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
-#: port.c:380
+#: port.c:380 port.c:532
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 
 #: port.c:426
-msgid "getElement applies only to named lists"
+msgid "'getElement' applies only to named lists"
 msgstr ""
 
 #: port.c:447
@@ -225,7 +235,7 @@ msgstr ""
 
 #: port.c:460
 #, c-format
-msgid "gradient must be a numeric matrix of dimension (%d,%d)"
+msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
 #: port.c:481
@@ -237,9 +247,9 @@ msgstr ""
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:532
-msgid "lowerb and upperb must be numeric vectors"
-msgstr ""
+#: port.c:513
+msgid "m must be a list"
+msgstr "m는 리스트가 아니면 되지 않습니다"
 
 #: qr.c:30
 msgid "assert failed in src/library/ts/src/carray.c"

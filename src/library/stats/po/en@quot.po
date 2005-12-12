@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
-"PO-Revision-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-12 09:29+0000\n"
+"PO-Revision-Date: 2005-12-12 09:29+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -98,48 +98,48 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg's algorithm failed to find partial correlation"
 
 #: nls.c:75
-msgid "control must be a list"
-msgstr "control must be a list"
+msgid "'control' must be a list"
+msgstr "‘control’ must be a list"
 
-#: nls.c:77 port.c:513
-msgid "m must be a list"
-msgstr "m must be a list"
+#: nls.c:77
+msgid "'m' must be a list"
+msgstr "‘m’ must be a list"
 
 #: nls.c:83
-msgid "control$maxiter absent"
-msgstr "control$maxiter absent"
+msgid "'control$maxiter' absent"
+msgstr "‘control$maxiter’ absent"
 
 #: nls.c:88
-msgid "control$tol absent"
-msgstr "control$tol absent"
+msgid "'control$tol' absent"
+msgstr "‘control$tol’ absent"
 
 #: nls.c:93
-msgid "control$minFactor absent"
-msgstr "control$minFactor absent"
+msgid "'control$minFactor' absent"
+msgstr "‘control$minFactor’ absent"
 
 #: nls.c:102
-msgid "m$conv() absent"
-msgstr "m$conv() absent"
+msgid "'m$conv()' absent"
+msgstr "‘m$conv()’ absent"
 
 #: nls.c:107
 msgid "m$incr() absent"
 msgstr "m$incr() absent"
 
 #: nls.c:112
-msgid "m$deviance() absent"
-msgstr "m$deviance() absent"
+msgid "'m$deviance()' absent"
+msgstr "‘m$deviance()’ absent"
 
 #: nls.c:117
-msgid "m$trace() absent"
-msgstr "m$trace() absent"
+msgid "'m$trace()' absent"
+msgstr "‘m$trace()’ absent"
 
 #: nls.c:122
-msgid "m$setPars() absent"
-msgstr "m$setPars() absent"
+msgid "'m$setPars()' absent"
+msgstr "‘m$setPars()’ absent"
 
 #: nls.c:127
-msgid "m$getPars() absent"
-msgstr "m$getPars() absent"
+msgid "'m$getPars()' absent"
+msgstr "‘m$getPars()’ absent"
 
 #: nls.c:154
 msgid "singular gradient"
@@ -231,13 +231,13 @@ msgstr "When Hessian defined must also have gradient defined"
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "environment ‘rho’ must contain a numeric vector ‘.par’ of length %d"
 
-#: port.c:380
+#: port.c:380 port.c:532
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "‘lowerb’ and ‘upperb’ must be numeric vectors"
 
 #: port.c:426
-msgid "getElement applies only to named lists"
-msgstr "getElement applies only to named lists"
+msgid "'getElement' applies only to named lists"
+msgstr "‘getElement’ applies only to named lists"
 
 #: port.c:447
 #, c-format
@@ -246,8 +246,8 @@ msgstr "%s$%s() not found"
 
 #: port.c:460
 #, c-format
-msgid "gradient must be a numeric matrix of dimension (%d,%d)"
-msgstr "gradient must be a numeric matrix of dimension (%d,%d)"
+msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
+msgstr "‘gradient’ must be a numeric matrix of dimension (%d,%d)"
 
 #: port.c:481
 #, c-format
@@ -258,9 +258,9 @@ msgstr "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgid "invalid type for eval_check_store"
 msgstr "invalid type for eval_check_store"
 
-#: port.c:532
-msgid "lowerb and upperb must be numeric vectors"
-msgstr "lowerb and upperb must be numeric vectors"
+#: port.c:513
+msgid "m must be a list"
+msgstr "m must be a list"
 
 #: qr.c:30
 msgid "assert failed in src/library/ts/src/carray.c"

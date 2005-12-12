@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-12 09:29+0000\n"
 "PO-Revision-Date: 2005-09-27 23:08-0300\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -79,48 +79,48 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr "algoritmo de Burg não conseguiu encontrar correlação parcial"
 
 #: nls.c:75
-msgid "control must be a list"
-msgstr "controle deve ser uma lista"
+msgid "'control' must be a list"
+msgstr "'control' deve ser uma lista"
 
-#: nls.c:77 port.c:513
-msgid "m must be a list"
-msgstr "m deve ser uma lista"
+#: nls.c:77
+msgid "'m' must be a list"
+msgstr "'m' deve ser uma lista"
 
 #: nls.c:83
-msgid "control$maxiter absent"
-msgstr "control$maxiter ausente"
+msgid "'control$maxiter' absent"
+msgstr "'control$maxiter' ausente"
 
 #: nls.c:88
-msgid "control$tol absent"
-msgstr "control$tol ausente"
+msgid "'control$tol' absent"
+msgstr "'control$tol' ausente"
 
 #: nls.c:93
-msgid "control$minFactor absent"
-msgstr "control$minFactor ausente"
+msgid "'control$minFactor' absent"
+msgstr "'control$minFactor' ausente"
 
 #: nls.c:102
-msgid "m$conv() absent"
-msgstr "m$conv() ausente"
+msgid "'m$conv()' absent"
+msgstr "'m$conv()' ausente"
 
 #: nls.c:107
 msgid "m$incr() absent"
-msgstr "m$incr() ausente"
+msgstr "'m$incr()' ausente"
 
 #: nls.c:112
-msgid "m$deviance() absent"
-msgstr "m$deviance() ausente"
+msgid "'m$deviance()' absent"
+msgstr "'m$deviance()' ausente"
 
 #: nls.c:117
-msgid "m$trace() absent"
-msgstr "m$trace() ausente"
+msgid "'m$trace()' absent"
+msgstr "'m$trace()' ausente"
 
 #: nls.c:122
-msgid "m$setPars() absent"
+msgid "'m$setPars()' absent"
 msgstr "m$setPars() ausente"
 
 #: nls.c:127
-msgid "m$getPars() absent"
-msgstr "m$getPars() ausente"
+msgid "'m$getPars()' absent"
+msgstr "'m$getPars()' ausente"
 
 #: nls.c:154
 msgid "singular gradient"
@@ -213,12 +213,13 @@ msgstr ""
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "ambiente 'rho' deve conter um vetor numérico '.par' de comprimento %d"
 
-#: port.c:380
+#: port.c:380 port.c:532
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' e 'upperb' devem ser vetores numéricos"
 
 #: port.c:426
-msgid "getElement applies only to named lists"
+#, fuzzy
+msgid "'getElement' applies only to named lists"
 msgstr "getElement se aplica apenas a listas nomeadas"
 
 #: port.c:447
@@ -227,8 +228,8 @@ msgid "%s$%s() not found"
 msgstr "%s$%s() não encontrado"
 
 #: port.c:460
-#, c-format
-msgid "gradient must be a numeric matrix of dimension (%d,%d)"
+#, fuzzy, c-format
+msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "função gradiente deve ser uma matriz numérica de dimensão (%d,%d)"
 
 #: port.c:481
@@ -241,9 +242,9 @@ msgstr ""
 msgid "invalid type for eval_check_store"
 msgstr "tipo inválido para eval_check_store"
 
-#: port.c:532
-msgid "lowerb and upperb must be numeric vectors"
-msgstr "'lowerb' e 'upperb' devem ser vetores numéricos"
+#: port.c:513
+msgid "m must be a list"
+msgstr "m deve ser uma lista"
 
 #: qr.c:30
 msgid "assert failed in src/library/ts/src/carray.c"
@@ -278,3 +279,6 @@ msgstr "erro na alocação em smooth(*, '3R')."
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valor faltante nas últimas %d observações"
+
+#~ msgid "lowerb and upperb must be numeric vectors"
+#~ msgstr "'lowerb' e 'upperb' devem ser vetores numéricos"

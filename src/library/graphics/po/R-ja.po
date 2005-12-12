@@ -43,16 +43,17 @@ msgid "'height' must be a vector or a matrix"
 msgstr "'height' はベクトルか行列でなければなりません"
 
 msgid "Cannot use shading lines in bars when log scale is used"
-msgstr ""
+msgstr "対数スケール使用時は、バー中に影線を使うことはできません"
 
 msgid "log scale error: at least one 'height + offset' value <= 0"
-msgstr ""
+msgstr "対数スケールのエラー: 少なくとも一つの 'height + offset' 値が <= 0"
 
 msgid "log scale error: 'xlim' <= 0"
-msgstr ""
+msgstr "対数スケールのエラー: 'xlim' <= 0"
 
 msgid "log scale error: 'ylim' <= 0"
-msgstr ""
+msgstr "対数スケールのエラー: 'ylim' <= 0"
+""
 
 msgid "incorrect number of names"
 msgstr "名前の数が誤りです"
@@ -73,17 +74,16 @@ msgid "invalid boxplot widths"
 msgstr "boxplot の幅が無効です"
 
 msgid "'formula' should specify exactly two variables"
-msgstr ""
+msgstr "'formula' は丁度二つの変数を特定すべきです"
 
 msgid "dependent variable should be a factor"
-msgstr ""
+msgstr "従属変数は因子でなければなりません"
 
-#, fuzzy
 msgid "explanatory variable should be numeric"
-msgstr "'y' 中の変数に数値でないものがあります"
+msgstr "説明変数は数値でなければなりません"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr ""
+msgstr "y 軸のメモリは累積確率のスケールです、 'ylim' は区間 [0,1] 中になければなりません"
 
 msgid "no 'z' matrix specified"
 msgstr "'z' 行列が指定されていません"
@@ -218,7 +218,7 @@ msgid "invalid title"
 msgstr "無効なタイトルです"
 
 msgid "'legend' is of length 0"
-msgstr ""
+msgstr "'legend' が長さゼロです"
 
 msgid "invalid coordinate lengths"
 msgstr "無効な座標長です"
@@ -320,10 +320,10 @@ msgid "'figs' must specify at least one screen"
 msgstr "'figs' は少なくとも一つのスクリーンを指定しなければなりません"
 
 msgid "a 2-way table has to be specified"
-msgstr ""
+msgstr "二元分類表を指定しなければなりません"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
-msgstr ""
+msgstr "x 軸の目盛は累積確率です、'xlim' は区間 [0,1] 中になければなりません"
 
 msgid "'x' must be a matrix or a data frame"
 msgstr "'x' は行列かデータフレームでなければなりません"
@@ -431,3 +431,4 @@ msgstr[1] "(複数の)外れ値 (%s) が boxplot %d から除かれました"
 
 #~ msgid "z value"
 #~ msgstr "個の z の値が"
+

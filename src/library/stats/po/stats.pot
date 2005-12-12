@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-12 09:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,27 +76,27 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr ""
 
 #: nls.c:75
-msgid "control must be a list"
+msgid "'control' must be a list"
 msgstr ""
 
-#: nls.c:77 port.c:513
-msgid "m must be a list"
+#: nls.c:77
+msgid "'m' must be a list"
 msgstr ""
 
 #: nls.c:83
-msgid "control$maxiter absent"
+msgid "'control$maxiter' absent"
 msgstr ""
 
 #: nls.c:88
-msgid "control$tol absent"
+msgid "'control$tol' absent"
 msgstr ""
 
 #: nls.c:93
-msgid "control$minFactor absent"
+msgid "'control$minFactor' absent"
 msgstr ""
 
 #: nls.c:102
-msgid "m$conv() absent"
+msgid "'m$conv()' absent"
 msgstr ""
 
 #: nls.c:107
@@ -104,19 +104,19 @@ msgid "m$incr() absent"
 msgstr ""
 
 #: nls.c:112
-msgid "m$deviance() absent"
+msgid "'m$deviance()' absent"
 msgstr ""
 
 #: nls.c:117
-msgid "m$trace() absent"
+msgid "'m$trace()' absent"
 msgstr ""
 
 #: nls.c:122
-msgid "m$setPars() absent"
+msgid "'m$setPars()' absent"
 msgstr ""
 
 #: nls.c:127
-msgid "m$getPars() absent"
+msgid "'m$getPars()' absent"
 msgstr ""
 
 #: nls.c:154
@@ -209,12 +209,12 @@ msgstr ""
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
-#: port.c:380
+#: port.c:380 port.c:532
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 
 #: port.c:426
-msgid "getElement applies only to named lists"
+msgid "'getElement' applies only to named lists"
 msgstr ""
 
 #: port.c:447
@@ -224,7 +224,7 @@ msgstr ""
 
 #: port.c:460
 #, c-format
-msgid "gradient must be a numeric matrix of dimension (%d,%d)"
+msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
 #: port.c:481
@@ -236,8 +236,8 @@ msgstr ""
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:532
-msgid "lowerb and upperb must be numeric vectors"
+#: port.c:513
+msgid "m must be a list"
 msgstr ""
 
 #: qr.c:30

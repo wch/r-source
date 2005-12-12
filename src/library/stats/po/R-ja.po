@@ -514,7 +514,6 @@ msgstr "有限な観測値が十分にありません"
 msgid "Cannot compute exact p-value with ties"
 msgstr "タイのため正確な p 値を計算することができません"
 
-#, fuzzy
 msgid "Cannot compute exact p-values with ties"
 msgstr "タイのため正確な p 値を計算することができません"
 
@@ -607,7 +606,6 @@ msgstr "'ColSideColors' は長さの ncol(x) の文字ベクトルでなけれ�
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
 msgstr "'RowSideColors' は長さ nrow(x) の文字ベクトルでなければなりません"
 
-#, fuzzy
 msgid "non-matched further arguments are disregarded"
 msgstr "余計な引数は捨てられました"
 
@@ -617,20 +615,17 @@ msgstr "引数 'x' は数値でなければなりません"
 msgid "'x' contains missing values"
 msgstr "'x' は欠測値を含んでいます"
 
-#, fuzzy
 msgid "'x' and 'weights' have unequal length"
-msgstr "'x' と 'g' は同じ長さを持たねばなりません"
+msgstr "'x' と 'weights' は同じ長さを持たねばなりません"
 
-#, fuzzy
 msgid "'weights' must all be finite"
-msgstr "予測子はすべて数値でなければなりません"
+msgstr "'weights' はすべて有限値でなければなりません"
 
-#, fuzzy
 msgid "'weights' must not be negative"
-msgstr "'x' は非負でなければなりません"
+msgstr "'weights' は非負でなければなりません"
 
 msgid "sum(weights) != 1  -- will not get true density"
-msgstr ""
+msgstr "sum(weights) != 1 -- 真の密度にはならないでしょう"
 
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "バンド幅を自動的に選ぶためには少なくとも二つの点が必要です"
@@ -662,9 +657,8 @@ msgstr "ラグ('lag')や階差('differences')には不適切な値です"
 msgid "'xi' has not the right length"
 msgstr "'xi' は正しい長さを持っていません"
 
-#, fuzzy
 msgid "incorrect dimensions for 'xi'"
-msgstr "'x' の長さが不正確です"
+msgstr "'xi' の次元が不正確です"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' はベクトルでも行列でもありません"
@@ -874,7 +868,7 @@ msgid "need 2 or more non-zero column marginals"
 msgstr ""
 
 msgid "'hybrid' is ignored for a 2 x 2 table"
-msgstr ""
+msgstr "'hybrid' は 2 x 2 分割表に対しては無視されます"
 
 msgid "all groups must contain data"
 msgstr "全てのグループはデータを含まなければなりません"
@@ -1108,9 +1102,8 @@ msgstr "'m' は 1 未満です"
 msgid "'r' is less than 0"
 msgstr "'r' は 0 未満です"
 
-#, fuzzy
 msgid "'m' must be numeric with non-negative integers"
-msgstr "'x' は非負整数でなければなりません"
+msgstr "'m' は非負整数の数値ベクトルでなければなりません"
 
 msgid "unknown named kernel"
 msgstr "未知の名前のカーネルです"
@@ -1389,7 +1382,7 @@ msgid "type '%s' is not implemented yet"
 msgstr "型 '%s' はまだ実装されていません"
 
 msgid "this fit does not inherit from \"lm\""
-msgstr ""
+msgstr "この当てはめは \"lm\" を継承していません"
 
 msgid "'cterms' argument must match terms in model object"
 msgstr ""
@@ -1468,7 +1461,7 @@ msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level' は {0,1,2} 中にありません"
 
 msgid "lower < upper  is not fulfilled"
-msgstr "よlower < upper になっていません"
+msgstr "lower < upper になっていません"
 
 msgid "f() values at end points not of opposite sign"
 msgstr "f() の端点での値が異なった符号を持ちません"
@@ -1476,18 +1469,17 @@ msgstr "f() の端点での値が異なった符号を持ちません"
 msgid "_NOT_ converged in"
 msgstr "収束しませんでした"
 
-#, fuzzy
 msgid "control argument must be a named list"
-msgstr "'split'引数はリストでなければなりません"
+msgstr "制御引数は名前付きリストでなければなりません"
 
 msgid "unrecognized control element(s) named `"
-msgstr ""
+msgstr "認識されない制御要素、名前は `"
 
 msgid "' ignored"
-msgstr ""
+msgstr "'、は無視されました"
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
-msgstr ""
+msgstr "論理値の `hessian' は許されません。ドキュメントを見てください。"
 
 msgid "'params' has wrong length"
 msgstr "'params' は 誤った長さです"
@@ -1517,10 +1509,10 @@ msgid "singular gradient matrix at initial parameter estimates"
 msgstr "パラメータの初期推定値で勾配行列が特異です"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
-msgstr ""
+msgstr "algorithm = \"port\" でない限り上限もしくは下限は無視されます"
 
 msgid "Convergence failure:"
-msgstr ""
+msgstr "収束の失敗："
 
 msgid "rows with zero weights not counted"
 msgstr "重みゼロの行はカウントされません"
@@ -1721,9 +1713,8 @@ msgstr "次の定数変数 (%s) は実際は変化しています"
 msgid "no 'time' or 'id' specified"
 msgstr "時間('time')も 'id' も指定されていません"
 
-#, fuzzy
 msgid "'k' must be positive"
-msgstr "'iter.max' は正でなければなりません"
+msgstr "'k' は正でなければなりません"
 
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr "'k' は奇数でなければなりません! 'k' を以下のように変更します："
@@ -1792,11 +1783,10 @@ msgid "setting df = 1  __use with care!__"
 msgstr "設定 df = 1 は注意して使わなければなりません！"
 
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
-msgstr ""
+msgstr "smooth.spline(*, keep.data=TRUE) の結果が必要です"
 
-#, fuzzy
 msgid "type = \"partial\" is not yet implemented"
-msgstr "型 '%s' に対する SEはまだ実装されていません"
+msgstr "type = \"partial\" はまだ実装されていません"
 
 msgid "not a valid \"smooth.spline\" object"
 msgstr "有効な \"smooth.spline\" オブジェクトではありません"
@@ -2034,7 +2024,7 @@ msgid "not enough (finite) 'x' observations"
 msgstr "(有限な) 'x' の観察値が十分ではありません"
 
 msgid "Requested conf.level not achievable"
-msgstr ""
+msgstr "要求された conf.level は達成不能です"
 
 msgid "cannot compute exact confidence interval with ties"
 msgstr "タイがあるので、正確な信頼区間を計算することができません"
@@ -2045,9 +2035,8 @@ msgstr "ゼロ値のため、正確な p 値を計算することができませ
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "ゼロ値のため、正確な信頼区間を計算することができません"
 
-#, fuzzy
 msgid "must supply either 'formula' or 'data'"
-msgstr "1 つ以上のベクトルを与えなければなりません"
+msgstr "'formula' か 'data' のどちらかを与えなければなりません"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "漸近回帰モデルの当てはめで、異なる入力値が少なすぎます"
