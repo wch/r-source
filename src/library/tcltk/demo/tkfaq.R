@@ -11,10 +11,10 @@ local({
     tkpack(txt, side="left", fill="both", expand=TRUE)
     tkpack(scr, side="right", fill="y")
 
-    chn <- tclopen(file.path(R.home(), "FAQ"))
+    chn <- tclopen(file.path(R.home("doc"), "FAQ"))
     tkinsert(txt, "end", tclread(chn))
     tclclose(chn)
-    
+
     tkconfigure(txt, state="disabled")
     tkmark.set(txt,"insert","0.0")
     tkfocus(txt)
