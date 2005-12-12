@@ -11,7 +11,8 @@ FULLVERSION=`cat ../../../VERSION`
 RPREFIX = $(shell perl ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 
-INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ NEWS README RESOURCES THANKS
+INFO_FILES = COPYING NEWS README
+DOC_INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ RESOURCES THANKS
 GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories
@@ -48,23 +49,25 @@ endif
 	$(CP) -pr $(R_HOME)/doc/html $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/manual/*.html $(R_HOME)/doc/manual/*.pdf \
 	  $(RPREFIX)/doc/manual
-#	html copies of these are in doc/manual, and we don't have PDFs on menus
+#	html copies of these are in doc/manual, and we don't have FAQ PDF on menus
 	$(RM) $(RPREFIX)/doc/manual/R-FAQ.pdf
 	$(RM) $(RPREFIX)/doc/html/R-admin.html 
 	$(RM) $(RPREFIX)/doc/html/index-default.html
 #
 	$(CP) -p $(foreach i,$(INFO_FILES),$(R_HOME)/$i) $(RPREFIX)
-	$(CP) -p $(foreach i,$(GW_INFO_FILES),../$i) $(RPREFIX)
+	$(CP) -p $(foreach i,$(DOC_INFO_FILES),$(R_HOME)/doc/$i) $(RPREFIX)/doc
+	$(CP) -p $(foreach i,$(GW_INFO_FILES),../$i) $(RPREFIX)/doc
+	mv $(RPREFIX)/doc/CHANGES $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" ../README > $(RPREFIX)/README.$(RPREFIX)
-	$(SED) -e 3,5d ../README.packages > $(RPREFIX)/README.packages
+	$(SED) -e 3,5d ../README.packages > $(RPREFIX)/doc/README.packages
 # convert docs and batch files to CRLF: might already be on Windows, though.
 ifeq ($(strip $(BUILD)),CROSS)
-	zip -l dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
+	zip -l dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/* $(RPREFIX)/bin/*.bat
 	unzip -o dosfiles.zip
 else
-	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
+	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/* $(RPREFIX)/bin/*.bat
 	unzip -ao dosfiles.zip
 endif
 	$(RM) dosfiles.zip

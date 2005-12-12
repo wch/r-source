@@ -159,7 +159,7 @@ rlibs:
 	$(MAKE) --no-print-directory -C ../extra/intl -f Makefile.win
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./graphapp
 	$(MAKE) --no-print-directory -C ./getline
 	@for ex in pcre bzip2 zlib xdr; do \
@@ -171,7 +171,7 @@ rmodules:
 	  OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(CP) unicode/iconv.dll ../../modules/
 
-COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
+COPYRIGHTS: $(RHOME)/doc/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
 
 
@@ -440,7 +440,7 @@ distclean veryclean: clean clean-recommended
 	$(RM) -r cran/*.html cran/*.htm cran/ReadMe cran/README* cran/*.exe \
 		cran/md5sum.txt cran/*.$(RPREFIX) 
 	$(RM) -r .vignettes # it gets left behind sometimes
-	$(RM) ../../FAQ ../../RESOURCES ../../doc/html/resources.html \
+	$(RM) ../../doc/FAQ ../../doc/RESOURCES ../../doc/html/resources.html \
 	  ../../SVN-REVISION # not in SVN sources
 	$(RM) -r ../../share/locale
 	$(RM) XINSTALL # from cross-building
