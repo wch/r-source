@@ -611,6 +611,9 @@ BUG FIXES
         so R_log was not available on platforms defining it.
 
 
+    o	HoltWinters() was using a slightly incorrect formula in the C code.
+
+
 
 		CHANGES IN R VERSION 2.2.0
 
