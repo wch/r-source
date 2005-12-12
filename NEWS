@@ -324,6 +324,11 @@ INSTALLATION CHANGES
 	under some circumstances glibc reported 60 when the true value
 	was 100.
 
+    o	The top-level documentation files AUTHORS COPYING.LIB COPYRIGHTS
+	FAQ RESOURCES THANKS have been moved to doc, and COPYING and NEWS
+	are installed there.  The file Y2K has been removed from the
+	distribution.
+
 
 UTILITIES
 

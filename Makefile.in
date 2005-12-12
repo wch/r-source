@@ -10,14 +10,14 @@ top_builddir = .
 include $(top_builddir)/Makeconf
 
 distdir = $(PACKAGE)-$(VERSION)
-INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS NEWS THANKS
-NON_SVN_INSTFILES = FAQ RESOURCES SVN-REVISION
+INSTFILES = COPYING NEWS
+NON_SVN_INSTFILES = SVN-REVISION
 DISTFILES = $(INSTFILES) \
 	ChangeLog INSTALL ONEWS OONEWS README VERSION \
 	Makeconf.in Makefile.in \
 	config.site configure configure.ac
 SUBDIRS = m4 tools doc etc share src tests @USE_NLS_TRUE@ po
-SUBDIRS_WITH_NO_BUILD = 
+SUBDIRS_WITH_NO_BUILD = @USE_NLS_FALSE@ po
 
 all: Makefile Makeconf R docs recommended
 recommended: @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
@@ -81,6 +81,9 @@ install: installdirs svnonly
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)"; \
 	done
+	@for f in $(INSTFILES); do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rdocdir)"; \
+	done
 	@for f in $(NON_SVN_INSTFILES); do \
 	  $(INSTALL_DATA) $${f} "$(rhome)"; \
 	done
@@ -95,7 +98,7 @@ install: installdirs svnonly
 @WANT_R_FRAMEWORK_TRUE@		@(cp $(R_FRAMEWORK_DIR)/Resources/bin/R $(R_FRAMEWORK_DIR)/Resources/R)
 
 svnonly:
-	@if test ! -f "$(srcdir)/FAQ" || test -f non-tarball ; then \
+	@if test ! -f "$(srcdir)/doc/FAQ" || test -f non-tarball ; then \
 	  (cd doc/manual && $(MAKE) front-matter) ; \
 	  touch non-tarball ; \
 	  (cd $(srcdir); LC_ALL=C TZ=GMT svn info || echo "Revision: unknown") 2> /dev/null \

@@ -11,8 +11,8 @@ for d in "${USER_R_HOME}" "${USER_R_HOME}/doc" \
 done
 
 for f in AUTHORS COPYING THANKS; do
-  if test -f "${R_HOME}/${f}"; then
-    ${LN_S} "${R_HOME}/${f}" "${USER_R_HOME}/${f}"
+  if test -f "${R_DOC_DIR}/${f}"; then
+    ${LN_S} "${R_DOC_DIR}/${f}" "${USER_R_HOME}/doc/${f}"
   fi
 done
 

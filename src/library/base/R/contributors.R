@@ -9,9 +9,9 @@ contributors <- function()
                      "effort with\ncontributions from all over the ",
                      "world.\n\n",
                      sep = ""), outConn)
-    writeLines(readLines(file.path(R.home(), "AUTHORS")), outConn)
+    writeLines(readLines(file.path(R.home("doc"), "AUTHORS")), outConn)
     writeLines("", outConn)
-    writeLines(readLines(file.path(R.home(), "THANKS")), outConn)
+    writeLines(readLines(file.path(R.home("doc"), "THANKS")), outConn)
     close(outConn)
     file.show(outFile, delete.file = TRUE)
 }

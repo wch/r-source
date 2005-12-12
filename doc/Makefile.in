@@ -11,9 +11,10 @@ subdir = doc
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-INSTFILES =  CRAN_mirrors.csv KEYWORDS KEYWORDS.db
+INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS CRAN_mirrors.csv \
+	KEYWORDS KEYWORDS.db THANKS
 DISTFILES = Makefile.in $(INSTFILES) R.aux
-NON_SVN_INSTFILES = R.1
+NON_SVN_INSTFILES = FAQ RESOURCES R.1
 SUBDIRS = html manual
 
 HELP2MAN = $(PERL) $(top_srcdir)/tools/help2man.pl

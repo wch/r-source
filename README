@@ -2,7 +2,7 @@
 			THE BASIC R README
 
 
-	   (See "FAQ" and "RESOURCES" for more detailed information
+	   (See "doc/FAQ" and "doc/RESOURCES" for more detailed information
 				      - these files are only in the tarballs)
 	   (See "INSTALL"             for help on installation)
 
@@ -47,7 +47,7 @@ large group of individuals has contributed to R by sending code and bug
 reports.
 
 Since mid-1997 there has been a core group who can modify the R source
-code archive, listed in file AUTHORS.
+code archive, listed in file doc/AUTHORS.
 
 R 1.0.0 was released on 29 February 2000 and 2.0.0 on 4 October 2004.
 

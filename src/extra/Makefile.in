@@ -14,7 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 SUBDIRS = bzip2 pcre xdr zlib @USE_NLS_TRUE@ intl
-SUBDIRS_WITH_NO_BUILD =
+SUBDIRS_WITH_NO_BUILD = @USE_NLS_FALSE@ intl
 
 LIBBZ2 = @BUILD_BZLIB_TRUE@ bzip2
 LIBPCRE = @BUILD_PCRE_TRUE@ pcre
