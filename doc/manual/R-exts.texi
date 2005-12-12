@@ -1061,7 +1061,11 @@ directly.
 
 @findex R CMD check
 Using @code{R CMD check}, the @R{} package checker, one can test whether
-@emph{source} @R{} packages work correctly.  This runs a series of checks.
+@emph{source} @R{} packages work correctly.  It can be run on one or
+more directories, or gzipped package @command{tar}
+archives@footnote{This may require GNU @command{tar}: the command used
+can be set with environment variable @env{TAR}.}  with extension
+@samp{.tar.gz} or @samp{.tgz}.  This runs a series of checks.
 
 @enumerate
 @item
