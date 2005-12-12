@@ -222,6 +222,7 @@ foreach my $pkg (@ARGV) {
 	    ## workaround for paths in Cygwin tar
 	    $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	}
+	## this requires GNU tar: ATT 'tar x' does not support -C.
 	if(R_system("$gzip -dc '$pkg' | $tar -xf - -C $dir")) {
 	    die "Error: cannot untar $pkg\n";}
 	$pkg = &file_path($dir, $pkgname);
