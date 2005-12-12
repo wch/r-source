@@ -200,13 +200,13 @@ correct versions of the recommended packages: if the number in the file
 @file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to download
 the contents of @samp{http://CRAN.R-project.org/src/contrib/@var{dir}},
 where @var{dir} is @samp{@var{x}.@var{y}.@var{z}/Recommended} for
-r-devel or @file{@var{x}.@var{y}.@var{z}-patched/Recommended} for
-r-patched, respectively, to directory @file{src/library/Recommended} in
-the sources you have unpacked.  After downloading manually you need to
-execute @command{tools/link-recommended} from the top level of the
-sources to make the requisite links in @file{src/library/Recommended}.
-A suitable incantation from the top level of the R sources using
-@command{wget} might be
+r-devel or @file{@var{x}.@var{y}-patched/Recommended} for r-patched,
+respectively, to directory @file{src/library/Recommended} in the sources
+you have unpacked.  After downloading manually you need to execute
+@command{tools/link-recommended} from the top level of the sources to
+make the requisite links in @file{src/library/Recommended}.  A suitable
+incantation from the top level of the R sources using @command{wget}
+might be
 
 @example
 wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
@@ -221,7 +221,7 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 @cindex Installing under Unix-alikes
 
 @R{} will configure and build under a number of common Unix and
-Unix-alike platforms including@var{cpu}-*-linux-gnu for the alpha,
+Unix-alike platforms including @var{cpu}-*-linux-gnu for the alpha,
 amd64, arm, hppa, ix86, ia64, m68k, powerpc, and sparc CPUs (see e.g.@:
 @url{http://buildd.debian.org/build.php?&pkg=r-base}),
 powerpc-apple-darwin and sparc-sun-solaris, as well as probably (it is
@@ -399,12 +399,12 @@ You will not be able to build the info files unless you have
 The DVI versions can be previewed and printed using standard programs
 such as @command{xdvi} and @command{dvips}.  The PDF versions can be
 viewed using Acrobat Reader or (fairly recent versions of)
-@command{ghostscript}: they have hyperlinks that can be followed in
-Acrobat Reader.  The info files are suitable for reading online with
-Emacs or the standalone @acronym{GNU} Info.  The DVI and PDF versions
-will be created using the papersize selected at configuration (default
-ISO a4):  this can be overridden by setting @env{R_PAPERSIZE} on the
-@command{make} command line, or setting @env{R_PAPERSIZE} in the
+@command{xpdf} and @command{ghostscript}: they have hyperlinks that can
+be followed in the first two.  The info files are suitable for reading
+online with Emacs or the standalone @acronym{GNU} Info.  The DVI and PDF
+versions will be created using the papersize selected at configuration
+(default ISO a4):  this can be overridden by setting @env{R_PAPERSIZE}
+on the @command{make} command line, or setting @env{R_PAPERSIZE} in the
 environment and using @command{make -e}.  (If re-making the manuals for
 a different papersize, you should first delete the file
 @file{doc/manual/version.texi}.)
@@ -486,9 +486,9 @@ This will install to the following directories:
 the front-end shell script
 @item @var{prefix}/man/man1 or @var{mandir}/man1
 the man page
-@item @var{prefix}/$LIBnn/R or @var{libdir}/R
+@item @var{prefix}/@var{LIBnn}/R or @var{libdir}/R
 all the rest (libraries, on-line help system, @dots{}).  Here
-@code{$LIBnn} is usually @code{lib}, but may be @code{lib64} on some
+@var{LIBnn} is usually @samp{lib}, but may be @samp{lib64} on some
 64-bit Linux systems.
 @end table
 
@@ -527,9 +527,11 @@ are installed.
 The configure option @option{--libdir} controls where the main @R{} files
 are installed: the default is
 
+@c <FIXME: What is EPREFIX?>
 @example
 libdir=EPREFIX/$@{LIBnn@}
 @end example
+@c </FIXME>
 
 All of @code{bindir} and @code{mandir} and @code{libdir} can also be
 specified on the @command{make install} command line.
@@ -1897,7 +1899,7 @@ could use
 
 @noindent
 if the appropriate library directory such as
-@file{/opt/acml2.7.0/gnu64/lib} is in the @samp{LD_LIBRRARY_PATH}.
+@file{/opt/acml2.7.0/gnu64/lib} is in the @env{LD_LIBRRARY_PATH}.
 For other compilers, see the ACML documentation.  Although the
 documentation is unclear, 32-bit versions of ACML do run on other
 @code{ia32} chips such as AthlonMP and P4.
@@ -2224,7 +2226,7 @@ is to search for
 @c F95_compilers in m4/R.m4:
 @command{f95}, @command{fort}, @command{xlf95},
 @command{ifort}, @command{ifc}, @command{efc}, @command{pgf95}
-@command{lf95}, @command{gfortran}, @command{ftn} @command{g95},
+@command{lf95}, @command{gfortran}, @command{ftn}, @command{g95},
 @c F90 compilers in m4/R.m4:
 @command{f90}, @command{xlf90}, @command{pghpf}, @command{pgf90},
 @command{epcf90},
@@ -2997,8 +2999,8 @@ may need to be compiled without optimization.  If configure detects
 @acronym{GNU} FORTRAN or the use of @command{f2c} it adds flag
 @option{-ffloat-store} which suffices, but it is possible that
 @file{src/modules/lapack/Makefile} will need to be edited to remove
-optimization on other platforms.  (This is true when using @samp{icc}
-on @samp{ix86} Linux, for example.)
+optimization on other platforms.  (This is true when using @command{icc}
+on ix86 Linux, for example.)
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include
@@ -3149,7 +3151,6 @@ strongly recommended for Mozilla-based browsers.
 This and @code{j2re 1.4.2_01} do work: the latter can be found in Sun's
 archive at @url{http://java.sun.com/products/archive/}.
 
-@noindent
 Other Java installations, for example those from Blackdown and IBM, have
 been used.
 
