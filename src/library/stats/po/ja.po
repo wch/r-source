@@ -46,17 +46,17 @@ msgstr "distance(): 不正な距離"
 #: family.c:20
 #, c-format
 msgid "Value %d out of range (0, 1)"
-msgstr ""
+msgstr "値 %d は範囲 (0, 1) 外です"
 
 #: family.c:40 family.c:53 family.c:70
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
-msgstr ""
+msgstr "引数 %s は空でない数値ベクトルでなければなりません "
 
 #: family.c:99 family.c:102
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
-msgstr ""
+msgstr "引数 %s は長さが 1 か %d の数値ベクトルでなければなりません"
 
 #: ksmooth.c:66
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
@@ -147,12 +147,12 @@ msgstr "モデルを評価する際，欠損値または無限大が生成され
 #: nls.c:226
 #, c-format
 msgid "variable '%s' is integer, not numeric"
-msgstr ""
+msgstr "変数 '%s' は整数です、数値ではありません"
 
 #: nls.c:228
 #, c-format
 msgid "variable '%s' is not numeric"
-msgstr ""
+msgstr "変数 '%s' は数値ではありません"
 
 #: pacf.c:72
 msgid "bad Starma struct"
@@ -175,17 +175,17 @@ msgstr "不正な lag.max 値です"
 #: port.c:111
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
-msgstr ""
+msgstr "Rf_divset: alg = %d は 1, 2, 3, または 4 でなければなりません"
 
 #: port.c:304
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
-msgstr ""
+msgstr "グラディエント関数は長さ %d の数値ベクトルを返さなければなりません"
 
 #: port.c:313
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr ""
+msgstr "ヘッシアン関数は次数 %d の正方数値行列を返さなければなりません"
 
 #: port.c:360
 msgid "`rho' must be an environment"
@@ -193,43 +193,43 @@ msgstr "'rho' は環境(environment)でなければなりません"
 
 #: port.c:362 port.c:509
 msgid "`d' must be a nonempty numeric vector"
-msgstr ""
+msgstr "`d' は空でない数値ベクトルでなければなりません"
 
 #: port.c:364
 msgid "When Hessian defined must also have gradient defined"
-msgstr ""
+msgstr "ヘッシアンを定義した際は、グラディエントも定義しなければなりません"
 
 #: port.c:367
 #, c-format
 msgid "environment `rho' must contain a numeric vector `.par' of length %d"
-msgstr ""
+msgstr "環境 `rho' は長さが %d の数値ベクトル `.par' を含まねばなりません"
 
 #: port.c:377 port.c:529
 msgid "lowerb and upperb must be numeric vectors"
-msgstr ""
+msgstr "lowerb と upperb は数値ベクトルでなければなりません"
 
 #: port.c:423
 msgid "getElement applies only to named lists"
-msgstr ""
+msgstr "getElement は名前つきリストにだけ適用されます"
 
 #: port.c:444
 #, c-format
 msgid "%s$%s() not found"
-msgstr ""
+msgstr "%s$%s() が見つかりません"
 
 #: port.c:457
 #, c-format
 msgid "gradient must be a numeric matrix of dimension (%d,%d)"
-msgstr ""
+msgstr "グラディエントは次元 (%d,%d) の数値行列でなければなりません"
 
 #: port.c:478
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr ""
+msgstr "モード %d, 長さ %d の fcn が作られました - モード %d, 長さ %d が必要でした"
 
 #: port.c:491
 msgid "invalid type for eval_check_store"
-msgstr ""
+msgstr "eval_check_store に対する不正なタイプです"
 
 #: qr.c:30
 msgid "assert failed in src/library/ts/src/carray.c"
@@ -265,3 +265,4 @@ msgstr "smooth(*, '3R') 中の割り当てエラーです．"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "直前の %d 個の観測値中に欠損値があります"
+

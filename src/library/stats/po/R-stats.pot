@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-12-08 17:08\n"
+"POT-Creation-Date: 2005-12-12 09:04\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1416,6 +1416,9 @@ msgid "setVarying : vary length must match length of parameters"
 msgstr ""
 
 msgid "singular gradient matrix at initial parameter estimates"
+msgstr ""
+
+msgid "argument 'weights' is currently ignored"
 msgstr ""
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""

@@ -42,7 +42,7 @@ msgid "invalid 'row.names' specification"
 msgstr "無効な 'row.names' の指定です"
 
 msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
+msgstr "row.names = FALSE の時 col.names = NA は意味をなしません"
 
 msgid "invalid 'col.names' specification"
 msgstr "無効な 'col.names' 指定です"
@@ -78,7 +78,7 @@ msgid "second argument must be a list"
 msgstr "第二引数はリストでなければなりません"
 
 msgid "'iconvlist' is not available on this system"
-msgstr ""
+msgstr "iconvlistはこのシステムで利用可能ではありません"
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr "'kind' は長さ 1 の文字列(使用されるべき RNG 名) でなければなりません"
@@ -471,7 +471,7 @@ msgid "not defined for POSIXt objects"
 msgstr "POSIXt オブジェクトに対しては定義されていません"
 
 msgid "'tzone' attributes are inconsistent"
-msgstr ""
+msgstr "'tzone' 属性は整合性がありません"
 
 msgid "not defined for \"POSIXct\" objects"
 msgstr "\"POSIXct\" オブジェクトに対しては定義されていません"
@@ -700,7 +700,7 @@ msgid "there is no package called '%s'"
 msgstr "'%s' という名前のパッケージはありません"
 
 msgid "no library trees found in 'lib.loc'"
-msgstr ""
+msgstr "'lib.loc' 中に如何なるライブラリー木も見つかりません"
 
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr ""
@@ -1205,10 +1205,10 @@ msgid "unable to find a plausible encoding"
 msgstr "もっともらしいエンコーディングを見つけられません"
 
 msgid "'chdir = TRUE' makes no sense for a URL"
-msgstr ""
+msgstr "'chdir = TRUE' は URL に対しては意味がありません"
 
 msgid "'chdir = TRUE' makes no sense for a connection"
-msgstr ""
+msgstr "'chdir = TRUE' はコネクションに対しては意味がありません"
 
 msgid "'%s' is not an existing file"
 msgstr "'%s' は既存のファイルではありません"
@@ -1292,7 +1292,7 @@ msgid "argument to 'which' is not logical"
 msgstr "'which' への引数は論理値ではありません"
 
 msgid "attempt to change '%s' ignored"
-msgstr ""
+msgstr "'%s' を変更しようとしましたが無視します"
 
 msgid "invalid 'digits'"
 msgstr "無効な 'digits' です"
@@ -1306,13 +1306,11 @@ msgstr "'cmd' を実行できませんでした"
 msgid "'cmd' execution failed with error code %d"
 msgstr "'cmd' の実行はエラーコード %d で失敗しました"
 
-#, fuzzy
 msgid "package '%s' has a non-function '.First.lib'"
-msgstr "パッケージ '%s' は '%s' に併合されました"
+msgstr "パッケージ '%s' は関数でない '.First.lib' を持ちます"
 
-#, fuzzy
 msgid "cannot find name space environment"
-msgstr "名前空間ではありません"
+msgstr "名前空間環境を見つけられません"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
@@ -1351,3 +1349,4 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
 msgstr[1] "警告メッセージ(複数)：\n"
+
