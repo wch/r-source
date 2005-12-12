@@ -80,17 +80,17 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
 
     conv = getListElement(control, tmp, "maxiter");
     if(conv == NULL || !isNumeric(conv))
-	error(_("'control$maxiter' absent"));
+	error(_("'%s' absent"), "control$maxiter");
     maxIter = asInteger(conv);
 
     conv = getListElement(control, tmp, "tol");
     if(conv == NULL || !isNumeric(conv))
-	error(_("'control$tol' absent"));
+	error(_("'%s' absent"), "control$tol");
     tolerance = asReal(conv);
 
     conv = getListElement(control, tmp, "minFactor");
     if(conv == NULL || !isNumeric(conv))
-	error(_("'control$minFactor' absent"));
+	error(_("'%s' absent"), "control$minFactor");
     minFac = asReal(conv);
 
     UNPROTECT(1);
@@ -99,32 +99,32 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
 
     conv = getListElement(m, tmp, "conv");
     if(conv == NULL || !isFunction(conv))
-	error(_("'m$conv()' absent"));
+	error(_("'%s' absent"), "m$conv()");
     PROTECT(conv = lang1(conv));
 
     incr = getListElement(m, tmp, "incr");
     if(incr == NULL || !isFunction(incr))
-	error(_("m$incr() absent"));
+	error(_("'%s' absent"), "m$incr()");
     PROTECT(incr = lang1(incr));
 
     deviance = getListElement(m, tmp, "deviance");
     if(deviance == NULL || !isFunction(deviance))
-	error(_("'m$deviance()' absent"));
+	error(_("'%s' absent"), "m$deviance()");
     PROTECT(deviance = lang1(deviance));
 
     trace = getListElement(m, tmp, "trace");
     if(trace == NULL || !isFunction(trace))
-	error(_("'m$trace()' absent"));
+	error(_("'%s' absent"), "m$trace()");
     PROTECT(trace = lang1(trace));
 
     setPars = getListElement(m, tmp, "setPars");
     if(setPars == NULL || !isFunction(setPars))
-	error(_("'m$setPars()' absent"));
+	error(_("'%s' absent"), "m$setPars()");
     PROTECT(setPars);
 
     getPars = getListElement(m, tmp, "getPars");
     if(getPars == NULL || !isFunction(getPars))
-	error(_("'m$getPars()' absent"));
+	error(_("'%s' absent"), "m$getPars()");
     PROTECT(getPars = lang1(getPars));
 
     PROTECT(pars = eval(getPars, R_GlobalEnv));
