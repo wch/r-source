@@ -82,10 +82,10 @@ void HoltWinters (double *x,
 	/* estimate of seasonal component *in* period i */
 	if (*gamma > 0) {
 	    if (*seasonal == 1)
-		season[s0] = *gamma       * (x[i] - level[i0])
+		season[s0] = *gamma       * (x[i] - level[i0 - 1])
  		           + (1 - *gamma) * stmp;
 	    else
-		season[s0] = *gamma       * (x[i] / level[i0])
+		season[s0] = *gamma       * (x[i] / level[i0 - 1])
 			   + (1 - *gamma) * stmp;
 	}
     }
