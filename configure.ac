@@ -146,9 +146,9 @@ fi
 m4_divert_once([HELP_BEGIN], [
 R installation directories:
   --libdir=DIR        R files to R_HOME=DIR/R @<:@EPREFIX/$LIBnn@:>@
-  --rdocdir=DIR       R doc files to DIR      @<:@R_HOME/doc@:>@
-  --rincludedir=DIR   R include files to DIR  @<:@R_HOME/include@:>@
-  --rsharedir=DIR     R share files to DIR    @<:@R_HOME/share@:>@])dnl
+    rdocdir=DIR       R doc files to DIR      @<:@R_HOME/doc@:>@
+    rincludedir=DIR   R include files to DIR  @<:@R_HOME/include@:>@
+    rsharedir=DIR     R share files to DIR    @<:@R_HOME/share@:>@])dnl
 
 if test -z ${rdocdir}; then
   rdocdir='${rhome}/doc'
