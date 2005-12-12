@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-12 09:29+0000\n"
+"POT-Creation-Date: 2005-12-12 10:04+0000\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -77,58 +77,18 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg의 알고니즘의 편상관을 검색되어서 결손시켰습니다"
 
 #: nls.c:75
-#, fuzzy
 msgid "'control' must be a list"
-msgstr "control는 리스트가 아니면 되지 않습니다"
+msgstr "'control'는 리스트가 아니면 되지 않습니다"
 
 #: nls.c:77
-#, fuzzy
 msgid "'m' must be a list"
-msgstr "m는 리스트가 아니면 되지 않습니다"
+msgstr "'m'는 리스트가 아니면 되지 않습니다"
 
-#: nls.c:83
-#, fuzzy
-msgid "'control$maxiter' absent"
-msgstr "control$maxiter가 결여 되었습니다"
-
-#: nls.c:88
-#, fuzzy
-msgid "'control$tol' absent"
-msgstr "control$tol가 결여 되었습니다"
-
-#: nls.c:93
-#, fuzzy
-msgid "'control$minFactor' absent"
-msgstr "contril$minFactor가 결여 되었습니다"
-
-#: nls.c:102
-#, fuzzy
-msgid "'m$conv()' absent"
-msgstr "m$conv()가  걸여 되었습니다"
-
-#: nls.c:107
-msgid "m$incr() absent"
-msgstr "m$incr()가 걸여 되었습니다"
-
-#: nls.c:112
-#, fuzzy
-msgid "'m$deviance()' absent"
-msgstr "m$deviance()가 걸여 되었습니다"
-
-#: nls.c:117
-#, fuzzy
-msgid "'m$trace()' absent"
-msgstr "m$trace()가 걸여 되었습니다"
-
-#: nls.c:122
-#, fuzzy
-msgid "'m$setPars()' absent"
-msgstr "m$setPars()가 없습니다"
-
-#: nls.c:127
-#, fuzzy
-msgid "'m$getPars()' absent"
-msgstr "m$getPars()가 없습니다"
+#: nls.c:83 nls.c:88 nls.c:93 nls.c:102 nls.c:107 nls.c:112 nls.c:117
+#: nls.c:122 nls.c:127
+#, c-format
+msgid "'%s' absent"
+msgstr "'%s'가 없습니다"
 
 #: nls.c:154
 msgid "singular gradient"
@@ -145,16 +105,16 @@ msgid "number of iterations exceeded maximum of %d"
 msgstr "반복수가 최대치 %d를 넘었습니다"
 
 #: nls.c:202
-msgid "theta should be of type character"
-msgstr "theta는 문자 유형이 아니면 되지 않습니다"
+msgid "'theta' should be of type character"
+msgstr "'theta'는 문자 유형이 아니면 되지 않습니다"
 
 #: nls.c:204 port.c:359
 msgid "use of NULL environment is deprecated"
 msgstr ""
 
 #: nls.c:208
-msgid "rho should be an environment"
-msgstr "rho는 환경이 나오지 않으면 되지 않습니다"
+msgid "'rho' should be an environment"
+msgstr "'rho'는 환경이 나오지 않으면 되지 않습니다"
 
 #: nls.c:224 nls.c:252
 msgid "Missing value or an infinity produced when evaluating the model"
@@ -284,3 +244,4 @@ msgstr "smooth(*,'3R')에서의 할당 에러입니다"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "직전의 %d개의 관측치에서 결손값이 있습니다"
+

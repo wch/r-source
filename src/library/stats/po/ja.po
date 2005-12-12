@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-12 09:29+0000\n"
+"POT-Creation-Date: 2005-12-12 10:04+0000\n"
 "PO-Revision-Date: 2005-06-02 16:10+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -75,58 +75,18 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg のアルゴリズムが偏相関を見つけ損ないました"
 
 #: nls.c:75
-#, fuzzy
 msgid "'control' must be a list"
-msgstr "control はリストでなければなりません"
+msgstr "'control' はリストでなければなりません"
 
 #: nls.c:77
-#, fuzzy
 msgid "'m' must be a list"
-msgstr "m はリストでなければなりません"
+msgstr "'m' はリストでなければなりません"
 
-#: nls.c:83
-#, fuzzy
-msgid "'control$maxiter' absent"
-msgstr "control$maxiter がありません"
-
-#: nls.c:88
-#, fuzzy
-msgid "'control$tol' absent"
-msgstr "control$tol がありません"
-
-#: nls.c:93
-#, fuzzy
-msgid "'control$minFactor' absent"
-msgstr "control$minFactor がありません"
-
-#: nls.c:102
-#, fuzzy
-msgid "'m$conv()' absent"
-msgstr "m$conv() がありません"
-
-#: nls.c:107
-msgid "m$incr() absent"
-msgstr "m$incr() がありません"
-
-#: nls.c:112
-#, fuzzy
-msgid "'m$deviance()' absent"
-msgstr "m$deviance() がありません"
-
-#: nls.c:117
-#, fuzzy
-msgid "'m$trace()' absent"
-msgstr "m$trace() がありません"
-
-#: nls.c:122
-#, fuzzy
-msgid "'m$setPars()' absent"
-msgstr "m$setPars() がありません"
-
-#: nls.c:127
-#, fuzzy
-msgid "'m$getPars()' absent"
-msgstr "m$getPars() がありません"
+#: nls.c:83 nls.c:88 nls.c:93 nls.c:102 nls.c:107 nls.c:112 nls.c:117
+#: nls.c:122 nls.c:127
+#, c-format
+msgid "'%s' absent"
+msgstr "'%s' がありません"
 
 #: nls.c:154
 msgid "singular gradient"
@@ -143,16 +103,16 @@ msgid "number of iterations exceeded maximum of %d"
 msgstr "繰り返し数が最大値 %d を超えました"
 
 #: nls.c:202
-msgid "theta should be of type character"
-msgstr "theta は文字型でなければなりません"
+msgid "'theta' should be of type character"
+msgstr "'theta' は文字型でなければなりません"
 
 #: nls.c:204 port.c:359
 msgid "use of NULL environment is deprecated"
 msgstr ""
 
 #: nls.c:208
-msgid "rho should be an environment"
-msgstr "rho は環境(environment)でなければなりません"
+msgid "'rho' should be an environment"
+msgstr "'rho' は環境(environment)でなければなりません"
 
 #: nls.c:224 nls.c:252
 msgid "Missing value or an infinity produced when evaluating the model"
@@ -223,9 +183,8 @@ msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "lowerb と upperb は数値ベクトルでなければなりません"
 
 #: port.c:426
-#, fuzzy
 msgid "'getElement' applies only to named lists"
-msgstr "getElement は名前つきリストにだけ適用されます"
+msgstr "'getElement' は名前つきリストにだけ適用されます"
 
 #: port.c:447
 #, c-format
@@ -285,3 +244,4 @@ msgstr "smooth(*, '3R') 中の割り当てエラーです．"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "直前の %d 個の観測値中に欠損値があります"
+

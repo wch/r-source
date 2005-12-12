@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-12 09:29+0000\n"
+"POT-Creation-Date: 2005-12-12 10:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,40 +83,10 @@ msgstr ""
 msgid "'m' must be a list"
 msgstr ""
 
-#: nls.c:83
-msgid "'control$maxiter' absent"
-msgstr ""
-
-#: nls.c:88
-msgid "'control$tol' absent"
-msgstr ""
-
-#: nls.c:93
-msgid "'control$minFactor' absent"
-msgstr ""
-
-#: nls.c:102
-msgid "'m$conv()' absent"
-msgstr ""
-
-#: nls.c:107
-msgid "m$incr() absent"
-msgstr ""
-
-#: nls.c:112
-msgid "'m$deviance()' absent"
-msgstr ""
-
-#: nls.c:117
-msgid "'m$trace()' absent"
-msgstr ""
-
-#: nls.c:122
-msgid "'m$setPars()' absent"
-msgstr ""
-
-#: nls.c:127
-msgid "'m$getPars()' absent"
+#: nls.c:83 nls.c:88 nls.c:93 nls.c:102 nls.c:107 nls.c:112 nls.c:117
+#: nls.c:122 nls.c:127
+#, c-format
+msgid "'%s' absent"
 msgstr ""
 
 #: nls.c:154
@@ -134,7 +104,7 @@ msgid "number of iterations exceeded maximum of %d"
 msgstr ""
 
 #: nls.c:202
-msgid "theta should be of type character"
+msgid "'theta' should be of type character"
 msgstr ""
 
 #: nls.c:204 port.c:359
@@ -142,7 +112,7 @@ msgid "use of NULL environment is deprecated"
 msgstr ""
 
 #: nls.c:208
-msgid "rho should be an environment"
+msgid "'rho' should be an environment"
 msgstr ""
 
 #: nls.c:224 nls.c:252

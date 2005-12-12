@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-12 09:29+0000\n"
+"POT-Creation-Date: 2005-12-12 10:04+0000\n"
 "PO-Revision-Date: 2005-09-27 23:08-0300\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -86,41 +86,11 @@ msgstr "'control' deve ser uma lista"
 msgid "'m' must be a list"
 msgstr "'m' deve ser uma lista"
 
-#: nls.c:83
-msgid "'control$maxiter' absent"
-msgstr "'control$maxiter' ausente"
-
-#: nls.c:88
-msgid "'control$tol' absent"
-msgstr "'control$tol' ausente"
-
-#: nls.c:93
-msgid "'control$minFactor' absent"
-msgstr "'control$minFactor' ausente"
-
-#: nls.c:102
-msgid "'m$conv()' absent"
-msgstr "'m$conv()' ausente"
-
-#: nls.c:107
-msgid "m$incr() absent"
-msgstr "'m$incr()' ausente"
-
-#: nls.c:112
-msgid "'m$deviance()' absent"
-msgstr "'m$deviance()' ausente"
-
-#: nls.c:117
-msgid "'m$trace()' absent"
-msgstr "'m$trace()' ausente"
-
-#: nls.c:122
-msgid "'m$setPars()' absent"
-msgstr "m$setPars() ausente"
-
-#: nls.c:127
-msgid "'m$getPars()' absent"
-msgstr "'m$getPars()' ausente"
+#: nls.c:83 nls.c:88 nls.c:93 nls.c:102 nls.c:107 nls.c:112 nls.c:117
+#: nls.c:122 nls.c:127
+#, c-format
+msgid "'%s' absent"
+msgstr "'%s' ausente"
 
 #: nls.c:154
 msgid "singular gradient"
@@ -137,16 +107,16 @@ msgid "number of iterations exceeded maximum of %d"
 msgstr "número de iterações excedeu o máximo de %d"
 
 #: nls.c:202
-msgid "theta should be of type character"
-msgstr "theta deve ser do tipo caractere"
+msgid "'theta' should be of type character"
+msgstr "'theta' deve ser do tipo caractere"
 
 #: nls.c:204 port.c:359
 msgid "use of NULL environment is deprecated"
 msgstr ""
 
 #: nls.c:208
-msgid "rho should be an environment"
-msgstr "rho deve ser um ambiente"
+msgid "'rho' should be an environment"
+msgstr "'rho' deve ser um ambiente"
 
 #: nls.c:224 nls.c:252
 msgid "Missing value or an infinity produced when evaluating the model"
@@ -218,9 +188,8 @@ msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' e 'upperb' devem ser vetores numéricos"
 
 #: port.c:426
-#, fuzzy
 msgid "'getElement' applies only to named lists"
-msgstr "getElement se aplica apenas a listas nomeadas"
+msgstr "'getElement' se aplica apenas a listas nomeadas"
 
 #: port.c:447
 #, c-format
@@ -279,6 +248,30 @@ msgstr "erro na alocação em smooth(*, '3R')."
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valor faltante nas últimas %d observações"
+
+#~ msgid "'control$maxiter' absent"
+#~ msgstr "'control$maxiter' ausente"
+
+#~ msgid "'control$tol' absent"
+#~ msgstr "'control$tol' ausente"
+
+#~ msgid "'control$minFactor' absent"
+#~ msgstr "'control$minFactor' ausente"
+
+#~ msgid "'m$conv()' absent"
+#~ msgstr "'m$conv()' ausente"
+
+#~ msgid "m$incr() absent"
+#~ msgstr "'m$incr()' ausente"
+
+#~ msgid "'m$deviance()' absent"
+#~ msgstr "'m$deviance()' ausente"
+
+#~ msgid "'m$trace()' absent"
+#~ msgstr "'m$trace()' ausente"
+
+#~ msgid "'m$setPars()' absent"
+#~ msgstr "m$setPars() ausente"
 
 #~ msgid "lowerb and upperb must be numeric vectors"
 #~ msgstr "'lowerb' e 'upperb' devem ser vetores numéricos"

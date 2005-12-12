@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-12 09:29+0000\n"
+"POT-Creation-Date: 2005-12-12 10:04+0000\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -76,58 +76,18 @@ msgid "Burg's algorithm failed to find partial correlation"
 msgstr "l'alrgoritmo di Burg non è riuscito a trovare correlazione parziale"
 
 #: nls.c:75
-#, fuzzy
 msgid "'control' must be a list"
-msgstr "control deve essere di tipo list"
+msgstr "'control' deve essere di tipo list"
 
 #: nls.c:77
-#, fuzzy
 msgid "'m' must be a list"
-msgstr "m deve essere di tipo list"
+msgstr "'m' deve essere di tipo list"
 
-#: nls.c:83
-#, fuzzy
-msgid "'control$maxiter' absent"
-msgstr "control$maxiter assente"
-
-#: nls.c:88
-#, fuzzy
-msgid "'control$tol' absent"
-msgstr "control$tol assente"
-
-#: nls.c:93
-#, fuzzy
-msgid "'control$minFactor' absent"
-msgstr "control$minFactor assente"
-
-#: nls.c:102
-#, fuzzy
-msgid "'m$conv()' absent"
-msgstr "m$conv() assente"
-
-#: nls.c:107
-msgid "m$incr() absent"
-msgstr "m$incr() assente"
-
-#: nls.c:112
-#, fuzzy
-msgid "'m$deviance()' absent"
-msgstr "m$deviance() assente"
-
-#: nls.c:117
-#, fuzzy
-msgid "'m$trace()' absent"
-msgstr "m$trace() assente"
-
-#: nls.c:122
-#, fuzzy
-msgid "'m$setPars()' absent"
-msgstr "m$setPars() assente"
-
-#: nls.c:127
-#, fuzzy
-msgid "'m$getPars()' absent"
-msgstr "m$getPars() assente"
+#: nls.c:83 nls.c:88 nls.c:93 nls.c:102 nls.c:107 nls.c:112 nls.c:117
+#: nls.c:122 nls.c:127
+#, c-format
+msgid "'%s' absent"
+msgstr "'%s' assente"
 
 #: nls.c:154
 msgid "singular gradient"
@@ -144,16 +104,16 @@ msgid "number of iterations exceeded maximum of %d"
 msgstr "il numero di iterazioni ha superato il massimo di %d"
 
 #: nls.c:202
-msgid "theta should be of type character"
-msgstr "theta deve essere di tipo character"
+msgid "'theta' should be of type character"
+msgstr "'theta' deve essere di tipo character"
 
 #: nls.c:204 port.c:359
 msgid "use of NULL environment is deprecated"
 msgstr ""
 
 #: nls.c:208
-msgid "rho should be an environment"
-msgstr "rho deve essere un environment"
+msgid "'rho' should be an environment"
+msgstr "'rho' deve essere un environment"
 
 #: nls.c:224 nls.c:252
 msgid "Missing value or an infinity produced when evaluating the model"
