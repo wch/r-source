@@ -345,11 +345,11 @@ distclean: clean
 	@-rm -f *.pdf *.dvi *.info* *.html
 maintainer-clean: distclean
 
-../../FAQ: R-FAQ.texi
+../FAQ: R-FAQ.texi
 	@$(TEXI2TEXT) -o $@ $<
-../../RESOURCES: resources.texi
+../RESOURCES: resources.texi
 	@$(TEXI2TEXT) -o $@ $<
 ../html/resources.html: resources.texi
 	@$(TEXI2HTML) --no-headers -o $@ $<
 
-svnonly: ../../FAQ ../../RESOURCES ../html/resources.html
+svnonly: ../FAQ ../RESOURCES ../html/resources.html
