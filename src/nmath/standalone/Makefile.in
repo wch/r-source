@@ -106,7 +106,6 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 Makedeps: Makefile ../../include/Rconfig.h
 	@$(MAKE) $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
-	@cat $(DEPENDS) | sed s/\.o:/.lo:/>> Makefile
 	@touch $@
 
 libRmath.a: $(libRmath_a_OBJECTS)
