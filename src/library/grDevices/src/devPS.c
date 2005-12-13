@@ -959,7 +959,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 #ifdef SUPPORT_MBCS
     if(mbcslocale && !isSymbol && c >= 128 && c < 65536) { /* Unicode */
 	void *cd = NULL;
-	unsigned char *i_buf, *o_buf, out[2];
+	char *i_buf, *o_buf, out[2];
 	size_t i_len, o_len, status;
 	unsigned short w[2];
 	
@@ -982,7 +982,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	    warning(_("font metrics unknown for Unicode character U+%04x"), c);
 	    return;
 	} else {
-	    c = out[0];
+	    c = out[0] & 0xff;
 	}
     }
 #endif
