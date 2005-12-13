@@ -43,6 +43,7 @@ EXTRA_SOURCES_C = \
 	mkdtemp.c \
 	snprintf.c strdup.c strncasecmp.c \
 	vsnprintf.c xspline.c
+
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
@@ -110,9 +111,9 @@ libR_la_OBJECTS = Rembedded.o $(OBJECTS)
 ## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
-libR_la_LIBADD = @LTLIBOBJS@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) \
+libR_la_LIBADD = @LIBOBJS@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) \
   $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR) @LIBINTL@
-libR_la_DEPENDENCIES = @LTLIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
+libR_la_DEPENDENCIES = @LIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 ## </FIXME>
 @USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
 LIBR_LDFLAGS = @LIBR_LDFLAGS@
