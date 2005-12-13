@@ -36,8 +36,10 @@ libunix_a_OBJECTS = $(OBJECTS)
 ## </FIXME>
 noinst_LTLIBRARIES = libunix.la
 libunix_la_SOURCES = $(SOURCES)
-libunix_la_OBJECTS = $(OBJECTS:.o=.lo)
+libunix_la_OBJECTS = $(OBJECTS)
 @USE_LIBTOOL_TRUE@libunix_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
+@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+
 
 all: Makefile Makedeps R
 

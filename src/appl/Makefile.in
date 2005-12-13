@@ -59,7 +59,7 @@ libappl_a_OBJECTS = $(OBJECTS)
 noinst_LTLIBRARIES = libappl.la
 ## </FIXME>
 libappl_la_SOURCES = $(SOURCES)
-libappl_la_OBJECTS = $(OBJECTS:.o=.lo)
+libappl_la_OBJECTS = $(OBJECTS)
 @USE_LIBTOOL_TRUE@libappl_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
 
 all: Makefile Makedeps R
@@ -75,6 +75,9 @@ R: Makefile
 	@$(MAKE) Makedeps
 @WANT_R_SHLIB_FALSE@	@$(MAKE) $(noinst_LIBRARIES)
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
+@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+@WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(R_XTRA_CFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
+
 
 libappl.a: $(libappl_a_OBJECTS)
 	rm -f $@

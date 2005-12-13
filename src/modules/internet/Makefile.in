@@ -33,6 +33,8 @@ internet_la_OBJECTS = $(OBJECTS)
 @USE_LIBTOOL_TRUE@internet_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
 internet_la_LIBADD = $(LIBR)
 
+ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+
 all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in \

@@ -106,7 +106,7 @@ libR_la = libR$(DYLIB_EXT)
 Rexeclib_LTLIBRARIES = $(libR_la)
 libR_la_SOURCES = $(SOURCES)
 libR_la_LDFLAGS =
-libR_la_OBJECTS = Rembedded.lo $(OBJECTS:.o=.lo)
+libR_la_OBJECTS = Rembedded.o $(OBJECTS)
 ## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
@@ -116,6 +116,8 @@ libR_la_DEPENDENCIES = @LTLIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/st
 ## </FIXME>
 @USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
 LIBR_LDFLAGS = @LIBR_LDFLAGS@
+@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+@WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(R_XTRA_CFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
 all: Makefile Makedeps R
 
@@ -165,7 +167,7 @@ $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 ## against ... the definition of $(SHLIB_LINK) in the top level Makeconf
 ## has a libtool conditional which we do not have here (as we currently
 ## cannot use libtool anyway).
-	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo  2>/dev/null` $(libR_la_LIBADD) $(READLINE_LIBS) $(LIBS)
+	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.o ../nmath/*.o ../unix/*.o  2>/dev/null` $(libR_la_LIBADD) $(READLINE_LIBS) $(LIBS)
 ## </FIXME>
 
 install-lib-local: $(libR_la)

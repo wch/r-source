@@ -49,6 +49,10 @@ lapack_la_LIBADD = $(LIBR)
 Rlapack_la_SOURCES = $(LIBSOURCES)
 Rlapack_la_OBJECTS = $(LIBOBJECTS)
 
+ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+ALL_FFLAGS = $(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
+
+
 all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in \
