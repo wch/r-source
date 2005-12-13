@@ -16,12 +16,12 @@ SOURCES_F = @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.f
 
 DEPENDS = $(SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
-OBJECTS = $(SOURCES_C:.c=.lo) $(SOURCES_F:.f=.lo)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = Lapack.h
 
 LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
   @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f
-LIBOBJECTS = $(LIBSOURCES:.f=.lo)
+LIBOBJECTS = $(LIBSOURCES:.f=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
@@ -62,10 +62,10 @@ Makedeps: Makefile $(DEPENDS)
 
 ## we need to force stores with gcc >= 3.4.0 at least on i686
 DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS) -ffloat-store
-@USING_G77_TRUE@dlamc.lo: dlamc.f
+@USING_G77_TRUE@dlamc.o: dlamc.f
 @USING_G77_TRUE@	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
 
-@USING_F2C_TRUE@dlamc.lo: dlamc.f
+@USING_F2C_TRUE@dlamc.o: dlamc.f
 @USING_F2C_TRUE@	$(F2C) $(F2CFLAGS) < $< > c_dlamc.c
 @USING_F2C_TRUE@	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -ffloat-store -c c_dlamc.c -o $@
 @USING_F2C_TRUE@	@rm -f c_dlamc.c

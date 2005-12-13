@@ -75,6 +75,11 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir)/.. $(CPPFLAGS) $(DEFS)
 .SUFFIXES:
 .SUFFIXES: .c .d .o .lo
 
+ALL_CFLAGS_LO = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+
+@r_cc_lo_rules_frag@
+
+
 all: Makefile inc static shared
 
 inc:
@@ -105,8 +110,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 Makedeps: Makefile ../../include/Rconfig.h
 	@$(MAKE) $(DEPENDS)
-	@cat $(DEPENDS) >> Makefile
-	@cat $(DEPENDS) | sed s/\.o:/.lo:/>> Makefile
+	@cat $(DEPENDS) | $(SED) -e 's/^\([^:]*\)\.o\([ 	]\)*:/\1.o \1.lo\2:/' >> Makefile
 	@touch $@
 
 libRmath.a: $(libRmath_a_OBJECTS)
@@ -137,7 +141,8 @@ installdirs:
 @WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/include
 @WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib
 
-RMATH_FRAMEWORK_DIR ?= /Library/Frameworks/Rmath.framework
+## ?= is not portable make syntax, so we conditionalize this.
+@WANT_R_FRAMEWORK_TRUE@RMATH_FRAMEWORK_DIR ?= /Library/Frameworks/Rmath.framework
 install-Rmath-framework: $(libRmath_la)
 	@(cd ../../include; $(MAKE) Rmath.h)
 	@$(MKINSTALLDIRS) $(RMATH_FRAMEWORK_DIR)/Versions/$(VERSION)/Headers

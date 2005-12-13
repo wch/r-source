@@ -14,7 +14,7 @@ include $(top_builddir)/Makeconf
 SOURCES = Rsock.c internet.c nanoftp.c nanohttp.c sock.c sockconn.c
 HEADERS = sock.h
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.lo)
+OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \

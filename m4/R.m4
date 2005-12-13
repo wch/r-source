@@ -392,12 +392,9 @@ rm -rf conftest* TMP])
 ## ------------------
 ## Generate a Make fragment with suffix rules for the C compiler.
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
-## NB test -d .libs || mkdir .libs can be run more than once
-##    and hence race when a parallel make is used
 AC_DEFUN([R_PROG_CC_MAKEFRAG],
 [r_cc_rules_frag=Makefrag.cc
 AC_REQUIRE([R_PROG_CC_M])
-AC_REQUIRE([R_PROG_CC_C_O_LO])
 cat << \EOF > ${r_cc_rules_frag}
 .c.o:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $[@]
@@ -406,8 +403,7 @@ if test -n "${r_cv_prog_cc_m}"; then
   cat << EOF >> ${r_cc_rules_frag}
 .c.d:
 	@echo "making \$[@] from \$<"
-	@${r_cv_prog_cc_m} \$(ALL_CPPFLAGS) $< | \\
-	  \$(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > \$[@]
+	@${r_cv_prog_cc_m} \$(ALL_CPPFLAGS) $< > \$[@]
 EOF
 else
   cat << \EOF >> ${r_cc_rules_frag}
@@ -415,21 +411,35 @@ else
 	@echo > $[@]
 EOF
 fi
+AC_SUBST_FILE(r_cc_rules_frag)
+])# R_PROG_CC_MAKEFRAG
+
+## R_PROG_CC_LO_MAKEFRAG
+## ---------------------
+## Generate a Make fragment with suffix rules for the C compiler.
+## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
+## Need to make .lo files in src/nmath/standalone only
+## NB test -d .libs || mkdir .libs can be run more than once
+##    and hence race when a parallel make is used
+AC_DEFUN([R_PROG_CC_LO_MAKEFRAG],
+[r_cc_lo_rules_frag=Makefrag.cc_lo
+AC_REQUIRE([R_PROG_CC_C_O_LO])
 if test "${r_cv_prog_cc_c_o_lo}" = yes; then
-  cat << \EOF >> ${r_cc_rules_frag}
+  cat << \EOF > ${r_cc_lo_rules_frag}
 .c.lo:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o $[@]
 EOF
 else
-  cat << \EOF >> ${r_cc_rules_frag}
+  cat << \EOF > ${r_cc_lo_rules_frag}
 .c.lo:
 	@-test -d .libs || mkdir .libs
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$[*].o
 	mv .libs/$[*].o $[*].lo
 EOF
 fi
-AC_SUBST_FILE(r_cc_rules_frag)
-])# R_PROG_CC_MAKEFRAG
+AC_SUBST_FILE(r_cc_lo_rules_frag)
+])# R_PROG_CC_LO_MAKEFRAG
+
 
 ## R_PROG_CC_FLAG(FLAG, [ACTION-IF-TRUE])
 ## ---------------------------------------
@@ -562,29 +572,6 @@ else
 fi])
 ])# R_PROG_CXX_M
 
-## R_PROG_CXX_C_O_LO
-## -----------------
-## Check whether the C++ compiler supports '-c -o FILE.lo'.
-AC_DEFUN([R_PROG_CXX_C_O_LO],
-[cxx_o_lo_rules_frag=Makefrag.cxx
-AC_CACHE_CHECK([whether ${CXX} supports -c -o FILE.lo],
-               [r_cv_prog_cxx_c_o_lo],
-[test -d TMP || mkdir TMP
-echo "int some_variable = 0;" > conftest.cc
-## No real point in using AC_LANG_* and ${ac_ext}, as we need to create
-## hard-wired suffix rules.  We could be a bit more careful as we
-## actually only test suffix '.cc'.
-ac_try='${CXX} ${CXXFLAGS} -c conftest.cc -o TMP/conftest.lo 1>&AS_MESSAGE_LOG_FD'
-if AC_TRY_EVAL(ac_try) \
-    && test -f TMP/conftest.lo \
-    && AC_TRY_EVAL(ac_try); then
-  r_cv_prog_cxx_c_o_lo=yes
-else
-  r_cv_prog_cxx_c_o_lo=no
-fi
-rm -rf conftest* TMP])
-])# R_PROG_CXX_C_O_LO
-
 ## R_PROG_CXX_MAKEFRAG
 ## -------------------
 ## Generate a Make fragment with suffix rules for the C++ compiler.
@@ -592,7 +579,6 @@ rm -rf conftest* TMP])
 AC_DEFUN([R_PROG_CXX_MAKEFRAG],
 [r_cxx_rules_frag=Makefrag.cxx
 AC_REQUIRE([R_PROG_CXX_M])
-AC_REQUIRE([R_PROG_CXX_C_O_LO])
 cat << \EOF > ${r_cxx_rules_frag}
 .cc.o:
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $[@]
@@ -605,16 +591,13 @@ if test "${r_cv_prog_cxx_m}" = yes; then
   cat << \EOF >> ${r_cxx_rules_frag}
 .cc.d:
 	@echo "making $[@] from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  $(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+	@$(CXX) -M $(ALL_CPPFLAGS) $< > $[@]
 .cpp.d:
 	@echo "making $[@] from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  $(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+	@$(CXX) -M $(ALL_CPPFLAGS) $< > $[@]
 .C.d:
 	@echo "making $[@] from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  $(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+	@$(CXX) -M $(ALL_CPPFLAGS) $< > $[@]
 EOF
 else
   cat << \EOF >> ${r_cxx_rules_frag}
@@ -624,31 +607,6 @@ else
 	@echo > $[@]
 .C.d:
 	@echo > $[@]
-EOF
-fi
-if test "${r_cv_prog_cxx_c_o_lo}" = yes; then
-  cat << \EOF >> ${r_cxx_rules_frag}
-.cc.lo:
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o $[@]
-.cpp.lo:
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o $[@]
-.C.lo:
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o $[@]
-EOF
-else
-  cat << \EOF >> ${r_cxx_rules_frag}
-.cc.lo:
-	@test -d .libs || mkdir .libs
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o .libs/$[*].o
-	mv .libs/$[*].o $[*].lo
-.cpp.lo:
-	@test -d .libs || mkdir .libs
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o .libs/$[*].o
-	mv .libs/$[*].o $[*].lo
-.C.lo:
-	@test -d .libs || mkdir .libs
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o .libs/$[*].o
-	mv .libs/$[*].o $[*].lo
 EOF
 fi
 AC_SUBST_FILE(r_cxx_rules_frag)
@@ -1187,54 +1145,18 @@ fi
 AC_SUBST(HAVE_FORTRAN_DOUBLE_COMPLEX)
 ])# R_PROG_F77_CC_COMPAT_COMPLEX
 
-## R_PROG_F77_C_O_LO
-## -----------------
-## Check whether the Fortran compiler supports '-c -o FILE.lo'.
-AC_DEFUN([R_PROG_F77_C_O_LO],
-[AC_CACHE_CHECK([whether ${F77} supports -c -o FILE.lo],
-                [r_cv_prog_f77_c_o_lo],
-[test -d TMP || mkdir TMP
-cat > conftest.f <<EOF
-      program conftest
-      end
-EOF
-ac_try='${F77} ${FFLAGS} -c conftest.f -o TMP/conftest.lo 1>&AS_MESSAGE_LOG_FD'
-if AC_TRY_EVAL(ac_try) \
-    && test -f TMP/conftest.lo \
-    && AC_TRY_EVAL(ac_try); then
-  r_cv_prog_f77_c_o_lo=yes
-else
-  r_cv_prog_f77_c_o_lo=no
-fi
-rm -rf conftest* TMP])
-])# R_PROG_F77_C_O_LO
-
 ## R_PROG_F77_MAKEFRAG
 ## -------------------
 ## Generate a Make fragment with suffix rules for Fortran 77 source
 ## files when using a Fortran 77 compiler.
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
 AC_DEFUN([R_PROG_F77_MAKEFRAG],
-[AC_REQUIRE([R_PROG_F77_C_O_LO])
-r_f77_rules_frag=Makefrag.f77
+[r_f77_rules_frag=Makefrag.f77
 cat << \EOF > ${r_f77_rules_frag}
 .f.c:
 .f.o:
 	$(F77) $(ALL_FFLAGS) -c $< -o $[@]
 EOF
-if test "${r_cv_prog_f77_c_o_lo}" = yes; then
-  cat << \EOF >> ${r_f77_rules_frag}
-.f.lo:
-	$(F77) $(ALL_FFLAGS_LO) -c $< -o $[@]
-EOF
-else
-  cat << \EOF >> ${r_f77_rules_frag}
-.f.lo:
-	@test -d .libs || mkdir .libs
-	$(F77) $(ALL_FFLAGS_LO) -c $< -o .libs/$[*].o
-	mv .libs/$[*].o $[*].lo
-EOF
-fi
 AC_SUBST_FILE(r_f77_rules_frag)
 ])# R_PROG_F77_MAKEFRAG
 
@@ -1319,22 +1241,6 @@ cat << \EOF > ${r_f77_rules_frag}
 .f.o:
 	$(F2C) $(F2CFLAGS) < $< > $[*].c
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $[*].c -o $[@]
-	@rm -f $[*].c
-.f.lo:
-	$(F2C) $(F2CFLAGS) < $< > $[*].c
-EOF
-if test "${r_cv_prog_cc_c_o_lo}" = yes; then
-  cat << \EOF >> ${r_f77_rules_frag}
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $[*].c -o $[@]
-EOF
-else
-  cat << \EOF >> ${r_f77_rules_frag}
-	@test -d .libs || mkdir .libs
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $[*].c -o .libs/$[*].o
-	mv .libs/$[*].o $[*].lo
-EOF
-fi
-cat << \EOF >> ${r_f77_rules_frag}
 	@rm -f $[*].c
 EOF
 AC_SUBST_FILE(r_f77_rules_frag)

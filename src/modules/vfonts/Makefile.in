@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 
 SOURCES = g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.lo)
+OBJECTS = $(SOURCES:.c=.o)
 HEADERS = g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)

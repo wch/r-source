@@ -713,6 +713,7 @@ if test "$ac_test_CFLAGS" != set; then
 fi
 
 R_PROG_CC_MAKEFRAG
+R_PROG_CC_LO_MAKEFRAG
 
 ### *** Fortran 77 compiler.
 

@@ -466,7 +466,7 @@ ac_includes_default="\
 #endif"
 
 ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE F2C R_BROWSER BLAS_LIBS LAPACK_LIBS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 USING_G77_TRUE USING_G77_FALSE USING_F2C_TRUE USING_F2C_FALSE CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS FLIBS HAVE_FORTRAN_DOUBLE_COMPLEX COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS F2CFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS FW_VERSION ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG RMATH_HAVE_WORKING_LOG1P HAVE_C99_COMPLEX USE_VECLIB_G95FIX_TRUE USE_VECLIB_G95FIX_FALSE USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF JAVA_PROG JAVAC JAVA_HOME JAVA_LD_PATH JAVA_LIBS R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE USE_NLS SET_MAKE MKINSTALLDIRS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC21 HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB USE_NLS_TRUE USE_NLS_FALSE LTLIBOBJS'
-ac_subst_files='r_cc_rules_frag r_f77_rules_frag r_cxx_rules_frag'
+ac_subst_files='r_cc_rules_frag r_cc_lo_rules_frag r_f77_rules_frag r_cxx_rules_frag'
 
 # Initialize some variables set by options.
 ac_init_help=
@@ -25989,6 +25989,26 @@ else
 echo "${ECHO_T}yes, using ${r_cv_prog_cc_m}" >&6
 fi
 
+r_cc_rules_frag=Makefrag.cc
+
+cat << \EOF > ${r_cc_rules_frag}
+.c.o:
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
+EOF
+if test -n "${r_cv_prog_cc_m}"; then
+  cat << EOF >> ${r_cc_rules_frag}
+.c.d:
+	@echo "making \$@ from \$<"
+	@${r_cv_prog_cc_m} \$(ALL_CPPFLAGS) $< > \$@
+EOF
+else
+  cat << \EOF >> ${r_cc_rules_frag}
+.c.d:
+	@echo > $@
+EOF
+fi
+
+
 echo "$as_me:$LINENO: checking whether ${CC} supports -c -o FILE.lo" >&5
 echo $ECHO_N "checking whether ${CC} supports -c -o FILE.lo... $ECHO_C" >&6
 if test "${r_cv_prog_cc_c_o_lo+set}" = set; then
@@ -26017,33 +26037,15 @@ fi
 echo "$as_me:$LINENO: result: $r_cv_prog_cc_c_o_lo" >&5
 echo "${ECHO_T}$r_cv_prog_cc_c_o_lo" >&6
 
-r_cc_rules_frag=Makefrag.cc
+r_cc_lo_rules_frag=Makefrag.cc_lo
 
-
-cat << \EOF > ${r_cc_rules_frag}
-.c.o:
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
-EOF
-if test -n "${r_cv_prog_cc_m}"; then
-  cat << EOF >> ${r_cc_rules_frag}
-.c.d:
-	@echo "making \$@ from \$<"
-	@${r_cv_prog_cc_m} \$(ALL_CPPFLAGS) $< | \\
-	  \$(SED) -e 's/^\([^:]*\)\.o\([ 	]\)*:/\1.o \1.lo\2:/' > \$@
-EOF
-else
-  cat << \EOF >> ${r_cc_rules_frag}
-.c.d:
-	@echo > $@
-EOF
-fi
 if test "${r_cv_prog_cc_c_o_lo}" = yes; then
-  cat << \EOF >> ${r_cc_rules_frag}
+  cat << \EOF > ${r_cc_lo_rules_frag}
 .c.lo:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o $@
 EOF
 else
-  cat << \EOF >> ${r_cc_rules_frag}
+  cat << \EOF > ${r_cc_lo_rules_frag}
 .c.lo:
 	@-test -d .libs || mkdir .libs
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$*.o
@@ -26110,7 +26112,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:26113: \"$ac_link\") >&5
+(eval echo $as_me:26115: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26188,7 +26190,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:26191: \"$ac_link\") >&5
+(eval echo $as_me:26193: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26434,7 +26436,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26437: \"$ac_link\") >&5
+(eval echo $as_me:26439: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26516,7 +26518,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26519: \"$ac_link\") >&5
+(eval echo $as_me:26521: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27550,57 +27552,12 @@ echo "$as_me: WARNING: ${warn_f77_cc_double_complex}" >&2;}
 fi
 
 
-  echo "$as_me:$LINENO: checking whether ${F77} supports -c -o FILE.lo" >&5
-echo $ECHO_N "checking whether ${F77} supports -c -o FILE.lo... $ECHO_C" >&6
-if test "${r_cv_prog_f77_c_o_lo+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  test -d TMP || mkdir TMP
-cat > conftest.f <<EOF
-      program conftest
-      end
-EOF
-ac_try='${F77} ${FFLAGS} -c conftest.f -o TMP/conftest.lo 1>&5'
-if { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } \
-    && test -f TMP/conftest.lo \
-    && { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; then
-  r_cv_prog_f77_c_o_lo=yes
-else
-  r_cv_prog_f77_c_o_lo=no
-fi
-rm -rf conftest* TMP
-fi
-echo "$as_me:$LINENO: result: $r_cv_prog_f77_c_o_lo" >&5
-echo "${ECHO_T}$r_cv_prog_f77_c_o_lo" >&6
-
-
-r_f77_rules_frag=Makefrag.f77
+  r_f77_rules_frag=Makefrag.f77
 cat << \EOF > ${r_f77_rules_frag}
 .f.c:
 .f.o:
 	$(F77) $(ALL_FFLAGS) -c $< -o $@
 EOF
-if test "${r_cv_prog_f77_c_o_lo}" = yes; then
-  cat << \EOF >> ${r_f77_rules_frag}
-.f.lo:
-	$(F77) $(ALL_FFLAGS_LO) -c $< -o $@
-EOF
-else
-  cat << \EOF >> ${r_f77_rules_frag}
-.f.lo:
-	@test -d .libs || mkdir .libs
-	$(F77) $(ALL_FFLAGS_LO) -c $< -o .libs/$*.o
-	mv .libs/$*.o $*.lo
-EOF
-fi
 
 
 else
@@ -27905,22 +27862,6 @@ cat << \EOF > ${r_f77_rules_frag}
 	$(F2C) $(F2CFLAGS) < $< > $*.c
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $*.c -o $@
 	@rm -f $*.c
-.f.lo:
-	$(F2C) $(F2CFLAGS) < $< > $*.c
-EOF
-if test "${r_cv_prog_cc_c_o_lo}" = yes; then
-  cat << \EOF >> ${r_f77_rules_frag}
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $*.c -o $@
-EOF
-else
-  cat << \EOF >> ${r_f77_rules_frag}
-	@test -d .libs || mkdir .libs
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $*.c -o .libs/$*.o
-	mv .libs/$*.o $*.lo
-EOF
-fi
-cat << \EOF >> ${r_f77_rules_frag}
-	@rm -f $*.c
 EOF
 
 
@@ -27957,37 +27898,7 @@ fi
 echo "$as_me:$LINENO: result: $r_cv_prog_cxx_m" >&5
 echo "${ECHO_T}$r_cv_prog_cxx_m" >&6
 
-cxx_o_lo_rules_frag=Makefrag.cxx
-echo "$as_me:$LINENO: checking whether ${CXX} supports -c -o FILE.lo" >&5
-echo $ECHO_N "checking whether ${CXX} supports -c -o FILE.lo... $ECHO_C" >&6
-if test "${r_cv_prog_cxx_c_o_lo+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  test -d TMP || mkdir TMP
-echo "int some_variable = 0;" > conftest.cc
-ac_try='${CXX} ${CXXFLAGS} -c conftest.cc -o TMP/conftest.lo 1>&5'
-if { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } \
-    && test -f TMP/conftest.lo \
-    && { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; then
-  r_cv_prog_cxx_c_o_lo=yes
-else
-  r_cv_prog_cxx_c_o_lo=no
-fi
-rm -rf conftest* TMP
-fi
-echo "$as_me:$LINENO: result: $r_cv_prog_cxx_c_o_lo" >&5
-echo "${ECHO_T}$r_cv_prog_cxx_c_o_lo" >&6
-
 r_cxx_rules_frag=Makefrag.cxx
-
 
 cat << \EOF > ${r_cxx_rules_frag}
 .cc.o:
@@ -28001,16 +27912,13 @@ if test "${r_cv_prog_cxx_m}" = yes; then
   cat << \EOF >> ${r_cxx_rules_frag}
 .cc.d:
 	@echo "making $@ from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  $(SED) -e 's/^\([^:]*\)\.o\([ 	]\)*:/\1.o \1.lo\2:/' > $@
+	@$(CXX) -M $(ALL_CPPFLAGS) $< > $@
 .cpp.d:
 	@echo "making $@ from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  $(SED) -e 's/^\([^:]*\)\.o\([ 	]\)*:/\1.o \1.lo\2:/' > $@
+	@$(CXX) -M $(ALL_CPPFLAGS) $< > $@
 .C.d:
 	@echo "making $@ from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  $(SED) -e 's/^\([^:]*\)\.o\([ 	]\)*:/\1.o \1.lo\2:/' > $@
+	@$(CXX) -M $(ALL_CPPFLAGS) $< > $@
 EOF
 else
   cat << \EOF >> ${r_cxx_rules_frag}
@@ -28020,31 +27928,6 @@ else
 	@echo > $@
 .C.d:
 	@echo > $@
-EOF
-fi
-if test "${r_cv_prog_cxx_c_o_lo}" = yes; then
-  cat << \EOF >> ${r_cxx_rules_frag}
-.cc.lo:
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o $@
-.cpp.lo:
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o $@
-.C.lo:
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o $@
-EOF
-else
-  cat << \EOF >> ${r_cxx_rules_frag}
-.cc.lo:
-	@test -d .libs || mkdir .libs
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o .libs/$*.o
-	mv .libs/$*.o $*.lo
-.cpp.lo:
-	@test -d .libs || mkdir .libs
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o .libs/$*.o
-	mv .libs/$*.o $*.lo
-.C.lo:
-	@test -d .libs || mkdir .libs
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o .libs/$*.o
-	mv .libs/$*.o $*.lo
 EOF
 fi
 
@@ -49777,6 +49660,8 @@ s,@USE_NLS_FALSE@,$USE_NLS_FALSE,;t t
 s,@LTLIBOBJS@,$LTLIBOBJS,;t t
 /@r_cc_rules_frag@/r $r_cc_rules_frag
 s,@r_cc_rules_frag@,,;t t
+/@r_cc_lo_rules_frag@/r $r_cc_lo_rules_frag
+s,@r_cc_lo_rules_frag@,,;t t
 /@r_f77_rules_frag@/r $r_f77_rules_frag
 s,@r_f77_rules_frag@,,;t t
 /@r_cxx_rules_frag@/r $r_cxx_rules_frag
