@@ -139,6 +139,9 @@ uninstall:
 	@for f in $(INSTFILES) $(NON_SVN_INSTFILES); do \
 	  rm -f "$(rhome)/$${f}"; \
 	done
+	@for f in $(INSTFILES); do \
+	  rm -f "$(rdocdir)/$${f}"; \
+	done
 	@rm -rf "$(Rexecbindir)" "$(Rexeclibdir)"
 	@rmdir "$(rhome)" 2>/dev/null \
           || echo "  dir $(rhome) not removed"
