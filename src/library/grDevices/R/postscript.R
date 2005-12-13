@@ -255,7 +255,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
             ## and pass in a device-independent font name.
             ## NOTE that in order to match, we need both family name
             ## and encoding to match.
-            matchFont(postscriptFonts(family)[[1]], old$encoding)
+            matchFont(pdfFonts(family)[[1]], old$encoding)
         } else
             stop("invalid 'family' argument")
         old$family <- family

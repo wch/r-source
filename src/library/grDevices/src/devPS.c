@@ -3851,7 +3851,7 @@ static void PS_MetricInfo(int c,
     if (isType1Font(gc->fontfamily, PostScriptFonts, pd->defaultFont)) {
 	PostScriptMetricInfo(c, ascent, descent, width,
 			     metricInfo(gc->fontfamily, face, pd), 
-			     face != 5, convname(gc->fontfamily, pd));
+			     face == 5, convname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily, PostScriptFonts) */
         if (face < 5) {
 	    PostScriptCIDMetricInfo(c, ascent, descent, width,
@@ -5086,7 +5086,7 @@ static void XFig_MetricInfo(int c,
 
     PostScriptMetricInfo(c, ascent, descent, width,
 			 &(pd->fonts->family->fonts[face-1]->metrics), 
-			 face != 5, "");
+			 face == 5, "");
     *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
     *descent = floor(gc->cex * gc->ps + 0.5) * *descent;
     *width = floor(gc->cex * gc->ps + 0.5) * *width;
@@ -5354,14 +5354,14 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *paper,
      */
     pd->encodings = NULL;
     if (!(enc = findEncoding(encoding, pd->encodings)))
-	enc = addEncoding(encoding, 0);
+	enc = addEncoding(encoding, 1);
     if (enc && (enclist = addDeviceEncoding(enc, 
 					    pd->encodings))) {
 	pd->encodings = enclist;
     } else {
 	free(dd);
 	free(pd);
-	error(_("failed to load encoding"));
+	error(_("failed to load default encoding"));
     }
 
     /*****************************
@@ -5414,7 +5414,7 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *paper,
 	 * device's list of fonts.
 	 */
 	if (!strcmp(family, "User") || 
-	    isType1Font(family, PostScriptFonts, NULL)) {
+	    isType1Font(family, PDFFonts, NULL)) {
 	    addPDFDevicefont(font, pd, &gotFont);
 	    pd->defaultFont = pd->fonts->family;
 	    pd->defaultCIDFont = NULL;
@@ -5988,7 +5988,6 @@ static void PDF_startfile(PDFDesc *pd)
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
     fprintf(pd->pdffp, "5 0 obj\n<<\n/Type /Font\n/Subtype /Type1\n/Name /F1\n/BaseFont /ZapfDingbats\n>>\nendobj\n");
 }
-
 
 #define boldslant(x) ((x==3)?",BoldItalic":((x==2)?",Italic":((x==1)?",Bold":"")))
 static void PDF_endfile(PDFDesc *pd)
@@ -7008,7 +7007,7 @@ static void PDF_MetricInfo(int c,
 	PostScriptMetricInfo(c, ascent, descent, width,
 			     PDFmetricInfo(gc->fontfamily, 
 					   gc->fontface, pd),
-			     face != 5, PDFconvname(gc->fontfamily, pd));
+			     face == 5, PDFconvname(gc->fontfamily, pd));
     } else { /* cidfont(gc->fontfamily) */
         if (face < 5) {
 	    PostScriptCIDMetricInfo(c, ascent, descent, width,
