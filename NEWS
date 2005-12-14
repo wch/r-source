@@ -226,6 +226,9 @@ BUG FIXES
 
     o	HoltWinters() was using a slightly incorrect formula in the C code.
 
+    o	dir.create() could be confused by a trailing slash on the
+	path, and by paths containing drives on Windows.
+
 
 
 		CHANGES IN R VERSION 2.2.0
