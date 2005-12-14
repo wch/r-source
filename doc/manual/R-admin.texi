@@ -447,7 +447,7 @@ to examine the logs carefully.  This was the default in @R{} version
 @end table
 
 Both Unix and Windows installations default to @code{times}.  The choice
-can be overridden by setting the environment variable @code{R_RD4PDF}.
+can be overridden by setting the environment variable @env{R_RD4PDF}.
 (On Unix, this will be picked up at install time.)  The default value is
 @code{times,hyper}: omit @code{hyper} if you do not want hyperlinks,
 e.g. for printing.
@@ -2591,12 +2591,11 @@ with @command{gcc 3.3} and later.
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 8 aka Solaris 2.8 aka SunOS
-5.8 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} (aka
-Forte 6) compilers and the `Sun ONE Studio 7 Compiler Suite' (aka Forte
-7), and less regularly on Solaris 9 and 10.  @acronym{GNU}
-@command{make} was needed prior to Solaris 2.7 for building other than
-in the source tree, and is sometimes needed to establish the correct
-dependencies when rebuilding.
+5.8 using @command{gcc}/@command{g77}, @command{gcc4}/@command{gfortran}
+and the `Sun ONE Studio 7 Compiler Suite' (aka Forte 7), and less
+regularly on Solaris 9 and 10.  @acronym{GNU} @command{make} was needed
+prior to Solaris 2.7 for building other than in the source tree, and is
+sometimes needed to establish the correct dependencies when rebuilding.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
@@ -2635,16 +2634,15 @@ many C++ applications Forte 7 requires @code{-lCstd}, which the
 configure script will add to @code{SHLIB_CXXLDFLAGS} if it identifies
 the compiler correctly.
 
-A 32-bit version of R is built without large file support and so can
+A 32-bit version of @R{} is built without large file support and so can
 only handle files up to 2Gb (unlike 64-bit versions).  According to
 @samp{man lfcompile} this restriction can be removed if
 @option{-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE=1} is added to
 @samp{CFLAGS}.
 
-
 To compile for a 64-bit target on Solaris (which needs an UltraSparc
-chip and for support to be enabled in the OS) with the Forte 6 and 7
-compilers we used @option{--without-blas} and 
+chip and for support to be enabled in the OS) with the Forte 7 compilers
+we used @option{--without-blas} and
 
 @example
 CC="cc -xarch=v9"
@@ -2668,6 +2666,8 @@ CXX="g++ -m64"
 LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end example
 
+@noindent
+replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.0.x.
 Note that @samp{/usr/local/lib/sparcv9} will need to be in the
 @samp{LD_LIBRARY_PATH} during configuration.
 
@@ -3362,15 +3362,17 @@ In this case the Help Workshop will not be needed.
 @node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
 @section @LaTeX{}
 
-The @code{MiKTeX} (@url{http://www.miktex.org}) distribution of @LaTeX{}
-includes a suitable port of @code{pdftex}.  We have also used the
-@code{fptex} distribution (available from any CTAN node such as
-@url{http://www.ctan.org/tex-archive/systems/windows/fptex/}).  Another
+The @samp{MiKTeX} (@url{http://www.miktex.org}) distribution of @LaTeX{}
+includes a suitable port of @code{pdftex}, as does the @samp{ProText}
+(@uref{http://www.tug.org/protext/}) enhanced version.  We have also
+used the @samp{fptex} distribution (available from any CTAN node such as
+@url{http://www.ctan.org/tex-archive/systems/windows/fptex/} and as part
+of TexLive 2005 (@uref{http://www.tug.org/texlive/})).  Another
 actively-maintained version is available from
 @uref{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/}.
 
 Please read @ref{Making the manuals} about how to make @file{refman.pdf}
-and set the environment variables @code{R_RD4DVI} and @code{R_RD4PDF}
+and set the environment variables @env{R_RD4DVI} and @env{R_RD4PDF}
 suitably; ensure you have the required fonts installed.
 
 @node The Inno Setup installer,  , LaTeX, The Windows toolset
