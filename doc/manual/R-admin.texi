@@ -200,13 +200,13 @@ correct versions of the recommended packages: if the number in the file
 @file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to download
 the contents of @samp{http://CRAN.R-project.org/src/contrib/@var{dir}},
 where @var{dir} is @samp{@var{x}.@var{y}.@var{z}/Recommended} for
-r-devel or @file{@var{x}.@var{y}.@var{z}-patched/Recommended} for
-r-patched, respectively, to directory @file{src/library/Recommended} in
-the sources you have unpacked.  After downloading manually you need to
-execute @command{tools/link-recommended} from the top level of the
-sources to make the requisite links in @file{src/library/Recommended}.
-A suitable incantation from the top level of the R sources using
-@command{wget} might be
+r-devel or @file{@var{x}.@var{y}-patched/Recommended} for r-patched,
+respectively, to directory @file{src/library/Recommended} in the sources
+you have unpacked.  After downloading manually you need to execute
+@command{tools/link-recommended} from the top level of the sources to
+make the requisite links in @file{src/library/Recommended}.  A suitable
+incantation from the top level of the R sources using @command{wget}
+might be
 
 @example
 wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
@@ -399,12 +399,12 @@ You will not be able to build the info files unless you have
 The DVI versions can be previewed and printed using standard programs
 such as @command{xdvi} and @command{dvips}.  The PDF versions can be
 viewed using Acrobat Reader or (fairly recent versions of)
-@command{ghostscript}: they have hyperlinks that can be followed in
-Acrobat Reader.  The info files are suitable for reading online with
-Emacs or the standalone @acronym{GNU} Info.  The DVI and PDF versions
-will be created using the papersize selected at configuration (default
-ISO a4):  this can be overridden by setting @env{R_PAPERSIZE} on the
-@command{make} command line, or setting @env{R_PAPERSIZE} in the
+@command{xpdf} and @command{ghostscript}: they have hyperlinks that can
+be followed in the first two.  The info files are suitable for reading
+online with Emacs or the standalone @acronym{GNU} Info.  The DVI and PDF
+versions will be created using the papersize selected at configuration
+(default ISO a4):  this can be overridden by setting @env{R_PAPERSIZE}
+on the @command{make} command line, or setting @env{R_PAPERSIZE} in the
 environment and using @command{make -e}.  (If re-making the manuals for
 a different papersize, you should first delete the file
 @file{doc/manual/version.texi}.)
@@ -447,7 +447,7 @@ to examine the logs carefully.  This was the default in @R{} version
 @end table
 
 Both Unix and Windows installations default to @code{times}.  The choice
-can be overridden by setting the environment variable @code{R_RD4PDF}.
+can be overridden by setting the environment variable @env{R_RD4PDF}.
 (On Unix, this will be picked up at install time.)  The default value is
 @code{times,hyper}: omit @code{hyper} if you do not want hyperlinks,
 e.g. for printing.
@@ -486,9 +486,9 @@ This will install to the following directories:
 the front-end shell script
 @item @var{prefix}/man/man1 or @var{mandir}/man1
 the man page
-@item @var{prefix}/$LIBnn/R or @var{libdir}/R
+@item @var{prefix}/@var{LIBnn}/R or @var{libdir}/R
 all the rest (libraries, on-line help system, @dots{}).  Here
-@code{$LIBnn} is usually @code{lib}, but may be @code{lib64} on some
+@var{LIBnn} is usually @samp{lib}, but may be @samp{lib64} on some
 64-bit Linux systems.
 @end table
 
@@ -1900,7 +1900,7 @@ could use
 
 @noindent
 if the appropriate library directory such as
-@file{/opt/acml2.7.0/gnu64/lib} is in the @samp{LD_LIBRRARY_PATH}.
+@file{/opt/acml2.7.0/gnu64/lib} is in the @env{LD_LIBRRARY_PATH}.
 For other compilers, see the ACML documentation.  Although the
 documentation is unclear, 32-bit versions of ACML do run on other
 @code{ia32} chips such as AthlonMP and P4.
@@ -1957,6 +1957,8 @@ Intel's Math Kernel Library suppies a full LAPACK which can be used via
 
 @noindent
 or @code{-lmkl_lapack32}: @code{-lmkl_lapack} is static and not PIC.
+However, the version 8.0.1.006 we tested failed a regression test in the
+complex LAPACK.
 
 If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
@@ -2221,7 +2223,7 @@ is to search for
 @c F95_compilers in m4/R.m4:
 @command{f95}, @command{fort}, @command{xlf95},
 @command{ifort}, @command{ifc}, @command{efc}, @command{pgf95}
-@command{lf95}, @command{gfortran}, @command{ftn} @command{g95},
+@command{lf95}, @command{gfortran}, @command{ftn}, @command{g95},
 @c F90 compilers in m4/R.m4:
 @command{f90}, @command{xlf90}, @command{pghpf}, @command{pgf90},
 @command{epcf90},
@@ -2589,12 +2591,11 @@ with @command{gcc 3.3} and later.
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 8 aka Solaris 2.8 aka SunOS
-5.8 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} (aka
-Forte 6) compilers and the `Sun ONE Studio 7 Compiler Suite' (aka Forte
-7), and less regularly on Solaris 9 and 10.  @acronym{GNU}
-@command{make} was needed prior to Solaris 2.7 for building other than
-in the source tree, and is sometimes needed to establish the correct
-dependencies when rebuilding.
+5.8 using @command{gcc}/@command{g77}, @command{gcc4}/@command{gfortran}
+and the `Sun ONE Studio 7 Compiler Suite' (aka Forte 7), and less
+regularly on Solaris 9 and 10.  @acronym{GNU} @command{make} was needed
+prior to Solaris 2.7 for building other than in the source tree, and is
+sometimes needed to establish the correct dependencies when rebuilding.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
@@ -2633,7 +2634,7 @@ many C++ applications Forte 7 requires @code{-lCstd}, which the
 configure script will add to @code{SHLIB_CXXLDFLAGS} if it identifies
 the compiler correctly.
 
-A 32-bit version of R is built without large file support and so can
+A 32-bit version of @R{} is built without large file support and so can
 only handle files up to 2Gb (unlike 64-bit versions).  According to
 @samp{man lfcompile} this restriction can be removed if
 @option{-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE=1} is added to
@@ -2641,8 +2642,8 @@ only handle files up to 2Gb (unlike 64-bit versions).  According to
 
 
 To compile for a 64-bit target on Solaris (which needs an UltraSparc
-chip and for support to be enabled in the OS) with the Forte 6 and 7
-compilers we used
+chip and for support to be enabled in the OS) with the Forte 7 compilers
+we used
 
 @example
 CC="cc -xarch=v9"
@@ -2666,6 +2667,8 @@ CXX="g++ -m64"
 LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end example
 
+@noindent
+replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.0.x.
 Note that @samp{/usr/local/lib/sparcv9} will need to be in the
 @samp{LD_LIBRARY_PATH} during configuration.
 
@@ -2999,8 +3002,8 @@ may need to be compiled without optimization.  If configure detects
 @acronym{GNU} FORTRAN or the use of @command{f2c} it adds flag
 @option{-ffloat-store} which suffices, but it is possible that
 @file{src/modules/lapack/Makefile} will need to be edited to remove
-optimization on other platforms.  (This is true when using @samp{icc}
-on @samp{ix86} Linux, for example.)
+optimization on other platforms.  (This is true when using @command{icc}
+on ix86 Linux, for example.)
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include
@@ -3151,7 +3154,6 @@ strongly recommended for Mozilla-based browsers.
 This and @code{j2re 1.4.2_01} do work: the latter can be found in Sun's
 archive at @url{http://java.sun.com/products/archive/}.
 
-@noindent
 Other Java installations, for example those from Blackdown and IBM, have
 been used.
 
@@ -3362,15 +3364,17 @@ In this case the Help Workshop will not be needed.
 @node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
 @section @LaTeX{}
 
-The @code{MiKTeX} (@url{http://www.miktex.org}) distribution of @LaTeX{}
-includes a suitable port of @code{pdftex}.  We have also used the
-@code{fptex} distribution (available from any CTAN node such as
-@url{http://www.ctan.org/tex-archive/systems/windows/fptex/}).  Another
+The @samp{MiKTeX} (@url{http://www.miktex.org}) distribution of @LaTeX{}
+includes a suitable port of @code{pdftex}, as does the @samp{ProText}
+(@uref{http://www.tug.org/protext/}) enhanced version.  We have also
+used the @samp{fptex} distribution (available from any CTAN node such as
+@url{http://www.ctan.org/tex-archive/systems/windows/fptex/} and as part
+of TexLive 2005 (@uref{http://www.tug.org/texlive/})).  Another
 actively-maintained version is available from
 @uref{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/}.
 
 Please read @ref{Making the manuals} about how to make @file{refman.pdf}
-and set the environment variables @code{R_RD4DVI} and @code{R_RD4PDF}
+and set the environment variables @env{R_RD4DVI} and @env{R_RD4PDF}
 suitably; ensure you have the required fonts installed.
 
 @node The Inno Setup installer,  , LaTeX, The Windows toolset
