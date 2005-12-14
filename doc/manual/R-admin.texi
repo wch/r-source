@@ -2949,7 +2949,8 @@ We understand that @option{--enable-R-shlib} does not work under AIX.
 Ei-ji Nakama has reported that @file{src/main/regex.c} in @R{} 2.2.0 has
 to be compiled with @option{-D_LINUX_SOURCE_COMPAT} in @code{CFLAGS} in
 AIX 5.x (and does not work correctly with AIX 4.x).  We believe that the
-patch applied since obviates the need for this.
+patch applied since obviates the need for this.  He tested @R{} 2.2.1
+beta on AIX 5.2.
 
 
 @node New platforms,  , AIX, Platform notes

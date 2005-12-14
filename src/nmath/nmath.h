@@ -59,7 +59,15 @@
 #define ML_NAN		R_NaN
 
 void R_CheckUserInterrupt(void);
+/* Ei-ji Nakama reported that AIX 5.2 has calloc as macro and objected
+   to redefining it.  Tests added for 2.2.1 */
+#ifdef calloc
+# undef calloc
+#endif
 #define calloc R_chk_calloc
+#ifdef free
+# undef free
+#endif
 #define free R_chk_free
 
 #ifdef ENABLE_NLS
