@@ -32,7 +32,7 @@ vfonts_la_OBJECTS = $(OBJECTS)
 @USE_LIBTOOL_TRUE@vfonts_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
 vfonts_la_LIBADD = $(LIBR)
 
-ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+ALL_CFLAGS = $(ALL_CFLAGS_LO)
 
 all: Makefile Makedeps R
 

@@ -75,8 +75,6 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir)/.. $(CPPFLAGS) $(DEFS)
 .SUFFIXES:
 .SUFFIXES: .c .d .o .lo
 
-ALL_CFLAGS_LO = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
-
 @r_cc_lo_rules_frag@
 
 

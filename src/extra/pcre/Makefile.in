@@ -23,7 +23,7 @@ SOURCES = pcre_compile.c pcre_config.c pcre_dfa_exec.c pcre_exec.c \
 HEADERS = pcre_internal.h ucp.h ucp_findchar.c ucptable.c ucpinternal.h pcre.h
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = LICENCE Makefile.in Makefile.win R_changes dftables.c \
