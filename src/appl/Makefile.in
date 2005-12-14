@@ -49,18 +49,8 @@ DISTFILES = COPYRIGHT COPYRIGHT.ftn README lowess.doc \
 	$(SOURCES_F) \
 	blas.f cmplxblas.f
 
-noinst_LIBRARIES = libappl.a
-libappl_a_SOURCES = $(SOURCES)
-libappl_a_OBJECTS = $(OBJECTS)
-
-## <FIXME>
-## We most likely will not want a separate shared library.
-## If we have a final decision, remove libappl.la target.
-noinst_LTLIBRARIES = libappl.la
-## </FIXME>
-libappl_la_SOURCES = $(SOURCES)
-libappl_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@libappl_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
+@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+@WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(R_XTRA_CFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
 all: Makefile Makedeps R
 
@@ -73,21 +63,16 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-@WANT_R_SHLIB_FALSE@	@$(MAKE) $(noinst_LIBRARIES)
+@WANT_R_SHLIB_FALSE@	@$(MAKE) libappl.a
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
-@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
-@WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(R_XTRA_CFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
-
-libappl.a: $(libappl_a_OBJECTS)
+libappl.a: $(OBJECTS)
 	rm -f $@
-	$(AR) cr $@ $(libappl_a_OBJECTS)
+	$(AR) cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
-stamp-lo: $(libappl_la_OBJECTS)
+stamp-lo: $(OBJECTS)
 	@touch $@
-libappl.la: stamp-lo
-	$(SHLIB_LINK) -o $@ $(libappl_la_LDFLAGS) $(libappl_la_OBJECTS)
 
 mostlyclean: clean
 clean:

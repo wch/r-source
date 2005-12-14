@@ -329,6 +329,10 @@ INSTALLATION CHANGES
 	are installed there.  The file Y2K has been removed from the
 	distribution.
 
+    o	The extension .lo is no longer used in building R (only in
+	the optional build of libRmath.so): this allows a considerable
+	simplification of the Makefiles.
+
 
 UTILITIES
 

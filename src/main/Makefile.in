@@ -37,6 +37,9 @@ SOURCES_C = \
 	version.c vfonts.c
 SOURCES_F = \
 	xxxpr.f
+
+## If the substitutes are needed, the corresponding objects are put by
+## configure in @LIBOBJS@ @ALLOCA@
 EXTRA_SOURCES_C = \
 	Rmain.c Rembedded.c \
 	alloca.c acosh.c asinh.c atanh.c \
@@ -46,7 +49,7 @@ EXTRA_SOURCES_C = \
 
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) @LIBOBJS@ @ALLOCA@
 HEADERS = \
 	RBufferUtils.h Rregex.h Rstrptime.h \
 	arithmetic.h apse.h \
@@ -64,7 +67,6 @@ DISTFILES = Makefile.in Makefile.win \
 	$(SOURCES_F) \
 	gram.y
 
-## these are built with CPICFLAGS so safe to use in libR.so
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
 PCRE_CPPFLAGS = @BUILD_PCRE_TRUE@ -I$(top_srcdir)/src/extra/pcre
@@ -72,8 +74,11 @@ XDR_CPPFLAGS = @BUILD_XDR_TRUE@ -I$(top_srcdir)/src/extra/xdr
 
 ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(PCRE_CPPFLAGS) \
   $(XDR_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
+@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+@WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(R_XTRA_CFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
 ## use an explicit library: there might be an unsatisfactory -lz around
+## these are built with CPICFLAGS so safe to use in libR.so
 R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
 R_BZLIBS = @BUILD_BZLIB_TRUE@ ../extra/bzip2/libbz2.a
 R_PCRE = @BUILD_PCRE_TRUE@ ../extra/pcre/libpcre.a
@@ -81,44 +86,36 @@ R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 
 ## <FIXME>
 ## Names in here should use '$(top_builddir)' instead ...
-RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a $(R_XDR)
+RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
 ## </FIXME>
+
+EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) \
+	$(R_BZLIBS) $(R_PCRE) $(R_XDR) @LIBINTL@ \
+	$(READLINE_LIBS) $(LIBS)
+
+COMMON_DEPENDENCIES = $(R_XTRA_LIBS) $(R_ZLIBS)	$(R_BZLIBS) $(R_PCRE) \
+	$(R_XDR) @LIBINTL@ \
+	@USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
 R_binary = R.bin
-Rexecbin_PROGRAMS = $(R_binary)
-R_bin_SOURCES = $(SOURCES)
 R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@ $(OBJECTS)
-## <FIXME>
-## This will not be good enough on AIX, where we need to play also with
-## -export-symbols SYMFILE.
-@USE_LIBTOOL_TRUE@R_bin_LDFLAGS = -export-dynamic
-## </FIXME>
-R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) @LIBINTL@
-## <NOTE>
-## Automake would figure this out itself.
-R_bin_DEPENDENCIES = @WANT_R_SHLIB_FALSE@ @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
-## </NOTE>
+@WANT_R_SHLIB_FALSE@R_bin_LDADD = $(RLIBS) $(EXTRA_LIBS)
+@WANT_R_SHLIB_TRUE@R_bin_LDADD = -L../../lib -lR
+R_bin_DEPENDENCIES = @WANT_R_SHLIB_FALSE@ $(RLIBS) $(COMMON_DEPENDENCIES)
 
-## <FIXME>
-## Change to 'libR.la' when using libtool for shlibs.
-## Remove when using automake ... also fix target 'install' then.
 libR_la = libR$(DYLIB_EXT)
-## </FIXME>
-Rexeclib_LTLIBRARIES = $(libR_la)
-libR_la_SOURCES = $(SOURCES)
-libR_la_LDFLAGS =
 libR_la_OBJECTS = Rembedded.o $(OBJECTS)
 ## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
-libR_la_LIBADD = @LIBOBJS@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) \
-  $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR) @LIBINTL@
-libR_la_DEPENDENCIES = @LIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
+libR_la_LIBADD = $(EXTRA_LIBS)
+libR_la_DEPENDENCIES = ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo \
+	 $(COMMON_DEPENDENCIES)
 ## </FIXME>
-@USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
+
+## The next is needed on darwin only at present
 LIBR_LDFLAGS = @LIBR_LDFLAGS@
-@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
-@WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(R_XTRA_CFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
+
 
 all: Makefile Makedeps R
 
@@ -126,7 +123,7 @@ Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
   ../include/config.h \
   ../include/Rversion.h \
-  $(SOURCES_C)
+  $(SOURCES_C) $(EXTRA_SOURCES_C)
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 Makedeps: Makefile $(DEPENDS)
@@ -144,12 +141,12 @@ R: Makefile
 	@$(MAKE) install-bin-local
 
 
+## is this portable?  Documented as GNU extension.
 ../include/config.h ../include/Rversion.h:
 	(cd $(@D); $(MAKE) $(@F))
 
 $(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
-@WANT_R_SHLIB_FALSE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(READLINE_LIBS) $(LIBS)
-@WANT_R_SHLIB_TRUE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) -L../../lib -lR
+	$(MAIN_LINK) -o $@ $(R_bin_OBJECTS) $(R_bin_LDADD)
 
 install-bin-local: $(R_binary)
 	@$(MAKE) rhome="$(abs_top_builddir)" install-bin
@@ -157,19 +154,18 @@ install-bin-local: $(R_binary)
 $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
 	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
 
+## is this portable?  Documented as GNU extension.
 $(RLIBS):
 	(cd $(@D); $(MAKE) $(@F))
 
+../extra/bzip2/libbz2.a ../extra/pcre/libpcre.a ../extra/xdr/libxdr.a ../extra/zlib/libz.a ../extra/intl/libintl.a:
+	(cd $(@D); $(MAKE))
+
+
 libR: $(libR_la)
+
 $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
-## <FIXME>
-## This used to have $(SHLIB_LINK), but this uses $(SHLIB_LDFLAGS) which
-## is really for loadable modules and not shared libraries for linking
-## against ... the definition of $(SHLIB_LINK) in the top level Makeconf
-## has a libtool conditional which we do not have here (as we currently
-## cannot use libtool anyway).
-	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.o ../nmath/*.o ../unix/*.o  2>/dev/null` $(libR_la_LIBADD) $(READLINE_LIBS) $(LIBS)
-## </FIXME>
+	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_OBJECTS) `ls ../appl/*.o ../nmath/*.o ../unix/*.o  2>/dev/null` $(libR_la_LIBADD)
 
 install-lib-local: $(libR_la)
 	@$(MAKE) rhome="$(abs_top_builddir)" install-lib
@@ -191,8 +187,7 @@ installdirs:
 install-bin: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir)/exec/R"
 install-lib: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(Rexeclibdir)/$(libR_la)"
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) "$(Rexeclibdir)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(Rexeclibdir)/$(libR_la)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
@@ -207,7 +202,7 @@ mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
 	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(DYLIB_EXT) \
-	  $(Rexecbin_PROGRAMS)
+	  $(R_binary)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
