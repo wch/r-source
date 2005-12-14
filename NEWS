@@ -619,8 +619,10 @@ BUG FIXES
     o	Rmath.h for standalone Rmath was not recording HAVE_WORKING_LOG, 
         so R_log was not available on platforms defining it.
 
-
     o	HoltWinters() was using a slightly incorrect formula in the C code.
+
+    o	dir.create() could be confused by a trailing slash on the
+	path, and by paths containing drives on Windows.
 
 
 

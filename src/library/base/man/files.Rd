@@ -68,7 +68,13 @@ dir.create(path, showWarnings = TRUE, recursive = FALSE)
   existing directory.
   
   \code{dir.create} creates the last element of the path, unless
-  \code{recursive = TRUE}.
+  \code{recursive = TRUE}.  As from \R 2.2.1 trailing path separators
+  are ignored.
+#ifdef windows
+  On Windows drives are allowed in the path specification, and unless
+  the path is rooted will be interpreted relative to the current
+  directory on that drive.
+#endif
 }
 \value{
   \code{dir.create} and \code{file.rename} return a logical,

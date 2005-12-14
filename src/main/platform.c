@@ -1428,6 +1428,9 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     recursive = asLogical(CADDR(args));
     if(recursive == NA_LOGICAL) recursive = 0;
     strcpy(dir, R_ExpandFileName(CHAR(STRING_ELT(path, 0))));
+    /* remove trailing slashes */
+    p = dir + strlen(dir) - 1;
+    while(*p == '/' && strlen(dir) > 1) *p-- = '\0';
     if(recursive) {
 	p = dir;
 	while((p = Rf_strchr(p+1, '/'))) {
@@ -1465,12 +1468,17 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     strcpy(dir, R_ExpandFileName(CHAR(STRING_ELT(path, 0))));
     /* need DOS paths on Win 9x */
     R_fixbackslash(dir);
+    /* remove trailing slashes */
+    p = dir + strlen(dir) - 1;
+    while(*p == '\\' && strlen(dir) > 1 && *(p-1) != ":") *p-- = '\0';
     if(recursive) {
 	p = dir;
 	while((p = Rf_strchr(p+1, '\\'))) {
 	    *p = '\0';
-	    res = mkdir(dir);
-	    if(res && errno != EEXIST) goto end;
+	    if(*(p-1) != ':') {
+		res = mkdir(dir);
+		if(res && errno != EEXIST) goto end;
+	    }
 	    *p = '\\';
 	}
     }
