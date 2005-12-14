@@ -136,7 +136,8 @@ installdirs:
 @WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/include
 @WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib
 
-RMATH_FRAMEWORK_DIR ?= /Library/Frameworks/Rmath.framework
+## ?= is not portable make syntax, so we conditionalize this.
+@WANT_R_FRAMEWORK_TRUE@RMATH_FRAMEWORK_DIR ?= /Library/Frameworks/Rmath.framework
 install-Rmath-framework: $(libRmath_la)
 	@(cd ../../include; $(MAKE) Rmath.h)
 	@$(MKINSTALLDIRS) $(RMATH_FRAMEWORK_DIR)/Versions/$(VERSION)/Headers
