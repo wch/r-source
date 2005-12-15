@@ -265,7 +265,7 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
   pointers from that page.
 }
 \examples{
-## using the definition of class "track" from \link{Classes}
+## using the definition of class "track" from \link{setClass}
 
 \dontshow{
 setClass("track",

@@ -61,7 +61,7 @@ initialize(.Object, ...)
 \seealso{ \link{Classes} }
 
 \examples{
-## using the definition of class "track" from \link{Classes}
+## using the definition of class "track" from \link{setClass}
 
 \dontshow{
 setClass("track",
