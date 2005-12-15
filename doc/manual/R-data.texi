@@ -94,6 +94,7 @@ principal authors of the packages mentioned are
 @item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{ncdf} @tab David Pierce
 @item @pkg{ncvar} @tab Juerg Schmidli
+@item @pkg{rJava} @tab Simon Urbanek
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
 @item @pkg{RNetCDF} @tab Pavel Michna
 @item @pkg{RODBC} @tab Michael Lapsley and Brian Ripley
@@ -134,8 +135,8 @@ allow functionality developed in languages such as @code{Java},
 @code{perl} and @code{python} to be directly integrated with @R{} code,
 making the use of facilities in these languages even more
 appropriate.  (See the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython}
-packages from the Omegahat project, @url{http://www.omegahat.org}.)
-
+packages from the Omegahat project, @url{http://www.omegahat.org}, and
+the @pkg{rJava} package from @acronym{CRAN}.)
 
 
 @cindex Unix tools
@@ -868,7 +869,7 @@ and return a list of data frames.  If SAS is available on your system,
 function @code{read.ssd} can be used to create and run a SAS script that
 saves a SAS permanent dataset (@file{.ssd} or @file{.sas7bdat}) in
 Transport format.  It then calls @code{read.xport} to read the resulting
-file.  Package @pkg{HMisc} has a similar function @code{sas.get}, also
+file.  Package @pkg{Hmisc} has a similar function @code{sas.get}, also
 running SAS.
 
 @cindex S-PLUS
@@ -928,10 +929,14 @@ or (more recently) @file{.syd}.
 @cindex Octave
 @findex read.octave
 
-Octave is a numerical linear algebra system, and function
-@code{read.octave} in package @pkg{foreign} can read the first vector or
-matrix from an Octave ASCII data file created using the Octave command
-@command{save -ascii}.
+Octave is a numerical linear algebra system
+(@url{http://www.octave.org}), and function @code{read.octave} in
+package @pkg{foreign} can read in files in Octave text data format
+created using the Octave command @command{save -ascii}, with support for
+most of the common types of variables, including the standard atomic
+(real and complex scalars, matrices, and @math{N}-d arrays, strings,
+ranges, and boolean scalars and matrices) and recursive (structs, cells,
+and lists) ones.
 
 @node Relational databases, Binary files, Importing from other statistical systems, Top
 @chapter Relational databases
