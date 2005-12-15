@@ -6,7 +6,7 @@
 ## Usage:
 ##   R CMD f77 [options] files [objs]
 
-## Copyright (C) 2002 The R Core Development Team
+## Copyright (C) 2002-5 The R Core Development Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 ## writing to the Free Software Foundation, Inc., 59 Temple Place,
 ## Suite 330, Boston, MA  02111-1307, U.S.A.
 
-revision='$Revision: 1.1 $'
+revision='$Revision: 1.2 $'
 version=`set - ${revision}; echo ${2}`
 version="R front-end script to f2c ${version}
 
-Copyright (C) 2002 The R Core Development Team.
+Copyright (C) 2002-5 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -40,22 +40,16 @@ Options:
       --version         print version info and exit
   -c                    compile and assemble, but do not link
   -o FILE               place the output into FILE
-  -v, --verbose         display the programs invoked
+  --verbose             display the programs invoked
 
 Report bugs to <r-bugs@r-project.org>."
 
-## Defaults from configure
-: ${F77='@F77@'}
-: ${F2C='@F2C@'}
-: ${CC='@CC@'}
-: ${CFLAGS='@CFLAGS@'}
-FLIBS='@FLIBS@'
-
-## For sake of completeness: if we have a real FORTRAN 77 compiler then
-## use it.
-if test -z "${F2C}"; then
-  exec ${F77} "${@}"
-fi
+## Possible user overrides
+: ${F2C='f2c'}
+: ${F2CLIBS='-lf2c'}
+: ${CC='cc'}
+: ${CPP='cpp'}
+CFLAGS=
 
 ## 
 rc=0
@@ -77,7 +71,7 @@ while test -n "${1}"; do
       ${echo} "${usage}"; exit 0 ;;
     --version)
       ${echo} "${version}"; exit 0 ;;
-    -v|--verbose)
+    --verbose)
       verbose=${echo} ;;
     -c)
       opt_c=yes ;;
@@ -86,10 +80,16 @@ while test -n "${1}"; do
       outfile="${2}"
       shift
       ;;
+    -v)
+      ${echo} "-lg2c -lm"; exit 0 ;;
     *.f)
+      srcs="${srcs} ${1}" ;;
+    *.F)
       srcs="${srcs} ${1}" ;;
     */*|*.a|*.o|*.s[lo]|*.s[lo].*)
       objs="${objs} ${1}" ;;
+    *)  # assume all the rest are C flags, -fPIC, -I etc.
+      CFLAGS="${CFLAGS} $1" ;;
   esac
   shift
 done
@@ -103,11 +103,29 @@ if test ${#} -gt 1 \
 fi
 
 for f in ${*}; do
-  b=`basename ${f} .f`
-  ${verbose} ${F2C} ${F2CFLAGS} ${f}
-  ${F2C} ${F2CFLAGS} ${f}
-  rc=${?}
-  test ${rc} = 0 || exit
+    case ${f} in
+	*.f)
+	    b=`basename ${f} .f`
+	    ${verbose} ${F2C} ${F2CFLAGS} ${f}
+	    ${F2C} ${F2CFLAGS} ${f}
+	    rc=${?}
+	    test ${rc} = 0 || exit
+	    ;;
+	*.F)
+	    b=`basename ${f} .F`
+	    ${CPP} $1 >$b.i
+	    rc=$?
+	    case $rc in 
+		0)
+		    ${verbose} ${F2C} ${F2CFLAGS} <$b.i >$b.c
+		    ${F2C} ${F2CFLAGS} <$b.i >$b.c
+		    rc=$?
+		    ;;
+	    esac
+	    rm $b.i
+	    test ${rc} = 0 || exit
+	    ;;
+    esac
   if test "${opt_c}" = yes && test "${opt_o}" = yes; then
     CFLAGS="${CFLAGS} -o ${outfile}"
   fi
@@ -120,8 +138,8 @@ for f in ${*}; do
 done
 
 if test "${opt_c}" = no && test -n "${objs}"; then
-  ${verbose} "${CC} ${CFLAGS} -o ${outfile} -u MAIN__ ${objs} ${FLIBS}"
-  ${CC} ${CFLAGS} -o ${outfile} -u MAIN__ ${objs} ${FLIBS}
+  ${verbose} "${CC} ${CFLAGS} -o ${outfile} -u MAIN__ ${objs} ${F2CLIBS}"
+  ${CC} ${CFLAGS} -o ${outfile} -u MAIN__ ${objs} ${F2CLIBS}
 fi
 rc=${?}
 exit ${rc}

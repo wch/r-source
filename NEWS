@@ -217,6 +217,9 @@ NEW FEATURES
 
     o	nls() now supports 'weights'.
 
+    o	install.packages() now does tilde expansion on file paths
+	supplied as 'pkgs'.
+
 
 DEPRECATED & DEFUNCT
 
@@ -333,6 +336,9 @@ INSTALLATION CHANGES
 	the optional build of libRmath.so): this allows a considerable
 	simplification of the Makefiles.
 
+    o	Direct support for f2c has been removed: it can still be used
+	via a script which makes it look like a Fortran compiler.
+
 
 UTILITIES
 
@@ -340,6 +346,8 @@ UTILITIES
 
     o	R CMD INSTALL now uses more randomness in the temporary
 	directory name even on systems without mktemp -d.
+
+    o	R CMD f77 has been removed now f2c is no longer supported.
 
 
 DOCUMENTATION

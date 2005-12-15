@@ -10,12 +10,12 @@ subdir = src/scripts
 
 include $(top_builddir)/Makeconf
 
-SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt config mkinstalldirs \
-  pager texi2dvi
+SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt config f77_f2c \
+  mkinstalldirs pager texi2dvi
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rdconv.in Rprof.in \
-  SHLIB.in Sd2Rd.in build.in check.in f77.in
+  SHLIB.in Sd2Rd.in build.in check.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 ## </NOTE>
 
@@ -55,8 +55,6 @@ Sd2Rd: $(srcdir)/Sd2Rd.in $(top_builddir)/config.status
 build: $(srcdir)/build.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 check: $(srcdir)/check.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-f77: $(srcdir)/f77.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 ## The following target helps in automatically generating the above
 ## target rules (provided that echo understands backslash escapes).

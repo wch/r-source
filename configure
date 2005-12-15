@@ -465,8 +465,8 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE F2C R_BROWSER BLAS_LIBS LAPACK_LIBS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 USING_G77_TRUE USING_G77_FALSE USING_F2C_TRUE USING_F2C_FALSE CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS FLIBS HAVE_FORTRAN_DOUBLE_COMPLEX COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS F2CFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS FW_VERSION ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG RMATH_HAVE_WORKING_LOG1P HAVE_C99_COMPLEX USE_VECLIB_G95FIX_TRUE USE_VECLIB_G95FIX_FALSE USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF JAVA_PROG JAVAC JAVA_HOME JAVA_LD_PATH JAVA_LIBS R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE USE_NLS SET_MAKE MKINSTALLDIRS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC21 HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB USE_NLS_TRUE USE_NLS_FALSE LTLIBOBJS'
-ac_subst_files='r_cc_rules_frag r_cc_lo_rules_frag r_f77_rules_frag r_cxx_rules_frag'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE R_BROWSER BLAS_LIBS LAPACK_LIBS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 USING_G77_TRUE USING_G77_FALSE CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS FLIBS HAVE_FORTRAN_DOUBLE_COMPLEX COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS FW_VERSION ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG RMATH_HAVE_WORKING_LOG1P HAVE_C99_COMPLEX USE_VECLIB_G95FIX_TRUE USE_VECLIB_G95FIX_FALSE USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF JAVA_PROG JAVAC JAVA_HOME JAVA_LD_PATH JAVA_LIBS R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE USE_NLS SET_MAKE MKINSTALLDIRS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC21 HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB USE_NLS_TRUE USE_NLS_FALSE LTLIBOBJS'
+ac_subst_files='r_cc_rules_frag r_cc_lo_rules_frag r_cxx_rules_frag'
 
 # Initialize some variables set by options.
 ac_init_help=
@@ -990,10 +990,6 @@ ac_env_MAKE_set=${MAKE+set}
 ac_env_MAKE_value=$MAKE
 ac_cv_env_MAKE_set=${MAKE+set}
 ac_cv_env_MAKE_value=$MAKE
-ac_env_F2C_set=${F2C+set}
-ac_env_F2C_value=$F2C
-ac_cv_env_F2C_set=${F2C+set}
-ac_cv_env_F2C_value=$F2C
 ac_env_R_BROWSER_set=${R_BROWSER+set}
 ac_env_R_BROWSER_value=$R_BROWSER
 ac_cv_env_R_BROWSER_set=${R_BROWSER+set}
@@ -1234,7 +1230,6 @@ Some influential environment variables:
   TCLTK_CPPFLAGS
               flags needed for finding the tcl.h and tk.h headers
   MAKE        Make command
-  F2C         Fortran-to-C converter command
   R_BROWSER   default browser
   BLAS_LIBS   flags needed for linking against external BLAS libraries
   LAPACK_LIBS flags needed for linking against external LAPACK libraries
@@ -2288,7 +2283,6 @@ else
 fi;
 
 ### ** Precious variables.
-
 
 
 
@@ -5121,17 +5115,10 @@ if test "${GCC}" = yes; then
 fi
 
 
-if test -n "${F77}" && test -n "${F2C}"; then
-  warn_F77_and_F2C="both 'F77' and 'F2C' given.
-Using the given Fortran 77 compiler ..."
-  { echo "$as_me:$LINENO: WARNING: ${warn_F77_and_F2C}" >&5
-echo "$as_me: WARNING: ${warn_F77_and_F2C}" >&2;}
-  F2C=
-fi
 if test -n "${F77}"; then
   echo "$as_me:$LINENO: result: defining F77 to be ${F77}" >&5
 echo "${ECHO_T}defining F77 to be ${F77}" >&6
-elif test -z "${F2C}"; then
+else
   F77=
   F95_compilers="f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn g95"
   F90_compilers="f90 xlf90 pgf90 pghpf epcf90"
@@ -5189,46 +5176,6 @@ fi
   test -n "$F77" && break
 done
 
-  if test -z "${F77}"; then
-    # Extract the first word of "f2c", so it can be a program name with args.
-set dummy f2c; ac_word=$2
-echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
-if test "${ac_cv_prog_F2C+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  if test -n "$F2C"; then
-  ac_cv_prog_F2C="$F2C" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_prog_F2C="f2c"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-
-fi
-fi
-F2C=$ac_cv_prog_F2C
-if test -n "$F2C"; then
-  echo "$as_me:$LINENO: result: $F2C" >&5
-echo "${ECHO_T}$F2C" >&6
-else
-  echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
-fi
-
-  fi
-else
-  echo "$as_me:$LINENO: result: defining F2C to be ${F2C}" >&5
-echo "${ECHO_T}defining F2C to be ${F2C}" >&6
 fi
 if test -n "${F77}"; then
   ## If the above 'found' a Fortran 77 compiler, we run AC_PROG_F77 as
@@ -5325,7 +5272,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:5328:" \
+echo "$as_me:5275:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -5469,12 +5416,10 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
-elif test -z "${F2C}"; then
+else
   { { echo "$as_me:$LINENO: error: Neither an F77 compiler nor f2c found" >&5
 echo "$as_me: error: Neither an F77 compiler nor f2c found" >&2;}
    { (exit 1); exit 1; }; }
-elif test "${GCC}" = yes; then
-  using_f2c=yes
 fi
 
 
@@ -5484,16 +5429,6 @@ if test "x${ac_cv_f77_compiler_gnu}" = xyes; then
 else
   USING_G77_TRUE='#'
   USING_G77_FALSE=
-fi
-
-
-
-if test "x${using_f2c}" = xyes; then
-  USING_F2C_TRUE=
-  USING_F2C_FALSE='#'
-else
-  USING_F2C_TRUE='#'
-  USING_F2C_FALSE=
 fi
 
 
@@ -6084,7 +6019,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 ## Libtool.
-## (Run this after R_PROG_F77_OR_F2C, as AC_PROG_LIBTOOL checks for a
+## (Run this after R_PROG_F77, as AC_PROG_LIBTOOL checks for a
 ## Fortran 77 compiler and sets F77 accordingly.)
 # Check whether --enable-static or --disable-static was given.
 if test "${enable_static+set}" = set; then
@@ -6614,7 +6549,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 6617 "configure"' > conftest.$ac_ext
+  echo '#line 6552 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -8055,11 +7990,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8058: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7993: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8062: \$? = $ac_status" >&5
+   echo "$as_me:7997: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -8288,11 +8223,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8291: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8226: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8295: \$? = $ac_status" >&5
+   echo "$as_me:8230: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -8348,11 +8283,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8351: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8286: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:8355: \$? = $ac_status" >&5
+   echo "$as_me:8290: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -10532,7 +10467,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10535 "configure"
+#line 10470 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10630,7 +10565,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10633 "configure"
+#line 10568 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12809,11 +12744,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12812: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12747: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:12816: \$? = $ac_status" >&5
+   echo "$as_me:12751: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -12869,11 +12804,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12872: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12807: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12876: \$? = $ac_status" >&5
+   echo "$as_me:12811: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14230,7 +14165,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 14233 "configure"
+#line 14168 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14328,7 +14263,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 14331 "configure"
+#line 14266 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15155,11 +15090,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15158: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15093: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15162: \$? = $ac_status" >&5
+   echo "$as_me:15097: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -15215,11 +15150,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15218: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15153: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15222: \$? = $ac_status" >&5
+   echo "$as_me:15157: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -17249,11 +17184,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17252: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17187: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17256: \$? = $ac_status" >&5
+   echo "$as_me:17191: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17482,11 +17417,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17485: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17420: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17489: \$? = $ac_status" >&5
+   echo "$as_me:17424: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17542,11 +17477,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17545: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17480: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17549: \$? = $ac_status" >&5
+   echo "$as_me:17484: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19726,7 +19661,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19729 "configure"
+#line 19664 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -19824,7 +19759,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19827 "configure"
+#line 19762 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -26057,8 +25992,8 @@ fi
 
 ### *** Fortran 77 compiler.
 
-if test -n "${F77}"; then
 
+if test -z "${FLIBS}"; then
 r_save_LIBS="${LIBS}"
 LIBS=
 ac_ext=f
@@ -26112,7 +26047,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:26115: \"$ac_link\") >&5
+(eval echo $as_me:26050: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26190,7 +26125,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:26193: \"$ac_link\") >&5
+(eval echo $as_me:26128: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26436,7 +26371,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26439: \"$ac_link\") >&5
+(eval echo $as_me:26374: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26518,7 +26453,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26521: \"$ac_link\") >&5
+(eval echo $as_me:26456: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26760,8 +26695,9 @@ for arg in ${FLIBS}; do
   esac
 done
 FLIBS="${flibs}"
+fi
 
-  ac_ext=f
+ac_ext=f
 ac_compile='$F77 -c $FFLAGS conftest.$ac_ext >&5'
 ac_link='$F77 -o conftest$ac_exeext $FFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_f77_compiler_gnu
@@ -27551,322 +27487,6 @@ else
 echo "$as_me: WARNING: ${warn_f77_cc_double_complex}" >&2;}
 fi
 
-
-  r_f77_rules_frag=Makefrag.f77
-cat << \EOF > ${r_f77_rules_frag}
-.f.c:
-.f.o:
-	$(F77) $(ALL_FFLAGS) -c $< -o $@
-EOF
-
-
-else
-  if test ${ac_cv_sizeof_long} -gt 4 ; then
-    { { echo "$as_me:$LINENO: error: Cannot use f2c on a > 32-bit machine" >&5
-echo "$as_me: error: Cannot use f2c on a > 32-bit machine" >&2;}
-   { (exit 1); exit 1; }; }
-  fi
-
-
-if test "${r_cv_f2c_flibs+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-cat > conftest.${ac_ext} << EOF
-int MAIN_ () { exit(0); }
-int MAIN__ () { exit(0); }
-EOF
-if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
-  (eval $ac_compile) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; then
-  ${AR} ${ARFLAGS} libconftest.a conftest.${ac_objext} 1>&5
-  ${RANLIB} libconftest.a 1>&5
-fi
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-echo "$as_me:$LINENO: checking for f_open in -lf2c" >&5
-echo $ECHO_N "checking for f_open in -lf2c... $ECHO_C" >&6
-if test "${ac_cv_lib_f2c_f_open+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lf2c -L. -lconftest ${LIBM} $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any gcc2 internal prototype to avoid an error.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-/* We use char because int might match the return type of a gcc2
-   builtin and then its argument prototype would still apply.  */
-char f_open ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-f_open ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_cv_lib_f2c_f_open=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-ac_cv_lib_f2c_f_open=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-echo "$as_me:$LINENO: result: $ac_cv_lib_f2c_f_open" >&5
-echo "${ECHO_T}$ac_cv_lib_f2c_f_open" >&6
-if test $ac_cv_lib_f2c_f_open = yes; then
-  flibs=-lf2c
-else
-  flibs=
-fi
-
-rm -f libconftest*
-if test -z "${flibs}"; then
-  echo "$as_me:$LINENO: checking for d_sin in -lF77" >&5
-echo $ECHO_N "checking for d_sin in -lF77... $ECHO_C" >&6
-if test "${ac_cv_lib_F77_d_sin+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lF77 ${LIBM} $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any gcc2 internal prototype to avoid an error.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-/* We use char because int might match the return type of a gcc2
-   builtin and then its argument prototype would still apply.  */
-char d_sin ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-d_sin ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_cv_lib_F77_d_sin=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-ac_cv_lib_F77_d_sin=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-echo "$as_me:$LINENO: result: $ac_cv_lib_F77_d_sin" >&5
-echo "${ECHO_T}$ac_cv_lib_F77_d_sin" >&6
-if test $ac_cv_lib_F77_d_sin = yes; then
-  flibs=-lF77
-else
-  flibs=
-fi
-
-  if test -n "${flibs}"; then
-    echo "$as_me:$LINENO: checking for f_rew in -lI77" >&5
-echo $ECHO_N "checking for f_rew in -lI77... $ECHO_C" >&6
-if test "${ac_cv_lib_I77_f_rew+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lI77 -lF77 $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any gcc2 internal prototype to avoid an error.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-/* We use char because int might match the return type of a gcc2
-   builtin and then its argument prototype would still apply.  */
-char f_rew ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-f_rew ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_cv_lib_I77_f_rew=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-ac_cv_lib_I77_f_rew=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-echo "$as_me:$LINENO: result: $ac_cv_lib_I77_f_rew" >&5
-echo "${ECHO_T}$ac_cv_lib_I77_f_rew" >&6
-if test $ac_cv_lib_I77_f_rew = yes; then
-  flibs="${flibs} -lI77"
-else
-  flibs=
-fi
-
-  fi
-fi
-r_cv_f2c_flibs="${flibs}"
-fi
-
-FLIBS="${r_cv_f2c_flibs}"
-if test -z "${FLIBS}"; then
-  warn_f2c_flibs="I found f2c but not libf2c, or libF77 and libI77"
-  { echo "$as_me:$LINENO: WARNING: ${warn_f2c_flibs}" >&5
-echo "$as_me: WARNING: ${warn_f2c_flibs}" >&2;}
-else
-  FLIBS="${FLIBS} ${LIBM}"
-fi
-
-  cat >>confdefs.h <<\_ACEOF
-#define HAVE_F77_UNDERSCORE 1
-_ACEOF
-
-  cat >>confdefs.h <<\_ACEOF
-#define HAVE_FORTRAN_DOUBLE_COMPLEX 1
-_ACEOF
-
-
-r_f77_rules_frag=Makefrag.f77
-cat << \EOF > ${r_f77_rules_frag}
-.f.o:
-	$(F2C) $(F2CFLAGS) < $< > $*.c
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $*.c -o $@
-	@rm -f $*.c
-EOF
-
-
-  F77="\$(SHELL) \$(R_HOME)/bin/f77"
-fi
 
 
 
@@ -29522,7 +29142,6 @@ esac
 
 
 
-
 ### ** DLL stuff.
 
 ## We need to determine the following:
@@ -29979,8 +29598,7 @@ echo "$as_me: error: See the file INSTALL for more information." >&2;}
 fi
 
 : ${FPICFLAGS="${fpicflags}"}
-if test -z "${FPICFLAGS}" \
-    && test -z "${F2C}"; then
+if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
     aix*|irix*|mingw*|osf*)
       ;;
@@ -34771,7 +34389,6 @@ if test "${use_blas}" = yes; then
 
 
 
-
 acx_blas_ok=no
 case "${with_blas}" in
   yes | "") ;;
@@ -34782,8 +34399,7 @@ case "${with_blas}" in
   *) BLAS_LIBS="-l${with_blas}" ;;
 esac
 
-if test "${r_cv_prog_f77_append_underscore}" = yes \
-  || test -n "${F2C}"; then
+if test "${r_cv_prog_f77_append_underscore}" = yes; then
   dgemm=dgemm_
   sgemm=sgemm_
   xerbla=xerbla_
@@ -35934,7 +35550,6 @@ if test "${use_lapack}" = "yes"; then
 
 
 
-
 acx_lapack_ok=no
 case "${with_lapack}" in
   yes | "") ;;
@@ -35945,8 +35560,7 @@ case "${with_lapack}" in
   *) LAPACK_LIBS="-l${with_lapack}" ;;
 esac
 
-if test "${r_cv_prog_f77_append_underscore}" = yes \
-  || test -n "${F2C}"; then
+if test "${r_cv_prog_f77_append_underscore}" = yes; then
   zgeev=zgeev_
 else
   zgeev=zgeev
@@ -48563,7 +48177,7 @@ esac
 
           ac_config_headers="$ac_config_headers src/include/config.h"
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ac_config_files="$ac_config_files Makeconf Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron m4/Makefile po/Makefile.in share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/bzip2/Makefile src/extra/intl/Makefile src/extra/pcre/Makefile src/extra/xdr/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h0 src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/datasets/DESCRIPTION src/library/datasets/Makefile src/library/graphics/DESCRIPTION src/library/graphics/Makefile src/library/grDevices/DESCRIPTION src/library/grDevices/Makefile src/library/grDevices/src/Makefile src/library/grid/DESCRIPTION src/library/grid/Makefile src/library/grid/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/profile/Makefile src/library/stats/DESCRIPTION src/library/stats/Makefile src/library/stats/src/Makefile src/library/stats4/DESCRIPTION src/library/stats4/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/tools/src/Makefile src/library/utils/DESCRIPTION src/library/utils/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE src/scripts/R.sh src/scripts/Rdconv src/scripts/Rprof src/scripts/SHLIB src/scripts/Sd2Rd src/scripts/build src/scripts/check src/scripts/f77 src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ac_config_files="$ac_config_files Makeconf Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron m4/Makefile po/Makefile.in share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/bzip2/Makefile src/extra/intl/Makefile src/extra/pcre/Makefile src/extra/xdr/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h0 src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/datasets/DESCRIPTION src/library/datasets/Makefile src/library/graphics/DESCRIPTION src/library/graphics/Makefile src/library/grDevices/DESCRIPTION src/library/grDevices/Makefile src/library/grDevices/src/Makefile src/library/grid/DESCRIPTION src/library/grid/Makefile src/library/grid/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/profile/Makefile src/library/stats/DESCRIPTION src/library/stats/Makefile src/library/stats/src/Makefile src/library/stats4/DESCRIPTION src/library/stats4/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/tools/src/Makefile src/library/utils/DESCRIPTION src/library/utils/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE src/scripts/R.sh src/scripts/Rdconv src/scripts/Rprof src/scripts/SHLIB src/scripts/Sd2Rd src/scripts/build src/scripts/check src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
 
 
           ac_config_commands="$ac_config_commands stamp-h"
@@ -48698,13 +48312,6 @@ if test -z "${USING_G77_TRUE}" && test -z "${USING_G77_FALSE}"; then
   { { echo "$as_me:$LINENO: error: conditional \"USING_G77\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 echo "$as_me: error: conditional \"USING_G77\" was never defined.
-Usually this means the macro was only invoked conditionally." >&2;}
-   { (exit 1); exit 1; }; }
-fi
-if test -z "${USING_F2C_TRUE}" && test -z "${USING_F2C_FALSE}"; then
-  { { echo "$as_me:$LINENO: error: conditional \"USING_F2C\" was never defined.
-Usually this means the macro was only invoked conditionally." >&5
-echo "$as_me: error: conditional \"USING_F2C\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
@@ -49346,7 +48953,6 @@ do
   "src/scripts/Sd2Rd" ) CONFIG_FILES="$CONFIG_FILES src/scripts/Sd2Rd" ;;
   "src/scripts/build" ) CONFIG_FILES="$CONFIG_FILES src/scripts/build" ;;
   "src/scripts/check" ) CONFIG_FILES="$CONFIG_FILES src/scripts/check" ;;
-  "src/scripts/f77" ) CONFIG_FILES="$CONFIG_FILES src/scripts/f77" ;;
   "src/unix/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/unix/Makefile" ;;
   "tests/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
   "tests/Embedding/Makefile" ) CONFIG_FILES="$CONFIG_FILES tests/Embedding/Makefile" ;;
@@ -49488,7 +49094,6 @@ s,@SHLIB_CXXLDFLAGS@,$SHLIB_CXXLDFLAGS,;t t
 s,@TCLTK_LIBS@,$TCLTK_LIBS,;t t
 s,@TCLTK_CPPFLAGS@,$TCLTK_CPPFLAGS,;t t
 s,@MAKE@,$MAKE,;t t
-s,@F2C@,$F2C,;t t
 s,@R_BROWSER@,$R_BROWSER,;t t
 s,@BLAS_LIBS@,$BLAS_LIBS,;t t
 s,@LAPACK_LIBS@,$LAPACK_LIBS,;t t
@@ -49543,8 +49148,6 @@ s,@FFLAGS@,$FFLAGS,;t t
 s,@ac_ct_F77@,$ac_ct_F77,;t t
 s,@USING_G77_TRUE@,$USING_G77_TRUE,;t t
 s,@USING_G77_FALSE@,$USING_G77_FALSE,;t t
-s,@USING_F2C_TRUE@,$USING_F2C_TRUE,;t t
-s,@USING_F2C_FALSE@,$USING_F2C_FALSE,;t t
 s,@CXX@,$CXX,;t t
 s,@CXXFLAGS@,$CXXFLAGS,;t t
 s,@ac_ct_CXX@,$ac_ct_CXX,;t t
@@ -49565,7 +49168,6 @@ s,@HAVE_FORTRAN_DOUBLE_COMPLEX@,$HAVE_FORTRAN_DOUBLE_COMPLEX,;t t
 s,@COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE@,$COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE,;t t
 s,@COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@,$COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE,;t t
 s,@SHLIB_CXXFLAGS@,$SHLIB_CXXFLAGS,;t t
-s,@F2CFLAGS@,$F2CFLAGS,;t t
 s,@R_XTRA_CFLAGS@,$R_XTRA_CFLAGS,;t t
 s,@R_XTRA_CPPFLAGS@,$R_XTRA_CPPFLAGS,;t t
 s,@R_XTRA_CXXFLAGS@,$R_XTRA_CXXFLAGS,;t t
@@ -49662,8 +49264,6 @@ s,@LTLIBOBJS@,$LTLIBOBJS,;t t
 s,@r_cc_rules_frag@,,;t t
 /@r_cc_lo_rules_frag@/r $r_cc_lo_rules_frag
 s,@r_cc_lo_rules_frag@,,;t t
-/@r_f77_rules_frag@/r $r_f77_rules_frag
-s,@r_f77_rules_frag@,,;t t
 /@r_cxx_rules_frag@/r $r_cxx_rules_frag
 s,@r_cxx_rules_frag@,,;t t
 CEOF
@@ -50392,11 +49992,7 @@ fi
 ## </NOTE>
 r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 r_cxx_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
-if test -z "${F2C}"; then
-  r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
-else
-  r_f77_compiler="${F2C} ${F2CFLAGS}"
-fi
+r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_interfaces=
 for item in X11 aqua tcltk; do
   if eval "test \${use_${item}} = yes"; then
@@ -50581,17 +50177,9 @@ R is now configured for ${host}
 
   Recommended packages:      ${use_recommended_packages}
 " >&6
-if test -n "${warn_F77_and_F2C}"; then
-  { echo "$as_me:$LINENO: WARNING: ${warn_F77_and_F2C}" >&5
-echo "$as_me: WARNING: ${warn_F77_and_F2C}" >&2;}
-fi
 if test -n "${warn_f77_cc_double_complex}"; then
   { echo "$as_me:$LINENO: WARNING: ${warn_f77_cc_double_complex}" >&5
 echo "$as_me: WARNING: ${warn_f77_cc_double_complex}" >&2;}
-fi
-if test -n "${warn_f2c_flibs}"; then
-  { echo "$as_me:$LINENO: WARNING: ${warn_f2c_flibs}" >&5
-echo "$as_me: WARNING: ${warn_f2c_flibs}" >&2;}
 fi
 if test -n "${warn_xcompile_sizeof_int}"; then
   { echo "$as_me:$LINENO: WARNING: ${warn_xcompile_sizeof_int}" >&5

@@ -61,12 +61,6 @@ DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS) -ffloat-store
 @USING_G77_TRUE@dlamc.o: dlamc.f
 @USING_G77_TRUE@	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
 
-@USING_F2C_TRUE@dlamc.o: dlamc.f
-@USING_F2C_TRUE@	$(F2C) $(F2CFLAGS) < $< > c_dlamc.c
-@USING_F2C_TRUE@	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -ffloat-store -c c_dlamc.c -o $@
-@USING_F2C_TRUE@	@rm -f c_dlamc.c
-
-
 R: Makefile
 	@$(MAKE) Makedeps
 @USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) $(Rlapack_la) Rlapack_install

@@ -64,4 +64,5 @@ ALL_LIBS = $(PKG_LIBS) $(SHLIB_LIBADD) $(LIBR)
 
 @r_cc_rules_frag@
 @r_cxx_rules_frag@
-@r_f77_rules_frag@
+.f.o:
+	$(F77) $(ALL_FFLAGS) -c $< -o $@

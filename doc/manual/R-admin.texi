@@ -1825,7 +1825,9 @@ specify location of @file{tkConfig.sh}
 or use the configure variables @code{TCLTK_LIBS} and
 @code{TCLTK_CPPFLAGS} to specify the flags needed for linking against
 the Tcl and Tk libraries and for finding the @file{tcl.h} and
-@file{tk.h} headers, respectively.
+@file{tk.h} headers, respectively.  If you have both 32- and 64-bit
+versions of Tcl/Tk installed, setting the paths to the correct config
+files will most likely be necessary to avoid confusion between them.
 
 Versions of Tcl/Tk from 8.3 to 8.4.11 have been used successfully: 8.0 is
 no longer supported.
@@ -2231,8 +2233,7 @@ variable @code{MAKE} at configure time, for example
 * Using gfortran::              
 @end menu
 
-To compile @R{}, you need a FORTRAN compiler or @command{f2c}, the
-FORTRAN-to-C converter (@url{http://www.netlib.org/f2c}).  The default
+To compile @R{}, you need a FORTRAN compiler.  The default
 is to search for
 @c F95_compilers in m4/R.m4:
 @command{f95}, @command{fort}, @command{xlf95},
@@ -2246,19 +2247,16 @@ is to search for
 @command{pgf77}, @command{cf77}, @command{fort77}, @command{fl32},
 @command{af77} (in that order)@footnote{On HP-UX @command{fort77} is the
 @acronym{POSIX} compliant FORTRAN compiler, and comes after
-@command{g77}.}, and then for @command{f2c}, and use whichever is found
-first; if none is found, @R{} cannot be compiled.
+@command{g77}.}, and use whichever is found first; if none is found,
+@R{} cannot be compiled.
 @c GCC_Fortran_compiler in m4/R.m4:
 However, if @command{CC} is @command{gcc}, the matching FORTRAN compiler
 (@command{g77} for @w{@command{gcc} 3} and @code{gfortran} for
 @w{@command{gcc} 4}) is used if available.
 
-The search mechanism can be changed using the configure variables
-@code{F77} and @code{F2C} which specify the commands that run the
-FORTRAN 77 compiler and FORTRAN-to-C converter, respectively.  If
-@code{F77} is given, it is used to compile FORTRAN; otherwise, if
-@code{F2C} is given, f2c is used even if a FORTRAN compiler would be be
-available.  If your FORTRAN compiler is in a non-standard location, you
+The search mechanism can be changed using the configure variable
+@code{F77} which specifies the command that runs the FORTRAN 77
+compiler.  If your FORTRAN compiler is in a non-standard location, you
 should set the environment variable @env{PATH} accordingly before
 running @command{configure}, or use the configure variable @code{F77} to
 specify its full path.
@@ -2273,10 +2271,7 @@ are supported.
 You must set whatever compilation flags (if any) are needed to ensure
 that FORTRAN @code{integer} is equivalent to a C @code{int} pointer and
 FORTRAN @code{double precision} is equivalent to a C @code{double}
-pointer.  This is checked during the configuration process.  Because of
-this, @code{f2c} will not be accepted on a 64-bit platform as it
-produces 64-bit integers, incompatible with C's @code{int} on such
-platforms.
+pointer.  This is checked during the configuration process.
 
 Some of the FORTRAN code makes use of @code{COMPLEX*16} variables, which
 is a FORTRAN 90 extension.  This is checked for at configure
@@ -2290,11 +2285,16 @@ FORTRAN 77 compliance.
 For performance reasons@footnote{e.g., to use an optimized BLAS on
 Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
 
-If you use @command{f2c} you may need to ensure that the FORTRAN type
-@code{integer} is translated to the C type @code{int}.  Normally
-@file{f2c.h} contains @samp{typedef long int integer;}, which will work
-on a 32-bit platform but not on a 64-bit platform, where @command{f2c}
-is not allowed.
+It is possible to use @command{f2c}, the FORTRAN-to-C converter
+(@url{http://www.netlib.org/f2c}), via a script.  (An example script is
+given in @file{scripts/f77_f2c}: this can be customized by setting the
+environment variables @env{F2C}, @env{F2CLIBS}, @env{CC} and @env{CPP}.)
+You may need to ensure that the FORTRAN type @code{integer} is
+translated to the C type @code{int}.  Normally @file{f2c.h} contains
+@samp{typedef long int integer;}, which will work on a 32-bit platform
+but not on a 64-bit platform.  If your compiler is not @command{gcc} you
+will need to set @env{FPICFLAGS} appropriately.
+
 
 @node Using gfortran,  , Using FORTRAN, Using FORTRAN
 @subsection Using gfortran
@@ -2560,10 +2560,10 @@ version of @code{libc} is found.  As from @R{} 2.2.1, we include
 @cindex Mac OS X
 
 You can build @R{} as a Unix application on Mac OS X using the Apple
-Developer Tools and @command{f2c} or @command{g77} or
-@command{gfortran}.  You will also need to install an X sub-system or
-configure with @option{--without-x}. The X window manager is part of the
-standard Mac OS X distribution since Mac OS X version 10.3 (Panther).
+Developer Tools and @command{g77} or @command{gfortran}.  You will also
+need to install an X sub-system or configure with
+@option{--without-x}. The X window manager is part of the standard Mac
+OS X distribution since Mac OS X version 10.3 (Panther).
 
 For more information on how to find these tools please read the
 @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
@@ -2996,27 +2996,25 @@ SunPro compilers causes @R{}'s @code{NaN} to be set incorrectly.
 across platforms on what needs to be done to build shared libraries.
 there are many different combinations of flags for the compilers and
 loaders.  @acronym{GNU} libtool cannot be used (yet), as it currently
-does not fully support FORTRAN (and will most likely never support
-@command{f2c}:  one would need a shell wrapper for this).  The technique
-we use is to first interrogate the X window system about what it does
-(using @command{xmkmf}), and then override this in situations where we
-know better (for tools from the @acronym{GNU} Compiler Collection and/or
-platforms we know about).  This typically works, but you may have to
-manually override the results.  Scanning the manual entries for
-@command{cc} and @command{ld} usually reveals the correct incantation.
-Once you know the recipe you can modify the file @file{config.site}
-(following the instructions therein) so that the build will use these
-options.
+does not fully support FORTRAN: one would need a shell wrapper for
+this).  The technique we use is to first interrogate the X window system
+about what it does (using @command{xmkmf}), and then override this in
+situations where we know better (for tools from the @acronym{GNU}
+Compiler Collection and/or platforms we know about).  This typically
+works, but you may have to manually override the results.  Scanning the
+manual entries for @command{cc} and @command{ld} usually reveals the
+correct incantation.  Once you know the recipe you can modify the file
+@file{config.site} (following the instructions therein) so that the
+build will use these options.
 
 It seems that @w{@command{gcc} 3.4.x} and later on @cputype{ix86} Linux
 defeat attempts by the LAPACK code to avoid computations entirely in
 extended-precision registers, so file @file{src/modules/lapack/dlamc.f}
 may need to be compiled without optimization.  If configure detects
-@acronym{GNU} FORTRAN or the use of @command{f2c} it adds flag
-@option{-ffloat-store} which suffices, but it is possible that
-@file{src/modules/lapack/Makefile} will need to be edited to remove
-optimization on other platforms.  (This is true when using @command{icc}
-on @cputype{ix86} Linux, for example.)
+@acronym{GNU} FORTRAN it adds flag @option{-ffloat-store} which
+suffices, but it is possible that @file{src/modules/lapack/Makefile}
+will need to be edited to remove optimization on other platforms.  (This
+is true when using @command{icc} on @cputype{ix86} Linux, for example.)
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include

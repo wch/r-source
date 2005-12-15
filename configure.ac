@@ -442,7 +442,6 @@ AC_ARG_VAR([TCLTK_LIBS],
 AC_ARG_VAR([TCLTK_CPPFLAGS],
            [flags needed for finding the tcl.h and tk.h headers])
 AC_ARG_VAR([MAKE], [Make command])
-AC_ARG_VAR([F2C], [Fortran-to-C converter command])
 AC_ARG_VAR([R_BROWSER], [default browser])
 AC_ARG_VAR([BLAS_LIBS],
            [flags needed for linking against external BLAS libraries])
@@ -505,12 +504,12 @@ AC_PROG_CC
 AC_PROG_GCC_TRADITIONAL
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS
-R_PROG_F77_OR_F2C
+R_PROG_F77
 AC_PROG_CXX
 AC_PROG_CXXCPP
 
 ## Libtool.
-## (Run this after R_PROG_F77_OR_F2C, as AC_PROG_LIBTOOL checks for a
+## (Run this after R_PROG_F77, as AC_PROG_LIBTOOL checks for a
 ## Fortran 77 compiler and sets F77 accordingly.)
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
@@ -717,25 +716,12 @@ R_PROG_CC_LO_MAKEFRAG
 
 ### *** Fortran 77 compiler.
 
-if test -n "${F77}"; then
-  R_PROG_F77_FLIBS
-  R_PROG_F77_APPEND_UNDERSCORE
-  R_PROG_F77_CAN_RUN
-  R_PROG_F77_CC_COMPAT
-  R_PROG_F77_CC_COMPAT_COMPLEX
-  R_PROG_F77_MAKEFRAG  
-else
-  if test ${ac_cv_sizeof_long} -gt 4 ; then
-    AC_MSG_ERROR([Cannot use f2c on a > 32-bit machine])
-  fi
-  R_PROG_F2C_FLIBS
-  AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
-  AC_DEFINE(HAVE_FORTRAN_DOUBLE_COMPLEX, 1)
-  R_PROG_F2C_MAKEFRAG
-  F77="\$(SHELL) \$(R_HOME)/bin/f77"
-fi
+R_PROG_F77_FLIBS
+R_PROG_F77_APPEND_UNDERSCORE
+R_PROG_F77_CAN_RUN
+R_PROG_F77_CC_COMPAT
+R_PROG_F77_CC_COMPAT_COMPLEX
 
-AC_SUBST(F2C)
 AM_CONDITIONAL(COMPILE_FORTRAN_DOUBLE_COMPLEX,
                [test "x${HAVE_FORTRAN_DOUBLE_COMPLEX}" != x])
 
@@ -961,7 +947,6 @@ AC_SUBST(SHLIB_CXXFLAGS)
 AC_SUBST(FFLAGS)
 AC_SUBST(MAIN_FFLAGS)
 AC_SUBST(SHLIB_FFLAGS)
-AC_SUBST(F2CFLAGS)
 AC_SUBST(R_XTRA_CFLAGS)
 AC_SUBST(R_XTRA_CPPFLAGS)
 AC_SUBST(R_XTRA_CXXFLAGS)
@@ -1280,8 +1265,7 @@ if test -z "${CPICFLAGS}"; then
 fi
 
 : ${FPICFLAGS="${fpicflags}"}
-if test -z "${FPICFLAGS}" \
-    && test -z "${F2C}"; then
+if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
     aix*|irix*|mingw*|osf*)
       ;;
@@ -1845,7 +1829,6 @@ AC_CONFIG_FILES(
   src/scripts/Sd2Rd
   src/scripts/build
   src/scripts/check
-  src/scripts/f77
   src/unix/Makefile
   tests/Makefile
   tests/Embedding/Makefile
@@ -1872,11 +1855,7 @@ AC_OUTPUT
 ## </NOTE>
 r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 r_cxx_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
-if test -z "${F2C}"; then
-  r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
-else
-  r_f77_compiler="${F2C} ${F2CFLAGS}"
-fi
+r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_interfaces=
 for item in X11 aqua tcltk; do
   if eval "test \${use_${item}} = yes"; then
@@ -1961,14 +1940,8 @@ R is now configured for ${host}
 
   Recommended packages:      ${use_recommended_packages} 
 ])
-if test -n "${warn_F77_and_F2C}"; then
-  AC_MSG_WARN([${warn_F77_and_F2C}])
-fi
 if test -n "${warn_f77_cc_double_complex}"; then
   AC_MSG_WARN([${warn_f77_cc_double_complex}])
-fi
-if test -n "${warn_f2c_flibs}"; then
-  AC_MSG_WARN([${warn_f2c_flibs}])
 fi
 if test -n "${warn_xcompile_sizeof_int}"; then
   AC_MSG_WARN([${warn_xcompile_sizeof_int}])

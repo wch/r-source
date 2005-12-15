@@ -641,9 +641,9 @@ fi
 
 ### * Fortran 77 compiler/converter and its characteristics.
 
-## R_PROG_F77_OR_F2C
-## -----------------
-## Find a Fortran 77 compiler, or f2c.
+## R_PROG_F77
+## ----------
+## Find a Fortran 77 compiler
 ##
 ## If we have not been forced to use a particular Fortran compiler, try
 ## to find one using one of the several common names.  The list is based
@@ -694,18 +694,12 @@ fi
 ##   reported by Bill Northcott <w.northcott@unsw.edu.au> for OSX with
 ##   4.0 as default and g77 around and the "old" search order F77 F95
 ##   F90 in use).
-AC_DEFUN([R_PROG_F77_OR_F2C],
+AC_DEFUN([R_PROG_F77],
 [AC_BEFORE([$0], [AC_PROG_LIBTOOL])
 AC_REQUIRE([R_PROG_CC_VERSION])
-if test -n "${F77}" && test -n "${F2C}"; then
-  warn_F77_and_F2C="both 'F77' and 'F2C' given.
-Using the given Fortran 77 compiler ..."
-  AC_MSG_WARN([${warn_F77_and_F2C}])
-  F2C=
-fi
 if test -n "${F77}"; then
   AC_MSG_RESULT([defining F77 to be ${F77}])
-elif test -z "${F2C}"; then
+else
   F77=
   F95_compilers="f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn g95"
   F90_compilers="f90 xlf90 pgf90 pghpf epcf90"
@@ -724,31 +718,25 @@ elif test -z "${F2C}"; then
   fi
   AC_CHECK_PROGS(F77, [ ${GCC_Fortran_compiler} ${F95_compilers} \
                         ${F90_compilers} ${F77_compilers} fc ])
-  if test -z "${F77}"; then
-    AC_CHECK_PROG(F2C, f2c, f2c, [])
-  fi
-else
-  AC_MSG_RESULT([defining F2C to be ${F2C}])
 fi
 if test -n "${F77}"; then
   ## If the above 'found' a Fortran 77 compiler, we run AC_PROG_F77 as
   ## this does additional testing (GNU, '-g', ...).
   AC_PROG_F77
-elif test -z "${F2C}"; then
+else
   AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
-elif test "${GCC}" = yes; then
-  using_f2c=yes
 fi
-## record if we are using g77 or f2c/gcc, so we can use -ffloat-store
+## record if we are using g77, so we can use -ffloat-store
 AM_CONDITIONAL(USING_G77, [test "x${ac_cv_f77_compiler_gnu}" = xyes])
-AM_CONDITIONAL(USING_F2C, [test "x${using_f2c}" = xyes])
-])# R_PROG_F77_OR_F2C
+])# R_PROG_F77
 
 ## R_PROG_F77_FLIBS
 ## ----------------
 ## Run AC_F77_LIBRARY_LDFLAGS, and fix some known problems with FLIBS.
+## Only do this if the user has not already set FLIBS.
 AC_DEFUN([R_PROG_F77_FLIBS],
 [AC_BEFORE([$0], [AC_F77_LIBRARY_LDFLAGS])
+if test -z "${FLIBS}"; then
 ##
 ## Currently (Autoconf 2.50 or better, it seems) FLIBS also contains all
 ## elements of LIBS when AC_F77_LIBRARY_LDFLAGS is run.  This is because
@@ -869,6 +857,7 @@ for arg in ${FLIBS}; do
   esac
 done
 FLIBS="${flibs}"
+fi
 ])# R_PROG_F77_FLIBS
 
 ## R_PROG_F77_APPEND_UNDERSCORE
@@ -1145,21 +1134,6 @@ fi
 AC_SUBST(HAVE_FORTRAN_DOUBLE_COMPLEX)
 ])# R_PROG_F77_CC_COMPAT_COMPLEX
 
-## R_PROG_F77_MAKEFRAG
-## -------------------
-## Generate a Make fragment with suffix rules for Fortran 77 source
-## files when using a Fortran 77 compiler.
-## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
-AC_DEFUN([R_PROG_F77_MAKEFRAG],
-[r_f77_rules_frag=Makefrag.f77
-cat << \EOF > ${r_f77_rules_frag}
-.f.c:
-.f.o:
-	$(F77) $(ALL_FFLAGS) -c $< -o $[@]
-EOF
-AC_SUBST_FILE(r_f77_rules_frag)
-])# R_PROG_F77_MAKEFRAG
-
 ## R_PROG_F77_FLAG(FLAG, [ACTION-IF-TRUE])
 ## ---------------------------------------
 ## Check whether the Fortran 77 compiler handles command line option
@@ -1186,65 +1160,6 @@ else
   AC_MSG_RESULT([no])
 fi
 ])# R_PROG_F77_FLAG
-
-## R_PROG_F2C_FLIBS
-## ----------------
-AC_DEFUN([R_PROG_F2C_FLIBS],
-[AC_REQUIRE([AC_PROG_RANLIB])
-AC_REQUIRE([AC_CHECK_LIBM])
-AC_CACHE_VAL([r_cv_f2c_flibs],
-[
-## <FIXME>
-## Why do we need this?  What about AC_F77_DUMMY_MAIN?
-## This seems to be necessary on some Linux system. -- you bet! -pd
-AC_LANG_PUSH(C)
-cat > conftest.${ac_ext} << EOF
-int MAIN_ () { exit(0); }
-int MAIN__ () { exit(0); }
-EOF
-if AC_TRY_EVAL(ac_compile); then
-  ${AR} ${ARFLAGS} libconftest.a conftest.${ac_objext} 1>&AS_MESSAGE_LOG_FD
-  ${RANLIB} libconftest.a 1>&AS_MESSAGE_LOG_FD
-fi
-AC_LANG_POP(C)
-## </FIXME>
-AC_CHECK_LIB(f2c, f_open, 
-             [flibs=-lf2c],
-             [flibs=],
-             [-L. -lconftest ${LIBM}])
-rm -f libconftest*
-if test -z "${flibs}"; then
-  AC_CHECK_LIB(F77, d_sin, [flibs=-lF77], [flibs=], [${LIBM}])
-  if test -n "${flibs}"; then
-    AC_CHECK_LIB(I77, f_rew, [flibs="${flibs} -lI77"], [flibs=], [-lF77])
-  fi
-fi
-r_cv_f2c_flibs="${flibs}"])
-FLIBS="${r_cv_f2c_flibs}"
-if test -z "${FLIBS}"; then
-  warn_f2c_flibs="I found f2c but not libf2c, or libF77 and libI77"
-  AC_MSG_WARN([${warn_f2c_flibs}])
-else
-  FLIBS="${FLIBS} ${LIBM}"
-fi
-])# R_PROG_F2C_FLIBS
-
-## R_PROG_F2C_MAKEFRAG
-## -------------------
-## Generate a Make fragment with suffix rules for Fortran 77 source
-## files when using f2c, the Fortran-to-C converter.
-## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
-AC_DEFUN([R_PROG_F2C_MAKEFRAG],
-[AC_REQUIRE([R_PROG_CC_C_O_LO])
-r_f77_rules_frag=Makefrag.f77
-cat << \EOF > ${r_f77_rules_frag}
-.f.o:
-	$(F2C) $(F2CFLAGS) < $< > $[*].c
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $[*].c -o $[@]
-	@rm -f $[*].c
-EOF
-AC_SUBST_FILE(r_f77_rules_frag)
-])# R_PROG_F2C_MAKEFRAG
 
 ### * Library functions
 
@@ -2194,7 +2109,6 @@ AC_SUBST(use_tcltk)
 AC_DEFUN([R_BLAS_LIBS],
 [AC_REQUIRE([R_PROG_F77_FLIBS])
 AC_REQUIRE([R_PROG_F77_APPEND_UNDERSCORE])
-AC_REQUIRE([R_PROG_F2C_FLIBS])
 
 acx_blas_ok=no
 case "${with_blas}" in
@@ -2206,8 +2120,7 @@ case "${with_blas}" in
   *) BLAS_LIBS="-l${with_blas}" ;;
 esac
 
-if test "${r_cv_prog_f77_append_underscore}" = yes \
-  || test -n "${F2C}"; then
+if test "${r_cv_prog_f77_append_underscore}" = yes; then
   dgemm=dgemm_
   sgemm=sgemm_
   xerbla=xerbla_
@@ -2573,7 +2486,6 @@ AC_SUBST(BLAS_LIBS)
 AC_DEFUN([R_LAPACK_LIBS],
 [AC_REQUIRE([R_PROG_F77_FLIBS])
 AC_REQUIRE([R_PROG_F77_APPEND_UNDERSCORE])
-AC_REQUIRE([R_PROG_F2C_FLIBS])
 AC_REQUIRE([R_BLAS_LIBS])
 
 acx_lapack_ok=no
@@ -2586,8 +2498,7 @@ case "${with_lapack}" in
   *) LAPACK_LIBS="-l${with_lapack}" ;;
 esac
 
-if test "${r_cv_prog_f77_append_underscore}" = yes \
-  || test -n "${F2C}"; then
+if test "${r_cv_prog_f77_append_underscore}" = yes; then
   zgeev=zgeev_
 else
   zgeev=zgeev

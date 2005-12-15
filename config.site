@@ -70,8 +70,7 @@
 ## xlf, frt, pgf77, fl32, af77, fort77, f90, xlf90, pgf90, epcf90, f95,
 ## fort, xlf95, lf95, g95, and fc (in that order); on HPUX fort77 is the
 ## POSIX compliant FORTRAN compiler, and comes second in the search
-## list.  If none of these is found, f2c is used if found; otherwise, R
-## cannot be compiled.
+## list.  If none of these is found, R cannot be compiled.
 ## F77=
 
 ## Options for the FORTRAN 77 compiler.
@@ -85,11 +84,6 @@
 ## profiling.
 ## MAIN_FFLAGS=
 ## SHLIB_FFLAGS=
-
-## The command which runs the FORTRAN-to-C converter.
-## If specified, the FORTRAN-to-C converter is used even if a FORTRAN 77
-## compiler would be available.
-## F2C=
 
 ## The command to be used to load the main R binary.
 ## This is usually the FORTRAN 77 or C compiler, but the automatic
