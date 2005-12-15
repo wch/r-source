@@ -20,6 +20,22 @@ Changes from grid_2.2.0 to grid_2.3.0:
     the name, gp and vp arguments so existing code that specifies
     any of these arguments *by position* (not by name) will fail.
 
+4.  Added "[" (subset) methods for "gpar" objects.
+
+5.  New grobX() and grobY() functions for producing units 
+    describing a location on the boundary of a grob.
+
+6.  Units produced by grobX() and grobY() make use of new 
+    xDetails() and yDetails() generic functions to calculate the 
+    boundary of a grob.  Methods for these functions are provided
+    for all grid graphical primitives.
+
+7.  Bug fix for grid.polygon() when 'x' is not just a simple unit
+    (e.g., it is unit arithmetic);  'index' was being calculated
+    incorrectly so not all of polygon would be drawn or, if 
+    'id' or 'id.length' were used, only a single polygon would
+    be drawn (with unexpected shape).
+
 
 Changes from grid_2.1.0 to grid_2.2.0:
 ------------------------------------

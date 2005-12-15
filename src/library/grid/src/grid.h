@@ -155,7 +155,7 @@ typedef enum {
 } LNullArithmeticMode;
 
 /* NOTE: The order of the enums here must match the order of the
- * strings in viewport.R
+ * strings in unit.R
  */
 typedef enum {
     L_NPC = 0,
@@ -182,12 +182,17 @@ typedef enum {
      * This is multiples of the font size.
      */
     L_CHAR = 18,
-    L_GROBWIDTH = 19,
-    L_GROBHEIGHT = 20,
-    L_MYLINES = 21,
-    L_MYCHAR = 22,
-    L_MYSTRINGWIDTH = 23,
-    L_MYSTRINGHEIGHT = 24
+    L_GROBX = 19,
+    L_GROBY = 20,
+    L_GROBWIDTH = 21,
+    L_GROBHEIGHT = 22,
+    /*
+     * No longer used
+     */
+    L_MYLINES = 23,
+    L_MYCHAR = 24,
+    L_MYSTRINGWIDTH = 25,
+    L_MYSTRINGHEIGHT = 26
 } LUnit;
 
 typedef enum {
@@ -587,12 +592,14 @@ void getViewportTransform(SEXP currentvp,
 			  double *vpWidthCM, double *vpHeightCM,
 			  LTransform transform, double *rotationAngle);
 
-SEXP L_circleBounds(SEXP x, SEXP y, SEXP r);
-SEXP L_locnBounds(SEXP x, SEXP y);
-SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust);
+SEXP L_circleBounds(SEXP x, SEXP y, SEXP r, SEXP theta);
+SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta);
+SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust,
+		  SEXP theta);
 SEXP L_textBounds(SEXP label, SEXP x, SEXP y, 
-		  SEXP hjust, SEXP vjust, SEXP rot);
-SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index);
+		  SEXP hjust, SEXP vjust, SEXP rot, SEXP theta);
+SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index,
+		     SEXP theta);
 
 /* From unit.c */
 SEXP validUnits(SEXP units);

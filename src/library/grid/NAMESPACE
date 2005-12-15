@@ -31,7 +31,8 @@ export(
        "unit",
        "is.unit",
        "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.rep",
-       "stringWidth", "stringHeight", "grobWidth", "grobHeight",
+       "stringWidth", "stringHeight",
+       "grobX", "grobY", "grobWidth", "grobHeight",
        "absolute.size",
 
        "viewport", "vpList", "vpStack", "vpTree", "vpPath",
@@ -91,6 +92,8 @@ export("layout.torture")
 ## </FIXME>
 
 ## S3 methods for generics in base
+S3method("[", "arrow")
+S3method("[", "gpar")
 S3method("[", "unit")
 S3method("[", "unit.arithmetic")
 S3method("[", "unit.list")
@@ -153,6 +156,14 @@ S3method("grobWidth", "grob")
 S3method("grobWidth", "gList")
 S3method("grobWidth", "gPath")
 S3method("grobWidth", "default")
+S3method("grobX", "grob")
+S3method("grobX", "gList")
+S3method("grobX", "gPath")
+S3method("grobX", "default")
+S3method("grobY", "grob")
+S3method("grobY", "gList")
+S3method("grobY", "gPath")
+S3method("grobY", "default")
 S3method("heightDetails", "arrows")
 S3method("heightDetails", "circle")
 S3method("heightDetails", "default")
@@ -197,6 +208,22 @@ S3method("widthDetails", "segments")
 S3method("widthDetails", "text")
 S3method("widthDetails", "xspline")
 #S3method("width.details", "viewport")
+S3method("xDetails", "circle")
+S3method("xDetails", "lines")
+S3method("xDetails", "points")
+S3method("xDetails", "polygon")
+S3method("xDetails", "rect")
+S3method("xDetails", "segments")
+S3method("xDetails", "text")
+S3method("xDetails", "xspline")
+S3method("yDetails", "circle")
+S3method("yDetails", "lines")
+S3method("yDetails", "points")
+S3method("yDetails", "polygon")
+S3method("yDetails", "rect")
+S3method("yDetails", "segments")
+S3method("yDetails", "text")
+S3method("yDetails", "xspline")
 
 # S3 methods for internal generics that are used in calls to external fns
 S3method("depth", "viewport")

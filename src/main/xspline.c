@@ -384,7 +384,7 @@ spline_segment_computing(float step, int k,
       COPY_CONTROL_POINT(3, K + 3, N)
 
 #define INIT_CONTROL_POINTS(N) \
-      COPY_CONTROL_POINT(0, 3, N); \
+      COPY_CONTROL_POINT(0, N - 1, N); \
       COPY_CONTROL_POINT(1, 0, N); \
       COPY_CONTROL_POINT(2, 1, N); \
       COPY_CONTROL_POINT(3, 2, N)

@@ -1780,11 +1780,11 @@ SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
      */
     char *vmaxsave = vmaxget();
     if (open) {
-      compute_open_spline(n, x, y, s, HIGH_PRECISION, dd);
+      compute_open_spline(n, x, y, s, LOW_PRECISION, dd);
       if (draw)
 	  GEPolyline(npoints, xpoints, ypoints, gc, dd);
     } else {
-      compute_closed_spline(n, x, y, s, HIGH_PRECISION, dd);
+      compute_closed_spline(n, x, y, s, LOW_PRECISION, dd);
       if (draw)
 	  GEPolygon(npoints, xpoints, ypoints, gc, dd);
     }

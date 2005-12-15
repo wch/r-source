@@ -1247,6 +1247,253 @@ SEXP L_layoutRegion(SEXP layoutPosRow, SEXP layoutPosCol) {
 }
 
 /***************************
+ * EDGE DETECTION 
+ ***************************
+ */
+
+/*
+ * Calculate the point on the edge of a rectangle at angle theta
+ * 0 = East, 180 = West, etc ...
+ * Assumes that x- and y-values are in INCHES
+ * Assumes that theta is within [0, 360)
+ */
+static void rectEdge(double xmin, double ymin, double xmax, double ymax,
+		     double theta,
+		     double *edgex, double *edgey) 
+{
+    double xm = (xmin + xmax)/2;
+    double ym = (ymin + ymax)/2;
+    double dx = (xmax - xmin)/2;
+    double dy = (ymax - ymin)/2;
+    /*
+     * FIXME: Special case 0 width or 0 height
+     */
+    /*
+     * Special case angles 
+     */
+    if (theta == 0) {
+	*edgex = xmax;
+	*edgey = ym;
+    } else if (theta == 270) {
+	*edgex = xm;
+	*edgey = ymin;
+    } else if (theta == 180) {
+	*edgex = xmin;
+	*edgey = ym;
+    } else if (theta == 90) {
+	*edgex = xm;
+	*edgey = ymax;
+    } else {
+	double cutoff = dy/dx;
+	double angle = theta/180*M_PI;
+	double tanTheta = tan(angle);
+	double cosTheta = cos(angle);
+	double sinTheta = sin(angle);
+	if (fabs(tanTheta) < cutoff) { /* Intersect with side */
+	    if (cosTheta > 0) { /* Right side */
+		*edgex = xmax;
+		*edgey = ym + tanTheta*dx;
+	    } else { /* Left side */
+		*edgex = xmin;
+		*edgey = ym - tanTheta*dx;
+	    }
+	} else { /* Intersect with top/bottom */
+	    if (sinTheta > 0) { /* Top */
+		*edgey = ymax;
+		*edgex = xm + dy/tanTheta;
+	    } else { /* Bottom */
+		*edgey = ymin;
+		*edgex = xm - dy/tanTheta;
+	    }
+	}
+    }
+}
+
+/*
+ * Calculate the point on the edge of a rectangle at angle theta
+ * 0 = East, 180 = West, etc ...
+ * Assumes that x- and y-values are in INCHES
+ * Assumes that theta is within [0, 360)
+ */
+static void circleEdge(double x, double y, double r,
+		       double theta,
+		       double *edgex, double *edgey)
+{
+    double angle = theta/180*M_PI;
+    *edgex = x + r*cos(angle);
+    *edgey = y + r*sin(angle);
+}
+
+/*
+ * Calculate the point on the edge of a *convex* polygon at angle theta
+ * 0 = East, 180 = West, etc ...
+ * Assumes that x- and y-values are in INCHES
+ * Assumes that vertices are in clock-wise order
+ * Assumes that theta is within [0, 360)
+ */
+static void polygonEdge(double *x, double *y, int n,
+			double theta,
+			double *edgex, double *edgey) {
+    int i, v1, v2;
+    double xm, ym;
+    double xmin = DOUBLE_XMAX;
+    double xmax = DOUBLE_XMIN;
+    double ymin = DOUBLE_XMAX;
+    double ymax = DOUBLE_XMIN;
+    int found = 0;
+    double angle = theta/180*M_PI;
+    double vangle1, vangle2;
+    /*
+     * Find "centre" of polygon
+     */
+    for (i=0; i<n; i++) {
+	if (x[i] < xmin)
+	    xmin = x[i];
+	if (x[i] > xmax)
+	    xmax = x[i];
+	if (y[i] < ymin)
+	    ymin = y[i];
+	if (y[i] > ymax)
+	    ymax = y[i];
+    }
+    xm = (xmin + xmax)/2;
+    ym = (ymin + ymax)/2;
+    /*
+     * Special case zero-width or zero-height
+     */ 
+    if (xmin == xmax) {
+        *edgex = xmin;
+        if (theta == 90) 
+	    *edgey = ymax;
+	else if (theta == 270)
+	    *edgey = ymin;
+	else
+	    *edgey = ym;
+	return;
+    }
+    if (ymin == ymax) {
+        *edgey = ymin;
+        if (theta == 0) 
+	    *edgex = xmax;
+	else if (theta == 180)
+	    *edgex = xmin;
+	else
+	    *edgex = xm;
+	return;
+    }	    
+    /*
+     * Find edge that intersects line from centre at angle theta
+     */
+    for (i=0; i<n; i++) {
+	v1 = i;
+	v2 = v1 + 1;
+	if (v2 == n)
+	    v2 = 0;
+	/*
+	 * Result of atan2 is in range -PI, PI so convert to
+	 * 0, 360 to correspond to angle
+	 */
+	vangle1 = atan2(y[v1] - ym, x[v1] - xm);
+	if (vangle1 < 0)
+	    vangle1 = vangle1 + 2*M_PI;
+	vangle2 = atan2(y[v2] - ym, x[v2] - xm);
+	if (vangle2 < 0)
+	    vangle2 = vangle2 + 2*M_PI;
+	/*
+	 * If vangle1 < vangle2 then angles are either side of 0
+	 * so check is more complicated
+	 */
+	if ((vangle1 >= vangle2 && 
+	     vangle1 >= angle && vangle2 < angle) || 
+	    (vangle1 < vangle2 && 
+	     ((vangle1 >= angle && 0 <= angle) ||
+	      (vangle2 < angle && 2*M_PI >= angle)))) {
+	    found = 1;
+	    break;
+	}
+    }
+    /*
+     * Find intersection point of "line from centre to bounding rect"
+     * and edge
+     */
+    if (found) {
+	double x1 = xm;
+	double y1 = ym;
+	double x2, y2;
+	double x3 = x[v1];
+	double y3 = y[v1];
+	double x4 = x[v2];
+	double y4 = y[v2];
+	double numa, denom, ua;
+	rectEdge(xmin, ymin, xmax, ymax, theta,
+		 &x2, &y2);
+	numa = ((x4 - x3)*(y1 - y3) - (y4 - y3)*(x1 - x3));
+	denom = ((y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1));
+	ua = numa/denom;
+	if (!R_FINITE(ua)) {
+	    /*
+	     * Should only happen if lines are parallel, which 
+	     * shouldn't happen!  Unless, perhaps the polygon has
+	     * zero extent vertically or horizontally ... ?
+	     */
+	    error(_("Polygon edge not found (zero-width or zero-height?)"));
+	}
+	/*
+	 * numb = ((x2 - x1)*(y1 - y3) - (y2 - y1)*(x1 - x3));
+	 * ub = numb/denom;
+	 */
+	*edgex = x1 + ua*(x2 - x1);
+	*edgey = y1 + ua*(y2 - y1);
+    } else {
+	error(_("Polygon edge not found"));    
+    }
+}
+
+/*
+ * Given a set of points, calculate the convex hull then
+ * find the edge of that hull
+ *
+ * NOTE:  assumes that 'grDevices' package has been loaded 
+ * so that chull() is available (grid depends on grDevices)
+ */
+static void hullEdge(double *x, double *y, int n,
+		     double theta,
+		     double *edgex, double *edgey) 
+{
+    char *vmax;
+    int i, nh;
+    double *hx, *hy;
+    SEXP xin, yin, chullFn, R_fcall, hull;
+    /*
+     * Determine convex hull
+     */
+    PROTECT(xin = allocVector(REALSXP, n));
+    PROTECT(yin = allocVector(REALSXP, n));
+    for (i=0; i<n; i++) {
+	REAL(xin)[i] = x[i];
+	REAL(yin)[i] = y[i];
+    }
+    PROTECT(chullFn = findFun(install("chull"), R_gridEvalEnv));
+    PROTECT(R_fcall = lang3(chullFn, xin, yin));
+    PROTECT(hull = eval(R_fcall, R_gridEvalEnv));
+    vmax = vmaxget();
+    nh = LENGTH(hull);
+    hx = (double *) R_alloc(nh, sizeof(double));
+    hy = (double *) R_alloc(nh, sizeof(double));
+    for (i=0; i<nh; i++) {
+	hx[i] = x[INTEGER(hull)[i] - 1];
+	hy[i] = y[INTEGER(hull)[i] - 1];
+    }
+    /*
+     * Find edge of that hull
+     */
+    polygonEdge(hx, hy, nh, theta, 
+		edgex, edgey);
+    vmaxset(vmax);
+    UNPROTECT(5);
+}
+
+/***************************
  * DRAWING PRIMITIVES
  ***************************
  */
@@ -1567,7 +1814,7 @@ SEXP L_lines(SEXP x, SEXP y, SEXP arrow)
  * are unit objects 
  */
 SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index,
-		 Rboolean draw) 
+		 double theta, Rboolean draw) 
 {
     int i, j, nx, np, nloc;
     double *xx, *yy, *ss;
@@ -1578,6 +1825,7 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index,
     LTransform transform;
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
+    double edgex, edgey;
     double xmin = DOUBLE_XMAX;
     double xmax = DOUBLE_XMIN;
     double ymin = DOUBLE_XMAX;
@@ -1617,28 +1865,72 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index,
 	ss = (double *) R_alloc(nx, sizeof(double));
 	for (j=0; j<nx; j++) {
 	    ss[j] = REAL(s)[(INTEGER(indices)[j] - 1) % LENGTH(s)];
-	    transformLocn(x, y, INTEGER(indices)[j] - 1, vpc, &gc,
-			  vpWidthCM, vpHeightCM,
-			  dd,
-			  transform,
-			  &(xx[j]), &(yy[j]));
+	    /*
+	     * If drawing, convert to INCHES on device
+	     * If just calculating bounds, convert to INCHES within current vp
+	     */
+	    if (draw) {
+		transformLocn(x, y, INTEGER(indices)[j] - 1, vpc, &gc,
+			      vpWidthCM, vpHeightCM,
+			      dd,
+			      transform,
+			      &(xx[j]), &(yy[j]));
+	    } else {
+		xx[j] = transformXtoINCHES(x, INTEGER(indices)[j] - 1,
+					   vpc, &gc,
+					   vpWidthCM, vpHeightCM, 
+					   dd);
+		yy[j] = transformYtoINCHES(y, INTEGER(indices)[j] - 1,
+					   vpc, &gc,
+					   vpWidthCM, vpHeightCM, 
+					   dd);	    
+	    }
 	    /* The graphics engine only takes device coordinates
 	     */
 	    xx[j] = toDeviceX(xx[j], GE_INCHES, dd);
 	    yy[j] = toDeviceY(yy[j], GE_INCHES, dd);
 	    if (!(R_FINITE(xx[j]) && R_FINITE(yy[j]))) {
-		error(_("Non-finite control point in Xspline"));
+		    error(_("Non-finite control point in Xspline"));
 	    }
 	}
 	PROTECT(points = GEXspline(nx, xx, yy, ss,
 				   LOGICAL(o)[0], draw, &gc, dd));
 	if (draw && !isNull(a) && !isNull(points)) {
 	    /*
+	     * In some cases, GEXspline seems to produce identical points 
+	     * (at least observed at end of spline)
+	     * so trim identical points from the ends 
+	     * (so arrow heads are drawn at correct angle)
+	     */
+	    int np = LENGTH(VECTOR_ELT(points, 0));
+	    double *px = REAL(VECTOR_ELT(points, 0));
+	    double *py = REAL(VECTOR_ELT(points, 1));
+	    int start = 0;
+	    int end = np - 1;
+	    /*
+	     * DEBUGGING ...
+	    int k;
+	    for (k=0; k<np; k++) {
+		GESymbol(px[k], py[k], 16, 3, &gc, dd); 
+	    }
+	     * ... DEBUGGING
+	     */
+	    while (np > 1 && 
+		   (px[start] == px[start + 1]) &&
+		   (py[start] == py[start + 1])) {
+		start++;
+		np--;
+	    }
+	    while (np > 1 && 
+		   (px[end] == px[end - 1]) &&
+		   (py[end] == py[end - 1])) {
+		end--;
+		np--;
+	    }
+	    /*
 	     * Can draw an arrow at the either end.
 	     */
-	    arrows(REAL(VECTOR_ELT(points, 0)), 
-		   REAL(VECTOR_ELT(points, 1)), 
-		   LENGTH(VECTOR_ELT(points, 0)),
+	    arrows(&(px[start]), &(py[start]), np,
 		   a, i, TRUE, TRUE,
 		   vpc, vpWidthCM, vpHeightCM, &gc, dd);
 	}
@@ -1649,49 +1941,70 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index,
 	    int j, n = LENGTH(VECTOR_ELT(points, 0));
 	    double *px = REAL(VECTOR_ELT(points, 0));
 	    double *py = REAL(VECTOR_ELT(points, 1));
+	    double *pxx = (double *) R_alloc(n, sizeof(double));
+	    double *pyy = (double *) R_alloc(n, sizeof(double));
 	    for (j=0; j<n; j++) {
-		double pxx = fromDeviceX(px[j], GE_INCHES, dd);
-		double pyy = fromDeviceY(py[j], GE_INCHES, dd);
-		if (R_FINITE(pxx) && R_FINITE(pyy)) {
-		    if (pxx < xmin)
-			xmin = pxx;
-		    if (pxx > xmax)
-			xmax = pxx;
-		    if (pyy < ymin)
-			ymin = pyy;
-		    if (pyy > ymax)
-			ymax = pyy;
+		pxx[j] = fromDeviceX(px[j], GE_INCHES, dd);
+		pyy[j] = fromDeviceY(py[j], GE_INCHES, dd);
+		if (R_FINITE(pxx[j]) && R_FINITE(pyy[j])) {
+		    if (pxx[j] < xmin)
+			xmin = pxx[j];
+		    if (pxx[j] > xmax)
+			xmax = pxx[j];
+		    if (pyy[j] < ymin)
+			ymin = pyy[j];
+		    if (pyy[j] > ymax)
+			ymax = pyy[j];
 		    nloc++;
 		}
 	    }
+	    /*
+	     * Calculate edgex and edgey for case where this is 
+	     * the only xspline
+	     */
+	    hullEdge(pxx, pyy, n, theta, &edgex, &edgey);
 	}
 	UNPROTECT(1);
 	if (draw)
 	    GEMode(0, dd);
+	vmaxset(vmax);
     }
     if (nloc > 0) {
 	result = allocVector(REALSXP, 4);
 	/*
+	 * If there is more than one xspline, just produce edge
+	 * based on bounding rect of all xsplines
+	 */
+	if (np > 1) {
+	    rectEdge(xmin, ymin, xmax, ymax, theta,
+		     &edgex, &edgey);
+	}
+	/*
 	 * Reverse the scale adjustment (zoom factor)
 	 * when calculating physical value to return to user-level
 	 */
-	REAL(result)[0] = xmin / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[1] = xmax / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[2] = ymin / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[3] = ymax / REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[0] = edgex / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[1] = edgey / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[2] = (xmax - xmin) / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[3] = (ymax - ymin) / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
     } 
     return result;
 }
 
 SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index) 
 {
-    gridXspline(x, y, s, o, a, index, TRUE);
+    gridXspline(x, y, s, o, a, index, 0, TRUE);
     return R_NilValue;
 }
 
-SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index) 
+SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP index,
+		     SEXP theta) 
 {
-    return gridXspline(x, y, s, o, a, index, FALSE);
+    return gridXspline(x, y, s, o, a, index, REAL(theta)[0], FALSE);
 }
 
 SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow) 
@@ -1983,7 +2296,8 @@ SEXP L_polygon(SEXP x, SEXP y, SEXP index)
     return R_NilValue;
 }
 
-static SEXP gridCircle(SEXP x, SEXP y, SEXP r, Rboolean draw)
+static SEXP gridCircle(SEXP x, SEXP y, SEXP r, 
+		       double theta, Rboolean draw)
 {
     int i, nx, ny, nr, ncirc;
     double xx, yy, rr1, rr2, rr;
@@ -1998,6 +2312,7 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r, Rboolean draw)
     double xmax = DOUBLE_XMIN;
     double ymin = DOUBLE_XMAX;
     double ymax = DOUBLE_XMIN;
+    double edgex, edgey;
     /* Get the current device 
      */
     GEDevDesc *dd = getDevice();
@@ -2020,11 +2335,24 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r, Rboolean draw)
     ncirc = 0;
     for (i=0; i<nx; i++) {
 	gcontextFromgpar(currentgp, i, &gc, dd);
-	transformLocn(x, y, i, vpc, &gc,
-		      vpWidthCM, vpHeightCM,
-		      dd,
-		      transform,
-		      &xx, &yy);
+	/*
+	 * If drawing, convert to INCHES on device
+	 * If just calculating bounds, convert to INCHES within current vp
+	 */
+	if (draw) {
+	    transformLocn(x, y, i, vpc, &gc,
+			  vpWidthCM, vpHeightCM,
+			  dd,
+			  transform,
+			  &xx, &yy);
+	} else {
+	    xx = transformXtoINCHES(x, i, vpc, &gc,
+				    vpWidthCM, vpHeightCM, 
+				    dd);
+	    yy = transformYtoINCHES(y, i, vpc, &gc,
+				    vpWidthCM, vpHeightCM, 
+				    dd);	    
+	}
 	/* These two will give the same answer unless r is in "native",
 	 * "npc", or some other relative units;  in those cases, just
 	 * take the smaller of the two values.
@@ -2072,37 +2400,52 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r, Rboolean draw)
     }
     if (draw) {
 	GEMode(0, dd);
-    }
-    if (ncirc > 0) {
+    } else if (ncirc > 0) {
 	result = allocVector(REALSXP, 4);
+	if (ncirc == 1) {
+	    /*
+	     * Produce edge of actual circle
+	     */
+	    circleEdge(xx, yy, rr, theta, &edgex, &edgey);
+	} else {
+	    /*
+	     * Produce edge of rect bounding all circles
+	     */
+	    rectEdge(xmin, ymin, xmax, ymax, theta,
+		     &edgex, &edgey);
+	}
 	/*
 	 * Reverse the scale adjustment (zoom factor)
 	 * when calculating physical value to return to user-level
 	 */
-	REAL(result)[0] = xmin / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[1] = xmax / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[2] = ymin / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[3] = ymax / REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[0] = edgex / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[1] = edgey /
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[2] = (xmax - xmin) /
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[3] = (ymax - ymin) / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
     } 
     return result;
 }
 
 SEXP L_circle(SEXP x, SEXP y, SEXP r)
 {
-    gridCircle(x, y, r, TRUE);
+    gridCircle(x, y, r, 0, TRUE);
     return R_NilValue;
 }
 
-SEXP L_circleBounds(SEXP x, SEXP y, SEXP r)
+SEXP L_circleBounds(SEXP x, SEXP y, SEXP r, SEXP theta)
 {
-    return gridCircle(x, y, r, FALSE);
+    return gridCircle(x, y, r, REAL(theta)[0], FALSE);
 }
 
 /* We are assuming here that the R code has checked that 
  * x, y, w, and h are all unit objects and that vp is a viewport
  */
 static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h, 
-		     SEXP hjust, SEXP vjust, Rboolean draw) 
+		     SEXP hjust, SEXP vjust, double theta, Rboolean draw) 
 {
     double xx, yy, ww, hh;
     double vpWidthCM, vpHeightCM;
@@ -2113,6 +2456,7 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
     LTransform transform;
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
+    double edgex, edgey;
     double xmin = DOUBLE_XMAX;
     double xmax = DOUBLE_XMIN;
     double ymin = DOUBLE_XMAX;
@@ -2142,11 +2486,24 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
     nrect = 0;
     for (i=0; i<maxn; i++) {
 	gcontextFromgpar(currentgp, i, &gc, dd);
-	transformLocn(x, y, i, vpc, &gc,
-		      vpWidthCM, vpHeightCM,
-		      dd,
-		      transform,
-		      &xx, &yy);
+	/*
+	 * If drawing, convert to INCHES on device
+	 * If just calculating bounds, convert to INCHES within current vp
+	 */
+	if (draw) {	
+	    transformLocn(x, y, i, vpc, &gc,
+			  vpWidthCM, vpHeightCM,
+			  dd,
+			  transform,
+			  &xx, &yy);
+	} else {
+	    xx = transformXtoINCHES(x, i, vpc, &gc,
+				    vpWidthCM, vpHeightCM, 
+				    dd);
+	    yy = transformYtoINCHES(y, i, vpc, &gc,
+				    vpWidthCM, vpHeightCM, 
+				    dd);	    
+	}
 	ww = transformWidthtoINCHES(w, i, vpc, &gc,
 				    vpWidthCM, vpHeightCM,
 				    dd);
@@ -2189,6 +2546,12 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 			ymin = yy + hh;
 		    if (yy + hh > ymax)
 			ymax = yy + hh;
+		    /*
+		     * Calculate edgex and edgey for case where this is 
+		     * the only rect
+		     */
+		    rectEdge(xx, yy, xx + ww, yy + hh, theta,
+			     &edgex, &edgey);
 		    nrect++;
 		}
 	    }
@@ -2301,6 +2664,13 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 			ymin = yyy[3];
 		    if (yyy[3] > ymax)
 			ymax = yyy[3];
+		    /*
+		     * Calculate edgex and edgey for case where this is 
+		     * the only rect
+		     */
+		    polygonEdge(xxx, yyy, 4, 
+				theta, 
+				&edgex, &edgey);
 		    nrect++;
 		}
 	    }
@@ -2312,26 +2682,39 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
     if (nrect > 0) {
 	result = allocVector(REALSXP, 4);
 	/*
+	 * If there is more than one rect, just produce edge
+	 * based on bounding rect of all rects
+	 */
+	if (nrect > 1) {
+	    rectEdge(xmin, ymin, xmax, ymax, theta,
+		     &edgex, &edgey);
+	}
+	/*
 	 * Reverse the scale adjustment (zoom factor)
 	 * when calculating physical value to return to user-level
 	 */
-	REAL(result)[0] = xmin / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[1] = xmax / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[2] = ymin / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[3] = ymax / REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[0] = edgex / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[1] = edgey /
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[2] = (xmax - xmin) /
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[3] = (ymax - ymin) / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
     } 
     return result;
 }
 
 SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust) 
 {
-    gridRect(x, y, w, h, hjust, vjust, TRUE);
+    gridRect(x, y, w, h, hjust, vjust, 0, TRUE);
     return R_NilValue;    
 }
 
-SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust) 
+SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust,
+		  SEXP theta) 
 {
-    return gridRect(x, y, w, h, hjust, vjust, FALSE);
+    return gridRect(x, y, w, h, hjust, vjust, REAL(theta)[0], FALSE);
 }
 
 /*
@@ -2339,7 +2722,7 @@ SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust)
  * Combined to avoid code replication
  */
 static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust, 
-		     SEXP rot, SEXP checkOverlap, Rboolean draw)
+		     SEXP rot, SEXP checkOverlap, double theta, Rboolean draw)
 {
     int i, nx, ny;
     double *xx, *yy;
@@ -2349,6 +2732,7 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
     R_GE_gcontext gc;
     LTransform transform;
     SEXP txt, result = R_NilValue;
+    double edgex, edgey;
     double xmin = DOUBLE_XMAX;
     double xmax = DOUBLE_XMIN;
     double ymin = DOUBLE_XMAX;
@@ -2381,11 +2765,24 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
     yy = (double *) R_alloc(nx, sizeof(double));
     for (i=0; i<nx; i++) {
 	gcontextFromgpar(currentgp, i, &gc, dd);
-	transformLocn(x, y, i, vpc, &gc,
-		      vpWidthCM, vpHeightCM,
-		      dd,
-		      transform,
-		      &(xx[i]), &(yy[i]));
+	/*
+	 * If drawing, convert to INCHES on device
+	 * If just calculating bounds, convert to INCHES within current vp
+	 */
+	if (draw) {	
+	    transformLocn(x, y, i, vpc, &gc,
+			  vpWidthCM, vpHeightCM,
+			  dd,
+			  transform,
+			  &(xx[i]), &(yy[i]));
+	} else {
+	    xx[i] = transformXtoINCHES(x, i, vpc, &gc,
+				       vpWidthCM, vpHeightCM, 
+				       dd);
+	    yy[i] = transformYtoINCHES(y, i, vpc, &gc,
+				       vpWidthCM, vpHeightCM, 
+				       dd);	    
+	}
     }
     /* The label can be a string or an expression
      */
@@ -2487,6 +2884,22 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 				       fmax2(trect.y3, trect.y4)));
 		    if (maxy > ymax)
 			ymax = maxy;
+		    /*
+		     * Calculate edgex and edgey for case where this is 
+		     * the only rect
+		     */
+		    {
+			double xxx[4], yyy[4];
+			/*
+			 * Must be in clock-wise order for polygonEdge
+			 */
+			xxx[0] = trect.x4; yyy[0] = trect.y4;
+			xxx[1] = trect.x3; yyy[1] = trect.y3;
+			xxx[2] = trect.x2; yyy[2] = trect.y2;
+			xxx[3] = trect.x1; yyy[3] = trect.y1;
+			polygonEdge(xxx, yyy, 4, theta,
+				    &edgex, &edgey);
+		    }
 		    ntxt++;
 		}
 	    }
@@ -2497,13 +2910,28 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 	if (ntxt > 0) {
 	    result = allocVector(REALSXP, 4);
 	    /*
+	     * If there is more than one text, just produce edge
+	     * based on bounding rect of all text
+	     */
+	    if (ntxt > 1) {
+		/*
+		 * Produce edge of rect bounding all text
+		 */
+		rectEdge(xmin, ymin, xmax, ymax, theta,
+			 &edgex, &edgey);
+	    }
+	    /*
 	     * Reverse the scale adjustment (zoom factor)
 	     * when calculating physical value to return to user-level
 	     */
-	    REAL(result)[0] = xmin / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	    REAL(result)[1] = xmax / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	    REAL(result)[2] = ymin / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	    REAL(result)[3] = ymax / REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    REAL(result)[0] = edgex / 
+		REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    REAL(result)[1] = edgey / 
+		REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    REAL(result)[2] = (xmax - xmin) / 
+		REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    REAL(result)[3] = (ymax - ymin) / 
+		REAL(gridStateElement(dd, GSS_SCALE))[0];
 	}
     }
     vmaxset(vmax);
@@ -2514,7 +2942,7 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust, 
 	    SEXP rot, SEXP checkOverlap)
 {
-    gridText(label, x, y, hjust, vjust, rot, checkOverlap, TRUE);
+    gridText(label, x, y, hjust, vjust, rot, checkOverlap, 0, TRUE);
     return R_NilValue;    
 }
 
@@ -2528,11 +2956,12 @@ SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
  * Return NULL if no text to draw;  R code will generate unit from that
  */
 SEXP L_textBounds(SEXP label, SEXP x, SEXP y, 
-		  SEXP hjust, SEXP vjust, SEXP rot)
+		  SEXP hjust, SEXP vjust, SEXP rot, SEXP theta)
 {
     SEXP checkOverlap = allocVector(LGLSXP, 1);
     LOGICAL(checkOverlap)[0] = FALSE;
-    return gridText(label, x, y, hjust, vjust, rot, checkOverlap, FALSE);
+    return gridText(label, x, y, hjust, vjust, rot, checkOverlap, 
+		    REAL(theta)[0], FALSE);
 }
 
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
@@ -2692,10 +3121,10 @@ SEXP L_locator() {
  *
  * Used for lines, segments, polygons
  */
-SEXP L_locnBounds(SEXP x, SEXP y)
+SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta)
 {
     int i, nx, ny, nloc;
-    double xx, yy;
+    double *xx, *yy;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
@@ -2703,10 +3132,12 @@ SEXP L_locnBounds(SEXP x, SEXP y)
     LTransform transform;
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
+    char *vmax;
     double xmin = DOUBLE_XMAX;
     double xmax = DOUBLE_XMIN;
     double ymin = DOUBLE_XMAX;
     double ymax = DOUBLE_XMIN;
+    double edgex, edgey;
     /* Get the current device 
      */
     GEDevDesc *dd = getDevice();
@@ -2721,38 +3152,51 @@ SEXP L_locnBounds(SEXP x, SEXP y)
     if (ny > nx) 
 	nx = ny;
     nloc = 0;
+    vmax = vmaxget();
     if (nx > 0) {
+	xx = (double *) R_alloc(nx, sizeof(double));
+	yy = (double *) R_alloc(nx, sizeof(double));
 	for (i=0; i<nx; i++) {
 	    gcontextFromgpar(currentgp, i, &gc, dd);
-	    transformLocn(x, y, i, vpc, &gc,
-			  vpWidthCM, vpHeightCM,
-			  dd,
-			  transform,
-			  &xx, &yy);
-	    if (R_FINITE(xx) && R_FINITE(yy)) {
-		if (xx < xmin)
-		    xmin = xx;
-		if (xx > xmax)
-		    xmax = xx;
-		if (yy < ymin)
-		    ymin = yy;
-		if (yy > ymax)
-		    ymax = yy;
+	    xx[i] = transformXtoINCHES(x, i, vpc, &gc,
+				       vpWidthCM, vpHeightCM, 
+				       dd);
+	    yy[i] = transformYtoINCHES(y, i, vpc, &gc,
+				       vpWidthCM, vpHeightCM, 
+				       dd);
+	    /*
+	     * Determine min/max x/y values
+	     */
+	    if (R_FINITE(xx[i]) && R_FINITE(yy[i])) {
+		if (xx[i] < xmin)
+		    xmin = xx[i];
+		if (xx[i] > xmax)
+		    xmax = xx[i];
+		if (yy[i] < ymin)
+		    ymin = yy[i];
+		if (yy[i] > ymax)
+		    ymax = yy[i];
 		nloc++;
 	    }
 	}
     }
     if (nloc > 0) {
+	hullEdge(xx, yy, nx, REAL(theta)[0], &edgex, &edgey);
 	result = allocVector(REALSXP, 4);
 	/*
 	 * Reverse the scale adjustment (zoom factor)
 	 * when calculating physical value to return to user-level
 	 */
-	REAL(result)[0] = xmin / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[1] = xmax / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[2] = ymin / REAL(gridStateElement(dd, GSS_SCALE))[0];
-	REAL(result)[3] = ymax / REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[0] = edgex / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[1] = edgey / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[2] = (xmax - xmin) / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	REAL(result)[3] = (ymax - ymin) / 
+	    REAL(gridStateElement(dd, GSS_SCALE))[0];
     } 
+    vmaxset(vmax);
     return result;
 }
 

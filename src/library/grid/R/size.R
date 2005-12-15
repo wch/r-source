@@ -13,6 +13,30 @@
 # construct their own viewports.
 
 #########
+# X locations on edge
+#########
+
+xDetails <- function(x, theta) {
+  UseMethod("xDetails")
+}
+
+xDetails.default <- function(x, theta) {
+  unit(0.5, "npc")
+}
+
+#########
+# Y locations on edge
+#########
+
+yDetails <- function(x, theta) {
+  UseMethod("yDetails")
+}
+
+yDetails.default <- function(x, theta) {
+  unit(0.5, "npc")
+}
+
+#########
 # WIDTHS
 #########
 
