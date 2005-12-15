@@ -87,7 +87,7 @@ install.packages <-
     }
 
     if(is.null(repos) & missing(contriburl)) {
-        update <- cbind(pkgs, lib) # for side-effect of recycling to same length
+        update <- cbind(path.expand(pkgs), lib) # for side-effect of recycling to same length
         cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")

@@ -79,6 +79,7 @@ contrib.url(repos, type = getOption("pkgType"))
 #ifdef unix
     \file{.tar.gz} files.  These can be source archives or binary
     package/bundle archive files (as created by \code{R CMD build --binary}).
+    Tilde-expansion will be done on the file paths.
 #endif
     If this is a zero-length character vector, a listbox of available
     packages (including those contained in bundles) is presented where
