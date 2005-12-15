@@ -440,11 +440,11 @@ double evaluateGrobUnit(double value, SEXP grob,
     R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
-    SEXP preFn, evalFn, postFn, findGrobFn;
+    SEXP preFn, evalFn = R_NilValue, postFn, findGrobFn;
     SEXP R_fcall0, R_fcall1, R_fcall2, R_fcall3;
     SEXP savedgpar, savedgrob;
-    SEXP unit;
-    double result;
+    SEXP unit = R_NilValue;
+    double result = 0.0;
     /*
      * We are just doing calculations, not drawing, so
      * we don't want anything recorded on the graphics engine DL

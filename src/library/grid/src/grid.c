@@ -2300,7 +2300,7 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
 		       double theta, Rboolean draw)
 {
     int i, nx, ny, nr, ncirc;
-    double xx, yy, rr1, rr2, rr;
+    double xx, yy, rr1, rr2, rr = 0.0 /* -Wall */;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
