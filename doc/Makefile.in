@@ -84,7 +84,7 @@ distclean: clean
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@if test -f non-tarball ; then \
-	  rm -f R.1 non-tarball ; \
+	  rm -f $(NON_SVN_INSTFILES) non-tarball ; \
 	fi
 	-@rm -f Makefile
 maintainer-clean: distclean
