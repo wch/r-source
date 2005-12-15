@@ -56,10 +56,11 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
-## we need to force stores with gcc >= 3.4.0 at least on i686
-DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS) -ffloat-store
-@USING_G77_TRUE@dlamc.o: dlamc.f
-@USING_G77_TRUE@	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
+## treated separately: e.g. we need to force stores with 
+## gcc >= 3.4.0 at least on i686
+DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
+dlamc.o: dlamc.f
+	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
 
 R: Makefile
 	@$(MAKE) Makedeps

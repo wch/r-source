@@ -78,6 +78,12 @@
 ## above.  If unspecified, defaults to '-O2' for g77, and '' otherwise.
 ## FFLAGS=
 
+## Options for same compilation underthe FORTRAN 77 compiler.
+## Use this to specify FFLAGS for the version of the compiler specified
+## above, using as accurate a result as possible, e.g. no optimization
+## or using -ffloat-store.
+## SAFE_FFLAGS=
+
 ## The following additional FFLAGS to be used only in the main
 ## compilation and only in building shared libraries respectively.
 ## For example, on some systems one needs 'MAIN_FFLAGS=-pg' when

@@ -2351,6 +2351,8 @@ ditto, for compiling the main program
 for shared libraries
 @item FFLAGS
 debugging and optimization flags, FORTRAN
+@item SAFE_FFLAGS
+ditto for source files which need exact floating point behaviour
 @item MAIN_FFLAGS
 ditto, for compiling the main program
 @item SHLIB_FFLAGS
@@ -3010,11 +3012,11 @@ build will use these options.
 It seems that @w{@command{gcc} 3.4.x} and later on @cputype{ix86} Linux
 defeat attempts by the LAPACK code to avoid computations entirely in
 extended-precision registers, so file @file{src/modules/lapack/dlamc.f}
-may need to be compiled without optimization.  If configure detects
-@acronym{GNU} FORTRAN it adds flag @option{-ffloat-store} which
-suffices, but it is possible that @file{src/modules/lapack/Makefile}
-will need to be edited to remove optimization on other platforms.  (This
-is true when using @command{icc} on @cputype{ix86} Linux, for example.)
+may need to be compiled without optimization.  Set the configure
+variable @env{SAFE_FFLAGS} to the flags to be used for this file.  If
+configure detects @acronym{GNU} FORTRAN it adds flag
+@option{-ffloat-store} to @env{FFLAGS}.  (Other settings are needed when
+using @command{icc} on @cputype{ix86} Linux, for example.)
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include

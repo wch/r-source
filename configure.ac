@@ -448,6 +448,8 @@ AC_ARG_VAR([BLAS_LIBS],
 AC_ARG_VAR([LAPACK_LIBS],
            [flags needed for linking against external LAPACK libraries])
 AC_ARG_VAR([LIBnn], ['lib' or 'lib64' for dynamic libraries])
+AC_ARG_VAR([SAFE_FFLAGS],
+	   [Safe Fortran 77 compiler flags for e.g. dlamc.f])
 
 ### ** Check whether we build in srcdir.
 
@@ -939,12 +941,22 @@ case "${host_os}" in
     ;;  
 esac
 
+if test "${SAFE_FFLAGS+set}" != set; then
+  if test "x${ac_cv_f77_compiler_gnu}" = xyes; then
+    SAFE_FFLAGS="${FFLAGS} -ffloat-store"
+  else
+    SAFE_FFLAGS=${FFLAGS}
+  fi
+fi
+
+
 AC_SUBST(CFLAGS)
 AC_SUBST(MAIN_CFLAGS)
 AC_SUBST(SHLIB_CFLAGS)
 AC_SUBST(CXXFLAGS)
 AC_SUBST(SHLIB_CXXFLAGS)
 AC_SUBST(FFLAGS)
+AC_SUBST(SAFE_FFLAGS)
 AC_SUBST(MAIN_FFLAGS)
 AC_SUBST(SHLIB_FFLAGS)
 AC_SUBST(R_XTRA_CFLAGS)
