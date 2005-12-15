@@ -577,7 +577,7 @@ BUG FIXES
     o	qbinom() was not accepting p = -Inf when log.p = TRUE, although
 	it is a legitimate value.
 
-    o	write.csv[2] only accepts logical constants for 'row.names', and
+    o	write.csv[2] only accepted logical constants for 'row.names', and
 	now accepts variables.
 
     o	Conversion of .Rd files did not correctly match braces
@@ -623,6 +623,10 @@ BUG FIXES
 
     o	dir.create() could be confused by a trailing slash on the
 	path, and by paths containing drives on Windows.
+
+    o	The search for tcl/tkConfig.sh looked in 'lib' before 'lib64'
+	directories (and not at all in /usr/local/lib64) and so might
+ 	prefer 32- to 64-bit versions if both are available.
 
 
 

@@ -20,17 +20,8 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.win $(SOURCES) $(HEADERS) \
 	dllversion.rc
-## Was: dllversion.rc internet.mcp.hqx
 
-## <FIXME>
-## Change to 'internet.la' when using libtool for shlibs.
-## Remove when using automake ... also fix target 'install' then.
 internet_la = internet$(SHLIB_EXT)
-## </FIXME>
-Rexecmodulesdir_LTLIBRARIES = $(internet_la)
-internet_la_SOURCES = $(SOURCES)
-internet_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@internet_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
 internet_la_LIBADD = $(LIBR)
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
@@ -48,24 +39,23 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
+	@$(MAKE) $(internet_la)
 
-$(internet_la): $(internet_la_OBJECTS) $(internet_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(internet_la_LDFLAGS) $(internet_la_OBJECTS) $(internet_la_LIBADD)
+$(internet_la): $(OBJECTS)
+	$(SHLIB_LINK) -o $@ $(OBJECTS) $(internet_la_LIBADD)
 ## <FIXME>
 ## Not sure if we want to do this ...
 	@$(MAKE) rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(internet_la) "$(Rexecmodulesdir)/internet$(SHLIB_EXT)"
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(internet_la) "$(Rexecmodulesdir)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(internet_la) "$(Rexecmodulesdir)/$(internet_la)"
 installdirs:
 	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f "$(Rexecmodulesdir)/internet$(SHLIB_EXT)"
+	@rm -f "$(Rexecmodulesdir)/$(internet_la)"
 
 mostlyclean: clean
 clean:

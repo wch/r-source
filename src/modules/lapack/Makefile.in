@@ -32,21 +32,13 @@ DISTFILES = \
 	cmplx.f \
 	dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f
 
-## <FIXME>
-## Change to 'lapack.la' when using libtool for shlibs.
-## Remove when using automake ... also fix target 'install' then.
 lapack_la = lapack$(SHLIB_EXT)
 Rlapack_la = libRlapack$(DYLIB_EXT)
-## </FIXME>
-Rexecmodulesdir_LTLIBRARIES = $(lapack_la)
-lapack_la_SOURCES = $(SOURCES)
 lapack_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@lapack_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
 ## Used for passing '+s' to SHLIB_LINK on HP-UX.
-@USE_LIBTOOL_FALSE@lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
+lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
 lapack_la_LIBADD = $(LIBR)
 
-Rlapack_la_SOURCES = $(LIBSOURCES)
 Rlapack_la_OBJECTS = $(LIBOBJECTS)
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
@@ -78,9 +70,9 @@ DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS) -ffloat-store
 R: Makefile
 	@$(MAKE) Makedeps
 @USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) $(Rlapack_la) Rlapack_install
-	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
+	@$(MAKE) $(lapack_la)
 
-$(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
+$(lapack_la): $(lapack_la_OBJECTS)
 	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS)
 ## <FIXME>
 ## Not sure if we want to do this ...
@@ -92,13 +84,12 @@ $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
 ## <FIXME>
 ## This is not yet right.  Prefer not to include FLIBS, but MacOSX seems
 ## to require it.
-## AIX support is untested
 ## </FIXME>
-$(Rlapack_la): $(Rlapack_la_OBJECTS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/Rlapack.exp
-	$(DYLIB_LINK) @RLAPACK_LDFLAGS@ -o $@ $(Rlapack_la_OBJECTS) @BLAS_LIBS@ $(FLIBS)
+$(Rlapack_la): $(LIBOBJECTS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/Rlapack.exp
+	$(DYLIB_LINK) @RLAPACK_LDFLAGS@ -o $@ $(LIBOBJECTS) @BLAS_LIBS@ $(FLIBS)
 
-$(top_builddir)/etc/Rlapack.exp: $(Rlapack_la_OBJECTS)
-	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(Rlapack_la_OBJECTS)
+$(top_builddir)/etc/Rlapack.exp: $(LIBOBJECTS)
+	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(LIBOBJECTS)
 
 Rlapack_install: $(Rlapack_la) 
 	@$(MKINSTALLDIRS) $(R_HOME)/lib/
@@ -106,15 +97,14 @@ Rlapack_install: $(Rlapack_la)
 	  $(R_HOME)/lib/$(Rlapack_la)
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(Rexecmodulesdir)/lapack$(SHLIB_EXT)"
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(lapack_la) "$(Rexecmodulesdir)"
-@USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(Rexeclibdir)/libRlapack$(DYLIB_EXT)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(Rexecmodulesdir)/$(lapack_la)"
+@USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(Rexeclibdir)/$(Rlapack_la)"
 installdirs:
 	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f "$(Rexecmodulesdir)/lapack$(SHLIB_EXT)"
+	@rm -f "$(Rexecmodulesdir)/$(lapack_la)"
 
 mostlyclean: clean
 clean:

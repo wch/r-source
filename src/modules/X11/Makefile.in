@@ -24,15 +24,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	Makefile.in $(SOURCES) $(HEADERS)
 
-## <FIXME>
-## Change to 'R_X11.la' when using libtool for shlibs.
-## Remove when using automake ... also fix target 'install' then.
 R_X11_la = R_X11$(SHLIB_EXT)
-## </FIXME>
-Rexecmodulesdir_LTLIBRARIES = $(R_X11_la)
-R_X11_la_SOURCES = $(SOURCES)
-R_X11_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@R_X11_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
 R_X11_la_LIBADD = $(ALL_X_LIBS) $(BITMAP_LIBS) $(LIBR)
 
 all: Makefile Makedeps R
@@ -48,18 +40,17 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
+	@$(MAKE) $(R_X11_la)
 
-$(R_X11_la): $(R_X11_la_OBJECTS) $(R_X11_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(R_X11_la_LDFLAGS) $(R_X11_la_OBJECTS) $(R_X11_la_LIBADD)
+$(R_X11_la): $(OBJECTS)
+	$(SHLIB_LINK) -o $@ $(OBJECTS) $(R_X11_la_LIBADD)
 ## <FIXME>
 ## Not sure of we want to do this ...
 	@$(MAKE) rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) "$(Rexecmodulesdir)/R_X11$(SHLIB_EXT)"
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(R_X11_la) "$(Rexecmodulesdir)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) "$(Rexecmodulesdir)/$(R_X11_la)"
 installdirs:
 	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
 install-strip:

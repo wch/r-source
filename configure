@@ -39165,7 +39165,7 @@ echo $ECHO_N "checking for tclConfig.sh in library (sub)directories... $ECHO_C" 
 if test "${r_cv_path_TCL_CONFIG+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  for ldir in /opt/lib /sw/lib /usr/local/lib /usr/lib /lib /usr/lib64 ; do
+  for ldir in /opt/lib /sw/lib /usr/local/lib64 /usr/local/lib /usr/lib64 /usr/lib /lib64 /lib ; do
   for dir in \
       ${ldir} \
       `ls -d ${ldir}/tcl[8-9].[0-9]* 2>/dev/null | sort -r`; do
@@ -39239,7 +39239,7 @@ echo $ECHO_N "checking for tkConfig.sh in library (sub)directories... $ECHO_C" >
 if test "${r_cv_path_TK_CONFIG+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  for ldir in /opt/lib /sw/lib /usr/local/lib /usr/lib /lib /usr/lib64 ; do
+  for ldir in /opt/lib /sw/lib /usr/local/lib64 /usr/local/lib /usr/lib64 /usr/lib /lib64 /lib ; do
   for dir in \
       ${ldir} \
       `ls -d ${ldir}/tk[8-9].[0-9]* 2>/dev/null | sort -r`; do
