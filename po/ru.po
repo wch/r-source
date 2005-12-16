@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-12-16 09:10+0000\n"
-"PO-Revision-Date: 2005-09-26 10:56+0300\n"
+"PO-Revision-Date: 2005-12-16 15:56+0300\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -422,9 +422,9 @@ msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "ВНИМАНИЕ: max-mem-size =%4.1fM слишком мал и пропущен\n"
 
 #: src/gnuwin32/system.c:886
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
-msgstr "ВНИМАНИЕ: max-mem-size =%4.1fM слишком мал и пропущен\n"
+msgstr "ВНИМАНИЕ: max-mem-size =%4.1fM слишком мал, используется 3Gb\n"
 
 #: src/gnuwin32/system.c:896 src/unix/system.c:244
 #, c-format
@@ -3628,16 +3628,12 @@ msgid "top-level task callback did not return a logical value"
 msgstr "обратный вызов задачи верхнего уровня не вернул логического значения"
 
 #: src/main/mapply.c:61
-#, fuzzy
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
-msgstr "аргумент 'editor' не определен"
+msgstr "аргумент 'MoreArgs' из 'mapply' не является списком"
 
 #: src/main/mapply.c:99
-#, fuzzy
 msgid "longer argument not a multiple of length of shorter"
-msgstr ""
-"длина большего объекта\n"
-"\tне является произведением длины меньшего объекта"
+msgstr "длина большего аргумента не является произведением длины меньшего"
 
 #: src/main/match.c:110
 msgid "invalid partial string match"
@@ -4327,7 +4323,7 @@ msgstr "параметр \"%s\" неправильной длины"
 
 #: src/main/par.c:230
 msgid "graphical parameter 'family' has a maximum length of 49 bytes"
-msgstr ""
+msgstr "максимальная длина графического параметра 'family' -- 49 байт"
 
 #: src/main/par.c:375
 msgid "parameter \"mfg\" has the wrong length"
