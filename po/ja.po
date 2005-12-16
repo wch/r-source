@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-08 14:15+0000\n"
+"POT-Creation-Date: 2005-12-16 09:10+0000\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -130,7 +130,7 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/platform.c:900 src/main/platform.c:903 src/main/platform.c:906
 #: src/main/platform.c:984 src/main/platform.c:1024 src/main/platform.c:1054
 #: src/main/platform.c:1056 src/main/platform.c:1089 src/main/platform.c:1186
-#: src/main/platform.c:1429 src/main/platform.c:1464 src/main/plot3d.c:2475
+#: src/main/platform.c:1429 src/main/platform.c:1467 src/main/plot3d.c:2475
 #: src/main/plot3d.c:2479 src/main/plot3d.c:2484 src/main/plot3d.c:2488
 #: src/main/plot3d.c:2492 src/main/plot3d.c:2496 src/main/print.c:172
 #: src/main/print.c:178 src/main/print.c:200 src/main/random.c:465
@@ -419,9 +419,9 @@ msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "警告: max-mem-size =%4.1fM は小さすぎるので無視されました\n"
 
 #: src/gnuwin32/system.c:886
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
-msgstr "警告: max-mem-size =%4.1fM は小さすぎるので無視されました\n"
+msgstr "警告: max-mem-size =%4.1fM は大きすぎるので、3Gbとされました\n"
 
 #: src/gnuwin32/system.c:896 src/unix/system.c:244
 #, c-format
@@ -1374,7 +1374,6 @@ msgid "argument 'x' must not contain NAs"
 msgstr "引数 'x' は，NA を含んではいけません"
 
 #: src/main/character.c:2371
-#, fuzzy
 msgid "argument 'x' must be an integer vector"
 msgstr "引数 'x' は整数ベクトルでなくてはなりません"
 
@@ -1439,9 +1438,8 @@ msgid "argument must have length at least 1"
 msgstr "引数は長さが1以上でなければいけません"
 
 #: src/main/coerce.c:1344
-#, fuzzy
 msgid "invalid body for function"
-msgstr "内部関数が不正です"
+msgstr "関数の内容が不正です"
 
 #: src/main/coerce.c:1363
 msgid "invalid length 0 argument"
@@ -1648,9 +1646,9 @@ msgid "write not enabled for this connection"
 msgstr "このコネクションには書き込みは有効になっていません"
 
 #: src/main/connections.c:376
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s', reason '%s'"
-msgstr "ファイル '%s' を開くことができません"
+msgstr "ファイル '%s' を開くことができません, 理由は'%s'です"
 
 #: src/main/connections.c:378 src/main/dounzip.c:101
 #, c-format
@@ -1683,9 +1681,9 @@ msgid "allocation of file connection failed"
 msgstr "ファイル接続の割り当てに失敗しました"
 
 #: src/main/connections.c:641
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create fifo '%s', reason '%s'"
-msgstr "fifo '%s' を作れません"
+msgstr "fifo '%s' を作れません, 理由は'%s'です"
 
 #: src/main/connections.c:644
 #, c-format
@@ -1730,9 +1728,9 @@ msgid "fifo connections are not available on this system"
 msgstr "このシステムでは fifo コネクションは利用できません"
 
 #: src/main/connections.c:821
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open pipe() cmd '%s', reason '%s'"
-msgstr "pipe() コマンド ’%s' を開くことができません"
+msgstr "pipe() コマンド ’%s' を開くことができません, 理由は'%s'です"
 
 #: src/main/connections.c:824
 #, c-format
@@ -2296,14 +2294,16 @@ msgid "too many arguments in foreign function call"
 msgstr "外部関数の呼び出しで引数が多すぎます"
 
 #: src/main/dotcode.c:178
-#, fuzzy, c-format
+#, c-format
 msgid "%s entry point \"%s%s\" not in DLL for package \"%s\""
-msgstr "関数名 \"%s\" はパッケージ '%s' の DLL の中にありません"
+msgstr ""
+"関数名 %s エントリポイント \"%s%s\" はパッケージ \"%s\" の DLL の中にありませ"
+"ん"
 
 #: src/main/dotcode.c:187
-#, fuzzy, c-format
+#, c-format
 msgid "%s entry point \"%s%s\" not in load table"
-msgstr "関数名 \"%s\" は load table にありません"
+msgstr "関数名 %s エントリポイント \"%s%s\" は load table にありません"
 
 #: src/main/dotcode.c:257
 #, c-format
@@ -2635,9 +2635,8 @@ msgid "invalid cached value in R_GetGlobalCache"
 msgstr "R_GetGlobalCache 中に不正なキャッシュ値があります"
 
 #: src/main/envir.c:724
-#, fuzzy
 msgid "cannot unbind in the base namespace"
-msgstr "基本環境中では切り離しはできません"
+msgstr "基本名前空間の中では切り離しはできません"
 
 #: src/main/envir.c:726
 msgid "cannot unbind in the base environment"
@@ -2648,9 +2647,8 @@ msgid "cannot remove bindings from a locked environment"
 msgstr "ロックされた環境からはバインディングを取り除くことはできません"
 
 #: src/main/envir.c:771
-#, fuzzy
 msgid "cannot get binding from base environment"
-msgstr "NULL 環境からはバインディングを得ることができません"
+msgstr "基本環境からはバインディングを得ることができません"
 
 #: src/main/envir.c:773
 msgid "cannot get binding from base namespace"
@@ -2992,7 +2990,7 @@ msgid "not in a try context"
 msgstr "トライ (try) 文脈ではありません"
 
 #: src/main/eval.c:213
-#, fuzzy, c-format
+#, c-format
 msgid "Rprof: cannot open profile file '%s'"
 msgstr "Rprof: プロファイル・ファイル '%s' を開くことができません"
 
@@ -3013,12 +3011,11 @@ msgstr ""
 #: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1380
 #: src/main/eval.c:1429 src/main/eval.c:1483 src/main/eval.c:1701
 #: src/main/eval.c:3036 src/main/eval.c:3128
-#, fuzzy
 msgid "'...' used in an incorrect context"
-msgstr "... が不適切な文脈で使われました"
+msgstr "'...' が不適切な文脈で使われました"
 
 #: src/main/eval.c:338 src/main/eval.c:784
-#, fuzzy, c-format
+#, c-format
 msgid "object \"%s\" not found"
 msgstr "オブジェクト \"%s\" は存在しません"
 
@@ -3040,7 +3037,7 @@ msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "ジエネリック関数の環境中に \"%s\" というシンボルが見つかりませんでした"
 
 #: src/main/eval.c:730
-#, fuzzy, c-format
+#, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "シンボル \"%s\" がメソッドの環境の中にありません"
 
@@ -3065,14 +3062,12 @@ msgid "non-symbol loop variable"
 msgstr "ループ変数がシンボルではありません"
 
 #: src/main/eval.c:951
-#, fuzzy
 msgid "invalid for() loop sequence"
 msgstr "for() ループが不正です"
 
 #: src/main/eval.c:1080
-#, fuzzy
 msgid "'...' not allowed in return"
-msgstr "... は返り値として許されません"
+msgstr "'...' は返り値として許されません"
 
 #: src/main/eval.c:1094
 msgid "multi-argument returns are deprecated"
@@ -3087,7 +3082,6 @@ msgid "invalid (NULL) left side of assignment"
 msgstr "代入の左辺が不正(NULL)です"
 
 #: src/main/eval.c:1175
-#, fuzzy
 msgid "target of assignment expands to non-language object"
 msgstr "付値対象は非言語オブジェクトに展開されます"
 
@@ -3096,9 +3090,8 @@ msgid "cannot do complex assignments in base namespace"
 msgstr "base 名前空間においては複素数の代入はできません"
 
 #: src/main/eval.c:1216
-#, fuzzy
 msgid "cannot do complex assignments in base environment"
-msgstr "NULL 環境においては複素数の代入はできません"
+msgstr "基本環境においては複素数の代入はできません"
 
 #: src/main/eval.c:1229 src/main/eval.c:1247
 msgid "invalid function in complex assignment"
@@ -3126,18 +3119,16 @@ msgid "numeric 'envir' arg not of length one"
 msgstr "数値の 'envir'  引数の長さが1ではありません"
 
 #: src/main/eval.c:1573 src/main/eval.c:1592
-#, fuzzy
 msgid "restarts not supported in 'eval'"
-msgstr "再実行機能は eval 関数に対してはサポートされていません"
+msgstr "再実行機能は 'eval' 関数に対してはサポートされていません"
 
 #: src/main/eval.c:1639
 msgid "'Recall' called from outside a closure"
 msgstr "クロージャの外部から 'Recall' が呼び出されました。"
 
 #: src/main/eval.c:1695
-#, fuzzy
 msgid "value in '...' is not a promise"
-msgstr "... の中の値は promise ではありません"
+msgstr "'...' の中の値は promise ではありません"
 
 #: src/main/eval.c:1887 src/main/objects.c:655
 #, c-format
@@ -3145,9 +3136,9 @@ msgid "call name too long in '%s'"
 msgstr "'%s' 中の呼び出し名が長すぎます"
 
 #: src/main/eval.c:1908
-#, fuzzy, c-format
+#, c-format
 msgid "generic name too long in '%s'"
-msgstr "%s のジェネリック名が長すぎます"
+msgstr "'%s' のジェネリック名が長すぎます"
 
 #: src/main/eval.c:1940
 #, c-format
@@ -3561,9 +3552,8 @@ msgid "invalid 'y' type in 'x %s y'"
 msgstr "'x %s y' の 'y' の型が不正です"
 
 #: src/main/logic.c:295
-#, fuzzy
 msgid "Unary operator `!' called with two arguments"
-msgstr "二項演算には二つの引数が必要です"
+msgstr "単項演算子 '!' が2つの引数で呼び出されました"
 
 #: src/main/main.c:50
 msgid "dummy - do not translate"
@@ -3633,16 +3623,12 @@ msgid "top-level task callback did not return a logical value"
 msgstr "トップレベルの task callback が論理値を返していません"
 
 #: src/main/mapply.c:61
-#, fuzzy
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
-msgstr "引数 'editor' が設定されていません"
+msgstr "'mapply' の引数 'MoreArgs' がリストになっていません"
 
 #: src/main/mapply.c:99
-#, fuzzy
 msgid "longer argument not a multiple of length of shorter"
-msgstr ""
-"長いオブジェクトの長さが\n"
-"\t 短いオブジェクトの長さの倍数になっていません"
+msgstr "長い引数の長さが短いほうの長さの倍数になっていません"
 
 #: src/main/match.c:110
 msgid "invalid partial string match"
@@ -3782,14 +3768,12 @@ msgid "argument is not a valid model"
 msgstr "引数は有効なモデルではありません"
 
 #: src/main/model.c:759
-#, fuzzy
 msgid "'data' argument is of the wrong type"
-msgstr "データ引数が誤った型です"
+msgstr "'data' 引数が誤った型です"
 
 #: src/main/model.c:1018
-#, fuzzy
 msgid "'.' in formula and no 'data' argument"
-msgstr "'data' 引数が不正です"
+msgstr "'.' が式中にありますが, 'data' 引数がありません"
 
 #: src/main/model.c:1163
 msgid "invalid formula in 'update'"
@@ -4338,7 +4322,7 @@ msgstr "パラメータ \"%s\" の長さが不正です"
 
 #: src/main/par.c:230
 msgid "graphical parameter 'family' has a maximum length of 49 bytes"
-msgstr ""
+msgstr "グラフィックスパラメータ 'family' の最大長は 49バイトです"
 
 #: src/main/par.c:375
 msgid "parameter \"mfg\" has the wrong length"
@@ -4410,9 +4394,8 @@ msgid "Impossible mode ( x )"
 msgstr "不可能なモード（x）です"
 
 #: src/main/paste.c:387
-#, fuzzy
 msgid "atomic vector arguments only"
-msgstr "引数はベクトルのみです"
+msgstr "引数はアトムであるベクトルのみです"
 
 #: src/main/platform.c:226
 msgid "invalid filename specification"
@@ -4520,9 +4503,8 @@ msgid "OS reports request cannot be honored"
 msgstr "OS のレポート要求は優先されません"
 
 #: src/main/platform.c:1233
-#, fuzzy
 msgid "invalid value of 'what' argument"
-msgstr "'what' の値が不正です"
+msgstr "'what' 引数の値が不正です"
 
 #: src/main/platform.c:1378
 msgid "'hostname' must be a character vector of length 1"
@@ -4541,7 +4523,7 @@ msgstr "gethostbyname が未知の書式を返しました"
 msgid "nsl() is not supported on this platform"
 msgstr "このプラットフォームでは nsl 関数はサポートされていません"
 
-#: src/main/platform.c:1446 src/main/platform.c:1483
+#: src/main/platform.c:1449 src/main/platform.c:1491
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' はすでに存在します"
@@ -4625,9 +4607,8 @@ msgid "invalid axis number %d"
 msgstr "軸の番号 %d が不正です"
 
 #: src/main/plot.c:1088
-#, fuzzy
 msgid "'hadj' must be of length one"
-msgstr "'which' は長さ1でなくてはなりません"
+msgstr "'hadj' は長さ1でなくてはなりません"
 
 #: src/main/plot.c:1095 src/main/plot.c:2486
 msgid "zero length 'padj' specified"
@@ -4635,7 +4616,7 @@ msgstr "長さゼロの 'padj' が指定されています"
 
 #: src/main/plot.c:1143
 msgid "'label' is supplied and not 'at'"
-msgstr ""
+msgstr "'label' が与えられていますが, 'at' がありません"
 
 #: src/main/plot.c:1147
 #, c-format
@@ -4678,9 +4659,8 @@ msgid "invalid third argument"
 msgstr "三番目の引数が不正です"
 
 #: src/main/plot.c:1759
-#, fuzzy
 msgid "invalid fourth argument"
-msgstr "一番目の引数が不正です"
+msgstr "四番目の引数が不正です"
 
 #: src/main/plot.c:1941
 msgid "invalid arrow head length"
@@ -5712,36 +5692,44 @@ msgid "syntax error on line %d"
 msgstr "%d 行に構文エラーがありました"
 
 #: src/main/source.c:92
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "syntax error at\n"
 "%d: %s"
-msgstr "構文エラーです"
+msgstr ""
+"以下の場所で構文エラーがありました.\n"
+"%d: %s"
 
 #: src/main/source.c:94
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "syntax error at\n"
 "%d: %s\n"
 "%d: %s"
-msgstr "%d 行に構文エラーがありました"
+msgstr ""
+"以下の場所で構文エラーがありました.\n"
+"%d: %s\n"
+"%d: %s"
 
 #: src/main/source.c:100
 msgid "syntax error"
 msgstr "構文エラーです"
 
 #: src/main/source.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "syntax error in \"%s\""
-msgstr "%d 行に構文エラーがありました"
+msgstr "\"%s\" に構文エラーがありました"
 
 #: src/main/source.c:103
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "syntax error in:\n"
 "\"%s\n"
 "%s\""
-msgstr "%d 行に構文エラーがありました"
+msgstr ""
+"以下の場所で構文エラーがありました.\n"
+"\"%s\n"
+"%s\""
 
 #: src/main/split.c:37
 msgid "first argument must be a vector"
@@ -5792,11 +5780,11 @@ msgstr "存在しない引数 %d を参照しました"
 
 #: src/main/sprintf.c:143
 msgid "at most one asterisk `*' is supported in each conversion specification"
-msgstr ""
+msgstr "各々の変換指定では最大で1つのアスタリスク `*'  がサポートされています"
 
 #: src/main/sprintf.c:150
 msgid "argument for `*' conversion specification must be a number"
-msgstr ""
+msgstr "`*' 変換指定に対する引数は数値でなければなりません"
 
 #: src/main/sprintf.c:204
 msgid "coercion has changed vector length to 0"
@@ -6010,7 +5998,6 @@ msgid "matrix subscripting not handled for this type"
 msgstr "このデータ型に対しては添え字は使えません"
 
 #: src/main/subset.c:428
-#, fuzzy
 msgid "array subscripting not handled for this type"
 msgstr "このデータ型に対しては添え字は使えません"
 
@@ -6227,14 +6214,12 @@ msgid "invalid input in mbcsToLatin1"
 msgstr "mbcsToLatin1  への入力が不正です"
 
 #: src/main/util.c:1186
-#, fuzzy
 msgid "allocation failure in 'mbcsToLatin1'"
-msgstr "mbcsToLatin1 で割り当てに失敗しました"
+msgstr "'mbcsToLatin1' で割り当てに失敗しました"
 
 #: src/main/util.c:1189
-#, fuzzy
 msgid "invalid input in 'mbcsToLatin1'"
-msgstr "mbcsToLatin1  への入力が不正です"
+msgstr "'mbcsToLatin1'  への入力が不正です"
 
 #: src/main/util.c:1288
 msgid "error message truncated to 255 chars"
@@ -6706,9 +6691,8 @@ msgid "unable to start device %s"
 msgstr "デバイス '%s' を開始できません"
 
 #: src/modules/X11/devX11.c:2356
-#, fuzzy
 msgid "invalid 'width' or 'height'"
-msgstr "幅または高さが不正です"
+msgstr "'width' または 'height' が不正です"
 
 #: src/modules/X11/devX11.c:2363
 msgid "invalid colortype passed to X11 driver"

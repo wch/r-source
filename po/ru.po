@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-08 14:15+0000\n"
+"POT-Creation-Date: 2005-12-16 09:10+0000\n"
 "PO-Revision-Date: 2005-09-26 10:56+0300\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -133,7 +133,7 @@ msgstr "неправильные 'имяs' в R_unlink"
 #: src/main/platform.c:900 src/main/platform.c:903 src/main/platform.c:906
 #: src/main/platform.c:984 src/main/platform.c:1024 src/main/platform.c:1054
 #: src/main/platform.c:1056 src/main/platform.c:1089 src/main/platform.c:1186
-#: src/main/platform.c:1429 src/main/platform.c:1464 src/main/plot3d.c:2475
+#: src/main/platform.c:1429 src/main/platform.c:1467 src/main/plot3d.c:2475
 #: src/main/plot3d.c:2479 src/main/plot3d.c:2484 src/main/plot3d.c:2488
 #: src/main/plot3d.c:2492 src/main/plot3d.c:2496 src/main/print.c:172
 #: src/main/print.c:178 src/main/print.c:200 src/main/random.c:465
@@ -4529,7 +4529,7 @@ msgstr "'gethostbyname' вернул неизвестный формат"
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 
-#: src/main/platform.c:1446 src/main/platform.c:1483
+#: src/main/platform.c:1449 src/main/platform.c:1491
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' уже существует"

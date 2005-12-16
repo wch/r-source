@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-08 14:15+0000\n"
+"POT-Creation-Date: 2005-12-16 09:10+0000\n"
 "PO-Revision-Date: 2005-09-26 17:43+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -129,7 +129,7 @@ msgstr "R_unlink 的 'names' 無效"
 #: src/main/platform.c:900 src/main/platform.c:903 src/main/platform.c:906
 #: src/main/platform.c:984 src/main/platform.c:1024 src/main/platform.c:1054
 #: src/main/platform.c:1056 src/main/platform.c:1089 src/main/platform.c:1186
-#: src/main/platform.c:1429 src/main/platform.c:1464 src/main/plot3d.c:2475
+#: src/main/platform.c:1429 src/main/platform.c:1467 src/main/plot3d.c:2475
 #: src/main/plot3d.c:2479 src/main/plot3d.c:2484 src/main/plot3d.c:2488
 #: src/main/plot3d.c:2492 src/main/plot3d.c:2496 src/main/print.c:172
 #: src/main/print.c:178 src/main/print.c:200 src/main/random.c:465
@@ -4467,7 +4467,7 @@ msgstr "gethostbyname 回傳了錯誤的格式"
 msgid "nsl() is not supported on this platform"
 msgstr "本平台不支援 nsl()"
 
-#: src/main/platform.c:1446 src/main/platform.c:1483
+#: src/main/platform.c:1449 src/main/platform.c:1491
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' 已存在"
