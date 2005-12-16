@@ -323,10 +323,6 @@ INSTALLATION CHANGES
     o	Most of the functions checked for by 'configure' also have
 	declarations checked for in the appropriate header.
 
-    o	sysconf() is now used to find the number of clock ticks/second:
-	under some circumstances glibc reported 60 when the true value
-	was 100.
-
     o	The top-level documentation files AUTHORS COPYING.LIB COPYRIGHTS
 	FAQ RESOURCES THANKS have been moved to doc, and COPYING and NEWS
 	are installed there.  The file Y2K has been removed from the
@@ -398,6 +394,10 @@ BUG FIXES
 	and so is not supported on all platforms.
 
     o	Changed apparent mis-spelling of "Gibraltar" in dataset 'eurodist'.
+
+    o	sysconf() is now used to find the number of clock ticks/second:
+	under some circumstances glibc reported 60 when the true value
+	was 100.
 
 
 
