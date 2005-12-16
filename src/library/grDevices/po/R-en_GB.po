@@ -62,7 +62,7 @@ msgid "'to.ref.white' disagrees with definition of"
 msgstr ""
 
 msgid "color spaces use different reference whites."
-msgstr ""
+msgstr "colour spaces use different reference whites."
 
 msgid "cannot shut down device 1 (the null device)"
 msgstr ""
