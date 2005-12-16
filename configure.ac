@@ -681,6 +681,9 @@ AH_TEMPLATE([blkcnt_t],
             [Define to 'long' if <sys/types.h> does not define.
              Apparently necessary to fix a GCC bug on AIX?])
 R_TYPE_SOCKLEN
+AC_CHECK_TYPES([stack_t], HAVE_STACK_T_01=1, HAVE_STACK_T_01=0,
+               [#include <signal.h>])
+AC_SUBST(HAVE_STACK_T_01)
 
 ### * Checks for compiler characteristics.
 
@@ -1426,6 +1429,7 @@ R_CHECK_FUNCS([fcntl], [#include <fcntl.h>])
 R_CHECK_FUNCS([getgrgid], [#include <grp.h>])
 R_CHECK_FUNCS([expm1 hypot log1p log2 log10 rint], [#include <math.h>])
 R_CHECK_FUNCS([getpwuid], [#include <pwd.h>])
+R_CHECK_FUNCS([sigaction sigaltstack sigemptyset], [#include <signal.h>])
 R_CHECK_FUNCS([va_copy __va_copy], [#include <stdarg.h>])
 R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
 R_CHECK_FUNCS([realpath setenv system unsetenv], [#include <stdlib.h>])

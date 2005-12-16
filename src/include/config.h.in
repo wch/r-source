@@ -505,11 +505,23 @@
 /* Define to 1 if you have the `setlocale' function. */
 #undef HAVE_SETLOCALE
 
+/* Define to 1 if you have the `sigaction' function. */
+#undef HAVE_SIGACTION
+
+/* Define to 1 if you have the `sigaltstack' function. */
+#undef HAVE_SIGALTSTACK
+
+/* Define to 1 if you have the `sigemptyset' function. */
+#undef HAVE_SIGEMPTYSET
+
 /* Define to 1 if you have the `snprintf' function. */
 #undef HAVE_SNPRINTF
 
 /* Define if you have support for sockets. */
 #undef HAVE_SOCKETS
+
+/* Define to 1 if the system has the type `stack_t'. */
+#undef HAVE_STACK_T
 
 /* Define to 1 if you have the `stat' function. */
 #undef HAVE_STAT
