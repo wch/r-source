@@ -366,6 +366,12 @@ pkgcheck-%:
 	    -f $(RHOME)/src/gnuwin32/check/PkgCheck tests;\
 	fi
 
+pkgcheck2-%:
+	@$(ECHO) -------- Testing package $* --------
+	-@$(MKDIR) -p $(PKGD)/$*/check
+	@$(MAKE) --no-print-directory -C $(PKGD)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
+
 lazyload-%:
 	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -C $(PKGD)/$* SPKG=$(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg lazyload
 
@@ -473,7 +479,7 @@ test-Basic:
 	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f Makefile.win
 
 
-PKGS-CHK = $(foreach i, $(R_PKGS_BASE), pkgcheck-$i)
+PKGS-CHK = $(foreach i, $(R_PKGS_BASE), pkgcheck2-$i)
 pkgtests: $(PKGS-CHK)
 
 check-devel: check

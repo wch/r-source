@@ -43,11 +43,10 @@ test-src-isas = isas-tests.R
 test-src-lapack = lapack.R
 test-src-nafns = nafns.R
 test-src-random = p-r-random-tests.R
-test-src-postscript = ps-tests.R
-test-src-ts = ts-tests.R
 test-src-segfault = no-segfault.R
 
-test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R reg-S4.R
+test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
+  reg-plot.R reg-S4.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 test-src-reg3 = reg-tests-3.R
@@ -60,14 +59,12 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-internet) internet.Rout.save \
 	$(test-src-lapack) \
 	$(test-src-nafns) \
-	$(test-src-postscript) ps-tests.Rout.save \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) $(test-src-reg3) \
 	  reg-S4.Rout.save \
 	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
 	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-win.R encodings.R \
-	$(test-src-ts) \
 	gct-foot.R \
 	nanbug.rda \
 	WinUnicode.dat \
@@ -88,24 +85,22 @@ test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-lapack = $(test-src-lapack:.R=.Rout)
 test-out-nafns = $(test-src-nafns:.R=.Rout)
-test-out-postscript = $(test-src-postscript:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
-test-out-ts = $(test-src-ts:.R=.Rout)
 
 ## This macro is used only for dependencies
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
-	$(test-out-random) $(test-out-postscript) $(test-out-reg) \
-	$(test-out-reg3) $(test-out-segfault) $(test-out-ts) $(test-out-isas)
+	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
+	$(test-out-segfault) $(test-out-isas)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
 all-basic-tests = Examples Specific Reg Internet
-all-devel-tests = Docs IsAs Lapack Nafns Postscript Random Demo Segfault \
+all-devel-tests = Docs IsAs Lapack Nafns Random Demo Segfault \
    Standalone Packages
 
 all check: Makefile test-all-basics
@@ -269,10 +264,6 @@ test-Nafns:
 	@echo "running tests of NA handling functions"
 	@$(MAKE) $(test-out-nafns) RVAL_IF_DIFF=0
 
-test-Postscript:
-	@echo "running tests of postscript() families"
-	@$(MAKE) $(test-out-postscript) RVAL_IF_DIFF=0
-
 test-Random:
 	@echo "running tests of random deviate generation"
 	@$(MAKE) $(test-out-random) RVAL_IF_DIFF=1
@@ -294,10 +285,6 @@ test-Standalone:
 	@echo "testing building standalone Rmath"
 	-@(cd $(top_builddir)/src/nmath/standalone; $(MAKE) check)
 ## </NOTE>
-
-test-Ts:
-	@echo "running tests of package ts functions"
-	@$(MAKE) $(test-out-ts) RVAL_IF_DIFF=0
 
 test-DocFiles:
 	@echo "checking Rd usage sections"
