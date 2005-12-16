@@ -1,0 +1,327 @@
+
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2005-12-16 r36752)
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## tests of nls, especially of weighted fits
+> 
+> .proctime00 <- proc.time()
+> library(stats)
+> 
+> postscript("nls-test.ps")
+> 
+> ## selfStart.default() w/ no parameters:
+> logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
++ 		function(x, Asym, xmid, scal){} )
+> logistInit <- function(mCall, LHS, data) {
++     xy <- sortedXyData(mCall[["x"]], LHS, data)
++     if(nrow(xy) < 3) stop("Too few distinct input values to fit a logistic")
++     Asym <- max(abs(xy[,"y"]))
++     if (Asym != max(xy[,"y"])) Asym <- -Asym  # negative asymptote
++     xmid <- NLSstClosestX(xy, 0.5 * Asym)
++     scal <- NLSstClosestX(xy, 0.75 * Asym) - xmid
++     value <- c(Asym, xmid, scal)
++     names(value) <- mCall[c("Asym", "xmid", "scal")]
++     value
++ }
+> logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
+> str(logist)
+function (x, Asym, xmid, scal)  
+ - attr(*, "initial")=function (mCall, LHS, data)  
+ - attr(*, "class")= chr "selfStart"
+> 
+> ## lower and upper in algorithm="port"
+> set.seed(123)
+> x <- runif(200)
+> a <- b <- 1
+> c <- -0.1
+> y <- a+b*x+c*x^2+rnorm(200, sd=0.05)
+> plot(x,y)
+> curve(a+b*x+c*x^2, add=TRUE)
+> nls(y~a+b*x+c*I(x^2), start=c(a=1,b=1,c=0.1), algorithm="port")
+Nonlinear regression model
+  model:  y ~ a + b * x + c * I(x^2) 
+   data:  parent.frame() 
+         a          b          c 
+ 1.0058361  0.9823908 -0.0897204 
+ residual sum-of-squares:  0.4604057 
+> nls(y~a+b*x+c*I(x^2), start=c(a=1,b=1,c=0.1), algorithm="port", lower=c(0,0,0))
+Nonlinear regression model
+  model:  y ~ a + b * x + c * I(x^2) 
+   data:  parent.frame() 
+        a         b         c 
+1.0230587 0.8897105 0.0000000 
+ residual sum-of-squares:  0.4682402 
+> 
+> 
+> 
+> ## weighted nls fit: unsupported < 2.3.0
+> set.seed(123)
+> y <- x <- 1:10
+> yeps <- y + rnorm(length(y), sd = 0.01)
+> wts <- rep(c(1, 2), length = 10)
+> fit0 <- lm(yeps~x, weights=wts)
+> summary(fit0, cor = TRUE)
+
+Call:
+lm(formula = yeps ~ x, weights = wts)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.015646 -0.007269 -0.001609  0.004094  0.024098 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.005205   0.007041   0.739    0.481    
+x           0.999151   0.001109 901.164   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.01231 on 8 degrees of freedom
+Multiple R-Squared:     1,	Adjusted R-squared:     1 
+F-statistic:  8.121e+05 on 1 and 8 DF,  p-value: < 2.2e-16 
+
+Correlation of Coefficients:
+  (Intercept)
+x -0.89      
+
+> cf0 <- coef(summary(fit0))[, 1:2]
+> fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
++            weights = wts, trace = TRUE)
+116.8145 :  0.12345 0.54321 
+0.001212901 :  0.005205333 0.999150933 
+> summary(fit)
+
+Formula: yeps ~ a + b * x
+
+Parameters:
+  Estimate Std. Error t value Pr(>|t|)    
+a 0.005205   0.007041   0.739    0.481    
+b 0.999151   0.001109 901.158   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.01231 on 8 degrees of freedom
+
+Correlation of Parameter Estimates:
+        a
+b -0.8923
+
+> stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5))
+> cf1 <- coef(summary(fit))[, 1:2]
+> fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
++             weights = wts, trace = TRUE, algorithm = "port")
+  0      58.4072: 0.123450 0.543210
+  1      6.42521:  1.35316 0.699974
+  2  0.000606450: 0.00520532 0.999151
+  3  0.000606450: 0.00520538 0.999151
+> summary(fit2)
+
+Formula: yeps ~ a + b * x
+
+Parameters:
+  Estimate Std. Error t value Pr(>|t|)    
+a 0.005205   0.007041   0.739    0.481    
+b 0.999151   0.001109 901.161   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.01231 on 8 degrees of freedom
+
+Correlation of Parameter Estimates:
+        a
+b -0.8923
+
+> cf2 <- coef(summary(fit2))[, 1:2]
+> rownames(cf0) <- c("a", "b")
+> # expect relative errors ca 2e-08
+> stopifnot(all.equal(cf1, cf0, 1e-6),  all.equal(cf1, cf0, 1e-6))
+> stopifnot(all.equal(residuals(fit2), residuals(fit0), 1e5))
+> 
+> 
+> DNase1 <- subset(DNase, Run == 1)
+> DNase1$wts <- rep(8:1, each = 2)
+> fm1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal),
++            data = DNase1, weights = wts)
+> summary(fm1)
+
+Formula: density ~ SSlogis(log(conc), Asym, xmid, scal)
+
+Parameters:
+     Estimate Std. Error t value Pr(>|t|)    
+Asym  2.33501    0.09664   24.16 3.45e-12 ***
+xmid  1.47308    0.09468   15.56 8.79e-10 ***
+scal  1.03851    0.03044   34.11 4.17e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.03555 on 13 degrees of freedom
+
+Correlation of Parameter Estimates:
+       Asym   xmid
+xmid 0.9834       
+scal 0.8712 0.9083
+
+> 
+> ## directly
+> fm2 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
++            data = DNase1, weights = wts,
++            start = list(Asym = 3, xmid = 0, scal = 1))
+> summary(fm2)
+
+Formula: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
+
+Parameters:
+     Estimate Std. Error t value Pr(>|t|)    
+Asym  2.33501    0.09663   24.16 3.45e-12 ***
+xmid  1.47308    0.09468   15.56 8.79e-10 ***
+scal  1.03851    0.03044   34.11 4.17e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.03555 on 13 degrees of freedom
+
+Correlation of Parameter Estimates:
+       Asym   xmid
+xmid 0.9834       
+scal 0.8712 0.9083
+
+> stopifnot(all.equal(coef(summary(fm2)), coef(summary(fm1)), tol = 1e-6))
+> stopifnot(all.equal(residuals(fm2), residuals(fm1), tol = 1e-5))
+> stopifnot(all.equal(fitted(fm2), fitted(fm1), tol = 1e-6))
+> fm2a <- nls(density ~ Asym/(1 + exp((xmid - log(conc)))),
++             data = DNase1, weights = wts,
++             start = list(Asym = 3, xmid = 0))
+> anova(fm2a, fm2)
+Analysis of Variance Table
+
+Model 1: density ~ Asym/(1 + exp((xmid - log(conc))))
+Model 2: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
+  Res.Df Res.Sum Sq Df    Sum Sq F value Pr(>F)
+1     14  0.0185483                            
+2     13  0.0164259  1 0.0021224  1.6798 0.2175
+> 
+> ## and without using weights
+> fm3 <- nls(~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal))),
++            data = DNase1, start = list(Asym = 3, xmid = 0, scal = 1))
+> summary(fm3)
+
+Formula: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal)))
+
+Parameters:
+     Estimate Std. Error t value Pr(>|t|)    
+Asym  2.33501    0.09663   24.16 3.45e-12 ***
+xmid  1.47308    0.09468   15.56 8.79e-10 ***
+scal  1.03851    0.03044   34.11 4.17e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.03555 on 13 degrees of freedom
+
+Correlation of Parameter Estimates:
+       Asym   xmid
+xmid 0.9834       
+scal 0.8712 0.9083
+
+> stopifnot(all.equal(coef(summary(fm3)), coef(summary(fm1)), tol = 1e-6))
+> ft <- with(DNase1, density - fitted(fm3)/sqrt(wts))
+> stopifnot(all.equal(ft, fitted(fm1), tol = 1e-6))
+> # sign of residuals is reversed
+> r <- with(DNase1, -residuals(fm3)/sqrt(wts))
+> all.equal(r, residuals(fm1), tol = 1e05)
+[1] TRUE
+> fm3a <- nls(~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))))),
++             data = DNase1, start = list(Asym = 3, xmid = 0))
+> anova(fm3a, fm3)
+Analysis of Variance Table
+
+Model 1: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc)))))
+Model 2: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal)))
+  Res.Df Res.Sum Sq Df    Sum Sq F value Pr(>F)
+1     14  0.0185483                            
+2     13  0.0164259  1 0.0021224  1.6798 0.2175
+> 
+> ## using conditional linearity
+> fm4 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
++            data = DNase1, weights = wts,
++            start = list(xmid = 0, scal = 1), algorithm = "plinear")
+> summary(fm4)
+
+Formula: density ~ 1/(1 + exp((xmid - log(conc))/scal))
+
+Parameters:
+     Estimate Std. Error t value Pr(>|t|)    
+xmid  1.47308    0.09468   15.56 8.79e-10 ***
+scal  1.03851    0.03044   34.11 4.17e-14 ***
+.lin  2.33501    0.09663   24.16 3.45e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.03555 on 13 degrees of freedom
+
+Correlation of Parameter Estimates:
+       xmid   scal
+scal 0.9083       
+.lin 0.9834 0.8712
+
+> cf <- coef(summary(fm4))[c(3,1,2), ]
+> rownames(cf)[2] <- "Asym"
+> stopifnot(all.equal(cf, coef(summary(fm1)), tol = 1e-6))
+> stopifnot(all.equal(residuals(fm4), residuals(fm1), tol = 1e-5))
+> stopifnot(all.equal(fitted(fm4), fitted(fm1), tol = 1e-6))
+> fm4a <- nls(density ~ 1/(1 + exp((xmid - log(conc)))),
++             data = DNase1, weights = wts,
++             start = list(xmid = 0), algorithm = "plinear")
+> anova(fm4a, fm4)
+Analysis of Variance Table
+
+Model 1: density ~ 1/(1 + exp((xmid - log(conc))))
+Model 2: density ~ 1/(1 + exp((xmid - log(conc))/scal))
+  Res.Df Res.Sum Sq Df    Sum Sq F value Pr(>F)
+1     14  0.0185483                            
+2     13  0.0164259  1 0.0021224  1.6798 0.2175
+> 
+> ## using 'port'
+> fm5 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
++            data = DNase1, weights = wts,
++            start = list(Asym = 3, xmid = 0, scal = 1),
++            algorithm = "port")
+> summary(fm5)
+
+Formula: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
+
+Parameters:
+     Estimate Std. Error t value Pr(>|t|)    
+Asym  2.33501    0.09663   24.16 3.45e-12 ***
+xmid  1.47308    0.09468   15.56 8.79e-10 ***
+scal  1.03851    0.03044   34.11 4.17e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.03555 on 13 degrees of freedom
+
+Correlation of Parameter Estimates:
+       Asym   xmid
+xmid 0.9834       
+scal 0.8712 0.9083
+
+> stopifnot(all.equal(coef(summary(fm5)), coef(summary(fm1)), tol = 1e-6))
+> stopifnot(all.equal(residuals(fm5), residuals(fm1), tol = 1e-5))
+> stopifnot(all.equal(fitted(fm5), fitted(fm1), tol = 1e-6))
+> 
+> 
+> cat('Time elapsed: ', proc.time() - .proctime00,'\n')
+Time elapsed:  0.29 0.03 0.33 NA NA 
+> 

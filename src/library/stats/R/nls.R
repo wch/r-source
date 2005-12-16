@@ -151,7 +151,7 @@ nlsModel.plinear <- function( form, data, start, wts )
       else function(X) X * lin
 
     m <-
-      list(resid = function() lhs - getPred(rhs), # want unweighted resids
+      list(resid = function() resid,
            fitted = function() getPred(rhs),
            formula = function() form,
            deviance = function() dev,
@@ -433,6 +433,7 @@ nls <-
         as.formula(paste("~", paste( varNames[varIndex], collapse = "+")),
                    env = environment(formula))
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
+    mf$lower <- mf$upper <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- eval.parent(mf)
     n <- nrow(mf)
@@ -665,6 +666,7 @@ residuals.nls <- function(object, type = c("response", "pearson"), ...)
             val <- naresid(object$na.action, val)
         attr(val, "label") <- "Standardized residuals"
     } else {
+        if(!is.null(object$weights)) val <- val / sqrt(object$weights)
         if(!is.null(object$na.action))
             val <- naresid(object$na.action, val)
         lab <- "Residuals"

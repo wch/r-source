@@ -1,5 +1,9 @@
-library(ts)
+## tests of time-series functionality
+
 .proctime00 <- proc.time()
+library(stats)
+
+postscript("ts-test.ps")
 
 ### ar
 ar(lh)
@@ -81,6 +85,7 @@ fit <- arima(nott,order=c(1,0,0), list(order=c(2,1,0), period=12))
 nott.fore <- predict(fit, n.ahead=36)
 ts.plot(nott, nott.fore$pred, nott.fore$pred+2*nott.fore$se,
         nott.fore$pred-2*nott.fore$se, gpars=list(col=c(1,1,4,4)))
+
 
 ### StructTS
 (fit <- StructTS(log10(UKgas), type = "BSM"))
