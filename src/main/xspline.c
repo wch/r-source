@@ -364,6 +364,45 @@ spline_segment_computing(float step, int k,
   }
 }
 
+/*
+ * For adding last line segment when computing open spline
+ * WITHOUT end control points repeated 
+ * (i.e., can't just connect to last control point)
+ */ 
+static void
+spline_last_segment_computing(float step, int k, 
+			      double *px, double *py,
+			      double s1, double s2, 
+			      GEDevDesc *dd)
+{
+  double A_blend[4];
+  double t = 1;
+  
+  if (s1<0) {  
+      if (s2<0) {
+	  negative_s1_influence(t, s1, &A_blend[0], &A_blend[2]);
+	  negative_s2_influence(t, s2, &A_blend[1], &A_blend[3]);
+	  
+	  point_adding(A_blend, px, py, dd);
+      } else {
+	  negative_s1_influence(t, s1, &A_blend[0], &A_blend[2]);
+	  positive_s2_influence(k, t, s2, &A_blend[1], &A_blend[3]);
+	  
+	  point_adding(A_blend, px, py, dd);
+      }
+  } else if (s2<0) {
+      positive_s1_influence(k, t, s1, &A_blend[0], &A_blend[2]);
+      negative_s2_influence(t, s2, &A_blend[1], &A_blend[3]);
+       
+      point_adding(A_blend, px, py, dd);
+  } else {
+      positive_s1_influence(k, t, s1, &A_blend[0], &A_blend[2]);
+      positive_s2_influence(k, t, s2, &A_blend[1], &A_blend[3]);
+      
+      point_adding(A_blend, px, py, dd);
+  } 
+}
+
 /********************* MAIN METHODS *************************************/
 
 /*
@@ -395,8 +434,9 @@ spline_segment_computing(float step, int k,
 
 static Rboolean
 compute_open_spline(int n, double *x, double *y, double *s,
-		      float precision, 
-		      GEDevDesc *dd)
+		    Rboolean repEnds,
+		    float precision, 
+		    GEDevDesc *dd)
 {
   int       k;
   float     step;
@@ -409,36 +449,45 @@ compute_open_spline(int n, double *x, double *y, double *s,
   xpoints = NULL;
   ypoints = NULL;
 
-  if (n < 2)
+  if (repEnds && n < 2)
       error(_("There must be at least two control points"));
+  if (!repEnds && n < 4)
+      error(_("There must be at least four control points"));
 
-  COPY_CONTROL_POINT(0, 0, n);
-  COPY_CONTROL_POINT(1, 0, n);
-  /* first control point is needed twice for the first segment */
+  if (repEnds) {
+      /* first control point is needed twice for the first segment */
+      COPY_CONTROL_POINT(0, 0, n);
+      COPY_CONTROL_POINT(1, 0, n);
+      COPY_CONTROL_POINT(2, 1, n);
 
-  COPY_CONTROL_POINT(2, 1, n);
+      if (n == 2) {
+	COPY_CONTROL_POINT(3, 1, n);
+      } else {
+	COPY_CONTROL_POINT(3, 2, n);
+      }
 
-  if (n == 2) {
-      COPY_CONTROL_POINT(3, 1, n);
-  } else {
-      COPY_CONTROL_POINT(3, 2, n);
-  }
+      for (k = 0 ; ; k++) {
+	  SPLINE_SEGMENT_LOOP(k, px, py, ps[1], ps[2], precision);
+	  if (k + 3 == n)
+	      break;
+	  NEXT_CONTROL_POINTS(k, n);
+      }
 
-
-  for (k = 0 ; ; k++) {
+      /* last control point is needed twice for the last segment */
+      COPY_CONTROL_POINT(0, n - 3, n);
+      COPY_CONTROL_POINT(1, n - 2, n);
+      COPY_CONTROL_POINT(2, n - 1, n);
+      COPY_CONTROL_POINT(3, n - 1, n);
       SPLINE_SEGMENT_LOOP(k, px, py, ps[1], ps[2], precision);
-      if (k + 3 == n)
-	break;
-      NEXT_CONTROL_POINTS(k, n);
+
+      add_point(px[3], py[3], dd);
+  } else {
+      for (k = 0 ; k + 3 < n ; k++) {
+	  NEXT_CONTROL_POINTS(k, n);
+	  SPLINE_SEGMENT_LOOP(k, px, py, ps[1], ps[2], precision);
+      }    
+      spline_last_segment_computing(step, n - 4, px, py, ps[1], ps[2], dd);
   }
-  /* last control point is needed twice for the last segment */
-  COPY_CONTROL_POINT(0, n - 3, n);
-  COPY_CONTROL_POINT(1, n - 2, n);
-  COPY_CONTROL_POINT(2, n - 1, n);
-  COPY_CONTROL_POINT(3, n - 1, n);
-  SPLINE_SEGMENT_LOOP(k, px, py, ps[1], ps[2], precision);
-  
-  add_point(px[3], py[3], dd);
   
   return TRUE;
 }

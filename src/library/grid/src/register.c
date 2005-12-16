@@ -62,7 +62,7 @@ static const R_CallMethodDef callMethods[] = {
     {"L_segments", (DL_FUNC) &L_segments, 5}, 
     {"L_arrows", (DL_FUNC) &L_arrows, 12}, 
     {"L_polygon", (DL_FUNC) &L_polygon, 3},
-    {"L_xspline", (DL_FUNC) &L_xspline, 6},
+    {"L_xspline", (DL_FUNC) &L_xspline, 7},
     {"L_circle", (DL_FUNC) &L_circle, 3},
     {"L_rect", (DL_FUNC) &L_rect, 6},
     {"L_text", (DL_FUNC) &L_text, 7},
@@ -78,7 +78,7 @@ static const R_CallMethodDef callMethods[] = {
     {"L_locnBounds", (DL_FUNC) &L_locnBounds, 3},
     {"L_rectBounds", (DL_FUNC) &L_rectBounds, 7},
     {"L_textBounds", (DL_FUNC) &L_textBounds, 7},
-    {"L_xsplineBounds", (DL_FUNC) &L_xsplineBounds, 7},
+    {"L_xsplineBounds", (DL_FUNC) &L_xsplineBounds, 8},
     { NULL, NULL, 0 }
 };
 

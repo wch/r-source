@@ -1766,6 +1766,7 @@ void GEText(double x, double y, char *str,
  * Return the vertices of the line that gets drawn.
  */
 SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
+	       Rboolean repEnds, 
 	       Rboolean draw, /* May be called just to get points */
 	       R_GE_gcontext *gc, GEDevDesc *dd)
 {
@@ -1780,7 +1781,7 @@ SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open,
      */
     char *vmaxsave = vmaxget();
     if (open) {
-      compute_open_spline(n, x, y, s, LOW_PRECISION, dd);
+      compute_open_spline(n, x, y, s, repEnds, LOW_PRECISION, dd);
       if (draw)
 	  GEPolyline(npoints, xpoints, ypoints, gc, dd);
     } else {

@@ -11,7 +11,7 @@ grid.xspline(...)
 xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
             id = NULL, id.lengths = NULL,
             default.units = "npc",
-            shape = 0, open = TRUE, arrow = NULL,
+            shape = 0, open = TRUE, arrow = NULL, repEnds = TRUE,
             name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
@@ -34,6 +34,9 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
     a line or a closed shape.}
   \item{arrow}{A list describing arrow heads to place at either end
     of the xspline, as produced by the \code{arrow} function.}
+  \item{repEnds}{A logical value indicating whether the first and
+    last control points should be replicated for drawing the curve
+    (see Details below).}
   \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
@@ -51,7 +54,8 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
 
   An xspline is a line drawn relative to control points.  For each
   control point, the line
-  may pass through the control point or it may only approach the control
+  may pass through (interpolate) the control point or it
+  may only approach (approximate) the control
   point;  the behaviour is determined by a shape parameter for each
   control point.
 
@@ -60,17 +64,32 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
   very similar to a cubic B-spline when the shape is
   1).  If the shape parameter is less than zero, the spline interpolates
   the control points (and is very similar to a Catmull-Rom spline when
-  the shape is -1).  If the shape parameter is 0, the spline is
-  discontinuous at that control point.
+  the shape is -1).  If the shape parameter is 0, the spline forms a
+  sharp corner at that control point.
 
   For open xsplines, the start and end control points must have a shape
-  of 0 (and non-zero values are converted to zero with a warning).
+  of 0 (and non-zero values are silently converted to zero without warning).
 
+  For open xsplines, by default the start and end control points are
+  actually replicated before the curve is drawn.  A curve is drawn
+  between (interpolating or approximating)
+  the second and third of each set of four control points, so
+  this default behaviour ensures that
+  the resulting curve starts at the first control point you have
+  specified and ends at the last control point.  
+  The default
+  behaviour can be turned off via the \code{repEnds} argument,
+  in which case the curve that is drawn starts (approximately) at
+  the second control point and ends (approximately) at thefirst and
+  second-to-last control point.
+
+  The \code{repEnds} argument is ignored for closed xsplines.
+  
   Missing values are not allowed for \code{x} and \code{y}
   (i.e., it is not valid for a control point to be missing).
 
-  For closed xsplines, the final point is automatically
-  connected to the initial point.
+  For closed xsplines, a curve is automatically drawn 
+  between the final control point and the initial control point.
 }
 \references{
   Blanc, C. and Schlick, C. (1995),

@@ -566,10 +566,10 @@ validDetails.xspline <- function(x) {
   if (any(x$shape < -1 || x$shape > 1))
     stop("shape must be between -1 and 1")
   x$open <- as.logical(x$open)
-  if (x$open &&
+  if (x$open && 
       (x$shape[1] != 0 ||
        rep(x$shape, length.out=nx)[nx] != 0)) {
-    warning("First and last shape set to 0")
+    # warning("First and last shape set to 0")
     x$shape <- rep(x$shape, length.out=nx)
     x$shape[c(1, length(x$shape))] <- 0
   }
@@ -599,12 +599,12 @@ xsplineIndex <- function(x) {
 
 drawDetails.xspline <- function(x, recording=TRUE) {
     grid.Call.graphics("L_xspline", x$x, x$y, x$shape, x$open, x$arrow,
-                       xsplineIndex(x))
+                       x$repEnds, xsplineIndex(x))
 }
 
 xDetails.xspline <- function(x, theta) {
   bounds <- grid.Call("L_xsplineBounds", x$x, x$y, x$shape, x$open, x$arrow,
-                      xsplineIndex(x), theta)
+                      x$repEnds, xsplineIndex(x), theta)
   if (is.null(bounds))
     unit(0.5, "npc")
   else
@@ -641,14 +641,14 @@ heightDetails.xspline <- function(x) {
 xsplineGrob <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
                         id=NULL, id.lengths=NULL,
                         default.units="npc", 
-                        shape=0, open=TRUE, arrow=NULL,
+                        shape=0, open=TRUE, arrow=NULL, repEnds=TRUE,
                         name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
   grob(x=x, y=y, shape=shape, open=open,
-       id=id, id.lengths=id.lengths, arrow=arrow,
+       id=id, id.lengths=id.lengths, arrow=arrow, repEnds=repEnds,
        name=name, gp=gp, vp=vp, cl="xspline")
 }
 
