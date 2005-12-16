@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-16 09:20+0000\n"
 "PO-Revision-Date: 2005-12-06 14:15+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -43,7 +43,7 @@ msgstr "entité AFM inconnue rencontrée"
 msgid "font width unknown for character U+%04x"
 msgstr "largeur de police inconnue pour le caractère 0x%x"
 
-#: devPS.c:887 devPS.c:4195 devPS.c:6788
+#: devPS.c:887 devPS.c:4195 devPS.c:6787
 #, fuzzy, c-format
 msgid "invalid string in '%s'"
 msgstr "argument chaîne de caractère incorrect"
@@ -187,7 +187,7 @@ msgstr "nom de fichier trop long dans postscript"
 msgid "encoding path is too long"
 msgstr "chemin d'accès à l'encodage trop long"
 
-#: devPS.c:3134 devPS.c:4514 devPS.c:5364
+#: devPS.c:3134 devPS.c:4514
 #, fuzzy
 msgid "failed to load encoding"
 msgstr "Echec de chargement du fichier d'encodage"
@@ -259,7 +259,7 @@ msgstr "famille %s non incluse dans le périphérique PostScript"
 msgid "family '%s' not included in PostScript device"
 msgstr "famille %s non incluse dans le périphérique PostScript"
 
-#: devPS.c:4009 devPS.c:4037 devPS.c:4980 devPS.c:6646 devPS.c:6697
+#: devPS.c:4009 devPS.c:4037 devPS.c:4980 devPS.c:6645 devPS.c:6696
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "tentative d'utiliser la police incorrecte %d remplacée par police 1"
@@ -273,7 +273,7 @@ msgstr ""
 msgid "conversion failure in 'mbcsToSbcs'"
 msgstr ""
 
-#: devPS.c:4182 devPS.c:5035 devPS.c:6773
+#: devPS.c:4182 devPS.c:5035 devPS.c:6772
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
@@ -353,6 +353,11 @@ msgstr "impossible d'allouer pd->pos"
 msgid "cannot allocate pd->pageobj"
 msgstr "impossible d'allouer pd->pageobj"
 
+#: devPS.c:5364
+#, fuzzy
+msgid "failed to load default encoding"
+msgstr "Echec de chargement du fichier d'encodage"
+
 #: devPS.c:5547
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
@@ -366,20 +371,20 @@ msgstr "couleurs de premier/arrière plans incorrectes (pdf)"
 msgid "Invalid alpha value in PDF"
 msgstr "Valeur d'alpha incorrecte dans PDF"
 
-#: devPS.c:6092
+#: devPS.c:6091
 msgid "Corrupt encodings in PDF device"
 msgstr "Encodage corrompus dans le périphérique PDF"
 
-#: devPS.c:6227
+#: devPS.c:6226
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr "impossible douvrir le fichier en argument de 'pdf' '%s'"
 
-#: devPS.c:6281
+#: devPS.c:6280
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr "impossible d'accroître la limite de pages : fermez le périphérique pdf"
 
-#: devPS.c:6294
+#: devPS.c:6293
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -388,34 +393,34 @@ msgstr ""
 "impossible d'ouvrir le fichier en argument de 'pdf' '%s'  fermez le "
 "périphérique pdf"
 
-#: devPS.c:6624 devPS.c:6924 devPS.c:6958
+#: devPS.c:6623 devPS.c:6923 devPS.c:6957
 msgid "Failed to find or load PDF font"
 msgstr "Impossible de trouver ou de charger la police PDF"
 
-#: devPS.c:6855 devPS.c:6890
+#: devPS.c:6854 devPS.c:6889
 #, fuzzy
 msgid "Failed to find or load PDF CID font"
 msgstr "Impossible de trouver ou de charger la police PDF"
 
-#: devPS.c:7070 devPS.c:7074 devPS.c:7226 devPS.c:7230
+#: devPS.c:7069 devPS.c:7073 devPS.c:7225 devPS.c:7229
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "paramètre 'family' incorrect dans %s"
 
-#: devPS.c:7092 devPS.c:7242
+#: devPS.c:7091 devPS.c:7241
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "paramètre 'fonts' incorrect dans %s"
 
-#: devPS.c:7108
+#: devPS.c:7107
 msgid "unable to start device PostScript"
 msgstr "impossible de démarrer le périphérique PostScript"
 
-#: devPS.c:7177
+#: devPS.c:7176
 msgid "unable to start device xfig"
 msgstr "impossible de démarrer le périphérique xfig"
 
-#: devPS.c:7260
+#: devPS.c:7259
 msgid "unable to start device pdf"
 msgstr "impossible de démarrer le périphérique pdf"
 

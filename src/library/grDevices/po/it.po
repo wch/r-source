@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-16 09:20+0000\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -42,7 +42,7 @@ msgstr "entità AFM sconosciuta"
 msgid "font width unknown for character U+%04x"
 msgstr "larghezza font sconosciuta per il carattere 0x%x"
 
-#: devPS.c:887 devPS.c:4195 devPS.c:6788
+#: devPS.c:887 devPS.c:4195 devPS.c:6787
 #, fuzzy, c-format
 msgid "invalid string in '%s'"
 msgstr "argomento stringa non valido"
@@ -183,7 +183,7 @@ msgstr "nome file troppo lungo in postscript"
 msgid "encoding path is too long"
 msgstr "percorso encoding troppo lungo"
 
-#: devPS.c:3134 devPS.c:4514 devPS.c:5364
+#: devPS.c:3134 devPS.c:4514
 #, fuzzy
 msgid "failed to load encoding"
 msgstr "Caricamento file encoding fallito"
@@ -255,7 +255,7 @@ msgstr "famiglia %s non inclusa nel dispositivo PostScript"
 msgid "family '%s' not included in PostScript device"
 msgstr "famiglia %s non inclusa nel dispositivo PostScript"
 
-#: devPS.c:4009 devPS.c:4037 devPS.c:4980 devPS.c:6646 devPS.c:6697
+#: devPS.c:4009 devPS.c:4037 devPS.c:4980 devPS.c:6645 devPS.c:6696
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "tentativo di usare il font %d non valido sostituito con il font 1"
@@ -269,7 +269,7 @@ msgstr ""
 msgid "conversion failure in 'mbcsToSbcs'"
 msgstr ""
 
-#: devPS.c:4182 devPS.c:5035 devPS.c:6773
+#: devPS.c:4182 devPS.c:5035 devPS.c:6772
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
@@ -349,6 +349,11 @@ msgstr "non posso allocare memoria per pd->pos"
 msgid "cannot allocate pd->pageobj"
 msgstr "non posso allocare memoria per pd->pageobj"
 
+#: devPS.c:5364
+#, fuzzy
+msgid "failed to load default encoding"
+msgstr "Caricamento file encoding fallito"
+
 #: devPS.c:5547
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
@@ -362,21 +367,21 @@ msgstr "colore foreground/background non valido (pdf)"
 msgid "Invalid alpha value in PDF"
 msgstr "valore alpha non valido in PDF"
 
-#: devPS.c:6092
+#: devPS.c:6091
 msgid "Corrupt encodings in PDF device"
 msgstr "Encoding danneggiato nel dispositivo PDF"
 
-#: devPS.c:6227
+#: devPS.c:6226
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr "non posso aprire il file '%s' in 'pdf'"
 
-#: devPS.c:6281
+#: devPS.c:6280
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr ""
 "non posso aumentare il limite pagina: si prega di chiudere il dispositivo pdf"
 
-#: devPS.c:6294
+#: devPS.c:6293
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -385,34 +390,34 @@ msgstr ""
 "non posso aprire il file '%s' in 'pdf'\n"
 "  si prega di chiudere il dispositivo PDF"
 
-#: devPS.c:6624 devPS.c:6924 devPS.c:6958
+#: devPS.c:6623 devPS.c:6923 devPS.c:6957
 msgid "Failed to find or load PDF font"
 msgstr "Impossibile caricare o trovare il font PDF"
 
-#: devPS.c:6855 devPS.c:6890
+#: devPS.c:6854 devPS.c:6889
 #, fuzzy
 msgid "Failed to find or load PDF CID font"
 msgstr "Impossibile caricare o trovare il font PDF"
 
-#: devPS.c:7070 devPS.c:7074 devPS.c:7226 devPS.c:7230
+#: devPS.c:7069 devPS.c:7073 devPS.c:7225 devPS.c:7229
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "parametro 'family' non valido in %s"
 
-#: devPS.c:7092 devPS.c:7242
+#: devPS.c:7091 devPS.c:7241
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "parametro 'fonts' non valido in %s"
 
-#: devPS.c:7108
+#: devPS.c:7107
 msgid "unable to start device PostScript"
 msgstr "impossibile aprire dispositivo PostScript"
 
-#: devPS.c:7177
+#: devPS.c:7176
 msgid "unable to start device xfig"
 msgstr "impossibile aprire dispositivo xfig"
 
-#: devPS.c:7260
+#: devPS.c:7259
 msgid "unable to start device pdf"
 msgstr "impossibile aprire dispositivo pdf"
 

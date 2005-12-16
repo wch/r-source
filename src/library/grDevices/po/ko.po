@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-16 09:20+0000\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -44,7 +44,7 @@ msgstr "충돌한 AFM entity를 알수가 없습니다 "
 msgid "font width unknown for character U+%04x"
 msgstr "문자 0x%x에는 알수 없는 font폭 입니다"
 
-#: devPS.c:887 devPS.c:4195 devPS.c:6788
+#: devPS.c:887 devPS.c:4195 devPS.c:6787
 #, fuzzy, c-format
 msgid "invalid string in '%s'"
 msgstr "무효의 문자열 인수입니다"
@@ -185,7 +185,7 @@ msgstr "postscript에 대해서 너무 긴 파일명입니다"
 msgid "encoding path is too long"
 msgstr "encoding 패스는 너무 깁니다"
 
-#: devPS.c:3134 devPS.c:4514 devPS.c:5364
+#: devPS.c:3134 devPS.c:4514
 #, fuzzy
 msgid "failed to load encoding"
 msgstr "encode 파일을 적재하는데 실패되었습니다"
@@ -258,7 +258,7 @@ msgstr "PostScript 디바이스에 포함하지 않는 family %s 입니다"
 msgid "family '%s' not included in PostScript device"
 msgstr "PostScript 디바이스에 포함하지 않는 family %s 입니다"
 
-#: devPS.c:4009 devPS.c:4037 devPS.c:4980 devPS.c:6646 devPS.c:6697
+#: devPS.c:4009 devPS.c:4037 devPS.c:4980 devPS.c:6645 devPS.c:6696
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "font 1과 변경할 수 있던 무효의 font %d를 사용하기 위하여 시도합니다"
@@ -272,7 +272,7 @@ msgstr ""
 msgid "conversion failure in 'mbcsToSbcs'"
 msgstr ""
 
-#: devPS.c:4182 devPS.c:5035 devPS.c:6773
+#: devPS.c:4182 devPS.c:5035 devPS.c:6772
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
@@ -353,6 +353,11 @@ msgstr "pd->pos를 할당할 수가 없습니다"
 msgid "cannot allocate pd->pageobj"
 msgstr "pd->pageobj를 할당할 수가 없습니다"
 
+#: devPS.c:5364
+#, fuzzy
+msgid "failed to load default encoding"
+msgstr "encode 파일을 적재하는데 실패되었습니다"
+
 #: devPS.c:5547
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
@@ -366,21 +371,21 @@ msgstr "무효의 foreground /background색(pdf) 입니다"
 msgid "Invalid alpha value in PDF"
 msgstr "PDF에서 무효의 alpha 값입니다"
 
-#: devPS.c:6092
+#: devPS.c:6091
 msgid "Corrupt encodings in PDF device"
 msgstr "PDF 디바이스에서의 Corrupt가 있는 encode 입니다"
 
-#: devPS.c:6227
+#: devPS.c:6226
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr "'pdf'파일 인수'%s'를 개시할수가 없습니다"
 
-#: devPS.c:6281
+#: devPS.c:6280
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr ""
 "page limit을 증가 시킬수 없습니다: 그 pdf 디바이스를 shutdown 해주십시오"
 
-#: devPS.c:6294
+#: devPS.c:6293
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -389,34 +394,34 @@ msgstr ""
 "'pdf'파일 인수 '%s'를 열 수가 없습니다\n"
 " PDFdevice를 shut down 헤주십시오"
 
-#: devPS.c:6624 devPS.c:6924 devPS.c:6958
+#: devPS.c:6623 devPS.c:6923 devPS.c:6957
 msgid "Failed to find or load PDF font"
 msgstr "PDF font를 검색 또는 적재하는데 실패되었습니다"
 
-#: devPS.c:6855 devPS.c:6890
+#: devPS.c:6854 devPS.c:6889
 #, fuzzy
 msgid "Failed to find or load PDF CID font"
 msgstr "PDF font를 검색 또는 적재하는데 실패되었습니다"
 
-#: devPS.c:7070 devPS.c:7074 devPS.c:7226 devPS.c:7230
+#: devPS.c:7069 devPS.c:7073 devPS.c:7225 devPS.c:7229
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s 에서 무효의 'family' 파라미터 입니다"
 
-#: devPS.c:7092 devPS.c:7242
+#: devPS.c:7091 devPS.c:7241
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s에서 무효의 'fonts' 파라미터 입니다"
 
-#: devPS.c:7108
+#: devPS.c:7107
 msgid "unable to start device PostScript"
 msgstr "디바이스 PostSscript를 시작할수 없습니다"
 
-#: devPS.c:7177
+#: devPS.c:7176
 msgid "unable to start device xfig"
 msgstr "디바이스 xfig를 시작할수 없습니다"
 
-#: devPS.c:7260
+#: devPS.c:7259
 msgid "unable to start device pdf"
 msgstr "디바이스 pdf를 시작할수가 없습니다"
 

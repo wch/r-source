@@ -92,13 +92,13 @@ topicName <- function(type, topic)
         if(methods::is(method, "MethodDefinition"))
             sigClasses <- method@defined
         else
-            warning(gettextf("no method defined for function '%s' and signature %s",
+            warning(gettextf("no method defined for function '%s' and signature '%s'",
                              f, paste(sigNames, " = ", dQuote(sigClasses),
                                       sep = "", collapse = ", ")), domain = NA)
         topic <- topicName("method", c(f,sigClasses))
         h <- .tryHelp(topic)
         if(methods::is(h, "try-error"))
-            stop(gettextf("no documentation for function '%s' and signature %s",
+            stop(gettextf("no documentation for function '%s' and signature '%s'",
                  f, paste(sigNames, " = ", dQuote(sigClasses), sep = "",
                           collapse = ", ")), domain = NA)
     }

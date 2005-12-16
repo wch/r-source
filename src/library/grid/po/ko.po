@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-16 09:20+0000\n"
 "PO-Revision-Date: 2005-05-25 16:44+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -35,15 +35,23 @@ msgstr "null 디바이스에서 plot를 시도합니다"
 msgid "There is no layout defined"
 msgstr "layout가 정의 되어있지 않습니다"
 
-#: grid.c:1341
+#: grid.c:1439
+msgid "Polygon edge not found (zero-width or zero-height?)"
+msgstr ""
+
+#: grid.c:1448
+msgid "Polygon edge not found"
+msgstr ""
+
+#: grid.c:1588
 msgid "Require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:1630
+#: grid.c:1893
 msgid "Non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:2043
+#: grid.c:2372
 msgid "Invalid circle radius (must be non-negative)"
 msgstr ""
 "부적절한 circle의 반경입니다(non-negative가 나오지 않으면 되지 않습니다)"
@@ -62,23 +70,23 @@ msgstr ""
 "현재의 grid 상태를 저장 유지할수가 없습니다.디바이스를 너무 많이 열고 있지 않"
 "습니까?"
 
-#: unit.c:258 unit.c:408 unit.c:1075 unit.c:1155 unit.c:1235 unit.c:1315
+#: unit.c:258 unit.c:408 unit.c:1077 unit.c:1157 unit.c:1237 unit.c:1317
 msgid "Unimplemented unit function"
 msgstr "unit함수는 실제 적용되지 않습니다"
 
-#: unit.c:768 unit.c:1508
+#: unit.c:770 unit.c:1510
 msgid "Illegal unit or unit not yet implemented"
 msgstr "부적절한 unit 또는 아직 적용되어있지 않는 unit입니다"
 
-#: unit.c:1638
+#: unit.c:1643
 msgid "Invalid unit"
 msgstr "부적절한 unit입니다"
 
-#: unit.c:1654
+#: unit.c:1659
 msgid "Units must be character"
 msgstr "units는 문자형태일 필요가 있습니다"
 
-#: unit.c:1657
+#: unit.c:1662
 msgid "Units must be of length > 0"
 msgstr "units의 길이는 0보다 클 필요가 있습니다"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2005-12-16 09:20\n"
 "PO-Revision-Date: 2005-03-31 08:00+0009\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -309,9 +309,6 @@ msgstr "'x' と 'y' は単位(units)でなければなりません"
 msgid "shape must be between -1 and 1"
 msgstr ""
 
-msgid "First and last shape set to 0"
-msgstr ""
-
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y', 'r' は全て単位(units)でなければなりません"
 
@@ -388,6 +385,10 @@ msgstr "添え字が範囲を超えています（単位(unit)リストの部分
 msgid "It is invalid to combine unit objects with other types"
 msgstr ""
 "単位(unit)オブジェクトとそれ以外の型のオブジェクトを結合することは出来ません"
+
+#, fuzzy
+msgid "Invalid theta"
+msgstr "不正な 'gPath' です"
 
 msgid "'range' must be numeric"
 msgstr "'range' は数値でなければなりません"

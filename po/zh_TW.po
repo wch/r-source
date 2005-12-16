@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-10 17:00+0000\n"
+"POT-Creation-Date: 2005-12-16 09:19+0000\n"
 "PO-Revision-Date: 2005-09-26 17:43+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -121,7 +121,7 @@ msgstr "R_unlink 的 'names' 無效"
 #: src/main/platform.c:899 src/main/platform.c:902 src/main/platform.c:980
 #: src/main/platform.c:1020 src/main/platform.c:1050 src/main/platform.c:1052
 #: src/main/platform.c:1085 src/main/platform.c:1182 src/main/platform.c:1425
-#: src/main/platform.c:1460 src/main/plot3d.c:2462 src/main/plot3d.c:2466
+#: src/main/platform.c:1463 src/main/plot3d.c:2462 src/main/plot3d.c:2466
 #: src/main/plot3d.c:2471 src/main/plot3d.c:2475 src/main/plot3d.c:2479
 #: src/main/plot3d.c:2483 src/main/print.c:172 src/main/print.c:178
 #: src/main/print.c:200 src/main/random.c:466 src/main/random.c:468
@@ -1063,7 +1063,7 @@ msgstr "矩陣的行數必須相符 (參看引數 %d)"
 #: src/main/builtin.c:41 src/main/builtin.c:64 src/main/builtin.c:73
 #: src/main/builtin.c:199 src/main/builtin.c:222 src/main/builtin.c:252
 #: src/main/builtin.c:261 src/main/coerce.c:1315 src/main/connections.c:2001
-#: src/main/engine.c:2672 src/main/envir.c:1452 src/main/envir.c:1546
+#: src/main/engine.c:2673 src/main/envir.c:1452 src/main/envir.c:1546
 #: src/main/envir.c:1616 src/main/envir.c:1747 src/main/envir.c:2345
 #: src/main/envir.c:2396 src/main/envir.c:2662 src/main/envir.c:2695
 #: src/main/envir.c:2715 src/main/envir.c:2737 src/main/envir.c:2771
@@ -2520,52 +2520,52 @@ msgstr "剪裁多邊形的時候記憶體不足"
 msgid "font face %d not supported for font family '%s'"
 msgstr "字模家族 '%2$s' 中沒有字模 %1$d"
 
-#: src/main/engine.c:1823
+#: src/main/engine.c:1824
 msgid "no graphics device is active"
 msgstr "沒有活動中的圖形裝置"
 
-#: src/main/engine.c:2155
+#: src/main/engine.c:2156
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "目前沒有實作pch '%d' 的值"
 
-#: src/main/engine.c:2178
+#: src/main/engine.c:2179
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "座標範圍不正確 [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2182
+#: src/main/engine.c:2183
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "無限的座標範圍值 [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2220
+#: src/main/engine.c:2221
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.): new *lo =%g <%g = x1"
 
-#: src/main/engine.c:2222
+#: src/main/engine.c:2223
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up =%g >%g = x2"
 
-#: src/main/engine.c:2489
+#: src/main/engine.c:2490
 msgid "Display list redraw incomplete"
 msgstr "顯示串列重新整理時不完整"
 
-#: src/main/engine.c:2668
+#: src/main/engine.c:2669
 msgid "'expr' argument must be an expression"
 msgstr "'expr' 引數必須是運算式"
 
-#: src/main/engine.c:2670
+#: src/main/engine.c:2671
 msgid "'list' argument must be a list"
 msgstr "'list' 引數必須是串列"
 
-#: src/main/engine.c:2676
+#: src/main/engine.c:2677
 msgid "'env' argument must be an environment"
 msgstr "'env' 引數必須是環境物件"
 
-#: src/main/engine.c:2698 src/main/graphics.c:2396
+#: src/main/engine.c:2699 src/main/graphics.c:2396
 msgid "invalid graphics state"
 msgstr "圖形狀態不正確"
 
@@ -4504,7 +4504,7 @@ msgstr "gethostbyname 回傳了錯誤的格式"
 msgid "nsl() is not supported on this platform"
 msgstr "本平台不支援 nsl()"
 
-#: src/main/platform.c:1442 src/main/platform.c:1479
+#: src/main/platform.c:1445 src/main/platform.c:1487
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' 已存在"
@@ -6268,11 +6268,16 @@ msgstr ""
 msgid "insufficient memory to allocate point array"
 msgstr ""
 
-#: src/main/xspline.c:413
+#: src/main/xspline.c:453
 msgid "There must be at least two control points"
 msgstr ""
 
-#: src/main/xspline.c:463
+#: src/main/xspline.c:455
+#, fuzzy
+msgid "There must be at least four control points"
+msgstr "必須有第一引數"
+
+#: src/main/xspline.c:512
 #, fuzzy
 msgid "There must be at least three control points"
 msgstr "必須有第一引數"

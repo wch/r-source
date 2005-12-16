@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2005-12-16 09:20\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -287,9 +287,6 @@ msgstr ""
 msgid "shape must be between -1 and 1"
 msgstr ""
 
-msgid "First and last shape set to 0"
-msgstr ""
-
 msgid "'x', 'y', and 'r' must be units"
 msgstr ""
 
@@ -363,6 +360,9 @@ msgid "Index out of bounds (unit list subsetting)"
 msgstr ""
 
 msgid "It is invalid to combine unit objects with other types"
+msgstr ""
+
+msgid "Invalid theta"
 msgstr ""
 
 msgid "'range' must be numeric"

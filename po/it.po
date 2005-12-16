@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-10 17:00+0000\n"
+"POT-Creation-Date: 2005-12-16 09:19+0000\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -125,7 +125,7 @@ msgstr "'names' non valido in R_unlink"
 #: src/main/platform.c:899 src/main/platform.c:902 src/main/platform.c:980
 #: src/main/platform.c:1020 src/main/platform.c:1050 src/main/platform.c:1052
 #: src/main/platform.c:1085 src/main/platform.c:1182 src/main/platform.c:1425
-#: src/main/platform.c:1460 src/main/plot3d.c:2462 src/main/plot3d.c:2466
+#: src/main/platform.c:1463 src/main/plot3d.c:2462 src/main/plot3d.c:2466
 #: src/main/plot3d.c:2471 src/main/plot3d.c:2475 src/main/plot3d.c:2479
 #: src/main/plot3d.c:2483 src/main/print.c:172 src/main/print.c:178
 #: src/main/print.c:200 src/main/random.c:466 src/main/random.c:468
@@ -1093,7 +1093,7 @@ msgstr "il numero di colonne delle matrici deve coincidere (si veda arg %d)"
 #: src/main/builtin.c:41 src/main/builtin.c:64 src/main/builtin.c:73
 #: src/main/builtin.c:199 src/main/builtin.c:222 src/main/builtin.c:252
 #: src/main/builtin.c:261 src/main/coerce.c:1315 src/main/connections.c:2001
-#: src/main/engine.c:2672 src/main/envir.c:1452 src/main/envir.c:1546
+#: src/main/engine.c:2673 src/main/envir.c:1452 src/main/envir.c:1546
 #: src/main/envir.c:1616 src/main/envir.c:1747 src/main/envir.c:2345
 #: src/main/envir.c:2396 src/main/envir.c:2662 src/main/envir.c:2695
 #: src/main/envir.c:2715 src/main/envir.c:2737 src/main/envir.c:2771
@@ -2568,52 +2568,52 @@ msgstr "mancanza di memoria durante il taglio di polyline"
 msgid "font face %d not supported for font family '%s'"
 msgstr "font fact %d non supportata per la famiglia font '%s'"
 
-#: src/main/engine.c:1823
+#: src/main/engine.c:1824
 msgid "no graphics device is active"
 msgstr "nessuno dispositivo grafico attivo"
 
-#: src/main/engine.c:2155
+#: src/main/engine.c:2156
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "valore pch '%d' non implementato"
 
-#: src/main/engine.c:2178
+#: src/main/engine.c:2179
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "estensione asse non valida [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2182
+#: src/main/engine.c:2183
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "estensione asse infinita [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2220
+#: src/main/engine.c:2221
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr ".. GEPretty(.): nuovo  *lo = %g < %g = x1"
 
-#: src/main/engine.c:2222
+#: src/main/engine.c:2223
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): nuovo *up = %g > %g = x2"
 
-#: src/main/engine.c:2489
+#: src/main/engine.c:2490
 msgid "Display list redraw incomplete"
 msgstr "Ri-disegno del grafico incompleto"
 
-#: src/main/engine.c:2668
+#: src/main/engine.c:2669
 msgid "'expr' argument must be an expression"
 msgstr "l'argomento 'expr' deve essere un'espressione"
 
-#: src/main/engine.c:2670
+#: src/main/engine.c:2671
 msgid "'list' argument must be a list"
 msgstr "l'argomento 'list' deve essere una lista"
 
-#: src/main/engine.c:2676
+#: src/main/engine.c:2677
 msgid "'env' argument must be an environment"
 msgstr "l'argomento 'env' deve essere un environment"
 
-#: src/main/engine.c:2698 src/main/graphics.c:2396
+#: src/main/engine.c:2699 src/main/graphics.c:2396
 msgid "invalid graphics state"
 msgstr "stato grafico non valido"
 
@@ -4586,7 +4586,7 @@ msgstr "formato sconosciuto resituito da gethostbyname"
 msgid "nsl() is not supported on this platform"
 msgstr "nls() non è supportato in questa piattaforma"
 
-#: src/main/platform.c:1442 src/main/platform.c:1479
+#: src/main/platform.c:1445 src/main/platform.c:1487
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' già esistente"
@@ -6369,11 +6369,16 @@ msgstr ""
 msgid "insufficient memory to allocate point array"
 msgstr ""
 
-#: src/main/xspline.c:413
+#: src/main/xspline.c:453
 msgid "There must be at least two control points"
 msgstr ""
 
-#: src/main/xspline.c:463
+#: src/main/xspline.c:455
+#, fuzzy
+msgid "There must be at least four control points"
+msgstr "deve esserci un primo argomento"
+
+#: src/main/xspline.c:512
 #, fuzzy
 msgid "There must be at least three control points"
 msgstr "deve esserci un primo argomento"

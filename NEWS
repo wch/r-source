@@ -440,7 +440,8 @@ NEW FEATURES
     o	R CMD INSTALL will clean up if interrupted (e.g. by ctrl-C from
 	the keyboard).
 
-    o	These is now a comprehensive French translation of the messages.
+    o	There is now a comprehensive French translation of the messages,
+	thanks to Philippe Grosjean.
 
 
 DEPRECATED & DEFUNCT

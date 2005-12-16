@@ -5,7 +5,7 @@ help.start <- function(update = TRUE, gui = "irrelevant",
     if(!file.exists(a))
         a <- file.path(R.home("doc"), "html", "index.htm")
     if(!file.exists(a))
-        stop("unable to find the html help")
+        stop("unable to find the HTML help")
     if(update) {
         cat(gettext("updating HTML package listing\n"))
         flush.console()

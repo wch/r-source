@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-16 09:20+0000\n"
 "PO-Revision-Date: 2005-06-02 16:09+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -33,15 +33,23 @@ msgstr "ヌルデバイスに作図を試みる"
 msgid "There is no layout defined"
 msgstr "layout が定義されていません"
 
-#: grid.c:1341
+#: grid.c:1439
+msgid "Polygon edge not found (zero-width or zero-height?)"
+msgstr ""
+
+#: grid.c:1448
+msgid "Polygon edge not found"
+msgstr ""
+
+#: grid.c:1588
 msgid "Require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:1630
+#: grid.c:1893
 msgid "Non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:2043
+#: grid.c:2372
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "不正な円の半径です（非負でなければなりません）"
 
@@ -59,23 +67,23 @@ msgstr ""
 "現在の grid の状態を保持することが出来ません．デバイスを開きすぎていません"
 "か？"
 
-#: unit.c:258 unit.c:408 unit.c:1075 unit.c:1155 unit.c:1235 unit.c:1315
+#: unit.c:258 unit.c:408 unit.c:1077 unit.c:1157 unit.c:1237 unit.c:1317
 msgid "Unimplemented unit function"
 msgstr "単位(unit)関数は推奨されていません"
 
-#: unit.c:768 unit.c:1508
+#: unit.c:770 unit.c:1510
 msgid "Illegal unit or unit not yet implemented"
 msgstr "不正な単位(unit)か，まだ推奨されていない単位(unit)です"
 
-#: unit.c:1638
+#: unit.c:1643
 msgid "Invalid unit"
 msgstr "不正な単位(unit) です"
 
-#: unit.c:1654
+#: unit.c:1659
 msgid "Units must be character"
 msgstr "単位(Units)は文字型である必要があります"
 
-#: unit.c:1657
+#: unit.c:1662
 msgid "Units must be of length > 0"
 msgstr "単位(Units)の長さは 0 より大きい必要があります"
 

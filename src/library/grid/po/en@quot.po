@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35+0000\n"
-"PO-Revision-Date: 2005-11-28 07:35+0000\n"
+"POT-Creation-Date: 2005-12-16 09:20+0000\n"
+"PO-Revision-Date: 2005-12-16 09:20+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -54,15 +54,23 @@ msgstr "attempt to plot on null device"
 msgid "There is no layout defined"
 msgstr "There is no layout defined"
 
-#: grid.c:1341
+#: grid.c:1439
+msgid "Polygon edge not found (zero-width or zero-height?)"
+msgstr "Polygon edge not found (zero-width or zero-height?)"
+
+#: grid.c:1448
+msgid "Polygon edge not found"
+msgstr "Polygon edge not found"
+
+#: grid.c:1588
 msgid "Require at least two points to draw arrow"
 msgstr "Require at least two points to draw arrow"
 
-#: grid.c:1630
+#: grid.c:1893
 msgid "Non-finite control point in Xspline"
 msgstr "Non-finite control point in Xspline"
 
-#: grid.c:2043
+#: grid.c:2372
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "Invalid circle radius (must be non-negative)"
 
@@ -78,23 +86,23 @@ msgstr "invalid layout.pos.col"
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Unable to store grid state.  Too many devices open?"
 
-#: unit.c:258 unit.c:408 unit.c:1075 unit.c:1155 unit.c:1235 unit.c:1315
+#: unit.c:258 unit.c:408 unit.c:1077 unit.c:1157 unit.c:1237 unit.c:1317
 msgid "Unimplemented unit function"
 msgstr "Unimplemented unit function"
 
-#: unit.c:768 unit.c:1508
+#: unit.c:770 unit.c:1510
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Illegal unit or unit not yet implemented"
 
-#: unit.c:1638
+#: unit.c:1643
 msgid "Invalid unit"
 msgstr "Invalid unit"
 
-#: unit.c:1654
+#: unit.c:1659
 msgid "Units must be character"
 msgstr "Units must be character"
 
-#: unit.c:1657
+#: unit.c:1662
 msgid "Units must be of length > 0"
 msgstr "Units must be of length > 0"
 
