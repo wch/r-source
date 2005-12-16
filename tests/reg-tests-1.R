@@ -3927,5 +3927,17 @@ stopifnot(is.nan(cooks.distance(Uniform)[Ind]))
 plot(Uniform)
 ##
 
+## alg="port" in nls and bounds (PR#8401)
+x <- runif(200)
+a <- b <- 1
+c <- -0.1
+y <- a+b*x+c*x^2+rnorm(200, sd=0.05)
+plot(x,y)
+curve(a+b*x+c*x^2, add=TRUE)
+nls(y~a+b*x+c*I(x^2), start=c(a=1,b=1,c=0.1), algorithm="port")
+nls(y~a+b*x+c*I(x^2), start=c(a=1,b=1,c=0.1), algorithm="port",
+    lower = c(0,0,0))
+## failed in 2.2.0
+
 
 ### end of tests added in 2.2.1 ###

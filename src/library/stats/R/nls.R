@@ -428,6 +428,7 @@ nls <-
         as.formula(paste("~", paste( varNames[varIndex], collapse = "+")),
                    env = environment(formula))
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
+    mf$lower <- mf$upper <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- as.list(eval(mf, parent.frame()))
     if (missing(start)) start <- getInitial(formula, mf)
