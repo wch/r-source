@@ -233,11 +233,12 @@ CPUs,
 @c Actually, see http://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd, ix86 <=> i386.
-@samp{powerpc-apple-darwin} and @samp{sparc-sun-solaris}, as well as
+@samp{powerpc-apple-darwin} and @samp{sparc-@/sun-@/solaris}, as well as
 probably (it is tested less frequently on these platforms)
-@samp{i386-*-freebsd}, @samp{i386-*-netbsd}, @samp{i386-*-openbsd},
-@samp{i386-sun-solaris}, @samp{mips-sgi-irix}, @samp{alpha-dec-osf*},
-@samp{rs6000-ibm-aix}, and @samp{hppa-hp-hpux}.
+@samp{i386-@/*-@/freebsd}, @samp{i386-@/*-@/netbsd},
+@samp{i386-@/*-@/openbsd}, @samp{i386-@/sun-@/solaris},
+@samp{mips-@/sgi-@/irix}, @samp{alpha-@/dec-@/osf*},
+@samp{rs6000-@/ibm-@/aix}, and @samp{hppa-@/hp-@/hpux}.
 
 @cindex Linux
 @cindex Mac OS X
@@ -1888,8 +1889,7 @@ happily with multiple threads.  That environment variable should be set
 when using @R{} profiling.
 
 For Intel processors under Linux, Intel's Math Kernel Library
-@url{http://www.intel.com/software/products/mkl/}
-can be used by
+@url{http://www.intel.com/software/products/mkl/} can be used by
 
 @example
 --with-blas="-lmkl -lguide -lpthread"
@@ -1901,10 +1901,10 @@ defaults to 1).  (Thanks to Andy Liaw for the information.)
 
 For @cputype{x86_64} and @cputype{ix86} processors under Linux there is
 the AMD Core Math Library (ACML) @url{http://www.amd.com/acml}.  For the
-@command{gcc} version@footnote{At the time of writing @w{version 2.7.0}
-was for @w{@command{gcc} 3}/@command{g77} and @w{version 3.0.0} for
-@w{@command{gcc} 4}/@command{gfortran}.} (which is single-threaded only)
-we could use
+@command{gcc} version@footnote{At the time of writing version@tie{}2.7.0
+was for @command{gcc}@tie{}3/@command{g77} and version@tie{}3.0.0 for
+@command{gcc}@tie{}4/@command{gfortran}.} (which is single-threaded
+only) we could use
 
 @example
 --with-blas="-lacml"
@@ -2251,8 +2251,8 @@ is to search for
 @R{} cannot be compiled.
 @c GCC_Fortran_compiler in m4/R.m4:
 However, if @command{CC} is @command{gcc}, the matching FORTRAN compiler
-(@command{g77} for @w{@command{gcc} 3} and @code{gfortran} for
-@w{@command{gcc} 4}) is used if available.
+(@command{g77} for @command{gcc}@tie{}3 and @code{gfortran} for
+@command{gcc}@tie{}4) is used if available.
 
 The search mechanism can be changed using the configure variable
 @code{F77} which specifies the command that runs the FORTRAN 77
@@ -2299,10 +2299,10 @@ will need to set @env{FPICFLAGS} appropriately.
 @node Using gfortran,  , Using FORTRAN, Using FORTRAN
 @subsection Using gfortran
 
-@command{gfortran} is the F95 compiler that is part of @w{@command{gcc}
-4.x.y}.
+@command{gfortran} is the F95 compiler that is part of
+@command{gcc}@tie{}4.x.y.
 
-There was a problem with the version in the @w{@command{gcc} 4.0.0}
+There was a problem with the version in the @command{gcc}@tie{}4.0.0
 release and most pre-releases.  At least on @cputype{ix86} and
 @cputype{x86_64} Linux and MacOS X the dynamic version of the FORTRAN
 runtime @code{libgfortran} could not be used: if this is loaded
@@ -2310,7 +2310,7 @@ redirection of C @file{stdin} (which @R{} uses in many of its scripts)
 becomes non-functional.  A workaround is to set the environment variable
 @env{GFORTRAN_STDIN_UNIT} to @code{-1}, but versions before 10 April
 2005 had another bug causing the setting to be ignored.  Both problems
-have been fixed for @w{@command{gcc} 4.0.1}.  The version of
+have been fixed for @command{gcc}@tie{}4.0.1.  The version of
 @command{gfortran} shipping with Fedora Core 4 seems to have the fixes
 in place.
 
@@ -2485,14 +2485,14 @@ required @option{-D__NO_MATH_INLINES} to achieve IEC60059-compliance for
 @code{exp}, and this is included in @code{R_XTRA_CFLAGS} if required.
 
 Several Linux distributions have shipped unreleased versions of
-@w{@command{gcc} 4.0.0} and its FORTRAN compiler @command{gfortran} (see
-the separate comments).  Some versions of @w{@command{gcc} 4} (such as
-that in Fedora Core 3) produce incorrect code.  In our experiments
-@w{@command{gcc} 3.4.x} always produced faster and more reliable code.
-It seems that @w{@command{gcc} 4.0.1} and @w{@command{gcc} 4.0.2} cannot
-compile @file{src/main/plot.c} when building R as a shared library on
-@cputype{ix86} unless the optimization level is reduced from the default
-@option{-O2}.
+@command{gcc}@tie{}4.0.0 and its FORTRAN compiler @command{gfortran}
+(see the separate comments).  Some versions of @command{gcc}@tie{}4
+(such as that in Fedora Core 3) produce incorrect code.  In our
+experiments @command{gcc}@tie{}3.4.x always produced faster and more
+reliable code.  It seems that @command{gcc}@tie{}4.0.1 and
+@command{gcc}@tie{}4.0.2 cannot compile @file{src/main/plot.c} when
+building R as a shared library on @cputype{ix86} unless the optimization
+level is reduced from the default @option{-O2}.
 
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
 Linux and @R{} contains code to set the FPU options suitably.  Brian
@@ -2598,7 +2598,7 @@ routines.  Building @R{} without these options @emph{via}
 
 @noindent
 used not to work with earlier versions of @command{gcc}, but can be done
-with @w{@command{gcc} 3.3} and later.
+with @command{gcc}@tie{}3.3 and later.
 
 
 @node Solaris, HP-UX, Mac OS X, Platform notes
@@ -2606,12 +2606,12 @@ with @w{@command{gcc} 3.3} and later.
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 8 aka Solaris 2.8 aka SunOS
-5.8 using @w{@command{gcc} 3}/@command{g77}, @w{@command{gcc}
-4}/@command{gfortran} and the `Sun ONE Studio 7 Compiler Suite' (aka
-@w{Forte 7}), and less regularly on @w{Solaris 9} and 10.  @acronym{GNU}
-@command{make} was needed prior to @w{Solaris 2.7} for building other
-than in the source tree, and is sometimes needed to establish the
-correct dependencies when rebuilding.
+5.8 using @command{gcc}@tie{}3/@command{g77},
+@command{gcc}@tie{}4/@command{gfortran} and the `Sun ONE Studio 7
+Compiler Suite' (aka Forte@tie{}7), and less regularly on Solaris@tie{}9
+and 10.  @acronym{GNU} @command{make} was needed prior to
+Solaris@tie{}2.7 for building other than in the source tree, and is
+sometimes needed to establish the correct dependencies when rebuilding.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
@@ -2718,7 +2718,7 @@ may need to set it to avoid finding 32-bit addons (as in the
 @command{gcc -m64} example above).  It is possible to build Tcl/Tk as
 64-bit libraries with the configure option @command{--enable-64bit}, but
 only with the Forte compiler (and not with @command{gcc}) as of
-@w{Tcl/Tk 8.4.5}.
+Tcl/Tk@tie{}8.4.5.
 
 
 @node HP-UX, IRIX, Solaris, Platform notes
@@ -2949,8 +2949,8 @@ and the @code{X11()} device worked.  [His system required the
 @file{/lib/crt0_64.o} in @code{R_XTRA_LIBS}, but @command{configure} now
 tries to detect this.]
 
-Paul Boutros reported success building @w{@R{} 2.0.1} under @w{AIX 5.2}
-with @w{@command{gcc} 3.3.2} using
+Paul Boutros reported success building @R{}@tie{}2.0.1 under
+AIX@tie{}5.2 with @command{gcc}@tie{}3.3.2 using
 
 @example
 OBJECT_MODE=64
@@ -2963,11 +2963,11 @@ SHLIB_LDFLAGS=-Wl,-G
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
 
-Ei-ji Nakama has reported that @file{src/main/regex.c} in @w{@R{} 2.2.0}
+Ei-ji Nakama has reported that @file{src/main/regex.c} in @R{}@tie{}2.2.0
 has to be compiled with @option{-D_LINUX_SOURCE_COMPAT} in @code{CFLAGS}
-in @w{AIX 5.x} (and does not work correctly with @w{AIX 4.x}).  We
+in AIX@tie{}5.x (and does not work correctly with AIX@tie{}4.x).  We
 believe that the patch applied since obviates the need for this.  He
-tested @w{@R{} 2.2.1 beta} on @w{AIX 5.2}.
+tested @R{}@tie{}2.2.1@tie{}beta on AIX@tie{}5.2.
 
 
 @node New platforms,  , AIX, Platform notes
@@ -3009,7 +3009,7 @@ correct incantation.  Once you know the recipe you can modify the file
 @file{config.site} (following the instructions therein) so that the
 build will use these options.
 
-It seems that @w{@command{gcc} 3.4.x} and later on @cputype{ix86} Linux
+It seems that @command{gcc}@tie{}3.4.x and later on @cputype{ix86} Linux
 defeat attempts by the LAPACK code to avoid computations entirely in
 extended-precision registers, so file @file{src/modules/lapack/dlamc.f}
 may need to be compiled without optimization.  Set the configure
@@ -3160,11 +3160,12 @@ enabling the Java search engine.
 @section Java Virtual Machines on Linux
 
 We are aware of problems with certain Java installations.  In
-particular, Sun's Java Run-time Environment @w{@code{j2re} 1.4.2_02} to
-_05 do not work under @cputype{ix86} Linux.  Version @w{@code{jre}
-1.5.0} is strongly recommended for Mozilla-based browsers.
+particular, Sun's Java Run-time Environment @code{j2re}@tie{}1.4.2_02 to
+_05 do not work under @cputype{ix86} Linux.  Version
+@code{jre}@tie{}1.5.0 is strongly recommended for Mozilla-based
+browsers.
 
-This and @w{@code{j2re} 1.4.2_01} do work: the latter can be found in
+This and @code{j2re}@tie{}1.4.2_01 do work: the latter can be found in
 Sun's archive at @url{http://java.sun.com/products/archive/}.
 
 Other Java installations, for example those from Blackdown and IBM, have
@@ -3188,18 +3189,19 @@ but 32-bit browsers have been used on that platform.
 @section Java Virtual Machines on Unix
 
 We have much less experience than under Linux, but we do know that Sun's
-Run-time Environment @w{@code{j2re} 1.4.2_03} does not work under
-Solaris, whereas @w{@code{jre} 1.5.0} and @w{@code{j2re} 1.4.2_01}
+Run-time Environment @code{j2re}@tie{}1.4.2_03 does not work under
+Solaris, whereas @code{jre}@tie{}1.5.0 and @code{j2re}@tie{}1.4.2_01
 (available from @url{http://java.sun.com/products/archive/}) do.
 
 @node Java Virtual Machines on Windows, Java Virtual Machines on Mac OS X, Java Virtual Machines on Unix, Enabling search in HTML help
 @section Java Virtual Machines on Windows
 
 We have not seen any problems on Windows provided a Java Virtual Machine
-has been installed and is operational: Sun's current @w{@code{j2re}
-1.5.0} works in Internet Explorer, Netscape 7.x, Mozilla 1.6/7 and
-Mozilla FireFox on Windows XP.  Note that a recent Windows system may
-not have a JVM installed at all.  For Netscape/Mozilla/FireFox visit
+has been installed and is operational: Sun's current
+@code{j2re}@tie{}1.5.0 works in Internet Explorer, Netscape@tie{}7.x,
+Mozilla@tie{}1.6/7 and Mozilla FireFox on Windows XP.  Note that a
+recent Windows system may not have a JVM installed at all.  For
+Netscape/Mozilla/FireFox visit
 @url{http://java.sun.com/getjava/manual.html} to install a Sun JVM.
 Which (if any) JVM is enabled can be set in `Set Program Access and
 Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
@@ -3213,7 +3215,7 @@ and need the block removed @emph{via} the @emph{information bar}.
 @section Java Virtual Machines on Mac OS X
 
 The @HTML{} search engine does not work with Safari under Mac OS X, but
-@w{@code{j2re} 1.4.x} may work with Mozilla, Firefox and Camino if the
+@code{j2re}@tie{}1.4.x may work with Mozilla, Firefox and Camino if the
 Java Embedding Plugin @url{http://javaplugin.sourceforge.net/} is used.
 
 The Aqua GUI provides an interface to @code{help.search} that may
