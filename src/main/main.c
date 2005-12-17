@@ -473,12 +473,28 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 	    }
 	REprintf("address %p, cause '%s'\n", ip->si_addr, s);
     }
+    {   /* A simple customized print of the traceback */
+	SEXP trace, p, q;
+	int line = 1, i;
+	PROTECT(trace = R_GetTraceback(0));
+	if(trace != R_NilValue) {
+	    REprintf("\nTraceback:\n");
+	    for(p = trace; p != R_NilValue; p = CDR(p), line++) {
+		q = CAR(p); /* a character vector */
+		REprintf("%2d: ", line);
+		for(i = 0; i < LENGTH(q); i++)
+		    REprintf("%s", CHAR(STRING_ELT(q, i)));
+		REprintf("\n");
+	    }
+	    UNPROTECT(1);
+	}
+    }
     if(R_Interactive) {
-	REprintf("\n1: %s\n2: %s\n3: %s\n4: %s\n", 
+	REprintf("\nPossible actions:\n1: %s\n2: %s\n3: %s\n4: %s\n", 
 		 "abort (with core dump)", 
-		 "normal exit", 
-		 "exit without saving",
-		 "exit saving workspace");
+		 "normal R exit", 
+		 "exit R without saving workspace",
+		 "exit R saving workspace");
 	while(1) {
 	    if(R_ReadConsole("Selection: ", ConsoleBuf, CONSOLE_BUFFER_SIZE, 
 			     0) > 0) {
@@ -489,7 +505,7 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 	    }
 	}
     }
-    REprintf("exiting ...\n");
+    REprintf("aborting ...\n");
     snprintf(buf, 1024, "rm -rf %s", R_TempDir);
     R_system(buf);
     /* now do normal behaviour, e.g. core dump */
@@ -497,16 +513,17 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
     raise(signum);
 }
 
+#define R_USAGE 100000 /* Just a guess */
 static void init_signal_handlers()
 {
     /* <FIXME> may need to reinstall this if we do recover.
        May need a larger stack to allow R to clean up.
      */
     struct sigaction sa;
-    signal_stack = malloc(SIGSTKSZ);
+    signal_stack = malloc(SIGSTKSZ + R_USAGE);
     if (signal_stack != NULL) {
         sigstk.ss_sp = signal_stack;
-        sigstk.ss_size = SIGSTKSZ;
+        sigstk.ss_size = SIGSTKSZ + R_USAGE;
         sigstk.ss_flags = 0;
         if(sigaltstack(&sigstk, NULL) < 0)
 	    warning("failed to set alternate signal stack");
