@@ -420,10 +420,6 @@ static struct sigaltstack sigstk;
 #endif
 static void *signal_stack;
 
-#ifdef HAVE_UNISTD_H
-# include <unistd.h>	/* for getpid() */
-#endif
-
 #define CONSOLE_BUFFER_SIZE 1024
 static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
 
@@ -488,7 +484,7 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
     R_system(buf);
     /* now do normal behaviour, e.g. core dump */
     signal(signum, SIG_DFL);
-    kill(getpid(), signum);
+    raise(signum);
 }
 
 static void init_signal_handlers()
@@ -510,7 +506,9 @@ static void init_signal_handlers()
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
     sigaction(SIGSEGV, &sa, NULL);
+#ifdef SIGBUS
     sigaction(SIGBUS, &sa, NULL);
+#endif
 
     install_signal_handlers();
 }
