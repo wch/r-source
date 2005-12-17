@@ -436,27 +436,37 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
     if(ip != (siginfo_t *)0) {
 	if(signum == SIGBUS)
 	    switch(ip->si_code) {
+#ifdef BUS_ADRALN
 	    case BUS_ADRALN:
 		s = "invalid alignment";
 		break;
+#endif
+#ifdef BUS_ADRERR /* not on MacOS X, apparently */
 	    case BUS_ADRERR:
 		s = "non-existent physical address";
 		break;
+#endif
+#ifdef BUS_OBJERR /* not on MacOS X, apparently */
 	    case BUS_OBJERR:
 		s = "object specific hardware error";
 		break;
+#endif
 	    default:
 		s = "unknown";
 		break;
 	    }
 	else
 	    switch(ip->si_code) {
+#ifdef SEGV_MAPERR
 	    case SEGV_MAPERR:
 		s = "memory not mapped";
 		break;
+#endif
+#ifdef SEGV_ACCERR
 	    case SEGV_ACCERR:
 		s = "invalid permissions";
 		break;
+#endif
 	    default:
 		s = "unknown";
 		break;
