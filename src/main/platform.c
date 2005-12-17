@@ -1474,7 +1474,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     R_fixbackslash(dir);
     /* remove trailing slashes */
     p = dir + strlen(dir) - 1;
-    while(*p == '\\' && strlen(dir) > 1 && *(p-1) != ":") *p-- = '\0';
+    while(*p == '\\' && strlen(dir) > 1 && *(p-1) != ':') *p-- = '\0';
     if(recursive) {
 	p = dir;
 	while((p = Rf_strchr(p+1, '\\'))) {
