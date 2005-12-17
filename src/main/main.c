@@ -404,60 +404,113 @@ static void install_signal_handlers()
     signal(SIGUSR1, onsigusr1);
     signal(SIGUSR2, onsigusr2);
 #ifdef Unix
-    signal(SIGPIPE, onpipe);
+    signal(SIGPIPE, onpipe); /* why not just SIG_IGN? */
 #endif
 }
 
 #if defined(HAVE_SIGALTSTACK) && defined(HAVE_SIGACTION) && defined(HAVE_SIGEMPTYSET)
 #ifndef SIGSTKSZ
-# define SIGSTKSZ 8000    /* just a guess of how much stack is needed... */
+# define SIGSTKSZ 8192    /* just a guess */
 #endif
 
+#ifdef HAVE_STACK_T
 static stack_t sigstk;
-static char *signal_stack;
+#else
+static struct sigaltstack sigstk;
+#endif
+static void *signal_stack;
 
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>	/* for getpid() */
 #endif
 
-#define CONSOLE_BUFFER_SIZE	1024
-#define CONSOLE_PROMPT_SIZE	256
+#define CONSOLE_BUFFER_SIZE 1024
 static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
 
-static void handleSegv(int dummy)
+static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 {
-    /* Do not translate these */
-    REprintf("\n *** caught segfault ***\n");
+    char *s, buf[1024];
+
+    /* need to take off stack checking as stack base has changed */
+    R_CStackLimit = (unsigned long)-1;
+
+    /* Do not translate these messages */
+    REprintf("\n *** caught %s ***\n", 
+	     signum == SIGBUS ? "bus error" : "segfault");
+    if(ip != (siginfo_t *)0) {
+	if(signum == SIGBUS)
+	    switch(ip->si_code) {
+	    case BUS_ADRALN:
+		s = "invalid alignment";
+		break;
+	    case BUS_ADRERR:
+		s = "non-existent physical address";
+		break;
+	    case BUS_OBJERR:
+		s = "object specific hardware error";
+		break;
+	    default:
+		s = "unknown";
+		break;
+	    }
+	else
+	    switch(ip->si_code) {
+	    case SEGV_MAPERR:
+		s = "memory not mapped";
+		break;
+	    case SEGV_ACCERR:
+		s = "invalid permissions";
+		break;
+	    default:
+		s = "unknown";
+		break;
+	    }
+	REprintf("address %p, cause '%s'\n", ip->si_addr, s);
+    }
     if(R_Interactive) {
-	/* need to take off R-level stack checking as stack has changed */
-	R_CStackLimit = (unsigned long)-1;
-	REprintf("1: terminate (with core dump)\n2: normal exit\n3: exit without saving\n");
-	if(R_ReadConsole("Selection: ", ConsoleBuf, CONSOLE_BUFFER_SIZE, 0) > 0) {
-	    if(ConsoleBuf[0] == '2') R_CleanUp(SA_DEFAULT, 0, 1);
-	    if(ConsoleBuf[0] == '3') R_CleanUp(SA_NOSAVE, 0, 1);
+	REprintf("\n1: %s\n2: %s\n3: %s\n4: %s\n", 
+		 "abort (with core dump)", 
+		 "normal exit", 
+		 "exit without saving",
+		 "exit saving workspace");
+	while(1) {
+	    if(R_ReadConsole("Selection: ", ConsoleBuf, CONSOLE_BUFFER_SIZE, 
+			     0) > 0) {
+		if(ConsoleBuf[0] == '1') break;
+		if(ConsoleBuf[0] == '2') R_CleanUp(SA_DEFAULT, 0, 1);
+		if(ConsoleBuf[0] == '3') R_CleanUp(SA_NOSAVE, 70, 0);
+		if(ConsoleBuf[0] == '4') R_CleanUp(SA_SAVE, 71, 0);
+	    }
 	}
     }
     REprintf("exiting ...\n");
+    snprintf(buf, 1024, "rm -rf %s", R_TempDir);
+    R_system(buf);
     /* now do normal behaviour, e.g. core dump */
-    signal(SIGSEGV, SIG_DFL);
-    kill(getpid(), SIGSEGV);
+    signal(signum, SIG_DFL);
+    kill(getpid(), signum);
 }
 
 static void init_signal_handlers()
 {
-    /* <FIXME> may need to reinstall this if we do recover */
+    /* <FIXME> may need to reinstall this if we do recover.
+       May need a larger stack to allow R to clean up.
+     */
     struct sigaction sa;
     signal_stack = malloc(SIGSTKSZ);
     if (signal_stack != NULL) {
         sigstk.ss_sp = signal_stack;
         sigstk.ss_size = SIGSTKSZ;
         sigstk.ss_flags = 0;
-        (void) sigaltstack(&sigstk, NULL);
-    }
-    sa.sa_handler = handleSegv;
+        if(sigaltstack(&sigstk, NULL) < 0)
+	    warning("failed to set alternate signal stack");
+    } else
+	warning("failed to allocate alternate signal stack");
+    sa.sa_sigaction = sigactionSegv;
     sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_ONSTACK;
+    sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
     sigaction(SIGSEGV, &sa, NULL);
+    sigaction(SIGBUS, &sa, NULL);
 
     install_signal_handlers();
 }
@@ -468,6 +521,7 @@ static void init_signal_handlers()
     install_signal_handlers();
 }
 #endif
+
 
 static void R_LoadProfile(FILE *fparg, SEXP env)
 {

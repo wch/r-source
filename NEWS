@@ -220,9 +220,9 @@ NEW FEATURES
     o	install.packages() now does tilde expansion on file paths
 	supplied as 'pkgs'.
 
-    o	On suitably equipped Unix-alike systems, segfaults are caught
-	and there is a simple error-handler which gives the user some
-	choice as to what to do. [Currently experimental.]
+    o	On suitably equipped Unix-alike systems, segfaults and bus errors
+	are caught and there is a simple error-handler which gives
+	the user some choice as to what to do. [Currently experimental.]
 
 
 DEPRECATED & DEFUNCT
