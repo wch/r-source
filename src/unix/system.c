@@ -169,7 +169,11 @@ int Rf_initialize_R(int ac, char **av)
     }
 #endif
     
-    R_CStackDir = ((long)&rstart > (long)&i) ? 1 : -1;
+    {
+        int ii;
+	/* 1 is downwards */
+        R_CStackDir = ((unsigned long)&i > (unsigned long)&ii) ? 1 : -1;
+    }
     /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit, 
               R_CStackStart, R_CStackDir); */
 }
