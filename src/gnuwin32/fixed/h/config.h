@@ -824,6 +824,9 @@
 /* Define this to enable R-level profiling. */
 #define R_PROFILING 1
 
+/* Type for socket lengths: socklen_t, sock_t, int? */
+#define R_SOCKLEN_T int
+
 /* Define this to be the name of the vendor of your system. */
 #define R_VENDOR "pc"
 
@@ -846,9 +849,6 @@
 /* Define as the maximum value of type 'size_t', if the system doesn't define
    it. */
 /* #undef SIZE_MAX */
-
-/* Type for socket lengths: socklen_t, sock_t, int? */
-#define SOCKLEN_T int
 
 /* If using the C implementation of alloca, define if you know the
    direction of stack growth for your system; otherwise it will be

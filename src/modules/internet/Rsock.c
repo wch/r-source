@@ -481,7 +481,7 @@ int R_SockConnect(int port, char *host)
 	}
 
 	if ( FD_ISSET(s, &wfd) ) {
-	    SOCKLEN_T len;
+	    R_SOCKLEN_T len;
 	    len = sizeof(status);
 	    if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char*)&status, &len) < 0){
 		/* Solaris error code */

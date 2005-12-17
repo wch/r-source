@@ -23711,7 +23711,7 @@ echo "${ECHO_T}${r_cv_type_socklen} *" >&6
 fi
 
 cat >>confdefs.h <<_ACEOF
-#define SOCKLEN_T ${r_cv_type_socklen}
+#define R_SOCKLEN_T ${r_cv_type_socklen}
 _ACEOF
 
 

@@ -174,7 +174,7 @@ int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 {
 #ifdef HAVE_SOCKETS 
     struct sockaddr_in net_client;
-    SOCKLEN_T len = sizeof(struct sockaddr);
+    R_SOCKLEN_T len = sizeof(struct sockaddr);
     int retval;
     struct hostent *hostptr;
 

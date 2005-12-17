@@ -1138,7 +1138,7 @@ RxmlNanoFTPGetConnection(void *ctx) {
     unsigned char ad[6], *adp, *portp;
     unsigned int temp[6];
     struct sockaddr_in dataAddr;
-    SOCKLEN_T dataAddrLen;
+    R_SOCKLEN_T dataAddrLen;
 
     ctxt->dataFd = socket (AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (ctxt->dataFd < 0) {
