@@ -1029,7 +1029,7 @@ $(SHLIB): $(OBJECTS)
 
 There is a MinGW build of @command{gfortran} available from
 @uref{http://gcc.gnu.org/wiki/GFortranBinaries} and a MinGW
-build@footnote{Remember to set @samp{LIBRARY_PATH} to point to your
+build@footnote{Remember to set @env{LIBRARY_PATH} to point to your
 MinGW @file{lib} directory} of @command{g95} from
 @uref{http://www.g95.org}.  Set @code{F95} in @code{MkRules} to point to
 the installed compiler.  Then a suitable @file{Makevars.win} could be
@@ -1387,7 +1387,7 @@ When all the testing is done, upload the @file{.tar.gz} file, using
 
 @noindent
 (note: use @code{ftp} and not @code{sftp} to connect to this server) and
-send a message to @url{mailto:cran@@r-project.org,,cran@@r-project.org}
+send a message to @email{cran@@r-project.org}
 about it.  The @acronym{CRAN} maintainers will run these tests before
 putting a submission in the main archive.
 
