@@ -419,9 +419,9 @@ msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "ATENÇÃO: max-mem-size =%4.1fM muito pequeno e ignorado\n"
 
 #: src/gnuwin32/system.c:886
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
-msgstr "ATENÇÃO: max-mem-size =%4.1fM muito pequeno e ignorado\n"
+msgstr "ATENÇÃO: max-mem-size =%4.1fM muito grande e tomando como 3Gb\n"
 
 #: src/gnuwin32/system.c:896 src/unix/system.c:244
 #, c-format
@@ -3632,16 +3632,12 @@ msgid "top-level task callback did not return a logical value"
 msgstr "chamada de tarefa de nível superior não retornou um valor lógico"
 
 #: src/main/mapply.c:61
-#, fuzzy
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
-msgstr "argumento 'editor' não definido"
+msgstr "argumento 'MoreArgs' de 'mapply' não é uma lista"
 
 #: src/main/mapply.c:99
-#, fuzzy
 msgid "longer argument not a multiple of length of shorter"
-msgstr ""
-"objeto de comprimento maior\n"
-"\tnão é múltiplo do objeto de comprimento menor"
+msgstr "argumento longo não é múltiplo do comprimento do curto"
 
 #: src/main/match.c:110
 msgid "invalid partial string match"
@@ -4337,7 +4333,7 @@ msgstr "parâmetro \"%s\" tem o comprimento errado"
 
 #: src/main/par.c:230
 msgid "graphical parameter 'family' has a maximum length of 49 bytes"
-msgstr ""
+msgstr "parâmetro gráfico 'family' tem o comprimento máximo de 49 bytes"
 
 #: src/main/par.c:375
 msgid "parameter \"mfg\" has the wrong length"

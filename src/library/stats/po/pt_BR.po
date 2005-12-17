@@ -151,12 +151,12 @@ msgstr "Obtido valor faltante ou infinito quando avaliando o modelo"
 #: nls.c:226
 #, c-format
 msgid "variable '%s' is integer, not numeric"
-msgstr ""
+msgstr "variável '%s' é inteira, não numérica"
 
 #: nls.c:228
 #, c-format
 msgid "variable '%s' is not numeric"
-msgstr ""
+msgstr "variável '%s' não é numérica"
 
 #: pacf.c:72
 msgid "bad Starma struct"

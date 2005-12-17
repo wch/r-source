@@ -874,7 +874,7 @@ msgid "p-values may be incorrect"
 msgstr "níveis descritivos podem estar incorretos"
 
 msgid "'hybrid' is ignored for a 2 x 2 table"
-msgstr ""
+msgstr "'hybrid' é ignorado para uma tabela 2 x 2"
 
 msgid "all groups must contain data"
 msgstr "todos os grupos devem conter dados"
