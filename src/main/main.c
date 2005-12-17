@@ -409,16 +409,12 @@ static void install_signal_handlers()
 }
 
 #if defined(HAVE_SIGALTSTACK) && defined(HAVE_SIGACTION) && defined(HAVE_SIGEMPTYSET)
-#ifndef SIGSTKSZ
-# define SIGSTKSZ 8192    /* just a guess */
-#endif
 
-#ifdef HAVE_STACK_T
-static stack_t sigstk;
-#else
-static struct sigaltstack sigstk;
-#endif
-static void *signal_stack;
+/* NB: this really isn't safe, but suffices for experimentation for now.
+   In due course just set a flag and do this after the return.  OTOH,
+   if we do want to bail out with a core dump, need to do that here.
+
+   2005-12-17 BDR */
 
 #define CONSOLE_BUFFER_SIZE 1024
 static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
@@ -512,6 +508,17 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
     signal(signum, SIG_DFL);
     raise(signum);
 }
+
+#ifndef SIGSTKSZ
+# define SIGSTKSZ 8192    /* just a guess */
+#endif
+
+#ifdef HAVE_STACK_T
+static stack_t sigstk;
+#else
+static struct sigaltstack sigstk;
+#endif
+static void *signal_stack;
 
 #define R_USAGE 100000 /* Just a guess */
 static void init_signal_handlers()
