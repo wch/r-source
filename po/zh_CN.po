@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-16 20:15+0000\n"
+"POT-Creation-Date: 2005-12-17 13:47+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -391,17 +391,17 @@ msgstr "警告: max-mem-size=%4.1fM太小，略过不用\n"
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr "警告: max-mem-size=%4.1fM太小，略过不用\n"
 
-#: src/gnuwin32/system.c:928 src/unix/system.c:299
+#: src/gnuwin32/system.c:928 src/unix/system.c:303
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 没有'%s'这样的选项\n"
 
-#: src/gnuwin32/system.c:953 src/unix/system.c:303
+#: src/gnuwin32/system.c:953 src/unix/system.c:307
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "变元’%s’略过不用\n"
 
-#: src/gnuwin32/system.c:971 src/unix/system.c:341
+#: src/gnuwin32/system.c:971 src/unix/system.c:345
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "你必需选'--save',’--no-save'或'--vanilla'其中的一个"
 
@@ -3546,60 +3546,60 @@ msgstr "dummy - do not translate"
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr "错误: 本R版本不支持系统命令.\n"
 
-#: src/main/main.c:643
+#: src/main/main.c:682
 msgid "unable to open the base package\n"
 msgstr "无法打开基本程序包\n"
 
-#: src/main/main.c:677
+#: src/main/main.c:716
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "警告: 本R版本不支持UTF-8语言环境\n"
 
-#: src/main/main.c:701
+#: src/main/main.c:740
 msgid "unable to restore saved data in .RData\n"
 msgstr "无法用.Rdata来復原保存数据\n"
 
-#: src/main/main.c:748
+#: src/main/main.c:787
 msgid "During startup - "
 msgstr "在启动过程中 - "
 
-#: src/main/main.c:950
+#: src/main/main.c:989
 msgid "cannot quit from browser"
 msgstr "无法退出瀏覽器"
 
-#: src/main/main.c:954
+#: src/main/main.c:993
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "只能用\"yes\", \"no\", \"ask\"或\"default\"中的一个."
 
-#: src/main/main.c:959
+#: src/main/main.c:998
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=\"ask\"不能在非交互型状态时使用，改用命令行缺省值"
 
-#: src/main/main.c:967
+#: src/main/main.c:1006
 msgid "unrecognized value of 'save'"
 msgstr "没有这种'save'值"
 
-#: src/main/main.c:970
+#: src/main/main.c:1009
 msgid "invalid 'status', 0 assumed"
 msgstr "'status'不对, 假設为0"
 
-#: src/main/main.c:975
+#: src/main/main.c:1014
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast'不对, 假設为FALSE"
 
-#: src/main/main.c:1006
+#: src/main/main.c:1045
 msgid "cannot allocate space for toplevel callback element"
 msgstr "无法为最高层回叫单元分配空间"
 
-#: src/main/main.c:1084
+#: src/main/main.c:1123
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex不能用负的索引值"
 
-#: src/main/main.c:1197
+#: src/main/main.c:1236
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "最高层任务回叫'%s'产生了警告信息\n"
 
-#: src/main/main.c:1257
+#: src/main/main.c:1296
 msgid "top-level task callback did not return a logical value"
 msgstr "最高层任务回叫没回覆逻辑值"
 
@@ -6894,22 +6894,22 @@ msgstr "本系统没有实现intern=TRUE这一功能"
 msgid "Sys.info() is not implemented on this system"
 msgstr "本系统没有实现Sys.info()这一功能"
 
-#: src/unix/system.c:236
+#: src/unix/system.c:240
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "警告: --gui或-g选项没有值，因此略过不用"
 
-#: src/unix/system.c:258
+#: src/unix/system.c:262
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "警告: 没有这种gui’%s', 用X11\n"
 
-#: src/unix/system.c:261
+#: src/unix/system.c:265
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "警告: 没有这种gui’%s', 因此什么都不用\n"
 
-#: src/unix/system.c:379
+#: src/unix/system.c:383
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: 只修改文件串列中的第一个单元"
 

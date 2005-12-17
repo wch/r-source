@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-11-28 07:35+0000\n"
-"PO-Revision-Date: 2005-11-05 17:05-0200\n"
+"PO-Revision-Date: 2005-12-17 10:49-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -105,7 +105,7 @@ msgstr ""
 
 #: methods_list_dispatch.c:662
 msgid "use of NULL environment is deprecated"
-msgstr ""
+msgstr "uso do ambiente NULL é obsoleto"
 
 #: methods_list_dispatch.c:666
 #, c-format

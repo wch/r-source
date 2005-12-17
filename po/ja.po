@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-16 20:15+0000\n"
+"POT-Creation-Date: 2005-12-17 13:47+0000\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -393,17 +393,17 @@ msgstr "警告: max-mem-size =%4.1fM は小さすぎるので無視されまし�
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr "警告: max-mem-size =%4.1fM は大きすぎるので、3Gbとされました\n"
 
-#: src/gnuwin32/system.c:928 src/unix/system.c:299
+#: src/gnuwin32/system.c:928 src/unix/system.c:303
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 未知の '%s' オプション\n"
 
-#: src/gnuwin32/system.c:953 src/unix/system.c:303
+#: src/gnuwin32/system.c:953 src/unix/system.c:307
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引数 '%s' は無視されました\n"
 
-#: src/gnuwin32/system.c:971 src/unix/system.c:341
+#: src/gnuwin32/system.c:971 src/unix/system.c:345
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'--save' ,  '--no-save',  '--vanilla' のいずれかを指定してください"
 
@@ -3589,61 +3589,61 @@ msgid "error: system commands are not supported in this version of R.\n"
 msgstr ""
 "エラー：システムコマンドはこのバージョンの R ではサポートされていません\n"
 
-#: src/main/main.c:643
+#: src/main/main.c:682
 msgid "unable to open the base package\n"
 msgstr "baseパッケージを開くことができません\n"
 
-#: src/main/main.c:677
+#: src/main/main.c:716
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "警告: UTF-8 ロケールは，このビルドの R ではサポートされていません\n"
 
-#: src/main/main.c:701
+#: src/main/main.c:740
 msgid "unable to restore saved data in .RData\n"
 msgstr ".RData に保存されたデータを復帰できません\n"
 
-#: src/main/main.c:748
+#: src/main/main.c:787
 msgid "During startup - "
 msgstr "起動準備中です ー"
 
-#: src/main/main.c:950
+#: src/main/main.c:989
 msgid "cannot quit from browser"
 msgstr "ブラウザを終了できません"
 
-#: src/main/main.c:954
+#: src/main/main.c:993
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "\"yes\", \"no\", \"ask\" または \"default\" のどれかが期待されています"
 
-#: src/main/main.c:959
+#: src/main/main.c:998
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "非対話的な使用での save=\"ask\"：コマンドラインでの既定動作が使用されます"
 
-#: src/main/main.c:967
+#: src/main/main.c:1006
 msgid "unrecognized value of 'save'"
 msgstr "'save' の値が認識できません"
 
-#: src/main/main.c:970
+#: src/main/main.c:1009
 msgid "invalid 'status', 0 assumed"
 msgstr "'status' が不正です。0が仮定されました"
 
-#: src/main/main.c:975
+#: src/main/main.c:1014
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast' が不正です。FALSE が仮定されました"
 
-#: src/main/main.c:1006
+#: src/main/main.c:1045
 msgid "cannot allocate space for toplevel callback element"
 msgstr "トップレベルの callback 要素に作業空間を割り当てることができません"
 
-#: src/main/main.c:1084
+#: src/main/main.c:1123
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex に負の添字が渡されました"
 
-#: src/main/main.c:1197
+#: src/main/main.c:1236
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "トップレベルの task callback '%s' からの警告メッセージ\n"
 
-#: src/main/main.c:1257
+#: src/main/main.c:1296
 msgid "top-level task callback did not return a logical value"
 msgstr "トップレベルの task callback が論理値を返していません"
 
@@ -6991,22 +6991,22 @@ msgstr "このプラットフォームでは intern=TRUE は実装されてい�
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() はこのシステムでは実装されていません"
 
-#: src/unix/system.c:236
+#: src/unix/system.c:240
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "警告: --gui または -g で，値が指定されていないので無視されました"
 
-#: src/unix/system.c:258
+#: src/unix/system.c:262
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "警告: \"%s\" は未知の gui です。X11 を使います\n"
 
-#: src/unix/system.c:261
+#: src/unix/system.c:265
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "警告: \"%s\" は未知の gui です。何も使いません\n"
 
-#: src/unix/system.c:379
+#: src/unix/system.c:383
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: ファイルリストの最初のみを編集します"
 

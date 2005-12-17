@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2005-11-28 07:35\n"
-"PO-Revision-Date: 2005-11-05 18:35-0200\n"
+"PO-Revision-Date: 2005-12-17 11:31-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -874,13 +874,13 @@ msgid "'or' must be a single number between 0 and Inf"
 msgstr "'or' deve ser um único número entre 0 e Inf"
 
 msgid "need 2 or more non-zero row marginals"
-msgstr ""
+msgstr "2 ou mais marginais das linhas precisam ser diferentes de 0"
 
 msgid "need 2 or more non-zero column marginals"
-msgstr ""
+msgstr "2 ou mais marginais das colunas precisam ser diferentes de 0"
 
 msgid "'hybrid' is ignored for a 2 x 2 table"
-msgstr ""
+msgstr "'hybrid' é ignorado para uma tabela 2 x 2"
 
 msgid "all groups must contain data"
 msgstr "todos os grupos devem conter dados"
@@ -1038,10 +1038,10 @@ msgid ","
 msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
-msgstr ""
+msgstr "uso do teste F com a família %s é inapropriado"
 
 msgid "using F test with a fixed dispersion is inappropriate"
-msgstr ""
+msgstr "uso do teste F com dispersão fixa é inapropriado"
 
 msgid "models with response"
 msgstr "modelos sem resposta"
@@ -1054,7 +1054,7 @@ msgstr ""
 "modelos não foram todos ajustados a conjuntos de dados de mesmo tamanho"
 
 msgid "using F test with a '%s' family is inappropriate"
-msgstr ""
+msgstr "uso do teste F com a família '%s' é inapropriado"
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "observações com peso zero não foram usadas para calcular a dispersão"
@@ -1405,7 +1405,7 @@ msgid "type '%s' is not implemented yet"
 msgstr "tipo '%s' ainda não implementado"
 
 msgid "this fit does not inherit from \"lm\""
-msgstr ""
+msgstr "esse ajuste não herda de \"lm\""
 
 msgid "'cterms' argument must match terms in model object"
 msgstr "argumento 'cterms' deve corresponder aos termos do objeto do modelo"

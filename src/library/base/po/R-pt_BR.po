@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2005-11-28 07:35\n"
-"PO-Revision-Date: 2005-09-27 23:03-0300\n"
+"PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -820,7 +820,7 @@ msgid "invalid 'category' argument"
 msgstr "argumento 'category' inválido"
 
 msgid "must specify formal argument names to vectorize"
-msgstr ""
+msgstr "nomes de argumentos formais devem ser especificados para vetorizar"
 
 msgid "'arg' should be one of"
 msgstr "'arg' deve ser um dentre"
@@ -904,20 +904,19 @@ msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "espaço de nomes '%s' já está selado em loadNamespace"
 
 msgid "failed to assign NativeSymbolInfo for"
-msgstr ""
+msgstr "falha na atribuição de NativeSymbolInfo para"
 
 msgid "to"
-msgstr ""
+msgstr "para"
 
 msgid "since"
-msgstr ""
+msgstr "desde"
 
 msgid "is already defined in the"
-msgstr ""
+msgstr "já está definido no"
 
-#, fuzzy
 msgid "namespace"
-msgstr "não é um espaço de nomes"
+msgstr "espaço de nomes"
 
 msgid "package '%s' does not have a name space"
 msgstr "pacote '%s' não tem um espaõ de nomes"
@@ -983,15 +982,14 @@ msgstr "exportações não definidas:"
 msgid "package '%s' has no NAMESPACE file"
 msgstr "pacote '%s' não tem arquivo NAMESPACE"
 
-#, fuzzy
 msgid "duplicated symbol names"
-msgstr "nomes de importação duplicados"
+msgstr "símbolos de importação duplicados"
 
 msgid "in useDynLib("
-msgstr ""
+msgstr "em useDynLib("
 
 msgid ")"
-msgstr ""
+msgstr ")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "diretiva 'S3method' inválida: %s"
