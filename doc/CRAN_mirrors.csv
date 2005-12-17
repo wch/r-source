@@ -24,9 +24,11 @@ Hungary,Hungary,Budapest,http://cran.hu.r-project.org/,"Semmelweis University","
 "Italy (Ferrara)",Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>"
 "Italy (Milano)",Italy,Milano,http://rm.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano",mirror-service@garr.it
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo@dssm.unipa.it, alf@dssm.unipa.it"
+Israel,Israel,Tel-Aviv,http://cran.active.co.il/,"Activetech Ltd, Tel-Aviv","""Rami Addady"" <rami@active.co.il>"
 "Japan (Aizu)",Japan,Aizu,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN,"University of Aizu",
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",
 Korea,Korea,Seoul,http://bibscvs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skon@kr.FreeBSD.org>"
+Netherlands,Netherlands,Amsterdam,http://cran.nedmirror.nl/,"Nedmirror, Amsterdam",mirror@nedmirror.nl
 "Poland (Lublin)",Poland,Lublin,http://novum.am.lublin.pl/CRAN/,"Skubiszewski Medical University, Lublin","Lukasz Komsta <luke@novum.am.lublin.pl>"
 "Poland (Wroclaw)",Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Pawel Netzel <netzel@meteo.uni.wroc.pl>"
 Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",neacm@fe.up.pt
@@ -45,6 +47,7 @@ Turkey,Turkey,Istanbul,http://godel.cs.bilgi.edu.tr/mirror/cran/,"Istanbul Bilgi
 "UK (London)",UK,London,http://www.sourcekeg.co.uk/cran/,"Sourcekeg, London",mirrors@sourcekeg.co.uk
 "USA (CA 1)",USA,Berkeley,http://cran.cnr.Berkeley.edu,"University of California, Berkeley, CA",casterln@nature.berkeley.edu
 "USA (CA 2)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA",
+"USA (CA 3)",USA,Davis,http://cran.ssds.ucdavis.edu/,"University of California, Davis, CA","Jeff Gill <jgill@ucdavis.edu>"
 "USA (IA)",USA,Ames,http://rh-mirror.linux.iastate.edu/CRAN/,"Iowa State University, Ames, IA","Dave Edsall <edsall@iastate.edu>"
 "USA (MI)",USA,Houghton,http://www.biometrics.mtu.edu/CRAN/,"Michigan Technological University, Houghton, MI","Robert Froese <froese@mtu.edu>"
 "USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO",admartin@wustl.edu
