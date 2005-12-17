@@ -58,7 +58,7 @@ nlminb <-
     if (any(lower != -Inf) || any(upper != Inf)) { 
         low <- rep(as.double(lower), length = length(par))
         upp <- rep(as.double(upper), length = length(par))
-    }
+    } else low <- upp <- numeric(0)
     
     ## Do the optimization
     .Call("port_nlminb", obj, grad, hess, rho, low, upp,
