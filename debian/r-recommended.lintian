@@ -1,6 +1,0 @@
-r-recommended: extra-license-file usr/lib/R/library/MASS/LICENCE
-r-recommended: extra-license-file usr/lib/R/library/class/LICENCE
-r-recommended: extra-license-file usr/lib/R/library/nnet/LICENCE
-r-recommended: extra-license-file usr/lib/R/library/spatial/LICENCE
-r-recommended: extra-license-file usr/lib/R/library/nlme/COPYING
-r-recommended: extra-license-file usr/lib/R/library/survival/COPYING
