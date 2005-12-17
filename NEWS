@@ -641,6 +641,9 @@ BUG FIXES
 	directories (and not at all in /usr/local/lib64) and so might
  	prefer 32- to 64-bit versions if both are available.
 
+    o	nlminb() used an uninitialized variable unless bounds were supplied,
+	and so failed on 64-bit Solaris.
+
 
 
 		CHANGES IN R VERSION 2.2.0

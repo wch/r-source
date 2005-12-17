@@ -117,9 +117,8 @@ msgstr ""
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "aucune méhode 'drop1' pour les modèles \"mlm\""
 
-#, fuzzy
 msgid "F test assumes 'quasi%s' family"
-msgstr "le test F implique une famille quasi%s"
+msgstr "le test F implique une famille 'quasi%s'"
 
 msgid "lower scope is not included in model"
 msgstr "la formule inférieure n'est pas incluse dans le modèle"
@@ -758,12 +757,11 @@ msgstr "optimisation impossible à partir de ces valeurs initiales"
 msgid "link not recognised"
 msgstr "lien non reconnu"
 
-#, fuzzy
 msgid ""
 "link \"%s\" not available for Poisson family; available links are \"identity"
 "\", \"log\" and \"sqrt\""
 msgstr ""
-"le lien \"%s\" n'est pas possible pour la famille poisson ; les liens "
+"le lien \"%s\" n'est pas possible pour la famille Poisson ; les liens "
 "possibles sont \"identity\", \"log\" et \"sqrt\""
 
 msgid "negative values not allowed for the Poisson family"

@@ -377,7 +377,7 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 		b[2*i] = REAL(lowerb)[i];
 		b[2*i + 1] = REAL(upperb)[i];
 	    }
-	} else error(_("'lowerb' and 'upperb' must be numeric vectors"));
+	} else error(_("'lower' and 'upper' must be numeric vectors"));
     }
     if (gr != R_NilValue) {
 	g = Calloc(n, double);
