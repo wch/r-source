@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 13:47+0000\n"
-"PO-Revision-Date: 2005-12-17 13:47+0000\n"
+"POT-Creation-Date: 2005-12-18 09:27+0000\n"
+"PO-Revision-Date: 2005-12-18 09:27+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -3586,60 +3586,60 @@ msgstr "dummy - do not translate"
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr "error: system commands are not supported in this version of R.\n"
 
-#: src/main/main.c:682
+#: src/main/main.c:706
 msgid "unable to open the base package\n"
 msgstr "unable to open the base package\n"
 
-#: src/main/main.c:716
+#: src/main/main.c:740
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "WARNING: UTF-8 locales are not supported in this build of R\n"
 
-#: src/main/main.c:740
+#: src/main/main.c:764
 msgid "unable to restore saved data in .RData\n"
 msgstr "unable to restore saved data in .RData\n"
 
-#: src/main/main.c:787
+#: src/main/main.c:811
 msgid "During startup - "
 msgstr "During startup - "
 
-#: src/main/main.c:989
+#: src/main/main.c:1013
 msgid "cannot quit from browser"
 msgstr "cannot quit from browser"
 
-#: src/main/main.c:993
+#: src/main/main.c:1017
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "one of “yes”, “no”, “ask” or “default” expected."
 
-#: src/main/main.c:998
+#: src/main/main.c:1022
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=“ask” in non-interactive use: command-line default will be used"
 
-#: src/main/main.c:1006
+#: src/main/main.c:1030
 msgid "unrecognized value of 'save'"
 msgstr "unrecognized value of ‘save’"
 
-#: src/main/main.c:1009
+#: src/main/main.c:1033
 msgid "invalid 'status', 0 assumed"
 msgstr "invalid 'status', 0 assumed"
 
-#: src/main/main.c:1014
+#: src/main/main.c:1038
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "invalid 'runLast', FALSE assumed"
 
-#: src/main/main.c:1045
+#: src/main/main.c:1069
 msgid "cannot allocate space for toplevel callback element"
 msgstr "cannot allocate space for toplevel callback element"
 
-#: src/main/main.c:1123
+#: src/main/main.c:1147
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "negative index passed to R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1236
+#: src/main/main.c:1260
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "warning messages from top-level task callback ‘%s’\n"
 
-#: src/main/main.c:1296
+#: src/main/main.c:1320
 msgid "top-level task callback did not return a logical value"
 msgstr "top-level task callback did not return a logical value"
 

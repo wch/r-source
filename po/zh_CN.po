@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 13:47+0000\n"
+"POT-Creation-Date: 2005-12-18 09:27+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -3546,60 +3546,60 @@ msgstr "dummy - do not translate"
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr "错误: 本R版本不支持系统命令.\n"
 
-#: src/main/main.c:682
+#: src/main/main.c:706
 msgid "unable to open the base package\n"
 msgstr "无法打开基本程序包\n"
 
-#: src/main/main.c:716
+#: src/main/main.c:740
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "警告: 本R版本不支持UTF-8语言环境\n"
 
-#: src/main/main.c:740
+#: src/main/main.c:764
 msgid "unable to restore saved data in .RData\n"
 msgstr "无法用.Rdata来復原保存数据\n"
 
-#: src/main/main.c:787
+#: src/main/main.c:811
 msgid "During startup - "
 msgstr "在启动过程中 - "
 
-#: src/main/main.c:989
+#: src/main/main.c:1013
 msgid "cannot quit from browser"
 msgstr "无法退出瀏覽器"
 
-#: src/main/main.c:993
+#: src/main/main.c:1017
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "只能用\"yes\", \"no\", \"ask\"或\"default\"中的一个."
 
-#: src/main/main.c:998
+#: src/main/main.c:1022
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=\"ask\"不能在非交互型状态时使用，改用命令行缺省值"
 
-#: src/main/main.c:1006
+#: src/main/main.c:1030
 msgid "unrecognized value of 'save'"
 msgstr "没有这种'save'值"
 
-#: src/main/main.c:1009
+#: src/main/main.c:1033
 msgid "invalid 'status', 0 assumed"
 msgstr "'status'不对, 假設为0"
 
-#: src/main/main.c:1014
+#: src/main/main.c:1038
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast'不对, 假設为FALSE"
 
-#: src/main/main.c:1045
+#: src/main/main.c:1069
 msgid "cannot allocate space for toplevel callback element"
 msgstr "无法为最高层回叫单元分配空间"
 
-#: src/main/main.c:1123
+#: src/main/main.c:1147
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex不能用负的索引值"
 
-#: src/main/main.c:1236
+#: src/main/main.c:1260
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "最高层任务回叫'%s'产生了警告信息\n"
 
-#: src/main/main.c:1296
+#: src/main/main.c:1320
 msgid "top-level task callback did not return a logical value"
 msgstr "最高层任务回叫没回覆逻辑值"
 
@@ -6928,441 +6928,3 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
-
-#~ msgid "cannot allocate memory for InternetRoutines structure"
-#~ msgstr "无法为InternetRoutines结构分配内存"
-
-#, fuzzy
-#~ msgid "unknown graphical parameter \"%s\""
-#~ msgstr "图形参数串列不对"
-
-#~ msgid "'lwd' must be numeric of length >=1"
-#~ msgstr "'lwd'必需是长度大于1的数值"
-
-#~ msgid "%s\\doc\\html\\rwin.htm[l] not found"
-#~ msgstr "找不到%s\\doc\\html\\rwin.htm[l]"
-
-#~ msgid "%s not found"
-#~ msgstr "找不到%s"
-
-#~ msgid "WinHelp call failed"
-#~ msgstr "WinHelp调用失败"
-
-#~ msgid "too many .hlp files opened"
-#~ msgstr "已经打开了太多.hlp文件"
-
-#~ msgid "type not yet implemented"
-#~ msgstr "种类目前还没有实现"
-
-#~ msgid "cannot unbind in the NULL environment"
-#~ msgstr "无法在NULL环境里切断联编"
-
-#~ msgid "syntax error: evaluating expression %d"
-#~ msgstr "评估表达式%d时发生了语法错误"
-
-#~ msgid "parse error"
-#~ msgstr "语法剖析错误"
-
-#~ msgid "invalid 'inherits' argument"
-#~ msgstr "'inherits'变元不对"
-
-#~ msgid "Warning message:\n"
-#~ msgid_plural "Warning messages:\n"
-#~ msgstr[0] "警告信息:\n"
-
-#~ msgid "%d argument passed to '%s' which requires %d"
-#~ msgid_plural "%d arguments passed to '%s' which requires %d"
-#~ msgstr[0] "%d个变元传给了'%s'，但后者只需要%d个变元"
-
-#~ msgid "class name too long in %s"
-#~ msgstr "%s里的类别名字太长"
-
-#~ msgid "call name too long in %s"
-#~ msgstr "%s里调用的名字太长"
-
-#~ msgid "invalid 'xlim'"
-#~ msgstr "'xlim'值不对"
-
-#~ msgid "invalid 'ylim'"
-#~ msgstr "'ylim'值不对"
-
-#~ msgid "first argument invalid"
-#~ msgstr "第一个变元不对"
-
-#~ msgid "second argument invalid"
-#~ msgstr "第二个变元不对"
-
-#~ msgid "third argument invalid"
-#~ msgstr "第三个变元不对"
-
-#~ msgid "fourth argument invalid"
-#~ msgstr "第四个变元不对"
-
-#, fuzzy
-#~ msgid "invalid value for 'tolerance'"
-#~ msgstr "'tolerance'值不对"
-
-#, fuzzy
-#~ msgid "invalid value for 'plot'"
-#~ msgstr "'plot'的值不对"
-
-#, fuzzy
-#~ msgid "invalid value for 'atpen'"
-#~ msgstr "'atpen'的值不对"
-
-#~ msgid "invalid value for 'method'"
-#~ msgstr "'method'值不对"
-
-#~ msgid "invalid value for 'nr'"
-#~ msgstr "'nr'值不对"
-
-#~ msgid "invalid value for 'nc'"
-#~ msgstr "'nc'值不对"
-
-#~ msgid "invalid value for 'rnames'"
-#~ msgstr "'rnames'值不对"
-
-#~ msgid "invalid value for 'sep'"
-#~ msgstr "'sep'值不对"
-
-#~ msgid "invalid value for 'eol'"
-#~ msgstr "'eol'值不对"
-
-#~ msgid "invalid value for 'na'"
-#~ msgstr "'na'值不对"
-
-#~ msgid "invalid value for 'dec'"
-#~ msgstr "'dec'值不对"
-
-#~ msgid "invalid value for 'qmethod'"
-#~ msgstr "'qmethod'值不对"
-
-#~ msgid "'na.last' is invalid"
-#~ msgstr "'na.last'不对"
-
-#~ msgid "invalid 'tempdir'"
-#~ msgstr "'tempdir'不对"
-
-#~ msgid "invalid value for 'w'"
-#~ msgstr "'w'值不对"
-
-#~ msgid "invalid value for 'quote'"
-#~ msgstr "'quote'值不对"
-
-#~ msgid "invalid value for 'justify'"
-#~ msgstr "'justify'值不对"
-
-#~ msgid "invalid gamma value"
-#~ msgstr "gamma值不对"
-
-#~ msgid "invalid value of 'bg'"
-#~ msgstr "'bg'值不对"
-
-#~ msgid "invalid value of 'canvas'"
-#~ msgstr "'canvas'的值不对"
-
-#~ msgid "invalid value of 'fonts'"
-#~ msgstr "'fonts'的值不对"
-
-#~ msgid "invalid 'x' argument"
-#~ msgstr "'x'变元不对"
-
-#~ msgid "invalid 'recursive' argument"
-#~ msgstr "'recursive'变元不对"
-
-#~ msgid "invalid 'topic' argument"
-#~ msgstr "'topic'变元不对"
-
-#~ msgid "invalid 'hlpfile' argument"
-#~ msgstr "'hlpfile'变元不对"
-
-#~ msgid "invalid 'file' argument"
-#~ msgstr "'file'变元不对"
-
-#~ msgid "invalid 'message' argument"
-#~ msgstr "'message'变元不对"
-
-#~ msgid "invalid 'default' argument"
-#~ msgstr "'default'变元不对"
-
-#~ msgid "invalid 'menuname' argument"
-#~ msgstr "'menuname'变元不对"
-
-#~ msgid "invalid 'itemname' argument"
-#~ msgstr "'itemname'变元不对"
-
-#~ msgid "invalid 'time' value"
-#~ msgstr "'time'值不对"
-
-#~ msgid "invalid 'path' argument"
-#~ msgstr "'path'变元不对"
-
-#~ msgid "invalid 'list' argument"
-#~ msgstr "'list'变元不对"
-
-#~ msgid "invalid 'preselect' argument"
-#~ msgstr "'preselect'变元不对"
-
-#~ msgid "invalid add argument"
-#~ msgstr "add变元不对"
-
-#~ msgid "invalid 'tz' value"
-#~ msgstr "'tz'的值不对"
-
-#~ msgid "invalid 'naok' value"
-#~ msgstr "'naok'值不对"
-
-#~ msgid "bad 'names' argument"
-#~ msgstr "'names'变元不对"
-
-#~ msgid "invalid 'string' value"
-#~ msgstr "'string'值不对"
-
-#~ msgid "invalid 'domain' value"
-#~ msgstr "'domain'值不对"
-
-#~ msgid "invalid 'dirname' value"
-#~ msgstr "'dirname'值不对"
-
-#~ msgid "invalid 'filename' argument"
-#~ msgstr "'filename'变元不对"
-
-#~ msgid "invalid 'xmin' value"
-#~ msgstr "'xmin'值不对"
-
-#~ msgid "invalid 'xmax' value"
-#~ msgstr "'xmax'值不对"
-
-#~ msgid "invalid 'tol' value"
-#~ msgstr "'tol'值不对"
-
-#~ msgid "invalid 'mode' value"
-#~ msgstr "'mode'值不对"
-
-#~ msgid "invalid 'vfont' value"
-#~ msgstr "'hostname'值不对"
-
-#~ msgid "invalid 'adj' value"
-#~ msgstr "'adj'值不对"
-
-#~ msgid "invalid 'cex' value"
-#~ msgstr "'cex'值不对"
-
-#~ msgid "invalid 'expand' value"
-#~ msgstr "'z'值不对"
-
-#~ msgid "invalid 'nticks' value"
-#~ msgstr "'nticks'值不对"
-
-#~ msgid "invalid 'ticktype' value"
-#~ msgstr "'ticktype'值不对"
-
-#~ msgid "invalid envir argument"
-#~ msgstr "envir变元不对"
-
-#~ msgid "invalid 'strip.white' value"
-#~ msgstr "'strip.white'值不对"
-
-#~ msgid "invalid 'na.strings' value"
-#~ msgstr "'na.strings'值不对"
-
-#~ msgid "invalid 'comment.char' value"
-#~ msgstr "'comment.char'值不对"
-
-#~ msgid "invalid 'sep' value"
-#~ msgstr "'sep'值不对"
-
-#~ msgid "invalid 'allowEscapes' value"
-#~ msgstr "'allowEscapes'值不对"
-
-#~ msgid "invalid 'nlines' value"
-#~ msgstr "'nlines'值不对"
-
-#~ msgid "invalid 'url' argument"
-#~ msgstr "'url'变元不对"
-
-#~ msgid "invalid 'destfile' argument"
-#~ msgstr "'destfile'变元不对"
-
-#~ msgid "invalid 'quiet' argument"
-#~ msgstr "'quiet'变元不对"
-
-#~ msgid "invalid 'mode' argument"
-#~ msgstr "'mode'变元不对"
-
-#~ msgid "invalid 'cacheOK' argument"
-#~ msgstr "'cacheOK'变元不对"
-
-#~ msgid "invalid 'fill' argument"
-#~ msgstr "'fill'变元不对"
-
-#~ msgid "invalid 'label' argument"
-#~ msgstr "'label'变元不对"
-
-#~ msgid "invalid 'append' specification"
-#~ msgstr "'append'设定不对"
-
-#~ msgid "invalid 'type' arg"
-#~ msgstr "‘type’变元不对"
-
-#~ msgid "invalid 'width' argument"
-#~ msgstr "'width'这个变元不对"
-
-#~ msgid "invalid 'description' argument"
-#~ msgstr "'description'变元不对"
-
-#~ msgid "invalid 'open' argument"
-#~ msgstr "'open'变元不对"
-
-#~ msgid "invalid 'block' argument"
-#~ msgstr "'block'变元不对"
-
-#~ msgid "invalid 'encoding' argument"
-#~ msgstr "'encoding'变元不对"
-
-#~ msgid "invalid 'compress' argument"
-#~ msgstr "'compress'变元不对"
-
-#~ msgid "invalid 'text' argument"
-#~ msgstr "'text'变元不对"
-
-#~ msgid "invalid 'environment' argument"
-#~ msgstr "'environment'变元不对"
-
-#~ msgid "invalid 'host' argument"
-#~ msgstr "'host'变元不对"
-
-#~ msgid "invalid 'port' argument"
-#~ msgstr "'port'变元不对"
-
-#~ msgid "invalid 'server' argument"
-#~ msgstr "'server'变元不对"
-
-#~ msgid "invalid 'blocking' argument"
-#~ msgstr "'blocking'变元不对"
-
-#~ msgid "invalid 'sep' argument"
-#~ msgstr "'sep'变元不对"
-
-#~ msgid "invalid 'data' argument"
-#~ msgstr "'data'变元有错"
-
-#~ msgid "invalid 'newLine' argument"
-#~ msgstr "'newLine'变元有错"
-
-#~ msgid "invalid 'format' argument"
-#~ msgstr "'format'变元不对"
-
-#~ msgid "invalid 'usetz' argument"
-#~ msgstr "'usetz'变元不对"
-
-#~ msgid "invalid 'topics' argument"
-#~ msgstr "'topic'变元不对"
-
-#~ msgid "invalid 'destination' argument"
-#~ msgstr "'destination'变元不对"
-
-#~ msgid "invalid 'envir' argument"
-#~ msgstr "'envir'变元不对"
-
-#~ msgid "invalid 'ifnotfound' argument"
-#~ msgstr "'ifnotfound'变元不对"
-
-#~ msgid "invalid 'pos' argument"
-#~ msgstr "'pos'变元不对"
-
-#~ msgid "invalid 'terms' argument"
-#~ msgstr "'terms'变元不对"
-
-#~ msgid "invalid 'method' argument"
-#~ msgstr "'method'变元不对"
-
-#~ msgid "invalid 'collapse' argument"
-#~ msgstr "'collapse'变元不对"
-
-#~ msgid "invalid 'nsmall' argument"
-#~ msgstr "'nsmall'变元不对"
-
-#~ msgid "invalid 'trim' argument"
-#~ msgstr "'trim'变元不对"
-
-#~ msgid "incorrect number of arguments"
-#~ msgstr "变元数目不对"
-
-#~ msgid "invalid 'pager' specification"
-#~ msgstr "'pager'程序设定不对"
-
-#~ msgid "invalid 'editor' specification"
-#~ msgstr "'editor'设定不对"
-
-#~ msgid "invalid 'directory' argument"
-#~ msgstr "'directory'变元不对"
-
-#~ msgid "invalid 'pattern' argument"
-#~ msgstr "'pattern'变元不对"
-
-#~ msgid "invalid 'indexname' argument"
-#~ msgstr "'indexname'变元不对"
-
-#~ msgid "invalid 'type' argument"
-#~ msgstr "'type'变元不对"
-
-#~ msgid "invalid 'names' argument"
-#~ msgstr "'names'变元不对"
-
-#~ msgid "invalid 'category' argument"
-#~ msgstr "'category'变元不对"
-
-#~ msgid "invalid 'locale' argument"
-#~ msgstr "'locale'变元不对"
-
-#~ msgid "invalid 'y' argument"
-#~ msgstr "'y'变元不对"
-
-#~ msgid "invalid 'z' argument"
-#~ msgstr "'z'变元不对"
-
-#~ msgid "invalid 'xlim' argument"
-#~ msgstr "'xlim'变元不对"
-
-#~ msgid "invalid 'ylim' argument"
-#~ msgstr "'ylim'变元不对"
-
-#~ msgid "invalid 'zlim' argument"
-#~ msgstr "'zlim'变元不对"
-
-#~ msgid "invalid 'col' specification"
-#~ msgstr "'col'设定不对"
-
-#~ msgid "invalid 'border' specification"
-#~ msgstr "'border'设定不对"
-
-#~ msgid "invalid 'digits' argument"
-#~ msgstr "'digits'变元不对"
-
-#~ msgid "invalid 'quote' argument"
-#~ msgstr "'quote'变元不对"
-
-#~ msgid "invalid 'right' argument"
-#~ msgstr "'right'变元不对"
-
-#~ msgid "invalid 'from' argument"
-#~ msgstr "'from'变元不对"
-
-#~ msgid "invalid 'to' argument"
-#~ msgstr "'to'变元不对"
-
-#~ msgid "invalid 'duplicates.ok' argument"
-#~ msgstr "'duplicates.ok'变元不对"
-
-#~ msgid "invalid 'xinds' argument"
-#~ msgstr "'xinds'变元不对"
-
-#~ msgid "invalid 'yinds' argument"
-#~ msgstr "'yinds'变元不对"
-
-#~ msgid "Hershey fonts not yet implemented for mtext()"
-#~ msgstr "mtext()还没有实现Hershey字形"
-
-#~ msgid "cannot resolve native routine"
-#~ msgstr "无法分辨本机例行程序"

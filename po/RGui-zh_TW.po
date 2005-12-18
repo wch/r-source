@@ -1139,12 +1139,3 @@ msgstr "等待頁面變更的確認..."
 #: ../library/grDevices/src/devWindows.c:3057
 msgid "Click or hit ENTER for next page"
 msgstr "按 ENTER 來看下一頁"
-
-#~ msgid "search.r-project.org ..."
-#~ msgstr "search.r-project.org ..."
-
-#~ msgid "Only 16 menus are allowed"
-#~ msgstr "最多只能有 16 個選單"
-
-#~ msgid "too many menu items have been created"
-#~ msgstr "建立了太多的選單項"

@@ -1149,30 +1149,3 @@ msgstr "Ожидаю подтверждения смены страницы..."
 #: ../library/grDevices/src/devWindows.c:3057
 msgid "Click or hit ENTER for next page"
 msgstr "Следующая страница: щелкните или нажмите ENTER "
-
-#~ msgid "search.r-project.org ..."
-#~ msgstr "Искать помощь в Интернет..."
-
-#~ msgid "Only 16 menus are allowed"
-#~ msgstr "Разрешается только 16 меню"
-
-#~ msgid "too many menu items have been created"
-#~ msgstr "создано слишком много пунктов меню"
-
-#~ msgid "An &Introduction to R"
-#~ msgstr "&Введение в R"
-
-#~ msgid "R &Reference Manual"
-#~ msgstr "Справочное руководство по &R"
-
-#~ msgid "R Data Import/Export"
-#~ msgstr "Экспорт/импорт данных в R"
-
-#~ msgid "R Language Definition"
-#~ msgstr "Язык программирования R"
-
-#~ msgid "Writing R Extensions"
-#~ msgstr "Написание расширений R"
-
-#~ msgid "R Installation and Administration"
-#~ msgstr "Установка и администрирование R"

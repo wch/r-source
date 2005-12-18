@@ -1168,12 +1168,3 @@ msgstr "Esperando para confirmar mudança de página..."
 #: ../library/grDevices/src/devWindows.c:3057
 msgid "Click or hit ENTER for next page"
 msgstr "Clique com o mouse ou pressione ENTER para próxima página"
-
-#~ msgid "search.r-project.org ..."
-#~ msgstr "search.r-project.org ... "
-
-#~ msgid "Only 16 menus are allowed"
-#~ msgstr "Somente 16 menus são permitidos"
-
-#~ msgid "too many menu items have been created"
-#~ msgstr "foram criados itens de menu demais"

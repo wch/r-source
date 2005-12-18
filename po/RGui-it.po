@@ -1154,39 +1154,3 @@ msgstr "Aspetto per confermare cambio pagina..."
 #: ../library/grDevices/src/devWindows.c:3057
 msgid "Click or hit ENTER for next page"
 msgstr "Click o premi ENTER per pagina successiva"
-
-#~ msgid "Only 16 menus are allowed"
-#~ msgstr "Sono consentiti solo 16 menu"
-
-#~ msgid "too many menu items have been created"
-#~ msgstr "sono state create troppe voci nel menu"
-
-#~ msgid "An &Introduction to R"
-#~ msgstr "Introduzione a R"
-
-#~ msgid "R &Reference Manual"
-#~ msgstr "Manuale di riferimento per R"
-
-#~ msgid "R Data Import/Export"
-#~ msgstr "Importa/esporta dati in R"
-
-#~ msgid "R Language Definition"
-#~ msgstr "Definizione del linguaggio R"
-
-#~ msgid "Writing R Extensions"
-#~ msgstr "Scrivere estensioni a R"
-
-#~ msgid "R Installation and Administration"
-#~ msgstr "Installazione e Amministrazione di R"
-
-#~ msgid "Text files (*.txt)"
-#~ msgstr "Files di test (*.txt)"
-
-#~ msgid "All files (*.*)"
-#~ msgstr "Tutti i file (*.*)"
-
-#~ msgid "R files (*.R)"
-#~ msgstr "R file (*.R)"
-
-#~ msgid "R images (*.RData)"
-#~ msgstr "Immagini R (*.RData)"

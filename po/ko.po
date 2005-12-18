@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 13:47+0000\n"
+"POT-Creation-Date: 2005-12-18 09:27+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -3607,62 +3607,62 @@ msgstr "dummy, 번역해서는 안됩니다(하지만, 변역을 했습니다)"
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr "에러:  system commands는 이 버전의 R 에서 서포트 되어있지 않습니다\n"
 
-#: src/main/main.c:682
+#: src/main/main.c:706
 msgid "unable to open the base package\n"
 msgstr "base 패키지를 열수가 없습니다\n"
 
-#: src/main/main.c:716
+#: src/main/main.c:740
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "경고:  UTF-8 locales은 이 bulid의 R에서 서포트되어있지 않습니다\n"
 
-#: src/main/main.c:740
+#: src/main/main.c:764
 msgid "unable to restore saved data in .RData\n"
 msgstr ".RData에 보존된 데이터를 복구할수가 없습니다\n"
 
-#: src/main/main.c:787
+#: src/main/main.c:811
 msgid "During startup - "
 msgstr "기동 준비중입니다 -"
 
-#: src/main/main.c:989
+#: src/main/main.c:1013
 msgid "cannot quit from browser"
 msgstr "브라우저를 종료할수가 없습니다"
 
-#: src/main/main.c:993
+#: src/main/main.c:1017
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 "\"yes\", \"no\", \\'\"ask\" 또는 \"default\" 의 어떤것이 예상되어 있습니다"
 
-#: src/main/main.c:998
+#: src/main/main.c:1022
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "비대화적인 사용에서  save=\"ask \": 커멘드 라인에서 기정 동작이 사용됩니다"
 
-#: src/main/main.c:1006
+#: src/main/main.c:1030
 msgid "unrecognized value of 'save'"
 msgstr "'save'의 값을 인식할수가 없습니다"
 
-#: src/main/main.c:1009
+#: src/main/main.c:1033
 msgid "invalid 'status', 0 assumed"
 msgstr "'status'가 부적절합니다. 0이 가정되었습니다"
 
-#: src/main/main.c:1014
+#: src/main/main.c:1038
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast'가 부적절합니다. FALSE가 가정되었습니다"
 
-#: src/main/main.c:1045
+#: src/main/main.c:1069
 msgid "cannot allocate space for toplevel callback element"
 msgstr "top level의 callback 요소에 작업 공간을 할당할수가 없습니다"
 
-#: src/main/main.c:1123
+#: src/main/main.c:1147
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex에 부의 첨자가 건데 받았습니다"
 
-#: src/main/main.c:1236
+#: src/main/main.c:1260
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "top level의 task callback '%s'로부터 경고 메세지\n"
 
-#: src/main/main.c:1296
+#: src/main/main.c:1320
 msgid "top-level task callback did not return a logical value"
 msgstr "top level의 task callback가 논리값을 돌려주고 있지 않습니다"
 
@@ -7055,462 +7055,3 @@ msgstr "X11 모듈은 적재할수가 없습니다"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11를 이용할수가 없습니다"
-
-#~ msgid "cannot allocate memory for InternetRoutines structure"
-#~ msgstr "InternetRoutines 구조에 메모리를 할당할수가 없습니다"
-
-#, fuzzy
-#~ msgid "unknown graphical parameter \"%s\""
-#~ msgstr "graphics 파라미터 리스트가 부적절합니다"
-
-#~ msgid "'lwd' must be numeric of length >=1"
-#~ msgstr "'lwd'는 길이 1이상의 수치가 아니면 안됩니다"
-
-#~ msgid "%s\\doc\\html\\rwin.htm[l] not found"
-#~ msgstr "%s\\doc\\html\\rwin.htm[l]가 검색할수 없습니다"
-
-#~ msgid "%s not found"
-#~ msgstr "%s가 검색되지 않습니다"
-
-#~ msgid "WinHelp call failed"
-#~ msgstr "WinHelp의 호출은 실패했습니다"
-
-#~ msgid "too many .hlp files opened"
-#~ msgstr "너무 많은 hlp 파일의 수가 열려져 있습니다"
-
-#~ msgid "type not yet implemented"
-#~ msgstr "실제 적용되지 않은 유형입니다"
-
-#~ msgid "cannot unbind in the NULL environment"
-#~ msgstr "NULL 환경중에서 분리 할수가 없습니다"
-
-#~ msgid "syntax error: evaluating expression %d"
-#~ msgstr "식 %d의 평가중에 구문 에러가 있었습니다"
-
-#~ msgid "parse error"
-#~ msgstr "구문 분석 에러입니다"
-
-#~ msgid "invalid 'inherits' argument"
-#~ msgstr "'inherits'인수가 부적절합니다"
-
-#~ msgid "Warning message:\n"
-#~ msgid_plural "Warning messages:\n"
-#~ msgstr[0] "경고 메시지가 잃게 되었습니다\n"
-
-#~ msgid "%d argument passed to '%s' which requires %d"
-#~ msgid_plural "%d arguments passed to '%s' which requires %d"
-#~ msgstr[0] ""
-#~ "%1$d개의 인수가 %3$d개의 인수를 필요로 하는 %2$s에게 건네졌습니다"
-#~ msgstr[1] ""
-#~ "%1$d개의 인수가 %3$d개의 인수를 필요로 하는 %2$s에게 건네졌습니다"
-
-#~ msgid "class name too long in %s"
-#~ msgstr "%s의 클래스 이름이 너무 깁니다"
-
-#~ msgid "call name too long in %s"
-#~ msgstr "%s의 호출명이 너무 깁니다"
-
-#~ msgid "invalid 'xlim'"
-#~ msgstr "'xlim'가 부적절합니다"
-
-#~ msgid "invalid 'ylim'"
-#~ msgstr "'ylim'가 부적절합니다"
-
-#~ msgid "first argument invalid"
-#~ msgstr "최초의 인수가 부적절합니다"
-
-#~ msgid "second argument invalid"
-#~ msgstr "두번째의 인수가 부적절합니다"
-
-#~ msgid "third argument invalid"
-#~ msgstr "세번째의 인수가 부적절합니다"
-
-#~ msgid "fourth argument invalid"
-#~ msgstr "네번째의 인수가 부적절합니다"
-
-#~ msgid "invalid value for 'tolerance'"
-#~ msgstr "'tolerance'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'plot'"
-#~ msgstr "'plot'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'atpen'"
-#~ msgstr "'atpen'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'method'"
-#~ msgstr "'method'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'nr'"
-#~ msgstr "'nr'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'nc'"
-#~ msgstr "'nc'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'rnames'"
-#~ msgstr "'rnames'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'sep'"
-#~ msgstr "'sep'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'eol'"
-#~ msgstr "'eol'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'na'"
-#~ msgstr "'na'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'dec'"
-#~ msgstr "'dec'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'qmethod'"
-#~ msgstr "'qmethod'의 값이 부적절합니다"
-
-#~ msgid "'na.last' is invalid"
-#~ msgstr "'na.last'는 무효입니다"
-
-#~ msgid "invalid 'tempdir'"
-#~ msgstr "'tempdir'가 부적절합니다"
-
-#~ msgid "invalid value for 'w'"
-#~ msgstr "'w'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'quote'"
-#~ msgstr "'quote'의 값이 부적절합니다"
-
-#~ msgid "invalid value for 'justify'"
-#~ msgstr "'justify'의 값이 부적절합니다"
-
-#~ msgid "invalid gamma value"
-#~ msgstr "gama 값이 부적절합니다"
-
-#~ msgid "invalid value of 'bg'"
-#~ msgstr "'bg'의 값이 부적절합니다"
-
-#~ msgid "invalid value of 'canvas'"
-#~ msgstr "'canvas'의 값이 부적절합니다"
-
-#~ msgid "invalid value of 'fonts'"
-#~ msgstr "'fonts'의 값이 부적절합니다"
-
-#~ msgid "invalid 'x' argument"
-#~ msgstr "'x' 인수가 부적절합니다"
-
-#~ msgid "invalid 'recursive' argument"
-#~ msgstr "'recursive' 인수가 부적절합니다"
-
-#~ msgid "invalid 'topic' argument"
-#~ msgstr "'topic' 인수가 부적절합니다"
-
-#~ msgid "invalid 'hlpfile' argument"
-#~ msgstr "'hlpfile' 인수가 부적절합니다"
-
-#~ msgid "invalid 'file' argument"
-#~ msgstr "'environment' 인수가 부적절합니다"
-
-#~ msgid "invalid 'message' argument"
-#~ msgstr "'message' 인수가 부적절합니다"
-
-#~ msgid "invalid 'default' argument"
-#~ msgstr "'default' 인수가 부적절합니다"
-
-#~ msgid "invalid 'menuname' argument"
-#~ msgstr "'menuname' 인수가 부적절합니다"
-
-#~ msgid "invalid 'itemname' argument"
-#~ msgstr "'itemname' 인수가 부적절합니다"
-
-#~ msgid "invalid 'time' value"
-#~ msgstr "'time'의 값이 부적절합니다"
-
-#~ msgid "invalid 'path' argument"
-#~ msgstr "'path' 인수가 부적절합니다"
-
-#~ msgid "invalid 'list' argument"
-#~ msgstr "'list' 인수가 부적절합니다"
-
-#~ msgid "invalid 'preselect' argument"
-#~ msgstr "'preselect' 인수가 부적절합니다"
-
-#~ msgid "invalid add argument"
-#~ msgstr "add 인수가 부적절합니다"
-
-#~ msgid "invalid 'tz' value"
-#~ msgstr "'tz'의 값이 부적절합니다"
-
-#~ msgid "invalid 'naok' value"
-#~ msgstr "'naok' 값이 부적절합니다"
-
-#~ msgid "bad 'names' argument"
-#~ msgstr "부적절한 'names' 인수입니다"
-
-#~ msgid "invalid 'string' value"
-#~ msgstr "'string'의 값이 부적절합니다"
-
-#~ msgid "invalid 'domain' value"
-#~ msgstr "'domain'의 값이 부적절합니다"
-
-#~ msgid "invalid 'dirname' value"
-#~ msgstr "'dirname'의 값이 부적절합니다"
-
-#~ msgid "invalid 'filename' argument"
-#~ msgstr "'filename' 인수가 부적절합니다"
-
-#~ msgid "invalid 'xmin' value"
-#~ msgstr "'xmin'의 값이 부적절합니다"
-
-#~ msgid "invalid 'xmax' value"
-#~ msgstr "'xmax'의 값이 부적절합니다"
-
-#~ msgid "invalid 'tol' value"
-#~ msgstr "'tol'의 값이 부적절합니다"
-
-#~ msgid "invalid 'mode' value"
-#~ msgstr "'mode'값이 부적절합니다"
-
-#~ msgid "invalid 'vfont' value"
-#~ msgstr "'vfont'의 값이 부적절합니다"
-
-#~ msgid "invalid 'adj' value"
-#~ msgstr "'adj'의 값이 부적절합니다"
-
-#~ msgid "invalid 'cex' value"
-#~ msgstr "'cex'의 값이 적절하지 않는다"
-
-#~ msgid "invalid 'expand' value"
-#~ msgstr "'expand'의 값이 부적절합니다"
-
-#~ msgid "invalid 'nticks' value"
-#~ msgstr "'nticks'의 값이 부적절합니다"
-
-#~ msgid "invalid 'ticktype' value"
-#~ msgstr "'ticktype'의 값이 부적절합니다"
-
-#~ msgid "invalid envir argument"
-#~ msgstr "envir 인수가 부적절합니다"
-
-#~ msgid "invalid 'strip.white' value"
-#~ msgstr "'strip.white'의 값이 부적절합니다"
-
-#~ msgid "invalid 'na.strings' value"
-#~ msgstr "'na.strings'의 값이 부적절합니다"
-
-#~ msgid "invalid 'comment.char' value"
-#~ msgstr "'comment.char'값이 부적절합니다"
-
-#~ msgid "invalid 'sep' value"
-#~ msgstr "'sep'의 값이 부적절합니다"
-
-#~ msgid "invalid 'allowEscapes' value"
-#~ msgstr "'allowEscapes'의 값이 부적절합니다"
-
-#~ msgid "invalid 'nlines' value"
-#~ msgstr "'nlines'의 값이 부적절합니다"
-
-#~ msgid "invalid 'url' argument"
-#~ msgstr "'url'인수는 부적절합니다"
-
-#~ msgid "invalid 'destfile' argument"
-#~ msgstr "'destfile'인수가 부적절합니다"
-
-#~ msgid "invalid 'quiet' argument"
-#~ msgstr "'quiet'인수가 부적절합니다"
-
-#~ msgid "invalid 'mode' argument"
-#~ msgstr "'mode' 인수가 부적절합니다"
-
-#~ msgid "invalid 'cacheOK' argument"
-#~ msgstr "'cacheOK'인수가 부적절합니다"
-
-#~ msgid "invalid 'fill' argument"
-#~ msgstr "'fill'의 지정이 부적절합니다"
-
-#~ msgid "invalid 'label' argument"
-#~ msgstr "'lable' 인수가 부적절합니다"
-
-#~ msgid "invalid 'append' specification"
-#~ msgstr "'append'의 지정이 부적절합니다"
-
-#~ msgid "invalid 'type' arg"
-#~ msgstr "'type' 인수가 부적절합니다"
-
-#~ msgid "invalid 'width' argument"
-#~ msgstr "'width'인수가 부적절합니다"
-
-#~ msgid "invalid 'description' argument"
-#~ msgstr "'description' 인수가 부적절합니다"
-
-#~ msgid "invalid 'open' argument"
-#~ msgstr "'open' 인수가 부적절합니다"
-
-#~ msgid "invalid 'block' argument"
-#~ msgstr "'block' 인수가 부적절합니다"
-
-#~ msgid "invalid 'encoding' argument"
-#~ msgstr "'encoding' 인수가 부적절합니다"
-
-#~ msgid "invalid 'compress' argument"
-#~ msgstr "'compress' 인수가 부적절합니다"
-
-#~ msgid "invalid 'text' argument"
-#~ msgstr "'text' 인수가 부적절합니다"
-
-#~ msgid "invalid 'environment' argument"
-#~ msgstr "'environment' 인수가 부적절합니다"
-
-#~ msgid "invalid 'host' argument"
-#~ msgstr "'host' 인수가 부적절합니다"
-
-#~ msgid "invalid 'port' argument"
-#~ msgstr "'port' 인수가 부적절합니다"
-
-#~ msgid "invalid 'server' argument"
-#~ msgstr "'server' 인수가 부적절합니다"
-
-#~ msgid "invalid 'blocking' argument"
-#~ msgstr "'blocking'인수가 부적절합니다"
-
-#~ msgid "invalid 'sep' argument"
-#~ msgstr "'sep' 인수가 부적절합니다"
-
-#~ msgid "invalid 'data' argument"
-#~ msgstr "'data' 인수가 부적절합니다"
-
-#~ msgid "invalid 'newLine' argument"
-#~ msgstr "'newLine' 인수가 부적절합니다"
-
-#~ msgid "invalid 'format' argument"
-#~ msgstr "'format' 인수가 부적절합니다"
-
-#~ msgid "invalid 'usetz' argument"
-#~ msgstr "'usetz' 인수가 부적절합니다"
-
-#~ msgid "invalid 'topics' argument"
-#~ msgstr "'topics' 인수가 부적절합니다"
-
-#~ msgid "invalid 'destination' argument"
-#~ msgstr "'destination'인수가 부적절합니다"
-
-#~ msgid "invalid 'envir' argument"
-#~ msgstr "'envir'인수가 부적절합니다"
-
-#~ msgid "invalid 'ifnotfound' argument"
-#~ msgstr "'ifnotfound' 인수가 부적절합니다"
-
-#~ msgid "invalid 'pos' argument"
-#~ msgstr "'pos' 인수가 부적절합니다"
-
-#~ msgid "invalid 'terms' argument"
-#~ msgstr "'terms'인수가 부적절합니다"
-
-#~ msgid "invalid 'method' argument"
-#~ msgstr "'method' 인수가 부적절합니다"
-
-#~ msgid "invalid 'collapse' argument"
-#~ msgstr "'collapse'인수가 부적절합니다"
-
-#~ msgid "invalid 'nsmall' argument"
-#~ msgstr "'nsmall'인수가 부적절합니다"
-
-#~ msgid "invalid 'trim' argument"
-#~ msgstr "'trim'인수가 부적절합니다"
-
-#~ msgid "incorrect number of arguments"
-#~ msgstr "인수의 개수가 올바르지는 않습니다"
-
-#~ msgid "invalid 'pager' specification"
-#~ msgstr "'pager'의 지정이 부적절합니다"
-
-#~ msgid "invalid 'editor' specification"
-#~ msgstr "'editor'의 지정이 부적절합니다"
-
-#~ msgid "invalid 'directory' argument"
-#~ msgstr "'directory'인수가 부적절합니다"
-
-#~ msgid "invalid 'pattern' argument"
-#~ msgstr "'pattern' 인수가 부적절합니다"
-
-#~ msgid "invalid 'indexname' argument"
-#~ msgstr "'indexname'인수가 부적절합니다"
-
-#~ msgid "invalid 'type' argument"
-#~ msgstr "'type'인수가 부적절합니다"
-
-#~ msgid "invalid 'names' argument"
-#~ msgstr "'names인수가 부적절합니다"
-
-#~ msgid "invalid 'category' argument"
-#~ msgstr "'category' 인수가 부적절합니다"
-
-#~ msgid "invalid 'locale' argument"
-#~ msgstr "'locale'인수가 부적절합니다"
-
-#~ msgid "invalid 'y' argument"
-#~ msgstr "'y'인수가 부적절합니다"
-
-#~ msgid "invalid 'z' argument"
-#~ msgstr "'z'인수가 부적절합니다"
-
-#~ msgid "invalid 'xlim' argument"
-#~ msgstr "'xlim'인수가 부적절합니다"
-
-#~ msgid "invalid 'ylim' argument"
-#~ msgstr "'ylim'인수가 부적절합니다"
-
-#~ msgid "invalid 'zlim' argument"
-#~ msgstr "'zlim'인수가 부적절합니다"
-
-#~ msgid "invalid 'col' specification"
-#~ msgstr "'col'의 지정이 부적절합니다"
-
-#~ msgid "invalid 'border' specification"
-#~ msgstr "'border'의 지정이 부적절합니다"
-
-#~ msgid "invalid 'digits' argument"
-#~ msgstr "'digits'인수가 부적절합니다"
-
-#~ msgid "invalid 'quote' argument"
-#~ msgstr "'quote'인수가 부적절합니다"
-
-#~ msgid "invalid 'right' argument"
-#~ msgstr "'right'인수가 부적절합니다"
-
-#~ msgid "invalid 'from' argument"
-#~ msgstr "'from'인수가 부적절합니다"
-
-#~ msgid "invalid 'to' argument"
-#~ msgstr "'to'인수가 부적적합니다"
-
-#~ msgid "invalid 'duplicates.ok' argument"
-#~ msgstr "'duplicates.ok'의 인수가 부적절합니다"
-
-#~ msgid "invalid 'xinds' argument"
-#~ msgstr "'xinds'인수가 부적절합니다"
-
-#~ msgid "invalid 'yinds' argument"
-#~ msgstr "'yinds'인수가 부적적합니다"
-
-#~ msgid "Hershey fonts not yet implemented for mtext()"
-#~ msgstr "Hershey 폰트는 아직 mtext함수에 실제로 적용되어 있지 않습니다"
-
-#~ msgid "allocation failure in strwidth"
-#~ msgstr "GVStrWidth로 할당에 실패했습니다"
-
-#~ msgid "cannot resolve native routine"
-#~ msgstr "\"native routine\"를 해결할수가 없습니다"
-
-#~ msgid ""
-#~ "saved workspaces with locked bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr ""
-#~ "R의 오랜된 버전이 로드 되었을때, locked된 바인딩를 갖춘 보존된 작업공간는 "
-#~ "적절히 움직이지 않을수가 있습니다"
-
-#~ msgid ""
-#~ "saved workspaces with active bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr ""
-#~ "R의 오랜된 버전에 로드 되었을때, 활발한 바인딩를 갖춘 보존된 작업공간은 적"
-#~ "절히 움직이지 않을수가 있습니다"
-
-#~ msgid ""
-#~ "Warning message:msgid_plural \"Warning messages:msgstr[0] \"msgstr[1] \""
-#~ msgstr "경고 메시지:msgid_plural \" 경고 메시지:msgstr[0] \"msgstr[1] \""

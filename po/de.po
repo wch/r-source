@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.2.0\n"
+"Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 13:47+0000\n"
-"PO-Revision-Date: 2005-09-28 15:00+0200\n"
+"POT-Creation-Date: 2005-12-18 09:27+0000\n"
+"PO-Revision-Date: 2005-12-17 15:00+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -64,7 +64,7 @@ msgstr ".C(..): 'type' muss für dieses Format \"real\" sein"
 #: src/gnuwin32/dynload.c:101
 #, c-format
 msgid "DLL attempted to change FPU control word from %x to %x"
-msgstr "DLL versuchte das FPU Kontrollwort von %x nach %x zu ändern"
+msgstr "DLL versuchte das FPU-Kontrollwort von %x nach %x zu ändern"
 
 #: src/gnuwin32/dynload.c:139
 msgid "cannot get working directory"
@@ -137,7 +137,7 @@ msgstr "ungültiges '%s' Argument"
 
 #: src/gnuwin32/extra.c:279 src/gnuwin32/extra.c:302
 msgid "R_HOME not set"
-msgstr "R_Home ist nicht gesetzt"
+msgstr "R_HOME ist nicht gesetzt"
 
 #: src/gnuwin32/extra.c:333
 msgid "unknown type"
@@ -212,7 +212,7 @@ msgstr "falsches Argument"
 
 #: src/gnuwin32/extra.c:653
 msgid "don't be silly!: your machine has a 4Gb address limit"
-msgstr "Stell Dich nicht dumm!: Deine Kiste kann nur 4Gb addressieren"
+msgstr "Stell Dich nicht dumm!: Deine Kiste kann nur 4Gb adressieren"
 
 #: src/gnuwin32/extra.c:656
 msgid "cannot decrease memory limit"
@@ -387,9 +387,9 @@ msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "Warnung: max-mem-size =%4.1fM zu klein und wird ignoriert\n"
 
 #: src/gnuwin32/system.c:918
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
-msgstr "Warnung: max-mem-size =%4.1fM zu klein und wird ignoriert\n"
+msgstr "Warnung: max-mem-size =%4.1fM zu groß und wird als 3GB angenommen\n"
 
 #: src/gnuwin32/system.c:928 src/unix/system.c:303
 #, c-format
@@ -409,7 +409,7 @@ msgstr "Sie müssen '--save', '--no-save' oder '--vanilla' angeben"
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
-"kann keinen 'reader thread' erzeugen; Sie müssen einige Systemresourcen "
+"kann keinen 'reader thread' erzeugen; Sie müssen einige Systemressourcen "
 "freigeben"
 
 #: src/include/Errormsg.h:31
@@ -743,9 +743,9 @@ msgid "unimplemented real function of %d numeric arguments"
 msgstr "nicht implementierte reelle Funktion von %d numerischen Argumenten"
 
 #: src/main/arithmetic.c:1144
-#, c-format
+#, fuzzy, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
-msgstr "%d Argumente an 'atan' übergeben, das aber 1 braucht"
+msgstr "%d Argumente an 'atan' übergeben, das aber 1 oder 2 braucht"
 
 #: src/main/arithmetic.c:1159 src/main/arithmetic.c:1178
 msgid "invalid second argument of length 0"
@@ -762,7 +762,7 @@ msgstr "matrix: ungültiger Wert für 'byrow'"
 
 #: src/main/array.c:81
 msgid "non-numeric matrix extent"
-msgstr "nicht numerische Matrix Erweiterung"
+msgstr "nicht numerische Matrix-Erweiterung"
 
 #: src/main/array.c:86
 msgid "matrix: invalid 'nrow' value (too large or NA)"
@@ -832,7 +832,7 @@ msgstr "eine Matrix ist als Argument für 'row/col' nötig"
 
 #: src/main/array.c:569
 msgid "requires numeric matrix/vector arguments"
-msgstr "verlangt numerische Matrix/Vektor Arguments"
+msgstr "verlangt numerische Matrix/Vektor-Argumente"
 
 #: src/main/array.c:642 src/main/array.c:646 src/main/array.c:650
 msgid "non-conformable arguments"
@@ -961,7 +961,7 @@ msgstr "dim: ungültiger Dimensionenvektor der Länge 0"
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
-"dim<- : Dimensionen [Produkt %d] entsprechen nicht der Länge des Objekts [%d]"
+"dim<- : Dimensionen [Produkt %d] passen nicht zur Länge des Objektes [%d]"
 
 #: src/main/attrib.c:865
 msgid "attributes must be in a list"
@@ -974,7 +974,7 @@ msgstr "Attribute müssen Namen haben"
 #: src/main/attrib.c:893
 #, c-format
 msgid "all attributes must have names [%d does not]"
-msgstr "alle Attribute müssen Namen haben [%d haben keinen]"
+msgstr "alle Attribute müssen Namen haben [%d hat keinen]"
 
 #: src/main/attrib.c:936
 msgid "attribute 'name' must be of mode character"
@@ -2453,7 +2453,7 @@ msgstr "'destination' ist zu lang"
 
 #: src/main/dounzip.c:194
 msgid "'destination' does not exist"
-msgstr "'destiantion' existiert nicht"
+msgstr "'destination' existiert nicht"
 
 #: src/main/dounzip.c:204
 msgid "requested file not found in the zip file"
@@ -2772,7 +2772,7 @@ msgstr ""
 
 #: src/main/envir.c:2627
 msgid "invalid object for as.environment"
-msgstr "ungültiges Objekt für as.enivronment"
+msgstr "ungültiges Objekt für as.environment"
 
 #: src/main/envir.c:2635
 #, fuzzy
@@ -3163,7 +3163,7 @@ msgstr "Knotenstacküberlauf"
 
 #: src/main/eval.c:2391
 msgid "integer stack overflow"
-msgstr "Integerstack Überlauf"
+msgstr "Integerstack-Überlauf"
 
 #: src/main/eval.c:2459
 msgid "Bad opcode"
@@ -3366,7 +3366,7 @@ msgstr "wiederholtes formales Argument"
 
 #: src/main/gram.y:1622
 msgid "input buffer overflow"
-msgstr "Überlauf des Eingabe Buffers"
+msgstr "Überlauf des Eingabebuffers"
 
 #: src/main/gram.y:1754
 msgid "\\uxxxx sequences are only valid in multibyte locales"
@@ -3584,75 +3584,73 @@ msgstr ""
 #: src/main/main.c:217
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr ""
-"Fehler: system Kommandos werden in dieser Version von R nicht unterstützt\n"
+"Fehler: Systemkommandos werden in dieser Version von R nicht unterstützt\n"
 
-#: src/main/main.c:682
+#: src/main/main.c:706
 msgid "unable to open the base package\n"
 msgstr "kann das base Paket nicht öffnen\n"
 
-#: src/main/main.c:716
+#: src/main/main.c:740
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr ""
 "Warnung: UTF-8 locales werden in diesem Build von R nicht unterstützt\n"
 
-#: src/main/main.c:740
+#: src/main/main.c:764
 msgid "unable to restore saved data in .RData\n"
 msgstr "kann die gespeicherten Daten aus .RData nicht wiederherstellen\n"
 
-#: src/main/main.c:787
+#: src/main/main.c:811
 msgid "During startup - "
 msgstr "Beim Start - "
 
-#: src/main/main.c:989
+#: src/main/main.c:1013
 msgid "cannot quit from browser"
 msgstr "kann Browser nicht beenden"
 
-#: src/main/main.c:993
+#: src/main/main.c:1017
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "entweder \"yes\", \"no\", \"ask\" oder \"default\" erwartet."
 
-#: src/main/main.c:998
+#: src/main/main.c:1022
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" in nicht-interaktiver Nutzung: Kommandozeilenstandard wird "
 "benutzt"
 
-#: src/main/main.c:1006
+#: src/main/main.c:1030
 msgid "unrecognized value of 'save'"
 msgstr "unbekannter Wert für 'save'"
 
-#: src/main/main.c:1009
+#: src/main/main.c:1033
 msgid "invalid 'status', 0 assumed"
 msgstr "ungültiger 'status', nehme 0 an"
 
-#: src/main/main.c:1014
+#: src/main/main.c:1038
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "ungültiger Wert für 'runLast', nehme FALSE an"
 
-#: src/main/main.c:1045
+#: src/main/main.c:1069
 msgid "cannot allocate space for toplevel callback element"
 msgstr "kann keinen Speicher für toplevel callback zuteilen"
 
-#: src/main/main.c:1123
+#: src/main/main.c:1147
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "negativer Index an R_removeTaskCallbackByIndex übergeben"
 
-#: src/main/main.c:1236
+#: src/main/main.c:1260
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "Warnmeldung vom toplevel task callback '%s'\n"
 
-#: src/main/main.c:1296
+#: src/main/main.c:1320
 msgid "top-level task callback did not return a logical value"
 msgstr "toplevel task callback gibt keinen logischen Wert zurück"
 
 #: src/main/mapply.c:61
-#, fuzzy
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
-msgstr "Argument 'editor' ist nicht gesetzt"
+msgstr "Argument 'MoreArgs' von 'mapply' ist keine Liste"
 
 #: src/main/mapply.c:99
-#, fuzzy
 msgid "longer argument not a multiple of length of shorter"
 msgstr ""
 "Länge des längeren Objektes\n"
@@ -3842,7 +3840,7 @@ msgstr "Variablenlängen sind unterschiedlich"
 
 #: src/main/model.c:1403
 msgid "invalid result from na.action"
-msgstr "ungültiges Ergebniss aus na.action"
+msgstr "ungültiges Ergebnis aus na.action"
 
 #: src/main/model.c:1596
 msgid "invalid model frame"
@@ -3855,7 +3853,7 @@ msgstr "kenne nicht die Anzahl der Fälle"
 #: src/main/model.c:1624 src/main/model.c:1631
 #, c-format
 msgid "variable %d has no levels"
-msgstr "Variabel %d hat keine Levels"
+msgstr "Variable %d hat keine Levels"
 
 #: src/main/model.c:1739
 msgid "the response appeared on the right-hand side and was dropped"
@@ -4360,7 +4358,7 @@ msgstr "Parameter \"%s\" kann nicht gesetzt werden"
 #: src/main/par.c:343 src/main/par.c:739
 #, fuzzy
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr "Parameter \"%s\" hat falsche Länge"
+msgstr "Grafikparameter 'family' hat eine maximale Länge von 49 bytes"
 
 #: src/main/par.c:472
 msgid "parameter \"mfg\" has the wrong length"
@@ -4661,7 +4659,7 @@ msgstr "'padj' mit Länge 0 angegeben"
 
 #: src/main/plot.c:1147
 msgid "'label' is supplied and not 'at'"
-msgstr ""
+msgstr "'label' ist angegeben und nicht 'at'"
 
 #: src/main/plot.c:1151
 #, c-format
@@ -5818,10 +5816,11 @@ msgstr "Referenz auf nicht existierendes Argument %d"
 #: src/main/sprintf.c:143
 msgid "at most one asterisk `*' is supported in each conversion specification"
 msgstr ""
+"höchstens ein Stern `*' wird in jeder Konvertierungsspezifikation unterstützt"
 
 #: src/main/sprintf.c:150
 msgid "argument for `*' conversion specification must be a number"
-msgstr ""
+msgstr "Argument für `*' Konvertierung muss eine Zahl sein"
 
 #: src/main/sprintf.c:204
 msgid "coercion has changed vector length to 0"
@@ -5866,7 +5865,7 @@ msgstr "R_LibraryFileName: Zwischenspeicher zu klein"
 
 #: src/main/summary.c:61 src/main/summary.c:410
 msgid "Integer overflow in sum(.); use sum(as.numeric(.))"
-msgstr "Integer Überlauf in sum(.); nutze sum(as.numeric(,))"
+msgstr "Integer-Überlauf in sum(.); nutze sum(as.numeric(,))"
 
 #: src/main/summary.c:341
 msgid "internal error ('op' in do_summary).\t Call a Guru"
@@ -6353,9 +6352,8 @@ msgid "There must be at least two control points"
 msgstr ""
 
 #: src/main/xspline.c:455
-#, fuzzy
 msgid "There must be at least four control points"
-msgstr "es muss ein erstes Argument geben"
+msgstr ""
 
 #: src/main/xspline.c:512
 #, fuzzy
@@ -6738,7 +6736,7 @@ msgstr "konnte Verbindung zu X11 display '%s' nicht öffnen"
 
 #: src/modules/X11/devX11.c:1227
 msgid "jpeg() does not support transparency: using white bg"
-msgstr "jpeg() unstützt keine Transparenz: nutze weissen Hintergrund"
+msgstr "jpeg() unstützt keine Transparenz: nutze weißen Hintergrund"
 
 #: src/modules/X11/devX11.c:1340
 msgid "unable to create X11 window"
@@ -7038,440 +7036,3 @@ msgstr "X11 Modul kann nicht geladen werden"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
-
-#~ msgid "cannot allocate memory for InternetRoutines structure"
-#~ msgstr "Kann Speicher für InternetRoutines Struktur nicht zuteilen"
-
-#, fuzzy
-#~ msgid "unknown graphical parameter \"%s\""
-#~ msgstr "ungültige Grafikparameterliste"
-
-#~ msgid "'lwd' must be numeric of length >=1"
-#~ msgstr "'lwd' muss numerisch mit Länge >=1 sein"
-
-#~ msgid "%s\\doc\\html\\rwin.htm[l] not found"
-#~ msgstr "%s\\doc\\html\\rwin.htm[l] nicht gefunden"
-
-#~ msgid "%s not found"
-#~ msgstr "%s nicht gefunden"
-
-#~ msgid "WinHelp call failed"
-#~ msgstr "Aufruf von WinHelp fehlgeschlagen"
-
-#~ msgid "too many .hlp files opened"
-#~ msgstr "zu viele .hlp Dateien geöffnet"
-
-#~ msgid "type not yet implemented"
-#~ msgstr "Typ noch nicht implementiert"
-
-#~ msgid "cannot unbind in the NULL environment"
-#~ msgstr "kann Bindung in der NULL Umgebung nicht lösen"
-
-#~ msgid "syntax error: evaluating expression %d"
-#~ msgstr "Syntaxfehler: Auswertung des Ausdrucks %d"
-
-#~ msgid "parse error"
-#~ msgstr "Parsingfehler"
-
-#~ msgid "invalid 'inherits' argument"
-#~ msgstr "ungültiges 'inherits' Argument"
-
-#~ msgid "Warning message:\n"
-#~ msgid_plural "Warning messages:\n"
-#~ msgstr[0] "Warnmeldung:\n"
-#~ msgstr[1] "Warnmeldungen:\n"
-
-#~ msgid "%d argument passed to '%s' which requires %d"
-#~ msgid_plural "%d arguments passed to '%s' which requires %d"
-#~ msgstr[0] "%d Argument an '%s' übergeben, was aber %d benötigt"
-#~ msgstr[1] "%d Argument an '%s' übergeben, was aber %d benötigt"
-
-#~ msgid "class name too long in %s"
-#~ msgstr "Klassenname zu lang in %s"
-
-#~ msgid "call name too long in %s"
-#~ msgstr "Aufrufname in %s zu lang"
-
-#~ msgid "invalid 'xlim'"
-#~ msgstr "ungültiges 'xlim'"
-
-#~ msgid "invalid 'ylim'"
-#~ msgstr "ungültiges 'ylim'"
-
-#~ msgid "first argument invalid"
-#~ msgstr "erstes Argument ungültig"
-
-#~ msgid "second argument invalid"
-#~ msgstr "zweites Argument ungültig"
-
-#~ msgid "third argument invalid"
-#~ msgstr "drittes Argument ungültig"
-
-#~ msgid "fourth argument invalid"
-#~ msgstr "viertes Argument ungültig"
-
-#~ msgid "invalid value for 'tolerance'"
-#~ msgstr "ungültiger Wert für 'tolerance'"
-
-#~ msgid "invalid value for 'plot'"
-#~ msgstr "ungültiger Wert für 'plot'"
-
-#~ msgid "invalid value for 'atpen'"
-#~ msgstr "ungültiger Wert für 'atpen'"
-
-#~ msgid "invalid value for 'method'"
-#~ msgstr "ungültiger Wert für 'method'"
-
-#~ msgid "invalid value for 'nr'"
-#~ msgstr "ungültiger Wert für 'nr'"
-
-#~ msgid "invalid value for 'nc'"
-#~ msgstr "ungültiger Wert für 'nc'"
-
-#~ msgid "invalid value for 'rnames'"
-#~ msgstr "ungültiger Wert für 'rnames'"
-
-#~ msgid "invalid value for 'sep'"
-#~ msgstr "ungültiger Wert für 'sep'"
-
-#~ msgid "invalid value for 'eol'"
-#~ msgstr "ungültiger Wert für 'eol'"
-
-#~ msgid "invalid value for 'na'"
-#~ msgstr "ungültiger Wert für 'na'"
-
-#~ msgid "invalid value for 'dec'"
-#~ msgstr "ungültiger Wert für 'dec'"
-
-#~ msgid "invalid value for 'qmethod'"
-#~ msgstr "ungültiger Wert für 'qmethod'"
-
-#~ msgid "'na.last' is invalid"
-#~ msgstr "'na.last' ist ungültig"
-
-#~ msgid "invalid 'tempdir'"
-#~ msgstr "ungültiges temporäres Verzeichnis 'tempdir'"
-
-#~ msgid "invalid value for 'w'"
-#~ msgstr "ungültiger Wert für 'w'"
-
-#~ msgid "invalid value for 'quote'"
-#~ msgstr "ungültiger Wert für 'quote'"
-
-#~ msgid "invalid value for 'justify'"
-#~ msgstr "ungültiger Wert für 'justify'"
-
-#~ msgid "invalid gamma value"
-#~ msgstr "ungültiger Wert für Gamma"
-
-#~ msgid "invalid value of 'bg'"
-#~ msgstr "ungültiger Wert für 'bg'"
-
-#~ msgid "invalid value of 'canvas'"
-#~ msgstr "ungültiger Wert für 'canvas'"
-
-#~ msgid "invalid value of 'fonts'"
-#~ msgstr "ungültiger Wert für 'fonts'"
-
-#~ msgid "invalid 'x' argument"
-#~ msgstr "ungültiges 'x' Argument"
-
-#~ msgid "invalid 'recursive' argument"
-#~ msgstr "ungültiges Argument für 'recursive'"
-
-#~ msgid "invalid 'topic' argument"
-#~ msgstr "ungültiges 'topic' Argument"
-
-#~ msgid "invalid 'hlpfile' argument"
-#~ msgstr "ungültiges Argument für 'hlpfile'"
-
-#~ msgid "invalid 'file' argument"
-#~ msgstr "ungültiges 'file' Argument"
-
-#~ msgid "invalid 'message' argument"
-#~ msgstr "ungültiges Argument für 'message'"
-
-#~ msgid "invalid 'default' argument"
-#~ msgstr "ungültiges Argument für 'default'"
-
-#~ msgid "invalid 'menuname' argument"
-#~ msgstr "ungültiges Argument für 'menuname'"
-
-#~ msgid "invalid 'itemname' argument"
-#~ msgstr "ungültiges Argument für 'itemname'"
-
-#~ msgid "invalid 'time' value"
-#~ msgstr "ungültiger Wert für 'time'"
-
-#~ msgid "invalid 'path' argument"
-#~ msgstr "ungültiges Argument für 'path'"
-
-#~ msgid "invalid 'list' argument"
-#~ msgstr "ungültiges Argument für 'list'"
-
-#~ msgid "invalid 'preselect' argument"
-#~ msgstr "ungültiges Argument für 'preselect'"
-
-#~ msgid "invalid add argument"
-#~ msgstr "ungültiges add Argument"
-
-#~ msgid "invalid 'tz' value"
-#~ msgstr "ungültiger 'tz' Wert"
-
-#~ msgid "invalid 'naok' value"
-#~ msgstr "ungültiger 'naok' Wert"
-
-#~ msgid "bad 'names' argument"
-#~ msgstr "unbrauchbares Argument für 'names'"
-
-#~ msgid "invalid 'string' value"
-#~ msgstr "ungültiger 'string' Wert"
-
-#~ msgid "invalid 'domain' value"
-#~ msgstr "ungültiger 'domain' Wert"
-
-#~ msgid "invalid 'dirname' value"
-#~ msgstr "ungültiger 'dirname' Wert"
-
-#~ msgid "invalid 'filename' argument"
-#~ msgstr "ungültiges 'filename' Argument"
-
-#~ msgid "invalid 'xmin' value"
-#~ msgstr "ungültiger 'xmin' Wert"
-
-#~ msgid "invalid 'xmax' value"
-#~ msgstr "ungültiger 'xmax' Wert"
-
-#~ msgid "invalid 'tol' value"
-#~ msgstr "ungültiger 'tol' Wert"
-
-#~ msgid "invalid 'mode' value"
-#~ msgstr "ungülter Wert für 'mode'"
-
-#~ msgid "invalid 'vfont' value"
-#~ msgstr "ungültiger Wert für 'vfont'"
-
-#~ msgid "invalid 'adj' value"
-#~ msgstr "unültiger 'adj' Wert"
-
-#~ msgid "invalid 'cex' value"
-#~ msgstr "ungültiger 'cex' Wert"
-
-#~ msgid "invalid 'expand' value"
-#~ msgstr "ungültiger Wert für 'expand'"
-
-#~ msgid "invalid 'nticks' value"
-#~ msgstr "ungültiger Wert für 'nticks'"
-
-#~ msgid "invalid 'ticktype' value"
-#~ msgstr "ungültiger Wert für 'ticktype'"
-
-#~ msgid "invalid envir argument"
-#~ msgstr "ungültiges envir Argument"
-
-#~ msgid "invalid 'strip.white' value"
-#~ msgstr "ungültiger Wert für 'strip.white'"
-
-#~ msgid "invalid 'na.strings' value"
-#~ msgstr "ungültiger Wert für 'na.strings'"
-
-#~ msgid "invalid 'comment.char' value"
-#~ msgstr "ungültiger Wert für 'comment.char'"
-
-#~ msgid "invalid 'sep' value"
-#~ msgstr "ungültiger Wert für 'sep'"
-
-#~ msgid "invalid 'allowEscapes' value"
-#~ msgstr "ungültiger Wert für 'allowEscapes'"
-
-#~ msgid "invalid 'nlines' value"
-#~ msgstr "ungültiger Wert für 'nlines'"
-
-#~ msgid "invalid 'url' argument"
-#~ msgstr "ungültiges 'url' Argument"
-
-#~ msgid "invalid 'destfile' argument"
-#~ msgstr "ungültiges Argument für 'destfile'"
-
-#~ msgid "invalid 'quiet' argument"
-#~ msgstr "ungültiges Argument für 'quiet'"
-
-#~ msgid "invalid 'mode' argument"
-#~ msgstr "ungültiges 'mode' Argument"
-
-#~ msgid "invalid 'cacheOK' argument"
-#~ msgstr "ungültiges Argument für 'cacheOK'"
-
-#~ msgid "invalid 'fill' argument"
-#~ msgstr "ungültiges 'fill' Argument"
-
-#~ msgid "invalid 'label' argument"
-#~ msgstr "ungültiges 'label' Argument"
-
-#~ msgid "invalid 'append' specification"
-#~ msgstr "ungültige 'append' Spezifikation"
-
-#~ msgid "invalid 'type' arg"
-#~ msgstr "ungültiges 'type' Argument"
-
-#~ msgid "invalid 'width' argument"
-#~ msgstr "ungültiges 'width' Argument"
-
-#~ msgid "invalid 'description' argument"
-#~ msgstr "ungültiges 'description Argument"
-
-#~ msgid "invalid 'open' argument"
-#~ msgstr "ungültiges 'open' Argument"
-
-#~ msgid "invalid 'block' argument"
-#~ msgstr "ungültiges 'block' Argument"
-
-#~ msgid "invalid 'encoding' argument"
-#~ msgstr "ungültiges 'encding' Argument"
-
-#~ msgid "invalid 'compress' argument"
-#~ msgstr "ungültiges 'compress' Argument"
-
-#~ msgid "invalid 'text' argument"
-#~ msgstr "ungültiges 'text' Argument"
-
-#~ msgid "invalid 'environment' argument"
-#~ msgstr "ungültiges 'environment' Argument"
-
-#~ msgid "invalid 'host' argument"
-#~ msgstr "ungültiges 'host' Argument"
-
-#~ msgid "invalid 'port' argument"
-#~ msgstr "ungültiges 'port' Argument"
-
-#~ msgid "invalid 'server' argument"
-#~ msgstr "ungültiges 'server' Argument"
-
-#~ msgid "invalid 'blocking' argument"
-#~ msgstr "ungültiges 'blocking' Argument"
-
-#~ msgid "invalid 'sep' argument"
-#~ msgstr "ungültiges 'sep' Argument"
-
-#~ msgid "invalid 'data' argument"
-#~ msgstr "ungültiges 'data' Argument"
-
-#~ msgid "invalid 'newLine' argument"
-#~ msgstr "ungültiges 'newLine' Argument"
-
-#~ msgid "invalid 'format' argument"
-#~ msgstr "ungültiges 'format' Argument"
-
-#~ msgid "invalid 'usetz' argument"
-#~ msgstr "ungültiges 'usetz' Argument"
-
-#~ msgid "invalid 'topics' argument"
-#~ msgstr "ungültiges Argument 'topics'"
-
-#~ msgid "invalid 'destination' argument"
-#~ msgstr "ungültiges Argument 'destination'"
-
-#~ msgid "invalid 'envir' argument"
-#~ msgstr "ungültiges 'envir' Argument"
-
-#~ msgid "invalid 'ifnotfound' argument"
-#~ msgstr "ungültiges 'ifnotfound' Argument"
-
-#~ msgid "invalid 'pos' argument"
-#~ msgstr "ungültiges 'pos' Argument"
-
-#~ msgid "invalid 'terms' argument"
-#~ msgstr "ungültiges Argument für 'terms'"
-
-#~ msgid "invalid 'method' argument"
-#~ msgstr "ungültiges Argument für 'method'"
-
-#~ msgid "invalid 'collapse' argument"
-#~ msgstr "ungültiges 'collapse' Argument"
-
-#~ msgid "invalid 'nsmall' argument"
-#~ msgstr "ungültiges Argument für 'nsmall'"
-
-#~ msgid "invalid 'trim' argument"
-#~ msgstr "ungültiges 'trim' Argument"
-
-#~ msgid "incorrect number of arguments"
-#~ msgstr "falsche Anzahl von Argumenten"
-
-#~ msgid "invalid 'pager' specification"
-#~ msgstr "ungültige 'pager' Spezifikation"
-
-#~ msgid "invalid 'editor' specification"
-#~ msgstr "ungültige Spezifikation für 'editor'"
-
-#~ msgid "invalid 'directory' argument"
-#~ msgstr "ungültiges Argument für 'directory'"
-
-#~ msgid "invalid 'pattern' argument"
-#~ msgstr "ungültiges 'pattern' Argument"
-
-#~ msgid "invalid 'indexname' argument"
-#~ msgstr "ungültiges Argument für 'indexname'"
-
-#~ msgid "invalid 'type' argument"
-#~ msgstr "ungültiges Argument 'type'"
-
-#~ msgid "invalid 'names' argument"
-#~ msgstr "ungültiges Argument für 'names'"
-
-#~ msgid "invalid 'category' argument"
-#~ msgstr "ungültiges Argument für 'category'"
-
-#~ msgid "invalid 'locale' argument"
-#~ msgstr "ungültiges Argument für 'locale'"
-
-#~ msgid "invalid 'y' argument"
-#~ msgstr "ungültiges 'y' Argument"
-
-#~ msgid "invalid 'z' argument"
-#~ msgstr "ungültiges 'z' Argument"
-
-#~ msgid "invalid 'xlim' argument"
-#~ msgstr "ungültiges 'xlim' Argument"
-
-#~ msgid "invalid 'ylim' argument"
-#~ msgstr "ungültiges 'ylim' Argument"
-
-#~ msgid "invalid 'zlim' argument"
-#~ msgstr "ungültiges 'zlim' Argument"
-
-#~ msgid "invalid 'col' specification"
-#~ msgstr "ungültige Spezifikation für 'col'"
-
-#~ msgid "invalid 'border' specification"
-#~ msgstr "ungültige Spezifikation für 'border'"
-
-#~ msgid "invalid 'digits' argument"
-#~ msgstr "ungültiges Argument für 'digits'"
-
-#~ msgid "invalid 'quote' argument"
-#~ msgstr "ungültiges Argument für 'quote'"
-
-#~ msgid "invalid 'right' argument"
-#~ msgstr "ungültiges Argument für 'right'"
-
-#~ msgid "invalid 'from' argument"
-#~ msgstr "ungültiges 'from' Argument"
-
-#~ msgid "invalid 'to' argument"
-#~ msgstr "ungültiges 'to' Argument"
-
-#~ msgid "invalid 'duplicates.ok' argument"
-#~ msgstr "ungültiges 'duplicates.ok' Argument"
-
-#~ msgid "invalid 'xinds' argument"
-#~ msgstr "ungültiges 'xinds' Argument"
-
-#~ msgid "invalid 'yinds' argument"
-#~ msgstr "ungültiges 'yinds' Argument"
-
-#~ msgid "Hershey fonts not yet implemented for mtext()"
-#~ msgstr "Hershey fonts noch nicht für mtext() implementiert"
-
-#~ msgid "cannot resolve native routine"
-#~ msgstr "kann native Routine nicht auflösen"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 13:47+0000\n"
+"POT-Creation-Date: 2005-12-18 09:27+0000\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -3604,63 +3604,63 @@ msgstr ""
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr "error: comandi 'system' non supportati in questa versione di R.\n"
 
-#: src/main/main.c:682
+#: src/main/main.c:706
 msgid "unable to open the base package\n"
 msgstr "impossibile aprire pacchetto base\n"
 
-#: src/main/main.c:716
+#: src/main/main.c:740
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "ATTENZIONE: locale UTF-8 non supportati in questa distribuzione di R\n"
 
-#: src/main/main.c:740
+#: src/main/main.c:764
 msgid "unable to restore saved data in .RData\n"
 msgstr "impossibile ripristinare i dati registrati in .RData\n"
 
-#: src/main/main.c:787
+#: src/main/main.c:811
 msgid "During startup - "
 msgstr "Durante l'avvio - "
 
-#: src/main/main.c:989
+#: src/main/main.c:1013
 msgid "cannot quit from browser"
 msgstr "non posso uscire dal browser"
 
-#: src/main/main.c:993
+#: src/main/main.c:1017
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "si ci aspetta una tra \"yes\", \"no\", \"ask\" o \"default\"."
 
-#: src/main/main.c:998
+#: src/main/main.c:1022
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" in modalità non interattiva: viene usata la linea di comando di "
 "default"
 
-#: src/main/main.c:1006
+#: src/main/main.c:1030
 msgid "unrecognized value of 'save'"
 msgstr "valore sconosciuto di 'save'"
 
-#: src/main/main.c:1009
+#: src/main/main.c:1033
 msgid "invalid 'status', 0 assumed"
 msgstr "valore 'status' non valido, uso 0"
 
-#: src/main/main.c:1014
+#: src/main/main.c:1038
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "argomento 'runLast' non valido, uso FALSE"
 
-#: src/main/main.c:1045
+#: src/main/main.c:1069
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 "non posso allocare spazio per l'elemento di callback di livello superiore"
 
-#: src/main/main.c:1123
+#: src/main/main.c:1147
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "indice negativo passato a R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1236
+#: src/main/main.c:1260
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "messaggio di avviso dal processo callback di livello superiore '%s'\n"
 
-#: src/main/main.c:1296
+#: src/main/main.c:1320
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 "il processo callback di livello superiore restituisce un valore non logico"
@@ -7055,440 +7055,3 @@ msgstr "il modulo X11 non può essere caricato"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 non disponibile"
-
-#~ msgid "cannot allocate memory for InternetRoutines structure"
-#~ msgstr "non è possibile allocare memoria per la struttura InternetRoutines"
-
-#, fuzzy
-#~ msgid "unknown graphical parameter \"%s\""
-#~ msgstr "lista parametro grafico non valida"
-
-#~ msgid "'lwd' must be numeric of length >=1"
-#~ msgstr "'lwd' deve essere numeric di lunghezza >=1"
-
-#~ msgid "%s\\doc\\html\\rwin.htm[l] not found"
-#~ msgstr "%s\\doc\\html\\rwin.htm[l] non trovata"
-
-#~ msgid "%s not found"
-#~ msgstr "%s non trovato"
-
-#~ msgid "WinHelp call failed"
-#~ msgstr "chiamata a WinHelp non riuscita"
-
-#~ msgid "too many .hlp files opened"
-#~ msgstr "troppi file .hlp aperti"
-
-#~ msgid "type not yet implemented"
-#~ msgstr "type non ancora implementato"
-
-#~ msgid "cannot unbind in the NULL environment"
-#~ msgstr "non posso rompere i legami nell'environment NULL"
-
-#~ msgid "syntax error: evaluating expression %d"
-#~ msgstr "errore di sintatti: calcolo dell'espressione %d"
-
-#~ msgid "parse error"
-#~ msgstr "errore di analisi"
-
-#~ msgid "invalid 'inherits' argument"
-#~ msgstr "argomento 'inherits' non valido"
-
-#~ msgid "Warning message:\n"
-#~ msgid_plural "Warning messages:\n"
-#~ msgstr[0] "Messaggio di avviso:\n"
-#~ msgstr[1] "Messaggi di avviso:\n"
-
-#~ msgid "%d argument passed to '%s' which requires %d"
-#~ msgid_plural "%d arguments passed to '%s' which requires %d"
-#~ msgstr[0] "%d argomento passato a '%s' che ne richiede %d"
-#~ msgstr[1] "%d argomenti passati a '%s' che ne richiede %d"
-
-#~ msgid "class name too long in %s"
-#~ msgstr "nome classe troppo lungo in %s"
-
-#~ msgid "call name too long in %s"
-#~ msgstr "nome chiamata troppo lunga in %s"
-
-#~ msgid "invalid 'xlim'"
-#~ msgstr "'xlim' non valido"
-
-#~ msgid "invalid 'ylim'"
-#~ msgstr "'ylim' non valido"
-
-#~ msgid "first argument invalid"
-#~ msgstr "primo argomento non valido"
-
-#~ msgid "second argument invalid"
-#~ msgstr "secondo argomenton non valido"
-
-#~ msgid "third argument invalid"
-#~ msgstr "terzo argomento non valido"
-
-#~ msgid "fourth argument invalid"
-#~ msgstr "quarto argomento non valido"
-
-#~ msgid "invalid value for 'tolerance'"
-#~ msgstr "valore non valido per 'tolerance'"
-
-#~ msgid "invalid value for 'plot'"
-#~ msgstr "valore non valido per 'plot'"
-
-#~ msgid "invalid value for 'atpen'"
-#~ msgstr "valore non valido per 'atpen'"
-
-#~ msgid "invalid value for 'method'"
-#~ msgstr "valore non valido per 'method'"
-
-#~ msgid "invalid value for 'nr'"
-#~ msgstr "valore non valido per 'nr'"
-
-#~ msgid "invalid value for 'nc'"
-#~ msgstr "valore non valido per 'nc'"
-
-#~ msgid "invalid value for 'rnames'"
-#~ msgstr "valore non valido per 'rnames'"
-
-#~ msgid "invalid value for 'sep'"
-#~ msgstr "valore non valido per 'sep'"
-
-#~ msgid "invalid value for 'eol'"
-#~ msgstr "valore non valido per 'eol'"
-
-#~ msgid "invalid value for 'na'"
-#~ msgstr "valore non valido per 'na'"
-
-#~ msgid "invalid value for 'dec'"
-#~ msgstr "valore non valido per 'dec'"
-
-#~ msgid "invalid value for 'qmethod'"
-#~ msgstr "valore non valido per 'qmethod'"
-
-#~ msgid "'na.last' is invalid"
-#~ msgstr "'na.last' non valido"
-
-#~ msgid "invalid 'tempdir'"
-#~ msgstr "'tempdir' non valido"
-
-#~ msgid "invalid value for 'w'"
-#~ msgstr "valore non valido per 'w'"
-
-#~ msgid "invalid value for 'quote'"
-#~ msgstr "valore non valido per 'quote'"
-
-#~ msgid "invalid value for 'justify'"
-#~ msgstr "valore non valido per 'justify'"
-
-#~ msgid "invalid gamma value"
-#~ msgstr "valore 'gamma' non valido"
-
-#~ msgid "invalid value of 'bg'"
-#~ msgstr "valore non valido per 'bg'"
-
-#~ msgid "invalid value of 'canvas'"
-#~ msgstr "valore non valido per 'canvas'"
-
-#~ msgid "invalid value of 'fonts'"
-#~ msgstr "valore non valido per 'fonts'"
-
-#~ msgid "invalid 'x' argument"
-#~ msgstr "argomento 'x' non valido"
-
-#~ msgid "invalid 'recursive' argument"
-#~ msgstr "argomento 'recursive' non valido"
-
-#~ msgid "invalid 'topic' argument"
-#~ msgstr "argomento 'topic' non valido"
-
-#~ msgid "invalid 'hlpfile' argument"
-#~ msgstr "argomento 'hlpfile' non valido"
-
-#~ msgid "invalid 'file' argument"
-#~ msgstr "argomento 'file' non valido"
-
-#~ msgid "invalid 'message' argument"
-#~ msgstr "argomento 'message' non valido"
-
-#~ msgid "invalid 'default' argument"
-#~ msgstr "argomento 'default' non valido"
-
-#~ msgid "invalid 'menuname' argument"
-#~ msgstr "argomento 'menuname' non valido"
-
-#~ msgid "invalid 'itemname' argument"
-#~ msgstr "argomento 'itemname' non valido"
-
-#~ msgid "invalid 'time' value"
-#~ msgstr "valore 'time' non valido"
-
-#~ msgid "invalid 'path' argument"
-#~ msgstr "argomento 'path' non valido"
-
-#~ msgid "invalid 'list' argument"
-#~ msgstr "argomento 'list' non valido"
-
-#~ msgid "invalid 'preselect' argument"
-#~ msgstr "argomento 'preselect' non valido"
-
-#~ msgid "invalid add argument"
-#~ msgstr "argomento 'add' non valido"
-
-#~ msgid "invalid 'tz' value"
-#~ msgstr "valore 'tz' non valido"
-
-#~ msgid "invalid 'naok' value"
-#~ msgstr "valore 'naok' non valido"
-
-#~ msgid "bad 'names' argument"
-#~ msgstr "argomento 'names' non valido"
-
-#~ msgid "invalid 'string' value"
-#~ msgstr "valore 'string' non valido"
-
-#~ msgid "invalid 'domain' value"
-#~ msgstr "valore 'domain' non valido"
-
-#~ msgid "invalid 'dirname' value"
-#~ msgstr "valore 'dirname' non valido"
-
-#~ msgid "invalid 'filename' argument"
-#~ msgstr "argomento 'filename' non valido"
-
-#~ msgid "invalid 'xmin' value"
-#~ msgstr "valore 'xmin' non valido"
-
-#~ msgid "invalid 'xmax' value"
-#~ msgstr "valore 'xmax' non valido"
-
-#~ msgid "invalid 'tol' value"
-#~ msgstr "valore 'tol' non valido"
-
-#~ msgid "invalid 'mode' value"
-#~ msgstr "valore 'mode' non valido"
-
-#~ msgid "invalid 'vfont' value"
-#~ msgstr "valore 'vfont' non valido"
-
-#~ msgid "invalid 'adj' value"
-#~ msgstr "valore 'adj' non valido"
-
-#~ msgid "invalid 'cex' value"
-#~ msgstr "valore 'cex' non valido"
-
-#~ msgid "invalid 'expand' value"
-#~ msgstr "valore 'expand' non valido"
-
-#~ msgid "invalid 'nticks' value"
-#~ msgstr "valore 'nticks' non valido"
-
-#~ msgid "invalid 'ticktype' value"
-#~ msgstr "valore 'ticktype' non valido"
-
-#~ msgid "invalid envir argument"
-#~ msgstr "argomento 'envir' non valido"
-
-#~ msgid "invalid 'strip.white' value"
-#~ msgstr "valore 'strip.white' non valido"
-
-#~ msgid "invalid 'na.strings' value"
-#~ msgstr "valore 'na.strings' non valido"
-
-#~ msgid "invalid 'comment.char' value"
-#~ msgstr "valore 'comment.char' non valido"
-
-#~ msgid "invalid 'sep' value"
-#~ msgstr "valore 'sep' non valido"
-
-#~ msgid "invalid 'allowEscapes' value"
-#~ msgstr "valore 'allowEscapes' non valido"
-
-#~ msgid "invalid 'nlines' value"
-#~ msgstr "valore 'nlines' non valido"
-
-#~ msgid "invalid 'url' argument"
-#~ msgstr "argomento 'url' non valido"
-
-#~ msgid "invalid 'destfile' argument"
-#~ msgstr "argomento 'destfile' non valido"
-
-#~ msgid "invalid 'quiet' argument"
-#~ msgstr "argomento 'quiet' non valido"
-
-#~ msgid "invalid 'mode' argument"
-#~ msgstr "argomento 'mode' non valido"
-
-#~ msgid "invalid 'cacheOK' argument"
-#~ msgstr "argomento 'cacheOK' non valido"
-
-#~ msgid "invalid 'fill' argument"
-#~ msgstr "argomento 'fill' non valido"
-
-#~ msgid "invalid 'label' argument"
-#~ msgstr "argomento 'label' non valido"
-
-#~ msgid "invalid 'append' specification"
-#~ msgstr "specificazione di 'append' non valida"
-
-#~ msgid "invalid 'type' arg"
-#~ msgstr "argomento 'type' non valido"
-
-#~ msgid "invalid 'width' argument"
-#~ msgstr "argomento 'width' non valido"
-
-#~ msgid "invalid 'description' argument"
-#~ msgstr "argomento 'description' non valido"
-
-#~ msgid "invalid 'open' argument"
-#~ msgstr "argomento 'open' non valido"
-
-#~ msgid "invalid 'block' argument"
-#~ msgstr "argomento 'block' non valido"
-
-#~ msgid "invalid 'encoding' argument"
-#~ msgstr "argomento 'encoding' non valido"
-
-#~ msgid "invalid 'compress' argument"
-#~ msgstr "argomento 'compress' non valido"
-
-#~ msgid "invalid 'text' argument"
-#~ msgstr "argomento 'text' non valido"
-
-#~ msgid "invalid 'environment' argument"
-#~ msgstr "argomento 'environment' non valido"
-
-#~ msgid "invalid 'host' argument"
-#~ msgstr "argomento 'host' non valido"
-
-#~ msgid "invalid 'port' argument"
-#~ msgstr "argomento 'port' non valido"
-
-#~ msgid "invalid 'server' argument"
-#~ msgstr "argomento 'server' non valido"
-
-#~ msgid "invalid 'blocking' argument"
-#~ msgstr "argomento 'blocking' non valido"
-
-#~ msgid "invalid 'sep' argument"
-#~ msgstr "argomento 'sep' non valido"
-
-#~ msgid "invalid 'data' argument"
-#~ msgstr "argomento 'data' non valido"
-
-#~ msgid "invalid 'newLine' argument"
-#~ msgstr "argomento 'newLine' non valido"
-
-#~ msgid "invalid 'format' argument"
-#~ msgstr "argomento 'format' non valido"
-
-#~ msgid "invalid 'usetz' argument"
-#~ msgstr "argomento 'usetz' non valido"
-
-#~ msgid "invalid 'topics' argument"
-#~ msgstr "argomento 'topics' non valido"
-
-#~ msgid "invalid 'destination' argument"
-#~ msgstr "argomento 'destination' non valido"
-
-#~ msgid "invalid 'envir' argument"
-#~ msgstr "argomento 'envir' non valido"
-
-#~ msgid "invalid 'ifnotfound' argument"
-#~ msgstr "argomento 'ifnotfound' non valido"
-
-#~ msgid "invalid 'pos' argument"
-#~ msgstr "argomento 'pos' non valido"
-
-#~ msgid "invalid 'terms' argument"
-#~ msgstr "argomento 'terms' non valido"
-
-#~ msgid "invalid 'method' argument"
-#~ msgstr "argomento 'method' non valido"
-
-#~ msgid "invalid 'collapse' argument"
-#~ msgstr "argomento 'collapse' non valido"
-
-#~ msgid "invalid 'nsmall' argument"
-#~ msgstr "argomento 'nsmall' non valido"
-
-#~ msgid "invalid 'trim' argument"
-#~ msgstr "argomento 'trim' non valido"
-
-#~ msgid "incorrect number of arguments"
-#~ msgstr "numero di argomenti non valido"
-
-#~ msgid "invalid 'pager' specification"
-#~ msgstr "specificazione di 'pager' non valida"
-
-#~ msgid "invalid 'editor' specification"
-#~ msgstr "specificazione di 'editor' non valida"
-
-#~ msgid "invalid 'directory' argument"
-#~ msgstr "argomento 'directory' non valido"
-
-#~ msgid "invalid 'pattern' argument"
-#~ msgstr "argomento 'pattern' non valido"
-
-#~ msgid "invalid 'indexname' argument"
-#~ msgstr "argomento 'indexname' non valido"
-
-#~ msgid "invalid 'type' argument"
-#~ msgstr "argomento 'type' non valido"
-
-#~ msgid "invalid 'names' argument"
-#~ msgstr "argomento 'names' non valido"
-
-#~ msgid "invalid 'category' argument"
-#~ msgstr "argomento 'category' non valido"
-
-#~ msgid "invalid 'locale' argument"
-#~ msgstr "argomento 'locale' non valido"
-
-#~ msgid "invalid 'y' argument"
-#~ msgstr "argomento 'y' non valido"
-
-#~ msgid "invalid 'z' argument"
-#~ msgstr "argomento 'z' non valido"
-
-#~ msgid "invalid 'xlim' argument"
-#~ msgstr "argomento 'xlim' non valido"
-
-#~ msgid "invalid 'ylim' argument"
-#~ msgstr "argomento 'ylim' non valido"
-
-#~ msgid "invalid 'zlim' argument"
-#~ msgstr "argomento 'zlim' non valido"
-
-#~ msgid "invalid 'col' specification"
-#~ msgstr "specificazione di 'col' non valida"
-
-#~ msgid "invalid 'border' specification"
-#~ msgstr "specificazione di 'border' non valida"
-
-#~ msgid "invalid 'digits' argument"
-#~ msgstr "argomento 'digits' non valido"
-
-#~ msgid "invalid 'quote' argument"
-#~ msgstr "argomento 'quote' non valido"
-
-#~ msgid "invalid 'right' argument"
-#~ msgstr "argomento 'right' non valido"
-
-#~ msgid "invalid 'from' argument"
-#~ msgstr "argomento 'from' non valido"
-
-#~ msgid "invalid 'to' argument"
-#~ msgstr "argomento 'to' non valido"
-
-#~ msgid "invalid 'duplicates.ok' argument"
-#~ msgstr "argomento 'duplicates.ok' non valido"
-
-#~ msgid "invalid 'xinds' argument"
-#~ msgstr "argomento 'xinds' non valido"
-
-#~ msgid "invalid 'yinds' argument"
-#~ msgstr "argomento 'yinds' non valido"
-
-#~ msgid "Hershey fonts not yet implemented for mtext()"
-#~ msgstr "font Hershey non ancora implementati in mtext()"
-
-#~ msgid "cannot resolve native routine"
-#~ msgstr "non posso trovare la routine nativa"

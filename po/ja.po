@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 13:47+0000\n"
+"POT-Creation-Date: 2005-12-18 09:27+0000\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -3589,61 +3589,61 @@ msgid "error: system commands are not supported in this version of R.\n"
 msgstr ""
 "エラー：システムコマンドはこのバージョンの R ではサポートされていません\n"
 
-#: src/main/main.c:682
+#: src/main/main.c:706
 msgid "unable to open the base package\n"
 msgstr "baseパッケージを開くことができません\n"
 
-#: src/main/main.c:716
+#: src/main/main.c:740
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "警告: UTF-8 ロケールは，このビルドの R ではサポートされていません\n"
 
-#: src/main/main.c:740
+#: src/main/main.c:764
 msgid "unable to restore saved data in .RData\n"
 msgstr ".RData に保存されたデータを復帰できません\n"
 
-#: src/main/main.c:787
+#: src/main/main.c:811
 msgid "During startup - "
 msgstr "起動準備中です ー"
 
-#: src/main/main.c:989
+#: src/main/main.c:1013
 msgid "cannot quit from browser"
 msgstr "ブラウザを終了できません"
 
-#: src/main/main.c:993
+#: src/main/main.c:1017
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "\"yes\", \"no\", \"ask\" または \"default\" のどれかが期待されています"
 
-#: src/main/main.c:998
+#: src/main/main.c:1022
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "非対話的な使用での save=\"ask\"：コマンドラインでの既定動作が使用されます"
 
-#: src/main/main.c:1006
+#: src/main/main.c:1030
 msgid "unrecognized value of 'save'"
 msgstr "'save' の値が認識できません"
 
-#: src/main/main.c:1009
+#: src/main/main.c:1033
 msgid "invalid 'status', 0 assumed"
 msgstr "'status' が不正です。0が仮定されました"
 
-#: src/main/main.c:1014
+#: src/main/main.c:1038
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast' が不正です。FALSE が仮定されました"
 
-#: src/main/main.c:1045
+#: src/main/main.c:1069
 msgid "cannot allocate space for toplevel callback element"
 msgstr "トップレベルの callback 要素に作業空間を割り当てることができません"
 
-#: src/main/main.c:1123
+#: src/main/main.c:1147
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex に負の添字が渡されました"
 
-#: src/main/main.c:1236
+#: src/main/main.c:1260
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "トップレベルの task callback '%s' からの警告メッセージ\n"
 
-#: src/main/main.c:1296
+#: src/main/main.c:1320
 msgid "top-level task callback did not return a logical value"
 msgstr "トップレベルの task callback が論理値を返していません"
 
@@ -7025,496 +7025,3 @@ msgstr "X11 モジュールをロードできません"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 が利用できません"
-
-#~ msgid "%s\\doc\\html\\rwin.htm[l] not found"
-#~ msgstr "%s\\doc\\html\\rwin.htm[l] が見つかりません"
-
-#~ msgid "%s not found"
-#~ msgstr "%s が見つかりません"
-
-#~ msgid "WinHelp call failed"
-#~ msgstr "WinHelp の呼び出しに失敗しました"
-
-#~ msgid "too many .hlp files opened"
-#~ msgstr "開いた .hlp ファイルの数が多すぎます"
-
-#~ msgid "type not yet implemented"
-#~ msgstr "未実装の型です"
-
-#~ msgid "'lwd' must be numeric of length >=1"
-#~ msgstr "'lwd' は長さ1以上の数値でなくてはなりません"
-
-#~ msgid "cannot allocate memory for InternetRoutines structure"
-#~ msgstr "InternetRoutines 構造にメモリを割り当てることができません"
-
-#~ msgid "cannot unbind in the NULL environment"
-#~ msgstr "NULL 環境中では切り離しはできません"
-
-#~ msgid "syntax error: evaluating expression %d"
-#~ msgstr "式 %d の評価中に構文エラーがありました"
-
-#~ msgid "parse error"
-#~ msgstr "構文解析エラーです"
-
-#~ msgid "invalid 'inherits' argument"
-#~ msgstr "'inherits' 引数が不正です"
-
-#~ msgid "Warning message:\n"
-#~ msgid_plural "Warning messages:\n"
-#~ msgstr[0] "警告メッセージ：\n"
-
-#~ msgid "%d argument passed to '%s' which requires %d"
-#~ msgid_plural "%d arguments passed to '%s' which requires %d"
-#~ msgstr[0] "%1$d 個の引数が %3$d 個の引数を必要とする '%2$s' に渡されました"
-
-#~ msgid "class name too long in %s"
-#~ msgstr "%s のクラス名が長すぎます"
-
-#~ msgid "call name too long in %s"
-#~ msgstr "%s 中の呼び出し名が長すぎます"
-
-#~ msgid "invalid 'xlim'"
-#~ msgstr "'xlm' が不正です"
-
-#~ msgid "invalid 'ylim'"
-#~ msgstr "'ylim' が不正です"
-
-#~ msgid "first argument invalid"
-#~ msgstr "最初の引数が不正です"
-
-#~ msgid "second argument invalid"
-#~ msgstr "二番目の引数が不正です"
-
-#~ msgid "third argument invalid"
-#~ msgstr "三番目の引数が不正です"
-
-#~ msgid "fourth argument invalid"
-#~ msgstr "4番目の引数が不正です"
-
-#~ msgid "invalid value for 'tolerance'"
-#~ msgstr "'tolerance' の値が不正です"
-
-#~ msgid "invalid value for 'plot'"
-#~ msgstr "'plot' の値が不正です"
-
-#~ msgid "invalid value for 'atpen'"
-#~ msgstr "'atpen' の値が不正です"
-
-#~ msgid "invalid value for 'method'"
-#~ msgstr "'method' の値が不正です"
-
-#~ msgid "invalid value for 'nr'"
-#~ msgstr "'nr' の値が不正です"
-
-#~ msgid "invalid value for 'nc'"
-#~ msgstr "'nc' の値が不正です"
-
-#~ msgid "invalid value for 'rnames'"
-#~ msgstr "'rnames' の値が不正です"
-
-#~ msgid "invalid value for 'sep'"
-#~ msgstr "'sep' の値が不正です"
-
-#~ msgid "invalid value for 'eol'"
-#~ msgstr "'eof' の値が不正です"
-
-#~ msgid "invalid value for 'na'"
-#~ msgstr "'na' の値が不正です"
-
-#~ msgid "invalid value for 'dec'"
-#~ msgstr "'dec' の値が不正です"
-
-#~ msgid "invalid value for 'qmethod'"
-#~ msgstr "'qmethod' の値が不正です"
-
-#~ msgid "'na.last' is invalid"
-#~ msgstr "'na.last' は無効です"
-
-#~ msgid "invalid 'tempdir'"
-#~ msgstr "'tempdir' が不正です"
-
-#~ msgid "invalid value for 'w'"
-#~ msgstr "'w' の値が不正です"
-
-#~ msgid "invalid value for 'quote'"
-#~ msgstr "'quote' の値が不正です"
-
-#~ msgid "invalid value for 'justify'"
-#~ msgstr "'justify' の値が不正です"
-
-#~ msgid "invalid gamma value"
-#~ msgstr "ガンマ値が不正です"
-
-#~ msgid "invalid value of 'bg'"
-#~ msgstr "'bg' の値が不正です"
-
-#~ msgid "invalid value of 'canvas'"
-#~ msgstr "'canvas' の値が不正です"
-
-#~ msgid "invalid value of 'fonts'"
-#~ msgstr "'fonts' の値が不正です"
-
-#~ msgid "invalid 'x' argument"
-#~ msgstr "'x' 引数が不正です"
-
-#~ msgid "invalid 'recursive' argument"
-#~ msgstr "'recursive' 引数が不正です"
-
-#~ msgid "invalid 'topic' argument"
-#~ msgstr "'topic' 引数が不正です"
-
-#~ msgid "invalid 'hlpfile' argument"
-#~ msgstr "'hlpfile' 引数が不正です"
-
-#~ msgid "invalid 'file' argument"
-#~ msgstr "'environment' 引数が不正です"
-
-#~ msgid "invalid 'message' argument"
-#~ msgstr "'message' 引数が不正です"
-
-#~ msgid "invalid 'default' argument"
-#~ msgstr "'default' 引数が不正です"
-
-#~ msgid "invalid 'menuname' argument"
-#~ msgstr "'menuname' 引数が不正です"
-
-#~ msgid "invalid 'itemname' argument"
-#~ msgstr "'itemname' 引数が不正です"
-
-#~ msgid "invalid 'time' value"
-#~ msgstr "'time' の値が不正です"
-
-#~ msgid "invalid 'path' argument"
-#~ msgstr "'path' 引数が不正です"
-
-#~ msgid "invalid 'list' argument"
-#~ msgstr "'list' 引数が不正です"
-
-#~ msgid "invalid 'preselect' argument"
-#~ msgstr "'preselect' 引数が不正です"
-
-#~ msgid "invalid add argument"
-#~ msgstr "add 引数が不正です"
-
-#~ msgid "invalid 'tz' value"
-#~ msgstr "'tz' の値が不正です"
-
-#~ msgid "invalid 'naok' value"
-#~ msgstr "'naok' の値が不正です"
-
-#~ msgid "bad 'names' argument"
-#~ msgstr "不正なネーム引数です"
-
-#~ msgid "invalid 'string' value"
-#~ msgstr "'string' の値が不正です"
-
-#~ msgid "invalid 'domain' value"
-#~ msgstr "'domain' の値が不正です"
-
-#~ msgid "invalid 'dirname' value"
-#~ msgstr "'dirname' の値が不正です"
-
-#~ msgid "invalid 'filename' argument"
-#~ msgstr "'filename' 引数が不正です"
-
-#~ msgid "invalid 'xmin' value"
-#~ msgstr "'xmin' の値が不正です"
-
-#~ msgid "invalid 'xmax' value"
-#~ msgstr "'xmax' の値が不正です"
-
-#~ msgid "invalid 'tol' value"
-#~ msgstr "'tol' の値が不正です"
-
-#~ msgid "invalid 'mode' value"
-#~ msgstr "'mode' 値が不正です"
-
-#~ msgid "invalid 'vfont' value"
-#~ msgstr "'vfont' の値が不正です"
-
-#~ msgid "invalid 'adj' value"
-#~ msgstr "'adj' の値が不正です"
-
-#~ msgid "invalid 'cex' value"
-#~ msgstr "'cex' の値が不正です"
-
-#~ msgid "invalid 'expand' value"
-#~ msgstr "'expand' の値が不正です"
-
-#~ msgid "invalid 'nticks' value"
-#~ msgstr "'nticks' の値が不正です"
-
-#~ msgid "invalid 'ticktype' value"
-#~ msgstr "'ticktype' の値が不正です"
-
-#~ msgid "invalid envir argument"
-#~ msgstr "envir 引数が不正です"
-
-#~ msgid "invalid 'strip.white' value"
-#~ msgstr "'strip' の値が不正です"
-
-#~ msgid "invalid 'na.strings' value"
-#~ msgstr "'na.strings' の値が不正です"
-
-#~ msgid "invalid 'comment.char' value"
-#~ msgstr "'comment' の値が不正です"
-
-#~ msgid "invalid 'sep' value"
-#~ msgstr "'sep' の値が不正です"
-
-#~ msgid "invalid 'allowEscapes' value"
-#~ msgstr "'allowEscapes' の値が不正です"
-
-#~ msgid "invalid 'nlines' value"
-#~ msgstr "'nlines' の値が不正です"
-
-#~ msgid "invalid 'url' argument"
-#~ msgstr "'url' 引数が不正です"
-
-#~ msgid "invalid 'destfile' argument"
-#~ msgstr "'destfile' 引数が不正です"
-
-#~ msgid "invalid 'quiet' argument"
-#~ msgstr "'quiet' 引数が不正です"
-
-#~ msgid "invalid 'mode' argument"
-#~ msgstr "'mode' 引数が不正です"
-
-#~ msgid "invalid 'cacheOK' argument"
-#~ msgstr "'cacheOK' 引数が不正です"
-
-#~ msgid "invalid 'fill' argument"
-#~ msgstr "'fill' 引数が不正です"
-
-#~ msgid "invalid 'label' argument"
-#~ msgstr "'label' 引数が不正です"
-
-#~ msgid "invalid 'append' specification"
-#~ msgstr "'append' の指定が不正です"
-
-#~ msgid "invalid 'type' arg"
-#~ msgstr "'type' 引数が不正です"
-
-#~ msgid "invalid 'width' argument"
-#~ msgstr "'width' 引数が不正です"
-
-#~ msgid "invalid 'description' argument"
-#~ msgstr "'description' 引数が不正です"
-
-#~ msgid "invalid 'open' argument"
-#~ msgstr "'open' 引数が不正です"
-
-#~ msgid "invalid 'block' argument"
-#~ msgstr "'block' 引数が不正です"
-
-#~ msgid "invalid 'encoding' argument"
-#~ msgstr "'encoding' の引数が不正です"
-
-#~ msgid "invalid 'compress' argument"
-#~ msgstr "'compress' 引数が不正です"
-
-#~ msgid "invalid 'text' argument"
-#~ msgstr "'text' 引数が不正です"
-
-#~ msgid "invalid 'environment' argument"
-#~ msgstr "'environment' 引数が不正です"
-
-#~ msgid "invalid 'host' argument"
-#~ msgstr "'host' 引数が不正です"
-
-#~ msgid "invalid 'port' argument"
-#~ msgstr "'port' 引数が不正です"
-
-#~ msgid "invalid 'server' argument"
-#~ msgstr "'server' 引数が不正です"
-
-#~ msgid "invalid 'blocking' argument"
-#~ msgstr "'blocking' 引数が不正です"
-
-#~ msgid "invalid 'sep' argument"
-#~ msgstr "'sep' 引数が不正です"
-
-#~ msgid "invalid 'data' argument"
-#~ msgstr "'data' 引数が不正です"
-
-#~ msgid "invalid 'newLine' argument"
-#~ msgstr "'newLine' 引数が不正です"
-
-#~ msgid "invalid 'format' argument"
-#~ msgstr "'format' 引数が不正です"
-
-#~ msgid "invalid 'usetz' argument"
-#~ msgstr "'usetz' 引数が不正です"
-
-#~ msgid "invalid 'topics' argument"
-#~ msgstr "'topics' 引数が不正です"
-
-#~ msgid "invalid 'destination' argument"
-#~ msgstr "'destination' 引数が不正です"
-
-#~ msgid "invalid 'envir' argument"
-#~ msgstr "'envir' 引数が不正です"
-
-#~ msgid "invalid 'ifnotfound' argument"
-#~ msgstr "'ifnotfound' 引数が不正です"
-
-#~ msgid "invalid 'pos' argument"
-#~ msgstr "'pos' 引数が不正です"
-
-#~ msgid "invalid 'terms' argument"
-#~ msgstr "'terms' 引数が不正です"
-
-#~ msgid "invalid 'method' argument"
-#~ msgstr "'method' 引数が不正です"
-
-#~ msgid "invalid 'collapse' argument"
-#~ msgstr "'collapse' 引数が不正です"
-
-#~ msgid "invalid 'nsmall' argument"
-#~ msgstr "'nsmall' 引数が不正です"
-
-#~ msgid "invalid 'trim' argument"
-#~ msgstr "'trim' 引数が不正です"
-
-#~ msgid "incorrect number of arguments"
-#~ msgstr "引数の個数が正しくありません"
-
-#~ msgid "invalid 'pager' specification"
-#~ msgstr "'pager' の指定が不正です"
-
-#~ msgid "invalid 'editor' specification"
-#~ msgstr "'editor' の指定が不正です"
-
-#~ msgid "invalid 'directory' argument"
-#~ msgstr "'directory' 引数が不正です"
-
-#~ msgid "invalid 'pattern' argument"
-#~ msgstr "'pattern' 引数が不正です"
-
-#~ msgid "invalid 'indexname' argument"
-#~ msgstr "'indexname' 引数が不正です"
-
-#~ msgid "invalid 'type' argument"
-#~ msgstr "'type' 引数が不正です"
-
-#~ msgid "invalid 'names' argument"
-#~ msgstr "'names' 引数が不正です"
-
-#~ msgid "invalid 'category' argument"
-#~ msgstr "'category' 引数が不正です"
-
-#~ msgid "invalid 'locale' argument"
-#~ msgstr "'local' 引数が不正です"
-
-#~ msgid "invalid 'y' argument"
-#~ msgstr "'y' 引数が不正です"
-
-#~ msgid "invalid 'z' argument"
-#~ msgstr "'z' 引数が不正です"
-
-#~ msgid "invalid 'xlim' argument"
-#~ msgstr "'xlim' 引数が不正です"
-
-#~ msgid "invalid 'ylim' argument"
-#~ msgstr "'ylim' 引数が不正です"
-
-#~ msgid "invalid 'zlim' argument"
-#~ msgstr "'zlim' 引数が不正です"
-
-#~ msgid "invalid 'col' specification"
-#~ msgstr "'col' の指定が不正です"
-
-#~ msgid "invalid 'border' specification"
-#~ msgstr "'border' の指定が不正です"
-
-#~ msgid "invalid 'digits' argument"
-#~ msgstr "'digits' 引数が不正です"
-
-#~ msgid "invalid 'quote' argument"
-#~ msgstr "'quote' 引数が不正です"
-
-#~ msgid "invalid 'right' argument"
-#~ msgstr "'right' 引数が不正です"
-
-#~ msgid "invalid 'from' argument"
-#~ msgstr "'from' 引数が不正です"
-
-#~ msgid "invalid 'to' argument"
-#~ msgstr "'to' 引数が不正です"
-
-#~ msgid "invalid 'duplicates.ok' argument"
-#~ msgstr "'duplicates.ok' の引数が不正です"
-
-#~ msgid "invalid 'xinds' argument"
-#~ msgstr "'xinds' 引数が不正です"
-
-#~ msgid "invalid 'yinds' argument"
-#~ msgstr "'yinds' 引数が不正です"
-
-#~ msgid "Hershey fonts not yet implemented for mtext()"
-#~ msgstr "Hershey フォントはまだ mtext 関数に実装されていません"
-
-#~ msgid "cannot resolve native routine"
-#~ msgstr "\"native routine\" を解くことが出来ません"
-
-#~ msgid "allocation failure in strwidth"
-#~ msgstr "GVStrWidth で割り当てに失敗しました"
-
-#~ msgid ""
-#~ "saved workspaces with locked bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr ""
-#~ "古いバージョンの R への読み込みでは、保存されたロックされたバインディング"
-#~ "を持つ作業スペースは適正に動作しないかも知れません"
-
-#~ msgid ""
-#~ "saved workspaces with active bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr ""
-#~ "古いバージョンの R への読み込みでは、保存されたアクティブなバインディング"
-#~ "をもつ作業スペースは適正に動作しないかも知れません"
-
-#~ msgid "not that many enclosing functions"
-#~ msgstr "そんなに多くの上位 (enclosing) 関数はありません"
-
-#~ msgid "Recall called from outside a closure"
-#~ msgstr "Recall が閉じられた外から呼び出されている"
-
-#~ msgid "sys.frame: not that many enclosing functions"
-#~ msgstr "sys.frame: そんなに多くの enclosing 関数はありません"
-
-#~ msgid "invalid frame number"
-#~ msgstr "フレーム番号が不正です"
-
-#~ msgid "invalid sep value"
-#~ msgstr "sep の値が不正です"
-
-#~ msgid "match requires vector arguments"
-#~ msgstr "match はベクトル引数を要求します"
-
-#~ msgid "not that many enclosing environments"
-#~ msgstr "そんなに多くの上位 (enclosing) 環境はありません"
-
-#~ msgid "UseMethod called from outside a closure"
-#~ msgstr "UseMethod は closure の外から呼びました"
-
-#~ msgid "Could not allocate memory for Encodebuf"
-#~ msgstr "Encodebuf にメモリーを割りあてられませんでした"
-
-#~ msgid "WARNING: invalid R_HISTSIZE ignored;\n"
-#~ msgstr "警告: 不正な R_HISTSIZE は無視されました\n"
-
-#~ msgid "invalid number of environment levels"
-#~ msgstr "環境レベル数が不正です"
-
-#~ msgid "argument should be a character vector of length 1"
-#~ msgstr "引数は長さ1の文字ベクトルであるべきです"
-
-#~ msgid "UseMethod used in an inappropriate fashion"
-#~ msgstr "UseMethod が不適切なやり方で使われました"
-
-#~ msgid "Warning messages:\n"
-#~ msgstr "警告メッセージ(複数)：\n"
-
-#~ msgid "only positive values are allowed"
-#~ msgstr "正の値だけが許されます"

@@ -1132,34 +1132,3 @@ msgstr "等待页面改变的确认..."
 #: ../library/grDevices/src/devWindows.c:3057
 msgid "Click or hit ENTER for next page"
 msgstr "按ENTER来看下一页"
-
-#~ msgid "Only 16 menus are allowed"
-#~ msgstr "最多只能有16个菜单"
-
-#~ msgid "too many menu items have been created"
-#~ msgstr "建立了太多的菜单项"
-
-#~ msgid "An &Introduction to R"
-#~ msgstr "R入门"
-
-#~ msgid "R &Reference Manual"
-#~ msgstr "R参考手册"
-
-#~ msgid "R Data Import/Export"
-#~ msgstr "R数据导入/导出"
-
-#~ msgid "R Language Definition"
-#~ msgstr "R语言定义"
-
-#~ msgid "Writing R Extensions"
-#~ msgstr "如何写R扩展程序"
-
-#~ msgid "R Installation and Administration"
-#~ msgstr "R安装和管理"
-
-#~ msgid ""
-#~ "Font %s-%d-%d has variable width.\n"
-#~ "Using system fixed font"
-#~ msgstr ""
-#~ "字体%s-%d-%d的宽度自由变动。\n"
-#~ "用系统字体"

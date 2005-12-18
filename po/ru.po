@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 13:47+0000\n"
+"POT-Creation-Date: 2005-12-18 09:27+0000\n"
 "PO-Revision-Date: 2005-12-16 15:56+0300\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -3592,63 +3592,63 @@ msgstr "dummy - do not translate"
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr "ошибка: системные команды не поддерживаются в этой версии R.\n"
 
-#: src/main/main.c:682
+#: src/main/main.c:706
 msgid "unable to open the base package\n"
 msgstr "не могу открыть пакет 'base'\n"
 
-#: src/main/main.c:716
+#: src/main/main.c:740
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "ВНИМАНИЕ: локали UTF-8 не поддерживаются в этой сборке R\n"
 
-#: src/main/main.c:740
+#: src/main/main.c:764
 msgid "unable to restore saved data in .RData\n"
 msgstr "не могу восстановить сохраненные в .RData данные\n"
 
-#: src/main/main.c:787
+#: src/main/main.c:811
 msgid "During startup - "
 msgstr "Во время загрузки - "
 
-#: src/main/main.c:989
+#: src/main/main.c:1013
 msgid "cannot quit from browser"
 msgstr "не могу выйти из браузера"
 
-#: src/main/main.c:993
+#: src/main/main.c:1017
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "ожидается одно из: \"yes\", \"no\", \"ask\" или \"default\"."
 
-#: src/main/main.c:998
+#: src/main/main.c:1022
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" во время неинтерактивной работы: будет использована командная "
 "строка по умолчанию"
 
-#: src/main/main.c:1006
+#: src/main/main.c:1030
 msgid "unrecognized value of 'save'"
 msgstr "нераспознанное значение 'save'"
 
-#: src/main/main.c:1009
+#: src/main/main.c:1033
 msgid "invalid 'status', 0 assumed"
 msgstr "неправильный 'status', принят 0"
 
-#: src/main/main.c:1014
+#: src/main/main.c:1038
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "неправильный 'runLast', принято FALSE"
 
-#: src/main/main.c:1045
+#: src/main/main.c:1069
 msgid "cannot allocate space for toplevel callback element"
 msgstr "не могу выделить место обратного вызова элемента верхнего уровня"
 
-#: src/main/main.c:1123
+#: src/main/main.c:1147
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "отрицательный индекс передан в R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1236
+#: src/main/main.c:1260
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 "предупреждающие сообщения из обратного вызова задачи верхнего уровня '%s'\n"
 
-#: src/main/main.c:1296
+#: src/main/main.c:1320
 msgid "top-level task callback did not return a logical value"
 msgstr "обратный вызов задачи верхнего уровня не вернул логического значения"
 
@@ -7027,202 +7027,3 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 недоступен"
-
-#~ msgid "cannot allocate memory for InternetRoutines structure"
-#~ msgstr "не могу разместить память для структуры 'InternetRoutines'"
-
-#, fuzzy
-#~ msgid "unknown graphical parameter \"%s\""
-#~ msgstr "неправильный список графических параметров"
-
-#~ msgid "'lwd' must be numeric of length >=1"
-#~ msgstr "'lwd' должна быть числом длиной >=1"
-
-#~ msgid "%s\\doc\\html\\rwin.htm[l] not found"
-#~ msgstr "%s\\doc\\html\\rwin.htm[l] не найден"
-
-#~ msgid "%s not found"
-#~ msgstr "%s не найден"
-
-#~ msgid "WinHelp call failed"
-#~ msgstr "вызвать WinHelp не получилось"
-
-#~ msgid "too many .hlp files opened"
-#~ msgstr "открыто слишком много hlp-файлов"
-
-#~ msgid "type not yet implemented"
-#~ msgstr "тип еще не разработан"
-
-#~ msgid "invalid 'x' argument"
-#~ msgstr "неправильный аргумент 'x'"
-
-#~ msgid "invalid 'recursive' argument"
-#~ msgstr "неправильный аргумент 'recursive'"
-
-#~ msgid "invalid 'topic' argument"
-#~ msgstr "неправильный аргумент 'topic'"
-
-#~ msgid "invalid 'hlpfile' argument"
-#~ msgstr "неправильный аргумент 'hlpfile'"
-
-#~ msgid "invalid 'file' argument"
-#~ msgstr "неправильный аргумент 'файл'"
-
-#~ msgid "invalid 'message' argument"
-#~ msgstr "неправильный аргумент 'сообщение'"
-
-#~ msgid "invalid 'default' argument"
-#~ msgstr "неправильный аргумент 'default'"
-
-#~ msgid "invalid 'menuname' argument"
-#~ msgstr "неправильный аргумент 'menuимя'"
-
-#~ msgid "invalid 'itemname' argument"
-#~ msgstr "неправильный аргумент 'itemимя'"
-
-#~ msgid "invalid 'time' value"
-#~ msgstr "неправильное значение 'time'"
-
-#~ msgid "invalid 'path' argument"
-#~ msgstr "неправильный аргумент 'path'"
-
-#~ msgid "invalid 'list' argument"
-#~ msgstr "неправильный аргумент 'list'"
-
-#~ msgid "invalid 'preselect' argument"
-#~ msgstr "неправильный аргумент 'preselect'"
-
-#~ msgid "class name too long in %s"
-#~ msgstr "у %s слишком длинное имя класса"
-
-#~ msgid "invalid add argument"
-#~ msgstr "неправильный дополнительный аргумент"
-
-#~ msgid "invalid 'fill' argument"
-#~ msgstr "неправильный аргумент 'fill'"
-
-#~ msgid "invalid 'label' argument"
-#~ msgstr "неправильный аргумент 'label'"
-
-#~ msgid "invalid 'append' specification"
-#~ msgstr "неправильное определение 'append'"
-
-#~ msgid "invalid 'type' arg"
-#~ msgstr "неправильный аргумент 'тип'"
-
-#~ msgid "invalid 'description' argument"
-#~ msgstr "неправильный аргумент 'description'"
-
-#~ msgid "invalid 'open' argument"
-#~ msgstr "неправильный 'open' аргумент"
-
-#~ msgid "invalid 'block' argument"
-#~ msgstr "неправильный 'block' аргумент"
-
-#~ msgid "invalid 'encoding' argument"
-#~ msgstr "неправильный 'encoding' аргумент"
-
-#~ msgid "invalid 'compress' argument"
-#~ msgstr "неправильный соединениеs 'compress'"
-
-#~ msgid "invalid 'text' argument"
-#~ msgstr "неправильный аргумент 'text'"
-
-#~ msgid "invalid 'environment' argument"
-#~ msgstr "неправильный аргумент 'окружение'"
-
-#~ msgid "invalid 'host' argument"
-#~ msgstr "неправильный аргумент 'host'"
-
-#~ msgid "invalid 'port' argument"
-#~ msgstr "неправильный аргумент 'port'"
-
-#~ msgid "invalid 'server' argument"
-#~ msgstr "неправильный аргумент 'server'"
-
-#~ msgid "invalid 'blocking' argument"
-#~ msgstr "неправильный аргумент 'blocking'"
-
-#~ msgid "invalid 'sep' argument"
-#~ msgstr "неправильный аргумент 'sep'"
-
-#~ msgid "invalid 'newLine' argument"
-#~ msgstr "неправильный аргумент 'newLine'"
-
-#~ msgid "invalid 'format' argument"
-#~ msgstr "неправильный аргумент 'format'"
-
-#~ msgid "invalid 'usetz' argument"
-#~ msgstr "неправильный аргумент 'usetz'"
-
-#~ msgid "invalid 'naok' value"
-#~ msgstr "неправильное значение 'naok'"
-
-#~ msgid "invalid 'topics' argument"
-#~ msgstr "неправильный аргумент 'topics'"
-
-#~ msgid "invalid 'destination' argument"
-#~ msgstr "неправильный аргумент 'destination'"
-
-#~ msgid "cannot unbind in the NULL environment"
-#~ msgstr "не могу освободить в NULL-окружении"
-
-#~ msgid "invalid 'envir' argument"
-#~ msgstr "неправильный аргумент 'envir'"
-
-#~ msgid "invalid 'inherits' argument"
-#~ msgstr "неправильный аргумент 'inherits'"
-
-#~ msgid "invalid 'mode' argument"
-#~ msgstr "неправильный аргумент 'mode'"
-
-#~ msgid "invalid 'ifnotfound' argument"
-#~ msgstr "неправильный аргумент 'ifnotнайден'"
-
-#~ msgid "bad 'names' argument"
-#~ msgstr "неправильный аргумент 'имяs'"
-
-#~ msgid "Warning message:\n"
-#~ msgid_plural "Warning messages:\n"
-#~ msgstr[0] "Предупреждающее сообщение:\n"
-#~ msgstr[1] "Предупреждающие сообщения:\n"
-#~ msgstr[2] "Предупреждающие сообщения:\n"
-
-#~ msgid "invalid 'string' value"
-#~ msgstr "неправильное значение 'string'"
-
-#~ msgid "invalid 'domain' value"
-#~ msgstr "неправильное значение 'domain'"
-
-#~ msgid "invalid 'dirname' value"
-#~ msgstr "неправильное значение 'dirимя' "
-
-#~ msgid "invalid 'filename' argument"
-#~ msgstr "неправильный аргумент 'fileимя'"
-
-#~ msgid "call name too long in %s"
-#~ msgstr "слишком длинное имя вызова в %s"
-
-#~ msgid "syntax error: evaluating expression %d"
-#~ msgstr "синтаксическая ошибка: выполнение выражения %d"
-
-#~ msgid "%d argument passed to '%s' which requires %d"
-#~ msgid_plural "%d arguments passed to '%s' which requires %d"
-#~ msgstr[0] "%d аргумент передан '%s' (требуется %d)"
-#~ msgstr[1] "%d аргумента передано '%s' (требуется %d)"
-#~ msgstr[2] "%d аргументов передано '%s' (требуется %d)"
-
-#~ msgid "invalid 'xinds' argument"
-#~ msgstr "неправильный аргумент для 'xinds'"
-
-#~ msgid "invalid 'yinds' argument"
-#~ msgstr "неправильный аргумент для 'yinds'"
-
-#~ msgid "invalid value for 'w'"
-#~ msgstr "неправильное значение для 'w'"
-
-#~ msgid "invalid value for 'quote'"
-#~ msgstr "неправильное значение для 'quote'"
-
-#~ msgid "invalid value for 'justify'"
-#~ msgstr "неправильное значение для 'justify'"
