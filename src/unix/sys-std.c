@@ -791,7 +791,7 @@ void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
     R_RunExitFinalizers();
     CleanEd();
     if(saveact != SA_SUICIDE) KillAllDevices();
-    if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
+    if((tmpdir = R_TempDir)) {
 	snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
 	R_system((char *)buf);
     }

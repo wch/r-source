@@ -24,8 +24,8 @@ HEADERS = \
 SOURCES = \
  bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
  localealias.c textdomain.c l10nflist.c explodename.c dcigettext.c \
- dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c localcharset.c \
- localename.c log.c printf.c osdep.c intl-compat.c
+ dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c langprefs.c \
+ localcharset.c localename.c log.c printf.c osdep.c intl-compat.c
 
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)

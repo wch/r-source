@@ -1519,25 +1519,6 @@ stopifnot(length(x) == length(predict(ss,deriv=1)$x))# not yet in 1.5.0
 ## pweibull(large, log=T):
 stopifnot(pweibull(seq(1,50,len=1001), 2,3, log = TRUE) < 0)
 
-## selfStart.default() w/ no parameters:
-## --> make this into example(selfStart) {with data and nls()!}
-logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
-		function(x, Asym, xmid, scal){} )
-logistInit <- function(mCall, LHS, data) {
-    xy <- sortedXyData(mCall[["x"]], LHS, data)
-    if(nrow(xy) < 3) stop("Too few distinct input values to fit a logistic")
-    Asym <- max(abs(xy[,"y"]))
-    if (Asym != max(xy[,"y"])) Asym <- -Asym  # negative asymptote
-    xmid <- NLSstClosestX(xy, 0.5 * Asym)
-    scal <- NLSstClosestX(xy, 0.75 * Asym) - xmid
-    value <- c(Asym, xmid, scal)
-    names(value) <- mCall[c("Asym", "xmid", "scal")]
-    value
-}
-logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
-str(logist)
-
-
 ## part of PR 1662: fisher.test with total one
 fisher.test(cbind(0, c(0,0,0,1)))
 ## crashed in R <= 1.5.0
@@ -3535,6 +3516,8 @@ summary(data.frame(mat = I(matrix(1:8, 2))))
 summary(data.frame(x = gl(2,2), I(matrix(1:8, 4))))
 ##
 
+
+
 ### fixes for 2.1.1 ###
 
 ## PR#7792: predict.glm dropped names
@@ -3593,6 +3576,7 @@ plot(x, exp(x), log = "y", ylim = c(30,1))
 ## gave error (and warning) in  log - axis(), 'at' creation
 
 ### end of tests added in 2.1.0 patched ###
+
 
 
 ## Multibyte character set regular expressions had buffer overrun
@@ -3988,24 +3972,3 @@ writeLines(xx, con)
 close(con)
 unlink("test.gz")
 ## segfaulted in 2.2.0 on some x86_64 systems.
-
-
-## weighted nls fit
-y <- x <- 1:10
-yeps <- y + rnorm(length(y), sd = 0.01)
-wts <- rep(c(1, 2), length = 10)
-fit0 <- lm(yeps~x, weights=wts)
-summary(fit0, cor = TRUE)
-cf0 <- coef(summary(fit0))[, 1:2]
-fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
-           weights = wts, trace = TRUE)
-summary(fit)
-cf1 <- coef(summary(fit))[, 1:2]
-fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
-            weights = wts, trace = TRUE, algorithm = "port")
-summary(fit2)
-cf2 <- coef(summary(fit2))[, 1:2]
-rownames(cf0) <- c("a", "b")
-# expect relative errors ca 2e-08
-stopifnot(all.equal(cf1, cf0, 1e-6),  all.equal(cf1, cf0, 1e-6))
-## weights unsupported < 2.3.0

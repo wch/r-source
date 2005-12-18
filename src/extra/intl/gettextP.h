@@ -1,5 +1,5 @@
 /* Header describing internals of libintl library.
-   Copyright (C) 1995-1999, 2000-2003 Free Software Foundation, Inc.
+   Copyright (C) 1995-1999, 2000-2005 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@cygnus.com>, 1995.
 
    This program is free software; you can redistribute it and/or modify it
@@ -14,7 +14,7 @@
 
    You should have received a copy of the GNU Library General Public
    License along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
    USA.  */
 
 #ifndef _GETTEXTP_H
@@ -143,6 +143,9 @@ struct binding
 extern int _nl_msg_cat_cntr;
 
 #ifndef _LIBC
+const char *_nl_language_preferences_default (void);
+const char *_nl_locale_name_posix (int category, const char *categoryname);
+const char *_nl_locale_name_default (void);
 const char *_nl_locale_name (int category, const char *categoryname);
 #endif
 

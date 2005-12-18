@@ -99,7 +99,7 @@ NEW FEATURES
 	usual way.
 
     o	plot.xy() now takes its default arguments from the
-	corresponding par() setting, so points(type="l") and
+	corresponding par() settings, so points(type="l") and
 	lines(type="p") behave in the same way (and more obviously,
 	also for type="b").
 
@@ -223,6 +223,8 @@ NEW FEATURES
     o	On suitably equipped Unix-alike systems, segfaults and bus errors
 	are caught and there is a simple error-handler which gives
 	the user some choice as to what to do. [Currently experimental.]
+
+    o	gettext has been updated to 0.14.5.
 
 
 DEPRECATED & DEFUNCT

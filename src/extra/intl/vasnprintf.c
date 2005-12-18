@@ -1,5 +1,5 @@
 /* vsprintf with automatic memory allocation.
-   Copyright (C) 1999, 2002-2003 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002-2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU Library General Public
    License along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
    USA.  */
 
 /* Tell glibc's <stdio.h> to provide a prototype for snprintf().
@@ -41,7 +41,7 @@
 #include <stdlib.h>	/* abort(), malloc(), realloc(), free() */
 #include <string.h>	/* memcpy(), strlen() */
 #include <errno.h>	/* errno */
-#include <limits.h>	/* CHAR_BIT */
+#include <limits.h>	/* CHAR_BIT, INT_MAX */
 #include <float.h>	/* DBL_MAX_EXP, LDBL_MAX_EXP */
 #if WIDE_CHAR_VERSION
 # include "wprintf-parse.h"
@@ -51,6 +51,11 @@
 
 /* Checked size_t computations.  */
 #include "xsize.h"
+
+/* Some systems, like OSF/1 4.0 and Woe32, don't have EOVERFLOW.  */
+#ifndef EOVERFLOW
+# define EOVERFLOW E2BIG
+#endif
 
 #ifdef HAVE_WCHAR_T
 # ifdef HAVE_WCSLEN
@@ -316,9 +321,8 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
 			  const CHAR_T *digitp = dp->precision_start + 1;
 
 			  precision = 0;
-			  do
+			  while (digitp != dp->precision_end)
 			    precision = xsum (xtimes (precision, 10), *digitp++ - '0');
-			  while (digitp != dp->precision_end);
 			}
 		    }
 
@@ -864,7 +868,18 @@ VASNPRINTF (CHAR_T *resultbuf, size_t *lengthp, const CHAR_T *format, va_list ar
       free (buf_malloced);
     CLEANUP ();
     *lengthp = length;
+    if (length > INT_MAX)
+      goto length_overflow;
     return result;
+
+  length_overflow:
+    /* We could produce such a big string, but its length doesn't fit into
+       an 'int'.  POSIX says that snprintf() fails with errno = EOVERFLOW in
+       this case.  */
+    if (result != resultbuf)
+      free (result);
+    errno = EOVERFLOW;
+    return NULL;
 
   out_of_memory:
     if (!(result == resultbuf || result == NULL))

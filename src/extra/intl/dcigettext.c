@@ -1,5 +1,5 @@
 /* Implementation of the internal dcigettext function.
-   Copyright (C) 1995-1999, 2000-2003 Free Software Foundation, Inc.
+   Copyright (C) 1995-1999, 2000-2005 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU Library General Public
    License along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
    USA.  */
 
 /* Tell glibc's <string.h> to provide a prototype for mempcpy().
@@ -200,8 +200,8 @@ static void *mempcpy (void *dest, const void *src, size_t n);
                         it may be concatenated to a directory pathname.
    IS_PATH_WITH_DIR(P)  tests whether P contains a directory specification.
  */
-#if defined _WIN32 || defined __WIN32__ || defined __EMX__ || defined __DJGPP__
-  /* Win32, OS/2, DOS */
+#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
+  /* Win32, Cygwin, OS/2, DOS */
 # define ISSLASH(C) ((C) == '/' || (C) == '\\')
 # define HAS_DEVICE(P) \
     ((((P)[0] >= 'A' && (P)[0] <= 'Z') || ((P)[0] >= 'a' && (P)[0] <= 'z')) \
@@ -1095,31 +1095,50 @@ category_to_name (int category)
 }
 #endif
 
-/* Guess value of current locale from value of the environment variables.  */
+/* Guess value of current locale from value of the environment variables
+   or system-dependent defaults.  */
 static const char *
 internal_function
 guess_category_value (int category, const char *categoryname)
 {
   const char *language;
-  const char *retval;
+  const char *locale;
+#ifndef _LIBC
+  const char *language_default;
+  int locale_defaulted;
+#endif
 
-  /* The highest priority value is the `LANGUAGE' environment
-     variable.  But we don't use the value if the currently selected
-     locale is the C locale.  This is a GNU extension.  */
-  language = getenv ("LANGUAGE");
-  if (language != NULL && language[0] == '\0')
-    language = NULL;
+  /* We use the settings in the following order:
+     1. The value of the environment variable 'LANGUAGE'.  This is a GNU
+        extension.  Its value can be a colon-separated list of locale names.
+     2. The value of the environment variable 'LC_ALL', 'LC_xxx', or 'LANG'.
+        More precisely, the first among these that is set to a non-empty value.
+        This is how POSIX specifies it.  The value is a single locale name.
+     3. A system-dependent preference list of languages.  Its value can be a
+        colon-separated list of locale names.
+     4. A system-dependent default locale name.
+     This way:
+       - System-dependent settings can be overridden by environment variables.
+       - If the system provides both a list of languages and a default locale,
+         the former is used.  */
 
-  /* We have to proceed with the POSIX methods of looking to `LC_ALL',
+  /* Fetch the locale name, through the POSIX method of looking to `LC_ALL',
      `LC_xxx', and `LANG'.  On some systems this can be done by the
      `setlocale' function itself.  */
 #ifdef _LIBC
-  retval = __current_locale_name (category);
+  locale = __current_locale_name (category);
 #else
-  retval = _nl_locale_name (category, categoryname);
+  locale = _nl_locale_name_posix (category, categoryname);
+  locale_defaulted = 0;
+  if (locale == NULL)
+    {
+      locale = _nl_locale_name_default ();
+      locale_defaulted = 1;
+    }
 #endif
 
-  /* Ignore LANGUAGE if the locale is set to "C" because
+  /* Ignore LANGUAGE and its system-dependent analogon if the locale is set
+     to "C" because
      1. "C" locale usually uses the ASCII encoding, and most international
 	messages use non-ASCII characters. These characters get displayed
 	as question marks (if using glibc's iconv()) or as invalid 8-bit
@@ -1127,8 +1146,28 @@ guess_category_value (int category, const char *categoryname)
 	characters to ASCII). In any case, the output is ugly.
      2. The precise output of some programs in the "C" locale is specified
 	by POSIX and should not depend on environment variables like
-	"LANGUAGE".  We allow such programs to use gettext().  */
-  return language != NULL && strcmp (retval, "C") != 0 ? language : retval;
+	"LANGUAGE" or system-dependent information.  We allow such programs
+        to use gettext().  */
+  if (strcmp (locale, "C") == 0)
+    return locale;
+
+  /* The highest priority value is the value of the 'LANGUAGE' environment
+     variable.  */
+  language = getenv ("LANGUAGE");
+  if (language != NULL && language[0] != '\0')
+    return language;
+#ifndef _LIBC
+  /* The next priority value is the locale name, if not defaulted.  */
+  if (locale_defaulted)
+    {
+      /* The next priority value is the default language preferences list. */
+      language_default = _nl_language_preferences_default ();
+      if (language_default != NULL)
+        return language_default;
+    }
+  /* The least priority value is the locale name, if defaulted.  */
+#endif
+  return locale;
 }
 
 /* @@ begin of epilog @@ */

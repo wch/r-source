@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU Library General Public
    License along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
    USA.  */
 
 /* Tell glibc's <string.h> to provide a prototype for mempcpy().
@@ -88,12 +88,6 @@ char *alloca ();
 #include "gettextP.h"
 #include "hash-string.h"
 #include "plural-exp.h"
-
-/* we need this to test libiconv version below */
-#ifdef HAVE_ICONV_H
-# include <iconv.h>
-#endif
-
 
 #ifdef _LIBC
 # include "../locale/localeinfo.h"
