@@ -530,26 +530,3 @@ msgstr "행해졌습니다"
 
 msgid "parsing '%s'"
 msgstr "분석 '%s'"
-
-#~ msgid "unclosed \\dontshow or \\testonly"
-#~ msgstr "\\\\dontshow 또는 \\\\testonly는 닫히고 있지 않습니다"
-
-#~ msgid "*** someone has corrupted the Built field in package"
-#~ msgstr ""
-#~ "*** 어떤것(someone)이 패키지'%s'에서 구축된 필드를 corrupt하게 되었습니다 "
-#~ "***"
-
-#~ msgid "Package"
-#~ msgstr "패키지"
-
-#~ msgid "***"
-#~ msgstr "***"
-
-#~ msgid "INDEX"
-#~ msgstr "인덱스"
-
-#~ msgid "object(s)"
-#~ msgstr "오브젝트(s)"
-
-#~ msgid ","
-#~ msgstr ","

@@ -2121,21 +2121,3 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
-
-#~ msgid "'shape' must be strictly positive"
-#~ msgstr "'shape' deve essere strettamente positivo"
-
-#~ msgid "p-values may be incorrect due to ties"
-#~ msgstr "i p-value possono essere sbagliati a causa dei ties"
-
-#~ msgid "one-argument anova() not implemented for 'mlm' objects"
-#~ msgstr "anova() con un solo argomento non supportato per oggetti 'mlm'"
-
-#~ msgid "'m' is negative"
-#~ msgstr "'m' è negativo"
-
-#~ msgid "need response in formula"
-#~ msgstr "serve la risposta in formula"
-
-#~ msgid "non-integer counts in a Poisson glm!"
-#~ msgstr "frequenze non interne nel modello glm Poisson!"

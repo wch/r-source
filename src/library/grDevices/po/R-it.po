@@ -251,12 +251,3 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
-
-#~ msgid "invalid arguments in"
-#~ msgstr "argomenti non validi in"
-
-#~ msgid "(need named args)"
-#~ msgstr "(servono argomenti col nome)"
-
-#~ msgid "device"
-#~ msgstr "dispositivo"

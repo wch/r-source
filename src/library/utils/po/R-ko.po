@@ -745,12 +745,3 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
-
-#~ msgid "'tar' returned non-zero exit code:"
-#~ msgstr "non-zero exit 코드를 반환하는 'tar' 입니다"
-
-#~ msgid "no package '%s' on CRAN"
-#~ msgstr "CRAN 에서 패키지 %s가 없습니다"
-
-#~ msgid "Download of package '%s' failed"
-#~ msgstr "패키지 '%s'의 다운로드는 실패했습니다"

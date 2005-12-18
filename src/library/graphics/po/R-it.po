@@ -377,26 +377,6 @@ msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] "Dato anomale (%s) nel boxplot %d non disegnato"
 msgstr[1] "Dati anomali (%s) nel boxplot %d non disegnati"
 
-#~ msgid "'coef' must not be negative"
-#~ msgstr "'coef' deve essere non negativo"
-
-#~ msgid "'x' and 'y' lengths differ"
-#~ msgstr "le lunghezze di 'x' e 'y' differiscono"
-
-#~ msgid "invalid first argument [bad language object]"
-#~ msgstr "primo argomento non valido [oggetto sbagliato]"
-
-#~ msgid "at least 2 columns needed"
-#~ msgstr "necessarie almeno 2 colonne"
-
-#~ msgid "'x', 'y' and 'z' lengths differ"
-#~ msgstr "le lunghezze di 'x', 'y' e 'z' differiscono"
-
-#~ msgid "%d x value <= 0 omitted from logarithmic plot"
-#~ msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-#~ msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
-#~ msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
-
 #~ msgid "%d y value <= 0 omitted from logarithmic plot"
 #~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
 #~ msgstr[0] "omesso %d valore di y <= 0 dal grafico su scala logaritmica"

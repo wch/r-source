@@ -531,18 +531,3 @@ msgstr "fatto"
 
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
-
-#~ msgid "unclosed \\dontshow or \\testonly"
-#~ msgstr "\\dontshow o \\testonly non chiusa"
-
-#~ msgid "Package"
-#~ msgstr "Pacchetto"
-
-#~ msgid "object(s)"
-#~ msgstr "oggetto(i)"
-
-#~ msgid "*** someone has corrupted the Built field in package"
-#~ msgstr "*** qualcuno ha danneggiato il campo Built del pacchetto"
-
-#~ msgid "***"
-#~ msgstr "***"

@@ -2111,22 +2111,3 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
-
-#~ msgid "'shape' must be strictly positive"
-#~ msgstr "'shape' 파라미터는 positive가 아니면 되지 않습니다"
-
-#~ msgid "p-values may be incorrect due to ties"
-#~ msgstr "p-values는 ties 때문에 정확한 p값을 계산할수가 없습니다"
-
-#~ msgid "one-argument anova() not implemented for 'mlm' objects"
-#~ msgstr ""
-#~ "one-argument anova()는 mlm의 오브젝트에 대해서는 실제 적용되지 않습니다"
-
-#~ msgid "'m' is negative"
-#~ msgstr "'m'은 negative입니다"
-
-#~ msgid "need response in formula"
-#~ msgstr "모델식에 응답이 필요합니다"
-
-#~ msgid "non-integer counts in a Poisson glm!"
-#~ msgstr "포아송 glm에서 정수가 아닌 카운터가 있었습니다!"

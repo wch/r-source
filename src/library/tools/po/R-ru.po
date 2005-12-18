@@ -506,6 +506,3 @@ msgstr "готово"
 msgid "parsing '%s'"
 msgstr "разбор '%s'"
 
-#~ msgid "Syntax error in объект документации '%s':"
-#~ msgstr "Ошибка синтаксиса в объекте документации '%s':"
-
