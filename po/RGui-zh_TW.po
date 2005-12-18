@@ -1147,6 +1147,3 @@ msgstr "等待頁面變更的確認..."
 #: ../library/grDevices/src/devWindows.c:3025
 msgid "Click or hit ENTER for next page"
 msgstr "按 ENTER 來看下一頁"
-
-#~ msgid "search.r-project.org ..."
-#~ msgstr "search.r-project.org ..."
