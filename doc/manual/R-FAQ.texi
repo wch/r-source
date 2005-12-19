@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-12-17
+@set FAQ_DATE @value{FAQ_YEAR}-12-19
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2599,6 +2599,8 @@ Fit a shared gamma frailty model and Cox proportional hazards model
 using a Penalized Likelihood on the hazard function.
 @item ftnonpar
 Features and strings for nonparametric regression.
+@item fuzzyRankTests
+Fuzzy rank tests and confidence intervals.
 @item g.data
 Create and maintain delayed-data packages (DDP's).
 @item gRbase
@@ -2700,6 +2702,8 @@ Generalized Regression Analysis and Spatial Predictions for R.
 Miscellaneous functions written/maintained by Gregory R. Warnes.
 @item gridBase
 Integration of base and grid graphics.
+@item grnnR
+A Generalized Regression Neural Network.
 @item grouped
 Regression models for grouped and coarse data, under the Coarsened At
 Random assumption.
