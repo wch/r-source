@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2005-11-06 09:26\n"
 "PO-Revision-Date: 2005-03-31 08:00+0009\n"
@@ -147,11 +147,13 @@ msgstr "postscriptFonts 中の不正な引数です（フォント名が必要�
 msgid "invalid arguments in postscriptFonts (need named args)"
 msgstr "postscriptFonts 中の不正な引数です（名前がついた引数が必要です）"
 
+#, fuzzy
 msgid "invalid arguments in pdfFonts (must be font names)"
-msgstr "pdfFonts 中の不正な引数です（フォント名が必要です）"
+msgstr "X11Fonts 中の不正な引数です（フォント名が必要です）"
 
+#, fuzzy
 msgid "invalid arguments in pdfFonts (need named args)"
-msgstr "pdfFonts 中の不正な引数です（名前がついた引数が必要です）"
+msgstr "X11Fonts 中の不正な引数です（名前がついた引数が必要です）"
 
 msgid "unknown font"
 msgstr ""
@@ -172,10 +174,10 @@ msgid "loading snapshot from different R version"
 msgstr "異なった R バージョンからのスナップショットが読み込まれています"
 
 msgid "'r' must be a \"range\", hence of length 2"
-msgstr ""
+msgstr "'r' は範囲でなければなりません. 従って長さは2です"
 
 msgid "invalid first argument"
-msgstr ""
+msgstr "最初の引数が無効です"
 
 msgid "'x' and 'y' lengths differ"
 msgstr "'x' と 'y' の長さが異なります"
