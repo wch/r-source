@@ -42,7 +42,7 @@ sink.number(type = c("output", "message"))
   output, so output reverts to the previous diversion (if there was
   one).  The stack is of up to 21 connections (20 diversions).
 
-  If \code{file} is a connection if will be opened if necessary.
+  If \code{file} is a connection it will be opened if necessary.
 
   Sink-ing the messages stream should be done only with great care.
   For that stream \code{file} must be an already open connection, and
