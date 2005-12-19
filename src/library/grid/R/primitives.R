@@ -613,7 +613,7 @@ xDetails.xspline <- function(x, theta) {
 
 yDetails.xspline <- function(x, theta) {
   bounds <- grid.Call("L_xsplineBounds", x$x, x$y, x$shape, x$open, x$arrow,
-                      xsplineIndex(x), theta)
+                      x$repEnds, xsplineIndex(x), theta)
   if (is.null(bounds))
     unit(0.5, "npc")
   else
@@ -622,7 +622,7 @@ yDetails.xspline <- function(x, theta) {
 
 widthDetails.xspline <- function(x) {
   bounds <- grid.Call("L_xsplineBounds", x$x, x$y, x$shape, x$open, x$arrow,
-                      list(as.integer(1:length(x$x))), 0)
+                      x$repEnds, list(as.integer(1:length(x$x))), 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -631,7 +631,7 @@ widthDetails.xspline <- function(x) {
 
 heightDetails.xspline <- function(x) {
   bounds <- grid.Call("L_xsplineBounds", x$x, x$y, x$shape, x$open, x$arrow,
-                      list(as.integer(1:length(x$x))), 0)
+                      x$repEnds, list(as.integer(1:length(x$x))), 0)
   if (is.null(bounds))
     unit(0, "inches")
   else

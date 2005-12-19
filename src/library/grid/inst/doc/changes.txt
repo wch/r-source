@@ -36,6 +36,12 @@ Changes from grid_2.2.0 to grid_2.3.0:
     'id' or 'id.length' were used, only a single polygon would
     be drawn (with unexpected shape).
 
+8.  New grid.curve() primitive for drawing a curve between two
+    locations.  
+
+    Together with new grobX() and grobY() provides support for
+    drawing simple node-and-edge graphs and flow diagrams.
+
 
 Changes from grid_2.1.0 to grid_2.2.0:
 ------------------------------------

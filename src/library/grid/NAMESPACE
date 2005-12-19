@@ -3,7 +3,7 @@ useDynLib("grid")
 import(grDevices)
 
 export(
-       "arrow",
+       "arcCurvature", "arrow",
        # Conversion of units
        "convertUnit", "convertX", "convertY",
        "convertWidth", "convertHeight",
@@ -60,12 +60,13 @@ export(
        "setChildren",
 
        # Creating and drawing predefined grobs and gTrees
-       "grid.arrows", "grid.circle",
+       "grid.arrows", "grid.circle", "grid.curve",
        "grid.line.to", "grid.lines", "grid.move.to",
        "grid.points", "grid.polygon", "grid.xspline",
        "grid.rect", "grid.segments", "grid.text",
        "grid.xaxis", "grid.yaxis",
-       "arrowsGrob", "circleGrob", "linesGrob", "lineToGrob", "moveToGrob",
+       "arrowsGrob", "circleGrob", "curveGrob",
+       "linesGrob", "lineToGrob", "moveToGrob",
        "pointsGrob", "polygonGrob", "rectGrob", "segmentsGrob", "textGrob",
        "xaxisGrob", "yaxisGrob", "xsplineGrob",
 
@@ -133,6 +134,7 @@ S3method("grid.draw", "pop")
 S3method("grid.draw", "up")
 S3method("drawDetails", "arrows")
 S3method("drawDetails", "circle")
+S3method("drawDetails", "curve")
 S3method("drawDetails", "grob")
 S3method("drawDetails", "line.to")
 S3method("drawDetails", "lines")
@@ -166,6 +168,7 @@ S3method("grobY", "gPath")
 S3method("grobY", "default")
 S3method("heightDetails", "arrows")
 S3method("heightDetails", "circle")
+S3method("heightDetails", "curve")
 S3method("heightDetails", "default")
 S3method("heightDetails", "frame")
 S3method("heightDetails", "lines")
@@ -187,6 +190,7 @@ S3method("record", "viewport")
 S3method("record", "vpPath")
 S3method("validDetails", "arrows")
 S3method("validDetails", "circle")
+S3method("validDetails", "curve")
 S3method("validDetails", "grob")
 S3method("validDetails", "lines")
 S3method("validDetails", "line.to")
@@ -198,6 +202,7 @@ S3method("validDetails", "segments")
 S3method("validDetails", "text")
 S3method("widthDetails", "arrows")
 S3method("widthDetails", "circle")
+S3method("widthDetails", "curve")
 S3method("widthDetails", "default")
 S3method("widthDetails", "frame")
 S3method("widthDetails", "lines")
@@ -209,6 +214,7 @@ S3method("widthDetails", "text")
 S3method("widthDetails", "xspline")
 #S3method("width.details", "viewport")
 S3method("xDetails", "circle")
+S3method("xDetails", "curve")
 S3method("xDetails", "lines")
 S3method("xDetails", "points")
 S3method("xDetails", "polygon")
@@ -217,6 +223,7 @@ S3method("xDetails", "segments")
 S3method("xDetails", "text")
 S3method("xDetails", "xspline")
 S3method("yDetails", "circle")
+S3method("yDetails", "curve")
 S3method("yDetails", "lines")
 S3method("yDetails", "points")
 S3method("yDetails", "polygon")
