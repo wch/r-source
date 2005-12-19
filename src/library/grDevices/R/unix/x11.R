@@ -104,12 +104,14 @@ X11Fonts <- function(...) {
     nnames <- length(fontNames)
     if (nnames == 0) {
       if (!all(sapply(fonts, is.character)))
-        stop("invalid arguments in X11Fonts (must be font names)")
+          stop(gettextf("invalid arguments in '%s' (must be font names)",
+                        "X11Fonts"), domain = NA)
       else
         get(".X11.Fonts", envir=.X11env)[unlist(fonts)]
     } else {
       if (ndots != nnames)
-        stop("invalid arguments in X11Fonts (need named args)")
+          stop(gettextf("invalid arguments in '%s' (need named args)",
+                        "X11Fonts"), domain = NA)
       setX11Fonts(fonts, fontNames)
     }
   }

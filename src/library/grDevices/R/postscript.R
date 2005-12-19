@@ -10,7 +10,7 @@ check.options <-
 {
     lnew <- length(new)
     if(lnew != length(newnames <- names(new)))
-	stop(gettextf("invalid arguments in '%s'  (need named args)",
+	stop(gettextf("invalid arguments in '%s' (need named args)",
                       deparse(sys.call(sys.parent()))), domain = NA)
     if(!is.character(name.opt))
 	stop("'name.opt' must be character, name of an existing list")
@@ -24,7 +24,7 @@ check.options <-
     }
     old <- get(name.opt, envir=envir)
     if(!is.list(old))
-	stop("invalid options in ", sQuote(name.opt))
+	stop(gettextf("invalid options in '%s'", name.opt), domain = NA)
     oldnames <- names(old)
     if(lnew > 0) {
 	matches <- pmatch(newnames, oldnames)
@@ -314,7 +314,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 assign(".PostScript.Fonts", list(), envir = .PSenv)
 
 fontError <- function(errDesc)
-    stop("invalid ", errDesc, " in font specification")
+    stop(gettextf("invalid %s in font specification", errdesc), domain = NA)
 
 checkFont <- function(font) UseMethod("checkFont")
 
@@ -377,7 +377,7 @@ checkFontInUse <- function(names, fontDBname) {
                   PACKAGE = "grDevices") ||
             .Call("CIDFontInUse", i, isPDF(fontDBname),
                   PACKAGE = "grDevices"))
-            stop("font " , i, " already in use")
+            stop(gettextf("font %s already in use", i), domain = NA)
 }
 
 setFonts <- function(fonts, fontNames, fontDBname) {
@@ -423,12 +423,14 @@ postscriptFonts <- function(...)
         nnames <- length(fontNames)
         if (nnames == 0) {
             if (!all(sapply(fonts, is.character)))
-                stop("invalid arguments in postscriptFonts (must be font names)")
+                stop(gettextf("invalid arguments in '%s' (must be font names)",
+                              "postscriptFonts"), domain = NA)
             else
                 get(".PostScript.Fonts", envir=.PSenv)[unlist(fonts)]
         } else {
             if (ndots != nnames)
-                stop("invalid arguments in postscriptFonts (need named args)")
+                stop(gettextf("invalid arguments in '%s' (need named args)",
+                              "postscriptFonts"), domain = NA)
             setFonts(fonts, fontNames, ".PostScript.Fonts")
         }
     }
@@ -480,12 +482,14 @@ pdfFonts <- function(...)
         nnames <- length(fontNames)
         if (nnames == 0) {
             if (!all(sapply(fonts, is.character)))
-                stop("invalid arguments in pdfFonts (must be font names)")
+                stop(gettextf("invalid arguments in '%s' (must be font names)",
+                              "pdfFonts"), domain = NA)
             else
                 get(".PDF.Fonts", envir=.PSenv)[unlist(fonts)]
         } else {
             if (ndots != nnames)
-                stop("invalid arguments in pdfFonts (need named args)")
+                stop(gettextf("invalid arguments in '%s' (need named args)",
+                              "pdfFonts"), domain = NA)
             setFonts(fonts, fontNames, ".PDF.Fonts")
         }
     }
