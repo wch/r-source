@@ -65,62 +65,11 @@
 /* Define this if you have support for C99 complex types. */
 #define HAVE_C99_COMPLEX 1
 
-/* Define to 1 if you have the `cacos' function. */
-#define HAVE_CACOS 1
-
-/* Define to 1 if you have the `cacosh' function. */
-#define HAVE_CACOSH 1
-
-/* Define to 1 if you have the `casin' function. */
-#define HAVE_CASIN 1
-
-/* Define to 1 if you have the `casinh' function. */
-#define HAVE_CASINH 1
-
-/* Define to 1 if you have the `catan' function. */
-#define HAVE_CATAN 1
-
-/* Define to 1 if you have the `catanh' function. */
-#define HAVE_CATANH 1
-
-/* Define to 1 if you have the `ccos' function. */
-#define HAVE_CCOS 1
-
-/* Define to 1 if you have the `ccosh' function. */
-#define HAVE_CCOSH 1
-
-/* Define to 1 if you have the `cexp' function. */
-#define HAVE_CEXP 1
-
 /* Define to 1 if you have the `chdir' function. */
 #define HAVE_CHDIR 1
 
-/* Define to 1 if you have the `clog' function. */
-#define HAVE_CLOG 1
-
-/* Define to 1 if you have the <complex.h> header file. */
-#define HAVE_COMPLEX_H 1
-
 /* Defined if framework CoreFoundation is present */
 /* #undef HAVE_COREFOUNDATION_FW */
-
-/* Define to 1 if you have the `cpow' function. */
-#define HAVE_CPOW 1
-
-/* Define to 1 if you have the `csin' function. */
-#define HAVE_CSIN 1
-
-/* Define to 1 if you have the `csinh' function. */
-#define HAVE_CSINH 1
-
-/* Define to 1 if you have the `csqrt' function. */
-#define HAVE_CSQRT 1
-
-/* Define to 1 if you have the `ctan' function. */
-#define HAVE_CTAN 1
-
-/* Define to 1 if you have the `ctanh' function. */
-#define HAVE_CTANH 1
 
 /* Define if the GNU dcgettext() function is already present or preinstalled.
    */
