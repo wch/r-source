@@ -34024,22 +34024,18 @@ if test "${r_cv_c99_complex+set}" = set; then
 else
    echo "$as_me:$LINENO: result: " >&5
 echo "${ECHO_T}" >&6
-
-for ac_header in complex.h
-do
-as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
-if eval "test \"\${$as_ac_Header+set}\" = set"; then
-  echo "$as_me:$LINENO: checking for $ac_header" >&5
-echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6
-if eval "test \"\${$as_ac_Header+set}\" = set"; then
+  if test "${ac_cv_header_complex_h+set}" = set; then
+  echo "$as_me:$LINENO: checking for complex.h" >&5
+echo $ECHO_N "checking for complex.h... $ECHO_C" >&6
+if test "${ac_cv_header_complex_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Header'}'`" >&5
-echo "${ECHO_T}`eval echo '${'$as_ac_Header'}'`" >&6
+echo "$as_me:$LINENO: result: $ac_cv_header_complex_h" >&5
+echo "${ECHO_T}$ac_cv_header_complex_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:$LINENO: checking $ac_header usability" >&5
-echo $ECHO_N "checking $ac_header usability... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking complex.h usability" >&5
+echo $ECHO_N "checking complex.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -34047,7 +34043,7 @@ cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 $ac_includes_default
-#include <$ac_header>
+#include <complex.h>
 _ACEOF
 rm -f conftest.$ac_objext
 if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
@@ -34083,15 +34079,15 @@ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:$LINENO: checking $ac_header presence" >&5
-echo $ECHO_N "checking $ac_header presence... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking complex.h presence" >&5
+echo $ECHO_N "checking complex.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
-#include <$ac_header>
+#include <complex.h>
 _ACEOF
 if { (eval echo "$as_me:$LINENO: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
@@ -34125,25 +34121,25 @@ echo "${ECHO_T}$ac_header_preproc" >&6
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
   yes:no: )
-    { echo "$as_me:$LINENO: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&5
-echo "$as_me: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the compiler's result" >&5
-echo "$as_me: WARNING: $ac_header: proceeding with the compiler's result" >&2;}
+    { echo "$as_me:$LINENO: WARNING: complex.h: accepted by the compiler, rejected by the preprocessor!" >&5
+echo "$as_me: WARNING: complex.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
+    { echo "$as_me:$LINENO: WARNING: complex.h: proceeding with the compiler's result" >&5
+echo "$as_me: WARNING: complex.h: proceeding with the compiler's result" >&2;}
     ac_header_preproc=yes
     ;;
   no:yes:* )
-    { echo "$as_me:$LINENO: WARNING: $ac_header: present but cannot be compiled" >&5
-echo "$as_me: WARNING: $ac_header: present but cannot be compiled" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header:     check for missing prerequisite headers?" >&5
-echo "$as_me: WARNING: $ac_header:     check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: see the Autoconf documentation" >&5
-echo "$as_me: WARNING: $ac_header: see the Autoconf documentation" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&5
-echo "$as_me: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: $ac_header: proceeding with the preprocessor's result" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: in the future, the compiler will take precedence" >&5
-echo "$as_me: WARNING: $ac_header: in the future, the compiler will take precedence" >&2;}
+    { echo "$as_me:$LINENO: WARNING: complex.h: present but cannot be compiled" >&5
+echo "$as_me: WARNING: complex.h: present but cannot be compiled" >&2;}
+    { echo "$as_me:$LINENO: WARNING: complex.h:     check for missing prerequisite headers?" >&5
+echo "$as_me: WARNING: complex.h:     check for missing prerequisite headers?" >&2;}
+    { echo "$as_me:$LINENO: WARNING: complex.h: see the Autoconf documentation" >&5
+echo "$as_me: WARNING: complex.h: see the Autoconf documentation" >&2;}
+    { echo "$as_me:$LINENO: WARNING: complex.h:     section \"Present But Cannot Be Compiled\"" >&5
+echo "$as_me: WARNING: complex.h:     section \"Present But Cannot Be Compiled\"" >&2;}
+    { echo "$as_me:$LINENO: WARNING: complex.h: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: complex.h: proceeding with the preprocessor's result" >&2;}
+    { echo "$as_me:$LINENO: WARNING: complex.h: in the future, the compiler will take precedence" >&5
+echo "$as_me: WARNING: complex.h: in the future, the compiler will take precedence" >&2;}
     (
       cat <<\_ASBOX
 ## ----------------------------------- ##
@@ -34154,27 +34150,24 @@ _ASBOX
       sed "s/^/$as_me: WARNING:     /" >&2
     ;;
 esac
-echo "$as_me:$LINENO: checking for $ac_header" >&5
-echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6
-if eval "test \"\${$as_ac_Header+set}\" = set"; then
+echo "$as_me:$LINENO: checking for complex.h" >&5
+echo $ECHO_N "checking for complex.h... $ECHO_C" >&6
+if test "${ac_cv_header_complex_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  eval "$as_ac_Header=\$ac_header_preproc"
+  ac_cv_header_complex_h=$ac_header_preproc
 fi
-echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Header'}'`" >&5
-echo "${ECHO_T}`eval echo '${'$as_ac_Header'}'`" >&6
-
-fi
-if test `eval echo '${'$as_ac_Header'}'` = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
+echo "$as_me:$LINENO: result: $ac_cv_header_complex_h" >&5
+echo "${ECHO_T}$ac_cv_header_complex_h" >&6
 
 fi
+if test $ac_cv_header_complex_h = yes; then
+  r_cv_c99_complex="yes"
+else
+  r_cv_c99_complex="no"
+fi
 
-done
 
-  r_cv_c99_complex=${ac_cv_header_complex_h}
   if test "${r_cv_c99_complex}" = "yes"; then
     echo "$as_me:$LINENO: checking for double complex" >&5
 echo $ECHO_N "checking for double complex... $ECHO_C" >&6
@@ -34249,26 +34242,10 @@ fi
 
   fi
   if test "${r_cv_c99_complex}" = "yes"; then
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
-		  ccosh csinh ctanh cacosh casinh catanh
-do
-as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+    for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
+	 	   ccosh csinh ctanh cacosh casinh catanh
+    do
+      as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
 echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6
 if eval "test \"\${$as_ac_Symbol+set}\" = set"; then
@@ -34335,22 +34312,10 @@ fi
 echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_Symbol'}'`" >&5
 echo "${ECHO_T}`eval echo '${'$as_ac_Symbol'}'`" >&6
 if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
-
-cat >>confdefs.h <<_ACEOF
-#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
-_ACEOF
-
+  :
+else
+  r_cv_c99_complex=no
 fi
-done
-
-    for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
-		   ccosh csinh ctanh cacosh casinh catanh
-    do
-      as_ac_var=`echo "ac_cv_func_$ac_func"`
-      this=`eval echo '${'$as_ac_var'}'`
-      if test "x$this" = xno; then
-	r_cv_c99_complex=no
-      fi
     done
   fi
     if test "${r_cv_c99_complex}" = "yes"; then
@@ -34435,9 +34400,12 @@ fi
 ## check for vecLib framework (potentially to be used for BLAS)
 ## in theory vecLib is platform-independent, in practice only
 ## Apple's Mac OS X is known to provide it
-r_check_fw_save_LIBS=$LIBS
-  echo "$as_me:$LINENO: checking for cblas_cdotu_sub in vecLib framework" >&5
+ echo "$as_me:$LINENO: checking for cblas_cdotu_sub in vecLib framework" >&5
 echo $ECHO_N "checking for cblas_cdotu_sub in vecLib framework... $ECHO_C" >&6
+if test "${r_check_fw_vecLib+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  r_check_fw_save_LIBS=$LIBS
   r_check_fw_vecLib=no
   LIBS="-framework vecLib  $LIBS"
   cat >conftest.$ac_ext <<_ACEOF
@@ -34493,14 +34461,10 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   r_check_fw_vecLib="-framework vecLib"
-                 echo "$as_me:$LINENO: result: yes" >&5
-echo "${ECHO_T}yes" >&6
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
 fi
 rm -f conftest.err conftest.$ac_objext \
       conftest$ac_exeext conftest.$ac_ext
@@ -34516,6 +34480,10 @@ else
   have_vecLib_fw=no
 fi
 
+
+fi
+echo "$as_me:$LINENO: result: $r_check_fw_vecLib" >&5
+echo "${ECHO_T}$r_check_fw_vecLib" >&6
 
 
 ## BLAS.
@@ -38763,9 +38731,12 @@ fi
 
 ## check for CoreFoundation framework (chances are much higher
 ## that we can build AQUA if this one is present)
-r_check_fw_save_LIBS=$LIBS
-  echo "$as_me:$LINENO: checking for CFStringGetSystemEncoding in CoreFoundation framework" >&5
+ echo "$as_me:$LINENO: checking for CFStringGetSystemEncoding in CoreFoundation framework" >&5
 echo $ECHO_N "checking for CFStringGetSystemEncoding in CoreFoundation framework... $ECHO_C" >&6
+if test "${r_check_fw_CoreFoundation+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  r_check_fw_save_LIBS=$LIBS
   r_check_fw_CoreFoundation=no
   LIBS="-framework CoreFoundation  $LIBS"
   cat >conftest.$ac_ext <<_ACEOF
@@ -38821,14 +38792,10 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   r_check_fw_CoreFoundation="-framework CoreFoundation"
-                 echo "$as_me:$LINENO: result: yes" >&5
-echo "${ECHO_T}yes" >&6
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
 fi
 rm -f conftest.err conftest.$ac_objext \
       conftest$ac_exeext conftest.$ac_ext
@@ -38844,6 +38811,10 @@ else
   have_CoreFoundation_fw=no
 fi
 
+
+fi
+echo "$as_me:$LINENO: result: $r_check_fw_CoreFoundation" >&5
+echo "${ECHO_T}$r_check_fw_CoreFoundation" >&6
 
 
 ## Aqua

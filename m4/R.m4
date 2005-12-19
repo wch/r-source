@@ -1546,18 +1546,18 @@ fi
 # HAVE_..._FW if present
 
 AC_DEFUN([R_CHECK_FRAMEWORK],
-[r_check_fw_save_LIBS=$LIBS
-  AC_MSG_CHECKING([for $1 in $2 framework])
+[ AC_CACHE_CHECK([for $1 in $2 framework], [r_check_fw_$2],
+  r_check_fw_save_LIBS=$LIBS
   r_check_fw_$2=no
   LIBS="-framework $2 $5 $LIBS"
   AC_LINK_IFELSE([AC_LANG_CALL([],[$1])],
-                 [r_check_fw_$2="-framework $2"
-                 AC_MSG_RESULT(yes)],[AC_MSG_RESULT(no)])
+                 [r_check_fw_$2="-framework $2"],[])
   LIBS=$r_check_fw_save_LIBS
   AS_IF([test "$r_check_fw_$2" != no],
         [m4_default([$3], [AC_DEFINE_UNQUOTED(AS_TR_CPP(HAVE_$2_FW), 1, [Defined if framework $2 is present])
 	AS_TR_SH(have_$2_fw)=yes])],
 	[m4_default([$4], AS_TR_SH(have_$2_fw)=no)])
+)
 ])# R_CHECK_FRAMEWORK
 
 ## R_AQUA
@@ -3012,24 +3012,16 @@ AC_DEFUN([R_C99_COMPLEX],
   AC_CACHE_CHECK([whether C99 double complex is supported],
   [r_cv_c99_complex],
 [ AC_MSG_RESULT([])
-  AC_CHECK_HEADERS(complex.h)
-  r_cv_c99_complex=${ac_cv_header_complex_h}
+  AC_CHECK_HEADER(complex.h, [r_cv_c99_complex="yes"], [r_cv_c99_complex="no"])
   if test "${r_cv_c99_complex}" = "yes"; then
     AC_CHECK_TYPE([double complex], , r_cv_c99_complex=no, 
                   [#include <complex.h>])
   fi
   if test "${r_cv_c99_complex}" = "yes"; then
-    R_CHECK_FUNCS([cexp clog csqrt cpow ccos csin ctan cacos casin catan \
-		  ccosh csinh ctanh cacosh casinh catanh],
-		  [#include<complex.h>])
     for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
-		   ccosh csinh ctanh cacosh casinh catanh
+	 	   ccosh csinh ctanh cacosh casinh catanh
     do
-      as_ac_var=`echo "ac_cv_func_$ac_func"`
-      this=`eval echo '${'$as_ac_var'}'`
-      if test "x$this" = xno; then
-	r_cv_c99_complex=no
-      fi
+      R_CHECK_DECL($ac_func, , [r_cv_c99_complex=no], [#include<complex.h>])dnl
     done
   fi
   dnl Now check if the representation is the same as Rcomplex
