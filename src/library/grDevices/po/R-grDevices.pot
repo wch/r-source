@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:26\n"
+"POT-Creation-Date: 2005-12-19 09:12\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,10 +68,10 @@ msgstr ""
 msgid "cannot shut down device 1 (the null device)"
 msgstr ""
 
-msgid "cannot supply which and device at the same time"
+msgid "cannot supply 'which' and 'device' at the same time"
 msgstr ""
 
-msgid "cannot copy the null device"
+msgid "cannot copy from the null device"
 msgstr ""
 
 msgid "cannot copy to the null device"
@@ -95,7 +95,7 @@ msgstr ""
 msgid "argument is missing with no default"
 msgstr ""
 
-msgid "invalid arguments in '%s'  (need named args)"
+msgid "invalid arguments in '%s' (need named args)"
 msgstr ""
 
 msgid "'name.opt' must be character, name of an existing list"
@@ -104,7 +104,7 @@ msgstr ""
 msgid "cannot reset non-existent '%s'"
 msgstr ""
 
-msgid "invalid options in"
+msgid "invalid options in '%s'"
 msgstr ""
 
 msgid "NOT changing"
@@ -116,10 +116,7 @@ msgstr ""
 msgid "invalid PDF version"
 msgstr ""
 
-msgid "invalid"
-msgstr ""
-
-msgid "in font specification"
+msgid "invalid %s in font specification"
 msgstr ""
 
 msgid "Invalid font type"
@@ -131,22 +128,10 @@ msgstr ""
 msgid "Invalid font database name"
 msgstr ""
 
-msgid "font"
+msgid "font %s already in use"
 msgstr ""
 
-msgid "already in use"
-msgstr ""
-
-msgid "invalid arguments in postscriptFonts (must be font names)"
-msgstr ""
-
-msgid "invalid arguments in postscriptFonts (need named args)"
-msgstr ""
-
-msgid "invalid arguments in pdfFonts (must be font names)"
-msgstr ""
-
-msgid "invalid arguments in pdfFonts (need named args)"
+msgid "invalid arguments in '%s' (must be font names)"
 msgstr ""
 
 msgid "unknown font"
@@ -213,12 +198,6 @@ msgid "invalid arguments in quartzFonts (need named args)"
 msgstr ""
 
 msgid "invalid X11 font specification:"
-msgstr ""
-
-msgid "invalid arguments in X11Fonts (must be font names)"
-msgstr ""
-
-msgid "invalid arguments in X11Fonts (need named args)"
 msgstr ""
 
 msgid "can only bring windows devices to the front"

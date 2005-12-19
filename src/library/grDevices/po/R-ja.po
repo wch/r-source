@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:26\n"
+"POT-Creation-Date: 2005-12-19 09:12\n"
 "PO-Revision-Date: 2005-03-31 08:00+0009\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -69,11 +69,13 @@ msgstr "カラースペース(color spaces)は異なった基準白色が使わ�
 msgid "cannot shut down device 1 (the null device)"
 msgstr "デバイス 1 をシャットダウンすることが出来ません（NULL デバイスです）"
 
-msgid "cannot supply which and device at the same time"
+#, fuzzy
+msgid "cannot supply 'which' and 'device' at the same time"
 msgstr "同時に which と device を与えることは出来ません"
 
-msgid "cannot copy the null device"
-msgstr "NULL デバイスをコピーすることは出来ません"
+#, fuzzy
+msgid "cannot copy from the null device"
+msgstr "NULL デバイスにコピーすることは出来ません"
 
 msgid "cannot copy to the null device"
 msgstr "NULL デバイスにコピーすることは出来ません"
@@ -98,7 +100,8 @@ msgstr ""
 msgid "argument is missing with no default"
 msgstr "引数はデフォルトなしで欠損となっています"
 
-msgid "invalid arguments in '%s'  (need named args)"
+#, fuzzy
+msgid "invalid arguments in '%s' (need named args)"
 msgstr "'%s' 中の不正な引数です（名前がついた引数が必要です）"
 
 msgid "'name.opt' must be character, name of an existing list"
@@ -107,7 +110,8 @@ msgstr "'name.opt' は既存のリストの名前である文字列でなけれ�
 msgid "cannot reset non-existent '%s'"
 msgstr "存在しない '%s' をリセットすることは出来ません"
 
-msgid "invalid options in"
+#, fuzzy
+msgid "invalid options in '%s'"
 msgstr "以下は不正なオプションです: "
 
 msgid "NOT changing"
@@ -119,11 +123,8 @@ msgstr "不正な 'family' 引数です"
 msgid "invalid PDF version"
 msgstr "不正な PDF のバージョンです"
 
-msgid "invalid"
-msgstr "不正な"
-
 #, fuzzy
-msgid "in font specification"
+msgid "invalid %s in font specification"
 msgstr "不正な X11 フォントの指定方法です"
 
 msgid "Invalid font type"
@@ -135,25 +136,12 @@ msgstr ""
 msgid "Invalid font database name"
 msgstr ""
 
-msgid "font"
-msgstr "フォント"
-
-msgid "already in use"
+#, fuzzy
+msgid "font %s already in use"
 msgstr "は既に使われています"
 
-msgid "invalid arguments in postscriptFonts (must be font names)"
-msgstr "postscriptFonts 中の不正な引数です（フォント名が必要です）"
-
-msgid "invalid arguments in postscriptFonts (need named args)"
-msgstr "postscriptFonts 中の不正な引数です（名前がついた引数が必要です）"
-
-#, fuzzy
-msgid "invalid arguments in pdfFonts (must be font names)"
-msgstr "X11Fonts 中の不正な引数です（フォント名が必要です）"
-
-#, fuzzy
-msgid "invalid arguments in pdfFonts (need named args)"
-msgstr "X11Fonts 中の不正な引数です（名前がついた引数が必要です）"
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "'%s' 中の不正な引数です（フォント名が必要です）"
 
 msgid "unknown font"
 msgstr ""
@@ -221,12 +209,6 @@ msgstr "quartzFonts 中の不正な引数です（名前がついた引数が必
 msgid "invalid X11 font specification:"
 msgstr "不正な X11 フォントの指定方法です"
 
-msgid "invalid arguments in X11Fonts (must be font names)"
-msgstr "X11Fonts 中の不正な引数です（フォント名が必要です）"
-
-msgid "invalid arguments in X11Fonts (need named args)"
-msgstr "X11Fonts 中の不正な引数です（名前がついた引数が必要です）"
-
 msgid "can only bring windows devices to the front"
 msgstr "windows デバイスしか正面にもってくることが出来ません"
 
@@ -273,6 +255,3 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
 msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
-
-#~ msgid "in PostScript font specification"
-#~ msgstr "が PostScript フォントの指定中にありました"

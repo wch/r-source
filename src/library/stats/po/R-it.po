@@ -1030,7 +1030,7 @@ msgid "algorithm stopped at boundary value"
 msgstr "algoritmo arrestato sui valori della frontiera"
 
 msgid "fitted probabilities numerically 0 or 1 occurred"
-msgstr "probabilità stimare numericamente pari a 0 o 1"
+msgstr "probabilitàstimate numericamente pari a 0 o 1"
 
 msgid "fitted rates numerically 0 occurred"
 msgstr "si è verificato che i tassi stimati sono numericamente pari a 0"

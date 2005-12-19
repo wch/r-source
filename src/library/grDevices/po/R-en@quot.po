@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:26\n"
-"PO-Revision-Date: 2005-11-06 09:26\n"
+"POT-Creation-Date: 2005-12-19 09:12\n"
+"PO-Revision-Date: 2005-12-19 09:12\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -90,11 +90,11 @@ msgstr "color spaces use different reference whites."
 msgid "cannot shut down device 1 (the null device)"
 msgstr "cannot shut down device 1 (the null device)"
 
-msgid "cannot supply which and device at the same time"
-msgstr "cannot supply which and device at the same time"
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "cannot supply ‘which’ and ‘device’ at the same time"
 
-msgid "cannot copy the null device"
-msgstr "cannot copy the null device"
+msgid "cannot copy from the null device"
+msgstr "cannot copy from the null device"
 
 msgid "cannot copy to the null device"
 msgstr "cannot copy to the null device"
@@ -117,8 +117,8 @@ msgstr "dev.control() called without an open graphics device"
 msgid "argument is missing with no default"
 msgstr "argument is missing with no default"
 
-msgid "invalid arguments in '%s'  (need named args)"
-msgstr "invalid arguments in ‘%s’  (need named args)"
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "invalid arguments in ‘%s’ (need named args)"
 
 msgid "'name.opt' must be character, name of an existing list"
 msgstr "‘name.opt’ must be character, name of an existing list"
@@ -126,8 +126,8 @@ msgstr "‘name.opt’ must be character, name of an existing list"
 msgid "cannot reset non-existent '%s'"
 msgstr "cannot reset non-existent ‘%s’"
 
-msgid "invalid options in"
-msgstr "invalid options in"
+msgid "invalid options in '%s'"
+msgstr "invalid options in ‘%s’"
 
 msgid "NOT changing"
 msgstr "NOT changing"
@@ -138,11 +138,8 @@ msgstr "invalid ‘family’ argument"
 msgid "invalid PDF version"
 msgstr "invalid PDF version"
 
-msgid "invalid"
-msgstr "invalid"
-
-msgid "in font specification"
-msgstr "in font specification"
+msgid "invalid %s in font specification"
+msgstr "invalid %s in font specification"
 
 msgid "Invalid font type"
 msgstr "Invalid font type"
@@ -153,23 +150,11 @@ msgstr "Not a CID font"
 msgid "Invalid font database name"
 msgstr "Invalid font database name"
 
-msgid "font"
-msgstr "font"
+msgid "font %s already in use"
+msgstr "font %s already in use"
 
-msgid "already in use"
-msgstr "already in use"
-
-msgid "invalid arguments in postscriptFonts (must be font names)"
-msgstr "invalid arguments in postscriptFonts (must be font names)"
-
-msgid "invalid arguments in postscriptFonts (need named args)"
-msgstr "invalid arguments in postscriptFonts (need named args)"
-
-msgid "invalid arguments in pdfFonts (must be font names)"
-msgstr "invalid arguments in pdfFonts (must be font names)"
-
-msgid "invalid arguments in pdfFonts (need named args)"
-msgstr "invalid arguments in pdfFonts (need named args)"
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "invalid arguments in ‘%s’ (must be font names)"
 
 msgid "unknown font"
 msgstr "unknown font"
@@ -236,12 +221,6 @@ msgstr "invalid arguments in quartzFonts (need named args)"
 
 msgid "invalid X11 font specification:"
 msgstr "invalid X11 font specification:"
-
-msgid "invalid arguments in X11Fonts (must be font names)"
-msgstr "invalid arguments in X11Fonts (must be font names)"
-
-msgid "invalid arguments in X11Fonts (need named args)"
-msgstr "invalid arguments in X11Fonts (need named args)"
 
 msgid "can only bring windows devices to the front"
 msgstr "can only bring windows devices to the front"

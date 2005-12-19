@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:26\n"
+"POT-Creation-Date: 2005-12-19 09:12\n"
 "PO-Revision-Date: 2005-12-06 14:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -73,11 +73,12 @@ msgstr "les espaces de couleurs utilisent différents blancs de référence."
 msgid "cannot shut down device 1 (the null device)"
 msgstr "impossible de fermer le périphérique 1 (périphérique null)"
 
-msgid "cannot supply which and device at the same time"
+msgid "cannot supply 'which' and 'device' at the same time"
 msgstr "fixer 'which' et 'device' en même temps n'est pas autorisé"
 
-msgid "cannot copy the null device"
-msgstr "impossible de copier le périphérique null"
+#, fuzzy
+msgid "cannot copy from the null device"
+msgstr "impossible de copier vers le périphérique null"
 
 msgid "cannot copy to the null device"
 msgstr "impossible de copier vers le périphérique null"
@@ -100,8 +101,8 @@ msgstr "dev.control() appelé sans périphérique graphique ouvert"
 msgid "argument is missing with no default"
 msgstr "argument manquant sans valeur par défaut"
 
-msgid "invalid arguments in '%s'  (need named args)"
-msgstr "arguments incorrects dans '%s'  (les arguments doivent être nommés)"
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "arguments incorrects dans '%s' (les arguments doivent être nommés)"
 
 msgid "'name.opt' must be character, name of an existing list"
 msgstr ""
@@ -110,8 +111,8 @@ msgstr ""
 msgid "cannot reset non-existent '%s'"
 msgstr "impossible de réinitialiser '%s' car il n'existe pas"
 
-msgid "invalid options in"
-msgstr "options incorrectes dans"
+msgid "invalid options in '%s'"
+msgstr "options incorrectes dans '%s'"
 
 msgid "NOT changing"
 msgstr "NE change(nt) PAS"
@@ -122,11 +123,8 @@ msgstr "argument 'family' incorrect"
 msgid "invalid PDF version"
 msgstr "version de PDF incorrecte"
 
-msgid "invalid"
-msgstr "incorrect"
-
 #, fuzzy
-msgid "in font specification"
+msgid "invalid %s in font specification"
 msgstr "spécification de police X11 incorrecte :"
 
 msgid "Invalid font type"
@@ -138,26 +136,12 @@ msgstr ""
 msgid "Invalid font database name"
 msgstr ""
 
-msgid "font"
-msgstr "police"
-
-msgid "already in use"
+#, fuzzy
+msgid "font %s already in use"
 msgstr "déjà utilisée"
 
-msgid "invalid arguments in postscriptFonts (must be font names)"
-msgstr "arguments incorrects dans postscriptFonts (il faut des noms de police)"
-
-msgid "invalid arguments in postscriptFonts (need named args)"
-msgstr ""
-"arguments incorrects dans postscriptFonts (les arguments doivent être nommés)"
-
-#, fuzzy
-msgid "invalid arguments in pdfFonts (must be font names)"
-msgstr "arguments incorrects dans X11Fonts (il faut des noms de police)"
-
-#, fuzzy
-msgid "invalid arguments in pdfFonts (need named args)"
-msgstr "arguments incorrects dans X11Fonts (les arguments doivent être nommés)"
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "arguments incorrects dans '%s' (il faut des noms de police)"
 
 msgid "unknown font"
 msgstr ""
@@ -230,12 +214,6 @@ msgstr ""
 msgid "invalid X11 font specification:"
 msgstr "spécification de police X11 incorrecte :"
 
-msgid "invalid arguments in X11Fonts (must be font names)"
-msgstr "arguments incorrects dans X11Fonts (il faut des noms de police)"
-
-msgid "invalid arguments in X11Fonts (need named args)"
-msgstr "arguments incorrects dans X11Fonts (les arguments doivent être nommés)"
-
 msgid "can only bring windows devices to the front"
 msgstr ""
 "seules les fenêtres des périphériques graphiques peuvent être amenées au "
@@ -284,6 +262,3 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
 msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"
-
-#~ msgid "in PostScript font specification"
-#~ msgstr "dans les spécification de police PostScript"

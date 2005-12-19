@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:26\n"
+"POT-Creation-Date: 2005-12-19 09:12\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -70,11 +70,12 @@ msgstr "color spaves는 다른 기준 백색이 사용되고 있습니다"
 msgid "cannot shut down device 1 (the null device)"
 msgstr "디바이스 1를 shut down 할수가 없습니다(NULL 디바이스 입니다)"
 
-msgid "cannot supply which and device at the same time"
-msgstr "동시에 which와 device를 공급할수가 없습니다"
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "동시에 'which' 와 'device' 를 공급할수가 없습니다"
 
-msgid "cannot copy the null device"
-msgstr "NULL 디바이스를 복사할수 없습니다"
+#, fuzzy
+msgid "cannot copy from the null device"
+msgstr "NULL 디바이스에 복사할수 없습니다"
 
 msgid "cannot copy to the null device"
 msgstr "NULL 디바이스에 복사할수 없습니다"
@@ -98,7 +99,8 @@ msgstr ""
 msgid "argument is missing with no default"
 msgstr "인수는 default 없음으로 결손이 되고 있습니다"
 
-msgid "invalid arguments in '%s'  (need named args)"
+#, fuzzy
+msgid "invalid arguments in '%s' (need named args)"
 msgstr "'%s'에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
 
 msgid "'name.opt' must be character, name of an existing list"
@@ -107,7 +109,8 @@ msgstr "'name.opt'는 기존 리스트의 이름인 문자열이 아니면 되�
 msgid "cannot reset non-existent '%s'"
 msgstr "존재하지 않는 '%s'를 reset할수 없습니다"
 
-msgid "invalid options in"
+#, fuzzy
+msgid "invalid options in '%s'"
 msgstr "이하의 부적절한 옵션입니다"
 
 msgid "NOT changing"
@@ -119,11 +122,8 @@ msgstr "부적절한 'family' 인수입니다"
 msgid "invalid PDF version"
 msgstr "부적절한 PDF의 버전입니다"
 
-msgid "invalid"
-msgstr "부적절함"
-
 #, fuzzy
-msgid "in font specification"
+msgid "invalid %s in font specification"
 msgstr "부적절한 X11 폰트의 지정방법입니다"
 
 msgid "Invalid font type"
@@ -135,23 +135,12 @@ msgstr ""
 msgid "Invalid font database name"
 msgstr ""
 
-msgid "font"
-msgstr "폰트"
-
-msgid "already in use"
+#, fuzzy
+msgid "font %s already in use"
 msgstr "이미 사용되고 있습니다"
 
-msgid "invalid arguments in postscriptFonts (must be font names)"
-msgstr "postscriptFonts에서 부적절한 인수입니다(폰트명이 필요합니다)"
-
-msgid "invalid arguments in postscriptFonts (need named args)"
-msgstr "postscriptFonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
-
-msgid "invalid arguments in pdfFonts (must be font names)"
-msgstr "pdfFonts에서 부적절한 인수입니다(폰트명이 필요합니다)"
-
-msgid "invalid arguments in pdfFonts (need named args)"
-msgstr "pdfFonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "'%s' 에서 부적절한 인수입니다(폰트명이 필요합니다)"
 
 msgid "unknown font"
 msgstr ""
@@ -220,12 +209,6 @@ msgstr "quartFonts에서 부적절한 인수입니다(이름이 붙은 인수가
 msgid "invalid X11 font specification:"
 msgstr "부적절한 X11 폰트의 지정방법입니다"
 
-msgid "invalid arguments in X11Fonts (must be font names)"
-msgstr "X11Fonts에서 부적절한 인수입니다(폰트명이 필요합니다)"
-
-msgid "invalid arguments in X11Fonts (need named args)"
-msgstr "X11Fonts에서 부적절한 인수입니다(이름이 붙은 인수가 필요합니다)"
-
 msgid "can only bring windows devices to the front"
 msgstr "windows 디바이스만을 그 전방으로 가져 올수가 없습니다"
 
@@ -267,6 +250,3 @@ msgstr[0] "%d개의 올바르지 않는 y의 값이 대수 plot로부터 제외�
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d개의 올바르지 않는 x의 값이 대수 plot로부터 제외해졌습니다"
-
-#~ msgid "in PostScript font specification"
-#~ msgstr "PostScript 폰트의 지정중에 있었습니다"

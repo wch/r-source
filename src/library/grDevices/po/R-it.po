@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:26\n"
+"POT-Creation-Date: 2005-12-19 09:12\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -73,11 +73,12 @@ msgstr "spazi colori usano binachi di riferimento differenti."
 msgid "cannot shut down device 1 (the null device)"
 msgstr "non posso chiudere il dispositivo 1 (dispositivo null)"
 
-msgid "cannot supply which and device at the same time"
-msgstr "non si possono indicare whic e device allo stesso tempo"
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "non si possono indicare 'which' e 'device' allo stesso tempo"
 
-msgid "cannot copy the null device"
-msgstr "non posso copiare il dispositivo null"
+#, fuzzy
+msgid "cannot copy from the null device"
+msgstr "non posso copiare sul dispositivo null"
 
 msgid "cannot copy to the null device"
 msgstr "non posso copiare sul dispositivo null"
@@ -100,7 +101,7 @@ msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
 msgid "argument is missing with no default"
 msgstr "argomento mancante senza valore di default"
 
-msgid "invalid arguments in '%s'  (need named args)"
+msgid "invalid arguments in '%s' (need named args)"
 msgstr "argomenti non validi in '%s' (devono essere argomenti con nome)"
 
 msgid "'name.opt' must be character, name of an existing list"
@@ -109,8 +110,8 @@ msgstr "'name.opt' deve essere di tipo carattere, nome di una lista esistente"
 msgid "cannot reset non-existent '%s'"
 msgstr "non posso re-inizializzare '%s' perché non esistente"
 
-msgid "invalid options in"
-msgstr "opzioni non valide in"
+msgid "invalid options in '%s'"
+msgstr "opzioni non valide in '%s'"
 
 msgid "NOT changing"
 msgstr "NON cambio"
@@ -121,12 +122,8 @@ msgstr "argomento 'family' non valido"
 msgid "invalid PDF version"
 msgstr "versione PDF non valida"
 
-msgid "invalid"
-msgstr "non valido"
-
-#, fuzzy
-msgid "in font specification"
-msgstr "specificazione font X11 non valida"
+msgid "invalid %s in font specification"
+msgstr "specificazione font %s non valida"
 
 msgid "Invalid font type"
 msgstr ""
@@ -137,23 +134,12 @@ msgstr ""
 msgid "Invalid font database name"
 msgstr ""
 
-msgid "font"
-msgstr "font"
-
-msgid "already in use"
+#, fuzzy
+msgid "font %s already in use"
 msgstr "già in uso"
 
-msgid "invalid arguments in postscriptFonts (must be font names)"
-msgstr "argomenti non validi in postscriptFonts (deve essere 'font names')"
-
-msgid "invalid arguments in postscriptFonts (need named args)"
-msgstr "argomenti non validi in postscriptFonts (necessari argomenti con nome)"
-
-msgid "invalid arguments in pdfFonts (must be font names)"
-msgstr "argomenti non validi in pdfFonts (deve essere 'font names')"
-
-msgid "invalid arguments in pdfFonts (need named args)"
-msgstr "argomenti non valid in pdfFonts (necessita argomenti con nome)"
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "argomenti non validi in '%s' (deve essere 'font names')"
 
 msgid "unknown font"
 msgstr ""
@@ -221,12 +207,6 @@ msgstr "argomenti non validi in quartzFonts (necessita argomenti con nome)"
 msgid "invalid X11 font specification:"
 msgstr "specificazione font X11 non valida"
 
-msgid "invalid arguments in X11Fonts (must be font names)"
-msgstr "argomenti non validi in X11Fonts (deve essere 'font names')"
-
-msgid "invalid arguments in X11Fonts (need named args)"
-msgstr "argomenti non valid in X11Fonts (necessita argomenti con nome)"
-
 msgid "can only bring windows devices to the front"
 msgstr "posso portare in primo piano dispositivi 'windows'"
 
@@ -273,15 +253,3 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
-
-#~ msgid "in PostScript font specification"
-#~ msgstr "nella specificazione del font PostScript"
-
-#~ msgid "invalid arguments in"
-#~ msgstr "argomenti non validi in"
-
-#~ msgid "(need named args)"
-#~ msgstr "(servono argomenti col nome)"
-
-#~ msgid "device"
-#~ msgstr "dispositivo"
