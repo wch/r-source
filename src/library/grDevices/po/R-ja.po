@@ -150,10 +150,10 @@ msgid "loading snapshot from different R version"
 msgstr "異なった R バージョンからのスナップショットが読み込まれています"
 
 msgid "'r' must be a \"range\", hence of length 2"
-msgstr ""
+msgstr "'r' は範囲でなければなりません. 従って長さは2です"
 
 msgid "invalid first argument"
-msgstr ""
+msgstr "最初の引数が無効です"
 
 msgid "'x' and 'y' lengths differ"
 msgstr "'x' と 'y' の長さが異なります"
@@ -249,3 +249,4 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
 msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
+
