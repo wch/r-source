@@ -1,5 +1,3 @@
-### $Id: pkg2tex.pl,v 1.4 2003/07/29 10:35:13 ripley Exp $
-
 ## Create a single pkgname-pkg.tex file from the Latex subdirectories
 ## Copyright (C) 1998 Douglas M. Bates <bates@stat.wisc.edu>
 
@@ -15,8 +13,8 @@
 
 ## A copy of the GNU General Public License is available via WWW at
 ## http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
-## writing to the Free Software Foundation, Inc., 59 Temple Place, 
-## Suite 330, Boston, MA  02111-1307  USA
+## writing to the Free Software Foundation, Inc., 51 Franklin Street,
+## Fifth Floor, Boston, MA 02110-1301  USA.
 
 ## Send any bug reports to bates@stat.wisc.edu
 
