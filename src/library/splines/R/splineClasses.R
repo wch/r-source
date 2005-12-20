@@ -31,7 +31,7 @@
 ##
 ## The text of the GNU General Public License, version 2, is available
 ## as http://www.gnu.org/copyleft or by writing to the Free Software
-## Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+## Foundation, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
 
 splineDesign <-
     ## Creates the "design matrix" for a collection of B-splines.
