@@ -10,12 +10,12 @@
   cases corresponding to lines and variables to fields in the file.
 }
 \usage{
-read.table(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
-           row.names, col.names, as.is = FALSE, na.strings = "NA",
-           colClasses = NA, nrows = -1, skip = 0, check.names = TRUE,
-           fill = !blank.lines.skip, strip.white = FALSE,
-           blank.lines.skip = TRUE, comment.char = "#",
-           allowEscapes = FALSE, flush = FALSE)
+read.table(file, header = FALSE, sep = "", quote = "\"'",
+           dec = ".", row.names, col.names, as.is = FALSE,
+           na.strings = "NA", colClasses = NA, nrows = -1,
+           skip = 0, check.names = TRUE, fill = !blank.lines.skip,
+           strip.white = FALSE, blank.lines.skip = TRUE,
+           comment.char = "#", allowEscapes = FALSE, flush = FALSE)
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, \dots)
@@ -115,7 +115,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     there needs to be an \code{as} method (from package \pkg{methods})
     for conversion from \code{"character"} to the specified formal
     class.
-    
+
     Note that \code{colClasses} is specified per column (not per
     variable) and so includes the column of row names (if any).
   }
@@ -143,7 +143,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
     input are ignored.}
-  
+
   \item{comment.char}{character: a character vector of length one
     containing a single character or an empty string.  Use \code{""} to
     turn off the interpretation of comments altogether.}
@@ -171,7 +171,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   A field or line is \sQuote{blank} if it contains nothing (except
   whitespace if no separator is specified) before a comment character or
   the end of the field or line.
-  
+
   If \code{row.names} is not specified and the header line has one less
   entry than the number of columns, the first column is taken to be the
   row names.  This allows data frames to be read in from the format in
@@ -183,7 +183,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   the length of \code{col.names} if it is specified and
   is longer.  This could conceivably be wrong if \code{fill} or
   \code{blank.lines.skip} are true, so specify \code{col.names} if necessary.
-  
+
   \code{read.csv} and \code{read.csv2} are identical to
   \code{read.table} except for the defaults.  They are intended for
   reading \dQuote{comma separated value} files (\file{.csv}) or
@@ -206,7 +206,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include
   the column of row names (if any).
-  
+
   Less memory will be used if \code{colClasses} is specified as one of
   the six atomic vector classes.
 
@@ -222,15 +222,15 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   Prior to version 1.9.0, underscores were not valid in variable names,
   and code that relies on them being converted to dots will no longer
-  work. The simplest workaround is to use 
+  work. The simplest workaround is to use
    \code{names(d) <- gsub("_", ".", names(d))},
   or, avoiding the (small) risk of creating duplicate names,
-   \code{names(d) <- make.names(gsub("_", ".", names(d)), unique=TRUE)}. 
+   \code{names(d) <- make.names(gsub("_", ".", names(d)), unique=TRUE)}.
 }
 
 \seealso{
   The \emph{R Data Import/Export} manual.
-  
+
   \code{\link{scan}}, \code{\link{type.convert}},
   \code{\link{read.fwf}} for reading \emph{f}ixed \emph{w}idth
   \emph{f}ormatted input;

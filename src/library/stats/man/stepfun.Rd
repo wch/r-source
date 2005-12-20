@@ -9,7 +9,8 @@
 %\alias{knots.stepfun}
 \title{Step Function Class}
 \usage{
-stepfun(x, y, f = as.numeric(right), ties = "ordered", right = FALSE)
+stepfun(x, y, f = as.numeric(right), ties = "ordered",
+        right = FALSE)
 
 is.stepfun(x)
 knots(Fn, \dots)

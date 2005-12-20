@@ -8,7 +8,8 @@
   files describing further steps in packaging.
 }
 \usage{
-package.skeleton(name = "anRpackage", list, environment = .GlobalEnv,
+package.skeleton(name = "anRpackage", list,
+                 environment = .GlobalEnv,
 	         path = ".", force = FALSE)
 }
 \arguments{

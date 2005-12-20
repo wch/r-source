@@ -9,7 +9,8 @@
   applied to the index of data points contained in the cluster.
 }
 \usage{
-\method{identify}{hclust}(x, FUN = NULL, N = 20, MAXCLUSTER = 20, DEV.FUN = NULL, \dots)
+\method{identify}{hclust}(x, FUN = NULL, N = 20, MAXCLUSTER = 20, DEV.FUN = NULL,
+          \dots)
 }
 \arguments{
   \item{x}{an object of the type produced by \code{hclust}.}
@@ -60,8 +61,9 @@ plot(hci)
 identify(hci, function(k) print(table(iris[k,5])))
 
 # open a new device (one for dendrogram, one for bars):
-get(getOption("device"))()# << make that narrow (& small) and *beside* 1st one
-nD <- dev.cur()           # to be for the barplot
+get(getOption("device"))() # << make that narrow (& small)
+                           # and *beside* 1st one
+nD <- dev.cur()            # to be for the barplot
 dev.set(dev.prev())# old one for dendrogram
 plot(hci)
 ## select subtrees in dendrogram and "see" the species distribution:

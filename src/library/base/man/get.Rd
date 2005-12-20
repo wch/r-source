@@ -6,10 +6,12 @@
   Search for an \R object with a given name and return it.
 }
 \usage{
-get(x, pos=-1, envir=as.environment(pos), mode="any", inherits=TRUE)
+get(x, pos = -1, envir = as.environment(pos), mode = "any",
+    inherits = TRUE)
+
 mget(x, envir, mode = "any",
      ifnotfound = list(function(x) stop(paste("value for '",
-    x, "' not found", sep = ""), call. = FALSE)), inherits = FALSE)
+     x, "' not found", sep = ""), call. = FALSE)), inherits = FALSE)
 }
 \arguments{
   \item{x}{a variable name (given as a character string).}

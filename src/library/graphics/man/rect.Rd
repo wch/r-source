@@ -57,12 +57,14 @@ op <- par(bg = "thistle")
 plot(c(100, 250), c(300, 450), type = "n", xlab="", ylab="",
      main = "2 x 11 rectangles; 'rect(100+i,300+i,  150+i,380+i)'")
 i <- 4*(0:10)
-## draw rectangles with bottom left (100, 300)+i and top right (150, 380)+i
+## draw rectangles with bottom left (100, 300)+i
+## and top right (150, 380)+i
 rect(100+i, 300+i, 150+i, 380+i, col=rainbow(11, start=.7,end=.1))
 rect(240-i, 320+i, 250-i, 410+i, col=heat.colors(11), lwd=i/5)
 ## Background alternating  ( transparent / "bg" ) :
 j <- 10*(0:5)
-rect(125+j, 360+j,   141+j, 405+j/2, col = c(NA,0), border = "gold", lwd = 2)
+rect(125+j, 360+j,   141+j, 405+j/2, col = c(NA,0),
+     border = "gold", lwd = 2)
 rect(125+j, 296+j/2, 141+j, 331+j/5, col = c(NA,"midnightblue"))
 mtext("+  2 x 6 rect(*, col = c(NA,0)) and  col = c(NA,\"m..blue\"))")
 

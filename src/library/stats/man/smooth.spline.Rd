@@ -7,8 +7,9 @@
 }
 \usage{
 smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
-              cv = FALSE, all.knots = FALSE, nknots = NULL, keep.data = TRUE,
-              df.offset = 0, penalty = 1, control.spar = list())
+              cv = FALSE, all.knots = FALSE, nknots = NULL,
+              keep.data = TRUE, df.offset = 0, penalty = 1,
+              control.spar = list())
 }
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
@@ -236,13 +237,15 @@ lines(s2, col = "gray"); lines(predict(s2, xx), col = 2)
 lines(predict(s02, xx), col = 3); mtext(deparse(s02$call), col = 3)
 
 ## The following shows the problematic behavior of 'spar' searching:
-(s2  <- smooth.spline(y18,          con=list(trace=TRUE,tol=1e-6, low= -1.5)))
-(s2m <- smooth.spline(y18, cv=TRUE, con=list(trace=TRUE,tol=1e-6, low= -1.5)))
+(s2  <- smooth.spline(y18, con = list(trace=TRUE,tol=1e-6, low= -1.5)))
+(s2m <- smooth.spline(y18, cv = TRUE,
+                      con = list(trace=TRUE,tol=1e-6, low= -1.5)))
 ## both above do quite similarly (Df = 8.5 +- 0.2)
 
 \dontshow{
 % not for the user
-  s2. <- smooth.spline(y18, cv=TRUE,con=list(trace=TRUE, tol=1e-6,low= -3,maxit=20))
+  s2. <- smooth.spline(y18, cv=TRUE,
+                       con=list(trace=TRUE, tol=1e-6,low= -3,maxit=20))
   s2. ## Intel-Linux: Df ~= (even! > ) 18 : interpolating -- much smaller PRESS
      ## {others, e.g., may end quite differently!}
   lines(predict(s2., xx), col = 4)

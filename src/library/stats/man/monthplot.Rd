@@ -26,8 +26,8 @@ monthplot(x, \dots)
           ylab = deparse(substitute(x)),
           times = 1:length(x),
           phase = (times - 1)\%\%length(labels) + 1, base = mean,
-          axes = TRUE, type = c("l", "h"), box = TRUE, add = FALSE,
-          \dots)
+          axes = TRUE, type = c("l", "h"), box = TRUE,
+          add = FALSE, \dots)
 }
 \arguments{
   \item{x}{Time series or related object.}

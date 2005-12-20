@@ -332,7 +332,8 @@ TestChars <- function(encoding="ISOLatin1", family="URWHelvetica")
 {
     postscript(encoding=encoding, family=family)
     par(pty="s")
-    plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="", xaxs="i", yaxs="i")
+    plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="",
+         xaxs="i", yaxs="i")
     title(paste("Centred chars in encoding", encoding))
     grid(17, 17, lty=1)
     for(i in c(32:255)) {

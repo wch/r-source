@@ -8,7 +8,9 @@
 }
 \usage{
 setWindowTitle(suffix, title = paste(getIdentification(), suffix))
+
 getWindowTitle()
+
 getIdentification()
 }
 \arguments{
@@ -16,9 +18,9 @@ getIdentification()
   \item{title}{a character string forming the complete new title}
 }
 \details{
-  \code{setWindowTitle} appends \code{suffix} to the normal window identification
-  (\code{RGui}, \code{R Console} or \code{Rterm}).  
-  Use \code{suffix = ""} to reset the title.
+  \code{setWindowTitle} appends \code{suffix} to the normal window
+  identification (\code{RGui}, \code{R Console} or \code{Rterm}).  Use
+  \code{suffix = ""} to reset the title.
   
   \code{getWindowTitle} gets the current title.
 
@@ -34,8 +36,8 @@ getIdentification()
   
   \code{setWindowTitle} returns the previous window title (invisibly).  
   
-  \code{getWindowTitle} and \code{getIdentification} return the current window title
-  and the normal window identification, respectively.
+  \code{getWindowTitle} and \code{getIdentification} return the current
+  window title and the normal window identification, respectively.
 }
 \examples{
 ## show the current working directory in the title, saving the old one

@@ -9,13 +9,13 @@
 \usage{
 persp(x, \dots)
 
-\method{persp}{default}(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
-      xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE),
+\method{persp}{default}(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+      z, xlim = range(x), ylim = range(y),
+      zlim = range(z, na.rm = TRUE),
       xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
-      theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE,
-      expand = 1, col = "white", border = NULL, ltheta = -135, lphi = 0,
-      shade = NA, box = TRUE, axes = TRUE, nticks = 5,
-      ticktype = "simple", \dots)
+      theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE, expand = 1,
+      col = "white", border = NULL, ltheta = -135, lphi = 0, shade = NA,
+      box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple", \dots)
 }
 \arguments{
   \item{x, y}{locations of grid lines at which the values in \code{z} are
@@ -146,7 +146,8 @@ phi <- seq(0, 2*pi, len = 201)
 r1 <- 7.725 # radius of 2nd maximum
 xr <- r1 * cos(phi)
 yr <- r1 * sin(phi)
-lines(trans3d(xr,yr, f(xr,yr), res), col = "pink", lwd=2)## (no hidden lines)
+lines(trans3d(xr,yr, f(xr,yr), res), col = "pink", lwd = 2)
+## (no hidden lines)
 
 # (3) Visualizing a simple DEM model
 

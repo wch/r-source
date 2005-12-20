@@ -99,16 +99,18 @@ nlminb(c(20, 20), hdev, lower = 0.001, upper = Inf)
 sumsq <- function( x, y) {sum((x-y)^2)}
 y <- rep(1,5)
 x0 <- rnorm(length(y))
-nlminb( start = x0, obj = sumsq, y = y)
+nlminb(start = x0, obj = sumsq, y = y)
 # now use bounds with a y that has some components outside the bounds
 y <- c( 0, 2, 0, -2, 0)
-nlminb( start = x0, obj = sumsq, lower = -1, upper = 1, y = y)
+nlminb(start = x0, obj = sumsq, lower = -1, upper = 1, y = y)
 # try using the gradient
 sumsq.g <- function(x,y) 2*(x-y)
-nlminb( start = x0, obj = sumsq, grad = sumsq.g, lo = -1, up = 1, y = y)
+nlminb(start = x0, obj = sumsq, grad = sumsq.g,
+       lower = -1, upper = 1, y = y)
 # now use the hessian, too
 sumsq.h <- function(x,y) diag(2, nrow = length(x))
-nlminb(st = x0, obj = sumsq, grad = sumsq.g, hes = sumsq.h, lo = -1, up = 1, y = y)
+nlminb(start = x0, obj = sumsq, grad = sumsq.g, hes = sumsq.h,
+       lower = -1, upper = 1, y = y)
 
 ## Rest lifted from optim help page
 

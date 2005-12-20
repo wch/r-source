@@ -1,8 +1,11 @@
 \name{ls.str}
 \title{List Objects and their Structure}
 \usage{
- ls.str(pos = 1, pattern, \dots,  envir = as.environment(pos), mode = "any")
+ls.str(pos = 1, pattern, \dots,  envir = as.environment(pos),
+       mode = "any")
+
 lsf.str(pos = 1, \dots, envir = as.environment(pos))
+
 \method{print}{ls_str}(x, max.level = 1, give.attr = FALSE, \dots)
 }
 \alias{ls.str}

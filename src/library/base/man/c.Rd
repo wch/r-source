@@ -13,7 +13,7 @@ c(\dots, recursive=FALSE)
 }
 \arguments{
   \item{\dots}{objects to be concatenated.}
-  \item{recursive}{logical. If \code{recursive=TRUE}, the function
+  \item{recursive}{logical. If \code{recursive = TRUE}, the function
     recursively descends through lists combining all their elements
     into a vector.}
 }

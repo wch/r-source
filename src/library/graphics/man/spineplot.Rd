@@ -53,27 +53,30 @@ spineplot(x, \dots)
     to be used for plotting.  }
 }
 \details{
-  \code{spineplot} creates either a spinogram or a spine plot. It can be called
-  via \code{spineplot(x, y)} or \code{spineplot(y ~ x)} where \code{y} is interpreted
-  to be the dependent variable (and has to be categorical) and \code{x}
-  the explanatory variable. \code{x} can be either categorical (then a spine
-  plot is created) or numerical (then a spinogram is plotted).
-  Additionally, \code{spineplot} can also be called with only a single argument
-  which then has to be a 2-way table, interpreted to correspond to \code{table(x, y)}.
+  \code{spineplot} creates either a spinogram or a spine plot.  It can
+  be called via \code{spineplot(x, y)} or \code{spineplot(y ~ x)} where
+  \code{y} is interpreted to be the dependent variable (and has to be
+  categorical) and \code{x} the explanatory variable.  \code{x} can be
+  either categorical (then a spine plot is created) or numerical (then a
+  spinogram is plotted).  Additionally, \code{spineplot} can also be
+  called with only a single argument which then has to be a 2-way table,
+  interpreted to correspond to \code{table(x, y)}.
   
-  Both, spine plots and spinograms, are essentially mosaic plots with special
-  formatting of spacing and shading. Conceptually, they plot \eqn{P(y | x)} against
-  \eqn{P(x)}. For the spine plot (where both \eqn{x} and \eqn{y} are categorical),
-  both quantities are approximated by the corresponding empirical relative
-  frequencies. For the spinogram (where \eqn{x} is numerical), \eqn{x} is
-  first discretized (by caling \code{\link{hist}} with \code{breaks} argument)
-  and then empirical relative frequencies are taken.
+  Both, spine plots and spinograms, are essentially mosaic plots with
+  special formatting of spacing and shading.  Conceptually, they plot
+  \eqn{P(y | x)} against \eqn{P(x)}.  For the spine plot (where both
+  \eqn{x} and \eqn{y} are categorical), both quantities are approximated
+  by the corresponding empirical relative frequencies.  For the
+  spinogram (where \eqn{x} is numerical), \eqn{x} is first discretized
+  (by caling \code{\link{hist}} with \code{breaks} argument) and then
+  empirical relative frequencies are taken.
   
-  Thus, spine plots can also be seen as a generalization of stacked bar plots
-  where not the heights but the widths of the bars corresponds to the relative
-  frequencies of \code{x}. The heights of the bars then correspond to the conditional
-  relative frequencies of \code{y} in every \code{x} group. Analogously, spinograms
-  extend stacked histograms. 
+  Thus, spine plots can also be seen as a generalization of stacked bar
+  plots where not the heights but the widths of the bars corresponds to
+  the relative frequencies of \code{x}. The heights of the bars then
+  correspond to the conditional relative frequencies of \code{y} in
+  every \code{x} group. Analogously, spinograms extend stacked
+  histograms.
 }
 \value{
   The table visualized is returned invisibly.
@@ -110,14 +113,17 @@ improved <- factor(rep(c(1, 2, 3, 1, 2, 3), c(29, 7, 7, 13, 7, 21)),
 
 ## applications and admissions by department at UC Berkeley
 ## (two-way tables)
-(spineplot(margin.table(UCBAdmissions, c(3, 2)), main = "Applications at UCB"))
-(spineplot(margin.table(UCBAdmissions, c(3, 1)), main = "Admissions at UCB"))
+(spineplot(margin.table(UCBAdmissions, c(3, 2)),
+           main = "Applications at UCB"))
+(spineplot(margin.table(UCBAdmissions, c(3, 1)),
+           main = "Admissions at UCB"))
 
 ## NASA space shuttle o-ring failures
-fail <- factor(c(2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1),
+fail <- factor(c(2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1,
+                 1, 1, 1, 2, 1, 1, 1, 1, 1),
                levels = c(1, 2), labels = c("no", "yes"))
-temperature <- c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70, 70, 70, 70, 72, 73, 75,
-                 75, 76, 76, 78, 79, 81)
+temperature <- c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70, 70,
+                 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81)
 
 ## (dependence on a numerical variable)
 (spineplot(fail ~ temperature))

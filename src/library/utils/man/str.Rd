@@ -8,7 +8,8 @@ str(object, \dots)
 \method{str}{default}(object, max.level = NA, vec.len = 4, digits.d = 3,
     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
     wid = getOption("width"), nest.lev = 0,
-    indent.str = paste(rep.int(" ", max(0, nest.lev + 1)), collapse = ".."),
+    indent.str = paste(rep.int(" ", max(0, nest.lev + 1)),
+                       collapse = ".."),
     comp.str="$ ", no.list = FALSE, envir = baseenv(),
     \dots)
 }
@@ -75,7 +76,8 @@ str(str)
 str(.Machine, digits = 20)
 str( lsfit(1:9,1:9))
 str( lsfit(1:9,1:9),  max = 1)
-op <- options(); str(op) #- save first; otherwise internal options() is used.
+op <- options(); str(op) # save first;
+                         # otherwise internal options() is used.
 need.dev <- !exists(".Device") || is.null(.Device)
 if(need.dev) postscript()
 str(par()); if(need.dev) graphics.off()
@@ -104,7 +106,8 @@ if(!had.stats4)
 ## S4 classes :
 require(stats4)
 x <- 0:10; y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
-ll <- function(ymax=15, xh=6) -sum(dpois(y, lambda=ymax/(1+x/xh), log=TRUE))
+ll <- function(ymax=15, xh=6)
+      -sum(dpois(y, lambda=ymax/(1+x/xh), log=TRUE))
 fit <- mle(ll)
 str(fit)
 \dontshow{if(!had.stats4 && rs) detach("package:stats4")}

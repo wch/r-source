@@ -159,8 +159,9 @@ points(x, cos(x), pch = 3, col = 4)
 lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
 title("legend(..., lty = c(2, -1, 1), pch = c(-1,3,4), merge = TRUE)",
       cex.main = 1.1)
-legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6), text.col= "green4",
-       lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE, bg='gray90')
+legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6),
+       text.col = "green4", lty = c(2, -1, 1), pch = c(-1, 3, 4),
+       merge = TRUE, bg = 'gray90')
 
 ## right-justifying a set of labels: thanks to Uwe Ligges
 x <- 1:5; y1 <- 1/x; y2 <- 2/x

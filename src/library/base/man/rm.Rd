@@ -1,10 +1,11 @@
 \name{remove}
 \title{Remove Objects from a Specified Environment}
 \usage{
-remove(\dots, list = character(0), pos = -1, envir = as.environment(pos),
-       inherits = FALSE)
-rm    (\dots, list = character(0), pos = -1, envir = as.environment(pos),
-       inherits = FALSE)
+remove(\dots, list = character(0), pos = -1,
+       envir = as.environment(pos), inherits = FALSE)
+
+rm    (\dots, list = character(0), pos = -1,
+       envir = as.environment(pos), inherits = FALSE)
 }
 \alias{rm}
 \alias{remove}

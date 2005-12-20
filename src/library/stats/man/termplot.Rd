@@ -12,10 +12,10 @@ termplot(model, data=NULL, envir=environment(formula(model)),
          col.term = 2, lwd.term = 1.5,
          col.se = "orange", lty.se = 2, lwd.se = 1,
          col.res = "gray", cex = 1, pch = par("pch"),
-         col.smth = "darkred", lty.smth=2, span.smth=2/3,
-         ask = interactive() && nb.fig < n.tms && .Device !="postscript",
-         use.factor.levels=TRUE, smooth=NULL,
-         \dots)
+         col.smth = "darkred", lty.smth = 2, span.smth = 2/3,
+         ask = interactive() && nb.fig < n.tms &&
+               .Device != "postscript",
+         use.factor.levels = TRUE, smooth = NULL, \dots)
 }
 \arguments{
   \item{model}{fitted model object}

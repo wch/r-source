@@ -5,8 +5,8 @@
   Generates a shell of documentation for an installed or source package.
 }
 \usage{
-promptPackage(package, lib.loc = NULL, filename = NULL, name = NULL,
-              final = FALSE)
+promptPackage(package, lib.loc = NULL, filename = NULL,
+              name = NULL, final = FALSE)
 }
 \arguments{
   \item{package}{the name of an \emph{installed} or \emph{source} package

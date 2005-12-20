@@ -80,8 +80,9 @@ x <- c(1:9,8:1)
 y <- c(1,2*(5:3),2,-1,17,9,8,2:9)
 op <- par(mfcol=c(3,1))
 for(xpd in c(FALSE,TRUE,NA)) {
-  plot(1:10, main=paste("xpd =", xpd)) ; box("figure", col = "pink", lwd=3)
-  polygon(x,y, xpd=xpd, col = "orange", lty=2, lwd=2, border = "red")
+  plot(1:10, main = paste("xpd =", xpd))
+  box("figure", col = "pink", lwd=3)
+  polygon(x,y, xpd=xpd, col="orange", lty=2, lwd=2, border="red")
 }
 par(op)
 

@@ -15,22 +15,22 @@
   by regular expression matching.
 }
 \usage{
-grep(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
-     value = FALSE, fixed = FALSE, useBytes = FALSE)
+grep(pattern, x, ignore.case = FALSE, extended = TRUE,
+     perl = FALSE, value = FALSE, fixed = FALSE, useBytes = FALSE)
 
 sub(pattern, replacement, x,
-    ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE,
-    useBytes = FALSE)
+    ignore.case = FALSE, extended = TRUE, perl = FALSE,
+    fixed = FALSE, useBytes = FALSE)
 
 gsub(pattern, replacement, x,
-     ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE,
-     useBytes = FALSE)
+     ignore.case = FALSE, extended = TRUE, perl = FALSE,
+     fixed = FALSE, useBytes = FALSE)
 
-regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
-        useBytes = FALSE)
+regexpr(pattern, text, extended = TRUE, perl = FALSE,
+        fixed = FALSE, useBytes = FALSE)
 
-gregexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
-        useBytes = FALSE)
+gregexpr(pattern, text, extended = TRUE, perl = FALSE,
+         fixed = FALSE, useBytes = FALSE)
 }
 \arguments{
   \item{pattern}{character string containing a \link{regular expression}

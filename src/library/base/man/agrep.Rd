@@ -8,7 +8,8 @@
   edit distance.
 }
 \usage{
-agrep(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
+agrep(pattern, x, ignore.case = FALSE, value = FALSE,
+      max.distance = 0.1)
 }
 \arguments{
   \item{pattern}{a non-empty character string to be matched (\emph{not}

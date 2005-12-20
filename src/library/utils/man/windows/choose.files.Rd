@@ -9,7 +9,8 @@ interactively.
 }
 \usage{
 choose.files(default = "", caption = "Select files",
-	     multi = TRUE, filters = Filters, index = nrow(Filters))
+	     multi = TRUE, filters = Filters,
+             index = nrow(Filters))
 
 Filters
 

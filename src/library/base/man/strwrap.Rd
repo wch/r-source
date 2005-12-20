@@ -9,8 +9,8 @@
   paragraph can be controlled independently.
 }
 \usage{
-strwrap(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
-        prefix = "", simplify = TRUE)
+strwrap(x, width = 0.9 * getOption("width"), indent = 0,
+        exdent = 0, prefix = "", simplify = TRUE)
 }
 \arguments{
   \item{x}{a character vector}

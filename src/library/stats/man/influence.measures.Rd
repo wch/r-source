@@ -27,7 +27,8 @@ influence.measures(model)
 rstandard(model, \dots)
 \method{rstandard}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
           sd = sqrt(deviance(model)/df.residual(model)), \dots)
-\method{rstandard}{glm}(model, infl = lm.influence(model, do.coef = FALSE), \dots)
+\method{rstandard}{glm}(model, infl = lm.influence(model, do.coef = FALSE),
+          \dots)
 
 rstudent(model, \dots)
 \method{rstudent}{lm}(model, infl = lm.influence(model, do.coef = FALSE),

@@ -10,11 +10,13 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
                  type = c("l", "p", "b"), legend = TRUE,
                  trace.label = deparse(substitute(trace.factor)),
                  fixed = FALSE,
-                 xlab = deparse(substitute(x.factor)), ylab = ylabel,
+                 xlab = deparse(substitute(x.factor)),
+                 ylab = ylabel,
                  ylim = range(cells, na.rm=TRUE),
                  lty = nc:1, col = 1, pch = c(1:9, 0, letters),
                  xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
-                 xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, \dots)
+                 xtick = FALSE, xaxt = par("xaxt"), axes = TRUE,
+                 \dots)
 }
 \arguments{
   \item{x.factor}{a factor whose levels will form the x axis.}

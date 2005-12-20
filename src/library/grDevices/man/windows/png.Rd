@@ -10,7 +10,8 @@
 bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480,
     pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
 jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480,
-     pointsize = 12, quality = 75, bg = "white", res = NA, restoreConsole = TRUE)
+     pointsize = 12, quality = 75, bg = "white", res = NA,
+     restoreConsole = TRUE)
 png(filename = "Rplot\%03d.png", width = 480, height = 480,
     pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
 }

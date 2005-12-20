@@ -7,7 +7,9 @@
 
 }
 \usage{
-grid.set(gPath, newGrob, strict = FALSE, grep = FALSE, redraw = TRUE) 
+grid.set(gPath, newGrob, strict = FALSE, grep = FALSE,
+         redraw = TRUE)
+ 
 setGrob(gTree, gPath, newGrob, strict = FALSE, grep = FALSE) 
 }
 \arguments{

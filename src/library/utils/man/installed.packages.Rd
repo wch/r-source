@@ -6,7 +6,8 @@
   libraries.
 }
 \usage{
-installed.packages(lib.loc = NULL, priority = NULL, noCache = FALSE)
+installed.packages(lib.loc = NULL, priority = NULL,
+                   noCache = FALSE)
 }
 \arguments{
   \item{lib.loc}{

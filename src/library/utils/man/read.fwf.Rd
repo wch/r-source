@@ -7,8 +7,8 @@
 }
 \usage{
 read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
-         skip = 0, row.names, col.names, n = -1, buffersize = 2000,
-         \dots)
+         skip = 0, row.names, col.names, n = -1,
+         buffersize = 2000, \dots)
 }
 \arguments{
   \item{file}{

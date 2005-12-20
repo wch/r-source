@@ -28,15 +28,23 @@
 \usage{
 file(description = "", open = "", blocking = TRUE,
      encoding = getOption("encoding"))
+
 pipe(description, open = "", encoding = getOption("encoding"))
+
 fifo(description = "", open = "", blocking = FALSE,
      encoding = getOption("encoding"))
+
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
-unz(description, filename, open = "", encoding = getOption("encoding"))
+
+unz(description, filename, open = "",
+    encoding = getOption("encoding"))
+
 bzfile(description, open = "", encoding = getOption("encoding"))
+
 url(description, open = "", blocking = TRUE,
     encoding = getOption("encoding"))
+
 socketConnection(host = "localhost", port, server = FALSE,
                  blocking = FALSE, open = "a+",
                  encoding = getOption("encoding"))

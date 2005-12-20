@@ -20,7 +20,8 @@ update.packages(lib.loc = NULL, repos = getOption("repos"),
 		installWithVers = FALSE, checkBuilt = FALSE,
                 type = getOption("pkgType"))
 
-available.packages(contriburl = contrib.url(getOption("repos")), method)
+available.packages(contriburl = contrib.url(getOption("repos")),
+                   method)
 
 old.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos),

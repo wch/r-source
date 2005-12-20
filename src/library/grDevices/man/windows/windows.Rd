@@ -16,14 +16,19 @@ windows(width = 7, height = 7, pointsize = 12,
         rescale = c("R", "fit", "fixed"), xpinch, ypinch,
         bg = "transparent", canvas = "white",
         gamma = getOption("gamma"), xpos = NA, ypos = NA,
-        buffered = getOption("windowsBuffered"), restoreConsole = FALSE)
+        buffered = getOption("windowsBuffered"),
+        restoreConsole = FALSE)
 
-win.graph(width = 7, height = 7, pointsize = 12, restoreConsole = FALSE)
+win.graph(width = 7, height = 7, pointsize = 12,
+          restoreConsole = FALSE)
 x11(width = 7, height = 7, pointsize = 12, restoreConsole = FALSE)
 X11(width = 7, height = 7, pointsize = 12, restoreConsole = FALSE)
 
-win.metafile(filename = "", width = 7, height = 7, pointsize = 12, restoreConsole = TRUE)
-win.print(width = 7, height = 7, pointsize = 12, printer = "", restoreConsole = TRUE)
+win.metafile(filename = "", width = 7, height = 7, pointsize = 12,
+             restoreConsole = TRUE)
+
+win.print(width = 7, height = 7, pointsize = 12, printer = "",
+          restoreConsole = TRUE)
 }
 
 \arguments{

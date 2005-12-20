@@ -16,6 +16,7 @@ grid.arrows(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
             angle = 30, length = unit(0.25, "inches"),
             ends = "last", type = "open", name = NULL,
             gp = gpar(), draw = TRUE, vp = NULL)
+
 arrowsGrob(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
             grob = NULL,
             angle = 30, length = unit(0.25, "inches"),

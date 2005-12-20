@@ -12,8 +12,11 @@
   was called.
 }
 \usage{
-mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
-Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE, USE.NAMES = TRUE)
+mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
+      USE.NAMES = TRUE)
+
+Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
+          USE.NAMES = TRUE)
 }
 \arguments{
   \item{FUN}{Function to apply }
@@ -22,8 +25,8 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE, USE.NAMES = TRUE)
   \item{SIMPLIFY}{Attempt to reduce the result to a vector or matrix? }
   \item{USE.NAMES}{If the first \dots argument is character and the
     result doesn't already have names, use it as the names}
-  \item{vectorize.args}{A character vector of arguments which should be vectorized.  Defaults
-  to all arguments to \code{FUN}}
+  \item{vectorize.args}{A character vector of arguments which should be
+    vectorized.  Defaults to all arguments to \code{FUN}.}
 }
 \value{
   \code{mapply} returns a list, vector, or matrix.
@@ -32,10 +35,10 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE, USE.NAMES = TRUE)
   but wrapping a call to \code{mapply}.
 }
 \details{
-  The arguments named in the \code{vectorize.args} argument to \code{Vectorize}
-  correspond to the arguments passed in the \code{...} list to \code{mapply}.  However,
-  only those that are actually passed will be vectorized; default values will not.
-  See the example below.
+  The arguments named in the \code{vectorize.args} argument to
+  \code{Vectorize} correspond to the arguments passed in the \code{...}
+  list to \code{mapply}.  However, only those that are actually passed
+  will be vectorized; default values will not. See the example below.
 }
 \seealso{
   \code{\link{sapply}},

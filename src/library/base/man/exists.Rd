@@ -5,7 +5,8 @@
   Look for an \R object of the given name.
 }
 \usage{
-exists(x, where = -1, envir = , frame, mode = "any", inherits = TRUE)
+exists(x, where = -1, envir = , frame, mode = "any",
+       inherits = TRUE)
 }
 \arguments{
   \item{x}{a variable name (given as a character string).}
