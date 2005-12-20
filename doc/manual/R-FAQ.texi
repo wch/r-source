@@ -2815,6 +2815,8 @@ Weighted @math{k}-nearest neighbors classification and regression.
 @item klaR
 Miscellaneous functions for classification and visualization developed
 at the Department of Statistics, University of Dortmund.
+@item km.ci
+Confidence intervals for the Kaplan-Meier estimator.
 @item knnFinder
 Fast nearest neighbor search.
 @item knnTree
