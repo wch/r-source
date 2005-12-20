@@ -43,7 +43,6 @@ test-src-demo = demos.R demos2.R
 test-src-internet = internet.R
 test-src-isas = isas-tests.R
 test-src-lapack = lapack.R
-test-src-nafns = nafns.R
 test-src-random = p-r-random-tests.R
 test-src-segfault = no-segfault.R
 
@@ -60,7 +59,6 @@ test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-lapack = $(test-src-lapack:.R=.Rout)
-test-out-nafns = $(test-src-nafns:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
@@ -68,7 +66,7 @@ test-out-segfault = $(test-src-segfault:.R=.Rout)
 
 ## This macro is used only for dependencies
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
-	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
+	$(test-out-internet) $(test-out-lapack) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
 	$(test-out-segfault) $(test-out-isas)
 
@@ -76,7 +74,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout
 
 all-basic-tests = Specific Reg Internet
-all-devel-tests = Docs IsAs Lapack Nafns Random Demo Segfault \
+all-devel-tests = Docs IsAs Lapack Random Demo Segfault \
    Standalone Packages
 
 all check: test-all-basics
@@ -177,10 +175,6 @@ test-IsAs:
 test-Lapack:
 	@echo "running tests of LAPACK-based functions"
 	@$(MAKE) -f Makefile.win $(test-out-lapack) RVAL_IF_DIFF=0
-
-test-Nafns:
-	@echo "running tests of NA handling functions"
-	@$(MAKE) -f Makefile.win $(test-out-nafns) RVAL_IF_DIFF=0
 
 test-Random:
 	@echo "running tests of random deviate generation"
