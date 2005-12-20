@@ -1028,11 +1028,12 @@ $(SHLIB): $(OBJECTS)
 @end example
 
 There is a MinGW build of @command{gfortran} available from
-@uref{http://gcc.gnu.org/wiki/GFortranBinaries} and a MinGW
-build@footnote{Remember to set @env{LIBRARY_PATH} to point to your
-MinGW @file{lib} directory} of @command{g95} from
-@uref{http://www.g95.org}.  Set @code{F95} in @code{MkRules} to point to
-the installed compiler.  Then a suitable @file{Makevars.win} could be
+@uref{http://gcc.gnu.org/wiki/GFortranBinaries,
+@code{http://@/gcc.gnu.org/@/wiki/@/GFortranBinaries}} and a MinGW
+build@footnote{Remember to set @env{LIBRARY_PATH} to point to your MinGW
+@file{lib} directory} of @command{g95} from @uref{http://www.g95.org}.
+Set @code{F95} in @code{MkRules} to point to the installed compiler.
+Then a suitable @file{Makevars.win} could be
 
 @example
 F95SOURCES=$(wildcard -f *.f95 *.f90)
@@ -2164,7 +2165,8 @@ The procedures make use of @code{msgfmt} and @code{xgettext} which are
 part of @acronym{GNU} @code{gettext} and this will need to be installed:
 Windows users can find pre-compiled binaries at the @acronym{GNU}
 archive mirrors and packaged with the @code{poEdit} package
-@uref{http://poedit.sourceforge.net/download.php#win32}.
+@uref{http://poedit.sourceforge.net/download.php#win32,
+@code{http://@/poedit.sourceforge.net/@/download.php#win32}}.
 
 @menu
 * C-level messages::
@@ -2286,10 +2288,10 @@ CMD check} will check the type and skip it.
 
 Conventionally, a translation package for language @var{ll} is called
 @pkg{Translation-@var{ll}} and has @code{Type: Translation}.  It needs
-to contain the directories @file{share/locale/@var{ll}}
-and @file{library/@var{pkgname}/po/@var{ll}}, or at least those for
-which translations are available.  The files @file{.mo} are installed in the
-parallel places in the @R{} installation tree.
+to contain the directories @file{share/@/locale/@var{ll}} and
+@file{library/@/@var{pkgname}/@/po/@/@var{ll}}, or at least those for
+which translations are available.  The files @file{.mo} are installed in
+the parallel places in the @R{} installation tree.
 
 For example, a package @pkg{Translation-it} might be prepared from an
 installed (and tested) version of @R{} by
@@ -7611,9 +7613,10 @@ Preparing input at the console command-line, in file
 @item
 Waiting for a response from a socket in the internal functions
 underlying FTP and HTTP transfers in @code{download.file()} and for
-direct socket access, in files @file{src/modules/internet/nanoftp.c},
-@file{src/modules/internet/nanohttp.c} and
-@file{src/modules/internet/Rsock.c}
+direct socket access, in files
+@file{src/@/modules/@/internet/@/nanoftp.c},
+@file{src/@/modules/@/internet/@/nanohttp.c} and
+@file{src/@/modules/@/internet/@/Rsock.c}
 
 @item
 Mouse and window events when displaying the X11-based dataentry window,
@@ -7687,11 +7690,12 @@ currently available that interface directly with @R{} and provide a
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
 Baier available on CRAN
-(@url{http://cran.r-project.org/other-software.html}) which works with
-@file{Rproxy.dll} (in the R distribution) and @file{R.dll} to support
-transfer of data to and from R and remote execution of R commands, as
-well as embedding of an R graphics window.  The @pkg{rcom} package on
-CRAN provides a (D)COM server in a running @R{} session.
+(@url{http://cran.r-project.org/other-software.html,
+@code{http://@/cran.r-project.org/@/other-software.html}}) which works
+with @file{Rproxy.dll} (in the R distribution) and @file{R.dll} to
+support transfer of data to and from R and remote execution of R
+commands, as well as embedding of an R graphics window.  The @pkg{rcom}
+package on CRAN provides a (D)COM server in a running @R{} session.
 
 @item
 Another (D)COM server, @code{RDCOMServer}, is available from
@@ -7707,7 +7711,7 @@ points.  Calling it directly will be tricky except from C code (or C++
 with a little care).
 
 Examples of calling @file{R.dll} directly are provided in the directory
-@file{src/gnuwin32/front-ends}, including @file{Rproxy.dll} used by
+@file{src/@/gnuwin32/@/front-ends}, including @file{Rproxy.dll} used by
 @code{StatConnector} and a simple command-line front end @file{rtest.c}
 whose code is
 

@@ -1163,8 +1163,9 @@ included DBMS @code{SQLite}, @url{http://www.hwaci.com/sw/sqlite}).
 
 Two earlier packages @pkg{RmSQL} and @pkg{RPgSQL} are now unsupported
 and in the development area on CRAN: the BioConductor project has
-@pkg{RdbiPgSQL}.  @pkg{PL/R} (@url{http://www.joeconway.com/plr/}) is a
-project to embed R into PostgreSQL.
+@pkg{RdbiPgSQL}.  @pkg{PL/R} (@url{http://www.joeconway.com/plr/,
+@code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
+PostgreSQL.
 
 
 @menu

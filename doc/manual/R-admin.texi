@@ -91,7 +91,7 @@ The current version of this document is @value{VERSION}.
 
 Sources, binaries and documentation for @R{} can be obtained via
 @acronym{CRAN}, the ``Comprehensive R Archive Network'' whose current
-members are listed at @url{http://cran.r-project.org/mirrors.html}.
+members are listed at @url{http://cran.r-project.org/mirrors.html, @code{http://cran.r-project.org/@/mirrors.html}}.
 
 @menu
 * Getting and unpacking the sources::  
@@ -119,8 +119,8 @@ gzip -dc R-@var{x}.@var{y}.@var{z}.tgz | tar xvf -
 @end example
 
 The pathname of the directory into which the sources are unpacked should
-not contain spaces, as @command{make} (specifically @acronym{GNU} make
-3.80) does not expect spaces.
+not contain spaces, as @command{make} (specifically @acronym{GNU}
+@command{make} 3.80) does not expect spaces.
 
 If you need to transport the sources on floppy disks, you can download
 the @file{R-@var{x}.@var{y}.@var{z}.tgz-split.*} files and paste them
@@ -145,10 +145,12 @@ current development version, @samp{r-devel}, are available as daily
 tarballs and via access to the R Subversion repository.
 
 The tarballs are available from
-@url{ftp://ftp.stat.math.ethz.ch/pub/Software/R/}.  Download either
-@file{R-patched.tar.gz} or @file{R-devel.tar.gz} (or the @file{.tar.bz2}
-versions) and unpack as described in the previous section.  They are
-built in exactly the same way as distributions of R releases.
+@url{ftp://ftp.stat.math.ethz.ch/pub/Software/R/,
+@code{ftp://ftp.stat.math.ethz.ch/@/pub/@/Software/R/}}.  Download
+either @file{R-patched.tar.gz} or @file{R-devel.tar.gz} (or the
+@file{.tar.bz2} versions) and unpack as described in the previous
+section.  They are built in exactly the same way as distributions of R
+releases.
 
 @menu
 * Using Subversion and rsync::  
@@ -369,7 +371,8 @@ it takes several minutes.
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or
 @file{doc/manual/R-FAQ.html}, or
-@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html} which always has
+@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html,
+@code{http://CRAN.R-project.org/@/doc/@/FAQ/@/R-FAQ.html}} which always has
 the latest version).
 
 @node Making the manuals, Installation, Simple compilation, Installing R under Unix-alikes
@@ -435,16 +438,18 @@ that the Usage and Examples sections may come out rather wide.
 @item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as
 part of a @TeX{} distribution, but can obtained from
-@url{http://www.ctan.org/tex-archive/fonts/ps-type1/lm} and mirrors.
-This uses fonts rather similar to Computer Modern, but is not so good
-on-screen as @code{times}.
+@url{http://www.ctan.org/tex-archive/fonts/ps-type1/lm,
+@code{http://www.ctan.org/@/tex-archive/@/fonts/@/ps-type1/@/lm}} and
+mirrors.  This uses fonts rather similar to Computer Modern, but is not
+so good on-screen as @code{times}.
 
 @item cm-super
 Using type-1 versions of the Computer Modern fonts by Vladimir Volovich.
 This is a large installation, obtainable from
-@url{http://www.ctan.org/tex-archive/fonts/ps-type1/cm-super} and its
-mirrors.  These type-1 fonts have poor hinting and so are nowhere near
-so readable on-screen as the other three options.
+@url{http://www.ctan.org/tex-archive/fonts/ps-type1/cm-super,
+@code{http://www.ctan.org/@/tex-archive/@/fonts/@/ps-type1/@/cm-super}}
+and its mirrors.  These type-1 fonts have poor hinting and so are
+nowhere near so readable on-screen as the other three options.
 
 @item ae
 A package to use composites of Computer Modern fonts.  This works well
@@ -683,9 +688,9 @@ It is also possible to obtain the source code using Subversion; see
 @ref{Obtaining R} for details.
 
 @item
-Extract the international character support file @file{iconv.dll} from
-@url{http://www.murdoch-sutherland.com/Rtools/iconv.zip} and put it in
-@file{@var{R_HOME}/src/gnuwin32/unicode}.
+Extract the international character support file @file{iconv.dll} from@*
+@url{http://www.murdoch-sutherland.com/Rtools/iconv.zip}@* 
+and put it in @file{@var{R_HOME}/@/src/@/gnuwin32/@/unicode}.
 
 @item
 The TclTk support files are in
@@ -718,10 +723,10 @@ and AthlonXP chips are available in the @file{windows/contrib/ATLAS}
 area on @acronym{CRAN}.
 
 Another possibility is to use AMD's AMD Core Math Library (ACML)
-@url{http://www.amd.com/acml}.  To use the Cygwin-compiled version
-(Cygwin itself is not needed, at least currently), install
-@file{acml-2-7-0-win32-g77.exe} (or later) and edit
-@file{@var{R_HOME}/src/gnuwin32/MkRules} to define @code{USE_ACML=YES}
+@url{http://www.amd.com/acml, @code{http://@/www.amd.com/@/acml}}.  To use
+the Cygwin-compiled version (Cygwin itself is not needed, at least
+currently), install @file{acml-2-7-0-win32-g77.exe} (or later) and edit
+@file{@var{R_HOME}/@/src/@/gnuwin32/MkRules} to define @code{USE_ACML=YES}
 and set @code{ACML_PATH} to the path to @file{libacml.a}.  If you also
 set @code{USE_ACML_LAPACK=YES}, ACML will be used to provide the LAPACK
 library for R itself and any packages using @code{$LAPACK_LIBS} built
@@ -1237,7 +1242,7 @@ Compiler Collection.
 @findex WINHELP
 
 This section describes ways to customize package compilation using the
-standard C/C++/FORTRAN compilers and tools.  For instructions on using
+standard C / C++ / FORTRAN compilers and tools.  For instructions on using
 non-standard tools, see the @file{README.packages} file.
 
 The Makefiles can be customized: in particular the name of the DLL can
@@ -1410,7 +1415,7 @@ from the library.
 Utilities such as @code{install.packages} can be pointed at any
 CRAN-style repository, and @R{} users may want to set up their own.  The
 `base' of a repository is a URL such as
-@uref{http://www.omegahat.org/R}: this must be an URL scheme that
+@url{http://www.omegahat.org/R}: this must be an URL scheme that
 @code{download.packages} supports (which also includes @code{ftp://} and
 @code{file://}).  Under that base URL there should be directory trees
 for one or more of the following types of package distributions:
@@ -1547,15 +1552,16 @@ most Unix-alikes.
 Windows also uses locales, but specified in a rather less concise way.
 Most users will encounter locales only via drop-down menus, but more
 information and lists can be found at
-@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}.
+@url{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp,
+@code{http://msdn.microsoft.com/@/library/@/default.asp?url=/@/library/@/en-us/@/@/vccore98/@/html/@/_crt_language_and_country_strings.asp}}.
 
 @node Locales under Mac OS X,  , Locales under Windows, Locales
 @subsection Locales under Mac OS X
 
 Mac OS X supports locales in its own particular way, but the R GUI tries
 to make this easier for users. See
-
-@uref{http://developer.apple.com/documentation/MacOSX/Conceptual/BPInternational/}
+@url{http://developer.apple.com/documentation/MacOSX/Conceptual/BPInternational/,
+@code{http://developer.apple.com/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}}
 
 @noindent
 for how users can set their locales. As with Windows, end users will
@@ -1625,7 +1631,7 @@ Unicode directional quotes.
 If no suitable translation catalogue is found or a particular message is
 not translated in any suitable catalogue, English is used.
 
-See @uref{http://developer.r-project.org/Translations.html} for how to
+See @url{http://developer.r-project.org/Translations.html} for how to
 prepare and install translation catalogues.
 
 @node Choosing between 32- and 64-bit builds, Essential and useful other programs in Unix, Internationalization, Top
@@ -1872,8 +1878,8 @@ since the basic BLAS is incomplete.
 
 Another tuned BLAS which is available for some processors under Linux is
 by Kazushige Goto, currently available @emph{for academic use only}
-(after registering) via
-@uref{http://www.tacc.utexas.edu/resources/software/software.php}.
+(after registering) via@*
+@url{http://www.tacc.utexas.edu/resources/software/software.php}.@*
 (Recent versions are multi-threaded only.)  Once this is installed, it
 can be used by configuring with
 
@@ -1889,7 +1895,9 @@ happily with multiple threads.  That environment variable should be set
 when using @R{} profiling.
 
 For Intel processors under Linux, Intel's Math Kernel Library
-@url{http://www.intel.com/software/products/mkl/} can be used by
+(@url{http://www.intel.com/software/products/mkl/,
+@code{http://www.intel.com/@/software/@/products/@/mkl/}}) can be used
+by
 
 @example
 --with-blas="-lmkl -lguide -lpthread"
@@ -2398,8 +2406,8 @@ of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 Many 32-bit systems have a means of using files > 2Gb, and most are
-based on that in the Single Unix specification: see
-@url{http://ftp.sas.com/standards/large.file/x_open.20Mar96.html}.
+based on that in the Single Unix specification: see@*
+@url{http://ftp.sas.com/standards/large.file/x_open.20Mar96.html}/@*
 However, this is only covered under Linux and Solaris.
 
 @menu
@@ -2508,8 +2516,8 @@ LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
 @end example
 
 @noindent
-and adding optimization flags failed: at least @file{src/main/regex.c}
-and @file{src/modules/lapack/dlamc.f} need to be compiled without
+and adding optimization flags failed: at least @file{src/@/main/@/regex.c}
+and @file{src/@/modules/@/lapack/@/dlamc.f} need to be compiled without
 optimization.  For @cputype{x86_64} he used
 
 @example
@@ -2529,7 +2537,7 @@ large number of warnings about the enumeration type @samp{Rboolean}.
 
 For some comments on building on an Itanium (@samp{ia64}) Linux system
 with @command{gcc} or the Intel compilers see
-@uref{http://www.nakama.ne.jp/memo/ia64_linux/}.
+@url{http://www.nakama.ne.jp/memo/ia64_linux/}.
 
 Jennifer Lai used the Portland Group compilers on @cputype{x86_64} to
 build pre-2.2.0 with settings
@@ -2870,8 +2878,10 @@ the native @command{make} to build @R{}.
 There is a problem with the time zones on IRIX (originally reported by
 George N. White III for 1.9.0) which will cause the @code{strptime}
 tests to fail unless Arthur Olson's timezone data
-@url{ftp://elsie.nci.nih.gov/pub/} has been installed (see also
-@url{http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html}) and
+@url{ftp://elsie.nci.nih.gov/pub/,
+@code{ftp://elsie.nci.nih.gov/@/pub/}} has been installed (see also
+@url{http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html,
+@code{http://cspry.co.uk/@/computing/@/Indy_admin/@/TIMEZONE.html}}) and
 @code{-ltz} is added to the list of libraries (for example, in
 environment variable @env{LIBS}).
 
@@ -2963,11 +2973,11 @@ SHLIB_LDFLAGS=-Wl,-G
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
 
-Ei-ji Nakama has reported that @file{src/main/regex.c} in @R{}@tie{}2.2.0
-has to be compiled with @option{-D_LINUX_SOURCE_COMPAT} in @code{CFLAGS}
-in AIX@tie{}5.x (and does not work correctly with AIX@tie{}4.x).  We
-believe that the patch applied since obviates the need for this.  He
-tested @R{}@tie{}2.2.1@tie{}beta on AIX@tie{}5.2.
+Ei-ji Nakama has reported that @file{src/main/regex.c} in
+@R{}@tie{}2.2.0 has to be compiled with @option{-D_LINUX_SOURCE_COMPAT}
+in @code{CFLAGS} in AIX@tie{}5.x (and does not work correctly with
+AIX@tie{}4.x).  We believe that the patch applied since obviates the
+need for this.  He tested @R{}@tie{}2.2.1@tie{}beta on AIX@tie{}5.2.
 
 
 @node New platforms,  , AIX, Platform notes
@@ -3166,18 +3176,23 @@ _05 do not work under @cputype{ix86} Linux.  Version
 browsers.
 
 This and @code{j2re}@tie{}1.4.2_01 do work: the latter can be found in
-Sun's archive at @url{http://java.sun.com/products/archive/}.
+Sun's archive at @url{http://java.sun.com/products/archive/,
+@code{http://java.sun.com/@/products/@/archive/}}.
 
 Other Java installations, for example those from Blackdown and IBM, have
 been used.
 
 Other useful links are for Mozilla,
 @url{http://plugindoc.mozdev.org/faqs/java.html} and
-@url{http://www.mozilla.org/releases/mozilla1.6/installation-extras.html},
-for Konqueror @url{http://www.konqueror.org/javahowto/}, for Opera
-@url{http://www.opera.com/support/search/supsearch.dml?index=459} and
-for Debian GNU/Linux
-@url{http://www.debian.org/doc/manuals/debian-java-faq/}.
+@url{http://www.mozilla.org/releases/mozilla1.6/installation-extras.html,
+@code{http://www.mozilla.org/@/releases/@/mozilla1.6/@/installation-extras.html}},
+for Konqueror @url{http://www.konqueror.org/javahowto/,
+@code{http://www.konqueror.org/@/javahowto/}}, for Opera
+@url{http://www.opera.com/support/search/supsearch.dml?index=459,
+@code{http://www.opera.com/@/support/@/search/@/supsearch.dml?@/index=459}}
+and for Debian GNU/Linux
+@url{http://www.debian.org/doc/manuals/debian-java-faq/,
+@code{http://www.debian.org/@/doc/@/manuals/@/debian-java-faq/}}.
 
 Note that there appears not to be a Sun Java plugin for 64-bit browsers
 on @cputype{x86_64} Linux:
@@ -3216,7 +3231,8 @@ and need the block removed @emph{via} the @emph{information bar}.
 
 The @HTML{} search engine does not work with Safari under Mac OS X, but
 @code{j2re}@tie{}1.4.x may work with Mozilla, Firefox and Camino if the
-Java Embedding Plugin @url{http://javaplugin.sourceforge.net/} is used.
+Java Embedding Plugin (@url{http://javaplugin.sourceforge.net/,
+@code{http://@/javaplugin.sourceforge.net/}}) is used.
 
 The Aqua GUI provides an interface to @code{help.search} that may
 substitute for the Java search.
@@ -3334,8 +3350,9 @@ this is available from
 @section The MinGW compilers
 
 You need a recent version of the MinGW port of @command{gcc} from
-@url{http://sourceforge.net/projects/mingw/}.  See the notes on
-@url{http://www.murdoch-sutherland.com/Rtools} for updates.
+@url{http://www.mingw.org}.  See the notes on
+@url{http://www.murdoch-sutherland.com/Rtools,
+@code{http://www.murdoch-sutherland.com/@/Rtools}} for updates.
 
 In late 2005 there was an installer @code{MinGW-5.0.0.exe} in the
 `Proposed' section.  Using this, select the @samp{Candidate} package and
@@ -3364,10 +3381,12 @@ required to build @R{}.
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
 
-To make compiled html (@file{.chm}) files you will need the
-Microsoft @HTML{} Help Workshop, currently available for download at
-@url{http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp}
-and @url{http://www.microsoft.com/office/ork/xp/appndx/appa06.htm}.
+To make compiled html (@file{.chm}) files you will need the Microsoft
+@HTML{} Help Workshop, currently available for download at
+@url{http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp,
+@code{http://msdn.microsoft.com/@/library/@/en-us/@/htmlhelp/@/html/@/hwmicrosofthtmlhelpdownloads.asp}}
+and @url{http://www.microsoft.com/office/ork/xp/appndx/appa06.htm,
+@code{http://www.microsoft.com/@/office/@/ork/@/xp/@/appndx/@/appa06.htm}}.
 
 You may need this on the same drive as the other tools.  (Although we
 regularly use it on a different, problems have been reported in the
@@ -3381,12 +3400,13 @@ In this case the Help Workshop will not be needed.
 
 The @samp{MiKTeX} (@url{http://www.miktex.org}) distribution of @LaTeX{}
 includes a suitable port of @code{pdftex}, as does the @samp{ProText}
-(@uref{http://www.tug.org/protext/}) enhanced version.  We have also
+(@url{http://www.tug.org/protext/,
+@code{http://www.tug.org/@/protext/}}) enhanced version.  We have also
 used the @samp{fptex} distribution (available from any CTAN node such as
 @url{http://www.ctan.org/tex-archive/systems/windows/fptex/} and as part
-of TexLive 2005 (@uref{http://www.tug.org/texlive/})).  Another
+of TexLive 2005 (@url{http://www.tug.org/texlive/})).  Another
 actively-maintained version is available from
-@uref{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/}.
+@url{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/}.
 
 Please read @ref{Making the manuals} about how to make @file{refman.pdf}
 and set the environment variables @env{R_RD4DVI} and @env{R_RD4PDF}
