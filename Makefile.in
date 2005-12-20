@@ -98,7 +98,7 @@ install: installdirs svnonly
 @WANT_R_FRAMEWORK_TRUE@		@(cp $(R_FRAMEWORK_DIR)/Resources/bin/R $(R_FRAMEWORK_DIR)/Resources/R)
 
 svnonly:
-	@if test ! -f "$(srcdir)/doc/FAQ" || test -f non-tarball ; then \
+	@if test ! -f "$(srcdir)/doc/AUTHORS" || test -f non-tarball ; then \
 	  (cd doc/manual && $(MAKE) front-matter) ; \
 	  touch non-tarball ; \
 	  (cd $(srcdir); LC_ALL=C TZ=GMT svn info || echo "Revision: unknown") 2> /dev/null \
