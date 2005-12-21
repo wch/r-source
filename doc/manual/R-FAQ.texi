@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-12-19
+@set FAQ_DATE @value{FAQ_YEAR}-12-21
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -143,7 +143,7 @@ at
 
 @noindent
 You can also obtain it by writing to the Free Software Foundation, Inc.,
-59 Temple Place --- Suite 330, Boston, MA 02111-1307, USA.
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, U.S.A.
 
 @node Obtaining this document, Citing this document, Legalese, Introduction
 @section Obtaining this document
@@ -1846,6 +1846,8 @@ Hastie, Robert Tibshirani and Jerome Friedman (2001), Springer.
 @item Epi
 Statistical analysis in epidemiology, with functions for demographic and
 epidemiological analysis in the Lexis diagram.
+@item FLCore
+Core package of FLR, fisheries modeling in R.
 @item Fahrmeir
 Data from the book ``Multivariate Statistical Modelling Based
 on Generalized Linear Models'' by Ludwig Fahrmeir and Gerhard Tutz
