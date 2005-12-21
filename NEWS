@@ -415,7 +415,17 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.2.0 patched
+		CHANGES IN R VERSION 2.2.1 patched
+
+
+BUG FIXES
+
+    o	sub(fixed = TRUE) could get wrong the length of the character
+	string of elements of the result after the first.
+
+
+
+		CHANGES IN R VERSION 2.2.1
 
 
 USER-VISIBLE CHANGES

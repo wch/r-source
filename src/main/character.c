@@ -1012,7 +1012,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	cflags, eflags, last_end;
     char *s, *t, *u;
     char *spat = NULL; /* -Wall */
-    int patlen = 0, replen = 0, st, nr = 1;
+    int patlen = 0, replen = 0, st, nr;
 
     checkArity(op, args);
 
@@ -1107,7 +1107,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    /* and reset */
 		    s = CHAR(STRING_ELT(vec, i));
 		    st = fgrep_one(spat, s, useBytes);
-		}
+		} else nr = 1;
 		SET_STRING_ELT(ans, i, allocString(ns + nr*(replen - patlen)));
 		u = CHAR(STRING_ELT(ans, i)); *u ='\0';
 		do {
