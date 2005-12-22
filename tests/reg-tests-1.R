@@ -3915,6 +3915,17 @@ plot(Uniform)
 
 ### end of tests added in 2.2.1 ###
 
+## sub(fixed=TRUE), reported by Roger Peng 2005-12-21
+x <- 0:10
+v <- paste(x, "asdf", sep=".")
+(xx <- sub(".asdf", "", v, fixed = TRUE))
+stopifnot(nchar(xx) == nchar(x), xx == x)
+## had random trailing bytes from second element on in 2.2.1.
+## identical reported true, fixed in 2.3.0.
+
+
+### end of tests added in 2.2.1 patched ###
+
 
 ## sort used to preserve inappropriate attributes and not always sort names.
 x <- runif(10)
