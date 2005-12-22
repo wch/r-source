@@ -93,8 +93,9 @@ EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) \
 	$(R_BZLIBS) $(R_PCRE) $(R_XDR) @LIBINTL@ \
 	$(READLINE_LIBS) $(LIBS)
 
+## <FIXME> needs to depend on ../extra/intl/libintl.a if used.
 COMMON_DEPENDENCIES = $(R_XTRA_LIBS) $(R_ZLIBS)	$(R_BZLIBS) $(R_PCRE) \
-	$(R_XDR) @LIBINTL@ \
+	$(R_XDR) \
 	@USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
 R_binary = R.bin
