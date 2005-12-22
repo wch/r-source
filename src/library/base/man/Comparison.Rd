@@ -38,9 +38,15 @@ x != y
   vector: this will succeed if the list is made up of elements of length
   one that canbe coerced to the correct type.
 
-  If the two arguments are atomic vectors of different types, they are
-  both coerced to the first of character, complex, numeric, integer and
-  logical.
+  If the two arguments are atomic vectors of different types, one is
+  coerced to the type of the other, the order of precedence being
+  character, complex, numeric, integer and logical.
+
+  When comparisons are made between character strings, parts of the
+  strings after embedded \code{nul} characters are ignored.  (This is
+  necessary as the position of \code{nul} in the collation sequence is
+  undefined, and we want one of \code{<}, \code{==} and \code{>} to be
+  true for any comparison.)
 }
 \value{
   A vector of logicals indicating the result of the element by element

@@ -45,6 +45,9 @@ identical(x, y)
   As from \R 1.6.0, \code{identical} sees \code{NaN} as different from
   \code{as.double(NA)}, but all \code{NaN}s are equal (and all \code{NA}
   of the same type are equal).
+
+  Comparison of character strings allowed for embedded \code{nul}
+  characters as from \R 2.3.0.
 }
 \value{
   A single logical value, \code{TRUE} or \code{FALSE}, never \code{NA}

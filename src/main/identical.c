@@ -95,15 +95,18 @@ Rboolean compute_identical(SEXP x, SEXP y)
     }
     case STRSXP:
     {
-	int i, n = length(x);
+	int i, n = length(x), n1, n2;
 	if(n != length(y)) return FALSE;
 	for(i = 0; i < n; i++) {
 	    Rboolean na1 = (STRING_ELT(x, i) == NA_STRING),
 		na2 = (STRING_ELT(y, i) == NA_STRING);
 	    if(na1 ^ na2) return FALSE;
 	    if(na1 && na2) continue;
-	    if(strcmp(CHAR(STRING_ELT(x, i)),
-		      CHAR(STRING_ELT(y, i))) != 0)
+	    /* NB: R strings can have embedded nuls */
+	    n1 = LENGTH(STRING_ELT(x, i));
+	    n2 = LENGTH(STRING_ELT(y, i));
+	    if (n1 != n2) return FALSE;
+	    if(memcmp(CHAR(STRING_ELT(x, i)), CHAR(STRING_ELT(y, i)), n1) != 0)
 		return FALSE;
 	}
 	return TRUE;

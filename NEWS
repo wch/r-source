@@ -403,7 +403,10 @@ BUG FIXES
 
     o	sysconf() is now used to find the number of clock ticks/second:
 	under some circumstances glibc reported 60 when the true value
-	was 100.
+
+    o	identical() was not allowing for embedded nuls in character
+	strings. (NB: the comparions operators including == do not,
+	and never will.)
 
 
 
