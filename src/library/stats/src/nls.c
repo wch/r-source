@@ -44,7 +44,7 @@ getListElement(SEXP list, SEXP names, char *str) {
     char *tempChar;
     int i;
 
-    for (i = 0; i < LENGTH(list); i++) {
+    for (i = 0; i < length(list); i++) {
 	tempChar = CHAR(STRING_ELT(names, i));
 	if( strcmp(tempChar,str) == 0) {
 	    elmt = VECTOR_ELT(list, i);
