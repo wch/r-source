@@ -75,10 +75,11 @@
 
 ## Options for the FORTRAN 77 compiler.
 ## Use this to specify FFLAGS for the version of the compiler specified
-## above.  If unspecified, defaults to '-O2' for g77, and '' otherwise.
+## above.  If unspecified, defaults to '-g -O2' for g77, and '-g' if
+## this is accepted, otherwise ''.
 ## FFLAGS=
 
-## Options for same compilation underthe FORTRAN 77 compiler.
+## Options for safe compilation under the FORTRAN 77 compiler.
 ## Use this to specify FFLAGS for the version of the compiler specified
 ## above, using as accurate a result as possible, e.g. no optimization
 ## or using -ffloat-store.
