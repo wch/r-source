@@ -1116,7 +1116,6 @@ pm <- promax(ability.FA$loadings)
 tmp1 <- as.vector(ability.FA$loadings %*% pm$rotmat)
 tmp2 <- as.vector(pm$loadings)
 stopifnot(all.equal(tmp1, tmp2))
-rm(ability.cov)
 
 
 ## PR 1155. On some systems strptime was not setting the month or mday
@@ -3534,6 +3533,8 @@ summary(data.frame(mat = I(matrix(1:8, 2))))
 summary(data.frame(x = gl(2,2), I(matrix(1:8, 4))))
 ##
 
+
+
 ### fixes for 2.1.1 ###
 
 ## PR#7792: predict.glm dropped names
@@ -3592,6 +3593,7 @@ plot(x, exp(x), log = "y", ylim = c(30,1))
 ## gave error (and warning) in  log - axis(), 'at' creation
 
 ### end of tests added in 2.1.0 patched ###
+
 
 
 ## Multibyte character set regular expressions had buffer overrun
@@ -3941,3 +3943,14 @@ nls(y~a+b*x+c*I(x^2), start=c(a=1,b=1,c=0.1), algorithm="port",
 
 
 ### end of tests added in 2.2.1 ###
+
+## sub(fixed=TRUE), reported by Roger Peng 2005-12-21
+x <- 0:10
+v <- paste(x, "asdf", sep=".")
+(xx <- sub(".asdf", "", v, fixed = TRUE))
+stopifnot(nchar(xx) == nchar(x), xx == x)
+## had random trailing bytes from second element on in 2.2.1.
+## identical reported true, fixed in 2.3.0.
+
+
+### end of tests added in 2.2.1 patched ###
