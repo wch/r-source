@@ -62,7 +62,7 @@ optim(par, fn, gr = NULL,
 
   Nocedal and Wright (1999) is a comprehensive reference for the
   previous three methods.
-  
+
   Method \code{"SANN"} is by default a variant of simulated annealing
   given in Belisle (1992). Simulated-annealing belongs to the class of
   stochastic global optimization methods. It uses only function values
@@ -73,10 +73,14 @@ optim(par, fn, gr = NULL,
   actual temperature. If a function to generate a new candidate point is
   given, method \code{"SANN"} can also be used to solve combinatorial
   optimization problems. Temperatures are decreased according to the
-  logarithmic cooling schedule as given in Belisle (1992, p. 890). Note
-  that the \code{"SANN"} method depends critically on the settings of
-  the control parameters. It is not a general-purpose method but can be 
-  very useful in getting to a good value on a very rough surface.
+  logarithmic cooling schedule as given in Belisle (1992, p. 890);
+  specifically, the temperature is set to
+  \code{temp / log(((t-1) \%/\% tmax)*tmax + exp(1))}, where \code{t} is
+  the current iteration step and \code{temp} and \code{tmax} are
+  specifiable via \code{control}, see below.  Note that the
+  \code{"SANN"} method depends critically on the settings of the control
+  parameters. It is not a general-purpose method but can be very useful
+  in getting to a good value on a very rough surface.
 
   Function \code{fn} can return \code{NA} or \code{Inf} if the function
   cannot be evaluated at the supplied value, but the initial value must
@@ -183,7 +187,7 @@ optim(par, fn, gr = NULL,
 
   Fletcher, R. and Reeves, C. M. (1964) Function minimization by
   conjugate gradients. \emph{Computer Journal} \bold{7}, 148--154.
-  
+
   Nash, J. C. (1990) \emph{Compact Numerical Methods for
     Computers. Linear Algebra and Function Minimisation.} Adam Hilger.
 
@@ -197,7 +201,7 @@ optim(par, fn, gr = NULL,
   \code{optim} will work with one-dimensional \code{par}s, but the
   default method does not work well (and will warn).  Use
   \code{\link{optimize}} instead.
-  
+
   The code for methods \code{"Nelder-Mead"}, \code{"BFGS"} and
   \code{"CG"} was based originally on Pascal code in Nash (1990) that was
   translated by \code{p2c} and then hand-optimized.  Dr Nash has agreed
@@ -264,7 +268,7 @@ distance <- function(sq) {  # Target function
     return(sum(eurodistmat[cbind(sq2[,2],sq2[,1])]))
 }
 
-genseq <- function(sq) {  # Generate new candidate sequence 
+genseq <- function(sq) {  # Generate new candidate sequence
     idx <- seq(2, NROW(eurodistmat)-1, by=1)
     changepoints <- sample(idx, size=2, replace=FALSE)
     tmp <- sq[changepoints[1]]
@@ -291,11 +295,11 @@ s <- seq(NROW(tspres)-1)
 plot(x, y, type="n", asp=1, xlab="", ylab="",
      main="initial solution of traveling salesman problem")
 arrows(tspinit[s,1], -tspinit[s,2], tspinit[s+1,1], -tspinit[s+1,2],
-       angle=10, col="green") 
+       angle=10, col="green")
 text(x, y, labels(eurodist), cex=0.8)
 
 plot(x, y, type="n", asp=1, xlab="", ylab="",
-     main="optim() 'solving' traveling salesman problem") 
+     main="optim() 'solving' traveling salesman problem")
 arrows(tspres[s,1], -tspres[s,2], tspres[s+1,1], -tspres[s+1,2],
        angle=10, col="red")
 text(x, y, labels(eurodist), cex=0.8)
