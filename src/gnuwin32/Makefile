@@ -425,7 +425,6 @@ distclean veryclean: clean clean-recommended
 	$(RM) ../library/*/src/*.d ../library/*/src/Makedeps
 	$(RM) ../library/*/src/*.dll
 	$(RM) ../library/grid/tests/Rplots.ps
-	$(RM) ../library/grid/tests/*.Rout
 	$(RM) -r ../library/*/check
 	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
 	../library/tcltk//src/tk$(TCL_VERSION).def

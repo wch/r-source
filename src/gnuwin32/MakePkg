@@ -92,7 +92,7 @@ clean:
 ifeq ($(strip $(SRCMAKE)),)
 	$(RM) $(SDYNLIB) $(LOBJS) $(SSPKG)/$(DLLNAME).a \
 	  $(SSPKG)/$(DLLNAME).def $(SSPKG)/$(DLLNAME)_res.* \
-	  $(SSPKG)/*.d $(SSPKG)/Makedeps
+	  $(SSPKG)/*.d $(SSPKG)/Makedeps tests/*.Rout
 else
 	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win clean
 endif
