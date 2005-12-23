@@ -1,4 +1,3 @@
-% $Id: profile.nls.Rd,v 1.1 2003/12/11 07:16:06 ripley Exp $
 \name{profile.nls}
 \alias{profile.nls}
 \title{Method for Profiling nls Objects}
@@ -30,6 +29,8 @@
   \item{tau}{ The profile t-statistics.}
 }
 \details{
+  Only fits with \code{algorithm = "default"} are supported.
+  
   The profile t-statistics is defined as the square root of change in
   sum-of-squares divided by residual standard error with an
   appropriate sign.

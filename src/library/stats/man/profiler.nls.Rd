@@ -1,4 +1,3 @@
-% $Id: profiler.nls.Rd,v 1.1 2003/12/11 07:16:06 ripley Exp $
 \name{profiler.nls}
 \alias{profiler.nls}
 \title{ Constructor for Profiler Objects from nls Objects}
@@ -34,11 +33,13 @@
   }
 }
 \section{Warning}{
-  When using setDefault and getProfile together, the internal state of
-  the fitted model may get changed. So after completing the profiling
-  for a parameter, the internal states should be restored by a call to
-  setDefault without any arguments. For example see below or the source
-  for \code{\link{profile.nls}}.
+  Only fits with \code{algorithm = "default"} are supported.
+  
+  When using \code{setDefault} and \code{getProfile} together, the
+  internal state of the fitted model may get changed.  So after
+  completing the profiling for a parameter, the internal states should
+  be restored by a call to \code{setDefault} without any arguments.  For
+  example see below or the source for \code{\link{profile.nls}}.
 }
 \references{
   Bates, D.M. and Watts, D.G. (1988),
@@ -54,7 +55,7 @@
 }
 \examples{
 ## obtain the fitted object
-fm1 <- nls(demand ~ SSasympOrig( Time, A, lrc ), data = BOD)
+fm1 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 ## get the profile for the fitted model
 prof1 <- profiler( fm1 )
 ## profile with A fixed at 16.0
