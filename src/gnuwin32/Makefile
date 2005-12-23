@@ -272,7 +272,7 @@ ifeq ($(strip $(USE_ACML)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../lib -lR  -L"$(ACML_PATH)" -lacml -lg2c
+	   -L../../lib -lR  -L"$(ACML_PATH)" -lacml $(FLIBS)
 else
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
@@ -282,7 +282,7 @@ ifeq ($(strip $(USE_ATLAS)),YES)
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../lib -lR -lg2c
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../lib -lR $(FLIBS)
 endif
 endif
 
