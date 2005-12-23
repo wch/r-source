@@ -3,8 +3,13 @@ install.packages <-
              contriburl = contrib.url(repos, type),
              method, available = NULL, destdir = NULL,
              installWithVers = FALSE, dependencies = FALSE,
-             type = getOption("pkgType"))
+             type = getOption("pkgType"), configure.args = character(0),
+             clean = FALSE)
 {
+
+    if (is.logical(clean) && clean)
+        clean <- "--clean"
+    
     explode_bundles <- function(a)
     {
         contains <- .find_bundles(a, FALSE)
@@ -21,6 +26,35 @@ install.packages <-
     	    pkgs <- c(pkgs[-bundled], bundles)
     	}
     	pkgs
+    }
+
+
+      # Compute the configuration arguments for a given package.
+      # If configure.args is an unnamed character vector, use that.
+      # If it is named, match the pkg name to the names of the character vector
+      # and if we get a match, use that element.
+      # Similarly, configure.args is a list(), match pkg to the names pkg and
+      # use that element, collapsing it into a single string.
+    
+    getConfigureArgs <-  function(pkg)
+    {
+        # Since the pkg argument can be the name of a file rather than a regular
+        # package name, we have to clean that up.      
+        pkg <- gsub("_\\.(zip|tar\\.gz)", "",
+                     gsub(.standard_regexps()$valid_package_version, "", basename(pkg)))
+      
+        if(length(pkgs) == 1 && length(names(configure.args)))
+          return(paste("--configure-args=", shQuote(paste(configure.args, collapse = " "), sep = "")))
+      
+        if (length(configure.args) && length(names(configure.args))
+              && pkg %in% names(configure.args))
+            config <- paste("--configure-args=",
+                            shQuote(paste(configure.args[[ pkg ]], collapse = " ")),
+                            sep = "")
+        else
+            config <- character(0)
+
+        config
     }
 
     if(missing(pkgs) || !length(pkgs)) {
@@ -91,8 +125,13 @@ install.packages <-
         cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
+        if (is.character(clean))
+            cmd0 <- paste(cmd0, clean)
+
         for(i in 1:nrow(update)) {
+         
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2]),
+                          getConfigureArgs(update[i, 1]), 
                          shQuote(update[i, 1]))
             if(system(cmd) > 0)
                 warning(gettextf(
@@ -189,8 +228,12 @@ install.packages <-
         cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
+        if (is.character(clean))
+            cmd0 <- paste(cmd0, clean)
+        
         for(i in 1:nrow(update)) {
-            cmd <- paste(cmd0, "-l", shQuote(update[i, 2]), update[i, 3])
+            cmd <- paste(cmd0, "-l", shQuote(update[i, 2]),
+                          getConfigureArgs(update[i, 3]), update[i, 3])
             status <- system(cmd)
             if(status > 0)
                 warning(gettextf(

@@ -21,6 +21,10 @@ USER-VISIBLE CHANGES
 	will fail.
 
 
+    o	install.packages() has additional arguments configure.args and 
+	clean which allow the caller to provide additional arguments
+	to the underlying R CMD INSTALL shell command.
+
 NEW FEATURES
 
     o	arima.sim() has a new argument 'start.innov' for compatibility
