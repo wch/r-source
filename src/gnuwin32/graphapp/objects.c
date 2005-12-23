@@ -259,12 +259,12 @@ static void remove_deleted_object(object obj)
  *  This function repeatedly deletes del_base until that value is null.
  *  This traversal occurs at the end of every doevent call.
  */
+static void del_object(object obj);	/* declaration */
 PROTECTED
 void deletion_traversal(void)
 {
 	static int level = 0;
 	object obj;
-	static void del_object(object obj);	/* declaration */
 
 	level++;
 	if (level == 1) {

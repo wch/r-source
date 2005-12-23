@@ -28,12 +28,12 @@ dlamc-FFLAGS=-ffloat-store
 	$(CP) $< $@
 
 ifeq ($(strip $(USE_ACML_LAPACK)),YES)
-lapack-DLLLIBS=-L../../../lib -lRblas -L"$(ACML_PATH)" -lacml -lg2c -lR
+lapack-DLLLIBS=-L../../../lib -lRblas -L"$(ACML_PATH)" -lacml $(FLIBS) -lR
 else
 lapack-DLLLIBS=-L../../../lib -lRlapack -lRblas -lR
 endif
 
-Rlapack-DLLLIBS=-L../../../lib -lR -lRblas -lg2c
+Rlapack-DLLLIBS=-L../../../lib -lR -lRblas $(FLIBS)
 
 $(MODULE).dll: $(OBJS)
 

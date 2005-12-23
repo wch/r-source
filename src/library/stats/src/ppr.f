@@ -605,7 +605,6 @@ c
 11511 continue
       goto 11492
 11521 continue
-11501 continue
       goto 11491
 11492 continue
       if(br .ne. 1) goto 11541
@@ -658,7 +657,6 @@ c
 11651 continue
       goto 11632
 11661 continue
-11641 continue
       goto 11631
 11632 continue
       if(eb .ge. n) goto 11681
@@ -672,7 +670,6 @@ c
 11731 continue
       goto 11712
 11741 continue
-11721 continue
       goto 11711
 11712 continue
       if(er.lt.n .and. x(er+1)-x(er).lt.x(eb+1)-x(eb)) goto 11621
@@ -699,7 +696,6 @@ c
 11791 continue
       goto 11772
 11801 continue
-11781 continue
       goto 11771
 11772 continue
       bb=bl

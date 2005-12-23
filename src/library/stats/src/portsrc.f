@@ -247,7 +247,7 @@ C
       IF (IV(1) .EQ. 2) GO TO 60
       IF (IV(1) .GT. 2) GO TO 220
 C
- 50   V(F) = ZERO
+      V(F) = ZERO
       IF (IV(NF1) .EQ. 0) GO TO 260
       IF (IV(RESTOR) .NE. 2) GO TO 260
       IV(NF0) = IV(NF1)
@@ -480,7 +480,7 @@ C
               A(IJ) = T
  20           CONTINUE
  30      CONTINUE
- 999  RETURN
+      RETURN
       END
       SUBROUTINE DRMNHB(B, D, FX, G, H, IV, LH, LIV, LV, N, V, X)
 C
@@ -1601,7 +1601,7 @@ C
 C
 C  ***  COMPUTE GRADIENT  ***
 C
- 30   IF (IV(NITER) .EQ. 0) CALL DV7SCP(N, V(G1), ZERO)
+      IF (IV(NITER) .EQ. 0) CALL DV7SCP(N, V(G1), ZERO)
       J = IV(LMAT)
       K = G1 - N
       DO 40 I = 1, N
@@ -2390,7 +2390,7 @@ C
       V(PREDUC) = PRED
       V(GTSTEP) = DD7TPR(P, G, STEP)
 C
- 999  RETURN
+      RETURN
 C  ***  LAST LINE OF DG7QSB FOLLOWS  ***
       END
       DOUBLE PRECISION FUNCTION DL7SVX(P, L, X, Y)
@@ -3346,7 +3346,7 @@ C
             IP(K) = -J
             IF (J .GT. I) GO TO 10
  90      CONTINUE
- 999  RETURN
+      RETURN
 C  ***  LAST LINE OF DS7IPR FOLLOWS  ***
       END
       SUBROUTINE DH2RFA(N, A, B, X, Y, Z)
@@ -3363,7 +3363,7 @@ C
          A(I) = A(I) + T
          B(I) = B(I) + T*Z
  10      CONTINUE
- 999  RETURN
+      RETURN
 C  ***  LAST LINE OF DH2RFA FOLLOWS  ***
       END
       SUBROUTINE DPARCK(ALG, D, IV, LIV, LV, N, V)
@@ -4897,7 +4897,7 @@ C
 C
 C  ***  NEW FUNCTION VALUE (RESIDUAL) NEEDED  ***
 C
- 40   IV(IV1SAV) = IV(1)
+      IV(IV1SAV) = IV(1)
       IV(1) = IABS(IV1)
       IF (IV(RESTOR) .EQ. 2 .AND. L .GT. 0) CALL DV7CPY(L, V(CSAVE1), C)
       GO TO 999
@@ -5081,7 +5081,7 @@ C
  30           CONTINUE
  40      CONTINUE
 C
- 999  RETURN
+      RETURN
 C  ***  LAST CARD OF DS7LUP FOLLOWS  ***
       END
       SUBROUTINE DL7MST(D, G, IERR, IPIVOT, KA, P, QTR, R, STEP, V, W)
@@ -5287,7 +5287,7 @@ C
 C
 C  ***  FRESH START -- COMPUTE V(NREDUC)  ***
 C
- 10   KA = 0
+      KA = 0
       KALIM = 12
       K = P
       IF (IERR .NE. 0) K = IABS(IERR) - 1
@@ -5566,7 +5566,7 @@ C
       W(UK0) = UK
       V(RAD0) = RAD
 C
- 999  RETURN
+      RETURN
 C
 C  ***  LAST CARD OF DL7MST FOLLOWS  ***
       END
@@ -5672,7 +5672,7 @@ C
 C
 C  ***  COMPUTE GRADIENT  ***
 C
- 30   IF (IV(NITER) .EQ. 0) CALL DV7SCP(P, V(G1), ZERO)
+      IF (IV(NITER) .EQ. 0) CALL DV7SCP(P, V(G1), ZERO)
       J = IV(LMAT)
       ALPHA0 = G1 - P - 1
       IPI = IV(PERM)
@@ -6975,7 +6975,7 @@ C
 C
  150  CALL DV2AXY(P, X, ONE, STEP, X0)
       IF (NS .GT. 0) CALL DV7IPR(P0, IPIV1, TD)
- 999  RETURN
+      RETURN
 C  ***  LAST LINE OF DS7BQN FOLLOWS  ***
       END
       SUBROUTINE N7MSRT(N,NMAX,NUM,MODE,INDEX,LAST,NEXT)
@@ -7922,7 +7922,7 @@ C
       V(PREDUC) = PRED
       V(GTSTEP) = DD7TPR(P, G, STEP)
 C
- 999  RETURN
+      RETURN
 C  ***  LAST LINE OF DL7MSB FOLLOWS  ***
       END
       SUBROUTINE DN2LRD(DR, IV, L, LH, LIV, LV, ND, NN, P, R, RD, V)
@@ -8035,7 +8035,7 @@ C
          IF (I .GT. 1) T = T + DD7TPR(I-1, U(1,I), X)
          Y(I) = T
  10      CONTINUE
- 999  RETURN
+      RETURN
 C  ***  LAST LINE OF DR7TVM FOLLOWS  ***
       END
       SUBROUTINE DQ7RAD(N, NN, P, QTR, QTRSET, RMAT, W, Y)
@@ -8621,7 +8621,7 @@ C
 C
 C  ***  NEW FUNCTION VALUE (RESIDUAL) NEEDED  ***
 C
- 40   IV(IV1SAV) = IV(1)
+      IV(IV1SAV) = IV(1)
       IV(1) = IABS(IV1)
       IF (IV(RESTOR) .EQ. 2 .AND. L .GT. 0) CALL DV7CPY(L, V(CSAVE1), C)
       GO TO 999
@@ -8877,7 +8877,7 @@ C
  10           CONTINUE
          I0 = I0 + I
  20      CONTINUE
- 999  RETURN
+      RETURN
 C  ***  LAST CARD OF DL7TVM FOLLOWS  ***
       END
       SUBROUTINE DL7ITV(N, X, L, Y)
@@ -9536,7 +9536,7 @@ C     ROUNDOFF (THE SMALLEST POSITIVE NUMBER SUCH THAT
 C     1 + MACHEP .GT. 1  AND  1 - MACHEP .LT. 1),  AND  H0 IS THE
 C     SQUARE-ROOT OF MACHEP.
 C
- 100  W(1) = DR7MDC(3)
+      W(1) = DR7MDC(3)
       W(2) = DSQRT(W(1))
 C
       W(FX0) = FX
@@ -10262,7 +10262,7 @@ C
          DIHDI(J) = W(K)
  420     CONTINUE
 C
- 999  RETURN
+      RETURN
 C
 C  ***  LAST CARD OF DG7QTS FOLLOWS  ***
       END
@@ -10343,7 +10343,7 @@ C
       DO 30 I = 1, N
  30      Z(I) = CY * Z(I)  -  CS * W(I)
 C
- 999  RETURN
+      RETURN
 C  ***  LAST CARD OF DW7ZBF FOLLOWS  ***
       END
       SUBROUTINE DC7VFN(IV, L, LH, LIV, LV, N, P, V)
@@ -10675,7 +10675,7 @@ C     ROUNDOFF (THE SMALLEST POSITIVE NUMBER SUCH THAT
 C     1 + MACHEP .GT. 1  AND  1 - MACHEP .LT. 1),  AND  H0 IS THE
 C     SQUARE-ROOT OF MACHEP.
 C
- 10   W(1) = DR7MDC(3)
+      W(1) = DR7MDC(3)
       W(2) = DSQRT(W(1))
 C
       W(FX0) = FX
@@ -10956,7 +10956,7 @@ C
  50      JJ = JJ - J
  60      CONTINUE
 C
- 999  RETURN
+      RETURN
 C  ***  LAST CARD OF DL7UPD FOLLOWS  ***
       END
       SUBROUTINE DO7PRD(L, LS, P, S, W, Y, Z)
@@ -10985,7 +10985,7 @@ C
  20           CONTINUE
  30      CONTINUE
 C
- 999  RETURN
+      RETURN
 C  ***  LAST CARD OF DO7PRD FOLLOWS  ***
       END
       SUBROUTINE DV7VMP(N, X, Y, Z, K)
@@ -11423,7 +11423,7 @@ C
  40           A(J) = LII * L(J)
  50      CONTINUE
 C
- 999  RETURN
+      RETURN
 C  ***  LAST CARD OF DL7TSQ FOLLOWS  ***
       END
       DOUBLE PRECISION FUNCTION DRLDST(P, D, X, X0)
@@ -11450,7 +11450,7 @@ C
  10      CONTINUE
       DRLDST = ZERO
       IF (XMAX .GT. ZERO) DRLDST = EMAX / XMAX
- 999  RETURN
+      RETURN
 C  ***  LAST CARD OF DRLDST FOLLOWS  ***
       END
       SUBROUTINE DRN2GB(B, D, DR, IV, LIV, LV, N, ND, N1, N2, P, R,
@@ -11610,7 +11610,7 @@ C
       IF (IV(1) .EQ. 2) GO TO 60
       IF (IV(1) .GT. 2) GO TO 260
 C
- 50   V(F) = ZERO
+      V(F) = ZERO
       IF (IV(NF1) .EQ. 0) GO TO 240
       IF (IV(RESTOR) .NE. 2) GO TO 240
       IV(NF0) = IV(NF1)
@@ -11932,7 +11932,7 @@ C
       V(DST0) = DNWTST
       V(GTSTEP) = DD7TPR(P, STEP, G)
 C
- 999  RETURN
+      RETURN
 C  ***  LAST LINE OF DD7DGB FOLLOWS  ***
       END
       SUBROUTINE DQ7RFH(IERR, IPIVOT, N, NN, NOPIVK, P, Q, R, RLEN, W)
