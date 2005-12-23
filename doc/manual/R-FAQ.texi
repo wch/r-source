@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-12-21
+@set FAQ_DATE @value{FAQ_YEAR}-12-23
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -3602,6 +3602,9 @@ Student's @math{t} variables.
 Transmission/disequilibrium tests for extended marker haplotypes.
 @item tensor
 Tensor product of arrays.
+@item tgp
+Bayesian regression and adaptive sampling with Treed Gaussian Process
+models.
 @item time
 Time tracking for developers.
 @item tkrplot
