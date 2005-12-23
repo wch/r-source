@@ -459,6 +459,7 @@ C        Loop  --- 15 robustness iterations
  137        continue
             if((maxds/(maxs-mins) .lt. .01) .and.
      &         (maxdt/(maxt-mint) .lt. .01))   goto 300
+ 151        continue
             j=j+1
             goto 100
          endif
@@ -538,18 +539,20 @@ c     while (j - i > 10)
          endif
       endif
 
+ 181  continue
       l = l-1
       if(a(l) .le. t)then
          tt = a(l)
  186     continue
          k = k+1
-         if(.not.(a(k) .ge. t))goto   186
+ 187     if(.not.(a(k) .ge. t))goto   186
 
          if(k .gt. l) goto 183
 
          a(l) = a(k)
          a(k) = tt
       endif
+ 182  goto   181
 
  183  continue
       indl(m) = jl
