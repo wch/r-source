@@ -111,7 +111,7 @@ nlsModel.plinear <- function( form, data, start, wts )
         dtdot <- function( A, b ) t(A) %*% b
     } else if( marg == 2 ) {
         if( p1 == 1 ) {
-            ddot <- function( A, b ) A*b
+            ddot <- function( A, b ) as.matrix(A*b)
             dtdot <- function( A, b ) t(b) %*% A
         } else if( p2 == 1 ) {
             ddot <- function( A, b ) A %*% b
@@ -380,8 +380,52 @@ nlsModel <- function( form, data, start, wts )
     m
 }
 
-nls.control <- function( maxiter = 50, tol = 0.00001, minFactor = 1/1024 ) {
-    list( maxiter = maxiter, tol = tol, minFactor = minFactor )
+nls.control <- function(maxiter = 50, tol = 0.00001, minFactor = 1/1024)
+    list(maxiter = maxiter, tol = tol, minFactor = minFactor)
+
+
+nls_port_fit <- function(m, start, lower, upper, control, trace)
+{
+    ## Establish the working vectors and check and set options
+    p <- length(par <- as.double(start))
+    iv <- integer(4*p + 82)
+    v <- double(105 + (p * (2 * p + 20)))
+    .Call("port_ivset", 1, iv, v, PACKAGE = "stats")
+    if (length(control)) {
+        control $tol <- control$minFactor <- NULL
+        nms <- names(control)
+        if (!is.list(control) || is.null(nms))
+            stop("control argument must be a named list")
+        cpos <- c(eval.max = 17, maxiter = 18, trace = 19, abs.tol = 31,
+                  rel.tol = 32, x.tol = 33, step.min = 34, step.max = 35,
+                  scale.init = 38, sing.tol = 37, diff.g = 42)
+        pos <- pmatch(nms, names(cpos))
+        if (any(nap <- is.na(pos))) {
+            warning(paste("unrecognized control element(s) named `",
+                          paste(nms[nap], collapse = ", "),
+                          "' ignored", sep = ""))
+            pos <- pos[!nap]
+            control <- control[!nap]
+        }
+        ivpars <- pos < 4
+        if (any(ivpars))
+            iv[cpos[pos[ivpars]]] <- as.integer(unlist(control[ivpars]))
+        if (any(!ivpars))
+            v[cpos[pos[!ivpars]]] <- as.double(unlist(control[!ivpars]))
+    }
+    if (trace)
+        iv[19] <- 1:1
+    scale <- 1
+    low <- upp <- NULL
+    if (any(lower != -Inf) || any(upper != Inf)) {
+        low <- rep(as.double(lower), length = length(par))
+        upp <- rep(as.double(upper), length = length(par))
+    }
+    ## Call driver routine
+    .Call("port_nlsb", m,
+          d = rep(as.double(scale), length = length(par)),
+          df = m$gradient(), iv, v, low, upp, PACKAGE = "stats")
+    iv
 }
 
 nls <-
@@ -461,8 +505,10 @@ nls <-
             warning('Upper or lower bounds ignored unless algorithm = "port"')
         nls.out <- list(m = .Call("nls_iter", m, ctrl, trace, PACKAGE = "stats"),
                         data = substitute(data), call = match.call())
+        ## we need these (evaluated) for profiling
         nls.out$call$control <- ctrl
         nls.out$call$trace <- trace
+        nls.out$call$algorithm <- algorithm
         nls.out$na.action <- attr(mf, "na.action")
         nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
         if(model) nls.out$model <- mf
@@ -471,48 +517,16 @@ nls <-
         return(nls.out)
     }
 
-    ## Establish the working vectors and check and set options
-    p <- length(par <- as.double(start))
-    iv <- integer(4*p + 82)
-    v <- double(105 + (p * (2 * p + 20)))
-    .Call("port_ivset", 1, iv, v, PACKAGE = "stats")
-    if (length(control)) {
-        control $tol <- control$minFactor <- NULL
-        nms <- names(control)
-        if (!is.list(control) || is.null(nms))
-            stop("control argument must be a named list")
-        cpos <- c(eval.max = 17, maxiter = 18, trace = 19, abs.tol = 31,
-                  rel.tol = 32, x.tol = 33, step.min = 34, step.max = 35,
-                  scale.init = 38, sing.tol = 37, diff.g = 42)
-        pos <- pmatch(nms, names(cpos))
-        if (any(nap <- is.na(pos))) {
-            warning(paste("unrecognized control element(s) named `",
-                          paste(nms[nap], collapse = ", "),
-                          "' ignored", sep = ""))
-            pos <- pos[!nap]
-            control <- control[!nap]
-        }
-        ivpars <- pos < 4
-        if (any(ivpars))
-            iv[cpos[pos[ivpars]]] <- as.integer(unlist(control[ivpars]))
-        if (any(!ivpars))
-            v[cpos[pos[!ivpars]]] <- as.double(unlist(control[!ivpars]))
-    }
-    if (trace)
-        iv[19] <- 1:1
-    scale <- 1
-    low <- upp <- NULL
-    if (any(lower != -Inf) || any(upper != Inf)) {
-        low <- rep(as.double(lower), length = length(par))
-        upp <- rep(as.double(upper), length = length(par))
-    }
-    ## Call driver routine
-    .Call("port_nlsb", m,
-          d = rep(as.double(scale), length = length(par)),
-          df = m$gradient(), iv, v, low, upp, PACKAGE = "stats")
-    ans <- list(m = m, data = substitute(data), call = match.call())
-    ans$convergence <- as.integer(if (iv[1] %in% 3:6) 0 else 1)
-    ans$message <-
+    iv <- nls_port_fit(m, start, lower, upper, control, trace)
+    nls.out <- list(m = m, data = substitute(data), call = match.call())
+    ## we need these (evaluated) for profiling
+    nls.out$call$algorithm <- algorithm
+    nls.out$call$lower <- lower
+    nls.out$call$upper <- upper
+    nls.out$call$control <- control
+    nls.out$call$trace <- trace
+    nls.out$convergence <- as.integer(if (iv[1] %in% 3:6) 0 else 1)
+    nls.out$message <-
         switch(as.character(iv[1]),
                "3" = "X-convergence (3)",
                "4" = "relative convergence (4)",
@@ -529,17 +543,17 @@ nls <-
                "16" = "LV too small (16)",
                "63" = "fn cannot be computed at initial par (63)",
                "65" = "gr cannot be computed at initial par (65)")
-    if (is.null(ans$message))
-        ans$message <-
+    if (is.null(nls.out$message))
+        nls.out$message <-
             paste("See PORT documentation.  Code (", iv[1], ")", sep = "")
-    if (ans$convergence)
-        stop(paste("Convergence failure:", ans$message))
-    ans$na.action <- attr(mf, "na.action")
-    ans$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
-    if(model) ans$model <- mf
-    if(!mWeights) ans$weights <- wts
-    class(ans) <- "nls"
-    ans
+    if (nls.out$convergence)
+        stop(paste("Convergence failure:", nls.out$message))
+    nls.out$na.action <- attr(mf, "na.action")
+    nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
+    if(model) nls.out$model <- mf
+    if(!mWeights) nls.out$weights <- wts
+    class(nls.out) <- "nls"
+    nls.out
 }
 
 coef.nls <- function( object, ... ) object$m$getAllPars()

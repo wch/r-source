@@ -408,8 +408,11 @@ BUG FIXES
 	under some circumstances glibc reported 60 when the true value
 
     o	identical() was not allowing for embedded nuls in character
-	strings. (NB: the comparions operators including == do not,
+	strings. (NB: the comparison operators including == do not,
 	and never will.)
+
+    o	The profile() and profiler() methods for "nls" objects now
+	support algorithm = "plinear" and algorithm = "port".
 
 
 

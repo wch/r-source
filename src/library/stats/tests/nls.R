@@ -2,6 +2,7 @@
 
 .proctime00 <- proc.time()
 library(stats)
+options(digits=5) # to avoid trivial printed differences
 
 postscript("nls-test.ps")
 
@@ -19,7 +20,7 @@ logistInit <- function(mCall, LHS, data) {
     names(value) <- mCall[c("Asym", "xmid", "scal")]
     value
 }
-logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
+logist <- selfStart(logist, initial = logistInit) ##-> Error in R 1.5.0
 str(logist)
 
 ## lower and upper in algorithm="port"
@@ -30,9 +31,10 @@ c <- -0.1
 y <- a+b*x+c*x^2+rnorm(200, sd=0.05)
 plot(x,y)
 curve(a+b*x+c*x^2, add=TRUE)
-nls(y~a+b*x+c*I(x^2), start=c(a=1,b=1,c=0.1), algorithm="port")
-nls(y~a+b*x+c*I(x^2), start=c(a=1,b=1,c=0.1), algorithm="port", lower=c(0,0,0))
-
+nls(y ~ a+b*x+c*I(x^2), start = c(a=1,b=1,c=0.1), algorithm = "port")
+(fm <- nls(y ~ a+b*x+c*I(x^2), start = c(a=1,b=1,c=0.1),
+           algorithm = "port", lower = c(0,0,0)))
+confint(fm)
 
 
 ## weighted nls fit: unsupported < 2.3.0
@@ -120,5 +122,11 @@ stopifnot(all.equal(fitted(fm5), fitted(fm1), tol = 1e-6))
 pfm1 <- profile(fm1)
 pfm3 <- profile(fm3)
 for(m in names(pfm1)) stopifnot(all.equal(pfm1[[m]], pfm3[[m]], tol=1e-5))
+pfm5 <- profile(fm5)
+for(m in names(pfm1)) stopifnot(all.equal(pfm1[[m]], pfm5[[m]], tol=1e-5))
+(c1 <- confint(fm1))
+(c4 <- confint(fm4, 1:2))
+stopifnot(all.equal(c1[2:3, ], c4, tol = 1e-3))
+
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

@@ -9,32 +9,29 @@
 \method{profiler}{nls}(fitted, \dots)
 }
 \arguments{
-  \item{fitted}{the original fitted model object of class
-    \code{\link{nls}}.}
-  \item{\dots}{  Additional parameters. None are used.}
+  \item{fitted}{the original fitted model object of class \code{\link{nls}}.}
+  \item{\dots}{Additional parameters. None are used.}
 }
 \value{
   An object of class \code{profiler.nls} which is a list with function
   elements
   \item{getFittedModel()}{
-    the \code{\link{nlsModel}} object corresponding to \code{fitted}
+    the \code{\link{nlsModel}} object corresponding to \code{fitted}.
   }
   \item{getFittedPars()}{
-    See documentation for \code{\link{profiler}}
+    See documentation for \code{\link{profiler}.}
   }
   \item{setDefault(varying, params)}{
-    See documentation for \code{\link{profiler}}
+    See documentation for \code{\link{profiler}.}
   }
   \item{getProfile(varying, params)}{
     In the returned list, \code{fstat} is the ratio of change in
     sum-of-squares and the residual standard error.
     
-    For other details, see documentation for \code{\link{profiler}}
+    For other details, see documentation for \code{\link{profiler}.}
   }
 }
 \section{Warning}{
-  Only fits with \code{algorithm = "default"} are supported.
-  
   When using \code{setDefault} and \code{getProfile} together, the
   internal state of the fitted model may get changed.  So after
   completing the profiling for a parameter, the internal states should

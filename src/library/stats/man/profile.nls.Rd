@@ -6,15 +6,16 @@
         delta.t = cutoff/5, \dots)
 }
 \arguments{
-  \item{fitted}{ the original fitted model object.}
-  \item{which}{ the original model parameters which should be
-    profiled. By default, all parameters are profiled.}
-  \item{maxpts}{ maximum number of points to be used for profiling each
+  \item{fitted}{the original fitted model object.}
+  \item{which}{the original model parameters which should be profiled.
+    This can be a numeric or character vector.
+    By default, all non-linear parameters are profiled.}
+  \item{maxpts}{maximum number of points to be used for profiling each
     parameter.}
-  \item{alphamax}{ maximum significance level allowed for the profile
+  \item{alphamax}{maximum significance level allowed for the profile
     t-statistics.}
-  \item{delta.t}{ suggested change on the scale of the profile
-    t-statistics. Default value chosen to allow profiling at about
+  \item{delta.t}{suggested change on the scale of the profile
+    t-statistics.  Default value chosen to allow profiling at about
     10 parameter values.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -25,12 +26,10 @@
 \value{
   A list with an element for each parameter being profiled. The elements
   are data-frames with two variables 
-  \item{par.vals}{ a matrix of parameter values for each fitted model.}
-  \item{tau}{ The profile t-statistics.}
+  \item{par.vals}{a matrix of parameter values for each fitted model.}
+  \item{tau}{the profile t-statistics.}
 }
 \details{
-  Only fits with \code{algorithm = "default"} are supported.
-  
   The profile t-statistics is defined as the square root of change in
   sum-of-squares divided by residual standard error with an
   appropriate sign.
