@@ -591,7 +591,7 @@ that is causing the error.
 * The installer does not offer my language::  
 * I want R in English!::        
 * I want to run R in Chinese/Japanese/Korean::  
-* I selected English for Installation but R runs in Chinese::  
+* I selected English for installation but R runs in Chinese::  
 * I would like to be able to use Japanese fonts::  
 * I don't see characters with accents at the R console::  
 * The dialog buttons are not translated::  
@@ -633,7 +633,7 @@ The default behaviour of R is to try to run in the language you run
 Windows in.  Apparently some users want Windows in their native language,
 but not R.  To do so, set @code{LANGUAGE=en} as discussed in Q2.2 and Q2.15.
 
-@node I want to run R in Chinese/Japanese/Korean, I selected English for Installation but R runs in Chinese, I want R in English!, Languages and Internationalization
+@node I want to run R in Chinese/Japanese/Korean, I selected English for installation but R runs in Chinese, I want R in English!, Languages and Internationalization
 @section I want to run R in Chinese/Japanese/Korean.
 
 This is possible by installing R with support for `East Asian' languages
@@ -671,8 +671,8 @@ be set under @emph{both} the `Regional Options' and `Advanced' tabs.
 When using @command{Rterm} the window in which it is run has to be set up
 to use a suitable font and a suitable codepage.
 
-@node I selected English for Installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
-@section I selected English for Installation but R runs in Chinese.
+@node I selected English for installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
+@section I selected English for installation but R runs in Chinese.
 
 Precisely, you selected English @strong{for installation}!  The language
 of the installer has nothing to do with the language used to run R: this
@@ -685,7 +685,7 @@ Installation and Administration Manual}) for the details.  You can
 ensure that R uses English messages by appending @code{LANGUAGE=en} to
 the shortcut you use to start R.
 
-@node I would like to be able to use Japanese fonts, I don't see characters with accents at the R console, I selected English for Installation but R runs in Chinese, Languages and Internationalization
+@node I would like to be able to use Japanese fonts, I don't see characters with accents at the R console, I selected English for installation but R runs in Chinese, Languages and Internationalization
 @section I would like to be able to use Japanese fonts.
 
 for example, in the console and to annotate graphs.  Similar comments
