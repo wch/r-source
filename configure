@@ -465,7 +465,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE R_BROWSER BLAS_LIBS LAPACK_LIBS SAFE_FFLAGS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS HAVE_STACK_T_01 FLIBS HAVE_FORTRAN_DOUBLE_COMPLEX COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS FW_VERSION ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG RMATH_HAVE_WORKING_LOG1P HAVE_C99_COMPLEX USE_VECLIB_G95FIX_TRUE USE_VECLIB_G95FIX_FALSE USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF JAVA_PROG JAVAC JAVA_HOME JAVA_LD_PATH JAVA_LIBS R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE USE_NLS SET_MAKE MKINSTALLDIRS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC21 HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB USE_NLS_TRUE USE_NLS_FALSE LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE R_BROWSER BLAS_LIBS LAPACK_LIBS SAFE_FFLAGS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS HAVE_STACK_T_01 FLIBS HAVE_FORTRAN_DOUBLE_COMPLEX COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS FW_VERSION ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG RMATH_HAVE_WORKING_LOG1P HAVE_C99_COMPLEX USE_VECLIB_G95FIX_TRUE USE_VECLIB_G95FIX_FALSE USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF JAVA_PROG JAVAC JAVA_HOME JAVA_LD_PATH JAVA_LIBS R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE USE_NLS SET_MAKE MKINSTALLDIRS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC2 GLIBC21 INTL_MACOSX_LIBS HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB USE_NLS_TRUE USE_NLS_FALSE BUILD_LIBINTL_TRUE BUILD_LIBINTL_FALSE LTLIBOBJS'
 ac_subst_files='r_cc_rules_frag r_cc_lo_rules_frag r_cxx_rules_frag'
 
 # Initialize some variables set by options.
@@ -1192,6 +1192,7 @@ Optional Packages:
                           libtool: include additional configurations
                           [automatic]
   --with-x                use the X Window System
+  --with-gnu-ld           assume the C compiler uses GNU ld default=no
   --with-libiconv-prefix[=DIR]  search for libiconv in DIR/include and DIR/lib
   --without-libiconv-prefix     don't search for libiconv in includedir and libdir
   --with-included-gettext use the GNU gettext library included here
@@ -5278,7 +5279,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:5281:" \
+echo "$as_me:5282:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -6545,7 +6546,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 6548 "configure"' > conftest.$ac_ext
+  echo '#line 6549 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -7986,11 +7987,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7989: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7990: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7993: \$? = $ac_status" >&5
+   echo "$as_me:7994: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -8219,11 +8220,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8222: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8223: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8226: \$? = $ac_status" >&5
+   echo "$as_me:8227: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -8279,11 +8280,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8282: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8283: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:8286: \$? = $ac_status" >&5
+   echo "$as_me:8287: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -10463,7 +10464,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10466 "configure"
+#line 10467 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10561,7 +10562,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10564 "configure"
+#line 10565 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10856,7 +10857,8 @@ echo "$as_me: creating $ofile" >&6;}
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
+# USA.
 #
 # As a special exception to the GNU General Public License, if you
 # distribute this file as part of a program that contains a
@@ -12740,11 +12742,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12743: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12745: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:12747: \$? = $ac_status" >&5
+   echo "$as_me:12749: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -12800,11 +12802,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12803: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12805: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12807: \$? = $ac_status" >&5
+   echo "$as_me:12809: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14161,7 +14163,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 14164 "configure"
+#line 14166 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14259,7 +14261,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 14262 "configure"
+#line 14264 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15086,11 +15088,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15089: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15091: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15093: \$? = $ac_status" >&5
+   echo "$as_me:15095: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -15146,11 +15148,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15149: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15151: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15153: \$? = $ac_status" >&5
+   echo "$as_me:15155: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -17180,11 +17182,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17183: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17185: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17187: \$? = $ac_status" >&5
+   echo "$as_me:17189: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17413,11 +17415,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17416: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17418: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17420: \$? = $ac_status" >&5
+   echo "$as_me:17422: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17473,11 +17475,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17476: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17478: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17480: \$? = $ac_status" >&5
+   echo "$as_me:17482: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19657,7 +19659,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19660 "configure"
+#line 19662 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -19755,7 +19757,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19758 "configure"
+#line 19760 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -26112,7 +26114,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:26115: \"$ac_link\") >&5
+(eval echo $as_me:26117: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26190,7 +26192,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:26193: \"$ac_link\") >&5
+(eval echo $as_me:26195: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26436,7 +26438,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26439: \"$ac_link\") >&5
+(eval echo $as_me:26441: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26518,7 +26520,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26521: \"$ac_link\") >&5
+(eval echo $as_me:26523: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -42054,7 +42056,7 @@ else
 fi
 
 
-# i18n support.  To update to a new version of gettext, run:
+# i18n support.  To update to a new version of gettext, run (untested):
 # gettextize -f -c --intl
 
   echo "$as_me:$LINENO: checking whether NLS is requested" >&5
@@ -42100,6 +42102,7 @@ else
 echo "${ECHO_T}no" >&6
   SET_MAKE="MAKE=${MAKE-make}"
 fi
+
 
 
         MKINSTALLDIRS=
@@ -42164,7 +42167,8 @@ else
       test -z "$ac_dir" && ac_dir=.
       for ac_exec_ext in '' $ac_executable_extensions; do
         if $ac_executable_p "$ac_dir/$ac_word$ac_exec_ext"; then
-          if $ac_dir/$ac_word --statistics /dev/null >/dev/null 2>&1 &&
+          echo "$as_me: trying $ac_dir/$ac_word..." >&5
+          if $ac_dir/$ac_word --statistics /dev/null >&5 2>&1 &&
      (if $ac_dir/$ac_word --statistics /dev/null 2>&1 >/dev/null | grep usage >/dev/null; then exit 1; else exit 0; fi); then
             ac_cv_path_MSGFMT="$ac_dir/$ac_word$ac_exec_ext"
             break 2
@@ -42274,7 +42278,8 @@ else
       test -z "$ac_dir" && ac_dir=.
       for ac_exec_ext in '' $ac_executable_extensions; do
         if $ac_executable_p "$ac_dir/$ac_word$ac_exec_ext"; then
-          if $ac_dir/$ac_word --omit-header --copyright-holder= --msgid-bugs-address= /dev/null >/dev/null 2>&1 &&
+          echo "$as_me: trying $ac_dir/$ac_word..." >&5
+          if $ac_dir/$ac_word --omit-header --copyright-holder= --msgid-bugs-address= /dev/null >&5 2>&1 &&
      (if $ac_dir/$ac_word --omit-header --copyright-holder= --msgid-bugs-address= /dev/null 2>&1 >/dev/null | grep usage >/dev/null; then exit 1; else exit 0; fi); then
             ac_cv_path_XGETTEXT="$ac_dir/$ac_word$ac_exec_ext"
             break 2
@@ -42345,7 +42350,8 @@ else
       test -z "$ac_dir" && ac_dir=.
       for ac_exec_ext in '' $ac_executable_extensions; do
         if $ac_executable_p "$ac_dir/$ac_word$ac_exec_ext"; then
-          if $ac_dir/$ac_word --update -q /dev/null /dev/null >/dev/null 2>&1; then
+          echo "$as_me: trying $ac_dir/$ac_word..." >&5
+          if $ac_dir/$ac_word --update -q /dev/null /dev/null >&5 2>&1; then
             ac_cv_path_MSGMERGE="$ac_dir/$ac_word$ac_exec_ext"
             break 2
           fi
@@ -42395,13 +42401,50 @@ echo "${ECHO_T}found xgettext program is not GNU xgettext; ignore it" >&6
 
 
 
-        echo "$as_me:$LINENO: checking for strerror in -lcposix" >&5
-echo $ECHO_N "checking for strerror in -lcposix... $ECHO_C" >&6
-if test "${ac_cv_lib_cposix_strerror+set}" = set; then
+    echo "$as_me:$LINENO: checking whether we are using the GNU C Library 2 or newer" >&5
+echo $ECHO_N "checking whether we are using the GNU C Library 2 or newer... $ECHO_C" >&6
+if test "${ac_cv_gnu_library_2+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lcposix  $LIBS"
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <features.h>
+#ifdef __GNU_LIBRARY__
+ #if (__GLIBC__ >= 2)
+  Lucky GNU user
+ #endif
+#endif
+
+_ACEOF
+if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
+  $EGREP "Lucky GNU user" >/dev/null 2>&1; then
+  ac_cv_gnu_library_2=yes
+else
+  ac_cv_gnu_library_2=no
+fi
+rm -f conftest*
+
+
+
+fi
+echo "$as_me:$LINENO: result: $ac_cv_gnu_library_2" >&5
+echo "${ECHO_T}$ac_cv_gnu_library_2" >&6
+
+    GLIBC2="$ac_cv_gnu_library_2"
+
+
+echo "$as_me:$LINENO: checking for library containing strerror" >&5
+echo $ECHO_N "checking for library containing strerror... $ECHO_C" >&6
+if test "${ac_cv_search_strerror+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+ac_cv_search_strerror=no
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -42454,24 +42497,88 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_lib_cposix_strerror=yes
+  ac_cv_search_strerror="none required"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-ac_cv_lib_cposix_strerror=no
 fi
 rm -f conftest.err conftest.$ac_objext \
       conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-echo "$as_me:$LINENO: result: $ac_cv_lib_cposix_strerror" >&5
-echo "${ECHO_T}$ac_cv_lib_cposix_strerror" >&6
-if test $ac_cv_lib_cposix_strerror = yes; then
-  LIBS="$LIBS -lcposix"
-fi
+if test "$ac_cv_search_strerror" = no; then
+  for ac_lib in cposix; do
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+    cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
 
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+   builtin and then its argument prototype would still apply.  */
+char strerror ();
+#ifdef F77_DUMMY_MAIN
 
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+strerror ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_search_strerror="-l$ac_lib"
+break
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+  done
+fi
+LIBS=$ac_func_search_save_LIBS
+fi
+echo "$as_me:$LINENO: result: $ac_cv_search_strerror" >&5
+echo "${ECHO_T}$ac_cv_search_strerror" >&6
+if test "$ac_cv_search_strerror" != no; then
+  test "$ac_cv_search_strerror" = "none required" || LIBS="$ac_cv_search_strerror $LIBS"
+
+fi
 
 
   echo "$as_me:$LINENO: checking for signed" >&5
@@ -45494,6 +45601,7 @@ _ACEOF
 
 
 
+
 for ac_header in stdint.h
 do
 as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
@@ -45645,6 +45753,163 @@ done
 
 
 
+    echo "$as_me:$LINENO: checking for CFPreferencesCopyAppValue" >&5
+echo $ECHO_N "checking for CFPreferencesCopyAppValue... $ECHO_C" >&6
+if test "${gt_cv_func_CFPreferencesCopyAppValue+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  gt_save_CPPFLAGS="$CPPFLAGS"
+     CPPFLAGS="$CPPFLAGS -I/System/Library/Frameworks/CoreFoundation.framework/Headers"
+     gt_save_LIBS="$LIBS"
+     LIBS="$LIBS -framework CoreFoundation"
+     cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <CFPreferences.h>
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+CFPreferencesCopyAppValue(NULL, NULL)
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  gt_cv_func_CFPreferencesCopyAppValue=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+gt_cv_func_CFPreferencesCopyAppValue=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+     CPPFLAGS="$gt_save_CPPFLAGS"
+     LIBS="$gt_save_LIBS"
+fi
+echo "$as_me:$LINENO: result: $gt_cv_func_CFPreferencesCopyAppValue" >&5
+echo "${ECHO_T}$gt_cv_func_CFPreferencesCopyAppValue" >&6
+  if test $gt_cv_func_CFPreferencesCopyAppValue = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_CFPREFERENCESCOPYAPPVALUE 1
+_ACEOF
+
+  fi
+    echo "$as_me:$LINENO: checking for CFLocaleCopyCurrent" >&5
+echo $ECHO_N "checking for CFLocaleCopyCurrent... $ECHO_C" >&6
+if test "${gt_cv_func_CFLocaleCopyCurrent+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  gt_save_CPPFLAGS="$CPPFLAGS"
+     CPPFLAGS="$CPPFLAGS -I/System/Library/Frameworks/CoreFoundation.framework/Headers"
+     gt_save_LIBS="$LIBS"
+     LIBS="$LIBS -framework CoreFoundation"
+     cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <CFLocale.h>
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+CFLocaleCopyCurrent();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  gt_cv_func_CFLocaleCopyCurrent=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+gt_cv_func_CFLocaleCopyCurrent=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+     CPPFLAGS="$gt_save_CPPFLAGS"
+     LIBS="$gt_save_LIBS"
+fi
+echo "$as_me:$LINENO: result: $gt_cv_func_CFLocaleCopyCurrent" >&5
+echo "${ECHO_T}$gt_cv_func_CFLocaleCopyCurrent" >&6
+  if test $gt_cv_func_CFLocaleCopyCurrent = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_CFLOCALECOPYCURRENT 1
+_ACEOF
+
+  fi
+  INTL_MACOSX_LIBS=
+  if test $gt_cv_func_CFPreferencesCopyAppValue = yes || test $gt_cv_func_CFLocaleCopyCurrent = yes; then
+    INTL_MACOSX_LIBS="-Wl,-framework -Wl,CoreFoundation"
+  fi
+
+
+
       if test "X$prefix" = "XNONE"; then
     acl_final_prefix="$ac_default_prefix"
   else
@@ -45660,6 +45925,14 @@ done
   eval acl_final_exec_prefix=\"$acl_final_exec_prefix\"
   prefix="$acl_save_prefix"
 
+
+# Check whether --with-gnu-ld or --without-gnu-ld was given.
+if test "${with_gnu_ld+set}" = set; then
+  withval="$with_gnu_ld"
+  test "$withval" = no || with_gnu_ld=yes
+else
+  with_gnu_ld=no
+fi;
 # Prepare PATH_SEPARATOR.
 # The user is always right.
 if test "${PATH_SEPARATOR+set}" != set; then
@@ -47312,7 +47585,7 @@ _ACEOF
 
   echo "$as_me:$LINENO: checking for LC_MESSAGES" >&5
 echo $ECHO_N "checking for LC_MESSAGES... $ECHO_C" >&6
-if test "${am_cv_val_LC_MESSAGES+set}" = set; then
+if test "${gt_cv_val_LC_MESSAGES+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -47360,19 +47633,19 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  am_cv_val_LC_MESSAGES=yes
+  gt_cv_val_LC_MESSAGES=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-am_cv_val_LC_MESSAGES=no
+gt_cv_val_LC_MESSAGES=no
 fi
 rm -f conftest.err conftest.$ac_objext \
       conftest$ac_exeext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $am_cv_val_LC_MESSAGES" >&5
-echo "${ECHO_T}$am_cv_val_LC_MESSAGES" >&6
-  if test $am_cv_val_LC_MESSAGES = yes; then
+echo "$as_me:$LINENO: result: $gt_cv_val_LC_MESSAGES" >&5
+echo "${ECHO_T}$gt_cv_val_LC_MESSAGES" >&6
+  if test $gt_cv_val_LC_MESSAGES = yes; then
 
 cat >>confdefs.h <<\_ACEOF
 #define HAVE_LC_MESSAGES 1
@@ -47380,6 +47653,10 @@ _ACEOF
 
   fi
 
+  fi
+
+  if test -n "$INTL_MACOSX_LIBS"; then
+    CPPFLAGS="$CPPFLAGS -I/System/Library/Frameworks/CoreFoundation.framework/Headers"
   fi
 
                       for ac_prog in bison
@@ -47456,6 +47733,177 @@ echo "${ECHO_T}$ac_prog_version" >&6
 
 
 
+    echo "$as_me:$LINENO: checking for CFPreferencesCopyAppValue" >&5
+echo $ECHO_N "checking for CFPreferencesCopyAppValue... $ECHO_C" >&6
+if test "${gt_cv_func_CFPreferencesCopyAppValue+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  gt_save_CPPFLAGS="$CPPFLAGS"
+     CPPFLAGS="$CPPFLAGS -I/System/Library/Frameworks/CoreFoundation.framework/Headers"
+     gt_save_LIBS="$LIBS"
+     LIBS="$LIBS -framework CoreFoundation"
+     cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <CFPreferences.h>
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+CFPreferencesCopyAppValue(NULL, NULL)
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  gt_cv_func_CFPreferencesCopyAppValue=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+gt_cv_func_CFPreferencesCopyAppValue=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+     CPPFLAGS="$gt_save_CPPFLAGS"
+     LIBS="$gt_save_LIBS"
+fi
+echo "$as_me:$LINENO: result: $gt_cv_func_CFPreferencesCopyAppValue" >&5
+echo "${ECHO_T}$gt_cv_func_CFPreferencesCopyAppValue" >&6
+  if test $gt_cv_func_CFPreferencesCopyAppValue = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_CFPREFERENCESCOPYAPPVALUE 1
+_ACEOF
+
+  fi
+    echo "$as_me:$LINENO: checking for CFLocaleCopyCurrent" >&5
+echo $ECHO_N "checking for CFLocaleCopyCurrent... $ECHO_C" >&6
+if test "${gt_cv_func_CFLocaleCopyCurrent+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  gt_save_CPPFLAGS="$CPPFLAGS"
+     CPPFLAGS="$CPPFLAGS -I/System/Library/Frameworks/CoreFoundation.framework/Headers"
+     gt_save_LIBS="$LIBS"
+     LIBS="$LIBS -framework CoreFoundation"
+     cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <CFLocale.h>
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+CFLocaleCopyCurrent();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  gt_cv_func_CFLocaleCopyCurrent=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+gt_cv_func_CFLocaleCopyCurrent=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+     CPPFLAGS="$gt_save_CPPFLAGS"
+     LIBS="$gt_save_LIBS"
+fi
+echo "$as_me:$LINENO: result: $gt_cv_func_CFLocaleCopyCurrent" >&5
+echo "${ECHO_T}$gt_cv_func_CFLocaleCopyCurrent" >&6
+  if test $gt_cv_func_CFLocaleCopyCurrent = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_CFLOCALECOPYCURRENT 1
+_ACEOF
+
+  fi
+  INTL_MACOSX_LIBS=
+  if test $gt_cv_func_CFPreferencesCopyAppValue = yes || test $gt_cv_func_CFLocaleCopyCurrent = yes; then
+    INTL_MACOSX_LIBS="-Wl,-framework -Wl,CoreFoundation"
+  fi
+
+
+
+
+  echo "$as_me:$LINENO: checking whether NLS is requested" >&5
+echo $ECHO_N "checking whether NLS is requested... $ECHO_C" >&6
+    # Check whether --enable-nls or --disable-nls was given.
+if test "${enable_nls+set}" = set; then
+  enableval="$enable_nls"
+  USE_NLS=$enableval
+else
+  USE_NLS=yes
+fi;
+  echo "$as_me:$LINENO: result: $USE_NLS" >&5
+echo "${ECHO_T}$USE_NLS" >&6
+
+
 
 
     BUILD_INCLUDED_LIBINTL=no
@@ -47515,7 +47963,7 @@ int
 main ()
 {
 bindtextdomain ("", "");
-return (int) gettext ("") + (int) ngettext ("", "", 0) + _nl_msg_cat_cntr + *_nl_domain_bindings
+return * gettext ("") + * ngettext ("", "", 0) + _nl_msg_cat_cntr + *_nl_domain_bindings
   ;
   return 0;
 }
@@ -47956,7 +48404,7 @@ extern
 #ifdef __cplusplus
 "C"
 #endif
-const char *_nl_expand_alias ();
+const char *_nl_expand_alias (const char *);
 #ifdef F77_DUMMY_MAIN
 
 #  ifdef __cplusplus
@@ -47969,7 +48417,7 @@ int
 main ()
 {
 bindtextdomain ("", "");
-return (int) gettext ("") + (int) ngettext ("", "", 0) + _nl_msg_cat_cntr + *_nl_expand_alias (0)
+return * gettext ("") + * ngettext ("", "", 0) + _nl_msg_cat_cntr + *_nl_expand_alias ("")
   ;
   return 0;
 }
@@ -48019,7 +48467,7 @@ extern
 #ifdef __cplusplus
 "C"
 #endif
-const char *_nl_expand_alias ();
+const char *_nl_expand_alias (const char *);
 #ifdef F77_DUMMY_MAIN
 
 #  ifdef __cplusplus
@@ -48032,7 +48480,7 @@ int
 main ()
 {
 bindtextdomain ("", "");
-return (int) gettext ("") + (int) ngettext ("", "", 0) + _nl_msg_cat_cntr + *_nl_expand_alias (0)
+return * gettext ("") + * ngettext ("", "", 0) + _nl_msg_cat_cntr + *_nl_expand_alias ("")
   ;
   return 0;
 }
@@ -48103,11 +48551,20 @@ echo "${ECHO_T}$gt_cv_func_gnugettext2_libintl" >&6
         LIBS=`echo " $LIBS " | sed -e 's/ -lintl / /' -e 's/^ //' -e 's/ $//'`
       fi
 
+      CATOBJEXT=
       if test "$gt_use_preinstalled_gnugettext" = "yes" \
          || test "$nls_cv_use_gnu_gettext" = "yes"; then
                 CATOBJEXT=.gmo
       fi
 
+
+    if test -n "$INTL_MACOSX_LIBS"; then
+      if test "$gt_use_preinstalled_gnugettext" = "yes" \
+         || test "$nls_cv_use_gnu_gettext" = "yes"; then
+                LIBINTL="$LIBINTL $INTL_MACOSX_LIBS"
+        LTLIBINTL="$LTLIBINTL $INTL_MACOSX_LIBS"
+      fi
+    fi
 
     if test "$gt_use_preinstalled_gnugettext" = "yes" \
        || test "$nls_cv_use_gnu_gettext" = "yes"; then
@@ -48210,7 +48667,8 @@ _ACEOF
         GENCAT=gencat
 
 
-        if test "$USE_INCLUDED_LIBINTL" = yes; then
+        INTLOBJS=
+    if test "$USE_INCLUDED_LIBINTL" = yes; then
       INTLOBJS="\$(GETTOBJS)"
     fi
 
@@ -48237,6 +48695,16 @@ if test "x${USE_NLS}" = xyes; then
 else
   USE_NLS_TRUE='#'
   USE_NLS_FALSE=
+fi
+
+
+
+if test "x${USE_INCLUDED_LIBINTL}" = xyes; then
+  BUILD_LIBINTL_TRUE=
+  BUILD_LIBINTL_FALSE='#'
+else
+  BUILD_LIBINTL_TRUE='#'
+  BUILD_LIBINTL_FALSE=
 fi
 
 
@@ -48543,6 +49011,13 @@ if test -z "${USE_NLS_TRUE}" && test -z "${USE_NLS_FALSE}"; then
   { { echo "$as_me:$LINENO: error: conditional \"USE_NLS\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 echo "$as_me: error: conditional \"USE_NLS\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${BUILD_LIBINTL_TRUE}" && test -z "${BUILD_LIBINTL_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"BUILD_LIBINTL\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"BUILD_LIBINTL\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
@@ -49356,7 +49831,9 @@ s,@MSGFMT@,$MSGFMT,;t t
 s,@GMSGFMT@,$GMSGFMT,;t t
 s,@XGETTEXT@,$XGETTEXT,;t t
 s,@MSGMERGE@,$MSGMERGE,;t t
+s,@GLIBC2@,$GLIBC2,;t t
 s,@GLIBC21@,$GLIBC21,;t t
+s,@INTL_MACOSX_LIBS@,$INTL_MACOSX_LIBS,;t t
 s,@HAVE_POSIX_PRINTF@,$HAVE_POSIX_PRINTF,;t t
 s,@HAVE_ASPRINTF@,$HAVE_ASPRINTF,;t t
 s,@HAVE_SNPRINTF@,$HAVE_SNPRINTF,;t t
@@ -49378,6 +49855,8 @@ s,@LTLIBINTL@,$LTLIBINTL,;t t
 s,@POSUB@,$POSUB,;t t
 s,@USE_NLS_TRUE@,$USE_NLS_TRUE,;t t
 s,@USE_NLS_FALSE@,$USE_NLS_FALSE,;t t
+s,@BUILD_LIBINTL_TRUE@,$BUILD_LIBINTL_TRUE,;t t
+s,@BUILD_LIBINTL_FALSE@,$BUILD_LIBINTL_FALSE,;t t
 s,@LTLIBOBJS@,$LTLIBOBJS,;t t
 /@r_cc_rules_frag@/r $r_cc_rules_frag
 s,@r_cc_rules_frag@,,;t t
@@ -49980,6 +50459,9 @@ echo "$as_me: executing $ac_dest commands" >&6;}
           /*) top_srcdir="$ac_given_srcdir" ;;
           *)  top_srcdir="$ac_dots$ac_given_srcdir" ;;
         esac
+        # Treat a directory as a PO directory if and only if it has a
+        # POTFILES.in file. This allows packages to have multiple PO
+        # directories under different names or in different locations.
         if test -f "$ac_given_srcdir/$ac_dir/POTFILES.in"; then
           rm -f "$ac_dir/POTFILES"
           test -n "$as_me" && echo "$as_me: creating $ac_dir/POTFILES" || echo "creating $ac_dir/POTFILES"
@@ -49993,7 +50475,7 @@ echo "$as_me: executing $ac_dest commands" >&6;}
             if test -n "$OBSOLETE_ALL_LINGUAS"; then
               test -n "$as_me" && echo "$as_me: setting ALL_LINGUAS in configure.in is obsolete" || echo "setting ALL_LINGUAS in configure.in is obsolete"
             fi
-            ALL_LINGUAS_=`sed -e "/^#/d" "$ac_given_srcdir/$ac_dir/LINGUAS"`
+            ALL_LINGUAS_=`sed -e "/^#/d" -e "s/#.*//" "$ac_given_srcdir/$ac_dir/LINGUAS"`
             # Hide the ALL_LINGUAS assigment from automake.
             eval 'ALL_LINGUAS''=$ALL_LINGUAS_'
             POMAKEFILEDEPS="$POMAKEFILEDEPS LINGUAS"

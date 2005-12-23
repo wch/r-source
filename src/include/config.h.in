@@ -67,6 +67,14 @@
 /* Define this if you have support for C99 complex types. */
 #undef HAVE_C99_COMPLEX
 
+/* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
+   CoreFoundation framework. */
+#undef HAVE_CFLOCALECOPYCURRENT
+
+/* Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in
+   the CoreFoundation framework. */
+#undef HAVE_CFPREFERENCESCOPYAPPVALUE
+
 /* Define to 1 if you have the `chdir' function. */
 #undef HAVE_CHDIR
 

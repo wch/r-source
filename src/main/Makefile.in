@@ -90,19 +90,21 @@ RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
 ## </FIXME>
 
 EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) \
-	$(R_BZLIBS) $(R_PCRE) $(R_XDR) @LIBINTL@ \
+	$(R_BZLIBS) $(R_PCRE) $(R_XDR) @LIBINTL@\
 	$(READLINE_LIBS) $(LIBS)
 
-## <FIXME> needs to depend on ../extra/intl/libintl.a if used.
-COMMON_DEPENDENCIES = $(R_XTRA_LIBS) $(R_ZLIBS)	$(R_BZLIBS) $(R_PCRE) \
-	$(R_XDR) \
-	@USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
+## find dependencies for both libR and standalone R.bin
+DEP_LIBINTL = @BUILD_LIBINTL_TRUE@ ../extra/intl/libintl.a
+DEP_AIX = @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
+COMMON_DEPENDENCIES = \
+	$(R_XTRA_LIBS) $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR) \
+	$(DEP_LIBINTL) $(DEP_AIX)
 
 R_binary = R.bin
-R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@ $(OBJECTS)
+R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)
 @WANT_R_SHLIB_FALSE@R_bin_LDADD = $(RLIBS) $(EXTRA_LIBS)
 @WANT_R_SHLIB_TRUE@R_bin_LDADD = -L../../lib -lR
-R_bin_DEPENDENCIES = @WANT_R_SHLIB_FALSE@ $(RLIBS) $(COMMON_DEPENDENCIES)
+R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ $(RLIBS) $(COMMON_DEPENDENCIES)
 
 libR_la = libR$(DYLIB_EXT)
 libR_la_OBJECTS = Rembedded.o $(OBJECTS)

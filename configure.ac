@@ -1734,16 +1734,17 @@ fi
 AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
                [test "x${use_recommended_packages}" = xyes])
 
-# i18n support.  To update to a new version of gettext, run:
+# i18n support.  To update to a new version of gettext, run (untested):
 # gettextize -f -c --intl
 AM_NLS
 if test "${USE_NLS}" = "yes"; then
-  AM_GNU_GETTEXT_VERSION(0.14.1)
+  AM_GNU_GETTEXT_VERSION(0.14.5)
   AM_GNU_GETTEXT(, [need-ngettext], [../extra/intl])
 else
   USE_INCLUDED_LIBINTL=no
 fi
 AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
+AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])
 
 ### * Win32 overrides
 case "${host_os}" in

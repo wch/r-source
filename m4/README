@@ -30,7 +30,7 @@ The files are as follows.
         is available in langinfo.h.
 
   gettext.m4
-	a concatenation of all the required files from gettext 0.14.1
+	a concatenation of all the required files from gettext 0.14.5
 	except codeset.m4.
 
   java.m4
