@@ -29,6 +29,10 @@ profiler.nls <-
   function(fitted, ...)
 {
   fittedModel <- fitted$m
+  algorithm <- fitted$call$algorithm
+  if(is.null(algorithm)) algorithm <- "default"
+  if(algorithm != "default")
+      stop("only 'default' algorithm is currently supported")
   ctrl <- fitted$call$control
   trace <- fitted$call$trace
   defaultPars <- fittedPars <- fittedModel$getPars()
