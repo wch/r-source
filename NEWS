@@ -20,7 +20,6 @@ USER-VISIBLE CHANGES
 	specifies any of these arguments *by position* (not by name)
 	will fail.
 
-
     o	install.packages() has additional arguments configure.args and 
 	clean which allow the caller to provide additional arguments
 	to the underlying R CMD INSTALL shell command.
