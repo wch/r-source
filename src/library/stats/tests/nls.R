@@ -116,5 +116,9 @@ stopifnot(all.equal(coef(summary(fm5)), coef(summary(fm1)), tol = 1e-6))
 stopifnot(all.equal(residuals(fm5), residuals(fm1), tol = 1e-5))
 stopifnot(all.equal(fitted(fm5), fitted(fm1), tol = 1e-6))
 
+## check profiling
+pfm1 <- profile(fm1)
+pfm3 <- profile(fm3)
+for(m in names(pfm1)) stopifnot(all.equal(pfm1[[m]], pfm3[[m]], tol=1e-5))
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
