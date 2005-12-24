@@ -1740,9 +1740,14 @@ AM_NLS
 if test "${USE_NLS}" = "yes"; then
   AM_GNU_GETTEXT_VERSION(0.14.5)
   AM_GNU_GETTEXT(, [need-ngettext], [../extra/intl])
+  if test -n "$INTL_MACOSX_LIBS"; then
+    XTRA_INTL_CPPFLAGS=-I/System/Library/Frameworks/CoreFoundation.framework/Headers
+  fi
 else
   USE_INCLUDED_LIBINTL=no
 fi
+AC_SUBST(XTRA_INTL_CPPFLAGS)
+
 AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])
 
