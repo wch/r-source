@@ -66,11 +66,15 @@
 ## CPPFLAGS=
 
 ## The command which runs the FORTRAN 77 compiler.
-## If neither this nor F2C specified, a search is made for g77, f77,
-## xlf, frt, pgf77, fl32, af77, fort77, f90, xlf90, pgf90, epcf90, f95,
-## fort, xlf95, lf95, g95, and fc (in that order); on HPUX fort77 is the
-## POSIX compliant FORTRAN compiler, and comes second in the search
-## list.  If none of these is found, R cannot be compiled.
+## If this is not specified, a search is made for
+## f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn g95
+## f90 xlf90 pgf90 pghpf epcf90
+## g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77
+## On HPUX fort77 is the POSIX compliant FORTRAN compiler, and replaces
+## f77 in the search list.
+## If CC is gcc, first preference is given to the matching FORTRAN
+## compiler (g77 or gfortran).
+## If none of these is found, R cannot be compiled.
 ## F77=
 
 ## Options for the FORTRAN 77 compiler.

@@ -64,7 +64,6 @@ Variables:
                 object files from a C or Fortran compiler only
   DYLIB_LDFLAGS
                 special flags used by DYLIB_LD
-  F2C           Fortran-to-C converter command
   F77           Fortran 77 compiler command
   FFLAGS        Fortran 77 compiler flags
   FLIBS         linker flags needed to link Fortran code
@@ -155,7 +154,7 @@ done
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
 ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"
 ok_dylib_vars="DYLIB_LD DYLIB_LDFLAGS"
-ok_f77_vars="F2C F77 FFLAGS FPICFLAGS FLIBS"
+ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
