@@ -387,12 +387,7 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
 {
     CompPatt <- function(x, ...) {
         x[abs(x) < 1e-6] <- 0
-        if(exists("fractions", mode="function")) fractions(x)
-        else {
-            class(x) <- "mtable"
-            x[abs(x) < 1e-6] <- NA
-            x
-        }
+        MASS::fractions(x)
     }
     PartPatt <- function(x) {
         z <- zapsmall(x) != 0
@@ -404,9 +399,8 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
         }
         x[!z] <- ""
         collabs <- colnames(x)
-        if(length(collabs)) {
-            collabs <- abbreviate(sub("\\.", "", collabs), 3)
-        } else  collabs <-1:ncol(x)
+        collabs <- if(length(collabs)) abbreviate(sub("\\.", "", collabs), 3)
+        else 1:ncol(x)
         colnames(x) <- collabs
         class(x) <- "mtable"
         x
@@ -415,7 +409,7 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
     attributes(Model) <- NULL
     value <- list(Model = Model)
     R <- object$qr$qr
-    R <- R[1:min(dim(R)),, drop=FALSE]
+    R <- R[1:min(dim(R)), , drop=FALSE]
     R[lower.tri(R)] <- 0
     d <- dim(R)
     rank <- object$rank

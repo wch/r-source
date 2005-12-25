@@ -11,7 +11,6 @@ alias(object, \dots)
 \alias{alias}
 \alias{alias.formula}
 \alias{alias.lm}
-%\alias{print.mtable}
 \arguments{
   \item{object}{A fitted model object, for example from \code{lm} or
     \code{aov}, or a formula for \code{alias.formula}.}
@@ -42,12 +41,13 @@ alias(object, \dots)
   A list (of \code{\link[base]{class} "listof"}) containing components
   \item{Model}{Description of the model; usually the formula.}
   \item{Complete}{A matrix with columns corresponding to effects that
-    are linearly dependent on the rows; may be of class \code{"mtable"}
-    which has its own \code{\link{print}} method.}
+    are linearly dependent on the rows.}
   \item{Partial}{The correlations of the estimable effects, with a zero
-    diagonal.}
+    diagonal. An object of class \code{"mtable"} which has its own
+    \code{\link{print}} method.}
 }
-\note{The aliasing pattern may depend on the contrasts in use: Helmert
+\note{
+  The aliasing pattern may depend on the contrasts in use: Helmert
   contrasts are probably most useful.
 
   The defaults are different from those in S.
@@ -63,9 +63,6 @@ alias(object, \dots)
   in Chambers \emph{et al.} (1992).
 }
 \examples{
-had.VR <- "package:MASS" \%in\% search()
-## The next line is for fractions() which gives neater results
-if(!had.VR) res <- require(MASS)
 ## From Venables and Ripley (2002) p.165.
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
 P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
@@ -78,7 +75,6 @@ npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
 op <- options(contrasts=c("contr.helmert", "contr.poly"))
 npk.aov <- aov(yield ~ block + N*P*K, npk)
 alias(npk.aov)
-if(!had.VR && res) detach(package:MASS)
 options(op)# reset
 }
 \keyword{models}
