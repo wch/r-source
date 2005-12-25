@@ -20,9 +20,6 @@ USER-VISIBLE CHANGES
 	specifies any of these arguments *by position* (not by name)
 	will fail.
 
-    o	install.packages() has additional arguments configure.args and 
-	clean which allow the caller to provide additional arguments
-	to the underlying R CMD INSTALL shell command.
 
 NEW FEATURES
 
@@ -53,9 +50,8 @@ NEW FEATURES
 
     o	There is some basic checking for imminent C stack overflow (when
 	the evaluation depth and the user interrupts are checked).
-	This is likely to be refined before release, and is currently
-	only active when using an R front-end except on Linux, FreeBSD
-	and Windows.
+	On systems with suitable OS support (not Windows), segfaults
+	from C stack overflow are caught and treated as an R error.
 
 	New function Cstack_info() reports on stack size and usage.
 
@@ -228,6 +224,11 @@ NEW FEATURES
 	the user some choice as to what to do. [Currently experimental.]
 
     o	gettext has been updated to 0.14.5.
+
+    o	install.packages() has additional arguments 'configure.args' and 
+	'clean' which allow the caller to provide additional arguments
+	to the underlying R CMD INSTALL shell command when installing
+	source packages on a Unix-alike.
 
 
 DEPRECATED & DEFUNCT
@@ -413,6 +414,9 @@ BUG FIXES
 
     o	The profile() and profiler() methods for "nls" objects now
 	support algorithm = "plinear" and algorithm = "port".
+
+    o	The signal handlers for signals USR1 and USR2 where not
+	restored if the signal arrived when interrupts were suspended.
 
 
 

@@ -72,11 +72,10 @@ void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
 int Rf_ParseBrowser(SEXP, SEXP);
 
  
-static void onpipe(int);
-
 extern void InitDynload();
 
-AccuracyInfo R_AccuracyInfo; /* This is declared here and declared extern in Defn.h */
+AccuracyInfo R_AccuracyInfo; 
+/* This is declared here and declared extern in Defn.h */
 
 	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
 
@@ -397,17 +396,6 @@ static void handleInterrupt(int dummy)
     signal(SIGINT, handleInterrupt);
 }
 
-
-static void install_signal_handlers()
-{
-    signal(SIGINT, handleInterrupt);
-    signal(SIGUSR1, onsigusr1);
-    signal(SIGUSR2, onsigusr2);
-#ifdef Unix
-    signal(SIGPIPE, onpipe); /* why not just SIG_IGN? */
-#endif
-}
-
 #if defined(HAVE_SIGALTSTACK) && defined(HAVE_SIGACTION) && defined(HAVE_SIGEMPTYSET)
 
 /* NB: this really isn't safe, but suffices for experimentation for now.
@@ -422,6 +410,19 @@ static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
 static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 {
     char *s, buf[1024];
+
+    /* First check for stack overflow */
+    if(signum == SIGSEGV && (ip != (siginfo_t *)0)) {
+	long addr = (long) ip->si_addr;
+	long diff = (R_CStackDir > 0) ? R_CStackStart - addr:
+	    addr - R_CStackStart;
+	long upper = 0x1000000;  /* 16Mb */
+	if((long) R_CStackLimit != -1) upper = R_CStackLimit + 0x100000;
+	if(diff > 0 && diff < 0x1000000) {
+	    REprintf(_("Error: segfault from C stack overflow\n"));
+	    jump_to_toplevel();	
+	}    
+    }
 
     /* need to take off stack checking as stack base has changed */
     R_CStackLimit = (unsigned long)-1;
@@ -523,9 +524,7 @@ static void *signal_stack;
 #define R_USAGE 100000 /* Just a guess */
 static void init_signal_handlers()
 {
-    /* <FIXME> may need to reinstall this if we do recover.
-       May need a larger stack to allow R to clean up.
-     */
+    /* <FIXME> may need to reinstall this if we do recover. */
     struct sigaction sa;
     signal_stack = malloc(SIGSTKSZ + R_USAGE);
     if (signal_stack != NULL) {
@@ -544,13 +543,21 @@ static void init_signal_handlers()
     sigaction(SIGBUS, &sa, NULL);
 #endif
 
-    install_signal_handlers();
+    signal(SIGINT,  handleInterrupt);
+    signal(SIGUSR1, onsigusr1);
+    signal(SIGUSR2, onsigusr2);
+    signal(SIGPIPE, SIG_IGN);
 }
 
 #else /* not sigaltstack and sigaction and sigemptyset*/
 static void init_signal_handlers()
 {
-    install_signal_handlers();
+    signal(SIGINT,  handleInterrupt);
+    signal(SIGUSR1, onsigusr1);
+    signal(SIGUSR2, onsigusr2);
+#ifndef Win32
+    signal(SIGPIPE, SIG_IGN);
+#endif
 }
 #endif
 
@@ -561,9 +568,6 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
     if (fp != NULL) {
 	if (! SETJMP(R_Toplevel.cjmpbuf)) {
 	    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-	    install_signal_handlers();
-#endif
 	    R_ReplFile(fp, env, 0, 0);
 	}
 	fclose(fp);
@@ -635,9 +639,7 @@ void setup_Rmainloop(void)
 #endif
 #endif
 
-#if defined(Unix) || defined(Win32)
     InitTempDir(); /* must be before InitEd */
-#endif
     InitMemory();
     InitNames();
     InitBaseEnv();
@@ -702,9 +704,8 @@ void setup_Rmainloop(void)
     */
 
     fp = R_OpenLibraryFile("base");
-    if (fp == NULL) {
+    if (fp == NULL)
 	R_Suicide(_("unable to open the base package\n"));
-    }
 
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
@@ -753,9 +754,6 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-    install_signal_handlers();
-#endif
     if (!doneit) {
 	doneit = 1;
 	R_InitialData();
@@ -770,9 +768,6 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-    install_signal_handlers();
-#endif
     if (!doneit) {
 	doneit = 1;
 	PROTECT(cmd = install(".First"));
@@ -791,9 +786,6 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-    install_signal_handlers();
-#endif
     if (!doneit) {
 	doneit = 1;
 	PROTECT(cmd = install(".First.sys"));
@@ -821,12 +813,6 @@ void end_Rmainloop(void)
     R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
-static void onpipe(int dummy)
-{
-    /* do nothing */
-    signal(SIGPIPE, onpipe);
-}
-
 void run_Rmainloop(void)
 {
     /* Here is the real R read-eval-loop. */
@@ -834,9 +820,6 @@ void run_Rmainloop(void)
     R_IoBufferInit(&R_ConsoleIob);
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-    install_signal_handlers();
-#endif
     R_ReplConsole(R_GlobalEnv, 0, 0);
     end_Rmainloop(); /* must go here */
 }
@@ -966,9 +949,6 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	R_InsertRestartHandlers(&thiscontext, TRUE);
 #endif
 	R_BrowseLevel = savebrowselevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-	install_signal_handlers();
-#endif
 	R_ReplConsole(rho, savestack, R_BrowseLevel);
 	endcontext(&thiscontext);
     }
