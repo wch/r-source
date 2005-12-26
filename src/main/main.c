@@ -390,7 +390,7 @@ FILE* R_OpenSysInitFile(void);
 FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
 
-static void handleInterrupt(int dummy)
+static RETSIGTYPE handleInterrupt(int dummy)
 {
     R_interrupts_pending = 1;
     signal(SIGINT, handleInterrupt);

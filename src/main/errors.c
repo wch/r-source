@@ -142,7 +142,7 @@ void onintr()
    These do far more processing than is allowed in a signal handler ....
 */
 
-void onsigusr1()
+RETSIGTYPE onsigusr1(int dummy)
 {
     if (R_interrupts_suspended) {
 	/**** ought to save signal and handle after suspend */
@@ -175,7 +175,7 @@ void onsigusr1()
 }
 
 
-void onsigusr2()
+RETSIGTYPE onsigusr2(int dummy)
 {
     inError = 1;
 
