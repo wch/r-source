@@ -654,7 +654,7 @@ void ran_start(seed)    /* do this before using ran_array */
 
 #define QUALITY 1009 /* recommended quality level for high-res use */
 long ran_arr_buf[QUALITY];
-long ran_arr_sentinel=-1;
+long ran_arr_sentinel=(long)-1;
 long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 
 #define ran_arr_next() (*ran_arr_ptr>=0? *ran_arr_ptr++: ran_arr_cycle())
