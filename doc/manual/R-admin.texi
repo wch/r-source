@@ -2484,14 +2484,9 @@ LIBnn=lib
 and had to build @code{readline} ourselves as Fedora Core 3 only shipped
 a 64-bit version.
 
-64-bit versions of Linux are built with support for files > 2Gb, but
-32-bit versions usually are not.  This can be enabled for Linux kernels
-2.4.x or later by the configure option @option{--enable-linux-lfs}: it
-tests for Linux, a suitable kernel and a 32-bit @samp{long} type.  A
-discussion of which Linux systems support large files can be found at
-@url{http://www.suse.de/~aj/linux_lfs.html,
-@code{www.suse.de/@/~aj/@/linux_lfs.html}}: it has been available since
-about 2001.
+64-bit versions of Linux are built with support for files > 2Gb, and
+32-bit versions will be if possible unless @option{--disable-largefile}
+is specified.
 
 @R{} used to include the compiler flag @option{-mieee-fp}, but it seems
 this was really an alias for the linker flag @option{-lieee}.  Neither
@@ -2667,12 +2662,6 @@ compiler: the @command{gcc}/@command{f77} combination works well.  For
 many C++ applications Forte 7 requires @code{-lCstd}, which the
 configure script will add to @code{SHLIB_CXXLDFLAGS} if it identifies
 the compiler correctly.
-
-A 32-bit version of @R{} is built without large file support and so can
-only handle files up to 2Gb (unlike 64-bit versions).  According to
-@samp{man lfcompile} this restriction can be removed if
-@option{-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE=1} is added to
-@samp{CFLAGS}.
 
 To compile for a 64-bit target on Solaris (which needs an UltraSparc
 chip and for support to be enabled in the OS) with the Forte 7 compilers

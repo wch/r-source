@@ -383,7 +383,7 @@ void init_con(Rconnection new, char *description, char *mode)
 
 /* ------------------- file connections --------------------- */
 
-#if defined(HAVE_OFF_T) && defined(_LARGEFILE_SOURCE)
+#if defined(HAVE_OFF_T) && defined(HAVE_SEEKO)
 #define f_seek fseeko
 #define f_tell ftello
 #else
@@ -498,7 +498,7 @@ static double file_seek(Rconnection con, double where, int origin, int rw)
 {
     Rfileconn this = con->private;
     FILE *fp = this->fp;
-#if defined(HAVE_OFF_T) && defined(_LARGEFILE_SOURCE)
+#if defined(HAVE_OFF_T) && defined(HAVE_SEEKO)
     off_t pos;
 #else
 #ifdef Win32

@@ -358,6 +358,10 @@ INSTALLATION CHANGES
 	problem cases (recent g77 and gfortran), but can be overridden
 	by the user.
 
+    o	The standard autoconf macros for large-file support are now used,
+	and these are enabled unless --disable-largefile is specified.
+	This replaces --enable-linux-lfs (and is now selected by default).
+
 
 UTILITIES
 

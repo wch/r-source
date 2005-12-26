@@ -256,12 +256,6 @@ if test x"${use_strict_barrier}" = xyes; then
              violation.])
 fi
 
-AC_ARG_ENABLE([linux-lfs],
-[AC_HELP_STRING([--enable-linux-lfs],
-                [enable support for > 2GB files on Linux @<:@no@:>@])],
-[want_linux_lfs="${enableval}"],
-[want_linux_lfs=no])
-
 AC_ARG_ENABLE([mbcs],
 [AC_HELP_STRING([--enable-mbcs],
                 [enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
@@ -1621,10 +1615,9 @@ if test "${want_R_profiling}" = yes; then
 fi
 AC_SUBST(R_PROFILING)
 
-## Large-file-support (Linux-only, at present)
-if test "x${want_linux_lfs}" = xyes; then
-R_LARGE_FILES
-fi
+## Large-file-support
+AC_SYS_LARGEFILE
+AC_FUNC_FSEEKO
 
 ## Valgrind instrumentation
 if test ${valgrind_level} -eq 0; then
