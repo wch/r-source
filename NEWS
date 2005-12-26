@@ -230,6 +230,9 @@ NEW FEATURES
 	to the underlying R CMD INSTALL shell command when installing
 	source packages on a Unix-alike.
 
+    o	summary.nls() has a new argument 'correlation' that defaults
+	to FALSE (like summary.lm).
+
 
 DEPRECATED & DEFUNCT
 

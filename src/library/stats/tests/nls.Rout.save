@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-12-23 r36849)
+Version 2.3.0 Under development (unstable) (2005-12-25 r36856)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -46,26 +46,25 @@ function (x, Asym, xmid, scal)
 > ## lower and upper in algorithm="port"
 > set.seed(123)
 > x <- runif(200)
-> a <- b <- 1
-> c <- -0.1
+> a <- b <- 1; c <- -0.1
 > y <- a+b*x+c*x^2+rnorm(200, sd=0.05)
 > plot(x,y)
-> curve(a+b*x+c*x^2, add=TRUE)
-> nls(y ~ a+b*x+c*I(x^2), start = c(a=1,b=1,c=0.1), algorithm = "port")
+> curve(a+b*x+c*x^2, add = TRUE)
+> nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1), algorithm = "port")
 Nonlinear regression model
   model:  y ~ a + b * x + c * I(x^2) 
    data:  parent.frame() 
        a        b        c 
  1.00584  0.98239 -0.08972 
- residual sum-of-squares:  0.46041 
-> (fm <- nls(y ~ a+b*x+c*I(x^2), start = c(a=1,b=1,c=0.1),
-+            algorithm = "port", lower = c(0,0,0)))
+ residual sum-of-squares: 0.46041
+> (fm <- nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1),
++            algorithm = "port", lower = c(0, 0, 0)))
 Nonlinear regression model
   model:  y ~ a + b * x + c * I(x^2) 
    data:  parent.frame() 
       a       b       c 
 1.02306 0.88971 0.00000 
- residual sum-of-squares:  0.46824 
+ residual sum-of-squares: 0.46824
 > confint(fm)
 Waiting for profiling to be done...
      2.5%    97.5%
@@ -78,8 +77,8 @@ c      NA 0.042693
 > set.seed(123)
 > y <- x <- 1:10
 > yeps <- y + rnorm(length(y), sd = 0.01)
-> wts <- rep(c(1, 2), length = 10)
-> fit0 <- lm(yeps~x, weights=wts)
+> wts <- rep(c(1, 2), length = 10); wts[5] <- 0
+> fit0 <- lm(yeps ~ x, weights = wts)
 > summary(fit0, cor = TRUE)
 
 Call:
@@ -87,18 +86,18 @@ lm(formula = yeps ~ x, weights = wts)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.01565 -0.00727 -0.00161  0.00409  0.02410 
+-0.01562 -0.00723 -0.00158  0.00403  0.02413 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  0.00521    0.00704    0.74     0.48    
-x            0.99915    0.00111  901.16   <2e-16 ***
+(Intercept)  0.00517    0.00764    0.68     0.52    
+x            0.99915    0.00119  841.38   <2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
-Residual standard error: 0.0123 on 8 degrees of freedom
+Residual standard error: 0.0132 on 7 degrees of freedom
 Multiple R-Squared:    1,	Adjusted R-squared:    1 
-F-statistic:  8.12e+05 on 1 and 8 DF,  p-value: <2e-16 
+F-statistic:  7.08e+05 on 1 and 7 DF,  p-value: <2e-16 
 
 Correlation of Coefficients:
   (Intercept)
@@ -107,49 +106,50 @@ x -0.89
 > cf0 <- coef(summary(fit0))[, 1:2]
 > fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 +            weights = wts, trace = TRUE)
-116.81 :  0.12345 0.54321 
-0.0012129 :  0.0052053 0.9991509 
-> summary(fit)
+112.14 :  0.12345 0.54321 
+0.0012128 :  0.0051705 0.9991529 
+> summary(fit, cor = TRUE)
 
 Formula: yeps ~ a + b * x
 
 Parameters:
   Estimate Std. Error t value Pr(>|t|)    
-a  0.00521    0.00704    0.74     0.48    
-b  0.99915    0.00111  901.16   <2e-16 ***
+a  0.00517    0.00764    0.68     0.52    
+b  0.99915    0.00119  841.37   <2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
-Residual standard error: 0.0123 on 8 degrees of freedom
+Residual standard error: 0.0132 on 7 degrees of freedom
 
-Correlation of Parameter Estimates:
-       a
-b -0.892
+Correlation of Paraneter Estimates:
+  a    
+b -0.89
 
 > stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5))
+> stopifnot(df.residual(fit) == df.residual(fit0))
 > cf1 <- coef(summary(fit))[, 1:2]
 > fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 +             weights = wts, trace = TRUE, algorithm = "port")
-  0      58.4072: 0.123450 0.543210
-  1      6.42521:  1.35316 0.699974
-  2  0.000606450: 0.00520532 0.999151
-  3  0.000606450: 0.00520538 0.999151
-> summary(fit2)
+  0      56.0706: 0.123450 0.543210
+  1      6.39646:  1.34546 0.700840
+  2  0.000606391: 0.00517053 0.999153
+  3  0.000606391: 0.00517053 0.999153
+> summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
 
 Parameters:
   Estimate Std. Error t value Pr(>|t|)    
-a  0.00521    0.00704    0.74     0.48    
-b  0.99915    0.00111  901.16   <2e-16 ***
+a  0.00517    0.00764    0.68     0.52    
+b  0.99915    0.00119  841.38   <2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
-Residual standard error: 0.0123 on 8 degrees of freedom
+Residual standard error: 0.0132 on 7 degrees of freedom
 
-Correlation of Parameter Estimates:
-       a
-b -0.892
+Correlation of Paraneter Estimates:
+  a    
+b -0.89
 
 > cf2 <- coef(summary(fit2))[, 1:2]
 > rownames(cf0) <- c("a", "b")
@@ -176,11 +176,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
-Correlation of Parameter Estimates:
-      Asym  xmid
-xmid 0.983      
-scal 0.871 0.908
-
 > 
 > ## directly
 > fm2 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
@@ -199,11 +194,6 @@ scal   1.0385     0.0304    34.1  4.2e-14 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.0355 on 13 degrees of freedom
-
-Correlation of Parameter Estimates:
-      Asym  xmid
-xmid 0.983      
-scal 0.871 0.908
 
 > stopifnot(all.equal(coef(summary(fm2)), coef(summary(fm1)), tol = 1e-6))
 > stopifnot(all.equal(residuals(fm2), residuals(fm1), tol = 1e-5))
@@ -236,11 +226,6 @@ scal   1.0385     0.0304    34.1  4.2e-14 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 0.0355 on 13 degrees of freedom
-
-Correlation of Parameter Estimates:
-      Asym  xmid
-xmid 0.983      
-scal 0.871 0.908
 
 > stopifnot(all.equal(coef(summary(fm3)), coef(summary(fm1)), tol = 1e-6))
 > ft <- with(DNase1, density - fitted(fm3)/sqrt(wts))
@@ -278,11 +263,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
-Correlation of Parameter Estimates:
-      xmid  scal
-scal 0.908      
-.lin 0.983 0.871
-
 > cf <- coef(summary(fm4))[c(3,1,2), ]
 > rownames(cf)[2] <- "Asym"
 > stopifnot(all.equal(cf, coef(summary(fm1)), tol = 1e-6))
@@ -319,11 +299,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
-Correlation of Parameter Estimates:
-      Asym  xmid
-xmid 0.983      
-scal 0.871 0.908
-
 > stopifnot(all.equal(coef(summary(fm5)), coef(summary(fm1)), tol = 1e-6))
 > stopifnot(all.equal(residuals(fm5), residuals(fm1), tol = 1e-5))
 > stopifnot(all.equal(fitted(fm5), fitted(fm1), tol = 1e-6))
@@ -349,5 +324,5 @@ scal 0.9757 1.1063
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.56 0.02 1.59 NA NA 
+Time elapsed:  1.63 0.03 1.96 NA NA 
 > 

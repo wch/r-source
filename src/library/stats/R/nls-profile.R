@@ -122,7 +122,7 @@ profile.nls <-
            delta.t = cutoff/5, ...)
 {
     f.summary <- summary(fitted)
-    std.err <- f.summary$parameters[, "Std. Error"]
+    std.err <- f.summary$coefficients[, "Std. Error"]
     nobs <- length(resid(fitted))
     prof <- profiler(fitted)
     pars <- prof$getFittedPars()

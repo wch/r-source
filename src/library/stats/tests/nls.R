@@ -26,14 +26,13 @@ str(logist)
 ## lower and upper in algorithm="port"
 set.seed(123)
 x <- runif(200)
-a <- b <- 1
-c <- -0.1
+a <- b <- 1; c <- -0.1
 y <- a+b*x+c*x^2+rnorm(200, sd=0.05)
 plot(x,y)
-curve(a+b*x+c*x^2, add=TRUE)
-nls(y ~ a+b*x+c*I(x^2), start = c(a=1,b=1,c=0.1), algorithm = "port")
-(fm <- nls(y ~ a+b*x+c*I(x^2), start = c(a=1,b=1,c=0.1),
-           algorithm = "port", lower = c(0,0,0)))
+curve(a+b*x+c*x^2, add = TRUE)
+nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1), algorithm = "port")
+(fm <- nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1),
+           algorithm = "port", lower = c(0, 0, 0)))
 confint(fm)
 
 
@@ -41,18 +40,19 @@ confint(fm)
 set.seed(123)
 y <- x <- 1:10
 yeps <- y + rnorm(length(y), sd = 0.01)
-wts <- rep(c(1, 2), length = 10)
-fit0 <- lm(yeps~x, weights=wts)
+wts <- rep(c(1, 2), length = 10); wts[5] <- 0
+fit0 <- lm(yeps ~ x, weights = wts)
 summary(fit0, cor = TRUE)
 cf0 <- coef(summary(fit0))[, 1:2]
 fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
            weights = wts, trace = TRUE)
-summary(fit)
+summary(fit, cor = TRUE)
 stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5))
+stopifnot(df.residual(fit) == df.residual(fit0))
 cf1 <- coef(summary(fit))[, 1:2]
 fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
             weights = wts, trace = TRUE, algorithm = "port")
-summary(fit2)
+summary(fit2, cor = TRUE)
 cf2 <- coef(summary(fit2))[, 1:2]
 rownames(cf0) <- c("a", "b")
 # expect relative errors ca 2e-08
