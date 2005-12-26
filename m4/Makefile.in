@@ -15,7 +15,7 @@ DISTFILES = Makefile.in README \
 	R.m4 \
 	clibs.m4 \
 	codeset.m4 \
-	gettext.m4 \
+	gettext.m4 gettext-lib.m4 \
 	java.m4 \
 	libtool.m4
 
