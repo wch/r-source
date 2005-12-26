@@ -73,6 +73,7 @@ Variables:
   LDFLAGS       linker flags, e.g. -L<dir> if you have libraries in a
                 nonstandard directory <dir> 
   MAKE          Make command
+  SAFE_FFLAGS   Safe (as conformant as possible) Fortran 77 compiler flags
   SHLIB_CFLAGS  additional CFLAGS used when building shared libraries
   SHLIB_CXXLD   command for linking shared libraries which contain
                 object files from a C++ compiler 
@@ -154,7 +155,7 @@ done
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
 ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"
 ok_dylib_vars="DYLIB_LD DYLIB_LDFLAGS"
-ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS"
+ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
