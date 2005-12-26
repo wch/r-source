@@ -348,6 +348,11 @@ INSTALLATION CHANGES
     o	Direct support for f2c has been removed: it can still be used
 	via a script which makes it look like a Fortran compiler.
 
+    o	There is a new flag SAFE_FFLAGS which is used for the
+	compilation of dlamc.f.  It is set by configure for known
+	problem cases (recent g77 and gfortran), but can be overridden
+	by the user.
+
 
 UTILITIES
 
@@ -380,6 +385,10 @@ C-LEVEL FACILITIES
 
     o	<R_ext/BLAS.h> and <R_ext/Lapack.h> now declare all the entry
 	points as 'extern'.
+
+    o	The flag SAFE_FFLAGS is made available to packages via
+	etc/Makeconf and R CMD config.  It can be used where
+	optimization needs to be defeated, e.g. in LAPACK setup.
 
 
 BUG FIXES
