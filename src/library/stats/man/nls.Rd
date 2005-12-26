@@ -9,14 +9,12 @@
 %\alias{logLik.nls}
 %\alias{print.nls}
 %\alias{residuals.nls}
-%\alias{summary.nls}
-%\alias{print.summary.nls}
-%\alias{weights.nls}
 %\alias{vcov.nls}
+%\alias{weights.nls}
 \title{Nonlinear Least Squares}
 \description{
-  Determine the nonlinear least-squares estimates of the nonlinear model
-  parameters and return a class \code{nls} object.
+  Determine the nonlinear (weighted) least-squares estimates of the
+  parameters of a nonlinear model.
 }
 \usage{
 nls(formula, data, start, control, algorithm,
@@ -24,70 +22,74 @@ nls(formula, data, start, control, algorithm,
     lower, upper, \dots)
 }
 \arguments{
- \item{formula}{a nonlinear model formula including variables and parameters}
- \item{data}{an optional data frame in which to evaluate the variables in
-     \code{formula}}
- \item{start}{a named list or named numeric vector of starting estimates}
- \item{control}{an optional list of control settings.  See
-     \code{nls.control} for the names of the settable control values and
-     their effect.}
- \item{algorithm}{character string specifying the algorithm to use.
-     The default algorithm is a Gauss-Newton algorithm. Other possible
-     values are \code{"plinear"} for the Golub-Pereyra algorithm for
-     partially linear least-squares models and \code{"port"} for the
-     "nl2sol" algorithm from the Port package.}
- \item{trace}{logical value indicating if a trace of the iteration
-     progress should be printed.  Default is \code{FALSE}.  If
-     \code{TRUE} the residual sum-of-squares and the parameter values
-     are printed at the conclusion of each iteration.  When the
-     \code{"plinear"} algorithm is used, the conditional estimates of
-     the linear parameters are printed after the nonlinear
-     parameters.  When the \code{"port"} algorithms are used the
-     objective function value printed is half the residual sum-of-squares.}
- \item{subset}{an optional vector specifying a subset of observations
-   to be used in the fitting process.}
- \item{weights}{an optional numeric vector of (fixed) weights.  When
-   present, the objective function is weighted least squares.}
-\item{na.action}{a function which indicates what should happen
+  \item{formula}{a nonlinear model formula including variables and
+    parameters.}
+  \item{data}{an optional data frame in which to evaluate the variables in
+    \code{formula}.}
+  \item{start}{a named list or named numeric vector of starting estimates.}
+  \item{control}{an optional list of control settings.  See
+    \code{\link{nls.control}} for the names of the settable control
+    values and their effect.}
+  \item{algorithm}{character string specifying the algorithm to use.
+    The default algorithm is a Gauss-Newton algorithm.  Other possible
+    values are \code{"plinear"} for the Golub-Pereyra algorithm for
+    partially linear least-squares models and \code{"port"} for the
+    \sQuote{nl2sol} algorithm from the Port package.}
+  \item{trace}{logical value indicating if a trace of the iteration
+    progress should be printed.  Default is \code{FALSE}.  If
+    \code{TRUE} the residual (weighted) sum-of-squares and the
+    parameter values are printed at the conclusion of each iteration.
+    When the \code{"plinear"} algorithm is used, the conditional
+    estimates of the linear parameters are printed after the nonlinear
+    parameters.  When the \code{"port"} algorithm is used the
+    objective function value printed is half the residual (weighted)
+    sum-of-squares.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used in the fitting process.}
+  \item{weights}{an optional numeric vector of (fixed) weights.  When
+    present, the objective function is weighted least squares.}
+  \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
     the \code{na.action} setting of \code{\link{options}}, and is
     \code{\link{na.fail}} if that is unset.  The \dQuote{factory-fresh}
     default is \code{\link{na.omit}}.  Value \code{\link{na.exclude}}
     can be useful.}
-\item{model}{logical.  If true, the model frame is returned as part of
-  the object. Default is \code{FALSE}}
-\item{lower, upper}{
-    vector of lower and upper bounds, replicated to be as long as
-    \code{start}.  If unspecified, all parameters are assumed to be
-    unconstrained.  Bounds can only be used with the \code{"port"}
-    algorithm.  They are ignored, with a warning, if given for other
-    algorithms.}
-\item{\dots}{Additional optional arguments.  None are used at present.}
+  \item{model}{logical.  If true, the model frame is returned as part of
+    the object. Default is \code{FALSE}.}
+  \item{lower, upper}{vectors of lower and upper bounds, replicated to
+    be as long as \code{start}.  If unspecified, all parameters are
+    assumed to be unconstrained.  Bounds can only be used with the
+    \code{"port"} algorithm.  They are ignored, with a warning, if given
+    for other algorithms.}
+  \item{\dots}{Additional optional arguments.  None are used at present.}
 }
 \details{
+  An \code{nls} object is a type of fitted model object.  It has methods
+  for the generic functions \code{\link{anova}}, \code{\link{coef}},
+  \code{\link{confint}}, \code{\link{deviance}},
+  \code{\link{df.residual}}, \code{\link{fitted}},
+  \code{\link{formula}}, \code{\link{logLik}}, \code{\link{predict}},
+  \code{\link{print}}, \code{\link{profile}}, \code{\link{profiler}},
+  \code{\link{residuals}}, \code{\link{summary}}, \code{\link{vcov}} and
+  \code{\link{weights}}.
+  
+  Variables in \code{formula} are looked for first in \code{data}, then
+  the environment of \code{formula} and finally along the search path.
+  Functions in \code{formula} are searched for first in the environment
+  of \code{formula} and then along the search path.
+}
+\section{Warning}{
   \bold{Do not use \code{nls} on artificial "zero-residual" data.}
 
   The \code{nls} function uses a relative-offset convergence criterion
   that compares the numerical imprecision at the current parameter
   estimates to the residual sum-of-squares.  This performs well on data of
   the form \deqn{y=f(x,\theta)+\epsilon}{y = f(x, theta) + eps} (with
-  \code{var(eps) > 0}).  It
-  fails to indicate convergence on data of the form
+  \code{var(eps) > 0}).  It fails to indicate convergence on data of the form
   \deqn{y=f(x,\theta)}{y = f(x, theta)} because the criterion amounts to
   comparing two components of the round-off error.  If you wish to test
   \code{nls} on artificial data please add a noise component, as shown
-  in the example below.
-  
-  An \code{nls} object is a type of fitted model object.  It has methods
-  for the generic functions \code{\link{coef}}, \code{\link{formula}},
-  \code{\link{resid}}, \code{\link{print}}, \code{\link{summary}},
-  \code{\link{AIC}}, \code{\link{fitted}} and \code{\link{vcov}}.
-
-  Variables in \code{formula} are looked for first in \code{data}, then
-  the environment of \code{formula} (added in 1.9.1) and finally along
-  the search path.  Functions in \code{formula} are searched for first
-  in the environment of \code{formula} (added in 1.9.1) and then along
-  the search path.
+  in the example below.  
 }
 \value{
   A list of
@@ -102,8 +104,8 @@ nls(formula, data, start, control, algorithm,
     \code{"terms"} attribute of the model frame.}
   \item{model}{if \code{model = TRUE}, the model frame.}
   \item{weights}{if \code{weights} is supplied, the weights.}
-  \item{convergence, message}{for an \code{algorithm="port"} fit only,
-    a convergence code (0 or 1} and message.}
+  \item{convergence, message}{for an \code{algorithm = "port"} fit only,
+    a convergence code (always 0) and message.}
 }
 \references{
   Bates, D.M. and Watts, D.G. (1988)
@@ -115,39 +117,46 @@ nls(formula, data, start, control, algorithm,
   Chapter 10 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 
-  \url{http://netlib.bell-labs.com/netlib/port/} for the Port library
+  \url{http://netlib.bell-labs.com/netlib/port/} for the Port library.
 }
 \author{Douglas M. Bates and Saikat DebRoy}
-\seealso{\code{\link{nlsModel}}}
+\seealso{
+  \code{\link{nlsModel}}, \code{\link{summary.nls}}, \code{\link{predict.nls}},
+  \code{\link{profile.nls}},  \code{\link{profiler.nls}}.
+}
 \examples{
 DNase1 <- subset(DNase, Run == 1)
+
 ## using a selfStart model
-fm1DNase1 <- nls( density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
-summary( fm1DNase1 )
+fm1DNase1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
+summary(fm1DNase1)
+
 ## using conditional linearity
-fm2DNase1 <- nls( density ~ 1/(1 + exp((xmid - log(conc))/scal)),
-                  data = DNase1,
-                  start = list(xmid = 0, scal = 1),
-                  alg = "plinear", trace = TRUE)
-summary( fm2DNase1 )
+fm2DNase1 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
+                 data = DNase1,
+                 start = list(xmid = 0, scal = 1),
+                 alg = "plinear", trace = TRUE)
+summary(fm2DNase1)
+
 ## without conditional linearity
-fm3DNase1 <- nls( density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
-                  data = DNase1,
-                  start = list(Asym = 3, xmid = 0, scal = 1),
-                  trace = TRUE)
-summary( fm3DNase1 )
-## using the nl2sol algorithm
-fm4DNase1 <- nls( density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
-                  data = DNase1,
-                  start = list(Asym = 3, xmid = 0, scal = 1),
-                  trace = TRUE, algorithm = "port")
+fm3DNase1 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
+                 data = DNase1,
+                 start = list(Asym = 3, xmid = 0, scal = 1),
+                 trace = TRUE)
+summary(fm3DNase1)
+
+## using Port's nl2sol algorithm
+fm4DNase1 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
+                 data = DNase1,
+                 start = list(Asym = 3, xmid = 0, scal = 1),
+                 trace = TRUE, algorithm = "port")
 summary(fm4DNase1)
 
 ## weighted nonlinear regression
 Treated <- Puromycin[Puromycin$state == "treated", ]
 weighted.MM <- function(resp, conc, Vm, K)
 {
-    ## Purpose: exactly as white book p.451 -- RHS for nls()
+    ## Purpose: exactly as white book p. 451 -- RHS for nls()
     ##  Weighted version of Michaelis-Menten model
     ## ------------------------------------------------------------
     ## Arguments: 'y', 'x' and the two parameters (see book)
@@ -161,7 +170,7 @@ weighted.MM <- function(resp, conc, Vm, K)
 Pur.wt <- nls( ~ weighted.MM(rate, conc, Vm, K), data = Treated,
               start = list(Vm = 200, K = 0.1),
               trace = TRUE)
-
+summary(Pur.wt)
 
 ## The two examples below show that you can fit a model to
 ## artificial data with noise but not to artificial data
