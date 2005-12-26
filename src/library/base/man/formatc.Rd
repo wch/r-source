@@ -11,11 +11,13 @@ formatC(x, digits = NULL, width = NULL,
         format = NULL, flag = "", mode = NULL,
         big.mark = "", big.interval = 3,
       small.mark = "", small.interval = 5,
-    decimal.mark = ".")
+    decimal.mark = ".", preserve.width = "individual")
 
 prettyNum(x, big.mark = "",   big.interval = 3,
-           small.mark = "", small.interval = 5,
-         decimal.mark = ".", \dots)
+          small.mark = "", small.interval = 5,
+          decimal.mark = ".",
+          preserve.width = c("common", "individual", "none"),
+          zero.print = NULL, \dots)
 }
 \arguments{
   \item{x}{an atomic numerical or character object, typically a vector
@@ -72,6 +74,15 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   \item{small.interval}{see \code{small.mark} above; defaults to 5.}
   \item{decimal.mark}{the character to be used to indicate the numeric
     decimal point.}
+  \item{preserve.width}{string specifying if the string widths should
+    be preserved where possible in those cases where marks
+    (\code{big.mark} or \code{small.mark}) are added.  \code{"common"},
+    the default, corresponds to \code{\link{format}}-like behavior
+    whereas \code{"individual"} is the default in
+    \code{formatC()}.}
+  \item{zero.print}{logical, character string or \code{NULL} specifying
+    if and how \emph{zeros} should be formatted specially.  Useful for
+    pretty printing \dQuote{sparse} objects.}
   \item{\dots}{arguments passed to \code{format}.}
 }
 \value{
@@ -146,6 +157,13 @@ prettyNum(dd, big.mark="'")
 pN <- stats::pnorm(1:7, lower=FALSE)
 cbind(format (pN, small.mark = " ", digits = 15))
 cbind(formatC(pN, small.mark = " ", digits = 17, format = "f"))
+
+cbind(ff <- format(1.2345 + 10^(0:5), width = 11, big.mark = "'"))
+## all with same width (one more than the specified minimum)
+
+## individual formatting to common width:
+fc <- formatC(1.234 + 10^(0:8), format="fg", width=11, big.mark = "'")
+cbind(fc)
 }
 \keyword{character}
 \keyword{print}

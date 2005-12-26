@@ -225,13 +225,18 @@ NEW FEATURES
 
     o	gettext has been updated to 0.14.5.
 
-    o	install.packages() has additional arguments 'configure.args' and 
+    o	install.packages() has additional arguments 'configure.args' and
 	'clean' which allow the caller to provide additional arguments
 	to the underlying R CMD INSTALL shell command when installing
 	source packages on a Unix-alike.
 
     o	summary.nls() has a new argument 'correlation' that defaults
 	to FALSE (like summary.lm).
+
+    o	prettyNum() has new arguments 'preserve.width' and
+	'zero.print'. When the former is not "none", as in calls from format()
+	and formatC(), the resulting strings are kept at desired width when
+	possible even after adding of 'big.mark' or 'small.mark'.
 
 
 DEPRECATED & DEFUNCT
@@ -666,7 +671,7 @@ BUG FIXES
 	'sigma' as NaN for cases with hat = 1, and on some platforms
 	not detecting hat = 1 correctly.
 
-    o	Rmath.h for standalone Rmath was not recording HAVE_WORKING_LOG, 
+    o	Rmath.h for standalone Rmath was not recording HAVE_WORKING_LOG,
         so R_log was not available on platforms defining it.
 
     o	HoltWinters() was using a slightly incorrect formula in the C code.

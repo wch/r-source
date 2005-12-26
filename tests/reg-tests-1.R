@@ -3983,3 +3983,16 @@ writeLines(xx, con)
 close(con)
 unlink("test.gz")
 ## segfaulted in 2.2.0 on some x86_64 systems.
+
+## format() with *.marks:
+x <- 1.2345 + 10^(0:5)
+ff <- format(x, width = 11, big.mark = "'")
+stopifnot(nchar(ff) == 12)
+## small marks test
+f2 <- format(x, big.mark = "'", small.mark="_", small.interval = 2)
+nc <- nchar(f2)
+stopifnot(substring(f2, nc,nc) != "_", # no traling small mark
+          nc == nc[1])# all the same
+fc <- formatC(1.234 + 10^(0:8), format="fg", width=11, big.mark = "'")
+stopifnot(nchar(fc) == 11)
+## had non-adjusted strings before 2.3.0
