@@ -7,7 +7,7 @@ str(object, \dots)
 
 \method{str}{default}(object, max.level = NA, vec.len = 4, digits.d = 3,
     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
-    wid = getOption("width"), nest.lev = 0,
+    width = getOption("width"), nest.lev = 0,
     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)),
                        collapse = ".."),
     comp.str="$ ", no.list = FALSE, envir = baseenv(),
@@ -43,8 +43,9 @@ str(object, \dots)
     as sub structures.}
   \item{give.length}{logical; if \code{TRUE} (default), indicate
     length (as \code{[1:\dots]}).}
-  \item{wid}{the page width to be used.  The default is the currently
-    active \code{\link{options}("width")}.}
+  \item{width}{the page width to be used.  The default is the currently
+    active \code{\link{options}("width")}; note that this has only a
+    weak effect, unless \code{strict.width} is true.}
   \item{nest.lev}{current nesting level in the recursive calls to
     \code{str}.}
   \item{indent.str}{the indentation string to use.}
@@ -53,6 +54,8 @@ str(object, \dots)
     class is printed.}
   \item{envir}{the environment to be used for \emph{promise} (see
     \code{\link{delayedAssign}}) objects only.}
+  \item{strict.width}{logical indicating if the \code{width} argument's
+    specification should be followed strictly.}
   \item{\dots}{potential further arguments (required for Method/Generic reasons).}
 }
 \value{
@@ -76,6 +79,7 @@ str(str)
 str(.Machine, digits = 20)
 str( lsfit(1:9,1:9))
 str( lsfit(1:9,1:9),  max = 1)
+str( lsfit(1:9,1:9),  width = 60, strict.width = TRUE)
 op <- options(); str(op) # save first;
                          # otherwise internal options() is used.
 need.dev <- !exists(".Device") || is.null(.Device)

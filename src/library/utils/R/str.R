@@ -27,9 +27,10 @@ str.data.frame <- function(object, ...)
 str.default <-
     function(object, max.level = NA, vec.len = 4, digits.d = 3,
 	     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
-	     wid = getOption("width"), nest.lev = 0,
+	     width = getOption("width"), nest.lev = 0,
 	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
 	     comp.str="$ ", no.list = FALSE, envir = baseenv(),
+             strict.width = FALSE,
 	     ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
@@ -38,6 +39,21 @@ str.default <-
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
+
+    if(strict.width) {
+        ## Fixme: use eval(  match.call(...))) and  just drop 'strict.width'
+        ss <- capture.output(str(object, max.level = max.level,
+                                 vec.len = vec.len, digits.d = digits.d,
+                                 nchar.max = nchar.max,
+                                 give.attr= give.attr, give.length= give.length,
+                                 width = width, nest.lev = nest.lev,
+                                 indent.str = indent.str, comp.str=comp.str,
+                                 no.list= no.list, envir = envir, ...) )
+        iLong <- nchar(ss) > width-2
+        ss[iLong] <- sub(sprintf("^(.{1,%d}).*",width-2), "\\1..", ss[iLong])
+        cat(ss, sep="\n")
+        return(invisible())
+    }
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -84,7 +100,7 @@ str.default <-
 	str(a, no.list = TRUE, comp.str = "@ ", # instead of "$ "
 	    max.level = max.level, vec.len = vec.len, digits.d = digits.d,
 	    indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1,
-	    nchar.max = nchar.max, give.attr = give.attr, wid=wid)
+	    nchar.max = nchar.max, give.attr = give.attr, width=width)
 	return(invisible())
     }
     else if(is.list(object)) {
@@ -123,7 +139,7 @@ str.default <-
                         nchar.max = nchar.max, max.level = max.level,
                         vec.len = vec.len, digits.d = digits.d,
                         give.attr = give.attr, give.length = give.length,
-                        wid = wid, envir = envir)
+                        width = width, envir = envir)
 		}
 	    }
 	}
@@ -242,7 +258,7 @@ str.default <-
 	    str(unclass(object),
 		max.level = max.level, vec.len = vec.len, digits.d = digits.d,
 		indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1,
-		nchar.max = nchar.max, give.attr = give.attr, wid=wid)
+		nchar.max = nchar.max, give.attr = give.attr, width=width)
 	    return(invisible())
 	} else if(is.atomic(object)) {
 	    if((1 == length(a <- attributes(object))) && (names(a) == "names"))
@@ -259,7 +275,7 @@ str.default <-
 		str(objExp,
 		    max.level= max.level, vec.len= vec.len, digits.d= digits.d,
 		    indent.str = indent.str, nest.lev = nest.lev,
-		    nchar.max = nchar.max, give.attr = give.attr, wid=wid)
+		    nchar.max = nchar.max, give.attr = give.attr, width=width)
 	    } else cat(" <...>\n")
 	    return(invisible())
 	} else {
@@ -341,9 +357,10 @@ str.default <-
 	if(char.like) {
 	    en_object <- encodeString(object)
 	    v.len <-
-		if(missing(vec.len))
+		if(missing(vec.len)) {
 		    max(1,sum(cumsum(3 + if(le>0) nchar(en_object, type="w") else 0) <
-			      wid - (4 + 5*nest.lev + nchar(str1, type="w"))))
+			      width - (4 + 5*nest.lev + nchar(str1, type="w"))))
+                }
 	    ## `5*ne..' above is fudge factor
 		else round(v.len)
 	    ile <- min(le, v.len)
@@ -378,7 +395,7 @@ str.default <-
 		    max.level = max.level, digits.d = digits.d,
 		    nchar.max = nchar.max,
 		    vec.len = if(nam[i] == "source") 1 else vec.len,
-		    give.attr= give.attr, give.length= give.length, wid= wid)
+		    give.attr= give.attr, give.length= give.length, width= width)
 	    }
     }
     invisible()	 ## invisible(object)#-- is SLOOOOW on large objects
@@ -400,7 +417,7 @@ lsf.str <- function(pos = 1, ..., envir = as.environment(pos))
 
 print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
 {
-    E <- attr(x, "envir") 
+    E <- attr(x, "envir")
     stopifnot(is.environment(E))
     M <- attr(x, "mode")
     for(nam in x) {
