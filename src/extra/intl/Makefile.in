@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = ChangeLog Makefile.in Makefile.win R_changes VERSION \
   plural.y $(SOURCES) $(HEADERS) \
-  config.charset locale.alias ref-add.sin ref-del.sin
+  config.charset ref-add.sin ref-del.sin
 
 HEADERS = \
   gmo.h gettextP.h hash-string.h loadinfo.h plural-exp.h eval-plural.h \
@@ -42,8 +42,7 @@ localedir = $(datadir)/locale
 aliaspath = $(localedir)
 
 DEFS = -DLOCALEDIR=\"$(localedir)\" -DLOCALE_ALIAS_PATH=\"$(aliaspath)\" \
--DLIBDIR=\"$(libdir)\" -DIN_LIBINTL -DIN_LIBRARY -DNO_XMALLOC \
--DDEPENDS_ON_LIBICONV=1 @DEFS@
+-DIN_LIBINTL -DIN_LIBRARY -DNO_XMALLOC -DDEPENDS_ON_LIBICONV=1 @DEFS@
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir) $(CPPFLAGS) $(DEFS) @XTRA_INTL_CPPFLAGS@
 

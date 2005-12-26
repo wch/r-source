@@ -1,4 +1,4 @@
-The problems we found were with the use of iconv
+The main problems we found were with the use of iconv
 
 1) On Solaris this finds iconv, but as it does not use the same charset
 names as glibc/libiconv's iconv, it does not work.
@@ -9,7 +9,9 @@ So we modified the iconv references to use our extra test and to use Riconv.
 
 
 Since we do not use relocation (and it was not easy to get to compile on
-Windows) we have removed it, as well as OS/2 compatibility.
+Windows) we have removed it, as well as OS/2 compatibility.  Also, we
+do not install or use locale.alias, and charset.alias is compiled in
+(via localecharset.h) rather than read at runtime.
 
 
 Since the packages will need libintl.h, we need to install it.  We also
@@ -24,8 +26,8 @@ as wint_t is unsigned short.
 BDR
 
 
-diff -u /users/ripley/src-new/texinfo-4.8/intl/dcigettext.c ./dcigettext.c
---- /users/ripley/src-new/texinfo-4.8/intl/dcigettext.c	2003-12-24 15:12:48.000000000 +0000
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/dcigettext.c ./dcigettext.c
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/dcigettext.c	2005-05-20 21:06:17.000000000 +0100
 +++ ./dcigettext.c	2005-01-27 20:05:32.226296000 +0000
 @@ -837,13 +837,11 @@
      }
@@ -100,10 +102,49 @@ diff -u /users/ripley/src-new/texinfo-4.8/intl/dcigettext.c ./dcigettext.c
  
  	    resize_freemem:
  	      /* We must allocate a new buffer or resize the old one.  */
-Only in .: diffs
-diff -u /users/ripley/src-new/texinfo-4.8/intl/gettextP.h ./gettextP.h
---- /users/ripley/src-new/texinfo-4.8/intl/gettextP.h	2003-12-24 15:12:48.000000000 +0000
-+++ ./gettextP.h	2005-01-27 15:11:54.015988000 +0000
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/finddomain.c ./finddomain.c
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/finddomain.c	2005-05-20 21:06:45.000000000 +0100
++++ ./finddomain.c	2005-12-18 16:19:44.709663000 +0000
+@@ -59,7 +59,7 @@
+   const char *special;
+   const char *sponsor;
+   const char *revision;
+-  const char *alias_value;
++  const char *alias_value = NULL;
+   int mask;
+ 
+   /* LOCALE can consist of up to four recognized parts for the XPG syntax:
+@@ -111,6 +111,7 @@
+       /* NOTREACHED */
+     }
+ 
++#ifndef WIN32 /* not used on Windows */
+   /* See whether the locale value is an alias.  If yes its value
+      *overwrites* the alias name.  No test for the original value is
+      done.  */
+@@ -130,6 +131,7 @@
+       memcpy (locale, alias_value, len);
+ #endif
+     }
++#endif
+ 
+   /* Now we determine the single parts of the locale name.  First
+      look for the language.  Termination symbols are `_' and `@' if
+@@ -163,8 +165,10 @@
+     }
+ 
+   /* The room for an alias was dynamically allocated.  Free it now.  */
++#ifndef WIN32 /* not used on Windows */
+   if (alias_value != NULL)
+-    free (locale);
++      free (locale);
++#endif
+ 
+   /* The space for normalized_codeset is dynamically allocated.  Free it.  */
+   if (mask & XPG_NORM_CODESET)
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/gettextP.h ./gettextP.h
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/gettextP.h	2005-05-20 21:06:54.000000000 +0100
++++ ./gettextP.h	2005-12-18 16:19:44.769664000 +0000
 @@ -22,12 +22,8 @@
  
  #include <stddef.h>		/* Get size_t.  */
@@ -134,9 +175,9 @@ diff -u /users/ripley/src-new/texinfo-4.8/intl/gettextP.h ./gettextP.h
    char **conv_tab;
  
    struct expression *plural;
-diff -u /users/ripley/src-new/texinfo-4.8/intl/loadmsgcat.c ./loadmsgcat.c
---- /users/ripley/src-new/texinfo-4.8/intl/loadmsgcat.c	2004-04-11 18:56:46.000000000 +0100
-+++ ./loadmsgcat.c	2005-01-27 20:05:36.336287000 +0000
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/loadmsgcat.c ./loadmsgcat.c
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/loadmsgcat.c	2005-05-20 21:07:47.000000000 +0100
++++ ./loadmsgcat.c	2005-12-18 16:19:45.199659000 +0000
 @@ -783,12 +783,8 @@
    /* Preinitialize fields, to avoid recursion during _nl_find_msg.  */
    domain->codeset_cntr =
@@ -216,3 +257,124 @@ diff -u /users/ripley/src-new/texinfo-4.8/intl/loadmsgcat.c ./loadmsgcat.c
  }
  
  /* Load the message catalogs specified by FILENAME.  If it is no valid
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/localcharset.c ./localcharset.c
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/localcharset.c	2005-05-20 21:07:51.000000000 +0100
++++ ./localcharset.c	2005-12-18 16:19:43.199667000 +0000
+@@ -115,104 +115,7 @@
+   if (cp == NULL)
+     {
+ #if !(defined VMS || defined WIN32)
+-      FILE *fp;
+-      const char *dir;
+-      const char *base = "charset.alias";
+-      char *file_name;
+-
+-      /* Make it possible to override the charset.alias location.  This is
+-	 necessary for running the testsuite before "make install".  */
+-      dir = getenv ("CHARSETALIASDIR");
+-      if (dir == NULL || dir[0] == '\0')
+-	dir = relocate (LIBDIR);
+-
+-      /* Concatenate dir and base into freshly allocated file_name.  */
+-      {
+-	size_t dir_len = strlen (dir);
+-	size_t base_len = strlen (base);
+-	int add_slash = (dir_len > 0 && !ISSLASH (dir[dir_len - 1]));
+-	file_name = (char *) malloc (dir_len + add_slash + base_len + 1);
+-	if (file_name != NULL)
+-	  {
+-	    memcpy (file_name, dir, dir_len);
+-	    if (add_slash)
+-	      file_name[dir_len] = DIRECTORY_SEPARATOR;
+-	    memcpy (file_name + dir_len + add_slash, base, base_len + 1);
+-	  }
+-      }
+-
+-      if (file_name == NULL || (fp = fopen (file_name, "r")) == NULL)
+-	/* Out of memory or file not found, treat it as empty.  */
+-	cp = "";
+-      else
+-	{
+-	  /* Parse the file's contents.  */
+-	  char *res_ptr = NULL;
+-	  size_t res_size = 0;
+-
+-	  for (;;)
+-	    {
+-	      int c;
+-	      char buf1[50+1];
+-	      char buf2[50+1];
+-	      size_t l1, l2;
+-	      char *old_res_ptr;
+-
+-	      c = getc (fp);
+-	      if (c == EOF)
+-		break;
+-	      if (c == '\n' || c == ' ' || c == '\t')
+-		continue;
+-	      if (c == '#')
+-		{
+-		  /* Skip comment, to end of line.  */
+-		  do
+-		    c = getc (fp);
+-		  while (!(c == EOF || c == '\n'));
+-		  if (c == EOF)
+-		    break;
+-		  continue;
+-		}
+-	      ungetc (c, fp);
+-	      if (fscanf (fp, "%50s %50s", buf1, buf2) < 2)
+-		break;
+-	      l1 = strlen (buf1);
+-	      l2 = strlen (buf2);
+-	      old_res_ptr = res_ptr;
+-	      if (res_size == 0)
+-		{
+-		  res_size = l1 + 1 + l2 + 1;
+-		  res_ptr = (char *) malloc (res_size + 1);
+-		}
+-	      else
+-		{
+-		  res_size += l1 + 1 + l2 + 1;
+-		  res_ptr = (char *) realloc (res_ptr, res_size + 1);
+-		}
+-	      if (res_ptr == NULL)
+-		{
+-		  /* Out of memory. */
+-		  res_size = 0;
+-		  if (old_res_ptr != NULL)
+-		    free (old_res_ptr);
+-		  break;
+-		}
+-	      strcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1);
+-	      strcpy (res_ptr + res_size - (l2 + 1), buf2);
+-	    }
+-	  fclose (fp);
+-	  if (res_size == 0)
+-	    cp = "";
+-	  else
+-	    {
+-	      *(res_ptr + res_size) = '\0';
+-	      cp = res_ptr;
+-	    }
+-	}
+-
+-      if (file_name != NULL)
+-	free (file_name);
+-
++#include "localecharset.h"
+ #else
+ 
+ # if defined VMS
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/printf-args.c ./printf-args.c
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/printf-args.c	2005-05-20 21:09:09.000000000 +0100
++++ ./printf-args.c	2005-12-18 16:19:45.799657000 +0000
+@@ -80,7 +80,7 @@
+ 	break;
+ #ifdef HAVE_WINT_T
+       case TYPE_WIDE_CHAR:
+-	ap->a.a_wide_char = va_arg (args, wint_t);
++        ap->a.a_wide_char = va_arg (args, /* wint_t */ int);
+ 	break;
+ #endif
+       case TYPE_STRING:
