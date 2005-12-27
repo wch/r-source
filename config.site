@@ -116,7 +116,7 @@
 ## CPICFLAGS=
 
 ## The following variable can be used to provide any PIC flags for the
-## FORTRAN 77 compiler (if you are using one).  If this variable is left
+## FORTRAN 77 compiler.  If this variable is left
 ## unspecified an attempt is made to automatically detect the correct
 ## value by configure.
 ## FPICFLAGS=
@@ -151,6 +151,7 @@
 ## If LIBnn is set it defaults to -L/usr/local/$LIBnn.
 ## LDFLAGS=
 
+
 ## The command which runs the C++ compiler.  It not specified, configure
 ## uses the values of the environment variables 'CXX' or 'CCC' if set,
 ## and then looks under the names 'c++', 'g++', 'gcc', 'CC', 'cxx', and
@@ -177,6 +178,16 @@
 ## automatically detected by configure, and anything set here will be in
 ## addition unless SHLIB_CXXLD is given.
 ## SHLIB_CXXLDFLAGS=
+
+
+## FORTRAN 95 compiler: optional for use in packages.
+## Analogous to the F77 and CXX settings.
+## FC=
+## FCFLAGS=
+## FCPICFLAGS=
+## SHLIB_FCLD=$(FC)
+## Unlike SHLIB_CXXLDFLAGS, SHLIB_FCLDFLAGS is never additional
+## SHLIB_FCLDFLAGS=$(SHLIB_LDFLAGS)
 
 ## Tcl/Tk settings.
 ## Use TCLTK_LIBS for all '-L' and '-l' options needed for linking

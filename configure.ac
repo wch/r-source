@@ -413,6 +413,9 @@ AC_ARG_VAR([CPICFLAGS],
 AC_ARG_VAR([FPICFLAGS],
            [special flags for compiling Fortran code to be turned into a
             shared library.])
+AC_ARG_VAR([FCPICFLAGS],
+           [special flags for compiling Fortran 95 code to be turned into a
+            shared library.])
 AC_ARG_VAR([SHLIB_LD],
            [command for linking shared libraries which contain object
             files from a C or Fortran compiler only])
@@ -431,6 +434,11 @@ AC_ARG_VAR([SHLIB_CXXLD],
             files from a C++ compiler])
 AC_ARG_VAR([SHLIB_CXXLDFLAGS],
            [special flags used by SHLIB_CXXLD])
+AC_ARG_VAR([SHLIB_FCD],
+           [command for linking shared libraries which contain object
+            files from the Fortran 95 compiler])
+AC_ARG_VAR([SHLIB_FCLDFLAGS],
+           [special flags used by SHLIB_FCLD])
 AC_ARG_VAR([TCLTK_LIBS],
            [flags needed for linking against the Tcl and Tk libraries])
 AC_ARG_VAR([TCLTK_CPPFLAGS],
@@ -969,7 +977,7 @@ AC_SUBST(R_XTRA_LIBS)
 ## MAIN_LD, MAINLD_FLAGS
 ##   command and flags for loading the main binary so that it will load
 ##   shared libraries (DLLs) at runtime, also for profiling.
-## CPICFLAGS, CXXPICFLAGS, FPICFLAGS
+## CPICFLAGS, CXXPICFLAGS, FPICFLAGS, FCPICFLAGS
 ##   flags for compiling C, C++, and Fortran library code.
 ## SHLIB_LD, SHLIB_LDFLAGS
 ##   command and flags for creating DLLs (which contain object files
@@ -1372,6 +1380,7 @@ AC_SUBST(CPICFLAGS)
 AC_SUBST(CXXPICFLAGS)
 AC_SUBST(DYLIB_LD)
 AC_SUBST(DYLIB_LDFLAGS)
+AC_SUBST(FCPICFLAGS)
 AC_SUBST(FPICFLAGS)
 AC_SUBST(SHLIB_CXXLD)
 AC_SUBST(SHLIB_CXXLDFLAGS)
@@ -1651,6 +1660,59 @@ AC_SUBST(R_BATCHSAVE)
 ## Java support
 R_JAVA
 
+## F90/F95 support
+AC_PROG_FC()
+AC_LANG_PUSH(Fortran)
+AC_FC_SRCEXT(f90, [], [])
+AC_FC_SRCEXT(f95, [], [])
+AC_LANG_POP()
+: ${SHLIB_FCLD="${FC}"}
+: ${SHLIB_FCLDFLAGS="${SHLIB_LDFLAGS}"}
+AC_SUBST(SHLIB_FCLD)
+AC_SUBST(SHLIB_FCLDFLAGS)
+case "${host_os}" in
+  hpux*)
+    case "${FC}" in
+      f90)
+        fcpicflags="+Z"
+        ;;
+    esac
+    ;;
+  linux*)
+    case  "${FC}" in
+      *gfortran)
+        fcpicflags="-fPIC"
+        ;;
+      ## Intel compilers
+      *ifc|*ifort)
+        fcpicflags="-fPIC"
+        ;;
+      ## Portland Group
+      *pgf95)
+        fcpicflags="-fpic"
+        ;;
+    esac
+    ;;
+  solaris*)
+    if test "${ac_cv_fc_compiler_gnu}" = yes; then
+      fcpicflags="-fPIC"
+    else
+      fcpicflags="-PIC"
+    fi
+    ;;
+esac
+: ${FCPICFLAGS="${fcpicflags}"}
+if test -z "${FCPICFLAGS}"; then
+  case "${host_os}" in
+    aix*|irix*|mingw*|osf*)
+      ;;
+    *)
+      AC_MSG_WARN([I could not determine FCPICFLAGS.])
+      ;;
+  esac
+fi
+
+
 ## Make sure -L terms come first in LIBS.
 LIBS1=""
 LIBS2=""
@@ -1871,6 +1933,7 @@ AC_OUTPUT
 r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 r_cxx_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
+r_f95_compiler="${FC} ${FCFLAGS}"
 r_interfaces=
 for item in X11 aqua tcltk; do
   if eval "test \${use_${item}} = yes"; then
@@ -1945,8 +2008,10 @@ R is now configured for ${host}
   Installation directory:    ${prefix}
 
   C compiler:                ${r_c_compiler}
+  Fortran 77 compiler:       ${r_f77_compiler}
+
   C++ compiler:              ${r_cxx_compiler}
-  Fortran compiler:          ${r_f77_compiler}
+  Fortran 90/95 compiler:    ${r_f95_compiler}
 
   Interfaces supported:      ${r_interfaces}
   External libraries:        ${r_external_libs}
@@ -1972,6 +2037,12 @@ if test -n "${warn_cxxpicflags}"; then
 fi
 if test -n "${warn_shlib_cxxldflags}"; then
   AC_MSG_WARN([${warn_shlib_cxxldflags}])
+fi
+if test -n "${warn_cxxpicflags}"; then
+  AC_MSG_WARN([${warn_cxxpicflags}])
+fi
+if test -n "${warn_fcpicflags}"; then
+  AC_MSG_WARN([${warn_fcpicflags}])
 fi
 if test -n "${warn_libglade_version}"; then
   AC_MSG_WARN([${warn_libglade_version}])

@@ -382,6 +382,12 @@ DOCUMENTATION
     o	Rd format now allows \var{} markup inside \code{} and \examples{}.
 
 
+PACKAGE INSTALLATION
+
+    o	There is now some support for Fortran 90/95 code in packages:
+	see `Writing R Extensions'.
+
+
 C-LEVEL FACILITIES
 
     o	qgamma and rgamma in Rmath.h now check for non-positive arguments.

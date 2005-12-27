@@ -34,6 +34,7 @@ makefiles="-f ${R_SHARE_DIR}/make/shlib.mk"
 shlib_libadd='@SHLIB_LIBADD@'
 with_cxx=false
 with_f77=false
+with_f9x=false
 
 while test -n "${1}"; do
   case ${1} in
@@ -54,6 +55,13 @@ while test -n "${1}"; do
       ;;
     *.f)
       with_f77=true
+      if test -z "${shlib}"; then
+	shlib="`echo ${1} | sed 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
+      fi
+      objs="${objs} `echo ${1} | sed 's/\.[^\.][^\.]*$/.o/'`"
+      ;;
+    *.f90|*.f95)
+      with_f9x=true
       if test -z "${shlib}"; then
 	shlib="`echo ${1} | sed 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
       fi
@@ -87,15 +95,20 @@ if test -r Makevars; then
 fi
 
 makeargs="SHLIB=\"${shlib}\""
-if ${with_cxx}; then
-  makeargs="SHLIB_LDFLAGS='\$(SHLIB_CXXLDFLAGS)' ${makeargs}"
-  makeargs="SHLIB_LD='\$(SHLIB_CXXLD)' ${makeargs}"
-fi
-if ${with_f77}; then
-  if test -z "${shlib_libadd}"; then
-    makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS)'"
-  else
-    makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS) ${shlib_libadd}'"
+if ${with_f9x}; then
+    makeargs="SHLIB_LDFLAGS='\$(SHLIB_FCLDFLAGS)' ${makeargs}"
+    makeargs="SHLIB_LD='\$(SHLIB_FCLD)' ${makeargs}"
+else
+  if ${with_cxx}; then
+    makeargs="SHLIB_LDFLAGS='\$(SHLIB_CXXLDFLAGS)' ${makeargs}"
+    makeargs="SHLIB_LD='\$(SHLIB_CXXLD)' ${makeargs}"
+  fi
+  if ${with_f77}; then
+    if test -z "${shlib_libadd}"; then
+      makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS)'"
+    else
+      makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS) ${shlib_libadd}'"
+    fi
   fi
 fi
 
