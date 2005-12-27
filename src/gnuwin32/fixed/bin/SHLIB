@@ -59,6 +59,8 @@ foreach $src (@ARGV) {
     } elsif ($src =~ /\.c$/) {
 	push @csrcs, $src;
 	push @cfsrcs, $src;
+    } elsif ($src =~ /\.(f90|f95)$/) {
+	push @cfsrcs, $src;
     } else {
 	push @cfsrcs, $src;
     }

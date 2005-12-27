@@ -2823,8 +2823,8 @@ You can configure @R{} to use both the native @command{cc} and
 typically resides in a non-standard directory (e.g.,
 @file{/opt/fortran90/lib}).  Hence, to use @command{f90} one needs to
 add this directory to the linker path via the configure variable
-@code{LDFLAGS} (e.g., @code{./configure F77=f90
-LDFLAGS=/opt/fortran90/lib}).
+@code{LDFLAGS} (e.g., 
+@command{./configure F77=f90 LDFLAGS=/opt/fortran90/lib}).
 
 
 @node IRIX, Alpha/OSF1, HP-UX, Platform notes
@@ -2838,7 +2838,7 @@ zones (see below).  A 64-bit executable has not been successfully
 built.
 
 It appears that some (but not all) versions of IRIX have broken
-wide-character header files and so may need @code{--disable-mbcs}.
+wide-character header files and so may need @option{--disable-mbcs}.
 
 To build @R{} with @command{gcc} use something like the following
 configuration flags

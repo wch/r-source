@@ -981,7 +981,7 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 @node Using F95 code,  , Configure example, Configure and cleanup
 @subsection Using F95 code
 
-@R{} currently does not distinguish between FORTRAN-77 and FORTRAN-95
+@R{} currently does not distinguish between FORTRAN 77 and FORTRAN 90/95
 code, and assumes all FORTRAN comes in source files with extension
 @code{.f}.  Commercial Unix systems tyically use a F95 compiler, but
 only since the release of @code{gcc 4.0.0} in April 2005 have Linux and
@@ -989,43 +989,22 @@ other non-commercial OSes had much support for F95.  The compiler used
 for @R{} on Windows is a F77 compiler.
 
 This means that portable packages need to be written in correct
-FORTRAN-77, which will also be valid FORTRAN-95.  See
+FORTRAN 77, which will also be valid FORTRAN 95.  See
 @uref{http://developer.r-project.org/Portability.html} for reference
 resources.  In particular, @emph{free source form} F95 code is not
 portable.
 
 On some systems an alternative F95 compiler is available: from the
 @code{gcc} family this might be @command{gfortran} or @command{g95}.
-Here is a fairly general @file{src/Makefile} to be used on such a
-system.  It only handles F95 files: mixing these with C or F77 may not
-be possible.  Of course @command{configure} could be used to set
-@option{F95}.
-
-@example
-## set these 3 lines as appropriate
-PKGNAME=testf95
-F95=gfortran
-F95FLAGS=-O2
-
-## these 3 lines are for GNU Makefile: just list the objects elsewhere.
-F90SOURCES=$(wildcard -f *.f90)
-F95SOURCES=$(wildcard -f *.f95)
-OBJECTS=$(F90SOURCES:.f90=.o) $(F95SOURCES:.f95=.o)
-
-SHLIB=$(PKGNAME)$(SHLIB_EXT)
-
-.SUFFIXES: .f90 .f95
-.f90.o:
-        $(F95) $(F95FLAGS) -c $< -o $@@
-.f95.o:
-        $(F95) $(F95FLAGS) -c $< -o $@@
-
-# use F95 to link to ensure the right libraries are picked up.
-SHLIB_LD=$(F95)
-
-$(SHLIB): $(OBJECTS)
-        $(SHLIB_LINK) -o $@@ $(OBJECTS) $(ALL_LIBS)
-@end example
+Configuring @R{} will try to find a compiler which (from its name)
+appears to be a FORTRAN 90/95 compiler, and set it in macro @samp{FC}.
+Note that it does not check that such a compiler is fully (or even
+partially) compliant with FORTRAN 90/95.  Packages making use of
+FORTRAN 90/95 features should use file extension @samp{.f90} or
+@samp{.f95} for the source files: the variable @code{PKG_FCFLAGS}
+specifies any special flags to be used.  There is no guarantee that 
+compiled FORTRAN 90/95 code can be mixed with any other type of code,
+nor that a build of @R{} will have support for such packages.
 
 There is a MinGW build of @command{gfortran} available from
 @uref{http://gcc.gnu.org/wiki/GFortranBinaries,
@@ -1033,14 +1012,8 @@ There is a MinGW build of @command{gfortran} available from
 build@footnote{Remember to set @env{LIBRARY_PATH} to point to your MinGW
 @file{lib} directory} of @command{g95} from @uref{http://www.g95.org}.
 Set @code{F95} in @code{MkRules} to point to the installed compiler.
-Then a suitable @file{Makevars.win} could be
-
-@example
-F95SOURCES=$(wildcard -f *.f95 *.f90)
-OBJS+= $(F95SOURCES:.f95=.o)
-DLL=$(F95)
-@end example
-
+Then @command{R CMD SHLIB} and @command{R CMD INSTALL} work for
+packages containing FORTRAN 90/95 source code.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages

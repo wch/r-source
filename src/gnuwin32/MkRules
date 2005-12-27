@@ -57,7 +57,7 @@ ISDIR=C:/packages/Inno51
 ## For a package using F90/95 set the name or path of gfortran.exe 
 ## or g95.exe.  No spaces.
 F95=c:/packages/gfortran/bin/gfortran
-F95FLAGS=-O2
+F95FLAGS=-O2 $(PKG_FCFLAGS)
 
 ## =================== cross-compilation settings  =================
 
@@ -121,7 +121,7 @@ CC=$(BINPREF)gcc $(MINGW32CFLAG)
 CXX=$(BINPREF)g++ $(MINGW32CFLAG)
 F77=$(BINPREF)g77
 AS=$(BINPREF)as
-DLL_LDMAIN=gcc
+DLL_LDMAIN=$(BINPREF)gcc
 DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
 ## use version without -k for front-ends/libproxy.a
 DLLTOOL_WIN32=$(BINPREF)dlltool --as $(AS)
@@ -193,6 +193,6 @@ lib%.a: %.def
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@
 
 .f90.o:
-	$(F95) $(F95FLAGS) -c $< -o $@
+	"$(F95)" $(F95FLAGS) -c $< -o $@
 .f95.o:
-	$(F95) $(F95FLAGS) -c $< -o $@
+	"$(F95)" $(F95FLAGS) -c $< -o $@

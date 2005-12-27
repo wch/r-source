@@ -13,16 +13,22 @@ CFSOURCES=$(wildcard -f *.c *.f *.f90 *.f95)
 CSOURCES=$(wildcard -f *.c)
 CXXSOURCES=$(wildcard -f *.cc *.cpp *.C)
 FSOURCES=$(wildcard -f *.f)
+FCSOURCES=$(wildcard -f *.f90 *.f95)
 OBJSA=$(foreach i,$(CSOURCES) $(FSOURCES) $(CXXSOURCES),$(basename $i).o)
 
 include $(RHOME)/src/gnuwin32/MkRules
 
-ifneq ($(strip $(CXXSOURCES)),)
-  DLL_LDMAIN=g++
-endif
+ifneq ($(strip $(FCSOURCES)),)
+  DLL_LDMAIN=$(F95)
+else
 
+ifneq ($(strip $(CXXSOURCES)),)
+  DLL_LDMAIN=$(BINPREF)g++
+endif
 ifneq ($(strip $(FSOURCES)),)
   EXTRA_LIBS=$(FLIBS)
+endif
+
 endif
 
 ifdef DEBUG
