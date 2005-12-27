@@ -59,7 +59,9 @@ _nl_find_domain (const char *dirname, char *locale,
   const char *special;
   const char *sponsor;
   const char *revision;
+#ifdef NOT_USED
   const char *alias_value = NULL;
+#endif
   int mask;
 
   /* LOCALE can consist of up to four recognized parts for the XPG syntax:
@@ -111,7 +113,7 @@ _nl_find_domain (const char *dirname, char *locale,
       /* NOTREACHED */
     }
 
-#ifndef WIN32 /* not used on Windows */
+#ifdef NOT_USED /* R change */
   /* See whether the locale value is an alias.  If yes its value
      *overwrites* the alias name.  No test for the original value is
      done.  */
@@ -165,7 +167,7 @@ _nl_find_domain (const char *dirname, char *locale,
     }
 
   /* The room for an alias was dynamically allocated.  Free it now.  */
-#ifndef WIN32 /* not used on Windows */
+#ifdef NOT_USED
   if (alias_value != NULL)
       free (locale);
 #endif

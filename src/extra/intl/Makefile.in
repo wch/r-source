@@ -23,7 +23,7 @@ HEADERS = \
 
 SOURCES = \
  bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
- localealias.c textdomain.c l10nflist.c explodename.c dcigettext.c \
+ textdomain.c l10nflist.c explodename.c dcigettext.c \
  dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c langprefs.c \
  localcharset.c localename.c log.c printf.c osdep.c intl-compat.c
 
@@ -39,9 +39,8 @@ noinst_LIBRARIES = libintl.a
 libdir = @libdir@
 datadir = @datadir@
 localedir = $(datadir)/locale
-aliaspath = $(localedir)
 
-DEFS = -DLOCALEDIR=\"$(localedir)\" -DLOCALE_ALIAS_PATH=\"$(aliaspath)\" \
+DEFS = -DLOCALEDIR=\"$(localedir)\" \
 -DIN_LIBINTL -DIN_LIBRARY -DNO_XMALLOC -DDEPENDS_ON_LIBICONV=1 @DEFS@
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir) $(CPPFLAGS) $(DEFS) @XTRA_INTL_CPPFLAGS@
