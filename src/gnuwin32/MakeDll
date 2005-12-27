@@ -19,11 +19,12 @@ OBJSA=$(foreach i,$(CSOURCES) $(FSOURCES) $(CXXSOURCES),$(basename $i).o)
 include $(RHOME)/src/gnuwin32/MkRules
 
 ifneq ($(strip $(FCSOURCES)),)
-  DLL_LDMAIN=$(F95)
+# don't assume F95 can be cross-compiled in the same way
+  DLL=$(F95)
 else
 
 ifneq ($(strip $(CXXSOURCES)),)
-  DLL_LDMAIN=$(BINPREF)g++
+  DLL_LDMAIN=g++
 endif
 ifneq ($(strip $(FSOURCES)),)
   EXTRA_LIBS=$(FLIBS)

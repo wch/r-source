@@ -98,8 +98,7 @@ MINGW32CFLAG=-isystem $(HEADER)
 MINGW32LDFLAG=
 FLIBS=-lg2c
 AWK=awk
-## BDR's build of cross-compiler was 2.95.3
-DEPARG=-M
+DEPARG=-MM
 endif
 
 ifdef SUPPORT_GUI_MBCS
@@ -107,7 +106,7 @@ CFLAGS+=-DSUPPORT_GUI_MBCS
 endif
 
 ifdef USE_UNICOWS
-LIBEXTRAS += -lunicows
+LIBEXTRAS+=-lunicows
 endif
 
 PERL=perl
@@ -121,7 +120,7 @@ CC=$(BINPREF)gcc $(MINGW32CFLAG)
 CXX=$(BINPREF)g++ $(MINGW32CFLAG)
 F77=$(BINPREF)g77
 AS=$(BINPREF)as
-DLL_LDMAIN=$(BINPREF)gcc
+DLL_LDMAIN=gcc
 DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
 ## use version without -k for front-ends/libproxy.a
 DLLTOOL_WIN32=$(BINPREF)dlltool --as $(AS)
@@ -176,7 +175,7 @@ RESCOMP=$(BINPREF)windres
 	@$(NM) $^ > Defs
 	@$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
 	@$(RM) Defs
-	$(DLL) --shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
+	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) $*.def
 
 lib%.a: %.def
