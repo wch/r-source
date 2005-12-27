@@ -54,7 +54,7 @@ There is now support for compiling Fortran 90/95 code in packages: see
 'Writing R Extensions'.
 
 For compatibility with Unix, the following environment variables are
-checked for a writeable directory for the R session temporary directory:
+checked for a writable directory for the R session temporary directory:
 
 	TMPDIR TMP TEMP R_USER
 
@@ -104,8 +104,8 @@ Closing the script editor could leave Rgui in an unstable state. (PR#8288)
 Support has been added for the ACML optimized BLAS: see the 'R
 Installation and Administration Manual'.
 
-winMenuAdd had a limit of 16 additional menus but only allocated 10: it
-now has the limit of 16 as intended.
+winMenuAdd() had a limit of 16 additional menus but only allocated 10:
+it now has the limit of 16 as intended.
 
 Clicking on the left part of the MDI radiobutton in the preferences
 dialog failed.

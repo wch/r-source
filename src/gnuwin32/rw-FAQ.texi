@@ -108,7 +108,7 @@ The information here applies only to recent versions of R for Windows,
 * R can't find my file::        
 * Does R use the Registry?::    
 * Does R support automation?::  
-* The internet download functions fail.::  
+* The Internet download functions fail.::  
 * Entering certain characters crashes Rgui.::  
 * Other strange crashes.::      
 @end menu
@@ -147,7 +147,7 @@ with spaces in will probably work, but is little-tested.)
 
 To install use @samp{@RWVER@-win32.exe}.  Just double-click on the icon and
 follow the instructions.  If you installed R this way you can uninstall
-it from the Control Panel or Start Menu (unless you supressed making a
+it from the Control Panel or Start Menu (unless you suppressed making a
 group for R).
 
 Choose a working directory for R.  You will have a shortcut to
@@ -232,7 +232,7 @@ for example an `MS-DOS window' (Windows 9x/ME), a `Command Prompt'
 (NT-based versions) or a port of a Unix shell such as @command{tcsh} or
 @command{bash}. (The command line can be anything you would put in the
 Target field of a shortcut, and the starting directory will be the
-currect working directory of the shell.)
+current working directory of the shell.)
 
 @node Can I run R from a CD or USB drive?, How do I UNinstall R?, How do I run it?, Installation and Usage
 @section Can I run R from a CD or USB drive?
@@ -495,7 +495,7 @@ After installation you can add the Registry entries in
 neither sets up nor removes the file associations.
 
 
-@node Does R support automation?, The internet download functions fail., Does R use the Registry?, Installation and Usage
+@node Does R support automation?, The Internet download functions fail., Does R use the Registry?, Installation and Usage
 @section Does R support automation (OLE, COM)?
 
 Directly, no.
@@ -513,8 +513,8 @@ has packages @code{RDCOMClient} and @code{SWinTypeLibs} which allow R
 to act as a (D)COM client.
 
 
-@node The internet download functions fail., Entering certain characters crashes Rgui., Does R support automation?, Installation and Usage
-@section The internet download functions fail.
+@node The Internet download functions fail., Entering certain characters crashes Rgui., Does R support automation?, Installation and Usage
+@section The Internet download functions fail.
 
 for example @code{update.packages()} and the menu items on the Packages menu.
 
@@ -542,7 +542,7 @@ The second version will prompt the user for the proxy username and
 password when HTTP downloads are first used.
 
 
-@node Entering certain characters crashes Rgui., Other strange crashes., The internet download functions fail., Installation and Usage
+@node Entering certain characters crashes Rgui., Other strange crashes., The Internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
 
 This used to happen occasionally, and all the occurrences we have solved
@@ -693,7 +693,7 @@ apply to any non-Western European language.
 
 We believe this is possible by setting suitable fonts in the @file{Rconsole}
 and @file{Rdevga} configuration files (see Q3.2 and the next Q).  You can
-specify additional fonts in Rdevga, and use them by
+specify additional fonts in @file{Rdevga}, and use them by
 
 @example
 par(font=, font.lab=, font.main=, font.sub=)
@@ -712,8 +712,8 @@ see its help page.
 @node I don't see characters with accents at the R console, The dialog buttons are not translated, I would like to be able to use Japanese fonts, Languages and Internationalization
 @section I don't see characters with accents at the R console, for example in ?text.
 
-You need to specify a font in Rconsole (see Q3.5) that supports the
-encoding in use, in Western European languages Latin-1.  The default
+You need to specify a font in @file{Rconsole} (see Q3.5) that supports
+the encoding in use, in Western European languages Latin-1.  The default
 font, @code{Courier New}, does on our systems, as does @code{FixedSys}.
 This may be a problem in other locales, especially for non-Western
 European languages.
@@ -781,7 +781,7 @@ risk.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
 @uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}, which also
-gives the locations of a few other precompiled packages.
+gives the locations of a few other pre-compiled packages.
 
 If there is not a pre-compiled version or that is not up-to-date or you
 prefer compiling from source, read the `R Installation and
@@ -1387,14 +1387,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 November 14: comments to
+Last edited 2005 December 27: comments to
 <code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 November 14: comments to <Rwindows@@r-project.org>
+Last edited 2005 December 27: comments to <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye

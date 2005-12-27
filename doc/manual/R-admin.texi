@@ -318,7 +318,7 @@ make check-all
 @noindent
 see @file{tests/README}.
 
-If the command @command{configure} and @command{make} commmands execute
+If the command @command{configure} and @command{make} commands execute
 successfully, the @R{} binary will be copied to
 @file{@var{R_HOME}/bin/exec/R}.  In addition, a shell-script front-end
 called @file{R} will be created and copied to the same directory.  You
@@ -722,7 +722,7 @@ make rsync-recommended
 Optionally, you can install a version of ATLAS
 (@url{http://math-atlas.sourceforge.net/,
 @code{math-atlas.sourceforge.net}}) tuned to your system for fast linear
-algebra routines. Prebuilt @file{Rblas.dll} for various Pentium and
+algebra routines. Pre-built @file{Rblas.dll} for various Pentium and
 AthlonXP chips are available in the @file{windows/contrib/ATLAS} area on
 @acronym{CRAN}.
 
@@ -830,7 +830,7 @@ should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
 @node Windows internationalization, Checking the build, Building the bitmap files, Building from source
 @subsection Windows internationalization
 
-This version of @R{} can be built with support for some multibyte
+This version of @R{} can be built with support for some multi-byte
 character sets such those used in Chinese, Japanese and Korean.
 
 Define @code{SUPPORT_MBCS} in @file{config.h} to enable support in the
@@ -884,7 +884,7 @@ make check-recommended
 @node Building the manuals, Building the installer, Building the recommended packages, Building from source
 @subsection Building the manuals
 
-The pdf manuals can be made by
+The PDF manuals can be made by
 
 @example
 make manuals
@@ -1353,7 +1353,10 @@ Some variables that may be used include:
 @item
 @code{PKG_CXXFLAGS=} to specify options to the C++ compiler.
 @item
-@code{PKG_FFLAGS=} to specify options to the FORTRAN compiler.
+@code{PKG_FFLAGS=} to specify options to the FORTRAN 77 compiler.
+@item
+@code{PKG_FCFLAGS=} to specify options to the FORTRAN 95 compiler (if
+specified).
 @item
 @code{PKG_LIBS=} to specify options to the linking step making the DLL.
 @item 
@@ -1654,11 +1657,11 @@ building a 32-bit or a 64-bit version of R (and details are given below
 under specific OSes).  For most a 32-bit version is the default, but for
 some (e.g., @cputype{x86_64}) 64-bit is.
 
-All current versions of @R{} use 32-bit integers and IEC
-60559@footnote{also known as IEC 559 and IEEE 754} double-precision
-reals, and so compute to the same accuracy and with the same limits on
-the sizes of numerical quantities.  The principal difference is in the
-size of the pointers.
+All current versions of @R{} use 32-bit integers and
+@acronym{IEC}@tie{}60559@footnote{also known as @acronym{IEC}@tie{}559 and
+@acronym{IEEE}@tie{}754} double-precision reals, and so compute to the
+same accuracy and with the same limits on the sizes of numerical
+quantities.  The principal difference is in the size of the pointers.
 
 64-bit builds have both advantages and disadvantages:
 @itemize
@@ -1679,10 +1682,10 @@ issue with objects more than 10% of the size of the address space
 third (around 1Gb).
 
 @item
-32-bit OSes by default limit file sizes to 2GB.  This can often be worked
-around: see the comments on Linux and Solaris below.  (We have also
-largely worked around that limit on Windows.)  64-bit builds have much
-larger limits.
+32-bit OSes by default limit file sizes to 2GB.  This can often be
+worked around: and @command{configure} selects suitable defines if this
+is possible.  (We have also largely worked around that limit on
+Windows.)  64-bit builds have much larger limits.
 
 @item
 Because the pointers are larger, @R{}'s basic structure (the cons cell)
@@ -1738,17 +1741,18 @@ installed.
 
 You need a means of compiling C and FORTRAN 77 (see @ref{Using
 FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
-compiler should be IEC60059@footnote{also known as @acronym{IEEE} 754},
-POSIX 1003.1 and C99-compliant if at all possible.  @R{} tries to choose
-suitable flags for the C compilers it knows about, but you may have to
-set @code{CFLAGS} suitably.  For recent versions of @command{gcc} with
-@code{glibc} this means including @code{-std=gnu99} in @code{CFLAGS}
-(@code{-std=c99} excludes POSIX functionality).
+compiler should be @acronym{IEC}@tie{}60059@footnote{also known as
+@acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant if at all
+possible.  @R{} tries to choose suitable flags for the C compilers it
+knows about, but you may have to set @code{CFLAGS} suitably.  For recent
+versions of @command{gcc} with @code{glibc} this means including
+@code{-std=gnu99} in @code{CFLAGS} (@code{-std=c99} excludes POSIX
+functionality).
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora Core
 Linux this means the @samp{xorg-x11-devel} and @samp{xorg-x11-libs}
-RPMs, for example.  Older Linuxen used @samp{XFree86-}.  Sone Debian
+RPMs, for example.  Older Linuxen used @samp{XFree86-}.  Some Debian
 derivatives apparently also require @samp{libxt-dev}.)  If you really do
 not want these you will need to explicitly configure @R{} without X11,
 using @option{--with-x=no}.
@@ -2399,7 +2403,8 @@ structures are passed.
 On some platforms @command{configure} will select additional flags for
 @code{CFLAGS}, @code{CPPFLAGS}, @code{FFLAGS}, @code{CXXFLAGS} and
 @code{LIBS} in @code{R_XTRA_CFLAGS} (and so on).  These are for options
-which are always required, for example to force IEC60559 compliance.
+which are always required, for example to force @acronym{IEC}@tie{}60559
+compliance.
 
 
 @node Platform notes, Building the GNOME console, Configuration on Unix, Top
@@ -2411,11 +2416,6 @@ each case with particular sets of compilers and support libraries.
 Success in building @R{} depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
-
-Many 32-bit systems have a means of using files > 2Gb, and most are
-based on that in the Single Unix specification: see@*
-@url{http://ftp.sas.com/standards/large.file/x_open.20Mar96.html}/@*
-However, this is only covered under Linux and Solaris.
 
 @menu
 * Linux::                       
@@ -2492,8 +2492,9 @@ is specified.
 this was really an alias for the linker flag @option{-lieee}.  Neither
 are needed for a modern Linux (e.g.@: using @code{glibc} 2.2 or 2.3) but
 could conceivably be needed on an older version.  @code{glibc} 2.1
-required @option{-D__NO_MATH_INLINES} to achieve IEC60059-compliance for
-@code{exp}, and this is included in @code{R_XTRA_CFLAGS} if required.
+required @option{-D__NO_MATH_INLINES} to achieve
+@acronym{IEC}@tie{}60059-compliance for @code{exp}, and this is included in
+@code{R_XTRA_CFLAGS} if required.
 
 Several Linux distributions have shipped unreleased versions of
 @command{gcc}@tie{}4.0.0 and its FORTRAN compiler @command{gfortran}
@@ -2535,7 +2536,7 @@ LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
 
 @noindent
 @R{} will add @code{-mp} in @code{R_XTRA_@{C,F,CXX@}FLAGS} to maintain
-correct IEC60559 arithmetic.  The flag @option{-wd188} suppresses a
+correct @acronym{IEC}@tie{}60559 arithmetic.  The flag @option{-wd188} suppresses a
 large number of warnings about the enumeration type @samp{Rboolean}.
 
 For some comments on building on an Itanium (@samp{ia64}) Linux system
@@ -2587,7 +2588,7 @@ If you use the X window manager and prefer @code{Terminal.app} to
 @code{xterm}, you should be aware that @R{}, like many Unix tools, uses
 the existence of a @env{DISPLAY} environment variable to determine
 whether an X system is running.  This affects the default graphics
-device for the commmand line version of R and the behaviour of the
+device for the commmand-line version of R and the behaviour of the
 @code{png()} and @code{jpeg} devices.
 
 
@@ -2674,6 +2675,8 @@ F77="f95 -xarch=v9"
 FFLAGS="-xO5 -xlibmil -dalign"
 CXX="CC -xarch=v9"
 CXXFLAGS="-xO5 -xlibmil -dalign"
+FC="f95 -xarch=v9"
+FCFLAGS="-xO5 -xlibmil -dalign"
 @end example
 
 @noindent
@@ -2686,6 +2689,7 @@ For 64-bit compilation with @command{gcc} 3.2.x and later we used
 CC="gcc -m64"
 F77="g77 -m64"
 CXX="g++ -m64"
+FC="gfortran -m64"
 LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end example
 
@@ -2986,17 +2990,18 @@ There are a number of sources of problems when installing @R {} on a new
 hardware/OS platform.  These include
 
 @strong{Floating Point Arithmetic}: @R{} requires arithmetic compliant
-with IEC60559, also know as IEEE 754.  This mandates the use of plus and
-minus infinity and @code{NaN} (not a number) as well as specific details
-of rounding.  Althugh almost all current FPUs can support this,
-selecting such support can be a pain.  The problem is that there is no
-agreement on how to set the signalling behaviour; Sun/Sparc, SGI/IRIX
-and @cputype{ix86} Linux require no special action, FreeBSD requires a
-call to (the macro) @code{fpsetmask(0)} and OSF1 requires that
-computation be done with a @option{-ieee_with_inexact} flag etc.  On a
-new platform you must find out the magic recipe and add some code to
-make it work.  This can often be done via the file @file{config.site}
-which resides in the top level directory.
+with @acronym{IEC}@tie{}60559, also know as @acronym{IEEE}@tie{}754.
+This mandates the use of plus and minus infinity and @code{NaN} (not a
+number) as well as specific details of rounding.  Althugh almost all
+current FPUs can support this, selecting such support can be a pain.
+The problem is that there is no agreement on how to set the signalling
+behaviour; Sun/Sparc, SGI/IRIX and @cputype{ix86} Linux require no
+special action, FreeBSD requires a call to (the macro)
+@code{fpsetmask(0)} and OSF1 requires that computation be done with a
+@option{-ieee_with_inexact} flag etc.  On a new platform you must find
+out the magic recipe and add some code to make it work.  This can often
+be done via the file @file{config.site} which resides in the top level
+directory.
 
 Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
