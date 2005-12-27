@@ -12,8 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = ChangeLog Makefile.in Makefile.win R_changes VERSION \
-  plural.y $(SOURCES) $(HEADERS) \
-  config.charset ref-add.sin ref-del.sin
+  config.charset plural.y $(SOURCES) $(HEADERS)
 
 HEADERS = \
   gmo.h gettextP.h hash-string.h loadinfo.h plural-exp.h eval-plural.h \
