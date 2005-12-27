@@ -23,10 +23,7 @@
 #define DEV_X 500
 #define DEV_Y 500
 
-#ifdef HAVE_CONFIG_H
-#include <Rconfig.h>
-#endif
-
+#include <config.h>
 #include <Defn.h>
 #include <Graphics.h>
 #include <Rdevices.h>
