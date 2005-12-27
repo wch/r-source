@@ -21,6 +21,12 @@ browseURL(url, browser = getOption("browser"))
 }
 #ifdef unix
 \details{
+  The default browser is set by option \code{"browser"}, in turn set by
+  the environment variable \code{R_BROWSER} which is by default set
+  in file \file{R\_HOME/etc/Renviron} to a choice made manually or
+  automatically when \R was configured.  (See \code{\link{Startup}} for
+  where to override that default value.)
+
   If \code{browser} supports remote control and \R knows how to perform
   it, the URL is opened in any already running browser or a new one if
   necessary.  This mechanism currently is available for browsers which
