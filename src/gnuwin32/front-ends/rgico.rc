@@ -3,6 +3,8 @@ Rgui  ICON  R.ico
 #include <windows.h>
 #include "../../include/Rversion.h"
 
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "Rgui.exe.manifest"
+
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION R_FILEVERSION
 PRODUCTVERSION 3,0,0,0
