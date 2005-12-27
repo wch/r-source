@@ -7036,10 +7036,10 @@ structures
 above
 @item @file{Rmath.h} @tab standalone math library
 @item @file{Rversion.h} @tab @R{} version information
-@item @file{Rinterface.h} @tab for add-on front-ends
+@item @file{Rinterface.h} @tab for add-on front-ends (Unix-alikes only)
 @item @file{R_ext/RStartup.h} @tab ditto
-@item @file{R_ext/eventloop.h} @tab ditto, and for packages that need to
-share in the @R{} event loops
+@item @file{R_ext/eventloop.h} @tab for add-on front-ends and for packages that need to
+share in the @R{} event loops (on all platforms)
 @item @file{R_ext/Applic.h} @tab optimization and integration
 @item @file{R_ext/BLAS.h} @tab C definitions for BLAS routines
 @item @file{R_ext/Lapack.h} @tab C definitions for some LAPACK routines
