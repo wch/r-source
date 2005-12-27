@@ -11,6 +11,7 @@ str(object, \dots)
     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)),
                        collapse = ".."),
     comp.str="$ ", no.list = FALSE, envir = baseenv(),
+    strict.width = c("no", "cut", "wrap"),
     \dots)
 }
 \alias{str}
@@ -45,7 +46,7 @@ str(object, \dots)
     length (as \code{[1:\dots]}).}
   \item{width}{the page width to be used.  The default is the currently
     active \code{\link{options}("width")}; note that this has only a
-    weak effect, unless \code{strict.width} is true.}
+    weak effect, unless \code{strict.width} is not \code{"no"}.}
   \item{nest.lev}{current nesting level in the recursive calls to
     \code{str}.}
   \item{indent.str}{the indentation string to use.}
@@ -54,8 +55,12 @@ str(object, \dots)
     class is printed.}
   \item{envir}{the environment to be used for \emph{promise} (see
     \code{\link{delayedAssign}}) objects only.}
-  \item{strict.width}{logical indicating if the \code{width} argument's
-    specification should be followed strictly.}
+  \item{strict.width}{string indicating if the \code{width} argument's
+    specification should be followed strictly; defaults to \code{"no"}
+    for back compatibility reasons; \code{"wrap"} uses
+    \code{\link{strwrap}(*, width=width)} whereas \code{"cut"} cuts
+    directly to \code{width}.  Note that a small \code{vec.length}
+    may be better than setting \code{strict.width = "wrap"}.}
   \item{\dots}{potential further arguments (required for Method/Generic reasons).}
 }
 \value{
@@ -78,8 +83,9 @@ str(freeny)
 str(str)
 str(.Machine, digits = 20)
 str( lsfit(1:9,1:9))
-str( lsfit(1:9,1:9),  max = 1)
-str( lsfit(1:9,1:9),  width = 60, strict.width = TRUE)
+str( lsfit(1:9,1:9), max = 1)
+str( lsfit(1:9,1:9), width = 60, strict.width = "cut")
+str( lsfit(1:9,1:9), width = 60, strict.width = "wrap")
 op <- options(); str(op) # save first;
                          # otherwise internal options() is used.
 need.dev <- !exists(".Device") || is.null(.Device)

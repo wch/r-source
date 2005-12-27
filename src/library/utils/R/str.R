@@ -30,29 +30,34 @@ str.default <-
 	     width = getOption("width"), nest.lev = 0,
 	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
 	     comp.str="$ ", no.list = FALSE, envir = baseenv(),
-             strict.width = FALSE,
+             strict.width = c("no", "cut", "wrap"),
 	     ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
     ## --- see HELP file --
     ## ------------------------------------------------------------------------
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
-    ## ------ Please send Bug-reports, -fixes and improvements !
-    ## ------------------------------------------------------------------------
 
-    if(strict.width) {
-        ## Fixme: use eval(  match.call(...))) and  just drop 'strict.width'
-        ss <- capture.output(str(object, max.level = max.level,
-                                 vec.len = vec.len, digits.d = digits.d,
-                                 nchar.max = nchar.max,
-                                 give.attr= give.attr, give.length= give.length,
-                                 width = width, nest.lev = nest.lev,
-                                 indent.str = indent.str, comp.str=comp.str,
-                                 no.list= no.list, envir = envir, ...) )
-        iLong <- nchar(ss) > width-2
-        ss[iLong] <- sub(sprintf("^(.{1,%d}).*",width-2), "\\1..", ss[iLong])
-        cat(ss, sep="\n")
-        return(invisible())
+    strict.width <- match.arg(strict.width)
+    if(strict.width != "no") {
+	## using eval() would be cleaner, but fails inside capture.output():
+	ss <- capture.output(str(object, max.level = max.level,
+				 vec.len = vec.len, digits.d = digits.d,
+				 nchar.max = nchar.max,
+				 give.attr= give.attr, give.length= give.length,
+				 width = width, nest.lev = nest.lev,
+				 indent.str = indent.str, comp.str= comp.str,
+				 no.list= no.list, envir = envir, ...) )
+	if(strict.width == "wrap") {
+	    nind <- nchar(indent.str) + 2
+	    ss <- strwrap(ss, width = width, exdent = nind)
+					# wraps at white space (only)
+	}
+	if(any(iLong <- nchar(ss) > width))
+	    ss[iLong] <- sub(sprintf("^(.{1,%d}).*", width-2), "\\1..",
+			     ss[iLong])
+	cat(ss, sep="\n")
+	return(invisible())
     }
 
     oo <- options(digits = digits.d); on.exit(options(oo))
