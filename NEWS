@@ -449,6 +449,11 @@ BUG FIXES
     o	The signal handlers for signals USR1 and USR2 where not
 	restored if the signal arrived when interrupts were suspended.
 
+    o  Certain combinations of inheritance could cause inherited methods
+        override some directly specified methods.
+
+    o  Some cases of named signatures in calls to setMethod() caused errors.
+
 
 
 

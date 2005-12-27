@@ -238,8 +238,14 @@ MethodsListSelect <-
     inherited <- is.na(which)
     selection <- if(inherited) NULL else allMethods[[which]]
     if(!inherited) {
-        if(is(selection, "function"))
+        if(is(selection, "function")) {
+            if(is.null(f)) {
+              ## An inherited method at the next level up.
+              ## only the inherited method should be added
+              mlist <- .trimMlist(mlist, fromClass)
+            }
             value <- mlist ## no change
+          }
         else {
             ## recursive call with NULL function name, to allow search to fail &
             ## to suppress any reset actions.
@@ -289,6 +295,9 @@ MethodsListSelect <-
             method <- MethodAddCoerce(method, argName, thisClass, fromClass)
             value <- .insertCachedMethods(mlist, as.character(argName), thisClass, fromClass,
                                          method)
+            if(is.null(f))
+            ## only insert the selected method
+              value@allMethods <- value@allMethods[thisClass]
         }
     }
     if(!is.null(f)) {
@@ -441,7 +450,8 @@ matchSignature <-
         which <- seq(length = length(signature))
     }
     else {
-    ## construct a function call with the same naming pattern as signature
+    ## construct a function call with the same naming pattern  &
+      ## values as signature
     fcall <- do.call("call", c("fun", signature))
     ## match the call to the formal signature (usually the formal args)
     if(identical(anames, formalArgs(fun)))
@@ -454,6 +464,10 @@ matchSignature <-
     }
     snames <- names(smatch)[-1]
     which <- match(snames, anames)
+    ## Assertion:  match.call has permuted the args into the order of formal args,
+    ## and carried along the values.  Get the supplied classes in that
+    ## order, from the matched args in the call object.
+    sigClasses <- as.character(smatch)[-1]
     if(any(is.na(which)))
         stop(gettextf("in the method signature for function '%s' invalid argument names in the signature: %s",
                       fun@generic,
@@ -596,7 +610,7 @@ promptMethods <- function(f, filename = NULL, methods)
              title = paste("\\title{ ~~ Methods for Function", f,
              packageString, "~~}"),
              description = paste0("\\description{\n ~~ Methods for function",
-             " \\code{", f, "} in package \\pkg{", getPackageName(where),
+             " \\code{", f, "} in package \\pkg{", packageString,
              "} ~~\n}"),
              "section{Methods}" = text,
              keywords = c("\\keyword{methods}",
@@ -721,3 +735,9 @@ listFromMlist <-
 ## methods for as<-
 asMethodDefinition <- function(def, signature = list(), sealed = FALSE)
     def
+
+.trimMlist <- function(mlist, fromClass) {
+  mlist@methods <- mlist@methods[fromClass]
+  mlist@allMethods <- mlist@allMethods[fromClass]
+  mlist
+}
