@@ -16,8 +16,8 @@ names and no spaces).
 There is now MBCS support for the line editor in Rterm.exe.
 (Contributed by Haruki Koyanagi.)
 
-The import libraries libR.a, libRblas.a and libproxy.a are now
-installed in R_HOME/lib (rather than R_HOME/src/gnuwin32).
+The import libraries libR.a are libRblas.a are now installed in
+R_HOME/lib (rather than R_HOME/src/gnuwin32).
 
 R CMD INSTALL will now clean up after interruption (by ctrl-C, at
 least where supported by the shell).
@@ -40,8 +40,8 @@ has been withdrawn.
 The ACML optimized BLAS can be used for LAPACK: see the 'R
 Installation and Administration Manual'.
 
-winMenuAdd() now has no limits on the number of menus or items, and names
-are now limited to 500 (not 50) bytes.
+winMenuAdd() now has no limits on the number of menus or items, and
+names are now limited to 500 (not 50) bytes.
 
 Added workaround to Windows graphics devices (windows(),
 win.metafile(), etc.) to allow callers to choose not to restore the
@@ -71,8 +71,8 @@ might be relevant for contributed software using R's macros.
 
 
 
-R 2.2.0 patched
-===============
+R 2.2.1
+=======
 
 Using the latest binutils allows us to distribute RGui.exe and Rterm.exe
 as large-address-aware (see the rw-FAQ Q2.9).
