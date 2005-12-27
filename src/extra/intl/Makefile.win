@@ -9,22 +9,20 @@ header-install: libintl.h
 	@cp -p $< ../../include
 	@cp -p $< ../../../include
 
-## we never use the default location for locales, and
-## Windows never uses the locale or charset alias files.
-DEFS = -DIN_LIBINTL -DNO_XMALLOC -DHAVE_CONFIG_H
+DEFS=-DIN_LIBINTL -DHAVE_CONFIG_H
 
 ifdef DEBUG
  DEFS+=-g
 endif
 
-CFLAGS = -O2 $(DEFS) -I. -I../../include
+CFLAGS=-O2 $(DEFS) -I. -I../../include
 dcigettext-CFLAGS=-DLOCALEDIR=\"\"
 
 SOURCES = \
  bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
  textdomain.c l10nflist.c explodename.c dcigettext.c \
  dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c langprefs.c \
- localcharset.c localename.c log.c printf.c osdep.c intl-compat.c
+ localcharset.c localename.c log.c printf.c osdep.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

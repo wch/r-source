@@ -35,15 +35,11 @@ libintl_a_SOURCES = $(SOURCES)
 libintl_a_OBJECTS = $(OBJECTS)
 noinst_LIBRARIES = libintl.a
 
-## there are default settings that we don't use.
-libdir = @libdir@
-datadir = @datadir@
-localedir = $(datadir)/locale
+# LOCALEDIR is the default location for catalogs in dcigettext.c,
+# and unused in R.
+DEFS=-DLOCALEDIR=\"\" -DIN_LIBINTL @DEFS@
 
-DEFS = -DLOCALEDIR=\"$(localedir)\" \
--DIN_LIBINTL -DIN_LIBRARY -DNO_XMALLOC -DDEPENDS_ON_LIBICONV=1 @DEFS@
-
-ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir) $(CPPFLAGS) $(DEFS) @XTRA_INTL_CPPFLAGS@
+ALL_CPPFLAGS=$(R_XTRA_CPPFLAGS) -I$(srcdir) $(CPPFLAGS) $(DEFS) @XTRA_INTL_CPPFLAGS@
 
 R all: all-@USE_INCLUDED_LIBINTL@
 all-yes: Makefile 
