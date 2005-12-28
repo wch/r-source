@@ -49,8 +49,7 @@ else
 R-DLLFLAGS = -mwindows
 endif
 
-## we may not need msvcp60, but no harm to include it.
-R-DLLLIBS =-L../../lib $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60 $(LIBEXTRAS)
+R-DLLLIBS =-L../../lib $(FLIBS) -lRblas -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c extra.c \
@@ -596,20 +595,9 @@ crandir:
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rpatched.in > cran/rpatched.html	  
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g cran/release.in > cran/release.htm
 
-rbuild-no-mbcs:
-	@$(MAKE) --no-print-directory fixfiles
-	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
-	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
-	@$(SED) -e '/SUPPORT_MBCS/d' fixed/h/config.h > ../include/config.h
-	@$(MAKE) --no-print-directory ../../lib/libRblas.a
-	@$(MAKE) --no-print-directory ../../bin/R.dll
-	@mv ../../bin/R.dll ../../bin/Rnombcs.dll
-	@$(RM) ../include/config.h ../include/Rconfig.h
-
 distribution:
 	@$(MAKE) Rpwd.exe
 	-mv ../../SVN-REVISION ../../SVN-REVISION.bak 2> /dev/null
-	@$(MAKE) rbuild-no-mbcs
 	@$(MAKE) rbuild
 	@$(MAKE) rpackage
 	@$(MAKE) htmldocs

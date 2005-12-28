@@ -120,7 +120,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win32.exe} of about 27Mb.  This contains all the
+installer @samp{@RWVER@-win32.exe} of about 26Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
 There are also links on that page to the @samp{r-patched} and
@@ -138,8 +138,7 @@ Windows64, but the standard 32-bit version should work.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
-@c East Asian is larger than `Full'
-takes up about 60Mb of disk space and a minimal one about 19Mb.
+takes up about 60Mb of disk space and a minimal one about 20Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -169,10 +168,6 @@ want to ensure that menus and messages are in (American) English,
 Run the program @file{bin\md5check.exe}.
 This compares checksums on all the installed files with those put into
 the installer, and will report any changed or missing files.
-
-Users who installed `East Asian' support will see a report that
-@file{R.dll} has changed, which is correct as it will have been replaced
-by a version with support for those languages.
 
 @node Can I customize the installation?, How do I run it?, How do I check an installation?, Installation and Usage
 @section Can I customize the installation?
@@ -636,13 +631,9 @@ but not R.  To do so, set @code{LANGUAGE=en} as discussed in Q2.2 and Q2.15.
 @node I want to run R in Chinese/Japanese/Korean, I selected English for installation but R runs in Chinese, I want R in English!, Languages and Internationalization
 @section I want to run R in Chinese/Japanese/Korean.
 
-This is possible by installing R with support for `East Asian' languages
-(with a suitable version of Windows -- Western installations of Windows
-XP do not by default have such support).  You will need
-@file{msvcp60.dll} installed: it is part of modern versions of Windows,
-and is often installed by other programs.  So if it is not found
-automatically it is worth searching your machine and copying it from
-another program's directory to R's @file{bin} directory.
+As from R 2.3.0 all Windows versions of R support `East Asian' languages
+(with a suitable version of Windows -- e.g. Western installations of
+Windows XP do not by default have such support).
 
 As from R 2.3.0 both @command{Rterm.exe} and @command{RGui.exe} support
 single- and double-width characters.  It will be necessary to select

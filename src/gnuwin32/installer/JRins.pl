@@ -151,7 +151,6 @@ Name: "devel"; Description: "Source Package Installation Files"; Types: user ful
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full CJK custom
 Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full CJK custom
 Name: "trans"; Description: "Message Translations"; Types: user full CJK custom
-Name: "mbcs"; Description: "Version for East Asian languages"; Types: CJK custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
 Name: "refman"; Description: "PDF Reference Manual"; Types: full custom
 Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
@@ -287,9 +286,6 @@ sub listFiles {
 	} elsif (m/^share\\locale/ 
 		 || m/^library\\[^\\]*\\po/) { # needs iconv
 	    $component = "trans";
-	} elsif ($_ eq "bin\\Rmbcs.dll") {
-	    $component = "mbcs";
-	    $newname = "R.dll";
 	} else {
 	    $component = "main";
 	}
