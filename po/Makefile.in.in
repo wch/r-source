@@ -184,7 +184,7 @@ install-data-no:
 install-data-yes:
 	@$(mkinstalldirs) $(Rsharedir)
 	@catalogs='$(CATALOGS)'; \
-	echo $(ECHO_N) "installing:"$(ECHO_C); \
+	echo "installing translations:"; \
 	for cat in $$catalogs; do \
 	  cat=`basename $$cat`; \
 	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
@@ -192,7 +192,7 @@ install-data-yes:
 	  $(mkinstalldirs) $$dir; \
 	  if test -r $$cat; then realcat=$$cat; else realcat=$(srcdir)/$$cat; fi; \
 	  $(INSTALL_DATA) $$realcat $$dir/$(DOMAIN).mo; \
-	  echo $(ECHO_N) " $$lang$(ECHO_C)"; \
+	  echo "  $$lang"; \
 	  for lc in '' $(EXTRA_LOCALE_CATEGORIES); do \
 	    if test -n "$$lc"; then \
 	      if (cd $(Rlocaledir)/$$lang && LC_ALL=C ls -l -d $$lc 2>/dev/null) | grep ' -> ' >/dev/null; then \
@@ -218,11 +218,10 @@ install-data-yes:
 	      ln -s ../LC_MESSAGES/$(DOMAIN).mo $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo 2>/dev/null || \
 	      ln $(Rlocaledir)/$$lang/LC_MESSAGES/$(DOMAIN).mo $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo 2>/dev/null || \
 	      cp -p $(Rlocaledir)/$$lang/LC_MESSAGES/$(DOMAIN).mo $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo; \
-	      echo $(ECHO_N) " $$lang$(ECHO_C)"; \
+	      echo "  $$lang"; \
 	    fi; \
 	  done; \
-	done; \
-	echo "$(ECHO_T)"
+	done
 
 install-strip: install
 
