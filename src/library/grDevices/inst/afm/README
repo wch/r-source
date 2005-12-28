@@ -9,6 +9,7 @@ and have licence file MustRead.html.  They are unmodified.
 
 *l.afm are Copyright 1999 by (URW)++ Design & Development, distributed
 under GPL as part of GhostScript 6.52 and copied from there.
+Those for NimbusMon have been corrected to all be 'IsFixedPitch true'
 
 CM_*.afm were converted by Brian D'Urso from afms which are copyright
 by the American Mathematical Society, but `the AMS does require that

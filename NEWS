@@ -241,6 +241,9 @@ NEW FEATURES
     o	str()'s default method has a new argument 'strict.width' which can
 	be used to produce strict 'width' conforming output.
 
+    o	The pdf() device writes /FontDescriptor entries for all fonts
+	except the base 14, and does not write font entries for unused
+	fonts.
 
 
 DEPRECATED & DEFUNCT

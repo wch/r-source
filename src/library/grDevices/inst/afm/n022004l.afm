@@ -7,7 +7,7 @@ FamilyName Nimbus Mono L
 Weight Bold
 Notice (Copyright (URW)++,Copyright 1999 by (URW)++ Design & Development; Cyrillic glyphs aded by Valek Filippov (C) 2001-2002)
 ItalicAngle 0
-IsFixedPitch false
+IsFixedPitch true
 UnderlinePosition -100
 UnderlineThickness 50
 Version 1.06
