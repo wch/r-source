@@ -65,6 +65,14 @@
 /* Define this if you have support for C99 complex types. */
 #define HAVE_C99_COMPLEX 1
 
+/* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
+   CoreFoundation framework. */
+/* #undef HAVE_CFLOCALECOPYCURRENT */
+
+/* Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in
+   the CoreFoundation framework. */
+/* #undef HAVE_CFPREFERENCESCOPYAPPVALUE */
+
 /* Define to 1 if you have the `chdir' function. */
 #define HAVE_CHDIR 1
 
@@ -199,7 +207,7 @@
 /* Define to 1 if you have the <fpu_control.h> header file. */
 /* #undef HAVE_FPU_CONTROL_H */
 
-/* Define to 1 if you have the `fseeko' function. */
+/* Define to 1 if fseeko (and presumably ftello) exists and is declared. */
 /* #undef HAVE_FSEEKO */
 
 /* Define to 1 if you have the `ftello' function. */
@@ -851,6 +859,15 @@
 
 /* Define to 1 if the X Window System is missing or not being used. */
 #define X_DISPLAY_MISSING 1
+
+/* Number of bits in a file offset, on hosts where this is settable. */
+/* #undef _FILE_OFFSET_BITS */
+
+/* Define to 1 to make fseeko visible on some hosts (e.g. glibc 2.2). */
+/* #undef _LARGEFILE_SOURCE */
+
+/* Define for large files, on AIX-style hosts. */
+/* #undef _LARGE_FILES */
 
 /* Define to 'long' if <sys/types.h> does not define. Apparently necessary to
    fix a GCC bug on AIX? */
