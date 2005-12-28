@@ -572,6 +572,7 @@ static void in_R_FTPClose(void *ctx)
 
 #ifdef USE_WININET
 
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <wininet.h>
 typedef struct wictxt {

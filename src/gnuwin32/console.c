@@ -34,6 +34,7 @@ extern Rboolean mbcslocale;
 extern void R_ProcessEvents(void);
 #endif
 
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <string.h>
 #include <ctype.h>

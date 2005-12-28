@@ -37,7 +37,8 @@
 #include "graphapp/stdimg.h"
 #include "console.h"
 #include "rui.h"
-#include "windows.h"
+#define WIN32_LEAN_AND_MEAN 1
+#include <windows.h>
 #include "devWindows.h"
 #include "grDevices.h"
 #ifdef ENABLE_NLS

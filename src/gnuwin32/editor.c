@@ -36,6 +36,7 @@ extern UImode  CharacterMode;
 #include "graphapp/stdimg.h"
 #include "console.h"
 #include "consolestructs.h"
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include "rui.h"
 #include "editor.h"

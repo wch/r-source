@@ -398,6 +398,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 # include <sys/time.h>
 #endif
 #ifdef Win32
+# define WIN32_LEAN_AND_MEAN 1
 # include <windows.h>
 #endif
 

@@ -86,6 +86,7 @@ static Rboolean bc_profiling = FALSE;
    L. T.  */
 
 #ifdef Win32
+# define WIN32_LEAN_AND_MEAN 1
 # include <windows.h>		/* for CreateEvent, SetEvent */
 # include <process.h>		/* for _beginthread, _endthread */
 #else

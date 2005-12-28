@@ -134,6 +134,7 @@ static int labdigs=4;
 static char labform[6];
 static int xScrollbarScale=1, yScrollbarScale=1;
 
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h> /* for Sleep */
 
 int mb_char_len(char *buf, int clength, wchar_t *wc); /* from console.c */

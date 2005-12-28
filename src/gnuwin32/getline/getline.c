@@ -145,6 +145,7 @@ static void     gl_beep(void);          /* try to play a system beep sound */
 
 #ifdef Win32
 /* guido masarotto (3/12/98)*/
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 static HANDLE Win32OutputStream, Win32InputStream = NULL;
 static DWORD OldWin32Mode, AltIsDown;

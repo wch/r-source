@@ -203,6 +203,7 @@ int R_system(char *command)
 }
 
 #ifdef Win32
+# define WIN32_LEAN_AND_MEAN 1
 # include <windows.h>
 #elif defined(__APPLE__)
 # include <crt_externs.h>

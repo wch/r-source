@@ -4,6 +4,7 @@ cl /MT /Ox /c Rchtml.c
 link /dll /out:Rchtml.dll Rchtml.obj user32.lib htmlhelp.lib advapi32.lib
 */
 
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <htmlhelp.h>
 

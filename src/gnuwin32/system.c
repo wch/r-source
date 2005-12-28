@@ -34,6 +34,7 @@
 #include "rui.h"
 #include "editor.h"
 #include "getline/getline.h"
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>		/* for CreateEvent,.. */
 #include <process.h>		/* for _beginthread,... */
 #include <io.h>			/* for isatty, chdir */
