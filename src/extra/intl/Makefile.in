@@ -11,7 +11,7 @@ subdir = src/extra/intl
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = ChangeLog Makefile.in Makefile.win R_changes VERSION \
+DISTFILES = Makefile.in Makefile.win R_changes VERSION \
   config.charset plural.y $(SOURCES) $(HEADERS)
 
 HEADERS = \
