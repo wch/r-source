@@ -840,7 +840,7 @@ multi-byte locales.  (This is the default in the sources, but the
 distribution builds two versions of @file{R.dll}, the default choice
 being that without @code{SUPPORT_MBCS}.)
 
-This also enables support for multi-byte locales in the @code{RGui}
+This also enables support for multi-byte locales in the @code{Rgui}
 console, pager, data and script editors (this is based loosely on the
 Japanization patches by Nakama and Okada).  The @code{Rterm}
 command-line editor is not supported in such locales.
@@ -1203,7 +1203,7 @@ a source package by setting the @code{type} argument.
 
 On Windows @code{install.packages} can also install a binary package
 from a local @file{zip} file by setting argument @code{repos} to
-@code{NULL}.   @code{RGui.exe} has a menu @code{Packages} with a GUI
+@code{NULL}.   @code{Rgui.exe} has a menu @code{Packages} with a GUI
 interface to @code{install.packages}, @code{update.packages} and
 @code{library}.
 
