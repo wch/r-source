@@ -1663,8 +1663,8 @@ R_JAVA
 ## F90/F95 support
 AC_PROG_FC()
 AC_LANG_PUSH(Fortran)
-AC_FC_SRCEXT(f90, [], [])
-AC_FC_SRCEXT(f95, [], [])
+AC_FC_SRCEXT(f90, [dummy=1], [dummy=0])
+AC_FC_SRCEXT(f95, [dummy=1], [dummy=0])
 AC_LANG_POP()
 : ${SHLIB_FCLD="${FC}"}
 : ${SHLIB_FCLDFLAGS="${SHLIB_LDFLAGS}"}

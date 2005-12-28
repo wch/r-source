@@ -42825,9 +42825,7 @@ fi
 echo "$as_me:$LINENO: result: $ac_cv_fc_srcext_f90" >&5
 echo "${ECHO_T}$ac_cv_fc_srcext_f90" >&6
 if test "x$ac_cv_fc_srcext_f90" = xunknown; then
-  { { echo "$as_me:$LINENO: error: Fortran could not compile .f90 files" >&5
-echo "$as_me: error: Fortran could not compile .f90 files" >&2;}
-   { (exit 1); exit 1; }; }
+  dummy=0
 else
   FC_SRCEXT=f90
   if test "x$ac_cv_fc_srcext_f90" = xnone; then
@@ -42838,7 +42836,7 @@ else
     FCFLAGS_f90=$ac_cv_fc_srcext_f90
   fi
 
-
+  dummy=1
 fi
 
 echo "$as_me:$LINENO: checking for Fortran flag to compile .f95 files" >&5
@@ -42894,9 +42892,7 @@ fi
 echo "$as_me:$LINENO: result: $ac_cv_fc_srcext_f95" >&5
 echo "${ECHO_T}$ac_cv_fc_srcext_f95" >&6
 if test "x$ac_cv_fc_srcext_f95" = xunknown; then
-  { { echo "$as_me:$LINENO: error: Fortran could not compile .f95 files" >&5
-echo "$as_me: error: Fortran could not compile .f95 files" >&2;}
-   { (exit 1); exit 1; }; }
+  dummy=0
 else
   FC_SRCEXT=f95
   if test "x$ac_cv_fc_srcext_f95" = xnone; then
@@ -42907,7 +42903,7 @@ else
     FCFLAGS_f95=$ac_cv_fc_srcext_f95
   fi
 
-
+  dummy=1
 fi
 
 ac_ext=c
