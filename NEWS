@@ -286,6 +286,9 @@ INTERNATIONALIZATION
     o	New postscript encodings for CP1253, CP1257 and Greek (ISO 8859-7).
 
     o	Support for East Asian CID-keyed fonts in pdf() and postscript().
+	Although these usually contain Latin characters no accurate
+	AFMs are available and so CID-keyed fonts are intended only
+	for use with CJK characters.
 
     o	Wide-character width functions wc[s]width are provided that
 	overcome problems found with OS-supplied ones (and those

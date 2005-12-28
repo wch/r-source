@@ -12,7 +12,7 @@
 \usage{
 Type1Font(family, metrics, encoding = "default")
 
-CIDFont(family, metrics, cmap, cmapEncoding, pdfresource = "")
+CIDFont(family, cmap, cmapEncoding, pdfresource = "")
 }
 \arguments{
   \item{family}{a character string giving the name to be used internally
@@ -40,8 +40,8 @@ CIDFont(family, metrics, cmap, cmapEncoding, pdfresource = "")
     when written to the file.
   }
   \item{pdfresource}{A chunk of PDF code;  only required for using
-    a CID-keyed font on PDF; users should not be
-    expected to provide this.}
+    a CID-keyed font on \code{pdf}; users should not be expected to
+    provide this.}
 }
 \details{
   For \code{Type1Fonts}, if four \code{.afm} files are supplied the
@@ -53,9 +53,23 @@ CIDFont(family, metrics, cmap, cmapEncoding, pdfresource = "")
 
   Glyphs in CID-keyed fonts are accessed by ID (number) and not by name.
   The CMap file maps encoded strings (usually in a MBCS) to IDs, so
-  \code{cmap} and \code{cmapEncoding} specifications must match.
-  Currently four \code{.afm} files are expected, with paths relative to
-  the directory \file{R\_HOME/library/grDevices/CID}.
+  \code{cmap} and \code{cmapEncoding} specifications must match.  There
+  are no real bold or italic versions of CID fonts (bold/italic were
+  very rarely used in traditional CJK topography), and for the
+  \code{\link{pdf}} device all four font faces will be identical.
+  However, for the \code{\link{postscript}} device, bold and italic (and
+  bold italic) are emulated.
+
+  CID-keyed fonts are intended only for use for the glyphs of CJK
+  languages, which are all monospaced and are all treated as filling the
+  same bounding box.  (Thus \code{\link{plotmath}} will work with such
+  characters, but the spacing will be less carefully controlled than
+  with Western glyphs.)  The CID-keyed fonts do contain other
+  characters, including a Latin alphabet:  non-CJK glyphs are regarded
+  as monospaced with half the width of CJK glyphs.  This is often the
+  case, but sometimes Latin glyphs designed for proportional spacing are
+  used (and may look odd).  We strongly recommend that CID-keyed fonts
+  are \bold{only} used for CJK glyphs.
 }
 \value{
   A list of class \code{"Type1Font"} or \code{"CIDFont"}.
@@ -74,9 +88,9 @@ CMitalic <- Type1Font("ComputerModern2",
 
 \dontrun{
 ## This could be used by
-postscript(family=CMitalic)
+postscript(family = CMitalic)
 ## or
 postscriptFonts(CMitalic = CMitalic)  # once in a session
-postscript(family="CMitalic", encoding = "TeXtext.enc")
+postscript(family = "CMitalic", encoding = "TeXtext.enc")
 }}
 \keyword{device}

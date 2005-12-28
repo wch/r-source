@@ -62,9 +62,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
     border on each side.}
   \item{family}{the initial font family to be used, normally as a
     character string.  See the section \sQuote{Families}.  This defaults
-    to the value given by a call to \code{grDevices:::guessFamily()}
-    when the \pkg{grDevices} namespace is loaded, which guess a suitable
-    family for the locale in use at the time.}
+    to \code{"Helvetica"}.}
   \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
     \file{"ISOLatin1.enc"} unless the locale is recognized as
