@@ -691,14 +691,16 @@ par(font=, font.lab=, font.main=, font.sub=)
 @end example
 
 Nineteen fonts are specified (as 1 to 19) by default: you can add to these
-(up to 13 more) or replace them.
+(up to 13 more) or replace them.  Also, you can make use of font
+families in a way similar to other graphics devices: see the examples
+for @code{windowsFonts}.
 
 In addition, the Hershey vector fonts (see @code{?Hershey},
 @code{?Japanese} and @code{demo(Japanese)}) can be used on any graphics
 device to display Japanese characters.
 
 To use non-Latin-1 characters in the @code{postscript} graphics device,
-see its help page.
+see its help page (which also applies to @code{pdf}).
 
 @node I don't see characters with accents at the R console, The dialog buttons are not translated, I would like to be able to use Japanese fonts, Languages and Internationalization
 @section I don't see characters with accents at the R console, for example in ?text.

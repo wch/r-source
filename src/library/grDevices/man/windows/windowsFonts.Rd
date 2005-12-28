@@ -51,10 +51,16 @@ windowsFonts(...)
 windowsFonts()
 windowsFonts("mono")
 
-\dontrun{## set up for Japanese: needs a Japanese locale
-windowsFonts(JP1 = windowsFont("MS Mincho"))
-par(family = "JP1")
+\dontrun{## set up for Japanese: needs an East Asian locale
+windows()  # tends to change locales
+Sys.setlocale("LC_ALL", "ja")
+windowsFonts(JP1 = windowsFont("MS Mincho"),
+             JP2 = windowsFont("MS Gothic"),
+             JP3 = windowsFont("Arial Unicode MS"))
 plot(1:10)
-text(5, 2, "\u{4E00}\u{4E01}")
+text(5, 2, "\u{4E10}\u{4E00}\u{4E01}", family = "JP1")
+text(7, 2, "\u{4E10}\u{4E00}\u{4E01}", family = "JP1", font=2)
+text(5, 1.5, "\u{4E10}\u{4E00}\u{4E01}", family = "JP2")
+text(9, 2, "\u{5100}", family = "JP3")
 }}
 \keyword{device}
