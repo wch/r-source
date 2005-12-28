@@ -290,8 +290,6 @@ sub listFiles {
 	} elsif ($_ eq "bin\\Rmbcs.dll") {
 	    $component = "mbcs";
 	    $newname = "R.dll";
-	} elsif (m/^library\\grDevices\\CID/) {
-	    $component = "mbcs";
 	} else {
 	    $component = "main";
 	}
