@@ -15,14 +15,15 @@ windows <- function(width = 7, height = 7, pointsize = 12,
     if(missing(ypinch))
         if(!length(ypinch <- getOption("ypinch"))) ypinch <- NA
     ypinch <- as.double(ypinch)
-    invisible(.External("devga", "", width, height, pointsize, record, rescale,
-                        xpinch, ypinch, canvas,
+    invisible(.External("devga", "", width, height, pointsize, record,
+                        rescale, xpinch, ypinch, canvas,
                         if(is.null(gamma)) 1 else gamma,
                         as.integer(xpos), as.integer(ypos), buffered,
                         .PSenv, bg, restoreConsole, PACKAGE = "grDevices"))
 }
 
-win.graph <- function(width = 7, height = 7, pointsize = 12, restoreConsole = FALSE)
+win.graph <- function(width = 7, height = 7, pointsize = 12,
+                      restoreConsole = FALSE)
 {
     gamma <- getOption("gamma")
     if(!length(xpinch <- getOption("xpinch"))) xpinch <- NA
@@ -36,31 +37,34 @@ win.graph <- function(width = 7, height = 7, pointsize = 12, restoreConsole = FA
                         .PSenv, NA, restoreConsole, PACKAGE = "grDevices"))
 }
 
-win.print <- function(width = 7, height = 7, pointsize = 12, printer = "", restoreConsole = TRUE)
+win.print <- function(width = 7, height = 7, pointsize = 12, printer = "",
+                      restoreConsole = TRUE)
     invisible(.External("devga", paste("win.print:", printer, sep=""),
                         width, height, pointsize, FALSE, 1,
                         NA, NA, "white", 1, as.integer(NA), as.integer(NA),
-                        FALSE, .PSenv, NA, restoreConsole, PACKAGE = "grDevices"))
+                        FALSE, .PSenv, NA, restoreConsole,
+                        PACKAGE = "grDevices"))
 
-win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12, restoreConsole = TRUE)
+win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12,
+                         restoreConsole = TRUE)
     invisible(.External("devga", paste("win.metafile:", filename, sep=""),
                         width, height, pointsize, FALSE, 1, NA, NA, "white", 1,
-                        as.integer(NA), as.integer(NA), FALSE, .PSenv, NA, restoreConsole,
-                        PACKAGE = "grDevices"))
+                        as.integer(NA), as.integer(NA), FALSE, .PSenv, NA,
+                        restoreConsole, PACKAGE = "grDevices"))
 
 png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                 pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
     invisible(.External("devga", paste("png:", filename, sep=""),
                         width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA, restoreConsole,
-                        PACKAGE = "grDevices"))
+                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
+                        restoreConsole, PACKAGE = "grDevices"))
 
 bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
                 pointsize = 12, bg = "white", res = NA, restoreConsole = TRUE)
     invisible(.External("devga", paste("bmp:", filename, sep=""),
                         width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA, restoreConsole,
-                        PACKAGE = "grDevices"))
+                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
+                        restoreConsole, PACKAGE = "grDevices"))
 
 jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
                  pointsize = 12, quality=75, bg = "white", res = NA, restoreConsole = TRUE)
@@ -128,34 +132,33 @@ print.SavedPlots <- function(x, ...)
 assign(".Windows.Fonts", list(), envir = .Windowsenv)
 
 # Check that the font has the correct structure and information
-checkWindowsFont <- function(font) {
-  # For now just use the simple format that is used in Rdevga
-  # i.e., just a font family name, possibly with "TT" as the first
-  # two characters to indicate a TrueType font
-  if (!is.character(font) || length(font) != 1)
-    stop("invalid Windows font:  must be a single font family name")
-  font
+checkWindowsFont <- function(font)
+{
+    # For now just use the simple format that is used in Rdevga
+    # i.e., just a font family name, possibly with "TT" as the first
+    # two characters to indicate a TrueType font
+    if (!is.character(font) || length(font) != 1)
+        stop("invalid Windows font:  must be a single font family name")
+    font
 }
 
-setWindowsFonts <- function(fonts, fontNames) {
-  fonts <- lapply(fonts, checkWindowsFont)
-  fontDB <- get(".Windows.Fonts", envir=.Windowsenv)
-  existingFonts <- fontNames %in% names(fontDB)
-  if (sum(existingFonts) > 0)
-    fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
-  if (sum(existingFonts) < length(fontNames))
-    fontDB <- c(fontDB, fonts[!existingFonts])
-  assign(".Windows.Fonts", fontDB, envir=.Windowsenv)
+setWindowsFonts <- function(fonts, fontNames)
+{
+    fonts <- lapply(fonts, checkWindowsFont)
+    fontDB <- get(".Windows.Fonts", envir=.Windowsenv)
+    existingFonts <- fontNames %in% names(fontDB)
+    if (sum(existingFonts) > 0)
+        fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
+    if (sum(existingFonts) < length(fontNames))
+        fontDB <- c(fontDB, fonts[!existingFonts])
+    assign(".Windows.Fonts", fontDB, envir=.Windowsenv)
 }
 
-printFont <- function(font) {
-  paste(font, "\n", sep="")
-}
+printFont <- function(font) paste(font, "\n", sep="")
 
-printFonts <- function(fonts) {
-  cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
-            sep="", collapse=""))
-}
+printFonts <- function(fonts)
+    cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
+              sep="", collapse=""))
 
 # If no arguments spec'ed, return entire font database
 # If no named arguments spec'ed, all args should be font names
@@ -163,36 +166,36 @@ printFonts <- function(fonts) {
 # Else, must specify new fonts to enter into database (all
 # of which must be valid PostScript font descriptions and
 # all of which must be named args)
-windowsFonts <- function(...) {
-  ndots <- length(fonts <- list(...))
-  if (ndots == 0)
-    get(".Windows.Fonts", envir=.Windowsenv)
-  else {
-    fontNames <- names(fonts)
-    nnames <- length(fontNames)
-    if (nnames == 0) {
-      if (!all(sapply(fonts, is.character)))
-        stop("invalid arguments in 'windowsFonts' (must be font names)")
-      else
-        get(".Windows.Fonts", envir=.Windowsenv)[unlist(fonts)]
-    } else {
-      if (ndots != nnames)
-        stop("invalid arguments in 'windowsFonts' (need named args)")
-      setWindowsFonts(fonts, fontNames)
+windowsFonts <- function(...)
+{
+    ndots <- length(fonts <- list(...))
+    if (ndots == 0)
+        get(".Windows.Fonts", envir=.Windowsenv)
+    else {
+        fontNames <- names(fonts)
+        nnames <- length(fontNames)
+        if (nnames == 0) {
+            if (!all(sapply(fonts, is.character)))
+                stop("invalid arguments in 'windowsFonts' (must be font names)")
+            else
+                get(".Windows.Fonts", envir=.Windowsenv)[unlist(fonts)]
+        } else {
+            if (ndots != nnames)
+                stop("invalid arguments in 'windowsFonts' (need named args)")
+            setWindowsFonts(fonts, fontNames)
+        }
     }
-  }
 }
 
 # Create a valid windows font description
-windowsFont <- function(family) {
-  checkWindowsFont(family)
-}
+windowsFont <- function(family) checkWindowsFont(family)
+
 
 windowsFonts(# Default Serif font is Times
-                serif=windowsFont("TT Times New Roman"),
-                # Default Sans Serif font is Helvetica
-                sans=windowsFont("TT Arial"),
-                # Default Monospace font is Courier
-                mono=windowsFont("TT Courier New"),
-                # Default Symbol font is Symbol
-                symbol=windowsFont("TT Symbol"))
+             serif = windowsFont("TT Times New Roman"),
+             # Default Sans Serif font is Helvetica
+             sans = windowsFont("TT Arial"),
+             # Default Monospace font is Courier
+             mono = windowsFont("TT Courier New"),
+             # Default Symbol font is Symbol
+             symbol = windowsFont("TT Symbol"))

@@ -166,6 +166,7 @@ int gwstrwidth(drawing d, font f, char *s);
 #endif
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width);
+void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj);
 
 
 /* pixels */

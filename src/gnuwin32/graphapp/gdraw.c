@@ -504,6 +504,35 @@ void gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
     SelectObject(dc, old);
 }
 
+/* This version interprets 's' as MBCS in the current locale */
+#ifdef SUPPORT_MBCS
+#include <wchar.h>
+void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
+{
+    HFONT old;
+    HDC dc = GETHDC(d);
+    UINT flags = TA_BASELINE | TA_UPDATECP;
+    wchar_t wc[1000]; int cnt;
+
+    cnt = mbstowcs(wc, s, 1000);
+    SetTextColor(dc, getwinrgb(d,c));
+    old = SelectObject(dc, f->handle);
+    MoveToEx(dc, p.x, p.y, NULL);
+    SetBkMode(dc, TRANSPARENT);
+    if (hadj < 0.25) flags |= TA_LEFT;
+    else if (hadj < 0.75) flags |= TA_CENTER;
+    else flags |= TA_RIGHT;
+    SetTextAlign(dc, flags);
+    TextOutW(dc, p.x, p.y, wc, cnt);
+    SelectObject(dc, old);
+}
+#else
+void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
+{
+    gdrawstr1(d, f, c, p, s, hadj);
+}
+#endif
+
 #ifdef SUPPORT_UTF8
 #include <wchar.h>
 size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);

@@ -50,5 +50,11 @@ windowsFonts(...)
 \examples{
 windowsFonts()
 windowsFonts("mono")
-}
+
+\dontrun{## set up for Japanese: needs a Japanese locale
+windowsFonts(JP1 = windowsFont("MS Mincho"))
+par(family = "JP1")
+plot(1:10)
+text(5, 2, "\u{4E00}\u{4E01}")
+}}
 \keyword{device}
