@@ -84,7 +84,7 @@ R 2.2.1 patched
 ===============
 
 Opening any windows (pager/editor/windows() device) was resetting the
-LC_TYPE in the locale to the system default.
+LC_CTYPE in the locale to the system default.
 
 
 
