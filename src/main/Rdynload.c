@@ -799,7 +799,8 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg,
 		if(symbol)
 		    symbol->dll = LoadedDLL+i;
 #ifdef CACHE_DLL_SYM
-		if(strlen(pkg) <= 20 && strlen(name) <= 40 && nCPFun < 100) {
+		if(strlen(pkg) <= 20 && strlen(name) <= 40 && nCPFun < 100
+                     && !symbol->symbol.c) {
 		    strcpy(CPFun[nCPFun].pkg, LoadedDLL[i].name);
 		    strcpy(CPFun[nCPFun].name, name);
 		    CPFun[nCPFun++].func = fcnptr;
