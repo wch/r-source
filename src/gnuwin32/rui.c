@@ -1034,9 +1034,12 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
     return 0;
 }
 
+#include <locale.h>
+
 int setupui()
 {
     initapp(0, 0);
+    setlocale(LC_CTYPE,""); /* set locale before doing anything with menus */
     readconsolecfg();
 #ifdef USE_MDI
     if (RguiMDI & RW_MDI) {

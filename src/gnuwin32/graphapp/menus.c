@@ -39,7 +39,6 @@
 #include "config.h"
 #ifdef SUPPORT_MBCS
 #include <wchar.h>
-#include <locale.h>
 #define mbs_init(x) memset(&x,0,sizeof(x))
 size_t Rf_mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
 #endif
@@ -269,9 +268,11 @@ static void setmenustring(object obj, char *buf, char *name, int key)
 	int ch, where, source, dest = 0;
 	char *extra = "\tCtrl+";
 
+#if 0 /* moved to rui.c
 #ifdef SUPPORT_MBCS
         setlocale(LC_CTYPE,"");
-#endif /* SUPPORT_MBCS */
+#endif */
+#endif
 	set_search_string(search, name, key);
 	ch = find_shortcut(obj, search);
 
