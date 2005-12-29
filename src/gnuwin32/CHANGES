@@ -75,8 +75,7 @@ might be relevant for contributed software using R's macros.
 
 Unicode characters are used to draw on the windows() family of device
 in multi-byte locales.  (This allows the user to select a locale other
-than the one Windows is running in: beware though that Windows has a
-habit of resetting the locale when a device is opened.)
+than the one Windows is running in.)
 
 
 
