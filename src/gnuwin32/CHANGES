@@ -80,6 +80,14 @@ habit of resetting the locale when a device is opened.)
 
 
 
+R 2.2.1 patched
+===============
+
+Opening any windows (pager/editor/windows() device) was resetting the
+LC_TYPE in the locale to the system default.
+
+
+
 R 2.2.1
 =======
 
