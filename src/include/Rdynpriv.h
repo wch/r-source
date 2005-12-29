@@ -203,6 +203,8 @@ DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path);
 DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name, 
 				  R_RegisteredNativeSymbol *symbol);
 
+DL_FUNC R_dlsym(DllInfo *info, char const *name, R_RegisteredNativeSymbol *symbol);
+
 #ifdef __cplusplus
 }
 #endif

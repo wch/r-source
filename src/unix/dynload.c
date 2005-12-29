@@ -65,7 +65,7 @@
 static void *loadLibrary(const char *path, int asLocal, int now);
 static void closeLibrary(void *handle);
 static void deleteCachedSymbols(DllInfo *);
-static DL_FUNC R_dlsym(DllInfo *info, char const *name);
+static DL_FUNC R_local_dlsym(DllInfo *info, char const *name);
 static void getFullDLLPath(SEXP call, char *buf, char *path);
 static void getSystemError(char *buf, int len);
 
@@ -74,7 +74,7 @@ static int computeDLOpenFlag(int asLocal, int now);
 void InitFunctionHashing()
 {
     R_osDynSymbol->loadLibrary = loadLibrary;
-    R_osDynSymbol->dlsym = R_dlsym;
+    R_osDynSymbol->dlsym = R_local_dlsym;
     R_osDynSymbol->closeLibrary = closeLibrary;
     R_osDynSymbol->getError = getSystemError;
 
@@ -207,7 +207,7 @@ static int computeDLOpenFlag(int asLocal, int now)
   This is the system/OS-specific version for resolving a
   symbol in a shared library.
  */
-static DL_FUNC R_dlsym(DllInfo *info, char const *name)
+static DL_FUNC R_local_dlsym(DllInfo *info, char const *name)
 {
     return (DL_FUNC) dlsym(info->handle, name);
 }

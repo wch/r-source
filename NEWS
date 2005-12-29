@@ -415,6 +415,14 @@ C-LEVEL FACILITIES
 	etc/Makeconf and R CMD config.  It can be used where
 	optimization needs to be defeated, e.g. in LAPACK setup.
 
+    o	getNativeSymbolInfo() has a withRegistrationInfo argument which
+        causes the address field to be a reference to the registration
+        information if it is available for that symbol.  If the
+        registration information is not available, the address is a
+        reference to the native symbol. The default is FALSE which is
+        backward compatible, returning just the address of the symbol
+        and ignoring registration information.
+
 
 BUG FIXES
 

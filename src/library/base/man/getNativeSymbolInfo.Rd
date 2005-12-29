@@ -67,10 +67,19 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   Each \code{NativeSymbolInfo} object is a list containing the following elements:
   \item{name}{the name of the symbol, as given by the
   \code{name} argument.}
-  \item{address}{the native memory address of the symbol which can
+\item{address}{if \code{withRegistrationInfo} is \code{FALSE},
+    this is the native memory address of the symbol which can
     be used to invoke the routine, and also
     compare with other symbol address. This is an external pointer
-    object and of class \code{NativeSymbol}.}
+    object and of class \code{NativeSymbol}.
+    If \code{withRegistrationInfo} is \code{TRUE} and registration
+    information is available for the symbol, then this is
+    an object of class \code{RegisteredNativeSymbol} and is a reference
+    to an internal data type that has access to the routine pointer and
+    registration information. This too can be used in calls to
+    \code{\link{.Call}}, \code{\link{.C}}, \code{\link{.Fortran}} and
+    \code{\link{.External}}.
+  }
   \item{package}{a list containing 3 elements:
     \describe{
       \item{name}{the short form of the library name which can be used
