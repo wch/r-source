@@ -661,7 +661,8 @@ be set under @emph{both} the `Regional Options' and `Advanced' tabs.
 (The @command{Rgui} menus may be corrupted if this is not done.)
 
 When using @command{Rterm} the window in which it is run has to be set up
-to use a suitable font and a suitable codepage.
+to use a suitable font and a suitable codepage (which for the Windows
+Cmd shell can be done by @command{chcp}).
 
 @node I selected English for installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
 @section I selected English for installation but R runs in Chinese.

@@ -52,7 +52,7 @@ windowsFonts()
 windowsFonts("mono")
 
 \dontrun{## set up for Japanese: needs an East Asian locale
-windows()  # tends to change locales
+windows()  # make sure we have the right device type
 Sys.setlocale("LC_ALL", "ja")
 windowsFonts(JP1 = windowsFont("MS Mincho"),
              JP2 = windowsFont("MS Gothic"),
