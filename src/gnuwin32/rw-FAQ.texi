@@ -81,7 +81,8 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.3.0} or later).
+(@samp{2.3.0} or later).  In particular, note that the details of
+Chinese/Japanese/Korean support changed in R @samp{2.3.0}.
 
 
 
@@ -735,7 +736,8 @@ for Unicode ones in many cases): see Q3.3.
 If you have Windows running completely in say French or Chinese these
 settings are likely to be consistent.  However, if you try to run
 Windows in one language and R in another, you may find the way Windows
-handles internationalization slightly odd.
+handles internationalization slightly odd.  For further details see
+@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/nls_0ddl.asp}
 
 @newchap{}
 @node Packages, Windows Features, Languages and Internationalization, Top
@@ -1380,14 +1382,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 December 27: comments to
+Last edited 2005 December 29: comments to
 <code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 December 27: comments to <Rwindows@@r-project.org>
+Last edited 2005 December 29: comments to <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye
