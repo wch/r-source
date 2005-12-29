@@ -83,10 +83,10 @@ FORCE:
 $(R_HOME)/SVN-REVISION: FORCE
 	@-cp -p $(R_HOME)/SVN-REVISION $(R_HOME)/SVN-REVISION.bak
 ifdef USE_SVNVERSION
-	@svnversion ../.. | sed -n 's/^/Revision: /p' > svn-tmp || rm -f svn-tmp
+	@LC_ALL=C svnversion ../.. | sed -n 's/^/Revision: /p' > svn-tmp || rm -f svn-tmp
 	@grep -v exported svn-tmp > /dev/null || rm -f svn-tmp
 else
-	@(cd ../..; svn info || echo "Revision: unknown") 2> /dev/null \
+	@(cd ../..; LC_ALL=C svn info || echo "Revision: unknown") 2> /dev/null \
 	  | sed -n '/^Revision/p' > svn-tmp
 	@if grep unknown svn-tmp > /dev/null ; then \
 	  rm svn-tmp; \
