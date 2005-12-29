@@ -175,7 +175,7 @@ void clear(control obj)
 void draw(control obj)
 {
 	drawing prev;
-	drawstate old;
+	drawstate old = NULL;
 
 	if (! obj)
 		return;
