@@ -23,7 +23,8 @@
   indexed by the given symbol names.
 }
 \usage{
-getNativeSymbolInfo(name, PACKAGE, unlist = TRUE)
+getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
+                     withRegistrationInfo = FALSE)
 }
 \arguments{
   \item{name}{the name of the native symbol as used in a call
@@ -43,6 +44,12 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE)
     more than one. 
     To be compatible with earlier versions of this function, this
     defaults to \code{TRUE}.
+  }
+  \item{withRegistrationInfo}{a logical value indicating whether,
+    if \code{TRUE}, to
+    return information that was registered with R about the symbol
+    and its parameter types if such information is available,
+    or if \code{FALSE} to return the address of the 
   }
 }
 \details{

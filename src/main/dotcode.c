@@ -89,19 +89,65 @@ static SEXP enctrim(SEXP args, char *name, int len);
    NB: in the last two cases it sets fun as well!
  */
 static void
-checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun)
+checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun, R_RegisteredNativeSymbol *symbol, char *buf)
 {
     if (isValidString(op)) return;
 
-    else if((TYPEOF(op) == EXTPTRSXP && 
-	     R_ExternalPtrTag(op) == Rf_install("native symbol"))) {
+    *fun = NULL;
+    if(TYPEOF(op) == EXTPTRSXP) {
+	char *q, *p = NULL;
+	if(R_ExternalPtrTag(op) == Rf_install("native symbol")) 
+   	   *fun = (DL_FUNC) R_ExternalPtrAddr(op);
+	else if(R_ExternalPtrTag(op) == Rf_install("registered native symbol")) {
+   	   R_RegisteredNativeSymbol *tmp;
+	   tmp = (R_RegisteredNativeSymbol *) R_ExternalPtrAddr(op);
+	   if(tmp) {
+  	      if(symbol->type != R_ANY_SYM && symbol->type != tmp->type)
+ 	         errorcall(call, _("NULL value passed as symbol address"));
+   	        /* Check the type of the symbol. */
+   	      switch(symbol->type) {
+	      case R_C_SYM:
+  	          *fun = tmp->symbol.c->fun;
+  	          p = tmp->symbol.c->name;
+		  break;
+	      case R_CALL_SYM:
+  	          *fun = tmp->symbol.call->fun;
+  	          p = tmp->symbol.call->name;
+		  break;
+	      case R_FORTRAN_SYM:
+  	          *fun = tmp->symbol.fortran->fun;
+  	          p = tmp->symbol.fortran->name;
+		  break;
+	      case R_EXTERNAL_SYM:
+  	          *fun = tmp->symbol.external->fun;
+  	          p = tmp->symbol.external->name;
+		  break;
+	      default:
+  	         /* Something unintended has happened if we get here. */
+	          error(_("Unimplemented type %d in createRSymbolObject"), 
+		         symbol->type);
+  	          break;
+	      }
+	      *symbol = *tmp;
+	   }
+	}
 	/* This is illegal C */
-	if((*fun = R_ExternalPtrAddr(op)) == NULL)
+	if(*fun == NULL)
 	    errorcall(call, _("NULL value passed as symbol address"));
+
+        /* copy the symbol name. */
+	if (p) {
+	    q = buf;
+	    while ((*q = *p) != '\0') {
+	        p++;
+	        q++;
+	    }
+	}
+
 	return;
     } 
     else if(inherits(op, "NativeSymbolInfo")) {
-	checkValidSymbolId(VECTOR_ELT(op, 1), call, fun);
+	checkValidSymbolId(VECTOR_ELT(op, 1), call, fun, symbol, buf);
 	return;
     }
     
@@ -130,8 +176,8 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     DllReference dll = {"", NULL, NULL, NOT_DEFINED};
 
     op = CAR(args);
-    checkValidSymbolId(op, call, fun); /* NB, might set fun, 
-					  not just a check! */
+    /* NB, this sets fun, symbol and buf and is not just a check! */
+    checkValidSymbolId(op, call, fun, symbol, buf); 
 
     /* The following code modifies the argument list */
     /* We know this is ok because do_dotCode is entered */
@@ -1619,6 +1665,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     args = enctrim(args, encname, 100);
     args = resolveNativeRoutine(args, &fun, &symbol, symName, &nargs,
 				&naok, &dup, call);
+
 
     if(symbol.symbol.c && symbol.symbol.c->numArgs > -1) {
 	if(symbol.symbol.c->numArgs != nargs)

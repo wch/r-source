@@ -225,15 +225,20 @@ loadNamespace <- function (package, lib.loc = NULL,
                symNames = symNames[-idx]                        
              }
             
-            symbols <- getNativeSymbolInfo(symNames, dll, unlist = FALSE)
+            symbols <- getNativeSymbolInfo(symNames, dll, unlist = FALSE,
+                                               withRegistrationInfo = TRUE)
             sapply(seq(along = symNames),
                     function(i) {
                         varName = names(symNames)[i]
                         origVarName = symNames[i]                                                
                         if(exists(varName, envir = env))
-                           warning("failed to assign NativeSymbolInfo for ", origVarName,
-                                   ifelse(origVarName != varName, paste(" to", varName), ""),
-                                   " since ", varName, " is already defined in the ", package, " namespace")
+                           warning("failed to assign NativeSymbolInfo for ",
+                                   origVarName,
+                                   ifelse(origVarName != varName,
+                                              paste(" to", varName), ""),
+                                   " since ", varName,
+                                   " is already defined in the ", package,
+                                   " namespace")
                            else
                               assign(varName, symbols[[origVarName]], envir = env)
                     })

@@ -7,7 +7,8 @@ dyn.unload <- function(x)
 is.loaded <- function(symbol, PACKAGE = "", type = "")
     .Internal(is.loaded(symbol, PACKAGE, type))
 
-getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE)
+getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE,
+                                 withRegistrationInfo = FALSE)
 {
     if(missing(PACKAGE)) PACKAGE <- ""
 
@@ -23,7 +24,7 @@ getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE)
 
 
     syms = lapply(name, function(id) {
-       v <- .Call("R_getSymbolInfo", as.character(id), PACKAGE,  PACKAGE = "base")
+       v <- .Call("R_getSymbolInfo", as.character(id), PACKAGE, as.logical(withRegistrationInfo), PACKAGE = "base")
        if(is.null(v)) {
            msg <- paste("no such symbol", id)
            if(length(pkgName) && nchar(pkgName))
