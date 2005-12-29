@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2004  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 2005        The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +28,8 @@
 #include "internal.h"
 extern unsigned int TopmostDialogs; /* from dialogs.c */
 #include <winbase.h>
+#include <wchar.h>
+#define alloca(x) __builtin_alloca((x)) /* always GNUC */
 
 static HDC GETHDC(drawing d)
 {
@@ -476,7 +479,16 @@ int gdrawstr(drawing d, font f, rgb c, point p, char *s)
     SetBkMode(dc, TRANSPARENT);
     SetTextAlign(dc, TA_TOP | TA_LEFT | TA_UPDATECP);
 
+#ifdef SUPPORT_MBCS
+    {  /* This allows us to change locales and output in the new locale */
+	wchar_t *wc; int n = strlen(s), cnt;
+	wc = alloca((n+1) * sizeof(wchar_t));
+	cnt = mbstowcs(wc, s, n);
+	TextOutW(dc, p.x, p.y, wc, cnt);
+    }
+#else
     TextOut(dc, p.x, p.y, s, strlen(s));
+#endif
 
     GetCurrentPositionEx(dc, &curr_pos);
     width = curr_pos.x - p.x;
@@ -506,15 +518,14 @@ void gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
 
 /* This version interprets 's' as MBCS in the current locale */
 #ifdef SUPPORT_MBCS
-#include <wchar.h>
 void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
 {
     HFONT old;
     HDC dc = GETHDC(d);
     UINT flags = TA_BASELINE | TA_UPDATECP;
-    wchar_t wc[1000]; int cnt;
+    wchar_t *wc; int n = strlen(s), cnt;
+    wc = alloca((n+1) * sizeof(wchar_t));
 
-    cnt = mbstowcs(wc, s, 1000);
     SetTextColor(dc, getwinrgb(d,c));
     old = SelectObject(dc, f->handle);
     MoveToEx(dc, p.x, p.y, NULL);
@@ -523,6 +534,7 @@ void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
     else if (hadj < 0.75) flags |= TA_CENTER;
     else flags |= TA_RIGHT;
     SetTextAlign(dc, flags);
+    cnt = mbstowcs(wc, s, n); /* This is OK if we get an error */
     TextOutW(dc, p.x, p.y, wc, cnt);
     SelectObject(dc, old);
 }
