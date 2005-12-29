@@ -142,45 +142,6 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
     TCHAR szCSDVersion[ 128 ];
     } OSVERSIONINFO; */
 
-
-/* defined in w32api 1.2, but not in 1.1 or earlier */
-#ifndef VER_NT_WORKSTATION
-#define VER_NT_WORKSTATION              0x0000001
-#define VER_NT_DOMAIN_CONTROLLER        0x0000002
-#define VER_NT_SERVER                   0x0000003
-
-#define VER_SERVER_NT                       0x80000000
-#define VER_WORKSTATION_NT                  0x40000000
-#define VER_SUITE_SMALLBUSINESS             0x00000001
-#define VER_SUITE_ENTERPRISE                0x00000002
-#define VER_SUITE_BACKOFFICE                0x00000004
-#define VER_SUITE_COMMUNICATIONS            0x00000008
-#define VER_SUITE_TERMINAL                  0x00000010
-#define VER_SUITE_SMALLBUSINESS_RESTRICTED  0x00000020
-#define VER_SUITE_EMBEDDEDNT                0x00000040
-#define VER_SUITE_DATACENTER                0x00000080
-#define VER_SUITE_SINGLEUSERTS              0x00000100
-#define VER_SUITE_PERSONAL                  0x00000200
-
-typedef struct _OSVERSIONINFOEX {
-  DWORD dwOSVersionInfoSize;
-  DWORD dwMajorVersion;
-  DWORD dwMinorVersion;
-  DWORD dwBuildNumber;
-  DWORD dwPlatformId;
-  TCHAR szCSDVersion[ 128 ];
-  WORD wServicePackMajor;
-  WORD wServicePackMinor;
-  WORD wSuiteMask;
-  BYTE wProductType;
-  BYTE wReserved;
-} OSVERSIONINFOEX;
-#endif
-/* next is from Nov 2001 Platform SDK */
-#ifndef VER_SUITE_BLADE
-#define VER_SUITE_BLADE                     0x00000400
-#endif
-
 SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char isNT[8]="??", ver[256];
