@@ -616,11 +616,9 @@ targets to uninstall DVI, info and PDF manuals in
 
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000, ME and XP (at
-least) on Intel x86 and clones (but not on other platforms).
-
-You do need one of those Windows versions: Windows 3.11+win32s will not
-work.
+from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000, ME, XP and 2003
+(at least) on Intel x86 and clones (including AMD64/EM64T ships and
+Windows 64).
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
@@ -740,7 +738,6 @@ There used to be support for Kazushige Goto's BLAS, but this is no
 longer available for Windows, and it seems that it will in future only
 to be offered via a source-code licence.
 
-
 @end itemize
 
 @node Building the core files, Building the bitmap files, Getting the source files, Building from source
@@ -754,9 +751,6 @@ Open a command window at @file{@var{R_HOME}/src/gnuwin32}.  Edit
 @file{MkRules} to set the appropriate paths as needed and to set the
 type(s) of help that you want built.  @strong{Beware}: @file{MkRules}
 contains tabs and some editors (e.g., WinEdt) silently remove them.
-Look at the comments in @file{front-ends/Makefile} and perhaps uncomment
-commands to increase the stack size and make the executables
-large-address-aware.
 Then run
 
 @example
@@ -830,31 +824,14 @@ should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
 @node Windows internationalization, Checking the build, Building the bitmap files, Building from source
 @subsection Windows internationalization
 
-This version of @R{} can be built with support for some multi-byte
-character sets such those used in Chinese, Japanese and Korean.
+This version of @R{} can be built with support for the multi-byte
+character sets used in Chinese, Japanese and Korean versions of Windows.
 
 Define @code{SUPPORT_MBCS} in @file{config.h} to enable support in the
-@R{} engine for multi-byte character sets.  This is only useful if you
-have an `East Asian' version of Windows, as only those versions have
-multi-byte locales.  (This is the default in the sources, but the
-distribution builds two versions of @file{R.dll}, the default choice
-being that without @code{SUPPORT_MBCS}.)
-
-This also enables support for multi-byte locales in the @code{Rgui}
-console, pager, data and script editors (this is based loosely on the
-Japanization patches by Nakama and Okada).  The @code{Rterm}
-command-line editor is not supported in such locales.
-
-Define both @code{SUPPORT_MBCS} and @code{SUPPORT_UTF8} in
-@file{config.h} to enable support in the R engine and in the Windows
-graphics device for UTF-8 character sets.  Since there are no UTF-8
-locales on Windows, this sets the locale to be UTF-8 and expects
-input/output in UTF-8.  It would only be useful with a customized
-front-end to @file{R.dll}.
-
-If any of these is defined you need the DLL @file{msvcp60.dll} to be
-installed.  It is on recent versions of Windows, and can be obtained
-by an Internet search.
+@R{} engine for multi-byte character sets.  (This is the default in the
+sources.)  This also enables support for multi-byte locales in
+@code{Rterm}, the @code{Rgui} console, pager, data and script editors
+(this is based loosely on the Japanization patches by Nakama and Okada).
 
 @node Checking the build, Building the recommended packages, Windows internationalization, Building from source
 @subsection Checking the build
