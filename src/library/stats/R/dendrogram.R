@@ -134,11 +134,10 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 ## -- e.g. when 'object' is part of a larger structure which *is* str()ed
 ## with default max.level= 0,  the dendrogram shouldn't be str()ed to all levels
 
-    ## FIXME: 'wid' argument is currently disregarded
     pasteLis <- function(lis, dropNam, sep = " = ") {
 	## drop uninteresting "attributes" here
 	lis <- lis[!(names(lis) %in% dropNam)]
-	fl <- sapply(lis, format, digits=digits.d, wid=wid)
+	fl <- sapply(lis, format, digits=digits.d)
 	paste(paste(names(fl), fl, sep=sep), collapse = ", ")
     }
 

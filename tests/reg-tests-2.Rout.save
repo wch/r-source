@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-10-27 r36070)
+Version 2.3.0 Under development (unstable) (2005-12-30 r36934)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > ## Regression tests for which the printed output is the issue
@@ -4893,4 +4893,17 @@ NULL
 > ## test of fix of trivial warning PR#8252
 > pairs(iris[1:4], oma=rep(3,4))
 > ## warned in 2.2.0 only
+> 
+> ## str(<dendrogram>)
+> dend <- as.dendrogram(hclust(dist(USArrests), "ave")) # "print()" method
+> dend2 <- cut(dend, h=70)
+> str(dend2$upper)
+--[dendrogram w/ 2 branches and 4 members at h = 152]
+  |--[dendrogram w/ 2 branches and 2 members at h = 77.6]
+  |  |--leaf "Branch 1" (h= 38.5 midpoint = 0.5, x.member = 2 )
+  |  `--leaf "Branch 2" (h= 44.3 midpoint = 5.03, x.member = 14 )
+  `--[dendrogram w/ 2 branches and 2 members at h = 89.2]
+     |--leaf "Branch 3" (h= 44.8 midpoint = 6.8, x.member = 14 )
+     `--leaf "Branch 4" (h= 54.7 midpoint = 7.65, x.member = 20 )
+> ## gave much too many spaces in 2.2.[01]
 > 

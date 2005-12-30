@@ -499,6 +499,8 @@ BUG FIXES
 	resizing 'lty', and so could fail if 'lty' was a different
 	length from 'legend'.
 
+    o	str(<dendrogram>) sometimes used much too many spaces (in 2.2.x).
+
 
 
 		CHANGES IN R VERSION 2.2.1
