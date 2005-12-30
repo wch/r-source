@@ -196,9 +196,9 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
     if (do.lines) {			#- draw lines ---------------------
 	seg.len <- 2 # length of drawn segment, in xchar units
 	if(missing(lty)) lty <- 1
-	ok.l <- !is.na(lty) & (is.character(lty) | lty > 0)
 	lty <- rep(lty, length.out = n.leg)
 	lwd <- rep(lwd, length.out = n.leg)
+	ok.l <- !is.na(lty) & (is.character(lty) | lty > 0)
 	if(trace)
 	    catn("  segments2(",xt[ok.l] + x.off*xchar, ",", yt[ok.l],
 		 ", dx=", seg.len*xchar, ", dy=0, ...)")

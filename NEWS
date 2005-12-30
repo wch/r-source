@@ -491,6 +491,10 @@ BUG FIXES
     o	sub(fixed = TRUE) could get wrong the length of the character
 	string of elements of the result after the first.
 
+    o	legend() worked out which elements of 'lty' were valid before
+	resizing 'lty', and so could fail if 'lty' was a different
+	length from 'legend'.
+
 
 
 		CHANGES IN R VERSION 2.2.1
