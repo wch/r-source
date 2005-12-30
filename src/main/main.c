@@ -602,6 +602,9 @@ void setup_Rmainloop(void)
 	if(p) strcpy(Rlocale, p); else strcpy(Rlocale, "");
 	if((p = getenv("LC_CTYPE"))) setlocale(LC_CTYPE, p);
 	else setlocale(LC_CTYPE, Rlocale);
+	/* LC_CTYPE=C bombs in mingwex */
+	if(strcmp(setlocale(LC_CTYPE, NULL), "C") == 0) 
+	    setlocale(LC_CTYPE, "en");
 	if((p = getenv("LC_COLLATE"))) setlocale(LC_COLLATE, p);
 	else setlocale(LC_COLLATE, Rlocale);
 	if((p = getenv("LC_TIME"))) setlocale(LC_TIME, p);

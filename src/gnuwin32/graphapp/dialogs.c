@@ -56,12 +56,9 @@ void setuserfilter(char *uf) {
 
 static HWND hModelessDlg = NULL;
 
-#include <R_ext/Boolean.h>
-extern Rboolean mbcslocale;
-
 int myMessageBox(HWND h, char *text, char *caption, UINT type)
 {
-    if(is_NT && mbcslocale) {
+    if(is_NT) {
 	wchar_t wc[1000], wcaption[100];
 	mbstowcs(wcaption, caption, 100);
 	mbstowcs(wc, text, 1000);

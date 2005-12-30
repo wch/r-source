@@ -77,7 +77,9 @@ on the console, pager, editor and windows() family of devices in
 multi-byte locales.  (This allows the user to select a locale other
 than the one Windows is running in, and with suitable fonts see the
 intended characters.  Menus and dialogs should also work in the
-selected locale.)
+selected locale.  A Windows quirk means that window titles (which
+includes the legends for the buttons used in the Preferences dialog
+box) use a font in the system locale).
 
 Added a few mappings from Window locale names (e.g. "chinese", "chs",
 "cht", "ptb") to language names.  There is still scope for confusion:

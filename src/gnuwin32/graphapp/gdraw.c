@@ -463,9 +463,6 @@ void gfillpolygon(drawing d, rgb fill, point *p, int n)
     DeleteObject(br);
 }
 
-#include <R_ext/Boolean.h>
-extern Rboolean mbcslocale;
-
 /* For ordinary text, e.g. in console */
 int gdrawstr(drawing d, font f, rgb c, point p, char *s)
 {
@@ -481,7 +478,7 @@ int gdrawstr(drawing d, font f, rgb c, point p, char *s)
     SetTextAlign(dc, TA_TOP | TA_LEFT | TA_UPDATECP);
 
 #ifdef SUPPORT_MBCS
-    if(is_NT && mbcslocale) {
+    if(is_NT) {
 	/* This allows us to change locales and output in the new locale */
 	wchar_t *wc; int n = strlen(s), cnt;
 	wc = alloca((n+1) * sizeof(wchar_t));

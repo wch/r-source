@@ -322,12 +322,9 @@ menubar newmenubar(actionfn adjust_menus)
 	return (menubar) obj;
 }
 
-#include <R_ext/Boolean.h>
-extern Rboolean mbcslocale;
-
 BOOL myAppendMenu(HMENU h, UINT flags, UINT id, LPCTSTR name)
 {
-    if(is_NT && mbcslocale) {
+    if(is_NT) {
 	wchar_t wc[100];
 	mbstowcs(wc, name, 100);
 	return AppendMenuW(h, flags, id, wc);
