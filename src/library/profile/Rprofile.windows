@@ -7,8 +7,8 @@ invisible(.libPaths(unlist(strsplit(chartr("\\", "/", Sys.getenv("R_LIBS")),
 if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
     options(papersize = as.vector(Sys.getenv("R_PAPERSIZE")))
 } else {
-    if(any(grep("united.states", Sys.getlocale("LC_CTYPE"), TRUE)) ||
-       any(grep("canada", Sys.getlocale("LC_CTYPE"), TRUE)))
+    if(any(grep("united.states", Sys.getlocale("LC_MONETARY"), TRUE)) ||
+       any(grep("canada", Sys.getlocale("LC_MONETARY"), TRUE)))
         options(papersize = "letter")
     else options(papersize = "a4")
 }
