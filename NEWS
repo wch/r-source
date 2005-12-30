@@ -383,6 +383,10 @@ UTILITIES
 
     o	R CMD f77 has been removed now f2c is no longer supported.
 
+    o   The version string shown in the startup message and by
+        "R --version", and the one stored in variable R.version.string
+	are now in exactly the same format.
+
 
 DOCUMENTATION
 
