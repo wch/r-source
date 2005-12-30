@@ -578,6 +578,7 @@ summary.nls <-
     dimnames(param) <-
         list(pnames, c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
     ans$coefficients <- param
+    ans$parameters <- param  # always been undocumented, for back-compatibility
     if(correlation && rdf > 0) {
         ans$correlation <- (XtXinv * resvar)/outer(se, se)
         ans$symbolic.cor <- symbolic.cor
