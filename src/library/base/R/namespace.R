@@ -807,32 +807,6 @@ namespaceExport <- function(ns, vars) {
     }
 }
 
-nativeRoutineMap <-
-  # Creates a new NativeRoutineMap.
-function(useRegistration, symbolNames, fixes)
-{
- proto <- list(useRegistration = FALSE,
-               symbolNames = character(0))
- class(proto) <- "NativeRoutineMap"
- 
- mergeNativeRoutineMaps(proto, useRegistration, symbolNames, fixes)
-}
-
-mergeNativeRoutineMaps <-
-  # Merges new settings into a NativeRoutineMap
-function(map, useRegistration, symbolNames, fixes)
-{
-  if(!useRegistration)
-    names(symbolNames) <- paste(fixes[1],  names(symbolNames), fixes[2], sep = "")
-  else 
-     map$registrationFixes <- fixes
- 
-  map$useRegistration <- map$useRegistration || useRegistration
-    
-  map$symbolNames <- c(map$symbolNames, symbolNames)
-
-  map
-}  
 
 ## NB this needs a decorated name, foo_ver, if appropriate
 packageHasNamespace <- function(package, package.lib) {
@@ -844,6 +818,36 @@ packageHasNamespace <- function(package, package.lib) {
 parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
     namespaceFilePath <- function(package, package.lib)
         file.path(package.lib, package, "NAMESPACE")
+
+     # These two functions are essentially local to the parsing of the namespace file
+     # and don't need to be made available to users.  These manipulate the data
+     # from useDynLib() directives for the same DLL to determine how to map
+     # the symbols to R variables.
+    nativeRoutineMap <-
+      # Creates a new NativeRoutineMap.
+      function(useRegistration, symbolNames, fixes) {
+        proto <- list(useRegistration = FALSE,
+                      symbolNames = character(0))
+        class(proto) <- "NativeRoutineMap"
+ 
+        mergeNativeRoutineMaps(proto, useRegistration, symbolNames, fixes)
+      }
+
+    mergeNativeRoutineMaps <-
+      # Merges new settings into a NativeRoutineMap
+      function(map, useRegistration, symbolNames, fixes) {
+        if(!useRegistration)
+          names(symbolNames) <- paste(fixes[1],  names(symbolNames), fixes[2], sep = "")
+        else 
+          map$registrationFixes <- fixes
+ 
+        map$useRegistration <- map$useRegistration || useRegistration
+    
+        map$symbolNames <- c(map$symbolNames, symbolNames)
+
+        map
+      }  
+
     nsFile <- namespaceFilePath(package, package.lib)
     if (file.exists(nsFile))
         directives <- parse(nsFile)
