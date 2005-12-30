@@ -1135,6 +1135,13 @@ guess_category_value (int category, const char *categoryname)
       locale = _nl_locale_name_default ();
       locale_defaulted = 1;
     }
+#ifdef WIN32
+  /* Need to translate some Windows locale names */
+  if(strcmp(locale, "chs") == 0) locale = "zh_CN";
+  if(strcmp(locale, "chinese") == 0) locale = "zh_TW";
+  if(strcmp(locale, "cht") == 0) locale = "zh_TW";
+  if(strcmp(locale, "ptb") == 0) locale = "pt_BR";
+#endif
 #endif
 
   /* Ignore LANGUAGE and its system-dependent analogon if the locale is set

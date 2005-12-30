@@ -1564,8 +1564,12 @@ This can be overridden first by the setting of the environment variable
 @env{LANGUAGE} and then by the environment variables @env{LC_ALL},
 @env{LC_MESSAGES} and @env{LANG}. (The last three are normally used to
 set the locale and so should not be needed, but the first is only used
-to select the language for messages.)  The code tries hard to map locale
-names to languages, even on Windows.
+to select the language for messages.)  The code tries hard to map
+locales to languages, but on some systems (notably Windows) the locale
+names needed for the environment variable @env{LC_ALL} do not all
+correspond to XPG language names and so @env{LANGUAGE} may need to be
+set.  (One example is @samp{LC_ALL=es} on Windows which sets the locale
+to Estonian and the language to Spanish.)
 
 Note that you should not expect to be able to change the language once R
 is running, and so @env{LC_MESSAGES} is not supported by
