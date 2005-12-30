@@ -658,6 +658,7 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 
 /* need this defined even if not used for non-MBCS since grDevices
    is compiled with SUPPORT_MBCS true */
+#ifdef SUPPORT_MBCS
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width)
 {
@@ -715,7 +716,13 @@ void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     }
     SelectObject(dc, old);
 }
-
+#else
+void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
+		  int *width)
+{
+    gcharmetric(d, f, c, ascent, descent, width);
+}
+#endif
 
 font gnewfont(drawing d, char *face, int style, int size, double rot)
 {
