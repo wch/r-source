@@ -396,6 +396,38 @@ static RETSIGTYPE handleInterrupt(int dummy)
     signal(SIGINT, handleInterrupt);
 }
 
+
+#ifdef Win32
+static int num_caught = 0;
+
+static void win32_segv(int signum)
+{
+    /* NB: stack overflow is not an access violation on Win32 */
+    {   /* A simple customized print of the traceback */
+	SEXP trace, p, q;
+	int line = 1, i;
+	PROTECT(trace = R_GetTraceback(0));
+	if(trace != R_NilValue) {
+	    REprintf("\nTraceback:\n");
+	    for(p = trace; p != R_NilValue; p = CDR(p), line++) {
+		q = CAR(p); /* a character vector */
+		REprintf("%2d: ", line);
+		for(i = 0; i < LENGTH(q); i++)
+		    REprintf("%s", CHAR(STRING_ELT(q, i)));
+		REprintf("\n");
+	    }
+	    UNPROTECT(1);
+	}
+    }
+    num_caught++;
+    if(num_caught < 10) signal(signum, win32_segv);
+    if(signum == SIGILL)  
+	error("caught access violation - continue with care");
+    else
+	error("caught access violation - continue with care");
+}
+#endif
+
 #if defined(HAVE_SIGALTSTACK) && defined(HAVE_SIGACTION) && defined(HAVE_SIGEMPTYSET)
 
 /* NB: this really isn't safe, but suffices for experimentation for now.
@@ -429,9 +461,42 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 
     /* Do not translate these messages */
     REprintf("\n *** caught %s ***\n", 
+	     signum == SIGILL ? "illegal operation" : 
 	     signum == SIGBUS ? "bus error" : "segfault");
     if(ip != (siginfo_t *)0) {
-	if(signum == SIGBUS)
+	if(signum == SIGILL) {
+	    
+	    switch(ip->si_code) {
+#ifdef ILL_ILLOPC
+	    case ILL_ILLOPC:
+		s = "illegal opcode";
+		break;
+#endif
+#ifdef ILL_ILLOPN
+	    case ILL_ILLOPN:
+		s = "illegal operand";
+		break;
+#endif
+#ifdef ILL_ILLADR
+	    case ILL_ILLADR:
+		s = "illegal addressing mode";
+		break;
+#endif
+#ifdef ILL_ILLTRP
+	    case ILL_ILLTRP:
+		s = "illegal trap";
+		break;
+#endif
+#ifdef ILL_COPROC
+	    case ILL_COPROC:
+		s = "coprocessor error";
+		break;
+#endif
+	    default:
+		s = "unknown";
+		break;
+	    }
+	} else if(signum == SIGBUS)
 	    switch(ip->si_code) {
 #ifdef BUS_ADRALN
 	    case BUS_ADRALN:
@@ -539,6 +604,7 @@ static void init_signal_handlers()
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
     sigaction(SIGSEGV, &sa, NULL);
+    sigaction(SIGILL, &sa, NULL);
 #ifdef SIGBUS
     sigaction(SIGBUS, &sa, NULL);
 #endif
@@ -557,6 +623,9 @@ static void init_signal_handlers()
     signal(SIGUSR2, onsigusr2);
 #ifndef Win32
     signal(SIGPIPE, SIG_IGN);
+#else
+    signal(SIGSEGV, win32_segv);
+    signal(SIGILL, win32_segv);
 #endif
 }
 #endif
