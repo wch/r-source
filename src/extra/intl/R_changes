@@ -31,7 +31,7 @@ BDR
 
 diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/dcigettext.c ./dcigettext.c
 --- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/dcigettext.c	2005-05-20 21:06:17.000000000 +0100
-+++ ./dcigettext.c	2005-01-27 20:05:32.226296000 +0000
++++ ./dcigettext.c	2005-12-30 11:07:37.175948000 +0000
 @@ -837,13 +837,11 @@
      }
  
@@ -105,27 +105,43 @@ diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/dcigettext.c .
  
  	    resize_freemem:
  	      /* We must allocate a new buffer or resize the old one.  */
+@@ -1162,6 +1135,13 @@
+       locale = _nl_locale_name_default ();
+       locale_defaulted = 1;
+     }
++#ifdef WIN32
++  /* Need to translate some Windows locale names */
++  if(strcmp(locale, "chs") == 0) locale = "zh_CN";
++  if(strcmp(locale, "chinese") == 0) locale = "zh_TW";
++  if(strcmp(locale, "cht") == 0) locale = "zh_TW";
++  if(strcmp(locale, "ptb") == 0) locale = "pt_BR";
++#endif
+ #endif
+ 
+   /* Ignore LANGUAGE and its system-dependent analogon if the locale is set
 diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/finddomain.c ./finddomain.c
 --- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/finddomain.c	2005-05-20 21:06:45.000000000 +0100
-+++ ./finddomain.c	2005-12-18 16:19:44.709663000 +0000
-@@ -59,7 +59,7 @@
++++ ./finddomain.c	2005-12-27 11:07:32.660418000 +0000
+@@ -59,7 +59,9 @@
    const char *special;
    const char *sponsor;
    const char *revision;
 -  const char *alias_value;
++#ifdef NOT_USED
 +  const char *alias_value = NULL;
++#endif
    int mask;
  
    /* LOCALE can consist of up to four recognized parts for the XPG syntax:
-@@ -111,6 +111,7 @@
+@@ -111,6 +113,7 @@
        /* NOTREACHED */
      }
  
-+#ifndef WIN32 /* not used on Windows */
++#ifdef NOT_USED /* R change */
    /* See whether the locale value is an alias.  If yes its value
       *overwrites* the alias name.  No test for the original value is
       done.  */
-@@ -130,6 +131,7 @@
+@@ -130,6 +133,7 @@
        memcpy (locale, alias_value, len);
  #endif
      }
@@ -133,11 +149,11 @@ diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/finddomain.c .
  
    /* Now we determine the single parts of the locale name.  First
       look for the language.  Termination symbols are `_' and `@' if
-@@ -163,8 +165,10 @@
+@@ -163,8 +167,10 @@
      }
  
    /* The room for an alias was dynamically allocated.  Free it now.  */
-+#ifndef WIN32 /* not used on Windows */
++#ifdef NOT_USED
    if (alias_value != NULL)
 -    free (locale);
 +      free (locale);
@@ -262,7 +278,7 @@ diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/loadmsgcat.c .
  /* Load the message catalogs specified by FILENAME.  If it is no valid
 diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/localcharset.c ./localcharset.c
 --- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/localcharset.c	2005-05-20 21:07:51.000000000 +0100
-+++ ./localcharset.c	2005-12-18 16:19:43.199667000 +0000
++++ ./localcharset.c	2005-12-30 11:07:37.105949000 +0000
 @@ -115,104 +115,7 @@
    if (cp == NULL)
      {
@@ -369,6 +385,38 @@ diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/localcharset.c
  #else
  
  # if defined VMS
+@@ -269,6 +172,10 @@
+   return cp;
+ }
+ 
++#ifdef WIN32
++# include <locale.h>
++#endif
++
+ /* Determine the current locale's character encoding, and canonicalize it
+    into one of the canonical names listed in config.charset.
+    The result must not be freed; it is statically allocated.
+@@ -325,9 +232,19 @@
+ 
+   static char buf[2 + 10 + 1];
+ 
+-  /* Woe32 has a function returning the locale's codepage as a number.  */
++  /* Woe32 has a function returning the locale's codepage as a number.
+   sprintf (buf, "CP%u", GetACP ());
+   codeset = buf;
++  */
++  /* But that is the system codepage, not that for the current locale */
++  {
++      char *ctype = setlocale(LC_CTYPE, NULL), *p;
++      p = strrchr(ctype, '.');
++      if(p && isdigit(p[1])) {
++	  sprintf (buf, "CP%s", p + 1);
++      } else sprintf (buf, "CP%u", GetACP ());
++      codeset = buf;
++  }
+ 
+ #elif defined OS2
+ 
 diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/printf-args.c ./printf-args.c
 --- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/printf-args.c	2005-05-20 21:09:09.000000000 +0100
 +++ ./printf-args.c	2005-12-18 16:19:45.799657000 +0000
