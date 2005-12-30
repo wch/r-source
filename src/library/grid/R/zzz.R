@@ -17,7 +17,7 @@ assign(".GRID.STATE", vector("list", 64), envir = .GridEvalEnv)
 {
     ## want eval in C code to see unexported objects
     environment(.GridEvalEnv) <- asNamespace("grid")
-    .Call("L_initGrid", .GridEvalEnv, PACKAGE="grid")
+    .Call(L_initGrid, .GridEvalEnv)
     .grid.loaded <<- TRUE
 }
 
@@ -29,7 +29,7 @@ assign(".GRID.STATE", vector("list", 64), envir = .GridEvalEnv)
         ## Not very friendly to other registered graphics systems
         ## but its safety first for now
         graphics.off()
-        .Call("L_killGrid", PACKAGE="grid")
+        .Call(L_killGrid)
     }
     library.dynam.unload("grid", libpath)
 }

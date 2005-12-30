@@ -9,7 +9,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     {
         par <- as.double(fixed)
         par[mask] <- p
-        .Call("arma0fa", G, par, PACKAGE = "stats")
+        .Call(R_arma0fa, G, par)
     }
 
     arCheck <- function(ar)
@@ -132,10 +132,10 @@ arima0 <- function(x, order = c(0, 0, 0),
 
     storage.mode(x) <- storage.mode(xreg) <- "double"
     if(method == "CSS") transform.pars <- 0
-    G <- .Call("setup_starma", as.integer(arma), x, n.used, xreg,
+    G <- .Call(R_setup_starma, as.integer(arma), x, n.used, xreg,
                ncxreg, delta, transform.pars > 0,
-               ncond - (n - n.used), PACKAGE = "stats")
-    on.exit(.Call("free_starma", G, PACKAGE = "stats"))
+               ncond - (n - n.used))
+    on.exit(.Call(R_free_starma, G))
 
     if(!is.null(init)) {
         if(length(init) != length(init0))
@@ -160,12 +160,12 @@ arima0 <- function(x, order = c(0, 0, 0),
                 ind <- sum(arma[1:3]) + 1:arma[4]
                 init[ind] <- maInvert(init[ind])
             }
-            init <- .Call("Invtrans", G, as.double(init), PACKAGE = "stats")
+            init <- .Call(R_Invtrans, G, as.double(init))
         }
     } else init <- init0
 
 
-    .Call("Starma_method", G, method == "CSS", PACKAGE = "stats")
+    .Call(R_Starma_method, G, method == "CSS")
     if(!("parscale" %in% names(optim.control)))
        optim.control$parscale <- parscale[mask]
     res <- optim(init[mask], arma0f, method = "BFGS",
@@ -179,14 +179,14 @@ arima0 <- function(x, order = c(0, 0, 0),
         cf[mask] <- coef
         ## do it this way to ensure hessian was computed inside
         ## stationarity region
-        A <- .Call("Gradtrans", G, as.double(cf), PACKAGE = "stats")[mask, mask]
+        A <- .Call(R_Gradtrans, G, as.double(cf))[mask, mask]
         var <- t(A) %*% solve(res$hessian*length(x)) %*% A
-        coef <- .Call("Dotrans", G, as.double(cf), PACKAGE = "stats")[mask]
-        .Call("set_trans", G, 0, PACKAGE = "stats")
+        coef <- .Call(R_Dotrans, G, as.double(cf))[mask]
+        .Call(R_set_trans, G, 0)
     } else var <- solve(res$hessian*length(x))
     arma0f(coef)  # reset pars
-    sigma2 <- .Call("get_s2", G, PACKAGE = "stats")
-    resid <- .Call("get_resid", G, PACKAGE = "stats")
+    sigma2 <- .Call(R_get_s2, G)
+    resid <- .Call(R_get_resid, G)
     tsp(resid) <- xtsp
     class(resid) <- "ts"
     n.used <- sum(!is.na(resid))
@@ -286,12 +286,12 @@ predict.arima0 <-
             warning("seasonal MA part of model is not invertible")
     }
     storage.mode(data) <- "double"
-    G <- .Call("setup_starma", as.integer(arma), data, n, rep(0, n),
-               0, -1, 0, 0, PACKAGE = "stats")
-    on.exit(.Call("free_starma", G, PACKAGE = "stats"))
-    .Call("Starma_method", G, TRUE, PACKAGE = "stats")
-    .Call("arma0fa", G, as.double(coefs), PACKAGE = "stats")
-    z <- .Call("arma0_kfore", G, arma[6], arma[7], n.ahead, PACKAGE = "stats")
+    G <- .Call(R_setup_starma, as.integer(arma), data, n, rep(0, n),
+               0, -1, 0, 0)
+    on.exit(.Call(R_free_starma, G))
+    .Call(R_Starma_method, G, TRUE)
+    .Call(R_arma0fa, G, as.double(coefs))
+    z <- .Call(R_arma0_kfore, G, arma[6], arma[7], n.ahead)
     pred <- ts(z[[1]] + xm, start = xtsp[2] + deltat(data),
                frequency = xtsp[3])
     if(se.fit) {

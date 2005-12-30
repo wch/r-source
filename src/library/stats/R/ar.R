@@ -112,12 +112,12 @@ ar.yw.default <-
     } else {
         ## univariate case
         r <- as.double(drop(xacf))
-        z <- .Fortran("eureka",
+        z <- .Fortran(R_eureka,
                       as.integer(order.max),
                       r, r,
                       coefs=double(order.max^2),
                       vars=double(order.max),
-                      double(order.max), PACKAGE="stats")
+                      double(order.max))
         coefs <- matrix(z$coefs, order.max, order.max)
         partialacf <- array(diag(coefs), dim=c(order.max, 1, 1))
         var.pred <- c(r[1], z$vars)
@@ -226,10 +226,10 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
             pred <- x[n+(1:n.ahead)]
             if(se.fit) {
                 npsi <- n.ahead - 1
-                psi <- .C("artoma",
+                psi <- .C(R_artoma,
                         as.integer(object$order), as.double(ar),
                         psi = double(npsi+object$order+1),
-                        as.integer(npsi), PACKAGE="stats")$psi[1:npsi]
+                        as.integer(npsi))$psi[1:npsi]
                 vars <- cumsum(c(1, psi^2))
                 se <- sqrt(object$var.pred*vars)[1:n.ahead]
             }

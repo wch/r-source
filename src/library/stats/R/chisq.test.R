@@ -47,7 +47,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	dimnames(E) <- dimnames(x)
 	if (simulate.p.value && all(sr > 0) && all(sc > 0)) {
 	    setMETH()
-	    tmp <- .C("chisqsim",
+	    tmp <- .C(R_chisqsim,
 		      as.integer(nr),
 		      as.integer(nc),
 		      as.integer(sr),
@@ -58,8 +58,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 		      integer(nr * nc),
 		      double(n + 1),
 		      integer(nc),
-		      results = double(B),
-		      PACKAGE = "stats")
+		      results = double(B))
 	    ## Sorting before summing may look strange, but seems to be
 	    ## a sensible way to deal with rounding issues (PR#3486):
 	    STATISTIC <- sum(sort((x - E) ^ 2 / E, decreasing = TRUE))

@@ -25,7 +25,7 @@
 
 
 numericDeriv <- function(expr, theta, rho = parent.frame()) {
-    val <- .Call("numeric_deriv", expr, theta, rho, PACKAGE="stats")
+    val <- .Call(R_numeric_deriv, expr, theta, rho)
     valDim <- dim(val)
     if (!is.null(valDim)) {
         if (valDim[length(valDim)] == 1)
@@ -377,7 +377,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
     p <- length(par <- as.double(start))
     iv <- integer(4*p + 82)
     v <- double(105 + (p * (2 * p + 20)))
-    .Call("port_ivset", 1, iv, v, PACKAGE = "stats")
+    .Call(R_port_ivset, 1, iv, v)
     if (length(control)) {
         control $tol <- control$minFactor <- NULL
         nms <- names(control)
@@ -409,9 +409,9 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
         upp <- rep(as.double(upper), length = length(par))
     }
     ## Call driver routine
-    .Call("port_nlsb", m,
+    .Call(R_port_nlsb, m,
           d = rep(as.double(scale), length = length(par)),
-          df = m$gradient(), iv, v, low, upp, PACKAGE = "stats")
+          df = m$gradient(), iv, v, low, upp)
     iv
 }
 
@@ -490,7 +490,7 @@ nls <-
     if (algorithm != "port") {
         if (!missing(lower) || !missing(upper))
             warning('Upper or lower bounds ignored unless algorithm = "port"')
-        nls.out <- list(m = .Call("nls_iter", m, ctrl, trace, PACKAGE = "stats"),
+        nls.out <- list(m = .Call(R_nls_iter, m, ctrl, trace),
                         data = substitute(data), call = match.call())
         ## we need these (evaluated) for profiling
         nls.out$call$control <- ctrl

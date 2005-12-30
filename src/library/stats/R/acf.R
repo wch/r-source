@@ -25,11 +25,11 @@ acf <-
     if(demean) x <- sweep(x, 2, colMeans(x, na.rm = TRUE))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
-    acf <- array(.C("acf",
+    acf <- array(.C(R_acf,
                     as.double(x), as.integer(sampleT), as.integer(nser),
                     as.integer(lag.max), as.integer(type=="correlation"),
-                    acf=double((lag.max+1) * nser * nser), NAOK = TRUE,
-                    PACKAGE = "stats")$acf, c(lag.max + 1, nser, nser))
+                    acf=double((lag.max+1) * nser * nser), NAOK = TRUE
+                    )$acf, c(lag.max + 1, nser, nser))
     lag <- outer(0:lag.max, lag/x.freq)
     acf.out <- structure(.Data = list(acf = acf, type = type,
         n.used = sampleT, lag = lag, series = series, snames = colnames(x)),
@@ -69,10 +69,10 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
         x <- scale(x, TRUE, FALSE)
         acf <- drop(acf(x, lag.max = lag.max, plot = FALSE,
                         na.action = na.action)$acf)
-        pacf <- array(.C("uni_pacf",
+        pacf <- array(.C(R_uni_pacf,
                          as.double(acf),
                          pacf = double(lag.max),
-                         as.integer(lag.max), PACKAGE="stats")$pacf,
+                         as.integer(lag.max))$pacf,
                       dim=c(lag.max,1,1))
         lag <- array((1:lag.max)/x.freq, dim=c(lag.max,1,1))
         snames <- NULL

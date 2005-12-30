@@ -38,8 +38,8 @@ ARMAacf <- function(ar = numeric(0), ma = numeric(0), lag.max = r,
         Acf <- Acf/Acf[1]
     }
     names(Acf) <- 0:lag.max
-    if(pacf) .C("uni_pacf", as.double(Acf), pacf = double(lag.max),
-                as.integer(lag.max), PACKAGE = "stats")$pacf
+    if(pacf) .C(R_uni_pacf, as.double(Acf), pacf = double(lag.max),
+                as.integer(lag.max))$pacf
     else Acf
 }
 
@@ -48,13 +48,12 @@ acf2AR <- function(acf)
     r <- as.double(drop(acf))
     order.max <- length(r) - 1
     if(order.max <= 0) stop("'acf' must be of length two or more")
-    z <- .Fortran("eureka", as.integer(order.max), r, r,
+    z <- .Fortran(R_eureka, as.integer(order.max), r, r,
                   coefs = double(order.max^2), vars = double(order.max),
-                  double(order.max), PACKAGE = "stats")
+                  double(order.max))
     nm <- paste("ar(",1:order.max, ")", sep="")
     matrix(z$coefs, order.max, order.max, dimnames=list(nm, 1:order.max))
 }
 
 ARMAtoMA <- function(ar = numeric(0), ma = numeric(0), lag.max)
-    .Call("ARMAtoMA", as.double(ar), as.double(ma), as.integer(lag.max),
-          PACKAGE ="stats")
+    .Call(R_ARMAtoMA, as.double(ar), as.double(ma), as.integer(lag.max))

@@ -1,4 +1,4 @@
-useDynLib("grid")
+useDynLib("grid", .registration = TRUE)
 
 import(grDevices)
 

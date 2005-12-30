@@ -42,7 +42,7 @@ stl <- function(x, s.window,
     l.degree <- deg.check(l.degree)
     if(is.null(t.window))
 	t.window <- nextodd(ceiling( 1.5 * period / (1- 1.5/s.window)))
-    z <- .Fortran("stl",
+    z <- .Fortran(R_stl,
 		  as.double(x),
 		  as.integer(n),
 		  as.integer(period),
@@ -58,8 +58,7 @@ stl <- function(x, s.window,
 		  weights = double(n),
 		  seasonal = double(n),
 		  trend = double(n),
-		  double((n+2*period)*5),
-		  PACKAGE="stats")
+		  double((n+2*period)*5))
     if(periodic) {
 	## make seasonal part exactly periodic
 	which.cycle <- cycle(x)

@@ -152,7 +152,7 @@ function(x, delim = c("\{", "\}"), syntax = "Rd")
     if(syntax != "Rd")
         stop("only Rd syntax is currently supported")
 
-    .Call("delim_match", x, delim, PACKAGE = "tools")
+    .Call(delim_match, x, delim)
 }
 
 

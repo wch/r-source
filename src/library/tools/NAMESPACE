@@ -1,4 +1,4 @@
-useDynLib(tools)
+useDynLib(tools, .registration = TRUE)
 
 export("Rdindex",
        "checkDocFiles", "checkDocStyle", "checkFF", "checkMD5sums",

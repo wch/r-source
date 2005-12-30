@@ -1,4 +1,14 @@
-useDynLib(grDevices)
+# Explicitly enumerate the symbols here that are in the registration information
+# rather than use .registration as there are symbols that conflict with functions
+# on Windows, i.e. savePlot.  devga and Quartz are also not listed
+# here since they are conditional as is savePlot.  Calls to those are currently
+# left in name, PACKAGE pairs.
+# We can add additional useDynLib() directives within the conditional constructs
+# below to add these and can use a different prefix.
+
+useDynLib(grDevices, R_chull,
+          PicTeX, PostScript, XFig, PDF, 
+          Type1FontInUse, CIDFontInUse, R_GD_nullDevice)
 
 export(Hershey, boxplot.stats, check.options, chull,
        CIDFont, 

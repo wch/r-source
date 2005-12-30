@@ -98,8 +98,7 @@ profiler.nls <- function(fitted, ...)
                  fittedModel$setVarying(vary)
                  fittedModel$setPars(startPars[vary])
                  profiledModel <- if(algorithm != "port")
-                     .Call("nls_iter", fittedModel, ctrl, trace,
-                           PACKAGE = "stats")
+                     .Call(R_nls_iter, fittedModel, ctrl, trace)
                  else {
                      nls_port_fit(fittedModel, startPars[vary],
                                   lower, upper, ctrl, trace)

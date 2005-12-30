@@ -170,11 +170,11 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
         old$family <- family
     }
 
-    .External("PostScript",
+    .External(PostScript,
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
               old$onefile, old$pagecentre, old$print.it, old$command,
-              title, fonts, PACKAGE = "grDevices")
+              title, fonts)
     # if .ps.prolog is searched for and fails, NULL got returned.
     invisible()
 }
@@ -187,10 +187,10 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
 
-    .External("XFig",
+    .External(XFig,
               file, old$paper, old$family, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
-              old$onefile, old$pagecentre, encoding, PACKAGE = "grDevices")
+              old$onefile, old$pagecentre, encoding)
     invisible()
 }
 
@@ -239,10 +239,10 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
         version <- as.integer(strsplit(version, "[.]")[[1]])
     else
         stop("invalid PDF version")
-    .External("PDF",
+    .External(PDF,
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               width, height, old$pointsize, old$onefile, old$pagecentre, title,
-              fonts, version[1], version[2], PACKAGE = "grDevices")
+              fonts, version[1], version[2])
     invisible()
 }
 
@@ -346,10 +346,8 @@ isPDF <- function(fontDBname) {
 
 checkFontInUse <- function(names, fontDBname) {
     for (i in names)
-        if (.Call("Type1FontInUse", i, isPDF(fontDBname),
-                  PACKAGE = "grDevices") ||
-            .Call("CIDFontInUse", i, isPDF(fontDBname),
-                  PACKAGE = "grDevices"))
+        if (.Call(Type1FontInUse, i, isPDF(fontDBname))
+            || .Call(CIDFontInUse, i, isPDF(fontDBname)))
             stop(gettextf("font %s already in use", i), domain = NA)
 }
 

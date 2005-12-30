@@ -97,7 +97,7 @@ smooth.spline <-
     iparms <- as.integer(c(icrit,ispar, contr.sp$maxit))
     names(iparms) <- c("icrit", "ispar", "iter")
 
-    fit <- .Fortran("qsbart",		# code in ../src/qsbart.f
+    fit <- .Fortran(R_qsbart,		# code in ../src/qsbart.f
 		    as.double(penalty),
 		    as.double(dofoff),
 		    x = as.double(xbar),
@@ -119,7 +119,7 @@ smooth.spline <-
 		    ld4  = as.integer(4),
 		    ldnk = as.integer(1),
 		    ier = integer(1),
-		    DUP = FALSE, PACKAGE="stats"
+		    DUP = FALSE
 		    )[c("coef","ty","lev","spar","parms","crit","iparms","ier")]
 
     lev <- fit$lev
@@ -236,7 +236,7 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
     n <- sum(interp) # number of xs in [0,1]
     y <- xs
     if(any(interp))
-	y[interp] <- .Fortran("bvalus",
+	y[interp] <- .Fortran(R_bvalus,
 			      n	  = as.integer(n),
 			      knot= as.double(object$knot),
 			      coef= as.double(object$coef),
@@ -244,7 +244,7 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 			      x	  = as.double(xs[interp]),
 			      s	  = double(n),
 			      order= as.integer(deriv),
-			      DUP = FALSE, PACKAGE="stats")$s
+			      DUP = FALSE)$s
     if(any(extrap)) {
 	xrange <- c(object$min, object$min + object$range)
 	if(deriv == 0) {
@@ -291,8 +291,8 @@ supsmu <-
     leno <- length(ord)
     if(diff <- n - leno)
 	warning(diff, " observation(s) with NAs, NaNs and/or Infs deleted")
-    .Fortran("setsmu", PACKAGE = "stats")
-    smo <- .Fortran("supsmu",
+    .Fortran(R_setsmu)
+    smo <- .Fortran(R_supsmu,
 		    as.integer(leno),
 		    as.double(xo),
 		    as.double(y[ord]),
@@ -301,8 +301,7 @@ supsmu <-
 		    as.double(span),
 		    as.double(bass),
 		    smo=double(leno),
-		    double(n*7), double(1),
-		    PACKAGE = "stats")$smo
+		    double(n*7), double(1))$smo
     ## eliminate duplicate xsort values and corresponding smoothed values
     dupx <- duplicated(xo)
     list(x = xo[!dupx], y = smo[!dupx])

@@ -1,4 +1,5 @@
-useDynLib(stats)
+ # Refer to all C/Fortran routines by their name prefixed by R_
+useDynLib(stats, .registration = TRUE, .fixes = "R_")
 
 # exportPattern("^[^\\.]")
 export(.checkMFClasses, .getXlevels, .MFclass)

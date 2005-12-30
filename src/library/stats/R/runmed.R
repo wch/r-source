@@ -50,7 +50,7 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
             ", iend=",iend,")\n")
     res <- switch(algorithm,
                   Turlach = {
-                      .C("Trunmed",
+                      .C(R_Trunmed,
                          n,
                          k,
                          as.double(x),
@@ -60,18 +60,16 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
                          tmp3 = double (2*k +1),# window []
                          as.integer(iend),
                          as.integer(print.level),
-                         PACKAGE = "stats",
                          DUP = FALSE)$ rmed
                   },
                   Stuetzle = {
-                      .C("Srunmed",
+                      .C(R_Srunmed,
                          as.double(x),
                          smo = double(n),
                          n,
                          k,
                          as.integer(iend),
                          debug = (print.level > 0),
-                         PACKAGE = "stats",
                          DUP = FALSE)$ smo
                   })
     if(endrule == "median")

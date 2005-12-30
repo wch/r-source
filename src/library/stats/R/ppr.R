@@ -57,12 +57,11 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
     msmod <- ml*(p+q+2*n)+q+7+ml+1	# for asr
     nsp <- n*(q+15)+q+3*p
     ndp <- p*(p+1)/2+6*p
-    .Fortran("setppr",
+    .Fortran(R_setppr,
 	     as.double(span), as.double(bass), as.integer(optlevel),
-	     as.integer(ism), as.double(df), as.double(gcvpen),
-	     PACKAGE="stats"
+	     as.integer(ism), as.double(df), as.double(gcvpen)
 	     )
-    Z <- .Fortran("smart",
+    Z <- .Fortran(R_smart,
 		  as.integer(ml), as.integer(mu),
 		  as.integer(p), as.integer(q), as.integer(n),
 		  as.double(weights),
@@ -72,8 +71,7 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
 		  smod=double(msmod), as.integer(msmod),
 		  double(nsp), as.integer(nsp),
 		  double(ndp), as.integer(ndp),
-		  edf=double(ml),
-		  PACKAGE="stats"
+		  edf=double(ml)
 		  )
     smod <- Z$smod
     ys <- smod[q+6]
@@ -82,13 +80,12 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
 		    dimnames=list(xnames, tnames))
     beta <- matrix(smod[q+6+p*ml + 1:(q*mu)], q, mu,
 		   dimnames=list(ynames, tnames))
-    fitted <- drop(matrix(.Fortran("pppred",
+    fitted <- drop(matrix(.Fortran(R_pppred,
 				   as.integer(nrow(x)),
 				   as.double(x),
 				   as.double(smod),
 				   y = double(nrow(x)*q),
-				   double(2*smod[4]),
-				   PACKAGE="stats")$y,
+				   double(2*smod[4]))$y,
 			  ncol=q, dimnames=dimnames(y)))
     jt <- q + 7 + ml*(p+q+2*n)
     gof <- smod[jt] * n * ys^2
@@ -192,13 +189,12 @@ predict.ppr <- function(object, newdata, ...)
     if(ncol(x) != object$p) stop("wrong number of columns in 'x'")
     res <- matrix(NA, length(keep), object$q,
                   dimnames = list(rn, object$ynames))
-    res[keep, ] <- matrix(.Fortran("pppred",
+    res[keep, ] <- matrix(.Fortran(R_pppred,
                                    as.integer(nrow(x)),
                                    as.double(x),
                                    as.double(object$smod),
                                    y = double(nrow(x)*object$q),
-                                   double(2*object$smod[4]),
-                                   PACKAGE="stats"
+                                   double(2*object$smod[4])
                                    )$y, ncol=object$q)
     drop(res)
 }

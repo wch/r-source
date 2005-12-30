@@ -30,31 +30,28 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
     fSD <- function(h, x, alph2, c1, n, d)
         (c1/SDh(x, alph2 * h^(5/7), n, d))^(1/5) - h
     SDh <- function(x, h, n, d)
-        .C("band_phi4_bin",
+        .C(R_band_phi4_bin,
            as.integer(n),
            as.integer(length(x)),
            as.double(d),
            x,
            as.double(h),
-           u = double(1),
-           PACKAGE="stats")$u
+           u = double(1))$u
     TDh <- function(x, h, n, d)
-        .C("band_phi6_bin",
+        .C(R_band_phi6_bin,
            as.integer(n),
            as.integer(length(x)),
            as.double(d),
            x,
            as.double(h),
-           u = double(1),
-           PACKAGE="stats")$u
+           u = double(1))$u
 
-    Z <- .C("band_den_bin",
+    Z <- .C(R_band_den_bin,
             as.integer(n),
             as.integer(nb),
             d = double(1),
             x,
-            cnt = integer(nb),
-            PACKAGE="stats")
+            cnt = integer(nb))
     d <- Z$d; cnt <- as.integer(Z$cnt)
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     scale <- min(sqrt(var(x)), IQR(x)/1.349)
@@ -86,24 +83,22 @@ bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
     if(!is.numeric(x)) stop("invalid 'x'")
 
     fucv <- function(h, x, n, d)
-        .C("band_ucv_bin",
+        .C(R_band_ucv_bin,
            as.integer(n),
            as.integer(length(x)),
            as.double(d),
            x,
            as.double(h),
-           u = double(1),
-           PACKAGE="stats")$u
+           u = double(1))$u
 
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     storage.mode(x) <- "double"
-    Z <- .C("band_den_bin",
+    Z <- .C(R_band_den_bin,
             as.integer(n),
             as.integer(nb),
             d = double(1),
             x,
-            cnt = integer(nb),
-            PACKAGE="stats")
+            cnt = integer(nb))
     d <- Z$d; cnt <- as.integer(Z$cnt)
     h <- optimize(fucv, c(lower, upper), tol=0.1*lower,
                   x=cnt, n=n, d=d)$minimum
@@ -118,25 +113,22 @@ bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
     if(!is.numeric(x)) stop("invalid 'x'")
 
     fbcv <- function(h, x, n, d)
-        .C("band_bcv_bin",
+        .C(R_band_bcv_bin,
            as.integer(n),
            as.integer(length(x)),
            as.double(d),
            x,
            as.double(h),
-           u = double(1),
-           PACKAGE="stats")$u
+           u = double(1))$u
 
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     storage.mode(x) <- "double"
-    Z <- .C("band_den_bin",
+    Z <- .C(R_band_den_bin,
             as.integer(n),
             as.integer(nb),
             d = double(1),
             x,
-            cnt = integer(nb),
-            PACKAGE="stats"
-            )
+            cnt = integer(nb))
     d <- Z$d; cnt <- as.integer(Z$cnt)
     h <- optimize(fbcv, c(lower, upper), tol=0.1*lower,
                   x=cnt, n=n, d=d)$minimum

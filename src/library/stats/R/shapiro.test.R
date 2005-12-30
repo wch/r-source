@@ -11,7 +11,7 @@ shapiro.test <- function(x) {
 	x <- x/rng # rescale to avoid ifault=6
     n2 <- n %/% 2
     ## C Code: Use the first n1 observations as uncensored
-    sw <- .C("swilk",
+    sw <- .C(R_swilk,
 	     init = FALSE,
 	     as.single(x),
 	     n,
@@ -20,7 +20,7 @@ shapiro.test <- function(x) {
 	     a = single(n2),
 	     w	= double(1),
 	     pw = double(1),
-	     ifault = integer(1), PACKAGE = "stats")
+	     ifault = integer(1))
     if (sw$ifault && sw$ifault != 7)# 7 *does* happen (Intel Linux)
 	stop(gettextf("ifault=%d. This should not happen", sw$ifault),
              domain = NA)

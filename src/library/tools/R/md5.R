@@ -1,5 +1,5 @@
 md5sum <- function(files)
-    structure(.Call("Rmd5", files, PACKAGE="tools"), names=files)
+    structure(.Call(Rmd5, files), names=files)
 
 .installMD5sums <- function(pkgDir, outDir = pkgDir)
 {

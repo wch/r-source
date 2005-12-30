@@ -18,6 +18,6 @@ is.odd <- function(x) !is.even(x)
 grid.pretty <- function(range) {
   if (!is.numeric(range))
     stop("'range' must be numeric")
-  .Call("L_pretty", range, PACKAGE="grid")
+  .Call(L_pretty, range)
 }
 

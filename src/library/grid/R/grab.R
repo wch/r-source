@@ -27,7 +27,7 @@ vpExists <- function(vp) {
 }
 
 vpExists.viewport <- function(vp) {
-  vp$name %in% ls(env=.Call("L_currentViewport", PACKAGE="grid")$children)
+  vp$name %in% ls(env=.Call(L_currentViewport)$children)
 }
 
 vpExists.vpStack <- function(vp) {
@@ -188,7 +188,7 @@ grid.grab <- function(warn=2, wrap=FALSE, ...) {
 
 grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
   # Start a new null device
-  .Call("R_GD_nullDevice", PACKAGE="grDevices")
+  .Call(R_GD_nullDevice)
   # If something goes wrong, want to revert to the current device
   on.exit(dev.off())
   # Run the graphics code in expr

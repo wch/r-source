@@ -178,7 +178,7 @@ valid.data <- function(units, data) {
 }
 
 valid.units <- function(units) {
-  .Call("validUnits", units, PACKAGE="grid")
+  .Call(validUnits, units)
 }
 
 as.character.unit <- function(unit) {

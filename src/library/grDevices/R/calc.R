@@ -59,7 +59,7 @@ chull <- function(x, y=NULL)
     x <- cbind(X$x, X$y)
     n <- nrow(x)
     if(n == 0) return(integer(0))
-    z <- .C("R_chull",
+    z <- .C(R_chull,
 	    n=as.integer(n),
 	    as.double(x),
 	    as.integer(n),
@@ -68,8 +68,7 @@ chull <- function(x, y=NULL)
 	    integer(n),
 	    ih=integer(n),
 	    nh=integer(1),
-	    il=integer(n),
-	    PACKAGE="grDevices")
+	    il=integer(n))
     rev(z$ih[1:z$nh])
 }
 

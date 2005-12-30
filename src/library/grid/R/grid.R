@@ -284,11 +284,11 @@ grid.prompt <- function(ask) {
   # page 2)
   # This is safe because all that is done is a query and/or
   # set of grid state setting "ask"
-  old.prompt <- .Call("L_getAsk", PACKAGE = "grid")
+  old.prompt <- .Call(L_getAsk)
   if (!missing(ask)) {
     if (!is.logical(ask))
       stop("Invalid 'ask' value")
-    .Call("L_setAsk", ask, PACKAGE = "grid")
+    .Call(L_setAsk, ask)
   }
   old.prompt
 }
@@ -303,12 +303,12 @@ grid.newpage <- function(recording=TRUE) {
   # NOTE that we do NOT do grid.Call here because we have to do
   # things slightly differently if grid.newpage is the first grid operation
   # on a new device
-  .Call("L_newpagerecording", PACKAGE="grid")
-  .Call("L_newpage", PACKAGE="grid")
-  .Call("L_initGPar", PACKAGE="grid")
-  .Call("L_initViewportStack", PACKAGE="grid")
+  .Call(L_newpagerecording)
+  .Call(L_newpage)
+  .Call(L_initGPar)
+  .Call(L_initViewportStack)
   if (recording) {
-    .Call("L_initDisplayList", PACKAGE="grid")
+    .Call(L_initDisplayList)
     for (fun in getHook("grid.newpage"))  {
         if(is.character(fun)) fun <- get(fun)
         try(fun())
@@ -401,14 +401,14 @@ grid.refresh <- function() {
 # .Call.graphics unless you have a good reason and you know what
 # you are doing -- this will be a bit of overkill, but is for safety
 grid.Call <- function(fnname, ...) {
-  .Call("L_gridDirty", PACKAGE="grid")
+  .Call(L_gridDirty)
   .Call(fnname, ..., PACKAGE="grid")
 }
 
 grid.Call.graphics <- function(fnname, ...) {
   # Only record graphics operations on the graphics engine's display
   # list if the engineDLon flag is set
-  engineDLon <- grid.Call("L_getEngineDLon")
+  engineDLon <- grid.Call(L_getEngineDLon)
   if (engineDLon) {
     # NOTE that we need a .Call.graphics("L_gridDirty") so that
     # the the first thing on the engine display list is a dirty
@@ -417,7 +417,7 @@ grid.Call.graphics <- function(fnname, ...) {
     .Call.graphics("L_gridDirty", PACKAGE="grid")
     result <- .Call.graphics(fnname, ..., PACKAGE="grid")
   } else {
-    .Call("L_gridDirty", PACKAGE="grid")
+    .Call(L_gridDirty)
     result <- .Call(fnname, ..., PACKAGE="grid")
   }
   result

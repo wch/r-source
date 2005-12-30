@@ -5,7 +5,7 @@ arima <- function(x, order = c(0, 0, 0),
                   method = c("CSS-ML", "ML", "CSS"), n.cond,
                   optim.control = list(), kappa = 1e6)
 {
-    "%+%" <- function(a, b) .Call("TSconv", a, b, PACKAGE = "stats")
+    "%+%" <- function(a, b) .Call(R_TSconv, a, b)
 
     upARIMA <- function(mod, phi, theta)
     {
@@ -14,7 +14,7 @@ arima <- function(x, order = c(0, 0, 0),
         r <- max(p, q + 1)
         if(p > 0) mod$T[1:p, 1] <- phi
         if(r > 1)
-            mod$Pn[1:r, 1:r] <- .Call("getQ0", phi, theta, PACKAGE = "stats")
+            mod$Pn[1:r, 1:r] <- .Call(R_getQ0, phi, theta)
         else if (p > 0)
             mod$Pn[1, 1] <- 1/(1 - phi^2)
         else
@@ -27,20 +27,20 @@ arima <- function(x, order = c(0, 0, 0),
     arimaSS <- function(y, mod)
     {
         ## next call changes objects a, P, Pn so beware!
-        .Call("ARIMA_Like", y, mod$phi, mod$theta, mod$Delta,
-              mod$a, mod$P, mod$Pn, as.integer(0), TRUE, PACKAGE = "stats")
+        .Call(R_ARIMA_Like, y, mod$phi, mod$theta, mod$Delta,
+              mod$a, mod$P, mod$Pn, as.integer(0), TRUE)
     }
 
     armafn <- function(p, trans)
     {
         par <- coef
         par[mask] <- p
-        trarma <- .Call("ARIMA_transPars", par, arma, trans, PACKAGE = "stats")
+        trarma <- .Call(R_ARIMA_transPars, par, arma, trans)
         Z <- upARIMA(mod, trarma[[1]], trarma[[2]])
         if(ncxreg > 0) x <- x - xreg %*% par[narma + (1:ncxreg)]
         ## next call changes objects a, P, Pn so beware!
-        res <- .Call("ARIMA_Like", x, Z$phi, Z$theta, Z$Delta,
-                     Z$a, Z$P, Z$Pn, as.integer(0), FALSE, PACKAGE = "stats")
+        res <- .Call(R_ARIMA_Like, x, Z$phi, Z$theta, Z$Delta,
+                     Z$a, Z$P, Z$Pn, as.integer(0), FALSE)
         s2 <- res[1]/res[3]
         0.5*(log(s2) + res[2]/res[3])
     }
@@ -49,10 +49,10 @@ arima <- function(x, order = c(0, 0, 0),
     {
         par <- as.double(fixed)
         par[mask] <- p
-        trarma <- .Call("ARIMA_transPars", par, arma, FALSE, PACKAGE = "stats")
+        trarma <- .Call(R_ARIMA_transPars, par, arma, FALSE)
         if(ncxreg > 0) x <- x - xreg %*% par[narma + (1:ncxreg)]
-        res <- .Call("ARIMA_CSS", x, arma, trarma[[1]], trarma[[2]],
-                     as.integer(ncond), FALSE, PACKAGE = "stats")
+        res <- .Call(R_ARIMA_CSS, x, arma, trarma[[1]], trarma[[2]],
+                     as.integer(ncond), FALSE)
         0.5 * log(res)
     }
 
@@ -194,8 +194,7 @@ arima <- function(x, order = c(0, 0, 0),
                 if(!arCheck(init[sum(arma[1:2]) + 1:arma[3]]))
                     stop("non-stationary seasonal AR part")
             if(transform.pars)
-                init <- .Call("ARIMA_Invtrans", as.double(init), arma,
-                              PACKAGE = "stats")
+                init <- .Call(R_ARIMA_Invtrans, as.double(init), arma)
         }
     } else init <- init0
 
@@ -214,13 +213,12 @@ arima <- function(x, order = c(0, 0, 0),
                           res$convergence)
         coef[mask] <- res$par
         ## set model for predictions
-        trarma <- .Call("ARIMA_transPars", coef, arma, FALSE,
-                        PACKAGE = "stats")
+        trarma <- .Call(R_ARIMA_transPars, coef, arma, FALSE)
         mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta, kappa)
         if(ncxreg > 0) x <- x - xreg %*% coef[narma + (1:ncxreg)]
         arimaSS(x, mod)
-        val <- .Call("ARIMA_CSS", x, arma, trarma[[1]], trarma[[2]],
-                     as.integer(ncond), TRUE, PACKAGE = "stats")
+        val <- .Call(R_ARIMA_CSS, x, arma, trarma[[1]], trarma[[2]],
+                     as.integer(ncond), TRUE)
         sigma2 <- val[[1]]
         var <- if(no.optim) numeric(0) else solve(res$hessian * n.used)
     } else {
@@ -241,7 +239,7 @@ arima <- function(x, order = c(0, 0, 0),
             ncond <- 0
         }
         if(transform.pars) {
-            init <- .Call("ARIMA_Invtrans", init, arma, PACKAGE = "stats")
+            init <- .Call(R_ARIMA_Invtrans, init, arma)
             ## enforce invertibility
             if(arma[2] > 0) {
                 ind <- arma[1] + 1:arma[2]
@@ -252,8 +250,7 @@ arima <- function(x, order = c(0, 0, 0),
                 init[ind] <- maInvert(init[ind])
             }
         }
-        trarma <- .Call("ARIMA_transPars", init, arma, transform.pars,
-                        PACKAGE = "stats")
+        trarma <- .Call(R_ARIMA_transPars, init, arma, transform.pars)
         mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta, kappa)
         res <- if(no.optim)
             list(convergence = 0, par = numeric(0),
@@ -290,14 +287,12 @@ arima <- function(x, order = c(0, 0, 0),
             }
             ## do it this way to ensure hessian was computed inside
             ## stationarity region
-            A <- .Call("ARIMA_Gradtrans", as.double(coef), arma,
-                       PACKAGE = "stats")
+            A <- .Call(R_ARIMA_Gradtrans, as.double(coef), arma)
             A <- A[mask, mask]
             var <- t(A) %*% solve(res$hessian * n.used) %*% A
-            coef <- .Call("ARIMA_undoPars", coef, arma, PACKAGE = "stats")
+            coef <- .Call(R_ARIMA_undoPars, coef, arma)
         } else var <- if(no.optim) numeric(0) else solve(res$hessian * n.used)
-        trarma <- .Call("ARIMA_transPars", coef, arma, FALSE,
-                        PACKAGE = "stats")
+        trarma <- .Call(R_ARIMA_transPars, coef, arma, FALSE)
         mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta, kappa)
         val <- if(ncxreg > 0)
             arimaSS(x - xreg %*% coef[narma + (1:ncxreg)], mod)
@@ -438,7 +433,7 @@ makeARIMA <- function(phi, theta, Delta, kappa = 1e6)
     h <- 0
     a <- rep(0, rd)
     Pn <- P <- matrix(0, rd, rd)
-    if(r > 1) Pn[1:r, 1:r] <- .Call("getQ0", phi, theta, PACKAGE = "stats")
+    if(r > 1) Pn[1:r, 1:r] <- .Call(R_getQ0, phi, theta)
     else Pn[1, 1] <- if(p > 0) 1/(1 - phi^2) else 1
     if(d > 0) Pn[cbind(r+1:d, r+1:d)] <- kappa
     return(list(phi=phi, theta=theta, Delta=Delta, Z=Z, a=a, P=P, T=T, V=V,

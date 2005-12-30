@@ -108,7 +108,7 @@ simpleLoess <-
 	    statistics <- if(trace.hat == "exact") "1.approx"
             else "2.approx" # trace.hat == "approximate"
 	surf.stat <- paste(surface, statistics, sep="/")
-	z <- .C("loess_raw", # ../src/loessc.c
+	z <- .C(R_loess_raw, # ../src/loessc.c
 		as.double(y),
 		as.double(x),
 		as.double(weights),
@@ -132,8 +132,7 @@ simpleLoess <-
 		trL = double(1),
 		delta1 = double(1),
 		delta2 = double(1),
-		as.integer(surf.stat == "interpolate/exact"),
-		PACKAGE="stats")
+		as.integer(surf.stat == "interpolate/exact"))
 	if(j==1) {
 	    trace.hat.out <- z$trL
 	    one.delta <- z$delta1
@@ -141,12 +140,11 @@ simpleLoess <-
 	}
 	fitted.residuals <- y - z$fitted.values
 	if(j < iterations)
-	    robust <- .Fortran("lowesw",
+	    robust <- .Fortran(R_lowesw,
 			       as.double(fitted.residuals),
 			       as.integer(N),
 			       robust = double(N),
-			       double(N),
-			       PACKAGE="stats")$robust
+			       double(N))$robust
     }
     if(surface == "interpolate")
     {
@@ -157,16 +155,15 @@ simpleLoess <-
 		       vert=z$vert, vval=z$vval[1:enough])
     }
     if(iterations > 1) {
-	pseudovalues <- .Fortran("lowesp",
+	pseudovalues <- .Fortran(R_lowesp,
 				 as.integer(N),
 				 as.double(y),
 				 as.double(z$fitted.values),
 				 as.double(weights),
 				 as.double(robust),
 				 double(N),
-				 pseudovalues = double(N),
-				 PACKAGE="stats")$pseudovalues
-	zz <- .C("loess_raw",
+				 pseudovalues = double(N))$pseudovalues
+	zz <- .C(R_loess_raw,
 		as.double(pseudovalues),
 		as.double(x),
 		as.double(weights),
@@ -190,8 +187,7 @@ simpleLoess <-
 		trL = double(1),
 		delta1 = double(1),
 		delta2 = double(1),
-		as.integer(0),
-		PACKAGE="stats")
+		as.integer(0))
 	pseudo.resid <- pseudovalues - zz$temp
     }
     sum.squares <- if(iterations <= 1) sum(weights * fitted.residuals^2)
@@ -263,7 +259,7 @@ predLoess <-
     order.drop.sqr <- (2 - drop.square)[order.parametric]
     if(surface == "direct") {
 	if(se) {
-	    z <- .C("loess_dfitse",
+	    z <- .C(R_loess_dfitse,
 		    as.double(y),
 		    as.double(x),
 		    as.double(x.evaluate),
@@ -279,13 +275,12 @@ predLoess <-
 		    as.integer(N),
 		    as.integer(M),
 		    fit = double(M),
-		    L = double(N*M),
-		    PACKAGE="stats")[c("fit", "L")]
+		    L = double(N*M))[c("fit", "L")]
 	    fit <- z$fit
 	    se.fit <- (matrix(z$L^2, M, N)/rep(weights, rep(M,N))) %*% rep(1,N)
 	    se.fit <- drop(s * sqrt(se.fit))
 	} else {
-	    fit <- .C("loess_dfit",
+	    fit <- .C(R_loess_dfit,
 		      as.double(y),
 		      as.double(x),
 		      as.double(x.evaluate),
@@ -298,8 +293,7 @@ predLoess <-
 		      as.integer(D),
 		      as.integer(N),
 		      as.integer(M),
-		      fit = double(M),
-		      PACKAGE="stats")$fit
+		      fit = double(M))$fit
 	}
     }
     else { ## interpolate
@@ -312,18 +306,17 @@ predLoess <-
 	M1 <- sum(inside)
 	fit <- rep(as.numeric(NA), M)
 	if(any(inside))
-	    fit[inside] <- .C("loess_ifit",
+	    fit[inside] <- .C(R_loess_ifit,
 			      as.integer(kd$parameter),
 			      as.integer(kd$a), as.double(kd$xi),
 			      as.double(kd$vert), as.double(kd$vval),
 			      as.integer(M1),
 			      as.double(x.evaluate[inside, ]),
-			      fit = double(M1),
-			      PACKAGE="stats")$fit
+			      fit = double(M1))$fit
 	if(se) {
 	    se.fit <- rep(as.numeric(NA), M)
 	    if(any(inside)) {
-		L <- .C("loess_ise",
+		L <- .C(R_loess_ise,
 			as.double(y),
 			as.double(x),
 			as.double(x.evaluate[inside, ]),
@@ -338,8 +331,7 @@ predLoess <-
 			as.integer(N),
 			as.integer(M1),
 			double(M1),
-			L = double(N*M1),
-			PACKAGE="stats"
+			L = double(N*M1)
 			)$L
 		tmp <- (matrix(L^2, M1, N)/rep(weights, rep(M1,N))) %*% rep(1,N)
 		se.fit[inside] <- drop(s * sqrt(tmp))
@@ -440,14 +432,13 @@ loess.smooth <-
 		       normalize=FALSE, "none", "interpolate",
 		       control$cell, iterations, control$trace.hat)
     kd <- fit$kd
-    z <- .C("loess_ifit",
+    z <- .C(R_loess_ifit,
 	    as.integer(kd$parameter),
 	    as.integer(kd$a), as.double(kd$xi),
 	    as.double(kd$vert), as.double(kd$vval),
 	    as.integer(evaluation),
 	    as.double(new.x),
-	    fit = double(evaluation),
-	    PACKAGE="stats")$fit
+	    fit = double(evaluation))$fit
     list(x = new.x, y = z)
 }
 
