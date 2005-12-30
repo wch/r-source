@@ -667,6 +667,7 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define parse			Rf_parse
 # define PrintGreeting		Rf_PrintGreeting
 # define PrintVersion		Rf_PrintVersion
+# define PrintVersionString    	Rf_PrintVersionString
 # define PrintWarnings		Rf_PrintWarnings
 # define promiseArgs		Rf_promiseArgs
 # define RemoveClass		Rf_RemoveClass
@@ -809,6 +810,7 @@ int OneIndex(SEXP, SEXP, int, int, SEXP*, int);
 SEXP parse(FILE*, int);
 void PrintGreeting(void);
 void PrintVersion(char *);
+void PrintVersionString(char *);
 void PrintWarnings(void);
 void process_site_Renviron();
 void process_system_Renviron();

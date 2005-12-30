@@ -14,8 +14,7 @@ R.version.string
     \R running. \cr
     \code{R.version} is a variable (a \code{\link{list}}) holding this
     information (and \code{version} is a copy of it for
-    S compatibility), whereas \code{R.version.string} is a simple
-    \code{\link{character}} string, useful for plotting, etc.
+    S compatibility).
 }
 \value{
  \code{R.Version} returns a list with character-string components
@@ -38,6 +37,9 @@ R.version.string
     sources used to build this version of \R.)
   }
   \item{language}{always \code{"R"}.}
+  \item{version.string}{a
+    \code{\link{character}} string concatenating some of the info above,
+    useful for plotting, etc.}
 
   \code{R.version} and \code{version} are lists of class
   \code{"simple.list"} which has a \code{print} method.
@@ -47,8 +49,11 @@ R.version.string
   code is running on: use \code{.Platform$OS.type} instead.  Slightly
   different versions of the OS may report different values of
   \code{R.version$os}, as may different versions of \R.
-}
-\seealso{
+
+   \code{R.version.string} is a copy of \code{R.version$version.string}
+   for simplicity and backwards compatibility.
+ } \seealso
+{
   \code{\link{getRversion}}
   \code{\link{.Platform}}.
 }

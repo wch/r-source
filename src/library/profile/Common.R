@@ -14,11 +14,9 @@ T <- TRUE
 F <- FALSE
 R.version <- structure(R.Version(), class = "simple.list")
 version <- R.version            # for S compatibility
-R.version.string <-
-    paste(paste("R version",
-                paste(version[c("major", "minor")], collapse = ".")),
-          paste(version[c("year", "month","day")], collapse = "-"),
-          sep=", ", collapse=" ")
+
+## for backwards compatibility only
+R.version.string <- R.version$version.string
 
 options(keep.source = interactive())
 options(warn = 0)

@@ -85,13 +85,14 @@ the usage of 'command'.
 
 Report bugs to <r-bugs@r-project.org>."
 
-version="R REPLACE_BY_VERSION.
-Copyright (C) REPLACE_BY_YEAR R Development Core Team
+### We also have this in compiled code -> use that one to always be in sync
+# version="R REPLACE_BY_VERSION.
+# Copyright (C) REPLACE_BY_YEAR R Development Core Team
 
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under the terms of the GNU
-General Public License.  For more information about these matters,
-see http://www.gnu.org/copyleft/gpl.html."
+# R is free software and comes with ABSOLUTELY NO WARRANTY.
+# You are welcome to redistribute it under the terms of the GNU
+# General Public License.  For more information about these matters,
+# see http://www.gnu.org/copyleft/gpl.html."
 
 error () {
   echo "ERROR: $*" >&2
@@ -137,8 +138,9 @@ while test -n "${1}"; do
       debugger_args=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     -h|--help)
       echo "${usage}"; exit 0 ;;
-    --version)
-      echo "${version}"; exit 0 ;;
+## use the version in compiled code to always be in sync      
+#    --version)
+#      echo "${version}"; exit 0 ;;
     --args)
       break ;;
     *)
