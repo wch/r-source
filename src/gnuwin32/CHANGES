@@ -11,6 +11,13 @@ There is no longer a separate 'East Asian' version of R.dll.
 (Also, msvcp60.dll is no longer used as libmingwex now supplies suitable
 functions.)
 
+There is an error handler for access violations and illegal
+instructions, which issues a traceback and error message, then returns
+to the top level.  This is switched off after 10 uses in a session.
+Note that such errors can be the result of damage to the code or
+objects in memory, so it is advisable to save your work and restart R
+unless you know exactly what happened.
+
 There is a new function choose.dir() to choose a folder (as used for
 'Change dir...' on the File menu in RGui.)
 

@@ -1047,6 +1047,7 @@ int setupui()
 				a valid locale */
     if((p = getenv("LC_ALL"))) strcpy(Rlocale, p);
     if((p = getenv("LC_CTYPE"))) strcpy(Rlocale, p);
+    if (strcmp(Rlocale, "C") == 0) strcpy(Rlocale, "en");
     setlocale(LC_CTYPE, Rlocale);
     mbcslocale = MB_CUR_MAX > 1;
 
