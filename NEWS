@@ -362,6 +362,7 @@ INSTALLATION CHANGES
 
     o	Direct support for f2c has been removed: it can still be used
 	via a script which makes it look like a Fortran compiler.
+	(src/scripts/f77_f2c is an example of such a script.)
 
     o	There is a new flag SAFE_FFLAGS which is used for the
 	compilation of dlamc.f.  It is set by configure for known
@@ -463,10 +464,10 @@ BUG FIXES
     o	The signal handlers for signals USR1 and USR2 where not
 	restored if the signal arrived when interrupts were suspended.
 
-    o  Certain combinations of inheritance could cause inherited methods
+    o	Certain combinations of inheritance could cause inherited methods
         override some directly specified methods.
 
-    o  Some cases of named signatures in calls to setMethod() caused errors.
+    o	Some cases of named signatures in calls to setMethod() caused errors.
 
 
 
