@@ -23,6 +23,9 @@ printf-args.c: In function `libintl_vasnprintf':
 printf-args.c:83: warning: `wint_t' is promoted to `int' when passed through `...'
 as wint_t is unsigned short.
 
+Also, we needed to override the way the locale_charset is found, and map some
+Windows locale names to XPG ones.
+
 BDR
 
 

@@ -172,6 +172,10 @@ get_charset_aliases ()
   return cp;
 }
 
+#ifdef WIN32
+# include <locale.h>
+#endif
+
 /* Determine the current locale's character encoding, and canonicalize it
    into one of the canonical names listed in config.charset.
    The result must not be freed; it is statically allocated.
@@ -228,9 +232,19 @@ locale_charset ()
 
   static char buf[2 + 10 + 1];
 
-  /* Woe32 has a function returning the locale's codepage as a number.  */
+  /* Woe32 has a function returning the locale's codepage as a number.
   sprintf (buf, "CP%u", GetACP ());
   codeset = buf;
+  */
+  /* But that is the system codepage, not that for the current locale */
+  {
+      char *ctype = setlocale(LC_CTYPE, NULL), *p;
+      p = strrchr(ctype, '.');
+      if(p && isdigit(p[1])) {
+	  sprintf (buf, "CP%s", p + 1);
+      } else sprintf (buf, "CP%u", GetACP ());
+      codeset = buf;
+  }
 
 #elif defined OS2
 
