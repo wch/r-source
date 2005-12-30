@@ -9,7 +9,7 @@ R 2.3.0
 
 There is no longer a separate 'East Asian' version of R.dll.
 (msvcp60.dll is no longer used as libmingwex now supplies suitable
-functions.  How good they are remains to be seen!)
+functions.)
 
 There is a new function choose.dir() to choose a folder (as used for
 'Change dir...' on the File menu in RGui.)
@@ -73,16 +73,19 @@ to do so).
 Import libraries are now made by default without -k (--kill-at).  This
 might be relevant for contributed software using R's macros.
 
-Unicode characters are used to draw on the windows() family of device
-in multi-byte locales.  (This allows the user to select a locale other
-than the one Windows is running in.)
+On NT-based versions of Windows, Unicode characters are used to draw
+on the console, pager, editor and windows() family of devices in
+multi-byte locales.  (This allows the user to select a locale other
+than the one Windows is running in, and with suitable fonts see the
+intended characters.  Menus and dialogs should also work in the
+selected locale.)
 
 
 
 R 2.2.1 patched
 ===============
 
-Opening any windows (pager/editor/windows() device) was resetting the
+Opening any window (pager/editor/windows() device) was resetting the
 LC_CTYPE in the locale to the system default.
 
 

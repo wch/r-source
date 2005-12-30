@@ -1038,8 +1038,18 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
 
 int setupui()
 {
+    char *p, Rlocale[1000] = ""; /* Windows' locales can be very long */
+
     initapp(0, 0);
-    setlocale(LC_CTYPE,""); /* set locale before doing anything with menus */
+
+    /* set locale before doing anything with menus */
+    setlocale(LC_CTYPE, ""); /* necessary in case next fails to set 
+				a valid locale */
+    if((p = getenv("LC_ALL"))) strcpy(Rlocale, p);
+    if((p = getenv("LC_CTYPE"))) strcpy(Rlocale, p);
+    setlocale(LC_CTYPE, Rlocale);
+    mbcslocale = MB_CUR_MAX > 1;
+
     readconsolecfg();
 #ifdef USE_MDI
     if (RguiMDI & RW_MDI) {

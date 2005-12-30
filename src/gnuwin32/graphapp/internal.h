@@ -401,6 +401,7 @@ struct callinfo
  *  Library internal variables.
  */
 
+  extern int    is_NT;
   extern int    app_initialised;
   extern char * app_name;
 

@@ -1828,6 +1828,8 @@ static double GA_StrWidth(char *str,
 	   we don't care which for a 7-bit char.
 	 */
 
+__declspec(dllimport) extern int is_NT; /* from graphapp */
+
 static void GA_MetricInfo(int c,
 			  R_GE_gcontext *gc,
 			  double* ascent, double* descent,
@@ -1838,9 +1840,11 @@ static void GA_MetricInfo(int c,
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     SetFont(gc->fontfamily, gc->fontface, size, 0.0, dd);
-    if(mbcslocale && gc->fontface != 5 && c > 127)
+#ifdef SUPPORT_MBCS
+    if(is_NT && mbcslocale && gc->fontface != 5 && c > 127)
 	gwcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
     else 
+#endif
 	gcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
     /* Some Windows systems report that space has height and depth,
        so we have a kludge.  Note that 32 is space in symbol font too */
@@ -2968,7 +2972,8 @@ SEXP devga(SEXP args)
 	GAsetunits(xpinch, ypinch);
 	if (!GADeviceDriver(dev, display, width, height, ps, 
 			    (Rboolean)recording, resize, bg, canvas, gamma,
-			    xpos, ypos, (Rboolean)buffered, psenv, restoreConsole)) {
+			    xpos, ypos, (Rboolean)buffered, psenv, 
+			    restoreConsole)) {
 	    free(dev);
 	    error(_("unable to start device devWindows"));
 	}
