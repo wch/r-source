@@ -295,9 +295,9 @@ MethodsListSelect <-
             method <- MethodAddCoerce(method, argName, thisClass, fromClass)
             value <- .insertCachedMethods(mlist, as.character(argName), thisClass, fromClass,
                                          method)
-            if(is.null(f))
+##            if(is.null(f))
             ## only insert the selected method
-              value@allMethods <- value@allMethods[thisClass]
+##              value@allMethods <- value@allMethods[thisClass]
         }
     }
     if(!is.null(f)) {
