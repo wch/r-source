@@ -3,8 +3,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-12-23
+@set FAQ_YEAR 2006
+@set FAQ_DATE @value{FAQ_YEAR}-01-01
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -3374,6 +3374,8 @@ APIs, and examples and documentation for its use.
 @item rstream
 Unified object oriented interface for multiple independent streams of
 random numbers from different sources.
+@item rtiff
+Read TIFF format images and return them as pixmap objects.
 @item rv
 Simulation-based random variable object class.
 @item rwt
