@@ -925,13 +925,14 @@ static cp2charset_table cp2charset [] = {
 
 /* Used to set the charset for the font in the console/pager/editor.
    As from 2.3.0 these use wchar on NT, but the charset still 
-   seems to affect the font chosen and its width */
+   seems to affect the font chosen and its width, depending on the system
+   locale. */
 int getcharset(void)
 {
     int i, acp = GetACP(); /* FIXME: probably should be localeCP */
-    /* From Nakama's patch.  I don't know the reason for this
-       as Win9x should support these CHARSET names. */
     if (!is_NT) 
+	/* From Nakama's patch.  I don't know the reason for this
+	   as Win9x should support these CHARSET names. */
 	return (DEFAULT_CHARSET);
     else
 	for (i = 0; i < sizeof(cp2charset)/sizeof(cp2charset_table); i++)
