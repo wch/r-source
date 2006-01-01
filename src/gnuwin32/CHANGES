@@ -100,6 +100,8 @@ R 2.2.1 patched
 Opening any window (pager/editor/windows() device) was resetting the
 LC_CTYPE in the locale to the system default.
 
+formatC() sometimes gave spurious leading spaces on Windows (PR#8337).
+
 
 
 R 2.2.1

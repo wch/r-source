@@ -1693,8 +1693,17 @@ a.frame
 pairs(iris[1:4], oma=rep(3,4))
 ## warned in 2.2.0 only
 
+
 ## str(<dendrogram>)
 dend <- as.dendrogram(hclust(dist(USArrests), "ave")) # "print()" method
 dend2 <- cut(dend, h=70)
 str(dend2$upper)
 ## gave much too many spaces in 2.2.[01]
+
+
+## formatC on Windows (PR#8337)
+xx  <- pi * 10^(-5:4)
+cbind(formatC(xx, wid = 9))
+cbind(formatC(xx, wid = 9, flag = "-"))
+cbind(formatC(xx, wid = 9, flag = "0"))
+## extra space on 2.2.1

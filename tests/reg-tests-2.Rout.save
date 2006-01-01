@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-12-30 r36934)
+Version 2.3.0 Under development (unstable) (2005-12-30 r36935)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4894,6 +4894,7 @@ NULL
 > pairs(iris[1:4], oma=rep(3,4))
 > ## warned in 2.2.0 only
 > 
+> 
 > ## str(<dendrogram>)
 > dend <- as.dendrogram(hclust(dist(USArrests), "ave")) # "print()" method
 > dend2 <- cut(dend, h=70)
@@ -4906,4 +4907,45 @@ NULL
      |--leaf "Branch 3" (h= 44.8 midpoint = 6.8, x.member = 14 )
      `--leaf "Branch 4" (h= 54.7 midpoint = 7.65, x.member = 20 )
 > ## gave much too many spaces in 2.2.[01]
+> 
+> 
+> ## formatC on Windows (PR#8337)
+> xx  <- pi * 10^(-5:4)
+> cbind(formatC(xx, wid = 9))
+      [,1]       
+ [1,] "3.142e-05"
+ [2,] "0.0003142"
+ [3,] " 0.003142"
+ [4,] "  0.03142"
+ [5,] "   0.3142"
+ [6,] "    3.142"
+ [7,] "    31.42"
+ [8,] "    314.2"
+ [9,] "     3142"
+[10,] "3.142e+04"
+> cbind(formatC(xx, wid = 9, flag = "-"))
+      [,1]       
+ [1,] "3.142e-05"
+ [2,] "0.0003142"
+ [3,] "0.003142 "
+ [4,] "0.03142  "
+ [5,] "0.3142   "
+ [6,] "3.142    "
+ [7,] "31.42    "
+ [8,] "314.2    "
+ [9,] "3142     "
+[10,] "3.142e+04"
+> cbind(formatC(xx, wid = 9, flag = "0"))
+      [,1]       
+ [1,] "3.142e-05"
+ [2,] "0.0003142"
+ [3,] "00.003142"
+ [4,] "000.03142"
+ [5,] "0000.3142"
+ [6,] "00003.142"
+ [7,] "000031.42"
+ [8,] "0000314.2"
+ [9,] "000003142"
+[10,] "3.142e+04"
+> ## extra space on 2.2.1
 > 
