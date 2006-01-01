@@ -11,7 +11,6 @@ load <- function (file, envir = parent.frame())
     if(!isOpen(con)) {
         ## code below assumes that the connection is open ...
         open(con, "rb")
-        on.exit(close(con))
     }
 
     magic <- readChar(con, 5)
