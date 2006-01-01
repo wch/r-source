@@ -402,6 +402,7 @@ struct callinfo
  */
 
   extern int    is_NT;
+  extern unsigned int localeCP; /* from Defn.h */
   extern int    app_initialised;
   extern char * app_name;
 

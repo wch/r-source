@@ -453,7 +453,7 @@ window newwindow(char *name, rect r, long flags)
 		else if (! win_class_name)
 		    win_class_name = register_new_class("", app_win_proc);
 
-		if(is_NT) {
+		if(is_NT && (localeCP != GetACP())) {
 		    wchar_t wkind[100], wc[1000];
 		    mbstowcs(wkind, (flags & Workspace) ? work_class_name 
 			     : win_class_name, 100);

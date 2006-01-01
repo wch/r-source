@@ -130,7 +130,7 @@ static object newchildwin(char *kind, char *text,
 	ensure_window();
 	r = rcanon(r);
 
-	if(is_NT) {
+	if(is_NT && (localeCP != GetACP())) {
 	    wchar_t wkind[100], wc[1000];
 	    mbstowcs(wkind, kind, 100);
 	    mbstowcs(wc, text, 1000);

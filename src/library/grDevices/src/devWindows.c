@@ -1828,8 +1828,6 @@ static double GA_StrWidth(char *str,
 	   we don't care which for a 7-bit char.
 	 */
 
-__declspec(dllimport) extern int is_NT; /* from graphapp */
-
 static void GA_MetricInfo(int c,
 			  R_GE_gcontext *gc,
 			  double* ascent, double* descent,
@@ -1841,7 +1839,7 @@ static void GA_MetricInfo(int c,
 
     SetFont(gc->fontfamily, gc->fontface, size, 0.0, dd);
 #ifdef SUPPORT_MBCS
-    if(is_NT && mbcslocale && gc->fontface != 5 && c > 127)
+    if(mbcslocale && gc->fontface != 5 && c > 127)
 	gwcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
     else 
 #endif
@@ -1851,12 +1849,11 @@ static void GA_MetricInfo(int c,
     if(c == 32) {
 	*ascent  = 0.0;
 	*descent = 0.0;
-	*width   = (double) w;
     } else {
 	*ascent  = (double) a;
 	*descent = (double) d;
-	*width   = (double) w;
     }
+    *width   = (double) w;
 }
 
 	/********************************************************/

@@ -1097,6 +1097,13 @@ SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef SUPPORT_MBCS
     mbcslocale = MB_CUR_MAX > 1;
 #endif
+#ifdef Win32
+    {
+	char *ctype = setlocale(LC_CTYPE, NULL), *p;
+	p = strrchr(ctype, '.');
+	if(p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 1252;
+    }
+#endif
 #if defined(Win32) && defined(SUPPORT_UTF8)
     utf8locale = mbcslocale = TRUE;
 #endif

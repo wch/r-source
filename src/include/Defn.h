@@ -556,6 +556,9 @@ extern SEXP	R_RestartStack;	/* Stack of available restarts */
 
 LibExtern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
 LibExtern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
+#ifdef Win32
+LibExtern unsigned int localeCP  INI_as(1252); /* the locale's codepage */
+#endif
 
 extern char OutDec	INI_as('.');  /* decimal point used for output */
 
