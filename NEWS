@@ -486,6 +486,10 @@ BUG FIXES
 	attributes, in particular names(); this is a part of the
 	propositions by Andy Piskorkski (PR#8191).
 
+    o	load() when applied to a connection leaves it open/not as it
+	found it, and checks explicitly for having a binary readable
+	connection.
+
 
 
 

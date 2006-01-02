@@ -2244,6 +2244,70 @@ SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+
+/* This version reads and checks the magic number, 
+   opens the connection if needed */
+
+static void saveloadcon_cleanup(void *data)
+{
+    FILE *fp = data;
+    fclose(fp);
+}
+
+SEXP do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /* loadFromConn2(conn, environment) */
+
+    struct R_inpstream_st in;
+    Rconnection con;
+    SEXP aenv, res = R_NilValue;
+    unsigned char buf[6];
+    int count;
+    Rboolean wasopen;
+    RCNTXT cntxt;
+
+    checkArity(op, args);
+
+    con = getConnection(asInteger(CAR(args)));
+    if(!con->canread) error(_("cannot read from this connection"));
+    if(con->text) error(_("can only read from a binary connection"));
+    wasopen = con->isopen;
+    if(!wasopen)
+	if(!con->open(con)) error(_("cannot open the connection"));
+
+    aenv = CADR(args);
+    if (TYPEOF(aenv) == NILSXP) {
+    	warning(_("use of NULL environment is deprecated"));
+    	aenv = R_BaseEnv;
+    } else if (TYPEOF(aenv) != ENVSXP)
+	error(_("invalid '%s' argument"), "envir");
+
+    /* check magic */
+    memset(buf, 0, 6);
+    count = con->read(buf, sizeof(char), 5, con);
+    if (count == 0) error(_("no input is available"));
+    if (strncmp((char*)buf, "RDA2\n", 5) == 0 ||
+	strncmp((char*)buf, "RDB2\n", 5) == 0 ||
+	strncmp((char*)buf, "RDX2\n", 5) == 0) {
+	/* set up a context which will clean up if there is an error */
+	if (wasopen) {
+	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+			 R_NilValue, R_NilValue);
+	    cntxt.cend = &saveloadcon_cleanup;
+	    cntxt.cenddata = con;
+	}
+	R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
+	PROTECT(res = RestoreToEnv(R_Unserialize(&in), aenv));
+	if (wasopen) {
+	    endcontext(&cntxt);
+	    con->close(con);
+	}
+	UNPROTECT(1);
+    } else 
+	error(_("the input does not start with a magic number compatible with loading from a connection"));
+    return res;
+}
+
 /* This assumes the magic number has already been read, and its format
    specification (A or X) is ignored.  For saved images with many
    variables and the values saved in a pair list this internal version
@@ -2264,8 +2328,7 @@ SEXP do_loadFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(aenv) == NILSXP) {
     	warning(_("use of NULL environment is deprecated"));
     	aenv = R_BaseEnv;
-    } else
-    if (TYPEOF(aenv) != ENVSXP)
+    } else if (TYPEOF(aenv) != ENVSXP)
 	error(_("invalid '%s' argument"), "envir");
 
     R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);

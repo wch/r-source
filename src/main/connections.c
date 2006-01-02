@@ -3924,10 +3924,12 @@ SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return CAR(args);
     }
     m = incon->mode;
-    if(strcmp(m, "r") == 0 || strcmp(m, "rb") == 0) mode = "rb";
-    else if (strcmp(m, "w") == 0 || strcmp(m, "wb") == 0) mode = "wb";
+    if(strcmp(m, "r") == 0 || strncmp(m, "rb", 2) == 0) mode = "rb";
+    else if (strcmp(m, "w") == 0 || strncmp(m, "wb", 2) == 0) mode = "wb";
     else errorcall(call, _("can only use read- or write- binary connections"));
-
+    if(strcmp(incon->class, "file") == 0 &&
+       (strcmp(m, "r") == 0 || strcmp(m, "w") == 0))
+	warning(_("using a text-mode 'file' connection may not work correctly"));
 
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of 'gzcon' connection failed"));

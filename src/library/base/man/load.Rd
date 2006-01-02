@@ -8,8 +8,8 @@
 load(file, envir = parent.frame())
 }
 \arguments{
-  \item{file}{a connection or a character string giving the name of the
-    file to load.}
+  \item{file}{a (readable binary) connection or a character string
+    giving the name of the file to load.}
   \item{envir}{the environment where the data should be loaded.}
 }
 \details{
@@ -46,7 +46,9 @@ load("all.Rdata")
 load("all.Rdata", .GlobalEnv)
 
 \dontrun{
+con <- url("http://some.where.net/R/data/kprats.rda")
 ## print the value to see what objects were created.
-print(load(url("http://some.where.net/R/data/kprats.rda")))
+print(load(con))
+close(con)
 }}
 \keyword{file}

@@ -1,36 +1,24 @@
 load <- function (file, envir = parent.frame())
 {
     if (is.character(file)) {
+        ## files are allowed to be of an earlier format
         ## As zlib is available just open with gzfile, whether file
         ## is compressed or not; zlib works either way.
         con <- gzfile(file)
         on.exit(close(con))
-    }
-    else if (inherits(file, "connection")) con <- gzcon(file)
-    else stop("bad file argument")
-    if(!isOpen(con)) {
-        ## code below assumes that the connection is open ...
-        open(con, "rb")
-    }
-
-    magic <- readChar(con, 5)
-    if(nchar(magic) == 0) {
-        warning("no input is available")
-        return(character(0))
-    }
-    if (regexpr("RD[AX]2\n", magic) == -1) {
-        ## a check while we still know the args
-        if(regexpr("RD[ABX][12]\r", magic) == 1)
-            stop("input has been corrupted, with LF replaced by CR")
-        ## Not a version 2 magic number, so try the old way.
-        if (is.character(file)) {
-            close(con)
-            on.exit()
+        magic <- readChar(con, 5)
+        if (regexpr("RD[AX]2\n", magic) == -1) {
+            ## a check while we still know the args
+            if(regexpr("RD[ABX][12]\r", magic) == 1)
+                stop("input has been corrupted, with LF replaced by CR")
+            ## Not a version 2 magic number, so try the old way.
+            return(.Internal(load(file, envir)))
         }
-        else stop("the input does not start with a magic number compatible with loading from a connection")
-        .Internal(load(file, envir))
-    }
-    else .Internal(loadFromConn(con, envir))
+    } else if (inherits(file, "connection")) {
+        con <- if(inherits(file, "gzfile")) file else gzcon(file)
+    } else stop("bad 'file' argument")
+
+    .Internal(loadFromConn2(con, envir))
 }
 
 save <- function(..., list = character(0),
