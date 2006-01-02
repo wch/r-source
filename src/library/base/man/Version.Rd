@@ -52,10 +52,10 @@ R.version.string
 
    \code{R.version.string} is a copy of \code{R.version$version.string}
    for simplicity and backwards compatibility.
- } \seealso
-{
-  \code{\link{getRversion}}
-  \code{\link{.Platform}}.
+}
+\seealso{
+  \code{\link{getRversion}},
+  \code{\link{.Platform}}
 }
 \examples{
 R.version$os # to check how lucky you are ...
