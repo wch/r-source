@@ -41,3 +41,19 @@ oats.aov <- aov(Y ~ B + V + N + V:N, data=oats[-1,])
 model.tables(oats.aov, "means", cterms=c("N", "V:N"))
 }
 ## wrong printed output in 2.1.0
+
+
+## tests of ISO C99 compliance (Windows fails without a workaround)
+sprintf("%g", 123456789)
+sprintf("%8g", 123456789)
+sprintf("%9.7g", 123456789)
+sprintf("%10.9g", 123456789)
+sprintf("%g", 12345.6789)
+sprintf("%10.9g", 12345.6789)
+sprintf("%10.7g", 12345.6789)
+sprintf("%.7g", 12345.6789)
+sprintf("%.5g", 12345.6789)
+sprintf("%.4g", 12345.6789)
+sprintf("%9.4g", 12345.6789)
+sprintf("%10.4g", 12345.6789)
+## Windows used e+008 etc prior to 2.3.0

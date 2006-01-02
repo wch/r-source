@@ -1,6 +1,7 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-05-04), ISBN 3-900051-07-0
+R : Copyright 2006, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2006-01-02 r36948)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -11,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > ### Regression tests for which the printed output is the issue
@@ -509,4 +510,32 @@ V             0.0cwt 0.2cwt 0.4cwt 0.6cwt
   Victory      69.77  89.20 110.37 118.03
   rep           5.00   6.00   6.00   6.00
 > ## wrong printed output in 2.1.0
+> 
+> 
+> ## tests of ISO C99 compliance (Windows fails without a workaround)
+> sprintf("%g", 123456789)
+[1] "1.23457e+08"
+> sprintf("%8g", 123456789)
+[1] "1.23457e+08"
+> sprintf("%9.7g", 123456789)
+[1] "1.234568e+08"
+> sprintf("%10.9g", 123456789)
+[1] " 123456789"
+> sprintf("%g", 12345.6789)
+[1] "12345.7"
+> sprintf("%10.9g", 12345.6789)
+[1] "12345.6789"
+> sprintf("%10.7g", 12345.6789)
+[1] "  12345.68"
+> sprintf("%.7g", 12345.6789)
+[1] "12345.68"
+> sprintf("%.5g", 12345.6789)
+[1] "12346"
+> sprintf("%.4g", 12345.6789)
+[1] "1.235e+04"
+> sprintf("%9.4g", 12345.6789)
+[1] "1.235e+04"
+> sprintf("%10.4g", 12345.6789)
+[1] " 1.235e+04"
+> ## Windows used e+008 etc prior to 2.3.0
 > 
