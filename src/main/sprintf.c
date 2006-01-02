@@ -31,7 +31,8 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, nargs, cnt, v, thislen;
     char *formatString, *starc;
-    char fmt[MAXLINE+1], bit[MAXLINE+1], outputString[MAXLINE+1];
+    char fmt[MAXLINE+1], fmt2[MAXLINE+1], *fmtp, bit[MAXLINE+1], 
+	outputString[MAXLINE+1];
     size_t n, cur, chunk;
 
     SEXP format, ans, this, a[100], tmp;
@@ -113,10 +114,10 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 		    }
 
-		    has_star=0;
-		    starc=strchr(fmt, '*');
+		    has_star = 0;
+		    starc = strchr(fmt, '*');
 		    if (starc) { /* handle * format if present */
-			nstar=-1;
+			nstar = -1;
 			if (strlen(starc) > 3 && starc[1] >= '1' && starc[1] <= '9') {
 			    v = starc[1] - '0';
 			    if(starc[2] == '$') {
@@ -164,10 +165,18 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    nthis = cnt++;
 			}
 			this = a[nthis];
+			if (has_star) {
+			    char *p, *q = fmt2;
+			    for (p = fmt; *p; p++)
+				if (*p == '*') q += sprintf(q, "%d", star_arg);
+				else *q++ = *p;
+			    *q = '\0';
+			    fmtp = fmt2;
+			} else fmtp = fmt;
 			
 			/* Now let us see if some minimal coercion would be sensible.
 			 */
-			switch(tolower(fmt[strlen(fmt) - 1])) {
+			switch(tolower(fmtp[strlen(fmtp) - 1])) {
 			case 'd':
 			case 'i':
 			case 'x':
@@ -207,123 +216,125 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			case LGLSXP:
 			    {
 				int x = LOGICAL(this)[ns % thislen];
-				if (strcspn(fmt, "di") >= strlen(fmt))
+				if (strcspn(fmtp, "di") >= strlen(fmtp))
 				    error("%s", 
 					  _("use format %d or %i for logical objects"));
 				if (x == NA_LOGICAL) {
-				    fmt[strlen(fmt)-1] = 's';
-				    if (has_star)
-					sprintf(bit, fmt, star_arg, "NA");
-				    else
-					sprintf(bit, fmt, "NA");
+				    fmtp[strlen(fmtp)-1] = 's';
+				    sprintf(bit, fmtp, "NA");
 				} else {
-				    if (has_star)
-					sprintf(bit, fmt, star_arg, x);
-				    else
-					sprintf(bit, fmt, x);
+				    sprintf(bit, fmtp, x);
 				}
 				break;
 			    }
 			case INTSXP:
 			    {
 				int x = INTEGER(this)[ns % thislen];
-				if (strcspn(fmt, "dixX") >= strlen(fmt))
+				if (strcspn(fmtp, "dixX") >= strlen(fmtp))
 				    error("%s",
 					  _("use format %d, %i, %x or %X for integer objects"));
 				if (x == NA_INTEGER) {
-				    fmt[strlen(fmt)-1] = 's';
-				    if (has_star)
-					sprintf(bit, fmt, star_arg, "NA");
-				    else
-					sprintf(bit, fmt, "NA");
+				    fmtp[strlen(fmtp)-1] = 's';
+				    sprintf(bit, fmtp, "NA");
 				} else {
-				    if (has_star)
-					sprintf(bit, fmt, star_arg, x);
-				    else
-					sprintf(bit, fmt, x);
+				    sprintf(bit, fmtp, x);
 				}
 				break;
 			    }
 			case REALSXP:
 			    {
 				double x = REAL(this)[ns % thislen];
-				if (strcspn(fmt, "feEgG") >= strlen(fmt))
+				if (strcspn(fmtp, "feEgG") >= strlen(fmtp))
 				    error("%s", 
 					  _("use format %f, %e or %g for numeric objects"));
 				if (R_FINITE(x)) {
-				    if (has_star)
-					sprintf(bit, fmt, star_arg, x);
-				    else
-					sprintf(bit, fmt, x);
+#ifdef Win32
+				    if (strcspn(fmtp, "eEgG") < strlen(fmtp)) {
+					/* needs e+00 -> e+0 fix, taking field
+					   width into account */
+					int width=0, prec=0, ii, len;
+					char *p;
+					Rboolean have_prec = FALSE;
+					for(p = fmtp; *p; p++) {
+					    if(*p == '.') have_prec = TRUE;
+					    if(isdigit(*p)) {
+						if(have_prec) prec = 10*prec + *p - '0';
+						else width = 10*width + *p - '0';
+					    }
+					}
+					if (!have_prec) prec = 6;
+					if (width > 0) {
+					    char fmt3[MAXLINE+1], *q = fmt3;
+					    for(p = fmtp; *p; *p++) {
+						if(isdigit(*p)) break;
+						*q++ = *p;
+					    }
+					    q += sprintf(q, "%d", width + 1);
+					    for( ; *p; *p++) if(!isdigit(*p)) break;
+					    for( ; *p; *p++) *q++ = *p;
+					    *q = '\0';
+					    sprintf(bit, fmt3, x);
+					    p = bit;
+					    len = strlen(p);
+					    if (tolower(p[len-5]) == 'e' &&
+						(p[len-4] == '+' || p[len-4] == '-') &&
+						p[len-3] == '0' &&
+						isdigit(p[len-2]) && isdigit(p[len-1])) {
+						for(ii = len-3; ii <= len; ii++) 
+						    p[ii] = p[ii+1];
+					    } else sprintf(bit, fmtp, x);
+					} else {
+					    sprintf(bit, fmtp, x);
+					    p = bit;
+					    len = strlen(p);
+					    if (tolower(p[len-5]) == 'e' &&
+						(p[len-4] == '+' || p[len-4] == '-') &&
+						p[len-3] == '0' &&
+						isdigit(p[len-2]) && isdigit(p[len-1])) {
+						for(ii = len-3; ii <= len; ii++) 
+						    p[ii] = p[ii+1];
+					    }
+					}
+				    } else
+#endif
+					sprintf(bit, fmtp, x);
 				} else {
-				    char *p = strchr(fmt, '.');
+				    char *p = strchr(fmtp, '.');
 				    if (p) {
 					*p++ = 's'; *p ='\0';
 				    } else
-					fmt[strlen(fmt)-1] = 's';
+					fmtp[strlen(fmtp)-1] = 's';
 				    if (ISNA(x)) {
-					if (strcspn(fmt, " ") < strlen(fmt)) {
-					    if (has_star)
-						sprintf(bit, fmt, star_arg, " NA");
-					    else						
-						sprintf(bit, fmt, " NA");
-					} else {
-					    if (has_star)
-						sprintf(bit, fmt, star_arg, "NA");
-					    else
-						sprintf(bit, fmt, "NA");
-					}
-				    } else if (ISNAN(x)) {
-					if (strcspn(fmt, " ") < strlen(fmt)) {
-					    if (has_star)
-						sprintf(bit, fmt, star_arg, " NaN");
-					    else
-						sprintf(bit, fmt, " NaN");
-					} else {
-					    if (has_star)
-						sprintf(bit, fmt, star_arg, "NaN");
-					    else
-						sprintf(bit, fmt, "NaN");
-					}
-				    } else if (x == R_PosInf) {
-					if (strcspn(fmt, "+") < strlen(fmt)) {
-					    if (has_star)
-						sprintf(bit, fmt, star_arg, "+Inf");
-					    else
-						sprintf(bit, fmt, "+Inf");
-					} else if (strcspn(fmt, " ") < strlen(fmt)) {
-					    if (has_star)
-						sprintf(bit, fmt, star_arg, " Inf");
-					    else
-						sprintf(bit, fmt, " Inf");
-					} else {
-					    if (has_star)
-						sprintf(bit, fmt, star_arg, "Inf");
-					    else
-						sprintf(bit, fmt, "Inf");
-					}
-				    } else if (x == R_NegInf) {
-					if (has_star)
-					    sprintf(bit, fmt, star_arg, "-Inf");
+					if (strcspn(fmtp, " ") < strlen(fmtp))
+					    sprintf(bit, fmtp, " NA");
 					else
-					    sprintf(bit, fmt, "-Inf");
-				    }
+					    sprintf(bit, fmtp, "NA");
+				    } else if (ISNAN(x)) {
+					if (strcspn(fmtp, " ") < strlen(fmtp))
+					    sprintf(bit, fmtp, " NaN");
+					else
+					    sprintf(bit, fmtp, "NaN");
+				    } else if (x == R_PosInf) {
+					if (strcspn(fmtp, "+") < strlen(fmtp))
+					    sprintf(bit, fmtp, "+Inf");
+					else if (strcspn(fmtp, " ") < strlen(fmtp))
+					    sprintf(bit, fmtp, " Inf");
+					else
+					    sprintf(bit, fmtp, "Inf");
+				    } else if (x == R_NegInf)
+					sprintf(bit, fmtp, "-Inf");
 				}
 				break;
 			    }
 			case STRSXP:
 			    /* NA_STRING will be printed as `NA' */
-			    if (strcspn(fmt, "s") >= strlen(fmt))
+			    if (strcspn(fmtp, "s") >= strlen(fmtp))
 				error("%s", _("use format %s for character objects"));
 			    if(strlen(CHAR(STRING_ELT(this, ns % thislen)))
 			       > MAXLINE)
 				warning(_("Likely truncation of character string"));
-			    if (has_star)
-				snprintf(bit, MAXLINE, fmt, star_arg,
-					 CHAR(STRING_ELT(this, ns % thislen)));
-			    else
-				snprintf(bit, MAXLINE, fmt, 
-					 CHAR(STRING_ELT(this, ns % thislen)));
+			    snprintf(bit, MAXLINE, fmtp, 
+				     CHAR(STRING_ELT(this, ns % thislen)));
 			    bit[MAXLINE] = '\0';
 			    break;
 			    

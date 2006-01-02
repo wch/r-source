@@ -92,6 +92,9 @@ Added a few mappings from Window locale names (e.g. "chinese", "chs",
 "cht", "ptb") to language names.  There is still scope for confusion:
 LC_ALL=es is Estonian, and LANGUAGE=es is Spanish.
 
+sprintf() now tries to ensure the output is C99-compliant, with 
+1.23e+08 not 1.23e+008 as given by the Windows run-time.
+
 
 
 R 2.2.1 patched
