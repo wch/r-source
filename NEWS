@@ -20,6 +20,8 @@ USER-VISIBLE CHANGES
 	specifies any of these arguments *by position* (not by name)
 	will fail.
 
+    o	all.equal() is more stringent, see the PR#8191 bug fix below.
+
 
 NEW FEATURES
 
@@ -479,6 +481,10 @@ BUG FIXES
         override some directly specified methods.
 
     o	Some cases of named signatures in calls to setMethod() caused errors.
+
+    o	all.equal() is now more consistent and "picky" about mismatching
+	attributes, in particular names(); this is a part of the
+	propositions by Andy Piskorkski (PR#8191).
 
 
 

@@ -1,9 +1,5 @@
 all.equal <- function(target, current, ...) UseMethod("all.equal")
 
-## NO:  is.*(x) should be like S4  is(x, *) ! -- use  isTRUE(all.equal(*))
-## is.all.equal <- function(target, current, ...)
-##     identical(TRUE, all.equal(target, current, ...))
-
 all.equal.default <- function(target, current, ...)
 {
     ## Really a dispatcher given mode() of args :
@@ -30,25 +26,36 @@ all.equal.default <- function(target, current, ...)
 
 all.equal.numeric <-
 function(target, current, tolerance = .Machine$double.eps ^ .5,
-         scale=NULL, ...)
+	 scale=NULL, ...)
 {
-    if(data.class(target) != data.class(current))
-        return(paste("target is ", data.class(target), ", current is ",
-		       data.class(current), sep = ""))
+    msg <- attr.all.equal(target, current, ...)
+    if(data.class(target) != data.class(current)) {
+	msg <- c(msg, paste("target is ", data.class(target), ", current is ",
+			    data.class(current), sep = ""))
+	return(msg)
+    }
+
     lt <- length(target)
     lc <- length(current)
     cplx <- is.complex(target)
-    if(lt != lc)
-	return(paste(if(cplx)"Complex" else "Numeric",
-                     ": lengths (", lt, ", ", lc, ") differ", sep = ""))
+    if(lt != lc) {
+	## *replace* the 'Lengths' msg[] from attr.all.equal():
+	msg <- msg[substr(msg,1,8) != "Lengths:"]
+	msg <- c(msg, paste(if(cplx)"Complex" else "Numeric",
+			    ": lengths (", lt, ", ", lc, ") differ", sep = ""))
+	return(msg)
+    }
     target <- as.vector(target)
     current <- as.vector(current)
     out <- is.na(target)
-    if(any(out != is.na(current)))
-	return(paste("`is.NA' value mismatches:", sum(is.na(current)),
-		     "in current,", sum(out), " in target"))
+    if(any(out != is.na(current))) {
+	msg <- c(msg, paste("'is.NA' value mismatches:", sum(is.na(current)),
+			    "in current,", sum(out), " in target"))
+	return(msg)
+    }
     out <- out | target == current
-    if(all(out)) return(TRUE)
+    if(all(out)) { if (is.null(msg)) return(TRUE) else return(msg) }
+
     target <- target[!out]
     current <- current[!out]
     xy <- mean((if(cplx)Mod else abs)(target - current))
@@ -63,29 +70,38 @@ function(target, current, tolerance = .Machine$double.eps ^ .5,
 	    xy <- xy/scale
 	    "scaled"
 	}
+
     if(is.na(xy) || xy > tolerance)
-	paste("Mean", what, if(cplx)"Mod", "difference:", format(xy)) else TRUE
+       msg <- c(msg, paste("Mean", what, if(cplx)"Mod", "difference:", format(xy)))
+
+    if(is.null(msg)) TRUE else msg
 }
 
 all.equal.character <- function(target, current, ...)
 {
-    if(data.class(target) != data.class(current))
-        return(paste("target is ", data.class(target), ", current is ",
-		       data.class(current), sep = ""))
+    msg <- attr.all.equal(target, current, ...)
+    if(data.class(target) != data.class(current)) {
+	msg <- c(msg, paste("target is ", data.class(target), ", current is ",
+			    data.class(current), sep = ""))
+	return(msg)
+    }
     lt <- length(target)
     lc <- length(current)
     if(lt != lc) {
-	msg <- paste("Lengths (", lt, ", ", lc,
+	msg <- msg[substr(msg,1,8) != "Lengths:"]
+	msg <- c(msg, paste("Lengths (", lt, ", ", lc,
 		     ") differ (string compare on first ", ll <- min(lt, lc),
-		     ")", sep = "")
+		     ")", sep = ""))
 	ll <- seq(length = ll)
 	target <- target[ll]
 	current <- current[ll]
-    } else msg <- NULL
+    }
     nas <- is.na(target)
-    if (any(nas != is.na(current)))
-        return(paste("`is.NA' value mismatches:", sum(is.na(current)),
-                     "in current,", sum(nas), " in target"))
+    if (any(nas != is.na(current))) {
+	msg <- c(msg, paste("'is.NA' value mismatches:", sum(is.na(current)),
+		     "in current,", sum(nas), " in target"))
+	return(msg)
+    }
     ne <- !nas & (target != current)
     if(!any(ne) && is.null(msg)) TRUE
     else if(any(ne)) c(msg, paste(sum(ne), "string mismatches"))
@@ -95,7 +111,7 @@ all.equal.character <- function(target, current, ...)
 all.equal.factor <- function(target, current, ...)
 {
     if(!inherits(current, "factor"))
-	return("`current' is not a factor")
+	return("'current' is not a factor")
     msg <- attr.all.equal(target, current)
     class(target) <- class(current) <- NULL
     nax <- is.na(target)
@@ -147,23 +163,24 @@ all.equal.list <- function(target, current, ...)
 #    nt <- names(target)
     nc <- names(current)
     iseq <-
-        ## <FIXME>
-        ## Commenting this eliminates PR#674, and assumes that lists are
-        ## regarded as generic vectors, so that they are equal iff they
-        ## have identical names attributes and all components are equal.
-        ## if(length(nt) && length(nc)) {
-        ##     if(any(not.in <- (c.in.t <- match(nc, nt, 0)) == 0))
-        ## 	msg <- c(msg, paste("Components not in target:",
-        ## 			    paste(nc[not.in], collapse = ", ")))
-        ##     if(any(not.in <- match(nt, nc, 0) == 0))
-        ## 	msg <- c(msg, paste("Components not in current:",
-        ## 			    paste(nt[not.in], collapse = ", ")))
-        ##     nt[c.in.t]
-        ## } else
-        ## </FIXME>
-        if(length(target) == length(current)) {
+	## <FIXME>
+	## Commenting this eliminates PR#674, and assumes that lists are
+	## regarded as generic vectors, so that they are equal iff they
+	## have identical names attributes and all components are equal.
+	## if(length(nt) && length(nc)) {
+	##     if(any(not.in <- (c.in.t <- match(nc, nt, 0)) == 0))
+	##	msg <- c(msg, paste("Components not in target:",
+	##			    paste(nc[not.in], collapse = ", ")))
+	##     if(any(not.in <- match(nt, nc, 0) == 0))
+	##	msg <- c(msg, paste("Components not in current:",
+	##			    paste(nt[not.in], collapse = ", ")))
+	##     nt[c.in.t]
+	## } else
+	## </FIXME>
+	if(length(target) == length(current)) {
 	    seq(along = target)
 	} else {
+	    msg <- msg[substr(msg,1,8) != "Lengths:"]
 	    nc <- min(length(target), length(current))
 	    msg <- c(msg, paste("Length mismatch: comparison on first",
 				nc, "components"))
