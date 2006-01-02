@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 alpha (2005-09-20 r35626)
+R : Copyright 2006, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2006-01-01 r36947)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > ##--- S4 Methods (and Classes)
@@ -525,4 +525,51 @@ NULL
 [2,]    2    5
 > stopifnot(identical(d2[-1,], d2[2:3,]))
 > ## failed in R <= 2.1.x
+> 
+> 
+> ## Fritz' S4 "odditiy"
+> setClass("X", representation(bar="numeric"))
+[1] "X"
+> setClass("Y", contains="X")
+[1] "Y"
+> ## Now we define a generic foo() and two different methods for "X" and
+> ## "Y" objects for arg missing:
+> setGeneric("foo", function(object, arg) standardGeneric("foo"))
+[1] "foo"
+> setMethod("foo", signature(object= "X", arg="missing"),
++           function(object, arg) cat("an X object with bar =", object@bar, "\n"))
+[1] "foo"
+> setMethod("foo", signature(object= "Y", arg="missing"),
++           function(object, arg) cat("a Y object with bar =", object@bar, "\n"))
+[1] "foo"
+> ## Finally we create a method where arg is "logical" only for class
+> ## "X", hence class "Y" should inherit that:
+> setMethod("foo", signature(object= "X", arg= "logical"),
++           function(object, arg) cat("Hello World!\n") )
+[1] "foo"
+> ## now create objects and call methods:
+> y <- new("Y", bar=2)
+> showMethods("foo")
+
+Function "foo":
+object = "X", arg = "missing"
+object = "X", arg = "logical"
+object = "Y", arg = "missing"
+> foo(y)
+a Y object with bar = 2 
+> foo(y, arg=TRUE)## Hello World!
+Hello World!
+> ## OK, inheritance worked, and we have
+> showMethods("foo")
+
+Function "foo":
+object = "X", arg = "missing"
+object = "X", arg = "logical"
+object = "Y", arg = "missing"
+object = "Y", arg = "logical"
+    (inherited from object = "X", arg = "logical")
+> foo(y)
+a Y object with bar = 2 
+> ## still 'Y' -- was 'X object' in R < 2.3
+> 
 > 

@@ -116,3 +116,29 @@ removeMethod("[", signature(x = "Mat",
 d2[1:2,] ## used to fail badly; now okay
 stopifnot(identical(d2[-1,], d2[2:3,]))
 ## failed in R <= 2.1.x
+
+
+## Fritz' S4 "odditiy"
+setClass("X", representation(bar="numeric"))
+setClass("Y", contains="X")
+## Now we define a generic foo() and two different methods for "X" and
+## "Y" objects for arg missing:
+setGeneric("foo", function(object, arg) standardGeneric("foo"))
+setMethod("foo", signature(object= "X", arg="missing"),
+          function(object, arg) cat("an X object with bar =", object@bar, "\n"))
+setMethod("foo", signature(object= "Y", arg="missing"),
+          function(object, arg) cat("a Y object with bar =", object@bar, "\n"))
+## Finally we create a method where arg is "logical" only for class
+## "X", hence class "Y" should inherit that:
+setMethod("foo", signature(object= "X", arg= "logical"),
+          function(object, arg) cat("Hello World!\n") )
+## now create objects and call methods:
+y <- new("Y", bar=2)
+showMethods("foo")
+foo(y)
+foo(y, arg=TRUE)## Hello World!
+## OK, inheritance worked, and we have
+showMethods("foo")
+foo(y)
+## still 'Y' -- was 'X object' in R < 2.3
+
