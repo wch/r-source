@@ -1,8 +1,7 @@
-factor <- function (x, levels = sort(unique.default(x), na.last = TRUE),
-		    labels=levels, exclude = NA, ordered = is.ordered(x))
+factor <- function (x=character(), levels = sort(unique.default(x), 
+                    na.last = TRUE), labels=levels, exclude = NA, 
+                    ordered = is.ordered(x))
 {
-    if(is.null(x))
-	x <- list()
     exclude <- as.vector(exclude, typeof(x))
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)

@@ -21,7 +21,7 @@
   are the membership and coercion functions for these classes.
 }
 \usage{
-factor(x, levels = sort(unique.default(x), na.last = TRUE),
+factor(x = character(), levels = sort(unique.default(x), na.last = TRUE),
        labels = levels, exclude = NA, ordered = is.ordered(x))
 ordered(x, \dots)
 
@@ -158,6 +158,7 @@ is.na(x)[2] <- TRUE
 x  # [1] 1    <NA> NA, <NA> used because NA is a level.
 is.na(x)
 # [1] FALSE  TRUE FALSE
+factor()
 }
 \keyword{category}
 \keyword{NA}
