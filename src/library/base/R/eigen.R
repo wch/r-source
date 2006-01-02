@@ -1,29 +1,34 @@
+
+isSymmetric <- function(object, ...) UseMethod("isSymmetric")
+
+isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...) {
+    if(!is.matrix(object)) return(FALSE) ## we test for  symmetric *matrix*
+
+    test <-
+        if(is.complex(object))
+            all.equal.numeric(object, Conj(t(object)), tol = tol, ...)
+        else # numeric, character, ..
+            all.equal(object, t(object), tol = tol, ...)
+    isTRUE(test)
+}
+
 eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 {
     x <- as.matrix(x)
-    dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors
+    if(!is.null(dimnames(x)))
+        dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors
     n <- nrow(x)
     if (!n) stop("0 x 0 matrix")
     if (n != ncol(x)) stop("non-square matrix in 'eigen'")
 
     complex.x <- is.complex(x)
-
+    if(!complex.x && !is.numeric(x))
+        stop("numeric or complex values required in 'eigen'")
     if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
 
-    if(complex.x) {
-	if(missing(symmetric)) {
-            test <- all.equal.numeric(x, Conj(t(x)), 100*.Machine$double.eps)
-	    symmetric <- is.logical(test) && test
-        }
-    }
-    else if(is.numeric(x)) {
-	storage.mode(x) <- "double"
-	if(missing(symmetric)) {
-            test <- all.equal.numeric(x, t(x), 100*.Machine$double.eps)
-	    symmetric <- is.logical(test) && test
-        }
-    }
-    else stop("numeric or complex values required in 'eigen'")
+    if(missing(symmetric))
+        symmetric <- isSymmetric.matrix(x)
+
     if (!EISPACK) {
         if (symmetric) {
             z <- if(!complex.x)

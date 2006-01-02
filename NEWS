@@ -249,6 +249,9 @@ NEW FEATURES
 	except the base 14, and does not write font entries for unused
 	fonts.
 
+    o	The symmetry test for matrices used in eigen() has been ``exported''
+	as 'matrix' method of a new S3-generic 'isSymmetric().
+
 
 DEPRECATED & DEFUNCT
 
