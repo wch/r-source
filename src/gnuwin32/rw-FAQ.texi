@@ -658,7 +658,6 @@ GB2312).  Note that this can be rather tricky: on Windows XP there are
 several places to select the language under the `Regional and Language
 Options' part of the control panel, and the appropriate language has to
 be set under @emph{both} the `Regional Options' and `Advanced' tabs.
-(The @command{Rgui} menus may be corrupted if this is not done.)
 
 When using @command{Rterm} the window in which it is run has to be set up
 to use a suitable font and a suitable codepage (which for the Windows
@@ -684,8 +683,8 @@ the shortcut you use to start R.
 for example, in the console and to annotate graphs.  Similar comments
 apply to any non-Western European language.
 
-We believe this is possible by setting suitable fonts in the @file{Rconsole}
-and @file{Rdevga} configuration files (see Q3.2 and the next Q).  You can
+This is possible by setting suitable fonts in the @file{Rconsole} and
+@file{Rdevga} configuration files (see Q3.2 and the next Q).  You can
 specify additional fonts in @file{Rdevga}, and use them by
 
 @example
@@ -1378,19 +1377,19 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-
+@set LASTEDIT 2006 January 02
 @ifhtml
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 December 29: comments to
+Last edited @value{LASTEDIT}: comments to
 <code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 December 29: comments to <Rwindows@@r-project.org>
+Last edited @value{LASTEDIT}: comments to <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye

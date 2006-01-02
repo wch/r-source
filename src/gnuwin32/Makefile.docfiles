@@ -16,5 +16,5 @@ FAQs: rw-FAQ ../../doc/html/rw-FAQ.html
 	  makeinfo --no-split --html --no-headers --number-sections -o $@ 
 
 rw-FAQ: rw-FAQ.texi ../../VERSION
-	$(SED) $(SEDVER) $< | \
+	@$(SED) $(SEDVER) $< | \
 	  makeinfo --no-headers --number-sections -o $@

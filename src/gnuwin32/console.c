@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004-5      The R Foundation
+ *  Copyright (C) 2004-6      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1642,14 +1642,16 @@ setconsoleoptions(char *fnname,int fnsty, int fnpoints,
     pointsize = fnpoints;
     if (consolefn) del(consolefn);
     consolefn = NULL;
-    if (strcmp(fontname, "FixedFont"))
-       consolefn = gnewfont(NULL, fnname, fnsty, fnpoints, 0.0);
-    if (!consolefn) {
-       sprintf(msg,
-	       G_("Font %s-%d-%d  not found.\nUsing system fixed font"),
-               fontname, fontsty | FixedWidth, pointsize);
-       R_ShowMessage(msg);
-       consolefn = FixedFont;
+    if (strcmp(fontname, "FixedFont")) {
+	consolefn = gnewfont(NULL, fnname, fnsty | FixedWidth, fnpoints, 0.0);
+	if (!consolefn) {
+	    /* This is unlikely to happen: it will find some match */
+	    sprintf(msg,
+		    G_("Font %s-%d-%d  not found.\nUsing system fixed font"),
+		    fontname, fontsty | FixedWidth, pointsize);
+	    R_ShowMessage(msg);
+	    consolefn = FixedFont;
+	}
     }
 /*    if (!ghasfixedwidth(consolefn)) {
        sprintf(msg,
