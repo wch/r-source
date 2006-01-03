@@ -183,8 +183,10 @@ NEW FEATURES
 	name, PACKAGE) pairs currently recommended.  Alternative names
 	can be given for the R variables mapping to these symbols.
 	The native routine registration information can also be used
-	directly via useDynLib(name, .registration = TRUE). See the
+	directly via useDynLib(name, .registration = TRUE).  See the
 	'Writing R Extensions' manual for more details.
+
+	checkFF() (package 'tools') has been updated accordingly.
 
     o	'R CMD check' works for packages whose package name is different
 	from the directory name in which it is located.

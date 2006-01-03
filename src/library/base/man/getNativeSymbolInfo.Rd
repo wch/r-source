@@ -1,6 +1,10 @@
 \name{getNativeSymbolInfo}
 \alias{getNativeSymbolInfo}
-\title{Obtain a description of one or more native (C/Fortran) symbols}
+\alias{NativeSymbolInfo} % the class
+\alias{NativeSymbol} % the class
+\title{
+  Obtain a Description of one or more Native (C/Fortran) Symbols
+}
 \description{
   This finds and returns as comprehensive a description of one or more
   dynamically loaded or \dQuote{exported} built-in native
@@ -24,10 +28,10 @@
 }
 \usage{
 getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
-                     withRegistrationInfo = FALSE)
+                    withRegistrationInfo = FALSE)
 }
 \arguments{
-  \item{name}{the name of the native symbol as used in a call
+  \item{name}{the name(s) of the native symbol(s) as used in a call
     to \code{\link{is.loaded}}, etc.  Note that Fortran symbols should be
     supplied as-is, not wrapped in \code{symbol.For}.
   }
@@ -38,18 +42,17 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
     returned if the function is called with the name of a single symbol.
     If \code{unlist} is \code{TRUE} and the number of symbol names in
     \code{name} is one, then the \code{NativeSymbolInfo} object
-    is returned. If it is \code{FALSE}, then the list
+    is returned.  If it is \code{FALSE}, then a list
     of \code{NativeSymbolInfo} objects is returned.
     This is ignored if the number of symbols passed in \code{name} is
     more than one. 
     To be compatible with earlier versions of this function, this
     defaults to \code{TRUE}.
   }
-  \item{withRegistrationInfo}{a logical value indicating whether,
-    if \code{TRUE}, to
-    return information that was registered with R about the symbol
-    and its parameter types if such information is available,
-    or if \code{FALSE} to return the address of the 
+  \item{withRegistrationInfo}{a logical value indicating whether, if
+    \code{TRUE}, to return information that was registered with \R about
+    the symbol and its parameter types if such information is available,
+    or if \code{FALSE} to return the address of the symbol.
   }
 }
 \details{
@@ -61,16 +64,16 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   Otherwise, a generic native symbol object is returned.
 }
 \value{
-  Generally, a list of \code{NativeSymbolInfo} elements
-  whose elements can be indexed by the elements of
-  \code{name}  in the call.
-  Each \code{NativeSymbolInfo} object is a list containing the following elements:
+  Generally, a list of \code{NativeSymbolInfo} elements whose elements
+  can be indexed by the elements of \code{name}  in the call.  Each
+  \code{NativeSymbolInfo} object is a list containing the following
+  elements:
   \item{name}{the name of the symbol, as given by the
-  \code{name} argument.}
-\item{address}{if \code{withRegistrationInfo} is \code{FALSE},
+    \code{name} argument.}
+  \item{address}{if \code{withRegistrationInfo} is \code{FALSE},
     this is the native memory address of the symbol which can
-    be used to invoke the routine, and also
-    compare with other symbol address. This is an external pointer
+    be used to invoke the routine, and also to
+    compare with other symbol addresses.  This is an external pointer
     object and of class \code{NativeSymbol}.
     If \code{withRegistrationInfo} is \code{TRUE} and registration
     information is available for the symbol, then this is

@@ -9,7 +9,8 @@ checkFF(package, dir, file, lib.loc = NULL,
 \description{
   Performs checks on calls to compiled code from R code.  Currently only
   whether the interface functions such as \code{.C} and \code{.Fortran}
-  are called with argument \code{PACKAGE} specified, which is highly
+  are called with a \code{\link{"NativeSymbolInfo"}} first argument or
+  with argument \code{PACKAGE} specified, which is highly
   recommended to avoid name clashes in foreign function calls.
 }
 \arguments{
@@ -28,6 +29,10 @@ checkFF(package, dir, file, lib.loc = NULL,
     printed (and the result is returned invisibly).}
 }
 \details{
+  Note that we can only check if the \code{name} argument is a symbol or
+  a character string, not what class of object the symbol resolves to
+  at run-time.
+  
   \emph{If} the package has a namespace and \emph{if} that contains a
   \code{useDynLib} directive, calls in top-level functions in the
   package are not reported as their symbols will be preferentially
@@ -35,10 +40,11 @@ checkFF(package, dir, file, lib.loc = NULL,
 }
 \value{
   An object of class \code{"checkFF"}, which currently is a list of the
-  (parsed) foreign function calls with no \code{PACKAGE} argument.
+  (parsed) foreign function calls with a character first argument and
+  no \code{PACKAGE} argument.
 
-  There is a \code{print} method for nicely displaying the information
-  contained in such objects.
+  There is a \code{print} method to display the information contained in
+  such objects.
 }
 \seealso{
   \code{\link{.C}},

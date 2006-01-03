@@ -1695,7 +1695,7 @@ function(package, dir, file, lib.loc = NULL,
     }
     ## Also, need to handle base::.Call() etc ...
     FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
-    
+
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             ## <NOTE>
@@ -1705,12 +1705,15 @@ function(package, dir, file, lib.loc = NULL,
             ## BDR 2002-11-28
             ## </NOTE>
             if(deparse(e[[1]])[1] %in% FF_funs) {
-                parg <- e[["PACKAGE"]]
-                parg <- if(!is.null(parg) && (parg != "")) "OK"
-                else if(!hasNamespace) {
-                    bad_exprs <<- c(bad_exprs, e)
-                    "MISSING"
-                } else "MISSING but in a function in a namespace"
+                if(!is.character(e[[2]])) parg <- "Called with symbol"
+                else {
+                    parg <- e[["PACKAGE"]]
+                    parg <- if(!is.null(parg) && (parg != "")) "OK"
+                    else if(!hasNamespace) {
+                        bad_exprs <<- c(bad_exprs, e)
+                        "MISSING"
+                    } else "MISSING but in a function in a namespace"
+                }
                 if(verbose)
                     cat(deparse(e[[1]]), "(", deparse(e[[2]]),
                         ", ...): ", parg, "\n", sep = "")
