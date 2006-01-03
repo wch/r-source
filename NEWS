@@ -516,6 +516,10 @@ BUG FIXES
 
     o	str(<dendrogram>) sometimes used much too many spaces (in 2.2.x).
 
+    o	eigen(eispack=TRUE) access areas of the matrix in some circumstances
+	(asymmetric matrices with both complex conjugate pair and real
+	eigenvalues).
+
 
 
 		CHANGES IN R VERSION 2.2.1

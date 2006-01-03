@@ -3923,6 +3923,18 @@ stopifnot(nchar(xx) == nchar(x), xx == x)
 ## had random trailing bytes from second element on in 2.2.1.
 ## identical reported true, fixed in 2.3.0.
 
+## eigen(EISPACK=TRUE) problem reported to R-devel by Ole Christensen
+## 2006-01-03
+Gm <- rbind(c(-0.3194373786, 0.2444066686, 0.0428108831,  3.221983e-02),
+            c(0.0002071301, -0.0003282719,  0.0001211418, 5.128830e-12),
+            c(0.0621332005,  0.0545850010, -0.2098487035, 9.313050e-02),
+            c(0.0280936142,  0.0586642184,  0.1658310277, -2.525889e-01))
+temp <- eigen(Gm)
+temp
+temp2 <- eigen(Gm, EISPACK = TRUE)
+temp2$vectors <- apply(temp2$vectors, 2, function(x) x/sqrt(sum(Mod(x)^2)))
+temp2
+## segfaulted in 2.2.1
 
 ### end of tests added in 2.2.1 patched ###
 
