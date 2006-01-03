@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -584,6 +584,12 @@ msgstr ""
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
 
+msgid "'zero.print' has length > 1"
+msgstr ""
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr ""
+
 msgid "'subset' must evaluate to logical"
 msgstr ""
 
@@ -749,22 +755,19 @@ msgstr ""
 msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
 msgstr ""
 
-msgid "bad file argument"
-msgstr ""
-
-msgid "no input is available"
-msgstr ""
-
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr ""
 
-msgid "the input does not start with a magic number compatible with loading from a connection"
+msgid "bad 'file' argument"
 msgstr ""
 
 msgid "'file' must be specified"
 msgstr ""
 
 msgid "'file' must be non-empty string"
+msgstr ""
+
+msgid "bad file argument"
 msgstr ""
 
 msgid "can only save to a binary connection"
@@ -857,7 +860,7 @@ msgstr ""
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr ""
 
-msgid "failed to assign NativeSymbolInfo for"
+msgid "failed to assign RegisteredNativeSymbol for"
 msgstr ""
 
 msgid "to"
@@ -870,6 +873,9 @@ msgid "is already defined in the"
 msgstr ""
 
 msgid "namespace"
+msgstr ""
+
+msgid "failed to assign NativeSymbolInfo for"
 msgstr ""
 
 msgid "package '%s' does not have a name space"
@@ -1092,9 +1098,6 @@ msgid "length must be non-negative number"
 msgstr ""
 
 msgid "too many arguments"
-msgstr ""
-
-msgid "bad 'file' argument"
 msgstr ""
 
 msgid "'connection' must be a connection"

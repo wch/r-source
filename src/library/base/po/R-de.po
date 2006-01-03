@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -607,6 +607,13 @@ msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
 "Korrupter Data Frame: Spalten werden abgeschnitten oder mit NAs aufgefüllt"
 
+#, fuzzy
+msgid "'zero.print' has length > 1"
+msgstr "'input' muss Länge 1 haben"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr ""
+
 msgid "'subset' must evaluate to logical"
 msgstr "'subset' muss sich zu booleschem Wert berechnen"
 
@@ -780,27 +787,20 @@ msgstr "Paket '%s' konnte nicht geladen werden"
 msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
 msgstr "Paket '%s' %s ist geladen, aber %s %s wird von '%s' benötigt"
 
-msgid "bad file argument"
-msgstr "unbrauchbares Argument für file"
-
-msgid "no input is available"
-msgstr "keine Eingabe verfügbar"
-
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "Eingabe wurde korrumpiert, LF wurde ersetzt durch CR"
 
-msgid ""
-"the input does not start with a magic number compatible with loading from a "
-"connection"
-msgstr ""
-"die Eingabe beginnt nicht mit der Magic Number, die zum Laden aus einer "
-"Verbindung nötig ist"
+msgid "bad 'file' argument"
+msgstr "unbrauchbares 'file' Argument"
 
 msgid "'file' must be specified"
 msgstr "'file' muss angegeben werden"
 
 msgid "'file' must be non-empty string"
 msgstr "'file' muss nicht-leere Zeichenkette sein"
+
+msgid "bad file argument"
+msgstr "unbrauchbares Argument für file"
 
 msgid "can only save to a binary connection"
 msgstr "kann nur in binäre Verbindung speichern"
@@ -898,7 +898,7 @@ msgstr "%s in 'loadNamespace' für '%s' fehlgeschlagen"
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "Namensraum '%s' ist bereits in loadNamespace versiegelt"
 
-msgid "failed to assign NativeSymbolInfo for"
+msgid "failed to assign RegisteredNativeSymbol for"
 msgstr ""
 
 msgid "to"
@@ -913,6 +913,9 @@ msgstr ""
 #, fuzzy
 msgid "namespace"
 msgstr "kein Namensraum"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr ""
 
 msgid "package '%s' does not have a name space"
 msgstr "Paket '%s' hat keinen Namensraum"
@@ -1138,9 +1141,6 @@ msgstr "Länge muss eine nicht negative Zahl sein"
 msgid "too many arguments"
 msgstr "zu viele Argumente"
 
-msgid "bad 'file' argument"
-msgstr "unbrauchbares 'file' Argument"
-
 msgid "'connection' must be a connection"
 msgstr "'connection' muss eine Verbindung sein"
 
@@ -1358,6 +1358,16 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "no input is available"
+#~ msgstr "keine Eingabe verfügbar"
+
+#~ msgid ""
+#~ "the input does not start with a magic number compatible with loading from "
+#~ "a connection"
+#~ msgstr ""
+#~ "die Eingabe beginnt nicht mit der Magic Number, die zum Laden aus einer "
+#~ "Verbindung nötig ist"
 
 #~ msgid "calling wrong method"
 #~ msgstr "falsche Methode aufgerufen"

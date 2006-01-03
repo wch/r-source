@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-12-16 09:20\n"
-"PO-Revision-Date: 2005-12-16 09:20\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
+"PO-Revision-Date: 2006-01-03 10:43\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,21 @@ msgstr "Invalid to specify axis labels when ‘at’ is NULL"
 
 msgid "'labels' and 'at' locations must have same length"
 msgstr "‘labels’ and ‘at’ locations must have same length"
+
+msgid "End points must not be identical"
+msgstr "End points must not be identical"
+
+msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
+msgstr "'x1', ‘y1’ ,'x2', and ‘y2’ must be units"
+
+msgid "'shape' must be between -1 and 1"
+msgstr "‘shape’ must be between -1 and 1"
+
+msgid "'squareShape' must be between -1 and 1"
+msgstr "‘squareShape’ must be between -1 and 1"
+
+msgid "'arrow' must be an arrow object or NULL"
+msgstr "‘arrow’ must be an arrow object or NULL"
 
 msgid "Invalid 'edit' information"
 msgstr "Invalid ‘edit’ information"

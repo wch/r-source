@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -603,6 +603,13 @@ msgstr ""
 "파손되어진 데이터 프레임입니다.열은 잘릴수 있습니다, 또는 NA값으로 가득채워질"
 "수가 있습니다"
 
+#, fuzzy
+msgid "'zero.print' has length > 1"
+msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr ""
+
 msgid "'subset' must evaluate to logical"
 msgstr "'subset'는 논리값으로서 평가되지 않으면 안됩니다"
 
@@ -779,27 +786,20 @@ msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
 msgstr ""
 "패키지 '%s' %s는 적재 되었습니다만, %s %s 가 '%s'에 의해 요구되어 있습니다"
 
-msgid "bad file argument"
-msgstr "잘못된 파일 인수입니다"
-
-msgid "no input is available"
-msgstr "어떠한 입력도 이용할 수 없습니다"
-
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "입력 오류가 발생되어지고 있습니다. LF가 CR로 옮겨 놓을 수가 있습니다"
 
-msgid ""
-"the input does not start with a magic number compatible with loading from a "
-"connection"
-msgstr ""
-"입력은 connection로부터 로드와 호환성이 있는 magic number로 시작되어\n"
-"있지 않습니다"
+msgid "bad 'file' argument"
+msgstr "잘못한 'file' 인수입니다"
 
 msgid "'file' must be specified"
 msgstr "'file'가 지정되지 않으면 안됩니다"
 
 msgid "'file' must be non-empty string"
 msgstr "'file'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
+
+msgid "bad file argument"
+msgstr "잘못된 파일 인수입니다"
 
 msgid "can only save to a binary connection"
 msgstr "binary connection만 저장할수가 없습니다"
@@ -896,7 +896,7 @@ msgstr "%s는 '%s'때문에 'loadNamespace'에 실패했습니다"
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "%s는 '%s'때문에 'loadNamespace'에 이미 밀폐되었습니다"
 
-msgid "failed to assign NativeSymbolInfo for"
+msgid "failed to assign RegisteredNativeSymbol for"
 msgstr ""
 
 msgid "to"
@@ -911,6 +911,9 @@ msgstr ""
 #, fuzzy
 msgid "namespace"
 msgstr "이름 공간이 아닙니다"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr ""
 
 msgid "package '%s' does not have a name space"
 msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
@@ -1138,9 +1141,6 @@ msgstr "길이의 non-negative 수치가 아니면 되지 않습니다"
 
 msgid "too many arguments"
 msgstr "인수의 수가 너무 많습니다"
-
-msgid "bad 'file' argument"
-msgstr "잘못한 'file' 인수입니다"
 
 msgid "'connection' must be a connection"
 msgstr "'connection'는 connection가 아니면 되지 않습니다"
@@ -1371,6 +1371,16 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "no input is available"
+#~ msgstr "어떠한 입력도 이용할 수 없습니다"
+
+#~ msgid ""
+#~ "the input does not start with a magic number compatible with loading from "
+#~ "a connection"
+#~ msgstr ""
+#~ "입력은 connection로부터 로드와 호환성이 있는 magic number로 시작되어\n"
+#~ "있지 않습니다"
 
 #~ msgid "calling wrong method"
 #~ msgstr "잘못된 메소드의 호출입니다"

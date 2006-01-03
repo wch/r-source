@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-12-16 09:20\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-12-06 23:24+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -26,6 +26,23 @@ msgstr ""
 
 msgid "'labels' and 'at' locations must have same length"
 msgstr "'labels' et 'at' doivent être de même longueur"
+
+msgid "End points must not be identical"
+msgstr ""
+
+#, fuzzy
+msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
+msgstr "'x0', 'y0', 'x1' et 'y1' doivent être des unités"
+
+msgid "'shape' must be between -1 and 1"
+msgstr ""
+
+msgid "'squareShape' must be between -1 and 1"
+msgstr ""
+
+#, fuzzy
+msgid "'arrow' must be an arrow object or NULL"
+msgstr "'x' et 'y' doivent être des unités ou NULL"
 
 msgid "Invalid 'edit' information"
 msgstr "Information 'edit' incorrecte"

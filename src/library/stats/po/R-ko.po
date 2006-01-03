@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1530,7 +1530,8 @@ msgstr "파라미터의 이름을 확인 할수 없습니다"
 msgid "levels truncated to positive values only"
 msgstr "레벨 poitive 값인만큼 축소되었습니다"
 
-msgid "setVarying : vary length must match length of parameters"
+#, fuzzy
+msgid "setVarying : 'vary' length must match length of parameters"
 msgstr ""
 "setVarying: vary 길이는 파라미터의 길이에 일치하지 않으면 되지 않습니다"
 
@@ -1542,9 +1543,6 @@ msgstr ""
 
 msgid "Convergence failure:"
 msgstr ""
-
-msgid "rows with zero weights not counted"
-msgstr "중량감 zero의 행은 카운트 되지 않습니다"
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "\"nls\" 오브젝트를 위한 REML 대수우도를 계산할 수 없습니다"
@@ -2128,6 +2126,9 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "rows with zero weights not counted"
+#~ msgstr "중량감 zero의 행은 카운트 되지 않습니다"
 
 #~ msgid "p-values may be incorrect"
 #~ msgstr "p 값은 올바르지 않을지도 모릅니다"

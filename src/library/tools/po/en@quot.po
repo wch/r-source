@@ -1,7 +1,7 @@
 # English translations for R package.
-# Copyright (C) 2005 The R Foundation
+# Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the R package.
-# Automatically generated, 2005.
+# Automatically generated, 2006.
 #
 # All this catalog "translates" are quotation characters.
 # The msgids must be ASCII and therefore cannot contain real quotation

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1530,7 +1530,8 @@ msgstr "impossibile riconoscere nome parametro"
 msgid "levels truncated to positive values only"
 msgstr "livelli limitati ai solo valori positivi"
 
-msgid "setVarying : vary length must match length of parameters"
+#, fuzzy
+msgid "setVarying : 'vary' length must match length of parameters"
 msgstr ""
 "setVarying: la lunghezza di vary deve coincidere con quella dei parametri"
 
@@ -1542,9 +1543,6 @@ msgstr ""
 
 msgid "Convergence failure:"
 msgstr ""
-
-msgid "rows with zero weights not counted"
-msgstr "le righe con pesi zero non considerate"
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "impossibile calcolare REML log-verosimiglianza per oggetti \"nls\""
@@ -2138,6 +2136,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "rows with zero weights not counted"
+#~ msgstr "le righe con pesi zero non considerate"
 
 #~ msgid "p-values may be incorrect"
 #~ msgstr "i p-value potrebbero essere non corretti"

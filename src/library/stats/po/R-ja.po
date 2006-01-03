@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1502,7 +1502,8 @@ msgstr "パラメータの名前を確認できません"
 msgid "levels truncated to positive values only"
 msgstr "水準は正の値だけに縮小されました"
 
-msgid "setVarying : vary length must match length of parameters"
+#, fuzzy
+msgid "setVarying : 'vary' length must match length of parameters"
 msgstr "setVarying: vary 長はパラメータの長さに一致しなければなりません"
 
 msgid "singular gradient matrix at initial parameter estimates"
@@ -1513,9 +1514,6 @@ msgstr "algorithm = \"port\" でない限り上限もしくは下限は無視さ
 
 msgid "Convergence failure:"
 msgstr "収束の失敗："
-
-msgid "rows with zero weights not counted"
-msgstr "重みゼロの行はカウントされません"
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "\"nls\" オブジェクトのための REML 対数尤度を計算することができません"
@@ -2089,6 +2087,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
 msgstr[1] "モデル式中にパラメータ(複数) %s がありません"
+
+#~ msgid "rows with zero weights not counted"
+#~ msgstr "重みゼロの行はカウントされません"
 
 #~ msgid "p-values may be incorrect"
 #~ msgstr "p 値は正しくないかもしれません"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1427,7 +1427,7 @@ msgstr ""
 msgid "levels truncated to positive values only"
 msgstr ""
 
-msgid "setVarying : vary length must match length of parameters"
+msgid "setVarying : 'vary' length must match length of parameters"
 msgstr ""
 
 msgid "singular gradient matrix at initial parameter estimates"
@@ -1437,9 +1437,6 @@ msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""
 
 msgid "Convergence failure:"
-msgstr ""
-
-msgid "rows with zero weights not counted"
 msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"

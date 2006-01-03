@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-12-06 12:52+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -629,6 +629,13 @@ msgstr ""
 "tableau de données corrompu : les colonnes seront tronquées ou complétées "
 "avec des NAs"
 
+#, fuzzy
+msgid "'zero.print' has length > 1"
+msgstr "'input' doit être de longueur 1"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr ""
+
 msgid "'subset' must evaluate to logical"
 msgstr "'subset' doit être évaluée comme une valeur logique"
 
@@ -806,27 +813,20 @@ msgstr "le package '%s' ne peut être chargé"
 msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
 msgstr "le package '%s' %s est chargé, mais %s %s est requis par '%s'"
 
-msgid "bad file argument"
-msgstr "mauvais argument 'file'"
-
-msgid "no input is available"
-msgstr "pas d'entrée disponible"
-
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "l'entrée est corrompue, avec LF remplacé par CR"
 
-msgid ""
-"the input does not start with a magic number compatible with loading from a "
-"connection"
-msgstr ""
-"l'entrée ne débute pas avec un nombre magique compatible avec le chargement "
-"à partir d'une connexion"
+msgid "bad 'file' argument"
+msgstr "mauvais argument 'file'"
 
 msgid "'file' must be specified"
 msgstr "'file' doit être spécifié"
 
 msgid "'file' must be non-empty string"
 msgstr "'file' doit être une chaîne de caractères non vide"
+
+msgid "bad file argument"
+msgstr "mauvais argument 'file'"
 
 msgid "can only save to a binary connection"
 msgstr "la sauvegarde n'est possible que vers une connexion binaire"
@@ -924,7 +924,7 @@ msgstr "%s a échoué dans 'loadNamespace' pour '%s'"
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "l'espace de noms '%s' est déjà verrouillé dans loadNamespace"
 
-msgid "failed to assign NativeSymbolInfo for"
+msgid "failed to assign RegisteredNativeSymbol for"
 msgstr ""
 
 msgid "to"
@@ -939,6 +939,9 @@ msgstr ""
 #, fuzzy
 msgid "namespace"
 msgstr "ceci n'est pas un espace de noms"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr ""
 
 msgid "package '%s' does not have a name space"
 msgstr "le package '%s' n'a pas d'espace de noms"
@@ -1171,9 +1174,6 @@ msgstr "'length' doit être positif ou nul"
 msgid "too many arguments"
 msgstr "trop d'arguments"
 
-msgid "bad 'file' argument"
-msgstr "mauvais argument 'file'"
-
 msgid "'connection' must be a connection"
 msgstr "'connection' doit être une connexion"
 
@@ -1393,6 +1393,16 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "no input is available"
+#~ msgstr "pas d'entrée disponible"
+
+#~ msgid ""
+#~ "the input does not start with a magic number compatible with loading from "
+#~ "a connection"
+#~ msgstr ""
+#~ "l'entrée ne débute pas avec un nombre magique compatible avec le "
+#~ "chargement à partir d'une connexion"
 
 #~ msgid "format.char: coercing 'x' to 'character'"
 #~ msgstr "format.char : conversion automatique de 'x' en 'character'"

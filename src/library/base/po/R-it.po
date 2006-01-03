@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -615,6 +615,13 @@ msgstr "'flag' può contenre solo '0+- #'"
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "data frame corrotto: le colonne verranno accorciate o riempite con NA"
 
+#, fuzzy
+msgid "'zero.print' has length > 1"
+msgstr "'input' deve avere lunghezza 1"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr ""
+
 msgid "'subset' must evaluate to logical"
 msgstr "'subset' deve lavorare su espressioni logiche"
 
@@ -789,27 +796,20 @@ msgstr "pacchetto '%s' non caricato"
 msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
 msgstr "pacchetto '%s' %s caricato, ma %s %s richiesto da '%s'"
 
-msgid "bad file argument"
-msgstr "argomento file non corretto"
-
-msgid "no input is available"
-msgstr "nessun input disponibile"
-
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "l'input è stato danneggiato, LF sostituiti da CR"
 
-msgid ""
-"the input does not start with a magic number compatible with loading from a "
-"connection"
-msgstr ""
-"l'input non inizia con un identificativo compatibile con il caricamento "
-"dauna connessione"
+msgid "bad 'file' argument"
+msgstr "argomento 'file' sbagliato"
 
 msgid "'file' must be specified"
 msgstr "'file' deve essere specificato"
 
 msgid "'file' must be non-empty string"
 msgstr "'file' deve essere una stringa non vuota"
+
+msgid "bad file argument"
+msgstr "argomento file non corretto"
 
 msgid "can only save to a binary connection"
 msgstr "posso salvare solo su connessioni di tipo binario"
@@ -906,7 +906,7 @@ msgstr "%s non riuscito in 'loadNamespace' per %s"
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "namespace '%s' già sigillato in loadNamespace"
 
-msgid "failed to assign NativeSymbolInfo for"
+msgid "failed to assign RegisteredNativeSymbol for"
 msgstr ""
 
 msgid "to"
@@ -921,6 +921,9 @@ msgstr ""
 #, fuzzy
 msgid "namespace"
 msgstr "non è un namespace"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr ""
 
 msgid "package '%s' does not have a name space"
 msgstr "il pacchetto '%s' non ha un namespace"
@@ -1150,9 +1153,6 @@ msgstr "la lunghezza deve essere un numero non negativo"
 msgid "too many arguments"
 msgstr "troppi argomenti"
 
-msgid "bad 'file' argument"
-msgstr "argomento 'file' sbagliato"
-
 msgid "'connection' must be a connection"
 msgstr "'connection' deve essere una connessione"
 
@@ -1370,6 +1370,16 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "no input is available"
+#~ msgstr "nessun input disponibile"
+
+#~ msgid ""
+#~ "the input does not start with a magic number compatible with loading from "
+#~ "a connection"
+#~ msgstr ""
+#~ "l'input non inizia con un identificativo compatibile con il caricamento "
+#~ "dauna connessione"
 
 #~ msgid "calling wrong method"
 #~ msgstr "chimata ad un metodo sbagliato"

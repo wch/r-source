@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-12-16 09:20\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -19,6 +19,23 @@ msgstr "'at'가 NULL인경우 axis labels를 지정하는 것은 부적절합니
 
 msgid "'labels' and 'at' locations must have same length"
 msgstr "'labels' 그리고 위치'at'는 동일 길이가 나오지 않으면 되지 않습니다"
+
+msgid "End points must not be identical"
+msgstr ""
+
+#, fuzzy
+msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
+msgstr "'x0', 'y0', 'x1' 그리고 'y1'는 units가 나오지 않으면 되지 않습니다"
+
+msgid "'shape' must be between -1 and 1"
+msgstr ""
+
+msgid "'squareShape' must be between -1 and 1"
+msgstr ""
+
+#, fuzzy
+msgid "'arrow' must be an arrow object or NULL"
+msgstr "'x' 그리고 'y'는 units 또는 NULL가 나오지 않으면 되지 않습니다"
 
 msgid "Invalid 'edit' information"
 msgstr "부적절한 'edit'정보입니다"

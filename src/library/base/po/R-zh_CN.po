@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -593,6 +593,13 @@ msgstr "'flag'只能含'0+- #'"
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "破损的数据框：縮短列的长度或用NA来填充空白"
 
+#, fuzzy
+msgid "'zero.print' has length > 1"
+msgstr "'input'的长度一定得为1"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr ""
+
 msgid "'subset' must evaluate to logical"
 msgstr "'subset'必需可以被评估成为逻辑值"
 
@@ -764,25 +771,20 @@ msgstr "无法载入程辑包'%s'"
 msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
 msgstr "载入了程辑包'%1$s' %2$s，但'%5$s'需要%3$s %4$s "
 
-msgid "bad file argument"
-msgstr "文件变元值不对"
-
-msgid "no input is available"
-msgstr "无输入"
-
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "输入有破损，LF被CR取代"
 
-msgid ""
-"the input does not start with a magic number compatible with loading from a "
-"connection"
-msgstr "用链结输入文件必须包含正确的幻数"
+msgid "bad 'file' argument"
+msgstr "'file'变元不对"
 
 msgid "'file' must be specified"
 msgstr "必需设定'file'的值"
 
 msgid "'file' must be non-empty string"
 msgstr "'file'的值必需是长度大于0的字符串"
+
+msgid "bad file argument"
+msgstr "文件变元值不对"
 
 msgid "can only save to a binary connection"
 msgstr "只能保存到二进列链结"
@@ -876,7 +878,7 @@ msgstr "'%2$s'的'loadNamespace'出了错：%1$s "
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "名字空间'%s'已经在loadNamespace封條了"
 
-msgid "failed to assign NativeSymbolInfo for"
+msgid "failed to assign RegisteredNativeSymbol for"
 msgstr ""
 
 msgid "to"
@@ -890,6 +892,9 @@ msgstr ""
 
 msgid "namespace"
 msgstr "名字空间"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr ""
 
 msgid "package '%s' does not have a name space"
 msgstr "程辑包'%s'没有名字空间"
@@ -1114,9 +1119,6 @@ msgstr "length必需为非负数"
 msgid "too many arguments"
 msgstr "太多变元"
 
-msgid "bad 'file' argument"
-msgstr "'file'变元不对"
-
 msgid "'connection' must be a connection"
 msgstr "'connection'必需是个链结"
 
@@ -1332,6 +1334,14 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "no input is available"
+#~ msgstr "无输入"
+
+#~ msgid ""
+#~ "the input does not start with a magic number compatible with loading from "
+#~ "a connection"
+#~ msgstr "用链结输入文件必须包含正确的幻数"
 
 #~ msgid "calling wrong method"
 #~ msgstr "调用的方法不对"

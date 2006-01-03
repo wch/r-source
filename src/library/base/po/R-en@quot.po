@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
-"PO-Revision-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
+"PO-Revision-Date: 2006-01-03 10:43\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -612,6 +612,12 @@ msgstr "‘flag’ can contain only ‘0+- #’"
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "corrupt data frame: columns will be truncated or padded with NAs"
 
+msgid "'zero.print' has length > 1"
+msgstr "‘zero.print’ has length > 1"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr "‘zero.print’ must be character, logical or NULL"
+
 msgid "'subset' must evaluate to logical"
 msgstr "‘subset’ must evaluate to logical"
 
@@ -785,27 +791,20 @@ msgstr "package ‘%s’ could not be loaded"
 msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
 msgstr "package ‘%s’ %s is loaded, but %s %s is required by ‘%s’"
 
-msgid "bad file argument"
-msgstr "bad file argument"
-
-msgid "no input is available"
-msgstr "no input is available"
-
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "input has been corrupted, with LF replaced by CR"
 
-msgid ""
-"the input does not start with a magic number compatible with loading from a "
-"connection"
-msgstr ""
-"the input does not start with a magic number compatible with loading from a "
-"connection"
+msgid "bad 'file' argument"
+msgstr "bad ‘file’ argument"
 
 msgid "'file' must be specified"
 msgstr "‘file’ must be specified"
 
 msgid "'file' must be non-empty string"
 msgstr "‘file’ must be non-empty string"
+
+msgid "bad file argument"
+msgstr "bad file argument"
 
 msgid "can only save to a binary connection"
 msgstr "can only save to a binary connection"
@@ -901,8 +900,8 @@ msgstr "%s failed in ‘loadNamespace’ for ‘%s’"
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "namespace ‘%s’ is already sealed in loadNamespace"
 
-msgid "failed to assign NativeSymbolInfo for"
-msgstr "failed to assign NativeSymbolInfo for"
+msgid "failed to assign RegisteredNativeSymbol for"
+msgstr "failed to assign RegisteredNativeSymbol for"
 
 msgid "to"
 msgstr "to"
@@ -915,6 +914,9 @@ msgstr "is already defined in the"
 
 msgid "namespace"
 msgstr "namespace"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr "failed to assign NativeSymbolInfo for"
 
 msgid "package '%s' does not have a name space"
 msgstr "package ‘%s’ does not have a name space"
@@ -1137,9 +1139,6 @@ msgstr "length must be non-negative number"
 
 msgid "too many arguments"
 msgstr "too many arguments"
-
-msgid "bad 'file' argument"
-msgstr "bad ‘file’ argument"
 
 msgid "'connection' must be a connection"
 msgstr "‘connection’ must be a connection"

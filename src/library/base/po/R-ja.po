@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-28 07:35\n"
+"POT-Creation-Date: 2006-01-03 10:43\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -605,6 +605,13 @@ msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
 "壊れたデータフレームです。列は切り詰められるか、または NA 値で埋められます"
 
+#, fuzzy
+msgid "'zero.print' has length > 1"
+msgstr "'input' は長さ 1 でなければなりません"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr ""
+
 msgid "'subset' must evaluate to logical"
 msgstr "'subset' は論理値として評価されなければなりません"
 
@@ -783,27 +790,20 @@ msgstr ""
 "パッケージ '%s' %s はロードされましたが、%s %s が '%s' によって要求されていま"
 "す"
 
-msgid "bad file argument"
-msgstr "誤ったファイル引数です"
-
-msgid "no input is available"
-msgstr "いかなる入力も利用できません"
-
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "入力は混乱しています。LF が CR で置き換えられています"
 
-msgid ""
-"the input does not start with a magic number compatible with loading from a "
-"connection"
-msgstr ""
-"入力はコネクションからのロードと互換性があるマジックナンバーで始まっていませ"
-"ん"
+msgid "bad 'file' argument"
+msgstr "誤った 'file' 引数です"
 
 msgid "'file' must be specified"
 msgstr "'file' が指定されなければなりません"
 
 msgid "'file' must be non-empty string"
 msgstr "'file' は空でない文字列でなければなりません"
+
+msgid "bad file argument"
+msgstr "誤ったファイル引数です"
 
 msgid "can only save to a binary connection"
 msgstr "バイナリコネクションへしかセーブできません"
@@ -900,7 +900,7 @@ msgstr "%s は '%s' のための 'loadNamespace' に失敗しました"
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "名前空間 '%s' は既に loadNamespace 中に密封さ れる"
 
-msgid "failed to assign NativeSymbolInfo for"
+msgid "failed to assign RegisteredNativeSymbol for"
 msgstr ""
 
 msgid "to"
@@ -915,6 +915,9 @@ msgstr ""
 #, fuzzy
 msgid "namespace"
 msgstr "名前空間ではありません"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr ""
 
 msgid "package '%s' does not have a name space"
 msgstr "パッケージ '%s' は名前空間を持っていません"
@@ -1146,9 +1149,6 @@ msgstr "長さは非負の数値でなければなりません"
 msgid "too many arguments"
 msgstr "引数の数が多すぎます"
 
-msgid "bad 'file' argument"
-msgstr "誤った 'file' 引数です"
-
 msgid "'connection' must be a connection"
 msgstr "'connection' はコネクションでなければなりません"
 
@@ -1372,6 +1372,16 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
 msgstr[1] "警告メッセージ(複数)：\n"
+
+#~ msgid "no input is available"
+#~ msgstr "いかなる入力も利用できません"
+
+#~ msgid ""
+#~ "the input does not start with a magic number compatible with loading from "
+#~ "a connection"
+#~ msgstr ""
+#~ "入力はコネクションからのロードと互換性があるマジックナンバーで始まっていま"
+#~ "せん"
 
 #~ msgid "format.char: coercing 'x' to 'character'"
 #~ msgstr "format.char: 'x' を強 'character' へ強制変換します"
