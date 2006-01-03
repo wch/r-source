@@ -684,9 +684,16 @@ AH_TEMPLATE([blkcnt_t],
              Apparently necessary to fix a GCC bug on AIX?])
 R_TYPE_SOCKLEN
 AC_CHECK_TYPES([stack_t], , , [#include <signal.h>])
-## This should be stdint.h in C99, but Solaris has this in inttypes.h instead
+## These are optional C99 types, which we typedef in Defn.h if absent.
+## There seems some confusion as to where they should be defined:
+## the standard says stdint.h but drafts and Solaris 8 have inttypes.h.
+## It seems all systems having stdint.h include it in inttypes.h, and
+## POSIX requires that.  But we will make sure.
 AC_CHECK_TYPES([intptr_t, uintptr_t], , , [#ifdef HAVE_INTTYPES_H
 #include <inttypes.h>
+#endif
+#ifdef HAVE_STDINT_H
+#include <stdint.h>
 #endif])
 
 ### * Checks for compiler characteristics.

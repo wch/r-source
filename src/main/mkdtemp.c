@@ -36,6 +36,8 @@
 # define TMP_MAX 238328
 #endif
 
+/* This is a little strange: inttypes.h is supposed according to
+   POSIX to include stdint.h */
 #ifdef HAVE_STDINT_H
 # include <stdint.h>
 #endif

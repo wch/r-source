@@ -3047,7 +3047,7 @@ fi
 AC_DEFUN([R_CHECK_DECL],
 [AS_VAR_PUSHDEF([ac_Symbol], [ac_cv_have_decl_$1])dnl
 AC_CACHE_CHECK([whether $1 exists and is declared], ac_Symbol,
-[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT([$4])],
+[AC_LINK_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT([$4])],
 [#ifndef $1
   char *p = (char *) $1;
 #endif
@@ -3069,8 +3069,7 @@ AC_DEFUN([R_CHECK_FUNCS],
 for ac_func in $1
 do
 R_CHECK_DECL($ac_func,
-             [AC_DEFINE_UNQUOTED([AS_TR_CPP([HAVE_$ac_func])], 1, 
-	        [Define to 1 if you have the `]AC_Func[' function.])], , [$2])dnl
+             [AC_DEFINE_UNQUOTED([AS_TR_CPP([HAVE_$ac_func])], 1)], , [$2])dnl
 done
 ])# R_CHECK_FUNCS
 

@@ -92,6 +92,8 @@ typedef long R_long_t;
 # ifdef HAVE_INTTYPES_H
 #  include <inttypes.h>
 # endif
+/* According to POSIX inttypes.h should include stdint.h, but let's be
+   sure. */
 # ifdef HAVE_STDINT_H
 #  include <stdint.h>
 # endif
@@ -110,6 +112,7 @@ typedef long R_long_t;
 # define R_SIZE_T_MAX ULONG_MAX
 #endif
 
+/* These are optional C99 types */
 #if !defined(HAVE_INTPTR_T) && !defined(intptr_t)
  typedef long intptr_t;
 #endif
