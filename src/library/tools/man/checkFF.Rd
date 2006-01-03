@@ -9,7 +9,7 @@ checkFF(package, dir, file, lib.loc = NULL,
 \description{
   Performs checks on calls to compiled code from R code.  Currently only
   whether the interface functions such as \code{.C} and \code{.Fortran}
-  are called with a \code{\link{"NativeSymbolInfo"}} first argument or
+  are called with a \code{"\link{NativeSymbolInfo}"} first argument or
   with argument \code{PACKAGE} specified, which is highly
   recommended to avoid name clashes in foreign function calls.
 }
