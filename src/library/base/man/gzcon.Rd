@@ -15,19 +15,22 @@ gzcon(con, level = 6, allowNonCompressed = TRUE)
   \item{con}{a connection.}
   \item{level}{integer between 0 and 9, the compression level when writing.}
   \item{allowNonCompressed}{logical.  When reading, should
-    non-compressed files (lacking the \code{gzip} magic header) be allowed?}
+    non-compressed input be allowed?}
 }
 \details{
-  If \code{con} is open then the modified
-  connection is opened.  Closing the
-  wrapper connection will also close the underlying connection.
+  If \code{con} is open then the modified connection is opened.  Closing
+  the wrapper connection will also close the underlying connection.
 
   Reading from a connection which does not supply a \code{gzip} magic
   header is equivalent to reading from the original connection if
   \code{allowNonCompressed} is true, otherwise an error.
 
-  The original connection is unusable: any object pointing to it will
+  The original connection becomes unusable: any object pointing to it will
   now refer to the modified connection.
+
+  When the connection is opened for reading, the input is expected to
+  start with the \code{gzip} magic header.  If it does not and if
+  \code{allowNonCompressed = TRUE} (the default) the input is read as-is.
 }
 \value{
   An object inheriting from class \code{"connection"}.  This is the same
@@ -35,10 +38,11 @@ gzcon(con, level = 6, allowNonCompressed = TRUE)
 }
 \seealso{\code{\link{gzfile}}}
 \examples{
-\dontrun{## This example may not still be available
+\dontrun{## This example is no longer available
 ## print the value to see what objects were created.
 con <- url("http://hesweb1.med.virginia.edu/biostat/s/data/sav/kprats.sav")
-print(load(con))}
+print(load(con))
+close(con)}
 
 ## gzfile and gzcon can inter-work.
 ## Of course here one would used gzfile, but file() can be replaced by
