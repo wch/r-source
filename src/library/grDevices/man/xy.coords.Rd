@@ -25,7 +25,7 @@ xy.coords(x, y, xlab = NULL, ylab = NULL, log = NULL,
   An attempt is made to interpret the arguments \code{x} and \code{y} in
   a way suitable for plotting.
 
-  If \code{y} is missing and \code{x} is a
+  If \code{y} is \code{NULL} and \code{x} is a
   \describe{
     \item{formula:}{of the form \code{yvar ~ xvar}. \code{xvar} and
       \code{yvar} are used as x and y variables.}

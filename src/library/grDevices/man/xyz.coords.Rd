@@ -11,9 +11,9 @@ xyz.coords(x, y, z, xlab = NULL, ylab = NULL, zlab = NULL,
 }
 \arguments{
   \item{x, y, z}{the x, y and z coordinates of a set of points.
-    Alternatively, a single argument \code{x} can be provided.
-    In this case, an attempt is made to interpret the
-    argument in a way suitable for plotting.
+    Optionally, both of \code{y} and \code{z} can be 
+    set to \code{NULL}. In this case, an attempt is made to interpret 
+    \code{x} in a way suitable for plotting.
 
     If the argument is a formula \code{zvar ~ xvar + yvar},
     \code{xvar}, \code{yvar} and \code{zvar} are used as x, y and z
@@ -23,7 +23,8 @@ xyz.coords(x, y, z, xlab = NULL, ylab = NULL, zlab = NULL,
     if the argument is a matrix with three columns, the first is
     assumed to contain the x values, etc.
 
-    Alternatively, two arguments \code{x} and \code{y} can be provided.
+    Alternatively, just \code{z} can be \code{NULL} and 
+    two arguments \code{x} and \code{y} can be provided.
     One may be real, the other complex;
     in any other case, the arguments are coerced to vectors
     and the values plotted against their indices.
