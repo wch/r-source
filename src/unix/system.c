@@ -151,7 +151,7 @@ int Rf_initialize_R(int ac, char **av)
         R_CStackLimit = lim1 < lim2 ? lim1 : lim2;
     }
 #if defined(linux)
-    R_CStackStart = (long) __libc_stack_end;
+    R_CStackStart = (uintptr_t) __libc_stack_end;
 #elif defined(__FreeBSD__)
     {
 	/* Borrowed from mzscheme/gc/os_dep.c */
@@ -159,20 +159,20 @@ int Rf_initialize_R(int ac, char **av)
 	void * base;
 	size_t len = sizeof(void *);
 	int r = sysctl(nm, 2, &base, &len, NULL, 0);
-	R_CStackStart = (long) base;
+	R_CStackStart = (uintptr_t) base;
     }
 #else
     if(R_running_as_main_program) {
 	/* This is not the main program, but unless embedded it is 
 	   near the top, 5540 bytes away when checked. */
-	R_CStackStart = (long) &i + 6000;
+	R_CStackStart = (uintptr_t) &i + 6000;
     }
 #endif
     
     {
         int ii;
 	/* 1 is downwards */
-        R_CStackDir = ((unsigned long)&i > (unsigned long)&ii) ? 1 : -1;
+        R_CStackDir = ((uintptr_t)&i > (uintptr_t)&ii) ? 1 : -1;
     }
     /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit, 
               R_CStackStart, R_CStackDir); */

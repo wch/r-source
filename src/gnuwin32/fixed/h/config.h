@@ -286,6 +286,9 @@
 /* Define if you have the 'intmax_t' type in <stdint.h> or <inttypes.h>. */
 #define HAVE_INTMAX_T 1
 
+/* Define to 1 if the system has the type `intptr_t'. */
+#define HAVE_INTPTR_T 1
+
 /* Define if <inttypes.h> exists and doesn't clash with <sys/types.h>. */
 #define HAVE_INTTYPES_H 1
 
@@ -589,6 +592,9 @@
 
 /* Define if you have the 'uintmax_t' type in <stdint.h> or <inttypes.h>. */
 #define HAVE_UINTMAX_T 1
+
+/* Define to 1 if the system has the type `uintptr_t'. */
+#define HAVE_UINTPTR_T 1
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2005  The R Development Core Team.
+ *  Copyright (C) 1998--2006  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -109,6 +109,14 @@ typedef long R_long_t;
   typedef unsigned long R_size_t;
 # define R_SIZE_T_MAX ULONG_MAX
 #endif
+
+#if !defined(HAVE_INTPTR_T) && !defined(intptr_t)
+ typedef long intptr_t;
+#endif
+#if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
+ typedef unsigned long uintptr_t;
+#endif
+
 
 #define Mega 1048576. /* 1 Mega Byte := 2^20 (= 1048576) Bytes */
 #define Giga 1073741824. /* 1 Giga Byte := 2^30 Bytes */
@@ -510,8 +518,8 @@ extern int	R_Expressions	INI_as(5000);	/* options(expressions) */
 extern Rboolean	R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 extern int	R_UseNamespaceDispatch INI_as(TRUE);
 extern int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
-extern unsigned long	R_CStackLimit	INI_as((unsigned long)-1);	/* C stack limit */
-extern unsigned long	R_CStackStart	INI_as((unsigned long)-1);	/* Initial stack address */
+extern uintptr_t	R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
+extern uintptr_t	R_CStackStart	INI_as((uintptr_t)-1);	/* Initial stack address */
 extern int	R_CStackDir	INI_as(1);	/* C stack direction */
 
 /* File Input/Output */

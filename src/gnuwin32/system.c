@@ -625,21 +625,6 @@ void R_SetWin32(Rstart Rp)
 {
     int dummy;
 
-#if 0
-    CharacterMode = Rp->CharacterMode;
-    switch(CharacterMode) {
-    case RGui:
-    case RTerm:
-	R_CStackLimit = 512*1024;  /* set in front-ends/Makefile */
-	break;
-    default:
-	R_CStackLimit = -1;  /* embedded in another front-end, 
-				so we have no idea */
-    }
-    R_CStackStart = (unsigned long)&dummy;
-    printf("stack base %lx\n", R_CStackStart);
-#endif
-
     {
 	/* Idea here is to ask about the memory block an automatic
 	   variable is in.  VirtualQuery rounds down to the beginning
@@ -647,11 +632,11 @@ void R_SetWin32(Rstart Rp)
 	   how many bytes the pages go up */
 
 	MEMORY_BASIC_INFORMATION buf;
-	unsigned long bottom, top;
+	uintptr_t bottom, top;
 
 	VirtualQuery(&dummy, &buf, sizeof(buf));
-	bottom = (unsigned long) buf.AllocationBase;
-	top = (unsigned long) buf.BaseAddress + buf.RegionSize;
+	bottom = (uintptr_t) buf.AllocationBase;
+	top = (uintptr_t) buf.BaseAddress + buf.RegionSize;
 	/* printf("stackbase %lx, size %lx\n", top, top-bottom); */
 	R_CStackStart = top;
 	R_CStackLimit = top - bottom;

@@ -683,9 +683,10 @@ AH_TEMPLATE([blkcnt_t],
             [Define to 'long' if <sys/types.h> does not define.
              Apparently necessary to fix a GCC bug on AIX?])
 R_TYPE_SOCKLEN
-AC_CHECK_TYPES([stack_t], HAVE_STACK_T_01=1, HAVE_STACK_T_01=0,
-               [#include <signal.h>])
-AC_SUBST(HAVE_STACK_T_01)
+AC_CHECK_TYPES([stack_t], , , [#include <signal.h>])
+AC_CHECK_TYPES([intptr_t, uintptr_t], , , [#ifdef HAVE_STDINT_H
+#include <stdint.h>
+#endif])
 
 ### * Checks for compiler characteristics.
 
