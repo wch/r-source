@@ -684,8 +684,9 @@ AH_TEMPLATE([blkcnt_t],
              Apparently necessary to fix a GCC bug on AIX?])
 R_TYPE_SOCKLEN
 AC_CHECK_TYPES([stack_t], , , [#include <signal.h>])
-AC_CHECK_TYPES([intptr_t, uintptr_t], , , [#ifdef HAVE_STDINT_H
-#include <stdint.h>
+## This should be stdint.h in C99, but Solaris has this in inttypes.h instead
+AC_CHECK_TYPES([intptr_t, uintptr_t], , , [#ifdef HAVE_INTTYPES_H
+#include <inttypes.h>
 #endif])
 
 ### * Checks for compiler characteristics.
