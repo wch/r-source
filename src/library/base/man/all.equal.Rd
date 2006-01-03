@@ -17,9 +17,10 @@ all.equal(target, current, \dots)
 
 \method{all.equal}{numeric}(target, current,
           tolerance = .Machine$double.eps ^ 0.5,
-          scale = NULL, \dots)
+          scale = NULL, check.attributes = TRUE, \dots)
 
-attr.all.equal(target, current, \dots)
+attr.all.equal(target, current,
+               check.attributes = TRUE, check.names = TRUE, \dots)
 }
 \arguments{
   \item{target}{\R object.}
@@ -29,6 +30,12 @@ attr.all.equal(target, current, \dots)
   \item{tolerance}{numeric \eqn{\ge}{>=} 0.  Differences smaller than
     \code{tolerance} are not considered.}
   \item{scale}{numeric scalar > 0 (or \code{NULL}). See Details.}
+  \item{check.attributes}{logical indicating if the
+    \code{\link{attributes}(.)} of \code{target} and \code{current}
+    should be compared as well.}
+  \item{check.names}{logical indicating if the \code{\link{names}(.)}
+    of \code{target} and \code{current} should be compared as well (and
+    separately from the \code{attributes}).}
 }
 \description{
     \code{all.equal(x,y)} is a utility to compare \R objects \code{x}

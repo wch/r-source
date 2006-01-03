@@ -1,6 +1,7 @@
 all.equal <- function(target, current, ...) UseMethod("all.equal")
 
-all.equal.default <- function(target, current, ...)
+all.equal.default <-
+    function(target, current, check.attributes = TRUE, ...)
 {
     ## Really a dispatcher given mode() of args :
     ## use data.class as unlike class it does not give "Integer"
@@ -8,15 +9,15 @@ all.equal.default <- function(target, current, ...)
 	return(all.equal.language(target, current, ...))
     if(is.recursive(target))
 	return(all.equal.list(target, current, ...))
-    msg <- c(attr.all.equal(target, current, ...),
+    msg <- c(if(check.attributes) attr.all.equal(target, current, ...),
 	     if(is.numeric(target)) {
-		 all.equal.numeric(target, current, ...)
+		 all.equal.numeric(target, current, check.attributes = check.attributes, ...)
 	     } else
 	     switch (mode(target),
 		     logical = ,
 		     complex = ,
-		     numeric = all.equal.numeric(target, current, ...),
-		     character = all.equal.character(target, current, ...),
+		     numeric = all.equal.numeric(target, current, check.attributes = check.attributes, ...),
+		     character = all.equal.character(target, current, check.attributes = check.attributes, ...),
 		      if(data.class(target) != data.class(current)) {
 		 paste("target is ", data.class(target), ", current is ",
 		       data.class(current), sep = "")
@@ -25,10 +26,10 @@ all.equal.default <- function(target, current, ...)
 }
 
 all.equal.numeric <-
-function(target, current, tolerance = .Machine$double.eps ^ .5,
-	 scale=NULL, ...)
+    function(target, current, tolerance = .Machine$double.eps ^ .5,
+             scale = NULL, check.attributes = TRUE, ...)
 {
-    msg <- attr.all.equal(target, current, ...)
+    msg <- if(check.attributes) attr.all.equal(target, current, ...)
     if(data.class(target) != data.class(current)) {
 	msg <- c(msg, paste("target is ", data.class(target), ", current is ",
 			    data.class(current), sep = ""))
@@ -40,7 +41,7 @@ function(target, current, tolerance = .Machine$double.eps ^ .5,
     cplx <- is.complex(target)
     if(lt != lc) {
 	## *replace* the 'Lengths' msg[] from attr.all.equal():
-	msg <- msg[substr(msg,1,8) != "Lengths:"]
+	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
 	msg <- c(msg, paste(if(cplx)"Complex" else "Numeric",
 			    ": lengths (", lt, ", ", lc, ") differ", sep = ""))
 	return(msg)
@@ -77,9 +78,10 @@ function(target, current, tolerance = .Machine$double.eps ^ .5,
     if(is.null(msg)) TRUE else msg
 }
 
-all.equal.character <- function(target, current, ...)
+all.equal.character <-
+    function(target, current, check.attributes = TRUE, ...)
 {
-    msg <- attr.all.equal(target, current, ...)
+    msg <-  if(check.attributes) attr.all.equal(target, current, ...)
     if(data.class(target) != data.class(current)) {
 	msg <- c(msg, paste("target is ", data.class(target), ", current is ",
 			    data.class(current), sep = ""))
@@ -88,7 +90,7 @@ all.equal.character <- function(target, current, ...)
     lt <- length(target)
     lc <- length(current)
     if(lt != lc) {
-	msg <- msg[substr(msg,1,8) != "Lengths:"]
+	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
 	msg <- c(msg, paste("Lengths (", lt, ", ", lc,
 		     ") differ (string compare on first ", ll <- min(lt, lc),
 		     ")", sep = ""))
@@ -108,11 +110,11 @@ all.equal.character <- function(target, current, ...)
     else msg
 }
 
-all.equal.factor <- function(target, current, ...)
+all.equal.factor <- function(target, current, check.attributes = TRUE, ...)
 {
     if(!inherits(current, "factor"))
 	return("'current' is not a factor")
-    msg <- attr.all.equal(target, current)
+    msg <-  if(check.attributes) attr.all.equal(target, current)
     class(target) <- class(current) <- NULL
     nax <- is.na(target)
     nay <- is.na(current)
@@ -121,7 +123,7 @@ all.equal.factor <- function(target, current, ...)
     else {
 	target <- levels(target)[target[!nax]]
 	current <- levels(current)[current[!nay]]
-	if(is.character(n <- all.equal(target, current)))
+	if(is.character(n <- all.equal(target, current, check.attributes = check.attributes)))
 	    msg <- c(msg, n)
     }
     if(is.null(msg)) TRUE else msg
@@ -137,12 +139,12 @@ all.equal.formula <- function(target, current, ...)
     else TRUE
 }
 
-all.equal.language <- function(target, current, ...)
+all.equal.language <- function(target, current, check.attributes = TRUE, ...)
 {
     mt <- mode(target)
     mc <- mode(current)
     if(mt == "expression" && mc == "expression")
-	return(all.equal.list(target, current, ...))
+	return(all.equal.list(target, current, check.attributes = check.attributes, ...))
     ttxt <- paste(deparse(target), collapse = "\n")
     ctxt <- paste(deparse(current), collapse = "\n")
     msg <- c(if(mt != mc)
@@ -157,11 +159,11 @@ all.equal.language <- function(target, current, ...)
     if(is.null(msg)) TRUE else msg
 }
 
-all.equal.list <- function(target, current, ...)
+all.equal.list <- function(target, current, check.attributes = TRUE, ...)
 {
-    msg <- attr.all.equal(target, current, ...)
-#    nt <- names(target)
-    nc <- names(current)
+    msg <- if(check.attributes) attr.all.equal(target, current, ...)
+##    nt <- names(target)
+##    nc <- names(current)
     iseq <-
 	## <FIXME>
 	## Commenting this eliminates PR#674, and assumes that lists are
@@ -180,14 +182,14 @@ all.equal.list <- function(target, current, ...)
 	if(length(target) == length(current)) {
 	    seq(along = target)
 	} else {
-	    msg <- msg[substr(msg,1,8) != "Lengths:"]
+            if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
 	    nc <- min(length(target), length(current))
 	    msg <- c(msg, paste("Length mismatch: comparison on first",
 				nc, "components"))
 	    seq(length = nc)
 	}
     for(i in iseq) {
-	mi <- all.equal(target[[i]], current[[i]], ...)
+	mi <- all.equal(target[[i]], current[[i]], check.attributes = check.attributes, ...)
 	if(is.character(mi))
 	    msg <- c(msg, paste("Component ", i, ": ", mi, sep=""))
     }
@@ -195,7 +197,8 @@ all.equal.list <- function(target, current, ...)
 }
 
 
-attr.all.equal <- function(target, current, ...)
+attr.all.equal <- function(target, current,
+                           check.attributes = TRUE, check.names = TRUE, ...)
 {
     ##--- "all.equal(.)" for attributes ---
     ##---  Auxiliary in all.equal(.) methods --- return NULL or character()
@@ -207,25 +210,27 @@ attr.all.equal <- function(target, current, ...)
 			    length(current), sep = ""))
     ax <- attributes(target)
     ay <- attributes(current)
-    nx <- names(target)
-    ny <- names(current)
-    if((lx <- length(nx)) | (ly <- length(ny))) {
-	## names() treated now; hence NOT with attributes()
-	ax$names <- ay$names <- NULL
-	if(lx && ly) {
-	    if(is.character(m <- all.equal.character(nx, ny)))
-		msg <- c(msg, paste("Names:", m))
-	} else if(lx)
-	    msg <- c(msg, "names for target but not for current")
-	else msg <- c(msg, "names for current but not for target")
+    if(check.names) {
+        nx <- names(target)
+        ny <- names(current)
+        if((lx <- length(nx)) | (ly <- length(ny))) {
+            ## names() treated now; hence NOT with attributes()
+            ax$names <- ay$names <- NULL
+            if(lx && ly) {
+                if(is.character(m <- all.equal.character(nx, ny, check.attributes = check.attributes)))
+                    msg <- c(msg, paste("Names:", m))
+            } else if(lx)
+                msg <- c(msg, "names for target but not for current")
+            else msg <- c(msg, "names for current but not for target")
+        }
     }
-    if(length(ax) || length(ay)) {# some (more) attributes
+    if(check.attributes && (length(ax) || length(ay))) {# some (more) attributes
 	## order by names before comparison:
 	nx <- names(ax)
 	ny <- names(ay)
-	if(length(nx))	    ax <- ax[order(nx)]
-	if(length(ny))	    ay <- ay[order(ny)]
-	tt <- all.equal(ax, ay, ...)
+	if(length(nx)) ax <- ax[order(nx)]
+	if(length(ny)) ay <- ay[order(ny)]
+	tt <- all.equal(ax, ay, check.attributes = check.attributes, ...)
 	if(is.character(tt)) msg <- c(msg, paste("Attributes: <", tt, ">"))
     }
     msg # NULL or character
