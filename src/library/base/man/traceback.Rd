@@ -16,20 +16,23 @@ traceback(x = NULL)
   \item{x}{\code{NULL} (default), or a list or pairlist of deparsed
     calls.}
 }
-\value{
-  \code{traceback()} returns nothing, but prints the deparsed call stack
-  deepest call first.  The calls may print on more that one line, and
-  the first line is labelled by the frame number.
-}
 \details{
   The stack of the last uncaught error is stored as a list of deparsed
   calls in \code{.Traceback}, which \code{traceback} prints in a
-  user-friendly format.
+  user-friendly format.  The stack of deparsed calls always contains all
+  function calls and (as from \R 2.3.0) all foreign function calls (such
+  as \code{\link{.Call}}): if profiling is in progress it will include
+  all other calls to primitive functions.
 
   Errors which are caught \emph{via} \code{\link{try}} or
   \code{\link{tryCatch}} do not generate a traceback, so what is printed
   is the call sequence for the last uncaught error, and not necessarily
   the last error.
+}
+\value{
+  \code{traceback()} returns nothing, but prints the deparsed call stack
+  deepest call first.  The calls may print on more than one line, and
+  the first line for each call is labelled by the frame number.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -226,10 +226,10 @@ NEW FEATURES
     o	On suitably equipped Unix-alike systems, segfaults, illegal
 	operations and bus errors are caught and there is a simple
 	error-handler which gives the user some choice as to what to
-	do. [Currently experimental.]
+	do in interactive use. [Currently experimental.]
 
 	On Windows access violations and illegal instructions are
-	caught with a simple error handler.  [Currently very experimental.]
+	caught with a simple error handler.  [Currently experimental.]
 
     o	gettext has been updated to 0.14.5.
 
@@ -241,10 +241,10 @@ NEW FEATURES
     o	summary.nls() has a new argument 'correlation' that defaults
 	to FALSE (like summary.lm).
 
-    o	prettyNum() has new arguments 'preserve.width' and
-	'zero.print'. When the former is not "none", as in calls from format()
-	and formatC(), the resulting strings are kept at desired width when
-	possible even after adding of 'big.mark' or 'small.mark'.
+    o	prettyNum() has new arguments 'preserve.width' and 'zero.print'. 
+	When the former is not "none", as in calls from format() and
+	formatC(), the resulting strings are kept at the desired width
+	when possible even after adding of 'big.mark' or 'small.mark'.
 
     o	str()'s default method has a new argument 'strict.width' which can
 	be used to produce strict 'width' conforming output.
@@ -254,7 +254,11 @@ NEW FEATURES
 	fonts.
 
     o	The symmetry test for matrices used in eigen() has been ``exported''
-	as 'matrix' method of a new S3-generic 'isSymmetric().
+	as the 'matrix' method of a new S3-generic 'isSymmetric().
+
+    o	Tracebacks now include calls such as .C/.Fortran/.Call, which
+	will help if errors occur in R code evaluated by compiled code
+	and in tracebacks presented by the segfault etc handlers.
 
 
 DEPRECATED & DEFUNCT

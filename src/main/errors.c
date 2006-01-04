@@ -1134,7 +1134,7 @@ SEXP R_GetTraceback(int skip)
     for (c = R_GlobalContext, ns = skip;
 	 c != NULL && c->callflag != CTXT_TOPLEVEL;
 	 c = c->nextcontext)
-	if (c->callflag & CTXT_FUNCTION ) {
+	if (c->callflag & (CTXT_FUNCTION | CTXT_BUILTIN) ) {
 	    if (ns > 0)
 		ns--;
 	    else
@@ -1146,7 +1146,7 @@ SEXP R_GetTraceback(int skip)
     for (c = R_GlobalContext ;
 	 c != NULL && c->callflag != CTXT_TOPLEVEL;
 	 c = c->nextcontext)
-	if (c->callflag & CTXT_FUNCTION ) {
+	if (c->callflag & (CTXT_FUNCTION | CTXT_BUILTIN) ) {
 	    if (skip > 0)
 		skip--;
 	    else {
