@@ -47,7 +47,8 @@ cf0 <- coef(summary(fit0))[, 1:2]
 fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
            weights = wts, trace = TRUE)
 summary(fit, cor = TRUE)
-stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5))
+stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5,
+                    check.attributes = FALSE))
 stopifnot(df.residual(fit) == df.residual(fit0))
 cf1 <- coef(summary(fit))[, 1:2]
 fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
@@ -57,7 +58,8 @@ cf2 <- coef(summary(fit2))[, 1:2]
 rownames(cf0) <- c("a", "b")
 # expect relative errors ca 2e-08
 stopifnot(all.equal(cf1, cf0, 1e-6),  all.equal(cf1, cf0, 1e-6))
-stopifnot(all.equal(residuals(fit2), residuals(fit0), 1e5))
+stopifnot(all.equal(residuals(fit2), residuals(fit0), 1e5,
+                    check.attributes = FALSE))
 
 
 DNase1 <- subset(DNase, Run == 1)
@@ -100,7 +102,8 @@ fm4 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
 summary(fm4)
 cf <- coef(summary(fm4))[c(3,1,2), ]
 rownames(cf)[2] <- "Asym"
-stopifnot(all.equal(cf, coef(summary(fm1)), tol = 1e-6))
+stopifnot(all.equal(cf, coef(summary(fm1)), tol = 1e-6,
+                    check.attributes = FALSE))
 stopifnot(all.equal(residuals(fm4), residuals(fm1), tol = 1e-5))
 stopifnot(all.equal(fitted(fm4), fitted(fm1), tol = 1e-6))
 fm4a <- nls(density ~ 1/(1 + exp((xmid - log(conc)))),

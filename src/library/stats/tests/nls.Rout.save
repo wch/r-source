@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-12-25 r36856)
+R : Copyright 2006, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2006-01-04 r36975)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -97,7 +97,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 Multiple R-Squared:    1,	Adjusted R-squared:    1 
-F-statistic:  7.08e+05 on 1 and 7 DF,  p-value: <2e-16 
+F-statistic: 7.08e+05 on 1 and 7 DF,  p-value: <2e-16 
 
 Correlation of Coefficients:
   (Intercept)
@@ -125,7 +125,8 @@ Correlation of Paraneter Estimates:
   a    
 b -0.89
 
-> stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5))
+> stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5,
++                     check.attributes = FALSE))
 > stopifnot(df.residual(fit) == df.residual(fit0))
 > cf1 <- coef(summary(fit))[, 1:2]
 > fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
@@ -155,7 +156,8 @@ b -0.89
 > rownames(cf0) <- c("a", "b")
 > # expect relative errors ca 2e-08
 > stopifnot(all.equal(cf1, cf0, 1e-6),  all.equal(cf1, cf0, 1e-6))
-> stopifnot(all.equal(residuals(fit2), residuals(fit0), 1e5))
+> stopifnot(all.equal(residuals(fit2), residuals(fit0), 1e5,
++                     check.attributes = FALSE))
 > 
 > 
 > DNase1 <- subset(DNase, Run == 1)
@@ -265,7 +267,8 @@ Residual standard error: 0.0355 on 13 degrees of freedom
 
 > cf <- coef(summary(fm4))[c(3,1,2), ]
 > rownames(cf)[2] <- "Asym"
-> stopifnot(all.equal(cf, coef(summary(fm1)), tol = 1e-6))
+> stopifnot(all.equal(cf, coef(summary(fm1)), tol = 1e-6,
++                     check.attributes = FALSE))
 > stopifnot(all.equal(residuals(fm4), residuals(fm1), tol = 1e-5))
 > stopifnot(all.equal(fitted(fm4), fitted(fm1), tol = 1e-6))
 > fm4a <- nls(density ~ 1/(1 + exp((xmid - log(conc)))),
@@ -324,5 +327,5 @@ scal 0.9757 1.1063
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.63 0.03 1.96 NA NA 
+Time elapsed:  1.6 0.01 1.61 NA NA 
 > 
