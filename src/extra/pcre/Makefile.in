@@ -33,7 +33,7 @@ libpcre_a_SOURCES = $(SOURCES)
 libpcre_a_OBJECTS = $(OBJECTS)
 
 
-all: Makefile Makedeps R
+all: R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
