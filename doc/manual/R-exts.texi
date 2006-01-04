@@ -8018,7 +8018,7 @@ inside other functions), such as
 @group
 nargs        missing
 interactive  is.@emph{xxx}
-.Primitive   .Internal   .External
+.Primitive   .Internal
 symbol.C     symbol.For
 globalenv    pos.to.env  unclass
 @end group
