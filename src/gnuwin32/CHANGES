@@ -105,6 +105,9 @@ LC_CTYPE in the locale to the system default.
 
 formatC() sometimes gave spurious leading spaces on Windows (PR#8337).
 
+Workaround in unlink() for a Windows-run-time problem with deleting
+directories with leading spaces in the name.
+
 
 
 R 2.2.1

@@ -81,7 +81,9 @@ static int R_unlink(char *names, int recursive)
 			failures += R_unlink_one(dir, find_data.cFileName, 1);
 		    FindClose(fh);
 		}
-		if(rmdir(dir)) failures++;
+		/* Use short path as e.g. ' test' fails */
+		GetShortPathName(dir, tmp, MAX_PATH);
+		if(rmdir(tmp)) failures++;
 	    } else failures++; /* don't try to delete dirs */
 	} else {/* Regular file (or several) */
 	    strcpy(dir, tmp);
