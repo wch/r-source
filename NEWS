@@ -502,6 +502,9 @@ BUG FIXES
 	non-nested models give rise to changes in deviance with a
 	different sign from changes in degrees of freedom.
 
+    o	Built-ins were reported as the relevant call in C-level errors
+	iff R profiling was in progress.  Now they are never reported.
+
 
 
 

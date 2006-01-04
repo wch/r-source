@@ -553,14 +553,16 @@ SEXP do_geterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
 void error(const char *format, ...)
 {
     char buf[BUFSIZE];
+    RCNTXT *c = R_GlobalContext;
 
     va_list(ap);
     va_start(ap, format);
     Rvsnprintf(buf, min(BUFSIZE, R_WarnLength), format, ap);
     va_end(ap);
     /* This can be called before R_GlobalContext is defined, so... */
-    errorcall(R_GlobalContext ?
-	      R_GlobalContext->call : R_NilValue, "%s", buf);
+    /* If profiling is on, this can be a CTXT_BUILTIN */
+    if (c && (c->callflag & CTXT_BUILTIN)) c = c->nextcontext;
+    errorcall(c ? c->call : R_NilValue, "%s", buf);
 }
 
 static void try_jump_to_restart(void)
