@@ -53,12 +53,12 @@ attr.all.equal(target, current,
 
     Numerical comparisons for \code{scale = NULL} (the default) are done
     by first computing the mean absolute difference of the two numerical
-    vectors. If this is smaller than \code{tolerance} or not finite,
+    vectors.  If this is smaller than \code{tolerance} or not finite,
     absolute differences are used, otherwise relative differences scaled
     by the mean absolute difference.
 
-    If \code{scale} is positive, absolute comparisons are after scaling
-    (dividing) by \code{scale}.
+    If \code{scale} is positive, absolute comparisons are made after
+    scaling (dividing) by \code{scale}.
 
     For complex arguments, the modulus \code{\link{Mod}} of the difference
     is used: \code{all.numeric.numeric} is called so arguments
@@ -71,8 +71,6 @@ attr.all.equal(target, current,
   Either \code{TRUE} or a vector of \code{\link{mode}}
   \code{"character"} describing the differences between \code{target}
   and \code{current}.
-
-  Numerical differences are reported by \emph{relative} error.
 }
 \references{
   Chambers, J. M. (1998)
