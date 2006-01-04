@@ -20,8 +20,8 @@ SOURCES_C = init.c kmeans.c \
   ksmooth.c loessc.c isoreg.c Srunmed.c Trunmed.c \
   dblcen.c distance.c hclust-utils.c \
   nls.c \
-  HoltWinters.c PPsum.c arima.c burg.c carray.c filter.c \
-  mburg.c myw.c pacf.c qr.c starma.c port.c family.c
+  HoltWinters.c PPsum.c arima.c burg.c filter.c \
+  mAR.c pacf.c starma.c port.c family.c
 
 SOURCES_F = bsplvd.f bvalue.f bvalus.f loessf.f ppr.f qsbart.f sbart.f \
   sgram.f sinerp.f sslvrg.f stxwx.f \
