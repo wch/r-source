@@ -471,7 +471,8 @@ BUG FIXES
     o	Changed apparent mis-spelling of "Gibraltar" in dataset 'eurodist'.
 
     o	sysconf() is now used to find the number of clock ticks/second:
-	under some circumstances glibc reported 60 when the true value
+	under some circumstances glibc reported CLK_TCK = 60 when the
+	true value was 100.
 
     o	identical() was not allowing for embedded nuls in character
 	strings. (NB: the comparison operators including == do not,
@@ -483,8 +484,8 @@ BUG FIXES
     o	The signal handlers for signals USR1 and USR2 where not
 	restored if the signal arrived when interrupts were suspended.
 
-    o	Certain combinations of inheritance could cause inherited methods
-        override some directly specified methods.
+    o	Certain combinations of S4 inheritance could cause inherited
+        methods to override some directly specified methods.
 
     o	Some cases of named signatures in calls to setMethod() caused errors.
 
@@ -495,6 +496,11 @@ BUG FIXES
     o	load() when applied to a connection leaves it open/not as it
 	found it, and checks explicitly for having a binary readable
 	connection.
+
+    o	The p-values given by stat.anova() (called from several
+	anova() methods) are now NA (rather than spurious) if
+	non-nested models give rise to changes in deviance with a
+	different sign from changes in degrees of freedom.
 
 
 
