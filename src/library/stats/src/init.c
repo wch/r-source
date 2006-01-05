@@ -176,7 +176,11 @@ static R_FortranMethodDef FortEntries[] = {
     {NULL, NULL, 0}
 };
 
-void R_init_stats(DllInfo *dll)
+void
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+__attribute__ ((visibility ("default")))
+#endif
+R_init_stats(DllInfo *dll)
 {
     R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
     R_useDynamicSymbols(dll, FALSE);

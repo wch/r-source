@@ -39,7 +39,11 @@ static const R_CMethodDef CEntries[]  = {
 };
 
 
-void R_init_tools(DllInfo *dll)
+void
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+__attribute__ ((visibility ("default")))
+#endif
+R_init_tools(DllInfo *dll)
 {
     R_registerRoutines(dll, CEntries, callMethods, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);

@@ -83,7 +83,11 @@ static const R_CallMethodDef callMethods[] = {
 };
 
 
-void R_init_grid(DllInfo *dll) 
+void
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+__attribute__ ((visibility ("default")))
+#endif
+R_init_grid(DllInfo *dll) 
 {
     /* No .C, .Fortran, or .External routines => NULL
      */

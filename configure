@@ -465,7 +465,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS FCPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FCD SHLIB_FCLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE R_BROWSER BLAS_LIBS LAPACK_LIBS SAFE_FFLAGS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS FLIBS HAVE_FORTRAN_DOUBLE_COMPLEX COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS FW_VERSION ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG RMATH_HAVE_WORKING_LOG1P HAVE_C99_COMPLEX USE_VECLIB_G95FIX_TRUE USE_VECLIB_G95FIX_FALSE USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF JAVA_PROG JAVAC JAVA_HOME JAVA_LD_PATH JAVA_LIBS FC FCFLAGS ac_ct_FC FCFLAGS_f90 FCFLAGS_f95 SHLIB_FCLD R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE USE_NLS SET_MAKE MKINSTALLDIRS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC2 GLIBC21 INTL_MACOSX_LIBS HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB XTRA_INTL_CPPFLAGS USE_NLS_TRUE USE_NLS_FALSE BUILD_LIBINTL_TRUE BUILD_LIBINTL_FALSE LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS FCPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FCD SHLIB_FCLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE R_BROWSER BLAS_LIBS LAPACK_LIBS SAFE_FFLAGS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 CXX CXXFLAGS ac_ct_CXX CXXCPP C_VISIBILITY F77_VISIBILITY ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS FLIBS HAVE_FORTRAN_DOUBLE_COMPLEX COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS FW_VERSION ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG RMATH_HAVE_WORKING_LOG1P HAVE_C99_COMPLEX USE_VECLIB_G95FIX_TRUE USE_VECLIB_G95FIX_FALSE USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF JAVA_PROG JAVAC JAVA_HOME JAVA_LD_PATH JAVA_LIBS FC FCFLAGS ac_ct_FC FCFLAGS_f90 FCFLAGS_f95 SHLIB_FCLD R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE USE_NLS SET_MAKE MKINSTALLDIRS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC2 GLIBC21 INTL_MACOSX_LIBS HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB XTRA_INTL_CPPFLAGS USE_NLS_TRUE USE_NLS_FALSE BUILD_LIBINTL_TRUE BUILD_LIBINTL_FALSE LTLIBOBJS'
 ac_subst_files='r_cc_rules_frag r_cc_lo_rules_frag r_cxx_rules_frag'
 
 # Initialize some variables set by options.
@@ -6037,6 +6037,163 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
+echo "$as_me:$LINENO: checking whether __attribute__((visibility())) is supported" >&5
+echo $ECHO_N "checking whether __attribute__((visibility())) is supported... $ECHO_C" >&6
+if test "${r_cv_visibility_attribute+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat > conftest.c <<EOF
+int foo __attribute__ ((visibility ("hidden"))) = 1;
+EOF
+r_cv_visibility_attribute=no
+if { ac_try='${CC-cc} -Werror -S conftest.c -o conftest.s 1>&5'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+ if grep '\.hidden.*foo' conftest.s >/dev/null; then
+    r_cv_visibility_attribute=yes
+ fi
+fi
+rm -f conftest.cs
+
+fi
+echo "$as_me:$LINENO: result: $r_cv_visibility_attribute" >&5
+echo "${ECHO_T}$r_cv_visibility_attribute" >&6
+if test $r_cv_visibility_attribute = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_VISIBILITY_ATTRIBUTE 1
+_ACEOF
+
+fi
+r_save_CFLAGS=$CFLAGS
+CFLAGS="$CFLAGS -fvisibility=hidden"
+echo "$as_me:$LINENO: checking whether $CC accepts -fvisibility" >&5
+echo $ECHO_N "checking whether $CC accepts -fvisibility... $ECHO_C" >&6
+if test "${r_cv_prog_cc_vis+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_cv_prog_cc_vis=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+r_cv_prog_cc_vis=no
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: $r_cv_prog_cc_vis" >&5
+echo "${ECHO_T}$r_cv_prog_cc_vis" >&6
+CFLAGS=$r_save_CFLAGS
+if test "${r_cv_prog_cc_vis}" = yes; then
+  if test "${r_cv_visibility_attribute}" = yes; then
+    C_VISIBILITY="-fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE"
+  fi
+fi
+
+ac_ext=f
+ac_compile='$F77 -c $FFLAGS conftest.$ac_ext >&5'
+ac_link='$F77 -o conftest$ac_exeext $FFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_f77_compiler_gnu
+
+r_save_FFLAGS=$FFLAGS
+FFLAGS="$FFLAGS -fvisibility=hidden"
+echo "$as_me:$LINENO: checking whether $F77 accepts -fvisibility" >&5
+echo $ECHO_N "checking whether $F77 accepts -fvisibility... $ECHO_C" >&6
+if test "${r_cv_prog_f77_vis+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+      program main
+
+      end
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_f77_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_cv_prog_f77_vis=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+r_cv_prog_f77_vis=no
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+echo "$as_me:$LINENO: result: $r_cv_prog_f77_vis" >&5
+echo "${ECHO_T}$r_cv_prog_f77_vis" >&6
+FFLAGS=$r_save_FFLAGS
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+if test "${r_cv_prog_f77_vis}" = yes; then
+  if test "${r_cv_visibility_attribute}" = yes; then
+    F77_VISIBILITY="-fvisibility=hidden"
+  fi
+fi
+
+
 
 ## Libtool.
 ## (Run this after R_PROG_F77, as AC_PROG_LIBTOOL checks for a
@@ -6569,7 +6726,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 6572 "configure"' > conftest.$ac_ext
+  echo '#line 6729 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -8010,11 +8167,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8013: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8170: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8017: \$? = $ac_status" >&5
+   echo "$as_me:8174: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -8243,11 +8400,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8246: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8403: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8250: \$? = $ac_status" >&5
+   echo "$as_me:8407: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -8303,11 +8460,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8306: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8463: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:8310: \$? = $ac_status" >&5
+   echo "$as_me:8467: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -10487,7 +10644,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10490 "configure"
+#line 10647 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10585,7 +10742,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10588 "configure"
+#line 10745 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12765,11 +12922,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12768: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12925: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:12772: \$? = $ac_status" >&5
+   echo "$as_me:12929: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -12825,11 +12982,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12828: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12985: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12832: \$? = $ac_status" >&5
+   echo "$as_me:12989: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14186,7 +14343,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 14189 "configure"
+#line 14346 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14284,7 +14441,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 14287 "configure"
+#line 14444 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15111,11 +15268,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15114: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15271: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15118: \$? = $ac_status" >&5
+   echo "$as_me:15275: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -15171,11 +15328,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15174: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15331: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15178: \$? = $ac_status" >&5
+   echo "$as_me:15335: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -17205,11 +17362,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17208: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17365: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17212: \$? = $ac_status" >&5
+   echo "$as_me:17369: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17438,11 +17595,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17441: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17598: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17445: \$? = $ac_status" >&5
+   echo "$as_me:17602: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17498,11 +17655,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17501: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17658: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17505: \$? = $ac_status" >&5
+   echo "$as_me:17662: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19682,7 +19839,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19685 "configure"
+#line 19842 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -19780,7 +19937,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19783 "configure"
+#line 19940 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -26280,7 +26437,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:26283: \"$ac_link\") >&5
+(eval echo $as_me:26440: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26358,7 +26515,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:26361: \"$ac_link\") >&5
+(eval echo $as_me:26518: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26604,7 +26761,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26607: \"$ac_link\") >&5
+(eval echo $as_me:26764: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26686,7 +26843,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26689: \"$ac_link\") >&5
+(eval echo $as_me:26846: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -42767,7 +42924,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:42770:" \
+echo "$as_me:42927:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -50930,6 +51087,8 @@ s,@CXX@,$CXX,;t t
 s,@CXXFLAGS@,$CXXFLAGS,;t t
 s,@ac_ct_CXX@,$ac_ct_CXX,;t t
 s,@CXXCPP@,$CXXCPP,;t t
+s,@C_VISIBILITY@,$C_VISIBILITY,;t t
+s,@F77_VISIBILITY@,$F77_VISIBILITY,;t t
 s,@ECHO@,$ECHO,;t t
 s,@ac_ct_AR@,$ac_ct_AR,;t t
 s,@STRIP@,$STRIP,;t t

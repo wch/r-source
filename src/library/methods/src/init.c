@@ -49,7 +49,11 @@ static R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
-void R_init_methods(DllInfo *dll)
+void
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+__attribute__ ((visibility ("default")))
+#endif
+R_init_methods(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);

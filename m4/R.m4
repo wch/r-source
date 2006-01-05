@@ -3039,11 +3039,11 @@ AC_SUBST(HAVE_C99_COMPLEX)
 fi
 ])# R_COMPLEX
 
-# R_CHECK_DECL(SYMBOL,
-#              [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND],
-#              [INCLUDES = DEFAULT-INCLUDES])
-# -------------------------------------------------------
-# Check if SYMBOL (a variable or a function) is declared.
+## R_CHECK_DECL(SYMBOL,
+##              [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND],
+##              [INCLUDES = DEFAULT-INCLUDES])
+## -------------------------------------------------------
+## Check if SYMBOL (a variable or a function) is declared.
 AC_DEFUN([R_CHECK_DECL],
 [AS_VAR_PUSHDEF([ac_Symbol], [ac_cv_have_decl_$1])dnl
 AC_CACHE_CHECK([whether $1 exists and is declared], ac_Symbol,
@@ -3058,10 +3058,10 @@ AS_IF([test AS_VAR_GET(ac_Symbol) = yes], [$2], [$3])[]dnl
 AS_VAR_POPDEF([ac_Symbol])dnl
 ])# R_CHECK_DECL
 
-# R_CHECK_FUNCS(SYMBOLS,
-#              [INCLUDES = DEFAULT-INCLUDES])
-# --------------------------------------------------------
-# Defines HAVE_SYMBOL if declared.  SYMBOLS is an m4 list.
+## R_CHECK_FUNCS(SYMBOLS,
+##              [INCLUDES = DEFAULT-INCLUDES])
+## --------------------------------------------------------
+## Defines HAVE_SYMBOL if declared.  SYMBOLS is an m4 list.
 AC_DEFUN([R_CHECK_FUNCS],
 [AC_FOREACH([AC_Func], [$1],
   [AH_TEMPLATE(AS_TR_CPP(HAVE_[]AC_Func),
@@ -3072,6 +3072,57 @@ R_CHECK_DECL($ac_func,
              [AC_DEFINE_UNQUOTED([AS_TR_CPP([HAVE_$ac_func])], 1)], , [$2])dnl
 done
 ])# R_CHECK_FUNCS
+
+## R_GCC4_VISIBILITY
+## Sets up suitable macros for visibility attributes in gcc4/gfortran
+AC_DEFUN([R_GCC4_VISIBILITY],
+[AC_CACHE_CHECK([whether __attribute__((visibility())) is supported],
+                [r_cv_visibility_attribute],
+[cat > conftest.c <<EOF
+int foo __attribute__ ((visibility ("hidden"))) = 1;
+EOF
+r_cv_visibility_attribute=no
+if AC_TRY_COMMAND(${CC-cc} -Werror -S conftest.c -o conftest.s 1>&AS_MESSAGE_LOG_FD); then
+ if grep '\.hidden.*foo' conftest.s >/dev/null; then
+    r_cv_visibility_attribute=yes
+ fi
+fi
+rm -f conftest.[cs]
+])
+if test $r_cv_visibility_attribute = yes; then
+  AC_DEFINE(HAVE_VISIBILITY_ATTRIBUTE, 1, 
+           [Define to 1 if __attribute__((visibility())) is supported])
+fi
+## test if visibility flag is accepted: NB Solaris compilers do and ignore,
+## so only make use of this if HAVE_VISIBILITY_ATTRIBUTE is true.
+r_save_CFLAGS=$CFLAGS
+CFLAGS="$CFLAGS -fvisibility=hidden"
+AC_CACHE_CHECK(whether $CC accepts -fvisibility, r_cv_prog_cc_vis,
+               [_AC_COMPILE_IFELSE([AC_LANG_PROGRAM()], [r_cv_prog_cc_vis=yes],
+                                                        [r_cv_prog_cc_vis=no])])
+CFLAGS=$r_save_CFLAGS
+if test "${r_cv_prog_cc_vis}" = yes; then
+  if test "${r_cv_visibility_attribute}" = yes; then
+    C_VISIBILITY="-fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE"
+  fi
+fi
+AC_SUBST(C_VISIBILITY)
+AC_LANG_PUSH(Fortran 77)
+r_save_FFLAGS=$FFLAGS
+FFLAGS="$FFLAGS -fvisibility=hidden"
+AC_CACHE_CHECK(whether $F77 accepts -fvisibility, r_cv_prog_f77_vis,
+               [_AC_COMPILE_IFELSE([AC_LANG_PROGRAM()], 
+                [r_cv_prog_f77_vis=yes], [r_cv_prog_f77_vis=no])])
+FFLAGS=$r_save_FFLAGS
+AC_LANG_POP(Fortran 77)
+if test "${r_cv_prog_f77_vis}" = yes; then
+  if test "${r_cv_visibility_attribute}" = yes; then
+    F77_VISIBILITY="-fvisibility=hidden"
+  fi
+fi
+AC_SUBST(F77_VISIBILITY)
+])# R_GCC4_VISIBILITY
+
 
 
 ### Local variables: ***
