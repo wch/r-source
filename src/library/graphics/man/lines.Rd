@@ -47,6 +47,8 @@ lines(x, \dots)
   \code{\link{plot}},
   and the workhorse function \code{\link{plot.xy}}.
 
+  \code{\link{abline}} for drawing (single) straight lines.
+
   \code{\link{par}} for how to specify colors.
 }
 \examples{
