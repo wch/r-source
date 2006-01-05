@@ -41,7 +41,7 @@
 
 extern int signgam;/* set in lgammafn(.) */
 
-double lfastchoose(double n, double k)
+double attribute_hidden lfastchoose(double n, double k)
 {
     return -log(n + 1.) - lbeta(n - k + 1., k + 1.);
 }

@@ -39,6 +39,14 @@
 # define USE_RINTERNALS
 #endif
 
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+# define attribute_visible __attribute__ ((visibility ("default")))
+# define attribute_hidden __attribute__ ((visibility ("hidden")))
+#else
+# define attribute_visible
+# define attribute_hidden
+#endif
+
 #include <Rinternals.h>		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
 #include "Internal.h"		/* do_FOO */

@@ -388,10 +388,10 @@ INSTALLATION CHANGES
 	and these are enabled unless --disable-largefile is specified.
 	This replaces --enable-linux-lfs (and is now selected by default).
 
-    o	Visibility attributes are used where supported (gcc4/gfortran).
-	The main benefit should be faster loading (and perhaps better
-	optimized code) in some of the dynamic shared objects 
-	(e.g. stats.so).
+    o	Visibility attributes are used where supported (gcc4/gfortran on 
+	some platforms).  The main benefit should be faster loading
+	(and perhaps better optimized code) in some of the dynamic 
+	shared objects (e.g. stats.so).
 
 
 UTILITIES

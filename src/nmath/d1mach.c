@@ -30,6 +30,7 @@
 #include "nmath.h"
 #undef d1mach
 
+/* This is (naughtily) used by port.c in package stats */
 double Rf_d1mach(int i)
 {
     switch(i) {

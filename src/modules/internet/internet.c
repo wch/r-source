@@ -923,10 +923,14 @@ void RxmlMessage(int level, const char *format, ...)
 #endif
 #include <R_ext/RS.h> /* for Calloc */
 
+void
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+__attribute__ ((visibility ("default")))
+#endif
 #ifdef USE_WININET
-void R_init_internet2(DllInfo *info)
+R_init_internet2(DllInfo *info)
 #else
-void R_init_internet(DllInfo *info)
+R_init_internet(DllInfo *info)
 #endif
 {
     R_InternetRoutines *tmp;

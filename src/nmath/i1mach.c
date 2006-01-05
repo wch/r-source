@@ -21,6 +21,7 @@
 #include "nmath.h"
 #undef i1mach
 
+/* This is (naughtily) used by port.c in package stats */
 int Rf_i1mach(int i)
 {
     switch(i) {

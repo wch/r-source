@@ -42,10 +42,6 @@
 #include <R_ext/RS.h>
 
 #ifndef MATHLIB_STANDALONE
-/* Mathlib in R */
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 
 #include <R_ext/Error.h>
 # define MATHLIB_ERROR(fmt,x)		error(fmt,x);
@@ -126,44 +122,51 @@ int R_finite(double);
 
 #define SIGNRANK_MAX 50
 
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+# define attribute_hidden __attribute__ ((visibility ("hidden")))
+#else
+# define attribute_hidden
+#endif
+
 /* Formerly private part of Mathlib.h */
 
 /* always remap internal functions */
 #define bd0       	Rf_bd0
 #define chebyshev_eval	Rf_chebyshev_eval
 #define chebyshev_init	Rf_chebyshev_init
-#define i1mach		Rf_i1mach
 #define gammalims	Rf_gammalims
 #define lfastchoose	Rf_lfastchoose
 #define lgammacor	Rf_lgammacor
 #define stirlerr       	Rf_stirlerr
+#define gamma_cody      Rf_gamma_cody
+
 
 	/* Chebyshev Series */
 
-int	chebyshev_init(double*, int, double);
-double	chebyshev_eval(double, const double *, const int);
+int	attribute_hidden chebyshev_init(double*, int, double);
+double	attribute_hidden chebyshev_eval(double, const double *, const int);
 
 	/* Gamma and Related Functions */
 
-void	gammalims(double*, double*);
-double	lgammacor(double); /* log(gamma) correction */
-double  stirlerr(double);  /* Stirling expansion "error" */
+void	attribute_hidden gammalims(double*, double*);
+double	attribute_hidden lgammacor(double); /* log(gamma) correction */
+double  attribute_hidden stirlerr(double);  /* Stirling expansion "error" */
 
-double	lfastchoose(double, double);
+double	attribute_hidden lfastchoose(double, double);
 
-double  bd0(double, double);
+double  attribute_hidden bd0(double, double);
 
 /* Consider adding these two to the API (Rmath.h): */
-double	dbinom_raw(double, double, double, double, int);
-double	dpois_raw (double, double, int);
-double  pnchisq_raw(double, double, double, double, double, int);
-double  pgamma_raw(double, double, int, int);
+double	attribute_hidden dbinom_raw(double, double, double, double, int);
+double	attribute_hidden dpois_raw (double, double, int);
+double  attribute_hidden pnchisq_raw(double, double, double, double, double, int);
+double  attribute_hidden pgamma_raw(double, double, int, int);
 
 int	i1mach(int);
 
 /* From toms708.c */
-void bratio(double a, double b, double x, double y,
-	    double *w, double *w1, int *ierr);
+void attribute_hidden bratio(double a, double b, double x, double y,
+	    		     double *w, double *w1, int *ierr);
 
 
 #endif /* MATHLIB_PRIVATE_H */

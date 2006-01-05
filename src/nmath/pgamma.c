@@ -666,7 +666,7 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
  */
 
 /* now would need this here: */
-double pgamma_raw(x, alph, lower_tail, log_p) {
+double attribute_hidden pgamma_raw(x, alph, lower_tail, log_p) {
     return pgamma(x, alph, 1, lower_tail, log_p);
 }
 

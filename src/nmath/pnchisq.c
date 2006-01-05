@@ -34,8 +34,9 @@ double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
     return (R_DT_val(pnchisq_raw(x, f, theta, 1e-12, 8*DBL_EPSILON, 1000000)));
 }
 
-double pnchisq_raw(double x, double f, double theta,
-		   double errmax, double reltol, int itrmax)
+double attribute_hidden
+pnchisq_raw(double x, double f, double theta,
+	    double errmax, double reltol, int itrmax)
 {
     double ans, lam, u, v, x2, f2, t, term, bound, f_x_2n, f_2n, lt;
     double lu = -1., l_lam = -1., l_x = -1.; /* initialized for -Wall */

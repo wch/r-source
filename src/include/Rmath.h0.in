@@ -601,12 +601,15 @@ double  logspace_sub(double logx, double logy);
 
 #ifdef MATHLIB_PRIVATE
 #define d1mach		Rf_d1mach
+#define i1mach          Rf_i1mach
 #define gamma_cody	Rf_gamma_cody
 
-double	d1mach(int);
-double	gamma_cody(double);
+double	gamma_cody(double); /* used in arithmetic.c */
 
 #endif /* MATHLIB_PRIVATE */
+
+double  Rf_d1mach(int); /* used in port.c in package stats */
+int     Rf_i1mach(int); /* used in port.c in package stats */
 
 #ifdef MATHLIB_STANDALONE
 #ifndef MATHLIB_PRIVATE_H

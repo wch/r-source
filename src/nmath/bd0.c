@@ -34,7 +34,7 @@
  */
 #include "nmath.h"
 
-double bd0(double x, double np)
+double attribute_hidden bd0(double x, double np)
 {
     double ej, s, s1, v;
     int j;

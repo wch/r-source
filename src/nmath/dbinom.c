@@ -39,7 +39,8 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double dbinom_raw(double x, double n, double p, double q, int give_log)
+double attribute_hidden 
+dbinom_raw(double x, double n, double p, double q, int give_log)
 {
     double f, lc;
 

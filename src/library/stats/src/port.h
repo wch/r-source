@@ -10,16 +10,13 @@
 
 #include <Rinternals.h>
 #include <R_ext/RS.h>
+#include <Rmath.h>  /* for d1mach and i1mach */
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) dgettext ("stats", String)
 #else
 #define _(String) (String)
 #endif
-
-				/* R sources */
-extern int Rf_i1mach(int);
-extern double Rf_d1mach(int);
 
 /* PORT interface functions - reverse communication */
 

@@ -18,6 +18,8 @@ line=`grep "HAVE_WORKING_ISFINITE" config.h`
 echo "${line}"
 line=`grep "R_INLINE" config.h`
 echo "${line}"
+line=`grep "HAVE_VISIBILITY_ATTRIBUTE" config.h`
+echo "${line}"
 ## temporary
 line=`grep "SUPPORT_UTF8" config.h`
 echo "${line}"

@@ -6,7 +6,7 @@
  */
 #include "nmath.h"
 
-double gamma_cody(double x)
+double attribute_hidden gamma_cody(double x)
 {
 /* ----------------------------------------------------------------------
 

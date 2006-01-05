@@ -24,7 +24,7 @@ DISTFILES = \
 internet_la = internet$(SHLIB_EXT)
 internet_la_LIBADD = $(LIBR)
 
-ALL_CFLAGS = $(ALL_CFLAGS_LO)
+ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@
 
 all: Makefile Makedeps R
 

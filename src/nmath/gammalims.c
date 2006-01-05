@@ -36,7 +36,7 @@
 
 #include "nmath.h"
 
-void gammalims(double *xmin, double *xmax)
+void attribute_hidden gammalims(double *xmin, double *xmax)
 {
 /* FIXME: Even better: If IEEE, #define these in nmath.h
 	  and don't call gammalims() at all

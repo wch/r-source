@@ -35,7 +35,7 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double dpois_raw(double x, double lambda, int give_log)
+double attribute_hidden dpois_raw(double x, double lambda, int give_log)
 {
     /*       x >= 0 ; integer for dpois(), but not e.g. for pgamma()!
         lambda >= 0

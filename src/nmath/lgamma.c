@@ -41,7 +41,7 @@
 
 #include "nmath.h"
 
-int signgam;
+int attribute_hidden signgam;
 
 double lgammafn(double x)
 {
