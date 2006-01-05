@@ -362,6 +362,7 @@ typedef struct {
 /* always remap private functions */
 #include <Rgraphics.h>
 #define char2col		Rf_char2col
+#define CheckColor		Rf_CheckColor
 #define col2name		Rf_col2name
 #define copyGPar		Rf_copyGPar
 #define curDevice               Rf_curDevice

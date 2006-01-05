@@ -24,7 +24,7 @@
 
 #include "Defn.h"
 
-SEXP do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op,args);
 #define find_char_fun \
@@ -51,7 +51,7 @@ SEXP do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP do_trace(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_trace(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 

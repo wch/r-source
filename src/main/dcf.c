@@ -33,7 +33,7 @@
 static SEXP allocMatrixNA(SEXPTYPE, int, int);
 static void transferVector(SEXP s, SEXP t);
 
-SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int nwhat, nret, nc, nr, m, k, lastm, need, skip;
     int whatlen, dynwhat, buflen=0;

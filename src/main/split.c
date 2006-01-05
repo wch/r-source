@@ -23,7 +23,7 @@
 
 #include "Defn.h"
 
-SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, f, counts, vec, nm, nmj;
     int i, j, k, nobs, nlevs, nfac;

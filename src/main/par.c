@@ -1162,7 +1162,7 @@ static SEXP Query(char *what, DevDesc *dd)
     return value;
 }
 
-SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP value;
     SEXP originalArgs = args;
@@ -1218,7 +1218,7 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
     return value;
 }
 
-SEXP do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP result;
     GEDevDesc *dd;
@@ -1265,7 +1265,7 @@ SEXP do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
  *  )
  */
 
-SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, j, nrow, ncol, ncmrow, ncmcol;
     SEXP originalArgs = args;

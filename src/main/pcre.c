@@ -45,7 +45,7 @@
 # include <wctype.h>
 #endif
 
-SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
     int i, j, n, nmatches;
@@ -284,7 +284,7 @@ static char *string_adj(char *target, char *orig, char *repl, int *ovec,
 }
 
 
-SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, rep, vec, ans;
     int i, j, n, ns, nns, nmatch, offset, re_nsub;
@@ -458,7 +458,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 #include "RBufferUtils.h"
-SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, matchlen;
     int i, n, st, erroffset;
@@ -555,7 +555,7 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_gpregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_gpregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ansList, ans, matchlen;
     SEXP matchbuf, matchlenbuf;

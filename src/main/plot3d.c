@@ -871,7 +871,7 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 
 SEXP GEdrawContourLines();
 
-SEXP do_contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, c, x, y, z;
     int nx, ny, nc;
@@ -1358,7 +1358,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 /* contour(x, y, z, levels, labels, labcex, drawlabels,
  *         method, vfont, col = col, lty = lty, lwd = lwd)
  */
-SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, c, x, y, z, vfont, col, rawcol, lty, lwd, labels;
     int i, j, nx, ny, nc, ncol, nlty, nlwd;
@@ -1656,7 +1656,7 @@ FindPolygonVertices(double low, double high,
 */
 
 /* filledcontour(x, y, z, levels, col) */
-SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, sx, sy, sz, sc, scol;
     double *x, *y, *z, *c;
@@ -1773,7 +1773,7 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 /* image(x, y, z, col, breaks) */
-SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, sx, sy, sz, sc;
     double *x, *y;
@@ -2442,7 +2442,7 @@ static void PerspAxes(double *x, double *y, double *z,
     Rf_gpptr(dd)->xpd = xpdsave;
 }
 
-SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, z, xlim, ylim, zlim;
     SEXP depth, indx, originalArgs;

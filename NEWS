@@ -389,9 +389,9 @@ INSTALLATION CHANGES
 	This replaces --enable-linux-lfs (and is now selected by default).
 
     o	Visibility attributes are used where supported (gcc4/gfortran on 
-	some platforms).  The main benefit should be faster loading
-	(and perhaps better optimized code) in some of the dynamic 
-	shared objects (e.g. stats.so).
+	some platforms, and also FC3).  The main benefit should be 
+	faster loading (and perhaps better optimized code) in some of
+	the dynamic shared objects (e.g. libR.so and stats.so).
 
 
 UTILITIES

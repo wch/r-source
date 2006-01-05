@@ -41,7 +41,8 @@ static int integerOneIndex(int i, int len) {
     return(indx);
 }
 
-int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos)
+int attribute_hidden
+OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos)
 {
     SEXP names;
     int i, indx, nx;
@@ -112,7 +113,8 @@ int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos)
     return indx;
 }
 
-int get1index(SEXP s, SEXP names, int len, Rboolean pok, int pos)
+int attribute_hidden
+get1index(SEXP s, SEXP names, int len, Rboolean pok, int pos)
 {
 /* Get a single index for the [[ operator.
    Check that only one index is being selected.
@@ -196,7 +198,7 @@ int get1index(SEXP s, SEXP names, int len, Rboolean pok, int pos)
 /* A zero anywhere in a row will cause a zero in the same */
 /* position in the result. */
 
-SEXP mat2indsub(SEXP dims, SEXP s)
+SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s)
 {
     int tdim, j, i, k, nrs = nrows(s);
     SEXP rvec;
@@ -494,8 +496,9 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
     return R_NilValue;
 }
 
-SEXP arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
-		    StringEltGetter strg, SEXP x)
+SEXP attribute_hidden
+arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
+	       StringEltGetter strg, SEXP x)
 {
     return int_arraySubscript(dim, s, dims, dng, strg, x, TRUE);
 }
@@ -508,7 +511,7 @@ SEXP arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
    otherwise, stretch returns the new required length for x
 */
 
-SEXP makeSubscript(SEXP x, SEXP s, int *stretch)
+SEXP attribute_hidden makeSubscript(SEXP x, SEXP s, int *stretch)
 {
     int nx;
     SEXP ans;
@@ -586,8 +589,9 @@ int_vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
 }
 
 
-SEXP vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
-		     StringEltGetter strg, SEXP x)
+SEXP attribute_hidden
+vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
+		StringEltGetter strg, SEXP x)
 {
     return int_vectorSubscript(nx, s, stretch, dng, strg, x, TRUE);
 }

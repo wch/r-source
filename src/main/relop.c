@@ -36,7 +36,7 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call);
 static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
 static SEXP raw_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
 
-SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
 
@@ -46,7 +46,7 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_relop_dflt(call, op, CAR(args), CADR(args));
 }
 
-SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
+SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 {
     SEXP class=R_NilValue, dims, tsp=R_NilValue, xnames, ynames;
     int nx, ny, xarray, yarray, xts, yts;

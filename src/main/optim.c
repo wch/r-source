@@ -199,7 +199,7 @@ static void genptry(int n, double *p, double *ptry, double scale, void *ex)
 }
 
 /* par fn gr method options */
-SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP par, fn, gr, method, options, tmp, slower, supper;
     SEXP res, value, counts, conv;
@@ -390,7 +390,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* par fn gr options */
-SEXP do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP par, fn, gr, options, tmp, ndeps, ans;
     OptStruct OS;

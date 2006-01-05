@@ -911,7 +911,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
     return ans;
 }
 
-SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
     int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline, escapes;
@@ -1069,7 +1069,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, file, sep,  bns, quotes, comstr;
     int nfields, nskip, i, c, inquote, quote = 0;
@@ -1249,7 +1249,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
    or a factor if as.is == FALSE. */
 
 
-SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP cvec, a, dup, levs, dims, names, dec;
     SEXP rval = R_NilValue; /* -Wall */
@@ -1439,7 +1439,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     return rval;
 }
 
-SEXP do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int c;
     char buffer[MAXELTSIZE], *bufp = buffer;
@@ -1479,7 +1479,7 @@ SEXP do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* Works with digits, but OK in UTF-8 */
-SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int c, j;
     double first;
@@ -1525,7 +1525,7 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* simplified version of readLines, with skip of blank lines and
    comment-only lines */
 #define BUF_SIZE 1000
-SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP file, comstr, ans = R_NilValue, ans2, quotes, sep;
     int nlines, i, c, quote=0, nread, nbuf, buf_size = BUF_SIZE, blskip;
@@ -1773,7 +1773,7 @@ static void wt_cleanup(void *data)
     R_print.digits = ld->savedigits;
 }
 
-SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, sep, rnames, eol, na, dec, quote, xj;
     int nr, nc, i, j, qmethod;

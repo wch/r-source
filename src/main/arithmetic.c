@@ -303,7 +303,7 @@ static SEXP lcall;
 
 /* Unary and Binary Operators */
 
-SEXP do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
 
@@ -880,7 +880,7 @@ static SEXP math1(SEXP sa, double(*f)(), SEXP lcall)
 }
 
 
-SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
 
@@ -934,7 +934,7 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;			/* never used; to keep -Wall happy */
 }
 
-SEXP do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
     if (DispatchGroup("Math", call, op, args, env, &s))
@@ -1070,7 +1070,7 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2, double (*f)(), SEXP lc
 #define Math2_1(A, FUN)	math2_1(CAR(A), CADR(A), CADDR(A), FUN, call);
 #define Math2_2(A, FUN) math2_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN, call)
 
-SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
@@ -1125,7 +1125,7 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
     int n;
@@ -1148,7 +1148,7 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 /* The S4 Math2 group, round and signif */
-SEXP do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP a;
     if (DispatchGroup("Math", call, op, args, env, &a))
@@ -1160,7 +1160,7 @@ SEXP do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_math2(call, op, args, env);
 }
 
-SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
     int n;
@@ -1324,7 +1324,7 @@ static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ, double (*f)(), 
 #define Math3_1(A, FUN)	math3_1(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN, call);
 #define Math3_2(A, FUN) math3_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), CAD4R(A), FUN, call)
 
-SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
@@ -1555,7 +1555,7 @@ static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
 				CAD5R(A), FUN, call)
 
 
-SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
@@ -1702,7 +1702,7 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 #define Math5(A, FUN) \
 	math5(CAR(A), CADR(A), CADDR(A), CAD3R(A), CAD4R(A), FUN);
 
-SEXP do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     lcall = call;

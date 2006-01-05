@@ -57,7 +57,7 @@ SEXP GetColNames(SEXP dimnames)
 	return R_NilValue;
 }
 
-SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP vals, snr, snc;
     int nr, nc, byrow, lendat;
@@ -312,7 +312,7 @@ SEXP DropDims(SEXP x)
     return x;
 }
 
-SEXP do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, xdims;
     int i, n, shorten;
@@ -334,7 +334,7 @@ SEXP do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Length of Primitive Objects */
 
-SEXP do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     R_len_t len;
@@ -353,7 +353,7 @@ SEXP do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     int i, j, nr, nc;
@@ -551,7 +551,7 @@ static void tccrossprod(Rcomplex *x, int nrx, int ncx,
 
 
 /* "%*%" (op = 0), crossprod (op = 1) or tcrossprod (op = 2) */
-SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int ldx, ldy, nrx, ncx, nry, ncy, mode;
     SEXP x = CAR(args), y = CADR(args), xdims, ydims, ans;
@@ -825,7 +825,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #undef YDIMS_ET_CETERA
 
-SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, r, dims, dimnames, dimnamesnames=R_NilValue,
 	ndimnamesnames, rnames, cnames;
@@ -958,7 +958,7 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	j += iip[itmp] * stride[itmp];
 
 /* aperm (a, perm, resize = TRUE) */
-SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, perm, resize, r, dimsa, dimsr, dna;
     int i, j, n, len, itmp;
@@ -1111,7 +1111,7 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* colSums(x, n, p, na.rm) and friends */
-SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, ans = R_NilValue;
     int OP, n, p, cnt = 0, i, j, type;

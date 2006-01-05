@@ -40,7 +40,7 @@ R_X11Routines * R_setX11Routines(R_X11Routines *routines)
     return tmp;
 }
 
-int R_X11_Init(void)
+int attribute_hidden R_X11_Init(void)
 {
     int res;
 
@@ -59,13 +59,13 @@ int R_X11_Init(void)
     return initialized;
 }
 
-Rboolean R_access_X11(void)
+Rboolean attribute_hidden R_access_X11(void)
 {
     R_X11_Init();
     return (initialized > 0) ? (*ptr->access)() > 0 : FALSE;
 }
 
-SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_X11_Init();
     if(initialized > 0)
@@ -77,7 +77,7 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifndef HAVE_AQUA
-SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 /*  This copy of do_dataentry is needed when R is built under MacOSX along
     with the aqua module which contains a definition of do_dataentry. If R
@@ -106,7 +106,7 @@ Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
     }
 }
 
-Rboolean R_ReadClipboard(Rclpconn clpcon, char *type)
+Rboolean attribute_hidden R_ReadClipboard(Rclpconn clpcon, char *type)
 {
     R_X11_Init();
     if(initialized > 0)
@@ -119,19 +119,19 @@ Rboolean R_ReadClipboard(Rclpconn clpcon, char *type)
 
 #else /* No HAVE_X11 */
 
-Rboolean R_access_X11(void)
+Rboolean attribute_hidden R_access_X11(void)
 {
     return FALSE;
 }
 
-SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error(_("X11 is not available"));
     return R_NilValue;
 }
 
 #ifndef HAVE_AQUA
-SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error(_("X11 is not available"));
     return R_NilValue;
@@ -144,7 +144,7 @@ Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
     return FALSE;
 }
 
-Rboolean R_ReadClipboard(Rclpconn con, char *type)
+Rboolean attribute_hidden R_ReadClipboard(Rclpconn con, char *type)
 {
     error(_("X11 is not available"));
     return FALSE;

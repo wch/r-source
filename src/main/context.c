@@ -434,7 +434,7 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
    then get the context of the call that owns the environment.  As it
    is, it will restart the wrong function if used in a promise.
    L.T. */
-SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *cptr;
 
@@ -460,7 +460,7 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* We don't want to count the closure that do_sys is contained in so the */
 /* indexing is adjusted to handle this. */
 
-SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int i, n, nframe;
     SEXP rval,t;
@@ -544,7 +544,7 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
-SEXP do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int n;
     SEXP t;

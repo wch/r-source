@@ -275,7 +275,7 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 /* NOTE: mean() [op = 1]  is no longer processed by this code.
 		(NEVER was correct for multiple arguments!) */
 
-SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, a;
     double tmp = 0.0, s;
@@ -522,7 +522,7 @@ badmode:
     errorcall_return(call, R_MSG_mode);
 }/* do_summary */
 
-SEXP do_range(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, a, b, prargs;
 
@@ -538,7 +538,7 @@ SEXP do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* which.min(x) : The index (starting at 1), of the first min(x) in x */
-SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #define Beg_do_first					\
     SEXP sx, ans;					\
@@ -582,7 +582,7 @@ SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* which.max(x) : The index (starting at 1), of the first max(x) in x */
-SEXP do_first_max(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_first_max(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     Beg_do_first
 
@@ -599,7 +599,7 @@ SEXP do_first_max(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* complete.cases(.) */
-SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s, t, u, rval;
     int i, len;

@@ -139,7 +139,7 @@ char *R_ExpandFileName(char *s)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
-SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return mkString("Unix");
 }
@@ -188,7 +188,7 @@ double R_getClockIncrement(void)
   return 1.0 / clk_tck;
 }
 
-SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = allocVector(REALSXP, 5);
     R_getProcTime(REAL(ans));
@@ -197,7 +197,7 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 #else /* not _R_HAVE_TIMING_ */
 void R_setStartTime(void) {}
 
-SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     error(_("proc.time() is not implemented on this system"));
     return R_NilValue;		/* -Wall */
@@ -206,7 +206,7 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 #define INTERN_BUFSIZE 8096
-SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP tlist = R_NilValue;
     int read=0;
@@ -272,7 +272,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #  include <pwd.h>
 # endif
 
-SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     struct utsname name;
@@ -345,7 +345,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include <pmmintrin.h>
 #endif
 
-void fpu_setup(Rboolean start)
+void attribute_hidden fpu_setup(Rboolean start)
 {
     if (start) {
 #ifdef __FreeBSD__

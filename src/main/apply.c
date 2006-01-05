@@ -27,7 +27,7 @@
 
 /* .Internal(lapply(X, FUN)) */
 
-SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP R_fcall, ans, X, FUN, ind, tmp;
     int i, n;
@@ -67,7 +67,7 @@ SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* X is a matrix, and the last dimension is the one we want to 
    loop over */
 
-SEXP do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP R_fcall, X, Xd, X1, ans, FUN;
     int i, j, nr, nc, inr;

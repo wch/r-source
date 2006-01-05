@@ -1028,7 +1028,7 @@ SEXP nthcdr(SEXP s, int n)
 }
 
 
-SEXP do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP t;
     RCNTXT *cptr;
@@ -1102,7 +1102,7 @@ SEXP dcdr(SEXP l)
 }
 
 /* merge(xinds, yinds, all.x, all.y) */
-SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP xi, yi, ansx, ansy, ans, ansnames, x_lone, y_lone;
     int y, nx = 0, ny = 0, i, j, k, nans = 0, nx_lone = 0, ny_lone = 0;
@@ -1172,7 +1172,7 @@ SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include <windows.h>
 #endif
 
-SEXP do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval = R_NilValue;
     char buf[2 * PATH_MAX];
@@ -1193,7 +1193,7 @@ SEXP do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include <direct.h> /* for chdir */
 #endif
 
-SEXP do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s = R_NilValue;	/* -Wall */
     const char *path;
@@ -1211,7 +1211,7 @@ SEXP do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* remove portion of path before file separator if one exists */
 
-SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
@@ -1245,7 +1245,7 @@ SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
    return "."
    */
 
-SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
@@ -1288,7 +1288,7 @@ SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* encodeString(x, w, quote, justify) */
-SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, s;
     int i, len, w, quote = 0, justify, na;

@@ -362,7 +362,7 @@ complete2(int n, int ncx, int ncy, double *x, double *y, int *ind, Rboolean na_f
 /* cov | cor( x, y, use = {1,		2,		3}
 			"all.obs", "complete.obs", "pairwise.complete.obs",
 		    kendall = TRUE/FALSE) */
-SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, ans, xm, ym, ind;
     Rboolean cor, kendall, pair, na_fail, sd_0;

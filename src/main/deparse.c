@@ -174,7 +174,7 @@ void R_FreeStringBuffer(DeparseBuffer *buf)
     }
 }
 
-SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ca1;
     int  cut0, backtick, opts;
@@ -270,7 +270,7 @@ SEXP deparse1line(SEXP call, Rboolean abbrev)
 
 #include "Rconnections.h"
 
-SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP saveenv, tval;
     int i, ifile, res;
@@ -316,7 +316,7 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
     return (CAR(args));
 }
 
-SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP file, names, o, objs, tval, source, outnames;
     int i, j, nobjs, nout, res;

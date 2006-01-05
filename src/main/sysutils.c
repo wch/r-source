@@ -58,13 +58,13 @@ extern int (*ptr_CocoaSystem)(char*);
 extern	Rboolean useaqua;
 #endif
 
-Rboolean R_FileExists(char *path)
+Rboolean attribute_hidden R_FileExists(char *path)
 {
     struct stat sb;
     return stat(R_ExpandFileName(path), &sb) == 0;
 }
 
-double R_FileMtime(char *path)
+double attribute_hidden R_FileMtime(char *path)
 {
     struct stat sb;
     if (stat(R_ExpandFileName(path), &sb) != 0)
@@ -72,12 +72,12 @@ double R_FileMtime(char *path)
     return sb.st_mtime;
 }
 #else
-Rboolean R_FileExists(char *path)
+Rboolean attribute_hidden R_FileExists(char *path)
 {
     error(_("file existence is not available on this system"));
 }
 
-double R_FileMtime(char *path)
+double attribute_hidden R_FileMtime(char *path)
 {
     error(_("file modification time is not available on this system"));
     return 0.0; /* not reached */
@@ -88,7 +88,7 @@ double R_FileMtime(char *path)
      *  Unix file names which begin with "." are invisible.
      */
 
-Rboolean R_HiddenFile(char *name)
+Rboolean attribute_hidden R_HiddenFile(char *name)
 {
     if (name && name[0] != '.') return 0;
     else return 1;
@@ -106,13 +106,13 @@ FILE *R_fopen(const char *filename, const char *mode)
 
           /* The location of the R system files */
 
-char *R_HomeDir()
+attribute_hidden char *R_HomeDir()
 {
     return getenv("R_HOME");
 }
 
 
-SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval;
 
@@ -121,7 +121,7 @@ SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
     return rval;
 }
 
-SEXP do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  ans;
 
@@ -132,7 +132,7 @@ SEXP do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  ans, pattern, tempdir;
     char *tn, *td, *tm;
@@ -212,7 +212,7 @@ int R_system(char *command)
 extern char ** environ;
 #endif
 
-SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, j;
     char *s;
@@ -268,7 +268,7 @@ static int Rputenv(char *str)
 #endif
 
 
-SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef HAVE_PUTENV
     int i, n;
@@ -362,7 +362,7 @@ write_one (unsigned int namescount, char * *names, void *data)
 #include "RBufferUtils.h"
 
 /* iconv(x, from, to, sub) */
-SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     SEXP ans, x = CAR(args);
@@ -544,7 +544,7 @@ static int isDir(char *path)
 extern char * mkdtemp (char *template);
 #endif
 
-void InitTempDir()
+void attribute_hidden InitTempDir()
 {
     char *tmp, *tm, tmp1[PATH_MAX+11], *p;
     int len;

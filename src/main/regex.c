@@ -2891,7 +2891,7 @@ re_compile_fastmap_iter (regex_t *bufp, const re_dfastate_t *init_state,
    It returns 0 if it succeeds, nonzero if it doesn't.  (See regex.h for
    the return codes and their meanings.)  */
 
-int
+int attribute_hidden
 regcomp (preg, pattern, cflags)
     regex_t *__restrict preg;
     const char *__restrict pattern;
@@ -2953,7 +2953,7 @@ weak_alias (__regcomp, regcomp)
 /* Returns a message corresponding to an error code, ERRCODE, returned
    from either regcomp or regexec.   We don't use PREG here.  */
 
-size_t
+size_t attribute_hidden
 regerror (errcode, preg, errbuf, errbuf_size)
     int errcode;
     const regex_t *preg;
@@ -6413,7 +6413,7 @@ static reg_errcode_t extend_buffers (re_match_context_t *mctx) internal_function
 
    We return 0 if we find a match and REG_NOMATCH if not.  */
 
-int
+int attribute_hidden
 regexec (preg, string, nmatch, pmatch, eflags)
     const regex_t *__restrict preg;
     const char *__restrict string;
@@ -10421,7 +10421,7 @@ sift_ctx_init (re_sift_context_t *sctx, re_dfastate_t **sifted_sts,
   re_node_set_init_empty (&sctx->limits);
 }
 
-int
+int attribute_hidden
 Rregexec (const regex_t *__restrict preg, const char *__restrict string, 
 	  size_t nmatch, regmatch_t pmatch[], int eflags, int offset)
 {

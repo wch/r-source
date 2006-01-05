@@ -347,7 +347,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 /* "usemethod". Things like [ and [[ call usemethod directly, */
 /* hence do_usemethod should just be an interface to usemethod. */
 
-SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, generic = R_NilValue /* -Wall */, obj;
     SEXP callenv, defenv;
@@ -442,7 +442,7 @@ static SEXP fixcall(SEXP call, SEXP args)
 
 #define ARGUSED(x) LEVELS(x)
 
-SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[512], b[512], bb[512], tbuf[10];
     SEXP ans, s, t, class, method, matchedarg, generic, nextfun;
@@ -758,7 +758,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     return(ans);
 }
 
-SEXP do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     switch(TYPEOF(CAR(args))) {
@@ -823,7 +823,7 @@ void RemoveClass(SEXP x, char *name)
     }
 }
 
-SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, class, what, which, rval = R_NilValue /* -Wall */;
     int i, j, nwhat, isvec, nclass;
@@ -990,7 +990,7 @@ static void load_methods_package()
 
 static SEXP get_this_generic(SEXP args);
 
-SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP arg, value, fdef; R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
     if(!ptr) {
@@ -1044,6 +1044,7 @@ SEXP R_primitive_methods(SEXP op)
     }
 }
 
+/* This is used in the methods package */
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 {
     int offset = 0;

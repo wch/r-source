@@ -839,7 +839,7 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
   call routines from "incomplete" libraries.
  */
 
-SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
     DllInfo *info;
@@ -856,7 +856,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     return(Rf_MakeDLLInfo(info));
 }
 
-SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
 
@@ -1255,13 +1255,13 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg,
     return (DL_FUNC)0;
 }
 
-SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     error(_("no dyn.load support in this R version"));
     return(R_NilValue);
 }
 
-SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     error(_("no dyn.load support in this R version"));
     return(R_NilValue);

@@ -30,7 +30,7 @@
 
 /* Fourier Transform for Univariate Spatial and Time Series */
 
-SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP z, d;
     int i, inv, maxf, maxmaxf, maxmaxp, maxp, n, ndims, nseg, nspn;
@@ -118,7 +118,7 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 /* Fourier Transform for Vector-Valued ("multivariate") Series */
 /* Not to be confused with the spatial case (in do_fft). */
 
-SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP z, d;
     int i, inv, maxf, maxp, n, p;
@@ -194,7 +194,7 @@ static int nextn(int n, int *f, int nf)
     return n;
 }
 
-SEXP do_nextn(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_nextn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP n, f, ans;
     int i, nn, nf;

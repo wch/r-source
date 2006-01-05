@@ -47,7 +47,7 @@ Type 'contributors()' for more information and\n\
 Type 'q()' to quit R.\n\n"));
 }
 
-SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP value, names;
     char buf[128];

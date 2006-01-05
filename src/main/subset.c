@@ -514,7 +514,7 @@ static void ExtractDropArg(SEXP el, int *drop)
 /* The "[" subset operator.
  * This provides the most general form of subsetting. */
 
-SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
@@ -532,7 +532,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subset_dflt(call, op, ans, rho);
 }
 
-SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ax, px, x, subs;
     int drop, i, nsubs, type;
@@ -691,7 +691,7 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* The [[ subset operator.  It needs to be fast. */
 /* The arguments to this call are evaluated on entry. */
 
-SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
@@ -710,7 +710,7 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subset2_dflt(call, op, ans, rho);
 }
 
-SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, dimnames, indx, subs, x;
     int i, ndims, nsubs, offset = 0;
@@ -890,7 +890,7 @@ pstrmatch(SEXP target, SEXP input, int slen)
    We need to be sure to only evaluate the first argument.
    The second will be a symbol that needs to be matched, not evaluated.
 */
-SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP input, nlist, ans;
 
@@ -927,7 +927,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_subset3_dflt(CAR(ans), STRING_ELT(input, 0));
 }
 
-SEXP R_subset3_dflt(SEXP x, SEXP input)
+SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input)
 {
     SEXP y, nlist;
     int slen;

@@ -1243,7 +1243,7 @@ static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 /* and the remainder of args have not.  If this was called directly */
 /* the CAR(args) and the last arg won't have been. */
 
-SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
@@ -1257,7 +1257,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subassign_dflt(call, op, ans, rho);
 }
 
-SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP subs, x, y;
     int nsubs, oldtype;
@@ -1375,7 +1375,7 @@ static SEXP DeleteOneVectorListItem(SEXP x, int which)
 /* args[2] = list of subscripts */
 /* args[3] = replacement values */
 
-SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
@@ -1385,7 +1385,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subassign2_dflt(call, op, ans, rho);
 }
 
-SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP dims, indx, names, newname, subs, x, xtop, xup, y;
     int i, ndims, nsubs, offset, off = -1 /* -Wall */, stretch, which;
@@ -1679,7 +1679,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
    to get DispatchOrEval to work we need to first translate it
    to a string
 */
-SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP nlist, ans, input;
     int iS;

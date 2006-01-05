@@ -26,14 +26,14 @@
 #include <Rinterface.h>
 
 
-SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     ptr_R_loadhistory(call, op, args, rho);
     return R_NilValue;
 }
 
-SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_savehistory(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     ptr_R_savehistory(call, op, args, rho);

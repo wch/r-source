@@ -276,7 +276,7 @@ SEXP complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     return ans;
 }
 
-SEXP do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y = R_NilValue;	/* -Wall*/
     int i, n;
@@ -881,7 +881,7 @@ SEXP complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 }
 
-SEXP do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     /* complex(length, real, imaginary) */
     SEXP ans, re, im;
@@ -915,7 +915,7 @@ SEXP do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP z, zr, zi, r, rr, ri;
     Rboolean fail;

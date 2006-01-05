@@ -161,8 +161,7 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files,
     return err;
 }
 
-SEXP 
-do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn, ans, names = R_NilValue;
     char  zipname[PATH_MAX], *topics[500], dest[PATH_MAX], *p;

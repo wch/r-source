@@ -213,7 +213,7 @@ static void namewalk(SEXP s, NameWalkData *d)
 
 /* Also does all.vars wiht functions=FALSE
    .Internal(all.names(expr, functions, max.names, unique)) */
-SEXP do_allnames(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_allnames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP expr;
     int i, savecount;

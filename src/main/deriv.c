@@ -580,7 +580,7 @@ static SEXP AddParens(SEXP expr)
     return expr;
 }
 
-SEXP do_D(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_D(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP expr, var;
     checkArity(op, args);
@@ -880,7 +880,7 @@ static SEXP Prune(SEXP lst)
     else return lst ;
 }
 
-SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* deriv.default(expr, namevec, function.arg, tag, hessian) */
     SEXP ans, ans2, expr, funarg, names, s;

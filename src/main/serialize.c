@@ -1503,7 +1503,8 @@ SEXP R_Unserialize(R_inpstream_t stream)
  * Generic Persistent Stream Initializers
  */
 
-void R_InitInPStream(R_inpstream_t stream, R_pstream_data_t data,
+void attribute_hidden
+R_InitInPStream(R_inpstream_t stream, R_pstream_data_t data,
 		     R_pstream_format_t type,
 		     int (*inchar)(R_inpstream_t),
 		     void (*inbytes)(R_inpstream_t, void *, int),
@@ -1517,7 +1518,8 @@ void R_InitInPStream(R_inpstream_t stream, R_pstream_data_t data,
     stream->InPersistHookData = pdata;
 }
 
-void R_InitOutPStream(R_outpstream_t stream, R_pstream_data_t data,
+void attribute_hidden
+R_InitOutPStream(R_outpstream_t stream, R_pstream_data_t data,
 		      R_pstream_format_t type, int version,
 		      void (*outchar)(R_outpstream_t, int),
 		      void (*outbytes)(R_outpstream_t, void *, int),
@@ -1562,7 +1564,8 @@ static void InBytesFile(R_inpstream_t stream, void *buf, int length)
     fread(buf, 1, length, fp); /**** error message */
 }
 
-void R_InitFileOutPStream(R_outpstream_t stream, FILE *fp,
+void attribute_hidden
+R_InitFileOutPStream(R_outpstream_t stream, FILE *fp,
 			  R_pstream_format_t type, int version,
 			  SEXP (*phook)(SEXP, SEXP), SEXP pdata)
 {
@@ -1570,7 +1573,8 @@ void R_InitFileOutPStream(R_outpstream_t stream, FILE *fp,
 		     OutCharFile, OutBytesFile, phook, pdata);
 }
 
-void R_InitFileInPStream(R_inpstream_t stream, FILE *fp,
+void attribute_hidden
+R_InitFileInPStream(R_inpstream_t stream, FILE *fp,
 			 R_pstream_format_t type,
 			 SEXP (*phook)(SEXP, SEXP), SEXP pdata)
 {
@@ -1697,7 +1701,7 @@ static SEXP CallHook(SEXP x, SEXP fun)
     return val;
 }
 
-SEXP do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* serializeToConn(object, conn, ascii, version, hook) */
 
@@ -1737,7 +1741,7 @@ SEXP do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-SEXP do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* unserializeFromConn(conn, hook) */
 

@@ -588,7 +588,7 @@ static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames)
    argument.
 */
 
-SEXP do_c(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
 
@@ -603,7 +603,7 @@ SEXP do_c(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_c_dflt(call, op, ans, env);
 }
 
-SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, t;
     int mode, recurse, usenames;
@@ -715,7 +715,7 @@ SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 } /* do_c */
 
 
-SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, t;
     int mode, recurse, usenames;
@@ -882,7 +882,7 @@ SEXP FetchMethod(char *generic, char *classname, SEXP env)
 }
 
 /* cbind(deparse.level, ...) and rbind(deparse.level, ...) : */
-SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP a, t, obj, class, classlist, classname, method, classmethod, rho;
     char *generic;

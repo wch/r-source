@@ -285,7 +285,7 @@ static R_FortranMethodDef fortranMethods[] = {
 };
 
 
-void
+void attribute_hidden
 R_init_base(DllInfo *dll)
 {
     R_registerRoutines(dll, cMethods, callMethods,

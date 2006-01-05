@@ -27,7 +27,7 @@
 
 #define MAXLINE MAXELTSIZE
 
-SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, nargs, cnt, v, thislen;
     char *formatString, *starc;

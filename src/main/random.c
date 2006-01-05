@@ -57,7 +57,7 @@ static Rboolean random1(double (*f) (), double *a, int na, double *x, int n)
 /* "do_random1" - random sampling from 1 parameter families. */
 /* See switch below for distributions. */
 
-SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, a;
     int i, n, na;
@@ -128,7 +128,7 @@ static Rboolean random2(double (*f) (), double *a, int na, double *b, int nb,
 /* "do_random2" - random sampling from 2 parameter families. */
 /* See switch below for distributions. */
 
-SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, a, b;
     int i, n, na, nb;
@@ -213,7 +213,7 @@ static Rboolean random3(double (*f) (), double *a, int na, double *b, int nb,
 /* "do_random3" - random sampling from 3 parameter families. */
 /* See switch below for distributions. */
 
-SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, a, b, c;
     int i, n, na, nb, nc;
@@ -451,7 +451,7 @@ static void FixupProb(SEXP call, double *p, int n, int k, int replace)
 /* do_sample - equal probability sampling with/without replacement. */
 /* Implements sample(n, k, r) - choose k elements from 1 to n */
 /* with/without replacement according to r. */
-SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, y, prob;
     int k, n, replace;
@@ -504,7 +504,7 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     return y;
 }
 
-SEXP do_rmultinom(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_rmultinom(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP prob, ans, nms;
     int n, size, k, i, ik;

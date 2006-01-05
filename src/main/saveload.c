@@ -1810,7 +1810,7 @@ static int R_DefaultSaveFormatVersion = 2;
 
 /* ----- E x t e r n a l -- I n t e r f a c e s ----- */
 
-void R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
+void attribute_hidden R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
 {
     SaveLoadData data = {{NULL, 0, MAXELTSIZE}};
 
@@ -1841,7 +1841,7 @@ void R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
     }
 }
 
-void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
+void attribute_hidden R_SaveToFile(SEXP obj, FILE *fp, int ascii)
 {
     R_SaveToFileV(obj, fp, ascii, R_DefaultSaveFormatVersion);
 }
@@ -1849,7 +1849,7 @@ void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
     /* different handling of errors */
 
 #define return_and_free(X) {r = X; R_FreeStringBuffer(&data.buffer); return r;}
-SEXP R_LoadFromFile(FILE *fp, int startup)
+SEXP attribute_hidden R_LoadFromFile(FILE *fp, int startup)
 {
     struct R_inpstream_st in;
     int magic;
@@ -1903,7 +1903,7 @@ static void saveload_cleanup(void *data)
     fclose(fp);
 }
 
-SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* save(list, file, ascii, version, environment) */
 
@@ -2009,7 +2009,7 @@ static SEXP R_LoadSavedData(FILE *fp, SEXP aenv)
 }
 
 /* This is only used for version 1 or earlier formats */
-SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP fname, aenv, val;
     FILE *fp;
@@ -2057,7 +2057,7 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 #define R_XDR_INTEGER_SIZE 4
 */
 
-void R_XDREncodeDouble(double d, void *buf)
+void attribute_hidden R_XDREncodeDouble(double d, void *buf)
 {
     XDR xdrs;
     int success;
@@ -2069,7 +2069,7 @@ void R_XDREncodeDouble(double d, void *buf)
         error(_("XDR write failed"));
 }
  
-double R_XDRDecodeDouble(void *buf)
+double attribute_hidden R_XDRDecodeDouble(void *buf)
 {
     XDR xdrs;
     double d;
@@ -2083,7 +2083,7 @@ double R_XDRDecodeDouble(void *buf)
     return d;
 }
  
-void R_XDREncodeInteger(int i, void *buf)
+void attribute_hidden R_XDREncodeInteger(int i, void *buf)
 {
     XDR xdrs;
     int success;
@@ -2095,7 +2095,7 @@ void R_XDREncodeInteger(int i, void *buf)
         error(_("XDR write failed"));
 }
 
-int R_XDRDecodeInteger(void *buf)
+int attribute_hidden R_XDRDecodeInteger(void *buf)
 {
     XDR xdrs;
     int i, success;
@@ -2108,7 +2108,7 @@ int R_XDRDecodeInteger(void *buf)
     return i;
 }
 
-void R_SaveGlobalEnvToFile(const char *name)
+void attribute_hidden R_SaveGlobalEnvToFile(const char *name)
 {
     SEXP sym = install("sys.save.image");
     if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
@@ -2127,7 +2127,7 @@ void R_SaveGlobalEnvToFile(const char *name)
     }
 }
 
-void R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
+void attribute_hidden R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
 {
     SEXP sym = install("sys.load.image");
     if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
@@ -2165,7 +2165,7 @@ void R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
    Unfortunately, this will result in too much duplication in the lapply
    (and any other way of doing this).  Hence we need an internal version. */
 
-SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* saveToConn(list, conn, ascii, version, environment) */
 
@@ -2254,7 +2254,7 @@ static void saveloadcon_cleanup(void *data)
     fclose(fp);
 }
 
-SEXP do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* loadFromConn2(conn, environment) */
 
@@ -2313,7 +2313,7 @@ SEXP do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
    variables and the values saved in a pair list this internal version
    will be faster than a version in R */
 
-SEXP do_loadFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_loadFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* loadFromConn(conn, environment) */
 

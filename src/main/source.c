@@ -31,7 +31,7 @@
 extern IoBuffer R_ConsoleIob;
 /* extern int errno; No longer used */
 
-SEXP getParseContext()
+SEXP attribute_hidden getParseContext()
 {
     int i, last = PARSE_CONTEXT_SIZE;
     char context[PARSE_CONTEXT_SIZE+1];
@@ -82,7 +82,7 @@ SEXP getParseContext()
     return ans2;
 }    
 
-void parseError(SEXP call, int linenum)
+void attribute_hidden parseError(SEXP call, int linenum)
 {
     SEXP context = getParseContext();
     int len = length(context);
@@ -114,7 +114,7 @@ void parseError(SEXP call, int linenum)
  .Internal( parse(file, n, text, prompt) )
  If there is text then that is read and the other arguments are ignored.
 */
-SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP text, prompt, s;
     Rconnection con;

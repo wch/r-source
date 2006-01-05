@@ -19,7 +19,7 @@ SOURCES = blocksort.c bzlib.c compress.c crctable.c decompress.c \
 HEADERS = bzlib.h bzlib_private.h
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
+@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = LICENSE Makefile.in Makefile.win \

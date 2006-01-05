@@ -66,7 +66,7 @@ extern Rboolean UsingReadline;
  *  1) FATAL MESSAGES AT STARTUP
  */
 
-void Rstd_Suicide(char *s)
+void attribute_hidden Rstd_Suicide(char *s)
 {
     REprintf("Fatal error: %s\n", s); 
     /* Might be called before translation is running */
@@ -407,7 +407,7 @@ extern void rl_callback_read_char(void);
 extern char *tilde_expand (const char *);
 # endif
 
-char *R_ExpandFileName_readline(char *s, char *buff)
+char attribute_hidden *R_ExpandFileName_readline(char *s, char *buff)
 {
     char *s2 = tilde_expand(s);
 
@@ -482,7 +482,7 @@ static struct {
   Registers the specified routine and prompt with readline
   and keeps a record of it on the top of the R readline stack.
  */
-void
+void attribute_hidden
 pushReadline(char *prompt, rl_vcpfunc_t f)
 {
    if(ReadlineStack.current >= ReadlineStack.max) {
@@ -500,8 +500,7 @@ pushReadline(char *prompt, rl_vcpfunc_t f)
   Unregister the current readline handler and pop it from R's readline
   stack, followed by re-registering the previous one.
 */
-void
-popReadline()
+void attribute_hidden popReadline()
 {
   if(ReadlineStack.current > -1) {
      rl_callback_handler_remove();
@@ -571,8 +570,9 @@ handleInterrupt(void)
 /* Fill a text buffer from stdin or with user typed console input. */
 static void *cd = NULL;
 
-int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
-		     int addtohistory)
+int attribute_hidden
+Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
+		 int addtohistory)
 {
     if(!R_Interactive) {
 	int ll, err = 0;
@@ -682,7 +682,7 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	/* Write a text buffer to the console. */
 	/* All system output is filtered through this routine. */
 
-void Rstd_WriteConsole(char *buf, int len)
+void attribute_hidden Rstd_WriteConsole(char *buf, int len)
 {
     printf("%s", buf);
 }
@@ -690,21 +690,21 @@ void Rstd_WriteConsole(char *buf, int len)
 
 	/* Indicate that input is coming from the console */
 
-void Rstd_ResetConsole()
+void attribute_hidden Rstd_ResetConsole()
 {
 }
 
 
 	/* Stdio support to ensure the console file buffer is flushed */
 
-void Rstd_FlushConsole()
+void attribute_hidden Rstd_FlushConsole()
 {
     /* fflush(stdin);  really work on Solaris on pipes */
 }
 
 	/* Reset stdin if the user types EOF on the console. */
 
-void Rstd_ClearerrConsole()
+void attribute_hidden Rstd_ClearerrConsole()
 {
     clearerr(stdin);
 }
@@ -713,7 +713,7 @@ void Rstd_ClearerrConsole()
  *  3) ACTIONS DURING (LONG) COMPUTATIONS
  */
 
-void Rstd_Busy(int which)
+void attribute_hidden Rstd_Busy(int which)
 {
 }
 
@@ -733,7 +733,7 @@ void Rstd_Busy(int which)
  */
 
 
-void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
+void attribute_hidden Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
     unsigned char buf[1024];
     char * tmpdir;
@@ -806,7 +806,8 @@ void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
-int Rstd_ShowFiles(int nfile, 		/* number of files */
+int attribute_hidden
+Rstd_ShowFiles(int nfile, 		/* number of files */
 		   char **file,		/* array of filenames */
 		   char **headers,	/* the `headers' args of file.show.
 					   Printed before each file. */
@@ -867,7 +868,7 @@ int Rstd_ShowFiles(int nfile, 		/* number of files */
 
 
 
-int Rstd_ChooseFile(int new, char *buf, int len)
+int attribute_hidden Rstd_ChooseFile(int new, char *buf, int len)
 {
     int namelen;
     char *bufp;
@@ -880,13 +881,13 @@ int Rstd_ChooseFile(int new, char *buf, int len)
 }
 
 
-void Rstd_ShowMessage(char *s)
+void attribute_hidden Rstd_ShowMessage(char *s)
 {
     REprintf("%s\n", s);
 }
 
 
-void Rstd_read_history(char *s)
+void attribute_hidden Rstd_read_history(char *s)
 {
 #ifdef HAVE_LIBREADLINE
 # ifdef HAVE_READLINE_HISTORY_H
@@ -897,7 +898,7 @@ void Rstd_read_history(char *s)
 #endif /* HAVE_LIBREADLINE */
 }
 
-void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+void attribute_hidden Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
     char file[PATH_MAX], *p;
@@ -919,7 +920,7 @@ void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
+void attribute_hidden Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
     char file[PATH_MAX], *p;
@@ -966,7 +967,7 @@ void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #define R_MIN(a, b) ((a) < (b) ? (a) : (b))
 
-SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int Timeout;
     double tm;
@@ -1003,7 +1004,7 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #else /* not _R_HAVE_TIMING_ */
-SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error(_("Sys.sleep is not implemented on this system"));
     return R_NilValue;		/* -Wall */

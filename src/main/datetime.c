@@ -402,7 +402,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 # include <windows.h>
 #endif
 
-SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = allocVector(REALSXP, 1);
 #ifdef HAVE_GETTIMEOFDAY
@@ -522,7 +522,7 @@ static void makelt(struct tm *tm, SEXP ans, int i, int valid)
 }
 
 
-SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans, ansnames, class, tzone;
     int i, n, isgmt = 0, valid, settz = 0;
@@ -584,7 +584,7 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans;
     int i, n = 0, isgmt = 0, nlen[9], settz = 0;
@@ -650,7 +650,7 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, sformat, ans, tz;
     int i, n = 0, m, N, nlen[9], UseTZ;
@@ -761,7 +761,7 @@ static void glibc_fix(struct tm *tm, int *invalid)
 }
 
 
-SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, sformat, ans, ansnames, class, stz;
     int i, n, m, N, invalid, isgmt = 0;
@@ -828,7 +828,7 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans, ansnames, class;
     int n, i, valid;
@@ -887,7 +887,7 @@ SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans, class;
     int i, n = 0, nlen[9];

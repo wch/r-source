@@ -25,6 +25,18 @@ Furthermore:
 
 /* <UTF8-FIXME> byte-level ops. Not at all clear that this is fixable. */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+# define attribute_hidden __attribute__ ((visibility ("hidden")))
+#else
+# define attribute_hidden
+#endif
+
+
+
 #include "apse.h"
 
 #include <stdio.h>
@@ -155,6 +167,7 @@ static char *_apse_fbin(apse_vec_t v, apse_size_t n, apse_bool_t last) {
 
 /* The code begins. */
 
+static
 apse_bool_t apse_set_pattern(apse_t*		ap,
 			     unsigned char*	pattern,
 			     apse_size_t	pattern_size) {
@@ -208,6 +221,7 @@ out:
     }
 }
 
+#if 0
 void apse_set_greedy(apse_t *ap, apse_bool_t greedy) {
     ap->is_greedy = greedy;
 }
@@ -260,6 +274,7 @@ void* (*apse_get_match_end_callback(apse_t * ap))(apse_t *ap) {
 void* (*apse_get_match_eot_callback(apse_t * ap))(apse_t *ap) {
     return ap->match_eot_callback;
 }
+#endif
 
 static int _apse_wrap_slice(apse_t*		ap,
 			    apse_ssize_t	begin_in,
@@ -294,6 +309,7 @@ static int _apse_wrap_slice(apse_t*		ap,
     return 1;
 }
 
+#if 0
 apse_bool_t apse_set_anychar(apse_t *ap, apse_ssize_t pattern_index) {
     apse_size_t	bitvectors_in_state = ap->bitvectors_in_state;
     apse_ssize_t	true_index, i;
@@ -352,6 +368,7 @@ apse_bool_t apse_set_charset(apse_t*		ap,
 
     return okay;
 }
+#endif
 
 static void _apse_reset_state(apse_t* ap) {
     apse_size_t	i, j;
@@ -368,6 +385,7 @@ static void _apse_reset_state(apse_t* ap) {
     }
 }
 
+#if 0
 apse_bool_t apse_set_text_position(apse_t *ap,
 					 apse_size_t text_position) {
     ap->text_position = text_position;
@@ -411,7 +429,9 @@ apse_bool_t apse_set_text_position_range(apse_t *ap,
 apse_size_t apse_get_text_position_range(apse_t *ap) {
     return ap->text_position_range;
 }
+#endif
 
+static
 void apse_reset(apse_t *ap) {
     _apse_reset_state(ap);
 
@@ -423,6 +443,7 @@ void apse_reset(apse_t *ap) {
     ap->match_end   = APSE_MATCH_BAD;
 }
 
+static
 apse_bool_t apse_set_edit_distance(apse_t *ap, apse_size_t edit_distance) {
     /* TODO: waste not--reuse if possible */
 
@@ -480,6 +501,7 @@ out:
     return ap->state && ap->prev_state;
 }
 
+#if 0
 apse_size_t apse_get_edit_distance(apse_t *ap) {
     return ap->edit_distance;
 }
@@ -534,7 +556,9 @@ apse_bool_t apse_set_exact_slice(apse_t*	ap,
 out:
     return okay;
 }
+#endif
 
+attribute_hidden
 apse_bool_t apse_set_caseignore_slice(apse_t*		ap,
 				      apse_ssize_t	caseignore_begin,
 				      apse_ssize_t	caseignore_size,
@@ -605,6 +629,7 @@ out:
     return okay;
 }
 
+attribute_hidden
 void apse_destroy(apse_t *ap) {
     if (ap->case_mask)		free(ap->case_mask);
     if (ap->fold_mask)		free(ap->fold_mask);
@@ -614,6 +639,7 @@ void apse_destroy(apse_t *ap) {
     free(ap);
 }
 
+attribute_hidden
 apse_t *apse_create(unsigned char*	pattern,
 		    apse_size_t		pattern_size,
 		    apse_size_t		edit_distance) {
@@ -719,6 +745,7 @@ apse_t *apse_create(unsigned char*	pattern,
     return ap;
 }
 
+attribute_hidden
 apse_bool_t apse_set_insertions(apse_t *ap, apse_size_t insertions) {
     apse_bool_t	okay = 0;
 
@@ -737,13 +764,16 @@ apse_bool_t apse_set_insertions(apse_t *ap, apse_size_t insertions) {
     return okay;
 }
 
+#if 0
 apse_size_t apse_get_insertions(apse_t *ap) {
     if (ap->has_different_distances)
 	return ap->edit_insertions;
     else
 	return ap->edit_distance;
 }
+#endif
 
+attribute_hidden
 apse_bool_t apse_set_deletions(apse_t *ap, apse_size_t deletions) {
     apse_bool_t	okay = 0;
 
@@ -762,13 +792,16 @@ apse_bool_t apse_set_deletions(apse_t *ap, apse_size_t deletions) {
     return okay;
 }
 
+#if 0
 apse_size_t apse_get_deletions(apse_t *ap) {
     if (ap->has_different_distances)
 	return ap->edit_deletions;
     else
 	return ap->edit_distance;
 }
+#endif
 
+attribute_hidden
 apse_bool_t apse_set_substitutions(apse_t *ap, apse_size_t substitutions) {
     apse_bool_t	okay = 0;
 
@@ -787,12 +820,14 @@ apse_bool_t apse_set_substitutions(apse_t *ap, apse_size_t substitutions) {
     return okay;
 }
 
+#if 0
 apse_size_t apse_get_substitutions(apse_t *ap) {
     if (ap->has_different_distances)
 	return ap->edit_substitutions;
     else
 	return ap->edit_distance;
 }
+#endif
 
 #ifdef APSE_DEBUGGING
 static const char* apse_match_state_name(apse_t* ap) {
@@ -1354,6 +1389,7 @@ static apse_bool_t _apse_match(apse_t 		*ap,
 	return __apse_match(ap, text, text_size);
 }
 
+attribute_hidden
 apse_bool_t apse_match(apse_t *ap,
 		       unsigned char *text, apse_size_t text_size) {
     apse_bool_t did_match = _apse_match(ap, text, text_size);
@@ -1364,6 +1400,7 @@ apse_bool_t apse_match(apse_t *ap,
     return did_match;
 }
 
+#if 0
 apse_bool_t apse_match_next(apse_t *ap,
 			    unsigned char *text, apse_size_t text_size) {
     apse_bool_t did_match = _apse_match(ap, text, text_size);
@@ -1456,3 +1493,4 @@ void* apse_get_custom_data(apse_t*	ap,
 	*custom_data_size = ap->custom_data_size;
     return ap->custom_data;
 }
+#endif

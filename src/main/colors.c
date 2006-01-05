@@ -48,14 +48,14 @@ unsigned int CheckColor(int x)
     return (unsigned int)x;
 }
 
-unsigned int ScaleAlpha(double x)
+static unsigned int ScaleAlpha(double x)
 {
     if (!R_FINITE(x) || x < 0.0 || x > 1.0)
 	error(_("alpha level %g, not in [0,1]"), x);
     return (unsigned int)(255*x + 0.5);
 }
 
-unsigned int CheckAlpha(int x)
+static unsigned int CheckAlpha(int x)
 {
     if (x == NA_INTEGER || x < 0 || x > 255)
 	error(_("alpha level %d, not in 0:255"), x);
@@ -70,7 +70,7 @@ static void setpalette(char **palette)
     R_ColorTableSize = i;
 }
 
-SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP val, ans;
     unsigned int color[COLOR_TABLE_SIZE];
@@ -100,7 +100,7 @@ SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     int n;
@@ -117,7 +117,7 @@ SEXP do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP c, h, s, v, gm, a;
     double hh, ss, vv, gg, aa, r, g, b;
@@ -233,7 +233,7 @@ hcl2rgb(double h, double c, double l, double *R, double *G, double *B)
     *B = gtrans(( 0.055648 * X - 0.204043 * Y + 1.057311 * Z) / WHITE_Y);
 }
 
-SEXP do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP h, c, l, a, ans;
     double H, C, L, A, r, g, b;
@@ -283,7 +283,7 @@ SEXP do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP c, r, g, b, a, nam;
     int OP, i, l_max, nr, ng, nb, na;
@@ -350,7 +350,7 @@ SEXP do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
     return c;
 }
 
-SEXP do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP lev, ans;
     double level;
@@ -372,7 +372,7 @@ SEXP do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* colorname, "#rrggbb" or "col.number" to (r,g,b) conversion */
     SEXP colors, ans, names, dmns;
@@ -407,7 +407,7 @@ SEXP do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_RGB2hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* (r,g,b) -> (h,s,v) conversion */
     SEXP rgb, dd, ans, names, dmns;

@@ -93,7 +93,7 @@ void PrintDefaults(SEXP rho)
     R_print.width = GetOptionWidth(rho);
 }
 
-SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     switch (length(args)) {
     case 0:
@@ -107,13 +107,13 @@ SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #if 0
-SEXP do_visibleflag(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_visibleflag(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     return ScalarLogical(R_Visible);
 }
 #endif
 
-SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int quote;
     SEXP a, x, rowlab, collab, naprint;
@@ -153,7 +153,7 @@ SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* .Internal(print.default(x, digits, quote, na.print, print.gap,
                            right, useS4)) */
-SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, naprint;
     int tryS4;

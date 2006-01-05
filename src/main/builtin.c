@@ -31,7 +31,7 @@
 #include <Fileio.h>
 #include <Rconnections.h>
 
-SEXP do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, env;
     checkArity(op, args);
@@ -46,7 +46,7 @@ SEXP do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
     return mkPROMISE(expr, env);
 }
 
-SEXP do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP name = R_NilValue /* -Wall */, expr, eenv, aenv;
     checkArity(op, args);
@@ -80,7 +80,7 @@ SEXP do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *ctxt;
     SEXP code, add, oldcode, tmp;
@@ -133,7 +133,7 @@ SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s;
     checkArity(op,args);
@@ -152,7 +152,7 @@ SEXP do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP do_formals(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_formals(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     if (TYPEOF(CAR(args)) == CLOSXP)
@@ -161,7 +161,7 @@ SEXP do_formals(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
 }
 
-SEXP do_body(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_body(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     if (TYPEOF(CAR(args)) == CLOSXP)
@@ -169,7 +169,7 @@ SEXP do_body(SEXP call, SEXP op, SEXP args, SEXP rho)
     else return R_NilValue;
 }
 
-SEXP do_bodyCode(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_bodyCode(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     if (TYPEOF(CAR(args)) == CLOSXP)
@@ -177,7 +177,7 @@ SEXP do_bodyCode(SEXP call, SEXP op, SEXP args, SEXP rho)
     else return R_NilValue;
 }
 
-SEXP do_envir(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_envir(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     if (TYPEOF(CAR(args)) == CLOSXP)
@@ -187,7 +187,7 @@ SEXP do_envir(SEXP call, SEXP op, SEXP args, SEXP rho)
     else return getAttrib(CAR(args), R_DotEnvSymbol);
 }
 
-SEXP do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP env;
     checkArity(op, args);
@@ -209,7 +209,7 @@ SEXP do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP enclos;
     int hash;
@@ -231,7 +231,7 @@ SEXP do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return NewEnvironment(R_NilValue, R_NilValue, enclos);
 }
 
-SEXP do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 
@@ -242,7 +242,7 @@ SEXP do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     return( ENCLOS(CAR(args)) );
 }
 
-SEXP do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP env, parent;
     checkArity(op, args);
@@ -317,7 +317,7 @@ static void cat_cleanup(void *data)
     if(changedcon) switch_stdout(-1, 0);
 }
 
-SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     cat_info ci;
     RCNTXT cntxt;
@@ -468,7 +468,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP list, names;
     int i, n, havenames;
@@ -497,7 +497,7 @@ SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
     return list;
 }
 
-SEXP do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, ans, nms;
     int i, n, named;
@@ -528,7 +528,7 @@ SEXP do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* vector(mode="logical", length=0) */
-SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_len_t len, i;
     SEXP s;
@@ -672,7 +672,7 @@ SEXP lengthgets(SEXP x, R_len_t len)
 }
 
 
-SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_len_t len;
     SEXP x, ans;
@@ -724,7 +724,7 @@ static SEXP switchList(SEXP el, SEXP rho)
     }
 }
 
-SEXP do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int argval;
     SEXP x, y, w;

@@ -913,7 +913,7 @@ FUNTAB R_FunTab[] =
 };
 
 
-SEXP do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP name;
     int i;
@@ -1063,7 +1063,7 @@ SEXP install(char const *name)
 
 /*  do_internal - This is the code for .Internal(). */
 
-SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, fun;
     int save = R_PPStackTop, flag;
