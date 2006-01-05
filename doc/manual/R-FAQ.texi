@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-01-01
+@set FAQ_DATE @value{FAQ_YEAR}-01-05
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -484,18 +484,21 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2005-06-21:
+@c Linux binaries as of 2006-01-05:
 @c
 @c debian
-@c   stable  i386   2.1.0  Christian T. Steigies <cts@debian.org>
+@c   stable  i386   2.2.1  Christian T. Steigies <cts@debian.org>
+@c   oldstable
+@c           i386   2.1.1  Christian T. Steigies <cts@debian.org>
 @c mandrake
 @c   10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat
-@c   fc3     i386   2.1.1  Martyn Plummer <plummer@iarc.fr>
-@c           x86_64 2.1.1  Brian Ripley
-@c   fc4     i386   2.1.1  Martyn Plummer <plummer@iarc.fr>
-@c   el3     i386   2.1.0  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c   el4     i386   2.1.0  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
+@c   fc3     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
+@c           x86_64 2.2.0  Brian Ripley
+@c   fc4     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
+@c           x86_64 2.2.0  Peter Dalgaard
+@c   el3     i386   2.1.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
+@c   el4     i386   2.1.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -503,28 +506,31 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   8.2     i386   2.0.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   9.0     i586   2.0.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   9.1     i586   2.1.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   9.2     i586   2.1.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   9.2     i586   2.2.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           x86_64 2.1.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   9.3     i586   2.1.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           x86_64 2.1.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   9.3     i586   2.2.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           x86_64 2.2.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   10.0    i586   2.2.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           x86_64 2.2.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux
-@c   3.1     i386   2.1.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
+@c   3.2     i386   2.2.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {VineLinux} {x86_64} {Enterprise Linux} {James Henstridge}
+@multitable {VineLinux} {x86_64} {9.0/9.1/9.2/9.3/10.0} {James Henstridge}
 @headitem @tab CPU @tab Versions @tab Provider
-@item Debian   @tab i386 @tab stable @tab Christian Steigies
+@item Debian   @tab i386 @tab stable/oldstable @tab Christian Steigies
 @item Mandrake @tab i386 @tab 10.0 @tab Michele Alzetta
-@item Red Hat  @tab i386 @tab Fedora3/Fedora4 @tab Martyn Plummer
-@item          @tab x86_64 @tab Fedora3 @tab Brian Ripley
+@item Red Hat  @tab i386 @tab FC3/FC4 @tab Martyn Plummer
+@item          @tab x86_64 @tab FC3 @tab Brian Ripley
+@item          @tab x86_64 @tab FC4 @tab Peter Dalgaard
 @item          @tab i386   @tab Enterprise Linux @tab Matthew P. Cox
 @item SuSE     @tab i386   @tab 7.3/8.0/8.1/8.2 @tab Detlef Steuer
-@item          @tab i586   @tab 9.0/9.1/9.2/9.3 @tab Detlef Steuer
-@item          @tab x86_64 @tab 9.2/9.3 @tab Detlef Steuer
-@item VineLinux @tab i386 @tab 3.1 @tab Susunu Tanimura
+@item          @tab i586   @tab 9.0/9.1/9.2/9.3/10.0 @tab Detlef Steuer
+@item          @tab x86_64 @tab 9.2/9.3/10.0 @tab Detlef Steuer
+@item VineLinux @tab i386 @tab 3.2 @tab Susunu Tanimura
 @end multitable
 @end quotation
 
@@ -1765,6 +1771,8 @@ Bayesian Model Averaging for linear models, generalizable linear models
 and survival models (Cox regression).
 @item BRugs
 OpenBUGS and its R interface BRugs.
+@item BayesTree
+Bayesian methods for tree based models.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item Biodem
@@ -3406,6 +3414,8 @@ Markov-chain Monte Carlo diagnostic plots, accompanying the
 @strong{scape} package.
 @item scatterplot3d
 Plots a three dimensional (3D) point cloud perspectively.
+@item scuba
+Scuba diving calculations and decompression models.
 @item seacarb
 Calculates parameters of the seawater carbonate system.
 @c <COMMENT>
