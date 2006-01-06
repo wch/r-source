@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-01-05
+@set FAQ_DATE @value{FAQ_YEAR}-01-06
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -810,10 +810,10 @@ The R Core Team can be reached at @email{R-core@@lists.R-project.org}
 for comments and reports.
 
 Many of the R project's mailing lists are also available via
-@url{http://gmane.org, Gmane}, from which they can be read on the web,
-using an NNTP newsreader, or via RSS feeds.  See
-@uref{http://dir.gmane.org/index.php?prefix=gmane.comp.lang.r.} for the
-available mailing lists, and @uref{http://www.gmane.org/rss.php} for
+@url{http://gmane.org, Gmane}, from which they can be read with a web
+browser, using an NNTP news reader, or via RSS feeds.  See
+@uref{http://dir.gmane.org/@/index.php?prefix=gmane.comp.lang.r.}@: for
+the available mailing lists, and @uref{http://www.gmane.org/rss.php} for
 details on RSS feeds.
 
 @node What is CRAN?, Can I use R for commercial purposes?, What mailing lists exist for R?, R Basics
@@ -1641,11 +1641,10 @@ of the features of the previous approaches with quite a bit of
 Javascript, allowing for a GUI-like behavior (wiht sortable tables,
 clickable graphics, editable output), etc.
 
-Jeff Horner is working on the R/Apache Integration Project which has a
-home page at
-@url{http://biostat.mc.vanderbilt.edu/twiki/bin/view/Main/RApacheProject}
-and embeds the R interpreter inside Apache 2 (and beyond).  A tutorial
-and presentation are available from the project web page.
+Jeff Horner is working on the R/Apache Integration Project which embeds
+the R interpreter inside Apache 2 (and beyond).  A tutorial and
+presentation are available from the project web page at
+@url{http://biostat.mc.vanderbilt.edu/@/twiki/@/bin/@/view/@/Main/@/RApacheProject}.
 
 @url{http://stats.math.uni-augsburg.de/Rserve/, Rserve} is a project
 actively developed by Simon Urbanek.  It implements a TCP/IP server which
@@ -2085,6 +2084,8 @@ Creating random fields using various methods.
 @item Rcmdr
 A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the @strong{tcltk} package.
+@item Rcpp
+An illustration of the use of the Rcpp R/C++ interface library.
 @item ResistorArray
 Electrical properties of resistor networks.
 @item Rfwdmv
@@ -3351,7 +3352,7 @@ R version of GENetic Optimization Using Derivatives.
 Functions for image processing, including Sobel filter, rank filters,
 fft, histogram equalization, and reading @acronym{JPEG} files.
 @item riv
-Robust Instrumental Variables estimators using high breakpoint point
+Robust Instrumental Variables estimators based on high breakpoint point
 S-estimators of multivariate location and scatter matrices.
 @item rlecuyer
 R interface to RNG with multiple streams.
@@ -3575,6 +3576,8 @@ Various tests on structural change in linear regression models.
 A collection of functions which assess the quality of variable subsets
 as surrogates for a full data set, and search for subsets which are
 optimal under various criteria.
+@item sudoku
+Sudoku puzzle solver.
 @item supclust
 Methodology for supervised grouping of predictor variables.
 @item superpc
@@ -5722,7 +5725,8 @@ Existing Reports'' facility in the Bug Tracking page at
 @url{https://svn.R-project.org/R/trunk/NEWS}, which records changes that
 will appear in the @emph{next} release of R, including some bug fixes
 that do not appear in Bug Tracking.  (Windows users should additionally
-consult @url{https://svn.R-project.org/R/trunk/src/gnuwin32/CHANGES}.)
+consult
+@url{https://svn.R-project.org/@/R/@/trunk/@/src/@/gnuwin32/@/CHANGES}.)
 Third, if possible try the current r-patched or r-devel version of R.
 If a bug has already been reported or fixed, please do not submit
 further bug reports on it.  Finally, check carefully whether the bug is
