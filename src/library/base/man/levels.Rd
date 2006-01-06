@@ -36,7 +36,7 @@ levels(x) <- value
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{nlevels}}.
+  \code{\link{nlevels}}, \code{\link{relevel}}, \code{\link{reorder}}.
 }
 \examples{
 ## assign individual levels

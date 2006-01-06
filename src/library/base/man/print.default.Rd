@@ -49,10 +49,11 @@
 
   If a non-printable character is encountered during output, it is
   represented as one of the ANSI escape sequences (\code{\a}, \code{\b},
-  \code{\f}, \code{\n}, \code{\r}, \code{\t}, \code{\v} and \code{\0}),
-  or failing that as a 3-digit octal code: for example the UK currency
-  pound in the C locale (if implemented correctly) is printed as
-  \code{\243}.  Which characters are non-printable depends on the locale.
+  \code{\f}, \code{\n}, \code{\r}, \code{\t}, \code{\v}, \code{\\\\} and
+  \code{\0}: see \link{Quotes}), or failing that as a 3-digit octal
+  code: for example the UK currency pound in the C locale (if
+  implemented correctly) is printed as \code{\243}.  Which characters
+  are non-printable depends on the locale.
 #ifdef windows
   (Because some versions of Windows get this wrong, all 8-bit characters
   are regarded as printable on Windows.)
@@ -62,7 +63,7 @@
   In a Unicode (UTF-8) locale, characters \code{0x00} to \code{0x1F} and
   \code{0x7f} (the ASCII non-printing characters) are printed in the
   same way, via ANSI escape sequences or 3-digit octal escapes.
-  Multi-byte non-printing characters are printed with as an escape
+  Multi-byte non-printing characters are printed as an escape
   sequence of the form \code{\uxxxx} or \code{\Uxxxxxxxx} (in hexadecimal).
 
   It is possible to have a character string in an object that is not

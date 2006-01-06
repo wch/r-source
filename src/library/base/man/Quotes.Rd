@@ -40,13 +40,17 @@
     \code{\\\\}\tab backslash \code{\\}\cr
     \code{\\nnn}\tab character with given octal code (1, 2 or 3 digits)\cr
     \code{\\xnn}\tab character with given hex code (1 or 2 hex digits)\cr
-    \code{\\unnnn}\tab Unicode character with given hex code (1--4 hex digits)\cr
-    \code{\\Unnnnnnnn}\tab Unicode character with given hex code (1--8 hex digits)\cr
+    \code{\\unnnn}\tab Unicode character with given code (1--4 hex digits)\cr
+    \code{\\Unnnnnnnn}\tab Unicode character with given code (1--8 hex digits)\cr
   }
-  The last two are only supported in Unicode and other multibyte locales,
-  and the last is not supported on Windows.  All but the Unicode escape
-  sequences are also supported when reading character strings from a
-  connection by \code{\link{scan}}. 
+  The last two are only supported in UTF-8 and other multibyte locales,
+  and the last is not supported on Windows.  (They are an error if used
+  where not supported.)  All except the Unicode escape sequences are
+  also supported when reading character strings from a connection by
+  \code{\link{scan}}.
+
+  These forms will also be used by \code{\link{print.default}}
+  when outputting non-printable characters (including backslash).
 }
 \section{Names and Identifiers}{
   Identifiers consist of a sequence of letters, digits, the period
