@@ -1689,11 +1689,13 @@ case "${host_os}" in
     esac
     ;;
   linux*)
+    ## Debian in their wisdom have f95 as a link to gfortran, so
+    ## use this to pick out gfortran (even though it is unreliable).
+    if test "${ac_cv_fc_compiler_gnu}" = yes; then
+      fcpicflags="-fPIC"
+    fi
     case  "${FC}" in
-      *gfortran)
-        fcpicflags="-fPIC"
-        ;;
-      ## Intel compilers
+      ## Intel compilers: probably get identified as GNU, but make sure.
       *ifc|*ifort)
         fcpicflags="-fPIC"
         ;;
