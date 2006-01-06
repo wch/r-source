@@ -3103,7 +3103,7 @@ AC_CACHE_CHECK(whether $CC accepts -fvisibility, r_cv_prog_cc_vis,
 CFLAGS=$r_save_CFLAGS
 if test "${r_cv_prog_cc_vis}" = yes; then
   if test "${r_cv_visibility_attribute}" = yes; then
-    C_VISIBILITY="-fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE"
+    C_VISIBILITY="-fvisibility=hidden"
   fi
 fi
 AC_SUBST(C_VISIBILITY)
