@@ -175,7 +175,7 @@ int R_finite(double x)
 
 /* Arithmetic Initialization */
 
-void InitArithmetic()
+void attribute_hidden InitArithmetic()
 {
     R_NaInt = INT_MIN;
     R_NaN = 0.0/R_Zero_Hack;

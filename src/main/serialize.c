@@ -1564,7 +1564,7 @@ static void InBytesFile(R_inpstream_t stream, void *buf, int length)
     fread(buf, 1, length, fp); /**** error message */
 }
 
-void attribute_hidden
+void
 R_InitFileOutPStream(R_outpstream_t stream, FILE *fp,
 			  R_pstream_format_t type, int version,
 			  SEXP (*phook)(SEXP, SEXP), SEXP pdata)
@@ -1573,7 +1573,7 @@ R_InitFileOutPStream(R_outpstream_t stream, FILE *fp,
 		     OutCharFile, OutBytesFile, phook, pdata);
 }
 
-void attribute_hidden
+void
 R_InitFileInPStream(R_inpstream_t stream, FILE *fp,
 			 R_pstream_format_t type,
 			 SEXP (*phook)(SEXP, SEXP), SEXP pdata)
@@ -2047,7 +2047,7 @@ static int used = 0;
 static char names[NC][PATH_MAX];
 static char *ptr[NC];
 
-SEXP R_lazyLoadDBflush(SEXP file)
+SEXP attribute_hidden R_lazyLoadDBflush(SEXP file)
 {
     int i;
     char *cfile = CHAR(STRING_ELT(file, 0));
@@ -2137,7 +2137,7 @@ static SEXP readStringFromFile(SEXP file, SEXP key)
    as a list.  If the force argument is true, promises are forced;
    otherwise they are not. */
 
-SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
+SEXP attribute_hidden R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
 {
     SEXP val, tmp, sym;
     Rboolean force;
@@ -2184,8 +2184,9 @@ SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
    result to a file.  Returns the key position/length key for
    retrieving the value */
 
-SEXP R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
-			     SEXP compsxp, SEXP hook)
+SEXP attribute_hidden
+R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
+                        SEXP compsxp, SEXP hook)
 {
     PROTECT_INDEX vpi;
     Rboolean compress = asLogical(compsxp);
@@ -2204,7 +2205,8 @@ SEXP R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
    from a file, optionally decompresses, and unserializes the bytes.
    If the result is a promise, then the promise is forced. */
 
-SEXP R_lazyLoadDBfetch(SEXP key, SEXP file, SEXP compsxp, SEXP hook)
+SEXP attribute_hidden
+R_lazyLoadDBfetch(SEXP key, SEXP file, SEXP compsxp, SEXP hook)
 {
     PROTECT_INDEX vpi;
     Rboolean compressed = asLogical(compsxp);

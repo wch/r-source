@@ -113,7 +113,7 @@
    determines the argument is responsible for making sure
    CTXT_TOPLEVEL's are not crossed unless appropriate. */
 
-void R_run_onexits(RCNTXT *cptr)
+void attribute_hidden R_run_onexits(RCNTXT *cptr)
 {
     RCNTXT *c;
 
@@ -152,7 +152,7 @@ please bug.report() [R_run_onexits]"));
    three should be unified so there is only one place where a LONGJMP
    occurs. */
 
-void R_restore_globals(RCNTXT *cptr)
+void attribute_hidden R_restore_globals(RCNTXT *cptr)
 {
     R_PPStackTop = cptr->cstacktop;
     R_EvalDepth = cptr->evaldepth;
@@ -255,7 +255,7 @@ void endcontext(RCNTXT * cptr)
 
 /* findcontext - find the correct context */
 
-void findcontext(int mask, SEXP env, SEXP val)
+void attribute_hidden findcontext(int mask, SEXP env, SEXP val)
 {
     RCNTXT *cptr;
     cptr = R_GlobalContext;
@@ -277,7 +277,7 @@ void findcontext(int mask, SEXP env, SEXP val)
     }
 }
 
-void R_JumpToContext(RCNTXT *target, int mask, SEXP val)
+void attribute_hidden R_JumpToContext(RCNTXT *target, int mask, SEXP val)
 {
     RCNTXT *cptr;
     for (cptr = R_GlobalContext;
@@ -295,7 +295,7 @@ void R_JumpToContext(RCNTXT *target, int mask, SEXP val)
 /* negative n counts back from the current frame */
 /* positive n counts up from the globalEnv */
 
-SEXP R_sysframe(int n, RCNTXT *cptr)
+SEXP attribute_hidden R_sysframe(int n, RCNTXT *cptr)
 {
     if (n == 0)
 	return(R_GlobalEnv);
@@ -334,7 +334,7 @@ SEXP R_sysframe(int n, RCNTXT *cptr)
 /* It would be much simpler if sysparent just returned cptr->sysparent */
 /* but then we wouldn't be compatible with S. */
 
-int R_sysparent(int n, RCNTXT *cptr)
+int attribute_hidden R_sysparent(int n, RCNTXT *cptr)
 {
     int j;
     SEXP s;
@@ -367,7 +367,7 @@ int R_sysparent(int n, RCNTXT *cptr)
     return n;
 }
 
-int framedepth(RCNTXT *cptr)
+int attribute_hidden framedepth(RCNTXT *cptr)
 {
     int nframe = 0;
     while (cptr->nextcontext != NULL) {
@@ -378,7 +378,7 @@ int framedepth(RCNTXT *cptr)
     return nframe;
 }
 
-SEXP R_syscall(int n, RCNTXT *cptr)
+SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
 {
     /* negative n counts back from the current frame */
     /* positive n counts up from the globalEnv */
@@ -404,7 +404,7 @@ SEXP R_syscall(int n, RCNTXT *cptr)
     return R_NilValue;	/* just for -Wall */
 }
 
-SEXP R_sysfunction(int n, RCNTXT *cptr)
+SEXP attribute_hidden R_sysfunction(int n, RCNTXT *cptr)
 {
     if (n > 0)
 	n = framedepth(cptr) - n;
@@ -580,7 +580,7 @@ SEXP attribute_hidden do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
    value is TRUE if fun returns normally, FALSE if it results in a
    jump to top level. */
 
-Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
+Rboolean attribute_hidden R_ToplevelExec(void (*fun)(void *), void *data)
 {
     RCNTXT thiscontext;
     RCNTXT * volatile saveToplevelContext;

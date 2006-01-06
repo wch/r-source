@@ -70,7 +70,7 @@
 #include <S.h>
 
 /* Global print parameter struct: */
-R_print_par_t R_print;
+attribute_hidden R_print_par_t R_print;
 
 static void printAttributes(SEXP, SEXP, Rboolean);
 

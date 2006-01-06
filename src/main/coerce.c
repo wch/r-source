@@ -147,25 +147,25 @@ double R_strtod(const char *c, char **end)
     return x;
 }
 
-int attribute_hidden LogicalFromInteger(int x, int *warn)
+int LogicalFromInteger(int x, int *warn)
 {
     return (x == NA_INTEGER) ?
 	NA_LOGICAL : (x != 0);
 }
 
-int attribute_hidden LogicalFromReal(double x, int *warn)
+int LogicalFromReal(double x, int *warn)
 {
     return ISNAN(x) ?
 	NA_LOGICAL : (x != 0);
 }
 
-int attribute_hidden LogicalFromComplex(Rcomplex x, int *warn)
+int LogicalFromComplex(Rcomplex x, int *warn)
 {
     return (ISNAN(x.r) || ISNAN(x.i)) ?
 	NA_LOGICAL : (x.r != 0 || x.i != 0);
 }
 
-int attribute_hidden LogicalFromString(SEXP x, int *warn)
+int LogicalFromString(SEXP x, int *warn)
 {
     if (x != R_NaString) {
 	int i;
@@ -179,13 +179,13 @@ int attribute_hidden LogicalFromString(SEXP x, int *warn)
     return NA_LOGICAL;
 }
 
-int attribute_hidden IntegerFromLogical(int x, int *warn)
+int IntegerFromLogical(int x, int *warn)
 {
     return (x == NA_LOGICAL) ?
 	NA_INTEGER : x;
 }
 
-int attribute_hidden IntegerFromReal(double x, int *warn)
+int IntegerFromReal(double x, int *warn)
 {
     if (ISNAN(x))
 	return NA_INTEGER;
@@ -196,7 +196,7 @@ int attribute_hidden IntegerFromReal(double x, int *warn)
     return x;
 }
 
-int attribute_hidden IntegerFromComplex(Rcomplex x, int *warn)
+int IntegerFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_INTEGER;
@@ -210,7 +210,7 @@ int attribute_hidden IntegerFromComplex(Rcomplex x, int *warn)
 }
 
 
-int attribute_hidden IntegerFromString(SEXP x, int *warn)
+int IntegerFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
@@ -233,13 +233,13 @@ int attribute_hidden IntegerFromString(SEXP x, int *warn)
     return NA_INTEGER;
 }
 
-double attribute_hidden RealFromLogical(int x, int *warn)
+double RealFromLogical(int x, int *warn)
 {
     return (x == NA_LOGICAL) ?
 	NA_REAL : x;
 }
 
-double attribute_hidden RealFromInteger(int x, int *warn)
+double RealFromInteger(int x, int *warn)
 {
     if (x == NA_INTEGER)
 	return NA_REAL;
@@ -247,7 +247,7 @@ double attribute_hidden RealFromInteger(int x, int *warn)
 	return x;
 }
 
-double attribute_hidden RealFromComplex(Rcomplex x, int *warn)
+double RealFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_REAL;
@@ -256,7 +256,7 @@ double attribute_hidden RealFromComplex(Rcomplex x, int *warn)
     return x.r;
 }
 
-double attribute_hidden RealFromString(SEXP x, int *warn)
+double RealFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
@@ -270,7 +270,7 @@ double attribute_hidden RealFromString(SEXP x, int *warn)
     return NA_REAL;
 }
 
-Rcomplex attribute_hidden ComplexFromLogical(int x, int *warn)
+Rcomplex ComplexFromLogical(int x, int *warn)
 {
     Rcomplex z;
     if (x == NA_LOGICAL) {
@@ -284,7 +284,7 @@ Rcomplex attribute_hidden ComplexFromLogical(int x, int *warn)
     return z;
 }
 
-Rcomplex attribute_hidden ComplexFromInteger(int x, int *warn)
+Rcomplex ComplexFromInteger(int x, int *warn)
 {
     Rcomplex z;
     if (x == NA_INTEGER) {
@@ -298,7 +298,7 @@ Rcomplex attribute_hidden ComplexFromInteger(int x, int *warn)
     return z;
 }
 
-Rcomplex attribute_hidden ComplexFromReal(double x, int *warn)
+Rcomplex ComplexFromReal(double x, int *warn)
 {
     Rcomplex z;
     if (ISNAN(x)) {
@@ -312,7 +312,7 @@ Rcomplex attribute_hidden ComplexFromReal(double x, int *warn)
     return z;
 }
 
-Rcomplex attribute_hidden ComplexFromString(SEXP x, int *warn)
+Rcomplex ComplexFromString(SEXP x, int *warn)
 {
     double xr, xi;
     Rcomplex z;
@@ -337,7 +337,7 @@ Rcomplex attribute_hidden ComplexFromString(SEXP x, int *warn)
     return z;
 }
 
-SEXP attribute_hidden StringFromLogical(int x, int *warn)
+SEXP StringFromLogical(int x, int *warn)
 {
     int w;
     formatLogical(&x, 1, &w);
@@ -345,7 +345,7 @@ SEXP attribute_hidden StringFromLogical(int x, int *warn)
     else return mkChar(EncodeLogical(x, w));
 }
 
-SEXP attribute_hidden StringFromInteger(int x, int *warn)
+SEXP StringFromInteger(int x, int *warn)
 {
     int w;
     formatInteger(&x, 1, &w);
@@ -353,7 +353,7 @@ SEXP attribute_hidden StringFromInteger(int x, int *warn)
     else return mkChar(EncodeInteger(x, w));
 }
 
-SEXP attribute_hidden StringFromReal(double x, int *warn)
+SEXP StringFromReal(double x, int *warn)
 {
     int w, d, e;
     formatReal(&x, 1, &w, &d, &e, 0);
@@ -361,7 +361,7 @@ SEXP attribute_hidden StringFromReal(double x, int *warn)
     else return mkChar(EncodeReal(x, w, d, e, OutDec));
 }
 
-SEXP attribute_hidden StringFromComplex(Rcomplex x, int *warn)
+SEXP StringFromComplex(Rcomplex x, int *warn)
 {
     int wr, dr, er, wi, di, ei;
     formatComplex(&x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
@@ -370,7 +370,7 @@ SEXP attribute_hidden StringFromComplex(Rcomplex x, int *warn)
 	return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei, OutDec));
 }
 
-SEXP attribute_hidden StringFromRaw(Rbyte x, int *warn)
+SEXP StringFromRaw(Rbyte x, int *warn)
 {
     char buf[3];
     sprintf(buf, "%02x", x);
@@ -379,7 +379,7 @@ SEXP attribute_hidden StringFromRaw(Rbyte x, int *warn)
 
 /* Conversion between the two list types (LISTSXP and VECSXP). */
 
-SEXP attribute_hidden PairToVectorList(SEXP x)
+SEXP PairToVectorList(SEXP x)
 {
     SEXP xptr, xnew, xnames;
     int i, len = 0, named = 0;
@@ -1183,7 +1183,7 @@ static SEXP asFunction(SEXP x)
     return f;
 }
 
-SEXP attribute_hidden ascommon(SEXP call, SEXP u, SEXPTYPE type)
+SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 {
     /* -> as.vector(..) or as.XXX(.) : coerce 'u' to 'type' : */
     SEXP v;

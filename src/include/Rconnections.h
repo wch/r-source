@@ -153,7 +153,6 @@ Rconnection getConnection(int n);
 Rconnection getConnection_no_err(int n);
 Rboolean switch_stdout(int icon, int closeOnExit);
 void con_close(int i);
-void Rconn_setEncoding(Rconnection con, SEXP enc);
 void init_con(Rconnection new, char *description, char *mode);
 Rconnection R_newurl(char *description, char *mode);
 Rconnection R_newsock(char *host, int port, int server, char *mode);

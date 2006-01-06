@@ -36,7 +36,7 @@ static R_toCConverter   *StoCConverters = NULL;
    than vectors and lists unaltered.
    This is is accessed in do_dotCode() in dotcode.c. It is not for public use.
 */
-void * attribute_hidden
+attribute_hidden void *
 Rf_convertToC(SEXP s, R_CConvertInfo *info, int *success,
               R_toCConverter **converter)
 {

@@ -106,7 +106,7 @@ FILE *R_fopen(const char *filename, const char *mode)
 
           /* The location of the R system files */
 
-attribute_hidden char *R_HomeDir()
+char *R_HomeDir()
 {
     return getenv("R_HOME");
 }

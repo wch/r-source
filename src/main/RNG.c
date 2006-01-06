@@ -653,12 +653,12 @@ void ran_start(seed)    /* do this before using ran_array */
 /* after calling ran_start, get new randoms by, e.g., "x=ran_arr_next()" */
 
 #define QUALITY 1009 /* recommended quality level for high-res use */
-long ran_arr_buf[QUALITY];
-long ran_arr_sentinel=(long)-1;
-long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
+static long ran_arr_buf[QUALITY];
+static long ran_arr_sentinel=(long)-1;
+static long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 
 #define ran_arr_next() (*ran_arr_ptr>=0? *ran_arr_ptr++: ran_arr_cycle())
-long ran_arr_cycle()
+static long ran_arr_cycle()
 {
   ran_array(ran_arr_buf,QUALITY);
   ran_arr_buf[100]=-1;

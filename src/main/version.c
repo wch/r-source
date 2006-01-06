@@ -25,7 +25,7 @@
 #include "Defn.h"
 #include <Rversion.h>
 
-void PrintGreeting(void)
+void attribute_hidden PrintGreeting(void)
 {
     char buf[128];
     
@@ -93,7 +93,7 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     return value;
 }
 
-void PrintVersion(char *s)
+void attribute_hidden PrintVersion(char *s)
 {
     char tmp[50];
 
@@ -106,7 +106,7 @@ void PrintVersion(char *s)
     strcat(s, "these matters, see http://www.gnu.org/copyleft/gpl.html.\n");
 }
 
-void PrintVersionString(char *s)
+void attribute_hidden PrintVersionString(char *s)
 {
     if(strcmp(R_SVN_REVISION, "unknown")==0)
     {

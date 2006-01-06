@@ -939,6 +939,7 @@ size_t ucs2ToMbcs(ucs2_t *in, char *out)
 #include <wctype.h>
 #endif
 
+/* This one is not in Rinternals.h, but is used in internet module */
 Rboolean isBlankString(char *s)
 {
 #ifdef SUPPORT_MBCS
@@ -1045,7 +1046,7 @@ SEXP attribute_hidden do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-void setIVector(int * vec, int len, int val)
+void attribute_hidden setIVector(int * vec, int len, int val)
 {
     int i;
     for (i = 0; i < len; i++)
@@ -1053,7 +1054,7 @@ void setIVector(int * vec, int len, int val)
 }
 
 
-void setRVector(double * vec, int len, double val)
+void attribute_hidden setRVector(double * vec, int len, double val)
 {
     int i;
     for (i = 0; i < len; i++)

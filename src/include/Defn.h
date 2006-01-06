@@ -487,8 +487,10 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 
 #ifdef __MAIN__
 # define INI_as(v) = v
+#define extern0 attribute_hidden
 #else
 # define INI_as(v)
+#define extern0 extern
 #endif
 
 /* extern int	errno; already have errno.h ! */
@@ -501,59 +503,60 @@ LibExtern int R_interrupts_pending INI_as(0);
 LibExtern char*	R_Home;		    /* Root of the R tree */
 
 /* Memory Management */
-extern R_size_t	R_NSize		INI_as(R_NSIZE);/* Size of cons cell heap */
-extern R_size_t	R_VSize		INI_as(R_VSIZE);/* Size of the vector heap */
-extern SEXP	R_NHeap;	    /* Start of the cons cell heap */
-extern SEXP	R_FreeSEXP;	    /* Cons cell free list */
-extern R_size_t	R_Collected;	    /* Number of free cons cells (after gc) */
+extern0 R_size_t R_NSize  INI_as(R_NSIZE);/* Size of cons cell heap */
+extern0 R_size_t R_VSize  INI_as(R_VSIZE);/* Size of the vector heap */
+extern0 SEXP	R_NHeap;	    /* Start of the cons cell heap */
+extern0 SEXP	R_FreeSEXP;	    /* Cons cell free list */
+extern0 R_size_t R_Collected;	    /* Number of free cons cells (after gc) */
 LibExtern SEXP	R_PreciousList;	    /* List of Persistent Objects */
 LibExtern int	R_Is_Running;	    /* for Windows memory manager */
 
 /* The Pointer Protection Stack */
-extern int	R_PPStackSize	INI_as(R_PPSSIZE); /* The stack size (elements) */
-extern int	R_PPStackTop;	    /* The top of the stack */
-extern SEXP*	R_PPStack;	    /* The pointer protection stack */
+extern0 int	R_PPStackSize	INI_as(R_PPSSIZE); /* The stack size (elements) */
+extern0 int	R_PPStackTop;	    /* The top of the stack */
+extern0 SEXP*	R_PPStack;	    /* The pointer protection stack */
 
 /* Evaluation Environment */
 LibExtern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
-extern SEXP	R_ReturnedValue;    /* Slot for return-ing values */
-extern SEXP*	R_SymbolTable;	    /* The symbol table */
+extern0 SEXP	R_ReturnedValue;    /* Slot for return-ing values */
+extern0 SEXP*	R_SymbolTable;	    /* The symbol table */
 LibExtern RCNTXT R_Toplevel;	    /* Storage for the toplevel environment */
 LibExtern RCNTXT* R_ToplevelContext;  /* The toplevel environment */
 LibExtern RCNTXT* R_GlobalContext;    /* The global environment */
 LibExtern int	R_Visible;	    /* Value visibility flag */
 LibExtern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
-extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
+extern0 int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
-extern int	R_Expressions	INI_as(5000);	/* options(expressions) */
-extern Rboolean	R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
-extern int	R_UseNamespaceDispatch INI_as(TRUE);
-extern int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
-extern uintptr_t	R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
-extern uintptr_t	R_CStackStart	INI_as((uintptr_t)-1);	/* Initial stack address */
-extern int	R_CStackDir	INI_as(1);	/* C stack direction */
+extern0 int	R_Expressions	INI_as(5000);	/* options(expressions) */
+extern0 Rboolean R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
+extern0 int	R_UseNamespaceDispatch INI_as(TRUE);
+extern0 int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
+extern0 uintptr_t R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
+extern0 uintptr_t R_CStackStart	INI_as((uintptr_t)-1);	/* Initial stack address */
+extern0 int	R_CStackDir	INI_as(1);	/* C stack direction */
 
 /* File Input/Output */
-LibExtern Rboolean R_Interactive	INI_as(TRUE);	/* TRUE during interactive use*/
-extern Rboolean	R_Quiet		INI_as(FALSE);	/* Be as quiet as possible */
-extern Rboolean	R_Slave		INI_as(FALSE);	/* Run as a slave process */
-extern Rboolean	R_Verbose	INI_as(FALSE);	/* Be verbose */
+LibExtern Rboolean R_Interactive INI_as(TRUE);	/* TRUE during interactive use*/
+extern0 Rboolean R_Quiet	INI_as(FALSE);	/* Be as quiet as possible */
+extern0 Rboolean R_Slave	INI_as(FALSE);	/* Run as a slave process */
+extern0 Rboolean R_Verbose	INI_as(FALSE);	/* Be verbose */
 /* extern int	R_Console; */	    /* Console active flag */
 /* IoBuffer R_ConsoleIob; : --> ./IOStuff.h */
+/* R_Consolefile is used in the internet module */
 extern FILE*	R_Consolefile	INI_as(NULL);	/* Console output file */
 extern FILE*	R_Outputfile	INI_as(NULL);	/* Output file */
-extern int	R_ErrorCon	INI_as(2);	/* Error connection */
+extern0 int	R_ErrorCon	INI_as(2);	/* Error connection */
 LibExtern char*	R_TempDir	INI_as(NULL);	/* Name of per-session dir */
-extern char	R_StdinEnc[31]  INI_as("");	/* Encoding assumed for stdin */
+extern0 char	R_StdinEnc[31]  INI_as("");	/* Encoding assumed for stdin */
 
 /* Objects Used In Parsing  */
-extern SEXP	R_CommentSxp;	    /* Comments accumulate here */
-extern SEXP	R_ParseText;	    /* Text to be parsed */
-extern int	R_ParseCnt;	    /* Count of lines of text to be parsed */
-extern int	R_ParseError	INI_as(0); /* Line where parse error occured */
+extern0 SEXP	R_CommentSxp;	    /* Comments accumulate here */
+extern0 SEXP	R_ParseText;	    /* Text to be parsed */
+extern0 int	R_ParseCnt;	    /* Count of lines of text to be parsed */
+extern0 int	R_ParseError	INI_as(0); /* Line where parse error occured */
 #define PARSE_CONTEXT_SIZE 256	    /* Recent parse context kept in a circular buffer */
-extern char	R_ParseContext[PARSE_CONTEXT_SIZE] INI_as("");
-extern int	R_ParseContextLast INI_as(0); /* last character in context buffer */
+extern0 char	R_ParseContext[PARSE_CONTEXT_SIZE] INI_as("");
+extern0 int	R_ParseContextLast INI_as(0); /* last character in context buffer */
 
 /* Image Dump/Restore */
 extern int	R_DirtyImage	INI_as(0);	/* Current image dirty */
@@ -565,12 +568,12 @@ LibExtern int	R_RestoreHistory;	/* restore the history file? */
 extern void 	R_setupHistory();
 
 /* Warnings/Errors */
-extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */
-extern SEXP	R_Warnings;	    /* the warnings and their calls */
-extern int	R_ShowErrorMessages INI_as(1);	/* show error messages? */
+extern0 int	R_CollectWarnings INI_as(0);	/* the number of warnings */
+extern0 SEXP	R_Warnings;	    /* the warnings and their calls */
+extern0 int	R_ShowErrorMessages INI_as(1);	/* show error messages? */
 #ifdef NEW_CONDITION_HANDLING
-extern SEXP	R_HandlerStack;	/* Condition handler stack */
-extern SEXP	R_RestartStack;	/* Stack of available restarts */
+extern0 SEXP	R_HandlerStack;	/* Condition handler stack */
+extern0 SEXP	R_RestartStack;	/* Stack of available restarts */
 #endif
 
 LibExtern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
@@ -579,21 +582,21 @@ LibExtern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
 LibExtern unsigned int localeCP  INI_as(1252); /* the locale's codepage */
 #endif
 
-extern char OutDec	INI_as('.');  /* decimal point used for output */
+extern0 char OutDec	INI_as('.');  /* decimal point used for output */
 
 /* Initialization of the R environment when it is embedded */
 extern int Rf_initEmbeddedR(int argc, char **argv);
 
 /* GUI type */
 
-extern char*	R_GUIType	INI_as("unknown");
+extern0 char*	R_GUIType	INI_as("unknown");
 
 #ifdef BYTECODE
 #define R_BCNODESTACKSIZE 10000
-extern SEXP *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
+extern0 SEXP *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
 # ifdef BC_INT_STACK
 #define R_BCINTSTACKSIZE 10000
-extern IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
+extern0 IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
 # endif
 #endif
 
@@ -613,10 +616,11 @@ SEXP R_do_slot(SEXP obj, SEXP name);
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 
 /* smallest decimal exponent, needed in format.c, set in Init_R_Machine */
-extern int R_dec_min_exponent		INI_as(-308);
+extern0 int R_dec_min_exponent		INI_as(-308);
 
 #ifdef __MAIN__
 # undef extern
+# undef extern0
 # undef LibExtern
 #endif
 #undef INI_as
@@ -707,12 +711,7 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define usemethod		Rf_usemethod
 # define warningcall		Rf_warningcall
 # define WarningMessage		Rf_WarningMessage
-# define yyerror		Rf_yyerror
-# define yyinit			Rf_yyinit
-# define yylex			Rf_yylex
 # define yyparse		Rf_yyparse
-# define yyprompt		Rf_yyprompt
-# define yywrap			Rf_yywrap
 
 /* Platform Dependent Gui Hooks */
 
@@ -729,7 +728,6 @@ void	R_Busy(int);
 int	R_ShowFiles(int, char **, char **, char *, Rboolean, char *);
 int     R_EditFiles(int, char **, char **, char *);
 int	R_ChooseFile(int, char*, int);
-char*	R_Date(void);
 char*	R_HomeDir(void);
 Rboolean R_FileExists(char*);
 Rboolean R_HiddenFile(char*);
@@ -895,14 +893,6 @@ void R_SetPPSize(R_size_t);
 void R_run_onexits(RCNTXT *);
 void R_restore_globals(RCNTXT *);
 
-
-/* gram.y & gram.c : */
-void yyerror(char *);
-void yyinit(void);
-int yylex();
-int yyparse(void);
-void yyprompt(char *format, ...);
-int yywrap(void);
 
 /* ../../main/printutils.c : */
 typedef enum {

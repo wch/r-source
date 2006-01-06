@@ -50,7 +50,7 @@ SEXP Rf_append(SEXP first, SEXP second)
 /*  mkPRIMSXP - return a builtin function      */
 /*              either "builtin" or "special"  */
 
-SEXP mkPRIMSXP(int offset, int eval)
+SEXP attribute_hidden mkPRIMSXP(int offset, int eval)
 {
     SEXP result = allocSExp(eval ? BUILTINSXP : SPECIALSXP);
     SET_PRIMOFFSET(result, offset);
@@ -65,7 +65,7 @@ SEXP mkPRIMSXP(int offset, int eval)
 /*  mkCLOSXP - return a closure with formals f,  */
 /*             body b, and environment rho       */
 
-SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
+SEXP attribute_hidden mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
 {
     SEXP c;
     PROTECT(formals);
@@ -135,7 +135,7 @@ static int isDDName(SEXP name)
     return 0;
 }
 
-SEXP mkSYMSXP(SEXP name, SEXP value)
+SEXP attribute_hidden mkSYMSXP(SEXP name, SEXP value)
 
 {
     SEXP c;

@@ -77,7 +77,7 @@
  * rightassoc: Right (1) or left (0) associative operator
  *
  */
-FUNTAB R_FunTab[] =
+attribute_hidden FUNTAB R_FunTab[] =
 {
 
 /* Language Related Constructs */

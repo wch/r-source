@@ -81,7 +81,7 @@ static int scmp(SEXP x, SEXP y, Rboolean nalast)
     return STRCOLL(CHAR(x), CHAR(y));
 }
 
-Rboolean attribute_hidden isUnsorted(SEXP x)
+Rboolean isUnsorted(SEXP x)
 {
     int n, i;
 

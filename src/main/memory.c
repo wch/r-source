@@ -209,19 +209,19 @@ static R_size_t R_MaxVSize = R_SIZE_T_MAX;
 static R_size_t R_MaxNSize = R_SIZE_T_MAX;
 static int vsfac = 1; /* current units for vsize: changes at initialization */
 
-R_size_t R_GetMaxVSize(void) 
+R_size_t attribute_hidden R_GetMaxVSize(void) 
 {
     if (R_MaxVSize == R_SIZE_T_MAX) return R_SIZE_T_MAX;
     return R_MaxVSize*vsfac;
 }
 
-void R_SetMaxVSize(R_size_t size)
+void attribute_hidden R_SetMaxVSize(R_size_t size)
 {
     if (size == R_SIZE_T_MAX) return;
     if (size / vsfac >= R_VSize) R_MaxVSize = (size+1)/sizeof(VECREC);
 }
 
-R_size_t R_GetMaxNSize(void) 
+R_size_t attribute_hidden R_GetMaxNSize(void) 
 { 
     return R_MaxNSize;
 }
@@ -1485,7 +1485,7 @@ static void mem_err_cons()
 #define PP_REDZONE_SIZE 1000L
 static R_size_t R_StandardPPStackSize, R_RealPPStackSize;
 
-void InitMemory()
+void attribute_hidden InitMemory()
 {
     int i;
     int gen;
@@ -1767,7 +1767,7 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
 
 /* mkPROMISE is defined directly do avoid the need to protect its arguments
    unless a GC will actually occur. */
-SEXP mkPROMISE(SEXP expr, SEXP rho)
+SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 {
     SEXP s;
     if (FORCE_GC || NO_FREE_NODES()) {

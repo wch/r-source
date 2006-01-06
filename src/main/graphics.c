@@ -3361,6 +3361,7 @@ void rgb2hsv(double r, double g, double b,
  * in response to user suggestion
  */
 
+attribute_hidden
 char *DefaultPalette[] = {
     "black",
     "red",
@@ -3381,6 +3382,7 @@ char *DefaultPalette[] = {
 
 static int ColorDataBaseSize;
 
+attribute_hidden
 ColorDataBaseEntry ColorDataBase[] = {
     /* name		rgb         code -- filled in by InitColors() */
     {"white",		"#FFFFFF",	0},
@@ -4115,7 +4117,7 @@ unsigned int rgb2col(char *rgb)
 
 /* External Color Name to Internal Color Code */
 
-unsigned int name2col(char *nm)
+unsigned int attribute_hidden name2col(char *nm)
 {
     int i;
     if(strcmp(nm, "NA") == 0 || strcmp(nm, "transparent") == 0)
@@ -4144,7 +4146,7 @@ unsigned int name2col(char *nm)
 
 /* Index (as string) to Internal Color Code */
 
-unsigned int number2col(char *nm)
+unsigned int attribute_hidden number2col(char *nm)
 {
     int indx;
     char *ptr;
@@ -4157,7 +4159,7 @@ unsigned int number2col(char *nm)
 
 static char ColBuf[10];
 
-char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
+attribute_hidden char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
 {
     ColBuf[0] = '#';
     ColBuf[1] = HexDigits[(r >> 4) & 15];
@@ -4170,7 +4172,7 @@ char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
     return &ColBuf[0];
 }
 
-char *RGBA2rgb(unsigned int r, unsigned int g, unsigned int b,
+attribute_hidden char *RGBA2rgb(unsigned int r, unsigned int g, unsigned int b,
 	       unsigned int a)
 {
     ColBuf[0] = '#';
@@ -4191,6 +4193,7 @@ char *RGBA2rgb(unsigned int r, unsigned int g, unsigned int b,
 /* Search the color name database first */
 /* If this fails, create an #RRGGBB string */
 
+/* used in grid */
 char *col2name(unsigned int col)
 {
     int i;
@@ -4230,6 +4233,7 @@ char *col2name(unsigned int col)
 /* the initialisation code in which case, str2col */
 /* assumes that `s' is a name */
 
+/* used in grDevices */
 unsigned int str2col(char *s)
 {
     if(s[0] == '#') return rgb2col(s);
@@ -4275,7 +4279,7 @@ unsigned int RGBpar(SEXP x, int i)
 /*
  * Is element i of a colour object NA (or NULL)?
  */
-Rboolean isNAcol(SEXP col, int index, int ncol)
+Rboolean attribute_hidden isNAcol(SEXP col, int index, int ncol)
 {
     Rboolean result = TRUE; /* -Wall */
 
@@ -4298,7 +4302,7 @@ Rboolean isNAcol(SEXP col, int index, int ncol)
 
 /* Initialize the Color Databases */
 
-void InitColors(void)
+void attribute_hidden InitColors(void)
 {
     int i;
 
@@ -4459,8 +4463,8 @@ SEXP LTYget(unsigned int lty)
 void DevNull(void) {}
 
 static int R_CurrentDevice = 0;
-int R_NumDevices = 1;
-DevDesc* R_Devices[R_MaxDevices];
+static int R_NumDevices = 1;
+static DevDesc* R_Devices[R_MaxDevices];
 static int R_LastDeviceEntry = R_MaxDevices - 1;  /* used to catch creation
 						     of too many devices */
 static int R_MaxRegularDevices =  R_MaxDevices - 1; /* not coulting the
@@ -4468,7 +4472,7 @@ static int R_MaxRegularDevices =  R_MaxDevices - 1; /* not coulting the
 
 /* a dummy description to point to when there are no active devices */
 
-DevDesc nullDevice;
+static DevDesc nullDevice;
 
 /* unused
 void devError(void)
@@ -4526,12 +4530,11 @@ Rboolean R_CheckDeviceAvailableBool(void)
     else return TRUE;
 }
 
-void InitGraphics(void)
+void attribute_hidden InitGraphics(void)
 {
     int i;
     SEXP s, t;
 
-    /* init R_Devices */
     R_Devices[0] = &nullDevice;
     for (i = 1; i < R_MaxDevices; i++)
 	R_Devices[i] = NULL;

@@ -25,6 +25,12 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+# define attribute_hidden __attribute__ ((visibility ("hidden")))
+#else
+# define attribute_hidden
+#endif
+
 /* for declaration of mempcpy */
 #define _GNU_SOURCE 1
 
@@ -159,7 +165,7 @@
 # define __mempcpy mempcpy
 # define __wcrtomb wcrtomb
 # define __regfree regfree
-# define attribute_hidden
+/* # define attribute_hidden */
 #endif /* not _LIBC */
 
 #ifdef __GNUC__
@@ -2576,7 +2582,7 @@ static void mark_opt_subexp_iter (const bin_tree_t *src, re_dfa_t *dfa, int idx)
    POSIX doesn't require that we do anything for REG_NOERROR,
    but why not be nice?  */
 
-static const char __re_error_msgid[] attribute_hidden =
+static const char __re_error_msgid[] =
   {
 #define REG_NOERROR_IDX	0
     gettext_noop ("Success")	/* REG_NOERROR */
@@ -2630,7 +2636,7 @@ static const char __re_error_msgid[] attribute_hidden =
     gettext_noop ("Unmatched ) or \\)") /* REG_ERPAREN */
   };
 
-static const size_t __re_error_msgid_idx[] attribute_hidden =
+static const size_t __re_error_msgid_idx[]  =
   {
     REG_NOERROR_IDX,
     REG_NOMATCH_IDX,

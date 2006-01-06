@@ -36,6 +36,10 @@
 #include "Fileio.h"
 #include "Parse.h"
 
+static void yyerror(char *);
+static int yylex();
+int yyparse(void);
+
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #endif
@@ -1112,6 +1116,7 @@ static int file_getc(void)
     return R_fgetc(fp_parse);
 }
 
+attribute_hidden
 SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
 {
     ParseInit();
@@ -1130,6 +1135,7 @@ static int buffer_getc()
     return R_IoBufferGetc(iob);
 }
 
+attribute_hidden
 SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 {
     ParseInit();
@@ -1148,6 +1154,7 @@ static int text_getc()
     return R_TextBufferGetc(txtb);
 }
 
+attribute_hidden
 SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
 {
     ParseInit();
@@ -1159,9 +1166,7 @@ SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
     return R_CurrentExpr;
 }
 
-#define GENERAL
-#ifdef GENERAL
-
+attribute_hidden
 SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
 		     int gencode, ParseStatus *status)
 {
@@ -1172,8 +1177,8 @@ SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
     R_Parse1(status);
     return R_CurrentExpr;
 }
-#endif
 
+attribute_hidden
 SEXP R_Parse(int n, ParseStatus *status)
 {
     int i;
@@ -1234,6 +1239,7 @@ SEXP R_Parse(int n, ParseStatus *status)
     }
 }
 
+attribute_hidden
 SEXP R_ParseFile(FILE *fp, int n, ParseStatus *status)
 {
     GenerateCode = 1;
@@ -1257,6 +1263,7 @@ static int con_getc(void)
     return (last = c);
 }
 
+attribute_hidden
 SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status)
 {
     GenerateCode = 1;
@@ -1266,6 +1273,7 @@ SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status)
     return R_Parse(n, status);
 }
 
+/* This one is public */
 SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
 {
     SEXP rval;
@@ -1280,7 +1288,7 @@ SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
     return rval;
 }
 
-#ifdef GENERAL
+attribute_hidden
 SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
 		    ParseStatus *status)
 {
@@ -1289,7 +1297,6 @@ SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
     ptr_getc = ggetc;
     return R_Parse(n, status);
 }
-#endif
 
 static char *Prompt(SEXP prompt, int type)
 {
@@ -1307,6 +1314,7 @@ static char *Prompt(SEXP prompt, int type)
     }
 }
 
+attribute_hidden
 SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt)
 {
     SEXP rval, t;
@@ -1467,7 +1475,7 @@ struct {
     char *name;
     int token;
 }
-keywords[] = {
+static keywords[] = {
     { "NULL",	    NULL_CONST },
     { "NA",	    NUM_CONST  },
     { "TRUE",	    NUM_CONST  },
@@ -1601,7 +1609,7 @@ SEXP mkFalse(void)
     return s;
 }
 
-void yyerror(char *s)
+static void yyerror(char *s)
 {
 }
 
@@ -2179,7 +2187,7 @@ static int token()
     }
 }
 
-int yylex(void)
+static int yylex(void)
 {
     int tok;
 

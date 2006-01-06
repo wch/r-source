@@ -85,7 +85,7 @@ do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
     return vals;
 }
 
-void
+void attribute_hidden
 R_common_command_line(int *pac, char **argv, Rstart Rp)
 {
     int ac = *pac, newac = 1;	/* argv[0] is process name */

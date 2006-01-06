@@ -72,7 +72,7 @@ static int NextReadBufferListItem(IoBuffer *iob)
 
 /* Reset the read/write pointers of an IoBuffer */
 
-int R_IoBufferWriteReset(IoBuffer *iob)
+int attribute_hidden R_IoBufferWriteReset(IoBuffer *iob)
 {
     if (iob == NULL || iob->start_buf == NULL)
 	return 0;
@@ -87,7 +87,7 @@ int R_IoBufferWriteReset(IoBuffer *iob)
 
 /* Reset the read pointer of an IoBuffer */
 
-int R_IoBufferReadReset(IoBuffer *iob)
+int attribute_hidden R_IoBufferReadReset(IoBuffer *iob)
 {
     if (iob == NULL || iob->start_buf == NULL)
 	return 0;
@@ -100,7 +100,7 @@ int R_IoBufferReadReset(IoBuffer *iob)
 /* Allocate an initial BufferListItem for IoBuffer */
 /* Initialize the counts and pointers. */
 
-int R_IoBufferInit(IoBuffer *iob)
+int attribute_hidden R_IoBufferInit(IoBuffer *iob)
 {
     if (iob == NULL) return 0;
     iob->start_buf = (BufferListItem*)malloc(sizeof(BufferListItem));
@@ -113,7 +113,7 @@ int R_IoBufferInit(IoBuffer *iob)
 /* This resets pointers to NULL, which could be detected */
 /* in other calls. */
 
-int R_IoBufferFree(IoBuffer *iob)
+int attribute_hidden R_IoBufferFree(IoBuffer *iob)
 {
     BufferListItem *thisItem, *nextItem;
     if (iob == NULL || iob->start_buf == NULL)
@@ -129,7 +129,7 @@ int R_IoBufferFree(IoBuffer *iob)
 
 /* Add a character to an IoBuffer */
 
-int R_IoBufferPutc(int c, IoBuffer *iob)
+int attribute_hidden R_IoBufferPutc(int c, IoBuffer *iob)
 {
     if (iob->write_offset == IOBSIZE)
 	NextWriteBufferListItem(iob);
@@ -140,7 +140,7 @@ int R_IoBufferPutc(int c, IoBuffer *iob)
 
 /* Add a (null terminated) string to an IoBuffer */
 
-int R_IoBufferPuts(char *s, IoBuffer *iob)
+int attribute_hidden R_IoBufferPuts(char *s, IoBuffer *iob)
 {
     char *p;
     int n = 0;
@@ -153,7 +153,7 @@ int R_IoBufferPuts(char *s, IoBuffer *iob)
 
 /* Read a character from an IoBuffer */
 
-int R_IoBufferGetc(IoBuffer *iob)
+int attribute_hidden R_IoBufferGetc(IoBuffer *iob)
 {
     if (iob->read_buf == iob->write_buf &&
        iob->read_offset >= iob->write_offset)
@@ -172,7 +172,7 @@ static void transferChars(unsigned char *p, char *q)
     *p++ = '\0';
 }
 
-int R_TextBufferInit(TextBuffer *txtb, SEXP text)
+int attribute_hidden R_TextBufferInit(TextBuffer *txtb, SEXP text)
 {
     int i, k, l, n;
     if (isString(text)) {
@@ -209,7 +209,7 @@ int R_TextBufferInit(TextBuffer *txtb, SEXP text)
 
 /* Finalization code for text buffers */
 
-int R_TextBufferFree(TextBuffer *txtb)
+int attribute_hidden R_TextBufferFree(TextBuffer *txtb)
 {
     vmaxset(txtb->vmax);
     return 0;/* not used */
@@ -217,7 +217,7 @@ int R_TextBufferFree(TextBuffer *txtb)
 
 /* Getc for text buffers */
 
-int R_TextBufferGetc(TextBuffer *txtb)
+int attribute_hidden R_TextBufferGetc(TextBuffer *txtb)
 {
     if (txtb->buf == NULL)
 	return EOF;

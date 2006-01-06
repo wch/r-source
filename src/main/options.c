@@ -202,7 +202,7 @@ int R_SetOptionWarn(int w)
 /* Note that options are stored as a dotted pair list */
 /* This is barely historical, but is also useful. */
 
-void InitOptions(void)
+void attribute_hidden InitOptions(void)
 {
     SEXP val, v;
     char *p;

@@ -339,7 +339,7 @@ static int isDuplicated(SEXP x, int indx, HashData *d)
     return 0;
 }
 
-SEXP attribute_hidden duplicated(SEXP x)
+SEXP duplicated(SEXP x)
 {
     SEXP ans;
     int *h, *v;

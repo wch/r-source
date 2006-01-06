@@ -10,7 +10,7 @@
 #include <Graphics.h>
 #include <Rdevices.h>
 
-int baseRegisterIndex = -1;
+int attribute_hidden baseRegisterIndex = -1;
 
 void restoredpSaved(DevDesc *dd);
 

@@ -706,7 +706,7 @@ void GetAxisLimits(double left, double right, double *low, double *high)
 
 /* axis(side, at, labels, ...) */
 
-SEXP labelformat(SEXP labels)
+SEXP attribute_hidden labelformat(SEXP labels)
 {
     /* format(labels): i.e. from numbers to strings */
     SEXP ans = R_NilValue;/* -Wall*/

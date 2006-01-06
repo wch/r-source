@@ -62,6 +62,8 @@ typedef struct TextBuffer {
 
 #ifndef __MAIN__
 extern
+#else
+attribute_hidden
 #endif
 IoBuffer R_ConsoleIob;	    			/* Console IO Buffer */
 
