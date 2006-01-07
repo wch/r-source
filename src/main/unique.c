@@ -520,7 +520,7 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-SEXP attribute_hidden match(SEXP itable, SEXP ix, int nmatch)
+SEXP match(SEXP itable, SEXP ix, int nmatch)
 {
     SEXP ans, x, table;
     SEXPTYPE type;
