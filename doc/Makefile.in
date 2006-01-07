@@ -31,8 +31,13 @@ R: Makefile svnonly
 	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 
-docs:
+docs: R.1
 	@(cd manual && $(MAKE) $@)
+
+R.1:
+	@$(HELP2MAN) --include=$(srcdir)/R.aux --no-info --output=R.1 \
+	  --name="a language for data analysis and graphics" \
+	  $(top_builddir)/bin/R
 
 install: install-message installdirs install-sources install-man
 	@for d in $(SUBDIRS); do \
@@ -41,7 +46,7 @@ install: install-message installdirs install-sources install-man
 installdirs:
 	@$(MKINSTALLDIRS) "$(rdocdir)"
 	@$(MKINSTALLDIRS) $(mandir)/man1
-install-man:
+install-man: R.1
 	@rm -f $(mandir)/man1/R.1
 	@$(INSTALL_DATA) R.1 $(mandir)/man1
 install-message:
@@ -92,14 +97,10 @@ maintainer-clean: distclean
 
 svnonly:
 	@if test ! -f "$(srcdir)/R.1" ; then \
-	  (cd $(top_builddir)/src/scripts && $(MAKE) R.fe) ; \
-	  $(HELP2MAN) --include=$(srcdir)/R.aux --no-info --output=R.1 \
-	    --name="a language for data analysis and graphics" \
-	  $(top_builddir)/src/scripts/R.fe ; \
 	  touch non-tarball ; \
 	else \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	    for f in $(NON_SVN_INSTFILES); do \
+	    for f in FAQ RESOURCES; do \
 	      $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/$(subdir)"; \
 	    done \
 	  fi \
