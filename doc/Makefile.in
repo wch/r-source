@@ -97,7 +97,7 @@ maintainer-clean: distclean
 
 
 svnonly:
-	@if test ! -f "$(srcdir)/R.1" ; then \
+	@if test ! -f "$(srcdir)/FAQ" ; then \
 	  touch non-tarball ; \
 	else \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
