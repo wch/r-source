@@ -529,6 +529,62 @@ function(file, text = NULL)
          rest = rest)
 }
 
+### * Rd_aliases
+
+Rd_aliases <-
+function(package, dir, lib.loc = NULL)
+{
+    ## Get the Rd aliases (topics) from an installed package or the
+    ## unpacked package sources.
+
+    if(!missing(package)) {
+        dir <- .find.package(package, lib.loc)
+        rds <- file.path(dir, "Meta", "Rd.rds")
+        if(file_test("-f", rds))
+            sort(unlist(.readRDS(rds)$Aliases))
+        else
+            character()
+        ## <NOTE>
+        ## Alternatively, we could get the aliases from the help index
+        ## (and in fact, earlier versions of this code, then part of
+        ## undoc(), did so), along the lines of
+        ## <CODE>
+        ##   help_index <- file.path(dir, "help", "AnIndex")
+        ##   all_doc_topics <- if(!file_test("-f", help_index))
+        ##       character()
+        ##   else
+        ##       sort(scan(file = helpIndex, what = list("", ""),
+        ##                 sep = "\t", quote = "", quiet = TRUE,
+        ##                 na.strings = character())[[1]])
+        ## </CODE>
+        ## This gets all topics the same way as index.search() would
+        ## find individual ones.
+        ## </NOTE>
+    }
+    else {
+        if(file_test("-d", file.path(dir, "man"))) {
+            db <- Rd_db(dir = dir)
+            aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
+            sort(unique(unlist(aliases, use.names = FALSE)))
+        }
+        else
+            character()
+    }
+}
+
+### .build_Rd_xref_db
+
+.build_Rd_xref_db <-
+function(package, dir, lib.loc = NULL)
+{
+    db <- if(!missing(package))
+        Rd_db(package, lib.loc = lib.loc)
+    else
+        Rd_db(dir = dir)
+    db <- lapply(db, function(f) paste(Rd_pp(f), collapse = "\n"))
+    lapply(db, .get_Rd_xrefs)
+}
+
 ### * get_Rd_section
 
 get_Rd_section <-
@@ -702,7 +758,31 @@ function(txt)
     txt
 }
 
-### .Rd_transform_command
+### * .get_Rd_xrefs
+
+.get_Rd_xrefs <-
+function(txt)
+{
+    out <- matrix(character(), nr = 0, nc = 2)
+    if(length(txt) != 1) return(out)
+    while((pos <-
+           regexpr("\\\\link(\\[[^\[]+\\])?\\{", txt)) != -1) {
+        len <- attr(pos, "match.length")
+        opt <- substring(txt, pos + 6, pos + len - 3)
+        txt <- substring(txt, pos + len - 1)
+        if((pos <- delimMatch(txt)) == -1)
+            stop("unclosed \\link")
+        len <- attr(pos, "match.length")
+        arg <- substring(txt, 2, pos + len - 2)
+        txt <- substring(txt, pos + len)
+        out <- rbind(out, c(arg, opt))
+    }
+    colnames(out) <- c("Target", "Anchor")
+    out[, 1] <-  gsub("\\\\%", "%", out[, 1])
+    out
+}
+
+### * .Rd_transform_command
 
 .Rd_transform_command <-
 function(txt, cmd, FUN)
@@ -736,7 +816,7 @@ function(txt, cmd, FUN)
     paste(c(out, txt), collapse = "")
 }
 
-### .apply_Rd_filter_to_Rd_db
+### * .apply_Rd_filter_to_Rd_db
 
 .apply_Rd_filter_to_Rd_db <-
 function(db, FUN, ...)
@@ -756,7 +836,7 @@ function(db, FUN, ...)
     db
 }
 
-### .get_Rd_names_from_Rd_db
+### * .get_Rd_names_from_Rd_db
 
 .get_Rd_names_from_Rd_db <-
 function(db)
