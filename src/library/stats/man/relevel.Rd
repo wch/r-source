@@ -22,7 +22,10 @@ relevel(x, ref, \dots)
   A factor of the same length as \code{x}.
 }
 
-\seealso{\code{\link{factor}}, \code{\link{contr.treatment}}}
+\seealso{
+  \code{\link{factor}}, \code{\link{contr.treatment}},
+  \code{\link{levels}}, \code{\link{reorder}}.
+}
 
 \examples{
 warpbreaks$tension <- relevel(warpbreaks$tension, ref="M")

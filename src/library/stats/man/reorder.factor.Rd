@@ -47,7 +47,8 @@ reorder(x, \dots)
 \author{Deepayan Sarkar \email{deepayan@stat.wisc.edu}}
 
 \seealso{
-  \code{\link{reorder.dendrogram}}.
+  \code{\link{reorder.dendrogram}}, \code{\link{levels}},
+  \code{\link{relevel}}.
 }
 
 \examples{
