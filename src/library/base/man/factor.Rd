@@ -7,6 +7,10 @@
 \alias{as.factor}
 \alias{as.ordered}
 \alias{is.na<-.factor}
+\alias{Math.factor}
+\alias{Ops.factor}
+\alias{Summary.factor}
+\alias{Ops.ordered}
 \concept{categorical variable}
 \concept{enumerated type}
 \concept{category}
@@ -32,7 +36,8 @@ as.factor(x)
 as.ordered(x)
 }
 \arguments{
-  \item{x}{a vector of data, usually taking a small number of distinct values}
+  \item{x}{a vector of data, usually taking a small number of distinct
+    values.}
   \item{levels}{an optional vector of the values that \code{x} might
     have taken. The default is the set of values taken by \code{x},
     sorted into increasing order.}
@@ -119,6 +124,23 @@ as.ordered(x)
   may well depend on the locale at the time of creation, and should
   not be assumed to be ASCII.
 }
+\section{Comparison operators and group generic methods}{
+  There are \code{"factor"} and \code{"ordered"} methods for the
+  \link{group generic} \code{\link{Ops}}, which provide methods for the
+  \link{Comparison} operators.  (The rest of the group and the
+  \code{\link{Math}} and \code{\link{Summary}} groups generate an error
+  as they are not meaningful for factors.)
+
+  Only \code{==} and \code{!=} can be used for factors: a factor can
+  only be compared to another factor with an identical set of levels
+  (not necessarily in the same ordering) or to a character vector.
+  Ordered factors are compared in the same way, but the general dispatch
+  mechanism precludes comparing ordered and unordered factors.
+  
+  All the comparison operators are available for ordered factors.
+  Sorting is done by the levels of the operands: if both operands are
+  ordered factors they must have the same level set.
+}
 \note{
   Storing character data as a factor is more efficient storage if
   there is even a small proportion of repeats.  On a 32-bit machine
@@ -126,8 +148,8 @@ as.ordered(x)
   \eqn{28 + 8\lceil(n+1)/8\rceil}{28 + 8*ceiling((n+1)/8)}
   bytes whereas storing a factor code takes 4 bytes.  (On a 64-bit
   machine 28 is replaced by 56 or more.)  Only if they were computed
-  from the same values (rather than, say, read from a file) will
-  identical strings share storage.
+  from the same values (or in some cases read from a file: see
+  \code{\link{scan}}) will identical strings share storage.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
@@ -144,13 +166,13 @@ as.ordered(x)
 }
 \examples{
 (ff <- factor(substring("statistics", 1:10, 1:10), levels=letters))
-as.integer(ff) # the internal codes
+as.integer(ff)  # the internal codes
 factor(ff)	# drops the levels that do not occur
 ff[, drop=TRUE] # the same, more transparently
 
 factor(letters[1:20], label="letter")
 
-class(ordered(4:1))# "ordered", inheriting from "factor"
+class(ordered(4:1)) # "ordered", inheriting from "factor"
 
 ## suppose you want "NA" as a level, and to allowing missing values.
 (x <- factor(c(1, 2, "NA"), exclude = ""))
