@@ -83,7 +83,12 @@ $(DLLNAME).a: $(OBJS)
 	$(AR) cr $@ $(OBJS)
 	$(RANLIB) $@
 
+ifeq ($(wildcard $(DLLNAME)-win.def),$(DLLNAME)-win.def)
+$(DLLNAME).dll : $(DLLNAME)-win.def $(DLLNAME).a $(RCOBJ)
+	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $^ $($*-DLLLIBS) $(DLLLIBS)
+else
 $(DLLNAME).dll : $(DLLNAME).a $(RCOBJ)
+endif
 
 # Dependencies
 CXXSOURCES1=$(wildcard -f *.cc)

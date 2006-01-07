@@ -1,0 +1,3 @@
+LIBRARY stats
+EXPORTS
+ R_init_stats

@@ -86,7 +86,7 @@ than the one Windows is running in, and with suitable fonts see the
 intended characters.  Menus and dialogs should also work in the
 selected locale.  A Windows quirk means that window titles (which
 includes the legends for the buttons used in the Preferences dialog
-box) use a font in the system locale).
+box) use a font in the system locale.
 
 Added a few mappings from Window locale names (e.g. "chinese", "chs",
 "cht", "ptb") to language names.  There is still scope for confusion:
@@ -94,6 +94,9 @@ LC_ALL=es is Estonian, and LANGUAGE=es is Spanish.
 
 sprintf() now tries to ensure the output is C99-compliant, with 
 1.23e+08 not 1.23e+008 as given by the Windows run-time.
+
+Packages can now supply export files pkgname/src/pkgname-win.def:
+package 'stats' does so.
 
 
 
