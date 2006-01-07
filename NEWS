@@ -518,14 +518,17 @@ BUG FIXES
 	non-nested models give rise to changes in deviance with a
 	different sign from changes in degrees of freedom.
 
-    o	Built-ins were reported as the relevant call in C-level errors
+    o	Built-ins were reported as the relevant call in C-level error()s
 	iff R profiling was in progress.  Now they are never reported.
 
-    o  Too-long signatures (with no names) were not being caught
+    o	Too-long signatures (with no names) were not being caught
         in setMethod().
 
-    o  Slot names in prototype() are being more thoroughly checked.
+    o	Slot names in prototype() are being more thoroughly checked.
 
+    o	signif() is more likely to follow the 'round to even' rule for
+	exactly representable numbers, e.g. signif(0.25, 1).  (Related
+	to PR#8452.)
 
 
 
@@ -550,9 +553,9 @@ BUG FIXES
 
     o	str(<dendrogram>) sometimes used much too many spaces (in 2.2.x).
 
-    o	eigen(eispack=TRUE) access areas of the matrix in some circumstances
-	(asymmetric matrices with both complex conjugate pair and real
-	eigenvalues).
+    o	eigen(eispack=TRUE) accessed areas off the matrix in some
+	circumstances (some asymmetric matrices with both complex
+	conjugate pair and real eigenvalues).
 
     o	strptime() in 2.2.1 sometimes did not set $isdst when it was
 	previously set.

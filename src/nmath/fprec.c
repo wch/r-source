@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000, 2001, 2005 The R Development Core Team
+ *  Copyright (C) 2000, 2001, 2005-2006 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,8 +35,19 @@
  *    conform to the IEEE 754 standard.
  */
 
+#include <config.h>
 #include "nmath.h"
 
+#ifndef HAVE_RINT
+#define USE_BUILTIN_RINT
+#endif
+
+#ifdef USE_BUILTIN_RINT
+#define R_rint private_rint
+extern double private_rint(double x);
+#else
+#define R_rint rint
+#endif
 /* Improvements by Martin Maechler, May 1997;
    further ones, Feb.2000:
    Replace  pow(x, (double)i) by  R_pow_di(x, i) {and use  int dig} */
@@ -93,10 +104,10 @@ double fprec(double x, double digits)
 	if(e10 > 0) { /* Try always to have pow >= 1
 			 and so exactly representable */
 	    pow10 = R_pow_di(10., e10);
-	    return(sgn*(floor(((x*pow10)*p10)+0.5)/pow10)/p10);
+	    return(sgn*(R_rint((x*pow10)*p10)/pow10)/p10);
 	} else {
 	    pow10 = R_pow_di(10., -e10);
-	    return(sgn*(floor(((x/pow10))+0.5)*pow10));
+	    return(sgn*(R_rint((x/pow10))*pow10));
 	}
     } else { /* -- LARGE or small -- */
 	do_round = max10e - l10	 >= R_pow_di(10., -dig);

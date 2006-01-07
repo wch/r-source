@@ -39,7 +39,7 @@
 #ifdef USE_BUILTIN_RINT
 #define R_rint private_rint
 
-static double private_rint(double x)
+double attribute_hidden private_rint(double x)
 {
     double tmp, sgn = 1.0;
     long ltmp;

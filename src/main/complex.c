@@ -383,7 +383,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void z_rround(Rcomplex *r, Rcomplex *x, Rcomplex *p)
 {
-    r->r = rround(x->r, p->r);
+    r->r = rround(x->r, p->r); /* #defined to fround in Rmath.h */
     r->i = rround(x->i, p->r);
 }
 
