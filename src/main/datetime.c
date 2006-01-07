@@ -754,7 +754,7 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* we do want to set wday, yday, isdst, but not to
 	       adjust structure at DST boundaries */
 	    memcpy(&tm2, &tm, sizeof(struct tm));
-	    mktime0(&tm, 1-isgmt); /* set wday, yday, isdst */
+	    mktime0(&tm2, 1-isgmt); /* set wday, yday, isdst */
 	    tm.tm_wday = tm2.tm_wday;
 	    tm.tm_yday = tm2.tm_yday;
 	    tm.tm_isdst = isgmt ? 0: tm2.tm_isdst;

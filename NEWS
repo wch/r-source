@@ -24,6 +24,9 @@ BUG FIXES
 	(asymmetric matrices with both complex conjugate pair and real
 	eigenvalues).
 
+    o	strptime() in 2.2.1 sometimes did not set $isdst when it was
+	previously set.
+
 
 
 		CHANGES IN R VERSION 2.2.1
