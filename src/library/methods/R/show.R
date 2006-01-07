@@ -64,7 +64,7 @@ show <- function(object)
                       nonStandard <-  paste(" (Class ", classLabel(cl),")", sep="")
                   cat("Method Definition",nonStandard,":\n\n", sep = "")
                   show(object@.Data)
-                  mm <- .methodSignatureMatrix(object)
+                  mm <- methodSignatureMatrix(object)
                   cat("\nSignatures:\n")
                   print(mm)
               },

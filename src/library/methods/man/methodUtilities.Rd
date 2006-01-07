@@ -12,6 +12,7 @@
 \alias{Quote}
 \alias{showDefault}
 \alias{initMethodDispatch}
+\alias{methodSignatureMatrix}
 \title{Utility Functions for Methods and S-Plus Compatibility}
 \description{
   These are utilities, currently in the \pkg{methods} package, that
@@ -36,6 +37,8 @@ Quote()
 showDefault(object, oldMethods = TRUE)
 
 initMethodDispatch()
+
+methodSignatureMatrix(object, sigSlots = c("target", "defined"))
 }
 \section{Summary of Functions}{
   \describe{
@@ -80,6 +83,9 @@ initMethodDispatch()
       the package.  Also, if dispatch has been turned off (by calling
       \code{.isMethodsDispatchOn(FALSE)}---a very gutsy thing to do),
       calling this function should turn dispatch back on again.
+    }
+  \item{\code{methodSignatureMatrix}:}{
+        Returns a matrix with the contents of the specified slots as rows.  The slots should be named character strings of the same length.  Basically used to turn the signatures of a \code{"MethodDefinition"} objectg into a matrix for printing.
     }
   }
 }

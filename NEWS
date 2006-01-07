@@ -260,6 +260,16 @@ NEW FEATURES
 	will help if errors occur in R code evaluated by compiled code
 	and in tracebacks presented by the segfault etc handlers.
 
+    o  treatment of signature objects and method definition objects has been
+        modified to give cleaner printing and more consistency in the treatment
+	of signatures.  A sometimes useful utility, methodSignatureMatrix, is now
+	exported.
+
+    o  trace() now works more consistently and more like its documentation,
+        in particular the assertions about old tracing being removed for new.
+        For debugging purposes (of R) a mechanism for debugging the trace 
+	computations themselves was added.  See trace.R.
+
 
 DEPRECATED & DEFUNCT
 
@@ -510,6 +520,11 @@ BUG FIXES
 
     o	Built-ins were reported as the relevant call in C-level errors
 	iff R profiling was in progress.  Now they are never reported.
+
+    o  Too-long signatures (with no names) were not being caught
+        in setMethod().
+
+    o  Slot names in prototype() are being more thoroughly checked.
 
 
 

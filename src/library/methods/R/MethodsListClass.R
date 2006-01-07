@@ -197,7 +197,15 @@
 	      function(x,y) .Internal(rbind(deparse.level = 0, x,y)))
     setMethod("rbind2", signature(x = "ANY", y = "missing"),
 	      function(x,y) .Internal(rbind(deparse.level = 0, x)))
-
+    
+    ## a show() method for the signature class
+    setMethod("show", "signature", function(object) {
+      message("An object of class \"", class(object), "\"")
+      val <- object@.Data
+      names(val) <- object@names
+      callNextMethod(val)
+    } )
+    
 ### Uncomment next line if we want special initialize methods for basic classes
 ###    .InitBasicClassMethods(where)
 }

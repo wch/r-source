@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-01 r36947)
+Version 2.3.0 Under development (unstable) (2006-01-02 r36959)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -20,82 +20,83 @@ Type 'q()' to quit R.
 > showMethods(where = "package:methods")
 
 Function "addNextMethod":
-method = "MethodDefinition"
-method = "MethodWithNext"
+ method = "MethodDefinition"
+ method = "MethodWithNext"
 
 Function "body<-":
-fun = "ANY"
-fun = "MethodDefinition"
-fun = "function"
+ fun = "ANY"
+ fun = "MethodDefinition"
+ fun = "function"
     (inherited from fun = "ANY")
 
 Function "cbind2":
-x = "ANY", y = "ANY"
-x = "ANY", y = "missing"
+ x = "ANY", y = "ANY"
+ x = "ANY", y = "missing"
 
 Function "coerce":
-from = "ANY", to = "array"
-from = "ANY", to = "call"
-from = "ANY", to = "character"
-from = "ANY", to = "complex"
-from = "ANY", to = "environment"
-from = "ANY", to = "expression"
-from = "ANY", to = "function"
-from = "ANY", to = "integer"
-from = "ANY", to = "list"
-from = "ANY", to = "logical"
-from = "ANY", to = "matrix"
-from = "ANY", to = "name"
-from = "ANY", to = "numeric"
-from = "ANY", to = "single"
-from = "ANY", to = "ts"
-from = "ANY", to = "vector"
-from = "ANY", to = "NULL"
-from = "NULL", to = "OptionalFunction"
+ from = "ANY", to = "array"
+ from = "ANY", to = "call"
+ from = "ANY", to = "character"
+ from = "ANY", to = "complex"
+ from = "ANY", to = "environment"
+ from = "ANY", to = "expression"
+ from = "ANY", to = "function"
+ from = "ANY", to = "integer"
+ from = "ANY", to = "list"
+ from = "ANY", to = "logical"
+ from = "ANY", to = "matrix"
+ from = "ANY", to = "name"
+ from = "ANY", to = "numeric"
+ from = "ANY", to = "single"
+ from = "ANY", to = "ts"
+ from = "ANY", to = "vector"
+ from = "ANY", to = "NULL"
+ from = "NULL", to = "OptionalFunction"
 
 Function "initialize":
-.Object = "ANY"
-.Object = "traceable"
-.Object = "signature"
-.Object = "environment"
-.Object = "derivedDefaultMethod"
+ .Object = "ANY"
+ .Object = "traceable"
+ .Object = "signature"
+ .Object = "environment"
+ .Object = "derivedDefaultMethod"
     (inherited from .Object = "ANY")
-.Object = "standardGeneric"
+ .Object = "standardGeneric"
     (inherited from .Object = "ANY")
-.Object = "MethodsList"
+ .Object = "MethodsList"
     (inherited from .Object = "ANY")
-.Object = "MethodDefinition"
+ .Object = "MethodDefinition"
     (inherited from .Object = "ANY")
-.Object = "classPrototypeDef"
+ .Object = "classPrototypeDef"
     (inherited from .Object = "ANY")
-.Object = "SClassExtension"
+ .Object = "SClassExtension"
     (inherited from .Object = "ANY")
-.Object = "classRepresentation"
+ .Object = "classRepresentation"
     (inherited from .Object = "ANY")
-.Object = "ClassUnionRepresentation"
+ .Object = "ClassUnionRepresentation"
     (inherited from .Object = "ANY")
-.Object = "ObjectsWithPackage"
+ .Object = "ObjectsWithPackage"
     (inherited from .Object = "ANY")
-.Object = "LinearMethodsList"
+ .Object = "LinearMethodsList"
     (inherited from .Object = "ANY")
 
 Function "loadMethod":
-method = "ANY"
-method = "MethodDefinition"
-method = "MethodWithNext"
+ method = "ANY"
+ method = "MethodDefinition"
+ method = "MethodWithNext"
 
 Function "rbind2":
-x = "ANY", y = "ANY"
-x = "ANY", y = "missing"
+ x = "ANY", y = "ANY"
+ x = "ANY", y = "missing"
 
 Function "show":
-object = "ANY"
-object = "traceable"
-object = "ObjectsWithPackage"
-object = "MethodDefinition"
-object = "MethodWithNext"
-object = "genericFunction"
-object = "classRepresentation"
+ object = "ANY"
+ object = "traceable"
+ object = "ObjectsWithPackage"
+ object = "signature"
+ object = "MethodDefinition"
+ object = "MethodWithNext"
+ object = "genericFunction"
+ object = "classRepresentation"
 NULL
 > 
 > ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
@@ -224,89 +225,92 @@ Formal class 'c1' [package ".GlobalEnv"] with 2 slots
 > showMethods(where = "package:stats4")
 
 Function "AIC":
-object = "ANY"
+ object = "ANY"
 
 Function "BIC":
-object = "logLik"
-object = "ANY"
+ object = "logLik"
+ object = "ANY"
 
 Function "coef":
-object = "ANY"
-object = "mle"
-object = "summary.mle"
+ object = "ANY"
+ object = "mle"
+ object = "summary.mle"
 
 Function "confint":
-object = "ANY"
-object = "profile.mle"
-object = "mle"
+ object = "ANY"
+ object = "profile.mle"
+ object = "mle"
 
 Function "logLik":
-object = "ANY"
-object = "mle"
+ object = "ANY"
+ object = "mle"
 
 Function "plot":
-x = "ANY", y = "ANY"
-x = "profile.mle", y = "missing"
+ x = "ANY", y = "ANY"
+ x = "profile.mle", y = "missing"
 
 Function "profile":
-fitted = "ANY"
-fitted = "mle"
+ fitted = "ANY"
+ fitted = "mle"
 
 Function "show":
-object = "ANY"
-object = "traceable"
-object = "ObjectsWithPackage"
-object = "MethodDefinition"
-object = "MethodWithNext"
-object = "genericFunction"
-object = "classRepresentation"
-object = "mle"
-object = "summary.mle"
-object = "bar"
+ object = "ANY"
+ object = "traceable"
+ object = "ObjectsWithPackage"
+ object = "signature"
+ object = "MethodDefinition"
+ object = "MethodWithNext"
+ object = "genericFunction"
+ object = "classRepresentation"
+ object = "mle"
+ object = "summary.mle"
+ object = "bar"
 
 Function "summary":
-object = "ANY"
-object = "mle"
+ object = "ANY"
+ object = "mle"
 
 Function "update":
-object = "ANY"
-object = "mle"
+ object = "ANY"
+ object = "mle"
 
 Function "vcov":
-object = "ANY"
-object = "mle"
+ object = "ANY"
+ object = "mle"
 NULL
 > showMethods("show")
 
 Function "show":
-object = "ANY"
-object = "traceable"
-object = "ObjectsWithPackage"
-object = "MethodDefinition"
-object = "MethodWithNext"
-object = "genericFunction"
-object = "classRepresentation"
-object = "mle"
-object = "summary.mle"
-object = "bar"
+ object = "ANY"
+ object = "traceable"
+ object = "ObjectsWithPackage"
+ object = "signature"
+ object = "MethodDefinition"
+ object = "MethodWithNext"
+ object = "genericFunction"
+ object = "classRepresentation"
+ object = "mle"
+ object = "summary.mle"
+ object = "bar"
 > showMethods("show")
 
 Function "show":
-object = "ANY"
-object = "traceable"
-object = "ObjectsWithPackage"
-object = "MethodDefinition"
-object = "MethodWithNext"
-object = "genericFunction"
-object = "classRepresentation"
-object = "mle"
-object = "summary.mle"
-object = "bar"
+ object = "ANY"
+ object = "traceable"
+ object = "ObjectsWithPackage"
+ object = "signature"
+ object = "MethodDefinition"
+ object = "MethodWithNext"
+ object = "genericFunction"
+ object = "classRepresentation"
+ object = "mle"
+ object = "summary.mle"
+ object = "bar"
 > showMethods("plot") # (ANY,ANY) and (profile.mle, missing)
 
 Function "plot":
-x = "ANY", y = "ANY"
-x = "profile.mle", y = "missing"
+ x = "ANY", y = "ANY"
+ x = "profile.mle", y = "missing"
 > showMethods(classes="mle")
 
 Function "addNextMethod":
@@ -331,7 +335,7 @@ Function "rbind2":
 <Empty Methods List>
 
 Function "show":
-object = "mle"
+ object = "mle"
 NULL
 > showMethods(classes="matrix")
 
@@ -345,7 +349,7 @@ Function "cbind2":
 <Empty Methods List>
 
 Function "coerce":
-from = "ANY", to = "matrix"
+ from = "ANY", to = "matrix"
 
 Function "initialize":
 <Empty Methods List>
@@ -371,11 +375,11 @@ Function "cbind2":
 <Empty Methods List>
 
 Function "coerce":
-from = "ANY", to = "matrix"
-from = "ANY", to = "numeric"
+ from = "ANY", to = "matrix"
+ from = "ANY", to = "numeric"
 
 Function "initialize":
-.Object = "numeric"
+ .Object = "numeric"
     (inherited from .Object = "ANY")
 
 Function "loadMethod":
@@ -390,108 +394,109 @@ NULL
 > showMethods(where = "package:methods")
 
 Function "addNextMethod":
-method = "MethodDefinition"
-method = "MethodWithNext"
+ method = "MethodDefinition"
+ method = "MethodWithNext"
 
 Function "body<-":
-fun = "ANY"
-fun = "MethodDefinition"
-fun = "function"
+ fun = "ANY"
+ fun = "MethodDefinition"
+ fun = "function"
     (inherited from fun = "ANY")
 
 Function "cbind2":
-x = "ANY", y = "ANY"
-x = "ANY", y = "missing"
+ x = "ANY", y = "ANY"
+ x = "ANY", y = "missing"
 
 Function "coerce":
-from = "ANY", to = "array"
-from = "ANY", to = "call"
-from = "ANY", to = "character"
-from = "ANY", to = "complex"
-from = "ANY", to = "environment"
-from = "ANY", to = "expression"
-from = "ANY", to = "function"
-from = "ANY", to = "integer"
-from = "ANY", to = "list"
-from = "ANY", to = "logical"
-from = "ANY", to = "matrix"
-from = "ANY", to = "name"
-from = "ANY", to = "numeric"
-from = "ANY", to = "single"
-from = "ANY", to = "ts"
-from = "ANY", to = "vector"
-from = "ANY", to = "NULL"
-from = "function", to = "PossibleMethod"
-from = "NULL", to = "OptionalFunction"
-from = "standardGeneric", to = "PossibleMethod"
-from = "MethodDefinition", to = "PossibleMethod"
+ from = "ANY", to = "array"
+ from = "ANY", to = "call"
+ from = "ANY", to = "character"
+ from = "ANY", to = "complex"
+ from = "ANY", to = "environment"
+ from = "ANY", to = "expression"
+ from = "ANY", to = "function"
+ from = "ANY", to = "integer"
+ from = "ANY", to = "list"
+ from = "ANY", to = "logical"
+ from = "ANY", to = "matrix"
+ from = "ANY", to = "name"
+ from = "ANY", to = "numeric"
+ from = "ANY", to = "single"
+ from = "ANY", to = "ts"
+ from = "ANY", to = "vector"
+ from = "ANY", to = "NULL"
+ from = "function", to = "PossibleMethod"
+ from = "NULL", to = "OptionalFunction"
+ from = "standardGeneric", to = "PossibleMethod"
+ from = "MethodDefinition", to = "PossibleMethod"
 
 Function "initialize":
-.Object = "ANY"
-.Object = "traceable"
-.Object = "signature"
-.Object = "environment"
-.Object = "derivedDefaultMethod"
+ .Object = "ANY"
+ .Object = "traceable"
+ .Object = "signature"
+ .Object = "environment"
+ .Object = "derivedDefaultMethod"
     (inherited from .Object = "ANY")
-.Object = "standardGeneric"
+ .Object = "standardGeneric"
     (inherited from .Object = "ANY")
-.Object = "MethodsList"
+ .Object = "MethodsList"
     (inherited from .Object = "ANY")
-.Object = "MethodDefinition"
+ .Object = "MethodDefinition"
     (inherited from .Object = "ANY")
-.Object = "classPrototypeDef"
+ .Object = "classPrototypeDef"
     (inherited from .Object = "ANY")
-.Object = "SClassExtension"
+ .Object = "SClassExtension"
     (inherited from .Object = "ANY")
-.Object = "classRepresentation"
+ .Object = "classRepresentation"
     (inherited from .Object = "ANY")
-.Object = "ClassUnionRepresentation"
+ .Object = "ClassUnionRepresentation"
     (inherited from .Object = "ANY")
-.Object = "ObjectsWithPackage"
+ .Object = "ObjectsWithPackage"
     (inherited from .Object = "ANY")
-.Object = "LinearMethodsList"
+ .Object = "LinearMethodsList"
     (inherited from .Object = "ANY")
-.Object = "test1"
+ .Object = "test1"
     (inherited from .Object = "ANY")
-.Object = "functionWithTrace"
+ .Object = "functionWithTrace"
     (inherited from .Object = "traceable")
-.Object = "standardGenericWithTrace"
+ .Object = "standardGenericWithTrace"
     (inherited from .Object = "traceable")
-.Object = "EmptyMethodsList"
+ .Object = "EmptyMethodsList"
     (inherited from .Object = "ANY")
-.Object = "MethodDefinitionWithTrace"
+ .Object = "MethodDefinitionWithTrace"
     (inherited from .Object = "traceable")
-.Object = "numeric"
+ .Object = "numeric"
     (inherited from .Object = "ANY")
-.Object = "bar"
+ .Object = "bar"
     (inherited from .Object = "ANY")
-.Object = "integer"
+ .Object = "integer"
     (inherited from .Object = "ANY")
-.Object = "c1"
+ .Object = "c1"
     (inherited from .Object = "ANY")
 
 Function "loadMethod":
-method = "ANY"
-method = "MethodDefinition"
-method = "MethodWithNext"
-method = "MethodDefinitionWithTrace"
+ method = "ANY"
+ method = "MethodDefinition"
+ method = "MethodWithNext"
+ method = "MethodDefinitionWithTrace"
     (inherited from method = "MethodDefinition")
 
 Function "rbind2":
-x = "ANY", y = "ANY"
-x = "ANY", y = "missing"
+ x = "ANY", y = "ANY"
+ x = "ANY", y = "missing"
 
 Function "show":
-object = "ANY"
-object = "traceable"
-object = "ObjectsWithPackage"
-object = "MethodDefinition"
-object = "MethodWithNext"
-object = "genericFunction"
-object = "classRepresentation"
-object = "mle"
-object = "summary.mle"
-object = "bar"
+ object = "ANY"
+ object = "traceable"
+ object = "ObjectsWithPackage"
+ object = "signature"
+ object = "MethodDefinition"
+ object = "MethodWithNext"
+ object = "genericFunction"
+ object = "classRepresentation"
+ object = "mle"
+ object = "summary.mle"
+ object = "bar"
 NULL
 > 
 > ## stopifnot(require(Matrix),
@@ -552,9 +557,9 @@ NULL
 > showMethods("foo")
 
 Function "foo":
-object = "X", arg = "missing"
-object = "X", arg = "logical"
-object = "Y", arg = "missing"
+ object = "X", arg = "missing"
+ object = "X", arg = "logical"
+ object = "Y", arg = "missing"
 > foo(y)
 a Y object with bar = 2 
 > foo(y, arg=TRUE)## Hello World!
@@ -563,10 +568,10 @@ Hello World!
 > showMethods("foo")
 
 Function "foo":
-object = "X", arg = "missing"
-object = "X", arg = "logical"
-object = "Y", arg = "missing"
-object = "Y", arg = "logical"
+ object = "X", arg = "missing"
+ object = "X", arg = "logical"
+ object = "Y", arg = "missing"
+ object = "Y", arg = "logical"
     (inherited from object = "X", arg = "logical")
 > foo(y)
 a Y object with bar = 2 

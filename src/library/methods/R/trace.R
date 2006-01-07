@@ -1,10 +1,23 @@
-.TraceWithMethods <- function(what, tracer = NULL, exit = NULL, at = numeric(), print = TRUE, signature = NULL, where = .GlobalEnv, edit = FALSE, from = NULL, untrace = FALSE) {
+## some temporary (!) hooks to trace the tracing code
+.doTraceTrace <- function(on) {
+ .assignOverBinding(".traceTraceState", on,
+                    environment(.doTraceTrace), FALSE)
+  on
+}
+
+.traceTraceState <- FALSE
+
+.TraceWithMethods <- function(what, tracer = NULL, exit = NULL, at =
+                              numeric(), print = TRUE, signature =
+                              NULL, where = .GlobalEnv, edit = FALSE,
+                              from = NULL, untrace = FALSE) {
     if(is.function(where)) {
         ## start from the function's environment:  important for tracing from a namespace
         where <- environment(where)
         fromPackage <- getPackageName(where)
     }
     else fromPackage <- ""
+    doEdit <- !identical(edit, FALSE)
     whereF <- NULL
     pname <- character()
     def <- NULL
@@ -54,6 +67,10 @@
         whereF <- temp$whereF
         pname <- temp$pname
     }
+ if(.traceTraceState) {
+    message(".TraceWithMethods: after computing what, whereF")
+    browser()
+  }
     if(nargs() == 1)
         return(.primTrace(what)) # for back compatibility
     if(is.null(whereF)) {
@@ -65,32 +82,38 @@
     }
         if(is.null(def))
             def <- getFunction(what, where = whereF)
+        if(is(def, "traceable") && identical(edit, FALSE) && !untrace)
+          def <- .untracedFunction(def)
         if(!is.null(signature)) {
-            fdef <- def
+            fdef <- if(is.primitive(def))  getGeneric(what, TRUE, where) else def
             def <- selectMethod(what, signature, fdef = def)
         }
     if(untrace) {
-    if(is.null(signature)) {
+     if(.traceTraceState) {
+    message(".TraceWithMethods: untrace case")
+    browser()
+  }
+  
+      if(is.null(signature)) {
         ## ensure that the version to assign is untraced
         if(is(def, "traceable")) {
-            newFun <- .untracedFunction(def)
+          newFun <- .untracedFunction(def)
         }
         else {
-            .primUntrace(what) # to be safe--no way to know if it's traced or not
-            return(what)
+          .primUntrace(what) # to be safe--no way to know if it's traced or not
+          return(what)
         }
+      }
+      else {
+        if(is(def, "traceable"))
+          newFun <- .untracedFunction(def)
+        else {
+          warning(gettextf("the method for \"%s\" for this signature was not being traced", what), domain = NA)
+          return(what)
+        }
+      }
     }
     else {
-            if(is(def, "traceable"))
-                newFun <- .untracedFunction(def)
-            else {
-                warning(gettextf("the method for \"%s\" for this signature was not being traced", what), domain = NA)
-                return(what)
-            }
-        }
-    }
-    else {
-        fBody <- body(def)
         if(!is.null(exit)) {
             if(is.function(exit)) {
                 tname <- substitute(exit)
@@ -107,12 +130,17 @@
                 tracer <- substitute(TRACE(), list(TRACE=tracer))
             }
         }
-        ## calls .makeTracedFunction via the initialize method for "traceable"
-        newFun <- new(.traceClassName(class(.untracedFunction(def))),
-                      def = def, tracer = tracer, exit = exit, at = at,
+        original <- .untracedFunction(def)
+         ## calls .makeTracedFunction via the initialize method for "traceable"
+        newFun <- new(.traceClassName(class(original)),
+                      def = if(doEdit) def else original, tracer = tracer, exit = exit, at = at,
                       print = print, doEdit = edit)
     }
     global <- identical(whereF, .GlobalEnv)
+ if(.traceTraceState) {
+    message(".TraceWithMethods: about to assign or setMethod")
+    browser()
+  }
     if(is.null(signature)) {
         if(bindingIsLocked(what, whereF))
             .assignOverBinding(what, newFun, whereF, global)
@@ -148,7 +176,7 @@
                fBody <- substitute({.prim <- DEF; .prim(...)},
                                    list(DEF = def))
                def <- eval(function(...)NULL)
-               body(def, environment = .GlobalEnv) <- fBody
+               body(def, envir = .GlobalEnv) <- fBody
                warning("making a traced version of a primitive; arguments will be treated as '...'")
            }
            )
@@ -164,7 +192,7 @@
     if(doEdit) {
         if(is(def, "traceable"))
             def <- as(def, "function") # retain previous tracing if editing
-        if(!is.na(match(editor, c("emacs","xemacs")))) {
+        if(is(editor, "character") && !is.na(match(editor, c("emacs","xemacs")))) {
             ## cater to the usual emacs modes for editing R functions
             file <- tempfile("emacs")
             file <- sub('..$', ".R", file)
@@ -191,29 +219,29 @@
                 stop("cannot use 'at' argument unless the function body has the form '{ ... }'")
             for(i in at) {
                 if(print)
-                    expri <- substitute({if(tracingState()){methods::.doTracePrint(MSG); TRACE}; EXPR},
+                    expri <- substitute({methods::.doTrace(TRACE, MSG); EXPR},
                                         list(TRACE = tracer, MSG = paste("step",i), EXPR = fBody[[i]]))
                 else
-                    expri <- substitute({if(tracingState())TRACE; EXPR},
+                    expri <- substitute({methods::.doTrace(TRACE); EXPR},
                                         list(TRACE=tracer, EXPR = fBody[[i]]))
                 fBody[[i]] <- expri
             }
         }
         else if(!is.null(tracer)){
             if(print)
-                fBody <- substitute({if(tracingState()){methods::.doTracePrint(MSG); TRACE}; EXPR},
+                fBody <- substitute({methods::.doTrace(TRACE, MSG); EXPR},
                                     list(TRACE = tracer, MSG = paste("on entry"), EXPR = fBody))
             else
-                fBody <- substitute({if(tracingState())TRACE; EXPR},
+                fBody <- substitute({methods::.doTrace(TRACE); EXPR},
                                     list(TRACE=tracer, EXPR = fBody))
         }
         if(!is.null(exit)) {
             if(print)
-                exit <- substitute(if(tracingState()){methods::.doTracePrint(MSG); EXPR},
+                exit <- substitute(methods::.doTrace(EXPR, MSG),
                                    list(EXPR = exit, MSG = paste("on exit")))
             else
-                exit <- substitute(if(tracingState())EXPR,
-                                   list(EXPR = exit, MSG = paste("on exit")))
+                exit <- substitute(methods::.doTrace(EXPR),
+                                   list(EXPR = exit))
             fBody <- substitute({on.exit(TRACE); BODY},
                                 list(TRACE=exit, BODY=fBody))
         }
@@ -268,6 +296,20 @@
     if(length(call)>1)
         call <- paste(call[[1]], "....")
     cat("Tracing", call, msg, "\n")
+}
+
+.doTrace <- function(expr, msg) {
+  if(!tracingState(FALSE))
+    return(NULL)
+  on.exit(tracingState(TRUE)) # restore on exit, keep off during trace
+  if(!missing(msg)) {
+    call <- deparse(sys.call(sys.parent(1)))
+    if(length(call)>1)
+        call <- paste(call[[1]], "....")
+    cat("Tracing", call, msg, "\n")
+  }
+  exprObj <- substitute(expr)
+  eval.parent(exprObj)
 }
 
 .traceClassName <- function(className) {

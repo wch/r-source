@@ -295,9 +295,6 @@ MethodsListSelect <-
             method <- MethodAddCoerce(method, argName, thisClass, fromClass)
             value <- .insertCachedMethods(mlist, as.character(argName), thisClass, fromClass,
                                          method)
-##            if(is.null(f))
-            ## only insert the selected method
-##              value@allMethods <- value@allMethods[thisClass]
         }
     }
     if(!is.null(f)) {
@@ -448,6 +445,8 @@ matchSignature <-
              domain = NA)
     if(is.null(names(signature))) {
         which <- seq(length = length(signature))
+        if(length(which) > length(anames))
+          stop(gettextf("more elements in the method signature (%d) than in the generic signature (%d)", length(which), length(anames)))
     }
     else {
     ## construct a function call with the same naming pattern  &
@@ -527,11 +526,14 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
         labels[[i]] <- paste(signatures[[i]], collapse = ", ")
     }
     for(i in seq(length=length(methods))) {
-      cat(file=con, labels[[i]])
+      cat(file=con, (if(includeDefs) "## Signature:" else ""), labels[[i]])
       method <- methods[[i]]
       if(includeDefs) {
         cat(file=con, ":\n")
-        cat(file=con, deparse(method), sep="\n")
+        if(is(method, "MethodDefinition")) ## really an assertion
+          cat(file=con, deparse(method@.Data), sep="\n")
+        else
+          cat(file=con, deparse(method), sep="\n")
       }
       if(is(method, "MethodDefinition") &&
          !identical(method@target, method@defined)) {

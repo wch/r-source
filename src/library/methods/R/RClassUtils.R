@@ -658,10 +658,14 @@ reconcilePropertiesAndPrototype <-
       if(extends(prototypeClass, "classPrototypeDef")) {
           pnames <- prototype@slots
           prototype <- prototype@object
+          if(any(is.na(match(pnames, slots))))
+            stop(gettextf("named elements of prototype do not correspond to slot names: %s",
+                      paste(dQuote(pnames[is.na(match(pnames, slots))]),
+                            collapse =", ")))
       }
       else
           pnames <- allNames(attributes(prototype))
-      ## now set the slots not yet in the prototype object.
+       ## now set the slots not yet in the prototype object.
       ## An important detail is that these are
       ## set using slot<- with check=FALSE (because the slot will not be there already)
       ## what <- is.na(match(slots, pnames))

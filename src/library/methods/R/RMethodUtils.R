@@ -743,7 +743,7 @@ sigToEnv <- function(signature, generic) {
     value
 }
 
-.methodSignatureMatrix <- function(object, sigSlots = c("target", "defined")) {
+methodSignatureMatrix <- function(object, sigSlots = c("target", "defined")) {
     if(length(sigSlots)>0) {
         allSlots <- lapply(sigSlots, slot, object = object)
         mm <- unlist(allSlots)
