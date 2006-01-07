@@ -15,26 +15,8 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         is_base <- package == "base"
-        helpIndex <- file.path(dir, "help", "AnIndex")
-        all_doc_topics <- if(!file_test("-f", helpIndex))
-            character()
-        else {
-            ## Find all documented topics from the help index.
-            ## May contain quotes!
-            sort(scan(file = helpIndex, what = list("", ""), sep = "\t",
-                      quote="", quiet = TRUE, na.strings = character())[[1]])
-            ## <NOTE>
-            ## This gets all topics the same way as index.search() would
-            ## find individual ones.  We could also use
-            ##   unlist(.readRDS(file.path(dir, "Meta", "Rd.rds"))$Aliases)
-            ## which is marginally slower.
-            ## A real gain in efficiency would come from reading in
-            ## Rd.rds *once* (e.g., the first time help() is called),
-            ## and storing it in some known place, e.g. an attribute of
-            ## the package env, or a dynamic variable with the help
-            ## entries indexed for fast lookup by topic.
-            ## </NOTE>
-        }
+        
+        all_doc_topics <- Rd_aliases(package, lib.loc = dirname(dir))
 
         ## Load package into code_env.
         if(!is_base)
@@ -53,24 +35,8 @@ function(package, dir, lib.loc = NULL)
         else
             dir <- file_path_as_absolute(dir)
         is_base <- basename(dir) == "base"
-        docs_dir <- file.path(dir, "man")
-        if(!file_test("-d", docs_dir))
-            all_doc_topics <- character()
-        else {
-            ## Find all documented topics from the Rd sources.
-            aliases <- character(0)
-            for(f in list_files_with_type(docs_dir, "docs")) {
-                aliases <- c(aliases,
-                             grep("^\\\\alias",
-                                  .read_Rd_lines_quietly(f),
-                                  value = TRUE))
-            }
-            all_doc_topics <-
-                gsub("\\\\alias\\{(.*)\\}.*", "\\1", aliases)
-            all_doc_topics <- gsub("\\\\%", "%", all_doc_topics)
-            all_doc_topics <- gsub(" ", "", all_doc_topics)
-            all_doc_topics <- sort(unique(all_doc_topics))
-        }
+
+        all_doc_topics <- Rd_aliases(dir = dir)
 
         code_env <- new.env()
         code_dir <- file.path(dir, "R")
@@ -80,7 +46,8 @@ function(package, dir, lib.loc = NULL)
                 stop("cannot source package code")
             }
             sys_data_file <- file.path(code_dir, "sysdata.rda")
-            if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
+            if(file_test("-f", sys_data_file))
+                load(sys_data_file, code_env)
         }
 
         code_objs <- ls(envir = code_env, all.names = TRUE)
@@ -3133,6 +3100,59 @@ function(x, ...)
         writeLines(strwrap(x, indent = 0, exdent = 2))
     invisible(x)
 }
+
+### * .check_Rd_xrefs
+
+.check_Rd_xrefs <-
+function(package, dir, lib.loc = NULL)
+{
+    ## Build a db with all possible link targets (aliases) in the base
+    ## packages.
+    aliases <- lapply(.get_standard_package_names()$base,
+                      Rd_aliases, lib.loc = .Library)
+
+    ## Add the aliases from the package itself, and build a db with all
+    ## \link xrefs in the package Rd objects.
+    if(!missing(package)) {
+        aliases <-
+            c(aliases, list(Rd_aliases(package, lib.loc = lib.loc)))
+        db <- .build_Rd_xref_db(package, lib.loc = lib.loc)
+    }
+    else {
+        aliases <-
+            c(aliases, list(Rd_aliases(dir = dir)))
+        db <- .build_Rd_xref_db(dir = dir)
+    }
+        
+    ## Flatten the xref db into one big matrix.
+    db <- cbind(do.call("rbind", db), rep(names(db), sapply(db, NROW)))
+
+    ## Take the targets from the non-anchored xrefs.
+    db <- db[db[, 2] == "", -2]
+
+    ## The bad ones:
+    db <- db[! db[, 1] %in% unlist(aliases), , drop = FALSE]
+    structure(split(db[, 1], db[, 2]), class = "check_Rd_xrefs")
+}
+
+print.check_Rd_xrefs <-
+function(x, ...)
+{
+    if(length(x) > 0) {
+        for(i in seq(along = x)) {
+            writeLines(gettextf("Missing link(s) in documentation object '%s':",
+                                names(x)[i]))
+            .pretty_print(x[[i]])
+            writeLines("")
+        }
+        ## <FIXME>
+        ## Add some explanatory message and a pointer to R-exts
+        ## eventually ...
+        ## </FIXME>
+    }
+    x
+}
+
 
 ### * as.alist.call
 
