@@ -5,7 +5,7 @@ Notes for Windows Maintainers
 achieved by overrides in the configure script.
 
 You will need a copy of sh.exe in /bin.  Then with the R sources in
-/R/rw2000, I used in /TEMP/R (any other directory will do, except the
+/R/R-2.3.0, I used in /TEMP/R (any other directory will do, except the
 sources)
 
 sh /R/R-2.3.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no

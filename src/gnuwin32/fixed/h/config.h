@@ -611,6 +611,9 @@
 /* Defined if framework vecLib is present */
 /* #undef HAVE_VECLIB_FW */
 
+/* Define to 1 if __attribute__((visibility())) is supported */
+/* #undef HAVE_VISIBILITY_ATTRIBUTE */
+
 /* Define to 1 if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1
 
