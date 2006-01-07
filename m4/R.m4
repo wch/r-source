@@ -3098,21 +3098,30 @@ fi
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS -fvisibility=hidden"
 AC_CACHE_CHECK(whether $CC accepts -fvisibility, r_cv_prog_cc_vis,
-               [_AC_COMPILE_IFELSE([AC_LANG_PROGRAM()], [r_cv_prog_cc_vis=yes],
-                                                        [r_cv_prog_cc_vis=no])])
+               [_AC_COMPILE_IFELSE([AC_LANG_PROGRAM()],
+	       [r_cv_prog_cc_vis=yes], [r_cv_prog_cc_vis=no])])
 CFLAGS=$r_save_CFLAGS
 if test "${r_cv_prog_cc_vis}" = yes; then
   if test "${r_cv_visibility_attribute}" = yes; then
     C_VISIBILITY="-fvisibility=hidden"
   fi
 fi
+## Need to exclude Intel compilers, where this does not work.
+## The flag is documented, and is effective but also hides
+## unsatisfied references. We cannot test for GCC, as icc passes that test.
+case  "${CC}" in
+  ## Intel compiler
+  *icc)
+    C_VISIBILITY=
+    ;;
+esac
 AC_SUBST(C_VISIBILITY)
 AC_LANG_PUSH(Fortran 77)
 r_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS -fvisibility=hidden"
 AC_CACHE_CHECK(whether $F77 accepts -fvisibility, r_cv_prog_f77_vis,
                [_AC_COMPILE_IFELSE([AC_LANG_PROGRAM()], 
-                [r_cv_prog_f77_vis=yes], [r_cv_prog_f77_vis=no])])
+               [r_cv_prog_f77_vis=yes], [r_cv_prog_f77_vis=no])])
 FFLAGS=$r_save_FFLAGS
 AC_LANG_POP(Fortran 77)
 if test "${r_cv_prog_f77_vis}" = yes; then
@@ -3120,6 +3129,13 @@ if test "${r_cv_prog_f77_vis}" = yes; then
     F77_VISIBILITY="-fvisibility=hidden"
   fi
 fi
+## need to exclude Intel compilers.
+case  "${CC}" in
+  ## Intel compiler
+  *ifc|*ifort)
+    F77_VISIBILITY=
+    ;;
+esac
 AC_SUBST(F77_VISIBILITY)
 ])# R_GCC4_VISIBILITY
 
