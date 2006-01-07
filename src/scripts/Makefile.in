@@ -117,8 +117,6 @@ uninstall:
 	@for f in $(SCRIPTS_S) $(SCRIPTS_B) libtool R; do \
 	  rm -f "$(Rexecbindir)/$${f}"; \
 	done
-	@rmdir "$(Rexecbindir)" 2>/dev/null \
-	  || echo "  subdir $(Rexecbindir) not removed"
 	@rm -f $(bindir)/R
 
 mostlyclean: clean

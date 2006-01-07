@@ -195,11 +195,7 @@ install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@rm -f "$(Rexecbindir)/exec/R" "$(Rexecbindir)/R.bin"
-	@rmdir "$(Rexecbindir)" 2>/dev/null \
-	  || echo "  subdir $(Rexecbindir) not removed"
 	@rm -f "$(Rexeclibdir)/libR$(DYLIB_EXT)"
-	@rmdir "$(Rexeclibdir)" 2>/dev/null \
-	  || echo "  subdir $(Rexeclibdir) not removed"
 
 mostlyclean: clean
 clean:

@@ -394,7 +394,8 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	-@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
-	  reg-plot.ps reg-tests-?.ps R-exts.* R-intro.R
+	  reg-plot.ps reg-tests-?.ps R-exts.* R-intro.R R-intro.Rout \
+	  FALSE.R FALSE.tex mirrors.html
 	-@rm -rf anRpackage
 distclean: clean
 	-@for d in $(SUBDIRS); do \

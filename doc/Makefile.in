@@ -14,7 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS CRAN_mirrors.csv \
 	KEYWORDS KEYWORDS.db THANKS
 DISTFILES = Makefile.in $(INSTFILES) R.aux
-NON_SVN_INSTFILES = FAQ RESOURCES R.1
+NON_SVN_INSTFILES = FAQ RESOURCES
 SUBDIRS = html manual
 
 HELP2MAN = $(PERL) $(top_srcdir)/tools/help2man.pl
@@ -57,6 +57,7 @@ install-sources:
 	done
 install-strip: install
 
+## top-level Makefile installed NEWS in docdir
 uninstall:
 	@echo "uninstalling $(subdir) ..."
 	@if test -d "$(rdocdir)" \
@@ -65,7 +66,7 @@ uninstall:
 	  for d in $(SUBDIRS); do \
 	    (cd $${d} && $(MAKE) $@) || exit 1; \
 	  done; \
-	  for f in $(INSTFILES); do \
+	  for f in $(INSTFILES) $(NON_SVN_INSTFILES) NEWS; do \
 	    rm -f "$(rdocdir)"/$${f}; \
 	  done; \
 	  rmdir "$(rdocdir)" 2>/dev/null \
@@ -91,7 +92,7 @@ distclean: clean
 	@if test -f non-tarball ; then \
 	  rm -f $(NON_SVN_INSTFILES) non-tarball ; \
 	fi
-	-@rm -f Makefile
+	-@rm -f Makefile R.1
 maintainer-clean: distclean
 
 
@@ -100,7 +101,7 @@ svnonly:
 	  touch non-tarball ; \
 	else \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	    for f in FAQ RESOURCES; do \
+	    for f in $(NON_SVN_INSTFILES); do \
 	      $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/$(subdir)"; \
 	    done \
 	  fi \

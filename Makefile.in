@@ -139,9 +139,6 @@ uninstall:
 	@for f in $(INSTFILES) $(NON_SVN_INSTFILES); do \
 	  rm -f "$(rhome)/$${f}"; \
 	done
-	@for f in $(INSTFILES); do \
-	  rm -f "$(rdocdir)/$${f}"; \
-	done
 	@rm -rf "$(Rexecbindir)" "$(Rexeclibdir)"
 	@rmdir "$(rhome)" 2>/dev/null \
           || echo "  dir $(rhome) not removed"
@@ -152,7 +149,7 @@ clean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -f $(INSTFILES) $(NON_SVN_INSTFILES) ; \
+	  rm -f $(INSTFILES); \
 	fi
 distclean: clean
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
