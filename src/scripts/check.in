@@ -1237,6 +1237,54 @@ sub check_pkg {
 	}
     }
 
+    ## Check cross-references in R documentation files.
+
+    ## <NOTE>
+    ## Installing a package warns about missing links (and hence R CMD
+    ## check knows about this too provided an install log is used).
+    ## However, under Windows the install-time check verifies the links
+    ## against what is available in the default library, which might be
+    ## considerably more than what can be assumed to be available.
+    ##
+    ## The formulations in section "Cross-references" of R-exts are not
+    ## quite clear about this, but CRAN policy has for a long time
+    ## enforced anchoring links to targets (aliases) from non-base
+    ## packages.
+    ##
+    ## For the time being, if the package is installed only run the test
+    ## if the internal environment variable _R_CHECK_RD_XREFS_ is set to
+    ## something "true".  Most likely one should always run the check if
+    ## no install log is used.
+
+    if(-d "man") {
+	my $R_check_Rd_xrefs = &R_getenv("_R_CHECK_RD_XREFS_", "FALSE");
+	$R_check_Rd_xrefs = &config_val_to_logical($R_check_Rd_xrefs);
+	
+	if(($opt_install && $R_check_Rd_xrefs) || !$opt_install) {
+
+	    $log->checking("Rd cross-references");
+
+	    my $Rcmd = "options(warn=1)\n";
+	    if($opt_install) {
+		$Rcmd .= "tools:::.check_Rd_xrefs(package = \"${pkgname}\")\n";
+	    }
+	    else {
+		$Rcmd .= "tools:::.check_Rd_xrefs(dir = \"${pkgdir}\")\n";
+	    }
+
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
+	    @out = grep(!/^\>/, @out);
+	    if(scalar(@out) > 0) {
+		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+	    }
+	    else {
+		$log->result("OK");
+	    }
+	}
+    }
+
     ## Check for missing documentation entries.
 
     if(((-d "R") || (-d "data"))) {
