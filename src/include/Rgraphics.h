@@ -172,13 +172,6 @@ int dummy;
 #define currentFigureLocation	Rf_currentFigureLocation
 #define doKeybd			Rf_doKeybd
 #define doMouseEvent		Rf_doMouseEvent
-#define FixupCex		Rf_FixupCex
-#define FixupCol		Rf_FixupCol
-#define FixupFont		Rf_FixupFont
-#define FixupLty		Rf_FixupLty
-#define FixupLwd		Rf_FixupLwd
-#define FixupPch		Rf_FixupPch
-#define FixupVFont		Rf_FixupVFont
 #define GArrow			Rf_GArrow
 #define GBox			Rf_GBox
 #define GCheckState		Rf_GCheckState
@@ -231,11 +224,9 @@ int dummy;
 #define LTYpar			Rf_LTYpar
 #define NewFrameConfirm		Rf_NewFrameConfirm
 #define NoDevices		Rf_NoDevices
-#define ProcessInlinePars	Rf_ProcessInlinePars
 #define RGBpar			Rf_RGBpar
 #define col2name                Rf_col2name
 #define selectDevice		Rf_selectDevice
-#define Specify2		Rf_Specify2
 /* which of these conversions should be public? maybe all?*/
 #define xDevtoNDC		Rf_xDevtoNDC
 #define xDevtoNFC		Rf_xDevtoNFC
@@ -265,21 +256,6 @@ void GRestore(DevDesc*);
 void GSavePars(DevDesc*);
 /* Restore the temporary copy saved by GSavePars */
 void GRestorePars(DevDesc*);
-
-		/* More Programmer GPar functions */
-
-void ProcessInlinePars(SEXP, DevDesc*, SEXP call);
-void Specify2(char*, SEXP, DevDesc*, SEXP call);
-void RecordGraphicsCall(SEXP);
-
-SEXP FixupPch(SEXP, int);
-SEXP FixupLty(SEXP, int);
-SEXP FixupFont(SEXP, int);
-SEXP FixupCol(SEXP, unsigned int);
-SEXP FixupCex(SEXP, double);
-SEXP FixupLwd(SEXP, double);
-SEXP FixupVFont(SEXP);
-
 
 
 /*-------------------------------------------------------------------

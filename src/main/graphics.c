@@ -108,7 +108,7 @@ static char HexDigits[] = "0123456789ABCDEF";
  *
  */
 
-double R_Log10(double x)
+double attribute_hidden R_Log10(double x)
 {
     return (R_FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
 }
@@ -1750,7 +1750,7 @@ static void invalidError(char* message, DevDesc *dd)
     error(message);
 }
 
-Rboolean GRecording(SEXP call, DevDesc *dd)
+Rboolean attribute_hidden GRecording(SEXP call, DevDesc *dd)
 {
     return GErecording(call, (GEDevDesc *) dd);
 }
@@ -2050,7 +2050,7 @@ void GSetupAxis(int axis, DevDesc *dd)
 
  * Typically called from  do_<dev>(.)  as  GInit(&dd->dp)
  */
-void GInit(GPar *dp)
+void attribute_hidden GInit(GPar *dp)
 {
     dp->state = 0;
     dp->valid = FALSE;
@@ -2477,6 +2477,7 @@ void GForceClip(DevDesc *dd)
  * In some cases, the settings made here will need to be overridden
  * (eps. the fill setting)
  */
+attribute_hidden
 void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd)
 {
     gc->col = Rf_gpptr(dd)->col;
@@ -4828,6 +4829,7 @@ void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
  * Once graphics.c gets hacked to pieces and split into engine.c and base.c
  * then this can be made static again.
  */
+attribute_hidden
 void restoredpSaved(DevDesc *dd)
 {
     /* NOTE that not all params should be restored before playing */

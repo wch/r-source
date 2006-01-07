@@ -136,6 +136,7 @@ SEXP attribute_hidden do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ProcessInLinePars handles inline par specifications in graphics functions.
  * It does this by calling Specify2() from ./par.c */
 
+attribute_hidden
 void ProcessInlinePars(SEXP s, DevDesc *dd, SEXP call)
 {
     if (isList(s)) {
@@ -152,7 +153,7 @@ void ProcessInlinePars(SEXP s, DevDesc *dd, SEXP call)
 /*
  * Extract specified par from list of inline pars
  */
-SEXP getInlinePar(SEXP s, char *name)
+static SEXP getInlinePar(SEXP s, char *name)
 {
     SEXP result = R_NilValue;
     int found = 0;
@@ -174,6 +175,7 @@ SEXP getInlinePar(SEXP s, char *name)
     return result;
 }
 
+attribute_hidden
 SEXP FixupPch(SEXP pch, int dflt)
 {
     int i, n;
@@ -235,6 +237,7 @@ SEXP FixupPch(SEXP pch, int dflt)
     return ans;
 }
 
+attribute_hidden
 SEXP FixupLty(SEXP lty, int dflt)
 {
     int i, n;
@@ -252,6 +255,7 @@ SEXP FixupLty(SEXP lty, int dflt)
     return ans;
 }
 
+attribute_hidden
 SEXP FixupLwd(SEXP lwd, double dflt)
 {
     int i, n;
@@ -278,6 +282,7 @@ SEXP FixupLwd(SEXP lwd, double dflt)
     return ans;
 }
 
+attribute_hidden
 SEXP FixupFont(SEXP font, int dflt)
 {
     int i, k, n;
@@ -315,6 +320,7 @@ SEXP FixupFont(SEXP font, int dflt)
     return ans;
 }
 
+attribute_hidden
 SEXP FixupCol(SEXP col, unsigned int dflt)
 {
     int i, n;
@@ -338,6 +344,7 @@ SEXP FixupCol(SEXP col, unsigned int dflt)
     return ans;
 }
 
+attribute_hidden
 SEXP FixupCex(SEXP cex, double dflt)
 {
     SEXP ans;
@@ -373,6 +380,7 @@ SEXP FixupCex(SEXP cex, double dflt)
     return ans;
 }
 
+attribute_hidden
 SEXP FixupVFont(SEXP vfont) {
     SEXP ans = R_NilValue;
     if (!isNull(vfont)) {
@@ -3025,7 +3033,7 @@ SEXP attribute_hidden do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 	type = CHAR(STRING_ELT(stype, 0))[0];
 	if (type != 'n') {
 	    GMode(1, dd);
-	    for (i=0; i<n; i++) {
+	    for (i = 0; i < n; i++) {
 		xp = REAL(x)[i];
 		yp = REAL(y)[i];
 		GConvert(&xp, &yp, USER, DEVICE, dd);
@@ -3052,12 +3060,10 @@ SEXP attribute_hidden do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(x = allocVector(REALSXP, n));
 	PROTECT(y = allocVector(REALSXP, n));
 	PROTECT(nobs=allocVector(INTSXP,1));
-	i = 0;
 
 	GMode(2, dd);
-	while (i < n) {
-	    if (!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd))
-		break;
+	for (i = 0; i < n; i++) {
+	    if (!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd)) break;
 	    if (type != 'n') {
 		GMode(1, dd);
 		xp = REAL(x)[i];
@@ -3067,14 +3073,12 @@ SEXP attribute_hidden do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 		GMode(2, dd);
 		xold = xp; yold = yp;
 	    }
-	    i += 1;
 	}
 	GMode(0, dd);
 	INTEGER(nobs)[0] = i;
-	while (i < n) {
+	for (; i < n; i++) {
 	    REAL(x)[i] = NA_REAL;
 	    REAL(y)[i] = NA_REAL;
-	    i += 1;
 	}
 	PROTECT(ans = allocList(3));
 	SETCAR(ans, x);
