@@ -5,14 +5,10 @@
 \alias{.Class}
 \alias{Math}
 \alias{Math.data.frame}
-\alias{Math.factor}
 \alias{Ops}
 \alias{Ops.data.frame}
-\alias{Ops.factor}
-\alias{Ops.ordered}
 \alias{Summary}
 \alias{Summary.data.frame}
-\alias{Summary.factor}
 \alias{Arith}
 \alias{Compare}
 \alias{Complex}
@@ -214,14 +210,14 @@ Complex(z)
   \code{\link{methods}} for methods of non-Internal generic functions.
 }
 \examples{
-methods("Math")
-methods("Ops")
-methods("Summary")
-
 d.fr <- data.frame(x=1:9, y=rnorm(9))
 data.class(1 + d.fr) == "data.frame" ##-- add to d.f. ...
 
 if(.isMethodsDispatchOn()) {# package "methods" is attached or loaded
+  methods("Math")
+  methods("Ops")
+  methods("Summary")
+
   setClass("testComplex", representation(zz = "complex"))
   ## method for whole group "Complex"
   setMethod("Complex", "testComplex",
@@ -233,6 +229,5 @@ if(.isMethodsDispatchOn()) {# package "methods" is attached or loaded
   z2 <- new("testComplex", zz = z1)
   stopifnot(identical(Mod(z2), c("groupMethod", Mod(z1))))
   stopifnot(identical(Arg(z2), c("ArgMethod", Arg(z1))))
-}
-}
+}}
 \keyword{methods}

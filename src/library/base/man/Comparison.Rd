@@ -68,6 +68,8 @@ x != y
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{\link{factor}} for the behaviour with factor arguments.
+  
   \code{\link{Syntax}} for operator precedence.
 }
 \examples{

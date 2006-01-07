@@ -48,9 +48,13 @@ zapsmall(x, digits = getOption("digits"))
   All but \code{zapsmall} are generic functions: methods can be
   defined for them individually or via the \code{\link{Math}} group generic.
 
-  Note that for rounding off a 5, the IEC 60559 standard is used,
-  \dQuote{\emph{go to the even digit}}.
-  Therefore \code{round(0.5)} is \code{0} and \code{round(-1.5)} is \code{-2}.
+  Note that for rounding off a 5, the IEC 60559 standard is expected to
+  be used, \dQuote{\emph{go to the even digit}}.
+  Therefore \code{round(0.5)} is \code{0} and \code{round(-1.5)} is
+  \code{-2}.  However, this is dependent on OS services and of course
+  on representation error (since e.g. \code{0.15} is not represented exactly,
+  the rounding rule applies to the represented number and to the printed
+  number).
 
   For \code{signif} the recognized values of \code{digits} are
   \code{1...22}.  As from \R 2.2.0 complex numbers are rounded to retain
