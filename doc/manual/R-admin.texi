@@ -2319,7 +2319,7 @@ Some versions of @command{g95} (from @url{http://www.g95.org,
 
 On @code{x86_64} systems there is an incompatibility in the return
 conventions for double-complex functions between @command{gfortran} and
-@command{g77} which result in the final example in @code{example(eigen)}
+@command{g77} which results in the final example in @code{example(eigen)}
 hanging or segfaulting under external BLASs built under @command{g77},
 as well as with Dr Goto's BLAS.  As from @R{} 2.2.0 this should be
 detected by a @command{configure} test.
@@ -2485,7 +2485,7 @@ experiments @command{gcc}@tie{}3.4.x always produced faster and more
 reliable code.  It seems that @command{gcc}@tie{}4.0.1 and
 @command{gcc}@tie{}4.0.2 cannot compile @file{src/main/plot.c} when
 building R as a shared library on @cputype{ix86} unless the optimization
-level is reduced from the default @option{-O2}.
+level is changed from the default @option{-O2} (@option{-O3} works).
 
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
 Linux and @R{} contains code to set the FPU options suitably.  Brian
