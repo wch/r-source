@@ -951,8 +951,8 @@ in your HOME directory (@pxref{What are HOME and working directories?}).
 
 @itemize @bullet
 @item R commands can be interrupted by @key{Esc} in @command{Rgui.exe}
-and @key{Ctrl-break} or @key{Ctrl-C} in @command{Rterm.exe}: @key{Ctrl-C}
-is used for copying in the GUI version.
+and @key{Ctrl-break} or @key{Ctrl-C} in @command{Rterm.exe}:
+@key{Ctrl-C} is used for copying in the GUI version.
 
 @item Command-line editing is always available, but is simpler than the
 readline-based editing on Unix.  For @command{Rgui.exe}, the menu item `Help |

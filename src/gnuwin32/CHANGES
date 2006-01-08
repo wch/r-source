@@ -98,6 +98,9 @@ sprintf() now tries to ensure the output is C99-compliant, with
 Packages can now supply export files pkgname/src/pkgname-win.def:
 package 'stats' does so.
 
+Rterm now responds to Ctrl-C during input (Ctrl-Break always worked).
+This means ^C is no longer echoed.
+
 
 
 R 2.2.1 patched

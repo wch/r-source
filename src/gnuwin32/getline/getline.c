@@ -255,7 +255,7 @@ gl_char_init()			/* turn off input echo */
        Win32OutputStream = GetStdHandle(STD_OUTPUT_HANDLE);	
    }
    GetConsoleMode(Win32InputStream,&OldWin32Mode);
-   SetConsoleMode(Win32InputStream, 0);
+   SetConsoleMode(Win32InputStream, ENABLE_PROCESSED_INPUT); /* So ^C works */
    AltIsDown = 0;
 #endif      
    
