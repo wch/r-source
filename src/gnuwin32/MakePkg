@@ -287,9 +287,13 @@ indices:
 	@$(ECHO) "  installing indices"
 	@$(ECHO) "invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); tools:::.install_package_indices('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
-# need not have HTML installed when building packages
-	@$(MKDIR) -p $(RHOME)/doc/html/search
-	@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
+# need not have HTML installed when building packages.
+# Do this only if installing into main library, but tricky to figure out.
+# (so we don't bother with being careful).
+ifeq ($(RLIB),$(RHOME)/library)
+	-@$(MKDIR) -p $(RHOME)/doc/html/search
+	-@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
+endif
 ifneq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "tools:::win.packages.html(.Library)" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
