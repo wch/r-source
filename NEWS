@@ -404,6 +404,12 @@ INSTALLATION CHANGES
 	optimized code) in some of the dynamic shared objects (e.g.
 	libR.so and stats.so).
 
+    o	The *PICFLAGS are taken to be -fpic rather than -fPIC where
+	possible.   This will make no difference on most platforms:
+	-fPIC is needed on Sparc (and still used there), but -fpic
+	should give slightly better performance on PowerPC (although
+	-fPIC is used on PPC64 as it is needed to build libR.so there).
+
 
 UTILITIES
 

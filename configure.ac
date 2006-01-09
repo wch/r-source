@@ -1058,14 +1058,39 @@ fi
 
 ## Step 2.  GNU compilers.
 if test "${GCC}" = yes; then
-  cpicflags="-fPIC"
+  case "${host_cpu}" in
+## Sparc has only an 8k global object table, 1024 entries on 64-bit.
+## PowerPC has 32k, not enough on ppc64 for the ca6200 entries in libR.so
+## The only other platform where this is said to matter is m68k, which
+## has 32k and so can use -fpic.
+    sparc*|ppc64)
+      cpicflags="-fPIC"
+      ;;
+    *)
+      cpicflags="-fpic"
+      ;;
+  esac
   shlib_ldflags="-shared"
 fi
 if test "${G77}" = yes; then
-  fpicflags="-fPIC"
+  case "${host_cpu}" in
+    sparc*|ppc64)
+      fpicflags="-fPIC"
+      ;;
+    *)
+      fpicflags="-fpic"
+      ;;
+  esac
 fi
 if test "${GXX}" = yes; then
-  cxxpicflags="-fPIC"
+  case "${host_cpu}" in
+    sparc*|ppc64)
+      cxxpicflags="-fPIC"
+      ;;
+    *)
+      cxxpicflags="-fpic"
+      ;;
+  esac
   shlib_cxxldflags="-shared"
 fi
 
@@ -1167,7 +1192,7 @@ case "${host_os}" in
     case  "${CC}" in
       ## Intel compiler
       *icc)
-        cpicflags="-fPIC"
+        cpicflags="-fpic"
         ;;
       ## Portland Group (information from Jennifer Lai)
       *pgcc)
@@ -1179,7 +1204,7 @@ case "${host_os}" in
     case  "${F77}" in
       ## Intel compilers
       *ifc|*ifort)
-        fpicflags="-fPIC"
+        fpicflags="-fpic"
         ;;
       ## Portland Group
       *pgf77)
@@ -1189,7 +1214,7 @@ case "${host_os}" in
     case  "${CXX}" in
       ## Intel compilers
       *icpc|*icc)
-        cxxpicflags="-fPIC"
+        cxxpicflags="-fpic"
         ;;
       ## Portland Group
       *pgCC)
@@ -1227,6 +1252,8 @@ case "${host_os}" in
     shlib_ldflags="-shared"
     ;;
   solaris*)
+## SPARC has only an 8k global object table, 1024 entries on 64-bit,
+## so need PIC not pic.  They are the same on other Solaris platforms.
     shlib_ldflags="-G"
     shlib_cxxldflags="-G"
     if test "${GCC}" = yes; then
@@ -1286,7 +1313,7 @@ if test -z "${CPICFLAGS}"; then
       ;;
     *)
       AC_MSG_WARN([I could not determine CPICFLAGS.])
-      AC_MSG_ERROR([See the file INSTALL for more information.])
+      AC_MSG_ERROR([See the file doc/html/R-admin.html for more information.])
       ;;
   esac
 fi
@@ -1298,7 +1325,7 @@ if test -z "${FPICFLAGS}"; then
       ;;
     *)
       AC_MSG_WARN([I could not determine FPICFLAGS.])
-      AC_MSG_ERROR([See the file INSTALL for more information.])
+      AC_MSG_ERROR([See the file doc/html/R-admin.html for more information.])
       ;;
   esac
 fi
@@ -1321,7 +1348,7 @@ if test -z "${SHLIB_LD}"; then
 fi
 if test -z "${SHLIB_LDFLAGS}"; then
   AC_MSG_WARN([I could not determine SHLIB_LDFLAGS.])
-  AC_MSG_ERROR([See the file INSTALL for more information.])
+  AC_MSG_ERROR([See the file doc/html/R-admin.html for more information.])
 fi
 
 if test -z "${SHLIB_CXXLD}"; then
@@ -1680,7 +1707,24 @@ AC_LANG_POP()
 : ${SHLIB_FCLDFLAGS="${SHLIB_LDFLAGS}"}
 AC_SUBST(SHLIB_FCLD)
 AC_SUBST(SHLIB_FCLDFLAGS)
+
+## Look for FCPICFLAGS
+## Debian in their wisdom have f95 as a link to gfortran, so
+## use this to pick out gfortran (even though it is unreliable).
+if test "${ac_cv_fc_compiler_gnu}" = yes; then
+  case "${host_cpu}" in
+    sparc*|ppc64)
+      fcpicflags="-fPIC"
+      ;;
+    *)
+      fcpicflags="-fpic"
+      ;;
+  esac
+fi
 case "${host_os}" in
+  darwin*)
+    fcpicflags="-fno-common"
+    ;;
   hpux*)
     case "${FC}" in
       f90)
@@ -1689,15 +1733,10 @@ case "${host_os}" in
     esac
     ;;
   linux*)
-    ## Debian in their wisdom have f95 as a link to gfortran, so
-    ## use this to pick out gfortran (even though it is unreliable).
-    if test "${ac_cv_fc_compiler_gnu}" = yes; then
-      fcpicflags="-fPIC"
-    fi
     case  "${FC}" in
       ## Intel compilers: probably get identified as GNU, but make sure.
       *ifc|*ifort)
-        fcpicflags="-fPIC"
+        fcpicflags="-fpic"
         ;;
       ## Portland Group
       *pgf95)
