@@ -2363,6 +2363,14 @@ additional flags for the main link
 additional flags for linking the shared libraries
 @item LIBnn
 the primary library directory, @file{lib} or @file{lib64}
+@item CPICFLAGS
+special flags for compiling C code to be turned into a shared library
+@item FPICFLAGS
+special flags for compiling Fortran code to be turned into a shared library
+@item CXXPICFLAGS
+special flags for compiling C++ code to be turned into a shared library
+@item FPICFLAGS
+special flags for compiling Fortran 95 code to be turned into a shared library
 @end table
 
 @noindent
@@ -2370,6 +2378,13 @@ Library paths specified as @option{-L/lib/path} in @code{LDFLAGS} are
 collected together and prepended to @env{LD_LIBRARY_PATH} (or your
 system's equivalent), so there should be no need for @option{-R} or
 @option{-rpath} flags.
+
+Variables such as @env{CPICFLAGS} are determined where possible by
+@command{configure}.  Some systems allows two types of PIC flags, for
+example @samp{-fpic} and @samp{-fPIC}, and if they differ the first
+allows only a limited number of symbols in a shared library.  Since @R{}
+as a shared library has about 6200 symbols, if in doubt use the larger
+version.
 
 To compile a profiling version of @R{}, one might for example want to
 use @samp{MAIN_CFLAGS=-pg}, @samp{MAIN_FFLAGS=-pg},
@@ -2432,14 +2447,15 @@ sometimes problems with missing components such as the FORTRAN
 compiler.  Searching the @samp{R-help} archives will normally reveal
 what is needed.
 
-It seems that the @samp{gcc} compilers normally produce PIC code on
-@cputype{ix86} Linux but do not necessarily do so on 64-bit versions such
-as that for AMD Opteron.  So care can be needed with BLAS libraries and
-when building @R{} as a shared library to ensure that
-position-independent code is used in any static libraries (such as the
-Tcl/Tk libraries, @code{libpng}, @code{libjpeg} and @code{zlib}) which
-might be linked against.  Fortunately these are normally built as shared
-libraries with the exception of the ATLAS BLAS libraries.
+It seems that @cputype{ix86} Linux accepts non-PIC code in shared
+libraries, but this is not necessarily do so on other platforms, in
+particular for 64-bit CPUs such as that for AMD Opteron.  So care can be
+needed with BLAS libraries and when building @R{} as a shared library to
+ensure that position-independent code is used in any static libraries
+(such as the Tcl/Tk libraries, @code{libpng}, @code{libjpeg} and
+@code{zlib}) which might be linked against.  Fortunately these are
+normally built as shared libraries with the exception of the ATLAS BLAS
+libraries.
 
 For platforms with both 64- and 32-bit support, it is likely that
 
@@ -2679,6 +2695,10 @@ replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.0.x.
 Note that @samp{/usr/local/lib/sparcv9} will need to be in the
 @samp{LD_LIBRARY_PATH} during configuration.
 
+Solaris on Sparc CPUs need @samp{PIC} and not @samp{pic} versions of
+@env{CPICFLAGS} and @env{FPICFLAGS} since the @samp{pic} version only
+allows 1024 symbols on a 64-bit build (and 2048 on a 32-bit build).
+
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -2702,7 +2722,8 @@ some of the Sun libraries: fortunately the equivalent flag for
 theory, libraries such as @code{libpng}, @code{libjpeg}, @code{zlib} and
 the ATLAS libraries need to be built with a @code{pic} or @code{PIC}
 flag, which could be a problem if static libraries are used.  In
-practice this seems to give little problem for 32-bit builds.
+practice this seems to give little problem for 32-bit builds, especially
+as @cputype{ix86} Linux accepts non-PIC code in shared libraries.
 
 For a 64-bit build, 64-bit libraries must be used.  As the configuration
 process by default sets @code{LDFLAGS} to @samp{-L/usr/local/lib}, you
