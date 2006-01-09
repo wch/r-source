@@ -131,5 +131,33 @@ for(m in names(pfm1)) stopifnot(all.equal(pfm1[[m]], pfm5[[m]], tol=1e-5))
 (c4 <- confint(fm4, 1:2))
 stopifnot(all.equal(c1[2:3, ], c4, tol = 1e-3))
 
+## some low-dimensional examples
+npts <- 1000
+set.seed(1001)
+x <- runif(npts)
+b <- 0.7
+y <- x^b+rnorm(npts, sd=0.05)
+a <- 0.5
+y2 <- a*x^b+rnorm(npts, sd=0.05)
+c <- 1.0
+y3 <- a*(x+c)^b+rnorm(npts, sd=0.05)
+d <- 0.5
+y4 <- a*(x^d+c)^b+rnorm(npts, sd=0.05)
+m1 <- c(y ~ x^b, y2 ~ a*x^b, y3 ~ a*(x+exp(logc))^b)
+s1 <- list(c(b=1), c(a=1,b=1), c(a=1,b=1,logc=0))
+for(p in 1:3) {
+    fm <- nls(m1[[p]], start = s1[[p]])
+    print(fm)
+    print(confint(fm))
+    fm <- nls(m1[[p]], start = s1[[p]], algorithm="port")
+    print(fm)
+    print(confint(fm))
+}
+
+fm <- nls(y2~x^b, start=c(b=1), algorithm="plinear")
+confint(profile(fm))
+fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
+confint(profile(fm))
+
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

@@ -25,7 +25,7 @@ confint(object, parm, level = 0.95, \dots)
 }
 \details{
   \code{confint} is a generic function.  The default method assumes
-  asymptotic nornality, and needs suitable \code{\link{coef}} and
+  asymptotic normality, and needs suitable \code{\link{coef}} and
   \code{\link{vcov}} methods to be available.  The default method can be
   called directly for comparison with other methods.
 

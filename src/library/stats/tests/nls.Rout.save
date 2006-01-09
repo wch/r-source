@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-04 r36975)
+Version 2.3.0 Under development (unstable) (2006-01-09 r37033)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -325,7 +325,100 @@ xmid 1.2866 1.6949
 scal 0.9757 1.1063
 > stopifnot(all.equal(c1[2:3, ], c4, tol = 1e-3))
 > 
+> ## some low-dimensional examples
+> npts <- 1000
+> set.seed(1001)
+> x <- runif(npts)
+> b <- 0.7
+> y <- x^b+rnorm(npts, sd=0.05)
+> a <- 0.5
+> y2 <- a*x^b+rnorm(npts, sd=0.05)
+> c <- 1.0
+> y3 <- a*(x+c)^b+rnorm(npts, sd=0.05)
+> d <- 0.5
+> y4 <- a*(x^d+c)^b+rnorm(npts, sd=0.05)
+> m1 <- c(y ~ x^b, y2 ~ a*x^b, y3 ~ a*(x+exp(logc))^b)
+> s1 <- list(c(b=1), c(a=1,b=1), c(a=1,b=1,logc=0))
+> for(p in 1:3) {
++     fm <- nls(m1[[p]], start = s1[[p]])
++     print(fm)
++     print(confint(fm))
++     fm <- nls(m1[[p]], start = s1[[p]], algorithm="port")
++     print(fm)
++     print(confint(fm))
++ }
+Nonlinear regression model
+  model:  y ~ x^b 
+   data:  parent.frame() 
+      b 
+0.69489 
+ residual sum-of-squares: 2.3866
+Waiting for profiling to be done...
+   2.5%   97.5% 
+0.68704 0.70281 
+Nonlinear regression model
+  model:  y ~ x^b 
+   data:  parent.frame() 
+      b 
+0.69489 
+ residual sum-of-squares: 2.3866
+Waiting for profiling to be done...
+   2.5%   97.5% 
+0.68704 0.70281 
+Nonlinear regression model
+  model:  y2 ~ a * x^b 
+   data:  parent.frame() 
+      a       b 
+0.50191 0.72370 
+ residual sum-of-squares: 2.5143
+Waiting for profiling to be done...
+     2.5%   97.5%
+a 0.49494 0.50893
+b 0.70019 0.74767
+Nonlinear regression model
+  model:  y2 ~ a * x^b 
+   data:  parent.frame() 
+      a       b 
+0.50191 0.72370 
+ residual sum-of-squares: 2.5143
+Waiting for profiling to be done...
+     2.5%   97.5%
+a 0.49494 0.50893
+b 0.70019 0.74767
+Nonlinear regression model
+  model:  y3 ~ a * (x + exp(logc))^b 
+   data:  parent.frame() 
+       a        b     logc 
+ 0.55767  0.60255 -0.17648 
+ residual sum-of-squares: 2.4382
+Waiting for profiling to be done...
+         2.5%   97.5%
+a     0.35005 0.66045
+b     0.45122 0.91492
+logc -0.64620 0.40950
+Nonlinear regression model
+  model:  y3 ~ a * (x + exp(logc))^b 
+   data:  parent.frame() 
+       a        b     logc 
+ 0.55766  0.60256 -0.17645 
+ residual sum-of-squares: 2.4382
+Waiting for profiling to be done...
+         2.5%   97.5%
+a     0.35005 0.66045
+b     0.45122 0.91492
+logc -0.64620 0.40950
+> 
+> fm <- nls(y2~x^b, start=c(b=1), algorithm="plinear")
+> confint(profile(fm))
+   2.5%   97.5% 
+0.70019 0.74767 
+> fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
+> confint(profile(fm))
+         2.5%   97.5%
+b     0.45121 0.91488
+logc -0.64628 0.40953
+> 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.6 0.01 1.61 NA NA 
+Time elapsed:  4.33 0 4.41 NA NA 
 > 

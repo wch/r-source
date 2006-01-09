@@ -156,9 +156,7 @@ nlsModel.plinear <- function(form, data, start, wts)
                  assign("cc", c(topzero, qr.qty(QR.rhs, .swts * lhs)[ -(1:p1)]),
                         envir = thisEnv)
                  rr <- qr.qy(QR.rhs, cc)
-                 B <- qr.qty(QR.rhs,
-                             .swts * ddot(attr(rhs, "gradient"), lin)
-                             )
+                 B <- qr.qty(QR.rhs, .swts * ddot(attr(rhs, "gradient"), lin))
                  B[1:p1, ] <- dtdot(.swts * attr(rhs, "gradient"), rr)
                  R <- t( qr.R(QR.rhs)[1:p1, ] )
                  if(p1 == 1) B[1, ] <- B[1, ]/R
@@ -266,12 +264,13 @@ nlsModel <- function(form, data, start, wts)
     gradSetArgs[[1]] <- (~attr(ans, "gradient"))[[2]]
     gradCall <-
         switch(length(gradSetArgs) - 1,
-               call("[", gradSetArgs[[1]], gradSetArgs[[2]]),
-               call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]]),
+               call("[", gradSetArgs[[1]], gradSetArgs[[2]], drop = FALSE),
                call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]],
-                    gradSetArgs[[3]]),
+                    drop = FALSE),
                call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]],
-                    gradSetArgs[[3]], gradSetArgs[[4]]))
+                    gradSetArgs[[3]], drop = FALSE),
+               call("[", gradSetArgs[[1]], gradSetArgs[[2]], gradSetArgs[[2]],
+                    gradSetArgs[[3]], gradSetArgs[[4]]), drop = FALSE)
     getRHS.varying <- function()
     {
         ans <- getRHS.noVarying()
@@ -316,6 +315,7 @@ nlsModel <- function(form, data, start, wts)
              gradient = function() .swts * attr(rhs, "gradient"),
              conv = function()
          {
+             if(npar == 0) return(0)
              rr <- qr.qty(QR, resid)    # rotated residual vector
              sqrt( sum(rr[1:npar]^2) / sum(rr[-(1:npar)]^2))
          },
@@ -331,7 +331,7 @@ nlsModel <- function(form, data, start, wts)
                     else {
                         vary
                     }, envir = thisEnv)
-             gradCall[[length(gradCall)]] <<- useParams
+             gradCall[[length(gradCall) - 1]] <<- useParams
              if(all(useParams)) {
                  assign("setPars", setPars.noVarying, envir = thisEnv)
                  assign("getPars", getPars.noVarying, envir = thisEnv)
@@ -408,10 +408,12 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
         low <- rep(as.double(lower), length = length(par))
         upp <- rep(as.double(upper), length = length(par))
     }
-    ## Call driver routine
-    .Call(R_port_nlsb, m,
-          d = rep(as.double(scale), length = length(par)),
-          df = m$gradient(), iv, v, low, upp)
+    if(p > 0) {
+        ## Call driver routine
+        .Call(R_port_nlsb, m,
+              d = rep(as.double(scale), length = length(par)),
+              df = m$gradient(), iv, v, low, upp)
+    } else iv[1] <- 6
     iv
 }
 

@@ -97,9 +97,9 @@ profiler.nls <- function(fitted, ...)
                  fittedModel$setPars(startPars)
                  fittedModel$setVarying(vary)
                  fittedModel$setPars(startPars[vary])
-                 profiledModel <- if(algorithm != "port")
-                     .Call(R_nls_iter, fittedModel, ctrl, trace)
-                 else {
+                 profiledModel <- if(algorithm != "port") {
+                     if(sum(vary)) .Call(R_nls_iter, fittedModel, ctrl, trace) else fittedModel
+                 } else {
                      nls_port_fit(fittedModel, startPars[vary],
                                   lower, upper, ctrl, trace)
                      fittedModel
