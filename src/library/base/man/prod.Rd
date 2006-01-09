@@ -12,6 +12,10 @@ prod(\dots, na.rm = FALSE)
   \item{\dots}{numeric vectors.}
   \item{na.rm}{logical. Should missing values be removed?}
 }
+\value{
+  The product.
+  \strong{NB:} the product of an empty set is one, by definition.
+}
 \details{
   If \code{na.rm} is \code{FALSE} an \code{NA}
   value in any of the arguments will cause
@@ -27,9 +31,8 @@ prod(\dots, na.rm = FALSE)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-\code{\link{sum}},
-\code{\link{cumprod}},
-\code{\link{cumsum}}.
+  \code{\link{sum}},
+  \code{\link{cumprod}}, \code{\link{cumsum}}.
 }
 \examples{
 print(prod(1:7)) == print(gamma(8))
