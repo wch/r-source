@@ -1648,12 +1648,12 @@ sub check_pkg {
             print MAKEVARS "R_LIBS = $ENV{'R_LIBS'}\n";
             print MAKEVARS "VPATH = \$(srcdir)\n\n";
             print MAKEVARS "test-src-1 =";
-	    foreach my $file (&list_files_with_exts($testdir, "R")) {
+	    foreach my $file (sort &list_files_with_exts($testdir, "R")) {
                 print MAKEVARS "\\\n " . basename($file);
             }
             print MAKEVARS "\n";
             print MAKEVARS "test-src-auto =";
-	    foreach my $file (&list_files_with_exts($testdir, "Rin")) {
+	    foreach my $file (sort &list_files_with_exts($testdir, "Rin")) {
                 $file =~ s/Rin$/R/;
                 print MAKEVARS "\\\n " . basename($file);
             }
