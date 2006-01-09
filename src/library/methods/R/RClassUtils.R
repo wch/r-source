@@ -658,7 +658,7 @@ reconcilePropertiesAndPrototype <-
       if(extends(prototypeClass, "classPrototypeDef")) {
           pnames <- prototype@slots
           prototype <- prototype@object
-          if(any(is.na(match(pnames, slots))))
+          if(length(superClasses) == 0 && any(is.na(match(pnames, slots))))
             stop(gettextf("named elements of prototype do not correspond to slot names: %s",
                       paste(dQuote(pnames[is.na(match(pnames, slots))]),
                             collapse =", ")))
