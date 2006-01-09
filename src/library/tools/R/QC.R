@@ -3107,9 +3107,12 @@ function(x, ...)
 function(package, dir, lib.loc = NULL)
 {
     ## Build a db with all possible link targets (aliases) in the base
-    ## packages.
-    aliases <- lapply(.get_standard_package_names()$base,
-                      Rd_aliases, lib.loc = .Library)
+    ## and recommended packages.
+    aliases <-
+        lapply(unlist(.get_standard_package_names()[c("base",
+                                                      "recommended")],
+                      use.names = FALSE),
+               Rd_aliases, lib.loc = .Library)
 
     ## Add the aliases from the package itself, and build a db with all
     ## \link xrefs in the package Rd objects.
