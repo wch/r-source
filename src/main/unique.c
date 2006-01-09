@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1148,7 +1148,12 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static int cshash(SEXP x, int indx, HashData *d)
 {
-    return scatter((unsigned int) STRING_ELT(x, indx), d);
+    intptr_t z = (intptr_t) STRING_ELT(x, indx);
+    unsigned int z1 = z & 0xffffffff, z2 = 0;
+#if SIZEOF_LONG == 8
+    z2 = z/0x100000000L;
+#endif
+    return scatter(z1 ^ z2, d);
 }
 
 static int csequal(SEXP x, int i, SEXP y, int j)
