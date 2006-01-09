@@ -17,8 +17,8 @@ sum(\dots, na.rm = FALSE)
   the sum is integer, and in that case the result will be \code{NA} (with a
   warning) if integer overflow occurs.
 
-  \strong{NB:} the sum of an empty set is (integer) zero, by definition.
-  }
+  \strong{NB:} the sum of an empty set is zero, by definition.
+}
 \details{
   This is a generic function: methods can be defined for it
   directly or via the \code{\link{Summary}} group generic.
