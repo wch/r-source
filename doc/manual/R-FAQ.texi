@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-01-06
+@set FAQ_DATE @value{FAQ_YEAR}-01-09
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2737,6 +2737,8 @@ Various functions to help manipulate data.
 @item hapassoc
 Likelihood inference of trait associations with SNP haplotypes and other 
 attributes using the EM Algorithm.
+@item haplo.ccs
+Estimate haplotype relative risks in case-control data.
 @c <COMMENT>
 @c Moved to Archive on 2005-10-05 as requested by the maintainer.
 @c @item haplo.score
@@ -3538,6 +3540,8 @@ Stochastic Proximity Embedding.
 Approximate Gaussian processes using the Fourier basis.
 @item spectrino
 Spectra organizer, visualization and data extraction from within R.
+@item spgwr
+Geographically weighted regression.
 @item splancs
 Spatial and space-time point pattern analysis functions.
 @c <COMMENT>
