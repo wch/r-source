@@ -142,14 +142,14 @@ Name: "full"; Description: {cm:full}
 Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
-Name: "main"; Description: "Main Files"; Types: user compact full CJK custom; Flags: fixed
-Name: "chtml"; Description: "Compiled HTML Help Files"; Types: user full CJK custom
-Name: "html"; Description: "HTML Help Files"; Types: user full CJK custom
-Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user full CJK custom
-Name: "devel"; Description: "Source Package Installation Files"; Types: user full CJK custom
-Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full CJK custom
-Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full CJK custom
-Name: "trans"; Description: "Message Translations"; Types: user full CJK custom
+Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
+Name: "chtml"; Description: "Compiled HTML Help Files"; Types: user full custom
+Name: "html"; Description: "HTML Help Files"; Types: user full custom
+Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user full custom
+Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
+Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom
+Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full custom
+Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
 Name: "refman"; Description: "PDF Reference Manual"; Types: full custom
 Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
