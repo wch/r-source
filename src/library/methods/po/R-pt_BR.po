@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:27\n"
+"POT-Creation-Date: 2006-01-10 15:31\n"
 "PO-Revision-Date: 2005-12-17 11:31-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -321,6 +321,10 @@ msgstr ""
 "classes, mas %d elementos na assinatura do objeto"
 
 msgid ""
+"more elements in the method signature (%d) than in the generic signature (%d)"
+msgstr ""
+
+msgid ""
 "in the method signature for function '%s' invalid argument names in the "
 "signature: %s"
 msgstr ""
@@ -349,6 +353,12 @@ msgid ""
 msgstr ""
 "inicialização do método retornou um objeto de classe \"%s\" ao invés da "
 "classe necessária \"%s\""
+
+msgid "An object of class \""
+msgstr ""
+
+msgid "\""
+msgstr ""
 
 msgid ""
 "the names in signature for method (%s) do not match function's arguments (%s)"
@@ -452,7 +462,7 @@ msgstr ""
 "não definição da classe \"%s\", a parte de dados da classe especificada, \"%s"
 "\" não é válida (deve ser uma classe básica ou uma classe virtual combinando "
 "classes básicas)"
-\
+
 msgid "class \"%s\" cannot be used as the data part of another class"
 msgstr "classe \"%s\" não pode ser usada como parte de dados de outra classe"
 
@@ -507,6 +517,12 @@ msgid ""
 msgstr ""
 "protótipo é uma lista com elementos nomeados (pode ser ambíguo): melhor usar "
 "a função prototype() para evitar problemas"
+
+#, fuzzy
+msgid "named elements of prototype do not correspond to slot names: %s"
+msgstr ""
+"na criação do protótipo para a classe \"%s\", elementos do protótipo "
+"flaharam na correspondência com o classe do slot: %s"
 
 msgid "the '%s' list for class \"%s\", includes an undefined class \"%s\""
 msgstr ""
@@ -950,10 +966,19 @@ msgstr ""
 msgid "argument 'what' should be the name of a function"
 msgstr ""
 
+msgid ".TraceWithMethods: after computing what, whereF"
+msgstr ""
+
 msgid "no function definition for '%s' found"
 msgstr ""
 
+msgid ".TraceWithMethods: untrace case"
+msgstr ""
+
 msgid "the method for \"%s\" for this signature was not being traced"
+msgstr ""
+
+msgid ".TraceWithMethods: about to assign or setMethod"
 msgstr ""
 
 msgid ""

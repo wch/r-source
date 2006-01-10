@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 10:22+0000\n"
+"POT-Creation-Date: 2006-01-10 15:31+0000\n"
 "PO-Revision-Date: 2005-06-02 16:10+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -66,11 +66,19 @@ msgstr "sm.method=\"spline\" では 2500 行までしか扱えません"
 msgid "span is too small"
 msgstr "範囲(span)が小さすぎます"
 
-#: mburg.c:197
+#: mAR.c:467
+msgid "Singular matrix in qr_solve"
+msgstr "qr_solve 中の特異行列です"
+
+#: mAR.c:510
+msgid "Singular matrix in ldet"
+msgstr "ldet 中の特異行列です"
+
+#: mAR.c:697
 msgid "Invalid vmethod"
 msgstr "不正な vmethod です"
 
-#: mburg.c:333
+#: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg のアルゴリズムが偏相関を見つけ損ないました"
 
@@ -214,19 +222,6 @@ msgstr "m はリストでなければなりません"
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "lowerb と upperb は数値ベクトルでなければなりません"
 
-#: qr.c:30
-msgid "assert failed in src/library/ts/src/carray.c"
-msgstr ""
-"src/library/ts/src/carray.c に対する引数整合性検査(assert)に失敗しました"
-
-#: qr.c:68
-msgid "Singular matrix in qr_solve"
-msgstr "qr_solve 中の特異行列です"
-
-#: qr.c:111
-msgid "Singular matrix in ldet"
-msgstr "ldet 中の特異行列です"
-
 #: smooth.c:79
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
@@ -248,3 +243,7 @@ msgstr "smooth(*, '3R') 中の割り当てエラーです．"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "直前の %d 個の観測値中に欠損値があります"
+
+#~ msgid "assert failed in src/library/ts/src/carray.c"
+#~ msgstr ""
+#~ "src/library/ts/src/carray.c に対する引数整合性検査(assert)に失敗しました"

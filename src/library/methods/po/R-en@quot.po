@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:27\n"
-"PO-Revision-Date: 2005-11-06 09:27\n"
+"POT-Creation-Date: 2006-01-10 15:31\n"
+"PO-Revision-Date: 2006-01-10 15:31\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -328,6 +328,11 @@ msgstr ""
 "names, but %d elements in the signature object"
 
 msgid ""
+"more elements in the method signature (%d) than in the generic signature (%d)"
+msgstr ""
+"more elements in the method signature (%d) than in the generic signature (%d)"
+
+msgid ""
 "in the method signature for function '%s' invalid argument names in the "
 "signature: %s"
 msgstr ""
@@ -353,6 +358,12 @@ msgid ""
 msgstr ""
 "initialize method returned an object of class “%s” instead of the required "
 "class “%s”"
+
+msgid "An object of class \""
+msgstr "An object of class \""
+
+msgid "\""
+msgstr "\""
 
 msgid ""
 "the names in signature for method (%s) do not match function's arguments (%s)"
@@ -504,6 +515,9 @@ msgid ""
 msgstr ""
 "prototype is a list with named elements (could be ambiguous):  better to use "
 "function prototype() to avoid trouble."
+
+msgid "named elements of prototype do not correspond to slot names: %s"
+msgstr "named elements of prototype do not correspond to slot names: %s"
 
 msgid "the '%s' list for class \"%s\", includes an undefined class \"%s\""
 msgstr "the ‘%s’ list for class “%s”, includes an undefined class “%s”"
@@ -1036,11 +1050,20 @@ msgstr ""
 msgid "argument 'what' should be the name of a function"
 msgstr "argument ‘what’ should be the name of a function"
 
+msgid ".TraceWithMethods: after computing what, whereF"
+msgstr ".TraceWithMethods: after computing what, whereF"
+
 msgid "no function definition for '%s' found"
 msgstr "no function definition for ‘%s’ found"
 
+msgid ".TraceWithMethods: untrace case"
+msgstr ".TraceWithMethods: untrace case"
+
 msgid "the method for \"%s\" for this signature was not being traced"
 msgstr "the method for “%s” for this signature was not being traced"
+
+msgid ".TraceWithMethods: about to assign or setMethod"
+msgstr ".TraceWithMethods: about to assign or setMethod"
 
 msgid ""
 "making a traced version of a primitive; arguments will be treated as '...'"

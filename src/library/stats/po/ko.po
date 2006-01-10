@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 10:22+0000\n"
+"POT-Creation-Date: 2006-01-10 15:31+0000\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -68,11 +68,19 @@ msgstr "sm.method=\"spline\"에서는 2500행까지만 취급할수 없습니다
 msgid "span is too small"
 msgstr "범위(span)가 너무 작습니다"
 
-#: mburg.c:197
+#: mAR.c:467
+msgid "Singular matrix in qr_solve"
+msgstr "qr_solve 에서의 특이 행렬입니다"
+
+#: mAR.c:510
+msgid "Singular matrix in ldet"
+msgstr "ldet에서의 특이 행렬입니다"
+
+#: mAR.c:697
 msgid "Invalid vmethod"
 msgstr "부적절한 vmethod입니다"
 
-#: mburg.c:333
+#: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg의 알고니즘의 편상관을 검색되어서 결손시켰습니다"
 
@@ -215,18 +223,6 @@ msgstr "m는 리스트가 아니면 되지 않습니다"
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 
-#: qr.c:30
-msgid "assert failed in src/library/ts/src/carray.c"
-msgstr "scr/library/ts/src/carray.c에 대한 인수 정합성 검사에 실패했습니다"
-
-#: qr.c:68
-msgid "Singular matrix in qr_solve"
-msgstr "qr_solve 에서의 특이 행렬입니다"
-
-#: qr.c:111
-msgid "Singular matrix in ldet"
-msgstr "ldet에서의 특이 행렬입니다"
-
 #: smooth.c:79
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
@@ -248,3 +244,6 @@ msgstr "smooth(*,'3R')에서의 할당 에러입니다"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "직전의 %d개의 관측치에서 결손값이 있습니다"
+
+#~ msgid "assert failed in src/library/ts/src/carray.c"
+#~ msgstr "scr/library/ts/src/carray.c에 대한 인수 정합성 검사에 실패했습니다"

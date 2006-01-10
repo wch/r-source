@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 10:22+0000\n"
-"PO-Revision-Date: 2005-12-17 10:22+0000\n"
+"POT-Creation-Date: 2006-01-10 15:31+0000\n"
+"PO-Revision-Date: 2006-01-10 15:31+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -89,11 +89,19 @@ msgstr "only 2500 rows are allowed for sm.method=“spline”"
 msgid "span is too small"
 msgstr "span is too small"
 
-#: mburg.c:197
+#: mAR.c:467
+msgid "Singular matrix in qr_solve"
+msgstr "Singular matrix in qr_solve"
+
+#: mAR.c:510
+msgid "Singular matrix in ldet"
+msgstr "Singular matrix in ldet"
+
+#: mAR.c:697
 msgid "Invalid vmethod"
 msgstr "Invalid vmethod"
 
-#: mburg.c:333
+#: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg's algorithm failed to find partial correlation"
 
@@ -235,18 +243,6 @@ msgstr "m must be a list"
 #: port.c:532
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "‘lowerb’ and ‘upperb’ must be numeric vectors"
-
-#: qr.c:30
-msgid "assert failed in src/library/ts/src/carray.c"
-msgstr "assert failed in src/library/ts/src/carray.c"
-
-#: qr.c:68
-msgid "Singular matrix in qr_solve"
-msgstr "Singular matrix in qr_solve"
-
-#: qr.c:111
-msgid "Singular matrix in ldet"
-msgstr "Singular matrix in ldet"
 
 #: smooth.c:79
 #, c-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-12-19 09:12\n"
+"POT-Creation-Date: 2006-01-10 15:31\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -122,14 +122,35 @@ msgstr "argomento 'family' non valido"
 msgid "invalid PDF version"
 msgstr "versione PDF non valida"
 
-msgid "invalid %s in font specification"
-msgstr "specificazione font %s non valida"
-
 msgid "Invalid font type"
 msgstr ""
 
+#, fuzzy
+msgid "invalid family name in font specification"
+msgstr "specificazione font %s non valida"
+
+#, fuzzy
+msgid "invalid metric information in font specification"
+msgstr "specificazione font %s non valida"
+
+#, fuzzy
+msgid "invalid encoding in font specification"
+msgstr "specificazione font %s non valida"
+
 msgid "Not a CID font"
 msgstr ""
+
+#, fuzzy
+msgid "invalid CMap name in font specification"
+msgstr "specificazione font %s non valida"
+
+#, fuzzy
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "specificazione font %s non valida"
+
+#, fuzzy
+msgid "invalid PDF resource in font specification"
+msgstr "specificazione font %s non valida"
 
 msgid "Invalid font database name"
 msgstr ""

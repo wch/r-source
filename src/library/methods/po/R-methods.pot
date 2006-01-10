@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:27\n"
+"POT-Creation-Date: 2006-01-10 15:31\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,6 +188,9 @@ msgstr ""
 msgid "object to use as a method signature for function '%s' does not look like a legitimate signature (a vector of single class names): there were %d class names, but %d elements in the signature object"
 msgstr ""
 
+msgid "more elements in the method signature (%d) than in the generic signature (%d)"
+msgstr ""
+
 msgid "in the method signature for function '%s' invalid argument names in the signature: %s"
 msgstr ""
 
@@ -204,6 +207,12 @@ msgid "missing package slot (%s) in object of class \"%s\" (package info added)"
 msgstr ""
 
 msgid "initialize method returned an object of class \"%s\" instead of the required class \"%s\""
+msgstr ""
+
+msgid "An object of class \""
+msgstr ""
+
+msgid "\""
 msgstr ""
 
 msgid "the names in signature for method (%s) do not match function's arguments (%s)"
@@ -285,6 +294,9 @@ msgid "\"%s\" is not eligible to be the data part of another class (must be a ba
 msgstr ""
 
 msgid "prototype is a list with named elements (could be ambiguous):  better to use function prototype() to avoid trouble."
+msgstr ""
+
+msgid "named elements of prototype do not correspond to slot names: %s"
 msgstr ""
 
 msgid "the '%s' list for class \"%s\", includes an undefined class \"%s\""
@@ -626,10 +638,19 @@ msgstr ""
 msgid "argument 'what' should be the name of a function"
 msgstr ""
 
+msgid ".TraceWithMethods: after computing what, whereF"
+msgstr ""
+
 msgid "no function definition for '%s' found"
 msgstr ""
 
+msgid ".TraceWithMethods: untrace case"
+msgstr ""
+
 msgid "the method for \"%s\" for this signature was not being traced"
+msgstr ""
+
+msgid ".TraceWithMethods: about to assign or setMethod"
 msgstr ""
 
 msgid "making a traced version of a primitive; arguments will be treated as '...'"

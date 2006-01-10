@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-12-19 09:12\n"
+"POT-Creation-Date: 2006-01-10 15:31\n"
 "PO-Revision-Date: 2005-12-06 14:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -123,15 +123,35 @@ msgstr "argument 'family' incorrect"
 msgid "invalid PDF version"
 msgstr "version de PDF incorrecte"
 
-#, fuzzy
-msgid "invalid %s in font specification"
-msgstr "spécification de police X11 incorrecte :"
-
 msgid "Invalid font type"
 msgstr ""
 
+#, fuzzy
+msgid "invalid family name in font specification"
+msgstr "spécification de police X11 incorrecte :"
+
+#, fuzzy
+msgid "invalid metric information in font specification"
+msgstr "spécification de police X11 incorrecte :"
+
+#, fuzzy
+msgid "invalid encoding in font specification"
+msgstr "spécification de police X11 incorrecte :"
+
 msgid "Not a CID font"
 msgstr ""
+
+#, fuzzy
+msgid "invalid CMap name in font specification"
+msgstr "spécification de police X11 incorrecte :"
+
+#, fuzzy
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "spécification de police X11 incorrecte :"
+
+#, fuzzy
+msgid "invalid PDF resource in font specification"
+msgstr "spécification de police X11 incorrecte :"
 
 msgid "Invalid font database name"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 10:22+0000\n"
+"POT-Creation-Date: 2006-01-10 15:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,11 +67,19 @@ msgstr ""
 msgid "span is too small"
 msgstr ""
 
-#: mburg.c:197
+#: mAR.c:467
+msgid "Singular matrix in qr_solve"
+msgstr ""
+
+#: mAR.c:510
+msgid "Singular matrix in ldet"
+msgstr ""
+
+#: mAR.c:697
 msgid "Invalid vmethod"
 msgstr ""
 
-#: mburg.c:333
+#: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr ""
 
@@ -212,18 +220,6 @@ msgstr ""
 
 #: port.c:532
 msgid "'lowerb' and 'upperb' must be numeric vectors"
-msgstr ""
-
-#: qr.c:30
-msgid "assert failed in src/library/ts/src/carray.c"
-msgstr ""
-
-#: qr.c:68
-msgid "Singular matrix in qr_solve"
-msgstr ""
-
-#: qr.c:111
-msgid "Singular matrix in ldet"
 msgstr ""
 
 #: smooth.c:79

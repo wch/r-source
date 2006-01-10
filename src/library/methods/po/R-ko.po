@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-10 15:19\n"
+"POT-Creation-Date: 2006-01-10 15:31\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -314,6 +314,11 @@ msgstr ""
 "었지만,\n"
 "기호 오브젝트에서 %d 요소가 있었습니다"
 
+#, fuzzy
+msgid ""
+"more elements in the method signature (%d) than in the generic signature (%d)"
+msgstr "메소드 정의에서 생략된 형식상의 인수는 기호(%s)에 있을 수 없습니다"
+
 msgid ""
 "in the method signature for function '%s' invalid argument names in the "
 "signature: %s"
@@ -342,6 +347,12 @@ msgid ""
 msgstr ""
 "initialize 메소드는 필수의 클래스 \"%s\"를 대신에 클래스\n"
 "\"%s\"의 오브젝트를 돌려주었습니다"
+
+msgid "An object of class \""
+msgstr ""
+
+msgid "\""
+msgstr ""
 
 msgid ""
 "the names in signature for method (%s) do not match function's arguments (%s)"
@@ -500,6 +511,12 @@ msgid ""
 msgstr ""
 "prototype는 이름이 붙여진 요소(애매하고 있었습니다)에 의한 리스트입니다: \n"
 "문제를 피하기 위해서 함수 prototype()를 사용하는데 보다 좋습니다"
+
+#, fuzzy
+msgid "named elements of prototype do not correspond to slot names: %s"
+msgstr ""
+"클래스 \"%s\"에 prototype 유형을 작성할때에 prototype 유형의 요소는\n"
+"대응하는 slot 클래스에 match 할수 없었습니다:%s"
 
 msgid "the '%s' list for class \"%s\", includes an undefined class \"%s\""
 msgstr ""
@@ -1047,11 +1064,20 @@ msgstr ""
 msgid "argument 'what' should be the name of a function"
 msgstr "인수'what' 함수의 이름이어야 합니다"
 
+msgid ".TraceWithMethods: after computing what, whereF"
+msgstr ""
+
 msgid "no function definition for '%s' found"
 msgstr "검색되는 '%s' 때문에 함수 정의가 아닙니다"
 
+msgid ".TraceWithMethods: untrace case"
+msgstr ""
+
 msgid "the method for \"%s\" for this signature was not being traced"
 msgstr "이 signature의 \"%s\" 메소드는 영향이 되고 있지 않았습니다"
+
+msgid ".TraceWithMethods: about to assign or setMethod"
+msgstr ""
 
 msgid ""
 "making a traced version of a primitive; arguments will be treated as '...'"

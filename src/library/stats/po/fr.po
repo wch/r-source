@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-17 10:22+0000\n"
+"POT-Creation-Date: 2006-01-10 15:31+0000\n"
 "PO-Revision-Date: 2005-12-06 23:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -67,11 +67,19 @@ msgstr "seulement 2500 lignes autorisées pour sm.method=\"spline\""
 msgid "span is too small"
 msgstr "fenêtre trop étroite"
 
-#: mburg.c:197
+#: mAR.c:467
+msgid "Singular matrix in qr_solve"
+msgstr "Matrice singulière dans qr_solve"
+
+#: mAR.c:510
+msgid "Singular matrix in ldet"
+msgstr "Matrice singulière dans ldet"
+
+#: mAR.c:697
 msgid "Invalid vmethod"
 msgstr "vmethod incorrecte"
 
-#: mburg.c:333
+#: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "l'algorithme de Burg n'a pas trouvé la correlation partielle"
 
@@ -221,18 +229,6 @@ msgstr "'m' doit être une liste"
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' et 'upperb' doivent tous deux être des vecteurs numériques"
 
-#: qr.c:30
-msgid "assert failed in src/library/ts/src/carray.c"
-msgstr "échec d'assertion dans src/library/ts/src/carray.c"
-
-#: qr.c:68
-msgid "Singular matrix in qr_solve"
-msgstr "Matrice singulière dans qr_solve"
-
-#: qr.c:111
-msgid "Singular matrix in ldet"
-msgstr "Matrice singulière dans ldet"
-
 #: smooth.c:79
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
@@ -254,6 +250,9 @@ msgstr "erreur d'allocation dans smooth(*, '3R')."
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valeur manquante dans les %d dernières observations"
+
+#~ msgid "assert failed in src/library/ts/src/carray.c"
+#~ msgstr "échec d'assertion dans src/library/ts/src/carray.c"
 
 #~ msgid "'control$maxiter' absent"
 #~ msgstr "'control$maxiter' absent"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-30 15:58\n"
+"POT-Creation-Date: 2006-01-10 15:31\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -312,6 +312,10 @@ msgstr ""
 msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
+#, fuzzy
+msgid "Missing link(s) in documentation object '%s':"
+msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
 msgid "argument 'lines' must be a character vector"
 msgstr "argomento 'lines' deve essere un vettore carattere"
 
@@ -363,6 +367,10 @@ msgstr "manca la descrizione dell'\\item per l'elemento '%s'"
 
 msgid "unmatched \\item description for item '%s'"
 msgstr "descrizione \\item non coincidente per l'elemento '%s'"
+
+#, fuzzy
+msgid "unclosed \\link"
+msgstr "\\dontrun non chiusa"
 
 #, fuzzy
 msgid "unclosed \\%s"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-12-19 09:12\n"
+"POT-Creation-Date: 2006-01-10 15:31\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,13 +116,28 @@ msgstr ""
 msgid "invalid PDF version"
 msgstr ""
 
-msgid "invalid %s in font specification"
-msgstr ""
-
 msgid "Invalid font type"
 msgstr ""
 
+msgid "invalid family name in font specification"
+msgstr ""
+
+msgid "invalid metric information in font specification"
+msgstr ""
+
+msgid "invalid encoding in font specification"
+msgstr ""
+
 msgid "Not a CID font"
+msgstr ""
+
+msgid "invalid CMap name in font specification"
+msgstr ""
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr ""
+
+msgid "invalid PDF resource in font specification"
 msgstr ""
 
 msgid "Invalid font database name"

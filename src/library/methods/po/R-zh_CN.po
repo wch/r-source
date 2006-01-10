@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-10 15:19\n"
+"POT-Creation-Date: 2006-01-10 15:31\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -270,6 +270,11 @@ msgstr ""
 "为函数'%1$s'作为方法标记而用的目标对象看来不象是合法的标记(单类别名字向量) ："
 "一共有%2$d类别名字，但标记目标对象里只有%3$d个單元"
 
+#, fuzzy
+msgid ""
+"more elements in the method signature (%d) than in the generic signature (%d)"
+msgstr "方法定义里所忽略的正式变元不能存在于标记(%s) 里"
+
 msgid ""
 "in the method signature for function '%s' invalid argument names in the "
 "signature: %s"
@@ -292,6 +297,12 @@ msgid ""
 "initialize method returned an object of class \"%s\" instead of the required "
 "class \"%s\""
 msgstr "初始化方法回復了类别为\"%s\"的目标对象而不是所要求的\"%s\"这一类别"
+
+msgid "An object of class \""
+msgstr ""
+
+msgid "\""
+msgstr ""
 
 msgid ""
 "the names in signature for method (%s) do not match function's arguments (%s)"
@@ -424,6 +435,10 @@ msgid ""
 "prototype is a list with named elements (could be ambiguous):  better to use "
 "function prototype() to avoid trouble."
 msgstr "原型是带名字單元的串列(允许有歧义) ：最好用函数prototype()以避免出错。"
+
+#, fuzzy
+msgid "named elements of prototype do not correspond to slot names: %s"
+msgstr "为类别\"%s\"建立原型时出了错，原型的單元同槽的类别对应不上: %s"
 
 msgid "the '%s' list for class \"%s\", includes an undefined class \"%s\""
 msgstr "类别为\"%s\"的'%s'串列包含不存在的类别\"%s\""
@@ -894,11 +909,20 @@ msgstr ""
 msgid "argument 'what' should be the name of a function"
 msgstr "变元'what'必需是一个函数名字"
 
+msgid ".TraceWithMethods: after computing what, whereF"
+msgstr ""
+
 msgid "no function definition for '%s' found"
 msgstr "没有'%s'这样一个函数定义"
 
+msgid ".TraceWithMethods: untrace case"
+msgstr ""
+
 msgid "the method for \"%s\" for this signature was not being traced"
 msgstr "此标记的\"%s\"方法没有被追踪"
+
+msgid ".TraceWithMethods: about to assign or setMethod"
+msgstr ""
 
 msgid ""
 "making a traced version of a primitive; arguments will be treated as '...'"
