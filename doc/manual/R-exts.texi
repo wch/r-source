@@ -1715,6 +1715,7 @@ Then, the directive in the @file{NAMESPACE} file
 useDynLib(myDLL, .registration = TRUE)
 @end example
 
+@noindent
 causes the DLL to be loaded and also for the @R{} variables @code{foo},
 @code{bar_sym}, @code{R_call_sym} and @code{R_version_sym} to be
 defined in the package's name space.
@@ -1736,7 +1737,7 @@ R_version <- function()
 
 More information about this symbol lookup, along with some approaches
 for customizing it, is available from
-@url{http://www.omegahat.org/example/RDotCall}.
+@url{http://www.omegahat.org/examples/RDotCall}.
 
 @node An example, Summary -- converting an existing package, Load hooks, Package name spaces
 @subsection An example
