@@ -1221,6 +1221,7 @@ Compiler Collection.
 @findex MakeDll
 @findex Makevars.win
 @findex HELP
+@findex HELPTYPES
 @findex WINHELP
 
 This section describes ways to customize package compilation using the
@@ -1231,8 +1232,8 @@ The Makefiles can be customized: in particular the name of the DLL can
 be set (for example we once needed @code{integrate-DLLNM=adapt}), the
 compile flags can be set (see the examples in @file{MakeDll}) and the
 types of help (if any) to be generated can be chosen (variables
-@code{HELP} and @code{WINHELP}). The simplest way to customize the
-compilation steps is to set variables in a file
+@code{HELP}, @code{HELPTYPES} and @code{WINHELP}).  The simplest way to
+customize the compilation steps is to set variables in a file
 @file{src/Makevars.win}, which will automatically be included by
 @file{MakeDLL}. For example, for RODBC @file{src/Makevars.win} could
 include the line

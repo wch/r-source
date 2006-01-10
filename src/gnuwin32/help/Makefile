@@ -23,8 +23,7 @@ pkg-% help-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
-	    -txt -html -example -latex $(CHM) \
-	    $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
+	    $(HELPTYPES) $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	fi
 
 pkgfake-%:

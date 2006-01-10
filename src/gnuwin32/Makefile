@@ -328,17 +328,17 @@ ifeq ($(strip $(HELP)),YES)
 	@$(ECHO) "  installing help"
   ifeq ($(strip $(DPKG)),)
     ifeq ($(strip $(WINHELP)),CHM)
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* CHM=-chm $($*-HELP)help-$*
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* CHM=-chm chm-$*
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='$(HELPTYPES) -chm' $($*-HELP)help-$*
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* chm-$*
     else
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* $($*-HELP)help-$*
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$* HELPTYPES='$(HELPTYPES)' $($*-HELP)help-$*
     endif
   else
     ifeq ($(strip $(WINHELP)),CHM)
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) CHM=-chm $($*-HELP)help-$*
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) CHM=-chm  chm-$*
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) HELPTYPES='$(HELPTYPES) -chm' $($*-HELP)help-$*
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) chm-$*
     else
-	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) $($*-HELP)help-$*
+	@$(MAKE) --no-print-directory -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) HELPTYPES='$(HELPTYPES)' $($*-HELP)help-$*
     endif
   endif
 endif
@@ -415,7 +415,7 @@ clean: cleanwin $(PKGCLEAN)
 	  $(RM) -rf ../library/$$p; \
 	done
 
-distclean veryclean: clean clean-recommended
+distclean: clean clean-recommended
 	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/iconv.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h \
@@ -423,8 +423,8 @@ distclean veryclean: clean clean-recommended
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
 	$(RM) ../library/*/src/*.d ../library/*/src/Makedeps
 	$(RM) ../library/*/src/*.dll
-	$(RM) ../library/grid/tests/Rplots.ps
 	$(RM) -r ../library/*/check
+	$(RM) ../library/*/tests/*.ps
 	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
 	../library/tcltk//src/tk$(TCL_VERSION).def
 	$(RM) R.exp Rm.exp COPYRIGHTS
@@ -440,15 +440,19 @@ distclean veryclean: clean clean-recommended
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
+	$(RM) ../../SVN-REVISION.bak
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
 	$(RM) -r cran/*.html cran/*.htm cran/ReadMe cran/README* cran/*.exe \
 		cran/md5sum.txt cran/*.$(RPREFIX) 
 	$(RM) -r .vignettes # it gets left behind sometimes
-	$(RM) ../../doc/FAQ ../../doc/RESOURCES ../../doc/html/resources.html \
-	  ../../SVN-REVISION # not in SVN sources
 	$(RM) -r ../../share/locale
 	$(RM) XINSTALL # from cross-building
 	$(RM) Rpwd.exe # do this last of all
+
+veryclean: distclean
+	$(RM) ../../doc/FAQ ../../doc/RESOURCES ../../doc/html/resources.html \
+	  ../../SVN-REVISION # not in SVN sources
+
 
 cleanwin:
 	$(RM) *.o *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 Rm.exp1\

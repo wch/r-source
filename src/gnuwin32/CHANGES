@@ -101,6 +101,8 @@ package 'stats' does so.
 Rterm now responds to Ctrl-C during input (Ctrl-Break always worked).
 This means ^C is no longer echoed.
 
+R CMD INSTALL --docs now has more options.
+
 
 
 R 2.2.1 patched

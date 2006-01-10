@@ -134,12 +134,24 @@ if($opt_library){
 
 my $helpflags = "HELP=YES WINHELP=CHM";
 if($opt_docs) {
+    my $tmp, $chm, @l;
     if ($opt_docs eq "none") {
 	$helpflags = "HELP=NO";
     } elsif ($opt_docs eq "normal") {
 	$helpflags = "HELP=YES WINHELP=NO";
     } elsif ($opt_docs eq "chm"|| ($opt_docs eq "all")) {
 	$helpflags = "HELP=YES WINHELP=CHM";
+    } elsif ($opt_docs =~ /,/) {
+	@l = split /, */, $opt_docs;
+	$tmp = ""; $chm = "NO";
+	foreach $f (@l) {
+	    if ($f eq "chm") {
+		$chm = "CHM";
+		next;
+	    }
+	    $tmp .= " -$f";
+	}
+	$helpflags = "HELP=YES WINHELP=$chm HELPTYPES='$tmp'";
     } else {
 	die "ERROR: invalid --docs value `$opt_docs'\n";
     }
@@ -502,7 +514,9 @@ Options:
   --auto-zip	        select whether to zip automatically
   --build		zip-up the installation.  Implies --auto-zip
 
-TYPE can be "none" or "normal" or "chm" (the default) or "all"
+TYPE can be "none" or "normal" or "chm" (the default) or "all", or
+  a comma-separated list of one or more of 
+  'txt', 'html', 'latex', "example' and 'chm'.
 
 Report bugs to <r-bugs\@r-project.org>.
 END
