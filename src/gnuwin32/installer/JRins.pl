@@ -139,7 +139,6 @@ Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Componen
 Name: "user"; Description: {cm:user}
 Name: "compact"; Description: {cm:compact}
 Name: "full"; Description: {cm:full}
-Name: "CJK"; Description: {cm:CJK}
 Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
