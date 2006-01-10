@@ -286,11 +286,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 
 assign(".PostScript.Fonts", list(), envir = .PSenv)
 
-fontError <- function(errDesc)
-    stop(gettextf("invalid %s in font specification", errdesc), domain = NA)
-
 checkFont <- function(font) UseMethod("checkFont")
-
 
 checkFont.default <- function(font) stop("Invalid font type")
 
@@ -301,15 +297,15 @@ checkFont.default <- function(font) stop("Invalid font type")
 # Already checked that it had a name
 checkFont.Type1Font <- function(font) {
     if (is.null(font$family) || !is.character(font$family))
-        fontError("font family name")
+        stop("invalid family name in font specification")
     if (is.null(font$metrics) || !is.character(font$metrics) ||
         length(font$metrics) < 4)
-        fontError("font metric information")
+        stop("invalid metric information in font specification")
         ## Add default symbol font metric if none provided
     if (length(font$metrics) == 4)
         font$metrics <- c(font$metrics, "Symbol.afm")
     if (is.null(font$encoding) || !is.character(font$encoding))
-        fontError("font encoding")
+        stop("invalid encoding in font specification")
     font
 }
 
@@ -321,19 +317,19 @@ checkFont.CIDFont <- function(font) {
     if (!inherits(font, "CIDFont"))
         stop("Not a CID font")
     if (is.null(font$family) || !is.character(font$family))
-        fontError("font family name")
+        stop("invalid family name in font specification")
     if (is.null(font$metrics) || !is.character(font$metrics) ||
         length(font$metrics) < 4)
-        fontError("font metric information")
+        stop("invalid metric information in font specification")
         ## Add default symbol font metric if none provided
     if (length(font$metrics) == 4)
         font$metrics <- c(font$metrics, "Symbol.afm")
     if (is.null(font$cmap) || !is.character(font$cmap))
-        fontError("CMap name")
+        stop("invalid CMap name in font specification")
     if (is.null(font$cmapEncoding) || !is.character(font$cmapEncoding))
-        fontError("font cmapEncoding")
+        stop("invalid 'cmapEncoding' in font specification")
     if (is.null(font$pdfresource) || !is.character(font$pdfresource))
-        fontError("PDF resource")
+        stop("invalid PDF resource in font specification")
     font
 }
 
