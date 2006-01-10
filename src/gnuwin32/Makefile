@@ -427,7 +427,7 @@ distclean: clean clean-recommended
 	$(RM) ../library/*/tests/*.ps
 	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
 	../library/tcltk//src/tk$(TCL_VERSION).def
-	$(RM) R.exp Rm.exp COPYRIGHTS
+	$(RM) R.exp COPYRIGHTS
 	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
@@ -455,7 +455,7 @@ veryclean: distclean
 
 
 cleanwin:
-	$(RM) *.o *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 Rm.exp1\
+	$(RM) *.o *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 \
 	   .RData .Rhistory Makedeps *.d
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
