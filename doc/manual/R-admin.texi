@@ -559,7 +559,7 @@ The @command{configure} or @command{make} variables @code{rdocdir} and
 @code{libdir}.  The C header files can be installed to the value of
 @code{rincludedir}: note that as the headers are not installed into a
 subdirectory you probably want something like
-@code{rincludedir=/usr/local/include/R-2.2.0}.
+@code{rincludedir=/usr/local/include/R-@value{VERSIONno}}.
 
 If you have made @R{} as a shared/dynamic library you can install it in
 your system's library directory by
@@ -971,12 +971,12 @@ You will need @code{Perl}, @command{zip} and @command{unzip} installed
 and @command{makeinfo} version 4.7 or later (part of GNU
 @code{texinfo}).
 
-You also need the R source (@file{R-2.x.y.tgz}).
+You also need the R source (@file{R-@value{VERSIONno}.tgz}).
 
-Then: untar @file{R-2.x.y.tgz} somewhere, and
+Then: untar @file{R-@value{VERSIONno}.tgz} somewhere, and
 
 @example
-cd /somewhere/R-2.x.y/src/gnuwin32
+cd /somewhere/R-@value{VERSIONno}/src/gnuwin32
 @end example
 
 Edit @file{MkRules} to set @code{BUILD=CROSS} and the appropriate
@@ -1002,7 +1002,7 @@ for testing) use
 @example
 cd installer
 make imagedir
-zip -r9X R-2.3.0.zip R-2.3.0  # or something similar
+zip -r9X R-@value{VERSIONno}.zip R-@value{VERSIONno}  # or something similar
 @end example
 
 We have not found a reliable way to convert base to lazy-loading when
@@ -1051,7 +1051,7 @@ and then sit back and wait.  The first two options are the default (and
 strongly recommended), and with some toolsets have been essential.  The
 second line of options is also default on Mac OS X, but needed only if
 you want to build @R{} for use with @code{R.app} Console, and imply
-@option{--enable-R-shlib} to build @R{} as a shared library.
+@option{--enable-R-shlib} to build @R{} as a shared/dynamic library.
 
 These options configure @R{} to be built and installed as a framework
 called @file{R.framework}.  The default path for @file{R.framework} is
@@ -1918,12 +1918,13 @@ is unclear, 32-bit versions of ACML do run on other @cputype{ia32} chips
 such as AthlonMP and P4.
 
 Note that the BLAS library will be used for several add-on packages as
-well as for @R{} itself.  This means that it is better to use a shared
-BLAS library, as most of a static library will be compiled into the @R{}
-executable and each BLAS-using package.  In any case, the BLAS library
-must be usable with dynamically-loadable code: this can be a problem
-with ATLAS on some platforms (including @cputype{x86_64}) as it is not
-by default built with position-independent code.
+well as for @R{} itself.  This means that it is better to use a
+shared/dynamic BLAS library, as most of a static library will be
+compiled into the @R{} executable and each BLAS-using package.  In any
+case, the BLAS library must be usable with dynamically-loadable code:
+this can be a problem with ATLAS on some platforms (including
+@cputype{x86_64}) as it is not by default built with
+position-independent code.
 
 You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.  This is checked by
@@ -2053,7 +2054,7 @@ use readline library (if available) [yes]
 @item --enable-R-profiling
 attempt to compile support for @code{Rprof()} [yes]
 @item --enable-R-shlib
-build @R{} as a shared library [no]
+build @R{} as a shared/dynamic library [no]
 @end table
 
 @noindent
@@ -2069,7 +2070,7 @@ the main @R{} executable @file{R.bin} against that library.  This can
 only be done if all the code (including system libraries) can be
 compiled into a dynamic library, and there may be a
 performance@footnote{We have measured 15--20% on i686 Linux and around
-10% on @cputype{x86_64} Linux.}  penalty.  So you probably only want
+10% on @cputype{x86_64} Linux.} penalty.  So you probably only want
 this if you will be using an application which embeds @R{}.  Note that C
 code in packages installed on a @R{} system linked with
 @option{--enable-R-shlib} are linked against the dynamic library and so
@@ -2543,19 +2544,18 @@ with @command{gcc} or the Intel compilers see
 @code{www.nakama.ne.jp/memo/ia64_linux}}.
 
 Jennifer Lai used the Portland Group compilers on @cputype{x86_64} to
-build pre-2.2.0 with settings
+build pre-2.2.0.  Updated versions of the settings she used are
 
 @example
 PG_HOME=/usr/pgi/linux86-64/6.0
 CC=pgcc
-CFLAGS="-g -O2 -mieee-fp"
+CFLAGS="-g -O2"
 CPPFLAGS="-I$PG_HOME/include -I$PG_HOME/include/CC"
-CPICFLAGS=-fpic
 F77=pgf77
 FFLAGS=-O2
-FPICFLAGS=-fpic
 CXX=pgCC
-CXXPICFLAGS=-fpic
+FC=pgf95
+FCFLAGS=-O2
 SHLIB_CXXLDFLAGS=-shared
 SHLIB_LDFLAGS=-shared
 LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
