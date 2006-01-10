@@ -26,8 +26,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
         stop("numeric or complex values required in 'eigen'")
     if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
 
-    if(missing(symmetric))
-        symmetric <- isSymmetric.matrix(x)
+    if(is.numeric(x)) storage.mode(x) <- "double"
+    if(missing(symmetric)) symmetric <- isSymmetric.matrix(x)
 
     if (!EISPACK) {
         if (symmetric) {
