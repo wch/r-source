@@ -133,7 +133,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \code{print} method, and a subset method.  As the individual plots are
   of class \code{"recordedplot"} they can be replayed by printing them:
   see \code{\link{recordPlot}}.  The active plot history is stored in
-  variable \code{.SavedPlots} in package \pkg{base}.
+  variable \code{.SavedPlots} in the workspace.
 
   When a screen device is double-buffered (the default) the
   screen is updated 100ms after last plotting call or every 500ms during
@@ -143,11 +143,10 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 
   The font used for text drawn in a Windows device may be controlled in
   two ways.  The file \code{RHOME\\etc\\Rdevga} can be used to specify
-  mappings for \code{par(font=)} (in the graphics
-  package). Alternatively, a device-independent R graphics font family
-  can be specified (e.g., via \code{par(family=)} in the graphics
-  package) and this will be mapped via the Windows font database (see
-  \code{windowsFonts}).
+  mappings for \code{par(font=)} (in the graphics package).  Alternatively,
+  a device-independent \R graphics font family can be specified (e.g.,
+  via \code{par(family=)} in the graphics package) and this will be
+  mapped via the Windows font database (see \code{\link{windowsFonts}}).
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96inch.  Multiples less than 1 are allowed, down to one pixel width.
