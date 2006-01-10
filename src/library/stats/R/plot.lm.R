@@ -228,7 +228,8 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     if (show[6]) {
 	ymx <- max(cook, na.rm = TRUE)*1.025
 	g <- hatval/(1-hatval)
-	plot(g, cook, xlim = c(0, max(g)), ylim = c(0, ymx),
+        g[is.infinite(g)] <- NaN
+	plot(g, cook, xlim = c(0, max(g, na.rm=TRUE)), ylim = c(0, ymx),
 	     main = main, xlab = "Leverage", ylab = "Cook's distance",
 	     xaxt = "n", type = "n", ...)
 	athat <- pretty(hatval)

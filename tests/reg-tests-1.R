@@ -3927,6 +3927,7 @@ stopifnot(is.nan(covratio(Uniform)[Ind]))
 stopifnot(is.nan(cooks.distance(Uniform)[Ind]))
 # had infinities in 2.2.0 on some platforms
 plot(Uniform)
+plot(Uniform, 6) # added 2006-01-10
 ##
 
 ## alg="port" in nls and bounds (PR#8401)
