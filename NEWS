@@ -571,6 +571,10 @@ BUG FIXES
     o	strptime() in 2.2.1 sometimes did not set $isdst when it was
 	previously set.
 
+    o	Another case of infinite influence has been worked around.
+	(An addendum to PR#8367.)
+
+
 
 
 		CHANGES IN R VERSION 2.2.1
