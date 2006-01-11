@@ -3131,7 +3131,7 @@ function(package, dir, lib.loc = NULL)
     db <- cbind(do.call("rbind", db), rep(names(db), sapply(db, NROW)))
 
     ## Take the targets from the non-anchored xrefs.
-    db <- db[db[, 2] == "", -2]
+    db <- db[db[, 2] == "", -2, drop = FALSE]
 
     ## The bad ones:
     db <- db[! db[, 1] %in% unlist(aliases), , drop = FALSE]
