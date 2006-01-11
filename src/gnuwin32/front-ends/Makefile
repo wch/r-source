@@ -52,11 +52,8 @@ Rterm-LIBS=-luser32 -L../../../bin -lR
 Rgui-LIBS=-L../../../bin -lR
 Rpwd-LIBS=-lkernel32
 
-## needs binutils > 2.15.90 which is what the cross-compiler toolkit has.
-ifneq ($(strip $(BUILD)),CROSS)
 Rgui-LINKFLAGS+=-Wl,--large-address-aware
 Rterm-LINKFLAGS+=-Wl,--large-address-aware
-endif
 ## Increase stack size to 10Mb
 Rgui-LINKFLAGS+=-Wl,--stack=0xA00000
 Rterm-LINKFLAGS+=-Wl,--stack=0xA00000
