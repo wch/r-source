@@ -3366,16 +3366,16 @@ In late 2005 there was an installer @code{MinGW-5.0.0.exe} in the
 `Proposed' section.  Using this, select the @samp{Candidate} package and
 add the @samp{g++} and @samp{g77} compilers to the @samp{MinGW base
 tools}: components will be downloaded from Sourceforge and unpacked.
-Note that you do need the @samp{Candidate} compilers (@code{gcc-3.4.4})
+Note that you do need the @samp{Candidate} compilers (@code{gcc-3.4.5})
 to compile some contributed packages correctly, although
 @code{gcc-3.4.2} suffices to build @R{} itself.
 
 An alternative is to download the components individually, currently
 
 @example
-gcc-core-3.4.4-20050522-1.tar.gz
-gcc-g++-3.4.4-20050522-1.tar.gz
-gcc-g77-3.4.4-20050522-1.tar.gz
+gcc-core-3.4.5-20051220-1.tar.gz
+gcc-g++-3.4.5-20051220-1.tar.gz
+gcc-g77-3.4.5-20051220-1.tar.gz
 binutils-2.16.91-20050827-1.tar.gz
 mingw-runtime-3.9.tar.gz
 w32api-3.5.tar.gz
