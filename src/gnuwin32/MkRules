@@ -26,7 +26,7 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 # Set to YES and specify the path to libacml.a 
 # if you want to use the AMD's ACML BLAS.
 USE_ACML=NO
-ACML_PATH=c:/Program Files/AMD/acml2.7.0/gnu32/lib
+ACML_PATH=c:/Program Files/AMD/acml3.0.0/gnu32/lib
 ## Set this to YES if you want to use ACML's LAPACK not R's.
 USE_ACML_LAPACK=NO
 
@@ -63,10 +63,11 @@ F95FLAGS=-O2 $(PKG_FCFLAGS)
 ## =================== cross-compilation settings  =================
 
 ifeq ($(strip $(BUILD)),CROSS)
-# Next might be i386-mingw32msvc- or i586- depending on the cross-compiler.
-BINPREF=mingw32-
+# Next might be mingw32- or i386-mingw32msvc- or i586- 
+# depending on the cross-compiler.
+BINPREF=i586-mingw32-
 # Set this to where the mingw32 include files are. It must be accurate.
-HEADER=/users/ripley/R/cross-tools4/i586-mingw32/include
+HEADER=/users/ripley/R/cross-tools5/i586-mingw32/include
 endif
 # path (possibly full path) to same version of R on the host system
 # R_EXE=R
