@@ -3080,6 +3080,7 @@ AC_DEFUN([R_GCC4_VISIBILITY],
                 [r_cv_visibility_attribute],
 [cat > conftest.c <<EOF
 int foo __attribute__ ((visibility ("hidden"))) = 1;
+int bar __attribute__ ((visibility ("default"))) = 1;
 EOF
 r_cv_visibility_attribute=no
 if AC_TRY_COMMAND(${CC-cc} -Werror -S conftest.c -o conftest.s 1>&AS_MESSAGE_LOG_FD); then
