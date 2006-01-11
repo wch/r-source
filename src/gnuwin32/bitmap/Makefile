@@ -23,7 +23,7 @@ $(JPEGDIR)/jconfig.h: jconfig.h
 	$(CP) jconfig.h $(JPEGDIR)/jconfig.h
 
 rbitmap-CFLAGS=-Wall -pedantic -DHAVE_PNG -DHAVE_JPEG -I../../extra/zlib -I./libpng -I$(JPEGDIR) -I../../include
-Rbitmap-DLLLIBS=-L../../../lib $(LIBUNICOWS) -lR
+Rbitmap-DLLLIBS=-L../../../bin $(LIBUNICOWS) -lR
 Rbitmap-DLLFLAGS=-s
 
 Rbitmap.dll: rbitmap.o $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a

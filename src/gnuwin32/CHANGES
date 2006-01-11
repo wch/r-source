@@ -72,9 +72,8 @@ checked for a writable directory for the R session temporary directory:
 (the last will always succeed).  The changes are that TMPDIR is checked
 first and that the values are checked to be a directory.
 
-The import library librproxy.a has been removed since linking directly
-to Rproxy.dll works in current MinGW (and package rcom will be updated
-to do so).
+The import libraries libR.a, libRblas.a, libRlapack.a and libproxy.a
+are no longer used, as we now link directly to the corresponding DLL.
 
 Import libraries are now made by default without -k (--kill-at).  This
 might be relevant for contributed software using R's macros.

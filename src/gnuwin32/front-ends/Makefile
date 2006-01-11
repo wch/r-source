@@ -48,8 +48,8 @@ rgui-CFLAGS=-DWin32
 rterm-CFLAGS=-DWin32
 Rgui-LINKFLAGS=-mwindows
 
-Rterm-LIBS=-luser32 -L../../../lib -lR
-Rgui-LIBS=-L../../../lib -lR
+Rterm-LIBS=-luser32 -L../../../bin -lR
+Rgui-LIBS=-L../../../bin -lR
 Rpwd-LIBS=-lkernel32
 
 ## needs binutils > 2.15.90 which is what the cross-compiler toolkit has.
@@ -89,7 +89,7 @@ bdx_util-CFLAGS=-D_IN_RPROXY_
 bdx_com-CFLAGS=-D_IN_RPROXY_
 bdx_SEXP-CFLAGS=-D_IN_RPROXY_
 rproxy-DLLFLAGS=-mwindows
-rproxy-DLLLIBS=-L../../../lib -lR -lole32 -luuid -loleaut32
+rproxy-DLLLIBS=-L../../../bin -lR -lole32 -luuid -loleaut32
 rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
 	bdx_util.o bdx_SEXP.o bdx_com.o rtico.o
 

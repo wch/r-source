@@ -49,7 +49,7 @@ else
 R-DLLFLAGS = -mwindows
 endif
 
-R-DLLLIBS =-L../../lib $(FLIBS) -lRblas -lcomctl32 -lversion $(LIBEXTRAS)
+R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c extra.c \
@@ -88,9 +88,8 @@ rbuild:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
-	@$(MAKE) --no-print-directory ../../lib/libRblas.a
+	@$(MAKE) --no-print-directory libRblas.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
-	@$(MAKE) --no-print-directory ../../lib/libR.a
 	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
 
@@ -183,9 +182,9 @@ fixed/fixdesc:
 
 dllversion.o: ../include/Rversion.h
 
-R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
+R.dll: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
-Rdll: makeMakedeps ../../lib/libRblas.a ../../bin/R.dll
+Rdll: makeMakedeps libRblas.a ../../bin/R.dll
 
 ../../bin/R.dll: FORCE
 	@$(MAKE) --no-print-directory fixfiles
@@ -202,31 +201,8 @@ endif
 
 FORCE:
 
-front-ends: ../../lib/libR.a
+front-ends:
 	$(MAKE) --no-print-directory -C front-ends
-
-R.a: $(OBJS)
-	@$(ECHO) -------- Building $@ --------
-	@$(RM) R.a
-	$(AR) cr R.a $^
-	$(RANLIB) R.a
-
-
-# R.dll exports all global symbols BUT import library (libR.a)
-# only (all functions) + (global vars listed in exported-vars))
-
-../../lib/libR.a:  R.exp
-	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib $@
-
-R.exp: R.exp1
-	@(diff R.exp R.exp1 > /dev/null 2>&1) || $(CP) R.exp1 R.exp
-
-R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
-	@$(ECHO) EXPORTS > $@
-	@$(NM) R.a $(MAINLIBS) $(EXTRALIBS) > RDefs
-	@$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
-	@$(CAT) exported-vars >> $@
-	@$(RM) RDefs
 
 ../../library/R.css: ../../doc/html/R.css
 	$(CP) $< $@
@@ -253,8 +229,7 @@ Rblas: ../../bin/Rblas.dll
 Rblas-clean:
 	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o
 
-../../lib/libRblas.a:  Rblas.def
-	@$(MKDIR) -p ../../lib
+libRblas.a:  Rblas.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
 	  --def Rblas.def --output-lib $@
 
@@ -271,17 +246,17 @@ ifeq ($(strip $(USE_ACML)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../lib -lR  -L"$(ACML_PATH)" -lacml $(FLIBS)
+	   -L../../bin -lR  -L"$(ACML_PATH)" -lacml $(FLIBS)
 else
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../lib -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas
+	   -L../../bin -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../lib -lR $(FLIBS)
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../bin -lR $(FLIBS)
 endif
 endif
 
