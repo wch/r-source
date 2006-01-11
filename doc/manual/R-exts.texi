@@ -1007,8 +1007,7 @@ compiled FORTRAN 90/95 code can be mixed with any other type of code,
 nor that a build of @R{} will have support for such packages.
 
 There is a MinGW build of @command{gfortran} available from
-@uref{http://gcc.gnu.org/wiki/GFortranBinaries,
-@code{http://@/gcc.gnu.org/@/wiki/@/GFortranBinaries}} and a MinGW
+@url{http://@/gcc.gnu.org/@/wiki/@/GFortranBinaries} and a MinGW
 build@footnote{Remember to set @env{LIBRARY_PATH} to point to your MinGW
 @file{lib} directory} of @command{g95} from @uref{http://www.g95.org}.
 Set @code{F95} in @code{MkRules} to point to the installed compiler.
@@ -1253,7 +1252,7 @@ provide a similar scheme for @code{R CMD build}.
 There are other internal settings that can be changed via environment
 variables @code{_R_CHECK_*_}: see the Perl source code.  One that may be
 interesting is @code{_R_CHECK_USE_CODETOOLS_} to make use of the
-@code{codetools} package available from
+@pkg{codetools} package available from
 @url{http://www.stat.uiowa.edu/~luke/R/codetools}.
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
@@ -1668,7 +1667,7 @@ computation as above where we resolve the symbol when the package is
 loaded. The only difference is that this is done each time in the case
 of @code{dll$myRoutine}.
 
-In order to use this dynamic approach (e.g. @code{dll$myRoutine}), one
+In order to use this dynamic approach (e.g., @code{dll$myRoutine}), one
 needs the reference to the DLL as an @R{} variable in the package.  The
 DLL can be assigned to a variable by using the @code{variable =
 dllName} format used above for mapping symbols to @R{} variables.  For
@@ -2139,8 +2138,8 @@ The procedures make use of @code{msgfmt} and @code{xgettext} which are
 part of @acronym{GNU} @code{gettext} and this will need to be installed:
 Windows users can find pre-compiled binaries at the @acronym{GNU}
 archive mirrors and packaged with the @code{poEdit} package
-@uref{http://poedit.sourceforge.net/download.php#win32,
-@code{http://@/poedit.sourceforge.net/@/download.php#win32}}.
+(@url{http://@/poedit.sourceforge.net/@/download.php#win32}).
+
 
 @menu
 * C-level messages::
@@ -7664,8 +7663,7 @@ currently available that interface directly with @R{} and provide a
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
 Baier available on CRAN
-(@url{http://cran.r-project.org/other-software.html,
-@code{http://@/cran.r-project.org/@/other-software.html}}) which works
+(@url{http://@/cran.r-project.org/@/other-software.html}) which works
 with @file{Rproxy.dll} (in the R distribution) and @file{R.dll} to
 support transfer of data to and from R and remote execution of R
 commands, as well as embedding of an R graphics window.  The @pkg{rcom}
