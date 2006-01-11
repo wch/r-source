@@ -422,8 +422,12 @@ UTILITIES
     o	R CMD f77 has been removed now f2c is no longer supported.
 
     o   The version string shown in the startup message and by
-        "R --version", and the one stored in variable R.version.string
+        "R --version", and that stored in variable R.version.string
 	are now in exactly the same format.
+
+    o	The base name of a help file needs to be valid as part of a file://
+	URL, do R CMD check now checks the names are ASCII and do not
+	contain % .
 
 
 DOCUMENTATION

@@ -188,6 +188,8 @@ names.  In addition, files with names @samp{con}, @samp{prn},
 @samp{lpt1} to @samp{lpt3} after conversion to lower case and stripping
 possible ``extensions'', are disallowed.  Also, file names in the same
 directory must not differ only by case (see the previous paragraph).
+In addition, the names of @samp{.Rd} files will be used in URLs and so
+must be ASCII and not contain @code{%}.
 
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.

@@ -151,6 +151,10 @@
    don't. */
 #define HAVE_DECL_STRNCASECMP 1
 
+/* Define to 1 if you have the declaration of `vasprintf', and to 0 if you
+   don't. */
+#define HAVE_DECL_VASPRINTF 0
+
 /* Define to 1 if you have the declaration of `vsnprintf', and to 0 if you
    don't. */
 #define HAVE_DECL_VSNPRINTF 1
@@ -604,6 +608,9 @@
 
 /* Define if you have the 'unsigned long long' type. */
 #define HAVE_UNSIGNED_LONG_LONG 1
+
+/* Define to 1 if you have the `vasprintf' function. */
+/* #undef HAVE_VASPRINTF */
 
 /* Define to 1 if you have the `va_copy' function. */
 #define HAVE_VA_COPY 1

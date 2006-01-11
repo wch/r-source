@@ -632,6 +632,10 @@ sub check_pkg {
     ## LPT2    Second parallel printer port
     ## LPT3    Third parallel printer port
 
+    ## In addition, the names of help files get converted to HTML
+    ## file names and so should be valid in URLs.  We check that they are
+    ## ASCII and do not contain %, which is what is known to cause troubles.
+
     $log->checking("for portable file names");
     my @bad_files = ();
     sub find_wrong_names {
@@ -650,8 +654,17 @@ sub check_pkg {
 	my $file_name = basename($file_path);
 	if(grep(/[[:cntrl:]\"\*\/\:\<\>\?\\\|]/, $file_name)) {
 	    push(@bad_files, $file_path);
-	}
-	else {
+	} elsif(dirname($file_path) =~ /man$/) {
+	    my $x, $len = length $file_name;
+	    for ($x=0; $x < $len; $x++) {
+		my $ch = substr($file_name, $x, 1);
+		## collation is ASCII as uselocale is not in effect.
+		if ($ch eq "%" || $ch lt " " || $ch gt "~")  {
+		    push(@bad_files, $file_path);
+		    break;
+		}
+	    }
+	} else {
 	    $file_name =~ tr/A-Z/a-z/;
 	    $file_name =~ s/\..*//;
 	    push(@bad_files, $file_path)
