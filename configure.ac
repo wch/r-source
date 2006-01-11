@@ -1486,6 +1486,9 @@ R_CHECK_FUNCS([access chdir ftruncate getcwd getuid symlink sysconf],
 ## everyone has it, possibly not declared.
 AC_CHECK_FUNCS(putenv)
 AC_CHECK_DECLS([putenv], , , [#include <stdlib.h>])
+## this is a GNU extension so usually hidden
+AC_CHECK_FUNCS(vasprintf)
+AC_CHECK_DECLS([vasprintf], , , [#include <stdio.h>])
 
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames

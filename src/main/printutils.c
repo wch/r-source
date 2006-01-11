@@ -486,25 +486,64 @@ void REprintf(char *format, ...)
     va_end(ap);
 }
 
+#if defined(HAVE_VASPRINTF) && !HAVE_DECL_VASPRINTF
+int vasprintf(char **strp, const char *fmt, va_list ap);
+#endif
+
+#if !HAVE_VA_COPY && HAVE___VA_COPY
+# define va_copy __va_copy
+# undef HAVE_VA_COPY
+# define HAVE_VA_COPY 1
+#endif
+
+#ifdef HAVE_VA_COPY
+# define R_BUFSIZE BUFSIZE
+#else
+# define R_BUFSIZE 100000
+#endif
 void Rcons_vprintf(const char *format, va_list arg)
 {
-    char buf[BUFSIZE], *p = buf, *vmax = vmaxget();
+    char buf[R_BUFSIZE], *p = buf;
     int res;
+#ifdef HAVE_VA_COPY
+    char *vmax = vmaxget();
+    int usedRalloc = FALSE, usedVasprintf = FALSE;
+    va_list aq;
 
-    res = vsnprintf(p, BUFSIZE, format, arg);
-    if(res >= BUFSIZE) { /* res is the desired output length */
+    va_copy(aq, arg);
+    res = vsnprintf(buf, R_BUFSIZE, format, aq);
+    va_end(aq);
+#ifdef HAVE_VASPRINTF
+    if(res >= R_BUFSIZE || res < 0)
+	vasprintf(&p, format, arg);
+#else
+    if(res >= R_BUFSIZE) { /* res is the desired output length */
+	usedRalloc = TRUE;
 	p = R_alloc(res+1, sizeof(char));
 	vsprintf(p, format, arg);
     } else if(res < 0) { /* just a failure indication */
-	p = R_alloc(10*BUFSIZE, sizeof(char));
-	res = vsnprintf(p, 10*BUFSIZE, format, arg);
+	p = R_alloc(10*R_BUFSIZE, sizeof(char));
+	res = vsnprintf(p, 10*R_BUFSIZE, format, arg);
 	if (res < 0) {
-	    *(p + 10*BUFSIZE) = '\0';
+	    *(p + 10*R_BUFSIZE) = '\0';
 	    warning("printing of extremely long output is truncated");
 	}
     }
+#endif /* HAVE_VASPRINTF */
+#else
+    res = vsnprintf(p, R_BUFSIZE, format, arg);
+    if(res >= R_BUFSIZE || res < 0) { 
+	/* res is the desired output length or just a failure indication */
+	    buf[R_BUFSIZE - 1] = '\0';
+	    warning(_("printing of extremely long output is truncated"));
+	    res = R_BUFSIZE;
+    }
+#endif /* HAVE_VA_COPY */
     R_WriteConsole(p, strlen(buf));
-    vmaxset(vmax);
+#ifdef HAVE_VA_COPY
+    if(usedRalloc) vmaxset(vmax);
+    if(usedVasprintf) free(p);
+#endif
 }
 
 void Rvprintf(const char *format, va_list arg)
