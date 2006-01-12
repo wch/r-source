@@ -655,13 +655,12 @@ sub check_pkg {
 	if(grep(/[[:cntrl:]\"\*\/\:\<\>\?\\\|]/, $file_name)) {
 	    push(@bad_files, $file_path);
 	} elsif(dirname($file_path) =~ /man$/) {
-	    my $x, $len = length $file_name;
-	    for ($x=0; $x < $len; $x++) {
-		my $ch = substr($file_name, $x, 1);
+	    my $ch;
+	    foreach $ch (split //, $file_name) {
 		## collation is ASCII as uselocale is not in effect.
 		if ($ch eq "%" || $ch lt " " || $ch gt "~")  {
 		    push(@bad_files, $file_path);
-		    break;
+		    last;
 		}
 	    }
 	} else {
