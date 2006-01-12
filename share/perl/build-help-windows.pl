@@ -113,13 +113,15 @@ print "\n";
 # as from 1.7.0 we can resolve links to base from other libraries
 # by fixing the link in fixup.package.URLs().
 # as from 1.9.0 we fix up utils, graphics, stats as well.
+# by 2.3.0 grDevices, datasets and methods.
 
 %anindex = read_anindex($lib);
 if($opt_html || $opt_chm){
     %htmlindex = read_htmlindex($lib);
     if ($lib ne $mainlib) {
 	%basehtmlindex = read_htmlpkgindex($mainlib, "base");
-	foreach $pkg ("utils", "graphics", "stats") {
+	foreach $pkg ("utils", "graphics", "grDevices", "stats", 
+		      "datasets", "methods") {
 	    my %pkghtmlindex = read_htmlpkgindex($mainlib, $pkg);
 	    foreach $topic (keys %pkghtmlindex) {
 		$basehtmlindex{$topic} = $pkghtmlindex{$topic};

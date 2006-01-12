@@ -102,6 +102,10 @@ This means ^C is no longer echoed.
 
 R CMD INSTALL --docs now has more options.
 
+LInks to package 'methods' are now fixed up, and R CMD INSTALL no
+longer reports as missing links to 'datasets' and 'grDevices' which
+would be fixed up.
+
 
 
 R 2.2.1 patched

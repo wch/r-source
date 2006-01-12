@@ -114,14 +114,17 @@ fixup.package.URLs <- function(pkg, force = FALSE)
         oldstats <- paste(oldtop, "/library/stats", sep="")
         olddata <- paste(oldtop, "/library/datasets", sep="")
         oldgrD <- paste(oldtop, "/library/grDevices", sep="")
+        oldmeth <- paste(oldtop, "/library/methods", sep="")
     } else {
         olddoc <- "../../../doc"
         oldbase <- "../../base"
         oldutils <- "../../utils"
         oldgraphics <- "../../graphics"
+        oldgrDevices <- "../../grDevices"
         oldstats <- "../../stats"
         olddata <- "../../datasets"
         oldgrD <- "../../grDevices"
+        oldmeth <- "../../methods"
     }
     if(!file.create(fixedfile)) return(FALSE)
     cat(top, "\n", sep = "", file = fixedfile)
@@ -135,6 +138,7 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     stats <- paste(top, "/library/stats", sep="")
     datasets <- paste(top, "/library/datasets", sep="")
     grD <- paste(top, "/library/grDevices", sep="")
+    meth <- paste(top, "/library/methods", sep="")
     for(f in files) {
         page <- readLines(f)
         ## <FIXME> use useBytes=TRUE later
@@ -145,6 +149,7 @@ fixup.package.URLs <- function(pkg, force = FALSE)
         page <- gsub(oldstats, stats, page, fixed = TRUE)
         page <- gsub(olddata, datasets, page, fixed = TRUE)
         page <- gsub(oldgrD, grD, page, fixed = TRUE)
+        page <- gsub(oldmeth, meth, page, fixed = TRUE)
         ## only do this if the substitutions worked
         out <- try(file(f, open = "w"), silent = TRUE)
         if(inherits(out, "try-error")) {
