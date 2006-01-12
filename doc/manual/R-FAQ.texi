@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-01-09
+@set FAQ_DATE @value{FAQ_YEAR}-01-12
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -484,7 +484,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2006-01-05:
+@c Linux binaries as of 2006-01-11:
 @c
 @c debian
 @c   stable  i386   2.2.1  Christian T. Steigies <cts@debian.org>
@@ -496,7 +496,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   fc3     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 2.2.0  Brian Ripley
 @c   fc4     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
-@c           x86_64 2.2.0  Peter Dalgaard
+@c           x86_64 2.2.1  Peter Dalgaard
 @c   el3     i386   2.1.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c   el4     i386   2.1.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c suse
@@ -2919,6 +2919,8 @@ problems, and transportation problems via interfacing Lp_solve.
 Local polynomial (ridge) regression.
 @item lsa
 Latent Semantic Analysis.
+@item lspls
+LS-PLS (least squares --- partial least squares) models.
 @item ltm
 Analysis of multivariate Bernoulli data using latent trait models
 (including the Rasch model) under the Item Response Theory approach.
