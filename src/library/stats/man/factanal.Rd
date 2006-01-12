@@ -84,10 +84,10 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   uniquenesses can be found analytically: Lawley & Maxwell (1971,
   p. 27).)  All the starting values supplied in \code{start} are tried
   in turn and the best fit obtained is used.  If \code{start = NULL}
-  then the first fit is started at the value suggested by Jöreskog
-  (1963) and given by Lawley & Maxwell (1971, p. 31), and then
-  \code{control$nstart - 1} other values are tried, randomly selected
-  as equal values of the uniquenesses.
+  then the first fit is started at the value suggested by
+  \enc{Jöreskog}{Joreskog} (1963) and given by Lawley & Maxwell
+  (1971, p. 31), and then \code{control$nstart - 1} other values are
+  tried, randomly selected as equal values of the uniquenesses.
 
   The uniquenesses are technically constrained to lie in \eqn{[0, 1]},
   but near-zero values are problematical, and the optimization is
