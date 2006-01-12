@@ -142,3 +142,13 @@ showMethods("foo")
 foo(y)
 ## still 'Y' -- was 'X object' in R < 2.3
 
+
+## Multiple inheritance
+setClass("A", representation(x = "numeric"))
+setClass("B", representation(y = "character"))
+setClass("C", contains = c("A", "B"), representation(z = "logical"))
+new("C")
+setClass("C", contains = c("A", "B"), representation(z = "logical"),
+         prototype = prototype(x = 1.5, y = "test", z = TRUE))
+(cc <- new("C"))
+## failed reconcilePropertiesAndPrototype(..) after svn r37018

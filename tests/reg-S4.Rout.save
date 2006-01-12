@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-02 r36959)
+Version 2.3.0 Under development (unstable) (2006-01-12 r37066)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -577,4 +577,38 @@ Function "foo":
 a Y object with bar = 2 
 > ## still 'Y' -- was 'X object' in R < 2.3
 > 
+> 
+> ## Multiple inheritance
+> setClass("A", representation(x = "numeric"))
+[1] "A"
+> setClass("B", representation(y = "character"))
+[1] "B"
+> setClass("C", contains = c("A", "B"), representation(z = "logical"))
+[1] "C"
+> new("C")
+An object of class "C"
+Slot "z":
+logical(0)
+
+Slot "x":
+numeric(0)
+
+Slot "y":
+character(0)
+
+> setClass("C", contains = c("A", "B"), representation(z = "logical"),
++          prototype = prototype(x = 1.5, y = "test", z = TRUE))
+[1] "C"
+> (cc <- new("C"))
+An object of class "C"
+Slot "z":
+[1] TRUE
+
+Slot "x":
+[1] 1.5
+
+Slot "y":
+[1] "test"
+
+> ## failed reconcilePropertiesAndPrototype(..) after svn r37018
 > 
