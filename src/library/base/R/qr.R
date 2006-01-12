@@ -51,14 +51,14 @@ qr.coef <- function(qr, y)
     if(is.complex(qr$qr)) {
 	if(!is.complex(y)) y[] <- as.complex(y)
 	coef <- matrix(as.complex(NA), nr=p, nc=ny)
-	coef[qr$pivot,] <- .Call("qr_coef_cmplx", qr, y, PACKAGE = "base")[1:p]
+	coef[qr$pivot,] <- .Call("qr_coef_cmplx", qr, y, PACKAGE = "base")
 	return(if(im) coef else c(coef))
     }
     ## else {not complex} :
     a <- attr(qr, "useLAPACK")
     if(!is.null(a) && is.logical(a) && a) {
 	coef <- matrix(as.double(NA), nr=p, nc=ny)
-	coef[qr$pivot,] <- .Call("qr_coef_real", qr, y, PACKAGE = "base")[1:p]
+	coef[qr$pivot,] <- .Call("qr_coef_real", qr, y, PACKAGE = "base")
 	return(if(im) coef else c(coef))
     }
     if (k==0) return( if (im) matrix(NA,p,ny) else rep.int(NA,p))
