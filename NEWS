@@ -30,6 +30,9 @@ BUG FIXES
     o	Another case of infinite influence has been worked around.
 	(An addendum to PR#8367.)
 
+    o	qr.coef() worked incorrectly with multiple rhs in the
+	LAPACK-using cases. (PR#8476/8)
+
 
 
 
