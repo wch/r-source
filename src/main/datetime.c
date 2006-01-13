@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2005  The R Development Core Team.
+ *  Copyright (C) 2000-2006  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -104,7 +104,7 @@ static const int days_in_month[12] =
 #ifndef HAVE_POSIX_LEAPSECONDS
 static const time_t leapseconds[] =
 {  78796800, 94694400,126230400,157766400,189302400,220924800,252460800,
-  283996800,315532800,362793600,425865600,489024000,520560000,567993600,
+  283996800,315532800,362793600,394329600,425865600,489024000,567993600,
   631152000,662688000,709948800,741484800,773020800,820454400,867715200,
   915148800 };
 #endif
