@@ -2069,6 +2069,9 @@ Scalable Vector Graphics.
 @item RUnit
 Functions implementing a standard Unit Testing framework, with
 additional code inspection and report generation tools.
+@item RWeka
+An R interface to Weka, a rich collection of machine learning algorithms
+for data mining tasks.
 @item RWinEdt
 A plug in for using WinEdt as an editor for R.
 @item RXshrink
