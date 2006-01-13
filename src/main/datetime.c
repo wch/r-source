@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2005  The R Development Core Team.
+ *  Copyright (C) 2000-2006  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -106,11 +106,35 @@ static const int days_in_month[12] =
 #define days_in_year(year) (isleap(year) ? 366 : 365)
 
 #ifndef HAVE_POSIX_LEAPSECONDS
+/* There have been 23 leapseconds, the last being on 2005-12-31.
+   But older OSes will not necessarily know about number 23, so we do 
+   a run-time test (the OS could have been patched since configure).
+ */
+static int n_leapseconds = -1;
 static const time_t leapseconds[] =
 {  78796800, 94694400,126230400,157766400,189302400,220924800,252460800,
-  283996800,315532800,362793600,425865600,489024000,520560000,567993600,
+  283996800,315532800,362793600,394329600,425865600,489024000,567993600,
   631152000,662688000,709948800,741484800,773020800,820454400,867715200,
-  915148800 };
+  915148800,1136073600};
+
+static void set_n_leapseconds(void)
+{
+    struct tm tm;
+    int t1, t2;
+
+    tm.tm_year = 105;
+    tm.tm_mon = 11;
+    tm.tm_mday = 31;
+    tm.tm_hour = 12;
+    tm.tm_min = 0;
+    tm.tm_sec = 0;
+    t1 = mktime(&tm);
+    tm.tm_year = 106;
+    tm.tm_mon = 0;
+    tm.tm_mday = 1;
+    t2 = mktime(&tm);
+    n_leapseconds = t2 - t1 == 84601) ? 23 : 22;
+}
 #endif
 
 /*
@@ -197,7 +221,7 @@ static double mktime00 (struct tm *tm)
     int day = 0;
     int i, year, year0;
     double excess = 0.0;
-
+    
     day = tm->tm_mday - 1;
     year0 = 1900 + tm->tm_year;
     /* safety check for unbounded loops */
@@ -313,7 +337,8 @@ static double mktime0 (struct tm *tm, const int local)
 	res = (double) mktime(tm);
 	if (res == (double)-1) return res;
 #ifndef HAVE_POSIX_LEAPSECONDS
-        for(i = 0; i < 22; i++)
+	if (n_leapseconds < 0) set_n_leapseconds();
+        for(i = 0; i < n_leapseconds; i++)
             if(res > leapseconds[i]) res -= 1.0;
 #endif
         return res;
@@ -333,7 +358,8 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     if(d < 2147483647.0 && d > (have_broken_mktime() ? 0. : -2147483647.0)) {
 	t = (time_t) d;
 #ifndef HAVE_POSIX_LEAPSECONDS
-        for(y = 0; y < 22; y++) if(t > leapseconds[y] + y - 1) t++;
+	if (n_leapseconds < 0) set_n_leapseconds();
+        for(y = 0; y < n_leapseconds; y++) if(t > leapseconds[y] + y - 1) t++;
 #endif
 	return local ? localtime(&t) : gmtime(&t);
     }
@@ -411,7 +437,8 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
     if(res == 0) {
 	double tmp = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
 #ifndef HAVE_POSIX_LEAPSECONDS
-	tmp -= 22;
+	if (n_leapseconds < 0) set_n_leapseconds();
+	tmp -= n_leapseconds;
 #endif
 	REAL(ans)[0] = tmp;
     } else 
@@ -422,7 +449,8 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
     double tmp = res;
     if(res != (time_t)(-1)) {
 #ifndef HAVE_POSIX_LEAPSECONDS
-	tmp -= 22;
+	if (n_leapseconds < 0) set_n_leapseconds();
+	tmp -= n_leapseconds;
 #endif
 #ifdef Win32
 	{
@@ -733,7 +761,8 @@ static void glibc_fix(struct tm *tm, int *invalid)
     struct tm *tm0;
     int tmp;
 #ifndef HAVE_POSIX_LEAPSECONDS
-    t -= 22;
+    if (n_leapseconds < 0) set_n_leapseconds();
+    t -= n_leapseconds;
 #endif
     tm0 = localtime(&t);
     if(tm->tm_year == NA_INTEGER) tm->tm_year = tm0->tm_year;

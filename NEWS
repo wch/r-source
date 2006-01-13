@@ -271,6 +271,10 @@ NEW FEATURES
         mechanism for debugging the trace computations themselves was
         added.  See trace.R.
 
+    o	.leap.seconds and the internal adjustment code now know about
+	the 23rd leap second on 2005-12-31: the internal code uses a
+	run-time test to see if the OS does.
+
 
 DEPRECATED & DEFUNCT
 
