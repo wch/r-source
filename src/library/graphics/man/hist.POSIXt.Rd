@@ -48,7 +48,7 @@
 \examples{
 hist(.leap.seconds, "years", freq = TRUE)
 hist(.leap.seconds,
-     seq(ISOdate(1970, 1, 10), ISOdate(2002, 1, 1), "5 years"))
+     seq(ISOdate(1970, 1, 1), ISOdate(2010, 1, 1), "5 years"))
 
 ## 100 random dates in a 10-week period
 random.dates <- as.Date("2001/1/1") + 70*runif(100)

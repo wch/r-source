@@ -61,12 +61,12 @@ axis.POSIXct(1, at=seq(r[1], r[2], by="hour"), format="\%H")
 rm(time)
 detach(beaver1)
 
-plot(.leap.seconds, 1:22, type="n", yaxt="n",
+plot(.leap.seconds, 1:23, type="n", yaxt="n",
      xlab="leap seconds", ylab="", bty="n")
 rug(.leap.seconds)
 ## or as dates
 lps <- as.Date(.leap.seconds)
-plot(lps, 1:22, type="n", yaxt="n", xlab="leap seconds", ylab="", bty="n")
+plot(lps, 1:23, type="n", yaxt="n", xlab="leap seconds", ylab="", bty="n")
 rug(lps)
 
 ## 100 random dates in a 10-week period
