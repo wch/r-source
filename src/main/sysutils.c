@@ -293,17 +293,17 @@ SEXP attribute_hidden do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+#if defined(HAVE_ICONV_H) && defined(ICONV_LATIN1) && !defined(Win32)
 /* Unfortunately glibc and Solaris differ in the const in the iconv decl.
    libiconv agrees with Solaris here.
  */
-#ifdef HAVE_ICONV_H
-#define const
-#include <iconv.h>
-#undef const
+# define const
+# include <iconv.h>
+# undef const
 #endif
 
 #ifdef Win32
-DL_FUNC ptr_iconv, ptr_iconv_open, ptr_iconv_close, ptr_iconvlist;
+static DL_FUNC ptr_iconv, ptr_iconv_open, ptr_iconv_close, ptr_iconvlist;
 
 static void iconv_Init(void)
 {
@@ -330,11 +330,12 @@ static void iconv_Init(void)
 #undef iconv_open
 #undef iconv_close
 #undef iconvlist
+typedef void* iconv_t;
 #define iconv(a,b,c,d,e) ((size_t)(*ptr_iconv)(a,b,c,d,e))
 #define iconv_open(a, b) ((iconv_t)(*ptr_iconv_open)(a,b))
 #define iconv_close(a) ((int)(*ptr_iconv_close)(a))
 #define iconvlist (*ptr_iconvlist)
-#endif
+#endif /* Win32 */
 
 
 #ifdef HAVE_ICONVLIST
