@@ -317,7 +317,6 @@ ENCS=`grep '^\\\\inputencoding' ${build_dir}/Rd2.tex | uniq |\
 ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex |  uniq | \
   sed -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
   tr '\na-z0-9' ',a-z0-9' | sed -e s/,$//`
-echo "ENCS is ${ENCS}"
 
 ## substitute for the encodings used
 mv ${build_dir}/Rd2.tex ${build_dir}/Rd2.tex.pre
@@ -335,7 +334,7 @@ status=0
 ## <FIXME>
 
 miktex=`latex --version | grep ^MiKTeX | wc -l`
-if test "${miktex}" eq "1"; then
+if test "${miktex}" = "1"; then
 R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
 else
 R_TEXOPTS=
