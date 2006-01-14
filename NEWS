@@ -241,7 +241,7 @@ NEW FEATURES
     o	summary.nls() has a new argument 'correlation' that defaults
 	to FALSE (like summary.lm).
 
-    o	prettyNum() has new arguments 'preserve.width' and 'zero.print'. 
+    o	prettyNum() has new arguments 'preserve.width' and 'zero.print'.
 	When the former is not "none", as in calls from format() and
 	formatC(), the resulting strings are kept at the desired width
 	when possible even after adding of 'big.mark' or 'small.mark'.
@@ -274,6 +274,8 @@ NEW FEATURES
     o	.leap.seconds and the internal adjustment code now know about
 	the 23rd leap second on 2005-12-31: the internal code uses a
 	run-time test to see if the OS does.
+
+    o	canCoerce() utility in "methods" package.
 
 
 DEPRECATED & DEFUNCT
@@ -403,7 +405,7 @@ INSTALLATION CHANGES
 	and these are enabled unless --disable-largefile is specified.
 	This replaces --enable-linux-lfs (and is now selected by default).
 
-    o	Visibility attributes are used where supported (gcc4/gfortran on 
+    o	Visibility attributes are used where supported (gcc4/gfortran on
 	some platforms, also gcc3/g77 on FC3 and partially elsewhere).
 	The main benefit should be faster loading (and perhaps better
 	optimized code) in some of the dynamic shared objects (e.g.

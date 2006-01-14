@@ -331,3 +331,10 @@ setAs <-
         FALSE
 
 }
+
+canCoerce <- function(object, Class) {
+    is(object, Class) ||
+    !is.null(selectMethod("coerce", c(class(object), Class),
+			  optional = TRUE,
+			  useInherited = c(from=TRUE, to=FALSE)))
+}

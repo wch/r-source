@@ -248,6 +248,10 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
   \code{showMethods("coerce")}.
 }
 
+\seealso{
+  If you think of using \code{try(as(x, cl))}, consider
+  \code{\link{canCoerce}(x, cl)} instead.
+}
 \references{
   The R package \pkg{methods} implements, with a few exceptions, the
   programming interface for classes
