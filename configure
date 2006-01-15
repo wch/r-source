@@ -6199,7 +6199,7 @@ if test "${r_cv_prog_f77_vis}" = yes; then
     F77_VISIBILITY="-fvisibility=hidden"
   fi
 fi
-case  "${CC}" in
+case  "${F77}" in
   ## Intel compiler
   *ifc|*ifort)
     F77_VISIBILITY=

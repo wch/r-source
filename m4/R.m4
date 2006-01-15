@@ -3131,7 +3131,7 @@ if test "${r_cv_prog_f77_vis}" = yes; then
   fi
 fi
 ## need to exclude Intel compilers.
-case  "${CC}" in
+case  "${F77}" in
   ## Intel compiler
   *ifc|*ifort)
     F77_VISIBILITY=
