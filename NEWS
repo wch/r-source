@@ -417,6 +417,11 @@ INSTALLATION CHANGES
 	should give slightly better performance on PowerPC (although
 	-fPIC is used on PPC64 as it is needed to build libR.so there).
 
+    o	More use is made of inlining for small utility functions such
+	as isReal.  Because this can only be done portably with C99
+	constructs (and we know of no actual implementation), this is
+	only done for the GNU C compiler.
+
 
 UTILITIES
 

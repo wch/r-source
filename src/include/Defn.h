@@ -47,8 +47,13 @@
 # define attribute_hidden
 #endif
 
+#define MAXELTSIZE 8192 /* The largest string size */
+
+#define CALLED_FROM_DEFN_H 1
 #include <Rinternals.h>		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
+#undef CALLED_FROM_DEFN_H
+
 #include "Internal.h"		/* do_FOO */
 
 #include "Errormsg.h"
@@ -231,7 +236,6 @@ extern int putenv(char *string);
 #include <R_ext/Rdynload.h>
 
 #define HSIZE	   4119	/* The size of the hash table for symbols */
-#define MAXELTSIZE 8192 /* The largest string size */
 #define MAXIDSIZE   256	/* Largest symbol size possible */
 
 /* The type of the do_xxxx functions. */

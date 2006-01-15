@@ -436,6 +436,7 @@ LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 
 /* Type Coercions of all kinds */
 
+SEXP Rf_asChar(SEXP);
 SEXP Rf_ascommon(SEXP, SEXP, SEXPTYPE);
 SEXP Rf_coerceVector(SEXP, SEXPTYPE);
 SEXP Rf_coerceList(SEXP, SEXPTYPE);
@@ -477,14 +478,8 @@ SEXP Rf_allocVector(SEXPTYPE, R_len_t);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
-SEXP Rf_asChar(SEXP);
-Rcomplex Rf_asComplex(SEXP);
-int Rf_asInteger(SEXP);
-int Rf_asLogical(SEXP);
-double Rf_asReal(SEXP);
 R_len_t Rf_asVecSize(SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
-Rboolean Rf_conformable(SEXP, SEXP);
 SEXP Rf_cons(SEXP, SEXP);
 void Rf_copyListMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyMatrix(SEXP, SEXP, Rboolean);
@@ -520,42 +515,11 @@ int Rf_GetOptionWidth(SEXP);
 /* SEXP Rf_GetPar(char*, SEXP); */
 SEXP Rf_GetRowNames(SEXP);
 void Rf_gsetVar(SEXP, SEXP, SEXP);
-Rboolean Rf_inherits(SEXP, char*);
 SEXP Rf_install(char const *);
-Rboolean Rf_isArray(SEXP);
-Rboolean Rf_isComplex(SEXP);
-Rboolean Rf_isEnvironment(SEXP);
-Rboolean Rf_isExpression(SEXP);
 /* Rboolean Rf_isExpressionObject(SEXP); */
-Rboolean Rf_isFactor(SEXP);
-Rboolean Rf_isFrame(SEXP);
 Rboolean Rf_isFree(SEXP);
 Rboolean Rf_isFunction(SEXP);
-Rboolean Rf_isInteger(SEXP);
-Rboolean Rf_isLanguage(SEXP);
-Rboolean Rf_isList(SEXP);
-Rboolean Rf_isLogical(SEXP);
-Rboolean Rf_isMatrix(SEXP);
-Rboolean Rf_isNewList(SEXP);
-Rboolean Rf_isNull(SEXP);
-Rboolean Rf_isNumeric(SEXP);
-Rboolean Rf_isObject(SEXP);
-Rboolean Rf_isOrdered(SEXP);
-Rboolean Rf_isPairList(SEXP);
-Rboolean Rf_isPrimitive(SEXP);
-Rboolean Rf_isReal(SEXP);
-Rboolean Rf_isString(SEXP);
-Rboolean Rf_isSymbol(SEXP);
-Rboolean Rf_isTs(SEXP);
-Rboolean Rf_isUnordered(SEXP);
 Rboolean Rf_isUnsorted(SEXP);
-Rboolean Rf_isUserBinop(SEXP);
-Rboolean Rf_isValidString(SEXP);
-Rboolean Rf_isValidStringF(SEXP);
-Rboolean Rf_isVector(SEXP);
-Rboolean Rf_isVectorAtomic(SEXP);
-Rboolean Rf_isVectorizable(SEXP);
-Rboolean Rf_isVectorList(SEXP);
 SEXP Rf_ItemName(SEXP, int);
 SEXP Rf_lang1(SEXP);
 SEXP Rf_lang2(SEXP, SEXP);
@@ -580,9 +544,8 @@ SEXP Rf_matchPar(char*, SEXP*);
 SEXP Rf_mkChar(const char*);
 SEXP Rf_mkString(const char*);
 SEXP Rf_namesgets(SEXP, SEXP);
-int Rf_ncols(SEXP);
-int Rf_nlevels(SEXP);
 Rboolean Rf_NonNullStringMatch(SEXP, SEXP);
+int Rf_ncols(SEXP);
 int Rf_nrows(SEXP);
 SEXP Rf_nthcdr(SEXP, int);
 Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
@@ -593,12 +556,6 @@ void Rf_PrintValueEnv(SEXP, SEXP);
 void Rf_PrintValueRec(SEXP, SEXP);
 SEXP Rf_protect(SEXP);
 SEXP Rf_rownamesgets(SEXP,SEXP);
-SEXP Rf_ScalarComplex(Rcomplex);
-SEXP Rf_ScalarInteger(int);
-SEXP Rf_ScalarLogical(int);
-SEXP Rf_ScalarRaw(Rbyte);
-SEXP Rf_ScalarReal(double);
-SEXP Rf_ScalarString(SEXP);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
 void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
@@ -614,7 +571,6 @@ void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP R_subset3_dflt(SEXP, SEXP);
-
 				/* return(.) NOT reached : for -Wall */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
@@ -1054,6 +1010,56 @@ int R_system(char *);
 #define VectorToPairList	Rf_VectorToPairList
 #define vectorSubscript         Rf_vectorSubscript
 #endif
+
+#if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))
+#include "Rinlinedfuns.h"
+#else
+Rcomplex asComplex(SEXP);
+int asInteger(SEXP);
+int asLogical(SEXP);
+double asReal(SEXP);
+Rboolean conformable(SEXP, SEXP);
+Rboolean inherits(SEXP, char*);
+Rboolean isArray(SEXP);
+Rboolean isComplex(SEXP);
+Rboolean isEnvironment(SEXP);
+Rboolean isExpression(SEXP);
+Rboolean isFactor(SEXP);
+Rboolean isFrame(SEXP);
+Rboolean isInteger(SEXP);
+Rboolean isFunction(SEXP);
+Rboolean isLanguage(SEXP);
+Rboolean isList(SEXP);
+Rboolean isLogical(SEXP);
+Rboolean isMatrix(SEXP);
+Rboolean isNewList(SEXP);
+Rboolean isNull(SEXP);
+Rboolean isNumeric(SEXP);
+Rboolean isObject(SEXP);
+Rboolean isOrdered(SEXP);
+Rboolean isPairList(SEXP);
+Rboolean isPrimitive(SEXP);
+Rboolean isReal(SEXP);
+Rboolean isString(SEXP);
+Rboolean isSymbol(SEXP);
+Rboolean isTs(SEXP);
+Rboolean isUnordered(SEXP);
+Rboolean isUserBinop(SEXP);
+Rboolean isValidString(SEXP);
+Rboolean isValidStringF(SEXP);
+Rboolean isVector(SEXP);
+Rboolean isVectorAtomic(SEXP);
+Rboolean isVectorList(SEXP);
+Rboolean isVectorizable(SEXP);
+int nlevels(SEXP);
+SEXP ScalarComplex(Rcomplex);
+SEXP ScalarInteger(int);
+SEXP ScalarLogical(int);
+SEXP ScalarRaw(Rbyte);
+SEXP ScalarReal(double);
+SEXP ScalarString(SEXP);
+#endif
+
 
 #ifdef __cplusplus
 }

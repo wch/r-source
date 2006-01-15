@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,6 +30,7 @@
 #include <config.h>
 #endif
 
+#define COMPILING_R 1 /* for Rinlinedfuns.h included via Defn.h */
 #include <Defn.h>
 #include <Rmath.h>
 #include <Print.h>
@@ -38,50 +39,17 @@
 #include <unistd.h>
 #endif
 
-SEXP ScalarLogical(int x)
+Rboolean tsConform(SEXP x, SEXP y)
 {
-    SEXP ans = allocVector(LGLSXP, 1);
-    INTEGER(ans)[0] = x;
-    return ans;
+    if ((x = getAttrib(x, R_TspSymbol)) != R_NilValue &&
+	(y = getAttrib(y, R_TspSymbol)) != R_NilValue)
+	return INTEGER(x)[0] == INTEGER(x)[0] &&
+	    INTEGER(x)[1] == INTEGER(x)[1] &&
+	    INTEGER(x)[2] == INTEGER(x)[2];
+    return FALSE;
 }
 
-SEXP ScalarInteger(int x)
-{
-    SEXP ans = allocVector(INTSXP, 1);
-    INTEGER(ans)[0] = x;
-    return ans;
-}
 
-SEXP ScalarReal(double x)
-{
-    SEXP ans = allocVector(REALSXP, 1);
-    REAL(ans)[0] = x;
-    return ans;
-}
-
-SEXP ScalarComplex(Rcomplex x)
-{
-    SEXP ans = allocVector(CPLXSXP, 1);
-    COMPLEX(ans)[0] = x;
-    return ans;
-}
-
-SEXP ScalarString(SEXP x)
-{
-    SEXP ans;
-    PROTECT(x);
-    ans = allocVector(STRSXP, 1);
-    SET_STRING_ELT(ans, 0, x);
-    UNPROTECT(1);
-    return ans;
-}
-
-SEXP ScalarRaw(Rbyte x)
-{
-    SEXP ans = allocVector(RAWSXP, 1);
-    RAW(ans)[0] = x;
-    return ans;
-}
 
 const static char * const truenames[] = {
     "T",
@@ -90,6 +58,51 @@ const static char * const truenames[] = {
     "true",
     (char *) 0,
 };
+int nrows(SEXP s)
+{
+    SEXP t;
+    if (isVector(s) || isList(s)) {
+	t = getAttrib(s, R_DimSymbol);
+	if (t == R_NilValue) return LENGTH(s);
+	return INTEGER(t)[0];
+    }
+    else if (isFrame(s)) {
+	return nrows(CAR(s));
+    }
+    else error(_("object is not a matrix"));
+    return -1;
+}
+
+
+int ncols(SEXP s)
+{
+    SEXP t;
+    if (isVector(s) || isList(s)) {
+	t = getAttrib(s, R_DimSymbol);
+	if (t == R_NilValue) return 1;
+	if (LENGTH(t) >= 2) return INTEGER(t)[1];
+	/* This is a 1D (or possibly 0D array) */
+	return 1;
+    }
+    else if (isFrame(s)) {
+	return length(s);
+    }
+    else error(_("object is not a matrix"));
+    return -1;/*NOTREACHED*/
+}
+
+const static char type_msg[] = "invalid type passed to internal function\n";
+
+
+void internalTypeCheck(SEXP call, SEXP s, SEXPTYPE type)
+{
+    if (TYPEOF(s) != type) {
+	if (call)
+	    errorcall(call, type_msg);
+	else
+	    error(type_msg);
+    }
+}
 
 const static char * const falsenames[] = {
     "F",
@@ -99,108 +112,9 @@ const static char * const falsenames[] = {
     (char *) 0,
 };
 
-/* int, not Rboolean, for NA_LOGICAL : */
-int asLogical(SEXP x)
-{
-    int warn = 0;
 
-    if (isVectorAtomic(x)) {
-	if (LENGTH(x) < 1)
-	    return NA_LOGICAL;
-	switch (TYPEOF(x)) {
-	case LGLSXP:
-	    return LOGICAL(x)[0];
-	case INTSXP:
-	    return LogicalFromInteger(INTEGER(x)[0], &warn);
-	case REALSXP:
-	    return LogicalFromReal(REAL(x)[0], &warn);
-	case CPLXSXP:
-	    return LogicalFromComplex(COMPLEX(x)[0], &warn);
-	default:
-	    UNIMPLEMENTED_TYPE("asLogical", x);
-	}
-    }
-    return NA_LOGICAL;
-}
 
-int asInteger(SEXP x)
-{
-    int warn = 0, res;
-
-    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
-	switch (TYPEOF(x)) {
-	case LGLSXP:
-	    return IntegerFromLogical(LOGICAL(x)[0], &warn);
-	case INTSXP:
-	    return INTEGER(x)[0];
-	case REALSXP:
-	    res = IntegerFromReal(REAL(x)[0], &warn);
-	    CoercionWarning(warn);
-	    return res;
-	case CPLXSXP:
-	    res = IntegerFromComplex(COMPLEX(x)[0], &warn);
-	    CoercionWarning(warn);
-	    return res;
-	default:
-	    UNIMPLEMENTED_TYPE("asInteger", x);
-	}
-    }
-    return NA_INTEGER;
-}
-
-double asReal(SEXP x)
-{
-    int warn = 0;
-    double res;
-
-    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
-	switch (TYPEOF(x)) {
-	case LGLSXP:
-	    res = RealFromLogical(LOGICAL(x)[0], &warn);
-	    CoercionWarning(warn);
-	    return res;
-	case INTSXP:
-	    res = RealFromInteger(INTEGER(x)[0], &warn);
-	    CoercionWarning(warn);
-	    return res;
-	case REALSXP:
-	    return REAL(x)[0];
-	case CPLXSXP:
-	    res = RealFromComplex(COMPLEX(x)[0], &warn);
-	    CoercionWarning(warn);
-	    return res;
-	default:
-	    UNIMPLEMENTED_TYPE("asReal", x);
-	}
-    }
-    return NA_REAL;
-}
-
-Rcomplex asComplex(SEXP x)
-{
-    int warn = 0;
-    Rcomplex z;
-
-    z.r = NA_REAL;
-    z.i = NA_REAL;
-    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
-	switch (TYPEOF(x)) {
-	case LGLSXP:
-	    return ComplexFromLogical(LOGICAL(x)[0], &warn);
-	case INTSXP:
-	    return ComplexFromInteger(INTEGER(x)[0], &warn);
-	case REALSXP:
-	    return ComplexFromReal(REAL(x)[0], &warn);
-	case CPLXSXP:
-	    return COMPLEX(x)[0];
-	default:
-	    UNIMPLEMENTED_TYPE("asComplex", x);
-	}
-    }
-    return z;
-}
-
-SEXP asChar(SEXP x)
+INLINE_FUN SEXP asChar(SEXP x)
 {
     int w, d, e, wi, di, ei;
     char buf[MAXELTSIZE];
@@ -235,6 +149,7 @@ SEXP asChar(SEXP x)
     return NA_STRING;
 }
 
+
 R_len_t asVecSize(SEXP x)
 {
     int warn = 0, res;
@@ -260,376 +175,6 @@ R_len_t asVecSize(SEXP x)
 	}
     }
     return -1;
-}
-
-
-const static char type_msg[] = "invalid type passed to internal function\n";
-
-
-void internalTypeCheck(SEXP call, SEXP s, SEXPTYPE type)
-{
-    if (TYPEOF(s) != type) {
-	if (call)
-	    errorcall(call, type_msg);
-	else
-	    error(type_msg);
-    }
-}
-
-Rboolean isValidString(SEXP x)
-{
-    return isString(x) && LENGTH(x) > 0 && !isNull(STRING_ELT(x, 0));
-}
-
-/* non-empty ("") valid string :*/
-Rboolean isValidStringF(SEXP x)
-{
-    return isValidString(x) && CHAR(STRING_ELT(x, 0))[0];
-}
-
-Rboolean isSymbol(SEXP s)
-{
-    return TYPEOF(s) == SYMSXP;
-}
-
-
-Rboolean isUserBinop(SEXP s)
-{
-    if (isSymbol(s)) {
-	char *str = CHAR(PRINTNAME(s));
-	if (strlen(str) >= 2 && str[0] == '%' && str[strlen(str)-1] == '%')
-	    return TRUE;
-    }
-    return FALSE;
-}
-
-
-Rboolean isNull(SEXP s)
-{
-    return (s == R_NilValue);
-}
-
-
-Rboolean isFunction(SEXP s)
-{
-    return (TYPEOF(s) == CLOSXP ||
-	    TYPEOF(s) == BUILTINSXP ||
-	    TYPEOF(s) == SPECIALSXP);
-}
-
-Rboolean isPrimitive(SEXP s)
-{
-    return (TYPEOF(s) == BUILTINSXP ||
-	    TYPEOF(s) == SPECIALSXP);
-}
-
-
-Rboolean isList(SEXP s)
-{
-    return (s == R_NilValue || TYPEOF(s) == LISTSXP);
-}
-
-
-Rboolean isNewList(SEXP s)
-{
-    return (s == R_NilValue || TYPEOF(s) == VECSXP);
-}
-
-Rboolean isPairList(SEXP s)
-{
-    switch (TYPEOF(s)) {
-    case NILSXP:
-    case LISTSXP:
-    case LANGSXP:
-	return TRUE;
-    default:
-	return FALSE;
-    }
-}
-
-Rboolean isVectorList(SEXP s)
-{
-    switch (TYPEOF(s)) {
-    case VECSXP:
-    case EXPRSXP:
-	return TRUE;
-    default:
-	return FALSE;
-    }
-}
-
-Rboolean isVectorAtomic(SEXP s)
-{
-    switch (TYPEOF(s)) {
-    case LGLSXP:
-    case INTSXP:
-    case REALSXP:
-    case CPLXSXP:
-    case STRSXP:
-    case RAWSXP:
-	return TRUE;
-    default: /* including NULL */
-	return FALSE;
-    }
-}
-
-Rboolean isVector(SEXP s)/* === isVectorList() or isVectorAtomic() */
-{
-    switch(TYPEOF(s)) {
-    case LGLSXP:
-    case INTSXP:
-    case REALSXP:
-    case CPLXSXP:
-    case STRSXP:
-    case RAWSXP:
-
-    case VECSXP:
-    case EXPRSXP:
-	return TRUE;
-    default:
-	return FALSE;
-    }
-}
-
-
-Rboolean isFrame(SEXP s)
-{
-    SEXP class;
-    int i;
-    if (isObject(s)) {
-	class = getAttrib(s, R_ClassSymbol);
-	for (i = 0; i < length(class); i++)
-	    if (!strcmp(CHAR(STRING_ELT(class, i)), "data.frame")) return TRUE;
-    }
-    return FALSE;
-}
-
-Rboolean isEnvironment(SEXP s)
-{
-    return (TYPEOF(s) == ENVSXP);
-}
-
-Rboolean isExpression(SEXP s)
-{
-    return TYPEOF(s) == EXPRSXP;
-}
-
-Rboolean isLanguage(SEXP s)
-{
-    return (s == R_NilValue || TYPEOF(s) == LANGSXP);
-}
-
-
-Rboolean isMatrix(SEXP s)
-{
-    SEXP t;
-    if (isVector(s)) {
-	t = getAttrib(s, R_DimSymbol);
-	if (TYPEOF(t) == INTSXP && LENGTH(t) == 2)
-	    return TRUE;
-    }
-    return FALSE;
-}
-
-Rboolean isArray(SEXP s)
-{
-    SEXP t;
-    if (isVector(s)) {
-	t = getAttrib(s, R_DimSymbol);
-	if (TYPEOF(t) == INTSXP && LENGTH(t) > 0)
-	    return TRUE;
-    }
-    return FALSE;
-}
-
-
-Rboolean isTs(SEXP s)
-{
-    return (isVector(s) && getAttrib(s, R_TspSymbol) != R_NilValue);
-}
-
-Rboolean tsConform(SEXP x, SEXP y)
-{
-    if ((x = getAttrib(x, R_TspSymbol)) != R_NilValue &&
-	(y = getAttrib(y, R_TspSymbol)) != R_NilValue)
-	return INTEGER(x)[0] == INTEGER(x)[0] &&
-	    INTEGER(x)[1] == INTEGER(x)[1] &&
-	    INTEGER(x)[2] == INTEGER(x)[2];
-    return FALSE;
-}
-
-
-/* Check to see if a list can be made into a vector. */
-/* it must have every element being a vector of length 1. */
-/* BUT it does not exclude 0! */
-
-Rboolean isVectorizable(SEXP s)
-{
-    if (isNull(s)) return TRUE;
-    else if (isNewList(s)) {
-	int i, n;
-
-	n = LENGTH(s);
-	for (i = 0 ; i < n; i++)
-	    if (!isVector(VECTOR_ELT(s, i)) || LENGTH(VECTOR_ELT(s, i)) > 1)
-		return FALSE;
-	return TRUE;
-    }
-    else if (isList(s)) {
-	for ( ; s != R_NilValue; s = CDR(s))
-	    if (!isVector(CAR(s)) || LENGTH(CAR(s)) > 1) return FALSE;
-	return TRUE;
-    }
-    else return FALSE;
-}
-
-
-/* Check to see if the arrays "x" and "y" have the identical extents */
-
-Rboolean conformable(SEXP x, SEXP y)
-{
-    int i, n;
-    PROTECT(x = getAttrib(x, R_DimSymbol));
-    y = getAttrib(y, R_DimSymbol);
-    UNPROTECT(1);
-    if ((n = length(x)) != length(y))
-	return FALSE;
-    for (i = 0; i < n; i++)
-	if (INTEGER(x)[i] != INTEGER(y)[i])
-	    return FALSE;
-    return TRUE;
-}
-
-
-int nrows(SEXP s)
-{
-    SEXP t;
-    if (isVector(s) || isList(s)) {
-	t = getAttrib(s, R_DimSymbol);
-	if (t == R_NilValue) return LENGTH(s);
-	return INTEGER(t)[0];
-    }
-    else if (isFrame(s)) {
-	return nrows(CAR(s));
-    }
-    else error(_("object is not a matrix"));
-    return -1;
-}
-
-
-int ncols(SEXP s)
-{
-    SEXP t;
-    if (isVector(s) || isList(s)) {
-	t = getAttrib(s, R_DimSymbol);
-	if (t == R_NilValue) return 1;
-	if (LENGTH(t) >= 2) return INTEGER(t)[1];
-	/* This is a 1D (or possibly 0D array) */
-	return 1;
-    }
-    else if (isFrame(s)) {
-	return length(s);
-    }
-    else error(_("object is not a matrix"));
-    return -1;/*NOTREACHED*/
-}
-
-
-int nlevels(SEXP f)
-{
-    if (!isFactor(f))
-	return 0;
-    return LENGTH(getAttrib(f, R_LevelsSymbol));
-}
-
-/* Is an object of numeric type. */
-/* FIXME:  the LGLSXP case should be excluded here
- * (really? in many places we affirm they are treated like INTs)*/
-
-Rboolean isNumeric(SEXP s)
-{
-    switch(TYPEOF(s)) {
-    case INTSXP:
-	if (inherits(s,"factor")) return FALSE;
-    case LGLSXP:
-    case REALSXP:
-	return TRUE;
-    default:
-	return FALSE;
-    }
-}
-
-Rboolean isString(SEXP s)
-{
-    return (TYPEOF(s) == STRSXP);
-}
-
-
-Rboolean isLogical(SEXP s)
-{
-    return (TYPEOF(s) == LGLSXP);
-}
-
-
-Rboolean isInteger(SEXP s)
-{
-    return (TYPEOF(s) == INTSXP && !inherits(s, "factor"));
-}
-
-
-Rboolean isReal(SEXP s)
-{
-    return (TYPEOF(s) == REALSXP);
-}
-
-
-Rboolean isComplex(SEXP s)
-{
-    return (TYPEOF(s) == CPLXSXP);
-}
-
-
-Rboolean isUnordered(SEXP s)
-{
-    return (TYPEOF(s) == INTSXP
-	    && inherits(s, "factor")
-	    && !inherits(s, "ordered"));
-}
-
-
-Rboolean isOrdered(SEXP s)
-{
-    return (TYPEOF(s) == INTSXP
-	    && inherits(s, "factor")
-	    && inherits(s, "ordered"));
-}
-
-
-Rboolean isFactor(SEXP s)
-{
-    return (TYPEOF(s) == INTSXP  && inherits(s, "factor"));
-}
-
-
-Rboolean isObject(SEXP s)
-{
-    return OBJECT(s);/* really '1-bit unsigned int' */
-}
-
-
-Rboolean inherits(SEXP s, char *name)
-{
-    SEXP class;
-    int i, nclass;
-    if (isObject(s)) {
-	class = getAttrib(s, R_ClassSymbol);
-	nclass = length(class);
-	for (i = 0; i < nclass; i++) {
-	    if (!strcmp(CHAR(STRING_ELT(class, i)), name))
-		return TRUE;
-	}
-    }
-    return FALSE;
 }
 
 
