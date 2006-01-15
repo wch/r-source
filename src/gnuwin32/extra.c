@@ -988,7 +988,7 @@ void InitTempDir()
 	GetShortPathName(tmp, tmp1, MAX_PATH);
     else
 	strcpy(tmp1, tmp); /* length must be valid as access has been checked */
-    sprintf(tmp2, "%s/RtmpXXXXXX", tmp1);
+    sprintf(tmp2, "%s\\RtmpXXXXXX", tmp1);
     tm = mkdtemp(tmp2);
     if(!tm) R_Suicide(_("cannot mkdir R_TempDir"));
 
