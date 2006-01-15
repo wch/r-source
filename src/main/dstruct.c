@@ -100,21 +100,7 @@ Should NEVER happen; please bug.report() [mkCLOSXP]"));
     return c;
 }
 
-/* mkChar - make a character (CHARSXP) variable */
-
-SEXP mkChar(const char *name)
-{
-    SEXP c;
-
-#if 0
-    if (streql(name, "NA"))
-	return (NA_STRING);
-#endif
-    c = allocString(strlen(name));
-    strcpy(CHAR(c), name);
-    return c;
-}
-
+/* mkChar - make a character (CHARSXP) variable -- see Rinlinedfuns.h */
 
 /*  mkSYMSXP - return a symsxp with the string  */
 /*             name inserted in the name field  */
@@ -149,39 +135,4 @@ SEXP attribute_hidden mkSYMSXP(SEXP name, SEXP value)
     SET_DDVAL(c, i);
     UNPROTECT(2);
     return c;
-}
-
-
-/*  length - length of objects  */
-
-R_len_t length(SEXP s)
-{
-    int i;
-    switch (TYPEOF(s)) {
-    case NILSXP:
-	return 0;
-    case LGLSXP:
-    case INTSXP:
-    case REALSXP:
-    case CPLXSXP:
-    case STRSXP:
-    case CHARSXP:
-    case VECSXP:
-    case EXPRSXP:
-    case RAWSXP:
-	return LENGTH(s);
-    case LISTSXP:
-    case LANGSXP:
-    case DOTSXP:
-	i = 0;
-	while (s != NULL && s != R_NilValue) {
-	    i++;
-	    s = CDR(s);
-	}
-	return i;
-    case ENVSXP:
-	return envlength(s);
-    default:
-	return 1;
-    }
 }

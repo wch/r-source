@@ -816,11 +816,11 @@ void mainloop(void);
 SEXP mat2indsub(SEXP, SEXP);
 SEXP match(SEXP, SEXP, int);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
-SEXP mkComplex(char *s);
+/* SEXP mkComplex(char *s); */
 /* SEXP mkEnv(SEXP, SEXP, SEXP); */
 SEXP mkFalse(void);
-SEXP mkFloat(char *s);
-SEXP mkNA(void);
+/* SEXP mkFloat(char *s);
+   SEXP mkNA(void); */
 SEXP mkPRIMSXP (int, int);
 SEXP mkPROMISE(SEXP, SEXP);
 SEXP mkQUOTE(SEXP);

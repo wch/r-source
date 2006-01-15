@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -64,12 +64,10 @@ static SEXP	TagArg(SEXP, SEXP);
 
 /* These routines allocate constants */
 
-SEXP		mkComplex(char *);
+static SEXP	mkComplex(char *);
 SEXP		mkFalse(void);
-SEXP		mkFloat(char *);
-SEXP		mkInteger(char *);
-SEXP		mkNA(void);
-SEXP		mkString(yyconst char *);
+static SEXP     mkFloat(char *);
+static SEXP	mkNA(void);
 SEXP		mkTrue(void);
 
 /* Internal lexer / parser state variables */
@@ -1554,17 +1552,7 @@ static int KeywordLookup(char *s)
 }
 
 
-SEXP mkString(yyconst char *s)
-{
-    SEXP t;
-
-    PROTECT(t = allocVector(STRSXP, 1));
-    SET_STRING_ELT(t, 0, mkChar(s));
-    UNPROTECT(1);
-    return t;
-}
-
-SEXP mkFloat(char *s)
+static SEXP mkFloat(char *s)
 {
     SEXP t = allocVector(REALSXP, 1);
     if(strlen(s) > 2 && (s[1] == 'x' || s[1] == 'X')) {
@@ -1580,7 +1568,7 @@ SEXP mkFloat(char *s)
     return t;
 }
 
-SEXP mkComplex(char *s)
+static SEXP mkComplex(char *s)
 {
     SEXP t = allocVector(CPLXSXP, 1);
     COMPLEX(t)[0].r = 0;
@@ -1588,7 +1576,7 @@ SEXP mkComplex(char *s)
     return t;
 }
 
-SEXP mkNA(void)
+static SEXP mkNA(void)
 {
     SEXP t = allocVector(LGLSXP, 1);
     LOGICAL(t)[0] = NA_LOGICAL;

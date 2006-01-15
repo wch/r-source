@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2005   The R Development Core Team.
+ *  Copyright (C) 1999-2006   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -473,7 +473,6 @@ SEXP Rf_allocArray(SEXPTYPE, SEXP);
 SEXP Rf_allocMatrix(SEXPTYPE, int, int);
 SEXP Rf_allocList(int);
 SEXP Rf_allocSExp(SEXPTYPE);
-SEXP Rf_allocString(int);
 SEXP Rf_allocVector(SEXPTYPE, R_len_t);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
@@ -494,7 +493,6 @@ SEXP Rf_dimnamesgets(SEXP, SEXP);
 SEXP Rf_DropDims(SEXP);
 SEXP Rf_duplicate(SEXP);
 SEXP Rf_duplicated(SEXP);
-SEXP Rf_elt(SEXP, int);
 /* SEXP Rf_emptyEnv(void); */
 SEXP Rf_eval(SEXP, SEXP);
 SEXP Rf_EvalArgs(SEXP, SEXP, int);
@@ -521,19 +519,7 @@ Rboolean Rf_isFree(SEXP);
 Rboolean Rf_isFunction(SEXP);
 Rboolean Rf_isUnsorted(SEXP);
 SEXP Rf_ItemName(SEXP, int);
-SEXP Rf_lang1(SEXP);
-SEXP Rf_lang2(SEXP, SEXP);
-SEXP Rf_lang3(SEXP, SEXP, SEXP);
-SEXP Rf_lang4(SEXP, SEXP, SEXP, SEXP);
-SEXP Rf_lastElt(SEXP);
-SEXP Rf_lcons(SEXP, SEXP);
-R_len_t Rf_length(SEXP);
 SEXP Rf_lengthgets(SEXP, R_len_t);
-SEXP Rf_list1(SEXP);
-SEXP Rf_list2(SEXP, SEXP);
-SEXP Rf_list3(SEXP, SEXP, SEXP);
-SEXP Rf_list4(SEXP, SEXP, SEXP, SEXP);
-SEXP Rf_listAppend(SEXP, SEXP);
 SEXP R_lsInternal(SEXP, Rboolean);
 SEXP Rf_makeSubscript(SEXP, SEXP, int *);
 SEXP Rf_match(SEXP, SEXP, int);
@@ -541,8 +527,6 @@ SEXP Rf_matchArg(SEXP, SEXP*);
 SEXP Rf_matchArgExact(SEXP, SEXP*);
 SEXP Rf_matchArgs(SEXP, SEXP);
 SEXP Rf_matchPar(char*, SEXP*);
-SEXP Rf_mkChar(const char*);
-SEXP Rf_mkString(const char*);
 SEXP Rf_namesgets(SEXP, SEXP);
 Rboolean Rf_NonNullStringMatch(SEXP, SEXP);
 int Rf_ncols(SEXP);
@@ -1014,11 +998,13 @@ int R_system(char *);
 #if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))
 #include "Rinlinedfuns.h"
 #else
+SEXP allocString(int);
 Rcomplex asComplex(SEXP);
 int asInteger(SEXP);
 int asLogical(SEXP);
 double asReal(SEXP);
 Rboolean conformable(SEXP, SEXP);
+SEXP elt(SEXP, int);
 Rboolean inherits(SEXP, char*);
 Rboolean isArray(SEXP);
 Rboolean isComplex(SEXP);
@@ -1051,6 +1037,20 @@ Rboolean isVector(SEXP);
 Rboolean isVectorAtomic(SEXP);
 Rboolean isVectorList(SEXP);
 Rboolean isVectorizable(SEXP);
+SEXP lang1(SEXP);
+SEXP lang2(SEXP, SEXP);
+SEXP lang3(SEXP, SEXP, SEXP);
+SEXP lang4(SEXP, SEXP, SEXP, SEXP);
+SEXP lastElt(SEXP);
+SEXP lcons(SEXP, SEXP);
+R_len_t length(SEXP);
+SEXP list1(SEXP);
+SEXP list2(SEXP, SEXP);
+SEXP list3(SEXP, SEXP, SEXP);
+SEXP list4(SEXP, SEXP, SEXP, SEXP);
+SEXP listAppend(SEXP, SEXP);
+SEXP mkChar(const char*);
+SEXP mkString(const char*);
 int nlevels(SEXP);
 SEXP ScalarComplex(Rcomplex);
 SEXP ScalarInteger(int);

@@ -37,6 +37,189 @@
 
 /* define inline-able functions */
 
+
+/* from memory.c */
+
+/* "allocString" allocate a string on the (vector) heap. */
+INLINE_FUN SEXP allocString(int length)
+{
+    return allocVector(CHARSXP, length);
+}
+
+/* from dstruct.c */
+
+/* mkChar - make a character (CHARSXP) variable */
+
+INLINE_FUN SEXP mkChar(const char *name)
+{
+    SEXP c = allocString(strlen(name));
+    strcpy(CHAR(c), name);
+    return c;
+}
+
+/*  length - length of objects  */
+
+int envlength(SEXP rho);
+
+INLINE_FUN R_len_t length(SEXP s)
+{
+    int i;
+    switch (TYPEOF(s)) {
+    case NILSXP:
+	return 0;
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case CPLXSXP:
+    case STRSXP:
+    case CHARSXP:
+    case VECSXP:
+    case EXPRSXP:
+    case RAWSXP:
+	return LENGTH(s);
+    case LISTSXP:
+    case LANGSXP:
+    case DOTSXP:
+	i = 0;
+	while (s != NULL && s != R_NilValue) {
+	    i++;
+	    s = CDR(s);
+	}
+	return i;
+    case ENVSXP:
+	return envlength(s);
+    default:
+	return 1;
+    }
+}
+
+
+/* from list.c */
+/* Return a dotted pair with the given CAR and CDR. */
+/* The (R) TAG slot on the cell is set to NULL. */
+
+
+/* Get the i-th element of a list */
+INLINE_FUN SEXP elt(SEXP list, int i)
+{
+    int j;
+    SEXP result = list;
+
+    if ((i < 0) || (i > length(list)))
+	return R_NilValue;
+    else
+	for (j = 0; j < i; j++)
+	    result = CDR(result);
+
+    return CAR(result);
+}
+
+
+/* Return the last element of a list */
+INLINE_FUN SEXP lastElt(SEXP list)
+{
+    SEXP result = R_NilValue;
+    while (list != R_NilValue) {
+	result = list;
+	list = CDR(list);
+    }
+    return result;
+}
+
+
+/* Shorthands for creating small lists */
+
+INLINE_FUN SEXP list1(SEXP s)
+{
+    return CONS(s, R_NilValue);
+}
+
+
+INLINE_FUN SEXP list2(SEXP s, SEXP t)
+{
+    PROTECT(s);
+    s = CONS(s, list1(t));
+    UNPROTECT(1);
+    return s;
+}
+
+
+INLINE_FUN SEXP list3(SEXP s, SEXP t, SEXP u)
+{
+    PROTECT(s);
+    s = CONS(s, list2(t, u));
+    UNPROTECT(1);
+    return s;
+}
+
+
+INLINE_FUN SEXP list4(SEXP s, SEXP t, SEXP u, SEXP v)
+{
+    PROTECT(s);
+    s = CONS(s, list3(t, u, v));
+    UNPROTECT(1);
+    return s;
+}
+
+
+/* Destructive list append : See also ``append'' */
+
+INLINE_FUN SEXP listAppend(SEXP s, SEXP t)
+{
+    SEXP r;
+    if (s == R_NilValue)
+	return t;
+    r = s;
+    while (CDR(r) != R_NilValue)
+	r = CDR(r);
+    SETCDR(r, t);
+    return s;
+}
+
+
+/* Language based list constructs.  These are identical to the list */
+/* constructs, but the results can be evaluated. */
+
+/* Return a (language) dotted pair with the given car and cdr */
+
+INLINE_FUN SEXP lcons(SEXP car, SEXP cdr)
+{
+    SEXP e = cons(car, cdr);
+    SET_TYPEOF(e, LANGSXP);
+    return e;
+}
+
+INLINE_FUN SEXP lang1(SEXP s)
+{
+    return LCONS(s, R_NilValue);
+}
+
+INLINE_FUN SEXP lang2(SEXP s, SEXP t)
+{
+    PROTECT(s);
+    s = LCONS(s, list1(t));
+    UNPROTECT(1);
+    return s;
+}
+
+INLINE_FUN SEXP lang3(SEXP s, SEXP t, SEXP u)
+{
+    PROTECT(s);
+    s = LCONS(s, list2(t, u));
+    UNPROTECT(1);
+    return s;
+}
+
+INLINE_FUN SEXP lang4(SEXP s, SEXP t, SEXP u, SEXP v)
+{
+    PROTECT(s);
+    s = LCONS(s, list3(t, u, v));
+    UNPROTECT(1);
+    return s;
+}
+
+/* from util.c */
+
 /* Check to see if the arrays "x" and "y" have the identical extents */
 
 INLINE_FUN Rboolean conformable(SEXP x, SEXP y)
@@ -479,6 +662,57 @@ INLINE_FUN Rcomplex asComplex(SEXP x)
 	}
     }
     return z;
+}
+
+/* from gram.y */
+
+INLINE_FUN SEXP mkString(const char *s)
+{
+    SEXP t;
+
+    PROTECT(t = allocVector(STRSXP, 1));
+    SET_STRING_ELT(t, 0, mkChar(s));
+    UNPROTECT(1);
+    return t;
+}
+
+/* from Rmath */
+
+#define Rf_fmin2(x, y) fmin2_int(x, y)
+#define Rf_fmax2(x, y) fmax2_int(x, y)
+#define Rf_imin2(x, y) imin2_int(x, y)
+#define Rf_imax2(x, y) imax2_int(x, y)
+#define Rf_fsign(x, y) fsign_int(x, y)
+
+INLINE_FUN double fmin2_int(double x, double y)
+{
+	if (ISNAN(x) || ISNAN(y))
+		return x + y;
+	return (x < y) ? x : y;
+}
+
+INLINE_FUN double fmax2_int(double x, double y)
+{
+	if (ISNAN(x) || ISNAN(y))
+		return x + y;
+	return (x < y) ? y : x;
+}
+
+INLINE_FUN int imin2_int(int x, int y)
+{
+    return (x < y) ? x : y;
+}
+
+INLINE_FUN int imax2_int(int x, int y)
+{
+    return (x < y) ? y : x;
+}
+
+INLINE_FUN double fsign_int(double x, double y)
+{
+    if (ISNAN(x) || ISNAN(y))
+	return x + y;
+    return ((y >= 0) ? fabs(x) : -fabs(x));
 }
 
 

@@ -39,6 +39,8 @@
 #include <unistd.h>
 #endif
 
+/* Many small functions are included from Rinlinedfuns.h */
+
 Rboolean tsConform(SEXP x, SEXP y)
 {
     if ((x = getAttrib(x, R_TspSymbol)) != R_NilValue &&
@@ -49,8 +51,6 @@ Rboolean tsConform(SEXP x, SEXP y)
     return FALSE;
 }
 
-
-
 const static char * const truenames[] = {
     "T",
     "True",
@@ -58,6 +58,7 @@ const static char * const truenames[] = {
     "true",
     (char *) 0,
 };
+
 int nrows(SEXP s)
 {
     SEXP t;
@@ -112,9 +113,7 @@ const static char * const falsenames[] = {
     (char *) 0,
 };
 
-
-
-INLINE_FUN SEXP asChar(SEXP x)
+SEXP asChar(SEXP x)
 {
     int w, d, e, wi, di, ei;
     char buf[MAXELTSIZE];
