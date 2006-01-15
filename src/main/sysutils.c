@@ -577,8 +577,10 @@ void attribute_hidden InitTempDir()
 	    GetShortPathName(tm, tmp2, MAX_PATH);
 	    tm = tmp2;
 	}
-#endif
+	sprintf(tmp1, "%s\\RtmpXXXXXX", tm);
+#else
 	sprintf(tmp1, "%s/RtmpXXXXXX", tm);
+#endif
 	tmp = mkdtemp(tmp1);
 	if(!tmp) R_Suicide(_("cannot mkdir R_TempDir"));
 #if defined(HAVE_PUTENV) && !defined(Win32)
@@ -607,6 +609,11 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
 {
     char tm[PATH_MAX], tmp1[PATH_MAX], *res;
     unsigned int n, done = 0;
+#ifdef Win32
+    char filesep[] = "\\";
+#else
+    char filesep[] = "/";
+#endif
 
     if(!prefix) prefix = "";	/* NULL */
     if(strlen(tempdir) >= PATH_MAX) error(_("invalid 'tempdir' in R_tmpnam"));
@@ -614,9 +621,9 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end.  Need at least 6 hex digits */
 #if RAND_MAX > 16777215
-	sprintf(tm, "%s/%s%x", tmp1, prefix, rand());
+	sprintf(tm, "%s%s%s%x", tmp1, filesep, prefix, rand());
 #else
-	sprintf(tm, "%s/%s%x%x", tmp1, prefix, rand(), rand());
+	sprintf(tm, "%s%s%s%x%x", tmp1, filesep, prefix, rand(), rand());
 #endif
         if(!R_FileExists(tm)) { 
 	    done = 1; 

@@ -27,9 +27,6 @@ names and no spaces).
 There is now MBCS support for the line editor in Rterm.exe.
 (Contributed by Haruki Koyanagi.)
 
-The import libraries libR.a are libRblas.a are now installed in
-R_HOME/lib (rather than R_HOME/src/gnuwin32).
-
 R CMD INSTALL will now clean up after interruption (by ctrl-C, at
 least where supported by the shell).
 
@@ -118,6 +115,8 @@ formatC() sometimes gave spurious leading spaces on Windows (PR#8337).
 
 Workaround in unlink() for a Windows-run-time problem with deleting
 directories with leading spaces in the name.
+
+tempdir() and tempfile() use all backslashes again (2.2.1 did not).
 
 
 
