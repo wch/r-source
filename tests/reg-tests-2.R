@@ -1707,3 +1707,12 @@ cbind(formatC(xx, wid = 9))
 cbind(formatC(xx, wid = 9, flag = "-"))
 cbind(formatC(xx, wid = 9, flag = "0"))
 ## extra space on 2.2.1
+
+
+## an impossible glm fit
+success <- c(13,12,11,14,14,11,13,11,12)
+failure <- c(0,0,0,0,0,0,0,2,2)
+predictor <- c(0, 5^(0:7))
+try(glm(cbind(success,failure) ~ 0+predictor, family = binomial(link="log")))
+# no coefficient is possible as the first case will have mu = 1
+## 2.2.1 gave a subscript out of range warning instead.

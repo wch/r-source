@@ -555,6 +555,10 @@ BUG FIXES
     o	nls() now works correctly with some low-dimensional fits,
 	e.g. with one or zero non-linear parameters.
 
+    o	glm() could give an inappropriate error message if all
+	possible coefficients were invalid (e.g. a log-linear binomial
+	model with no intercept and not all positive predictor).
+
 
 
 

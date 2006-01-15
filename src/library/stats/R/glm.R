@@ -248,6 +248,8 @@ glm.fit <-
             }
             ## check for fitted values outside domain.
             if (!(valideta(eta) && validmu(mu))) {
+                if(is.null(coefold))
+                    stop("no valid set of coefficients has been found: please supply starting values", call. = FALSE)
                 warning("step size truncated: out of bounds", call. = FALSE)
                 ii <- 1
                 while (!(valideta(eta) && validmu(mu))) {
