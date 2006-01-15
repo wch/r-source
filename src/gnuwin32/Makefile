@@ -88,7 +88,7 @@ rbuild:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
-	@$(MAKE) --no-print-directory libRblas.a
+	@$(MAKE) --no-print-directory libRblas.dll.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
 	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
@@ -184,7 +184,7 @@ dllversion.o: ../include/Rversion.h
 
 R.dll: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
-Rdll: makeMakedeps libRblas.a ../../bin/R.dll
+Rdll: makeMakedeps libRblas.dll.a ../../bin/R.dll
 
 ../../bin/R.dll: FORCE
 	@$(MAKE) --no-print-directory fixfiles
@@ -229,7 +229,7 @@ Rblas: ../../bin/Rblas.dll
 Rblas-clean:
 	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o
 
-libRblas.a:  Rblas.def
+libRblas.dll.a:  Rblas.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
 	  --def Rblas.def --output-lib $@
 

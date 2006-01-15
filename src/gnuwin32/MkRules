@@ -103,10 +103,6 @@ AWK=awk
 DEPARG=-MM
 endif
 
-ifdef SUPPORT_GUI_MBCS
-CFLAGS+=-DSUPPORT_GUI_MBCS
-endif
-
 ifdef USE_UNICOWS
 LIBEXTRAS+=-lunicows
 endif
@@ -124,7 +120,7 @@ F77=$(BINPREF)g77
 AS=$(BINPREF)as
 DLL_LDMAIN=gcc
 DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
-## use version without -k for front-ends/libproxy.a
+## formerly used version without -k for front-ends/libproxy.a
 DLLTOOL_WIN32=$(BINPREF)dlltool --as $(AS)
 DLLTOOL=$(DLLTOOL_WIN32) -k
 LINKER=$(BINPREF)gcc $(MINGW32LDFLAG)
@@ -171,7 +167,6 @@ RESCOMP=$(BINPREF)windres
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
 
 %.dll:
-#	@$(ECHO) ------- Building $@ from $^ --------
 	@$(ECHO) LIBRARY $* > $*.def
 	@$(ECHO) EXPORTS >> $*.def
 	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> $*.def
@@ -179,8 +174,10 @@ RESCOMP=$(BINPREF)windres
 	@$(RM) $*.def
 
 lib%.a: %.def
-	@$(ECHO) -------- Building $@ from $^ --------
-	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib lib$*.a
+	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib $@
+
+lib%.dll.a: %.def
+	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib $@
 
 %.a:
 #	@$(ECHO) -------- Building $@ from $^ --------

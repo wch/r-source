@@ -10,7 +10,7 @@ all:
 	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
 ifneq ($(strip $(USE_ACML)),YES)
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../bin/Rlapack.dll 
-	@$(MAKE) --no-print-directory -f Makefile.win libRlapack.a
+	@$(MAKE) --no-print-directory -f Makefile.win libRlapack.dll.a
 endif
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../modules/$(MODULE).dll
 
@@ -45,7 +45,7 @@ dllversion.o: ../../include/Rversion.h
 
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def \
-	  Rlapack.dll libRlapack.a
+	  Rlapack.dll *.a
 
 
 # Rlapack.* section
@@ -55,7 +55,7 @@ Rlapack.dll: $(LIBOBJECTS)
 	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> Rlapack.def
 	$(DLL) --shared $(DLLFLAGS) -o $@ Rlapack.def $^ $(Rlapack-DLLLIBS)
 
-libRlapack.a: Rlapack.def
+libRlapack.dll.a: Rlapack.def
 
 ../../../bin/Rlapack.dll: Rlapack.dll
 	@$(MKDIR) -p ../../../bin
