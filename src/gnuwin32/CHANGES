@@ -103,6 +103,10 @@ LInks to package 'methods' are now fixed up, and R CMD INSTALL no
 longer reports as missing links to 'datasets' and 'grDevices' which
 would be fixed up.
 
+The default optimization level has been changed from -O2 to -O3, since
+space taken by compiled code is no longer much of an issue.  This will
+result is a small performance increase.
+
 
 
 R 2.2.1 patched

@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-CFLAGS=-O2 -I. -DWIN32 -D_X86_
+CFLAGS=-O3 -I. -DWIN32 -D_X86_
 
 libxdr.a: xdr.o xdr_float.o xdr_stdio.o xdr_mem.o
 

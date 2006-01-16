@@ -6,7 +6,7 @@ ifdef DEBUG
   LINKFLAGS=
   DLLFLAGS=
 else
-  OPTFLAGS=-O2 -Wall -pedantic
+  OPTFLAGS=-O3 -Wall -pedantic
   LINKFLAGS=-s
   DLLFLAGS=-s
 endif

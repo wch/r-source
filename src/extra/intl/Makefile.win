@@ -15,7 +15,7 @@ ifdef DEBUG
  DEFS+=-g
 endif
 
-CFLAGS=-O2 $(DEFS) -I. -I../../include
+CFLAGS=-O3 $(DEFS) -I. -I../../include
 dcigettext-CFLAGS=-DLOCALEDIR=\"\"
 
 SOURCES = \

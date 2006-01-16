@@ -4,7 +4,7 @@ include ../../gnuwin32/MkRules
 
 all: makeMakedeps libbz2.a
 
-CFLAGS=-Wall -I../../include -O2 -fomit-frame-pointer -fno-strength-reduce
+CFLAGS=-Wall -I../../include -O3
 
 CSOURCES= blocksort.c huffman.c crctable.c randtable.c compress.c \
           decompress.c bzlib.c
