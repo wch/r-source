@@ -70,6 +70,17 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \code{\link{eval}}, \code{\link{parse}} and \code{\link{scan}};
   \code{\link{options}("keep.source")}.
 }
+\examples{
+## If you want to source() a bunch of files, something like
+## the following may be useful:
+ sourceDir <- function(path, trace = TRUE, ...) {
+    for (nm in list.files(path, pattern = "\\.[RrSsQq]$")) {
+       if(trace) cat(nm,":")
+       source(file.path(path, nm), ...)
+       if(trace) cat("\n")
+    }
+ }
+}
 \keyword{file}
 \keyword{programming}
 \keyword{connection}
