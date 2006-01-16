@@ -18,6 +18,7 @@ buildpng:
 # jconfig.h and Makefile obtained running 'CC="gcc -mno-cygwin" ./configure'
 # under CYGWIN. They are here since the configure script doesn't run 
 # (I suspect) using the reduced set of tools we distribute.
+## 2006-01-15 checked under current tools
 buildjpeg: $(JPEGDIR)/jconfig.h Makefile.jpeg
 	$(MAKE) CC='$(CC)' AR='$(AR) rc' RANLIB=$(RANLIB) -C $(JPEGDIR) \
 	  -f ../Makefile.jpeg libjpeg.a
@@ -26,7 +27,7 @@ $(JPEGDIR)/jconfig.h: jconfig.h
 	$(CP) jconfig.h $(JPEGDIR)/jconfig.h
 
 rbitmap-CFLAGS=-O3 -Wall -pedantic -DHAVE_PNG -DHAVE_JPEG -I../../extra/zlib -I./libpng -I$(JPEGDIR) -I../../include
-Rbitmap-DLLLIBS=-L../../../bin $(LIBUNICOWS) -lR
+Rbitmap-DLLLIBS=-L../../../bin -lR
 Rbitmap-DLLFLAGS=-s
 
 Rbitmap.dll: rbitmap.o $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a
