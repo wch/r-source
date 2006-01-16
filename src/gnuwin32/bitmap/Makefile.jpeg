@@ -24,7 +24,7 @@ mandir = $(prefix)/man/man$(manext)
 CC= gcc -mno-cygwin
 
 # You may need to adjust these cc options:
-CFLAGS= -O2  -I. -I$(srcdir)
+CFLAGS= -O3 -I.
 # Generally, we recommend defining any configuration symbols in jconfig.h,
 # NOT via -D switches here.
 # However, any special defines for ansi2knr.c may be included here:
