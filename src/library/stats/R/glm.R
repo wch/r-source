@@ -36,7 +36,6 @@ glm <- function(formula, family = gaussian, data, weights,
     switch(method,
 	   "model.frame" = return(mf),
 	   "glm.fit" = 1,
-	   "glm.fit.null" = 1,
 	   ## else
 	   stop("invalid 'method': ", method))
     mt <- attr(mf, "terms") # allow model.frame to update it

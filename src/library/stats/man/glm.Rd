@@ -118,8 +118,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   of \code{first} and \code{second}.
   This is the same as \code{first + second + first:second}.
 
-  \code{glm.fit} and \code{glm.fit.null} are the workhorse functions:
-  the former calls the latter for a null model (with no intercept).
+  \code{glm.fit} is the workhorse function.
 
   If more than one of \code{etastart}, \code{start} and \code{mustart}
   is specified, the first in the list will be used.
@@ -182,7 +181,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{data}{the \code{data argument}.}
   \item{offset}{the offset vector used.}
   \item{control}{the value of the \code{control} argument used.}
-  \item{method}{the name of the fitter function used, in \R always
+  \item{method}{the name of the fitter function used, currently always
     \code{"glm.fit"}.}
   \item{contrasts}{(where relevant) the contrasts used.}
   \item{xlevels}{(where relevant) a record of the levels of the factors
