@@ -41,9 +41,9 @@ else
 endif
 
 CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/include
-CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
-CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
-FFLAGS=-O2 $(DEBUGFLAG) $(PKG_FFLAGS)
+CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O3 $(PKG_CFLAGS)
+CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O3 $(PKG_CXXFLAGS)
+FFLAGS=-O3 $(DEBUGFLAG) $(PKG_FFLAGS)
 DLLLIBS=-L$(RHOME)/bin $(PKG_LIBS) $(EXTRA_LIBS) -lR
 RESFLAGS=--include-dir $(RHOME)/include
 # Note: DLLLIBS has already set -L$(RHOME)/bin
@@ -74,16 +74,11 @@ $(DLLNAME)_res.rc:
 
 $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/include/Rversion.h
 
-$(DLLNAME).a: $(OBJS)
-	@$(RM) -f $@
-	$(AR) cr $@ $(OBJS)
-	$(RANLIB) $@
-
 ifeq ($(wildcard $(DLLNAME)-win.def),$(DLLNAME)-win.def)
-$(DLLNAME).dll : $(DLLNAME)-win.def $(DLLNAME).a $(RCOBJ)
+$(DLLNAME).dll : $(DLLNAME)-win.def $(OBJS) $(RCOBJ)
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $^ $($*-DLLLIBS) $(DLLLIBS)
 else
-$(DLLNAME).dll : $(DLLNAME).a $(RCOBJ)
+$(DLLNAME).dll : $(OBJS) $(RCOBJ)
 endif
 
 # Dependencies
