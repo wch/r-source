@@ -559,6 +559,9 @@ BUG FIXES
 	possible coefficients were invalid (e.g. a log-linear binomial
 	model with no intercept and not all positive predictor).
 
+    o	solve() gives clearer error messages for some incorrect usages.
+	(PR#8494 and similar)
+
 
 
 

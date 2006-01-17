@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-15 r37088)
+Version 2.3.0 Under development (unstable) (2006-01-16 r37100)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4958,4 +4958,19 @@ NULL
 Error: no valid set of coefficients has been found: please supply starting values
 > # no coefficient is possible as the first case will have mu = 1
 > ## 2.2.1 gave a subscript out of range warning instead.
+> 
+> 
+> ## error message from solve (PR#8494)
+> temp <- diag(1, 5)[, 1:4]
+> rownames(temp) <- as.character(1:5)
+> colnames(temp) <- as.character(1:4)
+> try(solve(temp))
+Error in solve.default(temp) : only square matrices can be inverted
+> # also complex
+> try(solve(temp+0i))
+Error in solve.default(temp + (0+0i)) : only square matrices can be inverted
+> # and non-comformant systems
+> try(solve(temp, diag(3)))
+Error in solve.default(temp, diag(3)) : 'b' must be compatible with 'a'
+> ## gave errors from rownames<- in 2.2.1
 > 

@@ -1716,3 +1716,15 @@ predictor <- c(0, 5^(0:7))
 try(glm(cbind(success,failure) ~ 0+predictor, family = binomial(link="log")))
 # no coefficient is possible as the first case will have mu = 1
 ## 2.2.1 gave a subscript out of range warning instead.
+
+
+## error message from solve (PR#8494)
+temp <- diag(1, 5)[, 1:4]
+rownames(temp) <- as.character(1:5)
+colnames(temp) <- as.character(1:4)
+try(solve(temp))
+# also complex
+try(solve(temp+0i))
+# and non-comformant systems
+try(solve(temp, diag(3)))
+## gave errors from rownames<- in 2.2.1

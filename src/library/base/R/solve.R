@@ -20,11 +20,14 @@ solve.default <-
     if(is.complex(a) || (!missing(b) && is.complex(b))) {
 	a <- as.matrix(a)
 	if(missing(b)) {
+            if(nrow(a) != ncol(a))
+                stop("only square matrices can be inverted")
 	    b <- diag(1+0i, nrow(a))
 	    colnames(b) <- rownames(a)
 	} else if(!is.complex(b)) b[] <- as.complex(b)
 	if(!is.complex(a)) a[] <- as.complex(a)
 	return (if (is.matrix(b)) {
+            if(ncol(a) != nrow(b)) stop("'b' must be compatible with 'a'")
 	    rownames(b) <- colnames(a)
 	    .Call("La_zgesv", a, b, PACKAGE = "base")
 	} else
@@ -38,11 +41,14 @@ solve.default <-
     if(!LINPACK) {
 	a <- as.matrix(a)
 	if(missing(b)) {
-	    b <- diag(1.0, nrow(a))
+            if(nrow(a) != ncol(a))
+                stop("only square matrices can be inverted")
+	    b <- diag(1, nrow(a))
 	    colnames(b) <- rownames(a)
 	} else storage.mode(b) <- "double"
 	storage.mode(a) <- "double"
 	return (if (is.matrix(b)) {
+            if(ncol(a) != nrow(b)) stop("'b' must be compatible with 'a'")
 	    rownames(b) <- colnames(a)
 	    .Call("La_dgesv", a, b, tol, PACKAGE = "base")
 	} else
