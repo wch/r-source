@@ -462,6 +462,7 @@ quasi <- function (link = "identity", variance = "constant")
 	       variance <- function(mu) rep.int(1, length(mu))
 	       dev.resids <- function(y, mu, wt) wt * ((y - mu)^2)
 	       validmu <- function(mu) TRUE
+               initialize <- expression({n <- rep.int(1, nobs); mustart <- y})
 	   },
 	   "mu(1-mu)" = {
 	       variance <- function(mu) mu * (1 - mu)
@@ -469,29 +470,36 @@ quasi <- function (link = "identity", variance = "constant")
 	       dev.resids <- function(y, mu, wt)
 		   2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
 			     (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
+               initialize <- expression({n <- rep.int(1, nobs)
+                   mustart <- pmax(0.001, pmin(0.999, y))})
 	   },
 	   "mu" = {
 	       variance <- function(mu) mu
 	       validmu <- function(mu) all(mu>0)
 	       dev.resids <- function(y, mu, wt)
 		   2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
+               ## 0.1 fudge here matches poisson: S has 1/6.
+               initialize <- expression({n <- rep.int(1, nobs)
+                   mustart <- y + 0.1 * (y == 0)})
 	   },
 	   "mu^2" = {
 	       variance <- function(mu) mu^2
 	       validmu <- function(mu) all(mu>0)
 	       dev.resids <- function(y, mu, wt)
 		   pmax(-2 * wt * (log(ifelse(y == 0, 1, y)/mu) - (y - mu)/mu), 0)
+               initialize <- expression({n <- rep.int(1, nobs)
+                   mustart <- y + 0.1 * (y == 0)})
 	   },
 	   "mu^3" = {
 	       variance <- function(mu) mu^3
 	       validmu <- function(mu) all(mu>0)
 	       dev.resids <- function(y, mu, wt)
 		   wt * ((y - mu)^2)/(y * mu^2)
+               initialize <- expression({n <- rep.int(1, nobs)
+                   mustart <- y + 0.1 * (y == 0)})
 	   },
 	   stop(gettextf('\'variance\' "%s" is invalid: possible values are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"', variancetemp), domain = NA)
 	   )# end switch(.)
-# 0.1 fudge here matches poisson: S has 1/6.
-    initialize <- expression({ n <- rep.int(1, nobs); mustart <- y + 0.1 * (y == 0)})
     aic <- function(y, n, mu, wt, dev) NA
     structure(list(family = "quasi",
 		   link = linktemp,

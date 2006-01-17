@@ -275,7 +275,11 @@ NEW FEATURES
 	the 23rd leap second on 2005-12-31: the internal code uses a
 	run-time test to see if the OS does.
 
-    o	canCoerce() utility in "methods" package.
+    o	New canCoerce() utility function in "methods" package.
+
+    o	The initialization methods for the quasi() family have been
+	changed to depend on the variance function, and in particular
+	work better for the "mu(1-mu)" variance function.  (PR#8486)
 
 
 DEPRECATED & DEFUNCT
@@ -362,14 +366,15 @@ INSTALLATION CHANGES
     o	Support for MBCS is only enabled if iconv is found and it
 	supports enough conversions.  (libiconv does.)
 
-    o	In a MBCS locale, make check now translates the graphics
+    o	In an MBCS locale, make check now translates the graphics
 	examples from Latin-1.  This ensures that they will work
 	correctly in UTF-8: it is possible that in other MBCS locales
 	they will now fail (rather than work completely incorrectly).
 
     o	There is a new test, 'test-Docs', which as part of 'make
 	check-devel' tests the code in the documentation.  Currently
-	it runs doc/manual/R-{exts,intro}.R.
+	it runs doc/manual/R-{exts,intro}.R and the compiled code in
+	R-exts.c.
 
     o	The workaround to allow an external LAPACK-containing BLAS
 	such as libsunperf to be used with the internal LAPACK has
