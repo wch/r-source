@@ -19,8 +19,8 @@ mget(x, envir, mode = "any",
     omitted, the function will search as if the name of the object
     appeared unquoted in an expression.}
   \item{envir}{an alternative way to specify an environment to look in;
-    see the details section.}
-  \item{mode}{the mode of object sought.}
+    see the Details section.}
+  \item{mode}{the mode or type of object sought: see the Details section.}
   \item{inherits}{should the enclosing frames of the environment be
     searched?}
   \item{ifnotfound}{A \code{list} of values to be used if the item is
@@ -42,12 +42,14 @@ mget(x, envir, mode = "any",
   is encountered.  See \code{\link{environment}} and the \sQuote{R
   Language Definition} manual for details about the structure of
   environments and their enclosures.
-  
-  \bold{Warning:}
-  \code{inherits=TRUE} is the default behaviour for \R but not for S.
 
-  The \code{mode} may specify collections such as \code{"numeric"} and
-  \code{"function"}: any member of the collection will suffice.
+  \bold{Warning:}
+  \code{inherits = TRUE} is the default behaviour for \R but not for S.
+
+  If \code{mode} is specified then only objects of that type are sought.
+  The \code{mode} may specify one of the collections \code{"numeric"} and
+  \code{"function"} (see \code{\link{mode}}): any member of the
+  collection will suffice.
 
   Using a \code{NULL} environment is equivalent to using the current
   environment.
