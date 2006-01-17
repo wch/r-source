@@ -1971,6 +1971,9 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP substitute(SEXP lang, SEXP rho)
 {
     SEXP t;
+    
+    if (rho == R_NilValue) rho = R_GlobalEnv;
+    
     switch (TYPEOF(lang)) {
     case PROMSXP:
 	return substitute(PREXPR(lang), rho);
@@ -2018,7 +2021,7 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 		return substituteList(CDR(el), rho);
 	    error(_("... used in an incorrect context"));
 	}
-	PROTECT(h = substituteList(h, R_NilValue));
+	PROTECT(h = substituteList(h, R_GlobalEnv));
 	PROTECT(t = substituteList(CDR(el), rho));
 	t = listAppend(h, t);
 	UNPROTECT(2);

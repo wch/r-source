@@ -1116,7 +1116,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    dn = getAttrib(u, R_NamesSymbol);
 	    if (k >= lenmin && (TAG(t) != R_NilValue ||
 				((deparse_level == 1) &&
-				 isSymbol(substitute(CAR(t),R_NilValue)))))
+				 isSymbol(substitute(CAR(t),R_GlobalEnv)))))
 		have_cnames = 1;
 	    nnames = imax2(nnames, length(dn));
 	}
@@ -1231,7 +1231,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		if (TAG(t) != R_NilValue)
 		    SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
 		else {
-		    expr = substitute(CAR(t), R_NilValue);
+		    expr = substitute(CAR(t), R_GlobalEnv);
 		    if (deparse_level == 1 && isSymbol(expr))
 			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (deparse_level == 2)
@@ -1329,7 +1329,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    dn = getAttrib(u, R_NamesSymbol);
 	    if (k >= lenmin && (TAG(t) != R_NilValue ||
 		      ((deparse_level == 1) &&
-		       isSymbol(substitute(CAR(t),R_NilValue)))))
+		       isSymbol(substitute(CAR(t),R_GlobalEnv)))))
 		have_rnames = 1;
 	    nnames = imax2(nnames, length(dn));
 	}
@@ -1463,7 +1463,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		if (TAG(t) != R_NilValue)
 		    SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
 		else {
-		    expr = substitute(CAR(t), R_NilValue);
+		    expr = substitute(CAR(t), R_GlobalEnv);
 		    if (deparse_level == 1 && isSymbol(expr))
 			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (deparse_level == 2)
