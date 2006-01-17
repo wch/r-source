@@ -2637,9 +2637,9 @@ Introduction with R'' by S. Wood (2006).
 Functions to fit Generalized Additive Models for Location Scale and
 Shape.
 @item gap
-Genetic analysis package for both population and family data.  Includes
-@strong{pathmix} for path analysis of pairs of relatives, and
-@strong{pointer} for complex segregation analysis.
+Genetic analysis package for both population and family data.
+@c Includes @strong{pathmix} for path analysis of pairs of relatives,
+@c and @strong{pointer} for complex segregation analysis.
 @item gbm
 Generalized Boosted Regression Models: implements extensions to Freund
 and Schapire's AdaBoost algorithm and J. Friedman's gradient boosting
