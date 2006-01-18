@@ -2522,6 +2522,11 @@ function(db)
           "format", "details", "value", "references", "source",
           "seealso", "examples", "note", "author", "synopsis",
           "docType", "encoding")
+    known_tags <- c(unique_tags,
+                    "section",
+                    ## Keep this for back-compatibility ...
+                    "non_function")
+    ## Note that we treat \alias and \keyword entries as meta data.
 
     files_with_surely_bad_Rd <- list()
     files_with_likely_bad_Rd <- list()
@@ -2530,6 +2535,7 @@ function(db)
     files_with_non_ASCII_section_titles <- NULL
     files_with_missing_mandatory_tags <- NULL
     files_with_duplicated_unique_tags <- NULL
+    files_with_unknown_tags <- NULL
     files_with_bad_name <- files_with_bad_title <- NULL
     files_with_bad_keywords <- NULL
 
@@ -2538,22 +2544,27 @@ function(db)
 
     for(f in names(db)) {
         x <- tryCatch(Rd_parse(text = db[[f]]), error = function(e) e)
+        
         if(inherits(x, "error")) {
             files_with_surely_bad_Rd[[f]] <- conditionMessage(x)
             next
         }
+        
         db_aliases[[f]] <- unique(x$meta$aliases)
         if(length(x$rest))
             files_with_likely_bad_Rd[[f]] <- x$rest
+        
         if(length(x$meta$encoding) && is.na(x$meta$encoding))
             files_with_unknown_encoding <-
                 c(files_with_unknown_encoding, f)
+        
         for(tag in c("aliases", "doc_type", "encoding")) {
             if(any(ind <- !.is_ASCII(x$meta[[tag]])))
                 files_with_non_ASCII_meta_data <-
                     rbind(files_with_non_ASCII_meta_data,
                           cbind(f, tag, x$meta[[tag]][ind]))
         }
+        
         ## Non-ASCII user-defined section titles.
         ## <NOTE>
         ## Rd_parse() re-encodes these if necessary (and possible), but
@@ -2565,6 +2576,7 @@ function(db)
                 rbind(files_with_non_ASCII_section_titles,
                       cbind(f, user_defined_section_titles[ind]))
         ## </NOTE>
+        
         tags <- sapply(x$data$tags, "[[", 1)
         ## Let's not worry about named sections for the time being ...
         bad_tags <- c(mandatory_tags %w/o% tags,
@@ -2579,18 +2591,28 @@ function(db)
             files_with_missing_mandatory_tags <-
                 rbind(files_with_missing_mandatory_tags,
                       cbind(f, bad_tags))
+        
         ind <- which(tags == "name")[1]
         if(is.na(ind))
             files_with_bad_name <- c(files_with_bad_name, f)
+        
         ind <- which(tags == "title")[1]
         if(is.na(ind) ||
            (regexpr("^[[:space:]]*$", x$data$vals[[ind]]) != -1))
             files_with_bad_title <- c(files_with_bad_title, f)
+        
         bad_tags <- intersect(tags[duplicated(tags)], unique_tags)
         if(length(bad_tags))
             files_with_duplicated_unique_tags <-
                 rbind(files_with_duplicated_unique_tags,
                       cbind(f, bad_tags))
+
+        bad_tags <- unique(tags) %w/o% known_tags
+        if(length(bad_tags))
+            files_with_unknown_tags <-
+                rbind(files_with_unknown_tags,
+                      cbind(f, bad_tags))
+        
         bad_keywords <- x$meta$keywords %w/o% standard_keywords
         if(length(bad_keywords))
             files_with_bad_keywords <-
@@ -2612,6 +2634,7 @@ function(db)
                 files_with_non_ASCII_section_titles,
                 files_with_missing_mandatory_tags,
                 files_with_duplicated_unique_tags,
+                files_with_unknown_tags,
                 files_with_bad_name,
                 files_with_bad_title,
                 files_with_bad_keywords,
@@ -2624,6 +2647,7 @@ function(db)
           "files_with_non_ASCII_section_titles",
           "files_with_missing_mandatory_tags",
           "files_with_duplicated_unique_tags",
+          "files_with_unknown_tags",
           "files_with_bad_name",
           "files_with_bad_title",
           "files_with_bad_keywords",
@@ -2739,6 +2763,19 @@ function(x, ...)
                          paste(" ", bad[[i]])))
         }
         writeLines(gettext("These entries must be unique in an Rd file.\n"))
+    }
+
+    if(length(x$files_with_unknown_tags)) {
+        writeLines(gettextf("Rd files with unknown sections:"))        
+        bad <- x$files_with_unknown_tags
+        bad <- split(bad[, 2], bad[, 1])
+        for(i in seq(along = bad)) {
+            writeLines(strwrap(paste(names(bad)[i], ": ",
+                                     paste(bad[[i]], collapse = " "),
+                                     "\n", sep = ""),
+                               indent = 2, exdent = 4))
+        }
+        writeLines("")
     }
 
     if(length(x$files_with_bad_keywords)) {

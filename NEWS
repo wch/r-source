@@ -445,6 +445,8 @@ UTILITIES
 	URL, do R CMD check now checks the names are ASCII and do not
 	contain % .
 
+    o	R CMD check now warns about unknown sections in Rd files.
+
 
 DOCUMENTATION
 
