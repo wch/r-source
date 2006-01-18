@@ -3997,6 +3997,7 @@ close(con)
 unlink("test.gz")
 ## segfaulted in 2.2.0 on some x86_64 systems.
 
+
 ## format() with *.marks:
 x <- 1.2345 + 10^(0:5)
 ff <- format(x, width = 11, big.mark = "'")
@@ -4009,3 +4010,13 @@ stopifnot(substring(f2, nc,nc) != "_", # no traling small mark
 fc <- formatC(1.234 + 10^(0:8), format="fg", width=11, big.mark = "'")
 stopifnot(nchar(fc) == 11)
 ## had non-adjusted strings before 2.3.0
+
+
+## data.matrix on zero-length columns
+DF <- data.frame(x=c("a", "b"), y=2:3)[FALSE,]
+stopifnot(is.numeric(data.matrix(DF)))
+# was logical in 2.2.1.
+DF <- data.frame(I(character(0)))
+X <- try(data.matrix(DF))
+stopifnot(inherits(X, "try-error"))
+## gave logical matrix in 2.2.1.

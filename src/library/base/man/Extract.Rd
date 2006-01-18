@@ -70,7 +70,8 @@ x$name
   extraction, or on the left-hand-side for replacement.
   When an index expression appears on the left side of an assignment
   then that part of \code{x} is set to the value of the right hand side
-  of the assignment.  In this case no partial matching of indices is done.
+  of the assignment.  In this case no partial matching of indices is
+  done.  The left-hand-side is coerced as needed to accept the values.
 }
 \section{Atomic vectors}{
   The usual form of indexing is \code{"["}.  \code{"[["} can be used to
@@ -177,7 +178,7 @@ x$name
 
   The documented behaviour of S is that an \code{NA} replacement index
   \sQuote{goes nowhere} but uses up an element of \code{value}
-  ((Becker \emph{et al} p. 359).  However, that is not the current
+  (Becker \emph{et al} p. 359).  However, that is not the current
   behaviour of S-PLUS.
 }
 \references{

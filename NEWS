@@ -576,6 +576,9 @@ BUG FIXES
 	invalid for the "log" and "inverse" link functions.  This is
 	now reported.
 
+    o	data.matrix() did not work correctly on zero-row data frames.
+	(PR#8496 and other problems.)
+
 
 
 
