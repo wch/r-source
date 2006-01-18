@@ -570,7 +570,7 @@ BUG FIXES
 	(PR#8494 and similar)
 
     o	The gaussian() family was missing the 'valideta' component
-	(which could be needed for the "log" and "inverse" link functions).
+	(which could be needed for the "inverse" link function).
 
 	The starting values supplied by the gaussian family could be
 	invalid for the "log" and "inverse" link functions.  This is
