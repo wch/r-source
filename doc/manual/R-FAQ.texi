@@ -497,7 +497,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c           x86_64 2.2.0  Brian Ripley
 @c   fc4     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 2.2.1  Peter Dalgaard
-@c   el3     i386   2.1.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
+@c   el3     i386   2.2.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c   el4     i386   2.1.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -2941,6 +2941,8 @@ consensus tree.
 @item magic
 A variety of methods for creating magic squares of any order greater
 than 2, and various magic hypercubes.
+@item mapLD
+Linkage Disequilibrium mapping.
 @item mapdata
 Supplement to package @strong{maps}, providing the larger and/or
 higher-resolution databases.
@@ -3667,6 +3669,9 @@ Maximum likelihood computations for Tweedie exponential family models.
 Interface to Unidata's routines to convert units.
 @item ump
 Uniformly Most Powerful tests.
+@item untb
+Ecological drift under the UNTB (Unified Neutral Theory of
+Biodiversity).
 @item urca
 Unit root and cointegration tests for time series data.
 @item urn
