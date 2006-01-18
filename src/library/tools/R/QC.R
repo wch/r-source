@@ -2524,9 +2524,12 @@ function(db)
           "docType", "encoding")
     known_tags <- c(unique_tags,
                     "section",
+                    ## Allow for empty keywords (these do not make it
+                    ## into the metadata).
+                    "keyword",
                     ## Keep this for back-compatibility ...
                     "non_function")
-    ## Note that we treat \alias and \keyword entries as meta data.
+    ## Note that we treat \alias and \keyword entries as metadata.
 
     files_with_surely_bad_Rd <- list()
     files_with_likely_bad_Rd <- list()
