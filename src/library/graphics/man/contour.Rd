@@ -55,9 +55,8 @@ contour(x, \dots)
   \item{lty}{line type for the lines drawn.}
   \item{lwd}{line width for the lines drawn.}
   \item{add}{logical. If \code{TRUE}, add to a current plot.}
-  \item{\dots}{additional graphical parameters (see \code{\link{par}}).
-    The plot aspect ratio \code{asp} (see \code{\link{plot.window}}) 
-    and the arguments to \code{\link{title}} may also be supplied.}
+  \item{\dots}{additional arguments to \code{\link{plot.window}} and
+    \code{\link{title}}.}
 }
 \details{
   \code{contour} is a generic function with only a default method in

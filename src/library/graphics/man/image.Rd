@@ -49,7 +49,7 @@ image(x, \dots)
     between the limits.}
   \item{\dots}{graphical parameters for \code{\link{plot}} may also be
     passed as arguments to this function, as can the plot aspect ratio
-    \code{asp} (see \code{\link{plot.window}}).}
+    \code{asp} and \code{axes} (see \code{\link{plot.window}}).}
 }
 \description{
   Creates a grid of colored or gray-scale rectangles with colors
