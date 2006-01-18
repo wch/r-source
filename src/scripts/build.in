@@ -630,7 +630,9 @@ Options:
 END
     if($WINDOWS) {
 	print STDERR "  --docs=TYPE           " .
-	    "type(s) of documentation to build and install\n";
+	    "type(s) of documentation to build and INSTALL\n";
+	print STDERR "                        " .
+	    "See Rcmd INSTALL --help for possible values of TYPE\n";
 	print STDERR "  --auto-zip            " .
 	    "select zipping of data and help based on size\n";
     } else {
