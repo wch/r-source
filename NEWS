@@ -588,6 +588,14 @@ BUG FIXES
 	label all files as having page 1 of 1, as some other software
 	seems to expect that.
 
+    o	The axis labels chosen for logarithmic axis are now less
+	likely to be linear and inappropriate (when the range is more
+	than 10 and less than 100).  (PR#1235)
+
+    o	Staircase lines (types "s" and "S") are now drawn as
+	continuously rather than a point at a time and so line types,
+	mitring and so on work. (PR#2630)
+
 
 
 

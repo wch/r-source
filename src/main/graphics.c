@@ -3102,10 +3102,15 @@ void GLPretty(double *ul, double *uh, int *n)
  * This only does a very simple setup.
  * The real work happens when the axis is drawn. */
     int p1, p2;
-    p1 = ceil(log10(*ul));
-    p2 = floor(log10(*uh));
+    double dl = *ul, dh = *uh;
+    p1 = ceil(log10(dl));
+    p2 = floor(log10(dh));	
+    if(p2 <= p1 &&  dh/dl > 10.0) {
+	p1 = ceil(log10(dl) - 0.5);
+	p2 = floor(log10(dh) + 0.5);
+    }
 
-    if (p2 - p1 <= 0) { /* floor(log10(uh)) <= ceil(log10(ul))
+    if (p2 <= p1) { /* floor(log10(uh)) <= ceil(log10(ul))
 			 * <==>	 log10(uh) - log10(ul) < 2
 			 * <==>		uh / ul	       < 100 */
 	/* Very small range : Use tickmarks from a LINEAR scale
