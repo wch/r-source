@@ -2,11 +2,13 @@
 
 .onLoad <- function(libname, pkgname)
 {
+    ## Set default options() related to functionality in 'utils' pkg
     op <- options()
     op.utils <-
         list(help.try.all.packages = FALSE,
              internet.info = 2,
-             pkgType = .Platform$pkgType)
+             pkgType = .Platform$pkgType,
+             str = list(strict.width = "no"))
     extra <-
         if(.Platform$OS.type == "windows") {
             list(mailer = "none",
