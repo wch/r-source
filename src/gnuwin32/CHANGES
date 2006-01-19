@@ -110,6 +110,11 @@ result is a small performance increase.
 When making DLLs, the objects are no longer wrapped in an archive en
 route (this was needed to avoid line-length limits on an earlier shell).
 
+When making standalone Rmath, the static library is now libRmath.a and the
+import library is called libRmath.dll.a.
+
+The minimum value for --max-mem-size is now 32M (rather than 16M).
+
 
 
 R 2.2.1 patched

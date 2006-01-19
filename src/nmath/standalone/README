@@ -8,13 +8,14 @@ Under Unix, making in this directory will make standalone libraries
 libRmath.a and libRmath.so.  `make static' and `make shared' make
 just one of them.
 
-Under Windows, use make -f Makefile.win.  This makes Rmath.dll with
-import library libRmath.a, and static library Rmath.a.
-
 NB: certain compilers are unable to do compile-time IEEE-754
 arithmetic and so cannot compile mlutils.c.  The known example is
 Sun's cc.  Use gcc for mlutils.c (or the whole library).
 
+Under Windows, use 'make -f Makefile.win', which makes Rmath.dll, its
+import library libRmath.dll.a and libRmath.s.  'make -f Makefile.win
+shared' makes the first two and 'make -f Makefile.win static' the
+third.
 
 To use the routines in your own C or C++ programs, include
 
@@ -26,7 +27,15 @@ file test.c does nothing useful, but is provided to test the process.
 Note that you will probably not be able to run it unless you add the
 directory containing libRmath.so to the LD_LIBRARY_PATH.
 
-Under Windows you can also link statically against Rmath.a.
+Under Windows you can link statically against libRmath.a or
+dynamically against Rmath.dll or its import library libRmath.dll.a.
+If you just use -lRmath it will use the first found of libRmath.dll.a,
+libRmath.a and Rmath.dll in that order, so the result depends on which
+files are present.  You should be able to force things via
+
+-Wl,-Bstatic -lRmath -Wl,dynamic
+-Wl,-Bdynamic -lRmath
+
 
 
 Rmath.h contains R_VERSION_STRING, which is a character string containing
