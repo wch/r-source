@@ -584,6 +584,10 @@ BUG FIXES
     o	data.matrix() did not work correctly on zero-row data frames.
 	(PR#8496 and other problems.)
 
+    o	The DSC comments in the files from postscript(onefile=F) now
+	label all files as having page 1 of 1, as some other software
+	seems to expect that.
+
 
 
 
