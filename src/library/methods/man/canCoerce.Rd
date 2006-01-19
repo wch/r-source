@@ -17,7 +17,7 @@ canCoerce(object, Class)
   a scalar logical, \code{TRUE} if there is a \code{coerce} method
   (as defined by \code{\link{setAs}}, e.g.) for the signature
   \code{(from = class(object), to = Class)}.
-
+}
 \seealso{\code{\link{as}}, \code{\link{setAs}},
   \code{\link{selectMethod}}, \code{\link{setClass}},
 }
