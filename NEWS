@@ -279,7 +279,12 @@ NEW FEATURES
 
     o	The initialization methods for the quasi() family have been
 	changed to depend on the variance function, and in particular
-	work better for the "mu(1-mu)" variance function.  (PR#8486)
+	to work better for the "mu(1-mu)" variance function.  (PR#8486)
+
+    o	eigen() applied to an asymmetric real matrix now uses a
+	tolerance to decide if the result is complex (rather than
+	expecting the imaginary parts of the eigenvalues to be exactly
+	zero).
 
 
 DEPRECATED & DEFUNCT
