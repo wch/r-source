@@ -19,7 +19,7 @@ chol <- function(x, pivot = FALSE, LINPACK = pivot)
 
     if(!is.double(x)) storage.mode(x) <- "double"
 
-    if(pivot) {
+    if(pivot) { ## code could be used in the other case too
         xx <- x
         xx[lower.tri(xx)] <- 0
         z <- .Fortran("dchdc",
@@ -31,8 +31,9 @@ chol <- function(x, pivot = FALSE, LINPACK = pivot)
                       as.integer(pivot),
                       rank = integer(1),
                       DUP = FALSE, PACKAGE = "base")
-        if (!pivot && z$rank < n)
-            stop("matrix not positive definite")
+        if (z$rank < n)
+            if(!pivot) stop("matrix not positive definite")
+            else warning("matrix not positive definite")
         robj <- z$x
         if (pivot) {
             attr(robj, "pivot") <- z$piv
@@ -59,7 +60,7 @@ chol2inv <- function(x, size=NCOL(x), LINPACK=FALSE)
 {
     if(!is.numeric(x))
 	stop("non-numeric argument to 'chol2inv'")
-    if(!LINPACK) return(La.chol2inv(x, size))
+    if(!LINPACK) return(.Call("La_chol2inv", x, size, PACKAGE = "base"))
 
     if(is.matrix(x)) {
 	nr <- nrow(x)

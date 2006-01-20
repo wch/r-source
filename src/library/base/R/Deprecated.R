@@ -17,10 +17,14 @@
 
 ## <entry>
 ## Deprecated in 2.3.0
+La.chol <- function(x) {
+    .Deprecated("svd")
+    .Call("La_chol", as.matrix(x), PACKAGE = "base")
+}
 
-## <entry>
-# format.char <- function(x, width = NULL, flag = "-")
-# {
-#     .Deprecated("format.default")
-# }
+La.chol2inv <- function(x, size = ncol(x)) {
+    .Deprecated("svd")
+    x <- as.matrix(x) # do it this way so ncol(x) is defined
+    .Call("La_chol2inv", x, size, PACKAGE = "base")
+}
 ## </entry>

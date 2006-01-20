@@ -288,6 +288,9 @@ NEW FEATURES
 	expecting the imaginary parts of the eigenvalues to be exactly
 	zero).
 
+    o	chol(pivot = TRUE) now gives a warning if used on a (numerically)
+	non-positive-definite matrix.
+
 
 DEPRECATED & DEFUNCT
 
@@ -320,6 +323,9 @@ DEPRECATED & DEFUNCT
 
     o	postscriptFont() is deprecated in favour of Type1Font() (which
 	is just a change of name).
+
+    o	La.chol() and La.chol2inv() are deprecated (they have since R
+	1.7.0 been the same as the default options of chol() and chol2inv).
 
 
 INTERNATIONALIZATION
