@@ -327,6 +327,8 @@ DEPRECATED & DEFUNCT
     o	La.chol() and La.chol2inv() are deprecated (they have since R
 	1.7.0 been the same as the default options of chol() and chol2inv).
 
+    o	La.svd(method = "dgesvd") is deprecated.
+
 
 INTERNATIONALIZATION
 
