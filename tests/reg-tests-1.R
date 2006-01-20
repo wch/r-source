@@ -3937,6 +3937,14 @@ temp2$vectors <- apply(temp2$vectors, 2, function(x) x/sqrt(sum(Mod(x)^2)))
 temp2
 ## segfaulted in 2.2.1
 
+## rbind on data frames with 0 rows (PR#8506)
+foo <- data.frame(x = 1:10, y = rnorm(10))
+bar1 <- rbind.data.frame(foo[1:5,], foo[numeric(0),])
+stopifnot(dim(bar1) == c(5,2))
+bar2 <- rbind.data.frame(a = foo[1:5,], b = foo[numeric(0),])
+stopifnot(dim(bar2) == c(5,2))
+## Last had 6 rows in 2.2.1, and was a corrupt data frame
+
 ### end of tests added in 2.2.1 patched ###
 
 

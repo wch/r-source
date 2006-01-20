@@ -648,6 +648,9 @@ BUG FIXES
     o	qr.coef() worked incorrectly with multiple rhs in the
 	LAPACK-using cases. (PR#8476/8)
 
+    o	rbind.data.frame() gave a corrupt data frame if one of the
+	named arguments was a zero-row data frame. (PR#8506)
+
 
 
 
