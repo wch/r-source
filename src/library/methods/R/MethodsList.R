@@ -446,7 +446,9 @@ matchSignature <-
     if(is.null(names(signature))) {
         which <- seq(length = length(signature))
         if(length(which) > length(anames))
-          stop(gettextf("more elements in the method signature (%d) than in the generic signature (%d)", length(which), length(anames)))
+          stop(gettextf("more elements in the method signature (%s) than in the generic  %s(%s)",
+               paste(signature, collapse=", "), fun@generic,
+               paste(anames, collapse=", ")))
     }
     else {
     ## construct a function call with the same naming pattern  &
