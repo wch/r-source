@@ -586,7 +586,7 @@ BUG FIXES
     o	data.matrix() did not work correctly on zero-row data frames.
 	(PR#8496 and other problems.)
 
-    o	The DSC comments in the files from postscript(onefile=F) now
+    o	The DSC comments in the files from postscript(onefile=FALSE) now
 	label all files as having page 1 of 1, as some other software
 	seems to expect that.
 
@@ -594,9 +594,14 @@ BUG FIXES
 	likely to be linear and inappropriate (when the range is more
 	than 10 and less than 100).  (PR#1235)
 
-    o	Staircase lines (types "s" and "S") are now drawn as
+    o	Staircase lines (types "s" and "S") are now drawn
 	continuously rather than a point at a time and so line types,
 	mitring and so on work. (PR#2630)
+
+    o	Calling par(mfg) before doing any plotting resulted in NewPage
+	never being called on the device, which in turn resulted in
+	incorrect output for postcript() and pdf() devices.  (Reported
+	by Marc Schwartz in discussion of the non-bug PR#7820.)
 
 
 

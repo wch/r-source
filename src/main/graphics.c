@@ -1772,6 +1772,10 @@ DevDesc *GNewPlot(Rboolean recording)
      * If Rf_gpptr(dd)->new is TRUE, any subsequent drawing will dirty the plot
      * and reset Rf_gpptr(dd)->new to FALSE
      */
+
+    /* we can call par(mfg) before any plotting.
+       That sets new = TRUE and also sets currentFigure <= lastFigure
+       so treat separately. */
     if (!Rf_gpptr(dd)->new) {
 	R_GE_gcontext gc;
 	gcontextFromGP(&gc, dd);
@@ -1792,6 +1796,23 @@ DevDesc *GNewPlot(Rboolean recording)
 	    Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure = 1;
 	}
 
+	GReset(dd);
+	GForceClip(dd);
+    } else if(!Rf_gpptr(dd)->state) { /* device is unused */
+	R_GE_gcontext gc;
+	gcontextFromGP(&gc, dd);
+	if (recording) {
+	    if (Rf_gpptr(dd)->ask) {
+		NewFrameConfirm();
+		if (NoDevices())
+		    error(_("attempt to plot on null device"));
+		else
+		    dd = CurrentDevice();
+	    }
+	    GEinitDisplayList((GEDevDesc*) dd);
+	}
+	GENewPage(&gc, (GEDevDesc*) dd);
+	Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure = 1;
 	GReset(dd);
 	GForceClip(dd);
     }

@@ -501,21 +501,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	R_DEV_2(currentFigure);
 	/* R_DEV_2(defaultFigure) = TRUE;
 	   R_DEV_2(layout) = FALSE; */
-	R_DEV_2(new) = 1;
-	/*
-	if (nrow > 2 || ncol > 2) {
-	    R_DEV__(cexbase) = 0.66;
-	    R_DEV__(mex) = 1.0;
-	}
-	else if (nrow == 2 && ncol == 2) {
-	    R_DEV__(cexbase) = 0.83;
-	    R_DEV__(mex) = 1.0;
-	}
-	else {
-	    R_DEV__(cexbase) = 1.0;
-	    R_DEV__(mex) = 1.0;
-	}
-	*/
+	R_DEV_2(new) = TRUE;
 	GReset(dd);
 	/* Force a device clip */
 	if (Rf_dpptr(dd)->canClip)
