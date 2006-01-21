@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-01-19
+@set FAQ_DATE @value{FAQ_YEAR}-01-21
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2310,6 +2310,8 @@ Processing and Classification of protein mass spectra (SELDI) data.
 @item caTools
 Miscellaneous utility functions, including reading/writing ENVI binary
 files, a LogitBoost classifier, and a base64 encoder/decoder.
+@item calibrate
+Calibration of biplot axes.
 @item car
 Companion to Applied Regression, containing functions for applied
 regession, linear models, and generalized linear models, with an
@@ -3299,6 +3301,9 @@ For solving quadratic programming problems.
 Quantitative chemical analysis: calibration and evaluation of results.
 @item quantreg
 Quantile regression and related methods.
+@item quantregForest
+Quantile Regression Forests, a tree-based ensemble method for estimation
+of conditional quantiles.
 @item qvalue
 Q-value estimation for false discovery rate control.
 @item qvcalc
