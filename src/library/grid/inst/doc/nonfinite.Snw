@@ -110,7 +110,7 @@ primtest2 <- function(nas, na) {
     grid.line.to(x[i], y[i], gp=gpar(lty="dashed", lwd=5))
   }
   grid.polygon(x, y, gp=gpar(fill="grey", col=NULL))
-  grid.arrows(grob=linesGrob(x, y))
+  grid.lines(x, y, arrow=arrow())
 }
 celltest <- function(r, c, nas, na) {
   pushViewport(viewport(layout.pos.col=c,

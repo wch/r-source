@@ -252,10 +252,11 @@ message <- paste("I could draw all sorts",
   "over there and stick",
   "a scatterplot in it.", sep="\n")
 grid.text(message, x=0.25)
-grid.arrows(x=unit.c(unit(0.25, "npc") + 0.5*stringWidth(message) +
+grid.lines(x=unit.c(unit(0.25, "npc") + 0.5*stringWidth(message) +
   unit(2, "mm"),
-  unit(0.5, "npc") - unit(2, "mm")),
-  angle=15, type="closed",
+  unit(0.5, "npc") - unit(2, "mm")), 
+  y=0.5,
+  arrow=arrow(angle=15, type="closed"),
   gp=gpar(lwd=3, fill="black"))
 pushViewport(viewport(x=0.5, height=0.5, width=0.45, just="left", 
   gp=gpar(cex=0.5)))

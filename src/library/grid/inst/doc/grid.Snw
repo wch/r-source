@@ -421,6 +421,10 @@ lists the \grid{} functions that produce these primitives.
 {\bf NOTE:} all of these graphical primitives are available in
 all graphical regions and coordinate systems.
 
+There used to be (prior to R 2.3.0) a separate {\tt grid.arrows()}
+function, but this has been superceded by an {\tt arrow} argument
+to the line-drawing primitives (lines, segments, line-to).
+
 \begin{table}[h!]
 \begin{center}
 \begin{tabular}{l l} \hline
@@ -431,7 +435,6 @@ all graphical regions and coordinate systems.
 \code{grid.points} & Can specify type of plotting symbol. \\
 \code{grid.lines} &  \\
 \code{grid.segments} &  \\
-\code{grid.arrows} & Can add these to lines, segments, and line.to's \\
 \code{grid.grill} & Convenience function for drawing grid lines \\
 \code{grid.move.to} &  \\
 \code{grid.line.to} &  \\
