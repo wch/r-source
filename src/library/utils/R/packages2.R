@@ -38,13 +38,15 @@ install.packages <-
     
     getConfigureArgs <-  function(pkg)
     {
-        # Since the pkg argument can be the name of a file rather than a regular
-        # package name, we have to clean that up.      
+        ## Since the pkg argument can be the name of a file rather than
+        ## a regular package name, we have to clean that up.      
         pkg <- gsub("_\\.(zip|tar\\.gz)", "",
-                     gsub(.standard_regexps()$valid_package_version, "", basename(pkg)))
+                    gsub(.standard_regexps()$valid_package_version, "", basename(pkg)))
       
         if(length(pkgs) == 1 && length(names(configure.args)))
-          return(paste("--configure-args=", shQuote(paste(configure.args, collapse = " "), sep = "")))
+            return(paste("--configure-args=",
+                         shQuote(paste(configure.args, collapse = " ")),
+                         sep = ""))
       
         if (length(configure.args) && length(names(configure.args))
               && pkg %in% names(configure.args))
