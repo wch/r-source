@@ -614,6 +614,9 @@ BUG FIXES
     o	terms.formula needed to add parentheses to formulae with
 	terms containing '|'.  (PR#8462)
 
+    o	pbirthday() and qbirthday() now also work for very improbable
+	events {those you are typically *not* interested in}.
+
 
 
 
