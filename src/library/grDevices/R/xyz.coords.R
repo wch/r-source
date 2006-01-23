@@ -1,6 +1,6 @@
 ## Both xy.coords() and xyz.coords()  --- should be kept in sync!
 
-xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
+xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 {
     if(is.null(y)) {
 	ylab <- xlab
@@ -97,7 +97,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 
 ## the obvious analog of  xy.coords() -- in ./plot.R
 
-xyz.coords <- function(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL,
+xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 		       log = NULL, recycle = FALSE)
 {
     ## Only x

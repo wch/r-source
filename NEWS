@@ -291,6 +291,10 @@ NEW FEATURES
     o	chol(pivot = TRUE) now gives a warning if used on a (numerically)
 	non-positive-definite matrix.
 
+    o	xy.coords() & xyz.coords() now have NULL defaults for their 'y' or
+	'y' and 'z' arguments.	This is more consistent with their earlier
+	documentation, and may be convenient for using them.
+
 
 DEPRECATED & DEFUNCT
 

@@ -26,7 +26,7 @@ colorRampPalette(colors, \dots)
   gives smoother and more uniform color ramps. On the other hand,
   palettes that vary from one hue to another via white may have a more
   symmetrical appearance in RGB space.
-  
+
   The conversion formulas in this function do not appear to be
   completely accurate and the color ramp may not reach the extreme
   values in Lab space.  Future changes in the \R color model may change
@@ -40,7 +40,7 @@ colorRampPalette(colors, \dots)
   sequence (similar to \code{\link{heat.colors}} or
   \code{\link{terrain.colors}}.
 }
- 
+
 \seealso{
   Good starting points for interpolation are the "sequential"
   and "diverging" ColorBrewer palettes in the RColorBrewer package
@@ -68,6 +68,12 @@ filled.contour(volcano,
                color = colorRampPalette(YlOrBr, space = "Lab",
                                         bias = 0.5),
                asp = 1)
+
+## 'jet.colors' is "as in Matlab" (and hurting the eye by oversaturation)
+jet.colors <-
+  colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan",
+                     "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
+filled.contour(volcano, color = jet.colors, asp = 1)
 
 ## space="Lab" helps when colors don't form a natural sequence
 m <- outer(1:20,1:20,function(x,y) sin(sqrt(x*y)/3))
