@@ -2534,7 +2534,7 @@ function(db)
     files_with_surely_bad_Rd <- list()
     files_with_likely_bad_Rd <- list()
     files_with_unknown_encoding <- NULL
-    files_with_non_ASCII_meta_data <- NULL
+    files_with_non_ASCII_metadata <- NULL
     files_with_non_ASCII_section_titles <- NULL
     files_with_missing_mandatory_tags <- NULL
     files_with_duplicated_unique_tags <- NULL
@@ -2563,8 +2563,8 @@ function(db)
         
         for(tag in c("aliases", "doc_type", "encoding")) {
             if(any(ind <- !.is_ASCII(x$meta[[tag]])))
-                files_with_non_ASCII_meta_data <-
-                    rbind(files_with_non_ASCII_meta_data,
+                files_with_non_ASCII_metadata <-
+                    rbind(files_with_non_ASCII_metadata,
                           cbind(f, tag, x$meta[[tag]][ind]))
         }
         
@@ -2633,7 +2633,7 @@ function(db)
     val <- list(files_with_surely_bad_Rd,
                 files_with_likely_bad_Rd,
                 files_with_unknown_encoding,
-                files_with_non_ASCII_meta_data,
+                files_with_non_ASCII_metadata,
                 files_with_non_ASCII_section_titles,
                 files_with_missing_mandatory_tags,
                 files_with_duplicated_unique_tags,
@@ -2646,7 +2646,7 @@ function(db)
         c("files_with_surely_bad_Rd",
           "files_with_likely_bad_Rd",
           "files_with_unknown_encoding",
-          "files_with_non_ASCII_meta_data",
+          "files_with_non_ASCII_metadata",
           "files_with_non_ASCII_section_titles",
           "files_with_missing_mandatory_tags",
           "files_with_duplicated_unique_tags",
@@ -2706,9 +2706,9 @@ function(x, ...)
                      ""))
     }
 
-    if(length(x$files_with_non_ASCII_meta_data)) {
-        writeLines(gettext("Rd files with invalid non-ASCII meta data:"))
-        bad <- x$files_with_non_ASCII_meta_data
+    if(length(x$files_with_non_ASCII_metadata)) {
+        writeLines(gettext("Rd files with invalid non-ASCII metadata:"))
+        bad <- x$files_with_non_ASCII_metadata
         ## Reinstate the Rd markup tags for better intelligibility.
         bad[ , 2] <- sub("aliases", "\\\\alias", bad[ , 2])
         bad[ , 2] <- sub("doc_type", "\\\\docType", bad[ , 2])
@@ -2849,7 +2849,7 @@ function(dfile)
             db <- iconv(db, encoding, "")
     }
     else if(!all(.is_ISO_8859(db))) {
-        ## No valid Encoding meta-data.
+        ## No valid Encoding metadata.
         ## Determine whether we can assume Latin1.
         out$missing_encoding <- TRUE
     }
