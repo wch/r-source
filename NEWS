@@ -611,6 +611,9 @@ BUG FIXES
 	incorrect output for postcript() and pdf() devices.  (Reported
 	by Marc Schwartz in discussion of the non-bug PR#7820.)
 
+    o	terms.formula needed to add parentheses to formulae with
+	terms containing '|'.  (PR#8462)
+
 
 
 

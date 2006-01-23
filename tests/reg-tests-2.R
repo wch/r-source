@@ -1728,3 +1728,8 @@ try(solve(temp+0i))
 # and non-comformant systems
 try(solve(temp, diag(3)))
 ## gave errors from rownames<- in 2.2.1
+
+
+## PR#8462 terms.formula(simplify = TRUE) needs parentheses.
+update.formula (Reaction ~ Days + (Days | Subject), . ~ . + I(Days^2))
+## < 2.3.0 dropped parens on second term.

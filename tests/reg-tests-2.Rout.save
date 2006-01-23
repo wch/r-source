@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-16 r37100)
+Version 2.3.0 Under development (unstable) (2006-01-23 r37144)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4973,4 +4973,10 @@ Error in solve.default(temp + (0+0i)) : only square matrices can be inverted
 > try(solve(temp, diag(3)))
 Error in solve.default(temp, diag(3)) : 'b' must be compatible with 'a'
 > ## gave errors from rownames<- in 2.2.1
+> 
+> 
+> ## PR#8462 terms.formula(simplify = TRUE) needs parentheses.
+> update.formula (Reaction ~ Days + (Days | Subject), . ~ . + I(Days^2))
+Reaction ~ Days + (Days | Subject) + I(Days^2)
+> ## < 2.3.0 dropped parens on second term.
 > 
