@@ -18,25 +18,28 @@ help(topic, offline = FALSE, package = NULL,
      chmhelp = getOption("chmhelp"),
      htmlhelp = getOption("htmlhelp"),
      pager = getOption("pager"))
+
 ?topic
+
 type?topic
 }
 \arguments{
- \item{topic}{usually, the name on  which documentation is sought.
+ \item{topic}{usually, the name on which documentation is sought.
    The name may be quoted or unquoted (but note that if \code{topic}
-   is the name of a
-   variable containing a character string  documentation is provided for
-   the name, not for the character string).
+   is the name of a variable containing a character string documentation
+   is provided for the name, not for the character string).
 
    The \code{topic} argument may also be a function call, to ask for
    documentation on a corresponding method.  See the section on method
    documentation.
+
+   See Details for what happens if this is omitted.
  }
  \item{offline}{a logical indicating whether documentation should be
    displayed on-line to the screen (the default) or hardcopy of it
    should be produced.}
  \item{package}{a name or character vector giving the packages to look
-   into for documentation, , or \code{NULL}.  By default, all packages
+   into for documentation, or \code{NULL}.  By default, all packages
    in the search path are used.}
  \item{lib.loc}{a character vector of directory names of \R libraries,
    or \code{NULL}.  The default value of \code{NULL} corresponds to all
@@ -45,31 +48,36 @@ type?topic
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
  \item{try.all.packages}{logical; see \code{Note}.}
  \item{chmhelp}{logical (or \code{NULL}). Only relevant under Windows.
-   If \code{TRUE} the Compiled HTML version of the help will be shown
-   in a help viewer.}
+   If \code{TRUE} the Compiled HTML version of the help on the topic
+   will be shown in a help viewer.}
 #ifdef unix
  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
    default after \code{\link{help.start}} has been called), the HTML
-   version of the help will be shown in the browser specified by
+   version of the help on the topic will be shown in the browser specified by
    \code{options("browser")}.  See \code{\link{browseURL}} for details
    of the browsers that are supported.  Where possible an existing
    browser window is re-used.}
 #endif
 #ifdef windows
   \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
-    version of the help will be shown in a browser specified by
+    version of the help on the topic will be shown in a browser specified by
     \code{options("browser")} or the file-association mechanism.
   }
 #endif
   \item{pager}{the pager to be used for \code{\link{file.show}}.}
   \item{type}{the special type of documentation to use for this topic;
-      for example, if the type is \code{class}, documentation is
-      provided for the class with name \code{topic}.  The function
-      \code{topicName} returns the actual name used in this case.
+    for example, if the type is \code{class}, documentation is
+    provided for the class with name \code{topic}.  The function
+    \code{topicName} returns the actual name used in this case.
     See the section on method documentation for the uses of
-      \code{type} to get help on formal methods.}
+    \code{type} to get help on formal methods.}
 }
 \details{
+  \code{topic} is not optional: if it is omitted \R will give a hint as
+  to suitable topics if a package is specified, to available packages if
+  \code{\lib.loc} only is specified, and help on \code{help} itself if
+  nothing is specified.  (In all cases this will be text help.)
+  
   In the case of unary and binary operators and control-flow special
   forms (including \code{if}, \code{for} and \code{function}), the topic
   may need to be quoted.
@@ -157,8 +165,6 @@ type?topic
   Both approaches make use of any inherited methods; the signature of
   the method to be looked up is found by using \code{selectMethod}
   (see the documentation for  \code{\link{getMethod}}).
-
-
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

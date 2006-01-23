@@ -138,7 +138,7 @@ function(x, ...)
                           err = integer(1), PACKAGE = "Rchtml")$err
                 if(err) stop("CHM file could not be displayed")
             } else
-                stop(gettextf("No CHM help for '%s' in package '%s' is available:\nthe CHM file is for the package is missing", topic, thispkg), domain = NA)
+                stop(gettextf("No CHM help for '%s' in package '%s' is available:\nthe CHM file for the package is missing", topic, thispkg), domain = NA)
         }
         else if(type == "help") {
             zfile <- zip.file.extract(file, "Rhelp.zip")
