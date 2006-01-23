@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-03 10:43\n"
+"POT-Creation-Date: 2006-01-23 08:51\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1169,6 +1169,10 @@ msgstr "'solve' 中に特異行列 'a' があります'"
 
 msgid "only square matrices can be inverted"
 msgstr "逆行列は正方行列だけにしか定義できません"
+
+#, fuzzy
+msgid "'b' must be compatible with 'a'"
+msgstr "'by' は長さ 1 でなければなりません"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr ""

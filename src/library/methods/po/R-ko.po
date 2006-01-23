@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31\n"
+"POT-Creation-Date: 2006-01-23 08:52\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -315,8 +315,7 @@ msgstr ""
 "기호 오브젝트에서 %d 요소가 있었습니다"
 
 #, fuzzy
-msgid ""
-"more elements in the method signature (%d) than in the generic signature (%d)"
+msgid "more elements in the method signature (%s) than in the generic  %s(%s)"
 msgstr "메소드 정의에서 생략된 형식상의 인수는 기호(%s)에 있을 수 없습니다"
 
 msgid ""

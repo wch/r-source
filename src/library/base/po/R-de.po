@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-03 10:43\n"
+"POT-Creation-Date: 2006-01-23 08:51\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1161,6 +1161,10 @@ msgstr "singuläre Matrix 'a' in 'solve'"
 
 msgid "only square matrices can be inverted"
 msgstr "nur quadratische Matrizen können invertiert werden"
+
+#, fuzzy
+msgid "'b' must be compatible with 'a'"
+msgstr "'by' muss Länge 1 haben"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr "solve.default mit einem \"qr\" Objekt aufgerufen: benutze 'qr.solve'"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31\n"
+"POT-Creation-Date: 2006-01-23 08:52\n"
 "PO-Revision-Date: 2005-12-16 16:06+0300\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -206,6 +206,10 @@ msgstr "Rd-файлы с двойными '%s':"
 
 msgid "These entries must be unique in an Rd file."
 msgstr "Эти пункты в Rd-файле должны быть уникальными."
+
+#, fuzzy
+msgid "Rd files with unknown sections:"
+msgstr "Rd-файлы неизвестной кодировки:"
 
 msgid "Rd files with non-standard keywords:"
 msgstr "Rd-файлы с нестандартными ключевыми словами:"

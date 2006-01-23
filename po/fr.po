@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-18 12:21+0000\n"
+"POT-Creation-Date: 2006-01-23 08:51+0000\n"
 "PO-Revision-Date: 2005-12-06 12:47+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -190,9 +190,9 @@ msgstr "loadhistory peut seulement être utilisé dans Rgui et Rterm"
 #: src/main/errors.c:900 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:181 src/main/optimize.c:188
 #: src/main/optimize.c:197 src/main/platform.c:983 src/main/plot.c:393
-#: src/main/plot.c:593 src/main/plot.c:598 src/main/plot.c:2138
-#: src/main/plot.c:2145 src/main/plot.c:3188 src/main/plot.c:3190
-#: src/main/plot.c:3192 src/main/plot.c:3341 src/main/plot3d.c:1419
+#: src/main/plot.c:593 src/main/plot.c:598 src/main/plot.c:2148
+#: src/main/plot.c:2155 src/main/plot.c:3198 src/main/plot.c:3200
+#: src/main/plot.c:3202 src/main/plot.c:3351 src/main/plot3d.c:1419
 #: src/main/plot3d.c:2541 src/main/plot3d.c:2545 src/main/plot3d.c:2547
 #: src/main/scan.c:953 src/main/scan.c:957 src/main/scan.c:959
 #: src/main/scan.c:970 src/main/scan.c:1006 src/main/scan.c:1009
@@ -425,7 +425,7 @@ msgstr "production de NaN"
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argument non numérique pour une fonction mathématique"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3672
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3682
 #: src/main/scan.c:1495
 msgid "invalid argument"
 msgstr "argument incorrect"
@@ -1115,7 +1115,7 @@ msgid "use of NULL environment is deprecated"
 msgstr ""
 
 #: src/main/builtin.c:55 src/main/envir.c:1447 src/main/envir.c:1607
-#: src/main/envir.c:1740 src/main/paste.c:60 src/main/plot.c:1748
+#: src/main/envir.c:1740 src/main/paste.c:60 src/main/plot.c:1758
 msgid "invalid first argument"
 msgstr "premier argument incorrect"
 
@@ -2254,10 +2254,10 @@ msgstr ""
 "impossible d'allouer de la mémoire dans la fonction C 'R_AllocStringBuffer'"
 
 #: src/main/deparse.c:184 src/main/plot.c:989 src/main/plot.c:1497
-#: src/main/plot.c:1783 src/main/plot.c:1848 src/main/plot.c:1924
-#: src/main/plot.c:2020 src/main/plot.c:2098 src/main/plot.c:2377
-#: src/main/plot.c:2555 src/main/plot.c:2798 src/main/plot.c:3434
-#: src/main/plot.c:3510 src/main/plot.c:3763 src/main/plot3d.c:1382
+#: src/main/plot.c:1793 src/main/plot.c:1858 src/main/plot.c:1934
+#: src/main/plot.c:2030 src/main/plot.c:2108 src/main/plot.c:2387
+#: src/main/plot.c:2565 src/main/plot.c:2808 src/main/plot.c:3444
+#: src/main/plot.c:3520 src/main/plot.c:3773 src/main/plot3d.c:1382
 #: src/main/sprintf.c:139 src/main/sprintf.c:164
 msgid "too few arguments"
 msgstr "trop peu d'arguments"
@@ -2655,7 +2655,7 @@ msgstr "l'argument 'list' doit être une liste"
 msgid "'env' argument must be an environment"
 msgstr "l'argument 'env' doit être un environnement"
 
-#: src/main/engine.c:2699 src/main/graphics.c:2396
+#: src/main/engine.c:2699 src/main/graphics.c:2417
 msgid "invalid graphics state"
 msgstr "état des graphiques incorrect"
 
@@ -3473,116 +3473,116 @@ msgstr ""
 "mauvaise unité spécifiée dans %s, veuillez envoyer un rapport s'il-vous-"
 "plait!"
 
-#: src/main/graphics.c:1785
+#: src/main/graphics.c:1789 src/main/graphics.c:1808
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique null"
 
-#: src/main/graphics.c:1818
+#: src/main/graphics.c:1839
 msgid "outer margins too large (fig.region too small)"
 msgstr "marges externes trop larges (fig.region trop petit)"
 
-#: src/main/graphics.c:1820
+#: src/main/graphics.c:1841
 msgid "figure region too large"
 msgstr "zone de dessin trop large"
 
-#: src/main/graphics.c:1822
+#: src/main/graphics.c:1843
 msgid "figure margins too large"
 msgstr "marges de dessin trop larges"
 
-#: src/main/graphics.c:1824
+#: src/main/graphics.c:1845
 msgid "plot region too large"
 msgstr "zone de graphe trop large"
 
-#: src/main/graphics.c:1873
+#: src/main/graphics.c:1894
 #, c-format
 msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
 msgstr "limites d'axes non finis [GScale(%g,%g,%d, .) ; log=%d]"
 
-#: src/main/graphics.c:1903
+#: src/main/graphics.c:1924
 #, c-format
 msgid "axis style \"%c\" unimplemented"
 msgstr "style d'axe \"%c\" non implémenté"
 
-#: src/main/graphics.c:1975
+#: src/main/graphics.c:1996
 #, c-format
 msgid "relative range of values =%4.0f * EPS, is small (axis %d)"
 msgstr "plage relative des valeurs = %4.0f * EPS trop petite (axe %d)"
 
-#: src/main/graphics.c:2196 src/main/graphics.c:2564
+#: src/main/graphics.c:2217 src/main/graphics.c:2585
 msgid "No graphics device is active"
 msgstr "Aucun périphérique graphique n'est actif"
 
-#: src/main/graphics.c:2391
+#: src/main/graphics.c:2412
 msgid "plot.new has not been called yet"
 msgstr "plot.new n'a pas encore été appelé"
 
-#: src/main/graphics.c:2529
+#: src/main/graphics.c:2550
 msgid "no locator capability in device driver"
 msgstr "'locator' n'est pas disponible pour ce driver de périphérique"
 
-#: src/main/graphics.c:2805 src/main/graphics.c:2841
+#: src/main/graphics.c:2826 src/main/graphics.c:2862
 msgid "unable to allocate memory (in GPolygon)"
 msgstr "impossible d'allouer de la mémoire (dans GPolygon)"
 
-#: src/main/graphics.c:2992
+#: src/main/graphics.c:3013
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "un flèche de longueur nulle n'a pas d'angle déterminé et est ignorée"
 
-#: src/main/graphics.c:3073
+#: src/main/graphics.c:3094
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr ""
 "par(\"bty\") = '%c' incorrect ; aucune boîte n'est tracée à l'aide de box()"
 
-#: src/main/graphics.c:3090
+#: src/main/graphics.c:3111
 msgid "invalid argument to GBox"
 msgstr "argument incorrect pour GBox"
 
-#: src/main/graphics.c:3284
+#: src/main/graphics.c:3310
 msgid "bad hsv to rgb color conversion"
 msgstr "conversion de couleur hsv vers rgb incorrecte"
 
-#: src/main/graphics.c:4060
+#: src/main/graphics.c:4086
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "nombre hexadécimal incorrect dans 'color' ou 'lty'"
 
-#: src/main/graphics.c:4101 src/main/graphics.c:4111
+#: src/main/graphics.c:4127 src/main/graphics.c:4137
 msgid "invalid RGB specification"
 msgstr "spécification RGB incorrecte"
 
-#: src/main/graphics.c:4144
+#: src/main/graphics.c:4170
 msgid "invalid color name"
 msgstr "nom de couleur incorrect"
 
-#: src/main/graphics.c:4155
+#: src/main/graphics.c:4181
 msgid "invalid color specification"
 msgstr "spécification de couleur incorrecte"
 
-#: src/main/graphics.c:4276
+#: src/main/graphics.c:4302
 msgid "supplied color is not numeric nor character"
 msgstr ""
 
-#: src/main/graphics.c:4299
+#: src/main/graphics.c:4325
 msgid "Invalid color"
 msgstr "Couleur incorrecte"
 
-#: src/main/graphics.c:4371
+#: src/main/graphics.c:4397
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "type de ligne incorrect : doit être de longueur 2, 4, 6 ou 8"
 
-#: src/main/graphics.c:4382 src/main/graphics.c:4390 src/main/graphics.c:4397
+#: src/main/graphics.c:4408 src/main/graphics.c:4416 src/main/graphics.c:4423
 msgid "invalid line type"
 msgstr "type de ligne incorrect"
 
-#: src/main/graphics.c:4508
+#: src/main/graphics.c:4534
 msgid "no active or default device"
 msgstr "pas de périphérique actif ou par défaut"
 
-#: src/main/graphics.c:4525
+#: src/main/graphics.c:4551
 msgid "too many open devices"
 msgstr "trop de périphériques ouverts"
 
-#: src/main/graphics.c:4668
+#: src/main/graphics.c:4694
 msgid "too many devices open"
 msgstr "trop de périphériques sont ouverts"
 
@@ -3656,79 +3656,79 @@ msgstr "L'opération unaire `!' est appelée avec deux arguments"
 msgid "dummy - do not translate"
 msgstr "dummy - ne pas traduire"
 
-#: src/main/main.c:216
+#: src/main/main.c:213
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr ""
 "erreur : les commandes systèmes ne sont pas supportées dans cette version de "
 "R.\n"
 
-#: src/main/main.c:454
+#: src/main/main.c:451
 #, fuzzy
 msgid "Error: segfault from C stack overflow\n"
 msgstr "pile d'entiers débordée vers le haut"
 
-#: src/main/main.c:787
+#: src/main/main.c:784
 msgid "unable to open the base package\n"
 msgstr "impossible d'ouvrir le package 'base'\n"
 
-#: src/main/main.c:820
+#: src/main/main.c:817
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr ""
 "AVIS : les localisations UTF-8 ne sont pas supportées dans cette compilation "
 "de R\n"
 
-#: src/main/main.c:841
+#: src/main/main.c:838
 msgid "unable to restore saved data in .RData\n"
 msgstr "impossible de récupérer les données sauvées dans .RData\n"
 
-#: src/main/main.c:882
+#: src/main/main.c:879
 msgid "During startup - "
 msgstr "Pendant le démarrage - "
 
-#: src/main/main.c:1072
+#: src/main/main.c:1069
 msgid "cannot quit from browser"
 msgstr "impossible de sortir de l'explorateur"
 
-#: src/main/main.c:1076
+#: src/main/main.c:1073
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "réponse attendue parmi \"yes\", \"no\", \"ask\" ou \"default\""
 
-#: src/main/main.c:1081
+#: src/main/main.c:1078
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" en usage non interactif : valeur par défaut de la ligne de "
 "commande utilisée"
 
-#: src/main/main.c:1089
+#: src/main/main.c:1086
 msgid "unrecognized value of 'save'"
 msgstr "valeur de 'save' non reconnue"
 
-#: src/main/main.c:1092
+#: src/main/main.c:1089
 msgid "invalid 'status', 0 assumed"
 msgstr "'status' incorrect, 0 est utilisé"
 
-#: src/main/main.c:1097
+#: src/main/main.c:1094
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast' incorrect, FALSE est utilisé"
 
-#: src/main/main.c:1128
+#: src/main/main.c:1125
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 "impossible d'assigner de l'espace pour l'élément de rappel (callback) de "
 "niveau le plus haut"
 
-#: src/main/main.c:1206
+#: src/main/main.c:1203
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "indice négatif passé à R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1319
+#: src/main/main.c:1316
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 "messages d'avertissement du rappel (callback) de la tâche de niveau le plus "
 "haut '%s'\n"
 
-#: src/main/main.c:1379
+#: src/main/main.c:1376
 msgid "top-level task callback did not return a logical value"
 msgstr "la tâche de niveau le plus haut n'a pas renvoyé une valeur logique"
 
@@ -4440,12 +4440,12 @@ msgstr "valeur spécifiée pour le paramètre graphique \"%s\" incorrect"
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "le paramètre graphique \"%s\" est de la mauvaise longueur"
 
-#: src/main/par.c:279 src/main/par.c:717
+#: src/main/par.c:279 src/main/par.c:703
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "le paramètre graphique \"%s\" ne peut être changé"
 
-#: src/main/par.c:343 src/main/par.c:739
+#: src/main/par.c:343 src/main/par.c:725
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
 msgstr "le paramètre graphique 'family' a une longueur maximale de 200 octets"
 
@@ -4469,43 +4469,43 @@ msgstr "la valeur de nr dans \"mfg\" est mauvaise et sera ignorée"
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
 msgstr "la valeur de nc dans \"mfg\" est mauvaise et sera ignorée"
 
-#: src/main/par.c:527
+#: src/main/par.c:513
 msgid "calling par(new=) with no plot"
 msgstr "appel de par(new=) sans graphe"
 
-#: src/main/par.c:709 src/main/par.c:1155
+#: src/main/par.c:695 src/main/par.c:1141
 #, fuzzy, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "liste de paramètres graphiques incorrecte"
 
-#: src/main/par.c:713 src/main/par.c:1159
+#: src/main/par.c:699 src/main/par.c:1145
 #, fuzzy, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "paramètres de dessin incorrects"
 
-#: src/main/par.c:754
+#: src/main/par.c:740
 #, fuzzy, c-format
 msgid "graphical parameter \"%s\" can not be set in high-level plot() function"
 msgstr ""
 "le paramètre \"%s\" ne peut être changé dans la fonction plot() de haut "
 "niveau"
 
-#: src/main/par.c:1212
+#: src/main/par.c:1198
 #, fuzzy
 msgid "invalid argument passed to par()"
 msgstr "paramètre passé à par() incorrect"
 
-#: src/main/par.c:1282
+#: src/main/par.c:1268
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "trop de lignes dans la mise en page, limité à %d"
 
-#: src/main/par.c:1288
+#: src/main/par.c:1274
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "trop de colonnes dans la mise en page, limité à %d"
 
-#: src/main/par.c:1290
+#: src/main/par.c:1276
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "trop de cellules dans la mise en page, limité à %d"
@@ -4746,7 +4746,7 @@ msgstr "nombre d'axes %d incorrect"
 msgid "'hadj' must be of length one"
 msgstr "'hadj' doit être de longueur unitaire"
 
-#: src/main/plot.c:1094 src/main/plot.c:2430
+#: src/main/plot.c:1094 src/main/plot.c:2440
 msgid "zero length 'padj' specified"
 msgstr "'padj' de longueur nulle spécifié"
 
@@ -4777,205 +4777,205 @@ msgstr "les longueurs 'x' et 'y' diffèrent dans %s()"
 msgid "plot type '%s' will be truncated to first character"
 msgstr "le type de graphe '%s' sera tronqué au premier caractère"
 
-#: src/main/plot.c:1531 src/main/plot.c:3058
+#: src/main/plot.c:1531 src/main/plot.c:3068
 msgid "invalid plot type"
 msgstr "type de graphe incorrect"
 
-#: src/main/plot.c:1707
+#: src/main/plot.c:1717
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "type de graphe incorrect '%c'"
 
-#: src/main/plot.c:1754
+#: src/main/plot.c:1764
 msgid "invalid second argument"
 msgstr "second argument incorrect"
 
-#: src/main/plot.c:1760
+#: src/main/plot.c:1770
 msgid "invalid third argument"
 msgstr "troisième argument incorrect"
 
-#: src/main/plot.c:1766
+#: src/main/plot.c:1776
 msgid "invalid fourth argument"
 msgstr "quatrième argument incorrect"
 
-#: src/main/plot.c:1936
+#: src/main/plot.c:1946
 msgid "invalid arrow head length"
 msgstr "longueur incorrecte pour la pointe de flêche"
 
-#: src/main/plot.c:1941
+#: src/main/plot.c:1951
 msgid "invalid arrow head angle"
 msgstr "angle incorrect pour la pointe de flêche"
 
-#: src/main/plot.c:1946
+#: src/main/plot.c:1956
 msgid "invalid arrow head specification"
 msgstr "choix incorrect de pointe de flêche"
 
-#: src/main/plot.c:2110
+#: src/main/plot.c:2120
 msgid "zero length 'labels'"
 msgstr "'labels' de taille nulle"
 
-#: src/main/plot.c:2179
+#: src/main/plot.c:2189
 msgid "no coordinates were supplied"
 msgstr "aucunes coordonnées spécifiées"
 
-#: src/main/plot.c:2388
+#: src/main/plot.c:2398
 msgid "zero length 'text' specified"
 msgstr "'text' choisi de taille nulle"
 
-#: src/main/plot.c:2394
+#: src/main/plot.c:2404
 msgid "zero length 'side' specified"
 msgstr "'side' choisi de taille nulle"
 
-#: src/main/plot.c:2401
+#: src/main/plot.c:2411
 msgid "zero length 'line' specified"
 msgstr "'line' choisi de taille nulle"
 
-#: src/main/plot.c:2409
+#: src/main/plot.c:2419
 msgid "zero length 'outer' specified"
 msgstr "'outer' choisi de taille nulle"
 
-#: src/main/plot.c:2416
+#: src/main/plot.c:2426
 msgid "zero length 'at' specified"
 msgstr "'at' choisi de taille nulle"
 
-#: src/main/plot.c:2423
+#: src/main/plot.c:2433
 msgid "zero length 'adj' specified"
 msgstr "'adj' choisi de taille nulle"
 
-#: src/main/plot.c:2437
+#: src/main/plot.c:2447
 msgid "zero length 'cex' specified"
 msgstr "'cex' choisi de taille nulle"
 
-#: src/main/plot.c:2445
+#: src/main/plot.c:2455
 msgid "zero length 'col' specified"
 msgstr "'col' choisi de taille nulle"
 
-#: src/main/plot.c:2452
+#: src/main/plot.c:2462
 msgid "zero length 'font' specified"
 msgstr "'font' fourni de taille nulle"
 
-#: src/main/plot.c:2839
+#: src/main/plot.c:2849
 msgid "invalid a=, b= specification"
 msgstr "choix a=, b= incorrect"
 
-#: src/main/plot.c:2848
+#: src/main/plot.c:2858
 msgid "'a' and 'b' must be finite"
 msgstr "'a' et 'b' doivent être finis"
 
-#: src/main/plot.c:2980
+#: src/main/plot.c:2990
 msgid "invalid 'which' specification"
 msgstr "choix de 'which' incorrect"
 
-#: src/main/plot.c:3053
+#: src/main/plot.c:3063
 msgid "invalid number of points in locator()"
 msgstr "nombre de points incorrect dans locator()"
 
-#: src/main/plot.c:3184
+#: src/main/plot.c:3194
 msgid "invalid number of points in identify()"
 msgstr "nombre de points incorrect dans identify()"
 
-#: src/main/plot.c:3186
+#: src/main/plot.c:3196
 msgid "incorrect argument type"
 msgstr "type d'argument incorrect"
 
-#: src/main/plot.c:3194
+#: src/main/plot.c:3204
 msgid "different argument lengths"
 msgstr "longueurs d'arguments différentes"
 
-#: src/main/plot.c:3248
+#: src/main/plot.c:3258
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "avis : aucun point avec %.2f pouces\n"
 
-#: src/main/plot.c:3254
+#: src/main/plot.c:3264
 msgid "warning: nearest point already identified\n"
 msgstr "avis : le point le plus proche est déjà identifié\n"
 
-#: src/main/plot.c:3335
+#: src/main/plot.c:3345
 msgid "invalid units"
 msgstr "unités incorrectes"
 
-#: src/main/plot.c:3494 src/main/plot.c:3603
+#: src/main/plot.c:3504 src/main/plot.c:3613
 msgid "invalid dendrogram input"
 msgstr "entrée de dendrogramme incorrecte"
 
-#: src/main/plot.c:3634
+#: src/main/plot.c:3644
 msgid "cannot take snapshot of old-style device"
 msgstr ""
 "impossible d'enregistrer un copie de graphe d'un ancien type de périphérique"
 
-#: src/main/plot.c:3647
+#: src/main/plot.c:3657
 msgid "cannot play snapshot on old-style device"
 msgstr "impossible de réafficher un copie sur un ancien type de périphérique"
 
-#: src/main/plot.c:3703
+#: src/main/plot.c:3713
 msgid "invalid graphics parameter list"
 msgstr "liste de paramètres graphiques incorrecte"
 
-#: src/main/plot.c:3745
+#: src/main/plot.c:3755
 msgid "invalid symbol parameter vector"
 msgstr "vecteur de paramètre symbole incorrect"
 
-#: src/main/plot.c:3768
+#: src/main/plot.c:3778
 msgid "invalid symbol coordinates"
 msgstr "coordonnées des symboles incorrectes"
 
-#: src/main/plot.c:3776
+#: src/main/plot.c:3786
 msgid "x/y/parameter length mismatch"
 msgstr "les longueurs des paramètres x et y diffèrent"
 
-#: src/main/plot.c:3795
+#: src/main/plot.c:3805
 msgid "invalid circles data"
 msgstr "données de cercles incorrectes"
 
-#: src/main/plot.c:3797 src/main/plot.c:3815 src/main/plot.c:3841
-#: src/main/plot.c:3870
+#: src/main/plot.c:3807 src/main/plot.c:3825 src/main/plot.c:3851
+#: src/main/plot.c:3880
 msgid "invalid symbol parameter"
 msgstr "paramètre de symbole incorrect"
 
-#: src/main/plot.c:3813
+#: src/main/plot.c:3823
 msgid "invalid squares data"
 msgstr "données de carrés incorrectes"
 
-#: src/main/plot.c:3839
+#: src/main/plot.c:3849
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "données de rectangles incorrectes (nécessite 2 colonnes)"
 
-#: src/main/plot.c:3868
+#: src/main/plot.c:3878
 msgid "invalid stars data"
 msgstr "données d'étoiles incorrectes"
 
-#: src/main/plot.c:3910
+#: src/main/plot.c:3920
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "données de jauges incorrectes (nécessite 3 ou 4 colonnes)"
 
-#: src/main/plot.c:3913
+#: src/main/plot.c:3923
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "jauges[,%s] incorrectes"
 
-#: src/main/plot.c:3917
+#: src/main/plot.c:3927
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "jauges[,%s] non comprises dans [0,1] -- aspect étrange possible"
 
-#: src/main/plot.c:3920
+#: src/main/plot.c:3930
 msgid "invalid thermometers[,1:2]"
 msgstr "jauges[,1:2] incorrectes"
 
-#: src/main/plot.c:3959
+#: src/main/plot.c:3969
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "données de boites à dispersion incorrectes (nécessite 5 colonnes)"
 
-#: src/main/plot.c:3969
+#: src/main/plot.c:3979
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] en dehors de [0,1] -- peut paraitre bizarre"
 
-#: src/main/plot.c:3971
+#: src/main/plot.c:3981
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplots[, 1:4] incorrect"
 
-#: src/main/plot.c:4017
+#: src/main/plot.c:4027
 msgid "invalid symbol type"
 msgstr "type de symbole incorrect"
 
@@ -6629,151 +6629,150 @@ msgstr "trop de redirections, annulation ..."
 msgid "allocation of socket connection failed"
 msgstr "échec d'allocation d'un connecteur logiciel (socket)"
 
-#: src/modules/lapack/Lapack.c:49 src/modules/lapack/Lapack.c:502
+#: src/modules/lapack/Lapack.c:41 src/modules/lapack/Lapack.c:470
 msgid "'jobu' and 'jobv' must be character strings"
 msgstr "'jobu' et 'jobv' doivent être des chaînes de caractères"
 
-#: src/modules/lapack/Lapack.c:51 src/modules/lapack/Lapack.c:130
+#: src/modules/lapack/Lapack.c:43
 msgid "'method' must be a character string"
 msgstr "'method' doit être une chaîne de caractères"
 
-#: src/modules/lapack/Lapack.c:72 src/modules/lapack/Lapack.c:82
-#: src/modules/lapack/Lapack.c:96 src/modules/lapack/Lapack.c:105
-#: src/modules/lapack/Lapack.c:156 src/modules/lapack/Lapack.c:162
-#: src/modules/lapack/Lapack.c:180 src/modules/lapack/Lapack.c:191
-#: src/modules/lapack/Lapack.c:271 src/modules/lapack/Lapack.c:277
-#: src/modules/lapack/Lapack.c:381 src/modules/lapack/Lapack.c:387
-#: src/modules/lapack/Lapack.c:432 src/modules/lapack/Lapack.c:439
-#: src/modules/lapack/Lapack.c:443 src/modules/lapack/Lapack.c:477
-#: src/modules/lapack/Lapack.c:484 src/modules/lapack/Lapack.c:515
-#: src/modules/lapack/Lapack.c:524 src/modules/lapack/Lapack.c:570
-#: src/modules/lapack/Lapack.c:576 src/modules/lapack/Lapack.c:631
-#: src/modules/lapack/Lapack.c:637 src/modules/lapack/Lapack.c:797
-#: src/modules/lapack/Lapack.c:803 src/modules/lapack/Lapack.c:843
-#: src/modules/lapack/Lapack.c:850 src/modules/lapack/Lapack.c:854
-#: src/modules/lapack/Lapack.c:883 src/modules/lapack/Lapack.c:890
-#: src/modules/lapack/Lapack.c:914
+#: src/modules/lapack/Lapack.c:64 src/modules/lapack/Lapack.c:74
+#: src/modules/lapack/Lapack.c:88 src/modules/lapack/Lapack.c:97
+#: src/modules/lapack/Lapack.c:149 src/modules/lapack/Lapack.c:160
+#: src/modules/lapack/Lapack.c:235 src/modules/lapack/Lapack.c:241
+#: src/modules/lapack/Lapack.c:349 src/modules/lapack/Lapack.c:355
+#: src/modules/lapack/Lapack.c:400 src/modules/lapack/Lapack.c:407
+#: src/modules/lapack/Lapack.c:411 src/modules/lapack/Lapack.c:445
+#: src/modules/lapack/Lapack.c:452 src/modules/lapack/Lapack.c:483
+#: src/modules/lapack/Lapack.c:492 src/modules/lapack/Lapack.c:538
+#: src/modules/lapack/Lapack.c:544 src/modules/lapack/Lapack.c:599
+#: src/modules/lapack/Lapack.c:605 src/modules/lapack/Lapack.c:765
+#: src/modules/lapack/Lapack.c:771 src/modules/lapack/Lapack.c:811
+#: src/modules/lapack/Lapack.c:818 src/modules/lapack/Lapack.c:822
+#: src/modules/lapack/Lapack.c:851 src/modules/lapack/Lapack.c:858
+#: src/modules/lapack/Lapack.c:882
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "code d'erreur %d dans le sous-programme Lapack '%s'"
 
-#: src/modules/lapack/Lapack.c:144 src/modules/lapack/Lapack.c:250
-#: src/modules/lapack/Lapack.c:557 src/modules/lapack/Lapack.c:610
+#: src/modules/lapack/Lapack.c:131 src/modules/lapack/Lapack.c:214
+#: src/modules/lapack/Lapack.c:525 src/modules/lapack/Lapack.c:578
 msgid "'x' must be a square numeric matrix"
 msgstr "'x' doit être une matrice carrée numérique"
 
-#: src/modules/lapack/Lapack.c:146 src/modules/lapack/Lapack.c:256
-#: src/modules/lapack/Lapack.c:559 src/modules/lapack/Lapack.c:616
+#: src/modules/lapack/Lapack.c:133 src/modules/lapack/Lapack.c:220
+#: src/modules/lapack/Lapack.c:527 src/modules/lapack/Lapack.c:584
 msgid "invalid 'only.values'"
 msgstr "'only.values' incorrect"
 
-#: src/modules/lapack/Lapack.c:324 src/modules/lapack/Lapack.c:367
+#: src/modules/lapack/Lapack.c:292 src/modules/lapack/Lapack.c:335
 msgid "'a' must be a complex matrix"
 msgstr "'a' doit être une matrice complexe"
 
-#: src/modules/lapack/Lapack.c:326 src/modules/lapack/Lapack.c:418
-#: src/modules/lapack/Lapack.c:461
+#: src/modules/lapack/Lapack.c:294 src/modules/lapack/Lapack.c:386
+#: src/modules/lapack/Lapack.c:429
 msgid "'b' must be a complex matrix"
 msgstr "'b' doit être une matrice complexe"
 
-#: src/modules/lapack/Lapack.c:331 src/modules/lapack/Lapack.c:748
+#: src/modules/lapack/Lapack.c:299 src/modules/lapack/Lapack.c:716
 msgid "'a' is 0-diml"
 msgstr "'a' est de dimension nulle"
 
-#: src/modules/lapack/Lapack.c:333 src/modules/lapack/Lapack.c:750
+#: src/modules/lapack/Lapack.c:301 src/modules/lapack/Lapack.c:718
 msgid "no right-hand side in 'b'"
 msgstr "aucun membre de droite dans 'b'"
 
-#: src/modules/lapack/Lapack.c:335 src/modules/lapack/Lapack.c:752
+#: src/modules/lapack/Lapack.c:303 src/modules/lapack/Lapack.c:720
 #, c-format
 msgid "'a' (%d x %d) must be square"
 msgstr "'a' (%d x %d) doit être carrée"
 
-#: src/modules/lapack/Lapack.c:337 src/modules/lapack/Lapack.c:754
+#: src/modules/lapack/Lapack.c:305 src/modules/lapack/Lapack.c:722
 #, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
 msgstr "'b' (%d x %d) doit être compatible avec 'a' (%d x %d)"
 
-#: src/modules/lapack/Lapack.c:346 src/modules/lapack/Lapack.c:684
-#: src/modules/lapack/Lapack.c:718 src/modules/lapack/Lapack.c:763
+#: src/modules/lapack/Lapack.c:314 src/modules/lapack/Lapack.c:652
+#: src/modules/lapack/Lapack.c:686 src/modules/lapack/Lapack.c:731
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "valeur incorrecte pour l'argument %d du sous-programme Lapack %s"
 
-#: src/modules/lapack/Lapack.c:353 src/modules/lapack/Lapack.c:404
-#: src/modules/lapack/Lapack.c:447 src/modules/lapack/Lapack.c:488
-#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:593
-#: src/modules/lapack/Lapack.c:654
+#: src/modules/lapack/Lapack.c:321 src/modules/lapack/Lapack.c:372
+#: src/modules/lapack/Lapack.c:415 src/modules/lapack/Lapack.c:456
+#: src/modules/lapack/Lapack.c:505 src/modules/lapack/Lapack.c:561
+#: src/modules/lapack/Lapack.c:622
 msgid "Fortran complex functions are not available on this platform"
 msgstr ""
 "Les fonctions Fortran complexes ne sont pas disponibles sur cette "
 "architecture"
 
-#: src/modules/lapack/Lapack.c:425 src/modules/lapack/Lapack.c:470
-#: src/modules/lapack/Lapack.c:836 src/modules/lapack/Lapack.c:876
+#: src/modules/lapack/Lapack.c:393 src/modules/lapack/Lapack.c:438
+#: src/modules/lapack/Lapack.c:804 src/modules/lapack/Lapack.c:844
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "le membre de droite devrait avoir %d lignes et non %d"
 
-#: src/modules/lapack/Lapack.c:463 src/modules/lapack/Lapack.c:869
+#: src/modules/lapack/Lapack.c:431 src/modules/lapack/Lapack.c:837
 msgid "invalid 'trans' parameter"
 msgstr "paramètre 'trans' incorrect"
 
-#: src/modules/lapack/Lapack.c:671 src/modules/lapack/Lapack.c:909
+#: src/modules/lapack/Lapack.c:639 src/modules/lapack/Lapack.c:877
 msgid "'a' must be a square matrix"
 msgstr "'a' doit être une matrice carrée"
 
-#: src/modules/lapack/Lapack.c:672
+#: src/modules/lapack/Lapack.c:640
 msgid "'a' must have dims > 0"
 msgstr "'a' doit avoir des dimensions > 0"
 
-#: src/modules/lapack/Lapack.c:682
+#: src/modules/lapack/Lapack.c:650
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr "le mineur dominant d'ordre %d n'est pas défini positif"
 
-#: src/modules/lapack/Lapack.c:690 src/modules/lapack/Lapack.c:728
-#: src/modules/lapack/Lapack.c:741 src/modules/lapack/Lapack.c:784
-#: src/modules/lapack/Lapack.c:902
+#: src/modules/lapack/Lapack.c:658 src/modules/lapack/Lapack.c:696
+#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:752
+#: src/modules/lapack/Lapack.c:870
 msgid "'a' must be a numeric matrix"
 msgstr "'a' doit être une matrice numérique"
 
-#: src/modules/lapack/Lapack.c:698
+#: src/modules/lapack/Lapack.c:666
 msgid "'size' argument must be a positive integer"
 msgstr "l'argument 'size' doit être un entier strictement positif"
 
-#: src/modules/lapack/Lapack.c:707
+#: src/modules/lapack/Lapack.c:675
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr "l'argument 'size' ne doit pas dépasser ncol(x) = %d"
 
-#: src/modules/lapack/Lapack.c:708
+#: src/modules/lapack/Lapack.c:676
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr "l'argument 'size' ne doit pas dépasser nrow(x) = %d"
 
-#: src/modules/lapack/Lapack.c:717
+#: src/modules/lapack/Lapack.c:685
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "l'élément (%d, %d) est nul, donc l'inverse ne peut être calculé"
 
-#: src/modules/lapack/Lapack.c:743 src/modules/lapack/Lapack.c:829
-#: src/modules/lapack/Lapack.c:867
+#: src/modules/lapack/Lapack.c:711 src/modules/lapack/Lapack.c:797
+#: src/modules/lapack/Lapack.c:835
 msgid "'b' must be a numeric matrix"
 msgstr "'b' doit être une matrice numérique"
 
-#: src/modules/lapack/Lapack.c:766
+#: src/modules/lapack/Lapack.c:734
 msgid "Lapack routine dgesv: system is exactly singular"
 msgstr "sous-programme Lapack dgesv : le système est exactement singulier"
 
-#: src/modules/lapack/Lapack.c:771
+#: src/modules/lapack/Lapack.c:739
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr ""
 "le système est numériquement singulier : conditionnement de la réciproque = %"
 "g"
 
-#: src/modules/lapack/Lapack.c:904
+#: src/modules/lapack/Lapack.c:872
 msgid "argument 'logarithm' must be logical"
 msgstr "l'argument 'logarithm' doit être de type logique"
 
