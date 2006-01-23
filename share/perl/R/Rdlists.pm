@@ -280,7 +280,7 @@ sub build_index { # lib, dest, version, [chmdir]
     my $tfile;
 
     foreach $manfile (@mandir) {
-	if($manfile =~ /\.Rd$/i){
+	if($manfile =~ /\.[Rr]d$/){
 
 	    my $rdname = basename($manfile, (".Rd", ".rd"));
 	    my $internal = 0;
