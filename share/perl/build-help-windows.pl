@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2005 R Development Core Team
+# Copyright (C) 1997-2006 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -146,7 +146,10 @@ format STDOUT =
 .
 
 foreach $manfile (@mandir) {
-    if($manfile =~ /\.[Rr]d$/ && !($manfile =~ /^\.#/)) {
+    ## Should only process files starting with [A-Za-z] and with
+    ## suffix .Rd or .rd, according to `Writing R Extensions'.
+    if($manfile =~ /^[A-Za-z]/ && 
+       $manfile =~ /\.[Rr]d$/ && !($manfile =~ /^\.#/)) {
 	$manfilebase = basename($manfile, (".Rd", ".rd"));
 	$manage = (-M $manfile);
 	$manfiles{$manfilebase} = $manfile;

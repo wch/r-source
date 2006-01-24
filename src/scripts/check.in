@@ -1,7 +1,7 @@
 #! @PERL@
 #-*- perl -*-
 
-## Copyright (C) 2000-2005 R Development Core Team
+## Copyright (C) 2000-2006 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -951,6 +951,26 @@ sub check_pkg {
 	    $any++;
 	    $log->print("Found subdirectory 'MAN'.\n");
 	    $log->print("Most likely, this should be 'man'.\n")
+	}
+    }
+    if(-d "man") {
+	## Should only contain files starting with [A-Za-z] and with
+	## suffix .Rd or .rd, according to `Writing R Extensions'.
+	my @manfiles;
+	opendir(DIR, "man") or die "cannot opendir man: $!";
+	@manfiles = grep { (!/^[A-Za-z].*\.[Rr]d$/) && -f "man/$_" } readdir(DIR);
+	closedir(DIR);
+	if(@manfiles) {
+	    $log->warning() unless $any;
+	    $any++;
+	    $log->print("Subdirectory 'man' contains invalid filenames:\n");
+	    $log->print("  " . join("\n  ", @manfiles) . "\n");
+	    $log->print(wrap("", "",
+			     ("These are not valid file names",
+			      "for help files.\n",
+			      "Please rename the files and try again.\n",
+			      "See section 'Package subdirectories'",
+			      "in manual 'Writing R Extensions'.\n")));
 	}
     }
     if((-d "data") || (-d "demo") || (-d "src") || (-d "inst")) {

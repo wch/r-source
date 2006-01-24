@@ -1,6 +1,6 @@
 ## Subroutines for building R documentation
 
-## Copyright (C) 1997-2005 R Development Core Team
+## Copyright (C) 1997-2006 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -280,7 +280,9 @@ sub build_index { # lib, dest, version, [chmdir]
     my $tfile;
 
     foreach $manfile (@mandir) {
-	if($manfile =~ /\.[Rr]d$/){
+	## Should only process files starting with [A-Za-z] and with
+	## suffix .Rd or .rd, according to `Writing R Extensions'.
+	if($manfile =~ /^[A-Za-z]/ && $manfile =~ /\.[Rr]d$/){
 
 	    my $rdname = basename($manfile, (".Rd", ".rd"));
 	    my $internal = 0;

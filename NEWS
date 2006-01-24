@@ -464,7 +464,8 @@ UTILITIES
 	URL, do R CMD check now checks the names are ASCII and do not
 	contain % .
 
-    o	R CMD check now warns about unknown sections in Rd files.
+    o	R CMD check now warns about unknown sections in Rd files, and
+	invalid names for help files.
 
 
 DOCUMENTATION
@@ -620,6 +621,11 @@ BUG FIXES
 
     o	pbirthday() and qbirthday() now also work for very improbable
 	events {those you are typically *not* interested in}.
+
+    o	Only source help files starting with an upper- or lower-case
+	letter and extension .Rd or .rd are documented to be
+	processed, and this is now enforced.
+
 
 
 
