@@ -25,6 +25,9 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   the second argument to sample needs to be length 1, so that
+        errors when supplying arguments are more easily detected.
+
     o	arima.sim() has a new argument 'start.innov' for compatibility
 	with S-PLUS.  (If not supplied, the output is unchanged from
 	previous versions in R.)
