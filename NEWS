@@ -627,6 +627,9 @@ BUG FIXES
 	letter and extension .Rd or .rd are documented to be
 	processed, and this is now enforced.
 
+    o	nls(algorthm="port") was always taking positive numeric
+	differences and so could exceed the upper bounds.
+
 
 
 

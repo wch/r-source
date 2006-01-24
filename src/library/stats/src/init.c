@@ -123,7 +123,7 @@ static const R_CMethodDef CEntries[]  = {
 static R_CallMethodDef CallEntries[] = {
     {"R_cutree", (DL_FUNC) &R_cutree, 2},
     {"R_isoreg", (DL_FUNC) &R_isoreg, 1},
-    {"numeric_deriv", (DL_FUNC)&numeric_deriv, 3},
+    {"numeric_deriv", (DL_FUNC)&numeric_deriv, 4},
     {"nls_iter", (DL_FUNC)&nls_iter, 3},
     {"setup_starma", (DL_FUNC) &setup_starma, 8},
     {"free_starma", (DL_FUNC) &free_starma, 1},

@@ -160,4 +160,29 @@ fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
 confint(profile(fm))
 
 
+## more profiling with bounds
+npts <- 10
+set.seed(1001)
+a <- 2
+b <- 0.5
+x <- runif(npts)
+y <- a*x/(1+a*b*x) + rnorm(npts, sd=0.2)
+gfun <- function(a,b,x) {
+    if(a < 0 || b < 0) stop("bounds violated")
+    a*x/(1+a*b*x)
+}
+m1 <- nls(y ~ gfun(a,b,x), algorithm = "port",
+          lower = c(0,0), start = c(a=1, b=1))
+(pr1 <- profile(m1))
+confint(pr1)
+
+gfun <- function(a,b,x) {
+    if(a < 0 || b < 0 || a > 1.5 || b > 1) stop("bounds violated")
+    a*x/(1+a*b*x)
+}
+m2 <- nls(y ~ gfun(a,b,x), algorithm = "port",
+          lower = c(0, 0), upper=c(1.5, 1), start = c(a=1, b=1))
+profile(m2)
+confint(m2)
+
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

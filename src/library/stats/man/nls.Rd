@@ -90,6 +90,10 @@ nls(formula, data, start, control, algorithm,
   comparing two components of the round-off error.  If you wish to test
   \code{nls} on artificial data please add a noise component, as shown
   in the example below.  
+
+  The \code{algorithm = "port"} code appears far from finished, and does
+  not even check that the starting value is within the bounds.
+  Use with caution, especially where bounds are supplied.
 }
 \value{
   A list of
@@ -108,7 +112,7 @@ nls(formula, data, start, control, algorithm,
     a convergence code (always 0) and message.}
 }
 \references{
-  Bates, D.M. and Watts, D.G. (1988)
+  Bates, D. M. and Watts, D. G. (1988)
   \emph{Nonlinear Regression Analysis and Its Applications},
   Wiley
 

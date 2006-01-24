@@ -5,7 +5,7 @@
     \code{numericDeriv} numerically evaluates the gradient of an expression.
 }
 \usage{
-numericDeriv(expr, theta, rho = parent.frame())
+numericDeriv(expr, theta, rho = parent.frame(), dir = 1)
 }
 \arguments{
   \item{expr}{The expression to be differentiated.  The value of this
@@ -14,6 +14,8 @@ numericDeriv(expr, theta, rho = parent.frame())
     used in \code{expr}.}
   \item{rho}{An environment containing all the variables needed to
     evaluate \code{expr}.}
+  \item{dir}{A numeric vector of directions to use for the finite
+    differences.}
 }
 \details{
   This is a front end to the C function \code{numeric_deriv}, which is

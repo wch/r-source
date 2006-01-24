@@ -3,7 +3,7 @@
 \alias{nlsModel.plinear}
 \title{Create an nlsModel Object}
 \usage{
-nlsModel(form, data, start, wts)
+nlsModel(form, data, start, wts, upper = NULL)
 }
 \arguments{
  \item{form}{a nonlinear model formula.}
@@ -12,6 +12,8 @@ nlsModel(form, data, start, wts)
  \item{start}{a named list or named numeric vector of starting
    estimates for the parameters in the model.}
  \item{wts}{case weights.  If missing, assumed to be 1.}
+ \item{upper}{Upper bounds for parameters.  If supplied, used to choose
+   the direction of finite-differencing of derivatives.}
 }
 \description{
   This is the constructor for \code{nlsModel} objects, which are
