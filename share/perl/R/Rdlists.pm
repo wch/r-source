@@ -282,9 +282,10 @@ sub build_index { # lib, dest, version, [chmdir]
     foreach $manfile (@mandir) {
 	## Should only process files starting with [A-Za-z] and with
 	## suffix .Rd or .rd, according to `Writing R Extensions'.
-	if($manfile =~ /^[A-Za-z]/ && $manfile =~ /\.[Rr]d$/){
+	if($manfile =~ /\.[Rr]d$/){
 
 	    my $rdname = basename($manfile, (".Rd", ".rd"));
+	    if(! $rdname =~ /^[A-Za-z]/) { next; }
 	    my $internal = 0;
 	    my $encoding = "unknown";
 

@@ -469,8 +469,11 @@ UTILITIES
 	contain % .
 
     o	R CMD check now warns about unknown sections in Rd files, and
-	invalid names for help files.  R CMD build excludes invalid
-	files in the 'man' subdirectory.
+	invalid names for help and R files, as well as unlikely file
+	names in the 'src' directory.
+
+	R CMD build excludes invalid files in the 'man' and 'R'
+	subdirectories.
 
 
 DOCUMENTATION

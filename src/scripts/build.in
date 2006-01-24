@@ -244,7 +244,7 @@ foreach my $pkg (@ARGV) {
     close(EXCLUDE);
     unlink($exclude);
     unlink($origfilepath);
-    ## Fix up man directory (in each package for a bundle)
+    ## Fix up man and R directories (in each package for a bundle)
     sub find_invalid_manfiles {
 	my ($dpath) = @_;
 	chdir($dpath);
@@ -264,13 +264,33 @@ foreach my $pkg (@ARGV) {
 	    }
 	}
     }
+    sub find_invalid_Rfiles {
+	my ($dpath) = @_;
+	chdir($dpath);
+	if(-d "R") {
+	    ## Should only contain files with suffix .[RSqrs] 
+	    ## according to `Writing R Extensions'.
+	    my @Rfiles;
+	    opendir(DIR, "R") or die "cannot opendir R: $!";
+	    @Rfiles = grep { (!/\.[RSqrs]$/) && -f "R/$_" } readdir(DIR);
+	    closedir(DIR);
+	    if(@Rfiles) {
+		$log->message("excluding invalid files from '$dpath/R' subdirectory");
+		print("  " . join("\n  ", @Rfiles) . "\n");
+		my $file;
+		foreach $file (@Rfiles) { rmtree("R/$file"); }
+	    }
+	}
+    }
     if($is_bundle) {
 	foreach $ppkg (@bundlepkgs) {
 	    &find_invalid_manfiles("$pkgname/$ppkg");
+	    &find_invalid_Rfiles("$pkgname/$ppkg");
 	    chdir($tmpdir);
 	}
     } else {
 	&find_invalid_manfiles($pkgname);
+	&find_invalid_Rfiles($pkgname);
 	chdir($tmpdir);
     }
     ## Fix permissions.

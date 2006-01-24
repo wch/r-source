@@ -956,6 +956,7 @@ sub check_pkg {
     if(-d "man") {
 	## Should only contain files starting with [A-Za-z] and with
 	## suffix .Rd or .rd, according to `Writing R Extensions'.
+	## Can also contain OS-specific directories, which we do not check.
 	my @manfiles;
 	opendir(DIR, "man") or die "cannot opendir man: $!";
 	@manfiles = grep { (!/^[A-Za-z].*\.[Rr]d$/) && -f "man/$_" } readdir(DIR);
@@ -963,11 +964,32 @@ sub check_pkg {
 	if(@manfiles) {
 	    $log->warning() unless $any;
 	    $any++;
-	    $log->print("Subdirectory 'man' contains invalid filenames:\n");
+	    $log->print("Subdirectory 'man' contains invalid file names:\n");
 	    $log->print("  " . join("\n  ", @manfiles) . "\n");
 	    $log->print(wrap("", "",
 			     ("These are not valid file names",
 			      "for help files.\n",
+			      "Please remove or rename the files.\n",
+			      "See section 'Package subdirectories'",
+			      "in manual 'Writing R Extensions'.\n")));
+	}
+    }
+    if(-d "R") {
+	## Should only contain files with suffix .[RrSsq]
+	## according to `Writing R Extensions'.
+	## Can also contain OS-specific directories, which we do not check.
+	my @Rfiles;
+	opendir(DIR, "R") or die "cannot opendir R: $!";
+	@Rfiles = grep { (!/\.[RSqrs]$/) && -f "R/$_" } readdir(DIR);
+	closedir(DIR);
+	if(@Rfiles) {
+	    $log->warning() unless $any;
+	    $any++;
+	    $log->print("Subdirectory 'R' contains invalid file names:\n");
+	    $log->print("  " . join("\n  ", @Rfiles) . "\n");
+	    $log->print(wrap("", "",
+			     ("These are not valid file names",
+			      "for R files.\n",
 			      "Please remove or rename the files.\n",
 			      "See section 'Package subdirectories'",
 			      "in manual 'Writing R Extensions'.\n")));
@@ -991,13 +1013,27 @@ sub check_pkg {
 	## If there is a Makefile (or a Makefile.win), we cannot assume
 	## that source files have the predefined extensions.
 	## </NOTE>
-	if((-d "src")
-	   && !(&list_files_with_exts("src", "([Ccf]|cc|cpp)")
-		|| (-f &file_path("src", "Makefile"))
-		|| (-f &file_path("src", "Makefile.win")))) {
-	    $log->warning() unless $any;
-	    $any++;
-	    $log->print("Subdirectory 'src' contains no source files.\n");
+	if( (-d "src") && !( (-f &file_path("src", "Makefile"))
+			  || (-f &file_path("src", "Makefile.win")) )) {
+	    if( !(&list_files_with_exts("src", "([Ccf]|cc|cpp|f90|f95)"))) {
+		$log->warning() unless $any;
+		$any++;
+		$log->print("Subdirectory 'src' contains no source files.\n");
+	    }
+	    print "checking src dir\n";
+	    opendir(DIR, "src") or die "cannot opendir src: $!";
+	    @srcfiles = grep { !(/\.([Ccfh]|cc|cpp|f90|f95)$/ || /^Makevars/)
+				   && -f "src/$_" } readdir(DIR);
+	    closedir(DIR);
+	    if(@srcfiles) {
+		$log->warning() unless $any;
+		$any++;
+		$log->print("Subdirectory 'src' contains suspect file names:\n");
+		$log->print("  " . join("\n  ", @srcfiles) . "\n");
+		$log->print(wrap("", "",
+				 ("These are unlikely file names",
+				  "for src files.\n")));
+	    }
 	}
 	## Do subdirectories of 'inst' interfere with R package system
 	## subdirectories?
