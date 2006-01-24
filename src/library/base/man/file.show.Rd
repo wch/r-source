@@ -55,6 +55,6 @@ file.show(\dots, header = rep("",nfiles), title = "R Information",
   \code{\link{help}}.
 }
 \examples{
-file.show(file.path(R.home(), "COPYRIGHTS"))
+file.show(file.path(R.home("doc"), "COPYRIGHTS"))
 }
 \keyword{file}
