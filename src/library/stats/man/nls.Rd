@@ -125,7 +125,7 @@ nls(formula, data, start, control, algorithm,
 }
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{
-  \code{\link{nlsModel}}, \code{\link{summary.nls}}, \code{\link{predict.nls}},
+  \code{\link{summary.nls}}, \code{\link{predict.nls}},
   \code{\link{profile.nls}},  \code{\link{profiler.nls}}.
 }
 \examples{

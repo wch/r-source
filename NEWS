@@ -333,6 +333,10 @@ DEPRECATED & DEFUNCT
 
     o	La.svd(method = "dgesvd") is deprecated.
 
+    o	nlsMethod() is no longer exported from the stats namespace (and
+	nlsMethod.plinear() is no longer registered as a method, as
+	nlsMethod() was not generic).
+
 
 INTERNATIONALIZATION
 
