@@ -1,6 +1,6 @@
 #! @PERL@
 #-*- perl -*-
-# Copyright (C) 2000-2004 R Development Core Team
+# Copyright (C) 2000-2006 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -190,7 +190,7 @@ foreach my $pkg (@ARGV) {
 		## Argh: Windows is case-honoring but not
 		## case-insensitive ...
 		print EXCLUDE "$File::Find::name\n"
-		    if($filename =~	/$p/i);
+		    if($filename =~ /$p/i);
 	    }
 	    else {
 		if($filename =~ /$p/) {
@@ -244,6 +244,35 @@ foreach my $pkg (@ARGV) {
     close(EXCLUDE);
     unlink($exclude);
     unlink($origfilepath);
+    ## Fix up man directory (in each package for a bundle)
+    sub find_invalid_manfiles {
+	my ($dpath) = @_;
+	chdir($dpath);
+	if(-d "man") {
+	    ## Should only contain files starting with [A-Za-z] and with
+	    ## suffix .Rd or .rd, according to `Writing R Extensions'.
+	    my @manfiles;
+	    opendir(DIR, "man") or die "cannot opendir man: $!";
+	    @manfiles = grep { (!/^[A-Za-z].*\.[Rr]d$/) && 
+				   -f "man/$_" } readdir(DIR);
+	    closedir(DIR);
+	    if(@manfiles) {
+		$log->message("excluding invalid files from '$dpath/man' subdirectory");
+		print("  " . join("\n  ", @manfiles) . "\n");
+		my $file;
+		foreach $file (@manfiles) { rmtree("man/$file"); }
+	    }
+	}
+    }
+    if($is_bundle) {
+	foreach $ppkg (@bundlepkgs) {
+	    &find_invalid_manfiles("$pkgname/$ppkg");
+	    chdir($tmpdir);
+	}
+    } else {
+	&find_invalid_manfiles($pkgname);
+	chdir($tmpdir);
+    }
     ## Fix permissions.
     sub fix_permissions {
 	## Note that when called via File::Find::find, $_ holds the

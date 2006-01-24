@@ -968,7 +968,7 @@ sub check_pkg {
 	    $log->print(wrap("", "",
 			     ("These are not valid file names",
 			      "for help files.\n",
-			      "Please rename the files and try again.\n",
+			      "Please remove or rename the files.\n",
 			      "See section 'Package subdirectories'",
 			      "in manual 'Writing R Extensions'.\n")));
 	}
