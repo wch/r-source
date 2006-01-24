@@ -6,7 +6,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
     if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
     method <- match.arg(method)
     if(is.numeric(x) && method == "dgesvd")
-        .Deprecated('La.svd(method = "dgesdd")')
+        .Deprecated('La.svd(method = "dgesvd")')
 
     x <- as.matrix(x)
     if (is.numeric(x)) storage.mode(x) <- "double"
