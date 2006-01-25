@@ -817,7 +817,13 @@ case "${host_os}" in
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ## Need '-no-cpp-precomp' say J de Leeuw <deleeuw@stat.ucla.edu> and
     ## http://fink.sourceforge.net/doc/porting/basics.php.
-    R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-no-cpp-precomp])
+    if test "${GCC}" = yes; then
+      ## only Apple build of gcc supports (and needs?) -no-cpp-precomp
+      ${CC} --version|grep Apple >/dev/null 2>/dev/null
+      if test $? == 0; then
+        R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-no-cpp-precomp])
+      fi
+    fi
     ;;
   hpux*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
@@ -1108,11 +1114,10 @@ case "${host_os}" in
     SHLIB_LIBADD="\$(LIBM)"
     ;;
   darwin*)
-    cpicflags="-fno-common"
-    cxxpicflags="-fno-common"
-    if test "${G77}" = yes; then
-      fpicflags="-fno-common"
-    fi
+    cpicflags="-fPIC -fno-common"
+    cxxpicflags="-fPIC -fno-common"
+    fpicflags="-fPIC -fno-common"
+
     ## Used to need this for GUI and quartz device, but neither are in
     ## R or libR.dylib any longer (2.1.0).
     ## main_ldflags="-framework Carbon"
@@ -1134,7 +1139,7 @@ case "${host_os}" in
       darwin1.[[012]]*)
         shlib_ldflags="-bundle -undefined suppress" ;;
       *)
-	shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
+	shlib_ldflags="-flat_namespace -bundle -undefined suppress" ;;
     esac
     shlib_cxxldflags="${shlib_ldflags}"
     if test "${ac_cv_lib_cc_dynamic_main}" = yes; then

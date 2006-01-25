@@ -28710,13 +28710,19 @@ _ACEOF
 
     ## Need '-no-cpp-precomp' say J de Leeuw <deleeuw@stat.ucla.edu> and
     ## http://fink.sourceforge.net/doc/porting/basics.php.
-    separator=""
+    if test "${GCC}" = yes; then
+      ## only Apple build of gcc supports (and needs?) -no-cpp-precomp
+      ${CC} --version|grep Apple >/dev/null 2>/dev/null
+      if test $? == 0; then
+        separator=""
 test -z "${separator}" && separator=" "
 if test -z "${R_XTRA_CPPFLAGS}"; then
   R_XTRA_CPPFLAGS="-no-cpp-precomp"
 else
   R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS}${separator}-no-cpp-precomp"
 fi
+      fi
+    fi
     ;;
   hpux*)
     cat >>confdefs.h <<\_ACEOF
@@ -29721,11 +29727,10 @@ case "${host_os}" in
     SHLIB_LIBADD="\$(LIBM)"
     ;;
   darwin*)
-    cpicflags="-fno-common"
-    cxxpicflags="-fno-common"
-    if test "${G77}" = yes; then
-      fpicflags="-fno-common"
-    fi
+    cpicflags="-fPIC -fno-common"
+    cxxpicflags="-fPIC -fno-common"
+    fpicflags="-fPIC -fno-common"
+
     ## Used to need this for GUI and quartz device, but neither are in
     ## R or libR.dylib any longer (2.1.0).
     ## main_ldflags="-framework Carbon"
@@ -29753,7 +29758,7 @@ fi ;;
       darwin1.[012]*)
         shlib_ldflags="-bundle -undefined suppress" ;;
       *)
-	shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
+	shlib_ldflags="-flat_namespace -bundle -undefined suppress" ;;
     esac
     shlib_cxxldflags="${shlib_ldflags}"
     if test "${ac_cv_lib_cc_dynamic_main}" = yes; then
@@ -43156,7 +43161,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:43159:" \
+echo "$as_me:43164:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
