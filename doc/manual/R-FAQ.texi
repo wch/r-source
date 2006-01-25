@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-01-21
+@set FAQ_DATE @value{FAQ_YEAR}-01-25
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2856,6 +2856,8 @@ kernel discriminant analysis for bivariate data.
 @item kza
 Kolmogorov-Zurbenko Adpative filter for locating change points in a time
 series.
+@item kzft
+Kolmogorov-Zurbenko Fourier Transform and application.
 @item labdsv
 Laboratory for Dynamic Synthetic Vegephenomenology.
 @item labstatR
@@ -2900,6 +2902,8 @@ Fit smoothing spline terms in Gaussian linear and nonlinear
 mixed-effects models.
 @item lmm
 Linear mixed models.
+@item lmoments
+@math{L}-moments and @math{L}-comoments.
 @item lmtest
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
@@ -3036,6 +3040,8 @@ Examples from Multilevel Modelling Software Review.
 Mixed-mode latent class regression (also known as mixed-mode mixture
 model regression or mixed-mode mixture regression models) which can
 handle both longitudinal and one-time responses.
+@item mnormt
+The multivariate normal and @math{t} distributions.
 @item moc
 Fits a variety of mixtures models for multivariate observations with
 user-difined distributions and curves.
