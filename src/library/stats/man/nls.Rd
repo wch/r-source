@@ -91,7 +91,7 @@ nls(formula, data, start, control, algorithm,
   \code{nls} on artificial data please add a noise component, as shown
   in the example below.  
 
-  The \code{algorithm = "port"} code appears far from finished, and does
+  The \code{algorithm = "port"} code appears unfinished, and does
   not even check that the starting value is within the bounds.
   Use with caution, especially where bounds are supplied.
 }
@@ -121,7 +121,8 @@ nls(formula, data, start, control, algorithm,
   Chapter 10 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 
-  \url{http://netlib.bell-labs.com/netlib/port/} for the Port library.
+  \url{http://netlib.bell-labs.com/netlib/port/} for the Port library
+  documentation.
 }
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{
