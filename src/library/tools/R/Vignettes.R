@@ -104,7 +104,7 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop(gettextf("directory '%s' does not exist", dir),
-                 domain = NA) 
+                 domain = NA)
         else
             ## maybe perform tilde expansion on @code{dir}
             docdir <- file.path(dirname(dir), basename(dir), "inst", "doc")
@@ -294,7 +294,8 @@ function(x, ...)
 
 .writeVignetteHtmlIndex <- function(pkg, con, vignetteIndex=NULL)
 {
-    html <- c(paste("<html><head><title>R:", pkg, "vignettes</title>"),
+    html <- c('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">',
+              paste("<html><head><title>R:", pkg, "vignettes</title>"),
               "<link rel=\"stylesheet\" type=\"text/css\" href=\"../../R.css\">",
               "</head><body>",
               paste("<h2>Vignettes of package", pkg,"</h2>"))

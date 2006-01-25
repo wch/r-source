@@ -1255,7 +1255,9 @@ sub html_functionhead
 {
     my ($title, $pkgname, $name, $enc) = @_;
 
-    my $retval = "<html><head><title>R: $title</title>\n" .
+    my $retval =
+	"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n" .
+	"<html><head><title>R: $title</title>\n" .
 	"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$enc\">\n" .
 	"<link rel=\"stylesheet\" type=\"text/css\" href=\"../../R.css\">\n" .
 	"</head><body>\n\n";
