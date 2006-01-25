@@ -268,11 +268,14 @@ foreach my $pkg (@ARGV) {
 	my ($dpath) = @_;
 	chdir($dpath);
 	if(-d "R") {
-	    ## Should only contain files with suffix .[RSqrs] 
-	    ## according to `Writing R Extensions'.
+	    ## Should only contain files with suffix .[RSqrs], or sysdata.rda,
+	    ## according to `Writing R Extensions'.  We allow configure
+	    ## to generate files here.
 	    my @Rfiles;
 	    opendir(DIR, "R") or die "cannot opendir R: $!";
-	    @Rfiles = grep { (!/\.[RSqrs]$/) && -f "R/$_" } readdir(DIR);
+	    @Rfiles = grep { (!/\.[RSqrs]$/) && (!/\.in$/) &&
+				 (!/^sysdata.rda$/) &&
+				 -f "R/$_" } readdir(DIR);
 	    closedir(DIR);
 	    if(@Rfiles) {
 		$log->message("excluding invalid files from '$dpath/R' subdirectory");

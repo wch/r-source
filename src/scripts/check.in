@@ -975,12 +975,14 @@ sub check_pkg {
 	}
     }
     if(-d "R") {
-	## Should only contain files with suffix .[RrSsq]
-	## according to `Writing R Extensions'.
+	## Should only contain files with suffix .[RSqrs], or sysdata.rda,
+	## according to `Writing R Extensions'.  We allow configure
+	## to generate files here.
 	## Can also contain OS-specific directories, which we do not check.
 	my @Rfiles;
 	opendir(DIR, "R") or die "cannot opendir R: $!";
-	@Rfiles = grep { (!/\.[RSqrs]$/) && -f "R/$_" } readdir(DIR);
+	@Rfiles = grep { (!/\.[RSqrs]$/) && (!/\.in$/) && (!/^sysdata.rda$/) 
+			     && -f "R/$_" } readdir(DIR);
 	closedir(DIR);
 	if(@Rfiles) {
 	    $log->warning() unless $any;
@@ -1020,9 +1022,10 @@ sub check_pkg {
 		$any++;
 		$log->print("Subdirectory 'src' contains no source files.\n");
 	    }
-	    print "checking src dir\n";
+	    ## We might have installed from this src directory,
+	    ## so it may be dirty.  Hence the long list of allowed things.
 	    opendir(DIR, "src") or die "cannot opendir src: $!";
-	    @srcfiles = grep { !(/\.([Ccfh]|cc|cpp|f90|f95)$/ || /^Makevars/)
+	    @srcfiles = grep { !(/\.([Ccfh]|cc|cpp|f90|f95|in|d|o|so|a|sl|dylib|dll|rc)$/ || /^Makevars/)
 				   && -f "src/$_" } readdir(DIR);
 	    closedir(DIR);
 	    if(@srcfiles) {
