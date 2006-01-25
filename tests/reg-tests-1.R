@@ -4028,3 +4028,7 @@ DF <- data.frame(I(character(0)))
 X <- try(data.matrix(DF))
 stopifnot(inherits(X, "try-error"))
 ## gave logical matrix in 2.2.1.
+
+stopifnot(pbirthday(950, coincident=250) == 0,
+          pbirthday(950, coincident=200) > 0)
+## gave error before 2.3.0
