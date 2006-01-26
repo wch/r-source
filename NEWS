@@ -642,6 +642,9 @@ BUG FIXES
     o	nls(algorthm="port") was always taking positive numeric
 	differences and so could exceed the upper bounds.
 
+    o	methods:::.asEnvironmentPackage() was not allowing for
+	versioned installs.
+
 
 
 
