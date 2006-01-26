@@ -10,34 +10,36 @@
 \description{
   Compute derivatives of simple expressions, symbolically.
 }
-\synopsis{
-D(expr, name)
-deriv(expr, ...)
-deriv.default(expr, namevec, function.arg = NULL, tag = ".expr", hessian = FALSE, ...)
-deriv.formula(expr, namevec, function.arg = NULL, tag = ".expr", hessian = FALSE, ...)
-deriv3(expr, ...)
-deriv3.default(expr, namevec, function.arg = NULL, tag = ".expr", hessian = TRUE, ...)
-deriv3.formula(expr, namevec, function.arg = NULL, tag = ".expr", hessian = TRUE, ...)
-}
 \usage{
     D (expr, name)
- deriv(expr, namevec, function.arg, tag = ".expr", hessian = FALSE)
-deriv3(expr, namevec, function.arg, tag = ".expr", hessian = TRUE)
+ deriv(expr, \dots)
+deriv3(expr, \dots)
+
+ \method{deriv}{default}(expr, namevec, function.arg = NULL, tag = ".expr",
+       hessian = FALSE, \dots)
+ \method{deriv}{formula}(expr, namevec, function.arg = NULL, tag = ".expr",
+       hessian = FALSE, \dots)
+
+\method{deriv3}{default}(expr, namevec, function.arg = NULL, tag = ".expr",
+       hessian = TRUE, \dots)
+\method{deriv3}{formula}(expr, namevec, function.arg = NULL, tag = ".expr",
+       hessian = TRUE, \dots)
 }
 \arguments{
-  \item{expr}{\code{\link{expression}} or \code{\link{call}} to
-    be differentiated.}
+  \item{expr}{A \code{\link{expression}} or \code{\link{call}} or
+    (except \code{D}) a formula with no lhs.}
   \item{name,namevec}{character vector, giving the variable names (only
     one for \code{D()}) with respect to which derivatives will be
     computed.}
-  \item{function.arg}{If specified, a character vector of arguments for
-    a function return, or a function (with empty body) or \code{TRUE},
-    the latter indicating that a function with argument names
-    \code{namevec} should be used.}
+  \item{function.arg}{If specified and non-\code{NULL}, a character
+    vector of arguments for a function return, or a function (with empty
+    body) or \code{TRUE}, the latter indicating that a function with
+    argument names \code{namevec} should be used.}
   \item{tag}{character; the prefix to be used for the locally created
     variables in result.}
   \item{hessian}{a logical value indicating whether the second derivatives
     should be calculated and incorporated in the return value.}
+  \item{\dots}{arguments to tbe passed to or from methods.}
 }
 \details{
   \code{D} is modelled after its S namesake for taking simple symbolic
@@ -56,6 +58,13 @@ deriv3(expr, namevec, function.arg, tag = ".expr", hessian = TRUE)
   \code{deriv3} and its methods are equivalent to \code{deriv} and its
   methods except that \code{hessian} defaults to \code{TRUE} for
   \code{deriv3}.
+
+  The internal code knows about the arithmetic operators \code{+},
+  \code{-}, \code{*}, \code{/} and \code{^}, and the single-variable
+  functions \code{exp}, \code{log}, \code{sin}, \code{cos}, \code{tan},
+  \code{sinh}, \code{cosh}, \code{sqrt}, \code{pnorm}, \code{dnorm},
+  \code{asin}, \code{acos}, \code{atan}, \code{gamma} and \code{lgamma}.
+  (Note that only the standard normal distribution is considered.)
 }
 \value{
   \code{D} returns a call and therefore can easily be iterated
@@ -67,8 +76,9 @@ deriv3(expr, namevec, function.arg, tag = ".expr", hessian = TRUE)
   matrix.  If \code{hessian} is \code{TRUE} the evaluation also returns
   a \code{"hessian"} attribute containing the Hessian array.
   
-  If \code{function.arg} is specified, \code{deriv} and \code{deriv3}
-  return a function with those arguments rather than an expression.
+  If \code{function.arg} is not \code{NULL}, \code{deriv} and
+  \code{deriv3} return a function with those arguments rather than an
+  expression.
 }
 \references{
   Griewank, A.  and  Corliss, G. F. (1991)
