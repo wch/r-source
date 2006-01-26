@@ -61,7 +61,9 @@ testPlatformEquivalence(built, run)
   true, warnings about packages found more than once are given.  It does
   know about versioned installs of packages, and for a package to be
   returned it must have a \file{DESCRIPTION} file containing a valid
-  \code{version} field.
+  \code{version} field.  Where more than one versioned match is found to
+  a unversioned name (and no exact match), the highest-numbered version
+  is selected.
 
   \code{.path.package} returns the paths from which the named packages
   were loaded, or if none were named, for all currently loaded packages.
