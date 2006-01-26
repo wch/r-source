@@ -1024,8 +1024,9 @@ sub check_pkg {
 	    }
 	    ## We might have installed from this src directory,
 	    ## so it may be dirty.  Hence the long list of allowed things.
+	    ## Shipping .def files is an error unless it is a -win.def file
 	    opendir(DIR, "src") or die "cannot opendir src: $!";
-	    @srcfiles = grep { !(/\.([Ccfh]|cc|cpp|f90|f95|in|d|o|so|a|sl|dylib|dll|rc)$/ || /^Makevars/)
+	    @srcfiles = grep { !(/\.([Ccfh]|cc|cpp|f90|f95|in|d|o|so|a|sl|dylib|dll|rc)$/ || /^Make/ || /-win\.def$/ )
 				   && -f "src/$_" } readdir(DIR);
 	    closedir(DIR);
 	    if(@srcfiles) {
