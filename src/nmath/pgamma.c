@@ -573,8 +573,6 @@ ppois_asymp (double x, double lambda, int lower_tail, int log_p)
 	       ig45*coef45)/x0 + ig35*coef35)/x0 + ig25*coef25)/x +
 	    coef15)*s2pt;
 
-    REprintf("res1 %.14g, res2 %.14g\n", res1, res2);
-
     if (!lower_tail) elfb = -elfb;
     f = (res1 + res2) / elfb;
 
