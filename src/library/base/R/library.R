@@ -885,8 +885,18 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
     }
 
     if(!quiet && (length(bad) > 0)) {
-        if(length(out) == 0)
-            stop("none of the packages were found")
+        if(length(out) == 0) {
+            if(length(bad) == 1) {
+                stop(gettextf("there is no package called '%s'", pkg),
+                     domain = NA)
+            } else {
+                stop(ngettext(length(bad),
+                              "there is no package called",
+                              "there are no packages called"), " ",
+                     paste(shQuote(bad), collapse = ", "), domain = NA)
+
+            }
+        }
         for(pkg in bad)
             warning(gettextf("there is no package called '%s'", pkg),
                     domain = NA)

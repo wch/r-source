@@ -645,6 +645,9 @@ BUG FIXES
     o	methods:::.asEnvironmentPackage() was not allowing for
 	versioned installs.
 
+    o	.find.package() now reports which package(s) it cannot find in
+	the case it stops with an error.
+
 
 
 
