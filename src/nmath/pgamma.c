@@ -542,28 +542,28 @@ ppois_asymp (double x, double lambda, int lower_tail, int log_p)
     if(fabs(x) > 1e50) {x0 = 1; pt0 = pt_/x;}
     ig2 = 1.0 + pt_;
     term = pt0 * pt_ * 0.5;
-    ig3 = ig2 + term;
+    ig3 = ig2/x + term;
     term *= pt0 / 3;
-    ig4 = ig3 + term;
+    ig4 = ig3/x + term;
     term *= pt0 / 4;
-    ig5 = ig4 + term;
+    ig5 = ig4/x + term;
     term *= pt0 / 5;
-    ig6 = ig5 + term;
+    ig6 = ig5/x + term;
     term *= pt0 / 6;
-    ig7 = ig6 + term;
+    ig7 = ig6/x + term;
 
     term = pt_ * (two / 3);
     ig25 = 1.0 + term;
     term *= pt0 * (two / 5);
-    ig35 = ig25 + term;
+    ig35 = ig25/x + term;
     term *= pt0 * (two / 7);
-    ig45 = ig35 + term;
+    ig45 = ig35/x + term;
     term *= pt0 * (two / 9);
-    ig55 = ig45 + term;
+    ig55 = ig45/x + term;
     term *= pt0 * (two / 11);
-    ig65 = ig55 + term;
+    ig65 = ig55/x + term;
     term *= pt0 * (two / 13);
-    ig75 = ig65 + term;
+    ig75 = ig65/x + term;
 
     elfb = ((((((coef75/x + coef65)/x + coef55)/x + coef45)/x + coef35)/x +
 	     coef25)/x + coef15) + x;
@@ -587,13 +587,6 @@ ppois_asymp (double x, double lambda, int lower_tail, int log_p)
 	return np + log1p (f * n_d_over_p);
     } else {
 	double nd = dnorm (s2pt, 0.0, 1.0, log_p);
-
-    if (log_p)
-	return np + log1p(f* exp(nd-np));  /* See PR#8528 */
-	    /*(f >= 0)
-	    ? logspace_add (np, log (fabs (f)) + nd)
-	    : logspace_sub (np, log (fabs (f)) + nd); */
-    else
 	return np + f * nd;
     }
 } /* ppois_asymp() */
