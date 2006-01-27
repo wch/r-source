@@ -238,7 +238,7 @@ foreach my $pkg (@ARGV) {
 
     $log = new R::Logfile(&file_path($pkgoutdir, "00check.log"));
     $log->message("using log directory '$pkgoutdir'");
-    my @out = R_runR("cat(R.version.string, '\n', sep='')", 
+    my @out = R_runR("cat(R.version.string, '\n', sep='')",
 		     "--slave --vanilla");
     $log->message("using @out");
 
@@ -342,12 +342,12 @@ foreach my $pkg (@ARGV) {
 				"contains object files.\n");
 		}
 	    }
-	    $log->result("OK") unless $any;	    
+	    $log->result("OK") unless $any;
 	}
 	else {
 	    $log->result("OK");
 	}
-	    
+
 	## Option '--no-install' turns off installation and the tests
 	## which require the package to be installed.  When testing
 	## recommended packages bundled with R we can skip installation,
@@ -426,7 +426,7 @@ foreach my $pkg (@ARGV) {
 			    &shell_quote_file_path($out) .
 			    " 2>&1";
 			$install_error = &R_system($cmd);
-			if($WINDOWS) { 
+			if($WINDOWS) {
 			    ## MS Html Help Compiler gives lines terminated
 			    ## by CRCRLF, so we clean up the log file.
 			    my $line;
@@ -492,7 +492,7 @@ foreach my $pkg (@ARGV) {
 		    ## filtering out by setting the internal environment
 		    ## variable _R_CHECK_WALL_FORTRAN_ to something
 		    ## "true".
-		    my $R_check_Wall_FORTRAN = 
+		    my $R_check_Wall_FORTRAN =
 			&R_getenv("_R_CHECK_WALL_FORTRAN_", "FALSE");
 		    $R_check_Wall_FORTRAN =
 			&config_val_to_logical($R_check_Wall_FORTRAN);
@@ -508,7 +508,7 @@ foreach my $pkg (@ARGV) {
 			    ")";
 			@lines = grep(!/$warn_re/, @lines);
 		    }
-		    
+
 		    if(scalar(@lines) > 0) {
 			$log->warning();
 			$log->print("Found the following " .
@@ -595,7 +595,7 @@ sub check_pkg {
     if(-f $exclude_file) {
 	open(RBUILDIGNORE, "< $exclude_file");
 	while(<RBUILDIGNORE>) {
-	    chop;	    
+	    chop;
 	    push(@exclude_patterns, $_) if $_;
 	}
 	close(RBUILDIGNORE);
@@ -695,7 +695,7 @@ sub check_pkg {
 
     ## next check for name clashes on case-insensitive file systems
     ## (that is on Windows).
-    %seen = (); 
+    %seen = ();
     my @duplicated = ();
     sub check_case_names {
 	my $file_path = lc($File::Find::name);
@@ -823,7 +823,7 @@ sub check_pkg {
     &R::Utils::check_package_description($pkgdir, $pkgname, $log,
 					 $in_bundle, $is_base_pkg,
 					 $full);
-    
+
     ## Check package dependencies.
 
     ## Try figuring out whether the package dependencies can be resolved
@@ -959,7 +959,7 @@ sub check_pkg {
 	## Can also contain OS-specific directories, which we do not check.
 	my @manfiles;
 	opendir(DIR, "man") or die "cannot opendir man: $!";
-	@manfiles = grep { (!/^[A-Za-z].*\.[Rr]d$/) && -f "man/$_" } readdir(DIR);
+	@manfiles = grep { (!/^[A-Za-z].*\.[Rr]d(~|\.~[0-9]+~)?$/) && -f "man/$_" } readdir(DIR);
 	closedir(DIR);
 	if(@manfiles) {
 	    $log->warning() unless $any;
@@ -981,7 +981,7 @@ sub check_pkg {
 	## Can also contain OS-specific directories, which we do not check.
 	my @Rfiles;
 	opendir(DIR, "R") or die "cannot opendir R: $!";
-	@Rfiles = grep { (!/\.[RSqrs]$/) && (!/\.in$/) && (!/^sysdata.rda$/) 
+	@Rfiles = grep { (!/\.[RSqrs](~|\.~[0-9]+~)?$/) && (!/\.in$/) && (!/^sysdata.rda$/)
 			     && -f "R/$_" } readdir(DIR);
 	closedir(DIR);
 	if(@Rfiles) {
@@ -1026,7 +1026,7 @@ sub check_pkg {
 	    ## so it may be dirty.  Hence the long list of allowed things.
 	    ## Shipping .def files is an error unless it is a -win.def file
 	    opendir(DIR, "src") or die "cannot opendir src: $!";
-	    @srcfiles = grep { !(/\.([Ccfh]|cc|cpp|f90|f95|in|d|o|so|a|sl|dylib|dll|rc)$/ || /^Make/ || /-win\.def$/ )
+	    @srcfiles = grep { !(/\.([Ccfh]|cc|cpp|f90|f95|in|d|o|so|a|sl|dylib|dll|rc)(~|\.~[0-9]+~)?$/ || /^Make/ || /-win\.def$/ )
 				   && -f "src/$_" } readdir(DIR);
 	    closedir(DIR);
 	    if(@srcfiles) {
@@ -1249,7 +1249,7 @@ sub check_pkg {
     ## Activated only via setting the internal environment variable
     ## _R_CHECK_USE_CODETOOLS_ to something "true".
 
-    my $R_check_use_codetools = 
+    my $R_check_use_codetools =
 	&R_getenv("_R_CHECK_USE_CODETOOLS_", "FALSE");
     $R_check_use_codetools =
 	&config_val_to_logical($R_check_use_codetools);
@@ -1331,7 +1331,7 @@ sub check_pkg {
     if(-d "man") {
 	my $R_check_Rd_xrefs = &R_getenv("_R_CHECK_RD_XREFS_", "FALSE");
 	$R_check_Rd_xrefs = &config_val_to_logical($R_check_Rd_xrefs);
-	
+
 	if(($opt_install && $R_check_Rd_xrefs) || !$opt_install) {
 
 	    $log->checking("Rd cross-references");
@@ -1544,7 +1544,7 @@ sub check_pkg {
 	    $log->result("OK");
 	}
     }
-    
+
 
     chdir($pkgoutdir);
 
@@ -1640,7 +1640,7 @@ sub check_pkg {
 	## Look at the output from running the examples.  For the time
 	## being, report warnings about use of deprecated functions, as
 	## the next release will make them defunct and hence using them
-	## an error.  Also warn about loading defunct base package stubs, 
+	## an error.  Also warn about loading defunct base package stubs,
 	## as load special-casing for these will be removed eventually.
 	my @lines = &read_lines("${pkgname}-Ex.Rout");
 	my $any;
@@ -1794,7 +1794,7 @@ sub check_pkg {
 	    $Rcmd .= ")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
-	    @out = grep(!/^[[:alnum:]]*\>/, @out);	    
+	    @out = grep(!/^[[:alnum:]]*\>/, @out);
 	    ## Or to "empty".  As empty lines in the output will most
 	    ## likely not indicate a problem ...
 	    @out = grep(!/^[[:space:]]*$/, @out);
@@ -1964,7 +1964,7 @@ sub usage {
     print STDERR <<END;
 Usage: R CMD $name [options] pkgs
 
-Check R packages from package sources, which can be directories or 
+Check R packages from package sources, which can be directories or
 gzipped package 'tar' archives with extension '.tar.gz' or '.tgz'.
 
 A variety of diagnostic checks on directory structure, index and
@@ -1992,7 +1992,7 @@ Options:
       --use-gct         use 'gctorture(TRUE)' when running examples/tests
       --use-valgrind    use 'valgrind' when running examples/tests/vignettes
       --rcfile=FILE     read configuration values from FILE
-      
+
 By default, all test sections are turned on.
 
 Email bug reports to <r-bugs\@r-project.org>.
