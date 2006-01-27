@@ -524,7 +524,7 @@ ppois_asymp (double x, double lambda, int lower_tail, int log_p)
     double dfm, pt_,s2pt,res1,res2,elfb,term;
     double ig2,ig3,ig4,ig5,ig6,ig7,ig25,ig35,ig45,ig55,ig65,ig75;
     double f, np;
-    double pt0, x0;
+    double pt0, x0, sc = 1.0;
 
     dfm = lambda - x;
     /* If lambda is large, the distribution is highly concentrated
@@ -537,33 +537,33 @@ ppois_asymp (double x, double lambda, int lower_tail, int log_p)
     if (dfm < 0) s2pt = -s2pt;
 
     pt0 = pt_; x0 = x;
-    /* If x and pt_ are large the coefficients here can overflow: the
-       series are in powers of pt_/x.  See PR#8528 */
-    if(fabs(x) > 1e50) {x0 = 1; pt0 = pt_/x;}
+    /* If x and pt_ are large the coefficients here can overflow.
+       See PR#8528 */
+    if(fabs(x) > 1e50) {x0 = 1; sc = x; pt0 = pt_/x;}
     ig2 = 1.0 + pt_;
     term = pt0 * pt_ * 0.5;
-    ig3 = ig2/x + term;
+    ig3 = ig2/sc + term;
     term *= pt0 / 3;
-    ig4 = ig3/x + term;
+    ig4 = ig3/sc + term;
     term *= pt0 / 4;
-    ig5 = ig4/x + term;
+    ig5 = ig4/sc + term;
     term *= pt0 / 5;
-    ig6 = ig5/x + term;
+    ig6 = ig5/sc + term;
     term *= pt0 / 6;
-    ig7 = ig6/x + term;
+    ig7 = ig6/sc + term;
 
     term = pt_ * (two / 3);
     ig25 = 1.0 + term;
     term *= pt0 * (two / 5);
-    ig35 = ig25/x + term;
+    ig35 = ig25/sc + term;
     term *= pt0 * (two / 7);
-    ig45 = ig35/x + term;
+    ig45 = ig35/sc + term;
     term *= pt0 * (two / 9);
-    ig55 = ig45/x + term;
+    ig55 = ig45/sc + term;
     term *= pt0 * (two / 11);
-    ig65 = ig55/x + term;
+    ig65 = ig55/sc + term;
     term *= pt0 * (two / 13);
-    ig75 = ig65/x + term;
+    ig75 = ig65/sc + term;
 
     elfb = ((((((coef75/x + coef65)/x + coef55)/x + coef45)/x + coef35)/x +
 	     coef25)/x + coef15) + x;
@@ -572,6 +572,8 @@ ppois_asymp (double x, double lambda, int lower_tail, int log_p)
     res2 = ((((((ig75*coef75/x0 + ig65*coef65)/x0 + ig55*coef55)/x0 +
 	       ig45*coef45)/x0 + ig35*coef35)/x0 + ig25*coef25)/x +
 	    coef15)*s2pt;
+
+    REprintf("res1 %.14g, res2 %.14g\n", res1, res2);
 
     if (!lower_tail) elfb = -elfb;
     f = (res1 + res2) / elfb;
