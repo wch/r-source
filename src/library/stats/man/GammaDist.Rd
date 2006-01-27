@@ -68,8 +68,9 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Karl Pearson in his 1922 tables) omit the normalizing factor,
   defining the incomplete gamma function as \code{pgamma(x, a) * gamma(a)}.
 
-  As from \R 2.1.0 \code{pgamma()} uses a new algorithm (mainly by
-  Morten Welinder) which should be uniformly as accurate as AS 239.
+  Prior to \R 2.1.0 \code{pgamma()} used AS239 (Shea, 1988).  It
+  currently uses an unpublished (and not otherwise documented) algorithm
+  mainly by Morten Welinder.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
