@@ -26,10 +26,11 @@ pbirthday <- function(n, classes = 365, coincident = 2) {
     f <- function(p) qbirthday(p,c,k) - n
     upper <- min(1, exp(k * log(n) - (k-1) * log(c)), na.rm = TRUE)
     nmin <- uniroot(f, lower = 0, upper = upper, tol = eps)
-    if(nmin$root == 0 && qbirthday(.Machine$double.xmin, c, k) - n < 0) {
+    if(nmin$root == 0 && f(.Machine$double.xmin) < 0) {
 	## try again -- on log scale --
 	f <- function(ln.p) qbirthday(exp(ln.p), c, k) - n
-	nmin <- uniroot(f, lower= -709, upper = -2, tol = eps)
+	nmin <- uniroot(f, lower= floor(log(.Machine$double.xmin)),
+			upper = -2, tol = eps)
 	exp(nmin$root)
     }
     else
