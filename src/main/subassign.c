@@ -870,6 +870,24 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    }
 	}
 	break;
+
+    case 2424: /* raw   <- raw   */
+
+	for (j = 0; j < ncs; j++) {
+	    jj = INTEGER(sc)[j];
+	    if (jj == NA_INTEGER) continue;
+	    jj = jj - 1;
+	    for (i = 0; i < nrs; i++) {
+		ii = INTEGER(sr)[i];
+		if (ii == NA_INTEGER) continue;
+		ii = ii - 1;
+		ij = ii + jj * nr;
+		RAW(x)[ij] = RAW(y)[k];
+		k = (k + 1) % ny;
+	    }
+	}
+	break;
+
     default:
 	error(_("incompatible types (case %d) in matrix subset assignment"), 
 	      which);
@@ -1607,6 +1625,11 @@ SEXP attribute_hidden do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho
             if( NAMED(y) ) y = duplicate(y);
 	    SET_VECTOR_ELT(x, offset, y);
 	    break;
+
+	case 2424:      /* raw <- raw */
+
+           RAW(x)[offset] = RAW(y)[0];
+           break;
 
 	default:
 	    error(_("incompatible types (%d) in [[ assignment"), which);

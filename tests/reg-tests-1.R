@@ -4032,3 +4032,20 @@ stopifnot(inherits(X, "try-error"))
 stopifnot(pbirthday(950, coincident=250) == 0,
           pbirthday(950, coincident=200) > 0)
 ## gave error before 2.3.0
+
+
+## raw matrices (PR#8529/30)
+v <- as.raw(c(1:6))
+dim(v) <- c(2,3)
+dimnames(v) <- list(c("x","y"), c("P", "Q", "R"))
+v
+s <- as.raw(c(11:16))
+dim(s) <- c(2,3)
+s
+rbind(s,v,v)
+(m <- cbind(s,v,v,s))
+m[2,4] <- as.raw(254)
+m
+m[1:2,2:4] <- s
+m
+## unimplemented before 2.3.0

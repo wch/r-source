@@ -300,6 +300,9 @@ NEW FEATURES
 	length 1, so that errors when supplying arguments are more
 	easily detected.
 
+    o	[rc]bind and some more cases of subassignment are implemented
+	for raw matrices.  (PR8529 and 8530)
+
 
 DEPRECATED & DEFUNCT
 
