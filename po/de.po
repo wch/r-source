@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-29 08:14+0000\n"
+"POT-Creation-Date: 2006-01-29 18:40+0000\n"
 "PO-Revision-Date: 2005-12-17 15:00+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -130,7 +130,7 @@ msgstr "ungültige 'names' in R_unlink"
 #: src/main/util.c:659 src/main/util.c:662 src/modules/internet/internet.c:252
 #: src/modules/internet/internet.c:258 src/modules/internet/internet.c:264
 #: src/modules/internet/internet.c:267 src/modules/internet/internet.c:271
-#: src/unix/sys-std.c:908 src/unix/sys-std.c:930
+#: src/unix/sys-std.c:917 src/unix/sys-std.c:939
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "ungültiges '%s' Argument"
@@ -201,7 +201,7 @@ msgstr "loadhistory kann nur im Rgui und im Rterm benutzt werden"
 #: src/main/sysutils.c:147 src/main/util.c:850 src/main/util.c:855
 #: src/main/util.c:863 src/main/util.c:866 src/modules/X11/devX11.c:2461
 #: src/modules/X11/devX11.c:2488 src/modules/X11/devX11.c:2493
-#: src/modules/X11/devX11.c:2498 src/unix/sys-std.c:980
+#: src/modules/X11/devX11.c:2498 src/unix/sys-std.c:989
 #, c-format
 msgid "invalid '%s' value"
 msgstr "ungültiger '%s' Wert"
@@ -6997,19 +6997,33 @@ msgstr ""
 msgid "re-encoding is not available on this system"
 msgstr "Rekodieren ist auf diesem System nicht verfügbar"
 
-#: src/unix/sys-std.c:911 src/unix/sys-std.c:933
+#: src/unix/sys-std.c:854
+#, fuzzy, c-format
+msgid ""
+"Cannot open file '%s', reason '%s'\n"
+"\n"
+msgstr "kann Datei '%s' nicht öffnen. Grund '%s'"
+
+#: src/unix/sys-std.c:857
+#, fuzzy, c-format
+msgid ""
+"Cannot open file '%s'\n"
+"\n"
+msgstr "kann Datei '%s' nicht öffnen"
+
+#: src/unix/sys-std.c:920 src/unix/sys-std.c:942
 msgid "'file' argument is too long"
 msgstr "Argument für 'file' zu lang"
 
-#: src/unix/sys-std.c:917 src/unix/sys-std.c:919
+#: src/unix/sys-std.c:926 src/unix/sys-std.c:928
 msgid "no history mechanism available"
 msgstr "kein History Mechanismus verfügbar"
 
-#: src/unix/sys-std.c:942 src/unix/sys-std.c:944
+#: src/unix/sys-std.c:951 src/unix/sys-std.c:953
 msgid "no history available to save"
 msgstr "keine History zum Sichern verfügbar"
 
-#: src/unix/sys-std.c:1009
+#: src/unix/sys-std.c:1018
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep ist auf diesem System nicht implementiert"
 

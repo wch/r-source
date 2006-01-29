@@ -651,6 +651,10 @@ BUG FIXES
     o	.find.package() now reports which package(s) it cannot find in
 	the case it stops with an error.
 
+    o	The standard Unix-alike version of file.show() gives an 
+	informative message if it cannot open a file rather than the
+	(possibly incorrect) 'NO FILE'.
+
 
 
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-29 08:14+0000\n"
+"POT-Creation-Date: 2006-01-29 18:40+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -130,7 +130,7 @@ msgstr "R_unlink的'names'不对"
 #: src/main/util.c:659 src/main/util.c:662 src/modules/internet/internet.c:252
 #: src/modules/internet/internet.c:258 src/modules/internet/internet.c:264
 #: src/modules/internet/internet.c:267 src/modules/internet/internet.c:271
-#: src/unix/sys-std.c:908 src/unix/sys-std.c:930
+#: src/unix/sys-std.c:917 src/unix/sys-std.c:939
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'变元不对"
@@ -201,7 +201,7 @@ msgstr "loadhistory只能在Rgui和Rterm有用"
 #: src/main/sysutils.c:147 src/main/util.c:850 src/main/util.c:855
 #: src/main/util.c:863 src/main/util.c:866 src/modules/X11/devX11.c:2461
 #: src/modules/X11/devX11.c:2488 src/modules/X11/devX11.c:2493
-#: src/modules/X11/devX11.c:2498 src/unix/sys-std.c:980
+#: src/modules/X11/devX11.c:2498 src/unix/sys-std.c:989
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'值不对"
@@ -6896,19 +6896,33 @@ msgstr "读行输入嵌套出了不寻常的错，请用bug.report()"
 msgid "re-encoding is not available on this system"
 msgstr "本系统没有重编码这个功能"
 
-#: src/unix/sys-std.c:911 src/unix/sys-std.c:933
+#: src/unix/sys-std.c:854
+#, fuzzy, c-format
+msgid ""
+"Cannot open file '%s', reason '%s'\n"
+"\n"
+msgstr "无法打开文件'%2$s'，因为'%1$s'"
+
+#: src/unix/sys-std.c:857
+#, fuzzy, c-format
+msgid ""
+"Cannot open file '%s'\n"
+"\n"
+msgstr "无法打开文件'%s'"
+
+#: src/unix/sys-std.c:920 src/unix/sys-std.c:942
 msgid "'file' argument is too long"
 msgstr "'file'变元太长"
 
-#: src/unix/sys-std.c:917 src/unix/sys-std.c:919
+#: src/unix/sys-std.c:926 src/unix/sys-std.c:928
 msgid "no history mechanism available"
 msgstr "没有历史功能"
 
-#: src/unix/sys-std.c:942 src/unix/sys-std.c:944
+#: src/unix/sys-std.c:951 src/unix/sys-std.c:953
 msgid "no history available to save"
 msgstr "没有可以保存的历史"
 
-#: src/unix/sys-std.c:1009
+#: src/unix/sys-std.c:1018
 msgid "Sys.sleep is not implemented on this system"
 msgstr "本系统没有实现Sys.sleep这一功能"
 

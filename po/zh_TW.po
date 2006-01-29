@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-29 08:14+0000\n"
+"POT-Creation-Date: 2006-01-29 18:40+0000\n"
 "PO-Revision-Date: 2005-09-26 17:43+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -131,7 +131,7 @@ msgstr "R_unlink 的 'names' 無效"
 #: src/main/util.c:659 src/main/util.c:662 src/modules/internet/internet.c:252
 #: src/modules/internet/internet.c:258 src/modules/internet/internet.c:264
 #: src/modules/internet/internet.c:267 src/modules/internet/internet.c:271
-#: src/unix/sys-std.c:908 src/unix/sys-std.c:930
+#: src/unix/sys-std.c:917 src/unix/sys-std.c:939
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s' 引數不正確"
@@ -202,7 +202,7 @@ msgstr "loadhistory 只能在 Rgui 和 Rterm 中使用"
 #: src/main/sysutils.c:147 src/main/util.c:850 src/main/util.c:855
 #: src/main/util.c:863 src/main/util.c:866 src/modules/X11/devX11.c:2461
 #: src/modules/X11/devX11.c:2488 src/modules/X11/devX11.c:2493
-#: src/modules/X11/devX11.c:2498 src/unix/sys-std.c:980
+#: src/modules/X11/devX11.c:2498 src/unix/sys-std.c:989
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s' 值不正確"
@@ -6900,19 +6900,33 @@ msgstr "巢狀 readline 輸入出了不尋常的錯，請用 bug.report()"
 msgid "re-encoding is not available on this system"
 msgstr "本系統沒有重新編碼這個功能"
 
-#: src/unix/sys-std.c:911 src/unix/sys-std.c:933
+#: src/unix/sys-std.c:854
+#, fuzzy, c-format
+msgid ""
+"Cannot open file '%s', reason '%s'\n"
+"\n"
+msgstr "無法開啟檔案 '%s'，原因是 '%s'"
+
+#: src/unix/sys-std.c:857
+#, fuzzy, c-format
+msgid ""
+"Cannot open file '%s'\n"
+"\n"
+msgstr "無法開啟檔案 '%s'"
+
+#: src/unix/sys-std.c:920 src/unix/sys-std.c:942
 msgid "'file' argument is too long"
 msgstr "'file' 引數太長"
 
-#: src/unix/sys-std.c:917 src/unix/sys-std.c:919
+#: src/unix/sys-std.c:926 src/unix/sys-std.c:928
 msgid "no history mechanism available"
 msgstr "沒有歷史功能"
 
-#: src/unix/sys-std.c:942 src/unix/sys-std.c:944
+#: src/unix/sys-std.c:951 src/unix/sys-std.c:953
 msgid "no history available to save"
 msgstr "沒有可以儲存的歷史紀錄"
 
-#: src/unix/sys-std.c:1009
+#: src/unix/sys-std.c:1018
 msgid "Sys.sleep is not implemented on this system"
 msgstr "本系統沒有實作 Sys.sleep 此一功能"
 

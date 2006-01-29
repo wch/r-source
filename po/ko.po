@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-29 08:14+0000\n"
+"POT-Creation-Date: 2006-01-29 18:40+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -132,7 +132,7 @@ msgstr "R_unlink의 'names'이 부적절합니다"
 #: src/main/util.c:659 src/main/util.c:662 src/modules/internet/internet.c:252
 #: src/modules/internet/internet.c:258 src/modules/internet/internet.c:264
 #: src/modules/internet/internet.c:267 src/modules/internet/internet.c:271
-#: src/unix/sys-std.c:908 src/unix/sys-std.c:930
+#: src/unix/sys-std.c:917 src/unix/sys-std.c:939
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'인수가 부적절합니다"
@@ -203,7 +203,7 @@ msgstr "loadhistory은 Rgui과 Rterm에서만 사용할수 있습니다"
 #: src/main/sysutils.c:147 src/main/util.c:850 src/main/util.c:855
 #: src/main/util.c:863 src/main/util.c:866 src/modules/X11/devX11.c:2461
 #: src/modules/X11/devX11.c:2488 src/modules/X11/devX11.c:2493
-#: src/modules/X11/devX11.c:2498 src/unix/sys-std.c:980
+#: src/modules/X11/devX11.c:2498 src/unix/sys-std.c:989
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'의 값이 부적절합니다"
@@ -7023,19 +7023,33 @@ msgstr ""
 msgid "re-encoding is not available on this system"
 msgstr "이 시스템에서는 re-encoding 할수가 없습니다"
 
-#: src/unix/sys-std.c:911 src/unix/sys-std.c:933
+#: src/unix/sys-std.c:854
+#, fuzzy, c-format
+msgid ""
+"Cannot open file '%s', reason '%s'\n"
+"\n"
+msgstr "파일 '%s'를 열수가 없습니다"
+
+#: src/unix/sys-std.c:857
+#, fuzzy, c-format
+msgid ""
+"Cannot open file '%s'\n"
+"\n"
+msgstr "파일 '%s'를 열수가 없습니다"
+
+#: src/unix/sys-std.c:920 src/unix/sys-std.c:942
 msgid "'file' argument is too long"
 msgstr "'file' 인수가 너무 깁니다"
 
-#: src/unix/sys-std.c:917 src/unix/sys-std.c:919
+#: src/unix/sys-std.c:926 src/unix/sys-std.c:928
 msgid "no history mechanism available"
 msgstr "이용 할수 있는 히스토리 machanism가 없습니다"
 
-#: src/unix/sys-std.c:942 src/unix/sys-std.c:944
+#: src/unix/sys-std.c:951 src/unix/sys-std.c:953
 msgid "no history available to save"
 msgstr "보존해야할 히스토리가 없습니다"
 
-#: src/unix/sys-std.c:1009
+#: src/unix/sys-std.c:1018
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep는 이 시스템에서 실제 적용되지 않습니다"
 
