@@ -3531,6 +3531,45 @@ The calls to the active frames are given in reverse order (starting with
 the innermost).  So we see the error message comes from an explicit
 check in @code{glm.fit}.
 
+Sometimes the traceback will indicate that the error was detected inside
+compiled code, for example (from @code{?nls})
+
+@example
+Error in nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321), trace = TRUE) :
+        step factor 0.000488281 reduced below 'minFactor' of 0.000976563
+>  traceback()
+2: .Call(R_nls_iter, m, ctrl, trace)
+1: nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321), trace = TRUE)
+@end example
+
+@noindent
+This will be the case if the innermost call is to @code{.C},
+@code{.Fortran}, @code{.Call}, @code{.External} or @code{.Internal}, but
+as it is also possible for such code to evaluate @R{} expressions, this
+need not be the innermost call, as in
+
+@example
+> traceback()
+9: gm(a, b, x)
+8: .Call(R_numeric_deriv, expr, theta, rho, dir)
+7: numericDeriv(form[[3]], names(ind), env)
+6: getRHS()
+5: assign("rhs", getRHS(), envir = thisEnv)
+4: assign("resid", .swts * (lhs - assign("rhs", getRHS(), envir = thisEnv)),
+       envir = thisEnv)
+3: function (newPars)
+   @{
+       setPars(newPars)
+       assign("resid", .swts * (lhs - assign("rhs", getRHS(), envir = thisEnv)),
+           envir = thisEnv)
+       assign("dev", sum(resid^2), envir = thisEnv)
+       assign("QR", qr(.swts * attr(rhs, "gradient")), envir = thisEnv)
+       return(QR$rank < min(dim(QR$qr)))
+   @}(c(-0.00760232418963883, 1.00119632515036))
+2: .Call(R_nls_iter, m, ctrl, trace)
+1: nls(yeps ~ gm(a, b, x), start = list(a = 0.12345, b = 0.54321))
+@end example
+
 Occasionally @code{traceback()} does not help, and this can be the case
 if S4 method dispatch is involved.  Consider the following example
 
@@ -3637,8 +3676,8 @@ Enter an environment number, or 0 to exit  Selection: 0
 Because @code{last.dump} can be looked at later or even in another @R{}
 session, post-mortem debugging is possible even for batch usage of @R{}.
 We do need to arrange for the dump to be saved: this can be done either
-using the flag @option{--save} to save the workspace at the end of the
-run, or via a setting such as
+using the command-line flag @option{--save} to save the workspace at the
+end of the run, or via a setting such as
 
 @example
 > options(error = quote(@{dump.frames(to.file=TRUE); q()@}))
@@ -3676,11 +3715,11 @@ can be routinely used as the error action in place of @code{dump.calls}
 
 @findex debug
 Post-mortem debugging is good for finding out exactly what went wrong,
-but not why.  An alternative approach is to take a closer look at what
-was happening just before the error, and a good way to do that is to use
-@command{debug}.  This inserts a call to @code{browser} at the beginning
-of the function, starting in single-step mode.  So in our example we
-could use
+but not necessarily why.  An alternative approach is to take a closer
+look at what was happening just before the error, and a good way to do
+that is to use @command{debug}.  This inserts a call to the browser
+at the beginning of the function, starting in single-step mode.  So in
+our example we could use
 
 @example
 > debug(glm.fit)
@@ -3731,8 +3770,8 @@ single-step mode in the outer function).
 
 Errors in memory allocation and reading/writing outside arrays are very
 common causes of crashes (e.g.,@: segfaults) on some machines.  Often
-the crashes appears long after the invalid memory access: in particular
-damage to the structures which @R{} itself has allocated can only become
+the crash appears long after the invalid memory access: in particular
+damage to the structures which @R{} itself has allocated may only become
 apparent at the next garbage collection (or even at later garbage
 collections after objects have been deleted).
 
@@ -3747,7 +3786,7 @@ collections after objects have been deleted).
 @findex gctorture
 We can help to detect memory problems earlier by running garbage
 collection as often as possible.  This is achieved by
-@code{gctorture(TRUE)}, which is described on its help page as
+@code{gctorture(TRUE)}, which as described on its help page
 
 @quotation
 Provokes garbage collection on (nearly) every memory allocation.
@@ -3756,10 +3795,14 @@ Intended to ferret out memory protection bugs.  Also makes @R{} run
 @end quotation
 
 @noindent
-The reference to `memory protection' is to missing calls to
+The reference to `memory protection' is to missing C-level calls to
 @code{PROTECT}/@code{UNPROTECT} (see below) which cause @R{} objects to
-be garbage-collected when they are still in use.  But it can help with
-other memory-related errors.
+be garbage-collected when they are still in use.  But it can also help
+with other memory-related errors.
+
+Normally running under @code{gctorture(TRUE)} will just produce a crash
+earlier in the @R{} program, hopefully close to the actual cause. See
+the next section for how to decipher such crashes.
 
 It is possible to run all the examples, tests and vignettes covered by
 @code{R CMD check} under @code{gctorture(TRUE)} by using the option
@@ -3776,7 +3819,7 @@ use something like
 
 @example
 R -d valgrind --vanilla < mypkg-Ex.R
-R -d "valgrind --tool=memcheck --leak-check=yes" --vanilla < mypkg-Ex.R
+R -d "valgrind --tool=memcheck --leak-check=full" --vanilla < mypkg-Ex.R
 @end example
 
 @noindent
@@ -3814,7 +3857,7 @@ It is possible to run all the examples, tests and vignettes covered by
 
 @example
 --tool=memcheck
---memcheck:leak-check=yes
+--memcheck:leak-check=full
 @end example
 
 @noindent
@@ -3826,8 +3869,99 @@ or setting the environment variable @env{VALGRIND_OPTS}.
 
 
 Sooner or later programmers will be faced with the need to debug
-compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
+compiled code loaded into @R{}.   This section is geared to platforms
+using @command{gdb} with code compiled by @code{gcc}, but similar things
+are possible with front-ends to @command{gdb} such as @command{ddd} and
+@command{insight}, and other debuggers such as Sun's @command{dbx}.
 
+Consider first `crashes', that is when @R{} terminated unexpectedly with
+an illegal memory access (a `segfault' or `bus error'), illegal
+instruction or similar.  As from @R{} 2.3.0 Unix-alike versions of @R{}
+use a signal handler which aims to give some basic information.  For
+example
+
+@example
+ *** caught segfault ***
+address 0x20000028, cause 'memory not mapped'
+
+Traceback:
+ 1: .identC(class1[[1]], class2)
+ 2: possibleExtends(class(sloti), classi, ClassDef2 = getClassDef(classi,
+where = where))
+ 3: validObject(t(cu))
+ 4: stopifnot(validObject(cu <- as(tu, "dtCMatrix")), validObject(t(cu)),
+validObject(t(tu)))
+
+Possible actions:
+1: abort (with core dump)
+2: normal R exit
+3: exit R without saving workspace
+4: exit R saving workspace
+Selection: 3
+@end example
+
+@noindent
+Since the @R{} process may be damaged, the only really safe option is
+the first.
+
+Another cause of a `crash' is to overrun the C stack.  @R{} tries to
+track that in its own code, but it may happen in third-party compiled
+code.  For modern POSIX-compilant OSes we can safely catch that and
+return to the top-level prompt.
+
+@example
+> .C("aaa")
+Error: segfault from C stack overflow
+>
+@end example
+
+@noindent
+However, C stack overflows are fatal under Windows and normally defeat
+attempts at debugging.
+
+If you have a crash which gives a core dump you can use something like
+
+@example
+gdb /path/to/R/bin/exec/R core.12345
+@end example
+
+@noindent
+to examine the core dump.  If core dumps are disabled or to catch errors
+that do not generate a dump one can run @R{} directly under a debugger
+by for example
+
+@example
+$ R -d gdb --vanilla
+...
+gdb> run
+@end example
+
+@noindent
+at which point @R{} will run normally, and hopefully the debugger will
+catch the error and return to its prompt.  This can also be used to
+catch infinite loops or interrupt very long-running code.  For a simple
+example
+
+@example
+> for(i in 1:1e7) x <- rnorm(100)
+[hit Ctrl-C]
+Program received signal SIGINT, Interrupt.
+0x00397682 in _int_free () from /lib/tls/libc.so.6
+(gdb) where
+#0  0x00397682 in _int_free () from /lib/tls/libc.so.6
+#1  0x00397eba in free () from /lib/tls/libc.so.6
+#2  0xb7cf2551 in R_gc_internal (size_needed=313)
+    at /users/ripley/R/svn/R-devel/src/main/memory.c:743
+#3  0xb7cf3617 in Rf_allocVector (type=13, length=626)
+    at /users/ripley/R/svn/R-devel/src/main/memory.c:1906
+#4  0xb7c3f6d3 in PutRNGstate ()
+    at /users/ripley/R/svn/R-devel/src/main/RNG.c:351
+#5  0xb7d6c0a5 in do_random2 (call=0x94bf7d4, op=0x92580e8, args=0x9698f98,
+    rho=0x9698f28) at /users/ripley/R/svn/R-devel/src/main/random.c:183
+...
+@end example
+
+Some ``tricks'' are worth knowing.
 
 @menu
 * Finding entry points::        
@@ -3838,9 +3972,9 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 @subsection Finding entry points in dynamically loaded code
 
 Under most compilation environments, compiled code dynamically loaded
-into @R{} cannot have breakpoints set within it until it is loaded.
-To use a symbolic debugger on such dynamically loaded code under UNIX
-use
+into @R{} cannot have breakpoints set within it until it is loaded.  To
+use a symbolic debugger on such dynamically loaded code under
+Unix-alikes use
 
 @itemize @bullet
 @item
@@ -3859,7 +3993,7 @@ Set the breakpoints in your code.
 Continue execution of R by typing @kbd{signal 0@key{RET}}.
 @end itemize
 
-Under Windows signals may not be able to be used, and the procedure is
+Under Windows signals may not be able to be used, and if so the procedure is
 more complicated.  See the rw-FAQ and
 @uref{http://www.stats.uwo.ca/faculty/murdoch/software/debuggingR/gdb.shtml}.
 
