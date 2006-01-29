@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-23 08:51+0000\n"
+"POT-Creation-Date: 2006-01-29 08:14+0000\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -125,11 +125,11 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/platform.c:1470 src/main/plot3d.c:2463 src/main/plot3d.c:2467
 #: src/main/plot3d.c:2472 src/main/plot3d.c:2476 src/main/plot3d.c:2480
 #: src/main/plot3d.c:2484 src/main/print.c:172 src/main/print.c:178
-#: src/main/print.c:200 src/main/random.c:466 src/main/random.c:468
-#: src/main/random.c:470 src/main/saveload.c:2032 src/main/saveload.c:2284
-#: src/main/saveload.c:2333 src/main/sysutils.c:396 src/main/sysutils.c:398
-#: src/main/sysutils.c:400 src/main/unique.c:588 src/main/util.c:659
-#: src/main/util.c:662 src/modules/internet/internet.c:252
+#: src/main/print.c:200 src/main/random.c:465 src/main/random.c:469
+#: src/main/random.c:471 src/main/random.c:473 src/main/saveload.c:2032
+#: src/main/saveload.c:2284 src/main/saveload.c:2333 src/main/sysutils.c:396
+#: src/main/sysutils.c:398 src/main/sysutils.c:400 src/main/unique.c:588
+#: src/main/util.c:659 src/main/util.c:662 src/modules/internet/internet.c:252
 #: src/modules/internet/internet.c:258 src/modules/internet/internet.c:264
 #: src/modules/internet/internet.c:267 src/modules/internet/internet.c:271
 #: src/unix/sys-std.c:908 src/unix/sys-std.c:930
@@ -446,8 +446,8 @@ msgstr "二番目の引数はリストでなければなりません"
 msgid "subscript out of bounds"
 msgstr "添え字が許される範囲外です"
 
-#: src/include/Errormsg.h:43 src/main/subassign.c:1324
-#: src/main/subassign.c:1671
+#: src/include/Errormsg.h:43 src/main/subassign.c:1342
+#: src/main/subassign.c:1694
 msgid "object is not subsettable"
 msgstr "オブジェクトは部分代入可能ではありません"
 
@@ -1070,16 +1070,16 @@ msgstr "引数はリストではありません"
 msgid "class name too long in '%s'"
 msgstr "'%s' のクラス名が長すぎます"
 
-#: src/main/bind.c:1004
+#: src/main/bind.c:1005
 msgid "cannot create a matrix from these types"
 msgstr "このようなタイプからは行列は作れません"
 
-#: src/main/bind.c:1079
+#: src/main/bind.c:1080
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "行列の行数は一致していなければなりません（%d 番目の引数を参照）"
 
-#: src/main/bind.c:1292
+#: src/main/bind.c:1305
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "行列の列数は一致していなければなりません（%d 番目の引数を参照）"
@@ -2765,7 +2765,7 @@ msgstr "\"package:base\" は切り離すことができません"
 msgid "argument must be an environment"
 msgstr "引数は環境でなければなりません"
 
-#: src/main/envir.c:2504 src/main/random.c:34 src/main/random.c:559
+#: src/main/envir.c:2504 src/main/random.c:34 src/main/random.c:562
 msgid "invalid arguments"
 msgstr "引数(複数)が不正です"
 
@@ -3194,7 +3194,7 @@ msgstr "単純な実数ベクトルだけを扱えます"
 msgid "not a simple vector"
 msgstr "単一のベクトルではありません"
 
-#: src/main/eval.c:2639 src/main/eval.c:2687 src/main/subassign.c:892
+#: src/main/eval.c:2639 src/main/eval.c:2687 src/main/subassign.c:910
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "添え字の数が正しくありません"
@@ -5068,22 +5068,22 @@ msgstr "確率値が正の値ではありません"
 msgid "too few positive probabilities"
 msgstr "正の確率値が少なすぎます"
 
-#: src/main/random.c:472
+#: src/main/random.c:475
 msgid ""
 "cannot take a sample larger than the population\n"
 " when 'replace = FALSE'"
 msgstr ""
 "'replace = FALSE' なので、母集団以上の大きさの標本は取ることができません"
 
-#: src/main/random.c:481
+#: src/main/random.c:484
 msgid "incorrect number of probabilities"
 msgstr "確率値の個数が正しくありません"
 
-#: src/main/random.c:515
+#: src/main/random.c:518
 msgid "invalid first argument 'n'"
 msgstr "一番目の引数 'n' が不正です"
 
-#: src/main/random.c:517
+#: src/main/random.c:520
 msgid "invalid second argument 'size'"
 msgstr "二番目の引数 'size' が不正です"
 
@@ -5924,17 +5924,17 @@ msgid "incompatible types (%d) in subassignment type fix"
 msgstr "部分代入における型のフィックスにおいて，型 (%d) は互換性がありません"
 
 #: src/main/subassign.c:389 src/main/subassign.c:660 src/main/subassign.c:663
-#: src/main/subassign.c:930
+#: src/main/subassign.c:948
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "添え字付きの付値で NA は許されていません"
 
-#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:922
-#: src/main/subassign.c:1104
+#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:940
+#: src/main/subassign.c:1122
 msgid "nothing to replace with"
 msgstr "置き換えるべきものがなにもありません"
 
-#: src/main/subassign.c:405 src/main/subassign.c:676 src/main/subassign.c:924
-#: src/main/subassign.c:1106
+#: src/main/subassign.c:405 src/main/subassign.c:676 src/main/subassign.c:942
+#: src/main/subassign.c:1124
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "置き換えるべき項目数が，置き換える数の倍数ではありませんでした"
 
@@ -5942,70 +5942,70 @@ msgstr "置き換えるべき項目数が，置き換える数の倍数ではあ
 msgid "incorrect number of subscripts on matrix"
 msgstr "行列への添え字の数が正しくありません"
 
-#: src/main/subassign.c:874
+#: src/main/subassign.c:892
 #, c-format
 msgid "incompatible types (case %d) in matrix subset assignment"
 msgstr "行列への部分代入で，型 (ケース %d) は互換性がありません"
 
-#: src/main/subassign.c:1053
+#: src/main/subassign.c:1071
 #, c-format
 msgid "incompatible types (%d) in array subset assignment"
 msgstr "配列の部分代入で，型 (%d) は互換性がありません"
 
-#: src/main/subassign.c:1078
+#: src/main/subassign.c:1096
 msgid "invalid number of subscripts to list assign"
 msgstr "リストへの付値の添字の個数が不正です"
 
-#: src/main/subassign.c:1223
+#: src/main/subassign.c:1241
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "SubAssignArgs: 引数の個数が違います"
 
-#: src/main/subassign.c:1428
+#: src/main/subassign.c:1446
 msgid "wrong args for environment subassignment"
 msgstr "subassignment 環境に対する誤った引数です"
 
-#: src/main/subassign.c:1438 src/main/subassign.c:1460
+#: src/main/subassign.c:1456 src/main/subassign.c:1478
 msgid "more elements supplied than there are to replace"
 msgstr "置き換えられる個数よりも多くの要素が与えられました"
 
-#: src/main/subassign.c:1440
+#: src/main/subassign.c:1458
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]] の添え字がありません"
 
-#: src/main/subassign.c:1448 src/main/subset.c:772
+#: src/main/subassign.c:1466 src/main/subset.c:772
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "再帰的な添字操作がレベル %d で失敗しました\n"
 
-#: src/main/subassign.c:1453 src/main/subset.c:776
+#: src/main/subassign.c:1471 src/main/subset.c:776
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "レベル %d にはそのようなインデックスはありません\n"
 
-#: src/main/subassign.c:1470 src/main/subassign.c:1487
+#: src/main/subassign.c:1488 src/main/subassign.c:1505
 msgid "[[ ]] subscript out of bounds"
 msgstr "[[ ]] の添え字が範囲外です"
 
-#: src/main/subassign.c:1476 src/main/subassign.c:1649
+#: src/main/subassign.c:1494 src/main/subassign.c:1672
 msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] の添え字の個数が不適切です"
 
-#: src/main/subassign.c:1612
+#: src/main/subassign.c:1635
 #, c-format
 msgid "incompatible types (%d) in [[ assignment"
 msgstr "[[ による代入で，型 (%d) は互換性がありません"
 
-#: src/main/subassign.c:1659
+#: src/main/subassign.c:1682
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] の添え字（%d）が範囲外です"
 
-#: src/main/subassign.c:1700 src/main/subscript.c:111 src/main/subscript.c:188
+#: src/main/subassign.c:1723 src/main/subscript.c:111 src/main/subscript.c:188
 #: src/main/subscript.c:585 src/main/subset.c:909
 msgid "invalid subscript type"
 msgstr "添え字の型が不正です"
 
-#: src/main/subassign.c:1780
+#: src/main/subassign.c:1803
 msgid "Coercing LHS to a list"
 msgstr "左辺をリストに変換しました"
 

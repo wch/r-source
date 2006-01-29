@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-23 08:51+0000\n"
+"POT-Creation-Date: 2006-01-29 08:14+0000\n"
 "PO-Revision-Date: 2005-12-17 11:31-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -124,11 +124,11 @@ msgstr "'names' inválidos em R_unlink"
 #: src/main/platform.c:1470 src/main/plot3d.c:2463 src/main/plot3d.c:2467
 #: src/main/plot3d.c:2472 src/main/plot3d.c:2476 src/main/plot3d.c:2480
 #: src/main/plot3d.c:2484 src/main/print.c:172 src/main/print.c:178
-#: src/main/print.c:200 src/main/random.c:466 src/main/random.c:468
-#: src/main/random.c:470 src/main/saveload.c:2032 src/main/saveload.c:2284
-#: src/main/saveload.c:2333 src/main/sysutils.c:396 src/main/sysutils.c:398
-#: src/main/sysutils.c:400 src/main/unique.c:588 src/main/util.c:659
-#: src/main/util.c:662 src/modules/internet/internet.c:252
+#: src/main/print.c:200 src/main/random.c:465 src/main/random.c:469
+#: src/main/random.c:471 src/main/random.c:473 src/main/saveload.c:2032
+#: src/main/saveload.c:2284 src/main/saveload.c:2333 src/main/sysutils.c:396
+#: src/main/sysutils.c:398 src/main/sysutils.c:400 src/main/unique.c:588
+#: src/main/util.c:659 src/main/util.c:662 src/modules/internet/internet.c:252
 #: src/modules/internet/internet.c:258 src/modules/internet/internet.c:264
 #: src/modules/internet/internet.c:267 src/modules/internet/internet.c:271
 #: src/unix/sys-std.c:908 src/unix/sys-std.c:930
@@ -445,8 +445,8 @@ msgstr "segundo argumento deve ser uma lista"
 msgid "subscript out of bounds"
 msgstr "índice fora de limites"
 
-#: src/include/Errormsg.h:43 src/main/subassign.c:1324
-#: src/main/subassign.c:1671
+#: src/include/Errormsg.h:43 src/main/subassign.c:1342
+#: src/main/subassign.c:1694
 msgid "object is not subsettable"
 msgstr "não é possível dividir o objeto em subconjuntos"
 
@@ -1065,16 +1065,16 @@ msgstr "argumento não é uma lista"
 msgid "class name too long in '%s'"
 msgstr "nome da classe muito longo em '%s'"
 
-#: src/main/bind.c:1004
+#: src/main/bind.c:1005
 msgid "cannot create a matrix from these types"
 msgstr "não é possível criar uma matriz a partir desses tipos"
 
-#: src/main/bind.c:1079
+#: src/main/bind.c:1080
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "número de linhas das matrizes devem ser iguais (veja arg %d)"
 
-#: src/main/bind.c:1292
+#: src/main/bind.c:1305
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "números de colunas das matrizes devem ser iguais (veja arg %d)"
@@ -2764,7 +2764,7 @@ msgstr "detach de \"package:base\" não é permitido"
 msgid "argument must be an environment"
 msgstr "argumento deve ser um ambiente"
 
-#: src/main/envir.c:2504 src/main/random.c:34 src/main/random.c:559
+#: src/main/envir.c:2504 src/main/random.c:34 src/main/random.c:562
 msgid "invalid arguments"
 msgstr "argumentos inválidos"
 
@@ -3196,7 +3196,7 @@ msgstr "somente vetores reais simples são suportados"
 msgid "not a simple vector"
 msgstr "não é um vetor simples"
 
-#: src/main/eval.c:2639 src/main/eval.c:2687 src/main/subassign.c:892
+#: src/main/eval.c:2639 src/main/eval.c:2687 src/main/subassign.c:910
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "número de índices incorretos"
@@ -5072,7 +5072,7 @@ msgstr "probabilidade não positiva"
 msgid "too few positive probabilities"
 msgstr "muito poucas probabilidades positivas"
 
-#: src/main/random.c:472
+#: src/main/random.c:475
 msgid ""
 "cannot take a sample larger than the population\n"
 " when 'replace = FALSE'"
@@ -5080,15 +5080,15 @@ msgstr ""
 "impossível tomar uma amostra maior que a população\n"
 " quando 'replace = FALSE'"
 
-#: src/main/random.c:481
+#: src/main/random.c:484
 msgid "incorrect number of probabilities"
 msgstr "número de probabilidades incorreto"
 
-#: src/main/random.c:515
+#: src/main/random.c:518
 msgid "invalid first argument 'n'"
 msgstr "primeiro argumento 'n' inválido"
 
-#: src/main/random.c:517
+#: src/main/random.c:520
 msgid "invalid second argument 'size'"
 msgstr "segundo argumento 'size' inválido"
 
@@ -5929,17 +5929,17 @@ msgid "incompatible types (%d) in subassignment type fix"
 msgstr "tipos incompatíveis (%d) em correção de tipo subatribuição "
 
 #: src/main/subassign.c:389 src/main/subassign.c:660 src/main/subassign.c:663
-#: src/main/subassign.c:930
+#: src/main/subassign.c:948
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "NAs não são permitidos em atribuições por subscritos"
 
-#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:922
-#: src/main/subassign.c:1104
+#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:940
+#: src/main/subassign.c:1122
 msgid "nothing to replace with"
 msgstr "nada para colocar no lugar"
 
-#: src/main/subassign.c:405 src/main/subassign.c:676 src/main/subassign.c:924
-#: src/main/subassign.c:1106
+#: src/main/subassign.c:405 src/main/subassign.c:676 src/main/subassign.c:942
+#: src/main/subassign.c:1124
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
 "número de itens para para substituir não é um múltiplo do comprimento do "
@@ -5949,70 +5949,70 @@ msgstr ""
 msgid "incorrect number of subscripts on matrix"
 msgstr "número de subscritos incorretos na matriz"
 
-#: src/main/subassign.c:874
+#: src/main/subassign.c:892
 #, c-format
 msgid "incompatible types (case %d) in matrix subset assignment"
 msgstr "tipos incompatíveis (caso %d) em atribuição de subconjunto de matriz"
 
-#: src/main/subassign.c:1053
+#: src/main/subassign.c:1071
 #, c-format
 msgid "incompatible types (%d) in array subset assignment"
 msgstr "tipos incompatíveis (%d) em atribuição de subconjunto de array"
 
-#: src/main/subassign.c:1078
+#: src/main/subassign.c:1096
 msgid "invalid number of subscripts to list assign"
 msgstr "número de subscritos inválidos em atribuição de lista"
 
-#: src/main/subassign.c:1223
+#: src/main/subassign.c:1241
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "SubAssignArgs: número de argumentos inválidos"
 
-#: src/main/subassign.c:1428
+#: src/main/subassign.c:1446
 msgid "wrong args for environment subassignment"
 msgstr "argumentos inválidos para subatribuição de ambiente"
 
-#: src/main/subassign.c:1438 src/main/subassign.c:1460
+#: src/main/subassign.c:1456 src/main/subassign.c:1478
 msgid "more elements supplied than there are to replace"
 msgstr "mais elementos fornecidos do que podem ser substituidos"
 
-#: src/main/subassign.c:1440
+#: src/main/subassign.c:1458
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]] com subscrito ausente"
 
-#: src/main/subassign.c:1448 src/main/subset.c:772
+#: src/main/subassign.c:1466 src/main/subset.c:772
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "indexação recursiva falhou no nível %d\n"
 
-#: src/main/subassign.c:1453 src/main/subset.c:776
+#: src/main/subassign.c:1471 src/main/subset.c:776
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "nenhum índice no nível %d\n"
 
-#: src/main/subassign.c:1470 src/main/subassign.c:1487
+#: src/main/subassign.c:1488 src/main/subassign.c:1505
 msgid "[[ ]] subscript out of bounds"
 msgstr "subscrito [[ ]] fora de limites"
 
-#: src/main/subassign.c:1476 src/main/subassign.c:1649
+#: src/main/subassign.c:1494 src/main/subassign.c:1672
 msgid "[[ ]] improper number of subscripts"
 msgstr "número inadequado de subscritos em [[ ]]"
 
-#: src/main/subassign.c:1612
+#: src/main/subassign.c:1635
 #, c-format
 msgid "incompatible types (%d) in [[ assignment"
 msgstr "tipos incompatíveis (%d) em atribuição [["
 
-#: src/main/subassign.c:1659
+#: src/main/subassign.c:1682
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "subscrito (%d) em [[ ]] fora de limites"
 
-#: src/main/subassign.c:1700 src/main/subscript.c:111 src/main/subscript.c:188
+#: src/main/subassign.c:1723 src/main/subscript.c:111 src/main/subscript.c:188
 #: src/main/subscript.c:585 src/main/subset.c:909
 msgid "invalid subscript type"
 msgstr "tipo de subscrito inválido"
 
-#: src/main/subassign.c:1780
+#: src/main/subassign.c:1803
 msgid "Coercing LHS to a list"
 msgstr "Realizando coerção de LHD para uma lista"
 

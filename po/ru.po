@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-23 08:51+0000\n"
+"POT-Creation-Date: 2006-01-29 08:14+0000\n"
 "PO-Revision-Date: 2005-12-16 15:56+0300\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -128,11 +128,11 @@ msgstr "неправильные 'имяs' в R_unlink"
 #: src/main/platform.c:1470 src/main/plot3d.c:2463 src/main/plot3d.c:2467
 #: src/main/plot3d.c:2472 src/main/plot3d.c:2476 src/main/plot3d.c:2480
 #: src/main/plot3d.c:2484 src/main/print.c:172 src/main/print.c:178
-#: src/main/print.c:200 src/main/random.c:466 src/main/random.c:468
-#: src/main/random.c:470 src/main/saveload.c:2032 src/main/saveload.c:2284
-#: src/main/saveload.c:2333 src/main/sysutils.c:396 src/main/sysutils.c:398
-#: src/main/sysutils.c:400 src/main/unique.c:588 src/main/util.c:659
-#: src/main/util.c:662 src/modules/internet/internet.c:252
+#: src/main/print.c:200 src/main/random.c:465 src/main/random.c:469
+#: src/main/random.c:471 src/main/random.c:473 src/main/saveload.c:2032
+#: src/main/saveload.c:2284 src/main/saveload.c:2333 src/main/sysutils.c:396
+#: src/main/sysutils.c:398 src/main/sysutils.c:400 src/main/unique.c:588
+#: src/main/util.c:659 src/main/util.c:662 src/modules/internet/internet.c:252
 #: src/modules/internet/internet.c:258 src/modules/internet/internet.c:264
 #: src/modules/internet/internet.c:267 src/modules/internet/internet.c:271
 #: src/unix/sys-std.c:908 src/unix/sys-std.c:930
@@ -451,8 +451,8 @@ msgstr "второй аргумент должен быть списком"
 msgid "subscript out of bounds"
 msgstr "подгруппа выходит за пределы"
 
-#: src/include/Errormsg.h:43 src/main/subassign.c:1324
-#: src/main/subassign.c:1671
+#: src/include/Errormsg.h:43 src/main/subassign.c:1342
+#: src/main/subassign.c:1694
 msgid "object is not subsettable"
 msgstr "объект не делится на подгруппы"
 
@@ -1069,16 +1069,16 @@ msgstr "аргумент не является списком"
 msgid "class name too long in '%s'"
 msgstr "слишком длинное имя класса в '%s'"
 
-#: src/main/bind.c:1004
+#: src/main/bind.c:1005
 msgid "cannot create a matrix from these types"
 msgstr "не могу создать матрицу из этих типов данных"
 
-#: src/main/bind.c:1079
+#: src/main/bind.c:1080
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "количества строчек матриц должны соответствовать (см. аргумент %d)"
 
-#: src/main/bind.c:1292
+#: src/main/bind.c:1305
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "количества колонок матриц должны соответствовать (см. аргумент %d)"
@@ -2766,7 +2766,7 @@ msgstr "отделение \"package:base\" не разрешено"
 msgid "argument must be an environment"
 msgstr "аргумент должен быть окружением"
 
-#: src/main/envir.c:2504 src/main/random.c:34 src/main/random.c:559
+#: src/main/envir.c:2504 src/main/random.c:34 src/main/random.c:562
 msgid "invalid arguments"
 msgstr "неправильные аргументы"
 
@@ -3200,7 +3200,7 @@ msgstr "могу работать только с простыми действительными векторами"
 msgid "not a simple vector"
 msgstr "не простой вектор"
 
-#: src/main/eval.c:2639 src/main/eval.c:2687 src/main/subassign.c:892
+#: src/main/eval.c:2639 src/main/eval.c:2687 src/main/subassign.c:910
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "неправильное количество подгрупп"
@@ -5070,7 +5070,7 @@ msgstr "не-положительная вероятность"
 msgid "too few positive probabilities"
 msgstr "слишком мало положительных вероятностей"
 
-#: src/main/random.c:472
+#: src/main/random.c:475
 msgid ""
 "cannot take a sample larger than the population\n"
 " when 'replace = FALSE'"
@@ -5078,15 +5078,15 @@ msgstr ""
 "не могу сделать выборку бОльшую чем популяция\n"
 " если 'replace = FALSE'"
 
-#: src/main/random.c:481
+#: src/main/random.c:484
 msgid "incorrect number of probabilities"
 msgstr "неправильное количество вероятностей"
 
-#: src/main/random.c:515
+#: src/main/random.c:518
 msgid "invalid first argument 'n'"
 msgstr "неправильный первый аргумент 'n'"
 
-#: src/main/random.c:517
+#: src/main/random.c:520
 msgid "invalid second argument 'size'"
 msgstr "неправильный второй аргумент 'size'"
 
@@ -5921,17 +5921,17 @@ msgid "incompatible types (%d) in subassignment type fix"
 msgstr "несовместимые типы (%d) при записи типа подгрупп присвоения"
 
 #: src/main/subassign.c:389 src/main/subassign.c:660 src/main/subassign.c:663
-#: src/main/subassign.c:930
+#: src/main/subassign.c:948
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "в подгруппах присвоений NA не разрешены"
 
-#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:922
-#: src/main/subassign.c:1104
+#: src/main/subassign.c:403 src/main/subassign.c:674 src/main/subassign.c:940
+#: src/main/subassign.c:1122
 msgid "nothing to replace with"
 msgstr "нечего заменять"
 
-#: src/main/subassign.c:405 src/main/subassign.c:676 src/main/subassign.c:924
-#: src/main/subassign.c:1106
+#: src/main/subassign.c:405 src/main/subassign.c:676 src/main/subassign.c:942
+#: src/main/subassign.c:1124
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "число единиц для замены не является произведением длины замены"
 
@@ -5939,70 +5939,70 @@ msgstr "число единиц для замены не является произведением длины замены"
 msgid "incorrect number of subscripts on matrix"
 msgstr "неправильное число подгрупп матрицы"
 
-#: src/main/subassign.c:874
+#: src/main/subassign.c:892
 #, c-format
 msgid "incompatible types (case %d) in matrix subset assignment"
 msgstr "несовместимые типы (случай %d) в определении подгрупп матрицы"
 
-#: src/main/subassign.c:1053
+#: src/main/subassign.c:1071
 #, c-format
 msgid "incompatible types (%d) in array subset assignment"
 msgstr "несовместимые типы (%d) в определении подгрупп многомерной матрицы"
 
-#: src/main/subassign.c:1078
+#: src/main/subassign.c:1096
 msgid "invalid number of subscripts to list assign"
 msgstr "неправильное количество подгрупп присвоения списка"
 
-#: src/main/subassign.c:1223
+#: src/main/subassign.c:1241
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "'SubAssignArgs': неправильное количество аргументов"
 
-#: src/main/subassign.c:1428
+#: src/main/subassign.c:1446
 msgid "wrong args for environment subassignment"
 msgstr "неправильные аргументы в подгруппах присвоения для окружения"
 
-#: src/main/subassign.c:1438 src/main/subassign.c:1460
+#: src/main/subassign.c:1456 src/main/subassign.c:1478
 msgid "more elements supplied than there are to replace"
 msgstr "дано больше элементов, чем можно их заменить"
 
-#: src/main/subassign.c:1440
+#: src/main/subassign.c:1458
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]] с пропущенным индексом"
 
-#: src/main/subassign.c:1448 src/main/subset.c:772
+#: src/main/subassign.c:1466 src/main/subset.c:772
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "на уровне %d рекурсивная индексация не удалась\n"
 
-#: src/main/subassign.c:1453 src/main/subset.c:776
+#: src/main/subassign.c:1471 src/main/subset.c:776
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "на уровне %d нет такого индекса\n"
 
-#: src/main/subassign.c:1470 src/main/subassign.c:1487
+#: src/main/subassign.c:1488 src/main/subassign.c:1505
 msgid "[[ ]] subscript out of bounds"
 msgstr "[[ ]] индекс за пределами"
 
-#: src/main/subassign.c:1476 src/main/subassign.c:1649
+#: src/main/subassign.c:1494 src/main/subassign.c:1672
 msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] неправильное количество подгрупп"
 
-#: src/main/subassign.c:1612
+#: src/main/subassign.c:1635
 #, c-format
 msgid "incompatible types (%d) in [[ assignment"
 msgstr "несовместимые типы (%d) в [[ присвоении"
 
-#: src/main/subassign.c:1659
+#: src/main/subassign.c:1682
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] индекс (%d) за пределами"
 
-#: src/main/subassign.c:1700 src/main/subscript.c:111 src/main/subscript.c:188
+#: src/main/subassign.c:1723 src/main/subscript.c:111 src/main/subscript.c:188
 #: src/main/subscript.c:585 src/main/subset.c:909
 msgid "invalid subscript type"
 msgstr "неправильный тип индекса"
 
-#: src/main/subassign.c:1780
+#: src/main/subassign.c:1803
 msgid "Coercing LHS to a list"
 msgstr "Преобразование 'LHS' в список"
 
