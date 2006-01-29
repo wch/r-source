@@ -3235,12 +3235,12 @@ of the function.
 Normally keeping the source code is a good idea, and in particular it
 avoids comments being moved around in the source.  However, we can make
 use of the ability to re-create a function listing from its parse tree
-to produce a tidy version of the function, with consistent indentation,
-spaces around operators.  This tidied version is much easier to read,
-not least by other users who are used to the standard format.  Although
-the deparsing cannot do so, we recommend the consistent use of the
-preferred assignment operator @samp{<-}, rather than @samp{=} for
-assignment.
+to produce a tidy version of the function, for example with consistent
+indentation and spaces around operators.  This tidied version is much
+easier to read, not least by other users who are used to the standard
+format.  Although the deparsing cannot do so, we recommend the
+consistent use of the preferred assignment operator @samp{<-} (rather
+than @samp{=}) for assignment.
 
 We can subvert the keeping of source in two ways.
 
@@ -3292,18 +3292,19 @@ recommended for the source code of @R{} itself.
 @cindex Profiling
 @findex Rprof
 
-It is possible to profile @R{} code on most Unix-like versions of @R{}:
-@R{} has to be built to enable this, by supplying the option
-@option{--enable-R-profiling}, profiling being enabled in a default
-build.  Profiling is also available on Windows.
+It is possible to profile @R{} code on Windows and most@footnote{@R{}
+has to be built to enable this, but the option
+@option{--enable-R-profiling} is the default.} Unix-like versions of
+@R{}.
 
 The command @command{Rprof} is used to control profiling, and its help
 page can be consulted for full details.  Profiling works by recording at
-fixed intervals (by default every 20 msecs) which @R{} function is being
-used, and recording the results in a file (default @file{Rprof.out} in
-the working directory).  Then the function @code{summaryRprof} or the
-command-line utility @code{R CMD Rprof @var{Rprof.out}} can be used to
-summarize the activity.
+fixed intervals@footnote{For Unix-alikes these are intervals of CPU
+time, and for WIndows of elapsed time.} (by default every 20 msecs) which
+@R{} function is being used, and recording the results in a file
+(default @file{Rprof.out} in the working directory).  Then the function
+@code{summaryRprof} or the command-line utility @code{R CMD Rprof
+@var{Rprof.out}} can be used to summarize the activity.
 
 As an example, consider the following code (from Venables & Ripley,
 2002).
@@ -3404,34 +3405,131 @@ with a profiling run without a preceding call to @code{gc}.
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
 @chapter Debugging
 
-[Under development.]
-
 This chapter covers the debugging of @R{} extensions, starting with the
 ways to get useful error information and moving on to how to deal with
 errors that crash @R{}.  For those who prefer other styles there are
-contributed packages such as @pkg{debug} on CRAN.
+contributed packages such as @pkg{debug} on CRAN (described in an
+article in @url{http://cran.r-project.org/doc/Rnews/Rnews_2003-3.pdf,
+R-News 3/3}).
 
 @menu
+* Browsing::                    
 * Debugging R code::            
-* Using valgrind::              
+* Using gctorture and valgrind::  
 * Debugging compiled code::     
 @end menu
 
-@node Debugging R code, Using valgrind, Debugging, Debugging
+
+@node Browsing, Debugging R code, Debugging, Debugging
+@section Browsing
+
+@findex browser
+Most of the R-level debugging facilities are based around the built-in
+browser.  This can be used directly by inserting a call to
+@code{browser()} into the code of a function (for example, using
+@code{fix(my_function)} ).  When code execution reaches that point in
+the function, control returns to the @R{} console with a special prompt.
+For example
+
+@example
+> fix(summary.data.frame) ## insert browser() call after for() loop
+> summary(women)
+Called from: summary.data.frame(women)
+Browse[1]> ls()
+ [1] "digits" "i"      "lbs"    "lw"     "maxsum" "nm"     "nr"     "nv"
+ [9] "object" "sms"    "z"
+Browse[1]> maxsum
+[1] 7
+Browse[1]>
+     height         weight
+ Min.   :58.0   Min.   :115.0
+ 1st Qu.:61.5   1st Qu.:124.5
+ Median :65.0   Median :135.0
+ Mean   :65.0   Mean   :136.7
+ 3rd Qu.:68.5   3rd Qu.:148.0
+ Max.   :72.0   Max.   :164.0
+> rm(summary.data.frame)
+@end example
+
+@noindent
+At the browser prompt one can enter @R{} code, so for example
+@code{ls()} lists the objects in the current frame, and entering the
+name of an object will@footnote{With the exceptions of the commands
+listed below: an object of such a name can be printed @emph{via} an
+explicit call to @code{print}.} print it.  The following commands are
+also accepted
+
+@itemize @bullet
+@item @code{n}
+
+Enter single-step mode.  In this mode, hitting return executes the next
+line of code (more precisely one line and any continuation lines).
+Typing @code{c} will continue to the end of the current context, e.g. to
+the end of the current loop.
+
+@item @code{c}
+
+In normal mode, this quits the browser and continues execution, and just
+return works in the same way.  @code{cont} is a synonym.
+
+@item @code{where}
+
+This prints the call stack and enters single-step mode.  For example
+
+@example
+> summary(women)
+Called from: summary.data.frame(women)
+Browse[1]> where
+where 1: summary.data.frame(women)
+where 2: summary(women)
+
+Browse[1]>
+@end example
+
+@item @code{Q}
+
+Quit both the browser and the current expression, and return to the
+top-level prompt.
+@end itemize
+
+Errors in code executed at the @code{browse} prompt will normally return
+to the browse prompt.  Objects can be altered by assignment, and will
+keep their changed values when the browser is exited.  If really
+necessary, objects can be assigned to the workspace from the browser
+prompt (by using @code{<<-} if the name is not already in scope).
+
+@node Debugging R code, Using gctorture and valgrind, Browsing, Debugging
 @section Debugging R code
 
 @findex traceback
 Suppose your @R{} program gives an error message.  The first thing to
 find out is what @R{} was doing at the time of the error, and the most
 useful tool is @code{traceback()}.  We suggest that this is run whenever
-the cause of the error is not immediately obvious.  Every day, errors
-are reported to the @R{} mailing lists as being in some package when
+the cause of the error is not immediately obvious.  Daily, errors are
+reported to the @R{} mailing lists as being in some package when
 traceback would show that the error was being reported by some other
-package or base @R{}.
+package or base @R{}.  Here is an example from the regression suite.
 
 @example
-example to follow
+> success <- c(13,12,11,14,14,11,13,11,12)
+> failure <- c(0,0,0,0,0,0,0,2,2)
+> resp <- cbind(success, failure)
+> predictor <- c(0, 5^(0:7))
+> glm(resp ~ 0+predictor, family = binomial(link="log"))
+Error: no valid set of coefficients has been found: please supply starting values
+> traceback()
+3: stop("no valid set of coefficients has been found: please supply 
+         starting values", call. = FALSE)
+2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,
+       mustart = mustart, offset = offset, family = family, control = control,
+       intercept = attr(mt, "intercept") > 0)
+1: glm(resp ~ 0 + predictor, family = binomial(link ="log"))
 @end example
+
+@noindent
+The calls to the active frames are given in reverse order (starting with
+the innermost).  So we see the error message comes from an explicit
+check in @code{glm.fit}.
 
 Occasionally @code{traceback()} does not help, and this can be the case
 if S4 method dispatch is involved.  Consider the following example
@@ -3453,7 +3551,7 @@ in @code{initialize} (and the note ``called from internal dispatch''
 tells us so).  In this case we searched the @R{} sources for the quoted
 call, which occurred in only one place,
 @code{methods:::.asEnvironmentPackage}.  So now we knew where the
-error was occurring.  (This was an unsually opaque example.)
+error was occurring.  (This was an unusually opaque example.)
 
 Sometimes there is warning that clearly is the precursor to some later
 error, but it is not obvious where it is coming from.  Setting
@@ -3464,46 +3562,220 @@ is to find out more about what was happening at the crash by looking a
 @emph{post-mortem} dump.  To do so, set
 @findex dump.frames
 @command{options(error=dump.frames)} and run the code again.  Then invoke
-@command{debugger()} and explore the dump.
+@command{debugger()} and explore the dump.  Continuing our example:
 
 @example
-example to follow
+> options(error = dump.frames)
+> glm(resp ~ 0 + predictor, family = binomial(link ="log"))
+Error: no valid set of coefficients has been found: please supply starting values
 @end example
+
+@noindent
+which is the same as before, but an object called @code{last.dump} has
+appeared in the workspace.  (Such objects can be large, so remove it
+when it is no longer needed.)  We can examine this at a later time by
+calling the function @code{debugger}.
+@findex debugger
+
+@example
+> debugger()
+Message:  Error: no valid set of coefficients has been found: please supply starting values
+Available environments had calls:
+1: glm(resp ~ 0 + predictor, family = binomial(link = "log"))
+2: glm.fit(x = X, y = Y, weights = weights, start = start, etas
+3: stop("no valid set of coefficients has been found: please su
+
+Enter an environment number, or 0 to exit  Selection:
+@end example
+
+@noindent
+which gives the same sequence of calls as @code{traceback}, but in
+outer-first order and truncated to 60 characters.  However, we can now
+examine in more detail what was happening at the time of the error.
+Selecting an environment opens the browser in that frame.  So we select
+the function call which spawned the error message, and explore some of
+the variables (and execute two function calls).
+
+@example
+Enter an environment number, or 0 to exit  Selection: 2
+Browsing in the environment with call:
+   glm.fit(x = X, y = Y, weights = weights, start = start, etas
+Called from: debugger.look(ind)
+Browse[1]> ls()
+ [1] "aic"        "boundary"   "coefold"    "control"    "conv"
+ [6] "dev"        "dev.resids" "devold"     "EMPTY"      "eta"
+[11] "etastart"   "family"     "fit"        "good"       "intercept"
+[16] "iter"       "linkinv"    "mu"         "mu.eta"     "mu.eta.val"
+[21] "mustart"    "n"          "ngoodobs"   "nobs"       "nvars"
+[26] "offset"     "start"      "valideta"   "validmu"    "variance"
+[31] "varmu"      "w"          "weights"    "x"          "xnames"
+[36] "y"          "ynames"     "z"
+Browse[1]> eta
+            1             2             3             4             5
+ 0.000000e+00 -2.235357e-06 -1.117679e-05 -5.588393e-05 -2.794197e-04
+            6             7             8             9
+-1.397098e-03 -6.985492e-03 -3.492746e-02 -1.746373e-01
+Browse[1]> valideta(eta)
+[1] TRUE
+Browse[1]> mu
+        1         2         3         4         5         6         7         8
+1.0000000 0.9999978 0.9999888 0.9999441 0.9997206 0.9986039 0.9930389 0.9656755
+        9
+0.8397616
+Browse[1]> validmu(mu)
+[1] FALSE
+Browse[1]> c
+Available environments had calls:
+1: glm(resp ~ 0 + predictor, family = binomial(link = "log"))
+2: glm.fit(x = X, y = Y, weights = weights, start = start, etas
+3: stop("no valid set of coefficients has been found: please su
+
+Enter an environment number, or 0 to exit  Selection: 0
+> rm(last.dump)
+@end example
+
+Because @code{last.dump} can be looked at later or even in another @R{}
+session, post-mortem debugging is possible even for batch usage of @R{}.
+We do need to arrange for the dump to be saved: this can be done either
+using the flag @option{--save} to save the workspace at the end of the
+run, or via a setting such as
+
+@example
+> options(error = quote(@{dump.frames(to.file=TRUE); q()@}))
+@end example
+
+@noindent
+See the help on @code{dump.frames} for further options and a worked
+example.
+
+@findex recover
+An alternative error action is to use the function @command{recover()}:
+
+@example
+> options(error = recover)
+> glm(resp ~ 0 + predictor, family = binomial(link = "log"))
+Error: no valid set of coefficients has been found: please supply starting values
+
+Enter a frame number, or 0 to exit
+
+1: glm(resp ~ 0 + predictor, family = binomial(link = "log"))
+2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart, mus
+
+Selection:
+@end example
+
+@noindent
+which is very similar to @code{dump.frames} (with the calls truncated to
+@code{getOption("width")}, but not allowing for the numbering).
+However, we can examine the state of the program directly, without
+dumping and re-loading the dump.  As its help page says, @code{recover}
+can be routinely used as the error action in place of @code{dump.calls}
+(used by @code{traceback}) and @code{dump.frames}, since it behaves like
+@code{dump.frames} in non-interactive use.
+
 
 @findex debug
 Post-mortem debugging is good for finding out exactly what went wrong,
 but not why.  An alternative approach is to take a closer look at what
 was happening just before the error, and a good way to do that is to use
 @command{debug}.  This inserts a call to @code{browser} at the beginning
-of the function, and then the single-step mode@footnote{type @code{n} at
-the prompt and press return to advance a line.} of @code{browser} can
-be used to step through the function, examining the values of variables
-as we go.  @code{debug} can be used for hidden functions and S3 methods
-by e.g. @code{debug(stats:::predict.Arima)}.  (It cannot be used for S4
-methods, but an alternative is given on the help page for @code{debug}.)
-Sometimes you want to debug a function defined inside another function,
-e.g. the function @code{arimafn} defined inside @code{arima}.  To do so,
-set @code{debug} on the outer function (here @code{arima}) and
-single-step through it until the inner function has been defined.  Them
-call @code{debug} on the inner function (and use @code{c} to get out of
-single-step mode.
-
-@findex recover
-An alternative is @command{recover()}.
-
-
-
-@node Using valgrind, Debugging compiled code, Debugging R code, Debugging
-@section Using valgrind
-
-Errors in memory allocation and reading/writing outside arrays are very
-common causes of crashes (e.g., segfaults) on some machines.  If you
-have access to Linux on an @code{ix86}, @code{x86_64} or @code{ppc32}
-platform you can use @code{valgrind} (@url{http://www.valgrind.org/}) to
-look out for possible problems.  To run some examples under
-@code{valgrind} use something like
+of the function, starting in single-step mode.  So in our example we
+could use
 
 @example
+> debug(glm.fit)
+> glm(resp ~ 0 + predictor, family = binomial(link ="log"))
+debugging in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,
+    mustart = mustart, offset = offset, family = family, control = control,
+    intercept = attr(mt, "intercept") > 0)
+debug: @{
+## lists the whole function
+Browse[1]>
+debug: x <- as.matrix(x)
+...
+Browse[1]> start
+[1] -2.235357e-06
+debug: eta <- drop(x %*% start)
+Browse[1]> eta
+            1             2             3             4             5
+ 0.000000e+00 -2.235357e-06 -1.117679e-05 -5.588393e-05 -2.794197e-04
+            6             7             8             9
+-1.397098e-03 -6.985492e-03 -3.492746e-02 -1.746373e-01
+Browse[1]>
+debug: mu <- linkinv(eta <- eta + offset)
+Browse[1]> mu
+        1         2         3         4         5         6         7         8
+1.0000000 0.9999978 0.9999888 0.9999441 0.9997206 0.9986039 0.9930389 0.9656755
+        9
+0.8397616
+@end example
+
+@noindent
+(The prompt @code{Browse[1]>} indicates that this is the first level of
+browsing: it is possible to step into another function that is itself
+being debugged or contains a call to @code{browser()}.)
+
+@code{debug} can be used for hidden functions and S3 methods by
+e.g.@: @code{debug(stats:::predict.Arima)}.  (It cannot be used for S4
+methods, but an alternative is given on the help page for @code{debug}.)
+Sometimes you want to debug a function defined inside another function,
+e.g.@: the function @code{arimafn} defined inside @code{arima}.  To do so,
+set @code{debug} on the outer function (here @code{arima}) and
+single-step through it until the inner function has been defined.  Then
+call @code{debug} on the inner function (and use @code{c} to get out of
+single-step mode in the outer function).
+
+
+@node Using gctorture and valgrind, Debugging compiled code, Debugging R code, Debugging
+@section Using gctorture and valgrind
+
+Errors in memory allocation and reading/writing outside arrays are very
+common causes of crashes (e.g.,@: segfaults) on some machines.  Often
+the crashes appears long after the invalid memory access: in particular
+damage to the structures which @R{} itself has allocated can only become
+apparent at the next garbage collection (or even at later garbage
+collections after objects have been deleted).
+
+@menu
+* Using gctorture::             
+* Using valgrind::              
+@end menu
+
+@node Using gctorture, Using valgrind, Using gctorture and valgrind, Using gctorture and valgrind
+@subsection Using gctorture
+
+@findex gctorture
+We can help to detect memory problems earlier by running garbage
+collection as often as possible.  This is achieved by
+@code{gctorture(TRUE)}, which is described on its help page as
+
+@quotation
+Provokes garbage collection on (nearly) every memory allocation.
+Intended to ferret out memory protection bugs.  Also makes @R{} run
+@emph{very} slowly, unfortunately.
+@end quotation
+
+@noindent
+The reference to `memory protection' is to missing calls to
+@code{PROTECT}/@code{UNPROTECT} (see below) which cause @R{} objects to
+be garbage-collected when they are still in use.  But it can help with
+other memory-related errors.
+
+It is possible to run all the examples, tests and vignettes covered by
+@code{R CMD check} under @code{gctorture(TRUE)} by using the option
+@option{--use-gct}. 
+
+@node Using valgrind,  , Using gctorture, Using gctorture and valgrind
+@subsection Using valgrind
+
+If you have access to Linux on an @code{ix86}, @code{x86_64} or
+@code{ppc32} platform you can use @code{valgrind}
+(@url{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
+check for possible problems.  To run some examples under @code{valgrind}
+use something like
+
+@example
+R -d valgrind --vanilla < mypkg-Ex.R
 R -d "valgrind --tool=memcheck --leak-check=yes" --vanilla < mypkg-Ex.R
 @end example
 
@@ -3511,27 +3783,28 @@ R -d "valgrind --tool=memcheck --leak-check=yes" --vanilla < mypkg-Ex.R
 where @file{mypkg-Ex.R} is a set of examples, e.g.@: the file created in
 @file{mypkg.Rcheck} by @code{R CMD check}.  Occasionally this reports
 memory reads of `uninitialised values' that are the result of compiler
-optimization, so can be worth checking under unoptimized compiles.  We
+optimization, so can be worth checking under an unoptimized compile.  We
 know there will be some small memory leaks from @code{readline} and @R{}
 itself -- these are memory areas that are in use right up to the end of
 the @R{} session.  Expect this to run around 20x slower than without
 @code{valgrind}, and in some cases even slower than that.  Current
 versions@footnote{Athough this is supposed to have been improved,
 @code{valgrind} 3.1.0 still aborts using optimized BLASes on an
-Opteron.} of @code{valgrind} is not happy with many optimized BLASes
+Opteron.} of @code{valgrind} are not happy with many optimized BLASes
 that use cpu-specific instructions (3D now, SSE, SSE2, SSE3 and similar)
 so you may need to build a version of @R{} specifically to use with
 @code{valgrind}.
 
-On platforms supported by @code{valgrind} you can build a version of @R{} with
-extra instrumentation to help @code{valgrind} detect errors in the use of
-memory allocated from the @R{} heap.  The configure option is
+On platforms supported by @code{valgrind} you can build a version of
+@R{} with extra instrumentation to help @code{valgrind} detect errors in
+the use of memory allocated from the @R{} heap.  The configure option is
 @option{--with-valgrind-instrumentation=level}, where @code{level} is 0,
 1, or 2.  Level 0 is the default and does not add any anything.  Level 1
 will detect use of uninitialised memory and has little impact on
 speed. Level 2 will detect many other memory use bugs but makes @R{}
-much slower when running under @code{valgrind}.
-
+much slower when running under @code{valgrind}.  Using this in
+conjuction with @code{gctorture} can be even more effective (and even
+slower).
 
 It is possible to run all the examples, tests and vignettes covered by
 @code{R CMD check} under @code{valgrind} by using the option
@@ -3547,7 +3820,7 @@ It is possible to run all the examples, tests and vignettes covered by
 @noindent
 or setting the environment variable @env{VALGRIND_OPTS}.
 
-@node Debugging compiled code,  , Using valgrind, Debugging
+@node Debugging compiled code,  , Using gctorture and valgrind, Debugging
 @section Debugging compiled code
 @cindex Debugging
 
@@ -3586,48 +3859,10 @@ Set the breakpoints in your code.
 Continue execution of R by typing @kbd{signal 0@key{RET}}.
 @end itemize
 
-Under Windows the @R{} engine is itself in a DLL, and the procedure is
+Under Windows signals may not be able to be used, and the procedure is
+more complicated.  See the rw-FAQ and
+@uref{http://www.stats.uwo.ca/faculty/murdoch/software/debuggingR/gdb.shtml}.
 
-@itemize @bullet
-@item
-Start @R{} under the debugger after setting a breakpoint for
-@code{WinMain}.
-
-@example
-@group
-gdb .../bin/Rgui.exe
-(gdb) break WinMain
-(gdb) run
-[ stops with R.dll loaded ]
-(gdb) break R_ReadConsole
-(gdb) continue
-[ stops with console running ]
-(gdb) continue
-@end group
-@end example
-
-@item
-At the @R{} prompt, use @code{dyn.load} or @code{library} to load your DLL.
-@item
-Set the breakpoints in your code.
-@item
-Use
-
-@example
-@group
-(gdb) clear R_ReadConsole
-(gdb) continue
-@end group
-@end example
-
-@noindent
-to continue running with the breakpoints set.
-@end itemize
-
-@noindent
-Windows has little support for signals, so the usual idea of running a
-program under a debugger and sending it a signal to interrupt it and
-drop control back to the debugger only works with some debuggers.
 
 @node Inspecting R objects,  , Finding entry points, Debugging compiled code
 @subsection Inspecting R objects when debugging
@@ -3638,7 +3873,7 @@ The key to inspecting @R{} objects from compiled code is the function
 mechanisms to print the @R{} object pointed to by @var{s}, or the safer
 version @code{R_PV(SEXP @var{s})} which will only print `objects'.
 
-One way to make use to @code{PrintValue} is to insert suitable calls
+One way to make use of @code{PrintValue} is to insert suitable calls
 into the code to be debugged.
 
 Another way is to call @code{R_PV} from the symbolic debugger.
