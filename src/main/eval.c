@@ -36,7 +36,7 @@
 static SEXP bcEval(SEXP, SEXP);
 #endif
 
-SEXP attribute_hidden do_browser(SEXP, SEXP, SEXP, SEXP);
+SEXP do_browser(SEXP, SEXP, SEXP, SEXP);  /* from main.c */
 
 /*#define BC_PROFILING*/
 #ifdef BC_PROFILING
