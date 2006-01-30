@@ -484,12 +484,12 @@ compiled code.
 The @file{man} subdirectory should contain documentation files for the
 objects in the package in @dfn{R documentation} (Rd) format.  The
 documentation files to be installed must also start with a (lower or
-upper case ASCII) letter@footnote{This is enforced as from @R{} 2.3.0.}
-and have the extension @file{.Rd} (the default) or @file{.rd}.
-@xref{Writing R documentation files}, for more information.  Note that
-all user-level objects in a package should be documented; if a package
-@var{pkg} contains user-level objects which are for ``internal'' use
-only, it should provide a file @file{@var{pkg}-internal.Rd} which
+upper case ASCII) letter or digite@footnote{This is enforced as from
+@R{} 2.3.0.}  and have the extension @file{.Rd} (the default) or
+@file{.rd}.  @xref{Writing R documentation files}, for more information.
+Note that all user-level objects in a package should be documented; if a
+package @var{pkg} contains user-level objects which are for ``internal''
+use only, it should provide a file @file{@var{pkg}-internal.Rd} which
 documents all such objects, and clearly states that these are not meant
 to be called by the user.  See e.g.@: the sources for package @pkg{grid}
 in the @R{} distribution for an example.

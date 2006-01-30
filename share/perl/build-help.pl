@@ -141,11 +141,11 @@ format STDOUT =
 .
 
 foreach $manfile (@mandir) {
-    ## Should only process files starting with [A-Za-z] and with
+    ## Should only process files starting with [A-Za-z0-9] and with
     ## suffix .Rd or .rd, according to `Writing R Extensions'.
     if($manfile =~ /\.[Rr]d$/) {
 	$manfilebase = basename($manfile, (".Rd", ".rd"));
-	if(! manfilebase =~ /^[A-Za-z]/) {next;}
+	if(! ($manfilebase =~ /^[A-Za-z0-9]/) ) {next;}
 	$manage = (-M $manfile);
 	$manfiles{$manfilebase} = $manfile;
 

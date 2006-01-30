@@ -773,7 +773,7 @@ do_install_source () {
   if test -d man; then
     message "help"
     ## Install man sources ...
-    Rdfiles=`ls man/*.[Rr]d man/${R_OSTYPE}/*.[Rr]d 2>/dev/null`
+    Rdfiles=`ls man/*.[Rr]d man/${R_OSTYPE}/*.[Rr]d 2>/dev/null | grep "^man/[A-Za-z0-9]"`
     if test -n "${Rdfiles}"; then
       ${MKDIR_P} "${R_PACKAGE_DIR}/man"
       rm -f "${R_PACKAGE_DIR}/man/"*

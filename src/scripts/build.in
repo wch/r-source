@@ -249,11 +249,11 @@ foreach my $pkg (@ARGV) {
 	my ($dpath) = @_;
 	chdir($dpath);
 	if(-d "man") {
-	    ## Should only contain files starting with [A-Za-z] and with
+	    ## Should only contain files starting with [A-Za-z0-9] and with
 	    ## suffix .Rd or .rd, according to `Writing R Extensions'.
 	    my @manfiles;
 	    opendir(DIR, "man") or die "cannot opendir man: $!";
-	    @manfiles = grep { (!/^[A-Za-z].*\.[Rr]d$/) && 
+	    @manfiles = grep { (!/^[A-Za-z0-9].*\.[Rr]d$/) && 
 				   -f "man/$_" } readdir(DIR);
 	    closedir(DIR);
 	    if(@manfiles) {

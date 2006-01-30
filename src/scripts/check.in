@@ -954,12 +954,12 @@ sub check_pkg {
 	}
     }
     if(-d "man") {
-	## Should only contain files starting with [A-Za-z] and with
+	## Should only contain files starting with [A-Za-z0-9] and with
 	## suffix .Rd or .rd, according to `Writing R Extensions'.
 	## Can also contain OS-specific directories, which we do not check.
 	my @manfiles;
 	opendir(DIR, "man") or die "cannot opendir man: $!";
-	@manfiles = grep { (!/^[A-Za-z].*\.[Rr]d(~|\.~[0-9]+~)?$/) && -f "man/$_" } readdir(DIR);
+	@manfiles = grep { (!/^[A-Za-z0-9].*\.[Rr]d(~|\.~[0-9]+~)?$/) && -f "man/$_" } readdir(DIR);
 	closedir(DIR);
 	if(@manfiles) {
 	    $log->warning() unless $any;
