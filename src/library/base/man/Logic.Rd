@@ -7,6 +7,7 @@ x && y
 x | y
 x || y
 xor(x, y)
+
 isTRUE(x)
 }
 \alias{!}
@@ -37,7 +38,9 @@ isTRUE(x)
 
   \code{xor} indicates elementwise exclusive OR.
 
-  \code{isTRUE(x)} is an abbreviation of \code{identical(TRUE,x)}.
+  \code{isTRUE(x)} is an abbreviation of \code{identical(TRUE, x)}, and
+  so is true if and only if \code{x} is a length-one logical vector with
+  no attributes (not even names).
 
   Numeric and complex vectors will be coerced to logical values, with
   zero being false and all non-zero values being true.  Raw vectors are
