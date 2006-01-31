@@ -959,7 +959,8 @@ sub check_pkg {
 	## Can also contain OS-specific directories, which we do not check.
 	my @manfiles;
 	opendir(DIR, "man") or die "cannot opendir man: $!";
-	@manfiles = grep { (!/^[A-Za-z0-9].*\.[Rr]d(~|\.~[0-9]+~)?$/) && -f "man/$_" } readdir(DIR);
+	@manfiles = grep { (!/^[A-Za-z0-9].*\.[Rr]d(~|\.~[0-9]+~)?$/) 
+			       && -f "man/$_" } readdir(DIR);
 	closedir(DIR);
 	if(@manfiles) {
 	    $log->warning() unless $any;
@@ -981,8 +982,8 @@ sub check_pkg {
 	## Can also contain OS-specific directories, which we do not check.
 	my @Rfiles;
 	opendir(DIR, "R") or die "cannot opendir R: $!";
-	@Rfiles = grep { (!/\.[RSqrs](~|\.~[0-9]+~)?$/) && (!/\.in$/) && (!/^sysdata.rda$/)
-			     && -f "R/$_" } readdir(DIR);
+	@Rfiles = grep { (!/\.[RSqrs](~|\.~[0-9]+~)?$/) && (!/\.in$/) 
+			     && (!/^sysdata.rda$/) && -f "R/$_" } readdir(DIR);
 	closedir(DIR);
 	if(@Rfiles) {
 	    $log->warning() unless $any;
@@ -992,6 +993,27 @@ sub check_pkg {
 	    $log->print(wrap("", "",
 			     ("These are not valid file names",
 			      "for R files.\n",
+			      "Please remove or rename the files.\n",
+			      "See section 'Package subdirectories'",
+			      "in manual 'Writing R Extensions'.\n")));
+	}
+    }
+    if(-d "demo") {
+	## Should only contain 00Index and files starting with [A-Za-z]
+	## and with suffix .R or .r, according to `Writing R Extensions'.
+	my @demofiles;
+	opendir(DIR, "demo") or die "cannot opendir demo: $!";
+	@demofiles = grep { (!/^[A-Za-z].*\.[Rr]$/) && (!/^00Index$/) 
+				&& -f "demo/$_" } readdir(DIR);
+	closedir(DIR);
+	if(@demofiles) {
+	    $log->warning() unless $any;
+	    $any++;
+	    $log->print("Subdirectory 'demo' contains invalid file names:\n");
+	    $log->print("  " . join("\n  ", @demofiles) . "\n");
+	    $log->print(wrap("", "",
+			     ("These are not valid file names",
+			      "for demo files.\n",
 			      "Please remove or rename the files.\n",
 			      "See section 'Package subdirectories'",
 			      "in manual 'Writing R Extensions'.\n")));

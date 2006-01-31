@@ -114,6 +114,12 @@ function(dir, type, all.files = FALSE, full.names = TRUE)
             files <- c(files, OSfiles)
         }
     }
+    if(type %in% "docs") {  ## only certain filenames are valid.
+        files <- files[grep("^[A-Za-z0-9]", basename(files))]
+    }
+    if(type %in% "demos") {  ## only certain filenames are valid.
+        files <- files[grep("^[A-Za-z]", basename(files))]
+    }
     files
 }
 
