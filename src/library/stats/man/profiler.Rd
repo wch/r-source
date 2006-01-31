@@ -1,16 +1,20 @@
 \name{profiler}
 \alias{profiler}
+\description{
+  Create a profiler object for the model object \code{fitted}.
+}
 \title{ Constructor for Profiler Objects for Nonlinear Models}
 \usage{
 profiler(fitted, \dots)
 }
 \arguments{
- \item{fitted}{the original fitted model object.}
- \item{\dots}{Additional parameters.  See documentation on individual
-   methods.}
+ \item{fitted}{a fitted model object.}
+ \item{\dots}{Additional arguments for specific methods (none are
+   currently used).}
 }
-\description{
-  Create a profiler object for the model object \code{fitted}.
+\details{
+  This is a generic function with a \code{"nls"} method in \pkg{stats}.
+  It is a support function for \code{\link{profile.nls}}.
 }
 \value{
   An object of class \code{"profiler"} which is a list with function
@@ -43,15 +47,20 @@ profiler(fitted, \dots)
     It returns a list with elements
 
     \code{parameters}: the parameter values for the profiled optimum.
-
-    \code{fstat}: a profile statistics.  See individual methods for details.
-
+    \code{fstat}: a profile statistics.
     \code{varying}: a logical vector indicating parameters which were varied.
   }
+
+  The \code{"nls"} method returns an objecr of class
+  \code{"profiler.nls"} inheriting from \code{"profiler"} with the
+  additional element
+  \item{getFittedModel()}{
+    the \code{nlsModel} object corresponding to \code{fitted}.
+  }  
 }
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{
-  \code{\link{profiler.nls}}, \code{\link{profile}}
+  \code{\link{profile}}, \code{\link{profile.nls}}
 }
 \keyword{nonlinear}
 \keyword{models}
