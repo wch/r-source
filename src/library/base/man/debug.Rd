@@ -1,5 +1,5 @@
 \name{debug}
-\title{Debug a function}
+\title{Debug a Function}
 \usage{
 debug(fun)
 undebug(fun)
@@ -14,23 +14,32 @@ undebug(fun)
 }
 \details{
   When a function flagged for debugging is entered, normal execution
-  is suspended and the body of function is executed one statement at a time.
-  A new browser context is initiated for each step (and the previous one
-  destroyed).
-  You take the next step by typing carriage return, \code{n} or \code{next}.
-  You can see the values of variables by typing their names.
-  Typing \code{c} or \code{cont} causes the debugger to continue to the
-  end of the function (or loop if within a loop).
-  You can \code{debug} new functions before you step in to them from inside
-  the debugger.
-  Typing \code{Q} quits the current execution and returns you to the
-  top--level prompt.
-  Typing \code{where} causes the debugger to print out the current
-  stack trace (all functions that are active).
-  If you have variables with names that are identical to the controls
-  (eg. \code{c} or \code{n} ) then you need to use \code{print(c)} and
-  \code{print(n)} to evaluate them.
+  is suspended and the body of function is executed one statement at a
+  time.  A new browser context is initiated for each step (and the
+  previous one destroyed).
 
+  At the debug prompt the user can enter commands or \R expressions.
+  The commands are
+
+  \describe{
+    \item{\code{n}}{(or just return).  Advance to the next step.}
+    \item{\code{c}}{continue to the end of the current context: e.g. to the
+      end of the loop if within a loop or to the end of the function.}
+    \item{\code{cont}}{synonym for \code{c}.}
+    \item{\code{where}}{print a stack trace of all active function calls.}
+    \item{\code{Q}}{exit the browser and the current evaluation and
+      return to the top-level prompt.}
+  }
+
+  Anything else entered at the debug prompt is interpreted as an
+  \R expression to be evaluated in the calling environment: in
+  particular typing an object name will cause the object to be printed,
+  and \code{ls()} lists the objects in the calling frame.  (If you want
+  to look at an object with a name such as \code{n}, print it explicitly.)
+
+  If a function is defined inside a function, single-step though to the
+  end of its definition, and then call \code{debug} on its name.
+  
   In order to debug S4 methods (see \code{\link[methods]{Methods}}), you
   need to use \code{\link{trace}}, typically calling \code{\link{browser}},
   e.g., as \cr
