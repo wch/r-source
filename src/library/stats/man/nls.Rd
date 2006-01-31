@@ -69,9 +69,8 @@ nls(formula, data, start, control, algorithm,
   \code{\link{confint}}, \code{\link{deviance}},
   \code{\link{df.residual}}, \code{\link{fitted}},
   \code{\link{formula}}, \code{\link{logLik}}, \code{\link{predict}},
-  \code{\link{print}}, \code{\link{profile}}, \code{\link{profiler}},
-  \code{\link{residuals}}, \code{\link{summary}}, \code{\link{vcov}} and
-  \code{\link{weights}}.
+  \code{\link{print}}, \code{\link{profile}}, \code{\link{residuals}},
+  \code{\link{summary}}, \code{\link{vcov}} and \code{\link{weights}}.
   
   Variables in \code{formula} are looked for first in \code{data}, then
   the environment of \code{formula} and finally along the search path.
@@ -127,7 +126,7 @@ nls(formula, data, start, control, algorithm,
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{
   \code{\link{summary.nls}}, \code{\link{predict.nls}},
-  \code{\link{profile.nls}},  \code{\link{profiler.nls}}.
+  \code{\link{profile.nls}}.
 }
 \examples{
 DNase1 <- subset(DNase, Run == 1)

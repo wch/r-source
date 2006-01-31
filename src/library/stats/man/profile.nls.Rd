@@ -35,11 +35,15 @@
   appropriate sign.
 }
 \references{
-  Bates, D.M. and Watts, D.G. (1988), \emph{Nonlinear Regression Analysis
-	and Its Applications}, Wiley (chapter 6)}
-\author{Douglas M. Bates and Saikat DebRoy}
-\seealso{\code{\link{nls}}, \code{\link{profile}},
-    \code{\link{profiler}}, \code{\link{plot.profile.nls}}
+  Bates, D. M. and Watts, D. G. (1988), \emph{Nonlinear Regression Analysis
+    and Its Applications}, Wiley (chapter 6).
+}
+\author{
+  Of the original version, 
+  Douglas M. Bates and Saikat DebRoy
+}
+\seealso{
+  \code{\link{nls}}, \code{\link{profile}}, \code{\link{plot.profile.nls}}
 }
 \examples{
 # obtain the fitted object
