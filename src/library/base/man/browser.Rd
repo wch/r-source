@@ -9,23 +9,29 @@
 browser()
 }
 \details{
-  A call to \code{browser} causes a pause in the execution of the
-  current expression and runs a copy of the \R interpreter which has
-  access to variables local to the environment where the call took
-  place.
+  A call to \code{browser} can be included in the body of a function.
+  When reached, this causes a pause in the execution of the
+  current expression and allows access to the \R interpreter.
 
-  Local variables can be listed with \code{ls}, and manipulated with \R
-  expressions typed to this sub-interpreter.  The sub-interpreter can be
-  exited by typing \code{c}.  Execution then resumes at the statement
-  following the call to \code{browser}.
+  At the browser prompt the user can enter commands or \R expressions.
+  The commands are
 
-  Typing \code{n} causes the step-through-debugger, to start and it is
-  possible to step through the remainder of the function one line at a
-  time.  In this mode \code{c} will continue to the end of the current
-  context (to the next loop iteration if within a loop).
+  \describe{
+    \item{\code{c}}{(or just return) exit the browser and continue
+      execution at the next statement.}
+    \item{\code{cont}}{synonym for \code{c}.}
+    \item{\code{n}}{enter the step-through debugger. This changes the
+      meaning of \code{c}: see the documentation for \code{\link{debug}}.}
+    \item{\code{where}}{print a stack trace of all active function calls.}
+    \item{\code{Q}}{exit the browser and the current evaluation and
+      return to the top-level prompt.}
+  }
 
-  Typing \code{Q} quits the current execution and returns you to the
-  top-level prompt.
+  Anything else entered at the browser prompt is interpreted as an
+  \R expression to be evaluated in the calling environment: in
+  particular typing an object name will cause the object to be printed,
+  and \code{ls()} lists the objects in the calling frame.  (If you want
+  to look at an object with a name such as \code{n}, print it explicitly.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -41,6 +41,12 @@ BUG FIXES
 	acceptable, despite the claim to be uniformly better.  For
 	example, pgamma(0.9e100, 1e100) was NaN.  (PR#8528)
 
+    o	There was no command 'ls' in browser() nor 'next' in debug(),
+	despite the documentation (which has been corrected).  
+	Command 'where' in the browser() no longer changes to 
+	step-though mode.
+
+
 
 
 		CHANGES IN R VERSION 2.2.1

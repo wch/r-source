@@ -244,9 +244,9 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 	    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &state->status);
 	    if (browselevel) {
 		    browsevalue = ParseBrowser(R_CurrentExpr, rho);
-		    if(browsevalue == 1 )
+		    if(browsevalue == 1)
 			    return(-1);
-		    if(browsevalue == 2 ) {
+		    if(browsevalue == 2) {
 			    R_IoBufferWriteReset(&R_ConsoleIob);
 			    return(0);
 		    }
@@ -711,9 +711,9 @@ static void printwhere(void)
   int lct = 1;
 
   for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
-    if ((cptr->callflag & CTXT_FUNCTION) &&
+    if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN)) &&
 	(TYPEOF(cptr->call) == LANGSXP)) {
-	Rprintf("where %d: ",lct++);
+	Rprintf("where %d: ", lct++);
 	PrintValue(cptr->call);
     }
   }
@@ -723,21 +723,21 @@ static void printwhere(void)
 
 int Rf_ParseBrowser(SEXP CExpr, SEXP rho)
 {
-    int rval=0;
+    int rval = 0;
     if (isSymbol(CExpr)) {
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"n")) {
+	if (!strcmp(CHAR(PRINTNAME(CExpr)), "n")) {
 	    SET_DEBUG(rho, 1);
-	    rval=1;
+	    rval = 1;
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"c")) {
-	    rval=1;
+	if (!strcmp(CHAR(PRINTNAME(CExpr)), "c")) {
+	    rval = 1;
 	    SET_DEBUG(rho, 0);
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"cont")) {
-	    rval=1;
+	if (!strcmp(CHAR(PRINTNAME(CExpr)), "cont")) {
+	    rval = 1;
 	    SET_DEBUG(rho, 0);
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"Q")) {
+	if (!strcmp(CHAR(PRINTNAME(CExpr)), "Q")) {
 
 	    /* Run onexit/cend code for everything above the target.
                The browser context is still on the stack, so any error
@@ -749,14 +749,14 @@ int Rf_ParseBrowser(SEXP CExpr, SEXP rho)
 
 	    /* this is really dynamic state that should be managed as such */
 	    R_BrowseLevel = 0;
-	    SET_DEBUG(rho,0); /*PR#1721*/
+	    SET_DEBUG(rho, 0); /*PR#1721*/
 
 	    jump_to_toplevel();
 	}
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"where")) {
 	    printwhere();
-	    SET_DEBUG(rho, 1);
-	    rval=2;
+	    /* SET_DEBUG(rho, 1); */
+	    rval = 2;
 	}
     }
     return rval;
