@@ -649,9 +649,13 @@ do_install_source () {
     message "demo"
     ${MKDIR_P} "${R_PACKAGE_DIR}/demo"
     rm -f "${R_PACKAGE_DIR}/demo/"*
-    cp demo/* "${R_PACKAGE_DIR}/demo" 2>/dev/null
+    echo "tools:::.install_package_demos('.', '${R_PACKAGE_DIR}')" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla --slave > /dev/null
+    if test ${?} -ne 0; then
+      error "installing demos failed"
+      do_exit_on_error
+    fi
     chmod 644 "${R_PACKAGE_DIR}/demo/"*
-    rm -f "${R_PACKAGE_DIR}/demo/00Index"
   fi
 
   if test -d exec && test "${fake}" != "true"; then
@@ -773,18 +777,13 @@ do_install_source () {
   if test -d man; then
     message "help"
     ## Install man sources ...
-    Rdfiles=`ls man/*.[Rr]d man/${R_OSTYPE}/*.[Rr]d 2>/dev/null | grep "^man/[A-Za-z0-9]"`
-    if test -n "${Rdfiles}"; then
-      ${MKDIR_P} "${R_PACKAGE_DIR}/man"
-      rm -f "${R_PACKAGE_DIR}/man/"*
-      for f in ${Rdfiles}; do
-	echo "% --- Source file: ${f} ---";
-	cat "${f}"; echo; echo '\eof';
-      done \
-        > "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
-      chmod 644 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
-      ${R_GZIPCMD} -9 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
+    echo "tools:::.install_package_man_sources('.', '${R_PACKAGE_DIR}')" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla --slave > /dev/null
+    if test ${?} -ne 0; then
+      error "installing man sources failed"
+      do_exit_on_error
     fi
+    chmod 644 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd.gz"
     ## Maybe build preformatted help pages ...
     if ${build_help}; then
       if ${NO_PERL5}; then

@@ -244,56 +244,25 @@ foreach my $pkg (@ARGV) {
     close(EXCLUDE);
     unlink($exclude);
     unlink($origfilepath);
-    ## Fix up man and R directories (in each package for a bundle)
-    sub find_invalid_manfiles {
+    ## Fix up man, R and demo directories (in each package for a bundle)
+    sub find_invalid_files{
 	my ($dpath) = @_;
-	chdir($dpath);
-	if(-d "man") {
-	    ## Should only contain files starting with [A-Za-z0-9] and with
-	    ## suffix .Rd or .rd, according to `Writing R Extensions'.
-	    my @manfiles;
-	    opendir(DIR, "man") or die "cannot opendir man: $!";
-	    @manfiles = grep { (!/^[A-Za-z0-9].*\.[Rr]d$/) && 
-				   -f "man/$_" } readdir(DIR);
-	    closedir(DIR);
-	    if(@manfiles) {
-		$log->message("excluding invalid files from '$dpath/man' subdirectory");
-		print("  " . join("\n  ", @manfiles) . "\n");
-		my $file;
-		foreach $file (@manfiles) { rmtree("man/$file"); }
-	    }
-	}
-    }
-    sub find_invalid_Rfiles {
-	my ($dpath) = @_;
-	chdir($dpath);
-	if(-d "R") {
-	    ## Should only contain files with suffix .[RSqrs], or sysdata.rda,
-	    ## according to `Writing R Extensions'.  We allow configure
-	    ## to generate files here.
-	    my @Rfiles;
-	    opendir(DIR, "R") or die "cannot opendir R: $!";
-	    @Rfiles = grep { (!/\.[RSqrs]$/) && (!/\.in$/) &&
-				 (!/^sysdata.rda$/) &&
-				 -f "R/$_" } readdir(DIR);
-	    closedir(DIR);
-	    if(@Rfiles) {
-		$log->message("excluding invalid files from '$dpath/R' subdirectory");
-		print("  " . join("\n  ", @Rfiles) . "\n");
-		my $file;
-		foreach $file (@Rfiles) { rmtree("R/$file"); }
-	    }
+	my $Rcmd = "tools:::.check_package_subdirs(\"$dpath\", TRUE)\n";
+	my @out = R_runR($Rcmd, "--vanilla --slave",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->message("Excluding invalid files from '$dpath'\n" .
+			  join("\n", @out));
 	}
     }
     if($is_bundle) {
 	foreach $ppkg (@bundlepkgs) {
-	    &find_invalid_manfiles("$pkgname/$ppkg");
-	    &find_invalid_Rfiles("$pkgname/$ppkg");
+	    &find_invalid_files("$pkgname/$ppkg");
 	    chdir($tmpdir);
 	}
     } else {
-	&find_invalid_manfiles($pkgname);
-	&find_invalid_Rfiles($pkgname);
+	&find_invalid_files($pkgname);
 	chdir($tmpdir);
     }
     ## Fix permissions.

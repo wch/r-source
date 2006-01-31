@@ -110,9 +110,7 @@ help pages
 @end example
 
 @noindent
-before reading on.  If the package you are writing uses the
-@pkg{methods} package, look at the corresponding section in
-@code{?INSTALL}.
+before reading on.
 
 Once a source package is created, it must be installed by
 the command @code{R CMD INSTALL}.
@@ -370,6 +368,9 @@ The optional @samp{SaveImage} field controls whether the @R{} objects
 are stored in a saved image @pxref{The install.R and R_PROFILE.R files}.
 (It takes the same values as the field @samp{LazyLoad}.)
 
+If the package you are writing uses the @pkg{methods} package, specify
+(preferably) @samp{LazyLoad: yes} or @samp{SaveImage: yes}.
+
 The optional @samp{ZipData} field controls whether the automatic
 Windows build will zip up the data directory or no: set this to
 @samp{no} if your package will not work with a zipped data directory.
@@ -405,13 +406,17 @@ source and when using the package builder (@pxref{Checking and building
 packages}).
 
 Rather than editing this file, it is preferable to put customized
-information about the package into an overview	man page
-(@pxref{Documenting packages}) and/or a vignette (@pxref{Writing package vignettes}).
+information about the package into an overview man page
+(@pxref{Documenting packages}) and/or a vignette (@pxref{Writing package
+vignettes}).
 
 @node The install.R and R_PROFILE.R files, Package subdirectories, The INDEX file, Package structure
 @subsection The @file{install.R} and @file{R_PROFILE.R} files
 @cindex install.R file
 @cindex R_PROFILE.R file
+
+@strong{NB:} This mechanism is now deprecated and will be removed at
+@R{} 2.4.0.
 
 The optional file @file{install.R} serves two purposes.  First, its
 presence tells the @code{INSTALL} utility to create a binary image of the
@@ -430,7 +435,7 @@ The optional file @file{R_PROFILE.R} is executed before the code in the
 @file{R} subdirectory when saving an image or preparing for
 lazy-loading, and should be used to set up an environment needed only to
 evaluate the code (which is run with the @option{--vanilla} command-line
-flag).  Very few packages will need such code, as the packages in the
+flag).  Packages should not need such code, as the packages in the
 @samp{Depends} field should suffice.
 
 Both @file{install.R} and @file{R_PROFILE.R} should be viewed as
@@ -444,15 +449,16 @@ facilities available as from @R{} 2.0.0 they should be removed if possible.
 @cindex Package subdirectories
 
 The @file{R} subdirectory contains @R{} code files.  The code files to
-be installed must start with a (lower or upper case) letter and have one
-of the extensions @file{.R}, @file{.S}, @file{.q}, @file{.r}, or
-@file{.s}.  We recommend using @file{.R}, as this extension seems to be
-not used by any other software.  It should be possible to read in the
-files using @code{source()}, so R objects must be created by
-assignments.  Note that there need be no connection between the name of
-the file and the R objects created by it.   The @R{} code files should
-only create R objects and not call functions with side effects such as
-@code{require} and @code{options}.
+be installed must start with a (lower or upper case) letter or
+digit@footnote{This is enforced as from @R{} 2.3.0.} and have one of the
+extensions @file{.R}, @file{.S}, @file{.q}, @file{.r}, or @file{.s}.  We
+recommend using @file{.R}, as this extension seems to be not used by any
+other software.  It should be possible to read in the files using
+@code{source()}, so R objects must be created by assignments.  Note that
+there need be no connection between the name of the file and the R
+objects created by it.  The @R{} code files should only create R objects
+and not call functions with side effects such as @code{require} and
+@code{options}.
 
 One exception is allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of @R{} objects) this will be
@@ -469,22 +475,21 @@ up.  For packages without a name space, these are @code{.First.lib} and
 It is conventional to define these functions in a file called
 @file{zzz.R}.  If @code{.First.lib} is defined in a package, it is
 called with arguments @code{libname} and @code{pkgname} after the
-package is loaded and attached.  (If a package is installed with
-version information, the package name includes the version information,
-e.g.@: @samp{ash_1.0.9}.)  A common use is to call
-@code{library.dynam()} inside @code{.First.lib()} to load compiled code:
-another use is to call those functions with side effects.  If
-@code{.Last.lib} exists in a package it is called (with argument the
-full path to the installed package) just before the package is detached.
-It is uncommon to detach packages and rare to have a @code{.Last.lib}
-function: one use is to call @code{library.dynam.unload} to unload
-compiled code.
+package is loaded and attached.  (If a package is installed with version
+information, the package name includes the version information, e.g.@:
+@samp{ash_1.0.9}.)  A common use is to call @code{library.dynam()}
+inside @code{.First.lib()} to load compiled code: another use is to call
+those functions with side effects.  If @code{.Last.lib} exists in a
+package it is called (with argument the full path to the installed
+package) just before the package is detached.  It is uncommon to detach
+packages and rare to have a @code{.Last.lib} function: one use is to
+call @code{library.dynam.unload} to unload compiled code.
 
 
 The @file{man} subdirectory should contain documentation files for the
 objects in the package in @dfn{R documentation} (Rd) format.  The
 documentation files to be installed must also start with a (lower or
-upper case ASCII) letter or digite@footnote{This is enforced as from
+upper case ASCII) letter or digit@footnote{This is enforced as from
 @R{} 2.3.0.}  and have the extension @file{.Rd} (the default) or
 @file{.rd}.  @xref{Writing R documentation files}, for more information.
 Note that all user-level objects in a package should be documented; if a
@@ -539,11 +544,11 @@ bah} if @code{data(foo)} provides @samp{bar} and @samp{bah}.
 The @file{demo} subdirectory is for @R{} scripts (for running via
 @code{demo()}) which demonstrate some of the functionality of the
 package.  The script files must start with a (lower or upper case)
-letter and have one of the extensions @file{.R} or @file{.r}.  If
-present, the @file{demo} subdirectory should also have a @file{00Index}
-file with one line for each demo, giving its name and a description.
-(Note that it is not possible to generate this index file
-automatically.)
+letter@footnote{This is enforced as from @R{} 2.3.0.} and have one of
+the extensions @file{.R} or @file{.r}.  If present, the @file{demo}
+subdirectory should also have a @file{00Index} file with one line for
+each demo, giving its name and a description.  (Note that it is not
+possible to generate this index file automatically.)
 
 The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.  Subdirectories of @file{inst} should not
@@ -617,11 +622,11 @@ URL: http://www.stats.ox.ac.uk/pub/MASS4/
 @end cartouche
 @end quotation
 
-The @samp{Contains} field lists the packages, which should be
-contained in separate subdirectories with the names given.  During
-building and installation, packages will be installed in the order
-specified.  Be sure to order this list so that dependencies are met
-appropriately.
+The @samp{Contains} field lists the packages (space separated), which
+should be contained in separate subdirectories with the names given.
+During building and installation, packages will be installed in the
+order specified.  Be sure to order this list so that dependencies are
+met appropriately.
 
 The packages contained in a bundle are standard packages in all
 respects except that the @file{DESCRIPTION} file is replaced by a
@@ -755,12 +760,8 @@ getting the value of the basic configuration variables, or the header
 and library flags necessary for linking against @R{}, see @kbd{R CMD
 config --help} for details.
 
-If @R{} was configured to use the FORTRAN-to-C converter (f2c),
-configure variable @code{F77} is set to a shell script wrapper to
-compile/link FORTRAN 77 code based on f2c which for the purpose of
-Autoconf qualifies as a FORTRAN 77 compiler.  E.g., to check for an
-external BLAS library using the @code{ACX_BLAS} macro from the Official
-Autoconf Macro Archive, one can simply do
+To check for an external BLAS library using the @code{ACX_BLAS} macro
+from the official Autoconf Macro Archive, one can simply do
 
 @example
 @group
@@ -799,7 +800,6 @@ Another example is when a package installs support files that are
 required at run time, and their location is substituted into an @R{}
 data structure at installation time. (This happens with the Java Archive
 files in the @pkg{SJava} package.)
-
 @vindex R_LIBRARY_DIR
 @vindex R_PACKAGE_DIR
 The names of the top-level library directory (i.e., specifiable via the
@@ -868,8 +868,8 @@ may point to an external LAPACK library, or may be empty if an external
 BLAS library also contains LAPACK.
 
 [There is no guarantee that the LAPACK library will provide more than
-all the double-precision and those double-complex driver routines used
-by @R{}, and some do not provide all the auxiliary routines.]
+all the double-precision and double-complex routines, and some do not
+provide all the auxiliary routines.]
 
 The macros @code{BLAS_LIBS} and @code{FLIBS} should always be included
 @emph{after} @code{LAPACK_LIBS}.
@@ -889,7 +889,7 @@ this by running @command{autoconf} in the top-level package directory
 @quotation
 @cartouche
 @smallexample
-AC_INIT([RODBC], 1.1.4) dnl package name, version
+AC_INIT([RODBC], 1.1.5) dnl package name, version
 
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
@@ -1071,6 +1071,10 @@ Available index information (in particular, for demos and vignettes) is
 checked for completeness.
 
 @item
+The package subdirectories are checked for suitable file names and for
+not being empty.
+
+@item
 The R files are checked for syntax errors.
 
 @item
@@ -1202,10 +1206,10 @@ you will need to set it in the environment.
 
 @quotation Note to Windows users
 @code{R CMD check} and @code{R CMD build} work well under Windows
-NT4/2000/XP but may not work correctly on Windows 95/98/ME because of
-problems with some versions of Perl on those limited OSes.  Experiences
-vary.  To use them you will need to have installed the files for
-building source packages (which is the default).
+NT4/2000/XP/2003 but may not work correctly on Windows 95/98/ME because
+of problems with some versions of Perl on those limited OSes.
+Experiences vary.  To use them you will need to have installed the files
+for building source packages (which is the default).
 @end quotation
 
 @node Customizing checking and building,  , Building packages, Checking and building packages
@@ -1271,12 +1275,15 @@ is installed.  Pointers from package help indices to the installed
 documents are automatically created.  Documents in @file{inst/doc} can
 be in arbitrary format, however we strongly recommend to provide them in
 PDF format, such that users on all platforms can easily read them.
+To ensure that they can be accessed from a browser, the file names
+should start with an ASCII letter and be entirely in ASCII letters or
+digits or minus or underscore
 
 A special case are documents in Sweave format, which we call
-@emph{package vignettes}.  Sweave allows to integrate @LaTeX{} documents
-and @R{} code and is contained in package @pkg{utils} which is part of
-the base @R{} distribution, see the @code{Sweave} help page for details
-on the document format.  Package vignettes found in directory
+@emph{package vignettes}.  Sweave allows the integration of @LaTeX{}
+documents and @R{} code and is contained in package @pkg{utils} which is
+part of the base @R{} distribution, see the @code{Sweave} help page for
+details on the document format.  Package vignettes found in directory
 @file{inst/doc} are tested by @code{R CMD check} by executing all @R{}
 code chunks they contain to ensure consistency between code and
 documentation.  Code chunks with option @code{eval=FALSE} are not

@@ -49,6 +49,8 @@
   creating the text, HTML, and LaTeX versions, respectively.  The
   default is to build help files in all three versions.
 
+  \strong{The following mechanism is deprecated:} use the flags such as
+  \code{LazyLoad} and \code{SaveImage} instead.
   If the option \option{--save} is used, the installation procedure
   creates a binary image of the package code, which is then loaded when
   the package is attached, rather than evaluating the package source at
@@ -79,13 +81,15 @@
 \section{Packages using the methods package}{
   Packages that require the methods package, and that use functions such
   as \code{\link{setMethod}} or \code{\link{setClass}},
-  should be installed by creating a binary image.
+  should be installed either (preferably) using lazy-loading or by
+  creating a binary image.
 
+  \strong{The following mechanism is deprecated:} use the flags such as
+  \code{LazyLoad} and \code{SaveImage} instead.
   The presence of a file named
   \file{install.R} in the package's main directory causes an image to
   be saved.  Note that the file is not in the \file{R} subdirectory: all
   the code in that subdirectory is used to construct the binary image.
-
   Normally, the file \file{install.R} will be empty; if it does contain
   R expressions
   these will be evaluated when the package is attached, e.g. by a call to

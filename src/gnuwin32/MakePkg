@@ -138,8 +138,8 @@ $(DPKG)/demo: $(PKGDEMOS)
 ifneq ($(strip $(PKGDEMOS)),)
 	@$(ECHO) "  installing demos"
 	@$(RM) -rf $@
-	@$(MKDIR) -p $@
-	@$(CP) $(PKGDEMOS)   $@
+	@$(ECHO) "tools:::.install_package_demos('.', '"$(DPKG)"')" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE) > /dev/null
 endif
 
 $(DPKG)/exec: $(EXECFILES)
@@ -276,9 +276,8 @@ $(DPKG)/man/$(PKG).Rd.gz: $(MANMAIN) $(MANWIN32)
 ifneq ($(strip $(PKGMANFILES)),)
 	@$(ECHO) "  installing man source files"
 	@$(RM) -rf $(DPKG)/man
-	@$(MKDIR) -p $(DPKG)/man
-	sh $(RHOME)/src/gnuwin32/man-install.sh $(DPKG)/man/$(PKG).Rd '$^'
-	@gzip -9 $(DPKG)/man/$(PKG).Rd
+	@$(ECHO) "tools:::.install_package_man_sources('.', '"$(DPKG)"')" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 else
 	@$(ECHO) "  no man files in this package"
 endif

@@ -4,8 +4,8 @@
 \description{
   \code{package.skeleton} automates some of the setup for a new source
   package.  It creates directories, saves functions and data to
-  appropriate places, and creates skeleton help files and \file{README}
-  files describing further steps in packaging.
+  appropriate places, and creates skeleton help files and
+  \file{Read-and-delete-me} files describing further steps in packaging.
 }
 \usage{
 package.skeleton(name = "anRpackage", list,
@@ -31,6 +31,12 @@ package.skeleton(name = "anRpackage", list,
   preceded by \code{zz}, and finally the converted names are made
   unique by \code{\link{make.unique}(sep = "_")}.  This can be done for
   code and help files but not data files (which are looked for by name).
+  Also, the code and help files should have names starting with an ASCII
+  letter or digit, and this is checked and if necessary \code{z}
+  prepended.
+
+  When you are done, delete the \file{Read-and-delete-me} files, as they
+  should not be distributed.
 }
 
 \references{

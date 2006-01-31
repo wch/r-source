@@ -341,9 +341,13 @@ DEPRECATED & DEFUNCT
 
     o	La.svd(method = "dgesvd") is deprecated.
 
-    o	nlsMethod() is no longer exported from the stats namespace (and
-	nlsMethod.plinear() is no longer registered as a method, as
-	nlsMethod() was not generic).
+    o	nlsMethod() and profiler() are no longer exported from the stats
+	namespace (and nlsMethod.plinear() is no longer registered as
+	a method, as nlsMethod() was not generic).
+
+    o	The use of install.R and R_PROFILE.R files in packages is
+	deprecated: use the DESCRIPTION file instead to arrange to
+	save an image or to load dependent packages.
 
 
 INTERNATIONALIZATION
@@ -477,10 +481,10 @@ UTILITIES
 	contain % .
 
     o	R CMD check now warns about unknown sections in Rd files, and
-	invalid names for help and R files, as well as unlikely file
-	names in the 'src' directory.
+	invalid names for help, demo and R files, as well as unlikely
+	file names in the 'src' directory.
 
-	R CMD build excludes invalid files in the 'man' and 'R'
+	R CMD build excludes invalid files in the 'man', 'R' and 'demo'
 	subdirectories.
 
 
@@ -493,6 +497,10 @@ PACKAGE INSTALLATION
 
     o	There is now some support for Fortran 90/95 code in packages:
 	see `Writing R Extensions'.
+
+    o	Installation of man sources and demos is now done by R code.
+	The restrictions on the names of help files, R files and
+	of demos are now enforced (see `Writing R Extensions').
 
 
 C-LEVEL FACILITIES
@@ -639,9 +647,9 @@ BUG FIXES
 	events {those you are typically *not* interested in}.
 
     o	Only source help files starting with an upper- or lower-case
-	letter and extension .Rd or .rd are documented to be
-	processed.  Starting with a digit is now also allowed, and
-	rule is now enforced.
+	letter or digit and extension .Rd or .rd are documented to be
+	processed.  This is more liberal in that starting with a digit
+	is now also allowed, but rule is now enforced.
 
     o	nls(algorthm="port") was always taking positive numeric
 	differences and so could exceed the upper bounds.
