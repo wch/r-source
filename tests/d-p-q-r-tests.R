@@ -534,4 +534,10 @@ stopifnot(Inf == qgamma(1, sh))
 stopifnot(0   == qgamma(0, sh))
 ## the first gave Inf, NaN, and 99.425 in R 2.1.1 and earlier
 
+f2 <- c(0.5, 1:4)
+stopifnot(df(0, 1, f2) == Inf,
+          df(0, 2, f2) == 1,
+          df(0, 3, f2) == 0)
+## only the last one was ok in R 2.2.1 and earlier
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
