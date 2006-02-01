@@ -69,7 +69,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   defining the incomplete gamma function as \code{pgamma(x, a) * gamma(a)}.
 }
 \source{
-  \code{dgamma} computed via the Poisson density, using code contributed
+  \code{dgamma} is computed via the Poisson density, using code contributed
   by Catherine Loader (see \code{\link{dbinom}}).
   
   Prior to \R 2.1.0 \code{pgamma} used AS239 (Shea, 1988).  It

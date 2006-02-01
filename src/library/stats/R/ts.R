@@ -632,10 +632,15 @@ window.default <- function(x, start = NULL, end = NULL,
         yend <- xtsp[2] + enoff/xfreq
         nold <- round(xfreq*(xtsp[2] - xtsp[1])) + 1
         ## both start and end could be outside time base
-        i0 <- 1+max(0, stoff); i1 <- nold + min(0, enoff)
-        i <- c(rep.int(nold+1, max(0, -stoff)),
-                   if(i0 <= i1) i0:i1,
-                   rep.int(nold+1, max(0, enoff)))
+        ## and indeed the new ad old ranges might not intersect.
+        i <- if(start > xtsp[2]+ts.eps/xfreq || end < xtsp[1] - ts.eps/xfreq)
+            rep(nold+1, floor(1+(end-start)*xfreq + ts.eps))
+        else {
+            i0 <- 1+max(0, stoff); i1 <- nold + min(0, enoff)
+            c(rep.int(nold+1, max(0, -stoff)),
+              if(i0 <= i1) i0:i1,
+              rep.int(nold+1, max(0, enoff)))
+        }
         y <- if(is.matrix(x)) rbind(x, NA)[i, , drop = FALSE] else c(x, NA)[i]
         attr(y, "tsp") <- c(ystart, yend, xfreq)
         if(yfreq != xfreq) y <- Recall(y, frequency = yfreq)

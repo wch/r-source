@@ -664,6 +664,9 @@ BUG FIXES
 	informative message if it cannot open a file rather than the
 	(possibly incorrect) 'NO FILE'.
 
+    o	window() did not allow non-overlapping ranges with
+	extend = TRUE.  (PR#8545)
+
 
 
 

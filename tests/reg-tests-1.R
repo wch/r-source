@@ -4049,3 +4049,9 @@ m
 m[1:2,2:4] <- s
 m
 ## unimplemented before 2.3.0
+
+
+## window with non-overlapping ranges (PR#8545)
+test <- ts(1:144, start=c(1,1), frequency=12)
+window(test, start=c(15,1), end=c(17,1), extend=TRUE)
+## failed < 2.3.0
