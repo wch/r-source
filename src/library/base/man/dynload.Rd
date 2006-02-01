@@ -167,6 +167,10 @@ symbol.For(name)
   Schwarte.  The compatibility code for HP-UX was provided by Luke
   Tierney.
 }
+\section{Warning}{
+  Do not use \code{dyn.unload} on a shared object loaded by
+  \code{\link{library.dynam}}: use \code{\link{library.dynam.unload}}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
