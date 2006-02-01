@@ -55,6 +55,17 @@ rwilcox(nn, m, n)
   \R if the stack limit is exceeded) if and one sample is large
   (several thousands or more).
 }
+\source{
+  These are calculated via recursion, based on \code{cwilcox(k, m, n)},
+  the number of choices with statistic \code{k} from samples of size
+  \code{m} and \code{n}, which is itself calculated recursively and the
+  results cached.  Then \code{dwilcox} and \code{pwilcox} sum
+  appropriate values of \code{cwilcox}, and \code{qwilcox} is based on
+  inversion.
+
+  \code{rwilcox} generates a random permutation of ranks and evaluates
+  the statistic.
+}
 \author{Kurt Hornik}
 \seealso{
   \code{\link{wilcox.test}} to calculate the statistic from data, find p
