@@ -322,9 +322,9 @@ foreach my $pkg (@ARGV) {
 	    my $any;
 	    my $pat = "(a|o|[ls][ao]|sl|obj)"; # Object file extensions.
 	    my @dirs;
-	    if($in_bundle) {
+	    if($is_bundle) {
 		foreach my $ppkg (split(/\s+/,
-					description->{"Contains"})) {
+					$description->{"Contains"})) {
 		    push(@dirs, &file_path($ppkg, "src"));
 		}
 	    }
