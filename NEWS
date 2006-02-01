@@ -664,6 +664,8 @@ BUG FIXES
 	informative message if it cannot open a file rather than the
 	(possibly incorrect) 'NO FILE'.
 
+    o	qcauchy(1) now gives +Inf instead of just a very large number.
+
     o	window() did not allow non-overlapping ranges with
 	extend = TRUE.  (PR#8545)
 
@@ -1656,7 +1658,6 @@ BUG FIXES
     o	R CMD INSTALL was not cleaning up after an unsuccessful
 	install of a non-bundle which was not already installed.
 
-    o	qcauchy(1) now gives +Inf instead of just a very large number.
 
 
 
