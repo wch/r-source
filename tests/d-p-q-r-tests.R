@@ -453,7 +453,7 @@ All.eq(+x, qcauchy(pcauchy(+x, log=TRUE), log=TRUE))
 All.eq(1/x, pcauchy(qcauchy(1/x)))
 All.eq(ex,  pcauchy(qcauchy(ex, log=TRUE), log=TRUE))
 II <- c(-Inf,Inf)
-stopifnot(pcauchy(II) == 0:1, ## qcauchy(0:1) == II,
+stopifnot(pcauchy(II) == 0:1, qcauchy(0:1) == II,
           pcauchy(II, log=TRUE) == c(-Inf,0),
           qcauchy(c(-Inf,0), log=TRUE) == II)
 

@@ -660,7 +660,7 @@ BUG FIXES
     o	.find.package() now reports which package(s) it cannot find in
 	the case it stops with an error.
 
-    o	The standard Unix-alike version of file.show() gives an 
+    o	The standard Unix-alike version of file.show() gives an
 	informative message if it cannot open a file rather than the
 	(possibly incorrect) 'NO FILE'.
 
@@ -710,8 +710,8 @@ BUG FIXES
 	example, pgamma(0.9e100, 1e100) was NaN.  (PR#8528)
 
     o	There was no command 'ls' in browser() nor 'next' in debug(),
-	despite the documentation (which has been corrected).  
-	Command 'where' in the browser() no longer changes to 
+	despite the documentation (which has been corrected).
+	Command 'where' in the browser() no longer changes to
 	step-though mode.
 
 
@@ -1653,6 +1653,7 @@ BUG FIXES
     o	R CMD INSTALL was not cleaning up after an unsuccessful
 	install of a non-bundle which was not already installed.
 
+    o	qcauchy(1) now gives +Inf instead of just a very large number.
 
 
 
