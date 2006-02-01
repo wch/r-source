@@ -477,12 +477,14 @@ UTILITIES
 	are now in exactly the same format.
 
     o	The base name of a help file needs to be valid as part of a file://
-	URL, do R CMD check now checks the names are ASCII and do not
+	URL, so R CMD check now checks the names are ASCII and do not
 	contain % .
 
     o	R CMD check now warns about unknown sections in Rd files, and
 	invalid names for help, demo and R files, as well as unlikely
-	file names in the 'src' directory.
+	file names in the 'src' directory.  The latter is controlled
+	by option --check-subdirs and by default is done if checking a
+	tarball without a configure script.
 
 	R CMD build excludes invalid files in the 'man', 'R' and 'demo'
 	subdirectories.

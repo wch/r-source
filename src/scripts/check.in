@@ -57,17 +57,19 @@ my $opt_use_valgrind = 0;
 my $opt_rcfile = "";		# Only set this if $ENV{"HOME"} is set.
 $opt_rcfile = &file_path($ENV{"HOME"}, ".R", "check.conf")
     if defined($ENV{"HOME"});
+my $opt_subdirs;
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
 R::Vars::error("R_HOME", "R_EXE");
 
 my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
-		    "no-clean", "no-examples", "no-tests", "no-latex",
-		    "use-gct" => \$opt_use_gct, "no-codoc",
-		    "install=s" => \$opt_install, "no-install",
+		     "no-clean", "no-examples", "no-tests", "no-latex",
+		     "use-gct" => \$opt_use_gct, "no-codoc",
+		     "install=s" => \$opt_install, "no-install",
 		     "no-vignettes", "use-valgrind" => \$opt_use_valgrind,
-		     "rcfile=s" => \$opt_rcfile);
+		     "rcfile=s" => \$opt_rcfile,
+		     "check-subdirs=s" => \$opt_subdirs);
 GetOptions(@known_options) or usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
@@ -80,6 +82,7 @@ $opt_latex = 0 if $opt_no_latex;
 $opt_codoc = 0 if $opt_no_codoc;
 $opt_install = 0 if $opt_no_install;
 $opt_vignettes = 0 if $opt_no_vignettes;
+$opt_subdirs = "default" if $opt_subdirs eq "";
 
 if($opt_install eq "fake") {
     ## If we fake installation, then we cannot *run* any code.
@@ -198,6 +201,7 @@ foreach my $pkg (@ARGV) {
     $pkg =~ s+/$++;  # strip any trailing '/'
     my $pkgname = basename($pkg);
 
+    my $thispkg_subdirs = $opt_subdirs;
     ## is this a tar archive?
     my $istar = 0;
     if($pkgname =~ /\.tar\.gz$/ || $pkgname =~ /\.tgz$/) {
@@ -205,6 +209,9 @@ foreach my $pkg (@ARGV) {
 	$pkgname =~ s/\.tgz$//;
 	$pkgname =~ s/_[0-9\.-]*$//;
 	$istar = 1;
+	$thispkg_subdirs = "yes-maybe" if $thispkg_subdirs eq "default";
+    } else {
+	$thispkg_subdirs = "no" if $thispkg_subdirs eq "default";
     }
 
     my $pkgoutdir = &file_path($outdir, "$pkgname.Rcheck");
@@ -234,6 +241,10 @@ foreach my $pkg (@ARGV) {
 	or die "Error: cannot change to directory '$pkg'\n";
     my $pkgdir = R_cwd();
     ## my $pkgname = basename($pkgdir);
+    if($thispkg_subdirs eq "yes-maybe") {
+	## now see if there is a 'configure' file
+	$thispkg_subdirs = "no" if (-f "configure");
+    }
     chdir($startdir);
 
     $log = new R::Logfile(&file_path($pkgoutdir, "00check.log"));
@@ -322,9 +333,9 @@ foreach my $pkg (@ARGV) {
 	    my $any;
 	    my $pat = "(a|o|[ls][ao]|sl|obj)"; # Object file extensions.
 	    my @dirs;
-	    if($in_bundle) {
+	    if($is_bundle) {
 		foreach my $ppkg (split(/\s+/,
-					description->{"Contains"})) {
+					$description->{"Contains"})) {
 		    push(@dirs, &file_path($ppkg, "src"));
 		}
 	    }
@@ -340,6 +351,33 @@ foreach my $pkg (@ARGV) {
 		    $dir = &file_path($pkgname, $dir);
 		    $log->print("Subdirectory '$dir' " .
 				"contains object files.\n");
+		}
+	    }
+
+	    if($thispkg_subdirs ne "no") {
+		foreach my $dir (@dirs) {
+		    if((-d &file_path($pkgdir, $dir))) {
+			chdir(&file_path($pkgdir, $dir));
+			if(!(-f "Makefile") && !(-f "Makefile.win")) {
+			    opendir(DIR, ".") or die "cannot opendir $dir: $!";
+			    @srcfiles = grep { 
+				!(/\.([Ccfh]|cc|cpp|f90|f95)$/
+				  || /^Makevars/ || /-win\.def$/ )
+				    && -f "$_" } readdir(DIR);
+			    closedir(DIR);
+			    if(@srcfiles) {
+				$log->warning() unless $any;
+				$any++;
+				$log->print("Subdirectory '$dir' contains:\n");
+				$log->print(wrap("  ", "  ",
+						 join(" ", sort @srcfiles) . "\n"));
+				$log->print(wrap("", "",
+						 ("These are unlikely file names",
+						  "for src files.\n")));
+			    }
+			}
+			chdir($startdir);
+		    }
 		}
 	    }
 	    $log->result("OK") unless $any;
@@ -539,7 +577,8 @@ foreach my $pkg (@ARGV) {
     else {
 	chdir($startdir);
 	check_pkg($pkgdir, $pkgoutdir, $startdir, $library,
-		  $is_bundle, $description, $log, $is_base_pkg);
+		  $is_bundle, $description, $log, $is_base_pkg, 
+		  $thispkg_subdirs);
     }
 
     if($log->{"warnings"}) {
@@ -554,7 +593,7 @@ foreach my $pkg (@ARGV) {
 sub check_pkg {
 
     my ($pkg, $pkgoutdir, $startdir, $library,
-	$in_bundle, $description, $log, $is_base_pkg) = @_;
+	$in_bundle, $description, $log, $is_base_pkg, $subdirs) = @_;
     my ($pkgdir, $pkgname);
 
     ## $pkg is the argument we received from the main loop.
@@ -887,6 +926,8 @@ sub check_pkg {
 	    $log->print(wrap("", "",
 			     ("These files are deprecated.",
 			      "See manual 'Writing R Extensions'.\n")));
+    } else {
+	$log->result("OK");
     }
 
     ## Check index information.
@@ -982,7 +1023,7 @@ sub check_pkg {
 			      "in manual 'Writing R Extensions'.\n")));
 	}
     }
-    &check_subdirs(".");
+    &check_subdirs(".") unless ($subdirs eq "no");
     if((-d "data") || (-d "demo") || (-d "src") || (-d "inst")) {
 	## Subdirectory 'data' without data sets?
 	if((-d "data") && !&list_files_with_type("data", "data")) {
@@ -1007,22 +1048,6 @@ sub check_pkg {
 		$log->warning() unless $any;
 		$any++;
 		$log->print("Subdirectory 'src' contains no source files.\n");
-	    }
-	    ## We might have installed from this src directory,
-	    ## so it may be dirty.  Hence the long list of allowed things.
-	    ## Shipping .def files is an error unless it is a -win.def file
-	    opendir(DIR, "src") or die "cannot opendir src: $!";
-	    @srcfiles = grep { !(/\.([Ccfh]|cc|cpp|f90|f95|in|d|o|so|a|sl|dylib|dll|rc)(~|\.~[0-9]+~)?$/ || /^Make/ || /-win\.def$/ )
-				   && -f "src/$_" } readdir(DIR);
-	    closedir(DIR);
-	    if(@srcfiles) {
-		$log->warning() unless $any;
-		$any++;
-		$log->print("Subdirectory 'src' contains suspect file names:\n");
-		$log->print("  " . join("\n  ", @srcfiles) . "\n");
-		$log->print(wrap("", "",
-				 ("These are unlikely file names",
-				  "for src files.\n")));
 	    }
 	}
 	## Do subdirectories of 'inst' interfere with R package system
@@ -1977,6 +2002,9 @@ Options:
       --no-latex        do not run LaTeX on help files
       --use-gct         use 'gctorture(TRUE)' when running examples/tests
       --use-valgrind    use 'valgrind' when running examples/tests/vignettes
+      --check-subdirs=default|yes|no
+                        run checks on the package subdirectories
+			(default is yes for a tarball, no otherwise)
       --rcfile=FILE     read configuration values from FILE
 
 By default, all test sections are turned on.
