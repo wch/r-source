@@ -60,6 +60,16 @@ rf(n, df1, df2)
   the means.  See \code{\link{Chisquare}} for further details on
   non-central distributions.  
 }
+\source{
+  For \code{df}, computed via a binomial probability, code contributed by
+  Catherine Loader (see \code{\link{dbinom}}).
+
+  For \code{pf}, via \code{\link{pbeta}} (or for large \code{df2}, via
+  \code{\link{pchisq}}).
+  
+  For \code{qf}, via \code{\link{qchisq}} for large \code{df2}, else via
+  \code{\link{qbeta}}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

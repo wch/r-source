@@ -61,6 +61,19 @@ rchisq(n, df, ncp=0)
   non-integer, and for non-centrality \eqn{\lambda > 0}, even \eqn{n = 0};
   see Johnson, Kotz and Balakrishnan (1995, chapter 29).
 }
+\source{
+  The central cases are computed via the gamma distribution.
+
+  The non-central \code{dchisq} is computed from a Poisson series.
+
+  The non-central \code{pchisq} is based on a C translation of
+
+  Ding, C. G. (1992)
+  Algorithm AS275: Computing the non-central chi-squared
+  distribution function. \emph{Appl.Statist.}, \bold{41} 478--482.
+
+  The non-central \code{qchisq} is based on inversion of \code{pchisq}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

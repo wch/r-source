@@ -30,7 +30,7 @@
  *
  *	Kachitvichyanukul, V. and Schmeiser, B. W. (1988).
  *	Binomial random variate generation.
- *	Communications of the ACM 31, p216.
+ *	Communications of the ACM 31, 216-222.
  *	(Algorithm BTPEC).
  */
 

@@ -43,6 +43,17 @@ rgeom(n, prob)
   The quantile is defined as the smallest value \eqn{x} such that
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 }
+\source{
+  \code{dgeom} computes via \code{dbinom}, using code contributed by
+  Catherine Loader (see \code{\link{dbinom}}).
+
+  \code{pgeom} and \code{qgeom} are based on the closed-form formulae.
+  
+  \code{rgeom} uses the derivation as an exponential mixture of Poissons, see
+
+  Devroye, L. (1986) \emph{Non-Uniform Random Variate Generation.}
+  Springer-Verlag, New York. Page 480.
+}
 \seealso{
   \code{\link{dnbinom}} for the negative binomial which generalizes
   the geometric distribution.

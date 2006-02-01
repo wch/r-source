@@ -6,7 +6,12 @@
  *
  *  Computes the noncentral chi-squared distribution function with
  *  positive real degrees of freedom f and nonnegative noncentrality
- *  parameter theta
+ *  parameter theta.
+ *
+ *    Ding, C. G. (1992)
+ *    Algorithm AS275: Computing the non-central chi-squared
+ *    distribution function. Appl.Statist., 41, 478-482.
+
  */
 
 #include "nmath.h"

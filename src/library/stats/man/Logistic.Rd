@@ -60,6 +60,11 @@ rlogis(n, location = 0, scale = 1)
   \code{plogis(x) == (1+ \link{tanh}(x/2))/2}, and it is called
   \emph{sigmoid function} in contexts such as neural networks.
 }
+\source{
+  \code{[dpr]logis} are calculated directly from the definitions.
+  
+  \code{rlogis} uses inversion.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

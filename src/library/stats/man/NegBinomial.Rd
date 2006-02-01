@@ -67,6 +67,20 @@ rnbinom(n, size, prob, mu)
   The quantile is defined as the smallest value \eqn{x} such that
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 }
+\source{
+  \code{dnbinom} computes via binomial probabilities, using code
+  contributed by Catherine Loader (see \code{\link{dbinom}}).
+
+  \code{pnbinom} uses \code{\link{pbeta}}.
+
+  \code{qnbinom} uses the Cornish--Fisher Expansion to include a skewness
+  correction to a normal approximation, followed by a search.
+
+  \code{rnbinom} uses the derivation as a gamma mixture of Poissons, see
+
+  Devroye, L. (1986) \emph{Non-Uniform Random Variate Generation.}
+  Springer-Verlag, New York. Page 480.
+}
 \seealso{
   \code{\link{dbinom}} for the binomial, \code{\link{dpois}} for the
   Poisson and \code{\link{dgeom}} for the geometric distribution, which

@@ -53,6 +53,44 @@ rbeta(n, shape1, shape2)
 
   \eqn{I_x(a,b)} is \code{pbeta(x,a,b)}.
 }
+\source{
+  The central \code{dbeta} is based on a binomial probabilty, code
+  contributed by Catherine Loader (see \code{\link{dbinom}}).
+  The non-central case is based on the definition as a Poisson
+  mixture of betas.
+
+  The central \code{pbeta} uses a C translation of a Fortran subroutine
+  by W. Fullerton of Los Alamos Scientific Laboratory. for small (less
+  than 15) shape parameters, otherwise
+
+  Didonato, A. and Morris, A., Jr, (1992)
+  Algorithm 708: Significant digit computation of the incomplete beta
+  function ratios,
+  \emph{ACM Transactions on Mathematical Software}, \bold{18}, 360--373.
+  (See also\crBrown, B. and Lawrence Levy, L. (1994)
+  Certification of algorithm 708: Significant digit computation of the
+  incomplete beta,
+  \emph{ACM Transactions on Mathematical Software}, \bold{20}, 393--397.)
+
+  The non-central \code{pbeta} uses a C translation of
+  
+  Lenth, R. V. (1987) Algorithm AS226: Computing noncentral beta
+  probabilities. \emph{Appl. Statist}, \bold{36}, 241--244,\cr
+incorporating AS R84 (1990), \emph{Appl. Statist}, \bold{39}, 311--2.
+  
+  \code{qbeta} is based on a C translation of
+
+  Cran, G. W., K. J. Martin and G. E. Thomas (1977).
+  Remark AS R19 and Algorithm AS 109,
+  \emph{Applied Statistics},  \bold{26}, 111--114,
+  and subsequent remarks (AS83 and correction).
+
+  \code{rbeta} is based on a C translation of
+
+  R. C. H. Cheng (1978).
+  Generating beta variates with nonintegral shape parameters.
+  \emph{Communications of the ACM}, \bold{21}, 317--322.  
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

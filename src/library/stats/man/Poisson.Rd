@@ -51,6 +51,21 @@ rpois(n, lambda)
   results when the default, \code{lower.tail = TRUE} would return 1, see
   the example below.
 }
+\source{
+  \code{dpois} uses C code contributed by Catherine Loader
+  (see \code{\link{dbinom}}).
+
+  \code{ppois} uses \code{pgamma}.
+
+  \code{qpois} uses the Cornish--Fisher Expansion to include a skewness
+  correction to a normal approximation, followed by a search.
+
+  \code{rpois} uses
+
+   Ahrens, J.H. and Dieter, U. (1982).
+   Computer generation of Poisson deviates from modified normal distributions.
+   \emph{ACM Transactions on Mathematical Software}, \bold{8}, 163--179.
+}
 \seealso{
   \code{\link{dbinom}} for the binomial and \code{\link{dnbinom}} for
   the negative binomial distribution.
