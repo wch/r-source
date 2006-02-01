@@ -721,6 +721,9 @@ BUG FIXES
 	Command 'where' in the browser() no longer changes to
 	step-though mode.
 
+    o	qcauchy(1) now gives +Inf instead of just a very large number.
+
+    o	df(0, f1, *) now properly returns Inf, 1, or 0 for f1 < , = , or > 2.
 
 
 
@@ -1659,7 +1662,6 @@ BUG FIXES
 
     o	R CMD INSTALL was not cleaning up after an unsuccessful
 	install of a non-bundle which was not already installed.
-
 
 
 
