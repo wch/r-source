@@ -82,7 +82,6 @@ $opt_latex = 0 if $opt_no_latex;
 $opt_codoc = 0 if $opt_no_codoc;
 $opt_install = 0 if $opt_no_install;
 $opt_vignettes = 0 if $opt_no_vignettes;
-$opt_subdirs = "default" if $opt_subdirs eq "";
 
 if($opt_install eq "fake") {
     ## If we fake installation, then we cannot *run* any code.
@@ -110,6 +109,8 @@ my $R_check_all_non_ISO_C =
     &R_getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE");
 my $R_check_weave_vignettes =
     &R_getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE");
+my $R_check_subdirs_strict =
+    &R_getenv("_R_CHECK_SUBDIRS_STRICT_", "default");
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
@@ -142,6 +143,8 @@ $R_check_all_non_ISO_C =
     &config_val_to_logical($R_check_all_non_ISO_C);
 $R_check_weave_vignettes =
     &config_val_to_logical($R_check_weave_vignettes);
+
+$opt_subdirs = $R_check_subdirs_strict if $opt_subdirs eq "";
 
 my $startdir = R_cwd();
 $opt_outdir = $startdir unless $opt_outdir;
