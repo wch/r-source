@@ -235,7 +235,7 @@ libRblas.dll.a:  Rblas.def
 
 ## suppress lots of warnings: this is a dummy
 blas00.o: blas00.c
-	$(CC) -O2  -c $< -o $@
+	$(CC) -O3  -c $< -o $@
 blas.o: ../appl/blas.f
 	$(F77) $(FFLAGS) -c $< -o $@
 cmplxblas.o: ../appl/cmplxblas.f
