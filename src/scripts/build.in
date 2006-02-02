@@ -245,15 +245,15 @@ foreach my $pkg (@ARGV) {
     unlink($exclude);
     unlink($origfilepath);
     ## Fix up man, R and demo directories (in each package for a bundle)
-    sub find_invalid_files{
+    sub find_invalid_files {
 	my ($dpath) = @_;
 	my $Rcmd = "tools:::.check_package_subdirs(\"$dpath\", TRUE)\n";
 	my @out = R_runR($Rcmd, "--vanilla --slave",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
-	    $log->message("Excluding invalid files from '$dpath'\n" .
-			  join("\n", @out));
+	    $log->message("excluding invalid files from '$dpath'");
+	    $log->print(join("\n", @out) . "\n");
 	}
     }
     if($is_bundle) {
@@ -299,9 +299,9 @@ foreach my $pkg (@ARGV) {
 	    my @files = readdir(DIR);
 	    closedir(DIR);
 	    if (@files <= 2) {
-		print "WARNING: directory $File::Find::name is empty\n";
+		$log->print("WARNING: directory $File::Find::name is empty\n");
 		if($File::Find::name =~ m+^$pkgname(/|\\)(help|html|latex|libs)$+) {
-		    print "  A directory named '$_' should only occur in an installed package\n";
+		    $log->print("  A directory named '$_' should only occur in an installed package\n");
 		}
 	    }
 	}
@@ -621,7 +621,7 @@ sub fix_CRLF_in_source_files {
 	    }
 	    close(TFILE); close(FILE);
 	    if ($has_CRLF) {
-		print("    file '$file' had CRLF line endings\n");
+		$log->print("    file '$file' had CRLF line endings\n");
 		unlink($file); # should not be necessary, but is on Windows
 		rename("$file.tmp", $file)
 		    or die "Error: cannot rename '$file.tmp'\n";
