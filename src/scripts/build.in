@@ -299,17 +299,39 @@ foreach my $pkg (@ARGV) {
 	    my @files = readdir(DIR);
 	    closedir(DIR);
 	    if (@files <= 2) {
-		$log->print("WARNING: directory $File::Find::name is empty\n");
-		if($File::Find::name =~ m+^$pkgname(/|\\)(help|html|latex|libs)$+) {
-		    $log->print("  A directory named '$_' should only occur in an installed package\n");
-		}
+		$log->print("WARNING: directory '$File::Find::name' is empty\n");
 	    }
 	}
     }
 
-    $log->message("checking for empty directories");
+    $log->message("checking for empty or unneeded directories");
     find(\&empty_dir_check, "${pkgname}");
 
+    sub fix_unneeded_dirs {
+	my ($path) = @_;
+	my $dir;
+	foreach my $system_dir ("Meta", "R-ex", "chtml",
+		       "help", "html", "latex") {
+	    $dir = &file_path($path, $system_dir);
+	    if(-d "$dir") {
+		$log->print(wrap("", "  ",
+				 ("WARNING: Removing directory '$dir'",
+				  "which should only occur",
+				  "in an installed package\n")
+				 ));
+		rmtree("$dir");
+	    }
+	}
+    }
+
+    if($is_bundle) {
+	foreach my $ppkg (@bundlepkgs) {
+	    &fix_unneeded_dirs(&file_path($pkgname, $ppkg));
+	}
+    } else {
+	&fix_unneeded_dirs($pkgname);
+    }
+    
     ## Finalize.
     if($opt_binary) {
 	$log->message("building binary distribution");
@@ -525,7 +547,7 @@ sub cleanup_pkg {
 	    }
 	}
     }
-    
+
     chdir($pkgdir);
     if(!$WINDOWS && -x "./cleanup") {
 	$log->message("running cleanup");
