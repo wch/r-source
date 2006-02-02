@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000-5  R Development Core Team
+# Copyright (C) 2000-6  R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -114,6 +114,13 @@ if($BUILD eq "CROSS") {
     die "Error: Environment variable R_VERSION not found\n";
 }
 ## ===== end =====
+
+print "\n*** Option --save is deprecated\n" if $opt_save;
+print "\n*** Option --no-save is deprecated\n" if $opt_no_save;
+print "\n*** Option --lazy is deprecated\n" if $opt_lazy;
+print "\n*** Option --no-lazy is deprecated\n" if $opt_no_lazy;
+print "\n*** Option --lazy-data is deprecated\n" if $opt_lazy_data;
+print "\n*** Option --no-lazy-data is deprecated\n" if $opt_no_lazy_data;
 
 if($opt_debug) {
     print "\nOption -d or --debug is accepted for compatibility with Unix.\n";
@@ -492,14 +499,6 @@ Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
   -c, --clean		remove all files created during installation
-  -s, --save            save the package source as an image file, and arrange for
-                        this file to be loaded when the library is attached.
-  --no-save             do not save the package source as an image file.
-
-  --lazy                use lazy loading
-  --no-lazy             do not use lazy loading
-  --lazy-data           use lazy loading for data
-  --no-lazy-data        do not use lazy loading for data (current default)
 
   --fake		do minimal install for testing purposes
   --unsafe		install on top of any existing installation
@@ -514,9 +513,20 @@ Options:
   --auto-zip	        select whether to zip automatically
   --build		zip-up the installation.  Implies --auto-zip
 
+
 TYPE can be "none" or "normal" or "chm" (the default) or "all", or
   a comma-separated list of one or more of 
   'txt', 'html', 'latex', "example' and 'chm'.
+
+Deprecated options:
+  -s, --save            save the package source as an image file, and arrange for
+                        this file to be loaded when the library is attached.
+  --no-save             do not save the package source as an image file.
+
+  --lazy                use lazy loading
+  --no-lazy             do not use lazy loading
+  --lazy-data           use lazy loading for data
+  --no-lazy-data        do not use lazy loading for data (current default)
 
 Report bugs to <r-bugs\@r-project.org>.
 END

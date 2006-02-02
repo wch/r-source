@@ -349,6 +349,10 @@ DEPRECATED & DEFUNCT
 	deprecated: use the DESCRIPTION file instead to arrange to
 	save an image or to load dependent packages.
 
+	The following ommand-line options to INSTALL are deprecated
+	(use the fields in the DESCRIPTION file instead):
+	-s --save --no-save --lazy --no-lazy --lazy-data --no-lazy-data
+
 
 INTERNATIONALIZATION
 
