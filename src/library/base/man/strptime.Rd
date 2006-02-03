@@ -174,8 +174,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   International Organization for Standardization (1988, 1997, \dots)
   \emph{ISO 8601. Data elements and interchange formats --
     Information interchange -- Representation of dates and times.}
-  The 1997 version is available on-line at
-  \url{ftp://ftp.qsl.net/pub/g1smd/8601v03.pdf}
+  For links to versions available on-line see (at the time of writing)
+  \url{http://www.qsl.net/g1smd/isopdf.htm}
 }
 \seealso{
   \link{DateTimeClasses} for details of the date-time classes;
