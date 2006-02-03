@@ -253,7 +253,7 @@ foreach my $pkg (@ARGV) {
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    $log->message("excluding invalid files from '$dpath'");
-	    $log->print(join("\n", @out) . "\n");
+	    $log->print(join("\n", @out));
 	}
     }
     if($is_bundle) {
