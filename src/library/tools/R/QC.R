@@ -3417,10 +3417,22 @@ function(x)
 
 .check_package_subdirs <- function(dir, doDelete = FALSE)
 {
+    OS_subdirs <- c("unix", "windows")    
+
     mydir <- function(dir)
     {
-        d <- list.files(dir, all.files=TRUE, full.names=FALSE)
+        d <- list.files(dir, all.files = TRUE, full.names = FALSE)
         if(!length(d)) return(d)
+        if(basename(dir) %in% c("R", "man"))
+            for(os in OS_subdirs) {
+                os_dir <- file.path(dir, os)
+                if(file_test("-d", os_dir))
+                    d <- c(d,
+                           file.path(os,
+                                     list.files(os_dir,
+                                                all.files = TRUE,
+                                                full.names = FALSE)))
+            }
         d[sapply(file.path(dir, d), function(x) file_test("-f", x))]
     }
 
@@ -3431,22 +3443,15 @@ function(x)
 
     wrong_things <- list(R = character(0), man = character(0),
                          demo = character(0), `inst/doc` = character(0))
+    
     code_dir <- file.path(dir, "R")
     if(file_test("-d", code_dir)) {
         all_files <- mydir(code_dir)
         R_files <- c("sysdata.rda",
-                     list_files_with_type(code_dir, "code", full.names = FALSE))
-        wrong <- all_files[!all_files %in% R_files]
-        for(subd in c("unix", "windows")) {
-            subdir <- file.path(dir, subd)
-            if(file_test("-d", subdir)) {
-                all_files <- mydir(subdir)
-                R_files <- list_files_with_type(subdir, "code",
-                                                full.names = FALSE)
-                wrong <- c(wrong,
-                           file.path(subd, all_files[!all_files %in% R_files]))
-            }
-        }
+                     list_files_with_type(code_dir, "code",
+                                          full.names = FALSE,
+                                          OS_subdirs = OS_subdirs))
+        wrong <- all_files %w/o% R_files
         ## now configure might generate files in this directory
         generated <- grep("\\.in$", wrong)
         if(length(generated)) wrong <- wrong[-generated]
@@ -3459,18 +3464,10 @@ function(x)
     man_dir <- file.path(dir, "man")
     if(file_test("-d", man_dir)) {
         all_files <- mydir(man_dir)
-        man_files <- list_files_with_type(man_dir, "docs", full.names = FALSE)
-        wrong <- all_files[!all_files %in% man_files]
-        for(subd in c("unix", "windows")) {
-            subdir <- file.path(dir, subd)
-            if(file_test("-d", subdir)) {
-                all_files <- mydir(subdir)
-                man_files <- list_files_with_type(subdir, "docs",
-                                                  full.names = FALSE)
-                wrong <- c(wrong,
-                           file.path(subd, all_files[!all_files %in% man_files]))
-            }
-        }
+        man_files <- list_files_with_type(man_dir, "docs",
+                                          full.names = FALSE,
+                                          OS_subdirs = OS_subdirs)
+        wrong <- all_files %w/o% man_files
         if(length(wrong)) {
             wrong_things$man <- wrong
             if(doDelete) unlink(file.path(dir, "man", wrong))
@@ -3480,8 +3477,9 @@ function(x)
     demo_dir <- file.path(dir, "demo")
     if(file_test("-d", demo_dir)) {
         all_files <- mydir(demo_dir)
-        demo_files <- list_files_with_type(demo_dir, "demo", full.names = FALSE)
-        wrong <- all_files[!all_files %in% c("00Index", demo_files)]
+        demo_files <- list_files_with_type(demo_dir, "demo",
+                                           full.names = FALSE)
+        wrong <- all_files %w/o% c("00Index", demo_files)
         if(length(wrong)) {
             wrong_things$demo <- wrong
             if(doDelete) unlink(file.path(dir, "demo", wrong))
@@ -3493,8 +3491,10 @@ function(x)
         vignettes <- list_files_with_type(vign_dir, "vignette",
                                           full.names = FALSE)
         vignettes <- c(vignettes,
-                       list_files_with_exts(vign_dir, "pdf", full.names = FALSE))
-        ## Assume here this is run in the C locale, as it is by R CMD check.
+                       list_files_with_exts(vign_dir, "pdf",
+                                            full.names = FALSE))
+        ## Assume here this is run in the C locale, as it is by R CMD
+        ## check. 
         OK <- grep("^[[:alpha:]][[:alnum:]._-]+$", vignettes)
         wrong <- vignettes
         if(length(OK)) wrong <- wrong[-OK]
