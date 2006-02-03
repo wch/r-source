@@ -4372,12 +4372,12 @@ visualization of chromatographically separated mass spectral data.
 @node Other add-on packages,  , Add-on packages from Bioconductor, Which add-on packages exist for R?
 @subsection Other add-on packages
 
-@email{jlindsey@@luc.ac.be, Jim Lindsey} has written a collection of R
-packages for nonlinear regression and repeated measurements, consisting
-of @strong{event} (event history procedures and models), @strong{gnlm}
-(generalized nonlinear regression models), @strong{growth} (multivariate
-normal and elliptically-contoured repeated measurements models),
-@strong{repeated} (non-normal repeated measurements models),
+@email{jlindsey@@gen.unimaas.nl, Jim Lindsey} has written a collection
+of R packages for nonlinear regression and repeated measurements,
+consisting of @strong{event} (event history procedures and models),
+@strong{gnlm} (generalized nonlinear regression models), @strong{growth}
+(multivariate normal and elliptically-contoured repeated measurements
+models), @strong{repeated} (non-normal repeated measurements models),
 @strong{rmutil} (utilities for nonlinear regression and repeated
 measurements), and @strong{stable} (probability functions and
 generalized regression models for stable distributions).  All analyses
@@ -4385,7 +4385,7 @@ in the new edition of his book ``Models for Repeated Measurements''
 (1999, Oxford University Press) were carried out using these packages.
 Jim has also started @strong{dna}, a package with procedures for the
 analysis of DNA sequences.  Jim's packages can be obtained from
-@url{http://www.luc.ac.be/~jlindsey/rcode.html}.
+@url{http://popgen.unimaas.nl/~jlindsey/rcode.html}.
 
 More code has been posted to the R-help mailing list, and can be
 obtained from the mailing list archive.
