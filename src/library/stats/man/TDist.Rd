@@ -57,7 +57,7 @@ rt(n, df)
   variables, \eqn{U \sim {\cal N}(0,1)}{U \~ N(0,1)}, and
 %%fails  \eqn{{\chi_{\nu}}^2}{(Chi(df))^2}
   \eqn{\chi^2_\nu}{Chi(df)^2}
-  is chi-squared, see \code{\link{pchisq}}.
+  is chi-squared, see \link{Chisquare}.
 
   The most used applications are power calculations for \eqn{t}-tests:\cr
   Let \eqn{T= \frac{\bar{X} - \mu_0}{S/\sqrt{n}}}{T= (mX - m0) / (S/sqrt(n))}
@@ -77,7 +77,7 @@ rt(n, df)
   
   For the non-central case of \code{dt}, contributed by
   Claus \enc{Ekstrøm}{Ekstroem} based on the relationship (for
-  \eqn{x \neq 0}{x != 0}) to the cumulative distribution).
+  \eqn{x \neq 0}{x != 0}) to the cumulative distribution.
   
   For the central case of \code{pt}, a normal approximation in the
   tails, otherwise via \code{\link{pbeta}}.
@@ -86,22 +86,26 @@ rt(n, df)
 
   Lenth, R. V. (1989). \emph{Algorithm AS 243} ---
   Cumulative distribution function of the non-central \eqn{t} distribution,
-  \emph{Appl.\ Statist.} \bold{38}, 185--189.
+  \emph{Applied Statistics} \bold{38}, 185--189.
 
   For \code{qt}, a C translation of
 
   Hill, G. W. (1970) Algorithm 396: Student's t-quantiles.
-  Communications of the ACM, \bold{13(10)}, 619--620.
+  \emph{Communications of the ACM}, \bold{13(10)}, 619--620.
 
   altered to take account of
 
-  Hill, G. W (1981) Remark on Algorithm 396, ACM Transactions on
-  Mathematical Software, \bold{7}, 250--1
+  Hill, G. W (1981) Remark on Algorithm 396, \emph{ACM Transactions on
+  Mathematical Software}, \bold{7}, 250--1
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole. (except non-central versions.)
+
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 2, chapters 28 and 31.
+  Wiley, New York.
 }
 \seealso{\code{\link{df}} for the F distribution.}
 \examples{
@@ -115,9 +119,7 @@ image(tt,ncp,ptn, zlim=c(0,1),main=t.tit <- "Non-central t - Probabilities")
 persp(tt,ncp,ptn, zlim=0:1, r=2, phi=20, theta=200, main=t.tit,
       xlab = "t", ylab = "noncentrality parameter", zlab = "Pr(T <= t)")
 
-op <- par(yaxs="i")
 plot(function(x) dt(x, df = 3, ncp = 2), -3, 11, ylim = c(0, 0.32),
-     main="Non-central t - Density")
-par(op)
+     main="Non-central t - Density", yaxs="i")
 }
 \keyword{distribution}

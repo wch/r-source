@@ -52,16 +52,21 @@ rbeta(n, shape1, shape2)
   \eqn{B(a,b) = B_1(a,b)} is the Beta function (\code{\link{beta}}).
 
   \eqn{I_x(a,b)} is \code{pbeta(x,a,b)}.
+
+  The non-central Beta distribution is defined (Johnson et al, 1995,
+  pp. 502) as the distribution of \eqn{X/(X+Y)} where
+  \eqn{X \sim \chi^2_{2a}(\lambda)}{X ~ chi^2_2a(lambda)} and
+  \eqn{Y \sim \chi^2_{2b}}{Y ~ chi^2_2b}.
 }
 \source{
-  The central \code{dbeta} is based on a binomial probabilty, code
+  The central \code{dbeta} is based on a binomial probability, using code
   contributed by Catherine Loader (see \code{\link{dbinom}}).
-  The non-central case is based on the definition as a Poisson
-  mixture of betas.
+  The non-central case is based on the derivation as a Poisson
+  mixture of betas (Johnson et al, 1995, pp. 502--3).
 
   The central \code{pbeta} uses a C translation of a Fortran subroutine
-  by W. Fullerton of Los Alamos Scientific Laboratory. for small (less
-  than 15) shape parameters, otherwise
+  by W. Fullerton of Los Alamos Scientific Laboratory for
+  \code{shape <= 15}, otherwise
 
   Didonato, A. and Morris, A., Jr, (1992)
   Algorithm 708: Significant digit computation of the incomplete beta
@@ -99,6 +104,10 @@ incorporating AS R84 (1990), \emph{Appl. Statist}, \bold{39}, 311--2.
   Abramowitz, M. and Stegun, I. A. (1972)
   \emph{Handbook of Mathematical Functions.} New York: Dover.
   Chapter 6: Gamma and Related Functions.
+
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 2, especially
+  chapter 25. Wiley, New York.
 }
 \seealso{
   \code{\link{beta}} for the Beta function, and \code{\link{dgamma}} for
