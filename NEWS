@@ -303,6 +303,8 @@ NEW FEATURES
     o	[rc]bind and some more cases of subassignment are implemented
 	for raw matrices.  (PR8529 and 8530)
 
+    o	rbeta(), rf() and rt() now have a non-centrality parameter.
+
 
 DEPRECATED & DEFUNCT
 
