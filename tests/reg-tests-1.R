@@ -4055,3 +4055,9 @@ m
 test <- ts(1:144, start=c(1,1), frequency=12)
 window(test, start=c(15,1), end=c(17,1), extend=TRUE)
 ## failed < 2.3.0
+
+
+## pbinom(size=0) gave NaN (PR#8560)
+x <- c(-1,0,1,2)
+stopifnot(identical(pbinom(x, size = 0, p = 0.5), c(0,1,1,1)))
+## 2.2.1 gave NaN in all cases (forced explicitly in C code).

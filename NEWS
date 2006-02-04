@@ -681,6 +681,8 @@ BUG FIXES
     o	window() did not allow non-overlapping ranges with
 	extend = TRUE.  (PR#8545)
 
+    o	pbinom(size=0) now returns correct values (not NaN).  (PR#8560)
+
 
 
 
