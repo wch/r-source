@@ -102,7 +102,9 @@ has been withdrawn.
 The assembler exponentiation code has been updated to that from glibc 2.3.6.
 
 The import libraries libR.a, libRblas.a, libRlapack.a and libproxy.a
-are no longer used, as we now link directly to the corresponding DLL.
+are no longer used, as we now link directly to the corresponding DLL
+(except that a local version of libRblas.a is needed to build R.dll,
+since R.dll and Rblas.dll are mutually dependent).
 
 Import libraries are now made by default without -k (--kill-at).  This
 might be relevant for contributed software using R's macros.
