@@ -12,10 +12,10 @@
   (and optional noncentrality parameter \code{ncp}).
 }
 \usage{
-dt(x, df, ncp=0, log = FALSE)
-pt(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE)
-qt(p, df,        lower.tail = TRUE, log.p = FALSE)
-rt(n, df)
+dt(x, df, ncp = 0, log = FALSE)
+pt(q, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
+qt(p, df,          lower.tail = TRUE, log.p = FALSE)
+rt(n, df, ncp = 0)
 }
 \arguments{
   \item{x, q}{vector of quantiles.}
@@ -73,7 +73,7 @@ rt(n, df)
 }
 \source{
   The central \code{dt} is computed via an accurate formula
-  provided by Catherine Loader (see \code{\link{dbinom}}).
+  provided by Catherine Loader (see the reference in \code{\link{dbinom}}).
   
   For the non-central case of \code{dt}, contributed by
   Claus \enc{Ekstrøm}{Ekstroem} based on the relationship (for
@@ -95,13 +95,13 @@ rt(n, df)
 
   altered to take account of
 
-  Hill, G. W (1981) Remark on Algorithm 396, \emph{ACM Transactions on
+  Hill, G. W. (1981) Remark on Algorithm 396, \emph{ACM Transactions on
   Mathematical Software}, \bold{7}, 250--1
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole. (except non-central versions.)
+  Wadsworth \& Brooks/Cole. (Except non-central versions.)
 
   Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
   \emph{Continuous Univariate Distributions}, volume 2, chapters 28 and 31.

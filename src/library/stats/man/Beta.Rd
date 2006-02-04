@@ -12,10 +12,10 @@
   \code{shape2} (and optional non-centrality parameter \code{ncp}).
 }
 \usage{
-dbeta(x, shape1, shape2, ncp=0, log = FALSE)
-pbeta(q, shape1, shape2, ncp=0, lower.tail = TRUE, log.p = FALSE)
-qbeta(p, shape1, shape2,        lower.tail = TRUE, log.p = FALSE)
-rbeta(n, shape1, shape2)
+dbeta(x, shape1, shape2, ncp = 0, log = FALSE)
+pbeta(q, shape1, shape2, ncp = 0, lower.tail = TRUE, log.p = FALSE)
+qbeta(p, shape1, shape2,          lower.tail = TRUE, log.p = FALSE)
+rbeta(n, shape1, shape2, ncp = 0)
 }
 \arguments{
   \item{x, q}{vector of quantiles.}

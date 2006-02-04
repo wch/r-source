@@ -77,7 +77,13 @@ pbeta <- function(q, shape1, shape2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
 }
 qbeta <- function(p, shape1, shape2, lower.tail = TRUE, log.p = FALSE)
     .Internal(qbeta(p, shape1, shape2, lower.tail, log.p))
-rbeta <- function(n, shape1, shape2) .Internal(rbeta(n, shape1, shape2))
+rbeta <- function(n, shape1, shape2, ncp = 0) {
+    if(ncp == 0) .Internal(rbeta(n, shape1, shape2))
+    else {
+        X <- rchisq(n, 2*shape1, ncp =ncp)
+        X/(X + rchisq(n, 2*shape2))
+    }
+}
 
 dbinom <- function(x, size, prob, log = FALSE)
     .Internal(dbinom(x, size, prob, log))
@@ -142,7 +148,11 @@ pf <- function(q, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
 }
 qf <- function(p, df1, df2, lower.tail = TRUE, log.p = FALSE)
     .Internal(qf(p, df1, df2, lower.tail, log.p))
-rf <- function(n, df1, df2) .Internal(rf(n, df1, df2))
+rf <- function(n, df1, df2, ncp = 0)
+{
+    if(ncp == 0) .Internal(rf(n, df1, df2))
+    else rchisq(n, df1, ncp=ncp)/rchiqs(n, df2)
+}
 
 dgeom <- function(x, prob, log = FALSE) .Internal(dgeom(x, prob, log))
 pgeom <- function(q, prob, lower.tail = TRUE, log.p = FALSE)
@@ -213,7 +223,10 @@ pt <- function(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE) {
 }
 qt <- function(p, df, lower.tail = TRUE, log.p = FALSE)
     .Internal(qt(p, df, lower.tail, log.p))
-rt <- function(n, df) .Internal(rt(n, df))
+rt <- function(n, df, ncp = 0) {
+    if(ncp == 0) .Internal(rt(n, df))
+    else rnorm(n, ncp)/(rchisp(n, df)/sqrt(df))
+}
 
 ptukey <- function(q, nmeans, df, nranges=1, lower.tail = TRUE, log.p = FALSE)
     .Internal(ptukey(q, nranges, nmeans, df, lower.tail, log.p))

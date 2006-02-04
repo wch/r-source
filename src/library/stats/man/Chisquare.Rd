@@ -64,8 +64,8 @@ rchisq(n, df, ncp=0)
 \source{
   The central cases are computed via the gamma distribution.
 
-  The non-central \code{dchisq} is computed as a Poisson mixture
-  (Johnson et al, 1995, p.436).
+  The non-central \code{dchisq} and \code{rchisq} are computed as a
+  Poisson mixture (Johnson et al, 1995, p.436).
 
   The non-central \code{pchisq} is based on a C translation of
 
