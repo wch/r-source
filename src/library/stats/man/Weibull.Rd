@@ -53,9 +53,13 @@ rweibull(n, shape, scale = 1)
   \code{[dpq]weibull} are calculated directly from the definitions.
   \code{rweibull} uses inversion.
 }
+\references{
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 1, chapter 21.
+  Wiley, New York.
+}
 \seealso{
-  \code{\link{dexp}} for the Exponential which is a special case of a
-  Weibull distribution.
+  The \link{Exponential} is a special case of the Weibull distribution.
 }
 \examples{
 x <- c(0,rlnorm(50))

@@ -69,6 +69,10 @@ rlogis(n, location = 0, scale = 1)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 2, chapter 23.
+  Wiley, New York.
 }
 \examples{
 var(rlogis(4000, 0, s = 5))# approximately (+/- 3)
