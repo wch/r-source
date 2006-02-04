@@ -5,25 +5,20 @@ MODULE=vfonts
 all: makeMakedeps ../../../modules/$(MODULE).dll
 
 CSOURCES=g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
-FSOURCES=
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
-OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
+OBJS=$(CSOURCES:.c=.o) dllversion.o
 
-../../../modules/$(MODULE).dll: $(MODULE).dll
+../../../modules/$(MODULE).dll: $(OBJS)
 	$(MKDIR) -p ../../../modules
-	$(CP) $< $@
-
-DLLLIBS=-L../../../bin -lR
-$(MODULE).dll: $(OBJS)
-
-dllversion.o: ../../include/Rversion.h
+	$(DLL) -shared  -o $@ $^ -L../../../bin -lR
 
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll
 
 # Dependencies
+dllversion.o: ../../include/Rversion.h
 DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)

@@ -12,7 +12,7 @@ endif
 CSOURCES = Lapack.c
 OBJS=$(CSOURCES:.c=.o) dllversion.o
 LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f cmplx.f
-LIBOBJECTS = $(LIBSOURCES:.f=.o)
+LIBOBJECTS = $(LIBSOURCES:.f=.o) Rlapackrc.o
 
 # will be overridden on call from src/gnuwin32/Makefile
 OPTFLAGS=-O3 -Wall -pedantic -std=gnu99
@@ -32,27 +32,20 @@ else
 lapack-DLLLIBS=-L../../../bin -lRlapack -lRblas -lR
 endif
 
-Rlapack-DLLLIBS=-L../../../bin -lR -lRblas $(FLIBS)
-
 $(MODULE).dll: $(OBJS)
 
-dllversion.o: ../../include/Rversion.h
+../../../bin/Rlapack.dll: $(LIBOBJECTS)
+	$(DLL) -shared  -o $@ $^ -L../../../bin -lR -lRblas $(FLIBS)
 
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def \
 	  Rlapack.dll *.a
 
 
-# Rlapack.* section
-Rlapack.dll: $(LIBOBJECTS)
-
-../../../bin/Rlapack.dll: Rlapack.dll
-	@$(MKDIR) -p ../../../bin
-	@$(CP) $< $@
-
+# Dependencies
+dllversion.o: ../../include/Rversion.h
 Rlapackrc.o: ../../include/Rversion.h
 
-# Dependencies
 DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
