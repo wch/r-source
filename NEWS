@@ -729,6 +729,12 @@ BUG FIXES
 
     o	rbind.data.frame() gave a corrupt data frame if one of the
 	named arguments was a zero-row data frame. (PR#8506)
+	
+    o	Checks for NULL in the rho argument of the C-level findVar
+	function have been added.
+
+    o	The C-level substitute function was handling NULL in its rho
+	argument incorrectly.
 
     o	The code for pgamma() introduced in 2.1.0 failed for large
 	values of 'shape' where the previous code was perfectly

@@ -1965,7 +1965,10 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* values as found in the environment.	There is no inheritance so only */
 /* the supplied environment is searched. If no environment is specified */
 /* the environment in which substitute was called is used.  If the */
-/* specified environment is R_NilValue then R_GlobalEnv is used. */
+/* specified environment is R_GlobalEnv it is converted to R_NilValue, for */
+/* historical reasons. */
+/* In substitute(), R_NilValue signals that no substitution should be done, only */
+/* extraction of promise expressions. */
 /* Arguments to do_substitute should not be evaluated. */
 
 SEXP substitute(SEXP lang, SEXP rho)
@@ -1975,20 +1978,22 @@ SEXP substitute(SEXP lang, SEXP rho)
     case PROMSXP:
 	return substitute(PREXPR(lang), rho);
     case SYMSXP:
-	t = findVarInFrame3( rho, lang, TRUE);
-	if (t != R_UnboundValue) {
-	    if (TYPEOF(t) == PROMSXP) {
-		do {
-		    t = PREXPR(t);
-		}
-		while(TYPEOF(t) == PROMSXP);
-		return t;
-	    }
-	    else if (TYPEOF(t) == DOTSXP) {
-		error(_("... used in an incorrect context"));
-	    }
-	    if (rho != R_GlobalEnv)
-		return t;
+    	if (rho != R_NilValue) {
+	    t = findVarInFrame3( rho, lang, TRUE);
+	    if (t != R_UnboundValue) {
+		if (TYPEOF(t) == PROMSXP) {
+		    do {
+			t = PREXPR(t);
+		    }
+		    while(TYPEOF(t) == PROMSXP);
+		    return t;
+	    	}
+	    	else if (TYPEOF(t) == DOTSXP) {
+		    error(_("... used in an incorrect context"));
+	    	}
+	    	if (rho != R_GlobalEnv)
+		    return t;
+	    }		    
 	}
 	return (lang);
     case LANGSXP:
@@ -2008,6 +2013,8 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
     if (isNull(el))
 	return el;
     if (CAR(el) == R_DotsSymbol) {
+    	if (rho == R_NilValue)
+    	    return substituteList(CDR(el), rho);
 	h = findVarInFrame3(rho, CAR(el), TRUE);
 	if (h == R_NilValue)
 	    return substituteList(CDR(el), rho);
@@ -2047,13 +2054,13 @@ SEXP attribute_hidden do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
 	env = rho;
     else
 	env = eval(CADR(args), rho);
-    if (env == R_NilValue)
-	env = R_GlobalEnv;
+    if (env == R_GlobalEnv)	/* For historical reasons, don't substitute in R_GlobalEnv */
+	env = R_NilValue;
     else if (TYPEOF(env) == VECSXP)
 	env = NewEnvironment(R_NilValue, VectorToPairList(env), R_BaseEnv);
     else if (TYPEOF(env) == LISTSXP)
 	env = NewEnvironment(R_NilValue, duplicate(env), R_BaseEnv);
-    if (TYPEOF(env) != ENVSXP)
+    else if (TYPEOF(env) != ENVSXP)
 	errorcall(call, _("invalid environment specified"));
 
     PROTECT(env);
