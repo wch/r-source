@@ -687,6 +687,9 @@ BUG FIXES
 	but not prob = 0.  qgeom(prob=1) now gives the correct values
 	(not -1).
 
+    o	INSTALL on Unix-alikes was not loading dependent packages when
+	preparing for lazy-loading.
+
 
 
 
