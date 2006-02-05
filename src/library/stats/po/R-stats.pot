@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-03 10:43\n"
+"POT-Creation-Date: 2006-01-23 08:52\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -728,6 +728,9 @@ msgstr ""
 msgid "link \"%s\" not available for gaussian family, available links are \"inverse\", \"log\" and \"identity\""
 msgstr ""
 
+msgid "cannot find valid starting values: please specify some"
+msgstr ""
+
 msgid "link \"%s\" not available for binomial family, available links are \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
 
@@ -906,9 +909,6 @@ msgid "invalid fitted means in empty model"
 msgstr ""
 
 msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
-msgstr ""
-
-msgid "cannot find valid starting values: please specify some"
 msgstr ""
 
 msgid "NAs in V(mu)"

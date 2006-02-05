@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-03 10:43\n"
+"POT-Creation-Date: 2006-01-29 08:16\n"
 "PO-Revision-Date: 2005-12-06 12:52+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -776,9 +776,6 @@ msgstr ""
 "le package '%s' est trouvé en plusieurs exemplaires,\n"
 "utilisation de celui trouvé dans '%s'"
 
-msgid "none of the packages were found"
-msgstr "aucun des packages n'a été trouvé"
-
 msgid ""
 "Further information is available in the following vignettes in directory '%"
 "s':"
@@ -1195,6 +1192,10 @@ msgstr "matrice 'a' singulière dans 'solve'"
 msgid "only square matrices can be inverted"
 msgstr "seules les matrices carrées peuvent être inversées"
 
+#, fuzzy
+msgid "'b' must be compatible with 'a'"
+msgstr "'by' doit être de longueur 1"
+
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr "solve.default appelé avec un objet \"qr\" : utilisation de 'qr.solve'"
 
@@ -1373,6 +1374,12 @@ msgid_plural "packages %s are not loaded"
 msgstr[0] "la package %s n'est pas chargé"
 msgstr[1] "les packages %s ne sont pas chargés"
 
+#, fuzzy
+msgid "there is no package called"
+msgid_plural "there are no packages called"
+msgstr[0] "aucun package nommé '%s' n'est trouvé"
+msgstr[1] "aucun package nommé '%s' n'est trouvé"
+
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] "l'objet %s n'est pas exporté par 'namespace:%s'"
@@ -1393,6 +1400,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "none of the packages were found"
+#~ msgstr "aucun des packages n'a été trouvé"
 
 #~ msgid "no input is available"
 #~ msgstr "pas d'entrée disponible"

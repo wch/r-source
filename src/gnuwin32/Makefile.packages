@@ -25,15 +25,6 @@ all:
 
 #                          ===== Packages ======
 
-MASS-HELP = ziponly
-boot-HELP = ziponly
-cluster-HELP = ziponly
-lattice-HELP = ziponly
-mgcv-HELP = ziponly
-nlme-HELP = ziponly
-rpart-HELP = ziponly
-survival-HELP = ziponly
-
 pkg-%:
 	@$(MAKE) --no-print-directory \
 	  SAVE=$($*-SAVE) LAZY=$($*-LAZY) LAZYDATA=$($*-LAZYDATA) \
@@ -61,6 +52,14 @@ ifeq ($(strip $(HELP)),YES)
     endif
   endif
 endif
+
+pkgfake-%:
+	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
+	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
+	  -f $(RHOME)/src/gnuwin32/MakePkg fake
+	@$(ECHO) "  installing help"
+	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) pkgfake-$*
+
 
 pkgclean-%:
 	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
@@ -90,7 +89,7 @@ ziponly-%:
 
 ## must be careful not to zip up a dir setup for lazy-data
 zipdata-%:
-	@if ! test -f ../../library/$*/data/Rdata.rdb ; then \
+	@if ! test -f $(RLIB)/$*/data/Rdata.rdb ; then \
 	  $(ECHO) "  zipping data" ; \
 	  (cd $(RLIB)/$*/data; \
 	    if test -f Rdata.zip ; then \
@@ -102,6 +101,6 @@ zipdata-%:
 	fi
 
 data-%:
-	@if ! test -f ../../library/$*/data/Rdata.rdb ; then \
+	@if ! test -f $(RLIB)/$*/data/Rdata.rdb ; then \
 	  $(ECHO) "  not zipping data" ; \
 	fi

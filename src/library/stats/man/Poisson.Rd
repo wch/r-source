@@ -20,7 +20,7 @@ rpois(n, lambda)
   \item{q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
   \item{n}{number of random values to return.}
-  \item{lambda}{vector of positive means.}
+  \item{lambda}{vector of (non-negative) means.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -50,6 +50,21 @@ rpois(n, lambda)
   Setting \code{lower.tail = FALSE} allows to get much more precise
   results when the default, \code{lower.tail = TRUE} would return 1, see
   the example below.
+}
+\source{
+  \code{dpois} uses C code contributed by Catherine Loader
+  (see \code{\link{dbinom}}).
+
+  \code{ppois} uses \code{pgamma}.
+
+  \code{qpois} uses the Cornish--Fisher Expansion to include a skewness
+  correction to a normal approximation, followed by a search.
+
+  \code{rpois} uses
+
+   Ahrens, J. H. and Dieter, U. (1982).
+   Computer generation of Poisson deviates from modified normal distributions.
+   \emph{ACM Transactions on Mathematical Software}, \bold{8}, 163--179.
 }
 \seealso{
   \code{\link{dbinom}} for the binomial and \code{\link{dnbinom}} for

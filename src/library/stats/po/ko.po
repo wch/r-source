@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31+0000\n"
+"POT-Creation-Date: 2006-01-29 08:17+0000\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -124,16 +124,20 @@ msgstr ""
 msgid "'rho' should be an environment"
 msgstr "'rho'는 환경이 나오지 않으면 되지 않습니다"
 
-#: nls.c:224 nls.c:252
+#: nls.c:210
+msgid "'dir' is not a numeric vector of the correct length"
+msgstr ""
+
+#: nls.c:227 nls.c:255
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "model를 평가할때 결손값 또는 무한대가 생성되었습니다"
 
-#: nls.c:230
+#: nls.c:233
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr ""
 
-#: nls.c:232
+#: nls.c:235
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr ""

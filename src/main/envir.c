@@ -865,11 +865,6 @@ SEXP findVarInFrame3(SEXP rho, SEXP symbol, Rboolean doGet)
 {
     int hashcode;
     SEXP frame, c;
-    
-    if (TYPEOF(rho) == NILSXP) {
-    	warning(_("use of NULL environment is deprecated"));
-    	rho = R_BaseEnv;
-    }    
 
     if (rho == R_BaseNamespace || rho == R_BaseEnv)
 	return SYMBOL_BINDING_VALUE(symbol);
@@ -964,14 +959,6 @@ static SEXP findGlobalVar(SEXP symbol)
 SEXP findVar(SEXP symbol, SEXP rho)
 {
     SEXP vl;
-        
-    if (TYPEOF(rho) == NILSXP) {
-    	warning(_("use of NULL environment is deprecated"));
-    	rho = R_BaseEnv;
-    }    
-
-    if (!isEnvironment(rho)) error(_("argument to %s is not an environment"), "findVar");
-    
 #ifdef USE_GLOBAL_CACHE
     /* This first loop handles local frames, if there are any.  It
        will also handle all frames if rho is a global frame other than

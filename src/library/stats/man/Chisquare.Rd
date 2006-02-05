@@ -59,15 +59,30 @@ rchisq(n, df, ncp=0)
 
   Note that the degrees of freedom \code{df}\eqn{= n}, can be
   non-integer, and for non-centrality \eqn{\lambda > 0}, even \eqn{n = 0};
-  see Johnson, Kotz and Balakrishnan (1995, chapter 29).
+  see Johnson et al. (1995, chapter 29).
+}
+\source{
+  The central cases are computed via the gamma distribution.
+
+  The non-central \code{dchisq} and \code{rchisq} are computed as a
+  Poisson mixture (Johnson et al, 1995, p.436).
+
+  The non-central \code{pchisq} is based on a C translation of
+
+  Ding, C. G. (1992)
+  Algorithm AS275: Computing the non-central chi-squared
+  distribution function. \emph{Appl.Statist.}, \bold{41} 478--482.
+
+  The non-central \code{qchisq} is based on inversion of \code{pchisq}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 
-  Johnson, Kotz and Balakrishnan (1995). \emph{Continuous Univariate
-    Distributions}, Vol \bold{2}; Wiley NY;
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, chapters 18 (volume 1)
+  and 29 (volume 2). Wiley, New York.
 }
 \seealso{
   A central chi-squared distribution with \eqn{n} degrees of freedom

@@ -13,7 +13,8 @@ file_path_as_absolute(x)
 file_path_sans_ext(x)
 file_test(op, x, y)
 list_files_with_exts(dir, exts, all.files = FALSE, full.names = TRUE)
-list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE)
+list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE,
+                     OS_subdirs = .OStype())
 }
 \arguments{
   \item{x,y}{character vectors giving file paths.}
@@ -33,6 +34,11 @@ list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE)
     possible values are \code{"code"} (R code), \code{"data"} (data
     sets), \code{"demo"} (demos), \code{"docs"} (R documentation), and
     \code{"vignette"} (vignettes).}
+  \item{OS_subdirs}{a character vector with the names of OS-specific
+    subdirectories to possibly include in the listing of R code and
+    documentation files.  By default, the value of the environment
+    variable \env{R\_OSTYPE}, or if this is empty, the value of
+    \code{\link{.Platform}$OS.type}, is used.}
 }
 \details{
   \code{file_path_as_absolute} turns a possibly relative file path
@@ -54,9 +60,9 @@ list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE)
   \code{list_files_with_type} returns the paths of the files in \code{dir}
   of the given \dQuote{type}, as determined by the extensions recognized
   by \R.  When listing R code and documentation files, files in
-  OS-specific subdirectories are included if present.  Note that by
-  default, full paths are returned, and that only visible files are
-  used.
+  OS-specific subdirectories are included if present according to the
+  value of \code{OS_subdirs}.  Note that by default, full paths are
+  returned, and that only visible files are used.
 }
 \seealso{
   \code{\link{file.path}},

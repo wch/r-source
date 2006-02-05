@@ -78,7 +78,7 @@ gettextf(fmt, \dots, domain = NULL)
   }
   Further, as from \R 2.1.0, immediately after \code{\%} may come
   \code{1$} to \code{99$} to refer to the numbered argument: this allows
-  arguments to referenced out of order and is mainly intended for
+  arguments to be referenced out of order and is mainly intended for
   translators of error messages.  If this is done it is best if all
   formats are numbered: if not the unnumbered ones process the arguments
   in order.  See the examples.
@@ -172,7 +172,7 @@ sprintf("second \%2$1.0f, first \%1$5.2f, third \%3$1.0f", pi, 2, 3)
 ## Using asterisk for width or precision
 sprintf("precision \%.*f, width '\%*.3f'", 3, pi, 8, pi)
 
-## Asterisk and argument re-use, e example reiterated:
+## Asterisk and argument re-use, 'e' example reiterated:
 sprintf("e with \%1$2d digits = \%2$.*1$g", n, exp(1))
 
 ## re-cycle arguments 

@@ -91,28 +91,37 @@ function(dir, exts, all.files = FALSE, full.names = TRUE)
 ### ** list_files_with_type
 
 list_files_with_type <-
-function(dir, type, all.files = FALSE, full.names = TRUE)
+function(dir, type, all.files = FALSE, full.names = TRUE,
+         OS_subdirs = .OStype())
 {
     ## Return a character vector with the paths of the files in
     ## @code{dir} of type @code{type} (as in .make_file_exts()).
     ## When listing R code and documentation files, files in OS-specific
-    ## subdirectories are included if present.
+    ## subdirectories are included (if present) according to the value
+    ## of @code{OS_subdirs}.
     exts <- .make_file_exts(type)
     files <-
         list_files_with_exts(dir, exts, all.files = all.files,
                              full.names = full.names)
 
     if(type %in% c("code", "docs")) {
-        OSdir <- file.path(dir, .OStype())
-        if(file_test("-d", OSdir)) {
-            OSfiles <-
-                list_files_with_exts(OSdir, exts, all.files = all.files,
-                                     full.names = FALSE)
-            OSfiles <-
-                file.path(if(full.names) OSdir else .OStype(),
-                          OSfiles)
-            files <- c(files, OSfiles)
+        for(os in OS_subdirs) {
+            os_dir <- file.path(dir, os)
+            if(file_test("-d", os_dir)) {
+                os_files <- list_files_with_exts(os_dir, exts,
+                                                 all.files = all.files,
+                                                 full.names = FALSE)
+                os_files <- file.path(if(full.names) os_dir else os,
+                                      os_files)
+                files <- c(files, os_files)
+            }
         }
+    }
+    if(type %in% c("code", "docs")) { # only certain filenames are valid.
+        files <- files[grep("^[A-Za-z0-9]", basename(files))]
+    }
+    if(type %in% "demo") {           # only certain filenames are valid.
+        files <- files[grep("^[A-Za-z]", basename(files))]
     }
     files
 }

@@ -1,6 +1,6 @@
 #! @PERL@
 #-*- perl -*-
-# Copyright (C) 2000-2004 R Development Core Team
+# Copyright (C) 2000-2006 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -190,7 +190,7 @@ foreach my $pkg (@ARGV) {
 		## Argh: Windows is case-honoring but not
 		## case-insensitive ...
 		print EXCLUDE "$File::Find::name\n"
-		    if($filename =~	/$p/i);
+		    if($filename =~ /$p/i);
 	    }
 	    else {
 		if($filename =~ /$p/) {
@@ -244,6 +244,27 @@ foreach my $pkg (@ARGV) {
     close(EXCLUDE);
     unlink($exclude);
     unlink($origfilepath);
+    ## Fix up man, R and demo directories (in each package for a bundle)
+    sub find_invalid_files {
+	my ($dpath) = @_;
+	my $Rcmd = "tools:::.check_package_subdirs(\"$dpath\", TRUE)\n";
+	my @out = R_runR($Rcmd, "--vanilla --slave",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->message("excluding invalid files from '$dpath'");
+	    $log->print(join("\n", @out));
+	}
+    }
+    if($is_bundle) {
+	foreach $ppkg (@bundlepkgs) {
+	    &find_invalid_files("$pkgname/$ppkg");
+	    chdir($tmpdir);
+	}
+    } else {
+	&find_invalid_files($pkgname);
+	chdir($tmpdir);
+    }
     ## Fix permissions.
     sub fix_permissions {
 	## Note that when called via File::Find::find, $_ holds the
@@ -278,17 +299,39 @@ foreach my $pkg (@ARGV) {
 	    my @files = readdir(DIR);
 	    closedir(DIR);
 	    if (@files <= 2) {
-		print "WARNING: directory $File::Find::name is empty\n";
-		if($File::Find::name =~ m+^$pkgname(/|\\)(help|html|latex|libs)$+) {
-		    print "  A directory named '$_' should only occur in an installed package\n";
-		}
+		$log->print("WARNING: directory '$File::Find::name' is empty\n");
 	    }
 	}
     }
 
-    $log->message("checking for empty directories");
+    $log->message("checking for empty or unneeded directories");
     find(\&empty_dir_check, "${pkgname}");
 
+    sub fix_unneeded_dirs {
+	my ($path) = @_;
+	my $dir;
+	foreach my $system_dir ("Meta", "R-ex", "chtml",
+		       "help", "html", "latex") {
+	    $dir = &file_path($path, $system_dir);
+	    if(-d "$dir") {
+		$log->print(wrap("", "  ",
+				 ("WARNING: Removing directory '$dir'",
+				  "which should only occur",
+				  "in an installed package\n")
+				 ));
+		rmtree("$dir");
+	    }
+	}
+    }
+
+    if($is_bundle) {
+	foreach my $ppkg (@bundlepkgs) {
+	    &fix_unneeded_dirs(&file_path($pkgname, $ppkg));
+	}
+    } else {
+	&fix_unneeded_dirs($pkgname);
+    }
+    
     ## Finalize.
     if($opt_binary) {
 	$log->message("building binary distribution");
@@ -504,7 +547,7 @@ sub cleanup_pkg {
 	    }
 	}
     }
-    
+
     chdir($pkgdir);
     if(!$WINDOWS && -x "./cleanup") {
 	$log->message("running cleanup");
@@ -600,7 +643,7 @@ sub fix_CRLF_in_source_files {
 	    }
 	    close(TFILE); close(FILE);
 	    if ($has_CRLF) {
-		print("    file '$file' had CRLF line endings\n");
+		$log->print("    file '$file' had CRLF line endings\n");
 		unlink($file); # should not be necessary, but is on Windows
 		rename("$file.tmp", $file)
 		    or die "Error: cannot rename '$file.tmp'\n";
@@ -630,7 +673,9 @@ Options:
 END
     if($WINDOWS) {
 	print STDERR "  --docs=TYPE           " .
-	    "type(s) of documentation to build and install\n";
+	    "type(s) of documentation to build and INSTALL\n";
+	print STDERR "                        " .
+	    "See Rcmd INSTALL --help for possible values of TYPE\n";
 	print STDERR "  --auto-zip            " .
 	    "select zipping of data and help based on size\n";
     } else {

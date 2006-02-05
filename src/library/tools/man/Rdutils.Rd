@@ -32,7 +32,7 @@ Rd_parse(file, text = NULL)
   \code{Rd_parse} is a simple top-level Rd parser/analyzer.  It returns
   a list with components
   \describe{
-    \item{\code{meta}}{a list containing the Rd meta data (aliases,
+    \item{\code{meta}}{a list containing the Rd metadata (aliases,
       concepts, keywords, and documentation type);
     }
     \item{\code{data}}{a data frame with the names (\code{tags}) and

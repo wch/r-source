@@ -255,7 +255,7 @@ function(dir, outDir)
              domain = NA)
     writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
                outFile)
-    # use fast version of file.append that ensure LF between files
+    # use fast version of file.append that ensures LF between files
     if(!all(.Internal(codeFiles.append(outFile, codeFiles))))
         stop("unable to write code files")
     ## </NOTE>
@@ -614,6 +614,45 @@ function(dir, packages)
             stop("invalid input", domain = NA)
         writeLines(text, outfile)
     } else file.copy(infile, outfile, TRUE)
+}
+
+
+### * .install_package_man_sources
+
+.install_package_man_sources <- function(dir, outDir)
+{
+    mandir <- file.path(dir, "man")
+    if(!file_test("-d", mandir)) return()
+    manfiles <- list_files_with_type(mandir, "docs")
+    if(!length(manfiles)) return()
+    manOutDir <- file.path(outDir, "man")
+    if(!file_test("-d", manOutDir)) dir.create(manOutDir)
+    pkgname <- sub("_.*$", "", basename(outDir)) # allow for versioned installs
+    filepath <- file.path(manOutDir, paste(pkgname, ".Rd.gz", sep = ""))
+    con <- gzfile(filepath, "wb")
+    for(file in manfiles) {
+        fn <- sub(".*/man/", "", file)
+        cat(file=con, "% --- Source file: ", fn, " ---\n", sep="")
+        writeLines(readLines(file), con) # will ensure final \n
+        ## previous format had (sometimes) blank line before \eof, but
+        ## this is not needed.
+        cat(file=con, "\\eof\n")
+    }
+    close(con)
+}
+
+### * .install_package_demos
+
+.install_package_demos <- function(dir, outDir)
+{
+    ## NB: we no longer install 00Index
+    demodir <- file.path(dir, "demo")
+    if(!file_test("-d", demodir)) return()
+    demofiles <- list_files_with_type(demodir, "demo", full.names = FALSE)
+    if(!length(demofiles)) return()
+    demoOutDir <- file.path(outDir, "demo")
+    if(!file_test("-d", demoOutDir)) dir.create(demoOutDir)
+    file.copy(file.path(demodir, demofiles), demoOutDir)
 }
 
 ### Local variables: ***

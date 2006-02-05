@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-03 10:43\n"
+"POT-Creation-Date: 2006-01-29 08:16\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -750,9 +750,6 @@ msgstr ""
 "패키지 '%s'가 복수(여러개) 검색되었습니다.\n"
 "'%s'에 검색된 것을 사용합니다"
 
-msgid "none of the packages were found"
-msgstr "어느 패키지도 검색되지 않았습니다"
-
 msgid ""
 "Further information is available in the following vignettes in directory '%"
 "s':"
@@ -1163,6 +1160,10 @@ msgstr "'slove'안에 특이 행렬 'a'가 있습니다"
 msgid "only square matrices can be inverted"
 msgstr "역행렬은 정방 행렬만 정의 할수가 없습니다"
 
+#, fuzzy
+msgid "'b' must be compatible with 'a'"
+msgstr "'by'는 길이 1이 나오지 않으면 되지 않습니다"
+
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr ""
 "solve.default가 \"qr\"오브젝트에 대해서 호출되었습니다\n"
@@ -1348,6 +1349,11 @@ msgstr[0] ""
 "패키지 %s는 적재되지 않습니다\n"
 "패키지(복수)%s는 적재되지 않습니다"
 
+#, fuzzy
+msgid "there is no package called"
+msgid_plural "there are no packages called"
+msgstr[0] "'%s'라는 이름의 패키지는 없습니다"
+
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] ""
@@ -1371,6 +1377,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "none of the packages were found"
+#~ msgstr "어느 패키지도 검색되지 않았습니다"
 
 #~ msgid "no input is available"
 #~ msgstr "어떠한 입력도 이용할 수 없습니다"

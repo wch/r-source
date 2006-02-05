@@ -1,7 +1,7 @@
 #! @PERL@
 #-*- perl -*-
 
-## Copyright (C) 2000-2005 R Development Core Team
+## Copyright (C) 2000-2006 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -57,17 +57,19 @@ my $opt_use_valgrind = 0;
 my $opt_rcfile = "";		# Only set this if $ENV{"HOME"} is set.
 $opt_rcfile = &file_path($ENV{"HOME"}, ".R", "check.conf")
     if defined($ENV{"HOME"});
+my $opt_subdirs;
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
 R::Vars::error("R_HOME", "R_EXE");
 
 my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
-		    "no-clean", "no-examples", "no-tests", "no-latex",
-		    "use-gct" => \$opt_use_gct, "no-codoc",
-		    "install=s" => \$opt_install, "no-install",
+		     "no-clean", "no-examples", "no-tests", "no-latex",
+		     "use-gct" => \$opt_use_gct, "no-codoc",
+		     "install=s" => \$opt_install, "no-install",
 		     "no-vignettes", "use-valgrind" => \$opt_use_valgrind,
-		     "rcfile=s" => \$opt_rcfile);
+		     "rcfile=s" => \$opt_rcfile,
+		     "check-subdirs=s" => \$opt_subdirs);
 GetOptions(@known_options) or usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
@@ -107,6 +109,8 @@ my $R_check_all_non_ISO_C =
     &R_getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE");
 my $R_check_weave_vignettes =
     &R_getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE");
+my $R_check_subdirs_strict =
+    &R_getenv("_R_CHECK_SUBDIRS_STRICT_", "default");
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
@@ -139,6 +143,8 @@ $R_check_all_non_ISO_C =
     &config_val_to_logical($R_check_all_non_ISO_C);
 $R_check_weave_vignettes =
     &config_val_to_logical($R_check_weave_vignettes);
+
+$opt_subdirs = $R_check_subdirs_strict if $opt_subdirs eq "";
 
 my $startdir = R_cwd();
 $opt_outdir = $startdir unless $opt_outdir;
@@ -198,6 +204,7 @@ foreach my $pkg (@ARGV) {
     $pkg =~ s+/$++;  # strip any trailing '/'
     my $pkgname = basename($pkg);
 
+    my $thispkg_subdirs = $opt_subdirs;
     ## is this a tar archive?
     my $istar = 0;
     if($pkgname =~ /\.tar\.gz$/ || $pkgname =~ /\.tgz$/) {
@@ -205,6 +212,9 @@ foreach my $pkg (@ARGV) {
 	$pkgname =~ s/\.tgz$//;
 	$pkgname =~ s/_[0-9\.-]*$//;
 	$istar = 1;
+	$thispkg_subdirs = "yes-maybe" if $thispkg_subdirs eq "default";
+    } else {
+	$thispkg_subdirs = "no" if $thispkg_subdirs eq "default";
     }
 
     my $pkgoutdir = &file_path($outdir, "$pkgname.Rcheck");
@@ -234,11 +244,15 @@ foreach my $pkg (@ARGV) {
 	or die "Error: cannot change to directory '$pkg'\n";
     my $pkgdir = R_cwd();
     ## my $pkgname = basename($pkgdir);
+    if($thispkg_subdirs eq "yes-maybe") {
+	## now see if there is a 'configure' file
+	$thispkg_subdirs = "no" if (-f "configure");
+    }
     chdir($startdir);
 
     $log = new R::Logfile(&file_path($pkgoutdir, "00check.log"));
     $log->message("using log directory '$pkgoutdir'");
-    my @out = R_runR("cat(R.version.string, '\n', sep='')", 
+    my @out = R_runR("cat(R.version.string, '\n', sep='')",
 		     "--slave --vanilla");
     $log->message("using @out");
 
@@ -322,9 +336,9 @@ foreach my $pkg (@ARGV) {
 	    my $any;
 	    my $pat = "(a|o|[ls][ao]|sl|obj)"; # Object file extensions.
 	    my @dirs;
-	    if($in_bundle) {
+	    if($is_bundle) {
 		foreach my $ppkg (split(/\s+/,
-					description->{"Contains"})) {
+					$description->{"Contains"})) {
 		    push(@dirs, &file_path($ppkg, "src"));
 		}
 	    }
@@ -342,12 +356,39 @@ foreach my $pkg (@ARGV) {
 				"contains object files.\n");
 		}
 	    }
-	    $log->result("OK") unless $any;	    
+
+	    if($thispkg_subdirs ne "no") {
+		foreach my $dir (@dirs) {
+		    if((-d &file_path($pkgdir, $dir))) {
+			chdir(&file_path($pkgdir, $dir));
+			if(!(-f "Makefile") && !(-f "Makefile.win")) {
+			    opendir(DIR, ".") or die "cannot opendir $dir: $!";
+			    @srcfiles = grep { 
+				!(/\.([Ccfh]|cc|cpp|f90|f95)$/
+				  || /^Makevars/ || /-win\.def$/ )
+				    && -f "$_" } readdir(DIR);
+			    closedir(DIR);
+			    if(@srcfiles) {
+				$log->warning() unless $any;
+				$any++;
+				$log->print("Subdirectory '$dir' contains:\n");
+				$log->print(wrap("  ", "  ",
+						 join(" ", sort @srcfiles) . "\n"));
+				$log->print(wrap("", "",
+						 ("These are unlikely file names",
+						  "for src files.\n")));
+			    }
+			}
+			chdir($startdir);
+		    }
+		}
+	    }
+	    $log->result("OK") unless $any;
 	}
 	else {
 	    $log->result("OK");
 	}
-	    
+
 	## Option '--no-install' turns off installation and the tests
 	## which require the package to be installed.  When testing
 	## recommended packages bundled with R we can skip installation,
@@ -426,7 +467,7 @@ foreach my $pkg (@ARGV) {
 			    &shell_quote_file_path($out) .
 			    " 2>&1";
 			$install_error = &R_system($cmd);
-			if($WINDOWS) { 
+			if($WINDOWS) {
 			    ## MS Html Help Compiler gives lines terminated
 			    ## by CRCRLF, so we clean up the log file.
 			    my $line;
@@ -492,7 +533,7 @@ foreach my $pkg (@ARGV) {
 		    ## filtering out by setting the internal environment
 		    ## variable _R_CHECK_WALL_FORTRAN_ to something
 		    ## "true".
-		    my $R_check_Wall_FORTRAN = 
+		    my $R_check_Wall_FORTRAN =
 			&R_getenv("_R_CHECK_WALL_FORTRAN_", "FALSE");
 		    $R_check_Wall_FORTRAN =
 			&config_val_to_logical($R_check_Wall_FORTRAN);
@@ -508,7 +549,7 @@ foreach my $pkg (@ARGV) {
 			    ")";
 			@lines = grep(!/$warn_re/, @lines);
 		    }
-		    
+
 		    if(scalar(@lines) > 0) {
 			$log->warning();
 			$log->print("Found the following " .
@@ -539,7 +580,8 @@ foreach my $pkg (@ARGV) {
     else {
 	chdir($startdir);
 	check_pkg($pkgdir, $pkgoutdir, $startdir, $library,
-		  $is_bundle, $description, $log, $is_base_pkg);
+		  $is_bundle, $description, $log, $is_base_pkg, 
+		  $thispkg_subdirs);
     }
 
     if($log->{"warnings"}) {
@@ -554,13 +596,13 @@ foreach my $pkg (@ARGV) {
 sub check_pkg {
 
     my ($pkg, $pkgoutdir, $startdir, $library,
-	$in_bundle, $description, $log, $is_base_pkg) = @_;
+	$in_bundle, $description, $log, $is_base_pkg, $subdirs) = @_;
     my ($pkgdir, $pkgname);
 
     ## $pkg is the argument we received from the main loop.
     ## $pkgdir is the corresponding absolute path,
     ## $pkgname the name of the package.
-    ## Note that we need to do repeat the checking from the main loop in
+    ## Note that we need to repeat the checking from the main loop in
     ## the case of package bundles (and we could check for this).
 
     $log->checking("package directory");
@@ -595,7 +637,7 @@ sub check_pkg {
     if(-f $exclude_file) {
 	open(RBUILDIGNORE, "< $exclude_file");
 	while(<RBUILDIGNORE>) {
-	    chop;	    
+	    chop;
 	    push(@exclude_patterns, $_) if $_;
 	}
 	close(RBUILDIGNORE);
@@ -695,7 +737,7 @@ sub check_pkg {
 
     ## next check for name clashes on case-insensitive file systems
     ## (that is on Windows).
-    %seen = (); 
+    %seen = ();
     my @duplicated = ();
     sub check_case_names {
 	my $file_path = lc($File::Find::name);
@@ -823,7 +865,7 @@ sub check_pkg {
     &R::Utils::check_package_description($pkgdir, $pkgname, $log,
 					 $in_bundle, $is_base_pkg,
 					 $full);
-    
+
     ## Check package dependencies.
 
     ## Try figuring out whether the package dependencies can be resolved
@@ -874,6 +916,21 @@ sub check_pkg {
 	else {
 	    $log->result("OK");
 	}
+    }
+
+    $log->checking("top-level files");
+    opendir(DIR, ".") or die "cannot opendir package: $!";
+    my @topfiles = grep { /^install.R$/ || /^R_PROFILE.R/
+			      && -f "$_" } readdir(DIR);
+    closedir(DIR);
+    if(@topfiles) {
+	$log->warning();
+	    $log->print(join(" ", @topfiles) . "\n");
+	    $log->print(wrap("", "",
+			     ("These files are deprecated.",
+			      "See manual 'Writing R Extensions'.\n")));
+    } else {
+	$log->result("OK");
     }
 
     ## Check index information.
@@ -953,6 +1010,23 @@ sub check_pkg {
 	    $log->print("Most likely, this should be 'man'.\n")
 	}
     }
+    sub check_subdirs {
+	my ($dpath) = @_;
+	my $Rcmd = "tools:::.check_package_subdirs(\"$dpath\")\n";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->warning() unless($any);
+	    $any++;
+	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "",
+			     ("Please remove or rename the files.\n",
+			      "See section 'Package subdirectories'",
+			      "in manual 'Writing R Extensions'.\n")));
+	}
+    }
+    &check_subdirs(".") unless ($subdirs eq "no");
     if((-d "data") || (-d "demo") || (-d "src") || (-d "inst")) {
 	## Subdirectory 'data' without data sets?
 	if((-d "data") && !&list_files_with_type("data", "data")) {
@@ -971,13 +1045,13 @@ sub check_pkg {
 	## If there is a Makefile (or a Makefile.win), we cannot assume
 	## that source files have the predefined extensions.
 	## </NOTE>
-	if((-d "src")
-	   && !(&list_files_with_exts("src", "([Ccf]|cc|cpp)")
-		|| (-f &file_path("src", "Makefile"))
-		|| (-f &file_path("src", "Makefile.win")))) {
-	    $log->warning() unless $any;
-	    $any++;
-	    $log->print("Subdirectory 'src' contains no source files.\n");
+	if( (-d "src") && !( (-f &file_path("src", "Makefile"))
+			  || (-f &file_path("src", "Makefile.win")) )) {
+	    if( !(&list_files_with_exts("src", "([Ccf]|cc|cpp|f90|f95)"))) {
+		$log->warning() unless $any;
+		$any++;
+		$log->print("Subdirectory 'src' contains no source files.\n");
+	    }
 	}
 	## Do subdirectories of 'inst' interfere with R package system
 	## subdirectories?
@@ -1189,7 +1263,7 @@ sub check_pkg {
     ## Activated only via setting the internal environment variable
     ## _R_CHECK_USE_CODETOOLS_ to something "true".
 
-    my $R_check_use_codetools = 
+    my $R_check_use_codetools =
 	&R_getenv("_R_CHECK_USE_CODETOOLS_", "FALSE");
     $R_check_use_codetools =
 	&config_val_to_logical($R_check_use_codetools);
@@ -1271,7 +1345,7 @@ sub check_pkg {
     if(-d "man") {
 	my $R_check_Rd_xrefs = &R_getenv("_R_CHECK_RD_XREFS_", "FALSE");
 	$R_check_Rd_xrefs = &config_val_to_logical($R_check_Rd_xrefs);
-	
+
 	if(($opt_install && $R_check_Rd_xrefs) || !$opt_install) {
 
 	    $log->checking("Rd cross-references");
@@ -1484,7 +1558,7 @@ sub check_pkg {
 	    $log->result("OK");
 	}
     }
-    
+
 
     chdir($pkgoutdir);
 
@@ -1580,7 +1654,7 @@ sub check_pkg {
 	## Look at the output from running the examples.  For the time
 	## being, report warnings about use of deprecated functions, as
 	## the next release will make them defunct and hence using them
-	## an error.  Also warn about loading defunct base package stubs, 
+	## an error.  Also warn about loading defunct base package stubs,
 	## as load special-casing for these will be removed eventually.
 	my @lines = &read_lines("${pkgname}-Ex.Rout");
 	my $any;
@@ -1734,7 +1808,7 @@ sub check_pkg {
 	    $Rcmd .= ")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
-	    @out = grep(!/^[[:alnum:]]*\>/, @out);	    
+	    @out = grep(!/^[[:alnum:]]*\>/, @out);
 	    ## Or to "empty".  As empty lines in the output will most
 	    ## likely not indicate a problem ...
 	    @out = grep(!/^[[:space:]]*$/, @out);
@@ -1904,7 +1978,7 @@ sub usage {
     print STDERR <<END;
 Usage: R CMD $name [options] pkgs
 
-Check R packages from package sources, which can be directories or 
+Check R packages from package sources, which can be directories or
 gzipped package 'tar' archives with extension '.tar.gz' or '.tgz'.
 
 A variety of diagnostic checks on directory structure, index and
@@ -1931,8 +2005,11 @@ Options:
       --no-latex        do not run LaTeX on help files
       --use-gct         use 'gctorture(TRUE)' when running examples/tests
       --use-valgrind    use 'valgrind' when running examples/tests/vignettes
+      --check-subdirs=default|yes|no
+                        run checks on the package subdirectories
+			(default is yes for a tarball, no otherwise)
       --rcfile=FILE     read configuration values from FILE
-      
+
 By default, all test sections are turned on.
 
 Email bug reports to <r-bugs\@r-project.org>.

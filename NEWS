@@ -194,9 +194,10 @@ NEW FEATURES
     o	cov.wt() is more efficient for 'cor = TRUE' and has a new 'method'
 	argument which allows 'Maximum Likelihood'.
 
-    o	On systems with va_copy and a vsnprintf which reports the size
-	of buffer required, connections such as gzfile() and bzfile()
-	can now write arbitrarily long lines, not just 100000 chars.
+    o	On systems with either vasprintf or both va_copy and a vsnprintf
+	which reports the size of buffer required, connections such as
+	gzfile() and bzfile() can now write arbitrarily long lines,
+	not just 100000 chars.
 
     o	The R session temporary directory is now set in C code using
 	the same algorithm whether or not the shell front-end is used
@@ -247,7 +248,9 @@ NEW FEATURES
 	when possible even after adding of 'big.mark' or 'small.mark'.
 
     o	str()'s default method has a new argument 'strict.width' which can
-	be used to produce strict 'width' conforming output.
+	be used to produce strict 'width' conforming output.  A new
+	options(str = list(strict.width = *)) setting allows to control
+	this for a whole session.
 
     o	The pdf() device writes /FontDescriptor entries for all fonts
 	except the base 14, and does not write font entries for unused
@@ -279,7 +282,28 @@ NEW FEATURES
 
     o	The initialization methods for the quasi() family have been
 	changed to depend on the variance function, and in particular
-	work better for the "mu(1-mu)" variance function.  (PR#8486)
+	to work better for the "mu(1-mu)" variance function.  (PR#8486)
+
+    o	eigen() applied to an asymmetric real matrix now uses a
+	tolerance to decide if the result is complex (rather than
+	expecting the imaginary parts of the eigenvalues to be exactly
+	zero).
+
+    o	chol(pivot = TRUE) now gives a warning if used on a (numerically)
+	non-positive-definite matrix.
+
+    o	xy.coords() & xyz.coords() now have NULL defaults for their 'y' or
+	'y' and 'z' arguments.	This is more consistent with their earlier
+	documentation, and may be convenient for using them.
+
+    o	The second argument 'size' to sample() is required to have
+	length 1, so that errors when supplying arguments are more
+	easily detected.
+
+    o	[rc]bind and some more cases of subassignment are implemented
+	for raw matrices.  (PR8529 and 8530)
+
+    o	rbeta(), rf() and rt() now have a non-centrality parameter.
 
 
 DEPRECATED & DEFUNCT
@@ -313,6 +337,23 @@ DEPRECATED & DEFUNCT
 
     o	postscriptFont() is deprecated in favour of Type1Font() (which
 	is just a change of name).
+
+    o	La.chol() and La.chol2inv() are deprecated (they have since R
+	1.7.0 been the same as the default options of chol() and chol2inv).
+
+    o	La.svd(method = "dgesvd") is deprecated.
+
+    o	nlsMethod() and profiler() are no longer exported from the stats
+	namespace (and nlsMethod.plinear() is no longer registered as
+	a method, as nlsMethod() was not generic).
+
+    o	The use of install.R and R_PROFILE.R files in packages is
+	deprecated: use the DESCRIPTION file instead to arrange to
+	save an image or to load dependent packages.
+
+	The following ommand-line options to INSTALL are deprecated
+	(use the fields in the DESCRIPTION file instead):
+	-s --save --no-save --lazy --no-lazy --lazy-data --no-lazy-data
 
 
 INTERNATIONALIZATION
@@ -442,8 +483,21 @@ UTILITIES
 	are now in exactly the same format.
 
     o	The base name of a help file needs to be valid as part of a file://
-	URL, do R CMD check now checks the names are ASCII and do not
+	URL, so R CMD check now checks the names are ASCII and do not
 	contain % .
+
+    o	R CMD check now warns about unknown sections in Rd files, and
+	invalid names for help, demo and R files, as well as unlikely
+	file names in the 'src' directory.  The latter is controlled
+	by option --check-subdirs and by default is done if checking a
+	tarball without a configure script.
+
+	R CMD build excludes invalid files in the 'man', 'R' and 'demo'
+	subdirectories.
+
+    o   \usepackage[noae]{Sweave} in the header of an Sweave file
+	supresses auto-usage of the ae package ("almost European"
+	fonts) and T1 input encoding.
 
 
 DOCUMENTATION
@@ -455,6 +509,10 @@ PACKAGE INSTALLATION
 
     o	There is now some support for Fortran 90/95 code in packages:
 	see `Writing R Extensions'.
+
+    o	Installation of man sources and demos is now done by R code.
+	The restrictions on the names of help files, R files and
+	of demos are now enforced (see `Writing R Extensions').
 
 
 C-LEVEL FACILITIES
@@ -567,6 +625,71 @@ BUG FIXES
     o	solve() gives clearer error messages for some incorrect usages.
 	(PR#8494 and similar)
 
+    o	The gaussian() family was missing the 'valideta' component
+	(which could be needed for the "inverse" link function).
+
+	The starting values supplied by the gaussian family could be
+	invalid for the "log" and "inverse" link functions.  This is
+	now reported.
+
+    o	data.matrix() did not work correctly on zero-row data frames.
+	(PR#8496 and other problems.)
+
+    o	The DSC comments in the files from postscript(onefile=FALSE) now
+	label all files as having page 1 of 1, as some other software
+	seems to expect that.
+
+    o	The axis labels chosen for logarithmic axis are now less
+	likely to be linear and inappropriate (when the range is more
+	than 10 and less than 100).  (PR#1235)
+
+    o	Staircase lines (types "s" and "S") are now drawn
+	continuously rather than a point at a time and so line types,
+	mitring and so on work. (PR#2630)
+
+    o	Calling par(mfg) before doing any plotting resulted in NewPage
+	never being called on the device, which in turn resulted in
+	incorrect output for postcript() and pdf() devices.  (Reported
+	by Marc Schwartz in discussion of the non-bug PR#7820.)
+
+    o	terms.formula needed to add parentheses to formulae with
+	terms containing '|'.  (PR#8462)
+
+    o	pbirthday() and qbirthday() now also work for very improbable
+	events {those you are typically *not* interested in}.
+
+    o	Only source help files starting with an upper- or lower-case
+	letter or digit and extension .Rd or .rd are documented to be
+	processed.  This is more liberal in that starting with a digit
+	is now also allowed, but rule is now enforced.
+
+    o	nls(algorthm="port") was always taking positive numeric
+	differences and so could exceed the upper bounds.
+
+    o	methods:::.asEnvironmentPackage() was not allowing for
+	versioned installs.
+
+    o	.find.package() now reports which package(s) it cannot find in
+	the case it stops with an error.
+
+    o	The standard Unix-alike version of file.show() gives an
+	informative message if it cannot open a file rather than the
+	(possibly incorrect) 'NO FILE'.
+
+    o	qcauchy(1) now gives +Inf instead of just a very large number.
+
+    o	window() did not allow non-overlapping ranges with
+	extend = TRUE.  (PR#8545)
+
+    o	pbinom(size = 0) now returns correct values (not NaN).  (PR#8560)
+
+    o	[dqpr]geom and [dpqr]nbinom() now all consistently accept prob = 1
+	but not prob = 0.  qgeom(prob=1) now gives the correct values
+	(not -1).
+
+    o	INSTALL on Unix-alikes was not loading dependent packages when
+	preparing for lazy-loading.
+
 
 
 
@@ -604,6 +727,22 @@ BUG FIXES
     o	qr.coef() worked incorrectly with multiple rhs in the
 	LAPACK-using cases. (PR#8476/8)
 
+    o	rbind.data.frame() gave a corrupt data frame if one of the
+	named arguments was a zero-row data frame. (PR#8506)
+
+    o	The code for pgamma() introduced in 2.1.0 failed for large
+	values of 'shape' where the previous code was perfectly
+	acceptable, despite the claim to be uniformly better.  For
+	example, pgamma(0.9e100, 1e100) was NaN.  (PR#8528)
+
+    o	There was no command 'ls' in browser() nor 'next' in debug(),
+	despite the documentation (which has been corrected).
+	Command 'where' in the browser() no longer changes to
+	step-though mode.
+
+    o	qcauchy(1) now gives +Inf instead of just a very large number.
+
+    o	df(0, f1, *) now properly returns Inf, 1, or 0 for f1 < , = , or > 2.
 
 
 
@@ -1542,7 +1681,6 @@ BUG FIXES
 
     o	R CMD INSTALL was not cleaning up after an unsuccessful
 	install of a non-bundle which was not already installed.
-
 
 
 

@@ -59,6 +59,9 @@ quasipoisson(link = "log")
   fitting takes place.
 }
 \details{
+  \code{family} is a generic function with methods for classes
+  \code{"glm"} and \code{"lm"} (the latter returning \code{gaussian()}).
+
   The \code{quasibinomial} and \code{quasipoisson} families differ from
   the \code{binomial} and \code{poisson} families only in that the
   dispersion parameter is not fixed at one, so they can \dQuote{model}
@@ -68,6 +71,28 @@ quasipoisson(link = "log")
   variance proportional to mean as in the quasi-binomial model, note
   that \code{glm} does not compute maximum-likelihood estimates in that
   model.  The behaviour of S is closer to the quasi- variants. 
+}
+\value{
+  An object of class \code{"family"} (which has a concise print method).
+  This is a list with elements
+  \item{family}{character: the family name.}
+  \item{link}{character: the link name.}
+  \item{linkfun}{function: the link.}
+  \item{linkinv}{function: the inverse of the link function.}
+  \item{variance}{function: the variance as a function of the mean.}
+  \item{dev.resids}{function giving the deviance residuals as a function
+    of \code{(y, mu, wt)}.}
+  \item{aic}{function giving the AIC value if appropriate (but \code{NA}
+    for a quasi- family).}
+  \item{mu.eta}{function: derivative \code{function(eta)}
+    \eqn{d\mu / d\eta}{dmu/deta}.}
+  \item{initialize}{expression.  This needs to set up whatever data
+    objects are needed for the family as well as \code{n} (needed for
+    AIC in the binomial family) and \code{mustart} (see \code{\link{glm}}.}
+  \item{valid.mu}{logical function.  Returns \code{TRUE} if a mean
+    vector \code{mu} is within the domain of \code{variance}.}
+  \item{valid.eta}{logical function.   Returns \code{TRUE} if a linear
+    predictor \code{eta} is within the domain of \code{linkinv}.}
 }
 \references{
   McCullagh P. and Nelder, J. A. (1989)
@@ -89,10 +114,11 @@ quasipoisson(link = "log")
 }
 \author{
   The design was inspired by S functions of the same names described
-  in Hastie \& Pregibon (1992).
+  in Hastie \& Pregibon (1992) (except \code{quasibinomial} and
+  \code{quasipoisson}).
 }
 \seealso{
-  \code{\link{glm}}, \code{\link{power}}.
+  \code{\link{glm}}, \code{\link{power}}, \code{\link{make.link}}.
 }
 \examples{
 nf <- gaussian()# Normal family

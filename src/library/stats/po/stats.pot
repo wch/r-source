@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31+0000\n"
+"POT-Creation-Date: 2006-01-29 08:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,16 +123,20 @@ msgstr ""
 msgid "'rho' should be an environment"
 msgstr ""
 
-#: nls.c:224 nls.c:252
+#: nls.c:210
+msgid "'dir' is not a numeric vector of the correct length"
+msgstr ""
+
+#: nls.c:227 nls.c:255
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr ""
 
-#: nls.c:230
+#: nls.c:233
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr ""
 
-#: nls.c:232
+#: nls.c:235
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr ""

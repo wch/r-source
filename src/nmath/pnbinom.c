@@ -36,7 +36,7 @@ double pnbinom(double x, double n, double p, int lower_tail, int log_p)
 	return x + n + p;
     if(!R_FINITE(n) || !R_FINITE(p))	ML_ERR_return_NAN;
 #endif
-    if (n <= 0 || p <= 0 || p >= 1)	ML_ERR_return_NAN;
+    if (n <= 0 || p <= 0 || p > 1)	ML_ERR_return_NAN;
 
     x = floor(x + 1e-7);
     if (x < 0) return R_DT_0;

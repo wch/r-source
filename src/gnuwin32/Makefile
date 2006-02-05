@@ -235,7 +235,7 @@ libRblas.dll.a:  Rblas.def
 
 ## suppress lots of warnings: this is a dummy
 blas00.o: blas00.c
-	$(CC) -O2  -c $< -o $@
+	$(CC) -O3  -c $< -o $@
 blas.o: ../appl/blas.f
 	$(F77) $(FFLAGS) -c $< -o $@
 cmplxblas.o: ../appl/cmplxblas.f
@@ -280,15 +280,6 @@ stats-HELP = ziponly
 stats4-HELP = ziponly
 utils-HELP = ziponly
 stats4-SAVE = true
-
-MASS-HELP = ziponly
-boot-HELP = ziponly
-cluster-HELP = ziponly
-lattice-HELP = ziponly
-mgcv-HELP = ziponly
-nlme-HELP = ziponly
-rpart-HELP = ziponly
-survival-HELP = ziponly
 
 pkg-%:
 	@$(MAKE) --no-print-directory \
@@ -340,6 +331,8 @@ pkgcheck-%:
 	    -f $(RHOME)/src/gnuwin32/check/PkgCheck tests;\
 	fi
 
+## used for standard packages whose tests are run in make check-devel, 
+## not make check
 pkgcheck2-%:
 	@$(ECHO) -------- Testing package $* --------
 	-@$(MKDIR) -p $(PKGD)/$*/check

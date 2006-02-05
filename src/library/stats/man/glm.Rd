@@ -121,7 +121,9 @@ glm.fit(x, y, weights = rep(1, nobs),
   \code{glm.fit} is the workhorse function.
 
   If more than one of \code{etastart}, \code{start} and \code{mustart}
-  is specified, the first in the list will be used.
+  is specified, the first in the list will be used.  It is often
+  advisable to supply starting values for a \code{\link{quasi}} family,
+  and also for families with unusual links such as \code{gaussian("log")}.
 
   All of \code{weights}, \code{subset}, \code{offset}, \code{etastart}
   and \code{mustart} are evaluated in the same way as variables in

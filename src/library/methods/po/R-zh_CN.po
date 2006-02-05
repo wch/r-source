@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31\n"
+"POT-Creation-Date: 2006-01-29 08:17\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -271,8 +271,7 @@ msgstr ""
 "一共有%2$d类别名字，但标记目标对象里只有%3$d个單元"
 
 #, fuzzy
-msgid ""
-"more elements in the method signature (%d) than in the generic signature (%d)"
+msgid "more elements in the method signature (%s) than in the generic  %s(%s)"
 msgstr "方法定义里所忽略的正式变元不能存在于标记(%s) 里"
 
 msgid ""
@@ -482,6 +481,9 @@ msgstr "正确的方法必需的带一个变元的函数，收到的却是类别
 
 msgid "unable to find required package '%s'"
 msgstr "找不到所需要的程輯包'%s'"
+
+msgid "Package '%s' is not loaded"
+msgstr ""
 
 msgid "unable to find an environment containing class \"%s\""
 msgstr "找不到包含类别\"%s\"的环境"

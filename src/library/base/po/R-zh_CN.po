@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-03 10:43\n"
+"POT-Creation-Date: 2006-01-29 08:16\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -736,9 +736,6 @@ msgstr ""
 "找到多个叫'%s'的程辑包，\n"
 "用在'%s'里找到的那一个"
 
-msgid "none of the packages were found"
-msgstr "所有的程辑包都没有找到"
-
 msgid ""
 "Further information is available in the following vignettes in directory '%"
 "s':"
@@ -1140,6 +1137,10 @@ msgstr "'solve'里的'a'是奇异矩阵"
 msgid "only square matrices can be inverted"
 msgstr "只有正方形的矩阵才能求逆"
 
+#, fuzzy
+msgid "'b' must be compatible with 'a'"
+msgstr "‘to’必需晚于‘from’"
+
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr "调用solve.default于\"qr\"对象：用'qr.solve'"
 
@@ -1317,6 +1318,11 @@ msgid_plural "packages %s are not loaded"
 msgstr[0] "程辑包%s没有载入"
 msgstr[1] "程辑包%s没有载入"
 
+#, fuzzy
+msgid "there is no package called"
+msgid_plural "there are no packages called"
+msgstr[0] "不存在叫这个名称的程辑包"
+
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] "'namespace:%2$s'没有出口%1$s这个对象"
@@ -1334,6 +1340,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "none of the packages were found"
+#~ msgstr "所有的程辑包都没有找到"
 
 #~ msgid "no input is available"
 #~ msgstr "无输入"
@@ -1442,9 +1451,6 @@ msgstr[1] "警告信息：\n"
 #~ msgid "has been merged into 'stats4'"
 #~ msgstr "已经被合并到‘stats4’ "
 
-#~ msgid "There is no package called"
-#~ msgstr "不存在叫这个名称的程辑包"
-
 #~ msgid "found more than once,"
 #~ msgstr "不止一个，"
 
@@ -1507,9 +1513,6 @@ msgstr[1] "警告信息：\n"
 
 #~ msgid "invalid version spec"
 #~ msgstr "版本不对"
-
-#~ msgid "'to' must be later than 'from'"
-#~ msgstr "‘to’必需晚于‘from’"
 
 #~ msgid "was not loaded"
 #~ msgstr "无法载入"

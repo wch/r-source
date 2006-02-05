@@ -56,7 +56,7 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
   \item{kernel}{The \code{kernel} argument, or the kernel constructed
     from \code{spans}.}
   \item{df}{The distribution of the spectral density estimate can be
-    approximated by a chi square distribution with \code{df} degrees
+    approximated by a (scaled) chi square distribution with \code{df} degrees
     of freedom.}
   \item{bandwidth}{The equivalent bandwidth of the kernel smoother as
     defined by Bloomfield (1976, page 201).}

@@ -37,6 +37,7 @@ double qgeom(double p, double prob, int lower_tail, int log_p)
 	return p + prob;
 #endif
 
+    if (prob == 1) return(0);
 /* add a fuzz to ensure left continuity */
     return ceil(R_DT_Clog(p) / log1p(- prob) - 1 - 1e-7);
 }

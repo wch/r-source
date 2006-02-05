@@ -15,7 +15,7 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         is_base <- package == "base"
-        
+
         all_doc_topics <- Rd_aliases(package, lib.loc = dirname(dir))
 
         ## Load package into code_env.
@@ -2522,14 +2522,23 @@ function(db)
           "format", "details", "value", "references", "source",
           "seealso", "examples", "note", "author", "synopsis",
           "docType", "encoding")
+    known_tags <- c(unique_tags,
+                    "section",
+                    ## Allow for empty keywords (these do not make it
+                    ## into the metadata).
+                    "keyword",
+                    ## Keep this for back-compatibility ...
+                    "non_function")
+    ## Note that we treat \alias and \keyword entries as metadata.
 
     files_with_surely_bad_Rd <- list()
     files_with_likely_bad_Rd <- list()
     files_with_unknown_encoding <- NULL
-    files_with_non_ASCII_meta_data <- NULL
+    files_with_non_ASCII_metadata <- NULL
     files_with_non_ASCII_section_titles <- NULL
     files_with_missing_mandatory_tags <- NULL
     files_with_duplicated_unique_tags <- NULL
+    files_with_unknown_tags <- NULL
     files_with_bad_name <- files_with_bad_title <- NULL
     files_with_bad_keywords <- NULL
 
@@ -2538,22 +2547,27 @@ function(db)
 
     for(f in names(db)) {
         x <- tryCatch(Rd_parse(text = db[[f]]), error = function(e) e)
+
         if(inherits(x, "error")) {
             files_with_surely_bad_Rd[[f]] <- conditionMessage(x)
             next
         }
+
         db_aliases[[f]] <- unique(x$meta$aliases)
         if(length(x$rest))
             files_with_likely_bad_Rd[[f]] <- x$rest
+
         if(length(x$meta$encoding) && is.na(x$meta$encoding))
             files_with_unknown_encoding <-
                 c(files_with_unknown_encoding, f)
+
         for(tag in c("aliases", "doc_type", "encoding")) {
             if(any(ind <- !.is_ASCII(x$meta[[tag]])))
-                files_with_non_ASCII_meta_data <-
-                    rbind(files_with_non_ASCII_meta_data,
+                files_with_non_ASCII_metadata <-
+                    rbind(files_with_non_ASCII_metadata,
                           cbind(f, tag, x$meta[[tag]][ind]))
         }
+
         ## Non-ASCII user-defined section titles.
         ## <NOTE>
         ## Rd_parse() re-encodes these if necessary (and possible), but
@@ -2565,6 +2579,7 @@ function(db)
                 rbind(files_with_non_ASCII_section_titles,
                       cbind(f, user_defined_section_titles[ind]))
         ## </NOTE>
+
         tags <- sapply(x$data$tags, "[[", 1)
         ## Let's not worry about named sections for the time being ...
         bad_tags <- c(mandatory_tags %w/o% tags,
@@ -2579,18 +2594,28 @@ function(db)
             files_with_missing_mandatory_tags <-
                 rbind(files_with_missing_mandatory_tags,
                       cbind(f, bad_tags))
+
         ind <- which(tags == "name")[1]
         if(is.na(ind))
             files_with_bad_name <- c(files_with_bad_name, f)
+
         ind <- which(tags == "title")[1]
         if(is.na(ind) ||
            (regexpr("^[[:space:]]*$", x$data$vals[[ind]]) != -1))
             files_with_bad_title <- c(files_with_bad_title, f)
+
         bad_tags <- intersect(tags[duplicated(tags)], unique_tags)
         if(length(bad_tags))
             files_with_duplicated_unique_tags <-
                 rbind(files_with_duplicated_unique_tags,
                       cbind(f, bad_tags))
+
+        bad_tags <- unique(tags) %w/o% known_tags
+        if(length(bad_tags))
+            files_with_unknown_tags <-
+                rbind(files_with_unknown_tags,
+                      cbind(f, bad_tags))
+
         bad_keywords <- x$meta$keywords %w/o% standard_keywords
         if(length(bad_keywords))
             files_with_bad_keywords <-
@@ -2608,10 +2633,11 @@ function(db)
     val <- list(files_with_surely_bad_Rd,
                 files_with_likely_bad_Rd,
                 files_with_unknown_encoding,
-                files_with_non_ASCII_meta_data,
+                files_with_non_ASCII_metadata,
                 files_with_non_ASCII_section_titles,
                 files_with_missing_mandatory_tags,
                 files_with_duplicated_unique_tags,
+                files_with_unknown_tags,
                 files_with_bad_name,
                 files_with_bad_title,
                 files_with_bad_keywords,
@@ -2620,10 +2646,11 @@ function(db)
         c("files_with_surely_bad_Rd",
           "files_with_likely_bad_Rd",
           "files_with_unknown_encoding",
-          "files_with_non_ASCII_meta_data",
+          "files_with_non_ASCII_metadata",
           "files_with_non_ASCII_section_titles",
           "files_with_missing_mandatory_tags",
           "files_with_duplicated_unique_tags",
+          "files_with_unknown_tags",
           "files_with_bad_name",
           "files_with_bad_title",
           "files_with_bad_keywords",
@@ -2679,9 +2706,9 @@ function(x, ...)
                      ""))
     }
 
-    if(length(x$files_with_non_ASCII_meta_data)) {
-        writeLines(gettext("Rd files with invalid non-ASCII meta data:"))
-        bad <- x$files_with_non_ASCII_meta_data
+    if(length(x$files_with_non_ASCII_metadata)) {
+        writeLines(gettext("Rd files with invalid non-ASCII metadata:"))
+        bad <- x$files_with_non_ASCII_metadata
         ## Reinstate the Rd markup tags for better intelligibility.
         bad[ , 2] <- sub("aliases", "\\\\alias", bad[ , 2])
         bad[ , 2] <- sub("doc_type", "\\\\docType", bad[ , 2])
@@ -2739,6 +2766,19 @@ function(x, ...)
                          paste(" ", bad[[i]])))
         }
         writeLines(gettext("These entries must be unique in an Rd file.\n"))
+    }
+
+    if(length(x$files_with_unknown_tags)) {
+        writeLines(gettextf("Rd files with unknown sections:"))
+        bad <- x$files_with_unknown_tags
+        bad <- split(bad[, 2], bad[, 1])
+        for(i in seq(along = bad)) {
+            writeLines(strwrap(paste(names(bad)[i], ": ",
+                                     paste(bad[[i]], collapse = " "),
+                                     "\n", sep = ""),
+                               indent = 2, exdent = 4))
+        }
+        writeLines("")
     }
 
     if(length(x$files_with_bad_keywords)) {
@@ -2809,7 +2849,7 @@ function(dfile)
             db <- iconv(db, encoding, "")
     }
     else if(!all(.is_ISO_8859(db))) {
-        ## No valid Encoding meta-data.
+        ## No valid Encoding metadata.
         ## Determine whether we can assume Latin1.
         out$missing_encoding <- TRUE
     }
@@ -3126,7 +3166,7 @@ function(package, dir, lib.loc = NULL)
             c(aliases, list(Rd_aliases(dir = dir)))
         db <- .build_Rd_xref_db(dir = dir)
     }
-        
+
     ## Flatten the xref db into one big matrix.
     db <- cbind(do.call("rbind", db), rep(names(db), sapply(db, NROW)))
 
@@ -3371,6 +3411,111 @@ function(x)
     sprintf("(\\\\S4method\\{(%s)\\}\\{(%s)\\})",
             "[._[:alnum:]]*",
             "[._[:alnum:],]*")
+
+
+### * .check_package_subdirs
+
+.check_package_subdirs <- function(dir, doDelete = FALSE)
+{
+    OS_subdirs <- c("unix", "windows")    
+
+    mydir <- function(dir)
+    {
+        d <- list.files(dir, all.files = TRUE, full.names = FALSE)
+        if(!length(d)) return(d)
+        if(basename(dir) %in% c("R", "man"))
+            for(os in OS_subdirs) {
+                os_dir <- file.path(dir, os)
+                if(file_test("-d", os_dir))
+                    d <- c(d,
+                           file.path(os,
+                                     list.files(os_dir,
+                                                all.files = TRUE,
+                                                full.names = FALSE)))
+            }
+        d[sapply(file.path(dir, d), function(x) file_test("-f", x))]
+    }
+
+    if(!file_test("-d", dir))
+        stop(gettextf("directory '%s' does not exist", dir), domain = NA)
+    else
+        dir <- file_path_as_absolute(dir)
+
+    wrong_things <- list(R = character(0), man = character(0),
+                         demo = character(0), `inst/doc` = character(0))
+    
+    code_dir <- file.path(dir, "R")
+    if(file_test("-d", code_dir)) {
+        all_files <- mydir(code_dir)
+        R_files <- c("sysdata.rda",
+                     list_files_with_type(code_dir, "code",
+                                          full.names = FALSE,
+                                          OS_subdirs = OS_subdirs))
+        wrong <- all_files %w/o% R_files
+        ## now configure might generate files in this directory
+        generated <- grep("\\.in$", wrong)
+        if(length(generated)) wrong <- wrong[-generated]
+        if(length(wrong)) {
+            wrong_things$R <- wrong
+            if(doDelete) unlink(file.path(dir, "R", wrong))
+        }
+    }
+
+    man_dir <- file.path(dir, "man")
+    if(file_test("-d", man_dir)) {
+        all_files <- mydir(man_dir)
+        man_files <- list_files_with_type(man_dir, "docs",
+                                          full.names = FALSE,
+                                          OS_subdirs = OS_subdirs)
+        wrong <- all_files %w/o% man_files
+        if(length(wrong)) {
+            wrong_things$man <- wrong
+            if(doDelete) unlink(file.path(dir, "man", wrong))
+        }
+    }
+
+    demo_dir <- file.path(dir, "demo")
+    if(file_test("-d", demo_dir)) {
+        all_files <- mydir(demo_dir)
+        demo_files <- list_files_with_type(demo_dir, "demo",
+                                           full.names = FALSE)
+        wrong <- all_files %w/o% c("00Index", demo_files)
+        if(length(wrong)) {
+            wrong_things$demo <- wrong
+            if(doDelete) unlink(file.path(dir, "demo", wrong))
+        }
+    }
+
+    vign_dir <- file.path(dir, "inst", "doc")
+    if(file_test("-d", vign_dir)) {
+        vignettes <- list_files_with_type(vign_dir, "vignette",
+                                          full.names = FALSE)
+        vignettes <- c(vignettes,
+                       list_files_with_exts(vign_dir, "pdf",
+                                            full.names = FALSE))
+        ## Assume here this is run in the C locale, as it is by R CMD
+        ## check. 
+        OK <- grep("^[[:alpha:]][[:alnum:]._-]+$", vignettes)
+        wrong <- vignettes
+        if(length(OK)) wrong <- wrong[-OK]
+        if(length(wrong)) wrong_things$`inst/doc` <- wrong
+    }
+
+    class(wrong_things) <- "subdir_tests"
+    wrong_things
+}
+
+print.subdir_tests <-
+function(x, ...)
+{
+    for(i in which(sapply(x, length) > 0)) {
+        tag <- names(x)[i]
+        writeLines(sprintf("Subdirectory '%s' contains invalid file names:",
+                           names(x)[i]))
+        .pretty_print(x[[i]])
+    }
+    invisible(x)
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***

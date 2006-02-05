@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31+0000\n"
+"POT-Creation-Date: 2006-01-29 08:17+0000\n"
 "PO-Revision-Date: 2005-06-02 16:10+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -122,16 +122,21 @@ msgstr ""
 msgid "'rho' should be an environment"
 msgstr "'rho' は環境(environment)でなければなりません"
 
-#: nls.c:224 nls.c:252
+#: nls.c:210
+#, fuzzy
+msgid "'dir' is not a numeric vector of the correct length"
+msgstr "引数 %s は長さが 1 か %d の数値ベクトルでなければなりません"
+
+#: nls.c:227 nls.c:255
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "モデルを評価する際，欠損値または無限大が生成されました"
 
-#: nls.c:230
+#: nls.c:233
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "変数 '%s' は整数です、数値ではありません"
 
-#: nls.c:232
+#: nls.c:235
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "変数 '%s' は数値ではありません"

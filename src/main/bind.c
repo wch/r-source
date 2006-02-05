@@ -997,7 +997,8 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     case CPLXSXP:
     case STRSXP:
     case VECSXP:
-	break;
+    case RAWSXP:
+ 	break;
 	/* we don't handle expressions: we could, but coercion of a matrix
 	   to an expression is not ideal */
     default:
@@ -1116,7 +1117,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    dn = getAttrib(u, R_NamesSymbol);
 	    if (k >= lenmin && (TAG(t) != R_NilValue ||
 				((deparse_level == 1) &&
-				 isSymbol(substitute(CAR(t),R_GlobalEnv)))))
+				 isSymbol(substitute(CAR(t),R_NilValue)))))
 		have_cnames = 1;
 	    nnames = imax2(nnames, length(dn));
 	}
@@ -1161,6 +1162,18 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		idx = (!isMatrix(u)) ? rows : k;
 		for (i = 0; i < idx; i++)
 		    COMPLEX(result)[n++] = COMPLEX(u)[i % k];
+	    }
+	}
+    }
+    else if (mode == RAWSXP) {
+	for (t = args; t != R_NilValue; t = CDR(t)) {
+	    u = PRVALUE(CAR(t));
+	    if (isMatrix(u) || length(u) >= lenmin) {
+		u = coerceVector(u, RAWSXP);
+		k = LENGTH(u);
+		idx = (!isMatrix(u)) ? rows : k;
+		for (i = 0; i < idx; i++)
+		    RAW(result)[n++] = RAW(u)[i % k];
 	    }
 	}
     }
@@ -1231,7 +1244,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		if (TAG(t) != R_NilValue)
 		    SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
 		else {
-		    expr = substitute(CAR(t), R_GlobalEnv);
+		    expr = substitute(CAR(t), R_NilValue);
 		    if (deparse_level == 1 && isSymbol(expr))
 			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (deparse_level == 2)
@@ -1329,7 +1342,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    dn = getAttrib(u, R_NamesSymbol);
 	    if (k >= lenmin && (TAG(t) != R_NilValue ||
 		      ((deparse_level == 1) &&
-		       isSymbol(substitute(CAR(t),R_GlobalEnv)))))
+		       isSymbol(substitute(CAR(t),R_NilValue)))))
 		have_rnames = 1;
 	    nnames = imax2(nnames, length(dn));
 	}
@@ -1366,6 +1379,21 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		    for (j = 0; j < cols; j++)
 		      SET_VECTOR_ELT(result, i + n + (j * rows),
 				     duplicate(VECTOR_ELT(u, (i + j * idx) % k)));
+		n += idx;
+	    }
+	}
+    }
+    else if (mode == RAWSXP) {
+	for (t = args; t != R_NilValue; t = CDR(t)) {
+	    u = PRVALUE(CAR(t));
+	    if (isMatrix(u) || length(u) >= lenmin) {
+		u = coerceVector(u, RAWSXP);
+		k = LENGTH(u);
+		idx = (isMatrix(u)) ? nrows(u) : (k > 0);
+		for (i = 0; i < idx; i++)
+		    for (j = 0; j < cols; j++)
+			RAW(result)[i + n + (j * rows)]
+			    = RAW(u)[(i + j * idx) % k];
 		n += idx;
 	    }
 	}
@@ -1463,7 +1491,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		if (TAG(t) != R_NilValue)
 		    SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
 		else {
-		    expr = substitute(CAR(t), R_GlobalEnv);
+		    expr = substitute(CAR(t), R_NilValue);
 		    if (deparse_level == 1 && isSymbol(expr))
 			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (deparse_level == 2)

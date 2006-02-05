@@ -9,10 +9,10 @@ La.svd(x, nu = min(n, p), nv = min(n, p),
        method = c("dgesdd", "dgesvd"))
 }
 \arguments{
-  \item{x}{a matrix whose SVD decomposition is to be computed.}
+  \item{x}{a real or complex matrix whose SVD decomposition is to be computed.}
   \item{nu}{the number of left  singular vectors to be computed.
     This must be one of \code{0}, \code{nrow(x)} and \code{ncol(x)},
-    except for \code{method = "dgesdd"}.}
+    except for the default options for real matrices.}
   \item{nv}{the number of right singular vectors to be computed.
     This must be one of \code{0} and \code{ncol(x)}.}
   \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
@@ -34,7 +34,8 @@ La.svd(x, nu = min(n, p), nv = min(n, p),
   DGESVD and DGESDD.  The latter is usually substantially faster
   if singular vectors are required: see
   \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
-  Most benefit is seen with an optimized BLAS system.
+  Most benefit is seen with an optimized BLAS system.  As from
+  \R 2.3.0, using \code{method="dgesvd"} is deprecated.
 
   Computing the singular vectors is the slow part for large matrices.
 

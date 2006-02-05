@@ -14,6 +14,13 @@ package.skeleton <-
 
     if(!is.character(list))
 	stop("'list' should be a character vector naming R objects")
+
+    ## we need to test in the C locale
+    curLocale <- Sys.getlocale("LC_CTYPE")
+    on.exit(Sys.setlocale("LC_CTYPE", curLocale), add = TRUE)
+    if(Sys.setlocale("LC_CTYPE", "C") != "C")
+        warning("cannot turn off locale-specific chars via LC_CTYPE")
+
     have <- sapply(list, exists)
     if(any(!have))
 	warning(sprintf(ngettext(sum(!have),
@@ -52,10 +59,10 @@ package.skeleton <-
     close(description)
 
     ## READMEs
-    cat("Creating READMEs ...\n")
+    cat("Creating Read-and-delete-mes ...\n")
 
-    ## src/README
-    readme <- file(file.path(path, name, "src", "README"), "wt")
+    ## src/Read-and-delete-me
+    readme <- file(file.path(path, name, "src", "Read-and-delete-me"), "wt")
     cat("Put C/C++/Fortran code here.",
 	"If you have compiled code, add a .First.lib() function",
 	"in the 'R' subdirectory to load it;",
@@ -63,14 +70,14 @@ package.skeleton <-
 	file = readme, sep = "\n")
     close(readme)
 
-    ## man/README
-    readme <- file(file.path(path, name, "man", "README"), "wt")
+    ## man/Read-and-delete-me
+    readme <- file(file.path(path, name, "man", "Read-and-delete-me"), "wt")
     cat("Edit these help files.\n",
 	"You may want to combine the help files for multiple functions.\n",
 	file = readme, sep = "")
     close(readme)
 
-    readme <- file(file.path(path, name, "README"), "wt")
+    readme <- file(file.path(path, name, "Read-and-delete-me"), "wt")
     cat("1. Put any C/C++/Fortran code in 'src'\n",
 	"2. If you have compiled code, add a .First.lib() function in 'R'\n",
 	"   to load the shared library\n",
@@ -93,6 +100,9 @@ package.skeleton <-
     wrong <- grep("^(con|prn|aux|clock\\$|nul|lpt[1-3]|com[1-4])(\\..*|)$",
 		  list0)
     if(length(wrong)) list0[wrong] <- paste("zz", list0[wrong], sep="")
+    ok <- grep("^[[:alnum:]]", list0)
+    if(length(ok) < length(list0))
+        list0[-ok] <- paste("z", list0[-ok], sep="")
     ## now on Windows lower/uppercase will collide too
     list1 <- tolower(list0)
     list2 <- make.unique(list1, sep="_")
@@ -163,6 +173,6 @@ package.skeleton <-
 
     cat("Done.\n")
     cat(paste("Further steps are described in",
-	      file.path(path, name, "README"),
+	      file.path(path, name, "Read-and-delete-me"),
 	      "\n"))
 }

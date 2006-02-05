@@ -67,9 +67,34 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \eqn{P(a, x)} is \code{pgamma(x, a)}.  Other authors (for example
   Karl Pearson in his 1922 tables) omit the normalizing factor,
   defining the incomplete gamma function as \code{pgamma(x, a) * gamma(a)}.
+}
+\source{
+  \code{dgamma} is computed via the Poisson density, using code contributed
+  by Catherine Loader (see \code{\link{dbinom}}).
+  
+  Prior to \R 2.1.0 \code{pgamma} used AS239 (Shea, 1988).  It
+  currently uses an unpublished (and not otherwise documented) algorithm
+  `mainly by Morten Welinder'.
 
-  As from \R 2.1.0 \code{pgamma()} uses a new algorithm (mainly by
-  Morten Welinder) which should be uniformly as accurate as AS 239.
+  \code{qgamma} is based on a C translation of
+
+  Best, D. J. and D. E. Roberts (1975).
+  Algorithm AS91. Percentage points of the chi-squared distribution.
+  \emph{Applied Statistics},  \bold{24}, 385--388.
+
+  plus a final Newton step to improve the approximation.
+  
+  \code{rgamma} for \code{shape >= 1} uses
+
+  Ahrens, J. H. and Dieter, U. (1982).
+  Generating gamma variates by a modified rejection technique.
+  \emph{Communications of the ACM}, \bold{25}, 47--54,
+
+  and for \code{0 < shape < 1} uses
+
+  Ahrens, J. H. and Dieter, U. (1974).
+  Computer methods for sampling from gamma, beta, Poisson and binomial
+  distributions. \emph{Computing}, \bold{12}, 223--246.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -77,7 +102,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Wadsworth \& Brooks/Cole.
 
   Shea, B. L. (1988)
-  Algorithm AS 239,  Chi-squared and Incomplete Gamma Integral,
+  Algorithm AS 239,  Chi-squared and incomplete Gamma integral,
   \emph{Applied Statistics (JRSS C)} \bold{37}, 466--473.
 
   Abramowitz, M. and Stegun, I. A. (1972)

@@ -21,7 +21,7 @@ function(lines)
         }
     }
     else {
-        ## No \encoding meta-data.
+        ## No \encoding metadata.
         ## Determine whether we can assume Latin1.
         if(!all(.is_ISO_8859(lines)))
             encoding <- NA
@@ -443,7 +443,7 @@ function(file, text = NULL)
         lines <- Rd_pp(.read_Rd_lines_quietly(file))
     }
 
-    ## Get meta data (need to agree on what precisely these are), and
+    ## Get metadata (need to agree on what precisely these are), and
     ## remove the corresponding lines (assuming that these entries are
     ## all one-liners).  We mostly do this because \alias (see Paren.Rd)
     ## has non-standard syntax.
@@ -458,11 +458,11 @@ function(file, text = NULL)
                  .get_Rd_metadata_from_Rd_lines(lines, "docType"),
                  encoding =
                  .get_Rd_metadata_from_Rd_lines(lines, "encoding"))
-    ## Use NA encoding meta-data to indicate that we re-encoded a file
+    ## Use NA encoding metadata to indicate that we re-encoded a file
     ## not in ISO-8859 as Latin1.
     if(identical(attr(lines, "encoding"), NA))
         meta$encoding <- NA
-    ## Remove the meta data lines.
+    ## Remove the metadata lines.
     ## (Use the same regexp as in .get_Rd_metadata_from_Rd_lines().)
     i <- grep(paste("^[[:space:]]*\\\\",
                     "(alias|concept|keyword|docType|encoding)",

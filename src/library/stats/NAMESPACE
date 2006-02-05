@@ -387,11 +387,10 @@ export(NLSstAsymptotic, NLSstClosestX, NLSstLfAsymptote,
        NLSstRtAsymptote, SSasymp, SSasympOff, SSasympOrig, SSbiexp,
        SSfol, SSfpl, SSgompertz, SSlogis, SSmicmen, SSweibull,
        asOneSidedFormula, clearNames, getInitial, nls, nls.control,
-       nlsModel, numericDeriv, profiler, selfStart, setNames,
-       sortedXyData)
+       numericDeriv, selfStart, setNames, sortedXyData)
 
 # documented but not exported
-# export(formula.nls, plot.profile.nls, predict.nls, profile.nls, profiler.nls)
+# export(formula.nls, plot.profile.nls, predict.nls, profile.nls)
 
 S3method(NLSstAsymptotic, sortedXyData)
 S3method(NLSstClosestX, sortedXyData)
@@ -407,7 +406,6 @@ S3method(getInitial, default)
 S3method(getInitial, formula)
 S3method(getInitial, selfStart)
 S3method(logLik, nls)
-S3method(nlsModel, plinear)
 S3method(plot, profile.nls)
 S3method(predict, nls)
 S3method(print, nls)

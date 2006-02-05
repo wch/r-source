@@ -58,7 +58,7 @@ ISDIR=C:/packages/Inno51
 ## For a package using F90/95 set the name or path of gfortran.exe 
 ## or g95.exe.  No spaces.
 F95=c:/packages/gfortran/bin/gfortran
-F95FLAGS=-O2 $(PKG_FCFLAGS)
+F95FLAGS=-O3 $(PKG_FCFLAGS)
 
 ## =================== cross-compilation settings  =================
 
@@ -167,14 +167,14 @@ RESCOMP=$(BINPREF)windres
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
 
 %.dll:
-	@$(ECHO) LIBRARY $* > $*.def
+	@$(ECHO) LIBRARY $*.dll > $*.def
 	@$(ECHO) EXPORTS >> $*.def
 	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> $*.def
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) $*.def
 
-lib%.a: %.def
-	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib $@
+#lib%.a: %.def
+#	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib $@
 
 lib%.dll.a: %.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib $@

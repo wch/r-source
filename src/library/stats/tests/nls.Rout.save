@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-09 r37033)
+Version 2.3.0 Under development (unstable) (2006-01-24 r37156)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -134,7 +134,7 @@ b -0.89
   0      56.0706: 0.123450 0.543210
   1      6.39646:  1.34546 0.700840
   2  0.000606391: 0.00517053 0.999153
-  3  0.000606391: 0.00517053 0.999153
+  3  0.000606391: 0.00517052 0.999153
 > summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -419,6 +419,122 @@ b     0.45121 0.91488
 logc -0.64628 0.40953
 > 
 > 
+> ## more profiling with bounds
+> npts <- 10
+> set.seed(1001)
+> a <- 2
+> b <- 0.5
+> x <- runif(npts)
+> y <- a*x/(1+a*b*x) + rnorm(npts, sd=0.2)
+> gfun <- function(a,b,x) {
++     if(a < 0 || b < 0) stop("bounds violated")
++     a*x/(1+a*b*x)
++ }
+> m1 <- nls(y ~ gfun(a,b,x), algorithm = "port",
++           lower = c(0,0), start = c(a=1, b=1))
+> (pr1 <- profile(m1))
+$a
+        tau par.vals.a par.vals.b
+1  -4.55943    0.61825    0.00000
+2  -3.69338    0.72777    0.00000
+3  -1.43894    1.02459    0.00000
+4   0.00000    1.53805    0.26331
+5   0.70536    2.05151    0.48084
+6   1.25688    2.65703    0.64972
+7   1.78274    3.57029    0.81653
+8   2.26362    5.01493    0.97638
+9   2.70180    7.51383    1.12707
+10  3.08992   12.25766    1.26434
+11  3.40458   22.42471    1.38476
+
+$b
+       tau par.vals.a par.vals.b
+1 -0.74662    1.17755    0.00000
+2  0.00000    1.53805    0.26331
+3  0.87566    2.14030    0.55601
+4  1.67482    3.03728    0.83406
+5  2.43255    4.61672    1.12347
+6  3.18042    7.90950    1.44117
+7  3.89865   23.13399    1.79455
+8  4.52605  166.09149    2.20381
+
+attr(,"original.fit")
+Nonlinear regression model
+  model:  y ~ gfun(a, b, x) 
+   data:  parent.frame() 
+      a       b 
+1.53805 0.26331 
+ residual sum-of-squares: 0.38938
+attr(,"summary")
+
+Formula: y ~ gfun(a, b, x)
+
+Parameters:
+  Estimate Std. Error t value Pr(>|t|)  
+a  1.53805    0.61727  2.4917  0.03742 *
+b  0.26331    0.35188  0.7483  0.47569  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.22062 on 8 degrees of freedom
+
+attr(,"class")
+[1] "profile.nls" "profile"    
+> confint(pr1)
+     2.5%  97.5%
+a 0.98596 5.2072
+b      NA 1.0733
+> 
+> gfun <- function(a,b,x) {
++     if(a < 0 || b < 0 || a > 1.5 || b > 1) stop("bounds violated")
++     a*x/(1+a*b*x)
++ }
+> m2 <- nls(y ~ gfun(a,b,x), algorithm = "port",
++           lower = c(0, 0), upper=c(1.5, 1), start = c(a=1, b=1))
+> profile(m2)
+$a
+      tau par.vals.a par.vals.b
+1 -4.4367    0.63351    0.00000
+2 -3.5758    0.74251    0.00000
+3 -1.5917    1.00251    0.00000
+4  0.0000    1.50000    0.24263
+
+$b
+       tau par.vals.a par.vals.b
+1 -0.74358    1.17755    0.00000
+2  0.00000    1.50000    0.24263
+3  1.95266    1.50000    0.53849
+4  2.54777    1.50000    0.66452
+5  3.23041    1.50000    0.84069
+
+attr(,"original.fit")
+Nonlinear regression model
+  model:  y ~ gfun(a, b, x) 
+   data:  parent.frame() 
+      a       b 
+1.50000 0.24263 
+ residual sum-of-squares: 0.38958
+attr(,"summary")
+
+Formula: y ~ gfun(a, b, x)
+
+Parameters:
+  Estimate Std. Error t value Pr(>|t|)  
+a  1.50000    0.59807  2.5080  0.03648 *
+b  0.24263    0.35567  0.6822  0.51438  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Residual standard error: 0.22068 on 8 degrees of freedom
+
+attr(,"class")
+[1] "profile.nls" "profile"    
+> confint(m2)
+Waiting for profiling to be done...
+     2.5%   97.5%
+a 0.90457      NA
+b      NA 0.61016
+> 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  4.33 0 4.41 NA NA 
+Time elapsed:  5.15 0.01 5.23 NA NA 
 > 

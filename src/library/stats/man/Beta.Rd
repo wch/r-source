@@ -12,10 +12,10 @@
   \code{shape2} (and optional non-centrality parameter \code{ncp}).
 }
 \usage{
-dbeta(x, shape1, shape2, ncp=0, log = FALSE)
-pbeta(q, shape1, shape2, ncp=0, lower.tail = TRUE, log.p = FALSE)
-qbeta(p, shape1, shape2,        lower.tail = TRUE, log.p = FALSE)
-rbeta(n, shape1, shape2)
+dbeta(x, shape1, shape2, ncp = 0, log = FALSE)
+pbeta(q, shape1, shape2, ncp = 0, lower.tail = TRUE, log.p = FALSE)
+qbeta(p, shape1, shape2,          lower.tail = TRUE, log.p = FALSE)
+rbeta(n, shape1, shape2, ncp = 0)
 }
 \arguments{
   \item{x, q}{vector of quantiles.}
@@ -52,6 +52,49 @@ rbeta(n, shape1, shape2)
   \eqn{B(a,b) = B_1(a,b)} is the Beta function (\code{\link{beta}}).
 
   \eqn{I_x(a,b)} is \code{pbeta(x,a,b)}.
+
+  The non-central Beta distribution is defined (Johnson et al, 1995,
+  pp. 502) as the distribution of \eqn{X/(X+Y)} where
+  \eqn{X \sim \chi^2_{2a}(\lambda)}{X ~ chi^2_2a(lambda)} and
+  \eqn{Y \sim \chi^2_{2b}}{Y ~ chi^2_2b}.
+}
+\source{
+  The central \code{dbeta} is based on a binomial probability, using code
+  contributed by Catherine Loader (see \code{\link{dbinom}}).
+  The non-central case is based on the derivation as a Poisson
+  mixture of betas (Johnson et al, 1995, pp. 502--3).
+
+  The central \code{pbeta} uses a C translation of a Fortran subroutine
+  by W. Fullerton of Los Alamos Scientific Laboratory for
+  \code{shape <= 15}, otherwise
+
+  Didonato, A. and Morris, A., Jr, (1992)
+  Algorithm 708: Significant digit computation of the incomplete beta
+  function ratios,
+  \emph{ACM Transactions on Mathematical Software}, \bold{18}, 360--373.
+  (See also\crBrown, B. and Lawrence Levy, L. (1994)
+  Certification of algorithm 708: Significant digit computation of the
+  incomplete beta,
+  \emph{ACM Transactions on Mathematical Software}, \bold{20}, 393--397.)
+
+  The non-central \code{pbeta} uses a C translation of
+  
+  Lenth, R. V. (1987) Algorithm AS226: Computing noncentral beta
+  probabilities. \emph{Appl. Statist}, \bold{36}, 241--244,\cr
+incorporating AS R84 (1990), \emph{Appl. Statist}, \bold{39}, 311--2.
+  
+  \code{qbeta} is based on a C translation of
+
+  Cran, G. W., K. J. Martin and G. E. Thomas (1977).
+  Remark AS R19 and Algorithm AS 109,
+  \emph{Applied Statistics},  \bold{26}, 111--114,
+  and subsequent remarks (AS83 and correction).
+
+  \code{rbeta} is based on a C translation of
+
+  R. C. H. Cheng (1978).
+  Generating beta variates with nonintegral shape parameters.
+  \emph{Communications of the ACM}, \bold{21}, 317--322.  
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -61,6 +104,10 @@ rbeta(n, shape1, shape2)
   Abramowitz, M. and Stegun, I. A. (1972)
   \emph{Handbook of Mathematical Functions.} New York: Dover.
   Chapter 6: Gamma and Related Functions.
+
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 2, especially
+  chapter 25. Wiley, New York.
 }
 \seealso{
   \code{\link{beta}} for the Beta function, and \code{\link{dgamma}} for

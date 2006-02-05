@@ -68,7 +68,7 @@ for(n in rbinom(n1, size = 2*n0, p = .4)) {
 }
 
 ##__ 2. Geometric __
-for(pr in seq(0,1,len=15)) {
+for(pr in seq(1e-10,1,len=15)) { # p=0 is not a distribution
     print(All.eq((dg <- dgeom(0:10, pr)),
 		 pr * (1-pr)^(0:10)))
     print(All.eq(cumsum(dg), pgeom(0:10, pr)))
@@ -453,7 +453,7 @@ All.eq(+x, qcauchy(pcauchy(+x, log=TRUE), log=TRUE))
 All.eq(1/x, pcauchy(qcauchy(1/x)))
 All.eq(ex,  pcauchy(qcauchy(ex, log=TRUE), log=TRUE))
 II <- c(-Inf,Inf)
-stopifnot(pcauchy(II) == 0:1, ## qcauchy(0:1) == II,
+stopifnot(pcauchy(II) == 0:1, qcauchy(0:1) == II,
           pcauchy(II, log=TRUE) == c(-Inf,0),
           qcauchy(c(-Inf,0), log=TRUE) == II)
 
@@ -533,5 +533,11 @@ sh <- c(1.1, 0.5, 0.2, 0.15, 1e-2, 1e-10)
 stopifnot(Inf == qgamma(1, sh))
 stopifnot(0   == qgamma(0, sh))
 ## the first gave Inf, NaN, and 99.425 in R 2.1.1 and earlier
+
+f2 <- c(0.5, 1:4)
+stopifnot(df(0, 1, f2) == Inf,
+          df(0, 2, f2) == 1,
+          df(0, 3, f2) == 0)
+## only the last one was ok in R 2.2.1 and earlier
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

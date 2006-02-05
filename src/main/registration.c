@@ -176,7 +176,7 @@ static R_CMethodDef cMethods [] = {
 static R_CallMethodDef callMethods [] = {
     /* lapack */
     CALLDEF(La_svd, 7),
-    CALLDEF(La_rs, 3),
+    CALLDEF(La_rs, 2),
     CALLDEF(La_rg, 2),
     CALLDEF(La_zgesv, 2),
     CALLDEF(La_zgeqp3, 1),

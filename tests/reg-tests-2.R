@@ -1728,3 +1728,16 @@ try(solve(temp+0i))
 # and non-comformant systems
 try(solve(temp, diag(3)))
 ## gave errors from rownames<- in 2.2.1
+
+
+## PR#8462 terms.formula(simplify = TRUE) needs parentheses.
+update.formula (Reaction ~ Days + (Days | Subject), . ~ . + I(Days^2))
+## < 2.3.0 dropped parens on second term.
+
+
+## PR#8528: errors in the post-2.1.0 pgamma
+pgamma(seq(0.75, 1.25, by=0.05)*1e100, shape = 1e100, log=TRUE)
+pgamma(seq(0.75, 1.25, by=0.05)*1e100, shape = 1e100, log=TRUE, lower=FALSE)
+pgamma(c(1-1e-10, 1+1e-10)*1e100, shape = 1e100)
+pgamma(0.9*1e25, 1e25, log=TRUE)
+## were NaN, -Inf etc in 2.2.1.

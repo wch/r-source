@@ -1594,11 +1594,9 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else if ((R_FINITE(xold) && R_FINITE(yold)) &&
 		     !(R_FINITE(xx) && R_FINITE(yy))) {
 		if (i-start > 1)
-		    GPolyline(i-start, x+start, y+start,
-			      USER, dd);
+		    GPolyline(i-start, x+start, y+start, USER, dd);
 	    }
-	    else if ((R_FINITE(xold) && R_FINITE(yold)) &&
-		     (i == n-1))
+	    else if ((R_FINITE(xold) && R_FINITE(yold)) && (i == n-1))
 		GPolyline(n-start, x+start, y+start, USER, dd);
 	    xold = xx;
 	    yold = yy;
@@ -1635,49 +1633,61 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 
     case 's': /* step function	I */
     {
-	double xtemp[3], ytemp[3];
+	double *xtemp, *ytemp;
+	int n0 = 0;
+	xtemp = (double *) alloca(2*n*sizeof(double));
+	ytemp = (double *) alloca(2*n*sizeof(double));
 	Rf_gpptr(dd)->col = INTEGER(col)[0];
-	xold = x[0];
-	yold = y[0];
-	GConvert(&xold, &yold, USER, DEVICE, dd);
-	for (i = 1; i < n; i++) {
+	xold = NA_REAL;
+	yold = NA_REAL;
+	for (i = 0; i < n; i++) {
 	    xx = x[i];
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
-	    if (R_FINITE(xold) && R_FINITE(yold) &&
-		R_FINITE(xx) && R_FINITE(yy)) {
-		xtemp[0] = xold; ytemp[0] = yold;
-		xtemp[1] = xx;	ytemp[1] = yold;
-		xtemp[2] = xx;	ytemp[2] = yy;
-		GPolyline(3, xtemp, ytemp, DEVICE, dd);
+	    if ((R_FINITE(xx) && R_FINITE(yy)) &&
+		(R_FINITE(xold) && R_FINITE(yold))) {
+		if(n0 == 0) {xtemp[n0] = xold; ytemp[n0++] = yold;}
+		xtemp[n0] = xx; ytemp[n0++] = yold;
+		xtemp[n0] = xx;	ytemp[n0++] = yy;		
+	    } else if ((R_FINITE(xold) && R_FINITE(yold)) &&
+		     !(R_FINITE(xx) && R_FINITE(yy))) {
+		GPolyline(n0, xtemp, ytemp, DEVICE, dd);
+		n0 = 0;
 	    }
 	    xold = xx;
 	    yold = yy;
 	}
+	if(n0 > 0) GPolyline(n0, xtemp, ytemp, DEVICE, dd);
     }
     break;
 
     case 'S': /* step function	II */
     {
-	double xtemp[3], ytemp[3];
+	double *xtemp, *ytemp;
+	int n0 = 0;
+	xtemp = (double *) alloca(2*n*sizeof(double));
+	ytemp = (double *) alloca(2*n*sizeof(double));
 	Rf_gpptr(dd)->col = INTEGER(col)[0];
-	xold = x[0];
-	yold = y[0];
-	GConvert(&xold, &yold, USER, DEVICE, dd);
-	for (i = 1; i < n; i++) {
+	xold = NA_REAL;
+	yold = NA_REAL;
+	for (i = 0; i < n; i++) {
 	    xx = x[i];
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
-	    if (R_FINITE(xold) && R_FINITE(yold) &&
-		R_FINITE(xx) && R_FINITE(yy)) {
-		xtemp[0] = xold; ytemp[0] = yold;
-		xtemp[1] = xold; ytemp[1] = yy;
-		xtemp[2] = xx; ytemp[2] = yy;
-		GPolyline(3, xtemp, ytemp, DEVICE, dd);
+	    if ((R_FINITE(xx) && R_FINITE(yy)) &&
+		(R_FINITE(xold) && R_FINITE(yold))) {
+		if(n0 == 0) {xtemp[n0] = xold; ytemp[n0++] = yold;}
+		xtemp[n0] = xold; ytemp[n0++] = yy;
+		xtemp[n0] = xx;	ytemp[n0++] = yy;		
+	    } else if ((R_FINITE(xold) && R_FINITE(yold)) &&
+		     !(R_FINITE(xx) && R_FINITE(yy))) {
+		GPolyline(n0, xtemp, ytemp, DEVICE, dd);
+		n0 = 0;
 	    }
 	    xold = xx;
 	    yold = yy;
 	}
+	if(n0 > 0) GPolyline(n0, xtemp, ytemp, DEVICE, dd);
     }
     break;
 

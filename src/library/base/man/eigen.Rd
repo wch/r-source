@@ -17,7 +17,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     \R < 1.7.0)?}
 }
 \description{
-  Computes eigenvalues and eigenvectors.
+  Computes eigenvalues and eigenvectors of real or complex matrices.
 }
 \details{
   By default \code{eigen} uses the LAPACK routines DSYEVR,
@@ -35,6 +35,14 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   between methods and between platforms.)
 
   Computing the eigenvectors is the slow part for large matrices.
+
+  Computing the eigendecomposition of a matrix is subject to errors on a
+  real-world computer: the definitive analysis is Wilkinson (1965).  All
+  you can hope for is a solution to a problem suitably close to
+  \code{x}.  So even though a real asymmetric \code{x} may have an
+  algebraic solution with repeated real eigenvalues, the computed
+  solution may be of a similar matrix with complex conjugate pairs of
+  eigenvalues.
 }
 \value{
   The spectral decomposition of \code{x} is returned as components of a
@@ -51,7 +59,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     \code{only.values} is \code{TRUE}.
     
     For \code{eigen(, symmetric = FALSE, EISPACK =TRUE)} the choice of
-    length of the eigenvectors is not defined by EISPACK. In all other
+    length of the eigenvectors is not defined by EISPACK.  In all other
     cases the vectors are normalized to unit length.
 
     Recall that the eigenvectors are only defined up to a constant: even
@@ -73,6 +81,9 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
+
+  Wilkinson, J. H. (1965) \emph{The Algebraic Eigenvalue Problem.}
+  Clarendon Press, Oxford.
 }
 
 \seealso{

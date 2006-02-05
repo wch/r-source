@@ -5,16 +5,16 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
 	stop("argument to 'La.svd' must be numeric or complex")
     if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
     method <- match.arg(method)
-    if(is.complex(x) && method == "dgesdd") {
-        method <- "dgesvd"
-    }
+    if(is.numeric(x) && method == "dgesvd")
+        .Deprecated('La.svd(method = "dgesvd")')
+
     x <- as.matrix(x)
     if (is.numeric(x)) storage.mode(x) <- "double"
     n <- nrow(x)
     p <- ncol(x)
     if(!n || !p) stop("0 extent dimensions")
 
-    if(method == "dgesvd") {
+    if(is.complex(x) || method == "dgesvd") {
         if(nu == 0) {
             jobu <- 'N'
             u <- matrix(0, 1, 1)  # dim is checked
@@ -44,6 +44,16 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
         }
         else
             stop("'nv' must be 0, nrow(x) or ncol(x)")
+        if(is.complex(x)) {
+            u[] <- as.complex(u)
+            v[] <- as.complex(v)
+            res <- .Call("La_svd_cmplx", jobu, jobv, x, double(min(n, p)),
+                         u, v, PACKAGE = "base")
+        } else {
+            res <- .Call("La_svd", jobu, jobv, x, double(min(n, p)), u, v,
+                         method, PACKAGE = "base")
+        }
+        return(res[c("d", if(nu) "u", if(nv) "vt")])
     } else {
         if(nu > 0 || nv > 0) {
             np <- min(n, p)
@@ -70,21 +80,5 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
         if(nv) res$vt <- res$vt[1:min(p, nv), , drop = FALSE]
         return(res)
     }
-
-    if(is.complex(x)) {
-        u[] <- as.complex(u)
-        v[] <- as.complex(v)
-        res <- .Call("La_svd_cmplx", jobu, jobv, x, double(min(n, p)), u, v,
-                     PACKAGE = "base")
-    } else
-        res <- .Call("La_svd", jobu, jobv, x, double(min(n, p)), u, v,
-                     method, PACKAGE = "base")
-    res[c("d", if(nu) "u", if(nv) "vt")]
-}
-
-La.chol <- function(x) .Call("La_chol", as.matrix(x), PACKAGE = "base")
-
-La.chol2inv <- function(x, size = ncol(x)) {
-    x <- as.matrix(x) # do it this way so ncol(x) is defined
-    .Call("La_chol2inv", x, size, PACKAGE = "base")
+    ## not reached
 }

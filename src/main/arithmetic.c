@@ -778,7 +778,7 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     if (n1 == 0 || n2 == 0) return(allocVector(REALSXP, 0));
 
     n = (n1 > n2) ? n1 : n2;
-    ans = allocVector(REALSXP, n);
+    PROTECT(ans = allocVector(REALSXP, n));
 
 /*    if (n1 < 1 || n2 < 1) {
       for (i = 0; i < n; i++)
@@ -825,9 +825,11 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     }
 
     /* quick return if there are no attributes */
-    if (ATTRIB(s1) == R_NilValue && ATTRIB(s2) == R_NilValue)
+    if (ATTRIB(s1) == R_NilValue && ATTRIB(s2) == R_NilValue) {
+	UNPROTECT(1);
 	return ans;
-
+    }
+    
     /* Copy attributes from longer argument. */
 
     if (n1 > n2)
@@ -839,6 +841,7 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     else
 	copyMostAttrib(s2, ans);
 
+    UNPROTECT(1);
     return ans;
 }
 

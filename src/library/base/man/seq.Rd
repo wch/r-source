@@ -88,6 +88,9 @@ seq(from)
   \code{\link{col}}.
 
   As an alternative to using \code{:} for factors, \code{\link{interaction}}.
+  
+  For \code{:} used in the formal representation of an interaction, see 
+  \code{\link{formula}}.
 }
 \examples{
 1:4

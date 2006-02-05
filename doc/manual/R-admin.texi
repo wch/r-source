@@ -2619,8 +2619,8 @@ with @command{gcc}@tie{}3.3 and later.
 @section Solaris on Sparc
 @cindex Solaris
 
-@R{} has been built successfully on Solaris 8 aka Solaris 2.8 aka SunOS
-5.8 using @command{gcc}@tie{}3/@command{g77},
+@R{} has been built successfully on Sparc Solaris 8 aka Solaris 2.8 aka
+SunOS 5.8 using @command{gcc}@tie{}3/@command{g77},
 @command{gcc}@tie{}4/@command{gfortran} and the `Sun ONE Studio 7
 Compiler Suite' (aka Forte@tie{}7), and less regularly on Solaris@tie{}9
 and 10.  @acronym{GNU} @command{make} was needed prior to
@@ -2652,11 +2652,15 @@ It was reported by Mike Pacey that Sun Forte 9 requires
 
 When using the SunPro compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will
-fail.  The maximal set of optimization options known to work is
+fail.  The maximal set of optimization options known to work on Sparc is
 
 @example
 -xlibmil -xO5 -dalign -xc99
 @end example
+
+@noindent
+(@cputype{x86} versions do not need @samp{-dalign}, and some do not
+support it.)
 
 We have found little performance difference between @command{gcc} and
 @command{cc} but considerable benefit from using a SunPro FORTRAN
@@ -2665,9 +2669,9 @@ many C++ applications Forte 7 requires @code{-lCstd}, which the
 configure script will add to @code{SHLIB_CXXLDFLAGS} if it identifies
 the compiler correctly.
 
-To compile for a 64-bit target on Solaris (which needs an UltraSparc
-chip and for support to be enabled in the OS) with the Forte 7 compilers
-we used @option{--without-blas} and
+To compile for a 64-bit target on Sparc Solaris (which needs an
+UltraSparc chip and for support to be enabled in the OS) with the Forte
+7 compilers we used @option{--without-blas} and
 
 @example
 CC="cc -xarch=v9"

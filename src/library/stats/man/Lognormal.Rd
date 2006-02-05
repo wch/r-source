@@ -33,6 +33,10 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   \code{qlnorm} gives the quantile function, and
   \code{rlnorm} generates random deviates.
 }
+\source{
+  \code{dlnorm} is calculated from the definition (in Details).
+  \code{[pqr]lnorm} are based on the relationship to the normal.
+}
 \details{
   The log normal distribution has density
   \deqn{
@@ -56,6 +60,10 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 1, chapter 14.
+  Wiley, New York.
 }
 \seealso{
   \code{\link{dnorm}} for the normal distribution.

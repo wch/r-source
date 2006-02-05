@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31\n"
+"POT-Creation-Date: 2006-01-24 11:58\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -182,8 +182,9 @@ msgstr "'%s'의 section를 무한했습니다"
 msgid "Rd files with unknown encoding:"
 msgstr ""
 
-msgid "Rd files with invalid non-ASCII meta data:"
-msgstr ""
+#, fuzzy
+msgid "Rd files with invalid non-ASCII metadata:"
+msgstr "Rd 파일은 비어 있는 \\\\title를 가지고 있어야만 합니다"
 
 #, fuzzy
 msgid "Rd files with non-ASCII section titles:"
@@ -208,6 +209,10 @@ msgstr ""
 
 msgid "These entries must be unique in an Rd file."
 msgstr ""
+
+#, fuzzy
+msgid "Rd files with unknown sections:"
+msgstr "Rd 파일은 비어 있는 \\\\title를 가지고 있어야만 합니다"
 
 msgid "Rd files with non-standard keywords:"
 msgstr ""

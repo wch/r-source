@@ -53,14 +53,31 @@ rnorm(n, mean=0, sd=1)
   \code{\link{runif}} and \code{\link{.Random.seed}} about random number
   generation, and \code{\link{dlnorm}} for the \emph{Log}normal distribution.
 }
+\source{
+  For \code{pnorm}, based on
+
+  Cody, W. D. (1993)
+  Algorithm 715: SPECFUN -- A portable FORTRAN package of special
+  function routines and test drivers.
+  \emph{ACM Transactions on Mathematical Software} \bold{19}, 22--32.
+
+  For \code{qnorm}, the code is a C translation of
+
+  Wichura, M. J. (1988)
+  Algorithm AS 241: The Percentage Points of the Normal Distribution.
+  \emph{Applied Statistics}, \bold{37}, 477--484.
+
+  For \code{rnorm}, see \link{RNG} for how to select the algorithm and
+  for references to the supplied methods.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 
-  Wichura, M. J. (1988)
-  Algorithm AS 241: The Percentage Points of the Normal Distribution.
-  \emph{Applied Statistics}, \bold{37}, 477--484.
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 1, chapter 13.
+  Wiley, New York.
 }
 \examples{
 dnorm(0) == 1/ sqrt(2*pi)

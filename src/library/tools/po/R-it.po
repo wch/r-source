@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31\n"
+"POT-Creation-Date: 2006-01-24 11:58\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -184,8 +184,9 @@ msgstr "sezione '%s' non conclusa"
 msgid "Rd files with unknown encoding:"
 msgstr ""
 
-msgid "Rd files with invalid non-ASCII meta data:"
-msgstr ""
+#, fuzzy
+msgid "Rd files with invalid non-ASCII metadata:"
+msgstr "I file Rd devono avere \\title non vuoto."
 
 #, fuzzy
 msgid "Rd files with non-ASCII section titles:"
@@ -210,6 +211,10 @@ msgstr ""
 
 msgid "These entries must be unique in an Rd file."
 msgstr ""
+
+#, fuzzy
+msgid "Rd files with unknown sections:"
+msgstr "I file Rd devono avere \\title non vuoto."
 
 msgid "Rd files with non-standard keywords:"
 msgstr ""

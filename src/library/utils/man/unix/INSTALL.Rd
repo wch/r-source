@@ -49,6 +49,19 @@
   creating the text, HTML, and LaTeX versions, respectively.  The
   default is to build help files in all three versions.
 
+  If the attempt to install the package fails, leftovers are removed.
+  If the package was already installed, the old version is restored.
+  This happens either if a command encounters an error or if the
+  install is interrupted from the keyboard.
+
+  Use \code{R CMD INSTALL --help} for more usage information.
+}
+
+\section{Deprecated options}{
+  \strong{The following options are deprecated:} use the
+  \file{DESCRIPTION} fields such as \code{LazyLoad}, \code{LazyData} and
+  \code{SaveImage} instead.
+
   If the option \option{--save} is used, the installation procedure
   creates a binary image of the package code, which is then loaded when
   the package is attached, rather than evaluating the package source at
@@ -67,25 +80,20 @@
   any values set in the \file{DESCRIPTION} file.)  The default is
   \option{--no-lazy --no-lazy-data} except that lazy-loading is used for
   package with more than 25kB of \R code and no saved image.
-
-  If the attempt to install the package fails, leftovers are removed.
-  If the package was already installed, the old version is restored.
-  This happens either if a command encounters an error or if the
-  install is interrupted from the keyboard.
-
-  Use \code{R CMD INSTALL --help} for more usage information.
 }
 
 \section{Packages using the methods package}{
   Packages that require the methods package, and that use functions such
   as \code{\link{setMethod}} or \code{\link{setClass}},
-  should be installed by creating a binary image.
+  should be installed either (preferably) using lazy-loading or by
+  creating a binary image.
 
+  \strong{The following mechanism is deprecated:} use the flags such as
+  \code{LazyLoad} and \code{SaveImage} instead.
   The presence of a file named
   \file{install.R} in the package's main directory causes an image to
   be saved.  Note that the file is not in the \file{R} subdirectory: all
   the code in that subdirectory is used to construct the binary image.
-
   Normally, the file \file{install.R} will be empty; if it does contain
   R expressions
   these will be evaluated when the package is attached, e.g. by a call to
@@ -94,11 +102,6 @@
   definition of \code{.First.lib} to ensure loading of the saved
   image, followed by the R code in file \file{install.R}, if any.)
 
-}
-
-\note{
-  Some binary distributions of \R have \code{INSTALL} in a separate
-  bundle, e.g. an \code{R-devel} RPM.
 }
 
 \seealso{

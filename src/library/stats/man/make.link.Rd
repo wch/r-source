@@ -24,7 +24,7 @@ make.link(link)
     \item{linkfun}{Link function \code{function(mu)}}
     \item{linkinv}{Inverse link function \code{function(eta)}}
     \item{mu.eta}{Derivative \code{function(eta)} \eqn{d\mu / d\eta}{dmu/deta}}
-    \item{valideta}{\code{function(eta)}\{ \code{TRUE} if all of
+    \item{valideta}{\code{function(eta)}\{ \code{TRUE} if
         \code{eta} is in the domain of \code{linkinv} \}.}
 }
 \seealso{\code{\link{glm}}, \code{\link{family}}.}

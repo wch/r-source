@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-03 10:43\n"
+"POT-Creation-Date: 2006-01-29 08:16\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -751,9 +751,6 @@ msgstr ""
 "パッケージ '%s' が複数見つかりました。\n"
 " '%s' 中に見つかったものを使います"
 
-msgid "none of the packages were found"
-msgstr "どのパッケージも見つかりませんでした"
-
 msgid ""
 "Further information is available in the following vignettes in directory '%"
 "s':"
@@ -1170,6 +1167,10 @@ msgstr "'solve' 中に特異行列 'a' があります'"
 msgid "only square matrices can be inverted"
 msgstr "逆行列は正方行列だけにしか定義できません"
 
+#, fuzzy
+msgid "'b' must be compatible with 'a'"
+msgstr "'by' は長さ 1 でなければなりません"
+
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr ""
 "solve.default が \"qr\" オブジェクトに対して呼び出されました。'qr.solve' を"
@@ -1350,6 +1351,11 @@ msgid_plural "packages %s are not loaded"
 msgstr[0] "パッケージ %s はロードされません"
 msgstr[1] "パッケージ(複数) %s はロードされません"
 
+#, fuzzy
+msgid "there is no package called"
+msgid_plural "there are no packages called"
+msgstr[0] "'%s' という名前のパッケージはありません"
+
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] "オブジェクト %s は 'namespace:%s' によってエクスポートされません"
@@ -1372,6 +1378,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
 msgstr[1] "警告メッセージ(複数)：\n"
+
+#~ msgid "none of the packages were found"
+#~ msgstr "どのパッケージも見つかりませんでした"
 
 #~ msgid "no input is available"
 #~ msgstr "いかなる入力も利用できません"

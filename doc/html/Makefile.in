@@ -15,9 +15,7 @@ INSTFILES = \
 	R.css \
 	left.jpg logo.jpg logosm.jpg right.jpg up.jpg \
 	about.html \
-	packages-head.html \
-	packages-head-utf8.html \
-	template.html \
+	packages-head.html packages-head-utf8.html \
 	thanks.html
 NON_SVN_INSTFILES = resources.html
 DISTFILES = Makefile.in $(INSTFILES) index-default.html

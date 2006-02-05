@@ -782,9 +782,11 @@ static void HelpMouseClick(window w, int button, point pt)
 	    xd->py = pt.y;
 	} else
 	    xd->clicked = 2;
-	if (dd->gettingEvent)  
+	if (dd->gettingEvent) { 
 	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseDown, 
 	    			button, pt.x, pt.y);
+            if (xd->buffered) SHOW;	
+        }
     }
 }
 
@@ -795,9 +797,11 @@ static void HelpMouseMove(window w, int button, point pt)
 	NewDevDesc *dd = (NewDevDesc *) getdata(w);
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-	if (dd->gettingEvent)  
+	if (dd->gettingEvent) {
 	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseMove, 
 	    			button, pt.x, pt.y);
+	    if (xd->buffered) SHOW;	    			
+	}
     }
 }
 
@@ -808,9 +812,11 @@ static void HelpMouseUp(window w, int button, point pt)
 	NewDevDesc *dd = (NewDevDesc *) getdata(w);
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-	if (dd->gettingEvent)  
+	if (dd->gettingEvent) { 
 	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseUp,
 	    			button, pt.x, pt.y);
+	    if (xd->buffered) SHOW;	
+	}
     }
 }
 
@@ -1259,8 +1265,10 @@ static void CHelpKeyIn(control w, int key)
     
     if (dd->gettingEvent) {
     	keyname = getKeyName(key);
-    	if (keyname > knUNKNOWN) 
+    	if (keyname > knUNKNOWN) {
     	    xd->eventResult = doKeybd(xd->eventRho, dd, keyname, NULL);
+	    if (xd->buffered) SHOW;	
+	}
     } else {
 	if (xd->replaying) return;
 	switch (key) {
@@ -1298,6 +1306,7 @@ static void NHelpKeyIn(control w, int key)
 	    keyname[1] = '\0';
 	}
 	xd->eventResult = doKeybd(xd->eventRho, dd, knUNKNOWN, keyname);
+	if (xd->buffered) SHOW;	
     } else {
 	if (xd->replaying) return;
 	switch (key) {
@@ -2449,7 +2458,7 @@ static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
     dd->onExit = GA_onExit;
     
     while (!xd->clicked) {
-	if(xd->buffered) SHOW;
+	SH;
         WaitMessage();
 	R_ProcessEvents();
     }
@@ -3028,7 +3037,7 @@ static Rboolean GA_NewFrameConfirm()
     settext(xd->gawin, G_("Click or hit ENTER for next page"));
     dd->dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->clicked && !xd->enterkey) {
-	if(xd->buffered) SHOW;
+	SH;
         WaitMessage();
 	R_ProcessEvents(); /* May not return if user interrupts */
     }
@@ -3061,7 +3070,7 @@ static SEXP GA_getEvent(SEXP eventRho, char* prompt)
     xd->eventResult = NULL;
     dd->dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->eventResult || xd->eventResult == R_NilValue) {
-	if(xd->buffered) SHOW;
+	SH;
         WaitMessage();
 	R_ProcessEvents(); /* May not return if user interrupts */
     }

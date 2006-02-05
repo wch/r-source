@@ -69,9 +69,8 @@ nls(formula, data, start, control, algorithm,
   \code{\link{confint}}, \code{\link{deviance}},
   \code{\link{df.residual}}, \code{\link{fitted}},
   \code{\link{formula}}, \code{\link{logLik}}, \code{\link{predict}},
-  \code{\link{print}}, \code{\link{profile}}, \code{\link{profiler}},
-  \code{\link{residuals}}, \code{\link{summary}}, \code{\link{vcov}} and
-  \code{\link{weights}}.
+  \code{\link{print}}, \code{\link{profile}}, \code{\link{residuals}},
+  \code{\link{summary}}, \code{\link{vcov}} and \code{\link{weights}}.
   
   Variables in \code{formula} are looked for first in \code{data}, then
   the environment of \code{formula} and finally along the search path.
@@ -90,6 +89,10 @@ nls(formula, data, start, control, algorithm,
   comparing two components of the round-off error.  If you wish to test
   \code{nls} on artificial data please add a noise component, as shown
   in the example below.  
+
+  The \code{algorithm = "port"} code appears unfinished, and does
+  not even check that the starting value is within the bounds.
+  Use with caution, especially where bounds are supplied.
 }
 \value{
   A list of
@@ -108,7 +111,7 @@ nls(formula, data, start, control, algorithm,
     a convergence code (always 0) and message.}
 }
 \references{
-  Bates, D.M. and Watts, D.G. (1988)
+  Bates, D. M. and Watts, D. G. (1988)
   \emph{Nonlinear Regression Analysis and Its Applications},
   Wiley
 
@@ -117,12 +120,13 @@ nls(formula, data, start, control, algorithm,
   Chapter 10 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 
-  \url{http://netlib.bell-labs.com/netlib/port/} for the Port library.
+  \url{http://netlib.bell-labs.com/netlib/port/} for the Port library
+  documentation.
 }
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{
-  \code{\link{nlsModel}}, \code{\link{summary.nls}}, \code{\link{predict.nls}},
-  \code{\link{profile.nls}},  \code{\link{profiler.nls}}.
+  \code{\link{summary.nls}}, \code{\link{predict.nls}},
+  \code{\link{profile.nls}}.
 }
 \examples{
 DNase1 <- subset(DNase, Run == 1)

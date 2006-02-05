@@ -36,7 +36,6 @@
 static SEXP bcEval(SEXP, SEXP);
 #endif
 
-SEXP attribute_hidden do_browser(SEXP, SEXP, SEXP, SEXP);
 
 /*#define BC_PROFILING*/
 #ifdef BC_PROFILING
@@ -536,7 +535,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	}
 	Rprintf("debug: ");
 	PrintValue(body);
-	do_browser(call,op,arglist,newrho);
+	do_browser(call, op, arglist, newrho);
     }
 
  regdb:

@@ -3,7 +3,9 @@ isSymmetric <- function(object, ...) UseMethod("isSymmetric")
 
 isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...) {
     if(!is.matrix(object)) return(FALSE) ## we test for  symmetric *matrix*
-
+    ## cheap pretest: is it square?
+    d <- dim(object)
+    if(d[1] != d[2]) return(FALSE)
     test <-
         if(is.complex(object))
             all.equal.numeric(object, Conj(t(object)), tol = tol, ...)
@@ -32,7 +34,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     if (!EISPACK) {
         if (symmetric) {
             z <- if(!complex.x)
-                .Call("La_rs", x, only.values, "dsyevr", PACKAGE = "base")
+                .Call("La_rs", x, only.values, PACKAGE = "base")
             else
                 .Call("La_rs_cmplx", x, only.values, PACKAGE = "base")
             ord <- rev(seq(along = z$values))

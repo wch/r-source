@@ -227,8 +227,15 @@ gaussian <- function (link = "identity")
 		   mu.eta = stats$mu.eta,
 		   initialize = expression({
 		       n <- rep.int(1, nobs)
+                       if(is.null(etastart) && is.null(start) &&
+                          is.null(mustart) &&
+                          ((family$link == "inverse" && any(y == 0)) ||
+                          (family$link == "log" && any(y <= 0))))
+                           stop("cannot find valid starting values: please specify some")
+
 		       mustart <- y }),
-		   validmu = function(mu) TRUE
+		   validmu = function(mu) TRUE,
+		   valideta = stats$valideta
 		   ),
 	      class = "family")
 }

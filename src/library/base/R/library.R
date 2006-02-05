@@ -690,7 +690,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                 ## package.  And that's the only check we have ...")
                 ## <FIXME PRE-R-NG>
                 ## All packages usable in R-ng must have 'package.rds'.
-                ## (And we do not need to validate these meta data.)
+                ## (And we do not need to validate these metadata.)
                 ## Should be simply ignore the others?
                 ## (See also above ...)
                 pfile <- file.path(lib, nam, "Meta", "package.rds")
@@ -703,7 +703,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                 ## In principle, info from 'package.rds' should be
                 ## validated, but we already had counterexamples ...
                 ## <FIXME>
-                ## Shouldn't we warn about packages with bad meta data?
+                ## Shouldn't we warn about packages with bad metadata?
                 if(inherits(info, "try-error")
                    || (length(info) != 2)
                    || any(is.na(info)))
@@ -825,7 +825,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
             db <- lapply(paths, function(p) {
                 ## <FIXME PRE-R-NG>
                 ## All packages usable in R-ng must have 'package.rds'.
-                ## (And we do not need to validate these meta data.)
+                ## (And we do not need to validate these metadata.)
                 ## Should be simply ignore the others?
                 ## (See also above ...)
                 pfile <- file.path(p, "Meta", "package.rds")
@@ -885,8 +885,18 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
     }
 
     if(!quiet && (length(bad) > 0)) {
-        if(length(out) == 0)
-            stop("none of the packages were found")
+        if(length(out) == 0) {
+            if(length(bad) == 1) {
+                stop(gettextf("there is no package called '%s'", pkg),
+                     domain = NA)
+            } else {
+                stop(ngettext(length(bad),
+                              "there is no package called",
+                              "there are no packages called"), " ",
+                     paste(shQuote(bad), collapse = ", "), domain = NA)
+
+            }
+        }
         for(pkg in bad)
             warning(gettextf("there is no package called '%s'", pkg),
                     domain = NA)

@@ -43,7 +43,9 @@ unloadNamespace(ns)
   \code{loadNamespace} loads the specified name space and registers it in
   an internal data base.  A request to load a name space that is already
   loaded has no effect.  The arguments have the same meaning as the
-  corresponding arguments to \code{library}.  After loading,
+  corresponding arguments to \code{\link{library}}, whose help page
+  explains the details of how a particular installed package comes to be
+  chosen.  After loading,
   \code{loadNamespace} looks for a hook function named
   \code{\link{.onLoad}} as an internal variable in the name space (it
   should not be exported).  This function is called with the same arguments

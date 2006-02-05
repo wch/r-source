@@ -622,6 +622,15 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 /* smallest decimal exponent, needed in format.c, set in Init_R_Machine */
 extern0 int R_dec_min_exponent		INI_as(-308);
 
+/* structure for caching machine accuracy values */
+typedef struct {
+    int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
+    double eps, epsneg, xmin, xmax;
+} AccuracyInfo;
+
+LibExtern AccuracyInfo R_AccuracyInfo;
+
+
 #ifdef __MAIN__
 # undef extern
 # undef extern0
@@ -677,7 +686,6 @@ extern0 int R_dec_min_exponent		INI_as(-308);
 # define jump_to_toplevel	Rf_jump_to_toplevel
 # define levelsgets		Rf_levelsgets
 # define mainloop		Rf_mainloop
-# define ParseBrowser	Rf_ParseBrowser
 # define mat2indsub		Rf_mat2indsub
 # define Mbrtowc		Rf_mbrtowc
 # define mkCLOSXP		Rf_mkCLOSXP
@@ -1000,13 +1008,6 @@ extern char * locale2charset(const char *);
         onintr(); \
 } while(0)
 
-/* structure for caching machine accuracy values */
-typedef struct {
-    int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
-    double eps, epsneg, xmin, xmax;
-} AccuracyInfo;
-
-extern AccuracyInfo R_AccuracyInfo;
 
 /* FreeBSD defines alloca in stdlib.h, _and_ does not allow a definition
    as here.  (Since it uses GCC, it should use the first clause.) */

@@ -8,14 +8,13 @@
 \description{
   Density, distribution function, quantile function and random
   generation for the F distribution with \code{df1} and \code{df2}
-  degrees of freedom (and optional non-centrality parameter
-  \code{ncp}).
+  degrees of freedom (and optional non-centrality parameter \code{ncp}).
 }
 \usage{
 df(x, df1, df2, log = FALSE)
-pf(q, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE)
-qf(p, df1, df2,        lower.tail = TRUE, log.p = FALSE)
-rf(n, df1, df2)
+pf(q, df1, df2, ncp = 0, lower.tail = TRUE, log.p = FALSE)
+qf(p, df1, df2,          lower.tail = TRUE, log.p = FALSE)
+rf(n, df1, df2, ncp = 0)
 }
 \arguments{
   \item{x, q}{vector of quantiles.}
@@ -57,13 +56,27 @@ rf(n, df1, df2)
   The non-central F distribution is again the ratio of mean squares of
   independent normals of unit variance, but those in the numerator are
   allowed to have non-zero means and \code{ncp} is the sum of squares of
-  the means.  See \code{\link{Chisquare}} for further details on
-  non-central distributions.  
+  the means.  See \link{Chisquare} for further details on
+  non-central distributions.
+}
+\source{
+  For \code{df}, computed via a binomial probability, code contributed by
+  Catherine Loader (see \code{\link{dbinom}}).
+
+  For \code{pf}, via \code{\link{pbeta}} (or for large \code{df2}, via
+  \code{\link{pchisq}}).
+  
+  For \code{qf}, via \code{\link{qchisq}} for large \code{df2}, else via
+  \code{\link{qbeta}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 2, chapters 27 and 30.
+  Wiley, New York.
 }
 \seealso{
   \code{\link{dchisq}} for chi-squared and \code{\link{dt}} for Student's

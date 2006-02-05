@@ -34,15 +34,6 @@ Options:
       --configure-vars=VARS
                         set variables for the configure script (if any)
   -c, --clean		remove all files created during installation
-  -s, --save[=ARGS]     save the package source as an image file, and
-                        arrange for this file to be loaded when the
-                        package is attached; if given, ARGS are passed
-                        to R when creating the save image
-      --no-save         do not save the package source as an image file
-      --lazy            use lazy loading
-      --no-lazy         do not use lazy loading
-      --lazy-data       use lazy loading for data
-      --no-lazy-data    do not use lazy loading for data (current default)
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
@@ -56,6 +47,17 @@ Options:
       --no-lock		install on top of any existing installation
                         without using a lock directory
       --build           build binary tarball(s) of the installed package(s)
+
+Deprecated options:
+  -s, --save[=ARGS]     save the package source as an image file, and
+                        arrange for this file to be loaded when the
+                        package is attached; if given, ARGS are passed
+                        to R when creating the save image
+      --no-save         do not save the package source as an image file
+      --lazy            use lazy loading
+      --no-lazy         do not use lazy loading
+      --lazy-data       use lazy loading for data
+      --no-lazy-data    do not use lazy loading for data (current default)
 
 Report bugs to <r-bugs@r-project.org>."
 
@@ -217,18 +219,25 @@ while test -n "${1}"; do
     -c|--clean)
       clean=true ;;
     -s|--save)
+      message "Option --save (-s) is deprecated"
       save=true;;
     --save=*)
+      message "Option --save is deprecated"
       save_args=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --lazy)
+      message "Option --lazy is deprecated"
       lazy=true ;;
     --no-lazy)
+      message "Option --no-lazy is deprecated"
       lazy=false ;;
     --lazy-data)
+      message "Option --lazy-data is deprecated"
       lazy_data=true ;;
     --no-lazy-data)
+      message "Option --no-lazy-data is deprecated"
       lazy_data=false ;;
     --no-save)
+      message "Option --no-save is deprecated"
       save=false ;;
     -d|--debug)
       debug=true ;;
@@ -649,9 +658,13 @@ do_install_source () {
     message "demo"
     ${MKDIR_P} "${R_PACKAGE_DIR}/demo"
     rm -f "${R_PACKAGE_DIR}/demo/"*
-    cp demo/* "${R_PACKAGE_DIR}/demo" 2>/dev/null
+    echo "tools:::.install_package_demos('.', '${R_PACKAGE_DIR}')" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla --slave > /dev/null
+    if test ${?} -ne 0; then
+      error "installing demos failed"
+      do_exit_on_error
+    fi
     chmod 644 "${R_PACKAGE_DIR}/demo/"*
-    rm -f "${R_PACKAGE_DIR}/demo/00Index"
   fi
 
   if test -d exec && test "${fake}" != "true"; then
@@ -757,7 +770,7 @@ do_install_source () {
   if ${thislazy}; then
     message "preparing package for lazy loading"
     (if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
-    echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::makeLazyLoading(\"${R_PACKAGE_NAME}\", \"${lib}\")") | \
+    echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages(); tools:::makeLazyLoading(\"${R_PACKAGE_NAME}\", \"${lib}\")") | \
       R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" --vanilla --slave
     if test ${?} -ne 0; then
       error "lazy loading failed for package '${pkg_name}'"
@@ -773,18 +786,13 @@ do_install_source () {
   if test -d man; then
     message "help"
     ## Install man sources ...
-    Rdfiles=`ls man/*.[Rr]d man/${R_OSTYPE}/*.[Rr]d 2>/dev/null`
-    if test -n "${Rdfiles}"; then
-      ${MKDIR_P} "${R_PACKAGE_DIR}/man"
-      rm -f "${R_PACKAGE_DIR}/man/"*
-      for f in ${Rdfiles}; do
-	echo "% --- Source file: ${f} ---";
-	cat "${f}"; echo; echo '\eof';
-      done \
-        > "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
-      chmod 644 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
-      ${R_GZIPCMD} -9 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
+    echo "tools:::.install_package_man_sources('.', '${R_PACKAGE_DIR}')" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla --slave > /dev/null
+    if test ${?} -ne 0; then
+      error "installing man sources failed"
+      do_exit_on_error
     fi
+    chmod 644 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd.gz"
     ## Maybe build preformatted help pages ...
     if ${build_help}; then
       if ${NO_PERL5}; then

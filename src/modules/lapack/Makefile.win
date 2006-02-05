@@ -1,27 +1,22 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-## Unfortunately, linking lapack.dll directly against Rlapack.dll
-## produces hard-to-reproduce segfaults in reg-tests-1.R.
-## Until this is resolved, we use a local import library.
-
 MODULE=lapack
 all: 
 	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
 ifneq ($(strip $(USE_ACML)),YES)
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../bin/Rlapack.dll 
-	@$(MAKE) --no-print-directory -f Makefile.win libRlapack.dll.a
 endif
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../modules/$(MODULE).dll
 
 CSOURCES = Lapack.c
 OBJS=$(CSOURCES:.c=.o) dllversion.o
 LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f cmplx.f
-LIBOBJECTS = $(LIBSOURCES:.f=.o)
+LIBOBJECTS = $(LIBSOURCES:.f=.o) Rlapackrc.o
 
 # will be overridden on call from src/gnuwin32/Makefile
-OPTFLAGS=-O2 -Wall -pedantic -std=gnu99
-FOPTFLAGS=-O2
+OPTFLAGS=-O3 -Wall -pedantic -std=gnu99
+FOPTFLAGS=-O3
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(FOPTFLAGS)
@@ -34,36 +29,23 @@ dlamc-FFLAGS=-ffloat-store
 ifeq ($(strip $(USE_ACML_LAPACK)),YES)
 lapack-DLLLIBS=-L../../../bin -lRblas -L"$(ACML_PATH)" -lacml $(FLIBS) -lR
 else
-lapack-DLLLIBS=-L. -lRlapack -L../../../bin -lRblas -lR
+lapack-DLLLIBS=-L../../../bin -lRlapack -lRblas -lR
 endif
-
-Rlapack-DLLLIBS=-L../../../bin -lR -lRblas $(FLIBS)
 
 $(MODULE).dll: $(OBJS)
 
-dllversion.o: ../../include/Rversion.h
+../../../bin/Rlapack.dll: $(LIBOBJECTS)
+	$(DLL) -shared  -o $@ $^ -L../../../bin -lR -lRblas $(FLIBS)
 
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def \
 	  Rlapack.dll *.a
 
 
-# Rlapack.* section
-Rlapack.dll: $(LIBOBJECTS)
-	@$(ECHO) LIBRARY Rlapack > Rlapack.def
-	@$(ECHO) EXPORTS >> Rlapack.def
-	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> Rlapack.def
-	$(DLL) --shared $(DLLFLAGS) -o $@ Rlapack.def $^ $(Rlapack-DLLLIBS)
-
-libRlapack.dll.a: Rlapack.def
-
-../../../bin/Rlapack.dll: Rlapack.dll
-	@$(MKDIR) -p ../../../bin
-	@$(CP) $< $@
-
+# Dependencies
+dllversion.o: ../../include/Rversion.h
 Rlapackrc.o: ../../include/Rversion.h
 
-# Dependencies
 DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)

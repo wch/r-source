@@ -1,6 +1,5 @@
 \name{chol}
 \alias{chol}
-\alias{La.chol}
 \title{The Choleski Decomposition}
 \description{
   Compute the Choleski factorization of a real symmetric
@@ -8,12 +7,11 @@
 }
 \usage{
 chol(x, pivot = FALSE,  LINPACK = pivot)
-La.chol(x)
 }
 \arguments{
   \item{x}{a real symmetric, positive-definite matrix}
   \item{pivot}{Should pivoting be used?}
-  \item{LINPACK}{logical. Should LINPACK be used in the non-pivoting
+  \item{LINPACK}{logical.  Should LINPACK be used in the non-pivoting
     case (for compatibility with \R < 1.7.0)?}
 }
 \value{
@@ -24,8 +22,8 @@ La.chol(x)
   \code{"pivot"} and \code{"rank"} are also returned.
 }
 \details{
-  \code{chol(pivot = TRUE)} provides an interface to the LINPACK routine DCHDC.
-  \code{La.chol} provides an interface to the LAPACK routine DPOTRF.
+  This is an interface to the LAPACK routine DPOTRF and the
+  LINPACK routines DPOFA and DCHDC.
 
   Note that only the upper triangular part of \code{x} is used, so
   that \eqn{R'R = x} when \code{x} is symmetric.
@@ -49,7 +47,7 @@ La.chol(x)
   The code does not check for symmetry.
 
   If \code{pivot = TRUE} and \code{x} is not non-negative
-  definite then there will be no error message but a meaningless
+  definite then there will be a warning message but a meaningless
   result will occur.  So only use \code{pivot = TRUE} when \code{x} is
   non-negative definite by construction.
 }
@@ -97,6 +95,13 @@ try(chol(m))
 pivot <- attr(Q, "pivot")
 oo <- order(pivot)
 t(Q[, oo]) \%*\% Q[, oo] # recover m
+
+## now for a non-positive-definite matrix
+( m <- matrix(c(5,-5,-5,3),2,2) )
+try(chol(m))  # fails
+try(chol(m, LINPACK=TRUE))   # fails
+(Q <- chol(m, pivot = TRUE)) # warning
+crossprod(Q)  # not equal to m
 }
 \keyword{algebra}
 \keyword{array}

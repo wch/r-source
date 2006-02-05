@@ -1,6 +1,5 @@
 \name{chol2inv}
 \alias{chol2inv}
-\alias{La.chol2inv}
 \title{Inverse from Choleski Decomposition}
 \description{
   Invert a symmetric, positive definite square matrix from its Choleski
@@ -8,7 +7,6 @@
 }
 \usage{
 chol2inv(x, size = NCOL(x), LINPACK = FALSE)
-La.chol2inv(x, size = ncol(x))
 }
 \arguments{
   \item{x}{a matrix.  The first \code{nc} columns of the upper triangle
@@ -22,9 +20,8 @@ La.chol2inv(x, size = ncol(x))
   The inverse of the decomposed matrix.
 }
 \details{
-  \code{chol2inv(LINPACK=TRUE)} provides an interface to the LINPACK
+  This is an interface to the LAPACK routine DPOTRI and the LINPACK
   routine DPODI.
-  \code{La.chol2inv} provides an interface to the LAPACK routine DPOTRI.
 }
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)

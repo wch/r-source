@@ -98,9 +98,10 @@ barplot(height, \dots)
   \item{add}{logical specifying if bars should be added to an already
     existing plot; defaults to \code{FALSE}.}
   \item{\dots}{arguments to be passed to/from other methods.  For the
-    default methods these can include
-    further graphical parameters (see \code{\link{par}}) which are
-    passed to \code{\link{plot.window}()}, \code{\link{title}()} and
+    default method these can include further arguments (such as
+    \code{axes}, \code{asp} and \code{main}) and graphical
+    parameters (see \code{\link{par}}) which are passed to
+    \code{\link{plot.window}()}, \code{\link{title}()} and
     \code{\link{axis}}.}
 }
 \details{

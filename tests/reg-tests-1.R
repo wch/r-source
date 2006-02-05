@@ -3937,6 +3937,14 @@ temp2$vectors <- apply(temp2$vectors, 2, function(x) x/sqrt(sum(Mod(x)^2)))
 temp2
 ## segfaulted in 2.2.1
 
+## rbind on data frames with 0 rows (PR#8506)
+foo <- data.frame(x = 1:10, y = rnorm(10))
+bar1 <- rbind.data.frame(foo[1:5,], foo[numeric(0),])
+stopifnot(dim(bar1) == c(5,2))
+bar2 <- rbind.data.frame(a = foo[1:5,], b = foo[numeric(0),])
+stopifnot(dim(bar2) == c(5,2))
+## Last had 6 rows in 2.2.1, and was a corrupt data frame
+
 ### end of tests added in 2.2.1 patched ###
 
 
@@ -3997,6 +4005,7 @@ close(con)
 unlink("test.gz")
 ## segfaulted in 2.2.0 on some x86_64 systems.
 
+
 ## format() with *.marks:
 x <- 1.2345 + 10^(0:5)
 ff <- format(x, width = 11, big.mark = "'")
@@ -4009,3 +4018,62 @@ stopifnot(substring(f2, nc,nc) != "_", # no traling small mark
 fc <- formatC(1.234 + 10^(0:8), format="fg", width=11, big.mark = "'")
 stopifnot(nchar(fc) == 11)
 ## had non-adjusted strings before 2.3.0
+
+
+## data.matrix on zero-length columns
+DF <- data.frame(x=c("a", "b"), y=2:3)[FALSE,]
+stopifnot(is.numeric(data.matrix(DF)))
+# was logical in 2.2.1.
+DF <- data.frame(I(character(0)))
+X <- try(data.matrix(DF))
+stopifnot(inherits(X, "try-error"))
+## gave logical matrix in 2.2.1.
+
+stopifnot(pbirthday(950, coincident=250) == 0,
+          pbirthday(950, coincident=200) > 0)
+## gave error before 2.3.0
+
+
+## raw matrices (PR#8529/30)
+v <- as.raw(c(1:6))
+dim(v) <- c(2,3)
+dimnames(v) <- list(c("x","y"), c("P", "Q", "R"))
+v
+s <- as.raw(c(11:16))
+dim(s) <- c(2,3)
+s
+rbind(s,v,v)
+(m <- cbind(s,v,v,s))
+m[2,4] <- as.raw(254)
+m
+m[1:2,2:4] <- s
+m
+## unimplemented before 2.3.0
+
+
+## window with non-overlapping ranges (PR#8545)
+test <- ts(1:144, start=c(1,1), frequency=12)
+window(test, start=c(15,1), end=c(17,1), extend=TRUE)
+## failed < 2.3.0
+
+
+## pbinom(size=0) gave NaN (PR#8560)
+x <- c(-1,0,1,2)
+stopifnot(identical(pbinom(x, size = 0, p = 0.5), c(0,1,1,1)))
+## 2.2.1 gave NaN in all cases (forced explicitly in C code).
+
+
+## Limits on [dpqr]nbinom and [dqpr]geom
+stopifnot(is.nan(dnbinom(0, 1, 0)), dnbinom(0, 1, 1) == 1,
+          pnbinom(c(-1, 0, 1), 1, 1) == c(0, 1, 1),
+          is.nan(pnbinom(0, 1, 0)),
+          qnbinom(0.5, 1, 1) == 0,
+          is.nan(qnbinom(0.5, 1, 0)),
+          is.finite(rnbinom(1, 1, 1)),
+          !is.finite(rnbinom(1, 1, 0)))
+## d allowed p=0, [pq] disallowed p=1 for R < 2.3.0, r gave NaN for p=1.
+stopifnot(is.nan(dgeom(0, 0)), dgeom(0, 1) == 1,
+          pgeom(c(-1, 0, 1), 1) == c(0, 1, 1), is.nan(pgeom(0, 0)),
+          qgeom(0.5, 1) == 0, is.nan(qgeom(0.5, 0)),
+          is.finite(rgeom(1, 1)),
+          !is.finite(rgeom(1, 0)))

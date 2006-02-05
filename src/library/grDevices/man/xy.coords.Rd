@@ -7,7 +7,7 @@
   produces a measure of consistency.
 }
 \usage{
-xy.coords(x, y, xlab = NULL, ylab = NULL, log = NULL,
+xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
           recycle = FALSE)
 }
 \alias{xy.coords}

@@ -50,18 +50,21 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     \code{1:n} where \code{n} is the number of boxes.}
   \item{show.names}{Set to \code{TRUE} or \code{FALSE} to override the
     defaults on whether an x-axis label is printed for each group.}
-  \item{pars,\dots}{graphical parameters can be passed as arguments to
-    this function, either as a list (\code{pars}) or
+  \item{pars,\dots}{graphical parameters (etc) can be passed as
+    arguments to this function, either as a list (\code{pars}) or
     normally(\code{\dots}), see the following.
 
     Currently, \code{yaxs} and \code{ylim} are used \sQuote{along the
       boxplot}, i.e., vertically, when \code{horizontal} is
-    false. \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis}, and
+    false.  \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis}, and
     \code{col.axis} are passed to \code{\link{axis}}, and \code{main},
     \code{cex.main}, \code{col.main}, \code{sub}, \code{cex.sub},
     \code{col.sub}, \code{xlab}, \code{ylab}, \code{cex.lab}, and
     \code{col.lab} are passed to \code{\link{title}}.
 
+    In addition, \code{axes} is accepted (see
+    \code{\link{plot.window}}), with default \code{TRUE}.
+    
     The following arguments (or \code{pars} components) allow further
     customization of the boxplot graphics.  Their defaults are typically
     determined from the non-prefixed version (e.g., \code{boxlty} from

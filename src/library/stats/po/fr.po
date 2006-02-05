@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31+0000\n"
+"POT-Creation-Date: 2006-01-29 08:17+0000\n"
 "PO-Revision-Date: 2005-12-06 23:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -123,17 +123,22 @@ msgstr ""
 msgid "'rho' should be an environment"
 msgstr "'rho' doit être un environnement"
 
-#: nls.c:224 nls.c:252
+#: nls.c:210
+#, fuzzy
+msgid "'dir' is not a numeric vector of the correct length"
+msgstr "l'argument %s doit être un vecteur numérique de longueur 1 ou %d"
+
+#: nls.c:227 nls.c:255
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Valeur manquante ou infinie obtenue au cours du calcul du modèle"
 
-#: nls.c:230
+#: nls.c:233
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr ""
 "la variable '%s' est une valeur entière, non un nombre à virgule flottante"
 
-#: nls.c:232
+#: nls.c:235
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "la variable '%s' n'est pas numérique"

@@ -11,8 +11,7 @@ str(object, \dots)
     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)),
                        collapse = ".."),
     comp.str="$ ", no.list = FALSE, envir = baseenv(),
-    strict.width = c("no", "cut", "wrap"),
-    \dots)
+    strict.width = getOption("str")$strict.width, \dots)
 }
 \alias{str}
 \alias{str.default}
@@ -56,12 +55,16 @@ str(object, \dots)
   \item{envir}{the environment to be used for \emph{promise} (see
     \code{\link{delayedAssign}}) objects only.}
   \item{strict.width}{string indicating if the \code{width} argument's
-    specification should be followed strictly; defaults to \code{"no"}
-    for back compatibility reasons; \code{"wrap"} uses
+    specification should be followed strictly, one of the values
+    \code{c("no", "cut", "wrap")}.
+    Defaults to option \code{"str.strict.width"} (see
+    \code{\link{options}}) which defaults to \code{"no"} for back
+    compatibility reasons; \code{"wrap"} uses
     \code{\link{strwrap}(*, width=width)} whereas \code{"cut"} cuts
     directly to \code{width}.  Note that a small \code{vec.length}
     may be better than setting \code{strict.width = "wrap"}.}
-  \item{\dots}{potential further arguments (required for Method/Generic reasons).}
+  \item{\dots}{potential further arguments (required for Method/Generic
+    reasons).}
 }
 \value{
   \code{str} does not return anything, for efficiency reasons.
@@ -99,6 +102,16 @@ nchar(longch <- paste(rep(letters,100), collapse=""))
 str(longch)
 str(longch, nchar.max = 52)
 
+str(longch, strict.width = "wrap")
+
+## Settings for narrow transcript :
+op <- options(width = 60, str = list(strict.width = "wrap"))
+str(lsfit(1:9,1:9))
+str(options())
+## reset to previous:
+options(op)
+
+
 \dontshow{
  ##-- Some "crazy" objects
  str(array(1:5, dim=20))
@@ -111,7 +124,7 @@ str(quote( { A+B; list(C,D) } ))
 \dontshow{
 had.stats4 <- "package:stats4" \%in\% search()
 if(!had.stats4)
-   rs <-
+   rs <- % the result of require() below
 }
 ## S4 classes :
 require(stats4)

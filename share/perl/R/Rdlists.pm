@@ -1,6 +1,6 @@
 ## Subroutines for building R documentation
 
-## Copyright (C) 1997-2005 R Development Core Team
+## Copyright (C) 1997-2006 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -280,9 +280,12 @@ sub build_index { # lib, dest, version, [chmdir]
     my $tfile;
 
     foreach $manfile (@mandir) {
-	if($manfile =~ /\.Rd$/i){
+	## Should only process files starting with [A-Za-z0-9] and with
+	## suffix .Rd or .rd, according to `Writing R Extensions'.
+	if($manfile =~ /\.[Rr]d$/){
 
 	    my $rdname = basename($manfile, (".Rd", ".rd"));
+	    if(! ($rdname =~ /^[A-Za-z0-9]/) ) { next; }
 	    my $internal = 0;
 	    my $encoding = "unknown";
 
@@ -493,7 +496,9 @@ sub html_pagehead
     my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext, 
 	$cssloc, $enc) = @_;
 
-    my $retval = "<html><head><title>R: $title</title>\n" .
+    my $retval = 
+	"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n" .
+	"<html><head><title>R: $title</title>\n" .
 	"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$enc\">\n" .
 	"<link rel=\"stylesheet\" type=\"text/css\" href=\"$cssloc\">\n" .
 	"</head><body>\n" .

@@ -24,8 +24,10 @@
 
 
 
-numericDeriv <- function(expr, theta, rho = parent.frame()) {
-    val <- .Call(R_numeric_deriv, expr, theta, rho)
+numericDeriv <- function(expr, theta, rho = parent.frame(), dir=1)
+{
+    dir <- rep(dir, length.out = length(theta))
+    val <- .Call(R_numeric_deriv, expr, theta, rho, dir)
     valDim <- dim(val)
     if (!is.null(valDim)) {
         if (valDim[length(valDim)] == 1)
@@ -219,7 +221,7 @@ nlsModel.plinear <- function(form, data, start, wts)
     m
 }
 
-nlsModel <- function(form, data, start, wts)
+nlsModel <- function(form, data, start, wts, upper=NULL)
 {
     thisEnv <- environment()
     env <- new.env(parent = environment(form))
@@ -233,6 +235,12 @@ nlsModel <- function(form, data, start, wts)
         ind[[i]] <- parLength + seq(along = start[[i]])
         parLength <- parLength + length(start[[i]])
     }
+    getPars.noVarying <- function()
+        unlist(setNames(lapply(names(ind), get, envir = env), names(ind)))
+    getPars <- getPars.noVarying
+    internalPars <- getPars()
+
+    if(!is.null(upper)) upper <- rep(upper, length.out = parLength)
     useParams <- rep(TRUE, parLength)
     lhs <- eval(form[[2]], envir = env)
     rhs <- eval(form[[3]], envir = env)
@@ -241,8 +249,13 @@ nlsModel <- function(form, data, start, wts)
     resid <- .swts * (lhs - rhs)
     dev <- sum(resid^2)
     if(is.null(attr(rhs, "gradient"))) {
-        getRHS.noVarying <- function()
-            numericDeriv(form[[3]], names(ind), env)
+        getRHS.noVarying <- function() {
+            if(is.null(upper))
+                numericDeriv(form[[3]], names(ind), env)
+            else
+                numericDeriv(form[[3]], names(ind), env,
+                             ifelse(internalPars < upper, 1, -1))
+        }
         getRHS <- getRHS.noVarying
         rhs <- getRHS()
     } else {
@@ -282,14 +295,9 @@ nlsModel <- function(form, data, start, wts)
     if(QR$rank < qrDim)
         stop("singular gradient matrix at initial parameter estimates")
 
-    getPars.noVarying <- function()
-        unlist(setNames(lapply(names(ind), get, envir = env), names(ind)))
     getPars.varying <- function()
         unlist(setNames(lapply(names(ind), get, envir = env),
                         names(ind)))[useParams]
-    getPars <- getPars.noVarying
-
-    internalPars <- getPars()
     setPars.noVarying <- function(newPars)
     {
         assign("internalPars", newPars, envir = thisEnv)
@@ -407,6 +415,10 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
     if (any(lower != -Inf) || any(upper != Inf)) {
         low <- rep(as.double(lower), length = length(par))
         upp <- rep(as.double(upper), length = length(par))
+        if(any(start < low || start > upp)) {
+            iv[1] <- 300
+            return(iv)
+        }
     }
     if(p > 0) {
         ## Call driver routine
@@ -421,7 +433,7 @@ nls <-
   function (formula, data = parent.frame(), start, control = nls.control(),
             algorithm = c("default", "plinear", "port"), trace = FALSE,
             subset, weights, na.action, model = FALSE,
-            lower =  - Inf, upper = Inf, ...)
+            lower = -Inf, upper = Inf, ...)
 {
     ## canonicalize the arguments
     formula <- as.formula(formula)
@@ -481,7 +493,7 @@ nls <-
 
     m <- switch(algorithm,
                 plinear = nlsModel.plinear(formula, mf, start, wts),
-                port = nlsModel(formula, mf, start, wts),
+                port = nlsModel(formula, mf, start, wts, upper),
                 nlsModel(formula, mf, start, wts))
 
     ctrl <- nls.control()
@@ -531,7 +543,8 @@ nls <-
                "15" = "LIV too small (15)",
                "16" = "LV too small (16)",
                "63" = "fn cannot be computed at initial par (63)",
-               "65" = "gr cannot be computed at initial par (65)")
+               "65" = "gr cannot be computed at initial par (65)",
+               "300" = "initial par violates constraints")
     if (is.null(nls.out$message))
         nls.out$message <-
             paste("See PORT documentation.  Code (", iv[1], ")", sep = "")

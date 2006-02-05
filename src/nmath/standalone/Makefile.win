@@ -2,28 +2,54 @@
 include ../../gnuwin32/MkRules
 
 ifdef DEBUG
- OPTFLAGS=-g -O2 -Wall
+ OPTFLAGS=-g -O3 -Wall
  DLLFLAGS=
 else
- OPTFLAGS=-O2 -Wall -pedantic
+ OPTFLAGS=-O3 -Wall -pedantic
  DLLFLAGS=-s
 endif
+
+.PHONY: cpy test
 
 all:
 	$(MAKE) -f Makefile.win cpy
 	$(MAKE) -f Makefile.win makeMakedeps
-	$(MAKE) -f Makefile.win Rmath.a Rmath.dll libRmath.a
+	$(MAKE) -f Makefile.win libRmath.a Rmath.dll implib
 
-cpy:
+static:
+	$(MAKE) -f Makefile.win cpy
+	$(MAKE) -f Makefile.win makeMakedeps
+	$(MAKE) -f Makefile.win libRmath.a
+
+shared:
+	$(MAKE) -f Makefile.win cpy
+	$(MAKE) -f Makefile.win makeMakedeps
+	$(MAKE) -f Makefile.win Rmath.dll implib
+
+
+implib: libRmath.dll.a
+
+cpy: stamp-src
+
+stamp-src: $(SOURCES_NMATH)
 	$(CP) -p ../*.c .
+	touch $@
 
-test test.exe: test.c
-	$(CC) -o $@ -I../../include $< -L. $(LIBUNICOWS) -lRmath
+test: test.exe test-static.exe
+
+test-CFLAGS=-I../../include
+## see README for alternatives
+test.exe: test.o
+	$(CC) -o $@ $< -L. Rmath.dll
+	$@
+test-static.exe: test.o
+	$(CC) -o $@ $< -L. libRmath.a
+	$@
 
 clean:
-	$(RM) $(SOURCES_NMATH) *.o *.d *.def Makedeps
+	$(RM) $(SOURCES_NMATH) *.o *.d *.def Makedeps stamp-src
 distclean: clean
-	$(RM) Rmath.a Rmath.dll libRmath.a test.exe
+	$(RM) *.a Rmath.dll test*.exe
 
 DEFS =  -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
 CFLAGS=$(OPTFLAGS) -I.. -I../../include -I../../include/R_ext $(DEFS)
@@ -65,15 +91,13 @@ SOURCES_NMATH = \
 	signrank.c
 DEPENDS = $(SOURCES_NMATH:.c=.d)
 
-Rmath.dll: Rmath.a
-Rmath.a: sunif.o $(SOURCES_NMATH:.c=.o)
+Rmath.dll: libRmath.a
+libRmath.a: sunif.o $(SOURCES_NMATH:.c=.o)
 Rmath.def: sunif.o $(SOURCES_NMATH:.c=.o)
 	$(ECHO) LIBRARY $* > $@
 	$(ECHO) EXPORTS >> $@
-	$(NM) $^ > Defs
-	$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $@
-	$(RM) Defs
-libRmath.a: Rmath.def
+	$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> $@
+libRmath.dll.a: Rmath.def
 
 # Dependencies
 makeMakedeps: $(DEPENDS)

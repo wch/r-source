@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31\n"
+"POT-Creation-Date: 2006-01-24 11:58\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -167,7 +167,7 @@ msgstr ""
 msgid "Rd files with unknown encoding:"
 msgstr ""
 
-msgid "Rd files with invalid non-ASCII meta data:"
+msgid "Rd files with invalid non-ASCII metadata:"
 msgstr ""
 
 msgid "Rd files with non-ASCII section titles:"
@@ -189,6 +189,9 @@ msgid "Rd files with duplicate '%s':"
 msgstr ""
 
 msgid "These entries must be unique in an Rd file."
+msgstr ""
+
+msgid "Rd files with unknown sections:"
 msgstr ""
 
 msgid "Rd files with non-standard keywords:"

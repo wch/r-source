@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-16 r37100)
+Version 2.3.0 Under development (unstable) (2006-01-26 r37181)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4973,4 +4973,26 @@ Error in solve.default(temp + (0+0i)) : only square matrices can be inverted
 > try(solve(temp, diag(3)))
 Error in solve.default(temp, diag(3)) : 'b' must be compatible with 'a'
 > ## gave errors from rownames<- in 2.2.1
+> 
+> 
+> ## PR#8462 terms.formula(simplify = TRUE) needs parentheses.
+> update.formula (Reaction ~ Days + (Days | Subject), . ~ . + I(Days^2))
+Reaction ~ Days + (Days | Subject) + I(Days^2)
+> ## < 2.3.0 dropped parens on second term.
+> 
+> 
+> ## PR#8528: errors in the post-2.1.0 pgamma
+> pgamma(seq(0.75, 1.25, by=0.05)*1e100, shape = 1e100, log=TRUE)
+ [1] -3.768207e+98 -2.314355e+98 -1.251893e+98 -5.360516e+97 -1.293294e+97
+ [6] -6.931472e-01  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+[11]  0.000000e+00
+> pgamma(seq(0.75, 1.25, by=0.05)*1e100, shape = 1e100, log=TRUE, lower=FALSE)
+ [1]  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+ [6] -6.931472e-01 -1.209836e+97 -4.689820e+97 -1.023806e+98 -1.767844e+98
+[11] -2.685645e+98
+> pgamma(c(1-1e-10, 1+1e-10)*1e100, shape = 1e100)
+[1] 0 1
+> pgamma(0.9*1e25, 1e25, log=TRUE)
+[1] -5.360516e+22
+> ## were NaN, -Inf etc in 2.2.1.
 > 

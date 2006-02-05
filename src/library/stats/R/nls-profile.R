@@ -3,7 +3,7 @@
 ###
 ### Copyright 1999-1999 Saikat DebRoy <saikat$stat.wisc.edu>,
 ###                     Douglas M. Bates <bates$stat.wisc.edu>,
-### Copyright 2005      The R Development Core Team
+### Copyright 2005-6   The R Development Core Team
 ###
 ### This file is part of the nls library for R and related languages.
 ### It is made available under the terms of the GNU General Public
@@ -29,9 +29,13 @@ profiler.nls <- function(fitted, ...)
     algorithm <- fitted$call$algorithm
     ctrl <- fitted$call$control
     trace <- fitted$call$trace
-    lower <- fitted$call$lower
-    upper <- fitted$call$upper
     defaultPars <- fittedPars <- fittedModel$getPars()
+    lower <- fitted$call$lower
+    lower <- rep(if(!is.null(lower)) as.double(lower) else Inf,
+                 length = length(defaultPars))
+    upper <- fitted$call$upper
+    upper <- rep(if(!is.null(upper)) as.double(upper) else Inf,
+                 length = length(defaultPars))
     defaultVary <- rep(TRUE, length(defaultPars))
     S.hat <- deviance(fitted) # need to allow for weights
     s2.hat <- summary(fitted)$sigma^2
@@ -100,8 +104,9 @@ profiler.nls <- function(fitted, ...)
                  profiledModel <- if(algorithm != "port") {
                      if(sum(vary)) .Call(R_nls_iter, fittedModel, ctrl, trace) else fittedModel
                  } else {
-                     nls_port_fit(fittedModel, startPars[vary],
-                                  lower, upper, ctrl, trace)
+                     iv <- nls_port_fit(fittedModel, startPars[vary],
+                                        lower[vary], upper[vary], ctrl, trace)
+                     if(!iv[1] %in% 3:6) fittedModel$deviance <- NA
                      fittedModel
                  }
                  fstat <- (profiledModel$deviance()-S.hat)/s2.hat
@@ -126,6 +131,10 @@ profile.nls <-
     prof <- profiler(fitted)
     pars <- prof$getFittedPars()
     npar <- length(pars)  # less in a partially linear model
+    lower <- fitted$call$lower
+    lower <- rep(if(!is.null(lower)) as.double(lower) else -Inf, length = npar)
+    upper <- fitted$call$upper
+    upper <- rep(if(!is.null(upper)) as.double(upper) else Inf, length = npar)
     if(is.character(which)) which <- match(which, names(pars), 0)
     which <- which[which >= 1 & which <= npar]
     cutoff <- sqrt(npar * qf(1 - alphamax, npar, nobs - npar))
@@ -145,18 +154,23 @@ profile.nls <-
         base <- pars[par]
         profile.par.inc <- delta.t * std.err[par]
         pars[par] <- base - profile.par.inc
+        pars[par] <- pmin(upper[par], pmax(lower[par], pars[par]))
         while(count <= maxpts) {
-            if(is.na(pars[par]) ||
+            if(is.na(pars[par]) || isTRUE(all.equal(pars, par.vals[1, ])) ||
+               pars[par] < lower[par] || pars[par] > upper[par] ||
                abs(pars[par] - base)/std.err[par] > 10 * cutoff) break
             prof$setDefault(params = pars)
             ans <- prof$getProfile()
             if(is.na(ans$fstat) || ans$fstat < 0) break
+            newtau <- sgn*sqrt(ans$fstat)
+            if(abs(newtau - tau[count]) < 0.1) break
             count <- count + 1
-            tau[count] <- sgn*sqrt(ans$fstat)
+            tau[count] <- newtau
             par.vals[count, ] <- pars <- ans$parameters[1:npar]
             if(abs(tau[count]) > cutoff) break
             pars <- pars + ((pars - par.vals[count - 1,  ]) * delta.t)/
                 abs(tau[count] - tau[count - 1])
+            pars[-par] <- pmin(upper[-par], pmax(lower[-par], pars[-par]))
         }
         ind <- seq(len=count)
         tau[ind] <- tau[rev(ind)]
@@ -165,18 +179,23 @@ profile.nls <-
         newmax <- count + maxpts
         pars <- par.vals[count,  ]
         pars[par] <- base + profile.par.inc
+        pars[par] <- pmin(upper[par], pmax(lower[par], pars[par]))
         while(count <= newmax) {
-            if(is.na(pars[par]) ||
+            if(is.na(pars[par]) || isTRUE(all.equal(pars, par.vals[1, ])) ||
+               pars[par] < lower[par] || pars[par] > upper[par] ||
                abs(pars[par] - base)/std.err[par] > 10 * cutoff) break
             prof$setDefault(params = pars)
             ans <- prof$getProfile()
             if(is.na(ans$fstat)|| ans$fstat < 0) break
+            newtau <- sgn*sqrt(ans$fstat)
+            if(abs(newtau - tau[count]) < 0.1) break
             count <- count + 1
-            tau[count] <- sgn*sqrt(ans$fstat)
+            tau[count] <- newtau
             par.vals[count, ] <- pars <- ans$parameters[1:npar]
             if(abs(tau[count]) > cutoff) break
             pars <- pars + ((pars - par.vals[count - 1,  ]) * delta.t)/
                 abs(tau[count] - tau[count - 1])
+            pars[-par] <- pmin(upper[-par], pmax(lower[-par], pars[-par]))
         }
         ind <- seq(len=count)
         out[[par]] <- structure(list(tau = tau[ind], par.vals =

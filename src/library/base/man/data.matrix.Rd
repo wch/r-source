@@ -15,9 +15,16 @@ data.matrix(frame)
     factors or numeric vectors.}
 }
 \details{
-  Suppling a data frame with columns which are not numerical or logical
-  is an error.  A warning is given if any non-factor column as a class,
+  Suppling a data frame with columns which are not numeric, factor or logical
+  is an error.  A warning is given if any non-factor column has a class,
   as then information can be lost.
+}
+\value{
+  If \code{frame} is a data frame, a numeric matrix of the same
+  dimensions as \code{frame}, with dimnames taken from the row.names and
+  names.
+
+  Otherwise, the result of \code{\link{as.matrix}}.
 }
 \seealso{
   \code{\link{as.matrix}},

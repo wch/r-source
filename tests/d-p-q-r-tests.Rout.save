@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-07-13 r34959)
+R : Copyright 2006, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2006-02-04 r37257)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > ####	d|ensity
@@ -101,7 +101,7 @@ n= 51 : ......................
 n= 48 : ......................
 > 
 > ##__ 2. Geometric __
-> for(pr in seq(0,1,len=15)) {
+> for(pr in seq(1e-10,1,len=15)) { # p=0 is not a distribution
 +     print(All.eq((dg <- dgeom(0:10, pr)),
 + 		 pr * (1-pr)^(0:10)))
 +     print(All.eq(cumsum(dg), pgeom(0:10, pr)))
@@ -944,7 +944,7 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > All.eq(ex,  pcauchy(qcauchy(ex, log=TRUE), log=TRUE))
 [1] TRUE
 > II <- c(-Inf,Inf)
-> stopifnot(pcauchy(II) == 0:1, ## qcauchy(0:1) == II,
+> stopifnot(pcauchy(II) == 0:1, qcauchy(0:1) == II,
 +           pcauchy(II, log=TRUE) == c(-Inf,0),
 +           qcauchy(c(-Inf,0), log=TRUE) == II)
 > 
@@ -1053,6 +1053,12 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > stopifnot(0   == qgamma(0, sh))
 > ## the first gave Inf, NaN, and 99.425 in R 2.1.1 and earlier
 > 
+> f2 <- c(0.5, 1:4)
+> stopifnot(df(0, 1, f2) == Inf,
++           df(0, 2, f2) == 1,
++           df(0, 3, f2) == 0)
+> ## only the last one was ok in R 2.2.1 and earlier
+> 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.78 0.02 2.25 0 0 
+Time elapsed:  2.43 0.01 2.47 NA NA 
 > 

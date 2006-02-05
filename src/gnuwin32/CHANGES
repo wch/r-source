@@ -7,10 +7,6 @@ See the file NEWS for changes that affect all versions of R.
 R 2.3.0
 =======
 
-There is no longer a separate 'East Asian' version of R.dll.
-(Also, msvcp60.dll is no longer used as libmingwex now supplies suitable
-functions.)
-
 There is an error handler for access violations and illegal
 instructions, which issues a traceback and error message, then returns
 to the top level.  This is switched off after 10 uses in a session.
@@ -24,42 +20,10 @@ There is a new function choose.dir() to choose a folder (as used for
 New function shortPathNames() to convert names to DOS-style paths (8+3
 names and no spaces).
 
-There is now MBCS support for the line editor in Rterm.exe.
-(Contributed by Haruki Koyanagi.)
-
-R CMD INSTALL will now clean up after interruption (by ctrl-C, at
-least where supported by the shell).
-
-iconv() was not always getting the current charset ("") right,
-especially if the locale was set in a running R session.
-
-gzfile() now always ensures that the underlying file is opened in
-binary mode (this is only an issue on Windows).  This solves some
-problems with reading compressed data files via gzfile().
-
-This version of R expects a complete double-complex BLAS to be
-available, and so customized (e.g. ATLAS and ACML) versions of
-Rblas.dll needs to be rebuilt.  (The pre-compiled ones available on
-CRAN have been updated.)
-
-Since the Goto BLAS is no longer available for Windows, support for it
-has been withdrawn.
-
-The ACML optimized BLAS can be used for LAPACK: see the 'R
-Installation and Administration Manual'.
-
-winMenuAdd() now has no limits on the number of menus or items, and
-names are now limited to 500 (not 50) bytes.
-
 Added workaround to Windows graphics devices (windows(),
 win.metafile(), etc.) to allow callers to choose not to restore the
 focus to the console.  The interface to this will likely change in a
 future release.
-
-The assembler exponentiation code has been updated to that from glibc 2.3.6.
-
-There is now support for compiling Fortran 90/95 code in packages: see
-'Writing R Extensions'.
 
 For compatibility with Unix, the following environment variables are
 checked for a writable directory for the R session temporary directory:
@@ -69,11 +33,24 @@ checked for a writable directory for the R session temporary directory:
 (the last will always succeed).  The changes are that TMPDIR is checked
 first and that the values are checked to be a directory.
 
-The import libraries libR.a, libRblas.a, libRlapack.a and libproxy.a
-are no longer used, as we now link directly to the corresponding DLL.
+sprintf() now tries to ensure the output is C99-compliant, with 
+1.23e+08 not 1.23e+008 as given by the Windows run-time.
 
-Import libraries are now made by default without -k (--kill-at).  This
-might be relevant for contributed software using R's macros.
+Rterm now responds to Ctrl-C during input (Ctrl-Break always worked).
+This means ^C is no longer echoed.
+
+The minimum value for --max-mem-size is now 32M (rather than 16M).
+
+
+Internationalization
+--------------------
+
+There is no longer a separate 'East Asian' version of R.dll.
+(Also, msvcp60.dll is no longer used as libmingwex now supplies suitable
+functions.)
+
+There is now MBCS support for the line editor in Rterm.exe.
+(Contributed by Haruki Koyanagi.)
 
 On NT-based versions of Windows, Unicode characters are used to draw
 on the console, pager, editor and windows() family of devices in
@@ -88,14 +65,12 @@ Added a few mappings from Window locale names (e.g. "chinese", "chs",
 "cht", "ptb") to language names.  There is still scope for confusion:
 LC_ALL=es is Estonian, and LANGUAGE=es is Spanish.
 
-sprintf() now tries to ensure the output is C99-compliant, with 
-1.23e+08 not 1.23e+008 as given by the Windows run-time.
 
-Packages can now supply export files pkgname/src/pkgname-win.def:
-package 'stats' does so.
+Installing packages
+-------------------
 
-Rterm now responds to Ctrl-C during input (Ctrl-Break always worked).
-This means ^C is no longer echoed.
+R CMD INSTALL will now clean up after interruption (by ctrl-C, at
+least where supported by the shell).
 
 R CMD INSTALL --docs now has more options.
 
@@ -103,12 +78,61 @@ LInks to package 'methods' are now fixed up, and R CMD INSTALL no
 longer reports as missing links to 'datasets' and 'grDevices' which
 would be fixed up.
 
+There is now support for compiling Fortran 90/95 code in packages: see
+'Writing R Extensions'.
+
+Packages can now supply export files pkgname/src/pkgname-win.def:
+package 'stats' does so.
+
+
+C-level changes
+---------------
+
+This version of R expects a complete double-complex BLAS to be
+available, and so customized (e.g. ATLAS and ACML) versions of
+Rblas.dll needs to be rebuilt.  (The pre-compiled ones available on
+CRAN have been updated.)
+
+The ACML optimized BLAS can be used for LAPACK: see the 'R
+Installation and Administration Manual'.
+
+Since the Goto BLAS is no longer available for Windows, support for it
+has been withdrawn.
+
+The assembler exponentiation code has been updated to that from glibc 2.3.6.
+
+The import libraries libR.a, libRblas.a, libRlapack.a and libproxy.a
+are no longer used, as we now link directly to the corresponding DLL
+(except that a local version of libRblas.a is needed to build R.dll,
+since R.dll and Rblas.dll are mutually dependent).
+
+Import libraries are now made by default without -k (--kill-at).  This
+might be relevant for contributed software using R's macros.
+
 The default optimization level has been changed from -O2 to -O3, since
 space taken by compiled code is no longer much of an issue.  This will
 result is a small performance increase.
 
 When making DLLs, the objects are no longer wrapped in an archive en
 route (this was needed to avoid line-length limits on an earlier shell).
+
+When making standalone Rmath, the static library is now libRmath.a and the
+import library is called libRmath.dll.a.
+
+
+Bug fixes
+---------
+
+iconv() was not always getting the current charset ("") right,
+especially if the locale was set in a running R session.
+
+gzfile() now always ensures that the underlying file is opened in
+binary mode (this is only an issue on Windows).  This solves some
+problems with reading compressed data files via gzfile().
+
+winMenuAdd() now has no limits on the number of menus or items, and
+names are now limited to 500 (not 50) bytes.
+
 
 
 
@@ -125,6 +149,9 @@ directories with leading spaces in the name.
 
 tempdir() and tempfile() use all backslashes again (2.2.1 did not).
 
+When a graphics window was double-buffered, it would update too
+frequently while waiting for input, overloading some remote display 
+utilities.
 
 
 R 2.2.1
