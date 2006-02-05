@@ -23,8 +23,9 @@ rnbinom(n, size, prob, mu)
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{size}{target for number of successful trials, or dispersion
-    parameter (the shape parameter of the gamma mixing distribution).}
-  \item{prob}{probability of success in each trial.}
+    parameter (the shape parameter of the gamma mixing distribution).
+    Must be strictly positive.}
+  \item{prob}{probability of success in each trial. \code{0 < p <= 1}.}
   \item{mu}{alternative parametrization via mean: see Details}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
@@ -42,7 +43,7 @@ rnbinom(n, size, prob, mu)
   \deqn{
     p(x) = \frac{\Gamma(x+n)}{\Gamma(n) x!} p^n (1-p)^x}{%
     p(x) = Gamma(x+n)/(Gamma(n) x!) p^n (1-p)^x}
-  for \eqn{x = 0, 1, 2, \ldots}
+  for \eqn{x = 0, 1, 2, \ldots}, \eqn{n > 0} and \eqn{0 < p \le 1}.
 
   This represents the number of failures which occur in a sequence of
   Bernoulli trials before a target number of successes is reached.

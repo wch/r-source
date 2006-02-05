@@ -68,7 +68,7 @@ for(n in rbinom(n1, size = 2*n0, p = .4)) {
 }
 
 ##__ 2. Geometric __
-for(pr in seq(0,1,len=15)) {
+for(pr in seq(1e-10,1,len=15)) { # p=0 is not a distribution
     print(All.eq((dg <- dgeom(0:10, pr)),
 		 pr * (1-pr)^(0:10)))
     print(All.eq(cumsum(dg), pgeom(0:10, pr)))

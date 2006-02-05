@@ -21,7 +21,7 @@ rgeom(n, prob)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
-  \item{prob}{probability of success in each trial.}
+  \item{prob}{probability of success in each trial. \code{0 < prob <= 1}.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -35,7 +35,7 @@ rgeom(n, prob)
 \details{
   The geometric distribution with \code{prob} \eqn{= p} has density
   \deqn{p(x) = p {(1-p)}^{x}}{p(x) = p (1-p)^x}
-  for \eqn{x = 0, 1, 2, \ldots}{x = 0, 1, 2, ...}
+  for \eqn{x = 0, 1, 2, \ldots}{x = 0, 1, 2, ...}, \eqn{0 < p \le 1}.
 
   If an element of \code{x} is not integer, the result of \code{pgeom}
   is zero, with a warning.

@@ -4061,3 +4061,19 @@ window(test, start=c(15,1), end=c(17,1), extend=TRUE)
 x <- c(-1,0,1,2)
 stopifnot(identical(pbinom(x, size = 0, p = 0.5), c(0,1,1,1)))
 ## 2.2.1 gave NaN in all cases (forced explicitly in C code).
+
+
+## Limits on [dpqr]nbinom and [dqpr]geom
+stopifnot(is.nan(dnbinom(0, 1, 0)), dnbinom(0, 1, 1) == 1,
+          pnbinom(c(-1, 0, 1), 1, 1) == c(0, 1, 1),
+          is.nan(pnbinom(0, 1, 0)),
+          qnbinom(0.5, 1, 1) == 0,
+          is.nan(qnbinom(0.5, 1, 0)),
+          is.finite(rnbinom(1, 1, 1)),
+          !is.finite(rnbinom(1, 1, 0)))
+## d allowed p=0, [pq] disallowed p=1 for R < 2.3.0, r gave NaN for p=1.
+stopifnot(is.nan(dgeom(0, 0)), dgeom(0, 1) == 1,
+          pgeom(c(-1, 0, 1), 1) == c(0, 1, 1), is.nan(pgeom(0, 0)),
+          qgeom(0.5, 1) == 0, is.nan(qgeom(0.5, 0)),
+          is.finite(rgeom(1, 1)),
+          !is.finite(rgeom(1, 0)))

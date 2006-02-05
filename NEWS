@@ -681,7 +681,11 @@ BUG FIXES
     o	window() did not allow non-overlapping ranges with
 	extend = TRUE.  (PR#8545)
 
-    o	pbinom(size=0) now returns correct values (not NaN).  (PR#8560)
+    o	pbinom(size = 0) now returns correct values (not NaN).  (PR#8560)
+
+    o	[dqpr]geom and [dpqr]nbinom() now all consistently accept prob = 1
+	but not prob = 0.  qgeom(prob=1) now gives the correct values
+	(not -1).
 
 
 

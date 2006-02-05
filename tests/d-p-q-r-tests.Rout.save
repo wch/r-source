@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-31 r37220)
+Version 2.3.0 Under development (unstable) (2006-02-04 r37257)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -101,7 +101,7 @@ n= 51 : ......................
 n= 48 : ......................
 > 
 > ##__ 2. Geometric __
-> for(pr in seq(0,1,len=15)) {
+> for(pr in seq(1e-10,1,len=15)) { # p=0 is not a distribution
 +     print(All.eq((dg <- dgeom(0:10, pr)),
 + 		 pr * (1-pr)^(0:10)))
 +     print(All.eq(cumsum(dg), pgeom(0:10, pr)))
@@ -1060,5 +1060,5 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > ## only the last one was ok in R 2.2.1 and earlier
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  3.61 0.02 3.85 0 0 
+Time elapsed:  2.43 0.01 2.47 NA NA 
 > 

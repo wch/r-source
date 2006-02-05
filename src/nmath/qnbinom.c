@@ -51,7 +51,8 @@ double qnbinom(double p, double n, double pr, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(n) || ISNAN(pr))
 	return p + n + pr;
 #endif
-    if (pr <= 0 || pr >= 1 || n <= 0) ML_ERR_return_NAN;
+    if (pr <= 0 || pr > 1 || n <= 0) ML_ERR_return_NAN;
+    if (pr == 1) return 0;
 
     R_Q_P01_boundaries(p, 0, ML_POSINF);
 
