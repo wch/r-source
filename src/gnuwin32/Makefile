@@ -281,15 +281,6 @@ stats4-HELP = ziponly
 utils-HELP = ziponly
 stats4-SAVE = true
 
-MASS-HELP = ziponly
-boot-HELP = ziponly
-cluster-HELP = ziponly
-lattice-HELP = ziponly
-mgcv-HELP = ziponly
-nlme-HELP = ziponly
-rpart-HELP = ziponly
-survival-HELP = ziponly
-
 pkg-%:
 	@$(MAKE) --no-print-directory \
 	  SAVE=$($*-SAVE) LAZY=$($*-LAZY) LAZYDATA=$($*-LAZYDATA) \
@@ -340,6 +331,8 @@ pkgcheck-%:
 	    -f $(RHOME)/src/gnuwin32/check/PkgCheck tests;\
 	fi
 
+## used for standard packages whose tests are run in make check-devel, 
+## not make check
 pkgcheck2-%:
 	@$(ECHO) -------- Testing package $* --------
 	-@$(MKDIR) -p $(PKGD)/$*/check
