@@ -149,6 +149,9 @@ directories with leading spaces in the name.
 
 tempdir() and tempfile() use all backslashes again (2.2.1 did not).
 
+When a graphics window was double-buffered, it would update too
+frequently while waiting for input, overloading some remote display 
+utilities.
 
 
 R 2.2.1
