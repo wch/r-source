@@ -109,9 +109,10 @@ since R.dll and Rblas.dll are mutually dependent).
 Import libraries are now made by default without -k (--kill-at).  This
 might be relevant for contributed software using R's macros.
 
-The default optimization level has been changed from -O2 to -O3, since
-space taken by compiled code is no longer much of an issue.  This will
-result is a small performance increase.
+The default optimization level for code in R (but not packages) has
+been changed from -O2 to -O3, since space taken by compiled code is no
+longer much of an issue.  This will result is a small performance
+increase.
 
 When making DLLs, the objects are no longer wrapped in an archive en
 route (this was needed to avoid line-length limits on an earlier shell).
