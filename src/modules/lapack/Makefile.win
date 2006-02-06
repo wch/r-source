@@ -34,7 +34,7 @@ clean:
 
 # Rlapack.* section
 Rlapack.dll: dlamc.o dlapack0.o dlapack1.o dlapack2.o dlapack3.o cmplx.o Rlapackrc.o
-	@$(ECHO) LIBRARY Rlapack > Rlapack.def
+	@$(ECHO) LIBRARY Rlapack.dll > Rlapack.def
 	@$(ECHO) EXPORTS >> Rlapack.def
 	@$(NM) $^ > Defs
 	@$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def

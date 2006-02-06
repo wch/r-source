@@ -164,7 +164,7 @@ RESCOMP=$(BINPREF)windres
 
 %.dll:
 #	@$(ECHO) ------- Building $@ from $^ --------
-	@$(ECHO) LIBRARY $* > $*.def
+	@$(ECHO) LIBRARY $*.dll > $*.def
 	@$(ECHO) EXPORTS >> $*.def
 	@$(NM) $^ > Defs
 	@$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
