@@ -193,9 +193,10 @@ function(dir, outDir)
         ## newlines in DCF entries but do not allow them in file names,
         ## hence we gsub() them out.
         collationField <- collationField[i][1]
-        codeFilesInCspec <-
-            scan(textConnection(gsub("\n", " ", db[collationField])),
-                 what = character(), strip.white = TRUE, quiet = TRUE)
+        con <- textConnection(gsub("\n", " ", db[collationField]))
+        on.exit(close(con))
+        codeFilesInCspec <- scan(con, what = character(),
+                                 strip.white = TRUE, quiet = TRUE) 
         ## Duplicated entries in the collaction spec?
         badFiles <-
             unique(codeFilesInCspec[duplicated(codeFilesInCspec)])
