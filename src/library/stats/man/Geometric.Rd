@@ -26,12 +26,6 @@ rgeom(n, prob)
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
-\value{
-  \code{dgeom} gives the density,
-  \code{pgeom} gives the distribution function,
-  \code{qgeom} gives the quantile function, and
-  \code{rgeom} generates random deviates.
-}
 \details{
   The geometric distribution with \code{prob} \eqn{= p} has density
   \deqn{p(x) = p {(1-p)}^{x}}{p(x) = p (1-p)^x}
@@ -44,6 +38,11 @@ rgeom(n, prob)
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 }
 \value{
+  \code{dgeom} gives the density,
+  \code{pgeom} gives the distribution function,
+  \code{qgeom} gives the quantile function, and
+  \code{rgeom} generates random deviates.
+
   Invalid \code{prob} will result in return value \code{NaN}, with a warning.
 }
 \source{

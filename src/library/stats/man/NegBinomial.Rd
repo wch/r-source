@@ -31,12 +31,6 @@ rnbinom(n, size, prob, mu)
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
-\value{
-  \code{dnbinom} gives the density,
-  \code{pnbinom} gives the distribution function,
-  \code{qnbinom} gives the quantile function, and
-  \code{rnbinom} generates random deviates.
-}
 \details{
   The negative binomial distribution with \code{size} \eqn{= n} and
   \code{prob} \eqn{= p} has density
@@ -69,6 +63,11 @@ rnbinom(n, size, prob, mu)
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 }
 \value{
+  \code{dnbinom} gives the density,
+  \code{pnbinom} gives the distribution function,
+  \code{qnbinom} gives the quantile function, and
+  \code{rnbinom} generates random deviates.
+
   Invalid \code{size} or \code{prob} will result in return value
   \code{NaN}, with a warning.
 }

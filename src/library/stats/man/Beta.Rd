@@ -28,11 +28,6 @@ rbeta(n, shape1, shape2, ncp = 0)
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
-\value{
-  \code{dbeta} gives the density, \code{pbeta} the distribution
-  function, \code{qbeta} the quantile function, and \code{rbeta}
-  generates random deviates.
-}
 \details{
   The Beta distribution with parameters \code{shape1} \eqn{= a} and
   \code{shape2} \eqn{= b} has density
@@ -59,6 +54,10 @@ rbeta(n, shape1, shape2, ncp = 0)
   \eqn{Y \sim \chi^2_{2b}}{Y ~ chi^2_2b}.
 }
 \value{
+  \code{dbeta} gives the density, \code{pbeta} the distribution
+  function, \code{qbeta} the quantile function, and \code{rbeta}
+  generates random deviates.
+
   Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \source{
