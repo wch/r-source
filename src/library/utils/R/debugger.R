@@ -7,7 +7,9 @@ dump.frames <- function(dumpto = "last.dump", to.file = FALSE)
     attr(last.dump, "error.message") <- geterrmessage()
     class(last.dump) <- "dump.frames"
     if(dumpto != "last.dump") assign(dumpto, last.dump)
-    if (to.file) save(list=dumpto, file = paste(dumpto, "rda", sep="."))
+    if (to.file)
+        save(list=dumpto, file = paste(dumpto, "rda", sep="."),
+             compress = TRUE)
     else assign(dumpto, last.dump, envir=.GlobalEnv)
     invisible()
 }
@@ -46,7 +48,8 @@ debugger <- function(dump = last.dump)
     }
 }
 
-limitedLabels <- function(value, maxwidth = options()$width)
+## allow for the numbering by menu here
+limitedLabels <- function(value, maxwidth = getOption("width") - 5)
 {
     value <- as.character(value)
     if(is.null(maxwidth) || maxwidth < 40)

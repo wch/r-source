@@ -1,3 +1,13 @@
+## debugging example
+
+success <- c(13,12,11,14,14,11,13,11,12)
+failure <- c(0,0,0,0,0,0,0,2,2)
+resp <- cbind(success, failure)
+predictor <- c(0, 5^(0:7))
+try(glm(resp ~ 0+predictor, family = binomial(link="log")))
+traceback()
+
+
 ## R code to run the .Call/.External examples in
 ##    `Writing R extensions'
 

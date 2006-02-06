@@ -532,6 +532,7 @@ LibExtern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
 extern0 int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
 extern0 int	R_Expressions	INI_as(5000);	/* options(expressions) */
+extern0 int	R_Expressions_keep INI_as(5000);	/* options(expressions) */
 extern0 Rboolean R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 extern0 int	R_UseNamespaceDispatch INI_as(TRUE);
 extern0 int	R_WarnLength	INI_as(1000);	/* Error/warning max length */

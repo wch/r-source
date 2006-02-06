@@ -305,6 +305,10 @@ NEW FEATURES
 
     o	rbeta(), rf() and rt() now have a non-centrality parameter.
 
+    o	options(expressions) is temporarily increased by 500 during
+	error-handling.   This enables e.g. traceback() to work when
+	the error is reaching the limit on the nesting of expressions.
+
 
 DEPRECATED & DEFUNCT
 

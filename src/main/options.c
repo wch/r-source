@@ -382,7 +382,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    errorcall(call,
 			      _("expressions parameter invalid, allowed %d...%d"),
 			      R_MIN_EXPRESSIONS_OPT, R_MAX_EXPRESSIONS_OPT);
-		R_Expressions = k;
+		R_Expressions = R_Expressions_keep = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if (streql(CHAR(namei), "keep.source")) {

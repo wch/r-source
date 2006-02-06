@@ -3624,13 +3624,30 @@ call, which occurred in only one place,
 @code{methods:::.asEnvironmentPackage}.  So now we knew where the
 error was occurring.  (This was an unusually opaque example.)
 
+The error message
+
+@example
+evaluation nested too deeply: infinite recursion / options(expressions=)?
+@end example
+
+@noindent
+can be hard to handle with the default value (5000 as from @R{} 2.3.0).
+Unless you know that there actually is deep recursion going on, it can
+help to set something like
+
+@example
+options(expressions=500)
+@end example
+
+@noindent and re-run the example showing the error.
+
 Sometimes there is warning that clearly is the precursor to some later
 error, but it is not obvious where it is coming from.  Setting
 @command{options(warn = 2)} (which turns warnings into errors) can help here.
 
 Once we have found the error, we have some choices.  One way to proceed
-is to find out more about what was happening at the crash by looking a
-@emph{post-mortem} dump.  To do so, set
+is to find out more about what was happening at the time of the crash by
+looking a @emph{post-mortem} dump.  To do so, set
 @findex dump.frames
 @command{options(error=dump.frames)} and run the code again.  Then invoke
 @command{debugger()} and explore the dump.  Continuing our example:
@@ -3653,15 +3670,14 @@ calling the function @code{debugger}.
 Message:  Error: no valid set of coefficients has been found: please supply starting values
 Available environments had calls:
 1: glm(resp ~ 0 + predictor, family = binomial(link = "log"))
-2: glm.fit(x = X, y = Y, weights = weights, start = start, etas
-3: stop("no valid set of coefficients has been found: please su
-
+2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart, mus
+3: stop("no valid set of coefficients has been found: please supply starting values
 Enter an environment number, or 0 to exit  Selection:
 @end example
 
 @noindent
 which gives the same sequence of calls as @code{traceback}, but in
-outer-first order and truncated to 60 characters.  However, we can now
+outer-first order and truncated to the current width.  However, we can now
 examine in more detail what was happening at the time of the error.
 Selecting an environment opens the browser in that frame.  So we select
 the function call which spawned the error message, and explore some of
@@ -3698,8 +3714,8 @@ Browse[1]> validmu(mu)
 Browse[1]> c
 Available environments had calls:
 1: glm(resp ~ 0 + predictor, family = binomial(link = "log"))
-2: glm.fit(x = X, y = Y, weights = weights, start = start, etas
-3: stop("no valid set of coefficients has been found: please su
+2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart
+3: stop("no valid set of coefficients has been found: please supply starting v
 
 Enter an environment number, or 0 to exit  Selection: 0
 > rm(last.dump)
@@ -3730,18 +3746,17 @@ Error: no valid set of coefficients has been found: please supply starting value
 Enter a frame number, or 0 to exit
 
 1: glm(resp ~ 0 + predictor, family = binomial(link = "log"))
-2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart, mus
+2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart
 
 Selection:
 @end example
 
 @noindent
-which is very similar to @code{dump.frames} (with the calls truncated to
-@code{getOption("width")}, but not allowing for the numbering).
-However, we can examine the state of the program directly, without
-dumping and re-loading the dump.  As its help page says, @code{recover}
-can be routinely used as the error action in place of @code{dump.calls}
-(used by @code{traceback}) and @code{dump.frames}, since it behaves like
+which is very similar to @code{dump.frames}.  However, we can examine
+the state of the program directly, without dumping and re-loading the
+dump.  As its help page says, @code{recover} can be routinely used as
+the error action in place of @code{dump.calls} (used by
+@code{traceback}) and @code{dump.frames}, since it behaves like
 @code{dump.frames} in non-interactive use.
 
 
