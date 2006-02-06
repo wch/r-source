@@ -30,6 +30,8 @@ rpois(n, lambda)
   \code{ppois} gives the (log) distribution function,
   \code{qpois} gives the quantile function, and
   \code{rpois} generates random deviates.
+
+  Invalid \code{lambda} will result in return value \code{NaN}, with a warning.
 }
 \details{
   The Poisson distribution has density

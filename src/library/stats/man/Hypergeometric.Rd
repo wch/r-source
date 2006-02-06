@@ -34,6 +34,8 @@ rhyper(nn, m, n, k)
   \code{phyper} gives the distribution function,
   \code{qhyper} gives the quantile function, and
   \code{rhyper} generates random deviates.
+
+  Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
   The hypergeometric distribution is used for sampling \emph{without}

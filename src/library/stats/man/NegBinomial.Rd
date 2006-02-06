@@ -25,7 +25,7 @@ rnbinom(n, size, prob, mu)
   \item{size}{target for number of successful trials, or dispersion
     parameter (the shape parameter of the gamma mixing distribution).
     Must be strictly positive.}
-  \item{prob}{probability of success in each trial. \code{0 < p <= 1}.}
+  \item{prob}{probability of success in each trial. \code{0 < prob <= 1}.}
   \item{mu}{alternative parametrization via mean: see Details}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
@@ -67,6 +67,10 @@ rnbinom(n, size, prob, mu)
 
   The quantile is defined as the smallest value \eqn{x} such that
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
+}
+\value{
+  Invalid \code{size} or \code{prob} will result in return value
+  \code{NaN}, with a warning.
 }
 \source{
   \code{dnbinom} computes via binomial probabilities, using code

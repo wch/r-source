@@ -31,6 +31,8 @@ rweibull(n, shape, scale = 1)
   \code{pweibull} gives the distribution function,
   \code{qweibull} gives the quantile function, and
   \code{rweibull} generates random deviates.
+
+  Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
   The Weibull distribution with \code{shape} parameter \eqn{a} and

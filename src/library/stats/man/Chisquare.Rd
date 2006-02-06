@@ -34,6 +34,8 @@ rchisq(n, df, ncp=0)
   \code{dchisq} gives the density, \code{pchisq} gives the distribution
   function, \code{qchisq} gives the quantile function, and \code{rchisq}
   generates random deviates.
+
+  Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
   The chi-squared distribution with \code{df}\eqn{= n > 0} degrees of

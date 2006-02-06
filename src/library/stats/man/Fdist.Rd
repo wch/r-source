@@ -32,6 +32,8 @@ rf(n, df1, df2, ncp = 0)
   \code{pf} gives the distribution function
   \code{qf} gives the quantile function, and
   \code{rf} generates random deviates.
+
+  Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
   The F distribution with \code{df1 =} \eqn{n_1}{n1} and \code{df2 =}

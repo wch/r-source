@@ -58,6 +58,9 @@ rbeta(n, shape1, shape2, ncp = 0)
   \eqn{X \sim \chi^2_{2a}(\lambda)}{X ~ chi^2_2a(lambda)} and
   \eqn{Y \sim \chi^2_{2b}}{Y ~ chi^2_2b}.
 }
+\value{
+  Invalid arguments will result in return value \code{NaN}, with a warning.
+}
 \source{
   The central \code{dbeta} is based on a binomial probability, using code
   contributed by Catherine Loader (see \code{\link{dbinom}}).

@@ -36,6 +36,8 @@ rt(n, df, ncp = 0)
   \code{pt} gives the distribution function,
   \code{qt} gives the quantile function, and
   \code{rt} generates random deviates.
+
+  Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
   The \eqn{t} distribution with \code{df} \eqn{= \nu}{= n} degrees of

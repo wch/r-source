@@ -36,6 +36,8 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \code{pgamma} gives the distribution function,
   \code{qgamma} gives the quantile function, and
   \code{rgamma} generates random deviates.
+
+  Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
   If \code{scale} is omitted, it assumes the default value of \code{1}.
