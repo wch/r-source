@@ -4077,3 +4077,25 @@ stopifnot(is.nan(dgeom(0, 0)), dgeom(0, 1) == 1,
           qgeom(0.5, 1) == 0, is.nan(qgeom(0.5, 0)),
           is.finite(rgeom(1, 1)),
           !is.finite(rgeom(1, 0)))
+
+
+## A response to PR#8528  incorrectly claimed these to be wrong.
+stopifnot(all.equal(df(0, 2, 2), 1))
+stopifnot(is.infinite(df(0, 1.3, 2)))
+x <- 1e-170
+stopifnot(all.equal(pbeta(x,x,x), 0.5))
+## just a regression check.
+## This underflowed
+stopifnot(all.equal(dbeta(x,x,x), 0.5))
+## this was slow
+stopifnot(system.time(qnbinom(1e-10, 1e3, 1e-7))[3] < 0.1)
+## but this failed
+qnbinom(0.5, 10000000000, 0.000000002)
+## infinite-looped in 2.2.1 (answer is approx 4e18)
+qpois(0.9, 1e50)
+## infinite-looped in 2.2.1
+z <- 10^seq(10, 300, 10)
+stopifnot(all.equal(pt(-z, 1, log=TRUE), pcauchy(-z, 1, log=TRUE)))
+## failed at about 1e150 in 2.2.1
+stopifnot(pt(-1e200, 0.001) > 0)
+## was 0 in 2.2.1, should be about 31%

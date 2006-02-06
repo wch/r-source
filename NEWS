@@ -694,6 +694,16 @@ BUG FIXES
     o	INSTALL on Unix-alikes was not loading dependent packages when
 	preparing for lazy-loading.
 
+    o	qbinom(), qnbinom() and qpois() now use a better search and
+	normally reach the answer very quickly when it is large
+	(instead of being slow or infinite-looping).
+
+    o	pt(x, df) lost accuracy in the far tails (when |x| > 1e154) for
+	small df (like df = 0.001 for which such extremes are not unlikely).
+
+    o	dbeta(x, a, b) underflowed internally and incorrectly gave 0
+	for very small x and a.
+
 
 
 

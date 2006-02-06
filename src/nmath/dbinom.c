@@ -42,7 +42,7 @@
 double attribute_hidden 
 dbinom_raw(double x, double n, double p, double q, int give_log)
 {
-    double f, lc;
+    double lf, lc;
 
     if (p == 0) return((x == 0) ? R_D__1 : R_D__0);
     if (q == 0) return((x == n) ? R_D__1 : R_D__0);
@@ -58,10 +58,14 @@ dbinom_raw(double x, double n, double p, double q, int give_log)
     }
     if (x < 0 || x > n) return( R_D__0 );
 
+    /* n*p or n*q can underflow to zero if n and p or q are small.  This
+       used to occur in dbeta, and gives NaN as from R 2.3.0.  */
     lc = stirlerr(n) - stirlerr(x) - stirlerr(n-x) - bd0(x,n*p) - bd0(n-x,n*q);
-    f = (M_2PI*x*(n-x))/n;
 
-    return R_D_fexp(f,lc);
+    /* f = (M_2PI*x*(n-x))/n; could overflow or underflow */
+    lf = log(M_2PI) + log(x) + log(n-x) - log(n);
+
+    return R_D_exp(lc - 0.5*lf);
 }
 
 double dbinom(double x, double n, double p, int give_log)
@@ -78,5 +82,5 @@ double dbinom(double x, double n, double p, int give_log)
     n = R_D_forceint(n);
     x = R_D_forceint(x);
 
-    return dbinom_raw(x,n,p,1-p,give_log);
+    return dbinom_raw(x, n, p, 1-p, give_log);
 }

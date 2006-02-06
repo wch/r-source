@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000, 2002, 2005 The R Development Core Team
- *  Copyright (C) 2003--2004 The R Foundation
+ *  Copyright (C) 2000-2006 The R Development Core Team
+ *  Copyright (C) 2003-2004 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,35 @@
  */
 #include "nmath.h"
 #include "dpq.h"
+
+static double 
+do_search(double y, double *z, double p, double n, double pr, double incr)
+{
+    if(*z >= p) {
+			/* search to the left */
+#ifdef DEBUG_qbinom
+	REprintf("\tnew z=%7g >= p = %7g  --> search to left (y--) ..\n", z,p);
+#endif
+	for(;;) {
+	    if(y == 0 ||
+	       (*z = pbinom(y - incr, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
+		return y;
+	    y = fmax2(0, y - incr);
+	}
+    }
+    else {		/* search to the right */
+#ifdef DEBUG_qbinom
+	REprintf("\tnew z=%7g < p = %7g  --> search to right (y++) ..\n", z,p);
+#endif
+	for(;;) {
+	    y = fmin2(y + incr, n);
+	    if(y == n ||
+	       (*z = pbinom(y, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
+		return y;
+	}
+    }    
+}
+
 
 double qbinom(double p, double n, double pr, int lower_tail, int log_p)
 {
@@ -89,34 +118,15 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     /* fuzz to ensure left continuity: */
     p *= 1 - 64*DBL_EPSILON;
 
-/*-- Fixme, here y can be way off --
-  should use interval search instead of primitive stepping down or up */
-
-#ifdef maybe_future
-    if((lower_tail && z >= p) || (!lower_tail && z <= p)) {
-#else
-    if(z >= p) {
-#endif
-			/* search to the left */
-#ifdef DEBUG_qbinom
-	REprintf("\tnew z=%7g >= p = %7g  --> search to left (y--) ..\n", z,p);
-#endif
-	for(;;) {
-	    if(y == 0 ||
-	       (z = pbinom(y - 1, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
-		return y;
-	    y = y - 1;
-	}
-    }
-    else {		/* search to the right */
-#ifdef DEBUG_qbinom
-	REprintf("\tnew z=%7g < p = %7g  --> search to right (y++) ..\n", z,p);
-#endif
-	for(;;) {
-	    y = y + 1;
-	    if(y == n ||
-	       (z = pbinom(y, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
-		return y;
-	}
+    if(n < 1e5) return do_search(y, &z, p, n, pr, 1);
+    /* Otherwise be a bit cleverer in the search */
+    {
+	double incr = floor(n * 0.001), oldincr;
+	do {
+	    oldincr = incr;
+	    y = do_search(y, &z, p, n, pr, incr);
+	    incr = fmax2(1, floor(incr/100));
+	} while(oldincr > 1 && incr > n*1e-15);
+	return y;
     }
 }

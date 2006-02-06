@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2006 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,28 @@
 
 #include "nmath.h"
 #include "dpq.h"
+
+static double 
+do_search(double y, double *z, double p, double lambda, double incr)
+{
+    if(*z >= p) {
+			/* search to the left */
+	for(;;) {
+	    if(y == 0 ||
+	       (*z = ppois(y - incr, lambda, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
+		return y;
+	    y = fmax2(0, y - incr);
+	}
+    }
+    else {		/* search to the right */
+
+	for(;;) {
+	    y = y + incr;
+	    if((*z = ppois(y, lambda, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
+		return y;
+	}
+    }
+}
 
 double qpois(double p, double lambda, int lower_tail, int log_p)
 {
@@ -72,27 +94,16 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
     /* fuzz to ensure left continuity; 1 - 1e-7 may lose too much : */
     p *= 1 - 64*DBL_EPSILON;
 
-/*-- Fixme, here y can be way off --
-  should use interval search instead of primitive stepping down or up */
-
-#ifdef maybe_future
-    if((lower_tail && z >= p) || (!lower_tail && z <= p)) {
-#else
-    if(z >= p) {
-#endif
-			/* search to the left */
-	for(;;) {
-	    if(y == 0 ||
-	       (z = ppois(y - 1, lambda, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
-		return y;
-	    y = y - 1;
-	}
-    }
-    else {		/* search to the right */
-	for(;;) {
-	    y = y + 1;
-	    if((z = ppois(y, lambda, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
-		return y;
-	}
+    /* If the mean is not too large a simple search is OK */
+    if(lambda < 1e5) return do_search(y, &z, p, lambda, 1);
+    /* Otherwise be a bit cleverer in the search */
+    {
+	double incr = floor(y * 0.001), oldincr;
+	do {
+	    oldincr = incr;
+	    y = do_search(y, &z, p, lambda, incr);
+	    incr = fmax2(1, floor(incr/100));
+	} while(oldincr > 1 && incr > lambda*1e-15);
+	return y;
     }
 }

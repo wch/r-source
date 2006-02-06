@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2006 The R Development Core Team
  *  Copyright (C) 2005 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -43,6 +43,29 @@
 #include "nmath.h"
 #include "dpq.h"
 
+static double 
+do_search(double y, double *z, double p, double n, double pr, double incr)
+{
+    if(*z >= p) {
+			/* search to the left */
+	for(;;) {
+	    if(y == 0 ||
+	       (*z = pnbinom(y - incr, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
+		return y;
+	    y = fmax2(0, y - incr);
+	}
+    }
+    else {		/* search to the right */
+
+	for(;;) {
+	    y = y + incr;
+	    if((*z = pnbinom(y, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
+		return y;
+	}
+    }
+}
+
+
 double qnbinom(double p, double n, double pr, int lower_tail, int log_p)
 {
     double P, Q, mu, sigma, gamma, z, y;
@@ -81,28 +104,16 @@ double qnbinom(double p, double n, double pr, int lower_tail, int log_p)
     /* fuzz to ensure left continuity: */
     p *= 1 - 64*DBL_EPSILON;
 
-/*-- Fixme, here y can be way off --
-  should use interval search instead of primitive stepping down or up */
-
-#ifdef maybe_future
-    if((lower_tail && z >= p) || (!lower_tail && z <= p)) {
-#else
-    if(z >= p) {
-#endif
-			/* search to the left */
-	for(;;) {
-	    if(y == 0 ||
-	       (z = pnbinom(y - 1, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
-		return y;
-	    y = y - 1;
-	}
-    }
-    else {		/* search to the right */
-
-	for(;;) {
-	    y = y + 1;
-	    if((z = pnbinom(y, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
-		return y;
-	}
+    /* If the C-F value is not too large a simple search is OK */
+    if(y < 1e5) return do_search(y, &z, p, n, pr, 1);
+    /* Otherwise be a bit cleverer in the search */
+    {
+	double incr = floor(y * 0.001), oldincr;
+	do {
+	    oldincr = incr;
+	    y = do_search(y, &z, p, n, pr, incr);
+	    incr = fmax2(1, floor(incr/100));
+	} while(oldincr > 1 && incr > y*1e-15);
+	return y;
     }
 }

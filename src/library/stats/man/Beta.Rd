@@ -63,12 +63,13 @@ rbeta(n, shape1, shape2, ncp = 0)
 }
 \source{
   The central \code{dbeta} is based on a binomial probability, using code
-  contributed by Catherine Loader (see \code{\link{dbinom}}).
+  contributed by Catherine Loader (see \code{\link{dbinom}}) if either
+  shape parameter is larger than one.
   The non-central case is based on the derivation as a Poisson
   mixture of betas (Johnson et al, 1995, pp. 502--3).
 
   The central \code{pbeta} uses a C translation of a Fortran subroutine
-  by W. Fullerton of Los Alamos Scientific Laboratory for
+  by W. Fullerton of Los Alamos Scientific Laboratory for both
   \code{shape <= 15}, otherwise
 
   Didonato, A. and Morris, A., Jr, (1992)

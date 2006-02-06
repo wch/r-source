@@ -499,8 +499,10 @@ dpnorm (double x, int lower_tail, double p)
 }
 
 /*
- * Asymptotic expansion to calculate the probability that poisson variate
+ * Asymptotic expansion to calculate the probability that Poisson variate
  * has value <= x.
+ * Various assertions about this are made (without proof) at
+ * http://members.aol.com/iandjmsmith/PoissonApprox.htm
  */
 static double
 ppois_asymp (double x, double lambda, int lower_tail, int log_p)

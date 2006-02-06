@@ -39,7 +39,7 @@
 
 double dbeta(double x, double a, double b, int give_log)
 { 
-    double f, p;
+    double lf, p;
     volatile double am1, bm1; /* prevent roundoff trouble on some
                                  platforms */
 
@@ -60,29 +60,30 @@ double dbeta(double x, double a, double b, int give_log)
 	if(b < 1) return(ML_POSINF);
 	/* b == 1 : */ return(R_D_val(a));
     } 
-    if (a < 1) { 
+    if (a < 1) {
 	if (b < 1) {		/* a,b < 1 */
-	    f = a*b/((a+b)*x*(1-x));
-	    p = dbinom_raw(a,a+b, x,1-x, give_log);
-	}
-	else {			/* a < 1 <= b */
-	    f = a/x;
+	    /* Do this directly, as we need to be careful for small x.
+	       (Small 1-x will not be representable.) */
+	      double lval = (a-1)*log(x) + (b-1)*log1p(-x) - lbeta(a, b);
+	      return log_p ? lval: exp(lval);
+	      }
+	      else {			/* a < 1 <= b */
+	    lf = log(a) - log(x);
 	    bm1 = b - 1;
 	    p = dbinom_raw(a,a+bm1, x,1-x, give_log);
 	}
-    }
-    else { 
+    } else { 
 	if (b < 1) {		/* a >= 1 > b */
-	    f = b/(1-x);
+	    lf = log(b) - log(1-x);
 	    am1 = a - 1; 
 	    p = dbinom_raw(am1,am1+b, x,1-x, give_log);
 	}
 	else {			/* a,b >= 1 */
-	    f = a+b-1;
+	    lf = log(a+b-1);
 	    am1 = a - 1;
 	    bm1 = b - 1;
 	    p = dbinom_raw(am1,am1+bm1, x,1-x, give_log);
 	}
     }
-    return( (give_log) ? p + log(f) : p*f );
+    return( (give_log) ? p + lf : p*exp(lf) );
 }
