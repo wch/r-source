@@ -244,9 +244,16 @@ foreach my $pkg (@ARGV) {
 	or die "Error: cannot change to directory '$pkg'\n";
     my $pkgdir = R_cwd();
     ## my $pkgname = basename($pkgdir);
-    if($thispkg_subdirs eq "yes-maybe") {
+    my $thispkg_src_subdir = $thispkg_subdirs;
+    if($thispkg_src_subdir eq "yes-maybe") {
 	## now see if there is a 'configure' file
-	$thispkg_subdirs = "no" if (-f "configure");
+	## configure files are only used if executable, but
+	## -x is always false on Windows.
+	if($WINDOWS) {
+	    $thispkg_src_subdir = "no" if (-f "configure");
+	} else {
+	    $thispkg_src_subdir = "no" if (-x "configure");
+	}
     }
     chdir($startdir);
 
@@ -357,7 +364,7 @@ foreach my $pkg (@ARGV) {
 		}
 	    }
 
-	    if($thispkg_subdirs ne "no") {
+	    if($thispkg_src_subdir ne "no") {
 		foreach my $dir (@dirs) {
 		    if((-d &file_path($pkgdir, $dir))) {
 			chdir(&file_path($pkgdir, $dir));
@@ -1027,57 +1034,55 @@ sub check_pkg {
 	}
     }
     &check_subdirs(".") unless ($subdirs eq "no");
-    if((-d "data") || (-d "demo") || (-d "src") || (-d "inst")) {
-	## Subdirectory 'data' without data sets?
-	if((-d "data") && !&list_files_with_type("data", "data")) {
+    ## Subdirectory 'data' without data sets?
+    if((-d "data") && !&list_files_with_type("data", "data")) {
+	$log->warning() unless $any;
+	$any++;
+	$log->print("Subdirectory 'data' contains no data sets.\n");
+    }
+    ## Subdirectory 'demo' without demos?
+    if((-d "demo") && !&list_files_with_type("demo", "demo")) {
+	$log->warning() unless $any;
+	$any++;
+	$log->print("Subdirectory 'demo' contains no demos.\n");
+    }
+    ## Subdirectory 'src' without sources?
+    ## <NOTE>
+    ## If there is a Makefile (or a Makefile.win), we cannot assume
+    ## that source files have the predefined extensions.
+    ## </NOTE>
+    if( (-d "src") && !( (-f &file_path("src", "Makefile"))
+			 || (-f &file_path("src", "Makefile.win")) )) {
+	if( !(&list_files_with_exts("src", "([Ccf]|cc|cpp|f90|f95)"))) {
 	    $log->warning() unless $any;
 	    $any++;
-	    $log->print("Subdirectory 'data' contains no data sets.\n");
+	    $log->print("Subdirectory 'src' contains no source files.\n");
 	}
-	## Subdirectory 'demo' without demos?
-	if((-d "demo") && !&list_files_with_type("demo", "demo")) {
+    }
+    ## Do subdirectories of 'inst' interfere with R package system
+    ## subdirectories?
+    if((-d "inst")) {
+	my @R_system_subdirs =
+	    ("Meta", "R", "data", "demo", "exec", "libs",
+	     "man", "help", "html", "latex", "R-ex");
+	my @bad_dirs = ();
+	foreach my $dir (@R_system_subdirs) {
+	    push(@bad_dirs, $dir)
+		if((-d &file_path("inst", $dir))
+		   && &list_files(file_path("inst", $dir)));
+	}
+	if(scalar(@bad_dirs) > 0) {
 	    $log->warning() unless $any;
 	    $any++;
-	    $log->print("Subdirectory 'demo' contains no demos.\n");
-	}
-	## Subdirectory 'src' without sources?
-	## <NOTE>
-	## If there is a Makefile (or a Makefile.win), we cannot assume
-	## that source files have the predefined extensions.
-	## </NOTE>
-	if( (-d "src") && !( (-f &file_path("src", "Makefile"))
-			  || (-f &file_path("src", "Makefile.win")) )) {
-	    if( !(&list_files_with_exts("src", "([Ccf]|cc|cpp|f90|f95)"))) {
-		$log->warning() unless $any;
-		$any++;
-		$log->print("Subdirectory 'src' contains no source files.\n");
-	    }
-	}
-	## Do subdirectories of 'inst' interfere with R package system
-	## subdirectories?
-	if((-d "inst")) {
-	    my @R_system_subdirs =
-		("Meta", "R", "data", "demo", "exec", "libs",
-		 "man", "help", "html", "latex", "R-ex");
-	    my @bad_dirs = ();
-	    foreach my $dir (@R_system_subdirs) {
-		push(@bad_dirs, $dir)
-		  if((-d &file_path("inst", $dir))
-		     && &list_files(file_path("inst", $dir)));
-	    }
-	    if(scalar(@bad_dirs) > 0) {
-		$log->warning() unless $any;
-		$any++;
-		$log->print(wrap("", "",
-				 ("Found the following non-empty",
-				  "subdirectories of 'inst' also",
-				  "used by R:\n")));
-		$log->print("  " . join(" ", @bad_dirs) . "\n");
-		$log->print(wrap("", "",
-				 ("It is recommended not to interfere",
-				  "with package subdirectories",
-				  "used by R.\n")));
-	    }
+	    $log->print(wrap("", "",
+			     ("Found the following non-empty",
+			      "subdirectories of 'inst' also",
+			      "used by R:\n")));
+	    $log->print("  " . join(" ", @bad_dirs) . "\n");
+	    $log->print(wrap("", "",
+			     ("It is recommended not to interfere",
+			      "with package subdirectories",
+			      "used by R.\n")));
 	}
     }
     $log->result("OK") unless $any;

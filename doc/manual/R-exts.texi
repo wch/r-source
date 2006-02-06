@@ -1082,12 +1082,12 @@ checked for completeness.
 The package subdirectories are checked for suitable file names and for
 not being empty.  The checks on file names are controlled by the option
 @option{--check-subdirs=@var{value}}.  This defaults to @samp{default},
-which runs the checks only if checking a tarball and the package/bundle
-does not contain a @file{configure} script: the default can be
-overridden by specifying the value as @samp{yes} or
-@samp{no}.@footnote{Another value which can be useful in test suites is
-@samp{yes-maybe}, which runs the tests unless there is a
-@file{configure} script, that is as if the sources were a tarball.}
+which runs the checks only if checking a tarball: the default can be
+overridden by specifying the value as @samp{yes} or @samp{no}.  Further,
+the check on the @file{src} directory is only run if the package/bundle
+does not contain a @file{configure} script (which corresponds to the
+value @samp{yes-maybe}) and there is no @file{src/Makefile} or
+@file{src/Makefile.in}.
 
 To allow a @file{configure} script to generate suitable files, files
 ending in @samp{.in} will be allowed in the @file{R} directory.
@@ -1186,9 +1186,9 @@ directory.  In addition, directories called @file{CVS} or @file{.svn} or
 @file{.arch-ids} and files @file{GNUMakefile} or with base names
 starting with @samp{.#}, or starting and ending with @samp{#}, or ending
 in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.  In
-addition, those files in the @file{R} and @file{man} directories which
-are flagged by @code{R CMD check} as having invalid names will be
-excluded.
+addition, those files in the @file{R}, @file{demo} and @file{man}
+directories which are flagged by @code{R CMD check} as having invalid
+names will be excluded.
 
 @c <FIXME>
 @c From 1.8.0 on, the build code removes exclude files itself, rather
@@ -1260,6 +1260,13 @@ Default: false.
 @item $R_check_weave_vignettes
 If true, weave package vignettes in the process of checking them.
 Default: true.
+@item $R_check_subdirs_nocase
+If true, check the case of directories such as @file{R} and @file{man}.
+Default: false.
+@item $R_check_subdirs_strict
+Initial setting for @option{--check-subdirs}.
+Default: @samp{default} (which checks only tarballs, and checks in the
+@file{src} only if there is no @file{configure} file).
 @end table
 
 Values @samp{1} or a string with lower-cased version @samp{"yes"} or
