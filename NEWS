@@ -692,6 +692,10 @@ BUG FIXES
     o	INSTALL on Unix-alikes was not loading dependent packages when
 	preparing for lazy-loading.
 
+    o	qcauchy(1) now gives +Inf instead of just a very large number.
+
+    o	df(0, f1, *) now properly returns Inf, 1, or 0 for f1 < , = , or > 2.
+
     o	qbinom(), qnbinom() and qpois() now use a better search and
 	normally reach the answer very quickly when it is large
 	(instead of being slow or infinite-looping).
@@ -745,7 +749,7 @@ BUG FIXES
 
     o	rbind.data.frame() gave a corrupt data frame if one of the
 	named arguments was a zero-row data frame. (PR#8506)
-	
+
     o	Checks for NULL in the rho argument of the C-level findVar
 	function have been added.
 
@@ -761,10 +765,6 @@ BUG FIXES
 	despite the documentation (which has been corrected).
 	Command 'where' in the browser() no longer changes to
 	step-though mode.
-
-    o	qcauchy(1) now gives +Inf instead of just a very large number.
-
-    o	df(0, f1, *) now properly returns Inf, 1, or 0 for f1 < , = , or > 2.
 
 
 
