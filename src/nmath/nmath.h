@@ -95,7 +95,6 @@ int R_finite(double);
 #define _(String) String
 #endif /* standalone */
 
-#define ML_ERROR(x)	/* nothing */
 #define ML_UNDERFLOW	(DBL_MIN * DBL_MIN)
 #define ML_VALID(x)	(!ISNAN(x))
 
@@ -113,6 +112,34 @@ int R_finite(double);
 /*	and underflow occured (important for IEEE)*/
 
 #define ML_ERR_return_NAN { ML_ERROR(ME_DOMAIN); return ML_NAN; }
+
+/* For a long time prior to R 2.3.0 ML_ERROR did nothing.
+   We don't report ME_DOMAIN errors as the callers collect ML_NANs into
+   a single warning.
+ */
+#define ML_ERROR(x) { \
+   if(x > ME_DOMAIN) { \
+       char *msg = ""; \
+       switch(x) { \
+       case ME_DOMAIN: \
+	   msg = "argument out of domain\n"; \
+	   break; \
+       case ME_RANGE: \
+	   msg = "value out of range\n"; \
+	   break; \
+       case ME_NOCONV: \
+	   msg = "convergence failed\n"; \
+	   break; \
+       case ME_PRECISION: \
+	   msg = "full precision was not achieved\n"; \
+	   break; \
+       case ME_UNDERFLOW: \
+	   msg = "underflow occurred\n"; \
+	   break; \
+       } \
+       MATHLIB_WARNING("%s", msg); \
+   } \
+}
 
 /* Wilcoxon Rank Sum Distribution */
 

@@ -27,6 +27,7 @@
 
 double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 {
+    double ans;
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(f) || ISNAN(theta))
 	return x + f + theta;
@@ -36,7 +37,13 @@ double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 
     if (f < 0. || theta < 0.) ML_ERR_return_NAN;
 
-    return (R_DT_val(pnchisq_raw(x, f, theta, 1e-12, 8*DBL_EPSILON, 1000000)));
+    ans = pnchisq_raw(x, f, theta, 1e-12, 8*DBL_EPSILON, 1000000);
+    if(lower_tail) return log_p	? log(ans) : ans;
+    else {
+	if(ans > 1 - 1e-10) ML_ERROR(ME_PRECISION);
+	ans = fmin2(ans, 1.0);  /* Precaution PR#7099 */
+	return log_p ? log1p(-ans) : (1 - ans);
+    }
 }
 
 double attribute_hidden

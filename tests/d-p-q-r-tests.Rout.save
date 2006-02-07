@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-02-04 r37257)
+Version 2.3.0 Under development (unstable) (2006-02-06 r37279)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -298,7 +298,9 @@ df = 100[1] TRUE
 > q0 <- qchisq(psml,    df=1.2, ncp=10, lower.tail=FALSE)
 > q1 <- qchisq(1 -psml, df=1.2, ncp=10)
 > p0 <- pchisq(q0, df=1.2, ncp=10, lower.tail=FALSE)
+There were 21 warnings (use warnings() to see them)
 > p1 <- pchisq(q1, df=1.2, ncp=10, lower.tail=FALSE)
+There were 21 warnings (use warnings() to see them)
 > iO <- 1:10
 > all.equal(q0[iO], q1[iO])
 [1] TRUE

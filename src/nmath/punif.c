@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2006 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,5 +37,6 @@ double punif(double x, double a, double b, int lower_tail, int log_p)
 	return R_DT_0;
     if (x >= b)
 	return R_DT_1;
-    return R_DT_val((x - a) / (b - a));
+    if (lower_tail) return R_D_val((x - a) / (b - a));
+    else return R_D_val((b - x) / (b - a));
 }

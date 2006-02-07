@@ -123,7 +123,7 @@ double gammafn(double x)
     /* If the argument is exactly zero or a negative integer
      * then return NaN. */
     if (x == 0 || (x < 0 && x == (long)x)) {
-	ML_ERROR(ME_RANGE);
+	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
 

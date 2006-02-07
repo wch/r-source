@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka and the R Development Core Team
- *  Copyright (C) 2000-2001 The R Development Core Team
+ *  Copyright (C) 2000-2006 The R Development Core Team
  *  based on AS243 (C) 1989 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -147,7 +147,7 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 	    if(errbd < errmax) goto finis;/*convergence*/
 	}
 	/* non-convergence:*/
-	ML_ERROR(ME_PRECISION);
+	ML_ERROR(ME_NOCONV);
     }
     else { /* x = t = 0 */
 	tnc = 0.;
@@ -156,5 +156,12 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
     tnc += pnorm(- del, 0., 1., /*lower*/TRUE, /*log_p*/FALSE);
 
     lower_tail = lower_tail != negdel; /* xor */
-    return R_DT_val(tnc);
+    /* return R_DT_val(tnc);
+       We want to warn about cancellation here */
+    if(lower_tail) return log_p	? log(tnc) : tnc;
+    else {
+	if(tnc > 1 - 1e-10) ML_ERROR(ME_PRECISION);
+	tnc = fmin2(tnc, 1.0);  /* Precaution */
+	return log_p ? log1p(-tnc) : (1 - tnc);
+    }
 }

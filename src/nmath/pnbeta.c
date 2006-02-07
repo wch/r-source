@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2006 The R Development Core Team
  *
  *  Algorithm AS 226 Appl. Statist. (1987) Vol. 36, No. 2
  *  Incorporates modification AS R84 from AS Vol. 39, pp311-2, 1990
@@ -55,7 +55,7 @@ double pnbeta(double x, double a, double b, double lambda,
     sumq = 1. - q;
     ans = ax = q * temp;
 
-	/* recur over subsequent terms until convergence is achieved */
+	/* recurse over subsequent terms until convergence is achieved */
     j = x0;
     do {
 	j++;
@@ -69,9 +69,18 @@ double pnbeta(double x, double a, double b, double lambda,
     }
     while (errbd > errmax && j < itrmax + x0);
 
-    if (errbd > errmax) {
+    if (errbd > errmax)
 	ML_ERROR(ME_PRECISION);
+    if (j >= itrmax + x0)
+	ML_ERROR(ME_NOCONV);
+    
+    /* return R_DT_val(ans); 
+       We want to warn about cancellation here */
+    if(lower_tail) return log_p	? log(ans) : ans;
+    else {
+	if(ans > 1 - 1e-10) ML_ERROR(ME_PRECISION);
+	ans = fmin2(ans, 1.0);  /* Precaution */
+	return log_p ? log1p(-ans) : (1 - ans);
     }
-    return R_DT_val(ans);
 }
 

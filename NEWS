@@ -680,8 +680,6 @@ BUG FIXES
 	informative message if it cannot open a file rather than the
 	(possibly incorrect) 'NO FILE'.
 
-    o	qcauchy(1) now gives +Inf instead of just a very large number.
-
     o	window() did not allow non-overlapping ranges with
 	extend = TRUE.  (PR#8545)
 
@@ -703,6 +701,10 @@ BUG FIXES
 
     o	dbeta(x, a, b) underflowed internally and incorrectly gave 0
 	for very small x and a.
+
+    o	None of the warnings about convergence failures or loss of
+	precision in nmath (distribution and special functions) were
+	being reported to the R user.
 
 
 

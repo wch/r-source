@@ -63,7 +63,7 @@ rbeta(n, shape1, shape2, ncp = 0)
 \source{
   The central \code{dbeta} is based on a binomial probability, using code
   contributed by Catherine Loader (see \code{\link{dbinom}}) if either
-  shape parameter is larger than one.
+  shape parameter is larger than one, otherwise directly from the definition.
   The non-central case is based on the derivation as a Poisson
   mixture of betas (Johnson et al, 1995, pp. 502--3).
 
