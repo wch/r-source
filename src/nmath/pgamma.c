@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2005	Morten Welinder <terra@gnome.org>
- *  Copyright (C) 2005	The R Foundation
- *  Copyright (C) 2006	The R Core Development Team
+ *  Copyright (C) 2005-6 Morten Welinder <terra@gnome.org>
+ *  Copyright (C) 2005-6 The R Foundation
+ *  Copyright (C) 2006	 The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -208,7 +208,7 @@ double lgamma1p (double a)
 } /* lgamma1p */
 
 
-#if 0  /* These were part of the problem of PR#8528 */
+
 /*
  * Compute the log of a sum from logs of terms, i.e.,
  *
@@ -235,7 +235,6 @@ double logspace_sub (double logx, double logy)
 {
     return logx + log1p (-exp (logy - logx));
 }
-#endif
 
 
 #ifndef R_USE_OLD_PGAMMA
@@ -463,15 +462,15 @@ pd_lower_series (double lambda, double y)
  * Abramowitz & Stegun 26.2.12
  */
 static double
-dpnorm (double x, int lower_tail, double p)
+dpnorm (double x, int lower_tail, double lp)
 {
     /*
      * So as not to repeat a pnorm call, we expect
      *
-     *	   p == pnorm (x, 0, 1, lower_tail, FALSE)
+     *	 lp == pnorm (x, 0, 1, lower_tail, TRUE)
      *
      * but use it only in the non-critical case where either x is small
-     * or p is close to 1.
+     * or p==exp(lp) is close to 1.
      */
 
     if (x < 0) {
@@ -494,7 +493,7 @@ dpnorm (double x, int lower_tail, double p)
 	return 1 / sum;
     } else {
 	double d = dnorm (x, 0, 1, FALSE);
-	return d / p;
+	return d / exp (lp);
     }
 }
 
@@ -507,26 +506,32 @@ dpnorm (double x, int lower_tail, double p)
 static double
 ppois_asymp (double x, double lambda, int lower_tail, int log_p)
 {
-    static const double coef15 = 1/12.;
-    static const double coef25 = 1/288.;
-    static const double coef35 = -139/51840.;
-    static const double coef45 = -571/2488320.;
-    static const double coef55 = 163879/209018880.;
-    static const double coef65 =  5246819/75246796800.;
-    static const double coef75 = -534703531/902961561600.;
-    static const double coef1 = 2/3.;
-    static const double coef2 = -4/135.;
-    static const double coef3 = 8/2835.;
-    static const double coef4 = 16/8505.;
-    static const double coef5 = -8992/12629925.;
-    static const double coef6 = -334144/492567075.;
-    static const double coef7 = 698752/1477701225.;
-    static const double two = 2;
+    static const double coefs_a[8] = {
+	-1e99, /* placeholder used for 1-indexing */
+	2/3.,
+	-4/135.,
+	8/2835.,
+	16/8505.,
+	-8992/12629925.,
+	-334144/492567075.,
+	698752/1477701225.
+    };
 
-    double dfm, pt_,s2pt,res1,res2,elfb,term;
-    double ig2,ig3,ig4,ig5,ig6,ig7,ig25,ig35,ig45,ig55,ig65,ig75;
-    double f, np;
-    double pt0, x0, sc = 1.0;
+    static const double coefs_b[8] = {
+	-1e99, /* placeholder */
+	1/12.,
+	1/288.,
+	-139/51840.,
+	-571/2488320.,
+	163879/209018880.,
+	5246819/75246796800.,
+	-534703531/902961561600.
+    };
+
+    double elfb, elfb_term;
+    double res12, res1_term, res1_ig, res2_term, res2_ig;
+    double dfm, pt_, s2pt, f, np;
+    int i;
 
     dfm = lambda - x;
     /* If lambda is large, the distribution is highly concentrated
@@ -534,61 +539,51 @@ ppois_asymp (double x, double lambda, int lower_tail, int log_p)
        to arbitrarily large values of pt_ and hence divergence of the
        coefficients of this approximation.
     */
-    pt_ = -x * log1pmx (dfm / x);
-    s2pt = sqrt (2 * pt_);
+    pt_ = - log1pmx (dfm / x);
+    s2pt = sqrt (2 * x * pt_);
     if (dfm < 0) s2pt = -s2pt;
 
-    pt0 = pt_; x0 = x;
-    /* If x and pt_ are large the coefficients here can overflow.
-       See PR#8528 */
-    if(fabs(x) > 1e50) {x0 = 1; sc = x; pt0 = pt_/x;}
-    ig2 = 1.0 + pt_;
-    term = pt0 * pt_ * 0.5;
-    ig3 = ig2/sc + term;
-    term *= pt0 / 3;
-    ig4 = ig3/sc + term;
-    term *= pt0 / 4;
-    ig5 = ig4/sc + term;
-    term *= pt0 / 5;
-    ig6 = ig5/sc + term;
-    term *= pt0 / 6;
-    ig7 = ig6/sc + term;
+    res12 = 0;
+    res1_ig = res1_term = sqrt (x);
+    res2_ig = res2_term = s2pt;
+    for (i = 1; i < 8; i++) {
+	res12 += res1_ig * coefs_a[i];
+	res12 += res2_ig * coefs_b[i];
+	res1_term *= pt_ / i ;
+	res2_term *= 2 * pt_ / (2 * i + 1);
+	res1_ig = res1_ig / x + res1_term;
+	res2_ig = res2_ig / x + res2_term;
+    }
 
-    term = pt_ * (two / 3);
-    ig25 = 1.0 + term;
-    term *= pt0 * (two / 5);
-    ig35 = ig25/sc + term;
-    term *= pt0 * (two / 7);
-    ig45 = ig35/sc + term;
-    term *= pt0 * (two / 9);
-    ig55 = ig45/sc + term;
-    term *= pt0 * (two / 11);
-    ig65 = ig55/sc + term;
-    term *= pt0 * (two / 13);
-    ig75 = ig65/sc + term;
-
-    elfb = ((((((coef75/x + coef65)/x + coef55)/x + coef45)/x + coef35)/x +
-	     coef25)/x + coef15) + x;
-    res1 = ((((((ig7*coef7/x0 + ig6*coef6)/x0 + ig5*coef5)/x0 + ig4*coef4)/x0 +
-	      ig3*coef3)/x0 + ig2*coef2)/x + coef1)*sqrt(x);
-    res2 = ((((((ig75*coef75/x0 + ig65*coef65)/x0 + ig55*coef55)/x0 +
-	       ig45*coef45)/x0 + ig35*coef35)/x0 + ig25*coef25)/x +
-	    coef15)*s2pt;
-
+    elfb = x;
+    elfb_term = 1;
+    for (i = 1; i < 8; i++) {
+	elfb += elfb_term * coefs_b[i];
+	elfb_term /= x;
+    }
     if (!lower_tail) elfb = -elfb;
-    f = (res1 + res2) / elfb;
+#ifdef DEBUG_p
+    REprintf ("res12 = %.14g   elfb=%.14g\n", elfb, res12);
+#endif
+
+    f = res12 / elfb;
 
     np = pnorm (s2pt, 0.0, 1.0, !lower_tail, log_p);
 
     if (log_p) {
-	double n_d_over_p = dpnorm (s2pt, !lower_tail, R_D_qIv (np));
+	double n_d_over_p = dpnorm (s2pt, !lower_tail, np);
 #ifdef DEBUG_p
-	REprintf ("pp*_asymp(): f=%.14g	 np=e^%.14g ndp=%.14g  f*ndp=%.14g\n",
+	REprintf ("pp*_asymp(): f=%.14g	 np=e^%.14g  nd/np=%.14g  f*nd/np=%.14g\n",
 		  f, np, n_d_over_p, f * n_d_over_p);
 #endif
 	return np + log1p (f * n_d_over_p);
     } else {
-	double nd = dnorm (s2pt, 0.0, 1.0, log_p);
+	double nd = dnorm (s2pt, 0., 1., log_p);
+
+#ifdef DEBUG_p
+	REprintf ("pp*_asymp(): f=%.14g	 np=%.14g  nd=%.14g  f*nd=%.14g\n",
+		  f, np, nd, f * nd);
+#endif
 	return np + f * nd;
     }
 } /* ppois_asymp() */
