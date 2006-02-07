@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-02-06 r37279)
+Version 2.3.0 Under development (unstable) (2006-02-07 r37285)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -296,15 +296,13 @@ df = 100[1] TRUE
 > ## p ~= 1 (<==> 1-p ~= 0) -- gave infinite loop in R <= 1.8.1 -- PR#6421
 > psml <- 2^-(10:54)
 > q0 <- qchisq(psml,    df=1.2, ncp=10, lower.tail=FALSE)
-> q1 <- qchisq(1 -psml, df=1.2, ncp=10)
+> q1 <- qchisq(1-psml, df=1.2, ncp=10) # inaccurate in the tail
 > p0 <- pchisq(q0, df=1.2, ncp=10, lower.tail=FALSE)
-There were 21 warnings (use warnings() to see them)
 > p1 <- pchisq(q1, df=1.2, ncp=10, lower.tail=FALSE)
-There were 21 warnings (use warnings() to see them)
-> iO <- 1:10
-> all.equal(q0[iO], q1[iO])
+> iO <- 1:30
+> all.equal(q0[iO], q1[iO], 1e-5)
 [1] TRUE
-> all.equal(p0[iO], psml[iO], tol = 0.08)# bad tol (0.0744 on 386-Linux).
+> all.equal(p0[iO], psml[iO])
 [1] TRUE
 > 
 > ##--- Beta (need more):
@@ -1062,5 +1060,5 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > ## only the last one was ok in R 2.2.1 and earlier
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  2.43 0.01 2.47 NA NA 
+Time elapsed:  3.83 0.05 3.98 NA NA 
 > 

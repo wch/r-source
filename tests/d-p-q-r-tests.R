@@ -192,12 +192,12 @@ for(df in c(0.1, 0.5, 1.5, 4.7, 10, 20,50,100)) {
 ## p ~= 1 (<==> 1-p ~= 0) -- gave infinite loop in R <= 1.8.1 -- PR#6421
 psml <- 2^-(10:54)
 q0 <- qchisq(psml,    df=1.2, ncp=10, lower.tail=FALSE)
-q1 <- qchisq(1 -psml, df=1.2, ncp=10)
+q1 <- qchisq(1-psml, df=1.2, ncp=10) # inaccurate in the tail
 p0 <- pchisq(q0, df=1.2, ncp=10, lower.tail=FALSE)
 p1 <- pchisq(q1, df=1.2, ncp=10, lower.tail=FALSE)
-iO <- 1:10
-all.equal(q0[iO], q1[iO])
-all.equal(p0[iO], psml[iO], tol = 0.08)# bad tol (0.0744 on 386-Linux).
+iO <- 1:30
+all.equal(q0[iO], q1[iO], 1e-5)
+all.equal(p0[iO], psml[iO])
 
 ##--- Beta (need more):
 

@@ -186,7 +186,7 @@ double  attribute_hidden bd0(double, double);
 /* Consider adding these two to the API (Rmath.h): */
 double	attribute_hidden dbinom_raw(double, double, double, double, int);
 double	attribute_hidden dpois_raw (double, double, int);
-double  attribute_hidden pnchisq_raw(double, double, double, double, double, int);
+double  attribute_hidden pnchisq_raw(double, double, double, double, double, int, Rboolean);
 double  attribute_hidden pgamma_raw(double, double, int, int);
 
 int	i1mach(int);

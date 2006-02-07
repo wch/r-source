@@ -23,9 +23,7 @@ rchisq(n, df, ncp=0)
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{df}{degrees of freedom (non-negative, but can be non-integer).}
-  \item{ncp}{non-centrality parameter (non-negative).  Note that
-    \code{ncp} values larger than about 1417 are not allowed currently
-    for \code{pchisq} and \code{qchisq}.}
+  \item{ncp}{non-centrality parameter (non-negative).}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -62,19 +60,27 @@ rchisq(n, df, ncp=0)
   Note that the degrees of freedom \code{df}\eqn{= n}, can be
   non-integer, and for non-centrality \eqn{\lambda > 0}, even \eqn{n = 0};
   see Johnson et al. (1995, chapter 29).
+
+  Note that \code{ncp} values larger than about 1e5 may give inaccurate
+  results with many warnings for \code{pchisq} and \code{qchisq}.
 }
 \source{
   The central cases are computed via the gamma distribution.
 
   The non-central \code{dchisq} and \code{rchisq} are computed as a
-  Poisson mixture (Johnson et al, 1995, p.436).
+  Poisson mixture central of chi-squares (Johnson et al, 1995, p.436).
 
-  The non-central \code{pchisq} is based on a C translation of
+  The non-central \code{pchisq} is for \code{ncp < 80} computed from
+  the Poisson mixture of central chi-squares and for larger \code{ncp}
+  based on a C translation of
 
   Ding, C. G. (1992)
   Algorithm AS275: Computing the non-central chi-squared
   distribution function. \emph{Appl.Statist.}, \bold{41} 478--482.
 
+  which computes the lower tail only (so the upper tail suffers from
+  cancellation).
+  
   The non-central \code{qchisq} is based on inversion of \code{pchisq}.
 }
 \references{

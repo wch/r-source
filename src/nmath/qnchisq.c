@@ -51,39 +51,62 @@ double qnchisq(double p, double df, double lambda, int lower_tail, int log_p)
 
     /* Invert pnchisq(.) :
      * 1. finding an upper and lower bound */
+    {
+       /* This is Pearson's (1959) approximation,
+          which is usually good to 4 figs or so.  */
+	double b, c, ff;
+	b = (lambda*lambda)/(df + 3*lambda);
+	c = (df + 3*lambda)/(df + 2*lambda);
+	ff = (df + 2 * lambda)/(c*c);
+	ux = b + c * qchisq(p, ff, lower_tail, FALSE);
+	if(ux < 0) ux = 1;
+    }
     if(lower_tail) {
-	pp = p * (1 + Eps);/*not good when p ~= 1; caught via DBL_MAX */
-        for(ux = 1.;
-	    ux < DBL_MAX && pnchisq_raw(ux, df, lambda, Eps, rEps, 10000) < pp;
+	if(p > 1 - DBL_EPSILON) return ML_POSINF;
+	pp = fmin2(1 - DBL_EPSILON, p * (1 + Eps));
+        for(ux = ux;
+	    ux < DBL_MAX &&
+		pnchisq_raw(ux, df, lambda, Eps, rEps, 10000, TRUE) < pp;
 	    ux *= 2);
 	pp = p * (1 - Eps);
         for(lx = fmin2(ux, DBL_MAX);
-	    lx > DBL_MIN && pnchisq_raw(lx, df, lambda, Eps, rEps, 10000) > pp;
+	    lx > DBL_MIN &&
+		pnchisq_raw(lx, df, lambda, Eps, rEps, 10000, TRUE) > pp;
 	    lx *= 0.5);
     }
     else {
-	pp = (p > Eps) ? 1 + Eps : 1;
-        for(ux = 1.;
-	    ux < DBL_MAX && pnchisq_raw(ux, df, lambda, Eps, rEps, 10000) + p < pp;
+	if(p > 1 - DBL_EPSILON) return 0.0;
+	pp = fmin2(1 - DBL_EPSILON, p * (1 + Eps));
+        for(ux = ux;
+	    ux < DBL_MAX &&
+		pnchisq_raw(ux, df, lambda, Eps, rEps, 10000, FALSE) > pp;
 	    ux *= 2);
-	pp = 1 - Eps;
+	pp = p * (1 - Eps);
         for(lx = fmin2(ux, DBL_MAX);
-	    lx > DBL_MIN && pnchisq_raw(lx, df, lambda, Eps, rEps, 10000) + p > pp;
+	    lx > DBL_MIN &&
+		pnchisq_raw(lx, df, lambda, Eps, rEps, 10000, FALSE) < pp;
 	    lx *= 0.5);
     }
 
-    p = R_D_Lval(p);
-
     /* 2. interval (lx,ux)  halving : */
-    do {
-	nx = 0.5 * (lx + ux);
-	if (pnchisq_raw(nx, df, lambda, accu, racc, 100000) > p)
-	    ux = nx;
-	else
-	    lx = nx;
+    if(lower_tail) {
+	do {
+	    nx = 0.5 * (lx + ux);
+	    if (pnchisq_raw(nx, df, lambda, accu, racc, 100000, TRUE) > p)
+		ux = nx;
+	    else
+		lx = nx;
+	}
+	while ((ux - lx) / nx > accu);
+    } else {
+	do {
+	    nx = 0.5 * (lx + ux);
+	    if (pnchisq_raw(nx, df, lambda, accu, racc, 100000, FALSE) < p)
+		ux = nx;
+	    else
+		lx = nx;
+	}
+	while ((ux - lx) / nx > accu);
     }
-    while ((ux - lx) / nx > accu);
     return 0.5 * (ux + lx);
 }
-
-

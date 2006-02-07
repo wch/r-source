@@ -309,6 +309,11 @@ NEW FEATURES
 	error-handling.   This enables e.g. traceback() to work when
 	the error is reaching the limit on the nesting of expressions.
 
+    o	pchisq() and qchisq() are considerably more accurate for
+	moderate (up to 80) values of ncp, and lower.tail = FALSE is
+	fully supported in that region.  (They are somewhat slower
+	than before.)
+
 
 DEPRECATED & DEFUNCT
 

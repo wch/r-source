@@ -6,7 +6,7 @@
  *
  *  Computes the noncentral chi-squared distribution function with
  *  positive real degrees of freedom f and nonnegative noncentrality
- *  parameter theta.
+ *  parameter theta.  pnchisq_raw is based on
  *
  *    Ding, C. G. (1992)
  *    Algorithm AS275: Computing the non-central chi-squared
@@ -37,18 +37,18 @@ double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 
     if (f < 0. || theta < 0.) ML_ERR_return_NAN;
 
-    ans = pnchisq_raw(x, f, theta, 1e-12, 8*DBL_EPSILON, 1000000);
-    if(lower_tail) return log_p	? log(ans) : ans;
+    ans = pnchisq_raw(x, f, theta, 1e-12, 8*DBL_EPSILON, 1000000, lower_tail);
+    if(lower_tail || theta < 80) return log_p ? log(ans) : ans;
     else {
-	if(ans > 1 - 1e-10) ML_ERROR(ME_PRECISION);
-	ans = fmin2(ans, 1.0);  /* Precaution PR#7099 */
-	return log_p ? log1p(-ans) : (1 - ans);
+	if(ans < 1e-10) ML_ERROR(ME_PRECISION);
+	ans = fmax2(ans, 0.0);  /* Precaution PR#7099 */
+	return log_p ? log(ans) : ans;
     }
 }
 
 double attribute_hidden
 pnchisq_raw(double x, double f, double theta,
-	    double errmax, double reltol, int itrmax)
+	    double errmax, double reltol, int itrmax, Rboolean lower_tail)
 {
     double ans, lam, u, v, x2, f2, t, term, bound, f_x_2n, f_2n, lt;
     double lu = -1., l_lam = -1., l_x = -1.; /* initialized for -Wall */
@@ -60,6 +60,20 @@ pnchisq_raw(double x, double f, double theta,
 
     if (x <= 0.)	return 0.;
     if(!R_FINITE(x))	return 1.;
+
+    /* This is principally for use from qnchisq */
+#ifndef MATHLIB_STANDALONE
+    R_CheckUserInterrupt();
+#endif
+
+    if(theta < 80) {
+	double sum = 0, lambda = 0.5*theta, pr = exp(-lambda);
+	int i;
+	for(i = 0; i < 100;  pr *= lambda/++i)
+	    sum += pr * pchisq(x, f+2*i, lower_tail, FALSE);
+	return sum;
+    }
+
 
 #ifdef DEBUG_pnch
     REprintf("pnchisq(x=%g, f=%g, theta=%g): ",x,f,theta);
@@ -125,6 +139,9 @@ pnchisq_raw(double x, double f, double theta,
     for (n = 1, f_2n = f + 2., f_x_2n += 2.;  ; n++, f_2n += 2, f_x_2n += 2) {
 #ifdef DEBUG_pnch
 	REprintf("\n _OL_: n=%d",n);
+#endif
+#ifndef MATHLIB_STANDALONE
+	if(n % 1000) R_CheckUserInterrupt();
 #endif
 	/* f_2n    === f + 2*n
 	 * f_x_2n  === f - x + 2*n   > 0  <==> (f+2n)  >   x */
@@ -197,5 +214,5 @@ pnchisq_raw(double x, double f, double theta,
 #ifdef DEBUG_pnch
     REprintf("\n == L_End: n=%d; term= %g; bound=%g\n",n,term,bound);
 #endif
-    return (ans);
+    return lower_tail ? ans : 1 - ans;
 }
