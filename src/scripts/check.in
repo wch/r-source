@@ -1105,7 +1105,7 @@ sub check_pkg {
 	    my $Rfile = $out[0];
 	    $Rfile =~ s/^Error: *//;
 	    $log->error();
-	    $log->print("Syntax error in file " . $Rfile . "\n");
+	    $log->print("Syntax error in file '$Rfile'\n");
 	    exit(1);
 	}
 	else {
