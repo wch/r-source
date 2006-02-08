@@ -61,6 +61,7 @@ MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
 MAKEINDEX = @MAKEINDEX@
 MKINSTALLDIRS = $(SHELL) $(top_srcdir)/src/scripts/mkinstalldirs
 PERL = @PERL@
+R_ARCH = @R_ARCH@
 R_FRAMEWORK_DIR = $(prefix)/R.framework
 R_GZIPCMD = @R_GZIPCMD@
 R_MODULES = @R_MODULES@
@@ -126,9 +127,10 @@ rdocdir = @rdocdir@
 @WANT_R_FRAMEWORK_TRUE@mandir = $(rhome)
 
 Rexecbindir = $(rhome)/bin
-Rexeclibdir = $(rhome)/lib
+Rexecbindir2 = $(rhome)/bin/exec$(R_ARCH)
+Rexeclibdir = $(rhome)/lib$(R_ARCH)
 ## FIXME:
 ## Alternatively, we could try to set pkglibdir = $(rhome)/lib when
 ## switching to automake.
 ## </FIXME>
-Rexecmodulesdir = $(rhome)/modules
+Rexecmodulesdir = $(rhome)/modules$(R_ARCH)

@@ -148,22 +148,32 @@ R installation directories:
   --libdir=DIR        R files to R_HOME=DIR/R @<:@EPREFIX/$LIBnn@:>@
     rdocdir=DIR       R doc files to DIR      @<:@R_HOME/doc@:>@
     rincludedir=DIR   R include files to DIR  @<:@R_HOME/include@:>@
-    rsharedir=DIR     R share files to DIR    @<:@R_HOME/share@:>@])dnl
+    rsharedir=DIR     R share files to DIR    @<:@R_HOME/share@:>@
+    r_arch=name       Use architecture-dependent subdirs   @<:@not used@:>@])dnl
 
-if test -z ${rdocdir}; then
+if test -z "${rdocdir}"; then
   rdocdir='${rhome}/doc'
 fi
 AC_SUBST([rdocdir])
 
-if test -z ${rincludedir}; then
+if test -z "${rincludedir}"; then
   rincludedir='${rhome}/include'
 fi
 AC_SUBST([rincludedir])
 
-if test -z ${rsharedir}; then
+if test -z "${rsharedir}"; then
   rsharedir='${rhome}/share'
 fi
 AC_SUBST([rsharedir])
+
+if test -z "${r_arch}"; then
+  R_ARCH=
+else
+  R_ARCH="/${r_arch}"
+fi
+AC_DEFINE_UNQUOTED(R_ARCH, "${r_arch}",
+[Define this to use architecture-dependent subdirectories of this name.])
+AC_SUBST([R_ARCH])
 
 ### ** Handle arguments to configure.
 
@@ -361,7 +371,7 @@ AC_ARG_WITH([valgrind-instrumentation],
 ## needs to come after GNOME
 AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
 if test "${want_R_shlib}" = yes; then
-  LIBR="-L\$(R_HOME)/lib -lR"
+  LIBR="-L\$(R_HOME)/lib\$(R_ARCH) -lR"
 else
   LIBR=
 fi
@@ -1597,7 +1607,11 @@ if test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
 fi
 if test "${acx_lapack_ok}" != "yes"; then
-  LAPACK_LIBS="-L\$(R_HOME)/lib -lRlapack"
+  if test -z "r_arch"; then
+    LAPACK_LIBS="-L\$(R_HOME)/lib -lRlapack"
+  else
+    LAPACK_LIBS="-L\$(R_HOME)/lib/${r_arch} -lRlapack"
+  fi
 fi
 AC_SUBST(LAPACK_LIBS)
 AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])

@@ -200,12 +200,23 @@ void process_system_Renviron()
 {
     char buf[PATH_MAX];
 
+#ifdef R_ARCH
+    if(strlen(R_Home) + strlen("/etc/Renviron") + strlen(R_ARCH) + 1 > PATH_MAX - 1) {
+        R_ShowMessage("path to system Renviron is too long: skipping");
+        return;
+    }
+    strcpy(buf, R_Home);
+    strcat(buf, "/etc/");
+    strcat(buf, R_ARCH);
+    strcat(buf, "/Renviron");
+#else
     if(strlen(R_Home) + strlen("/etc/Renviron") > PATH_MAX - 1) {
 	R_ShowMessage("path to system Renviron is too long: skipping");
 	return;
     }
     strcpy(buf, R_Home);
     strcat(buf, "/etc/Renviron");
+#endif
     if(!process_Renviron(buf))
 	R_ShowMessage("cannot find system Renviron");
 }

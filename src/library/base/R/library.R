@@ -533,7 +533,10 @@ function(chname, package = NULL, lib.loc = NULL,
         chname <- substr(chname, 1, nc_chname - nc_file_ext)
 
     for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
-        file <- file.path(pkg, "libs",
+        file <- if(nchar(.Platform$r_arch))
+                file.path(pkg, "libs", .Platform$r_arch,
+                          paste(chname, file.ext, sep = ""))
+	else    file.path(pkg, "libs",
                           paste(chname, file.ext, sep = ""))
         if(file.exists(file)) break else file <- ""
     }
@@ -582,8 +585,12 @@ function(chname, libpath, verbose = getOption("verbose"),
        == file.ext)
         chname <- substr(chname, 1, nc_chname - nc_file_ext)
 
-    file <- file.path(libpath, "libs",
-                      paste(chname, file.ext, sep = ""))
+     file <- if(nchar(.Platform$r_arch))
+             file.path(pkg, "libs", .Platform$r_arch,
+                       paste(chname, file.ext, sep = ""))
+     else    file.path(pkg, "libs",
+                       paste(chname, file.ext, sep = ""))
+ 
     pos <- which(sapply(dll_list, function(x) x[["path"]] == file))
     if(!length(pos))
         stop(gettextf("shared library '%s' was not loaded", chname),

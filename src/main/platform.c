@@ -130,8 +130,8 @@ static void Init_R_Platform(SEXP rho)
 {
     SEXP value, names;
 
-    PROTECT(value = allocVector(VECSXP, 7));
-    PROTECT(names = allocVector(STRSXP, 7));
+    PROTECT(value = allocVector(VECSXP, 8));
+    PROTECT(names = allocVector(STRSXP, 8));
     SET_STRING_ELT(names, 0, mkChar("OS.type"));
     SET_STRING_ELT(names, 1, mkChar("file.sep"));
     SET_STRING_ELT(names, 2, mkChar("dynlib.ext"));
@@ -139,6 +139,7 @@ static void Init_R_Platform(SEXP rho)
     SET_STRING_ELT(names, 4, mkChar("endian"));
     SET_STRING_ELT(names, 5, mkChar("pkgType"));
     SET_STRING_ELT(names, 6, mkChar("path.sep"));
+    SET_STRING_ELT(names, 7, mkChar("r_arch"));
     SET_VECTOR_ELT(value, 0, mkString(R_OSType));
     SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
     SET_VECTOR_ELT(value, 2, mkString(SHLIB_EXT));
@@ -161,6 +162,11 @@ static void Init_R_Platform(SEXP rho)
     SET_VECTOR_ELT(value, 6, mkString(";"));
 #else /* not Win32 */
     SET_VECTOR_ELT(value, 6, mkString(":"));
+#endif
+#ifdef R_ARCH
+    SET_VECTOR_ELT(value, 7, mkString(R_ARCH));
+#else
+    SET_VECTOR_ELT(value, 7, mkString(""));
 #endif
     setAttrib(value, R_NamesSymbol, names);
     defineVar(install(".Platform"), value, rho);

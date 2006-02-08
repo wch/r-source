@@ -15,16 +15,6 @@ export R_INCLUDE_DIR
 R_DOC_DIR="${R_HOME_DIR}/doc"
 export R_DOC_DIR
 
-## NOTE:
-## We must set this here rather than in the main binary.
-: ${R_LD_LIBRARY_PATH=${R_HOME}/lib:@R_LD_LIBRARY_PATH@}
-if test -z "${@shlibpath_var@}"; then
-  @shlibpath_var@="${R_LD_LIBRARY_PATH}"
-else
-  @shlibpath_var@="${R_LD_LIBRARY_PATH}:${@shlibpath_var@}"
-fi
-export @shlibpath_var@
-
 usage="
 Usage: R [options] [< infile] [> outfile]
    or: R CMD command [arguments]
@@ -62,6 +52,7 @@ Options:
   --debugger-args=ARGS  Pass ARGS as arguments to the debugger
   -g, --gui=TYPE	Use TYPE as GUI; possible values are 'X11'
 			(default), 'Tk' and (with package gnomeGUI) 'gnome'
+  --arch=NAME		Specify a sub-architecture
   --args                Skip the rest of the command line
 
 Commands:
@@ -104,13 +95,15 @@ args=
 debugger=
 debugger_args=
 gui=
-R_binary="${R_HOME}/bin/exec/R"
+r_arch=
+R_ARCH=@R_ARCH@
 while test -n "${1}"; do
   case ${1} in
     RHOME|--print-home)
       echo "${R_HOME}"; exit 0 ;;
     CMD)
       shift;
+      export R_ARCH
       exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
     -g|--gui)
       if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
@@ -143,11 +136,42 @@ while test -n "${1}"; do
 #      echo "${version}"; exit 0 ;;
     --args)
       break ;;
+   --arch)
+      if test -n "`echo ${2} | sed 's/^-.*//'`"; then
+        r_arch="${2}"
+	R_ARCH="/${r_arch}"
+        shift
+      else
+        error "option '${1}' requires an argument"
+      fi
+      ;;
+    --arch=*)
+      r_arch=`echo "${1}" | sed -e 's/[^=]*=//'`
+      R_ARCH="/${r_arch}"
+      ;;
     *)
       args="${args} ${1}" ;;
   esac
   shift
 done
+if test -n "${r_arch}" ; then
+  r_arch="/${r_arch}"
+else
+  r_arch=@R_ARCH@
+fi
+
+R_binary="${R_HOME}/bin/exec${r_arch}/R"
+
+## NOTE:
+## We must set this here rather than in the main binary.
+: ${R_LD_LIBRARY_PATH=${R_HOME}/lib${r_arch}:@R_LD_LIBRARY_PATH@}
+if test -z "${@shlibpath_var@}"; then
+  @shlibpath_var@="${R_LD_LIBRARY_PATH}"
+else
+  @shlibpath_var@="${R_LD_LIBRARY_PATH}:${@shlibpath_var@}"
+fi
+export @shlibpath_var@
+
 
 case "${gui}" in
 gnome|GNOME)

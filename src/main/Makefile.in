@@ -103,7 +103,7 @@ COMMON_DEPENDENCIES = \
 R_binary = R.bin
 R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)
 @WANT_R_SHLIB_FALSE@R_bin_LDADD = $(RLIBS) $(EXTRA_LIBS)
-@WANT_R_SHLIB_TRUE@R_bin_LDADD = -L../../lib -lR
+@WANT_R_SHLIB_TRUE@R_bin_LDADD = -L../../lib@R_ARCH@ -lR
 R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ $(RLIBS) $(COMMON_DEPENDENCIES)
 
 libR_la = libR$(DYLIB_EXT)
@@ -185,16 +185,16 @@ install: installdirs
 	@$(MAKE) install-bin
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
 installdirs:
-	@$(MKINSTALLDIRS) "$(Rexecbindir)" "$(Rexecbindir)/exec"
+	@$(MKINSTALLDIRS) "$(Rexecbindir2)"
 	@$(MKINSTALLDIRS) "$(Rexeclibdir)"
 install-bin: installdirs
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir)/exec/R"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir2)/R"
 install-lib: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(Rexeclibdir)/$(libR_la)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f "$(Rexecbindir)/exec/R" "$(Rexecbindir)/R.bin"
+	@rm -f "$(Rexecbindir)/exec/$(R_ARCH)/R" "$(Rexecbindir)/R.bin"
 	@rm -f "$(Rexeclibdir)/libR$(DYLIB_EXT)"
 
 mostlyclean: clean

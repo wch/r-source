@@ -45,15 +45,24 @@ R: $(OBJECTS)
 	    $(INSTALL_DATA) $(srcdir)/$${f} .; \
 	  done \
 	fi
+	@if test -n "$(R_ARCH)" ; then \
+	  $(MKINSTALLDIRS) .$(R_ARCH); \
+	  for f in $(OBJECTS); do \
+	    $(INSTALL_DATA) $${f} .$(R_ARCH); \
+	  done \
+	fi
 
 install: installdirs
 	@echo "installing $(subdir) ..."
 	@$(INSTALL_DATA) $(srcdir)/repositories "$(rhome)/$(subdir)"
-	@for f in $(OBJECTS) $(EXPORTFILES); do \
+	@for f in $(EXPORTFILES); do \
 	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
 	done
+	for f in $(OBJECTS); do
+	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)$(R_ARCH)"; \
+	done
 installdirs:
-	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"
+	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)$(R_ARCH)"
 install-strip: install
 
 uninstall:

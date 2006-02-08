@@ -36,7 +36,7 @@ DISTCLEANFILES = Makefile Rmath.h0 config.h stamp-h
 .SUFFIXES: .h .ts
 
 .h.ts:
-	@$(INSTALL_DATA) $< $(top_builddir)/include/`basename $<`
+	@$(INSTALL_DATA) $< $(top_builddir)/include@R_ARCH@/`basename $<`
 	@touch $@
 
 all: Makefile R
@@ -49,7 +49,7 @@ R: Makefile stamp-R $(TIMESTAMPS)
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 stamp-R:
-	@$(MKINSTALLDIRS) $(top_builddir)/include
+	@$(MKINSTALLDIRS) $(top_builddir)/include@R_ARCH@
 	@touch $@
 $(TIMESTAMPS): stamp-R
 
@@ -85,10 +85,10 @@ install: installdirs install-intl-@USE_INCLUDED_LIBINTL@
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rincludedir)"; \
 	done
 	@for f in $(OBJ_HEADERS); do \
-	  $(INSTALL_DATA) $${f} "$(rincludedir)"; \
+	  $(INSTALL_DATA) $${f} "$(rincludedir)@R_ARCH@"; \
 	done
 installdirs:
-	@$(MKINSTALLDIRS) "$(rincludedir)"
+	@$(MKINSTALLDIRS) "$(rincludedir)@R_ARCH@"
 install-intl-yes:
 	@$(INSTALL_DATA) libintl.h "$(rincludedir)"
 install-intl-no:

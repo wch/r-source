@@ -64,7 +64,7 @@ dlamc.o: dlamc.f
 
 R: Makefile
 	@$(MAKE) Makedeps
-@USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) $(Rlapack_la) Rlapack_install
+@USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) rhome="$(abs_top_builddir)" $(Rlapack_la) Rlapack_install
 	@$(MAKE) $(lapack_la)
 
 $(lapack_la): $(lapack_la_OBJECTS)
@@ -87,9 +87,9 @@ $(top_builddir)/etc/Rlapack.exp: $(LIBOBJECTS)
 	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(LIBOBJECTS)
 
 Rlapack_install: $(Rlapack_la) 
-	@$(MKINSTALLDIRS) $(R_HOME)/lib/
+	@$(MKINSTALLDIRS) $(Rexeclibdir)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) \
-	  $(R_HOME)/lib/$(Rlapack_la)
+	  $(Rexeclibdir)/$(Rlapack_la)
 
 install: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(Rexecmodulesdir)/$(lapack_la)"
