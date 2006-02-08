@@ -1910,17 +1910,17 @@ fi
 
 ## R installation directories
 
-if test -z ${rdocdir}; then
+if test -z "${rdocdir}"; then
   rdocdir='${rhome}/doc'
 fi
 
 
-if test -z ${rincludedir}; then
+if test -z "${rincludedir}"; then
   rincludedir='${rhome}/include'
 fi
 
 
-if test -z ${rsharedir}; then
+if test -z "${rsharedir}"; then
   rsharedir='${rhome}/share'
 fi
 

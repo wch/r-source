@@ -155,12 +155,12 @@ if test -z ${rdocdir}; then
 fi
 AC_SUBST([rdocdir])
 
-if test -z ${rincludedir}; then
+if test -z "${rincludedir}"; then
   rincludedir='${rhome}/include'
 fi
 AC_SUBST([rincludedir])
 
-if test -z ${rsharedir}; then
+if test -z "${rsharedir}"; then
   rsharedir='${rhome}/share'
 fi
 AC_SUBST([rsharedir])
