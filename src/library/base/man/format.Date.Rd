@@ -73,11 +73,14 @@ as.Date(x, \ldots)
   Years before 1CE (aka 1AD) will probably not be handled correctly.
 }
 \references{
-  International Organization for Standardization (1988, 1997, \dots)
+  International Organization for Standardization (2004, 1988, 1997,
+  \dots)
   \emph{ISO 8601. Data elements and interchange formats --
     Information interchange -- Representation of dates and times.}
-  The 1997 version is available on-line at
-  \url{ftp://ftp.qsl.net/pub/g1smd/8601v03.pdf}
+  For links to versions available on-line see (at the time of writing)
+  \url{http://www.qsl.net/g1smd/isopdf.htm}; for information on the
+  current official version, see
+  \url{http://www.iso.org/iso/en/prods-services/popstds/datesandtime.html}.
 }
 \seealso{
   \link{Date} for details of the date class;
