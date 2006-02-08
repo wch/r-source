@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-02-06
+@set FAQ_DATE @value{FAQ_YEAR}-02-08
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1950,6 +1950,8 @@ Estimation of L-moments and the parameters of normal and Cauchy
 polynomial quantile mixtures.
 @item LogicReg
 Routines for Logic Regression.
+@item LoopAnalyst
+A collection of tools to conduct Levins' Loop Analysis.
 @item MASS
 Functions and datasets from the main package of Venables and Ripley,
 ``Modern Applied Statistics with S''.  Contained in the @file{VR}
