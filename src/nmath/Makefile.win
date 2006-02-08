@@ -35,8 +35,8 @@ CSOURCES= \
 	dweibull.c pweibull.c qweibull.c rweibull.c \
 	dlogis.c plogis.c qlogis.c rlogis.c \
 	dnchisq.c pnchisq.c qnchisq.c \
-	dnbeta.c pnbeta.c \
-	pnf.c pnt.c \
+	dnbeta.c pnbeta.c qnbeta.c \
+	pnf.c pnt.c qnf.c qnt.c \
 	ptukey.c qtukey.c \
 	toms708.c wilcox.c \
 	signrank.c

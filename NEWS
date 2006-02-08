@@ -303,7 +303,7 @@ NEW FEATURES
     o	[rc]bind and some more cases of subassignment are implemented
 	for raw matrices.  (PR8529 and 8530)
 
-    o	rbeta(), rf() and rt() now have a non-centrality parameter.
+    o	[qr]beta(), [qr]f() and [qr]t() now have a non-centrality parameter.
 
     o	options(expressions) is temporarily increased by 500 during
 	error-handling.   This enables e.g. traceback() to work when
@@ -714,6 +714,8 @@ BUG FIXES
     o	None of the warnings about convergence failures or loss of
 	precision in nmath (distribution and special functions) were
 	being reported to the R user.
+
+    o	dnt was missing from standalone nmath.
 
 
 

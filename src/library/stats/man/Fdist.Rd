@@ -13,7 +13,7 @@
 \usage{
 df(x, df1, df2, log = FALSE)
 pf(q, df1, df2, ncp = 0, lower.tail = TRUE, log.p = FALSE)
-qf(p, df1, df2,          lower.tail = TRUE, log.p = FALSE)
+qf(p, df1, df2, ncp = 0, lower.tail = TRUE, log.p = FALSE)
 rf(n, df1, df2, ncp = 0)
 }
 \arguments{

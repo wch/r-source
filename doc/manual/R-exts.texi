@@ -6833,8 +6833,8 @@ distributions.
 @item chi-squared @tab @code{chisq} @tab @code{df}
 @item non-central chi-squared @tab @code{nchisq} @tab @code{df}, @code{lambda}
 @item exponential @tab @code{exp} @tab @code{scale}
-@item F @tab @code{f} @tab @code{n1}, @code{n2}
-@item non-central F @tab @code{nf} (*) @tab @code{n1}, @code{n2}, @code{ncp}
+@item F @tab @code{f} (*) @tab @code{n1}, @code{n2}
+@item non-central F @tab @code{nf} @tab @code{n1}, @code{n2}, @code{ncp}
 @item gamma @tab @code{gamma} @tab @code{shape}, @code{scale}
 @item geometric @tab @code{geom} @tab @code{p}
 @item hypergeometric @tab @code{hyper} @tab @code{NR}, @code{NB}, @code{n}
@@ -6844,7 +6844,7 @@ distributions.
 @item normal @tab @code{norm} @tab @code{mu}, @code{sigma}
 @item Poisson @tab @code{pois} @tab @code{lambda}
 @item Student's t @tab @code{t} @tab @code{n}
-@item non-central t @tab @code{nt} (*) @tab @code{df}, @code{delta}
+@item non-central t @tab @code{nt} @tab @code{df}, @code{delta}
 @item Studentized range @tab @code{tukey} (*) @tab @code{rr}, @code{cc}, @code{df}
 @item uniform @tab @code{unif} @tab @code{a}, @code{b}
 @item Weibull @tab @code{weibull} @tab @code{shape}, @code{scale}
@@ -6855,7 +6855,8 @@ distributions.
 
 @noindent
 Entries marked with an asterisk only have @samp{p} and @samp{q}
-functions available.  After a call to @code{dwilcox}, @code{pwilcox} or
+functions available, and none of the non-central distributions have
+@samp{r} functions.  After a call to @code{dwilcox}, @code{pwilcox} or
 @code{qwilcox} the function @code{wilcox_free()} should be called, and
 similarly for the signed rank functions.
 

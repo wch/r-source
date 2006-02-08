@@ -27,7 +27,7 @@ SOURCES_NMATH = \
 	dnorm.c pnorm.c qnorm.c rnorm.c \
 	dlnorm.c plnorm.c qlnorm.c rlnorm.c \
 	df.c pf.c qf.c rf.c \
-	dt.c pt.c qt.c rt.c \
+	dt.c pt.c qt.c rt.c dnt.c \
 	dchisq.c pchisq.c qchisq.c rchisq.c rnchisq.c \
 	dbinom.c pbinom.c qbinom.c rbinom.c \
 	rmultinom.c \
@@ -40,8 +40,8 @@ SOURCES_NMATH = \
 	dweibull.c pweibull.c qweibull.c rweibull.c \
 	dlogis.c plogis.c qlogis.c rlogis.c \
 	dnchisq.c pnchisq.c qnchisq.c \
-	dnbeta.c pnbeta.c \
-	pnf.c pnt.c \
+	dnbeta.c pnbeta.c qnbeta.c \
+	pnf.c pnt.c qnf.c qnt.c \
 	ptukey.c qtukey.c \
 	toms708.c wilcox.c \
 	signrank.c

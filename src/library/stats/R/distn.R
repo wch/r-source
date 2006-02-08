@@ -75,8 +75,10 @@ pbeta <- function(q, shape1, shape2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
     if(missing(ncp)) .Internal(pbeta(q, shape1, shape2, lower.tail, log.p))
     else .Internal(pnbeta(q, shape1, shape2, ncp, lower.tail, log.p))
 }
-qbeta <- function(p, shape1, shape2, lower.tail = TRUE, log.p = FALSE)
-    .Internal(qbeta(p, shape1, shape2, lower.tail, log.p))
+qbeta <- function(p, shape1, shape2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
+    if(missing(ncp)) .Internal(qbeta(p, shape1, shape2, lower.tail, log.p))
+    else .Internal(qnbeta(p, shape1, shape2, ncp, lower.tail, log.p))
+}
 rbeta <- function(n, shape1, shape2, ncp = 0) {
     if(ncp == 0) .Internal(rbeta(n, shape1, shape2))
     else {
@@ -146,8 +148,10 @@ pf <- function(q, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
     if(missing(ncp)) .Internal(pf(q, df1, df2, lower.tail, log.p))
     else .Internal(pnf(q, df1, df2, ncp, lower.tail, log.p))
 }
-qf <- function(p, df1, df2, lower.tail = TRUE, log.p = FALSE)
-    .Internal(qf(p, df1, df2, lower.tail, log.p))
+qf <- function(p, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
+    if(missing(ncp)) .Internal(qf(p, df1, df2, lower.tail, log.p))
+    else .Internal(qnf(p, df1, df2, ncp, lower.tail, log.p))
+}
 rf <- function(n, df1, df2, ncp = 0)
 {
     if(ncp == 0) .Internal(rf(n, df1, df2))
@@ -216,13 +220,13 @@ dt <- function(x, df, ncp=0, log = FALSE) {
 }
 
 pt <- function(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE) {
-    if(missing(ncp))
-	.Internal(pt(q, df, lower.tail, log.p))
-    else
-	.Internal(pnt(q, df, ncp, lower.tail, log.p))
+    if(missing(ncp)) .Internal(pt(q, df, lower.tail, log.p))
+    else .Internal(pnt(q, df, ncp, lower.tail, log.p))
 }
-qt <- function(p, df, lower.tail = TRUE, log.p = FALSE)
-    .Internal(qt(p, df, lower.tail, log.p))
+qt <- function(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
+    if(ncp == 0) .Internal(qt(p, df, lower.tail, log.p))
+    else .Internal(qnt(p, df, ncp, lower.tail, log.p))
+}
 rt <- function(n, df, ncp = 0) {
     if(ncp == 0) .Internal(rt(n, df))
     else rnorm(n, ncp)/(rchisp(n, df)/sqrt(df))

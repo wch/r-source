@@ -14,7 +14,7 @@
 \usage{
 dt(x, df, ncp = 0, log = FALSE)
 pt(q, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
-qt(p, df,          lower.tail = TRUE, log.p = FALSE)
+qt(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
 rt(n, df, ncp = 0)
 }
 \arguments{
@@ -90,7 +90,7 @@ rt(n, df, ncp = 0)
   Cumulative distribution function of the non-central \eqn{t} distribution,
   \emph{Applied Statistics} \bold{38}, 185--189.
 
-  For \code{qt}, a C translation of
+  For central \code{qt}, a C translation of
 
   Hill, G. W. (1970) Algorithm 396: Student's t-quantiles.
   \emph{Communications of the ACM}, \bold{13(10)}, 619--620.
@@ -98,7 +98,9 @@ rt(n, df, ncp = 0)
   altered to take account of
 
   Hill, G. W. (1981) Remark on Algorithm 396, \emph{ACM Transactions on
-  Mathematical Software}, \bold{7}, 250--1
+    Mathematical Software}, \bold{7}, 250--1.
+
+  The non-central case is done by inversion.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
