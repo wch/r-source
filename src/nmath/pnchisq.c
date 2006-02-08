@@ -1,8 +1,6 @@
 /*
  *  Algorithm AS 275 Appl.Statist. (1992), vol.41, no.2
  *  original  (C) 1992	     Royal Statistical Society
- *  Copyright (C) 2000--2002 The R Development Core Team
- *  Copyright (C) 2003--2004 The R Foundation
  *
  *  Computes the noncentral chi-squared distribution function with
  *  positive real degrees of freedom f and nonnegative noncentrality
@@ -12,6 +10,9 @@
  *    Algorithm AS275: Computing the non-central chi-squared
  *    distribution function. Appl.Statist., 41, 478-482.
 
+ *  Other parts
+ *  Copyright (C) 2000-2006  The R Development Core Team
+ *  Copyright (C) 2003-2004  The R Foundation
  */
 
 #include "nmath.h"
