@@ -959,7 +959,7 @@ rm -rf conftest conftest.* conftestf.* core
 if test -n "${r_cv_prog_f77_can_run}"; then
   AC_MSG_RESULT([yes])
 else
-  AC_MSG_WARN([cannot run mixed C/Fortan code])
+  AC_MSG_WARN([cannot run mixed C/Fortran code])
   AC_MSG_ERROR([Maybe check LDFLAGS for paths to Fortran libraries?])
 fi
 ])# R_PROG_F77_CAN_RUN
