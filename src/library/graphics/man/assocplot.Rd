@@ -1,5 +1,6 @@
 \name{assocplot}
 \alias{assocplot}
+\encoding{latin1}
 \title{Association Plots}
 \description{
   Produce a Cohen-Friendly association plot indicating deviations from
@@ -39,9 +40,14 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   \code{col}, which defaults to black; otherwise, the box falls below
   the baseline and is shaded in the color specified by the second
   element of \code{col}, which defaults to red.
+
+  A more flexible and extensible implementation of association plots
+  written in the grid graphics system is provided in the function
+  \code{\link[vcd]{assoc}} in the contributed package \pkg{vcd} (Meyer,
+  Zeileis and Hornik, 2005).
 }
 \seealso{
-  \code{\link{mosaicplot}}; \code{\link{chisq.test}}.
+  \code{\link{mosaicplot}}, \code{\link{chisq.test}}.
 }
 \references{
   Cohen, A. (1980),
@@ -55,6 +61,12 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   \emph{SAS User Group International Conference Proceedings}, \bold{17},
   190--200.
   \url{http://www.math.yorku.ca/SCS/sugi/sugi17-paper.html}
+
+  Meyer, D., Zeileis, A., and Hornik, K. (2005)
+  The strucplot framework: Visualizing multi-way contingency tables with vcd.
+  \emph{Report 22}, Department of Statistics and Mathematics, 
+  \enc{Wirtschaftsuniversität}{Wirtschaftsuniversitaet} Wien, Research Report Series.
+  \url{http://epub.wu-wien.ac.at/dyn/openURL?id=oai:epub.wu-wien.ac.at:epub-wu-01_8a1}
 }
 \examples{
 ## Aggregate over sex:

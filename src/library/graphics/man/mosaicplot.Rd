@@ -2,6 +2,7 @@
 \alias{mosaicplot}
 \alias{mosaicplot.default}
 \alias{mosaicplot.formula}
+\encoding{latin1}
 \title{Mosaic Plots}
 \description{Plots a mosaic on the current graphics device.}
 \usage{
@@ -80,8 +81,8 @@ mosaicplot(x, \dots)
   (\code{mosaicplot.default}) and a formula interface
   (\code{mosaicplot.formula}).
 
-  Extended mosaic displays show the standardized residuals of a
-  loglinear model of the counts from by the color and outline of the
+  Extended mosaic displays visualize standardized residuals of a
+  loglinear model for the table by color and outline of the
   mosaic's tiles.  (Standardized residuals are often referred to a
   standard normal distribution.)  Negative residuals are drawn in shaded
   of red and with broken outlines; positive ones are drawn in blue with
@@ -108,10 +109,15 @@ mosaicplot(x, \dots)
 
   Missing values are not supported except via an \code{na.action}
   function when \code{data} contains variables to be cross-tabulated.
+  
+  A more flexible and extensible implementation of mosaic plots written
+  in the grid graphics system is provided in the function
+  \code{\link[vcd]{mosaic}} in the contributed package \pkg{vcd} (Meyer,
+  Zeileis and Hornik, 2005).
 }
 \author{
   S-PLUS original by John Emerson \email{emerson@stat.yale.edu}.
-  Originally modified and enhanced for \R by KH.
+  Originally modified and enhanced for \R by Kurt Hornik.
 }
 \references{
   Hartigan, J.A., and Kleiner, B. (1984)
@@ -119,7 +125,7 @@ mosaicplot(x, \dots)
   \bold{38}, 32--35.
 
   Emerson, J. W. (1998)
-  Mosaic displays in S-PLUS: a general implementation and a case study.
+  Mosaic displays in S-PLUS: A general implementation and a case study.
   \emph{Statistical Computing and Graphics Newsletter (ASA)},
   \bold{9}, 1, 17--23.
 
@@ -127,6 +133,12 @@ mosaicplot(x, \dots)
   Mosaic displays for multi-way contingency tables.
   \emph{Journal of the American Statistical Association}, \bold{89},
   190--200.
+
+  Meyer, D., Zeileis, A., and Hornik, K. (2005)
+  The strucplot framework: Visualizing multi-way contingency tables with vcd.
+  \emph{Report 22}, Department of Statistics and Mathematics, 
+  \enc{Wirtschaftsuniversität}{Wirtschaftsuniversitaet} Wien, Research Report Series.
+  \url{http://epub.wu-wien.ac.at/dyn/openURL?id=oai:epub.wu-wien.ac.at:epub-wu-01_8a1}
 
   The home page of Michael Friendly
   (\url{http://www.math.yorku.ca/SCS/friendly.html}) provides
@@ -144,14 +156,19 @@ mosaicplot(~ Sex + Age + Survived, data = Titanic, color = TRUE)
 
 mosaicplot(HairEyeColor, shade = TRUE)
 ## Independence model of hair and eye color and sex.  Indicates that
-## there are significantly more blue eyed blonde females than expected
-## in the case of independence (and too few brown eyed blonde females).
+## there are more blue eyed blonde females than expected in the case 
+## of independence and too few brown eyed blonde females.
+## The corresponding model is:
+fm <- loglin(HairEyeColor, list(1, 2, 3))
+pchisq(fm$pearson, fm$df, lower.tail = FALSE)
 
-mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
+mosaicplot(HairEyeColor, shade = TRUE, margin = list(1:2, 3))
 ## Model of joint independence of sex from hair and eye color.  Males
 ## are underrepresented among people with brown hair and eyes, and are
-## overrepresented among people with brown hair and blue eyes, but not
-## "significantly".
+## overrepresented among people with brown hair and blue eyes.
+## The corresponding model is:
+fm <- loglin(HairEyeColor, list(1:2, 3))
+pchisq(fm$pearson, fm$df, lower.tail = FALSE)
 
 ## Formula interface for raw data: visualize crosstabulation of numbers
 ## of gears and carburettors in Motor Trend car data.
