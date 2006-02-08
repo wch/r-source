@@ -204,7 +204,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         assignNativeRoutines <- function(dll, lib, env, nativeRoutines) {
             if(length(nativeRoutines) == 0)
                  return(NULL)
-            
+
             if(nativeRoutines$useRegistration) {
                # Use the registration information to register ALL the symbols
                fixes <- nativeRoutines$registrationFixes
@@ -221,7 +221,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                                                " since ", varName,
                                                " is already defined in the ", package,
                                                " namespace")
-                                     else 
+                                     else
                                        assign(varName, sym, envir = env)
                                  })
                       })
@@ -231,7 +231,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             symNames <- nativeRoutines$symbolNames
             if(length(symNames) == 0)
               return(NULL)
-            
+
             symbols <- getNativeSymbolInfo(symNames, dll, unlist = FALSE,
                                                withRegistrationInfo = TRUE)
             sapply(seq(along = symNames),
@@ -248,16 +248,16 @@ loadNamespace <- function (package, lib.loc = NULL,
                                    " since ", varName,
                                    " is already defined in the ", package,
                                    " namespace")
-                           else 
+                           else
                               assign(varName, symbols[[origVarName]], envir = env)
-                           
+
                     })
-                   
+
 
 
             symbols
           }
-        
+
         # find package and check it has a name space
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if (length(pkgpath) == 0)
@@ -306,8 +306,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                                                      c(lib.loc, .libPaths())),
                                    imp[[2]])
 
-       
-        
+
+
         # dynamic variable to allow/disable .Import and friends
         "__NamespaceDeclarativeOnly__" <- declarativeOnly
 
@@ -829,7 +829,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
         proto <- list(useRegistration = FALSE,
                       symbolNames = character(0))
         class(proto) <- "NativeRoutineMap"
- 
+
         mergeNativeRoutineMaps(proto, useRegistration, symbolNames, fixes)
       }
 
@@ -838,15 +838,15 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
       function(map, useRegistration, symbolNames, fixes) {
         if(!useRegistration)
           names(symbolNames) <- paste(fixes[1],  names(symbolNames), fixes[2], sep = "")
-        else 
+        else
           map$registrationFixes <- fixes
- 
+
         map$useRegistration <- map$useRegistration || useRegistration
-    
+
         map$symbolNames <- c(map$symbolNames, symbolNames)
 
         map
-      }  
+      }
 
     nsFile <- namespaceFilePath(package, package.lib)
     if (file.exists(nsFile))
@@ -875,14 +875,14 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                "{" =  for (ee in as.list(e[-1])) parseDirective(ee),
                "=" = {
                    parseDirective(e[[3]])
-                   if(as.character(e[[3]][[1]]) == "useDynLib") 
+                   if(as.character(e[[3]][[1]]) == "useDynLib")
                        names(dynlibs)[length(dynlibs)] <<- as.character(e[[2]])
                },
                "<-" = {
                    parseDirective(e[[3]])
-                   if(as.character(e[[3]][[1]]) == "useDynLib") 
+                   if(as.character(e[[3]][[1]]) == "useDynLib")
                        names(dynlibs)[length(dynlibs)] <<- as.character(e[[2]])
-               },               
+               },
                export = {
                    exp <- e[-1]
                    exp <- structure(as.character(exp), names=names(exp))
@@ -926,7 +926,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                     # when NAMESPACE is parsed rather than when it is loaded and creates
                     # NativeRoutineMap objects to handle the mapping of symbols to R variable
                     # names.
-                 
+
                     # The name is the second element after useDynLib
                    dyl <- as.character(e[2])
                     # We ensure uniqueness at the end.
@@ -988,12 +988,12 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                        idx <- match(".registration", names(symNames))
                        if(!is.na(idx)) {
                          useRegistration = as.logical(symNames[idx])
-                         symNames <- symNames[-idx] 
+                         symNames <- symNames[-idx]
                        }
 
                        # Now merge into the NativeRoutineMap.
                        nativeRoutines[[ dyl ]] <<-
-                          if(dyl %in% names(nativeRoutines)) 
+                          if(dyl %in% names(nativeRoutines))
                                mergeNativeRoutineMaps(nativeRoutines[[ dyl ]],
                                                       useRegistration, symNames, fixes)
                           else
@@ -1012,7 +1012,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                    S3methods[nS3, 1:length(spec)] <<- as.character(spec)
                },
                stop(gettextf("unknown namespace directive: %s", deparse(e)),
-                    call. = FALSE, domain = FALSE)
+                    call. = FALSE, domain = NA)
                )
     }
     for (e in directives)
