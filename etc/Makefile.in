@@ -58,7 +58,7 @@ install: installdirs
 	@for f in $(EXPORTFILES); do \
 	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
 	done
-	for f in $(OBJECTS); do
+	@for f in $(OBJECTS); do \
 	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)$(R_ARCH)"; \
 	done
 installdirs:

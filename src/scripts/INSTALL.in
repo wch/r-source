@@ -86,6 +86,8 @@ NO_PERL5_MSG="\
 *** The CRAN master site can be found at
 ***    http://cran.r-project.org/"
 
+: ${R_ARCH=@R_ARCH@}
+
 if mkdir -p . 2>/dev/null; then
   MKDIR_P="mkdir -p"
 else
@@ -546,7 +548,7 @@ do_install_source () {
     message "libs"
     has_error=false
     if ${debug}; then set -x; fi
-    ${MKDIR_P} "${R_PACKAGE_DIR}/libs@R_ARCH@"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
     if test -f src/Makefile; then
       cd src;
       makefiles="-f \"${R_SHARE_DIR}\"/make/shlib.mk -f Makefile"
@@ -559,7 +561,7 @@ do_install_source () {
 	makefiles="-f Makevars ${makefiles}"
       fi
       eval ${MAKE} ${makefiles} \
-	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs@R_ARCH@" \
+	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
         || has_error=true; \
       cd ..
     else
@@ -567,7 +569,7 @@ do_install_source () {
       srcs=`ls *.[cfC] *.cc *.cpp *.f90 *.f95 2>/dev/null`
       if test -n "${srcs}"; then
 	sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
-          && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs@R_ARCH@" \
+          && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
 	  || has_error=true; \
       else
 	warning "no source files found"
@@ -578,7 +580,7 @@ do_install_source () {
       error "compilation failed for package '${pkg_name}'"
       do_exit_on_error
     fi
-    chmod 755 "${R_PACKAGE_DIR}/libs@R_ARCH@/"*
+    chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*
     if ${debug}; then set +x; fi
   fi
 
