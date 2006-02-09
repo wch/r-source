@@ -1852,11 +1852,16 @@ static void NumDenomVShift(BBOX numBBox, BBOX denomBBox,
 	phi = theta;
     }
     delta = (*u - bboxDepth(numBBox)) - (a + 0.5 * theta);
+    /*
+     * Numerators and denominators on fractions appear too far from
+     * horizontal bar. 
+     * Reread of Knuth suggests removing "+ theta" components below.
+     */ 
     if (delta < phi)
-	*u += (phi - delta) + theta;
+	*u += (phi - delta); /* + theta; */
     delta = (a + 0.5 * theta) - (bboxHeight(denomBBox) - *v);
     if (delta < phi)
-	*v += (phi - delta) + theta;
+	*v += (phi - delta); /* + theta; */
 }
 
 static void NumDenomHShift(BBOX numBBox, BBOX denomBBox,
