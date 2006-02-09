@@ -75,6 +75,12 @@ write.csv2(\dots)
   \code{\link{I}()}.  Use \code{\link{options}("OutDec")} to control
   such conversions.
 
+  In almost all cases the conversion of numeric quantities is governed
+  by the options in force, in particular by \code{"digits"} and
+  \code{"scipen"} (see \code{\link{options}}).  For finer control, use
+  \code{\link{format}} to make a character matrix/data frame, and call
+  \code{write.table} on that.
+
   These functions check for a user interrupt every 1000 lines of output.
 }
 \section{CSV files}{

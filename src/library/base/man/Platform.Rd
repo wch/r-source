@@ -49,6 +49,10 @@
     \code{";"} on Windows.  Used to separate paths in variables
     such as \code{PATH} and \code{TEXINPUTS}.
   }
+  \item{r_arch}{
+    character, posssibly \code{""}.  The name of the
+    architecture-specific directories used in this build of \R.
+  }
 }
 \seealso{
   \code{\link{R.version}} and \code{\link{Sys.info}} give more details
