@@ -14,8 +14,9 @@ identify(x, \dots)
     object which defines coordinates (a plotting structure, time
     series etc: see \code{\link{xy.coords}}) can be given as \code{x},
     and \code{y} left undefined.}
-  \item{labels}{an optional vector, the same length as \code{x} and
-    \code{y}, giving labels for the points.}
+  \item{labels}{an optional character vector, the same length as \code{x} and
+    \code{y}, giving labels for the points.  Will be coerced using
+    \code{\link{as.character}}.}
   \item{pos}{if \code{pos} is \code{TRUE}, a component is added to the
     return value which indicates where text was plotted relative to each
     identified point: see Value.}
