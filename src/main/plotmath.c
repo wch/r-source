@@ -591,7 +591,17 @@ static BBOX DrawBBox(BBOX bbox, double xoffset, double yoffset,
     y[3] = ConvertedY(mc, dd);
     gc->col = mc->BoxColor;
     gc->lty = LTY_SOLID;
-    gc->lwd = 1;
+    /*
+     * We used to just force lwd = 1, which is a reasonable sanity check
+     * because if the user had set lwd = 10 for something, your
+     * mathematical annotation would look REALLY bad.
+     * Unfortunately, this meant that the user could not set a nice
+     * small lwd to get a finer line;  we always bumped it back up to 1.
+     * NOW we just reduce lwd to 1 (as a sanity check) ONLY if 
+     * lwd is greater than 1.
+     */
+    if (gc->lwd > 1)
+	gc->lwd = 1;
     GEPolyline(5, x, y, gc, dd);
     PMoveTo(xsaved, ysaved, mc);
     gc->col = savedcol;
@@ -1383,7 +1393,8 @@ static BBOX RenderSlash(int draw, mathContext *mc, R_GE_gcontext *gc,
 	y[1] = ConvertedY(mc, dd);
 	PMoveUp(-height, mc);
 	gc->lty = LTY_SOLID;
-	gc->lwd = 1;
+	if (gc->lwd > 1)
+	    gc->lwd = 1;
 	GEPolyline(2, x, y, gc, dd);
 	PMoveAcross(0.5 * width, mc);
 	gc->lty = savedlty;
@@ -1642,7 +1653,8 @@ static BBOX RenderWideTilde(SEXP expr, int draw, mathContext *mc,
 	x[NTILDE + 2] = ConvertedX(mc, dd);
 	y[NTILDE + 2] = ConvertedY(mc, dd);
 	gc->lty = LTY_SOLID;
-	gc->lwd = 1;
+	if (gc->lwd > 1)
+	    gc->lwd = 1;
 	GEPolyline(NTILDE + 3, x, y, gc, dd);
 	PMoveTo(savedX + totalwidth, savedY, mc);
 	gc->lty = savedlty;
@@ -1685,7 +1697,8 @@ static BBOX RenderWideHat(SEXP expr, int draw, mathContext *mc,
 	x[2] = ConvertedX(mc, dd);
 	y[2] = ConvertedY(mc, dd);
 	gc->lty = LTY_SOLID;
-	gc->lwd = 1;
+	if (gc->lwd > 1)
+	    gc->lwd = 1;
 	GEPolyline(3, x, y, gc, dd);
 	PMoveTo(savedX + width, savedY, mc);
 	gc->lty = savedlty;
@@ -1722,7 +1735,8 @@ static BBOX RenderBar(SEXP expr, int draw, mathContext *mc,
 	x[1] = ConvertedX(mc, dd);
 	y[1] = ConvertedY(mc, dd);
 	gc->lty = LTY_SOLID;
-	gc->lwd = 1;
+	if (gc->lwd > 1)
+	    gc->lwd = 1;
 	GEPolyline(2, x, y, gc, dd);
 	PMoveTo(savedX + width, savedY, mc);
 	gc->lty = savedlty;
@@ -1913,7 +1927,8 @@ static BBOX RenderFraction(SEXP expr, int rule, int draw,
 	    x[1] = ConvertedX(mc, dd);
 	    y[1] = ConvertedY(mc, dd);
 	    gc->lty = LTY_SOLID;
-	    gc->lwd = 1;
+	    if (gc->lwd > 1)
+		gc->lwd = 1;
 	    GEPolyline(2, x, y, gc, dd);
 	    PMoveUp(-AxisHeight(gc, dd), mc);
 	    gc->lty = savedlty;
@@ -1954,7 +1969,8 @@ static BBOX RenderUnderline(SEXP expr, int draw, mathContext *mc,
         x[1] = ConvertedX(mc, dd);
         y[1] = ConvertedY(mc, dd);
         gc->lty = LTY_SOLID;
-        gc->lwd = 1;
+	if (gc->lwd > 1)
+	    gc->lwd = 1;
         GEPolyline(2, x, y, gc, dd);
         PMoveUp(depth, mc);
         gc->lty = savedlty;
@@ -2576,7 +2592,8 @@ static BBOX RenderRadical(SEXP expr, int draw, mathContext *mc,
 	x[4] = ConvertedX(mc, dd);
 	y[4] = ConvertedY(mc, dd);
 	gc->lty = LTY_SOLID;
-	gc->lwd = 1;
+	if (gc->lwd > 1)
+	    gc->lwd = 1;
 	GEPolyline(5, x, y, gc, dd);
 	PMoveTo(savedX, savedY, mc);
 	gc->lty = savedlty;
@@ -2625,7 +2642,8 @@ static BBOX RenderAbs(SEXP expr, int draw, mathContext *mc,
 	x[1] = ConvertedX(mc, dd);
 	y[1] = ConvertedY(mc, dd);
 	gc->lty = LTY_SOLID;
-	gc->lwd = 1;
+	if (gc->lwd > 1)
+	    gc->lwd = 1;
 	GEPolyline(2, x, y, gc, dd);
 	PMoveUp(-height, mc);
 	gc->lty = savedlty;
@@ -2645,7 +2663,8 @@ static BBOX RenderAbs(SEXP expr, int draw, mathContext *mc,
 	x[1] = ConvertedX(mc, dd);
 	y[1] = ConvertedY(mc, dd);
 	gc->lty = LTY_SOLID;
-	gc->lwd = 1;
+	if (gc->lwd > 1)
+	    gc->lwd = 1;
 	GEPolyline(2, x, y, gc, dd);
 	PMoveUp(-height, mc);
 	gc->lty = savedlty;

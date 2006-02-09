@@ -193,7 +193,7 @@ get.gpar <- function(names=NULL) {
     # gamma deprecated
     if ("gamma" %in% names)
       warning("'gamma' gpar is deprecated")
-    result <- grid.Call("L_getGPar")[names]
+    result <- unclass(grid.Call("L_getGPar"))[names]
   }
   class(result) <- "gpar"
   result
