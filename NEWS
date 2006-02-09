@@ -477,6 +477,9 @@ INSTALLATION CHANGES
 	constructs (and we know of no actual implementation), this is
 	only done for the GNU C compiler.
 
+    o	There is an experimental feature to allow shared installations
+	of sub-architectures.  See the R-admin manual.
+
 
 UTILITIES
 
@@ -715,7 +718,7 @@ BUG FIXES
 	precision in nmath (distribution and special functions) were
 	being reported to the R user.
 
-    o	dnt was missing from standalone nmath.
+    o	dnt was missing from standalone nmath (under Unix-alikes).
 
 
 

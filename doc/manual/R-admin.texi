@@ -255,6 +255,7 @@ the rest of this chapter we consider only building from the sources.
 * Making the manuals::          
 * Installation::                
 * Uninstallation::              
+* Sub-architectures::           
 @end menu
 
 @node Simple compilation, Making the manuals, Installing R under Unix-alikes, Installing R under Unix-alikes
@@ -592,7 +593,7 @@ option @option{--infodir}).  The DVI and PDF files are installed into
 the @R{} @file{doc} tree, set by the @command{make} variable
 @code{rdocdir}.
 
-@node Uninstallation,  , Installation, Installing R under Unix-alikes
+@node Uninstallation, Sub-architectures, Installation, Installing R under Unix-alikes
 @section Uninstallation
 
 You can uninstall @R{} by
@@ -608,6 +609,48 @@ installation.
 This will also uninstall any installed manuals.  There are specific
 targets to uninstall DVI, info and PDF manuals in
 @file{doc/manual/Makefile}.
+
+
+@node Sub-architectures,  , Uninstallation, Installing R under Unix-alikes
+@section Sub-architectures
+
+@strong{This is an experimental feature that may be released in @R{} 2.3.0.}
+
+Some platforms can support closely related builds of R which can share
+all but the executables and dynamic objects.  Examples include builds
+under Solaris for different chips (in particular, 32- and 64-bit
+builds), 64- and 32- bit builds on @cputype{x86_64} Linux and different
+CPUs (@cputype{ppc}, @cputype{ppc64} and @cputype{i386}) under MacOS 10.4.
+
+@R{} supports the idea of architecture-specific builds, specified by
+adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
+@var{name} can be anything non-empty, and is used to name subdirectories
+of @file{lib}, @code{etc}, @code{include} and @code{libs}.  Example
+names from other systems are the use of @file{sparcv9} on Solaris and
+@file{32} by @code{gcc} on @cputype{x86_64} Linux.
+
+If you have two or more such builds you can install them over each other
+(and one build can be done without @samp{r_arch}).  The space savings
+can be considerable: on @cputype{x86_64} Linux a basic install (without
+debugging symbols) took 63Mb, and adding a 32-bit build added 6Mb.  If
+you have installed multiple build you can select which build to run by
+
+@example
+R --arch=@var{name}
+@end example
+
+@noindent
+and running @samp{R} will run the last build that was installed.
+
+@code{R CMD INSTALL} will detect if more that one build is installed and
+try to install packages with the appropriate library objects for each.
+This cannot be done if the package has a @file{src/Makefile}, and may
+not work if the package has a @code{configure} script.  In such cases
+you can install for one build by
+
+@example
+R --arch=@var{name} CMD INSTALL @var{pkg(s)}
+@end example
 
 
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
