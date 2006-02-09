@@ -96,6 +96,7 @@ install: installdirs svnonly
 @WANT_R_FRAMEWORK_TRUE@		@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RR $(R_FRAMEWORK_DIR)/Resources/bin/R)
 @WANT_R_FRAMEWORK_TRUE@		@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/R)
 @WANT_R_FRAMEWORK_TRUE@		@(cp $(R_FRAMEWORK_DIR)/Resources/bin/R $(R_FRAMEWORK_DIR)/Resources/R)
+@WANT_R_FRAMEWORK_TRUE@		@(chmod -R g+w $(R_FRAMEWORK_DIR))
 
 svnonly:
 	@if test ! -f "$(srcdir)/doc/FAQ" || test -f non-tarball ; then \
@@ -236,15 +237,22 @@ install-R-framework:
 	  ln -f -s -n Versions/Current/Headers Headers&& \
 	  ln -f -s -n Versions/Current/R R && \
 	  ln -f -s -n Versions/Current/Resources Resources)
+	@## the resulting libR will point dyld to the fat libR regardless of its origin
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/lib" && \
-	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" ../lib/libR.dylib)
+	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" $(Rexeclibdir)/libR.dylib)
 	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders && \
+	  cp src/include/config.h $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/ && \
 	  find $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders -name .svn | xargs rm -rf)
 
 	@(install_name_tool -change libR.dylib \
 	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \
-	    $(R_FRAMEWORK_DIR)/Resources/bin/exec/R)
-	@(find "$(R_FRAMEWORK_DIR)/Resources/" -name '*.so' -exec install_name_tool \
+	    $(Rexecbindir2)/R)
+	@(find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -exec install_name_tool \
 	  -change libR.dylib "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \{\} \;)
-
+	@(if [ "$(Rexeclibdir)" != "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib" ]; then \
+	    $(srcdir)/tools/updatefat "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" "$(Rexeclibdir)/libR.dylib"; \
+	    if [ -e "$(Rexeclibdir)/libRlapack.dylib" ]; then \
+	      $(srcdir)/tools/updatefat "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libRlapack.dylib" "$(Rexeclibdir)/libRlapack.dylib"; \
+	    fi \
+	  fi )
 TAGS:

@@ -75,3 +75,7 @@ The files are as follows.
   rsync-recommended
 	obtain sources for the recommended packages using rsync, and then
 	create links with simplified names to these.
+
+  updatefat
+	updates a fat file by adding a new architecture (Mac OS X only)
+	it is essentially a smart wrapper for "lipo".
