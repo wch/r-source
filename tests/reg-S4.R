@@ -1,6 +1,6 @@
 ##--- S4 Methods (and Classes)
 library(methods)
-showMethods(where = "package:methods")
+##too fragile: showMethods(where = "package:methods")
 
 ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
 setClass("test1", representation(date="POSIXct"))

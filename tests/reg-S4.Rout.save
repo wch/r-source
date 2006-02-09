@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-12 r37066)
+Version 2.3.0 Under development (unstable) (2006-02-09 r37301)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -17,87 +17,7 @@ Type 'q()' to quit R.
 
 > ##--- S4 Methods (and Classes)
 > library(methods)
-> showMethods(where = "package:methods")
-
-Function "addNextMethod":
- method = "MethodDefinition"
- method = "MethodWithNext"
-
-Function "body<-":
- fun = "ANY"
- fun = "MethodDefinition"
- fun = "function"
-    (inherited from fun = "ANY")
-
-Function "cbind2":
- x = "ANY", y = "ANY"
- x = "ANY", y = "missing"
-
-Function "coerce":
- from = "ANY", to = "array"
- from = "ANY", to = "call"
- from = "ANY", to = "character"
- from = "ANY", to = "complex"
- from = "ANY", to = "environment"
- from = "ANY", to = "expression"
- from = "ANY", to = "function"
- from = "ANY", to = "integer"
- from = "ANY", to = "list"
- from = "ANY", to = "logical"
- from = "ANY", to = "matrix"
- from = "ANY", to = "name"
- from = "ANY", to = "numeric"
- from = "ANY", to = "single"
- from = "ANY", to = "ts"
- from = "ANY", to = "vector"
- from = "ANY", to = "NULL"
- from = "NULL", to = "OptionalFunction"
-
-Function "initialize":
- .Object = "ANY"
- .Object = "traceable"
- .Object = "signature"
- .Object = "environment"
- .Object = "derivedDefaultMethod"
-    (inherited from .Object = "ANY")
- .Object = "standardGeneric"
-    (inherited from .Object = "ANY")
- .Object = "MethodsList"
-    (inherited from .Object = "ANY")
- .Object = "MethodDefinition"
-    (inherited from .Object = "ANY")
- .Object = "classPrototypeDef"
-    (inherited from .Object = "ANY")
- .Object = "SClassExtension"
-    (inherited from .Object = "ANY")
- .Object = "classRepresentation"
-    (inherited from .Object = "ANY")
- .Object = "ClassUnionRepresentation"
-    (inherited from .Object = "ANY")
- .Object = "ObjectsWithPackage"
-    (inherited from .Object = "ANY")
- .Object = "LinearMethodsList"
-    (inherited from .Object = "ANY")
-
-Function "loadMethod":
- method = "ANY"
- method = "MethodDefinition"
- method = "MethodWithNext"
-
-Function "rbind2":
- x = "ANY", y = "ANY"
- x = "ANY", y = "missing"
-
-Function "show":
- object = "ANY"
- object = "traceable"
- object = "ObjectsWithPackage"
- object = "signature"
- object = "MethodDefinition"
- object = "MethodWithNext"
- object = "genericFunction"
- object = "classRepresentation"
-NULL
+> ##too fragile: showMethods(where = "package:methods")
 > 
 > ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
 > setClass("test1", representation(date="POSIXct"))
@@ -451,10 +371,6 @@ Function "initialize":
     (inherited from .Object = "ANY")
  .Object = "ClassUnionRepresentation"
     (inherited from .Object = "ANY")
- .Object = "ObjectsWithPackage"
-    (inherited from .Object = "ANY")
- .Object = "LinearMethodsList"
-    (inherited from .Object = "ANY")
  .Object = "test1"
     (inherited from .Object = "ANY")
  .Object = "functionWithTrace"
@@ -472,6 +388,10 @@ Function "initialize":
  .Object = "integer"
     (inherited from .Object = "ANY")
  .Object = "c1"
+    (inherited from .Object = "ANY")
+ .Object = "ObjectsWithPackage"
+    (inherited from .Object = "ANY")
+ .Object = "LinearMethodsList"
     (inherited from .Object = "ANY")
 
 Function "loadMethod":
