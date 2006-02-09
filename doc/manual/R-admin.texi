@@ -1004,6 +1004,10 @@ please rename it to indicate that it is customized.
 @node Cross-building on ix86 Linux,  , Building the installer, Building from source
 @subsection Cross-building on ix86 Linux
 
+It is possible to cross-build @R{} or packages on @cputype{ix86} Linux,
+and the @cputype{ix86} cross-compilers have also been used successfully
+on @cputype{x86_64} Linux.
+
 You will need i386-mingw32 cross-compilers installed and in your path.
 There is currently a complete set of tools at
 @url{http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2,
@@ -1029,7 +1033,7 @@ Edit @file{MkRules} to set the type(s) of help that you want built. (You
 will not be able to cross-build @file{.chm} files, so @code{WINHELP} is
 automatically set to @code{NO}.)
 
-You also need a working copy of @emph{this version} of R on Linux:
+You also need a working copy of @emph{this version} of @R{} on Linux:
 uncomment and set @code{R_EXE} in @file{MkRules} to point to it.
 
 Then run @code{make} (and parallel make works reliably, unlike on Windows).
