@@ -327,6 +327,49 @@ foreach my $pkg (@ARGV) {
 	$log->message("this is $package_or_bundle " .
 		      "'$package_or_bundle_name' " .
 		      "version '$description->{\"Version\"}'");
+
+	## Check package dependencies.
+
+	## <NOTE>
+	## We want to check for dependencies early, since missing
+	## dependencies may make installation fail, and in any case we
+	## give up if they are missing.
+	## </NOTE>
+ 
+	## Try figuring out whether the package dependencies can be resolved
+	## at run time.  Ideally, the installation mechanism would do this,
+	## and we also do not check versions ... also see whether vignette
+	## and namespace package dependencies are recorded in DESCRIPTION.
+
+	## <NOTE>
+	## We are not checking base packages here, so all packages do have a
+	## description file. Bundles should have dependencies only at the
+	## top level to be usable by install.packages and friends, and
+	## `Writing R Extensions' says so.
+	## </NOTE>
+
+	$log->checking("package dependencies");
+	## Everything listed in Depends or Suggests or Imports
+	## should be available for successfully running R CMD check.
+	## \VignetteDepends{} entries not "required" by the package code
+	## must be in Suggests.  Note also that some of us think that a
+	## package vignette must require its own package, which OTOH is
+	## not required in the package DESCRIPTION file.
+	## Namespace imports must really be in Depends.
+	my $Rcmd = "tools:::.check_package_depends(\"${pkgdir}\")\n";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->error();
+	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "", @msg_DESCRIPTION));
+	    exit(1);
+	} else {
+	    $log->result("OK");
+	}
+
+
 	## <NOTE>
 	## This check should be adequate, but would not catch a manually
 	## installed package, nor one installed prior to 1.4.0.
@@ -872,58 +915,6 @@ sub check_pkg {
     &R::Utils::check_package_description($pkgdir, $pkgname, $log,
 					 $in_bundle, $is_base_pkg,
 					 $full);
-
-    ## Check package dependencies.
-
-    ## Try figuring out whether the package dependencies can be resolved
-    ## at run time.  Ideally, the installation mechanism would do this,
-    ## and we also do not check versions ... also see whether vignette
-    ## and namespace package dependencies are recorded in DESCRIPTION.
-
-    ## <NOTE>
-    ## When checking uninstalled base or bundle packages, there is no
-    ## DESCRIPTION file in the package source directory.  Hence, for
-    ## simplicity, we only run this check on "installed" packages.  We
-    ## could work around this, but checking uninstalled packages is a
-    ## bad thing anyway.
-    ##
-    ## Also, if --install=skip, bundles never get DESCRIPTION files
-    ## made in the source dir which is what we are checking here.
-    ## </NOTE>
-    if($opt_install) {
-	$log->checking("package dependencies");
-	## Everything listed in Depends or Suggests or Imports
-	## should be available for successfully running R CMD check.
-	## \VignetteDepends{} entries not "required" by the package code
-	## must be in Suggests.  Note also that some of us think that a
-	## package vignette must require its own package, which OTOH is
-	## not required in the package DESCRIPTION file.
-	## Namespace imports must really be in Depends.
-	my $Rcmd = "tools:::.check_package_depends(\"${pkgname}\")\n";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES=NULL");
-	@out = grep(!/^\>/, @out);
-	if(scalar(@out) > 0) {
-	    ## <FIXME>
-	    ## These should really all be errors ...
-	    ## Change this for 2.1 at least, once stubs are fully gone.
-	    if(grep(/^Packages required but not available:/, @out)) {
-		$log->error();
-		$log->print(join("\n", @out) . "\n");
-		$log->print(wrap("", "", @msg_DESCRIPTION));
-		exit(1);
-	    }
-	    else {
-		$log->warning();
-		$log->print(join("\n", @out) . "\n");
-		$log->print(wrap("", "", @msg_DESCRIPTION));
-	    }
-	    ## </FIXME>
-	}
-	else {
-	    $log->result("OK");
-	}
-    }
 
     $log->checking("top-level files");
     opendir(DIR, ".") or die "cannot opendir package: $!";

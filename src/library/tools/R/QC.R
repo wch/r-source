@@ -2332,12 +2332,13 @@ function(x, ...)
 
 ### * .check_package_depends
 
+## changed in 2.3.0 to refer to a source dir.
+
 .check_package_depends <-
-function(package)
+function(dir)
 {
-    if(length(package) != 1)
+    if(length(dir) != 1)
         stop("argument 'package' must be of length 1")
-    dir <- .find.package(package)
 
     ## We definitely need a valid DESCRIPTION file.
     db <- .read_description(file.path(dir, "DESCRIPTION"))
@@ -3417,7 +3418,7 @@ function(x)
 
 .check_package_subdirs <- function(dir, doDelete = FALSE)
 {
-    OS_subdirs <- c("unix", "windows")    
+    OS_subdirs <- c("unix", "windows")
 
     mydir <- function(dir)
     {
@@ -3443,7 +3444,7 @@ function(x)
 
     wrong_things <- list(R = character(0), man = character(0),
                          demo = character(0), `inst/doc` = character(0))
-    
+
     code_dir <- file.path(dir, "R")
     if(file_test("-d", code_dir)) {
         all_files <- mydir(code_dir)
@@ -3494,7 +3495,7 @@ function(x)
                        list_files_with_exts(vign_dir, "pdf",
                                             full.names = FALSE))
         ## Assume here this is run in the C locale, as it is by R CMD
-        ## check. 
+        ## check.
         OK <- grep("^[[:alpha:]][[:alnum:]._-]+$", vignettes)
         wrong <- vignettes
         if(length(OK)) wrong <- wrong[-OK]
