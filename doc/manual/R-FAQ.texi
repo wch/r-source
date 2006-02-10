@@ -3662,6 +3662,8 @@ Three-Stage Least Squares (3SLS).
 Tools for accessing (UK) parliamentary information in R.
 @item taskPR
 Task-Parallel R package.
+@item tcltk2
+A series of widgets and functions to supplement @strong{tcltk}.
 @item tdist
 Computes the distribution of a linear combination of independent
 Student's @math{t} variables.
@@ -3745,6 +3747,8 @@ multiresolution analyses.
 Basic wavelet routines for time series analysis.
 @item wavethresh
 Software to perform 1-d and 2-d wavelet statistics and transforms.
+@item wccsom
+SOM networks for comparing patterns with peak shifts.
 @item wle
 Robust statistical inference via a weighted likelihood approach.
 @item xgobi
