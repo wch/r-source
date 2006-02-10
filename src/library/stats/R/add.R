@@ -520,8 +520,17 @@ factor.scope <- function(factor, scope)
 	facs <- factor
 	if(length(drop)) {
 	    nmfac <- colnames(factor)
-	    where <- match(nmdrop, nmfac, 0)
-	    if(any(!where)) stop("lower scope is not included in model")
+            ## workaround as in PR#7842.
+            ## terms.formula may have flipped interactions
+            nmfac0 <- sapply(strsplit(nmfac, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"))
+            nmdrop0 <- sapply(strsplit(nmdrop, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"))
+	    where <- match(nmdrop0, nmfac0, 0)
+	    if(any(!where))
+                stop(gettextf("lower scope has term(s) %s not included in model",
+                              paste(sQuote(nmdrop[where==0]), collapse=", ")),
+                     domain = NA)
 	    facs <- factor[, -where, drop = FALSE]
 	    nmdrop <- nmfac[-where]
 	} else nmdrop <- colnames(factor)
@@ -539,8 +548,17 @@ factor.scope <- function(factor, scope)
 	nmfac <- colnames(factor)
 	nmadd <- colnames(add)
 	if(!is.null(nmfac)) {
-	    where <- match(nmfac, nmadd, 0)
-	    if(any(!where)) stop("upper scope does not include model")
+            ## workaround as in PR#7842.
+            ## terms.formula may have flipped interactions
+            nmfac0 <- sapply(strsplit(nmfac, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"))
+            nmadd0 <- sapply(strsplit(nmadd, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"))
+	    where <- match(nmfac0, nmadd0, 0)
+	    if(any(!where))
+                stop(gettextf("upper scope does not include model term(s) %s",
+                              paste(sQuote(nmfac[where==0]), collapse=", ")),
+                     domain = NA)
 	    nmadd <- nmadd[-where]
 	    add <- add[, -where, drop = FALSE]
 	}

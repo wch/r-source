@@ -46,6 +46,10 @@ BUG FIXES
 	Command 'where' in the browser() no longer changes to 
 	step-though mode.
 
+    o	factor.scope() could report incorrectly that interaction terms
+	were not in the upper scope when such terms in the model and
+	the upper scope had different orders for the main effects.
+	(Another manifestation of PR#7842.)
 
 
 
