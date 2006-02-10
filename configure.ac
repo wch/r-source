@@ -1607,7 +1607,7 @@ if test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
 fi
 if test "${acx_lapack_ok}" != "yes"; then
-  if test -z "r_arch"; then
+  if test -z "${r_arch}"; then
     LAPACK_LIBS="-L\$(R_HOME)/lib -lRlapack"
   else
     LAPACK_LIBS="-L\$(R_HOME)/lib/${r_arch} -lRlapack"
