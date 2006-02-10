@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2004   The R Development Core Team
+ *  Copyright (C) 1997-2006   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -293,9 +293,8 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level,
 
     default:
 	errorcall(call, 
-		  _("incompatible types (%d) in subassignment type fix"),
-		  which);
-
+		  _("incompatible types (from %s to %s) in subassignment type fix"),
+		  CHAR(type2str(which%100)), CHAR(type2str(which/100)));
     }
 
     if (stretch) {
@@ -889,8 +888,8 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	break;
 
     default:
-	error(_("incompatible types (case %d) in matrix subset assignment"), 
-	      which);
+	error(_("incompatible types (from %s to %s) in matrix subset assignment"),
+		  CHAR(type2str(which%100)), CHAR(type2str(which/100)));
     }
     UNPROTECT(2);
     return x;
@@ -1068,8 +1067,8 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    break;
 
 	default:
-	    error(_("incompatible types (%d) in array subset assignment"), 
-		  which);
+	error(_("incompatible types (from %s to %s) in array subset assignment"),
+		  CHAR(type2str(which%100)), CHAR(type2str(which/100)));
 	}
     next_i:
 	;
@@ -1632,7 +1631,8 @@ SEXP attribute_hidden do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho
            break;
 
 	default:
-	    error(_("incompatible types (%d) in [[ assignment"), which);
+	    error(_("incompatible types (from %s to %s) in [[ assignment"),
+		  CHAR(type2str(which%100)), CHAR(type2str(which/100)));
 	}
 	/* If we stretched, we may have a new name. */
 	/* In this case we must create a names attribute */
