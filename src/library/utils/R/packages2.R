@@ -228,8 +228,9 @@ install.packages <-
             update <- update[sort.list(match(pkgs, p0)), ]
         }
         cmd0 <- file.path(R.home("bin"),"R")
-        if(nchar(r_arch <- .Platform$r_arch))
-            cmd0 <- paste(cmd0, "--arch", r_arch)
+	## setting R_ARCH obviates the need for this
+        ## if(nchar(r_arch <- .Platform$r_arch))
+        ##     cmd0 <- paste(cmd0, "--arch", r_arch)
         cmd0 <- paste(cmd0, "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
