@@ -51,7 +51,7 @@
 
 typedef struct {
     char *name;
-    int code; /* 0 normal, 1 not inline, 2 read-only 
+    int code; /* 0 normal, 1 not inline, 2 read-only
 		 -1 unknown, -2 obselete, -3 graphical args
 	       */
 } ParTab;
@@ -131,9 +131,9 @@ ParTable[] = {
     { "yaxs",		 0 },
     { "yaxt",		 0 },
     { "ylog",		 1 },
-    /* Obselete pars */
+    /* Obsolete pars */
     { "type",		-2},
-    /* Mon-pars that might get passed to Specify2 */
+    /* Non-pars that might get passed to Specify2 */
     { "asp",		-3},
     { "main",		-3},
     { "sub",		-3},
@@ -173,7 +173,7 @@ static void par_error(char *what)
 static void lengthCheck(char *what, SEXP v, int n, SEXP call)
 {
     if (length(v) != n)
-	errorcall(call, _("graphical parameter \"%s\" has the wrong length"), 
+	errorcall(call, _("graphical parameter \"%s\" has the wrong length"),
 		  what);
 }
 
@@ -272,7 +272,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
  */
     double x;
     int ix = 0;
-    
+
     /* If we get here, Query has already checked that 'what' is valid */
 
     if (ParCode(what) == 2) {
@@ -686,7 +686,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
     int ix = 0, ptype = ParCode(what);
 
     if (ptype == 1 || ptype == -3) {
-	/* 1: these are valid, but not settable inline 
+	/* 1: these are valid, but not settable inline
 	   3: arguments, not pars
 	*/
 	return;
@@ -924,7 +924,7 @@ static SEXP Query(char *what, DevDesc *dd)
     else if (streql(what, "lmitre")) {
 	value = allocVector(REALSXP, 1);
 	REAL(value)[0] = Rf_dpptr(dd)->lmitre;
-    }    
+    }
     else if (streql(what, "lty")) {
 	value = LTYget(Rf_dpptr(dd)->lty);
     }
@@ -1262,7 +1262,7 @@ SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     dd = CurrentDevice();
 
     /* num.rows: */
-    nrow = Rf_dpptr(dd)->numrows = Rf_gpptr(dd)->numrows = 
+    nrow = Rf_dpptr(dd)->numrows = Rf_gpptr(dd)->numrows =
 	INTEGER(CAR(args))[0];
     if (nrow > MAX_LAYOUT_ROWS)
 	error(_("too many rows in layout, limit %d"), MAX_LAYOUT_ROWS);
@@ -1283,17 +1283,17 @@ SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* num.figures: */
     Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure =
-	Rf_dpptr(dd)->lastFigure = Rf_gpptr(dd)->lastFigure = 
+	Rf_dpptr(dd)->lastFigure = Rf_gpptr(dd)->lastFigure =
 	INTEGER(CAR(args))[0];
     args = CDR(args);
     /* col.widths: */
     for (j = 0; j < ncol; j++)
-	Rf_dpptr(dd)->widths[j] = Rf_gpptr(dd)->widths[j] = 
+	Rf_dpptr(dd)->widths[j] = Rf_gpptr(dd)->widths[j] =
 	    REAL(CAR(args))[j];
     args = CDR(args);
     /* row.heights: */
     for (i = 0; i < nrow; i++)
-	Rf_dpptr(dd)->heights[i] = Rf_gpptr(dd)->heights[i] = 
+	Rf_dpptr(dd)->heights[i] = Rf_gpptr(dd)->heights[i] =
 	    REAL(CAR(args))[i];
     args = CDR(args);
     /* cm.widths: */
