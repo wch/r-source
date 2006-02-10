@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-02-09
+@set FAQ_DATE @value{FAQ_YEAR}-02-10
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -3411,6 +3411,8 @@ the use of the metasim engine to build and run individual based
 population genetics simulations.
 @item roblm
 Robust regression estimators.
+@item robustbase
+Basic Robust Statistics.
 @item rpart
 Recursive PARTitioning and regression trees.  @emph{Recommended}.
 @item rpart.permutation
