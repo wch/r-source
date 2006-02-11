@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-02-10
+@set FAQ_DATE @value{FAQ_YEAR}-02-11
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2037,6 +2037,8 @@ convergence in a table and graph, and save the simulations in arrays for
 easy access in R.
 @item RArcInfo
 Functions to import Arc/Info V7.x coverages and data.
+@item RBloomberg
+Fetch data from a Bloomberg API using COM.
 @item RColorBrewer
 ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
@@ -3693,6 +3695,8 @@ Local optimization using two derivatives and trust regions.
 Package for time series analysis with emphasis on non-linear modelling.
 @item tseriesChaos
 Routines for the analysis of non-linear time series.
+@item tsfa
+Time Series Factor Analysis.
 @item tuneR
 Collection of tools to analyze music, handle wave files, transcription,
 etc.
