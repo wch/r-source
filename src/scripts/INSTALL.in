@@ -46,6 +46,7 @@ Options:
       --fake		do minimal install for testing purposes
       --no-lock		install on top of any existing installation
                         without using a lock directory
+      --libs-only      	only install the libs directory
       --build           build binary tarball(s) of the installed package(s)
 
 Deprecated options:
@@ -209,6 +210,7 @@ fake=false
 lazy="auto"
 lazy_data=false
 lock=true
+libs_only=false
 tar_up=false
 
 while test -n "${1}"; do
@@ -279,6 +281,8 @@ while test -n "${1}"; do
       fake=true ;;
     --no-lock)
       lock=false ;;
+    --libs-only)
+      libs_only=true ;;
     --build)
       tar_up=true ;;
     *)
@@ -328,6 +332,14 @@ if (${tar_up} && ${fake}); then
   error "building a fake installation is disallowed"
   do_cleanup_tmpdir;
   exit 1
+fi
+
+if ${libs_only} ; then
+  lock=false
+  tar_up=false
+  more_than_libs=false
+else
+  more_than_libs=true
 fi
 
 if ${debug} ; then
@@ -496,8 +508,10 @@ do_install_source () {
     if ${lock} ; then
       mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
     else
-      ## this is only used for recommended packages installed from .tgz
-      rm -rf "${R_PACKAGE_DIR}"
+      if ${more_than_libs}; then
+        ## this is only used for recommended packages installed from .tgz
+        rm -rf "${R_PACKAGE_DIR}"
+      fi
     fi
     ${MKDIR_P} "${R_PACKAGE_DIR}"
     ## Preserve man pages to speed up installation?  Only makes sense
@@ -529,19 +543,21 @@ do_install_source () {
   fi
 
 
-  for f in COPYING NAMESPACE; do
-    if test -f "${f}"; then
-      cp "${f}" "${R_PACKAGE_DIR}"
-      chmod 644 "${R_PACKAGE_DIR}/${f}"
-    fi
-  done
+  if ${more_than_libs}; then
+    for f in COPYING NAMESPACE; do
+      if test -f "${f}"; then
+	cp "${f}" "${R_PACKAGE_DIR}"
+	chmod 644 "${R_PACKAGE_DIR}/${f}"
+      fi
+    done
 
-  ## Install DESCRIPTION file with build information.
-  echo "tools:::.install_package_description(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
-  if test ${?} -ne 0; then
-    error "installing package DESCRIPTION failed"
-    do_exit_on_error
+    ## Install DESCRIPTION file with build information.
+    echo "tools:::.install_package_description(\".\", \"${R_PACKAGE_DIR}\")" | \
+      R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
+    if test ${?} -ne 0; then
+      error "installing package DESCRIPTION failed"
+      do_exit_on_error
+    fi
   fi
 
   if test -d src && test "${fake}" != "true"; then
@@ -550,6 +566,8 @@ do_install_source () {
     if ${debug}; then set -x; fi
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
     if test -f src/Makefile; then
+      arch=`echo ${R_ARCH} | sed s+^/++`
+      message "arch - ${arch}"
       cd src;
       makefiles="-f \"${R_SHARE_DIR}\"/make/shlib.mk -f Makefile"
       if test -r "${HOME}/.R/Makevars-${R_PLATFORM}"; then
@@ -570,26 +588,39 @@ do_install_source () {
       archs=`(cd ${R_HOME}/bin/exec; ls)`
       R_ARCH_keep=${R_ARCH}
       if test -n "${srcs}"; then
-	for arch in ${archs}; do
-	  rm -f *.o *.so *.sl *.dylib
-	  if test "${arch}" = "R"; then
-            R_ARCH=${R_ARCH_keep}
-            export R_ARCH
-	    sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
-              && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
-	      || has_error=true;
-	  else
+	## if there is a configure script we install only the main
+	## sub-architecture
+	if test -x ../configure; then
+	  if test -n "${R_ARCH}"; then
+	    arch=`echo ${R_ARCH} | sed s+^/++`
 	    message "arch - ${arch}"
-            R_ARCH="/${arch}"
-            export R_ARCH
-	    ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
-	    sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
-              && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
-	      || has_error=true;
-	    chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*
 	  fi
-	done
-	R_ARCH=${R_ARCH_keep}
+	  sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
+	    && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
+	    || has_error=true;
+	  chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*
+        else
+	  for arch in ${archs}; do
+	    rm -f *.o *.so *.sl *.dylib
+	    if test "${arch}" = "R"; then
+	      R_ARCH=${R_ARCH_keep}
+	      export R_ARCH
+	      sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
+		&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
+		|| has_error=true;
+	    else
+	      message "arch - ${arch}"
+	      R_ARCH="/${arch}"
+	      export R_ARCH
+	      ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
+	      sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
+		&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
+		|| has_error=true;
+	      chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*
+	    fi
+	  done
+	  R_ARCH=${R_ARCH_keep}
+        fi
       else
 	warning "no source files found"
       fi
@@ -603,6 +634,7 @@ do_install_source () {
     if ${debug}; then set +x; fi
   fi
 
+  if ${more_than_libs}; then
   if test -d R; then
     message "R"
       ${MKDIR_P} "${R_PACKAGE_DIR}/R"
@@ -803,7 +835,6 @@ do_install_source () {
     fi
   fi
 
-
   if test -d man; then
     message "help"
     ## Install man sources ...
@@ -866,6 +897,8 @@ do_install_source () {
       do_exit_on_error
     fi
   fi
+
+  fi ## ${more_than_libs}
 
   ## <NOTE>
   ## Remove stuff we should not have installed in the first place.

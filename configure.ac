@@ -148,8 +148,7 @@ R installation directories:
   --libdir=DIR        R files to R_HOME=DIR/R @<:@EPREFIX/$LIBnn@:>@
     rdocdir=DIR       R doc files to DIR      @<:@R_HOME/doc@:>@
     rincludedir=DIR   R include files to DIR  @<:@R_HOME/include@:>@
-    rsharedir=DIR     R share files to DIR    @<:@R_HOME/share@:>@
-    r_arch=name       Use architecture-dependent subdirs   @<:@not used@:>@])dnl
+    rsharedir=DIR     R share files to DIR    @<:@R_HOME/share@:>@])dnl
 
 if test -z "${rdocdir}"; then
   rdocdir='${rhome}/doc'
@@ -165,15 +164,6 @@ if test -z "${rsharedir}"; then
   rsharedir='${rhome}/share'
 fi
 AC_SUBST([rsharedir])
-
-if test -z "${r_arch}"; then
-  R_ARCH=
-else
-  R_ARCH="/${r_arch}"
-fi
-AC_DEFINE_UNQUOTED(R_ARCH, "${r_arch}",
-[Define this to use architecture-dependent subdirectories of this name.])
-AC_SUBST([R_ARCH])
 
 ### ** Handle arguments to configure.
 
@@ -462,6 +452,18 @@ AC_ARG_VAR([LAPACK_LIBS],
 AC_ARG_VAR([LIBnn], ['lib' or 'lib64' for dynamic libraries])
 AC_ARG_VAR([SAFE_FFLAGS],
 	   [Safe Fortran 77 compiler flags for e.g. dlamc.f])
+AC_ARG_VAR([r_arch],
+           [Use architecture-dependent subdirs with this name])
+
+if test -z "${r_arch}"; then
+  R_ARCH=
+else
+  R_ARCH="/${r_arch}"
+fi
+AC_DEFINE_UNQUOTED(R_ARCH, "${r_arch}",
+[Define this to use architecture-dependent subdirectories of this name.])
+AC_SUBST([R_ARCH])
+
 
 ### ** Check whether we build in srcdir.
 
@@ -1607,11 +1609,7 @@ if test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
 fi
 if test "${acx_lapack_ok}" != "yes"; then
-  if test -z "${r_arch}"; then
-    LAPACK_LIBS="-L\$(R_HOME)/lib -lRlapack"
-  else
-    LAPACK_LIBS="-L\$(R_HOME)/lib/${r_arch} -lRlapack"
-  fi
+  LAPACK_LIBS="-L\$(R_HOME)/lib\$(R_ARCH) -lRlapack"
 fi
 AC_SUBST(LAPACK_LIBS)
 AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
@@ -1912,6 +1910,7 @@ AC_CONFIG_FILES(
   etc/Makefile
   etc/Makeconf
   etc/Renviron
+  etc/ldpaths
   m4/Makefile
   po/Makefile.in 
   share/Makefile
