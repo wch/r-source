@@ -6572,6 +6572,20 @@ static void PDF_Text(double x, double y, char *str,
 	cidfontfamily cidfont = findDeviceCIDFont(gc->fontfamily,
 						  pd->cidfonts,
 						  &fontIndex);
+	if (!cidfont) {
+	    int dontcare;
+	    /*
+	     * Try to load the font
+	     */
+	    cidfont = addCIDFont(gc->fontfamily, 1);
+	    if (cidfont) {
+		if (!addPDFDeviceCIDfont(cidfont, pd, &dontcare)) {
+		    cidfont = NULL;
+		}
+	    }
+	}
+	if (!cidfont)
+	    error(_("Failed to find or load PDF CID font"));
         if(!strcmp(locale2charset(NULL), cidfont->encoding)) {
             if (alphaVersion(pd) || (R_OPAQUE(gc->col))) {
                 PDF_SetFill(gc->col, dd);
