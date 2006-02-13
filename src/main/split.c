@@ -27,6 +27,7 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, f, counts, vec, nm, nmj;
     int i, j, k, nobs, nlevs, nfac;
+    double d;
     Rboolean have_names;
 
     checkArity(op, args);
@@ -35,9 +36,10 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     f = CADR(args);
     if (!isVector(x))
 	errorcall(call, _("first argument must be a vector"));
-    if (!isFactor(f))
+    /* was isFactor, but this need not be integer */
+    if (!inherits(f, "factor"))
 	errorcall(call, _("second argument must be a factor"));
-    nlevs = nlevels(f);
+    nlevs = LENGTH(getAttrib(f, R_LevelsSymbol));
     nfac = LENGTH(CADR(args));
     nobs = LENGTH(CAR(args));
     if (nobs <= 0)
@@ -52,10 +54,11 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < nlevs; i++)
 	INTEGER(counts)[i] = 0;
     for (i = 0; i < nobs; i++) {
-	j = INTEGER(f)[i % nfac];
-	if (j != NA_INTEGER) {
-	    INTEGER(counts)[j - 1] += 1;
-	}
+	if(TYPEOF(f) == REALSXP) {
+	    d = REAL(f)[i % nfac];
+	    j  = R_FINITE(d) ? (int) d :  NA_INTEGER;
+	} else j = INTEGER(f)[i % nfac];
+	if (j != NA_INTEGER) INTEGER(counts)[j - 1]++;
     }
     /* Allocate a generic vector to hold the results. */
     /* The i-th element will hold the split-out data */
@@ -72,7 +75,10 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < nlevs; i++)
 	INTEGER(counts)[i] = 0;
     for (i = 0;  i < nobs; i++) {
-	j = INTEGER(f)[i % nfac];
+	if(TYPEOF(f) == REALSXP) {
+	    d = REAL(f)[i % nfac];
+	    j  = R_FINITE(d) ? (int) d :  NA_INTEGER;
+	} else j = INTEGER(f)[i % nfac];
 	if (j != NA_INTEGER) {
 	    k = INTEGER(counts)[j - 1];
 	    switch (TYPEOF(x)) {

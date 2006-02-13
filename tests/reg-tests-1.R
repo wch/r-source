@@ -4099,3 +4099,12 @@ stopifnot(all.equal(pt(-z, 1, log=TRUE), pcauchy(-z, 1, log=TRUE)))
 ## failed at about 1e150 in 2.2.1
 stopifnot(pt(-1e200, 0.001) > 0)
 ## was 0 in 2.2.1, should be about 31%
+
+
+## is.factor differed from internal isFactor on hand-constructed factors
+fac2 <- rep(c(1,2,3), each=5)
+attr(fac2, "levels") <- as.character(1:3)
+oldClass(fac2) <- "factor"
+stopifnot(is.factor(fac2))
+split(rnorm(15), fac2)
+## failed in 2.2.1

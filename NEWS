@@ -724,6 +724,9 @@ BUG FIXES
 
     o	dnt was missing from standalone nmath (under Unix-alikes).
 
+    o	split() now accepts factors with numeric (but not storage mode
+	integer) codes.
+
 
 
 
