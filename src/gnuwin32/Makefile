@@ -184,7 +184,14 @@ fixed/fixdesc:
 
 dllversion.o: ../include/Rversion.h
 
+## this one needs R.dll as the LIBRARY line
 R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
+## this one needs R.dll as the LIBRARY line
+	@$(ECHO) LIBRARY $*.dll > $*.def
+	@$(ECHO) EXPORTS >> $*.def
+	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> $*.def
+	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
+	@$(RM) $*.def
 
 Rdll: makeMakedeps libRblas.a ../../bin/R.dll
 
