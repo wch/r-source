@@ -3876,6 +3876,14 @@ static void mbcsToSbcs(char *in, char *out, char *encoding)
 
     Riconv_close(cd);
     if (status == (size_t)-1) error(_("conversion failure in 'mbcsToSbcs'"));
+    /*
+     * If conversion produced 'out' with shorter length than 'in'
+     * (e.g., 2-byte utf-8 char to 1-byte ISOLatin2 char)
+     * then need to trim 'out'
+     */
+    if (o_len > 0) {
+	out[strlen(in) - o_len] = '\0';
+    }
 }
 
 static void PS_Text(double x, double y, char *str,
