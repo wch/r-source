@@ -14,7 +14,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          keep.source = getOption("keep.source.pkgs"),
          verbose = getOption("verbose"), version)
 {
-    testRversion <- function(pkgInfo, pkgname)
+    testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
         current <- getRversion()
         ## depends on R version?
@@ -44,6 +44,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     stop(gettextf("package '%s' was built for %s",
                                   pkgname, platform),
                          call. = FALSE, domain = NA)
+                ## if using r_arch subdirs, check for presence
+                if(nchar(r_arch <- .Platform$r_arch)
+                   && file.exists(file.path(pkgpath, "libs"))
+                   && !file.exists(file.path(pkgpath, "libs", r_arch)))
+                    stop(gettextf("package '%s' is not installed for 'arch=%s'",
+                                  pkgname, r_arch),
+                         call. = FALSE, domain = NA)
+
             }
         }
         else
@@ -250,7 +258,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             	stop(gettextf("'%s' is not a valid package -- installed < 2.0.0?",
                      libraryPkgName(package)), domain = NA)
             pkgInfo <- .readRDS(pfile)
-            testRversion(pkgInfo, package)
+            testRversion(pkgInfo, package, pkgpath)
 
             ## The check for inconsistent naming is now in .find.package
 
@@ -590,7 +598,7 @@ function(chname, libpath, verbose = getOption("verbose"),
                        paste(chname, file.ext, sep = ""))
      else    file.path(pkg, "libs",
                        paste(chname, file.ext, sep = ""))
- 
+
     pos <- which(sapply(dll_list, function(x) x[["path"]] == file))
     if(!length(pos))
         stop(gettextf("shared library '%s' was not loaded", chname),
