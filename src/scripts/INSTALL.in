@@ -1038,27 +1038,31 @@ do_install () {
 
 do_exit_on_error () {
   remove_R_package_dir=${1-yes}
-  ## bundlepkg is set if this is a bundle or if the package/bundle 
-  ## is already installed, but not for a new non-bundle.
-  if test -z "${bundlepkg}"; then
-    bundlepkg=${pkg_name}
+  ## If we are not yet processing a package, we will not have
+  ## set pkg_dir.  It's the first thing in do_install.
+  if test -n "${pkg_dir}"; then
+    ## Find out if this is a bundle.  If we are installing multiple
+    ## 'packages' the existing bundlepkg is unreliable.
+    bundlepkg=`get_dcf_field Contains "${pkg_dir}/DESCRIPTION"`
+    if test -z "${bundlepkg}"; then
+      bundlepkg=${pkg_name}
+    fi
+    for p in ${bundlepkg}; do
+      if ${with_package_versions}; then
+	p=${p}_${version}
+      fi
+      pkgdir="${lib}/$p"
+      if test "${remove_R_package_dir}" = yes && test -n "${pkgdir}"; then
+	message "Removing '${pkgdir}'"
+	rm -rf "${pkgdir}"
+      fi
+      if test -n "$p" \
+	  && test -d "${lockdir}/$p"; then
+	message "Restoring previous '${pkgdir}'"
+	mv "${lockdir}/$p" "${pkgdir}"
+      fi
+    done
   fi
-  for p in ${bundlepkg}; do
-    if ${with_package_versions}; then
-      p=${p}_${version}
-    fi
-    pkgdir="${lib}/$p"
-    if test "${remove_R_package_dir}" = yes \
-	&& test -n "${pkgdir}"; then
-      message "Removing '${pkgdir}'"
-      rm -rf "${pkgdir}"
-    fi
-    if test -n "$p" \
-	&& test -d "${lockdir}/$p"; then
-      message "Restoring previous '${pkgdir}'"
-      mv "${lockdir}/$p" "${pkgdir}"
-    fi
-  done
   do_cleanup
   exit 1
 }
