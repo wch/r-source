@@ -21,7 +21,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
      in degrees (counter-clockwise).}
    \item{col}{the color for filling the polygon. The default,
      \code{NA}, is to leave polygons unfilled, unless \code{density} is
-     specified.  (For back-compatibiility, \code{NULL} is equivalent to
+     specified.  (For back-compatibility, \code{NULL} is equivalent to
      \code{NA}.)}
   \item{border}{the color to draw the border.  The default, \code{NULL},
     means to use \code{\link{par}("fg")}.  Use \code{border = NA} to
