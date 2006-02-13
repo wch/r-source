@@ -314,6 +314,10 @@ NEW FEATURES
 	fully supported in that region.  (They are somewhat slower
 	than before.)
 
+    o	The class "POSIXlt" now supports fractional seconds (as
+	"POSIXct" has always done), although they are not printed in
+	the default format and not supported by strptime().
+
 
 DEPRECATED & DEFUNCT
 

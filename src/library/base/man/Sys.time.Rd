@@ -24,6 +24,10 @@ Sys.timezone()
   \code{Sys.time} returns an object of class \code{"POSIXct"} (see
   \link{DateTimeClasses}).  On some systems it will have sub-second
   accuracy, but on others it will increment in seconds.
+#ifdef unix
+  On systems conforming to POSIX 1003.1-2001 the time will be reported
+  in microsecond increments.
+#endif
 #ifdef windows
   On Windows, it increments in clock ticks, 1/60 of a second.
 #endif

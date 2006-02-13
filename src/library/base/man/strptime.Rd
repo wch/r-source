@@ -35,7 +35,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     otherwise.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
   \item{usetz}{logical.  Should the timezone be appended to the output?
-    This is used in printing time, and as a workaround for problems with
+    This is used in printing times, and as a workaround for problems with
     using \code{"\%Z"} on most Linux systems.}
   \item{year, month, day}{numerical values to specify a day.}
   \item{hour, min, sec}{numerical values for a time within a day.}
@@ -43,7 +43,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 \details{
   \code{strftime} is an alias for \code{format.POSIXlt}, and
   \code{format.POSIXct} first converts to class \code{"POSIXlt"} by
-  calling \code{\link{as.POSIXlt}}. Note that only that conversion
+  calling \code{\link{as.POSIXlt}}.  Note that only that conversion
   depends on the time zone.
 
   The usual vector re-cycling rules are applied to \code{x} and
@@ -75,7 +75,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%p}}{AM/PM indicator in the locale.  Used in
       conjuction with \code{\%I} and \bold{not} with \code{\%H}.}
     \item{\code{\%S}}{Second as decimal number (00--61), allowing for
-      up to two leap-seconds.}
+      up to two leap-seconds (but POSIX-compliant OSes will ignore leap
+      seconds).}
     \item{\code{\%U}}{Week of the year as decimal number (00--53) using
       the first Sunday as day 1 of week 1.}
     \item{\code{\%w}}{Weekday as decimal number (0--6, Sunday is 0).}
@@ -124,11 +125,12 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%t}}{Newline on output, arbitrary whitespace on input.}
     \item{\code{\%T}}{Equivalent to \code{\%H:\%M:\%S}.}
   }
-  There are also \code{\%O[dHImMSUVwWy]} which may emit numbers in an
-  alternative local-dependent format (e.g. roman numerals), and
+  There are also \code{\%O[dHImMUVwWy]} which may emit numbers in an
+  alternative locale-dependent format (e.g. roman numerals), and
   \code{\%E[cCyYxX]} which can use an alternative \sQuote{era}
   (e.g. a different religious calendar).  Which of these are supported is
-  OS-dependent.
+  OS-dependent.  Specific to \R is \code{"\%OSn"}, which gives the
+  seconds to \code{1 <= n <= 6} decimal places.
 
   \code{ISOdatetime} and \code{ISOdate} are convenience wrappers for
   \code{strptime}, that differ only in their defaults and that
@@ -196,6 +198,9 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 \examples{
 ## locale-specific version of date()
 format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
+
+## time to sub-second accuracy (if supported by the OS)
+format(Sys.time(), "\%H:\%M:\%OS3")
 
 ## read in date info in format 'ddmmmyyyy'
 ## This will give NA(s) in some locales; setting the C locale

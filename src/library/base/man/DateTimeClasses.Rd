@@ -131,6 +131,15 @@
   Using \code{\link{c}} on \code{"POSIXlt"} objects converts them to the
   current time zone.
 }
+\section{Sub-section Accuracy}{
+  Class \code{"POSIXct"} has always been able to express fractions of a
+  second, and as from \R 2.3.0, class \code{"POSIXlt"} can also.
+  (Conversion of fractions between the two forms may not be exact, but
+  will have better than microsecond accuracy.)
+
+  Seconds will be rounded down when printing (but
+  \code{\link{format.POSIXlt}} can convert fractional values).
+}
 \seealso{
   \link{Dates} for dates without times.
   
