@@ -21,13 +21,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 
   
-  $Source: /scratch/CVS-ARCHIVE/R/doc/html/search/Value.java,v $
-  
-  $Revision: 1.4 $
+  $Rev$
 
-  $Date: 2002/05/05 22:34:52 $
+  $LastChangedDate$
   
-  $Author: pd $
+  $Author$
 
 ==============================================================================*/
 

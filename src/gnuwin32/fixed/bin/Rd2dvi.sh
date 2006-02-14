@@ -9,7 +9,7 @@
 ## This is set by R CMD on Unix but not on Windows
 R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.41 $'
+revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 

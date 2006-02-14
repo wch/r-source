@@ -20,11 +20,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 
-  $Revision: 1.4 $
+  $Rev$
 
-  $Date: 2000/02/10 17:03:55 $
+  $LastChangedDate$
   
-  $Author: leisch $
+  $Author$
 
 ============================================================================*/
 

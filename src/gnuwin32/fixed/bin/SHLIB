@@ -24,7 +24,7 @@ use File::Path;
 use Getopt::Long;
 
 
-my $revision = ' $Revision: 1.7 $ ';
+my $revision = ' $Rev$ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
