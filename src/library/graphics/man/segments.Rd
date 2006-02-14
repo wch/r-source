@@ -24,7 +24,7 @@ segments(x0, y0, x1, y1,
   \code{(x0[i], y0[i])} and the point \code{(x1[i], y1[i])}.
 
   The graphical parameters \code{col}, \code{lty} and \code{lwd} can be
-  vectors of length greater than one and will be recycled if ncessary.
+  vectors of length greater than one and will be recycled if necessary.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
