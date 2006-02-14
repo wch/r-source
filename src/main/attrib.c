@@ -652,7 +652,7 @@ static SEXP dimnamesgets1(SEXP val1)
     if (LENGTH(val1) == 0) return R_NilValue;
     /* if (isObject(val1)) dispatch on as.character.foo, but we don't
        have the context at this point to do so */
-    if (isFactor(val1)) { /* mimic as.character.factor */
+    if (inherits(val1, "factor")) { /* mimic as.character.factor */
 	int i, n = LENGTH(val1);
 	SEXP labels = getAttrib(val1, install("levels"));
 	PROTECT(this2 = allocVector(STRSXP, n));
@@ -768,7 +768,7 @@ SEXP dimgets(SEXP vec, SEXP val)
     int len, ndim, i, total;
     PROTECT(vec);
     PROTECT(val);
-    if ((!isVector(vec) && !isList(vec)) || isFactor(vec) )
+    if ((!isVector(vec) && !isList(vec)) || inherits(vec, "factor") )
 	error(_("dim<- : invalid first argument"));
 
     if (!isVector(val) && !isList(val))
