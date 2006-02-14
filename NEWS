@@ -730,6 +730,8 @@ BUG FIXES
     o	The utilities such as 'check' now report active version numbers
 	again, as SVN last changed revision numbers.
 
+    o	addmargins() did not accept a name for 'FUN', only an expression.
+
 
 
 
