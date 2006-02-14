@@ -7,6 +7,7 @@ split.default <- function(x, f, drop = FALSE, ...)
     if (is.list(f)) f <- interaction(f, drop = drop)
     else if (drop || !is.factor(f)) # drop extraneous levels
 	f <- factor(f)
+    storage.mode(f) <- "integer"  # some factors have double
     if (is.null(attr(x, "class")))
 	return(.Internal(split(x, f)))
     ## else

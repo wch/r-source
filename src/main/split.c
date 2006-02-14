@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copuright (C) 2006 The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +28,6 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, f, counts, vec, nm, nmj;
     int i, j, k, nobs, nlevs, nfac;
-    double d;
     Rboolean have_names;
 
     checkArity(op, args);
@@ -36,10 +36,9 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     f = CADR(args);
     if (!isVector(x))
 	errorcall(call, _("first argument must be a vector"));
-    /* was isFactor, but this need not be integer */
-    if (!inherits(f, "factor"))
+    if (!isFactor(f))
 	errorcall(call, _("second argument must be a factor"));
-    nlevs = LENGTH(getAttrib(f, R_LevelsSymbol));
+    nlevs = nlevels(f);
     nfac = LENGTH(CADR(args));
     nobs = LENGTH(CAR(args));
     if (nobs <= 0)
@@ -51,13 +50,9 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     nm = getAttrib(x, R_NamesSymbol);
     have_names = nm != R_NilValue;
     PROTECT(counts = allocVector(INTSXP, nlevs));
-    for (i = 0; i < nlevs; i++)
-	INTEGER(counts)[i] = 0;
+    for (i = 0; i < nlevs; i++) INTEGER(counts)[i] = 0;
     for (i = 0; i < nobs; i++) {
-	if(TYPEOF(f) == REALSXP) {
-	    d = REAL(f)[i % nfac];
-	    j  = R_FINITE(d) ? (int) d :  NA_INTEGER;
-	} else j = INTEGER(f)[i % nfac];
+	j = INTEGER(f)[i % nfac];
 	if (j != NA_INTEGER) INTEGER(counts)[j - 1]++;
     }
     /* Allocate a generic vector to hold the results. */
@@ -75,10 +70,7 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < nlevs; i++)
 	INTEGER(counts)[i] = 0;
     for (i = 0;  i < nobs; i++) {
-	if(TYPEOF(f) == REALSXP) {
-	    d = REAL(f)[i % nfac];
-	    j  = R_FINITE(d) ? (int) d :  NA_INTEGER;
-	} else j = INTEGER(f)[i % nfac];
+	j = INTEGER(f)[i % nfac];
 	if (j != NA_INTEGER) {
 	    k = INTEGER(counts)[j - 1];
 	    switch (TYPEOF(x)) {
