@@ -305,7 +305,7 @@ str(accountants)
 ## 2-tailed p-value for t distribution
 2*pt(-2.43, df = 13)
 ## upper 1% point for an F(2, 7)  distribution
-qf(0.99, 2, 7)
+qf(0.01, 2, 7, lower.tail = FALSE)
 
 attach(faithful)
 summary(eruptions)

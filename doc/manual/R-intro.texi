@@ -2988,9 +2988,9 @@ CDF, @samp{q} for the quantile function and @samp{r} for simulation
 (@emph{r}andom deviates).  The first argument is @code{x} for
 @code{d@var{xxx}}, @code{q} for @code{p@var{xxx}}, @code{p} for
 @code{q@var{xxx}} and @code{n} for @code{r@var{xxx}} (except for
-@code{rhyper} and @code{rwilcox}, for which it is @code{nn}).  The
-non-centrality parameter @code{ncp} is currently only available for the
-CDFs, most pdfs and a few other cases: see the on-line help for details.
+@code{rhyper} and @code{rwilcox}, for which it is @code{nn}).  In not
+quite all cases is the non-centrality parameter @code{ncp} are currently
+available: see the on-line help for details.
 
 The @code{p@var{xxx}} and @code{q@var{xxx}} functions all have logical
 arguments @code{lower.tail} and @code{log.p} and the @code{d@var{xxx}}
@@ -3016,7 +3016,7 @@ Here are some examples
 > ## @r{2-tailed p-value for t distribution}
 > 2*pt(-2.43, df = 13)
 > ## @r{upper 1% point for an F(2, 7) distribution}
-> qf(0.99, 2, 7)
+> qf(0.01, 2, 7, lower.tail = FALSE)
 @end example
 
 @node  Examining the distribution of a set of data, One- and two-sample tests, R as a set of statistical tables, Probability distributions
