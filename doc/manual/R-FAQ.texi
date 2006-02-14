@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-02-13
+@set FAQ_DATE @value{FAQ_YEAR}-02-14
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -3366,6 +3366,8 @@ C Double Description for R, an interface to the CDD computational
 geometry library.
 @item rcom
 R COM Client Interface and internal COM Server.
+@item rda
+Shrunken Centroids Regularized Discriminant Analysis.
 @item ref
 Functions for creating references, reading from and writing ro
 references and a memory efficient refdata type that transparently
@@ -3431,6 +3433,8 @@ Markov chain marginal bootstrap for quantile regression.
 @item rrcov
 Functions for robust location and scatter estimation and robust
 regression with high breakdown point.
+@item rrp
+Random Recursive Partitioning.
 @item rsprng
 Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use.
@@ -3612,6 +3616,9 @@ Spatial and space-time point pattern analysis functions.
 @c for summarising these objects, and for permitting their use in spatial
 @c data analysis.
 @c </COMMENT>
+@item ssanv
+Sample Size Adjusted for Nonadherence or Variability of input
+parameters.
 @item sspir
 State SPace models In R.
 @c @item stable
