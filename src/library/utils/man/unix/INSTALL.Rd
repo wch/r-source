@@ -16,6 +16,9 @@
   }
 }
 \details{
+  This will stop at the first error, so if you want all the \code{pkgs}
+  to be tried, call this via a shell \code{for} or \code{foreach} loop.
+  
   If used as \code{R CMD INSTALL pkgs} without explicitly specifying
   \code{lib}, packages are installed into the library tree rooted at the
   first directory given in the environment variable \env{R\_LIBS} if
@@ -52,7 +55,8 @@
   If the attempt to install the package fails, leftovers are removed.
   If the package was already installed, the old version is restored.
   This happens either if a command encounters an error or if the
-  install is interrupted from the keyboard.
+  install is interrupted from the keyboard: after cleaning up the script
+  terminates.
 
   Use \code{R CMD INSTALL --help} for more usage information.
 }
