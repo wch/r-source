@@ -40,7 +40,7 @@ glm <- function(formula, family = gaussian, data, weights,
 	   stop("invalid 'method': ", method))
     mt <- attr(mf, "terms") # allow model.frame to update it
 
-    Y <- model.response(mf, "numeric")
+    Y <- model.response(mf, "any") # e.g. factors are allowed
     ## avoid problems with 1D arrays, but keep names
     if(length(dim(Y)) == 1) {
         nm <- rownames(Y)
