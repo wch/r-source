@@ -38,7 +38,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.81 $ ';
+my $revision = ' $Rev$ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;

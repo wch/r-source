@@ -22,7 +22,7 @@
 use Getopt::Long;
 use R::Utils;
 
-my $revision = ' $Revision: 1.21 $ ';
+my $revision = ' $Rev$ ';
 my $version;
 my $name;
 
