@@ -727,6 +727,9 @@ BUG FIXES
     o	split() now accepts factors with numeric (but not storage mode
 	integer) codes.
 
+    o	The utilities such as 'check' now report active version numbers
+	again, as SVN last changed revision numbers.
+
 
 
 
