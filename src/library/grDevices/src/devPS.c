@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2005  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2006  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -36,6 +36,7 @@
 #include <wctype.h>
 static void mbcsToSbcs(char *in, char *out, char *encoding);
 #endif
+
 #if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 #include <R_ext/Riconv.h>
 #endif
@@ -68,7 +69,7 @@ static char PS_hyphen = 173;
 /* Part 0.  AFM File Names */
 
 #ifdef SUPPORT_MBCS
-static char *CIDBoldFontStr1 = 
+static char *CIDBoldFontStr1 =
 "16 dict begin\n"
 "  /basecidfont exch def\n"
 "  /basefont-H /.basefont-H /Identity-H [ basecidfont ] composefont def\n"
@@ -713,21 +714,15 @@ PostScriptStringWidth(unsigned char *str,
     char *buff;
     /* We need to remap even if we are in a SBCS */
     if(!metrics && (face % 5) != 0) {
-	unsigned short *ucs2s;
+	ucs2_t *ucs2s;
 	size_t ucslen;
 	ucslen = mbcsToUcs2((char *)str, NULL);
-	if ((size_t)-1 != ucslen ) {
-	    ucs2s = (unsigned short *)
-		alloca(sizeof(unsigned short) * (ucslen+1));
-	    memset(ucs2s, 0, ucslen+1);
+	if (ucslen != (size_t)-1) {
+	    /* We convert the characters but not the terminator here */
+	    ucs2s = (ucs2_t *) alloca(sizeof(ucs2_t) * ucslen);
+	    R_CheckStack();
 	    mbcsToUcs2((char *)str, ucs2s);
 	    for(i = 0 ; i < ucslen ; i++) {
-		/* wx = cidmetrics->CharInfo[ucs2s[i]].WX;
-		if(wx == NA_SHORT) {
-		    warning(_("font width unknown for character U+%04x"),
-			    ucs2s[i]);
-		    wx = 1000;
-		    } */
 #ifdef SUPPORT_MBCS
 		wx = 500 * Ri18n_wcwidth(ucs2s[i]);
 #else
@@ -811,6 +806,8 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
     }
 
 #ifdef SUPPORT_MBCS
+    /* We don't need the restriction to 65536 here any more as we could
+       convert from  UCS4ENC, but there are no language chars about 65536. */
     if(mbcslocale && !isSymbol && c >= 128 && c < 65536) { /* Unicode */
 	void *cd = NULL;
 	char *i_buf, *o_buf, out[2];
@@ -821,6 +818,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	    error(_("unknown encoding '%s' in 'PostScriptMetricInfo'"),
 		  encoding);
 
+	/* Here we use terminated strings, but could use one char */
 	w[0] = c; w[1] = 0;
 	i_buf = (char *)w;
 	i_len = 4;
@@ -870,14 +868,13 @@ PostScriptCIDMetricInfo(int c, double *ascent, double *descent, double *width)
 	if (c > 255)
 	    error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"));
 	else {
-	    /* convert to UCS-2 to match the assumptions for the AFMs */
-	    char str[2];
-	    ucs2_t out[2];
-	    str[0] = c;
-	    str[1] = '\0';
-	    if(mbcsToUcs2(str, out) == (size_t)-1)
+	    /* convert to UCS-2 to use wcwidth. */
+	    char str;
+	    ucs2_t out;
+	    str = c;
+	    if(mbcsToUcs2(&str, &out) == (size_t)-1)
 		error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"));
-	    c = out[0];
+	    c = out;
 	}
     }
 #endif
@@ -3868,22 +3865,14 @@ static void mbcsToSbcs(char *in, char *out, char *encoding)
 	error(_("unknown encoding '%s' in 'mbcsToSbcs'"), encoding);
 
     i_buf = in;
-    i_len = strlen(in);
+    i_len = strlen(in)+1; /* include terminator */
     o_buf = (char *)out;
-    o_len = i_len;
+    o_len = i_len; /* must be the same or fewer chars */
     status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
 		    (char **)&o_buf, (size_t *)&o_len);
 
     Riconv_close(cd);
     if (status == (size_t)-1) error(_("conversion failure in 'mbcsToSbcs'"));
-    /*
-     * If conversion produced 'out' with shorter length than 'in'
-     * (e.g., 2-byte utf-8 char to 1-byte ISOLatin2 char)
-     * then need to trim 'out'
-     */
-    if (o_len > 0) {
-	out[strlen(in) - o_len] = '\0';
-    }
 }
 
 static void PS_Text(double x, double y, char *str,
@@ -3938,31 +3927,30 @@ static void PS_Text(double x, double y, char *str,
 	/*
 	 * CID convert PS encoding != locale encode case
 	 */
-        ucslen = mbcsToUcs2(str, NULL);
-        if ((size_t)-1 != ucslen) {
+        ucslen = mbstowcs(NULL, str, 0);
+        if (ucslen != (size_t)-1) {
 	    void *cd;
 	    unsigned char *buf;
 	    char  *i_buf, *o_buf;
-	    size_t nb, i_len,  o_len, buflen = MB_LEN_MAX*(ucslen+1);
+	    size_t nb, i_len,  o_len, buflen = ucslen * sizeof(ucs2_t);
 	    size_t status;
 
             cd = (void*)Riconv_open(cidfont->encoding, "");
-            if((void*)-1 == cd) return;
+            if(cd == (void*)-1) return;
 
             buf = (unsigned char *) alloca(buflen);
 	    R_CheckStack();
 
-            memset(buf, 0, buflen);  /* should not be needed: is it? */
             i_buf = str;
             o_buf = (char *)buf;
-            i_len = strlen(str);
+            i_len = strlen(str); /* do not include terminator */
             nb = o_len = buflen;
 
             status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
                             (char **)&o_buf, (size_t *)&o_len);
 
             Riconv_close(cd);
-            if((size_t)-1 == status)
+            if(status == (size_t)-1)
                 warning(_("failed in text conversion to encoding '%s'"),
 			cidfont->encoding);
             else {
@@ -4801,21 +4789,21 @@ static void XFig_Text(double x, double y, char *str,
 	    void *cd;
 	    char  *i_buf, *o_buf;
 	    size_t i_len, o_len, status;
-	    int buflen = 6*strlen(str);
+	    int buflen = MB_LEN_MAX*strlen(str) + 1;
 
 	    cd = (void*)Riconv_open(pd->encoding, "");
-	    if((void*)-1 == cd) {
+	    if(cd == (void*)-1) {
 		warning(_("unable to use encoding '%s'"), pd->encoding);
 	    } else {
 		buf = (char *) alloca(buflen);
 		R_CheckStack();
 		i_buf = str;
 		o_buf = buf;
-		i_len = strlen(str);
+		i_len = strlen(str) + 1; /* including terminator */
 		o_len = buflen;
 		status = Riconv(cd, &i_buf, &i_len, &o_buf, &o_len);
 		Riconv_close(cd);
-		if((size_t)-1==status)
+		if(status == (size_t)-1)
 		    warning(_("failed in text conversion to encoding '%s'"),
 			    pd->encoding);
 		else str1 = buf;
@@ -6615,31 +6603,31 @@ static void PDF_Text(double x, double y, char *str,
         /*
          * CID convert  PDF encoding != locale encode case
          */
-	ucslen = mbcsToUcs2(str, NULL);
-        if ((size_t)-1 != ucslen ) {
+	ucslen = mbstowcs(NULL, str, 0);
+        if (ucslen != (size_t)-1) {
 	    void *cd;
 	    char  *i_buf, *o_buf;
-	    size_t i, nb, i_len,  o_len, buflen = (ucslen+1)*MB_LEN_MAX;
+	    size_t i, nb, i_len,  o_len, buflen = ucslen*sizeof(ucs2_t);
 	    size_t status;
 	    unsigned char *p;
 
 	    cd = (void*)Riconv_open(cidfont->encoding, "");
-	    if((void*)-1 == cd) return;
+	    if(cd  == (void*)-1) return;
 
 	    buf = (unsigned char *) alloca(buflen);
 	    R_CheckStack();
 
-	    memset(buf, 0, buflen);
 	    i_buf = str;
 	    o_buf = (char *)buf;
-	    i_len = strlen(str);
+	    i_len = strlen(str); /* no terminator,
+				    as output a byte at a time */
 	    nb = o_len = buflen;
 
 	    status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
 			    (char **)&o_buf, (size_t *)&o_len);
 
 	    Riconv_close(cd);
-	    if((size_t)-1==status)
+	    if(status == (size_t)-1)
                 warning(_("failed in text conversion to encoding '%s'"),
 			cidfont->encoding);
 	    else

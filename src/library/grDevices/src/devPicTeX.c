@@ -481,35 +481,23 @@ static double PicTeX_StrWidth(char *str,
     char *p;
     int size;
     double sum;
+
     size = gc->cex * gc->ps + 0.5;
     SetFont(gc->fontface, size, ptd);
     sum = 0;
 #if defined(SUPPORT_MBCS)
     if(mbcslocale && ptd->fontface != 5) {
-	/* <FIXME> what happens for symbols fonts: unsupported? */
-	/*
-	 * <FIXME>
-	 * is ad-hoc.
-	 * substitute it in wcwidth forcibly.
-	 * reference to memory is better.
-	 * </FIXME>
-	 */
-	for(p = str; *p; p++) {
-	    int mb_len;
-	    unsigned short ucs2;
-	    char buf[8];
-
-	    mb_len = (int) mbcsMblen(p);  /* uses iconv */
-	    if (mb_len == 1 && (unsigned char)*p < 128)
-		sum += charwidth[ptd->fontface-1][(int)*p];
-	    else if (mb_len > 0){
-		memset(buf, 0, sizeof(buf));
-		strncpy(buf, p, mb_len);
-		mbcsToUcs2(buf, &ucs2);
-		sum += (double) Ri18n_wcwidth(ucs2) * 0.5; /* A guess */
-	    }
-	    if (mb_len > 0) p += mb_len - 1;
-	}
+	/* This version at least uses the state of the MBCS */
+	int i, ucslen = mbcsToUcs2(str, NULL);
+	if (ucslen != (size_t)-1) {
+	    ucs2_t *ucs;
+	    ucs = (ucs2_t *) alloca(ucslen*sizeof(ucs2_t));
+	    mbcsToUcs2(str, ucs);
+	    for (i = 0; i < ucslen; i++)
+		if(ucs[i] < 128) sum += charwidth[ptd->fontface-1][ucs[i]];
+		else sum += (double) Ri18n_wcwidth(ucs[i]) * 0.5; /* A guess */
+	} else
+	    warning(_("invalid string in '%s'"), "PicTeX_StrWidth");
     } else
 #endif
 	for(p = str; *p; p++)

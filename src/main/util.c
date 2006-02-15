@@ -273,16 +273,21 @@ void UNIMPLEMENTED_TYPE(char *s, SEXP x)
 # include <sys/param.h>
 # include <errno.h>
 
+
 /* Previous versions of R (< 2.3.0) assumed wchar_t was in Unicode
    (and it commonly is).  These functions do not. */
 # ifdef WORDS_BIGENDIAN
 static const char UCS2ENC[] = "UCS-2BE";
-static const char UCS4ENC[] = "UCS-4BE";
 # else
 static const char UCS2ENC[] = "UCS-2LE";
-static const char UCS4ENC[] = "UCS-4LE";
 # endif
 
+#if 0
+/* <FIXME>
+ * It would make a lot of sense to cache cd here, but it would need to be 
+ * refreshed if the locale was changed.  However, this seems the
+ * wrong way to do this, as mbrlen will do the job correctly.
+ */
 size_t mbcsMblen(char *in)
 {
     unsigned int ucs4buf[1];
@@ -292,8 +297,8 @@ size_t mbcsMblen(char *in)
     size_t i_len, o_len, status;
     int i;
 
-    /* 6 == MB_LEN_MAX ? shift sequence is ignored... */
-    for (i = 1 ; i <= 6 ; i++){
+    /* 6 == MB_LEN_MAX ? shift state is ignored... */
+    for (i = 1 ; i <= 6 ; i++) {
 	buftype = (void *) ucs4buf;
 	if((void*)-1 == (cd = Riconv_open((char*)UCS4ENC, ""))) {
 	    buftype = (void *)ucs2buf;
@@ -311,7 +316,7 @@ size_t mbcsMblen(char *in)
 	status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
 			(char **)&o_buf, (size_t *)&o_len);
 	Riconv_close(cd);
-	if ((size_t) -1 == status) {
+	if (status == (size_t) -1) {
 	    switch (errno){
 	    case EINVAL:
 		/* next char */
@@ -330,6 +335,7 @@ size_t mbcsMblen(char *in)
     return (size_t) -1;
 }
 
+/* Currently only used in this file */
 size_t ucs2Mblen(ucs2_t *in)
 {
     char mbbuf[16];
@@ -362,9 +368,13 @@ size_t ucs2Mblen(ucs2_t *in)
 	}
     return (size_t) strlen(mbbuf);
 }
+#endif
 
 /*
- * out returns the number of the national chars in the case of NULL
+ * out returns the number of the MBCS chars
+ */
+/* Note: this does not terminate out, as all current uses are to look
+ * at 'out' a wchar at a time, and sometimes just one char.
  */
 size_t mbcsToUcs2(char *in, ucs2_t *out)
 {
@@ -373,7 +383,7 @@ size_t mbcsToUcs2(char *in, ucs2_t *out)
     size_t  i_len, o_len, status, wc_len;
 
     /* out length */
-    i_buf = in;
+    /* i_buf = in;
     wc_len = 0;
     while(*i_buf){
 	int rc;
@@ -381,16 +391,17 @@ size_t mbcsToUcs2(char *in, ucs2_t *out)
 	if (rc < 0) return rc;
 	i_buf += rc;
 	wc_len++;
-    }
-    if ( out == NULL ) return wc_len;
+	} */
+    wc_len = mbstowcs(NULL, in, 0);
+    if (out == NULL || (int)wc_len < 0) return wc_len;
 
     if ((void*)-1 == (cd = Riconv_open((char *)UCS2ENC, "")))
 	return (size_t) -1;
 
     i_buf = in;
-    i_len = strlen(in);
+    i_len = strlen(in); /* not including terminator */
     o_buf = (char *)out;
-    o_len = wc_len * sizeof(ucs2_t);
+    o_len = (wc_len+1) * sizeof(ucs2_t);
     status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
 		    (char **)&o_buf, (size_t *)&o_len);
 
@@ -411,9 +422,11 @@ size_t mbcsToUcs2(char *in, ucs2_t *out)
     return wc_len;
 }
 
+#if 0
 /*
  * out returns the number of the bytes in the case of NULL
  */
+/* Also does not terminate out, and currently unused */
 size_t ucs2ToMbcs(ucs2_t *in, char *out)
 {
     void   *cd = NULL ;
@@ -456,26 +469,7 @@ size_t ucs2ToMbcs(ucs2_t *in, char *out)
     }
     return strlen(out);
 }
-#else
-/* we need dummy entry points in R.dll */
-typedef unsigned short ucs2_t;
-
-size_t mbcsMblen(char *in)
-{
-    return (size_t) -1;
-}
-size_t ucs2Mblen(ucs2_t *in)
-{
-    return (size_t) -1;
-}
-size_t mbcsToUcs2(char *in, ucs2_t *out)
-{
-    return (size_t) -1;
-}
-size_t ucs2ToMbcs(ucs2_t *in, char *out)
-{
-    return (size_t) -1;
-}
+#endif
 #endif /* SUPPORT_MBCS */
 
 

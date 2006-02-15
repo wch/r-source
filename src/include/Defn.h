@@ -935,9 +935,9 @@ Rboolean utf8strIsASCII(char *str);
 #ifdef SUPPORT_MBCS
 typedef unsigned short ucs2_t;
 size_t mbcsToUcs2(char *in, ucs2_t *out);
+/* size_t mbcsMblen(char *in);
 size_t ucs2ToMbcs(ucs2_t *in, char *out);
-size_t mbcsMblen(char *in);
-size_t ucs2Mblen(ucs2_t *in);
+size_t ucs2Mblen(ucs2_t *in); */
 int utf8clen(char c);
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
