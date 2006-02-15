@@ -11,8 +11,8 @@
 \usage{
 format(x, \dots)
 
-\method{format}{default}(x, trim = FALSE, digits = NULL,
-       nsmall = 0, justify = c("left", "right", "centre", "none"),
+\method{format}{default}(x, trim = FALSE, digits = NULL, nsmall = 0,
+       justify = c("left", "right", "centre", "none"),
        width = NULL, na.encode = TRUE, scientific = NA,
        big.mark = "",   big.interval = 3,
      small.mark = "", small.interval = 5,
@@ -35,9 +35,9 @@ format(x, \dots)
     places will be used so that the smallest (in magnitude) number has
     this many significant digits, and also to satisfy \code{nsmall}.
     (For the intepretation for complex numbers see \code{\link{signif}}.)}
-  \item{nsmall}{number of digits which will always appear to the right of
-    the decimal point in formatting real/complex numbers in
-    non-scientific formats.  Allowed values are \code{0 <= nsmall <= 20}.}
+  \item{nsmall}{the minimum number of digits to the right of the decimal
+    point in formatting real/complex numbers in non-scientific formats.
+    Allowed values are \code{0 <= nsmall <= 20}.}
   \item{justify}{should a \emph{character} vector be left-justified (the
     default), right-justified, centred or left alone.}
   \item{width}{\code{default} method: the \emph{minimum} field width or
