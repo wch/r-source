@@ -3,7 +3,11 @@ include ../../gnuwin32/MkRules
 
 CFLAGS = -I../../include -I. -O3 -DWIN32
 
-all: chartables.h makeMakedeps libpcre.a
+## done this way for parallel make
+all:
+	$(MAKE) -f Makefile.win chartables.h
+	$(MAKE) -f Makefile.win makeMakedeps
+	$(MAKE) -f Makefile.win libpcre.a
 
 CSOURCES = pcre_compile.c pcre_config.c pcre_dfa_exec.c pcre_exec.c \
 	pcre_fullinfo.c pcre_get.c pcre_globals.c pcre_info.c \
