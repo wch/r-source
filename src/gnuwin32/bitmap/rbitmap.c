@@ -75,6 +75,7 @@ static void my_png_warning(png_structp png_ptr, png_const_charp msg)
 
 #define CN (100.0/2.54)
 
+__declspec(dllexport)
 int R_SaveAsPng(void  *d, int width, int height, 
 		unsigned long (*gp)(void *, int, int),
 		int bgr, FILE *fp, unsigned int transparent, int res) 
@@ -283,6 +284,7 @@ static void my_output_message (j_common_ptr cinfo)
 
 
 
+__declspec(dllexport)
 int R_SaveAsJpeg(void  *d, int width, int height, 
 		unsigned long (*gp)(void *, int, int),
 		int bgr, int quality, FILE *outfile, int res) 
@@ -386,6 +388,7 @@ int R_SaveAsJpeg(void  *d, int width, int height,
 #define BMPPUTC(a) if(fputc(a,fp)==EOF) BMPERROR;
 #define HEADERSIZE 54
 
+__declspec(dllexport)
 int R_SaveAsBmp(void  *d, int width, int height, 
 		unsigned long (*gp)(void *, int, int), int bgr, FILE *fp,
 		int res) 

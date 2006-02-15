@@ -85,11 +85,17 @@ clean:
 bdx_util-CFLAGS=-D_IN_RPROXY_
 bdx_com-CFLAGS=-D_IN_RPROXY_
 bdx_SEXP-CFLAGS=-D_IN_RPROXY_
-rproxy-DLLFLAGS=-mwindows
-rproxy-DLLLIBS=-L../../../bin -lR -lole32 -luuid -loleaut32
-rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
+Rproxy-DLLFLAGS=-mwindows
+Rproxy-DLLLIBS=-L../../../bin -lR -lole32 -luuid -loleaut32
+## this one needs Rproxy.dll as the LIBRARY line
+Rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
 	bdx_util.o bdx_SEXP.o bdx_com.o rtico.o
+	@$(ECHO) LIBRARY $*.dll > $*.def
+	@$(ECHO) EXPORTS >> $*.def
+	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> $*.def
+	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
+	@$(RM) $*.def
 
-$(R_HOME)/bin/Rproxy.dll: rproxy.dll
+$(R_HOME)/bin/Rproxy.dll: Rproxy.dll
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) rproxy.dll $@	

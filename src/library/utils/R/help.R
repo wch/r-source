@@ -125,7 +125,7 @@ function(x, ...)
         }
         else if(type == "chm") {
             ## unneeded but harmless under Unix
-            chm.dll <- file.path(R.home("bin"), "Rchtml.dll")
+            chm.dll <- file.path(R.home("modules"), "Rchtml.dll")
             if(!file.exists(chm.dll))
                 stop("Compiled HTML is not installed")
             if(!is.loaded("Rchtml")) dyn.load(chm.dll)

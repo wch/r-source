@@ -2727,7 +2727,7 @@ SEXP savePlot(SEXP args)
 
 
 /* Rbitmap  */
-#define BITMAP_DLL_NAME "\\BIN\\RBITMAP.DLL\0"
+#define BITMAP_DLL_NAME "\\modules\\Rbitmap.dll\0"
 typedef int (*R_SaveAsBitmap)();
 static R_SaveAsBitmap R_SaveAsPng, R_SaveAsJpeg, R_SaveAsBmp;
 

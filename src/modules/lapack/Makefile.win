@@ -35,7 +35,7 @@ endif
 $(MODULE).dll: $(OBJS)
 
 ../../../bin/Rlapack.dll: $(LIBOBJECTS)
-	$(DLL) -shared  -o $@ $^ -L../../../bin -lR -lRblas $(FLIBS)
+	$(DLL) -shared -s -o $@ $^ -L../../../bin -lR -lRblas $(FLIBS)
 
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def \

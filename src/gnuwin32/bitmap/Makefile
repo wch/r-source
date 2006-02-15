@@ -5,7 +5,7 @@ PNGDIR=libpng
 
 all:
 	@$(MAKE) --no-print-directory buildzlib buildpng buildjpeg rbitmap.o 
-	@$(MAKE) --no-print-directory installdll
+	@$(MAKE) --no-print-directory ../../../modules/Rbitmap.dll
 
 buildzlib:
 	@$(MAKE) -C ../../extra/zlib -f Makefile.win
@@ -27,13 +27,11 @@ $(JPEGDIR)/jconfig.h: jconfig.h
 	$(CP) jconfig.h $(JPEGDIR)/jconfig.h
 
 rbitmap-CFLAGS=-O3 -Wall -pedantic -DHAVE_PNG -DHAVE_JPEG -I../../extra/zlib -I./libpng -I$(JPEGDIR) -I../../include
-Rbitmap-DLLLIBS=-L../../../bin -lR
-Rbitmap-DLLFLAGS=-s
+# Rbitmap-DLLLIBS=-L../../../bin -lR
+# Rbitmap-DLLFLAGS=-s
 
-Rbitmap.dll: rbitmap.o $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a
-
-installdll: Rbitmap.dll
-	$(CP) Rbitmap.dll ../../../bin
+../../../modules/Rbitmap.dll: rbitmap.o $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a
+	$(DLL) -shared -s -o $@ $^ -L../../../bin -lR
 
 clean:
 	$(RM) *.o *.a *.dll *.def *~ \#*\#
