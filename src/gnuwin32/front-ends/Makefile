@@ -98,4 +98,4 @@ Rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
 
 $(R_HOME)/bin/Rproxy.dll: Rproxy.dll
 	$(MKDIR) -p $(R_HOME)/bin
-	$(CP) rproxy.dll $@	
+	$(CP) Rproxy.dll $@	
