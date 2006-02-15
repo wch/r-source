@@ -1,4 +1,4 @@
-LIBRARY Rblas
+LIBRARY Rblas.dll
 EXPORTS
  dasum_
  daxpy_
