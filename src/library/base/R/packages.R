@@ -33,6 +33,7 @@ function(x, strict = TRUE)
 is.package_version <-
 function(x)
     inherits(x, "package_version")
+
 as.package_version <-
 function(x)
     if(is.package_version(x)) x else package_version(x)
@@ -41,7 +42,7 @@ function(x)
 function(x, base = NULL)
 {
     if(!is.package_version(x)) stop("wrong class")
-    if(is.null(base)) base <- max(unlist(x), 0) + 1
+    if(is.null(base)) base <- max(unlist(x), 0, na.rm=TRUE) + 1
     lens <- as.numeric(sapply(x, length))
     ## We store the lengths so that we know when to stop when decoding.
     ## Alternatively, we need to be smart about trailing zeroes.  One
@@ -55,6 +56,7 @@ function(x, base = NULL)
     attr(x, "lens") <- lens
     x
 }
+
 .decode_package_version <-
 function(x, base = NULL)
 {
@@ -79,12 +81,14 @@ function(x, base = NULL)
 as.character.package_version <-
 function(x)
     as.character(unlist(lapply(x, paste, collapse = ".")))
+
 print.package_version <-
 function(x, ...)
 {
     print(noquote(sQuote(as.character(x))), ...)
     invisible(x)
 }
+
 Ops.package_version <-
 function(e1, e2)
 {
@@ -101,16 +105,16 @@ function(e1, e2)
     e2 <- .encode_package_version(e2, base = base)
     NextMethod(.Generic)
 }
+
 Summary.package_version <-
-function(x, ...)
+function(x, ..., na.rm)
 {
     ok <- switch(.Generic, max = , min = TRUE, FALSE)
     if(!ok)
         stop(.Generic, " not defined for package_version objects")
     x <- list(x, ...)
-    x$na.rm <- NULL
     x <- do.call("c", lapply(x, as.package_version))
-    ## </FIXME>
+    ## <FIXME> which.max/min automatically remove NAs
     switch(.Generic,
            max = x[which.max(.encode_package_version(x))],
            min = x[which.min(.encode_package_version(x))])

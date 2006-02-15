@@ -155,6 +155,11 @@ Complex(z)
   The number of arguments supplied for \code{"Math"} group generic
   methods is not checked prior to dispatch. (Most have default methods
   expecting one argument, but three expect two.)
+
+  All of the methods of the \code{Summary} group have a last argument
+  \code{na.rm}, so a \code{Summary} group method can be written with
+  argument list \code{function(..., na.rm)}, and methods should be
+  prepared to handle a \code{na.rm} argument.
 }
 \section{S4 Group Dispatching}{
   When package \pkg{methods} is attached (which it is by default),

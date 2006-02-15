@@ -211,7 +211,7 @@ check_tzones <- function(...)
     if(length(tzs)) tzs[1] else NULL
 }
 
-Summary.POSIXct <- function (x, ...)
+Summary.POSIXct <- function (x, ..., na.rm)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok) stop(.Generic, " not defined for \"POSIXct\" objects")
@@ -224,7 +224,7 @@ Summary.POSIXct <- function (x, ...)
     val
 }
 
-Summary.POSIXlt <- function (x, ...)
+Summary.POSIXlt <- function (x, ..., na.rm)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok) stop(.Generic, " not defined for \"POSIXlt\" objects")
@@ -473,7 +473,7 @@ mean.difftime <- function (x, ..., na.rm = FALSE)
     }
 }
 
-Summary.difftime <- function (x, ..., na.rm = FALSE)
+Summary.difftime <- function (x, ..., na.rm)
 {
     coerceTimeUnit <- function(x)
     {
