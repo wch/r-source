@@ -781,16 +781,16 @@ embedFonts <- function(file, # The ps or pdf file to convert
                        format, # Default guessed from file suffix
                        outfile = file, # By default overwrite file
                        options = "" # Additional options to ghostscript
-                       ) 
+                       )
 {
-    if(!is.character(file) || nchar(file) == 0)
+    if(!is.character(file) || length(file) != 1 || nchar(file) == 0)
         stop("'file' must be a non-empty character string")
     suffix <- gsub(".+[.]", "", file)
     if (missing(format)) {
         format <- switch(suffix,
-                         ps=,
-                         eps="pswrite",
-                         pdf="pdfwrite")
+                         ps = ,
+                         eps = "pswrite",
+                         pdf = "pdfwrite")
     }
     if (!is.character(format)) {
         stop("Invalid output format")
@@ -798,15 +798,18 @@ embedFonts <- function(file, # The ps or pdf file to convert
     gsexe <- Sys.getenv("R_GSCMD")
     if(is.null(gsexe) || nchar(gsexe) == 0) {
         gsexe <- switch(.Platform$OS.type,
-                        unix="gs",
-                        windows="gswin32c.exe")
+                        unix = "gs",
+                        windows = "gswin32c.exe")
     }
     tmpfile <- tempfile("Rembed")
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", format,
-                 " -sOutputFile=", tmpfile, " ", options, " ", file, sep="")
-    switch(.Platform$OS.type,
-           unix=system(cmd),
-           windows=shell(cmd, invisible=TRUE))
-    file.copy(tmpfile, outfile, overwrite=TRUE)
+                 " -sOutputFile=", tmpfile, " ", options, " ", file, sep = "")
+    ret <- switch(.Platform$OS.type,
+                  unix = system(cmd),
+                  windows = system(cmd, invisible = TRUE))
+    if(ret != 0)
+        stop(gettextf("status %d in running command '%s'", ret, cmd),
+             domain = NA)
+    file.copy(tmpfile, outfile, overwrite = TRUE)
     invisible(cmd)
 }
