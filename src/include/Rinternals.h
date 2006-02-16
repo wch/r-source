@@ -144,6 +144,8 @@ typedef enum {
 #endif
 
 #ifdef USE_RINTERNALS
+/* This is intended for use only within R itself */
+
 /* Flags */
 struct sxpinfo_struct {
     SEXPTYPE type      :  5;/* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
@@ -246,7 +248,6 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_OBJECT(x,v)	(((x)->sxpinfo.obj)=(v))
 #define SET_TYPEOF(x,v)	(((x)->sxpinfo.type)=(v))
 #define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
-
 
 /* Vector Access Macros */
 #define LENGTH(x)	(((VECSEXP) (x))->vecsxp.length)
@@ -575,7 +576,7 @@ void (SET_OBJECT)(SEXP x, int v);
 void (SET_TYPEOF)(SEXP x, int v);
 void (SET_NAMED)(SEXP x, int v);
 
-/* Vector Access Macros */
+/* Vector Access Functions */
 int (LENGTH)(SEXP x);
 int (TRUELENGTH)(SEXP x);
 char *(R_CHAR)(SEXP x);
@@ -595,7 +596,7 @@ Rcomplex *(COMPLEX)(SEXP x);
 SEXP *(STRING_PTR)(SEXP x);
 SEXP *(VECTOR_PTR)(SEXP x);
 
-/* List Access Macros */
+/* List Access Functions */
 /* These also work for ... objects */
 /*#define LISTVAL(x)	((x)->u.listsxp)*/
 SEXP (TAG)(SEXP e);
@@ -618,7 +619,7 @@ SEXP (SETCADDDR)(SEXP x, SEXP y);
 SEXP (SETCAD4R)(SEXP e, SEXP y);
 void (SET_MISSING)(SEXP x, int v);
 
-/* Closure Access Macros */
+/* Closure Access Functions */
 SEXP (FORMALS)(SEXP x);
 SEXP (BODY)(SEXP x);
 SEXP (CLOENV)(SEXP x);
@@ -630,12 +631,12 @@ void (SET_CLOENV)(SEXP x, SEXP v);
 void (SET_DEBUG)(SEXP x, int v);
 void (SET_TRACE)(SEXP x, int v);
 
-/* Primitive Access Macros */
+/* Primitive Access Functions */
 int (PRIMOFFSET)(SEXP x);
 void (SET_PRIMOFFSET)(SEXP x, int v);
 
 
-/* Symbol Access Macros */
+/* Symbol Access Functions */
 SEXP (PRINTNAME)(SEXP x);
 SEXP (SYMVALUE)(SEXP x);
 SEXP (INTERNAL)(SEXP x);
@@ -645,7 +646,7 @@ void (SET_SYMVALUE)(SEXP x, SEXP v);
 void (SET_INTERNAL)(SEXP x, SEXP v);
 void (SET_DDVAL)(SEXP x, int v);
 
-/* Environment Access Macros */
+/* Environment Access Functions */
 SEXP (FRAME)(SEXP x);
 SEXP (ENCLOS)(SEXP x);
 SEXP (HASHTAB)(SEXP x);
@@ -655,7 +656,7 @@ void (SET_ENCLOS)(SEXP x, SEXP v);
 void (SET_HASHTAB)(SEXP x, SEXP v);
 void (SET_ENVFLAGS)(SEXP x, int v);
 
-/* Promise Access Macros */
+/* Promise Access Functions */
 SEXP (PRCODE)(SEXP x);
 SEXP (PRENV)(SEXP x);
 SEXP (PRVALUE)(SEXP x);
@@ -665,7 +666,7 @@ void (SET_PRVALUE)(SEXP x, SEXP v);
 void (SET_PRCODE)(SEXP x, SEXP v);
 void (SET_PRSEEN)(SEXP x, int v);
 
-/* Hashing Macros */
+/* Hashing Functions */
 int (HASHASH)(SEXP x);
 int (HASHVALUE)(SEXP x);
 void (SET_HASHASH)(SEXP x, int v);
@@ -726,6 +727,12 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env);
 Rboolean R_BindingIsLocked(SEXP sym, SEXP env);
 Rboolean R_BindingIsActive(SEXP sym, SEXP env);
 Rboolean R_HasFancyBindings(SEXP rho);
+
+
+/* ../main/errors.c : */
+/* needed for R_load/savehistory handling in front ends */
+void Rf_errorcall(SEXP, const char*, ...);
+void Rf_warningcall(SEXP, const char*,...);
 
 /* Experimental Changes in Dispatching */
 void R_SetUseNamespaceDispatch(Rboolean val);
@@ -822,7 +829,7 @@ void R_ReleaseObject(SEXP);
 void R_dot_Last(void);		/* in main.c */
 void R_RunExitFinalizers(void);	/* in memory.c */
 
-/* Recpalcments for popen and system */
+/* Replacements for popen and system */
 #ifdef HAVE_POPEN
 FILE *R_popen(char *, char *);
 #endif
@@ -871,6 +878,7 @@ int R_system(char *);
 #define elt			Rf_elt
 #define emptyEnv		Rf_emptyEnv
 #define EnsureString		Rf_EnsureString
+# define errorcall		Rf_errorcall
 #define eval			Rf_eval
 #define EvalArgs		Rf_EvalArgs
 #define evalList		Rf_evalList
@@ -993,6 +1001,7 @@ int R_system(char *);
 #define unprotect_ptr		Rf_unprotect_ptr
 #define VectorToPairList	Rf_VectorToPairList
 #define vectorSubscript         Rf_vectorSubscript
+#define warningcall		Rf_warningcall
 #endif
 
 #if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))

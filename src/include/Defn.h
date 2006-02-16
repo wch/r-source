@@ -353,7 +353,7 @@ typedef struct {
 #define FLOAT2VEC(n)	(((n)>0)?(((n)*sizeof(double)-1)/sizeof(VECREC)+1):0)
 #define COMPLEX2VEC(n)	(((n)>0)?(((n)*sizeof(Rcomplex)-1)/sizeof(VECREC)+1):0)
 #define PTR2VEC(n)	(((n)>0)?(((n)*sizeof(SEXP)-1)/sizeof(VECREC)+1):0)
-#else
+#else /* USE_RINTERNALS */
 typedef struct VECREC *VECP;
 #define PRIMFUN(x)	(R_FunTab[PRIMOFFSET(x)].cfun)
 #define PRIMNAME(x)	(R_FunTab[PRIMOFFSET(x)].name)
@@ -361,7 +361,7 @@ typedef struct VECREC *VECP;
 #define PRIMARITY(x)	(R_FunTab[PRIMOFFSET(x)].arity)
 #define PPINFO(x)	(R_FunTab[PRIMOFFSET(x)].gram)
 #define PRIMPRINT(x)	(((R_FunTab[PRIMOFFSET(x)].eval)/100)%10)
-#endif
+#endif /* USE_RINTERNALS */
 
 #ifdef BYTECODE
 # ifdef BC_INT_STACK
@@ -656,7 +656,6 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define EncodeRaw              Rf_EncodeRaw
 # define EncodeString           Rf_EncodeString
 # define endcontext		Rf_endcontext
-# define errorcall		Rf_errorcall
 # define ErrorMessage		Rf_ErrorMessage
 # define factorsConform		Rf_factorsConform
 # define FetchMethod		Rf_FetchMethod
@@ -890,8 +889,6 @@ SEXP R_LookupMethod(SEXP, SEXP, SEXP, SEXP);
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
 
 /* ../main/errors.c : */
-void errorcall(SEXP, const char*, ...);
-void warningcall(SEXP, const char*,...);
 void ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 SEXP R_GetTraceback(int);
