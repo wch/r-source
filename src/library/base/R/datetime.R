@@ -160,7 +160,7 @@ summary.POSIXlt <- function(object, digits = 15, ...)
     if (inherits(e1, "difftime")) e1 <- coerceTimeUnit(e1)
     if (inherits(e2, "difftime")) e2 <- coerceTimeUnit(e2)
     structure(unclass(e1) + unclass(e2), class = c("POSIXt", "POSIXct"),
-              tzone = attr(e1, "tzone"))
+              tzone = check_tzones(e1, e2))
 }
 
 "-.POSIXt" <- function(e1, e2)
@@ -287,7 +287,7 @@ is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 ## This is documented to remove the timezone
 c.POSIXct <- function(..., recursive=FALSE)
     structure(c(unlist(lapply(list(...), unclass))),
-              class=c("POSIXt","POSIXct"))
+              class = c("POSIXt", "POSIXct"))
 
 ## we need conversion to POSIXct as POSIXlt objects can be in different tz.
 c.POSIXlt <- function(..., recursive=FALSE)

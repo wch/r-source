@@ -735,6 +735,9 @@ BUG FIXES
 
     o	addmargins() did not accept a name for 'FUN', only an expression.
 
+    o	'+' for POSIXt objects now takes the tzone from which ever
+	object has it, so date+x is the same as x+date if x is numeric.
+
 
 
 

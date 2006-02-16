@@ -1741,3 +1741,9 @@ pgamma(seq(0.75, 1.25, by=0.05)*1e100, shape = 1e100, log=TRUE, lower=FALSE)
 pgamma(c(1-1e-10, 1+1e-10)*1e100, shape = 1e100)
 pgamma(0.9*1e25, 1e25, log=TRUE)
 ## were NaN, -Inf etc in 2.2.1.
+
+
+## + for POSIXt objects was non-commutative
+# SPSS-style dates
+c(10485849600,10477641600,10561104000,10562745600)+ISOdate(1582,10,14)
+## was in the local time zone in 2.2.1.

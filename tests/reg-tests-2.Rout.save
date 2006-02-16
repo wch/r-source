@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-26 r37181)
+Version 2.3.0 Under development (unstable) (2006-02-16 r37370)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4995,4 +4995,12 @@ Reaction ~ Days + (Days | Subject) + I(Days^2)
 > pgamma(0.9*1e25, 1e25, log=TRUE)
 [1] -5.360516e+22
 > ## were NaN, -Inf etc in 2.2.1.
+> 
+> 
+> ## + for POSIXt objects was non-commutative
+> # SPSS-style dates
+> c(10485849600,10477641600,10561104000,10562745600)+ISOdate(1582,10,14)
+[1] "1915-01-26 12:00:00 GMT" "1914-10-23 12:00:00 GMT"
+[3] "1917-06-15 12:00:00 GMT" "1917-07-04 12:00:00 GMT"
+> ## was in the local time zone in 2.2.1.
 > 
