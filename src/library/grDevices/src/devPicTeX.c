@@ -479,7 +479,7 @@ static double PicTeX_StrWidth(char *str,
     picTeXDesc *ptd = (picTeXDesc *) dd->deviceSpecific;
 
     char *p;
-    int size;
+    int size, status;
     double sum;
 
     size = gc->cex * gc->ps + 0.5;
@@ -488,14 +488,17 @@ static double PicTeX_StrWidth(char *str,
 #if defined(SUPPORT_MBCS)
     if(mbcslocale && ptd->fontface != 5) {
 	/* This version at least uses the state of the MBCS */
-	int i, ucslen = mbcsToUcs2(str, NULL);
+	int i, ucslen = mbcsToUcs2(str, NULL, 0);
 	if (ucslen != (size_t)-1) {
 	    ucs2_t *ucs;
 	    ucs = (ucs2_t *) alloca(ucslen*sizeof(ucs2_t));
-	    mbcsToUcs2(str, ucs);
-	    for (i = 0; i < ucslen; i++)
-		if(ucs[i] < 128) sum += charwidth[ptd->fontface-1][ucs[i]];
-		else sum += (double) Ri18n_wcwidth(ucs[i]) * 0.5; /* A guess */
+	    status = (int) mbcsToUcs2(str, ucs, ucslen);
+	    if (status >= 0) 
+		for (i = 0; i < ucslen; i++)
+		    if(ucs[i] < 128) sum += charwidth[ptd->fontface-1][ucs[i]];
+		    else sum += (double) Ri18n_wcwidth(ucs[i]) * 0.5; /* A guess */
+	    else
+		warning(_("invalid string in '%s'"), "PicTeX_StrWidth");
 	} else
 	    warning(_("invalid string in '%s'"), "PicTeX_StrWidth");
     } else

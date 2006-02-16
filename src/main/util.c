@@ -371,12 +371,12 @@ size_t ucs2Mblen(ucs2_t *in)
 #endif
 
 /*
- * out returns the number of the MBCS chars
+ * out=NULL returns the number of the MBCS chars
  */
 /* Note: this does not terminate out, as all current uses are to look
  * at 'out' a wchar at a time, and sometimes just one char.
  */
-size_t mbcsToUcs2(char *in, ucs2_t *out)
+size_t mbcsToUcs2(char *in, ucs2_t *out, int nout)
 {
     void   *cd = NULL ;
     char   *i_buf, *o_buf;
@@ -401,7 +401,7 @@ size_t mbcsToUcs2(char *in, ucs2_t *out)
     i_buf = in;
     i_len = strlen(in); /* not including terminator */
     o_buf = (char *)out;
-    o_len = (wc_len+1) * sizeof(ucs2_t);
+    o_len = nout * sizeof(ucs2_t);
     status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
 		    (char **)&o_buf, (size_t *)&o_len);
 
@@ -419,7 +419,7 @@ size_t mbcsToUcs2(char *in, ucs2_t *out)
 	    return (size_t) -1;
         }
     }
-    return wc_len;
+    return wc_len; /* status would be better? */
 }
 
 #if 0

@@ -705,42 +705,43 @@ PostScriptStringWidth(unsigned char *str,
 		      FontMetricInfo *metrics,
 		      int face, char *encoding)
 {
-    int sum = 0, i;
+    int sum = 0, i, status;
     short wx;
     unsigned char *p = NULL, *str1 = str;
     unsigned char p1, p2;
 
 #ifdef SUPPORT_MBCS
     char *buff;
-    /* We need to remap even if we are in a SBCS */
     if(!metrics && (face % 5) != 0) {
+	/* This is the CID font case, and should only happen for
+	   non-symbol fonts.  So we assume monospaced with multipliers.
+	   We need to remap even if we are in a SBCS, should we get to here */
 	ucs2_t *ucs2s;
 	size_t ucslen;
-	ucslen = mbcsToUcs2((char *)str, NULL);
+	ucslen = mbcsToUcs2((char *)str, NULL, 0);
 	if (ucslen != (size_t)-1) {
 	    /* We convert the characters but not the terminator here */
 	    ucs2s = (ucs2_t *) alloca(sizeof(ucs2_t) * ucslen);
 	    R_CheckStack();
-	    mbcsToUcs2((char *)str, ucs2s);
-	    for(i = 0 ; i < ucslen ; i++) {
-#ifdef SUPPORT_MBCS
-		wx = 500 * Ri18n_wcwidth(ucs2s[i]);
-#else
-		wx = 500;
-#endif
-		/* printf("width for U+%04x is %d\n", ucs2s[i], wx); */
-		sum += wx;
-	    }
+	    status = (int) mbcsToUcs2((char *)str, ucs2s, ucslen);
+	    if (status >= 0)
+		for(i = 0 ; i < ucslen ; i++) {
+		    wx = 500 * Ri18n_wcwidth(ucs2s[i]);
+		    /* printf("width for U+%04x is %d\n", ucs2s[i], wx); */
+		    sum += wx;
+		}
+	    else
+		warning(_("invalid string in '%s'"), "PostScriptStringWidth");
 	    return 0.001 * sum;
 	} else {
 	    warning(_("invalid string in '%s'"), "PostScriptStringWidth");
-	    return 0;
+	    return 0.0;
 	}
     } else
 	if(utf8locale && !utf8strIsASCII((char *) str) &&
 	   /*
-	    * Every fifth font is a symbol font
-	    * See postscriptFonts()
+	    * Every fifth font is a symbol font:
+	    * see postscriptFonts()
 	    */
 	   (face % 5) != 0) {
 	    buff = alloca(strlen((char *)str)+1);
@@ -872,7 +873,7 @@ PostScriptCIDMetricInfo(int c, double *ascent, double *descent, double *width)
 	    char str;
 	    ucs2_t out;
 	    str = c;
-	    if(mbcsToUcs2(&str, &out) == (size_t)-1)
+	    if(mbcsToUcs2(&str, &out, 1) == (size_t)-1)
 		error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"));
 	    c = out;
 	}
@@ -3850,6 +3851,10 @@ static void PS_Text(double x, double y, char *str,
 		   gc, dd);
 }
 #else
+/* <FIXME> it would make sense to cache 'cd' here, but we would also
+   need to know if the current locale's charset changes.  However,
+   currently this is only called in a UTF-8 locale.
+ */
 static void mbcsToSbcs(char *in, char *out, char *encoding)
 {
     void *cd = NULL;
@@ -3969,7 +3974,12 @@ static void PS_Text(double x, double y, char *str,
 	}
     }
 
-    /* Now using single-byte non-symbol font */
+    /* Now using single-byte non-symbol font. It is not entirely
+       obvious that only UTF-8 locales need re-encoding, but we don't
+       have any other MBCSs that can sensibly be mapped to a SBCS.
+       It would be perverse (but possible) to write English in a
+       CJK MBCS.
+    */
     if(utf8locale && !utf8strIsASCII(str)) {
 	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
 	R_CheckStack();

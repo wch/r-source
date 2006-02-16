@@ -934,7 +934,7 @@ void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(char *str);
 #ifdef SUPPORT_MBCS
 typedef unsigned short ucs2_t;
-size_t mbcsToUcs2(char *in, ucs2_t *out);
+size_t mbcsToUcs2(char *in, ucs2_t *out, int nout);
 /* size_t mbcsMblen(char *in);
 size_t ucs2ToMbcs(ucs2_t *in, char *out);
 size_t ucs2Mblen(ucs2_t *in); */
