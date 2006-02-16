@@ -31,7 +31,11 @@
 
 #ifdef HAVE_C99_COMPLEX
 # include <complex.h>
-# define C99_COMPLEX(x)	((double complex *) DATAPTR(x))
+# ifdef USE_RINTERNALS
+#  define C99_COMPLEX(x) ((double complex *) DATAPTR(x))
+# else
+#  define C99_COMPLEX(x) ((double complex *) COMPLEX(x))
+# endif
 #endif
 
 #ifndef HAVE_HYPOT
