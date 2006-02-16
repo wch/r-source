@@ -318,6 +318,9 @@ NEW FEATURES
 	"POSIXct" has always done), although they are not printed in
 	the default format and not supported by strptime().
 
+    o	New function embedFonts() for embedding fonts in PDF or
+        PostScript graphics files.
+
 
 DEPRECATED & DEFUNCT
 
