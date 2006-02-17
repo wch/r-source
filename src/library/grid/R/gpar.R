@@ -46,7 +46,21 @@ validGP <- function(gpars) {
   numnotnull("gamma")
   numnotnull("alpha")
   # col and fill are converted in C code
-  # so is lty, BUT still want to check for NULL
+  # BUT still want to check length > 0
+  if (!is.na(match("col", names(gpars)))) {
+      if (is.null(gpars$col))
+          gpars$col <- NULL
+      else
+          check.length("col")
+  }
+  if (!is.na(match("fill", names(gpars)))) {
+      if (is.null(gpars$fill))
+          gpars$fill <- NULL
+      else
+          check.length("fill")
+  }
+  # lty converted in C code
+  # BUT still want to check for NULL and check length > 0
   if (!is.na(match("lty", names(gpars)))) {
     if (is.null(gpars$lty))
       gpars$lty <- NULL
