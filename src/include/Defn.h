@@ -65,9 +65,9 @@
 # endif
 #endif /* SunOS4 */
 
-#ifdef Win32
-void R_ProcessEvents(void);
-#endif /* Win32 */
+#if defined(Win32) || defined(HAVE_AQUA)
+extern void R_ProcessEvents(void);
+#endif
 
 #ifdef Win32
 # include <psignal.h>
@@ -305,15 +305,13 @@ typedef struct {
 } FUNTAB;
 
 #ifdef USE_RINTERNALS
-/* General Cons Cell Attributes */
-#define ATTRIB(x)	((x)->attrib)
-#define OBJECT(x)	((x)->sxpinfo.obj)
-#define MARK(x)		((x)->sxpinfo.mark)
-#define TYPEOF(x)	((x)->sxpinfo.type)
-#define NAMED(x)	((x)->sxpinfo.named)
+/* There is much more in Rinternals.h, including function versions
+ * of the Promise and Hasking groups.
+ */
 
 /* Primitive Access Macros */
 #define PRIMOFFSET(x)	((x)->u.primsxp.offset)
+#define SET_PRIMOFFSET(x,v)	(((x)->u.primsxp.offset)=(v))
 #define PRIMFUN(x)	(R_FunTab[(x)->u.primsxp.offset].cfun)
 #define PRIMNAME(x)	(R_FunTab[(x)->u.primsxp.offset].name)
 #define PRIMVAL(x)	(R_FunTab[(x)->u.primsxp.offset].code)
@@ -326,10 +324,6 @@ typedef struct {
 #define PRENV(x)	((x)->u.promsxp.env)
 #define PRVALUE(x)	((x)->u.promsxp.value)
 #define PRSEEN(x)	((x)->sxpinfo.gp)
-#ifndef USE_WRITE_BARRIER
-# define SET_PRENV(x,v)	  (((x)->u.promsxp.env)=(v))
-# define SET_PRVALUE(x,v) (((x)->u.promsxp.value)=(v))
-#endif
 #define SET_PRSEEN(x,v)	(((x)->sxpinfo.gp)=(v))
 
 /* Hashing Macros */
@@ -353,14 +347,20 @@ typedef struct {
 #define FLOAT2VEC(n)	(((n)>0)?(((n)*sizeof(double)-1)/sizeof(VECREC)+1):0)
 #define COMPLEX2VEC(n)	(((n)>0)?(((n)*sizeof(Rcomplex)-1)/sizeof(VECREC)+1):0)
 #define PTR2VEC(n)	(((n)>0)?(((n)*sizeof(SEXP)-1)/sizeof(VECREC)+1):0)
+
 #else /* USE_RINTERNALS */
+
 typedef struct VECREC *VECP;
+int (PRIMOFFSET)(SEXP x);
+void (SET_PRIMOFFSET)(SEXP x, int v);
+
 #define PRIMFUN(x)	(R_FunTab[PRIMOFFSET(x)].cfun)
 #define PRIMNAME(x)	(R_FunTab[PRIMOFFSET(x)].name)
 #define PRIMVAL(x)	(R_FunTab[PRIMOFFSET(x)].code)
 #define PRIMARITY(x)	(R_FunTab[PRIMOFFSET(x)].arity)
 #define PPINFO(x)	(R_FunTab[PRIMOFFSET(x)].gram)
 #define PRIMPRINT(x)	(((R_FunTab[PRIMOFFSET(x)].eval)/100)%10)
+
 #endif /* USE_RINTERNALS */
 
 #ifdef BYTECODE

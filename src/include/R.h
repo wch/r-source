@@ -55,6 +55,10 @@ typedef int Sint;
 #define SINT_MAX INT_MAX
 #define SINT_MIN INT_MIN
 
+void R_FlushConsole(void);
+/* always declared, but only usable under Win32 and Aqua */
+void R_ProcessEvents(void);
+
 #ifdef __cplusplus
 }
 #endif

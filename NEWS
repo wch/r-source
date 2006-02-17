@@ -563,6 +563,11 @@ C-LEVEL FACILITIES
         backward compatible, returning just the address of the symbol
         and ignoring registration information.
 
+    o	errorcall() and warningcall() are now declared in <Rinternals.h>
+	(they might be needed in front-ends).
+
+    o	R_FlushConsole and R_ProcessEvents are now declared in <R.h>.
+
 
 BUG FIXES
 

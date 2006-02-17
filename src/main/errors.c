@@ -24,9 +24,11 @@
 #include <config.h>
 #endif
 
+/* Now in Defn.h
 #ifdef HAVE_AQUA
 extern void R_ProcessEvents(void);
 #endif
+*/
 
 #include <Defn.h>
 /* -> Errormsg.h */

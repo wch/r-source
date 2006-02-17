@@ -32,7 +32,6 @@ extern "C" {
 #include <R_ext/Memory.h>
 #include <R_ext/PrtUtil.h>
 #include <R_ext/Utils.h>
-/*#include <R_ext/rlocale.h> this cannot be right */
 
 #include <errno.h>
 #include <stdio.h>
@@ -137,14 +136,12 @@ typedef enum {
 } SEXPTYPE;
 #endif
 
-#define USE_GENERATIONAL_GC
-
-#ifdef USE_GENERATIONAL_GC
-# define USE_WRITE_BARRIER
-#endif
-
 #ifdef USE_RINTERNALS
-/* This is intended for use only within R itself */
+/* This is intended for use only within R itself.
+ * It defines internal structures that are otherwise only accessible
+ * via SEXP, and macros to replace many (but not all) of accessor functions
+ * (which are always defined).
+ */
 
 /* Flags */
 struct sxpinfo_struct {
@@ -272,11 +269,6 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define STRING_PTR(x)	((SEXP *) DATAPTR(x))
 #define VECTOR_PTR(x)	((SEXP *) DATAPTR(x))
 
-#ifndef USE_WRITE_BARRIER
-#define SET_STRING_ELT(x,i,v)	(((x)->u.vecsxp.type.s)[i]=(v))
-#define SET_VECTOR_ELT(x,i,v)	(((x)->u.vecsxp.type.s)[i]=(v))
-#endif
-
 /* List Access Macros */
 /* These also work for ... objects */
 #define LISTVAL(x)	((x)->u.listsxp)
@@ -290,18 +282,8 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define CADDR(e)	CAR(CDR(CDR(e)))
 #define CADDDR(e)	CAR(CDR(CDR(CDR(e))))
 #define CAD4R(e)	CAR(CDR(CDR(CDR(CDR(e)))))
-#define CONS(a, b)	cons((a), (b))		/* data lists */
-#define LCONS(a, b)	lcons((a), (b))		/* language lists */
 #define MISSING_MASK	15 /* reserve 4 bits--only 2 uses now */
 #define MISSING(x)	((x)->sxpinfo.gp & MISSING_MASK)/* for closure calls */
-#ifndef USE_WRITE_BARRIER
-#define SETCAR(x,v)	(CAR(x)=(v))
-#define SETCADR(x,v)	(CADR(x)=(v))
-#define SETCADDR(x,v)	(CADDR(x)=(v))
-#define SETCADDDR(x,v)	(CADDDR(x)=(v))
-#define SETCAD4R(x,v)	(CAD4R(x)=(v))
-#define SETCDR(x,y)	do {SEXP X=(x), Y=(y); if(X != R_NilValue) CDR(X)=Y; else error("bad value");} while (0)
-#endif
 #define SET_MISSING(x,v) do { \
   SEXP __x__ = (x); \
   int __v__ = (v); \
@@ -318,21 +300,12 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_DEBUG(x,v)	(((x)->sxpinfo.debug)=(v))
 #define SET_TRACE(x,v)	(((x)->sxpinfo.trace)=(v))
 
-/* Primitive Access Macros */
-#define PRIMOFFSET(x)	((x)->u.primsxp.offset)
-#define SET_PRIMOFFSET(x,v)	(((x)->u.primsxp.offset)=(v))
-
 /* Symbol Access Macros */
 #define PRINTNAME(x)	((x)->u.symsxp.pname)
 #define SYMVALUE(x)	((x)->u.symsxp.value)
 #define INTERNAL(x)	((x)->u.symsxp.internal)
 #define DDVAL_MASK	1
 #define DDVAL(x)	((x)->sxpinfo.gp & DDVAL_MASK) /* for ..1, ..2 etc */
-#ifndef USE_WRITE_BARRIER
-#define SET_PRINTNAME(x,v)	(((x)->u.symsxp.pname)=(v))
-#define SET_SYMVALUE(x,v)	(((x)->u.symsxp.value)=(v))
-#define SET_INTERNAL(x,v)	(((x)->u.symsxp.internal)=(v))
-#endif
 #define SET_DDVAL_BIT(x) (((x)->sxpinfo.gp) |= DDVAL_MASK)
 #define UNSET_DDVAL_BIT(x) (((x)->sxpinfo.gp) &= ~DDVAL_MASK)
 #define SET_DDVAL(x,v) ((v) ? SET_DDVAL_BIT(x) : UNSET_DDVAL_BIT(x)) /* for ..1, ..2 etc */
@@ -341,19 +314,130 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define FRAME(x)	((x)->u.envsxp.frame)
 #define ENCLOS(x)	((x)->u.envsxp.enclos)
 #define HASHTAB(x)	((x)->u.envsxp.hashtab)
-#ifndef USE_WRITE_BARRIER
-#define SET_FRAME(x,v)		(((x)->u.envsxp.frame)=(v))
-#define SET_ENCLOS(x,v)		(((x)->u.envsxp.enclos)=(v))
-#define SET_HASHTAB(x,v)	(((x)->u.envsxp.hashtab)=(v))
-#endif
 #define ENVFLAGS(x)	((x)->sxpinfo.gp)	/* for environments */
 #define SET_ENVFLAGS(x,v)	(((x)->sxpinfo.gp)=(v))
-#else
+
+#else /* not USE_RINTERNALS */
+
 typedef struct SEXPREC *SEXP;
+
+#define CHAR(x)		R_CHAR(x)
+char *(R_CHAR)(SEXP x);
+
+#endif /* USE_RINTERNALS */
+
+/* Accessor functions.  Many are declared using () to avoid the macro
+   definitions in the USE_RINTERNALS section.
+   The function STRING_ELT is used as an argument to arrayAssign even 
+   if the macro version is in use.
+*/
+
+/* General Cons Cell Attributes */
+SEXP (ATTRIB)(SEXP x);
+int  (OBJECT)(SEXP x);
+int  (MARK)(SEXP x);
+int  (TYPEOF)(SEXP x);
+int  (NAMED)(SEXP x);
+void (SET_OBJECT)(SEXP x, int v);
+void (SET_TYPEOF)(SEXP x, int v);
+void (SET_NAMED)(SEXP x, int v);
+void SET_ATTRIB(SEXP x, SEXP v);
+
+/* Vector Access Functions */
+int  (LENGTH)(SEXP x);
+int  (TRUELENGTH)(SEXP x);
+void (SETLENGTH)(SEXP x, int v);
+void (SET_TRUELENGTH)(SEXP x, int v);
+int  (LEVELS)(SEXP x);
+int  (SETLEVELS)(SEXP x, int v);
+
+int  *(LOGICAL)(SEXP x);
+int  *(INTEGER)(SEXP x);
+Rbyte *(RAW)(SEXP x);
+double *(REAL)(SEXP x);
+Rcomplex *(COMPLEX)(SEXP x);
+SEXP (STRING_ELT)(SEXP x, int i);
+SEXP (VECTOR_ELT)(SEXP x, int i);
+void SET_STRING_ELT(SEXP x, int i, SEXP v);
+SEXP SET_VECTOR_ELT(SEXP x, int i, SEXP v);
+SEXP *(STRING_PTR)(SEXP x);
+SEXP *(VECTOR_PTR)(SEXP x);
+
+/* List Access Functions */
+/* These also work for ... objects */
 #define CONS(a, b)	cons((a), (b))		/* data lists */
 #define LCONS(a, b)	lcons((a), (b))		/* language lists */
-#define CHAR(x)		R_CHAR(x)
-#endif /* USE_RINTERNALS */
+SEXP (TAG)(SEXP e);
+SEXP (CAR)(SEXP e);
+SEXP (CDR)(SEXP e);
+SEXP (CAAR)(SEXP e);
+SEXP (CDAR)(SEXP e);
+SEXP (CADR)(SEXP e);
+SEXP (CDDR)(SEXP e);
+SEXP (CADDR)(SEXP e);
+SEXP (CADDDR)(SEXP e);
+SEXP (CAD4R)(SEXP e);
+int  (MISSING)(SEXP x);
+void (SET_MISSING)(SEXP x, int v);
+void SET_TAG(SEXP x, SEXP y);
+SEXP SETCAR(SEXP x, SEXP y);
+SEXP SETCDR(SEXP x, SEXP y);
+SEXP SETCADR(SEXP x, SEXP y);
+SEXP SETCADDR(SEXP x, SEXP y);
+SEXP SETCADDDR(SEXP x, SEXP y);
+SEXP SETCAD4R(SEXP e, SEXP y);
+
+/* Closure Access Functions */
+SEXP (FORMALS)(SEXP x);
+SEXP (BODY)(SEXP x);
+SEXP (CLOENV)(SEXP x);
+int  (DEBUG)(SEXP x);
+int  (TRACE)(SEXP x);
+void (SET_DEBUG)(SEXP x, int v);
+void (SET_TRACE)(SEXP x, int v);
+void SET_FORMALS(SEXP x, SEXP v);
+void SET_BODY(SEXP x, SEXP v);
+void SET_CLOENV(SEXP x, SEXP v);
+
+/* Symbol Access Functions */
+SEXP (PRINTNAME)(SEXP x);
+SEXP (SYMVALUE)(SEXP x);
+SEXP (INTERNAL)(SEXP x);
+int  (DDVAL)(SEXP x);
+void (SET_DDVAL)(SEXP x, int v);
+void SET_PRINTNAME(SEXP x, SEXP v);
+void SET_SYMVALUE(SEXP x, SEXP v);
+void SET_INTERNAL(SEXP x, SEXP v);
+
+/* Environment Access Functions */
+SEXP (FRAME)(SEXP x);
+SEXP (ENCLOS)(SEXP x);
+SEXP (HASHTAB)(SEXP x);
+int  (ENVFLAGS)(SEXP x);
+void (SET_ENVFLAGS)(SEXP x, int v);
+void SET_FRAME(SEXP x, SEXP v);
+void SET_ENCLOS(SEXP x, SEXP v);
+void SET_HASHTAB(SEXP x, SEXP v);
+
+/* Promise Access Functions */
+/* First five have macro versions in Defn.h */
+SEXP (PRCODE)(SEXP x);
+SEXP (PRENV)(SEXP x);
+SEXP (PRVALUE)(SEXP x);
+int  (PRSEEN)(SEXP x);
+void (SET_PRSEEN)(SEXP x, int v);
+void SET_PRENV(SEXP x, SEXP v);
+void SET_PRVALUE(SEXP x, SEXP v);
+void SET_PRCODE(SEXP x, SEXP v);
+void SET_PRSEEN(SEXP x, int v);
+
+/* Hashing Functions */
+/* There are macro versions in Defn.h */
+int  (HASHASH)(SEXP x);
+int  (HASHVALUE)(SEXP x);
+void (SET_HASHASH)(SEXP x, int v);
+void (SET_HASHVALUE)(SEXP x, int v);
+
 
 /* External pointer access macros */
 #define EXTPTR_PTR(x)	CAR(x)
@@ -565,113 +649,6 @@ SEXP R_subset3_dflt(SEXP, SEXP);
 #undef LibExtern
 #endif
 
-/* General Cons Cell Attributes */
-SEXP (ATTRIB)(SEXP x);
-int (OBJECT)(SEXP x);
-int (MARK)(SEXP x);
-int (TYPEOF)(SEXP x);
-int (NAMED)(SEXP x);
-void (SET_ATTRIB)(SEXP x, SEXP v);
-void (SET_OBJECT)(SEXP x, int v);
-void (SET_TYPEOF)(SEXP x, int v);
-void (SET_NAMED)(SEXP x, int v);
-
-/* Vector Access Functions */
-int (LENGTH)(SEXP x);
-int (TRUELENGTH)(SEXP x);
-char *(R_CHAR)(SEXP x);
-SEXP (STRING_ELT)(SEXP x, int i);
-void (SETLENGTH)(SEXP x, int v);
-void (SET_TRUELENGTH)(SEXP x, int v);
-void (SET_STRING_ELT)(SEXP x, int i, SEXP v);
-int (LEVELS)(SEXP x);
-int (SETLEVELS)(SEXP x, int v);
-SEXP (VECTOR_ELT)(SEXP x, int i);
-SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v);
-int *(LOGICAL)(SEXP x);
-int *(INTEGER)(SEXP x);
-Rbyte *(RAW)(SEXP x);
-double *(REAL)(SEXP x);
-Rcomplex *(COMPLEX)(SEXP x);
-SEXP *(STRING_PTR)(SEXP x);
-SEXP *(VECTOR_PTR)(SEXP x);
-
-/* List Access Functions */
-/* These also work for ... objects */
-/*#define LISTVAL(x)	((x)->u.listsxp)*/
-SEXP (TAG)(SEXP e);
-SEXP (CAR)(SEXP e);
-SEXP (CDR)(SEXP e);
-SEXP (CAAR)(SEXP e);
-SEXP (CDAR)(SEXP e);
-SEXP (CADR)(SEXP e);
-SEXP (CDDR)(SEXP e);
-SEXP (CADDR)(SEXP e);
-SEXP (CADDDR)(SEXP e);
-SEXP (CAD4R)(SEXP e);
-int (MISSING)(SEXP x);
-void (SET_TAG)(SEXP x, SEXP y);
-SEXP (SETCAR)(SEXP x, SEXP y);
-SEXP (SETCDR)(SEXP x, SEXP y);
-SEXP (SETCADR)(SEXP x, SEXP y);
-SEXP (SETCADDR)(SEXP x, SEXP y);
-SEXP (SETCADDDR)(SEXP x, SEXP y);
-SEXP (SETCAD4R)(SEXP e, SEXP y);
-void (SET_MISSING)(SEXP x, int v);
-
-/* Closure Access Functions */
-SEXP (FORMALS)(SEXP x);
-SEXP (BODY)(SEXP x);
-SEXP (CLOENV)(SEXP x);
-int (DEBUG)(SEXP x);
-int (TRACE)(SEXP x);
-void (SET_FORMALS)(SEXP x, SEXP v);
-void (SET_BODY)(SEXP x, SEXP v);
-void (SET_CLOENV)(SEXP x, SEXP v);
-void (SET_DEBUG)(SEXP x, int v);
-void (SET_TRACE)(SEXP x, int v);
-
-/* Primitive Access Functions */
-int (PRIMOFFSET)(SEXP x);
-void (SET_PRIMOFFSET)(SEXP x, int v);
-
-
-/* Symbol Access Functions */
-SEXP (PRINTNAME)(SEXP x);
-SEXP (SYMVALUE)(SEXP x);
-SEXP (INTERNAL)(SEXP x);
-int (DDVAL)(SEXP x);
-void (SET_PRINTNAME)(SEXP x, SEXP v);
-void (SET_SYMVALUE)(SEXP x, SEXP v);
-void (SET_INTERNAL)(SEXP x, SEXP v);
-void (SET_DDVAL)(SEXP x, int v);
-
-/* Environment Access Functions */
-SEXP (FRAME)(SEXP x);
-SEXP (ENCLOS)(SEXP x);
-SEXP (HASHTAB)(SEXP x);
-int (ENVFLAGS)(SEXP x);
-void (SET_FRAME)(SEXP x, SEXP v);
-void (SET_ENCLOS)(SEXP x, SEXP v);
-void (SET_HASHTAB)(SEXP x, SEXP v);
-void (SET_ENVFLAGS)(SEXP x, int v);
-
-/* Promise Access Functions */
-SEXP (PRCODE)(SEXP x);
-SEXP (PRENV)(SEXP x);
-SEXP (PRVALUE)(SEXP x);
-int (PRSEEN)(SEXP x);
-void (SET_PRENV)(SEXP x, SEXP v);
-void (SET_PRVALUE)(SEXP x, SEXP v);
-void (SET_PRCODE)(SEXP x, SEXP v);
-void (SET_PRSEEN)(SEXP x, int v);
-
-/* Hashing Functions */
-int (HASHASH)(SEXP x);
-int (HASHVALUE)(SEXP x);
-void (SET_HASHASH)(SEXP x, int v);
-void (SET_HASHVALUE)(SEXP x, int v);
-
 /* External pointer interface */
 SEXP R_MakeExternalPtr(void *p, SEXP tag, SEXP prot);
 void *R_ExternalPtrAddr(SEXP s);
@@ -732,7 +709,7 @@ Rboolean R_HasFancyBindings(SEXP rho);
 /* ../main/errors.c : */
 /* needed for R_load/savehistory handling in front ends */
 void Rf_errorcall(SEXP, const char*, ...);
-void Rf_warningcall(SEXP, const char*,...);
+void Rf_warningcall(SEXP, const char*, ...);
 
 /* Experimental Changes in Dispatching */
 void R_SetUseNamespaceDispatch(Rboolean val);
