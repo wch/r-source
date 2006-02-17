@@ -33,7 +33,8 @@ DISTFILES = README \
 	missing \
 	move-if-change \
 	pkg2tex.pl \
-	rsync-recommended
+	rsync-recommended \
+	updatefat
 
 CLEANFILES =
 DISTCLEANFILES = Makefile
