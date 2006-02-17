@@ -4,12 +4,12 @@
 \alias{transform.data.frame}
 \title{Transform an Object, for Example a Data Frame}
 \usage{
-transform(x, \dots)
+transform(`_data`, \dots)
 %transform.default(x, \dots)
 %transform.data.frame(x, \dots)
 }
 \arguments{
-    \item{x}{The object to be transformed}
+    \item{_data}{The object to be transformed}
     \item{\dots}{Further arguments of the form \code{tag=value}}
 }
 \description{
@@ -21,15 +21,20 @@ transform(x, \dots)
 \details{
   The \code{\dots} arguments to \code{transform.data.frame} are tagged
   vector expressions, which are evaluated in the data frame
-  \code{x}.  The tags are matched against \code{names(x)}, and for
+  \code{_data}.  The tags are matched against \code{names(_data)}, and for
   those that match, the value replace the corresponding variable in
-  \code{x}, and the others are appended to \code{x}.
+  \code{_data}, and the others are appended to \code{_data}.
 } 
 \value{
-  The modified value of \code{x}.
+  The modified value of \code{_data}.
 }
 \author{Peter Dalgaard}
-\note{If some of the values are not vectors of the appropriate length,
+\note{Prior to R 2.3.0, the first argument was named \code{x}, but this
+caused trouble if people wanted to create a variable of that name.
+Names starting with an underscore are syntactically invalid, so the
+current choice should be less problematic.
+
+If some of the values are not vectors of the appropriate length,
   you deserve whatever you get!}
 \seealso{
     \code{\link{subset}},

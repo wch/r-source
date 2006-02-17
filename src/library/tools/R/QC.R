@@ -3209,7 +3209,7 @@ function(x)
     else
         which(names(y) == "")
     if(any(ind)) {
-        names(y)[ind] <- as.character(y[ind])
+        names(y)[ind] <- sapply(y[ind],as.character)
         y[ind] <- rep.int(list(alist(irrelevant = )[[1]]), length(ind))
     }
     y

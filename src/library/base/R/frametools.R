@@ -39,28 +39,32 @@ subset.matrix <- function(x, subset, select, drop = FALSE, ...)
     x[subset & !is.na(subset), vars, drop = drop]
 }
 
-transform.data.frame <- function (x, ...)
+### Notice use of "illegal" variable name for the first argument
+### This used to be "x", but then you couldn't create a variable 
+### called "x"...
+
+transform.data.frame <- function (`_data`, ...)
 {
-    e <- eval(substitute(list(...)), x, parent.frame())
+    e <- eval(substitute(list(...)), `_data`, parent.frame())
     tags <- names(e)
-    inx <- match(tags, names(x))
+    inx <- match(tags, names(`_data`))
     matched <- !is.na(inx)
     if (any(matched)) {
-	x[inx[matched]] <- e[matched]
-	x <- data.frame(x)
+	`_data`[inx[matched]] <- e[matched]
+	`_data` <- data.frame(`_data`)
     }
     if (!all(matched))
-	data.frame(x, e[!matched])
-    else x
+	data.frame(`_data`, e[!matched])
+    else `_data`
 }
 
-transform <- function(x,...) UseMethod("transform")
+transform <- function(`_data`,...) UseMethod("transform")
 
 ## Actually, I have no idea what to transform(), except dataframes.
 ## The default converts its argument to a dataframe and transforms
 ## that. This is probably marginally useful at best. --pd
-transform.default <- function(x,...)
-    transform.data.frame(data.frame(x),...)
+transform.default <- function(`_data`,...)
+    transform.data.frame(data.frame(`_data`),...)
 
 stack.data.frame <- function(x, select, ...)
 {

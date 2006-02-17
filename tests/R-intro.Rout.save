@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-11-11 r36281)
+R : Copyright 2006, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2006-02-15 r37368)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > ####  "All the examples" from  ./R-intro.texi
@@ -473,7 +473,7 @@ incomef   act nsw nt qld sa tas vic wa
 > 2*pt(-2.43, df = 13)
 [1] 0.030331
 > ## upper 1% point for an F(2, 7)  distribution
-> qf(0.99, 2, 7)
+> qf(0.01, 2, 7, lower.tail = FALSE)
 [1] 9.5466
 > 
 > attach(faithful)

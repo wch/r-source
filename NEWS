@@ -22,6 +22,11 @@ USER-VISIBLE CHANGES
 
     o	all.equal() is more stringent, see the PR#8191 bug fix below.
 
+    o   The data frame argument to transform() is no longer called 'x',
+        but '_data'. Since this is an invalid name, it is less likely
+        to clash with names given to transformed variables. (People
+        were getting into trouble with transform(data, x=y+z).)
+
 
 NEW FEATURES
 
