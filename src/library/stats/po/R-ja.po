@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-23 08:52\n"
+"POT-Creation-Date: 2006-02-17 14:07\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -109,10 +109,12 @@ msgstr "'drop1' は mlm モデルには実装されていません"
 msgid "F test assumes 'quasi%s' family"
 msgstr "F テストは疑似%sファミリ"
 
-msgid "lower scope is not included in model"
+#, fuzzy
+msgid "lower scope has term(s) %s not included in model"
 msgstr "下位のスコープはモデル中に含まれません"
 
-msgid "upper scope does not include model"
+#, fuzzy
+msgid "upper scope does not include model term(s) %s"
 msgstr "上位のスコープはモデルを含んでいません"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"

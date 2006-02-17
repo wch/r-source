@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-29 08:17\n"
+"POT-Creation-Date: 2006-02-17 14:07\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -321,6 +321,9 @@ msgid "cannot create directory '%s'"
 msgstr ""
 
 msgid "'list' should be a character vector naming R objects"
+msgstr ""
+
+msgid "cannot turn off locale-specific chars via LC_CTYPE"
 msgstr ""
 
 msgid "no R objects specified or available"

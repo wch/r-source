@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-29 08:16\n"
+"POT-Creation-Date: 2006-02-17 14:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -641,6 +641,10 @@ msgstr "程辑包'%s'是用R版本%s 来建造的"
 
 msgid "package '%s' was built for %s"
 msgstr "程辑包'%s'是为%s建造的"
+
+#, fuzzy
+msgid "package '%s' is not installed for 'arch=%s'"
+msgstr "程辑包'%s'没有正确地被建造"
 
 msgid "package '%s' has not been installed properly"
 msgstr "程辑包'%s'没有正确地被建造"

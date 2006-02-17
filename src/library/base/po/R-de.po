@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-29 08:16\n"
+"POT-Creation-Date: 2006-02-17 14:06\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -655,6 +655,10 @@ msgstr "Paket '%s' wurde unter R Version %s gebaut"
 
 msgid "package '%s' was built for %s"
 msgstr "Paket '%s' wurde gebaut für %s"
+
+#, fuzzy
+msgid "package '%s' is not installed for 'arch=%s'"
+msgstr "Paket '%s' wurde nicht ordentlich installiert"
 
 msgid "package '%s' has not been installed properly"
 msgstr "Paket '%s' wurde nicht ordentlich installiert"

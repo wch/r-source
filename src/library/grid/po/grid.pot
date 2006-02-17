@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-12-16 09:20+0000\n"
+"POT-Creation-Date: 2006-02-17 14:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,36 +20,40 @@ msgstr ""
 msgid "Cannot clip to rotated viewport"
 msgstr ""
 
-#: grid.c:641 grid.c:646 grid.c:743 grid.c:748
+#: grid.c:650 grid.c:655 grid.c:744 grid.c:749
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 
-#: grid.c:939
+#: grid.c:940
 msgid "attempt to plot on null device"
 msgstr ""
 
-#: grid.c:1219
+#: grid.c:1220
 msgid "There is no layout defined"
 msgstr ""
 
-#: grid.c:1439
+#: grid.c:1440
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
-#: grid.c:1448
+#: grid.c:1449
 msgid "Polygon edge not found"
 msgstr ""
 
-#: grid.c:1588
+#: grid.c:1589
 msgid "Require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:1893
+#: grid.c:1894
 msgid "Non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:2372
+#: grid.c:2373
 msgid "Invalid circle radius (must be non-negative)"
+msgstr ""
+
+#: grid.c:3089
+msgid "Unable to clip to rotated rectangle"
 msgstr ""
 
 #: layout.c:520

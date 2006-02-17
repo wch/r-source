@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31\n"
-"PO-Revision-Date: 2006-01-10 15:31\n"
+"POT-Creation-Date: 2006-02-17 14:06\n"
+"PO-Revision-Date: 2006-02-17 14:06\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -177,6 +177,15 @@ msgstr "unknown font"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "font encoding mismatch '%s'/'%s'"
 
+msgid "'file' must be a non-empty character string"
+msgstr "‘file’ must be a non-empty character string"
+
+msgid "Invalid output format"
+msgstr "Invalid output format"
+
+msgid "status %d in running command '%s'"
+msgstr "status %d in running command ‘%s’"
+
 msgid "no current device to record from"
 msgstr "no current device to record from"
 
@@ -209,9 +218,6 @@ msgstr "'x', ‘y’ and ‘z’ lengths differ"
 
 msgid "'file' is missing with no default"
 msgstr "‘file’ is missing with no default"
-
-msgid "'file' must be a non-empty character string"
-msgstr "‘file’ must be a non-empty character string"
 
 msgid "sorry, 'gs' cannot be found"
 msgstr "sorry, ‘gs’ cannot be found"

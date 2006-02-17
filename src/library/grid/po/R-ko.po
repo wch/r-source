@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-03 10:43\n"
+"POT-Creation-Date: 2006-02-17 14:06\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -349,6 +349,11 @@ msgstr ""
 "'x' 그리고 'y'는 units가 나오지 않으면 안되고, 동일 길이가 나오지 않으면 되"
 "지 않습니다"
 
+msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
+msgstr ""
+"'x', 'y', 'width' 그리고 'height'는 모두 길이 1의 units가 나오지 않으면 되지 "
+"않습니다"
+
 msgid "'x' must be numeric"
 msgstr "'x'는 수치가 아니면 되지 않습니다"
 
@@ -413,11 +418,6 @@ msgstr "부적절한 'gPath' 입니다"
 
 msgid "'range' must be numeric"
 msgstr "'range'는 수치가 아니면 되지 않습니다"
-
-msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr ""
-"'x', 'y', 'width' 그리고 'height'는 모두 길이 1의 units가 나오지 않으면 되지 "
-"않습니다"
 
 msgid "Invalid graphics parameters"
 msgstr "부적절한 graphics 파라미터입니다"

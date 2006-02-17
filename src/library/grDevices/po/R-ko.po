@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31\n"
+"POT-Creation-Date: 2006-02-17 14:06\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -168,6 +168,15 @@ msgstr ""
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr ""
 
+msgid "'file' must be a non-empty character string"
+msgstr "'file'는 비어 있지 않은 문자열이 아니면 되지 않습니다"
+
+msgid "Invalid output format"
+msgstr ""
+
+msgid "status %d in running command '%s'"
+msgstr ""
+
 msgid "no current device to record from"
 msgstr "현재 이하의 것으로부터 기록할수가 있는 디바이스는 없습니다:"
 
@@ -200,9 +209,6 @@ msgstr "'x', 'y' 그리고 'z'의 길이가 다릅니다"
 
 msgid "'file' is missing with no default"
 msgstr "'file'는 default가 없음으로 결손이 되고 있습니다"
-
-msgid "'file' must be a non-empty character string"
-msgstr "'file'는 비어 있지 않은 문자열이 아니면 되지 않습니다"
 
 msgid "sorry, 'gs' cannot be found"
 msgstr "죄송합니다.'gs'가 검색되지 않습니다"

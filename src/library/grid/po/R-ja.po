@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-03 10:43\n"
+"POT-Creation-Date: 2006-02-17 14:06\n"
 "PO-Revision-Date: 2005-03-31 08:00+0009\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -344,6 +344,10 @@ msgstr "'x', 'y', 'size' は全て単位(units)でなければなりません"
 msgid "'x' and 'y' must be unit objects and have the same length"
 msgstr "'x' と 'y' は単位(units)でなければならず，同じ長さでなければなりません"
 
+msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
+msgstr ""
+"'x', 'y', 'width', 'height' は全て長さ 1 の単位(units)でなければなりません"
+
 msgid "'x' must be numeric"
 msgstr "'x' は数値でなければなりません"
 
@@ -409,10 +413,6 @@ msgstr "不正な 'gPath' です"
 
 msgid "'range' must be numeric"
 msgstr "'range' は数値でなければなりません"
-
-msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr ""
-"'x', 'y', 'width', 'height' は全て長さ 1 の単位(units)でなければなりません"
 
 msgid "Invalid graphics parameters"
 msgstr "不正なグラフィックスパラメータです"

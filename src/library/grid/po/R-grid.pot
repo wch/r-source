@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-03 10:43\n"
+"POT-Creation-Date: 2006-02-17 14:06\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -320,6 +320,9 @@ msgstr ""
 msgid "'x' and 'y' must be unit objects and have the same length"
 msgstr ""
 
+msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
+msgstr ""
+
 msgid "'x' must be numeric"
 msgstr ""
 
@@ -381,9 +384,6 @@ msgid "Invalid theta"
 msgstr ""
 
 msgid "'range' must be numeric"
-msgstr ""
-
-msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
 msgstr ""
 
 msgid "Invalid graphics parameters"

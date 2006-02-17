@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-10 15:31\n"
+"POT-Creation-Date: 2006-02-17 14:06\n"
 "PO-Revision-Date: 2005-03-31 08:00+0009\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -169,6 +169,15 @@ msgstr ""
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr ""
 
+msgid "'file' must be a non-empty character string"
+msgstr "'file' は空でない文字列でなければなりません"
+
+msgid "Invalid output format"
+msgstr ""
+
+msgid "status %d in running command '%s'"
+msgstr ""
+
 msgid "no current device to record from"
 msgstr "現在，以下のものから記録することが出来るデバイスはありません: "
 
@@ -201,9 +210,6 @@ msgstr "'x','y' そして 'z' の長さが異なります"
 
 msgid "'file' is missing with no default"
 msgstr "'file' はデフォルトなしで欠損となっています"
-
-msgid "'file' must be a non-empty character string"
-msgstr "'file' は空でない文字列でなければなりません"
 
 msgid "sorry, 'gs' cannot be found"
 msgstr "すみません，'gs' が見つかりません"
