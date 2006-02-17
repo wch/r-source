@@ -42,6 +42,10 @@ Changes from grid_2.2.0 to grid_2.3.0:
     Together with new grobX() and grobY() provides support for
     drawing simple node-and-edge graphs and flow diagrams.
 
+9.  New grid.clip() primitive for setting the clipping region
+    (more accurately, the clipping rectangle).  Has effect until
+    the next grid.clip() or the next pushViewport() or popViewport().
+
 
 Changes from grid_2.1.0 to grid_2.2.0:
 ------------------------------------

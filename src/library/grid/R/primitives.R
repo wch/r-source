@@ -1015,6 +1015,54 @@ grid.points <- function(x=runif(10),
   invisible(pg)
 }
 
+######################################
+# CLIP primitive
+######################################
+validDetails.clip <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y) ||
+      !is.unit(x$width) ||
+      !is.unit(x$height))
+    stop("'x', 'y', 'width', and 'height' must be units")
+  if (unit.length(x$x) > 1 || unit.length(x$y) > 1 ||
+      unit.length(x$width) > 1 || unit.length(x$height) > 1)
+    stop("'x', 'y', 'width', and 'height' must all be units of length 1")
+  valid.just(x$just)
+  if (!is.null(x$hjust))
+    x$hjust <- as.numeric(x$hjust)
+  if (!is.null(x$vjust))
+    x$vjust <- as.numeric(x$vjust)
+  x
+}
+
+drawDetails.clip <- function(x, recording=TRUE) {
+  grid.Call.graphics("L_clip", x$x, x$y, x$width, x$height,
+                     resolveHJust(x$just, x$hjust),
+                     resolveVJust(x$just, x$vjust))
+}
+
+clipGrob <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
+                     width=unit(1, "npc"), height=unit(1, "npc"),
+                     just="centre", hjust=NULL, vjust=NULL,
+                     default.units="npc",
+                     name=NULL, vp=NULL) {
+  if (!is.unit(x))
+    x <- unit(x, default.units)
+  if (!is.unit(y))
+    y <- unit(y, default.units)
+  if (!is.unit(width))
+    width <- unit(width, default.units)
+  if (!is.unit(height))
+    height <- unit(height, default.units)
+  grob(x=x, y=y, width=width, height=height, just=just,
+       hjust=hjust, vjust=vjust,
+       name=name, vp=vp, cl="clip")
+}
+
+grid.clip <- function(...) {
+  grid.draw(clipGrob(...))
+}
+
 
 
 

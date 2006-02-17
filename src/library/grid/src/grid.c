@@ -273,6 +273,15 @@ SEXP doSetViewport(SEXP vp,
 	yy1 = REAL(parentClip)[1];
 	xx2 = REAL(parentClip)[2];
 	yy2 = REAL(parentClip)[3];
+	/*
+	 * Also, re-enforce the parent clip rect in case
+	 * there have been some grid.clip()s which might
+	 * have messed with the parent clipping rect.
+	 * (don't need to worry about whether it is correct for
+	 *  current device size, because if device size has changed
+	 *  the parent has just been recalculated)
+	 */
+	GESetClip(xx1, yy1, xx2, yy2, dd);
 	UNPROTECT(1);
     }
     PROTECT(currentClip = allocVector(REALSXP, 4));
@@ -693,14 +702,6 @@ SEXP L_unsetviewport(SEXP n)
     xx2 = REAL(parentClip)[2];
     yy2 = REAL(parentClip)[3];
     GESetClip(xx1, yy1, xx2, yy2, dd);
-	    /* This is a VERY short term fix to avoid mucking
-	     * with the core graphics during feature freeze
-	     * It should be removed post R 1.4 release
-	     */
-	    dd->dev->clipLeft = fmin2(xx1, xx2);
-	    dd->dev->clipRight = fmax2(xx1, xx2);
-	    dd->dev->clipTop = fmax2(yy1, yy2);
-	    dd->dev->clipBottom = fmin2(yy1, yy2); 
     /* Set the value of the current viewport for the current device
      * Need to do this in here so that redrawing via R BASE display
      * list works 
@@ -3035,6 +3036,60 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
     GEMode(0, dd);
     vmaxset(vmax);
     return R_NilValue;
+}
+
+SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust) 
+{
+    double xx, yy, ww, hh;
+    double vpWidthCM, vpHeightCM;
+    double rotationAngle;
+    int i;
+    LViewportContext vpc;
+    R_GE_gcontext gc;
+    LTransform transform;
+    SEXP currentvp, currentgp;
+    /* Get the current device 
+     */
+    GEDevDesc *dd = getDevice();
+    currentvp = gridStateElement(dd, GSS_VP);
+    currentgp = gridStateElement(dd, GSS_GPAR);
+    getViewportTransform(currentvp, dd, 
+			 &vpWidthCM, &vpHeightCM, 
+			 transform, &rotationAngle);
+    getViewportContext(currentvp, &vpc);
+    GEMode(1, dd);
+    gcontextFromgpar(currentgp, i, &gc, dd);
+    transformLocn(x, y, i, vpc, &gc,
+		  vpWidthCM, vpHeightCM,
+		  dd,
+		  transform,
+		  &xx, &yy);
+    ww = transformWidthtoINCHES(w, i, vpc, &gc,
+				vpWidthCM, vpHeightCM,
+				dd);
+    hh = transformHeighttoINCHES(h, i, vpc, &gc,
+				 vpWidthCM, vpHeightCM,
+				 dd);
+    /* 
+     * We can ONLY clip if the total rotation angle is zero.
+     */
+    if (rotationAngle == 0) {
+        xx = justifyX(xx, ww, REAL(hjust)[i % LENGTH(hjust)]);
+	yy = justifyY(yy, hh, REAL(vjust)[i % LENGTH(vjust)]);
+	/* The graphics engine only takes device coordinates
+	 */
+	xx = toDeviceX(xx, GE_INCHES, dd);
+	yy = toDeviceY(yy, GE_INCHES, dd);
+	ww = toDeviceWidth(ww, GE_INCHES, dd);
+	hh = toDeviceHeight(hh, GE_INCHES, dd);
+	if (R_FINITE(xx) && R_FINITE(yy) && 
+	    R_FINITE(ww) && R_FINITE(hh))
+	    GESetClip(xx, yy, xx + ww, yy + hh, dd);
+    } else {
+        warning(_("Unable to clip to rotated rectangle"));
+    }
+    GEMode(0, dd);
+    return R_NilValue;    
 }
 
 SEXP L_pretty(SEXP scale) {

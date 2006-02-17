@@ -60,12 +60,12 @@ export(
        "setChildren",
 
        # Creating and drawing predefined grobs and gTrees
-       "grid.arrows", "grid.circle", "grid.curve",
+       "grid.arrows", "grid.circle", "grid.clip", "grid.curve",
        "grid.line.to", "grid.lines", "grid.move.to",
        "grid.points", "grid.polygon", "grid.xspline",
        "grid.rect", "grid.segments", "grid.text",
        "grid.xaxis", "grid.yaxis",
-       "arrowsGrob", "circleGrob", "curveGrob",
+       "arrowsGrob", "circleGrob", "clipGrob", "curveGrob",
        "linesGrob", "lineToGrob", "moveToGrob",
        "pointsGrob", "polygonGrob", "rectGrob", "segmentsGrob", "textGrob",
        "xaxisGrob", "yaxisGrob", "xsplineGrob",
@@ -190,6 +190,7 @@ S3method("record", "viewport")
 S3method("record", "vpPath")
 S3method("validDetails", "arrows")
 S3method("validDetails", "circle")
+S3method("validDetails", "clip")
 S3method("validDetails", "curve")
 S3method("validDetails", "grob")
 S3method("validDetails", "lines")

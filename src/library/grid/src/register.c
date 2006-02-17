@@ -67,6 +67,7 @@ static const R_CallMethodDef callMethods[] = {
     {"L_rect", (DL_FUNC) &L_rect, 6},
     {"L_text", (DL_FUNC) &L_text, 7},
     {"L_points", (DL_FUNC) &L_points, 4},
+    {"L_clip", (DL_FUNC) &L_clip, 6},
     {"L_pretty", (DL_FUNC) &L_pretty, 1},
     {"L_locator", (DL_FUNC) &L_locator, 0},
     {"L_convert", (DL_FUNC) &L_convert, 4},
