@@ -705,13 +705,14 @@ PostScriptStringWidth(unsigned char *str,
 		      FontMetricInfo *metrics,
 		      int face, char *encoding)
 {
-    int sum = 0, i, status;
+    int sum = 0, i;
     short wx;
     unsigned char *p = NULL, *str1 = str;
     unsigned char p1, p2;
 
 #ifdef SUPPORT_MBCS
     char *buff;
+    int status;
     if(!metrics && (face % 5) != 0) {
 	/* This is the CID font case, and should only happen for
 	   non-symbol fonts.  So we assume monospaced with multipliers.
