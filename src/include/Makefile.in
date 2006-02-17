@@ -27,17 +27,21 @@ DISTFILES = Makefile.in Makefile.win README $(INT_HEADERS) $(SRC_HEADERS) \
 SUBDIRS = R_ext
 SUBDIRS_WITH_NO_BUILD = Rmodules
 
-TIMESTAMPS = $(SRC_HEADERS:.h=.ts) $(OBJ_HEADERS:.h=.ts)
+TIMESTAMPS = $(SRC_HEADERS:.h=.ts) $(OBJ_HEADERS:.h=.tsa)
 
 CLEANFILES = $(OBJ_HEADERS) stamp-R $(TIMESTAMPS) libintl.h
 DISTCLEANFILES = Makefile Rmath.h0 config.h stamp-h
 
 .SUFFIXES:
-.SUFFIXES: .h .ts
+.SUFFIXES: .h .ts .tsa
 
 .h.ts:
+	@$(INSTALL_DATA) $< $(top_builddir)/include/`basename $<`
+	@touch $@
+.h.tsa:
 	@$(INSTALL_DATA) $< $(top_builddir)/include@R_ARCH@/`basename $<`
 	@touch $@
+
 
 all: Makefile R
 
@@ -90,7 +94,7 @@ install: installdirs install-intl-@USE_INCLUDED_LIBINTL@
 installdirs:
 	@$(MKINSTALLDIRS) "$(rincludedir)@R_ARCH@"
 install-intl-yes:
-	@$(INSTALL_DATA) libintl.h "$(rincludedir)"
+	@$(INSTALL_DATA) libintl.h "$(rincludedir)@R_ARCH@"
 install-intl-no:
 
 install-strip:
