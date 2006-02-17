@@ -543,7 +543,7 @@ extern0 int	R_CStackDir	INI_as(1);	/* C stack direction */
 /* File Input/Output */
 LibExtern Rboolean R_Interactive INI_as(TRUE);	/* TRUE during interactive use*/
 extern0 Rboolean R_Quiet	INI_as(FALSE);	/* Be as quiet as possible */
-extern0 Rboolean R_Slave	INI_as(FALSE);	/* Run as a slave process */
+extern Rboolean  R_Slave	INI_as(FALSE);	/* Run as a slave process */
 extern0 Rboolean R_Verbose	INI_as(FALSE);	/* Be verbose */
 /* extern int	R_Console; */	    /* Console active flag */
 /* IoBuffer R_ConsoleIob; : --> ./IOStuff.h */

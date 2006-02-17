@@ -36,8 +36,8 @@
 #include "Startup.h"
 
 /* These are used in ../gnuwin32/system.c, ../unix/sys-std.c */
-attribute_hidden SA_TYPE SaveAction = SA_SAVEASK;
-attribute_hidden SA_TYPE	RestoreAction = SA_RESTORE;
+SA_TYPE SaveAction = SA_SAVEASK;
+SA_TYPE	RestoreAction = SA_RESTORE;
 static Rboolean LoadSiteFile = TRUE;
 attribute_hidden Rboolean LoadInitFile = TRUE;  /* Used in R_OpenInitFile */
 static Rboolean DebugInitFile = FALSE;
