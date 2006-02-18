@@ -574,7 +574,11 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     struct group *stgrp;
 #endif
     int i, n;
+#ifdef Win32
+    struct _stati64 sb;
+#else
     struct stat sb;
+#endif
 
     checkArity(op, args);
     fn = CAR(args);
@@ -612,7 +616,12 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     for (i = 0; i < n; i++) {
 	if (STRING_ELT(fn, i) != R_NilValue &&
-	    stat(R_ExpandFileName(CHAR(STRING_ELT(fn, i))), &sb) == 0) {
+#ifdef Win32
+	    _stati64(R_ExpandFileName(CHAR(STRING_ELT(fn, i))), &sb)
+#else
+	    stat(R_ExpandFileName(CHAR(STRING_ELT(fn, i))), &sb)
+#endif
+	    == 0) {
 	    REAL(fsize)[i] = (double) sb.st_size;
 	    LOGICAL(isdir)[i] = (sb.st_mode & S_IFDIR) > 0;
 	    INTEGER(mode)[i]  = (int) sb.st_mode & 0007777;

@@ -41,6 +41,9 @@ This means ^C is no longer echoed.
 
 The minimum value for --max-mem-size is now 32M (rather than 16M).
 
+file.info() now supports files bigger than 2Gb (the size was reported
+incorrectly before, since Windows' stat call only supports smaller files).
+
 
 Internationalization
 --------------------
