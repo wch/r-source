@@ -148,9 +148,9 @@ range(eigen(C2, only=TRUE)$val) # 6.46	1930
 C3 <- cov(swM, use = "pairwise")
 range(eigen(C3, only=TRUE)$val) # 6.19	1938
 
-(scM <- symnum(cor(swM, method = "kendall", use = "complete")))
-## Kendall's tau doesn't change much: identical symnum codings!
-identical(scM, symnum(cor(swiss, method = "kendall")))
+symnum(cor(swM, method = "kendall", use = "complete"))
+## Kendall's tau doesn't change much:
+symnum(cor(swiss, method = "kendall"))
 }
 \keyword{univar}
 \keyword{multivariate}

@@ -372,7 +372,7 @@ DEPRECATED & DEFUNCT
 	deprecated: use the DESCRIPTION file instead to arrange to
 	save an image or to load dependent packages.
 
-	The following ommand-line options to INSTALL are deprecated
+	The following command-line options to INSTALL are deprecated
 	(use the fields in the DESCRIPTION file instead):
 	-s --save --no-save --lazy --no-lazy --lazy-data --no-lazy-data
 
@@ -745,8 +745,12 @@ BUG FIXES
 
     o	addmargins() did not accept a name for 'FUN', only an expression.
 
-    o	'+' for POSIXt objects now takes the tzone from which ever
+    o	'+' for POSIXt objects now takes the tzone from whichever
 	object has it, so date+x is the same as x+date if x is numeric.
+
+    o	var() computes means with an additional pass and so is more
+	accurate, e.g. the variance of a constant vector is (almost)
+	always zero.  (A partial resolution of PR#1228)
 
 
 
@@ -791,7 +795,7 @@ BUG FIXES
     o	Checks for NULL in the rho argument of the C-level findVar
 	function have been added.
 
-    o	The C-level substitute function was handling NULL in its rho
+    o	The C-level substitute function was handling NULL in its 'rho'
 	argument incorrectly.
 
     o	The code for pgamma() introduced in 2.1.0 failed for large

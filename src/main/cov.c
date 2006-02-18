@@ -108,7 +108,8 @@
 
 
 static void cov_pairwise1(int n, int ncx, double *x,
-			  double *ans, Rboolean *sd_0, Rboolean cor, Rboolean kendall)
+			  double *ans, Rboolean *sd_0, Rboolean cor, 
+			  Rboolean kendall)
 {
     double sum, xmean =0., ymean =0., xsd, ysd, *xx, *yy, xm, ym;
     int i, j, k, nobs, n1 = -1;	/* -Wall initializing */
@@ -125,7 +126,8 @@ static void cov_pairwise1(int n, int ncx, double *x,
 }
 
 static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
-			  double *ans, Rboolean *sd_0, Rboolean cor, Rboolean kendall)
+			  double *ans, Rboolean *sd_0, Rboolean cor, 
+			  Rboolean kendall)
 {
     double sum, xmean =0., ymean =0., xsd, ysd, *xx, *yy, xm, ym;
     int i, j, k, nobs, n1 = -1;	/* -Wall initializing */
@@ -146,7 +148,7 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
 #define ANS(I,J)  ans[I + J * ncx]
 
 #define COV_init(_ny_)				\
-    double sum, xxm, yym, *xx, *yy;		\
+    double sum, tmp, xxm, yym, *xx, *yy;	\
     int i, j, k, nobs, n1=-1;/* -Wall */	\
 						\
     /* total number of complete observations */	\
@@ -162,6 +164,7 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
     }
 
 
+/* This uses two passes for better accuracy */
 #define MEAN(_X_)				\
     /* variable means */			\
     for (i = 0 ; i < nc##_X_ ; i++) {		\
@@ -170,13 +173,19 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
 	for (k = 0 ; k < n ; k++)		\
 	    if(ind[k] != 0)			\
 		sum += xx[k];			\
-	_X_##m [i] = sum / nobs;		\
+        tmp = sum / nobs;			\
+	sum = 0.;				\
+	for (k = 0 ; k < n ; k++)		\
+	    if(ind[k] != 0)			\
+		sum += (xx[k] - tmp);		\
+	_X_##m [i] = tmp + sum / nobs;		\
     }
 
 
 static void
 cov_complete1(int n, int ncx, double *x, double *xm,
-	      int *ind, double *ans, Rboolean *sd_0, Rboolean cor, Rboolean kendall)
+	      int *ind, double *ans, Rboolean *sd_0, Rboolean cor,
+	      Rboolean kendall)
 {
     COV_init(ncx);
 
