@@ -81,7 +81,8 @@ lm(formula, data, subset, weights, na.action,
   See \code{\link{model.matrix}} for some further details.  The terms in
   the formula will be re-ordered so that main effects come first,
   followed by the interactions, all second-order, all third-order and so
-  on: to avoid this pass a \code{terms} object as the formula.
+  on: to avoid this pass a \code{terms} object as the formula (see
+  \code{\link{aov}} and \code{demo(glm.vr)} for an example).
 
   A formula has an implied intercept term.  To remove this use either
   \code{y ~ x - 1} or \code{y ~ 0 + x}.  See \code{\link{formula}} for
