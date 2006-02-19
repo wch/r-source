@@ -75,6 +75,10 @@ getOption(x)
       printing numeric values.  It is a suggestion only.  Valid values
       are 1\dots22 with default 7.  See \code{\link{print.default}}.}
 
+    \item{\code{digits.secs}:}{controls the maximum number of digits to
+      print when formatting time values in seconds.  Valid values
+      are 0\dots6 with default 0.  See \code{\link{strftime}}.}
+
     \item{\code{download.file.method}:}{Method to be used for
       \code{download.file}.  Currently download methods
       \code{"internal"}, \code{"wget"} and \code{"lynx"} are available.

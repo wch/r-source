@@ -137,8 +137,8 @@
   (Conversion of fractions between the two forms may not be exact, but
   will have better than microsecond accuracy.)
 
-  Seconds will be rounded down when printing (but
-  \code{\link{format.POSIXlt}} can convert fractional values).
+  Fractional seconds are printed only if
+  \code{\link{options}("digits.secs")} is set: see \code{\link{strftime}}.
 }
 \seealso{
   \link{Dates} for dates without times.

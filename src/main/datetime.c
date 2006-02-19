@@ -816,6 +816,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n, m, N, invalid, isgmt = 0;
     struct tm tm, tm2;
     char *tz = NULL;
+    double psecs = 0.0;
 
     checkArity(op, args);
     if(!isString((x= CAR(args))))
@@ -846,9 +847,15 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_year = tm.tm_mon = tm.tm_mday = tm.tm_yday = 
 	    tm.tm_wday = NA_INTEGER;
 	tm.tm_isdst = -1;
+#ifndef HAVE_WORKING_STRPTIME
+	invalid = STRING_ELT(x, i%n) == NA_STRING ||
+	    !strptime(CHAR(STRING_ELT(x, i%n)),
+		      CHAR(STRING_ELT(sformat, i%m)), &tm, &psecs);
+#else
 	invalid = STRING_ELT(x, i%n) == NA_STRING ||
 	    !strptime(CHAR(STRING_ELT(x, i%n)),
 		      CHAR(STRING_ELT(sformat, i%m)), &tm);
+#endif
 	/* it seems glibc cannot valid at all consistently */
 	if(!invalid) {
 	    /* Solaris sets missing fields to 0 */
@@ -866,7 +873,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tm.tm_isdst = isgmt ? 0: tm2.tm_isdst;
 	}
 	invalid = invalid || validate_tm(&tm) != 0;
-	makelt(&tm, ans, i, !invalid, 0.0);
+	makelt(&tm, ans, i, !invalid, psecs - floor(psecs));
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(class = allocVector(STRSXP, 2));

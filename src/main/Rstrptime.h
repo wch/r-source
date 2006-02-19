@@ -85,7 +85,7 @@ static void get_locale_w_strings(void);
   get_number(from, to, n)
 #define recursive(new_fmt) \
   (*(new_fmt) != '\0'							      \
-   && (rp = strptime_internal (rp, (new_fmt), tm, decided)) != NULL)
+   && (rp = strptime_internal (rp, (new_fmt), tm, decided, psecs)) != NULL)
 
 /* This version: may overwrite these with versions for the locale,
  * hence the extra length of the fields
@@ -213,11 +213,11 @@ static int wcsncasecmp(const wchar_t *cs1, const wchar_t *s2)
 
 #define w_recursive(new_fmt) \
   (*(new_fmt) != '\0'							      \
-   && (rp = w_strptime_internal (rp, (new_fmt), tm, decided)) != NULL)
+   && (rp = w_strptime_internal (rp, (new_fmt), tm, decided, psecs)) != NULL)
 
 static wchar_t * 
 w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm, 
-		     enum locale_status *decided)
+		     enum locale_status *decided, double *psecs)
 {
     const wchar_t *rp_backup;
     int cnt;
@@ -535,10 +535,19 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 		tm->tm_min = val;
 		break;
 	    case L'S':
-		/* Match seconds using alternate numeric symbols.  */
-		get_alt_number (0, 61, 2);
-		tm->tm_sec = val;
-		break;
+		/* Match seconds using alternate numeric symbols.
+		get_alt_number (0, 61, 2); */
+		{  
+		    double sval;
+		    wchar_t *end;
+		    sval = wcstod(rp, &end);
+		    if( sval >= 0.0 && sval <= 61.0) {
+			tm->tm_sec = sval;
+			*psecs = sval;
+		    }
+		    rp = end;
+		}
+	    break;
 	    case L'U':
 	      get_alt_number (0, 53, 2);
 	      week_no = val;
@@ -647,7 +656,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 
 static char * 
 strptime_internal (const char *rp, const char *fmt, struct tm *tm, 
-		   enum locale_status *decided)
+		   enum locale_status *decided, double *psecs)
 {
     const char *rp_backup;
     int cnt;
@@ -965,9 +974,18 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 		tm->tm_min = val;
 		break;
 	    case 'S':
-		/* Match seconds using alternate numeric symbols.  */
-		get_alt_number (0, 61, 2);
-		tm->tm_sec = val;
+		/* Match seconds using alternate numeric symbols.
+		   get_alt_number (0, 61, 2); */
+		   {  
+		       double sval;
+		       char *end;
+		       sval = strtod(rp, &end);
+		       if( sval >= 0.0 && sval <= 61.0) {
+			   tm->tm_sec = sval;
+			   *psecs = sval;
+		       }
+		       rp = end;
+		   }
 		break;
 	    case 'U':
 	      get_alt_number (0, 53, 2);
@@ -1076,7 +1094,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 #define strptime Rf_strptime /* to avoid gcc4 complaining */
 /* We only care if the result is null or not */
 static char *
-strptime (const char *buf, const char *format, struct tm *tm)
+strptime (const char *buf, const char *format, struct tm *tm, double *psecs)
 {
     enum locale_status decided;
     decided = raw;
@@ -1095,14 +1113,14 @@ strptime (const char *buf, const char *format, struct tm *tm)
 	if(n > 1000) error(_("format string is too long"));
 	n = mbstowcs(wfmt, format, 1000);
 	if(n == -1) error(_("invalid multibyte format string"));
-	return (char *) w_strptime_internal (wbuf, wfmt, tm, &decided);
+	return (char *) w_strptime_internal (wbuf, wfmt, tm, &decided, psecs);
     } else
 #endif
     {
 #ifdef HAVE_LOCALE_H
     get_locale_strings();
 #endif
-    return strptime_internal (buf, format, tm, &decided);
+    return strptime_internal (buf, format, tm, &decided, psecs);
     }
 }
 

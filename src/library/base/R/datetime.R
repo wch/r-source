@@ -98,8 +98,18 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
     if(format == "") {
         ## need list [ method here.
         times <- unlist(unclass(x)[1:3])
+        secs <- x$sec; secs <- secs[!is.na(secs)]
+        np <- getOption("digits.secs")
+        if(is.null(np)) np <- 0 else np <- min(6, np)
+        if(np >= 1) {
+            for (i in (1:np)- 1) if(all( abs(secs - round(secs, i)) < 1e-6 )) {
+                np <- i
+                break;
+            }
+        }
         format <- if(all(times[!is.na(times)] == 0)) "%Y-%m-%d"
-        else "%Y-%m-%d %H:%M:%S"
+        else if(np == 0) "%Y-%m-%d %H:%M:%S"
+        else paste("%Y-%m-%d %H:%M:%OS", np, sep="")
     }
     .Internal(format.POSIXlt(x, format, usetz))
 }

@@ -320,8 +320,10 @@ NEW FEATURES
 	than before.)
 
     o	The class "POSIXlt" now supports fractional seconds (as
-	"POSIXct" has always done), although they are not printed in
-	the default format and not supported by strptime().
+	"POSIXct" has always done), although they are only supported
+	by strptime() on platforms using R's replacement code.  The
+	printing of fractional seconds is controlled by the new option
+	"digits.secs", and by default is off.
 
     o	New function embedFonts() for embedding fonts in PDF or
         PostScript graphics files.

@@ -32,7 +32,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \item{format}{A character string.  The default is
     \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any component has a time
     component which is not midnight, and \code{"\%Y-\%m-\%d"}
-    otherwise.}
+    otherwise.  If \code{\link{options}("digits.secs")} is set, up to
+    the specified number of digits will be printed for seconds.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
   \item{usetz}{logical.  Should the timezone be appended to the output?
     This is used in printing times, and as a workaround for problems with
@@ -129,8 +130,10 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   alternative locale-dependent format (e.g. roman numerals), and
   \code{\%E[cCyYxX]} which can use an alternative \sQuote{era}
   (e.g. a different religious calendar).  Which of these are supported is
-  OS-dependent.  Specific to \R is \code{"\%OSn"}, which gives the
-  seconds to \code{1 <= n <= 6} decimal places.
+  OS-dependent.  Specific to \R is \code{"\%OSn"}, which for output gives the
+  seconds to \code{1 <= n <= 6} decimal places.  On many systems
+  (including Linux and Windows) \code{"OS"} will input seconds including
+  decimal places.
 
   \code{ISOdatetime} and \code{ISOdate} are convenience wrappers for
   \code{strptime}, that differ only in their defaults and that
