@@ -434,7 +434,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 /* Data Summaries */
 
 {"sum",		do_summary,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-  /*MM{"mean",	do_summary,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},*/
+{"mean",	do_summary,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"min",		do_summary,	2,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"max",		do_summary,	3,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"prod",	do_summary,	4,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},

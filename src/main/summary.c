@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2004   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997-2006   Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -68,15 +68,11 @@ static Rboolean isum(int *x, int n, int *value, Rboolean narm)
 
 static Rboolean rsum(double *x, int n, double *value, Rboolean narm)
 {
-    double s;
+    LDOUBLE s;
     int i;
     Rboolean updated = FALSE;
     for (i = 0, s = 0; i < n; i++) {
-	if (!ISNAN(x[i])) {
-	    if(!updated) updated = 1;
-	    s += x[i];
-	}
-	else if (!narm) {
+	if (!ISNAN(x[i]) || !narm) {
 	    if(!updated) updated = 1;
 	    s += x[i];
 	}
@@ -88,20 +84,19 @@ static Rboolean rsum(double *x, int n, double *value, Rboolean narm)
 
 static Rboolean csum(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 {
-    Rcomplex s;
+    LDOUBLE sr = 0.0, si = 0.0;
     int i;
     Rboolean updated = FALSE;
 
-    s.r = s.i = 0;
     for (i = 0; i < n; i++) {
 	if ((!ISNAN(x[i].r) && !ISNAN(x[i].i)) || !narm) {
 	    if(!updated) updated=1;
-	    s.r += x[i].r;
-	    s.i += x[i].i;
+	    sr += x[i].r;
+	    si += x[i].i;
 	}
     }
-    value->r = s.r;
-    value->i = s.i;
+    value->r = sr;
+    value->i = si;
 
     return(updated);
 }
@@ -229,7 +224,7 @@ static Rboolean iprod(int *x, int n, double *value, Rboolean narm)
 
 static Rboolean rprod(double *x, int n, double *value, Rboolean narm)
 {
-    double s;
+    LDOUBLE s;
     int i;
     Rboolean updated = FALSE;
     for (i = 0, s = 1; i < n; i++) {
@@ -249,22 +244,22 @@ static Rboolean rprod(double *x, int n, double *value, Rboolean narm)
 
 static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 {
-    Rcomplex s, t;
+    LDOUBLE sr, si, tr, ti;
     int i;
     Rboolean updated = FALSE;
-    s.r = 1;
-    s.i = 0;
+    sr = 1;
+    si = 0;
     for (i = 0; i < n; i++) {
 	if ((!ISNAN(x[i].r) && !ISNAN(x[i].i)) || !narm) {
 	    if(!updated) updated = 1;
-	    t.r = s.r;
-	    t.i = s.i;
-	    s.r = t.r * x[i].r - t.i * x[i].i;
-	    s.i = t.r * x[i].i + t.i * x[i].r;
+	    tr = sr;
+	    ti = si;
+	    sr = tr * x[i].r - ti * x[i].i;
+	    si = tr * x[i].i + ti * x[i].r;
 	}
     }
-    value->r = s.r;
-    value->i = s.i;
+    value->r = sr;
+    value->i = si;
 
     return(updated);
 }
@@ -272,8 +267,7 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 
 /* do_summary provides a variety of data summaries
 	op : 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod */
-/* NOTE: mean() [op = 1]  is no longer processed by this code.
-		(NEVER was correct for multiple arguments!) */
+/* NOTE: mean() is rather different as only one arg and no na.rm. */
 
 SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -288,6 +282,51 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     int updated;
 	/* updated := 1 , as soon as (i)tmp (do_summary),
 	   or *value ([ir]min / max) is assigned */
+
+    if(PRIMVAL(op) == 1) { /* mean */
+	LDOUBLE s = 0., si = 0., t = 0., ti = 0.;
+	int i, n = LENGTH(CAR(args));
+	SEXP x = CAR(args);
+	switch(TYPEOF(x)) {
+	case LGLSXP:
+	case INTSXP:
+	    PROTECT(ans = allocVector(REALSXP, 1));
+	    for (i = 0; i < n; i++) s += INTEGER(x)[i];
+	    REAL(ans)[0] = s/n;
+	    break;
+	case REALSXP:
+	    PROTECT(ans = allocVector(REALSXP, 1));
+	    for (i = 0; i < n; i++) s += REAL(x)[i];
+	    s /= n;
+	    if(R_FINITE((double)s)) {
+		for (i = 0; i < n; i++) t += (REAL(x)[i] - s);
+		s += t/n;
+	    }
+	    REAL(ans)[0] = s;
+	    break;
+	case CPLXSXP:
+	    PROTECT(ans = allocVector(CPLXSXP, 1));
+	    for (i = 0; i < n; i++) {
+		s += COMPLEX(x)[i].r;
+		si += COMPLEX(x)[i].i;
+	    }
+	    s /= n; si /= n;
+	    if( R_FINITE((double)s) && R_FINITE((double)si) ) {
+		for (i = 0; i < n; i++) {
+		    s += COMPLEX(x)[i].r;
+		    si += COMPLEX(x)[i].i;
+		}
+		s += t/n; si += ti/n;
+	    }
+	    COMPLEX(ans)[0].r = s;
+	    COMPLEX(ans)[0].i = si;
+	    break;
+	default:
+	    errorcall_return(call, R_MSG_mode);
+	}
+	UNPROTECT(1);
+	return ans;
+    }
 
 
     if(DispatchGroup("Summary", call, op, args, env, &ans))
@@ -342,7 +381,8 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
     default:
 	errorcall(call,
-		  _("internal error ('op' in do_summary).\t Call a Guru"));
+		  _("internal error ('op = %d' in do_summary).\t Call a Guru"),
+		  iop);
 	return R_NilValue;/*-Wall */
     }
 

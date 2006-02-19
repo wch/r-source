@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2001   The R Development Core Team
- *  Copyright (C) 2002--2005  The R Foundation
+ *  Copyright (C) 2002--2006  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -388,7 +388,8 @@ static void matprod(double *x, int nrx, int ncx,
 {
     char *transa = "N", *transb = "N";
     int i,  j, k;
-    double one = 1.0, zero = 0.0, sum;
+    double one = 1.0, zero = 0.0;
+    LDOUBLE sum;
     Rboolean have_na = FALSE;
 
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
@@ -432,7 +433,8 @@ static void cmatprod(Rcomplex *x, int nrx, int ncx,
     }
 #else
     int i, j, k;
-    double xij_r, xij_i, yjk_r, yjk_i, sum_i, sum_r;
+    double xij_r, xij_i, yjk_r, yjk_i;
+    LDOUBLE sum_i, sum_r;
 
     for (i = 0; i < nrx; i++)
 	for (k = 0; k < ncy; k++) {
@@ -1117,7 +1119,8 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     int OP, n, p, cnt = 0, i, j, type;
     Rboolean NaRm, keepNA;
     int *ix;
-    double *rx, sum = 0.0;
+    double *rx;
+    LDOUBLE sum = 0.0;
 
     checkArity(op, args);
     x = CAR(args); args = CDR(args);
@@ -1182,13 +1185,17 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	cnt = p;
 	PROTECT(ans = allocVector(REALSXP, n));
 
-	/* reverse summation order to improve cache hits */
+	/* interchange summation order to improve cache hits */
 	if (type == REALSXP) {
-	    double *rans = REAL(ans), *ra = rans;
 	    int *Cnt = NULL, *c;
+	    LDOUBLE *rans, *ra;
+	    if(n <= 10000) {
+		rans = (LDOUBLE *) alloca(n * sizeof(LDOUBLE));
+		R_CheckStack();
+		memset(rans, 0, n*sizeof(LDOUBLE));
+	    } else rans = Calloc(n, LDOUBLE);
 	    rx = REAL(x);
 	    if (!keepNA && OP == 3) Cnt = Calloc(n, int);
-	    memset(rans, 0, n*sizeof(double));
 	    for (j = 0; j < p; j++) {
 		ra = rans;
 		if (keepNA)
@@ -1209,22 +1216,14 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    Free(Cnt);
 		}
 	    }
+	    for (i = 0; i < n; i++) REAL(ans)[i] = rans[i];
+	    if(n > 10000) Free(rans);
 	    UNPROTECT(1);
-	    return ans;
+	    return ans;	    
 	}
 
 	for (i = 0; i < n; i++) {
 	    switch (type) {
-	    case REALSXP: /* this cannot be reached */
-		rx = REAL(x) + i;
-		if (keepNA)
-		    for (sum = 0., j = 0; j < p; j++, rx += n) sum += *rx;
-		else {
-		    for (cnt = 0, sum = 0., j = 0; j < p; j++, rx += n)
-			if (!ISNAN(*rx)) {cnt++; sum += *rx;}
-			else if (keepNA) {sum = NA_REAL; break;}
-		}
-		break;
 	    case INTSXP:
 		ix = INTEGER(x) + i;
 		for (cnt = 0, sum = 0., j = 0; j < p; j++, ix += n)
