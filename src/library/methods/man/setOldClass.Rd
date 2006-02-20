@@ -46,7 +46,7 @@
   \code{class} attribute; in particular, if there is more than one
   string,  old-style class inheritance is mimiced.  Registering via
   \code{setOldClass} allows S3 classes to appear  in method
-  signatures, and in class inheritance if a prototype is included.
+  signatures, and as a slot in an S4 class if a prototype is included.
 }
 \usage{
 setOldClass(Classes, prototype, where, test = FALSE)
@@ -58,7 +58,7 @@ setOldClass(Classes, prototype, where, test = FALSE)
     the \code{class} attribute.
   }
 \item{prototype}{
-    An optional object to use as the prototype.  This should be provided as the default S3 object for the class, if you plan to use the class as a slot or superclass in an S4 class.  See the details section.
+    An optional object to use as the prototype.  This should be provided as the default S3 object for the class, if you plan to use the class as a slot  in an S4 class.  See the details section.
   }
   \item{where}{
     Where to store the class definitions, the global or top-level
@@ -78,7 +78,7 @@ setOldClass(Classes, prototype, where, test = FALSE)
   \code{oldClass}, which is the \dQuote{root} of all old-style classes.
 S3 classes have no formal definition, and therefore no formally defined slots.
 If a \code{prototype} argument is supplied in the call to \code{setOldClass()}, objects from the class can be generated.
-If the S3 class is to be extended by an S4 class or a slot in an S4 class, providing a prototype is recommended.
+If the S3 class is to be a slot in an S4 class, providing a prototype is recommended.
 Otherwise, the class will be created as a virtual S4 class; method dispatch will still work and inheritance will follow the S3 class hierarchy, but actions that require a prototype object from the class will not.
 For example, using the class as a slot in an S4 class definition will set the corresponding slot to \code{NULL} in the prototype for the S4 class.
 
