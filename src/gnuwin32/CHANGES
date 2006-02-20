@@ -33,8 +33,8 @@ checked for a writable directory for the R session temporary directory:
 (the last will always succeed).  The changes are that TMPDIR is checked
 first and that the values are checked to be a directory.
 
-sprintf() now tries to ensure the output is C99-compliant, with 
-1.23e+08 not 1.23e+008 as given by the Windows run-time.
+sprintf() now tries to ensure the output is C99-compliant, with e.g.
+1.23e+08 not 1.23e+008 as given by MSVCRT.dll.
 
 Rterm now responds to Ctrl-C during input (Ctrl-Break always worked).
 This means ^C is no longer echoed.
@@ -43,6 +43,9 @@ The minimum value for --max-mem-size is now 32M (rather than 16M).
 
 file.info() now supports files bigger than 2Gb (the size was reported
 incorrectly before, since Windows' stat call only supports smaller files).
+
+The installer executable now has the file version information set
+appropriately.
 
 
 Internationalization

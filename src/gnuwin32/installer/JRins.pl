@@ -23,7 +23,7 @@ use File::Find;
 
 my $fn, $component, $path;
 my $startdir=cwd();
-my $RVER;
+my $RVER, $RVER0;
 my $RW=$ARGV[0];
 my $SRCDIR=$ARGV[1];
 $SRCDIR =~ s+/+\\+g; # need DOS-style paths
@@ -36,6 +36,8 @@ $RVER = <ver>;
 close ver;
 $RVER =~ s/\n.*$//;
 $RVER =~ s/Under .*$/Pre-release/;
+$RVER0 = $RVER;
+$RVER0 =~ s/ .*$//;
 
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
@@ -51,6 +53,7 @@ AppPublisherURL=http://www.r-project.org
 AppSupportURL=http://www.r-project.org
 AppUpdatesURL=http://www.r-project.org
 AppVersion=${RVER}
+VersionInfoVersion=$RVER0
 DefaultDirName={code:UserPF}\\R\\${RW}
 DefaultGroupName=R
 AllowNoIcons=yes
