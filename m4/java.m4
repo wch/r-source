@@ -58,7 +58,8 @@ have_java=no
 if test -z "${JAVA_HOME}" ; then
   JAVA_PATH=${PATH}
 else
-  JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/bin:${PATH}
+  ## try jre/bin first just in case we don't have full JDK
+  JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${PATH}
 fi
 ## if 'java' is not on the PATH or JAVA_HOME, add some guesses as of
 ## where java could live
@@ -108,6 +109,10 @@ if test ${acx_java_works} = yes; then
         R_RUN_JAVA(JAVA_LIBS, [-classpath ${getsp_cp} getsp -libs])
         JAVA_LIBS="${JAVA_LIBS} -ljvm"
         R_RUN_JAVA(JAVA_LD_LIBRARY_PATH, [-classpath ${getsp_cp} getsp java.library.path])
+	## FIXME: we may want to figure out whether JAVA_HOME is a symlink
+	## to any paths in JAVA_LD_LIBARARY_PATH in which case we should use
+	## the symlink instead. This would solve versioning problems across
+	## Sun's JDKs.
         ;;
     esac
   

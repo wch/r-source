@@ -42818,7 +42818,8 @@ have_java=no
 if test -z "${JAVA_HOME}" ; then
   JAVA_PATH=${PATH}
 else
-  JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/bin:${PATH}
+  ## try jre/bin first just in case we don't have full JDK
+  JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${PATH}
 fi
 JAVA_PATH=${JAVA_PATH}:/usr/java/bin:/usr/jdk/bin:/usr/lib/java/bin:/usr/lib/jdk/bin:/usr/local/java/bin:/usr/local/jdk/bin:/usr/local/lib/java/bin:/usr/local/lib/jdk/bin
 for ac_prog in java
@@ -42995,6 +42996,10 @@ echo "${ECHO_T}in ${JAVA_HOME}" >&6
   fi
   JAVA_LD_LIBRARY_PATH=$acx_java_result
 
+	## FIXME: we may want to figure out whether JAVA_HOME is a symlink
+	## to any paths in JAVA_LD_LIBARARY_PATH in which case we should use
+	## the symlink instead. This would solve versioning problems across
+	## Sun's JDKs.
         ;;
     esac
 
@@ -43110,7 +43115,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:43113:" \
+echo "$as_me:43118:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
