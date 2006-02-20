@@ -18,10 +18,10 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
     y1=`expr ${y} - 2000`
     svn_rev=`sed -n -e 's/^Revision: //' -e '1p' < ../../SVN-REVISION`
   else
-    y=2001
+    y=2006
     m=01
     d=01
-    y1=5
+    y1=6
     svn_rev=unknown
   fi
   echo "/* Rversion.h.  Generated automatically. */"
@@ -42,7 +42,8 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   echo "#define R_DAY    \"${d}\""
   echo "#define R_SVN_REVISION \"${svn_rev}\""
 ## Using 1-digit year stops problems with leading zeros
-  echo "#define R_FILEVERSION    ${maj},${pl}${sl},${y1}${m}${d},0"
+#  echo "#define R_FILEVERSION    ${maj},${pl}${sl},${y1}${m}${d},0"
+  echo "#define R_FILEVERSION    ${maj},${pl}${sl},${svn_rev},0"
   echo
   echo '#ifdef __cplusplus'
   echo '}'

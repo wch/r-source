@@ -47,6 +47,8 @@ incorrectly before, since Windows' stat call only supports smaller files).
 The installer executable now has the file version information set
 appropriately.
 
+The Dll version number is now 2.xy.svn_revision.
+
 
 Internationalization
 --------------------
