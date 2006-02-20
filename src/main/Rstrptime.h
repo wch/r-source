@@ -679,9 +679,9 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
     {
 	/* A white space in the format string matches 0 more or white
 	   space in the input string.  */
-	if (isspace (*fmt))
+	if (isspace ((int)*fmt))
 	{
-	    while (isspace (*rp))
+	    while (isspace ((int)*rp))
 		++rp;
 	    ++fmt;
 	    continue;
@@ -815,7 +815,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 	case 'n':
 	case 't':
 	  /* Match any white space.  */
-	  while (isspace (*rp))
+	  while (isspace ((int)*rp))
 	    ++rp;
 	  break;
 	case 'p':
