@@ -133,6 +133,10 @@ dev.print <- function(device = postscript, ...)
         if(is.null(oc$width)) oc$width <- w
         if(is.null(oc$height)) oc$height <- h
     } else {
+        devname <- deparse(substitute(device))
+        if(devname %in% c("png", "jpeg", "bmp") &&
+           is.null(oc$width) && is.null(oc$height))
+            warning("need to specify one of 'width' and 'height'")
         if(is.null(oc$width))
             oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
         if(is.null(oc$height))

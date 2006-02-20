@@ -80,9 +80,11 @@ dev.control(displaylist = c("inhibit", "enable"))
   can be printed at full size by switching its value this is done
   instead of shrinking the plot region.
 
-  If \code{dev.print} is used with a specified device (even
+  If \code{dev.print} is used with a specified \code{device} (even
   \code{postscript}) it sets the width and height in the same way as
-  \code{dev.copy2eps}.
+  \code{dev.copy2eps}.  This will not be appropriate unless the device
+  specifies dimensions in inches, in particular not for \code{png},
+  \code{jpeg} and (Windows only) \code{bmp}.
 }
 \note{
   Most devices (including all screen devices) have a display list

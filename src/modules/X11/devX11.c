@@ -19,10 +19,10 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-/* The version for R 2.1.0 is partly based on patches by 
-   Ei-ji Nakama <nakama@ki.rim.or.jp> for use in Japanese. 
+/* The version for R 2.1.0 is partly based on patches by
+   Ei-ji Nakama <nakama@ki.rim.or.jp> for use in Japanese.
 
-   <MBCS> all the strings manipulated here like display and fonts specs 
+   <MBCS> all the strings manipulated here like display and fonts specs
    are probably ASCII, or at least start with ASCII in the part searched.
 */
 
@@ -674,8 +674,8 @@ static R_XFont *R_XLoadQueryFont(Display *display, char *name)
     tmp = (R_XFont *) malloc(sizeof(R_XFont));
     tmp->type = One_Font;
     tmp->font = XLoadQueryFont(display, name);
-    if(tmp->font) 
-	return tmp; 
+    if(tmp->font)
+	return tmp;
     else {
 	free(tmp);
 	return NULL;
@@ -701,7 +701,7 @@ static R_XFont *R_XLoadQueryFontSet(Display *display,
     XFontSet fontset;
     int  /*i,*/ missing_charset_count;
     char **missing_charset_list, *def_string;
-  
+
 #ifdef DEBUG_X11
     printf("loading fontset %s\n", fontset_name);
 #endif
@@ -709,7 +709,7 @@ static R_XFont *R_XLoadQueryFontSet(Display *display,
 			     &missing_charset_count, &def_string);
     if(!fontset) {
 	free(tmp);
-	return NULL;	
+	return NULL;
     }
     if (missing_charset_count) {
 #ifdef DEBUG_X11
@@ -1134,7 +1134,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     /* Indicates whether the display is created within this particular call: */
     Rboolean DisplayOpened = FALSE;
     static const char *title = "R Graphics";
-    XSizeHints *hint; 
+    XSizeHints *hint;
 
 #ifdef USE_FONTSET
     if (!XSupportsLocale ())
@@ -1260,9 +1260,9 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	    if(xpos == NA_INTEGER)
 		hint->x = numX11Devices*20 %
 		    ( DisplayWidth(display, screen) - iw - 10 );
-	    else hint->x = (xpos >= 0) ? xpos : 
+	    else hint->x = (xpos >= 0) ? xpos :
 		DisplayWidth(display, screen) - iw + xpos;
-	    
+
 	    if(ypos == NA_INTEGER)
 		hint->y = numX11Devices*20 %
 		    ( DisplayHeight(display, screen) + ih - 10 );
@@ -1286,10 +1286,10 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 		xtdpy = XtOpenDisplay(app_con, NULL, "r_x11", "R_x11",
 				      NULL, 0, &zero, NULL);
 		toplevel = XtAppCreateShell(NULL, "R_x11",
-					    applicationShellWidgetClass, 
+					    applicationShellWidgetClass,
 					    xtdpy, NULL, 0);
 		XtGetApplicationResources(toplevel, (XtPointer) &xdev,
-					  x_resources, 
+					  x_resources,
 					  x_resource_count,
 					  NULL, 0);
 		XtDestroyWidget(toplevel);
@@ -1298,24 +1298,24 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 		if (xdev.geometry != NULL) {
 		    char gstr[40];
 		    int bitmask;
-		    
+
 		    sprintf(gstr, "%dx%d+%d+%d", hint->width,
 			    hint->height, hint->x, hint->y);
 		    bitmask = XWMGeometry(display, DefaultScreen(display),
-					  xdev.geometry, gstr, 
+					  xdev.geometry, gstr,
 					  1,
 					  hint,
 					  &hint->x, &hint->y,
 					  &hint->width, &hint->height,
 					  &hint->win_gravity);
-		    
+
 		    if (bitmask & (XValue | YValue))
 			hint->flags |= USPosition;
-		    if (bitmask & (WidthValue | HeightValue)) 
+		    if (bitmask & (WidthValue | HeightValue))
 			hint->flags |= USSize;
 		    /* Restore user-specified settings */
 		    if(xpos != NA_INTEGER)
-			hint->x = (xpos >= 0) ? xpos : 
+			hint->x = (xpos >= 0) ? xpos :
 			    DisplayWidth(display, screen) - iw + xpos;
 		    if(ypos != NA_INTEGER)
 			hint->y = (ypos >= 0)? ypos :
@@ -1384,6 +1384,9 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     } else { /* PIXMAP */
 	xd->windowWidth = iw = w;
 	xd->windowHeight = ih = h;
+	if (iw < 20 && ih < 20)
+	    warning(_("'width=%d, height=%d' are unlikely values in pixels"),
+		    iw, ih);
 	if ((xd->window = XCreatePixmap(
 	    display, rootwin,
 	    iw, ih, DefaultDepth(display, screen))) == 0) {
@@ -1523,7 +1526,7 @@ static void newX11_MetricInfo(int c,
 #else
 	    XFontsOfFontSet(xd->font->fontset, &fs_list, &ml);
 #endif
-	    
+
 	    f = fs_list[0];
 	} else f = xd->font->font;
 	first = f->min_char_or_byte2;
@@ -1543,7 +1546,7 @@ static void newX11_MetricInfo(int c,
 	wchar_t *wcs=wc;
 
 	wc[0] = (unsigned int) c;
-	
+
 	wcsrtombs(buf, (const wchar_t **)&wcs, sizeof(wc), NULL);
 #ifdef HAVE_XUTF8TEXTEXTENTS
 	if(utf8locale)
@@ -1585,7 +1588,7 @@ static void newX11_MetricInfo(int c,
 	*width = f->max_bounds.width;
     } else if (first <= c && c <= last) {
     /* It seems that per_char could be NULL
-       http://www.ac3.edu.au/SGI_Developer/books/XLib_PG/sgi_html/ch06.html 
+       http://www.ac3.edu.au/SGI_Developer/books/XLib_PG/sgi_html/ch06.html
     */
 	if(f->per_char) {
 	    *ascent = f->per_char[c-first].ascent;
@@ -2107,7 +2110,7 @@ Rboolean newX11DeviceDriver(DevDesc *dd,
 			    int bgcolor,
 			    int canvascolor,
 			    SEXP sfonts,
-			    int res, 
+			    int res,
 			    int xpos, int ypos)
 {
     newX11Desc *xd;
@@ -2200,14 +2203,14 @@ Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
     {
 	XFontStruct *f;
 #ifdef USE_FONTSET
-	/* Use fudge size of M, not the max of the first font or the 
+	/* Use fudge size of M, not the max of the first font or the
 	   whole fontset which may have very wide characters if it contains
 	   a comprehensive ISO 10646 font.
 	 */
 	if(xd->font->type == Font_Set) {
 	    char buf[10];
 	    XRectangle ink, log;
-	    
+
 	    wcstombs(buf, L"M", 10);
 #ifdef HAVE_XUTF8TEXTEXTENTS
 	    if(utf8locale)
@@ -2509,7 +2512,7 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (!strcmp(display, "XImage")) devname = "XImage";
 
     Rf_addX11Device(display, width, height, ps, gamma, colormodel,
-		    maxcubesize, bgcolor, canvascolor, devname, sfonts, 
+		    maxcubesize, bgcolor, canvascolor, devname, sfonts,
 		    res, xpos, ypos);
     vmaxset(vmax);
     return R_NilValue;
@@ -2540,7 +2543,7 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
     unsigned long pty_size, pty_items;
     int pty_format, ret;
     Rboolean res = TRUE;
-  
+
     if (!displayOpen) {
 	if ((display = XOpenDisplay(NULL)) == NULL) {
 	    warning(_("unable to contact X11 display"));
@@ -2551,19 +2554,19 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 
     pty = XInternAtom(display, "RCLIP_READ", False);
 
-    clpwin = XCreateSimpleWindow(display, DefaultRootWindow(display), 
+    clpwin = XCreateSimpleWindow(display, DefaultRootWindow(display),
 				 0, 0, 1, 1, 0, 0, 0);
     /* send a selection request */
     ret = XConvertSelection(display, sel, XA_STRING, pty, clpwin, CurrentTime);
 
     /* wait for the response */
     while(1) {
-	XNextEvent(display, &evt);	
+	XNextEvent(display, &evt);
 	if (evt.type == SelectionNotify) break;
     }
-    
+
     /* find the size and format of the data in the selection */
-    XGetWindowProperty(display, clpwin, pty, 0, 0, False, AnyPropertyType, 
+    XGetWindowProperty(display, clpwin, pty, 0, 0, False, AnyPropertyType,
 		       &pty_type, &pty_format, &pty_items, &pty_size, &buffer);
     XFree(buffer);
     if (pty_format != 8) { /* bytes */
@@ -2571,7 +2574,7 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 	res = FALSE;
     } else { /* read the property */
 	XGetWindowProperty(display, clpwin, pty, 0, (long)pty_size, False,
-			   AnyPropertyType, &pty_type, &pty_format, 
+			   AnyPropertyType, &pty_type, &pty_format,
 			   &pty_items, &pty_size, &buffer);
 	this->buff = (char *)malloc(pty_items + 1);
 	this->last = this->len = pty_items;
