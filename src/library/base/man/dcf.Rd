@@ -49,12 +49,13 @@ write.dcf(x, file = "", append = FALSE,
   }
 
   \code{read.dcf} returns a character matrix with one line per record
-  and one column per field. Leading and trailing whitespace of field
-  values is ignored. If a tag name is specified, but the corresponding
+  and one column per field.  Leading and trailing whitespace of field
+  values is ignored.  If a tag name is specified, but the corresponding
   value is empty, then an empty string of length 0 is returned. If the
   tag name of a fields is never used in a record, then \code{NA} is
   returned.  If there are multiple records with the same tag name, the
-  last one encountered is returned.
+  last one encountered is returned.  Malformed lines are ignored
+  (with a warning as from \R 2.3.0).
 }    
 \seealso{
   \code{\link{write.table}}.

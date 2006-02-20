@@ -745,7 +745,7 @@ BUG FIXES
 	integer) codes.
 
     o	The utilities such as 'check' now report active version numbers
-	again, as SVN last changed revision numbers.
+	again, as SVN 'last changed revision' numbers.
 
     o	addmargins() did not accept a name for 'FUN', only an expression.
 
@@ -756,11 +756,13 @@ BUG FIXES
 	and so are more accurate, e.g. the variance of a constant
 	vector is (almost) always zero and the mean of such a vector
 	will be equal to the constant value to machine precision.
-	(A partial resolution of PR#1228.)
+	(PR#1228)
 
 	sum(), prod(), mean(), rowSums() and friends use a long
 	double accumulator where available (on all major platforms)
 	and so will be somewhat more accurate.
+
+    o	read.dcf() now gives a warning on malformed lines.
 
 
 
