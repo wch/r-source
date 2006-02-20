@@ -28,7 +28,7 @@ revision='$Revision$'
 version=`set - ${revision}; echo ${2}`
 version="R configuration information retrieval script ${version}
 
-Copyright (C) 2002 The R Core Development Team.
+Copyright (C) 2002-6 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -128,7 +128,7 @@ while test -n "${1}"; do
       if test -z "${LIBR}"; then
         echo "R was not built as a shared library" >&2
       else
-        echo "-I${R_HOME}/include"
+        echo "-I${R_INCLUDE_DIR} -I${R_INCLUDE_DIR}${R_ARCH}"
       fi
       exit 0
       ;;
