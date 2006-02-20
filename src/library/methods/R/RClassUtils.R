@@ -141,7 +141,7 @@ makePrototypeFromClassDef <-
         }
     }
     extra <- pnames[is.na(match(pnames, snames)) & !is.na(match(pnames, pslots))]
-    if(length(extra)>0)
+    if(length(extra)>0 && is.na(match("oldClass", supers)))
         warning(gettextf("in constructing the prototype for class \"%s\", slots in prototype and not in class: %s",
                          className, paste(extra, collapse=", ")), domain = NA)
     ## now check the elements of the prototype against the class definition
@@ -441,11 +441,12 @@ assignClassDef <-
     pnames <- names(protoSlots)
     for(i in seq(along=protoSlots))
         slot(proto, pnames[[i]], FALSE) <- protoSlots[[i]]
-    class(proto) <- "classRepresentation"
+    classRepClass <- .classNameFromMethods("classRepresentation")
+    class(proto) <- classRepClass
     object <- list()
-    class(object) <- "classRepresentation"
+    class(object) <- classRepClass
     slot(object, "slots", FALSE) <- defSlots
-    slot(object, "className", FALSE) <- "classRepresentation"
+    slot(object, "className", FALSE) <- classRepClass
     slot(object, "virtual", FALSE) <- FALSE
     slot(object, "prototype", FALSE) <- proto
     for(what in c("contains", "validity", "access", "hasValidity", "subclasses",
@@ -456,6 +457,11 @@ assignClassDef <-
 ##    assignClassDef("classRepresentation", object, where)
     assign(classMetaName("classRepresentation"), object, where)
 }
+
+.classNameFromMethods <- function(what) {
+    packageSlot(what) <- "methods"
+    what
+  }
 
 .initClassSupport <- function(where) {
     setClass("classPrototypeDef", representation(object = "ANY", slots = "character", dataPart = "logical"),
@@ -1114,9 +1120,12 @@ setDataPart <- function(object, value) {
         else if(extends(cl, "oldClass") && isVirtualClass(cl)) {
             if(.identC(cl, "ts"))
                 value <- cl
-            else
-                warning(gettextf("old-style ('S3') class \"%s\" supplied as a superclass of \"%s\", but no automatic conversion will be peformed for S3 classes",
-                                 cl, .className(inClass)), domain = NA)
+            ## The following warning is obsolete if S3 classes can be
+            ## non-virtual--the subclass can have a prototype
+            
+##             else
+##                 warning(gettextf("old-style ('S3') class \"%s\" supplied as a superclass of \"%s\", but no automatic conversion will be peformed for S3 classes",
+##                                  cl, .className(inClass)), domain = NA)
         }
         else if(identical(ClassDef@virtual, TRUE) &&
                length(ClassDef@slots) == 0 &&

@@ -84,14 +84,20 @@ str(nc)# gave ^ANULL^A in 2.0.0
 
 
 library(stats4)
-showMethods(where = "package:stats4")
-showMethods("show")
-showMethods("show")
-showMethods("plot") # (ANY,ANY) and (profile.mle, missing)
-showMethods(classes="mle")
-showMethods(classes="matrix")
-showMethods(classes=c("matrix", "numeric"))
-showMethods(where = "package:methods")
+## the following showMethods() output tends to generate errors in the tests
+## whenever the contents of the packages change. Searching in the
+## diff's can easily mask real problems.  If there is a point
+## to the printout, e.g., to verify that certain methods exist,
+## hasMethod() would be a useful replacement
+
+## showMethods(where = "package:stats4")
+## showMethods("show")
+## showMethods("show")
+## showMethods("plot") # (ANY,ANY) and (profile.mle, missing)
+## showMethods(classes="mle")
+## showMethods(classes="matrix")
+## showMethods(classes=c("matrix", "numeric"))
+## showMethods(where = "package:methods")
 
 ## stopifnot(require(Matrix),
 ##           require(lme4)) # -> S4  plot

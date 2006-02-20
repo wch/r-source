@@ -12,7 +12,7 @@
            }, envir)
     clList = character()
     setClass("VIRTUAL", where = envir); clList <- c(clList, "VIRTUAL")
-    setClass("oldClass", where = envir); clList <- c(clList, "oldClass")
+    setClass("oldClass", where = envir) ## NOT A BASIC CLASS
     setClass("ANY", where = envir); clList <- c(clList, "ANY")
     setClass("vector", where = envir); clList <- c(clList, "vector")
     setClass("missing", where = envir); clList <- c(clList, "missing")
@@ -103,19 +103,34 @@
     setIs("function", "OptionalFunction", where = envir)
     setIs("NULL", "OptionalFunction")
     assign(".BasicClasses", clList, envir)
-    ## call setOldClass on some known old-style classes.  Ideally this would be done
+    assign(".SealedClasses", clList, envir)
+    ## restore the true definition of the hidden functions
+    assign("reconcilePropertiesAndPrototype", real.reconcileP, envir)
+}
+
+.InitS3Classes <- function(envir) {
+      ## call setOldClass on some known old-style classes.  Ideally this would be done
     ## in the code that uses the classes, but that code doesn't know about the methods
     ## package.
+    ## Two steps; first, those classes with a known prototype.  These
+    ## can be non-Virtual
+    clList <- get(".SealedClasses", envir = envir)
+    for(i in seq(along = .OldClassesPrototypes)) {
+      el <- .OldClassesPrototypes[[i]]
+      if(is.list(el) && length(el) > 1)
+        setOldClass(el[[1]], prototype = el[[2]],  where = envir)
+       else
+        warning("OOPS: something wrong with line ",i, " in .OldClassesPrototypes")
+    }
+    ## Next, miscellaneous S3 classes.
     for(cl in .OldClassesList)
-        setOldClass(cl, envir)
+        setOldClass(cl, where = envir)
     ## some S3 classes have inheritance on an instance basis, that breaks the S4 contains
     ## model.  To emulate their (unfortunate) behavior requires a setIs with a test.
     for(cl in .OldIsList)
         .setOldIs(cl, envir)
     assign(".SealedClasses", c(clList,unique(unlist(.OldClassesList))),  envir)
-    ## restore the true definition of the hidden functions
-    assign("reconcilePropertiesAndPrototype", real.reconcileP, envir)
-}
+  }
 
 ### The following methods are not currently installed.  (Tradeoff between intuition
 ### of users that new("matrix", ...) should be like matrix(...) vs
@@ -172,6 +187,21 @@
 ## .OldClassList is a purely heuristic list of known old-style classes, with emphasis
 ## on old-style class inheritiance.  Used in .InitBasicClasses to call setOldClass for
 ## each known class pattern.
+## .OldClassesPrototypes is a list of S3 classes for which prototype
+## objects are known & reasonable.  The classes will reappear in
+## .OldClassesList, but will have been initialized first in
+## .InitBasicClasses.  NB:  the methods package will NOT set up
+## prototypes for S3 classes except those in package base (and would
+## rather not do those either).  The package that owns the S3 class
+## should have code to call setOldClass in its initialization.
+.OldClassesPrototypes <-
+  list(
+       list("data.frame",  data.frame(), "data.frame"),
+       list("factor",  factor()),
+       list(c("ordered", "factor"), ordered(character())),
+       list("table",  table(factor())),
+       list("summary.table",  summary.table(table(factor())))
+       )
 .OldClassesList <-
     list(
          c("anova", "data.frame"),

@@ -150,6 +150,12 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }/* do_prmatrix */
 
+static SEXP R_packageSlot(SEXP object) {
+  static SEXP packageStr = NULL;
+  if(!packageStr)
+    packageStr = install("package");
+  return getAttrib(object, packageStr);
+}
 
 /* .Internal(print.default(x, digits, quote, na.print, print.gap,
                            right, useS4)) */
@@ -204,16 +210,8 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(tryS4 == NA_LOGICAL)
 	errorcall(call, _("invalid 'tryS4' internal argument"));
 
-    if(tryS4 && isObject(x) && isMethodsDispatchOn()) {
-	SEXP class = getAttrib(x, R_ClassSymbol);
-	if(length(class) == 1) {
-	    /* internal version of isClass() */
-	    char str[201];
-	    snprintf(str, 200, ".__C__%s", CHAR(STRING_ELT(class, 0)));
-	    if(findVar(install(str), rho) != R_UnboundValue)
-		callShow = TRUE;
-	}
-    }
+    if(tryS4 && isObject(x) && isMethodsDispatchOn())
+      callShow = R_seemsS4Object(x);
 
     if(callShow) {
 	SEXP call;

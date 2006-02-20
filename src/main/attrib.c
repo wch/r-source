@@ -1223,6 +1223,8 @@ static Rboolean has_class_definition(SEXP class_name)
 	return FALSE;
 }
 
+static Rboolean can_test_S4Object = FALSE; /* turning this to TRUE will throw
+   error or warning on all packages that have not been reinstalled for current R 2.3 */
 SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  nlist, object, ans, class;
@@ -1236,32 +1238,22 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid type or length for slot name"));
     if(isString(nlist)) nlist = install(CHAR(STRING_ELT(nlist, 0)));
     PROTECT(object = eval(CAR(args), env));
-    /* do some testing here where we can give a better error message */
-    class = getAttrib(object, R_ClassSymbol);
-    if(length(class) == 1)
-    {
-	/* internal version of isClass().
-	*  should eventually be able to grab class definition pointer
-	from the object itself.  At least the code below usually only
-	does the has_class_definition step (a single lookup); the
-	findVar part is only in the case that the check will fail OR
-	that the class definition has not yet been completed.*/
-	char str[201]; SEXP class_name; Rboolean quick;
-	snprintf(str, 200, ".__C__%s", CHAR(STRING_ELT(class, 0)));
-	class_name = install(str);
-	quick = has_class_definition(class_name);
-	if(!quick &&
-	   (findVar(class_name, env) == R_UnboundValue))
-	    error(_("trying to get slot \"%s\" from an object whose class (\"%s\") is not defined "),
-		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(class, 0)));
-    }
-    else if(length(class) == 0)
+    if(can_test_S4Object && !R_seemsS4Object(object)) {
+      class = getAttrib(object, R_ClassSymbol);
+      if(length(class) == 0)
 	    error(_("trying to get slot \"%s\" from an object of a basic class (\"%s\") with no slots"),
 		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(R_data_class(object, FALSE), 0)));
-    else
-	    error(_("trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s\", ...) (not a formally defined class)"),
-		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(class, 0)),
-		  CHAR(STRING_ELT(class, 1)));
+      else {
+	if(isString(class) &&
+	   install(CHAR(STRING_ELT(class, 0))) == install("classRepresentation")) {
+	  warning("Class representations out of date--package(s) need to be reinstalled");
+	  can_test_S4Object = FALSE; /* turn tests off to avoid repeated warnings */
+	}
+	else
+	  error(_("trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 object "),
+	      CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(class, 0)));
+      }
+    }
     ans = R_do_slot(object, nlist);
     UNPROTECT(1);
     return ans;

@@ -584,10 +584,10 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
                 stop(gettextf("no definition of \"%s\" to use for %s",
                               Class, unique), domain = NA)
             if(length(where) > 1) {
-                where <- where[[1]]
+                where <- where[1]
                 ## problem: 'unique'x is text passed in, so do not translate
                 warning(sprintf("multiple definitions of class \"%s\" visible; using the definition on package '%s' for %s",
-                                 Class, getPackageName(where), unique),
+                                 Class, getPackageName(where[[1]]), unique),
                         domain = NA)
             }
     }

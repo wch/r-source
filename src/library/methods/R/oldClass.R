@@ -1,8 +1,10 @@
 ## assumes oldClass has been defined as a virtual class
 
-setOldClass <- function(Classes, where = topenv(parent.frame()), test = FALSE) {
+setOldClass <- function(Classes, prototype,
+                        where = topenv(parent.frame()), test = FALSE) {
     if(test)
         return(.setOldIs(Classes, where))
+    mainClass <- Classes[[1]]
     prevClass <- "oldClass"
     for(cl in rev(Classes)) {
         if(isClass(cl, where)) {
@@ -10,11 +12,16 @@ setOldClass <- function(Classes, where = topenv(parent.frame()), test = FALSE) {
                 warning(gettextf("inconsistent old-style class information for \"%s\" (maybe mixing old and new classes?)", cl), domain = NA)
         }
         else
-            setClass(cl, representation(prevClass, "VIRTUAL"), where = where)
+            setClass(cl, contains = c(prevClass, "VIRTUAL"), where = where)
         prevClass <- cl
     }
-}
+    if(!missing(prototype)) {
+      cl <- Classes[[1]]
+      prevClass <- if(length(Classes)>1) Classes[[2]] else "oldClass"
+      setClass(cl, contains = prevClass, prototype = prototype, where = where)
+    }
 
+}
 .oldTestFun <- function(object) CLASS %in% attr(object, "class")
 .oldCoerceFun <- function(from, strict = TRUE) {
     if(strict)

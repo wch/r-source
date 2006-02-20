@@ -117,8 +117,10 @@
             if(!identical(class(value), class(.Object))) {
                 cv <- class(value)
                 co <- class(.Object)
-                if(.identC(cv, co) && is.null(packageSlot(cv))) {
-                    if(is.na(match(cv, .BasicClasses))) {
+                if(.identC(cv[[1]], co)) {
+                  ## ignore S3 with multiple classes  or basic classes
+                    if(is.na(match(cv, .BasicClasses)) &&
+                       length(cv) == 1) {
                         warning(gettextf("missing package slot (%s) in object of class \"%s\" (package info added)", packageSlot(co), class(.Object)),
                                 domain = NA)
                         class(value) <- class(.Object)
@@ -128,7 +130,7 @@
                 }
                 else
                     stop(gettextf("initialize method returned an object of class \"%s\" instead of the required class \"%s\"",
-                                  class(value), class(.Object)), domain = NA)
+                                  paste(class(value), collapse=", "), class(.Object)), domain = NA)
             }
             value
         }

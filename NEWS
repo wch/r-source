@@ -326,6 +326,18 @@ NEW FEATURES
     o	New function embedFonts() for embedding fonts in PDF or
         PostScript graphics files.
 
+    o  S3 classes can now be made non-virtual by supplying a prototype
+        object in the arguments to setOldClass().
+
+    o  A new heuristic test, seemsS4Object() is supplied, along with a
+        similar C-level test, R_seemsS4Object(object).  The test
+        detects probable S4 objects by their class's attribute. See the help
+        page.
+
+    o  The implementation of trace() has beem made more general by
+        calling a function to do the trace interaction, and recover()
+        now detects trace calls to trim the irrelevant code underneath.
+
 
 DEPRECATED & DEFUNCT
 

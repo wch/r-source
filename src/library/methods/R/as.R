@@ -244,7 +244,7 @@ setAs <-
 		 value <- as.ts(from)
 		 if(strict) {
 		     attributes(value) <- NULL
-		     class(value) <- "ts"
+		     class(value) <- class(new("ts"))
 		     tsp(value) <- tsp(from)
 		 }
 		 value

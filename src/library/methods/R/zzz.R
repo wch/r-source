@@ -18,6 +18,8 @@
         where <- as.environment(where)
     }
     initMethodDispatch(where)
+    ## temporary empty reference to the package's own namespace
+    assign(".methodsNamespace", new.env(), envir = where)
     saved <- (if(exists(".saveImage", envir = where, inherits = FALSE))
               get(".saveImage", envir = where)
               else
@@ -44,6 +46,7 @@
         .InitShowMethods(where)
         assign(".isPrototype", ..isPrototype, envir = where)
         .InitClassUnion(where)
+        .InitS3Classes(where)
         ## now seal the classes defined in the package
         for(cl in get(".SealedClasses", where))
             sealClass(cl, where)

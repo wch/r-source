@@ -65,14 +65,27 @@ recover <-
         tState <- tracingState(FALSE)
         on.exit(tracingState(tState))
     }
-    ## find an interesting environment to dump from
+    ## find an interesting environment to start from
     calls <- sys.calls()
     from <- 0
     n <- length(calls)
     if(identical(sys.function(n), recover))
         ## options(error=recover) produces a call to this function as an object
         n <- n - 1
+    ## look for a call inserted by trace() (and don't show frames below)
+    ## this level.
     for(i in rev(seq(length=n))) {
+        calli <- calls[[i]]
+        fname <- calli[[1]]
+        if(!is.na(match(deparse(fname), c("methods::.doTrace", ".doTrace")))) {
+            from <- i-1
+            break
+        }
+    }
+  ## if no trace, look for the first frame from the bottom that is not
+    ## stop or recover
+    if(from == 0)
+      for(i in rev(seq(length=n))) {
         calli <- calls[[i]]
         fname <- calli[[1]]
         if(!is.name(fname) ||

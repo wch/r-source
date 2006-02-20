@@ -89,7 +89,7 @@ makeGeneric <-
 ###--------
       value <- fdef
       if(is.null(genericFunction))
-          class(value) <- "standardGeneric"
+          class(value) <- .classNameFromMethods("standardGeneric")
       else
           class(value) <- class(genericFunction)
       slot(value, "generic", FALSE) <- f
