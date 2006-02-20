@@ -126,14 +126,13 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%t}}{Newline on output, arbitrary whitespace on input.}
     \item{\code{\%T}}{Equivalent to \code{\%H:\%M:\%S}.}
   }
-  There are also \code{\%O[dHImMUVwWy]} which may emit numbers in an
+  For output there are also \code{\%O[dHImMUVwWy]} which may emit numbers in an
   alternative locale-dependent format (e.g. roman numerals), and
   \code{\%E[cCyYxX]} which can use an alternative \sQuote{era}
   (e.g. a different religious calendar).  Which of these are supported is
   OS-dependent.  Specific to \R is \code{"\%OSn"}, which for output gives the
-  seconds to \code{1 <= n <= 6} decimal places.  On many systems
-  (including Linux and Windows) \code{"OS"} will input seconds including
-  decimal places.
+  seconds to \code{1 <= n <= 6} decimal places.  Further, for \code{strptime}
+  \code{"OS"} will input seconds including fractional seconds.
 
   \code{ISOdatetime} and \code{ISOdate} are convenience wrappers for
   \code{strptime}, that differ only in their defaults and that
@@ -218,8 +217,14 @@ z
 dates <- c("02/27/92", "02/27/92", "01/14/92", "02/28/92", "02/01/92")
 times <- c("23:03:20", "22:29:56", "01:03:30", "18:21:03", "16:56:26")
 x <- paste(dates, times)
-z <- strptime(x, "\%m/\%d/\%y \%H:\%M:\%S")
+strptime(x, "\%m/\%d/\%y \%H:\%M:\%S")
+
+## time with fractional seconds
+z <- strptime("20/2/06 11:16:16.683", "\%d/\%m/\%y \%H:\%M:\%OS")
+z # prints without fractional seconds
+op <- options(digits.secs=3)
 z
+options(op)
 }
 \keyword{utilities}
 \keyword{chron}

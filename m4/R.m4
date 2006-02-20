@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2005 R Core Team
+### Copyright (C) 1998-2006 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -1333,38 +1333,6 @@ fi
 AC_SUBST(RMATH_HAVE_WORKING_LOG1P)
 ])# R_FUNC_LOG1P
 
-## R_FUNC_STRPTIME
-## ---------------
-AC_DEFUN([R_FUNC_STRPTIME],
-[AC_CACHE_CHECK([for working strptime], [r_cv_func_strptime_works],
-[AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include <stdlib.h>
-#if defined(HAVE_GLIBC2) && !defined(__USE_XOPEN)
-#define __USE_XOPEN
-#endif
-#include <time.h>
-int main () {
-#ifdef HAVE_STRPTIME
-  struct tm tm;
-  char *p, *q, *p2;
-
-  p = strptime("1960-01-01", "%Y-%m-%d", &tm); /* works on MacOS X */
-  p2 =strptime("1899-01-01", "%Y-%m-%d", &tm); /* but this one does not */
-  q = strptime("2003-02-40", "%Y-%m-%d", &tm);
-  exit(p == 0 || p2 == 0 || q);
-#else
-  exit(1);
-#endif
-}
-]])],
-               [r_cv_func_strptime_works=yes],
-               [r_cv_func_strptime_works=no],
-               [r_cv_func_strptime_works=no])])
-if test "x${r_cv_func_strptime_works}" = xyes; then
-  AC_DEFINE(HAVE_WORKING_STRPTIME, 1,
-            [Define if strptime() exists, validates and does not fail pre-1970.])
-fi
-])# R_FUNC_STRPTIME
 
 ## R_FUNC_FTELL
 ## ------------

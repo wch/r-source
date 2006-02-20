@@ -48,9 +48,6 @@
 # ifndef __USE_BSD
 #  define __USE_BSD		/* so that we get unsetenv() */
 # endif
-# ifndef __USE_XOPEN
-#  define __USE_XOPEN		/* so that we get strptime() */
-# endif
 # ifndef __USE_MISC
 #  define __USE_MISC		/* for finite */
 # endif
@@ -94,10 +91,8 @@ static Rboolean have_broken_mktime(void)
 
 }
 
-#ifndef HAVE_WORKING_STRPTIME
 /* Substitute based on glibc code. */
-# include "Rstrptime.h"
-#endif
+#include "Rstrptime.h"
 
 static const int days_in_month[12] =
 {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -847,16 +842,9 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_year = tm.tm_mon = tm.tm_mday = tm.tm_yday = 
 	    tm.tm_wday = NA_INTEGER;
 	tm.tm_isdst = -1;
-#ifndef HAVE_WORKING_STRPTIME
 	invalid = STRING_ELT(x, i%n) == NA_STRING ||
-	    !strptime(CHAR(STRING_ELT(x, i%n)),
-		      CHAR(STRING_ELT(sformat, i%m)), &tm, &psecs);
-#else
-	invalid = STRING_ELT(x, i%n) == NA_STRING ||
-	    !strptime(CHAR(STRING_ELT(x, i%n)),
-		      CHAR(STRING_ELT(sformat, i%m)), &tm);
-#endif
-	/* it seems glibc cannot valid at all consistently */
+	    !R_strptime(CHAR(STRING_ELT(x, i%n)),
+			CHAR(STRING_ELT(sformat, i%m)), &tm, &psecs);
 	if(!invalid) {
 	    /* Solaris sets missing fields to 0 */
 	    if(tm.tm_mday == 0) tm.tm_mday = NA_INTEGER;

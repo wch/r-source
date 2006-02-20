@@ -1091,10 +1091,9 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
     return (char *) rp;
 }
 
-#define strptime Rf_strptime /* to avoid gcc4 complaining */
 /* We only care if the result is null or not */
 static char *
-strptime (const char *buf, const char *format, struct tm *tm, double *psecs)
+R_strptime (const char *buf, const char *format, struct tm *tm, double *psecs)
 {
     enum locale_status decided;
     decided = raw;

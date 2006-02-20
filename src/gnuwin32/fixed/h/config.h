@@ -528,9 +528,6 @@
 /* Define to 1 if you have the `strncasecmp' function. */
 #define HAVE_STRNCASECMP 1
 
-/* Define to 1 if you have the `strptime' function. */
-/* #undef HAVE_STRPTIME */
-
 /* Define to 1 if you have the `strtoul' function. */
 #define HAVE_STRTOUL 1
 
@@ -677,9 +674,6 @@
 
 /* Define if log1p() exists and is accurate enough. */
 #define HAVE_WORKING_LOG1P 1
-
-/* Define if strptime() exists, validates and does not fail pre-1970. */
-/* #undef HAVE_WORKING_STRPTIME */
 
 /* Define if you have the X11 headers and libraries, and want the X11 GUI to
    be built. */
