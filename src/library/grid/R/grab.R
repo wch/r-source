@@ -188,11 +188,12 @@ grid.grab <- function(warn=2, wrap=FALSE, ...) {
 
 grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
   # Start a new null device
-  .Call(R_GD_nullDevice)
+  .Call("R_GD_nullDevice")
   # If something goes wrong, want to revert to the current device
   on.exit(dev.off())
   # Run the graphics code in expr
-  eval(substitute(expr))
+  # Rely on lazy evaluation for correct "timing"
+  eval(expr)
   # Grab the DL on the new device
   grabDL(warn, wrap, ...)
 }
