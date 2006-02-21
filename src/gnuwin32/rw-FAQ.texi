@@ -445,9 +445,16 @@ which these options are listed, that is the command line then
 
 How did you specify it?  Backslashes have to be doubled in R character
 strings, so for example one needs
-@samp{"d:\\@RWVER@\\library\\xgobi\\scripts\\xgobi.bat"}.  You can make
-life easier for yourself by using forward slashes as path separators:
-they do work under Windows.
+@samp{"d:\\@RWVER@\\library\\xgobi\\scripts\\xgobi.bat"}.  You can
+make life easier for yourself by using forward slashes as path
+separators: they do work under Windows.  You should include the file
+extension (e.g. @samp{"xgobi.bat"} rather than just @samp{"xgobi"});
+sometimes this isn't shown in Windows, but it is necessary in R.
+
+A simple way to avoid these problems is to use the function
+@code{file.choose()} to invoke the standard Windows file selection
+dialog.  If you select a file there, the name will be passed to R in
+the correct format.
 
 Another possible source of grief is spaces in folder names.  We have
 tried to make R work on paths with spaces in, but many people writing
