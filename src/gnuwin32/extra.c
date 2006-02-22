@@ -454,9 +454,7 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
 
 void Rwin_fpset()
 {
-    _fpreset();
-    _controlfp(_MCW_EM, _MCW_EM);
-    _controlfp(_PC_64, _MCW_PC);
+    __asm__ ( "fninit" ) ;
 }
 
 #include "getline/getline.h"  /* for gl_load/savehistory */

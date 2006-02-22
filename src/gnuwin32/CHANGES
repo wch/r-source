@@ -49,6 +49,11 @@ appropriately.
 
 The Dll version number is now 2.xy.svn_revision.
 
+There is now aggressive protection of the setting of the FPU control word: it
+is reset to 64-bit mantissa and rounding mode before evaluating every
+expression.  This should prevent the implicit loading of DLLs changing
+to 53-bit mantissa.
+
 
 Internationalization
 --------------------
@@ -224,6 +229,9 @@ expected form is
 	file:///d:/path/to/file
 
 with *three* slashes.
+
+library.dynam() temporarily adds the <package>/libs dir to the path so
+that dependent DLLs can be put there and found with no further action.
 
 The (D)COM support has been updated, and header files and an import 
 library (src/gnuwin32/librproxy.a) are now installed.  See the rcom
