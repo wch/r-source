@@ -147,7 +147,7 @@ reshape <-
                 tmp <- data[,idvar]
                 really.constant <-
                     unlist(lapply(rval,
-                                  function(a) all(tapply(a, tmp,
+                                  function(a) all(tapply(a, as.vector(tmp),
                                                          function(b) length(unique(b)) == 1))))
                 if (!all(really.constant))
                     warning(gettextf("some constant variables (%s) are really varying",
