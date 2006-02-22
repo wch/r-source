@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-02-17
+@set FAQ_DATE @value{FAQ_YEAR}-02-22
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1861,6 +1861,8 @@ Core package of FLR, fisheries modeling in R.
 Data from the book ``Multivariate Statistical Modelling Based
 on Generalized Linear Models'' by Ludwig Fahrmeir and Gerhard Tutz
 (1994),  Springer.
+@item FortranCallsR
+Simple Fortran/C/R interface example.
 @item FracSim
 Simulation of one- and two-dimensional fractional and multifractional
 Levy motions.
@@ -1952,6 +1954,9 @@ polynomial quantile mixtures.
 Routines for Logic Regression.
 @item LoopAnalyst
 A collection of tools to conduct Levins' Loop Analysis.
+@item LowRankQP
+Low Rank Quadratic Programming: QP problems where the hessian is
+represented as the product of two matrices.
 @item MASS
 Functions and datasets from the main package of Venables and Ripley,
 ``Modern Applied Statistics with S''.  Contained in the @file{VR}
@@ -2382,6 +2387,8 @@ Calculates Contour Lines.
 CLUster Ensembles.
 @item cluster
 Functions for cluster analysis.  @emph{Recommended}.
+@item clusterRepro
+Reproducibility of gene expression clusters.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
@@ -2486,6 +2493,8 @@ Extensions of package @strong{distr}.
 Simulation classes based on package @strong{distr}.
 @item distrTEst
 Estimation and Testing classes based on package @strong{distr}.
+@item doBy
+Facilities for groupwise computations.
 @item dprep
 Data preprocessing and visualization functions for classification.
 @item dr
