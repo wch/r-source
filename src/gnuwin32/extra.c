@@ -454,6 +454,11 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
 
 void Rwin_fpset()
 {
+    /* Under recent MinGW this is what fpreset does.  It sets the
+       control word to 0x37f which corresponds to 0x8001F as used by
+       _controlfp.  That is all errors are masked, 64-bit mantissa and
+       rounding are selected. */
+
     __asm__ ( "fninit" ) ;
 }
 

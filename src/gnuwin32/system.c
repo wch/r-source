@@ -674,7 +674,7 @@ void R_SetWin32(Rstart Rp)
 	process_site_Renviron();
 	process_user_Renviron();
     }
-    Rwin_fpset();
+    Rwin_fpset();  /* in extra.c */
 }
 
 
