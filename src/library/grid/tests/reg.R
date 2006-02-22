@@ -425,4 +425,9 @@ testHeight(grobHeight(textGrob(str,
                                x=unit(.5, "npc") + unit(c(-.5, .5), "inches"),
                                y=unit(.5, "npc") + unit(c(-.5, .5), "inches"),
                                hjust=c(0, 1), vjust=c(0, 1))),
-           unit(1, "inches"))          
+           unit(1, "inches"))
+
+# Determining unit lengths
+stopifnot(length(unit.c(unit(1, "npc") + unit(1, "cm"), unit(2, "cm"))) == 2)
+stopifnot(length(unit.c(unit(1, "npc") + unit(1, "cm"), unit(2:4, "cm"))) == 4)
+stopifnot(length(unit.c(unit(1:3, "npc") + unit(1, "cm"), unit(2:4, "cm"))) == 6)

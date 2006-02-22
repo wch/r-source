@@ -4,6 +4,9 @@
 \description{
   Replicates the units according to the values given in \code{times} and
   \code{length.out}.
+
+  This function has been deprecated in favour of a unit method for
+  the generic \code{rep} function.
 }
 \usage{
 unit.rep(x, times, length.out)
@@ -25,11 +28,11 @@ unit.rep(x, times, length.out)
 }
 
 \examples{
-unit.rep(unit(1:3, "npc"), 3)
-unit.rep(unit(1:3, "npc"), 1:3)
-unit.rep(unit(1:3, "npc") + unit(1, "inches"), 3)
-unit.rep(max(unit(1:3, "npc") + unit(1, "inches")), 3)
-unit.rep(max(unit(1:3, "npc") + unit(1, "strwidth", "a"))*4, 3)
-unit.rep(unit(1:3, "npc") + unit(1, "strwidth", "a")*4, 3)
+rep(unit(1:3, "npc"), 3)
+rep(unit(1:3, "npc"), 1:3)
+rep(unit(1:3, "npc") + unit(1, "inches"), 3)
+rep(max(unit(1:3, "npc") + unit(1, "inches")), 3)
+rep(max(unit(1:3, "npc") + unit(1, "strwidth", "a"))*4, 3)
+rep(unit(1:3, "npc") + unit(1, "strwidth", "a")*4, 3)
 }
 \keyword{dplot}

@@ -83,13 +83,7 @@ unit(x, units, data=NULL)
     "inches"))}).
 }
 \section{WARNING}{
-  A special function \code{unit.length} is provided for
-  determining the number of unit values in a unit object.
-
-  The \code{length} function will work in some cases, but in general
-  will not give the right answer.
-
-  There is also a special function \code{unit.c} for concatenating
+  There is a special function \code{unit.c} for concatenating
   several unit objects.
 
   The \code{c} function will not give the right answer.
@@ -105,8 +99,7 @@ unit(x, units, data=NULL)
 }
 \author{Paul Murrell}
 \seealso{
-  \code{\link{unit.c}} and
-  \code{\link{unit.length}}
+  \code{\link{unit.c}}
 }
 
 \examples{

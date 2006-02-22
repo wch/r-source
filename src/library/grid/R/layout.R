@@ -142,3 +142,6 @@ grid.layout <- function (nrow = 1, ncol = 1,
 # Utility Functions
 ####################
 
+dim.layout <- function(x) {
+    c(x$nrow, x$ncol)
+}

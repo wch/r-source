@@ -17,8 +17,8 @@ valid.viewport <- function(x, y, width, height, just,
                            xscale, yscale, angle,
                            layout, layout.pos.row, layout.pos.col,
                            name) {
-  if (unit.length(x) > 1 || unit.length(y) > 1 ||
-      unit.length(width) > 1 || unit.length(height) > 1)
+  if (length(x) > 1 || length(y) > 1 ||
+      length(width) > 1 || length(height) > 1)
     stop("'x', 'y', 'width', and 'height' must all be units of length 1")
   if (!is.gpar(gp))
     stop("Invalid graphics parameters")

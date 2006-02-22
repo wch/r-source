@@ -19,9 +19,9 @@ arrow <- function(angle=30, length=unit(0.25, "inches"),
 # Method for subsetting "arrow" objects
 "[.arrow" <- function(x, index, ...) {
     maxn <- max(do.call("max", lapply(x, length)),
-                unit.length(x$length))
+                length(x$length))
     newa <- list(angle=rep(x$angle, length.out=maxn),
-                 length=unit.rep(x$length, length.out=maxn),
+                 length=rep(x$length, length.out=maxn),
                  ends=rep(x$ends, length.out=maxn),
                  type=rep(x$type, length.out=maxn))
     newa <- lapply(newa, "[", index, ...)
@@ -37,7 +37,7 @@ validDetails.move.to <- function(x) {
       !is.unit(x$y))
     stop("'x' and 'y' must be units")
   # Make sure that x and y are of length 1
-  if (unit.length(x$x) > 1 | unit.length(x$y) > 1)
+  if (length(x$x) > 1 | length(x$y) > 1)
     stop("'x' and 'y' must have length 1")
   x
 }
@@ -72,7 +72,7 @@ validDetails.line.to <- function(x) {
       !is.unit(x$y))
     stop("'x' and 'y' must be units")
   # Make sure that x and y are of length 1
-  if (unit.length(x$x) > 1 | unit.length(x$y) > 1)
+  if (length(x$x) > 1 | length(x$y) > 1)
     stop("'x' and 'y' must have length 1")
   if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
       stop("invalid 'arrow' argument")
@@ -312,18 +312,18 @@ drawDetails.arrows <- function(x, recording=TRUE) {
       yn <- lineThing$y
     } else if (inherits(lineThing, "lines")) {
       # x or y may be recycled
-      n <- max(unit.length(lineThing$x),
-               unit.length(lineThing$y))
-      xx <- unit.rep(lineThing$x, length=2)
+      n <- max(length(lineThing$x),
+               length(lineThing$y))
+      xx <- rep(lineThing$x, length.out=2)
       x1 <- xx[1]
       x2 <- xx[2]
-      xx <- unit.rep(lineThing$x, length=n)
+      xx <- rep(lineThing$x, length.out=n)
       xnm1 <- xx[n - 1]
       xn <- xx[n]
-      yy <- unit.rep(lineThing$y, length=2)
+      yy <- rep(lineThing$y, length.out=2)
       y1 <- yy[1]
       y2 <- yy[2]
-      yy <- unit.rep(lineThing$y, length=n)
+      yy <- rep(lineThing$y, length.out=n)
       ynm1 <- yy[n - 1]
       yn <- yy[n]
     } else { # inherits(lineThing, "segments")
@@ -338,17 +338,17 @@ drawDetails.arrows <- function(x, recording=TRUE) {
     }
   } else {
     # x or y may be recycled
-    n <- max(unit.length(x$x), unit.length(x$y))
-    xx <- unit.rep(x$x, length=2)
+    n <- max(length(x$x), length(x$y))
+    xx <- rep(x$x, length.out=2)
     x1 <- xx[1]
     x2 <- xx[2]
-    xx <- unit.rep(x$x, length=n)
+    xx <- rep(x$x, length.out=n)
     xnm1 <- xx[n - 1]
     xn <- xx[n]
-    yy <- unit.rep(x$y, length=2)
+    yy <- rep(x$y, length.out=2)
     y1 <- yy[1]
     y2 <- yy[2]
-    yy <- unit.rep(x$y, length=n)
+    yy <- rep(x$y, length.out=n)
     ynm1 <- yy[n - 1]
     yn <- yy[n]
     grid.Call.graphics("L_lines", x$x, x$y, NULL)
@@ -447,13 +447,13 @@ validDetails.polygon <- function(x) {
     stop("'x' and 'y' must be units")
   if (!is.null(x$id) && !is.null(x$id.lengths))
     stop("It is invalid to specify both 'id' and 'id.lengths")
-  if (unit.length(x$x) != unit.length(x$y))
+  if (length(x$x) != length(x$y))
     stop("'x' and 'y' must be same length")
-  if (!is.null(x$id) && (length(x$id) != unit.length(x$x)))
+  if (!is.null(x$id) && (length(x$id) != length(x$x)))
     stop("'x' and 'y' and 'id' must all be same length")
   if (!is.null(x$id))
     x$id <- as.integer(x$id)
-  if (!is.null(x$id.lengths) && (sum(x$id.lengths) != unit.length(x$x)))
+  if (!is.null(x$id.lengths) && (sum(x$id.lengths) != length(x$x)))
     stop("'x' and 'y' and 'id.lengths' must specify same overall length")
   if (!is.null(x$id.lengths))
     x$id.lengths <- as.integer(x$id.lengths)
@@ -463,7 +463,7 @@ validDetails.polygon <- function(x) {
 drawDetails.polygon <- function(x, recording=TRUE) {
   if (is.null(x$id) && is.null(x$id.lengths))
     grid.Call.graphics("L_polygon", x$x, x$y,
-                       list(as.integer(1:unit.length(x$x))))
+                       list(as.integer(1:length(x$x))))
   else {
     if (is.null(x$id)) {
       n <- length(x$id.lengths)
@@ -475,7 +475,7 @@ drawDetails.polygon <- function(x, recording=TRUE) {
     index <- vector("list", n)
     count <- 1
     for (i in unique(id)) {
-      index[[count]] <- as.integer((1:unit.length(x$x))[id == i])
+      index[[count]] <- as.integer((1:length(x$x))[id == i])
       count <- count + 1
     }
     grid.Call.graphics("L_polygon", x$x, x$y, index)
@@ -549,8 +549,8 @@ validDetails.xspline <- function(x) {
     stop("x and y must be units")
   if (!is.null(x$id) && !is.null(x$id.lengths))
     stop("It is invalid to specify both 'id' and 'id.lengths")
-  nx <- unit.length(x$x)
-  ny <- unit.length(x$y)
+  nx <- length(x$x)
+  ny <- length(x$y)
   if (nx != ny)
     stop("'x' and 'y' must be same length")
   if (!is.null(x$id) && (length(x$id) != nx))
@@ -945,7 +945,7 @@ validDetails.points <- function(x) {
       !is.unit(x$y) ||
       !is.unit(x$size))
     stop("'x', 'y' and 'size' must be units")
-  if (unit.length(x$x) != unit.length(x$y))
+  if (length(x$x) != length(x$y))
     stop("'x' and 'y' must be unit objects and have the same length")
   x$pch <- valid.pch(x$pch)
   x
@@ -1024,8 +1024,8 @@ validDetails.clip <- function(x) {
       !is.unit(x$width) ||
       !is.unit(x$height))
     stop("'x', 'y', 'width', and 'height' must be units")
-  if (unit.length(x$x) > 1 || unit.length(x$y) > 1 ||
-      unit.length(x$width) > 1 || unit.length(x$height) > 1)
+  if (length(x$x) > 1 || length(x$y) > 1 ||
+      length(x$width) > 1 || length(x$height) > 1)
     stop("'x', 'y', 'width', and 'height' must all be units of length 1")
   valid.just(x$just)
   if (!is.null(x$hjust))

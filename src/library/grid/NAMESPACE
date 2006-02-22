@@ -118,10 +118,6 @@ S3method("print", "path")
 S3method("print", "gpar")
 
 ## S3 methods for exported generics in grid
-S3method("unit.length", "unit")
-S3method("unit.length", "unit.list")
-S3method("unit.length", "unit.arithmetic")
-
 S3method("downViewport", "default")
 S3method("downViewport", "vpPath")
 
@@ -253,3 +249,15 @@ S3method("push.vp", "vpList")
 S3method("push.vp", "vpStack")
 S3method("push.vp", "vpTree")
 
+# S3 method for generic dim (in base)
+S3method("dim", "layout")
+
+# S3 method for generic rep (in base)
+S3method("rep", "unit")
+S3method("rep", "unit.arithmetic")
+S3method("rep", "unit.list")
+
+# S3 method for generic length (in base)
+S3method("length", "unit")
+S3method("length", "unit.arithmetic")
+S3method("length", "unit.list")

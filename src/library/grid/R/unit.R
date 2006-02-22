@@ -270,8 +270,8 @@ unit.pmax <- function(...) {
   # how long will the result be?
   maxlength <- 0
   for (i in 1:numargs)
-    if (unit.length(x[[i]]) > maxlength)
-      maxlength <- unit.length(x[[i]])
+    if (length(x[[i]]) > maxlength)
+      maxlength <- length(x[[i]])
   # maxlength guaranteed >= 1
   result <- max(unit.list.from.list(lapply(x, select.i, 1)))
   for (i in 2:maxlength)
@@ -292,8 +292,8 @@ unit.pmin <- function(...) {
   # how long will the result be?
   maxlength <- 0
   for (i in 1:numargs)
-    if (unit.length(x[[i]]) > maxlength)
-      maxlength <- unit.length(x[[i]])
+    if (length(x[[i]]) > maxlength)
+      maxlength <- length(x[[i]])
   # maxlength guaranteed >= 1
   result <- min(unit.list.from.list(lapply(x, select.i, 1)))
   for (i in 2:maxlength)
@@ -312,7 +312,7 @@ unit.list <- function(unit) {
   if (is.unit.list(unit))
     unit
   else {
-    l <- unit.length(unit)
+    l <- length(unit)
     result <- list()
     for (i in 1:l)
       result[[i]] <- unit[i]
@@ -326,9 +326,9 @@ is.unit.list <- function(x) {
 }
 
 as.character.unit.list <- function(ul) {
-  l <- unit.length(ul)
+  l <- length(ul)
   result <- rep("", l)
-  for (i in 1:unit.length(ul))
+  for (i in 1:length(ul))
     result[i] <- as.character(ul[[i]])
   result
 }
@@ -382,7 +382,7 @@ print.unit <- function(x, ...) {
 # NOTE that units will be recycled to the length of the largest
 # of the arguments
 "[.unit.arithmetic" <- function(x, index, top=TRUE, ...) {
-  this.length <- unit.length(x)
+  this.length <- length(x)
   if (is.logical(index))
     index <- (1:this.length)[index]
   if (top && index > this.length)
@@ -401,7 +401,7 @@ print.unit <- function(x, ...) {
 }
 
 "[.unit.list" <- function(x, index, top=TRUE, ...) {
-  this.length <- unit.length(x)
+  this.length <- length(x)
   if (is.logical(index))
     index <- (1:this.length)[index]
   if (top && index > this.length)
@@ -481,39 +481,39 @@ function(x) {
 # rep'ing unit objects
 #########################
 
-# NOTE that rep() is not a generic -- it does have different "methods"
-# for some different data types, but this is ALL handled internally
-# in seq.c
+rep.unit.arithmetic <- function(x, times, length.out, ...) {
+    if (length(x) == 0)
+        return(x)
+    if (!missing(length.out))
+        times <- ceiling(length.out/length(x))
 
-unit.arithmetic.rep <- function(x, times) {
-  switch(x$fname,
-         "+"=unit.rep(x$arg1, times) + unit.rep(x$arg2, times),
-         "-"=unit.rep(x$arg1, times) - unit.rep(x$arg2, times),
-         "*"=x$arg1 * unit.rep(x$arg2, times),
-         "min"=unit.list.rep(unit.list(x), times),
-         "max"=unit.list.rep(unit.list(x), times),
-         "sum"=unit.list.rep(unit.list(x), times))
+    switch(x$fname,
+           "+"=rep(x$arg1, times) + rep(x$arg2, times),
+           "-"=rep(x$arg1, times) - rep(x$arg2, times),
+           "*"=x$arg1 * rep(x$arg2, times),
+           "min"=rep(unit.list(x), times),
+           "max"=rep(unit.list(x), times),
+           "sum"=rep(unit.list(x), times))
 }
 
-unit.list.rep <- function(x, times) {
-  # Make use of the subsetting code to replicate the unit list
-  # top=FALSE allows the subsetting to go beyond the original length
-  "["(x, 1:(unit.length(x)*times), top=FALSE)
+rep.unit.list <- function(x, times, length.out, ...) {
+    if (length(x) == 0)
+        return(x)
+    if (!missing(length.out))
+        times <- ceiling(length.out/length(x))
+    
+    # Make use of the subsetting code to replicate the unit list
+    # top=FALSE allows the subsetting to go beyond the original length
+    "["(x, 1:(length(x)*times), top=FALSE)
 }
 
-unit.rep <- function (x, times, length.out)
-{
-  if (unit.length(x) == 0)
-    return(x)
-  if (missing(times))
-    times <- ceiling(length.out/length(x))
-
-  if (is.unit.list(x))
-    unit <- unit.list.rep(x, times)
-  else if (is.unit.arithmetic(x))
-    unit <- unit.arithmetic.rep(x, times)
-  else {
-    values <- rep(x, times)
+rep.unit <- function(x, times, length.out, ...) {
+    if (length(x) == 0)
+        return(x)
+    if (missing(times))
+        times <- ceiling(length.out/length(x))
+    
+    values <- rep(unclass(x), times, length.out, ...)
     # Do I need to replicate the "unit"s?
     unit <- attr(x, "unit")
     # If there are any data then they must be explicitly replicated
@@ -521,36 +521,42 @@ unit.rep <- function (x, times, length.out)
     # vector of values
     data <- recycle.data(attr(x, "data"), TRUE, length(values))
     unit <- unit(values, unit, data=data)
-  }
-  if (!missing(length.out))
-    return(unit[if (length.out > 0) 1:length.out else integer(0)])
-  unit
+    unit    
+}
+
+# Vestige from when rep() was not generic
+unit.rep <- function (x, times, length.out)
+{
+  warning("unit.rep has been deprecated in favour of a unit method for the generic rep function")
+  rep(x, times, length.out) 
 }
 
 #########################
 # Length of unit objects
 #########################
 
-unit.length <- function(unit) {
-  UseMethod("unit.length")
+length.unit <- function(unit) {
+  length(unclass(unit))
 }
 
-unit.length.unit <- function(unit) {
-  length(unit)
+length.unit.list <- function(unit) {
+  length(unclass(unit))
 }
 
-unit.length.unit.list <- function(unit) {
-  length(unit)
-}
-
-unit.length.unit.arithmetic <- function(unit) {
+length.unit.arithmetic <- function(unit) {
   switch(unit$fname,
-         "+"=max(unit.length(unit$arg1), unit.length(unit$arg2)),
-         "-"=max(unit.length(unit$arg1), unit.length(unit$arg2)),
-         "*"=max(length(unit$arg1), unit.length(unit$arg2)),
+         "+"=max(length(unit$arg1), length(unit$arg2)),
+         "-"=max(length(unit$arg1), length(unit$arg2)),
+         "*"=max(length(unit$arg1), length(unit$arg2)),
          "min"=1,
          "max"=1,
          "sum"=1)
+}
+
+# Vestige of when length was not generic
+unit.length <- function(unit) {
+   warning("unit.length has been deprecated in favour of a unit method for the generic length function")
+   length(unit)
 }
 
 #########################
@@ -684,7 +690,7 @@ grobHeight.default <- function(x) {
 # on parent's drawing context or size)
 #########################
 
-# Only deals with unit of unit.length() 1
+# Only deals with unit of length() 1
 absolute <- function(unit) {
   !is.na(match(attr(unit, "unit"),
                c("cm", "inches", "lines", "null",
@@ -700,7 +706,7 @@ absolute.units <- function(unit) {
 }
 
 absolute.units.unit <- function(unit) {
-  n <- unit.length(unit)
+  n <- length(unit)
   if (absolute(unit[1]))
     abs.unit <- unit[1]
   else
