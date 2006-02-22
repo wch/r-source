@@ -3252,6 +3252,7 @@ manual.
 @menu
 * Tidying R code::              
 * Profiling R code::            
+* Profiling compiled code::     
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -3325,7 +3326,7 @@ See @ref{R coding standards} for style options within the ESS[S] mode
 recommended for the source code of @R{} itself.
 
 
-@node Profiling R code,  , Tidying R code, Tidying and profiling R code
+@node Profiling R code, Profiling compiled code, Tidying R code, Tidying and profiling R code
 @section Profiling R code
 @cindex Profiling
 @findex Rprof
@@ -3439,6 +3440,120 @@ memory, and this takes an appreciable amount of time which profiling
 will charge to whichever function happens to provoke it.  It may be
 useful to compare profiling code immediately after a call to @code{gc()}
 with a profiling run without a preceding call to @code{gc}.
+
+@node Profiling compiled code,  , Profiling R code, Tidying and profiling R code
+@section Profiling compiled code
+@cindex Profiling
+
+Profiling compiled code is highly system-specific, but this section
+contains some hints gleaned from various @R{} users.  Some methods need
+to be different for a compiled executable and for dynamic/shared
+libraries/objects as used by @R{} packages.  We know of no good way to
+profile DLLs on Windows.
+
+@menu
+* Linux::                       
+* Solaris::                     
+* MacOS X::                     
+@end menu
+
+@node Linux, Solaris, Profiling compiled code, Profiling compiled code
+@subsection Linux
+
+Options include using @command{sprof} for shared object, and
+@command{oprofile} (see @url{http://oprofile.sourceforge.net/}) for any
+executable or shared object.
+
+@subsection sprof
+
+You cam select shared objects to be profiled with @command{sprof} by setting
+the environment variable @env{LD_PROFILE}.  For example
+
+@example
+% setenv LD_PROFILE /path/to/R_HOME/library/stats/libs/stats.so
+R 
+... run the boot example
+% sprof /path/to/R_HOME/library/stats/libs/stats.so \
+  /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
+
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls  us/call  us/call  name
+ 76.19      0.32     0.32        0     0.00           numeric_deriv
+ 16.67      0.39     0.07        0     0.00           nls_iter
+  7.14      0.42     0.03        0     0.00           getListElement
+
+rm /path/to/R_HOME/library/stats/libs/stats.so.profile
+... to clear up ...
+@end example
+
+It is possible that root access is needed to create the directories used
+for the profile data.
+
+@subsection oprofile
+
+@code{oprofile} works by running a daemon which collects information.
+The daemon must be started as root, e.g.
+
+@example
+% su
+% opcontrol --no-vmlinux
+% opcontrol --start
+% exit
+@end example
+
+Then as a user
+
+@example
+% R
+... run the boot example
+% opcontrol --dump
+% opreport -l /path/to/R_HOME/library/stats/libs/stats.so
+...
+samples  %        symbol name
+1623     75.5939  anonymous symbol from section .plt
+349      16.2552  numeric_deriv
+113       5.2632  nls_iter
+62        2.8878  getListElement
+% opreport -l /users/ripley/R/R-devel/bin/exec/R
+...
+samples  %        symbol name
+76052    11.9912  Rf_eval
+54670     8.6198  Rf_findVarInFrame3
+37814     5.9622  Rf_allocVector
+31489     4.9649  Rf_duplicate
+28221     4.4496  Rf_protect
+26485     4.1759  Rf_cons
+23650     3.7289  Rf_matchArgs
+21088     3.3250  Rf_findFun
+19995     3.1526  findVarLocInFrame
+14871     2.3447  Rf_evalList
+13794     2.1749  R_Newhashpjw
+13522     2.1320  R_gc_internal
+...
+@end example
+
+Shutting down the profiler and clearing the records needs to be done as
+root.  You can use @command{opannotate} to annotate the source code with
+the times spent in each section, if @R{} or the shared objects were
+built with debugging support.
+
+@node Solaris, MacOS X, Linux, Profiling compiled code
+@subsection Solaris
+
+On 64-bit (only) Solaris, the standard profiling tool @command{gprof}
+collects information from shared libraries compiled with @option{-pg}.
+
+@node MacOS X,  , Solaris, Profiling compiled code
+@subsection MacOS X
+
+Developers have recommended @command{sample} (or @command{Sampler.app},
+which is a GUI version) and @command{Shark} (see
+@url{http://developer.apple.com/tools/sharkoptimize.html} and
+@url{http://developer.apple.com/tools/shark_optimize.html})).
+
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
 @chapter Debugging
