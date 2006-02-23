@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-02-22
+@set FAQ_DATE @value{FAQ_YEAR}-02-23
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2880,6 +2880,8 @@ classifier will consist of a classification tree with one such
 @math{k}-nn classifier in each leaf.
 @item knncat
 Nearest-neighbor classification with categorical variables.
+@item kohonen
+Supervised and unsupervised self-organising maps.
 @item ks
 Kernel smoothing: bandwidth matrices for kernel density estimators and
 kernel discriminant analysis for bivariate data.
@@ -4792,6 +4794,7 @@ dir /opt/R/src/unix
 * I installed a package but the functions are not there::  
 * Why doesn't R think these numbers are equal?::  
 * How can I capture or ignore errors in a long simulation?::  
+* Why are powers of negative numbers wrong?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -5592,7 +5595,7 @@ Computer Scientist Should Know About Floating-Point Arithmetic'',
 @emph{ACM Computing Surveys}, @strong{23/1}, 5--48, also available via
 @url{http://docs.sun.com/source/806-3568/ncg_goldberg.html}.
 
-@node How can I capture or ignore errors in a long simulation?,  , Why doesn't R think these numbers are equal?, R Miscellanea
+@node How can I capture or ignore errors in a long simulation?, Why are powers of negative numbers wrong?, Why doesn't R think these numbers are equal?, R Miscellanea
 @section How can I capture or ignore errors in a long simulation?
 
 Use @code{try()}, which returns an object of class @code{"try-error"}
@@ -5608,6 +5611,40 @@ beta[i,] <- tryCatch(coef(lm(formula, data)),
 would return the coefficients if the @code{lm()} call succeeded and
 would return @code{c(NaN, NaN, NaN, NaN)} if it failed (presumably there
 are supposed to be 4 coefficients in this example).
+
+@node Why are powers of negative numbers wrong?,  , How can I capture or ignore errors in a long simulation?, R Miscellanea
+@section Why are powers of negative numbers wrong?
+
+You are probably seeing something like
+
+@example
+R> -2^2
+[1] -4
+@end example
+
+@noindent
+and misunderstanding the precedence rules for expressions in R.
+Write
+
+@example
+R> (-2)^2
+[1] 4
+@end example
+
+@noindent
+to get the square of @math{-2}.
+
+The precedence rules are documented in @code{?Syntax}, and to see how R
+interprets  an expression you can look at the parse tree
+
+@example
+R> as.list(quote(-2^2))
+[[1]]
+`-`
+
+[[2]]
+2^2
+@end example
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
