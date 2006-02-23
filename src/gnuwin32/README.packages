@@ -20,14 +20,20 @@ This file contains instructions for non-standard situations:
  - Using other compilers and languages
  - Cross-building packages on Linux
 
- 
+All the examples given here have worked at some point, but they are not
+tested for every R release.
+
+
 Using Visual C++
 ================
 
 You may if you prefer use Visual C++ to make the DLLs (unless they use
 Fortran source!). First build the import library Rdll.lib by
 
+	pexports R.dll > R.exp
 	lib /def:R.exp /out:Rdll.lib
+
+(pexports is part of the mingw-utils bundle.)
 
 Then you can compile the objects and build the DLL by
 
