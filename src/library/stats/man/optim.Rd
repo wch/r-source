@@ -40,17 +40,17 @@ optim(par, fn, gr = NULL,
 
   The default method is an implementation of that of Nelder and Mead
   (1965), that uses only function values and is robust but relatively
-  slow. It will work reasonably well for non-differentiable functions.
+  slow.  It will work reasonably well for non-differentiable functions.
 
   Method \code{"BFGS"} is a quasi-Newton method (also known as a variable
   metric algorithm), specifically that published simultaneously in 1970
-  by Broyden, Fletcher, Goldfarb and Shanno. This uses function values
+  by Broyden, Fletcher, Goldfarb and Shanno.  This uses function values
   and gradients to build up a picture of the surface to be optimized.
 
   Method \code{"CG"} is a conjugate gradients method based on that by
   Fletcher and Reeves (1964) (but with the option of Polak--Ribiere or
   Beale--Sorenson updates).  Conjugate gradient methods will generally
-  be more fragile that the BFGS method, but as they do not store a
+  be more fragile than the BFGS method, but as they do not store a
   matrix they may be successful in much larger optimization problems.
 
   Method \code{"L-BFGS-B"} is that of Byrd \emph{et. al.} (1995) which
