@@ -234,7 +234,7 @@ getOption(x)
     \code{echo} \tab \code{TRUE}\cr
     \code{encoding} \tab \code{"native.enc"}\cr
     \code{error} \tab \code{NULL}\cr
-    \code{expressions} \tab \code{5000}\cr
+    \code{expressions} \tab \code{1000}\cr
     \code{keep.source} \tab \code{interactive()}\cr
     \code{keep.source.pkgs} \tab \code{FALSE}\cr
     \code{max.print} \tab \code{1000}\cr
