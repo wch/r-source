@@ -765,14 +765,16 @@ BUG FIXES
 	object has it, so date+x is the same as x+date if x is numeric.
 
     o	mean.default() and var() compute means with an additional pass
-	and so are more accurate, e.g. the variance of a constant
-	vector is (almost) always zero and the mean of such a vector
-	will be equal to the constant value to machine precision.
-	(PR#1228)
+	and so are often more accurate, e.g. the variance of a
+	constant vector is (almost) always zero and the mean of such a
+	vector will be equal to the constant value to machine
+	precision.  (PR#1228)
 
-	sum(), prod(), mean(), rowSums() and friends use a long
-	double accumulator where available (on all major platforms)
-	and so will be somewhat more accurate.
+	sum(), prod(), mean(), rowSums() and friends use a long double
+	accumulator where available and so may be more accurate. (This
+	is particularly helpful on systems such as Sparc and AMD64
+	where long double gives considerably greater exponent range
+	and precision than double.)
 
     o	read.dcf() now gives a warning on malformed lines.
 
