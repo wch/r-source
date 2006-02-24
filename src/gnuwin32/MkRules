@@ -174,8 +174,7 @@ RESCOMP=$(BINPREF)windres
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
 
 %.dll:
-	@$(ECHO) LIBRARY $* > $*.def
-	@$(ECHO) EXPORTS >> $*.def
+	@$(ECHO) EXPORTS > $*.def
 	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> $*.def
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) $*.def

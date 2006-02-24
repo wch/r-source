@@ -57,19 +57,29 @@ BDR 2004-01-09
 
 Mingw's ld.exe takes the internal name of the DLL as the object to
 link to, and hence for DLLs which are to be linked to (rather than
-loaded), the internal name need to be dllname.dll.  This was not being
+loaded), the internal names need to be dllname.dll.  This was not being
 done by the %.dll rule used in 2.2.1, which builds via a .def file
 with first line
 
 LIBRARY $*
 
+[The example in ld.info is
+
+LIBRARY "xyz.dll"
+
+whereas that in the MSDN documentation
+(http://msdn2.microsoft.com/en-us/library/d91k01sh.aspx) is
+
+LIBRARY BTREE
+
+so MinGW is inconsistent with MSDN here.]
+
 It would seem that this should just be replaced by $*.dll, but there
 is another problem: ld.exe rejects .def files whose LIBRARY name
 contains more than one dot, and so this is unable to cope with
 packages with a dot in their name.  (We already document that two or
-more dots are not allowed.)  So we have had to revert to the rule used
-in 2.2.1 and treat separately the DLLs which are designed to be linked
-to.  These are
+more dots are not allowed.)  So we have had to treat separately the
+DLLs which are designed to be linked to.  These are
 
 R.dll : is special-cased, and as it wants to export entry points from
 static libraries and exports variables, nothing else we tried worked.
@@ -86,4 +96,9 @@ have been moved to R_HOME/modules.  They are now made directly with
 gcc -shared.  Rchtml.dll needs an import library as you cannot link
 directly to a .ocx.
 
-BDR 2006-02-15
+However, whereas MSDN says there must be a LIBRARY statement, it seems
+not to be required for ld.exe, at least when building a loadable
+module.  So the default rule in MkRules as from 2.3.0 does not have a
+LIBRARY statement, which circumvents the 'at most one dot' rule.
+
+BDR 2006-02-15, 2006-02-24
