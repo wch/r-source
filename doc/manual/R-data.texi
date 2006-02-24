@@ -1942,7 +1942,7 @@ is involved.
 The missing value for @R{} logical and integer types is @code{INT_MIN},
 the smallest representable @code{int} defined in the C header
 @file{limits.h}, normally corresponding to the bit pattern
-@code{0xffffffff}.
+@code{0x80000000}.
 
 The representation of the special values for @R{} numeric and complex
 types is machine-dependent, and possibly also compiler-dependent.  The
