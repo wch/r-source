@@ -74,7 +74,7 @@ my @special_commands = ("command", "env", "file", "kbd", "option",
 sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version)
 
     $Rdname = $_[0];
-    open(rdfile, "<$Rdname") or die "Rdconv(): Couldn't open '$Rdfile': $!\n";
+    open(rdfile, "<$Rdname") or die "Rdconv(): Couldn't open '$Rdname': $!\n";
 
     $type = $_[1];
     $debug = $_[2];
