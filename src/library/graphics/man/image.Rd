@@ -39,7 +39,7 @@ image(x, \dots)
     appropriate for images.  See \code{\link{par}}.}
   \item{xlab, ylab}{each a character string giving the labels for the x and
     y axis.  Default to the \sQuote{call names} of \code{x} or \code{y}, or to
-    \code{""} if these where unspecified.}
+    \code{""} if these were unspecified.}
   \item{breaks}{a set of breakpoints for the colours: must give one more
     breakpoint than colour.}
   \item{oldstyle}{logical. If true the midpoints of the colour intervals
