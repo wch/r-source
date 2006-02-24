@@ -12,7 +12,10 @@ OBJS=$(CSOURCES:.c=.o) dllversion.o
 
 ../../../modules/$(MODULE).dll: $(OBJS)
 	$(MKDIR) -p ../../../modules
-	$(DLL) -shared  -o $@ $^ -L../../../bin -lR
+	@$(ECHO) "EXPORTS" > vfonts.def
+	@$(ECHO) " R_init_vfonts" >> vfonts.def
+	$(DLL) -shared  -o $@ $^ vfonts.def -L../../../bin -lR
+	@$(RM) vfonts.def
 
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll
