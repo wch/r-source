@@ -338,6 +338,10 @@ NEW FEATURES
         calling a function to do the trace interaction, and recover()
         now detects trace calls to trim the irrelevant code underneath.
 
+    o	R refrains from printing the final EOL upon exiting the main loop
+	if the quiet flag is on and the save action is known (e.g. this
+	is true for --slave).
+
 
 DEPRECATED & DEFUNCT
 

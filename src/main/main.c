@@ -881,9 +881,15 @@ void setup_Rmainloop(void)
     }
 }
 
+extern SA_TYPE SaveAction; /* from src/main/startup.c */
+
 void end_Rmainloop(void)
 {
-    Rprintf("\n");
+    /* refrain from printing trailing '\n' only if quiet flag is on and
+       the save action is known (e.g. implied by --slave) */
+    if (!R_Quiet ||
+	(SaveAction != SA_NOSAVE && SaveAction != SA_SAVE))
+        Rprintf("\n");
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */
     R_CleanUp(SA_DEFAULT, 0, 1);
