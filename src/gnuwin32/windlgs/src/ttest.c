@@ -95,7 +95,7 @@ void menu_ttest(char **vars, int ints[], double level[])
 
 
 extern void consolecmd(window c, char *cmd);
-extern window RConsole;
+extern __declspec(dllimport) window RConsole;
 
 
 static void cancel2(button b)
