@@ -338,8 +338,8 @@ NEW FEATURES
         calling a function to do the trace interaction, and recover()
         now detects trace calls to trim the irrelevant code underneath.
 
-    o	R refrains from printing the final EOL upon exiting the main loop
-	if the quiet flag is on and the save action is known (e.g. this
+    o	R refrains from printing a final EOL upon exiting the main loop
+	if the quiet flag is on and if the save action is known (e.g. this
 	is true for --slave).
 
 
@@ -592,6 +592,10 @@ C-LEVEL FACILITIES
 	(they might be needed in front-ends).
 
     o	R_FlushConsole and R_ProcessEvents are now declared in <R.h>.
+
+    o	The R_Sock* functions supporting socket connections are no
+	longer declared in R-ftp-http.h as they are not loaded into R
+	itself, and are now hidden in the module's DLL on suitable systems.
 
 
 BUG FIXES
