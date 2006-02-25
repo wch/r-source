@@ -36,7 +36,7 @@ static R_CMethodDef CEntries [] = {
 
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
-static R_CallMethodDef CallEntries[] = {
+static const R_CallMethodDef CallEntries[] = {
     CALLDEF(Type1FontInUse, 2),
     CALLDEF(CIDFontInUse, 2),
     {"R_GD_nullDevice", (DL_FUNC) &R_GD_nullDevice, 0},
@@ -45,7 +45,7 @@ static R_CallMethodDef CallEntries[] = {
 
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
-static R_ExternalMethodDef ExtEntries[] = {
+static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(PicTeX, 6),
     EXTDEF(PostScript, 16),
     EXTDEF(XFig, 11),

@@ -120,7 +120,7 @@ static const R_CMethodDef CEntries[]  = {
     {NULL, NULL, 0}
 };
 
-static R_CallMethodDef CallEntries[] = {
+static const R_CallMethodDef CallEntries[] = {
     {"R_cutree", (DL_FUNC) &R_cutree, 2},
     {"R_isoreg", (DL_FUNC) &R_isoreg, 1},
     {"numeric_deriv", (DL_FUNC)&numeric_deriv, 4},
@@ -158,7 +158,7 @@ static R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
-static R_FortranMethodDef FortEntries[] = {
+static const R_FortranMethodDef FortEntries[] = {
     {"lowesw", (DL_FUNC) &F77_SUB(lowesw), 4},
     {"lowesp", (DL_FUNC) &F77_SUB(lowesp), 7},
     {"setppr", (DL_FUNC) &F77_SUB(setppr), 6},

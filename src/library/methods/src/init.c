@@ -25,7 +25,7 @@
 
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
-static R_CallMethodDef CallEntries[] = {
+static const R_CallMethodDef CallEntries[] = {
     CALLDEF(R_M_setPrimitiveMethods, 5),
     CALLDEF(R_clear_method_selection, 0),
     CALLDEF(R_dummy_extern_place, 0),
