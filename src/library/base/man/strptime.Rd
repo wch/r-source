@@ -130,9 +130,12 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   alternative locale-dependent format (e.g. roman numerals), and
   \code{\%E[cCyYxX]} which can use an alternative \sQuote{era}
   (e.g. a different religious calendar).  Which of these are supported is
-  OS-dependent.  Specific to \R is \code{"\%OSn"}, which for output gives the
-  seconds to \code{1 <= n <= 6} decimal places.  Further, for \code{strptime}
-  \code{"OS"} will input seconds including fractional seconds.
+  OS-dependent.  Specific to \R is \code{\%OSn}, which for output gives the
+  seconds to \code{0 <= n <= 6} decimal places (and if \code{\%OS} is
+  not followed by a digit, it uses the setting of
+  \code{\link{getOption("digits.secs")}}, or if that is unset, \code{n = 3}).
+  Further, for \code{strptime} \code{\%OS} will input seconds including
+  fractional seconds.
 
   \code{ISOdatetime} and \code{ISOdate} are convenience wrappers for
   \code{strptime}, that differ only in their defaults and that

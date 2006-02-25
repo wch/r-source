@@ -734,14 +734,24 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		strcpy(buf2,  q);
 		p = strstr(q, "%OS");
 		if(p) {
-		    int ns = 3;
+		    int ns, nused = 4;
 		    char *p2 = strstr(buf2, "%OS");
 		    *p2 = '\0';
 		    ns = *(p+3) - '0';
+		    if(ns < 0 || ns > 9) { /* not a digit */
+			ns = asInteger(GetOption(install("digits.secs"),
+						 R_BaseEnv));
+			if(ns == NA_INTEGER) ns = 0;
+			nused = 3;
+		    }
 		    if(ns > 6) ns = 6;
-		    if(ns < 1) ns = 1;
-		    sprintf(p2, "%0*.*f", ns+3, ns, secs);
-		    strcat(buf2, p+4);
+		    if(ns > 0) {
+			sprintf(p2, "%0*.*f", ns+3, ns, secs);
+			strcat(buf2, p+nused);
+		    } else {
+			strcat(p2, "%S");
+			strcat(buf2, p+nused);
+		    }
 		}
 		strftime(buff, 256, buf2, &tm);
 		if(UseTZ && !isNull(tz)) {
