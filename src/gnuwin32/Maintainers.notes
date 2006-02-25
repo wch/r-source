@@ -97,8 +97,8 @@ gcc -shared.  Rchtml.dll needs an import library as you cannot link
 directly to a .ocx.
 
 However, whereas MSDN says there must be a LIBRARY statement, it seems
-not to be required for ld.exe, at least when building a loadable
-module.  So the default rule in MkRules as from 2.3.0 does not have a
-LIBRARY statement, which circumvents the 'at most one dot' rule.
+not to be required for ld.exe.  So the %.dll rule in MkRules as from
+2.3.0 does not have a LIBRARY statement, which circumvents the 'at
+most one dot' rule.
 
 BDR 2006-02-15, 2006-02-24

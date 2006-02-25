@@ -97,6 +97,10 @@ There is now support for compiling Fortran 90/95 code in packages: see
 Packages can now supply export files pkgname/src/pkgname-win.def:
 package 'stats' does so.
 
+The restriction on the numnber of dots in a package name (which
+stemmed from an undocumented restriction in ld.exe) has been worked
+around.
+
 
 C-level changes
 ---------------

@@ -45,7 +45,7 @@ Based on files which are
 	http://www.ede.com/free/u2nt
 
 
-src/gnuwin32/front-ends/SC_*.h, bdx*.[ch], com_util.[ch], rp*.[ch]
+src/gnuwin32/front-ends/SC_*.h, bdx*.[ch], com_util.[ch], rproxy*.[ch]
 
 	Copyright (C) 1999-2005 Thomas Baier
 

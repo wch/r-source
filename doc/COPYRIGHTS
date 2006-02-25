@@ -43,6 +43,8 @@ From the announcement of the change (2001-Feb-05)
 
 	---------------------------------------------------
 
+As from R 2.3.0 import libraries are no longer used under Windows.
+
 
 Some of the code contains different copyright statements.  It is used
 here in accordance with the copyright conditions in that code.
@@ -108,16 +110,13 @@ src/appl/maxcol.c
 
 
 src/appl/interv.c : moved to API from code originally in
-		    src/library/stats/src/bvalue.f, see the following
+		    src/library/stats/src/bvalue.f, see
+		    src/library/stats/COPYRIGHTS.modreg
 
 src/library/stats:
 
-	See the file src/library/stats/COPYRIGHTS.modreg for details
-
-      src/loessc.c
-      src/loessf.f
-
-	Copyright (c) 1989, 1992 by AT&T.
+	See the files src/library/stats/COPYRIGHTS.modreg and
+	src/library/stats/COPYRIGHTS.portsrc for further details
 
 
 src/library/stats/R/diffinv.R
@@ -160,19 +159,8 @@ src/nmath/sunif.c
 src/nmath/stirlerr.c
 src/nmath/dbinom.c
 src/nmath/dpois.c
-  are now partly based on Clive Loader's (1999) work,
+  are partly based on Clive Loader's (1999) work,
   (C) 1999-2000 Lucent Technologies, Bell Laboratories.
-
-src/modules/gnome/devGNOME.c
-src/modules/gnome/gdkrotated.c
-src/modules/gnome/gnome-find-dialog.c
-src/modules/gnome/gtkconsole.c
-src/modules/gnome/system-*.c
-src/modules/gnome/terminal*.c
-
-	Copyright (C) 1998-1999	  Lyndon Drake
-		and the R Development Core Team
-
 
 src/main/RNG.c
 
@@ -187,7 +175,7 @@ src/main/RNG.c
   and is used unchanged.
 
 
-src/modules/lapack/dlapack[0123].f, cmplx.f, dlamc,f rgeev.f, rsyev.f
+src/modules/lapack/dlapack[0123].f, cmplx.f, dlamc.f
 
   Extracted from
   *  -- LAPACK routine (version 3.0) --
@@ -319,8 +307,8 @@ src/unix/dlfcn-darwin.[ch]
 
 src/extra/intl/*
 
-Based on gettextize from gettext 0.14.1
-   Copyright (C) 1995-1999, 2000-2003 Free Software Foundation, Inc.
+Based on gettextize from gettext 0.14.5
+   Copyright (C) 1995-1999, 2000-2005 Free Software Foundation, Inc.
 
 
 src/include/memcheck.h
