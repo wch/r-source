@@ -84,7 +84,8 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     if(is.null(x)) {
 	fc <- object$call
 	fc$formula <- Terms
-	fob <- list(call = fc)
+	## model.frame.lm looks at the terms part for the environment
+	fob <- list(call = fc, terms = Terms)
 	class(fob) <- oldClass(object)
 	m <- model.frame(fob, xlev = object$xlevels)
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
@@ -187,7 +188,8 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     if(is.null(x)) {
 	fc <- object$call
 	fc$formula <- Terms
-	fob <- list(call = fc)
+	## model.frame.glm looks at the terms part for the environment
+	fob <- list(call = fc, terms = Terms)
 	class(fob) <- oldClass(object)
 	m <- model.frame(fob, xlev = object$xlevels)
         offset <- model.offset(m)
