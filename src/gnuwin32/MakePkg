@@ -83,8 +83,10 @@ ifeq ($(strip $(LAZYDATA)),true)
 endif
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s mansrcs indices
 
-fake: zzzfirst frontmatter nmspacefake R Rfake $(DPKG)/demo \
-  $(DPKG)/exec $(DPKG)/inst $(DATA) mansrcs indices
+## this does not make any DLL, and modifies the NAMESPACE and R code
+## to try to ensure no attempt is made to load the DLL.
+## Otherwise, follow what Unix INSTALL does (no demo, exec or inst)
+fake: zzzfirst frontmatter nmspacefake R Rfake $(DATA) mansrcs indices
 
 include $(RHOME)/src/gnuwin32/MkRules
 
@@ -258,12 +260,14 @@ else
  include R/Makefile.win
 endif
 
-Rfake:
+Rfake: $(PKGRFILES)
+ifneq ($(strip $(PKGRFILES)),)
 	@if test -f $(SPKG)/NAMESPACE; then \
 	  echo ".onLoad <- .onAttach <- function(lib, pkg) NULL" >> $(DPKG)/R/$(PKG) ; \
 	else \
 	  echo ".First.lib <- function(lib, pkg) NULL" >> $(DPKG)/R/$(PKG) ;\
 	fi
+endif
 
 
 MANMAIN=$(wildcard $(SPKG)/man/*.[Rr]d)
