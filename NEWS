@@ -558,6 +558,9 @@ PACKAGE INSTALLATION
 	The restrictions on the names of help files, R files and
 	of demos are now enforced (see `Writing R Extensions').
 
+    o	Packages which contain compiled code can now have more than
+	one dot in their name even on Windows.
+
 
 C-LEVEL FACILITIES
 
@@ -785,6 +788,10 @@ BUG FIXES
 	and precision than double.)
 
     o	read.dcf() now gives a warning on malformed lines.
+
+    o	add1.[g]lm now try harder to use the environment of the
+	formula in the orginal fit to look for objects such as the
+	'data' and 'subset' arguments.
 
 
 
