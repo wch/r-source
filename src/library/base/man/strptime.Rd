@@ -133,7 +133,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   OS-dependent.  Specific to \R is \code{\%OSn}, which for output gives the
   seconds to \code{0 <= n <= 6} decimal places (and if \code{\%OS} is
   not followed by a digit, it uses the setting of
-  \code{\link{getOption("digits.secs")}}, or if that is unset, \code{n = 3}).
+  \code{\link{getOption}("digits.secs")}, or if that is unset, \code{n = 3}).
   Further, for \code{strptime} \code{\%OS} will input seconds including
   fractional seconds.
 
