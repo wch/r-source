@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-02-23
+@set FAQ_DATE @value{FAQ_YEAR}-02-27
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2104,7 +2104,7 @@ Creating random fields using various methods.
 @item Rcmdr
 A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the @strong{tcltk} package.
-@item Rcpp
+@item RcppTemplate
 An illustration of the use of the Rcpp R/C++ interface library.
 @item ResistorArray
 Electrical properties of resistor networks.
@@ -2440,6 +2440,8 @@ Likelihood and posterior analysis of conditionally specified logistic
 regression models.
 @item ctv
 Server-side and client-side tools for @acronym{CRAN} task views.
+@item cwhmisc
+Miscellaneous functions by Christian W. Hoffmann.
 @item cyclones
 Cyclone identification.
 @item date
@@ -3570,12 +3572,9 @@ R.
 Fault Tolerant Simple Network of Workstations.
 @item som
 Self-Organizing Maps (with application in gene clustering).
-@c <COMMENT>
-@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
-@c @item sound
-@c A sound interface for R: Basic functions for dealing with @file{.wav}
-@c files and sound samples.
-@c </COMMENT>
+@item sound
+A sound interface for R: Basic functions for dealing with @file{.wav}
+files and sound samples.
 @item sp
 A package that provides classes and methods for spatial data, including
 utility functions for plotting data as maps, spatial selection, amd much
