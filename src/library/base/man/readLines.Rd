@@ -16,8 +16,8 @@ readLines(con = stdin(), n = -1, ok = TRUE)
     \code{n > 0} lines are read? If not, an error will be generated.}
 }
 \details{
-  If the \code{con} is a character string, the functions call
-  \code{\link{file}} to obtain an file connection which is opened for
+  If the \code{con} is a character string, the function call
+  \code{\link{file}} to obtain a file connection which is opened for
   the duration of the function call.
 
   If the connection is open it is read from its current position.

@@ -15,7 +15,7 @@ data.matrix(frame)
     factors or numeric vectors.}
 }
 \details{
-  Suppling a data frame with columns which are not numeric, factor or logical
+  Supplying a data frame with columns which are not numeric, factor or logical
   is an error.  A warning is given if any non-factor column has a class,
   as then information can be lost.
 }
