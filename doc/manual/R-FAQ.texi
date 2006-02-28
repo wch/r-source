@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-02-27
+@set FAQ_DATE @value{FAQ_YEAR}-02-28
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2614,6 +2614,8 @@ Functional Data Analysis: analysis of data where the basic observation
 is a function of some sort.
 @item fdim
 Functions for calculating fractal dimension.
+@item femmeR
+Output analysis of FEMME model results.
 @item fgac
 Families of Generalized Archimedean Copulas.
 @item fields
