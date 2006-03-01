@@ -30,7 +30,7 @@
 #define R_INLINES_H_
 
 #ifndef COMPILING_R /* defined only in util.c */
-# define INLINE_FUN extern inline
+# define INLINE_FUN extern R_INLINE
 #else
 # define INLINE_FUN
 #endif
