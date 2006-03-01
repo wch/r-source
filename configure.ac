@@ -1821,7 +1821,7 @@ case "${host_os}" in
     ;;
 esac
 for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
-           ${TCLTK_LIBS} ${GNOME_LIBS} ${JAVA_LIBS}; do
+           ${TCLTK_LIBS} ${GNOME_LIBS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
@@ -1829,20 +1829,53 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
       ## don't add anything for Darwin
       case "${host_os}" in darwin*) r_want_lib=false ;; esac
       ## Do not add non-existent directories.
-      test -d "${lib}" || continue
-      ## Canonicalize (/usr/lib/gcc-lib/i486-linux/3.3.4/../../..).
-      lib=`cd "${lib}" && ${GETWD}`
-      ## Do not add something twice, or default paths.
-      r_save_IFS="${IFS}"; IFS="${PATH_SEPARATOR}"
-      for dir in ${R_LD_LIBRARY_PATH}${IFS}${r_ld_library_defaults}; do
-        if test x"${dir}" = x"${lib}"; then
-           r_want_lib=false
-           break
-        fi
-      done
-      IFS="${r_save_IFS}"
+      test -d "${lib}" || r_want_lib=false
       if test x"${r_want_lib}" = xtrue; then
-        R_SH_VAR_ADD(R_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
+        ## Canonicalize (/usr/lib/gcc-lib/i486-linux/3.3.4/../../..).
+        lib=`cd "${lib}" && ${GETWD}`
+        ## Do not add something twice, or default paths.
+        r_save_IFS="${IFS}"; IFS="${PATH_SEPARATOR}"
+        for dir in ${R_LD_LIBRARY_PATH}${IFS}${r_ld_library_defaults}; do
+          if test x"${dir}" = x"${lib}"; then
+            r_want_lib=false
+            break
+          fi
+        done
+        IFS="${r_save_IFS}"
+        if test x"${r_want_lib}" = xtrue; then
+          R_SH_VAR_ADD(R_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
+        fi
+      fi
+      ;;
+  esac
+done
+## Handle JAVA_LIBS specially so that users can conveniently set just
+## R_JAVA_LD_LIBRARY_PATH in their environment.
+for arg in ${JAVA_LIBS}; do
+  case "${arg}" in
+    -L*)
+      lib=`echo ${arg} | sed "s/^-L//"`
+      r_want_lib=true
+      ## don't add anything for Darwin
+      case "${host_os}" in darwin*) r_want_lib=false ;; esac
+      ## Do not add non-existent directories.
+      test -d "${lib}" || r_want_lib=false
+      if test x"${r_want_lib}" = xtrue; then
+        ## Canonicalize (/usr/lib/j2sdk1.5-sun/jre/../lib/i386).
+        lib=`cd "${lib}" && ${GETWD}`
+        ## Do not add something twice, or something already in
+        ## R_LD_LIBRARY_PATH or the defaults.
+        r_save_IFS="${IFS}"; IFS="${PATH_SEPARATOR}"
+        for dir in ${R_JAVA_LD_LIBRARY_PATH}${IFS}${R_LD_LIBRARY_PATH}${IFS}${r_ld_library_defaults}; do
+          if test x"${dir}" = x"${lib}"; then
+             r_want_lib=false
+             break
+          fi
+        done
+        IFS="${r_save_IFS}"
+        if test x"${r_want_lib}" = xtrue; then
+          R_SH_VAR_ADD(R_JAVA_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
+        fi
       fi
       ;;
   esac
@@ -1850,6 +1883,7 @@ done
 ## </FIXME>
 
 AC_SUBST(R_LD_LIBRARY_PATH)
+AC_SUBST(R_JAVA_LD_LIBRARY_PATH)
 
 ## Recommended packages.
 if test "${use_recommended_packages}" = yes; then
