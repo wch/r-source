@@ -2987,15 +2987,15 @@ port would be greatly appreciated.
 @section AIX
 @cindex AIX
 
-On AIX 4.3.3 and AIX 5.1/2, it was found that the use of ``run time
-linking'' (as opposed to normal AIX style linking) was required.  For
-this, the @R{} main program must be linked to the runtime linker with
-the @option{-brtl} linker option, and shareable objects must be enabled
-for runtime linking with the @option{-G} linker option.  Without these
-options, the AIX linker would not automatically link to any shared
-object with a @file{.so} extension.  Also, the @R{} main program would
-be unable to dynamically load modules (such as X11) with the
-@code{dlopen} call.
+On AIX 4.3.3 and AIX 5.1/2 (and probably latter), it was found that the
+use of ``run time linking'' (as opposed to normal AIX style linking) was
+required.  For this, the @R{} main program must be linked to the runtime
+linker with the @option{-brtl} linker option, and shareable objects must
+be enabled for runtime linking with the @option{-G} linker option.
+Without these options, the AIX linker would not automatically link to
+any shared object with a @file{.so} extension.  Also, the @R{} main
+program would be unable to dynamically load modules (such as X11) with
+the @code{dlopen} call.
 
 When setting @code{MAIN_LDFLAGS} and @code{SHLIB_LDFLAGS} accordingly,
 note that linker flags must be escaped using @samp{-Wl,} if
@@ -3041,6 +3041,9 @@ Ei-ji Nakama has reported that @file{src/main/regex.c} in
 in @code{CFLAGS} in AIX@tie{}5.x (and does not work correctly with
 AIX@tie{}4.x).  We believe that the patch applied since obviates the
 need for this.  He tested @R{}@tie{}2.2.1@tie{}beta on AIX@tie{}5.2.
+
+It seems that AIX@tie{}5.3 defines the macro @samp{SOCKLEN_T} and so
+@R{} versions prior to 2.3.0 cannot be compiled on that version of AIX.
 
 
 @node New platforms,  , AIX, Platform notes
