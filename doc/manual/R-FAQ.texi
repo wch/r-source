@@ -2831,6 +2831,8 @@ Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
 @item ifs
 Iterated Function Systems distribution function estimator.
+@item igraph
+Routines for simple graphs.
 @item iid.test
 Testing whether data is independent and identically distributed.
 @item impute
