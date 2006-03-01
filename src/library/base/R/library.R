@@ -594,9 +594,9 @@ function(chname, libpath, verbose = getOption("verbose"),
         chname <- substr(chname, 1, nc_chname - nc_file_ext)
 
      file <- if(nchar(.Platform$r_arch))
-             file.path(pkg, "libs", .Platform$r_arch,
+             file.path(libpath, "libs", .Platform$r_arch,
                        paste(chname, file.ext, sep = ""))
-     else    file.path(pkg, "libs",
+     else    file.path(libpath, "libs",
                        paste(chname, file.ext, sep = ""))
 
     pos <- which(sapply(dll_list, function(x) x[["path"]] == file))
