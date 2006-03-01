@@ -245,6 +245,12 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
 	strncpy(data, CHAR(STRING_ELT(svec, 0)), 10);
 	if (strlen(CHAR(STRING_ELT(svec, 0))) > 10) strcat(data, "...");
 	svec = mkString(data);
+    } else if(R_BrowseLines > 0 && 
+	      localData.linenumber > R_BrowseLines) {
+	/* we need to truncate to fewer lines in the browser call */
+	PROTECT(svec = lengthgets(svec, R_BrowseLines+1));
+	SET_STRING_ELT(svec, R_BrowseLines, mkChar("  ..."));
+	UNPROTECT(1);
     }
     R_print.digits = savedigits;
     if ((opts & WARNINCOMPLETE) && !localData.sourceable)

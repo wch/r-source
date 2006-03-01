@@ -71,6 +71,11 @@ getOption(x)
       that the change takes effect before the base package is
       initialized (see \code{\link{Startup}}).}
 
+    \item{\code{deparse.max.lines}:}{controls the number of lines used
+      when deparsing in \code{\link{traceback}} and
+      \code{\link{browser}}.  Initially unset, and only used if set to
+      a positive integer.}
+
     \item{\code{digits}:}{controls the number of digits to print when
       printing numeric values.  It is a suggestion only.  Valid values
       are 1\dots22 with default 7.  See \code{\link{print.default}}.}

@@ -32,7 +32,9 @@ traceback(x = NULL)
 \value{
   \code{traceback()} returns nothing, but prints the deparsed call stack
   deepest call first.  The calls may print on more than one line, and
-  the first line for each call is labelled by the frame number.
+  the first line for each call is labelled by the frame number.  The
+  number of lines printed per call can be limited by setting
+  \code{\link{options}(deparse.max.lines)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

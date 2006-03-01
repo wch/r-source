@@ -342,6 +342,10 @@ NEW FEATURES
 	if the quiet flag is on and if the save action is known (e.g. this
 	is true for --slave).
 
+    o	The number of lines of deparsed calls printed by browser() and
+	traceback() can be limited by the option "deparse.max.lines".
+	(Wish of PR#8638.)
+
 
 DEPRECATED & DEFUNCT
 

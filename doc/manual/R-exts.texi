@@ -3680,7 +3680,9 @@ Error: no valid set of coefficients has been found: please supply starting value
 @noindent
 The calls to the active frames are given in reverse order (starting with
 the innermost).  So we see the error message comes from an explicit
-check in @code{glm.fit}.
+check in @code{glm.fit}.  (@code{traceback()} shows you all the lines of
+the function calls, which can be limited by setting @code{option}
+@option{"deparse.max.lines"}.)
 
 Sometimes the traceback will indicate that the error was detected inside
 compiled code, for example (from @code{?nls})
@@ -3796,11 +3798,12 @@ Enter an environment number, or 0 to exit  Selection:
 
 @noindent
 which gives the same sequence of calls as @code{traceback}, but in
-outer-first order and truncated to the current width.  However, we can now
-examine in more detail what was happening at the time of the error.
-Selecting an environment opens the browser in that frame.  So we select
-the function call which spawned the error message, and explore some of
-the variables (and execute two function calls).
+outer-first order and with only the first line truncated to the current
+width.  However, we can now examine in more detail what was happening at
+the time of the error.  Selecting an environment opens the browser in
+that frame.  So we select the function call which spawned the error
+message, and explore some of the variables (and execute two function
+calls).
 
 @example
 Enter an environment number, or 0 to exit  Selection: 2

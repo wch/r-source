@@ -77,7 +77,9 @@ recover <-
     for(i in rev(seq(length=n))) {
         calli <- calls[[i]]
         fname <- calli[[1]]
-        if(!is.na(match(deparse(fname), c("methods::.doTrace", ".doTrace")))) {
+        ## deparse can use more than one line
+        if(!is.na(match(deparse(fname)[1],
+                        c("methods::.doTrace", ".doTrace")))) {
             from <- i-1
             break
         }

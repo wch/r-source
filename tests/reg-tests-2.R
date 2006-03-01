@@ -1747,3 +1747,18 @@ pgamma(0.9*1e25, 1e25, log=TRUE)
 # SPSS-style dates
 c(10485849600,10477641600,10561104000,10562745600)+ISOdate(1582,10,14)
 ## was in the local time zone in 2.2.1.
+
+
+## Limiting lines on deparse (wishlist PR#8638)
+op <- options(deparse.max.lines = 3)
+f <- function(...) browser()
+do.call(f, mtcars)
+c
+
+options(error = expression(NULL))
+f <- function(...) stop()
+do.call(f, mtcars)
+traceback()
+
+options(op)
+## unlimited < 2.3.0
