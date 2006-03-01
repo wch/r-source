@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-02-28 r37448)
+Version 2.3.0 Under development (unstable) (2006-03-01 r37455)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -5028,5 +5028,5 @@ Error in function (...)  :
 1: do.call(f, mtcars)
 > 
 > options(op)
-> ##
+> ## unlimited < 2.3.0
 > 
