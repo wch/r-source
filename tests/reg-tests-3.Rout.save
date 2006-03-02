@@ -511,6 +511,7 @@ V             0.0cwt 0.2cwt 0.4cwt 0.6cwt
   rep           5.00   6.00   6.00   6.00
 > ## wrong printed output in 2.1.0
 > 
+> 
 > ## drop1 on weighted lm() fits
 > if(require(MASS)) {
 +     hills.lm <- lm(time ~ 0 + dist + climb, data=hills, weights=1/dist^2)
@@ -571,4 +572,33 @@ I(climb/dist)  1      9.73 451.95  91.54
 > sprintf("%10.4g", 12345.6789)
 [1] " 1.235e+04"
 > ## Windows used e+008 etc prior to 2.3.0
+> 
+> 
+> ## weighted glm() fits
+> if(require(MASS)) {
++     hills.glm <- glm(time ~ 0 + dist + climb, data=hills, weights=1/dist^2)
++     print(AIC(hills.glm))
++     print(extractAIC(hills.glm))
++     print(drop1(hills.glm))
++     stats:::drop1.default(hills.glm)
++ }
+[1] 322.2318
+[1]   2.0000 322.2318
+Single term deletions
+
+Model:
+time ~ 0 + dist + climb
+       Df Deviance    AIC
+<none>      442.22 322.23
+dist    1   773.14 339.78
+climb   1   451.95 320.99
+Single term deletions
+
+Model:
+time ~ 0 + dist + climb
+       Df    AIC
+<none>    322.23
+dist    1 339.78
+climb   1 320.99
+> ## wrong AIC() and drop1 prior to 2.3.0.
 > 

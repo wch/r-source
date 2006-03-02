@@ -222,8 +222,10 @@ gaussian <- function (link = "identity")
 		   linkinv = stats$linkinv,
 		   variance = function(mu) rep.int(1, length(mu)),
 		   dev.resids = function(y, mu, wt) wt * ((y - mu)^2),
-		   aic =	function(y, n, mu, wt, dev)
-		   sum(wt)*(log(dev/sum(wt)*2*pi)+1)+2,
+		   aic =	function(y, n, mu, wt, dev) {
+                       nobs <- length(y)
+                       nobs*(log(dev/nobs*2*pi)+1)+2 - sum(log(wt))
+                   },
 		   mu.eta = stats$mu.eta,
 		   initialize = expression({
 		       n <- rep.int(1, nobs)

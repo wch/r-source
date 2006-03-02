@@ -797,6 +797,10 @@ BUG FIXES
 	formula in the orginal fit to look for objects such as the
 	'data' and 'subset' arguments.
 
+    o	gaussian()$aic was inconsistent with e.g. AIC() and extractAIC()
+	for weighted fits: it treated the weights as case weights and
+	not variance factors.
+
 
 
 

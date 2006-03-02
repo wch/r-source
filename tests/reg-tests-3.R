@@ -42,6 +42,7 @@ model.tables(oats.aov, "means", cterms=c("N", "V:N"))
 }
 ## wrong printed output in 2.1.0
 
+
 ## drop1 on weighted lm() fits
 if(require(MASS)) {
     hills.lm <- lm(time ~ 0 + dist + climb, data=hills, weights=1/dist^2)
@@ -67,3 +68,14 @@ sprintf("%.4g", 12345.6789)
 sprintf("%9.4g", 12345.6789)
 sprintf("%10.4g", 12345.6789)
 ## Windows used e+008 etc prior to 2.3.0
+
+
+## weighted glm() fits
+if(require(MASS)) {
+    hills.glm <- glm(time ~ 0 + dist + climb, data=hills, weights=1/dist^2)
+    print(AIC(hills.glm))
+    print(extractAIC(hills.glm))
+    print(drop1(hills.glm))
+    stats:::drop1.default(hills.glm)
+}
+## wrong AIC() and drop1 prior to 2.3.0.
