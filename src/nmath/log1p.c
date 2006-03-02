@@ -130,7 +130,7 @@ double log1p(double x)
     /* else */
     if (x < xmin) {
 	/* answer less than half precision because x too near -1 */
-	ML_ERROR(ME_PRECISION);
+	ML_ERROR(ME_PRECISION, "log1p");
     }
     return log(1 + x);
 }

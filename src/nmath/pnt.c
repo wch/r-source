@@ -99,8 +99,8 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 	if(p == 0.) { /* underflow! */
 
 	    /*========== really use an other algorithm for this case !!! */
-	    ML_ERROR(ME_UNDERFLOW);
-	    ML_ERROR(ME_RANGE); /* |delta| too large */
+	    ML_ERROR(ME_UNDERFLOW, "pnt");
+	    ML_ERROR(ME_RANGE, "pnt"); /* |delta| too large */
 	    return R_DT_0;
 	}
 #ifdef DEBUG_pnt
@@ -133,7 +133,7 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 	    tnc += p * xodd + q * xeven;
 	    s -= p;
 	    if(s <= 0.) { /* happens e.g. for (t,df,delta)=(40,10,38.5), after 799 it.*/
-		ML_ERROR(ME_PRECISION);
+		ML_ERROR(ME_PRECISION, "pnt");
 #ifdef DEBUG_pnt
 		REprintf("s = %#14.7g < 0 !!! ---> non-convergence!!\n", s);
 #endif
@@ -147,7 +147,7 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 	    if(errbd < errmax) goto finis;/*convergence*/
 	}
 	/* non-convergence:*/
-	ML_ERROR(ME_NOCONV);
+	ML_ERROR(ME_NOCONV, "pnt");
     }
     else { /* x = t = 0 */
 	tnc = 0.;
@@ -160,7 +160,7 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
        We want to warn about cancellation here */
     if(lower_tail) return log_p	? log(tnc) : tnc;
     else {
-	if(tnc > 1 - 1e-10) ML_ERROR(ME_PRECISION);
+	if(tnc > 1 - 1e-10) ML_ERROR(ME_PRECISION, "pnt");
 	tnc = fmin2(tnc, 1.0);  /* Precaution */
 	return log_p ? log1p(-tnc) : (1 - tnc);
     }

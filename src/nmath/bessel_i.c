@@ -46,7 +46,7 @@ double bessel_i(double x, double alpha, double expo)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE);
+	ML_ERROR(ME_RANGE, "bessel_i");
 	return ML_NAN;
     }
     ize = (long)expo;
@@ -201,7 +201,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
 	*ncalc = *nb;
 	if((*ize == 1 && *x > exparg_BESS) ||
 	   (*ize == 2 && *x > xlrg_BESS_IJ)) {
-	    ML_ERROR(ME_RANGE);
+	    ML_ERROR(ME_RANGE, "I_bessel");
 	    for(k=1; k <= *nb; k++)
 		bi[k]=ML_POSINF;
 	    return;

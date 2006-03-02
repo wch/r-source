@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2003	      The R Foundation
+ *  Copyright (C) 2003-2006     The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,9 +40,9 @@
 #include <stdlib.h>
 
 #ifdef MATHLIB_STANDALONE
-#define ML_ERR_ret_NAN(_k_) {ML_ERROR(ME_DOMAIN); rN[_k_]=-1; return;}
+#define ML_ERR_ret_NAN(_k_) {ML_ERROR(ME_DOMAIN, "rmultinom"); rN[_k_]=-1; return;}
 #else
-#define ML_ERR_ret_NAN(_k_) {ML_ERROR(ME_DOMAIN); rN[_k_]=NA_INTEGER; return;}
+#define ML_ERR_ret_NAN(_k_) {ML_ERROR(ME_DOMAIN, "rmultinom"); rN[_k_]=NA_INTEGER; return;}
 #endif
 
 void rmultinom(int n, double* prob, int K, int* rN)
@@ -54,10 +54,10 @@ void rmultinom(int n, double* prob, int K, int* rN)
     double pp, p_tot = 0.;
 
 #ifdef MATHLIB_STANDALONE
-    if (K < 1) { ML_ERROR(ME_DOMAIN); return;}
+    if (K < 1) { ML_ERROR(ME_DOMAIN, "rmultinom"); return;}
     if (n < 0)  ML_ERR_ret_NAN(0);
 #else
-    if (K == NA_INTEGER || K < 1) { ML_ERROR(ME_DOMAIN); return;}
+    if (K == NA_INTEGER || K < 1) { ML_ERROR(ME_DOMAIN, "rmultinom"); return;}
     if (n == NA_INTEGER || n < 0)  ML_ERR_ret_NAN(0);
 #endif
 

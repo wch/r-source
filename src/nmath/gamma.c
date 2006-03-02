@@ -123,7 +123,7 @@ double gammafn(double x)
     /* If the argument is exactly zero or a negative integer
      * then return NaN. */
     if (x == 0 || (x < 0 && x == (long)x)) {
-	ML_ERROR(ME_DOMAIN);
+	ML_ERROR(ME_DOMAIN, "gammafn");
 	return ML_NAN;
     }
 
@@ -151,12 +151,12 @@ double gammafn(double x)
 	    /* The answer is less than half precision */
 	    /* because x too near a negative integer. */
 	    if (x < -0.5 && fabs(x - (int)(x - 0.5) / x) < dxrel) {
-		ML_ERROR(ME_PRECISION);
+		ML_ERROR(ME_PRECISION, "gammafn");
 	    }
 
 	    /* The argument is so close to 0 that the result would overflow. */
 	    if (y < xsml) {
-		ML_ERROR(ME_RANGE);
+		ML_ERROR(ME_RANGE, "gammafn");
 		if(x > 0) return ML_POSINF;
 		else return ML_NEGINF;
 	    }
@@ -181,12 +181,12 @@ double gammafn(double x)
 	/* gamma(x) for	 y = |x| > 10. */
 
 	if (x > xmax) {			/* Overflow */
-	    ML_ERROR(ME_RANGE);
+	    ML_ERROR(ME_RANGE, "gammafn");
 	    return ML_POSINF;
 	}
 
 	if (x < xmin) {			/* Underflow */
-	    ML_ERROR(ME_UNDERFLOW);
+	    ML_ERROR(ME_UNDERFLOW, "gammafn");
 	    return ML_UNDERFLOW;
 	}
 
@@ -206,12 +206,12 @@ double gammafn(double x)
 	    /* The answer is less than half precision because */
 	    /* the argument is too near a negative integer. */
 
-	    ML_ERROR(ME_PRECISION);
+	    ML_ERROR(ME_PRECISION, "gammafn");
 	}
 
 	sinpiy = sin(M_PI * y);
 	if (sinpiy == 0) {		/* Negative integer arg - overflow */
-	    ML_ERROR(ME_RANGE);
+	    ML_ERROR(ME_RANGE, "gammafn");
 	    return ML_POSINF;
 	}
 

@@ -70,15 +70,15 @@ double pnbeta(double x, double a, double b, double lambda,
     while (errbd > errmax && j < itrmax + x0);
 
     if (errbd > errmax)
-	ML_ERROR(ME_PRECISION);
+	ML_ERROR(ME_PRECISION, "pnbeta");
     if (j >= itrmax + x0)
-	ML_ERROR(ME_NOCONV);
+	ML_ERROR(ME_NOCONV, "pnbeta");
     
     /* return R_DT_val(ans); 
        We want to warn about cancellation here */
     if(lower_tail) return log_p	? log(ans) : ans;
     else {
-	if(ans > 1 - 1e-10) ML_ERROR(ME_PRECISION);
+	if(ans > 1 - 1e-10) ML_ERROR(ME_PRECISION, "pnbeta");
 	ans = fmin2(ans, 1.0);  /* Precaution */
 	return log_p ? log1p(-ans) : (1 - ans);
     }

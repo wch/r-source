@@ -47,7 +47,7 @@ double bessel_k(double x, double alpha, double expo)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE);
+	ML_ERROR(ME_RANGE, "bessel_k");
 	return ML_NAN;
     }
     ize = (long)expo;
@@ -217,7 +217,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
     if (*nb > 0 && (0. <= nu && nu < 1.) && (1 <= *ize && *ize <= 2)) {
 	if(ex <= 0 || (*ize == 1 && ex > xmax_BESS_K)) {
 	    if(ex <= 0) {
-		ML_ERROR(ME_RANGE);
+		ML_ERROR(ME_RANGE, "K_bessel");
 		for(i=0; i < *nb; i++)
 		    bk[i] = ML_POSINF;
 	    } else /* would only have underflow */

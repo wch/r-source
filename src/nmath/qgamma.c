@@ -215,7 +215,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 		     p, MAXIT, ch/fabs(q - ch));
 #endif
 /* was
- *    ML_ERROR(ME_PRECISION);
+ *    ML_ERROR(ME_PRECISION, "qgamma");
  * does nothing in R !*/
 
 END:

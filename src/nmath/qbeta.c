@@ -168,7 +168,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 	yprev = y;
     }
     /*-- NOT converged: Iteration count --*/
-    ML_ERROR(ME_PRECISION);
+    ML_ERROR(ME_PRECISION, "qbeta");
 
  L_converged:
     if (swap_tail)

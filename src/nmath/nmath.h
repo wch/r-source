@@ -111,33 +111,33 @@ int R_finite(double);
 #define ME_UNDERFLOW	16
 /*	and underflow occured (important for IEEE)*/
 
-#define ML_ERR_return_NAN { ML_ERROR(ME_DOMAIN); return ML_NAN; }
+#define ML_ERR_return_NAN { ML_ERROR(ME_DOMAIN, ""); return ML_NAN; }
 
 /* For a long time prior to R 2.3.0 ML_ERROR did nothing.
    We don't report ME_DOMAIN errors as the callers collect ML_NANs into
    a single warning.
  */
-#define ML_ERROR(x) { \
+#define ML_ERROR(x, s) { \
    if(x > ME_DOMAIN) { \
        char *msg = ""; \
        switch(x) { \
        case ME_DOMAIN: \
-	   msg = "argument out of domain\n"; \
+	   msg = "argument out of domain in '%s'\n"; \
 	   break; \
        case ME_RANGE: \
-	   msg = "value out of range\n"; \
+	   msg = "value out of range in '%s'\n"; \
 	   break; \
        case ME_NOCONV: \
-	   msg = "convergence failed\n"; \
+	   msg = "convergence failed in '%s'\n"; \
 	   break; \
        case ME_PRECISION: \
-	   msg = "full precision was not achieved\n"; \
+	   msg = "full precision was not achieved in '%s'\n"; \
 	   break; \
        case ME_UNDERFLOW: \
-	   msg = "underflow occurred\n"; \
+	   msg = "underflow occurred in '%s'\n"; \
 	   break; \
        } \
-       MATHLIB_WARNING("%s", msg); \
+       MATHLIB_WARNING(msg, s); \
    } \
 }
 

@@ -127,7 +127,7 @@ double qtukey(double p, double rr, double cc, double df,
 
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(rr) || ISNAN(cc) || ISNAN(df)) {
-	ML_ERROR(ME_DOMAIN);
+	ML_ERROR(ME_DOMAIN, "qtukey");
 	return p + rr + cc + df;
     }
 #endif
@@ -185,6 +185,6 @@ double qtukey(double p, double rr, double cc, double df,
     }
 
     /* The process did not converge in 'maxiter' iterations */
-    ML_ERROR(ME_NOCONV);
+    ML_ERROR(ME_NOCONV, "qtukey");
     return ans;
 }

@@ -47,8 +47,6 @@ double qnchisq(double p, double df, double lambda, int lower_tail, int log_p)
 
     R_Q_P01_boundaries(p, 0, ML_POSINF);
 
-    p = R_D_qIv(p);
-
     /* Invert pnchisq(.) :
      * 1. finding an upper and lower bound */
     {
@@ -58,9 +56,11 @@ double qnchisq(double p, double df, double lambda, int lower_tail, int log_p)
 	b = (lambda*lambda)/(df + 3*lambda);
 	c = (df + 3*lambda)/(df + 2*lambda);
 	ff = (df + 2 * lambda)/(c*c);
-	ux = b + c * qchisq(p, ff, lower_tail, FALSE);
+	ux = b + c * qchisq(p, ff, lower_tail, log_p);
 	if(ux < 0) ux = 1;
     }
+    p = R_D_qIv(p);
+
     if(lower_tail) {
 	if(p > 1 - DBL_EPSILON) return ML_POSINF;
 	pp = fmin2(1 - DBL_EPSILON, p * (1 + Eps));

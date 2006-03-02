@@ -41,7 +41,7 @@ double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
     ans = pnchisq_raw(x, f, theta, 1e-12, 8*DBL_EPSILON, 1000000, lower_tail);
     if(lower_tail || theta < 80) return log_p ? log(ans) : ans;
     else {
-	if(ans < 1e-10) ML_ERROR(ME_PRECISION);
+	if(ans < 1e-10) ML_ERROR(ME_PRECISION, "pnchisq");
 	ans = fmax2(ans, 0.0);  /* Precaution PR#7099 */
 	return log_p ? log(ans) : ans;
     }

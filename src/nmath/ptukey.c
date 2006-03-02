@@ -399,7 +399,7 @@ double ptukey(double q, double rr, double cc, double df,
     }
 
     if(otsum > eps2) { /* not converged */
-	ML_ERROR(ME_PRECISION);
+	ML_ERROR(ME_PRECISION, "ptukey");
     }
     if (ans > 1.)
 	ans = 1.;

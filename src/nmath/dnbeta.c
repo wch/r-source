@@ -92,7 +92,7 @@ double dnbeta(double x, double a, double b, double lambda, int give_log)
 	if(1 - psum < eps) break;
     }
     if(1 - psum >= eps) { /* not converged */
-	ML_ERROR(ME_PRECISION);
+	ML_ERROR(ME_PRECISION, "dnbeta");
     }
     return R_D_val(sum);
 }

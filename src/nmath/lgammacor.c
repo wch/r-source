@@ -90,7 +90,7 @@ double attribute_hidden lgammacor(double x)
     if (x < 10)
 	ML_ERR_return_NAN
     else if (x >= xmax) {
-	ML_ERROR(ME_UNDERFLOW);
+	ML_ERROR(ME_UNDERFLOW, "lgammacor");
 	return ML_UNDERFLOW;
     }
     else if (x < xbig) {

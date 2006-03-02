@@ -46,7 +46,7 @@ double bessel_y(double x, double alpha)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE);
+	ML_ERROR(ME_RANGE, "bessel_y");
 	return ML_NAN;
     }
     if (alpha < 0) {
@@ -203,7 +203,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
     nu = *alpha;
     if (*nb > 0 && 0. <= nu && nu < 1.) {
 	if(ex < DBL_MIN || ex > xlrg_BESS_Y) {
-	    ML_ERROR(ME_RANGE);
+	    ML_ERROR(ME_RANGE, "Y_bessel");
 	    *ncalc = *nb;
 	    if(ex > xlrg_BESS_Y)  by[0]=ML_POSINF;
 	    else if(ex < DBL_MIN) by[0]=ML_NEGINF;
