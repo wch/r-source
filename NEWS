@@ -810,6 +810,13 @@ BUG FIXES
 		CHANGES IN R VERSION 2.2.1 patched
 
 
+INSTALLATION CHANGES
+
+
+    o	The macro SOCKLEN_T has been replaced by R_SOCKLEN_T to work
+	around a problem with the headers of AIX 5.3.
+
+
 BUG FIXES
 
     o	sub(fixed = TRUE) could get wrong the length of the character
@@ -1795,6 +1802,7 @@ BUG FIXES
 
     o	R CMD INSTALL was not cleaning up after an unsuccessful
 	install of a non-bundle which was not already installed.
+
 
 
 
