@@ -64,6 +64,9 @@ BUG FIXES
 	the upper scope had different orders for the main effects.
 	(Another manifestation of PR#7842.)
 
+    o	The "lm" method of drop1 was giving incorrect results for
+	weighted fits (since deviance.lm was called on a non-lm object).
+
 
 
 		CHANGES IN R VERSION 2.2.1
