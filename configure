@@ -1910,7 +1910,7 @@ fi
 
 ## R installation directories
 
-if test -z ${rdocdir}; then
+if test -z "${rdocdir}"; then
   rdocdir='${rhome}/doc'
 fi
 

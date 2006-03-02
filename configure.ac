@@ -150,7 +150,7 @@ R installation directories:
     rincludedir=DIR   R include files to DIR  @<:@R_HOME/include@:>@
     rsharedir=DIR     R share files to DIR    @<:@R_HOME/share@:>@])dnl
 
-if test -z ${rdocdir}; then
+if test -z "${rdocdir}"; then
   rdocdir='${rhome}/doc'
 fi
 AC_SUBST([rdocdir])
