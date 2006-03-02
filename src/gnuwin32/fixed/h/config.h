@@ -798,7 +798,7 @@
 /* #undef SIZE_MAX */
 
 /* Type for socket lengths: socklen_t, sock_t, int? */
-#define SOCKLEN_T int
+#define R_SOCKLEN_T int
 
 /* If using the C implementation of alloca, define if you know the
    direction of stack growth for your system; otherwise it will be
