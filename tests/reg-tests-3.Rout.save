@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-02 r36948)
+Version 2.3.0 Under development (unstable) (2006-03-02 r37458)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -510,6 +510,39 @@ V             0.0cwt 0.2cwt 0.4cwt 0.6cwt
   Victory      69.77  89.20 110.37 118.03
   rep           5.00   6.00   6.00   6.00
 > ## wrong printed output in 2.1.0
+> 
+> ## drop1 on weighted lm() fits
+> if(require(MASS)) {
++     hills.lm <- lm(time ~ 0 + dist + climb, data=hills, weights=1/dist^2)
++     print(drop1(hills.lm))
++     print(stats:::drop1.default(hills.lm))
++     hills.lm2 <- lm(time/dist ~ 1 + I(climb/dist), data=hills)
++     drop1(hills.lm2)
++ }
+Single term deletions
+
+Model:
+time ~ 0 + dist + climb
+       Df Sum of Sq    RSS    AIC
+<none>              442.22  92.78
+dist    1    330.92 773.14 110.33
+climb   1      9.73 451.95  91.54
+Single term deletions
+
+Model:
+time ~ 0 + dist + climb
+       Df     AIC
+<none>     92.776
+dist    1 110.329
+climb   1  91.538
+Single term deletions
+
+Model:
+time/dist ~ 1 + I(climb/dist)
+              Df Sum of Sq    RSS    AIC
+<none>                     442.22  92.78
+I(climb/dist)  1      9.73 451.95  91.54
+> ## quoted unweighted RSS etc in 2.2.1
 > 
 > 
 > ## tests of ISO C99 compliance (Windows fails without a workaround)

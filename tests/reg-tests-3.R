@@ -42,6 +42,16 @@ model.tables(oats.aov, "means", cterms=c("N", "V:N"))
 }
 ## wrong printed output in 2.1.0
 
+## drop1 on weighted lm() fits
+if(require(MASS)) {
+    hills.lm <- lm(time ~ 0 + dist + climb, data=hills, weights=1/dist^2)
+    print(drop1(hills.lm))
+    print(stats:::drop1.default(hills.lm))
+    hills.lm2 <- lm(time/dist ~ 1 + I(climb/dist), data=hills)
+    drop1(hills.lm2)
+}
+## quoted unweighted RSS etc in 2.2.1
+
 
 ## tests of ISO C99 compliance (Windows fails without a workaround)
 sprintf("%g", 123456789)

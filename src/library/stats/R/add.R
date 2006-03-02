@@ -362,7 +362,8 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 	z <- if(iswt) lm.wfit(x[, jj, drop = FALSE], y, wt, offset=offset)
 	else lm.fit(x[, jj, drop = FALSE], y, offset=offset)
 	dfs[i] <- z$rank
-	RSS[i] <- deviance.lm(z)
+        oldClass(z) <- "lm" # needed as deviance.lm calls residuals.lm
+	RSS[i] <- deviance(z)
     }
     scope <- c("<none>", scope)
     dfs <- c(object$rank, dfs)
