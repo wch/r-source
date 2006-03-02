@@ -103,7 +103,6 @@ static void menusource(control m)
     if (!ConsoleAcceptCmd) return;
     setuserfilter("R files (*.R)\0*.R\0S files (*.q)\0*.q\0All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Select file to source"), "");
-    Rwin_fpset();
 /*    show(RConsole); */
     if (fn) {
 	fixslash(fn);
@@ -125,7 +124,6 @@ static void menuloadimage(control m)
     if (!ConsoleAcceptCmd) return;
     setuserfilter("R images (*.RData)\0*.RData\0R images - old extension (*.rda)\0*.rda\0All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Select image to load"), "");
-    Rwin_fpset();
 /*    show(RConsole); */
     if (fn) {
 	fixslash(fn);
@@ -141,7 +139,6 @@ static void menusaveimage(control m)
     if (!ConsoleAcceptCmd) return;
     setuserfilter("R images (*.RData)\0*.RData\0All files (*.*)\0*.*\0\0");
     fn = askfilesave(G_("Save image in"), ".RData");
-    Rwin_fpset();
 /*    show(RConsole); */
     if (fn) {
 	fixslash(fn);
@@ -156,7 +153,6 @@ static void menuloadhistory(control m)
 
     setuserfilter("All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Load history from"), R_HistoryFile);
-    Rwin_fpset();
 /*    show(RConsole); */
     if (fn) {
 	fixslash(fn);
@@ -170,7 +166,6 @@ static void menusavehistory(control m)
 
     setuserfilter("All files (*.*)\0*.*\0\0");
     fn = askfilesave(G_("Save history in"), R_HistoryFile);
-    Rwin_fpset();
 /*    show(RConsole); */
     if (fn) {
 	fixslash(fn);
@@ -182,7 +177,6 @@ static void menusavehistory(control m)
 static void menuchangedir(control m)
 {
     askchangedir();
-    Rwin_fpset();
 /*    show(RConsole); */
 }
 
@@ -1217,7 +1211,6 @@ int DialogSelectFile(char *buf, int len)
 
     setuserfilter("All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Select file"), "");
-    Rwin_fpset();
 /*    if (!CharacterMode)
   	show(RConsole); */
     if (fn)
