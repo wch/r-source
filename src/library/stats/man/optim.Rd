@@ -148,6 +148,9 @@ optim(par, fn, gr = NULL,
     \item{\code{tmax}}{is the number of function evaluations at each
       temperature for the \code{"SANN"} method. Defaults to \code{10}.}
   }
+
+  As from \R{} 2.3.0, any names given to \code{par} will be copied to
+  the vectors passed to \code{fn} and \code{gr}.
 }
 \value{
   A list with components:
