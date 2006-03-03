@@ -26,7 +26,8 @@ step(object, scope, scale = 0,
   \item{scale}{
     used in the definition of the AIC statistic for selecting the models,
     currently only for \code{\link{lm}}, \code{\link{aov}} and
-    \code{\link{glm}} models.
+    \code{\link{glm}} models.  The default value, \code{0}, indicates
+    the scale should be estimated: see \code{\link{extractAIC}}.
   }
   \item{direction}{
     the mode of stepwise search, can be one of \code{"both"},
@@ -93,18 +94,18 @@ step(object, scope, scale = 0,
   
   There is a potential problem in using \code{\link{glm}} fits with a
   variable \code{scale}, as in that case the deviance is not simply
-  related to the maximized log-likelihood. The \code{"glm"} method for
+  related to the maximized log-likelihood.  The \code{"glm"} method for
   function \code{\link{extractAIC}} makes the
   appropriate adjustment for a \code{gaussian} family, but may need to be
-  amended for other cases. (The \code{binomial} and \code{poisson}
+  amended for other cases.  (The \code{binomial} and \code{poisson}
   families have fixed \code{scale} by default and do not correspond
   to a particular maximum-likelihood problem for variable \code{scale}.)
 }
 \note{
   This function differs considerably from the function in S, which uses a
-  number of approximations and does not compute the correct AIC.
+  number of approximations and does not in general compute the correct AIC.
 
-  This is a minimal implementation. Use \code{\link[MASS]{stepAIC}}
+  This is a minimal implementation.  Use \code{\link[MASS]{stepAIC}}
   in package \pkg{MASS} for a wider range of object classes.
 }
 \section{Warning}{

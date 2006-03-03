@@ -32,6 +32,12 @@ AIC(object, \dots, k = 2)
   computing the log-likelihood for the given class.
 
   When comparing fitted objects, the smaller the AIC, the better the fit.
+
+  The log-likelihood and hence the AIC is only defined up to an additive
+  constant.  Different constants have conventionally be used for
+  different purposes and so \code{\link{extractAIC}} and \code{AIC} may
+  give different values (and do for models of class \code{"lm"}: see the
+  help for \code{\link{extractAIC}}).
 }
 \value{
   If just one object is provided, returns a numeric value

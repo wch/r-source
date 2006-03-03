@@ -83,7 +83,8 @@ quasipoisson(link = "log")
   \item{dev.resids}{function giving the deviance residuals as a function
     of \code{(y, mu, wt)}.}
   \item{aic}{function giving the AIC value if appropriate (but \code{NA}
-    for a quasi- family).}
+    for the quasi- families).  See \code{\link{logLik}} for the assumptions
+      made about the dispersion parameter.}
   \item{mu.eta}{function: derivative \code{function(eta)}
     \eqn{d\mu / d\eta}{dmu/deta}.}
   \item{initialize}{expression.  This needs to set up whatever data
