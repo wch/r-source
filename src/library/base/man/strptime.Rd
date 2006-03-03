@@ -39,7 +39,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     This is used in printing times, and as a workaround for problems with
     using \code{"\%Z"} on most Linux systems.}
   \item{year, month, day}{numerical values to specify a day.}
-  \item{hour, min, sec}{numerical values for a time within a day.}
+  \item{hour, min, sec}{numerical values for a time within a day.
+    Fractional seconds are allowed.}
 }
 \details{
   \code{strftime} is an alias for \code{format.POSIXlt}, and

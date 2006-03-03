@@ -314,7 +314,7 @@ all.equal.POSIXct <- function(target, current, ..., scale=1)
 ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
 {
     x <- paste(year, month, day, hour, min, sec, sep="-")
-    as.POSIXct(strptime(x, "%Y-%m-%d-%H-%M-%S", tz=tz), tz=tz)
+    as.POSIXct(strptime(x, "%Y-%m-%d-%H-%M-%OS", tz=tz), tz=tz)
 }
 
 ISOdate <- function(year, month, day, hour=12, min=0, sec=0, tz="GMT")
