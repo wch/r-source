@@ -826,6 +826,10 @@ BUG FIXES
     o	as.table() now produces non-NA rownames when converting a
 	matrix of more than 26 rows.  (PR#8652)
 
+    o	Partial sorting used an algorithm that was intended only for a
+	few values of 'partial', and now switches to a barebones full
+	sort for more than 10.
+
 
 
 
