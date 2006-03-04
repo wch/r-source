@@ -28,7 +28,7 @@
  *	where M = E[X] = n*p (or = lambda), for	  x, M > 0
  *
  *	in a manner that should be stable (with small relative error)
- *	for all x and np. In particular for x/np close to 1, direct
+ *	for all x and M=np. In particular for x/np close to 1, direct
  *	evaluation fails, and evaluation is based on the Taylor series
  *	of log((1+v)/(1-v)) with v = (x-np)/(x+np).
  */

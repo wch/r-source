@@ -27,11 +27,12 @@
  *   This checks for argument validity, and calls dbinom_raw().
  *
  *   dbinom_raw() does the actual computation; note this is called by
- *   other functions in addition to dbinom()).
+ *   other functions in addition to dbinom().
  *     (1) dbinom_raw() has both p and q arguments, when one may be represented
  *         more accurately than the other (in particular, in df()).
  *     (2) dbinom_raw() does NOT check that inputs x and n are integers. This
  *         should be done in the calling function, where necessary.
+ *         -- but is not the case at all when called e.g., from df() or dbeta() !
  *     (3) Also does not check for 0 <= p <= 1 and 0 <= q <= 1 or NaN's.
  *         Do this in the calling function.
  */
@@ -39,7 +40,7 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double attribute_hidden 
+double attribute_hidden
 dbinom_raw(double x, double n, double p, double q, int give_log)
 {
     double lf, lc;
