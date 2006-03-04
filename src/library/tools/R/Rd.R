@@ -235,7 +235,7 @@ function(contents, outFile)
     ## <NOTE>
     ## To deal with possible changes in the format of the contents db
     ## in the future, use a version attribute and/or a formal class.
-    .saveRDS(contents, file = outFile)
+    .saveRDS(contents, file = outFile, compress = TRUE)
     ## </NOTE>
 }
 

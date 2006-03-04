@@ -136,13 +136,12 @@ function(x, ...)
 ### * .build_hsearch_index
 
 .build_hsearch_index <-
-function(contents, packageName, libDir)
+function(contents, packageName)
 {
     ## Build an index of the Rd contents in 'contents', of a package
-    ## named 'packageName' (to be) installed in 'libDir', in a form
-    ## useful for help.search().
-    ## As from 2.3.0 libDir is no longer recorded, but the format is
-    ## kept for back-compatibility.
+    ## named 'packageName' in a form useful for help.search().
+    ## As from 2.3.0 the installation directory is no longer recorded,
+    ## but the format is kept for back-compatibility.
 
     dbAliases <- dbConcepts <- dbKeywords <- matrix(character(), nc = 3)
 

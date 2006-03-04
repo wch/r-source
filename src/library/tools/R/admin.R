@@ -125,7 +125,8 @@ function(dir, packages)
                      package_info_rds_file,
                      package_info_dcf_file))
             next
-        .saveRDS(.split_description(.read_description(package_info_dcf_file)), package_info_rds_file)
+        .saveRDS(.split_description(.read_description(package_info_dcf_file)),
+                 package_info_rds_file)
     }
     invisible()
 }
@@ -196,8 +197,8 @@ function(dir, outDir)
         con <- textConnection(gsub("\n", " ", db[collationField]))
         on.exit(close(con))
         codeFilesInCspec <- scan(con, what = character(),
-                                 strip.white = TRUE, quiet = TRUE) 
-        ## Duplicated entries in the collaction spec?
+                                 strip.white = TRUE, quiet = TRUE)
+        ## Duplicated entries in the collation spec?
         badFiles <-
             unique(codeFilesInCspec[duplicated(codeFilesInCspec)])
         if(length(badFiles)) {
@@ -312,7 +313,7 @@ function(dir, outDir)
     if(!file_test("-d", docsDir)) {
         if(file_test("-d", dataDir))
             .saveRDS(.build_data_index(dataDir, NULL),
-                     file.path(outDir, "Meta", "data.rds"))
+                     file.path(outDir, "Meta", "data.rds"), compress = TRUE)
         return(invisible())
     }
 
@@ -345,8 +346,8 @@ function(dir, outDir)
     .write_contents_as_RDS(contents,
                            file.path(outDir, "Meta", "Rd.rds"))
 
-    .saveRDS(.build_hsearch_index(contents, packageName, outDir),
-             file.path(outDir, "Meta", "hsearch.rds"))
+    .saveRDS(.build_hsearch_index(contents, packageName),
+             file.path(outDir, "Meta", "hsearch.rds"), compress = TRUE)
 
     .write_contents_as_DCF(contents, packageName,
                            file.path(outDir, "CONTENTS"))
@@ -584,7 +585,7 @@ function(dir, outDir)
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
         stop(gettextf("cannot open directory '%s'", outMetaDir),
              domain = NA)
-    .saveRDS(nsInfo, nsInfoFilePath)
+    .saveRDS(nsInfo, nsInfoFilePath, compress = TRUE)
     invisible()
 }
 
