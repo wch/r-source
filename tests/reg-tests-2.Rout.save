@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-03-01 r37455)
+Version 2.3.0 Under development (unstable) (2006-03-04 r37473)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -5029,4 +5029,40 @@ Error in function (...)  :
 > 
 > options(op)
 > ## unlimited < 2.3.0
+> 
+> 
+> ## row names in as.table (PR#8652)
+> as.table(matrix(1:60, ncol=2))
+    A  B
+A   1 31
+B   2 32
+C   3 33
+D   4 34
+E   5 35
+F   6 36
+G   7 37
+H   8 38
+I   9 39
+J  10 40
+K  11 41
+L  12 42
+M  13 43
+N  14 44
+O  15 45
+P  16 46
+Q  17 47
+R  18 48
+S  19 49
+T  20 50
+U  21 51
+V  22 52
+W  23 53
+X  24 54
+Y  25 55
+Z  26 56
+A1 27 57
+B1 28 58
+C1 29 59
+D1 30 60
+> ## rows past 26 had NA row names
 > 

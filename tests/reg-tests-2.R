@@ -1762,3 +1762,8 @@ traceback()
 
 options(op)
 ## unlimited < 2.3.0
+
+
+## row names in as.table (PR#8652)
+as.table(matrix(1:60, ncol=2))
+## rows past 26 had NA row names

@@ -811,6 +811,9 @@ BUG FIXES
     o	system() on Unix-alikes ignored non-logical values of 'intern' and
 	treated 'intern = NA' as true.
 
+    o	as.table() now produces non-NA rownames when converting a
+	matrix of more than 26 rows.  (PR#8652)
+
 
 
 
