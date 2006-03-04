@@ -10,7 +10,8 @@ system(command, intern = FALSE, ignore.stderr = FALSE)
 }
 \arguments{
   \item{command}{the system command to be invoked, as a string.}
-  \item{intern}{a logical, indicates whether to make the output of the
+  \item{intern}{a logical (not \code{NA}) which indicates whether to 
+    make the output of the
     command an \R object.  Not available unless \code{popen} is
     supported on the platform.}
   \item{ignore.stderr}{a logical indicating whether error messages (written

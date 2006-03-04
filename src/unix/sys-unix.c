@@ -216,8 +216,10 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (!isValidStringF(CAR(args)))
 	errorcall(call, _("non-empty character argument expected"));
-    if (isLogical(CADR(args)))
-	read = INTEGER(CADR(args))[0];
+    if (isLogical(CADR(args)) && (read = LOGICAL(CADR(args))[0]) != NA_INTEGER)
+	;
+    else
+        errorcall(call, _("'intern' must be logical and not NA"));
     if (read) {
 #ifdef HAVE_POPEN
 	FILE *fp;
@@ -244,7 +246,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
 	return (rval);
 #else /* not HAVE_POPEN */
-	errorcall(call, _("intern=TRUE is not implemented on this platform"));
+	errorcall(call, _("'intern=TRUE' is not implemented on this platform"));
 	return R_NilValue;
 #endif /* not HAVE_POPEN */
     }
