@@ -363,10 +363,9 @@ function(dir, outDir)
                    file.path(outDir, "INDEX"))
     ## </NOTE>
 
-    if(file_test("-d", dataDir)) {
+    if(file_test("-d", dataDir))
         .saveRDS(.build_data_index(dataDir, contents),
-                 file.path(outDir, "Meta", "data.rds"))
-    }
+                 file.path(outDir, "Meta", "data.rds"), compress = TRUE)
     invisible()
 }
 
