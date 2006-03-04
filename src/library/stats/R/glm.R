@@ -540,11 +540,11 @@ summary.glm <- function(object, dispersion = NULL,
 
     ## calculate scaled and unscaled covariance matrix
 
+    aliased <- is.na(coef(object))  # used in print method
     p <- object$rank
     if (p > 0) {
         p1 <- 1:p
         Qr <- object$qr
-        aliased <- is.na(coef(object))  # used in print method
         ## WATCHIT! doesn't this rely on pivoting not permuting 1:p? -- that's quaranteed
         coef.p <- object$coefficients[Qr$pivot[p1]]
         covmat.unscaled <- chol2inv(Qr$qr[p1,p1,drop=FALSE])
@@ -578,7 +578,6 @@ summary.glm <- function(object, dispersion = NULL,
         dimnames(coef.table) <-
             list(NULL, c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
         covmat.unscaled <- covmat <- matrix(, 0, 0)
-        aliased <- is.na(coef(object))
         df.f <- length(aliased)
     }
     ## return answer
