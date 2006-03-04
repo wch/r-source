@@ -1013,7 +1013,7 @@ Note that it does not check that such a compiler is fully (or even
 partially) compliant with FORTRAN 90/95.  Packages making use of
 FORTRAN 90/95 features should use file extension @samp{.f90} or
 @samp{.f95} for the source files: the variable @code{PKG_FCFLAGS}
-specifies any special flags to be used.  There is no guarantee that 
+specifies any special flags to be used.  There is no guarantee that
 compiled FORTRAN 90/95 code can be mixed with any other type of code,
 nor that a build of @R{} will have support for such packages.
 
@@ -1631,7 +1631,7 @@ User-level hooks are also available: see the help on function
 The @code{useDynLib} directive also accepts the names of the native
 routines that are to be used in @R{} via the @code{.C}, @code{.Call},
 @code{.Fortran} and @code{.External} interface functions.  These are given as
-additional arguments to the directive, for example, 
+additional arguments to the directive, for example,
 
 @example
 useDynLib(foo, myRoutine, myOtherRoutine)
@@ -1689,7 +1689,7 @@ that name.
 In some cases, it may be preferable not to create @R{} variables in the
 package's name space that identify the native routines.  It may be too
 costly to compute these for many routines when the package is loaded
-if many of these routines are not likely to be used.  In this case, 
+if many of these routines are not likely to be used.  In this case,
 one can still perform the symbol resolution correctly using the DLL,
 but do this each time the routine is called.  Given a reference to the
 DLL as an @R{} variable, say @code{dll}, we can call the routine
@@ -7067,7 +7067,7 @@ prior to 1.5.0, the entry point @code{Rf_log1p} is still provided.
 @end deftypefun
 
 @deftypefun double log1pmx (@var{x})
-Computes @code{log(1 + @var{x}) - x} (@emph{log 1 @b{p}lus x @b{m}inus @b{x}}),
+Computes @code{log(1 + @var{x}) - @var{x}} (@emph{log 1 @b{p}lus x @b{m}inus @b{x}}),
 accurately even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 @end deftypefun
 
