@@ -1,7 +1,7 @@
 ## Subroutines for converting R documentation into text, HTML, LaTeX and
 ## R (Examples) format
 
-## Copyright (C) 1997-2005 R Development Core Team
+## Copyright (C) 1997-2006 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -704,12 +704,17 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
 }
 
 sub html_striptitle {
-    ## Call striptitle(), and handle LaTeX single and double quotes.
+    ## Call striptitle(), and handle LaTeX single and double quotes, < and >.
     my ($text) = @_;
-    $text = striptitle($text);
+    # $text = striptitle($text);
+    $text =~ s/\\//go;
+    $text =~ s/---/&mdash;/go;
+    $text =~ s/--/&ndash;/go;
     $text =~ s/\`\`/&ldquo;/g;
     $text =~ s/\'\'/&rdquo;/g;
     $text =~ s/\`/\'/g;		# @samp{'} could be an apostroph ...
+    $text =~ s/</&lt;/g;
+    $text =~ s/>/&gt;/g;
     $text;
 }
 
@@ -2863,7 +2868,8 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
     }
     $using_chm = 1;
     $nlink = 0;
-    print $htmlout (chm_functionhead(striptitle($blocks{"title"}), $pkgname,
+    print $htmlout (chm_functionhead(html_striptitle($blocks{"title"}), 
+				     $pkgname,
 				     &html_escape_name($blocks{"name"})));
 
     html_print_block("description", "Description");

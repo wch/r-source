@@ -2426,7 +2426,8 @@ Note that the @code{\name} is not necessarily a topic documented.
 @findex \title
 Title information for the Rd file.  This should be capitalized, not end
 in a period, and not use any markup (which would cause problems for
-hypertext search).
+hypertext search).  Use of characters other than English text and
+punctuation (e.g. @code{<}) may limit portability.
 
 @item \description@{@dots{}@}
 @findex \description
@@ -3153,15 +3154,17 @@ can be put in a @file{unix} or @file{windows} subdirectory.
 @section Encoding
 @cindex encoding
 
-@code{Rd} files  are text files  and so it  is impossible to  deduce the
+@code{Rd} files are text files and so it is impossible to deduce the
 encoding they are written in: ASCII, UTF-8, Latin-1, Latin-9 @emph{etc}.
-So  the  @code{\encoding@{@}} directive  must  be  used  to specify  the
+So the @code{\encoding@{@}} directive must be used to specify the
 encoding: if not present the processing to HTML assumes that the file is
-in Latin-1 (ISO-8859-1).   This is used when creating  the header of the
-@HTML{} conversion  and to make a  comment in the examples  file.  It is
+in Latin-1 (ISO-8859-1).  This is used when creating the header of the
+@HTML{} conversion and to make a comment in the examples file.  It is
 also used to indicate to @LaTeX{} how to process the file (see below).
 
-Wherever possible, avoid non-ASCII chars in @code{Rd} files.
+Wherever possible, avoid non-ASCII chars in @code{Rd} files, and even
+symbols such as @code{< > $ ^ & | @ ~ *} outside verbatim environments
+(since they may not appear in fonts designed to render text).
 
 For convenience, encoding names @code{latin1} and @code{latin2} are
 always recognized: these and @code{UTF-8} are likely to work fairly
@@ -3174,7 +3177,7 @@ the declared encoding.
 The @LaTeX{} conversion converts an explicit encoding of the file to a
 
 @example
-\inputencoding@{some_encoding@}
+\inputencoding@{@var{some_encoding}@}
 @end example
 
 @noindent

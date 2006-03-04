@@ -564,6 +564,9 @@ DOCUMENTATION
 
     o	Rd format now allows \var{} markup inside \code{} and \examples{}.
 
+    o	Markup such as --, ---, < and > is handled better when
+	converting .Rd files to [C]HTML.
+
 
 PACKAGE INSTALLATION
 
