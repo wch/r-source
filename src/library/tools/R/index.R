@@ -141,6 +141,8 @@ function(contents, packageName, libDir)
     ## Build an index of the Rd contents in 'contents', of a package
     ## named 'packageName' (to be) installed in 'libDir', in a form
     ## useful for help.search().
+    ## As from 2.3.0 libDir is no longer recorded, but the format is
+    ## kept for back-compatibility.
 
     dbAliases <- dbConcepts <- dbKeywords <- matrix(character(), nc = 3)
 
@@ -176,7 +178,7 @@ function(contents, packageName, libDir)
         ## with entry, ID of the Rd object the entry comes from, and the
         ## package the object comes from.  The latter is useful when
         ## subscripting the help.search db according to package.
-        dbBase <- cbind(packageName, libDir, IDs, base,
+        dbBase <- cbind(packageName, "", IDs, base,
                         topic = sapply(aliases, "[", 1), encoding)
         ## If there are no aliases at all, cbind() below would give
         ## matrix(packageName, nc = 1).  (Of course, Rd objects without

@@ -141,53 +141,21 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    np <- np + 1
 	    if(verbose)
 		cat("", p, if((np %% 5) == 0) "\n")
-	    ## skip stub packages
-	    if(p %in% defunct_standard_package_names)
-		next
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
 		stop(gettextf("could not find package '%s'", p), domain = NA)
 
+            ## Hsearch 'Meta/hsearch.rds' indices were introduced in
+            ## R 1.8.0.  If they are missing, we really cannot use
+            ## the package (as library() will refuse to load it).
 	    if(file.exists(hsearch_file <-
-			   file.path(path, "Meta", "hsearch.rds"))) {
+			   file.path(path, "Meta", "hsearch.rds")))
 		hDB <- .readRDS(hsearch_file)
-	    }
-	    else {
-		## <FIXME PRE-R-NG>
-		## Hsearch 'Meta/hsearch.rds' indices were introduced in
-		## R 1.8.0.  If they are missing, we really cannot use
-		## the package (as library() will refuse to load it), so
-		## perhaps we should exclude such packages anyway?
-		hDB <- contents <- NULL
-		## Read the contents info from the respective Rd meta
-		## files.
-		if(file.exists(contents_file <-
-			       file.path(path, "Meta", "Rd.rds"))) {
-		    contents <- .readRDS(contents_file)
-		}
-		else if(file.exists(contents_file
-				    <- file.path(path, "CONTENTS"))) {
-		    contents <-
-			read.dcf(contents_file,
-				 fields = contents_DCF_fields)
-		}
-		## If we found Rd contents information ...
-		if(!is.null(contents)) {
-		    ## build the hsearch index from it;
-		    hDB <- tools:::.build_hsearch_index(contents, p,
-							dirname(path))
-		}
-		else {
-		    ## otherwise, issue a warning.
-		    warning(gettextf("no Rd contents for package '%s' in '%s'",
-				    p, dirname(path)), domain = NA)
-		}
-		## </FIXME>
-	    }
 	    if(!is.null(hDB)) {
 		## Fill up possibly missing information.
 		if(is.na(match("Encoding", colnames(hDB[[1]]))))
 		    hDB[[1]] <- cbind(hDB[[1]], Encoding = "")
+                hDB[[1]][, "LibPath"] <- path
 		## Put the hsearch index for the np-th package into the
 		## np-th row of the matrix used for aggregating.
 		dbMat[np, seq(along = hDB)] <- hDB
@@ -375,9 +343,9 @@ function(pattern, fields = c("alias", "concept", "title"),
     y
 }
 
-print.hsearch <- function(x,...){
-  printhsearchInternal(x,...)
-}
+print.hsearch <- function(x, ...)
+    printhsearchInternal(x, ...)
+
 
 printhsearchInternal  <- function(x, ...)
 {

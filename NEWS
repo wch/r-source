@@ -353,6 +353,11 @@ NEW FEATURES
     o	stopifnot(A) now gives a better error message when A has NAs, and
 	uses "not all TRUE" when A has length >= 2.
 
+    o	help.search() no longer attempts to handle packages installed
+	prior to R 2.0.0, and reports the current path to the
+	package (rather than where it was originally installed: this
+	information is not shown by the print() method).
+
 
 DEPRECATED & DEFUNCT
 
@@ -571,6 +576,10 @@ PACKAGE INSTALLATION
 
     o	Packages which contain compiled code can now have more than
 	one dot in their name even on Windows.
+
+    o	The Meta/hsearch.rds database saved now contains LibPath="".  This
+	information is now always recreated when help.search() is run,
+	but the field is retained for back-compatibility.
 
 
 C-LEVEL FACILITIES
