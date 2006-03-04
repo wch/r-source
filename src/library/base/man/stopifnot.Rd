@@ -12,19 +12,16 @@
 stopifnot(\dots)
 }
 \arguments{
-  \item{\dots}{any number of (\code{\link{logical}}) \R expressions
-    which should evaluate to \code{\link{TRUE}} or \code{FALSE} (and not
-    \code{NA}).}
+  \item{\dots}{any number of (\code{\link{logical}}) \R expressions.}
+  which should evaluate to \code{\link{TRUE}}.}
 }
 \details{
-  This function is intended for use in regression tests, in particular
-  to make them easier to read.
-  
+  This function is intended for use in regression tests or also argument
+  checking of functions, in particular to make them easier to read.
+
   \code{stopifnot(A, B)} is conceptually equivalent to
-  \code{\{ if(!all(A)) stop(...) ; if(!all(B)) stop(...) \}}.
-  Note that it does not handle missing values: \code{\link{isTRUE}} can
-  be helpful in writing expressions that always evaluate to \code{TRUE} or
-  \code{FALSE}.
+  \code{\{ if(any(is.na(A)) || !all(A)) stop(...) ;
+           if(any(is.na(B)) || !all(B)) stop(...) \}}.
 }
 \value{
   (\code{\link{NULL}} if all statements in \code{\dots} are \code{TRUE}.)

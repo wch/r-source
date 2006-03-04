@@ -350,6 +350,9 @@ NEW FEATURES
 	arguments of optim() has the names (if any) given to argument
 	'par'.
 
+    o	stopifnot(A) now gives a better error message when A has NAs, and
+	uses "not all TRUE" when A has length >= 2.
+
 
 DEPRECATED & DEFUNCT
 
