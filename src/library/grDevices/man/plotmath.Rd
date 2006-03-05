@@ -84,7 +84,7 @@
     \code{alpha} -- \code{omega} \tab Greek symbols \cr
     \code{Alpha} -- \code{Omega} \tab uppercase Greek symbols \cr
     \code{theta1, phi1, sigma1, omega1} \tab cursive Greek symbols\cr
-    \code{Upsilon1} \tab Capital upsilon with hook\cr
+    \code{Upsilon1} \tab capital upsilon with hook\cr
     \code{infinity}   \tab infinity symbol \cr
     \code{partialdiff} \tab partial differential symbol \cr
     \code{32*degree}   \tab 32 degrees \cr
