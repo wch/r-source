@@ -530,13 +530,16 @@ summary.glm <- function(object, dispersion = NULL,
     df.r <- object$df.residual
     if(is.null(dispersion))	# calculate dispersion if needed
 	dispersion <-
-	    if(any(object$family$family == c("poisson", "binomial")))  1
+	    if(object$family$family %in% c("poisson", "binomial"))  1
 	    else if(df.r > 0) {
-		est.disp <- TRUE
+                est.disp <- TRUE
 		if(any(object$weights==0))
 		    warning("observations with zero weight not used for calculating dispersion")
 		sum(object$weights*object$residuals^2)/ df.r
-	    } else Inf
+	    } else {
+                est.disp <- TRUE
+                NaN
+            }
 
     ## calculate scaled and unscaled covariance matrix
 
@@ -558,7 +561,7 @@ summary.glm <- function(object, dispersion = NULL,
         tvalue <- coef.p/s.err
 
         dn <- c("Estimate", "Std. Error")
-        if(!est.disp) {
+        if(!est.disp) { # known dispersion
             pvalue <- 2*pnorm(-abs(tvalue))
             coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
             dimnames(coef.table) <- list(names(coef.p),
@@ -568,9 +571,10 @@ summary.glm <- function(object, dispersion = NULL,
             coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
             dimnames(coef.table) <- list(names(coef.p),
                                          c(dn, "t value","Pr(>|t|)"))
-        } else { ## df.r == 0
-            coef.table <- cbind(coef.p, Inf)
-            dimnames(coef.table) <- list(names(coef.p), dn)
+        } else { # df.r == 0
+            coef.table <- cbind(coef.p, NaN, NaN, NaN)
+            dimnames(coef.table) <- list(names(coef.p),
+                                         c(dn, "t value","Pr(>|t|)"))
         }
         df.f <- NCOL(Qr$qr)
     } else {

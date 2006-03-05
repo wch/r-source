@@ -830,6 +830,11 @@ BUG FIXES
 	few values of 'partial', and now switches to a barebones full
 	sort for more than 10.
 
+    o	summary.glm() returned an estimate of dispersion of Inf for a
+	gaussian glm with zero residual degrees of freedom and then
+	treated that as a known value.  It now uses the estimate NaN,
+	which is consistent with summary.lm().
+
 
 
 
