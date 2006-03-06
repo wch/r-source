@@ -220,7 +220,7 @@ foreach my $pkg (@ARGV) {
     my $origfilepath = $filepath;
     if($WINDOWS) {
 	## workaround for paths in Cygwin tar
-	$filepath =~ s+^([A-Za-x]):+/cygdrive/\1+;
+	$filepath =~ s+^([A-Za-z]):+/cygdrive/\1+;
     }
     R_system(join(" ",
 		  ("$tar chf",
