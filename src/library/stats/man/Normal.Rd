@@ -4,6 +4,10 @@
 \alias{pnorm}
 \alias{qnorm}
 \alias{rnorm}
+% These concepts are for the last example
+\concept{error function}
+\concept{erf}
+\concept{erfc}
 \title{The Normal Distribution}
 \description{
   Density, distribution function, quantile function and random
