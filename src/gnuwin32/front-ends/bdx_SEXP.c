@@ -232,6 +232,7 @@ int BDX2SEXP(BDX_Data const* pBDXData,SEXP* pSEXPData)
 /* 05-05-24 | baier | VECSXP */
 /* 05-06-05 | baier | support for special values (R_NaN,...), generic vectors */
 /* 05-06-08 | baier | BDX_SPECIAL for scalars (REALSXP conversions) */
+/* 06-02-15 | baier | fixes for COM objects/EXTPTRSXP */
 int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
 {
   BDX_Data* lData;
@@ -326,7 +327,8 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
       lTotalSize *= lData->dimensions[i];
     }
     /* lData->data.raw_data = (BDX_RawData*) malloc(sizeof(BDX_RawData)); */
-  } else if(LENGTH(sexp) == 1) {
+  } else if((LENGTH(sexp) == 1) 
+	    || (TYPEOF(sexp) == EXTPTRSXP)){
     /* scalar */
     lData->type |= BDX_SCALAR;
     lData->dim_count = 1;
@@ -369,12 +371,20 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
 	}
 	break;
       case EXTPTRSXP:
+	/*
+	 * according to BDR (mail on r-devel, 05-10-24) an EXTPTRSXP is not
+	 * a vector, therefore LENGTH() does not work
+	 */
+	lTotalSize = 1; 
+#if 0
 	/* no EXTPTRSXP for arrays */
 	if(lTotalSize != 1) {
-	  BDX_TRACE(printf("SEXP2BDX: EXTPTRSXP in array with %d elements\n",
+	  bdx_free(lData);
+	  BDX_TRACE(printf("SEXP2BDX[1]: EXTPTRSXP in array with %d elements\n",
 			      lTotalSize));
 	  return -7;
 	}
+#endif
 	{
 	  /* is it a COM object? */
 	  RCOM_OBJHANDLE lHandle = com_getHandle(sexp);
@@ -409,6 +419,8 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
 				lRc,i));
 	    
 	  }
+	  BDX_TRACE(printf("SEXP2BDX: base=%08x, type=%08x, ptr=%08x\n",
+			   lData,lData->type,lData->data.raw_data[0].ptr));
 	}
 	break;
       case STRSXP:
@@ -485,12 +497,20 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
 	  break;
 	case EXTPTRSXP:
 	  lData->data.raw_data_with_type[i].type = BDX_HANDLE;
+	  /*
+	   * according to BDR (mail on r-devel, 05-10-24) an EXTPTRSXP is not
+	   * a vector, therefore LENGTH() does not work
+	   */
+	  lTotalSize = 1; 
 	  /* no EXTPTRSXP for arrays */
+#if 0
 	  if(lTotalSize != 1) {
-	    BDX_TRACE(printf("SEXP2BDX: EXTPTRSXP in array with %d elements\n",
+	    bdx_free(lData);
+	    BDX_TRACE(printf("SEXP2BDX[2]: EXTPTRSXP in array with %d elements\n",
 				lTotalSize));
 	    return -7;
 	  }
+#endif
 	  {
 	    /* is it a COM object? */
 	    RCOM_OBJHANDLE lHandle = com_getHandle(lElementSexp);
@@ -563,6 +583,12 @@ static int EXTPTRSXP2LPSTREAM(RCOM_OBJHANDLE pHandle,
     BDX_TRACE(printf("SEXP2BDX: error %08x marshalling interface into stream\n",
 		     hr));
     return -5;
+  } else {
+#if 0
+    BDX_TRACE(printf("EXTPTRSXP2LPSTREAM: object %08p marshalled into stream %08p\n",
+		     lUnk,lStream));
+#endif
+    *pStream = lStream;
   }
   return 0;
 }

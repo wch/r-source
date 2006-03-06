@@ -151,6 +151,9 @@ problems with reading compressed data files via gzfile().
 winMenuAdd() now has no limits on the number of menus or items, and
 names are now limited to 500 (not 50) bytes.
 
+Several fixes to Rproxy have been submitted by Thomas Baier, so it 
+handles more types of objects.
+
 
 
 
