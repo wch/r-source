@@ -12,8 +12,9 @@ exitstatus=${3}
 
 ## sed script to get rid of the startup message
 script='/^R : Copyright/,/quit R.$/{d;}'
-## egrep pattern to get rid of some more???
-pattern='(^Number of.*:|^Time |^Loading required package.*'
+## egrep pattern to get rid of some more
+## <= 2.2.x was pattern='(^Number of.*:|^Time |^Loading required package.*'
+pattern='(^Time |^Loading required package.*'
 case "${ffile}" in
   *primitive-funs*)
     pattern=${pattern}'|^\[1\] [19][0-9][0-9])'
