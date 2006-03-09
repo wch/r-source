@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-02-28
+@set FAQ_DATE @value{FAQ_YEAR}-03-08
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1866,6 +1866,8 @@ Simple Fortran/C/R interface example.
 @item FracSim
 Simulation of one- and two-dimensional fractional and multifractional
 Levy motions.
+@item FunCluster
+Functional profiling of cDNA microarray expression data.
 @item GDD
 Platform and X11 independent device for creating bitmaps (png, gif and
 jpeg) using the GD graphics library.
@@ -2375,8 +2377,6 @@ Contained in the @file{VR} bundle.  @emph{Recommended}.
 Projection Pursuit for supervised classification.
 @item clim.pact
 Climate analysis and downscaling for monthly and daily data.
-@item climate.plot
-Detailed seasonal plots of temperature and precipitation data.
 @item climatol
 Functions to fill missing data in climatological (monthly) series and to
 test their homogeneity, plus functions to draw wind-rose and
@@ -3506,6 +3506,10 @@ Calculates parameters of the seawater carbonate system.
 @c @item seao.gui
 @c Simple Evolutionary Algorithm Optimization: graphical user interface.
 @c </COMMENT>
+@item seas
+Detailed seasonal plots of temperature and precipitation data.
+@item seewave
+Time wave analysis and graphical representation.
 @item segmented
 Functions to estimate break-points of segmented relationships in
 regression models (GLMs).
@@ -3716,6 +3720,8 @@ Stem analysis functions for volume increment and carbon uptake
 assessment from tree-rings.
 @item tripack
 A constrained two-dimensional Delaunay triangulation package.
+@item truncgof
+Goodness-of-fit tests allowing for left truncated data.
 @item trust
 Local optimization using two derivatives and trust regions.
 @item tseries
