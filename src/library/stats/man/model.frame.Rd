@@ -22,9 +22,10 @@ model.frame(formula, \dots)
   \item{formula}{a model \code{\link{formula}} or \code{\link{terms}}
     object or an \R object.}
 
-  \item{data}{\code{data.frame}, list, \code{environment} or object
-    coercible to \code{data.frame} containing the variables in
-    \code{formula}.  Neither a matrix nor an array will be accepted.}
+  \item{data}{a data.frame, list or environment (or object
+    coercible by \code{\link{as.data.frame}} to a data.frame),
+    containing the variables in \code{formula}.  Neither a matrix nor an
+    array will be accepted.}
 
   \item{subset}{a specification of the rows to be used: defaults to all
     rows. This can be any valid indexing vector (see

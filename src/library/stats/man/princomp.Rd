@@ -19,7 +19,8 @@ princomp(x, \dots)
 }
 \arguments{
   \item{formula}{a formula with no response variable.}
-  \item{data}{an optional data frame containing the variables in the
+  \item{data}{an optional data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
     formula \code{formula}.  By default the variables are taken from
     \code{environment(formula)}.}
   \item{subset}{an optional vector used to select rows (observations) of the

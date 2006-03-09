@@ -19,10 +19,11 @@ lm(formula, data, subset, weights, na.action,
   \item{formula}{a symbolic description of the model to be fit.
     The details of model specification are given below.}
 
-  \item{data}{an optional data frame containing the variables
-    in the model.  If not found in \code{data}, the variables are taken
-    from \code{environment(formula)}, typically the environment from which
-    \code{lm} is called.}
+  \item{data}{an optional data frame, list or environment (or object
+    coercible by \code{\link{as.data.frame}} to a data frame) containing
+    the variables in the model.  If not found in \code{data}, the
+    variables are taken from \code{environment(formula)},
+    typically the environment from which \code{lm} is called.}
 
   \item{subset}{an optional vector specifying a subset of observations
     to be used in the fitting process.}

@@ -17,7 +17,9 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \item{x}{A formula or a numeric matrix or an object that can be
     coerced to a numeric matrix.}
   \item{factors}{The number of factors to be fitted.}
-  \item{data}{A data frame, used only if \code{x} is a formula.}
+  \item{data}{An optional data frame (or similar: see
+    \code{\link{model.frame}}), used only if \code{x} is a formula.  By
+    default the variables are taken from \code{environment(formula)}.}
   \item{covmat}{A covariance matrix, or a covariance list as returned by
     \code{\link{cov.wt}}.  Of course, correlation matrices are covariance
     matrices.}

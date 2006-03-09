@@ -17,8 +17,10 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
     a matrix of counts; in the latter case, the columns are interpreted
     as corresponding to the levels of a variable.  This is useful if the
     data has already been tabulated, see the examples below.}
-  \item{data}{a data frame, list or environment containing the variables
-    to be cross-tabulated.}
+  \item{data}{an optional matrix or data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
+    formula \code{formula}.  By default the variables are taken from
+    \code{environment(formula)}.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when

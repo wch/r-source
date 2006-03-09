@@ -40,8 +40,8 @@ ppr(x, \dots)
   }
   \item{nterms}{number of terms to include in the final model.}
   \item{data}{
-    data frame from which variables specified in \code{formula} are
-    preferentially to be taken.
+    a data frame (or similar: see \code{\link{model.frame}}) from which
+    variables specified in \code{formula} are preferentially to be taken.
   }
   \item{weights}{a vector of weights \code{w_i} for each \emph{case}.}
   \item{ww}{

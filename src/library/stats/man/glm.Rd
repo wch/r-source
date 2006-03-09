@@ -36,10 +36,11 @@ glm.fit(x, y, weights = rep(1, nobs),
     to a family function.  (See \code{\link{family}} for details of
     family functions.)}
 
-  \item{data}{an optional data frame containing the variables
-    in the model.  If not found in \code{data}, the variables are taken
-    from \code{environment(formula)}, typically the environment from
-    which \code{glm} is called.}
+  \item{data}{an optional data frame, list or environment (or object
+    coercible by \code{\link{as.data.frame}} to a data frame) containing
+    the variables in the model.  If not found in \code{data}, the
+    variables are taken from \code{environment(formula)},
+    typically the environment from which \code{glm} is called.}
 
   \item{weights}{an optional vector of weights to be used
     in the fitting process.}

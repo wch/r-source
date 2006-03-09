@@ -1,4 +1,5 @@
 \name{loess}
+\alias{loess}
 \title{Local Polynomial Regression Fitting}
 \usage{
 loess(formula, data, weights, subset, na.action, model = FALSE,
@@ -8,17 +9,15 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
       method = c("loess", "model.frame"),
       control = loess.control(\dots), \dots)
 }
-\alias{loess}
-%\alias{anova.loess}
-%\alias{print.loess}
-%\alias{summary.loess}
-%\alias{print.summary.loess}
 \arguments{
   \item{formula}{a formula specifying the numeric response and one to four
     numeric predictors (best specified via an interaction, but can also
     be specified additively).}
-  \item{data}{an optional data frame within which to look first for the
-    response, predictors and weights.}
+  \item{data}{an optional data frame, list or environment (or object
+    coercible by \code{\link{as.data.frame}} to a data frame) containing
+    the variables in the model.  If not found in \code{data}, the
+    variables are taken from \code{environment(formula)},
+    typically the environment from which \code{loess} is called.}
   \item{weights}{optional weights for each case.}
   \item{subset}{an optional specification of a subset of the data to be
     used.}
