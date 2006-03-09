@@ -11,8 +11,7 @@
 \title{Date-time Conversion Functions}
 \description{
   Functions to manipulate objects of classes \code{"POSIXlt"} and
-  \code{"POSIXct"} representing calendar dates and times (to the nearest
-  second). 
+  \code{"POSIXct"} representing calendar dates and times. 
 }
 \usage{
 as.POSIXct(x, tz = "")
@@ -49,6 +48,30 @@ as.POSIXlt(x, tz = "")
 
   The \code{as.numeric} method converts \code{"POSIXlt"} objects to
   \code{"POSIXct"}.
+
+  Where OSes describe their valid timezones can be obscure.  The help
+  for \code{tzset} (or \code{_tzset} on Windows) can be helpful, but it
+  can also be inaccurate.  There is a cumbersome POSIX specification,
+  (listed under environment variable \code{TZ} at
+  \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap08.html}),
+  which is often at least partially supported, but there may be other more
+  user-friendly ways to specify timezones.
+#ifdef unix
+  For most Unix-alikes (including MacOS X) this can be an optional colon
+  prepended to the path to a file (by default under
+  \file{/usr/share/zoneinfo} or \file{/usr/lib/zoneinfo}
+  (or even \file{/usr/share/lib/zoneinfo} on Solaris)),
+  for example \file{EST5EDT} of \file{GB} or \file{Europe/Paris}.  See
+  \url{http://www.twinsun.com/tz/tz-link.htm} for more details and
+  references.
+#endif
+#ifdef windows
+  Windows documents a specification of the form \code{GST-1GDT}, but
+  seems always to apply the US rules for changing to/from DST with such a
+  specification.  There appears to be no documented way to apply
+  timezones using other DST rules except to switch to the timezone,
+  e.g. from the Control Panel.
+#endif
 }
 \value{
   \code{as.POSIXct} and \code{as.POSIXlt} return an object of the
