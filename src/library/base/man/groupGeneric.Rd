@@ -156,7 +156,7 @@ Complex(z)
   methods is not checked prior to dispatch. (Most have default methods
   expecting one argument, but three expect two.)
 
-  All of the methods of the \code{Summary} group have a last argument
+  All of the members of the \code{Summary} group have a last argument
   \code{na.rm}, so a \code{Summary} group method can be written with
   argument list \code{function(..., na.rm)}, and methods should be
   prepared to handle a \code{na.rm} argument.
