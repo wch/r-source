@@ -11,9 +11,6 @@ CSOURCES= blocksort.c huffman.c crctable.c randtable.c compress.c \
 OBJS=$(CSOURCES:.c=.o)
 
 libbz2.a: $(OBJS)
-	rm -f libbz2.a
-	$(AR) cq libbz2.a $(OBJS)
-	$(RANLIB) libbz2.a
 
 clean:
 	$(RM) *.o *~ libbz2.a *.d Makedeps
