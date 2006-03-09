@@ -95,8 +95,7 @@ simplifyRepos <- function(repos, type)
 update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                             contriburl = contrib.url(repos, type),
                             method, instlib = NULL, ask = TRUE,
-                            available = NULL, destdir = NULL,
-			    installWithVers = FALSE,
+                            available = NULL, ...,
                             checkBuilt = FALSE, type = getOption("pkgType"))
 {
     ask  # just a check that it is valid before we start work
@@ -158,8 +157,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         install.packages(update[,"Package"], instlib,
                          contriburl = contriburl,
                          method = method,
-                         available = available, destdir = destdir,
-                         installWithVers = installWithVers, type = type)
+                         available = available, ..., type = type)
     }
 }
 

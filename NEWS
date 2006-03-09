@@ -584,6 +584,10 @@ PACKAGE INSTALLATION
 	information is now always recreated when help.search() is run,
 	but the field is retained for back-compatibility.
 
+    o	update.packages() has a '...' argument to be passed to
+	install.packages(), including the formerly separate arguments
+	'destdir' and 'installWithVers'.
+
 
 C-LEVEL FACILITIES
 
