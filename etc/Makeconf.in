@@ -4,6 +4,7 @@
 
 include $(R_SHARE_DIR)/make/vars.mk
 
+AR = @AR@
 BLAS_LIBS = @BLAS_LIBS@
 C_VISIBILITY = @C_VISIBILITY@
 CC = @CC@
@@ -40,6 +41,7 @@ LIBS = @LIBS@
 LIBTOOL = $(SHELL) $(R_HOME)/bin/libtool
 LDFLAGS = @LDFLAGS@
 R_ARCH = @R_ARCH@
+RANLIB = @RANLIB@
 SAFE_FFLAGS = @SAFE_FFLAGS@
 SED = @SED@
 SHELL = @SHELL@
