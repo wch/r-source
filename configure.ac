@@ -596,27 +596,22 @@ AC_SUBST(LIBM)
 ## the following as well.
 AC_CHECK_LIB(m, sin)
 case "${host_os}" in
-  darwin[[123456]].*)
-    ## MacOS <= 10.2 doesn't have dlcompat
-    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, true)
-    AC_CHECK_LIB(cc_dynamic, main)
-    ;;
   darwin*)
-    ## MacOS 10.3 and 10.4 do
-    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, false)
+    ## MacOS <= 10.2 doesn't have dlcompat, >= 10.3 include it in libSystem
+    ## since R 2.3 we don't provide a work-around for missing dl anymore
+    AC_SEARCH_LIBS(dlopen, dl,,[AC_MSG_ERROR([Please install dlcompat or update to a more recent OS X.])])
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
     ## http://developer.apple.com/documentation/MacOSX/ has nothing
     ## official.  Bill Northcott <w.northcott@unsw.edu.au> points out
-    ## that it is only needed to GCC 3.x ...
+    ## that it is only needed to GCC 3.x (and earlier) ...
     if test "${GCC}" = yes; then
       case "${CC_VERSION}" in
-        3.*)
+        2.*|3.*)
           AC_CHECK_LIB(cc_dynamic, main) ;;
       esac
     fi
     ;;
   *)
-    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, false)
     AC_CHECK_LIB(dl, dlopen)
     ;;
 esac

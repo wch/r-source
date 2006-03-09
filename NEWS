@@ -528,6 +528,9 @@ INSTALLATION CHANGES
 	which allows fractional seconds.  (The major platforms were
 	already using it.)
 
+    o   The dlcompat work-around for old Mac OS X systems (<= 10.2)
+	has been removed. External dlcompat must be installed if needed. 
+
 
 UTILITIES
 
