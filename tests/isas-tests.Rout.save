@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-03 r36961)
+Version 2.3.0 Under development (unstable) (2006-03-09 r37494)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -393,7 +393,7 @@ using 'as.environment(NULL)' is deprecated
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] FALSE
-Error: x is not TRUE
+Error: x is not  TRUE
 > res <- try(as.stepfun( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
@@ -516,7 +516,7 @@ IS: [1] TRUE
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] FALSE
-Error: x is not TRUE
+Error: x is not  TRUE
 > res <- try(as.stepfun( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -2217,7 +2217,7 @@ IS: [1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] FALSE
-Error: x is not TRUE
+Error: x is not  TRUE
 > res <- try(as.stepfun( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
@@ -2281,7 +2281,7 @@ IS: [1] TRUE
 +    } else   !isall.equal(x, res)})
 IS: [1] "Attributes: < names for target but not for current >"             
 [2] "Attributes: < Length mismatch: comparison on first 0 components >"
-Error: x is not TRUE
+Error: x is not all TRUE
 > res <- try(as.logical( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.logical(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -2341,7 +2341,7 @@ Error: x is not TRUE
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] FALSE
-Error: x is not TRUE
+Error: x is not  TRUE
 > res <- try(as.stepfun( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -2450,6 +2450,6 @@ non-square matrix in: as.dist.default(x)
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.22 0.02 0.24 NA NA 
+Time elapsed:  0.47 0 0.49 0 0 
 > 
 > 
