@@ -11,21 +11,15 @@ endif
 
 .PHONY: cpy test
 
-all:
-	$(MAKE) -f Makefile.win cpy
-	$(MAKE) -f Makefile.win makeMakedeps
-	$(MAKE) -f Makefile.win libRmath.a Rmath.dll implib
+all: shared
 
 static:
 	$(MAKE) -f Makefile.win cpy
 	$(MAKE) -f Makefile.win makeMakedeps
 	$(MAKE) -f Makefile.win libRmath.a
 
-shared:
-	$(MAKE) -f Makefile.win cpy
-	$(MAKE) -f Makefile.win makeMakedeps
-	$(MAKE) -f Makefile.win Rmath.dll implib
-
+shared: static
+	$(MAKE) -f Makefile.win Rmath.dll
 
 implib: libRmath.dll.a
 
@@ -91,12 +85,12 @@ SOURCES_NMATH = \
 	signrank.c
 DEPENDS = $(SOURCES_NMATH:.c=.d)
 
-Rmath.dll: libRmath.a
 libRmath.a: sunif.o $(SOURCES_NMATH:.c=.o)
 Rmath.def: sunif.o $(SOURCES_NMATH:.c=.o)
-	$(ECHO) LIBRARY $* > $@
-	$(ECHO) EXPORTS >> $@
+	$(ECHO) EXPORTS > $@
 	$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> $@
+Rmath.dll: libRmath.a Rmath.def
+	gcc --shared -o $@ Rmath.def $^
 libRmath.dll.a: Rmath.def
 
 # Dependencies

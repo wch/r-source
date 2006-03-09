@@ -12,10 +12,10 @@ NB: certain compilers are unable to do compile-time IEEE-754
 arithmetic and so cannot compile mlutils.c.  The known example is
 Sun's cc.  Use gcc for mlutils.c (or the whole library).
 
-Under Windows, use 'make -f Makefile.win', which makes Rmath.dll, its
-import library libRmath.dll.a and libRmath.s.  'make -f Makefile.win
-shared' makes the first two and 'make -f Makefile.win static' the
-third.
+Under Windows, use 'make -f Makefile.win', which makes Rmath.dll and
+libRmath.a.  'make -f Makefile.win static' makes just libRmath.a.  If
+you want an import library libRmath.dll.a for Rmath.dll use 'make -f
+Makefile.win shared implib'.
 
 To use the routines in your own C or C++ programs, include
 
@@ -35,6 +35,8 @@ files are present.  You should be able to force things via
 
 -Wl,-Bstatic -lRmath -Wl,dynamic
 -Wl,-Bdynamic -lRmath
+
+or by linking to explicit files (as in the 'test' target in Makefile.win).
 
 
 
