@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-29 08:17\n"
-"PO-Revision-Date: 2006-01-29 08:17\n"
+"POT-Creation-Date: 2006-03-09 16:42\n"
+"PO-Revision-Date: 2006-03-09 16:42\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -35,6 +35,12 @@ msgstr ""
 
 msgid "replacement value is not a matrix"
 msgstr "replacement value is not a matrix"
+
+msgid "OOPS: something wrong with line"
+msgstr "OOPS: something wrong with line"
+
+msgid "in .OldClassesPrototypes"
+msgstr "in .OldClassesPrototypes"
 
 msgid ""
 "methods may not be defined for primitive function '%s' in this version of R"
@@ -528,13 +534,6 @@ msgstr "no ‘.Data’ slot defined for class “%s”"
 
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "class “%s” does not have a data part (a .Data slot) defined"
-
-msgid ""
-"old-style ('S3') class \"%s\" supplied as a superclass of \"%s\", but no "
-"automatic conversion will be peformed for S3 classes"
-msgstr ""
-"old-style ('S3') class “%s” supplied as a superclass of “%s”, but no "
-"automatic conversion will be peformed for S3 classes"
 
 msgid ""
 "trying to change the argument list of a function with %d arguments to have "

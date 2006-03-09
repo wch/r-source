@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-02-17 14:06\n"
+"POT-Creation-Date: 2006-03-09 16:42\n"
 "PO-Revision-Date: 2005-03-31 08:00+0009\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -406,6 +406,16 @@ msgstr "添え字が範囲を超えています（単位(unit)リストの部分
 msgid "It is invalid to combine unit objects with other types"
 msgstr ""
 "単位(unit)オブジェクトとそれ以外の型のオブジェクトを結合することは出来ません"
+
+msgid ""
+"unit.rep has been deprecated in favour of a unit method for the generic rep "
+"function"
+msgstr ""
+
+msgid ""
+"unit.length has been deprecated in favour of a unit method for the generic "
+"length function"
+msgstr ""
 
 #, fuzzy
 msgid "Invalid theta"

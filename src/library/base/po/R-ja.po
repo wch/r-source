@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-02-17 14:06\n"
+"POT-Creation-Date: 2006-03-09 16:41\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1226,8 +1226,15 @@ msgstr "'chdir = TRUE' はコネクションに対しては意味がありませ
 msgid "'%s' is not an existing file"
 msgstr "'%s' は既存のファイルではありません"
 
-msgid "is not TRUE"
+#, fuzzy
+msgid "is not"
 msgstr "は TRUE ではありません"
+
+msgid "all"
+msgstr ""
+
+msgid "TRUE"
+msgstr ""
 
 msgid "incorrect value for 'x'"
 msgstr "'x' に対する不正確な値です"

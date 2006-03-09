@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-02-17 14:06\n"
+"POT-Creation-Date: 2006-03-09 16:42\n"
 "PO-Revision-Date: 2005-08-15 11:43+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -86,6 +86,9 @@ msgid "no device to print from"
 msgstr ""
 
 msgid "can only print from screen device"
+msgstr ""
+
+msgid "need to specify one of 'width' and 'height'"
 msgstr ""
 
 msgid "dev.control() called without an open graphics device"
