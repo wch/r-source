@@ -608,6 +608,8 @@ do_install_source () {
 	      sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
 		&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
 		|| has_error=true;
+	    elif test "${arch}" = "Rgnome"; then
+		R_ARCH=${R_ARCH_keep}
 	    else
 	      message "arch - ${arch}"
 	      R_ARCH="/${arch}"
