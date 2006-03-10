@@ -1,4 +1,4 @@
-dexp <- function(x, rate=1, log = FALSE) .Internal(dexp(x, 1/rate, log))
+\dexp <- function(x, rate=1, log = FALSE) .Internal(dexp(x, 1/rate, log))
 pexp <- function(q, rate=1, lower.tail = TRUE, log.p = FALSE)
     .Internal(pexp(q, 1/rate, lower.tail, log.p))
 qexp <- function(p, rate=1, lower.tail = TRUE, log.p = FALSE)
@@ -155,7 +155,7 @@ qf <- function(p, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
 rf <- function(n, df1, df2, ncp = 0)
 {
     if(ncp == 0) .Internal(rf(n, df1, df2))
-    else rchisq(n, df1, ncp=ncp)/rchiqs(n, df2)
+    else rchisq(n, df1, ncp=ncp)/rchisq(n, df2)
 }
 
 dgeom <- function(x, prob, log = FALSE) .Internal(dgeom(x, prob, log))
@@ -229,7 +229,7 @@ qt <- function(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
 }
 rt <- function(n, df, ncp = 0) {
     if(ncp == 0) .Internal(rt(n, df))
-    else rnorm(n, ncp)/(rchisp(n, df)/sqrt(df))
+    else rnorm(n, ncp)/(rchisq(n, df)/sqrt(df))
 }
 
 ptukey <- function(q, nmeans, df, nranges=1, lower.tail = TRUE, log.p = FALSE)
