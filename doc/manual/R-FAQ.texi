@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-03-08
+@set FAQ_DATE @value{FAQ_YEAR}-03-10
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1760,9 +1760,10 @@ Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 @item ArDec
 Time series autoregressive decomposition.
 @item BACCO
-Bayesian Analysis of Computer Code Output.  Contains @strong{emulator}
-and @strong{emulator} for Bayesian calibration of computer models and
-emulation of computer programs. 
+Bayesian Analysis of Computer Code Output.  Contains
+@strong{approximator}, @strong{calibrator}, and @strong{emulator}, for
+Bayesian prediction of complex computer codes, calibration of computer
+models, and emulation of computer programs, respectively.
 @item BHH2
 Functions and data sets reproducing some examples in ``Statistics for
 Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
@@ -2373,6 +2374,9 @@ data.
 @item class
 Functions for classification (@math{k}-nearest neighbor and LVQ).
 Contained in the @file{VR} bundle.  @emph{Recommended}.
+@item classInt
+Choose univariate class intervals for mapping or other graphics
+purposes.
 @item classPP
 Projection Pursuit for supervised classification.
 @item clim.pact
