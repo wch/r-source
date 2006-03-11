@@ -404,7 +404,7 @@ void sortVector(SEXP s, Rboolean decreasing)
     Rboolean nalast=TRUE;					\
     int L, R, i, j;						\
 								\
-    for (L = 0, R = n - 1; L < R; ) {				\
+    for (L = lo, R = hi; L < R; ) {				\
 	v = x[k];						\
 	for(i = L, j = R; i <= j;) {				\
 	    while (TYPE_CMP(x[i], v, nalast) < 0) i++;			\
@@ -416,7 +416,7 @@ void sortVector(SEXP s, Rboolean decreasing)
     }
 
 
-void iPsort(int *x, int n, int k)
+static void iPsort2(int *x, int lo, int hi, int k)
 {
     int v, w;
 #define TYPE_CMP icmp
@@ -424,7 +424,7 @@ void iPsort(int *x, int n, int k)
 #undef TYPE_CMP
 }
 
-void rPsort(double *x, int n, int k)
+static void rPsort2(double *x, int lo, int hi, int k)
 {
     double v, w;
 #define TYPE_CMP rcmp
@@ -432,7 +432,7 @@ void rPsort(double *x, int n, int k)
 #undef TYPE_CMP
 }
 
-void cPsort(Rcomplex *x, int n, int k)
+static void cPsort2(Rcomplex *x, int lo, int hi, int k)
 {
     Rcomplex v, w;
 #define TYPE_CMP ccmp
@@ -441,7 +441,7 @@ void cPsort(Rcomplex *x, int n, int k)
 }
 
 
-static void sPsort(SEXP *x, int n, int k)
+static void sPsort2(SEXP *x, int lo, int hi, int k)
 {
     SEXP v, w;
 #define TYPE_CMP scmp
@@ -449,26 +449,64 @@ static void sPsort(SEXP *x, int n, int k)
 #undef TYPE_CMP
 }
 
-static void Psort(SEXP x, int k)
+/* elements of ind are 1-based, lo and hi are 0-based */
+
+static void Psort(SEXP x, int lo, int hi, int k)
 {
+    /* Rprintf("looking for index %d in (%d, %d)\n", k, lo, hi);*/
     switch (TYPEOF(x)) {
     case LGLSXP:
     case INTSXP:
-	iPsort(INTEGER(x), LENGTH(x), k);
+	iPsort2(INTEGER(x), lo, hi, k);
 	break;
     case REALSXP:
-	rPsort(REAL(x), LENGTH(x), k);
+	rPsort2(REAL(x), lo, hi, k);
 	break;
     case CPLXSXP:
-	cPsort(COMPLEX(x), LENGTH(x), k);
+	cPsort2(COMPLEX(x), lo, hi, k);
 	break;
     case STRSXP:
-	sPsort(STRING_PTR(x), LENGTH(x), k);
+	sPsort2(STRING_PTR(x), lo, hi, k);
 	break;
     default:
 	UNIMPLEMENTED_TYPE("Psort", x);
     }
 }
+
+static void Psort0(SEXP x, int lo, int hi, int *ind, int k)
+{
+    if(k < 1 || hi-lo < 1) return;
+    if(k <= 1) 
+	Psort(x, lo, hi, ind[0]-1);
+    else {
+    /* Look for index nearest the centre of the range */
+	int i, this = 0, mid = (lo+hi)/2, z;
+	for(i = 0; i < k; i++)
+	    if(ind[i]-1 <= mid) this = i;
+	z = ind[this]-1;
+	Psort(x, lo, hi, z);
+	Psort0(x, lo, z-1, ind, this);
+	Psort0(x, z+1, hi, ind+this+1, k-this-1);
+    }
+}
+
+/* Needed for mistaken decision to put these in the API */
+void iPsort(int *x, int n, int k)
+{
+    iPsort2(x, 0, n-1, k);
+}
+
+void rPsort(double *x, int n, int k)
+{
+    rPsort2(x, 0, n-1, k);
+}
+
+void cPsort(Rcomplex *x, int n, int k)
+{
+    cPsort2(x, 0, n-1, k);
+}
+
+
 
 /* FUNCTION psort(x, indices) */
 SEXP attribute_hidden do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -493,8 +531,7 @@ SEXP attribute_hidden do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     SETCAR(args, duplicate(CAR(args)));
     SET_ATTRIB(CAR(args), R_NilValue);  /* remove all attributes */
-    for (i = 0; i < k; i++)
-	Psort(CAR(args), l[i] - 1);
+    Psort0(CAR(args), 0, n - 1, l, k);
     return CAR(args);
 }
 

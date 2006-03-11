@@ -837,8 +837,10 @@ BUG FIXES
 	matrix of more than 26 rows.  (PR#8652)
 
     o	Partial sorting used an algorithm that was intended only for a
-	few values of 'partial', and now switches to a barebones full
-	sort for more than 10.
+	few values of 'partial' and so could be far slower than a full
+	sort.  It now switches to a barebones full sort for more than
+	10 values of 'partial' and uses a more efficient recursive
+	implementation for 2...10.
 
     o	summary.glm() returned an estimate of dispersion of Inf for a
 	gaussian glm with zero residual degrees of freedom and then
