@@ -4770,7 +4770,8 @@ In Windows the same command works, but files @file{Makevars.win} or
 @file{Makefile} if they exist.  (This does need the files in the @R{}
 binary Windows distribution for installing source packages to be
 installed.)  For details of building DLLs with a variety of compilers,
-see @samp{readme.packages}.
+see @samp{README.packages} and
+@url{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
 
 
 @node Interfacing C++ code, Handling R objects in C, Creating shared objects, System and foreign language interfaces
@@ -6951,8 +6952,8 @@ distributions.
 @item chi-squared @tab @code{chisq} @tab @code{df}
 @item non-central chi-squared @tab @code{nchisq} @tab @code{df}, @code{lambda}
 @item exponential @tab @code{exp} @tab @code{scale}
-@item F @tab @code{f} (*) @tab @code{n1}, @code{n2}
-@item non-central F @tab @code{nf} @tab @code{n1}, @code{n2}, @code{ncp}
+@item F @tab @code{f} @tab @code{n1}, @code{n2}
+@item non-central F @tab @code{nf} (*) @tab @code{n1}, @code{n2}, @code{ncp}
 @item gamma @tab @code{gamma} @tab @code{shape}, @code{scale}
 @item geometric @tab @code{geom} @tab @code{p}
 @item hypergeometric @tab @code{hyper} @tab @code{NR}, @code{NB}, @code{n}

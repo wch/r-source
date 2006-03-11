@@ -2547,10 +2547,11 @@ Several Linux distributions have shipped unreleased versions of
 (see the separate comments).  Some versions of @command{gcc}@tie{}4
 (such as that in Fedora Core 3) produce incorrect code.  In our
 experiments @command{gcc}@tie{}3.4.x always produced faster and more
-reliable code.  It seems that @command{gcc}@tie{}4.0.1 and
-@command{gcc}@tie{}4.0.2 cannot compile @file{src/main/plot.c} when
-building R as a shared library on @cputype{ix86} unless the optimization
-level is changed from the default @option{-O2} (@option{-O3} works).
+reliable code.  It seems that @command{gcc}@tie{}4.0.x cannot compile
+@file{src/main/plot.c} when building R as a shared library on
+@cputype{ix86} unless the optimization level is changed from the default
+@option{-O2} (@option{-O3} works, as does @command{gcc}@tie{}4.1.0 with
+the default settings).
 
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
 Linux and @R{} contains code to set the FPU options suitably.  Brian
@@ -2599,13 +2600,14 @@ build pre-2.2.0.  Updated versions of the settings she used are
 @example
 PG_HOME=/usr/pgi/linux86-64/6.0
 CC=pgcc
-CFLAGS="-g -O2"
+CFLAGS="-g -O2 -Kieee"
 CPPFLAGS="-I$PG_HOME/include -I$PG_HOME/include/CC"
 F77=pgf77
-FFLAGS=-O2
+FFLAGS="-g -O2 -Kieee"
 CXX=pgCC
+CXXFLAGS="-g -O2 -Kieee"
 FC=pgf95
-FCFLAGS=-O2
+FCFLAGS="-g -O2 -Kieee"
 SHLIB_CXXLDFLAGS=-shared
 SHLIB_LDFLAGS=-shared
 LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
@@ -2613,9 +2615,10 @@ LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
 
 @noindent
 Note particularly the last, which is needed to ensure that a shared
-version of @code{libc} is found.  As from @R{} 2.2.1, we include
-@code{-mieee-fp} in @code{R_XTRA_CFLAGS} so it should not be included in
-@code{CFLAGS}.
+version of @code{libc} is found.  The flag @code{-Kieee} ensures strict
+compilance to IEC60659.  Also,
+@url{http://@/www.amd.com/@/us-en/@/assets/@/content_type/@/DownloadableAssets/@/dwamd_PGI_nov603.pdf}
+suggests that @option{-pc64} may be desirable.
 
 
 @node Mac OS X, Solaris, Linux, Platform notes
