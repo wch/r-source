@@ -45,8 +45,8 @@ clean:
 distclean: clean
 	$(RM) *.a Rmath.dll test*.exe
 
-DEFS =  -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
-CFLAGS=$(OPTFLAGS) -I.. -I../../include -I../../include/R_ext $(DEFS)
+DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
+CFLAGS=$(OPTFLAGS) -I.. -I../../include $(DEFS)
 
 SOURCES_NMATH = \
 	mlutils.c \
