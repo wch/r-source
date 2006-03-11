@@ -188,8 +188,7 @@ lib%.dll.a: %.def
 %.a:
 #	@$(ECHO) -------- Building $@ from $^ --------
 	@$(RM) $@
-	$(AR) cr $@ $^
-	$(RANLIB) $@
+	$(AR) crs $@ $^
 
 %.o: %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@
