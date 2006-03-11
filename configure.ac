@@ -895,11 +895,6 @@ case "${host_os}" in
         R_PROG_CC_FLAG([-mp],
                        R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mp]))
         ;;
-      ## Portland Group (information from Jennifer Lai)
-      *pgcc)
-        R_PROG_CC_FLAG([-mieee-fp],
-                       R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
-	;;
     esac
     case  "${F77}" in
       ## Intel compilers
@@ -1206,11 +1201,9 @@ case "${host_os}" in
       *icc)
         cpicflags="-fpic"
         ;;
-      ## Portland Group (information from Jennifer Lai)
+      ## Portland Group
       *pgcc)
         cpicflags="-fpic"
-        R_PROG_CC_FLAG([-mieee-fp],
-                       R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
 	;;
     esac
     case  "${F77}" in
@@ -1219,7 +1212,7 @@ case "${host_os}" in
         fpicflags="-fpic"
         ;;
       ## Portland Group
-      *pgf77)
+      *pgf77|*pgf90|*pgf95)
         fpicflags="-fpic"
         ;;
     esac
@@ -1752,7 +1745,7 @@ case "${host_os}" in
         fcpicflags="-fpic"
         ;;
       ## Portland Group
-      *pgf95)
+      *pgf95|*pgf90)
         fcpicflags="-fpic"
         ;;
     esac
