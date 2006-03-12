@@ -30,7 +30,7 @@ stopifnot <- function(...)
     for(i in 1:n)
 	if(!(is.logical(r <- eval(ll[[i]])) && !any(is.na(r)) && all(r)))
 	    stop(paste(deparse(mc[[i+1]]),
-		       "is not", if(length(r) > 1) "all", "TRUE"), call.= FALSE)
+		       " is not ", if(length(r) > 1) "all ", "TRUE", sep=''), call.= FALSE)
 }
 
 warning <- function(..., call. = TRUE, immediate. = FALSE, domain = NULL)
