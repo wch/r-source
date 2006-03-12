@@ -74,8 +74,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 ## If you want to source() a bunch of files, something like
 ## the following may be useful:
  sourceDir <- function(path, trace = TRUE, ...) {
-    for (nm in list.files(path, pattern = "\\.[RrSsQq]$")) {
-       if(trace) cat(nm,":")
+    for (nm in list.files(path, pattern = "\\\\.[RrSsQq]$")) {
+       if(trace) cat(nm,":")           %   ^^^^ doubled in *.Rd file
        source(file.path(path, nm), ...)
        if(trace) cat("\n")
     }
