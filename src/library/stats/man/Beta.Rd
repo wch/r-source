@@ -65,11 +65,9 @@ rbeta(n, shape1, shape2, ncp = 0)
   contributed by Catherine Loader (see \code{\link{dbinom}}) if either
   shape parameter is larger than one, otherwise directly from the definition.
   The non-central case is based on the derivation as a Poisson
-  mixture of betas (Johnson et al, 1995, pp. 502--3).
+  mixture of betas (Johnson \emph{et al}, 1995, pp. 502--3).
 
-  The central \code{pbeta} uses a C translation of a Fortran subroutine
-  by W. Fullerton of Los Alamos Scientific Laboratory for both
-  \code{shape <= 15}, otherwise
+  The central \code{pbeta} uses a C translation of
 
   Didonato, A. and Morris, A., Jr, (1992)
   Algorithm 708: Significant digit computation of the incomplete beta

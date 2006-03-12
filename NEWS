@@ -358,6 +358,10 @@ NEW FEATURES
 	package (rather than where it was originally installed: this
 	information is not shown by the print() method).
 
+    o	pbeta() now uses TOMS708 in all cases and so is more accurate
+	in some (e.g. when lower.tail = FALSE and when one of the
+	shape parameters is very small).
+
 
 DEPRECATED & DEFUNCT
 
