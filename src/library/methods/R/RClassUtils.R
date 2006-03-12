@@ -797,24 +797,24 @@ print.classRepresentation <-
 possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
     .identC(class1, class2) || .identC(class2, "ANY")
 
-
+## "Real" definition (assigned in ./zzz.R )
 .possibleExtends <-
-  ## Find the information that says whether class1 extends class2,
-  ## directly or indirectly.  This can be either a logical value or
-  ## an object containing various functions to test and/or coerce the relationship.
+    ## Find the information that says whether class1 extends class2,
+    ## directly or indirectly.  This can be either a logical value or
+    ## an object containing various functions to test and/or coerce the relationship.
     ## TODO:  convert into a generic function w. methods WHEN dispatch is really fast!
-  function(class1, class2, ClassDef1 = getClassDef(class1),
-           ClassDef2 = getClassDef(class2, where = .classEnv(ClassDef1)))
+    function(class1, class2, ClassDef1 = getClassDef(class1),
+             ClassDef2 = getClassDef(class2, where = .classEnv(ClassDef1)))
 {
     if(.identC(class1[[1]], class2) || .identC(class2, "ANY"))
         return(TRUE)
     ext <- TRUE # may become a list of extends definitions
-    if(is.null(ClassDef1))  # class1 not defined
+    if(is.null(ClassDef1)) # class1 not defined
         return(FALSE)
-    else {
-        ext <- ClassDef1@contains
-        i <- match(class2, names(ext))
-     }
+    ## else
+    ext <- ClassDef1@contains
+    nm1 <- names(ext)
+    i <- match(class2, nm1)
     if(is.na(i)) {
         ## look for class1 in the known subclasses of class2
         if(!is.null(ClassDef2)) {
@@ -822,7 +822,7 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
             if(!.identC(class(ClassDef2), "classRepresentation") &&
                isClassUnion(ClassDef2))
                 ## a simple TRUE iff class1 or one of its superclasses belongs to the union
-                i <- any(duplicated(c(class1, names(ClassDef1@contains), names(ext))))
+                i <- any(duplicated(c(class1, unique(nm1), names(ext))))
             else {
                 i <- match(class1, names(ext))
             }
@@ -1122,7 +1122,7 @@ setDataPart <- function(object, value) {
                 value <- cl
             ## The following warning is obsolete if S3 classes can be
             ## non-virtual--the subclass can have a prototype
-            
+
 ##             else
 ##                 warning(gettextf("old-style ('S3') class \"%s\" supplied as a superclass of \"%s\", but no automatic conversion will be peformed for S3 classes",
 ##                                  cl, .className(inClass)), domain = NA)
