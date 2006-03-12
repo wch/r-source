@@ -728,10 +728,7 @@ The following  example writes a left-justified label in each strip
 
 <<trellisstripplot, eval=FALSE>>=
 if ("lattice" %in% .packages()) {
-xyplot(y ~ x | g, strip=function(which.given, which.panel, var.name,
-              factor.levels, shingle.intervals,
-	       strip.names="", style, bg, fg, 
-               par.strip.text) { 
+xyplot(y ~ x | g, strip=function(which.given, which.panel, ...) { 
   grid.text(paste("Variable ", which.given, ": Level ",
   which.panel[which.given], sep=""), unit(1, "mm"), .5, just="left") })
 }
