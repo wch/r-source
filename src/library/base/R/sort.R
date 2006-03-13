@@ -23,7 +23,7 @@ sort <- function(x, partial = NULL, na.last = NA, decreasing = FALSE,
         y <- if(length(partial) <= 10) {
             partial <- .Internal(qsort(partial, FALSE))
             .Internal(psort(x, partial))
-        } else .Internal(sort(x, FALSE))
+        } else .Internal(qsort(x, FALSE))
     }
     else {
         nms <- names(x)
