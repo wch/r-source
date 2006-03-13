@@ -43,7 +43,8 @@ extern int Rf_i1mach(int i);
 /*      THIS WORK PUBLISHED IN TRANSACTIONS ON MATHEMATICAL SOFTWARE, */
 /*      VOL. 18, NO. 3, SEPTEMBER, 1992, PP. 360-373z. */
 void attribute_hidden
-bratio(double a, double b, double x, double y, double *w, double *w1, int *ierr)
+bratio(double a, double b, double x, double y, double *w, double *w1, 
+       int *ierr, int log_p)
 {
     /* System generated locals */
     double d__1;

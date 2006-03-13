@@ -183,17 +183,18 @@ double	attribute_hidden lfastchoose(double, double);
 
 double  attribute_hidden bd0(double, double);
 
-/* Consider adding these two to the API (Rmath.h): */
 double	attribute_hidden dbinom_raw(double, double, double, double, int);
 double	attribute_hidden dpois_raw (double, double, int);
 double  attribute_hidden pnchisq_raw(double, double, double, double, double, int, Rboolean);
 double  attribute_hidden pgamma_raw(double, double, int, int);
+double	attribute_hidden pbeta_raw(double, double, double, int, int);
+double  attribute_hidden qchisq_appr(double, double, double, int, int, double tol);
 
 int	i1mach(int);
 
 /* From toms708.c */
 void attribute_hidden bratio(double a, double b, double x, double y,
-	    		     double *w, double *w1, int *ierr);
+	    		     double *w, double *w1, int *ierr, int log_p);
 
 
 #endif /* MATHLIB_PRIVATE_H */

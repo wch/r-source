@@ -38,11 +38,11 @@
 #include "dpq.h"
 
 attribute_hidden
-double pbeta_raw(double x, double pin, double qin, int lower_tail)
+double pbeta_raw(double x, double pin, double qin, int lower_tail, int log_p)
 {
     double x1 = 1 - x, w, wc;
     int ierr;
-    bratio(pin, qin, x, x1, &w, &wc, &ierr);
+    bratio(pin, qin, x, x1, &w, &wc, &ierr, log_p);
     if(ierr)
 	MATHLIB_WARNING(_("pbeta_raw() -> bratio() gave error code %d"), ierr);
     return lower_tail ? w : wc;
@@ -61,5 +61,5 @@ double pbeta(double x, double pin, double qin, int lower_tail, int log_p)
     if (x >= 1)
 	return R_DT_1;
     /* FIXME: this doesn't allow an extended value range when log_p = TRUE */
-    return R_D_val(pbeta_raw(x, pin, qin, lower_tail));
+    return R_D_val(pbeta_raw(x, pin, qin, lower_tail, log_p));
 }

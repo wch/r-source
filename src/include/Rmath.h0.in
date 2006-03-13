@@ -390,7 +390,6 @@ double	dbeta(double, double, double, int);
 double	pbeta(double, double, double, int, int);
 double	qbeta(double, double, double, int, int);
 double	rbeta(double, double);
-double	pbeta_raw(double, double, double, int);
 
 	/* Lognormal Distribution */
 
@@ -405,7 +404,6 @@ double	dchisq(double, double, int);
 double	pchisq(double, double, int, int);
 double	qchisq(double, double, int, int);
 double	rchisq(double);
-double  qchisq_appr(double, double, double, int, int, double tol);
 
 	/* Non-central Chi-squared Distribution */
 
