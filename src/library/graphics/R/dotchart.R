@@ -5,7 +5,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 	 xlim = range(x[is.finite(x)]),
 	 main = NULL, xlab = NULL, ylab = NULL, ...)
 {
-    opar <- par("mar", "cex", "yaxs")
+    opar <- par("mai", "cex", "yaxs")
     on.exit(par(opar))
     par(cex = cex, yaxs = "i")
 
@@ -38,11 +38,10 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 	ginch <- max(strwidth(glabels, "inch"), na.rm = TRUE)
 	goffset <- 0.4
     }
-    lheight <- strheight("M", "inch")
     if (!(is.null(labels) && is.null(glabels))) {
-	nmar <- par("mar")
-	nmar[2] <- nmar[4] + (max(linch + goffset, ginch) + 0.1)/lheight
-	par(mar = nmar)
+	nmai <- par("mai")
+	nmai[2] <- nmai[4] + max(linch + goffset, ginch) + 0.1
+	par(mai = nmai)
     }
 
     if (is.null(groups)) {
@@ -63,6 +62,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 
     plot.window(xlim = xlim, ylim = ylim, log = "")
 #    xmin <- par("usr")[1]
+    lheight <- par("csi")
     if (!is.null(labels)) {
 	linch <- max(strwidth(labels, "inch"), na.rm = TRUE)
 	loffset <- (linch + 0.1)/lheight
