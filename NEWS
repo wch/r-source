@@ -851,6 +851,9 @@ BUG FIXES
 	treated that as a known value.  It now uses the estimate NaN,
 	which is consistent with summary.lm().
 
+    o	Sys.sleep() on Unix-alikes was restructed to about 2147 seconds
+	and otherwise might never have returned.  (PR#8678)
+
 
 
 

@@ -979,7 +979,7 @@ void attribute_hidden Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int Timeout;
-    double tm;
+    double tm, tmp;
     struct tms timeinfo;
     double timeint, start, elapsed;
 
@@ -992,6 +992,7 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     start = times(&timeinfo);
     for (;;) {
 	fd_set *what;
+	tmp = R_MIN(tm, 2e9); /* avoid integer overflow */
         Timeout = R_wait_usec ? R_MIN(tm, R_wait_usec) : tm;
 	what = R_checkActivity(Timeout, 1);
 
