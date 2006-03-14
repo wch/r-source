@@ -3043,7 +3043,7 @@ SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust)
     double xx, yy, ww, hh;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
-    int i;
+    int i = 0 /* -Wall */;
     LViewportContext vpc;
     R_GE_gcontext gc;
     LTransform transform;
