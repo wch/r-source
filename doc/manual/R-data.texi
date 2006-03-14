@@ -1271,7 +1271,7 @@ Package @pkg{RODBC} on @acronym{CRAN} provides an interface to database
 sources supporting an @acronym{ODBC} interface.  This is very widely
 available, and allows the same @R{} code to access different database
 systems.  @pkg{RODBC} runs on both Unix/Linux and Windows, and almost
-all database systems provide support for @acronym{ODBC}.  We havew
+all database systems provide support for @acronym{ODBC}.  We have
 tested Microsoft SQL Server, Access, MySQL and PostgreSQL on Windows and
 MySQL, Oracle, PostgreSQL and SQLite on Linux.
 
