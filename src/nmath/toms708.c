@@ -47,15 +47,11 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
        int *ierr, int log_p)
 {
     /* System generated locals */
-    double d__1;
+    double d1;
 
     /* Local variables */
-    int n;
-    double t, z__, a0, b0, x0, y0;
-    int ind;
-    double eps;
-    int ierr1;
-    double lambda;
+    int n, ind, ierr1;
+    double t, z, a0, b0, x0, y0, eps, lambda;
 
 /* ----------------------------------------------------------------------- */
 
@@ -63,7 +59,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 
 /*                     -------------------- */
 
-/*     IT IS ASSUMED THAT A AND B ARE NONNEGATIVE, AND THAT X .LE. 1 */
+/*     IT IS ASSUMED THAT A AND B ARE NONNEGATIVE, AND THAT X <= 1 */
 /*     AND Y = 1 - X.  BRATIO ASSIGNS W AND W1 THE VALUES */
 
 /*                      W  = IX(A,B) */
@@ -77,9 +73,9 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 
 /*        IERR = 1  IF A OR B IS NEGATIVE */
 /*        IERR = 2  IF A = B = 0 */
-/*        IERR = 3  IF X .LT. 0 OR X .GT. 1 */
-/*        IERR = 4  IF Y .LT. 0 OR Y .GT. 1 */
-/*        IERR = 5  IF X + Y .NE. 1 */
+/*        IERR = 3  IF X < 0 OR X > 1 */
+/*        IERR = 4  IF Y < 0 OR Y > 1 */
+/*        IERR = 5  IF X + Y != 1 */
 /*        IERR = 6  IF X = A = 0 */
 /*        IERR = 7  IF Y = B = 0 */
 
@@ -92,7 +88,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 /* ----------------------------------------------------------------------- */
 
 /*     ****** EPS IS A MACHINE DEPENDENT CONSTANT. EPS IS THE SMALLEST */
-/*            FLOATING POINT NUMBER FOR WHICH 1.0 + EPS .GT. 1.0 */
+/*            FLOATING POINT NUMBER FOR WHICH 1.0 + EPS > 1.0 */
 
     eps = 2.0 * Rf_d1mach(3);
 
@@ -111,8 +107,8 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
     if (y < 0.0 || y > 1.0) {
 	goto L330;
     }
-    z__ = x + y - 0.5 - 0.5;
-    if (fabs(z__) > eps * 3.0) {
+    z = x + y - 0.5 - 0.5;
+    if (fabs(z) > eps * 3.0) {
 	goto L340;
     }
 
@@ -144,7 +140,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	goto L30;
     }
 
-/*             PROCEDURE FOR A0 .LE. 1 OR B0 .LE. 1 */
+/*             PROCEDURE FOR a0 <= 1 OR b0 <= 1 */
 
     if (x <= 0.5) {
 	goto L10;
@@ -167,13 +163,13 @@ L10:
     if (max(a0,b0) > 1.0) {
 	goto L20;
     }
-    if (a0 >= min(.2,b0)) {
+    if (a0 >= min(0.2, b0)) {
 	goto L100;
     }
-    if (pow(x0, a0) <= .9f) {
+    if (pow(x0, a0) <= 0.9) {
 	goto L100;
     }
-    if (x0 >= .3f) {
+    if (x0 >= 0.3) {
 	goto L110;
     }
     n = 20;
@@ -183,13 +179,13 @@ L20:
     if (b0 <= 1.0) {
 	goto L100;
     }
-    if (x0 >= .3f) {
+    if (x0 >= 0.3) {
 	goto L110;
     }
-    if (x0 >= .1f) {
+    if (x0 >= 0.1) {
 	goto L21;
     }
-    if (pow(x0*b0, a0) <= .7f) {
+    if (pow(x0*b0, a0) <= 0.7) {
 	goto L100;
     }
 L21:
@@ -199,7 +195,7 @@ L21:
     n = 20;
     goto L130;
 
-/*             PROCEDURE FOR A0 .GT. 1 AND B0 .GT. 1 */
+/*             PROCEDURE FOR a0 > 1 AND b0 > 1 */
 
 L30:
     if (a > b) {
@@ -221,7 +217,7 @@ L32:
     lambda = fabs(lambda);
 
 L40:
-    if (b0 < 40.0 && b0 * x0 <= .7f) {
+    if (b0 < 40.0 && b0 * x0 <= 0.7) {
 	goto L100;
     }
     if (b0 < 40.0) {
@@ -233,7 +229,7 @@ L40:
     if (a0 <= 100.0) {
 	goto L120;
     }
-    if (lambda > a0 * .03f) {
+    if (lambda > a0 * 0.03) {
 	goto L120;
     }
     goto L180;
@@ -241,19 +237,19 @@ L50:
     if (b0 <= 100.0) {
 	goto L120;
     }
-    if (lambda > b0 * .03f) {
+    if (lambda > b0 * 0.03) {
 	goto L120;
     }
     goto L180;
 
 /*            EVALUATION OF THE APPROPRIATE ALGORITHM */
 
-L80:
+L80:  /* b0 < min(eps, eps * a0) */
     *w = fpser(a0, b0, x0, eps);
     *w1 = 0.5 - *w + 0.5;
     goto L220;
 
-L90:
+L90: /* a0 < min(eps, eps * b0) && b0 * x0 <= 1.0 */
     *w1 = apser(a0, b0, x0, eps);
     *w = 0.5 - *w1 + 0.5;
     goto L220;
@@ -269,8 +265,8 @@ L110:
     goto L220;
 
 L120:
-    d__1 = eps * 15.0;
-    *w = bfrac(a0, b0, x0, y0, lambda, d__1);
+    d1 = eps * 15.0;
+    *w = bfrac(a0, b0, x0, y0, lambda, d1);
     *w1 = 0.5 - *w + 0.5;
     goto L220;
 
@@ -292,7 +288,7 @@ L140:
     b0 = 1.0;
 L141:
     *w = bup(b0, a0, y0, x0, n, eps);
-    if (x0 > .7f) {
+    if (x0 > 0.7) {
 	goto L150;
     }
     *w += bpser(a0, b0, x0, eps);
@@ -312,8 +308,8 @@ L151:
     goto L220;
 
 L180:
-    d__1 = eps * 100.0;
-    *w = basym(a0, b0, lambda, d__1);
+    d1 = eps * 100.0;
+    *w = basym(a0, b0, lambda, d1);
     *w1 = 0.5 - *w + 0.5;
     goto L220;
 
@@ -346,7 +342,7 @@ L220:
     *w1 = t;
     return;
 
-/*           PROCEDURE FOR A AND B .LT. 1.D-3*EPS */
+/*           PROCEDURE FOR A AND B < 1.e-3*eps */
 
 L230:
     *w = b / (a + b);
@@ -384,21 +380,21 @@ double fpser(double a, double b, double x, double eps)
     double ret_val;
 
     /* Local variables */
-    double c__, s, t, an, tol;
+    double c, s, t, an, tol;
 
 /* ----------------------------------------------------------------------- */
 
 /*                 EVALUATION OF I (A,B) */
 /*                                X */
 
-/*          FOR B .LT. MIN(EPS,EPS*A) AND X .LE. 0.5. */
+/*          FOR B < MIN(EPS, EPS*A) AND X <= 0.5. */
 
 /* ----------------------------------------------------------------------- */
 
 /*                  SET  FPSER = X**A */
 
     ret_val = 1.0;
-    if (a <= eps * .001f) {
+    if (a <= eps * 0.001) {
 	goto L10;
     }
     ret_val = 0.0;
@@ -419,9 +415,9 @@ L10:
 L20:
     an += 1.0;
     t = x * t;
-    c__ = t / an;
-    s += c__;
-    if (fabs(c__) > tol) {
+    c = t / an;
+    s += c;
+    if (fabs(c) > tol) {
 	goto L20;
     }
 
@@ -435,32 +431,29 @@ static double apser(double a, double b, double x, double eps)
 
     static double g = .577215664901533;
 
-    /* System generated locals */
-    double ret_val;
-
     /* Local variables */
-    double c__, j, s, t, aj, bx;
+    double c, j, s, t, aj, bx;
     double tol;
 
 /* ----------------------------------------------------------------------- */
 /*     APSER YIELDS THE INCOMPLETE BETA RATIO I(SUB(1-X))(B,A) FOR */
-/*     A .LE. MIN(EPS,EPS*B), B*X .LE. 1, AND X .LE. 0.5. USED WHEN */
+/*     A <= MIN(EPS,EPS*B), B*X <= 1, AND X <= 0.5. USED WHEN */
 /*     A IS VERY SMALL. USE ONLY IF ABOVE INEQUALITIES ARE SATISFIED. */
 /* ----------------------------------------------------------------------- */
 /* -------------------- */
 /* -------------------- */
     bx = b * x;
     t = x - bx;
-    if (b * eps > .02f) {
+    if (b * eps > 0.02) {
 	goto L10;
     }
-    c__ = log(x) + psi(b) + g + t;
+    c = log(x) + psi(b) + g + t;
     goto L20;
 L10:
-    c__ = log(bx) + g + t;
+    c = log(bx) + g + t;
 
 L20:
-    tol = eps * 5.0 * fabs(c__);
+    tol = eps * 5.0 * fabs(c);
     j = 1.0;
     s = 0.0;
 L30:
@@ -472,24 +465,22 @@ L30:
 	goto L30;
     }
 
-    ret_val = -(a) * (c__ + s);
-    return ret_val;
+    return -a * (c + s);
 } /* apser */
 
 static double bpser(double a, double b, double x, double eps)
 {
     /* System generated locals */
-    int i__1;
+    int i1;
     double ret_val;
 
     /* Local variables */
-    double c__;
-    int i__, m;
-    double n, t, u, w, z__, a0, b0, apb, tol, sum;
+    int i, m;
+    double c, n, t, u, w, z, a0, b0, apb, tol, sum;
 
 /* ----------------------------------------------------------------------- */
-/*     POWER SERIES EXPANSION FOR EVALUATING IX(A,B) WHEN B .LE. 1 */
-/*     OR B*X .LE. 0.7.  EPS IS THE TOLERANCE USED. */
+/*     POWER SERIES EXPANSION FOR EVALUATING IX(A,B) WHEN B <= 1 */
+/*     OR B*X <= 0.7.  EPS IS THE TOLERANCE USED. */
 /* ----------------------------------------------------------------------- */
 
     ret_val = 0.0;
@@ -503,8 +494,8 @@ static double bpser(double a, double b, double x, double eps)
     if (a0 < 1.0) {
 	goto L10;
     }
-    z__ = a * log(x) - betaln(a, b);
-    ret_val = exp(z__) / a;
+    z = a * log(x) - betaln(a, b);
+    ret_val = exp(z) / a;
     goto L70;
 L10:
     b0 = max(a,b);
@@ -515,7 +506,7 @@ L10:
 	goto L40;
     }
 
-/*            PROCEDURE FOR A0 .LT. 1 AND B0 .LE. 1 */
+/*            PROCEDURE FOR a0 < 1 AND b0 <= 1 */
 
     ret_val = pow(x, a);
     if (ret_val == 0.0) {
@@ -526,18 +517,18 @@ L10:
     if (apb > 1.0) {
 	goto L20;
     }
-    z__ = gam1(apb) + 1.0;
+    z = gam1(apb) + 1.0;
     goto L30;
 L20:
-    u = (double) (a) + (double) (b) - 1.;
-    z__ = (gam1(u) + 1.0) / apb;
+    u = a + b - 1.;
+    z = (gam1(u) + 1.0) / apb;
 
 L30:
-    c__ = (gam1(a) + 1.0) * (gam1(b) + 1.0) / z__;
-    ret_val = ret_val * c__ * (b / apb);
+    c = (gam1(a) + 1.0) * (gam1(b) + 1.0) / z;
+    ret_val = ret_val * c * (b / apb);
     goto L70;
 
-/*         PROCEDURE FOR A0 .LT. 1 AND 1 .LT. B0 .LT. 8 */
+/*         PROCEDURE FOR a0 < 1 AND 1 < b0 < 8 */
 
 L40:
     u = gamln1(a0);
@@ -545,17 +536,17 @@ L40:
     if (m < 1) {
 	goto L50;
     }
-    c__ = 1.0;
-    i__1 = m;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    c = 1.0;
+    i1 = m;
+    for (i = 1; i <= i1; ++i) {
 	b0 += -1.0;
 /* L41: */
-	c__ *= b0 / (a0 + b0);
+	c *= b0 / (a0 + b0);
     }
-    u = log(c__) + u;
+    u = log(c) + u;
 
 L50:
-    z__ = a * log(x) - u;
+    z = a * log(x) - u;
     b0 += -1.0;
     apb = a0 + b0;
     if (apb > 1.0) {
@@ -567,17 +558,17 @@ L51:
     u = a0 + b0 - 1.;
     t = (gam1(u) + 1.0) / apb;
 L52:
-    ret_val = exp(z__) * (a0 / a) * (gam1(b0) + 1.0) / t;
+    ret_val = exp(z) * (a0 / a) * (gam1(b0) + 1.0) / t;
     goto L70;
 
-/*            PROCEDURE FOR A0 .LT. 1 AND B0 .GE. 8 */
+/*            PROCEDURE FOR a0 < 1 AND b0 >= 8 */
 
 L60:
     u = gamln1(a0) + algdiv(a0, b0);
-    z__ = a * log(x) - u;
-    ret_val = a0 / a * exp(z__);
+    z = a * log(x) - u;
+    ret_val = a0 / a * exp(z);
 L70:
-    if (ret_val == 0.0 || a <= eps * .1f) {
+    if (ret_val == 0.0 || a <= eps * 0.1) {
 	return ret_val;
     }
 /* ----------------------------------------------------------------------- */
@@ -585,12 +576,12 @@ L70:
 /* ----------------------------------------------------------------------- */
     sum = 0.0;
     n = 0.0;
-    c__ = 1.0;
+    c = 1.0;
     tol = eps / a;
 L100:
     n += 1.0;
-    c__ = c__ * (0.5 - b / n + 0.5) * x;
-    w = c__ / (a + n);
+    c = c * (0.5 - b / n + 0.5) * x;
+    w = c / (a + n);
     sum += w;
     if (fabs(w) > tol) {
 	goto L100;
@@ -602,13 +593,13 @@ L100:
 static double bup(double a, double b, double x, double y, int n, double eps)
 {
     /* System generated locals */
-    int i__1;
-    double ret_val, d__1;
+    int i1;
+    double ret_val, d1;
 
     /* Local variables */
-    double d__;
-    int i__, k;
-    double l, r__, t, w;
+    double d;
+    int i, k;
+    double l, r, t, w;
     int mu;
     double ap1;
     int nm1, kp1;
@@ -625,20 +616,20 @@ static double bup(double a, double b, double x, double y, int n, double eps)
     apb = a + b;
     ap1 = a + 1.0;
     mu = 0;
-    d__ = 1.0;
+    d = 1.0;
     if (n == 1 || a < 1.0) {
 	goto L10;
     }
-    if (apb < ap1 * 1.1f) {
+    if (apb < ap1 * 1.1) {
 	goto L10;
     }
-    mu = (d__1 = exparg(1), (int) fabs(d__1));
+    mu = (d1 = exparg(1), (int) fabs(d1));
     k = (int) exparg(0);
     if (k < mu) {
 	mu = k;
     }
     t = (double) mu;
-    d__ = exp(-t);
+    d = exp(-t);
 
 L10:
     ret_val = brcmp1(mu, a, b, x, y) / a;
@@ -646,7 +637,7 @@ L10:
 	return ret_val;
     }
     nm1 = n - 1;
-    w = d__;
+    w = d;
 
 /*          LET K BE THE INDEX OF THE MAXIMUM TERM */
 
@@ -660,24 +651,24 @@ L10:
     k = nm1;
     goto L30;
 L20:
-    r__ = (b - 1.0) * x / y - a;
-    if (r__ < 1.0) {
+    r = (b - 1.0) * x / y - a;
+    if (r < 1.0) {
 	goto L40;
     }
     k = nm1;
     t = (double) nm1;
-    if (r__ < t) {
-	k = (int) r__;
+    if (r < t) {
+	k = (int) r;
     }
 
 /*          ADD THE INCREASING TERMS OF THE SERIES */
 
 L30:
-    i__1 = k;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	l = (double) (i__ - 1);
-	d__ = (apb + l) / (ap1 + l) * x * d__;
-	w += d__;
+    i1 = k;
+    for (i = 1; i <= i1; ++i) {
+	l = (double) (i - 1);
+	d = (apb + l) / (ap1 + l) * x * d;
+	w += d;
 /* L31: */
     }
     if (k == nm1) {
@@ -688,12 +679,12 @@ L30:
 
 L40:
     kp1 = k + 1;
-    i__1 = nm1;
-    for (i__ = kp1; i__ <= i__1; ++i__) {
-	l = (double) (i__ - 1);
-	d__ = (apb + l) / (ap1 + l) * x * d__;
-	w += d__;
-	if (d__ <= eps * w) {
+    i1 = nm1;
+    for (i = kp1; i <= i1; ++i) {
+	l = (double) (i - 1);
+	d = (apb + l) / (ap1 + l) * x * d;
+	w += d;
+	if (d <= eps * w) {
 	    goto L50;
 	}
 /* L41: */
@@ -706,17 +697,18 @@ L50:
     return ret_val;
 } /* bup */
 
-static double bfrac(double a, double b, double x, double y, double lambda, double eps)
+static double bfrac(double a, double b, double x, double y, double lambda, 
+		    double eps)
 {
     /* System generated locals */
-    double ret_val, d__1;
+    double ret_val, d1;
 
     /* Local variables */
-    double c__, e, n, p, r__, s, t, w, c0, c1, r0, an, bn, yp1, anp1, bnp1,
+    double c, e, n, p, r, s, t, w, c0, c1, r0, an, bn, yp1, anp1, bnp1,
 	    beta, alpha;
 
 /* ----------------------------------------------------------------------- */
-/*     CONTINUED FRACTION EXPANSION FOR IX(A,B) WHEN A,B .GT. 1. */
+/*     CONTINUED FRACTION EXPANSION FOR IX(A,B) WHEN A,B > 1. */
 /*     IT IS ASSUMED THAT  LAMBDA = (A + B)*Y - B. */
 /* ----------------------------------------------------------------------- */
 /* -------------------- */
@@ -725,7 +717,7 @@ static double bfrac(double a, double b, double x, double y, double lambda, doubl
 	return ret_val;
     }
 
-    c__ = lambda + 1.0;
+    c = lambda + 1.0;
     c0 = b / a;
     c1 = 1.0 / a + 1.0;
     yp1 = y + 1.0;
@@ -736,8 +728,8 @@ static double bfrac(double a, double b, double x, double y, double lambda, doubl
     an = 0.0;
     bn = 1.0;
     anp1 = 1.0;
-    bnp1 = c__ / c1;
-    r__ = c1 / c__;
+    bnp1 = c / c1;
+    r = c1 / c;
 
 /*        CONTINUED FRACTION CALCULATION */
 
@@ -748,7 +740,7 @@ L10:
     e = a / s;
     alpha = p * (p + c0) * e * e * (w * x);
     e = (t + 1.0) / (c1 + t + t);
-    beta = n + w / s + e * (c__ + n * yp1);
+    beta = n + w / s + e * (c + n * yp1);
     p = t + 1.0;
     s += 2.0;
 
@@ -761,9 +753,9 @@ L10:
     bn = bnp1;
     bnp1 = t;
 
-    r0 = r__;
-    r__ = anp1 / bnp1;
-    if ((d__1 = r__ - r0, fabs(d__1)) <= eps * r__) {
+    r0 = r;
+    r = anp1 / bnp1;
+    if ((d1 = r - r0, fabs(d1)) <= eps * r) {
 	goto L20;
     }
 
@@ -771,14 +763,14 @@ L10:
 
     an /= bnp1;
     bn /= bnp1;
-    anp1 = r__;
+    anp1 = r;
     bnp1 = 1.0;
     goto L10;
 
 /*                 TERMINATION */
 
 L20:
-    ret_val *= r__;
+    ret_val *= r;
     return ret_val;
 } /* bfrac */
 
@@ -789,13 +781,13 @@ static double brcomp(double a, double b, double x, double y)
     static double const__ = .398942280401433;
 
     /* System generated locals */
-    int i__1;
+    int i1;
     double ret_val;
 
     /* Local variables */
-    double c__, e, h__;
-    int i__, n;
-    double t, u, v, z__, a0, b0, x0, y0, apb, lnx, lny;
+    double c, e, h;
+    int i, n;
+    double t, u, v, z, a0, b0, x0, y0, apb, lnx, lny;
     double lambda;
 
 /* ----------------------------------------------------------------------- */
@@ -832,15 +824,15 @@ L11:
     lny = log(y);
 
 L20:
-    z__ = a * lnx + b * lny;
+    z = a * lnx + b * lny;
     if (a0 < 1.0) {
 	goto L30;
     }
-    z__ -= betaln(a, b);
-    ret_val = exp(z__);
+    z -= betaln(a, b);
+    ret_val = exp(z);
     return ret_val;
 /* ----------------------------------------------------------------------- */
-/*              PROCEDURE FOR A .LT. 1 OR B .LT. 1 */
+/*              PROCEDURE FOR a < 1 OR b < 1 */
 /* ----------------------------------------------------------------------- */
 L30:
     b0 = max(a, b);
@@ -851,9 +843,9 @@ L30:
 	goto L60;
     }
 
-/*                   ALGORITHM FOR B0 .LE. 1 */
+/*                   ALGORITHM FOR b0 <= 1 */
 
-    ret_val = exp(z__);
+    ret_val = exp(z);
     if (ret_val == 0.0) {
 	return ret_val;
     }
@@ -862,18 +854,18 @@ L30:
     if (apb > 1.0) {
 	goto L40;
     }
-    z__ = gam1(apb) + 1.0;
+    z = gam1(apb) + 1.0;
     goto L50;
 L40:
     u = a + b - 1.;
-    z__ = (gam1(u) + 1.0) / apb;
+    z = (gam1(u) + 1.0) / apb;
 
 L50:
-    c__ = (gam1(a) + 1.0) * (gam1(b) + 1.0) / z__;
-    ret_val = ret_val * (a0 * c__) / (a0 / b0 + 1.0);
+    c = (gam1(a) + 1.0) * (gam1(b) + 1.0) / z;
+    ret_val = ret_val * (a0 * c) / (a0 / b0 + 1.0);
     return ret_val;
 
-/*                ALGORITHM FOR 1 .LT. B0 .LT. 8 */
+/*                ALGORITHM FOR 1 < b0 < 8 */
 
 L60:
     u = gamln1(a0);
@@ -881,17 +873,17 @@ L60:
     if (n < 1) {
 	goto L70;
     }
-    c__ = 1.0;
-    i__1 = n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    c = 1.0;
+    i1 = n;
+    for (i = 1; i <= i1; ++i) {
 	b0 += -1.0;
-	c__ *= b0 / (a0 + b0);
+	c *= b0 / (a0 + b0);
 /* L61: */
     }
-    u = log(c__) + u;
+    u = log(c) + u;
 
 L70:
-    z__ -= u;
+    z -= u;
     b0 += -1.0;
     apb = a0 + b0;
     if (apb > 1.0) {
@@ -903,31 +895,31 @@ L71:
     u = a0 + b0 - 1.;
     t = (gam1(u) + 1.0) / apb;
 L72:
-    ret_val = a0 * exp(z__) * (gam1(b0) + 1.0) / t;
+    ret_val = a0 * exp(z) * (gam1(b0) + 1.0) / t;
     return ret_val;
 
-/*                   ALGORITHM FOR B0 .GE. 8 */
+/*                   ALGORITHM FOR b0 >= 8 */
 
 L80:
     u = gamln1(a0) + algdiv(a0, b0);
-    ret_val = a0 * exp(z__ - u);
+    ret_val = a0 * exp(z - u);
     return ret_val;
 /* ----------------------------------------------------------------------- */
-/*              PROCEDURE FOR A .GE. 8 AND B .GE. 8 */
+/*              PROCEDURE FOR A >= 8 AND B >= 8 */
 /* ----------------------------------------------------------------------- */
 L100:
     if (a > b) {
 	goto L101;
     }
-    h__ = a / b;
-    x0 = h__ / (h__ + 1.0);
-    y0 = 1.0 / (h__ + 1.0);
+    h = a / b;
+    x0 = h / (h + 1.0);
+    y0 = 1.0 / (h + 1.0);
     lambda = a - (a + b) * x;
     goto L110;
 L101:
-    h__ = b / a;
-    x0 = 1.0 / (h__ + 1.0);
-    y0 = h__ / (h__ + 1.0);
+    h = b / a;
+    x0 = 1.0 / (h + 1.0);
+    y0 = h / (h + 1.0);
     lambda = (a + b) * y - b;
 
 L110:
@@ -951,8 +943,8 @@ L121:
     v = e - log(y / y0);
 
 L130:
-    z__ = exp(-(a * u + b * v));
-    ret_val = const__ * sqrt(b * x0) * z__ * exp(-bcorr(a, b));
+    z = exp(-(a * u + b * v));
+    ret_val = const__ * sqrt(b * x0) * z * exp(-bcorr(a, b));
     return ret_val;
 } /* brcomp */
 
@@ -963,13 +955,13 @@ static double brcmp1(int mu, double a, double b, double x, double y)
     static double const__ = .398942280401433;
 
     /* System generated locals */
-    int i__1;
-    double ret_val, r__1;
+    int i1;
+    double ret_val, r1;
 
     /* Local variables */
-    double c__, e, h__;
-    int i__, n;
-    double t, u, v, z__, a0, b0, x0, y0, apb, lnx, lny;
+    double c, e, h;
+    int i, n;
+    double t, u, v, z, a0, b0, x0, y0, apb, lnx, lny;
     double lambda;
 
 /* ----------------------------------------------------------------------- */
@@ -1002,15 +994,15 @@ L11:
     lny = log(y);
 
 L20:
-    z__ = a * lnx + b * lny;
+    z = a * lnx + b * lny;
     if (a0 < 1.0) {
 	goto L30;
     }
-    z__ -= betaln(a, b);
-    ret_val = esum(mu, z__);
+    z -= betaln(a, b);
+    ret_val = esum(mu, z);
     return ret_val;
 /* ----------------------------------------------------------------------- */
-/*              PROCEDURE FOR A .LT. 1 OR B .LT. 1 */
+/*              PROCEDURE FOR A < 1 OR B < 1 */
 /* ----------------------------------------------------------------------- */
 L30:
     b0 = max(a,b);
@@ -1021,9 +1013,9 @@ L30:
 	goto L60;
     }
 
-/*                   ALGORITHM FOR B0 .LE. 1 */
+/*                   ALGORITHM FOR b0 <= 1 */
 
-    ret_val = esum(mu, z__);
+    ret_val = esum(mu, z);
     if (ret_val == 0.0) {
 	return ret_val;
     }
@@ -1032,18 +1024,18 @@ L30:
     if (apb > 1.0) {
 	goto L40;
     }
-    z__ = gam1(apb) + 1.0;
+    z = gam1(apb) + 1.0;
     goto L50;
 L40:
     u = a + b - 1.;
-    z__ = (gam1(u) + 1.0) / apb;
+    z = (gam1(u) + 1.0) / apb;
 
 L50:
-    c__ = (gam1(a) + 1.0) * (gam1(b) + 1.0) / z__;
-    ret_val = ret_val * (a0 * c__) / (a0 / b0 + 1.0);
+    c = (gam1(a) + 1.0) * (gam1(b) + 1.0) / z;
+    ret_val = ret_val * (a0 * c) / (a0 / b0 + 1.0);
     return ret_val;
 
-/*                ALGORITHM FOR 1 .LT. B0 .LT. 8 */
+/*                ALGORITHM FOR 1 < b0 < 8 */
 
 L60:
     u = gamln1(a0);
@@ -1051,17 +1043,17 @@ L60:
     if (n < 1) {
 	goto L70;
     }
-    c__ = 1.0;
-    i__1 = n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    c = 1.0;
+    i1 = n;
+    for (i = 1; i <= i1; ++i) {
 	b0 += -1.0;
-	c__ *= b0 / (a0 + b0);
+	c *= b0 / (a0 + b0);
 /* L61: */
     }
-    u = log(c__) + u;
+    u = log(c) + u;
 
 L70:
-    z__ -= u;
+    z -= u;
     b0 += -1.0;
     apb = a0 + b0;
     if (apb > 1.0) {
@@ -1073,36 +1065,36 @@ L71:
     u = a0 + b0 - 1.;
     t = (gam1(u) + 1.0) / apb;
 L72:
-    ret_val = a0 * esum(mu, z__) * (gam1(b0) + 1.0) / t;
+    ret_val = a0 * esum(mu, z) * (gam1(b0) + 1.0) / t;
     return ret_val;
 
-/*                   ALGORITHM FOR B0 .GE. 8 */
+/*                   ALGORITHM FOR b0 >= 8 */
 
 L80:
     u = gamln1(a0) + algdiv(a0, b0);
-    ret_val = a0 * esum(mu, z__ - u);
+    ret_val = a0 * esum(mu, z - u);
     return ret_val;
 /* ----------------------------------------------------------------------- */
-/*              PROCEDURE FOR A .GE. 8 AND B .GE. 8 */
+/*              PROCEDURE FOR A >= 8 AND B >= 8 */
 /* ----------------------------------------------------------------------- */
 L100:
     if (a > b) {
 	goto L101;
     }
-    h__ = a / b;
-    x0 = h__ / (h__ + 1.0);
-    y0 = 1.0 / (h__ + 1.0);
+    h = a / b;
+    x0 = h / (h + 1.0);
+    y0 = 1.0 / (h + 1.0);
     lambda = a - (a + b) * x;
     goto L110;
 L101:
-    h__ = b / a;
-    x0 = 1.0 / (h__ + 1.0);
-    y0 = h__ / (h__ + 1.0);
+    h = b / a;
+    x0 = 1.0 / (h + 1.0);
+    y0 = h / (h + 1.0);
     lambda = (a + b) * y - b;
 
 L110:
     e = -lambda / a;
-    if (fabs(e) > .6f) {
+    if (fabs(e) > 0.6) {
 	goto L111;
     }
     u = rlog1(e);
@@ -1112,7 +1104,7 @@ L111:
 
 L120:
     e = lambda / b;
-    if (fabs(e) > .6f) {
+    if (fabs(e) > 0.6) {
 	goto L121;
     }
     v = rlog1(e);
@@ -1121,9 +1113,9 @@ L121:
     v = e - log(y / y0);
 
 L130:
-    r__1 = -(a * u + b * v);
-    z__ = esum(mu, r__1);
-    ret_val = const__ * sqrt(b * x0) * z__ * exp(-bcorr(a, b));
+    r1 = -(a * u + b * v);
+    z = esum(mu, r1);
+    ret_val = const__ * sqrt(b * x0) * z * exp(-bcorr(a, b));
     return ret_val;
 } /* brcmp1 */
 
@@ -1131,15 +1123,15 @@ static void bgrat(double a, double b, double x, double y, double *w,
 		  double eps, int *ierr)
 {
     /* System generated locals */
-    int i__1;
-    double r__1;
+    int i1;
+    double r1;
 
     /* Local variables */
-    double c__[30], d__[30];
-    int i__;
+    double c[30], d[30];
+    int i;
     double j, l;
     int n;
-    double p, q, r__, s, t, u, v, z__, n2, t2, dj, cn, nu, bm1;
+    double p, q, r, s, t, u, v, z, n2, t2, dj, cn, nu, bm1;
     int nm1;
     double lnx, sum;
     double bp2n, coef;
@@ -1147,13 +1139,13 @@ static void bgrat(double a, double b, double x, double y, double *w,
 /* ----------------------------------------------------------------------- */
 /*     ASYMPTOTIC EXPANSION FOR IX(A,B) WHEN A IS LARGER THAN B. */
 /*     THE RESULT OF THE EXPANSION IS ADDED TO W. IT IS ASSUMED */
-/*     THAT A .GE. 15 AND B .LE. 1.  EPS IS THE TOLERANCE USED. */
+/*     THAT A >= 15 AND B <= 1.  EPS IS THE TOLERANCE USED. */
 /*     IERR IS A VARIABLE THAT REPORTS THE STATUS OF THE RESULTS. */
 /* ----------------------------------------------------------------------- */
 
     bm1 = b - 0.5 - 0.5;
     nu = a + bm1 * 0.5;
-    if (y > .375f) {
+    if (y > 0.375) {
 	goto L10;
     }
     lnx = alnrel(-y);
@@ -1161,55 +1153,55 @@ static void bgrat(double a, double b, double x, double y, double *w,
 L10:
     lnx = log(x);
 L11:
-    z__ = -nu * lnx;
-    if (b * z__ == 0.0) {
+    z = -nu * lnx;
+    if (b * z == 0.0) {
 	goto L100;
     }
 
 /*                 COMPUTATION OF THE EXPANSION */
 /*                 SET R = EXP(-Z)*Z**B/GAMMA(B) */
 
-    r__ = b * (gam1(b) + 1.0) * exp(b * log(z__));
-    r__ = r__ * exp(a * lnx) * exp(bm1 * 0.5 * lnx);
+    r = b * (gam1(b) + 1.0) * exp(b * log(z));
+    r = r * exp(a * lnx) * exp(bm1 * 0.5 * lnx);
     u = algdiv(b, a) + b * log(nu);
-    u = r__ * exp(-u);
+    u = r * exp(-u);
     if (u == 0.0) {
 	goto L100;
     }
-    grat1(b, z__, r__, &p, &q, eps);
+    grat1(b, z, r, &p, &q, eps);
 
 /* Computing 2nd power */
-    r__1 = 1.0 / nu;
-    v = r__1 * r__1 * .25;
-    t2 = lnx * .25f * lnx;
+    r1 = 1.0 / nu;
+    v = r1 * r1 * 0.25;
+    t2 = lnx * 0.25 * lnx;
     l = *w / u;
-    j = q / r__;
+    j = q / r;
     sum = j;
     t = 1.0;
     cn = 1.0;
     n2 = 0.0;
     for (n = 1; n <= 30; ++n) {
 	bp2n = b + n2;
-	j = (bp2n * (bp2n + 1.0) * j + (z__ + bp2n + 1.0) * t) * v;
+	j = (bp2n * (bp2n + 1.0) * j + (z + bp2n + 1.0) * t) * v;
 	n2 += 2.0;
 	t *= t2;
 	cn /= n2 * (n2 + 1.0);
-	c__[n - 1] = cn;
+	c[n - 1] = cn;
 	s = 0.0;
 	if (n == 1) {
 	    goto L21;
 	}
 	nm1 = n - 1;
 	coef = b - n;
-	i__1 = nm1;
-	for (i__ = 1; i__ <= i__1; ++i__) {
-	    s += coef * c__[i__ - 1] * d__[n - i__ - 1];
+	i1 = nm1;
+	for (i = 1; i <= i1; ++i) {
+	    s += coef * c[i - 1] * d[n - i - 1];
 /* L20: */
 	    coef += b;
 	}
 L21:
-	d__[n - 1] = bm1 * cn + s / n;
-	dj = d__[n - 1] * j;
+	d[n - 1] = bm1 * cn + s / n;
+	dj = d[n - 1] * j;
 	sum += dj;
 	if (sum <= 0.0) {
 	    goto L100;
@@ -1238,7 +1230,7 @@ static void grat1(double a, double x, double r, double *p, double *q,
 		  double eps)
 {
     /* Local variables */
-    double c__, g, h__, j, l, t, w, z__, an, am0, an0, a2n, b2n, cma;
+    double c, g, h, j, l, t, w, z, an, am0, an0, a2n, b2n, cma;
     double tol, sum;
     double a2nm1, b2nm1;
 
@@ -1246,7 +1238,7 @@ static void grat1(double a, double x, double r, double *p, double *q,
 /*        EVALUATION OF THE INCOMPLETE GAMMA RATIO FUNCTIONS */
 /*                      P(A,X) AND Q(A,X) */
 
-/*     IT IS ASSUMED THAT A .LE. 1.  EPS IS THE TOLERANCE TO BE USED. */
+/*     IT IS ASSUMED THAT A <= 1.  EPS IS THE TOLERANCE TO BE USED. */
 /*     THE INPUT ARGUMENT R HAS THE VALUE E**(-X)*X**A/GAMMA(A). */
 /* ----------------------------------------------------------------------- */
     if (a * x == 0.0) {
@@ -1255,7 +1247,7 @@ static void grat1(double a, double x, double r, double *p, double *q,
     if (a == 0.5) {
 	goto L120;
     }
-    if (x < 1.1f) {
+    if (x < 1.1) {
 	goto L10;
     }
     goto L50;
@@ -1264,44 +1256,44 @@ static void grat1(double a, double x, double r, double *p, double *q,
 
 L10:
     an = 3.0;
-    c__ = x;
+    c = x;
     sum = x / (a + 3.0);
-    tol = eps * .1f / (a + 1.0);
+    tol = eps * 0.1 / (a + 1.0);
 L11:
     an += 1.0;
-    c__ = -c__ * (x / an);
-    t = c__ / (a + an);
+    c = -c * (x / an);
+    t = c / (a + an);
     sum += t;
     if (fabs(t) > tol) {
 	goto L11;
     }
     j = a * x * ((sum / 6.0 - 0.5 / (a + 2.0)) * x + 1.0 / (a + 1.0));
 
-    z__ = a * log(x);
-    h__ = gam1(a);
-    g = h__ + 1.0;
-    if (x < .25f) {
+    z = a * log(x);
+    h = gam1(a);
+    g = h + 1.0;
+    if (x < 0.25) {
 	goto L20;
     }
-    if (a < x / 2.59f) {
+    if (a < x / 2.59) {
 	goto L40;
     }
     goto L30;
 L20:
-    if (z__ > -.13394f) {
+    if (z > -0.13394) {
 	goto L40;
     }
 
 L30:
-    w = exp(z__);
+    w = exp(z);
     *p = w * g * (0.5 - j + 0.5);
     *q = 0.5 - *p + 0.5;
     return;
 
 L40:
-    l = rexpm1(z__);
+    l = rexpm1(z);
     w = l + 0.5 + 0.5;
-    *q = (w * j - l) * g - h__;
+    *q = (w * j - l) * g - h;
     if (*q < 0.0) {
 	goto L110;
     }
@@ -1315,13 +1307,13 @@ L50:
     a2n = 1.0;
     b2nm1 = x;
     b2n = x + (1.0 - a);
-    c__ = 1.0;
+    c = 1.0;
 L51:
-    a2nm1 = x * a2n + c__ * a2nm1;
-    b2nm1 = x * b2n + c__ * b2nm1;
+    a2nm1 = x * a2n + c * a2nm1;
+    b2nm1 = x * b2n + c * b2nm1;
     am0 = a2nm1 / b2nm1;
-    c__ += 1.0;
-    cma = c__ - a;
+    c += 1.0;
+    cma = c - a;
     a2n = a2nm1 + cma * a2n;
     b2n = b2nm1 + cma * b2n;
     an0 = a2n / b2n;
@@ -1345,7 +1337,7 @@ L110:
     return;
 
 L120:
-    if (x >= .25f) {
+    if (x >= 0.25) {
 	goto L121;
     }
     *p = erf__(sqrt(x));
@@ -1372,13 +1364,13 @@ static double basym(double a, double b, double lambda, double eps)
     static double e1 = .353553390593274;
 
     /* System generated locals */
-    int i__1, i__2, i__3, i__4;
-    double ret_val, r__1, r__2;
+    int i1, i2, i3, i4;
+    double ret_val;
 
     /* Local variables */
-    double c__[21], d__[21], f, h__;
-    int i__, j, m, n;
-    double r__, s, t, u, w, z__, a0[21], b0[21], j0, j1, h2, r0, r1, t0, t1, w0,
+    double c[21], d[21], f, h;
+    int i, j, m, n;
+    double r, s, t, u, w, z, a0[21], b0[21], j0, j1, h2, r0, r1, t0, t1, w0,
 	     z0, z2, hn, zn;
     int im1, mm1, np1, imj, mmj;
     double sum, znm1, bsum, dsum;
@@ -1403,79 +1395,77 @@ static double basym(double a, double b, double lambda, double eps)
     if (a >= b) {
 	goto L10;
     }
-    h__ = a / b;
-    r0 = 1.0 / (h__ + 1.0);
+    h = a / b;
+    r0 = 1.0 / (h + 1.0);
     r1 = (b - a) / b;
-    w0 = 1.0 / sqrt(a * (h__ + 1.0));
+    w0 = 1.0 / sqrt(a * (h + 1.0));
     goto L20;
 L10:
-    h__ = b / a;
-    r0 = 1.0 / (h__ + 1.0);
+    h = b / a;
+    r0 = 1.0 / (h + 1.0);
     r1 = (b - a) / a;
-    w0 = 1.0 / sqrt(b * (h__ + 1.0));
+    w0 = 1.0 / sqrt(b * (h + 1.0));
 
 L20:
-    r__1 = -lambda / a;
-    r__2 = lambda / b;
-    f = a * rlog1(r__1) + b * rlog1(r__2);
+    f = a * rlog1(-lambda/a) + b * rlog1(lambda/b);
     t = exp(-f);
     if (t == 0.0) {
 	return ret_val;
     }
     z0 = sqrt(f);
-    z__ = z0 / e1 * 0.5;
+    z = z0 / e1 * 0.5;
     z2 = f + f;
 
     a0[0] = r1 * .66666666666666663;
-    c__[0] = a0[0] * -0.5;
-    d__[0] = -c__[0];
+    c[0] = a0[0] * -0.5;
+    d[0] = -c[0];
     j0 = 0.5 / e0 * erfc1(1, z0);
     j1 = e1;
-    sum = j0 + d__[0] * w0 * j1;
+    sum = j0 + d[0] * w0 * j1;
 
     s = 1.0;
-    h2 = h__ * h__;
+    h2 = h * h;
     hn = 1.0;
     w = w0;
-    znm1 = z__;
+    znm1 = z;
     zn = z2;
-    i__1 = num;
-    for (n = 2; n <= i__1; n += 2) {
+    i1 = num;
+    for (n = 2; n <= i1; n += 2) {
 	hn = h2 * hn;
-	a0[n - 1] = r0 * 2.0 * (h__ * hn + 1.0) / (n + 2.0);
+	a0[n - 1] = r0 * 2.0 * (h * hn + 1.0) / (n + 2.0);
 	np1 = n + 1;
 	s += hn;
 	a0[np1 - 1] = r1 * 2.0 * s / (n + 3.0);
 
-	i__2 = np1;
-	for (i__ = n; i__ <= i__2; ++i__) {
-	    r__ = (i__ + 1.0) * -0.5;
-	    b0[0] = r__ * a0[0];
-	    i__3 = i__;
-	    for (m = 2; m <= i__3; ++m) {
+	i2 = np1;
+	for (i = n; i <= i2; ++i) {
+	    r = (i + 1.0) * -0.5;
+	    b0[0] = r * a0[0];
+	    i3 = i;
+	    for (m = 2; m <= i3; ++m) {
 		bsum = 0.0;
 		mm1 = m - 1;
-		i__4 = mm1;
-		for (j = 1; j <= i__4; ++j) {
+		i4 = mm1;
+		for (j = 1; j <= i4; ++j) {
 		    mmj = m - j;
 /* L30: */
-		    bsum += (j * r__ - mmj) * a0[j - 1] * b0[mmj - 1];
+		    bsum += (j * r - mmj) * a0[j - 1] * b0[mmj - 1];
 		}
 /* L31: */
-		b0[m - 1] = r__ * a0[m - 1] + bsum / m;
+		b0[m - 1] = r * a0[m - 1] + bsum / m;
 	    }
-	    c__[i__ - 1] = b0[i__ - 1] / (i__ + 1.0);
+	    c[i - 1] = b0[i - 1] / (i + 1.0);
 
 	    dsum = 0.0;
-	    im1 = i__ - 1;
-	    i__3 = im1;
-	    for (j = 1; j <= i__3; ++j) {
-		imj = i__ - j;
+	    im1 = i - 1;
+	    i3 = im1;
+	    for (j = 1; j <= i3; ++j) {
+		imj = i - j;
 /* L40: */
-		dsum += d__[imj - 1] * c__[j - 1];
+		dsum += d[imj - 1] * c[j - 1];
 	    }
 /* L41: */
-	    d__[i__ - 1] = -(dsum + c__[i__ - 1]);
+	    d[i - 1] = -(dsum + c[i - 1]);
 	}
 
 	j0 = e1 * znm1 + (n - 1.0) * j0;
@@ -1483,9 +1473,9 @@ L20:
 	znm1 = z2 * znm1;
 	zn = z2 * zn;
 	w = w0 * w;
-	t0 = d__[n - 1] * w * j0;
+	t0 = d[n - 1] * w * j0;
 	w = w0 * w;
-	t1 = d__[np1 - 1] * w * j1;
+	t1 = d[np1 - 1] * w * j1;
 	sum += t0 + t1;
 	if (fabs(t0) + fabs(t1) <= eps * sum) {
 	    goto L60;
@@ -1588,7 +1578,7 @@ double rexpm1(double x)
 /*            EVALUATION OF THE FUNCTION EXP(X) - 1 */
 /* ----------------------------------------------------------------------- */
 /* ----------------------- */
-    if (fabs(x) > .15f) {
+    if (fabs(x) > 0.15) {
 	goto L10;
     }
     ret_val = x * (((p2 * x + p1) * x + 1.0) / ((((q4 * x + q3) * x + q2)
@@ -1628,7 +1618,7 @@ static double alnrel(double a)
 /*            EVALUATION OF THE FUNCTION LN(1 + A) */
 /* ----------------------------------------------------------------------- */
 /* -------------------------- */
-    if (fabs(a) > .375f) {
+    if (fabs(a) > 0.375) {
 	goto L10;
     }
     t = a / (a + 2.0);
@@ -1660,46 +1650,46 @@ static double rlog1(double x)
     double ret_val;
 
     /* Local variables */
-    double h__, r__, t, w, w1;
+    double h, r, t, w, w1;
 
 /* ----------------------------------------------------------------------- */
 /*             EVALUATION OF THE FUNCTION X - LN(1 + X) */
 /* ----------------------------------------------------------------------- */
 /* ------------------------ */
 /* ------------------------ */
-    if (x < -.39f || x > .57f) {
+    if (x < -0.39 || x > 0.57) {
 	goto L100;
     }
-    if (x < -.18f) {
+    if (x < -0.18) {
 	goto L10;
     }
-    if (x > .18f) {
+    if (x > 0.18) {
 	goto L20;
     }
 
 /*              ARGUMENT REDUCTION */
 
-    h__ = x;
+    h = x;
     w1 = 0.0;
     goto L30;
 
 L10:
-    h__ = x + .3;
-    h__ /= .7;
-    w1 = a - h__ * .3;
+    h = x + .3;
+    h /= .7;
+    w1 = a - h * .3;
     goto L30;
 
 L20:
-    h__ = x * .75 - .25;
-    w1 = b + h__ / 3.0;
+    h = x * .75 - .25;
+    w1 = b + h / 3.0;
 
 /*               SERIES EXPANSION */
 
 L30:
-    r__ = h__ / (h__ + 2.0);
-    t = r__ * r__;
+    r = h / (h + 2.0);
+    t = r * r;
     w = ((p2 * t + p1) * t + p0) / ((q2 * t + q1) * t + 1.0);
-    ret_val = t * 2.0 * (1.0 / (1.0 - r__) - r__ * w) + w1;
+    ret_val = t * 2.0 * (1.0 / (1.0 - r) - r * w) + w1;
     return ret_val;
 
 
@@ -1713,7 +1703,7 @@ static double erf__(double x)
 {
     /* Initialized data */
 
-    static double c__ = .564189583547756;
+    static double c = .564189583547756;
     static double a[5] = { 7.7105849500132e-5,-.00133733772997339,
 	    .0323076579225834,.0479137145607681,.128379167095513 };
     static double b[3] = { .00301048631703895,.0538971687740286,
@@ -1724,7 +1714,7 @@ static double erf__(double x)
     static double q[8] = { 1.,12.7827273196294,77.0001529352295,
 	    277.585444743988,638.980264465631,931.35409485061,
 	    790.950925327898,300.459260956983 };
-    static double r__[5] = { 2.10144126479064,26.2370141675169,
+    static double r[5] = { 2.10144126479064,26.2370141675169,
 	    21.3688200555087,4.6580782871847,.282094791773523 };
     static double s[4] = { 94.153775055546,187.11481179959,
 	    99.0191814623914,18.0124575948747 };
@@ -1773,9 +1763,9 @@ L20:
     }
     x2 = x * x;
     t = 1.0 / x2;
-    top = (((r__[0] * t + r__[1]) * t + r__[2]) * t + r__[3]) * t + r__[4];
+    top = (((r[0] * t + r[1]) * t + r[2]) * t + r[3]) * t + r[4];
     bot = (((s[0] * t + s[1]) * t + s[2]) * t + s[3]) * t + 1.0;
-    ret_val = (c__ - top / (x2 * bot)) / ax;
+    ret_val = (c - top / (x2 * bot)) / ax;
     ret_val = 0.5 - exp(-x2) * ret_val + 0.5;
     if (x < 0.0) {
 	ret_val = -ret_val;
@@ -1785,13 +1775,13 @@ L20:
 L30:
     ret_val = x > 0 ? 1 : -1;
     return ret_val;
-} /* erf__ */
+} /* erf */
 
 static double erfc1(int ind, double x)
 {
     /* Initialized data */
 
-    static double c__ = .564189583547756;
+    static double c = .564189583547756;
     static double a[5] = { 7.7105849500132e-5,-.00133733772997339,
 	    .0323076579225834,.0479137145607681,.128379167095513 };
     static double b[3] = { .00301048631703895,.0538971687740286,
@@ -1802,13 +1792,13 @@ static double erfc1(int ind, double x)
     static double q[8] = { 1.,12.7827273196294,77.0001529352295,
 	    277.585444743988,638.980264465631,931.35409485061,
 	    790.950925327898,300.459260956983 };
-    static double r__[5] = { 2.10144126479064,26.2370141675169,
+    static double r[5] = { 2.10144126479064,26.2370141675169,
 	    21.3688200555087,4.6580782871847,.282094791773523 };
     static double s[4] = { 94.153775055546,187.11481179959,
 	    99.0191814623914,18.0124575948747 };
 
     /* System generated locals */
-    double ret_val, d__1;
+    double ret_val, d1;
 
     /* Local variables */
     double e, t, w, ax, bot, top;
@@ -1825,7 +1815,7 @@ static double erfc1(int ind, double x)
 /* ------------------------- */
 /* ------------------------- */
 
-/*                     ABS(X) .LE. 0.5 */
+/*                     ABS(X) <= 0.5 */
 
     ax = fabs(x);
     if (ax > 0.5) {
@@ -1840,7 +1830,7 @@ static double erfc1(int ind, double x)
     }
     return ret_val;
 
-/*                  0.5 .LT. ABS(X) .LE. 4 */
+/*                  0.5 < ABS(X) <= 4 */
 
 L10:
     if (ax > 4.0) {
@@ -1853,10 +1843,10 @@ L10:
     ret_val = top / bot;
     goto L40;
 
-/*                      ABS(X) .GT. 4 */
+/*                      ABS(X) > 4 */
 
 L20:
-    if (x <= -5.6f) {
+    if (x <= -5.6) {
 	goto L50;
     }
     if (ind != 0) {
@@ -1871,11 +1861,11 @@ L20:
 
 L30:
 /* Computing 2nd power */
-    d__1 = 1.0 / x;
-    t = d__1 * d__1;
-    top = (((r__[0] * t + r__[1]) * t + r__[2]) * t + r__[3]) * t + r__[4];
+    d1 = 1.0 / x;
+    t = d1 * d1;
+    top = (((r[0] * t + r[1]) * t + r[2]) * t + r[3]) * t + r[4];
     bot = (((s[0] * t + s[1]) * t + s[2]) * t + s[3]) * t + 1.0;
-    ret_val = (c__ - t * top / bot) / ax;
+    ret_val = (c - t * top / bot) / ax;
 
 /*                      FINAL ASSEMBLY */
 
@@ -1888,7 +1878,7 @@ L40:
     }
     return ret_val;
 L41:
-    w = (double) (x) * (double) (x);
+    w = x * x;
     t = w;
     e = w - t;
     ret_val = (0.5 - e + 0.5) * exp(-t) * ret_val;
@@ -1923,7 +1913,7 @@ static double gam1(double a)
 	    -.00514889771323592,5.89597428611429e-4 };
     static double q[5] = { 1.,.427569613095214,.158451672430138,
 	    .0261132021441447,.00423244297896961 };
-    static double r__[9] = { -.422784335098468,-.771330383816272,
+    static double r[9] = { -.422784335098468,-.771330383816272,
 	    -.244757765222226,.118378989872749,9.30357293360349e-4,
 	    -.0118290993445146,.00223047661158249,2.66505979058923e-4,
 	    -1.32674909766242e-4 };
@@ -1934,10 +1924,10 @@ static double gam1(double a)
     double ret_val;
 
     /* Local variables */
-    double d__, t, w, bot, top;
+    double d, t, w, bot, top;
 
 /*     ------------------------------------------------------------------ */
-/*     COMPUTATION OF 1/GAMMA(A+1) - 1  FOR -0.5 .LE. A .LE. 1.5 */
+/*     COMPUTATION OF 1/GAMMA(A+1) - 1  FOR -0.5 <= A <= 1.5 */
 /*     ------------------------------------------------------------------ */
 /*     ------------------- */
 /*     ------------------- */
@@ -1945,9 +1935,9 @@ static double gam1(double a)
 /*     ------------------- */
 /*     ------------------- */
     t = a;
-    d__ = a - 0.5;
-    if (d__ > 0.0) {
-	t = d__ - 0.5;
+    d = a - 0.5;
+    if (d > 0.0) {
+	t = d - 0.5;
     }
     if (t < 0.0) {
 	goto L30;
@@ -1966,7 +1956,7 @@ L20:
 	    ) * t + p[0];
     bot = (((q[4] * t + q[3]) * t + q[2]) * t + q[1]) * t + 1.0;
     w = top / bot;
-    if (d__ > 0.0) {
+    if (d > 0.0) {
 	goto L21;
     }
     ret_val = a * w;
@@ -1976,11 +1966,11 @@ L21:
     return ret_val;
 
 L30:
-    top = (((((((r__[8] * t + r__[7]) * t + r__[6]) * t + r__[5]) * t + r__[4]
-	    ) * t + r__[3]) * t + r__[2]) * t + r__[1]) * t + r__[0];
+    top = (((((((r[8] * t + r[7]) * t + r[6]) * t + r[5]) * t + r[4]
+	    ) * t + r[3]) * t + r[2]) * t + r[1]) * t + r[0];
     bot = (s2 * t + s1) * t + 1.0;
     w = top / bot;
-    if (d__ > 0.0) {
+    if (d > 0.0) {
 	goto L31;
     }
     ret_val = a * (w + 0.5 + 0.5);
@@ -2026,11 +2016,11 @@ static double gamln1(double a)
     double w, x;
 
 /* ----------------------------------------------------------------------- */
-/*     EVALUATION OF LN(GAMMA(1 + A)) FOR -0.2 .LE. A .LE. 1.25 */
+/*     EVALUATION OF LN(GAMMA(1 + A)) FOR -0.2 <= A <= 1.25 */
 /* ----------------------------------------------------------------------- */
 /* ---------------------- */
 /* ---------------------- */
-    if (a >= .6f) {
+    if (a >= 0.6) {
 	goto L10;
     }
     w = ((((((p6 * a + p5) * a + p4) * a + p3) * a + p2) * a + p1) * a
@@ -2065,11 +2055,11 @@ static double psi(double x)
 	    54.6117738103215,7.77788548522962 };
 
     /* System generated locals */
-    double ret_val, d__1, d__2;
+    double ret_val, d1, d2;
 
     /* Local variables */
-    int i__, m, n;
-    double w, z__;
+    int i, m, n;
+    double w, z;
     int nq;
     double den, aug, sgn, xmx0, xmax1, upper;
     double xsmall;
@@ -2101,13 +2091,13 @@ static double psi(double x)
 /* --------------------------------------------------------------------- */
 
 /*     COEFFICIENTS FOR RATIONAL APPROXIMATION OF */
-/*     PSI(X) / (X - X0),  0.5 .LE. X .LE. 3.0 */
+/*     PSI(X) / (X - X0),  0.5 <= X <= 3.0 */
 
 /* --------------------------------------------------------------------- */
 /* --------------------------------------------------------------------- */
 
 /*     COEFFICIENTS FOR RATIONAL APPROXIMATION OF */
-/*     PSI(X) - LN(X) + 1 / (2*X),  X .GT. 3.0 */
+/*     PSI(X) - LN(X) + 1 / (2*X),  X > 3.0 */
 
 /* --------------------------------------------------------------------- */
 /* --------------------------------------------------------------------- */
@@ -2126,8 +2116,8 @@ static double psi(double x)
 /* --------------------------------------------------------------------- */
     xmax1 = Rf_d1mach(4) - 1.0;
 /* Computing MIN */
-    d__1 = xmax1, d__2 = 0.5 / Rf_d1mach(3);;
-    xmax1 = min(d__1,d__2);
+    d1 = xmax1, d2 = 0.5 / Rf_d1mach(3);;
+    xmax1 = min(d1,d2);
     xsmall = 1e-9;
 /* --------------------------------------------------------------------- */
     aug = 0.0;
@@ -2135,17 +2125,17 @@ static double psi(double x)
 	goto L200;
     }
 /* --------------------------------------------------------------------- */
-/*     X .LT. 0.5,  USE REFLECTION FORMULA */
+/*     X < 0.5,  USE REFLECTION FORMULA */
 /*     PSI(1-X) = PSI(X) + PI * COTAN(PI*X) */
 /* --------------------------------------------------------------------- */
     if (fabs(x) > xsmall) {
 	goto L100;
     }
-    if (x == 0.f) {
+    if (x == 0.0) {
 	goto L400;
     }
 /* --------------------------------------------------------------------- */
-/*     0 .LT. ABS(X) .LE. XSMALL.  USE 1/X AS A SUBSTITUTE */
+/*     0 < ABS(X) <= XSMALL.  USE 1/X AS A SUBSTITUTE */
 /*     FOR  PI*COTAN(PI*X) */
 /* --------------------------------------------------------------------- */
     aug = -1.0 / x;
@@ -2162,7 +2152,7 @@ L100:
     w = -w;
     sgn = -sgn;
 /* --------------------------------------------------------------------- */
-/*     MAKE AN ERROR EXIT IF X .LE. -XMAX1 */
+/*     MAKE AN ERROR EXIT IF X <= -XMAX1 */
 /* --------------------------------------------------------------------- */
 L120:
     if (w >= xmax1) {
@@ -2171,7 +2161,7 @@ L120:
     nq = (int) w;
     w -= (double) nq;
     nq = (int) (w * 4.0);
-    w = (w - (double) nq * .25f) * 4.0;
+    w = (w - (double) nq * 0.25) * 4.0;
 /* --------------------------------------------------------------------- */
 /*     W IS NOW RELATED TO THE FRACTIONAL PART OF  4.0 * X. */
 /*     ADJUST ARGUMENT TO CORRESPOND TO VALUES IN FIRST */
@@ -2181,7 +2171,7 @@ L120:
     if (n + n != nq) {
 	w = 1.0 - w;
     }
-    z__ = piov4 * w;
+    z = piov4 * w;
     m = n / 2;
     if (m + m != n) {
 	sgn = -sgn;
@@ -2198,17 +2188,17 @@ L120:
 /* --------------------------------------------------------------------- */
 /*     CHECK FOR SINGULARITY */
 /* --------------------------------------------------------------------- */
-    if (z__ == 0.0) {
+    if (z == 0.0) {
 	goto L400;
     }
 /* --------------------------------------------------------------------- */
 /*     USE COS/SIN AS A SUBSTITUTE FOR COTAN, AND */
 /*     SIN/COS AS A SUBSTITUTE FOR TAN */
 /* --------------------------------------------------------------------- */
-    aug = sgn * (cos(z__) / sin(z__) * 4.0);
+    aug = sgn * (cos(z) / sin(z) * 4.0);
     goto L150;
 L140:
-    aug = sgn * (sin(z__) / cos(z__) * 4.0);
+    aug = sgn * (sin(z) / cos(z) * 4.0);
 L150:
     x = 1.0 - x;
 L200:
@@ -2216,14 +2206,14 @@ L200:
 	goto L300;
     }
 /* --------------------------------------------------------------------- */
-/*     0.5 .LE. X .LE. 3.0 */
+/*     0.5 <= X <= 3.0 */
 /* --------------------------------------------------------------------- */
     den = x;
     upper = p1[0] * x;
 
-    for (i__ = 1; i__ <= 5; ++i__) {
-	den = (den + q1[i__ - 1]) * x;
-	upper = (upper + p1[i__]) * x;
+    for (i = 1; i <= 5; ++i) {
+	den = (den + q1[i - 1]) * x;
+	upper = (upper + p1[i]) * x;
 /* L210: */
     }
 
@@ -2232,22 +2222,22 @@ L200:
     ret_val = den * xmx0 + aug;
     return ret_val;
 /* --------------------------------------------------------------------- */
-/*     IF X .GE. XMAX1, PSI = LN(X) */
+/*     IF X >= XMAX1, PSI = LN(X) */
 /* --------------------------------------------------------------------- */
 L300:
     if (x >= xmax1) {
 	goto L350;
     }
 /* --------------------------------------------------------------------- */
-/*     3.0 .LT. X .LT. XMAX1 */
+/*     3.0 < X < XMAX1 */
 /* --------------------------------------------------------------------- */
     w = 1.0 / (x * x);
     den = w;
     upper = p2[0] * w;
 
-    for (i__ = 1; i__ <= 3; ++i__) {
-	den = (den + q2[i__ - 1]) * w;
-	upper = (upper + p2[i__]) * w;
+    for (i = 1; i <= 3; ++i) {
+	den = (den + q2[i - 1]) * w;
+	upper = (upper + p2[i]) * w;
 /* L310: */
     }
 
@@ -2270,13 +2260,13 @@ static double betaln(double a0, double b0)
     static double e = .918938533204673;
 
     /* System generated locals */
-    int i__1;
+    int i1;
     double ret_val;
 
     /* Local variables */
-    double a, b, c__, h__;
-    int i__, n;
-    double u, v, w, z__;
+    double a, b, c, h;
+    int i, n;
+    double u, v, w, z;
 
 /* ----------------------------------------------------------------------- */
 /*     EVALUATION OF THE LOGARITHM OF THE BETA FUNCTION */
@@ -2293,7 +2283,7 @@ static double betaln(double a0, double b0)
 	goto L20;
     }
 /* ----------------------------------------------------------------------- */
-/*                   PROCEDURE WHEN A .LT. 1 */
+/*                   PROCEDURE WHEN A < 1 */
 /* ----------------------------------------------------------------------- */
     if (b >= 8.0) {
 	goto L10;
@@ -2304,7 +2294,7 @@ L10:
     ret_val = gamln(a) + algdiv(a, b);
     return ret_val;
 /* ----------------------------------------------------------------------- */
-/*                PROCEDURE WHEN 1 .LE. A .LT. 8 */
+/*                PROCEDURE WHEN 1 <= A < 8 */
 /* ----------------------------------------------------------------------- */
 L20:
     if (a > 2.0) {
@@ -2323,19 +2313,19 @@ L21:
     ret_val = gamln(a) + algdiv(a, b);
     return ret_val;
 
-/*                REDUCTION OF A WHEN B .LE. 1000 */
+/*                REDUCTION OF A WHEN B <= 1000 */
 
 L30:
-    if (b > 1e3f) {
+    if (b > 1e3) {
 	goto L50;
     }
     n = a - 1.0;
     w = 1.0;
-    i__1 = n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    i1 = n;
+    for (i = 1; i <= i1; ++i) {
 	a += -1.0;
-	h__ = a / b;
-	w *= h__ / (h__ + 1.0);
+	h = a / b;
+	w *= h / (h + 1.0);
 /* L31: */
     }
     w = log(w);
@@ -2345,27 +2335,27 @@ L30:
     ret_val = w + gamln(a) + algdiv(a, b);
     return ret_val;
 
-/*                 REDUCTION OF B WHEN B .LT. 8 */
+/*                 REDUCTION OF B WHEN B < 8 */
 
 L40:
     n = b - 1.0;
-    z__ = 1.0;
-    i__1 = n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    z = 1.0;
+    i1 = n;
+    for (i = 1; i <= i1; ++i) {
 	b += -1.0;
-	z__ *= b / (a + b);
+	z *= b / (a + b);
 /* L41: */
     }
-    ret_val = w + log(z__) + (gamln(a) + (gamln(b) - gsumln(a, b)));
+    ret_val = w + log(z) + (gamln(a) + (gamln(b) - gsumln(a, b)));
     return ret_val;
 
-/*                REDUCTION OF A WHEN B .GT. 1000 */
+/*                REDUCTION OF A WHEN B > 1000 */
 
 L50:
     n = a - 1.0;
     w = 1.0;
-    i__1 = n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    i1 = n;
+    for (i = 1; i <= i1; ++i) {
 	a += -1.0;
 	w *= a / (a / b + 1.0);
 /* L51: */
@@ -2373,14 +2363,14 @@ L50:
     ret_val = log(w) - n * log(b) + (gamln(a) + algdiv(a, b));
     return ret_val;
 /* ----------------------------------------------------------------------- */
-/*                   PROCEDURE WHEN A .GE. 8 */
+/*                   PROCEDURE WHEN A >= 8 */
 /* ----------------------------------------------------------------------- */
 L60:
     w = bcorr(a, b);
-    h__ = a / b;
-    c__ = h__ / (h__ + 1.0);
-    u = -(a - 0.5) * log(c__);
-    v = b * alnrel(h__);
+    h = a / b;
+    c = h / (h + 1.0);
+    u = -(a - 0.5) * log(c);
+    v = b * alnrel(h);
     if (u <= v) {
 	goto L61;
     }
@@ -2401,7 +2391,7 @@ static double gsumln(double a, double b)
 
 /* ----------------------------------------------------------------------- */
 /*          EVALUATION OF THE FUNCTION LN(GAMMA(A + B)) */
-/*          FOR 1 .LE. A .LE. 2  AND  1 .LE. B .LE. 2 */
+/*          FOR 1 <= A <= 2  AND  1 <= B <= 2 */
 /* ----------------------------------------------------------------------- */
     x = a + b - 2.;
     if (x > 0.25) {
@@ -2432,25 +2422,25 @@ static double bcorr(double a0, double b0)
     static double c5 = -.00165322962780713;
 
     /* System generated locals */
-    double ret_val, r__1;
+    double ret_val, r1;
 
     /* Local variables */
-    double a, b, c__, h__, t, w, x, s3, s5, x2, s7, s9, s11;
+    double a, b, c, h, t, w, x, s3, s5, x2, s7, s9, s11;
 
 /* ----------------------------------------------------------------------- */
 
 /*     EVALUATION OF  DEL(A0) + DEL(B0) - DEL(A0 + B0)  WHERE */
 /*     LN(GAMMA(A)) = (A - 0.5)*LN(A) - A + 0.5*LN(2*PI) + DEL(A). */
-/*     IT IS ASSUMED THAT A0 .GE. 8 AND B0 .GE. 8. */
+/*     IT IS ASSUMED THAT A0 >= 8 AND B0 >= 8. */
 
 /* ----------------------------------------------------------------------- */
 /* ------------------------ */
     a = min(a0, b0);
     b = max(a0, b0);
 
-    h__ = a / b;
-    c__ = h__ / (h__ + 1.0);
-    x = 1.0 / (h__ + 1.0);
+    h = a / b;
+    c = h / (h + 1.0);
+    x = 1.0 / (h + 1.0);
     x2 = x * x;
 
 /*                SET SN = (1 - X**N)/(1 - X) */
@@ -2464,17 +2454,17 @@ static double bcorr(double a0, double b0)
 /*                SET W = DEL(B) - DEL(A + B) */
 
 /* Computing 2nd power */
-    r__1 = 1.0 / b;
-    t = r__1 * r__1;
+    r1 = 1.0 / b;
+    t = r1 * r1;
     w = ((((c5 * s11 * t + c4 * s9) * t + c3 * s7) * t + c2 * s5) * t + c1 *
 	    s3) * t + c0;
-    w *= c__ / b;
+    w *= c / b;
 
 /*                   COMPUTE  DEL(A) + W */
 
 /* Computing 2nd power */
-    r__1 = 1.0 / a;
-    t = r__1 * r__1;
+    r1 = 1.0 / a;
+    t = r1 * r1;
     ret_val = (((((c5 * t + c4) * t + c3) * t + c2) * t + c1) * t + c0) / a +
 	    w;
     return ret_val;
@@ -2492,14 +2482,14 @@ static double algdiv(double a, double b)
     static double c5 = -.00165322962780713;
 
     /* System generated locals */
-    double ret_val, r__1;
+    double ret_val, r1;
 
     /* Local variables */
-    double c__, d__, h__, t, u, v, w, x, s3, s5, x2, s7, s9, s11;
+    double c, d, h, t, u, v, w, x, s3, s5, x2, s7, s9, s11;
 
 /* ----------------------------------------------------------------------- */
 
-/*     COMPUTATION OF LN(GAMMA(B)/GAMMA(A+B)) WHEN B .GE. 8 */
+/*     COMPUTATION OF LN(GAMMA(B)/GAMMA(A+B)) WHEN B >= 8 */
 
 /*                         -------- */
 
@@ -2511,16 +2501,16 @@ static double algdiv(double a, double b)
     if (a <= b) {
 	goto L10;
     }
-    h__ = b / a;
-    c__ = 1.0 / (h__ + 1.0);
-    x = h__ / (h__ + 1.0);
-    d__ = a + (b - 0.5);
+    h = b / a;
+    c = 1.0 / (h + 1.0);
+    x = h / (h + 1.0);
+    d = a + (b - 0.5);
     goto L20;
 L10:
-    h__ = a / b;
-    c__ = h__ / (h__ + 1.0);
-    x = 1.0 / (h__ + 1.0);
-    d__ = b + (a - 0.5);
+    h = a / b;
+    c = h / (h + 1.0);
+    x = 1.0 / (h + 1.0);
+    d = b + (a - 0.5);
 
 /*                SET SN = (1 - X**N)/(1 - X) */
 
@@ -2535,16 +2525,16 @@ L20:
 /*                SET W = DEL(B) - DEL(A + B) */
 
 /* Computing 2nd power */
-    r__1 = 1.0 / b;
-    t = r__1 * r__1;
+    r1 = 1.0 / b;
+    t = r1 * r1;
     w = ((((c5 * s11 * t + c4 * s9) * t + c3 * s7) * t + c2 * s5) * t + c1 *
 	    s3) * t + c0;
-    w *= c__ / b;
+    w *= c / b;
 
 /*                    COMBINE THE RESULTS */
 
-    r__1 = a / b;
-    u = d__ * alnrel(r__1);
+    r1 = a / b;
+    u = d * alnrel(r1);
     v = a * (log(b) - 1.0);
     if (u <= v) {
 	goto L30;
@@ -2560,7 +2550,7 @@ static double gamln(double a)
 {
     /* Initialized data */
 
-    static double d__ = .418938533204673;
+    static double d = .418938533204673;
     static double c0 = .0833333333333333;
     static double c1 = -.00277777777760991;
     static double c2 = 7.9365066682539e-4;
@@ -2569,11 +2559,11 @@ static double gamln(double a)
     static double c5 = -.00165322962780713;
 
     /* System generated locals */
-    int i__1;
-    double ret_val, r__1;
+    int i1;
+    double ret_val, r1;
 
     /* Local variables */
-    int i__, n;
+    int i, n;
     double t, w;
 
 /* ----------------------------------------------------------------------- */
@@ -2587,13 +2577,13 @@ static double gamln(double a)
 /* -------------------------- */
 /* -------------------------- */
 /* ----------------------------------------------------------------------- */
-    if (a > .8f) {
+    if (a > 0.8) {
 	goto L10;
     }
     ret_val = gamln1(a) - log(a);
     return ret_val;
 L10:
-    if (a > 2.25f) {
+    if (a > 2.25) {
 	goto L20;
     }
     t = a - 0.5 - 0.5;
@@ -2607,21 +2597,21 @@ L20:
     n = a - 1.25;
     t = a;
     w = 1.0;
-    i__1 = n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    i1 = n;
+    for (i = 1; i <= i1; ++i) {
 	t += -1.0;
 /* L21: */
 	w = t * w;
     }
-    r__1 = t - 1.0;
-    ret_val = gamln1(r__1) + log(w);
+    r1 = t - 1.0;
+    ret_val = gamln1(r1) + log(w);
     return ret_val;
 
 L30:
 /* Computing 2nd power */
-    r__1 = 1.0 / a;
-    t = r__1 * r__1;
+    r1 = 1.0 / a;
+    t = r1 * r1;
     w = (((((c5 * t + c4) * t + c3) * t + c2) * t + c1) * t + c0) / a;
-    ret_val = d__ + w + (a - 0.5) * (log(a) - 1.0);
+    ret_val = d + w + (a - 0.5) * (log(a) - 1.0);
     return ret_val;
 } /* gamln */

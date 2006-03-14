@@ -1,7 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2006 The R Development Core Team
+ *  Copyright (C) 2006 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +20,7 @@
  *
  * #include <Rmath.h>
  *
- * double pbeta_raw(double x, double pin, double qin, int lower_tail)
+ * double pbeta_raw(double x, double pin, double qin, int lower_tail, int log_p)
  * double pbeta	   (double x, double pin, double qin, int lower_tail, int log_p)
  *
  *  DESCRIPTION
@@ -60,6 +59,12 @@ double pbeta(double x, double pin, double qin, int lower_tail, int log_p)
 	return R_DT_0;
     if (x >= 1)
 	return R_DT_1;
-    /* FIXME: this doesn't allow an extended value range when log_p = TRUE */
+    /* <FIXME>
+       We need to consider log return if this can be small. That can happen if
+       1) x is very small and a and b are moderate (but not if 1-x is small)
+       in the left tail.
+       2) a or b is very large for all but a small range of x, in both the 
+       left or right tail. 
+    */
     return R_D_val(pbeta_raw(x, pin, qin, lower_tail, log_p));
 }
