@@ -1012,7 +1012,7 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* Time up? */
 #ifdef HAVE_GETTIMEOFDAY
 	gettimeofday(&tv, NULL);
-	elapsed = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
+	elapsed = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec - start;
 #else
 	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
 #endif
@@ -1024,7 +1024,7 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* Servicing events might take some time, so recheck: */
 #ifdef HAVE_GETTIMEOFDAY
 	gettimeofday(&tv, NULL);
-	elapsed = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
+	elapsed = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec - start;
 #else
 	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
 #endif
