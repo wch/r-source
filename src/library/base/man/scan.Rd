@@ -218,6 +218,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \code{\link{write}}.
 
   \code{Quotes} for the details of C-style escape sequences.
+
+  \code{\link{readChar}} and \code{\link{readBin}} to read fixed or
+  variable length character strings or binary representations of numbers
+  a few at a time from a connection.
 }
 \examples{
 cat("TITLE extra line", "2 3 5 7", "11 13 17", file="ex.data", sep="\n")
