@@ -362,6 +362,9 @@ NEW FEATURES
 	in some (e.g. when lower.tail = FALSE and when one of the
 	shape parameters is very small).
 
+    o	Sys.sleep() has sub-millisecond resulution on Unix-alikes 
+	with gettimeofday().
+
 
 DEPRECATED & DEFUNCT
 
@@ -851,7 +854,7 @@ BUG FIXES
 	treated that as a known value.  It now uses the estimate NaN,
 	which is consistent with summary.lm().
 
-    o	Sys.sleep() on Unix-alikes was restructed to about 2147 seconds
+    o	Sys.sleep() on Unix-alikes was restricted to about 2147 seconds
 	and otherwise might never have returned.  (PR#8678)
 
 

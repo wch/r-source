@@ -976,11 +976,19 @@ void attribute_hidden Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #define R_MIN(a, b) ((a) < (b) ? (a) : (b))
 
+/* This could in principle overflow times.  It is of type clock_t,
+   typically long int.  So use gettimeofday if you have it, which
+   is also more accurate.
+ */
 SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int Timeout;
-    double tm, tmp;
+    double tm;
+#ifdef HAVE_GETTIMEOFDAY
+    struct timeval tv;
+#else
     struct tms timeinfo;
+#endif
     double timeint, start, elapsed;
 
     checkArity(op, args);
@@ -989,22 +997,37 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("invalid '%s' value"), "time");
     tm = timeint * 1e6;
 
+#ifdef HAVE_GETTIMEOFDAY
+    gettimeofday(&tv, NULL);
+    start = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
+#else
     start = times(&timeinfo);
+#endif
     for (;;) {
 	fd_set *what;
-	tmp = R_MIN(tm, 2e9); /* avoid integer overflow */
+	tm = R_MIN(tm, 2e9); /* avoid integer overflow */
         Timeout = R_wait_usec ? R_MIN(tm, R_wait_usec) : tm;
 	what = R_checkActivity(Timeout, 1);
 
 	/* Time up? */
+#ifdef HAVE_GETTIMEOFDAY
+	gettimeofday(&tv, NULL);
+	elapsed = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
+#else
 	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
+#endif
 	if(elapsed >= timeint) break;
 
 	/* Nope, service pending events */
 	R_runHandlers(R_InputHandlers, what);
 
 	/* Servicing events might take some time, so recheck: */
+#ifdef HAVE_GETTIMEOFDAY
+	gettimeofday(&tv, NULL);
+	elapsed = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
+#else
 	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
+#endif
 	if(elapsed >= timeint) break;
 
 	tm = 1e6*(timeint - elapsed); /* old code had "+ 10000;" */
