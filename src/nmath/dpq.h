@@ -9,21 +9,19 @@
 #define R_DT_0	(lower_tail ? R_D__0 : R_D__1)		/* 0 */
 #define R_DT_1	(lower_tail ? R_D__1 : R_D__0)		/* 1 */
 
-#define R_D_Lval(p)	(lower_tail ? (p) : (1 - (p)))	/*  p  */
-#define R_D_Cval(p)	(lower_tail ? (1 - (p)) : (p))	/*  1 - p */
+/* Use 0.5 - p + 0.5 to perhaps gain 1 bit of accuracy */
+#define R_D_Lval(p)	(lower_tail ? (p) : (0.5 - (p) + 0.5))	/*  p  */
+#define R_D_Cval(p)	(lower_tail ? (0.5 - (p) + 0.5) : (p))	/*  1 - p */
 
 #define R_D_val(x)	(log_p	? log(x) : (x))		/*  x  in pF(x,..) */
 #define R_D_qIv(p)	(log_p	? exp(p) : (p))		/*  p  in qF(p,..) */
 #define R_D_exp(x)	(log_p	?  (x)	 : exp(x))	/* exp(x) */
 #define R_D_log(p)	(log_p	?  (p)	 : log(p))	/* log(p) */
-#define R_D_Clog(p)	(log_p	? log1p(-(p)) : (1 - (p)))/* [log](1-p) */
+#define R_D_Clog(p)	(log_p	? log1p(-(p)) : (0.5 - (p) + 0.5)) /* [log](1-p) */
 
 /* log(1-exp(x)):  R_D_LExp(x) == (log1p(- R_D_qIv(x))) but even more stable:*/
 #define R_D_LExp(x)     (log_p ? R_Log1_Exp(x) : log1p(-x))
 
-/*till 1.8.x:
- * #define R_DT_val(x)	R_D_val(R_D_Lval(x))
- * #define R_DT_Cval(x)	R_D_val(R_D_Cval(x)) */
 #define R_DT_val(x)	(lower_tail ? R_D_val(x)  : R_D_Clog(x))
 #define R_DT_Cval(x)	(lower_tail ? R_D_Clog(x) : R_D_val(x))
 
