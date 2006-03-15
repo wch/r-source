@@ -44,7 +44,7 @@ Changes from grid_2.2.0 to grid_2.3.0:
 
 9.  New grid.clip() primitive for setting the clipping region
     (more accurately, the clipping rectangle).  Has effect until
-    the next grid.clip() or the next pushViewport() or popViewport().
+    the next grid.clip() or when the current viewport is popped.
 
 10. New dim.layout() method for layout objects.  Allows easy
     access to dimensions of layout via nrow() and ncol().
@@ -52,6 +52,13 @@ Changes from grid_2.2.0 to grid_2.3.0:
 11. unit.rep() deprecated in favour of unit method(s) for rep() function.
 
 12. unit.length() deprecated in favour of unit method(s) for length() function.
+
+13. New grid.polyline() primitive.  Just like grid.lines() except has
+    'id' and 'id.lengths' arguments.
+
+    These work like the corresponding arguments in grid.polygon() and
+    grid.xspline(), allowing multiple polylines to be drawn from a
+    single grid.polyline() call.
 
 
 Changes from grid_2.1.0 to grid_2.2.0:

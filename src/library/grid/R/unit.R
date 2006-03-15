@@ -1,29 +1,4 @@
 
-recycle.data <- function(data, data.per, max.n) {
-  # VERY IMPORTANT:  Even if there is only one data specified
-  # and/or only one data needed, we want this to be a LIST of
-  # data values so that a single data and several data can be
-  # handled equivalently
-  # The test for whether it is only a single value currently
-  # consists of a check for mode="character" (i.e., a single
-  # string) or mode="expression" (i.e., a single expression)
-  # or class="grob" (i.e., a single grob) or class="gPath"
-  if (is.character(data) || is.expression(data) ||
-      is.grob(data) || inherits(data, "gPath"))
-    data <- list(data)
-  if (data.per)
-    n <- max.n
-  else
-    n <- length(data)
-  original <- data
-  index <- 1
-  while (length(data) < n) {
-    data <- c(data, list(original[[(index - 1) %% length(original) + 1]]))
-    index <- index + 1
-  }
-  data
-}
-
 # Create an object of class "unit"
 # Simple units are of the form 'unit(1, "cm")' or 'unit(1:3, "cm")' or
 # 'unit(c(1,3,6), c("cm", "inch", "npc"))'
@@ -35,7 +10,7 @@ unit <- function(x, units, data=NULL) {
   units <- as.character(units)
   if (length(x) == 0 || length(units) == 0)
     stop("'x' and 'units' must have length > 0")
-  valid.unit(x, units, recycle.data(data, FALSE, length(x)))
+  valid.unit(x, units, recycle.data(data, FALSE, length(x), units))
 }
 
 valid.unit <- function(x, units, data) {
@@ -132,49 +107,72 @@ convertNative <- function(unit, dimension="x", type="location") {
                      "grobx", "groby", "grobwidth", "grobheight",
                      "mylines", "mychar", "mystrwidth", "mystrheight")
 
+stringUnit <- function(unit) {
+    unit == "strwidth" | unit == "strheight"
+}
+
+grobUnit <- function(unit) {
+    unit == "grobwidth" | unit == "grobheight" |
+    unit == "grobx" | unit == "groby"
+}
+
+dataUnit <- function(unit) {
+    stringUnit(unit) | grobUnit(unit)
+}
+    
+recycle.data <- function(data, data.per, max.n, units) {
+    # FIRST STEP:  check that data needs to be recycled
+    if (any(dataUnit(units))) {
+        # VERY IMPORTANT:  Even if there is only one data specified
+        # and/or only one data needed, we want this to be a LIST of
+        # data values so that a single data and several data can be
+        # handled equivalently
+        # The test for whether it is only a single value currently
+        # consists of a check for mode="character" (i.e., a single
+        # string) or mode="expression" (i.e., a single expression)
+        # or class="grob" (i.e., a single grob) or class="gPath"
+        if (is.character(data) || is.language(data) ||
+            is.grob(data) || inherits(data, "gPath"))
+            data <- list(data)
+        if (data.per)
+            n <- max.n
+        else
+            n <- length(data)
+        original <- data
+        length(data) <- n
+        if (length(original) < length(data)) {
+            for (i in (length(original) + 1):length(data)) {
+                data[[i]] <- original[[(i - 1) %% length(original) + 1]]
+            }
+        }
+    }
+    data
+}
+
 # Make sure that and "str*" and "grob*" units have data
 valid.data <- function(units, data) {
-  n <- length(units)
-  str.units <- (units == "strwidth" | units == "mystrwidth")
-  if (any(str.units != 0))
-    for (i in (1:n)[str.units])
-      if (!(length(data) >= i &&
-            (is.character(data[[i]]) || is.expression(data[[i]]))))
-        stop("No string supplied for 'strwidth' unit")
-  str.units <- (units == "strheight" | units == "mystrheight")
-  if (any(str.units != 0))
-    for (i in (1:n)[str.units])
-      if (!(length(data) >= i &&
-            (is.character(data[[i]]) || is.expression(data[[i]]))))
-        stop("No string supplied for 'strheight' unit")
-  # Make sure that a grob has been specified
-  grob.units <- units == "grobwidth"
-  if (any(grob.units != 0))
-    for (i in (1:n)[grob.units]) {
-      if (!(length(data) >= i &&
-            (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
-             is.character(data[[i]]))))
-        stop("No 'grob' supplied for 'grobwidth' unit")
-      if (is.character(data[[i]]))
-        data[[i]] <- gPathDirect(data[[i]])
-      if (inherits(data[[i]], "gPath"))
-        if (depth(data[[i]]) > 1)
-          stop("'gPath' must have depth 1 in 'grobwidth/height' units")
-    }
-  grob.units <- units == "grobheight"
-  if (any(grob.units != 0))
-    for (i in (1:n)[grob.units]) {
-      if (!(length(data) >= i &&
-            (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
-             is.character(data[[i]]))))
-        stop("No 'grob' supplied for 'grobheight' unit")
-      if (is.character(data[[i]]))
-        data[[i]] <- gPathDirect(data[[i]])
-      if (inherits(data[[i]], "gPath"))
-        if (depth(data[[i]]) > 1)
-          stop("'gPath' must have depth 1 in 'grobwidth/height' units")
-    }
-  data
+    n <- length(units)
+    str.units <- stringUnit(units)
+    if (any(str.units))
+        for (i in (1:n)[str.units])
+            if (!(length(data) >= i &&
+                  (is.character(data[[i]]) || is.language(data[[i]]))))
+                stop("No string supplied for 'strwidth/height' unit")
+    # Make sure that a grob has been specified
+    grob.units <- grobUnit(units)
+    if (any(grob.units)) 
+        for (i in (1:n)[grob.units]) {
+            if (!(length(data) >= i &&
+                  (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
+                   is.character(data[[i]]))))
+                stop("No 'grob' supplied for 'grobwidth/height' unit")
+            if (is.character(data[[i]]))
+                data[[i]] <- gPathDirect(data[[i]])
+            if (inherits(data[[i]], "gPath"))
+                if (depth(data[[i]]) > 1)
+                    stop("'gPath' must have depth 1 in 'grobwidth/height' units")
+        }
+    data
 }
 
 valid.units <- function(units) {
@@ -430,51 +428,38 @@ print.unit <- function(x, ...) {
 # If any arguments are unit.arithmetic or unit.list, then the result will be
 # unit.list
 unit.c <- function(...) {
-  x <- list(...)
-  ual <- FALSE
-  for (i in 1:length(x))
-    if (inherits(x[[i]], "unit.list") ||
-        inherits(x[[i]], "unit.arithmetic"))
-      ual <- TRUE
-  if (ual)
-    unit.list.from.list(x)
-  else {
-    values <- NULL
-    units <- NULL
-    data <- NULL
-    for (i in 1:length(x))
-      if (is.unit(x[[i]])) {
-        values <- c(values, x[[i]])
-        units <- c(units, rep(attr(x[[i]], "unit"), length.out=length(x[[i]])))
-        data <- c(data, recycle.data(attr(x[[i]], "data"), TRUE,
-                                     length(x[[i]])))
-      }
-      else
+    x <- list(...)
+    if (!all(sapply(x, is.unit)))
         stop("It is invalid to combine unit objects with other types")
-    unit(values, units, data=data)
-  }
+    listUnit <- function(x) {
+        inherits(x, "unit.list") ||
+        inherits(x, "unit.arithmetic")
+    }
+    ual <- any(sapply(x, listUnit))
+    if (ual)
+        unit.list.from.list(x)
+    else {
+        values <- unlist(x)
+        unitUnits <- function(x) {
+            rep(attr(x, "unit"), length.out=length(x))
+        }
+        units <- unlist(lapply(x, unitUnits))
+        unitData <- function(x) {
+            data <- attr(x, "data")
+            if (is.null(data))
+                vector("list", length(x))
+            else
+                recycle.data(data, TRUE, length(x), unitUnits(x))
+        }
+        data <- do.call("c", lapply(x, unitData))
+        unit(values, units, data=data)
+    }
 }
 
 unit.list.from.list <- function(x) {
-  if (length(x) == 1)
-    unit.list(x[[1]])
-  else {
-    result <- c(unit.list(x[[1]]), unit.list.from.list(x[2:length(x)]))
+    result <- do.call("c", lapply(x, unit.list))
     class(result) <- c("unit.list", "unit")
     result
-  }
-}
-
-# OLD unit.list.from.list <-
-function(x) {
-  result <- unit.list(x[[1]])
-  i <- 2
-  while (i < length(x) + 1) {
-    result <- c(result, unit.list(x[[i]]))
-    i <- i + 1
-  }
-  class(result) <- c("unit.list", "unit")
-  result
 }
 
 #########################
@@ -515,12 +500,12 @@ rep.unit <- function(x, times, length.out, ...) {
     
     values <- rep(unclass(x), times, length.out, ...)
     # Do I need to replicate the "unit"s?
-    unit <- attr(x, "unit")
+    units <- attr(x, "unit")
     # If there are any data then they must be explicitly replicated
     # because the list of data must be the same length as the
     # vector of values
-    data <- recycle.data(attr(x, "data"), TRUE, length(values))
-    unit <- unit(values, unit, data=data)
+    data <- recycle.data(attr(x, "data"), TRUE, length(values), units)
+    unit <- unit(values, units, data=data)
     unit    
 }
 

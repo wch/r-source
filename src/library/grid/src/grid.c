@@ -273,15 +273,6 @@ SEXP doSetViewport(SEXP vp,
 	yy1 = REAL(parentClip)[1];
 	xx2 = REAL(parentClip)[2];
 	yy2 = REAL(parentClip)[3];
-	/*
-	 * Also, re-enforce the parent clip rect in case
-	 * there have been some grid.clip()s which might
-	 * have messed with the parent clipping rect.
-	 * (don't need to worry about whether it is correct for
-	 *  current device size, because if device size has changed
-	 *  the parent has just been recalculated)
-	 */
-	GESetClip(xx1, yy1, xx2, yy2, dd);
 	UNPROTECT(1);
     }
     PROTECT(currentClip = allocVector(REALSXP, 4));
@@ -1726,9 +1717,9 @@ SEXP L_lineTo(SEXP x, SEXP y, SEXP arrow)
 /* We are assuming here that the R code has checked that x and y 
  * are unit objects and that vp is a viewport
  */
-SEXP L_lines(SEXP x, SEXP y, SEXP arrow) 
+SEXP L_lines(SEXP x, SEXP y, SEXP index, SEXP arrow) 
 {
-    int i, nx, ny, start=0;
+    int i, j, nx, nl, start=0;
     double *xx, *yy;
     double xold, yold;
     double vpWidthCM, vpHeightCM;
@@ -1747,67 +1738,76 @@ SEXP L_lines(SEXP x, SEXP y, SEXP arrow)
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
-    gcontextFromgpar(currentgp, 0, &gc, dd);
-    nx = unitLength(x);
-    ny = unitLength(y); 
-    if (ny > nx) 
-	nx = ny;
-    /* Convert the x and y values to CM locations */
-    vmax = vmaxget();
     GEMode(1, dd);
-    xx = (double *) R_alloc(nx, sizeof(double));
-    yy = (double *) R_alloc(nx, sizeof(double));
-    xold = NA_REAL;
-    yold = NA_REAL;
-    for (i=0; i<nx; i++) {
-	transformLocn(x, y, i, vpc, &gc,
-		      vpWidthCM, vpHeightCM,
-		      dd,
-		      transform,
-		      &(xx[i]), &(yy[i]));
-	/* The graphics engine only takes device coordinates
+    /* 
+     * Number of lines 
+     */
+    nl = LENGTH(index);
+    for (j=0; j<nl; j++) {
+	SEXP indices = VECTOR_ELT(index, j);
+	gcontextFromgpar(currentgp, j, &gc, dd);
+	/* 
+	 * Number of vertices
+	 *
+	 * x and y same length forced in R code 
 	 */
-	xx[i] = toDeviceX(xx[i], GE_INCHES, dd);
-	yy[i] = toDeviceY(yy[i], GE_INCHES, dd);
-	if ((R_FINITE(xx[i]) && R_FINITE(yy[i])) &&
-	    !(R_FINITE(xold) && R_FINITE(yold)))
-	    start = i;
-	else if ((R_FINITE(xold) && R_FINITE(yold)) &&
-		 !(R_FINITE(xx[i]) && R_FINITE(yy[i]))) {
-	    if (i-start > 1) {
-		GEPolyline(i-start, xx+start, yy+start, &gc, dd);
+	nx = LENGTH(indices); 
+	/* Convert the x and y values to CM locations */
+	vmax = vmaxget();
+	xx = (double *) R_alloc(nx, sizeof(double));
+	yy = (double *) R_alloc(nx, sizeof(double));
+	xold = NA_REAL;
+	yold = NA_REAL;
+	for (i=0; i<nx; i++) {
+	    transformLocn(x, y, INTEGER(indices)[i] - 1, vpc, &gc,
+			  vpWidthCM, vpHeightCM,
+			  dd,
+			  transform,
+			  &(xx[i]), &(yy[i]));
+	    /* The graphics engine only takes device coordinates
+	     */
+	    xx[i] = toDeviceX(xx[i], GE_INCHES, dd);
+	    yy[i] = toDeviceY(yy[i], GE_INCHES, dd);
+	    if ((R_FINITE(xx[i]) && R_FINITE(yy[i])) &&
+		!(R_FINITE(xold) && R_FINITE(yold)))
+	        start = i;
+	    else if ((R_FINITE(xold) && R_FINITE(yold)) &&
+		     !(R_FINITE(xx[i]) && R_FINITE(yy[i]))) {
+	        if (i-start > 1) {
+		    GEPolyline(i-start, xx+start, yy+start, &gc, dd);
+		    if (!isNull(arrow)) {
+		        /*
+			 * Can draw an arrow at the start if the points
+			 * include the first point.
+			 * CANNOT draw an arrow at the end point 
+			 * because we have just broken the line for an NA.
+			 */
+		        arrows(xx+start, yy+start, i-start,
+			       arrow, j, start == 0, FALSE,
+			       vpc, vpWidthCM, vpHeightCM, &gc, dd);
+		    }
+		}
+	    }
+	    else if ((R_FINITE(xold) && R_FINITE(yold)) &&
+		     (i == nx-1)) {
+	        GEPolyline(nx-start, xx+start, yy+start, &gc, dd);
 		if (!isNull(arrow)) {
 		    /*
 		     * Can draw an arrow at the start if the points
 		     * include the first point.
-		     * CANNOT draw an arrow at the end point 
-		     * because we have just broken the line for an NA.
+		     * Can draw an arrow at the end point.
 		     */
-		    arrows(xx+start, yy+start, i-start,
-			   arrow, 0, start == 0, FALSE,
+ 		    arrows(xx+start, yy+start, nx-start, 
+			   arrow, j, start == 0, TRUE,
 			   vpc, vpWidthCM, vpHeightCM, &gc, dd);
 		}
-	    }
+	    } 
+	    xold = xx[i];
+	    yold = yy[i];
 	}
-	else if ((R_FINITE(xold) && R_FINITE(yold)) &&
-		 (i == nx-1)) {
-	    GEPolyline(nx-start, xx+start, yy+start, &gc, dd);
-	    if (!isNull(arrow)) {
-		/*
-		 * Can draw an arrow at the start if the points
-		 * include the first point.
-		 * Can draw an arrow at the end point.
-		 */
-		arrows(xx+start, yy+start, nx-start, 
-		       arrow, 0, start == 0, TRUE,
-		       vpc, vpWidthCM, vpHeightCM, &gc, dd);
-	    }
-	} 
-	xold = xx[i];
-	yold = yy[i];
+	vmaxset(vmax);
     }
     GEMode(0, dd);
-    vmaxset(vmax);
     return R_NilValue;
 }
 
@@ -3043,11 +3043,10 @@ SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust)
     double xx, yy, ww, hh;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
-    int i = 0 /* -Wall */;
     LViewportContext vpc;
     R_GE_gcontext gc;
     LTransform transform;
-    SEXP currentvp, currentgp;
+    SEXP currentvp, currentgp, currentClip;
     /* Get the current device 
      */
     GEDevDesc *dd = getDevice();
@@ -3058,24 +3057,27 @@ SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust)
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
     GEMode(1, dd);
-    gcontextFromgpar(currentgp, i, &gc, dd);
-    transformLocn(x, y, i, vpc, &gc,
+    /*
+     * Only set ONE clip rectangle (i.e., NOT vectorised)
+     */
+    gcontextFromgpar(currentgp, 0, &gc, dd);
+    transformLocn(x, y, 0, vpc, &gc,
 		  vpWidthCM, vpHeightCM,
 		  dd,
 		  transform,
 		  &xx, &yy);
-    ww = transformWidthtoINCHES(w, i, vpc, &gc,
+    ww = transformWidthtoINCHES(w, 0, vpc, &gc,
 				vpWidthCM, vpHeightCM,
 				dd);
-    hh = transformHeighttoINCHES(h, i, vpc, &gc,
+    hh = transformHeighttoINCHES(h, 0, vpc, &gc,
 				 vpWidthCM, vpHeightCM,
 				 dd);
     /* 
      * We can ONLY clip if the total rotation angle is zero.
      */
     if (rotationAngle == 0) {
-        xx = justifyX(xx, ww, REAL(hjust)[i % LENGTH(hjust)]);
-	yy = justifyY(yy, hh, REAL(vjust)[i % LENGTH(vjust)]);
+        xx = justifyX(xx, ww, REAL(hjust)[0]);
+	yy = justifyY(yy, hh, REAL(vjust)[0]);
 	/* The graphics engine only takes device coordinates
 	 */
 	xx = toDeviceX(xx, GE_INCHES, dd);
@@ -3083,8 +3085,25 @@ SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust)
 	ww = toDeviceWidth(ww, GE_INCHES, dd);
 	hh = toDeviceHeight(hh, GE_INCHES, dd);
 	if (R_FINITE(xx) && R_FINITE(yy) && 
-	    R_FINITE(ww) && R_FINITE(hh))
+	    R_FINITE(ww) && R_FINITE(hh)) {
 	    GESetClip(xx, yy, xx + ww, yy + hh, dd);
+	    /*
+	     * ALSO set the current clip region for the 
+	     * current viewport so that, if a viewport
+	     * is pushed within the current viewport,
+	     * when that viewport gets popped again,
+	     * the clip region returns to what was set
+	     * by THIS clipGrob (NOT to the current
+	     * viewport's previous setting)
+	     */
+	    PROTECT(currentClip = allocVector(REALSXP, 4));
+	    REAL(currentClip)[0] = xx;
+	    REAL(currentClip)[1] = yy;
+	    REAL(currentClip)[2] = xx + ww;
+	    REAL(currentClip)[3] = yy + hh;
+	    SET_VECTOR_ELT(currentvp, PVP_CLIPRECT, currentClip);
+	    UNPROTECT(1);
+	}
     } else {
         warning(_("Unable to clip to rotated rectangle"));
     }

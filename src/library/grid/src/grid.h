@@ -284,7 +284,7 @@ SEXP L_initDisplayList();
 SEXP L_convertToNative(SEXP x, SEXP what); 
 SEXP L_moveTo(SEXP x, SEXP y);
 SEXP L_lineTo(SEXP x, SEXP y, SEXP arrow);
-SEXP L_lines(SEXP x, SEXP y, SEXP arrow); 
+SEXP L_lines(SEXP x, SEXP y, SEXP index, SEXP arrow); 
 SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow); 
 SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn, 
 	      SEXP y1, SEXP y2, SEXP ynm1, SEXP yn, 

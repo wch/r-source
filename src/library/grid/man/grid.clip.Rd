@@ -61,14 +61,12 @@ grid.lines(gp=gpar(col="green", lwd=5))
 # draw across entire viewport, but clipped (in different place)
 grid.clip(x = 0.7, width = 0.1)
 grid.lines(gp=gpar(col="red", lwd=5))
-# new viewport clears any grid.clip() settings
-# EVEN THOUGH the viewport does not force clipping itself
-# (viewport inherits clip regions from parent viewport,
-#  unless it sets clipping itself)
-pushViewport(viewport())
+# Viewport sets new clip region
+pushViewport(viewport(width=0.5, height=0.5, clip=TRUE))
 grid.lines(gp=gpar(col="grey", lwd=3))
-# Return to original viewport;  get original viewport
-# clip region (NOT anything from grid.clip())
+# Return to original viewport;  get 
+# clip region from previous grid.clip()
+# (NOT from previous viewport clip region)
 popViewport()
 grid.lines(gp=gpar(col="black"))
 }

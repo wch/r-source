@@ -119,7 +119,9 @@ validDetails.lines <- function(x) {
 }
 
 drawDetails.lines <- function(x, recording=TRUE) {
-  grid.Call.graphics("L_lines", x$x, x$y, x$arrow)
+    grid.Call.graphics("L_lines", x$x, x$y,
+                       list(as.integer(1:max(length(x$x), length(x$y)))),
+                       x$arrow)
 }
 
 xDetails.lines <- function(x, theta) {
@@ -164,7 +166,8 @@ linesGrob <- function(x=unit(c(0, 1), "npc", units.per.obs),
     x <- unit(x, default.units, units.per.obs)
   if (!is.unit(y))
     y <- unit(y, default.units, units.per.obs)
-  grob(x=x, y=y, arrow=arrow, name=name, gp=gp, vp=vp, cl="lines")
+  grob(x=x, y=y, 
+       arrow=arrow, name=name, gp=gp, vp=vp, cl="lines")
 }
 
 # Specify "units.per.obs=TRUE" to give a unit or units per (x, y) pair
@@ -173,12 +176,114 @@ grid.lines <- function(x=unit(c(0, 1), "npc", units.per.obs),
                        default.units="npc", units.per.obs=FALSE,
                        arrow=NULL,
                        name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
-  lg <- linesGrob(x=x, y=y, default.units=default.units,
+  lg <- linesGrob(x=x, y=y, 
+                  default.units=default.units,
                   units.per.obs=units.per.obs, arrow=arrow,
                   name=name, gp=gp, vp=vp)
   if (draw)
     grid.draw(lg)
   invisible(lg)
+}
+
+######################################
+# POLYLINES primitive
+######################################
+# Very similar to LINES primitive, but allows
+# multiple polylines via 'id' and 'id.lengths' args
+# as per POLYGON primitive
+validDetails.polyline <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y))
+      stop("'x' and 'y' must be units")
+  if (!is.null(x$id) && !is.null(x$id.lengths))
+      stop("It is invalid to specify both 'id' and 'id.lengths")
+  if (length(x$x) != length(x$y))
+      stop("'x' and 'y' must be same length")
+  if (!is.null(x$id) && (length(x$id) != length(x$x)))
+      stop("'x' and 'y' and 'id' must all be same length")
+  if (!is.null(x$id))
+      x$id <- as.integer(x$id)
+  if (!is.null(x$id.lengths) && (sum(x$id.lengths) != length(x$x)))
+      stop("'x' and 'y' and 'id.lengths' must specify same overall length")
+  if (!is.null(x$id.lengths))
+      x$id.lengths <- as.integer(x$id.lengths)
+  if (!(is.null(x$arrow) || inherits(x$a, "arrow")))
+      stop("invalid 'arrow' argument")
+  x
+}
+
+drawDetails.polyline <- function(x, recording=TRUE) {
+    if (is.null(x$id) && is.null(x$id.lengths))
+        grid.Call.graphics("L_lines", x$x, x$y,
+                           list(as.integer(1:length(x$x))),
+                           x$arrow)
+    else {
+        if (is.null(x$id)) {
+            n <- length(x$id.lengths)
+            id <- rep(1:n, x$id.lengths)
+        } else {
+            n <- length(unique(x$id))
+            id <- x$id
+        }
+        index <- vector("list", n)
+        count <- 1
+        for (i in unique(id)) {
+            index[[count]] <- as.integer((1:length(x$x))[id == i])
+            count <- count + 1
+        }
+        grid.Call.graphics("L_lines", x$x, x$y, index, x$arrow)
+    }
+}
+
+xDetails.polyline <- function(x, theta) {
+    bounds <- grid.Call("L_locnBounds", x$x, x$y, theta)
+    if (is.null(bounds))
+        unit(0.5, "npc")
+    else
+        unit(bounds[1], "inches")
+}
+
+yDetails.polyline <- function(x, theta) {
+    bounds <- grid.Call("L_locnBounds", x$x, x$y, theta)
+    if (is.null(bounds))
+        unit(0.5, "npc")
+    else
+        unit(bounds[2], "inches")
+}
+
+widthDetails.polyline <- function(x) {
+    bounds <- grid.Call("L_locnBounds", x$x, x$y, 0)
+    if (is.null(bounds))
+        unit(0, "inches")
+    else
+        unit(bounds[3], "inches")
+}
+
+heightDetails.polyline <- function(x) {
+    bounds <- grid.Call("L_locnBounds", x$x, x$y, 0)
+    if (is.null(bounds))
+        unit(0, "inches")
+    else
+        unit(bounds[4], "inches")
+}
+
+polylineGrob <- function(x=unit(c(0, 1), "npc"),
+                         y=unit(c(0, 1), "npc"),
+                         id=NULL, id.lengths=NULL,
+                         default.units="npc", 
+                         arrow=NULL,
+                         name=NULL, gp=gpar(), vp=NULL) {
+    # Allow user to specify unitless vector;  add default units
+    if (!is.unit(x))
+        x <- unit(x, default.units)
+    if (!is.unit(y))
+        y <- unit(y, default.units)
+    grob(x=x, y=y, id=id, id.lengths=id.lengths,
+         arrow=arrow, name=name, gp=gp, vp=vp, cl="polyline")
+}
+
+grid.polyline <- function(...) {
+    grid.draw(polylineGrob(...))
 }
 
 ######################################

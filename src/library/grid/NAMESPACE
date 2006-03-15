@@ -62,13 +62,15 @@ export(
        # Creating and drawing predefined grobs and gTrees
        "grid.arrows", "grid.circle", "grid.clip", "grid.curve",
        "grid.line.to", "grid.lines", "grid.move.to",
-       "grid.points", "grid.polygon", "grid.xspline",
-       "grid.rect", "grid.segments", "grid.text",
-       "grid.xaxis", "grid.yaxis",
+       "grid.points", "grid.polygon", "grid.polyline", 
+       "grid.rect", "grid.segments", "grid.text", "grid.xspline",
        "arrowsGrob", "circleGrob", "clipGrob", "curveGrob",
        "linesGrob", "lineToGrob", "moveToGrob",
-       "pointsGrob", "polygonGrob", "rectGrob", "segmentsGrob", "textGrob",
-       "xaxisGrob", "yaxisGrob", "xsplineGrob",
+       "pointsGrob", "polygonGrob", "polylineGrob",
+       "rectGrob", "segmentsGrob", "textGrob", "xsplineGrob",
+       
+       "grid.xaxis", "grid.yaxis",
+       "xaxisGrob", "yaxisGrob", 
 
        # Frames and packing
        "grid.frame", "grid.pack", "grid.place",
@@ -137,6 +139,7 @@ S3method("drawDetails", "lines")
 S3method("drawDetails", "move.to")
 S3method("drawDetails", "points")
 S3method("drawDetails", "polygon")
+S3method("drawDetails", "polyline")
 S3method("drawDetails", "xspline")
 S3method("drawDetails", "rect")
 S3method("drawDetails", "segments")
@@ -170,6 +173,7 @@ S3method("heightDetails", "frame")
 S3method("heightDetails", "lines")
 S3method("heightDetails", "points")
 S3method("heightDetails", "polygon")
+S3method("heightDetails", "polyline")
 S3method("heightDetails", "rect")
 S3method("heightDetails", "segments")
 S3method("heightDetails", "text")
@@ -193,6 +197,7 @@ S3method("validDetails", "lines")
 S3method("validDetails", "line.to")
 S3method("validDetails", "move.to")
 S3method("validDetails", "polygon")
+S3method("validDetails", "polyline")
 S3method("validDetails", "points")
 S3method("validDetails", "rect")
 S3method("validDetails", "segments")
@@ -205,6 +210,7 @@ S3method("widthDetails", "frame")
 S3method("widthDetails", "lines")
 S3method("widthDetails", "points")
 S3method("widthDetails", "polygon")
+S3method("widthDetails", "polyline")
 S3method("widthDetails", "rect")
 S3method("widthDetails", "segments")
 S3method("widthDetails", "text")
@@ -215,6 +221,7 @@ S3method("xDetails", "curve")
 S3method("xDetails", "lines")
 S3method("xDetails", "points")
 S3method("xDetails", "polygon")
+S3method("xDetails", "polyline")
 S3method("xDetails", "rect")
 S3method("xDetails", "segments")
 S3method("xDetails", "text")
@@ -224,6 +231,7 @@ S3method("yDetails", "curve")
 S3method("yDetails", "lines")
 S3method("yDetails", "points")
 S3method("yDetails", "polygon")
+S3method("yDetails", "polyline")
 S3method("yDetails", "rect")
 S3method("yDetails", "segments")
 S3method("yDetails", "text")

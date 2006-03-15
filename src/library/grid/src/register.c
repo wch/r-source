@@ -58,7 +58,7 @@ static const R_CallMethodDef callMethods[] = {
     {"L_initDisplayList", (DL_FUNC) &L_initDisplayList, 0},
     {"L_moveTo", (DL_FUNC) &L_moveTo, 2},
     {"L_lineTo", (DL_FUNC) &L_lineTo, 3}, 
-    {"L_lines", (DL_FUNC) &L_lines, 3}, 
+    {"L_lines", (DL_FUNC) &L_lines, 4}, 
     {"L_segments", (DL_FUNC) &L_segments, 5}, 
     {"L_arrows", (DL_FUNC) &L_arrows, 12}, 
     {"L_polygon", (DL_FUNC) &L_polygon, 3},
