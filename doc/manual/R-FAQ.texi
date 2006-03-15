@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-03-13
+@set FAQ_DATE @value{FAQ_YEAR}-03-15
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2435,6 +2435,8 @@ data.
 Efficient estimation of covariance and (partial) correlation.
 @item covRobust
 Robust covariance estimation via nearest neighbor cleaning.
+@item coxrobust
+Robust Estimation in the Cox proportional hazards regression model.
 @item cramer
 Routine for the multivariate nonparametric Cramer test.
 @item crossdes
