@@ -363,7 +363,7 @@ getClasses <-
 }
 
 
-validObject <- function(object, test = FALSE)
+validObject <- function(object, test = FALSE, complete = FALSE)
 {
     Class <- class(object)
     classDef <- getClassDef(Class)
@@ -377,15 +377,35 @@ validObject <- function(object, test = FALSE)
     for(i in seq(along=slotTypes)) {
         classi <- slotTypes[[i]]
         sloti <- slot(object, slotNames[[i]])
+        classDefi <- getClassDef(classi, where = where)
+        if(is.null(classDefi)) {
+          errors <- c(errors, paste("class for slot \"", slotNames[[i]],
+                                    "\" (\"", classi, "\")", sep=""))
+          next
+        }
         ## note that the use of possibleExtends is shared with checkSlotAssignment(), in case a
         ## future revision improves on it!
-        ok <- possibleExtends(class(sloti), classi, ClassDef2 = getClassDef(classi, where = where))
-        if(identical(ok, FALSE))
+        ok <- possibleExtends(class(sloti), classi, ClassDef2 = classDefi)
+        if(identical(ok, FALSE)) {
             errors <- c(errors,
                         paste("invalid object for slot \"", slotNames[[i]],
                               "\" in class \"", Class,
                               "\": got class \"", class(sloti),
                               "\", should be or extend class \"", classi, "\"", sep = ""))
+            next
+        }
+        if(!complete)
+          next
+        validityMethod <- classDefi@validity
+        if(is(validityMethod, "function")) {
+            errori <- anyStrings(validityMethod(sloti))
+            if(length(errori)>0) {
+                errori <- paste("In slot \"", slotNames[[i]],
+                                "\" of class \"", class(sloti), "\": ",
+                                sep = "", errori)
+                errors <- c(errors, errori)
+            }
+        }
     }
     extends <- rev(classDef@contains); i <- 1
     while(length(errors) == 0 && i <= length(extends)) {

@@ -365,6 +365,10 @@ NEW FEATURES
     o	Sys.sleep() has sub-millisecond resulution on Unix-alikes
 	with gettimeofday().
 
+    o  validObject() has an option complete=TRUE that recursively
+        checks the objects in the slots.  Not used when new(...)
+        checks validity.
+
 
 DEPRECATED & DEFUNCT
 
