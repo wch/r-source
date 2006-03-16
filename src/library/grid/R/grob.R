@@ -141,18 +141,41 @@ gPathDirect <- function(path) {
 ################
 # Just a list of grobs
 okGListelt <- function(x) {
-  is.grob(x) || is.null(x)
+  is.grob(x) || is.null(x) || is.gList(x)
+}
+
+is.gList <- function(x) {
+    inherits(x, "gList")
+}
+
+as.gList <- function(x) {
+    if (is.null(x)) {
+        result <- list()
+        class(result) <- "gList"
+    } else if (is.grob(x)) {
+        result <- list(x)
+        class(result) <- "gList"
+    } else if (is.gList(x)) {
+        result <- x
+    } else {
+        stop("Unable to coerce to gList")
+    }
+    result
 }
 
 gList <- function(...) {
-  gl <- list(...)
-  if (length(gl) == 0 ||
-      all(sapply(gl, okGListelt, simplify=TRUE))) {
-    class(gl) <- c("gList")
-    return(gl)
-  } else {
-    stop("Only 'grobs' allowed in 'gList'")
-  }
+    gl <- list(...)
+    if (length(gl) == 0 ||
+        all(sapply(gl, okGListelt, simplify=TRUE))) {
+        # Ensure gList is "flat"
+        # Don't want gList containing gList ...
+        if (!all(sapply(gl, is.grob)))
+            gl <- do.call("c", lapply(gl, as.gList))
+        class(gl) <- c("gList")
+        return(gl)
+    } else {
+        stop("Only 'grobs' allowed in 'gList'")
+    }
 }
 
 addToGList <- function(x, gList) {
@@ -187,6 +210,13 @@ as.character.gList <- function(x, ...) {
 
 print.gList <- function(x, ...) {
   cat(as.character(x), "\n")
+}
+
+"[.gList" <- function(x, index, ...) {
+    cl <- class(x)
+    result <- "["(unclass(x), index, ...)
+    class(result) <- cl
+    result
 }
 
 ################
@@ -1730,13 +1760,13 @@ grid.draw.grob <- function(x, recording=TRUE) {
 }
 
 drawGList <- function(x) {
-  # Temporarily turn off the grid DL so that
-  # nested calls to drawing code do not get recorded
-  dlon <- grid.Call("L_setDLon", FALSE)
-  # If get error or user-interrupt, need to reset state
-  # Need to turn grid DL back on (if it was on)
-  on.exit(grid.Call("L_setDLon", dlon))
-  lapply(x, grid.draw, recording=FALSE)
+    # DO NOT turn off grid DL.
+    # A top-level gList does not itself go on the DL,
+    # but its children do.
+    # A gList which is part of some other grob (e.g., children
+    # of a gTree) will be "protected" by the gTree
+    # turning off the DL.
+    lapply(x, grid.draw)
 }
 
 grid.draw.gList <- function(x, recording=TRUE) {

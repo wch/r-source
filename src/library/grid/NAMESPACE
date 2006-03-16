@@ -96,6 +96,7 @@ export("layout.torture")
 
 ## S3 methods for generics in base
 S3method("[", "arrow")
+S3method("[", "gList")
 S3method("[", "gpar")
 S3method("[", "unit")
 S3method("[", "unit.arithmetic")

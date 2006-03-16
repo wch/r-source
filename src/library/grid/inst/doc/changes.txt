@@ -60,6 +60,17 @@ Changes from grid_2.2.0 to grid_2.3.0:
     grid.xspline(), allowing multiple polylines to be drawn from a
     single grid.polyline() call.
 
+14. Fixed drawing of top-level gList objects so that they 
+    (actually the grobs in the gList) are recorded on the 
+    grid display list.
+
+    Allowed a gList to be component of a gList 
+    (the gList constructor merges sub-gList into resulting gList).
+
+    Added subset method for gList objects 
+    (so that result is still a gList).
+
+
 
 Changes from grid_2.1.0 to grid_2.2.0:
 ------------------------------------
