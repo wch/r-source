@@ -55,7 +55,7 @@ BUG FIXES
 	example, pgamma(0.9e100, 1e100) was NaN.  (PR#8528)
 
     o	There was no command 'ls' in browser() nor 'next' in debug(),
-	despite the documentation (which has been corrected).  
+	despite the documentation (which has been corrected).
 	Command 'where' in the browser() no longer changes to
 	step-though mode.
 
@@ -66,9 +66,11 @@ BUG FIXES
 
     o	The "lm" method of drop1 was giving incorrect results for
 	weighted fits (since deviance.lm was called on a non-lm object).
-	
-    o	dotchart() was miscalculating the space for the labels in the 
+
+    o	dotchart() was miscalculating the space for the labels in the
 	left margin.  (PR#8681)
+
+    o	r <- glm(.....); all.equal(r,r) # now gives TRUE instead of an error
 
 
 

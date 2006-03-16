@@ -3974,4 +3974,10 @@ bar2 <- rbind.data.frame(a = foo[1:5,], b = foo[numeric(0),])
 stopifnot(dim(bar2) == c(5,2))
 ## Last had 6 rows in 2.2.1, and was a corrupt data frame
 
+## environments are recursive but cannot be indexed - all.equal.default()
+d <- data.frame(k=1:7, n=2:8, x=0:6)
+r <- glm(cbind(k, n-k) ~ x, family=binomial, data=d)
+stopifnot(all.equal(r,r))
+## failed in 2.2.1
+
 ### end of tests added in 2.2.1 patched ###
