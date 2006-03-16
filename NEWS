@@ -939,6 +939,8 @@ BUG FIXES
     o	dotchart() was miscalculating the space for the labels in the
 	left margin.  (PR#8681)
 
+    o	r <- glm(.....); all.equal(r,r) # now gives TRUE instead of an error
+
 
 
 		CHANGES IN R VERSION 2.2.1
