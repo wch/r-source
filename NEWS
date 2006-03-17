@@ -869,6 +869,10 @@ BUG FIXES
 
     o	confint[.lm / .default] used label "100 %" for level = 0.999
 
+    o	empty entries (i.e., extraneous ",") in NAMESPACE files now give
+	a better error message early at parsing time instead of a less
+	comprehensible one later at load time.
+
 
 
 	**************************************************
