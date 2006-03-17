@@ -141,7 +141,7 @@ static void editorsaveas(editor c) {
     EditorData p = getdata(t);
     char *current_name = (p->file ? p->filename : "");
     char *name;
-    setuserfilter("R files (*.R)\0*.R\0S files (*.q)\0*.q\0All files (*.*)\0*.*\0\0");
+    setuserfilter("R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
     name = askfilesave("Save script as", current_name);
     if (name == NULL)
 	return;
@@ -323,7 +323,7 @@ static void editoropen(char *default_name)
 {
     char *name;
     int i; textbox t; EditorData p;
-    setuserfilter("R files (*.R)\0*.R\0S files (*.q)\0*.q\0All files (*.*)\0*.*\0\0");
+    setuserfilter("R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
     name = askfilename("Open script", default_name); /* returns NULL if open dialog cancelled */
     if (name) {
 	/* check if file is already open in an editor. If so, close and open again */

@@ -54,6 +54,9 @@ is reset to 64-bit mantissa and rounding mode before evaluating every
 expression.  This should prevent the implicit loading of DLLs changing
 to 53-bit mantissa, but has a small performance penalty.
 
+The file open dialogs now list *.ssc and *.S files in addition to *.q
+files as "S files".
+
 
 Internationalization
 --------------------

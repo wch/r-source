@@ -101,7 +101,7 @@ static void menusource(control m)
     char *fn;
 
     if (!ConsoleAcceptCmd) return;
-    setuserfilter("R files (*.R)\0*.R\0S files (*.q)\0*.q\0All files (*.*)\0*.*\0\0");
+    setuserfilter("R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Select file to source"), "");
 /*    show(RConsole); */
     if (fn) {
