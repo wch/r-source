@@ -151,7 +151,7 @@ as.table.ftable <- function(x, ...)
     x
 }
 
-write.ftable <- function(x, file = "", quote = TRUE,
+write.ftable <- function(x, file = "", quote = TRUE, append = FALSE,
                          digits = getOption("digits"))
 {
     if(!inherits(x, "ftable"))
@@ -191,7 +191,8 @@ write.ftable <- function(x, file = "", quote = TRUE,
                   format(unclass(x), digits = digits))
     x <- cbind(apply(LABS, 2, format, justify = "left"),
                apply(DATA, 2, format, justify = "right"))
-    cat(t(x), file = file, sep = c(rep(" ", ncol(x) - 1), "\n"))
+    cat(t(x), file = file, append = append,
+        sep = c(rep(" ", ncol(x) - 1), "\n"))
     invisible(ox)
 }
 

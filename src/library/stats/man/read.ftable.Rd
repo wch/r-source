@@ -8,7 +8,7 @@
 read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
 
-write.ftable(x, file = "", quote = TRUE,
+write.ftable(x, file = "", quote = TRUE, append = FALSE,
              digits = getOption("digits"))
 
 \method{as.table}{ftable}(x, \dots)
@@ -31,6 +31,10 @@ write.ftable(x, file = "", quote = TRUE,
   \item{skip}{the number of lines of the data file to skip before
     beginning to read data.}
   \item{x}{an object of class \code{"ftable"}.}
+  \item{append}{logical.  If \code{TRUE} and \code{file} is the name of
+    a file (and not a connection or \code{"|cmd"}), the output from
+    \code{write.ftable} is appended to the file.  If \code{FALSE},
+    the contents of \code{file} will be overwritten.}
   \item{digits}{an integer giving the number of significant digits to
     use for (the cell entries of) \code{x}.}
   \item{\dots}{further arguments to be passed to or from methods.}
@@ -68,7 +72,7 @@ write.ftable(x, file = "", quote = TRUE,
   Agresti, A. (1990)
   \emph{Categorical data analysis}.
   New York: Wiley.
-}  
+}
 \examples{
 ## Agresti (1990), page 157, Table 5.8.
 ## Not in ftable standard format, but o.k.

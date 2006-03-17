@@ -362,12 +362,15 @@ NEW FEATURES
 	in some (e.g. when lower.tail = FALSE and when one of the
 	shape parameters is very small).
 
-    o	Sys.sleep() has sub-millisecond resulution on Unix-alikes
+    o	Sys.sleep() has sub-millisecond resolution on Unix-alikes
 	with gettimeofday().
 
-    o  validObject() has an option complete=TRUE that recursively
-        checks the objects in the slots.  Not used when new(...)
-        checks validity.
+    o	validObject() has an option complete=TRUE that recursively
+	checks the objects in the slots.  Not used when new(...)
+	checks validity.
+
+    o	write.ftable() has gained an argument 'append = FALSE' thanks to
+	Stephen Weigand.
 
 
 DEPRECATED & DEFUNCT

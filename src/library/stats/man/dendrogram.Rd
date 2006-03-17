@@ -9,6 +9,7 @@
 \alias{rev.dendrogram}
 \alias{str.dendrogram}
 \alias{plot.dendrogram}
+% Not exported:
 %\alias{plotNode}
 %\alias{plotNodeLimit}
 \alias{is.leaf}
