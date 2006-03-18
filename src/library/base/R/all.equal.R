@@ -59,6 +59,7 @@ all.equal.numeric <-
 
     target <- target[!out]
     current <- current[!out]
+    if(is.integer(target) && is.integer(current)) target <- as.double(target)
     xy <- mean((if(cplx)Mod else abs)(target - current))
     what <-
 	if(is.null(scale)) {

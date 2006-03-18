@@ -873,6 +873,9 @@ BUG FIXES
 	a better error message early at parsing time instead of a less
 	comprehensible one later at load time.
 
+    o	all.equal(n1,n2) could erronously return NA when n1, n2 contained
+	large integers.
+
 
 
 	**************************************************

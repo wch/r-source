@@ -4114,3 +4114,9 @@ oldClass(fac2) <- "factor"
 stopifnot(is.factor(fac2))
 split(rnorm(15), fac2)
 ## failed in 2.2.1
+
+## all.equal.numeric overflowed for large integers
+set.seed(1); r1 <- .Random.seed
+set.seed(2); r2 <- .Random.seed
+stopifnot(is.character(all.equal(r1, r2)))
+## all.equal() gave NA in 2.2.1
