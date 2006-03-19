@@ -251,9 +251,6 @@ void xbufaddc(xbuf p, char c)
 	}
 	break;
       case '\r':
-	i = strlen(p->s[p->ns - 1]);
-	p->free -= i;
-	p->av += i;
 	break;
       case '\t':
 	XPUTC(' ');

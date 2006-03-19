@@ -57,11 +57,6 @@ to 53-bit mantissa, but has a small performance penalty.
 The file open dialogs now list *.ssc and *.S files in addition to *.q
 files as "S files".
 
-Writing "\r" to the console in Rgui now causes the cursor to return to
-the start of the line.  (Note that it erases the remainder of the
-line, whereas Rterm in a standard console does not.)
-
-
 
 Internationalization
 --------------------
