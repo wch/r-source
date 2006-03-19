@@ -876,6 +876,12 @@ BUG FIXES
     o	all.equal(n1,n2) could erronously return NA when n1, n2 contained
 	large integers.
 
+    o   anova.mlm() didn't handle multi-df effects properly in the 
+        single-model case (PR#8679)
+
+    o   anova.mlm() had its colnames mangled by data.frame() (needed
+        check.names=FALSE)
+
 
 
 	**************************************************

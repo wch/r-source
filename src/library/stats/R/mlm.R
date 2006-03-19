@@ -234,7 +234,11 @@ anova.mlm <-
             asgn <- object$assign[object$qr$pivot][p1]
             nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
             tlabels <- nmeffects[1 + unique(asgn)]
-            ss <- lapply(split(comp,asgn), function(x) crossprod(t(x)))
+	    ix <- split(seq(length=nrow(comp)), asgn)
+            ss <- lapply(ix, function(i) crossprod(comp[i,,drop=FALSE]))
+# This was broken. Something similar might work if we implement
+#  split.matrix a la split.data.frame
+#            ss <- lapply(split(comp,asgn), function(x) crossprod(t(x)))
             df <- sapply(split(asgn,  asgn), length)
         } else {
 #            ss <- ssr
@@ -300,7 +304,7 @@ anova.mlm <-
             }
 
         }
-        table <- data.frame(Df=c(df,ssd$df), stats)
+        table <- data.frame(Df=c(df,ssd$df), stats, check.names=FALSE)
         row.names(table) <- c(tlabels, "Residuals")
 #        if(attr(object$terms,"intercept")) table <- table[-1, ]
         structure(table, heading = c(title, transformnote, epsnote),
