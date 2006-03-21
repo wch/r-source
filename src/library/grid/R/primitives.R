@@ -456,7 +456,9 @@ drawDetails.arrows <- function(x, recording=TRUE) {
     yy <- rep(x$y, length.out=n)
     ynm1 <- yy[n - 1]
     yn <- yy[n]
-    grid.Call.graphics("L_lines", x$x, x$y, NULL)
+    grid.Call.graphics("L_lines", x$x, x$y,
+                       list(as.integer(1:n)),
+                       NULL)
   }
   grid.Call.graphics("L_arrows", x1, x2, xnm1, xn, y1, y2, ynm1, yn,
                      x$angle, x$length, x$ends, x$type)

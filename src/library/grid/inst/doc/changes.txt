@@ -70,6 +70,10 @@ Changes from grid_2.2.0 to grid_2.3.0:
     Added subset method for gList objects 
     (so that result is still a gList).
 
+15. Bug fix for grid.rect() and grid.circle() with gpar(lty="blank").
+    (problem was actually in the graphics engine).
+    
+    Reported by John Braun (private correspondence).
 
 
 Changes from grid_2.1.0 to grid_2.2.0:

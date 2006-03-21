@@ -780,6 +780,7 @@ pdfFonts(Japan1 = CIDFont("KozMinPro-Regular-Acro", "EUC-H", "EUC-JP",
 embedFonts <- function(file, # The ps or pdf file to convert
                        format, # Default guessed from file suffix
                        outfile = file, # By default overwrite file
+                       fontpaths = "",
                        options = "" # Additional options to ghostscript
                        )
 {
@@ -802,8 +803,13 @@ embedFonts <- function(file, # The ps or pdf file to convert
                         windows = "gswin32c.exe")
     }
     tmpfile <- tempfile("Rembed")
+    if (length(fontpaths) > 0)
+        fontpaths <- paste("-sFONTPATH=",
+                           paste(fontpaths, collapse=.Platform$path.sep),
+                           sep="")
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", format,
-                 " -sOutputFile=", tmpfile, " ", options, " ", file, sep = "")
+                 " -sOutputFile=", tmpfile, " ", fontpaths, " ",
+                 options, " ", file, sep = "")
     ret <- switch(.Platform$OS.type,
                   unix = system(cmd),
                   windows = system(cmd, invisible = TRUE))

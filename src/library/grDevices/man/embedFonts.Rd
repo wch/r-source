@@ -7,13 +7,15 @@
   embed all fonts in the file.
 }
 \usage{
-embedFonts(file, format, outfile = file, options = "")
+embedFonts(file, format, outfile = file, fontpaths = "", options = "")
 }
 \arguments{
   \item{file}{a character string giving the name of the original file.}
   \item{format}{either \code{"pswrite"} or \code{"pdfwrite"}.
     If not specified, it is guessed from the suffix of \code{file}.}
   \item{outfile}{the name of the new file (with fonts embedded).}
+  \item{fontpaths}{a character vector giving directories that
+    ghostscript will search for fonts.}
   \item{options}{a character string containing further options to
     ghostscript.}
 }
