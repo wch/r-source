@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-02-07 r37285)
+Version 2.3.0 Under development (unstable) (2006-03-21 r37560)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1059,6 +1059,14 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 +           df(0, 3, f2) == 0)
 > ## only the last one was ok in R 2.2.1 and earlier
 > 
+> x0 <- -2 * 10^-c(22,10,7,5)
+> stopifnot(pbinom(x0, size = 3, prob = 0.1) == 0,
++           dbinom(x0, 3, 0.1) == 0) # d*() warns about non-integer
+Warning messages:
+1: non-integer x = -0.000000 
+2: non-integer x = -0.000020 
+> ## very small negatives were rounded to 0 in R 2.2.1 and earlier
+> 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  3.83 0.05 3.98 NA NA 
+Time elapsed:  4.36 0.02 4.47 0 0 
 > 

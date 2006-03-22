@@ -32,11 +32,11 @@ double pgeom(double x, double p, int lower_tail, int log_p)
     if (ISNAN(x) || ISNAN(p))
 	return x + p;
 #endif
-    x = floor(x +1e-7);
     if(p <= 0 || p > 1) ML_ERR_return_NAN;
 
     if (x < 0.) return R_DT_0;
     if (!R_FINITE(x)) return R_DT_1;
+    x = floor(x +1e-7);
 
     if(p == 1.) { /* we cannot assume IEEE */
 	x = lower_tail ? 1: 0;

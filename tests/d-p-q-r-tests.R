@@ -540,4 +540,9 @@ stopifnot(df(0, 1, f2) == Inf,
           df(0, 3, f2) == 0)
 ## only the last one was ok in R 2.2.1 and earlier
 
+x0 <- -2 * 10^-c(22,10,7,5)
+stopifnot(pbinom(x0, size = 3, prob = 0.1) == 0,
+          dbinom(x0, 3, 0.1) == 0) # d*() warns about non-integer
+## very small negatives were rounded to 0 in R 2.2.1 and earlier
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

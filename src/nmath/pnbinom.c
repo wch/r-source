@@ -38,8 +38,8 @@ double pnbinom(double x, double n, double p, int lower_tail, int log_p)
 #endif
     if (n <= 0 || p <= 0 || p > 1)	ML_ERR_return_NAN;
 
-    x = floor(x + 1e-7);
     if (x < 0) return R_DT_0;
     if (!R_FINITE(x)) return R_DT_1;
+    x = floor(x + 1e-7);
     return pbeta(p, n, x + 1, lower_tail, log_p);
 }
