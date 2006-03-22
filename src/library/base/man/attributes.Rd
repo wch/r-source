@@ -21,7 +21,7 @@ mostattributes(obj) <- value
 \details{
   The \code{mostattributes} assignment takes special care for the
   \code{\link{dim}}, \code{\link{names}} and \code{\link{dimnames}}
-  attributes, and assigns them only when that is valid whereas as
+  attributes, and assigns them only when that is valid whereas an
   \code{attributes} assignment would give an error in that case.
 }
 \references{
