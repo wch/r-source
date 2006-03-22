@@ -372,6 +372,10 @@ NEW FEATURES
     o	write.ftable() has gained an argument 'append = FALSE' thanks to
 	Stephen Weigand.
 
+    o	splinefun() returns a function that now also has a 'deriv' argument
+	and can provide up to the 3rd derivative of the interpolating
+	spline, thanks to Berwin Turlach.
+
 
 DEPRECATED & DEFUNCT
 

@@ -44,9 +44,13 @@ spline(x, y = NULL, n = 3*length(x), method = "fmm",
   \code{y} which give the ordinates where interpolation took place and
   the interpolated values.
 
-  \code{splinefun} returns a function which will perform cubic spline
-  interpolation of the given data points.  This is often more useful
-  than \code{spline}.
+  \code{splinefun} returns a function with formal arguments \code{x} and
+  \code{deriv}, the latter defaulting to zero.  This function
+  can be used to evaluate the interpolating cubic spline
+  (\code{deriv}=0), or its derivatives (\code{deriv}=1,2,3) at the
+  points \code{x}, where the spline function interpolates the data
+  points originally specified.  This is often more useful than
+  \code{spline}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -83,11 +87,15 @@ lines(spline(x, y, n = 201, method = "natural"), col = 3)
 lines(spline(x, y, n = 201, method = "periodic"), col = 4)
 legend(6,25, c("fmm","natural","periodic"), col=2:4, lty=1)
 
+y <- sin((x-0.5)*pi)
 f <- splinefun(x, y)
 ls(envir = environment(f))
-splinecoef <- eval(expression(z), envir = environment(f))
+splinecoef <- get("z", envir = environment(f))
 curve(f(x), 1, 10, col = "green", lwd = 1.5)
 points(splinecoef, col = "purple", cex = 2)
+curve(f(x, deriv=1), 1, 10, col = 2, lwd = 1.5)
+curve(f(x, deriv=2), 1, 10, col = 2, lwd = 1.5, n = 401)
+curve(f(x, deriv=3), 1, 10, col = 2, lwd = 1.5, n = 401)
 par(op)
 }
 \keyword{math}
