@@ -71,6 +71,8 @@ BUG FIXES
 	left margin.  (PR#8681)
 
     o	r <- glm(.....); all.equal(r,r) # now gives TRUE instead of an error
+    
+    o	plot.acf() was miscalculating the ylim value for the plot.  (PR#8705)
 
 
 
