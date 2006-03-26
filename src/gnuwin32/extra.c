@@ -494,6 +494,21 @@ SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+SEXP do_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP stamp;
+    int i;
+    
+    checkArity(op, args);
+    stamp = CAR(args);
+    if (!isString(stamp))
+    	errorcall(call, _("invalid timestamp"));
+    if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))  	
+	for (i = 0; i < LENGTH(stamp); i++) 
+	    gl_histadd(CHAR(STRING_ELT(stamp, i)));
+    return R_NilValue;
+}
+    
 #include <lmcons.h>
 
 SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)

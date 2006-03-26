@@ -375,6 +375,8 @@ NEW FEATURES
     o	splinefun() returns a function that now also has a 'deriv' argument
 	and can provide up to the 3rd derivative of the interpolating
 	spline, thanks to Berwin Turlach.
+	
+    o	timestamp() adds a time stamp to the saved command history.
 
 
 DEPRECATED & DEFUNCT

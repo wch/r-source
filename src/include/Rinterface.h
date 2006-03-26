@@ -101,6 +101,7 @@ extern int  (*ptr_R_ChooseFile)(int, char *, int);
 extern int  (*ptr_R_EditFile)(char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
+extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
 
 /* These two are not used by R itself, but are used by the GNOME front end
    and the tcltk package */

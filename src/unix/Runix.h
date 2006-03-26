@@ -19,5 +19,6 @@ int  Rstd_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 int  Rstd_ChooseFile(int new, char *buf, int len);
 void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env);
 void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env);
+void Rstd_addhistory(SEXP call, SEXP op, SEXP args, SEXP env);
 
 void R_load_X11_shlib(void);

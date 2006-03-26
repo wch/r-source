@@ -825,6 +825,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 /* History manipulation */
 {"loadhistory", do_loadhistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"savehistory", do_savehistory,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"addhistory",  do_addhistory,  0,	11,	1,	{PP_FUNCALL, PREC_FN, 	0}},
 
 /* date-time manipulations */
 {"Sys.time",	do_systime,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},

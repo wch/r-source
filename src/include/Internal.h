@@ -76,6 +76,7 @@ SEXP do_writeClipboard(SEXP, SEXP, SEXP, SEXP);
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
 SEXP do_abline(SEXP, SEXP, SEXP, SEXP);
 SEXP do_abs(SEXP, SEXP, SEXP, SEXP);
+SEXP do_addhistory(SEXP, SEXP, SEXP, SEXP);
 #ifdef NEW_CONDITION_HANDLING
 SEXP do_addCondHands(SEXP, SEXP, SEXP, SEXP);
 SEXP do_addRestart(SEXP, SEXP, SEXP, SEXP);

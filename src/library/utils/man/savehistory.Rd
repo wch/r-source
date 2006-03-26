@@ -2,6 +2,7 @@
 \alias{loadhistory}
 \alias{savehistory}
 \alias{history}
+\alias{timestamp}
 \title{Load or Save or Display the Commands History}
 \description{
   Load or save or display the commands history.
@@ -10,6 +11,7 @@
 loadhistory(file = ".Rhistory")
 savehistory(file = ".Rhistory")
 history(max.show = 25, reverse = FALSE)
+timestamp(stamp = date(), prefix="##------ ", suffix=" ------##", quiet=FALSE)
 }
 \arguments{
   \item{file}{The name of the file in which to save the history, or
@@ -19,6 +21,10 @@ history(max.show = 25, reverse = FALSE)
     give all of the currently available history.}
   \item{reverse}{logical. If true, the lines are shown in reverse
     order. Note: this is not useful when there are continuation lines.}
+  \item{stamp}{A value or vector of values to be written into the history.}
+  \item{prefix}{A prefix to apply to each line.}
+  \item{suffix}{A suffix to apply to each line.}
+  \item{quiet}{If \code{TRUE}, suppress printing timestamp to the console.}
 }
 \details{
   There are several history mechanisms available for the different \R
@@ -47,6 +53,10 @@ history(max.show = 25, reverse = FALSE)
 
   These variables are read at the time of saving, so can be altered
   within a session by the use of \code{\link{Sys.putenv}}.
+  
+  The \code{timestamp} function writes a timestamp (or other message)
+  into the history and echos it to the console.  On platforms that do not 
+  support a history mechanism only the console message is printed.
 }
 \note{
   If you want to save the history (almost) every session, you can put a

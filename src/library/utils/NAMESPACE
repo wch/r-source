@@ -20,7 +20,7 @@ export("?", CRAN.packages, Rprof, RSiteSearch, URLdecode, URLencode,
        promptData, promptPackage, readCitationFile, read.fwf,
        read.fortran, read.socket, recover, remove.packages,
        savehistory, select.list, sessionInfo, setRepositories, str,
-       summaryRprof, tail, topicName, toBibtex, toLatex,
+       summaryRprof, tail, timestamp, topicName, toBibtex, toLatex,
        update.packageStatus, update.packages, upgrade, url.show, vi,
        vignette, write.socket, wsbrowser, xedit, xemacs)
 

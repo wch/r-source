@@ -17,3 +17,12 @@ history <- function(max.show=25, reverse=FALSE)
     write(rawhist[inds], file2)
     file.show(file2, title="R History", delete.file=TRUE)
 }
+
+timestamp <- function(stamp=date(), prefix="##------ ", suffix=" ------##",
+		      quiet=FALSE)
+{
+    stamp <- paste(prefix, stamp, suffix, sep="")
+    .Internal(addhistory(stamp))
+    if (!quiet) cat(stamp, sep="\n")
+    invisible(stamp)
+}

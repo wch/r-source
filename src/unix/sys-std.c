@@ -954,6 +954,21 @@ void attribute_hidden Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
+void attribute_hidden Rstd_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP stamp;
+    int i;
+    
+    checkArity(op, args);
+    stamp = CAR(args);
+    if (!isString(stamp))
+    	errorcall(call, _("invalid timestamp"));
+#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
+    if(R_Interactive && UsingReadline) 
+	for (i = 0; i < LENGTH(stamp); i++) 
+	    add_history(CHAR(STRING_ELT(stamp, i)));
+# endif      
+}
 
 
 
