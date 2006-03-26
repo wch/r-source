@@ -84,7 +84,7 @@ check-all: check-devel
 
 .Rin.R:
 	@echo "creating '$@'"
-	@$(R) --slave < $< > /dev/null
+	@$(R) < $< > /dev/null
 
 .R.Rout:
 	@rm -f $@ $@.fail
