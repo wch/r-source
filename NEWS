@@ -326,15 +326,15 @@ NEW FEATURES
     o	New function embedFonts() for embedding fonts in PDF or
 	PostScript graphics files.
 
-    o  S3 classes can now be made non-virtual by supplying a prototype
+    o	S3 classes can now be made non-virtual by supplying a prototype
 	object in the arguments to setOldClass().
 
-    o  A new heuristic test, seemsS4Object() is supplied, along with a
+    o	A new heuristic test, seemsS4Object() is supplied, along with a
 	similar C-level test, R_seemsS4Object(object).	The test
 	detects probable S4 objects by their class's attribute. See the help
 	page.
 
-    o  The implementation of trace() has beem made more general by
+    o	The implementation of trace() has beem made more general by
 	calling a function to do the trace interaction, and recover()
 	now detects trace calls to trim the irrelevant code underneath.
 
@@ -838,7 +838,7 @@ BUG FIXES
 	precision.  (PR#1228)
 
 	sum(), prod(), mean(), rowSums() and friends use a long double
-	accumulator where available and so may be more accurate. (This
+	accumulator where available and so may be more accurate.  (This
 	is particularly helpful on systems such as Sparc and AMD64
 	where long double gives considerably greater exponent range
 	and precision than double.)
@@ -878,18 +878,19 @@ BUG FIXES
 
     o	confint[.lm / .default] used label "100 %" for level = 0.999
 
-    o	empty entries (i.e., extraneous ",") in NAMESPACE files now give
+    o	Empty entries (i.e., extraneous ",") in NAMESPACE files now give
 	a better error message early at parsing time instead of a less
 	comprehensible one later at load time.
 
     o	all.equal(n1,n2) could erronously return NA when n1, n2 contained
 	large integers.
 
-    o   anova.mlm() didn't handle multi-df effects properly in the
-        single-model case (PR#8679)
+    o	anova.mlm() didn't handle multi-df effects properly in the
+	single-model case (PR#8679)
 
-    o   anova.mlm() had its colnames mangled by data.frame() (needed
-        check.names=FALSE)
+    o	anova.mlm() had its colnames mangled by data.frame() (needed
+	check.names=FALSE).
+
 
 
 
