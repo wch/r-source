@@ -43,6 +43,6 @@ SEXP attribute_hidden do_savehistory(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_addhistory(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    ptr_R_addhistory(call, op, args, rho);
+    if(ptr_R_addhistory) ptr_R_addhistory(call, op, args, rho);
     return R_NilValue;
 }
