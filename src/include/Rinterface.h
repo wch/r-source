@@ -19,7 +19,8 @@
  */
 
 /* This header file is to provide hooks for external GUIs such as
-   GNOME and Cocoa.  It is only used on Unix-alikes */
+   GNOME and Cocoa.  It is only used on Unix-alikes.  All entries
+   here should be documented in doc/manual/R-exts.texi            */
 
 #ifndef RINTERFACE_H_
 #define RINTERFACE_H_

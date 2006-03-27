@@ -8048,6 +8048,7 @@ extern int  (*ptr_R_ChooseFile)(int, char *, int);
 extern int  (*ptr_R_EditFile)(char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
+extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
 @end example
 
 @noindent
@@ -8109,10 +8110,13 @@ Send a file to an editor window.
 
 @deftypefun SEXP R_loadhistory (SEXP, SEXP, SEXP, SEXP);
 @deftypefunx SEXP R_savehistory (SEXP, SEXP, SEXP, SEXP);
+@deftypefunx SEXP R_addhistory (SEXP, SEXP, SEXP, SEXP);
 
-@code{.Internal} functions for @code{loadhistory} and
-@code{savehistory}: these are called after checking the number of
-arguments.  If the console has no history mechanism these can be as
+@code{.Internal} functions for @code{loadhistory},
+@code{savehistory} and @code{timestamp}: these are called after checking the number of
+arguments.  
+
+If the console has no history mechanism these can be as
 simple as
 
 @example
@@ -8126,7 +8130,15 @@ SEXP R_savehistory (SEXP call, SEXP op , SEXP args, SEXP env)
     errorcall(call, "savehistory is not implemented");
     return R_NilValue;
 @}
+SEXP R_addhistory (SEXP call, SEXP op , SEXP args, SEXP env)
+@{
+    return R_NilValue;
+@}
 @end example
+
+The @code{R_addhistory} function should return silently if no history
+mechanism is present, as a user may be calling @code{timestamp} purely to write the
+time stamp to the console.
 @end deftypefun
 
 @deftypefun void R_Suicide (char *@var{message})
