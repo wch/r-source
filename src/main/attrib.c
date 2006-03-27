@@ -1209,6 +1209,7 @@ static int make_class_meta_data_env()
 }
 */
 
+#if UNUSED
 /* check for a class definition from the internal table -- will not get
  * classes whose definition has not been completed for this session,
  * so any code relying on this routine should call the S language
@@ -1222,6 +1223,7 @@ static Rboolean has_class_definition(SEXP class_name)
 	else */
 	return FALSE;
 }
+#endif
 
 static Rboolean can_test_S4Object = FALSE; /* turning this to TRUE will throw
    error or warning on all packages that have not been reinstalled for current R 2.3 */
