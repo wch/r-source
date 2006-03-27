@@ -837,22 +837,53 @@ void CleanTempDir()
     if(R_TempDir) R_unlink(R_TempDir, 1);
 }
 
+SEXP do_getClipboardFormats(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans = R_NilValue;
+    int size, format = 0;
+    
+    checkArity(op, args);
+    
+    if(OpenClipboard(NULL)) {
+    	size = CountClipboardFormats();
+    	PROTECT(ans = allocVector(INTSXP, size));
+    	for (int j=0; j<size; j++) {
+    	    format = EnumClipboardFormats(format);
+    	    INTEGER(ans)[j] = format;
+    	}
+    	UNPROTECT(1);
+    	CloseClipboard();
+    }
+    return ans;
+}
+
 SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans = allocVector(STRSXP, 0);
+    SEXP ans = R_NilValue;
     HGLOBAL hglb;
     char *pc;
+    int format, raw, size;
 
     checkArity(op, args);
-    if(clipboardhastext() &&
-       OpenClipboard(NULL) &&
-       (hglb = GetClipboardData(CF_TEXT)) &&
-       (pc = (char *)GlobalLock(hglb))) {
-	    PROTECT(ans = allocVector(STRSXP, 1));
-	    SET_STRING_ELT(ans, 0, mkChar(pc));
+    format = asInteger(CAR(args));
+    raw = asLogical(CADR(args));
+
+    if(OpenClipboard(NULL)) {
+    	if(IsClipboardFormatAvailable(format) &&
+    	   	(hglb = GetClipboardData(format)) &&
+    	   	(pc = (char *)GlobalLock(hglb))) {
+	    if(!raw) {
+		PROTECT(ans = allocVector(STRSXP, 1));
+		SET_STRING_ELT(ans, 0, mkChar(pc));
+	    } else {
+		size = GlobalSize(hglb);
+		PROTECT(ans = allocVector(RAWSXP, size));
+		for (int j=0; j<size; j++) RAW(ans)[j] = *pc++;
+	    }
 	    GlobalUnlock(hglb);
-	    CloseClipboard();
-	    UNPROTECT(1);
+	    UNPROTECT(1);	
+	}    
+	CloseClipboard();
     }
     return ans;
 }
@@ -860,27 +891,37 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, text;
-    int i, n;
+    int i, n, format;
     HGLOBAL hglb;
     char *s, *p;
-    Rboolean success = FALSE;
+    Rboolean success = FALSE, raw = FALSE;
 
     checkArity(op, args);
     text = CAR(args);
-    if(!isString(text))
-	errorcall(call, _("argument must be a character vector"));
-    n = length(text);
+    format = asInteger(CADR(args));
+
+    if (TYPEOF(text) == RAWSXP) raw = TRUE;
+    else if(!isString(text)) 
+    	errorcall(call, _("argument must be a character vector or a raw vector"));
+    
+    n = length(text);  
     if(n > 0) {
-	int len = 1;
-	for(i = 0; i < n; i++) len += strlen(CHAR(STRING_ELT(text, i))) + 2;
+    	int len = 1;
+    	if(!raw) 
+    	    for(i = 0; i < n; i++) len += strlen(CHAR(STRING_ELT(text, i))) + 2;
+    	else len = n;
 	if ( (hglb = GlobalAlloc(GHND, len)) &&
 	     (s = (char *)GlobalLock(hglb)) ) {
-	    for(i = 0; i < n; i++) {
-		p = CHAR(STRING_ELT(text, i));
-		while(*p) *s++ = *p++;
-		*s++ = '\r'; *s++ = '\n';
-	    }
-	    *s = '\0';
+	    if(!raw) {
+		for(i = 0; i < n; i++) {
+		    p = CHAR(STRING_ELT(text, i));
+		    while(*p) *s++ = *p++;
+		    *s++ = '\r'; *s++ = '\n';
+		}
+		*s = '\0';
+	    } else 
+	    	for(i = 0; i < n; i++) *s++ = RAW(text)[i];
+				
 	    GlobalUnlock(hglb);
 	    if (!OpenClipboard(NULL) || !EmptyClipboard()) {
 		warningcall(call, _("Unable to open the clipboard"));

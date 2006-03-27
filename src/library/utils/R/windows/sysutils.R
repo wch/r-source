@@ -4,11 +4,19 @@ memory.limit <- function(size = NA) .Internal(memory.size(size))
 
 DLL.version <- function(path) .Internal(DLL.version(path))
 
-readClipboard <- function()
-    strsplit(.Internal(readClipboard()), "\r\n")[[1]]
+getClipboardFormats <- function()
+    .Internal(getClipboardFormats())
+    
+readClipboard <- function(format = 1, raw = FALSE) {
+    result <- .Internal(readClipboard(format, raw))
+    if (!is.null(result) && !raw)
+    	strsplit(result,"\r\n")[[1]]
+    else
+     	result
+}
 
-writeClipboard <- function(str)
-    .Internal(writeClipboard(str))
+writeClipboard <- function(str, format = 1)
+    .Internal(writeClipboard(str, format))
 
 getIdentification <- function()
     .Internal(getIdentification())

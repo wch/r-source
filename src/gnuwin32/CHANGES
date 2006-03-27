@@ -57,6 +57,9 @@ to 53-bit mantissa, but has a small performance penalty.
 The file open dialogs now list *.ssc and *.S files in addition to *.q
 files as "S files".
 
+readClipboard() and writeClipboard() now support formats other than text.
+A new function getClipboardFormats() reports on available formats.
+
 
 Internationalization
 --------------------

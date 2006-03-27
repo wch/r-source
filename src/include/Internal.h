@@ -53,6 +53,7 @@ SEXP do_chooseFiles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_chooseDir(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dllversion(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
+SEXP do_getClipboardFormats(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getIdentification(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getWindowHandle(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getWindowTitle(SEXP, SEXP, SEXP, SEXP);
