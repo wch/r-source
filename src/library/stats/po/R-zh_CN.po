@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-02-17 14:07\n"
+"POT-Creation-Date: 2006-03-27 15:42\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1811,6 +1811,10 @@ msgstr "spline: 第一个和最后一个y的值不相等 -用y[1]"
 
 msgid "splinefun: invalid interpolation method"
 msgstr "splinefun: 内插方法不对"
+
+#, fuzzy
+msgid "'deriv' must be between 0 and 3"
+msgstr "'p'必需在0和0.5之间"
 
 msgid "stepfun: 'x' must be ordered increasingly"
 msgstr "stepfun: 'x'必需从小到大排序"

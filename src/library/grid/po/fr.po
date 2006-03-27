@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grid 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-02-17 14:06+0000\n"
+"POT-Creation-Date: 2006-03-27 15:42+0100\n"
 "PO-Revision-Date: 2005-12-06 16:52+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -20,29 +20,29 @@ msgstr ""
 msgid "Cannot clip to rotated viewport"
 msgstr "Impossible de couper une vue pivotée"
 
-#: grid.c:650 grid.c:655 grid.c:744 grid.c:749
+#: grid.c:641 grid.c:646 grid.c:735 grid.c:740
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 "Impossible de rendre la vue de plus haut niveau active (grid et sorties "
 "graphiques mixées ?)"
 
-#: grid.c:940
+#: grid.c:931
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique 'null'"
 
-#: grid.c:1220
+#: grid.c:1211
 msgid "There is no layout defined"
 msgstr "Aucune mise en page définie"
 
-#: grid.c:1440
+#: grid.c:1431
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
-#: grid.c:1449
+#: grid.c:1440
 msgid "Polygon edge not found"
 msgstr ""
 
-#: grid.c:1589
+#: grid.c:1580
 msgid "Require at least two points to draw arrow"
 msgstr ""
 
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "Rayon de cercle incorrect (doit être positif ou nul)"
 
-#: grid.c:3089
+#: grid.c:3108
 #, fuzzy
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossible de couper une vue pivotée"

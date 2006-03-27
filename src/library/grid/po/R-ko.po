@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-09 16:42\n"
+"POT-Creation-Date: 2006-03-27 15:42\n"
 "PO-Revision-Date: 2005-05-25 16:34+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -165,6 +165,9 @@ msgstr ""
 msgid "Invalid 'grob' name(s)"
 msgstr "부적절한 'grob'의 이름입니다"
 
+msgid "Unable to coerce to gList"
+msgstr ""
+
 msgid "Only 'grobs' allowed in 'gList'"
 msgstr "'gList'에는 'grobs'만을 허용됩니다"
 
@@ -289,6 +292,19 @@ msgstr "'x' 그리고 'y'는 길이 1이 아니면 안됩니다"
 msgid "invalid 'arrow' argument"
 msgstr "부적절한 'rot' 값입니다"
 
+msgid "It is invalid to specify both 'id' and 'id.lengths"
+msgstr "'id' 그리고 'id.lengths'의 양쪽 모두를 지정할수 없지 않습니다"
+
+msgid "'x' and 'y' must be same length"
+msgstr "'x'와 'y'는 동일 길이가 나오지 않으면 되지 않습니다"
+
+msgid "'x' and 'y' and 'id' must all be same length"
+msgstr "'x' 그리고  'y', 'id'는 모두 동일 길이가 나오지 않으면 되지 않습니다"
+
+msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
+msgstr ""
+"'x' 그리고 'y', 'id.lengths'는 모두 동일 길이를 지정하지 않으면 되지 않습니다"
+
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr "'x0', 'y0', 'x1' 그리고 'y1'는 units가 나오지 않으면 되지 않습니다"
 
@@ -307,19 +323,6 @@ msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr ""
 "'grob'인수는 'line.to','limes','segments'인 몇개의 grob가 나오지 않으면 되지 "
 "않습니다"
-
-msgid "It is invalid to specify both 'id' and 'id.lengths"
-msgstr "'id' 그리고 'id.lengths'의 양쪽 모두를 지정할수 없지 않습니다"
-
-msgid "'x' and 'y' must be same length"
-msgstr "'x'와 'y'는 동일 길이가 나오지 않으면 되지 않습니다"
-
-msgid "'x' and 'y' and 'id' must all be same length"
-msgstr "'x' 그리고  'y', 'id'는 모두 동일 길이가 나오지 않으면 되지 않습니다"
-
-msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
-msgstr ""
-"'x' 그리고 'y', 'id.lengths'는 모두 동일 길이를 지정하지 않으면 되지 않습니다"
 
 #, fuzzy
 msgid "x and y must be units"
@@ -366,21 +369,17 @@ msgstr "인수'x'는 units 오브젝트가 아니면 되지 않습니다"
 msgid "Invalid 'axis' or 'type'"
 msgstr "부적절한 'axis' 또는 'type'입니다"
 
-msgid "No string supplied for 'strwidth' unit"
-msgstr "'strwidth' units를 주는 문자열이 없습니다"
-
-msgid "No string supplied for 'strheight' unit"
+#, fuzzy
+msgid "No string supplied for 'strwidth/height' unit"
 msgstr "'strheight' units를 주는 문자열이 없습니다"
 
-msgid "No 'grob' supplied for 'grobwidth' unit"
-msgstr "'grobwidth' units를 주는 'grob'가 없습니다"
+#, fuzzy
+msgid "No 'grob' supplied for 'grobwidth/height' unit"
+msgstr "'grobheight' units를 주는 'grob'가 없습니다"
 
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
 "'gPath'는 'grobwidth/height' units에서는 깊이 1이 나오지 않으면 되지 않습니다"
-
-msgid "No 'grob' supplied for 'grobheight' unit"
-msgstr "'grobheight' units를 주는 'grob'가 없습니다"
 
 msgid "Operator '%s' not meaningful for units"
 msgstr "연산자 '%s'는 units로서 의미를 작성하지 않습니다"
@@ -477,3 +476,9 @@ msgstr "'x' 또는 'xscale' 중 적어도 하나를 지정하지 않으면 되�
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "'y' 또는 'yscale' 중 적어도 하나를 지정하지 않으면 되지 않습니다"
+
+#~ msgid "No string supplied for 'strwidth' unit"
+#~ msgstr "'strwidth' units를 주는 문자열이 없습니다"
+
+#~ msgid "No 'grob' supplied for 'grobwidth' unit"
+#~ msgstr "'grobwidth' units를 주는 'grob'가 없습니다"

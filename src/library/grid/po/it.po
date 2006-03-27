@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-02-17 14:06+0000\n"
+"POT-Creation-Date: 2006-03-27 15:42+0100\n"
 "PO-Revision-Date: 2005-04-17 17:30+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -20,29 +20,29 @@ msgstr ""
 msgid "Cannot clip to rotated viewport"
 msgstr "Impossibile tagliare su una viewport ruotata"
 
-#: grid.c:650 grid.c:655 grid.c:744 grid.c:749
+#: grid.c:641 grid.c:646 grid.c:735 grid.c:740
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 "Non posso mostrare la view-port di livello massimo (grid e graphics output "
 "mischiato?)"
 
-#: grid.c:940
+#: grid.c:931
 msgid "attempt to plot on null device"
 msgstr "tentativo di scrivere sul dispositivo null"
 
-#: grid.c:1220
+#: grid.c:1211
 msgid "There is no layout defined"
 msgstr "Il layout non è definito"
 
-#: grid.c:1440
+#: grid.c:1431
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
-#: grid.c:1449
+#: grid.c:1440
 msgid "Polygon edge not found"
 msgstr ""
 
-#: grid.c:1589
+#: grid.c:1580
 msgid "Require at least two points to draw arrow"
 msgstr ""
 
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "Raggio del cerchio non valido (deve essere non negativo)"
 
-#: grid.c:3089
+#: grid.c:3108
 #, fuzzy
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossibile tagliare su una viewport ruotata"

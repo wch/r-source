@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-02-17 14:07\n"
+"POT-Creation-Date: 2006-03-27 15:42\n"
 "PO-Revision-Date: 2005-12-17 11:31-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1858,6 +1858,10 @@ msgstr "spline: primeiro e último valor de y diferem - usando y[1] para ambos"
 
 msgid "splinefun: invalid interpolation method"
 msgstr "splinefun: método de interpolação inválido"
+
+#, fuzzy
+msgid "'deriv' must be between 0 and 3"
+msgstr "'p' deve estar entre 0 e 0.5"
 
 msgid "stepfun: 'x' must be ordered increasingly"
 msgstr "stepfun: 'x' deve estar ordenado crescentemente"

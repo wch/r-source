@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-09 16:42\n"
+"POT-Creation-Date: 2006-03-27 15:42\n"
 "PO-Revision-Date: 2005-12-06 23:24+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -170,6 +170,9 @@ msgstr "Un chemin 'grob' doit contenir au moins un nom de 'grob'"
 msgid "Invalid 'grob' name(s)"
 msgstr "Nom(s) de 'grob' incorrect(s)"
 
+msgid "Unable to coerce to gList"
+msgstr ""
+
 msgid "Only 'grobs' allowed in 'gList'"
 msgstr "Seuls des 'grob's sont permis dans 'gList'"
 
@@ -304,6 +307,19 @@ msgstr "'x' et 'y' doivent être de longueur unitaire"
 msgid "invalid 'arrow' argument"
 msgstr "Valeur 'rot' incorrecte"
 
+msgid "It is invalid to specify both 'id' and 'id.lengths"
+msgstr "Il n'est pas permi de spécifier simultanément 'id' et 'id.lengths'"
+
+msgid "'x' and 'y' must be same length"
+msgstr "'x' et 'y' doivent être de même longueur"
+
+msgid "'x' and 'y' and 'id' must all be same length"
+msgstr "'x', 'y' et 'id' doivent être de même longueur"
+
+msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
+msgstr ""
+"'x', 'y' et 'id.lengths' doivent spécifier les mêmes longueurs globales"
+
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr "'x0', 'y0', 'x1' et 'y1' doivent être des unités"
 
@@ -321,19 +337,6 @@ msgstr ""
 msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr ""
 "L'argument 'grob' doit être un grob de type 'line.to', 'lines' ou 'segments'"
-
-msgid "It is invalid to specify both 'id' and 'id.lengths"
-msgstr "Il n'est pas permi de spécifier simultanément 'id' et 'id.lengths'"
-
-msgid "'x' and 'y' must be same length"
-msgstr "'x' et 'y' doivent être de même longueur"
-
-msgid "'x' and 'y' and 'id' must all be same length"
-msgstr "'x', 'y' et 'id' doivent être de même longueur"
-
-msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
-msgstr ""
-"'x', 'y' et 'id.lengths' doivent spécifier les mêmes longueurs globales"
 
 #, fuzzy
 msgid "x and y must be units"
@@ -377,21 +380,17 @@ msgstr "l'argument 'x' doit être un objet unité"
 msgid "Invalid 'axis' or 'type'"
 msgstr "'axis' ou 'type' incorrect"
 
-msgid "No string supplied for 'strwidth' unit"
-msgstr "Pas de chaîne de caractères fournie pour l'unité 'strwidth'"
-
-msgid "No string supplied for 'strheight' unit"
+#, fuzzy
+msgid "No string supplied for 'strwidth/height' unit"
 msgstr "Pas de chaîne de caractères fournie pour l'unité 'strheight'"
 
-msgid "No 'grob' supplied for 'grobwidth' unit"
-msgstr "Pas de 'grob' fourni pour l'unité 'grobwidth'"
+#, fuzzy
+msgid "No 'grob' supplied for 'grobwidth/height' unit"
+msgstr "Pas de 'grob' fourni pour l'unité 'grobheight'"
 
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
 "'gPath' doit avoir une profondeur de 1 dans les unités 'grobwidth/height'"
-
-msgid "No 'grob' supplied for 'grobheight' unit"
-msgstr "Pas de 'grob' fourni pour l'unité 'grobheight'"
 
 msgid "Operator '%s' not meaningful for units"
 msgstr "L'opérateur '%s' est inapplicable aux unités"
@@ -486,3 +485,9 @@ msgstr "Il faut spécifier au moins 'x' ou 'xscale'"
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "Il faut spécifier au moins 'y' ou 'yscale'"
+
+#~ msgid "No string supplied for 'strwidth' unit"
+#~ msgstr "Pas de chaîne de caractères fournie pour l'unité 'strwidth'"
+
+#~ msgid "No 'grob' supplied for 'grobwidth' unit"
+#~ msgstr "Pas de 'grob' fourni pour l'unité 'grobwidth'"

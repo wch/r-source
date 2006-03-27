@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-02-17 14:07\n"
+"POT-Creation-Date: 2006-03-27 15:42\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1833,6 +1833,10 @@ msgstr ""
 
 msgid "splinefun: invalid interpolation method"
 msgstr "splinefun: 無効な補間法です"
+
+#, fuzzy
+msgid "'deriv' must be between 0 and 3"
+msgstr "'p' は 0 と 0.5 の間になければなりません"
 
 msgid "stepfun: 'x' must be ordered increasingly"
 msgstr "stepfun: 'x' は昇順に並んでいる必要があります"

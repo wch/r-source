@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-03-09 16:41+0000\n"
+"POT-Creation-Date: 2006-03-27 15:41+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -78,8 +78,8 @@ msgstr "R_unlink的'names'不对"
 #: src/gnuwin32/extra.c:284 src/gnuwin32/extra.c:311 src/gnuwin32/extra.c:314
 #: src/gnuwin32/extra.c:363 src/gnuwin32/extra.c:400 src/gnuwin32/extra.c:411
 #: src/gnuwin32/extra.c:435 src/gnuwin32/extra.c:443 src/gnuwin32/extra.c:473
-#: src/gnuwin32/extra.c:489 src/gnuwin32/extra.c:640 src/gnuwin32/extra.c:724
-#: src/gnuwin32/extra.c:727 src/gnuwin32/extra.c:732 src/main/builtin.c:100
+#: src/gnuwin32/extra.c:489 src/gnuwin32/extra.c:655 src/gnuwin32/extra.c:739
+#: src/gnuwin32/extra.c:742 src/gnuwin32/extra.c:747 src/main/builtin.c:100
 #: src/main/builtin.c:354 src/main/builtin.c:366 src/main/character.c:116
 #: src/main/character.c:119 src/main/character.c:158 src/main/character.c:2410
 #: src/main/character.c:2414 src/main/connections.c:815
@@ -109,8 +109,8 @@ msgstr "R_unlink的'names'不对"
 #: src/main/envir.c:1660 src/main/envir.c:1771 src/main/envir.c:1779
 #: src/main/envir.c:1787 src/main/envir.c:1801 src/main/envir.c:1807
 #: src/main/envir.c:2330 src/main/envir.c:2598 src/main/envir.c:3133
-#: src/main/eval.c:251 src/main/eval.c:1540 src/main/eval.c:1564
-#: src/main/eval.c:1568 src/main/model.c:1580 src/main/model.c:1588
+#: src/main/eval.c:251 src/main/eval.c:1545 src/main/eval.c:1569
+#: src/main/eval.c:1573 src/main/model.c:1580 src/main/model.c:1588
 #: src/main/optim.c:229 src/main/paste.c:71 src/main/paste.c:163
 #: src/main/paste.c:170 src/main/paste.c:177 src/main/paste.c:182
 #: src/main/paste.c:187 src/main/paste.c:192 src/main/paste.c:195
@@ -180,7 +180,12 @@ msgstr "savehistory只能在Rgui和Rterm里有用"
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory只能在Rgui和Rterm有用"
 
-#: src/gnuwin32/extra.c:561 src/main/datetime.c:558 src/main/datetime.c:624
+#: src/gnuwin32/extra.c:505 src/unix/sys-std.c:965
+#, fuzzy
+msgid "invalid timestamp"
+msgstr "标签不对"
+
+#: src/gnuwin32/extra.c:576 src/main/datetime.c:558 src/main/datetime.c:624
 #: src/main/datetime.c:832 src/main/dotcode.c:191 src/main/errors.c:747
 #: src/main/errors.c:775 src/main/errors.c:874 src/main/errors.c:899
 #: src/main/errors.c:904 src/main/optimize.c:95 src/main/optimize.c:102
@@ -197,94 +202,95 @@ msgstr "loadhistory只能在Rgui和Rterm有用"
 #: src/main/scan.c:1572 src/main/scan.c:1578 src/main/scan.c:1812
 #: src/main/scan.c:1813 src/main/scan.c:1815 src/main/scan.c:1816
 #: src/main/scan.c:1817 src/main/scan.c:1818 src/main/scan.c:1819
-#: src/main/scan.c:1820 src/main/sort.c:723 src/main/sort.c:823
+#: src/main/scan.c:1820 src/main/sort.c:760 src/main/sort.c:860
 #: src/main/sysutils.c:147 src/main/util.c:844 src/main/util.c:849
 #: src/main/util.c:857 src/main/util.c:860 src/modules/X11/devX11.c:2464
 #: src/modules/X11/devX11.c:2491 src/modules/X11/devX11.c:2496
-#: src/modules/X11/devX11.c:2501 src/unix/sys-std.c:989
+#: src/modules/X11/devX11.c:2501 src/unix/sys-std.c:1012
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'值不对"
 
-#: src/gnuwin32/extra.c:616 src/gnuwin32/extra.c:626
+#: src/gnuwin32/extra.c:631 src/gnuwin32/extra.c:641
 msgid "incorrect argument"
 msgstr "变元不对"
 
-#: src/gnuwin32/extra.c:619
+#: src/gnuwin32/extra.c:634
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "愚蠢!: 你的机器有4Gb的地址上限"
 
-#: src/gnuwin32/extra.c:622
+#: src/gnuwin32/extra.c:637
 msgid "cannot decrease memory limit"
 msgstr "无法减少内存极限"
 
-#: src/gnuwin32/extra.c:856
-msgid "argument must be a character vector"
-msgstr "变元必需为字符向量"
+#: src/gnuwin32/extra.c:905
+#, fuzzy
+msgid "argument must be a character vector or a raw vector"
+msgstr "变元必需是长度为1的字符向量"
 
-#: src/gnuwin32/extra.c:871 src/main/connections.c:1444
+#: src/gnuwin32/extra.c:927 src/main/connections.c:1444
 msgid "Unable to open the clipboard"
 msgstr "无法打开裁剪板"
 
-#: src/gnuwin32/extra.c:876 src/main/connections.c:1448
+#: src/gnuwin32/extra.c:932 src/main/connections.c:1448
 msgid "Unable to write to the clipboard"
 msgstr "无法写入裁剪板"
 
-#: src/gnuwin32/extra.c:976 src/gnuwin32/extra.c:996
+#: src/gnuwin32/extra.c:1032 src/gnuwin32/extra.c:1052
 #, fuzzy
 msgid "'path' must be a character vector"
 msgstr "'what'必需是字符向量"
 
-#: src/gnuwin32/extra.c:1022 src/gnuwin32/extra.c:1100
+#: src/gnuwin32/extra.c:1078 src/gnuwin32/extra.c:1156
 msgid "'default' must be a character string"
 msgstr "'default'必需为字符串"
 
-#: src/gnuwin32/extra.c:1024 src/gnuwin32/extra.c:1102
+#: src/gnuwin32/extra.c:1080 src/gnuwin32/extra.c:1158
 msgid "'default' is overlong"
 msgstr "'default'太长"
 
-#: src/gnuwin32/extra.c:1033 src/gnuwin32/extra.c:1106
+#: src/gnuwin32/extra.c:1089 src/gnuwin32/extra.c:1162
 msgid "'caption' must be a character string"
 msgstr "'caption'必需为字符串"
 
-#: src/gnuwin32/extra.c:1035
+#: src/gnuwin32/extra.c:1091
 msgid "'multi' must be a logical value"
 msgstr "'multi'必需为逻辑值"
 
-#: src/gnuwin32/extra.c:1037
+#: src/gnuwin32/extra.c:1093
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'必需为正数"
 
-#: src/gnuwin32/extra.c:1194
+#: src/gnuwin32/extra.c:1250
 msgid "'title' must be a character string"
 msgstr "'title'必需为字符串"
 
-#: src/gnuwin32/extra.c:1226
+#: src/gnuwin32/extra.c:1282
 msgid "'which' must be length 1"
 msgstr "'which'的长度必需为1"
 
-#: src/gnuwin32/extra.c:1256
+#: src/gnuwin32/extra.c:1312
 msgid "invalid value of 'which'"
 msgstr "'which'的值不对"
 
-#: src/gnuwin32/extra.c:1258 src/gnuwin32/extra.c:1260
-#: src/gnuwin32/extra.c:1300
+#: src/gnuwin32/extra.c:1314 src/gnuwin32/extra.c:1316
+#: src/gnuwin32/extra.c:1356
 msgid "invalid device"
 msgstr "设备不对"
 
-#: src/gnuwin32/extra.c:1261
+#: src/gnuwin32/extra.c:1317
 msgid "requires SDI mode"
 msgstr "必需用SDI方式"
 
-#: src/gnuwin32/extra.c:1294
+#: src/gnuwin32/extra.c:1350
 msgid "invalid graphical device number"
 msgstr "图形设备号不对"
 
-#: src/gnuwin32/extra.c:1304
+#: src/gnuwin32/extra.c:1360
 msgid "bad device"
 msgstr "设备有错"
 
-#: src/gnuwin32/extra.c:1412 src/gnuwin32/extra.c:1420
+#: src/gnuwin32/extra.c:1468 src/gnuwin32/extra.c:1476
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs里的输入不对"
 
@@ -391,17 +397,17 @@ msgstr "警告: max-mem-size=%4.1fM太小，略过不用\n"
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr "警告: max-mem-size=%4.1fM太小，略过不用\n"
 
-#: src/gnuwin32/system.c:913 src/unix/system.c:304
+#: src/gnuwin32/system.c:913 src/unix/system.c:305
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 没有'%s'这样的选项\n"
 
-#: src/gnuwin32/system.c:938 src/unix/system.c:308
+#: src/gnuwin32/system.c:938 src/unix/system.c:309
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "变元’%s’略过不用\n"
 
-#: src/gnuwin32/system.c:956 src/unix/system.c:346
+#: src/gnuwin32/system.c:956 src/unix/system.c:347
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "你必需选'--save',’--no-save'或'--vanilla'其中的一个"
 
@@ -439,7 +445,7 @@ msgstr "第二个变元必需是字符串"
 msgid "second argument must be a list"
 msgstr "第二个变元必需是串列"
 
-#: src/include/Errormsg.h:42 src/main/eval.c:2611 src/main/subscript.c:228
+#: src/include/Errormsg.h:42 src/main/eval.c:2616 src/main/subscript.c:228
 #: src/main/subscript.c:333 src/main/subscript.c:336 src/main/subscript.c:436
 msgid "subscript out of bounds"
 msgstr "下标出界"
@@ -984,7 +990,7 @@ msgstr "只能给一个'name'属性"
 msgid "'name' must be non-null character"
 msgstr "'name'必需为非空字符"
 
-#: src/main/attrib.c:1112 src/main/attrib.c:1151 src/main/attrib.c:1238
+#: src/main/attrib.c:1112 src/main/attrib.c:1151 src/main/attrib.c:1240
 msgid "invalid type or length for slot name"
 msgstr "名字槽的类别或长度不对"
 
@@ -998,25 +1004,25 @@ msgstr "类别\"%2$s\"的目标对象中没有\"%1$s\"这样一个槽"
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "\"%1$s\"槽名不存在于\"%2$s\"类别目标对象中"
 
-#: src/main/attrib.c:1233
+#: src/main/attrib.c:1235
 msgid "formal classes cannot be used without the methods package"
 msgstr "一定要有方法程序包才能用正式类别"
 
-#: src/main/attrib.c:1244
+#: src/main/attrib.c:1246
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr "无法从没有槽的基本类别(\"%2$s\") 的目标对象中取得\"%1$s\"槽"
 
-#: src/main/attrib.c:1253
+#: src/main/attrib.c:1255
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr "目标对象的类别(\"%2$s\") 没有设定，因此不能从它那儿获取槽\"%1$s\" "
 
-#: src/main/attrib.c:1272
+#: src/main/attrib.c:1274
 msgid "invalid slot type"
 msgstr "槽的种类不对"
 
@@ -1036,7 +1042,7 @@ msgstr "正式变元'use.names'有重复"
 msgid "argument not a list"
 msgstr "变元不是串列"
 
-#: src/main/bind.c:874 src/main/eval.c:1841 src/main/eval.c:1851
+#: src/main/bind.c:874 src/main/eval.c:1846 src/main/eval.c:1856
 #: src/main/objects.c:278 src/main/objects.c:317 src/main/objects.c:671
 #: src/main/objects.c:689
 #, c-format
@@ -1060,12 +1066,12 @@ msgstr "矩阵的列数必需相符(见arg%d)"
 #: src/main/builtin.c:41 src/main/builtin.c:64 src/main/builtin.c:73
 #: src/main/builtin.c:199 src/main/builtin.c:222 src/main/builtin.c:252
 #: src/main/builtin.c:261 src/main/coerce.c:1316 src/main/connections.c:2015
-#: src/main/engine.c:2673 src/main/envir.c:870 src/main/envir.c:969
+#: src/main/engine.c:2679 src/main/envir.c:870 src/main/envir.c:969
 #: src/main/envir.c:1467 src/main/envir.c:1561 src/main/envir.c:1631
 #: src/main/envir.c:1762 src/main/envir.c:2360 src/main/envir.c:2411
 #: src/main/envir.c:2677 src/main/envir.c:2710 src/main/envir.c:2730
 #: src/main/envir.c:2752 src/main/envir.c:2786 src/main/envir.c:2806
-#: src/main/envir.c:3121 src/main/envir.c:3127 src/main/eval.c:3394
+#: src/main/envir.c:3121 src/main/envir.c:3127 src/main/eval.c:3399
 #: src/main/objects.c:177 src/main/objects.c:183 src/main/saveload.c:2028
 #: src/main/saveload.c:2281 src/main/saveload.c:2330 src/main/serialize.c:2147
 msgid "use of NULL environment is deprecated"
@@ -1398,7 +1404,7 @@ msgstr "无法强制改变成向量"
 msgid "list argument expected"
 msgstr "需要串列变元"
 
-#: src/main/coerce.c:1320 src/main/eval.c:3391 src/main/eval.c:3398
+#: src/main/coerce.c:1320 src/main/eval.c:3396 src/main/eval.c:3403
 msgid "invalid environment"
 msgstr "环境不对"
 
@@ -2210,7 +2216,7 @@ msgstr "变元长度为0"
 msgid "bad environment"
 msgstr "环境有错"
 
-#: src/main/deparse.c:358 src/main/eval.c:2480
+#: src/main/deparse.c:358 src/main/eval.c:2485
 #, c-format
 msgid "Object \"%s\" not found"
 msgstr "找不到这个目标对象\"%s\""
@@ -2517,57 +2523,57 @@ msgstr "行接合出行"
 msgid "out of memory while clipping polyline"
 msgstr "剪裁多重线的时候内存不够"
 
-#: src/main/engine.c:1567
+#: src/main/engine.c:1573
 #, c-format
 msgid "font face %d not supported for font family '%s'"
 msgstr "字模家族'%2$s'中字没有模面%1$d"
 
-#: src/main/engine.c:1824
+#: src/main/engine.c:1830
 msgid "no graphics device is active"
 msgstr "没有已待用的图形设备"
 
-#: src/main/engine.c:2156
+#: src/main/engine.c:2162
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "目前没有实现pch'%d'的值"
 
-#: src/main/engine.c:2179
+#: src/main/engine.c:2185
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "座标范围不对[GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2183
+#: src/main/engine.c:2189
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "座标范围不能是无限值[GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2221
+#: src/main/engine.c:2227
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.): new *lo =%g <%g = x1"
 
-#: src/main/engine.c:2223
+#: src/main/engine.c:2229
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up =%g >%g = x2"
 
-#: src/main/engine.c:2490
+#: src/main/engine.c:2496
 msgid "Display list redraw incomplete"
 msgstr "不完全显示串列刷新"
 
-#: src/main/engine.c:2669
+#: src/main/engine.c:2675
 msgid "'expr' argument must be an expression"
 msgstr "'expr'变元必需是表达式"
 
-#: src/main/engine.c:2671
+#: src/main/engine.c:2677
 msgid "'list' argument must be a list"
 msgstr "'list'变元必需是串列"
 
-#: src/main/engine.c:2677
+#: src/main/engine.c:2683
 msgid "'env' argument must be an environment"
 msgstr "'env'变元必需是环境"
 
-#: src/main/engine.c:2699 src/main/graphics.c:2417
+#: src/main/engine.c:2705 src/main/graphics.c:2417
 msgid "invalid graphics state"
 msgstr "图形狀態不对"
 
@@ -2630,7 +2636,7 @@ msgstr "... 串列不包含%d单元"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d所用的上下文出错, 找不到..."
 
-#: src/main/envir.c:1252 src/main/eval.c:351 src/main/eval.c:2483
+#: src/main/envir.c:1252 src/main/eval.c:351 src/main/eval.c:2488
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "缺少变元\"%s\",也没有缺省值"
@@ -2987,9 +2993,9 @@ msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr "评估嵌套太深：无穷递归/ options(expressions=)?"
 
-#: src/main/eval.c:341 src/main/eval.c:430 src/main/eval.c:1385
-#: src/main/eval.c:1434 src/main/eval.c:1488 src/main/eval.c:1708
-#: src/main/eval.c:3045 src/main/eval.c:3137
+#: src/main/eval.c:341 src/main/eval.c:430 src/main/eval.c:1390
+#: src/main/eval.c:1439 src/main/eval.c:1493 src/main/eval.c:1713
+#: src/main/eval.c:3050 src/main/eval.c:3142
 msgid "'...' used in an incorrect context"
 msgstr "'...'用在的上下文不对"
 
@@ -2998,15 +3004,15 @@ msgstr "'...'用在的上下文不对"
 msgid "object \"%s\" not found"
 msgstr "找不到这个目标对象\"%s\""
 
-#: src/main/eval.c:353 src/main/eval.c:2484
+#: src/main/eval.c:353 src/main/eval.c:2489
 msgid "argument is missing, with no default"
 msgstr "缺少变元, 也没有缺省值"
 
-#: src/main/eval.c:368 src/main/eval.c:2428
+#: src/main/eval.c:368 src/main/eval.c:2433
 msgid "recursive default argument reference"
 msgstr "缺省变元引用不能有递回"
 
-#: src/main/eval.c:426 src/main/eval.c:2993
+#: src/main/eval.c:426 src/main/eval.c:2998
 msgid "attempt to apply non-function"
 msgstr "不适用于非函数"
 
@@ -3040,218 +3046,218 @@ msgstr "变元长度为0"
 msgid "non-symbol loop variable"
 msgstr "非符号循环变数"
 
-#: src/main/eval.c:956
+#: src/main/eval.c:961
 msgid "invalid for() loop sequence"
 msgstr "for()循环顺序不对"
 
-#: src/main/eval.c:1085
+#: src/main/eval.c:1090
 msgid "'...' not allowed in return"
 msgstr "回覆值里不能有'...'"
 
-#: src/main/eval.c:1099
+#: src/main/eval.c:1104
 msgid "multi-argument returns are deprecated"
 msgstr "已经不再用多变元回覆值这一功能了"
 
-#: src/main/eval.c:1102
+#: src/main/eval.c:1107
 msgid "empty expression in return value"
 msgstr "回覆值里的表达式是空的"
 
-#: src/main/eval.c:1158
+#: src/main/eval.c:1163
 msgid "invalid (NULL) left side of assignment"
 msgstr "赋值公式左手不能是(NULL)值"
 
-#: src/main/eval.c:1180
+#: src/main/eval.c:1185
 msgid "target of assignment expands to non-language object"
 msgstr "赋值目标擴充到非语言目标对象"
 
-#: src/main/eval.c:1219
+#: src/main/eval.c:1224
 msgid "cannot do complex assignments in base namespace"
 msgstr "无法在基本名字空间里赋复数值"
 
-#: src/main/eval.c:1221
+#: src/main/eval.c:1226
 msgid "cannot do complex assignments in base environment"
 msgstr "无法在基本环境里赋复数值"
 
-#: src/main/eval.c:1234 src/main/eval.c:1252
+#: src/main/eval.c:1239 src/main/eval.c:1257
 msgid "invalid function in complex assignment"
 msgstr "复数赋值里的函数不对"
 
-#: src/main/eval.c:1236 src/main/eval.c:1254
+#: src/main/eval.c:1241 src/main/eval.c:1259
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "'%s'中的名字太长"
 
-#: src/main/eval.c:1328
+#: src/main/eval.c:1333
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "(do_set)赋值公式左手不对"
 
-#: src/main/eval.c:1343
+#: src/main/eval.c:1348
 msgid "invalid assignment left-hand side"
 msgstr "赋值公式左手不对"
 
-#: src/main/eval.c:1518
+#: src/main/eval.c:1523
 msgid "invalid formal argument list for \"function\""
 msgstr "\"function\"正式变元串列不对"
 
-#: src/main/eval.c:1561
+#: src/main/eval.c:1566
 msgid "numeric 'envir' arg not of length one"
 msgstr "数值'envir'变元的长度不是1"
 
-#: src/main/eval.c:1579 src/main/eval.c:1598
+#: src/main/eval.c:1584 src/main/eval.c:1603
 msgid "restarts not supported in 'eval'"
 msgstr "'eval'不支持重新启动"
 
-#: src/main/eval.c:1645
+#: src/main/eval.c:1650
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall'在封閉包外调用"
 
-#: src/main/eval.c:1702
+#: src/main/eval.c:1707
 msgid "value in '...' is not a promise"
 msgstr "'... '里的值不是允諾"
 
-#: src/main/eval.c:1895 src/main/objects.c:663
+#: src/main/eval.c:1900 src/main/objects.c:663
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "'%s'里调用的名字太长"
 
-#: src/main/eval.c:1916
+#: src/main/eval.c:1921
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "'%s'里的类属名字太长"
 
-#: src/main/eval.c:1948
+#: src/main/eval.c:1953
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "不可兼容的方法(\"%s\", \"%s\")对\"%s\""
 
-#: src/main/eval.c:2012
+#: src/main/eval.c:2017
 msgid "dispatch error"
 msgstr "分派错误"
 
-#: src/main/eval.c:2392
+#: src/main/eval.c:2397
 msgid "node stack overflow"
 msgstr "节点堆叠上溢"
 
-#: src/main/eval.c:2398
+#: src/main/eval.c:2403
 msgid "integer stack overflow"
 msgstr "整数堆叠上溢"
 
-#: src/main/eval.c:2466
+#: src/main/eval.c:2471
 msgid "Bad opcode"
 msgstr "op代码不对"
 
-#: src/main/eval.c:2613
+#: src/main/eval.c:2618
 msgid "not a vector object"
 msgstr "非向量目标对象"
 
-#: src/main/eval.c:2621 src/main/eval.c:2643 src/main/eval.c:2667
-#: src/main/eval.c:2691
+#: src/main/eval.c:2626 src/main/eval.c:2648 src/main/eval.c:2672
+#: src/main/eval.c:2696
 msgid "can only handle simple real vectors"
 msgstr "只能用简单的实数向量"
 
-#: src/main/eval.c:2630 src/main/eval.c:2677
+#: src/main/eval.c:2635 src/main/eval.c:2682
 msgid "not a simple vector"
 msgstr "非简单向量"
 
-#: src/main/eval.c:2647 src/main/eval.c:2695 src/main/subassign.c:909
+#: src/main/eval.c:2652 src/main/eval.c:2700 src/main/subassign.c:909
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "下标数目不对"
 
-#: src/main/eval.c:2658 src/main/eval.c:2709
+#: src/main/eval.c:2663 src/main/eval.c:2714
 msgid "not a simple matrix"
 msgstr "非简单矩阵"
 
-#: src/main/eval.c:2743
+#: src/main/eval.c:2748
 msgid "bytecode version mismatch; using eval"
 msgstr "位元組碼版本不配; 用eval"
 
-#: src/main/eval.c:2748
+#: src/main/eval.c:2753
 msgid "bytecode version is too old"
 msgstr "位元組碼版本太旧"
 
-#: src/main/eval.c:2749
+#: src/main/eval.c:2754
 msgid "bytecode version is too new"
 msgstr "位元組碼版本太新"
 
-#: src/main/eval.c:2754
+#: src/main/eval.c:2759
 msgid "byte code version mismatch"
 msgstr "位元組碼版本不配"
 
-#: src/main/eval.c:2770
+#: src/main/eval.c:2775
 msgid "missing value where logical needed"
 msgstr "需要逻辑值的地方不能有缺少值"
 
-#: src/main/eval.c:2771
+#: src/main/eval.c:2776
 msgid "argument of if(*) is not interpretable as logical"
 msgstr "if(*)的变元不能作为逻辑值来用"
 
-#: src/main/eval.c:2805
+#: src/main/eval.c:2810
 msgid "invalid sequence argument in for loop"
 msgstr "循环里的顺序变元不对"
 
-#: src/main/eval.c:2955 src/main/eval.c:2976 src/main/eval.c:3083
+#: src/main/eval.c:2960 src/main/eval.c:2981 src/main/eval.c:3088
 msgid "not a BUILTIN function"
 msgstr "非BUILTIN函数"
 
-#: src/main/eval.c:3071
+#: src/main/eval.c:3076
 msgid "bad function"
 msgstr "函数不对"
 
-#: src/main/eval.c:3104
+#: src/main/eval.c:3109
 msgid "not a SPECIAL function"
 msgstr "非SPECIAL函数"
 
-#: src/main/eval.c:3333
+#: src/main/eval.c:3338
 msgid "cannot find index for threaded code address"
 msgstr "找不到线程代码地址的索引"
 
-#: src/main/eval.c:3411
+#: src/main/eval.c:3416
 msgid "invalid symbol"
 msgstr "符号不对"
 
-#: src/main/eval.c:3455
+#: src/main/eval.c:3460
 msgid "argument is not a byte code object"
 msgstr "变元不是位元组码目标对象"
 
-#: src/main/eval.c:3478
+#: src/main/eval.c:3483
 msgid "bad file name"
 msgstr "文件名字不对"
 
-#: src/main/eval.c:3482 src/main/eval.c:3503
+#: src/main/eval.c:3487 src/main/eval.c:3508
 msgid "unable to open 'file'"
 msgstr "无法打开'file'"
 
-#: src/main/eval.c:3497 src/main/saveload.c:1921
+#: src/main/eval.c:3502 src/main/saveload.c:1921
 msgid "'file' must be non-empty string"
 msgstr "'file'必需是非空字符串"
 
-#: src/main/eval.c:3499 src/main/saveload.c:1923 src/main/saveload.c:2190
+#: src/main/eval.c:3504 src/main/saveload.c:1923 src/main/saveload.c:2190
 #: src/main/serialize.c:1722
 msgid "'ascii' must be logical"
 msgstr "'ascii’必需是逻辑值"
 
-#: src/main/eval.c:3528 src/main/eval.c:3535
+#: src/main/eval.c:3533 src/main/eval.c:3540
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_Compiled文件名字: 缓冲区太小"
 
-#: src/main/eval.c:3568
+#: src/main/eval.c:3573
 msgid "code must be a generic vector"
 msgstr "代码必需是向量类属"
 
-#: src/main/eval.c:3607
+#: src/main/eval.c:3612
 msgid "profile timer in use"
 msgstr "程序概要分析计时器在使用中"
 
-#: src/main/eval.c:3609
+#: src/main/eval.c:3614
 msgid "already byte code profiling"
 msgstr "已经在进行位元组码程序概要分析"
 
-#: src/main/eval.c:3627
+#: src/main/eval.c:3632
 msgid "setting profile timer failed"
 msgstr "程序概要分析计时器设制失败"
 
-#: src/main/eval.c:3644
+#: src/main/eval.c:3649
 msgid "not byte code profiling"
 msgstr "非位元组码程序概要分析"
 
@@ -3852,31 +3858,31 @@ msgstr "模型矩阵的%d项有问题: 没有指定的列"
 msgid "term names will be truncated"
 msgstr "项名字太长，被缩短了"
 
-#: src/main/names.c:924
+#: src/main/names.c:926
 msgid "string argument required"
 msgstr "需要字符串变元"
 
-#: src/main/names.c:932
+#: src/main/names.c:934
 msgid "no such primitive function"
 msgstr "没有这一原始函数"
 
-#: src/main/names.c:1045
+#: src/main/names.c:1047
 msgid "attempt to use zero-length variable name"
 msgstr "不能用0长度变数名"
 
-#: src/main/names.c:1047
+#: src/main/names.c:1049
 msgid "symbol print-name too long"
 msgstr "符号print-name太长了"
 
-#: src/main/names.c:1073
+#: src/main/names.c:1075
 msgid "invalid .Internal() argument"
 msgstr ".Internal()变元不对"
 
-#: src/main/names.c:1076
+#: src/main/names.c:1078
 msgid "invalid internal function"
 msgstr "内部函数不对"
 
-#: src/main/names.c:1078
+#: src/main/names.c:1080
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "没有\"%s\"这个内部函数"
@@ -4125,23 +4131,23 @@ msgstr "'vmmin'的初始值不能为无穷大"
 msgid "function cannot be evaluated at initial parameters"
 msgstr "无法用初始参数来评估函数"
 
-#: src/main/optim.c:875
+#: src/main/optim.c:872
 msgid "unknown 'type' in CG method of optim"
 msgstr "optim的CG方法中没有这一'type'"
 
-#: src/main/optim.c:888
+#: src/main/optim.c:885
 msgid "Function cannot be evaluated at initial parameters"
 msgstr "无法用初始参数来评估函数"
 
-#: src/main/optim.c:943
+#: src/main/optim.c:940
 msgid "unknown type in CG method of optim"
 msgstr "optim的CG方法中没有这一种类"
 
-#: src/main/optim.c:1028
+#: src/main/optim.c:1025
 msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
 msgstr "REPORT必需 > 0 (method = \"L-BFGS-B\")"
 
-#: src/main/optim.c:1052
+#: src/main/optim.c:1049
 msgid "L-BFGS-B needs finite values of 'fn'"
 msgstr "L-BFGS-B不能有'fn'的无限值"
 
@@ -5633,49 +5639,49 @@ msgstr "变数名字不对"
 msgid "only atomic vectors can be tested to be sorted"
 msgstr "只有基元向量才能被试着排序"
 
-#: src/main/sort.c:266 src/main/sort.c:727 src/main/sort.c:826
+#: src/main/sort.c:266 src/main/sort.c:764 src/main/sort.c:863
 msgid "'decreasing' must be TRUE or FALSE"
 msgstr "'increasing'必需是TRUE或是FALSE"
 
-#: src/main/sort.c:269 src/main/sort.c:481
+#: src/main/sort.c:269 src/main/sort.c:519
 msgid "only atomic vectors can be sorted"
 msgstr "只有基元向量才能被排序"
 
-#: src/main/sort.c:271 src/main/sort.c:483 src/main/sort.c:769
+#: src/main/sort.c:271 src/main/sort.c:521 src/main/sort.c:806
 msgid "raw vectors cannot be sorted"
 msgstr "无法排序原始向量"
 
-#: src/main/sort.c:490
+#: src/main/sort.c:528
 msgid "NA index"
 msgstr "NA索引"
 
-#: src/main/sort.c:492
+#: src/main/sort.c:530
 #, c-format
 msgid "index %d outside bounds"
 msgstr "索引%d在界限外"
 
-#: src/main/sort.c:736
+#: src/main/sort.c:773
 #, c-format
 msgid "argument %d is not a vector"
 msgstr "变元%d不是向量"
 
-#: src/main/sort.c:738
+#: src/main/sort.c:775
 msgid "argument lengths differ"
 msgstr "变元长度不同"
 
-#: src/main/sort.c:767
+#: src/main/sort.c:804
 msgid "argument is not an atomic vector"
 msgstr "变元不是基元向量"
 
-#: src/main/sort.c:778
+#: src/main/sort.c:815
 msgid "invalid ties.method for rank() [should never happen]"
 msgstr "rank()的ties.method不对[这是不应该发生的]"
 
-#: src/main/sort.c:833
+#: src/main/sort.c:870
 msgid "negative value in 'x'"
 msgstr "'x'里有负值"
 
-#: src/main/sort.c:844
+#: src/main/sort.c:881
 msgid "too large a range of values in 'x'"
 msgstr "'x'里的值的范围太大"
 
@@ -6829,29 +6835,29 @@ msgstr "norm_rand(): N01_kind:%d不对\n"
 msgid "wilcox allocation error %d"
 msgstr "wilcox分配错误%d"
 
-#: src/unix/dynload.c:149
+#: src/unix/dynload.c:141
 msgid ""
 "Explicit local dynamic loading not supported on this platform. Using default."
 msgstr "本系统不支持明晰本地动态载入。用缺席值。"
 
-#: src/unix/dynload.c:150
+#: src/unix/dynload.c:142
 msgid ""
 "Explicit global dynamic loading not supported on this platform. Using "
 "default."
 msgstr "本系统不支持明晰整体动态载入。用缺席值。"
 
-#: src/unix/dynload.c:151
+#: src/unix/dynload.c:143
 msgid ""
 "Explicit non-lazy dynamic loading not supported on this platform. Using "
 "default."
 msgstr "本系统不支持明晰非缓慢动态载入。用缺席值。"
 
-#: src/unix/dynload.c:152
+#: src/unix/dynload.c:144
 msgid ""
 "Explicit lazy dynamic loading not supported on this platform. Using default."
 msgstr "本系统不支持明晰缓慢动态载入。用缺席值。"
 
-#: src/unix/dynload.c:235
+#: src/unix/dynload.c:227
 msgid "cannot get working directory!"
 msgstr "找不到工作目录"
 
@@ -6938,7 +6944,7 @@ msgstr "没有历史功能"
 msgid "no history available to save"
 msgstr "没有可以保存的历史"
 
-#: src/unix/sys-std.c:1018
+#: src/unix/sys-std.c:1057
 msgid "Sys.sleep is not implemented on this system"
 msgstr "本系统没有实现Sys.sleep这一功能"
 
@@ -6964,22 +6970,22 @@ msgstr "本系统没有实现intern=TRUE这一功能"
 msgid "Sys.info() is not implemented on this system"
 msgstr "本系统没有实现Sys.info()这一功能"
 
-#: src/unix/system.c:241
+#: src/unix/system.c:242
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "警告: --gui或-g选项没有值，因此略过不用"
 
-#: src/unix/system.c:263
+#: src/unix/system.c:264
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "警告: 没有这种gui’%s', 用X11\n"
 
-#: src/unix/system.c:266
+#: src/unix/system.c:267
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "警告: 没有这种gui’%s', 因此什么都不用\n"
 
-#: src/unix/system.c:384
+#: src/unix/system.c:385
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: 只修改文件串列中的第一个单元"
 
@@ -6998,6 +7004,9 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
+
+#~ msgid "argument must be a character vector"
+#~ msgstr "变元必需为字符向量"
 
 #~ msgid ""
 #~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"

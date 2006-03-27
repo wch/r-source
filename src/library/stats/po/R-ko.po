@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-02-17 14:07\n"
+"POT-Creation-Date: 2006-03-27 15:42\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1868,6 +1868,10 @@ msgstr "spline: 최초와 마지막 y값이 다른 y[1]을 양쪽 모두를 위�
 
 msgid "splinefun: invalid interpolation method"
 msgstr "splinefun: 무효인 보간법입니다"
+
+#, fuzzy
+msgid "'deriv' must be between 0 and 3"
+msgstr "'p'는 0과 0.5의 사이에 없으면 되지 않습니다"
 
 msgid "stepfun: 'x' must be ordered increasingly"
 msgstr "stepfun: 'x'는 승순에 줄지어 있을 필요가 있습니다"

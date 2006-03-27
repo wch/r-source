@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-09 16:42\n"
+"POT-Creation-Date: 2006-03-27 15:42\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,6 +146,9 @@ msgstr ""
 msgid "Invalid 'grob' name(s)"
 msgstr ""
 
+msgid "Unable to coerce to gList"
+msgstr ""
+
 msgid "Only 'grobs' allowed in 'gList'"
 msgstr ""
 
@@ -269,6 +272,18 @@ msgstr ""
 msgid "invalid 'arrow' argument"
 msgstr ""
 
+msgid "It is invalid to specify both 'id' and 'id.lengths"
+msgstr ""
+
+msgid "'x' and 'y' must be same length"
+msgstr ""
+
+msgid "'x' and 'y' and 'id' must all be same length"
+msgstr ""
+
+msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
+msgstr ""
+
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr ""
 
@@ -282,18 +297,6 @@ msgid "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing
 msgstr ""
 
 msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-msgstr ""
-
-msgid "It is invalid to specify both 'id' and 'id.lengths"
-msgstr ""
-
-msgid "'x' and 'y' must be same length"
-msgstr ""
-
-msgid "'x' and 'y' and 'id' must all be same length"
-msgstr ""
-
-msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
 msgstr ""
 
 msgid "x and y must be units"
@@ -335,19 +338,13 @@ msgstr ""
 msgid "Invalid 'axis' or 'type'"
 msgstr ""
 
-msgid "No string supplied for 'strwidth' unit"
+msgid "No string supplied for 'strwidth/height' unit"
 msgstr ""
 
-msgid "No string supplied for 'strheight' unit"
-msgstr ""
-
-msgid "No 'grob' supplied for 'grobwidth' unit"
+msgid "No 'grob' supplied for 'grobwidth/height' unit"
 msgstr ""
 
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr ""
-
-msgid "No 'grob' supplied for 'grobheight' unit"
 msgstr ""
 
 msgid "Operator '%s' not meaningful for units"
