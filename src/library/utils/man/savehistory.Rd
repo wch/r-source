@@ -10,8 +10,12 @@
 \usage{
 loadhistory(file = ".Rhistory")
 savehistory(file = ".Rhistory")
+
 history(max.show = 25, reverse = FALSE)
-timestamp(stamp = date(), prefix="##------ ", suffix=" ------##", quiet=FALSE)
+
+timestamp(stamp = date(),
+          prefix = "##------ ", suffix = " ------##",
+          quiet = FALSE)
 }
 \arguments{
   \item{file}{The name of the file in which to save the history, or
@@ -60,7 +64,7 @@ timestamp(stamp = date(), prefix="##------ ", suffix=" ------##", quiet=FALSE)
 }
 \note{
   If you want to save the history (almost) every session, you can put a
-  call to \code{savehistory()} in \code{\link{.Last}}.
+  call to \code{savehistory()} in \code{\link{.Last}}.  See the examples.
 }
 \examples{\dontrun{
 .Last <- function()
