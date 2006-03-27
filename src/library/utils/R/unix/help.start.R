@@ -31,7 +31,7 @@ browseURL <- function(url, browser = getOption("browser"))
 {
     ## escape characters.  ' can occur in URLs, so we must use " to
     ## delimit the URL.  We need to escape $, but "`\ do not occur in
-    ## valid URLs (RFC 2396, on the W2C site).
+    ## valid URLs (RFC 2396, on the W3C site).
     shQuote <- function(string)
         paste('"', gsub("\\$", "\\\\$", string), '"', sep="")
 
@@ -42,7 +42,7 @@ browseURL <- function(url, browser = getOption("browser"))
        || (nchar(browser) == 0))
         stop("browser must be a non-empty character string")
 
-    if (.Platform$GUI=="AQUA" ||
+    if (.Platform$GUI == "AQUA" ||
         length(grep("^(localhost|):", Sys.getenv("DISPLAY"))) > 0)
       isLocal <- TRUE
     else
