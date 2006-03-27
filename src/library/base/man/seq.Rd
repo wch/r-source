@@ -46,7 +46,8 @@ seq(from)
   sequence \code{from, from+1, \dots, to}.
 
   The second form generates \code{from, from+by}, \ldots, up to the
-  sequence value less than or equal to \code{to}.
+  sequence value less than or equal to \code{to}.  Specifying
+  \code{to - from} and \code{by} of opposite signs is an error.
 
   The third generates a sequence of \code{length.out} equally spaced
   values from \code{from} to \code{to}.
