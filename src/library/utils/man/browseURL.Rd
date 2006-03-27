@@ -50,8 +50,15 @@ browseURL(url, browser = getOption("browser"))
 #ifdef windows
 \examples{
 \dontrun{browseURL("http://www.r-project.org")
-browseURL("file://c|/R/rw1060/doc/html/index.html",
+browseURL("file://c|/R/R-2.3.0/doc/html/index.html",
           browser="C:/Program Files/Netscape/Netscape/netscp.exe")
+}}
+#endif
+#ifdef unix
+\examples{
+\dontrun{## for KDE users who want to open files in a new tab
+option(browser="kfmclient newTab") 
+browseURL("http://www.r-project.org")
 }}
 #endif
 \keyword{file}
