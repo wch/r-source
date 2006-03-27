@@ -93,7 +93,7 @@ function(x, y,
     ## plot polygons
     if(plot) {
         plot(0, 0, xlim = xlim, ylim = ylim, type = "n", axes = FALSE,
-             xaxs = "i", yaxs = "i", xlab = xlab, ylab = ylab)
+             xaxs = "i", yaxs = "i", xlab = xlab, ylab = ylab, main = main)
         for(i in 1:(NROW(y1)-1)) {
             polygon(c(x1, rev(x1)), c(y1[i+1,], rev(y1[i,])), col = col[i], border = border)
         }
