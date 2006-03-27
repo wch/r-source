@@ -4120,3 +4120,9 @@ set.seed(1); r1 <- .Random.seed
 set.seed(2); r2 <- .Random.seed
 stopifnot(is.character(all.equal(r1, r2)))
 ## all.equal() gave NA in 2.2.1
+
+
+## support for raw indices in for() was added in 2.3.0
+xx <- as.raw(40:48)
+for(i in xx) print(i)
+## was error < 2.3.0

@@ -945,6 +945,11 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(v, 0, STRING_ELT(val, i));
 	    setVar(sym, v, rho);
 	    break;
+	case RAWSXP:
+	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
+	    RAW(v)[0] = RAW(val)[i];
+	    setVar(sym, v, rho);
+	    break;
 	case EXPRSXP:
 	case VECSXP:
 	    setVar(sym, VECTOR_ELT(val, i), rho);

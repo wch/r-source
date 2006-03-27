@@ -29,7 +29,8 @@ next
     only the first element is used.
   }
   \item{var}{A syntactical name for a variable.}
-  \item{seq}{An expression evaluating to a vector (including a list).}
+  \item{seq}{An expression evaluating to a vector (including a list and
+    an \link{expression}) or to a \link{pairlist} or \code{NULL}.}
   \item{expr, cons.expr, alt.expr}{
     An \emph{expression} in a formal sense.  This is either a
     simple expression or a so called \emph{compound expression}, usually
@@ -64,6 +65,8 @@ next
 
   \code{for}, \code{while} and \code{repeat} return the value of the
   last expression evaluated (or \code{NULL} if none was), invisibly.
+  \code{for} sets \code{var} to the last used element of \code{seq},
+  or to \code{NULL} if it was of length zero.
 
   \code{break} and \code{next} have value \code{NULL}, although it would
   be strange to look for a return value.

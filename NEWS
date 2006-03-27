@@ -378,6 +378,8 @@ NEW FEATURES
 	
     o	timestamp() adds a time stamp to the saved command history.
 
+    o	for() now supports raw vectors as the set of indices.
+
 
 DEPRECATED & DEFUNCT
 
