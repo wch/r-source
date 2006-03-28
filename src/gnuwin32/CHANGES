@@ -87,7 +87,7 @@ selected locale.  A Windows quirk means that window titles (which
 includes the legends for the buttons used in the Preferences dialog
 box) use a font in the system locale.
 
-Added a few mappings from Window locale names (e.g. "chinese", "chs",
+Added a few mappings from Windows locale names (e.g. "chinese", "chs",
 "cht", "ptb") to language names.  There is still scope for confusion:
 LC_ALL=es is Estonian, and LANGUAGE=es is Spanish.
 
@@ -100,7 +100,7 @@ least where supported by the shell).
 
 R CMD INSTALL --docs now has more options.
 
-LInks to package 'methods' are now fixed up, and R CMD INSTALL no
+Links to package 'methods' are now fixed up, and R CMD INSTALL no
 longer reports as missing links to 'datasets' and 'grDevices' which
 would be fixed up.
 
@@ -120,7 +120,7 @@ C-level changes
 
 This version of R expects a complete double-complex BLAS to be
 available, and so customized (e.g. ATLAS and ACML) versions of
-Rblas.dll needs to be rebuilt.  (The pre-compiled ones available on
+Rblas.dll need to be rebuilt.  (The pre-compiled ones available on
 CRAN have been updated.)
 
 The ACML optimized BLAS can be used for LAPACK: see the 'R
