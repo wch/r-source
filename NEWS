@@ -893,6 +893,9 @@ BUG FIXES
     o	anova.mlm() had its colnames mangled by data.frame() (needed
 	check.names=FALSE).
 
+    o	summary.glm() gave an NA estimate of dispersion for fits with
+	zero weights.  (PR#8720)
+
 
 
 

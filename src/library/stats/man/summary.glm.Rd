@@ -59,7 +59,8 @@
   If \code{dispersion} is not supplied or \code{NULL},
   the dispersion is taken as \code{1} for the \code{binomial} and
   \code{Poisson} families, and otherwise estimated by the residual
-  Chisquared statistic divided by the residual degrees of freedom.
+  Chisquared statistic (calculated from cases with non-zero weights)
+  divided by the residual degrees of freedom.
 
   \code{summary} can be used with Gaussian \code{glm} fits to handle the
   case of a linear regression with known error variance, something not

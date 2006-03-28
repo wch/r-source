@@ -535,7 +535,7 @@ summary.glm <- function(object, dispersion = NULL,
                 est.disp <- TRUE
 		if(any(object$weights==0))
 		    warning("observations with zero weight not used for calculating dispersion")
-		sum(object$weights*object$residuals^2)/ df.r
+		sum((object$weights*object$residuals^2)[object$weights > 0])/ df.r
 	    } else {
                 est.disp <- TRUE
                 NaN

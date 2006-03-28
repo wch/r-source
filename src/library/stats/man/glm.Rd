@@ -152,7 +152,8 @@ glm.fit(x, y, weights = rep(1, nobs),
 
   \item{coefficients}{a named vector of coefficients}
   \item{residuals}{the \emph{working} residuals, that is the residuals
-    in the final iteration of the IWLS fit.}
+    in the final iteration of the IWLS fit.  Since cases with zero
+    weights are omitted, their working residuals are \code{NA}.}
   \item{fitted.values}{the fitted mean values, obtained by transforming
     the linear predictors by the inverse of the link function.}
   \item{rank}{the numeric rank of the fitted linear model.}

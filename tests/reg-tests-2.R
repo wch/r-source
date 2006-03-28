@@ -1767,3 +1767,12 @@ options(op)
 ## row names in as.table (PR#8652)
 as.table(matrix(1:60, ncol=2))
 ## rows past 26 had NA row names
+
+
+## summary on a glm with zero weights and estimated dispersion (PR#8720)
+y <- rnorm(10)
+x <- 1:10
+w <- c(rep(1,9), 0)
+summary(glm(y ~ x, weights = w))
+summary(glm(y ~ x, subset = w > 0))
+## has NA dispersion in 2.2.1

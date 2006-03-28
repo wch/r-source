@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-03-04 r37473)
+Version 2.3.0 alpha (2006-03-27 r37590)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -5065,4 +5065,57 @@ B1 28 58
 C1 29 59
 D1 30 60
 > ## rows past 26 had NA row names
+> 
+> 
+> ## summary on a glm with zero weights and estimated dispersion (PR#8720)
+> y <- rnorm(10)
+> x <- 1:10
+> w <- c(rep(1,9), 0)
+> summary(glm(y ~ x, weights = w))
+
+Call:
+glm(formula = y ~ x, weights = w)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.7806  -0.1416   0.1863   0.5690   1.2057  
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)  -0.7532     0.7862  -0.958    0.370
+x             0.1311     0.1397   0.938    0.379
+
+(Dispersion parameter for gaussian family taken to be 1.17125)
+
+    Null deviance: 9.2298  on 8  degrees of freedom
+Residual deviance: 8.1988  on 7  degrees of freedom
+AIC: Inf
+
+Number of Fisher Scoring iterations: 2
+
+Warning message:
+observations with zero weight not used for calculating dispersion in: summary.glm(glm(y ~ x, weights = w)) 
+> summary(glm(y ~ x, subset = w > 0))
+
+Call:
+glm(formula = y ~ x, subset = w > 0)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.7806  -0.1582   0.3726   0.5896   1.2057  
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)  -0.7532     0.7862  -0.958    0.370
+x             0.1311     0.1397   0.938    0.379
+
+(Dispersion parameter for gaussian family taken to be 1.17125)
+
+    Null deviance: 9.2298  on 8  degrees of freedom
+Residual deviance: 8.1988  on 7  degrees of freedom
+AIC: 30.702
+
+Number of Fisher Scoring iterations: 2
+
+> ## has NA dispersion in 2.2.1
 > 

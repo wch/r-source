@@ -1,6 +1,6 @@
 \name{factanal}
 \alias{factanal}
-\alias{factanal.fit.mle}
+%\alias{factanal.fit.mle}
 \encoding{latin1}
 \title{Factor Analysis}
 \description{
