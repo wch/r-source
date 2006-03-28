@@ -1985,10 +1985,11 @@ on most @R{} platforms (including those used by the @acronym{CRAN}
 maintainers), but 64-bit on many modern Unix and Linux platforms.  It is
 rather unlikely that the use of @code{long} in C code has been thought
 through: if you need a longer type than @code{int} you should use a
-configure test for @code{long long} and typedef your own type to be
-@code{long} or @code{long long}, or use a suitable type (such as
-@code{size_t}).  Note that @code{integer} in @acronym{FORTRAN}
-corresponds to @code{int} in C on all @R{} platforms.
+configure test for a C99 type such as @code{int_fast64_t} (and failing
+that, @code{long long}) and typedef your own type to be @code{long} or
+@code{long long}, or use another suitable type (such as @code{size_t}).
+Note that @code{integer} in @acronym{FORTRAN} corresponds to @code{int}
+in C on all @R{} platforms.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
