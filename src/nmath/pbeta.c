@@ -39,7 +39,7 @@
 attribute_hidden
 double pbeta_raw(double x, double pin, double qin, int lower_tail, int log_p)
 {
-    double x1 = 1 - x, w, wc;
+    double x1 = 0.5 - x + 0.5, w, wc;
     int ierr;
     bratio(pin, qin, x, x1, &w, &wc, &ierr, log_p);
     if(ierr)
