@@ -47,7 +47,7 @@ incorrectly before, since Windows' stat call only supports smaller files).
 The installer executable now has the file version information set
 appropriately.
 
-The Dll version number is now 2.xy.svn_revision.
+The DLL version number is now 2.xy.svn_revision.
 
 There is now aggressive protection of the setting of the FPU control word: it
 is reset to 64-bit mantissa and rounding mode before evaluating every
@@ -59,6 +59,10 @@ files as "S files".
 
 readClipboard() and writeClipboard() now support formats other than text.
 A new function getClipboardFormats() reports on available formats.
+
+The Rgui console now support '\r' in output as a non-destructive
+return to the left margin in the same way as Rterm (it was previously
+ignored).
 
 
 Internationalization
@@ -159,6 +163,8 @@ names are now limited to 500 (not 50) bytes.
 
 Several fixes to Rproxy have been submitted by Thomas Baier, so it 
 handles more types of objects.
+
+Outputting \b in Rgui deleted the last byte and not the last character.
 
 
 
