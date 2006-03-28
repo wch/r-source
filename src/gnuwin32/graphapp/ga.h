@@ -3,7 +3,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file ga.h
  *  Copyright (C) 1998--1999  Guido Masarotto
- *  Copyright (C) 2004-5      The R Foundation
+ *  Copyright (C) 2004--2006   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -85,7 +85,8 @@ void    askchangedir();
 char *	askcdstring(char *question, char *default_string);
 char *	askfilesavewithdir(char *title, char *default_name, char *dir);
 char *  askfilenames(char *title, char *default_name, int multi,
-			       char *filters, int filterindex, char *strbuf, int bufsize);
+			       char *filters, int filterindex, char *strbuf, int bufsize,
+			       char *dir);
 int	    countFilenames(char *strbuf); /* Note that first name is path when there are multiple names */
 
 /*  rgb.c */

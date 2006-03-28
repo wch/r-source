@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005	      The R Development Core Team
+ *  Copyright (C) 2005--2006  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1107,7 +1107,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     *list = '\0'; /* no initialization */
     askfilenames(CHAR(STRING_ELT(caption, 0)), path,
 		 multi, cfilters, filterindex,
-                 list, 65500);  /* list declared larger to protect against overwrites */
+                 list, 65500, NULL);  /* list declared larger to protect against overwrites */
 
     if(!multi) {
 	/* only one filename possible */

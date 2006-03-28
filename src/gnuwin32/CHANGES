@@ -60,9 +60,12 @@ files as "S files".
 readClipboard() and writeClipboard() now support formats other than text.
 A new function getClipboardFormats() reports on available formats.
 
-The Rgui console now support '\r' in output as a non-destructive
+The Rgui console now supports '\r' in output as a non-destructive
 return to the left margin in the same way as Rterm (it was previously
 ignored).
+
+The "Edit|GUI preferences..." dialog now allows Rconsole files to be 
+loaded as well as saved.
 
 
 Internationalization

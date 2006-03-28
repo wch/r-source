@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1998--2005  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004--2005  The R Foundation
+ *  Copyright (C) 2004--2006  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
 #endif
 #include "console.h"
 #include "rui.h"
-#include "opt.h"
+#include "preferences.h"
 #include <Rversion.h>
 #include "getline/getline.h"  /* for gl_load/savehistory */
 #include <Startup.h>          /* for SA_DEFAULT */
@@ -637,227 +637,79 @@ static void menuact(control m)
 
 #define MCHECK(m) {if(!(m)) {del(RConsole); return 0;}}
 
-/* This file will always be ASCII */
 void readconsolecfg()
 {
-    int   consoler, consolec, consolex, consoley, pagerrow, pagercol,
-	multiplewin, widthonresize;
-    int   bufbytes, buflines;
-    rgb   consolebg, consolefg, consoleuser, highlight ;
-    int   ok, fnchanged, done, cfgerr;
-    char  fn[128] = "FixedFont";
+    char  fn[128];
     int   sty = Plain;
-    int   pointsize = 12;
     char  optf[PATH_MAX];
-    char *opt[2];
+    
+    struct structGUI gui;
 
-    consoler = 32;
-    consolec = 90;
-    consolex = consoley = 0;
-    consolebg = White;
-    consolefg = Black;
-    consoleuser = gaRed;
-    highlight = DarkRed;
-    pagerrow = 25;
-    pagercol = 80;
-    multiplewin = 0;
-    bufbytes = 64*1024;
-    buflines = 8*1024;
-    widthonresize = 1;
+    gui.crows = 32;
+    gui.ccols = 90;
+    gui.cx = gui.cy = 0;
+    gui.grx = Rwin_graphicsx;
+    gui.gry = Rwin_graphicsy;
+    gui.bg = White;
+    gui.fg = Black;
+    gui.user = gaRed;
+    gui.hlt = DarkRed;
+    gui.prows = 25;
+    gui.pcols = 80;
+    gui.pagerMultiple = 0;
+    gui.cbb = 64*1024;
+    gui.cbl = 8*1024;
+    gui.setWidthOnResize = 1;
+    strcpy(gui.font, "FixedFont");
+    strcpy(gui.style, "normal");
+    gui.tt_font = 0;
+    gui.pointsize = 12;
+    
 #ifdef USE_MDI
-    if (MDIset == 1)
-	RguiMDI |= RW_MDI;
-    if (MDIset == -1)
-	RguiMDI &= ~RW_MDI;
-    MDIsize = rect(0, 0, 0, 0);
+    if (MDIset == 1)  RguiMDI |= RW_MDI;
+    if (MDIset == -1) RguiMDI &= ~RW_MDI;
+
+    gui.toolbar = ((RguiMDI & RW_TOOLBAR) != 0);
+    gui.statusbar = ((RguiMDI & RW_STATUSBAR) != 0);
+    gui.MDI = ((RguiMDI & RW_MDI) != 0);
+    
+    gui.MDIsize = rect(0, 0, 0, 0);
 #endif
-    sprintf(optf, "%s/RConsole", getenv("R_USER"));
-    if (!optopenfile(optf)) {
-	sprintf(optf, "%s/etc/RConsole", getenv("R_HOME"));
-	if (!optopenfile(optf))
-	    return;
-    }
-    cfgerr = 0;
-    fnchanged = 0;
-    while ((ok = optread(opt, '='))) {
-	done = 0;
-	if (ok == 2) {
-	    if (!strcmp(opt[0], "font")) {
-		if(strlen(opt[1]) > 127) opt[1][127] = '\0';
-		strcpy(fn, opt[1]);
-		fnchanged = 1;
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "points")) {
-		pointsize = atoi(opt[1]);
-		fnchanged = 1;
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "style")) {
-		fnchanged = 1;
-		if (!strcmp(opt[1], "normal")) {
-		    sty = Plain;
-		    done = 1;
-		}
-		if (!strcmp(opt[1], "bold")) {
-		    sty = Bold;
-		    done = 1;
-		}
-		if (!strcmp(opt[1], "italic")) {
-		    sty = Italic;
-		    done = 1;
-		}
-	    }
-	    if (!strcmp(opt[0], "rows")) {
-		consoler = atoi(opt[1]);
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "columns")) {
-		consolec = atoi(opt[1]);
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "xconsole")) {
-		consolex = atoi(opt[1]);
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "yconsole")) {
-		consoley = atoi(opt[1]);
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "xgraphics")) {
-		Rwin_graphicsx = atoi(opt[1]);
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "ygraphics")) {
-		Rwin_graphicsy = atoi(opt[1]);
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "pgrows")) {
-		pagerrow = atoi(opt[1]);
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "pgcolumns")) {
-		pagercol = atoi(opt[1]);
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "pagerstyle")) {
-		if (!strcmp(opt[1], "singlewindow"))
-		    multiplewin = 0;
-		else
-		    multiplewin = 1;
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "bufbytes")) {
-		bufbytes = atoi(opt[1]);
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "buflines")) {
-		buflines = atoi(opt[1]);
-		done = 1;
-	    }
-#ifdef USE_MDI
-	    if (!strcmp(opt[0], "MDI")) {
-		if (!MDIset && !strcmp(opt[1], "yes"))
-		    RguiMDI |= RW_MDI;
-		else if (!MDIset && !strcmp(opt[1], "no"))
-		    RguiMDI &= ~RW_MDI;
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "toolbar")) {
-		if (!strcmp(opt[1], "yes"))
-		    RguiMDI |= RW_TOOLBAR;
-		else if (!strcmp(opt[1], "no"))
-		    RguiMDI &= ~RW_TOOLBAR;
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "statusbar")) {
-		if (!strcmp(opt[1], "yes"))
-		    RguiMDI |= RW_STATUSBAR;
-		else if (!strcmp(opt[1], "no"))
-		    RguiMDI &= ~RW_STATUSBAR;
-		done = 1;
-	    }
-	    if (!strcmp(opt[0], "MDIsize")) { /* wxh+x+y */
-		int x=0, y=0, w=0, h=0, sign;
-		char *p = opt[1];
-
-		if(*p == '-') {sign = -1; p++;} else sign = +1;
-		for(w=0; isdigit(*p); p++) w = 10*w + (*p - '0');
-		w *= sign;
-		p++;
-
-		if(*p == '-') {sign = -1; p++;} else sign = +1;
-		for(h=0; isdigit(*p); p++) h = 10*h + (*p - '0');
-		h *= sign;
-
-		if(*p == '-') sign = -1; else sign = +1;
-		p++;
-		for(x=0; isdigit(*p); p++) x = 10*x + (*p - '0');
-		x *= sign;
-		if(*p == '-') sign = -1; else sign = +1;
-		p++;
-		for(y=0; isdigit(*p); p++) y = 10*y + (*p - '0');
-		y *= sign;
-
-		MDIsize = rect(x, y, w, h);
-		done = 1;
-	    }
-#endif
-	    if (!strcmp(opt[0], "background")) {
-		if (!strcmpi(opt[1], "Windows"))
-		    consolebg = myGetSysColor(COLOR_WINDOW);
-		else consolebg = nametorgb(opt[1]);
-		if (consolebg != Transparent)
-		    done = 1;
-	    }
-	    if (!strcmp(opt[0], "normaltext")) {
-		if (!strcmpi(opt[1], "Windows"))
-		    consolefg = myGetSysColor(COLOR_WINDOWTEXT);
-		else consolefg = nametorgb(opt[1]);
-		if (consolefg != Transparent)
-		    done = 1;
-	    }
-	    if (!strcmp(opt[0], "usertext")) {
-		if (!strcmpi(opt[1], "Windows"))
-		    consoleuser = myGetSysColor(COLOR_ACTIVECAPTION);
-		else consoleuser = nametorgb(opt[1]);
-		if (consoleuser != Transparent)
-		    done = 1;
-	    }
-	    if (!strcmp(opt[0], "highlight")) {
-		if (!strcmpi(opt[1], "Windows"))
-		    highlight = myGetSysColor(COLOR_ACTIVECAPTION);
-		else highlight = nametorgb(opt[1]);
-		if (highlight != Transparent)
-		    done = 1;
-	    }
-	    if (!strcmp(opt[0], "setwidthonresize")) {
-		if (!strcmp(opt[1], "yes"))
-		    widthonresize = 1;
-		else if (!strcmp(opt[1], "no"))
-		    widthonresize = 0;
-		done = 1;
-	    }
-	}
-	if (!done) {
-	    char  buf[128];
-
-	    snprintf(buf, 128, G_("Error at line %d of file %s"),
-		     optline(), optfile());
-	    askok(buf);
-	    cfgerr = 1;
+    sprintf(optf, "%s/Rconsole", getenv("R_USER"));
+    if (!loadRconsole(&gui, optf)) {
+	sprintf(optf, "%s/etc/Rconsole", getenv("R_HOME"));
+	if (!loadRconsole(&gui, optf)) {
+	    app_cleanup();
+	    RConsole = NULL;
+	    exit(10);
 	}
     }
-    if (cfgerr) {
-	app_cleanup();
-	RConsole = NULL;
-	exit(10);
-    }
-    setconsoleoptions(fn, sty, pointsize, consoler, consolec,
-		      consolex, consoley,
-		      consolefg, consoleuser, consolebg, highlight,
-		      pagerrow, pagercol, multiplewin, widthonresize,
-		      bufbytes, buflines);
+    if (gui.tt_font) { 
+    	strcpy(fn, "TT ");
+    	strcpy(fn+3, gui.font);
+    } else strcpy(fn, gui.font);
+    
+    MDIsize = gui.MDIsize;
+    
+    if (gui.MDI)  RguiMDI |= RW_MDI;
+    else          RguiMDI &= ~RW_MDI;
+    if (gui.toolbar) RguiMDI |= RW_TOOLBAR;
+    else	     RguiMDI &= ~RW_MDI;
+    if (gui.statusbar) RguiMDI |= RW_STATUSBAR;
+    else	       RguiMDI &= ~RW_STATUSBAR;
+    
+    if (!strcmp(gui.style, "normal")) sty = Plain;
+    if (!strcmp(gui.style, "bold")) sty = Bold;
+    if (!strcmp(gui.style, "italic")) sty = Italic;
+    
+    Rwin_graphicsx = gui.grx;
+    Rwin_graphicsy = gui.gry;
+
+    setconsoleoptions(fn, sty, gui.pointsize, gui.crows, gui.ccols,
+		      gui.cx, gui.cy,
+		      gui.fg, gui.user, gui.bg, gui.hlt,
+		      gui.prows, gui.pcols, gui.pagerMultiple, gui.setWidthOnResize,
+		      gui.cbb, gui.cbl);
 }
 
 static void dropconsole(control m, char *fn)

@@ -5,6 +5,8 @@
  *  Version 2.4 (c) Lachlan Patrick 1996-1998.
  *  This header file is designed to be platform-independent.
  *
+ *  Copyright 2006 	The R Foundation
+ *
  */
 
 /*
@@ -703,6 +705,7 @@ int 	askyesnocancel(char *question);
 char *	askstring(char *question, char *default_string);
 char *	askpassword(char *question, char *default_string);
 char *	askfilename(char *title, char *default_name);
+char *  askfilenamewithdir(char *title, char *default_name, char *dir);
 char *	askfilesave(char *title, char *default_name);
 char *	askUserPass(char *title);
 
