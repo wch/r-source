@@ -896,6 +896,9 @@ BUG FIXES
     o	summary.glm() gave an NA estimate of dispersion for fits with
 	zero weights.  (PR#8720)
 
+    o	qhyper() had too small a tolerance for right-continuity on
+	some platforms so that was not always an inverse to phyper.
+
 
 
 

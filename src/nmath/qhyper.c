@@ -68,7 +68,7 @@ double qhyper(double p, double NR, double NB, double n,
     if(!lower_tail || log_p) {
 	p = R_DT_qIv(p);
     }
-    p *= 1 - 64*DBL_EPSILON;
+    p *= 1 - 1000*DBL_EPSILON; /* was 64, but failed on FreeBSD sometimes */
     sum = small_N ? term : exp(term);
 
     while(sum < p && xr < xend) {
