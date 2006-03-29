@@ -64,15 +64,17 @@ BUG FIXES
 	the upper scope had different orders for the main effects.
 	(Another manifestation of PR#7842.)
 
-    o	The "lm" method of drop1 was giving incorrect results for
-	weighted fits (since deviance.lm was called on a non-lm object).
+    o	The "lm" method of drop1() was giving incorrect results for
+	weighted fits (since deviance.lm() was called on a non-"lm" object).
 
     o	dotchart() was miscalculating the space for the labels in the
 	left margin.  (PR#8681)
 
     o	r <- glm(.....); all.equal(r,r) # now gives TRUE instead of an error
     
-    o	plot.acf() was miscalculating the ylim value for the plot.  (PR#8705)
+    o	plot.acf() with a multiple time series was sometimes
+	miscalculating the 'ylim' value for the plot after the first.
+	(PR#8705)
 
 
 
@@ -119,7 +121,7 @@ DEPRECATED & DEFUNCT
     o	The 'vfont' argument of axis() and mtext() is deprecated
 	(it currently warns and does nothing).
 
-    o   The function mauchley.test() is deprecated (was a misspelling)
+    o	The function mauchley.test() is deprecated (was a misspelling)
 	and replaced by mauchly.test()
 
 
@@ -150,7 +152,7 @@ BUG FIXES
     o	The 255th character in an 8-bit character set was not handled
 	correctly as a letter on some platforms where C char is
 	signed: for example it was printed as \377 and not allowed in
-	variable names.  (Spotted by Alexey Shipunov in Russian
+	variable names.	 (Spotted by Alexey Shipunov in Russian
 	encodings.)
 
     o	Conversion from POSIXct to POSIXlt is done more accurately
@@ -196,7 +198,7 @@ BUG FIXES
 	a matrix.
 
     o	getGraphicsEvent() would cause memory corruption if passed an
-    	empty prompt.
+	empty prompt.
 
     o	qr() and chol() now pivot the colnames of the result when
 	pivoting is used.  (PR#8258)
