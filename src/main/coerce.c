@@ -1218,6 +1218,11 @@ SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
     }
     else if (isSymbol(u) && type == SYMSXP)
 	return u;
+    else if (isSymbol(u) && type == VECSXP) {
+	v = allocVector(VECSXP, 1);
+	SET_VECTOR_ELT(v, 0, u);
+	return v;
+    }
     else errorcall(call, _("cannot coerce to vector"));
     return u;/* -Wall */
 }

@@ -4131,3 +4131,8 @@ for(i in xx) print(i)
 ## atan2 with one complex argument
 atan2(1, 1i)
 ## was error in 2.2.1
+
+
+## as.list on a symbol, for S-compatibility
+as.list(as.name("data.frame"))
+## was error in 2.2.1

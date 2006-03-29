@@ -330,9 +330,9 @@ NEW FEATURES
 	object in the arguments to setOldClass().
 
     o	A new heuristic test, seemsS4Object() is supplied, along with a
-	similar C-level test, R_seemsS4Object(object).	The test
-	detects probable S4 objects by their class's attribute. See the help
-	page.
+	similar C-level test, R_seemsS4Object(object). The test
+	detects probable S4 objects by their class's attribute. See
+	the help page.
 
     o	The implementation of trace() has beem made more general by
 	calling a function to do the trace interaction, and recover()
@@ -381,7 +381,10 @@ NEW FEATURES
 
     o	for() now supports raw vectors as the set of indices.
 
-    o	atan2 now allows one complex and one numeric argument.
+    o	atan2() now allows one complex and one numeric argument.
+
+    o	as.list() now accepts symbols (as given by as.symbol() aka
+	as.name()).
 
 
 DEPRECATED & DEFUNCT
@@ -900,7 +903,7 @@ BUG FIXES
 	zero weights.  (PR#8720)
 
     o	qhyper() had too small a tolerance for right-continuity on
-	some platforms so that was not always an inverse to phyper.
+	some platforms so was not always an inverse to phyper().
 
 
 
@@ -970,15 +973,17 @@ BUG FIXES
 	the upper scope had different orders for the main effects.
 	(Another manifestation of PR#7842.)
 
-    o	The "lm" method of drop1 was giving incorrect results for
-	weighted fits (since deviance.lm was called on a non-lm object).
+    o	The "lm" method of drop1() was giving incorrect results for
+	weighted fits (since deviance.lm() was called on a non-"lm" object).
 
     o	dotchart() was miscalculating the space for the labels in the
 	left margin.  (PR#8681)
 
     o	r <- glm(.....); all.equal(r,r) # now gives TRUE instead of an error
     
-    o	plot.acf() was miscalculating the ylim value for the plot.  (PR#8705)
+    o	plot.acf() with a multiple time series was sometimes
+	miscalculating the 'ylim' value for the plot after the first.
+	(PR#8705)
 
 
 
