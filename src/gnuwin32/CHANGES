@@ -62,7 +62,8 @@ A new function getClipboardFormats() reports on available formats.
 
 The Rgui console now supports '\r' in output as a non-destructive
 return to the left margin in the same way as Rterm (it was previously
-ignored).
+ignored).  Note that copy/cut of overtyped output will not necessarily
+pick up the visible layer of text.
 
 The "Edit|GUI preferences..." dialog now allows Rconsole files to be 
 loaded as well as saved.
