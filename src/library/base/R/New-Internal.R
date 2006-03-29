@@ -94,14 +94,15 @@ deparse <-
     .Internal(deparse(expr, width.cutoff, backtick, opts))
 }
 
-do.call <- function(what, args, quote=FALSE) {
+do.call <- function(what, args, quote = FALSE, envir = parent.frame())
+{
     if (!is.list(args))
 	stop("second argument must be a list")
     if (quote) {
 	enquote <- function(x) as.call(list(as.name("quote"), x))
 	args <- lapply(args, enquote)
     }
-    .Internal(do.call(what,args))
+    .Internal(do.call(what, args, envir))
 }
 
 drop <- function(x).Internal(drop(x))

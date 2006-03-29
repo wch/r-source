@@ -456,7 +456,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"format.info",	do_formatinfo,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"cat",		do_cat,		0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"call",	do_call,	0,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"do.call",	do_docall,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"do.call",	do_docall,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"as.call",	do_ascall,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"type.convert",do_typecvt,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"as.environment",do_as_environment,0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},

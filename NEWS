@@ -386,6 +386,8 @@ NEW FEATURES
     o	as.list() now accepts symbols (as given by as.symbol() aka
 	as.name()).
 
+    o	do.call) gains an 'envir' argument.
+
 
 DEPRECATED & DEFUNCT
 
