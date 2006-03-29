@@ -17,7 +17,7 @@
 \usage{
 save(\dots, list = character(0),
      file = stop("'file' must be specified"),
-     ascii = FALSE, version = NULL, envir = parent.frame(), 
+     ascii = FALSE, version = NULL, envir = parent.frame(),
      compress = FALSE)
 
 save.image(file = ".RData", version = NULL, ascii = FALSE,
@@ -33,16 +33,15 @@ sys.save.image(name)
   \item{file}{a connection or the name of the file where the data will be
     saved.  Must be a file name for workspace format version 1.}
   \item{ascii}{if \code{TRUE}, an ASCII representation of the data is
-    written.  This is useful for transporting data between machines of
-    different types.  The default value of \code{ascii} is \code{FALSE}
-    which leads to a more compact binary file being written.}
+    written.  The default value of \code{ascii} is \code{FALSE} which
+    leads to a more compact binary file being written.}
   \item{version}{the workspace format version to use.  \code{NULL}
     specifies the current default format.  The version used from \R
     0.99.0 to \R 1.3.1 was version 1.  The default format as from \R
     1.4.0 is version 2.}
   \item{envir}{environment to search for objects to be saved.}
   \item{compress}{logical specifying whether saving to a named file is to
-    use compression. Ignored when \code{file} is a connection and for
+    use compression.  Ignored when \code{file} is a connection and for
     workspace format version 1.}
   \item{safe}{logical.  If \code{TRUE}, a temporary file is used for
     creating the saved workspace.  The temporary file is renamed to
@@ -55,14 +54,15 @@ sys.save.image(name)
 \details{
   All \R platforms use the XDR representation of binary objects in
   binary save-d files, and these are portable across all \R platforms.
+  (ASCII saves used to be useful for moving data between platforms but
+  are now only of historical interest.)
 
   Default values for the \code{ascii}, \code{compress}, \code{safe} and
   \code{version} arguments can be modified with
   the \code{save.defaults} option (used both by \code{save} and
   \code{save.image}). If a \code{save.image.defaults}
   option is set it overrides \code{save.defaults} for function
-  \code{save.image} (which allows to have different defaults). This
-  mechanism is experimental and subject to change.
+  \code{save.image} (which allows to have different defaults).
 
   \code{sys.save.image} is a system function that is called by \code{q()}
   and its GUI analogs; \code{sys.load.image} is called by the startup code.
@@ -72,17 +72,27 @@ sys.save.image(name)
   is able to open a connection to save the image.  This is appropriate
   when called from \code{q()} and allies, but reinforces the warning
   that it should not be called directly.
+
+  It is possible to compress later (with \code{gzip}) a file saved with
+  \code{compress = FALSE}: the effect is the same as saving with
+  \code{compress = TRUE}.
 }
-\section{Warning}{
+\section{Warnings}{
   The \code{\dots} arguments only give the \emph{names} of the objects
   to be saved: they are searched for in the environment given by the
   \code{envir} argument, and the actual objects given as arguments need
-  not be those found.  
+  not be those found.
 
   Saved \R objects are binary files, even those saved with
-  \code{ascii=TRUE}, so ensure that they are transferred without
+  \code{ascii = TRUE}, so ensure that they are transferred without
   conversion of end of line markers.  The lines are delimited by LF on
   all platforms.
+
+  Although the default version has not changed since \R 1.4.0, this
+  does not mean that saved files are necessarily backwards conpatible.
+  You will be able to load a saved image into an earlier version of \R
+  unless use is made of later additions (for example, raw vectors or
+  external pointers).
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},
