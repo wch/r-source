@@ -386,7 +386,7 @@ NEW FEATURES
     o	as.list() now accepts symbols (as given by as.symbol() aka
 	as.name()).
 
-    o	do.call) gains an 'envir' argument.
+    o	do.call() gains an 'envir' argument.
 
 
 DEPRECATED & DEFUNCT
@@ -621,8 +621,8 @@ PACKAGE INSTALLATION
 	install.packages(), including the formerly separate arguments
 	'destdir' and 'installWithVers'.
 
-    o	AR and RANLIB are now declared in etc/Makeconf for use by
-	packages which wish to make static libraries.
+    o	Make macros AR and RANLIB are now declared in etc/Makeconf for
+	use by packages which wish to make static libraries.
 
 
 C-LEVEL FACILITIES
@@ -906,6 +906,10 @@ BUG FIXES
 
     o	qhyper() had too small a tolerance for right-continuity on
 	some platforms so was not always an inverse to phyper().
+
+    o	rownames<-.data.frame() and dimnames<-.data.frame() tested the
+	length(s) of the replacement value(s) before coercion, which
+	can change the length (e.g. for class "POSIXlt").
 
 
 

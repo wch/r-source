@@ -38,10 +38,15 @@ colnames(x) <- value
   case, prepending \code{prefix} to simple numbers, if there are no
   dimnames or the corresponding component of the dimnames is \code{NULL}.
 
+  The replacement methods for arrays/matrices coerce vector and factor
+  values of \code{value} to character, but do not dispatch methods for
+  \code{as.character}.
+  
   For a data frame, \code{value} for \code{rownames} should be a
-  character vector of unique names, and for \code{colnames} a character
-  vector of unique syntactically-valid names.  (Note: uniqueness and
-  validity are not enforced.)
+  character vector of non-duplicated and non-missing names (this is
+  enforced), and for \code{colnames} a character vector of (preferably)
+  unique syntactically-valid names.  In both cases, \code{value} will be
+  coerced by \code{\link{as.character}}.
 }
 \seealso{
   \code{\link{dimnames}},

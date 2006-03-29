@@ -21,21 +21,26 @@ dimnames(x) <- value
 
   For an \code{\link{array}} (and hence in particular, for a
   \code{\link{matrix}}), they retrieve or set the \code{dimnames}
-  attribute (see \link{attributes}) of the object.  The list
+  attribute (see \link{attributes}) of the object.  A list
   \code{value} can have names, and these will be used to label the
   dimensions of the array where appropriate.
 
-  Both have methods for data frames.  The dimnames of a data frame are
-  its \code{row.names} attribute and its \code{\link{names}}.
+  For an array/matrix, vector and factor components of \code{value} will
+  be coerced to character, but no other coercions are done.
 
-  As from \R 1.8.0 factor components of \code{value} will be coerced to
-  character. 
+  Both have methods for data frames.  The dimnames of a data frame are
+  its \code{\link{row.names}} and its \code{\link{names}}.  For the
+  replacement method each component of \code{value} will be coerced by
+  \code{\link{as.character}}.
 }
 \value{
   The dimnames of a matrix or array can be \code{NULL} or a list of the
   same length as \code{dim(x)}.  If a list, its components are either
   \code{NULL} or a character vector the length of the appropriate
   dimension of \code{x}.
+
+  For the \code{"data.frame"} method both dimnames must be non-null, and
+  the rownames must be contain no duplicates nor missing values.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
