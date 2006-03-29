@@ -50,14 +50,18 @@ dim.data.frame <- function(x) c(length(attr(x,"row.names")), length(x))
 
 dimnames.data.frame <- function(x) list(attr(x,"row.names"), names(x))
 
-"dimnames<-.data.frame" <- function(x, value) {
+"dimnames<-.data.frame" <- function(x, value)
+{
     d <- dim(x)
-    if(!is.list(value) || length(value) != 2
-       || d[[1]] != length(value[[1]])
-       || d[[2]] != length(value[[2]]))
+    if(!is.list(value) || length(value) != 2)
 	stop("invalid 'dimnames' given for data frame")
-    row.names(x) <- as.character(value[[1]]) # checks validity
-    names(x) <- as.character(value[[2]])
+    ## do the coercion first, as might change length
+    value[[1]] <- as.character(value[[1]])
+    value[[2]] <- as.character(value[[2]])
+    if(d[[1]] != length(value[[1]]) || d[[2]] != length(value[[2]]))
+	stop("invalid 'dimnames' given for data frame")
+    row.names(x) <- value[[1]] # checks validity
+    names(x) <- value[[2]]
     x
 }
 
