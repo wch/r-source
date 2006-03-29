@@ -23,12 +23,12 @@ atan(x)
 atan2(y, x)
 }
 \arguments{
-   \item{x, y}{numeric or complex vector}
+   \item{x, y}{numeric or complex vectors.}
 }
 \details{
-  The arc-tangent of two arguments \code{atan2(y,x)} returns the angle
-  between the x-axis and the vector from the origin to \eqn{(x,y)},
-  i.e., for positive arguments \code{atan2(y,x) == atan(y/x)}.
+  The arc-tangent of two arguments \code{atan2(y, x)} returns the angle
+  between the x-axis and the vector from the origin to \eqn{(x, y)},
+  i.e., for positive arguments \code{atan2(y, x) == atan(y/x)}.
 
   Angles are in radians, not degrees (i.e., a right angle is
   \eqn{\pi/2}).
@@ -40,7 +40,7 @@ atan2(y, x)
    For the inverse trigonometric functions, branch cuts are defined as in
    Abramowitz and Stegun, figure 4.4, page 79.  Continuity on the
    branch cuts is standard.
-  
+
    For \code{asin()} and \code{acos()}, there are two cuts, both along
    the real axis: \eqn{\left(-\infty, -1\right]}{\(-Inf, 1\]} and
    \eqn{\left[1, \infty\right)}{\[1, Inf\)}.  Functions \code{asin()}

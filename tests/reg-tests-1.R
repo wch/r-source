@@ -4126,3 +4126,8 @@ stopifnot(is.character(all.equal(r1, r2)))
 xx <- as.raw(40:48)
 for(i in xx) print(i)
 ## was error < 2.3.0
+
+
+## atan2 with one complex argument
+atan2(1, 1i)
+## was error in 2.2.1

@@ -1077,7 +1077,8 @@ SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
-    if (isComplex(CAR(args)))
+    if (isComplex(CAR(args)) ||
+	(PRIMVAL(op) == 0 && isComplex(CADR(args))))
 	return complex_math2(call, op, args, env);
 
 

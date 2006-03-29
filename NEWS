@@ -376,9 +376,12 @@ NEW FEATURES
 	and can provide up to the 3rd derivative of the interpolating
 	spline, thanks to Berwin Turlach.
 	
-    o	timestamp() adds a time stamp to the saved command history.
+    o	The new function timestamp() adds a time stamp to the saved
+	command history on consoles which support it.
 
     o	for() now supports raw vectors as the set of indices.
+
+    o	atan2 now allows one complex and one numeric argument.
 
 
 DEPRECATED & DEFUNCT
