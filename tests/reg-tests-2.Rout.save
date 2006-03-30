@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 alpha (2006-03-27 r37590)
+Version 2.3.0 alpha (2006-03-30 r37614)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -5118,4 +5118,9 @@ AIC: 30.702
 Number of Fisher Scoring iterations: 2
 
 > ## has NA dispersion in 2.2.1
+> 
+> ## substitute was losing "..." after r37269
+> yaa <- function(...) substitute(list(...))
+> yaa(foo(...))
+list(foo(...))
 > 

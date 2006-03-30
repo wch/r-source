@@ -2020,6 +2020,11 @@ SEXP substitute(SEXP lang, SEXP rho)
 /* Work through a list doing substitute on the */
 /* elements taking particular care to handle ... */
 
+/* FIXME:  This version takes particular care, but still mis-handles 	*/
+/* cases like substitute(list(..., x), list(x=1)) (where it 		*/
+/* doesn't substitute for x).  -DJM 					*/
+
+
 SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 {
     SEXP h, t;
@@ -2027,7 +2032,7 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 	return el;
     if (CAR(el) == R_DotsSymbol) {
     	if (rho == R_NilValue)
-    	    return substituteList(CDR(el), rho);
+    	    return el;
 	h = findVarInFrame3(rho, CAR(el), TRUE);
 	if (h == R_NilValue)
 	    return substituteList(CDR(el), rho);

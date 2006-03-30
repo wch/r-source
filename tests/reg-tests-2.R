@@ -1776,3 +1776,7 @@ w <- c(rep(1,9), 0)
 summary(glm(y ~ x, weights = w))
 summary(glm(y ~ x, subset = w > 0))
 ## has NA dispersion in 2.2.1
+
+## substitute was losing "..." after r37269
+yaa <- function(...) substitute(list(...))
+yaa(foo(...))
