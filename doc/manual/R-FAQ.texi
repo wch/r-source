@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-03-24
+@set FAQ_DATE @value{FAQ_YEAR}-03-30
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -484,7 +484,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2006-01-11:
+@c Linux binaries as of 2006-03-27:
 @c
 @c debian
 @c   stable  i386   2.2.1  Christian T. Steigies <cts@debian.org>
@@ -496,6 +496,8 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   fc3     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 2.2.1  Brian Ripley
 @c   fc4     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
+@c           x86_64 2.2.1  Martyn Plummer <plummer@iarc.fr>
+@c   fc5     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 2.2.1  Martyn Plummer <plummer@iarc.fr>
 @c   el3     i386   2.2.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c   el4     i386   2.2.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
@@ -520,13 +522,13 @@ The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {VineLinux} {x86_64} {9.0/9.1/9.2/9.3/10.0} {James Henstridge}
+@multitable {Debian et al.} {x86_64} {9.0/9.1/9.2/9.3/10.0} {James Henstridge}
 @headitem @tab CPU @tab Versions @tab Provider
-@item Debian   @tab i386 @tab stable/oldstable @tab Christian Steigies
+@item Debian et al. @tab i386 @tab stable/oldstable @tab Christian Steigies
 @item Mandrake @tab i386 @tab 10.0 @tab Michele Alzetta
-@item Red Hat  @tab i386 @tab FC3/FC4 @tab Martyn Plummer
+@item Red Hat  @tab i386 @tab FC3/FC4/FC5 @tab Martyn Plummer
 @item          @tab x86_64 @tab FC3 @tab Brian Ripley
-@item          @tab x86_64 @tab FC4 @tab Martyn Plummer
+@item          @tab x86_64 @tab FC4/FC5 @tab Martyn Plummer
 @item          @tab i386   @tab Enterprise Linux @tab Matthew P. Cox
 @item          @tab x86_64 @tab Enterprise Linux @tab Matthew P. Cox
 @item SuSE     @tab i386   @tab 7.3/8.0/8.1/8.2 @tab Detlef Steuer
@@ -550,8 +552,8 @@ install r-base r-recommended} to install the R environment and
 recommended packages.  If you also want to build R packages from source,
 also run @code{apt-get install r-base-dev} to obtain the additional
 tools required for this.  So-called ``backports'' of the current R
-packages for the @dfn{stable} distribution are provided by Christian
-Steigies, and available from CRAN.  Simply add the line
+packages for the @dfn{stable} distribution of Debian are provided by
+Christian Steigies, and available from CRAN.  Simply add the line
 
 @example
 deb http://cran.R-project.org/bin/linux/debian stable/
@@ -559,7 +561,12 @@ deb http://cran.R-project.org/bin/linux/debian stable/
 
 @noindent
 (feel free to use a @CRAN{} mirror instead of the master) to the file
-@file{/etc/apt/sources.list}, and install as usual.
+@file{/etc/apt/sources.list}, and install as usual.  More details on
+installing and administering R on Debian Linux can be found at
+@url{http://cran.r-project.org/bin/linux/debian/README}.  While the
+@dfn{stable} backport was built for Debian, it has also been found to be
+directly usable for Ubuntu/Kubuntu, and should be suitable for other
+Debian derivatives.
 
 @c Once you have added that line the programs @command{apt-get},
 @c @command{apt-cache}, and @command{dselect} (using the apt access
@@ -574,7 +581,17 @@ deb http://cran.R-project.org/bin/linux/debian stable/
 @c platforms in @file{bin/nextstep/i386} and @file{bin/nextstep/m68k},
 @c created by Stephen Shiboski <steve@biostat.ucsf.edu>.
 
-No other binary distributions are currently publically available.
+No other binary distributions are currently publically available via
+@CRAN{}.
+
+A ``live'' Linux distribution with a particular focus on R is
+@dfn{Quantian}, which provides a directly bootable and self-configuring
+``Live DVD'' containing numerous applications of interests to scientists
+and researchers, including several hundred @CRAN{} and Bioconductor
+packages, the ``ESS'' extensions for Emacs, the ``JGR'' Java GUI for R,
+the Ggobi visualization tool as well as several other R interfaces. The
+@dfn{Quantian} website at @url{http://dirk.eddelbuettel.com/quantian/}
+contains more details as well download information.
 
 @node What documentation exists for R?, Citing R, Are there Unix binaries for R?, R Basics
 @section What documentation exists for R?
@@ -1545,6 +1562,10 @@ of @code{x} and @code{y} interchanged.  (R used to have undocumented
 support for a two-argument @code{atan} with positional arguments, but
 this has been withdrawn to avoid further confusion.)
 
+@item
+Numeric constants with no fractional and exponent (i.e., only integer)
+part are taken as integer in @SPLUS{} 6.x or later, but as double in R.
+
 @end itemize
 
 There are also differences which are not intentional, and result from
@@ -1640,7 +1661,7 @@ has a web page at @url{http://www.omegahat.org/CGIwithR/}.
 @url{http://www.rpad.org/Rpad, Rpad}, developed and actively maintained
 by Tom Short, provides a sophisticated environment which combines some
 of the features of the previous approaches with quite a bit of
-Javascript, allowing for a GUI-like behavior (wiht sortable tables,
+Javascript, allowing for a GUI-like behavior (with sortable tables,
 clickable graphics, editable output), etc.
 
 Jeff Horner is working on the R/Apache Integration Project which embeds
@@ -1775,6 +1796,8 @@ and survival models (Cox regression).
 OpenBUGS and its R interface BRugs.
 @item BayesTree
 Bayesian methods for tree based models.
+@item BayesValidate
+Bayesian software validation using posterior quantiles.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item Biodem
@@ -2311,6 +2334,8 @@ Functions for Bitwise operations on integer vectors.
 Bivariate Poisson models using the EM algorithm.
 @item blighty
 Function for drawing the coastline of the United Kingdom.
+@item blockrand
+Randomization for block random clinical trials.
 @item boa
 Bayesian Output Analysis Program for MCMC.
 @item boolean
@@ -2779,6 +2804,8 @@ multivariable geostatistical modelling, prediction and simulation.
 Includes code for variogram modelling; simple, ordinary and universal
 point or block (co)kriging, sequential Gaussian or indicator
 (co)simulation, and map plotting functions.
+@item gsubfn
+Miscellaneous string utilities.
 @item gtkDevice
 GTK graphics device driver that may be used independently of the R-GNOME
 interface and can be used to create R devices as embedded components in
@@ -3307,6 +3334,8 @@ PLS analyses for genomics.
 Routines for the polynomial spline fitting routines hazard regression,
 hazard estimation with flexible tails, logspline, lspec, polyclass, and
 polymars, by C. Kooperberg and co-authors.
+@item polyapost
+Simulating from the Polya posterior.
 @item polycor
 Polychoric and polyserial correlations.
 @item polynom
@@ -4818,6 +4847,7 @@ dir /opt/R/src/unix
 * Why doesn't R think these numbers are equal?::  
 * How can I capture or ignore errors in a long simulation?::  
 * Why are powers of negative numbers wrong?::  
+* How can I save the result of each iteration in a loop into a separate file?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -5355,11 +5385,12 @@ squares resulting from dropping single terms.
 Under Unix, the @code{png()} device uses the X11 driver, which is a
 problem in batch mode or for remote operation.  If you have Ghostscript
 you can use @code{bitmap()}, which produces a PostScript file then
-converts it to any bitmap format supported by ghostscript.  On some
+converts it to any bitmap format supported by Ghostscript.  On some
 installations this produces ugly output, on others it is perfectly
 satisfactory.  In theory one could also use Xvfb from
-@url{http://www.x.org/Downloads.html, X.Org}, which provides an X server
-with no display.
+@url{http://www.x.org/Downloads.html, X.Org}, which is an X11 server
+that does not require a screen; and the @strong{GDD} package from
+@CRAN{}, which produces PNG, JPEG and GIF bitmaps without X11.
 
 @node How can I get command line editing to work?, How can I turn a string into a variable?, How do I produce PNG graphics in batch mode?, R Miscellanea
 @section How can I get command line editing to work?
@@ -5506,7 +5537,7 @@ utils::help.start()
 @section Where have all the methods gone?
 
 Many functions, particularly S3 methods, are now hidden in namespaces.
-This has the advantage that they cannot be called inadvertantly with
+This has the advantage that they cannot be called inadvertently with
 arguments of the wrong class, but it makes them harder to view.
 
 To see the code for an S3 method (e.g., @code{[.terms}) use
@@ -5635,7 +5666,7 @@ would return the coefficients if the @code{lm()} call succeeded and
 would return @code{c(NaN, NaN, NaN, NaN)} if it failed (presumably there
 are supposed to be 4 coefficients in this example).
 
-@node Why are powers of negative numbers wrong?,  , How can I capture or ignore errors in a long simulation?, R Miscellanea
+@node Why are powers of negative numbers wrong?, How can I save the result of each iteration in a loop into a separate file?, How can I capture or ignore errors in a long simulation?, R Miscellanea
 @section Why are powers of negative numbers wrong?
 
 You are probably seeing something like
@@ -5667,6 +5698,23 @@ R> as.list(quote(-2^2))
 
 [[2]]
 2^2
+@end example
+
+@node How can I save the result of each iteration in a loop into a separate file?,  , Why are powers of negative numbers wrong?, R Miscellanea
+@section How can I save the result of each iteration in a loop into a separate file?
+
+One way is to use @code{paste()} (or @code{sprintf()}) to concatenate a
+stem filename and the iteration number while @code{file.path()}
+constructs the path.  For example, to save results into files
+@file{result1.rda}, @dots{}, @file{result100.rda} in the subdirectory
+@file{Results} of the current working directory, one can use
+
+@example
+for(i in 1:100) @{
+  ## Calculations constructing "some_object" ...
+  fp <- file.path("Results", paste("result", i, ".rda", sep = ""))
+  save(list = "some_object", file = fp)
+@}
 @end example
 
 @node R Programming, R Bugs, R Miscellanea, Top
@@ -5914,7 +5962,7 @@ Iacus, Fritz Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian
 D. Ripley, Anthony Rossini, and Andreas Weingessel for their comments
 which helped me improve this @acronym{FAQ}.
 
-More to some soon @dots{}
+More to come soon @dots{}
 
 @bye
 
