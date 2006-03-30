@@ -22,12 +22,13 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
         xlim = NULL, ylim = NULL, \dots)
 }
 \arguments{
-  \item{x, y}{the x and y co-ordinates for the symbols. They can be
-    specified in any way which is accepted by \code{\link{xy.coords}}.}
+  \item{x, y}{the x and y co-ordinates for the centres of the symbols.
+    They can be specified in any way which is accepted by
+    \code{\link{xy.coords}}.}
   \item{circles}{a vector giving the radii of the circles.}
   \item{squares}{a vector giving the length of the sides of the squares.}
   \item{rectangles}{a matrix with two columns.  The first column gives
-    widths and the second the heights of rectangle symbols.}
+    widths and the second the heights of rectangles.}
   \item{stars}{a matrix with three or more columns giving the lengths
     of the rays from the center of the stars.  \code{NA} values
     are replaced by zeroes.}
@@ -36,38 +37,47 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
     If there are three columns, the third is taken as a proportion.
     The thermometers are filled from their base to this proportion
     of their height.  If there are four columns, the third and fourth
-    columns are taken as proportions.  The thermometers are filled
-    between these two proportions of their heights.}
+    columns are taken as proportions.  The thermometers are filled (using
+    colour \code{fg}) between these two proportions of their heights.}
   \item{boxplots}{a matrix with five columns.  The first two columns
     give the width and height of the boxes, the next two columns
     give the lengths of the lower and upper whiskers and the fifth
     the proportion (with a warning if not in [0,1]) of the way up
     the box that the median line is drawn.}
-  \item{inches}{If \code{inches} is \code{FALSE}, the units are taken
-    to be those of the x axis.  If \code{inches} is \code{TRUE},
-    the symbols are scaled so that the largest symbol is one
-    inch in height.  If a number is given the symbols are scaled to
-    make largest symbol this height in inches.}
+  \item{inches}{\code{TRUE}, \code{FALSE} or a positive number.
+    See Details.}
   \item{add}{if \code{add} is \code{TRUE}, the symbols are added to
     an existing plot, otherwise a new plot is created.}
   \item{fg}{color(s) the symbols are to be drawn in.}
   \item{bg}{if specified, the symbols are filled with this color.
-    The default is to leave the symbols unfilled. }
-  \item{xlab}{the x label of the plot if \code{add} is not true; this
-    applies to the following arguments as well.  Defaults to the
-    \code{\link{deparse}}d expression used for \code{x}.}
-  \item{ylab}{the y label of the plot.}
-  \item{main}{a main title for the plot.}
-  \item{xlim}{numeric of length 2 giving the x limits for the plot.}
-  \item{ylim}{numeric of length 2 giving the y limits for the plot.}
+    The default is to leave the symbols unfilled.}
+  \item{xlab}{the x label of the plot if \code{add} is not true.
+    Defaults to the \code{\link{deparse}}d expression used for \code{x}.}
+  \item{ylab}{the y label of the plot.  Unused if \code{add = TRUE}.}
+  \item{main}{a main title for the plot.  Unused if \code{add = TRUE}.}
+  \item{xlim}{numeric vector of length 2 giving the x limits for the
+    plot.  Unused if \code{add = TRUE}.}
+  \item{ylim}{numeric vector of length 2 giving the y limits for the
+    plot.  Unused if \code{add = TRUE}.}
   \item{\dots}{graphics parameters can also be passed to this function,
     as can the plot aspect ratio \code{asp} (see \code{\link{plot.window}}).}
 }
 \details{
   Observations which have missing coordinates or missing size
   parameters are not plotted.  The exception to this is \emph{stars}.
-  In that case, the length of any rays which are \code{NA} is reset
+  In that case, the length of any ray which is \code{NA} is reset
   to zero.
+
+  Argument \code{inches} controls the sizes of the symbols.  If
+  \code{TRUE} (the default), the the symbols are scaled so that the
+  largest dimension of any symbol is one inch.  If a positive number is
+  given the symbols are scaled to make largest symbol this height in
+  inches (so \code{TRUE} and \code{1} are equivalent). If \code{inches}
+  is \code{FALSE}, the units are taken to be those of the appropriate
+  axes.  (For circles, squares and stars the units of the x axis are
+  used.  For boxplots, the lengths of the whiskers are regarded as
+  dimensions alongside width and height when scaling by \code{inches},
+  and are otherwise interpreted in the units of the y axis.)
 
   Circles of radius zero are plotted at radius one pixel (which is
   device-dependent).

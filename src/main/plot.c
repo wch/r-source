@@ -3809,9 +3809,10 @@ SEXP attribute_hidden do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i]) &&
 		R_FINITE(REAL(p)[i])) {
 		rx = REAL(p)[i];
+		/* For GCircle the radius is always in INCHES */
 		if (inches > 0)
-		    rx *= inches / pmax;/* <-- no GConvert ?? */
-		else/* FIXME : INCHES in the following ??? */
+		    rx *= inches / pmax;
+		else
 		    rx = GConvertXUnits(rx, USER, INCHES, dd);
 		GCircle(REAL(x)[i], REAL(y)[i],	USER, rx,
 			INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg],	dd);
@@ -3831,13 +3832,11 @@ SEXP attribute_hidden do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 		yy = REAL(y)[i];
 		GConvert(&xx, &yy, USER, DEVICE, dd);
 		if (inches > 0) {
-		    p0 = p0 / pmax * inches;
+		    p0 *= inches / pmax;
 		    rx = GConvertXUnits(0.5 * p0, INCHES, DEVICE, dd);
-		    ry = GConvertYUnits(0.5 * p0, INCHES, DEVICE, dd);
 		}
 		else {
 		    rx = GConvertXUnits(0.5 * p0, USER, DEVICE, dd);
-		    ry = GConvertYUnits(0.5 * p0, USER, DEVICE, dd);
 		}
 		GRect(xx - rx, yy - rx, xx + rx, yy + rx, DEVICE,
 		      INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
