@@ -914,6 +914,10 @@ BUG FIXES
     o	max() and min() ignored the largest/smallest representable
 	integer. (PR#8731)
 
+    o	write.table() assumed factors had integer codes: it now allows
+	malformed factors with numeric codes (and otherwise throws an
+	error).
+
 
 
 
