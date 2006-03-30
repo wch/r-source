@@ -388,6 +388,8 @@ NEW FEATURES
 
     o	do.call() gains an 'envir' argument.
 
+    o	The default is now compress = !ascii in save() (but not save.image).
+
 
 DEPRECATED & DEFUNCT
 
@@ -912,7 +914,7 @@ BUG FIXES
 	can change the length (e.g. for class "POSIXlt").
 
     o	max() and min() ignored the largest/smallest representable
-	integer. (PR#8731)
+	integer, as well as Inf/-Inf. (PR#8731)
 
     o	write.table() assumed factors had integer codes: it now allows
 	malformed factors with numeric codes (and otherwise throws an

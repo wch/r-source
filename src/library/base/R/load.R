@@ -24,7 +24,7 @@ load <- function (file, envir = parent.frame())
 save <- function(..., list = character(0),
                  file = stop("'file' must be specified"),
                  ascii = FALSE, version = NULL, envir = parent.frame(),
-                 compress = FALSE)
+                 compress = !ascii)
 {
     opts <- getOption("save.defaults")
     if (missing(compress) && ! is.null(opts$compress))

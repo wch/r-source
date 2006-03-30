@@ -4139,6 +4139,10 @@ as.list(as.name("data.frame"))
 
 
 ## min ignored INT_MAX, (PR#8731)
-min(.Machine$integer.max)
-max(-.Machine$integer.max)
-## was +/-Inf with warning in 2.2.1.
+stopifnot(min(.Machine$integer.max) == .Machine$integer.max)
+stopifnot(max(-.Machine$integer.max) == -.Machine$integer.max)
+op <- options(warn=2)
+min(Inf)
+max(-Inf)
+options(op)
+## were +/-Inf with warning in 2.2.1.
