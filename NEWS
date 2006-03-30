@@ -892,8 +892,8 @@ BUG FIXES
 	a better error message early at parsing time instead of a less
 	comprehensible one later at load time.
 
-    o	all.equal(n1,n2) could erronously return NA when n1, n2 contained
-	large integers.
+    o	all.equal(n1,n2) could erroneously return NA when n1, n2
+	contained large integers.
 
     o	anova.mlm() didn't handle multi-df effects properly in the
 	single-model case (PR#8679)
@@ -910,6 +910,9 @@ BUG FIXES
     o	rownames<-.data.frame() and dimnames<-.data.frame() tested the
 	length(s) of the replacement value(s) before coercion, which
 	can change the length (e.g. for class "POSIXlt").
+
+    o	max() and min() ignored the largest/smallest representable
+	integer. (PR#8731)
 
 
 

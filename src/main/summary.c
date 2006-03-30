@@ -49,10 +49,10 @@ static Rboolean isum(int *x, int n, int *value, Rboolean narm)
 
     for (i = 0, s = 0; i < n; i++) {
 	if (x[i] != NA_INTEGER) {
-	    if(!updated) updated = 1;
+	    if(!updated) updated = TRUE;
 	    s += x[i];
 	} else if (!narm) {
-	    if(!updated) updated = 1;
+	    if(!updated) updated = TRUE;
 	    *value = NA_INTEGER;
 	    return(updated);
 	}
@@ -73,7 +73,7 @@ static Rboolean rsum(double *x, int n, double *value, Rboolean narm)
     Rboolean updated = FALSE;
     for (i = 0, s = 0; i < n; i++) {
 	if (!ISNAN(x[i]) || !narm) {
-	    if(!updated) updated = 1;
+	    if(!updated) updated = TRUE;
 	    s += x[i];
 	}
     }
@@ -90,7 +90,7 @@ static Rboolean csum(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 
     for (i = 0; i < n; i++) {
 	if ((!ISNAN(x[i].r) && !ISNAN(x[i].i)) || !narm) {
-	    if(!updated) updated=1;
+	    if(!updated) updated = TRUE;
 	    sr += x[i].r;
 	    si += x[i].i;
 	}
@@ -103,21 +103,21 @@ static Rboolean csum(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 
 static Rboolean imin(int *x, int n, int *value, Rboolean narm)
 {
-    int i, s;
-    Rboolean updated = FALSE;
+    int i, s /* -Wall */;
+    Rboolean updated = FALSE, used = FALSE;
 
-    s = INT_MAX;
+    /* Used to set s = INT_MAX, but this ignored INT_MAX in the input */
     for (i = 0; i < n; i++) {
 	if (x[i] != NA_INTEGER) {
-	    if (s > x[i]) {
+	    if (!used || s > x[i]) {
+		used = TRUE;
 		s = x[i];
-		if(!updated) updated = 1;
+		if(!updated) updated = TRUE;
 	    }
 	}
 	else if (!narm) {
-	    if(!updated) updated = 1;
 	    *value = NA_INTEGER;
-	    return(updated);
+	    return(TRUE);
 	}
     }
     *value = s;
@@ -136,12 +136,12 @@ static Rboolean  rmin(double *x, int n, double *value, Rboolean narm)
 	if (ISNAN(x[i])) {/* Na(N) */
 	    if (!narm) {
 		if(s != NA_REAL) s = x[i];/* was s += x[i];*/
-		if(!updated) updated = 1;
+		if(!updated) updated = TRUE;
 	    }
 	}
 	else if (x[i] < s) {
 	    s = x[i];
-	    if(!updated) updated = 1;
+	    if(!updated) updated = TRUE;
 	}
     }
     *value = /* (!updated) ? NA_REAL : */ s;
@@ -151,19 +151,19 @@ static Rboolean  rmin(double *x, int n, double *value, Rboolean narm)
 
 static Rboolean imax(int *x, int n, int *value, Rboolean narm)
 {
-    int i, s;
-    Rboolean updated = FALSE;
-    s = R_INT_MIN;
+    int i, s = 0 /* -Wall */;
+    Rboolean updated = FALSE, used = FALSE;
+
     for (i = 0; i < n; i++) {
 	if (x[i] != NA_INTEGER) {
-	    if (s < x[i]) {
+	    if (!used || s < x[i]) {
+		used = TRUE;
 		s = x[i];
-		if(!updated) updated = 1;
+		if(!updated) updated = TRUE;
 	    }
 	} else if (!narm) {
-	    if(!updated) updated = 1;
 	    *value = NA_INTEGER;
-	    return(updated);
+	    return(TRUE);
 	}
     }
     *value = s;
@@ -182,12 +182,12 @@ static Rboolean rmax(double *x, int n, double *value, Rboolean narm)
 	if (ISNAN(x[i])) {/* Na(N) */
 	    if (!narm) {
 		if(s != NA_REAL) s = x[i];/* was s += x[i];*/
-		if(!updated) updated = 1;
+		if(!updated) updated = TRUE;
 	    }
 	}
 	else if (x[i] > s) {
 	    s = x[i];
-	    if(!updated) updated = 1;
+	    if(!updated) updated = TRUE;
 	}
     }
     *value = /* (!updated) ? NA_REAL : */ s;
@@ -204,10 +204,10 @@ static Rboolean iprod(int *x, int n, double *value, Rboolean narm)
     for (i = 0; i < n; i++) {
 	if (x[i] != NA_INTEGER) {
 	    s = s * x[i];
-	    if(!updated) updated = 1;
+	    if(!updated) updated = TRUE;
 	}
 	else if (!narm) {
-	    if(!updated) updated = 1;
+	    if(!updated) updated = TRUE;
 	    *value = NA_REAL;
 	    return(updated);
 	}
@@ -229,11 +229,11 @@ static Rboolean rprod(double *x, int n, double *value, Rboolean narm)
     Rboolean updated = FALSE;
     for (i = 0, s = 1; i < n; i++) {
 	if (!ISNAN(x[i])) {
-	    if(!updated) updated = 1;
+	    if(!updated) updated = TRUE;
 	    s = s * x[i];
 	}
 	else if (!narm) {
-	    if(!updated) updated = 1;
+	    if(!updated) updated = TRUE;
 	    s *= x[i];/* Na(N) */
 	}
     }
@@ -251,7 +251,7 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
     si = 0;
     for (i = 0; i < n; i++) {
 	if ((!ISNAN(x[i].r) && !ISNAN(x[i].i)) || !narm) {
-	    if(!updated) updated = 1;
+	    if(!updated) updated = TRUE;
 	    tr = sr;
 	    ti = si;
 	    sr = tr * x[i].r - ti * x[i].i;

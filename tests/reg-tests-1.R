@@ -4136,3 +4136,9 @@ atan2(1, 1i)
 ## as.list on a symbol, for S-compatibility
 as.list(as.name("data.frame"))
 ## was error in 2.2.1
+
+
+## min ignored INT_MAX, (PR#8731)
+min(.Machine$integer.max)
+max(-.Machine$integer.max)
+## was +/-Inf with warning in 2.2.1.
