@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-03-27
+@set FAQ_DATE @value{FAQ_YEAR}-03-30
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1796,6 +1796,8 @@ and survival models (Cox regression).
 OpenBUGS and its R interface BRugs.
 @item BayesTree
 Bayesian methods for tree based models.
+@item BayesValidate
+Bayesian software validation using posterior quantiles.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item Biodem
@@ -2332,6 +2334,8 @@ Functions for Bitwise operations on integer vectors.
 Bivariate Poisson models using the EM algorithm.
 @item blighty
 Function for drawing the coastline of the United Kingdom.
+@item blockrand
+Randomization for block random clinical trials.
 @item boa
 Bayesian Output Analysis Program for MCMC.
 @item boolean
@@ -3330,6 +3334,8 @@ PLS analyses for genomics.
 Routines for the polynomial spline fitting routines hazard regression,
 hazard estimation with flexible tails, logspline, lspec, polyclass, and
 polymars, by C. Kooperberg and co-authors.
+@item polyapost
+Simulating from the Polya posterior.
 @item polycor
 Polychoric and polyserial correlations.
 @item polynom
