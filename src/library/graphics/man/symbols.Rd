@@ -71,8 +71,8 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
   Argument \code{inches} controls the sizes of the symbols.  If
   \code{TRUE} (the default), the the symbols are scaled so that the
   largest dimension of any symbol is one inch.  If a positive number is
-  given the symbols are scaled to make largest symbol this height in
-  inches (so \code{TRUE} and \code{1} are equivalent). If \code{inches}
+  given the symbols are scaled to make largest dimension this size in
+  inches (so \code{TRUE} and \code{1} are equivalent).  If \code{inches}
   is \code{FALSE}, the units are taken to be those of the appropriate
   axes.  (For circles, squares and stars the units of the x axis are
   used.  For boxplots, the lengths of the whiskers are regarded as
