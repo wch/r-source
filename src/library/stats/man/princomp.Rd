@@ -18,7 +18,8 @@ princomp(x, \dots)
 \method{predict}{princomp}(object, newdata, \dots)
 }
 \arguments{
-  \item{formula}{a formula with no response variable.}
+  \item{formula}{a formula with no response variable, referring only to
+    numeric variables.}
   \item{data}{an optional data frame (or similar: see
     \code{\link{model.frame}}) containing the variables in the
     formula \code{formula}.  By default the variables are taken from
