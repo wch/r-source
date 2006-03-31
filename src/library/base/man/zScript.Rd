@@ -26,6 +26,7 @@
 }
 \note{This function is for R internal use only.}
 \examples{
+## not useful on Windows, where the help is zipped.
 .Script("perl", "massage-Examples.pl",
         paste("tools", system.file("R-ex", package = "tools")))
 }
