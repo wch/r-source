@@ -2968,7 +2968,8 @@ There are optional arguments specified as
 These are rarely needed, perhaps to refer to not-yet-installed packages
 (but there the HTML help will resolve the link at run time) or in the
 normally undesirable event that more than one package offers help on a
-topic.
+topic.  They are only in used in (C)HTML help (and not for hyperlinks in
+latex or S sgml conversions of help pages).
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation files
 @section Mathematics
