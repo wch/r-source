@@ -25,7 +25,8 @@ writeChar(object, con,
   These functions complement \code{\link{readBin}} and
   \code{\link{writeBin}} which read and write C-style zero-terminated
   character strings.  They are for strings of known length, and
-  can optionally write an end-of-string mark.
+  can optionally write an end-of-string mark.  They are intended only
+  for character strings valid in the current locale.
   
   If \code{con} is a character string, the functions call
   \code{\link{file}} to obtain an file connection which is opened for
@@ -36,8 +37,10 @@ writeChar(object, con,
   and then closed again.  Connections can be open in either text or
   binary mode.
 
-  Character strings containing ASCII \code{nul}(s) will be read correctly
-  by and appear with embedded nuls in the character vector returned.
+  In a single-byte locale, character strings containing ASCII
+  \code{nul}(s) will be read correctly by \code{readChar} and appear
+  with embedded nuls in the character vector returned.  This may not
+  work for multi-byte locales, and does not work for \code{writeChar}.
   
   If the character length requested for \code{readChar} is longer than
   the data available on the connection, what is available is

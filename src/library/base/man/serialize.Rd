@@ -17,8 +17,8 @@ unserialize(connection, refhook = NULL)
 \arguments{
   \item{object}{\R object to serialize.}
   \item{file}{a connection or the name of the file where the R object
-    is saved to or read from, or \code{NULL} for \code{serialize}
-    (see details).}
+    is saved to or read from, or \code{NULL} for \code{serialize} or for
+    \code{unserialize} an object returned by \code{serialize} (see Details).}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
     written; otherwise (default), a more compact binary one is used.}
   \item{version}{the workspace format version to use.  \code{NULL}
@@ -40,8 +40,8 @@ unserialize(connection, refhook = NULL)
   For a text mode connection, the default value of \code{ascii} is set
   to \code{TRUE}.
 
-  \code{unserialize} reads an object from \code{connection}.
-  \code{connection} may also be a scalar string.
+  \code{unserialize} reads an object (as written by \code{serialize})
+  from \code{connection}.
 
   The \code{refhook} functions can be used to customize handling of
   non-system reference objects (all external pointers and weak
