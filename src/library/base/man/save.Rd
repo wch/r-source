@@ -60,7 +60,8 @@ sys.save.image(name)
   Default values for the \code{ascii}, \code{compress}, \code{safe} and
   \code{version} arguments can be modified with
   the \code{save.defaults} option (used both by \code{save} and
-  \code{save.image}). If a \code{save.image.defaults}
+  \code{save.image}), see also the example section below.
+  If a \code{save.image.defaults}
   option is set it overrides \code{save.defaults} for function
   \code{save.image} (which allows to have different defaults).
 
