@@ -277,10 +277,27 @@ graphics-HELP = ziponly
 grDevices-HELP = ziponly
 grid-HELP = ziponly
 methods-HELP = ziponly
+splines-HELP = ziponly
 stats-HELP = ziponly
 stats4-HELP = ziponly
+tcltk-HELP = ziponly
+tools-HELP = ziponly
 utils-HELP = ziponly
 stats4-SAVE = true
+
+KernSmooth-HELP = ziponly
+MASS-HELP = ziponly
+class-HELP = ziponly
+nnet-HELP = ziponly
+spatial-HELP = ziponly
+boot-HELP = ziponly
+cluster-HELP = ziponly
+foreign-HELP = ziponly
+lattice-HELP = ziponly
+mgcv-HELP = ziponly
+nlme-HELP = ziponly
+rpart-HELP = ziponly
+survival-HELP = ziponly
 
 pkg-%:
 	@$(MAKE) --no-print-directory \
