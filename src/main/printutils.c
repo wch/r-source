@@ -550,6 +550,7 @@ void Rvprintf(const char *format, va_list arg)
 {
     int i=0, con_num=R_OutputCon;
     Rconnection con;
+    va_list argcopy;
     static int printcount = 0;
     if (++printcount > 100) {
 	R_CheckUserInterrupt();
@@ -559,9 +560,20 @@ void Rvprintf(const char *format, va_list arg)
     do{
       con = getConnection(con_num);
       /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
+#ifdef HAVE_VA_COPY
+      va_copy(argcopy, arg);
+      (con->vfprintf)(con, format, argcopy);
+      va_end(argcopy);
+#else /* don't support sink(,split=TRUE) */
+      va_start(arg, format);
       (con->vfprintf)(con, format, arg);
+      va_end(arg);
+#endif
       con->fflush(con);
       con_num = getActiveSink(i++);
+#ifndef HAVE_VA_COPY
+      if (con_num>0) error("Internal error: this platform does not support split output")
+#endif
     } while(con_num>0);
 
 

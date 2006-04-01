@@ -925,6 +925,9 @@ BUG FIXES
     o	Worked around a Solaris restriction which meant that
 	Sys.sleep() was only effective for times of up to one second.
 
+    o   sink(,split=TRUE) now works correctly, but is allowed only on
+        platforms that support va_copy. (PR#8716)
+
 
 
 
