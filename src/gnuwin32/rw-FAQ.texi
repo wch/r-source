@@ -234,7 +234,7 @@ current working directory of the shell.)
 @section Can I run R from a CD or USB drive?
 
 Yes, with care.  A basic R installation is relocatable, so you can burn
-an image on the R installation on your hard disc or install directly
+an image of the R installation on your hard disc or install directly
 onto a removable storage device such as a flash-memory USB drive.  (If
 you have installed packages into a private library, their absolute paths
 will appear in the HTML packages list.)
