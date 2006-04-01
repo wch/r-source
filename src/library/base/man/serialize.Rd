@@ -54,8 +54,9 @@ unserialize(connection, refhook = NULL)
 }
 \section{Warning}{
   These functions are still experimental.  Both names, interfaces and
-  values might change in future versions.  \code{.saveRDS} and
-  \code{.readRDS} are intended for internal use.
+  values might change in future versions
+  (and are expected to for \R 2.4.0).
+  \code{.saveRDS} and \code{.readRDS} are intended for internal use.
 }
 \value{
   For \code{serialize}, \code{NULL} unless \code{connection=NULL}, when
@@ -70,6 +71,8 @@ unserialize(connection, refhook = NULL)
 \examples{
 x <- serialize(list(1,2,3), NULL)
 unserialize(x)
+(y <- charToRaw(x))
+unserialize(y)
 }
 \keyword{internal}
 \keyword{file}

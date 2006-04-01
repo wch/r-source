@@ -390,6 +390,8 @@ NEW FEATURES
 
     o	The default is now compress = !ascii in save() (but not save.image).
 
+    o	unserialize() can now also read a byte stream from a raw vector.
+
 
 DEPRECATED & DEFUNCT
 
@@ -919,6 +921,9 @@ BUG FIXES
     o	write.table() assumed factors had integer codes: it now allows
 	malformed factors with numeric codes (and otherwise throws an
 	error).
+
+    o	Worked around a Solaris restriction which meant that
+	Sys.sleep() was only effective for times of up to one second.
 
 
 

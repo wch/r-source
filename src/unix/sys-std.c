@@ -300,13 +300,17 @@ fd_set *R_checkActivityEx(int usec, int ignore_stdin, void (*intr)(void))
 	else onintr();
     }
 
-    tv.tv_sec = 0;
-    tv.tv_usec = usec;
+    /* Solaris (but not POSIX) requires these times to be normalized.
+       POSIX requires up to 31 days to be supported, and we only
+       use up to 2147 secs here.
+     */
+    tv.tv_sec = usec/1000000;
+    tv.tv_usec = usec % 1000000;
     maxfd = setSelectMask(R_InputHandlers, &readMask);
     if (ignore_stdin)
 	FD_CLR(fileno(stdin), &readMask);
     if (R_SelectEx(maxfd+1, &readMask, NULL, NULL,
-		   (usec >= 0) ? &tv : NULL, intr))
+		   (usec >= 0) ? &tv : NULL, intr) > 0)
 	return(&readMask);
     else
 	return(NULL);
