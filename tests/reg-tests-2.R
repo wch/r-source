@@ -1780,3 +1780,5 @@ summary(glm(y ~ x, subset = w > 0))
 ## substitute was losing "..." after r37269
 yaa <- function(...) substitute(list(...))
 yaa(foo(...))
+## and wasn't substituting after "..."
+substitute(list(..., x), list(x=1))

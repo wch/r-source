@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 alpha (2006-03-30 r37614)
+Version 2.3.0 alpha (2006-04-01 r37623)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -5123,4 +5123,7 @@ Number of Fisher Scoring iterations: 2
 > yaa <- function(...) substitute(list(...))
 > yaa(foo(...))
 list(foo(...))
+> ## and wasn't substituting after "..."
+> substitute(list(..., x), list(x=1))
+list(..., 1)
 > 
