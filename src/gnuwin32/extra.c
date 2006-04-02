@@ -508,6 +508,25 @@ SEXP do_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 	    gl_histadd(CHAR(STRING_ELT(stamp, i)));
     return R_NilValue;
 }
+
+#include <preferences.h>
+
+SEXP do_loadRconsole(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sfile;
+    struct structGUI gui;
+
+    checkArity(op, args);
+    sfile = CAR(args);
+    if (!isString(sfile) || LENGTH(sfile) < 1)
+	errorcall(call, _("invalid '%s' argument"), "file");
+    if (CharacterMode == RGui) {
+    	getActive(&gui);
+	if (loadRconsole(&gui, (CHAR(STRING_ELT(sfile, 0))))) applyGUI(&gui);
+    } else
+	errorcall(call, _("loadRconsole can only be used in Rgui"));
+    return R_NilValue;
+}
     
 #include <lmcons.h>
 

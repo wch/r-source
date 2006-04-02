@@ -1,16 +1,27 @@
 \name{Rwin configuration}
 \alias{Rconsole}
 \alias{Rdevga}
+\alias{loadRconsole}
 \concept{console}
 \concept{fonts}
 \concept{preferences}
 \title{R for Windows Configuration}
 \description{
   The file \file{Rconsole} configures the R GUI console in this
-  Windows port. The file \file{Rdevga} configures the graphics devices
+  Windows port. The \code{loadRconsole} function loads a new 
+  configuration.
+  
+  The file \file{Rdevga} configures the graphics devices
   \code{windows}, \code{win.graph}, \code{win.metafile} and
   \code{win.print}, as well as the bitmap devices \code{bmp},
   \code{jpeg} and \code{png} (which use \code{windows} internally).
+}
+\usage{
+  loadRconsole(file)
+}
+\arguments{
+  \item{file}{The file from which to load a new \file{Rconsole} configuration.
+   By default a file dialog is used to select a file. }
 }
 \value{
   Each of the files contains details in its comments of how to set the
@@ -29,6 +40,9 @@
   \file{Rconsole} can also set the initial positions of the console and
   the graphics device, as well as the size and position of the MDI
   workspace in MDI mode.
+  
+  \code{loadRconsole} is called for its side effect of loading new 
+  defaults.  It returns no useful value.
 }
 \details{
   There are system copies of these files in \file{R\_HOME\\etc}.  Users

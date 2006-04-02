@@ -41,3 +41,5 @@ struct structGUI
 typedef struct structGUI *Gui;
 
 int loadRconsole(Gui gui, char *optf);
+void getActive(Gui gui);
+void applyGUI(Gui newGUI);

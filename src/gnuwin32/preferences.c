@@ -106,7 +106,7 @@ static void getChoices(Gui p)
     /* MDIsize is not currently a choice in the dialog, only in the Rconsole file */
 }
 
-static void getActive(Gui gui)
+void getActive(Gui gui)
 {
     rect r;
     ConsoleData p = (ConsoleData) getdata(RConsole);
@@ -216,36 +216,35 @@ static void cleanup()
     delobj(wconfig);
 }
 
-
-static void do_apply()
+void applyGUI(Gui newGUI)
 {
     rect r = getrect(RConsole);
     ConsoleData p = (ConsoleData) getdata(RConsole);
     int havenewfont = 0;
-    struct structGUI curGUI, newGUI;
+    struct structGUI curGUI;
 
-    getActive(&curGUI);
-    getChoices(&newGUI);
-    if(!has_changed(&curGUI, &newGUI)) return;
+    getActive(&curGUI);    
+    
+    if(!has_changed(&curGUI, newGUI)) return;
 
-    if(newGUI.MDI != curGUI.MDI || newGUI.toolbar != curGUI.toolbar ||
-       newGUI.statusbar != curGUI.statusbar)
+    if(newGUI->MDI != curGUI.MDI || newGUI->toolbar != curGUI.toolbar ||
+       newGUI->statusbar != curGUI.statusbar)
 	askok(G_("The overall console properties cannot be changed\non a running console.\n\nSave the preferences and restart Rgui to apply them.\n"));
 
 
 /*  Set a new font? */
-    if(strcmp(newGUI.font, curGUI.font) ||
-       newGUI.pointsize != curGUI.pointsize ||
-       strcmp(newGUI.style, curGUI.style))
+    if(strcmp(newGUI->font, curGUI.font) ||
+       newGUI->pointsize != curGUI.pointsize ||
+       strcmp(newGUI->style, curGUI.style))
     {
 	char msg[LF_FACESIZE + 128];
 	int sty = Plain;
 
-	if(newGUI.tt_font) strcpy(fontname, "TT "); else strcpy(fontname, "");
-	strcat(fontname,  newGUI.font);
-	if (!strcmp(newGUI.style, "bold")) sty = Bold;
-	if (!strcmp(newGUI.style, "italic")) sty = Italic;
-	pointsize = newGUI.pointsize;
+	if(newGUI->tt_font) strcpy(fontname, "TT "); else strcpy(fontname, "");
+	strcat(fontname,  newGUI->font);
+	if (!strcmp(newGUI->style, "bold")) sty = Bold;
+	if (!strcmp(newGUI->style, "italic")) sty = Italic;
+	pointsize = newGUI->pointsize;
 	fontsty = sty;
 
 	/* Don't delete font: open pagers may be using it */
@@ -274,43 +273,51 @@ static void do_apply()
     }
 
 /* resize console, possibly with new font */
-    if (consoler != newGUI.crows || consolec != newGUI.ccols || havenewfont) {
+    if (consoler != newGUI->crows || consolec != newGUI->ccols || havenewfont) {
 	char buf[20];
-	consoler = newGUI.crows;
-	consolec = newGUI.ccols;
+	consoler = newGUI->crows;
+	consolec = newGUI->ccols;
 	r.width = (consolec + 1) * FW;
 	r.height = (consoler + 1) * FH;
 	resize(RConsole, r);
 	sprintf(buf, "%d", ROWS); settext(f_crows, buf);
 	sprintf(buf, "%d", COLS); settext(f_ccols, buf);
     }
-    if (p->lbuf->dim != newGUI.cbb || p->lbuf->ms != newGUI.cbl)
-	xbufgrow(p->lbuf, newGUI.cbb, newGUI.cbl);
+    if (p->lbuf->dim != newGUI->cbb || p->lbuf->ms != newGUI->cbl)
+	xbufgrow(p->lbuf, newGUI->cbb, newGUI->cbl);
 
 /* Set colours and redraw */
-    p->fg = consolefg = newGUI.fg;
-    p->ufg = consoleuser = newGUI.user;
-    p->bg = consolebg = newGUI.bg;
+    p->fg = consolefg = newGUI->fg;
+    p->ufg = consoleuser = newGUI->user;
+    p->bg = consolebg = newGUI->bg;
     drawconsole(RConsole, r);
-    pagerhighlight = newGUI.hlt;
+    pagerhighlight = newGUI->hlt;
 
     if(haveusedapager && 
-       (newGUI.prows != curGUI.prows || newGUI.pcols != curGUI.pcols))
+       (newGUI->prows != curGUI.prows || newGUI->pcols != curGUI.pcols))
 	askok(G_("Changes in pager size will not apply to any open pagers"));
-    pagerrow = newGUI.prows;
-    pagercol = newGUI.pcols;
+    pagerrow = newGUI->prows;
+    pagercol = newGUI->pcols;
 
-    if(newGUI.pagerMultiple != pagerMultiple) {
+    if(newGUI->pagerMultiple != pagerMultiple) {
 	if(!haveusedapager ||
 	   askokcancel(G_("Do not change pager type if any pager is open\nProceed?"))
 	   == YES)
-	    pagerMultiple = newGUI.pagerMultiple;
+	    pagerMultiple = newGUI->pagerMultiple;
 	if(pagerMultiple) {
 	    check(rb_mwin); uncheck(rb_swin);
 	} else {check(rb_swin); uncheck(rb_mwin);}
     }
 
-    setWidthOnResize = newGUI.setWidthOnResize;
+    setWidthOnResize = newGUI->setWidthOnResize;
+}
+
+static void do_apply()
+{
+    struct structGUI newGUI;
+
+    getChoices(&newGUI);
+    applyGUI(&newGUI);
 }
 
 static void save(button b)

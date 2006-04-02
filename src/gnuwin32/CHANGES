@@ -66,7 +66,8 @@ ignored).  Note that copy/cut of overtyped output will not necessarily
 pick up the visible layer of text.
 
 The "Edit|GUI preferences..." dialog now allows Rconsole files to be 
-loaded as well as saved.
+loaded as well as saved.  A new function loadRconsole() has also been
+added.
 
 
 Internationalization
