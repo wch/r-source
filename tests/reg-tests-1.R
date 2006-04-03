@@ -4108,12 +4108,14 @@ stopifnot(pt(-1e200, 0.001) > 0)
 
 
 ## is.factor differed from internal isFactor on hand-constructed factors
+## and this hit split. (The difference is still there.)
 fac2 <- rep(c(1,2,3), each=5)
 attr(fac2, "levels") <- as.character(1:3)
 oldClass(fac2) <- "factor"
 stopifnot(is.factor(fac2))
 split(rnorm(15), fac2)
 ## failed in 2.2.1
+
 
 ## all.equal.numeric overflowed for large integers
 set.seed(1); r1 <- .Random.seed
@@ -4147,9 +4149,14 @@ max(-Inf)
 options(op)
 ## were +/-Inf with warning in 2.2.1.
 
+
 ## PR#8718
 a<-matrix(2,2,2)
 apply(a,1,"$","a")
 apply(a,1,sum)
 ## first apply was corrupting apply() code in 2.2.1
 
+
+## NULL results in apply()
+apply(as.matrix(1), 1, function(x) NULL)
+## was error in 2.2.1.

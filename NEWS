@@ -896,7 +896,7 @@ BUG FIXES
 	a better error message early at parsing time instead of a less
 	comprehensible one later at load time.
 
-    o	all.equal(n1,n2) could erroneously return NA when n1, n2
+    o	all.equal(n1, n2) could erroneously return NA when n1, n2
 	contained large integers.
 
     o	anova.mlm() didn't handle multi-df effects properly in the
@@ -916,7 +916,7 @@ BUG FIXES
 	can change the length (e.g. for class "POSIXlt").
 
     o	max() and min() ignored the largest/smallest representable
-	integer, as well as Inf/-Inf. (PR#8731)
+	integer, as well as Inf/-Inf.  (PR#8731)
 
     o	write.table() assumed factors had integer codes: it now allows
 	malformed factors with numeric codes (and otherwise throws an
@@ -926,7 +926,7 @@ BUG FIXES
 	Sys.sleep() was only effective for times of up to one second.
 
     o   sink(,split=TRUE) now works correctly, but is allowed only on
-        platforms that support va_copy. (PR#8716)
+        platforms that support va_copy or __va_copy.  (PR#8716)
 
     o	factanal(), prcomp() and princomp() now only check that columns
 	in the model frame that will be used are numeric (they
@@ -934,6 +934,10 @@ BUG FIXES
 	in the formula).
 
     o   Misuse of $ in apply could corrupt memory (PR#8718)
+
+    o	apply() could fail if the function returned NULL (e.g. if
+	there was a single row).
+
 
 
 

@@ -41,9 +41,15 @@ apply <- function(X, MARGIN, FUN, ...)
     ans <- vector("list", d2)
     if(length(d.call) < 2) {# vector
         if (length(dn.call)) dimnames(newX) <- c(dn.call, list(NULL))
-        for(i in 1:d2) ans[[i]] <- FUN(newX[,i], ...)
+        for(i in 1:d2) {
+            tmp <- FUN(newX[,i], ...)
+            if(!is.null(tmp)) ans[[i]] <- tmp
+        }
     } else
-       for(i in 1:d2) ans[[i]] <- FUN(array(newX[,i], d.call, dn.call), ...)
+       for(i in 1:d2) {
+           tmp <- FUN(array(newX[,i], d.call, dn.call), ...)
+           if(!is.null(tmp)) ans[[i]] <- tmp
+        }
 
     ## answer dims and dimnames
 
