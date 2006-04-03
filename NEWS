@@ -928,6 +928,11 @@ BUG FIXES
     o   sink(,split=TRUE) now works correctly, but is allowed only on
         platforms that support va_copy. (PR#8716)
 
+    o	factanal(), prcomp() and princomp() now only check that columns
+	in the model frame that will be used are numeric (they
+	previously also checked columns which were part of negative terms
+	in the formula).
+
 
 
 

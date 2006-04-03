@@ -54,7 +54,7 @@ factanal <-
             mf[[1]] <- as.name("model.frame")
             mf <- eval.parent(mf)
             na.act <- attr(mf, "na.action")
-            if(any(sapply(mf, function(x) is.factor(x) || !is.numeric(x))))
+            if (.check_vars_numeric(mf))
                 stop("factor analysis applies only to numerical variables")
             z <- model.matrix(mt, mf)
         } else {

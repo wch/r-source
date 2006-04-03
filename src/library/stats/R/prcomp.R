@@ -39,7 +39,7 @@ prcomp.formula <- function (formula, data = NULL, subset, na.action, ...)
     mf <- eval.parent(mf)
     ## this is not a `standard' model-fitting function,
     ## so no need to consider contrasts or levels
-    if (any(sapply(mf, function(x) is.factor(x) || !is.numeric(x))))
+    if (.check_vars_numeric(mf))
         stop("PCA applies only to numerical variables")
     na.act <- attr(mf, "na.action")
     mt <- attr(mf, "terms")
@@ -113,4 +113,13 @@ predict.prcomp <- function(object, newdata, ...)
     }
     ## next line does as.matrix
     scale(newdata, object$center, object$scale) %*% object$rotation
+}
+
+.check_vars_numeric <- function(mf)
+{
+    ## we need to test just the columns which are actually used.
+    mt <- attr(mf, "terms")
+    mterms <- attr(mt, "factors")
+    mterms <- rownames(mterms)[apply(mterms, 1, any)]
+    any(sapply(mterms, function(x) is.factor(mf[,x]) || !is.numeric(mf[,x])))
 }

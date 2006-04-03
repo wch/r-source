@@ -64,8 +64,7 @@ model.frame(formula, \dots)
   default method.  The default method itself can cope with rather
   standard model objects such as those of classes
   \code{"\link[MASS]{lqs}"} and \code{"\link[ppr]{ppr}"} from
-  package \pkg{MASS} if no other
-  arguments are supplied.
+  package \pkg{MASS} if no other arguments are supplied.
   
   The rest of this section applies only to the default method.
 
@@ -83,9 +82,9 @@ model.frame(formula, \dots)
   All the variables in \code{formula}, \code{subset} and in \code{\dots}
   are looked for first in \code{data} and then in the environment of
   \code{formula} (see the help for \code{\link{formula}()} for further
-  details) and collected into a data frame. Then the \code{subset}
+  details) and collected into a data frame.  Then the \code{subset}
   expression is evaluated, and it is is used as a row index to the data
-  frame. Then the \code{na.action} function is applied to the data frame
+  frame.  Then the \code{na.action} function is applied to the data frame
   (and may well add attributes).  The levels of any factors in the data
   frame are adjusted according to the \code{drop.unused.levels} and
   \code{xlev} arguments.
@@ -93,6 +92,9 @@ model.frame(formula, \dots)
   Unless \code{na.action = NULL}, time-series attributes will be removed
   from the variables found (since they will be wrong if \code{NA}s are
   removed).
+
+  Note that \emph{all} the variables in the formula are included in the
+  data frame, even those preceded by \code{-}.
 }
 \value{
   A \code{\link{data.frame}} containing the variables used in

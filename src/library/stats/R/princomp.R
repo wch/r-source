@@ -12,8 +12,8 @@ princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
     mf <- eval.parent(mf)
     ## this is not a `standard' model-fitting function,
     ## so no need to consider contrasts or levels
-    if(any(sapply(mf, function(x) is.factor(x) || !is.numeric(x))))
-        stop("PCA applies only to numerical variables")
+    if (.check_vars_numeric(mf))
+         stop("PCA applies only to numerical variables")
     na.act <- attr(mf, "na.action")
     mt <- attr(mf, "terms") # allow model.frame to update it
     attr(mt, "intercept") <- 0
