@@ -1277,7 +1277,7 @@ int winaddmenuitem(char * item, char * menu, char * action, char *errmsg)
 	addto(usermenus[im]);
 	m  = newmenuitem(item, 0, menuuser);
 	if (m) {
-	    if(alloc_items < nitems) {
+	    if(alloc_items <= nitems) {
 		if(alloc_items <= 0) {
 		    alloc_items = 100;
 		    umitems = (Uitem *) malloc(sizeof(Uitem) * alloc_items);
