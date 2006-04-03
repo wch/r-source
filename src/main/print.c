@@ -150,12 +150,6 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }/* do_prmatrix */
 
-static SEXP R_packageSlot(SEXP object) {
-  static SEXP packageStr = NULL;
-  if(!packageStr)
-    packageStr = install("package");
-  return getAttrib(object, packageStr);
-}
 
 /* .Internal(print.default(x, digits, quote, na.print, print.gap,
                            right, useS4)) */
