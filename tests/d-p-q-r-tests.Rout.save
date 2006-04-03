@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-03-21 r37560)
+Version 2.3.0 alpha (2006-04-03 r37628)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -294,6 +294,7 @@ df =  50[1] TRUE
 df = 100[1] TRUE
 > 
 > ## p ~= 1 (<==> 1-p ~= 0) -- gave infinite loop in R <= 1.8.1 -- PR#6421
+> options(warn=-1) # ignore warnings from R's version of log1p
 > psml <- 2^-(10:54)
 > q0 <- qchisq(psml,    df=1.2, ncp=10, lower.tail=FALSE)
 > q1 <- qchisq(1-psml, df=1.2, ncp=10) # inaccurate in the tail
@@ -304,6 +305,7 @@ df = 100[1] TRUE
 [1] TRUE
 > all.equal(p0[iO], psml[iO])
 [1] TRUE
+> options(warn=0)
 > 
 > ##--- Beta (need more):
 > 
@@ -1068,5 +1070,5 @@ Warning messages:
 > ## very small negatives were rounded to 0 in R 2.2.1 and earlier
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  4.36 0.02 4.47 0 0 
+Time elapsed:  2.53 0.03 2.55 0 0 
 > 
