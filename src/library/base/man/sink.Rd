@@ -57,6 +57,11 @@ sink.number(type = c("output", "message"))
   For \code{sink.number("message")} the connection number used for
   messages, 2 if no diversion has been used.
 }
+\note{
+  \code{sink(split = TRUE)} is only available on systems which support
+  the C99 function \code{va_copy} (or under the name \code{__va_copy}),
+  but we know of no current systems which do not.
+}
 \section{Warning}{
   Don't use a connection that is open for \code{sink} for any other
   purpose.  The software will stop you closing one such inadvertently.
