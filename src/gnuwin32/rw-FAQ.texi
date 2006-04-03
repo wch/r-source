@@ -419,7 +419,7 @@ If you have permission to do so, you can also create an environment file
 @file{etc\Renviron.site} and set environmental variables in that file in
 the same way.  This is useful for variables which should be set for all
 users and all usages of this R installation.  (Their values can be
-overridden in a @file{.Renviron} or on the command line.)
+overridden in a @file{.Renviron} file or on the command line.)
 
 See @code{?Startup} for more details of environment files, include
 the site-wide environment file @file{Renviron.site}.
@@ -577,11 +577,13 @@ error may also happen in the middle of a session.  In some cases where
 we have tracked this down, it was due to bugs in the video driver on the
 system in question: it makes changes to the floating point control word
 which are incompatible with R.  (Good practice would restore the control
-word to the state it was in when the driver code was called.)  For
-example, one user reported that the virtual screen manager JSP2 caused
-this crash.
+word to the state it was in when the driver code was called, and R
+tries hard to correct this before running its own code.)  For example,
+one user reported that the virtual screen manager JSP2 caused this
+crash.
 
-These errors are essentially impossible for us to fix or work around.
+These errors are essentially impossible for us to fix or work around
+beyond the measures already taken (which were increased in R 2.3.0).
 The only solution we know of is for the user to replace the buggy driver
 that is causing the error.
 
@@ -911,7 +913,8 @@ standard packages if it has write permission in the main library tree.
 Not even these work for Compiled HTML help.
 
 Currently links to the @code{base}, @code{datasets}, @code{utils},
-@code{grDevices}, @code{graphics} and @code{stats} packages are fixed.
+@code{grDevices}, @code{graphics}, @code{methods} and @code{stats}
+packages are fixed.
 
 
 @node update.packages() fails, How do I add to the list of repositories?, Hyperlinks in HTML do not work., Packages
@@ -1384,7 +1387,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2006 January 02
+@set LASTEDIT 2006 April 03
 @ifhtml
 @html
 <hr WIDTH="100%">
