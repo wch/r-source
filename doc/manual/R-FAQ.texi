@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-03-30
+@set FAQ_DATE @value{FAQ_YEAR}-04-03
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -3275,6 +3275,8 @@ Unbiased recursive partitioning in a conditional inference framework.
 Package for Analysis of Space-Time Ecological Series.
 @item pbatR
 Frontend to PBAT to run within R.
+@item pcaPP
+Robust PCA by Projection Pursuit.
 @item pcurve
 Fits a principal curve to a numeric multivariate dataset in arbitrary
 dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis and
