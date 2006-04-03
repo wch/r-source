@@ -1779,7 +1779,7 @@ SEXP attribute_hidden do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nr, nc, i, j, qmethod;
     Rboolean wasopen, quote_rn = FALSE, *quote_col;
     Rconnection con;
-    char *csep, *ceol, *cna, cdec, *tmp;
+    char *csep, *ceol, *cna, cdec, *tmp=NULL /* -Wall */;
     SEXP *levels;
     R_StringBuffer strBuf = {NULL, 0, MAXELTSIZE};
     wt_info wi;

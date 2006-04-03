@@ -29,6 +29,11 @@
 #include <config.h>
 #endif
 
+#if defined(HAVE_GLIBC2)
+/* for isnan in Rinlinedfuns.h */
+# define _SVID_SOURCE 1
+#endif
+
 #include <stdlib.h> /* for putenv */
 #include <Defn.h> /* for PATH_MAX */
 
