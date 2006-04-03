@@ -910,7 +910,11 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     /* replace the second argument with a string */
-    SETCADR(args, input);
+
+    /* Previously this was SETCADR(args, input); */
+    /* which could cause problems when nlist was */
+    /* ..., as in PR#8718 */
+    args = CONS(CAR(args), CONS(input, R_NilValue));
 
     /* If the first argument is an object and there is */
     /* an approriate method, we dispatch to that method, */

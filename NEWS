@@ -933,6 +933,7 @@ BUG FIXES
 	previously also checked columns which were part of negative terms
 	in the formula).
 
+    o   Misuse of $ in apply could corrupt memory (PR#8718)
 
 
 
