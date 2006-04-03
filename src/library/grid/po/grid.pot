@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-03-27 15:42+0100\n"
+"POT-Creation-Date: 2006-04-03 09:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,27 +64,31 @@ msgstr ""
 msgid "invalid layout.pos.col"
 msgstr ""
 
+#: matrix.c:50
+msgid "singular transformation matrix"
+msgstr ""
+
 #: state.c:178
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr ""
 
-#: unit.c:258 unit.c:408 unit.c:1077 unit.c:1157 unit.c:1237 unit.c:1317
+#: unit.c:258 unit.c:408 unit.c:1129 unit.c:1209 unit.c:1289 unit.c:1369
 msgid "Unimplemented unit function"
 msgstr ""
 
-#: unit.c:770 unit.c:1510
+#: unit.c:822 unit.c:1564
 msgid "Illegal unit or unit not yet implemented"
 msgstr ""
 
-#: unit.c:1643
+#: unit.c:1697
 msgid "Invalid unit"
 msgstr ""
 
-#: unit.c:1659
+#: unit.c:1713
 msgid "Units must be character"
 msgstr ""
 
-#: unit.c:1662
+#: unit.c:1716
 msgid "Units must be of length > 0"
 msgstr ""
 
