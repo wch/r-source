@@ -310,6 +310,8 @@ double locationY(LLocation l);
 
 void copyTransform(LTransform t1, LTransform t2);
 
+void invTransform(LTransform t, LTransform invt);
+
 void identity(LTransform m);
 
 void translation(double tx, double ty, LTransform m);

@@ -45,6 +45,7 @@ export(
        "editDetails",
        "validDetails",
        "heightDetails", "widthDetails",
+       "xDetails", "yDetails",
 
 #       "height", "heightDetails",
 #       "width", "widthDetails",

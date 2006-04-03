@@ -41,6 +41,24 @@ void copyTransform(LTransform t1, LTransform t2)
 	    t2[i][j] = t1[i][j];
 }
 
+void invTransform(LTransform t, LTransform invt)
+{
+    double det = t[0][0]*(t[2][2]*t[1][1] - t[2][1]*t[1][2]) - 
+	t[1][0]*(t[2][2]*t[0][1] - t[2][1]*t[0][2]) +
+	t[2][0]*(t[1][2]*t[0][1] - t[1][1]*t[0][2]);
+    if (det == 0)
+	error(_("singular transformation matrix"));
+    invt[0][0] = 1/det*(t[2][2]*t[1][1] - t[2][1]*t[1][2]);
+    invt[0][1] = -1/det*(t[2][2]*t[0][1] - t[2][1]*t[0][2]);
+    invt[0][2] = 1/det*(t[1][2]*t[0][1] - t[1][1]*t[0][2]);
+    invt[1][0] = -1/det*(t[2][2]*t[1][0] - t[2][0]*t[1][2]);
+    invt[1][1] = 1/det*(t[2][2]*t[0][0] - t[2][0]*t[0][2]);
+    invt[1][2] = -1/det*(t[1][2]*t[0][0] - t[1][0]*t[0][2]);
+    invt[2][0] = 1/det*(t[2][1]*t[1][0] - t[2][0]*t[1][1]);
+    invt[2][1] = -1/det*(t[2][1]*t[0][0] - t[2][0]*t[0][1]);
+    invt[2][2] = 1/det*(t[1][1]*t[0][0] - t[1][0]*t[0][1]);
+}
+
 void identity(LTransform m) 
 {
     int i, j;

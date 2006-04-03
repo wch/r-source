@@ -438,12 +438,13 @@ double evaluateGrobUnit(double value, SEXP grob,
     double rotationAngle;
     LViewportContext vpc;
     R_GE_gcontext gc;
-    LTransform transform;
+    LTransform transform, savedTransform;
     SEXP currentvp, currentgp;
-    SEXP preFn, evalFn = R_NilValue, postFn, findGrobFn;
-    SEXP R_fcall0, R_fcall1, R_fcall2, R_fcall3;
+    SEXP preFn,  postFn, findGrobFn;
+    SEXP evalFnx = R_NilValue, evalFny = R_NilValue;
+    SEXP R_fcall0, R_fcall1, R_fcall2x, R_fcall2y, R_fcall3;
     SEXP savedgpar, savedgrob;
-    SEXP unit = R_NilValue;
+    SEXP unitx = R_NilValue, unity = R_NilValue;
     double result = 0.0;
     /*
      * We are just doing calculations, not drawing, so
@@ -454,6 +455,14 @@ double evaluateGrobUnit(double value, SEXP grob,
      */
     Rboolean record = dd->recordGraphics;
     dd->recordGraphics = FALSE;
+    /*
+     * Save the current viewport transform 
+     * (use to convert location relative to current viewport)
+     */
+    currentvp = gridStateElement(dd, GSS_VP);
+    getViewportTransform(currentvp, dd, 
+			 &vpWidthCM, &vpHeightCM, 
+			 savedTransform, &rotationAngle);
     /* 
      * Save the current gpar state and restore it at the end
      */
@@ -468,16 +477,16 @@ double evaluateGrobUnit(double value, SEXP grob,
     PROTECT(preFn = findFun(install("preDraw"), R_gridEvalEnv));
     switch(evalType) {
     case 0:
-	PROTECT(evalFn = findFun(install("xDetails"), R_gridEvalEnv));
-	break;
     case 1:
-	PROTECT(evalFn = findFun(install("yDetails"), R_gridEvalEnv));
+	PROTECT(evalFnx = findFun(install("xDetails"), R_gridEvalEnv));
+	PROTECT(evalFny = findFun(install("yDetails"), R_gridEvalEnv));
 	break;
     case 2:
-	PROTECT(evalFn = findFun(install("width"), R_gridEvalEnv));
+	PROTECT(evalFnx = findFun(install("width"), R_gridEvalEnv));
 	break;
     case 3:
-	PROTECT(evalFn = findFun(install("height"), R_gridEvalEnv));
+	PROTECT(evalFny = findFun(install("height"), R_gridEvalEnv));
+	break;
     }
     PROTECT(postFn = findFun(install("postDraw"), R_gridEvalEnv));
     /*
@@ -546,15 +555,20 @@ double evaluateGrobUnit(double value, SEXP grob,
 	    SEXP val;
 	    PROTECT(val = allocVector(REALSXP, 1));
 	    REAL(val)[0] = value;
-	    PROTECT(R_fcall2 = lang3(evalFn, grob, val));
-	    PROTECT(unit = eval(R_fcall2, R_gridEvalEnv));
+	    PROTECT(R_fcall2x = lang3(evalFnx, grob, val));
+	    PROTECT(unitx = eval(R_fcall2x, R_gridEvalEnv));
+	    PROTECT(R_fcall2y = lang3(evalFny, grob, val));
+	    PROTECT(unity = eval(R_fcall2y, R_gridEvalEnv));
 	    UNPROTECT(1); /* Just unprotect val */
 	}
 	break;
     case 2:
+	PROTECT(R_fcall2x = lang2(evalFnx, grob));
+	PROTECT(unitx = eval(R_fcall2x, R_gridEvalEnv));
+	break;
     case 3:
-	PROTECT(R_fcall2 = lang2(evalFn, grob));
-	PROTECT(unit = eval(R_fcall2, R_gridEvalEnv));
+	PROTECT(R_fcall2y = lang2(evalFny, grob));
+	PROTECT(unity = eval(R_fcall2y, R_gridEvalEnv));
 	break;
     }
     /* 
@@ -564,33 +578,63 @@ double evaluateGrobUnit(double value, SEXP grob,
      */
     /* Special case for "null" units
      */
-    if (pureNullUnit(unit, 0, dd)) {
-	result = evaluateNullUnit(pureNullUnitValue(unit, 0), vpWidthCM,
-				  nullLMode, nullAMode);
-    } else {
-	gcontextFromgpar(currentgp, 0, &gc, dd);
-	switch(evalType) {
-	case 0:
-	    result = transformXtoINCHES(unit, 0, vpc, &gc,
-					vpWidthCM, vpHeightCM,
-					dd);
-	    break;
-	case 1:
-	    result = transformYtoINCHES(unit, 0, vpc, &gc,
-					vpWidthCM, vpHeightCM,
-					dd);
-	    break;
-	case 2:
-	    result = transformWidthtoINCHES(unit, 0, vpc, &gc,
+    gcontextFromgpar(currentgp, 0, &gc, dd);
+    switch(evalType) {
+    case 0:
+    case 1:
+	if (evalType && pureNullUnit(unitx, 0, dd)) {
+	    result = evaluateNullUnit(pureNullUnitValue(unitx, 0), 
+				      vpWidthCM,
+				      nullLMode, nullAMode);
+	} else if (pureNullUnit(unity, 0, dd)) {
+	    result = evaluateNullUnit(pureNullUnitValue(unity, 0), 
+				      vpWidthCM,
+				      nullLMode, nullAMode);
+	} else {
+	    /*
+	     * Transform to device (to allow for viewports in grob)
+	     * then adjust relative to current viewport.
+	     */
+	    double xx, yy;
+	    LLocation lin, lout;
+	    LTransform invt;
+	    invTransform(savedTransform, invt);
+	    transformLocn(unitx, unity, 0,
+			  vpc, &gc,
+			  vpWidthCM, vpHeightCM, dd,
+			  transform, &xx, &yy);
+	    location(xx, yy, lin);
+	    trans(lin, invt, lout);
+	    xx = locationX(lout);
+	    yy = locationY(lout);
+	    if (evalType)
+		result = yy;
+	    else
+		result = xx;
+	}
+	break;
+    case 2:
+	if (pureNullUnit(unitx, 0, dd)) {
+	    result = evaluateNullUnit(pureNullUnitValue(unitx, 0), 
+				      vpWidthCM,
+				      nullLMode, nullAMode);
+	} else {
+	    result = transformWidthtoINCHES(unitx, 0, vpc, &gc,
 					    vpWidthCM, vpHeightCM,
 					    dd);
-	    break;
-	case 3:
-	    result = transformHeighttoINCHES(unit, 0, vpc, &gc,
+	}
+	break;
+    case 3:
+	if (pureNullUnit(unity, 0, dd)) {
+	    result = evaluateNullUnit(pureNullUnitValue(unity, 0), 
+				      vpWidthCM,
+				      nullLMode, nullAMode);
+	} else {
+	    result = transformHeighttoINCHES(unity, 0, vpc, &gc,
 					     vpWidthCM, vpHeightCM,
 					     dd);
-	    break;
 	}
+	break;
     }
     /* Call postDraw(grob)
      */
@@ -601,7 +645,15 @@ double evaluateGrobUnit(double value, SEXP grob,
      */
     setGridStateElement(dd, GSS_GPAR, savedgpar);
     setGridStateElement(dd, GSS_CURRGROB, savedgrob);
-    UNPROTECT(9);
+    switch(evalType) {
+    case 0:
+    case 1:
+	UNPROTECT(12);
+	break;
+    case 2:
+    case 3:
+	UNPROTECT(9);
+    }
     /* Return the transformed width
      */
     /*
@@ -1503,6 +1555,8 @@ double transformFromINCHES(double value, int unit,
     case L_MYSTRINGWIDTH:
     case L_STRINGHEIGHT:
     case L_MYSTRINGHEIGHT:
+    case L_GROBX:
+    case L_GROBY:
     case L_GROBWIDTH:
     case L_GROBHEIGHT:
     case L_NULL:
