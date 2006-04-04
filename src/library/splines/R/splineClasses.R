@@ -64,7 +64,7 @@ splineDesign <-
                 nnx <- length(x)
             }
 	} else
-        stop(gettextf("the 'x' data must be in the range %f to %f unless you set 'outer.ok = TRUE'", knots[ord], knots[nk- o1]), domain = NA)
+        stop(gettextf("the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'", knots[ord], knots[nk- o1]), domain = NA)
     }
     temp <- .Call("spline_basis", knots, ord, x, derivs, PACKAGE = "splines")
     ncoef <- nk - ord
