@@ -160,12 +160,12 @@ get1index(SEXP s, SEXP names, int len, Rboolean pok, int pos)
 	    }
 	/* Try for partial match */
 	if (pok && indx < 0) {
-	    if (STRING_ELT(names, i) == NA_STRING || 
-		STRING_ELT(s, pos) == NA_STRING) {
-		/* NA matches nothing */
-	    } else {
-		len = strlen(CHAR(STRING_ELT(s, pos)));
-		for(i = 0; i < length(names); i++) {
+	    len = strlen(CHAR(STRING_ELT(s, pos)));
+	    for(i = 0; i < length(names); i++) {
+		if (STRING_ELT(names, i) == NA_STRING || 
+		    STRING_ELT(s, pos) == NA_STRING) {
+		    /* NA matches nothing */
+		} else {
 		    if(!strncmp(CHAR(STRING_ELT(names, i)),
 				CHAR(STRING_ELT(s, pos)), len)) {
 			if(indx == -1)/* first one */
