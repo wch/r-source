@@ -2516,10 +2516,10 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 	 * rectangle as the devices understand rectangles
 	 * Otherwise we have to draw a polygon equivalent.
 	 */
-	if (rotationAngle == 0) {
-	    xx = justifyX(xx, ww, REAL(hjust)[i % LENGTH(hjust)]);
-	    yy = justifyY(yy, hh, REAL(vjust)[i % LENGTH(vjust)]);
-	    if (draw) {
+	if (draw) {
+	    if (rotationAngle == 0) {
+		xx = justifyX(xx, ww, REAL(hjust)[i % LENGTH(hjust)]);
+		yy = justifyY(yy, hh, REAL(vjust)[i % LENGTH(vjust)]);
 		/* The graphics engine only takes device coordinates
 		 */
 		xx = toDeviceX(xx, GE_INCHES, dd);
@@ -2530,87 +2530,58 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 		    R_FINITE(ww) && R_FINITE(hh))
 		    GERect(xx, yy, xx + ww, yy + hh, &gc, dd);
 	    } else {
-		if (R_FINITE(xx) && R_FINITE(yy) && 
-		    R_FINITE(ww) && R_FINITE(hh)) {
-		    if (xx < xmin)
-			xmin = xx;
-		    if (xx > xmax)
-			xmax = xx;
-		    if (xx + ww < xmin)
-			xmin = xx + ww;
-		    if (xx + ww > xmax)
-			xmax = xx + ww;
-		    if (yy < ymin)
-			ymin = yy;
-		    if (yy > ymax)
-			ymax = yy;
-		    if (yy + hh < ymin)
-			ymin = yy + hh;
-		    if (yy + hh > ymax)
-			ymax = yy + hh;
-		    /*
-		     * Calculate edgex and edgey for case where this is 
-		     * the only rect
-		     */
-		    rectEdge(xx, yy, xx + ww, yy + hh, theta,
-			     &edgex, &edgey);
-		    nrect++;
-		}
-	    }
-	} else {
-	    /* We have to do a little bit of work to figure out where the 
-	     * corners of the rectangle are.
-	     */
-	    double xxx[5], yyy[5], xadj, yadj;
-	    double dw, dh;
-	    SEXP temp = unit(0, L_INCHES);
-	    SEXP www, hhh;
-	    int tmpcol;
-	    /* Find bottom-left location */
-	    justification(ww, hh, 
-			  REAL(hjust)[i % LENGTH(hjust)], 
-			  REAL(vjust)[i % LENGTH(vjust)], 
-			  &xadj, &yadj);
-	    www = unit(xadj, L_INCHES);
-	    hhh = unit(yadj, L_INCHES);
-	    transformDimn(www, hhh, 0, vpc, &gc,
-			  vpWidthCM, vpHeightCM,
-			  dd, rotationAngle,
-			  &dw, &dh);
-	    xxx[0] = xx + dw;
-	    yyy[0] = yy + dh;
-	    /* Find top-left location */
-	    www = temp;
-	    hhh = unit(hh, L_INCHES);
-	    transformDimn(www, hhh, 0, vpc, &gc,
-			  vpWidthCM, vpHeightCM,
-			  dd, rotationAngle,
-			  &dw, &dh);
-	    xxx[1] = xxx[0] + dw;
-	    yyy[1] = yyy[0] + dh;
-	    /* Find top-right location */
-	    www = unit(ww, L_INCHES);
-	    hhh = unit(hh, L_INCHES);
-	    transformDimn(www, hhh, 0, vpc, &gc,
-			  vpWidthCM, vpHeightCM,
-			  dd, rotationAngle,
-			  &dw, &dh);
-	    xxx[2] = xxx[0] + dw;
-	    yyy[2] = yyy[0] + dh;
-	    /* Find bottom-right location */
-	    www = unit(ww, L_INCHES);
-	    hhh = temp;
-	    transformDimn(www, hhh, 0, vpc, &gc,
-			  vpWidthCM, vpHeightCM,
-			  dd, rotationAngle,
-			  &dw, &dh);
-	    xxx[3] = xxx[0] + dw;
-	    yyy[3] = yyy[0] + dh;
-	    if (R_FINITE(xxx[0]) && R_FINITE(yyy[0]) &&
-		R_FINITE(xxx[1]) && R_FINITE(yyy[1]) &&
-		R_FINITE(xxx[2]) && R_FINITE(yyy[2]) &&
-		R_FINITE(xxx[3]) && R_FINITE(yyy[3])) {
-		if (draw) {
+		/* We have to do a little bit of work to figure out where the 
+		 * corners of the rectangle are.
+		 */
+		double xxx[5], yyy[5], xadj, yadj;
+		double dw, dh;
+		SEXP temp = unit(0, L_INCHES);
+		SEXP www, hhh;
+		int tmpcol;
+		/* Find bottom-left location */
+		justification(ww, hh, 
+			      REAL(hjust)[i % LENGTH(hjust)], 
+			      REAL(vjust)[i % LENGTH(vjust)], 
+			      &xadj, &yadj);
+		www = unit(xadj, L_INCHES);
+		hhh = unit(yadj, L_INCHES);
+		transformDimn(www, hhh, 0, vpc, &gc,
+			      vpWidthCM, vpHeightCM,
+			      dd, rotationAngle,
+			      &dw, &dh);
+		xxx[0] = xx + dw;
+		yyy[0] = yy + dh;
+		/* Find top-left location */
+		www = temp;
+		hhh = unit(hh, L_INCHES);
+		transformDimn(www, hhh, 0, vpc, &gc,
+			      vpWidthCM, vpHeightCM,
+			      dd, rotationAngle,
+			      &dw, &dh);
+		xxx[1] = xxx[0] + dw;
+		yyy[1] = yyy[0] + dh;
+		/* Find top-right location */
+		www = unit(ww, L_INCHES);
+		hhh = unit(hh, L_INCHES);
+		transformDimn(www, hhh, 0, vpc, &gc,
+			      vpWidthCM, vpHeightCM,
+			      dd, rotationAngle,
+			      &dw, &dh);
+		xxx[2] = xxx[0] + dw;
+		yyy[2] = yyy[0] + dh;
+		/* Find bottom-right location */
+		www = unit(ww, L_INCHES);
+		hhh = temp;
+		transformDimn(www, hhh, 0, vpc, &gc,
+			      vpWidthCM, vpHeightCM,
+			      dd, rotationAngle,
+			      &dw, &dh);
+		xxx[3] = xxx[0] + dw;
+		yyy[3] = yyy[0] + dh;
+		if (R_FINITE(xxx[0]) && R_FINITE(yyy[0]) &&
+		    R_FINITE(xxx[1]) && R_FINITE(yyy[1]) &&
+		    R_FINITE(xxx[2]) && R_FINITE(yyy[2]) &&
+		    R_FINITE(xxx[3]) && R_FINITE(yyy[3])) {
 		    /* The graphics engine only takes device coordinates
 		     */
 		    xxx[0] = toDeviceX(xxx[0], GE_INCHES, dd);
@@ -2633,48 +2604,36 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 		    gc.col = tmpcol;
 		    gc.fill = NA_INTEGER;
 		    GEPolygon(5, xxx, yyy, &gc, dd);
-		} else {
-		    if (xxx[0] < xmin)
-			xmin = xxx[0];
-		    if (xxx[0] > xmax)
-			xmax = xxx[0];
-		    if (xxx[1] < xmin)
-			xmin = xxx[1];
-		    if (xxx[1] > xmax)
-			xmax = xxx[1];
-		    if (xxx[2] < xmin)
-			xmin = xxx[2];
-		    if (xxx[2] > xmax)
-			xmax = xxx[2];
-		    if (xxx[3] < xmin)
-			xmin = xxx[3];
-		    if (xxx[3] > xmax)
-			xmax = xxx[3];
-		    if (yyy[0] < ymin)
-			ymin = yyy[0];
-		    if (yyy[0] > ymax)
-			ymax = yyy[0];
-		    if (yyy[1] < ymin)
-			ymin = yyy[1];
-		    if (yyy[1] > ymax)
-			ymax = yyy[1];
-		    if (yyy[2] < ymin)
-			ymin = yyy[2];
-		    if (yyy[2] > ymax)
-			ymax = yyy[2];
-		    if (yyy[3] < ymin)
-			ymin = yyy[3];
-		    if (yyy[3] > ymax)
-			ymax = yyy[3];
-		    /*
-		     * Calculate edgex and edgey for case where this is 
-		     * the only rect
-		     */
-		    polygonEdge(xxx, yyy, 4, 
-				theta, 
-				&edgex, &edgey);
-		    nrect++;
 		}
+	    }
+	} else { /* Just calculating boundary */
+	    xx = justifyX(xx, ww, REAL(hjust)[i % LENGTH(hjust)]);
+	    yy = justifyY(yy, hh, REAL(vjust)[i % LENGTH(vjust)]);
+	    if (R_FINITE(xx) && R_FINITE(yy) && 
+		R_FINITE(ww) && R_FINITE(hh)) {
+		if (xx < xmin)
+		    xmin = xx;
+		if (xx > xmax)
+		    xmax = xx;
+		if (xx + ww < xmin)
+		    xmin = xx + ww;
+		if (xx + ww > xmax)
+		    xmax = xx + ww;
+		if (yy < ymin)
+		    ymin = yy;
+		if (yy > ymax)
+		    ymax = yy;
+		if (yy + hh < ymin)
+		    ymin = yy + hh;
+		if (yy + hh > ymax)
+		    ymax = yy + hh;
+		/*
+		 * Calculate edgex and edgey for case where this is 
+		 * the only rect
+		 */
+		rectEdge(xx, yy, xx + ww, yy + hh, theta,
+			 &edgex, &edgey);
+		nrect++;
 	    }
 	}
     }

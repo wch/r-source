@@ -582,12 +582,12 @@ double evaluateGrobUnit(double value, SEXP grob,
     switch(evalType) {
     case 0:
     case 1:
-	if (evalType && pureNullUnit(unitx, 0, dd)) {
-	    result = evaluateNullUnit(pureNullUnitValue(unitx, 0), 
+	if (evalType && pureNullUnit(unity, 0, dd)) {
+	    result = evaluateNullUnit(pureNullUnitValue(unity, 0), 
 				      vpWidthCM,
 				      nullLMode, nullAMode);
-	} else if (pureNullUnit(unity, 0, dd)) {
-	    result = evaluateNullUnit(pureNullUnitValue(unity, 0), 
+	} else if (pureNullUnit(unitx, 0, dd)) {
+	    result = evaluateNullUnit(pureNullUnitValue(unitx, 0), 
 				      vpWidthCM,
 				      nullLMode, nullAMode);
 	} else {
