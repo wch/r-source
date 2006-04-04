@@ -933,10 +933,18 @@ BUG FIXES
 	previously also checked columns which were part of negative terms
 	in the formula).
 
-    o   Misuse of $ in apply could corrupt memory (PR#8718)
+    o   Misuse of $ in apply could corrupt memory.  (PR#8718)
 
     o	apply() could fail if the function returned NULL (e.g. if
 	there was a single row).
+
+    o	registerS3method() failed due to a typo. (It was almost never
+	used.)
+
+    o	Registering an S3 method for an S3 generic in another package
+	that was converted to an S4 generic in the same package as the
+	S3 method registerd the method in the wrong place.
+
 
 
 

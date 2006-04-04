@@ -1032,7 +1032,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
 registerS3method <- function(genname, class, method, envir = parent.frame()) {
     addNamespaceS3method <- function(ns, generic, class, method) {
         regs <- getNamespaceInfo(ns, "S3methods")
-        regs <- cbind(regs, c(generic, class, method))
+        regs <- rbind(regs, c(generic, class, method))
         setNamespaceInfo(ns, "S3methods", regs)
     }
     groupGenerics <- c("Math", "Ops",  "Summary", "Complex")
@@ -1040,7 +1040,9 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
     else {
         genfun <- get(genname, envir = envir)
         if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
-            genfun <- methods::finalDefaultMethod(methods::getMethods(genname))@.Data
+            ## changed to match the later .registerS3method
+            ## genfun <- methods::finalDefaultMethod(methods::getMethods(genname))@.Data
+            genfun <- methods::slot(genfun, "default")@methods$ANY
         if (typeof(genfun) == "closure") environment(genfun)
         else .BaseNamespaceEnv
     }
@@ -1149,16 +1151,28 @@ registerS3methods <- function(info, package, env)
                 call. = FALSE, domain = NA)
     Info <- Info[!notex, , drop = FALSE]
 
-    ## do local generics first -- this could be load-ed if pre-computed.
-    localGeneric <- Info[,1] %in% loc
-    lin <- Info[localGeneric, , drop = FALSE]
-    S3MethodsTable <- get(".__S3MethodsTable__.", envir = env,
-                          inherits = FALSE)
-    for(i in seq(len = nrow(lin)))
-        assign(lin[i,4], get(lin[i,3], envir = env), envir = S3MethodsTable)
+    ## Do local generics first (this could be load-ed if pre-computed).
+    ## However, the local generic could be an S4 takeover of a non-local
+    ## (or local) S3 generic.  We can't just pass S4 generics on to
+    ## .registerS3method as that only looks non-locally (for speed).
+    l2 <- localGeneric <- Info[,1] %in% loc
+    if(.isMethodsDispatchOn())
+        for(i in which(localGeneric)) {
+            genfun <- get(Info[i, 1], envir = env)
+            if(methods::is(genfun, "genericFunction")) {
+                localGeneric[i] <- FALSE
+                registerS3method(Info[i, 1], Info[i, 2], Info[i, 3], env)
+            }
+        }
+    if(any(localGeneric)) {
+        lin <- Info[localGeneric, , drop = FALSE]
+        S3MethodsTable <- get(".__S3MethodsTable__.", envir = env, inherits = FALSE)
+        for(i in seq(len = nrow(lin)))
+            assign(lin[i,4], get(lin[i,3], envir = env), envir = S3MethodsTable)
+    }
 
     ## now the rest
-    fin <- Info[!localGeneric, , drop = FALSE]
+    fin <- Info[!l2, , drop = FALSE]
     for(i in seq(len = nrow(fin)))
         .registerS3method(fin[i, 1], fin[i, 2], fin[i, 3], fin[i, 4], env)
 
