@@ -105,9 +105,11 @@ parent.env(env) <- value
   \code{\link{ls}} may be used to view the objects in an environment.
 }
 \examples{
+f <- function() "top level function"
+
 ##-- all three give the same:
 environment()
-environment(environment)
+environment(f)
 .GlobalEnv
 
 ls(envir=environment(approxfun(1:2,1:2, method="const")))
