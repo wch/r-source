@@ -914,7 +914,7 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Previously this was SETCADR(args, input); */
     /* which could cause problems when nlist was */
     /* ..., as in PR#8718 */
-    args = CONS(CAR(args), CONS(input, R_NilValue));
+    PROTECT(args = CONS(CAR(args), CONS(input, R_NilValue)));
 
     /* If the first argument is an object and there is */
     /* an approriate method, we dispatch to that method, */
@@ -923,11 +923,11 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* evaluation retains any missing argument indicators. */
 
     if(DispatchOrEval(call, op, "$", args, env, &ans, 0, 0)) {
-	UNPROTECT(1);
+	UNPROTECT(2);
 	return(ans);
     }
 
-    UNPROTECT(1);
+    UNPROTECT(2);
     return R_subset3_dflt(CAR(ans), STRING_ELT(input, 0));
 }
 
