@@ -26,6 +26,10 @@
   The \code{infile} can have end of line marked by LF or CRLF (but not
   just CR), and files with an incomplete last line (missing end of line
   (EOL) mark) are processed correctly.
+
+  Additional options can be set by the environment variable
+  \code{R_BATCH_OPTIONS}: these come after \samp{--restore --save
+    --no-readline} and before any options given on the command line.
 }
 \note{
   Unlike \code{Splus BATCH}, this does not run the \R process in the

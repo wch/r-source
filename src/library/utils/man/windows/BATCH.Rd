@@ -25,6 +25,10 @@
 
   Files with an incomplete last line (no end of line mark) are now
   accepted.
+
+  Additional options can be set by the environment variable
+  \code{R_BATCH_OPTIONS}: these come after \samp{--restore --save}
+  and before any options given on the command line.
 }
 \keyword{utilities}
 
