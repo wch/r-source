@@ -943,7 +943,10 @@ BUG FIXES
 
     o	Registering an S3 method for an S3 generic in another package
 	that was converted to an S4 generic in the same package as the
-	S3 method registerd the method in the wrong place.
+	S3 method registered the method in the wrong place.
+
+    o	Several instances of Recall in S3 methods have been replaced by
+	the name of the function: see ?Recall for why.
 
 
 

@@ -248,8 +248,8 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
     if(any(extrap)) {
 	xrange <- c(object$min, object$min + object$range)
 	if(deriv == 0) {
-	    end.object <- Recall(object, xrange)$y
-	    end.slopes <- Recall(object, xrange, 1)$y * object$range
+	    end.object <- predict.smooth.spline.fit(object, xrange)$y
+	    end.slopes <- predict.smooth.spline.fit(object, xrange, 1)$y * object$range
 	    if(any(extrap.left))
 		y[extrap.left] <- end.object[1] +
 		    end.slopes[1] * (xs[extrap.left] - 0)
@@ -257,7 +257,7 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 		y[extrap.right] <- end.object[2] +
 		    end.slopes[2] * (xs[extrap.right] - 1)
 	} else if(deriv == 1) {
-	    end.slopes <- Recall(object, xrange, 1)$y * object$range
+	    end.slopes <- predict.smooth.spline.fit(object, xrange, 1)$y * object$range
 	    y[extrap.left] <- end.slopes[1]
 	    y[extrap.right] <- end.slopes[2]
 	}

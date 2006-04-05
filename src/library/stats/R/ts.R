@@ -643,7 +643,7 @@ window.default <- function(x, start = NULL, end = NULL,
         }
         y <- if(is.matrix(x)) rbind(x, NA)[i, , drop = FALSE] else c(x, NA)[i]
         attr(y, "tsp") <- c(ystart, yend, xfreq)
-        if(yfreq != xfreq) y <- Recall(y, frequency = yfreq)
+        if(yfreq != xfreq) y <- window.default(y, frequency = yfreq)
     }
     y
 }
