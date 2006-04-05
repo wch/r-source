@@ -446,6 +446,7 @@ double evaluateGrobUnit(double value, SEXP grob,
     SEXP savedgpar, savedgrob;
     SEXP unitx = R_NilValue, unity = R_NilValue;
     double result = 0.0;
+    Rboolean protectedGrob = FALSE;
     /*
      * We are just doing calculations, not drawing, so
      * we don't want anything recorded on the graphics engine DL
@@ -505,16 +506,19 @@ double evaluateGrobUnit(double value, SEXP grob,
 					 R_gridEvalEnv));
 	    PROTECT(R_fcall0 = lang2(findGrobFn, 
 				     getListElement(grob, "name")));
-	    grob = eval(R_fcall0, R_gridEvalEnv);
+	    PROTECT(grob = eval(R_fcall0, R_gridEvalEnv));
 	} else {
 	    PROTECT(findGrobFn = findFun(install("findGrobinChildren"), 
 					 R_gridEvalEnv));
 	    PROTECT(R_fcall0 = lang3(findGrobFn, 
 				     getListElement(grob, "name"),
 				     getListElement(savedgrob, "children")));
-	    grob = eval(R_fcall0, R_gridEvalEnv);
+	    PROTECT(grob = eval(R_fcall0, R_gridEvalEnv));
 	}
-	UNPROTECT(2);
+	/*
+	 * Flag to make sure we UNPROTECT these at the end
+	 */
+	protectedGrob = TRUE;
     }
     /* Call preDraw(grob) 
      */
@@ -559,7 +563,6 @@ double evaluateGrobUnit(double value, SEXP grob,
 	    PROTECT(unitx = eval(R_fcall2x, R_gridEvalEnv));
 	    PROTECT(R_fcall2y = lang3(evalFny, grob, val));
 	    PROTECT(unity = eval(R_fcall2y, R_gridEvalEnv));
-	    UNPROTECT(1); /* Just unprotect val */
 	}
 	break;
     case 2:
@@ -645,10 +648,12 @@ double evaluateGrobUnit(double value, SEXP grob,
      */
     setGridStateElement(dd, GSS_GPAR, savedgpar);
     setGridStateElement(dd, GSS_CURRGROB, savedgrob);
+    if (protectedGrob) 
+	UNPROTECT(3);
     switch(evalType) {
     case 0:
     case 1:
-	UNPROTECT(12);
+	UNPROTECT(13);
 	break;
     case 2:
     case 3:
@@ -897,13 +902,14 @@ double transformX(SEXP x, int index,
 	    nullamode = nullAMode;
 	result = unitValue(x, index);
 	unit = unitUnit(x, index);
-	data = unitData(x, index);
+	PROTECT(data = unitData(x, index));
 	result = transformLocation(result, unit, data, 
 				   vpc.xscalemin, vpc.xscalemax, gc,
 				   widthCM, heightCM, 
 				   nullLMode, 
 				   nullamode,
 				   dd);
+	UNPROTECT(1);
     }
     return result;
 }
@@ -938,13 +944,14 @@ double transformY(SEXP y, int index,
 	    nullamode = nullAMode;
 	result = unitValue(y, index);
 	unit = unitUnit(y, index);
-	data = unitData(y, index);
+	PROTECT(data = unitData(y, index));
 	result = transformLocation(result, unit, data, 
 				   vpc.yscalemin, vpc.yscalemax, gc,
 				   heightCM, widthCM, 
 				   nullLMode, 
 				   nullamode,
 				   dd);
+	UNPROTECT(1);
     } 
     return result;
 }
@@ -998,13 +1005,14 @@ double transformWidth(SEXP width, int index,
 	    nullamode = nullAMode;
 	result = unitValue(width, index);
 	unit = unitUnit(width, index);
-	data = unitData(width, index);
+	PROTECT(data = unitData(width, index));
 	result = transformDimension(result, unit, data, 
 				    vpc.xscalemin, vpc.xscalemax, gc,
 				    widthCM, heightCM, 
 				    nullLMode, 
 				    nullamode,
 				    dd);
+	UNPROTECT(1);
     }
     return result;
 }
@@ -1039,13 +1047,14 @@ double transformHeight(SEXP height, int index,
 	    nullamode = nullAMode;
 	result = unitValue(height, index);
 	unit = unitUnit(height, index);
-	data = unitData(height, index);
+	PROTECT(data = unitData(height, index));
 	result = transformDimension(result, unit, data, 
 				    vpc.yscalemin, vpc.yscalemax, gc,
 				    heightCM, widthCM, 
 				    nullLMode, 
 				    nullamode,
 				    dd);
+	UNPROTECT(1);
     }
     return result;
 }
