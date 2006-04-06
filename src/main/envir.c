@@ -1256,7 +1256,8 @@ SEXP findFun(SEXP symbol, SEXP rho)
     }
     if (rho == R_BaseEnv) {
 	if (SYMVALUE(symbol) == R_UnboundValue)
-	    error(_("couldn't find function \"%s\""), CHAR(PRINTNAME(symbol)));
+	    error(_("could not find function \"%s\""),
+		  CHAR(PRINTNAME(symbol)));
 	if (TYPEOF(SYMBOL_BINDING_VALUE(symbol)) == PROMSXP)
 	    return eval(SYMBOL_BINDING_VALUE(symbol), rho);
 	return SYMBOL_BINDING_VALUE(symbol);
