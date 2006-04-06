@@ -228,7 +228,7 @@ function(x)
     }
     children <- vector("list", length(x))
     for(i in seq(along = x))
-        children[[i]] <- cophenetic.dendrogram(x[[i]])
+        children[[i]] <- Recall(x[[i]])
     lens <- sapply(children, attr, "Size")
     m <- matrix(attr(x, "height"), sum(lens), sum(lens))
     ## This seems a bit slower:

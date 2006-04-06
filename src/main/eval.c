@@ -1648,7 +1648,14 @@ SEXP attribute_hidden do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (cptr == NULL)
 	error(_("'Recall' called from outside a closure"));
-    if( TYPEOF(CAR(cptr->call)) == SYMSXP)
+
+    /* If the function has been recorded in the context, use it
+       otherwise search for it by name or evaluate the expression
+       originally used to get it.
+    */
+    if (cptr->callfun != R_NilValue)
+	PROTECT(s = cptr->callfun);
+    else if( TYPEOF(CAR(cptr->call)) == SYMSXP)
 	PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
     else
 	PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));

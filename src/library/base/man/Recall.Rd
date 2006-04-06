@@ -12,25 +12,17 @@ Recall(\dots)
   in which it is called.  It allows the definition of recursive
   functions which still work after being renamed, see example below.
 }
-\details{
-  Because of the way contexts in \R are implemented, this looks up the
-  function from the name in the environment in which the function was
-  originally called, and calls the function of that name which is found
-  by the usual lookup rules.
-
-  Beware that if \code{Recall} is called from within an S3 method, it
-  will call the method and not the generic, and the method may not be
-  visible in the environment from which the generic was called.
-}
+% \details{
+% 
+% }
 \note{
   \code{Recall} will not work correctly when passed as a function
-  argument, eg to the \code{apply} family of functions.
+  argument, e.g. to the \code{apply} family of functions.
 }
 \seealso{
   \code{\link{do.call}} and \code{\link{call}}.
-    
-  \code{\link{local}} for another way to write anonymous
-  recursive functions
+  
+  \code{\link{local}} for another way to write anonymous recursive functions.
 }
 \examples{
 ## A trivial (but inefficient!) example:

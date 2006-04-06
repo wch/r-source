@@ -945,8 +945,8 @@ BUG FIXES
 	that was converted to an S4 generic in the same package as the
 	S3 method registered the method in the wrong place.
 
-    o	Several instances of Recall in S3 methods have been replaced by
-	the name of the function: see ?Recall for why.
+    o	Recall() used lookup for the function in use and so could fail
+	if that was an S3 method not on the search path.
 
 
 

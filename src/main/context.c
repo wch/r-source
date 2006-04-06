@@ -32,14 +32,16 @@
  *  recursively.  The memory is reclaimed naturally on return through
  *  the recursions (the R_GlobalContext pointer needs adjustment).
  *
- *  A context contains the following information:
+ *  A context contains the following information (and more):
  *
  *	nextcontext	the next level context
  *	cjmpbuf		longjump information for non-local return
  *	cstacktop	the current level of the pointer protection stack
  *	callflag	the context "type"
- *	call		the call (name of function) that effected this
- *			context
+ *	call		the call (name of function, or expression to 
+ *			get the function) that effected this
+ *			context if a closure, otherwise often NULL.
+ *	callfun		the function, if this was a closure.
  *	cloenv		for closures, the environment of the closure.
  *	sysparent	the environment the closure was called from
  *	conexit		code for on.exit calls, to be executed in cloenv
@@ -592,7 +594,7 @@ Rboolean attribute_hidden R_ToplevelExec(void (*fun)(void *), void *data)
     saveToplevelContext = R_ToplevelContext;
 
     begincontext(&thiscontext, CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
-		 R_BaseEnv, R_NilValue, R_GlobalEnv);
+		 R_BaseEnv, R_NilValue, R_NilValue);
     if (SETJMP(thiscontext.cjmpbuf))
 	result = FALSE;
     else {
