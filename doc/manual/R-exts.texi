@@ -2964,12 +2964,14 @@ manual.)
 There are optional arguments specified as
 @code{\link[@var{pkg}]@{@var{foo}@}} and
 @code{\link[@var{pkg:bar}]@{@var{foo}@}} to link to the package
-@var{pkg} with topic (file?) @var{foo} and @var{bar} respectively.
-These are rarely needed, perhaps to refer to not-yet-installed packages
-(but there the HTML help will resolve the link at run time) or in the
-normally undesirable event that more than one package offers help on a
-topic.  They are only in used in (C)HTML help (and not for hyperlinks in
-latex or S sgml conversions of help pages).
+@var{pkg} with topic @var{foo} and @var{bar} respectively.  These are
+rarely needed, perhaps to refer to not-yet-installed packages (but there
+the HTML help will resolve the link at run time) or in the normally
+undesirable event that more than one package offers help on a topic.
+They are only in used in (C)HTML help (and not for hyperlinks in latex
+or S sgml conversions of help pages), and actually link to the file of
+the given topic name (since there is no way to know which topics are in
+which files in an uninstalled package).
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation files
 @section Mathematics
