@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-04-03
+@set FAQ_DATE @value{FAQ_YEAR}-04-05
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -1849,6 +1849,8 @@ Communications in Medicine (DICOM) Standard.
 @item Davies
 Functions for the Davies quantile function and the Generalized Lambda
 distribution.
+@item DescribeDisplay
+R interface to the DescribeDisplay GGobi plugin.
 @item Design
 Regression modeling, testing, estimation, validation, graphics,
 prediction, and typesetting by storing enhanced model design attributes
@@ -2567,6 +2569,8 @@ Fitting and testing probabilistic choice models, especially the BTL,
 elimination-by-aspects (EBA), and preference tree (Pretree) models.
 @item eco
 Fitting Bayesian models of ecological inference in 2 by 2 tables.
+@c @item ecodist
+@c Dissimilarity-based functions for ecological analysis.
 @item edci
 Edge Detection and Clustering in Images.
 @item effects
@@ -2750,6 +2754,8 @@ Mesh generation and surface tesselation, based on the Qhull library.
 @item ggm
 Functions for defining directed acyclic graphs and undirected graphs,
 finding induced graphs and fitting Gaussian Markov models.
+@item ggplot
+Grammar of graphics based plots for R.
 @item giRaph
 Data structures and algorithms for computations on graphs.
 @item gld
@@ -3464,6 +3470,8 @@ Provides bindings to Frank Warmerdam's Geospatial Data Abstraction
 Library (GDAL).
 @item rgenoud
 R version of GENetic Optimization Using Derivatives.
+@item rggobi
+Interface between R and GGobi.
 @item rgl
 3D visualization device system (OpenGL).
 @item rimage
