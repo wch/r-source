@@ -238,6 +238,18 @@ SEXP type2str(SEXPTYPE t)
     return R_NilValue; /* for -Wall */
 }
 
+char *type2char(SEXPTYPE t)
+{
+    int i;
+
+    for (i = 0; TypeTable[i].str; i++) {
+	if (TypeTable[i].type == t)
+	    return TypeTable[i].str;
+    }
+    error(_("type %d is unimplemented in type2str"), t);
+    return ""; /* for -Wall */
+}
+
 SEXP type2symbol(SEXPTYPE t)
 {
     int i;

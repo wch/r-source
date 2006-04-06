@@ -718,6 +718,7 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define substituteList		Rf_substituteList
 # define tsConform		Rf_tsConform
 # define tspgets		Rf_tspgets
+# define type2char		Rf_type2char
 # define type2str		Rf_type2str
 # define type2symbol		Rf_type2symbol
 # define unbindVar		Rf_unbindVar
@@ -880,6 +881,7 @@ SEXP R_sysframe(int,RCNTXT*);
 SEXP R_sysfunction(int,RCNTXT*);
 Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
+char *type2char(SEXPTYPE);
 SEXP type2str(SEXPTYPE);
 SEXP type2symbol(SEXPTYPE);
 void unbindVar(SEXP, SEXP);

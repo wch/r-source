@@ -51,7 +51,7 @@
   represented as one of the ANSI escape sequences (\code{\a}, \code{\b},
   \code{\f}, \code{\n}, \code{\r}, \code{\t}, \code{\v}, \code{\\\\} and
   \code{\0}: see \link{Quotes}), or failing that as a 3-digit octal
-  code: for example the UK currency pound in the C locale (if
+  code: for example the UK currency pound sign in the C locale (if
   implemented correctly) is printed as \code{\243}.  Which characters
   are non-printable depends on the locale.
 #ifdef windows
@@ -59,17 +59,18 @@
   are regarded as printable on Windows.)
 #endif
 }
-\section{Unicode  and other multi-byte locales}{
+\section{Unicode and other multi-byte locales}{
   In a Unicode (UTF-8) locale, characters \code{0x00} to \code{0x1F} and
   \code{0x7f} (the ASCII non-printing characters) are printed in the
-  same way, via ANSI escape sequences or 3-digit octal escapes.
-  Multi-byte non-printing characters are printed as an escape
-  sequence of the form \code{\uxxxx} or \code{\Uxxxxxxxx} (in hexadecimal).
+  same way as in a single-byte locale, via ANSI escape sequences or
+  3-digit octal escapes. Multi-byte non-printing characters are printed
+  as an escape sequence of the form \code{\uxxxx} or \code{\Uxxxxxxxx}
+  (in hexadecimal).
 
   It is possible to have a character string in an object that is not
   valid UTF-8.  If a byte is encountered that is not part of an
   encoded Unicode character it is printed in hex in the form \code{<xx>}
-  and the next character is tried.
+  and the next byte is tried to see if it starts a valid Unicode character.
 }
 \seealso{
   The generic \code{\link{print}}, \code{\link{options}}.

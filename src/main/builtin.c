@@ -359,6 +359,10 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    pwidth = INT_MAX;
     }
     else pwidth = asInteger(fill);
+    if(pwidth <= 0) {
+	warningcall(call, _("non-positive 'fill' argument will be ignored"));
+	pwidth = INT_MAX;
+    }
     args = CDR(args);
 
     labs = CAR(args);
@@ -378,7 +382,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     ci.con = con;
 
-    /* set up a context which will close the window if there is an error */
+    /* set up a context which will close the connection if there is an error */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
     cntxt.cend = &cat_cleanup;
@@ -425,8 +429,9 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 #endif
 	    else
-		errorcall(call, _("argument %d not yet handled by cat"),
-			  1+iobj);
+		errorcall(call, 
+			  _("argument %d (type '%s') cannot be handled by 'cat'"),
+			  1+iobj, type2char(TYPEOF(s)));
 	    /* FIXME : cat(...) should handle ANYTHING */
 	    w = strlen(p);
 	    cat_sepwidth(sepr, &sepw, ntot);
@@ -448,6 +453,8 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    }
 		    w = strlen(p);
 		    cat_sepwidth(sepr, &sepw, ntot);
+		    /* This is inconsistent with the version above.
+		       As from R 2.3.0, fill <= 0 is ignored. */
 		    if ((width + w + sepw > pwidth) && pwidth) {
 			cat_newline(labs, &width, lablen, nlines);
 			nlines++;
