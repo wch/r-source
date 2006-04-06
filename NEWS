@@ -232,10 +232,10 @@ NEW FEATURES
     o	On suitably equipped Unix-alike systems, segfaults, illegal
 	operations and bus errors are caught and there is a simple
 	error-handler which gives the user some choice as to what to
-	do in interactive use. [Currently experimental.]
+	do in interactive use. [Experimental.]
 
 	On Windows access violations and illegal instructions are
-	caught with a simple error handler.  [Currently experimental.]
+	caught with a simple error handler.  [Experimental.]
 
     o	gettext has been updated to 0.14.5.
 
@@ -391,6 +391,11 @@ NEW FEATURES
     o	The default is now compress = !ascii in save() (but not save.image).
 
     o	unserialize() can now also read a byte stream from a raw vector.
+
+    o	page() accepts general R objects, not just names (and
+	previously undocumented) character strings.  This allows the
+	object to be specified as a call, for example.  More options
+	are allowed in its '...' argument.
 
 
 DEPRECATED & DEFUNCT

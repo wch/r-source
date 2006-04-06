@@ -1,22 +1,31 @@
 page <- function(x, method = c("dput", "print"), ...)
 {
-    subx <- substitute(x)
-    if( is.name(subx) )
-	subx <- deparse(subx)
-    if (!is.character(subx) || length(subx) != 1)
-	stop("'page' requires a name")
-    method <- match.arg(method)
-    parent <- parent.frame()
-    if(exists(subx, envir = parent, inherits=TRUE)) {
-        file <- tempfile("Rpage.")
-        if(method == "dput")
-            dput(get(subx, envir = parent, inherits=TRUE), file)
-        else {
-            sink(file)
-            print(get(subx, envir = parent, inherits=TRUE))
-            sink()
-        }
-	file.show(file, title = subx, delete.file = TRUE, ...)
-    } else
-	stop(gettextf("no object named '%s' to show", subx), domain = NA)
+    ## local functions to parcel out '...'
+    local.file.show <- function(file, title = subx, delete.file = TRUE,
+                                pager = getOption("pager"), ...)
+        file.show(file, title = title, delete.file = delete.file, pager = pager)
+    local.dput <- function(x, file, title, delete.file, pager, ...)
+        dput(x, file, ...)
+    local.print <- function(x, title, delete.file, pager, ...)
+        print(x, ...)
+
+    if(is.character(x) && length(x) == 1) {
+        subx <- x
+        parent <- parent.frame()
+        if(exists(subx, envir = parent)) # inherits=TRUE is default
+            x <- get(subx, envir = parent)
+        else
+            stop(gettextf("no object named '%s' to show", x), domain = NA)
+    } else {
+        subx <- deparse(substitute(x))
+    }
+    file <- tempfile("Rpage.")
+    if(match.arg(method) == "dput")
+        local.dput(x, file, ...)
+    else {
+        sink(file)
+        local.print(x, ...)
+        sink()
+    }
+    local.file.show(file, ...)
 }
