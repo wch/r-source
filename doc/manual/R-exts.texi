@@ -2393,9 +2393,11 @@ particular, functions) are given in this subsection.
 @table @code
 @item \name@{@var{name}@}
 @findex \name
-@var{name} typically is the basename of the Rd file containing the
-documentation.  It is the ``name'' of the Rd object represented by the
-file and has to be unique in a package.
+@var{name} typically@footnote{There can be exceptions: for example Rd
+files are not allowed to start with a dot, and have to be uniquely named
+on a case-insensitve file system.} is the basename of the Rd file
+containing the documentation.  It is the ``name'' of the Rd object
+represented by the file and has to be unique in a package.
 @c and must not contain @LaTeX{}
 @c special characters (@samp{#}, @samp{$}, @samp{%}, @samp{&}, @samp{~},
 @c @samp{_}, @samp{^}, @samp{\}, @samp{@{}, @samp{@}}).
@@ -2795,9 +2797,11 @@ For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
 upper case).
 
-Note that the additional named sections are always inserted at fixed
-positions in the output (before @code{\note}, @code{\seealso} and the
-examples), no matter where they appear in the input.
+Note that the additional named sections are always inserted at a fixed
+position in the output (before @code{\note}, @code{\seealso} and the
+examples), no matter where they appear in the input (but in the same
+order as the input).
+
 
 @node Marking text, Lists and tables, Sectioning, Writing R documentation files
 @section Marking text
@@ -2961,17 +2965,29 @@ affects the creation of hyperlinks, for example in the @HTML{} pages
 used by @code{help.start()} and the PDF version of the reference
 manual.)
 
-There are optional arguments specified as
+You can specify a link to a different topic as
+@code{\link[=@var{dest}]@{@var{name}@}} which links to topic @var{dest}
+with name @var{name}.  This can be used to refer to the documentation
+for S3/4 classes, for example @code{\code@{"\link[=abc-class]@{abc@}"@}}
+would be a way to refer to the documentation of an S4 class @code{"abc"}
+defined in your package, and
+@code{\code@{"\link[=terms.object]@{terms@}"@}} to the S3 @code{"terms"}
+class (in package @pkg{stats}).
+
+There are two other forms of optional argument specified as
 @code{\link[@var{pkg}]@{@var{foo}@}} and
 @code{\link[@var{pkg:bar}]@{@var{foo}@}} to link to the package
-@var{pkg} with topic @var{foo} and @var{bar} respectively.  These are
-rarely needed, perhaps to refer to not-yet-installed packages (but there
-the HTML help will resolve the link at run time) or in the normally
-undesirable event that more than one package offers help on a topic.
-They are only in used in (C)HTML help (and not for hyperlinks in latex
-or S sgml conversions of help pages), and actually link to the file of
-the given topic name (since there is no way to know which topics are in
-which files in an uninstalled package).
+@var{pkg}, to @emph{files} @file{@var{foo}.html} and
+@file{@var{bar}.html} respectively.  These are rarely needed, perhaps to
+refer to not-yet-installed packages (but there the HTML help system will
+resolve the link at run time) or in the normally undesirable event that
+more than one package offers help on a topic@footnote{a common example
+in CRAN packages is @code{\link[mgcv]@{gam@}}.} (in which case the
+present package has precedence so this is only needed to refer to other
+packages).  They are only in used in (C)HTML help (and not for
+hyperlinks in latex nor S sgml conversions of help pages), and link to
+the file rather than the topic (since there is no way to know which
+topics are in which files in an uninstalled package).
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation files
 @section Mathematics

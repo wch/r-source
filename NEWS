@@ -609,6 +609,9 @@ DOCUMENTATION
     o	Markup such as --, ---, < and > is handled better when
 	converting .Rd files to [C]HTML.
 
+    o	There is new markup \link[=dest]{name} to generate a link to topic
+	'dest' which is shown as 'name'.
+
 
 PACKAGE INSTALLATION
 
@@ -952,6 +955,8 @@ BUG FIXES
 
     o	Recall() used lookup for the function in use and so could fail
 	if that was an S3 method not on the search path.
+
+    o	Rdconv -t Ssgm failed if it encountered \link[opt]{arg}.
 
 
 

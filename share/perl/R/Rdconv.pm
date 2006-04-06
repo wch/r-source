@@ -418,18 +418,28 @@ sub get_arguments {
 }
 
 ## Get the argument(s) of a link.
+## The return value is ($id, $arg, $dest, $opt)
+## Here $arg is the argument in {}
+## $dest=$arg unless it is of the form \link[=dest]{arg}.  It is the
+## topic to link to.
+## $opt is empty unless the form is \link[opt]{arg}, so it has to be last.
 sub get_link {
     my ($text) = @_;
     my @retval, $id;
-    if($text =~ /\\link\[([^\]]+)\]($ID)/){
+    if($text =~ /\\link\[=([^\]]+)\]($ID)/){
 	$retval[2] = $1;
 	$id = $2;
 	$text =~ /$id(.*)$id/s;
 	$retval[1] = $1;
+    } elsif($text =~ /\\link\[([^\]]+)\]($ID)/){
+	$retval[3] = $1;
+	$id = $2;
+	$text =~ /$id(.*)$id/s;
+	$retval[1] = $retval[2] = $1;
     } elsif($text =~ /\\link($ID)/){
 	$id = $1;
 	$text =~ /$id(.*)$id/s;
-	$retval[1] = $1;
+	$retval[1] = $retval[2] = $1;
     }
     $retval[0] = $id;
     @retval;
@@ -813,9 +823,9 @@ sub text2html {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
-	my ($id, $arg, $opt) = get_link($text);
+	my ($id, $arg, $dest, $opt) = get_link($text);
 	## fix conversions in key of htmlindex:
-	my $argkey = $arg;
+	my $argkey = $dest;
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
 	die "\nERROR: command (e.g. \\url) inside \\link\n"
@@ -969,10 +979,10 @@ sub code2html {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
-	my ($id, $arg, $opt) = get_link($text);
+	my ($id, $arg, $dest, $opt) = get_link($text);
 
 	## fix conversions in key of htmlindex:
-	my $argkey = $arg;
+	my $argkey = $dest;
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
 	$argkey =~ s/&amp;/&/go;
@@ -2571,8 +2581,8 @@ sub text2latex {
     ## we need to convert \links's
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
-	my ($id, $arg, $opt) = get_link($text);
-	my $mapped_name = &latex_link_trans0($arg);
+	my ($id, $arg, $dest, $opt) = get_link($text);
+	my $mapped_name = &latex_link_trans0($dest);
 	$text =~ s/\\link(\[.*\])?$id.*$id/\\LinkA{$arg}{$mapped_name}/s;
     }
 
@@ -2600,8 +2610,8 @@ sub code2latex {
 	my $loopcount = 0;
 	while(checkloop($loopcount++, $text, "\\link")
 	      && $text =~ /\\link/) {
-	    my ($id, $arg, $opt) = get_link($text);
-	    $text =~ s/\\link(\[.*\])?$id.*$id/HYPERLINK($arg)/s;
+	    my ($id, $arg, $dest, $opt) = get_link($text);
+	    $text =~ s/\\link(\[.*\])?$id.*$id/HYPERLINK($arg)($dest)/s;
 	}
     } else {
 	$text = undefine_command($text, "link");
@@ -2790,11 +2800,11 @@ sub latex_code_trans {
     ## avoid conversion to guillemets
     $c =~ s/<</<\{\}</go;
     $c =~ s/>>/>\{\}>/go;
-    $c =~ /HYPERLINK\(([^)]*)\)/;
-    my $c0 = $1;
-    my $link = latex_link_trans($c0);
+    $c =~ /HYPERLINK\(([^)]*)\)\(([^)]*)\)/;
+    my $c0 = $2; # destination
+    my $link = latex_link_trans($1);
     $c0 = latex_link_trans0($c0);
-    $c =~ s/HYPERLINK\([^)]*\)/\\LinkA{$link}{$c0}/go;
+    $c =~ s/HYPERLINK\([^)]*\)\([^)]*\)/\\LinkA{$link}{$c0}/go;
     $c =~ s/,,/,{},/g; # ,, is a ligature in the ae font.
     $c;
 }
@@ -2971,8 +2981,9 @@ sub text2Ssgm {
         $text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
 	$text =~ s/>/&gt;/go;
 	$text =~ s/</&lt;/go;
-	$text =~ s/\]/&rsqb;/go;
-	$text =~ s/\[/&lsqb;/go;
+# have to do these after \link[]{}
+#	$text =~ s/\]/&rsqb;/go;
+#	$text =~ s/\[/&lsqb;/go;
 	$text =~ s/\\%/%/go;
 
 	$text =~ s/\n\s*\n/\n<p>\n/sgo;
@@ -3039,9 +3050,9 @@ sub text2Ssgm {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
-	my ($id, $arg, $opt) = get_link($text);
+	my ($id, $arg, $dest, $opt) = get_link($text);
 	$text =~
-	    s/\\link(\[.*\])?$id.*$id/<s-function name="$arg">$arg<\/s-function>/s;
+	    s/\\link(\[.*\])?$id.*$id/<s-function name="$dest">$arg<\/s-function>/s;
     }
 
     $loopcount = 0;
@@ -3099,6 +3110,8 @@ sub text2Ssgm {
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
     }
     if($outerpass) {
+	$text =~ s/\]/&rsqb;/go;
+	$text =~ s/\[/&lsqb;/go;
 	$text =~ s/\\([^\\])/$1/go;#-drop single "\" (as in '\R')
 	$text =~ s/\\\\/\\/go;
 	$text = Ssgm_unescape_codes($text);
@@ -3125,9 +3138,9 @@ sub code2Ssgm {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
-	my ($id, $arg, $opt) = get_link($text);
+	my ($id, $arg, $dest, $opt) = get_link($text);
 	$text =~
-	    s/\\link(\[.*\])?$id.*$id/<s-function name="$arg">$arg<\/s-function>/s;
+	    s/\\link(\[.*\])?$id.*$id/<s-function name="$dest">$arg<\/s-function>/s;
     }
 
     $text = replace_addnl_command($text, "dontrun",
@@ -3151,9 +3164,9 @@ sub see2Ssgm {
     $text = Ssgm_unescape_codes($text);
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
-	my ($id, $arg, $opt) = get_link($text);
+	my ($id, $arg, $dest, $opt) = get_link($text);
 	$text =~
-	    s/\\link(\[.*\])?$id.*$id/<s-function name="$arg">$arg<\/s-function>/s;
+	    s/\\link(\[.*\])?$id.*$id/<s-function name="$dest">$arg<\/s-function>/s;
     }
 
     $text = unmark_brackets($text);
