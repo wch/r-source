@@ -12,20 +12,23 @@
 \arguments{
   \item{x}{the object to be printed.}
   \item{digits}{a non-null value for \code{digits} specifies the minimum
-    number of significant digits to be printed in values.   The default,
+    number of significant digits to be printed in values.  The default,
     \code{NULL}, uses \code{\link{getOption}(digits)}.  (For the
-    intepretation for complex numbers see \code{\link{signif}}.)}
+    intepretation for complex numbers see \code{\link{signif}}.)
+    Non-integer values will be rounded down, and only values
+    greater than or equal to one are accepted.
+  }
   \item{quote}{logical, indicating whether or not strings
     (\code{\link{character}}s) should be printed with surrounding quotes.}
   \item{na.print}{a character string which is used to indicate
     \code{\link{NA}} values in printed output, or \code{NULL} (see Details)}
   \item{print.gap}{a non-negative integer \eqn{\le 1024}{<= 1024},
-    giving the spacing between adjacent \dQuote{columns} in printed
-    vectors, matrices and arrays, or \code{NULL} meaning 1.}
+    or \code{NULL} (meaning 1), giving the spacing between adjacent
+    \dQuote{columns} in printed vectors, matrices and arrays.}
   \item{right}{logical, indicating whether or not strings should be
-    right-aligned. The default is left-alignment.}
+    right aligned.  The default is left alignment.}
   \item{\dots}{further arguments to be passed to or from other
-    methods. They are ignored in this function.}
+    methods.  They are ignored in this function.}
 }
 \details{
   The default for printing \code{NA}s is to print \code{NA} (without
@@ -37,7 +40,8 @@
   digits to be used, and that at least one entry will be encoded with
   that minimum number.  However, if all the encoded elements then have
   trailing zeroes, the number of decimal places is reduced until at
-  least one element has a non-zero final digit.
+  least one element has a non-zero final digit.  Decimal points are only
+  included if at least one decimal place is selected.
 
   Attributes are printed respecting their class(es), using the values of
   \code{digits} to \code{print.default}, but using the default values
@@ -46,7 +50,8 @@
   When the \pkg{methods} package is attached, \code{print} will call
   \code{\link{show}} for \R objects with formal classes if called
   with no optional arguments.
-
+}
+\section{Single-byte locales}{
   If a non-printable character is encountered during output, it is
   represented as one of the ANSI escape sequences (\code{\a}, \code{\b},
   \code{\f}, \code{\n}, \code{\r}, \code{\t}, \code{\v}, \code{\\\\} and
@@ -55,28 +60,38 @@
   implemented correctly) is printed as \code{\243}.  Which characters
   are non-printable depends on the locale.
 #ifdef windows
-  (Because some versions of Windows get this wrong, all 8-bit characters
-  are regarded as printable on Windows.)
+  (Because some versions of Windows get this wrong, all bytes with the
+  upper bit set are regarded as printable on Windows in a single-byte
+  locale.)
 #endif
 }
 \section{Unicode and other multi-byte locales}{
-  In a Unicode (UTF-8) locale, characters \code{0x00} to \code{0x1F} and
-  \code{0x7f} (the ASCII non-printing characters) are printed in the
-  same way as in a single-byte locale, via ANSI escape sequences or
-  3-digit octal escapes. Multi-byte non-printing characters are printed
-  as an escape sequence of the form \code{\uxxxx} or \code{\Uxxxxxxxx}
-  (in hexadecimal).
+  In all locales, the characters in the ASCII range (\code{0x00} to
+  \code{0x7f}) are printed in the same way, as-is if printable, otherwise
+  via ANSI escape sequences or 3-digit octal escapes as described for
+  single-byte locales.
+  
+  Multi-byte non-printing characters are printed as an escape sequence
+  of the form \code{\uxxxx}
+#ifndef windows
+  or \code{\Uxxxxxxxx}
+#endif
+  (in hexadecimal).  This is the internal code for the wide-character
+  representation of the character, which for all currently known
+  \R platforms is the Unicode code point.
 
-  It is possible to have a character string in an object that is not
-  valid UTF-8.  If a byte is encountered that is not part of an
-  encoded Unicode character it is printed in hex in the form \code{<xx>}
-  and the next byte is tried to see if it starts a valid Unicode character.
+  It is possible to have a character string in a character vector that
+  is not valid in the current locale.  If a byte is encountered that is
+  not part of a valid character it is printed in hex in the form
+  \code{<xx>} and this is repeated until the start of a valid character.
+  (This will rapidly recover from minor errors in UTF-8.)
 }
 \seealso{
   The generic \code{\link{print}}, \code{\link{options}}.
   The \code{"\link{noquote}"} class and print method.
 
-  \code{\link{encodeString}}.
+  \code{\link{encodeString}}, which encodes a character vector the way
+  it would be printed.
 }
 \examples{
 pi

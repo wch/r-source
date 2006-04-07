@@ -38,7 +38,7 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
 #ifdef windows
   (Windows' reporting of printable characters is unreliable, so all
   other control characters are regarded as non-printable, and all
-  characters with codes 32--255 as printable.)
+  characters with codes 32--255 as printable in a single-byte locale.)
 #endif
   See \code{\link{print.default}} for how non-printable characters are
   handled in multi-byte locales.
