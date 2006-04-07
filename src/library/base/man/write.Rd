@@ -40,7 +40,7 @@ write(x, file = "data",
 x <- matrix(1:10,ncol=5)
 
 # the file data contains x, two rows, five cols
-# 1 3 5 6 9 will form the first row
+# 1 3 5 7 9 will form the first row
 write(t(x))
 
 # Writing to the "console" 'tab-delimited'
