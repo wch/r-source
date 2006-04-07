@@ -1071,7 +1071,9 @@ if test "${GCC}" = yes; then
 ## PowerPC has 32k, not enough on ppc64 for the ca6200 entries in libR.so
 ## The only other platform where this is said to matter is m68k, which
 ## has 32k and so can use -fpic.
-    sparc*|ppc64)
+## However, although the gcc docs do not mention it, it seems s390/s390x
+## also supports and needs -fPIC
+    sparc*|ppc64|s390*)
       cpicflags="-fPIC"
       ;;
     *)
@@ -1082,7 +1084,7 @@ if test "${GCC}" = yes; then
 fi
 if test "${G77}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64)
+    sparc*|ppc64|s390*)
       fpicflags="-fPIC"
       ;;
     *)
@@ -1092,7 +1094,7 @@ if test "${G77}" = yes; then
 fi
 if test "${GXX}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64)
+    sparc*|ppc64|s390*)
       cxxpicflags="-fPIC"
       ;;
     *)
@@ -1719,7 +1721,7 @@ AC_SUBST(SHLIB_FCLDFLAGS)
 ## use this to pick out gfortran (even though it is unreliable).
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64)
+    sparc*|ppc64|s390*)
       fcpicflags="-fPIC"
       ;;
     *)
