@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2005  The R Development Core Team
+ *  Copyright (C) 1999--2006  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
    char here is either ASCII or handled as a whole, apart from Rstrlen
    and EncodeString.
 
-   Octal representation of strings replaced by \u+6hex (can that be
+   Octal representation of strings replaced by \u+4/8hex (can that be
    improved?).
 */
 
@@ -220,6 +220,20 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
     return buff;
 }
 
+/* <FIXME> encodeString and Rstrwid make several assumptions which
+   may not be true.
+
+   1) That the ASCII charset is embedded as single bytes 0-127.
+   2) All multi-byte chars start with a byte 128-255.
+   3) The wchar_t representation used to hold multibyte chars.
+      is UCS-2 or -4 (and not say UTF-16 with surrogates).
+   4) The encoding is stateless.
+   
+   These are all true for UTF-8 and the Windows DBCSes, so perhaps
+   it does not matter much.  But it would be better to convert the
+   whole string to UCS-4 and then handle a char at a time.
+*/
+
 #ifdef SUPPORT_MBCS
 # include <R_ext/rlocale.h>
 #include <wchar.h>
@@ -326,8 +340,8 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 
     /* We need enough space for the encoded string, including escapes.
        Octal encoding turns one byte into four.
-       Unicode encoding can turn a multibyte into six or perhaps ten.
-       Let's be wasteful here.
+       Unicode encoding can turn a multibyte into six.
+       Let's be wasteful here (but why 5 not MB_CUR_MAX?)
      */
     R_AllocStringBuffer(imax2(5*cnt+2, w), buffer); /* +2 allows for quotes */
     q = buffer->data;
