@@ -1498,7 +1498,7 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
 		    cur_line[max_byte] = '\0';
 		}
 		cur_byte++;
-#if SUPPORT_MBCS /* SUPPORT_MBCS*/
+#ifdef SUPPORT_MBCS /* SUPPORT_MBCS*/
 	    }
 #endif /* */
 	} else { /* a control char */
