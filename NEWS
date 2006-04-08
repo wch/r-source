@@ -34,14 +34,18 @@ NEW FEATURES
 	with S-PLUS.  (If not supplied, the output is unchanged from
 	previous versions in R.)
 
-    o	Non-syntactic names of list elements are now printed quoted by
-	backticks rather than double quotes.
+    o	arrows() has been changed to be more similar to segments():
+	for example col=NA omits the arrow rather than as previously
+	(undocumented) using par("col").
 
-    o	chooseCRANmirror() consults the CRAN master (if accessible) to
-	find an up-to-date list of mirrors.
+    o	as.list() now accepts symbols (as given by as.symbol() aka
+	as.name()).
 
-    o	postscript() supports family = "ComputerModernItalic" for
-	Computer Modern with italic (rather than slanted) faces.
+    o	atan2() now allows one complex and one numeric argument.
+
+    o	The 'masked' warnings given by attach() and library() now only
+	warn for functions masking functions or non-functions masking
+	non-functions.
 
     o	New function Axis(), a generic version of axis(), with Date and
 	POSIX[cl]t methods.  This is used by most of the standard
@@ -49,54 +53,73 @@ NEW FEATURES
 	pairs, plot.default, rug, stripchart) which will thus label x
 	or y axes appropriately.
 
-    o	pairs() allows a wider class of inputs, including data frames
-	with date and date-time columns.
+    o	pbeta() now uses TOMS708 in all cases and so is more accurate
+	in some (e.g. when lower.tail = FALSE and when one of the
+	shape parameters is very small).
 
-    o	scan() and write.table() now have some interruptibility, which
-	may be useful when processing very large files.
+    o	[qr]beta(), [qr]f() and [qr]t() now have a non-centrality parameter.
 
-    o	There is some basic checking for imminent C stack overflow (when
-	the evaluation depth and the user interrupts are checked).
-	On systems with suitable OS support (not Windows), segfaults
-	from C stack overflow are caught and treated as an R error.
+    o	[rc]bind and some more cases of subassignment are implemented
+	for raw matrices.  (PR8529 and 8530)
 
-	New function Cstack_info() reports on stack size and usage.
+    o	The number of lines of deparsed calls printed by browser() and
+	traceback() can be limited by the option "deparse.max.lines".
+	(Wish of PR#8638.)
 
-    o	options(expressions) reverts to the default of 5000 now
-	stack checking is in place.
+    o	New canCoerce() utility function in "methods" package.
 
-    o	Package tcltk does not try to initialize Tk on Unix-alikes
-	unless a DISPLAY variable is present.  This allows packages
-	dependent on tcltk to be installed without access to an X server.
+    o	[pq]chisq() are considerably more accurate for moderate (up to
+	80) values of ncp, and lower.tail = FALSE is fully supported
+	in that region.  (They are somewhat slower than before.)
 
-    o	The code used to guess timezone offsets where not supplied by
-	the OS uses a different algorithm that is more likely to guess
-	the summer-time transitions correctly.
+    o	chol(pivot = TRUE) now gives a warning if used on a (numerically)
+	non-positive-definite matrix.
 
-    o	new.packages() gains a ... argument to pass e.g. 'destdir' to
-	install.packages().  (Wish of PR#8239.)
+    o	chooseCRANmirror() consults the CRAN master (if accessible) to
+	find an up-to-date list of mirrors.
+
+    o	cov.wt() is more efficient for 'cor = TRUE' and has a new 'method'
+	argument which allows 'Maximum Likelihood'.
+
+    o	do.call() gains an 'envir' argument.
+
+    o	eigen() applied to an asymmetric real matrix now uses a
+	tolerance to decide if the result is complex (rather than
+	expecting the imaginary parts of the eigenvalues to be exactly
+	zero).
+
+    o	New function embedFonts() for embedding fonts in PDF or
+	PostScript graphics files.
+
+    o	fisher.test() now uses p-values computed via hypergeometric
+	distributions for all 2 by 2 tables.  This might be slightly
+	slower for a few cases, but works much better for tables with
+	some large counts.
+
+	There is a new option to simulate the p-value for larger than
+	2 x 2 tables.
+
+    o	for() now supports raw vectors as the set of indices.
+
+    o	getNativeSymbolInfo() is vectorized for the 'name' argument.  It
+	returns a named list of NativeSymbolInfo objects, but is
+	backward compatible by default when called with a character
+	vector of length 1, returning the NativeSymbolInfo object.
+
+    o	help.search() no longer attempts to handle packages installed
+	prior to R 2.0.0, and reports the current path to the
+	package (rather than where it was originally installed: this
+	information is not shown by the print() method).
 
     o	Added "hexmode" to parallel "octmode".
 
-    o	Package tools contains translation tables 'Adobe_glyphs' and
-	'charset_to_Unicode'.
+    o	install.packages() now does tilde expansion on file paths
+	supplied as 'pkgs'.
 
-    o	On Unix-alikes, X11() now has arguments to request the initial
-	position of the window, and 'gamma' defaults to the value of
-	getOptions("gamma").  These changes are consistent with the
-	windows() device.
-
-    o	The postscript()/pdf() font metrics for the 14 standard fonts
-	(only, not the rest of the common 35) have been updated to
-	versions from late 1999 which cover more glyphs.  There are
-	also a few differences in the metrics and hence the output
-	might be slightly different in some cases.
-
-    o	pdf() now allows 'family' to be specified in the same
-	generality as postscript().
-
-    o	X11() and the Unix-alike data entry window can have properties
-	(including geometry) set by X resources: see their help files.
+    o	install.packages() has additional arguments 'configure.args' and
+	'clean' which allow the caller to provide additional arguments
+	to the underlying R CMD INSTALL shell command when installing
+	source packages on a Unix-alike.
 
     o	is.loaded() has a new argument 'type' to confine the search to
 	symbols for .C, .Fortran, .Call or .External: by default it
@@ -104,34 +127,42 @@ NEW FEATURES
 	internal and not primitive, so argument matching works in the
 	usual way.
 
-    o	plot.xy() now takes its default arguments from the
-	corresponding par() settings, so points(type="l") and
-	lines(type="p") behave in the same way (and more obviously,
-	also for type="b").
+    o	The symmetry test for matrices used in eigen() has been ``exported''
+	as the 'matrix' method of a new S3-generic 'isSymmetric().
 
-    o	arrows() has been changed to be more similar to segments():
-	for example col=NA omits the arrow rather than as previously
-	(undocumented) using par("col").
+    o	.leap.seconds and the internal adjustment code now know about
+	the 23rd leap second on 2005-12-31: the internal code uses a
+	run-time test to see if the OS does.
 
     o	The 'col' argument of legend() now defaults to par("col")
 	(which defaults to "black", the previous default), so that
 	the lines/symbols are shown in the legend in the colour that
 	is used on the plot.
 
-    o	New Vectorize() function, a wrapper for mapply().
-
-    o	Changed environment tree to be rooted in an empty environment,
-	available as emptyenv().  baseenv() modified to return an
-	environment with emptyenv() as parent, rather than NULL.
-
-    o	The way families can be specified for postscript() and pdf()
-	has been expanded to include CID-keyed fonts, with new
-	functions Type1Font() and CIDFont() to set up such fonts
-	families.
-
     o	log2() and log10() call C functions of the same name if
 	available, and will then be more likely to be precise to
 	machine accuracy.
+
+    o	new.packages() gains a ... argument to pass e.g. 'destdir' to
+	install.packages().  (Wish of PR#8239.)
+
+    o	nls() now supports 'weights'.
+
+    o	The vector passed as the first argument of the 'fn' and 'gr'
+	arguments of optim() has the names (if any) given to argument
+	'par'.
+
+    o	options(expressions) is temporarily increased by 500 during
+	error-handling.	  This enables e.g. traceback() to work when
+	the error is reaching the limit on the nesting of expressions.
+
+    o	page() accepts general R objects, not just names (and
+	previously undocumented) character strings.  This allows the
+	object to be specified as a call, for example.  More options
+	are allowed in its '...' argument.
+
+    o	pairs() allows a wider class of inputs, including data frames
+	with date and date-time columns.
 
     o	par() and the in-line use of graphical parameters produce more
 	informative error messages, distinguishing between
@@ -148,38 +179,117 @@ NEW FEATURES
 	to 200 bytes, to allow for the names of some CID-keyed fonts
 	in multi-byte locales.
 
+    o	The pdf() device now allows 'family' to be specified in the same
+	generality as postscript().
+
+    o	The pdf() device writes /FontDescriptor entries for all fonts
+	except the base 14, and does not write font entries for unused
+	fonts.
+
     o	Plotmath allows 'vartheta', 'varphi' and 'varsigma' (or 'stigma')
 	as synonyms for 'theta1', 'phi1' and 'sigma1', and the help
 	page has a note for TeX users.
 
-    o	require() now takes a 'lib.loc' argument.
+    o	plot.xy() now takes its default arguments from the
+	corresponding par() settings, so points(type="l") and
+	lines(type="p") behave in the same way (and more obviously,
+	also for type="b").
 
     o	poly() has a new argument 'raw', mainly for pedagogical purposes.
+
+    o	The class "POSIXlt" now supports fractional seconds (as
+	"POSIXct" has always done).  The printing of fractional seconds
+	is controlled by the new option "digits.secs", and by default is off.
+
+    o	postscript() supports family = "ComputerModernItalic" for
+	Computer Modern with italic (rather than slanted) faces.
+
+    o	The postscript()/pdf() font metrics for the 14 standard fonts
+	(only, not the rest of the common 35) have been updated to
+	versions from late 1999 which cover more glyphs.  There are
+	also a few differences in the metrics and hence the output
+	might be slightly different in some cases.
+
+    o	The way families can be specified for postscript() and pdf()
+	has been expanded to include CID-keyed fonts, with new
+	functions Type1Font() and CIDFont() to set up such fonts
+	families.
+
+    o	prettyNum() has new arguments 'preserve.width' and 'zero.print'.
+	When the former is not "none", as in calls from format() and
+	formatC(), the resulting strings are kept at the desired width
+	when possible even after adding of 'big.mark' or 'small.mark'.
+
+    o	proc.time() and system.time() now record times to 1ms accuracy
+	where available (most Unix-like systems).
+
+    o	The initialization methods for the quasi() family have been
+	changed to depend on the variance function, and in particular
+	to work better for the "mu(1-mu)" variance function.  (PR#8486)
+
+    o	read.table() gains a 'flush' argument passed to scan().
+
+    o	require() now takes a 'lib.loc' argument.
+
+    o	The second argument 'size' to sample() is required to have
+	length 1, so that errors when supplying arguments are more
+	easily detected.
+
+    o	The default is now compress = !ascii in save() (but not save.image).
+
+    o	scan() and write.table() now have some interruptibility, which
+	may be useful when processing very large files.
+
+    o	A new heuristic test, seemsS4Object() is supplied, along with a
+	similar C-level test, R_seemsS4Object(object). The test
+	detects probable S4 objects by their class's attribute. See
+	the help page.
+
+    o	S3 classes can now be made non-virtual S4 classes by supplying a
+	prototype object in the arguments to setOldClass().
+
+    o	splinefun() returns a function that now also has a 'deriv' argument
+	and can provide up to the 3rd derivative of the interpolating
+	spline, thanks to Berwin Turlach.
+	
+    o	stopifnot(A) now gives a better error message when A has NAs, and
+	uses "not all TRUE" when A has length >= 2.
+
+    o	str()'s default method has a new argument 'strict.width' which can
+	be used to produce strict 'width' conforming output.  A new
+	options(str = list(strict.width = *)) setting allows to control
+	this for a whole session.
+
+    o	summary.nls() has a new argument 'correlation' that defaults
+	to FALSE (like summary.lm).
+
+    o	Sys.sleep() has sub-millisecond resolution on Unix-alikes
+	with gettimeofday().
 
     o	Sys.time() now has sub-millisecond accuracy on systems
 	supporting the POSIX call gettimeofday, and clock-tick
 	accuracy on Windows.
 
-    o	read.table() gains a 'flush' argument passed to scan().
+    o	The new function timestamp() adds a time stamp to the saved
+	command history on consoles which support it.
 
-    o	fisher.test() now uses p-values computed via hypergeometric
-	distributions for all 2 by 2 tables.  This might be slightly
-	slower for a few cases, but works much better for tables with
-	some large counts.
+    o	New function tcrossprod() for efficiently computing x %*% t(x)
+	and x %*% t(y).
 
-	There is a new option to simulate the p-value for larger than
-	2 x 2 tables.
+    o	The suffix used by tempfile() is now in hex on all platforms
+	and guaranteed to be at least 6 hex digits (usually 8).
 
-    o	PCRE has been updated to version 6.4.
+    o	trace() now works more consistently and more like its
+	documentation, in particular the assertions about old tracing
+	being removed for new.	For debugging purposes (of R) a
+	mechanism for debugging the trace computations themselves was
+	added.	See trace.R.
 
-    o	getNativeSymbolInfo() is vectorized for the 'name' argument.  It
-	returns a named list of NativeSymbolInfo objects, but is
-	backward compatible by default when called with a character
-	vector of length 1, returning the NativeSymbolInfo object.
+    o	The implementation of trace() has beem made more general by
+	calling a function to do the trace interaction, and recover()
+	now detects trace calls to trim the irrelevant code underneath.
 
-    o	The method $.DLLInfo resolves the specified symbol in the DLL,
-	returning a NativeSymbolInfo object.  Use [[ to access the actual
-	values in the DLLInfo object.
+    o	unserialize() can now also read a byte stream from a raw vector.
 
     o	The useDynLib() directive in the NAMESPACE file now accepts the
 	names of the native/foreign symbols that are to be resolved in
@@ -193,11 +303,64 @@ NEW FEATURES
 
 	checkFF() (package 'tools') has been updated accordingly.
 
-    o	'R CMD check' works for packages whose package name is different
-	from the directory name in which it is located.
+    o	validObject() has an option complete=TRUE that recursively
+	checks the objects in the slots.  Not used when new(...)
+	checks validity.
 
-    o	cov.wt() is more efficient for 'cor = TRUE' and has a new 'method'
-	argument which allows 'Maximum Likelihood'.
+    o	New Vectorize() function, a wrapper for mapply().
+
+    o	write.ftable() has gained an argument 'append = FALSE' (thanks to
+	Stephen Weigand).
+
+    o	On Unix-alikes, X11() now has arguments to request the initial
+	position of the window, and 'gamma' defaults to the value of
+	getOptions("gamma").  These changes are consistent with the
+	windows() device.
+
+    o	X11() and the Unix-alike data entry window can have properties
+	(including geometry) set by X resources: see their help files.
+
+    o	xy.coords() & xyz.coords() now have NULL defaults for their 'y' or
+	'y' and 'z' arguments.	This is more consistent with their earlier
+	documentation, and may be convenient for using them.
+
+
+    o	Non-syntactic names of list elements are now printed quoted by
+	backticks rather than double quotes.
+
+    o	There is some basic checking for imminent C stack overflow (when
+	the evaluation depth and the user interrupts are checked).
+	On systems with suitable OS support (not Windows), segfaults
+	from C stack overflow are caught and treated as an R error.
+
+	New function Cstack_info() reports on stack size and usage.
+
+    	options(expressions) reverts to the default of 5000 now
+	stack checking is in place.
+
+    o	Package tcltk does not try to initialize Tk on Unix-alikes
+	unless a DISPLAY variable is present.  This allows packages
+	dependent on tcltk to be installed without access to an X server.
+
+    o	The code used to guess timezone offsets where not supplied by
+	the OS uses a different algorithm that is more likely to guess
+	the summer-time transitions correctly.
+
+    o	Package tools contains translation tables 'Adobe_glyphs' and
+	'charset_to_Unicode'.
+
+    o	Changed the environment tree to be rooted in an empty
+	environment, available as emptyenv().  baseenv() has been
+	modified to return an environment with emptyenv() as parent,
+	rather than NULL.
+
+    o	gettext has been updated to 0.14.5.
+
+    o	PCRE has been updated to version 6.4.
+
+    o	The method $.DLLInfo resolves the specified symbol in the DLL,
+	returning a NativeSymbolInfo object.  Use [[ to access the actual
+	values in the DLLInfo object.
 
     o	On systems with either vasprintf or both va_copy and a vsnprintf
 	which reports the size of buffer required, connections such as
@@ -210,24 +373,9 @@ NEW FEATURES
 	TMPDIR, TMP and TEMP in turn, and checks if they point to a
 	writable directory.
 
-    o	The suffix used by tempfile() is now in hex on all platforms
-	and guaranteed to be at least 6 hex digits (usually 8).
-
     o	Some of the classical tests put unnecessary restrictions on the
 	LHS in the formula interface (e.g., t.test(x+y ~ g) was not
 	allowed).
-
-    o	The 'masked' warnings given by attach() and library() now only
-	warn for functions masking functions or non-functions masking
-	non-functions.
-
-    o	New function tcrossprod() for efficiently computing x %*% t(x)
-	and x %*% t(y).
-
-    o	nls() now supports 'weights'.
-
-    o	install.packages() now does tilde expansion on file paths
-	supplied as 'pkgs'.
 
     o	On suitably equipped Unix-alike systems, segfaults, illegal
 	operations and bus errors are caught and there is a simple
@@ -237,33 +385,6 @@ NEW FEATURES
 	On Windows access violations and illegal instructions are
 	caught with a simple error handler.  [Experimental.]
 
-    o	gettext has been updated to 0.14.5.
-
-    o	install.packages() has additional arguments 'configure.args' and
-	'clean' which allow the caller to provide additional arguments
-	to the underlying R CMD INSTALL shell command when installing
-	source packages on a Unix-alike.
-
-    o	summary.nls() has a new argument 'correlation' that defaults
-	to FALSE (like summary.lm).
-
-    o	prettyNum() has new arguments 'preserve.width' and 'zero.print'.
-	When the former is not "none", as in calls from format() and
-	formatC(), the resulting strings are kept at the desired width
-	when possible even after adding of 'big.mark' or 'small.mark'.
-
-    o	str()'s default method has a new argument 'strict.width' which can
-	be used to produce strict 'width' conforming output.  A new
-	options(str = list(strict.width = *)) setting allows to control
-	this for a whole session.
-
-    o	The pdf() device writes /FontDescriptor entries for all fonts
-	except the base 14, and does not write font entries for unused
-	fonts.
-
-    o	The symmetry test for matrices used in eigen() has been ``exported''
-	as the 'matrix' method of a new S3-generic 'isSymmetric().
-
     o	Tracebacks now include calls such as .C/.Fortran/.Call, which
 	will help if errors occur in R code evaluated by compiled code
 	and in tracebacks presented by the segfault etc handlers.
@@ -271,134 +392,11 @@ NEW FEATURES
     o	Treatment of signature objects and method definition objects has
 	been modified to give cleaner printing and more consistency in
 	the treatment of signatures.  A sometimes useful utility,
-	methodSignatureMatrix, is now exported.
-
-    o	trace() now works more consistently and more like its
-	documentation, in particular the assertions about old tracing
-	being removed for new.	For debugging purposes (of R) a
-	mechanism for debugging the trace computations themselves was
-	added.	See trace.R.
-
-    o	.leap.seconds and the internal adjustment code now know about
-	the 23rd leap second on 2005-12-31: the internal code uses a
-	run-time test to see if the OS does.
-
-    o	New canCoerce() utility function in "methods" package.
-
-    o	The initialization methods for the quasi() family have been
-	changed to depend on the variance function, and in particular
-	to work better for the "mu(1-mu)" variance function.  (PR#8486)
-
-    o	eigen() applied to an asymmetric real matrix now uses a
-	tolerance to decide if the result is complex (rather than
-	expecting the imaginary parts of the eigenvalues to be exactly
-	zero).
-
-    o	chol(pivot = TRUE) now gives a warning if used on a (numerically)
-	non-positive-definite matrix.
-
-    o	xy.coords() & xyz.coords() now have NULL defaults for their 'y' or
-	'y' and 'z' arguments.	This is more consistent with their earlier
-	documentation, and may be convenient for using them.
-
-    o	The second argument 'size' to sample() is required to have
-	length 1, so that errors when supplying arguments are more
-	easily detected.
-
-    o	[rc]bind and some more cases of subassignment are implemented
-	for raw matrices.  (PR8529 and 8530)
-
-    o	[qr]beta(), [qr]f() and [qr]t() now have a non-centrality parameter.
-
-    o	options(expressions) is temporarily increased by 500 during
-	error-handling.	  This enables e.g. traceback() to work when
-	the error is reaching the limit on the nesting of expressions.
-
-    o	pchisq() and qchisq() are considerably more accurate for
-	moderate (up to 80) values of ncp, and lower.tail = FALSE is
-	fully supported in that region.	 (They are somewhat slower
-	than before.)
-
-    o	The class "POSIXlt" now supports fractional seconds (as
-	"POSIXct" has always done).  The printing of fractional seconds
-	is controlled by the new option "digits.secs", and by default is off.
-
-    o	New function embedFonts() for embedding fonts in PDF or
-	PostScript graphics files.
-
-    o	S3 classes can now be made non-virtual by supplying a prototype
-	object in the arguments to setOldClass().
-
-    o	A new heuristic test, seemsS4Object() is supplied, along with a
-	similar C-level test, R_seemsS4Object(object). The test
-	detects probable S4 objects by their class's attribute. See
-	the help page.
-
-    o	The implementation of trace() has beem made more general by
-	calling a function to do the trace interaction, and recover()
-	now detects trace calls to trim the irrelevant code underneath.
+	methodSignatureMatrix(), is now exported.
 
     o	R refrains from printing a final EOL upon exiting the main loop
 	if the quiet flag is on and if the save action is known (e.g. this
 	is true for --slave).
-
-    o	The number of lines of deparsed calls printed by browser() and
-	traceback() can be limited by the option "deparse.max.lines".
-	(Wish of PR#8638.)
-
-    o	The vector passed as the first argument of the 'fn' and 'gr'
-	arguments of optim() has the names (if any) given to argument
-	'par'.
-
-    o	stopifnot(A) now gives a better error message when A has NAs, and
-	uses "not all TRUE" when A has length >= 2.
-
-    o	help.search() no longer attempts to handle packages installed
-	prior to R 2.0.0, and reports the current path to the
-	package (rather than where it was originally installed: this
-	information is not shown by the print() method).
-
-    o	pbeta() now uses TOMS708 in all cases and so is more accurate
-	in some (e.g. when lower.tail = FALSE and when one of the
-	shape parameters is very small).
-
-    o	Sys.sleep() has sub-millisecond resolution on Unix-alikes
-	with gettimeofday().
-
-    o	validObject() has an option complete=TRUE that recursively
-	checks the objects in the slots.  Not used when new(...)
-	checks validity.
-
-    o	write.ftable() has gained an argument 'append = FALSE' thanks to
-	Stephen Weigand.
-
-    o	splinefun() returns a function that now also has a 'deriv' argument
-	and can provide up to the 3rd derivative of the interpolating
-	spline, thanks to Berwin Turlach.
-	
-    o	The new function timestamp() adds a time stamp to the saved
-	command history on consoles which support it.
-
-    o	for() now supports raw vectors as the set of indices.
-
-    o	atan2() now allows one complex and one numeric argument.
-
-    o	as.list() now accepts symbols (as given by as.symbol() aka
-	as.name()).
-
-    o	do.call() gains an 'envir' argument.
-
-    o	The default is now compress = !ascii in save() (but not save.image).
-
-    o	unserialize() can now also read a byte stream from a raw vector.
-
-    o	page() accepts general R objects, not just names (and
-	previously undocumented) character strings.  This allows the
-	object to be specified as a call, for example.  More options
-	are allowed in its '...' argument.
-
-    o	proc.time() and system.time() now record times to 1ms accuracy
-	where available (most Unix-like systems).
 
 
 DEPRECATED & DEFUNCT
@@ -414,11 +412,6 @@ DEPRECATED & DEFUNCT
 	arguments --min-vsize --min-nsize --max-vsize --max-nsize
 	--vsize --nsize of R CMD BATCH has been removed.
 
-    o	The re-named tcltk functions tkcmd, tkfile.tail, tkfile.dir,
-	tkopen, tkclose, tkputs, tkread are now formally deprecated.
-
-    o	Argument 'col' of bxp() is now formally deprecated.
-
     o	The 'debian' subdirectory has been removed from the sources.
 
     o	The 'vfont' argument of axis() and mtext() has been removed:
@@ -427,6 +420,15 @@ DEPRECATED & DEFUNCT
     o	The unused graphical parameter "type" has been removed: it
 	invited confusion with the 'type' argument to default methods
 	of plot(), points() and lines().
+
+    o	nlsMethod() and profiler() are no longer exported from the stats
+	namespace (and nlsMethod.plinear() is no longer registered as
+	a method, as nlsMethod() was not generic).
+
+    o	The re-named tcltk functions tkcmd, tkfile.tail, tkfile.dir,
+	tkopen, tkclose, tkputs, tkread are now formally deprecated.
+
+    o	Argument 'col' of bxp() is now formally deprecated.
 
     o	Use of NULL as an environment is deprecated and gives a warning.
 
@@ -437,10 +439,6 @@ DEPRECATED & DEFUNCT
 	1.7.0 been the same as the default options of chol() and chol2inv).
 
     o	La.svd(method = "dgesvd") is deprecated.
-
-    o	nlsMethod() and profiler() are no longer exported from the stats
-	namespace (and nlsMethod.plinear() is no longer registered as
-	a method, as nlsMethod() was not generic).
 
     o	The use of install.R and R_PROFILE.R files in packages is
 	deprecated: use the DESCRIPTION file instead to arrange to
@@ -571,12 +569,15 @@ INSTALLATION CHANGES
 	already using it.)
 
     o	The dlcompat work-around for old Mac OS X systems (<= 10.2)
-	has been removed. External dlcompat must be installed if needed.
+	has been removed.  External dlcompat must be installed if needed.
 
 
 UTILITIES
 
     o	R CMD check now uses an install log by default.
+
+    o	R CMD check works for packages whose package name is different
+	from the directory name in which it is located.
 
     o	R CMD INSTALL now uses more randomness in the temporary
 	directory name even on systems without mktemp -d.
@@ -630,11 +631,11 @@ PACKAGE INSTALLATION
     o	Packages which contain compiled code can now have more than
 	one dot in their name even on Windows.
 
-    o	The Meta/hsearch.rds database saved now contains LibPath="".  This
-	information is now always recreated when help.search() is run,
-	but the field is retained for back-compatibility.
+    o	The Meta/hsearch.rds database saved now contains LibPath="".
+	This information is now always recreated when help.search() is
+	run, but the field is retained for back-compatibility.
 
-    o	update.packages() has a '...' argument to be passed to
+    o	update.packages() now has a '...' argument to be passed to
 	install.packages(), including the formerly separate arguments
 	'destdir' and 'installWithVers'.
 
