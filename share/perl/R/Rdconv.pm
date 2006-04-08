@@ -154,6 +154,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version)
     }
     printf STDERR "-- read file '%s';\n",$_[0] if $debug;
 
+    macro_subs();
     mark_brackets();
     ##HARD Debug:print "$complete_text\n"; exit;
     escape_preformats();
@@ -224,6 +225,12 @@ sub checkloop {
 
     1;
 }
+
+sub macro_subs { # does macro substitution on $complete_text
+    print STDERR "\n-- macro_subs:" if $debug;
+    $complete_text =~ s/\\linkS4class\{(.*)\}/\\link[=$1-class]{$1}/g;
+}
+
 
 ## Mark each matching opening and closing bracket with a unique id.
 ## Idea and original code from latex2html

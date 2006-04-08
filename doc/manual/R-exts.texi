@@ -2583,7 +2583,6 @@ addresses, or @code{\url@{@}} for web pointers.
 Pointers to related @R{} objects, using @code{\code@{\link@{...@}@}} to
 refer to them (@code{\code} is the correct markup for @R{} object names,
 and @code{\link}
-@findex \link
 produces hyperlinks in output formats which support this.  @xref{Marking
 text}, and @ref{Cross-references}).
 
@@ -2979,6 +2978,7 @@ contain only spaces).
 @section Cross-references
 @cindex Cross-references in documentation
 
+@findex \link
 The markup @code{\link@{@var{foo}@}} (usually in the combination
 @code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help for
 @var{foo}.  Here @var{foo} is a @emph{topic}, that is the argument of
@@ -2990,6 +2990,7 @@ text and S nroff formats.
 One main usage of @code{\link} is in the @code{\seealso} section of the
 help page, @pxref{Rd format}.
 
+@cindex \linkS4class
 You can specify a link to a different topic than its name by
 @code{\link[=@var{dest}]@{@var{name}@}} which links to topic @var{dest}
 with name @var{name}.  This can be used to refer to the documentation
@@ -2997,7 +2998,8 @@ for S3/4 classes, for example @code{\code@{"\link[=abc-class]@{abc@}"@}}
 would be a way to refer to the documentation of an S4 class @code{"abc"}
 defined in your package, and
 @code{\code@{"\link[=terms.object]@{terms@}"@}} to the S3 @code{"terms"}
-class (in package @pkg{stats}).
+class (in package @pkg{stats}).  To make these easy to read,
+@code{\code@{"\linkS4class@{abc@}"@}} expands to the form given above.
 
 There are two other forms of optional argument specified as
 @code{\link[@var{pkg}]@{@var{foo}@}} and
@@ -4411,7 +4413,9 @@ The first argument to each function is a character string given the
 symbol name as known to C or FORTRAN, that is the function or subroutine
 name.  (That the symbol is loaded can be tested by, for example,
 @code{is.loaded("cg")}: it is no longer necessary or correct to use
-@code{symbol.For}.)
+@code{symbol.For}.)  (Note that the underscore is not a valid character
+in a FORTRAN 77 symbol name, and on many platforms @code{.Fortran} will
+not correctly translate names containing underscores.)
 
 There can be up to 65 further arguments giving @R{} objects to be passed
 to compiled code.  Normally these are copied before being passed in, and

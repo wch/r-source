@@ -613,7 +613,9 @@ DOCUMENTATION
 	converting .Rd files to [C]HTML.
 
     o	There is new markup \link[=dest]{name} to generate a link to topic
-	'dest' which is shown as 'name'.
+	'dest' which is shown as 'name', and \linkS4class{abc} which
+	expands to \link[=abc-class]{abc}, for cross-referencing the
+	recommended form of documentation for S4 classes.
 
 
 PACKAGE INSTALLATION
@@ -661,7 +663,7 @@ C-LEVEL FACILITIES
 	etc/Makeconf and R CMD config.	It can be used where
 	optimization needs to be defeated, e.g. in LAPACK setup.
 
-    o	getNativeSymbolInfo() has a withRegistrationInfo argument which
+    o	getNativeSymbolInfo has a withRegistrationInfo argument which
 	causes the address field to be a reference to the registration
 	information if it is available for that symbol.	 If the
 	registration information is not available, the address is a
@@ -669,7 +671,7 @@ C-LEVEL FACILITIES
 	backward compatible, returning just the address of the symbol
 	and ignoring registration information.
 
-    o	errorcall() and warningcall() are now declared in <Rinternals.h>
+    o	errorcall and warningcall are now declared in <Rinternals.h>
 	(they might be needed in front-ends).
 
     o	R_FlushConsole and R_ProcessEvents are now declared in <R.h>.
@@ -754,7 +756,7 @@ BUG FIXES
 
     o	glm() could give an inappropriate error message if all
 	possible coefficients were invalid (e.g. a log-linear binomial
-	model with no intercept and not all positive predictor).
+	model with no intercept and a not all positive predictor).
 
     o	solve() gives clearer error messages for some incorrect usages.
 	(PR#8494 and similar)
@@ -954,7 +956,7 @@ BUG FIXES
 
     o	Registering an S3 method for an S3 generic in another package
 	that was converted to an S4 generic in the same package as the
-	S3 method registered the method in the wrong place.
+	S3 method, registered the method in the wrong place.
 
     o	Recall() used lookup for the function in use and so could fail
 	if that was an S3 method not on the search path.
@@ -985,7 +987,7 @@ INSTALLATION CHANGES
 BUG FIXES
 
     o	sub(fixed = TRUE) could get wrong the length of the character
-	string of elements of the result after the first.
+	string for elements of the result after the first.
 
     o	legend() worked out which elements of 'lty' were valid before
 	resizing 'lty', and so could fail if 'lty' was a different

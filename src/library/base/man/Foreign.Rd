@@ -181,6 +181,13 @@
   should treat arguments you receive through these interfaces as
   read-only.
 }
+\note{
+  Symbol names containing underscores are not valid Fortran 77 (although
+  they are valid in Fortran 9x).  Many Fortran 77 compilers (including
+  \code{g77}) will allow them but translate them in a different way to
+  \code{.Fortran}.  Portable code should not use Fortran names
+  containing underscores for entry points to be called from \R.
+}
 
 \section{Header files for external code}{
     Writing code for use with \code{.External} and \code{.Call} will
