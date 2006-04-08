@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -34,10 +34,20 @@
 
 #include <Defn.h>
 #include <Fileio.h>
+#include <Rmath.h> /* for rround */
 #include "Runix.h"
 
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
+#endif
+
+#ifdef HAVE_SYS_TIME_H
+# include <sys/time.h>		/* for struct timeval */
+#endif
+
+#if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRUSAGE)
+/* on MacOS X it seems sys/resource.h needs sys/time.h first */
+# include <sys/resource.h>
 #endif
 
 extern Rboolean LoadInitFile;
@@ -152,10 +162,17 @@ SEXP attribute_hidden do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static clock_t StartTime;
 static struct tms timeinfo;
+#ifdef HAVE_GETTIMEOFDAY
+static double StartTime2;
+#endif
 static double clk_tck;
 
 void R_setStartTime(void)
 {
+#ifdef HAVE_GETTIMEOFDAY
+    struct timeval tv;
+#endif
+
 #ifdef HAVE_SYSCONF
     clk_tck = (double) sysconf(_SC_CLK_TCK);
 #else
@@ -172,22 +189,56 @@ void R_setStartTime(void)
 #endif
     /* printf("CLK_TCK = %d\n", CLK_TCK); */
     StartTime = times(&timeinfo);
+#ifdef HAVE_GETTIMEOFDAY
+    gettimeofday(&tv, NULL);
+    StartTime2 = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
+#endif
 }
 
 attribute_hidden
 void R_getProcTime(double *data)
 {
+#ifdef HAVE_GETTIMEOFDAY
+    struct timeval tv;
+    double now;
+#endif
+#ifdef HAVE_GETRUSAGE
+    struct rusage self, children;
+#endif
+
+#if !defined(HAVE_GETTIMEOFDAY) || !defined(HAVE_GETRUSAGE)
     data[2] = (times(&timeinfo) - StartTime) / clk_tck;
-    data[0] = timeinfo.tms_utime / clk_tck;
-    data[1] = timeinfo.tms_stime / clk_tck;
-    data[3] = timeinfo.tms_cutime / clk_tck;
-    data[4] = timeinfo.tms_cstime / clk_tck;
+#endif
+
+#ifdef HAVE_GETRUSAGE
+    getrusage(RUSAGE_SELF, &self);
+    getrusage(RUSAGE_CHILDREN, &children);
+    data[0] = (double) self.ru_utime.tv_sec + 
+	1e-3 * (self.ru_utime.tv_usec/1000);
+    data[1] = (double) self.ru_stime.tv_sec + 
+	1e-3 * (self.ru_stime.tv_usec/1000);
+    data[3] = (double) children.ru_utime.tv_sec + 
+	1e-3 * (children.ru_utime.tv_usec/1000);
+    data[4] = (double) children.ru_utime.tv_sec + 
+	1e-3 * (children.ru_utime.tv_usec/1000);
+#else
+    data[0] = rround(timeinfo.tms_utime / clk_tck, 3);
+    data[1] = rround(timeinfo.tms_stime / clk_tck, 3);
+    data[3] = rround(timeinfo.tms_cutime / clk_tck, 3);
+    data[4] = rround(timeinfo.tms_cstime / clk_tck, 3);
+#endif
+#ifdef HAVE_GETTIMEOFDAY
+    gettimeofday(&tv, NULL);
+    now = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
+    data[2] = now - StartTime2;
+#endif
+    data[2] = rround(data[2], 3);
 }
 
 attribute_hidden
 double R_getClockIncrement(void)
 {
-  return 1.0 / clk_tck;
+    return 1.0 / clk_tck;
 }
 
 SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)

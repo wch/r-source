@@ -397,6 +397,9 @@ NEW FEATURES
 	object to be specified as a call, for example.  More options
 	are allowed in its '...' argument.
 
+    o	proc.time() and system.time() now record times to 1ms accuracy
+	where available (most Unix-like systems).
+
 
 DEPRECATED & DEFUNCT
 

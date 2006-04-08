@@ -31448,7 +31448,8 @@ fi
 done
 
 
-for ac_func in getrlimit
+
+for ac_func in getrlimit getrusage
 do
 as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
@@ -42958,7 +42959,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:42961:" \
+echo "$as_me:42962:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5

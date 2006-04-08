@@ -13,9 +13,15 @@ proc.time()
   elapsed times for the currently running \R process, and the cumulative
   sum of user and system times of any child processes spawned by it.
 
-  The resolution of the times will be system-specific; it is common for
-  them to be recorded to of the order of 1/100 second, and elapsed
-  time is rounded to the nearest 1/100.
+  The resolution of the times will be system-specific;
+#ifdef unix
+  and times are rounded to the nearest 1ms.  On modern systems they will
+  be that accurate, but on older systems they might be accurate to
+  1/100 or 1/60 sec.
+#endif
+#ifdef windows
+  and times are typically available to 10ms on NT-based versions of Windows.
+#endif
 
   It is most useful for \dQuote{timing} the evaluation of \R expressions,
   which can be done conveniently with \code{\link{system.time}}.

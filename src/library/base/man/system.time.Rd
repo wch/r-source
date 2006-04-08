@@ -36,12 +36,11 @@ unix.time(expr, gcFirst = TRUE)
   On Windows the subproc times are not available and so are always
   \code{NA}. The first two components are not available on Windows 9x,
   and so are reported as \code{NA}; they do return real values on
-  Windows NT4/2000/XP.
+  NT-based versions of Windows.
 #endif
 
-  The resolution of the times will be system-specific; it is common for
-  them to be recorded to of the order of 1/100 second, and elapsed
-  time is rounded to the nearest 1/100.
+  The resolution of the times will be system-specific; see
+  \code{\link{proc.time}} for details.
 }
 #ifdef unix
 \note{
