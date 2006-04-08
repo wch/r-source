@@ -89,7 +89,17 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \code{\link{par}("xaxp")} or \code{"yaxp"} and
   \code{\link{par}("xlog")} (or \code{"ylog"}).  Note that these
   locations may change if an on-screen plot is resized (for example, if
-  \code{plot} argument \code{\link[graphics:plot.window]{asp}} is set).
+  the \code{plot} argument \code{\link[graphics:plot.window]{asp}} is set).
+
+  If \code{labels} is not specified, the numeric values supplied or
+  calculated for \code{at} are converted to character strings as if they
+  were a numeric vector printed by \code{\link{print.default}(digits=7)}.
+  
+  The code tries hard not to draw overlapping tick labels, and so will
+  omit labels where they would abut or overlap previously drawn labels.
+  This can result in, for example, every other tick being labelled.
+  (The ticks are drawn left to right or bottom to top, and space at
+  least the size of an \sQuote{m} is left between labels.)
 
   Several of the graphics parameters affect the way axes are drawn. The
   vertical (for sides 1 and 3) positions of the axis and the tick labels
