@@ -39,8 +39,10 @@ uniroot <- function(f, interval, lower = min(interval), upper = max(interval),
     val <- .Internal(zeroin(function(arg) f(arg, ...), lower, upper, tol,
 			    as.integer(maxiter)))
     iter <- as.integer(val[2])
-    if(val[3] > tol)
+    if(iter < 0) {
 	warning("_NOT_ converged in ", maxiter, " iterations")
+        iter <- maxiter
+    }
     list(root = val[1], f.root = f(val[1], ...),
          iter = iter, estim.prec = val[3])
 }

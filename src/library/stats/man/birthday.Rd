@@ -53,7 +53,6 @@ pbirthday(150,coincident=4)
 pbirthday(1000, coincident=100)
 
 ## Accuracy compared to exact calculation
-op <- options(warn = -1) ## turn off warnings from uniroot
 x1<-  sapply(10:100, pbirthday)
 x2<- 1-sapply(10:100, function(n)prod((365:(365-n+1))/rep(365,n)))
 par(mfrow=c(2,2))
@@ -65,6 +64,5 @@ plot(x1, x2, log="xy", xlab="approximate", ylab="exact")
 abline(0,1)
 plot(1-x1, 1-x2, log="xy", xlab="approximate", ylab="exact")
 abline(0,1)
-options(op)
 }
 \keyword{distribution}

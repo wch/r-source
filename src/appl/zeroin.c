@@ -44,7 +44,8 @@
  *	Zeroin returns an estimate for the root with accuracy
  *	4*EPSILON*abs(x) + tol
  *	*Tol returns estimated precision
- *	*Maxit returns actual # of iterations
+ *	*Maxit returns actual # of iterations, or -1 if maxit was
+ *      reached without convergence.
  *
  * Algorithm
  *	G.Forsythe, M.Malcolm, C.Moler, Computer methods for mathematical
@@ -140,8 +141,8 @@ double R_zeroin(			/* An estimate of the root */
 		p = t2 * ( cb*q*(q-t1) - (b-a)*(t1-1.0) );
 		q = (q-1.0) * (t1-1.0) * (t2-1.0);
 	    }
-	    if( p>(double)0 )		/* p was calculated with the op-*/
-		q = -q;			/* posite sign; make p positive	*/
+	    if( p>(double)0 )		/* p was calculated with the */
+		q = -q;			/* opposite sign; make p positive */
 	    else			/* and assign possible minus to	*/
 		p = -p;			/* q				*/
 
@@ -170,5 +171,6 @@ double R_zeroin(			/* An estimate of the root */
     }
     /* failed! */
     *Tol = fabs(c-b);
+    *Maxit = -1;
     return b;
 }
