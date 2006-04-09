@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-04-05
+@set FAQ_DATE @value{FAQ_YEAR}-04-09
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2472,6 +2472,8 @@ Routine for the multivariate nonparametric Cramer test.
 Functions for the construction and randomization of balanced carryover
 balanced designs, to check given designs for balance, and for simulation
 studies on the validity of two randomization procedures.
+@item crq
+Quantile regression for randomly censored data.
 @item cslogistic
 Likelihood and posterior analysis of conditionally specified logistic
 regression models.
@@ -2569,8 +2571,8 @@ Fitting and testing probabilistic choice models, especially the BTL,
 elimination-by-aspects (EBA), and preference tree (Pretree) models.
 @item eco
 Fitting Bayesian models of ecological inference in 2 by 2 tables.
-@c @item ecodist
-@c Dissimilarity-based functions for ecological analysis.
+@item ecodist
+Dissimilarity-based functions for ecological analysis.
 @item edci
 Edge Detection and Clustering in Images.
 @item effects
@@ -3217,8 +3219,11 @@ Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @item nlmeODE
 Combine the @strong{nlme} and @strong{odesolve} packages for
 mixed-effects modelling using differential equations.
-@item nlrq
-Nonlinear quantile regression routines.  @emph{Defunct}.
+@c <COMMENT>
+@c Moved to the Archive on 2006-04-09 as requested by R Koenker.
+@c @item nlrq
+@c Nonlinear quantile regression routines.  @emph{Defunct}.
+@c </COMMENT>
 @item nltm
 NonLinear Transformation Models for survival analysis.
 @item nnet
@@ -3245,8 +3250,11 @@ data set has no longer overlap.
 Nonparametric Multiple Comparisons:  provides simultaneous rank test
 procedures for the one-way layout without presuming a certain
 distribution.
-@item nprq
-Nonparametric quantile regression.  @emph{Defunct}.
+@c <COMMENT>
+@c Moved to the Archive on 2006-04-09 as requested by R Koenker.
+@c @item nprq
+@c Nonparametric quantile regression.  @emph{Defunct}.
+@c </COMMENT>
 @item nws
 Functions for NetWorkSpaces and Sleigh.
 @item odesolve
