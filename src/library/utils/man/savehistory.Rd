@@ -42,8 +42,7 @@ timestamp(stamp = date(),
 #endif
 #ifdef unix
   This works under the \code{readline} and GNOME and MacOS X consoles,
-  but not if \code{readline} is not available (for example, in batch use
-  or in an embedded application).
+  but not otherwise (for example, in batch use or in an embedded application).
 
   The \code{readline} history mechanism is controlled by two environment
 #endif
@@ -60,7 +59,8 @@ timestamp(stamp = date(),
   
   The \code{timestamp} function writes a timestamp (or other message)
   into the history and echos it to the console.  On platforms that do not 
-  support a history mechanism only the console message is printed.
+  support a history mechanism (where the mechanism does not yet support
+  timestamps) only the console message is printed.
 }
 \note{
   If you want to save the history (almost) every session, you can put a
