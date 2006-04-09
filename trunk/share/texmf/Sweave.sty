@@ -1,0 +1,27 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Sweave}{}
+
+\RequirePackage{ifthen}
+\newboolean{Sweave@gin}
+\setboolean{Sweave@gin}{true}
+\newboolean{Sweave@ae}
+\setboolean{Sweave@ae}{true}
+
+\DeclareOption{nogin}{\setboolean{Sweave@gin}{false}}
+\DeclareOption{noae}{\setboolean{Sweave@ae}{false}}
+\ProcessOptions
+
+\RequirePackage{graphicx,fancyvrb}
+\IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
+
+\ifthenelse{\boolean{Sweave@gin}}{\setkeys{Gin}{width=0.8\textwidth}}{}%
+\ifthenelse{\boolean{Sweave@ae}}{%
+  \RequirePackage[T1]{fontenc}  
+  \RequirePackage{ae}
+}{}%
+
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{fontshape=sl}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{fontshape=sl}
+
+\newenvironment{Schunk}{}{}

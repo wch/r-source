@@ -1,0 +1,13 @@
+#-*- Makefile -*-
+include ../gnuwin32/MkRules
+
+MODULES=internet lapack vfonts
+
+ifndef DEBUG
+  DLLFLAGS=-s
+endif
+
+all clean:
+	@for d in $(MODULES); do \
+	  (cd $${d} && $(MAKE) DLLFLAGS=$(DLLFLAGS) -f Makefile.win $@) || exit 1; \
+	done

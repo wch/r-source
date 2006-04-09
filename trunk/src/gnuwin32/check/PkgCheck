@@ -1,0 +1,78 @@
+#-*- Makefile -*-
+#
+# ${RHOME}/src/gnuwin32/check/PkgCheck
+
+# to be run from RHOME/src/library/$(PKG)/check or tests
+
+include $(RHOME)/src/gnuwin32/MkRules
+
+REXs=$(wildcard $(RLIB)/$(PKG)/R-ex/*)
+ifneq ($(strip $(REXs)),)
+all: run
+else 
+all:
+endif
+
+R = $(RHOME)/bin/Rterm --vanilla LC_ALL=C
+RDIFF = $(RHOME)/bin/Rcmd Rdiff.sh
+
+run: $(PKG)-Ex.R
+	@if test -f $(PKG)-Ex.Rout ; then \
+	  mv $(PKG)-Ex.Rout $(PKG)-Ex.Rout.prev ; fi
+	@rm -f $(PKG)-Ex.Rout.fail
+	@$(ECHO) "Running examples in '$(PKG)-Ex.R' ..."
+	@$(R) R_LIBS='$(RLIB);$(R_LIBS)' < $(PKG)-Ex.R > $(PKG)-Ex.Rout 2>&1 \
+	  || (mv  $(PKG)-Ex.Rout $(PKG)-Ex.Rout.fail && exit 1)
+	@if test -f $(PKG)-Ex.Rout.prev ; then \
+	  mv $(PKG)-Ex.Rout $(PKG)-Ex.Rout.fail; \
+	  echo -n "Comparing \`$(PKG)-Ex.Rout' to \`$(PKG)-Ex.Rout.prev' ..."; \
+	  $(RDIFF) $(PKG)-Ex.Rout.fail $(PKG)-Ex.Rout.prev 0 || exit 1; \
+	  mv $(PKG)-Ex.Rout.fail $(PKG)-Ex.Rout; \
+	  echo "OK"; \
+	fi
+
+
+$(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/* $(RHOME)/bin/massage-Examples
+	@$(ECHO) "Massaging examples into '$(PKG)-Ex.R' ..."
+	@if test -f $(RLIB)/$(PKG)/R-ex/Rex.zip; then \
+	  (cd $(RLIB)/$(PKG)/R-ex; unzip -oq Rex); \
+	  perl $(RHOME)/bin/massage-Examples $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
+	  (cd $(RLIB)/$(PKG)/R-ex; $(RM) -f *.R); \
+	else \
+	  perl $(RHOME)/bin/massage-Examples $(PKG) $(RLIB)/$(PKG)/R-ex/*.R > $@; \
+	fi
+
+test-src-1=$(shell ls *.R 2> /dev/null)
+test-src-auto=$(shell ls *.Rin 2> /dev/null | sed 's/Rin$$/R/')
+test-src = $(test-src-1) $(test-src-auto)
+test-out = $(test-src:.R=.Rout)
+
+.SUFFIXES:
+.SUFFIXES: .R .Rin .Rout
+
+.Rin.R:
+	@echo "Creating \`$@'"
+	@$(R) < $< > /dev/null
+
+.R.Rout:
+	@rm -f $@ $@.fail
+	@echo "  Running \`$<'"
+	@$(R) R_LIBS="$(RLIB);$(R_LIBS)" < $< > $@  2>&1 || (mv $@ $@.fail && exit 1)
+	@if test -f $@.save ; then \
+	  mv $@ $@.fail; \
+	  echo -n "  Comparing \`$@' to \`$@.save' ..."; \
+	  $(RDIFF) $@.fail $@.save 0 || exit 1; \
+	  mv $@.fail $@; \
+	  echo "OK"; \
+	fi
+
+tests:
+	@(out=$(shell echo \"$(test-out)\");\
+	  if test -n "$${out}"; then \
+	    echo "Running specific tests"; \
+	    rm -f *.Rout ; \
+	    $(MAKE) -f $(RHOME)/src/gnuwin32/check/PkgCheck $${out}; \
+	  fi)
+
+clean:
+	@rm -f $(test-out) $(test-src-auto) *.fail

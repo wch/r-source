@@ -1,0 +1,114 @@
+Testing R build under Windows
+=============================
+
+- Build R, the bitmap library, the distribution, the installer.
+
+    make
+    make bitmapdll
+    make tcl
+
+    make check
+
+    make distribution
+    (cd installer; make; make clean)
+
+- Test the rw1060.exe and miniR.exe installers and un-installing.
+
+- cd to ../../tests and run
+
+    make test-all-extras
+
+    Go online and run
+
+    make test-Internet
+
+- Using the installed copy, do some interactive testing
+
+    o Check it will start and run correctly in sdi and mdi modes.
+      Check the pager by using help().
+      Check also HTML and CHTML help.
+
+    o run demo(graphics) and check the output looks correct.
+
+    o run the tcl/tk demos by
+
+        library(tcltk)
+	demo(tkttest)
+	demo(tkdensity)
+	demo(tkcanvas)
+	demo(tkfaq)
+	demo(tkfilefind)
+
+    o Check each of the console menu items in turn.  Try the
+      right-click popup menu too.
+
+    o Put up a simple plot and experiment with saving, copying and
+      printing it.  Also try all the options of savePlot().  You'll
+      need to look at the saved files, and paste into e.g. Word.
+
+    o Try using identify().
+
+    o Try the various resize options on the graphics window's menu.
+
+    o Try printing and saving from a graphics window's menu.
+
+    o Experiment with printing from the console, from a pager and
+      printing to a win.print() device.
+
+    o Shut down a graphics window, a pager and the console from the
+      frame icons and menu, the File menu etc.
+
+    o Test drag-and-drop onto a shortcut on the desktop and into the
+      RGui console window.
+
+    o Test the plot history commands on the History menu of a graphics
+      window.
+
+    o Try a canvas colour and plot some transparent and opaque
+      rectangles.  Try example(points) and example(rect) too.
+
+    o Test help.start() and the HTML help's search engine.  Also check
+      cross-links between help files in different packages under HTML
+      and CHTML.
+
+    o Try R CMD INSTALL on windlgs.
+
+
+- Test Rprof and R CMD Rprof.
+
+- Check win.version() is reporting sensibly.
+
+- Run undoc() and codoc() on a package you installed.
+
+- cd front-ends then
+
+    make -f make.rtest
+    set R_HOME appropriately
+    Rtest.exe
+    >  try some simple R commands
+    > q()
+
+    If you have access to Visual C++, test it as described in readme.
+
+- Install Thomas Baier's StatConnector (on CRAN under
+  Software->Other->Non-standard packages) and run its tests.  (You
+  will need to do this on an installed version or run .../bin/RSetReg.exe.)
+
+- Using the installed copy, try building a copy of packages and a
+  bundle (e.g. VR) using R CMD INSTALL, and try R CMD check and R CMD
+  build too.  Also a package that uses BLAS (e.g. quadprog).
+
+- If you have latex installed, customize .../bin/helpPRINT.bat and
+  test help(offline=TRUE).
+
+- Try building using an ATLAS BLAS, and run the make check and make
+  test-all-extras tests again.
+
+- Check you can interrupt RGui with ESC and Rterm with Ctrl-C.
+
+- check building Rmath.dll in src/nmath/standalone.
+
+
+BDR
+2001-12-13, 2002-06-04
+

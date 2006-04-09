@@ -1,0 +1,119 @@
+#! @PERL@
+
+## Convert R documentation into HTML, LaTeX and text format
+
+# Copyright (C) 1997 Friedrich Leisch
+# Copyright (C) 2000-4 The R Core Development Team
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
+# General Public License for more details.
+#
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+## writing to the Free Software Foundation, Inc., 51 Franklin Street,
+## Fifth Floor, Boston, MA 02110-1301  USA.
+
+# Send any bug reports to r-bugs@r-project.org.
+
+use Getopt::Long;
+use R::Rdconv;
+use R::Utils;
+use R::Vars;
+
+my $revision = ' $Rev$ ';
+my $version;
+my $name;
+
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
+
+## <NOTE>
+## Used in Rdconv.pm and Rdlists.pm via $main::OSdir, and hence must not
+## be lexical.  Argh.
+$OSdir = $R::Vars::OSTYPE;
+## </NOTE>
+
+my @knownoptions = ("debug|d", "type|t:s", "h|help", "v|version", 
+		    "o|output:s", "os|OS=s" => \$OSdir);
+GetOptions (@knownoptions) || &usage();
+&R_version($name, $version) if $opt_v;
+&usage() if $opt_h;
+
+my $out = 0;
+if(defined $opt_o) {
+    if(length($opt_o)) {
+	$out = $opt_o;
+    }
+    else {
+	$out = $ARGV[0];
+	$out =~ s/.Rd$//i;
+    }
+}
+$out = 0 if $out eq "-";
+
+my %types_and_exts = ("txt", "",
+		      "html", ".html",
+		      "latex", ".tex",		      
+		      "Sd", ".d",
+		      "Ssgm", ".sgml",
+		      "example", ".R");
+
+my $opt_type_ok = 0;
+
+foreach my $type (keys(%types_and_exts)) {
+    if($opt_type =~ /$type/i) {
+	if(defined $opt_o && length($opt_o) == 0) {
+	    $out .= $types_and_exts{$type};
+	}
+	Rdconv($ARGV[0], $opt_type, $opt_debug, $out, "unknown");
+	$opt_type_ok = 1;
+	last;
+    }
+}
+
+if(!$opt_type_ok) {
+    print STDERR "Unknown type: options are " .
+	join(", ", sort(keys(%types_and_exts))) . ".\n";
+}
+
+sub usage {
+  print STDERR <<END;
+Usage: R CMD Rdconv [options] FILE
+
+Convert R documentation in FILE to other formats such as plain text,
+HTML or LaTeX.
+
+Options:
+  -h, --help		print short help message and exit
+  -v, --version		print Rdconv version info and exit
+  -d, --debug		turn on debugging (increase verbosity)
+  -t, --type=TYPE	convert to format TYPE
+  -o, --output=OUT	use 'OUT' as the output file
+      --os=NAME		use OS subdir 'NAME' (unix or windows)
+      --OS=NAME		the same as '--os'
+
+Possible format specifications are 'txt' (plain text), 'html', 'latex',
+'Sd' (old S documentation format), 'Ssgm' (new S documentation format),
+and 'example' (extract R code in the examples).
+
+The default is to send output to stdout, which is also given by '-o -'.
+Using '-o ""' will choose an output filename by removing a '.Rd'
+extension from FILE and adding a suitable extension.
+  
+Email bug reports to <r-bugs\@r-project.org>.
+END
+  exit 0;
+}
+
+### Local Variables: ***
+### mode: perl ***
+### perl-indent-level: 4 ***
+### End: ***

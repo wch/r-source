@@ -1,0 +1,81 @@
+These are the  Header  files for the ``R machine''
+
+There are 2 kinds:
+
+     i) Those only used for R internally, e.g.,  Defn.h  declarations
+
+    ii) Those declaring things generally useful in the ``R API'',
+	i.e., declaring code that can be used in
+	R packages or user code which will be  dyn.load()ed into R.
+
+	The declarations from "ii)" will be moved to  $(R_HOME)/include/
+	and be available with, e.g., ``R COMPILE''.
+	These are listed as "SRC_HEADERS" in ./Makefile.
+			     ~~~~~~~~~~~
+
+
+
+-------------------------------------------------------------------
+         NESTING Hierarchy
+-------------------------------------------------------------------
+
+i)
+
+Graphics.h
+	-> Defn.h	-> .......
+
+IOStuff.h
+	-> Defn.h	-> .......
+
+Print.h
+	-> PrtUtil.h 	-> Complex.h
+	-> Defn.h	-> .......
+
+Defn.h
+	-> config.h
+	-> Rinternals.h -> .......
+	-> Errormsg.h
+
+Utils.h
+ 	-> Sort.h -> Complex.h
+
+    -------------
+
+ii)
+
+Mathlib.h
+	-> Rconfig.h
+	-> Arith.h
+	-> Error.h (_iff_ Mathlib in R)
+
+S.h
+	-> Rconfig.h
+	-> Error.h
+	-> Memory.h
+	-> Rdefines.h
+
+Applic.h
+	-> Rconfig.h
+
+Arith.h
+
+
+Linpack.h
+	-> Rconfig.h
+	-> Blas.h
+
+PrtUtil.h
+	-> Complex.h
+
+Error.h
+
+Rinternals.h
+	-> Arith.h
+	-> Complex.h
+	-> Error.h
+	-> Memory.h
+	-> PrtUtil.h
+	-> Utils.h
+
+Sort.h
+	-> Complex.h

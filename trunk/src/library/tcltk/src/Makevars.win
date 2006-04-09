@@ -1,0 +1,2 @@
+PKG_CFLAGS = -I "$(TCL_HOME)"/include -DWin32
+PKG_LIBS = -L"$(TCL_HOME)"/bin -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)

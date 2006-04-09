@@ -1,0 +1,3 @@
+LIBRARY stats.dll
+EXPORTS
+ R_init_stats
