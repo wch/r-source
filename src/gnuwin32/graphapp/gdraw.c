@@ -23,7 +23,7 @@
    More safe in case of multiple redrawing
  */
 
-#include <config.h> /* for SUPPORT_MBCS and SUPPORT_UTF8 */
+#include <config.h> /* for SUPPORT_UTF8 */
 
 #include "internal.h"
 extern unsigned int TopmostDialogs; /* from dialogs.c */
@@ -477,7 +477,6 @@ int gdrawstr(drawing d, font f, rgb c, point p, char *s)
     SetBkMode(dc, TRANSPARENT);
     SetTextAlign(dc, TA_TOP | TA_LEFT | TA_UPDATECP);
 
-#ifdef SUPPORT_MBCS
     if (is_NT && (localeCP != GetACP())) {
 	/* This allows us to change locales and output in the new locale */
 	wchar_t *wc; int n = strlen(s), cnt;
@@ -485,7 +484,6 @@ int gdrawstr(drawing d, font f, rgb c, point p, char *s)
 	cnt = mbstowcs(wc, s, n);
 	TextOutW(dc, p.x, p.y, wc, cnt);
     } else
-#endif
 	TextOut(dc, p.x, p.y, s, strlen(s));
 
     GetCurrentPositionEx(dc, &curr_pos);
@@ -515,7 +513,6 @@ void gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
 }
 
 /* This version interprets 's' as MBCS in the current locale */
-#ifdef SUPPORT_MBCS
 void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
 {
     HFONT old;
@@ -536,12 +533,6 @@ void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
     TextOutW(dc, p.x, p.y, wc, cnt);
     SelectObject(dc, old);
 }
-#else
-void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
-{
-    gdrawstr1(d, f, c, p, s, hadj);
-}
-#endif
 
 #ifdef SUPPORT_UTF8
 #include <wchar.h>
@@ -697,7 +688,6 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     SelectObject(dc, old);
 }
 
-#ifdef SUPPORT_MBCS
 /* This needs to work even when not on NT */
 void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		  int *width)
@@ -781,7 +771,6 @@ void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 	    gcharmetric(d, f, c, ascent, descent, width);
     }
 }
-#endif
 
 font gnewfont(drawing d, char *face, int style, int size, double rot)
 {

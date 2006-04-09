@@ -31,9 +31,7 @@
 #include "win-nls.h"
 
 #include <wchar.h>
-#ifdef SUPPORT_MBCS
 #include <R_ext/rlocale.h>
-#endif
 
 #include "Defn.h"
 #include "Print.h"
