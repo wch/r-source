@@ -19,29 +19,28 @@ optimize <- function(f, interval, lower=min(interval), upper=max(interval),
 {
     if(maximum) {
 	val <- .Internal(fmin(function(arg) -f(arg, ...), lower, upper, tol))
-	list(maximum=val, objective= f(val, ...))
+	list(maximum = val, objective= f(val, ...))
     } else {
 	val <- .Internal(fmin(function(arg) f(arg, ...), lower, upper, tol))
-	list(minimum=val, objective= f(val, ...))
+	list(minimum = val, objective= f(val, ...))
     }
 }
 
 ##nice to the English (or rather the Scots)
 optimise <- optimize
 
-uniroot <- function(f, interval, lower=min(interval), upper=max(interval),
-		    tol=.Machine$double.eps^0.25, maxiter = 1000, ...)
+uniroot <- function(f, interval, lower = min(interval), upper = max(interval),
+		    tol = .Machine$double.eps^0.25, maxiter = 1000, ...)
 {
     if(!is.numeric(lower) || !is.numeric(upper) || lower >= upper)
 		   stop("lower < upper  is not fulfilled")
-    if(f(lower, ...)*f(upper, ...) >= 0)
+    if(f(lower, ...) * f(upper, ...) >= 0)
 	stop("f() values at end points not of opposite sign")
     val <- .Internal(zeroin(function(arg) f(arg, ...), lower, upper, tol,
 			    as.integer(maxiter)))
-    if((iter <- as.integer(val[2])) < 0) {
-	warning("_NOT_ converged in ",maxiter, " iterations")
-        iter <- -iter
-    }
-    list(root=val[1], f.root=f(val[1], ...),
-         iter=iter, estim.prec= val[3])
+    iter <- as.integer(val[2])
+    if(val[3] > tol)
+	warning("_NOT_ converged in ", maxiter, " iterations")
+    list(root = val[1], f.root = f(val[1], ...),
+         iter = iter, estim.prec = val[3])
 }

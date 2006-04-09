@@ -1777,8 +1777,20 @@ summary(glm(y ~ x, weights = w))
 summary(glm(y ~ x, subset = w > 0))
 ## has NA dispersion in 2.2.1
 
+
 ## substitute was losing "..." after r37269
 yaa <- function(...) substitute(list(...))
 yaa(foo(...))
 ## and wasn't substituting after "..."
 substitute(list(..., x), list(x=1))
+## fixed for 2.3.0
+
+
+## uniroot never warned (PR#8750)
+ff <- function(x) (x-pi)^3
+uniroot(ff, c(-10,10), maxiter=10)
+## should warn, did not < 2.3.0
+
+
+### end of tests added in 2.3.0 ###
+
