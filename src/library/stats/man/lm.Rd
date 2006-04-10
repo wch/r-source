@@ -76,6 +76,9 @@ lm(formula, data, subset, weights, na.action,
   indicates the \emph{cross} of \code{first} and \code{second}.  This is
   the same as \code{first + second + first:second}.
 
+  If the formula includes an \code{\link{offset}}, this is evaluated and
+  subtracted from the response.
+
   If \code{response} is a matrix a linear model is fitted separately by
   least-squares to each column of the matrix.
 
