@@ -903,6 +903,27 @@ if test "${r_cv_prog_f77_append_underscore}" = yes; then
             [Define if your Fortran compiler appends an underscore to
              external names.])
 fi
+AC_MSG_CHECKING([whether ${F77} appends extra underscores to external names])
+AC_CACHE_VAL([r_cv_prog_f77_append_second_underscore],
+[case "${ac_cv_f77_mangling}" in
+  *", extra underscore")
+    r_cv_prog_f77_append_second_underscore=yes
+    ;;
+  *", no extra underscore")
+    r_cv_prog_f77_append_second_underscore=no
+    ;;
+esac])
+if test -n "${r_cv_prog_f77_append_second_underscore}"; then
+  AC_MSG_RESULT([${r_cv_prog_f77_append_second_underscore}])
+else
+  AC_MSG_RESULT([unknown])
+  AC_MSG_ERROR([cannot use Fortran])
+fi
+if test "${r_cv_prog_f77_append_second_underscore}" = yes; then
+  AC_DEFINE(HAVE_F77_EXTRA_UNDERSCORE, 1,
+            [Define if your Fortran compiler appends an extra_underscore to
+             external names containing an underscore.])
+fi
 ])# R_PROG_F77_APPEND_UNDERSCORE
 
 ## R_PROG_F77_CAN_RUN

@@ -27705,6 +27705,38 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
 fi
+echo "$as_me:$LINENO: checking whether ${F77} appends extra underscores to external names" >&5
+echo $ECHO_N "checking whether ${F77} appends extra underscores to external names... $ECHO_C" >&6
+if test "${r_cv_prog_f77_append_second_underscore+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  case "${ac_cv_f77_mangling}" in
+  *", extra underscore")
+    r_cv_prog_f77_append_second_underscore=yes
+    ;;
+  *", no extra underscore")
+    r_cv_prog_f77_append_second_underscore=no
+    ;;
+esac
+fi
+
+if test -n "${r_cv_prog_f77_append_second_underscore}"; then
+  echo "$as_me:$LINENO: result: ${r_cv_prog_f77_append_second_underscore}" >&5
+echo "${ECHO_T}${r_cv_prog_f77_append_second_underscore}" >&6
+else
+  echo "$as_me:$LINENO: result: unknown" >&5
+echo "${ECHO_T}unknown" >&6
+  { { echo "$as_me:$LINENO: error: cannot use Fortran" >&5
+echo "$as_me: error: cannot use Fortran" >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test "${r_cv_prog_f77_append_second_underscore}" = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_F77_EXTRA_UNDERSCORE 1
+_ACEOF
+
+fi
 
 
 echo "$as_me:$LINENO: checking whether mixed C/Fortran code can be run" >&5
@@ -42959,7 +42991,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:42962:" \
+echo "$as_me:42994:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5

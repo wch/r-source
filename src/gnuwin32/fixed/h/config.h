@@ -186,6 +186,10 @@
 /* Define to 1 if you have the `expm1' function. */
 #define HAVE_EXPM1 1
 
+/* Define if your Fortran compiler appends an extra_underscore to external
+   names containing an underscore. */
+#define HAVE_F77_EXTRA_UNDERSCORE 1
+
 /* Define if your Fortran compiler appends an underscore to external names. */
 #define HAVE_F77_UNDERSCORE 1
 
