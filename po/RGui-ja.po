@@ -42,11 +42,11 @@ msgstr ""
 
 #: console.c:1864
 msgid "Save selection to"
-msgstr "セーブ先"
+msgstr "選択を以下にセーブします"
 
 #: console.c:1866
 msgid "Save console contents to"
-msgstr "コンソール中のテキストの保存先"
+msgstr "コンソールの内容を以下に保存します"
 
 #: console.c:1964
 msgid "Scrolling.\n"
@@ -113,7 +113,7 @@ msgstr ""
 
 #: console.c:1978
 msgid "     Ctrl+U: delete all text from current line.\n"
-msgstr "     Ctrl+U: 行の文字を全て消去.\n"
+msgstr "     Ctrl+U: 現在の行のテキストを全て消去.\n"
 
 #: console.c:1979
 msgid "  Copy and paste.\n"
@@ -137,9 +137,7 @@ msgstr ""
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
-msgstr ""
-"     Shift+Ins (または Ctrl+V または Ctrl+Y) でクリップボードの内容をペースト"
-"して(もしあれば)  \n"
+msgstr "     Shift+Ins (または Ctrl+V または Ctrl+Y) でクリップボードの内容（もしあれば）をペーストして\n"
 
 #: console.c:1983
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -157,7 +155,7 @@ msgstr "     Ctrl+L: コンソール画面を全消去します.\n"
 
 #: console.c:1986
 msgid "     Ctrl+O: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O: 上書きモード: 最初はオフです.\n"
+msgstr "     Ctrl+O: 上書きモードを切り替えます: 最初はオフです.\n"
 
 #: console.c:1987
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -189,9 +187,7 @@ msgstr ""
 
 #: console.c:1991
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr ""
-"標準ウインドウズ・ホットキーは,以下を切りかえるために使用することができま"
-"す:\n"
+msgstr "標準ウインドウズ・ホットキーを使い以下へ切りかえることができます\n"
 
 #: console.c:1992
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
@@ -204,7 +200,7 @@ msgstr "無効な引数です"
 
 #: dataentry.c:268
 msgid "invalid type for value"
-msgstr "無効な値の型です"
+msgstr "無効な型の値です"
 
 #: dataentry.c:282
 msgid "invalid device"
@@ -228,7 +224,7 @@ msgstr "dataentry: 入力された式が長すぎます"
 
 #: dataentry.c:1351
 msgid "column names cannot be blank"
-msgstr "列名に空白を指定することはできません"
+msgstr "列名は空白であってはなりません"
 
 #: dataentry.c:1395
 msgid "Variable editor"
@@ -244,7 +240,7 @@ msgstr "型"
 
 #: dataentry.c:1506
 msgid "Cell width(s)"
-msgstr "セルの幅"
+msgstr "セル（複数）の幅"
 
 #: dataentry.c:1511
 msgid "Cell width"
@@ -317,7 +313,7 @@ msgstr "セルサイズの自動調節"
 #: dataentry.c:1565 pager.c:295 rui.c:752
 #: ../library/grDevices/src/devWindows.c:1598
 msgid "Stay on top"
-msgstr "ウインドウを常にトップに置く"
+msgstr "ウィンドウを常にトップに置く"
 
 #: dataentry.c:1567 dataentry.c:1645 pager.c:297 pager.c:460
 msgid "Close"
@@ -346,7 +342,7 @@ msgstr "ペースト \tCTRL+V"
 
 #: dataentry.c:1650
 msgid "Delete\tDEL"
-msgstr "消去\tDEL"
+msgstr "消去 tDEL"
 
 #: dataentry.c:1652
 msgid "Cell widths ..."
@@ -358,7 +354,7 @@ msgstr "データエディタ"
 
 #: editor.c:446 pager.c:172 pager.c:192
 msgid "No RGui console to paste to"
-msgstr "RGui コンソールにペーストできません"
+msgstr "ペーストすべき RGui コンソールがありません"
 
 #: editor.c:548
 msgid "R EDITOR\n"
@@ -585,12 +581,11 @@ msgstr ""
 
 #: preferences.c:330
 msgid "Select directory for file 'Rconsole'"
-msgstr "ファイル'Rconsole'のディレクトリを選択"
+msgstr "ファイル 'Rconsole' のディレクトリを選択"
 
 #: preferences.c:415
-#, fuzzy
 msgid "Select 'Rconsole' file"
-msgstr "ファイルを選択"
+msgstr "ファイル 'Rconsole' を選択"
 
 #: preferences.c:594
 #, c-format
@@ -607,7 +602,7 @@ msgstr "反映"
 
 #: preferences.c:740
 msgid "Load"
-msgstr ""
+msgstr "ロード"
 
 #: rui.c:105
 msgid "Select file to source"
@@ -644,7 +639,7 @@ msgstr "'%s' が見つかりません"
 
 #: rui.c:345
 msgid "Are you sure?"
-msgstr "本当ですか?"
+msgstr "本気ですか?"
 
 #: rui.c:426
 msgid "Help on"
@@ -664,7 +659,7 @@ msgstr "オブジェクトの検索"
 
 #: rui.c:738
 msgid "Can only drag-and-drop .R, .RData and .rda files"
-msgstr ".R, .RData and .rda ファイルのみドラッグ＆ドロップができます"
+msgstr ".R, .RData そして .rda ファイルのみドラッグ＆ドロップができます"
 
 #: rui.c:744 rui.c:1000
 msgid "Paste commands only"
@@ -764,7 +759,7 @@ msgstr "現在の計算を中断"
 
 #: rui.c:977
 msgid "Source R code..."
-msgstr "R コードのソース..."
+msgstr "R コードのソースを読み込み..."
 
 #: rui.c:980
 msgid "Display file(s)..."
@@ -885,8 +880,7 @@ msgstr "作業スペースを保存しますか?"
 
 #: graphapp/clipboard.c:70 graphapp/clipboard.c:74
 msgid "Insufficient memory: cell not copied to the clipboard"
-msgstr ""
-"目盛りが不足しています: セルをクリップボードにコピーすることができません"
+msgstr "メモリが不足しています: セルをクリップボードにコピーすることができません"
 
 #: graphapp/dialogs.c:96 graphapp/dialogs.c:113 graphapp/dialogs.c:130
 msgid "Question"
@@ -899,7 +893,7 @@ msgstr "作業ディレクトリの変更"
 #: graphapp/dialogs.c:153
 #, c-format
 msgid "Unable to set '%s' as working directory"
-msgstr "作業ディレクトリとして '%s' を指定することができません"
+msgstr "作業ディレクトリとして '%s' を設定することができません"
 
 #: graphapp/dialogs.c:389
 msgid "Select working directory"
@@ -997,7 +991,7 @@ msgstr "変数名"
 
 #: ../library/grDevices/src/devWindows.c:1175
 msgid "Variable doesn't exist or doesn't contain any plots!"
-msgstr "変数が存在しないか,プロットに含まれていません!"
+msgstr "変数が存在しないか、いかなるプロットも含んでいません!"
 
 #: ../library/grDevices/src/devWindows.c:1191
 msgid "Name of variable to save to"
@@ -1075,11 +1069,11 @@ msgstr "クリップボードにコピー"
 
 #: ../library/grDevices/src/devWindows.c:1555
 msgid "as a Bitmap\tCTRL+C"
-msgstr "ビットマップ\tCTRL+C"
+msgstr "ビットマップtCTRL+C　として"
 
 #: ../library/grDevices/src/devWindows.c:1556
 msgid "as a Metafile\tCTRL+W"
-msgstr "メタファイル\tCTRL+W"
+msgstr "メタファイルtCTRL+W　として"
 
 #: ../library/grDevices/src/devWindows.c:1559
 msgid "Print...\tCTRL+P"
@@ -1115,7 +1109,7 @@ msgstr "進む\tPgDown"
 
 #: ../library/grDevices/src/devWindows.c:1572
 msgid "Save to variable..."
-msgstr "変数の保存..."
+msgstr "変数へ保存..."
 
 #: ../library/grDevices/src/devWindows.c:1573
 msgid "Get from variable..."
@@ -1167,4 +1161,5 @@ msgstr "ページ変更を確認するまで待機中..."
 
 #: ../library/grDevices/src/devWindows.c:3044
 msgid "Click or hit ENTER for next page"
-msgstr "クリックまたは ENTER キーを押すことで次のページに移ります"
+msgstr "クリックまたは ENTER キーを押すと次のページに移ります"
+
