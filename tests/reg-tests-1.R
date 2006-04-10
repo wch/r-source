@@ -128,8 +128,6 @@ stopifnot(all.equal(dcauchy(-1:4), 1 / (pi*(1 + (-1:4)^2))))
 ( m <- matrix(c(5,1,1,3),2,2) )
 ( cm <- chol(m) )
 stopifnot(abs(m	 -  t(cm) %*% cm) < 100* .Machine$double.eps)
-( Lcm <- La.chol(m) )
-stopifnot(abs(m - crossprod(Lcm))  < 100* .Machine$double.eps)
 
 ## check with pivoting
 ( m <- matrix(c(5,1,1,3),2,2) )
@@ -163,7 +161,6 @@ stopifnot(all.equal(t(Q) %*% Q, m[pivot, pivot]))
 ## chol2inv
 cma <- chol(ma	<- cbind(1, 1:3, c(1,3,7)))
 stopifnot(all.equal(diag(3), ma %*% chol2inv(cma)))
-stopifnot(all.equal(diag(3), ma %*% La.chol2inv(cma)))
 ## end of moved from chol2inv.Rd
 
 

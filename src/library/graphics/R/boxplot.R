@@ -73,13 +73,11 @@ boxplot.formula <-
 }
 
 bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
-		notch.frac = 0.5, log = "", border=par("fg"), col=par("bg"),
+		notch.frac = 0.5, log = "", border=par("fg"),
                 pars = NULL, frame.plot = axes, horizontal = FALSE,
                 add = FALSE, at = NULL, show.names = NULL, ...)
 {
     pars <- c(pars, list(...))
-    if(!missing(col))
-        warning("argument 'col' is deprecated in favour of 'boxfill'")
 
     bplt <- function(x, wid, stats, out, conf, notch, xlog, i)
     {
@@ -185,7 +183,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     boxlty    <- pcycle(pars$boxlty,	pars$lty, par("lty"))
     boxlwd    <- pcycle(pars$boxlwd,	pars$lwd, par("lwd"))
     boxcol    <- pcycle(pars$boxcol,	border)
-    boxfill   <- pcycle(pars$boxfill,	col)
+    boxfill   <- pcycle(pars$boxfill,	par("bg"))
     boxwex    <- pcycle(pars$boxwex,	0.8 * {
         if(n <= 1) 1 else
         quantile(diff(sort(if(xlog) log(at) else at)), 0.10) })

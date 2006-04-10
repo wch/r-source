@@ -5,8 +5,7 @@
 \usage{
 svd(x, nu = min(n, p), nv = min(n, p), LINPACK = FALSE)
 
-La.svd(x, nu = min(n, p), nv = min(n, p),
-       method = c("dgesdd", "dgesvd"))
+La.svd(x, nu = min(n, p), nv = min(n, p))
 }
 \arguments{
   \item{x}{a real or complex matrix whose SVD decomposition is to be computed.}
@@ -17,7 +16,6 @@ La.svd(x, nu = min(n, p), nv = min(n, p),
     This must be one of \code{0} and \code{ncol(x)}.}
   \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
     \R < 1.7.0)?}
-  \item{method}{The LAPACK routine to use in the real case.}
 }
 \description{
   Compute the singular-value decomposition of a rectangular matrix.
@@ -30,13 +28,6 @@ La.svd(x, nu = min(n, p), nv = min(n, p),
   provides an interface to the LINPACK routine DSVDC, purely for
   backwards compatibility.
   
-  \code{La.svd} provides an interface to both the LAPACK routines
-  DGESVD and DGESDD.  The latter is usually substantially faster
-  if singular vectors are required: see
-  \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
-  Most benefit is seen with an optimized BLAS system.  As from
-  \R 2.3.0, using \code{method="dgesvd"} is deprecated.
-
   Computing the singular vectors is the slow part for large matrices.
 
   Unsuccessful results from the underlying LAPACK code will result in an

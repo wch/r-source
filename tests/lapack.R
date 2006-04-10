@@ -10,17 +10,8 @@ str(s <- La.svd(X)); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
 
-str(s <- La.svd(X, method = "dgesvd")); D <- diag(s$d)
-stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
-stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
-
 X <- cbind(1, 1:7)
 str(s <- La.svd(X)); D <- diag(s$d)
-stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
-stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
-
-X <- cbind(1, 1:7)
-str(s <- La.svd(X, method = "dgesvd")); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
 
@@ -29,11 +20,6 @@ La.svd(X, nu = 0)
 (s <- La.svd(X, nu = 7))
 stopifnot(dim(s$u) == c(7,7))
 La.svd(X, nv = 0)
-
-La.svd(X, nu = 0, method = "dgesvd")
-(s <- La.svd(X, nu = 7, method = "dgesvd"))
-stopifnot(dim(s$u) == c(7,7))
-La.svd(X, nv = 0, method = "dgesvd")
 
 # test of complex case
 

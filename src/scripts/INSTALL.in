@@ -49,17 +49,6 @@ Options:
       --libs-only      	only install the libs directory
       --build           build binary tarball(s) of the installed package(s)
 
-Deprecated options:
-  -s, --save[=ARGS]     save the package source as an image file, and
-                        arrange for this file to be loaded when the
-                        package is attached; if given, ARGS are passed
-                        to R when creating the save image
-      --no-save         do not save the package source as an image file
-      --lazy            use lazy loading
-      --no-lazy         do not use lazy loading
-      --lazy-data       use lazy loading for data
-      --no-lazy-data    do not use lazy loading for data (current default)
-
 Report bugs to <r-bugs@r-project.org>."
 
 ## <NOTE>
@@ -222,27 +211,6 @@ while test -n "${1}"; do
       echo "${version}"; do_cleanup_tmpdir; exit 0 ;;
     -c|--clean)
       clean=true ;;
-    -s|--save)
-      message "Option --save (-s) is deprecated"
-      save=true;;
-    --save=*)
-      message "Option --save is deprecated"
-      save_args=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
-    --lazy)
-      message "Option --lazy is deprecated"
-      lazy=true ;;
-    --no-lazy)
-      message "Option --no-lazy is deprecated"
-      lazy=false ;;
-    --lazy-data)
-      message "Option --lazy-data is deprecated"
-      lazy_data=true ;;
-    --no-lazy-data)
-      message "Option --no-lazy-data is deprecated"
-      lazy_data=false ;;
-    --no-save)
-      message "Option --no-save is deprecated"
-      save=false ;;
     -d|--debug)
       debug=true ;;
     --with-package-versions)

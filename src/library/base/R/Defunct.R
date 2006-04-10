@@ -103,3 +103,10 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 format.char <- function(x, width = NULL, flag = "-")
     .Defunct("format.default")
 ## </entry>
+
+## <entry>
+## Deprecated in 2.3.0
+## Defunct in 2.4.0
+La.chol <- function(x) .Defunct("chol")
+La.chol2inv <- function(x, size = ncol(x)) .Defunct("chol2inv")
+## </entry>

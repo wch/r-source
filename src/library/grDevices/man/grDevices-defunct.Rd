@@ -1,9 +1,9 @@
-\name{grDevices-deprecated}
+\name{grDevices-defunct}
 \alias{postscriptFont}
-\title{Deprecated Functions in Package grDevices}
+\title{Defunct Functions in Package grDevices}
 \description{
-  These functions are provided for compatibility with older versions of
-  \R only, and may be defunct as soon as of the next release.
+  The functions or variables listed here are no longer part of \R as
+  they are not needed (any more).
 }
 \usage{
 postscriptFont(family, metrics, encoding = "default")
@@ -16,13 +16,13 @@ postscriptFont(family, metrics, encoding = "default")
   \item{encoding}{the name of an encoding file.}
 }
 \details{
-  The function \code{postscriptFont} is deprecated in favour of
-  \code{\link{Type1Font}}.
+  The function \code{postscriptFont} has been replaced by
+  \code{\link{Type1Font}}, which is just a change of name.
 }
 \value{
   One or more font mappings.
 }
 \seealso{
-  \code{\link{Deprecated}}, \code{\link{Defunct}}
+  \code{\link{Defunct}}
 }
-\keyword{misc}
+\keyword{internal}

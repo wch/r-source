@@ -1,58 +1,46 @@
-La.svd <- function(x, nu = min(n, p), nv = min(n, p),
-                   method = c("dgesdd", "dgesvd"))
+La.svd <- function(x, nu = min(n, p), nv = min(n, p))
 {
     if(!is.numeric(x) && !is.complex(x))
 	stop("argument to 'La.svd' must be numeric or complex")
     if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
-    method <- match.arg(method)
-    if(is.numeric(x) && method == "dgesvd")
-        .Deprecated('La.svd(method = "dgesvd")')
-
     x <- as.matrix(x)
     if (is.numeric(x)) storage.mode(x) <- "double"
     n <- nrow(x)
     p <- ncol(x)
     if(!n || !p) stop("0 extent dimensions")
 
-    if(is.complex(x) || method == "dgesvd") {
+    if(is.complex(x)) {
         if(nu == 0) {
             jobu <- 'N'
-            u <- matrix(0, 1, 1)  # dim is checked
+            u <- matrix(0+0i, 1, 1)  # dim is checked
         }
         else if(nu == n) {
             jobu <- ifelse(n > p, 'A', 'S')
-            u <- matrix(0, n, n)
+            u <- matrix(0+0i, n, n)
         }
         else if(nu == p) {
             jobu <- ifelse(n > p, 'S', 'A')
-            u <- matrix(0, n, p)
+            u <- matrix(0+0i, n, p)
         }
         else
             stop("'nu' must be 0, nrow(x) or ncol(x)")
 
         if (nv == 0) {
             jobv <- 'N'
-            v <- matrix(0, 1, 1) # dim is checked
+            v <- matrix(0+0i, 1, 1) # dim is checked
         }
         else if (nv == n) {
             jobv <- ifelse(n > p, 'A', 'S')
-            v <- matrix(0, min(n, p), p)
+            v <- matrix(0+0i, min(n, p), p)
         }
         else if (nv == p) {
             jobv <- ifelse(n > p, 'S', 'A')
-            v <- matrix(0, p, p)
+            v <- matrix(0+0i, p, p)
         }
         else
             stop("'nv' must be 0, nrow(x) or ncol(x)")
-        if(is.complex(x)) {
-            u[] <- as.complex(u)
-            v[] <- as.complex(v)
-            res <- .Call("La_svd_cmplx", jobu, jobv, x, double(min(n, p)),
-                         u, v, PACKAGE = "base")
-        } else {
-            res <- .Call("La_svd", jobu, jobv, x, double(min(n, p)), u, v,
-                         method, PACKAGE = "base")
-        }
+        res <- .Call("La_svd_cmplx", jobu, jobv, x, double(min(n, p)),
+                     u, v, PACKAGE = "base")
         return(res[c("d", if(nu) "u", if(nv) "vt")])
     } else {
         if(nu > 0 || nv > 0) {
@@ -74,7 +62,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
         }
         jobv <- ''
         res <- .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v,
-                     method, PACKAGE = "base")
+                     "dgsedd", PACKAGE = "base")
         res <- res[c("d", if(nu) "u", if(nv) "vt")]
         if(nu) res$u <- res$u[, 1:min(n, nu), drop = FALSE]
         if(nv) res$vt <- res$vt[1:min(p, nv), , drop = FALSE]

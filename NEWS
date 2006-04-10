@@ -12,6 +12,23 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
+    o	The re-named tcltk functions tkcmd, tkfile.tail, tkfile.dir,
+	tkopen, tkclose, tkputs, tkread are now defunct.
+
+    o	Argument 'col' of bxp() has been removed: use 'boxfill'.
+
+    o	postscriptFont() is defunct: use Type1Font().
+
+    o	La.chol() and La.chol2inv() are defunct (they were the same as
+	the default options of chol() and chol2inv).
+
+    o	La.svd(method = "dgesvd") is defunct.
+
+    o	The following deprecated command-line options to INSTALL have
+	been removed (use the fields in the DESCRIPTION file instead):
+	-s --save --no-save --lazy --no-lazy --lazy-data --no-lazy-data
+
+
 BUG FIXES
 
 
