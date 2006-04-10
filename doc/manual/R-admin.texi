@@ -2553,6 +2553,10 @@ reliable code.  It seems that @command{gcc}@tie{}4.0.x cannot compile
 @option{-O2} (@option{-O3} works, as does @command{gcc}@tie{}4.1.0 with
 the default settings).
 
+It has been reported that using @command{gcc}@tie{}4.0.3 on
+@cputype{ppc64} needed the compiler flag @option{-mminimal-toc} to avoid
+errors when linking @R{} as a shared library.
+
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
 Linux and @R{} contains code to set the FPU options suitably.  Brian
 Ripley tried version 9.0 of the compilers for @cputype{ix86} @emph{via}
