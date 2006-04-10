@@ -8699,8 +8699,8 @@ These are the following 1-, 2-, and @math{N}-argument functions:
 
 @example
 @group
-          [    [[    $
-<-   <<-  [<-  [[<-  $<-
+               [    [[    $    @
+<-   <<-  =    [<-  [[<-  $<-
 
 +    -    *    /     ^    %%   %*%  %/%
 <    <=   ==   !=    >=   >
@@ -8768,7 +8768,8 @@ nargs        missing
 interactive  is.@emph{xxx}
 .Primitive   .Internal
 symbol.C     symbol.For
-globalenv    pos.to.env  unclass
+globalenv    baseenv     emptyenv     pos.to.env
+unclass
 @end group
 @end example
 
@@ -8796,6 +8797,7 @@ The following basic assignment and extractor functions
 @group
 length      length<-
 class       class<-
+oldClass    oldCLass<-
 attr        attr<-
 attributes  attributes<-
 dim         dim<-
@@ -8811,9 +8813,15 @@ efficiency reasons:
 @example
 @group
 :          ~          c           list
-call       as.call    expression  substitute  as.environment
+call       as.call    as.character
+expression  substitute  as.environment
 UseMethod  invisible
 .C         .Fortran   .Call       .External
+.Call.graphics        .External.graphics
+.subset    .subset2
+.primTrace            .primUntrace
+reg.finalizer         gc.time
+UseMethod             standardGeneric
 @end group
 @end example
 
