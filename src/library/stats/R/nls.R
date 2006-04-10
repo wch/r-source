@@ -620,7 +620,7 @@ print.summary.nls <-
     if (!is.null(correl)) {
         p <- NCOL(correl)
         if (p > 1) {
-            cat("\nCorrelation of Paraneter Estimates:\n")
+            cat("\nCorrelation of Parameter Estimates:\n")
 	    if(is.logical(symbolic.cor) && symbolic.cor) {
 		print(symnum(correl, abbr.col = NULL))
             } else {
