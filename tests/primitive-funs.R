@@ -10,7 +10,6 @@ bpos <- match("package:base",search())
 nn <- ls(pos=bpos, all = TRUE)
 length(nn) # 844 [R 0.62.0, March 25, 1998;  1067 R 0.64.0 March 1999]
 
-is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
 is.special <- function(obj) typeof(obj) == "special"
 
 Primf <- nn[sapply(nn, function(N) is.primitive(get(N, pos=bpos)))]
@@ -20,7 +19,7 @@ Real.primitives <-
     list(
 	 specials = c("{", "(", "if", "for", "while", "repeat", "break", "next",
 	 "return", "function", "quote",
-	 "on.exit" ## on.exit(expression, add=F) has two arguments in S-plus !
+	 "on.exit"
 	 ),
 	 language = c("$", "$<-", "@", "<-", "=", "<<-", "[", "[<-", "[[", "[[<-"),
 	 arith = c("%%", "%*%", "%/%","*", "+", "-", "/", "^"),
@@ -31,9 +30,9 @@ Real.primitives <-
 	   "floor", "ceiling", "trunc",
 	   "sqrt",
 	   "exp",	## NOT: "log",
-	   "cos",	  "sin",  "tan",
-	   "acos",	 "asin", "atan", ## Not:  atan2
-	   "cosh",	 "sinh", "tanh",
+	   "cos",   "sin",  "tan",
+	   "acos",  "asin", "atan", ## Not:  atan2
+	   "cosh",  "sinh", "tanh",
 	   "acosh","asinh","atanh",
 	   "cumsum","cumprod",
 	   "cummax", "cummin"
@@ -52,32 +51,27 @@ Real.primitives <-
 	   ##maybe ? "gc", "gcinfo",
 	   ##
 	   "debug", "undebug", ".primTrace", ".primUntrace",
-	   "browser",  "proc.time", "gc.time", #"traceback",
+	   "browser",  "proc.time", "gc.time",
+           ".subset", ".subset2"
 	   ),
 
-	 language2= c(":", "~", "c", "list", #nomore (Sep.9,1998): "unlist",
-	 # ".Alias", removed for 1.5.0
+	 language2= c(":", "~", "c", "list",
 	 "call", "as.call", "expression", "substitute",
-	 "UseMethod", ## ? really ?
+	 "UseMethod",
          "standardGeneric",
-	 "invisible",
+	 "invisible", "reg.finalizer",
 	 ),
 
 	 language3=
 	 c("environment<-",
 	   "length",	"length<-",
 	   "class",	"class<-",
-	   "attr", # again
+	   "attr",
 	   "attr<-",
 	   "attributes",	"attributes<-",
 	   "dim",		"dim<-",
 	   "dimnames",	"dimnames<-",
-	   ## MM:	"comment", "comment<-",
-	   ## New data.frame code
-	   ##	   "levels", "levels<-",
-	   ##	   "codes",  "codes<-",
-	   ##	   "[.data.frame",  "[<-.data.frame",
-	   ##	   "[[.data.frame", "[[<-.data.frame"
+	   "oldClass",	"oldClass<-",
 	   ),
 	 )
 real.primitives <- unlist(Real.primitives)
