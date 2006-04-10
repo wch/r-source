@@ -294,93 +294,6 @@ static const char UCS2ENC[] = "UCS-2BE";
 static const char UCS2ENC[] = "UCS-2LE";
 # endif
 
-#if 0
-/* <FIXME>
- * It would make a lot of sense to cache cd here, but it would need to be 
- * refreshed if the locale was changed.  However, this seems the
- * wrong way to do this, as mbrlen will do the job correctly.
- */
-size_t mbcsMblen(char *in)
-{
-    unsigned int ucs4buf[1];
-    unsigned short ucs2buf[1];
-    void *cd = NULL, *buftype;
-    char *i_buf, *o_buf;
-    size_t i_len, o_len, status;
-    int i;
-
-    /* 6 == MB_LEN_MAX ? shift state is ignored... */
-    for (i = 1 ; i <= 6 ; i++) {
-	buftype = (void *) ucs4buf;
-	if((void*)-1 == (cd = Riconv_open((char*)UCS4ENC, ""))) {
-	    buftype = (void *)ucs2buf;
-	    if ((void*)-1 == (cd = Riconv_open((char*)UCS2ENC, ""))) {
-		return (size_t)(-1);
-	    }
-	}
-
-	i_buf = in;
-	i_len = i;
-	o_buf = buftype == (void *) ucs4buf ?
-	    (char *) ucs4buf : (char *) ucs2buf;
-	o_len = buftype == (void *) ucs4buf ? 4 : 2;
-	memset (o_buf, 0 , o_len);
-	status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
-			(char **)&o_buf, (size_t *)&o_len);
-	Riconv_close(cd);
-	if (status == (size_t) -1) {
-	    switch (errno){
-	    case EINVAL:
-		/* next char */
-		break;
-	    case E2BIG:
-		return (size_t) -1;
-	    case EILSEQ:
-		return (size_t) -1;
-	    }
-	} else if ((size_t) 0 == status)
-	    /* normal status */
-	    return (size_t) i;
-	else
-	    return (size_t) status;
-    }
-    return (size_t) -1;
-}
-
-/* Currently only used in this file */
-size_t ucs2Mblen(ucs2_t *in)
-{
-    char mbbuf[16];
-    void *cd = NULL;
-    char *i_buf, *o_buf;
-    size_t i_len, o_len, status;
-
-    if ((void*) -1 == (cd = Riconv_open("", (char *)UCS2ENC)))
-	return (size_t) -1;
-
-    memset(mbbuf, 0, sizeof(mbbuf));
-    i_buf = (char *)in;
-    i_len = sizeof(ucs2_t);
-    o_buf = mbbuf;
-    o_len = sizeof(mbbuf);
-    memset(o_buf, 0 , o_len);
-    status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
-		    (char **)&o_buf, (size_t *)&o_len);
-    Riconv_close(cd);
-    if ((size_t) -1 == status)
-	switch (errno) {
-	case EINVAL:
-	    /* not case */
-	    return (size_t) -1;
-	case E2BIG:
-	    /* probably few case */
-	    return (size_t) -1;
-	case EILSEQ:
-	    return (size_t) -1;
-	}
-    return (size_t) strlen(mbbuf);
-}
-#endif
 
 /*
  * out=NULL returns the number of the MBCS chars
@@ -395,15 +308,6 @@ size_t mbcsToUcs2(char *in, ucs2_t *out, int nout)
     size_t  i_len, o_len, status, wc_len;
 
     /* out length */
-    /* i_buf = in;
-    wc_len = 0;
-    while(*i_buf){
-	int rc;
-	rc = (int) mbcsMblen(i_buf);
-	if (rc < 0) return rc;
-	i_buf += rc;
-	wc_len++;
-	} */
     wc_len = mbstowcs(NULL, in, 0);
     if (out == NULL || (int)wc_len < 0) return wc_len;
 
@@ -433,55 +337,6 @@ size_t mbcsToUcs2(char *in, ucs2_t *out, int nout)
     }
     return wc_len; /* status would be better? */
 }
-
-#if 0
-/*
- * out returns the number of the bytes in the case of NULL
- */
-/* Also does not terminate out, and currently unused */
-size_t ucs2ToMbcs(ucs2_t *in, char *out)
-{
-    void   *cd = NULL ;
-    ucs2_t *ucs = in ;
-    char   *i_buf = (char *)in, *o_buf;
-    size_t  i_len, o_len, status;
-
-    /* out length */
-    o_len = 0;
-    i_len = 0;
-    while(*ucs) {
-	int rc;
-	rc = ucs2Mblen(ucs);
-	if(rc < 0) return rc;
-	o_len += rc;
-	i_len += sizeof(ucs2_t);
-    }
-    if ( out == NULL ) return o_len;
-
-    if ((void*)-1 == (cd = Riconv_open("", (char *)UCS2ENC)))
-	return((size_t)(-1));
-
-    o_buf = (char *)out;
-    status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
-		    (char **)&o_buf, (size_t *)&o_len);
-
-    Riconv_close(cd);
-    if (status == (size_t)-1){
-        switch(errno){
-        case EINVAL:
-            return (size_t) -2;
-        case EILSEQ:
-            return (size_t) -1;
-        case E2BIG:
-            break;
-        default:
-	    errno=EILSEQ;
-	    return (size_t) -1;
-        }
-    }
-    return strlen(out);
-}
-#endif
 #endif /* SUPPORT_MBCS */
 
 
