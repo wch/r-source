@@ -6905,7 +6905,9 @@ to access a FORTRAN common block from C
 
 On most current platforms these are all the same, but it is unwise to
 rely on this.  Note that names with underscores are not legal in FORTRAN
-77, and are not portably handled by the above macros.
+77, and are not portably handled by the above macros.  (Also, all
+FORTRAN names for use by @R{} are lower case, but this is not enforced
+by the macros.)
 
 For example, suppose we want to call R's normal random numbers from
 FORTRAN.  We need a C wrapper along the lines of

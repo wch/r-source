@@ -754,6 +754,12 @@ DL_FUNC R_dlsym(DllInfo *info, char const *name,
 	buf[strlen(buf)] = '_';
     }
 #endif
+#ifdef HAVE_F77_EXTRA_UNDERSCORE
+    if(strchr(name, '_') && symbol && symbol->type == R_FORTRAN_SYM) {
+	buf[strlen(buf)+1] = '\0';
+	buf[strlen(buf)] = '_';
+    }
+#endif
 
     return (DL_FUNC) R_osDynSymbol->dlsym(info, buf);
 }

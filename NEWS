@@ -18,6 +18,9 @@ NEW FEATURES
     o	reg.finalizer() has a new argument 'onexit' to parallel the
 	C-level equivalent R_RegisterFinalizerEx.
 
+    o	.Fortran() will map 'name' to lower case, and will work with
+	'name' containing underscores.
+
 
 DEPRECATED & DEFUNCT
 
@@ -37,8 +40,15 @@ DEPRECATED & DEFUNCT
 	been removed (use the fields in the DESCRIPTION file instead):
 	-s --save --no-save --lazy --no-lazy --lazy-data --no-lazy-data
 
+    o	symbol.C() and symbol.For() are deprecated.  They are required in
+	S for use with is.loaded(), but are not so required in R. 
+
 
 BUG FIXES
+
+    o	The name of a Fortran symbol reported to be missing by
+	.Fortran() is now the actual name.  (What was reported to be
+	an 'entry point' was missing the common leading underscore.)
 
 
 

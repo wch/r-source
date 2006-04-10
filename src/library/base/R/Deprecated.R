@@ -16,7 +16,8 @@
 
 
 ## <entry>
-## Deprecated in 2.3.0
+## Deprecated in 2.4.0
+## symbol.C and symbol.For are primitives
 ## La.chol <- function(x) {
 ##     .Deprecated("chol")
 ##     .Call("La_chol", as.matrix(x), PACKAGE = "base")

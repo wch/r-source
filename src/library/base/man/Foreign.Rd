@@ -75,10 +75,6 @@
   For Windows-specific details on producing the external code, see the
   \dQuote{R Installation and Administration} manual.
 #endif
-
-  Fortran names will need to be in the case as mapped by the compiler,
-  for all known \R platforms in lower case.  They should not include any
-  trailing underscore if one is appended by the compiler.
 }
 \section{Argument types}{
   The mapping of the types of \R arguments to C or Fortran arguments
@@ -135,9 +131,9 @@
   Note that you cannot assign values to the elements of the list within
   the C routine. Assigning values to elements of the array corresponding
   to the list bypasses R's memory management/garbage collection and will
-  cause problems.  Essentially, the array corresponding to the list is read-only.
-  If you need to return S objects created within the C routine,  use the
-  \code{.Call} interface.
+  cause problems.  Essentially, the array corresponding to the list is
+  read-only. If you need to return S objects created within the C
+  routine,  use the \code{.Call} interface.
 
 
   \R functions can be invoked using \code{call_S} or \code{call_R} and
@@ -145,7 +141,7 @@
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM,
 %%      edited by BDR for 1.2.0's non-moving garbage collector):
-\note{\emph{\code{DUP=FALSE} is dangerous.}
+\section{Warning}{\emph{\code{DUP=FALSE} is dangerous.}
 
   There are two dangers with using \code{DUP=FALSE}.
 
@@ -180,20 +176,31 @@
   Neither \code{.Call} nor \code{.External} copy their arguments.  You
   should treat arguments you receive through these interfaces as
   read-only.
+}
 
+\section{Fortran symbol names}{
+  All compilers that can be used with \R map symbol names to lower case,
+  and so does \code{.Fortran}.
+  
   Symbol names containing underscores are not valid Fortran 77 (although
   they are valid in Fortran 9x).  Many Fortran 77 compilers (including
   \code{g77}) will allow them but translate them in a different way to
-  \code{.Fortran}.  Portable code should not use Fortran names
-  containing underscores for entry points to be called from \R.
+  names not containing underscores.  As from \R 2.4.0 such names will
+  work with \code{.Fortran}, but portable code should not use Fortran
+  names containing underscores.
+
+  Use \code{.Fortran} with care for compiled Fortran 9x code: it may not
+  work if the Fortran 9x compiler used differs from the Fortran compiler
+  used when configuring \R, especially if the subroutine name is not
+  lower-case or includes an underscore.
 }
 
 \section{Header files for external code}{
-    Writing code for use with \code{.External} and \code{.Call} will
-    use internal \R structures. If possible use just those defined in
-    \file{Rinternals.h} and/or the macros in \file{Rdefines.h},
-    as other header files are not installed and are even more
-    likely to be changed.
+  Writing code for use with \code{.External} and \code{.Call} will need to
+  use internal \R structures.  If possible use just those defined in
+  \file{Rinternals.h} and/or the macros in \file{Rdefines.h},
+  as other header files are not installed and are even more
+  likely to be changed.
 }
 
 \references{

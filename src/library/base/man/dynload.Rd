@@ -2,8 +2,6 @@
 \alias{dyn.load}
 \alias{dyn.unload}
 \alias{is.loaded}
-\alias{symbol.C}
-\alias{symbol.For}
 \title{Foreign Function Interface}
 \description{
   Load or unload shared libraries, and test whether a C function or
@@ -14,8 +12,6 @@ dyn.load(x, local = TRUE, now = TRUE)
 dyn.unload(x)
 
 is.loaded(symbol, PACKAGE = "", type = "")
-symbol.C(name)
-symbol.For(name)
 }
 \arguments{
   \item{x}{a character string giving the pathname to a shared library or
@@ -48,8 +44,7 @@ symbol.For(name)
     same way as in \code{\link{.C}}, \code{\link{.Call}},
     \code{\link{.Fortran}} and \code{\link{.External}} functions}
   \item{name}{a character string giving either the name of a C function
-    or Fortran subroutine.  Fortran names probably need to be given
-    entirely in lower case (but this may be system-dependent).}
+    or Fortran subroutine.}
   \item{type}{The type of symbol to look for: can be any (\code{""}, the
   default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
 }
@@ -138,19 +133,13 @@ symbol.For(name)
 
   The function \code{dyn.unload} unlinks the shared library.
 
-  Functions \code{symbol.C} and \code{symbol.For} are for historical
-  compatibility with S.  \code{symbol.C} just returns its argument
-  unchanged, whereas \code{symbol.For} will append an underscore on
-  those platforms (almost all) which do so for Fortran symbols.
-  These are no longer of much use in \R.
-
   \code{is.loaded} checks if the symbol name is loaded and hence
   available for use in \code{.C} or \code{.Fortran} or \code{.Call} or
   \code{.Exernal}: it requires the name you would give to \code{.C} etc
-  and \strong{not} that remapped by \code{symbol.C} or
-  \code{symbol.For}.  It will succeed if any one of the four calling
-  functions would succeed in using the entry point unless \code{type}
-  is specified: for Fortran entry points
+  and \strong{not} (as in S) that remapped by deprecated functions
+  \code{\link{symbol.C}} or \code{\link{symbol.For}}.  It will succeed
+  if any one of the four calling functions would succeed in using the
+  entry point unless \code{type} is specified: for Fortran entry points
   \code{is.loaded(symbol.For("symbol"))} will also succeed \emph{unless}
   the registration mechanism has been used.
 }
