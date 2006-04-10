@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "'%s' is defunct."
-msgstr "'%s' は廃止されました"
+msgstr "'%s' は廃止されました。"
 
 msgid "Use '%s' instead."
 msgstr "'%s' を代わりに使って下さい"
@@ -48,13 +48,13 @@ msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv' は 0 , nrow(x) または ncol(x) でなければなりません"
 
 msgid "'all' can not be used with other deparse options"
-msgstr "deparse オプションでは、すべてを使用することはできません"
+msgstr "'all' は他の deparse オプションと一緒には使えません"
 
 msgid "second argument must be a list"
 msgstr "第二引数はリストでなければなりません"
 
 msgid "'iconvlist' is not available on this system"
-msgstr "iconvlistはこのシステムで利用可能ではありません"
+msgstr "'iconvlist' はこのシステムで利用可能ではありません"
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr "'kind' は長さ 1 の文字列(使用されるべき RNG 名) でなければなりません"
@@ -171,11 +171,10 @@ msgid "not a valid restart specification"
 msgstr "有効な再スタート指定ではありません"
 
 msgid "argument 'where' of length 0"
-msgstr "長さ 0 の引数"
+msgstr "長さ 0 の引数 'where' です"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
-msgstr ""
-"'origin' は 'start', 'current' または 'end' のいずれかでなければなりません"
+msgstr "'origin' は 'start', 'current' または 'end' のいずれかでなければなりません"
 
 msgid "can only truncate an open connection"
 msgstr "開かれたコネクションしか切り詰められません"
@@ -223,8 +222,7 @@ msgid "cannot coerce class \"%s\" into a data.frame"
 msgstr "クラス \"%s\" はデータフレームに強制変換できません"
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr ""
-"無効な 'row.names' です。長さが %d ですが、データフレームの行数は %d です"
+msgstr "無効な 'row.names' です。長さが %d ですが、データフレームの行数は %d です"
 
 msgid "supplied %d row names for %d rows"
 msgstr "%d 個の行名が %d 個の行に提供されました"
@@ -469,7 +467,7 @@ msgid "'from' must be a POSIXt object"
 msgstr "'from' は POSIXt オブジェクトでなければなりません"
 
 msgid "'to' must be a POSIXt object"
-msgstr "'to' POSIXt のオブジェクトでなければなりません"
+msgstr "'to' は POSIXt のオブジェクトでなければなりません"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' は文字列かコネクションでなければなりません"
@@ -594,23 +592,19 @@ msgid "coercing argument to \"character\" for format=\"s\""
 msgstr "引数を \"format=\"s\" に対する \"character\" へ強制変換します"
 
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
-msgstr ""
-"'format' は {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\" } のいずれかでなけれ"
-"ばなりません"
+msgstr "'format' は {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\" } のいずれかでなければなりません"
 
 msgid "'flag' can contain only '0+- #'"
-msgstr "'flag' は '0+- #' だけを含めます"
+msgstr "'flag' は '0 + - #' だけを含めます"
 
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
-msgstr ""
-"壊れたデータフレームです。列は切り詰められるか、または NA 値で埋められます"
+msgstr "壊れたデータフレームです。列が切り詰められるか、または NA 値で埋められます"
 
-#, fuzzy
 msgid "'zero.print' has length > 1"
-msgstr "'input' は長さ 1 でなければなりません"
+msgstr "'zero.print' は長さ > 1 を持ちます"
 
 msgid "'zero.print' must be character, logical or NULL"
-msgstr ""
+msgstr "'zero.print' は文字、論理値、または NULL でなければなりません"
 
 msgid "'subset' must evaluate to logical"
 msgstr "'subset' は論理値として評価されなければなりません"
@@ -619,7 +613,7 @@ msgid "'subset' must be logical"
 msgstr "'subset' は論理値でなければなりません"
 
 msgid "'form' must be a two-sided formula"
-msgstr "'form' は左右の辺を持つモデル式でなければなりません"
+msgstr "'form' は左右の項を持つモデル式でなければなりません"
 
 msgid "value for '"
 msgstr "以下に対する値："
@@ -655,15 +649,14 @@ msgstr "パッケージ '%s' はバージョン %s の R の下で造られま�
 msgid "package '%s' was built for %s"
 msgstr "パッケージ '%s' は %s に対して造られました"
 
-#, fuzzy
 msgid "package '%s' is not installed for 'arch=%s'"
-msgstr "パッケージ '%s' は正しくインストールされませんでした"
+msgstr "パッケージ '%s' は 'arch=%s' に対してインストールされていません"
 
 msgid "package '%s' has not been installed properly"
 msgstr "パッケージ '%s' は正しくインストールされませんでした"
 
 msgid "See the Note in ?library"
-msgstr "ライブラリ ?library のノートを見て下さい"
+msgstr "?library でライブラリのノートを見て下さい"
 
 msgid "Attaching package: '%s'"
 msgstr "次のパッケージを付け加えます: '%s'"
@@ -675,13 +668,13 @@ msgid "package 'lqs' has been moved back to package 'MASS'"
 msgstr "パッケージ 'lqs' はパッケージ 'MASS' へ戻さました"
 
 msgid "package 'MASS' has now been loaded"
-msgstr "パッケージ 'MASS' はロードされました"
+msgstr "パッケージ 'MASS' は現在ロードされています"
 
 msgid "package 'MASS' seems to be missing from this R installation"
 msgstr "パッケージ 'MASS' はこの R のインストールでは存在しないようです"
 
 msgid "there is no package called '%s', version %s"
-msgstr "'%s' と名前のパッケージ(%s 版)がありません"
+msgstr "'%s' という名前のパッケージ(%s 版)がありません"
 
 msgid "there is no package called '%s'"
 msgstr "'%s' という名前のパッケージはありません"
@@ -695,7 +688,7 @@ msgstr ""
 "たかも知れません"
 
 msgid "'%s' not found on search path, using pos = 2"
-msgstr "'%s' は検索パス上には見つかりませんでした。位置 = 2 を使用します"
+msgstr "'%s' は検索パス上には見つかりませんでした。pos = 2 を使用します"
 
 msgid "package/namespace load failed for '%s'"
 msgstr "'%s' に対するパッケージもしくは名前空間のロードが失敗しました"
@@ -707,13 +700,13 @@ msgid "package '%s' contains no R code"
 msgstr "パッケージ '%s' は R コードを含んでいません"
 
 msgid ".First.lib failed for '%s'"
-msgstr "First.lib は '%s' に対して失敗しました"
+msgstr ".First.lib は '%s' に対して失敗しました"
 
 msgid "package '%s' already present in search()"
 msgstr "パッケージ '%s' は既に search() 中に存在します"
 
 msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
-msgstr "'DESCRIPTION'はフィールドを'Encoding'する、再符号化は出来ない"
+msgstr "'DESCRIPTION' は 'Encoding' を持ち、再符号化は出来ません"
 
 msgid "%sPackages in library '%s':"
 msgstr "ライブラリ '%2%s' 中の %1%s パッケージ："
@@ -740,7 +733,7 @@ msgid "shared library '%s' was not loaded"
 msgstr "共用ライブラリ '%s' はロードされませんでした"
 
 msgid "now dyn.unload(\"%s\") ..."
-msgstr "dyn.unload(\"%s\") 中です ..."
+msgstr "今 dyn.unload(\"%s\") 中です ..."
 
 msgid "Loading required package: %s"
 msgstr "要求されたパッケージ %s をロード中です"
@@ -758,11 +751,10 @@ msgstr ""
 msgid ""
 "Further information is available in the following vignettes in directory '%"
 "s':"
-msgstr ""
-"これ以上の情報はディレクトリ '%s' にある以下の vignettes 中にあります："
+msgstr "これ以上の情報はディレクトリ '%s' にある以下の vignettes 中にあります："
 
 msgid "doc"
-msgstr "doc"
+msgstr "ドキュメント"
 
 msgid "Description:"
 msgstr "記述："
@@ -819,7 +811,7 @@ msgid "invalid 'category' argument"
 msgstr "無効な 'category' 引数です"
 
 msgid "must specify formal argument names to vectorize"
-msgstr ""
+msgstr "ベクトル化するためには仮引数名を指定しなければなりません"
 
 msgid "'arg' should be one of"
 msgstr "'arg' は以下の一つでなければなりません："
@@ -855,16 +847,16 @@ msgid "trimmed means are not defined for complex data"
 msgstr "複素数データに対しては刈込み平均は定義されません"
 
 msgid "'by' must match numbers of columns"
-msgstr "'by' は列数に一致しなければなりません"
+msgstr "'by' は列数にマッチしなければなりません"
 
 msgid "'by' must match number of columns"
-msgstr "'by' は列数に一致しなければなりません"
+msgstr "'by' は列数にマッチしなければなりません"
 
 msgid "'by' must specify column(s)"
-msgstr "'by' は column(s) を指定しなければなりません"
+msgstr "'by' は列を指定しなければなりません"
 
 msgid "'by' must specify valid column(s)"
-msgstr "'by' は有効な column(s) を指定しなければなりません"
+msgstr "'by' は有効な列を指定しなければなりません"
 
 msgid "no rows to match"
 msgstr "マッチすべき行がありません"
@@ -875,8 +867,7 @@ msgstr "'by.x' そして 'by.y' は異なった列数を指定しています"
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
-msgstr ""
-"トレース関数はメソッドパッケージを必要としていますが、メソッドの名前空間を"
+msgstr "トレース関数は methods パッケージを必要としていますが、メソッドの名前空間を"
 "ロードできません"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
@@ -899,26 +890,25 @@ msgid "%s failed in 'loadNamespace' for '%s'"
 msgstr "%s は '%s' のための 'loadNamespace' に失敗しました"
 
 msgid "namespace '%s' is already sealed in loadNamespace"
-msgstr "名前空間 '%s' は既に loadNamespace 中に密封さ れる"
+msgstr "名前空間 '%s' は既に loadNamespace 中に封印(seal)されています"
 
 msgid "failed to assign RegisteredNativeSymbol for"
-msgstr ""
+msgstr "以下に対する "
 
 msgid "to"
-msgstr ""
+msgstr "egisteredNativeSymbol を以下に代入できません"
 
 msgid "since"
-msgstr ""
+msgstr "なぜなら以下が"
 
 msgid "is already defined in the"
-msgstr ""
+msgstr "既に以下の"
 
-#, fuzzy
 msgid "namespace"
-msgstr "名前空間ではありません"
+msgstr "名前空間に定義されているからです"
 
 msgid "failed to assign NativeSymbolInfo for"
-msgstr ""
+msgstr "以下に対する NativeSymbolInfo を代入できません"
 
 msgid "package '%s' does not have a name space"
 msgstr "パッケージ '%s' は名前空間を持っていません"
@@ -941,16 +931,16 @@ msgid "not loading a name space"
 msgstr "名前空間をロードしません"
 
 msgid "name space '%s' is loaded"
-msgstr "名前 '%s' がロードされました"
+msgstr "名前空間 '%s' がロードされました"
 
 msgid "%s failed in unloadNamespace(%s)"
-msgstr "%s は unloadNamespace(%s) に失敗しました"
+msgstr "%s は unloadNamespace(%s) で失敗しました"
 
 msgid "name space '%s' is still used by:"
-msgstr "名前 '%s' まだ以下により使用されています："
+msgstr "名前空間 '%s' まだ以下により使用されています："
 
 msgid "imperative name space directives are disabled"
-msgstr "命令的な名前空間の指令は使用不可能です"
+msgstr "命令的な名前空間の指令(imperative name space directive)は無効とされています"
 
 msgid "all objects in base name space are currently exported."
 msgstr "ベース名前空間中の全てのオブジェクトは現在エクスポートされています"
@@ -968,7 +958,7 @@ msgid "duplicate import names"
 msgstr "重複したインポート名です"
 
 msgid "cannot import into a sealed name space"
-msgstr "密閉された名前ネーム空間にはインポートできません"
+msgstr "封印された名前空間にはインポートできません"
 
 msgid "invalid import target"
 msgstr "無効なインポート対象です"
@@ -979,7 +969,7 @@ msgstr ""
 "ん： %s"
 
 msgid "cannot add to exports of a sealed name space"
-msgstr "密閉された名前空間のエクスポートへ加えることができません"
+msgstr "封印された名前空間のエクスポートへ加えることができません"
 
 msgid "undefined exports :"
 msgstr "未定義のエクスポートです："
@@ -987,25 +977,23 @@ msgstr "未定義のエクスポートです："
 msgid "package '%s' has no NAMESPACE file"
 msgstr "パッケージ '%s' は名前空間ファイルを持っていません"
 
-#, fuzzy
 msgid "empty name in directive '%s' in NAMESPACE file"
-msgstr "パッケージ '%s' は名前空間ファイルを持っていません"
+msgstr "NAMESPACE ファイル中の directive '%s' 中には名前がありません"
 
-#, fuzzy
 msgid "duplicated symbol names"
-msgstr "重複したインポート名です"
+msgstr "重複したシンボル名です"
 
 msgid "in useDynLib("
-msgstr ""
+msgstr "useDynLib("
 
 msgid ")"
-msgstr ""
+msgstr ") 中に"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "誤った 'S3method' 指令です：%s"
 
 msgid "too many 'S3method' directives"
-msgstr "余りにも多くの 'S3method' 指令です"
+msgstr "'S3method' 指令が多すぎます"
 
 msgid "unknown namespace directive: %s"
 msgstr "未知の名前空間指令です： %s"
@@ -1038,7 +1026,7 @@ msgid "wrong argument"
 msgstr "間違った引数です"
 
 msgid "not defined for package_version objects"
-msgstr "は package_version オブジェクトに対しては定義されていません"
+msgstr "package_version オブジェクトに対しては定義されていません"
 
 msgid "invalid 'n' value"
 msgstr "無効な 'n' 値です"
@@ -1080,7 +1068,7 @@ msgid "'k' is too large"
 msgstr "'k' は大きすぎます"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
-msgstr "ピボット操作が起きるように大きな 'ncol' の値が必要です"
+msgstr "ピボット操作が起きたので、より大きな 'ncol' 値が必要です"
 
 msgid "no lines available in input"
 msgstr "入力に利用可能な行がありません"
@@ -1146,7 +1134,7 @@ msgid "wrong sign in 'by' argument"
 msgstr "'by' 引数中に誤った符号があります"
 
 msgid "'by' argument is much too small"
-msgstr "'by' 引数小さすぎます"
+msgstr "'by' 引数がかなり小さすぎます"
 
 msgid "length must be non-negative number"
 msgstr "長さは非負の数値でなければなりません"
@@ -1175,9 +1163,8 @@ msgstr "'solve' 中に特異行列 'a' があります'"
 msgid "only square matrices can be inverted"
 msgstr "逆行列は正方行列だけにしか定義できません"
 
-#, fuzzy
 msgid "'b' must be compatible with 'a'"
-msgstr "'by' は長さ 1 でなければなりません"
+msgstr "'b' は 'a' と両立しなければなりません"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr ""
@@ -1230,24 +1217,23 @@ msgstr "'chdir = TRUE' はコネクションに対しては意味がありませ
 msgid "'%s' is not an existing file"
 msgstr "'%s' は既存のファイルではありません"
 
-#, fuzzy
 msgid "is not"
-msgstr "は TRUE ではありません"
+msgstr "違います"
 
 msgid "all"
-msgstr ""
+msgstr "全て"
 
 msgid "TRUE"
-msgstr ""
+msgstr "TRUE"
 
 msgid "incorrect value for 'x'"
-msgstr "'x' に対する不正確な値です"
+msgstr "'x' に対する値が不正です"
 
 msgid "'x' and 'y' must have the same length"
 msgstr "'x' と 'y' は同じ長さを持たなければなりません"
 
 msgid "incorrect values of 'indent' and 'width'"
-msgstr "'indent' と 'width' に対する不正確な値です"
+msgstr "'indent' と 'width' に対する値が不正です"
 
 msgid "argument to 'svd' must be numeric"
 msgstr "'svd' への引数は数値でなければなりません"
@@ -1316,7 +1302,7 @@ msgid "argument to 'which' is not logical"
 msgstr "'which' への引数は論理値ではありません"
 
 msgid "invalid numbers in 'quote'"
-msgstr "'quote' 中にの無効な数値があります"
+msgstr "'quote' 中に無効な数値があります"
 
 msgid "invalid 'quote' specification"
 msgstr "無効な 'quote' 指定です"
@@ -1331,7 +1317,7 @@ msgid "appending column names to file"
 msgstr "ファイルへの列名を加えます"
 
 msgid "attempt to change '%s' ignored"
-msgstr "'%s' を変更しようとしましたが無視します"
+msgstr "'%s' を変更しようとしましたが無視されます"
 
 msgid "invalid 'digits'"
 msgstr "無効な 'digits' です"
@@ -1343,7 +1329,7 @@ msgid "'cmd' could not be run"
 msgstr "'cmd' を実行できませんでした"
 
 msgid "'cmd' execution failed with error code %d"
-msgstr "'cmd' の実行はエラーコード %d で失敗しました"
+msgstr "'cmd' の実行は失敗しました(エラーコード %d)"
 
 msgid "package '%s' has a non-function '.First.lib'"
 msgstr "パッケージ '%s' は関数でない '.First.lib' を持ちます"
@@ -1366,10 +1352,9 @@ msgid_plural "packages %s are not loaded"
 msgstr[0] "パッケージ %s はロードされません"
 msgstr[1] "パッケージ(複数) %s はロードされません"
 
-#, fuzzy
 msgid "there is no package called"
 msgid_plural "there are no packages called"
-msgstr[0] "'%s' という名前のパッケージはありません"
+msgstr[0] "呼び出されたパッケージがありません"
 
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
@@ -1412,3 +1397,4 @@ msgstr[1] "警告メッセージ(複数)：\n"
 
 #~ msgid "calling wrong method"
 #~ msgstr "間違ったメソッドの呼出しです"
+

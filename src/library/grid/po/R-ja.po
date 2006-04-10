@@ -20,21 +20,19 @@ msgid "'labels' and 'at' locations must have same length"
 msgstr "'labels' と、位置 'at' は同じ長さでなければなりません"
 
 msgid "End points must not be identical"
-msgstr ""
+msgstr "端点は同じであってはなりません"
 
-#, fuzzy
 msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
-msgstr "'x0', 'y0', 'x1', 'y1' は単位(units)でなければなりません"
+msgstr "'x1', 'y1', 'x2', 'y2' は単位(units)でなければなりません"
 
 msgid "'shape' must be between -1 and 1"
-msgstr ""
+msgstr "'shape' は -1 と 1 の間でなければなりません"
 
 msgid "'squareShape' must be between -1 and 1"
-msgstr ""
+msgstr "'squareShape' は -1 と 1 の間になければなりません"
 
-#, fuzzy
 msgid "'arrow' must be an arrow object or NULL"
-msgstr "'x' と 'y' は単位(units)または NULL でなければなりません"
+msgstr "'arrow' は arrwo オブジェクトかまたは NULL でなければなりません"
 
 msgid "Invalid 'edit' information"
 msgstr "不正な 'edit' 情報です"
@@ -165,7 +163,7 @@ msgid "Invalid 'grob' name(s)"
 msgstr "不正な 'grob' の名前です"
 
 msgid "Unable to coerce to gList"
-msgstr ""
+msgstr "gList に強制変換出来ません"
 
 msgid "Only 'grobs' allowed in 'gList'"
 msgstr "'gList' 中には 'grobs' のみが許されます"
@@ -287,9 +285,8 @@ msgstr "'x' と 'y' は単位(units)でなければなりません"
 msgid "'x' and 'y' must have length 1"
 msgstr "'x' と 'y' は長さ 1 でなければならない"
 
-#, fuzzy
 msgid "invalid 'arrow' argument"
-msgstr "不正な 'rot' 値です"
+msgstr "不正な 'arrow' 引数です"
 
 msgid "It is invalid to specify both 'id' and 'id.lengths"
 msgstr "'id' と 'id.lengths' の両方を指定することは出来ません"
@@ -315,19 +312,18 @@ msgstr "壊れた 'arrows' オブジェクトです"
 msgid ""
 "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
 "functions."
-msgstr ""
+msgstr "grid.arrows() は廃止されました。直線描画関数には 'arrow' 引数を使ってください。"
 
 msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr ""
 "'grob' 引数は 'line.to', 'lines', 'segments' のいずれかの grob でなければなり"
 "ません"
 
-#, fuzzy
 msgid "x and y must be units"
-msgstr "'x' と 'y' は単位(units)でなければなりません"
+msgstr "x と y は単位(units)でなければなりません"
 
 msgid "shape must be between -1 and 1"
-msgstr ""
+msgstr "shape は -1 と 1 の間になければなりません "
 
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y', 'r' は全て単位(units)でなければなりません"
@@ -363,13 +359,11 @@ msgstr "引数 'x' は単位(units)オブジェクトでなければなりませ
 msgid "Invalid 'axis' or 'type'"
 msgstr "不正な 'axis' か 'type' です"
 
-#, fuzzy
 msgid "No string supplied for 'strwidth/height' unit"
-msgstr "'strheight' 単位(units)を与える文字列がありません"
+msgstr "'strwidth/height' 単位に対する文字列があたえられていません"
 
-#, fuzzy
 msgid "No 'grob' supplied for 'grobwidth/height' unit"
-msgstr "'grobheight' 単位(units)を与える 'grob' がありません"
+msgstr "'grobwidth/height' 単位に対して 'grob' があたえられていません"
 
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
@@ -397,10 +391,10 @@ msgid "Index out of bounds (unit subsetting)"
 msgstr "添え字が範囲を超えています（単位(unit)の部分集合です??????????）"
 
 msgid "Index out of bounds (unit arithmetic subsetting)"
-msgstr "添え字が範囲を超えています（単位(unit)計算の部分集合です??????????）"
+msgstr "添え字が範囲を超えています（unit arithmetic subsetting）"
 
 msgid "Index out of bounds (unit list subsetting)"
-msgstr "添え字が範囲を超えています（単位(unit)リストの部分集合です??????????）"
+msgstr "添え字が範囲を超えています（unit list subsetting)"
 
 msgid "It is invalid to combine unit objects with other types"
 msgstr ""
@@ -409,16 +403,15 @@ msgstr ""
 msgid ""
 "unit.rep has been deprecated in favour of a unit method for the generic rep "
 "function"
-msgstr ""
+msgstr "unit.rep は廃止されました。総称的 rep 関数には代わりに unit メソッドを使いましょう "
 
 msgid ""
 "unit.length has been deprecated in favour of a unit method for the generic "
 "length function"
-msgstr ""
+msgstr "unit.length は廃止されました。総称的 length 関数には代わりに unit メソッドを使いましょう "
 
-#, fuzzy
 msgid "Invalid theta"
-msgstr "不正な 'gPath' です"
+msgstr "不正な theta です"
 
 msgid "'range' must be numeric"
 msgstr "'range' は数値でなければなりません"
@@ -427,7 +420,7 @@ msgid "Invalid graphics parameters"
 msgstr "不正なグラフィックスパラメータです"
 
 msgid "Invalid 'clip' value"
-msgstr "viewport 中の 'clip' が不正です"
+msgstr "不正な 'clip' 値です"
 
 msgid "Invalid 'xscale' in viewport"
 msgstr "viewport 中の 'xscale' が不正です"
@@ -448,10 +441,10 @@ msgid "Invalid 'layout.pos.col' in viewport"
 msgstr "viewport 中の 'layout.pos.col' が不正です"
 
 msgid "Only viewports allowed in 'vpList'"
-msgstr "viewports は 'vpList' 中でのみ許されます"
+msgstr "'vpList' 中には viewport のみが許されます"
 
 msgid "Only viewports allowed in 'vpStack'"
-msgstr "viewports は 'vpStack' 中でのみ許されます"
+msgstr "'vpStack' 中には viewport のみが許されます"
 
 msgid ""
 "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
@@ -477,3 +470,4 @@ msgstr "'y' か 'yscale' のうち少なくとも一つを指定しなければ�
 
 #~ msgid "No 'grob' supplied for 'grobwidth' unit"
 #~ msgstr "'grobwidth' 単位(units)を与える 'grob' がありません"
+

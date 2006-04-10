@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-06 10:28+0100\n"
+"POT-Creation-Date: 2006-04-10 14:46+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -356,11 +356,11 @@ msgstr "'truncate' non abilitato per questa connessione"
 msgid "allocation of pipe connection failed"
 msgstr "allocazione della connessione 'pipe' fallita"
 
-#: src/gnuwin32/sys-win32.c:189
+#: src/gnuwin32/sys-win32.c:193
 msgid "character string expected as first argument"
 msgstr "il primo parametro deve essere una stringa di caratteri"
 
-#: src/gnuwin32/sys-win32.c:201
+#: src/gnuwin32/sys-win32.c:205
 msgid "character string expected as third argument"
 msgstr "il terzo parametro deve essere una stringa di caratteri"
 
@@ -7089,25 +7089,25 @@ msgstr "nessuna history displonibile da salvare"
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep non è implementata su questo sistema"
 
-#: src/unix/sys-unix.c:204
+#: src/unix/sys-unix.c:255
 msgid "proc.time() is not implemented on this system"
 msgstr "proc.time() non è implementata su questo sistema"
 
-#: src/unix/sys-unix.c:218
+#: src/unix/sys-unix.c:269
 msgid "non-empty character argument expected"
 msgstr "richiesti argomenti di tipo character non vuoti"
 
-#: src/unix/sys-unix.c:222
+#: src/unix/sys-unix.c:273
 #, fuzzy
 msgid "'intern' must be logical and not NA"
 msgstr "'ascii' deve essere di tipo logico"
 
-#: src/unix/sys-unix.c:249
+#: src/unix/sys-unix.c:300
 #, fuzzy
 msgid "'intern=TRUE' is not implemented on this platform"
 msgstr "intern=TRUE non è implementato per questa piattaforma"
 
-#: src/unix/sys-unix.c:322
+#: src/unix/sys-unix.c:373
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() non è implementata su questo sistema"
 

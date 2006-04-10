@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-09 16:42\n"
+"POT-Creation-Date: 2006-04-10 14:49\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -460,9 +460,6 @@ msgstr ""
 "下载的程序包在\n"
 "\t%s里"
 
-msgid "'page' requires a name"
-msgstr "'page'需要名字值"
-
 msgid "no object named '%s' to show"
 msgstr "找不到名字为'%s'的目标对象"
 
@@ -713,6 +710,9 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被重新安装"
 msgstr[1] "正在使用'%s'这个程序包，因此不会被重新安装"
+
+#~ msgid "'page' requires a name"
+#~ msgstr "'page'需要名字值"
 
 #~ msgid "no Rd contents for package '%s' in '%s'"
 #~ msgstr "'%2$s'里的'%1$s'程序包内不包含Rd内容 "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-03 09:12+0100\n"
+"POT-Creation-Date: 2006-04-10 14:49+0100\n"
 "PO-Revision-Date: 2005-05-25 16:44+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -56,7 +56,7 @@ msgid "Invalid circle radius (must be non-negative)"
 msgstr ""
 "부적절한 circle의 반경입니다(non-negative가 나오지 않으면 되지 않습니다)"
 
-#: grid.c:3108
+#: grid.c:3067
 #, fuzzy
 msgid "Unable to clip to rotated rectangle"
 msgstr "회전한 viewport에 생략할수가 없습니다"
@@ -79,23 +79,23 @@ msgstr ""
 "현재의 grid 상태를 저장 유지할수가 없습니다.디바이스를 너무 많이 열고 있지 않"
 "습니까?"
 
-#: unit.c:258 unit.c:408 unit.c:1129 unit.c:1209 unit.c:1289 unit.c:1369
+#: unit.c:258 unit.c:408 unit.c:1138 unit.c:1218 unit.c:1298 unit.c:1378
 msgid "Unimplemented unit function"
 msgstr "unit함수는 실제 적용되지 않습니다"
 
-#: unit.c:822 unit.c:1564
+#: unit.c:827 unit.c:1573
 msgid "Illegal unit or unit not yet implemented"
 msgstr "부적절한 unit 또는 아직 적용되어있지 않는 unit입니다"
 
-#: unit.c:1697
+#: unit.c:1706
 msgid "Invalid unit"
 msgstr "부적절한 unit입니다"
 
-#: unit.c:1713
+#: unit.c:1722
 msgid "Units must be character"
 msgstr "units는 문자형태일 필요가 있습니다"
 
-#: unit.c:1716
+#: unit.c:1725
 msgid "Units must be of length > 0"
 msgstr "units의 길이는 0보다 클 필요가 있습니다"
 

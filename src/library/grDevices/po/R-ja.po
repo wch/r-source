@@ -69,13 +69,11 @@ msgstr "カラースペース(color spaces)は異なった基準白色が使わ�
 msgid "cannot shut down device 1 (the null device)"
 msgstr "デバイス 1 をシャットダウンすることが出来ません（NULL デバイスです）"
 
-#, fuzzy
 msgid "cannot supply 'which' and 'device' at the same time"
-msgstr "同時に which と device を与えることは出来ません"
+msgstr "同時に 'which' と 'device' を与えることは出来ません"
 
-#, fuzzy
 msgid "cannot copy from the null device"
-msgstr "NULL デバイスにコピーすることは出来ません"
+msgstr "null デバイスTからコピーすることは出来ません"
 
 msgid "cannot copy to the null device"
 msgstr "NULL デバイスにコピーすることは出来ません"
@@ -93,7 +91,7 @@ msgid "can only print from screen device"
 msgstr "スクリーンデバイスからしかプリントすることが出来ません"
 
 msgid "need to specify one of 'width' and 'height'"
-msgstr ""
+msgstr "'width' と 'height' のどちらか一つを指定する必要があります"
 
 msgid "dev.control() called without an open graphics device"
 msgstr ""
@@ -103,9 +101,8 @@ msgstr ""
 msgid "argument is missing with no default"
 msgstr "引数はデフォルトなしで欠損となっています"
 
-#, fuzzy
 msgid "invalid arguments in '%s' (need named args)"
-msgstr "'%s' 中の不正な引数です（名前がついた引数が必要です）"
+msgstr "'%s' 中に不正な引数があります（名前付き引数が必要です）"
 
 msgid "'name.opt' must be character, name of an existing list"
 msgstr "'name.opt' は既存のリストの名前である文字列でなければなりません"
@@ -113,9 +110,8 @@ msgstr "'name.opt' は既存のリストの名前である文字列でなけれ�
 msgid "cannot reset non-existent '%s'"
 msgstr "存在しない '%s' をリセットすることは出来ません"
 
-#, fuzzy
 msgid "invalid options in '%s'"
-msgstr "以下は不正なオプションです: "
+msgstr "'%s' 中に不正なオプションがあります "
 
 msgid "NOT changing"
 msgstr "変更しません"
@@ -127,59 +123,52 @@ msgid "invalid PDF version"
 msgstr "不正な PDF のバージョンです"
 
 msgid "Invalid font type"
-msgstr ""
+msgstr "不正なフォント型です"
 
-#, fuzzy
 msgid "invalid family name in font specification"
-msgstr "不正な X11 フォントの指定方法です"
+msgstr "フォント指定中に不正なファミリ名があります"
 
-#, fuzzy
 msgid "invalid metric information in font specification"
-msgstr "不正な X11 フォントの指定方法です"
+msgstr "フォント指定中に不正なメトリック指定があります"
 
-#, fuzzy
 msgid "invalid encoding in font specification"
-msgstr "不正な X11 フォントの指定方法です"
+msgstr "フォント指定中に不正なエンコーディングがあります"
 
 msgid "Not a CID font"
-msgstr ""
+msgstr " CID フォントではありません"
 
-#, fuzzy
 msgid "invalid CMap name in font specification"
-msgstr "不正な X11 フォントの指定方法です"
+msgstr "フォント指定中に不正な CMap 名があります"
 
-#, fuzzy
 msgid "invalid 'cmapEncoding' in font specification"
-msgstr "不正な X11 フォントの指定方法です"
+msgstr "フォント指定中に不正な 'cmapEncoding' があります"
 
-#, fuzzy
 msgid "invalid PDF resource in font specification"
-msgstr "不正な X11 フォントの指定方法です"
+msgstr "フォント指定中に不正な PDF resource があります"
 
 msgid "Invalid font database name"
-msgstr ""
+msgstr "不正なフォントデータベース名です"
 
-#, fuzzy
 msgid "font %s already in use"
-msgstr "は既に使われています"
+msgstr "フォント %s% は既に使われています"
 
 msgid "invalid arguments in '%s' (must be font names)"
 msgstr "'%s' 中の不正な引数です（フォント名が必要です）"
 
 msgid "unknown font"
-msgstr ""
+msgstr "未知のフォントです"
 
 msgid "font encoding mismatch '%s'/'%s'"
-msgstr ""
+msgstr "フォントエンコーディングがミスマッチです '%s'/'%s'"
 
 msgid "'file' must be a non-empty character string"
 msgstr "'file' は空でない文字列でなければなりません"
 
 msgid "Invalid output format"
-msgstr ""
+msgstr "不正な出力書式です"
 
 msgid "status %d in running command '%s'"
-msgstr ""
+msgstr "状態 %d が命令 '%s' 実行中に起きました"
 
 msgid "no current device to record from"
 msgstr "現在，以下のものから記録することが出来るデバイスはありません: "
@@ -284,3 +273,4 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
 msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
+

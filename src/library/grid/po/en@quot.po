@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-03 09:12+0100\n"
-"PO-Revision-Date: 2006-04-03 09:12+0100\n"
+"POT-Creation-Date: 2006-04-10 14:49+0100\n"
+"PO-Revision-Date: 2006-04-10 14:49+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -74,7 +74,7 @@ msgstr "Non-finite control point in Xspline"
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "Invalid circle radius (must be non-negative)"
 
-#: grid.c:3108
+#: grid.c:3067
 msgid "Unable to clip to rotated rectangle"
 msgstr "Unable to clip to rotated rectangle"
 
@@ -94,23 +94,23 @@ msgstr "singular transformation matrix"
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Unable to store grid state.  Too many devices open?"
 
-#: unit.c:258 unit.c:408 unit.c:1129 unit.c:1209 unit.c:1289 unit.c:1369
+#: unit.c:258 unit.c:408 unit.c:1138 unit.c:1218 unit.c:1298 unit.c:1378
 msgid "Unimplemented unit function"
 msgstr "Unimplemented unit function"
 
-#: unit.c:822 unit.c:1564
+#: unit.c:827 unit.c:1573
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Illegal unit or unit not yet implemented"
 
-#: unit.c:1697
+#: unit.c:1706
 msgid "Invalid unit"
 msgstr "Invalid unit"
 
-#: unit.c:1713
+#: unit.c:1722
 msgid "Units must be character"
 msgstr "Units must be character"
 
-#: unit.c:1716
+#: unit.c:1725
 msgid "Units must be of length > 0"
 msgstr "Units must be of length > 0"
 
