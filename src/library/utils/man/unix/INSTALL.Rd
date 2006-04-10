@@ -61,31 +61,6 @@
   Use \code{R CMD INSTALL --help} for more usage information.
 }
 
-\section{Deprecated options}{
-  \strong{The following options are deprecated:} use the
-  \file{DESCRIPTION} fields such as \code{LazyLoad}, \code{LazyData} and
-  \code{SaveImage} instead.
-
-  If the option \option{--save} is used, the installation procedure
-  creates a binary image of the package code, which is then loaded when
-  the package is attached, rather than evaluating the package source at
-  that time.  Having a file \file{install.R} in the package directory
-  makes this the default behavior for the package (option
-  \option{--no-save} overrides).  You may need  \option{--save} if your
-  package requires other packages to evaluate its own source.  If the
-  file \file{install.R} is non-empty, it should contain R expressions to
-  be executed when the package is attached, after loading the saved
-  image.  Options to be passed to R when creating the save image can be
-  specified via \option{--save=ARGS}.
-
-  Options \option{--lazy}, \option{--no-lazy}, \option{--lazy-data} and
-  \option{--no-lazy-data} control where the \R objects and the datasets
-  are made available for lazy loading.  (These options are overridden by
-  any values set in the \file{DESCRIPTION} file.)  The default is
-  \option{--no-lazy --no-lazy-data} except that lazy-loading is used for
-  package with more than 25kB of \R code and no saved image.
-}
-
 \section{Packages using the methods package}{
   Packages that require the methods package, and that use functions such
   as \code{\link{setMethod}} or \code{\link{setClass}},

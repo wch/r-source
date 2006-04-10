@@ -316,23 +316,17 @@ foreach $pkg (@ARGV){
 
 	$description = new R::Dcf("$pkgdir/$pkgname/DESCRIPTION");
 
-	my $save = "CHECK";
-	$save = "false" if $opt_no_save;
-	$save = "true" if $opt_save;
+	my $save = "false";
 	my $tmp = parse_description_field("SaveImage");
 	$save = "false" if($tmp == 0);
 	$save = "true" if($tmp == 1);
 	print "*** save is $save ***\n" if($opt_debug);
 
 	my $lazyload = -1;
-	$lazyload = 1 if $opt_lazy;
-	$lazyload = 0 if $opt_no_lazy;
 	my $tmp = parse_description_field("LazyLoad");
 	$lazyload = $tmp if($tmp >= 0);
 
 	my $lazydata = 0;
-	$lazydata = 1 if $opt_lazy_data;
-	$lazydata = 0 if $opt_no_lazy_data;
 	my $tmp = parse_description_field("LazyData");
 	$lazydata = $tmp if($tmp >= 0);
 	print "*** lazydata is $lazydata ***\n" if($opt_debug);
