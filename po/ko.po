@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-06 10:28+0100\n"
+"POT-Creation-Date: 2006-04-10 14:46+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -351,11 +351,11 @@ msgstr "이 연결에서는 잘림이 유효가 되지 않습니다"
 msgid "allocation of pipe connection failed"
 msgstr "pipe 연결이 실패 되었습니다"
 
-#: src/gnuwin32/sys-win32.c:189
+#: src/gnuwin32/sys-win32.c:193
 msgid "character string expected as first argument"
 msgstr "최초의 인수에는 문자열으로 예측되어 있습니다"
 
-#: src/gnuwin32/sys-win32.c:201
+#: src/gnuwin32/sys-win32.c:205
 msgid "character string expected as third argument"
 msgstr "세번째 인수에는 문자열으로 예측되어 있습니다"
 
@@ -7092,25 +7092,25 @@ msgstr "보존해야할 히스토리가 없습니다"
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep는 이 시스템에서 실제 적용되지 않습니다"
 
-#: src/unix/sys-unix.c:204
+#: src/unix/sys-unix.c:255
 msgid "proc.time() is not implemented on this system"
 msgstr "이 시스템에서는 proc.time()함수가 실제 적용되지 않습니다"
 
-#: src/unix/sys-unix.c:218
+#: src/unix/sys-unix.c:269
 msgid "non-empty character argument expected"
 msgstr "비어 있지 않는 문자 인수가 예상되어 있습니다"
 
-#: src/unix/sys-unix.c:222
+#: src/unix/sys-unix.c:273
 #, fuzzy
 msgid "'intern' must be logical and not NA"
 msgstr "'ascii'는 논리값 이어야만 합니다"
 
-#: src/unix/sys-unix.c:249
+#: src/unix/sys-unix.c:300
 #, fuzzy
 msgid "'intern=TRUE' is not implemented on this platform"
 msgstr "이 platform에서 intern=TRUE은 실제 적용되어 있지 않습니다"
 
-#: src/unix/sys-unix.c:322
+#: src/unix/sys-unix.c:373
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info()은 이 시스템에서는 실제 적용되어 있지 않습니다"
 

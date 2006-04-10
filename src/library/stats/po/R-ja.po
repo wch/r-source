@@ -105,17 +105,14 @@ msgstr "スコープは項ラベルの部分集合ではありません"
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "'drop1' は mlm モデルには実装されていません"
 
-#, fuzzy
 msgid "F test assumes 'quasi%s' family"
-msgstr "F テストは疑似%sファミリ"
+msgstr "F テストは 'quasi%s' ファミリを仮定しています"
 
-#, fuzzy
 msgid "lower scope has term(s) %s not included in model"
-msgstr "下位のスコープはモデル中に含まれません"
+msgstr "下位のスコープはモデル中に含まれない項 %s を持ちます"
 
-#, fuzzy
 msgid "upper scope does not include model term(s) %s"
-msgstr "上位のスコープはモデルを含んでいません"
+msgstr "上位のスコープはモデル項 %s を含んでいません"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
@@ -734,12 +731,10 @@ msgstr "これらの初期値からは最適化ができません"
 msgid "link not recognised"
 msgstr "というリンクはポアッソンファミリに対しては利用できません。"
 
-#, fuzzy
 msgid ""
 "link \"%s\" not available for Poisson family; available links are \"identity"
 "\", \"log\" and \"sqrt\""
-msgstr ""
-"リンク%sはポアソンファミリには利用できません。利用できるリンクは \"identity"
+msgstr "リンク '%s' はポアソンファミリには利用できません。利用できるリンクは \"identity"
 "\", \"log\" 及び \"sqrt\" です"
 
 msgid "negative values not allowed for the Poisson family"
@@ -867,10 +862,10 @@ msgid "'or' must be a single number between 0 and Inf"
 msgstr "'or' は単一の数値もしくは 0 と inf 間の単一の数でなければなりません"
 
 msgid "need 2 or more non-zero row marginals"
-msgstr ""
+msgstr "2 もしくはそれ以上のゼロでない列周辺を持たなければなりません"
 
 msgid "need 2 or more non-zero column marginals"
-msgstr ""
+msgstr "2 もしくはそれ以上のゼロでない行周辺を持たなければなりません"
 
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr "'hybrid' は 2 x 2 分割表に対しては無視されます"
@@ -1024,10 +1019,10 @@ msgid ","
 msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
-msgstr ""
+msgstr "%s ファミリに F 検定を使うことは適当ではありません"
 
 msgid "using F test with a fixed dispersion is inappropriate"
-msgstr ""
+msgstr "固定された dispersion に F 検定を使うことは適当ではありません"
 
 msgid "models with response"
 msgstr "応答"
@@ -1039,7 +1034,7 @@ msgid "models were not all fitted to the same size of dataset"
 msgstr "モデルは全て同じサイズのデータセットに当てはめられませんでした"
 
 msgid "using F test with a '%s' family is inappropriate"
-msgstr ""
+msgstr "'%s' ファミリに対して F 検定を使うのは不適切です"
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "重みが 0 の観測値は標準偏差の計算で使われません"
@@ -1391,14 +1386,13 @@ msgstr ""
 "'cterms' パラメータはモデルオブジェクト中の項に適合しなければなりません"
 
 msgid "Design is unbalanced - use se.contrast() for se's"
-msgstr "設計は均衡を失うようにできます - seのためにse.contrast()を使います"
+msgstr "デザインは均衡していません - seのためにse.contrast()を使います"
 
 msgid ""
 "Standard error information not returned as design is unbalanced. \n"
 "Standard errors can be obtained through 'se.contrast'."
-msgstr ""
-"設計上、返されない標準エラー情報はアンバランスになる\n"
-"標準エラーは、'se.contrast'から得られることができる"
+msgstr "デザインが均衡していないため標準エラー情報は返されません\n"
+"標準エラーは 'se.contrast' を用いて得ることができます"
 
 msgid "SEs for type '%s' are not yet implemented"
 msgstr "型 '%s' に対する SEはまだ実装されていません"
@@ -1410,39 +1404,38 @@ msgid "non-factors ignored:"
 msgstr "因子でないものは無視されました"
 
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
-msgstr "eff.aovlist：non-orthogonal contrasts は、誤った値でしょう"
+msgstr "eff.aovlist：直交しない対比は誤った結果を与えるかもしれません"
 
 msgid "no terms component"
 msgstr "terms 成分がありません"
 
 msgid ""
 "variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
-msgstr "変数'%s'はクラス\"%s\"を付けていた、しかしクラス\"%s\"は満たされた"
+msgstr "変数 '%s' はクラス \"%s\" として当てはめられていました、しかしクラス \"%s\" が与えられています"
 
 msgid "variables %s were specified with different classes from the fit"
-msgstr "変数 %s は当てはめによるものとは異なったクラスとして指定されました"
+msgstr "変数 %s は当てはめによるものとは異なったクラスを用いて指定されました"
 
 msgid "'data' must be a data.frame, not a matrix or an array"
 msgstr "'data' は行列や配列ではなく、データフレームでなければなりません"
 
 msgid "'newdata' had %d rows but variable(s) found have %d rows"
-msgstr ""
-"'newdata'は %d 個の行を持ちますが、見付かった変数は %d の行数を持ちます："
+msgstr "'newdata' は %d 個の行を持ちますが、見付かった変数は %d の行数を持ちます："
 
 msgid "variable '%s' is not a factor"
 msgstr "変数 %s は因子ではありません"
 
 msgid "factor '%s' has new level(s) %s"
-msgstr "因子 '%s'には新しい水準 %s があります"
+msgstr "因子 '%s' には新しい水準 %s があります"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix() でモデルフレームとモデル式の組合せが不適当です"
 
 msgid "invalid 'contrasts.arg' argument"
-msgstr "無効な対比引数('contrasts.arg')です"
+msgstr "無効な 'contrasts.arg' 引数です"
 
 msgid "variable '%s' is absent, its contrast will be ignored"
-msgstr "変数 '%s' は存在しません、対比は無視されます"
+msgstr "変数 '%s' は存在しません。その対比は無視されます"
 
 msgid "invalid response type"
 msgstr "無効な応答タイプです"
@@ -1457,10 +1450,10 @@ msgid "missing values in object"
 msgstr "オブジェクト中に欠損値があります"
 
 msgid "invalid argument 'omit'"
-msgstr "無効な引数'omit'です"
+msgstr "無効な引数 'omit' です"
 
 msgid "'print.level' must be in {0,1,2}"
-msgstr "'print.level' は {0,1,2} 中にありません"
+msgstr "'print.level' は {0,1,2} 中でなければなりません"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper になっていません"
@@ -1504,12 +1497,11 @@ msgstr "パラメータの名前を確認できません"
 msgid "levels truncated to positive values only"
 msgstr "水準は正の値だけに縮小されました"
 
-#, fuzzy
 msgid "setVarying : 'vary' length must match length of parameters"
-msgstr "setVarying: vary 長はパラメータの長さに一致しなければなりません"
+msgstr "setVarying: 'vary' 長はパラメータの長さに一致しなければなりません"
 
 msgid "singular gradient matrix at initial parameter estimates"
-msgstr "パラメータの初期推定値で勾配行列が特異です"
+msgstr "パラメータの初期値で勾配行列が特異です"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "algorithm = \"port\" でない限り上限もしくは下限は無視されます"
@@ -1521,10 +1513,10 @@ msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "\"nls\" オブジェクトのための REML 対数尤度を計算することができません"
 
 msgid "anova is only defined for sequences of \"nls\" objects"
-msgstr "anova は \"nls\" オブジェクトの系列に対してだけ定義されています"
+msgstr "anova は \"nls\" オブジェクト系列に対してだけ定義されています"
 
 msgid "'anova' is only defined for sequences of \"nls\" objects"
-msgstr "'anova' は \"nls\" オブジェクトの系列に対してだけ定義されています"
+msgstr "'anova' は \"nls\" オブジェクト系列に対してだけ定義されています"
 
 msgid "formula '%s' must be of the form '~expr'"
 msgstr "式 '%s' は形式 '~expr' でなければなりません"
@@ -1536,7 +1528,7 @@ msgid "not enough groups"
 msgstr "不十分なグループです"
 
 msgid "bounds can only be used with method L-BFGS-B"
-msgstr "bounds は L-BFGS-B 法としか使用することができません"
+msgstr "bounds は L-BFGS-B 法でしか使用することができません"
 
 msgid "read the documentation for 'trace' more carefully"
 msgstr "'trace' に対する解説をより注意深く読んでください"
@@ -1623,10 +1615,10 @@ msgstr "'x' は行列かデータフレームでなければなりません"
 msgid ""
 "'newdata' does not have named columns matching one or more of the original "
 "columns"
-msgstr "'newdata' は、元のカラムの一つ以上と同じカラムに名前をつけなかった"
+msgstr "'newdata' は、元のカラムの一つ以上とマッチする名前つき列を持ちません"
 
 msgid "'newdata' does not have the correct number of columns"
-msgstr "'coef' の長さが正しくありません"
+msgstr "'newdata' は正しい列数を持ちません"
 
 msgid "wrong number of predictors"
 msgstr "予測子の数が間違っています"
@@ -1674,11 +1666,10 @@ msgid "y is empty or has only NAs"
 msgstr "y が空か、または NA 値しか持っていませ"
 
 msgid "NA's are not allowed in 'groups' or 'blocks'"
-msgstr "NA はグループ('groups')やブロック('blocks')中には許されません"
+msgstr "NA は 'groups' や 'blocks' 中には許されません"
 
 msgid "'y', 'groups' and 'blocks' must have the same length"
-msgstr ""
-"'y', グループ('groups')及びブロック('blocks')は同じ長さでなければなりません"
+msgstr "'y', 'groups' 及び 'blocks' は同じ長さでなければなりません"
 
 msgid "'formula' missing"
 msgstr "モデル式('formula')がありません"
@@ -1708,10 +1699,10 @@ msgid "there are records with missing times, which will be dropped."
 msgstr "時間が欠損した記録がありますので、取り除きます"
 
 msgid "some constant variables (%s) are really varying"
-msgstr "次の定数変数 (%s) は実際は変化しています"
+msgstr "定数変数 (%s) は実際は変化しています"
 
 msgid "no 'time' or 'id' specified"
-msgstr "時間('time')も 'id' も指定されていません"
+msgstr "'time' も 'id' も指定されていません"
 
 msgid "'k' must be positive"
 msgstr "'k' は正でなければなりません"
@@ -1729,7 +1720,7 @@ msgid "argument 'object' has an impossible length"
 msgstr "引数 'object' はあり得ない長さを持ちます"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
-msgstr "\"%s\"オブジェクトにメソッド 'getInitial' が見付かりませんでした"
+msgstr "\"%s\" オブジェクトにメソッド 'getInitial' が見付かりませんでした"
 
 msgid "sample size must be between 3 and 5000"
 msgstr "サンプルの大きさは 3 と 5000 の間になければなりません"
@@ -1753,7 +1744,7 @@ msgid "'nknots' must be numeric <= n"
 msgstr "'nknots' は n 以下の数値でなければなりません"
 
 msgid "cannot use more inner knots than unique 'x' values"
-msgstr "相異なる 'x' 値より多くの内部結節点を使用することはできません"
+msgstr "相異なる 'x' 値の数より多くの内部結節点を使用することはできません"
 
 msgid "invalid 'control.spar'"
 msgstr "無効な 'control.spar' です"
@@ -1780,7 +1771,7 @@ msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
 msgstr "Na lev[ ]; おそらく平滑化パラメ‐タ 'spar'が大きすぎました！"
 
 msgid "setting df = 1  __use with care!__"
-msgstr "設定 df = 1 は注意して使わなければなりません！"
+msgstr "df = 1 と設定しました。注意して使ってください！"
 
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
 msgstr "smooth.spline(*, keep.data=TRUE) の結果が必要です"
@@ -1801,7 +1792,7 @@ msgid "number of weights must match number of observations."
 msgstr "重みの数は観測値の数と一致する必要があります"
 
 msgid "'span' must be between 0 and 1."
-msgstr "スパン('span')は 0 と 1 の間になければなりません。"
+msgstr "'span' は 0 と 1 の間になければなりません。"
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr "周期的な平滑化のためには 'x' は 0 と 1 の間に位置する必要があります"
@@ -1819,24 +1810,22 @@ msgid "'x' must be a time series or an ar() fit"
 msgstr "'x' は時系列か ar() 当てはめ結果である必要があります"
 
 msgid "must specify 'spans' or a valid kernel"
-msgstr "スパン('span')か、有効なカーネルを指定しなければなりません"
+msgstr "'span' か、有効なカーネルを指定しなければなりません"
 
 msgid "coverage probability out of range [0,1)"
 msgstr "被覆確率が範囲 [0,1) 外です"
 
 msgid "spline: invalid interpolation method"
-msgstr "splline: 無効な補間法です"
+msgstr "spline: 無効な補間法です"
 
 msgid "spline: first and last y values differ - using y[1] for both"
-msgstr ""
-"スプライン: 最初と最後の y 値が異なります ‐ y[1] を双方のために使用します"
+msgstr "spline: 最初と最後の y 値が異なります ‐ y[1] を双方のために使用します"
 
 msgid "splinefun: invalid interpolation method"
 msgstr "splinefun: 無効な補間法です"
 
-#, fuzzy
 msgid "'deriv' must be between 0 and 3"
-msgstr "'p' は 0 と 0.5 の間になければなりません"
+msgstr "'deriv' は 0 と 3 の間になければなりません"
 
 msgid "stepfun: 'x' must be ordered increasingly"
 msgstr "stepfun: 'x' は昇順に並んでいる必要があります"
@@ -1869,12 +1858,11 @@ msgid "unknown string value for s.window"
 msgstr "s.window に対する未知の文字列です"
 
 msgid "'cutpoints' must be unique in 0 < cuts < 1, but are ="
-msgstr ""
-"'cutpoints' は 0 < cuts < 1 中で重複があってはいけませんが、等しいものがあり"
-"ます"
+msgstr "'cutpoints' は 0 < cuts < 1 中で重複があってはいけませんが、以下の値です："
+""
 
 msgid "'cutpoints' must be unique, but are ="
-msgstr "'cutpoints' は重複があってはいけませんが、等しいものがあります"
+msgstr "'cutpoints' は重複があってはいけませんが、以下の値です"
 
 msgid "'x' must be between -1 and 1"
 msgstr "'x' は -1 と 1 の間になければなりません"
@@ -1883,10 +1871,10 @@ msgid "'x' must be between %s and %s"
 msgstr "'x' は %s と %s の間になければなりません"
 
 msgid "number of 'cutpoints' must be one less than number of symbols"
-msgstr "分割点('cutpoints')の数は記号の数より一つ少なくなければなりません"
+msgstr "'cutpoints' の数は記号の数より一つ少なくなければなりません"
 
 msgid "number of 'cutpoints' must be one more than number of symbols"
-msgstr "分割点('cutpoints')の数は記号の数より一つ多くなければなりません"
+msgstr "'cutpoints' の数は記号の数より一つ多くなければなりません"
 
 msgid "'x' must be numeric or logical"
 msgstr "'x'は数値か論理値でなければなりません"
@@ -2007,7 +1995,7 @@ msgid "number of differences must be a positive integer"
 msgstr "階差の数は正整数でなければなりません"
 
 msgid "'start.innov' is too short: need %d points"
-msgstr ""
+msgstr "'start.innov' が短すぎます: %d 個の点が必要です"
 
 msgid "insufficient observations"
 msgstr "観測値の数が不十分です"
@@ -2025,7 +2013,7 @@ msgid "'y' must be numeric"
 msgstr "'y' は数値でなければなりません"
 
 msgid "not enough (finite) 'x' observations"
-msgstr "(有限な) 'x' の観察値が十分ではありません"
+msgstr "(有限な) 'x' の観察値の数が十分ではありません"
 
 msgid "Requested conf.level not achievable"
 msgstr "要求された conf.level は達成不能です"
@@ -2055,10 +2043,10 @@ msgid "too few distinct input values to fit the 'asympOff' model"
 msgstr "'asympOff' モデルの当てはめで、異なる入力値が少なすぎます"
 
 msgid "too few distinct input values to fit the 'asympOrig' model"
-msgstr "'asympOrig' モデルの当てはめで、異なる入力値が少なすぎます"
+msgstr "'asympOrig' モデルの当てはめで、入力に異なる値が少なすぎます"
 
 msgid "too few distinct input values to fit a biexponential"
-msgstr "biexponential モデルの当てはめで、異なる入力値が少なすぎます"
+msgstr "biexponential モデルの当てはめで、入力に異なる値が少なすぎます"
 
 msgid "must have length of response = length of second argument to 'SSfol'"
 msgstr "'SSfol'の第二引数の長さは、応答変数の長さと等しい必要があります"
@@ -2067,19 +2055,19 @@ msgid "must have at least 4 observations to fit an 'SSfol' model"
 msgstr "'SSfol' モデルの当てはめには、少なくとも4つの観察値が必要です"
 
 msgid "too few distinct input values to fit a four-parameter logistic"
-msgstr "4変数ロジスティックモデルの当てはめで、異なる入力値が少なすぎます"
+msgstr "4変数ロジスティックモデルの当てはめには、入力に異なる値が少なすぎます"
 
 msgid "too few distinct input values to fit a logistic model"
-msgstr "ロジスティックモデルの当てはめで、異なる入力値が少なすぎます"
+msgstr "ロジスティックモデルの当てはめには、入力に異なる値が少なすぎます"
 
 msgid "too few distinct input values to fit a Michaelis-Menten model"
-msgstr "Michaelis-Menten モデルの当てはめで、異なる入力値が少なすぎます"
+msgstr "Michaelis-Menten モデルの当てはめには、入力に異なる値が少なすぎます"
 
 msgid "too few distinct input values to fit the Gompertz model"
-msgstr "Gompertz モデルの当てはめで、異なる入力値が少なすぎます"
+msgstr "Gompertz モデルの当てはめには、入力に異なる値が少なすぎます"
 
 msgid "too few distinct input values to fit the Weibull growth model"
-msgstr "Weibull 成長モデルの当てはめで、異なる入力値が少なすぎます"
+msgstr "Weibull 成長モデルの当てはめには、入力に異なる値が少なすぎます"
 
 msgid "all 'x' values must be non-negative to fit the Weibull growth model"
 msgstr ""
@@ -2087,7 +2075,7 @@ msgstr ""
 
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
-msgstr[0] "個のエラー項があります。一つだけが許されます"
+msgstr[0] "%d 個のエラー項があります。一つだけが許されます"
 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
@@ -2294,3 +2282,4 @@ msgstr[1] "モデル式中にパラメータ(複数) %s がありません"
 
 #~ msgid "formula is incorrect"
 #~ msgstr "式が正しくありません"
+

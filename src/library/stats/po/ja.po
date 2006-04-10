@@ -116,16 +116,15 @@ msgstr "'theta' は文字型でなければなりません"
 
 #: nls.c:204 port.c:359
 msgid "use of NULL environment is deprecated"
-msgstr ""
+msgstr "NULL 環境の使用は廃止されました"
 
 #: nls.c:208
 msgid "'rho' should be an environment"
 msgstr "'rho' は環境(environment)でなければなりません"
 
 #: nls.c:210
-#, fuzzy
 msgid "'dir' is not a numeric vector of the correct length"
-msgstr "引数 %s は長さが 1 か %d の数値ベクトルでなければなりません"
+msgstr "'dir' は正しい長さの数値ベクトルではありません"
 
 #: nls.c:227 nls.c:255
 msgid "Missing value or an infinity produced when evaluating the model"
@@ -205,9 +204,9 @@ msgid "%s$%s() not found"
 msgstr "%s$%s() が見つかりません"
 
 #: port.c:460
-#, fuzzy, c-format
+#, , c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
-msgstr "グラディエントは次元 (%d,%d) の数値行列でなければなりません"
+msgstr "'gradient' は次元 (%d,%d) の数値行列でなければなりません"
 
 #: port.c:481
 #, c-format
@@ -252,3 +251,4 @@ msgstr "直前の %d 個の観測値中に欠損値があります"
 #~ msgid "assert failed in src/library/ts/src/carray.c"
 #~ msgstr ""
 #~ "src/library/ts/src/carray.c に対する引数整合性検査(assert)に失敗しました"
+
