@@ -3305,7 +3305,7 @@ stopifnot(labels(lm.D9) == "group")
 
 ## sprintf had no length check (PR#7554)
 a <- matrix (ncol=100, nrow=100, data=c(1,2,3,4,5))
-a.serial <- serialize(a, NULL, ascii=TRUE)
+a.serial <- rawToChar(serialize(a, NULL, ascii=TRUE))
 try(sprintf('foo: %s\n', a.serial))
 ## seqfaulted in 2.0.1
 

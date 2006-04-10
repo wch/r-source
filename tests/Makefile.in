@@ -18,7 +18,6 @@ test-src-gct = \
 	arith-true.R \
 	arith.R \
 	lm-tests.R \
-	primitive-funs.R \
 	ok-errors.R \
 	method-dispatch.R
 test-src-strict-1 = \
