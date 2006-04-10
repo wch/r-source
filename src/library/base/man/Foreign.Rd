@@ -180,8 +180,7 @@
   Neither \code{.Call} nor \code{.External} copy their arguments.  You
   should treat arguments you receive through these interfaces as
   read-only.
-}
-\note{
+
   Symbol names containing underscores are not valid Fortran 77 (although
   they are valid in Fortran 9x).  Many Fortran 77 compilers (including
   \code{g77}) will allow them but translate them in a different way to
