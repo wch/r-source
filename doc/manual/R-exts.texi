@@ -8815,13 +8815,10 @@ efficiency reasons:
 :          ~          c           list
 call       as.call    as.character
 expression  substitute  as.environment
-UseMethod  invisible
+UseMethod  invisible  standardGeneric
 .C         .Fortran   .Call       .External
 .Call.graphics        .External.graphics
-.subset    .subset2
-.primTrace            .primUntrace
-reg.finalizer         gc.time
-UseMethod             standardGeneric
+.subset    .subset2   .primTrace  .primUntrace
 @end group
 @end example
 

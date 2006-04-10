@@ -235,5 +235,8 @@ iconvlist <- function()
 
 Cstack_info <- function() .Internal(Cstack_info())
 
+reg.finalizer <- function(e, f, onexit = FALSE)
+    .Internal(reg.finalizer(e, f, onexit))
+
 ## base has no S4 generics
 .noGenerics <- TRUE

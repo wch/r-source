@@ -8,7 +8,16 @@
 
 		CHANGES IN R VERSION 2.4.0
 
+
 NEW FEATURES
+
+    o	serialize(connection = NULL) now returns a raw vector (and not
+	a character string).  unserialize() accepts both old and new
+	formats (and has since 2.3.0).
+
+    o	reg.finalizer() has a new argument 'onexit' to parallel the
+	C-level equivalent R_RegisterFinalizerEx.
+
 
 DEPRECATED & DEFUNCT
 

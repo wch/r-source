@@ -9,9 +9,12 @@
 }
 \usage{
 serialize(object, connection, ascii = FALSE, refhook = NULL)
+
 unserialize(connection, refhook = NULL)
+
 .saveRDS(object, file = "", ascii = FALSE, version = NULL,
          compress = FALSE, refhook = NULL)
+
 .readRDS(file, refhook = NULL)
 }
 \arguments{
@@ -71,7 +74,8 @@ unserialize(connection, refhook = NULL)
 \examples{
 x <- serialize(list(1,2,3), NULL)
 unserialize(x)
-(y <- charToRaw(x))
+## test pre-2.3.0 interface as a length-one character vector
+y <- rawToChar(x)
 unserialize(y)
 }
 \keyword{internal}

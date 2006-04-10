@@ -1126,14 +1126,20 @@ void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
 
 SEXP attribute_hidden do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    int onexit;
+    
     checkArity(op, args);
 
     if (TYPEOF(CAR(args)) != ENVSXP && TYPEOF(CAR(args)) != EXTPTRSXP)
 	errorcall(call, _("first argument must be environment or external pointer"));
     if (TYPEOF(CADR(args)) != CLOSXP)
 	errorcall(call, _("second argument must be a function"));
+
+    onexit = asLogical(CADDR(args));
+    if(onexit == NA_LOGICAL)
+	errorcall(call, _("third argument must be 'TRUE' or 'FALSE'"));
     
-    R_RegisterFinalizer(CAR(args), CADR(args));
+    R_RegisterFinalizerEx(CAR(args), CADR(args), onexit);
     return R_NilValue;
 }
 

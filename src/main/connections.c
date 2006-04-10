@@ -4020,18 +4020,18 @@ SEXP R_compress1(SEXP in)
     Bytef *buf;
     SEXP ans;
 
-    if(!isString(in) || length(in) !=1)
-	error(_("R_compress1 requires a scalar string"));
-    inlen = LENGTH(STRING_ELT(in, 0));
+    if(TYPEOF(in) != RAWSXP)
+	error(_("R_decompress1 requires a raw vector"));
+    inlen = LENGTH(in);
     outlen = 1.001*inlen + 20;
     buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
     /* we want this to be system-independent */
     *((unsigned int *)buf) = (unsigned int) uiSwap(inlen);
-    res = compress(buf + 4, &outlen, (Bytef *)CHAR(STRING_ELT(in, 0)), inlen);
+    res = compress(buf + 4, &outlen, (Bytef *)RAW(in), inlen);
     if(res != Z_OK) error(_("internal error in R_compress1"));
-    ans = allocVector(CHARSXP, outlen + 4);
-    memcpy(CHAR(ans), buf, outlen + 4);
-    return ScalarString(ans);
+    ans = allocVector(RAWSXP, outlen + 4);
+    memcpy(RAW(ans), buf, outlen + 4);
+    return ans;
 }
 
 attribute_hidden
@@ -4040,19 +4040,19 @@ SEXP R_decompress1(SEXP in)
     uLong inlen, outlen;
     int res;
     Bytef *buf;
-    char *p = CHAR(STRING_ELT(in, 0));
+    unsigned char *p = RAW(in);
     SEXP ans;
 
-    if(!isString(in) || length(in) !=1)
-	error(_("R_decompress1 requires a scalar string"));
-    inlen = LENGTH(STRING_ELT(in, 0));
+    if(TYPEOF(in) != RAWSXP)
+	error(_("R_decompress1 requires a raw vector"));
+    inlen = LENGTH(in);
     outlen = (uLong) uiSwap(*((unsigned int *) p));
     buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
     res = uncompress(buf, &outlen, (Bytef *)(p + 4), inlen - 4);
     if(res != Z_OK) error(_("internal error in R_decompress1"));
-    ans = allocVector(CHARSXP, outlen);
-    memcpy(CHAR(ans), buf, outlen);
-    return ScalarString(ans);
+    ans = allocVector(RAWSXP, outlen);
+    memcpy(RAW(ans), buf, outlen);
+    return ans;
 }
 
 SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
