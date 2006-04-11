@@ -65,7 +65,12 @@
   locale.)
 #endif
 }
+#ifdef unix
 \section{Unicode and other multi-byte locales}{
+#endif
+#ifdef windows
+\section{Multi-byte locales}{
+#endif
   In all locales, the characters in the ASCII range (\code{0x00} to
   \code{0x7f}) are printed in the same way, as-is if printable, otherwise
   via ANSI escape sequences or 3-digit octal escapes as described for
@@ -76,15 +81,26 @@
 #ifndef windows
   or \code{\Uxxxxxxxx}
 #endif
-  (in hexadecimal).  This is the internal code for the wide-character
-  representation of the character, which for all currently known
-  \R platforms is the Unicode code point.
+  (in hexadecimal).
+#ifdef windows
+  This is the Unicode point of the character.
+#endif
+#ifdef unix
+  This is the internal code for the wide-character representation of the
+  character.  If this is not known to be the Unicode point, a warning is
+  issued.  The only known exceptions are certain Japanese ISO2022
+  locales on commercial Unixes, which use a concatenation of the bytes:
+  it is unlikely that \R compiles on such a system.
+% http://www.cl.cam.ac.uk/~mgk25/ucs/iso2022-wc.html
+#endif
 
   It is possible to have a character string in a character vector that
   is not valid in the current locale.  If a byte is encountered that is
   not part of a valid character it is printed in hex in the form
   \code{<xx>} and this is repeated until the start of a valid character.
+#ifdef unix
   (This will rapidly recover from minor errors in UTF-8.)
+#endif
 }
 \seealso{
   The generic \code{\link{print}}, \code{\link{options}}.

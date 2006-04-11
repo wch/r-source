@@ -53,6 +53,11 @@ BUG FIXES
 	.Fortran() is now the actual name.  (What was reported to be
 	an 'entry point' was missing the common leading underscore.)
 
+    o	print() on a MBCS character string now works properly a character
+	at a time rather than a byte at time.  (This does not affect
+	MBCSs like UTF-8 and the Windows DBCSes which have non-ASCII
+	lead bytes and always worked correctly.)
+
 
 
 
