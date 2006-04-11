@@ -8815,7 +8815,7 @@ efficiency reasons:
 :          ~          c           list
 call       as.call    as.character
 expression  substitute  as.environment
-UseMethod  invisible
+invisible
 .C         .Fortran   .Call       .External
 .Call.graphics        .External.graphics
 .subset    .subset2
