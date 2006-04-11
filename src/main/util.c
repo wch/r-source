@@ -238,7 +238,7 @@ SEXP type2str(SEXPTYPE t)
     return R_NilValue; /* for -Wall */
 }
 
-char *type2char(SEXPTYPE t)
+char * const type2char(SEXPTYPE t)
 {
     int i;
 
