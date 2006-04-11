@@ -881,7 +881,7 @@ SEXP R_sysframe(int,RCNTXT*);
 SEXP R_sysfunction(int,RCNTXT*);
 Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
-char * const type2char(SEXPTYPE);
+char * type2char(SEXPTYPE);
 SEXP type2str(SEXPTYPE);
 SEXP type2symbol(SEXPTYPE);
 void unbindVar(SEXP, SEXP);

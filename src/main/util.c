@@ -238,13 +238,13 @@ SEXP type2str(SEXPTYPE t)
     return R_NilValue; /* for -Wall */
 }
 
-char * const type2char(SEXPTYPE t)
+char * type2char(SEXPTYPE t)
 {
     int i;
 
     for (i = 0; TypeTable[i].str; i++) {
 	if (TypeTable[i].type == t)
-	    return (char * const) TypeTable[i].str;
+	    return (char *) TypeTable[i].str;
     }
     error(_("type %d is unimplemented in '%s'"), t, "type2char");
     return ""; /* for -Wall */
