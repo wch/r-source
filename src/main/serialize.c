@@ -2151,7 +2151,7 @@ SEXP attribute_hidden R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
     int i, len;
 
     if (TYPEOF(env) == NILSXP) {
-    	warning(_("use of NULL environment is deprecated"));
+    	error(_("use of NULL environment is defunct"));
     	env = R_BaseEnv;
     } else
     if (TYPEOF(env) != ENVSXP)

@@ -2012,7 +2012,7 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     open = CHAR(STRING_ELT(sopen, 0));
     venv = CADDDR(args);
     if (isNull(venv)) {
-	warning(_("use of NULL environment is deprecated"));
+	error(_("use of NULL environment is defunct"));
 	venv = R_BaseEnv;
     } else      
     if (!isEnvironment(venv))

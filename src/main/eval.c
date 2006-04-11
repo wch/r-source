@@ -3403,7 +3403,7 @@ SEXP attribute_hidden do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("invalid environment"));
 
     if (isNull(env)) {
-	warning(_("use of NULL environment is deprecated"));
+	error(_("use of NULL environment is defunct"));
 	env = R_BaseEnv;
     } else  
     if (!isEnvironment(env))

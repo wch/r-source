@@ -1275,11 +1275,6 @@ sub check_pkg {
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
                          "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	@out = grep(!/^\>/, @out);
-	## <FIXME>
-	## Temporarily work around R 2.3.0 NULL environment changes.
-        @out = grep(!/^Warning: use of NULL environment is deprecated/,
-		    @out);
-	## </FIXME>
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");

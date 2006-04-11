@@ -1317,7 +1317,7 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     envir = CADR(args);
     if (isNull(envir)) {
-	warning(_("use of NULL environment is deprecated"));
+	error(_("use of NULL environment is defunct"));
 	envir = R_BaseEnv;
     } else    
     if (!isEnvironment(envir))

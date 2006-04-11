@@ -32,6 +32,8 @@ DEPRECATED & DEFUNCT
 
     o	Argument 'col' of bxp() has been removed: use 'boxfill'.
 
+    o	Use of NULL as an environment is now an error.
+
     o	postscriptFont() is defunct: use Type1Font().
 
     o	La.chol() and La.chol2inv() are defunct (they were the same as
@@ -39,15 +41,15 @@ DEPRECATED & DEFUNCT
 
     o	La.svd(method = "dgesvd") is defunct.
 
+    o	Files install.R and R_PROFILE.R in packages are now ignored
+	(with a warning).
+
     o	The following deprecated command-line options to INSTALL have
 	been removed (use the fields in the DESCRIPTION file instead):
 	-s --save --no-save --lazy --no-lazy --lazy-data --no-lazy-data
 
     o	symbol.C() and symbol.For() are deprecated.  They are required in
 	S for use with is.loaded(), but are not so required in R. 
-
-    o	Files install.R and R_PROFILE.R in packages are now ignored
-	(with a warning).
 
 
 BUG FIXES

@@ -174,13 +174,13 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 
     if (R_UseNamespaceDispatch) {
 	if (TYPEOF(callrho) == NILSXP) {
-	    warning(_("use of NULL environment is deprecated"));
+	    error(_("use of NULL environment is defunct"));
 	    callrho = R_BaseEnv;
 	} else
 	if (TYPEOF(callrho) != ENVSXP)
 	    error(_("bad generic call environment"));
 	if (TYPEOF(defrho) == NILSXP) {
-	    warning(_("use of NULL environment is deprecated"));
+	    error(_("use of NULL environment is defunct"));
 	    defrho = R_BaseEnv;
 	} else
 	if (TYPEOF(defrho) != ENVSXP)
