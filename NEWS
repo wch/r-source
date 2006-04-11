@@ -21,6 +21,9 @@ NEW FEATURES
     o	.Fortran() will map 'name' to lower case, and will work with
 	'name' containing underscores.
 
+    o	history() gains a 'pattern' argument as suggested by Romain
+	Francois.
+
 
 DEPRECATED & DEFUNCT
 
@@ -1027,7 +1030,9 @@ BUG FIXES
     o	Rdconv -t Ssgm failed if it encountered \link[opt]{arg}.
 
     o	uniroot() did not give a warning (as documented) if it failed
-	to converge in 'maxiter' steps.  (PR#8750)
+
+    o	eapply (and as.list.environment) did not work for the base
+	environment/namespace.  (PR#8761)
 
 
 

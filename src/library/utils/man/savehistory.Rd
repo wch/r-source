@@ -11,7 +11,7 @@
 loadhistory(file = ".Rhistory")
 savehistory(file = ".Rhistory")
 
-history(max.show = 25, reverse = FALSE)
+history(max.show = 25, reverse = FALSE, pattern, \dots)
 
 timestamp(stamp = date(),
           prefix = "##------ ", suffix = " ------##",
@@ -25,6 +25,10 @@ timestamp(stamp = date(),
     give all of the currently available history.}
   \item{reverse}{logical. If true, the lines are shown in reverse
     order. Note: this is not useful when there are continuation lines.}
+  \item{pattern}{A character string to be matched against the lines of
+    the history}
+  \item{\dots}{Arguments to be passed to \code{\link{grep}} when doing
+    the matching.}
   \item{stamp}{A value or vector of values to be written into the history.}
   \item{prefix}{A prefix to apply to each line.}
   \item{suffix}{A suffix to apply to each line.}
@@ -56,6 +60,9 @@ timestamp(stamp = date(),
 
   These variables are read at the time of saving, so can be altered
   within a session by the use of \code{\link{Sys.putenv}}.
+
+  \code{history} shows only unqiue matching lines if \code{pattern} is
+  supplied.
   
   The \code{timestamp} function writes a timestamp (or other message)
   into the history and echos it to the console.  On platforms that do not 
