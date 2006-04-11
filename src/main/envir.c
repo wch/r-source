@@ -2278,6 +2278,40 @@ BuiltinNames(int all, int intern, SEXP names, int *indx)
     }
 }
 
+static void
+BuiltinValues(int all, int intern, SEXP values, int *indx)
+{
+    SEXP s, vl;
+    int j;
+    for (j = 0; j < HSIZE; j++) {
+	for (s = R_SymbolTable[j]; s != R_NilValue; s = CDR(s)) {
+	    if (intern) {
+		if (INTERNAL(CAR(s)) != R_NilValue) {
+		    vl = SYMVALUE(CAR(s));
+		    if (TYPEOF(vl) == PROMSXP) {
+			PROTECT(vl);
+			vl = eval(vl, R_BaseEnv);
+			UNPROTECT(1);
+		    }
+		    SET_VECTOR_ELT(values, (*indx)++, duplicate(vl));
+		}
+	    }
+	    else {
+		if ((all || CHAR(PRINTNAME(CAR(s)))[0] != '.') 
+		    && SYMVALUE(CAR(s)) != R_UnboundValue) {
+		    vl = SYMVALUE(CAR(s));
+		    if (TYPEOF(vl) == PROMSXP) {
+			PROTECT(vl);
+			vl = eval(vl, R_BaseEnv);
+			UNPROTECT(1);
+		    }
+		    SET_VECTOR_ELT(values, (*indx)++, duplicate(vl));
+		}
+	    }
+	}
+    }
+}
+
 SEXP attribute_hidden do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP env;
@@ -2368,7 +2402,9 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (all == NA_LOGICAL)
       all = 0;
 
-    if( HASHTAB(env) != R_NilValue)
+    if (env == R_BaseEnv)
+        k = BuiltinSize(all, 0);
+    else if (HASHTAB(env) != R_NilValue)
         k = HashTableSize(HASHTAB(env), all);
     else
         k = FrameSize(FRAME(env), all);
@@ -2378,13 +2414,17 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(VECSXP, k));
 
     k = 0;
-    if(HASHTAB(env) != R_NilValue) 
+    if (env == R_BaseEnv)
+	BuiltinValues(all, 0, ans, &k);
+    else if (HASHTAB(env) != R_NilValue) 
       HashTableValues(HASHTAB(env), all, ans, &k);
     else
       FrameValues(FRAME(env), all, ans, &k);
 
     k = 0;
-    if(HASHTAB(env) != R_NilValue) 
+    if (env == R_BaseEnv)
+	BuiltinNames(all, 0, names, &k);
+    else if (HASHTAB(env) != R_NilValue) 
         HashTableNames(HASHTAB(env), all, names, &k);
     else
         FrameNames(FRAME(env), all, names, &k);
@@ -2423,7 +2463,9 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (all == NA_LOGICAL)
       all = 0;
 
-    if( HASHTAB(env) != R_NilValue)
+    if (env == R_BaseEnv)
+        k = BuiltinSize(all, 0);
+    else if (HASHTAB(env) != R_NilValue)
         k = HashTableSize(HASHTAB(env), all);
     else
         k = FrameSize(FRAME(env), all);
@@ -2434,13 +2476,16 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(tmp2 = allocVector(VECSXP, k));
 
     k = 0;
-    if(HASHTAB(env) != R_NilValue) 
-      HashTableValues(HASHTAB(env), all, tmp2, &k);
+    if (env == R_BaseEnv)
+	BuiltinValues(all, 0, tmp2, &k);
+    else if (HASHTAB(env) != R_NilValue) 
+	HashTableValues(HASHTAB(env), all, tmp2, &k);
     else
-      FrameValues(FRAME(env), all, tmp2, &k);
+	FrameValues(FRAME(env), all, tmp2, &k);
 
     PROTECT(ind = allocVector(INTSXP, 1));
-    PROTECT(tmp = LCONS(R_Bracket2Symbol, LCONS(tmp2, LCONS(ind, R_NilValue))));
+    PROTECT(tmp = LCONS(R_Bracket2Symbol, 
+			LCONS(tmp2, LCONS(ind, R_NilValue))));
     PROTECT(R_fcall = LCONS(FUN, LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
 
     for(i = 0; i < k; i++) {
@@ -2449,7 +2494,9 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     
     k = 0;
-    if(HASHTAB(env) != R_NilValue) 
+    if (env == R_BaseEnv)
+	BuiltinNames(all, 0, names, &k);
+    else if(HASHTAB(env) != R_NilValue) 
         HashTableNames(HASHTAB(env), all, names, &k);
     else
         FrameNames(FRAME(env), all, names, &k);
