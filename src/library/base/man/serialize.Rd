@@ -39,12 +39,13 @@ unserialize(connection, refhook = NULL)
   connection.  Sharing of reference objects is preserved within the
   object but not across separate calls to serialize.  If
   \code{connection} is \code{NULL} then \code{object} is serialized to a
-  scalar string, which is returned as the result of \code{serialize}.
+  raw vector, which is returned as the result of \code{serialize}.
   For a text mode connection, the default value of \code{ascii} is set
   to \code{TRUE}.
 
   \code{unserialize} reads an object (as written by \code{serialize})
-  from \code{connection}.
+  from \code{connection} or a raw vector or (for compatibility with
+  earlier versions of \code{serialize}) a length-one character vector.
 
   The \code{refhook} functions can be used to customize handling of
   non-system reference objects (all external pointers and weak
@@ -56,16 +57,13 @@ unserialize(connection, refhook = NULL)
   \code{serialize} and should return an appropriate object.
 }
 \section{Warning}{
-  These functions are still experimental.  Both names, interfaces and
-  values might change in future versions
-  (and are expected to for \R 2.4.0).
+  These functions are still experimental.  Names, interfaces and
+  values might change in future versions (and was changed for \R 2.4.0).
   \code{.saveRDS} and \code{.readRDS} are intended for internal use.
 }
 \value{
   For \code{serialize}, \code{NULL} unless \code{connection=NULL}, when
-  the result is stored in the first element of a character vector (but
-  is not a normal character string unless \code{ascii = TRUE} and should
-  not be processed except by \code{unserialize}).
+  the result is stored in a raw vector.
 
   For \code{unserialize} and \code{.readRDS}, an \R object.
 
