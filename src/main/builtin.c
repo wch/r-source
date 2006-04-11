@@ -389,12 +389,6 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     cntxt.cenddata = &ci;
 
     nobjs = length(objs);
-    /*
-    for (i = 0; i < nobjs; i++) {
-	if (!isVector(VECTOR_ELT(objs, i)) && !isNull(VECTOR_ELT(objs, i)))
-	    errorcall(call, "argument %d has invalid type", i + 1);
-    }
-    */
     width = 0;
     ntot = 0;
     nlines = 0;
