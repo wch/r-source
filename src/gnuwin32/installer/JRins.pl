@@ -90,6 +90,7 @@ Name: chs; MessagesFile: "ChineseSimp.isl"
 Name: cht; MessagesFile: "ChineseTrad.isl"
 Name: ja; MessagesFile: "Japanese.isl"
 Name: ko; MessagesFile: "Korean.isl"
+Name: es; MessagesFile: "SpanishStd.isl"
 
 #include "CustomMsg.txt"
 
