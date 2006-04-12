@@ -196,6 +196,7 @@ if (/^(\S+) +\(((?:GNU|Free) +[^)]+)\) +(.*)/ or
     $program = $1;
     $package = $2;
     $version = $3;
+    $version =~ s/^version //g;	# FL
     $version =~ s/ .*//g;	# KH
 }
 elsif (/^((?:GNU|Free) +)?(\S+) +(.*)/)
@@ -203,6 +204,7 @@ elsif (/^((?:GNU|Free) +)?(\S+) +(.*)/)
     $program = $2;
     $package = $1 ? "$1$2" : $2;
     $version = $3;
+    $version =~ s/^version //g;	# FL
     $version =~ s/ .*//g;	# KH
 }
 else

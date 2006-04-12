@@ -9,6 +9,12 @@
 		CHANGES IN R VERSION 2.4.0
 
 
+USER-VISIBLE CHANGES
+
+    o   The startup message now prints first the version string and
+        then the copyright notice (to be more similar to R --version).
+
+
 NEW FEATURES
 
     o	serialize(connection = NULL) now returns a raw vector (and not

@@ -29,13 +29,13 @@ void attribute_hidden PrintGreeting(void)
 {
     char buf[128];
     
-    Rprintf("\nR : Copyright %s, The R Foundation for Statistical Computing\n",
-	    R_YEAR);
-
+    Rprintf("\n");
     PrintVersionString(buf);
     Rprintf(buf);
+    Rprintf("\nCopyright (C) %s The R Foundation for Statistical Computing\n",
+	    R_YEAR);
     
-    Rprintf("\nISBN 3-900051-07-0\n\n");
+    Rprintf("ISBN 3-900051-07-0\n\n");
     Rprintf(_("R is free software and comes with ABSOLUTELY NO WARRANTY.\n\
 You are welcome to redistribute it under certain conditions.\n\
 Type 'license()' or 'licence()' for distribution details.\n\n"));
@@ -95,11 +95,12 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 
 void attribute_hidden PrintVersion(char *s)
 {
-    char tmp[50];
+    char tmp[128];
 
     PrintVersionString(s);
-    sprintf(tmp, "\nCopyright (C) %s R Development Core Team\n\n", R_YEAR);
+    sprintf(tmp, "\nCopyright (C) %s The R Foundation for Statistical Computing\n", R_YEAR);
     strcat(s, tmp);
+    strcat(s, "ISBN 3-900051-07-0\n\n");
     strcat(s, "R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
     strcat(s, "You are welcome to redistribute it under the terms of the\n");
     strcat(s, "GNU General Public License.  For more information about\n");
@@ -110,16 +111,16 @@ void attribute_hidden PrintVersionString(char *s)
 {
     if(strcmp(R_SVN_REVISION, "unknown")==0)
     {
-        sprintf(s, "Version %s.%s %s (%s-%s-%s)",
+        sprintf(s, "R version %s.%s %s (%s-%s-%s)",
                 R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
     }
     else{
 	if(strlen(R_STATUS)==0){
-	    sprintf(s, "Version %s.%s (%s-%s-%s)",
+	    sprintf(s, "R version %s.%s (%s-%s-%s)",
 		    R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY);
 	}
 	else{
-	    sprintf(s, "Version %s.%s %s (%s-%s-%s r%s)",
+	    sprintf(s, "R version %s.%s %s (%s-%s-%s r%s)",
 		    R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
 		    R_SVN_REVISION);
 	}
