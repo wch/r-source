@@ -38,6 +38,18 @@ dk.adminprivilegesrequired=Du skal helst være logget ind som administrator for a
 dk.adminexplanation=En fuld R installation kræver administratorrettigheder, og disse ser ikke ud til at være til stede. Hvis du fortsætter installationen, vil du ikke kunne installere DCOM understøttelse eller kunne associere R med .RData filer. Installation skal være til en mappe, hvortil du har skrivetilladelse.
 dk.recordversion=Gem versionsnummer i registreringsdatabasen
 
+es.regentries=Registro de entradas:
+es.associate=&Asociar archivos .RData con R
+es.dcom=&Registrar R para uso del servidor (D)COM
+es.user=Instalación del usuario
+es.compact=Instalación mínima
+es.full=Instalación completa
+es.CJK=Instalación en Chino/Japones/Koreano
+es.custom=Instalación a medida
+es.adminprivilegesrequired=Debe registrarse como administrador cuando instala R
+es.adminexplanation=Nota: Una instalación completa de R requiere de privilegios de administrador.  Si continua esta instalación, no podrá instalar el soporte DCOM ni asociar archivos .RData con R.  La instalación debe realizase en un directorio donde tiene permiso de escritura.
+es.recordversion=Guarde el número de versión en el registro
+
 fr.regentries=Entrées dans le registre:
 fr.associate=&Associer R avec les fichiers .RData
 fr.dcom=&Enregistrer R pour l'utiliser avec '(D)COM server'

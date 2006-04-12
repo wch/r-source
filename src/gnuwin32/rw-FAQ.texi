@@ -627,9 +627,9 @@ Korean,
 Norwegian,
 Polish,
 Portuguese,
-Russian
-and
-Slovenian.
+Russian,
+Slovenian
+and Spanish (Spain).
 
 @node I want R in English!, I want to run R in Chinese/Japanese/Korean, The installer does not offer my language, Languages and Internationalization
 @section I want R in English (and not in French/Chinese/...)!

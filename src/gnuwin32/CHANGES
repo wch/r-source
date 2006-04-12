@@ -93,6 +93,10 @@ Added a few mappings from Windows locale names (e.g. "chinese", "chs",
 "cht", "ptb") to language names.  There is still scope for confusion:
 LC_ALL=es is Estonian, and LANGUAGE=es is Spanish.
 
+Spanish (as used in Spain) has been added to the list of installation
+languages.
+
+
 
 Installing packages
 -------------------
