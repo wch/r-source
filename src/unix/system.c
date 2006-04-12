@@ -145,6 +145,12 @@ int Rf_initialize_R(int ac, char **av)
 {
     struct rlimit rlim;
 
+    {
+        int ii;
+	/* 1 is downwards */
+        R_CStackDir = ((uintptr_t)&i > (uintptr_t)&ii) ? 1 : -1;
+    }
+
     if(getrlimit(RLIMIT_STACK, &rlim) == 0) {
 	unsigned long lim1, lim2;
 	lim1 = (unsigned long) rlim.rlim_cur;
@@ -166,15 +172,11 @@ int Rf_initialize_R(int ac, char **av)
     if(R_running_as_main_program) {
 	/* This is not the main program, but unless embedded it is 
 	   near the top, 5540 bytes away when checked. */
-	R_CStackStart = (uintptr_t) &i + 6000;
+	R_CStackStart = (uintptr_t) &i + (6000 * R_CStackDir);
     }
 #endif
+    if(R_CStackStart == -1) R_CStackLimit = -1; /* never set */
     
-    {
-        int ii;
-	/* 1 is downwards */
-        R_CStackDir = ((uintptr_t)&i > (uintptr_t)&ii) ? 1 : -1;
-    }
     /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit, 
               R_CStackStart, R_CStackDir); */
 }
