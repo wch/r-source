@@ -10,13 +10,15 @@ Cstack_info()
 \details{
   On most platforms, C stack information is recorded when \R is
   initialized and used for stack-checking.  If this information is
-  unavailable, the \code{size} will be returned as \code{-1}, and
+  unavailable, the \code{size} will be returned as \code{NA}, and
   stack-checking is not performed.
 
-  The information on the base address is thought to be accurate on
+  The information on the stack base address is thought to be accurate on
   Windows, Linux and FreeBSD (including MacOS X), but a heuristic is
   used on other platforms.  Because this might be slightly inaccurate,
-  the current usage could be estimated as negative.
+  the current usage could be estimated as negative.  (The heuristic is
+  not used on embedded uses of \R on platforms where the stack base
+  is not thought to be accurate.)
 }
 \value{
   An integer vector.  This has named elements
