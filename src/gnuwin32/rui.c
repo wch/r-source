@@ -666,9 +666,6 @@ void readconsolecfg()
     gui.pointsize = 12;
     
 #ifdef USE_MDI
-    if (MDIset == 1)  RguiMDI |= RW_MDI;
-    if (MDIset == -1) RguiMDI &= ~RW_MDI;
-
     gui.toolbar = ((RguiMDI & RW_TOOLBAR) != 0);
     gui.statusbar = ((RguiMDI & RW_STATUSBAR) != 0);
     gui.MDI = ((RguiMDI & RW_MDI) != 0);
@@ -693,6 +690,10 @@ void readconsolecfg()
     
     if (gui.MDI)  RguiMDI |= RW_MDI;
     else          RguiMDI &= ~RW_MDI;
+
+    if (MDIset == 1)  RguiMDI |= RW_MDI;
+    if (MDIset == -1) RguiMDI &= ~RW_MDI;    
+        
     if (gui.toolbar) RguiMDI |= RW_TOOLBAR;
     else	     RguiMDI &= ~RW_TOOLBAR;
     if (gui.statusbar) RguiMDI |= RW_STATUSBAR;
