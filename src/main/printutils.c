@@ -359,7 +359,6 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 {
     int b, b0, i, j, cnt;
     char *p, *q, buf[11];
-    Rboolean Unicode_warning=FALSE;
 
     /* We have to do something like this as the result is returned, and
        passed on by EncodeElement -- so no way could be enduser be
@@ -399,6 +398,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	mbstate_t mb_st;
 	wchar_t wc;
 	unsigned int k; /* not wint_t as it might be signed */
+        Rboolean Unicode_warning=FALSE;
 
 	mbs_init(&mb_st);
 	for (i = 0; i < cnt; i++) {
