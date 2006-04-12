@@ -42551,6 +42551,73 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
+## KERN_USRSTACK support (BSD, Darwin, ...)
+
+  echo "$as_me:$LINENO: checking whether KERN_USRSTACK sysctl is supported" >&5
+echo $ECHO_N "checking whether KERN_USRSTACK sysctl is supported... $ECHO_C" >&6
+if test "${r_cv_kern_usrstack+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test "$cross_compiling" = yes; then
+  r_cv_kern_usrstack=no
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include "confdefs.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/sysctl.h>
+
+int main () {
+  int nm[2] = {CTL_KERN, KERN_USRSTACK};
+  void * base;
+  size_t len = sizeof(void *);
+  int r = sysctl(nm, 2, &base, &len, NULL, 0);
+
+  exit((r==0)?0:1);
+}
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_cv_kern_usrstack=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+r_cv_kern_usrstack=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+fi
+echo "$as_me:$LINENO: result: $r_cv_kern_usrstack" >&5
+echo "${ECHO_T}$r_cv_kern_usrstack" >&6
+
+  if test $r_cv_kern_usrstack = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_KERN_USRSTACK 1
+_ACEOF
+
+  fi
+
 
 ### * Miscellaneous.
 
@@ -42959,7 +43026,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:42962:" \
+echo "$as_me:43029:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5

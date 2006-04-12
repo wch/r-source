@@ -1679,6 +1679,8 @@ if test ${valgrind_level} -eq 0; then
 fi
 AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
 
+## KERN_USRSTACK support (BSD, Darwin, ...)
+R_KERN_USRSTACK
 
 ### * Miscellaneous.
 
