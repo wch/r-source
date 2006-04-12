@@ -3130,6 +3130,37 @@ AC_SUBST(F77_VISIBILITY)
 ])# R_GCC4_VISIBILITY
 
 
+## R_KERN_USRSTACK
+## -------------
+## Checks whether we can use KERN_USRSTACK sysctl to
+## get the bottom of the stack (*BSD, Darwin, ...)
+AC_DEFUN([R_KERN_USRSTACK],
+[
+  AC_CACHE_CHECK([whether KERN_USRSTACK sysctl is supported],
+  [r_cv_kern_usrstack],
+  [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include "confdefs.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/sysctl.h>
+
+int main () {
+  int nm[2] = {CTL_KERN, KERN_USRSTACK};
+  void * base;
+  size_t len = sizeof(void *);
+  int r = sysctl(nm, 2, &base, &len, NULL, 0);
+
+  exit((r==0)?0:1);
+}
+  ]])], [r_cv_kern_usrstack=yes], [r_cv_kern_usrstack=no], 
+    [r_cv_kern_usrstack=no])])
+
+  if test $r_cv_kern_usrstack = yes; then
+    AC_DEFINE(HAVE_KERN_USRSTACK, 1, [Define if KERN_USRSTACK sysctl is supported.])
+  fi
+])
+
 
 ### Local variables: ***
 ### mode: outline-minor ***

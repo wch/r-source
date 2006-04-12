@@ -120,7 +120,7 @@ void R_setupHistory()
 # ifdef linux
 extern void * __libc_stack_end;
 # endif
-# ifdef __FreeBSD__
+# ifdef HAVE_KERN_USRSTACK
 #  include <unistd.h>
 #  include <sys/types.h>
 #  include <sys/sysctl.h>
@@ -153,7 +153,7 @@ int Rf_initialize_R(int ac, char **av)
     }
 #if defined(linux)
     R_CStackStart = (uintptr_t) __libc_stack_end;
-#elif defined(__FreeBSD__)
+#elif defined(HAVE_KERN_USRSTACK)
     {
 	/* Borrowed from mzscheme/gc/os_dep.c */
 	int nm[2] = {CTL_KERN, KERN_USRSTACK};
