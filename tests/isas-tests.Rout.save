@@ -1,6 +1,6 @@
 
-R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-03-12 r37520)
+R version 2.4.0 Under development (unstable) (2006-04-12 r37740)
+Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -344,7 +344,7 @@ non-square matrix in: as.dist.default(x)
 [1] TRUE
 > res <- try(as.environment( x ), silent = TRUE)
 Warning message:
-using 'as.environment(NULL)' is deprecated 
+using 'as.environment(NULL)' is defunct 
 > if(!inherits(res, 'try-error')) report(is.environment(res))
 [1] TRUE
 > res <- try(as.expression( x ), silent = TRUE)
@@ -429,7 +429,7 @@ Error: x is not TRUE
 [1] TRUE
 > res <- try(as.environment( x ), silent = TRUE)
 Warning message:
-using 'as.environment(NULL)' is deprecated 
+using 'as.environment(NULL)' is defunct 
 > if(!inherits(res, 'try-error'))
 +    report({if(is.environment(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
@@ -552,7 +552,7 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.environment( x ), silent = TRUE)
 Warning message:
-using 'as.environment(NULL)' is deprecated 
+using 'as.environment(NULL)' is defunct 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.environment( f )))
 [1] TRUE
 > f <- try(as.expression( x ), silent = TRUE)
@@ -2450,6 +2450,6 @@ non-square matrix in: as.dist.default(x)
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.73 0.02 0.88 0 0 
+Time elapsed:  0.187 0.005 0.193 0 0 
 > 
 > 
