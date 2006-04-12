@@ -97,7 +97,14 @@ void attribute_hidden PrintVersion(char *s)
 {
     char tmp[50];
 
-    PrintVersionString(s);
+    /* This is just to make GNU tools like help2man happy */
+    /* (we are in feature freeze) */
+    /* For 2.4 PrintVersionString will do "R version 2.4.0" */
+    sprintf(s, "R ");
+    PrintVersionString(tmp);
+    tmp[0] = 'v';
+    
+    strcat(s, tmp);
     sprintf(tmp, "\nCopyright (C) %s R Development Core Team\n\n", R_YEAR);
     strcat(s, tmp);
     strcat(s, "R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
