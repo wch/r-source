@@ -14,17 +14,18 @@ Cstack_info()
   stack-checking is not performed.
 
   The information on the base address is thought to be accurate on
-  Windows, Linux and FreeBSD, but a heuristic is used on other
-  platforms.  Because this might be slightly inaccurate, the current
-  usage could be estimated as negative.
+  Windows, Linux and FreeBSD (including MacOS X), but a heuristic is
+  used on other platforms.  Because this might be slightly inaccurate,
+  the current usage could be estimated as negative.
 }
 \value{
   An integer vector.  This has named elements
-  \item{size}{The size of the stack (in bytes), or \code{-1} if unknown.}
-  \item{current}{The estimated current usage (in bytes).}
-  \item{directioon}{\code{1} (stack grows down) or \code{-1} (stack grows up).}
-  \item{eval\_depth}{The current evaluation depth (including two calls
-    for the call to \code{Cstack_info}.}
+  \item{size}{The size of the stack (in bytes), or \code{NA} if unknown.}
+  \item{current}{The estimated current usage (in bytes), possibly \code{NA}.}
+  \item{direction}{\code{1} (stack grows down, the usual case) or
+    \code{-1} (stack grows up).}
+  \item{eval_depth}{The current evaluation depth (including two calls
+    for the call to \code{Cstack_info}).}
 }
 \examples{
 Cstack_info()
