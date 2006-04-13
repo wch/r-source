@@ -379,8 +379,10 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 
     /* We need enough space for the encoded string, including escapes.
        Octal encoding turns one byte into four.
-       Unicode encoding can turn a multibyte into six.
-       Let's be wasteful here (but why 5 not MB_CUR_MAX?)
+       Unicode encoding can turn a multibyte into six or ten,
+       but it turns 2/3 into 6, and 4 (and perhaps 5/6) into 10.
+       Let's be wasteful here (the worst case appears to be an MBCS with
+       two bytes for an upper-plane Unicode point output as ten bytes).
      */
     R_AllocStringBuffer(imax2(5*cnt+2, w), buffer); /* +2 allows for quotes */
     q = buffer->data;
