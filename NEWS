@@ -489,7 +489,9 @@ INTERNATIONALIZATION
 	In UTF-8 locales, a suitable single-byte encoding is chosen
 	for postscript() and pdf(), and text translated to it.
 
-   o	xfig() gains an 'encoding' argument.
+    o	xfig() gains an 'encoding' argument.
+
+    o	There are some message translations into Spanish.
 
 
 INSTALLATION CHANGES
