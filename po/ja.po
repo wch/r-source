@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-10 14:46+0100\n"
+"POT-Creation-Date: 2006-04-13 13:10+0100\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -103,15 +103,15 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/connections.c:2550 src/main/connections.c:3300
 #: src/main/connections.c:3306 src/main/connections.c:3553
 #: src/main/connections.c:3564 src/main/connections.c:3568
-#: src/main/connections.c:3572 src/main/datetime.c:622 src/main/datetime.c:691
-#: src/main/datetime.c:693 src/main/datetime.c:697 src/main/datetime.c:828
-#: src/main/datetime.c:830 src/main/datetime.c:953 src/main/dounzip.c:181
+#: src/main/connections.c:3572 src/main/datetime.c:624 src/main/datetime.c:693
+#: src/main/datetime.c:695 src/main/datetime.c:699 src/main/datetime.c:830
+#: src/main/datetime.c:832 src/main/datetime.c:955 src/main/dounzip.c:181
 #: src/main/dounzip.c:187 src/main/envir.c:1472 src/main/envir.c:1476
 #: src/main/envir.c:1566 src/main/envir.c:1572 src/main/envir.c:1638
 #: src/main/envir.c:1654 src/main/envir.c:1661 src/main/envir.c:1772
 #: src/main/envir.c:1780 src/main/envir.c:1788 src/main/envir.c:1802
-#: src/main/envir.c:1808 src/main/envir.c:2331 src/main/envir.c:2599
-#: src/main/envir.c:3134 src/main/eval.c:251 src/main/eval.c:1545
+#: src/main/envir.c:1808 src/main/envir.c:2365 src/main/envir.c:2646
+#: src/main/envir.c:3181 src/main/eval.c:251 src/main/eval.c:1545
 #: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1580
 #: src/main/model.c:1588 src/main/optim.c:229 src/main/paste.c:71
 #: src/main/paste.c:163 src/main/paste.c:170 src/main/paste.c:177
@@ -191,8 +191,8 @@ msgstr "タイムスタンプが不正です"
 msgid "'loadRconsole' can only be used in Rgui"
 msgstr "'loadRconsole' はRgui でしか使用することができない"
 
-#: src/gnuwin32/extra.c:595 src/main/datetime.c:558 src/main/datetime.c:624
-#: src/main/datetime.c:832 src/main/dotcode.c:191 src/main/errors.c:747
+#: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
+#: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:747
 #: src/main/errors.c:775 src/main/errors.c:874 src/main/errors.c:899
 #: src/main/errors.c:904 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:181 src/main/optimize.c:188
@@ -401,17 +401,17 @@ msgstr "警告: max-mem-size =%4.1fM は小さすぎるので無視されまし�
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr "警告: max-mem-size =%4.1fM は大きすぎるので、3Gbとされました\n"
 
-#: src/gnuwin32/system.c:913 src/unix/system.c:305
+#: src/gnuwin32/system.c:913 src/unix/system.c:307
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 未知の '%s' オプション\n"
 
-#: src/gnuwin32/system.c:938 src/unix/system.c:309
+#: src/gnuwin32/system.c:938 src/unix/system.c:311
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引数 '%s' は無視されました\n"
 
-#: src/gnuwin32/system.c:956 src/unix/system.c:347
+#: src/gnuwin32/system.c:956 src/unix/system.c:349
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'--save' ,  '--no-save',  '--vanilla' のいずれかを指定してください"
 
@@ -698,7 +698,7 @@ msgstr "'destination' が長すぎます"
 msgid "invalid multibyte format string"
 msgstr "マルチバイト文字列が不正です"
 
-#: src/main/apply.c:39 src/main/envir.c:2420
+#: src/main/apply.c:39 src/main/envir.c:2460
 msgid "arguments must be symbolic"
 msgstr "引数はシンボルでなくてはいけません"
 
@@ -1091,10 +1091,10 @@ msgstr "行列の列数は一致していなければなりません（%d 番目
 #: src/main/builtin.c:261 src/main/coerce.c:1321 src/main/connections.c:2015
 #: src/main/engine.c:2679 src/main/envir.c:870 src/main/envir.c:969
 #: src/main/envir.c:1468 src/main/envir.c:1562 src/main/envir.c:1632
-#: src/main/envir.c:1763 src/main/envir.c:2361 src/main/envir.c:2412
-#: src/main/envir.c:2678 src/main/envir.c:2711 src/main/envir.c:2731
-#: src/main/envir.c:2753 src/main/envir.c:2787 src/main/envir.c:2807
-#: src/main/envir.c:3122 src/main/envir.c:3128 src/main/eval.c:3406
+#: src/main/envir.c:1763 src/main/envir.c:2395 src/main/envir.c:2452
+#: src/main/envir.c:2725 src/main/envir.c:2758 src/main/envir.c:2778
+#: src/main/envir.c:2800 src/main/envir.c:2834 src/main/envir.c:2854
+#: src/main/envir.c:3169 src/main/envir.c:3175 src/main/eval.c:3406
 #: src/main/objects.c:177 src/main/objects.c:183 src/main/saveload.c:2028
 #: src/main/saveload.c:2281 src/main/saveload.c:2330 src/main/serialize.c:2157
 msgid "use of NULL environment is deprecated"
@@ -2204,12 +2204,12 @@ msgstr "複素数に対しては min/max は定義されていません"
 msgid "unknown cumxxx function"
 msgstr "未知の cumxxx 関数です"
 
-#: src/main/datetime.c:488
+#: src/main/datetime.c:490
 msgid "cannot set timezones on this system"
 msgstr "このシステムではタイムゾーンは設定できません"
 
-#: src/main/datetime.c:642 src/main/datetime.c:644 src/main/datetime.c:961
-#: src/main/datetime.c:963
+#: src/main/datetime.c:644 src/main/datetime.c:646 src/main/datetime.c:963
+#: src/main/datetime.c:965
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "空ではない POSIXlt 構造の中に長さゼロの成分があります"
 
@@ -2773,106 +2773,106 @@ msgstr "attach：全ての要素に名前が必要です"
 msgid "detaching \"package:base\" is not allowed"
 msgstr "\"package:base\" は切り離すことができません"
 
-#: src/main/envir.c:2365 src/main/envir.c:2416
+#: src/main/envir.c:2399 src/main/envir.c:2456
 msgid "argument must be an environment"
 msgstr "引数は環境でなければなりません"
 
-#: src/main/envir.c:2518 src/main/random.c:34 src/main/random.c:562
+#: src/main/envir.c:2565 src/main/random.c:34 src/main/random.c:562
 msgid "invalid arguments"
 msgstr "引数(複数)が不正です"
 
-#: src/main/envir.c:2576
+#: src/main/envir.c:2623
 msgid "no enclosing environment"
 msgstr "上位 (enclosing) 環境がありません"
 
-#: src/main/envir.c:2623
+#: src/main/envir.c:2670
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "検索リストに \"%s\" という項目はありません"
 
-#: src/main/envir.c:2640
+#: src/main/envir.c:2687
 msgid "using 'as.environment(NULL)' is deprecated"
 msgstr "'as.environment(NULL)'の利用は廃要素です"
 
-#: src/main/envir.c:2643
+#: src/main/envir.c:2690
 msgid "invalid object for as.environment"
 msgstr "as.environment に対する不正なオブジェクトです"
 
-#: src/main/envir.c:2651
+#: src/main/envir.c:2698
 msgid "locking the base environment is not supported yet"
 msgstr "NULL (base) 環境のロックは，まだサポートされていません"
 
-#: src/main/envir.c:2653 src/main/envir.c:2682 src/main/envir.c:2715
-#: src/main/envir.c:2735 src/main/envir.c:2757 src/main/envir.c:2791
-#: src/main/envir.c:2811
+#: src/main/envir.c:2700 src/main/envir.c:2729 src/main/envir.c:2762
+#: src/main/envir.c:2782 src/main/envir.c:2804 src/main/envir.c:2838
+#: src/main/envir.c:2858
 msgid "not an environment"
 msgstr "環境ではありません"
 
-#: src/main/envir.c:2709 src/main/envir.c:2729 src/main/envir.c:2749
-#: src/main/envir.c:2785 src/main/envir.c:2805 src/main/envir.c:2901
+#: src/main/envir.c:2756 src/main/envir.c:2776 src/main/envir.c:2796
+#: src/main/envir.c:2832 src/main/envir.c:2852 src/main/envir.c:2948
 msgid "not a symbol"
 msgstr "シンボルではありません"
 
-#: src/main/envir.c:2721 src/main/envir.c:2741 src/main/envir.c:2797
-#: src/main/envir.c:2817
+#: src/main/envir.c:2768 src/main/envir.c:2788 src/main/envir.c:2844
+#: src/main/envir.c:2864
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "\"%s\" にバインドされているものがありません。"
 
-#: src/main/envir.c:2751
+#: src/main/envir.c:2798
 msgid "not a function"
 msgstr "関数でありません"
 
-#: src/main/envir.c:2760 src/main/envir.c:2774
+#: src/main/envir.c:2807 src/main/envir.c:2821
 msgid "symbol already has a regular binding"
 msgstr "シンボルは既に regular binding を持っています"
 
-#: src/main/envir.c:2862
+#: src/main/envir.c:2909
 msgid "unknown op"
 msgstr "未知の演算子です"
 
-#: src/main/envir.c:2903
+#: src/main/envir.c:2950
 msgid "cannot unbind a locked binding"
 msgstr "ロックされたバインディングを切り離せません"
 
-#: src/main/envir.c:2905
+#: src/main/envir.c:2952
 msgid "cannot unbind an active binding"
 msgstr "現在使用中のバインディングを切り離すことはできません"
 
-#: src/main/envir.c:2965
+#: src/main/envir.c:3012
 #, c-format
 msgid "using .GlobalEnv instead of '%s'"
 msgstr "'%s' の代わりに .GlobalEnv を使います"
 
-#: src/main/envir.c:3032
+#: src/main/envir.c:3079
 msgid "namespaces not available; using .GlobalEnv"
 msgstr "ネームスペースは使えません。.GlobalEnv を使います"
 
-#: src/main/envir.c:3054
+#: src/main/envir.c:3101
 msgid "bad name space name"
 msgstr "不正なネームスペース名です"
 
-#: src/main/envir.c:3066
+#: src/main/envir.c:3113
 msgid "name space already registered"
 msgstr "ネームスペースはすでに登録されています"
 
-#: src/main/envir.c:3078
+#: src/main/envir.c:3125
 msgid "name space not registered"
 msgstr "ネームスペースはまだ登録されていません"
 
-#: src/main/envir.c:3126
+#: src/main/envir.c:3173
 msgid "bad import environment argument"
 msgstr "インポートしようとしている環境引数が不正です"
 
-#: src/main/envir.c:3132
+#: src/main/envir.c:3179
 msgid "bad export environment argument"
 msgstr "エクスポートしようとしている環境引数が不正です"
 
-#: src/main/envir.c:3136
+#: src/main/envir.c:3183
 msgid "length of import and export names must match"
 msgstr "インポートとエクスポート名の長さは一致しなければなりません"
 
-#: src/main/envir.c:3159
+#: src/main/envir.c:3206
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "エクスポートされたシンボル \"%s\" が値を持っていません"
@@ -7064,22 +7064,22 @@ msgstr "このプラットフォームでは 'intern=TRUE' は実装されてい
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() はこのシステムでは実装されていません"
 
-#: src/unix/system.c:242
+#: src/unix/system.c:244
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "警告: --gui または -g で，値が指定されていないので無視されました"
 
-#: src/unix/system.c:264
+#: src/unix/system.c:266
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "警告: \"%s\" は未知の gui です。X11 を使います\n"
 
-#: src/unix/system.c:267
+#: src/unix/system.c:269
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "警告: \"%s\" は未知の gui です。何も使いません\n"
 
-#: src/unix/system.c:385
+#: src/unix/system.c:387
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: ファイルリストの最初のみを編集します"
 
