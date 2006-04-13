@@ -485,7 +485,7 @@ update-RGui: Makefile remove-potcdate.sed
 	    lang=`echo $${tr} | sed -e 's/^RGui-//' -e 's/.po$$//'`; \
 	    echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
 	    (cd $(srcdir) && $(MSGMERGE_UPDATE) $${tr} RGui.pot); \
-	    (cd $(srcdir) && $(MSGFMT) -c --statistics -o $${pkg}.gmo $${tr}) ; \
+	    (cd $(srcdir) && $(MSGFMT) -c --statistics -o $${tr}.gmo $${tr}) ; \
 	  done; \
 	fi
 
