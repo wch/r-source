@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-13 14:29+0100\n"
+"POT-Creation-Date: 2006-04-13 13:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -127,7 +127,7 @@ msgstr ""
 #: src/main/random.c:469 src/main/random.c:471 src/main/random.c:473
 #: src/main/saveload.c:2032 src/main/saveload.c:2284 src/main/saveload.c:2333
 #: src/main/sysutils.c:396 src/main/sysutils.c:398 src/main/sysutils.c:400
-#: src/main/unique.c:593 src/main/util.c:520 src/main/util.c:523
+#: src/main/unique.c:593 src/main/util.c:665 src/main/util.c:668
 #: src/modules/internet/internet.c:252 src/modules/internet/internet.c:258
 #: src/modules/internet/internet.c:264 src/modules/internet/internet.c:267
 #: src/modules/internet/internet.c:271 src/unix/sys-std.c:921
@@ -207,8 +207,8 @@ msgstr ""
 #: src/main/scan.c:1813 src/main/scan.c:1815 src/main/scan.c:1816
 #: src/main/scan.c:1817 src/main/scan.c:1818 src/main/scan.c:1819
 #: src/main/scan.c:1820 src/main/sort.c:760 src/main/sort.c:860
-#: src/main/sysutils.c:147 src/main/util.c:711 src/main/util.c:716
-#: src/main/util.c:724 src/main/util.c:727 src/modules/X11/devX11.c:2464
+#: src/main/sysutils.c:147 src/main/util.c:856 src/main/util.c:861
+#: src/main/util.c:869 src/main/util.c:872 src/modules/X11/devX11.c:2464
 #: src/modules/X11/devX11.c:2491 src/modules/X11/devX11.c:2496
 #: src/modules/X11/devX11.c:2501 src/unix/sys-std.c:1016
 #, c-format
@@ -630,46 +630,46 @@ msgstr ""
 msgid "could not allocate space for 'name'"
 msgstr ""
 
-#: src/main/Rdynload.c:856 src/main/Rdynload.c:872 src/main/util.c:609
+#: src/main/Rdynload.c:850 src/main/Rdynload.c:866 src/main/util.c:754
 msgid "character argument expected"
 msgstr ""
 
-#: src/main/Rdynload.c:861 src/main/Rdynload.c:895
+#: src/main/Rdynload.c:855 src/main/Rdynload.c:889
 #, c-format
 msgid ""
 "unable to load shared library '%s':\n"
 "  %s"
 msgstr ""
 
-#: src/main/Rdynload.c:875
+#: src/main/Rdynload.c:869
 #, c-format
 msgid "dynamic/shared library '%s' was not loaded"
 msgstr ""
 
-#: src/main/Rdynload.c:939
+#: src/main/Rdynload.c:933
 #, c-format
 msgid "cannot allocate memory for registered native symbol (%d bytes)"
 msgstr ""
 
-#: src/main/Rdynload.c:1061
+#: src/main/Rdynload.c:1055
 msgid "must pass package name or DllInfo reference"
 msgstr ""
 
-#: src/main/Rdynload.c:1147 src/main/dotcode.c:127
+#: src/main/Rdynload.c:1141 src/main/dotcode.c:127
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr ""
 
-#: src/main/Rdynload.c:1230
+#: src/main/Rdynload.c:1224
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
 msgstr ""
 
-#: src/main/Rdynload.c:1235
+#: src/main/Rdynload.c:1229
 msgid "NULL value passed for DllInfo"
 msgstr ""
 
-#: src/main/Rdynload.c:1273 src/main/Rdynload.c:1279 src/main/Rdynload.c:1286
-#: src/main/Rdynload.c:1292 src/main/Rdynload.c:1298
+#: src/main/Rdynload.c:1267 src/main/Rdynload.c:1273 src/main/Rdynload.c:1280
+#: src/main/Rdynload.c:1286 src/main/Rdynload.c:1292
 msgid "no dyn.load support in this R version"
 msgstr ""
 
@@ -878,155 +878,151 @@ msgid "'x' must be numeric"
 msgstr ""
 
 #: src/main/attrib.c:89
-#, c-format
-msgid "getAttrib: invalid type (%s) for TAG"
+msgid "getAttrib: invalid type for TAG"
 msgstr ""
 
-#: src/main/attrib.c:130 src/main/attrib.c:219
+#: src/main/attrib.c:129 src/main/attrib.c:218
 msgid "attempt to set an attribute on NULL"
 msgstr ""
 
-#: src/main/attrib.c:265
-#, c-format
-msgid "invalid type (%s) for 'names': must be vector"
+#: src/main/attrib.c:264
+msgid "invalid type for 'names': must be vector"
 msgstr ""
 
-#: src/main/attrib.c:268
+#: src/main/attrib.c:266
 #, c-format
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr ""
 
-#: src/main/attrib.c:270
+#: src/main/attrib.c:268
 msgid "names() applied to a non-vector"
 msgstr ""
 
-#: src/main/attrib.c:278
+#: src/main/attrib.c:276
 msgid "invalid time series parameters specified"
 msgstr ""
 
-#: src/main/attrib.c:287
+#: src/main/attrib.c:285
 msgid "'tsp' attribute must be numeric of length three"
 msgstr ""
 
-#: src/main/attrib.c:304
+#: src/main/attrib.c:302
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr ""
 
-#: src/main/attrib.c:332
+#: src/main/attrib.c:330
 msgid "attempt to set invalid 'comment' attribute"
 msgstr ""
 
-#: src/main/attrib.c:368
+#: src/main/attrib.c:366
 msgid "attempt to set invalid 'class' attribute"
 msgstr ""
 
-#: src/main/attrib.c:570
+#: src/main/attrib.c:568
 msgid "incompatible 'names' argument"
 msgstr ""
 
-#: src/main/attrib.c:622
-#, c-format
-msgid "invalid type (%s) to set 'names' attribute"
+#: src/main/attrib.c:620
+msgid "invalid type to set 'names' attribute"
 msgstr ""
 
-#: src/main/attrib.c:689
+#: src/main/attrib.c:686
 msgid "'dimnames' applied to non-array"
 msgstr ""
 
-#: src/main/attrib.c:693
+#: src/main/attrib.c:690
 msgid "'dimnames' must be a list"
 msgstr ""
 
-#: src/main/attrib.c:696
+#: src/main/attrib.c:693
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr ""
 
-#: src/main/attrib.c:713
-#, c-format
-msgid "invalid type (%s) for 'dimnames' (must be a vector)"
+#: src/main/attrib.c:710
+msgid "invalid type for 'dimnames' (must be a vector)"
 msgstr ""
 
-#: src/main/attrib.c:716
+#: src/main/attrib.c:712
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr ""
 
-#: src/main/attrib.c:776
+#: src/main/attrib.c:772
 msgid "dim<- : invalid first argument"
 msgstr ""
 
-#: src/main/attrib.c:779
+#: src/main/attrib.c:775
 msgid "dim<- : invalid second argument"
 msgstr ""
 
-#: src/main/attrib.c:787
+#: src/main/attrib.c:783
 msgid "dim: length-0 dimension vector is invalid"
 msgstr ""
 
-#: src/main/attrib.c:792
+#: src/main/attrib.c:788
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 
-#: src/main/attrib.c:869
+#: src/main/attrib.c:865
 msgid "attributes must be in a list"
 msgstr ""
 
-#: src/main/attrib.c:893
+#: src/main/attrib.c:889
 msgid "attributes must be named"
 msgstr ""
 
-#: src/main/attrib.c:897
+#: src/main/attrib.c:893
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr ""
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:936
 msgid "attribute 'name' must be of mode character"
 msgstr ""
 
-#: src/main/attrib.c:942
+#: src/main/attrib.c:938
 msgid "exactly one attribute 'name' must be given"
 msgstr ""
 
-#: src/main/attrib.c:1010
+#: src/main/attrib.c:1006
 msgid "'name' must be non-null character"
 msgstr ""
 
-#: src/main/attrib.c:1116 src/main/attrib.c:1155 src/main/attrib.c:1244
+#: src/main/attrib.c:1112 src/main/attrib.c:1151 src/main/attrib.c:1240
 msgid "invalid type or length for slot name"
 msgstr ""
 
-#: src/main/attrib.c:1130
+#: src/main/attrib.c:1126
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1138
+#: src/main/attrib.c:1134
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1239
+#: src/main/attrib.c:1235
 msgid "formal classes cannot be used without the methods package"
 msgstr ""
 
-#: src/main/attrib.c:1250
+#: src/main/attrib.c:1246
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
 
-#: src/main/attrib.c:1259
+#: src/main/attrib.c:1255
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr ""
 
-#: src/main/attrib.c:1278
+#: src/main/attrib.c:1274
 msgid "invalid slot type"
 msgstr ""
 
@@ -1069,7 +1065,7 @@ msgstr ""
 
 #: src/main/builtin.c:41 src/main/builtin.c:64 src/main/builtin.c:73
 #: src/main/builtin.c:199 src/main/builtin.c:222 src/main/builtin.c:252
-#: src/main/builtin.c:261 src/main/coerce.c:1320 src/main/connections.c:2015
+#: src/main/builtin.c:261 src/main/coerce.c:1321 src/main/connections.c:2015
 #: src/main/engine.c:2679 src/main/envir.c:870 src/main/envir.c:969
 #: src/main/envir.c:1468 src/main/envir.c:1562 src/main/envir.c:1632
 #: src/main/envir.c:1763 src/main/envir.c:2395 src/main/envir.c:2452
@@ -1077,8 +1073,8 @@ msgstr ""
 #: src/main/envir.c:2800 src/main/envir.c:2834 src/main/envir.c:2854
 #: src/main/envir.c:3169 src/main/envir.c:3175 src/main/eval.c:3406
 #: src/main/objects.c:177 src/main/objects.c:183 src/main/saveload.c:2028
-#: src/main/saveload.c:2281 src/main/saveload.c:2330 src/main/serialize.c:2154
-msgid "use of NULL environment is defunct"
+#: src/main/saveload.c:2281 src/main/saveload.c:2330 src/main/serialize.c:2157
+msgid "use of NULL environment is deprecated"
 msgstr ""
 
 #: src/main/builtin.c:55 src/main/envir.c:1461 src/main/envir.c:1621
@@ -1125,45 +1121,45 @@ msgstr ""
 msgid "non-positive 'fill' argument will be ignored"
 msgstr ""
 
-#: src/main/builtin.c:427
+#: src/main/builtin.c:433
 #, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
 msgstr ""
 
-#: src/main/builtin.c:541
+#: src/main/builtin.c:547
 msgid "vector: zero-length 'type' argument"
 msgstr ""
 
-#: src/main/builtin.c:560
+#: src/main/builtin.c:566
 #, c-format
 msgid "vector: cannot make a vector of mode \"%s\"."
 msgstr ""
 
-#: src/main/builtin.c:590
+#: src/main/builtin.c:596
 msgid "cannot set length of non-vector"
 msgstr ""
 
-#: src/main/builtin.c:687
+#: src/main/builtin.c:693
 msgid "length<- invalid first argument"
 msgstr ""
 
-#: src/main/builtin.c:689
+#: src/main/builtin.c:695
 msgid "length<- invalid second argument"
 msgstr ""
 
-#: src/main/builtin.c:692
+#: src/main/builtin.c:698
 msgid "length<- missing value for 'length'"
 msgstr ""
 
-#: src/main/builtin.c:718 src/main/coerce.c:2004 src/main/coerce.c:2044
+#: src/main/builtin.c:724 src/main/coerce.c:2005 src/main/coerce.c:2045
 msgid "... used in an incorrect context"
 msgstr ""
 
-#: src/main/builtin.c:723
+#: src/main/builtin.c:729
 msgid "invalid parameter in 'switch()'"
 msgstr ""
 
-#: src/main/builtin.c:734
+#: src/main/builtin.c:740
 msgid "switch: EXPR must return a length 1 vector"
 msgstr ""
 
@@ -1393,86 +1389,86 @@ msgstr ""
 msgid "(list) object cannot be coerced to '%s'"
 msgstr ""
 
-#: src/main/coerce.c:1090
+#: src/main/coerce.c:1091
 msgid "environments cannot be coerced to other types"
 msgstr ""
 
-#: src/main/coerce.c:1100
+#: src/main/coerce.c:1101
 #, c-format
 msgid "cannot coerce type %s to %s vector"
 msgstr ""
 
-#: src/main/coerce.c:1225
+#: src/main/coerce.c:1226
 msgid "cannot coerce to vector"
 msgstr ""
 
-#: src/main/coerce.c:1316
+#: src/main/coerce.c:1317
 msgid "list argument expected"
 msgstr ""
 
-#: src/main/coerce.c:1324 src/main/eval.c:3403 src/main/eval.c:3410
+#: src/main/coerce.c:1325 src/main/eval.c:3403 src/main/eval.c:3410
 msgid "invalid environment"
 msgstr ""
 
-#: src/main/coerce.c:1328
+#: src/main/coerce.c:1329
 msgid "argument must have length at least 1"
 msgstr ""
 
-#: src/main/coerce.c:1353
+#: src/main/coerce.c:1354
 msgid "invalid body for function"
 msgstr ""
 
-#: src/main/coerce.c:1372
+#: src/main/coerce.c:1373
 msgid "invalid length 0 argument"
 msgstr ""
 
-#: src/main/coerce.c:1387
+#: src/main/coerce.c:1388
 msgid "invalid argument list"
 msgstr ""
 
-#: src/main/coerce.c:1531
+#: src/main/coerce.c:1532
 msgid "type \"single\" unimplemented in R"
 msgstr ""
 
-#: src/main/coerce.c:1533
+#: src/main/coerce.c:1534
 msgid "unimplemented predicate"
 msgstr ""
 
-#: src/main/coerce.c:1669 src/main/coerce.c:1767
+#: src/main/coerce.c:1670 src/main/coerce.c:1768
 #, c-format
 msgid "%s() applied to non-(list or vector)"
 msgstr ""
 
-#: src/main/coerce.c:1923 src/main/coerce.c:1925
+#: src/main/coerce.c:1924 src/main/coerce.c:1926
 msgid "first argument must be a character string or a function"
 msgstr ""
 
-#: src/main/coerce.c:1931
+#: src/main/coerce.c:1932
 msgid "'envir' must be an environment"
 msgstr ""
 
-#: src/main/coerce.c:2077
+#: src/main/coerce.c:2078
 msgid "invalid environment specified"
 msgstr ""
 
-#: src/main/coerce.c:2155
+#: src/main/coerce.c:2156
 msgid "invalid replacement object to be a class string"
 msgstr ""
 
-#: src/main/coerce.c:2173
+#: src/main/coerce.c:2174
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
 
-#: src/main/coerce.c:2189
+#: src/main/coerce.c:2190
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
 "length 2 (was %d)"
 msgstr ""
 
-#: src/main/coerce.c:2195
+#: src/main/coerce.c:2196
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
@@ -2078,12 +2074,16 @@ msgstr ""
 msgid "allocation of 'gzcon' connection failed"
 msgstr ""
 
-#: src/main/connections.c:4024 src/main/connections.c:4047
-msgid "R_decompress1 requires a raw vector"
+#: src/main/connections.c:4024
+msgid "R_compress1 requires a scalar string"
 msgstr ""
 
 #: src/main/connections.c:4031
 msgid "internal error in R_compress1"
+msgstr ""
+
+#: src/main/connections.c:4047
+msgid "R_decompress1 requires a scalar string"
 msgstr ""
 
 #: src/main/connections.c:4052
@@ -2216,7 +2216,7 @@ msgid "zero length argument"
 msgstr ""
 
 #: src/main/deparse.c:345 src/main/saveload.c:1932 src/main/saveload.c:2204
-#: src/main/serialize.c:2158
+#: src/main/serialize.c:2161
 msgid "bad environment"
 msgstr ""
 
@@ -2267,159 +2267,154 @@ msgstr ""
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr ""
 
-#: src/main/dotcode.c:193 src/main/dotcode.c:853
+#: src/main/dotcode.c:193 src/main/dotcode.c:841
 msgid "too many arguments in foreign function call"
 msgstr ""
 
-#: src/main/dotcode.c:237
+#: src/main/dotcode.c:227
 #, c-format
-msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
+msgid "%s entry point \"%s%s\" not in DLL for package \"%s\""
 msgstr ""
 
-#: src/main/dotcode.c:241
+#: src/main/dotcode.c:236
 #, c-format
-msgid "%s symbol name \"%s\" not in load table"
+msgid "%s entry point \"%s%s\" not in load table"
 msgstr ""
 
-#: src/main/dotcode.c:303
+#: src/main/dotcode.c:304
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr ""
 
-#: src/main/dotcode.c:328
+#: src/main/dotcode.c:329
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:342
+#: src/main/dotcode.c:343
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:364
+#: src/main/dotcode.c:365
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:376
+#: src/main/dotcode.c:377
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr ""
 
-#: src/main/dotcode.c:380
+#: src/main/dotcode.c:381
 msgid "only first string in char vector used in .Fortran"
 msgstr ""
 
-#: src/main/dotcode.c:393 src/main/dotcode.c:517
+#: src/main/dotcode.c:394 src/main/dotcode.c:518
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:407
+#: src/main/dotcode.c:408
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:414 src/main/dotcode.c:539
+#: src/main/dotcode.c:415 src/main/dotcode.c:540
 msgid "re-encoding is not supported on this system"
 msgstr ""
 
-#: src/main/dotcode.c:437 src/main/dotcode.c:449
+#: src/main/dotcode.c:438 src/main/dotcode.c:450
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:531
+#: src/main/dotcode.c:532
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:608
+#: src/main/dotcode.c:609
 msgid "NAOK used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:612
+#: src/main/dotcode.c:613
 msgid "DUP used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:618
+#: src/main/dotcode.c:619
 msgid "DLL name is too long"
 msgstr ""
 
-#: src/main/dotcode.c:621 src/main/dotcode.c:679 src/main/dotcode.c:685
+#: src/main/dotcode.c:622 src/main/dotcode.c:680 src/main/dotcode.c:686
 msgid "PACKAGE used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:658
+#: src/main/dotcode.c:659
 msgid "PACKAGE argument must be a single character string"
 msgstr ""
 
-#: src/main/dotcode.c:664
+#: src/main/dotcode.c:665
 msgid "PACKAGE argument is too long"
 msgstr ""
 
-#: src/main/dotcode.c:708 src/main/dotcode.c:716
+#: src/main/dotcode.c:709 src/main/dotcode.c:717
 msgid "ENCODING used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:710 src/main/dotcode.c:718
+#: src/main/dotcode.c:711 src/main/dotcode.c:719
 msgid "ENCODING argument must be a single character string"
 msgstr ""
 
-#: src/main/dotcode.c:737
-#, c-format
-msgid "'%s' is deprecated"
-msgstr ""
-
-#: src/main/dotcode.c:769
+#: src/main/dotcode.c:757
 msgid "no arguments supplied"
 msgstr ""
 
-#: src/main/dotcode.c:770
+#: src/main/dotcode.c:758
 msgid "too many arguments"
 msgstr ""
 
-#: src/main/dotcode.c:824 src/main/dotcode.c:859 src/main/dotcode.c:1681
+#: src/main/dotcode.c:812 src/main/dotcode.c:847 src/main/dotcode.c:1669
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr ""
 
-#: src/main/dotcode.c:1516 src/main/dotcode.c:2311
+#: src/main/dotcode.c:1504 src/main/dotcode.c:2299
 msgid "too many arguments, sorry"
 msgstr ""
 
-#: src/main/dotcode.c:1540 src/main/dotcode.c:1562
+#: src/main/dotcode.c:1528 src/main/dotcode.c:1550
 msgid "Invalid graphics state"
 msgstr ""
 
-#: src/main/dotcode.c:1635
+#: src/main/dotcode.c:1623
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr ""
 
-#: src/main/dotcode.c:1707
+#: src/main/dotcode.c:1695
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr ""
 
-#: src/main/dotcode.c:2400
+#: src/main/dotcode.c:2388
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr ""
 
-#: src/main/dotcode.c:2412
+#: src/main/dotcode.c:2400
 msgid "invalid function in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2414
+#: src/main/dotcode.c:2402
 msgid "invalid argument count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2416
+#: src/main/dotcode.c:2404
 msgid "invalid return value count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2461
+#: src/main/dotcode.c:2449
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr ""
@@ -2753,7 +2748,7 @@ msgid "no item called \"%s\" on the search list"
 msgstr ""
 
 #: src/main/envir.c:2687
-msgid "using 'as.environment(NULL)' is defunct"
+msgid "using 'as.environment(NULL)' is deprecated"
 msgstr ""
 
 #: src/main/envir.c:2690
@@ -3669,83 +3664,79 @@ msgstr ""
 msgid "not a weak reference"
 msgstr ""
 
-#: src/main/memory.c:1134
+#: src/main/memory.c:1132
 msgid "first argument must be environment or external pointer"
 msgstr ""
 
-#: src/main/memory.c:1136
+#: src/main/memory.c:1134
 msgid "second argument must be a function"
 msgstr ""
 
-#: src/main/memory.c:1140
-msgid "third argument must be 'TRUE' or 'FALSE'"
-msgstr ""
-
-#: src/main/memory.c:1479
+#: src/main/memory.c:1473
 msgid "vector memory exhausted (limit reached?)"
 msgstr ""
 
-#: src/main/memory.c:1485
+#: src/main/memory.c:1479
 msgid "cons memory exhausted (limit reached?)"
 msgstr ""
 
-#: src/main/memory.c:1607 src/main/memory.c:1611
+#: src/main/memory.c:1601 src/main/memory.c:1605
 #, c-format
 msgid "cannot allocate memory block of size %.0f"
 msgstr ""
 
-#: src/main/memory.c:1819
+#: src/main/memory.c:1813
 msgid "negative length vectors are not allowed"
 msgstr ""
 
-#: src/main/memory.c:1839 src/main/memory.c:1850 src/main/memory.c:1861
-#: src/main/memory.c:1874
+#: src/main/memory.c:1833 src/main/memory.c:1844 src/main/memory.c:1855
+#: src/main/memory.c:1868
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr ""
 
-#: src/main/memory.c:1887
+#: src/main/memory.c:1881
 #, c-format
 msgid "invalid type/length (%d/%d) in vector allocation"
 msgstr ""
 
-#: src/main/memory.c:1949
+#: src/main/memory.c:1943
 #, c-format
 msgid "cannot allocate vector of size %lu Kb"
 msgstr ""
 
-#: src/main/memory.c:2051
+#: src/main/memory.c:2045
 msgid "gc.time() is not implemented on this system"
 msgstr ""
 
-#: src/main/memory.c:2215
+#: src/main/memory.c:2209
 msgid "protect(): protection stack overflow"
 msgstr ""
 
-#: src/main/memory.c:2231
+#: src/main/memory.c:2225
 msgid "unprotect(): stack imbalance"
 msgstr ""
 
-#: src/main/memory.c:2245
+#: src/main/memory.c:2239
 msgid "unprotect_ptr: pointer not found"
 msgstr ""
 
-#: src/main/memory.c:2288
+#: src/main/memory.c:2282
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr ""
 
-#: src/main/memory.c:2297
+#: src/main/memory.c:2291
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr ""
 
-#: src/main/memory.c:2416
+#: src/main/memory.c:2410
 msgid "not safe to return vector pointer"
 msgstr ""
 
-#: src/main/memory.c:2444 src/main/memory.c:2453 src/main/memory.c:2464
-#: src/main/memory.c:2477 src/main/memory.c:2493 src/main/memory.c:2510
+#: src/main/memory.c:2438 src/main/memory.c:2447 src/main/memory.c:2458
+#: src/main/memory.c:2471 src/main/memory.c:2487 src/main/memory.c:2504
 msgid "bad value"
 msgstr ""
 
@@ -5293,7 +5284,7 @@ msgstr ""
 msgid "unable to open file"
 msgstr ""
 
-#: src/main/saveload.c:1952 src/main/saveload.c:2239 src/main/serialize.c:2172
+#: src/main/saveload.c:1952 src/main/saveload.c:2239 src/main/serialize.c:2175
 #, c-format
 msgid "object '%s' not found"
 msgstr ""
@@ -5585,47 +5576,47 @@ msgstr ""
 msgid "cannot allocate buffer"
 msgstr ""
 
-#: src/main/serialize.c:2024 src/main/serialize.c:2087
+#: src/main/serialize.c:2026 src/main/serialize.c:2089
 msgid "not a proper file name"
 msgstr ""
 
-#: src/main/serialize.c:2026
-msgid "not a proper raw vector"
+#: src/main/serialize.c:2028
+msgid "not a proper string"
 msgstr ""
 
-#: src/main/serialize.c:2030 src/main/serialize.c:2033
+#: src/main/serialize.c:2032 src/main/serialize.c:2035
 msgid "file open failed"
 msgstr ""
 
-#: src/main/serialize.c:2042
+#: src/main/serialize.c:2044
 msgid "write failed"
 msgstr ""
 
-#: src/main/serialize.c:2043
+#: src/main/serialize.c:2045
 msgid "could not determine file position"
 msgstr ""
 
-#: src/main/serialize.c:2089
+#: src/main/serialize.c:2091
 msgid "bad offset/length argument"
 msgstr ""
 
-#: src/main/serialize.c:2111 src/main/serialize.c:2130
+#: src/main/serialize.c:2114 src/main/serialize.c:2133
 #, c-format
 msgid "open failed on %s"
 msgstr ""
 
-#: src/main/serialize.c:2114 src/main/serialize.c:2122
-#: src/main/serialize.c:2133
+#: src/main/serialize.c:2117 src/main/serialize.c:2125
+#: src/main/serialize.c:2136
 #, c-format
 msgid "seek failed on %s"
 msgstr ""
 
-#: src/main/serialize.c:2126 src/main/serialize.c:2137
+#: src/main/serialize.c:2129 src/main/serialize.c:2140
 #, c-format
 msgid "read failed on %s"
 msgstr ""
 
-#: src/main/serialize.c:2160
+#: src/main/serialize.c:2163
 msgid "bad variable names"
 msgstr ""
 
@@ -6148,9 +6139,14 @@ msgstr ""
 msgid "vector size specified is too large"
 msgstr ""
 
-#: src/main/util.c:237 src/main/util.c:249 src/main/util.c:263
+#: src/main/util.c:237 src/main/util.c:249
 #, c-format
-msgid "type %d is unimplemented in '%s'"
+msgid "type %d is unimplemented in type2str"
+msgstr ""
+
+#: src/main/util.c:263
+#, c-format
+msgid "type %d is unimplemented in type2symbol"
 msgstr ""
 
 #: src/main/util.c:273
@@ -6163,64 +6159,64 @@ msgstr ""
 msgid "unimplemented type (%d) in '%s'\n"
 msgstr ""
 
-#: src/main/util.c:406
+#: src/main/util.c:551
 msgid "invalid tag in name extraction"
 msgstr ""
 
-#: src/main/util.c:427
+#: src/main/util.c:572
 #, c-format
 msgid "\"nthcdr\" list shorter than %d"
 msgstr ""
 
-#: src/main/util.c:432
+#: src/main/util.c:577
 msgid "\"nthcdr\" needs a list to CDR down"
 msgstr ""
 
-#: src/main/util.c:525
+#: src/main/util.c:670
 msgid "'all.x' must be TRUE or FALSE"
 msgstr ""
 
-#: src/main/util.c:527
+#: src/main/util.c:672
 msgid "'all.y' must be TRUE or FALSE"
 msgstr ""
 
-#: src/main/util.c:614
+#: src/main/util.c:759
 msgid "cannot change working directory"
 msgstr ""
 
-#: src/main/util.c:628 src/main/util.c:662 src/main/util.c:706
+#: src/main/util.c:773 src/main/util.c:807 src/main/util.c:851
 msgid "a character vector argument expected"
 msgstr ""
 
-#: src/main/util.c:633 src/main/util.c:667
+#: src/main/util.c:778 src/main/util.c:812
 msgid "path too long"
 msgstr ""
 
-#: src/main/util.c:721
+#: src/main/util.c:866
 msgid "only the first character of 'quote' will be used"
 msgstr ""
 
-#: src/main/util.c:781
+#: src/main/util.c:926
 msgid "invalid multibyte string"
 msgstr ""
 
-#: src/main/util.c:798
+#: src/main/util.c:943
 msgid "invalid input in mbcsToLatin1"
 msgstr ""
 
-#: src/main/util.c:804
+#: src/main/util.c:949
 msgid "allocation failure in 'mbcsToLatin1'"
 msgstr ""
 
-#: src/main/util.c:807
+#: src/main/util.c:952
 msgid "invalid input in 'mbcsToLatin1'"
 msgstr ""
 
-#: src/main/util.c:906
+#: src/main/util.c:1051
 msgid "error message truncated to 255 chars"
 msgstr ""
 
-#: src/main/util.c:919
+#: src/main/util.c:1064
 msgid "warning message truncated to 255 chars"
 msgstr ""
 
@@ -6431,7 +6427,7 @@ msgstr ""
 msgid "allocation of socket connection failed"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:41 src/modules/lapack/Lapack.c:446
+#: src/modules/lapack/Lapack.c:41 src/modules/lapack/Lapack.c:470
 msgid "'jobu' and 'jobv' must be character strings"
 msgstr ""
 
@@ -6439,137 +6435,138 @@ msgstr ""
 msgid "'method' must be a character string"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:64 src/modules/lapack/Lapack.c:73
-#: src/modules/lapack/Lapack.c:125 src/modules/lapack/Lapack.c:136
-#: src/modules/lapack/Lapack.c:211 src/modules/lapack/Lapack.c:217
-#: src/modules/lapack/Lapack.c:325 src/modules/lapack/Lapack.c:331
-#: src/modules/lapack/Lapack.c:376 src/modules/lapack/Lapack.c:383
-#: src/modules/lapack/Lapack.c:387 src/modules/lapack/Lapack.c:421
-#: src/modules/lapack/Lapack.c:428 src/modules/lapack/Lapack.c:459
-#: src/modules/lapack/Lapack.c:468 src/modules/lapack/Lapack.c:514
-#: src/modules/lapack/Lapack.c:520 src/modules/lapack/Lapack.c:575
-#: src/modules/lapack/Lapack.c:581 src/modules/lapack/Lapack.c:741
-#: src/modules/lapack/Lapack.c:747 src/modules/lapack/Lapack.c:787
-#: src/modules/lapack/Lapack.c:794 src/modules/lapack/Lapack.c:798
-#: src/modules/lapack/Lapack.c:827 src/modules/lapack/Lapack.c:834
-#: src/modules/lapack/Lapack.c:858
+#: src/modules/lapack/Lapack.c:64 src/modules/lapack/Lapack.c:74
+#: src/modules/lapack/Lapack.c:88 src/modules/lapack/Lapack.c:97
+#: src/modules/lapack/Lapack.c:149 src/modules/lapack/Lapack.c:160
+#: src/modules/lapack/Lapack.c:235 src/modules/lapack/Lapack.c:241
+#: src/modules/lapack/Lapack.c:349 src/modules/lapack/Lapack.c:355
+#: src/modules/lapack/Lapack.c:400 src/modules/lapack/Lapack.c:407
+#: src/modules/lapack/Lapack.c:411 src/modules/lapack/Lapack.c:445
+#: src/modules/lapack/Lapack.c:452 src/modules/lapack/Lapack.c:483
+#: src/modules/lapack/Lapack.c:492 src/modules/lapack/Lapack.c:538
+#: src/modules/lapack/Lapack.c:544 src/modules/lapack/Lapack.c:599
+#: src/modules/lapack/Lapack.c:605 src/modules/lapack/Lapack.c:765
+#: src/modules/lapack/Lapack.c:771 src/modules/lapack/Lapack.c:811
+#: src/modules/lapack/Lapack.c:818 src/modules/lapack/Lapack.c:822
+#: src/modules/lapack/Lapack.c:851 src/modules/lapack/Lapack.c:858
+#: src/modules/lapack/Lapack.c:882
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:107 src/modules/lapack/Lapack.c:190
-#: src/modules/lapack/Lapack.c:501 src/modules/lapack/Lapack.c:554
+#: src/modules/lapack/Lapack.c:131 src/modules/lapack/Lapack.c:214
+#: src/modules/lapack/Lapack.c:525 src/modules/lapack/Lapack.c:578
 msgid "'x' must be a square numeric matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:109 src/modules/lapack/Lapack.c:196
-#: src/modules/lapack/Lapack.c:503 src/modules/lapack/Lapack.c:560
+#: src/modules/lapack/Lapack.c:133 src/modules/lapack/Lapack.c:220
+#: src/modules/lapack/Lapack.c:527 src/modules/lapack/Lapack.c:584
 msgid "invalid 'only.values'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:268 src/modules/lapack/Lapack.c:311
+#: src/modules/lapack/Lapack.c:292 src/modules/lapack/Lapack.c:335
 msgid "'a' must be a complex matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:270 src/modules/lapack/Lapack.c:362
-#: src/modules/lapack/Lapack.c:405
+#: src/modules/lapack/Lapack.c:294 src/modules/lapack/Lapack.c:386
+#: src/modules/lapack/Lapack.c:429
 msgid "'b' must be a complex matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:275 src/modules/lapack/Lapack.c:692
+#: src/modules/lapack/Lapack.c:299 src/modules/lapack/Lapack.c:716
 msgid "'a' is 0-diml"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:277 src/modules/lapack/Lapack.c:694
+#: src/modules/lapack/Lapack.c:301 src/modules/lapack/Lapack.c:718
 msgid "no right-hand side in 'b'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:279 src/modules/lapack/Lapack.c:696
+#: src/modules/lapack/Lapack.c:303 src/modules/lapack/Lapack.c:720
 #, c-format
 msgid "'a' (%d x %d) must be square"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:281 src/modules/lapack/Lapack.c:698
+#: src/modules/lapack/Lapack.c:305 src/modules/lapack/Lapack.c:722
 #, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:290 src/modules/lapack/Lapack.c:628
-#: src/modules/lapack/Lapack.c:662 src/modules/lapack/Lapack.c:707
+#: src/modules/lapack/Lapack.c:314 src/modules/lapack/Lapack.c:652
+#: src/modules/lapack/Lapack.c:686 src/modules/lapack/Lapack.c:731
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:297 src/modules/lapack/Lapack.c:348
-#: src/modules/lapack/Lapack.c:391 src/modules/lapack/Lapack.c:432
-#: src/modules/lapack/Lapack.c:481 src/modules/lapack/Lapack.c:537
-#: src/modules/lapack/Lapack.c:598
+#: src/modules/lapack/Lapack.c:321 src/modules/lapack/Lapack.c:372
+#: src/modules/lapack/Lapack.c:415 src/modules/lapack/Lapack.c:456
+#: src/modules/lapack/Lapack.c:505 src/modules/lapack/Lapack.c:561
+#: src/modules/lapack/Lapack.c:622
 msgid "Fortran complex functions are not available on this platform"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:369 src/modules/lapack/Lapack.c:414
-#: src/modules/lapack/Lapack.c:780 src/modules/lapack/Lapack.c:820
+#: src/modules/lapack/Lapack.c:393 src/modules/lapack/Lapack.c:438
+#: src/modules/lapack/Lapack.c:804 src/modules/lapack/Lapack.c:844
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:407 src/modules/lapack/Lapack.c:813
+#: src/modules/lapack/Lapack.c:431 src/modules/lapack/Lapack.c:837
 msgid "invalid 'trans' parameter"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:615 src/modules/lapack/Lapack.c:853
+#: src/modules/lapack/Lapack.c:639 src/modules/lapack/Lapack.c:877
 msgid "'a' must be a square matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:616
+#: src/modules/lapack/Lapack.c:640
 msgid "'a' must have dims > 0"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:626
+#: src/modules/lapack/Lapack.c:650
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:634 src/modules/lapack/Lapack.c:672
-#: src/modules/lapack/Lapack.c:685 src/modules/lapack/Lapack.c:728
-#: src/modules/lapack/Lapack.c:846
+#: src/modules/lapack/Lapack.c:658 src/modules/lapack/Lapack.c:696
+#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:752
+#: src/modules/lapack/Lapack.c:870
 msgid "'a' must be a numeric matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:642
+#: src/modules/lapack/Lapack.c:666
 msgid "'size' argument must be a positive integer"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:651
+#: src/modules/lapack/Lapack.c:675
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:652
+#: src/modules/lapack/Lapack.c:676
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:661
+#: src/modules/lapack/Lapack.c:685
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:687 src/modules/lapack/Lapack.c:773
-#: src/modules/lapack/Lapack.c:811
+#: src/modules/lapack/Lapack.c:711 src/modules/lapack/Lapack.c:797
+#: src/modules/lapack/Lapack.c:835
 msgid "'b' must be a numeric matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:710
+#: src/modules/lapack/Lapack.c:734
 msgid "Lapack routine dgesv: system is exactly singular"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:715
+#: src/modules/lapack/Lapack.c:739
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:848
+#: src/modules/lapack/Lapack.c:872
 msgid "argument 'logarithm' must be logical"
 msgstr ""
 
