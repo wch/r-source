@@ -272,7 +272,9 @@ static double guess_offset (struct tm *tm)
     tm->tm_isdst = -1;
     mktime00(tm);  /* to get wday valid */
     wday = tm->tm_wday;
-    for(i = 70; i < 78; i++) { /* These cover all the possibilities */
+    /* We cannot use 1970 because of the Windows bug with 1970-01-01 east
+       of GMT. */
+    for(i = 71; i < 82; i++) { /* These cover all the possibilities */
 	tm->tm_year = i;
 	mktime(tm);
 	if(tm->tm_wday == wday) break;
