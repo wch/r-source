@@ -636,7 +636,8 @@ and Spanish (Spain).
 
 The default behaviour of R is to try to run in the language you run
 Windows in.  Apparently some users want Windows in their native language,
-but not R.  To do so, set @code{LANGUAGE=en} as discussed in Q2.2 and Q2.15.
+but not R.  To do so, set @code{LANGUAGE=en} as discussed in Q2.2 and
+Q2.15, or in the @file{Rconsole} file.
 
 @node I want to run R in Chinese/Japanese/Korean, I selected English for installation but R runs in Chinese, I want R in English!, Languages and Internationalization
 @section I want to run R in Chinese/Japanese/Korean.
@@ -684,7 +685,7 @@ The language R uses for menus and messages is determined by the
 @emph{locale}: please read the appropriate manual (the @emph{R
 Installation and Administration Manual}) for the details.  You can
 ensure that R uses English messages by appending @code{LANGUAGE=en} to
-the shortcut you use to start R.
+the shortcut you use to start R, or setting it in the @file{Rconsole} file.
 
 @node I would like to be able to use Japanese fonts, I don't see characters with accents at the R console, I selected English for installation but R runs in Chinese, Languages and Internationalization
 @section I would like to be able to use Japanese fonts.

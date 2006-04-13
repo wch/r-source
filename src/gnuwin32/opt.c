@@ -113,6 +113,8 @@ int optread(char *opt[],char sep)
     opt[1] = rmspace(p + 1);
     if (strlen(opt[0]) && strlen(opt[1]))
 	return 2;
+    else if (strlen(opt[0]))
+	return 3;
     else
 	return 1;
 }

@@ -37,6 +37,7 @@ struct structGUI
 	cbb, cbl, grx, gry;
     rgb bg, fg, user, hlt;
     rect MDIsize;
+    char language[20];
 };
 typedef struct structGUI *Gui;
 
