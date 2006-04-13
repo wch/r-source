@@ -1141,6 +1141,10 @@ guess_category_value (int category, const char *categoryname)
   if(strcmp(locale, "chinese") == 0) locale = "zh_TW";
   if(strcmp(locale, "cht") == 0) locale = "zh_TW";
   if(strcmp(locale, "ptb") == 0) locale = "pt_BR";
+  if(strcmp(locale, "esp") == 0) locale = "es_ES";
+  if(strcmp(locale, "esm") == 0) locale = "es_MX";
+  if(strcmp(locale, "esn") == 0) locale = "es_ES";
+  if(strncasecmp(locale, "spanish", 7) == 0) locale = "es_ES";
 #endif
 #endif
 

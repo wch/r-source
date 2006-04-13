@@ -1655,7 +1655,11 @@ to a generic German one (@code{de}) for an Austrian user.  However, if a
 specific translation catalogue exists but does not contain a
 translation, the less specific catalogues are consulted.  For example,
 @R{} has catalogues for @code{en_GB} that translate the Americanisms
-(e.g., @code{gray}) in the standard messages into English.
+(e.g., @code{gray}) in the standard messages into English.  Two other
+examples: there are catalogues for @code{es}, which is Spanish as written in
+Spain and these will by default also be used in Spanish-speaking Latin
+American countries, and also for @code{pt_BR}, which are used for
+Brazlian locales but not for locales specifying Portugal.
 
 Translations in the right language but the wrong charset can generally
 be made use of by on-the-fly re-encoding.  The @env{LANGUAGE} variable
