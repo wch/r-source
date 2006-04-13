@@ -4,6 +4,10 @@ testPlatformEquivalence <- function(built, run)
     ## remove vendor field
     built <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", built)
     run <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", run)
+    ## Mac OS X supports multiple CPUs by using 'universal' binaries
+    if (nchar(grep("^universal-darwin", built)) > 0 &&
+        nchar(.Platform$r_arch) > 0)
+        built <- sub("^universal", .Platform$r_arch, built)
     ## allow for small mismatches, e.g. OS version number and i686 vs i586.
     length(agrep(built, run)) > 0
 }
