@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-04-03 10:08+0100\n"
-"PO-Revision-Date: 2005-09-28 19:27+0200\n"
+"PO-Revision-Date: 2006-04-13 11:47+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -588,9 +588,8 @@ msgid "Select directory for file 'Rconsole'"
 msgstr "Bitte ein Verzeichnis für die Datei 'Rconsole' auswählen"
 
 #: preferences.c:415
-#, fuzzy
 msgid "Select 'Rconsole' file"
-msgstr "Wähle Datei"
+msgstr "Wähle 'Rconsole' Datei"
 
 #: preferences.c:594
 #, c-format
@@ -607,7 +606,7 @@ msgstr "Anwenden"
 
 #: preferences.c:740
 msgid "Load"
-msgstr ""
+msgstr "Laden"
 
 #: rui.c:105
 msgid "Select file to source"
