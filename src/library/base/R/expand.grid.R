@@ -31,6 +31,6 @@ expand.grid <- function(...)
 	rep.fac <- rep.fac * nx
     }
     attr(cargs, "out.attrs") <- list(dim=d, dimnames=dn)
-    structure(cargs, row.names = seq(length = prod(d)), colnames = nmc,
-              class = "data.frame")
+    structure(cargs, row.names = as.character(seq(length = prod(d))),
+              colnames = nmc, class = "data.frame")
 }
