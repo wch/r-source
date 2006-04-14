@@ -1,6 +1,7 @@
 
 row.names <- function(x) UseMethod("row.names")
-row.names.data.frame <- function(x) attr(x, "row.names")
+## expand.grid was setting integer row.names
+row.names.data.frame <- function(x) as.character(attr(x, "row.names"))
 row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
 
 "row.names<-" <- function(x, value) UseMethod("row.names<-")
@@ -8,6 +9,7 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     if (!is.data.frame(x))
 	x <- as.data.frame(x)
     old <- attr(x, "row.names")
+    ## do this here, as e.g. POSIXlt changes length when coerced.
     value <- as.character(value)
     if (!is.null(old) && length(value) != length(old))
 	stop("invalid 'row.names' length")

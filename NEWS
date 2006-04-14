@@ -975,6 +975,11 @@ BUG FIXES
     o	Added protection in configure against systems for which using
 	xmkmf fails to eport a C or C++ compiler.
 
+    o	expand.grid() was constructing a data frame 'by hand' and so
+	setting integer row.names (which are documented to be
+	character).  It now sets character row names, and
+	row.names.data.frame() coerces to character.
+
 
 
 
