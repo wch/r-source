@@ -1057,6 +1057,10 @@ BUG FIXES
 	character).  It now sets character row names, and
 	row.names.data.frame() coerces to character.
 
+    o	qbeta() used == on volatile doubles for its convergence test,
+	which failed with gcc 3.3.x on ix86 Linux.  We now use a less
+	fragile test (and lose a negligible amount of accuracy).
+
 
 
 

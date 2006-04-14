@@ -162,7 +162,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 	}
 	xtrunc = tx;	/* this prevents trouble with excess FPU */
 				/* precision on some machines. */
-	if (xtrunc == xinbta)
+	if (fabs(xtrunc - xinbta) < 1e-15*xinbta)
 	    goto L_converged;
 	xinbta = tx;
 	yprev = y;
