@@ -1052,7 +1052,7 @@ if test -n "${XMKMF}"; then
   ${XMKMF} > /dev/null 2>&1 || echo > Makefile
   cc=`${srcdir}/tools/GETMAKEVAL CC`
   cc=`echo ${cc} | sed "s/ .*//"`
-  ## Paul Gilbert reported on R-devel 2006-03-13 a system with cc=""
+  ## Paul Gilbert reported on R-devel 2006-04-13 a system with cc=""
   if test -n "${cc}" ; then
     if test "`which ${cc}`" = "`which ${CC}`"; then
       shlib_ldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
