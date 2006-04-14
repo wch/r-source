@@ -17,9 +17,10 @@ NextMethod(generic = NULL, object = NULL, \dots)
 \arguments{
   \item{generic}{a character string naming a function. Required for
     \code{UseMethod}.}
-  \item{object}{an object whose class will determine the method to be
-    dispatched.  Defaults to the first argument of the enclosing function.}
-  \item{\dots}{further arguments to be passed to the method.}
+  \item{object}{for \code{UseMethod}: an object whose class will
+    determine the method to be dispatched.  Defaults to the first
+    argument of the enclosing function.}
+  \item{\dots}{further arguments to be passed to the next method.}
 }
 \details{
   An \R \dQuote{object} is a data object which has a \code{class} attribute.
@@ -39,20 +40,20 @@ NextMethod(generic = NULL, object = NULL, \dots)
   \code{fun.second} is tried.  If no class name produces a suitable
   function, the function \code{fun.default} is used, if it exists, or an
   error results.
-  
 
   Function \code{\link{methods}} can be used to find out about the
   methods for a particular generic function or class.
 
   Now for some obscure details that need to appear somewhere.  These
-  comments will be slightly different than those in Appendix A of the
-  White S Book. \code{UseMethod} creates a \dQuote{new} function call with
+  comments will be slightly different than those in Chambers(1992).
+  (See also the draft \sQuote{R Language Definition}.)
+  \code{UseMethod} creates a \dQuote{new} function call with
   arguments matched as they came in to the generic.  Any local variables
   defined before the call to \code{UseMethod} are retained (unlike S).  Any
   statements after the call to \code{UseMethod} will not be evaluated as
   \code{UseMethod} does not return.  \code{UseMethod} can be called with
   more than two arguments: a warning will be given and additional
-  arguments ignored. (They are not completely ignored in S.)  If it is
+  arguments ignored.  (They are not completely ignored in S.)  If it is
   called with just one argument, the class of the first argument of the
   enclosing function is used as \code{object}: unlike S this is the first
   actual argument passed and not the current value of the object of that
@@ -62,15 +63,22 @@ NextMethod(generic = NULL, object = NULL, \dots)
   used and names of supplied arguments are ignored.
 
   \code{NextMethod} invokes the next method (determined by the
-  class).  It does this by creating a special call frame for that
-  method.  The arguments will be the same in number, order and name as
-  those to the current method but their values will be promises to
-  evaluate their name in the current method and environment.  Any
-  arguments matched to \code{\dots} are handled specially.  They are
-  passed on as the promise that was supplied as an argument to the
-  current environment. (S does this differently!)  If they have been
-  evaluated in the current (or a previous environment) they remain
-  evaluated.
+  class vector, either of the object supplied to \code{UseMethod}, or of
+  the first argument to the function containing \code{NextMethod} if a
+  method was invoked directly).  Normally \code{NextMethod} is used with
+  only one argument, \code{generic}, but if further arguments are
+  supplied these modify the call to the next method. It does this by
+  creating a special call frame for that method.  If no new arguments
+  are supplied, the arguments will be the same in number, order and name
+  as those to the current method but their values will be promises to
+  evaluate their name in the current method and environment.  Any named
+  arguments matched to \code{\dots} are handled specially: they either
+  replace existing arguments of the same name or are appended to the
+  argument list.  They are passed on as the promise that was supplied as
+  an argument to the current environment. (S does this differently!)  If
+  they have been evaluated in the current (or a previous environment)
+  they remain evaluated.  (This is a complex area, and subject to
+  change: see the draft \sQuote{R Language Definition}.)
 
   \code{NextMethod} should not be called except in methods called by
   \code{UseMethod}. In particular it will not work inside anonymous
@@ -102,7 +110,9 @@ NextMethod(generic = NULL, object = NULL, \dots)
   \sQuote{strongly discouraged} in S-PLUS, and is no longer allowed in \R.
 }
 \seealso{
-  \code{\link{methods}}, \code{\link[base]{class}}, \code{\link{getS3method}}
+  The draft \sQuote{R Language Definition}.
+  
+  \code{\link{methods}}, \code{\link[base]{class}}, \code{\link{getS3method}}.
 }
 \references{
   Chambers, J. M. (1992)
