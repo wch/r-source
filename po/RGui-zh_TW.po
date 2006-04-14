@@ -1,15 +1,15 @@
-# Traditional Chinese translations for RGui
-# Copyright (C) 2005 The R Foundation
+# Traditional Chinese translations for RGui.
+# Copyright (C) 2005, 06 The R Foundation
 # This file is distributed under the same license as the R package.
-# <FeiChen@FairIsaac.com>, 2005
-# Wei-Lun Chao <chaoweilun@pcmail.com.tw>, 2005
+# <FeiChen@FairIsaac.com>, 2005.
+# Wei-Lun Chao <chaoweilun@pcmail.com.tw>, 2005, 06.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-04-03 10:08+0100\n"
-"PO-Revision-Date: 2005-09-26 17:43+0800\n"
+"PO-Revision-Date: 2006-04-14 22:50+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -566,12 +566,11 @@ msgstr ""
 
 #: preferences.c:330
 msgid "Select directory for file 'Rconsole'"
-msgstr "為檔案 Rconsole 選擇目錄"
+msgstr "為檔案 'Rconsole' 選擇目錄"
 
 #: preferences.c:415
-#, fuzzy
 msgid "Select 'Rconsole' file"
-msgstr "選擇檔案"
+msgstr "選擇 'Rconsole' 檔案"
 
 #: preferences.c:594
 #, c-format
@@ -588,7 +587,7 @@ msgstr "套用"
 
 #: preferences.c:740
 msgid "Load"
-msgstr ""
+msgstr "載入"
 
 #: rui.c:105
 msgid "Select file to source"
