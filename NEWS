@@ -972,6 +972,9 @@ BUG FIXES
     o	eapply (and as.list.environment) did not work for the base
 	environment/namespace.  (PR#8761)
 
+    o	Added protection in configure against systems for which using
+	xmkmf fails to eport a C or C++ compiler.
+
 
 
 
