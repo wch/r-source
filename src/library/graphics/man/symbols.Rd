@@ -33,12 +33,14 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
     of the rays from the center of the stars.  \code{NA} values
     are replaced by zeroes.}
   \item{thermometers}{a matrix with three or four columns.  The first
-    two columns give the width and height of the thermometer symbols.
-    If there are three columns, the third is taken as a proportion.
-    The thermometers are filled from their base to this proportion
-    of their height.  If there are four columns, the third and fourth
-    columns are taken as proportions.  The thermometers are filled (using
-    colour \code{fg}) between these two proportions of their heights.}
+    two columns give the width and height of the thermometer symbols. If
+    there are three columns, the third is taken as a proportion: the
+    thermometers are filled (using colour \code{fg}) from their base to
+    this proportion of their height.  If there are four columns, the
+    third and fourth columns are taken as proportions and the
+    thermometers are filled between these two proportions of their
+    heights.  The part of the box not filled in \code{fg} will be filled
+    in the background colour (default transparent) given by \code{bg}.}
   \item{boxplots}{a matrix with five columns.  The first two columns
     give the width and height of the boxes, the next two columns
     give the lengths of the lower and upper whiskers and the fifth
@@ -48,8 +50,9 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
     See Details.}
   \item{add}{if \code{add} is \code{TRUE}, the symbols are added to
     an existing plot, otherwise a new plot is created.}
-  \item{fg}{color(s) the symbols are to be drawn in.}
-  \item{bg}{if specified, the symbols are filled with this color.
+  \item{fg}{colour(s) the symbols are to be drawn in.}
+  \item{bg}{if specified, the symbols are filled with colour(s), the
+    vector \code{bg} being recycled to the number of symbols.
     The default is to leave the symbols unfilled.}
   \item{xlab}{the x label of the plot if \code{add} is not true.
     Defaults to the \code{\link{deparse}}d expression used for \code{x}.}
@@ -119,7 +122,7 @@ attach(trees)
 ## Girth is diameter in inches
 symbols(Height, Volume, circles=Girth/24, inches=FALSE,
         main="Trees' Girth")# xlab and ylab automatically
-## Colors too:
+## Colours too:
 palette(rainbow(N, end = 0.9))
 symbols(Height, Volume, circles=Girth/16, inches=FALSE, bg = 1:N,
         fg="gray30", main="symbols(*, circles=Girth/16, bg = 1:N)")
