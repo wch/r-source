@@ -54,7 +54,7 @@ save <- function(..., list = character(0),
 }
 
 save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
-                        compress = FALSE, safe = TRUE) {
+                        compress = !ascii, safe = TRUE) {
     if (! is.character(file) || file == "")
         stop("'file' must be non-empty string")
 
@@ -63,10 +63,10 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
 
     if (missing(safe) && ! is.null(opts$safe))
         safe <- opts$safe
-    if (missing(compress) && ! is.null(opts$compress))
-        compress <- opts$compress
     if (missing(ascii) && ! is.null(opts$ascii))
         ascii <- opts$ascii
+    if (missing(compress) && ! is.null(opts$compress))
+        compress <- opts$compress
     if (missing(version)) version <- opts$version
 
     if (safe) {

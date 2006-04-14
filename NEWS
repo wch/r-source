@@ -30,6 +30,11 @@ NEW FEATURES
     o	history() gains a 'pattern' argument as suggested by Romain
 	Francois.
 
+    o	save.image() [also called by sys.save.image() and hence from q()]
+	now defaults to saving compressed binary images.  To revert to
+	the previous behaviour set option "save.image.defaults": see
+	?save.image.
+
 
 DEPRECATED & DEFUNCT
 

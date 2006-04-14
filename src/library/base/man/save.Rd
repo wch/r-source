@@ -10,9 +10,9 @@
   date by using the function \code{load} (or \code{data} in some cases).
 
   \code{save.image()} is just a short-cut for \dQuote{save my current
-    environment},
-  i.e., \code{save(list = ls(all=TRUE), file = ".RData")}.  It is what
-  also happens with \code{\link{q}("yes")}.
+    workspace},
+  i.e., \code{save(list = ls(all=TRUE), file = ".RData")}.  It is also what
+  happens with \code{\link{q}("yes")}.
 }
 \usage{
 save(\dots, list = character(0),
@@ -21,7 +21,7 @@ save(\dots, list = character(0),
      compress = !ascii)
 
 save.image(file = ".RData", version = NULL, ascii = FALSE,
-           compress = FALSE, safe = TRUE)
+           compress = !ascii, safe = TRUE)
 
 sys.load.image(name, quiet)
 sys.save.image(name)
@@ -78,6 +78,13 @@ sys.save.image(name)
   \code{compress = FALSE}: the effect is the same as saving with
   \code{compress = TRUE}.
 }
+\note{
+  The defaults were changed to use compressed saves for \code{save} in
+  2.3.0 and for \code{save.image} in 2.4.0.  Any recent version of \R
+  can read compressed save files, and a compressed file can be
+  uncompressed (by \code{gzip -d}) for use with very old versions of \R.
+}
+
 \section{Warnings}{
   The \code{\dots} arguments only give the \emph{names} of the objects
   to be saved: they are searched for in the environment given by the
