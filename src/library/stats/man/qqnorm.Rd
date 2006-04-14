@@ -3,10 +3,11 @@
 \usage{
 qqnorm(y, \dots)
 \method{qqnorm}{default}(y, ylim, main = "Normal Q-Q Plot",
-       xlab = "Theoretical Quantiles",
-       ylab = "Sample Quantiles", plot.it = TRUE, datax = FALSE,
-       \dots)
+       xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
+       plot.it = TRUE, datax = FALSE, \dots)
+
 qqline(y, datax = FALSE, \dots)
+
 qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
        ylab = deparse(substitute(y)), \dots)
 }
@@ -18,7 +19,8 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
 \arguments{
   \item{x}{The first sample for \code{qqplot}.}
   \item{y}{The second or only data sample.}
-  \item{xlab, ylab, main}{plot labels.}
+  \item{xlab, ylab, main}{plot labels.  The \code{xlab} and \code{ylab}
+    refer to the y and x axes respectively if \code{datax = TRUE}.}
   \item{plot.it}{logical. Should the result be plotted?}
   \item{datax}{logical. Should data values be on the x-axis?}
   \item{ylim, \dots}{graphical parameters.}
@@ -46,7 +48,8 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-\code{\link{ppoints}}.
+  \code{\link{ppoints}}, used by \code{qqnorm} to generate
+  approximations to expected order statistics for a normal distribution.
 }
 \examples{
 y <- rt(200, df = 5)

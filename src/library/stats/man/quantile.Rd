@@ -99,8 +99,8 @@ quantile(x, \dots)
     }
 
     \item{Type 9}{\eqn{p(k) = \frac{k - \frac{3}{8}}{n + \frac{1}{4}}}{p(k) = (k - 3/8) / (n + 1/4)}.
-      The resulting quantile estimates are approximately unbiased if
-      \code{x} is normally distributed.
+      The resulting quantile estimates are approximately unbiased for
+      the expected order statistics if \code{x} is normally distributed.
     }
   }
   Hyndman and Fan (1996) recommend type 8.
