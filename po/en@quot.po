@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-13 14:29+0100\n"
-"PO-Revision-Date: 2006-04-13 13:10+0100\n"
+"POT-Creation-Date: 2006-04-14 16:25+0100\n"
+"PO-Revision-Date: 2006-04-14 16:25+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -909,18 +909,18 @@ msgid "'x' must be numeric"
 msgstr "‘x’ must be numeric"
 
 #: src/main/attrib.c:89
-#, fuzzy, c-format
+#, c-format
 msgid "getAttrib: invalid type (%s) for TAG"
-msgstr "getAttrib: invalid type for TAG"
+msgstr "getAttrib: invalid type (%s) for TAG"
 
 #: src/main/attrib.c:130 src/main/attrib.c:219
 msgid "attempt to set an attribute on NULL"
 msgstr "attempt to set an attribute on NULL"
 
 #: src/main/attrib.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for 'names': must be vector"
-msgstr "invalid type for 'names': must be vector"
+msgstr "invalid type (%s) for 'names': must be vector"
 
 #: src/main/attrib.c:268
 #, c-format
@@ -956,9 +956,9 @@ msgid "incompatible 'names' argument"
 msgstr "incompatible ‘names’ argument"
 
 #: src/main/attrib.c:622
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) to set 'names' attribute"
-msgstr "invalid type to set ‘names’ attribute"
+msgstr "invalid type (%s) to set ‘names’ attribute"
 
 #: src/main/attrib.c:689
 msgid "'dimnames' applied to non-array"
@@ -974,9 +974,9 @@ msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "length of ‘dimnames’ [%d] must match that of ‘dims’ [%d]"
 
 #: src/main/attrib.c:713
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
-msgstr "invalid type for ‘dimnames’ (must be a vector)"
+msgstr "invalid type (%s) for ‘dimnames’ (must be a vector)"
 
 #: src/main/attrib.c:716
 #, c-format
@@ -1111,9 +1111,8 @@ msgstr "number of columns of matrices must match (see arg %d)"
 #: src/main/envir.c:3169 src/main/envir.c:3175 src/main/eval.c:3406
 #: src/main/objects.c:177 src/main/objects.c:183 src/main/saveload.c:2028
 #: src/main/saveload.c:2281 src/main/saveload.c:2330 src/main/serialize.c:2154
-#, fuzzy
 msgid "use of NULL environment is defunct"
-msgstr "use of NULL environment is deprecated"
+msgstr "use of NULL environment is defunct"
 
 #: src/main/builtin.c:55 src/main/envir.c:1461 src/main/envir.c:1621
 #: src/main/envir.c:1754 src/main/paste.c:60 src/main/plot.c:1758
@@ -2121,9 +2120,8 @@ msgid "allocation of 'gzcon' connection failed"
 msgstr "allocation of ‘gzcon’ connection failed"
 
 #: src/main/connections.c:4024 src/main/connections.c:4047
-#, fuzzy
 msgid "R_decompress1 requires a raw vector"
-msgstr "R_decompress1 requires a scalar string"
+msgstr "R_decompress1 requires a raw vector"
 
 #: src/main/connections.c:4031
 msgid "internal error in R_compress1"
@@ -2317,14 +2315,14 @@ msgid "too many arguments in foreign function call"
 msgstr "too many arguments in foreign function call"
 
 #: src/main/dotcode.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
-msgstr "%s entry point “%s%s” not in DLL for package “%s”"
+msgstr "%s symbol name “%s” not in DLL for package “%s”"
 
 #: src/main/dotcode.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "%s symbol name \"%s\" not in load table"
-msgstr "%s entry point “%s%s” not in load table"
+msgstr "%s symbol name “%s” not in load table"
 
 #: src/main/dotcode.c:303
 #, c-format
@@ -2417,7 +2415,7 @@ msgstr "ENCODING argument must be a single character string"
 #: src/main/dotcode.c:737
 #, c-format
 msgid "'%s' is deprecated"
-msgstr ""
+msgstr "‘%s’ is deprecated"
 
 #: src/main/dotcode.c:769
 msgid "no arguments supplied"
@@ -2802,9 +2800,8 @@ msgid "no item called \"%s\" on the search list"
 msgstr "no item called “%s” on the search list"
 
 #: src/main/envir.c:2687
-#, fuzzy
 msgid "using 'as.environment(NULL)' is defunct"
-msgstr "using ‘as.environment(NULL)’ is deprecated"
+msgstr "using ‘as.environment(NULL)’ is defunct"
 
 #: src/main/envir.c:2690
 msgid "invalid object for as.environment"
@@ -3729,9 +3726,8 @@ msgid "second argument must be a function"
 msgstr "second argument must be a function"
 
 #: src/main/memory.c:1140
-#, fuzzy
 msgid "third argument must be 'TRUE' or 'FALSE'"
-msgstr "argument ‘multiple’ must be TRUE or FALSE"
+msgstr "third argument must be ‘TRUE’ or ‘FALSE’"
 
 #: src/main/memory.c:1479
 msgid "vector memory exhausted (limit reached?)"
@@ -5673,9 +5669,8 @@ msgid "not a proper file name"
 msgstr "not a proper file name"
 
 #: src/main/serialize.c:2026
-#, fuzzy
 msgid "not a proper raw vector"
-msgstr "not a simple vector"
+msgstr "not a proper raw vector"
 
 #: src/main/serialize.c:2030 src/main/serialize.c:2033
 msgid "file open failed"
@@ -6241,9 +6236,9 @@ msgid "vector size specified is too large"
 msgstr "vector size specified is too large"
 
 #: src/main/util.c:237 src/main/util.c:249 src/main/util.c:263
-#, fuzzy, c-format
+#, c-format
 msgid "type %d is unimplemented in '%s'"
-msgstr "type %d is unimplemented in type2str"
+msgstr "type %d is unimplemented in ‘%s’"
 
 #: src/main/util.c:273
 #, c-format
@@ -7086,12 +7081,3 @@ msgstr "X11 module cannot be loaded"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 is not available"
-
-#~ msgid "R_compress1 requires a scalar string"
-#~ msgstr "R_compress1 requires a scalar string"
-
-#~ msgid "not a proper string"
-#~ msgstr "not a proper string"
-
-#~ msgid "type %d is unimplemented in type2symbol"
-#~ msgstr "type %d is unimplemented in type2symbol"
