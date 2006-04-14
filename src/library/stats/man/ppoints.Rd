@@ -16,21 +16,30 @@ ppoints(n, a = ifelse(n <= 10, 3/8, 1/2))
   \code{length(n)}.
 }
 \details{
- If \eqn{0 < a < 1}, the resulting values are within \eqn{(0,1)}
- (excluding boundaries).
- In any case, the resulting sequence is symmetric in \eqn{[0,1]}, i.e.,
- \code{p + rev(p) == 1}.
+  If \eqn{0 < a < 1}, the resulting values are within \eqn{(0,1)}
+  (excluding boundaries).
+  In any case, the resulting sequence is symmetric in \eqn{[0,1]}, i.e.,
+  \code{p + rev(p) == 1}.
 
- \code{ppoints()} is used in \code{qqplot} and \code{qqnorm} to generate
- the set of probabilities at which to evaluate the inverse distribution.
+  \code{ppoints()} is used in \code{qqplot} and \code{qqnorm} to generate
+  the set of probabilities at which to evaluate the inverse distribution.
+
+  The choice of \code{a} follows the documentation of the function of the
+  same name in Becker \emph{et al} (1988), and appears to have been
+  motivated by results from Blom (1958) on approximations to expect normal
+  order statistics (see also \code{\link{quantile}}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Blom, G. (1958)
+  \emph{Statistical Estimates and Transformed Beta Variables.}
+  Wiley
 }
 \seealso{
-\code{\link{qqplot}}, \code{\link{qqnorm}}.
+  \code{\link{qqplot}}, \code{\link{qqnorm}}.
 }
 \examples{
 ppoints(4) # the same as  ppoints(1:4)
