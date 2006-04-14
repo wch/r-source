@@ -322,6 +322,9 @@
 /* Define if you have the JPEG headers and libraries. */
 #define HAVE_JPEG 1
 
+/* Define if KERN_USRSTACK sysctl is supported. */
+/* #undef HAVE_KERN_USRSTACK */
+
 /* Define if you have KeySym defined in X11. */
 /* #undef HAVE_KEYSYM */
 
