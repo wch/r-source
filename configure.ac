@@ -1052,14 +1052,19 @@ if test -n "${XMKMF}"; then
   ${XMKMF} > /dev/null 2>&1 || echo > Makefile
   cc=`${srcdir}/tools/GETMAKEVAL CC`
   cc=`echo ${cc} | sed "s/ .*//"`
-  if test "`which ${cc}`" = "`which ${CC}`"; then
-    shlib_ldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
-    cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
+  ## Paul Gilbert reported on R-devel 2006-03-13 a system with cc=""
+  if test -n "${cc}" ; then
+    if test "`which ${cc}`" = "`which ${CC}`"; then
+      shlib_ldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
+      cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
+    fi
   fi
   cxx=`${srcdir}/tools/GETMAKEVAL CXX`
   cxx=`echo ${cxx} | sed "s/ .*//"`
-  if test "`which ${cxx}`" = "`which ${CXX}`"; then
-    cxxpicflags=`${srcdir}/tools/GETMAKEVAL CXXPICFLAGS`
+  if test -n "${cxx}" ; then
+    if test "`which ${cxx}`" = "`which ${CXX}`"; then
+      cxxpicflags=`${srcdir}/tools/GETMAKEVAL CXXPICFLAGS`
+    fi
   fi
   rm -f Imakefile Makefile
 fi
