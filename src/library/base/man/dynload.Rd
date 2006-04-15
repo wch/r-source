@@ -43,8 +43,6 @@ is.loaded(symbol, PACKAGE = "", type = "")
     \code{PACKAGE="base"} for symbols linked in to \R.  This is used in the
     same way as in \code{\link{.C}}, \code{\link{.Call}},
     \code{\link{.Fortran}} and \code{\link{.External}} functions}
-  \item{name}{a character string giving either the name of a C function
-    or Fortran subroutine.}
   \item{type}{The type of symbol to look for: can be any (\code{""}, the
   default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
 }
