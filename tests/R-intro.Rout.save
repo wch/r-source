@@ -1,6 +1,6 @@
 
-R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-02-15 r37368)
+R version 2.4.0 Under development (unstable) (2006-04-15 r37780)
+Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -171,7 +171,7 @@ $cat
 Levels: A B
 
 attr(,"row.names")
-[1] "1" "2" "3" "4"
+[1] 1 2 3 4
 > 
 > ###------------ Ordered and unordered factors --------
 > state <- c("tas", "sa",  "qld", "nsw", "nsw", "nt",  "wa",  "wa",
