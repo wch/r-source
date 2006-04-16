@@ -74,6 +74,10 @@ BUG FIXES
 	MBCSs like UTF-8 and the Windows DBCSes which have non-ASCII
 	lead bytes and always worked correctly.)
 
+    o	charmatch() and pmatch() did not specify they applied only to
+	character vectors.  Now they do, and attempt to coerce 'x' and
+	'target' to character before attempting matching.
+
 
 
 
