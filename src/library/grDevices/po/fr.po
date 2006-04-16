@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-03-09 16:41+0000\n"
+"POT-Creation-Date: 2006-04-16 12:46+0100\n"
 "PO-Revision-Date: 2005-12-06 14:15+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -19,6 +19,16 @@ msgstr ""
 #: devNull.c:41 devNull.c:45
 msgid "unable to start NULL device"
 msgstr "impossible de démarrer le périphérique NULL"
+
+#: devPicTeX.c:501 devPicTeX.c:503 devPS.c:735 devPS.c:738 devPS.c:3973
+#: devPS.c:6657
+#, fuzzy, c-format
+msgid "invalid string in '%s'"
+msgstr "argument chaîne de caractère incorrect"
+
+#: devPicTeX.c:782
+msgid "unable to start device PicTeX"
+msgstr "impossible de démarrer le périphérique PicTeX"
 
 #: devPS.c:553
 #, fuzzy, c-format
@@ -37,12 +47,6 @@ msgstr "le fichier metafile '%s' ne peut être créé"
 #: devPS.c:620
 msgid "unknown AFM entity encountered"
 msgstr "entité AFM inconnue rencontrée"
-
-#: devPS.c:735 devPS.c:738 devPS.c:3973 devPS.c:6657 devPicTeX.c:501
-#: devPicTeX.c:503
-#, fuzzy, c-format
-msgid "invalid string in '%s'"
-msgstr "argument chaîne de caractère incorrect"
 
 #: devPS.c:766
 #, c-format
@@ -409,10 +413,6 @@ msgstr "impossible de démarrer le périphérique xfig"
 #: devPS.c:7087
 msgid "unable to start device pdf"
 msgstr "impossible de démarrer le périphérique pdf"
-
-#: devPicTeX.c:782
-msgid "unable to start device PicTeX"
-msgstr "impossible de démarrer le périphérique PicTeX"
 
 #: devQuartz.c:454
 msgid "invalid string argument"

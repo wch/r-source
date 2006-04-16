@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-29 08:17+0000\n"
+"POT-Creation-Date: 2006-04-16 12:46+0100\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -16,10 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#: Srunmed.c:60
-msgid "bandwidth/span of running medians is larger than n"
-msgstr "이동 중앙값의 bandwidth/span가 n보다 큽니다"
 
 #: ansari.c:129
 msgid "probabilities outside [0,1] in qansari()"
@@ -243,6 +239,10 @@ msgstr "smooth(*,'3RSS')에서의 할당 에러입니다"
 #: smooth.c:262
 msgid "allocation error in smooth(*, '3R')."
 msgstr "smooth(*,'3R')에서의 할당 에러입니다"
+
+#: Srunmed.c:60
+msgid "bandwidth/span of running medians is larger than n"
+msgstr "이동 중앙값의 bandwidth/span가 n보다 큽니다"
 
 #: starma.c:366
 #, c-format

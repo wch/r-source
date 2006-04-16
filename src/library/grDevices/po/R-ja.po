@@ -73,7 +73,7 @@ msgid "cannot supply 'which' and 'device' at the same time"
 msgstr "同時に 'which' と 'device' を与えることは出来ません"
 
 msgid "cannot copy from the null device"
-msgstr "null デバイスTからコピーすることは出来ません"
+msgstr "nullデバイスからコピーすることは出来ません"
 
 msgid "cannot copy to the null device"
 msgstr "NULL デバイスにコピーすることは出来ません"
@@ -150,7 +150,7 @@ msgid "Invalid font database name"
 msgstr "不正なフォントデータベース名です"
 
 msgid "font %s already in use"
-msgstr "フォント %s% は既に使われています"
+msgstr "フォント %s は既に使われています"
 
 msgid "invalid arguments in '%s' (must be font names)"
 msgstr "'%s' 中の不正な引数です（フォント名が必要です）"

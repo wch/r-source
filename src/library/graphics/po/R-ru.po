@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-11-06 09:27\n"
+"POT-Creation-Date: 2006-04-16 12:46\n"
 "PO-Revision-Date: 2005-12-16 17:21+0300\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -282,18 +282,6 @@ msgstr "функция 'panel' создала новый график"
 msgid "'x' values must be positive."
 msgstr "значения 'x' должны быть положительными."
 
-msgid "invalid table 'x'"
-msgstr "таблица 'x' неправильная"
-
-msgid "cannot handle more than one 'x' coordinate"
-msgstr "не могу взять больше чем одну координату 'x'"
-
-msgid "must have a response variable"
-msgstr "нужна зависимая переменная"
-
-msgid "'plot.data.frame' applied to non data frame"
-msgstr "'plot.data.frame' применена не к таблице данных"
-
 msgid "'y' must be a numeric vector"
 msgstr "'y' должен быть числовым вектором"
 
@@ -314,6 +302,18 @@ msgstr "переменная в 'y' не является числовой"
 
 msgid "there must be at least one numeric variable!"
 msgstr "тут должна быть по крайней мере одна числовая переменная!"
+
+msgid "invalid table 'x'"
+msgstr "таблица 'x' неправильная"
+
+msgid "cannot handle more than one 'x' coordinate"
+msgstr "не могу взять больше чем одну координату 'x'"
+
+msgid "must have a response variable"
+msgstr "нужна зависимая переменная"
+
+msgid "'plot.data.frame' applied to non data frame"
+msgstr "'plot.data.frame' применена не к таблице данных"
 
 msgid "cannot hatch with logarithmic scale active"
 msgstr "не могу зачерчивать, когда активна логарифмическая шкала"
