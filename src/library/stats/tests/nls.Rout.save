@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-01-24 r37156)
+Version 2.3.0 beta (2006-04-13 r37760)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -121,7 +121,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 
-Correlation of Paraneter Estimates:
+Correlation of Parameter Estimates:
   a    
 b -0.89
 
@@ -134,7 +134,7 @@ b -0.89
   0      56.0706: 0.123450 0.543210
   1      6.39646:  1.34546 0.700840
   2  0.000606391: 0.00517053 0.999153
-  3  0.000606391: 0.00517052 0.999153
+  3  0.000606391: 0.00517051 0.999153
 > summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -148,7 +148,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 
-Correlation of Paraneter Estimates:
+Correlation of Parameter Estimates:
   a    
 b -0.89
 
@@ -415,7 +415,7 @@ logc -0.64620 0.40950
 > fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
 > confint(profile(fm))
          2.5%   97.5%
-b     0.45121 0.91488
+b     0.45121 0.91489
 logc -0.64628 0.40953
 > 
 > 
@@ -445,7 +445,7 @@ $a
 8   2.26362    5.01493    0.97638
 9   2.70180    7.51383    1.12707
 10  3.08992   12.25766    1.26434
-11  3.40458   22.42471    1.38476
+11  3.40458   22.42470    1.38476
 
 $b
        tau par.vals.a par.vals.b
@@ -455,8 +455,8 @@ $b
 4  1.67482    3.03728    0.83406
 5  2.43255    4.61672    1.12347
 6  3.18042    7.90950    1.44117
-7  3.89865   23.13399    1.79455
-8  4.52605  166.09149    2.20381
+7  3.89865   23.13401    1.79455
+8  4.52605  166.09148    2.20381
 
 attr(,"original.fit")
 Nonlinear regression model
@@ -536,5 +536,5 @@ a 0.90457      NA
 b      NA 0.61016
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  5.15 0.01 5.23 NA NA 
+Time elapsed:  4.744 0.021 4.912 0 0 
 > 
