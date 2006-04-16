@@ -38,7 +38,7 @@ function(dir, outDir)
         "i386-pc-mingw32"
     else
         R.version$platform
-    if (nchar(grep("-apple-darwin",R.version$platform)) > 0 &&
+    if (length(grep("-apple-darwin",R.version$platform)) > 0 &&
         nchar(Sys.getenv("R_ARCH")) > 0)
         OStype <- sub(".*-apple-darwin", "universal-apple-darwin", OStype)
     Built <-
