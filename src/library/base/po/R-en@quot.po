@@ -24,77 +24,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-27 15:42\n"
-"PO-Revision-Date: 2006-03-27 15:42\n"
+"POT-Creation-Date: 2006-04-16 12:46\n"
+"PO-Revision-Date: 2006-04-16 12:46\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid "'%s' is defunct."
-msgstr "‘%s’ is defunct."
-
-msgid "Use '%s' instead."
-msgstr "Use ‘%s’ instead."
-
-msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr "See help(“Defunct”) and help(“%s-defunct”)."
-
-msgid "See help(\"Defunct\")"
-msgstr "See help(“Defunct”)"
-
-msgid "'%s' is deprecated."
-msgstr "‘%s’ is deprecated."
-
-msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
-msgstr "See help(“Deprecated”) and help(“%s-deprecated”)."
-
-msgid "See help(\"Deprecated\")"
-msgstr "See help(“Deprecated”)"
-
-msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "argument to ‘La.svd’ must be numeric or complex"
-
-msgid "infinite or missing values in 'x'"
-msgstr "infinite or missing values in ‘x’"
-
-msgid "0 extent dimensions"
-msgstr "0 extent dimensions"
-
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "‘nu’ must be 0, nrow(x) or ncol(x)"
-
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "‘nv’ must be 0, nrow(x) or ncol(x)"
-
-msgid "'all' can not be used with other deparse options"
-msgstr "‘all’ can not be used with other deparse options"
-
-msgid "second argument must be a list"
-msgstr "second argument must be a list"
-
-msgid "'iconvlist' is not available on this system"
-msgstr "‘iconvlist’ is not available on this system"
-
-msgid "'kind' must be a character string of length 1 (RNG to be used)."
-msgstr "‘kind’ must be a character string of length 1 (RNG to be used)."
-
-msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr "‘%s’ is not a valid abbreviation of an RNG"
-
-msgid "'normal.kind' must be a character string of length 1."
-msgstr "‘normal.kind’ must be a character string of length 1."
-
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "Buggy version of Kinderman-Ramage generator used."
-
-msgid "'%s' is not a valid choice"
-msgstr "‘%s’ is not a valid choice"
-
-msgid "malformed version string"
-msgstr "malformed version string"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) must have a positive length"
@@ -221,12 +158,6 @@ msgstr "‘breaks’ are not unique"
 
 msgid "labels/breaks length conflict"
 msgstr "labels/breaks length conflict"
-
-msgid "non-numeric data type in frame"
-msgstr "non-numeric data type in frame"
-
-msgid "class information lost from one or more columns"
-msgstr "class information lost from one or more columns"
 
 msgid "invalid 'row.names' length"
 msgstr "invalid ‘row.names’ length"
@@ -359,6 +290,12 @@ msgstr "list of length %d not meaningful"
 msgid "only defined on a data frame with all numeric or complex variables"
 msgstr "only defined on a data frame with all numeric or complex variables"
 
+msgid "non-numeric data type in frame"
+msgstr "non-numeric data type in frame"
+
+msgid "class information lost from one or more columns"
+msgstr "class information lost from one or more columns"
+
 msgid "character string is not in a standard unambiguous format"
 msgstr "character string is not in a standard unambiguous format"
 
@@ -490,6 +427,27 @@ msgstr "‘to’ must be a POSIXt object"
 msgid "'file' must be a character string or connection"
 msgstr "‘file’ must be a character string or connection"
 
+msgid "'%s' is defunct."
+msgstr "‘%s’ is defunct."
+
+msgid "Use '%s' instead."
+msgstr "Use ‘%s’ instead."
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "See help(“Defunct”) and help(“%s-defunct”)."
+
+msgid "See help(\"Defunct\")"
+msgstr "See help(“Defunct”)"
+
+msgid "'%s' is deprecated."
+msgstr "‘%s’ is deprecated."
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "See help(“Deprecated”) and help(“%s-deprecated”)."
+
+msgid "See help(\"Deprecated\")"
+msgstr "See help(“Deprecated”)"
+
 msgid "'x' must be a square matrix"
 msgstr "‘x’ must be a square matrix"
 
@@ -539,6 +497,9 @@ msgstr "non-square matrix in ‘eigen’"
 
 msgid "numeric or complex values required in 'eigen'"
 msgstr "numeric or complex values required in ‘eigen’"
+
+msgid "infinite or missing values in 'x'"
+msgstr "infinite or missing values in ‘x’"
 
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "‘ch’ returned code %d in ‘eigen’"
@@ -647,6 +608,18 @@ msgstr "‘max.distance’ components must be non-negative"
 
 msgid "matrix should be square"
 msgstr "matrix should be square"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "argument to ‘La.svd’ must be numeric or complex"
+
+msgid "0 extent dimensions"
+msgstr "0 extent dimensions"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "‘nu’ must be 0, nrow(x) or ncol(x)"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "‘nv’ must be 0, nrow(x) or ncol(x)"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "This is R %s, package ‘%s’ needs %s %s"
@@ -821,6 +794,12 @@ msgstr "invalid ‘category’ argument"
 msgid "must specify formal argument names to vectorize"
 msgstr "must specify formal argument names to vectorize"
 
+msgid "'%s' is not a function, character or symbol"
+msgstr "‘%s’ is not a function, character or symbol"
+
+msgid "found non-function '%s'"
+msgstr "found non-function ‘%s’"
+
 msgid "'arg' should be one of"
 msgstr "‘arg’ should be one of"
 
@@ -835,12 +814,6 @@ msgstr "‘input’ must have length 1"
 
 msgid "'input' and 'target' must be character vectors"
 msgstr "‘input’ and ‘target’ must be character vectors"
-
-msgid "'%s' is not a function, character or symbol"
-msgstr "‘%s’ is not a function, character or symbol"
-
-msgid "found non-function '%s'"
-msgstr "found non-function ‘%s’"
 
 msgid "attempt to set rownames on object with no dimensions"
 msgstr "attempt to set rownames on object with no dimensions"
@@ -1014,6 +987,15 @@ msgstr "object ‘%s’ not found whilst loading namespace ‘%s’"
 msgid "found an S4 version of '%s' so it has not been imported correctly"
 msgstr "found an S4 version of ‘%s’ so it has not been imported correctly"
 
+msgid "'all' can not be used with other deparse options"
+msgstr "‘all’ can not be used with other deparse options"
+
+msgid "second argument must be a list"
+msgstr "second argument must be a list"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "‘iconvlist’ is not available on this system"
+
 msgid "'%s' is not implemented yet"
 msgstr "‘%s’ is not implemented yet"
 
@@ -1109,6 +1091,24 @@ msgstr "‘x’ must be a vector"
 
 msgid "invalid 'rle' structure"
 msgstr "invalid ‘rle’ structure"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr "‘kind’ must be a character string of length 1 (RNG to be used)."
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "‘%s’ is not a valid abbreviation of an RNG"
+
+msgid "'normal.kind' must be a character string of length 1."
+msgstr "‘normal.kind’ must be a character string of length 1."
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Buggy version of Kinderman-Ramage generator used."
+
+msgid "'%s' is not a valid choice"
+msgstr "‘%s’ is not a valid choice"
+
+msgid "malformed version string"
+msgstr "malformed version string"
 
 msgid "incorrect length for 'group'"
 msgstr "incorrect length for ‘group’"
@@ -1335,11 +1335,6 @@ msgstr "package ‘%s’ has a non-function ‘.First.lib’"
 msgid "cannot find name space environment"
 msgstr "cannot find name space environment"
 
-msgid "deparse option %s is not recognized"
-msgid_plural "deparse options %s are not recognized"
-msgstr[0] "deparse option %s is not recognized"
-msgstr[1] "deparse options %s are not recognized"
-
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "library %s contains no packages"
@@ -1369,6 +1364,11 @@ msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3 method %s was declared in NAMESPACE but not found"
 msgstr[1] "S3 methods %s were declared in NAMESPACE but not found"
+
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "deparse option %s is not recognized"
+msgstr[1] "deparse options %s are not recognized"
 
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-30 08:51\n"
+"POT-Creation-Date: 2006-04-16 12:46\n"
 "PO-Revision-Date: 2005-02-26 22:56+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -273,18 +273,6 @@ msgstr "La funzione 'panel' ha generato un nuovo grafico"
 msgid "'x' values must be positive."
 msgstr "i valori di 'x' devono essere positiv"
 
-msgid "invalid table 'x'"
-msgstr "table 'x' non valida"
-
-msgid "cannot handle more than one 'x' coordinate"
-msgstr "non possono lavorare con piu' di una coordinata 'x'"
-
-msgid "must have a response variable"
-msgstr "deve avere una variabile risposta"
-
-msgid "'plot.data.frame' applied to non data frame"
-msgstr "'plot.data.frame' applicato a un non data frame"
-
 msgid "'y' must be a numeric vector"
 msgstr "'y' deve essere un vettore numerico"
 
@@ -305,6 +293,18 @@ msgstr "una variabile in 'y' non è numerica"
 
 msgid "there must be at least one numeric variable!"
 msgstr "ci deve essere almeno una variabile numerica!"
+
+msgid "invalid table 'x'"
+msgstr "table 'x' non valida"
+
+msgid "cannot handle more than one 'x' coordinate"
+msgstr "non possono lavorare con piu' di una coordinata 'x'"
+
+msgid "must have a response variable"
+msgstr "deve avere una variabile risposta"
+
+msgid "'plot.data.frame' applied to non data frame"
+msgstr "'plot.data.frame' applicato a un non data frame"
 
 msgid "cannot hatch with logarithmic scale active"
 msgstr "non posso usare il tratteggio in scala logaritmica"

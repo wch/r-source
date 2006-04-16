@@ -29,11 +29,10 @@ msgstr ""
 msgid "need at least 2*ord -1 (=%d) knots"
 msgstr "são necessários pelo menos 2*ord -1 (=%d) nós"
 
-#, fuzzy
 msgid ""
 "the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
 msgstr ""
-"os dados 'x' devem estar na faixa de %f a %f, a não ser que você especifique "
+"os dados 'x' devem estar na faixa de %g a %g, a não ser que você especifique "
 "'outer.ok = TRUE'"
 
 msgid "values of 'x' must be distinct"

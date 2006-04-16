@@ -32,11 +32,10 @@ msgstr "'ord' должен быть положительным целым, максимум количеством узлов"
 msgid "need at least 2*ord -1 (=%d) knots"
 msgstr "необходимо как минимум 2*ord -1 (=%d) узлов"
 
-#, fuzzy
 msgid ""
 "the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
 msgstr ""
-"данные 'x' должны быть в промежутке от %f до %f, если Вы не установили "
+"данные 'x' должны быть в промежутке от %g до %g, если Вы не установили "
 "'outer.ok = TRUE'"
 
 msgid "values of 'x' must be distinct"

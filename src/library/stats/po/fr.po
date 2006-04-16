@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-01-29 08:17+0000\n"
+"POT-Creation-Date: 2006-04-16 12:46+0100\n"
 "PO-Revision-Date: 2005-12-06 23:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -15,10 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: Srunmed.c:60
-msgid "bandwidth/span of running medians is larger than n"
-msgstr "largeur de fenêtre de médiane mobile supérieure à n"
 
 #: ansari.c:129
 msgid "probabilities outside [0,1] in qansari()"
@@ -250,6 +246,10 @@ msgstr "erreur d'allocation dans smooth(*, '3RSS')."
 #: smooth.c:262
 msgid "allocation error in smooth(*, '3R')."
 msgstr "erreur d'allocation dans smooth(*, '3R')."
+
+#: Srunmed.c:60
+msgid "bandwidth/span of running medians is larger than n"
+msgstr "largeur de fenêtre de médiane mobile supérieure à n"
 
 #: starma.c:366
 #, c-format

@@ -23,11 +23,10 @@ msgstr "'ord'는 positive 정수로, 대부분 konts 수입니다"
 msgid "need at least 2*ord -1 (=%d) knots"
 msgstr "적어도  2*ord -1 (=%d) 개의 knots 필요합니다"
 
-#, fuzzy
 msgid ""
 "the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
 msgstr ""
-"outer.ok = TRUE가 나오지 않는경우 데이터 'x'는 %f로부터 %f의 범위내에 있어야"
+"outer.ok = TRUE가 나오지 않는경우 데이터 'x'는 %g로부터 %g의 범위내에 있어야"
 "만 합니다"
 
 msgid "values of 'x' must be distinct"

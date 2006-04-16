@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-10-30 08:51\n"
+"POT-Creation-Date: 2006-04-16 12:46\n"
 "PO-Revision-Date: 2005-06-02 15:33+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -53,7 +53,6 @@ msgstr "対数スケールのエラー: 'xlim' <= 0"
 
 msgid "log scale error: 'ylim' <= 0"
 msgstr "対数スケールのエラー: 'ylim' <= 0"
-""
 
 msgid "incorrect number of names"
 msgstr "名前の数が誤りです"
@@ -83,7 +82,9 @@ msgid "explanatory variable should be numeric"
 msgstr "説明変数は数値でなければなりません"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr "y 軸のメモリは累積確率のスケールです、 'ylim' は区間 [0,1] 中になければなりません"
+msgstr ""
+"y 軸のメモリは累積確率のスケールです、 'ylim' は区間 [0,1] 中になければなりま"
+"せん"
 
 msgid "no 'z' matrix specified"
 msgstr "'z' 行列が指定されていません"
@@ -173,7 +174,9 @@ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 msgstr "負の 'counts' です。\"bincount\" のための C コードの内部エラーです"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr "'x' の一部分が数えられていません。多分 'breaks' が 'x' の範囲全体をカバーしていません"
+msgstr ""
+"'x' の一部分が数えられていません。多分 'breaks' が 'x' の範囲全体をカバーして"
+"いません"
 
 msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
 msgstr "プロットの領域が誤まりです。むしろ freq=FALSE を使用して下さい"
@@ -266,18 +269,6 @@ msgstr "'panel' 関数は新規のプロットを行いました"
 msgid "'x' values must be positive."
 msgstr "'x' の値は正でなければなりません"
 
-msgid "invalid table 'x'"
-msgstr "テーブル 'x' は不正です"
-
-msgid "cannot handle more than one 'x' coordinate"
-msgstr "二つ以上の 'x' 座標を扱うことはできません"
-
-msgid "must have a response variable"
-msgstr "応答変数を持たなければなりません"
-
-msgid "'plot.data.frame' applied to non data frame"
-msgstr "'plot.data.frame' がデータフレームでないものに適用されました"
-
 msgid "'y' must be a numeric vector"
 msgstr "'y' は数値ベクトルでなければなりません"
 
@@ -298,6 +289,18 @@ msgstr "'y' 中の変数に数値でないものがあります"
 
 msgid "there must be at least one numeric variable!"
 msgstr "少なくとも一つの数値変数がなければなりません！"
+
+msgid "invalid table 'x'"
+msgstr "テーブル 'x' は不正です"
+
+msgid "cannot handle more than one 'x' coordinate"
+msgstr "二つ以上の 'x' 座標を扱うことはできません"
+
+msgid "must have a response variable"
+msgstr "応答変数を持たなければなりません"
+
+msgid "'plot.data.frame' applied to non data frame"
+msgstr "'plot.data.frame' がデータフレームでないものに適用されました"
 
 msgid "cannot hatch with logarithmic scale active"
 msgstr "対数スケール使用中は網掛けできません"
@@ -428,4 +431,3 @@ msgstr[0] "箱型図 %d 中の外れ値 (%s) は描かれません"
 
 #~ msgid "z value"
 #~ msgstr "個の z の値が"
-
