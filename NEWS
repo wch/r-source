@@ -35,6 +35,16 @@ NEW FEATURES
 	the previous behaviour set option "save.image.defaults": see
 	?save.image.
 
+    o	The 'row.names' of a data frame may be stored internally as an
+	integer or character vector.  This can result in considerably
+	more compact storage (and more logical row names from rbind)
+	when the row.names are 1:nrow(x).  However, such data frames
+	are not compatible with earlier versions of R: this can be
+	ensured by supplying a character vector as 'row.names'.
+
+	row.names() will always return a character vector, but direct
+	access to the attribute may not.
+
 
 DEPRECATED & DEFUNCT
 

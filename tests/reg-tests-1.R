@@ -4157,10 +4157,3 @@ apply(a,1,sum)
 ## NULL results in apply()
 apply(as.matrix(1), 1, function(x) NULL)
 ## was error in 2.2.1.
-
-
-## expand.grid gave integer row.names
-z <- expand.grid(x=1:2, y=1:2)
-stopifnot(typeof(row.names(z)) == "character")
-stopifnot(typeof(attr(z, "row.names")) == "character")
-## were "integer" < 2.3.0 (regression test added in FF for 2.3)
