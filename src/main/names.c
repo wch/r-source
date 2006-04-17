@@ -979,6 +979,7 @@ static void SymbolShortcuts()
     R_DotEnvSymbol = install(".Environment");
     R_RecursiveSymbol = install("recursive");
     R_UseNamesSymbol = install("use.names");
+    R_RowNamesSymbol = install("row.names");
 }
 
 extern SEXP framenames; /* from model.c */

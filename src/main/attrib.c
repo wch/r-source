@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -36,6 +36,34 @@ static SEXP removeAttrib(SEXP, SEXP);
 SEXP comment(SEXP);
 static SEXP commentgets(SEXP, SEXP);
 
+static SEXP row_names_gets(SEXP vec , SEXP val)
+{
+    if(isInteger(val)) {
+	Rboolean OK_compact = TRUE;
+	int i, n = LENGTH(val);
+	if(n == 2 && INTEGER(val)[0] == NA_INTEGER) {
+	    n = INTEGER(val)[1];
+	} else if (n > 2) {
+	    for(i = 0; i < n; i++)
+		if(INTEGER(val)[i] != i+1) {
+		    OK_compact = FALSE;
+		    break;
+		}
+	} else OK_compact = FALSE;
+	if(OK_compact) {
+	    SEXP ans;
+	    /* we hide the length in an impossible integer vector */
+	    PROTECT(val = allocVector(INTSXP, 2));
+	    INTEGER(val)[0] = NA_INTEGER;
+	    INTEGER(val)[1] = n;
+	    ans =  installAttrib(vec, R_RowNamesSymbol, val);
+	    UNPROTECT(1);
+	    return ans;
+	} 
+    }
+    return installAttrib(vec, R_RowNamesSymbol, val);
+}
+
 static SEXP stripAttrib(SEXP tag, SEXP lst)
 {
     if(lst == R_NilValue) return lst;
@@ -50,17 +78,10 @@ static SEXP stripAttrib(SEXP tag, SEXP lst)
    conclude that the class attribute is R_NilValue.  If you want to
    rewrite this function to use such a pre-test, be sure to adjust
    serialize.c accordingly.  LT */
-SEXP getAttrib(SEXP vec, SEXP name)
+SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
 {
     SEXP s;
     int len, i, any;
-
-    /* pre-test to avoid expensive operations if clearly not needed -- LT */
-    if (ATTRIB(vec) == R_NilValue &&
-	! (TYPEOF(vec) == LISTSXP || TYPEOF(vec) == LANGSXP))
-	return R_NilValue;
-
-    if (isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
 
     if (name == R_NamesSymbol) {
 	if(isVector(vec) || isList(vec) || isLanguage(vec)) {
@@ -119,6 +140,30 @@ SEXP getAttrib(SEXP vec, SEXP name)
     return R_NilValue;
 }
 
+SEXP getAttrib(SEXP vec, SEXP name)
+{
+    /* pre-test to avoid expensive operations if clearly not needed -- LT */
+    if (ATTRIB(vec) == R_NilValue &&
+	! (TYPEOF(vec) == LISTSXP || TYPEOF(vec) == LANGSXP))
+	return R_NilValue;
+
+    if (isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
+
+    if (name == R_RowNamesSymbol) { 
+	SEXP s = getAttrib0(vec, R_RowNamesSymbol);
+	if(isInteger(s) && LENGTH(s) == 2 && INTEGER(s)[0] == NA_INTEGER) {
+	    int i, n = INTEGER(s)[1];
+	    PROTECT(s = allocVector(INTSXP, n));
+	    for(i = 0; i < n; i++)
+		INTEGER(s)[i] = i+1;
+	    UNPROTECT(1);
+	}
+	return s;
+    } else
+	return getAttrib0(vec, name);
+}
+
+
 SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 {
     if (isString(name))
@@ -147,6 +192,8 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 	return tspgets(vec, val);
     else if (name == R_CommentSymbol)
 	return commentgets(vec, val);
+    else if (name == R_RowNamesSymbol)
+	return row_names_gets(vec, val);
     else
 	return installAttrib(vec, name, val);
 }
@@ -356,7 +403,7 @@ SEXP classgets(SEXP vec, SEXP class)
 	    SET_OBJECT(vec, 0);
 	}
 	else {
-	    /* When data frames where a special data type */
+	    /* When data frames were a special data type */
 	    /* we had more exhaustive checks here.  Now that */
 	    /* use JMCs interpreted code, we don't need this */
 	    /* FIXME : The whole "classgets" may as well die. */
@@ -822,7 +869,12 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	nvalues++;
     }
     while (attrs != R_NilValue) {
-	SET_VECTOR_ELT(value, nvalues, CAR(attrs));
+	/* treat R_RowNamesSymbol specially */
+	if (TAG(attrs) == R_RowNamesSymbol)
+	    SET_VECTOR_ELT(value, nvalues, 
+			   getAttrib(CAR(args), R_RowNamesSymbol));
+	else
+	    SET_VECTOR_ELT(value, nvalues, CAR(attrs));
 	if (TAG(attrs) == R_NilValue)
 	    SET_STRING_ELT(names, nvalues, R_BlankString);
 	else

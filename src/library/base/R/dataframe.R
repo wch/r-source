@@ -1,7 +1,11 @@
-## as from R 2.4.0, row.names can be either character or integer.
+## As from R 2.4.0, row.names can be either character or integer.
 ## row.names() will always return character.
 ## attr(, "row.names") will return either character or integer.
-## Do not assume that the internal representation is either.
+##
+## Do not assume that the internal representation is either, since
+## 1:n is stored as the integer vector c(NA, n) to save space (and
+## the C-level code to get/set the attribute makes the appropriate
+## translations (whereas attributes does not).
 
 row.names <- function(x) UseMethod("row.names")
 row.names.data.frame <- function(x) as.character(attr(x, "row.names"))
@@ -12,6 +16,12 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     if (!is.data.frame(x))
 	x <- as.data.frame(x)
     old <- attr(x, "row.names")
+    if(is.null(value)) {
+        n <- length(old)
+        attr(x, "row.names") <-
+            if(n > 2) c(as.integer(NA), n) else seq(length = n)
+        return(x)
+    }
     ## do this here, as e.g. POSIXlt changes length when coerced.
     if(is.object(value) || !(is.integer(value)) )
         value <- as.character(value)
@@ -20,7 +30,7 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     if (any(duplicated(value)))
 	stop("duplicate 'row.names' are not allowed")
     if (any(is.na(value)))
-	stop("missing 'row.names' are not allowed")
+	stop("missing values in 'row.names' are not allowed")
     attr(x, "row.names") <- value
     x
 }

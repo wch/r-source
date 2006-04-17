@@ -45,6 +45,9 @@ NEW FEATURES
 	row.names() will always return a character vector, but direct
 	access to the attribute may not.
 
+	The internal storage of row.names = 1:n just records 'n' for
+	efficiency with very long vectors.
+
 
 DEPRECATED & DEFUNCT
 

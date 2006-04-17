@@ -720,6 +720,14 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		sprintf(ptag, "attr(,\"%s\")",
 			EncodeString(PRINTNAME(TAG(a)), 0, 0, Rprt_adj_left));
 	    Rprintf("%s", tagbuf); Rprintf("\n");
+	    if (TAG(a) == R_RowNamesSymbol) {
+		/* need special handling AND protection */
+		SEXP val;
+		PROTECT(val = getAttrib(s, R_RowNamesSymbol));
+		PrintValueRec(val, env);
+		UNPROTECT(1);
+		goto nextattr;
+	    }
 	    if (isObject(CAR(a))) {
 		/* Need to construct a call to
 		   print(CAR(a), digits)

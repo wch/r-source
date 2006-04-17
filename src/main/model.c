@@ -1367,13 +1367,9 @@ SEXP attribute_hidden do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     if (length(row_names) == nr) {
 	setAttrib(data, R_RowNamesSymbol, row_names);
-    }
-    else {
-	PROTECT(row_names = allocVector(STRSXP, nr));
-	for (i=0; i<nr; i++) {
-	    sprintf(buf, "%d", i+1);
-	    SET_STRING_ELT(row_names, i, mkChar(buf));
-	}
+    } else {
+	PROTECT(row_names = allocVector(INTSXP, nr));
+	for (i = 0; i < nr; i++) INTEGER(row_names)[i] = i+1;
 	setAttrib(data, R_RowNamesSymbol, row_names);
 	UNPROTECT(1);
     }
@@ -1600,7 +1596,8 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(vars) == 0)
 	errorcall(call, _("do not know how many cases"));
     n = nrows(VECTOR_ELT(vars, 0));
-    rnames = getAttrib(vars, R_RowNamesSymbol);
+    /* This could be generated, so need to protect it */
+    PROTECT(rnames = getAttrib(vars, R_RowNamesSymbol));
 
     /* This section of the code checks the types of the variables */
     /* in the model frame.  Note that it should really only check */
@@ -1927,6 +1924,6 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_VECTOR_ELT(tnames, 1, xnames);
     setAttrib(x, R_DimNamesSymbol, tnames);
     setAttrib(x, install("assign"), assign);
-    UNPROTECT(13);
+    UNPROTECT(14);
     return x;
 }
