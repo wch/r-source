@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 15:18+0100\n"
+"POT-Creation-Date: 2006-04-17 17:04+0100\n"
 "PO-Revision-Date: 2005-02-05 13:45+0100\n"
 "Last-Translator: Stefano M. Iacus <stefano.iacus@R-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -513,13 +513,13 @@ msgstr "Non è possibile creare una finestra per l'editor"
 msgid "Untitled"
 msgstr "Senza titolo"
 
-#: extra.c:804 preferences.c:771 graphapp/dialogs.c:506 graphapp/dialogs.c:601
+#: extra.c:804 preferences.c:771 graphapp/dialogs.c:468 graphapp/dialogs.c:563
 msgid "OK"
 msgstr ""
 
-#: extra.c:805 preferences.c:772 graphapp/dialogs.c:480 graphapp/dialogs.c:504
-#: graphapp/dialogs.c:510 graphapp/dialogs.c:585 graphapp/dialogs.c:599
-#: graphapp/dialogs.c:605
+#: extra.c:805 preferences.c:772 graphapp/dialogs.c:442 graphapp/dialogs.c:466
+#: graphapp/dialogs.c:472 graphapp/dialogs.c:547 graphapp/dialogs.c:561
+#: graphapp/dialogs.c:567
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -910,23 +910,23 @@ msgstr " Cambia directory di lavoro a:"
 msgid "Unable to set '%s' as working directory"
 msgstr "Impossibile impostare '%s' come directory di lavoro"
 
-#: graphapp/dialogs.c:389
-msgid "Select working directory"
-msgstr "Seleziona directory di lavoro"
+#: graphapp/dialogs.c:363
+msgid "Choose a folder"
+msgstr ""
 
-#: graphapp/dialogs.c:493 graphapp/dialogs.c:495
+#: graphapp/dialogs.c:455 graphapp/dialogs.c:457
 msgid "Browse"
 msgstr ""
 
-#: graphapp/dialogs.c:593
+#: graphapp/dialogs.c:555
 msgid "User"
 msgstr "Utente"
 
-#: graphapp/dialogs.c:594
+#: graphapp/dialogs.c:556
 msgid "Password"
 msgstr ""
 
-#: graphapp/dialogs.c:755 graphapp/dialogs.c:761
+#: graphapp/dialogs.c:717 graphapp/dialogs.c:723
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\" non trovato"
@@ -1181,3 +1181,6 @@ msgstr "Aspetto per confermare cambio pagina..."
 #: ../library/grDevices/src/devWindows.c:3044
 msgid "Click or hit ENTER for next page"
 msgstr "Click o premi ENTER per pagina successiva"
+
+#~ msgid "Select working directory"
+#~ msgstr "Seleziona directory di lavoro"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 15:18+0100\n"
+"POT-Creation-Date: 2006-04-17 17:04+0100\n"
 "PO-Revision-Date: 2005-12-06 16:49+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -516,13 +516,13 @@ msgstr "Impossible de créer la fenêtre d'édition"
 msgid "Untitled"
 msgstr "Sans titre"
 
-#: extra.c:804 preferences.c:771 graphapp/dialogs.c:506 graphapp/dialogs.c:601
+#: extra.c:804 preferences.c:771 graphapp/dialogs.c:468 graphapp/dialogs.c:563
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:805 preferences.c:772 graphapp/dialogs.c:480 graphapp/dialogs.c:504
-#: graphapp/dialogs.c:510 graphapp/dialogs.c:585 graphapp/dialogs.c:599
-#: graphapp/dialogs.c:605
+#: extra.c:805 preferences.c:772 graphapp/dialogs.c:442 graphapp/dialogs.c:466
+#: graphapp/dialogs.c:472 graphapp/dialogs.c:547 graphapp/dialogs.c:561
+#: graphapp/dialogs.c:567
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -915,23 +915,23 @@ msgstr "Changer le répertoire courant vers :"
 msgid "Unable to set '%s' as working directory"
 msgstr "Impossible de spécifier '%s' comme répertoire courant"
 
-#: graphapp/dialogs.c:389
-msgid "Select working directory"
-msgstr "Sélectionnez le répertoire courant"
+#: graphapp/dialogs.c:363
+msgid "Choose a folder"
+msgstr ""
 
-#: graphapp/dialogs.c:493 graphapp/dialogs.c:495
+#: graphapp/dialogs.c:455 graphapp/dialogs.c:457
 msgid "Browse"
 msgstr "Explorer"
 
-#: graphapp/dialogs.c:593
+#: graphapp/dialogs.c:555
 msgid "User"
 msgstr "Utilisateur"
 
-#: graphapp/dialogs.c:594
+#: graphapp/dialogs.c:556
 msgid "Password"
 msgstr "Mot de passe"
 
-#: graphapp/dialogs.c:755 graphapp/dialogs.c:761
+#: graphapp/dialogs.c:717 graphapp/dialogs.c:723
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\" introuvable"
@@ -1186,3 +1186,6 @@ msgstr "Changement de page : attente de confirmation..."
 #: ../library/grDevices/src/devWindows.c:3044
 msgid "Click or hit ENTER for next page"
 msgstr "Cliquez ou appuyez ENTREE pour la page suivante"
+
+#~ msgid "Select working directory"
+#~ msgstr "Sélectionnez le répertoire courant"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 15:18+0100\n"
+"POT-Creation-Date: 2006-04-17 17:04+0100\n"
 "PO-Revision-Date: 2006-04-13 11:47+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -517,13 +517,13 @@ msgstr "Kann kein Editor-Fenster öffnen"
 msgid "Untitled"
 msgstr "Namenlos"
 
-#: extra.c:804 preferences.c:771 graphapp/dialogs.c:506 graphapp/dialogs.c:601
+#: extra.c:804 preferences.c:771 graphapp/dialogs.c:468 graphapp/dialogs.c:563
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:805 preferences.c:772 graphapp/dialogs.c:480 graphapp/dialogs.c:504
-#: graphapp/dialogs.c:510 graphapp/dialogs.c:585 graphapp/dialogs.c:599
-#: graphapp/dialogs.c:605
+#: extra.c:805 preferences.c:772 graphapp/dialogs.c:442 graphapp/dialogs.c:466
+#: graphapp/dialogs.c:472 graphapp/dialogs.c:547 graphapp/dialogs.c:561
+#: graphapp/dialogs.c:567
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -914,23 +914,23 @@ msgstr " Wechsele Arbeitsverzeichnis nach:"
 msgid "Unable to set '%s' as working directory"
 msgstr "Kann '%s' nicht als Arbeitsverzeichnis setzen"
 
-#: graphapp/dialogs.c:389
-msgid "Select working directory"
-msgstr "Wähle Arbeitsverzeichnis"
+#: graphapp/dialogs.c:363
+msgid "Choose a folder"
+msgstr ""
 
-#: graphapp/dialogs.c:493 graphapp/dialogs.c:495
+#: graphapp/dialogs.c:455 graphapp/dialogs.c:457
 msgid "Browse"
 msgstr ""
 
-#: graphapp/dialogs.c:593
+#: graphapp/dialogs.c:555
 msgid "User"
 msgstr "Nutzer"
 
-#: graphapp/dialogs.c:594
+#: graphapp/dialogs.c:556
 msgid "Password"
 msgstr "Passwort"
 
-#: graphapp/dialogs.c:755 graphapp/dialogs.c:761
+#: graphapp/dialogs.c:717 graphapp/dialogs.c:723
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\" nicht gefunden"
@@ -1185,3 +1185,6 @@ msgstr "Warte auf Bestätigung des Seitenwechsels..."
 #: ../library/grDevices/src/devWindows.c:3044
 msgid "Click or hit ENTER for next page"
 msgstr "Klick oder Return für die nächste Seite"
+
+#~ msgid "Select working directory"
+#~ msgstr "Wähle Arbeitsverzeichnis"

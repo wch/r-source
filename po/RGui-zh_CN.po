@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 15:18+0100\n"
+"POT-Creation-Date: 2006-04-17 17:04+0100\n"
 "PO-Revision-Date: 2005-05-20 18:16+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -499,13 +499,13 @@ msgstr "无法建立编辑器窗口"
 msgid "Untitled"
 msgstr "未命名"
 
-#: extra.c:804 preferences.c:771 graphapp/dialogs.c:506 graphapp/dialogs.c:601
+#: extra.c:804 preferences.c:771 graphapp/dialogs.c:468 graphapp/dialogs.c:563
 msgid "OK"
 msgstr "确定"
 
-#: extra.c:805 preferences.c:772 graphapp/dialogs.c:480 graphapp/dialogs.c:504
-#: graphapp/dialogs.c:510 graphapp/dialogs.c:585 graphapp/dialogs.c:599
-#: graphapp/dialogs.c:605
+#: extra.c:805 preferences.c:772 graphapp/dialogs.c:442 graphapp/dialogs.c:466
+#: graphapp/dialogs.c:472 graphapp/dialogs.c:547 graphapp/dialogs.c:561
+#: graphapp/dialogs.c:567
 msgid "Cancel"
 msgstr "取消"
 
@@ -884,23 +884,23 @@ msgstr " 当前目录改成："
 msgid "Unable to set '%s' as working directory"
 msgstr "无法将'%s'设成当前目录"
 
-#: graphapp/dialogs.c:389
-msgid "Select working directory"
-msgstr "选择当前目录"
+#: graphapp/dialogs.c:363
+msgid "Choose a folder"
+msgstr ""
 
-#: graphapp/dialogs.c:493 graphapp/dialogs.c:495
+#: graphapp/dialogs.c:455 graphapp/dialogs.c:457
 msgid "Browse"
 msgstr ""
 
-#: graphapp/dialogs.c:593
+#: graphapp/dialogs.c:555
 msgid "User"
 msgstr "用户"
 
-#: graphapp/dialogs.c:594
+#: graphapp/dialogs.c:556
 msgid "Password"
 msgstr "密码"
 
-#: graphapp/dialogs.c:755 graphapp/dialogs.c:761
+#: graphapp/dialogs.c:717 graphapp/dialogs.c:723
 #, c-format
 msgid "\"%s\" not found"
 msgstr "找不到\"%s\""
@@ -1155,3 +1155,6 @@ msgstr "等待页面改变的确认..."
 #: ../library/grDevices/src/devWindows.c:3044
 msgid "Click or hit ENTER for next page"
 msgstr "按ENTER来看下一页"
+
+#~ msgid "Select working directory"
+#~ msgstr "选择当前目录"

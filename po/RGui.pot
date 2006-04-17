@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 15:18+0100\n"
+"POT-Creation-Date: 2006-04-17 17:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -470,13 +470,13 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: extra.c:804 preferences.c:771 graphapp/dialogs.c:506 graphapp/dialogs.c:601
+#: extra.c:804 preferences.c:771 graphapp/dialogs.c:468 graphapp/dialogs.c:563
 msgid "OK"
 msgstr ""
 
-#: extra.c:805 preferences.c:772 graphapp/dialogs.c:480 graphapp/dialogs.c:504
-#: graphapp/dialogs.c:510 graphapp/dialogs.c:585 graphapp/dialogs.c:599
-#: graphapp/dialogs.c:605
+#: extra.c:805 preferences.c:772 graphapp/dialogs.c:442 graphapp/dialogs.c:466
+#: graphapp/dialogs.c:472 graphapp/dialogs.c:547 graphapp/dialogs.c:561
+#: graphapp/dialogs.c:567
 msgid "Cancel"
 msgstr ""
 
@@ -854,23 +854,23 @@ msgstr ""
 msgid "Unable to set '%s' as working directory"
 msgstr ""
 
-#: graphapp/dialogs.c:389
-msgid "Select working directory"
+#: graphapp/dialogs.c:363
+msgid "Choose a folder"
 msgstr ""
 
-#: graphapp/dialogs.c:493 graphapp/dialogs.c:495
+#: graphapp/dialogs.c:455 graphapp/dialogs.c:457
 msgid "Browse"
 msgstr ""
 
-#: graphapp/dialogs.c:593
+#: graphapp/dialogs.c:555
 msgid "User"
 msgstr ""
 
-#: graphapp/dialogs.c:594
+#: graphapp/dialogs.c:556
 msgid "Password"
 msgstr ""
 
-#: graphapp/dialogs.c:755 graphapp/dialogs.c:761
+#: graphapp/dialogs.c:717 graphapp/dialogs.c:723
 #, c-format
 msgid "\"%s\" not found"
 msgstr ""
