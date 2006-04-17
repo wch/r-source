@@ -24,6 +24,11 @@ attr(x, which) <- value
   The first form first looks for an exact match to \code{code} amongst the
   attributed of \code{x}, then a partial match.  If no exact match is
   found and more than one partial match is found, the result is \code{NULL}.
+
+  Note that some attributes (namely \code{class}, \code{comment},
+  \code{dim}, \code{dimnames}, \code{names}
+  and \code{tsp}) are treated specially and have restrictions on the
+  values which can be set.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -228,6 +228,14 @@ sealClass(Class, where)
 
 }% S3 classes
 
+\note{
+  Certain slot names are not allowed in the current implementation, as
+  they correspond to \link{attributes} which are treated
+  specially.  These are \code{class}, \code{comment}, \code{dim},
+  \code{dimnames}, \code{names}
+  and \code{tsp}.
+}
+
 \references{
   The \R package \pkg{methods} implements, with a few exceptions, the
   programming interface for classes and methods in the book
