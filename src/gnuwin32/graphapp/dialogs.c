@@ -354,53 +354,15 @@ static void hit_button(control c)
 	hide(w);
 }
 
-#ifndef OLD
-
 static void browse_button(control c)
 {
     window w = parentwindow(c);
     dialog_data *d = data(w);
     char strbuf[MAX_PATH];
     strcpy(strbuf, gettext(d->text));
-    selectfolder(strbuf);
+    selectfolder(strbuf, G_("Choose a folder"));
     if(strlen(strbuf)) settext(d->text, strbuf);
 }
-#else
-static void browse_button(control c)
-{
-    window w = parentwindow(c);
-    dialog_data *d = data(w);
-
-    OPENFILENAME ofn;
-    char strbuf[_MAX_PATH] = "anything", *p;
-
-    ofn.lStructSize     = sizeof(OPENFILENAME);
-    ofn.hwndOwner       = 0;
-    ofn.hInstance       = 0;
-    ofn.lpstrFilter     = "All files (*.*)\0*.*\0\0";
-    ofn.lpstrCustomFilter = NULL;
-    ofn.nMaxCustFilter  = 0;
-    ofn.nFilterIndex    = 0;
-    ofn.lpstrFile       = strbuf;
-    ofn.nMaxFile        = _MAX_PATH;
-    ofn.lpstrFileTitle  = NULL;
-    ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
-    ofn.lpstrInitialDir = gettext(d->text);
-    ofn.lpstrTitle      = G_("Select working directory");
-    ofn.Flags           = OFN_HIDEREADONLY;
-    ofn.nFileOffset     = 0;
-    ofn.nFileExtension  = 0;
-    ofn.lpstrDefExt     = "";
-    ofn.lCustData       = 0L;
-    ofn.lpfnHook        = NULL;
-    ofn.lpTemplateName  = NULL;
-
-    if(GetSaveFileName(&ofn) && strlen(strbuf)) {
-	 p = strrchr(strbuf,'\\'); if(p) *p ='\0';
-	 settext(d->text, strbuf);
-    }
-}
-#endif
 
 static void hit_key(window w, int key)
 {
