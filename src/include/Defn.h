@@ -537,8 +537,8 @@ extern0 int	R_Expressions_keep INI_as(5000);	/* options(expressions) */
 extern0 Rboolean R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 extern0 int	R_UseNamespaceDispatch INI_as(TRUE);
 extern0 int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
-extern0 uintptr_t R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
-extern0 uintptr_t R_CStackStart	INI_as((uintptr_t)-1);	/* Initial stack address */
+extern uintptr_t R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
+extern uintptr_t R_CStackStart	INI_as((uintptr_t)-1);	/* Initial stack address */
 extern0 int	R_CStackDir	INI_as(1);	/* C stack direction */
 
 /* File Input/Output */
