@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:21+0100\n"
+"POT-Creation-Date: 2006-04-17 17:01+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -72,7 +72,8 @@ msgid "cannot get working directory"
 msgstr "找不到工作目錄"
 
 #: src/gnuwin32/extra.c:69
-msgid "invalid 'names' in R_unlink"
+#, fuzzy
+msgid "invalid 'names' in 'R_unlink'"
 msgstr "R_unlink 的 'names' 無效"
 
 #: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
@@ -227,6 +228,16 @@ msgstr "別傻了!: 您的機器有 4Gb 的位址上限"
 #: src/gnuwin32/extra.c:656
 msgid "cannot decrease memory limit"
 msgstr "無法減少記憶體限制"
+
+#: src/gnuwin32/extra.c:788
+#, fuzzy
+msgid "Select one or more"
+msgstr "選擇: "
+
+#: src/gnuwin32/extra.c:788
+#, fuzzy
+msgid "Select one"
+msgstr "選擇: "
 
 #: src/gnuwin32/extra.c:924
 msgid "argument must be a character vector or a raw vector"

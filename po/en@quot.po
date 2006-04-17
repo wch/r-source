@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:21+0100\n"
-"PO-Revision-Date: 2006-04-17 11:21+0100\n"
+"POT-Creation-Date: 2006-04-17 17:01+0100\n"
+"PO-Revision-Date: 2006-04-17 17:01+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -93,8 +93,8 @@ msgid "cannot get working directory"
 msgstr "cannot get working directory"
 
 #: src/gnuwin32/extra.c:69
-msgid "invalid 'names' in R_unlink"
-msgstr "invalid ‘names’ in R_unlink"
+msgid "invalid 'names' in 'R_unlink'"
+msgstr "invalid ‘names’ in ‘R_unlink’"
 
 #: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
 #: src/gnuwin32/extra.c:284 src/gnuwin32/extra.c:311 src/gnuwin32/extra.c:314
@@ -248,6 +248,14 @@ msgstr "don't be silly!: your machine has a 4Gb address limit"
 #: src/gnuwin32/extra.c:656
 msgid "cannot decrease memory limit"
 msgstr "cannot decrease memory limit"
+
+#: src/gnuwin32/extra.c:788
+msgid "Select one or more"
+msgstr "Select one or more"
+
+#: src/gnuwin32/extra.c:788
+msgid "Select one"
+msgstr "Select one"
 
 #: src/gnuwin32/extra.c:924
 msgid "argument must be a character vector or a raw vector"

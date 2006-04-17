@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:21+0100\n"
+"POT-Creation-Date: 2006-04-17 17:01+0100\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -71,7 +71,7 @@ msgid "cannot get working directory"
 msgstr ""
 
 #: src/gnuwin32/extra.c:69
-msgid "invalid 'names' in R_unlink"
+msgid "invalid 'names' in 'R_unlink'"
 msgstr ""
 
 #: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
@@ -225,6 +225,14 @@ msgstr ""
 
 #: src/gnuwin32/extra.c:656
 msgid "cannot decrease memory limit"
+msgstr ""
+
+#: src/gnuwin32/extra.c:788
+msgid "Select one or more"
+msgstr ""
+
+#: src/gnuwin32/extra.c:788
+msgid "Select one"
 msgstr ""
 
 #: src/gnuwin32/extra.c:924

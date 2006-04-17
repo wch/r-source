@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:21+0100\n"
+"POT-Creation-Date: 2006-04-17 17:01+0100\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -72,7 +72,8 @@ msgid "cannot get working directory"
 msgstr "não foi possível obter o diretório de trabalho"
 
 #: src/gnuwin32/extra.c:69
-msgid "invalid 'names' in R_unlink"
+#, fuzzy
+msgid "invalid 'names' in 'R_unlink'"
 msgstr "'names' inválidos em R_unlink"
 
 #: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
@@ -227,6 +228,16 @@ msgstr "não seja tolo!: seu computador tem um limite de endereçamento de 4Gb"
 #: src/gnuwin32/extra.c:656
 msgid "cannot decrease memory limit"
 msgstr "não foi possível diminuir o limite de memória"
+
+#: src/gnuwin32/extra.c:788
+#, fuzzy
+msgid "Select one or more"
+msgstr "Seleção: "
+
+#: src/gnuwin32/extra.c:788
+#, fuzzy
+msgid "Select one"
+msgstr "Seleção: "
 
 #: src/gnuwin32/extra.c:924
 msgid "argument must be a character vector or a raw vector"

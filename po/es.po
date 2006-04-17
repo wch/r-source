@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:21+0100\n"
-"PO-Revision-Date: 13.04.06\n"
-"Last-Translator: Pablo E. Verde <pabloemilio.verde@uni-duesseldorf.de> \n"
+"POT-Creation-Date: 2006-04-17 17:01+0100\n"
+"PO-Revision-Date: 2006-04-17 00:24+0100\n"
+"Last-Translator: Pablo E. Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -72,7 +72,8 @@ msgid "cannot get working directory"
 msgstr "no se puede obtener una carpeta de trabajo"
 
 #: src/gnuwin32/extra.c:69
-msgid "invalid 'names' in R_unlink"
+#, fuzzy
+msgid "invalid 'names' in 'R_unlink'"
 msgstr "'names' inválidos en R_unlink"
 
 #: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
@@ -229,6 +230,16 @@ msgstr ""
 #: src/gnuwin32/extra.c:656
 msgid "cannot decrease memory limit"
 msgstr "no se puede disminuir el límite de la memoria"
+
+#: src/gnuwin32/extra.c:788
+#, fuzzy
+msgid "Select one or more"
+msgstr "Selección: "
+
+#: src/gnuwin32/extra.c:788
+#, fuzzy
+msgid "Select one"
+msgstr "Selección: "
 
 #: src/gnuwin32/extra.c:924
 #, fuzzy
@@ -1805,7 +1816,6 @@ msgstr "falla en la asignación de memoria para abrir el portapapeles"
 msgid "attempt to seek outside the range of the clipboard"
 msgstr "tentativa de buscar fuera del rango del portapapeles"
 
-# desde aca
 #: src/main/connections.c:1528
 msgid "clipboard connection is open for reading only"
 msgstr "La conexión con el portapapeles está abierta sólo para lectura"
@@ -2260,7 +2270,6 @@ msgstr "argumentos do tipo carácter esperados"
 msgid "zero length argument"
 msgstr "argumento de longitud cero"
 
-# desde aca
 #: src/main/deparse.c:345 src/main/saveload.c:1932 src/main/saveload.c:2204
 #: src/main/serialize.c:2158
 msgid "bad environment"
@@ -4460,7 +4469,6 @@ msgstr "lista de parámetros gráficos no válidos"
 msgid "\"%s\" is not a graphical parameter"
 msgstr "parámetro gráfico inválido"
 
-#  c-format
 #: src/main/par.c:740
 #, c-format
 msgid "graphical parameter \"%s\" can not be set in high-level plot() function"
@@ -5223,8 +5231,7 @@ msgid ""
 " \tis not a multiple of shorter object length"
 msgstr ""
 "longitud de objeto mayor\n"
-" \n"
-"o es múltiplo de longitud de objeto menor"
+" \tno es múltiplo de longitud de objeto menor"
 
 #: src/main/relop.c:100
 #, c-format
@@ -6209,7 +6216,7 @@ msgstr "'tempdir' inválido en R_tmpnam"
 
 #: src/main/sysutils.c:634
 msgid "cannot find unused tempfile name"
-msgstr "no se puede utilizar un nombre no utilizado para archivo temporario"
+msgstr "no se puede encontrar un nombre temporario de archivo no utilizado"
 
 #: src/main/unique.c:274
 #, c-format
@@ -6401,7 +6408,7 @@ msgid ""
 msgstr ""
 "Escriba 'demo()' para demostraciones, 'help()' para el sistema on-line de "
 "ayuda,\n"
-"o 'help.start()' para abrir el sistema de ayuda HTML de su navegador.\n"
+"o 'help.start()' para abrir el sistema de ayuda HTML con su navegador.\n"
 "Escriba 'q()' para salir de R.\n"
 "\n"
 
@@ -6731,7 +6738,7 @@ msgstr ""
 
 #: src/modules/lapack/Lapack.c:848
 msgid "argument 'logarithm' must be logical"
-msgstr "argumento 'logarithm' debe ser l—gico"
+msgstr "argumento 'logarithm' debe ser logico"
 
 #: src/modules/X11/devX11.c:298
 msgid "cannot set grayscale: reverting to monochrome"
@@ -6765,12 +6772,12 @@ msgstr ""
 #: src/modules/X11/devX11.c:891
 #, c-format
 msgid "X11 used font size %d when %d was requested"
-msgstr "X11 utiliza fuentes de tama–o %d cuando %d fue pedido"
+msgstr "X11 usa fuentes de tamaño %d cuando %d fue pedido"
 
 #: src/modules/X11/devX11.c:950
 #, c-format
 msgid "X11 font at size %d could not be loaded"
-msgstr "fuente X11 de tama–o %d no puede ser cargada"
+msgstr "fuente X11 de tamaño %d no puede ser cargada"
 
 #: src/modules/X11/devX11.c:1065
 #, c-format
@@ -6921,7 +6928,7 @@ msgstr "bessel_k(%g,nu=%g): precisión perdida en resultado\n"
 
 #: src/nmath/bessel_y.c:61
 msgid "bessel_y allocation error"
-msgstr "error de alocaci—n en bessel_y"
+msgstr "error de alocación en bessel_y"
 
 #: src/nmath/bessel_y.c:71
 #, c-format
@@ -6969,7 +6976,7 @@ msgstr "error de alocación %d en wilcox"
 msgid ""
 "Explicit local dynamic loading not supported on this platform. Using default."
 msgstr ""
-"Carga din‡mica local explícita no soportado en esta plataforma. Usar por "
+"Carga dinámica local explícita no soportado en esta plataforma. Usar por "
 "defecto."
 
 #: src/unix/dynload.c:142
@@ -6977,7 +6984,7 @@ msgid ""
 "Explicit global dynamic loading not supported on this platform. Using "
 "default."
 msgstr ""
-"Carga din‡mica global explícita no soportado en esta plataforma. Usar por "
+"Carga dinámica global explícita no soportado en esta plataforma. Usar por "
 "defecto."
 
 #: src/unix/dynload.c:143

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:21+0100\n"
+"POT-Creation-Date: 2006-04-17 17:01+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -78,7 +78,8 @@ msgid "cannot get working directory"
 msgstr "impossibile ottenere la directory di lavoro"
 
 #: src/gnuwin32/extra.c:69
-msgid "invalid 'names' in R_unlink"
+#, fuzzy
+msgid "invalid 'names' in 'R_unlink'"
 msgstr "'names' non valido in R_unlink"
 
 #: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
@@ -237,6 +238,16 @@ msgstr "esagerato: la tua macchina ha un limite massimo di indirizzi di 4Gb"
 #: src/gnuwin32/extra.c:656
 msgid "cannot decrease memory limit"
 msgstr "impossibile diminuire il limite di memoria"
+
+#: src/gnuwin32/extra.c:788
+#, fuzzy
+msgid "Select one or more"
+msgstr "Selezione: "
+
+#: src/gnuwin32/extra.c:788
+#, fuzzy
+msgid "Select one"
+msgstr "Selezione: "
 
 #: src/gnuwin32/extra.c:924
 #, fuzzy
