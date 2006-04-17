@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-16 12:47\n"
+"POT-Creation-Date: 2006-04-17 07:32\n"
 "PO-Revision-Date: 2005-12-07 00:21+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -15,6 +15,9 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "cannot handle object of mode '%s'"
+msgstr "impossible de manipuler un objet de mode '%s'"
 
 msgid "cannot change names on Tcl array"
 msgstr "impossible de changer les noms dans un tableau Tcl"
@@ -24,9 +27,6 @@ msgstr "impossible d'imposer la taille d'un tableau Tcl"
 
 msgid "Tcl package '%s' not found"
 msgstr "le package Tcl '%s' est introuvable"
-
-msgid "cannot handle object of mode '%s'"
-msgstr "impossible de manipuler un objet de mode '%s'"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "les fichiers Tcl/Tk nécessaires n'ont pas été installés"
