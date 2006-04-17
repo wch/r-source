@@ -93,5 +93,12 @@ a <- a[(0:2)-length(a)]
 (a <- sub(" .*","", a))
 # and reverse them
 strReverse(a)
+
+## Note that final empty strings are not produced:
+strsplit(paste(c("", "a", ""), collapse="#"), split="#")[[1]]
+# [1] ""  "a"
+## and also an empty string is only produced before a definite match:
+strsplit("", " ")[[1]]    # character(0)
+strsplit(" ", " ")[[1]]   # [1] ""
 }
 \keyword{character}
