@@ -66,7 +66,7 @@ static int R_unlink(char *names, int recursive)
     HANDLE fh;
     struct stat sb;
 
-    if(strlen(names) >= MAX_PATH) error(_("invalid 'names' in R_unlink"));
+    if(strlen(names) >= MAX_PATH) error(_("invalid 'names' in 'R_unlink'"));
     strcpy(tmp, names);
     for(p = tmp; *p != '\0'; p++) if(*p == '/') *p = '\\';
     if(stat(tmp, &sb) == 0) {
@@ -785,7 +785,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     ymax = min(80+fht*n, h0-100); /* allow for window widgets, toolbar */
     ylist = ymax - 60;
     wselect = newwindow(haveTitle ? CHAR(STRING_ELT(CADDDR(args), 0)):
-			(multiple ? "Select one or more" : "Select one"),
+			(multiple ? _("Select one or more") : _("Select one")),
 			rect(0, 0, xmax, ymax),
 			Titlebar | Centered | Modal);
     setbackground(wselect, dialog_bg());
