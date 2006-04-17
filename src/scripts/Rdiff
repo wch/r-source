@@ -10,8 +10,9 @@ ffile=${1}
 tfile=${2}
 exitstatus=${3}
 
-## sed script to get rid of the startup message
-script='/^R \(version\|: Copyright\) /,/quit R.$/{d;}'
+## sed scripts to get rid of the startup message
+scriptold='/^R : Copyright /,/quit R.$/{d;}'
+scriptnew='/^R version /,/quit R.$/{d;}'
 
 ## egrep pattern to get rid of some more
 ## <= 2.2.x was pattern='(^Number of.*:|^Time |^Loading required package.*'
@@ -39,8 +40,8 @@ fi
 
 tmpfile=${TMPDIR-/tmp}/${bfile}-d.${$}
 
-sed -e "${script}" ${ffile} | ${EGREP} -v "${pattern}" > ${tmpfile}
-(sed -e "${script}" ${tfile} | \
+sed -e "${scriptold}" -e "${scriptnew}" ${ffile} | ${EGREP} -v "${pattern}" > ${tmpfile}
+(sed -e "${scriptold}" -e "${scriptnew}" ${tfile} | \
   ${EGREP} -v "${pattern}" | \
   diff -bw ${tmpfile} - ) && exitstatus=0
 
