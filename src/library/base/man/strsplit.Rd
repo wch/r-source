@@ -27,7 +27,8 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
   }
   \item{fixed}{
     logical.  If \code{TRUE} match string exactly, otherwise
-    use regular expressions.
+    use regular expressions.  Has priority over \code{perl} and
+    \code{extended}.
   }
   \item{perl}{
     logical.  Should perl-compatible regexps be used?
@@ -49,14 +50,32 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
 
   A missing value of \code{split} does not split the the corresponding
   element(s) of \code{x} at all.
+
+  The algorithm applied to each input string is
+  \preformatted{
+    repeat \{
+	if the string is empty
+	    break.
+	if there is a match
+	    add the string to the left of the match to the output.
+	    remove the match and all to the left of it.
+	else
+	    add the string to the output.
+	    break.
+    \}
+  }
+  Note that this means that if there is a match at the beginning of a
+  (non-empty) string, the first element of the output is \code{""}, but
+  if there is a match at the end of the string, the output is the same
+  as with the match removed. 
 }
 \section{Warning}{
   The standard regular expression code has been reported to be very slow
   when applied to extremely long character strings
   (tens of thousands of characters or more): the code used when
-  \code{perl=TRUE} seems much faster and more reliable for such usages.
+  \code{perl = TRUE} seems much faster and more reliable for such usages.
 
-  The \code{perl = TRUE} option is only implemented for singlebyte and
+  The \code{perl = TRUE} option is only implemented for single-byte and
   UTF-8 encodings, and will warn if used in a non-UTF-8 multibyte locale.
 }
 \seealso{
