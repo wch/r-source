@@ -7148,22 +7148,3 @@ msgstr "X11 모듈은 적재할수가 없습니다"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11를 이용할수가 없습니다"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call:  부모 환경이 검색되지 않았습니다"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "인수는 문자벡터가 되어야만 합니다"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "slot \"%s\"를 S3 클래스 c(\"\"%s\", \"%s\"\",...)의 오브젝트로부터 얻으려"
-#~ "고 했습니다(정식으로 정의된 클래스가 아닙니다"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B'  복소행렬이 아니면 되지 않습니다"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B'는 수치 행렬이 아니면 되지 않습니다"

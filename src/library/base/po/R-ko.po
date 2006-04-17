@@ -1392,22 +1392,3 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
-
-#~ msgid "none of the packages were found"
-#~ msgstr "어느 패키지도 검색되지 않았습니다"
-
-#~ msgid "no input is available"
-#~ msgstr "어떠한 입력도 이용할 수 없습니다"
-
-#~ msgid ""
-#~ "the input does not start with a magic number compatible with loading from "
-#~ "a connection"
-#~ msgstr ""
-#~ "입력은 connection로부터 로드와 호환성이 있는 magic number로 시작되어\n"
-#~ "있지 않습니다"
-
-#~ msgid "calling wrong method"
-#~ msgstr "잘못된 메소드의 호출입니다"
-
-#~ msgid "format.char: coercing 'x' to 'character'"
-#~ msgstr "format.char: 'x'를 'character' 로 강제 변환합니다"

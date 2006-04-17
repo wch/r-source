@@ -178,14 +178,12 @@ msgid "unable to delete menu item (%s)"
 msgstr "impossible d'effacer l'entrée de menu (%s)"
 
 #: src/gnuwin32/extra.c:478
-#, fuzzy
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr "savehistory peut seulement être utilisé dans Rgui et Rterm"
+msgstr "'savehistory' peut seulement être utilisé dans Rgui et Rterm"
 
 #: src/gnuwin32/extra.c:493
-#, fuzzy
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr "loadhistory peut seulement être utilisé dans Rgui et Rterm"
+msgstr "'loadhistory' peut seulement être utilisé dans Rgui et Rterm"
 
 #: src/gnuwin32/extra.c:505 src/unix/sys-std.c:969
 #, fuzzy
@@ -193,9 +191,8 @@ msgid "invalid timestamp"
 msgstr "marque (tag) incorrecte"
 
 #: src/gnuwin32/extra.c:527
-#, fuzzy
 msgid "'loadRconsole' can only be used in Rgui"
-msgstr "loadhistory peut seulement être utilisé dans Rgui et Rterm"
+msgstr "'loadRconsole' peut seulement être utilisé dans Rgui"
 
 #: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
 #: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:747
@@ -1167,9 +1164,9 @@ msgid "non-positive 'fill' argument will be ignored"
 msgstr ""
 
 #: src/main/builtin.c:433
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
-msgstr "argument %d pas encore traité par cat"
+msgstr "argument %d (type '%s') pas encore traité par cat"
 
 #: src/main/builtin.c:547
 msgid "vector: zero-length 'type' argument"
@@ -1499,9 +1496,8 @@ msgid "first argument must be a character string or a function"
 msgstr "le premier argument doit être une chaîne de caractères ou une fonction"
 
 #: src/main/coerce.c:1932
-#, fuzzy
 msgid "'envir' must be an environment"
-msgstr "'enclos' doit être un environnement"
+msgstr "'envir' doit être un environnement"
 
 #: src/main/coerce.c:2078
 msgid "invalid environment specified"
@@ -3936,9 +3932,9 @@ msgid "overlong names in '%s'"
 msgstr "noms trop longs dans '%s'"
 
 #: src/main/model.c:1349
-#, fuzzy, c-format
+#, c-format
 msgid "invalid variable type for '%s'"
-msgstr "type de variable incorrect"
+msgstr "type de variable incorrect pour '%s'"
 
 #: src/main/model.c:1352
 #, fuzzy, c-format
@@ -4522,9 +4518,8 @@ msgstr ""
 "niveau"
 
 #: src/main/par.c:1198
-#, fuzzy
 msgid "invalid argument passed to par()"
-msgstr "paramètre passé à par() incorrect"
+msgstr "paramètre passé à par() invalide"
 
 #: src/main/par.c:1268
 #, c-format
@@ -6022,9 +6017,9 @@ msgid "Integer overflow in sum(.); use sum(as.numeric(.))"
 msgstr "Dépassement d'entier dans sum(.) ; utiliser sum(as.numeric(.))"
 
 #: src/main/summary.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
-msgstr "erreur interne ('op' in do_summary).\t Appelez un expert"
+msgstr "erreur interne ('op = %d' in do_summary).\t Appelez un expert"
 
 #: src/main/summary.c:537
 #, fuzzy
@@ -6051,9 +6046,10 @@ msgstr ""
 "affectation en dehors des limites vecteur / liste (extension de %d vers %d)"
 
 #: src/main/subassign.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in subassignment type fix"
-msgstr "types (%d) incompatibles dans l'ajustement d'affectation de type"
+msgstr ""
+"types (de %s a %s) incompatibles dans l'ajustement d'affectation de type"
 
 #: src/main/subassign.c:388 src/main/subassign.c:659 src/main/subassign.c:662
 #: src/main/subassign.c:947
@@ -6077,16 +6073,18 @@ msgid "incorrect number of subscripts on matrix"
 msgstr "nombre d'indices incorrect sur la matrice"
 
 #: src/main/subassign.c:891
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
 msgstr ""
-"types incompatibles (cas %d) dans l'affectation d'un sous-ensemble de matrice"
+"types incompatibles (de %s a %s) dans l'affectation d'un sous-ensemble de "
+"matrice"
 
 #: src/main/subassign.c:1070
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in array subset assignment"
 msgstr ""
-"types (%d) incompatibles dans l'affectation d'un sous-ensemble de tableau"
+"types (de %s a %s) incompatibles dans l'affectation d'un sous-ensemble de "
+"tableau"
 
 #: src/main/subassign.c:1095
 msgid "invalid number of subscripts to list assign"
@@ -6127,9 +6125,9 @@ msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] nombre d'indices incorrect"
 
 #: src/main/subassign.c:1634
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in [[ assignment"
-msgstr "types (%d) incompatibles dans l'affectation [["
+msgstr "types (de %s a %s) incompatibles dans l'affectation [["
 
 #: src/main/subassign.c:1682
 #, c-format
@@ -7016,9 +7014,9 @@ msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..) : absence de convergence en %d itérations."
 
 #: src/nmath/polygamma.c:473
-#, fuzzy, c-format
+#, c-format
 msgid "deriv = %d > %d (= n_max)\n"
-msgstr "deriv = %d > %d (= n_max)"
+msgstr "deriv = %d > %d (= n_max)\n"
 
 #: src/nmath/rmultinom.c:74
 #, c-format
@@ -7138,18 +7136,22 @@ msgid "re-encoding is not available on this system"
 msgstr "re-encodage indisponible sur ce systéme"
 
 #: src/unix/sys-std.c:858
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s', reason '%s'\n"
 "\n"
-msgstr "impossible d'ouvrir le fichier '%s', à cause de '%s'"
+msgstr ""
+"impossible d'ouvrir le fichier '%s', à cause de '%s'\n"
+"\n"
 
 #: src/unix/sys-std.c:861
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s'\n"
 "\n"
-msgstr "impossible d'ouvrir le fichier '%s'"
+msgstr ""
+"impossible d'ouvrir le fichier '%s'\n"
+"\n"
 
 #: src/unix/sys-std.c:924 src/unix/sys-std.c:946
 msgid "'file' argument is too long"
@@ -7181,9 +7183,8 @@ msgid "'intern' must be logical and not NA"
 msgstr "'ascii' doit être une valeur logique"
 
 #: src/unix/sys-unix.c:300
-#, fuzzy
 msgid "'intern=TRUE' is not implemented on this platform"
-msgstr "intern=TRUE n'est pas implémenté sur cette architecture"
+msgstr "'intern=TRUE' n'est pas implémenté sur cette architecture"
 
 #: src/unix/sys-unix.c:373
 msgid "Sys.info() is not implemented on this system"
@@ -7223,22 +7224,3 @@ msgstr "impossible de charger le module X11"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 indisponible"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call : impossible de trouver l'environnement parent"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "l'argument doit être un vecteur de caractères"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "tentative d'obtenir le slot \"%s\" d'un objet de classe S3 c(\"%s\", \"%s"
-#~ "\", ...) (classe qui n'est pas formellement définie)"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B' doit être une matrice complexe"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B' doit être une matrice numérique"

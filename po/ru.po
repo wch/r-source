@@ -7104,22 +7104,3 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 недоступен"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call: не могу найти родительское окружение"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "аргумент должен быть текстовым вектором"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "попытка получить слот \"%s\" из объекта с классом S3 c(\"%s\", \"%s"
-#~ "\", ...) (класс, не определенный формально)"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B' должен быть комплексной матрицей"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B' должен быть числовой матрицей"

@@ -1386,22 +1386,3 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
 msgstr[1] "警告メッセージ(複数)：\n"
-
-#~ msgid "none of the packages were found"
-#~ msgstr "どのパッケージも見つかりませんでした"
-
-#~ msgid "no input is available"
-#~ msgstr "いかなる入力も利用できません"
-
-#~ msgid ""
-#~ "the input does not start with a magic number compatible with loading from "
-#~ "a connection"
-#~ msgstr ""
-#~ "入力はコネクションからのロードと互換性があるマジックナンバーで始まっていま"
-#~ "せん"
-
-#~ msgid "format.char: coercing 'x' to 'character'"
-#~ msgstr "format.char: 'x' を強 'character' へ強制変換します"
-
-#~ msgid "calling wrong method"
-#~ msgstr "間違ったメソッドの呼出しです"

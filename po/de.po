@@ -7110,22 +7110,3 @@ msgstr "X11 Modul kann nicht geladen werden"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call: konnte Elternumgebung nicht finden"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "Argument muss ein Charaktervektor sein"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "versuche einen Slot \"%s\" von einem Objekt mit S3 Klasse c(\"%s\", \"%s"
-#~ "\", ...) . (keine formal definierte Klasse) zu bekommen"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B' muss eine komplexe Matrix sein"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B' muss numerische Matrix sein"

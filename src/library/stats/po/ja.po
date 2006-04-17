@@ -247,7 +247,3 @@ msgstr "smooth(*, '3R') 中の割り当てエラーです．"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "直前の %d 個の観測値中に欠損値があります"
-
-#~ msgid "assert failed in src/library/ts/src/carray.c"
-#~ msgstr ""
-#~ "src/library/ts/src/carray.c に対する引数整合性検査(assert)に失敗しました"

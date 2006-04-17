@@ -21,7 +21,7 @@ msgid "unable to start NULL device"
 msgstr "impossible de démarrer le périphérique NULL"
 
 #: devPS.c:553
-#, fuzzy, c-format
+#, c-format
 msgid "afm file '%s' could not be opened"
 msgstr "le fichier metafile '%s' ne peut être créé"
 
@@ -40,9 +40,9 @@ msgstr "entité AFM inconnue rencontrée"
 
 #: devPS.c:735 devPS.c:738 devPS.c:3973 devPS.c:6657 devPicTeX.c:501
 #: devPicTeX.c:503
-#, fuzzy, c-format
+#, c-format
 msgid "invalid string in '%s'"
-msgstr "argument chaîne de caractère incorrect"
+msgstr "argument chaîne de caractère incorrect dans '%s'"
 
 #: devPS.c:766
 #, c-format
@@ -55,9 +55,9 @@ msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
 msgstr ""
 
 #: devPS.c:836 devPS.c:848
-#, fuzzy, c-format
+#, c-format
 msgid "font metrics unknown for Unicode character U+%04x"
-msgstr "taille de police inconnue pour le caractère Unicode 0x%x"
+msgstr "taille de police inconnue pour le caractère Unicode U+%04x"
 
 #: devPS.c:856
 #, c-format
@@ -70,65 +70,55 @@ msgid ""
 msgstr ""
 
 #: devPS.c:992
-#, fuzzy
 msgid "failed to allocate CID font info"
-msgstr "Echec d'allocation d'information de police de Type 1"
+msgstr "Echec d'allocation d'information de police de Type CID"
 
 #: devPS.c:1007
-#, fuzzy
 msgid "failed to allocate Type 1 font info"
 msgstr "Echec d'allocation d'information de police de Type 1"
 
 #: devPS.c:1027
-#, fuzzy
 msgid "failed to allocate encoding info"
 msgstr "Echec d'allocation d'information d'encodage"
 
 #: devPS.c:1045
-#, fuzzy
 msgid "failed to allocate CID font family"
-msgstr "Echec d'allocation de la famille de police de Type 1"
+msgstr "Echec d'allocation de la famille de police de Type CID"
 
 #: devPS.c:1058
-#, fuzzy
 msgid "failed to allocate Type 1 font family"
 msgstr "Echec d'allocation de la famille de police de Type 1"
 
 #: devPS.c:1097 devPS.c:1108
-#, fuzzy
 msgid "failed to allocate font list"
 msgstr "Echec d'allocation de la liste de polices"
 
 #: devPS.c:1159
-#, fuzzy
 msgid "failed to allocated encoding list"
 msgstr "Echec d'allocation de la liste d'encodage"
 
 #: devPS.c:1305
-#, fuzzy
 msgid "truncated string which was too long for copy"
 msgstr "Chaîne de caractères tronquée car trop longue pour copie"
 
 #: devPS.c:1344
-#, fuzzy, c-format
+#, c-format
 msgid "failed to load encoding file '%s'"
-msgstr "Echec de chargement du fichier d'encodage"
+msgstr "Echec de chargement du fichier d'encodage '%s'"
 
 #: devPS.c:1433 devPS.c:1471
 msgid "Invalid font name or more than one font name"
 msgstr "Nom de police incorrect ou plus d'un nom de police"
 
 #: devPS.c:1595 devPS.c:1628
-#, fuzzy
 msgid "font family not found in PostScript font database"
 msgstr ""
 "Famille de police introuvable dans la base de données de polices PostScript"
 
 #: devPS.c:1697 devPS.c:1772 devPS.c:1797
-#, fuzzy
 msgid "font encoding not found in font database"
 msgstr ""
-"Encodage de police introuvable dans la base de données de polices PostScript"
+"Encodage de police introuvable dans la base de données de polices"
 
 #: devPS.c:1722 devPS.c:1747
 #, fuzzy
@@ -137,9 +127,9 @@ msgstr ""
 "Famille de police introuvable dans la base de données des polices Quartz"
 
 #: devPS.c:1935 devPS.c:2014 devPS.c:2081
-#, fuzzy, c-format
+#, c-format
 msgid "cannot load afm file '%s'"
-msgstr "impossible de lire fichier afm %s"
+msgstr "impossible de lire fichier afm '%s'"
 
 #: devPS.c:2369
 msgid "Corrupt loaded encodings;  encoding not recorded"
@@ -174,12 +164,10 @@ msgid "encoding path is too long"
 msgstr "chemin d'accès à l'encodage trop long"
 
 #: devPS.c:2933 devPS.c:4297
-#, fuzzy
 msgid "failed to load encoding"
 msgstr "Echec de chargement du fichier d'encodage"
 
 #: devPS.c:2976 devPS.c:3039 devPS.c:5193 devPS.c:5248
-#, fuzzy
 msgid "Invalid font type"
 msgstr "Spécification de police incorrecte"
 
@@ -236,14 +224,14 @@ msgstr ""
 "    %s"
 
 #: devPS.c:3559
-#, fuzzy, c-format
+#, c-format
 msgid "CID family '%s' not included in PostScript device"
-msgstr "famille %s non incluse dans le périphérique PostScript"
+msgstr "famille CID '%s' non incluse dans le périphérique PostScript"
 
 #: devPS.c:3572 devPS.c:3583 devPS.c:3791 devPS.c:3822
-#, fuzzy, c-format
+#, c-format
 msgid "family '%s' not included in PostScript device"
-msgstr "famille %s non incluse dans le périphérique PostScript"
+msgstr "famille '%s' non incluse dans le périphérique PostScript"
 
 #: devPS.c:3784 devPS.c:3812 devPS.c:4763 devPS.c:6501 devPS.c:6552
 #, c-format
@@ -291,9 +279,8 @@ msgid "Only Type 1 fonts supported for XFig"
 msgstr ""
 
 #: devPS.c:4328
-#, fuzzy
 msgid "Failed to initialise default XFig font"
-msgstr "Echec d'initialisation des polices PostScript par défaut"
+msgstr "Echec d'initialisation des polices XFig par défaut"
 
 #: devPS.c:4365
 #, c-format
@@ -589,39 +576,3 @@ msgstr "impossible de démarrer périphérique devWindows"
 #: devWindows.c:3064
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "l'utilisation récursive de getGraphicsEvent n'est pas supportée"
-
-#, fuzzy
-#~ msgid "font width unknown for character U+%04x"
-#~ msgstr "largeur de police inconnue pour le caractère 0x%x"
-
-#, fuzzy
-#~ msgid "font metrics unknown for character U+%04x"
-#~ msgstr "taille de police inconnue pour le caractère 0x%x"
-
-#, fuzzy
-#~ msgid "failed to load CID afm file '%s'"
-#~ msgstr "Echec de chargement du fichier d'encodage"
-
-#~ msgid "allocation failure in PS_Text"
-#~ msgstr "échec d'allocation dans PS_Text"
-
-#~ msgid ""
-#~ "Requested encoding \"%s\"\n"
-#~ "Only encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\n"
-#~ "Assuming \"ISOLatin1.enc\""
-#~ msgstr ""
-#~ "Encodage demandé: \"%s\"\n"
-#~ "Seul encoding = \"ISOLatin1.enc\" est permis pour le moment dans "
-#~ "l'environnement\n"
-#~ "linguistique UTF-8. \"ISOLatin1.enc\" est forcé"
-
-#~ msgid ""
-#~ "Only encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\n"
-#~ "Assuming \"ISOLatin1.enc\""
-#~ msgstr ""
-#~ "Seul encoding = \"ISOLatin1.enc\" est permis pour le moment dans "
-#~ "l'environnement\n"
-#~ "linguistique UTF-8. \"ISOLatin1.enc\" est forcé"
-
-#~ msgid "allocation failure in PDF_Text"
-#~ msgstr "échec d'allocation dans PDF_Text"

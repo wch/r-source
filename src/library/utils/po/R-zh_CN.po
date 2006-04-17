@@ -710,9 +710,3 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被重新安装"
 msgstr[1] "正在使用'%s'这个程序包，因此不会被重新安装"
-
-#~ msgid "'page' requires a name"
-#~ msgstr "'page'需要名字值"
-
-#~ msgid "no Rd contents for package '%s' in '%s'"
-#~ msgstr "'%2$s'里的'%1$s'程序包内不包含Rd内容 "

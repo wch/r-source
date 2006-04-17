@@ -680,9 +680,8 @@ msgstr "le package '%s' a été compilé avec la version R %s"
 msgid "package '%s' was built for %s"
 msgstr "le package '%s' a été compilé pour %s"
 
-#, fuzzy
 msgid "package '%s' is not installed for 'arch=%s'"
-msgstr "le package '%s' n'a pas été installé correctement"
+msgstr "le package '%s' n'a pas été installé pour 'arch=%s'"
 
 msgid "package '%s' has not been installed properly"
 msgstr "le package '%s' n'a pas été installé correctement"
@@ -937,9 +936,8 @@ msgstr ""
 msgid "is already defined in the"
 msgstr ""
 
-#, fuzzy
 msgid "namespace"
-msgstr "ceci n'est pas un espace de noms"
+msgstr "un espace de noms"
 
 msgid "failed to assign NativeSymbolInfo for"
 msgstr ""
@@ -1252,9 +1250,8 @@ msgstr "'chdir = TRUE' n'a pas de sens pour une connection"
 msgid "'%s' is not an existing file"
 msgstr "'%s' n'est pas un fichier existant"
 
-#, fuzzy
 msgid "is not"
-msgstr "n'est pas TRUE"
+msgstr "n'est pas"
 
 msgid "all"
 msgstr ""
@@ -1389,11 +1386,10 @@ msgid_plural "packages %s are not loaded"
 msgstr[0] "la package %s n'est pas chargé"
 msgstr[1] "les packages %s ne sont pas chargés"
 
-#, fuzzy
 msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "aucun package nommé '%s' n'est trouvé"
-msgstr[1] "aucun package nommé '%s' n'est trouvé"
+msgstr[1] "aucun packages nommé '%s' n'est trouvé"
 
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
@@ -1415,22 +1411,3 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
-
-#~ msgid "none of the packages were found"
-#~ msgstr "aucun des packages n'a été trouvé"
-
-#~ msgid "no input is available"
-#~ msgstr "pas d'entrée disponible"
-
-#~ msgid ""
-#~ "the input does not start with a magic number compatible with loading from "
-#~ "a connection"
-#~ msgstr ""
-#~ "l'entrée ne débute pas avec un nombre magique compatible avec le "
-#~ "chargement à partir d'une connexion"
-
-#~ msgid "format.char: coercing 'x' to 'character'"
-#~ msgstr "format.char : conversion automatique de 'x' en 'character'"
-
-#~ msgid "calling wrong method"
-#~ msgstr "appel d'une mauvaise méthode"

@@ -2183,12 +2183,3 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "le paramètre %s n'apparaît pas dans la formule du modèle"
 msgstr[1] "les paramètres %s n'apparaîssent pas dans la formule du modèle"
-
-#~ msgid "rows with zero weights not counted"
-#~ msgstr "les lignes de poids nul sont non comptées"
-
-#~ msgid "p-values may be incorrect"
-#~ msgstr "les p-values peuvent être incorrectes"
-
-#~ msgid "'shape' must be strictly positive"
-#~ msgstr "'shape' doit être strictement positif"

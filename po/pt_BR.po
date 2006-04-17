@@ -7118,12 +7118,3 @@ msgstr "módulo X11 não pode ser carregado"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 não está disponível"
-
-#~ msgid "'%s' is deprecated"
-#~ msgstr "'%s' não é mais permitido"
-
-#~ msgid "third argument must be 'TRUE' or 'FALSE'"
-#~ msgstr "terceiro argumento deve ser 'TRUE' ou 'FALSE'"
-
-#~ msgid "not a proper raw vector"
-#~ msgstr "não é um vetor simples apropriado"

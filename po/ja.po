@@ -7098,22 +7098,3 @@ msgstr "X11 モジュールをロードできません"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 が利用できません"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call：親環境が見つかりませんでした"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "引数は文字ベクトルでなければなりません"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "スロット \"%s\" を S3 クラス c(\"%s\", \"%s\"\", ...) のオブジェクトから得"
-#~ "ようとしました (正式に定義されたクラスではありません) "
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B' は複素行列でなければなりません"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B' は数値行列でなければなりません"

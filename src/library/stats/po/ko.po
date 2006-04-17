@@ -248,6 +248,3 @@ msgstr "smooth(*,'3R')에서의 할당 에러입니다"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "직전의 %d개의 관측치에서 결손값이 있습니다"
-
-#~ msgid "assert failed in src/library/ts/src/carray.c"
-#~ msgstr "scr/library/ts/src/carray.c에 대한 인수 정합성 검사에 실패했습니다"

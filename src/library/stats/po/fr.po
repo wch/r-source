@@ -255,33 +255,3 @@ msgstr "erreur d'allocation dans smooth(*, '3R')."
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valeur manquante dans les %d dernières observations"
-
-#~ msgid "assert failed in src/library/ts/src/carray.c"
-#~ msgstr "échec d'assertion dans src/library/ts/src/carray.c"
-
-#~ msgid "'control$maxiter' absent"
-#~ msgstr "'control$maxiter' absent"
-
-#~ msgid "'control$tol' absent"
-#~ msgstr "'control$tol' absent"
-
-#~ msgid "'control$minFactor' absent"
-#~ msgstr "'control$minFactor' absent"
-
-#~ msgid "'m$conv()' absent"
-#~ msgstr "'m$conv()' absent"
-
-#~ msgid "m$incr() absent"
-#~ msgstr "m$incr() absent"
-
-#~ msgid "'m$deviance()' absent"
-#~ msgstr "'m$deviance()' absent"
-
-#~ msgid "'m$trace()' absent"
-#~ msgstr "'m$trace()' absent"
-
-#~ msgid "'m$setPars()' absent"
-#~ msgstr "'m$setPars()' absent"
-
-#~ msgid "lowerb and upperb must be numeric vectors"
-#~ msgstr "'lowerb' et 'upperb' doivent tous deux être des vecteurs numériques"

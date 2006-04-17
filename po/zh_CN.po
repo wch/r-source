@@ -174,14 +174,12 @@ msgid "unable to delete menu item (%s)"
 msgstr "无法删除菜单项(%s)"
 
 #: src/gnuwin32/extra.c:478
-#, fuzzy
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr "savehistory只能在Rgui和Rterm里有用"
+msgstr "'savehistory'只能在Rgui和Rterm里有用"
 
 #: src/gnuwin32/extra.c:493
-#, fuzzy
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr "loadhistory只能在Rgui和Rterm有用"
+msgstr "'loadhistory'只能在Rgui和Rterm有用"
 
 #: src/gnuwin32/extra.c:505 src/unix/sys-std.c:969
 #, fuzzy
@@ -245,9 +243,8 @@ msgid "Unable to write to the clipboard"
 msgstr "无法写入裁剪板"
 
 #: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
-#, fuzzy
 msgid "'path' must be a character vector"
-msgstr "'what'必需是字符向量"
+msgstr "'path'必需是字符向量"
 
 #: src/gnuwin32/extra.c:1097 src/gnuwin32/extra.c:1175
 msgid "'default' must be a character string"
@@ -1454,9 +1451,8 @@ msgid "first argument must be a character string or a function"
 msgstr "第一个变元必需是字符串或函数"
 
 #: src/main/coerce.c:1932
-#, fuzzy
 msgid "'envir' must be an environment"
-msgstr "'enclos'必需是环境"
+msgstr "'envir'必需是环境"
 
 #: src/main/coerce.c:2078
 msgid "invalid environment specified"
@@ -6521,35 +6517,31 @@ msgid "invalid 'only.values'"
 msgstr "'only.values'值不对"
 
 #: src/modules/lapack/Lapack.c:292 src/modules/lapack/Lapack.c:335
-#, fuzzy
 msgid "'a' must be a complex matrix"
-msgstr "'A'必需是复数矩阵"
+msgstr "'a'必需是复数矩阵"
 
 #: src/modules/lapack/Lapack.c:294 src/modules/lapack/Lapack.c:386
 #: src/modules/lapack/Lapack.c:429
-#, fuzzy
 msgid "'b' must be a complex matrix"
-msgstr "'A'必需是复数矩阵"
+msgstr "'b'必需是复数矩阵"
 
 #: src/modules/lapack/Lapack.c:299 src/modules/lapack/Lapack.c:716
-#, fuzzy
 msgid "'a' is 0-diml"
-msgstr "'A'是0-diml"
+msgstr "'a'是0-diml"
 
 #: src/modules/lapack/Lapack.c:301 src/modules/lapack/Lapack.c:718
-#, fuzzy
 msgid "no right-hand side in 'b'"
-msgstr "'B'在等号右手没有公式"
+msgstr "'b'在等号右手没有公式"
 
 #: src/modules/lapack/Lapack.c:303 src/modules/lapack/Lapack.c:720
-#, fuzzy, c-format
+#, c-format
 msgid "'a' (%d x %d) must be square"
-msgstr "A'A' (%d x %d)必需是正文形的"
+msgstr "'a' (%d x %d)必需是正文形的"
 
 #: src/modules/lapack/Lapack.c:305 src/modules/lapack/Lapack.c:722
-#, fuzzy, c-format
+#, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
-msgstr "'B' (%dx%d)必需与A(%dx%d)相容"
+msgstr "'b' (%dx%d)必需与a(%dx%d)相容"
 
 #: src/modules/lapack/Lapack.c:314 src/modules/lapack/Lapack.c:652
 #: src/modules/lapack/Lapack.c:686 src/modules/lapack/Lapack.c:731
@@ -6575,14 +6567,12 @@ msgid "invalid 'trans' parameter"
 msgstr "'trans'参数不对"
 
 #: src/modules/lapack/Lapack.c:639 src/modules/lapack/Lapack.c:877
-#, fuzzy
 msgid "'a' must be a square matrix"
-msgstr "'A'必需是正文形矩阵"
+msgstr "'a'必需是正文形矩阵"
 
 #: src/modules/lapack/Lapack.c:640
-#, fuzzy
 msgid "'a' must have dims > 0"
-msgstr "'A'必需有dims > 0"
+msgstr "'a'必需有dims > 0"
 
 #: src/modules/lapack/Lapack.c:650
 #, c-format
@@ -6592,9 +6582,8 @@ msgstr "%d数位主次为非正定"
 #: src/modules/lapack/Lapack.c:658 src/modules/lapack/Lapack.c:696
 #: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:752
 #: src/modules/lapack/Lapack.c:870
-#, fuzzy
 msgid "'a' must be a numeric matrix"
-msgstr "'A'必需是数值矩阵"
+msgstr "'a'必需是数值矩阵"
 
 #: src/modules/lapack/Lapack.c:666
 msgid "'size' argument must be a positive integer"
@@ -6617,9 +6606,8 @@ msgstr "单元(%d,%d)为0, 因此无法求逆"
 
 #: src/modules/lapack/Lapack.c:711 src/modules/lapack/Lapack.c:797
 #: src/modules/lapack/Lapack.c:835
-#, fuzzy
 msgid "'b' must be a numeric matrix"
-msgstr "'A'必需是数值矩阵"
+msgstr "'b'必需是数值矩阵"
 
 #: src/modules/lapack/Lapack.c:734
 msgid "Lapack routine dgesv: system is exactly singular"
@@ -6830,9 +6818,9 @@ msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..):%d次循环后还没有聚合."
 
 #: src/nmath/polygamma.c:473
-#, fuzzy, c-format
+#, c-format
 msgid "deriv = %d > %d (= n_max)\n"
-msgstr "deriv =%d >%d (= n_max)"
+msgstr "deriv = %d > %d (= n_max)\n"
 
 #: src/nmath/rmultinom.c:74
 #, c-format
@@ -6938,18 +6926,22 @@ msgid "re-encoding is not available on this system"
 msgstr "本系统没有重编码这个功能"
 
 #: src/unix/sys-std.c:858
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s', reason '%s'\n"
 "\n"
-msgstr "无法打开文件'%2$s'，因为'%1$s'"
+msgstr ""
+"无法打开文件'%2$s'，因为'%1$s'\n"
+"\n"
 
 #: src/unix/sys-std.c:861
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s'\n"
 "\n"
-msgstr "无法打开文件'%s'"
+msgstr ""
+"无法打开文件'%s'\n"
+"\n"
 
 #: src/unix/sys-std.c:924 src/unix/sys-std.c:946
 msgid "'file' argument is too long"
@@ -6981,9 +6973,8 @@ msgid "'intern' must be logical and not NA"
 msgstr "'ascii’必需是逻辑值"
 
 #: src/unix/sys-unix.c:300
-#, fuzzy
 msgid "'intern=TRUE' is not implemented on this platform"
-msgstr "本系统没有实现intern=TRUE这一功能"
+msgstr "本系统没有实现'intern=TRUE'这一功能"
 
 #: src/unix/sys-unix.c:373
 msgid "Sys.info() is not implemented on this system"
@@ -7023,20 +7014,3 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call: 找不到上代环境"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "变元必需为字符向量"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr "无法属于S3类别c(\"%2$s\", \"%3$s\", ...) 目标对象中取得\"%1$s\"槽"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B'必需是复数矩阵"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B'必需是数值矩阵"

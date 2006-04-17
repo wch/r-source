@@ -269,7 +269,6 @@ msgstr "L'aide au format HTML compilé n'est pas installée"
 msgid "CHM file could not be displayed"
 msgstr "Le fichier CHM n'a pas pu être affiché"
 
-#, fuzzy
 msgid ""
 "No CHM help for '%s' in package '%s' is available:\n"
 "the CHM file for the package is missing"
@@ -747,9 +746,3 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
-
-#~ msgid "'page' requires a name"
-#~ msgstr "'page' nécessite un nom"
-
-#~ msgid "no Rd contents for package '%s' in '%s'"
-#~ msgstr "pas de contenu Rd pour le package '%s' dans '%s'"

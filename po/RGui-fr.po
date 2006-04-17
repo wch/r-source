@@ -1171,9 +1171,3 @@ msgstr "Changement de page : attente de confirmation..."
 #: ../library/grDevices/src/devWindows.c:3044
 msgid "Click or hit ENTER for next page"
 msgstr "Cliquez ou appuyez ENTREE pour la page suivante"
-
-#~ msgid "Only 16 menus are allowed"
-#~ msgstr "Seulement 16 menus sont autorisés"
-
-#~ msgid "too many menu items have been created"
-#~ msgstr "trop d'entrées de menu ont été créées"

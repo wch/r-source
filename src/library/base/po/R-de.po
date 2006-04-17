@@ -1380,22 +1380,3 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
-
-#~ msgid "none of the packages were found"
-#~ msgstr "keines der Pakete gefunden"
-
-#~ msgid "no input is available"
-#~ msgstr "keine Eingabe verfügbar"
-
-#~ msgid ""
-#~ "the input does not start with a magic number compatible with loading from "
-#~ "a connection"
-#~ msgstr ""
-#~ "die Eingabe beginnt nicht mit der Magic Number, die zum Laden aus einer "
-#~ "Verbindung nötig ist"
-
-#~ msgid "calling wrong method"
-#~ msgstr "falsche Methode aufgerufen"
-
-#~ msgid "format.char: coercing 'x' to 'character'"
-#~ msgstr "format.char: wandle 'x' in 'character' um"

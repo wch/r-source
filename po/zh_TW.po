@@ -7007,12 +7007,3 @@ msgstr "無法載入 X11 模組"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "無法使用 X11"
-
-#~ msgid "'%s' is deprecated"
-#~ msgstr "建議不要使用 '%s'"
-
-#~ msgid "third argument must be 'TRUE' or 'FALSE'"
-#~ msgstr "第三引數的值必須是 'TRUE' 或 'FALSE'"
-
-#~ msgid "not a proper raw vector"
-#~ msgstr "非適當純量向量"

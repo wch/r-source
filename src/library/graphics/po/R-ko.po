@@ -379,30 +379,3 @@ msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] ""
 "하나가 어긋나고 값(%s)이 boxplot %d로부터 제외해졌습니다\n"
 "(복수)가 어긋나고 값(%s)이 boxplot %d로부터 제외해졌습니다"
-
-#~ msgid "'coef' must not be negative"
-#~ msgstr "'coef'는 negative로는 될수 없습니다"
-
-#~ msgid "'x' and 'y' lengths differ"
-#~ msgstr "'x' 그리고 'y'의 길이가 다릅니다"
-
-#~ msgid "invalid first argument [bad language object]"
-#~ msgstr "최초의 인수가 무효입니다 [잘못한 언어 오브젝트입니다]"
-
-#~ msgid "at least 2 columns needed"
-#~ msgstr "적어도 두개의 열이 필요합니다"
-
-#~ msgid "'x', 'y' and 'z' lengths differ"
-#~ msgstr "'x', 'y' 그리고 'z'의 길이가 다릅니다"
-
-#~ msgid "%d x value <= 0 omitted from logarithmic plot"
-#~ msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-#~ msgstr[0] "%d개의 올바르지 않는 x의 값이 대수 plot로부터 제외했습니다"
-
-#~ msgid "%d y value <= 0 omitted from logarithmic plot"
-#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-#~ msgstr[0] "%d개의 올바르지 않는 y의 값이 대수 plot로부터 제외해졌습니다"
-
-#~ msgid "%d z value <= 0 omitted from logarithmic plot"
-#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-#~ msgstr[0] "%d개의 올바르지 않는 x의 값이 대수 plot로부터 제외해졌습니다"

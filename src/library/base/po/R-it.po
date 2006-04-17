@@ -1392,22 +1392,3 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
-
-#~ msgid "none of the packages were found"
-#~ msgstr "nessuno dei pacchetti è stato trovato"
-
-#~ msgid "no input is available"
-#~ msgstr "nessun input disponibile"
-
-#~ msgid ""
-#~ "the input does not start with a magic number compatible with loading from "
-#~ "a connection"
-#~ msgstr ""
-#~ "l'input non inizia con un identificativo compatibile con il caricamento "
-#~ "dauna connessione"
-
-#~ msgid "calling wrong method"
-#~ msgstr "chimata ad un metodo sbagliato"
-
-#~ msgid "format.char: coercing 'x' to 'character'"
-#~ msgstr "fomrat.char: trasformo 'x' in 'character'"

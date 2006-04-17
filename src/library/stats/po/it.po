@@ -247,6 +247,3 @@ msgstr "errore allocazione memoria in smooth(*, '3R')."
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valori mancanti nelle ultime %d osservazioni"
-
-#~ msgid "assert failed in src/library/ts/src/carray.c"
-#~ msgstr "fallito assert in src/library/ts/src/carray.c"
