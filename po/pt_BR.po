@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-04-13 13:10+0100\n"
-"PO-Revision-Date: 2005-12-17 11:31-0200\n"
+"PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -175,24 +175,20 @@ msgid "unable to delete menu item (%s)"
 msgstr "não foi possivel deletar o item do menu (%s)"
 
 #: src/gnuwin32/extra.c:478
-#, fuzzy
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr "savehistory só pode ser utilizado no Rgui e Rterm"
+msgstr "'savehistory' só pode ser utilizado no Rgui e Rterm"
 
 #: src/gnuwin32/extra.c:493
-#, fuzzy
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr "loadhistory só pode ser utilizado no Rgui e Rterm"
+msgstr "'loadhistory' só pode ser utilizado no Rgui e Rterm"
 
 #: src/gnuwin32/extra.c:505 src/unix/sys-std.c:969
-#, fuzzy
 msgid "invalid timestamp"
-msgstr "etiqueta inválida"
+msgstr "etiqueta de tempo inválida"
 
 #: src/gnuwin32/extra.c:527
-#, fuzzy
 msgid "'loadRconsole' can only be used in Rgui"
-msgstr "loadhistory só pode ser utilizado no Rgui e Rterm"
+msgstr "'loadRconsole' só pode ser utilizado no Rgui"
 
 #: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
 #: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:747
@@ -233,9 +229,8 @@ msgid "cannot decrease memory limit"
 msgstr "não foi possível diminuir o limite de memória"
 
 #: src/gnuwin32/extra.c:924
-#, fuzzy
 msgid "argument must be a character vector or a raw vector"
-msgstr "argumento deve ser um vetor de caracteres de comprimento 1"
+msgstr "argumento deve ser um vetor de caracteres ou um vetor simples"
 
 #: src/gnuwin32/extra.c:946 src/main/connections.c:1444
 msgid "Unable to open the clipboard"
@@ -658,9 +653,10 @@ msgid "dynamic/shared library '%s' was not loaded"
 msgstr "biblioteca dinâmica/compartilhada '%s' não foi carregada"
 
 #: src/main/Rdynload.c:933
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate memory for registered native symbol (%d bytes)"
-msgstr "não foi possível alocar memória para conexão texto"
+msgstr ""
+"não foi possível alocar memória para símbolo nativo registrado (%d bytes)"
 
 #: src/main/Rdynload.c:1055
 msgid "must pass package name or DllInfo reference"
@@ -1036,13 +1032,13 @@ msgstr ""
 "sem slots"
 
 #: src/main/attrib.c:1255
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr ""
-"tentativa de obter um slot \"%s\" de um objeto cuja classe (\"%s\") não está "
-"definida"
+"tentativa de obter um slot \"%s\" de um objeto cuja classe (\"%s\") não é um "
+"objeto S4 "
 
 #: src/main/attrib.c:1274
 msgid "invalid slot type"
@@ -1141,12 +1137,12 @@ msgstr "especificação '%s' inválida"
 
 #: src/main/builtin.c:363
 msgid "non-positive 'fill' argument will be ignored"
-msgstr ""
+msgstr "argumento 'fill' não positivo será ignorado"
 
 #: src/main/builtin.c:433
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
-msgstr "argumento %d não suportado por cat"
+msgstr "argumento %d (tipo '%s') não suportado por 'cat'"
 
 #: src/main/builtin.c:547
 msgid "vector: zero-length 'type' argument"
@@ -1472,9 +1468,8 @@ msgid "first argument must be a character string or a function"
 msgstr "primeiro argumento deve ser uma string de caracteres ou uma função"
 
 #: src/main/coerce.c:1932
-#, fuzzy
 msgid "'envir' must be an environment"
-msgstr "'enclos' deve ser um ambiente"
+msgstr "'envir' deve ser um ambiente"
 
 #: src/main/coerce.c:2078
 msgid "invalid environment specified"
@@ -2056,7 +2051,7 @@ msgstr "valor inválido para 'split'"
 
 #: src/main/connections.c:3436
 msgid "this platform does not support 'split=TRUE'"
-msgstr ""
+msgstr "essa plataforma não suporta 'split=TRUE'"
 
 #: src/main/connections.c:3596
 msgid ""
@@ -2108,7 +2103,7 @@ msgstr "só é possível usar conexões binárias read- ou write-"
 
 #: src/main/connections.c:3950
 msgid "using a text-mode 'file' connection may not work correctly"
-msgstr ""
+msgstr "uso de uma conexão 'file' em modo texto pode não funcionar"
 
 #: src/main/connections.c:3953 src/main/connections.c:3957
 #: src/main/connections.c:3964 src/main/connections.c:3978
@@ -2676,9 +2671,9 @@ msgid "cannot get binding from base namespace"
 msgstr "não é possível obter vinculação a partir do espaço de nomes base"
 
 #: src/main/envir.c:973
-#, fuzzy, c-format
+#, c-format
 msgid "argument to %s is not an environment"
-msgstr "argumento não é um ambiente"
+msgstr "argumento de %s não é um ambiente"
 
 #: src/main/envir.c:1176
 #, c-format
@@ -3620,9 +3615,8 @@ msgid "error: system commands are not supported in this version of R.\n"
 msgstr "erro: comandos de sistema não são suportados nessa versão do R.\n"
 
 #: src/main/main.c:451
-#, fuzzy
 msgid "Error: segfault from C stack overflow\n"
-msgstr "estouro da pilha de inteiros"
+msgstr "Erro: falha de segmentação na pilha C\n"
 
 #: src/main/main.c:784
 msgid "unable to open the base package\n"
@@ -3870,14 +3864,14 @@ msgid "overlong names in '%s'"
 msgstr "nomes longos demais em '%s'"
 
 #: src/main/model.c:1349
-#, fuzzy, c-format
+#, c-format
 msgid "invalid variable type for '%s'"
-msgstr "variável de tipo inválido"
+msgstr "variável de tipo inválido para '%s'"
 
 #: src/main/model.c:1352
-#, fuzzy, c-format
+#, c-format
 msgid "variable lengths differ (found for '%s')"
-msgstr "comprimentos das variáveis diferem"
+msgstr "comprimentos das variáveis diferem (encontradas em '%s')"
 
 #: src/main/model.c:1406
 msgid "invalid result from na.action"
@@ -3892,9 +3886,9 @@ msgid "do not know how many cases"
 msgstr "não é possível determinar o número de casos"
 
 #: src/main/model.c:1617
-#, fuzzy, c-format
+#, c-format
 msgid "variable lengths differ (found for variable %d)"
-msgstr "comprimentos das variáveis diferem"
+msgstr "comprimentos das variáveis diferem (encontrados para a variável %d)"
 
 #: src/main/model.c:1621 src/main/model.c:1628
 #, c-format
@@ -5930,19 +5924,17 @@ msgid "Integer overflow in sum(.); use sum(as.numeric(.))"
 msgstr "Estouro da capacidade de inteiro em sum(.); use sum(as.numeric(.))"
 
 #: src/main/summary.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
-msgstr "erro interno ('op' em do_summary).\t Chame um guru"
+msgstr "erro interno ('op = %d' em do_summary).\t Chame um guru"
 
 #: src/main/summary.c:537
-#, fuzzy
 msgid "no non-missing arguments to min; returning Inf"
-msgstr "nenhum argumento finito para min; retornando Inf"
+msgstr "nenhum argumento não faltante para min; retornando Inf"
 
 #: src/main/summary.c:539
-#, fuzzy
 msgid "no non-missing arguments to max; returning -Inf"
-msgstr "nenhum argumento finito para max; retornando -Inf"
+msgstr "nenhum argumento não faltante para max; retornando -Inf"
 
 #: src/main/summary.c:814
 msgid "not all arguments have the same length"
@@ -5958,9 +5950,9 @@ msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr "atribuição fora dos limites do vetor/lista (extendendo de %d até %d)"
 
 #: src/main/subassign.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in subassignment type fix"
-msgstr "tipos incompatíveis (%d) em correção de tipo subatribuição "
+msgstr "tipos incompatíveis (de %s para %s) em correção de tipo subatribuição "
 
 #: src/main/subassign.c:388 src/main/subassign.c:659 src/main/subassign.c:662
 #: src/main/subassign.c:947
@@ -5984,14 +5976,16 @@ msgid "incorrect number of subscripts on matrix"
 msgstr "número de subscritos incorretos na matriz"
 
 #: src/main/subassign.c:891
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
-msgstr "tipos incompatíveis (caso %d) em atribuição de subconjunto de matriz"
+msgstr ""
+"tipos incompatíveis (de %s para %s) em atribuição de subconjunto de matriz"
 
 #: src/main/subassign.c:1070
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in array subset assignment"
-msgstr "tipos incompatíveis (%d) em atribuição de subconjunto de array"
+msgstr ""
+"tipos incompatíveis (de %s para %s) em atribuição de subconjunto de array"
 
 #: src/main/subassign.c:1095
 msgid "invalid number of subscripts to list assign"
@@ -6032,9 +6026,9 @@ msgid "[[ ]] improper number of subscripts"
 msgstr "número inadequado de subscritos em [[ ]]"
 
 #: src/main/subassign.c:1634
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in [[ assignment"
-msgstr "tipos incompatíveis (%d) em atribuição [["
+msgstr "tipos incompatíveis (de %s para %s) em atribuição [["
 
 #: src/main/subassign.c:1682
 #, c-format
@@ -6618,9 +6612,8 @@ msgid "'a' is 0-diml"
 msgstr "'a' tem dimensão 0"
 
 #: src/modules/lapack/Lapack.c:301 src/modules/lapack/Lapack.c:718
-#, fuzzy
 msgid "no right-hand side in 'b'"
-msgstr "sem lado direito em 'B'"
+msgstr "sem lado direito em 'b'"
 
 #: src/modules/lapack/Lapack.c:303 src/modules/lapack/Lapack.c:720
 #, c-format
@@ -6811,7 +6804,7 @@ msgstr "não foi possível criar janela X11"
 #: src/modules/X11/devX11.c:1388
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
-msgstr ""
+msgstr "width=%d, height=%d' são valores improváveis em pixeis"
 
 #: src/modules/X11/devX11.c:1393
 msgid "unable to create pixmap"
@@ -6920,9 +6913,9 @@ msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..): não houve convergência em %d iterações"
 
 #: src/nmath/polygamma.c:473
-#, fuzzy, c-format
+#, c-format
 msgid "deriv = %d > %d (= n_max)\n"
-msgstr "deriv = %d > %d (= n_max)"
+msgstr "deriv = %d > %d (= n_max)\n"
 
 #: src/nmath/rmultinom.c:74
 #, c-format
@@ -7042,18 +7035,18 @@ msgid "re-encoding is not available on this system"
 msgstr "recodificação não está disponível nesse sistema"
 
 #: src/unix/sys-std.c:858
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s', reason '%s'\n"
 "\n"
-msgstr "não foi possível abrir o arquivo '%s', motivo '%s'"
+msgstr "Não foi possível abrir o arquivo '%s', motivo '%s'\n"
 
 #: src/unix/sys-std.c:861
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s'\n"
 "\n"
-msgstr "não foi possível abrir o arquivo '%s'"
+msgstr "não foi possível abrir o arquivo '%s'\n"
 
 #: src/unix/sys-std.c:924 src/unix/sys-std.c:946
 msgid "'file' argument is too long"
@@ -7080,14 +7073,12 @@ msgid "non-empty character argument expected"
 msgstr "argumento caractere não vazio esperado"
 
 #: src/unix/sys-unix.c:273
-#, fuzzy
 msgid "'intern' must be logical and not NA"
-msgstr "'ascii' deve ser um valor lógico"
+msgstr "'intern' deve ser um valor lógico e não NA"
 
 #: src/unix/sys-unix.c:300
-#, fuzzy
 msgid "'intern=TRUE' is not implemented on this platform"
-msgstr "itern=TRUE não está implementado nessa plataforma"
+msgstr "'intern=TRUE' não está implementado nessa plataforma"
 
 #: src/unix/sys-unix.c:373
 msgid "Sys.info() is not implemented on this system"
@@ -7128,21 +7119,11 @@ msgstr "módulo X11 não pode ser carregado"
 msgid "X11 is not available"
 msgstr "X11 não está disponível"
 
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call: não foi possível encontrar o ambiente pai"
+#~ msgid "'%s' is deprecated"
+#~ msgstr "'%s' não é mais permitido"
 
-#~ msgid "argument must be a character vector"
-#~ msgstr "argumento deve ser um vetor de caracteres"
+#~ msgid "third argument must be 'TRUE' or 'FALSE'"
+#~ msgstr "terceiro argumento deve ser 'TRUE' ou 'FALSE'"
 
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "tentativa de obter um slot \"%s\" de um objeto de classe S3 c(\"%s\", \"%s"
-#~ "\", ...) (classe não definida formalmente)"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B' deve ser uma matrix complexa"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B' deve ser uma matriz numérica"
+#~ msgid "not a proper raw vector"
+#~ msgstr "não é um vetor simples apropriado"
