@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-17 07:32\n"
+"POT-Creation-Date: 2006-04-17 11:22\n"
 "PO-Revision-Date: 2005-12-07 01:16+0100\n"
 "Last-Translator: Jean Thioulouse <j.thioulouse@biomserv.univ-lyon1.fr>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -15,78 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
-msgstr "'format' doit être \"normal\" ou \"short\". \"normal\" est utilisé"
-
-msgid "wrong 'sortby' specified. Using sortby=\"score\""
-msgstr "valeur de 'sortby' incorrect. sortby=\"score\" est utilisé"
-
-msgid ""
-"wrong restriction specified.\n"
-"Using '%s'"
-msgstr ""
-"restriction incorrecte.\n"
-"'%s' est utilisé"
-
-msgid "A search query has been submitted to"
-msgstr "Une requête de recherche a été soumise à"
-
-msgid "The results page should open in your browser shortly"
-msgstr "La page de résultats devrait s'ouvrir dans votre navigateur"
-
-msgid "reference to unknown chunk '%s'"
-msgstr "référence à un tronçon inconnu '%s'"
-
-msgid "no Sweave file with name '%s' found"
-msgstr "un fichier Sweave de nom '%s' est introuvable"
-
-msgid "%d Sweave files for basename '%s' found:"
-msgstr "%d fichiers Sweave trouvés pour le nom de base '%s' :"
-
-msgid "Found invalid multi-byte character data."
-msgstr "Données caractère multi-octets incorrectes."
-
-msgid "Cannot re-encode because 'iconv' is not available."
-msgstr "Impossible de ré-encoder car 'iconv' n'est pas disponible"
-
-msgid "Try running R in a single-byte locale."
-msgstr "Essayez de lancer R dans un environnement linguistique uni-octet"
-
-msgid "more than one syntax specification found, using the first one"
-msgstr ""
-"plusieurs spécifications de syntaxe possibles ; la première est utilisée"
-
-msgid "object '%s' does not have class \"SweaveSyntax\""
-msgstr "l'objet '%s' n'est pas de la classe \"SweaveSyntax\""
-
-msgid "recursive Sweave input '%s' in stack"
-msgstr "entrée Sweave récursive '%s' dans la pile"
-
-msgid "target syntax not of class \"SweaveSyntax\""
-msgstr "la syntaxe de la cible n'est pas de la classe \"SweaveSyntax\""
-
-msgid "target syntax contains no translation table"
-msgstr "la syntaxe de la cible ne contient pas de table de traduction"
-
-msgid ""
-"parse error or empty option in\n"
-"%s"
-msgstr ""
-"erreur d'interprétation ou option vide dans\n"
-"%s"
-
-msgid "path to '%s' contains spaces,"
-msgstr "le chemin vers '%s' contient des espaces"
-
-msgid "this may cause problems when running LaTeX"
-msgstr "cela peut provoquer des problèmes dans l'utilisation de LaTeX"
-
-msgid "You can now run LaTeX on '%s'"
-msgstr "Vous pouvez maintenant lancer LaTeX sur '%s'"
-
-msgid "invalid value for '%s' : %s"
-msgstr "valeur incorrecte pour '%s' : %s"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "les éléments suivants de 'what' seront ignorés"
@@ -113,6 +41,12 @@ msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr ""
 "impossible de déterminer l'année de '%s' du fichier DESCRIPTION du package "
 
+msgid "kind '%s' not yet implemented"
+msgstr "le type '%s' n'est pas encore implémenté"
+
+msgid "wrong number of table row entries"
+msgstr "nombre d'entrées lignes du tableau incorrect"
+
 msgid "'package' must be a character string or NULL"
 msgstr "'package' doit être une chaîne de caratcères ou NULL"
 
@@ -134,33 +68,6 @@ msgstr "fichier 'filelist' introuvable pour le répertoire '%s'"
 
 msgid "data set '%s' not found"
 msgstr "jeu de données '%s' introuvable"
-
-msgid "kind '%s' not yet implemented"
-msgstr "le type '%s' n'est pas encore implémenté"
-
-msgid "wrong number of table row entries"
-msgstr "nombre d'entrées lignes du tableau incorrect"
-
-msgid "wrong argument to 'dataentry'"
-msgstr "argument de 'dataentry' incorrect"
-
-msgid "could not restore type information"
-msgstr "impossible de restaurer l'information de type"
-
-msgid "modes argument ignored"
-msgstr "argument modes ignoré"
-
-msgid "'names' argument ignored"
-msgstr "argument 'names' ignoré"
-
-msgid "'modes' argument ignored"
-msgstr "argument 'modes' ignoré"
-
-msgid "could not restore variables properly"
-msgstr "impossible de restaurer les variables correctement"
-
-msgid "did not assign() anything"
-msgstr "rien n'a été assign()é"
 
 msgid "Browsing in the environment with call:"
 msgstr "Navigation dans l'environnement avec l'appel :"
@@ -194,6 +101,27 @@ msgid ""
 msgstr ""
 "La démo pour le thème '%s' a été trouvée plusieurs fois,\n"
 "celle trouvée dans '%s' est utilisée"
+
+msgid "wrong argument to 'dataentry'"
+msgstr "argument de 'dataentry' incorrect"
+
+msgid "could not restore type information"
+msgstr "impossible de restaurer l'information de type"
+
+msgid "modes argument ignored"
+msgstr "argument modes ignoré"
+
+msgid "'names' argument ignored"
+msgstr "argument 'names' ignoré"
+
+msgid "'modes' argument ignored"
+msgstr "argument 'modes' ignoré"
+
+msgid "could not restore variables properly"
+msgstr "impossible de restaurer les variables correctement"
+
+msgid "did not assign() anything"
+msgstr "rien n'a été assign()é"
 
 msgid "invalid 'data' argument"
 msgstr "argument 'data' incorrect"
@@ -269,7 +197,6 @@ msgstr "L'aide au format HTML compilé n'est pas installée"
 msgid "CHM file could not be displayed"
 msgstr "Le fichier CHM n'a pas pu être affiché"
 
-#, fuzzy
 msgid ""
 "No CHM help for '%s' in package '%s' is available:\n"
 "the CHM file for the package is missing"
@@ -368,77 +295,11 @@ msgstr "'fixInNamespace' nécessite un nom"
 msgid "only numeric indices can be used"
 msgstr "seuls les indices numériques peuvent être utilisés"
 
-msgid "cannot create directory '%s'"
-msgstr "impossible de créer le répertoire '%s'"
-
-msgid "'list' should be a character vector naming R objects"
-msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
-
-msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr ""
-
-msgid "no R objects specified or available"
-msgstr "aucun objet R spécifié ou disponible"
-
-msgid "directory '%s' already exists"
-msgstr "le répertoire '%s' existe déjà"
-
-msgid "unable to access index for repository %s"
-msgstr "impossible d'accéder à l'index de l'entrepôt %s"
-
-msgid "no installed packages for (invalid?) 'lib.loc=%s'"
-msgstr "aucun package installé pour 'lib.loc=%s' (incorrect ?)"
-
-msgid "bundle '%s' is incompletely installed"
-msgstr "le bundle '%s' n'est pas installé complètement"
-
-msgid "bundle '%s' has extra contents %s"
-msgstr "le bundle '%s' possède un contenu surnuméraire %s"
-
-msgid "'priority' must be character or NULL"
-msgstr "'priority' doit être de type caractère ou NULL"
+msgid "no packages were specified"
+msgstr "aucun package spécifié"
 
 msgid "argument 'lib' is missing: using %s"
 msgstr "l'argument 'lib' manque : %s est utilisé"
-
-msgid "'destdir' is not a directory"
-msgstr "'destdir' n'est pas un répertoire"
-
-msgid "no package '%s' at the repositories"
-msgstr "pas de package '%s' dans les entrepôts"
-
-msgid "download of package '%s' failed"
-msgstr "le téléchargement du package '%s' a échoué"
-
-msgid "--- Please select a CRAN mirror for use in this session ---"
-msgstr "--- SVP sélectionner un miroir CRAN pour cette session ---"
-
-msgid "trying to use CRAN without setting a mirror"
-msgstr "essai d'utilisation de CRAN sans fixer un miroir"
-
-msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "impossible de choisir un miroir CRAN en mode non interactif"
-
-msgid "cannot set repositories non-interactively"
-msgstr "impossible de fixer les entrepôts en mode non interactif"
-
-msgid "--- Please select repositories for use in this session ---"
-msgstr "--- SVP sélectionner les entrepôts à utiliser pour cette session ---"
-
-msgid "Enter one or more numbers separated by spaces"
-msgstr "Entrer un ou plusieurs nombres séparés par des espaces"
-
-msgid "'%s' must be supplied"
-msgstr "'%s' doit être fourni"
-
-msgid "every package depends on at least one other"
-msgstr "tout package dépend au moins d'un autre"
-
-msgid "packages %s are mutually dependent"
-msgstr "les packages %s sont mutuellement dépendants"
-
-msgid "no packages were specified"
-msgstr "aucun package spécifié"
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "impossible d'installer les packages MacOS X binaire sous Windows"
@@ -477,6 +338,72 @@ msgid ""
 msgstr ""
 "Les packages téléchargés sont dans\n"
 "\t%s"
+
+msgid "cannot create directory '%s'"
+msgstr "impossible de créer le répertoire '%s'"
+
+msgid "'list' should be a character vector naming R objects"
+msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
+
+msgid "cannot turn off locale-specific chars via LC_CTYPE"
+msgstr ""
+
+msgid "no R objects specified or available"
+msgstr "aucun objet R spécifié ou disponible"
+
+msgid "directory '%s' already exists"
+msgstr "le répertoire '%s' existe déjà"
+
+msgid "unable to access index for repository %s"
+msgstr "impossible d'accéder à l'index de l'entrepôt %s"
+
+msgid "no installed packages for (invalid?) 'lib.loc=%s'"
+msgstr "aucun package installé pour 'lib.loc=%s' (incorrect ?)"
+
+msgid "bundle '%s' is incompletely installed"
+msgstr "le bundle '%s' n'est pas installé complètement"
+
+msgid "bundle '%s' has extra contents %s"
+msgstr "le bundle '%s' possède un contenu surnuméraire %s"
+
+msgid "'priority' must be character or NULL"
+msgstr "'priority' doit être de type caractère ou NULL"
+
+msgid "'destdir' is not a directory"
+msgstr "'destdir' n'est pas un répertoire"
+
+msgid "no package '%s' at the repositories"
+msgstr "pas de package '%s' dans les entrepôts"
+
+msgid "download of package '%s' failed"
+msgstr "le téléchargement du package '%s' a échoué"
+
+msgid "--- Please select a CRAN mirror for use in this session ---"
+msgstr "--- SVP sélectionner un miroir CRAN pour cette session ---"
+
+msgid "trying to use CRAN without setting a mirror"
+msgstr "essai d'utilisation de CRAN sans fixer un miroir"
+
+msgid "cannot choose a CRAN mirror non-interactively"
+msgstr "impossible de choisir un miroir CRAN en mode non interactif"
+
+msgid "cannot set repositories non-interactively"
+msgstr "impossible de fixer les entrepôts en mode non interactif"
+
+msgid "--- Please select repositories for use in this session ---"
+msgstr "--- SVP sélectionner les entrepôts à utiliser pour cette session ---"
+
+msgid "Enter one or more numbers separated by spaces"
+msgstr "Entrer un ou plusieurs nombres séparés par des espaces"
+
+msgid "'%s' must be supplied"
+msgstr "'%s' doit être fourni"
+
+msgid "every package depends on at least one other"
+msgstr "tout package dépend au moins d'un autre"
+
+msgid "packages %s are mutually dependent"
+msgstr "les packages %s sont mutuellement dépendants"
 
 msgid "no object named '%s' to show"
 msgstr "aucun objet de nom '%s' à afficher"
@@ -569,6 +496,25 @@ msgstr "dernier enregistrement incomplet, %d lignes ignorées"
 msgid "transfer failure"
 msgstr "erreur de transfert"
 
+msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
+msgstr "'format' doit être \"normal\" ou \"short\". \"normal\" est utilisé"
+
+msgid "wrong 'sortby' specified. Using sortby=\"score\""
+msgstr "valeur de 'sortby' incorrect. sortby=\"score\" est utilisé"
+
+msgid ""
+"wrong restriction specified.\n"
+"Using '%s'"
+msgstr ""
+"restriction incorrecte.\n"
+"'%s' est utilisé"
+
+msgid "A search query has been submitted to"
+msgstr "Une requête de recherche a été soumise à"
+
+msgid "The results page should open in your browser shortly"
+msgstr "La page de résultats devrait s'ouvrir dans votre navigateur"
+
 msgid "invalid 'socket' argument"
 msgstr "argument 'socket' incorrect"
 
@@ -595,6 +541,59 @@ msgstr "'str.default': 'le' est NA"
 
 msgid "no events were recorded"
 msgstr "aucun événement à enregistrer"
+
+msgid "reference to unknown chunk '%s'"
+msgstr "référence à un tronçon inconnu '%s'"
+
+msgid "no Sweave file with name '%s' found"
+msgstr "un fichier Sweave de nom '%s' est introuvable"
+
+msgid "%d Sweave files for basename '%s' found:"
+msgstr "%d fichiers Sweave trouvés pour le nom de base '%s' :"
+
+msgid "Found invalid multi-byte character data."
+msgstr "Données caractère multi-octets incorrectes."
+
+msgid "Cannot re-encode because 'iconv' is not available."
+msgstr "Impossible de ré-encoder car 'iconv' n'est pas disponible"
+
+msgid "Try running R in a single-byte locale."
+msgstr "Essayez de lancer R dans un environnement linguistique uni-octet"
+
+msgid "more than one syntax specification found, using the first one"
+msgstr ""
+"plusieurs spécifications de syntaxe possibles ; la première est utilisée"
+
+msgid "object '%s' does not have class \"SweaveSyntax\""
+msgstr "l'objet '%s' n'est pas de la classe \"SweaveSyntax\""
+
+msgid "recursive Sweave input '%s' in stack"
+msgstr "entrée Sweave récursive '%s' dans la pile"
+
+msgid "target syntax not of class \"SweaveSyntax\""
+msgstr "la syntaxe de la cible n'est pas de la classe \"SweaveSyntax\""
+
+msgid "target syntax contains no translation table"
+msgstr "la syntaxe de la cible ne contient pas de table de traduction"
+
+msgid ""
+"parse error or empty option in\n"
+"%s"
+msgstr ""
+"erreur d'interprétation ou option vide dans\n"
+"%s"
+
+msgid "path to '%s' contains spaces,"
+msgstr "le chemin vers '%s' contient des espaces"
+
+msgid "this may cause problems when running LaTeX"
+msgstr "cela peut provoquer des problèmes dans l'utilisation de LaTeX"
+
+msgid "You can now run LaTeX on '%s'"
+msgstr "Vous pouvez maintenant lancer LaTeX sur '%s'"
+
+msgid "invalid value for '%s' : %s"
+msgstr "valeur incorrecte pour '%s' : %s"
 
 msgid ""
 "vignette '%d' found more than once,\n"
@@ -727,11 +726,6 @@ msgstr "'tar' a renvoyé un code de sortie non nul %d"
 msgid "cannot remove prior installation of package"
 msgstr "impossible de supprimer l'installation précédente du package"
 
-msgid "object '%s' not found"
-msgid_plural "objects '%s' not found"
-msgstr[0] "objet '%s' introuvable"
-msgstr[1] "objets '%s' introuvables"
-
 msgid "dependency '%s' is not available"
 msgid_plural "dependencies '%s' are not available"
 msgstr[0] "la dépendance '%s' n'est pas disponible"
@@ -742,14 +736,13 @@ msgid_plural "also installing the dependencies "
 msgstr[0] "installation de la dépendance "
 msgstr[1] "installation des dépendances "
 
+msgid "object '%s' not found"
+msgid_plural "objects '%s' not found"
+msgstr[0] "objet '%s' introuvable"
+msgstr[1] "objets '%s' introuvables"
+
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
-
-#~ msgid "'page' requires a name"
-#~ msgstr "'page' nécessite un nom"
-
-#~ msgid "no Rd contents for package '%s' in '%s'"
-#~ msgstr "pas de contenu Rd pour le package '%s' dans '%s'"

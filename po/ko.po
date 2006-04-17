@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:06+0100\n"
+"POT-Creation-Date: 2006-04-17 11:21+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -990,51 +990,51 @@ msgstr "dim:  길이0차원 벡터는 부적절합니다"
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr "dim<-: dims [product %d]는 object[%d]의 길이에 정합하지 않습니다"
 
-#: src/main/attrib.c:916
+#: src/main/attrib.c:921
 msgid "attributes must be in a list"
 msgstr "속성은 리스트안에 있어야만 합니다"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:945
 msgid "attributes must be named"
 msgstr "속성은 이름을 붙어야만 합니다"
 
-#: src/main/attrib.c:944
+#: src/main/attrib.c:949
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "모든 속성은 이름을 가지고 있어야만 합니다[%d가 가지고 있지 않습니다]"
 
-#: src/main/attrib.c:987
+#: src/main/attrib.c:992
 msgid "attribute 'name' must be of mode character"
 msgstr "'name'속성은 모드를 표시하는 문자이어야만 합니다"
 
-#: src/main/attrib.c:989
+#: src/main/attrib.c:994
 msgid "exactly one attribute 'name' must be given"
 msgstr "정확히 하나의 속성 'name'가 주어져야 합니다"
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1062
 msgid "'name' must be non-null character"
 msgstr "'name'는 NULL아닌 문자열이어야만 합니다"
 
-#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
+#: src/main/attrib.c:1168 src/main/attrib.c:1207 src/main/attrib.c:1296
 msgid "invalid type or length for slot name"
 msgstr "축 라벨의 유형이 부적절합니다"
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "형태 \"%s\"의 오브젝트로부터 슬롯(\"%s\")을 받을수가 없습니다"
 
-#: src/main/attrib.c:1185
+#: src/main/attrib.c:1190
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 "이름 \"%s\" 라고 하는 slot이 클래스\"%s\"의  오브젝트에는 존재하지 않습니다"
 
-#: src/main/attrib.c:1286
+#: src/main/attrib.c:1291
 msgid "formal classes cannot be used without the methods package"
 msgstr "메소드 패키지 없이 (formal class)는 사용할수 없습니다"
 
-#: src/main/attrib.c:1297
+#: src/main/attrib.c:1302
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1043,7 +1043,7 @@ msgstr ""
 "slot \"%s\"를 slot를 가지지 않는 기본 클래스(\"%s\")의 오브젝트로부터 얻으려"
 "고 했습니다"
 
-#: src/main/attrib.c:1306
+#: src/main/attrib.c:1311
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1051,7 +1051,7 @@ msgid ""
 msgstr ""
 "slot \"%s\"를 정의하지않는 클래스(\"%s\")의 오브젝트로부터 얻으려고 했습니다"
 
-#: src/main/attrib.c:1325
+#: src/main/attrib.c:1330
 msgid "invalid slot type"
 msgstr "slot 유형가 부적절합니다"
 
@@ -5076,23 +5076,23 @@ msgstr "'gap'는  non-negative 정수가 아니면 안됩니다"
 msgid "invalid 'tryS4' internal argument"
 msgstr "'tryS4' 내부인수가 부적절합니다"
 
-#: src/main/print.c:845
+#: src/main/print.c:853
 msgid "invalid character length in dblepr"
 msgstr "dblepr의 문자열 길이가 부적절합니다"
 
-#: src/main/print.c:863
+#: src/main/print.c:871
 msgid "invalid character length in intpr"
 msgstr "intpr의 문자열 길이가 부적절합니다"
 
-#: src/main/print.c:882
+#: src/main/print.c:890
 msgid "invalid character length in realpr"
 msgstr "'realpr'로 메모리 확보에 실패했습니다"
 
-#: src/main/print.c:892
+#: src/main/print.c:900
 msgid "memory allocation error in realpr"
 msgstr "realpr의 메모리 확보에 실패했습니다"
 
-#: src/main/print.c:908
+#: src/main/print.c:916
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "BLAS/LAPACK 함수 '%6s'는 에러 코드 %d를 돌려주었습니다"
@@ -7154,31 +7154,3 @@ msgstr "X11 모듈은 적재할수가 없습니다"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11를 이용할수가 없습니다"
-
-#~ msgid "R_compress1 requires a scalar string"
-#~ msgstr "R_compress1는 scalar 문자열을 요구합니다"
-
-#~ msgid "not a proper string"
-#~ msgstr "부적절한 문자열입니다"
-
-#~ msgid "type %d is unimplemented in type2symbol"
-#~ msgstr "type2symbol에서 %d유형는 실제 적용되지 않습니다"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call:  부모 환경이 검색되지 않았습니다"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "인수는 문자벡터가 되어야만 합니다"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "slot \"%s\"를 S3 클래스 c(\"\"%s\", \"%s\"\",...)의 오브젝트로부터 얻으려"
-#~ "고 했습니다(정식으로 정의된 클래스가 아닙니다"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B'  복소행렬이 아니면 되지 않습니다"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B'는 수치 행렬이 아니면 되지 않습니다"

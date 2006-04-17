@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:06+0100\n"
+"POT-Creation-Date: 2006-04-17 11:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -969,64 +969,64 @@ msgstr ""
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 
-#: src/main/attrib.c:916
+#: src/main/attrib.c:921
 msgid "attributes must be in a list"
 msgstr ""
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:945
 msgid "attributes must be named"
 msgstr ""
 
-#: src/main/attrib.c:944
+#: src/main/attrib.c:949
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr ""
 
-#: src/main/attrib.c:987
+#: src/main/attrib.c:992
 msgid "attribute 'name' must be of mode character"
 msgstr ""
 
-#: src/main/attrib.c:989
+#: src/main/attrib.c:994
 msgid "exactly one attribute 'name' must be given"
 msgstr ""
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1062
 msgid "'name' must be non-null character"
 msgstr ""
 
-#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
+#: src/main/attrib.c:1168 src/main/attrib.c:1207 src/main/attrib.c:1296
 msgid "invalid type or length for slot name"
 msgstr ""
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1185
+#: src/main/attrib.c:1190
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1286
+#: src/main/attrib.c:1291
 msgid "formal classes cannot be used without the methods package"
 msgstr ""
 
-#: src/main/attrib.c:1297
+#: src/main/attrib.c:1302
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
 
-#: src/main/attrib.c:1306
+#: src/main/attrib.c:1311
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr ""
 
-#: src/main/attrib.c:1325
+#: src/main/attrib.c:1330
 msgid "invalid slot type"
 msgstr ""
 
@@ -4962,23 +4962,23 @@ msgstr ""
 msgid "invalid 'tryS4' internal argument"
 msgstr ""
 
-#: src/main/print.c:845
+#: src/main/print.c:853
 msgid "invalid character length in dblepr"
 msgstr ""
 
-#: src/main/print.c:863
+#: src/main/print.c:871
 msgid "invalid character length in intpr"
 msgstr ""
 
-#: src/main/print.c:882
+#: src/main/print.c:890
 msgid "invalid character length in realpr"
 msgstr ""
 
-#: src/main/print.c:892
+#: src/main/print.c:900
 msgid "memory allocation error in realpr"
 msgstr ""
 
-#: src/main/print.c:908
+#: src/main/print.c:916
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr ""

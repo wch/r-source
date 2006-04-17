@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 07:31+0100\n"
+"POT-Creation-Date: 2006-04-17 11:21+0100\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -18,6 +18,16 @@ msgstr ""
 
 #: devNull.c:41 devNull.c:45
 msgid "unable to start NULL device"
+msgstr ""
+
+#: devPicTeX.c:501 devPicTeX.c:503 devPS.c:735 devPS.c:738 devPS.c:3973
+#: devPS.c:6657
+#, c-format
+msgid "invalid string in '%s'"
+msgstr ""
+
+#: devPicTeX.c:782
+msgid "unable to start device PicTeX"
 msgstr ""
 
 #: devPS.c:553
@@ -35,12 +45,6 @@ msgstr ""
 
 #: devPS.c:620
 msgid "unknown AFM entity encountered"
-msgstr ""
-
-#: devPS.c:735 devPS.c:738 devPS.c:3973 devPS.c:6657 devPicTeX.c:501
-#: devPicTeX.c:503
-#, c-format
-msgid "invalid string in '%s'"
 msgstr ""
 
 #: devPS.c:766
@@ -383,10 +387,6 @@ msgstr ""
 
 #: devPS.c:7087
 msgid "unable to start device pdf"
-msgstr ""
-
-#: devPicTeX.c:782
-msgid "unable to start device PicTeX"
 msgstr ""
 
 #: devQuartz.c:454

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:06+0100\n"
+"POT-Creation-Date: 2006-04-17 11:21+0100\n"
 "PO-Revision-Date: 2005-12-06 12:47+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -178,14 +178,12 @@ msgid "unable to delete menu item (%s)"
 msgstr "impossible d'effacer l'entrée de menu (%s)"
 
 #: src/gnuwin32/extra.c:478
-#, fuzzy
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr "savehistory peut seulement être utilisé dans Rgui et Rterm"
+msgstr "'savehistory' peut seulement être utilisé dans Rgui et Rterm"
 
 #: src/gnuwin32/extra.c:493
-#, fuzzy
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr "loadhistory peut seulement être utilisé dans Rgui et Rterm"
+msgstr "'loadhistory' peut seulement être utilisé dans Rgui et Rterm"
 
 #: src/gnuwin32/extra.c:505 src/unix/sys-std.c:969
 #, fuzzy
@@ -193,9 +191,8 @@ msgid "invalid timestamp"
 msgstr "marque (tag) incorrecte"
 
 #: src/gnuwin32/extra.c:527
-#, fuzzy
 msgid "'loadRconsole' can only be used in Rgui"
-msgstr "loadhistory peut seulement être utilisé dans Rgui et Rterm"
+msgstr "'loadRconsole' peut seulement être utilisé dans Rgui"
 
 #: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
 #: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:747
@@ -1006,51 +1003,51 @@ msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 "dim<- : dims [produit %d] ne correspond pas à la longueur de l'objet [%d]"
 
-#: src/main/attrib.c:916
+#: src/main/attrib.c:921
 msgid "attributes must be in a list"
 msgstr "les attributs doivent être dans une liste"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:945
 msgid "attributes must be named"
 msgstr "les attributs doivent être nommés"
 
-#: src/main/attrib.c:944
+#: src/main/attrib.c:949
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "tous les attributs doivent être nommés [%d ne l'est pas]"
 
-#: src/main/attrib.c:987
+#: src/main/attrib.c:992
 msgid "attribute 'name' must be of mode character"
 msgstr "l'attribut 'name' doit être en mode caractère"
 
-#: src/main/attrib.c:989
+#: src/main/attrib.c:994
 msgid "exactly one attribute 'name' must be given"
 msgstr "un et un seul attribut 'name' doit être fourni"
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1062
 msgid "'name' must be non-null character"
 msgstr "'name' doit être une chaîne de caractères non nulle"
 
-#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
+#: src/main/attrib.c:1168 src/main/attrib.c:1207 src/main/attrib.c:1296
 msgid "invalid type or length for slot name"
 msgstr "type ou longueur incorrect pour le nom d'un slot"
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "impossible d'obtenir un slot (\"%s\") d'un objet de type \"%s\""
 
-#: src/main/attrib.c:1185
+#: src/main/attrib.c:1190
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "aucun slot de nom \"%s\" pour cet objet de la classe \"%s\""
 
-#: src/main/attrib.c:1286
+#: src/main/attrib.c:1291
 msgid "formal classes cannot be used without the methods package"
 msgstr ""
 "les classes formelles ne peuvent être utilisées sans le package 'methods'"
 
-#: src/main/attrib.c:1297
+#: src/main/attrib.c:1302
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1059,7 +1056,7 @@ msgstr ""
 "tentative d'obtenir le slot \"%s\" d'un objet d'une classe élémentaire (\"%s"
 "\") sans slots"
 
-#: src/main/attrib.c:1306
+#: src/main/attrib.c:1311
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1068,7 +1065,7 @@ msgstr ""
 "tentative d'obtenir le slot \"%s\" d'un objet dont la classe (\"%s\") n'est "
 "pas définie"
 
-#: src/main/attrib.c:1325
+#: src/main/attrib.c:1330
 msgid "invalid slot type"
 msgstr "type de slot incorrect"
 
@@ -1171,9 +1168,9 @@ msgid "non-positive 'fill' argument will be ignored"
 msgstr ""
 
 #: src/main/builtin.c:427
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
-msgstr "argument %d pas encore traité par cat"
+msgstr "argument %d (type '%s') pas encore traité par cat"
 
 #: src/main/builtin.c:541
 msgid "vector: zero-length 'type' argument"
@@ -1503,9 +1500,8 @@ msgid "first argument must be a character string or a function"
 msgstr "le premier argument doit être une chaîne de caractères ou une fonction"
 
 #: src/main/coerce.c:1931
-#, fuzzy
 msgid "'envir' must be an environment"
-msgstr "'enclos' doit être un environnement"
+msgstr "'envir' doit être un environnement"
 
 #: src/main/coerce.c:2077
 msgid "invalid environment specified"
@@ -3947,9 +3943,9 @@ msgid "overlong names in '%s'"
 msgstr "noms trop longs dans '%s'"
 
 #: src/main/model.c:1349
-#, fuzzy, c-format
+#, c-format
 msgid "invalid variable type for '%s'"
-msgstr "type de variable incorrect"
+msgstr "type de variable incorrect pour '%s'"
 
 #: src/main/model.c:1352
 #, fuzzy, c-format
@@ -4533,9 +4529,8 @@ msgstr ""
 "niveau"
 
 #: src/main/par.c:1198
-#, fuzzy
 msgid "invalid argument passed to par()"
-msgstr "paramètre passé à par() incorrect"
+msgstr "paramètre passé à par() invalide"
 
 #: src/main/par.c:1268
 #, c-format
@@ -5133,23 +5128,23 @@ msgstr "'gap' doit être un entier positif ou nul"
 msgid "invalid 'tryS4' internal argument"
 msgstr "argument interne 'tryS4' incorrect"
 
-#: src/main/print.c:845
+#: src/main/print.c:853
 msgid "invalid character length in dblepr"
 msgstr "taille de caractère incorrecte dans dblepr"
 
-#: src/main/print.c:863
+#: src/main/print.c:871
 msgid "invalid character length in intpr"
 msgstr "taille de caractère incorrecte dans intpr"
 
-#: src/main/print.c:882
+#: src/main/print.c:890
 msgid "invalid character length in realpr"
 msgstr "taille de caractère incorrecte dans realpr"
 
-#: src/main/print.c:892
+#: src/main/print.c:900
 msgid "memory allocation error in realpr"
 msgstr "erreur d'affectation mémoire dans realpr"
 
-#: src/main/print.c:908
+#: src/main/print.c:916
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "la procédure BLAS/LAPACK '%6s' a produit le code d'erreur %d"
@@ -6034,9 +6029,9 @@ msgid "Integer overflow in sum(.); use sum(as.numeric(.))"
 msgstr "Dépassement d'entier dans sum(.) ; utiliser sum(as.numeric(.))"
 
 #: src/main/summary.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
-msgstr "erreur interne ('op' in do_summary).\t Appelez un expert"
+msgstr "erreur interne ('op = %d' in do_summary).\t Appelez un expert"
 
 #: src/main/summary.c:537
 #, fuzzy
@@ -6063,9 +6058,10 @@ msgstr ""
 "affectation en dehors des limites vecteur / liste (extension de %d vers %d)"
 
 #: src/main/subassign.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in subassignment type fix"
-msgstr "types (%d) incompatibles dans l'ajustement d'affectation de type"
+msgstr ""
+"types (de %s a %s) incompatibles dans l'ajustement d'affectation de type"
 
 #: src/main/subassign.c:388 src/main/subassign.c:659 src/main/subassign.c:662
 #: src/main/subassign.c:947
@@ -6089,16 +6085,18 @@ msgid "incorrect number of subscripts on matrix"
 msgstr "nombre d'indices incorrect sur la matrice"
 
 #: src/main/subassign.c:891
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
 msgstr ""
-"types incompatibles (cas %d) dans l'affectation d'un sous-ensemble de matrice"
+"types incompatibles (de %s a %s) dans l'affectation d'un sous-ensemble de "
+"matrice"
 
 #: src/main/subassign.c:1070
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in array subset assignment"
 msgstr ""
-"types (%d) incompatibles dans l'affectation d'un sous-ensemble de tableau"
+"types (de %s a %s) incompatibles dans l'affectation d'un sous-ensemble de "
+"tableau"
 
 #: src/main/subassign.c:1095
 msgid "invalid number of subscripts to list assign"
@@ -6139,9 +6137,9 @@ msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] nombre d'indices incorrect"
 
 #: src/main/subassign.c:1634
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in [[ assignment"
-msgstr "types (%d) incompatibles dans l'affectation [["
+msgstr "types (de %s a %s) incompatibles dans l'affectation [["
 
 #: src/main/subassign.c:1682
 #, c-format
@@ -7022,9 +7020,9 @@ msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..) : absence de convergence en %d itérations."
 
 #: src/nmath/polygamma.c:473
-#, fuzzy, c-format
+#, c-format
 msgid "deriv = %d > %d (= n_max)\n"
-msgstr "deriv = %d > %d (= n_max)"
+msgstr "deriv = %d > %d (= n_max)\n"
 
 #: src/nmath/rmultinom.c:74
 #, c-format
@@ -7144,18 +7142,22 @@ msgid "re-encoding is not available on this system"
 msgstr "re-encodage indisponible sur ce systéme"
 
 #: src/unix/sys-std.c:858
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s', reason '%s'\n"
 "\n"
-msgstr "impossible d'ouvrir le fichier '%s', à cause de '%s'"
+msgstr ""
+"impossible d'ouvrir le fichier '%s', à cause de '%s'\n"
+"\n"
 
 #: src/unix/sys-std.c:861
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s'\n"
 "\n"
-msgstr "impossible d'ouvrir le fichier '%s'"
+msgstr ""
+"impossible d'ouvrir le fichier '%s'\n"
+"\n"
 
 #: src/unix/sys-std.c:924 src/unix/sys-std.c:946
 msgid "'file' argument is too long"
@@ -7187,9 +7189,8 @@ msgid "'intern' must be logical and not NA"
 msgstr "'ascii' doit être une valeur logique"
 
 #: src/unix/sys-unix.c:300
-#, fuzzy
 msgid "'intern=TRUE' is not implemented on this platform"
-msgstr "intern=TRUE n'est pas implémenté sur cette architecture"
+msgstr "'intern=TRUE' n'est pas implémenté sur cette architecture"
 
 #: src/unix/sys-unix.c:373
 msgid "Sys.info() is not implemented on this system"
@@ -7229,31 +7230,3 @@ msgstr "impossible de charger le module X11"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 indisponible"
-
-#~ msgid "R_compress1 requires a scalar string"
-#~ msgstr "R_compress1 exige une chaîne scalaire"
-
-#~ msgid "not a proper string"
-#~ msgstr "chaîne de caractères incorrecte"
-
-#~ msgid "type %d is unimplemented in type2symbol"
-#~ msgstr "type %d est indisponible dans type2symbol"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call : impossible de trouver l'environnement parent"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "l'argument doit être un vecteur de caractères"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "tentative d'obtenir le slot \"%s\" d'un objet de classe S3 c(\"%s\", \"%s"
-#~ "\", ...) (classe qui n'est pas formellement définie)"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B' doit être une matrice complexe"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B' doit être une matrice numérique"

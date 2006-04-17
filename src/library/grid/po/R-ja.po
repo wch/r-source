@@ -464,10 +464,3 @@ msgstr "'x' or 'xscale' のうち少なくとも一つを指定しなければ�
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "'y' か 'yscale' のうち少なくとも一つを指定しなければなりません"
-
-#~ msgid "No string supplied for 'strwidth' unit"
-#~ msgstr "'strwidth' 単位(units)を与える文字列がありません"
-
-#~ msgid "No 'grob' supplied for 'grobwidth' unit"
-#~ msgstr "'grobwidth' 単位(units)を与える 'grob' がありません"
-

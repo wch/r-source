@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:06+0100\n"
+"POT-Creation-Date: 2006-04-17 11:21+0100\n"
 "PO-Revision-Date: 13.04.06\n"
 "Last-Translator: Pablo E. Verde <pabloemilio.verde@uni-duesseldorf.de> \n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
@@ -988,50 +988,50 @@ msgstr "dim: vector de dimensión de longitud 0 es inválido"
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr "dim<- : dims [producto %d] no coincide con la longitud del objeto [%d]"
 
-#: src/main/attrib.c:916
+#: src/main/attrib.c:921
 msgid "attributes must be in a list"
 msgstr "los atributos deben estar en una lista"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:945
 msgid "attributes must be named"
 msgstr "los atributos deben tener nombre"
 
-#: src/main/attrib.c:944
+#: src/main/attrib.c:949
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "todos los atributos deben tener nombre [%d no lo tiene]"
 
-#: src/main/attrib.c:987
+#: src/main/attrib.c:992
 msgid "attribute 'name' must be of mode character"
 msgstr "el atributo 'name' debe ser de modo caracter"
 
-#: src/main/attrib.c:989
+#: src/main/attrib.c:994
 msgid "exactly one attribute 'name' must be given"
 msgstr "exactamente 1 atributo 'name' debe ser especificado"
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1062
 msgid "'name' must be non-null character"
 msgstr "'name' debe ser un caracter no nulo"
 
-#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
+#: src/main/attrib.c:1168 src/main/attrib.c:1207 src/main/attrib.c:1296
 msgid "invalid type or length for slot name"
 msgstr "tipo o longitud inválido para el nombre de slot"
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "no es posible obtener un slot (\"%s\") de un objeto de tipo \"%s\""
 
-#: src/main/attrib.c:1185
+#: src/main/attrib.c:1190
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "no hay un slot de nombre \"%s\" para ese objeto de clase \"%s\""
 
-#: src/main/attrib.c:1286
+#: src/main/attrib.c:1291
 msgid "formal classes cannot be used without the methods package"
 msgstr "no pueden utilizarse clases formales  sin el paquete métodos"
 
-#: src/main/attrib.c:1297
+#: src/main/attrib.c:1302
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1040,7 +1040,7 @@ msgstr ""
 "tentativa de obtener un slot \"%s\" de un objeto de una clase básica (\"%s"
 "\") sin slots"
 
-#: src/main/attrib.c:1306
+#: src/main/attrib.c:1311
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1049,7 +1049,7 @@ msgstr ""
 "tentativa de obtener un slot \"%s\" de un objeto cuya clase (\"%s\") no está "
 "definida"
 
-#: src/main/attrib.c:1325
+#: src/main/attrib.c:1330
 msgid "invalid slot type"
 msgstr "tipo de slot inválido"
 
@@ -5064,23 +5064,23 @@ msgstr "'gap' debe ser un entero no negativo"
 msgid "invalid 'tryS4' internal argument"
 msgstr "argumento interno 'tryS4' inválido"
 
-#: src/main/print.c:845
+#: src/main/print.c:853
 msgid "invalid character length in dblepr"
 msgstr "largo de carácter invalido en dblepr"
 
-#: src/main/print.c:863
+#: src/main/print.c:871
 msgid "invalid character length in intpr"
 msgstr " largo de carácter inválido en intpr"
 
-#: src/main/print.c:882
+#: src/main/print.c:890
 msgid "invalid character length in realpr"
 msgstr " largo de carácter inválido en realpr"
 
-#: src/main/print.c:892
+#: src/main/print.c:900
 msgid "memory allocation error in realpr"
 msgstr "error de asignación en memoria en realpr"
 
-#: src/main/print.c:908
+#: src/main/print.c:916
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "rutina BLAS/LAPACK '%6s' tuvo un error de código %d"

@@ -2067,30 +2067,3 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
-
-#~ msgid "rows with zero weights not counted"
-#~ msgstr "0重量的行不算"
-
-#~ msgid "p-values may be incorrect"
-#~ msgstr "p-值可能有错"
-
-#~ msgid "'shape' must be strictly positive"
-#~ msgstr "'shape'必需是正数"
-
-#~ msgid "p-values may be incorrect due to ties"
-#~ msgstr "因为有连结p-值算得可能不准"
-
-#~ msgid "one-argument anova() not implemented for 'mlm' objects"
-#~ msgstr "没有为'mlm'目标对象实现单变元的anova()功能"
-
-#~ msgid "'m' is negative"
-#~ msgstr "'m'是负数"
-
-#~ msgid "need response in formula"
-#~ msgstr "公式里没有反应"
-
-#~ msgid "non-integer counts in a Poisson glm!"
-#~ msgstr "Poisson通用线性模型里不能有负计数!"
-
-#~ msgid "'if 'x' is not a matrix, 'y' must be given"
-#~ msgstr "'如果'x'不是矩阵的话, 必需提供'y'值"

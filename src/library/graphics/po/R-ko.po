@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:08\n"
+"POT-Creation-Date: 2006-04-17 11:22\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -266,18 +266,6 @@ msgstr "'panel' 함수는 신규의 plot로 작성했습니다"
 msgid "'x' values must be positive."
 msgstr "'x'의 값은 positive가 아니면 되지 않습니다"
 
-msgid "invalid table 'x'"
-msgstr "테이블 'x'는 부적절합니다"
-
-msgid "cannot handle more than one 'x' coordinate"
-msgstr "두개 이상의 'x'좌표를 취급할 수 없습니다"
-
-msgid "must have a response variable"
-msgstr "응답 변수를 가지지 않으면 안됩니다"
-
-msgid "'plot.data.frame' applied to non data frame"
-msgstr "'plot.data.frame'가 데이터 프레임이 아닌것에 적용되었습니다"
-
 msgid "'y' must be a numeric vector"
 msgstr "'y'는 수치 벡터가 아니면 되지 않습니다"
 
@@ -298,6 +286,18 @@ msgstr "'y'의 변수에서 수치가 아닌것이 있습니다"
 
 msgid "there must be at least one numeric variable!"
 msgstr "적어도 하나의 수치 변수가 없으면 되지 않습니다!"
+
+msgid "invalid table 'x'"
+msgstr "테이블 'x'는 부적절합니다"
+
+msgid "cannot handle more than one 'x' coordinate"
+msgstr "두개 이상의 'x'좌표를 취급할 수 없습니다"
+
+msgid "must have a response variable"
+msgstr "응답 변수를 가지지 않으면 안됩니다"
+
+msgid "'plot.data.frame' applied to non data frame"
+msgstr "'plot.data.frame'가 데이터 프레임이 아닌것에 적용되었습니다"
 
 msgid "cannot hatch with logarithmic scale active"
 msgstr "활성화 대수적 scale로 해치할수가 없습니다 "
@@ -376,30 +376,3 @@ msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] ""
 "하나가 어긋나고 값(%s)이 boxplot %d로부터 제외해졌습니다\n"
 "(복수)가 어긋나고 값(%s)이 boxplot %d로부터 제외해졌습니다"
-
-#~ msgid "'coef' must not be negative"
-#~ msgstr "'coef'는 negative로는 될수 없습니다"
-
-#~ msgid "'x' and 'y' lengths differ"
-#~ msgstr "'x' 그리고 'y'의 길이가 다릅니다"
-
-#~ msgid "invalid first argument [bad language object]"
-#~ msgstr "최초의 인수가 무효입니다 [잘못한 언어 오브젝트입니다]"
-
-#~ msgid "at least 2 columns needed"
-#~ msgstr "적어도 두개의 열이 필요합니다"
-
-#~ msgid "'x', 'y' and 'z' lengths differ"
-#~ msgstr "'x', 'y' 그리고 'z'의 길이가 다릅니다"
-
-#~ msgid "%d x value <= 0 omitted from logarithmic plot"
-#~ msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-#~ msgstr[0] "%d개의 올바르지 않는 x의 값이 대수 plot로부터 제외했습니다"
-
-#~ msgid "%d y value <= 0 omitted from logarithmic plot"
-#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-#~ msgstr[0] "%d개의 올바르지 않는 y의 값이 대수 plot로부터 제외해졌습니다"
-
-#~ msgid "%d z value <= 0 omitted from logarithmic plot"
-#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-#~ msgstr[0] "%d개의 올바르지 않는 x의 값이 대수 plot로부터 제외해졌습니다"

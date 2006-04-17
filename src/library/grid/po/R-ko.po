@@ -476,9 +476,3 @@ msgstr "'x' 또는 'xscale' 중 적어도 하나를 지정하지 않으면 되�
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "'y' 또는 'yscale' 중 적어도 하나를 지정하지 않으면 되지 않습니다"
-
-#~ msgid "No string supplied for 'strwidth' unit"
-#~ msgstr "'strwidth' units를 주는 문자열이 없습니다"
-
-#~ msgid "No 'grob' supplied for 'grobwidth' unit"
-#~ msgstr "'grobwidth' units를 주는 'grob'가 없습니다"

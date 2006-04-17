@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-17 07:32\n"
+"POT-Creation-Date: 2006-04-17 11:22\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -15,77 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
-msgstr "'format'的值必需是\"normal\"或是\"short\"。现用\"normal\""
-
-msgid "wrong 'sortby' specified. Using sortby=\"score\""
-msgstr "'sortby'的值不对。用sortby=\"score\""
-
-msgid ""
-"wrong restriction specified.\n"
-"Using '%s'"
-msgstr ""
-"限制设定得不对。\n"
-"用'%s'"
-
-msgid "A search query has been submitted to"
-msgstr "檢索查詢疑問已被提出于"
-
-msgid "The results page should open in your browser shortly"
-msgstr "计算结果应很快就在瀏覽器里打开"
-
-msgid "reference to unknown chunk '%s'"
-msgstr "没有这样一个'%s'的對照參块"
-
-msgid "no Sweave file with name '%s' found"
-msgstr "没有名字为'%s'的Sweave文件"
-
-msgid "%d Sweave files for basename '%s' found:"
-msgstr "找到了%d个不含路径文件字符串为'%s'的Sweave文件:"
-
-msgid "Found invalid multi-byte character data."
-msgstr "多字節字符数据中有错。"
-
-msgid "Cannot re-encode because 'iconv' is not available."
-msgstr "因为没有'iconv'这个程序所以无法进行重新编码。"
-
-msgid "Try running R in a single-byte locale."
-msgstr "请试试在单字节場所运行R。"
-
-msgid "more than one syntax specification found, using the first one"
-msgstr "在多套語法規則里选用第一个套"
-
-msgid "object '%s' does not have class \"SweaveSyntax\""
-msgstr "目标对象'%s'不是\"Sweave語法\"这一类别"
-
-msgid "recursive Sweave input '%s' in stack"
-msgstr "堆疊里不能有回歸Sweave输入'%s'"
-
-msgid "target syntax not of class \"SweaveSyntax\""
-msgstr "目标語法不是\"SweaveSyntax\"这一类别"
-
-msgid "target syntax contains no translation table"
-msgstr "目标語法内没有翻译表"
-
-msgid ""
-"parse error or empty option in\n"
-"%s"
-msgstr ""
-"解析出错或是\n"
-"%s里有空白的选项"
-
-msgid "path to '%s' contains spaces,"
-msgstr "指向'%s'的路径里不能有空格,"
-
-msgid "this may cause problems when running LaTeX"
-msgstr "这可能会对运行LaTeX里产生问题"
-
-msgid "You can now run LaTeX on '%s'"
-msgstr "现在你可以在'%s'上运行LaTeX"
-
-msgid "invalid value for '%s' : %s"
-msgstr "'%s'的值不对: %s"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "只用'what'值里的第一个元素"
@@ -111,6 +40,12 @@ msgstr "程序包'%s'里的DESCRIPTION文件中没有日期这一域"
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "没有从程序包的DESCRIPTION文件中为'%s'确定年份"
 
+msgid "kind '%s' not yet implemented"
+msgstr "'%s'这一类还没有被实现"
+
+msgid "wrong number of table row entries"
+msgstr "表中的行数不对"
+
 msgid "'package' must be a character string or NULL"
 msgstr "'package'的值必需是字符串或NULL"
 
@@ -128,33 +63,6 @@ msgstr "目录'%s'里没有'filelist'这一文件"
 
 msgid "data set '%s' not found"
 msgstr "没有'%s'这个数据机"
-
-msgid "kind '%s' not yet implemented"
-msgstr "'%s'这一类还没有被实现"
-
-msgid "wrong number of table row entries"
-msgstr "表中的行数不对"
-
-msgid "wrong argument to 'dataentry'"
-msgstr "'dataentry'的变元不对"
-
-msgid "could not restore type information"
-msgstr "无法恢復种类的信息"
-
-msgid "modes argument ignored"
-msgstr "基本模式变元略过不用"
-
-msgid "'names' argument ignored"
-msgstr "'names'变元略过不用"
-
-msgid "'modes' argument ignored"
-msgstr "'modes'变元略过不用"
-
-msgid "could not restore variables properly"
-msgstr "无法正确恢复变量"
-
-msgid "did not assign() anything"
-msgstr "assign()没有用到"
 
 msgid "Browsing in the environment with call:"
 msgstr "在調用环境里浏览:"
@@ -186,6 +94,27 @@ msgid ""
 msgstr ""
 "有多个与題目'%s'有关的演示，\n"
 "现在用在'%s'找到的那一个"
+
+msgid "wrong argument to 'dataentry'"
+msgstr "'dataentry'的变元不对"
+
+msgid "could not restore type information"
+msgstr "无法恢復种类的信息"
+
+msgid "modes argument ignored"
+msgstr "基本模式变元略过不用"
+
+msgid "'names' argument ignored"
+msgstr "'names'变元略过不用"
+
+msgid "'modes' argument ignored"
+msgstr "'modes'变元略过不用"
+
+msgid "could not restore variables properly"
+msgstr "无法正确恢复变量"
+
+msgid "did not assign() anything"
+msgstr "assign()没有用到"
 
 msgid "invalid 'data' argument"
 msgstr "'data'变元不对"
@@ -352,77 +281,11 @@ msgstr "'fixInNamespace'需要名字值"
 msgid "only numeric indices can be used"
 msgstr "只能用数值的指标"
 
-msgid "cannot create directory '%s'"
-msgstr "无法产生'%s'目录"
-
-msgid "'list' should be a character vector naming R objects"
-msgstr "'list'必需是为R目标对象取名的字符向量"
-
-msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr ""
-
-msgid "no R objects specified or available"
-msgstr "没有指点定的R目标对象"
-
-msgid "directory '%s' already exists"
-msgstr "已经有了'%s'这样一个目录"
-
-msgid "unable to access index for repository %s"
-msgstr "无法在貯藏處%s中读写索引"
-
-msgid "no installed packages for (invalid?) 'lib.loc=%s'"
-msgstr "'lib.loc=%s'里没有已经安装好了的程序包"
-
-msgid "bundle '%s' is incompletely installed"
-msgstr "包袱'%s'没有完全被装好"
-
-msgid "bundle '%s' has extra contents %s"
-msgstr "包袱'%s'里有多余的内容%s"
-
-msgid "'priority' must be character or NULL"
-msgstr "'priority'的值要么是字符要么为NULL"
+msgid "no packages were specified"
+msgstr "没有设定程序包"
 
 msgid "argument 'lib' is missing: using %s"
 msgstr "没有'lib'这个变元：改用%s"
-
-msgid "'destdir' is not a directory"
-msgstr "'destdir'不是目录"
-
-msgid "no package '%s' at the repositories"
-msgstr "貯藏處里没有'%s'这样的程序包"
-
-msgid "download of package '%s' failed"
-msgstr "下载程序包'%s'时出了问题"
-
-msgid "--- Please select a CRAN mirror for use in this session ---"
-msgstr "--- 在此連線階段时请选用CRAN的鏡子 ---"
-
-msgid "trying to use CRAN without setting a mirror"
-msgstr "试试在不设定镜子的情况下用CRAN"
-
-msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "无法在非互交的情况下选用CRAN镜子"
-
-msgid "cannot set repositories non-interactively"
-msgstr "无法在非互交情况下设定貯藏處"
-
-msgid "--- Please select repositories for use in this session ---"
-msgstr "--- 请选用一个貯藏處 ---"
-
-msgid "Enter one or more numbers separated by spaces"
-msgstr "请输入一个或多个由空格分开的数字"
-
-msgid "'%s' must be supplied"
-msgstr "必需提供'%s'"
-
-msgid "every package depends on at least one other"
-msgstr "每个程序包至少依赖其他另外一个程序字"
-
-msgid "packages %s are mutually dependent"
-msgstr "程序包%s相互依赖"
-
-msgid "no packages were specified"
-msgstr "没有设定程序包"
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "无法在Windows下安装MacOS X二元程序包"
@@ -459,6 +322,72 @@ msgid ""
 msgstr ""
 "下载的程序包在\n"
 "\t%s里"
+
+msgid "cannot create directory '%s'"
+msgstr "无法产生'%s'目录"
+
+msgid "'list' should be a character vector naming R objects"
+msgstr "'list'必需是为R目标对象取名的字符向量"
+
+msgid "cannot turn off locale-specific chars via LC_CTYPE"
+msgstr ""
+
+msgid "no R objects specified or available"
+msgstr "没有指点定的R目标对象"
+
+msgid "directory '%s' already exists"
+msgstr "已经有了'%s'这样一个目录"
+
+msgid "unable to access index for repository %s"
+msgstr "无法在貯藏處%s中读写索引"
+
+msgid "no installed packages for (invalid?) 'lib.loc=%s'"
+msgstr "'lib.loc=%s'里没有已经安装好了的程序包"
+
+msgid "bundle '%s' is incompletely installed"
+msgstr "包袱'%s'没有完全被装好"
+
+msgid "bundle '%s' has extra contents %s"
+msgstr "包袱'%s'里有多余的内容%s"
+
+msgid "'priority' must be character or NULL"
+msgstr "'priority'的值要么是字符要么为NULL"
+
+msgid "'destdir' is not a directory"
+msgstr "'destdir'不是目录"
+
+msgid "no package '%s' at the repositories"
+msgstr "貯藏處里没有'%s'这样的程序包"
+
+msgid "download of package '%s' failed"
+msgstr "下载程序包'%s'时出了问题"
+
+msgid "--- Please select a CRAN mirror for use in this session ---"
+msgstr "--- 在此連線階段时请选用CRAN的鏡子 ---"
+
+msgid "trying to use CRAN without setting a mirror"
+msgstr "试试在不设定镜子的情况下用CRAN"
+
+msgid "cannot choose a CRAN mirror non-interactively"
+msgstr "无法在非互交的情况下选用CRAN镜子"
+
+msgid "cannot set repositories non-interactively"
+msgstr "无法在非互交情况下设定貯藏處"
+
+msgid "--- Please select repositories for use in this session ---"
+msgstr "--- 请选用一个貯藏處 ---"
+
+msgid "Enter one or more numbers separated by spaces"
+msgstr "请输入一个或多个由空格分开的数字"
+
+msgid "'%s' must be supplied"
+msgstr "必需提供'%s'"
+
+msgid "every package depends on at least one other"
+msgstr "每个程序包至少依赖其他另外一个程序字"
+
+msgid "packages %s are mutually dependent"
+msgstr "程序包%s相互依赖"
 
 msgid "no object named '%s' to show"
 msgstr "找不到名字为'%s'的目标对象"
@@ -539,6 +468,25 @@ msgstr "最后一个记录不完全，%d行略不不用"
 msgid "transfer failure"
 msgstr "转移时出了错"
 
+msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
+msgstr "'format'的值必需是\"normal\"或是\"short\"。现用\"normal\""
+
+msgid "wrong 'sortby' specified. Using sortby=\"score\""
+msgstr "'sortby'的值不对。用sortby=\"score\""
+
+msgid ""
+"wrong restriction specified.\n"
+"Using '%s'"
+msgstr ""
+"限制设定得不对。\n"
+"用'%s'"
+
+msgid "A search query has been submitted to"
+msgstr "檢索查詢疑問已被提出于"
+
+msgid "The results page should open in your browser shortly"
+msgstr "计算结果应很快就在瀏覽器里打开"
+
 msgid "invalid 'socket' argument"
 msgstr "'套介面'变元不对"
 
@@ -565,6 +513,58 @@ msgstr "'str.default': 'le'的值是NA"
 
 msgid "no events were recorded"
 msgstr "没有记录下任何事件"
+
+msgid "reference to unknown chunk '%s'"
+msgstr "没有这样一个'%s'的對照參块"
+
+msgid "no Sweave file with name '%s' found"
+msgstr "没有名字为'%s'的Sweave文件"
+
+msgid "%d Sweave files for basename '%s' found:"
+msgstr "找到了%d个不含路径文件字符串为'%s'的Sweave文件:"
+
+msgid "Found invalid multi-byte character data."
+msgstr "多字節字符数据中有错。"
+
+msgid "Cannot re-encode because 'iconv' is not available."
+msgstr "因为没有'iconv'这个程序所以无法进行重新编码。"
+
+msgid "Try running R in a single-byte locale."
+msgstr "请试试在单字节場所运行R。"
+
+msgid "more than one syntax specification found, using the first one"
+msgstr "在多套語法規則里选用第一个套"
+
+msgid "object '%s' does not have class \"SweaveSyntax\""
+msgstr "目标对象'%s'不是\"Sweave語法\"这一类别"
+
+msgid "recursive Sweave input '%s' in stack"
+msgstr "堆疊里不能有回歸Sweave输入'%s'"
+
+msgid "target syntax not of class \"SweaveSyntax\""
+msgstr "目标語法不是\"SweaveSyntax\"这一类别"
+
+msgid "target syntax contains no translation table"
+msgstr "目标語法内没有翻译表"
+
+msgid ""
+"parse error or empty option in\n"
+"%s"
+msgstr ""
+"解析出错或是\n"
+"%s里有空白的选项"
+
+msgid "path to '%s' contains spaces,"
+msgstr "指向'%s'的路径里不能有空格,"
+
+msgid "this may cause problems when running LaTeX"
+msgstr "这可能会对运行LaTeX里产生问题"
+
+msgid "You can now run LaTeX on '%s'"
+msgstr "现在你可以在'%s'上运行LaTeX"
+
+msgid "invalid value for '%s' : %s"
+msgstr "'%s'的值不对: %s"
 
 msgid ""
 "vignette '%d' found more than once,\n"
@@ -691,11 +691,6 @@ msgstr "'tar'退出码为%d"
 msgid "cannot remove prior installation of package"
 msgstr "无法拆除原来安装的程序包"
 
-msgid "object '%s' not found"
-msgid_plural "objects '%s' not found"
-msgstr[0] "找不到'%s'这个目标对象"
-msgstr[1] "找不到'%s'这个目标对象"
-
 msgid "dependency '%s' is not available"
 msgid_plural "dependencies '%s' are not available"
 msgstr[0] "没有'%s'这种相依关系"
@@ -706,13 +701,12 @@ msgid_plural "also installing the dependencies "
 msgstr[0] "还安装相依关系"
 msgstr[1] "还安装相依关系"
 
+msgid "object '%s' not found"
+msgid_plural "objects '%s' not found"
+msgstr[0] "找不到'%s'这个目标对象"
+msgstr[1] "找不到'%s'这个目标对象"
+
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被重新安装"
 msgstr[1] "正在使用'%s'这个程序包，因此不会被重新安装"
-
-#~ msgid "'page' requires a name"
-#~ msgstr "'page'需要名字值"
-
-#~ msgid "no Rd contents for package '%s' in '%s'"
-#~ msgstr "'%2$s'里的'%1$s'程序包内不包含Rd内容 "

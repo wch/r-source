@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:06+0100\n"
+"POT-Creation-Date: 2006-04-17 11:21+0100\n"
 "PO-Revision-Date: 2006-04-13 10:41+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -982,50 +982,50 @@ msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 "dim<- : Dimensionen [Produkt %d] passen nicht zur Länge des Objektes [%d]"
 
-#: src/main/attrib.c:916
+#: src/main/attrib.c:921
 msgid "attributes must be in a list"
 msgstr "Attribute müssen in einer Liste sein"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:945
 msgid "attributes must be named"
 msgstr "Attribute müssen Namen haben"
 
-#: src/main/attrib.c:944
+#: src/main/attrib.c:949
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "alle Attribute müssen Namen haben [%d hat keinen]"
 
-#: src/main/attrib.c:987
+#: src/main/attrib.c:992
 msgid "attribute 'name' must be of mode character"
 msgstr "Attribut 'name' muss vom Modus Charakter sein"
 
-#: src/main/attrib.c:989
+#: src/main/attrib.c:994
 msgid "exactly one attribute 'name' must be given"
 msgstr "es muss genau ein Attribut 'name' angegeben werden"
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1062
 msgid "'name' must be non-null character"
 msgstr "'name' muss ein nicht-Null Charakter sein"
 
-#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
+#: src/main/attrib.c:1168 src/main/attrib.c:1207 src/main/attrib.c:1296
 msgid "invalid type or length for slot name"
 msgstr "ungültiger Typ oder ungültige Länge für den Slot-Namen"
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "kann keinen Slot (\"%s\") von einem Objekt vom Typ \"%s\" bekommen"
 
-#: src/main/attrib.c:1185
+#: src/main/attrib.c:1190
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "kein Slot des Namens \"%s\" für dieses Objekt der Klasse \"%s\""
 
-#: src/main/attrib.c:1286
+#: src/main/attrib.c:1291
 msgid "formal classes cannot be used without the methods package"
 msgstr "formale Klassen können nicht ohne das methods Paket benutzt werden"
 
-#: src/main/attrib.c:1297
+#: src/main/attrib.c:1302
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1034,7 +1034,7 @@ msgstr ""
 "versuche einen Slot \"%s\" von einem Objekt der einfachen Klasse (\"%s\") "
 "ohne Slots anzufordern"
 
-#: src/main/attrib.c:1306
+#: src/main/attrib.c:1311
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1043,7 +1043,7 @@ msgstr ""
 "versuche einen Slot \"%s\" von einem Objekt der Klasse (\"%s\") anzufordern, "
 "das aber kein S4 Objekt ist"
 
-#: src/main/attrib.c:1325
+#: src/main/attrib.c:1330
 msgid "invalid slot type"
 msgstr "ungültiger Slot Typ"
 
@@ -5046,23 +5046,23 @@ msgstr "'gap' muss eine nicht-negative ganze Zahl sein"
 msgid "invalid 'tryS4' internal argument"
 msgstr "ungültiges internes Argument für 'tryS4'"
 
-#: src/main/print.c:845
+#: src/main/print.c:853
 msgid "invalid character length in dblepr"
 msgstr "ungültige Charakterlänge in dblepr"
 
-#: src/main/print.c:863
+#: src/main/print.c:871
 msgid "invalid character length in intpr"
 msgstr "ungültige Charakterlänge in intpr"
 
-#: src/main/print.c:882
+#: src/main/print.c:890
 msgid "invalid character length in realpr"
 msgstr "ungültige Charakterlänge in realpr"
 
-#: src/main/print.c:892
+#: src/main/print.c:900
 msgid "memory allocation error in realpr"
 msgstr "Speicherallokationsfehler in realpr"
 
-#: src/main/print.c:908
+#: src/main/print.c:916
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "BLAS/LAPACK-Routine '%6s' gab Fehlercode %d"
@@ -7118,31 +7118,3 @@ msgstr "X11 Modul kann nicht geladen werden"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
-
-#~ msgid "R_compress1 requires a scalar string"
-#~ msgstr "R_compress1 benötigt eine skalare Zeichenkette"
-
-#~ msgid "not a proper string"
-#~ msgstr "keine korrekte Zeichenkette"
-
-#~ msgid "type %d is unimplemented in type2symbol"
-#~ msgstr "Typ %d ist in type2symbol nicht implementiert"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call: konnte Elternumgebung nicht finden"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "Argument muss ein Charaktervektor sein"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "versuche einen Slot \"%s\" von einem Objekt mit S3 Klasse c(\"%s\", \"%s"
-#~ "\", ...) . (keine formal definierte Klasse) zu bekommen"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B' muss eine komplexe Matrix sein"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B' muss numerische Matrix sein"

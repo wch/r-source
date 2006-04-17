@@ -188,7 +188,6 @@ msgstr "Section suivante '%s'"
 msgid "Rd files with unknown encoding:"
 msgstr "Fichiers Rd dont le type d'encodage est inconnu :"
 
-#, fuzzy
 msgid "Rd files with invalid non-ASCII metadata:"
 msgstr "Fichiers Rd avec des métadonnées non-ASCII incorrectes :"
 

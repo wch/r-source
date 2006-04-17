@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:06+0100\n"
+"POT-Creation-Date: 2006-04-17 11:21+0100\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -986,52 +986,52 @@ msgstr "dim:  長さ 0 の次元のベクトルは無効です"
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr "dim<- : dims [product %d] は object [%d] の長さに整合しません"
 
-#: src/main/attrib.c:916
+#: src/main/attrib.c:921
 msgid "attributes must be in a list"
 msgstr "属性はリストの中になければなりません"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:945
 msgid "attributes must be named"
 msgstr "属性は名前が付けられていなければなりません"
 
-#: src/main/attrib.c:944
+#: src/main/attrib.c:949
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "全ての属性は名前を持っていなければなりません[%d が持っていません]"
 
-#: src/main/attrib.c:987
+#: src/main/attrib.c:992
 msgid "attribute 'name' must be of mode character"
 msgstr "'name' 属性はモードを表す文字でなくてはなりません"
 
-#: src/main/attrib.c:989
+#: src/main/attrib.c:994
 msgid "exactly one attribute 'name' must be given"
 msgstr "ちょうど一つの属性 'name' が与えられるべきです"
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1062
 msgid "'name' must be non-null character"
 msgstr "'name' は NULL でない文字列でなければなりません"
 
-#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
+#: src/main/attrib.c:1168 src/main/attrib.c:1207 src/main/attrib.c:1296
 msgid "invalid type or length for slot name"
 msgstr "スロット名の型または長さが不正です"
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "型 \"%s\" のオブジェクトからはスロット (\"%s\") を得ることは出来ません"
 
-#: src/main/attrib.c:1185
+#: src/main/attrib.c:1190
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 "名前 \"%s\" というスロットが、クラス \"%s\" のこのオブジェクトには存在しませ"
 "ん"
 
-#: src/main/attrib.c:1286
+#: src/main/attrib.c:1291
 msgid "formal classes cannot be used without the methods package"
 msgstr "メソッドパッケージなしにフォーマルクラス（formal class）は使えません"
 
-#: src/main/attrib.c:1297
+#: src/main/attrib.c:1302
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1040,7 +1040,7 @@ msgstr ""
 "スロット \"%s\"を、スロットを持たない基本クラス(\"%s\")のオブジェクトから得よ"
 "うとしました"
 
-#: src/main/attrib.c:1306
+#: src/main/attrib.c:1311
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1049,7 +1049,7 @@ msgstr ""
 "スロット \"%s\" を S4オブジェクトでは無い(クラス\"%s\")のオブジェクトから得よ"
 "うとしました"
 
-#: src/main/attrib.c:1325
+#: src/main/attrib.c:1330
 msgid "invalid slot type"
 msgstr "スロット型が不正です"
 
@@ -5039,23 +5039,23 @@ msgstr "'gap' は，非負の整数でなくてはなりません"
 msgid "invalid 'tryS4' internal argument"
 msgstr "'tryS4' 内部引数が不正です"
 
-#: src/main/print.c:845
+#: src/main/print.c:853
 msgid "invalid character length in dblepr"
 msgstr "dblepr の文字列の長さが不正です"
 
-#: src/main/print.c:863
+#: src/main/print.c:871
 msgid "invalid character length in intpr"
 msgstr "intpr の文字列の長さが不正です"
 
-#: src/main/print.c:882
+#: src/main/print.c:890
 msgid "invalid character length in realpr"
 msgstr "realpr の文字列の長さが不正です"
 
-#: src/main/print.c:892
+#: src/main/print.c:900
 msgid "memory allocation error in realpr"
 msgstr "realpr でメモリ確保に失敗しました"
 
-#: src/main/print.c:908
+#: src/main/print.c:916
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "BLAS/LAPACK 関数 '%6s' はエラーコード %d を返しました "
@@ -7106,31 +7106,3 @@ msgstr "X11 モジュールをロードできません"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 が利用できません"
-
-#~ msgid "R_compress1 requires a scalar string"
-#~ msgstr "R_compress1 はスカラー文字列を要求します"
-
-#~ msgid "not a proper string"
-#~ msgstr "不適切な文字列です"
-
-#~ msgid "type %d is unimplemented in type2symbol"
-#~ msgstr "type2symbol には %d 型は未実装です"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call：親環境が見つかりませんでした"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "引数は文字ベクトルでなければなりません"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "スロット \"%s\" を S3 クラス c(\"%s\", \"%s\"\", ...) のオブジェクトから得"
-#~ "ようとしました (正式に定義されたクラスではありません) "
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B' は複素行列でなければなりません"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B' は数値行列でなければなりません"

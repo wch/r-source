@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:06+0100\n"
+"POT-Creation-Date: 2006-04-17 11:21+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -1005,51 +1005,51 @@ msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 "dim<- : dims [prodotto %d] non conformi alla lunghezza dell'oggetto [%d]"
 
-#: src/main/attrib.c:916
+#: src/main/attrib.c:921
 msgid "attributes must be in a list"
 msgstr "gli attributi devono essere un oggetto di tipo list"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:945
 msgid "attributes must be named"
 msgstr "gli attributi devono avere un nome"
 
-#: src/main/attrib.c:944
+#: src/main/attrib.c:949
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "tutti gli attributi devono avere dei nomi [%d non ce l'ha]"
 
-#: src/main/attrib.c:987
+#: src/main/attrib.c:992
 msgid "attribute 'name' must be of mode character"
 msgstr "l'attributo 'name' deve essere in modalità character"
 
-#: src/main/attrib.c:989
+#: src/main/attrib.c:994
 msgid "exactly one attribute 'name' must be given"
 msgstr "deve essere specificato solo un attributo 'name'"
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1062
 msgid "'name' must be non-null character"
 msgstr "'name' deve essere un character non nullo"
 
-#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
+#: src/main/attrib.c:1168 src/main/attrib.c:1207 src/main/attrib.c:1296
 msgid "invalid type or length for slot name"
 msgstr "typo o lunghezza non ammissibile per il nome dello slot"
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "non è possibile ottenere lo slot (\"%s\") da un oggetto di tipo \"%s\""
 
-#: src/main/attrib.c:1185
+#: src/main/attrib.c:1190
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "nessuno slot di nome \"%s\" per questo oggetto di classe \"%s\""
 
-#: src/main/attrib.c:1286
+#: src/main/attrib.c:1291
 msgid "formal classes cannot be used without the methods package"
 msgstr ""
 "classi formali non possono essere utilizzati senza il pacchetto methods"
 
-#: src/main/attrib.c:1297
+#: src/main/attrib.c:1302
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1058,7 +1058,7 @@ msgstr ""
 "tentativo di ottenre lo slot \"%s\" da un oggetto di classe base (\"%s\") "
 "senza slots"
 
-#: src/main/attrib.c:1306
+#: src/main/attrib.c:1311
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1067,7 +1067,7 @@ msgstr ""
 "tentativo di ottere lo slot \"%s\" da un oggetto per il quale la classe (\"%s"
 "\") non è definita "
 
-#: src/main/attrib.c:1325
+#: src/main/attrib.c:1330
 msgid "invalid slot type"
 msgstr "tipo di slot non valido"
 
@@ -5076,23 +5076,23 @@ msgstr "'gap' deve essere un intero non negativo"
 msgid "invalid 'tryS4' internal argument"
 msgstr "argomento interno 'tryS4' non valido"
 
-#: src/main/print.c:845
+#: src/main/print.c:853
 msgid "invalid character length in dblepr"
 msgstr "lunghezza carattere non valida in dblepr"
 
-#: src/main/print.c:863
+#: src/main/print.c:871
 msgid "invalid character length in intpr"
 msgstr "lunghezza carattere non valida in intpr"
 
-#: src/main/print.c:882
+#: src/main/print.c:890
 msgid "invalid character length in realpr"
 msgstr "lnghezza carattere non valida in realpr"
 
-#: src/main/print.c:892
+#: src/main/print.c:900
 msgid "memory allocation error in realpr"
 msgstr "errore di allocazione della memoria in realpr"
 
-#: src/main/print.c:908
+#: src/main/print.c:916
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "la routine BLAS/LAPACK '%6s' ha restituito un codice errore %d"
@@ -7151,49 +7151,3 @@ msgstr "il modulo X11 non può essere caricato"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 non disponibile"
-
-#~ msgid "R_compress1 requires a scalar string"
-#~ msgstr "R_compress1 richiede una stringa scalare"
-
-#~ msgid "not a proper string"
-#~ msgstr "non è una stringa propria"
-
-#~ msgid "type %d is unimplemented in type2symbol"
-#~ msgstr "type %d non implementato in type2symbol"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call: non posso trovare l'environment padre"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "l'argomento deve essere una vettore di tipo character"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "tentativo di ottere lo slot \"%s\" da un oggetto di classe S3 c(\"%s\", "
-#~ "\"%s\", ...) (classe non formalmente definita)"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B' deve essere una matrice di tipo complex"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B' deve essere una matrice di tipo numeric"
-
-#~ msgid "%s\\doc\\html\\rwin.htm[l] not found"
-#~ msgstr "%s\\doc\\html\\rwin.htm[l] non trovata"
-
-#~ msgid "%s not found"
-#~ msgstr "%s non trovato"
-
-#~ msgid "WinHelp call failed"
-#~ msgstr "chiamata a WinHelp non riuscita"
-
-#~ msgid "too many .hlp files opened"
-#~ msgstr "troppi file .hlp aperti"
-
-#~ msgid "type not yet implemented"
-#~ msgstr "type non ancora implementato"
-
-#~ msgid "'lwd' must be numeric of length >=1"
-#~ msgstr "'lwd' deve essere numeric di lunghezza >=1"

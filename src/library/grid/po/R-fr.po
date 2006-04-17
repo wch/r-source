@@ -30,9 +30,8 @@ msgstr "'labels' et 'at' doivent être de même longueur"
 msgid "End points must not be identical"
 msgstr ""
 
-#, fuzzy
 msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
-msgstr "'x0', 'y0', 'x1' et 'y1' doivent être des unités"
+msgstr "'x1', 'y1', 'x2' et 'y2' doivent être des unités"
 
 msgid "'shape' must be between -1 and 1"
 msgstr ""
@@ -338,7 +337,6 @@ msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr ""
 "L'argument 'grob' doit être un grob de type 'line.to', 'lines' ou 'segments'"
 
-#, fuzzy
 msgid "x and y must be units"
 msgstr "'x' et 'y' doivent être des unités"
 
@@ -380,13 +378,11 @@ msgstr "l'argument 'x' doit être un objet unité"
 msgid "Invalid 'axis' or 'type'"
 msgstr "'axis' ou 'type' incorrect"
 
-#, fuzzy
 msgid "No string supplied for 'strwidth/height' unit"
-msgstr "Pas de chaîne de caractères fournie pour l'unité 'strheight'"
+msgstr "Pas de chaîne de caractères fournie pour l'unité 'strwidth/height'"
 
-#, fuzzy
 msgid "No 'grob' supplied for 'grobwidth/height' unit"
-msgstr "Pas de 'grob' fourni pour l'unité 'grobheight'"
+msgstr "Pas de 'grob' fourni pour l'unité 'grobwidth.height'"
 
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
@@ -432,9 +428,8 @@ msgid ""
 "length function"
 msgstr ""
 
-#, fuzzy
 msgid "Invalid theta"
-msgstr "'gPath' incorrect"
+msgstr "'theta' incorrect"
 
 msgid "'range' must be numeric"
 msgstr "'range' doit être numérique"
@@ -485,9 +480,3 @@ msgstr "Il faut spécifier au moins 'x' ou 'xscale'"
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "Il faut spécifier au moins 'y' ou 'yscale'"
-
-#~ msgid "No string supplied for 'strwidth' unit"
-#~ msgstr "Pas de chaîne de caractères fournie pour l'unité 'strwidth'"
-
-#~ msgid "No 'grob' supplied for 'grobwidth' unit"
-#~ msgstr "Pas de 'grob' fourni pour l'unité 'grobwidth'"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 07:31+0100\n"
+"POT-Creation-Date: 2006-04-17 11:21+0100\n"
 "PO-Revision-Date: 2005-05-31 10:31+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -20,6 +20,16 @@ msgstr ""
 #: devNull.c:41 devNull.c:45
 msgid "unable to start NULL device"
 msgstr "NULL 디바이스를 시작할수가 없습니다"
+
+#: devPicTeX.c:501 devPicTeX.c:503 devPS.c:735 devPS.c:738 devPS.c:3973
+#: devPS.c:6657
+#, fuzzy, c-format
+msgid "invalid string in '%s'"
+msgstr "무효의 문자열 인수입니다"
+
+#: devPicTeX.c:782
+msgid "unable to start device PicTeX"
+msgstr "디바이스 PicTex를 시작할수가 없습니다"
 
 #: devPS.c:553
 #, fuzzy, c-format
@@ -38,12 +48,6 @@ msgstr "'%s' metafile 하는것을 작성할 수 없습니다"
 #: devPS.c:620
 msgid "unknown AFM entity encountered"
 msgstr "충돌한 AFM entity를 알수가 없습니다 "
-
-#: devPS.c:735 devPS.c:738 devPS.c:3973 devPS.c:6657 devPicTeX.c:501
-#: devPicTeX.c:503
-#, fuzzy, c-format
-msgid "invalid string in '%s'"
-msgstr "무효의 문자열 인수입니다"
 
 #: devPS.c:766
 #, c-format
@@ -411,10 +415,6 @@ msgstr "디바이스 xfig를 시작할수 없습니다"
 msgid "unable to start device pdf"
 msgstr "디바이스 pdf를 시작할수가 없습니다"
 
-#: devPicTeX.c:782
-msgid "unable to start device PicTeX"
-msgstr "디바이스 PicTex를 시작할수가 없습니다"
-
 #: devQuartz.c:454
 msgid "invalid string argument"
 msgstr "무효의 문자열 인수입니다"
@@ -587,65 +587,3 @@ msgstr "장치 debWindows를 시작할수 없습니다"
 #: devWindows.c:3064
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "지원되지 않는 getGraphicsEvent의 재귀적으로 사용합니다"
-
-#, fuzzy
-#~ msgid "font width unknown for character U+%04x"
-#~ msgstr "문자 0x%x에는 알수 없는 font폭 입니다"
-
-#, fuzzy
-#~ msgid "font metrics unknown for character U+%04x"
-#~ msgstr "문자 0x%x에는 알수 없는 font 척도입니다"
-
-#, fuzzy
-#~ msgid "failed to load CID afm file '%s'"
-#~ msgstr "유형 1 font 패밀리를 할당하는데 실패했습니다"
-
-#, fuzzy
-#~ msgid "font width unknown for character U+%04x, assuming 1000"
-#~ msgstr "문자 U+%04x에는 알수 없는 font폭 입니다"
-
-#, fuzzy
-#~ msgid "failed to load afm file '%s'"
-#~ msgstr "encode 파일을 적재하는데 실패되었습니다"
-
-#, fuzzy
-#~ msgid "unknown postscript font CID family, name %s"
-#~ msgstr "%s 사용하는 알수 없는 postscript font 패밀리입니다"
-
-#, fuzzy
-#~ msgid "cidfamily '%s' not included in PostScript device"
-#~ msgstr "PostScript 디바이스에 포함하지 않는 family %s 입니다"
-
-#~ msgid "family %s not included in PostScript device"
-#~ msgstr "PostScript 디바이스에 포함하지 않는 family %s 입니다"
-
-#, fuzzy
-#~ msgid "cannot read CID %s family afm files"
-#~ msgstr "afm file %s를 읽을 수가 없습니다"
-
-#~ msgid "allocation failure in PS_Text"
-#~ msgstr "PS_Text의 할당이 실패되었습니다"
-
-#~ msgid ""
-#~ "Requested encoding \"%s\"\n"
-#~ "Only encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\n"
-#~ "Assuming \"ISOLatin1.enc\""
-#~ msgstr ""
-#~ "encoding \"%s\"만을 요구한\n"
-#~ "encoding = \"ISOLatin1.enc\"를 가정하는 UTF-8 locale에\n"
-#~ "현재 허용됩니다"
-
-#, fuzzy
-#~ msgid "allocation failure in PDF_TextCIDWrapper"
-#~ msgstr "PDF_Text에서 할당이 실패했습니다"
-
-#~ msgid "allocation failure in PDF_Text"
-#~ msgstr "PDF_Text에서 할당이 실패했습니다"
-
-#~ msgid ""
-#~ "Only encoding = \"ISOLatin1.enc\" is currently allowed in a UTF-8 locale\n"
-#~ "Assuming \"ISOLatin1.enc\""
-#~ msgstr ""
-#~ "encoding = \"ISOLatin1.enc\" 만이 \"ISOLatin1.enc\"를 가정하는 UTF-8 loale"
-#~ "에서\n"
-#~ "현재 허용됩니다"

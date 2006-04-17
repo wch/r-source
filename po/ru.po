@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:06+0100\n"
+"POT-Creation-Date: 2006-04-17 11:21+0100\n"
 "PO-Revision-Date: 2006-04-15 23:34-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -989,50 +989,50 @@ msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 "dim<- : измерения [произведение %d] не соответствуют длине объекта [%d]"
 
-#: src/main/attrib.c:916
+#: src/main/attrib.c:921
 msgid "attributes must be in a list"
 msgstr "атрибуты должны быть списком"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:945
 msgid "attributes must be named"
 msgstr "атрибуты должны быть именованы"
 
-#: src/main/attrib.c:944
+#: src/main/attrib.c:949
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "все атрибуты должны иметь имена [%d не имеет]"
 
-#: src/main/attrib.c:987
+#: src/main/attrib.c:992
 msgid "attribute 'name' must be of mode character"
 msgstr "атрибут 'имя' должен быть текстом"
 
-#: src/main/attrib.c:989
+#: src/main/attrib.c:994
 msgid "exactly one attribute 'name' must be given"
 msgstr "должен быть задан в точности один атрибут 'имя'"
 
-#: src/main/attrib.c:1057
+#: src/main/attrib.c:1062
 msgid "'name' must be non-null character"
 msgstr "'имя' должен быть непустым текстом"
 
-#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
+#: src/main/attrib.c:1168 src/main/attrib.c:1207 src/main/attrib.c:1296
 msgid "invalid type or length for slot name"
 msgstr "неправильный тип или длина для имени слота"
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "не могу получить слот (\"%s\") из объекта типа \"%s\""
 
-#: src/main/attrib.c:1185
+#: src/main/attrib.c:1190
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "нет слота имени \"%s\" для этого объекта класса \"%s\""
 
-#: src/main/attrib.c:1286
+#: src/main/attrib.c:1291
 msgid "formal classes cannot be used without the methods package"
 msgstr "формальные классы не могут использоваться без пакета 'methods'"
 
-#: src/main/attrib.c:1297
+#: src/main/attrib.c:1302
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1040,7 +1040,7 @@ msgid ""
 msgstr ""
 "попытка получить слот \"%s\" из объекта базового класса (\"%s\") без слотов"
 
-#: src/main/attrib.c:1306
+#: src/main/attrib.c:1311
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1049,7 +1049,7 @@ msgstr ""
 "попытка получить слот \"%s\" из объекта (класс \"%s\"), который не является "
 "объектом S4"
 
-#: src/main/attrib.c:1325
+#: src/main/attrib.c:1330
 msgid "invalid slot type"
 msgstr "неправильный тип слота"
 
@@ -5044,23 +5044,23 @@ msgstr "'gap' должен быть положительным целым числом"
 msgid "invalid 'tryS4' internal argument"
 msgstr "неправильный внутренний аргумент 'tryS4' "
 
-#: src/main/print.c:845
+#: src/main/print.c:853
 msgid "invalid character length in dblepr"
 msgstr "неправильная длина текста в 'dblepr'"
 
-#: src/main/print.c:863
+#: src/main/print.c:871
 msgid "invalid character length in intpr"
 msgstr "неправильная длина текста в 'intpr'"
 
-#: src/main/print.c:882
+#: src/main/print.c:890
 msgid "invalid character length in realpr"
 msgstr "неправильная длина текста 'realpr'"
 
-#: src/main/print.c:892
+#: src/main/print.c:900
 msgid "memory allocation error in realpr"
 msgstr "ошибка размещения памяти в 'realpr'"
 
-#: src/main/print.c:908
+#: src/main/print.c:916
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "средство BLAS/LAPACK '%6s' вызвало ошибку с кодом %d"
@@ -7110,31 +7110,3 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 недоступен"
-
-#~ msgid "R_compress1 requires a scalar string"
-#~ msgstr "R_compress1 требует скалярную строку"
-
-#~ msgid "not a proper string"
-#~ msgstr "неправильная строка"
-
-#~ msgid "type %d is unimplemented in type2symbol"
-#~ msgstr "в 'type2symbol' тип %d не разработан"
-
-#~ msgid "do.call: could not find parent environment"
-#~ msgstr "do.call: не могу найти родительское окружение"
-
-#~ msgid "argument must be a character vector"
-#~ msgstr "аргумент должен быть текстовым вектором"
-
-#~ msgid ""
-#~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
-#~ "\", ...) (not a formally defined class)"
-#~ msgstr ""
-#~ "попытка получить слот \"%s\" из объекта с классом S3 c(\"%s\", \"%s"
-#~ "\", ...) (класс, не определенный формально)"
-
-#~ msgid "'B' must be a complex matrix"
-#~ msgstr "'B' должен быть комплексной матрицей"
-
-#~ msgid "'B' must be a numeric matrix"
-#~ msgstr "'B' должен быть числовой матрицей"

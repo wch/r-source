@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:06\n"
+"POT-Creation-Date: 2006-04-17 11:21\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -15,69 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-msgid "'%s' is defunct."
-msgstr "'%s'已无用。"
-
-msgid "Use '%s' instead."
-msgstr "请用'%s'。"
-
-msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr "见help(\"Defunct\"))和help(\"%s-defunct\")。"
-
-msgid "See help(\"Defunct\")"
-msgstr "见help(\"Defunct\"))"
-
-msgid "'%s' is deprecated."
-msgstr "%s不再有用。"
-
-msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
-msgstr "见help(\"Deprecated\")和help(\"%s-deprecated\")。"
-
-msgid "See help(\"Deprecated\")"
-msgstr "见help(\"Deprecated\")"
-
-msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "'La.svd'的变元必需是数值或是复数"
-
-msgid "infinite or missing values in 'x'"
-msgstr "'x'里有无穷大值或遗漏值"
-
-msgid "0 extent dimensions"
-msgstr "0扩充维度"
-
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "'nu'的值必需是0，nrow(x) 或ncol(x)"
-
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "'nv'的值必需是0，nrow(x)或ncol(x)"
-
-msgid "'all' can not be used with other deparse options"
-msgstr "'all'不能和deparse的其他选项同时共存"
-
-msgid "second argument must be a list"
-msgstr "第二个变元必需为串列"
-
-msgid "'iconvlist' is not available on this system"
-msgstr "本系统不支持'iconvlist'"
-
-msgid "'kind' must be a character string of length 1 (RNG to be used)."
-msgstr "'kind' 必需是字符，而且其长度只能为1(用RNG) 。"
-
-msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr "'%s'不是正当的RNG缩写"
-
-msgid "'normal.kind' must be a character string of length 1."
-msgstr "'normal.kind'必需是字符，而且其长度只能为1。"
-
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "使用的Kinderman-Ramage任意数产生器可能有虫。"
-
-msgid "'%s' is not a valid choice"
-msgstr "%s'不是正当的选择"
-
-msgid "malformed version string"
-msgstr "版本字串格式有错"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X)的值必需是正数"
@@ -109,11 +46,14 @@ msgstr "需要"
 msgid "(still attached)"
 msgstr "(仍连接着)"
 
-msgid "replaced regular expression pattern '[' by  '\\\\['"
+#, fuzzy
+msgid "replaced regular expression pattern '[' by  '\\\\\\\\"
 msgstr "正规表现'['被换成'\\\\['"
 
-msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
-msgstr "正规表现'[<-'被换成'\\\\[<-'"
+msgid ""
+"replaced '[<-' by '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"
+"\\\\\\\\\\\\\\"
+msgstr ""
 
 msgid "RHS must be list"
 msgstr "等式右边必需是串列"
@@ -204,12 +144,6 @@ msgstr "'breaks' 的值有重复"
 
 msgid "labels/breaks length conflict"
 msgstr "label/breaks两个变元的长度不一样"
-
-msgid "non-numeric data type in frame"
-msgstr "框里有非数值的数据类"
-
-msgid "class information lost from one or more columns"
-msgstr "一个或多个行的类别信息丢失了"
 
 msgid "invalid 'row.names' length"
 msgstr "'row.names'的长度不对"
@@ -342,6 +276,12 @@ msgstr "%d长度的串列没有意义"
 msgid "only defined on a data frame with all numeric or complex variables"
 msgstr "只适用于全数值或全复数的数据框"
 
+msgid "non-numeric data type in frame"
+msgstr "框里有非数值的数据类"
+
+msgid "class information lost from one or more columns"
+msgstr "一个或多个行的类别信息丢失了"
+
 msgid "character string is not in a standard unambiguous format"
 msgstr "字符串的格式不够标准明确"
 
@@ -472,6 +412,27 @@ msgstr "'to'一定得是POSIXt对象"
 msgid "'file' must be a character string or connection"
 msgstr "'file'要么是字符串，要么是连接"
 
+msgid "'%s' is defunct."
+msgstr "'%s'已无用。"
+
+msgid "Use '%s' instead."
+msgstr "请用'%s'。"
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "见help(\"Defunct\"))和help(\"%s-defunct\")。"
+
+msgid "See help(\"Defunct\")"
+msgstr "见help(\"Defunct\"))"
+
+msgid "'%s' is deprecated."
+msgstr "%s不再有用。"
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "见help(\"Deprecated\")和help(\"%s-deprecated\")。"
+
+msgid "See help(\"Deprecated\")"
+msgstr "见help(\"Deprecated\")"
+
 msgid "'x' must be a square matrix"
 msgstr "'x'必需是正方形矩阵"
 
@@ -520,6 +481,9 @@ msgstr "eigen里的矩阵不是正方形的"
 
 msgid "numeric or complex values required in 'eigen'"
 msgstr "'eigen'必需用数值或复数值"
+
+msgid "infinite or missing values in 'x'"
+msgstr "'x'里有无穷大值或遗漏值"
 
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'eigen'里'ch'回覆了代码%d"
@@ -630,6 +594,18 @@ msgstr "'max.distance'的组成部分不能有负值"
 
 msgid "matrix should be square"
 msgstr "矩阵必需的正方形的"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "'La.svd'的变元必需是数值或是复数"
+
+msgid "0 extent dimensions"
+msgstr "0扩充维度"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "'nu'的值必需是0，nrow(x) 或ncol(x)"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "'nv'的值必需是0，nrow(x)或ncol(x)"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "这是R%s，程辑包'%s'需要%s %s "
@@ -803,6 +779,12 @@ msgstr "'category'变元有错"
 msgid "must specify formal argument names to vectorize"
 msgstr ""
 
+msgid "'%s' is not a function, character or symbol"
+msgstr "'%s'不是函数，也不是字符，也不是符號"
+
+msgid "found non-function '%s'"
+msgstr "找到个非函数'%s'"
+
 msgid "'arg' should be one of"
 msgstr "'arg'应当是这些其中的一个"
 
@@ -817,12 +799,6 @@ msgstr "'input'的长度一定得为1"
 
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input'和'target'一定都得是字符串"
-
-msgid "'%s' is not a function, character or symbol"
-msgstr "'%s'不是函数，也不是字符，也不是符號"
-
-msgid "found non-function '%s'"
-msgstr "找到个非函数'%s'"
 
 msgid "attempt to set rownames on object with no dimensions"
 msgstr "不能给没有维度的对象设行名"
@@ -996,6 +972,15 @@ msgstr "在载入名字空间的时候没有找到'%s'对象"
 msgid "found an S4 version of '%s' so it has not been imported correctly"
 msgstr "找到了'%s' 的S4版本，因此它没有被正确地被进口"
 
+msgid "'all' can not be used with other deparse options"
+msgstr "'all'不能和deparse的其他选项同时共存"
+
+msgid "second argument must be a list"
+msgstr "第二个变元必需为串列"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "本系统不支持'iconvlist'"
+
 msgid "'%s' is not implemented yet"
 msgstr "'%s'还没有编程实现"
 
@@ -1091,6 +1076,24 @@ msgstr "'x'必需为向量"
 
 msgid "invalid 'rle' structure"
 msgstr "'rle'结构有错"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr "'kind' 必需是字符，而且其长度只能为1(用RNG) 。"
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "'%s'不是正当的RNG缩写"
+
+msgid "'normal.kind' must be a character string of length 1."
+msgstr "'normal.kind'必需是字符，而且其长度只能为1。"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "使用的Kinderman-Ramage任意数产生器可能有虫。"
+
+msgid "'%s' is not a valid choice"
+msgstr "%s'不是正当的选择"
+
+msgid "malformed version string"
+msgstr "版本字串格式有错"
 
 msgid "incorrect length for 'group'"
 msgstr "‘ group’的长度不对"
@@ -1319,11 +1322,6 @@ msgstr "程辑包'%s'有一个非函数的'.First.lib'"
 msgid "cannot find name space environment"
 msgstr "找不到名字空间环境"
 
-msgid "deparse option %s is not recognized"
-msgid_plural "deparse options %s are not recognized"
-msgstr[0] "没有%s这个deparse选项"
-msgstr[1] "没有%s这个deparse选项"
-
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "图书馆%s里没有程辑包"
@@ -1352,231 +1350,15 @@ msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "没有%s这个deparse选项"
+msgstr[1] "没有%s这个deparse选项"
+
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
 
-#~ msgid "none of the packages were found"
-#~ msgstr "所有的程辑包都没有找到"
-
-#~ msgid "no input is available"
-#~ msgstr "无输入"
-
-#~ msgid ""
-#~ "the input does not start with a magic number compatible with loading from "
-#~ "a connection"
-#~ msgstr "用链结输入文件必须包含正确的幻数"
-
-#~ msgid "calling wrong method"
-#~ msgstr "调用的方法不对"
-
-#~ msgid "format.char: coercing 'x' to 'character'"
-#~ msgstr "format.char：'x'被强迫转成'character'"
-
-#~ msgid "x must be numeric"
-#~ msgstr "x必需为数值"
-
-#~ msgid "file' must be a character string or connection"
-#~ msgstr "'file'必需是字符串或链结"
-
-#~ msgid "invalid 'row.names 'specification"
-#~ msgstr "'row.names'的设定不对"
-
-#~ msgid "found"
-#~ msgstr "找到了"
-
-#~ msgid "File"
-#~ msgstr "文件"
-
-#~ msgid "not found."
-#~ msgstr "不存在。"
-
-#~ msgid "in"
-#~ msgstr "在里面"
-
-#~ msgid "cannot coerce class"
-#~ msgstr "无法强迫改变类别"
-
-#~ msgid "into a data.frame"
-#~ msgstr "变成数据框"
-
-#~ msgid "invalid row.names, length"
-#~ msgstr "row.names不对，长度是"
-
-#~ msgid "for a data frame with"
-#~ msgstr "数据框"
-
-#~ msgid "rows"
-#~ msgstr "行"
-
-#~ msgid "supplied"
-#~ msgstr "提供"
-
-#~ msgid "row names for"
-#~ msgstr "行名"
-
-#~ msgid "rows, data has"
-#~ msgstr "行，但数据有"
-
-#~ msgid "items, need"
-#~ msgstr "项，需要"
-
-#~ msgid "is a matrix/data frame of"
-#~ msgstr "是矩阵/数据框，内有"
-
-#~ msgid "rows, need"
-#~ msgstr "行，需要"
-
-#~ msgid "has"
-#~ msgstr "已有"
-
-#~ msgid "rows to replace"
-#~ msgstr "行可以被替换"
-
-#~ msgid "provided"
-#~ msgstr "已经提供了"
-
-#~ msgid "variables"
-#~ msgstr "变数"
-
-#~ msgid "not meaningful"
-#~ msgstr "没有意义"
-
-#~ msgid "to class \"Date\""
-#~ msgstr "到\"Date\"类别"
-
-#~ msgid "to class \"POSIXlt\""
-#~ msgstr "到\"POSIXlt\"类别"
-
-#~ msgid "to class \"POSIXct\""
-#~ msgstr "到\"POSIXct\"类别"
-
-#~ msgid "in eigen"
-#~ msgstr "在eigen"
-
-#~ msgid "should be 1 or"
-#~ msgstr "应为1或"
-
-#~ msgid "Level sets of factors are different"
-#~ msgstr "因子的层次集不同"
-
-#~ msgid "package"
-#~ msgstr "程辑包"
-
-#~ msgid "has been merged into 'stats4'"
-#~ msgstr "已经被合并到‘stats4’ "
-
-#~ msgid "found more than once,"
-#~ msgstr "不止一个，"
-
-#~ msgid "using the one found in"
-#~ msgstr "所用的位于"
-
-#~ msgid "required by"
-#~ msgstr "被要求的是"
-
-#~ msgid "could not be found"
-#~ msgstr "无法找到"
-
-#~ msgid "was found, but"
-#~ msgstr "是找到了，但"
-
-#~ msgid "could not be loaded"
-#~ msgstr "载入失败"
-
-#~ msgid "is loaded, but"
-#~ msgstr "是载入成功了，但"
-
-#~ msgid "Unable to load R code in package"
-#~ msgstr "载入程辑包里R写码的时个出错"
-
-#~ msgid "In"
-#~ msgstr "在"
-
-#~ msgid "name space"
-#~ msgstr "名字空间"
-
-#~ msgid "is loaded"
-#~ msgstr "已载入"
-
-#~ msgid "failed in"
-#~ msgstr "失败于"
-
-#~ msgid "object(s)"
-#~ msgstr "对象"
-
-#~ msgid "are not exported by"
-#~ msgstr "不被出口"
-
-#~ msgid "previous export(s)"
-#~ msgstr "以前的出口"
-
-#~ msgid "S3 method"
-#~ msgstr "S3方法"
-
-#~ msgid "object"
-#~ msgstr "对象"
-
-#~ msgid "found an S4 version of"
-#~ msgstr "找到S4版本"
-
-#~ msgid "S3 method(s)"
-#~ msgstr "S3方法"
-
-#~ msgid "were declared in NAMESPACE but not found"
-#~ msgstr "在NAMESPACE里有声明但不存在"
-
-#~ msgid "invalid version spec"
-#~ msgstr "版本不对"
-
-#~ msgid "was not loaded"
-#~ msgstr "无法载入"
-
-#~ msgid "Use"
-#~ msgstr "用"
-
-#~ msgid "and help(\""
-#~ msgstr "还可以见help(\""
-
-#~ msgid "-defunct\")."
-#~ msgstr "-defunc\")。"
-
-#~ msgid "not recognized"
-#~ msgstr "找不到"
-
-#~ msgid ". Using"
-#~ msgstr "。用"
-
-#~ msgid "form must be a two-sided formula"
-#~ msgstr "‘form’必需是双边公式"
-
-#~ msgid "This is R"
-#~ msgstr "我是R"
-
-#~ msgid ", package"
-#~ msgstr "，程辑包"
-
-#~ msgid "needs"
-#~ msgstr "需要"
-
-#~ msgid "libraries"
-#~ msgstr "图书馆"
-
-#~ msgid "library"
-#~ msgstr "图书馆"
-
-#~ msgid "package(s)"
-#~ msgstr "程辑包"
-
-#~ msgid "are not loaded"
-#~ msgstr "载入失败"
-
-#~ msgid "error"
-#~ msgstr "错误"
-
-#~ msgid "in dsvdc"
-#~ msgstr "dsvdc里"
-
-#~ msgid "'x' must inherit from class"
-#~ msgstr "‘x’必需继承于这一类别"
+#~ msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+#~ msgstr "正规表现'[<-'被换成'\\\\[<-'"
