@@ -57,7 +57,11 @@ usertext = Red
 highlight = DarkRed
 
 
-## Initial position of the graphics window 
+## Initial position of the graphics window
 ## (pixels, <0 values from opposite edge)
 xgraphics = -25
 ygraphics = 0
+
+
+## Language for messages
+language = 
