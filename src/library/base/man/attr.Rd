@@ -26,7 +26,7 @@ attr(x, which) <- value
   found and more than one partial match is found, the result is \code{NULL}.
 
   Note that some attributes (namely \code{class}, \code{comment},
-  \code{dim}, \code{dimnames}, (from \R 2.4.0) \code{row.names}
+  \code{dim}, \code{dimnames}, \code{names}, (from \R 2.4.0) \code{row.names}
   and \code{tsp}) are treated specially and have restrictions on the
   values which can be set.
 }
