@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-14 16:25+0100\n"
+"POT-Creation-Date: 2006-04-17 08:06+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -112,8 +112,8 @@ msgstr "R_unlink의 'names'이 부적절합니다"
 #: src/main/envir.c:1780 src/main/envir.c:1788 src/main/envir.c:1802
 #: src/main/envir.c:1808 src/main/envir.c:2365 src/main/envir.c:2646
 #: src/main/envir.c:3181 src/main/eval.c:251 src/main/eval.c:1545
-#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1580
-#: src/main/model.c:1588 src/main/optim.c:229 src/main/paste.c:71
+#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1576
+#: src/main/model.c:1584 src/main/optim.c:229 src/main/paste.c:71
 #: src/main/paste.c:163 src/main/paste.c:170 src/main/paste.c:177
 #: src/main/paste.c:182 src/main/paste.c:187 src/main/paste.c:192
 #: src/main/paste.c:195 src/main/paste.c:203 src/main/paste.c:341
@@ -898,143 +898,143 @@ msgstr "'na.rm'의 값이 부적절합니다"
 msgid "'x' must be numeric"
 msgstr "'x'는 수치이어야만 합니다"
 
-#: src/main/attrib.c:89
+#: src/main/attrib.c:110
 #, fuzzy, c-format
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib:  TAG에대한 유형가 부적절합니다"
 
-#: src/main/attrib.c:130 src/main/attrib.c:219
+#: src/main/attrib.c:175 src/main/attrib.c:266
 msgid "attempt to set an attribute on NULL"
 msgstr "NULL에 대한 속성을 설정하려고 했습니다"
 
-#: src/main/attrib.c:265
+#: src/main/attrib.c:312
 #, fuzzy, c-format
 msgid "invalid type (%s) for 'names': must be vector"
 msgstr "'names'의 유형이 부적절합니다"
 
-#: src/main/attrib.c:268
+#: src/main/attrib.c:315
 #, c-format
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr "'names' 속성[%d]는 벡터[%d]의 길이와 동일하여야만 합니다"
 
-#: src/main/attrib.c:270
+#: src/main/attrib.c:317
 msgid "names() applied to a non-vector"
 msgstr "names 함수가 벡터가 아닌것에 적용되었습니다"
 
-#: src/main/attrib.c:278
+#: src/main/attrib.c:325
 msgid "invalid time series parameters specified"
 msgstr "부적절할때 계열파라미터가 지정되었습니다"
 
-#: src/main/attrib.c:287
+#: src/main/attrib.c:334
 msgid "'tsp' attribute must be numeric of length three"
 msgstr "'names' 속성[%d]는 벡터[%d]의 길이와 동일하여야만 합니다"
 
-#: src/main/attrib.c:304
+#: src/main/attrib.c:351
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr "'n'길이 0의 벡터에는 속성 'tsp'를 주어지지 않습니다"
 
-#: src/main/attrib.c:332
+#: src/main/attrib.c:379
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "부적절한 'comment'속성을 설정하려고 했습니다"
 
-#: src/main/attrib.c:368
+#: src/main/attrib.c:415
 msgid "attempt to set invalid 'class' attribute"
 msgstr "부적절한 'class'속성을 설정하려고 했습니다"
 
-#: src/main/attrib.c:570
+#: src/main/attrib.c:617
 msgid "incompatible 'names' argument"
 msgstr "'names'인수에 호환성이 없습니다"
 
-#: src/main/attrib.c:622
+#: src/main/attrib.c:669
 #, fuzzy, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "'names'속성으로 설정하기에는 부적절한 유형입니다"
 
-#: src/main/attrib.c:689
+#: src/main/attrib.c:736
 msgid "'dimnames' applied to non-array"
 msgstr "'names'속성으로 설정하기에는 부적절한 유형입니다"
 
-#: src/main/attrib.c:693
+#: src/main/attrib.c:740
 msgid "'dimnames' must be a list"
 msgstr "'dimnames'는 리스트가 아니면 안됩니다"
 
-#: src/main/attrib.c:696
+#: src/main/attrib.c:743
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames'의 길이[%d]는 'dims'의 길이[%d]와 동일하여야만 합니다"
 
-#: src/main/attrib.c:713
+#: src/main/attrib.c:760
 #, fuzzy, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "'dimnames'의 유형이 부적절합니다(벡터이어야만 합니다)"
 
-#: src/main/attrib.c:716
+#: src/main/attrib.c:763
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimames'의 길이[%d]가 배열의 크기와 다릅니다"
 
-#: src/main/attrib.c:776
+#: src/main/attrib.c:823
 msgid "dim<- : invalid first argument"
 msgstr "dim<-:  최초의 인수가 부적절합니다"
 
-#: src/main/attrib.c:779
+#: src/main/attrib.c:826
 msgid "dim<- : invalid second argument"
 msgstr "dim<-: 두번째의 인수가 부적절합니다"
 
-#: src/main/attrib.c:787
+#: src/main/attrib.c:834
 msgid "dim: length-0 dimension vector is invalid"
 msgstr "dim:  길이0차원 벡터는 부적절합니다"
 
-#: src/main/attrib.c:792
+#: src/main/attrib.c:839
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr "dim<-: dims [product %d]는 object[%d]의 길이에 정합하지 않습니다"
 
-#: src/main/attrib.c:869
+#: src/main/attrib.c:916
 msgid "attributes must be in a list"
 msgstr "속성은 리스트안에 있어야만 합니다"
 
-#: src/main/attrib.c:893
+#: src/main/attrib.c:940
 msgid "attributes must be named"
 msgstr "속성은 이름을 붙어야만 합니다"
 
-#: src/main/attrib.c:897
+#: src/main/attrib.c:944
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "모든 속성은 이름을 가지고 있어야만 합니다[%d가 가지고 있지 않습니다]"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:987
 msgid "attribute 'name' must be of mode character"
 msgstr "'name'속성은 모드를 표시하는 문자이어야만 합니다"
 
-#: src/main/attrib.c:942
+#: src/main/attrib.c:989
 msgid "exactly one attribute 'name' must be given"
 msgstr "정확히 하나의 속성 'name'가 주어져야 합니다"
 
-#: src/main/attrib.c:1010
+#: src/main/attrib.c:1057
 msgid "'name' must be non-null character"
 msgstr "'name'는 NULL아닌 문자열이어야만 합니다"
 
-#: src/main/attrib.c:1116 src/main/attrib.c:1155 src/main/attrib.c:1244
+#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
 msgid "invalid type or length for slot name"
 msgstr "축 라벨의 유형이 부적절합니다"
 
-#: src/main/attrib.c:1130
+#: src/main/attrib.c:1177
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "형태 \"%s\"의 오브젝트로부터 슬롯(\"%s\")을 받을수가 없습니다"
 
-#: src/main/attrib.c:1138
+#: src/main/attrib.c:1185
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 "이름 \"%s\" 라고 하는 slot이 클래스\"%s\"의  오브젝트에는 존재하지 않습니다"
 
-#: src/main/attrib.c:1239
+#: src/main/attrib.c:1286
 msgid "formal classes cannot be used without the methods package"
 msgstr "메소드 패키지 없이 (formal class)는 사용할수 없습니다"
 
-#: src/main/attrib.c:1250
+#: src/main/attrib.c:1297
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1043,7 +1043,7 @@ msgstr ""
 "slot \"%s\"를 slot를 가지지 않는 기본 클래스(\"%s\")의 오브젝트로부터 얻으려"
 "고 했습니다"
 
-#: src/main/attrib.c:1259
+#: src/main/attrib.c:1306
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1051,7 +1051,7 @@ msgid ""
 msgstr ""
 "slot \"%s\"를 정의하지않는 클래스(\"%s\")의 오브젝트로부터 얻으려고 했습니다"
 
-#: src/main/attrib.c:1278
+#: src/main/attrib.c:1325
 msgid "invalid slot type"
 msgstr "slot 유형가 부적절합니다"
 
@@ -3911,44 +3911,44 @@ msgstr "변수의 유형이 부적절합니다"
 msgid "variable lengths differ (found for '%s')"
 msgstr "변수의 길이가 다릅니다"
 
-#: src/main/model.c:1406
+#: src/main/model.c:1402
 msgid "invalid result from na.action"
 msgstr "na.action의 결과가 부적절합니다"
 
-#: src/main/model.c:1599
+#: src/main/model.c:1595
 msgid "invalid model frame"
 msgstr "모델 프레임이 부적절합니다"
 
-#: src/main/model.c:1601
+#: src/main/model.c:1597
 msgid "do not know how many cases"
 msgstr "cases의 수가 몇개정도 알수가 없습니다"
 
-#: src/main/model.c:1617
+#: src/main/model.c:1614
 #, fuzzy, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "변수의 길이가 다릅니다"
 
-#: src/main/model.c:1621 src/main/model.c:1628
+#: src/main/model.c:1618 src/main/model.c:1625
 #, c-format
 msgid "variable %d has no levels"
 msgstr "변수 %d는 레벨을 가지지 않습니다"
 
-#: src/main/model.c:1647
+#: src/main/model.c:1644
 msgid "invalid variable type"
 msgstr "변수의 유형이 부적절합니다"
 
-#: src/main/model.c:1736
+#: src/main/model.c:1733
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "목적 변수가 우변에 있기 때문에, 버리고 가졌습니다"
 
-#: src/main/model.c:1768
+#: src/main/model.c:1765
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 "model.matrix 중의 항%d에 문제가 있습니다: 어떠한 열도 지정되어 있지 않습니다"
 
-#: src/main/model.c:1816 src/main/model.c:1821 src/main/model.c:1827
-#: src/main/model.c:1837 src/main/model.c:1843 src/main/model.c:1849
+#: src/main/model.c:1813 src/main/model.c:1818 src/main/model.c:1824
+#: src/main/model.c:1834 src/main/model.c:1840 src/main/model.c:1846
 msgid "term names will be truncated"
 msgstr "항의 이름은 잘라질것입니다"
 
@@ -3960,23 +3960,23 @@ msgstr "문자열 인수가 요구되어져 있습니다"
 msgid "no such primitive function"
 msgstr "그러한 원시적 함수는 없습니다"
 
-#: src/main/names.c:1048
+#: src/main/names.c:1049
 msgid "attempt to use zero-length variable name"
 msgstr "길이 0의 변수명을 사용했습니다"
 
-#: src/main/names.c:1050
+#: src/main/names.c:1051
 msgid "symbol print-name too long"
 msgstr "심벌의 표시명이 너무 깁니다"
 
-#: src/main/names.c:1076
+#: src/main/names.c:1077
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 인수가 부적절합니다"
 
-#: src/main/names.c:1079
+#: src/main/names.c:1080
 msgid "invalid internal function"
 msgstr "내부 함수가 부적절합니다"
 
-#: src/main/names.c:1081
+#: src/main/names.c:1082
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "내부 함수 \"%s \" 가 없습니다"

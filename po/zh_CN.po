@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-14 16:25+0100\n"
+"POT-Creation-Date: 2006-04-17 08:06+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -110,8 +110,8 @@ msgstr "R_unlink的'names'不对"
 #: src/main/envir.c:1780 src/main/envir.c:1788 src/main/envir.c:1802
 #: src/main/envir.c:1808 src/main/envir.c:2365 src/main/envir.c:2646
 #: src/main/envir.c:3181 src/main/eval.c:251 src/main/eval.c:1545
-#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1580
-#: src/main/model.c:1588 src/main/optim.c:229 src/main/paste.c:71
+#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1576
+#: src/main/model.c:1584 src/main/optim.c:229 src/main/paste.c:71
 #: src/main/paste.c:163 src/main/paste.c:170 src/main/paste.c:177
 #: src/main/paste.c:182 src/main/paste.c:187 src/main/paste.c:192
 #: src/main/paste.c:195 src/main/paste.c:203 src/main/paste.c:341
@@ -885,156 +885,156 @@ msgstr "'na.rm'的值不对"
 msgid "'x' must be numeric"
 msgstr "'x'必需为数值"
 
-#: src/main/attrib.c:89
+#: src/main/attrib.c:110
 #, fuzzy, c-format
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib: 标记的种类不对"
 
-#: src/main/attrib.c:130 src/main/attrib.c:219
+#: src/main/attrib.c:175 src/main/attrib.c:266
 msgid "attempt to set an attribute on NULL"
 msgstr "NULL是不能有属性的"
 
-#: src/main/attrib.c:265
+#: src/main/attrib.c:312
 #, fuzzy, c-format
 msgid "invalid type (%s) for 'names': must be vector"
 msgstr "'names'的种类不对: 必需是向量"
 
-#: src/main/attrib.c:268
+#: src/main/attrib.c:315
 #, c-format
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr "'names'属性[%d]必需和向量的长度[%d]一样"
 
-#: src/main/attrib.c:270
+#: src/main/attrib.c:317
 msgid "names() applied to a non-vector"
 msgstr "names()不能用于非向量"
 
-#: src/main/attrib.c:278
+#: src/main/attrib.c:325
 msgid "invalid time series parameters specified"
 msgstr "时间系列参数设定不对"
 
-#: src/main/attrib.c:287
+#: src/main/attrib.c:334
 msgid "'tsp' attribute must be numeric of length three"
 msgstr "'tsp'属性必需长度为三的数值"
 
-#: src/main/attrib.c:304
+#: src/main/attrib.c:351
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr "0长度向量不能设成'tsp'"
 
-#: src/main/attrib.c:332
+#: src/main/attrib.c:379
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "无法设'comment'属性"
 
-#: src/main/attrib.c:368
+#: src/main/attrib.c:415
 msgid "attempt to set invalid 'class' attribute"
 msgstr "无法设'class'属性"
 
-#: src/main/attrib.c:570
+#: src/main/attrib.c:617
 msgid "incompatible 'names' argument"
 msgstr "非兼容'names'变元"
 
-#: src/main/attrib.c:622
+#: src/main/attrib.c:669
 #, fuzzy, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "设'names'属性时种类出错"
 
-#: src/main/attrib.c:689
+#: src/main/attrib.c:736
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames'不适用于非陈列"
 
-#: src/main/attrib.c:693
+#: src/main/attrib.c:740
 msgid "'dimnames' must be a list"
 msgstr "'dimnames'必需是串列"
 
-#: src/main/attrib.c:696
+#: src/main/attrib.c:743
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames'的长度[%d]必需同'dims'的长度[%d]相等"
 
-#: src/main/attrib.c:713
+#: src/main/attrib.c:760
 #, fuzzy, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "设'dimnames'时的种类不对(必需为向量)"
 
-#: src/main/attrib.c:716
+#: src/main/attrib.c:763
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimnames'的长度[%d]必需与陈列范围相等"
 
-#: src/main/attrib.c:776
+#: src/main/attrib.c:823
 msgid "dim<- : invalid first argument"
 msgstr "dim<-: 第一变元有错"
 
-#: src/main/attrib.c:779
+#: src/main/attrib.c:826
 msgid "dim<- : invalid second argument"
 msgstr "dim<-: 第二变元有错"
 
-#: src/main/attrib.c:787
+#: src/main/attrib.c:834
 msgid "dim: length-0 dimension vector is invalid"
 msgstr "dim: 不能有0长度的大小向量"
 
-#: src/main/attrib.c:792
+#: src/main/attrib.c:839
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr "dim<-: dims [product %d]与目标对象[%d]的长度不酢"
 
-#: src/main/attrib.c:869
+#: src/main/attrib.c:916
 msgid "attributes must be in a list"
 msgstr "属性必需必需在串列里设定"
 
-#: src/main/attrib.c:893
+#: src/main/attrib.c:940
 msgid "attributes must be named"
 msgstr "属性必需取名"
 
-#: src/main/attrib.c:897
+#: src/main/attrib.c:944
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "所有的属性都必需有名字[%d没有]"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:987
 msgid "attribute 'name' must be of mode character"
 msgstr "'name'属性必需是字符"
 
-#: src/main/attrib.c:942
+#: src/main/attrib.c:989
 msgid "exactly one attribute 'name' must be given"
 msgstr "只能给一个'name'属性"
 
-#: src/main/attrib.c:1010
+#: src/main/attrib.c:1057
 msgid "'name' must be non-null character"
 msgstr "'name'必需为非空字符"
 
-#: src/main/attrib.c:1116 src/main/attrib.c:1155 src/main/attrib.c:1244
+#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
 msgid "invalid type or length for slot name"
 msgstr "名字槽的类别或长度不对"
 
-#: src/main/attrib.c:1130
+#: src/main/attrib.c:1177
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "类别\"%2$s\"的目标对象中没有\"%1$s\"这样一个槽"
 
-#: src/main/attrib.c:1138
+#: src/main/attrib.c:1185
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "\"%1$s\"槽名不存在于\"%2$s\"类别目标对象中"
 
-#: src/main/attrib.c:1239
+#: src/main/attrib.c:1286
 msgid "formal classes cannot be used without the methods package"
 msgstr "一定要有方法程序包才能用正式类别"
 
-#: src/main/attrib.c:1250
+#: src/main/attrib.c:1297
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr "无法从没有槽的基本类别(\"%2$s\") 的目标对象中取得\"%1$s\"槽"
 
-#: src/main/attrib.c:1259
+#: src/main/attrib.c:1306
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr "目标对象的类别(\"%2$s\") 没有设定，因此不能从它那儿获取槽\"%1$s\" "
 
-#: src/main/attrib.c:1278
+#: src/main/attrib.c:1325
 msgid "invalid slot type"
 msgstr "槽的种类不对"
 
@@ -3846,43 +3846,43 @@ msgstr "变数种类不对"
 msgid "variable lengths differ (found for '%s')"
 msgstr "变数的长度不一样"
 
-#: src/main/model.c:1406
+#: src/main/model.c:1402
 msgid "invalid result from na.action"
 msgstr "na.action的结果有错"
 
-#: src/main/model.c:1599
+#: src/main/model.c:1595
 msgid "invalid model frame"
 msgstr "模型框不对"
 
-#: src/main/model.c:1601
+#: src/main/model.c:1597
 msgid "do not know how many cases"
 msgstr "案例数目不清"
 
-#: src/main/model.c:1617
+#: src/main/model.c:1614
 #, fuzzy, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "变数的长度不一样"
 
-#: src/main/model.c:1621 src/main/model.c:1628
+#: src/main/model.c:1618 src/main/model.c:1625
 #, c-format
 msgid "variable %d has no levels"
 msgstr "变数%d没有因子层"
 
-#: src/main/model.c:1647
+#: src/main/model.c:1644
 msgid "invalid variable type"
 msgstr "变数种类不对"
 
-#: src/main/model.c:1736
+#: src/main/model.c:1733
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "公式右手有反应，略过不用"
 
-#: src/main/model.c:1768
+#: src/main/model.c:1765
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "模型矩阵的%d项有问题: 没有指定的列"
 
-#: src/main/model.c:1816 src/main/model.c:1821 src/main/model.c:1827
-#: src/main/model.c:1837 src/main/model.c:1843 src/main/model.c:1849
+#: src/main/model.c:1813 src/main/model.c:1818 src/main/model.c:1824
+#: src/main/model.c:1834 src/main/model.c:1840 src/main/model.c:1846
 msgid "term names will be truncated"
 msgstr "项名字太长，被缩短了"
 
@@ -3894,23 +3894,23 @@ msgstr "需要字符串变元"
 msgid "no such primitive function"
 msgstr "没有这一原始函数"
 
-#: src/main/names.c:1048
+#: src/main/names.c:1049
 msgid "attempt to use zero-length variable name"
 msgstr "不能用0长度变数名"
 
-#: src/main/names.c:1050
+#: src/main/names.c:1051
 msgid "symbol print-name too long"
 msgstr "符号print-name太长了"
 
-#: src/main/names.c:1076
+#: src/main/names.c:1077
 msgid "invalid .Internal() argument"
 msgstr ".Internal()变元不对"
 
-#: src/main/names.c:1079
+#: src/main/names.c:1080
 msgid "invalid internal function"
 msgstr "内部函数不对"
 
-#: src/main/names.c:1081
+#: src/main/names.c:1082
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "没有\"%s\"这个内部函数"

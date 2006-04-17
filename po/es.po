@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-14 16:25+0100\n"
+"POT-Creation-Date: 2006-04-17 08:06+0100\n"
 "PO-Revision-Date: 13.04.06\n"
 "Last-Translator: Pablo E. Verde <pabloemilio.verde@uni-duesseldorf.de> \n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
@@ -111,8 +111,8 @@ msgstr "'names' inválidos en R_unlink"
 #: src/main/envir.c:1780 src/main/envir.c:1788 src/main/envir.c:1802
 #: src/main/envir.c:1808 src/main/envir.c:2365 src/main/envir.c:2646
 #: src/main/envir.c:3181 src/main/eval.c:251 src/main/eval.c:1545
-#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1580
-#: src/main/model.c:1588 src/main/optim.c:229 src/main/paste.c:71
+#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1576
+#: src/main/model.c:1584 src/main/optim.c:229 src/main/paste.c:71
 #: src/main/paste.c:163 src/main/paste.c:170 src/main/paste.c:177
 #: src/main/paste.c:182 src/main/paste.c:187 src/main/paste.c:192
 #: src/main/paste.c:195 src/main/paste.c:203 src/main/paste.c:341
@@ -895,143 +895,143 @@ msgstr "valor de 'na.rm' no válido"
 msgid "'x' must be numeric"
 msgstr "'x' debe ser numérico"
 
-#: src/main/attrib.c:89
+#: src/main/attrib.c:110
 #, fuzzy, c-format
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib: tipo no válido para TAG"
 
-#: src/main/attrib.c:130 src/main/attrib.c:219
+#: src/main/attrib.c:175 src/main/attrib.c:266
 msgid "attempt to set an attribute on NULL"
 msgstr "se intenta especificar un atributo en un NULL"
 
-#: src/main/attrib.c:265
+#: src/main/attrib.c:312
 #, fuzzy, c-format
 msgid "invalid type (%s) for 'names': must be vector"
 msgstr "tipo no válido para 'names': debe ser un vector"
 
-#: src/main/attrib.c:268
+#: src/main/attrib.c:315
 #, c-format
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr ""
 "el atributo 'names' [%d] debe tener la misma longitud que el vector [%d]"
 
-#: src/main/attrib.c:270
+#: src/main/attrib.c:317
 msgid "names() applied to a non-vector"
 msgstr "names() aplicado a un objeto que no es un vector"
 
-#: src/main/attrib.c:278
+#: src/main/attrib.c:325
 msgid "invalid time series parameters specified"
 msgstr "parámetros no válidos para series temporales"
 
-#: src/main/attrib.c:287
+#: src/main/attrib.c:334
 msgid "'tsp' attribute must be numeric of length three"
 msgstr "el atributo 'tsp' debe ser numérico de longitud tres"
 
-#: src/main/attrib.c:304
+#: src/main/attrib.c:351
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr "no se puede asignar 'tsp' a un vector de longitud 0"
 
-#: src/main/attrib.c:332
+#: src/main/attrib.c:379
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "se intenta especificar un atributo 'comment' no válido"
 
-#: src/main/attrib.c:368
+#: src/main/attrib.c:415
 msgid "attempt to set invalid 'class' attribute"
 msgstr "se intenta especificar un atributo 'class' no válido"
 
-#: src/main/attrib.c:570
+#: src/main/attrib.c:617
 msgid "incompatible 'names' argument"
 msgstr "argumento 'names' incompatible"
 
-#: src/main/attrib.c:622
+#: src/main/attrib.c:669
 #, fuzzy, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "tipo inválido para especificar el atributo de 'names'"
 
-#: src/main/attrib.c:689
+#: src/main/attrib.c:736
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' aplicado a un objeto que no es un arreglo"
 
-#: src/main/attrib.c:693
+#: src/main/attrib.c:740
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' debe ser una lista"
 
-#: src/main/attrib.c:696
+#: src/main/attrib.c:743
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "la longitud de 'dimnames' [%d] debe coincidir con la de 'dims' [%d]"
 
-#: src/main/attrib.c:713
+#: src/main/attrib.c:760
 #, fuzzy, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "tipo inválido para 'dimnames' (debe ser un vector)"
 
-#: src/main/attrib.c:716
+#: src/main/attrib.c:763
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "la longitud de 'dimnames' [%d] no es igual a la extensión del arreglo"
 
-#: src/main/attrib.c:776
+#: src/main/attrib.c:823
 msgid "dim<- : invalid first argument"
 msgstr "dim<- : primer argumento inválido"
 
-#: src/main/attrib.c:779
+#: src/main/attrib.c:826
 msgid "dim<- : invalid second argument"
 msgstr "dim<- : segundo argumento inválido"
 
-#: src/main/attrib.c:787
+#: src/main/attrib.c:834
 msgid "dim: length-0 dimension vector is invalid"
 msgstr "dim: vector de dimensión de longitud 0 es inválido"
 
-#: src/main/attrib.c:792
+#: src/main/attrib.c:839
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr "dim<- : dims [producto %d] no coincide con la longitud del objeto [%d]"
 
-#: src/main/attrib.c:869
+#: src/main/attrib.c:916
 msgid "attributes must be in a list"
 msgstr "los atributos deben estar en una lista"
 
-#: src/main/attrib.c:893
+#: src/main/attrib.c:940
 msgid "attributes must be named"
 msgstr "los atributos deben tener nombre"
 
-#: src/main/attrib.c:897
+#: src/main/attrib.c:944
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "todos los atributos deben tener nombre [%d no lo tiene]"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:987
 msgid "attribute 'name' must be of mode character"
 msgstr "el atributo 'name' debe ser de modo caracter"
 
-#: src/main/attrib.c:942
+#: src/main/attrib.c:989
 msgid "exactly one attribute 'name' must be given"
 msgstr "exactamente 1 atributo 'name' debe ser especificado"
 
-#: src/main/attrib.c:1010
+#: src/main/attrib.c:1057
 msgid "'name' must be non-null character"
 msgstr "'name' debe ser un caracter no nulo"
 
-#: src/main/attrib.c:1116 src/main/attrib.c:1155 src/main/attrib.c:1244
+#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
 msgid "invalid type or length for slot name"
 msgstr "tipo o longitud inválido para el nombre de slot"
 
-#: src/main/attrib.c:1130
+#: src/main/attrib.c:1177
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "no es posible obtener un slot (\"%s\") de un objeto de tipo \"%s\""
 
-#: src/main/attrib.c:1138
+#: src/main/attrib.c:1185
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "no hay un slot de nombre \"%s\" para ese objeto de clase \"%s\""
 
-#: src/main/attrib.c:1239
+#: src/main/attrib.c:1286
 msgid "formal classes cannot be used without the methods package"
 msgstr "no pueden utilizarse clases formales  sin el paquete métodos"
 
-#: src/main/attrib.c:1250
+#: src/main/attrib.c:1297
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1040,7 +1040,7 @@ msgstr ""
 "tentativa de obtener un slot \"%s\" de un objeto de una clase básica (\"%s"
 "\") sin slots"
 
-#: src/main/attrib.c:1259
+#: src/main/attrib.c:1306
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1049,7 +1049,7 @@ msgstr ""
 "tentativa de obtener un slot \"%s\" de un objeto cuya clase (\"%s\") no está "
 "definida"
 
-#: src/main/attrib.c:1278
+#: src/main/attrib.c:1325
 msgid "invalid slot type"
 msgstr "tipo de slot inválido"
 
@@ -3900,45 +3900,45 @@ msgstr "el tipo de variable no es válido"
 msgid "variable lengths differ (found for '%s')"
 msgstr "las longitudes de las variables son diferentes"
 
-#: src/main/model.c:1406
+#: src/main/model.c:1402
 msgid "invalid result from na.action"
 msgstr "el resultado de na.action no es válido"
 
-#: src/main/model.c:1599
+#: src/main/model.c:1595
 msgid "invalid model frame"
 msgstr "la estructura del modelo no es válida"
 
-#: src/main/model.c:1601
+#: src/main/model.c:1597
 msgid "do not know how many cases"
 msgstr "no se conoce el número de casos"
 
-#: src/main/model.c:1617
+#: src/main/model.c:1614
 #, fuzzy, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "las longitudes de las variables son diferentes"
 
-#: src/main/model.c:1621 src/main/model.c:1628
+#: src/main/model.c:1618 src/main/model.c:1625
 #, c-format
 msgid "variable %d has no levels"
 msgstr "la variable %d no tiene nniveles"
 
-#: src/main/model.c:1647
+#: src/main/model.c:1644
 msgid "invalid variable type"
 msgstr "el tipo de variable no es válido"
 
-#: src/main/model.c:1736
+#: src/main/model.c:1733
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "la respuesta es extrema y fue descartada"
 
-#: src/main/model.c:1768
+#: src/main/model.c:1765
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 "hay problema con el término %d en la matriz del modelo: no se asignó ninguna "
 "columna"
 
-#: src/main/model.c:1816 src/main/model.c:1821 src/main/model.c:1827
-#: src/main/model.c:1837 src/main/model.c:1843 src/main/model.c:1849
+#: src/main/model.c:1813 src/main/model.c:1818 src/main/model.c:1824
+#: src/main/model.c:1834 src/main/model.c:1840 src/main/model.c:1846
 msgid "term names will be truncated"
 msgstr "los nombres de los términos serán truncados"
 
@@ -3950,23 +3950,23 @@ msgstr "se requiere el argumento del string"
 msgid "no such primitive function"
 msgstr "no existe esa función primitiva"
 
-#: src/main/names.c:1048
+#: src/main/names.c:1049
 msgid "attempt to use zero-length variable name"
 msgstr "se intenta usar un nombre de varible de longitud cero"
 
-#: src/main/names.c:1050
+#: src/main/names.c:1051
 msgid "symbol print-name too long"
 msgstr "el nombre impreso del símbolo es demasiado largo"
 
-#: src/main/names.c:1076
+#: src/main/names.c:1077
 msgid "invalid .Internal() argument"
 msgstr "el argumento .Internal() no es válido"
 
-#: src/main/names.c:1079
+#: src/main/names.c:1080
 msgid "invalid internal function"
 msgstr "la función interna no es válida"
 
-#: src/main/names.c:1081
+#: src/main/names.c:1082
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "no hay ninguna función interna \"%s\""

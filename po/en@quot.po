@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-14 16:25+0100\n"
-"PO-Revision-Date: 2006-04-14 16:25+0100\n"
+"POT-Creation-Date: 2006-04-17 08:06+0100\n"
+"PO-Revision-Date: 2006-04-17 08:06+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -132,8 +132,8 @@ msgstr "invalid ‘names’ in R_unlink"
 #: src/main/envir.c:1780 src/main/envir.c:1788 src/main/envir.c:1802
 #: src/main/envir.c:1808 src/main/envir.c:2365 src/main/envir.c:2646
 #: src/main/envir.c:3181 src/main/eval.c:251 src/main/eval.c:1545
-#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1580
-#: src/main/model.c:1588 src/main/optim.c:229 src/main/paste.c:71
+#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1576
+#: src/main/model.c:1584 src/main/optim.c:229 src/main/paste.c:71
 #: src/main/paste.c:163 src/main/paste.c:170 src/main/paste.c:177
 #: src/main/paste.c:182 src/main/paste.c:187 src/main/paste.c:192
 #: src/main/paste.c:195 src/main/paste.c:203 src/main/paste.c:341
@@ -908,142 +908,142 @@ msgstr "invalid value of ‘na.rm’"
 msgid "'x' must be numeric"
 msgstr "‘x’ must be numeric"
 
-#: src/main/attrib.c:89
+#: src/main/attrib.c:110
 #, c-format
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib: invalid type (%s) for TAG"
 
-#: src/main/attrib.c:130 src/main/attrib.c:219
+#: src/main/attrib.c:175 src/main/attrib.c:266
 msgid "attempt to set an attribute on NULL"
 msgstr "attempt to set an attribute on NULL"
 
-#: src/main/attrib.c:265
+#: src/main/attrib.c:312
 #, c-format
 msgid "invalid type (%s) for 'names': must be vector"
 msgstr "invalid type (%s) for 'names': must be vector"
 
-#: src/main/attrib.c:268
+#: src/main/attrib.c:315
 #, c-format
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr "‘names’ attribute [%d] must be the same length as the vector [%d]"
 
-#: src/main/attrib.c:270
+#: src/main/attrib.c:317
 msgid "names() applied to a non-vector"
 msgstr "names() applied to a non-vector"
 
-#: src/main/attrib.c:278
+#: src/main/attrib.c:325
 msgid "invalid time series parameters specified"
 msgstr "invalid time series parameters specified"
 
-#: src/main/attrib.c:287
+#: src/main/attrib.c:334
 msgid "'tsp' attribute must be numeric of length three"
 msgstr "‘tsp’ attribute must be numeric of length three"
 
-#: src/main/attrib.c:304
+#: src/main/attrib.c:351
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr "cannot assign ‘tsp’ to zero-length vector"
 
-#: src/main/attrib.c:332
+#: src/main/attrib.c:379
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "attempt to set invalid ‘comment’ attribute"
 
-#: src/main/attrib.c:368
+#: src/main/attrib.c:415
 msgid "attempt to set invalid 'class' attribute"
 msgstr "attempt to set invalid ‘class’ attribute"
 
-#: src/main/attrib.c:570
+#: src/main/attrib.c:617
 msgid "incompatible 'names' argument"
 msgstr "incompatible ‘names’ argument"
 
-#: src/main/attrib.c:622
+#: src/main/attrib.c:669
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "invalid type (%s) to set ‘names’ attribute"
 
-#: src/main/attrib.c:689
+#: src/main/attrib.c:736
 msgid "'dimnames' applied to non-array"
 msgstr "‘dimnames’ applied to non-array"
 
-#: src/main/attrib.c:693
+#: src/main/attrib.c:740
 msgid "'dimnames' must be a list"
 msgstr "‘dimnames’ must be a list"
 
-#: src/main/attrib.c:696
+#: src/main/attrib.c:743
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "length of ‘dimnames’ [%d] must match that of ‘dims’ [%d]"
 
-#: src/main/attrib.c:713
+#: src/main/attrib.c:760
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "invalid type (%s) for ‘dimnames’ (must be a vector)"
 
-#: src/main/attrib.c:716
+#: src/main/attrib.c:763
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "length of ‘dimnames’ [%d] not equal to array extent"
 
-#: src/main/attrib.c:776
+#: src/main/attrib.c:823
 msgid "dim<- : invalid first argument"
 msgstr "dim<- : invalid first argument"
 
-#: src/main/attrib.c:779
+#: src/main/attrib.c:826
 msgid "dim<- : invalid second argument"
 msgstr "dim<- : invalid second argument"
 
-#: src/main/attrib.c:787
+#: src/main/attrib.c:834
 msgid "dim: length-0 dimension vector is invalid"
 msgstr "dim: length-0 dimension vector is invalid"
 
-#: src/main/attrib.c:792
+#: src/main/attrib.c:839
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr "dim<- : dims [product %d] do not match the length of object [%d]"
 
-#: src/main/attrib.c:869
+#: src/main/attrib.c:916
 msgid "attributes must be in a list"
 msgstr "attributes must be in a list"
 
-#: src/main/attrib.c:893
+#: src/main/attrib.c:940
 msgid "attributes must be named"
 msgstr "attributes must be named"
 
-#: src/main/attrib.c:897
+#: src/main/attrib.c:944
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "all attributes must have names [%d does not]"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:987
 msgid "attribute 'name' must be of mode character"
 msgstr "attribute ‘name’ must be of mode character"
 
-#: src/main/attrib.c:942
+#: src/main/attrib.c:989
 msgid "exactly one attribute 'name' must be given"
 msgstr "exactly one attribute ‘name’ must be given"
 
-#: src/main/attrib.c:1010
+#: src/main/attrib.c:1057
 msgid "'name' must be non-null character"
 msgstr "‘name’ must be non-null character"
 
-#: src/main/attrib.c:1116 src/main/attrib.c:1155 src/main/attrib.c:1244
+#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
 msgid "invalid type or length for slot name"
 msgstr "invalid type or length for slot name"
 
-#: src/main/attrib.c:1130
+#: src/main/attrib.c:1177
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "cannot get a slot (“%s”) from an object of type “%s”"
 
-#: src/main/attrib.c:1138
+#: src/main/attrib.c:1185
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "no slot of name “%s” for this object of class “%s”"
 
-#: src/main/attrib.c:1239
+#: src/main/attrib.c:1286
 msgid "formal classes cannot be used without the methods package"
 msgstr "formal classes cannot be used without the methods package"
 
-#: src/main/attrib.c:1250
+#: src/main/attrib.c:1297
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1051,7 +1051,7 @@ msgid ""
 msgstr ""
 "trying to get slot “%s” from an object of a basic class (“%s”) with no slots"
 
-#: src/main/attrib.c:1259
+#: src/main/attrib.c:1306
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1059,7 +1059,7 @@ msgid ""
 msgstr ""
 "trying to get slot “%s” from an object (class “%s”) that is not an S4 object "
 
-#: src/main/attrib.c:1278
+#: src/main/attrib.c:1325
 msgid "invalid slot type"
 msgstr "invalid slot type"
 
@@ -3873,43 +3873,43 @@ msgstr "invalid variable type for ‘%s’"
 msgid "variable lengths differ (found for '%s')"
 msgstr "variable lengths differ (found for '%s')"
 
-#: src/main/model.c:1406
+#: src/main/model.c:1402
 msgid "invalid result from na.action"
 msgstr "invalid result from na.action"
 
-#: src/main/model.c:1599
+#: src/main/model.c:1595
 msgid "invalid model frame"
 msgstr "invalid model frame"
 
-#: src/main/model.c:1601
+#: src/main/model.c:1597
 msgid "do not know how many cases"
 msgstr "do not know how many cases"
 
-#: src/main/model.c:1617
+#: src/main/model.c:1614
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "variable lengths differ (found for variable %d)"
 
-#: src/main/model.c:1621 src/main/model.c:1628
+#: src/main/model.c:1618 src/main/model.c:1625
 #, c-format
 msgid "variable %d has no levels"
 msgstr "variable %d has no levels"
 
-#: src/main/model.c:1647
+#: src/main/model.c:1644
 msgid "invalid variable type"
 msgstr "invalid variable type"
 
-#: src/main/model.c:1736
+#: src/main/model.c:1733
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "the response appeared on the right-hand side and was dropped"
 
-#: src/main/model.c:1768
+#: src/main/model.c:1765
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "problem with term %d in model.matrix: no columns are assigned"
 
-#: src/main/model.c:1816 src/main/model.c:1821 src/main/model.c:1827
-#: src/main/model.c:1837 src/main/model.c:1843 src/main/model.c:1849
+#: src/main/model.c:1813 src/main/model.c:1818 src/main/model.c:1824
+#: src/main/model.c:1834 src/main/model.c:1840 src/main/model.c:1846
 msgid "term names will be truncated"
 msgstr "term names will be truncated"
 
@@ -3921,23 +3921,23 @@ msgstr "string argument required"
 msgid "no such primitive function"
 msgstr "no such primitive function"
 
-#: src/main/names.c:1048
+#: src/main/names.c:1049
 msgid "attempt to use zero-length variable name"
 msgstr "attempt to use zero-length variable name"
 
-#: src/main/names.c:1050
+#: src/main/names.c:1051
 msgid "symbol print-name too long"
 msgstr "symbol print-name too long"
 
-#: src/main/names.c:1076
+#: src/main/names.c:1077
 msgid "invalid .Internal() argument"
 msgstr "invalid .Internal() argument"
 
-#: src/main/names.c:1079
+#: src/main/names.c:1080
 msgid "invalid internal function"
 msgstr "invalid internal function"
 
-#: src/main/names.c:1081
+#: src/main/names.c:1082
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "no internal function “%s”"

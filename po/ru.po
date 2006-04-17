@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-14 16:25+0100\n"
-"PO-Revision-Date: 2005-12-16 15:56+0300\n"
+"POT-Creation-Date: 2006-04-17 08:06+0100\n"
+"PO-Revision-Date: 2006-04-15 23:34-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -115,8 +115,8 @@ msgstr "неправильные 'имяs' в R_unlink"
 #: src/main/envir.c:1780 src/main/envir.c:1788 src/main/envir.c:1802
 #: src/main/envir.c:1808 src/main/envir.c:2365 src/main/envir.c:2646
 #: src/main/envir.c:3181 src/main/eval.c:251 src/main/eval.c:1545
-#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1580
-#: src/main/model.c:1588 src/main/optim.c:229 src/main/paste.c:71
+#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1576
+#: src/main/model.c:1584 src/main/optim.c:229 src/main/paste.c:71
 #: src/main/paste.c:163 src/main/paste.c:170 src/main/paste.c:177
 #: src/main/paste.c:182 src/main/paste.c:187 src/main/paste.c:192
 #: src/main/paste.c:195 src/main/paste.c:203 src/main/paste.c:341
@@ -179,24 +179,20 @@ msgid "unable to delete menu item (%s)"
 msgstr "не могу удалить пункт меню (%s)"
 
 #: src/gnuwin32/extra.c:478
-#, fuzzy
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr "'savehistory' можно использовать только в RGui и в RTerm"
+msgstr "'savehistory' можно использовать только в Rgui и в Rterm"
 
 #: src/gnuwin32/extra.c:493
-#, fuzzy
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr "'loadhistory' можно использовать только в RGui и в RTerm"
+msgstr "'loadhistory' можно использовать только в Rgui и в Rterm"
 
 #: src/gnuwin32/extra.c:505 src/unix/sys-std.c:969
-#, fuzzy
 msgid "invalid timestamp"
-msgstr "неправильный тег"
+msgstr "неправильная временная метка"
 
 #: src/gnuwin32/extra.c:527
-#, fuzzy
 msgid "'loadRconsole' can only be used in Rgui"
-msgstr "'loadhistory' можно использовать только в RGui и в RTerm"
+msgstr "'loadhistory' можно использовать только в Rgui и в Rterm"
 
 #: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
 #: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:747
@@ -237,9 +233,8 @@ msgid "cannot decrease memory limit"
 msgstr "не могу уменьшить предел памяти"
 
 #: src/gnuwin32/extra.c:924
-#, fuzzy
 msgid "argument must be a character vector or a raw vector"
-msgstr "аргумент должен быть a текстовым вектором единичной длины"
+msgstr "аргумент должен быть текстовым вектором или простым верктором"
 
 #: src/gnuwin32/extra.c:946 src/main/connections.c:1444
 msgid "Unable to open the clipboard"
@@ -250,9 +245,8 @@ msgid "Unable to write to the clipboard"
 msgstr "Не могу записать в буфер обмена"
 
 #: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
-#, fuzzy
 msgid "'path' must be a character vector"
-msgstr "'what' должен быть текстовым вектором"
+msgstr "'path' должен быть текстовым вектором"
 
 #: src/gnuwin32/extra.c:1097 src/gnuwin32/extra.c:1175
 msgid "'default' must be a character string"
@@ -662,9 +656,11 @@ msgid "dynamic/shared library '%s' was not loaded"
 msgstr "динамическая/разделенная библиотека '%s' не загружена"
 
 #: src/main/Rdynload.c:939
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate memory for registered native symbol (%d bytes)"
-msgstr "не могу разместить память для текстового соединения"
+msgstr ""
+"не могу разместить память для зарегистрированного естественного символа (%d "
+"байт)"
 
 #: src/main/Rdynload.c:1061
 msgid "must pass package name or DllInfo reference"
@@ -769,9 +765,9 @@ msgid "unimplemented real function of %d numeric arguments"
 msgstr "не разработанная действительная функция %d числовых аргументов"
 
 #: src/main/arithmetic.c:1148
-#, fuzzy, c-format
+#, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
-msgstr "%d аргумента передано 'atan', а нужно 1 или 2"
+msgstr "%d аргумент(ов) передано в 'atan', а требуется 1"
 
 #: src/main/arithmetic.c:1163 src/main/arithmetic.c:1182
 msgid "invalid second argument of length 0"
@@ -900,143 +896,143 @@ msgstr "неправильное значение 'na.rm'"
 msgid "'x' must be numeric"
 msgstr "'x' должен быть числом"
 
-#: src/main/attrib.c:89
+#: src/main/attrib.c:110
 #, fuzzy, c-format
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib: неправильный тип TAG"
 
-#: src/main/attrib.c:130 src/main/attrib.c:219
+#: src/main/attrib.c:175 src/main/attrib.c:266
 msgid "attempt to set an attribute on NULL"
 msgstr "попытка присвоения атрибута NULL"
 
-#: src/main/attrib.c:265
+#: src/main/attrib.c:312
 #, fuzzy, c-format
 msgid "invalid type (%s) for 'names': must be vector"
 msgstr "неправильный тип 'имяs': должен быть вектор"
 
-#: src/main/attrib.c:268
+#: src/main/attrib.c:315
 #, c-format
 msgid "'names' attribute [%d] must be the same length as the vector [%d]"
 msgstr "'имяs' атрибут [%d] должен быть той же длины, что и вектор [%d]"
 
-#: src/main/attrib.c:270
+#: src/main/attrib.c:317
 msgid "names() applied to a non-vector"
 msgstr "имяs() применен к не-вектору"
 
-#: src/main/attrib.c:278
+#: src/main/attrib.c:325
 msgid "invalid time series parameters specified"
 msgstr "указаны неправильные параметры временного ряда"
 
-#: src/main/attrib.c:287
+#: src/main/attrib.c:334
 msgid "'tsp' attribute must be numeric of length three"
 msgstr "атрибут 'tsp' должен быть числовым, длиной в 3"
 
-#: src/main/attrib.c:304
+#: src/main/attrib.c:351
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr "не могу присвоить 'tsp' нулевому вектору"
 
-#: src/main/attrib.c:332
+#: src/main/attrib.c:379
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "попытка установить неправильный атрибут 'comment' "
 
-#: src/main/attrib.c:368
+#: src/main/attrib.c:415
 msgid "attempt to set invalid 'class' attribute"
 msgstr "попытка установить неправильный атрибут 'class'"
 
-#: src/main/attrib.c:570
+#: src/main/attrib.c:617
 msgid "incompatible 'names' argument"
 msgstr "несовместимый аргумент 'имяs'"
 
-#: src/main/attrib.c:622
+#: src/main/attrib.c:669
 #, fuzzy, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "неправильный тип для установки атрибута 'имяs'"
 
-#: src/main/attrib.c:689
+#: src/main/attrib.c:736
 msgid "'dimnames' applied to non-array"
 msgstr "'dimимяs' применены для не-многомерной матрицы"
 
-#: src/main/attrib.c:693
+#: src/main/attrib.c:740
 msgid "'dimnames' must be a list"
 msgstr "'dimимяs' должны быть списком"
 
-#: src/main/attrib.c:696
+#: src/main/attrib.c:743
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "длина 'dimимяs' [%d] должна соответствовать 'dims' [%d]"
 
-#: src/main/attrib.c:713
+#: src/main/attrib.c:760
 #, fuzzy, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "неправильный тип для 'dimимяs' (должен быть вектор)"
 
-#: src/main/attrib.c:716
+#: src/main/attrib.c:763
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "длина 'dimимяs' [%d] не равна протяженности многомерной матрицы"
 
-#: src/main/attrib.c:776
+#: src/main/attrib.c:823
 msgid "dim<- : invalid first argument"
 msgstr "dim<- : неправильный первый аргумент"
 
-#: src/main/attrib.c:779
+#: src/main/attrib.c:826
 msgid "dim<- : invalid second argument"
 msgstr "dim<- : неправильный второй аргумент"
 
-#: src/main/attrib.c:787
+#: src/main/attrib.c:834
 msgid "dim: length-0 dimension vector is invalid"
 msgstr "dim: нулевой размерный вектор неправилен"
 
-#: src/main/attrib.c:792
+#: src/main/attrib.c:839
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 "dim<- : измерения [произведение %d] не соответствуют длине объекта [%d]"
 
-#: src/main/attrib.c:869
+#: src/main/attrib.c:916
 msgid "attributes must be in a list"
 msgstr "атрибуты должны быть списком"
 
-#: src/main/attrib.c:893
+#: src/main/attrib.c:940
 msgid "attributes must be named"
 msgstr "атрибуты должны быть именованы"
 
-#: src/main/attrib.c:897
+#: src/main/attrib.c:944
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "все атрибуты должны иметь имена [%d не имеет]"
 
-#: src/main/attrib.c:940
+#: src/main/attrib.c:987
 msgid "attribute 'name' must be of mode character"
 msgstr "атрибут 'имя' должен быть текстом"
 
-#: src/main/attrib.c:942
+#: src/main/attrib.c:989
 msgid "exactly one attribute 'name' must be given"
 msgstr "должен быть задан в точности один атрибут 'имя'"
 
-#: src/main/attrib.c:1010
+#: src/main/attrib.c:1057
 msgid "'name' must be non-null character"
 msgstr "'имя' должен быть непустым текстом"
 
-#: src/main/attrib.c:1116 src/main/attrib.c:1155 src/main/attrib.c:1244
+#: src/main/attrib.c:1163 src/main/attrib.c:1202 src/main/attrib.c:1291
 msgid "invalid type or length for slot name"
 msgstr "неправильный тип или длина для имени слота"
 
-#: src/main/attrib.c:1130
+#: src/main/attrib.c:1177
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "не могу получить слот (\"%s\") из объекта типа \"%s\""
 
-#: src/main/attrib.c:1138
+#: src/main/attrib.c:1185
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "нет слота имени \"%s\" для этого объекта класса \"%s\""
 
-#: src/main/attrib.c:1239
+#: src/main/attrib.c:1286
 msgid "formal classes cannot be used without the methods package"
 msgstr "формальные классы не могут использоваться без пакета 'methods'"
 
-#: src/main/attrib.c:1250
+#: src/main/attrib.c:1297
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1044,15 +1040,16 @@ msgid ""
 msgstr ""
 "попытка получить слот \"%s\" из объекта базового класса (\"%s\") без слотов"
 
-#: src/main/attrib.c:1259
-#, fuzzy, c-format
+#: src/main/attrib.c:1306
+#, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr ""
-"попытка получить слот \"%s\" из объекта, чей класс (\"%s\") не определен"
+"попытка получить слот \"%s\" из объекта (класс \"%s\"), который не является "
+"объектом S4"
 
-#: src/main/attrib.c:1278
+#: src/main/attrib.c:1325
 msgid "invalid slot type"
 msgstr "неправильный тип слота"
 
@@ -1105,7 +1102,7 @@ msgstr "количества колонок матриц должны соответствовать (см. аргумент %d)"
 #: src/main/objects.c:177 src/main/objects.c:183 src/main/saveload.c:2028
 #: src/main/saveload.c:2281 src/main/saveload.c:2330 src/main/serialize.c:2154
 msgid "use of NULL environment is defunct"
-msgstr ""
+msgstr "использование окружения NULL не одобряется"
 
 #: src/main/builtin.c:55 src/main/envir.c:1461 src/main/envir.c:1621
 #: src/main/envir.c:1754 src/main/paste.c:60 src/main/plot.c:1758
@@ -1129,14 +1126,12 @@ msgid "argument is not an environment"
 msgstr "аргумент не является окружением"
 
 #: src/main/builtin.c:241
-#, fuzzy
 msgid "the empty environment has no parent"
-msgstr "неправильный аргумент экспорта окружения"
+msgstr "пустое окружение не имеет родительского"
 
 #: src/main/builtin.c:258
-#, fuzzy
 msgid "can not set parent of the empty environment"
-msgstr "не могу освободить в базовом окружении"
+msgstr "не могу установить родителя для пустого окружения"
 
 #: src/main/builtin.c:265
 msgid "'parent' is not an environment"
@@ -1151,12 +1146,12 @@ msgstr "неправильное определение '%s'"
 
 #: src/main/builtin.c:363
 msgid "non-positive 'fill' argument will be ignored"
-msgstr ""
+msgstr "неположительный аргумент 'fill' будет проигнорирован"
 
 #: src/main/builtin.c:427
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
-msgstr "аргумент %d пока не поддерживается 'cat'"
+msgstr "'cat' не может работать с аргументом %d (тип '%s')"
 
 #: src/main/builtin.c:541
 msgid "vector: zero-length 'type' argument"
@@ -1479,9 +1474,8 @@ msgid "first argument must be a character string or a function"
 msgstr "первый аргумент должен быть текстовой строкой или функцией"
 
 #: src/main/coerce.c:1931
-#, fuzzy
 msgid "'envir' must be an environment"
-msgstr "'enclos' должен быть окружением"
+msgstr "'envir' должен быть окружением"
 
 #: src/main/coerce.c:2077
 msgid "invalid environment specified"
@@ -2061,7 +2055,7 @@ msgstr "неправильное значение 'split'"
 
 #: src/main/connections.c:3436
 msgid "this platform does not support 'split=TRUE'"
-msgstr ""
+msgstr "эта платформа не поддерживает 'split=TRUE'"
 
 #: src/main/connections.c:3596
 msgid ""
@@ -2114,6 +2108,7 @@ msgstr "могу только использовать read- или write- бинарные соединения"
 #: src/main/connections.c:3950
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
+"использование текстового соединения 'file' может не работать как положено"
 
 #: src/main/connections.c:3953 src/main/connections.c:3957
 #: src/main/connections.c:3964 src/main/connections.c:3978
@@ -2682,9 +2677,9 @@ msgid "cannot get binding from base namespace"
 msgstr "не могу взять связи из базового пространства имен"
 
 #: src/main/envir.c:973
-#, fuzzy, c-format
+#, c-format
 msgid "argument to %s is not an environment"
-msgstr "аргумент не является окружением"
+msgstr "аргумент %s не является окружением"
 
 #: src/main/envir.c:1176
 #, c-format
@@ -2711,9 +2706,8 @@ msgid "cannot assign variables to this database"
 msgstr "не могу присвоить переменные этой базе данных"
 
 #: src/main/envir.c:1331 src/main/envir.c:1365
-#, fuzzy
 msgid "cannot assign values in the empty environment"
-msgstr "не могу освободить в базовом окружении"
+msgstr "не могу присваивать значения в пустом окружении"
 
 #: src/main/envir.c:1353 src/main/envir.c:1515
 msgid "cannot remove variables from this database"
@@ -2724,9 +2718,8 @@ msgid "cannot remove variables from base namespace"
 msgstr "не могу убрать переменные из базового пространства имен"
 
 #: src/main/envir.c:1507
-#, fuzzy
 msgid "cannot remove variables from the empty environment"
-msgstr "не могу удалить переменные из этой базы данных"
+msgstr "не могу удалить переменные из пустого окружения"
 
 #: src/main/envir.c:1557
 msgid "invalid first argument to remove()"
@@ -2807,16 +2800,15 @@ msgstr "в списке поиска нет пункта по имени \"%s\""
 
 #: src/main/envir.c:2687
 msgid "using 'as.environment(NULL)' is defunct"
-msgstr ""
+msgstr "использование 'as.environment(NULL)' не одобряется"
 
 #: src/main/envir.c:2690
 msgid "invalid object for as.environment"
 msgstr "неправильный объект для as.environment"
 
 #: src/main/envir.c:2698
-#, fuzzy
 msgid "locking the base environment is not supported yet"
-msgstr "блокирование NULL- (базового) окружения пока не поддерживается"
+msgstr "блокирование базового окружения пока не поддерживается"
 
 #: src/main/envir.c:2700 src/main/envir.c:2729 src/main/envir.c:2762
 #: src/main/envir.c:2782 src/main/envir.c:2804 src/main/envir.c:2838
@@ -3415,6 +3407,7 @@ msgstr "переполнение буфера ввода"
 #: src/main/gram.y:1751
 msgid "\\uxxxx sequences are only valid in multibyte locales"
 msgstr ""
+"последовательности \\uxxxx действительны только на многобайтных локалях"
 
 #: src/main/gram.y:1767 src/main/gram.y:1772
 msgid "invalid \\u{xxxx} sequence"
@@ -3426,11 +3419,12 @@ msgstr "неправильная \\uxxxx последовательность"
 
 #: src/main/gram.y:1783
 msgid "\\Uxxxxxxxx sequences are not supported on Windows"
-msgstr ""
+msgstr "последовательности \\Uxxxxxxxx не поддерживаются Windows"
 
 #: src/main/gram.y:1786
 msgid "\\Uxxxxxxxx sequences are only valid in multibyte locales"
 msgstr ""
+"последовательности \\Uxxxxxxxx действительны только на многобайтных локалях"
 
 #: src/main/gram.y:1802 src/main/gram.y:1806
 msgid "invalid \\U{xxxxxxxx} sequence"
@@ -3531,7 +3525,7 @@ msgstr "неправильный указание цвета"
 
 #: src/main/graphics.c:4302
 msgid "supplied color is not numeric nor character"
-msgstr ""
+msgstr "предложенный цвет -- не цифра и не символ"
 
 #: src/main/graphics.c:4325
 msgid "Invalid color"
@@ -3630,9 +3624,8 @@ msgid "error: system commands are not supported in this version of R.\n"
 msgstr "ошибка: системные команды не поддерживаются в этой версии R.\n"
 
 #: src/main/main.c:451
-#, fuzzy
 msgid "Error: segfault from C stack overflow\n"
-msgstr "переполнение стека целых чисел"
+msgstr "Ошибка сегментации памяти из переполненного стека С\n"
 
 #: src/main/main.c:784
 msgid "unable to open the base package\n"
@@ -3882,52 +3875,52 @@ msgid "overlong names in '%s'"
 msgstr "слишком длинное имя в '%s'"
 
 #: src/main/model.c:1349
-#, fuzzy, c-format
+#, c-format
 msgid "invalid variable type for '%s'"
-msgstr "неправильный тип переменной"
+msgstr "неправильный тип переменной для '%s'"
 
 #: src/main/model.c:1352
-#, fuzzy, c-format
+#, c-format
 msgid "variable lengths differ (found for '%s')"
-msgstr "длины переменных различаются"
+msgstr "длины переменных различаются (найдено в '%s')"
 
-#: src/main/model.c:1406
+#: src/main/model.c:1402
 msgid "invalid result from na.action"
 msgstr "неправильный результат 'na.action'"
 
-#: src/main/model.c:1599
+#: src/main/model.c:1595
 msgid "invalid model frame"
 msgstr "неправильный модельный фрейм"
 
-#: src/main/model.c:1601
+#: src/main/model.c:1597
 msgid "do not know how many cases"
 msgstr "не знаю, сколько строк"
 
-#: src/main/model.c:1617
-#, fuzzy, c-format
+#: src/main/model.c:1614
+#, c-format
 msgid "variable lengths differ (found for variable %d)"
-msgstr "длины переменных различаются"
+msgstr "длины переменных различаются (найдено для переменной %d)"
 
-#: src/main/model.c:1621 src/main/model.c:1628
+#: src/main/model.c:1618 src/main/model.c:1625
 #, c-format
 msgid "variable %d has no levels"
 msgstr "у переменной %d нет уровней"
 
-#: src/main/model.c:1647
+#: src/main/model.c:1644
 msgid "invalid variable type"
 msgstr "неправильный тип переменной"
 
-#: src/main/model.c:1736
+#: src/main/model.c:1733
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "отклик появился справа и поэтому был удален"
 
-#: src/main/model.c:1768
+#: src/main/model.c:1765
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "проблема с термином %d в 'model.matrix': не присвоены колонки"
 
-#: src/main/model.c:1816 src/main/model.c:1821 src/main/model.c:1827
-#: src/main/model.c:1837 src/main/model.c:1843 src/main/model.c:1849
+#: src/main/model.c:1813 src/main/model.c:1818 src/main/model.c:1824
+#: src/main/model.c:1834 src/main/model.c:1840 src/main/model.c:1846
 msgid "term names will be truncated"
 msgstr "имена терминов будут укорочены"
 
@@ -3939,23 +3932,23 @@ msgstr "нужен текстовый аргумент"
 msgid "no such primitive function"
 msgstr "нет такой примитивной функции"
 
-#: src/main/names.c:1048
+#: src/main/names.c:1049
 msgid "attempt to use zero-length variable name"
 msgstr "попытка использовать имя переменной нулевой длины"
 
-#: src/main/names.c:1050
+#: src/main/names.c:1051
 msgid "symbol print-name too long"
 msgstr "имя символьной печати слишком длинное"
 
-#: src/main/names.c:1076
+#: src/main/names.c:1077
 msgid "invalid .Internal() argument"
 msgstr "неправильный .Internal() аргумент"
 
-#: src/main/names.c:1079
+#: src/main/names.c:1080
 msgid "invalid internal function"
 msgstr "неправильная внутренняя функция"
 
-#: src/main/names.c:1081
+#: src/main/names.c:1082
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "нет внутренней функции \"%s\""
@@ -4395,19 +4388,19 @@ msgstr ""
 "предложенный градиент неправильной длины или режима, и поэтому пропущен"
 
 #: src/main/par.c:169
-#, fuzzy, c-format
+#, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
-msgstr "для графического параметра \"%s\" указано неправильное значение"
+msgstr "указано неправильное значение графического параметра \"%s\""
 
 #: src/main/par.c:176
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
-msgstr "параметр \"%s\" неправильной длины"
+msgstr "графический параметр \"%s\" неправильной длины"
 
 #: src/main/par.c:279 src/main/par.c:703
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" cannot be set"
-msgstr "параметр \"%s\" не может быть установлен"
+msgstr "графический параметр \"%s\" не может быть установлен"
 
 #: src/main/par.c:343 src/main/par.c:725
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
@@ -4438,25 +4431,25 @@ msgid "calling par(new=) with no plot"
 msgstr "вызов par(new=) без графика"
 
 #: src/main/par.c:695 src/main/par.c:1141
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" is obsolete"
-msgstr "неправильный список графических параметров"
+msgstr "графический параметр \"%s\" устарел"
 
 #: src/main/par.c:699 src/main/par.c:1145
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" is not a graphical parameter"
-msgstr "неправильный графический параметр"
+msgstr "\"%s\" -- не графический параметр"
 
 #: src/main/par.c:740
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" can not be set in high-level plot() function"
 msgstr ""
-"в функции 'plot()' высокого уровня параметр \"%s\" не может быть установлен"
+"нельзя установить графический параметр \"%s\" в функции 'plot()' высокого "
+"уровня"
 
 #: src/main/par.c:1198
-#, fuzzy
 msgid "invalid argument passed to par()"
-msgstr "для par() передан неправильный параметр"
+msgstr "par() передан неправильный аргумент"
 
 #: src/main/par.c:1268
 #, c-format
@@ -5442,15 +5435,15 @@ msgid "error writing to connection"
 msgstr "ошибка записи в соединение"
 
 #: src/main/saveload.c:2289
-#, fuzzy
 msgid "no input is available"
-msgstr "механизм истории недоступен"
+msgstr "ввод недоступен"
 
 #: src/main/saveload.c:2308
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
 msgstr ""
+"ввод не началася с магического числа, совместимого с загрузкой с соединения"
 
 #: src/main/scan.c:561
 #, c-format
@@ -5934,19 +5927,17 @@ msgstr ""
 "Целочисленное переполнение в 'sum(.)'; использование 'sum(as.numeric(.))'"
 
 #: src/main/summary.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
-msgstr "внутренняя ошибка ('op' в 'do_summary').\t Вызовите специалиста"
+msgstr "внутренняя ошибка ('op = %d' в 'do_summary').\t Вызовите специалиста"
 
 #: src/main/summary.c:537
-#, fuzzy
 msgid "no non-missing arguments to min; returning Inf"
-msgstr "у 'min' нет конечных аргументов; возвращаю Inf"
+msgstr "у 'min' нет не пропущенных аргументов; возвращаю Inf"
 
 #: src/main/summary.c:539
-#, fuzzy
 msgid "no non-missing arguments to max; returning -Inf"
-msgstr "у 'max' нет конечных аргументов; возвращаю -Inf"
+msgstr "у 'max' нет не пропущенных аргументов; возвращаю -Inf"
 
 #: src/main/summary.c:814
 msgid "not all arguments have the same length"
@@ -5962,9 +5953,9 @@ msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr "присвоение за пределами вектора/списка (превышение от %d до %d)"
 
 #: src/main/subassign.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in subassignment type fix"
-msgstr "несовместимые типы (%d) при записи типа подгрупп присвоения"
+msgstr "несовместимые типы (от %s до %s) при записи типа подгрупп присвоения"
 
 #: src/main/subassign.c:388 src/main/subassign.c:659 src/main/subassign.c:662
 #: src/main/subassign.c:947
@@ -5986,14 +5977,15 @@ msgid "incorrect number of subscripts on matrix"
 msgstr "неправильное число подгрупп матрицы"
 
 #: src/main/subassign.c:891
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
-msgstr "несовместимые типы (случай %d) в определении подгрупп матрицы"
+msgstr "несовместимые типы (от %s до %s) в определении подгрупп матрицы"
 
 #: src/main/subassign.c:1070
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in array subset assignment"
-msgstr "несовместимые типы (%d) в определении подгрупп многомерной матрицы"
+msgstr ""
+"несовместимые типы (от %s до %s) в определении подгрупп многомерной матрицы"
 
 #: src/main/subassign.c:1095
 msgid "invalid number of subscripts to list assign"
@@ -6034,9 +6026,9 @@ msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] неправильное количество подгрупп"
 
 #: src/main/subassign.c:1634
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in [[ assignment"
-msgstr "несовместимые типы (%d) в [[ присвоении"
+msgstr "несовместимые типы (от %s до %s) в [[ присвоении"
 
 #: src/main/subassign.c:1682
 #, c-format
@@ -6403,25 +6395,23 @@ msgstr "неудачное размещение в 'GVText'"
 #: src/main/xspline.c:58
 #, c-format
 msgid "add_point - reached MAXNUMPTS (%d)"
-msgstr ""
+msgstr "add_point -- достигнуто MAXNUMPTS (%d)"
 
 #: src/main/xspline.c:72
 msgid "insufficient memory to allocate point array"
-msgstr ""
+msgstr "недостаточно памяти для размещения точечной многомерной матрицы"
 
 #: src/main/xspline.c:453
 msgid "There must be at least two control points"
-msgstr ""
+msgstr "Нужны как минимум две контрольные точки"
 
 #: src/main/xspline.c:455
-#, fuzzy
 msgid "There must be at least four control points"
-msgstr "тут должен быть первый аргумент"
+msgstr "Тут должно быть по крайней мере 4 контрольных точки"
 
 #: src/main/xspline.c:512
-#, fuzzy
 msgid "There must be at least three control points"
-msgstr "тут должен быть первый аргумент"
+msgstr "Тут должно быть по крайней мере 3 контрольных точки"
 
 #: src/modules/internet/internet.c:91
 msgid "unknown URL scheme"
@@ -6806,7 +6796,7 @@ msgstr "не могу создать окно X11"
 #: src/modules/X11/devX11.c:1388
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
-msgstr ""
+msgstr "'width=%d, height=%d' непохожи на значения, заданные в пикселях"
 
 #: src/modules/X11/devX11.c:1393
 msgid "unable to create pixmap"
@@ -6911,9 +6901,9 @@ msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..): не сошлось на %d итерации."
 
 #: src/nmath/polygamma.c:473
-#, fuzzy, c-format
+#, c-format
 msgid "deriv = %d > %d (= n_max)\n"
-msgstr "deriv = %d > %d (= n_max)"
+msgstr "deriv = %d > %d (= n_max)\n"
 
 #: src/nmath/rmultinom.c:74
 #, c-format
@@ -7033,18 +7023,22 @@ msgid "re-encoding is not available on this system"
 msgstr "перекодировка в этой системе недоступна"
 
 #: src/unix/sys-std.c:858
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s', reason '%s'\n"
 "\n"
-msgstr "не могу открыть файл '%s' по причине '%s'"
+msgstr ""
+"Не могу открыть файл '%s' по причине '%s'\n"
+"\n"
 
 #: src/unix/sys-std.c:861
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s'\n"
 "\n"
-msgstr "не могу открыть файл '%s'"
+msgstr ""
+"Не могу открыть файл '%s'\n"
+"\n"
 
 #: src/unix/sys-std.c:924 src/unix/sys-std.c:946
 msgid "'file' argument is too long"
@@ -7071,14 +7065,12 @@ msgid "non-empty character argument expected"
 msgstr "ожидается непустой текстовый аргумент"
 
 #: src/unix/sys-unix.c:273
-#, fuzzy
 msgid "'intern' must be logical and not NA"
-msgstr "'ascii' должно быть логическим"
+msgstr "'intern' должно быть логическим и не NA"
 
 #: src/unix/sys-unix.c:300
-#, fuzzy
 msgid "'intern=TRUE' is not implemented on this platform"
-msgstr "'intern=TRUE' для этой платформы не разработан"
+msgstr "'intern=TRUE' не разработан для этой платформы"
 
 #: src/unix/sys-unix.c:373
 msgid "Sys.info() is not implemented on this system"
