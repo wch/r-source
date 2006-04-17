@@ -7,13 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-16 12:46+0100\n"
+"POT-Creation-Date: 2006-04-17 07:31+0100\n"
 "PO-Revision-Date: 2005-06-02 16:10+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: Srunmed.c:60
+msgid "bandwidth/span of running medians is larger than n"
+msgstr "移動中央値のバンド幅・バンド範囲(span)が n より大きくなっています"
 
 #: ansari.c:129
 msgid "probabilities outside [0,1] in qansari()"
@@ -238,10 +242,6 @@ msgstr "smooth(*, '3RSS') 中の割り当てエラーです．"
 #: smooth.c:262
 msgid "allocation error in smooth(*, '3R')."
 msgstr "smooth(*, '3R') 中の割り当てエラーです．"
-
-#: Srunmed.c:60
-msgid "bandwidth/span of running medians is larger than n"
-msgstr "移動中央値のバンド幅・バンド範囲(span)が n より大きくなっています"
 
 #: starma.c:366
 #, c-format

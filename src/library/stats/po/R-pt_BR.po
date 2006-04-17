@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2006-03-27 15:42\n"
-"PO-Revision-Date: 2005-12-17 11:31-0200\n"
+"PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -117,13 +117,11 @@ msgstr "nenhum método 'drop1' para modelos \"mlm\""
 msgid "F test assumes 'quasi%s' family"
 msgstr "teste F supõe família 'quasi%s'"
 
-#, fuzzy
 msgid "lower scope has term(s) %s not included in model"
-msgstr "escopo inferior não incluído no modelo"
+msgstr "escopo inferior tem termo(s) %s não incluído(s) no modelo"
 
-#, fuzzy
 msgid "upper scope does not include model term(s) %s"
-msgstr "escopo superior não inclui modelo"
+msgstr "escopo superior não inclui termos do modelo %s"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "AIC não definido para esse modelo, então 'step' não pode continuar"
@@ -1528,10 +1526,9 @@ msgstr "não é possível reconhecer o nome do parâmetro"
 msgid "levels truncated to positive values only"
 msgstr "níveis truncados para valores positivos"
 
-#, fuzzy
 msgid "setVarying : 'vary' length must match length of parameters"
 msgstr ""
-"setVarying : comprimento variável deve corresponder ao comprimento dos "
+"setVarying : comprimento de 'vary' deve corresponder ao comprimento dos "
 "parâmetros"
 
 msgid "singular gradient matrix at initial parameter estimates"
@@ -1859,9 +1856,8 @@ msgstr "spline: primeiro e último valor de y diferem - usando y[1] para ambos"
 msgid "splinefun: invalid interpolation method"
 msgstr "splinefun: método de interpolação inválido"
 
-#, fuzzy
 msgid "'deriv' must be between 0 and 3"
-msgstr "'p' deve estar entre 0 e 0.5"
+msgstr "'deriv' deve estar entre 0 e 3"
 
 msgid "stepfun: 'x' must be ordered increasingly"
 msgstr "stepfun: 'x' deve estar ordenado crescentemente"
@@ -2139,11 +2135,3 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "parâmetro %s não ocorre na fórmula do modelo"
 msgstr[1] "parâmetros %s não ocorrem na fórmula do modelo"
 
-#~ msgid "rows with zero weights not counted"
-#~ msgstr "linhas com peso zero não contadas"
-
-#~ msgid "p-values may be incorrect"
-#~ msgstr "níveis descritivos podem estar incorretos"
-
-#~ msgid "'shape' must be strictly positive"
-#~ msgstr "'shape' deve ser estritamente positivo"

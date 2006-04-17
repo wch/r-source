@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-16 12:47\n"
+"POT-Creation-Date: 2006-04-17 07:32\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -11,6 +11,77 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
+msgstr ""
+"'format'는 \"normal\" 또는 \"short\" 이어야만 합니다. \"normal\"를 사용해주십"
+"시오"
+
+msgid "wrong 'sortby' specified. Using sortby=\"score\""
+msgstr "'sortby'는 지정이 잘못되었습니다. \"sortby=\"score\"를 사용해주십시오"
+
+msgid ""
+"wrong restriction specified.\n"
+"Using '%s'"
+msgstr ""
+"제한은 잘못된 지정을 했습니다.\n"
+"'%s'를 사용 해주십시오"
+
+msgid "A search query has been submitted to"
+msgstr "탐색에 관한 query는 받아들여졌습니다"
+
+msgid "The results page should open in your browser shortly"
+msgstr "page가 당신의 브라우저에서 곧 열어야만 할 결과입니다"
+
+msgid "reference to unknown chunk '%s'"
+msgstr "알수 없는 chunk '%s'에 언급합니다"
+
+msgid "no Sweave file with name '%s' found"
+msgstr "이름 '%s'를 구성된 Sweave 파일은 검색되지 않았습니다"
+
+msgid "%d Sweave files for basename '%s' found:"
+msgstr "basename '%s' 때문에 Sweave 파일은 검색되어졌습니다"
+
+msgid "Found invalid multi-byte character data."
+msgstr "무효의 다중 바이트 문자 데이터를 검색되어졌습니다"
+
+msgid "Cannot re-encode because 'iconv' is not available."
+msgstr "'iconv'가 이용 가능하지 않기 때문에 re-encode를 할수가 없습니다"
+
+msgid "Try running R in a single-byte locale."
+msgstr "single-byte locale의 R를 실행해주십시오"
+
+msgid "more than one syntax specification found, using the first one"
+msgstr "1 개를 넘는 문장 구조법 명세는 최초의 하나를 사용해 검색되어졌습니다"
+
+msgid "object '%s' does not have class \"SweaveSyntax\""
+msgstr "오브젝트 '%s'는 클래스 \"SweavaeSyntax\"를 가지고 있지 않습니다"
+
+msgid "recursive Sweave input '%s' in stack"
+msgstr "스택에서 재귀적인 Sweave 입력'%s'입니다"
+
+msgid "target syntax not of class \"SweaveSyntax\""
+msgstr "클래스 \"SweaveSyntax\"것은 아닌 target syntax 입니다"
+
+msgid "target syntax contains no translation table"
+msgstr "target syntax는 번역 테이블을 포함하고 있지 않습니다"
+
+msgid ""
+"parse error or empty option in\n"
+"%s"
+msgstr "%s에 있어서 에러 또는 비어 있는 옵션을 해석해주십시오"
+
+msgid "path to '%s' contains spaces,"
+msgstr "'%s'에서 패스(path)는 space를 포함하고 있습니다"
+
+msgid "this may cause problems when running LaTeX"
+msgstr "LaxTeX를 실행하는경우, 이것은 문제를 일으킬지도 모릅니다"
+
+msgid "You can now run LaTeX on '%s'"
+msgstr "현재 '%s'에서 LaTeX를 실행할수 있습니다"
+
+msgid "invalid value for '%s' : %s"
+msgstr "'%s'에 적절하지 않는 value입니다: %s"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "'what' 요소의 첫번째가 무시될 것입니다"
@@ -36,12 +107,6 @@ msgstr "패키지 '%s'의  DESCRIPTION 파일에서 date 필드가 있습니다"
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "패키지 DESCRIPTION 파일로부터'%s'때문에 year를 결정할수 없었습니다"
 
-msgid "kind '%s' not yet implemented"
-msgstr "'%s' 종류는 아직 실제로 적용되지 않습니다"
-
-msgid "wrong number of table row entries"
-msgstr "테이블 열 엔트리가 잘못된 수입니다"
-
 msgid "'package' must be a character string or NULL"
 msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
@@ -66,6 +131,33 @@ msgstr "파일 'filelist'는 디렉토리 '%s'에서 잘못되어져 있습니�
 
 msgid "data set '%s' not found"
 msgstr "data set '%s'는 검색되지 않습니다"
+
+msgid "kind '%s' not yet implemented"
+msgstr "'%s' 종류는 아직 실제로 적용되지 않습니다"
+
+msgid "wrong number of table row entries"
+msgstr "테이블 열 엔트리가 잘못된 수입니다"
+
+msgid "wrong argument to 'dataentry'"
+msgstr "'dataentry'에서 잘못된 인수입니다"
+
+msgid "could not restore type information"
+msgstr "유형 정보를 회복할 수 없었습니다"
+
+msgid "modes argument ignored"
+msgstr "무시 되어진 모드 인수 입니다"
+
+msgid "'names' argument ignored"
+msgstr "무시 되어진 'names' 인수 입니다"
+
+msgid "'modes' argument ignored"
+msgstr "무시 되어진 'modes' 인수입니다"
+
+msgid "could not restore variables properly"
+msgstr "변수를 적절히 회복할 수 없었습니다"
+
+msgid "did not assign() anything"
+msgstr "()에 아무것도 할당하지 않았습니다"
 
 msgid "Browsing in the environment with call:"
 msgstr "호출을 갖춘 환경에서 Browsing"
@@ -99,27 +191,6 @@ msgid ""
 msgstr ""
 "topic '%s' demo는 '%s'로 검색되어진 것을 사용하고,\n"
 "두번이상 검색되었습니다"
-
-msgid "wrong argument to 'dataentry'"
-msgstr "'dataentry'에서 잘못된 인수입니다"
-
-msgid "could not restore type information"
-msgstr "유형 정보를 회복할 수 없었습니다"
-
-msgid "modes argument ignored"
-msgstr "무시 되어진 모드 인수 입니다"
-
-msgid "'names' argument ignored"
-msgstr "무시 되어진 'names' 인수 입니다"
-
-msgid "'modes' argument ignored"
-msgstr "무시 되어진 'modes' 인수입니다"
-
-msgid "could not restore variables properly"
-msgstr "변수를 적절히 회복할 수 없었습니다"
-
-msgid "did not assign() anything"
-msgstr "()에 아무것도 할당하지 않았습니다"
 
 msgid "invalid 'data' argument"
 msgstr "무효의 'data' 인수입니다"
@@ -293,49 +364,6 @@ msgstr "'fixInNamespace'는 이름을 요구합니다"
 msgid "only numeric indices can be used"
 msgstr "수치의 색인만은 사용할 수 있습니다"
 
-msgid "no packages were specified"
-msgstr "패키지는 지정되지 않았습니다"
-
-msgid "argument 'lib' is missing: using %s"
-msgstr "인수'lib'는 잘못되었습니다: %s를 사용합니다"
-
-msgid "cannot install MacOS X binary packages on Windows"
-msgstr "windows에 MacOs의 X 2진법의 패키지를 인스톨 할수 없습니다"
-
-msgid "cannot install MacOS X binary packages on this plaform"
-msgstr "이 plaform에  MacOS의  X 2진법의 패키지를 인스톨 할수 없습니다"
-
-msgid "cannot install Windows binary packages on this plaform"
-msgstr "이 plaform에 windows의 2진법 패키지를 인스톨 할수 없습니다"
-
-msgid ""
-"This version of R is not set up to install source packages\n"
-"If it was installed from an RPM, you may need the R-devel RPM"
-msgstr ""
-"R의 이 버전은 그것이 RPM와 당신으로부터 인스톨 되었을 때,\n"
-"source 패키지를 인스톨 하기 위해서는 up 되지 않습니다, R-devel RPM를 필요로 "
-"할지도 모릅니다"
-
-msgid "installation of package '%s' had non-zero exit status"
-msgstr "패키지 '%s'의 설치는 zero이 아닌 exit 상태를 가지고 있었습니다"
-
-msgid "Unable to create temporary directory '%s'"
-msgstr "일시적 디렉토리 '%s'를 작성할수가 없습니다"
-
-msgid ""
-"Do not know which element of 'lib' to install dependencies into\n"
-"skipping dependencies"
-msgstr ""
-"모르는 어느'lib' 요소가 의존성의 스킵에\n"
-"의존성을 설치합니다"
-
-msgid ""
-"The downloaded packages are in\n"
-"\t%s"
-msgstr ""
-"다운로드된 패키지는 %s에\n"
-"있습니다"
-
 msgid "cannot create directory '%s'"
 msgstr "디렉토리 '%s'를 작성할수 없습니다"
 
@@ -365,6 +393,9 @@ msgstr "bundle '%s'는 여분의 내용 %s를 가지고 있습니다"
 
 msgid "'priority' must be character or NULL"
 msgstr "'prority'는 문자 또는 NULL이어야만 합니다"
+
+msgid "argument 'lib' is missing: using %s"
+msgstr "인수'lib'는 잘못되었습니다: %s를 사용합니다"
 
 msgid "'destdir' is not a directory"
 msgstr "'destdir'는 디렉토리가 아닙니다"
@@ -403,6 +434,46 @@ msgstr "모든 패키지는 적어도 1개의 다른것에 의존합니다"
 
 msgid "packages %s are mutually dependent"
 msgstr "패키지%s는 서로 의존합니다"
+
+msgid "no packages were specified"
+msgstr "패키지는 지정되지 않았습니다"
+
+msgid "cannot install MacOS X binary packages on Windows"
+msgstr "windows에 MacOs의 X 2진법의 패키지를 인스톨 할수 없습니다"
+
+msgid "cannot install MacOS X binary packages on this plaform"
+msgstr "이 plaform에  MacOS의  X 2진법의 패키지를 인스톨 할수 없습니다"
+
+msgid "cannot install Windows binary packages on this plaform"
+msgstr "이 plaform에 windows의 2진법 패키지를 인스톨 할수 없습니다"
+
+msgid ""
+"This version of R is not set up to install source packages\n"
+"If it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+"R의 이 버전은 그것이 RPM와 당신으로부터 인스톨 되었을 때,\n"
+"source 패키지를 인스톨 하기 위해서는 up 되지 않습니다, R-devel RPM를 필요로 "
+"할지도 모릅니다"
+
+msgid "installation of package '%s' had non-zero exit status"
+msgstr "패키지 '%s'의 설치는 zero이 아닌 exit 상태를 가지고 있었습니다"
+
+msgid "Unable to create temporary directory '%s'"
+msgstr "일시적 디렉토리 '%s'를 작성할수가 없습니다"
+
+msgid ""
+"Do not know which element of 'lib' to install dependencies into\n"
+"skipping dependencies"
+msgstr ""
+"모르는 어느'lib' 요소가 의존성의 스킵에\n"
+"의존성을 설치합니다"
+
+msgid ""
+"The downloaded packages are in\n"
+"\t%s"
+msgstr ""
+"다운로드된 패키지는 %s에\n"
+"있습니다"
 
 msgid "no object named '%s' to show"
 msgstr ""
@@ -493,27 +564,6 @@ msgstr "마지막 불완전한 레코드 ,%d 라인이 없어져버렸습니다"
 msgid "transfer failure"
 msgstr "전송이 실패했습니다"
 
-msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
-msgstr ""
-"'format'는 \"normal\" 또는 \"short\" 이어야만 합니다. \"normal\"를 사용해주십"
-"시오"
-
-msgid "wrong 'sortby' specified. Using sortby=\"score\""
-msgstr "'sortby'는 지정이 잘못되었습니다. \"sortby=\"score\"를 사용해주십시오"
-
-msgid ""
-"wrong restriction specified.\n"
-"Using '%s'"
-msgstr ""
-"제한은 잘못된 지정을 했습니다.\n"
-"'%s'를 사용 해주십시오"
-
-msgid "A search query has been submitted to"
-msgstr "탐색에 관한 query는 받아들여졌습니다"
-
-msgid "The results page should open in your browser shortly"
-msgstr "page가 당신의 브라우저에서 곧 열어야만 할 결과입니다"
-
 msgid "invalid 'socket' argument"
 msgstr "무효의 'socket' 인수입니다"
 
@@ -540,56 +590,6 @@ msgstr "'str.default': 'le'는 NA입니다"
 
 msgid "no events were recorded"
 msgstr "events는 기록되지 않았습니다"
-
-msgid "reference to unknown chunk '%s'"
-msgstr "알수 없는 chunk '%s'에 언급합니다"
-
-msgid "no Sweave file with name '%s' found"
-msgstr "이름 '%s'를 구성된 Sweave 파일은 검색되지 않았습니다"
-
-msgid "%d Sweave files for basename '%s' found:"
-msgstr "basename '%s' 때문에 Sweave 파일은 검색되어졌습니다"
-
-msgid "Found invalid multi-byte character data."
-msgstr "무효의 다중 바이트 문자 데이터를 검색되어졌습니다"
-
-msgid "Cannot re-encode because 'iconv' is not available."
-msgstr "'iconv'가 이용 가능하지 않기 때문에 re-encode를 할수가 없습니다"
-
-msgid "Try running R in a single-byte locale."
-msgstr "single-byte locale의 R를 실행해주십시오"
-
-msgid "more than one syntax specification found, using the first one"
-msgstr "1 개를 넘는 문장 구조법 명세는 최초의 하나를 사용해 검색되어졌습니다"
-
-msgid "object '%s' does not have class \"SweaveSyntax\""
-msgstr "오브젝트 '%s'는 클래스 \"SweavaeSyntax\"를 가지고 있지 않습니다"
-
-msgid "recursive Sweave input '%s' in stack"
-msgstr "스택에서 재귀적인 Sweave 입력'%s'입니다"
-
-msgid "target syntax not of class \"SweaveSyntax\""
-msgstr "클래스 \"SweaveSyntax\"것은 아닌 target syntax 입니다"
-
-msgid "target syntax contains no translation table"
-msgstr "target syntax는 번역 테이블을 포함하고 있지 않습니다"
-
-msgid ""
-"parse error or empty option in\n"
-"%s"
-msgstr "%s에 있어서 에러 또는 비어 있는 옵션을 해석해주십시오"
-
-msgid "path to '%s' contains spaces,"
-msgstr "'%s'에서 패스(path)는 space를 포함하고 있습니다"
-
-msgid "this may cause problems when running LaTeX"
-msgstr "LaxTeX를 실행하는경우, 이것은 문제를 일으킬지도 모릅니다"
-
-msgid "You can now run LaTeX on '%s'"
-msgstr "현재 '%s'에서 LaTeX를 실행할수 있습니다"
-
-msgid "invalid value for '%s' : %s"
-msgstr "'%s'에 적절하지 않는 value입니다: %s"
 
 msgid ""
 "vignette '%d' found more than once,\n"
@@ -720,6 +720,12 @@ msgstr "non-zero exit 코드를 반환하는 'tar' 입니다"
 msgid "cannot remove prior installation of package"
 msgstr "패키지의 전의 설치를 삭제할 수 없습니다"
 
+msgid "object '%s' not found"
+msgid_plural "objects '%s' not found"
+msgstr[0] ""
+"검색되지 않는 object '%s' 입니다\n"
+"검색되지 않는 objects '%s' 입니다"
+
 msgid "dependency '%s' is not available"
 msgid_plural "dependencies '%s' are not available"
 msgstr[0] ""
@@ -731,12 +737,6 @@ msgid_plural "also installing the dependencies "
 msgstr[0] ""
 "한층 더 dependency를 인스톨 합니다\n"
 "한층 더 depengencies를 인스톨 합니다"
-
-msgid "object '%s' not found"
-msgid_plural "objects '%s' not found"
-msgstr[0] ""
-"검색되지 않는 object '%s' 입니다\n"
-"검색되지 않는 objects '%s' 입니다"
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"

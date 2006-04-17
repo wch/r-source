@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-16 12:46+0100\n"
-"PO-Revision-Date: 2005-12-17 10:57-0200\n"
+"POT-Creation-Date: 2006-04-17 07:31+0100\n"
+"PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Language: Portuguese\n"
 "X-Poedit-Country: BRAZIL\n"
+
+#: Srunmed.c:60
+msgid "bandwidth/span of running medians is larger than n"
+msgstr "largura de banda/vão das medianas móveis é maior que n"
 
 #: ansari.c:129
 msgid "probabilities outside [0,1] in qansari()"
@@ -123,9 +127,8 @@ msgid "'rho' should be an environment"
 msgstr "'rho' deve ser um ambiente"
 
 #: nls.c:210
-#, fuzzy
 msgid "'dir' is not a numeric vector of the correct length"
-msgstr "argumento %s deve ser um vetor numérico com comprimento 1 ou %d"
+msgstr "'dir' não é um vetor numérico com o comprimento correto"
 
 #: nls.c:227 nls.c:255
 msgid "Missing value or an infinity produced when evaluating the model"
@@ -245,41 +248,7 @@ msgstr "erro na alocação em smooth(*, '3RSS')."
 msgid "allocation error in smooth(*, '3R')."
 msgstr "erro na alocação em smooth(*, '3R')."
 
-#: Srunmed.c:60
-msgid "bandwidth/span of running medians is larger than n"
-msgstr "largura de banda/vão das medianas móveis é maior que n"
-
 #: starma.c:366
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valor faltante nas últimas %d observações"
-
-#~ msgid "assert failed in src/library/ts/src/carray.c"
-#~ msgstr "declaração falhou em src/library/ts/src/carray.c:"
-
-#~ msgid "'control$maxiter' absent"
-#~ msgstr "'control$maxiter' ausente"
-
-#~ msgid "'control$tol' absent"
-#~ msgstr "'control$tol' ausente"
-
-#~ msgid "'control$minFactor' absent"
-#~ msgstr "'control$minFactor' ausente"
-
-#~ msgid "'m$conv()' absent"
-#~ msgstr "'m$conv()' ausente"
-
-#~ msgid "m$incr() absent"
-#~ msgstr "'m$incr()' ausente"
-
-#~ msgid "'m$deviance()' absent"
-#~ msgstr "'m$deviance()' ausente"
-
-#~ msgid "'m$trace()' absent"
-#~ msgstr "'m$trace()' ausente"
-
-#~ msgid "'m$setPars()' absent"
-#~ msgstr "m$setPars() ausente"
-
-#~ msgid "lowerb and upperb must be numeric vectors"
-#~ msgstr "'lowerb' e 'upperb' devem ser vetores numéricos"

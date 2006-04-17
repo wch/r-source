@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-16 12:46\n"
+"POT-Creation-Date: 2006-04-17 07:31\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -10,6 +10,69 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'%s' is defunct."
+msgstr "'%s' は廃止されました。"
+
+msgid "Use '%s' instead."
+msgstr "'%s' を代わりに使って下さい"
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "help(\"Defunct\") と help(\"%s-defunct\") を見て下さい"
+
+msgid "See help(\"Defunct\")"
+msgstr "help(\"Defunct\") を見て下さい"
+
+msgid "'%s' is deprecated."
+msgstr "'%s' は廃止予定です"
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "help(\"Deprecated\") と help(\"%s-deprecated\") を見て下さい"
+
+msgid "See help(\"Deprecated\")"
+msgstr "help(\"Deprecated\") を見て下さい"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "'La.svd' への引数は数値か複素数でなければなりません"
+
+msgid "infinite or missing values in 'x'"
+msgstr "'x' のに無限値か欠測値があります"
+
+msgid "0 extent dimensions"
+msgstr "範囲が 0 の次元です"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "'nu' は 0 , nrow(x) または ncol(x) でなければなりません"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "'nv' は 0 , nrow(x) または ncol(x) でなければなりません"
+
+msgid "'all' can not be used with other deparse options"
+msgstr "'all' は他の deparse オプションと一緒には使えません"
+
+msgid "second argument must be a list"
+msgstr "第二引数はリストでなければなりません"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "'iconvlist' はこのシステムで利用可能ではありません"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr "'kind' は長さ 1 の文字列(使用されるべき RNG 名) でなければなりません"
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "'%s' は RNG の有効な省略名ではありません"
+
+msgid "'normal.kind' must be a character string of length 1."
+msgstr "'normal.kind' は長さ 1 の文字列でなければなりません"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Kinderman-Ramage の疑似乱数発生法のバギー版を使います"
+
+msgid "'%s' is not a valid choice"
+msgstr "'%s' は有効な選択ではありません"
+
+msgid "malformed version string"
+msgstr "正しい書式のバージョン文字列ではありません"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) は正の長さを持たねばなりません"
@@ -137,6 +200,12 @@ msgstr "'breaks' が一意的ではありません"
 
 msgid "labels/breaks length conflict"
 msgstr "ラベルまたは分割点の長さが矛盾しています"
+
+msgid "non-numeric data type in frame"
+msgstr "フレーム中に数値でないデータタイプがあります"
+
+msgid "class information lost from one or more columns"
+msgstr "クラス情報が一つ以上の列から失われました"
 
 msgid "invalid 'row.names' length"
 msgstr "無効な 'row.names'長です"
@@ -272,12 +341,6 @@ msgstr "長さ %d のリストは意味がありません"
 msgid "only defined on a data frame with all numeric or complex variables"
 msgstr "すべて数値または複素数値の変数のデータフレームに対してだけ定義されます"
 
-msgid "non-numeric data type in frame"
-msgstr "フレーム中に数値でないデータタイプがあります"
-
-msgid "class information lost from one or more columns"
-msgstr "クラス情報が一つ以上の列から失われました"
-
 msgid "character string is not in a standard unambiguous format"
 msgstr "文字列は標準的な曖昧さのない書式にはなっていません"
 
@@ -411,27 +474,6 @@ msgstr "'to' は POSIXt のオブジェクトでなければなりません"
 msgid "'file' must be a character string or connection"
 msgstr "'file' は文字列かコネクションでなければなりません"
 
-msgid "'%s' is defunct."
-msgstr "'%s' は廃止されました。"
-
-msgid "Use '%s' instead."
-msgstr "'%s' を代わりに使って下さい"
-
-msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr "help(\"Defunct\") と help(\"%s-defunct\") を見て下さい"
-
-msgid "See help(\"Defunct\")"
-msgstr "help(\"Defunct\") を見て下さい"
-
-msgid "'%s' is deprecated."
-msgstr "'%s' は廃止予定です"
-
-msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
-msgstr "help(\"Deprecated\") と help(\"%s-deprecated\") を見て下さい"
-
-msgid "See help(\"Deprecated\")"
-msgstr "help(\"Deprecated\") を見て下さい"
-
 msgid "'x' must be a square matrix"
 msgstr "'x' 正方行列でなければなりません"
 
@@ -486,9 +528,6 @@ msgstr "'eigen' に非正方行列が与えられました"
 
 msgid "numeric or complex values required in 'eigen'"
 msgstr "'eigen' には数値か複素数値が必要です"
-
-msgid "infinite or missing values in 'x'"
-msgstr "'x' のに無限値か欠測値があります"
 
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'eigen' で 'ch' がコード %d を返しました"
@@ -601,18 +640,6 @@ msgstr "'max.distance' 成分は非負でなければなりません"
 
 msgid "matrix should be square"
 msgstr "正方行列であるべきです"
-
-msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "'La.svd' への引数は数値か複素数でなければなりません"
-
-msgid "0 extent dimensions"
-msgstr "範囲が 0 の次元です"
-
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "'nu' は 0 , nrow(x) または ncol(x) でなければなりません"
-
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "'nv' は 0 , nrow(x) または ncol(x) でなければなりません"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "これは R %s です。パッケージ '%s' は %s %s を必要とします"
@@ -792,12 +819,6 @@ msgstr "無効な 'category' 引数です"
 msgid "must specify formal argument names to vectorize"
 msgstr "ベクトル化するためには仮引数名を指定しなければなりません"
 
-msgid "'%s' is not a function, character or symbol"
-msgstr "'%s' は関数、文字、またはシンボルではありません"
-
-msgid "found non-function '%s'"
-msgstr "関数でない '%s' が見付かりました"
-
 msgid "'arg' should be one of"
 msgstr "'arg' は以下の一つでなければなりません："
 
@@ -812,6 +833,12 @@ msgstr "'input' は長さ 1 でなければなりません"
 
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input' そして 'target' は文字ベクトルでなければなりません"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "'%s' は関数、文字、またはシンボルではありません"
+
+msgid "found non-function '%s'"
+msgstr "関数でない '%s' が見付かりました"
 
 msgid "attempt to set rownames on object with no dimensions"
 msgstr "次元無しのオブジェクトに行名を設定しようとしました"
@@ -994,15 +1021,6 @@ msgid "found an S4 version of '%s' so it has not been imported correctly"
 msgstr ""
 "'%s' の S4 版が見付かりました。したがってそれは正しくインポートされていません"
 
-msgid "'all' can not be used with other deparse options"
-msgstr "'all' は他の deparse オプションと一緒には使えません"
-
-msgid "second argument must be a list"
-msgstr "第二引数はリストでなければなりません"
-
-msgid "'iconvlist' is not available on this system"
-msgstr "'iconvlist' はこのシステムで利用可能ではありません"
-
 msgid "'%s' is not implemented yet"
 msgstr "'%s' はまだ実装されていません"
 
@@ -1098,24 +1116,6 @@ msgstr "'x' はベクトルでなければなりません"
 
 msgid "invalid 'rle' structure"
 msgstr "無効な 'rle' 構造です"
-
-msgid "'kind' must be a character string of length 1 (RNG to be used)."
-msgstr "'kind' は長さ 1 の文字列(使用されるべき RNG 名) でなければなりません"
-
-msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr "'%s' は RNG の有効な省略名ではありません"
-
-msgid "'normal.kind' must be a character string of length 1."
-msgstr "'normal.kind' は長さ 1 の文字列でなければなりません"
-
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "Kinderman-Ramage の疑似乱数発生法のバギー版を使います"
-
-msgid "'%s' is not a valid choice"
-msgstr "'%s' は有効な選択ではありません"
-
-msgid "malformed version string"
-msgstr "正しい書式のバージョン文字列ではありません"
 
 msgid "incorrect length for 'group'"
 msgstr "'group' に対する不正確な長さです"
@@ -1345,6 +1345,11 @@ msgstr "パッケージ '%s' は関数でない '.First.lib' を持ちます"
 msgid "cannot find name space environment"
 msgstr "名前空間環境を見つけられません"
 
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "deparse オプション %s は認識できません"
+msgstr[1] "deparse オプション(複数) %s は認識できません"
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "ライブラリ %s はパッケージを含んでいません"
@@ -1376,11 +1381,6 @@ msgstr[0] ""
 "S3 メソッド %s は NAMESPACE で宣言されましたが、見つかりませんでした"
 msgstr[1] ""
 "S3 メソッド(複数) %s は NAMESPACE で宣言されましたが、見つかりませんでした"
-
-msgid "deparse option %s is not recognized"
-msgid_plural "deparse options %s are not recognized"
-msgstr[0] "deparse オプション %s は認識できません"
-msgstr[1] "deparse オプション(複数) %s は認識できません"
 
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"

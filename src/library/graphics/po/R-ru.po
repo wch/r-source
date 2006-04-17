@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-16 12:46\n"
-"PO-Revision-Date: 2005-12-16 17:21+0300\n"
+"POT-Creation-Date: 2005-11-06 09:27\n"
+"PO-Revision-Date: 2006-04-15 23:36-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -19,8 +19,7 @@ msgstr ""
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' должна быть a двумерной таблицей сопряженности"
@@ -53,12 +52,10 @@ msgid "'height' must be a vector or a matrix"
 msgstr "'height' должен быть вектором или матрицей"
 
 msgid "Cannot use shading lines in bars when log scale is used"
-msgstr ""
-"Не могу затенять линии в столбиках, если используется логарифмическая шкала"
+msgstr "Не могу затенять линии в столбиках, если используется логарифмическая шкала"
 
 msgid "log scale error: at least one 'height + offset' value <= 0"
-msgstr ""
-"Ошибка логарифмической шкалы: at least one 'height + offset' значение <= 0"
+msgstr "Ошибка логарифмической шкалы: at least one 'height + offset' значение <= 0"
 
 msgid "log scale error: 'xlim' <= 0"
 msgstr "Ошибка логарифмической шкалы: 'xlim' <= 0"
@@ -76,7 +73,7 @@ msgid "'formula' missing or incorrect"
 msgstr "'formula' пропущена или неправильная"
 
 msgid "argument 'col' is deprecated in favour of 'boxfill'"
-msgstr ""
+msgstr "аргумент 'col' не одобряется, пользуйтесь 'boxfill'"
 
 msgid "'at' must have same length as 'z$n', i.e."
 msgstr "'at' должен иметь ту же длину, что и 'z$n', т.е."
@@ -94,8 +91,7 @@ msgid "explanatory variable should be numeric"
 msgstr "независимая переменная должна быть числовой"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
-msgstr ""
-"ось y -- в шкале суммарной вероятности, 'ylim' должен быть в пределах [0,1]"
+msgstr "ось y -- в шкале суммарной вероятности, 'ylim' должен быть в пределах [0,1]"
 
 msgid "no 'z' matrix specified"
 msgstr "не указана матрица 'z'"
@@ -185,8 +181,7 @@ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 msgstr "негативные 'counts'. Внутренняя ошибка C-кода для \"bincount\""
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr ""
-"некоторые 'x' не подсчитаны; возможно, 'breaks' не занимают всего размаха 'x'"
+msgstr "некоторые 'x' не подсчитаны; возможно, 'breaks' не занимают всего размаха 'x'"
 
 msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
 msgstr "Неправильные AREAS на графике -- используйте лучше freq=FALSE"
@@ -198,7 +193,7 @@ msgid "argument must be matrix-like"
 msgstr "аргумент должен быть матрицеподобен"
 
 msgid "'x' and 'y' values must be finite and non-missing"
-msgstr ""
+msgstr "значения 'x' и 'y' должны быть конечными и не пропущенными"
 
 msgid "'z' must be a matrix"
 msgstr "'z' должен быть матрицей"
@@ -216,9 +211,7 @@ msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
 msgstr "размерность z не является произведением length(x)(+1) на length(y)(+1)"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
-msgstr ""
-"'respect' должен быть логическим или матрицей с той же размерностью, что и "
-"'mat'"
+msgstr "'respect' должен быть логическим или матрицей с той же размерностью, что и 'mat'"
 
 msgid ""
 "layout matrix must contain at least one reference\n"
@@ -252,8 +245,7 @@ msgid "'x' and 'y' must have same number of rows"
 msgstr "'x' и 'y' должны иметь одинаковое количество строк"
 
 msgid "'x' and 'y' must have only 1 or the same number of columns"
-msgstr ""
-"'x' и 'y' должны иметь только 1 колонку или одинаковое количество колонок"
+msgstr "'x' и 'y' должны иметь только 1 колонку или одинаковое количество колонок"
 
 msgid "missing values in contingency table"
 msgstr "пропущенные значения в таблице сопряженности"
@@ -282,6 +274,18 @@ msgstr "функция 'panel' создала новый график"
 msgid "'x' values must be positive."
 msgstr "значения 'x' должны быть положительными."
 
+msgid "invalid table 'x'"
+msgstr "таблица 'x' неправильная"
+
+msgid "cannot handle more than one 'x' coordinate"
+msgstr "не могу взять больше чем одну координату 'x'"
+
+msgid "must have a response variable"
+msgstr "нужна зависимая переменная"
+
+msgid "'plot.data.frame' applied to non data frame"
+msgstr "'plot.data.frame' применена не к таблице данных"
+
 msgid "'y' must be a numeric vector"
 msgstr "'y' должен быть числовым вектором"
 
@@ -302,18 +306,6 @@ msgstr "переменная в 'y' не является числовой"
 
 msgid "there must be at least one numeric variable!"
 msgstr "тут должна быть по крайней мере одна числовая переменная!"
-
-msgid "invalid table 'x'"
-msgstr "таблица 'x' неправильная"
-
-msgid "cannot handle more than one 'x' coordinate"
-msgstr "не могу взять больше чем одну координату 'x'"
-
-msgid "must have a response variable"
-msgstr "нужна зависимая переменная"
-
-msgid "'plot.data.frame' applied to non data frame"
-msgstr "'plot.data.frame' применена не к таблице данных"
 
 msgid "cannot hatch with logarithmic scale active"
 msgstr "не могу зачерчивать, когда активна логарифмическая шкала"
@@ -337,8 +329,7 @@ msgid "a 2-way table has to be specified"
 msgstr "надо указать двумерную таблицу"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
-msgstr ""
-"ось х -- в шкале суммарной вероятности, 'xlim' должен быть в пределах [0,1]"
+msgstr "ось х -- в шкале суммарной вероятности, 'xlim' должен быть в пределах [0,1]"
 
 msgid "'x' must be a matrix or a data frame"
 msgstr "'x' должен быть матрицей или таблицей данных"
@@ -393,3 +384,4 @@ msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] "Выброс (%s) в ящике-с-усами %d не изображен"
 msgstr[1] "Выбросы (%s) в ящике-с-усами %d не изображены"
 msgstr[2] "Выбросы (%s) в ящике-с-усами %d не изображены"
+
