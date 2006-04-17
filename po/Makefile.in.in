@@ -482,10 +482,11 @@ update-RGui: Makefile remove-potcdate.sed
 	@trs=`cd $(srcdir) && ls RGui-*.po 2> /dev/null`; \
 	if test -n "$${trs}"; then \
 	  for tr in $${trs}; do \
-	    lang=`echo $${tr} | sed -e 's/^RGui-//' -e 's/.po$$//'`; \
+	    lang=`echo $${tr} | sed -e 's/^RGui-//' -e 's/\.po$$//'`; \
+	    out=`echo $${tr} | sed -e 's/\.po$$/.gmo/'`; \
 	    echo $(ECHO_N) "  $$lang:$(ECHO_C)"; \
 	    (cd $(srcdir) && $(MSGMERGE_UPDATE) $${tr} RGui.pot); \
-	    (cd $(srcdir) && $(MSGFMT) -c --statistics -o $${tr}.gmo $${tr}) ; \
+	    (cd $(srcdir) && $(MSGFMT) -c --statistics -o $${out} $${tr}) ; \
 	  done; \
 	fi
 
