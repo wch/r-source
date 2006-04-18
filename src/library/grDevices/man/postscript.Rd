@@ -143,7 +143,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
     PostScript}) compatible, and can be included into other documents,
   e.g., into LaTeX, using \code{\includegraphics{<filename>}}.  For use
   in this way you will probably want to set \code{horizontal = FALSE,
-    onefile = FALSE, paper = "special"}.
+    onefile = FALSE, paper = "special"}.  Note that the bounding box is
+  for the device region: if you find the white space around the plot
+  region excessive, reduce the margins of the figure region via
+  \code{\link{par}(mar=)}.
 
   Most of the PostScript prologue used is taken from the \R character
   vector \code{.ps.prolog}.  This is marked in the output, and can be
