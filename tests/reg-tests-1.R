@@ -1380,7 +1380,7 @@ stopifnot(inherits(z, "try-error"))
 ## 1.4.1 gave +-Inf + random imaginary part
 
 
-## PR#1238  min/max(NULL) or (integer(0))
+## PR#1283  min/max(NULL) or (integer(0))
 z <- min(NULL)
 stopifnot(!is.na(z), mode(z) == "numeric", z == Inf)
 z <- min(integer(0))
@@ -4157,3 +4157,13 @@ apply(a,1,sum)
 ## NULL results in apply()
 apply(as.matrix(1), 1, function(x) NULL)
 ## was error in 2.2.1.
+
+
+## sum on data frames (PR#8385)
+DF <- data.frame(m1=1:2, m2=3:4)
+sum(DF)
+sum(DF=DF)  # needed arg named x
+sum(DF, DF) # failed
+DF[1, 1] <- NA
+stopifnot(is.na(sum(DF)), sum(DF, na.rm=TRUE) == 9)
+## failures < 2.4.0

@@ -1,20 +1,16 @@
 \name{prod}
 \title{Product of Vector Elements}
-\usage{
-prod(\dots, na.rm = FALSE)
-}
-\alias{prod}
 \description{
   \code{prod} returns the product of all the values
   present in its arguments.
 }
-\arguments{
-  \item{\dots}{numeric vectors.}
-  \item{na.rm}{logical. Should missing values be removed?}
+\usage{
+prod(\dots, na.rm = FALSE)
 }
-\value{
-  The product.
-  \strong{NB:} the product of an empty set is one, by definition.
+\alias{prod}
+\arguments{
+  \item{\dots}{numeric or complex or logical vectors.}
+  \item{na.rm}{logical.  Should missing values be removed?}
 }
 \details{
   If \code{na.rm} is \code{FALSE} an \code{NA}
@@ -24,6 +20,15 @@ prod(\dots, na.rm = FALSE)
 
   This is a generic function: methods can be defined for it
   directly or via the \code{\link{Summary}} group generic.
+  For this to work properly, the arguments \code{\dots} should be unnamed.
+
+  Logical true values are regarded as one, false values as zero.
+  For historical reasons, \code{NULL} is accepted and treated as if it
+  were \code{numeric(0)}.
+}
+\value{
+  The product, a numeric or complex vector or length one.
+  \strong{NB:} the product of an empty set is one, by definition.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

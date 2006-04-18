@@ -261,8 +261,12 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 
 
 /* do_summary provides a variety of data summaries
-	op : 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod */
-/* NOTE: mean() is rather different as only one arg and no na.rm. */
+	op : 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod
+ */
+/* NOTE: mean() is rather different as only one arg and no na.rm, and
+ * dispatch is from an R-level generic, this being a special case of
+ * mean.default.
+ */
 
 SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -340,11 +344,13 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     switch(iop) {
     case 0:/* sum */
     /* we need to find out if _all_ the arguments are integer or logical
-       in advance, as we might overflow before we find out */
+       in advance, as we might overflow before we find out.  NULL is
+       documented to be the same as integer(0).
+    */
 	a = args;
 	int_a = 1;
 	while (a != R_NilValue) {
-	    if(!isInteger(CAR(a)) &&  !isLogical(CAR(a))) {
+	    if(!isInteger(CAR(a)) &&  !isLogical(CAR(a)) && !isNull(CAR(a))) {
 		int_a = 0;
 		break;
 	    }
@@ -524,7 +530,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	    case LGLSXP:
 	    case INTSXP:
 	    case REALSXP:
-	    case NILSXP:  /* OK historically, e.g. PR#1238 */
+	    case NILSXP:  /* OK historically, e.g. PR#1283 */
 		break;
 	    case CPLXSXP:
 		if (iop == 2 || iop == 3) goto invalid_type;

@@ -21,6 +21,7 @@ range(\dots, na.rm = FALSE)
 \details{
   \code{range} is a generic function: methods can be defined for it
   directly or via the \code{\link{Summary}} group generic.
+  For this to work properly, the arguments \code{\dots} should be unnamed.
 
   If \code{na.rm} is \code{FALSE}, \code{NA}
   and \code{NaN} values in any of the arguments will cause \code{NA} values

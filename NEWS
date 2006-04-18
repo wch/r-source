@@ -100,6 +100,12 @@ BUG FIXES
     o	min(), max(), sum() and prod() gave nonsensical answers with
 	an empty list or raw argument.
 
+    o	sum() on a data frame did not allow multiple arguments.  (PR#8385)
+
+    o	The Summary() methods for data.frame, Date, POSIXct, POSIXlt
+	and difftime all required an argument which can match 'x',
+	although the generics did not.
+
 
 
 
