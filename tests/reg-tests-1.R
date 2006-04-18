@@ -1380,7 +1380,7 @@ stopifnot(inherits(z, "try-error"))
 ## 1.4.1 gave +-Inf + random imaginary part
 
 
-## PR#1238  min/max(NULL) or (integer(0))
+## PR#1283  min/max(NULL) or (integer(0))
 z <- min(NULL)
 stopifnot(!is.na(z), mode(z) == "numeric", z == Inf)
 z <- min(integer(0))
