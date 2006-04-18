@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:21\n"
+"POT-Creation-Date: 2006-04-18 08:46\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -15,6 +15,72 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "'%s' is defunct."
+msgstr "'%s' è disattivata"
+
+msgid "Use '%s' instead."
+msgstr "Usare '%s' al suo posto."
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "Si veda help(\"Defunct\") e help(\"%s-defunct\")."
+
+msgid "See help(\"Defunct\")"
+msgstr "Si veda help(\"Defunct\")"
+
+msgid "'%s' is deprecated."
+msgstr "'%s' è deprecata"
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "Si veda help(\"Deprecated\") e help(\"%s-deprecated\")."
+
+msgid "See help(\"Deprecated\")"
+msgstr "Si veda help(\"Deprecated\")"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "l'argomento di 'La.svd' deve essere numeric o complex"
+
+msgid "infinite or missing values in 'x'"
+msgstr "valori infiniti o mancanti in 'x'"
+
+msgid "0 extent dimensions"
+msgstr "dimensioni nulle"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "'nu' deve essere 0, nrow(x) o ncol(x)"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "'nv' deve essere 0, nrow(x) o ncol(x)"
+
+msgid "'all' can not be used with other deparse options"
+msgstr "'all' non può essere utilizzato assieme ad altre opzioni 'deparse'"
+
+msgid "second argument must be a list"
+msgstr "il secondo argomento deve essere di tipo list"
+
+msgid "'iconvlist' is not available on this system"
+msgstr ""
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr ""
+"'kind' deve essere una stringa di caratteri di lunghezza 1 (si deve usare "
+"RNG)"
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "'%s' non è una abbreviazione valida di un RNG"
+
+msgid "'normal.kind' must be a character string of length 1."
+msgstr "'normal.kind' deve essere una stringa di caratteri di lunghezza 1"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr ""
+"Stai usando una versione non funzionante del generatore di Kinderman-Ramage."
+
+msgid "'%s' is not a valid choice"
+msgstr "'%s' non è una scelta valida"
+
+msgid "malformed version string"
+msgstr "versione stringa mal composta"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) deve avere lunghezza positiva"
@@ -47,13 +113,11 @@ msgid "(still attached)"
 msgstr "(ancora attaccato)"
 
 #, fuzzy
-msgid "replaced regular expression pattern '[' by  '\\\\\\\\"
+msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "nell'espressione regolare il pattern '[' è sostituito con '\\\\['"
 
-msgid ""
-"replaced '[<-' by '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"
-"\\\\\\\\\\\\\\"
-msgstr ""
+msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+msgstr "sostituito '[<-' da '\\\\[<-' nell pattern dell'espressione regolare"
 
 msgid "RHS must be list"
 msgstr "il membro di destra (RHS) deve essere di tipo list"
@@ -144,6 +208,12 @@ msgstr "i 'breaks' non sono distinti"
 
 msgid "labels/breaks length conflict"
 msgstr "lunghezze di labels e breaks differenti"
+
+msgid "non-numeric data type in frame"
+msgstr "dati in frame non di tipo numeric"
+
+msgid "class information lost from one or more columns"
+msgstr "informazioni sulla classe perse per una o più colonne"
 
 msgid "invalid 'row.names' length"
 msgstr "lunghezza di 'row.names' non ammissibile"
@@ -285,12 +355,6 @@ msgstr "lista di lunghezza %d non significativa"
 msgid "only defined on a data frame with all numeric or complex variables"
 msgstr "è definita solo per data frame con variabili tutte numeric o complex"
 
-msgid "non-numeric data type in frame"
-msgstr "dati in frame non di tipo numeric"
-
-msgid "class information lost from one or more columns"
-msgstr "informazioni sulla classe perse per una o più colonne"
-
 msgid "character string is not in a standard unambiguous format"
 msgstr "la stringa di caratteri non è in formato ambiguo e non standard"
 
@@ -423,27 +487,6 @@ msgstr "'to' deve essere un oggetto POSIXt"
 msgid "'file' must be a character string or connection"
 msgstr "'file' deve essere una string di caratteri o una connessione"
 
-msgid "'%s' is defunct."
-msgstr "'%s' è disattivata"
-
-msgid "Use '%s' instead."
-msgstr "Usare '%s' al suo posto."
-
-msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr "Si veda help(\"Defunct\") e help(\"%s-defunct\")."
-
-msgid "See help(\"Defunct\")"
-msgstr "Si veda help(\"Defunct\")"
-
-msgid "'%s' is deprecated."
-msgstr "'%s' è deprecata"
-
-msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
-msgstr "Si veda help(\"Deprecated\") e help(\"%s-deprecated\")."
-
-msgid "See help(\"Deprecated\")"
-msgstr "Si veda help(\"Deprecated\")"
-
 msgid "'x' must be a square matrix"
 msgstr "'x' deve essere una matrice quadrata"
 
@@ -499,9 +542,6 @@ msgstr "matrice non quadrata in 'eigen'"
 
 msgid "numeric or complex values required in 'eigen'"
 msgstr "valori numeric o complex necessari in 'eigen'"
-
-msgid "infinite or missing values in 'x'"
-msgstr "valori infiniti o mancanti in 'x'"
 
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'ch' ha restituito codice %d in 'eigen'"
@@ -613,18 +653,6 @@ msgstr "le componenti di 'max.distance' devono essere non negative"
 
 msgid "matrix should be square"
 msgstr "la matrice deve essere quadrata"
-
-msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "l'argomento di 'La.svd' deve essere numeric o complex"
-
-msgid "0 extent dimensions"
-msgstr "dimensioni nulle"
-
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "'nu' deve essere 0, nrow(x) o ncol(x)"
-
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "'nv' deve essere 0, nrow(x) o ncol(x)"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "Questo è R %s, il pacchetto '%s' necessita di %s %s"
@@ -801,12 +829,6 @@ msgstr "argomento 'category' non valido"
 msgid "must specify formal argument names to vectorize"
 msgstr ""
 
-msgid "'%s' is not a function, character or symbol"
-msgstr "'%s' non è un oggetto function, character o symbol:"
-
-msgid "found non-function '%s'"
-msgstr "trovata una non-function '%s'"
-
 msgid "'arg' should be one of"
 msgstr "'arg' deve essere uno tra"
 
@@ -821,6 +843,12 @@ msgstr "'input' deve avere lunghezza 1"
 
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input' e 'target' devono essere vettori di caratteri"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "'%s' non è un oggetto function, character o symbol:"
+
+msgid "found non-function '%s'"
+msgstr "trovata una non-function '%s'"
 
 msgid "attempt to set rownames on object with no dimensions"
 msgstr "tentativo di impostare rownames per un oggetto senza dimensioni"
@@ -1000,15 +1028,6 @@ msgid "found an S4 version of '%s' so it has not been imported correctly"
 msgstr ""
 "trovata una versione S4 di '%s' quindi non è stato importato correttamente"
 
-msgid "'all' can not be used with other deparse options"
-msgstr "'all' non può essere utilizzato assieme ad altre opzioni 'deparse'"
-
-msgid "second argument must be a list"
-msgstr "il secondo argomento deve essere di tipo list"
-
-msgid "'iconvlist' is not available on this system"
-msgstr ""
-
 msgid "'%s' is not implemented yet"
 msgstr "'%s' non ancora implementato"
 
@@ -1106,27 +1125,6 @@ msgstr "'x' deve essere un vettore"
 
 msgid "invalid 'rle' structure"
 msgstr "'struttura 'rle' non valida"
-
-msgid "'kind' must be a character string of length 1 (RNG to be used)."
-msgstr ""
-"'kind' deve essere una stringa di caratteri di lunghezza 1 (si deve usare "
-"RNG)"
-
-msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr "'%s' non è una abbreviazione valida di un RNG"
-
-msgid "'normal.kind' must be a character string of length 1."
-msgstr "'normal.kind' deve essere una stringa di caratteri di lunghezza 1"
-
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr ""
-"Stai usando una versione non funzionante del generatore di Kinderman-Ramage."
-
-msgid "'%s' is not a valid choice"
-msgstr "'%s' non è una scelta valida"
-
-msgid "malformed version string"
-msgstr "versione stringa mal composta"
 
 msgid "incorrect length for 'group'"
 msgstr "lunghezza per 'group' non corretta"
@@ -1356,6 +1354,11 @@ msgstr ""
 msgid "cannot find name space environment"
 msgstr ""
 
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "opzione di deparse %s non riconosciuta"
+msgstr[1] "opzioni di deparse %s non riconosciute"
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "la libreria %s non contiene pacchetti"
@@ -1387,16 +1390,7 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "metodo S3 %s dichiarato in NAMESPACE ma non trovato"
 msgstr[1] "metodi S3 %s dichiarati in NAMESPACE ma non trovati"
 
-msgid "deparse option %s is not recognized"
-msgid_plural "deparse options %s are not recognized"
-msgstr[0] "opzione di deparse %s non riconosciuta"
-msgstr[1] "opzioni di deparse %s non riconosciute"
-
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
-
-#~ msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
-#~ msgstr ""
-#~ "sostituito '[<-' da '\\\\[<-' nell pattern dell'espressione regolare"

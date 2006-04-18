@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:21\n"
+"POT-Creation-Date: 2006-04-18 08:46\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -10,6 +10,69 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'%s' is defunct."
+msgstr "'%s'는 없어져 버렸습니다"
+
+msgid "Use '%s' instead."
+msgstr "'%s'를 대신에 사용해주십시오"
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "lp(\"Defunct\")와 help(\"%s-defunct\")를 보아 주십시오"
+
+msgid "See help(\"Defunct\")"
+msgstr "help(\\\"Defunct\\\")를 보아 주십시오"
+
+msgid "'%s' is deprecated."
+msgstr "'%s'는 없어져 버릴 예정입니다"
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "help(\\\"Deprecated\\\")와 help(\\\"%s-deprecate\\\")를 보아 주십시오"
+
+msgid "See help(\"Deprecated\")"
+msgstr "help(\\\"Deprecated\\\")를 보아 주십시오"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "'La.svd'의 인수는 수치나 복소수가 아니면 안됩니다"
+
+msgid "infinite or missing values in 'x'"
+msgstr "'x'의 무한값 또는 결과값이 있습니다"
+
+msgid "0 extent dimensions"
+msgstr "범위가 0의 차원입니다"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "'nu'는 0, nrow(x) 또는 ncol(x)가 아니면 안됩니다"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "'nv'는 0, nrow(x) 또는 nod(x)가 아니면 안됩니다"
+
+msgid "'all' can not be used with other deparse options"
+msgstr "deparse 옵션에서 모든것을 사용할수가 없습니다"
+
+msgid "second argument must be a list"
+msgstr "제 2 인수는 리스트가 아니면 안됩니다"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "'iconvlist'는 이 시스템으로 이용 가능하지는 않습니다"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr "'kind'는 길이 1의 문자열(사용되어야할 RNG명)가 아니면 안됩니다"
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "'%s' RNG의 유효한 생략명이 아닙니다"
+
+msgid "'normal.kind' must be a character string of length 1."
+msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Kinderman-Ramage의 유사 Buggy 버전의 생성원(generator)을 사용합니다"
+
+msgid "'%s' is not a valid choice"
+msgstr "'%s'는 유효한 선택이 아닙니다"
+
+msgid "malformed version string"
+msgstr "'%s'는 유효한 선택이 아닙니다"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(x)은 positive 길이를 가지지 않으면 되지 않습니다"
@@ -42,13 +105,11 @@ msgid "(still attached)"
 msgstr "(아직 attached되어 있습니다)"
 
 #, fuzzy
-msgid "replaced regular expression pattern '[' by  '\\\\\\\\"
+msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "정규 표현 패턴'['를 '\\\\['로 옮겨놓았습니다"
 
-msgid ""
-"replaced '[<-' by '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"
-"\\\\\\\\\\\\\\"
-msgstr ""
+msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+msgstr "정규 표현 패턴 '[<-'를 ' \\\\[<-'로 옮겨놓았습니다"
 
 msgid "RHS must be list"
 msgstr "우변은 리스트가 아니면 안됩니다"
@@ -141,6 +202,12 @@ msgstr "'breaks'가 일의적이지는 않습니다"
 
 msgid "labels/breaks length conflict"
 msgstr "labels/breaks의 길이가 모순되어져 있습니다"
+
+msgid "non-numeric data type in frame"
+msgstr "프레임중에 수치가 아닌 데이터 유형이 있습니다"
+
+msgid "class information lost from one or more columns"
+msgstr "class 정보가 하나 이상의 열로부터 잃게 되었습니다"
 
 msgid "invalid 'row.names' length"
 msgstr "무효인 'row.names' 길이입니다"
@@ -275,12 +342,6 @@ msgstr "길이 %d 의 리스트는 의미가 없습니다"
 msgid "only defined on a data frame with all numeric or complex variables"
 msgstr "모든 수치 또는 복소수값의 변수는 데이터 프레임에 대해서만 정의 됩니다"
 
-msgid "non-numeric data type in frame"
-msgstr "프레임중에 수치가 아닌 데이터 유형이 있습니다"
-
-msgid "class information lost from one or more columns"
-msgstr "class 정보가 하나 이상의 열로부터 잃게 되었습니다"
-
 msgid "character string is not in a standard unambiguous format"
 msgstr "문자열은 표준적인 애매함이 없는 서식으로 되고있지 않습니다"
 
@@ -413,27 +474,6 @@ msgstr "'to'는  POSIXt 오브젝트가 아니면 되지 않습니다"
 msgid "'file' must be a character string or connection"
 msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
 
-msgid "'%s' is defunct."
-msgstr "'%s'는 없어져 버렸습니다"
-
-msgid "Use '%s' instead."
-msgstr "'%s'를 대신에 사용해주십시오"
-
-msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr "lp(\"Defunct\")와 help(\"%s-defunct\")를 보아 주십시오"
-
-msgid "See help(\"Defunct\")"
-msgstr "help(\\\"Defunct\\\")를 보아 주십시오"
-
-msgid "'%s' is deprecated."
-msgstr "'%s'는 없어져 버릴 예정입니다"
-
-msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
-msgstr "help(\\\"Deprecated\\\")와 help(\\\"%s-deprecate\\\")를 보아 주십시오"
-
-msgid "See help(\"Deprecated\")"
-msgstr "help(\\\"Deprecated\\\")를 보아 주십시오"
-
 msgid "'x' must be a square matrix"
 msgstr "'x' 정방 행렬이 아니면 되지 않습니다"
 
@@ -487,9 +527,6 @@ msgstr "'eigen'에 non-sqare 행렬이 주어졌습니다"
 
 msgid "numeric or complex values required in 'eigen'"
 msgstr "'eigen'에 수치 또는 복소수값이 필요합니다"
-
-msgid "infinite or missing values in 'x'"
-msgstr "'x'의 무한값 또는 결과값이 있습니다"
 
 msgid "'ch' returned code %d in 'eigen'"
 msgstr "'eigen'로 'ch'가 부호 %d를 돌려주었습니다"
@@ -604,18 +641,6 @@ msgstr "'max.distance'요소는 non-negative가 나오지 않으면 되지 않�
 
 msgid "matrix should be square"
 msgstr "정방 행렬이어야 합니다"
-
-msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "'La.svd'의 인수는 수치나 복소수가 아니면 안됩니다"
-
-msgid "0 extent dimensions"
-msgstr "범위가 0의 차원입니다"
-
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "'nu'는 0, nrow(x) 또는 ncol(x)가 아니면 안됩니다"
-
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "'nv'는 0, nrow(x) 또는 nod(x)가 아니면 안됩니다"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "이것은 R %s입니다.패키지 '%s'는 %s %s를 필요로 합니다"
@@ -794,12 +819,6 @@ msgstr "무효인 'category' 인수입니다"
 msgid "must specify formal argument names to vectorize"
 msgstr ""
 
-msgid "'%s' is not a function, character or symbol"
-msgstr "'%s'는 함수, 문자, 또는 심벌이 아닙니다"
-
-msgid "found non-function '%s'"
-msgstr "함수가 아닌 '%s'가 검색되었습니다"
-
 msgid "'arg' should be one of"
 msgstr "'arg'는 이하의 하나가 아니면 되지 않습니다"
 
@@ -814,6 +833,12 @@ msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
 
 msgid "'input' and 'target' must be character vectors"
 msgstr "'input' 그리고 'target'는 문자 벡터가 아니면 되지 않습니다"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "'%s'는 함수, 문자, 또는 심벌이 아닙니다"
+
+msgid "found non-function '%s'"
+msgstr "함수가 아닌 '%s'가 검색되었습니다"
 
 msgid "attempt to set rownames on object with no dimensions"
 msgstr "차원 없음에 오브젝트의 행명을 설정 하려고 했습니다"
@@ -995,15 +1020,6 @@ msgstr ""
 "'%s'의 S4 버전이 검색되었습니다.그래서 그것이 올바르고 import되어 있지 않습니"
 "다"
 
-msgid "'all' can not be used with other deparse options"
-msgstr "deparse 옵션에서 모든것을 사용할수가 없습니다"
-
-msgid "second argument must be a list"
-msgstr "제 2 인수는 리스트가 아니면 안됩니다"
-
-msgid "'iconvlist' is not available on this system"
-msgstr "'iconvlist'는 이 시스템으로 이용 가능하지는 않습니다"
-
 msgid "'%s' is not implemented yet"
 msgstr "'%s'는 아직 실제로 적용되지 않습니다"
 
@@ -1099,24 +1115,6 @@ msgstr "'x'는 벡터가 아니면 되지 않습니다"
 
 msgid "invalid 'rle' structure"
 msgstr "무효인 'rle' 구조입니다"
-
-msgid "'kind' must be a character string of length 1 (RNG to be used)."
-msgstr "'kind'는 길이 1의 문자열(사용되어야할 RNG명)가 아니면 안됩니다"
-
-msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr "'%s' RNG의 유효한 생략명이 아닙니다"
-
-msgid "'normal.kind' must be a character string of length 1."
-msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
-
-msgid "Buggy version of Kinderman-Ramage generator used."
-msgstr "Kinderman-Ramage의 유사 Buggy 버전의 생성원(generator)을 사용합니다"
-
-msgid "'%s' is not a valid choice"
-msgstr "'%s'는 유효한 선택이 아닙니다"
-
-msgid "malformed version string"
-msgstr "'%s'는 유효한 선택이 아닙니다"
 
 msgid "incorrect length for 'group'"
 msgstr "'group'에 대한 정확하지 않는 길이입니다"
@@ -1350,6 +1348,12 @@ msgstr "패케지'%s'는 '%s'에 병합되었습니다"
 msgid "cannot find name space environment"
 msgstr "이름 공간이 아닙니다"
 
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] ""
+"deparse 옵션%s는 인식 할수 없습니다 \n"
+"deparse 옵션(복수)%s는 인식 할수 없습니다"
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] ""
@@ -1385,17 +1389,8 @@ msgstr[0] ""
 "S3 메소드 %s는 NAMESPACE로 정의되었습니다만, 검색되지 않았습니다\n"
 "S3 메소드(복수) %s는 NAMESPACE로 정의되었습니만, 검색되지 않았습니다"
 
-msgid "deparse option %s is not recognized"
-msgid_plural "deparse options %s are not recognized"
-msgstr[0] ""
-"deparse 옵션%s는 인식 할수 없습니다 \n"
-"deparse 옵션(복수)%s는 인식 할수 없습니다"
-
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
-
-#~ msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
-#~ msgstr "정규 표현 패턴 '[<-'를 ' \\\\[<-'로 옮겨놓았습니다"

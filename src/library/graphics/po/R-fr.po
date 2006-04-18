@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:22\n"
-"PO-Revision-Date: 2005-12-06 13:10+0100\n"
+"POT-Creation-Date: 2006-04-18 08:46\n"
+"PO-Revision-Date: 2006-04-18 08:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -192,7 +192,7 @@ msgid "argument must be matrix-like"
 msgstr "argument doit être une matrice ou assimilé"
 
 msgid "'x' and 'y' values must be finite and non-missing"
-msgstr ""
+msgstr "les valeurs de 'x' et 'y' doivent être finies et non manquantes"
 
 msgid "'z' must be a matrix"
 msgstr "'z' doit être une matrice"
@@ -277,6 +277,18 @@ msgstr "la fonction 'panel' a créé un nouveau graphe"
 msgid "'x' values must be positive."
 msgstr "les valeurs de 'x' doivent être positives."
 
+msgid "invalid table 'x'"
+msgstr "tableau 'x' incorrect"
+
+msgid "cannot handle more than one 'x' coordinate"
+msgstr "incapable de traiter plus d'une coordonnée 'x'"
+
+msgid "must have a response variable"
+msgstr "il doit y avoir une variable réponse"
+
+msgid "'plot.data.frame' applied to non data frame"
+msgstr "'plot.data.frame' appliqué à autre chose qu'à un tableau de données"
+
 msgid "'y' must be a numeric vector"
 msgstr "'y' doit être un vecteur numérique"
 
@@ -297,18 +309,6 @@ msgstr "une variable dans 'y' n'est pas numérique"
 
 msgid "there must be at least one numeric variable!"
 msgstr "il doit y avoir au moins une variable numérique !"
-
-msgid "invalid table 'x'"
-msgstr "tableau 'x' incorrect"
-
-msgid "cannot handle more than one 'x' coordinate"
-msgstr "incapable de traiter plus d'une coordonnée 'x'"
-
-msgid "must have a response variable"
-msgstr "il doit y avoir une variable réponse"
-
-msgid "'plot.data.frame' applied to non data frame"
-msgstr "'plot.data.frame' appliqué à autre chose qu'à un tableau de données"
 
 msgid "cannot hatch with logarithmic scale active"
 msgstr "le hachurage n'est pas réalisable avec une échelle logarithmique"

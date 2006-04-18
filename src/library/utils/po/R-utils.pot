@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:22\n"
+"POT-Creation-Date: 2006-04-18 08:47\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,6 +10,69 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+
+msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
+msgstr ""
+
+msgid "wrong 'sortby' specified. Using sortby=\"score\""
+msgstr ""
+
+msgid "wrong restriction specified.\nUsing '%s'"
+msgstr ""
+
+msgid "A search query has been submitted to"
+msgstr ""
+
+msgid "The results page should open in your browser shortly"
+msgstr ""
+
+msgid "reference to unknown chunk '%s'"
+msgstr ""
+
+msgid "no Sweave file with name '%s' found"
+msgstr ""
+
+msgid "%d Sweave files for basename '%s' found:"
+msgstr ""
+
+msgid "Found invalid multi-byte character data."
+msgstr ""
+
+msgid "Cannot re-encode because 'iconv' is not available."
+msgstr ""
+
+msgid "Try running R in a single-byte locale."
+msgstr ""
+
+msgid "more than one syntax specification found, using the first one"
+msgstr ""
+
+msgid "object '%s' does not have class \"SweaveSyntax\""
+msgstr ""
+
+msgid "recursive Sweave input '%s' in stack"
+msgstr ""
+
+msgid "target syntax not of class \"SweaveSyntax\""
+msgstr ""
+
+msgid "target syntax contains no translation table"
+msgstr ""
+
+msgid "parse error or empty option in\n%s"
+msgstr ""
+
+msgid "path to '%s' contains spaces,"
+msgstr ""
+
+msgid "this may cause problems when running LaTeX"
+msgstr ""
+
+msgid "You can now run LaTeX on '%s'"
+msgstr ""
+
+msgid "invalid value for '%s' : %s"
+msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr ""
@@ -35,12 +98,6 @@ msgstr ""
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr ""
 
-msgid "kind '%s' not yet implemented"
-msgstr ""
-
-msgid "wrong number of table row entries"
-msgstr ""
-
 msgid "'package' must be a character string or NULL"
 msgstr ""
 
@@ -57,6 +114,33 @@ msgid "file 'filelist' is missing for directory '%s'"
 msgstr ""
 
 msgid "data set '%s' not found"
+msgstr ""
+
+msgid "kind '%s' not yet implemented"
+msgstr ""
+
+msgid "wrong number of table row entries"
+msgstr ""
+
+msgid "wrong argument to 'dataentry'"
+msgstr ""
+
+msgid "could not restore type information"
+msgstr ""
+
+msgid "modes argument ignored"
+msgstr ""
+
+msgid "'names' argument ignored"
+msgstr ""
+
+msgid "'modes' argument ignored"
+msgstr ""
+
+msgid "could not restore variables properly"
+msgstr ""
+
+msgid "did not assign() anything"
 msgstr ""
 
 msgid "Browsing in the environment with call:"
@@ -84,27 +168,6 @@ msgid "No demo found for topic '%s'"
 msgstr ""
 
 msgid "Demo for topic '%s' found more than once,\nusing the one found in '%s'"
-msgstr ""
-
-msgid "wrong argument to 'dataentry'"
-msgstr ""
-
-msgid "could not restore type information"
-msgstr ""
-
-msgid "modes argument ignored"
-msgstr ""
-
-msgid "'names' argument ignored"
-msgstr ""
-
-msgid "'modes' argument ignored"
-msgstr ""
-
-msgid "could not restore variables properly"
-msgstr ""
-
-msgid "did not assign() anything"
 msgstr ""
 
 msgid "invalid 'data' argument"
@@ -251,36 +314,6 @@ msgstr ""
 msgid "only numeric indices can be used"
 msgstr ""
 
-msgid "no packages were specified"
-msgstr ""
-
-msgid "argument 'lib' is missing: using %s"
-msgstr ""
-
-msgid "cannot install MacOS X binary packages on Windows"
-msgstr ""
-
-msgid "cannot install MacOS X binary packages on this plaform"
-msgstr ""
-
-msgid "cannot install Windows binary packages on this plaform"
-msgstr ""
-
-msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"
-msgstr ""
-
-msgid "installation of package '%s' had non-zero exit status"
-msgstr ""
-
-msgid "Unable to create temporary directory '%s'"
-msgstr ""
-
-msgid "Do not know which element of 'lib' to install dependencies into\nskipping dependencies"
-msgstr ""
-
-msgid "The downloaded packages are in\n\t%s"
-msgstr ""
-
 msgid "cannot create directory '%s'"
 msgstr ""
 
@@ -309,6 +342,9 @@ msgid "bundle '%s' has extra contents %s"
 msgstr ""
 
 msgid "'priority' must be character or NULL"
+msgstr ""
+
+msgid "argument 'lib' is missing: using %s"
 msgstr ""
 
 msgid "'destdir' is not a directory"
@@ -345,6 +381,33 @@ msgid "every package depends on at least one other"
 msgstr ""
 
 msgid "packages %s are mutually dependent"
+msgstr ""
+
+msgid "no packages were specified"
+msgstr ""
+
+msgid "cannot install MacOS X binary packages on Windows"
+msgstr ""
+
+msgid "cannot install MacOS X binary packages on this plaform"
+msgstr ""
+
+msgid "cannot install Windows binary packages on this plaform"
+msgstr ""
+
+msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+
+msgid "installation of package '%s' had non-zero exit status"
+msgstr ""
+
+msgid "Unable to create temporary directory '%s'"
+msgstr ""
+
+msgid "Do not know which element of 'lib' to install dependencies into\nskipping dependencies"
+msgstr ""
+
+msgid "The downloaded packages are in\n\t%s"
 msgstr ""
 
 msgid "no object named '%s' to show"
@@ -422,21 +485,6 @@ msgstr ""
 msgid "transfer failure"
 msgstr ""
 
-msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
-msgstr ""
-
-msgid "wrong 'sortby' specified. Using sortby=\"score\""
-msgstr ""
-
-msgid "wrong restriction specified.\nUsing '%s'"
-msgstr ""
-
-msgid "A search query has been submitted to"
-msgstr ""
-
-msgid "The results page should open in your browser shortly"
-msgstr ""
-
 msgid "invalid 'socket' argument"
 msgstr ""
 
@@ -462,54 +510,6 @@ msgid "'str.default': 'le' is NA"
 msgstr ""
 
 msgid "no events were recorded"
-msgstr ""
-
-msgid "reference to unknown chunk '%s'"
-msgstr ""
-
-msgid "no Sweave file with name '%s' found"
-msgstr ""
-
-msgid "%d Sweave files for basename '%s' found:"
-msgstr ""
-
-msgid "Found invalid multi-byte character data."
-msgstr ""
-
-msgid "Cannot re-encode because 'iconv' is not available."
-msgstr ""
-
-msgid "Try running R in a single-byte locale."
-msgstr ""
-
-msgid "more than one syntax specification found, using the first one"
-msgstr ""
-
-msgid "object '%s' does not have class \"SweaveSyntax\""
-msgstr ""
-
-msgid "recursive Sweave input '%s' in stack"
-msgstr ""
-
-msgid "target syntax not of class \"SweaveSyntax\""
-msgstr ""
-
-msgid "target syntax contains no translation table"
-msgstr ""
-
-msgid "parse error or empty option in\n%s"
-msgstr ""
-
-msgid "path to '%s' contains spaces,"
-msgstr ""
-
-msgid "this may cause problems when running LaTeX"
-msgstr ""
-
-msgid "You can now run LaTeX on '%s'"
-msgstr ""
-
-msgid "invalid value for '%s' : %s"
 msgstr ""
 
 msgid "vignette '%d' found more than once,\nusing the one found in '%s'"
@@ -626,6 +626,11 @@ msgstr ""
 msgid "cannot remove prior installation of package"
 msgstr ""
 
+msgid        "object '%s' not found"
+msgid_plural "objects '%s' not found"
+msgstr[0]    ""
+msgstr[1]    ""
+
 msgid        "dependency '%s' is not available"
 msgid_plural "dependencies '%s' are not available"
 msgstr[0]    ""
@@ -633,11 +638,6 @@ msgstr[1]    ""
 
 msgid        "also installing the dependency "
 msgid_plural "also installing the dependencies "
-msgstr[0]    ""
-msgstr[1]    ""
-
-msgid        "object '%s' not found"
-msgid_plural "objects '%s' not found"
 msgstr[0]    ""
 msgstr[1]    ""
 

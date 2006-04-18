@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-17 11:22\n"
+"POT-Creation-Date: 2006-04-18 08:47\n"
 "PO-Revision-Date: 2006-04-15 23:38-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -20,6 +20,9 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
+msgid "cannot handle object of mode '%s'"
+msgstr "не могу работать с объектом вида '%s'"
+
 msgid "cannot change names on Tcl array"
 msgstr "нельзя изменить имя массива Tcl"
 
@@ -28,9 +31,6 @@ msgstr "нельзя задать длину массива Tcl"
 
 msgid "Tcl package '%s' not found"
 msgstr "пакет Tcl '%s' не найден"
-
-msgid "cannot handle object of mode '%s'"
-msgstr "не могу работать с объектом вида '%s'"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "файлы поддержки Tcl/Tk не установлены"

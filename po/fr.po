@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-04-17 17:01+0100\n"
-"PO-Revision-Date: 2005-12-06 12:47+0100\n"
+"PO-Revision-Date: 2006-04-18 08:23+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,9 +73,8 @@ msgid "cannot get working directory"
 msgstr "répertoire de travail introuvable"
 
 #: src/gnuwin32/extra.c:69
-#, fuzzy
 msgid "invalid 'names' in 'R_unlink'"
-msgstr "'names' incorrect dans R_unlink"
+msgstr "'names' incorrect dans 'R_unlink'"
 
 #: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
 #: src/gnuwin32/extra.c:284 src/gnuwin32/extra.c:311 src/gnuwin32/extra.c:314
@@ -187,9 +186,8 @@ msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' peut seulement être utilisé dans Rgui et Rterm"
 
 #: src/gnuwin32/extra.c:505 src/unix/sys-std.c:969
-#, fuzzy
 msgid "invalid timestamp"
-msgstr "marque (tag) incorrecte"
+msgstr "marque (timestamp) incorrecte"
 
 #: src/gnuwin32/extra.c:527
 msgid "'loadRconsole' can only be used in Rgui"
@@ -236,19 +234,16 @@ msgid "cannot decrease memory limit"
 msgstr "impossible de diminuer la limite de mémoire allouée"
 
 #: src/gnuwin32/extra.c:788
-#, fuzzy
 msgid "Select one or more"
-msgstr "Sélection : "
+msgstr "Sélectionnez un ou plusieurs items"
 
 #: src/gnuwin32/extra.c:788
-#, fuzzy
 msgid "Select one"
-msgstr "Sélection : "
+msgstr "Sélectionnez un item"
 
 #: src/gnuwin32/extra.c:924
-#, fuzzy
 msgid "argument must be a character vector or a raw vector"
-msgstr "l'argument doit être un vecteur de caractères de longueur 1"
+msgstr "l'argument doit être un vecteur de caractères ou un vecteur 'raw'"
 
 #: src/gnuwin32/extra.c:946 src/main/connections.c:1444
 msgid "Unable to open the clipboard"
@@ -684,9 +679,11 @@ msgid "dynamic/shared library '%s' was not loaded"
 msgstr "la bibliothèque dynamique / partagée '%s' n'a pas été chargée"
 
 #: src/main/Rdynload.c:939
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate memory for registered native symbol (%d bytes)"
-msgstr "impossible d'allouer de la mémoire pour une connexion textuelle"
+msgstr ""
+"impossible d'allouer de la mémoire pour le symbole natif enregistré (%d "
+"bytes)"
 
 #: src/main/Rdynload.c:1061
 msgid "must pass package name or DllInfo reference"
@@ -921,18 +918,18 @@ msgid "'x' must be numeric"
 msgstr "'x' doit être numérique"
 
 #: src/main/attrib.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "getAttrib: invalid type (%s) for TAG"
-msgstr "getAttrib : type incorrect pour TAG"
+msgstr "getAttrib : type incorrect (%s) pour TAG"
 
 #: src/main/attrib.c:175 src/main/attrib.c:266
 msgid "attempt to set an attribute on NULL"
 msgstr "tentative de changer un attribut en NULL"
 
 #: src/main/attrib.c:312
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for 'names': must be vector"
-msgstr "type incorrect pour 'names' : doit être un vecteur"
+msgstr "type incorrect (%s) pour 'names' : doit être un vecteur"
 
 #: src/main/attrib.c:315
 #, c-format
@@ -968,9 +965,9 @@ msgid "incompatible 'names' argument"
 msgstr "argument 'names' incompatible"
 
 #: src/main/attrib.c:669
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) to set 'names' attribute"
-msgstr "type incorrect pour l'attribut 'names'"
+msgstr "type incorrect (%s) pour l'attribut 'names'"
 
 #: src/main/attrib.c:736
 msgid "'dimnames' applied to non-array"
@@ -987,9 +984,9 @@ msgstr ""
 "la longueur de 'dimnames' [%d] doit correspondre à celle de 'dims' [%d]"
 
 #: src/main/attrib.c:760
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
-msgstr "type incorrect pour 'dimnames' (doit être un vecteur)"
+msgstr "type incorrect (%s) pour 'dimnames' (doit être un vecteur)"
 
 #: src/main/attrib.c:763
 #, c-format
@@ -1068,13 +1065,13 @@ msgstr ""
 "\") sans slots"
 
 #: src/main/attrib.c:1311
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr ""
-"tentative d'obtenir le slot \"%s\" d'un objet dont la classe (\"%s\") n'est "
-"pas définie"
+"tentative d'obtenir le slot \"%s\" d'un objet (classe \"%s\") qui n'est pas "
+"un objet S4"
 
 #: src/main/attrib.c:1330
 msgid "invalid slot type"
@@ -1130,7 +1127,7 @@ msgstr ""
 #: src/main/objects.c:177 src/main/objects.c:183 src/main/saveload.c:2028
 #: src/main/saveload.c:2281 src/main/saveload.c:2330 src/main/serialize.c:2154
 msgid "use of NULL environment is defunct"
-msgstr ""
+msgstr "l'utilisation de l'environnement NULL n'est plus autorisée"
 
 #: src/main/builtin.c:55 src/main/envir.c:1461 src/main/envir.c:1621
 #: src/main/envir.c:1754 src/main/paste.c:60 src/main/plot.c:1758
@@ -1154,14 +1151,12 @@ msgid "argument is not an environment"
 msgstr "l'argument n'est pas un environnment"
 
 #: src/main/builtin.c:241
-#, fuzzy
 msgid "the empty environment has no parent"
-msgstr "argument d'environnement 'export' erroné"
+msgstr "l'environnement vide n'a pas de parent"
 
 #: src/main/builtin.c:258
-#, fuzzy
 msgid "can not set parent of the empty environment"
-msgstr "impossible de délier dans l'environnement de base"
+msgstr "impossible de fixer le parent de l'environnement vide"
 
 #: src/main/builtin.c:265
 msgid "'parent' is not an environment"
@@ -1176,7 +1171,7 @@ msgstr "spécification de '%s' incorrecte"
 
 #: src/main/builtin.c:363
 msgid "non-positive 'fill' argument will be ignored"
-msgstr ""
+msgstr "l'argument 'fill' négatif ou nul sera ignoré"
 
 #: src/main/builtin.c:427
 #, c-format
@@ -2104,7 +2099,7 @@ msgstr "valeur de 'split' incorrect"
 
 #: src/main/connections.c:3436
 msgid "this platform does not support 'split=TRUE'"
-msgstr ""
+msgstr "cette plateforme ne supporte pas 'split=TRUE'"
 
 #: src/main/connections.c:3596
 msgid ""
@@ -2158,6 +2153,8 @@ msgstr ""
 #: src/main/connections.c:3950
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
+"l'utilisation d'un 'fichier' en mode texte peut ne pas fonctionner "
+"correctement"
 
 #: src/main/connections.c:3953 src/main/connections.c:3957
 #: src/main/connections.c:3964 src/main/connections.c:3978
@@ -2165,9 +2162,8 @@ msgid "allocation of 'gzcon' connection failed"
 msgstr "l'allocation d'une connexion 'gzcon' a échoué"
 
 #: src/main/connections.c:4024 src/main/connections.c:4047
-#, fuzzy
 msgid "R_decompress1 requires a raw vector"
-msgstr "R_decompress1 exige une chaîne scalaire"
+msgstr "R_decompress1 exige un vecteur 'raw'"
 
 #: src/main/connections.c:4031
 msgid "internal error in R_compress1"
@@ -2364,14 +2360,16 @@ msgid "too many arguments in foreign function call"
 msgstr "trop d'arguments dans l'appel de fonction externe"
 
 #: src/main/dotcode.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
-msgstr "point d'entrée %s \"%s%s\" absent de la DLL pour le package \"%s\""
+msgstr ""
+"le nom %s de symbole \"%s\" est introuvable dans la DLL pour le package \"%s"
+"\""
 
 #: src/main/dotcode.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "%s symbol name \"%s\" not in load table"
-msgstr "point d'entrée %s \"%s%s\" absent de la table de chargement"
+msgstr "point d'entrée %s \"%s\" absent de la table de chargement"
 
 #: src/main/dotcode.c:303
 #, c-format
@@ -2467,7 +2465,7 @@ msgstr "l'argument ENCODING doit être une chaîne de caractères unique"
 #: src/main/dotcode.c:737
 #, c-format
 msgid "'%s' is deprecated"
-msgstr ""
+msgstr "'%s' est obsolète"
 
 #: src/main/dotcode.c:769
 msgid "no arguments supplied"
@@ -2736,9 +2734,9 @@ msgid "cannot get binding from base namespace"
 msgstr "impossible d'obtenir le lien de l'espace de noms de base"
 
 #: src/main/envir.c:973
-#, fuzzy, c-format
+#, c-format
 msgid "argument to %s is not an environment"
-msgstr "l'argument n'est pas un environnment"
+msgstr "l'argument à %s n'est pas un environnment"
 
 #: src/main/envir.c:1176
 #, c-format
@@ -2765,9 +2763,8 @@ msgid "cannot assign variables to this database"
 msgstr "impossible d'affecter des variables à cette base de données"
 
 #: src/main/envir.c:1331 src/main/envir.c:1365
-#, fuzzy
 msgid "cannot assign values in the empty environment"
-msgstr "impossible de délier dans l'environnement de base"
+msgstr "impossible d'assigner des valeurs dans l'environnement vide"
 
 #: src/main/envir.c:1353 src/main/envir.c:1515
 msgid "cannot remove variables from this database"
@@ -2778,9 +2775,8 @@ msgid "cannot remove variables from base namespace"
 msgstr "impossible d'effacer des variables de l'espace de noms de base"
 
 #: src/main/envir.c:1507
-#, fuzzy
 msgid "cannot remove variables from the empty environment"
-msgstr "impossible d'éliminer des variables de cette base de données"
+msgstr "impossible d'éliminer des variables de l'environnement vide"
 
 #: src/main/envir.c:1557
 msgid "invalid first argument to remove()"
@@ -2861,17 +2857,15 @@ msgstr "ancun élément du nom de \"%s\" dans la liste de recherche"
 
 #: src/main/envir.c:2687
 msgid "using 'as.environment(NULL)' is defunct"
-msgstr ""
+msgstr "l'utilisation de 'as.environment(NULL)' n'est plus autorisée"
 
 #: src/main/envir.c:2690
 msgid "invalid object for as.environment"
 msgstr "objet incorrect pour as.environment"
 
 #: src/main/envir.c:2698
-#, fuzzy
 msgid "locking the base environment is not supported yet"
-msgstr ""
-"le verrouillage de l'environnement NULL (base) n'est pas encore disponible"
+msgstr "le verrouillage de l'environnement de base n'est pas encore disponible"
 
 #: src/main/envir.c:2700 src/main/envir.c:2729 src/main/envir.c:2762
 #: src/main/envir.c:2782 src/main/envir.c:2804 src/main/envir.c:2838
@@ -3473,7 +3467,7 @@ msgstr "débordement vers le haut du tampon d'entrée"
 
 #: src/main/gram.y:1751
 msgid "\\uxxxx sequences are only valid in multibyte locales"
-msgstr ""
+msgstr "\\uxxxx séquences ne sont correctes qu'en mode local multi-octets"
 
 #: src/main/gram.y:1767 src/main/gram.y:1772
 msgid "invalid \\u{xxxx} sequence"
@@ -3485,11 +3479,12 @@ msgstr "séquence \\uxxxx incorrecte"
 
 #: src/main/gram.y:1783
 msgid "\\Uxxxxxxxx sequences are not supported on Windows"
-msgstr ""
+msgstr "\\Uxxxxxxxx séquences non supportées sous Windows"
 
 #: src/main/gram.y:1786
 msgid "\\Uxxxxxxxx sequences are only valid in multibyte locales"
 msgstr ""
+"\\Uxxxxxxxx séquences admises seulement en versions locales multi-octets"
 
 #: src/main/gram.y:1802 src/main/gram.y:1806
 msgid "invalid \\U{xxxxxxxx} sequence"
@@ -3594,6 +3589,7 @@ msgstr "spécification de couleur incorrecte"
 #: src/main/graphics.c:4302
 msgid "supplied color is not numeric nor character"
 msgstr ""
+"la valeur de couleur fournie n'est ni un nombre, ni une chaîne de caractères"
 
 #: src/main/graphics.c:4325
 msgid "Invalid color"
@@ -3696,9 +3692,8 @@ msgstr ""
 "R.\n"
 
 #: src/main/main.c:451
-#, fuzzy
 msgid "Error: segfault from C stack overflow\n"
-msgstr "pile d'entiers débordée vers le haut"
+msgstr "Erreur : pile C débordée vers le haut\n"
 
 #: src/main/main.c:784
 msgid "unable to open the base package\n"
@@ -3815,9 +3810,8 @@ msgid "second argument must be a function"
 msgstr "le second argument doit être une fonction"
 
 #: src/main/memory.c:1140
-#, fuzzy
 msgid "third argument must be 'TRUE' or 'FALSE'"
-msgstr "l'argument 'multiple' doit être TRUE ou FALSE"
+msgstr "le troisième argument doit être 'TRUE' ou 'FALSE'"
 
 #: src/main/memory.c:1479
 msgid "vector memory exhausted (limit reached?)"
@@ -3959,9 +3953,9 @@ msgid "invalid variable type for '%s'"
 msgstr "type de variable incorrect pour '%s'"
 
 #: src/main/model.c:1352
-#, fuzzy, c-format
+#, c-format
 msgid "variable lengths differ (found for '%s')"
-msgstr "les longueurs des variables diffèrent"
+msgstr "les longueurs des variables diffèrent (trouvé pour '%s')"
 
 #: src/main/model.c:1402
 msgid "invalid result from na.action"
@@ -3976,9 +3970,9 @@ msgid "do not know how many cases"
 msgstr "nombre de cas inconnu"
 
 #: src/main/model.c:1614
-#, fuzzy, c-format
+#, c-format
 msgid "variable lengths differ (found for variable %d)"
-msgstr "les longueurs des variables diffèrent"
+msgstr "les longueurs des variables diffèrent (trouvé pour la variable %d)"
 
 #: src/main/model.c:1618 src/main/model.c:1625
 #, c-format
@@ -4523,21 +4517,21 @@ msgid "calling par(new=) with no plot"
 msgstr "appel de par(new=) sans graphe"
 
 #: src/main/par.c:695 src/main/par.c:1141
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" is obsolete"
-msgstr "liste de paramètres graphiques incorrecte"
+msgstr "paramètre graphique \"%s\" incorrect"
 
 #: src/main/par.c:699 src/main/par.c:1145
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" is not a graphical parameter"
-msgstr "paramètres de dessin incorrects"
+msgstr "\"%s\" n'est pas un paramètre graphique"
 
 #: src/main/par.c:740
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" can not be set in high-level plot() function"
 msgstr ""
-"le paramètre \"%s\" ne peut être changé dans la fonction plot() de haut "
-"niveau"
+"le paramètre graphique \"%s\" ne peut être changé dans la fonction plot() de "
+"haut niveau"
 
 #: src/main/par.c:1198
 msgid "invalid argument passed to par()"
@@ -5802,9 +5796,8 @@ msgid "not a proper file name"
 msgstr "nom de fichier incorrect"
 
 #: src/main/serialize.c:2026
-#, fuzzy
 msgid "not a proper raw vector"
-msgstr "ce n'est pas un simple vecteur"
+msgstr "ce n'est pas un vecteur 'raw'"
 
 #: src/main/serialize.c:2030 src/main/serialize.c:2033
 msgid "file open failed"
@@ -6045,14 +6038,12 @@ msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "erreur interne ('op = %d' in do_summary).\t Appelez un expert"
 
 #: src/main/summary.c:537
-#, fuzzy
 msgid "no non-missing arguments to min; returning Inf"
-msgstr "aucun argument fini pour min ; Inf est renvoyé"
+msgstr "aucun argument trouvé pour min ; Inf est renvoyé"
 
 #: src/main/summary.c:539
-#, fuzzy
 msgid "no non-missing arguments to max; returning -Inf"
-msgstr "aucun argument fini pour max ; -Inf est renvoyé"
+msgstr "aucun argument pour max ; -Inf est renvoyé"
 
 #: src/main/summary.c:814
 msgid "not all arguments have the same length"
@@ -6382,9 +6373,9 @@ msgid "vector size specified is too large"
 msgstr "la longueur choisie pour le vecteur est trop grande"
 
 #: src/main/util.c:237 src/main/util.c:249 src/main/util.c:263
-#, fuzzy, c-format
+#, c-format
 msgid "type %d is unimplemented in '%s'"
-msgstr "type %d est indisponible dans type2str"
+msgstr "type %d est indisponible dans '%s'"
 
 #: src/main/util.c:273
 #, c-format
@@ -6516,25 +6507,23 @@ msgstr "erreur d'affectation mémoire dans GVText"
 #: src/main/xspline.c:58
 #, c-format
 msgid "add_point - reached MAXNUMPTS (%d)"
-msgstr ""
+msgstr "add_point - MAXNUMPTS (%d) est atteint"
 
 #: src/main/xspline.c:72
 msgid "insufficient memory to allocate point array"
-msgstr ""
+msgstr "mémoire insuffisante pour allouer le tableau de points"
 
 #: src/main/xspline.c:453
 msgid "There must be at least two control points"
-msgstr ""
+msgstr "Il faut au moins deux points de contrôle"
 
 #: src/main/xspline.c:455
-#, fuzzy
 msgid "There must be at least four control points"
-msgstr "premier argument indispensable"
+msgstr "Il doit y avoir au moins quatre points de contrôle"
 
 #: src/main/xspline.c:512
-#, fuzzy
 msgid "There must be at least three control points"
-msgstr "premier argument indispensable"
+msgstr "Il doit y avoir au moins trois points de contrôle"
 
 #: src/modules/internet/internet.c:91
 msgid "unknown URL scheme"
@@ -6925,7 +6914,7 @@ msgstr "impossible de créer une fenêtre X11"
 #: src/modules/X11/devX11.c:1388
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
-msgstr ""
+msgstr "'width=%d, height=%d' ne sont probablement pas des valeurs en pixels"
 
 #: src/modules/X11/devX11.c:1393
 msgid "unable to create pixmap"
@@ -7195,9 +7184,8 @@ msgid "non-empty character argument expected"
 msgstr "argument de taille non nulle et de type caractère attendu"
 
 #: src/unix/sys-unix.c:273
-#, fuzzy
 msgid "'intern' must be logical and not NA"
-msgstr "'ascii' doit être une valeur logique"
+msgstr "'intern' doit être une valeur logique et non NA"
 
 #: src/unix/sys-unix.c:300
 msgid "'intern=TRUE' is not implemented on this platform"
