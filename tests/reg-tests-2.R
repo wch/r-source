@@ -1794,3 +1794,14 @@ uniroot(ff, c(-10,10), maxiter=10)
 
 ### end of tests added in 2.3.0 ###
 
+
+## prod etc on empty lists and raw vectors
+try(min(list()))
+try(max(list()))
+try(sum(list()))
+try(prod(list()))
+try(min(raw()))
+try(max(raw()))
+try(sum(raw()))
+try(prod(raw()))
+## Inf, -Inf, list(NULL) etc in 2.2.1

@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-04-15 r37780)
+R version 2.4.0 Under development (unstable) (2006-04-18 r37827)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5152,4 +5152,23 @@ _NOT_ converged in 10 iterations in: uniroot(ff, c(-10, 10), maxiter = 10)
 > 
 > ### end of tests added in 2.3.0 ###
 > 
+> 
+> ## prod etc on empty lists and raw vectors
+> try(min(list()))
+Error in min(..., na.rm = na.rm) : invalid 'type' (list) of argument
+> try(max(list()))
+Error in max(..., na.rm = na.rm) : invalid 'type' (list) of argument
+> try(sum(list()))
+Error in sum(..., na.rm = na.rm) : invalid 'type' (list) of argument
+> try(prod(list()))
+Error in prod(..., na.rm = na.rm) : invalid 'type' (list) of argument
+> try(min(raw()))
+Error in min(..., na.rm = na.rm) : invalid 'type' (raw) of argument
+> try(max(raw()))
+Error in max(..., na.rm = na.rm) : invalid 'type' (raw) of argument
+> try(sum(raw()))
+Error in sum(..., na.rm = na.rm) : invalid 'type' (raw) of argument
+> try(prod(raw()))
+Error in prod(..., na.rm = na.rm) : invalid 'type' (raw) of argument
+> ## Inf, -Inf, list(NULL) etc in 2.2.1
 > 
