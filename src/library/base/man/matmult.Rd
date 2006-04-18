@@ -4,7 +4,7 @@
 \title{Matrix Multiplication}
 \description{
   Multiplies two matrices, if they are conformable.
-  If one argument is a vector, it will be coerced to either a row or
+  If one argument is a vector, it will be promoted to either a row or
   column matrix to make the two arguments conformable.
   If both are vectors it will return the inner product.
 }
@@ -13,6 +13,10 @@ a \%*\% b
 }
 \arguments{
   \item{a, b}{numeric or complex matrices or vectors.}
+}
+\details{
+  When a vector is promoted to a matrix, its names are not
+  promoted to row or column names, unlike \code{\link{as.matrix}}.
 }
 \value{
   The matrix product.  Use \code{\link{drop}} to get rid of dimensions
