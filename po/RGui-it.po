@@ -584,9 +584,8 @@ msgid "Select directory for file 'Rconsole'"
 msgstr "Seleziona directory per il file 'Rconsole'"
 
 #: preferences.c:415
-#, fuzzy
 msgid "Select 'Rconsole' file"
-msgstr "Seleziona file"
+msgstr "Seleziona file 'Rconsole'"
 
 #: preferences.c:594
 #, c-format

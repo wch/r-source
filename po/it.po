@@ -181,14 +181,12 @@ msgid "unable to delete menu item (%s)"
 msgstr "impossibile eliminare la voce menu (%s)"
 
 #: src/gnuwin32/extra.c:478
-#, fuzzy
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr "savehistory può essere utilizzata solo in Rgui e Rterm"
+msgstr "'savehistory' può essere utilizzata solo in Rgui e Rterm"
 
 #: src/gnuwin32/extra.c:493
-#, fuzzy
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr "loadhistory può essere utilizzata solo in Rgui e Rterm"
+msgstr "'loadhistory' può essere utilizzata solo in Rgui e Rterm"
 
 #: src/gnuwin32/extra.c:505 src/unix/sys-std.c:969
 #, fuzzy
@@ -196,9 +194,8 @@ msgid "invalid timestamp"
 msgstr "'tag' non valido"
 
 #: src/gnuwin32/extra.c:527
-#, fuzzy
 msgid "'loadRconsole' can only be used in Rgui"
-msgstr "loadhistory può essere utilizzata solo in Rgui e Rterm"
+msgstr "'loadRconsole' può essere utilizzata solo in Rgui"
 
 #: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
 #: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:747
@@ -252,9 +249,8 @@ msgid "Unable to write to the clipboard"
 msgstr "Impossibile scrivere negli appunti"
 
 #: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
-#, fuzzy
 msgid "'path' must be a character vector"
-msgstr "'what' deve essere un vettore di tipo character"
+msgstr "'path' deve essere un vettore di tipo character"
 
 #: src/gnuwin32/extra.c:1097 src/gnuwin32/extra.c:1175
 msgid "'default' must be a character string"
@@ -779,9 +775,9 @@ msgid "unimplemented real function of %d numeric arguments"
 msgstr "funzione reale di %d argomenti numerici non implementata"
 
 #: src/main/arithmetic.c:1148
-#, fuzzy, c-format
+#, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
-msgstr "%d argomenti passati alla funzione 'atan' che ne richiede 1 o 2"
+msgstr "%d argomenti passati alla funzione 'atan' che ne richiede 1"
 
 #: src/main/arithmetic.c:1163 src/main/arithmetic.c:1182
 msgid "invalid second argument of length 0"
@@ -1167,7 +1163,7 @@ msgstr ""
 #: src/main/builtin.c:433
 #, fuzzy, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
-msgstr "l'argomento %d non ancora supportato da cat"
+msgstr "l'argomento %d (type '%s') non ancora supportato da cat"
 
 #: src/main/builtin.c:547
 msgid "vector: zero-length 'type' argument"
@@ -1492,9 +1488,8 @@ msgid "first argument must be a character string or a function"
 msgstr "il primo argomento deve essere una stringa di caratteri o una funzione"
 
 #: src/main/coerce.c:1932
-#, fuzzy
 msgid "'envir' must be an environment"
-msgstr "'enclos' deve essere un environment"
+msgstr "'envir' deve essere un environment"
 
 #: src/main/coerce.c:2078
 msgid "invalid environment specified"
@@ -2824,9 +2819,8 @@ msgid "invalid object for as.environment"
 msgstr "oggetto non valido per 'as.environment'"
 
 #: src/main/envir.c:2698
-#, fuzzy
 msgid "locking the base environment is not supported yet"
-msgstr "blocco dell'envirnoment NULL (base) non ancora supportato"
+msgstr "blocco dell'envirnoment base non ancora supportato"
 
 #: src/main/envir.c:2700 src/main/envir.c:2729 src/main/envir.c:2762
 #: src/main/envir.c:2782 src/main/envir.c:2804 src/main/envir.c:2838
@@ -4408,24 +4402,23 @@ msgstr ""
 "il gradiente fornito è della lunghezza o modalità sbagliata, viene ignorato"
 
 #: src/main/par.c:169
-#, fuzzy, c-format
+#, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
 msgstr "valore non valido specificato per il parametro grafico \"%s\""
 
 #: src/main/par.c:176
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "il parametro \"%s\" ha la lunghezza sbagliata"
 
 #: src/main/par.c:279 src/main/par.c:703
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "il parametro \"%s\" non può essere impostato"
 
 #: src/main/par.c:343 src/main/par.c:725
-#, fuzzy
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr "il parametro grafico 'family' ha una lunghezza massima di 49 byte"
+msgstr "il parametro grafico 'family' ha una lunghezza massima di 200 byte"
 
 #: src/main/par.c:472
 msgid "parameter \"mfg\" has the wrong length"
@@ -4457,19 +4450,18 @@ msgid "graphical parameter \"%s\" is obsolete"
 msgstr "lista parametro grafico non valida"
 
 #: src/main/par.c:699 src/main/par.c:1145
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" is not a graphical parameter"
-msgstr "parametro grafico non valido"
+msgstr "parametro grafico \"%s\" non valido"
 
 #: src/main/par.c:740
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" can not be set in high-level plot() function"
 msgstr ""
 "il parametro \"%s\" non può essere impostato nella funzione plot() di alto "
 "livello"
 
 #: src/main/par.c:1198
-#, fuzzy
 msgid "invalid argument passed to par()"
 msgstr "parametro non valido passato a par()"
 
@@ -5953,9 +5945,9 @@ msgid "Integer overflow in sum(.); use sum(as.numeric(.))"
 msgstr "Overflow di interi in sum(.); usare sum(as.numeric(.))"
 
 #: src/main/summary.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
-msgstr "errore interno ('op' in do_summary).\t Chiama un Guru"
+msgstr "errore interno ('op = %d' in do_summary).\t Chiama un Guru"
 
 #: src/main/summary.c:537
 #, fuzzy
@@ -5981,9 +5973,9 @@ msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr "assegnazione oltre i limiti del vettore/lista (estendo da %d a %d)"
 
 #: src/main/subassign.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in subassignment type fix"
-msgstr "tipi incompatibili (%d) in subassignment type fix"
+msgstr "tipi incompatibili (da %s a %s) in subassignment type fix"
 
 #: src/main/subassign.c:388 src/main/subassign.c:659 src/main/subassign.c:662
 #: src/main/subassign.c:947
@@ -6007,14 +5999,16 @@ msgid "incorrect number of subscripts on matrix"
 msgstr "numero di indici non corretto su una matrice"
 
 #: src/main/subassign.c:891
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
-msgstr "tipi incompatibili (caso %d) in assegnazioni per sottogruppi in matrix"
+msgstr ""
+"tipi incompatibili (da %s a %s) in assegnazioni per sottogruppi in matrix"
 
 #: src/main/subassign.c:1070
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in array subset assignment"
-msgstr "tipi incompatibili (%d) in assegnazioni per sottogruppi in array"
+msgstr ""
+"tipi incompatibili (da %s a %s) in assegnazioni per sottogruppi in array"
 
 #: src/main/subassign.c:1095
 msgid "invalid number of subscripts to list assign"
@@ -6055,9 +6049,9 @@ msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] numero di indici non valido"
 
 #: src/main/subassign.c:1634
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in [[ assignment"
-msgstr "tipi incompatibili (%d) nell'assegnazione [["
+msgstr "tipi incompatibili (da %s a %s) nell'assegnazione [["
 
 #: src/main/subassign.c:1682
 #, c-format
@@ -6938,9 +6932,9 @@ msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..): diverge nell'iterazione %d."
 
 #: src/nmath/polygamma.c:473
-#, fuzzy, c-format
+#, c-format
 msgid "deriv = %d > %d (= n_max)\n"
-msgstr "deriv = %d > %d (= n_max)"
+msgstr "deriv = %d > %d (= n_max)\n"
 
 #: src/nmath/rmultinom.c:74
 #, c-format
@@ -7060,18 +7054,22 @@ msgid "re-encoding is not available on this system"
 msgstr "re-codifica non disponibile per questo sistema"
 
 #: src/unix/sys-std.c:858
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s', reason '%s'\n"
 "\n"
-msgstr "impossibile aprire il file '%s' perché '%s'"
+msgstr ""
+"impossibile aprire il file '%s' perché '%s'\n"
+"\n"
 
 #: src/unix/sys-std.c:861
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s'\n"
 "\n"
-msgstr "impossibile aprire il file '%s'"
+msgstr ""
+"impossibile aprire il file '%s'\n"
+"\n"
 
 #: src/unix/sys-std.c:924 src/unix/sys-std.c:946
 msgid "'file' argument is too long"
@@ -7103,9 +7101,8 @@ msgid "'intern' must be logical and not NA"
 msgstr "'ascii' deve essere di tipo logico"
 
 #: src/unix/sys-unix.c:300
-#, fuzzy
 msgid "'intern=TRUE' is not implemented on this platform"
-msgstr "intern=TRUE non è implementato per questa piattaforma"
+msgstr "'intern=TRUE' non è implementato per questa piattaforma"
 
 #: src/unix/sys-unix.c:373
 msgid "Sys.info() is not implemented on this system"

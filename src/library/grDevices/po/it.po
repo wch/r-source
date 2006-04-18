@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 07:31+0100\n"
+"POT-Creation-Date: 2006-04-18 12:45+0100\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -54,9 +54,9 @@ msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
 msgstr ""
 
 #: devPS.c:836 devPS.c:848
-#, fuzzy, c-format
+#, c-format
 msgid "font metrics unknown for Unicode character U+%04x"
-msgstr "metrica font sconosciuta per carattere Unicode 0x%x"
+msgstr "metrica font sconosciuta per carattere Unicode U+%04x"
 
 #: devPS.c:856
 #, c-format
@@ -69,63 +69,53 @@ msgid ""
 msgstr ""
 
 #: devPS.c:992
-#, fuzzy
 msgid "failed to allocate CID font info"
-msgstr "Allocazione font Type 1 fallita"
+msgstr "allocazione font CID fallita"
 
 #: devPS.c:1007
-#, fuzzy
 msgid "failed to allocate Type 1 font info"
-msgstr "Allocazione font Type 1 fallita"
+msgstr "allocazione font Type 1 fallita"
 
 #: devPS.c:1027
-#, fuzzy
 msgid "failed to allocate encoding info"
-msgstr "Allocazione informazioni encoding fallita"
+msgstr "allocazione informazioni encoding fallita"
 
 #: devPS.c:1045
-#, fuzzy
 msgid "failed to allocate CID font family"
-msgstr "Allocazione famiglia font Type 1 fallita"
+msgstr "allocazione famiglia font CID fallita"
 
 #: devPS.c:1058
-#, fuzzy
 msgid "failed to allocate Type 1 font family"
-msgstr "Allocazione famiglia font Type 1 fallita"
+msgstr "allocazione famiglia font Type 1 fallita"
 
 #: devPS.c:1097 devPS.c:1108
-#, fuzzy
 msgid "failed to allocate font list"
-msgstr "Allocazione lista font fallita"
+msgstr "allocazione lista font fallita"
 
 #: devPS.c:1159
-#, fuzzy
 msgid "failed to allocated encoding list"
-msgstr "Allocazione lista encodings fallita"
+msgstr "allocazione lista encodings fallita"
 
 #: devPS.c:1305
-#, fuzzy
 msgid "truncated string which was too long for copy"
 msgstr "Trontata una stringa troppo lunga per essere copiata"
 
 #: devPS.c:1344
-#, fuzzy, c-format
+#, c-format
 msgid "failed to load encoding file '%s'"
-msgstr "Caricamento file encoding fallito"
+msgstr "Caricamento file encoding '%s' fallito"
 
 #: devPS.c:1433 devPS.c:1471
 msgid "Invalid font name or more than one font name"
 msgstr "Più di un nome font specificato oppure nome font non valido"
 
 #: devPS.c:1595 devPS.c:1628
-#, fuzzy
 msgid "font family not found in PostScript font database"
-msgstr "Famiglia font non trovata nel database PostScript"
+msgstr "famiglia font non trovata nel database PostScript"
 
 #: devPS.c:1697 devPS.c:1772 devPS.c:1797
-#, fuzzy
 msgid "font encoding not found in font database"
-msgstr "Encoding non trovato nel database PostScript"
+msgstr "encoding non trovato nel database"
 
 #: devPS.c:1722 devPS.c:1747
 #, fuzzy
@@ -133,9 +123,9 @@ msgid "font CMap not found in font database"
 msgstr "Famiglia font non presente nel database font di Quartz"
 
 #: devPS.c:1935 devPS.c:2014 devPS.c:2081
-#, fuzzy, c-format
+#, c-format
 msgid "cannot load afm file '%s'"
-msgstr "non posso leggere file afm %s"
+msgstr "non posso leggere file afm '%s'"
 
 #: devPS.c:2369
 msgid "Corrupt loaded encodings;  encoding not recorded"
@@ -170,12 +160,10 @@ msgid "encoding path is too long"
 msgstr "percorso encoding troppo lungo"
 
 #: devPS.c:2933 devPS.c:4297
-#, fuzzy
 msgid "failed to load encoding"
-msgstr "Caricamento file encoding fallito"
+msgstr "caricamento file encoding fallito"
 
 #: devPS.c:2976 devPS.c:3039 devPS.c:5193 devPS.c:5248
-#, fuzzy
 msgid "Invalid font type"
 msgstr "Specificazione font non valida"
 
@@ -232,14 +220,14 @@ msgstr ""
 "    %s"
 
 #: devPS.c:3559
-#, fuzzy, c-format
+#, c-format
 msgid "CID family '%s' not included in PostScript device"
-msgstr "famiglia %s non inclusa nel dispositivo PostScript"
+msgstr "famiglia CID '%s' non inclusa nel dispositivo PostScript"
 
 #: devPS.c:3572 devPS.c:3583 devPS.c:3791 devPS.c:3822
-#, fuzzy, c-format
+#, c-format
 msgid "family '%s' not included in PostScript device"
-msgstr "famiglia %s non inclusa nel dispositivo PostScript"
+msgstr "famiglia '%s' non inclusa nel dispositivo PostScript"
 
 #: devPS.c:3784 devPS.c:3812 devPS.c:4763 devPS.c:6501 devPS.c:6552
 #, c-format
@@ -287,9 +275,8 @@ msgid "Only Type 1 fonts supported for XFig"
 msgstr ""
 
 #: devPS.c:4328
-#, fuzzy
 msgid "Failed to initialise default XFig font"
-msgstr "Inizializzazione font PostScript fallita"
+msgstr "Inizializzazione font XFig fallita"
 
 #: devPS.c:4365
 #, c-format
@@ -336,9 +323,8 @@ msgid "cannot allocate pd->pageobj"
 msgstr "non posso allocare memoria per pd->pageobj"
 
 #: devPS.c:5150
-#, fuzzy
 msgid "failed to load default encoding"
-msgstr "Caricamento file encoding fallito"
+msgstr "caricamento file encoding fallito"
 
 #: devPS.c:5333
 #, c-format
@@ -381,9 +367,8 @@ msgid "Failed to find or load PDF font"
 msgstr "Impossibile caricare o trovare il font PDF"
 
 #: devPS.c:6595 devPS.c:6723
-#, fuzzy
 msgid "Failed to find or load PDF CID font"
-msgstr "Impossibile caricare o trovare il font PDF"
+msgstr "Impossibile caricare o trovare il font PDF CID"
 
 #: devPS.c:6897 devPS.c:6901 devPS.c:7053 devPS.c:7057
 #, c-format

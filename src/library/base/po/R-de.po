@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-17 07:31\n"
+"POT-Creation-Date: 2006-04-18 12:45\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -607,9 +607,8 @@ msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
 "Korrupter Data Frame: Spalten werden abgeschnitten oder mit NAs aufgefüllt"
 
-#, fuzzy
 msgid "'zero.print' has length > 1"
-msgstr "'input' muss Länge 1 haben"
+msgstr "'zero.print' muss Länge > 1 haben"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr ""
@@ -911,9 +910,8 @@ msgstr ""
 msgid "is already defined in the"
 msgstr ""
 
-#, fuzzy
 msgid "namespace"
-msgstr "kein Namensraum"
+msgstr "Namensraum"
 
 msgid "failed to assign NativeSymbolInfo for"
 msgstr ""
@@ -1219,9 +1217,8 @@ msgstr ""
 msgid "'%s' is not an existing file"
 msgstr "'%s' ist keine existierende Datei"
 
-#, fuzzy
 msgid "is not"
-msgstr "ist nicht TRUE"
+msgstr "ist nicht"
 
 msgid "all"
 msgstr ""

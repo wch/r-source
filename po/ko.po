@@ -176,14 +176,12 @@ msgid "unable to delete menu item (%s)"
 msgstr "메뉴 항목(%s)을 삭제할수 없습니다"
 
 #: src/gnuwin32/extra.c:478
-#, fuzzy
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr "savehistory은 Rgui 또는 Rterm에서만 사용할수 있습니다"
+msgstr "'savehistory'은 Rgui 또는 Rterm에서만 사용할수 있습니다"
 
 #: src/gnuwin32/extra.c:493
-#, fuzzy
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr "loadhistory은 Rgui과 Rterm에서만 사용할수 있습니다"
+msgstr "'loadhistory'은 Rgui과 Rterm에서만 사용할수 있습니다"
 
 #: src/gnuwin32/extra.c:505 src/unix/sys-std.c:969
 #, fuzzy
@@ -247,9 +245,8 @@ msgid "Unable to write to the clipboard"
 msgstr "clipborad를 쓰기 위해서 열수가 없습니다"
 
 #: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
-#, fuzzy
 msgid "'path' must be a character vector"
-msgstr "'what'는 문자 벡터가 아니면 안됩니다"
+msgstr "'path'는 문자 벡터가 아니면 안됩니다"
 
 #: src/gnuwin32/extra.c:1097 src/gnuwin32/extra.c:1175
 msgid "'default' must be a character string"
@@ -1476,9 +1473,8 @@ msgid "first argument must be a character string or a function"
 msgstr "첫번째에서 뺀 수는 문자열 또는 함수이어야만 합니다"
 
 #: src/main/coerce.c:1932
-#, fuzzy
 msgid "'envir' must be an environment"
-msgstr "'enclos'는 환경이어야만 합니다"
+msgstr "'envir'는 환경이어야만 합니다"
 
 #: src/main/coerce.c:2078
 msgid "invalid environment specified"
