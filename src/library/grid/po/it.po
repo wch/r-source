@@ -55,7 +55,6 @@ msgid "Invalid circle radius (must be non-negative)"
 msgstr "Raggio del cerchio non valido (deve essere non negativo)"
 
 #: grid.c:3067
-#, fuzzy
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossibile tagliare su una viewport ruotata"
 

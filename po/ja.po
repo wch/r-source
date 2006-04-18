@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 17:01+0100\n"
+"POT-Creation-Date: 2006-04-18 12:53+0100\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -471,10 +471,16 @@ msgid "object is not subsettable"
 msgstr "オブジェクトは部分代入可能ではありません"
 
 #: src/include/Errormsg.h:44
-msgid "invalid 'mode' of argument"
-msgstr "引数の 'mode' が不正です"
+#, fuzzy
+msgid "invalid argument 'mode'"
+msgstr "引数が不正です"
 
 #: src/include/Errormsg.h:45
+#, fuzzy, c-format
+msgid "invalid 'type' (%s) of argument"
+msgstr "引数の 'mode' が不正です"
+
+#: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
 msgstr "リストとベクトルのみに適用できます"
 
@@ -3328,7 +3334,7 @@ msgstr "プロファイルタイマーの設定に失敗しました"
 msgid "not byte code profiling"
 msgstr "バイトコードのプロファイリングではありません"
 
-#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:593
+#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:607
 msgid "non-numeric argument"
 msgstr "引数が数値でありません"
 
@@ -5943,15 +5949,15 @@ msgstr ""
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "内部エラー (do_summary 中の 'op = %d')。Rの達人に相談しましょう"
 
-#: src/main/summary.c:537
+#: src/main/summary.c:550
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "min の引数に有限な値がありません：Inf を返します"
 
-#: src/main/summary.c:539
+#: src/main/summary.c:552
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "max の引数に有限な値がありません：-Inf を返します"
 
-#: src/main/summary.c:814
+#: src/main/summary.c:828
 msgid "not all arguments have the same length"
 msgstr "引数の中に異なった長さのものがあります"
 

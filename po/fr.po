@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 17:01+0100\n"
+"POT-Creation-Date: 2006-04-18 12:53+0100\n"
 "PO-Revision-Date: 2006-04-18 08:23+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -474,10 +474,16 @@ msgid "object is not subsettable"
 msgstr "objet non indiçable"
 
 #: src/include/Errormsg.h:44
-msgid "invalid 'mode' of argument"
-msgstr "'mode' de l'argument incorrect"
+#, fuzzy
+msgid "invalid argument 'mode'"
+msgstr "argument incorrect"
 
 #: src/include/Errormsg.h:45
+#, fuzzy, c-format
+msgid "invalid 'type' (%s) of argument"
+msgstr "'mode' de l'argument incorrect"
+
+#: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
 msgstr "ne s'applique qu'à des listes ou des vecteurs"
 
@@ -3381,7 +3387,7 @@ msgstr "le démarrage d'une temporisation de profilage a échoué"
 msgid "not byte code profiling"
 msgstr "profilage d'autre chose que du pseudo-code"
 
-#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:593
+#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:607
 msgid "non-numeric argument"
 msgstr "argument non numérique"
 
@@ -6037,15 +6043,15 @@ msgstr "Dépassement d'entier dans sum(.) ; utiliser sum(as.numeric(.))"
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "erreur interne ('op = %d' in do_summary).\t Appelez un expert"
 
-#: src/main/summary.c:537
+#: src/main/summary.c:550
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "aucun argument trouvé pour min ; Inf est renvoyé"
 
-#: src/main/summary.c:539
+#: src/main/summary.c:552
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "aucun argument pour max ; -Inf est renvoyé"
 
-#: src/main/summary.c:814
+#: src/main/summary.c:828
 msgid "not all arguments have the same length"
 msgstr "les arguments n'ont pas tous la même taille"
 

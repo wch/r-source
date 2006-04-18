@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 17:01+0100\n"
+"POT-Creation-Date: 2006-04-18 12:53+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -177,14 +177,12 @@ msgid "unable to delete menu item (%s)"
 msgstr "메뉴 항목(%s)을 삭제할수 없습니다"
 
 #: src/gnuwin32/extra.c:478
-#, fuzzy
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr "savehistory은 Rgui 또는 Rterm에서만 사용할수 있습니다"
+msgstr "'savehistory'은 Rgui 또는 Rterm에서만 사용할수 있습니다"
 
 #: src/gnuwin32/extra.c:493
-#, fuzzy
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr "loadhistory은 Rgui과 Rterm에서만 사용할수 있습니다"
+msgstr "'loadhistory'은 Rgui과 Rterm에서만 사용할수 있습니다"
 
 #: src/gnuwin32/extra.c:505 src/unix/sys-std.c:969
 #, fuzzy
@@ -258,9 +256,8 @@ msgid "Unable to write to the clipboard"
 msgstr "clipborad를 쓰기 위해서 열수가 없습니다"
 
 #: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
-#, fuzzy
 msgid "'path' must be a character vector"
-msgstr "'what'는 문자 벡터가 아니면 안됩니다"
+msgstr "'path'는 문자 벡터가 아니면 안됩니다"
 
 #: src/gnuwin32/extra.c:1097 src/gnuwin32/extra.c:1175
 msgid "'default' must be a character string"
@@ -479,10 +476,16 @@ msgid "object is not subsettable"
 msgstr "오브젝트는 부분대입이 가능하지 않습니다"
 
 #: src/include/Errormsg.h:44
-msgid "invalid 'mode' of argument"
-msgstr "인수의 'mode'이 부적절합니다"
+#, fuzzy
+msgid "invalid argument 'mode'"
+msgstr "부적절한 인수입니다"
 
 #: src/include/Errormsg.h:45
+#, fuzzy, c-format
+msgid "invalid 'type' (%s) of argument"
+msgstr "인수의 'mode'이 부적절합니다"
+
+#: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
 msgstr "리스트 그리고 벡터에만 적용이 될수 있습니다"
 
@@ -1491,9 +1494,8 @@ msgid "first argument must be a character string or a function"
 msgstr "첫번째에서 뺀 수는 문자열 또는 함수이어야만 합니다"
 
 #: src/main/coerce.c:1931
-#, fuzzy
 msgid "'envir' must be an environment"
-msgstr "'enclos'는 환경이어야만 합니다"
+msgstr "'envir'는 환경이어야만 합니다"
 
 #: src/main/coerce.c:2077
 msgid "invalid environment specified"
@@ -3352,7 +3354,7 @@ msgstr "profile timer의 설정에 실패했습니다"
 msgid "not byte code profiling"
 msgstr "바이트 코드의 profiling가 아닙니다"
 
-#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:593
+#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:607
 msgid "non-numeric argument"
 msgstr "인수가 수치가 아닙니다"
 
@@ -5965,17 +5967,17 @@ msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr ""
 "내부 에러 (do_summary중의 'op').R의 분야에 있는 인에게(달인) 상담하십시오"
 
-#: src/main/summary.c:537
+#: src/main/summary.c:550
 #, fuzzy
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "mix 의 인수에 유한것 값이 없습니다: -Inf를 돌려줍니다"
 
-#: src/main/summary.c:539
+#: src/main/summary.c:552
 #, fuzzy
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "max의 인수에 유한것 값이 없습니다 -Inf를 돌려줍니다"
 
-#: src/main/summary.c:814
+#: src/main/summary.c:828
 msgid "not all arguments have the same length"
 msgstr "인수안 길이에 다른것이 있습니다"
 

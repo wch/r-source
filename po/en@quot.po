@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 17:01+0100\n"
-"PO-Revision-Date: 2006-04-17 17:01+0100\n"
+"POT-Creation-Date: 2006-04-18 12:53+0100\n"
+"PO-Revision-Date: 2006-04-18 12:53+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -489,10 +489,15 @@ msgid "object is not subsettable"
 msgstr "object is not subsettable"
 
 #: src/include/Errormsg.h:44
-msgid "invalid 'mode' of argument"
-msgstr "invalid ‘mode’ of argument"
+msgid "invalid argument 'mode'"
+msgstr "invalid argument ‘mode’"
 
 #: src/include/Errormsg.h:45
+#, c-format
+msgid "invalid 'type' (%s) of argument"
+msgstr "invalid ‘type’ (%s) of argument"
+
+#: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
 msgstr "applies only to lists and vectors"
 
@@ -3323,7 +3328,7 @@ msgstr "setting profile timer failed"
 msgid "not byte code profiling"
 msgstr "not byte code profiling"
 
-#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:593
+#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:607
 msgid "non-numeric argument"
 msgstr "non-numeric argument"
 
@@ -5916,15 +5921,15 @@ msgstr "Integer overflow in sum(.); use sum(as.numeric(.))"
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "internal error ('op = %d' in do_summary).\t Call a Guru"
 
-#: src/main/summary.c:537
+#: src/main/summary.c:550
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "no non-missing arguments to min; returning Inf"
 
-#: src/main/summary.c:539
+#: src/main/summary.c:552
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "no non-missing arguments to max; returning -Inf"
 
-#: src/main/summary.c:814
+#: src/main/summary.c:828
 msgid "not all arguments have the same length"
 msgstr "not all arguments have the same length"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 17:01+0100\n"
+"POT-Creation-Date: 2006-04-18 12:53+0100\n"
 "PO-Revision-Date: 2006-04-15 23:34-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -476,10 +476,16 @@ msgid "object is not subsettable"
 msgstr "объект не делится на подгруппы"
 
 #: src/include/Errormsg.h:44
-msgid "invalid 'mode' of argument"
-msgstr "неправильный 'mode' аргумента"
+#, fuzzy
+msgid "invalid argument 'mode'"
+msgstr "неправильный аргумент"
 
 #: src/include/Errormsg.h:45
+#, fuzzy, c-format
+msgid "invalid 'type' (%s) of argument"
+msgstr "неправильный 'mode' аргумента"
+
+#: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
 msgstr "применимо только к спискам и векторам"
 
@@ -3331,7 +3337,7 @@ msgstr "установить профильный таймер не удалось"
 msgid "not byte code profiling"
 msgstr "не побайтное профилирование"
 
-#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:593
+#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:607
 msgid "non-numeric argument"
 msgstr "нечисловой аргумент"
 
@@ -5942,15 +5948,15 @@ msgstr ""
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "внутренняя ошибка ('op = %d' в 'do_summary').\t Вызовите специалиста"
 
-#: src/main/summary.c:537
+#: src/main/summary.c:550
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "у 'min' нет не пропущенных аргументов; возвращаю Inf"
 
-#: src/main/summary.c:539
+#: src/main/summary.c:552
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "у 'max' нет не пропущенных аргументов; возвращаю -Inf"
 
-#: src/main/summary.c:814
+#: src/main/summary.c:828
 msgid "not all arguments have the same length"
 msgstr "не все аргументы имеют одинаковую длину"
 

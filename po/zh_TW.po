@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 17:01+0100\n"
+"POT-Creation-Date: 2006-04-18 12:53+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -470,10 +470,16 @@ msgid "object is not subsettable"
 msgstr "目的物件不是次集合表格"
 
 #: src/include/Errormsg.h:44
-msgid "invalid 'mode' of argument"
-msgstr "'mode' 引數不正確"
+#, fuzzy
+msgid "invalid argument 'mode'"
+msgstr "引數不正確"
 
 #: src/include/Errormsg.h:45
+#, fuzzy, c-format
+msgid "invalid 'type' (%s) of argument"
+msgstr "'mode' 引數不正確"
+
+#: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
 msgstr "只能用於串列和向量"
 
@@ -3284,7 +3290,7 @@ msgstr "程式概要分析計時器設置失敗"
 msgid "not byte code profiling"
 msgstr "非位元組碼程式概要分析"
 
-#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:593
+#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:607
 msgid "non-numeric argument"
 msgstr "非數值引數"
 
@@ -5857,15 +5863,15 @@ msgstr "sum(.) 中整數上溢；請用 sum(as.numeric(.))"
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "內部錯誤 (do_summary 中的 'op = %d')。\t 請向專家請教"
 
-#: src/main/summary.c:537
+#: src/main/summary.c:550
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "min 中沒有無漏失的引數; 回傳 Inf"
 
-#: src/main/summary.c:539
+#: src/main/summary.c:552
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "max 中沒有無漏失的引數；回傳 -Inf"
 
-#: src/main/summary.c:814
+#: src/main/summary.c:828
 msgid "not all arguments have the same length"
 msgstr "不是所有的引數都一樣長"
 

@@ -23,9 +23,8 @@ msgstr "'labels' 그리고 위치'at'는 동일 길이가 나오지 않으면 �
 msgid "End points must not be identical"
 msgstr ""
 
-#, fuzzy
 msgid "'x1', 'y1' ,'x2', and 'y2' must be units"
-msgstr "'x0', 'y0', 'x1' 그리고 'y1'는 units가 나오지 않으면 되지 않습니다"
+msgstr "'x1', 'y1', 'x2' 그리고 'y2'는 units가 나오지 않으면 되지 않습니다"
 
 msgid "'shape' must be between -1 and 1"
 msgstr ""
@@ -369,13 +368,11 @@ msgstr "인수'x'는 units 오브젝트가 아니면 되지 않습니다"
 msgid "Invalid 'axis' or 'type'"
 msgstr "부적절한 'axis' 또는 'type'입니다"
 
-#, fuzzy
 msgid "No string supplied for 'strwidth/height' unit"
-msgstr "'strheight' units를 주는 문자열이 없습니다"
+msgstr "'strwidth/height' units를 주는 문자열이 없습니다"
 
-#, fuzzy
 msgid "No 'grob' supplied for 'grobwidth/height' unit"
-msgstr "'grobheight' units를 주는 'grob'가 없습니다"
+msgstr "'grobiwidth/height' units를 주는 'grob'가 없습니다"
 
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
@@ -421,9 +418,8 @@ msgid ""
 "length function"
 msgstr ""
 
-#, fuzzy
 msgid "Invalid theta"
-msgstr "부적절한 'gPath' 입니다"
+msgstr "부적절한 'theta' 입니다"
 
 msgid "'range' must be numeric"
 msgstr "'range'는 수치가 아니면 되지 않습니다"

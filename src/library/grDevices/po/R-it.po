@@ -76,7 +76,6 @@ msgstr "non posso chiudere il dispositivo 1 (dispositivo null)"
 msgid "cannot supply 'which' and 'device' at the same time"
 msgstr "non si possono indicare 'which' e 'device' allo stesso tempo"
 
-#, fuzzy
 msgid "cannot copy from the null device"
 msgstr "non posso copiare sul dispositivo null"
 

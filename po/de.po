@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 17:01+0100\n"
+"POT-Creation-Date: 2006-04-18 12:53+0100\n"
 "PO-Revision-Date: 2006-04-13 10:41+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -471,10 +471,16 @@ msgid "object is not subsettable"
 msgstr "Objekt ist nicht indizierbar"
 
 #: src/include/Errormsg.h:44
-msgid "invalid 'mode' of argument"
-msgstr "Argument hat ungültigen 'mode'"
+#, fuzzy
+msgid "invalid argument 'mode'"
+msgstr "ungültiges Argument"
 
 #: src/include/Errormsg.h:45
+#, fuzzy, c-format
+msgid "invalid 'type' (%s) of argument"
+msgstr "Argument hat ungültigen 'mode'"
+
+#: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
 msgstr "kann nur auf Listen und Vektoren angewendet werden"
 
@@ -3325,7 +3331,7 @@ msgstr "Stellen des Profile-Zeitnehmers fehlgeschlagen"
 msgid "not byte code profiling"
 msgstr "Byte Code Profiling läuft nicht"
 
-#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:593
+#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:607
 msgid "non-numeric argument"
 msgstr "nicht-numerisches Argument"
 
@@ -5945,15 +5951,15 @@ msgstr "Integer-Überlauf in sum(.); nutze sum(as.numeric(,))"
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "interner Fehler ('op = %d' in do_summary).\t Call a Guru"
 
-#: src/main/summary.c:537
+#: src/main/summary.c:550
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "kein nicht-fehlendes Argument für min; gebe Inf zurück"
 
-#: src/main/summary.c:539
+#: src/main/summary.c:552
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "kein nicht-fehlendes Argument für max; gebe -Inf zurück"
 
-#: src/main/summary.c:814
+#: src/main/summary.c:828
 msgid "not all arguments have the same length"
 msgstr "nicht alle Argumente haben gleiche Länge"
 

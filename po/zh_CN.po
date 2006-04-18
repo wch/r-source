@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 17:01+0100\n"
+"POT-Creation-Date: 2006-04-18 12:53+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -475,10 +475,16 @@ msgid "object is not subsettable"
 msgstr "目标对象无法取子集"
 
 #: src/include/Errormsg.h:44
-msgid "invalid 'mode' of argument"
-msgstr "'状态'变元不对"
+#, fuzzy
+msgid "invalid argument 'mode'"
+msgstr "变元不对"
 
 #: src/include/Errormsg.h:45
+#, fuzzy, c-format
+msgid "invalid 'type' (%s) of argument"
+msgstr "'状态'变元不对"
+
+#: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
 msgstr "只能用于串列和向量"
 
@@ -3295,7 +3301,7 @@ msgstr "程序概要分析计时器设制失败"
 msgid "not byte code profiling"
 msgstr "非位元组码程序概要分析"
 
-#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:593
+#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:607
 msgid "non-numeric argument"
 msgstr "非数值变元"
 
@@ -5875,17 +5881,17 @@ msgstr "sum(.)中整数上溢；请用sum(as.numeric(.))"
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "内部错误(do_summary里的'op').\t 请向专家请教"
 
-#: src/main/summary.c:537
+#: src/main/summary.c:550
 #, fuzzy
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "min里没有有限的变元; 回覆Inf"
 
-#: src/main/summary.c:539
+#: src/main/summary.c:552
 #, fuzzy
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "max里没有有限的变元；回覆-Inf"
 
-#: src/main/summary.c:814
+#: src/main/summary.c:828
 msgid "not all arguments have the same length"
 msgstr "不是所有的变元都一样长"
 

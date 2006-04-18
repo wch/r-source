@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 17:01+0100\n"
+"POT-Creation-Date: 2006-04-18 12:53+0100\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -471,10 +471,16 @@ msgid "object is not subsettable"
 msgstr "não é possível dividir o objeto em subconjuntos"
 
 #: src/include/Errormsg.h:44
-msgid "invalid 'mode' of argument"
-msgstr "modo do argumento inválido"
+#, fuzzy
+msgid "invalid argument 'mode'"
+msgstr "argumento inválido"
 
 #: src/include/Errormsg.h:45
+#, fuzzy, c-format
+msgid "invalid 'type' (%s) of argument"
+msgstr "modo do argumento inválido"
+
+#: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
 msgstr "se aplica somente a listas e vetores"
 
@@ -3329,7 +3335,7 @@ msgstr "especificação de um cronômetro de desempenho falhou"
 msgid "not byte code profiling"
 msgstr "análise de desempenho bytecode não está em andamento"
 
-#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:593
+#: src/main/fourier.c:55 src/main/fourier.c:149 src/main/summary.c:607
 msgid "non-numeric argument"
 msgstr "argumento não numérico"
 
@@ -5948,15 +5954,15 @@ msgstr "Estouro da capacidade de inteiro em sum(.); use sum(as.numeric(.))"
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "erro interno ('op = %d' em do_summary).\t Chame um guru"
 
-#: src/main/summary.c:537
+#: src/main/summary.c:550
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "nenhum argumento não faltante para min; retornando Inf"
 
-#: src/main/summary.c:539
+#: src/main/summary.c:552
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "nenhum argumento não faltante para max; retornando -Inf"
 
-#: src/main/summary.c:814
+#: src/main/summary.c:828
 msgid "not all arguments have the same length"
 msgstr "nem todos os argumentos tem o mesmo comprimento"
 

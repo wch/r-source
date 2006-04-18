@@ -524,7 +524,6 @@ msgstr "non ci sono abbastanza osservazioni finite"
 msgid "Cannot compute exact p-value with ties"
 msgstr "Impossibile calcolare p-value esatti in presenza di ties"
 
-#, fuzzy
 msgid "Cannot compute exact p-values with ties"
 msgstr "Impossibile calcolare p-value esatti in presenza di ties"
 
@@ -1593,9 +1592,8 @@ msgstr "troppi pochi gruppi"
 msgid "use only with \"lm\" objects"
 msgstr "usare solo con oggetti \"lm\""
 
-#, fuzzy
 msgid "'which' must be in 1:6"
-msgstr "'which' deve essere in 1:4"
+msgstr "'which' deve essere in 1:6"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' deve essere in {1,..,%d}"
