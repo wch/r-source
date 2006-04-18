@@ -38,7 +38,7 @@ Plot ridge functions for projection pursuit regression fit.
   \code{\link{ppr}}, \code{\link{par}}
 }
 \examples{
-attach(rock)
+with(rock, {
 area1 <- area/10000; peri1 <- peri/10000
 par(mfrow=c(3,2))# maybe: , pty="s")
 rock.ppr <- ppr(log(perm) ~ area1 + peri1 + shape,
@@ -47,7 +47,7 @@ plot(rock.ppr, main="ppr(log(perm)~ ., nterms=2, max.terms=5)")
 plot(update(rock.ppr, bass=5), main = "update(..., bass = 5)")
 plot(update(rock.ppr, sm.method="gcv", gcvpen=2),
      main = "update(..., sm.method=\"gcv\", gcvpen=2)")
-detach()
+})
 }
 \keyword{hplot}
 % Converted by Sd2Rd version 0.2-a5.

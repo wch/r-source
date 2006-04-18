@@ -71,12 +71,12 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
 }
 
 \examples{
-attach(ToothGrowth)
+with(ToothGrowth, {
 interaction.plot(dose, supp, len, fixed=TRUE)
 dose <- ordered(dose)
 interaction.plot(dose, supp, len, fixed=TRUE, col = 2:3, leg.bty = "o")
 interaction.plot(dose, supp, len, fixed=TRUE, col = 2:3, type = "p")
-detach()
+})
 
 with(OrchardSprays, {
   interaction.plot(treatment, rowpos, decrease)
