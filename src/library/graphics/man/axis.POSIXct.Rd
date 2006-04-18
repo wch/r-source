@@ -50,7 +50,7 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
   \link{DateTimeClasses}, \link{Dates} for details of the classes.
 }
 \examples{
-attach(beaver1)
+with(beaver1, {
 time <- strptime(paste(1990, day, time \%/\% 100, time \%\% 100),
                  "\%Y \%j \%H \%M")
 plot(time, temp, type="l") # axis at 4-hour intervals.
@@ -58,8 +58,7 @@ plot(time, temp, type="l") # axis at 4-hour intervals.
 plot(time, temp, type="l", xaxt="n")
 r <- as.POSIXct(round(range(time), "hours"))
 axis.POSIXct(1, at=seq(r[1], r[2], by="hour"), format="\%H")
-rm(time)
-detach(beaver1)
+})
 
 plot(.leap.seconds, 1:23, type="n", yaxt="n",
      xlab="leap seconds", ylab="", bty="n")
