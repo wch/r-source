@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grDevices 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-04-17 07:31+0100\n"
-"PO-Revision-Date: 2005-12-06 14:15+0100\n"
+"PO-Revision-Date: 2006-04-18 08:39+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,12 +27,11 @@ msgstr "le fichier metafile '%s' ne peut être créé"
 
 #: devPS.c:582
 msgid "FontBBox could not be parsed"
-msgstr ""
+msgstr "FontBBox ne peut être analysé"
 
 #: devPS.c:590
-#, fuzzy
 msgid "CharInfo could not be parsed"
-msgstr "le fichier metafile '%s' ne peut être créé"
+msgstr "CharInfo ne peut être analysé"
 
 #: devPS.c:620
 msgid "unknown AFM entity encountered"
@@ -52,7 +51,7 @@ msgstr "largeur de police inconnue pour le caractère 0x%x"
 #: devPS.c:820
 #, c-format
 msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
-msgstr ""
+msgstr "encodage inconnu '%s' dans 'PostScriptMetricInfo'"
 
 #: devPS.c:836 devPS.c:848
 #, c-format
@@ -68,6 +67,8 @@ msgstr "taille de police inconnue pour le caractère 0x%x"
 msgid ""
 "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr ""
+"chaîne de caractères incorrecte envoyée à 'PostScriptCIDMetricInfo' dans une "
+"version localisée simple-octet"
 
 #: devPS.c:992
 msgid "failed to allocate CID font info"
@@ -117,14 +118,11 @@ msgstr ""
 
 #: devPS.c:1697 devPS.c:1772 devPS.c:1797
 msgid "font encoding not found in font database"
-msgstr ""
-"Encodage de police introuvable dans la base de données de polices"
+msgstr "Encodage de police introuvable dans la base de données de polices"
 
 #: devPS.c:1722 devPS.c:1747
-#, fuzzy
 msgid "font CMap not found in font database"
-msgstr ""
-"Famille de police introuvable dans la base de données des polices Quartz"
+msgstr "la police CMap introuvable dans la base de données des polices"
 
 #: devPS.c:1935 devPS.c:2014 devPS.c:2081
 #, c-format
@@ -241,16 +239,16 @@ msgstr "tentative d'utiliser la police incorrecte %d remplacée par police 1"
 #: devPS.c:3871
 #, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
-msgstr ""
+msgstr "encodage inconnu '%s' dans 'mbcsToSbcs'"
 
 #: devPS.c:3881
 msgid "conversion failure in 'mbcsToSbcs'"
-msgstr ""
+msgstr "erreur de conversion dans 'mbcsToSbcs'"
 
 #: devPS.c:3960 devPS.c:4818 devPS.c:6642
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
-msgstr ""
+msgstr "erreur dans la conversion du texte vers l'encodage '%s'"
 
 #: devPS.c:4119
 msgid "run out of colors in xfig()"
@@ -262,9 +260,9 @@ msgid "unimplemented line texture %08x: using Dash-double-dotted"
 msgstr "texture de lignes non implémentée %08x : utilise 'Dash-double-dotted'"
 
 #: devPS.c:4219
-#, fuzzy, c-format
+#, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
-msgstr "famille de police postscript inconnue, utilise %s"
+msgstr "famille de police postscript '%s' inconnue, utilisation d'Helvetica"
 
 #: devPS.c:4257
 msgid "filename too long in xfig"
@@ -276,7 +274,7 @@ msgstr "couleurs de premier/arrière plans incorrectes (xfig)"
 
 #: devPS.c:4315
 msgid "Only Type 1 fonts supported for XFig"
-msgstr ""
+msgstr "Seules les fontes Type 1 sont supportées pour XFig"
 
 #: devPS.c:4328
 msgid "Failed to initialise default XFig font"
@@ -297,13 +295,13 @@ msgid "empty file name"
 msgstr "nom de fichier vide"
 
 #: devPS.c:4807
-#, fuzzy, c-format
+#, c-format
 msgid "unable to use encoding '%s'"
-msgstr "Echec d'allocation de la liste d'encodage"
+msgstr "Impossible d'utiliser l'encodage '%s'"
 
 #: devPS.c:4823
 msgid "re-encoding is not possible on this system"
-msgstr ""
+msgstr "le réencodage n'est pas possible sur ce système"
 
 #: devPS.c:5055
 msgid "Corrupt loaded encodings;  font not added"
@@ -327,9 +325,8 @@ msgid "cannot allocate pd->pageobj"
 msgstr "impossible d'allouer pd->pageobj"
 
 #: devPS.c:5150
-#, fuzzy
 msgid "failed to load default encoding"
-msgstr "Echec de chargement du fichier d'encodage"
+msgstr "Echec de chargement du fichier d'encodage par défaut"
 
 #: devPS.c:5333
 #, c-format
@@ -371,9 +368,8 @@ msgid "Failed to find or load PDF font"
 msgstr "Impossible de trouver ou de charger la police PDF"
 
 #: devPS.c:6595 devPS.c:6723
-#, fuzzy
 msgid "Failed to find or load PDF CID font"
-msgstr "Impossible de trouver ou de charger la police PDF"
+msgstr "Impossible de trouver ou de charger la police PDF CID"
 
 #: devPS.c:6897 devPS.c:6901 devPS.c:7053 devPS.c:7057
 #, c-format
@@ -459,7 +455,7 @@ msgstr "Impossible de charger Rbitmap.dll"
 #: devWindows.c:1709 devWindows.c:1742
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
-msgstr ""
+msgstr "'width=%d, height=%d' ne sont probablement pas des valeurs en pixels"
 
 #: devWindows.c:1717 devWindows.c:1745
 msgid "Unable to allocate bitmap"

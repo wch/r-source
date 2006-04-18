@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grid 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-04-10 14:49+0100\n"
-"PO-Revision-Date: 2005-12-06 16:52+0100\n"
+"PO-Revision-Date: 2006-04-18 08:46+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,12 @@ msgstr ""
 msgid "Cannot clip to rotated viewport"
 msgstr "Impossible de couper une vue pivotée"
 
-#: grid.c:641 grid.c:646 grid.c:735 grid.c:740
+#: grid.c:641
+#: grid.c:646
+#: grid.c:735
+#: grid.c:740
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
-msgstr ""
-"Impossible de rendre la vue de plus haut niveau active (grid et sorties "
-"graphiques mixées ?)"
+msgstr "Impossible de rendre la vue de plus haut niveau active (grid et sorties graphiques mixées ?)"
 
 #: grid.c:931
 msgid "attempt to plot on null device"
@@ -36,28 +37,27 @@ msgstr "Aucune mise en page définie"
 
 #: grid.c:1431
 msgid "Polygon edge not found (zero-width or zero-height?)"
-msgstr ""
+msgstr "Polygône non trouvé (longueur ou largeur nulle?)"
 
 #: grid.c:1440
 msgid "Polygon edge not found"
-msgstr ""
+msgstr "Extrémités de polygône non trouvées"
 
 #: grid.c:1580
 msgid "Require at least two points to draw arrow"
-msgstr ""
+msgstr "Il faut au moins deux points pour tracer une flêche"
 
 #: grid.c:1894
 msgid "Non-finite control point in Xspline"
-msgstr ""
+msgstr "Point de contrôle non fini dans Xspline"
 
 #: grid.c:2373
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "Rayon de cercle incorrect (doit être positif ou nul)"
 
 #: grid.c:3067
-#, fuzzy
 msgid "Unable to clip to rotated rectangle"
-msgstr "Impossible de couper une vue pivotée"
+msgstr "Impossible de couper au rectangle pivoté"
 
 #: layout.c:520
 msgid "invalid layout.pos.row"
@@ -69,18 +69,23 @@ msgstr "layout.pos.col incorrect"
 
 #: matrix.c:50
 msgid "singular transformation matrix"
-msgstr ""
+msgstr "matrice de transformation singulière"
 
 #: state.c:178
 msgid "Unable to store grid state.  Too many devices open?"
-msgstr ""
-"Impossible de conserver l'état de 'grid'. Trop de périphériques ouverts ?"
+msgstr "Impossible de conserver l'état de 'grid'. Trop de périphériques ouverts ?"
 
-#: unit.c:258 unit.c:408 unit.c:1138 unit.c:1218 unit.c:1298 unit.c:1378
+#: unit.c:258
+#: unit.c:408
+#: unit.c:1138
+#: unit.c:1218
+#: unit.c:1298
+#: unit.c:1378
 msgid "Unimplemented unit function"
 msgstr "Fonction d'unité non implémentée"
 
-#: unit.c:827 unit.c:1573
+#: unit.c:827
+#: unit.c:1573
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Unité non autorisée ou pas encore implémentée"
 
@@ -99,3 +104,4 @@ msgstr "Les unités doivent être de longueur > 0"
 #: viewport.c:317
 msgid "Non-finite location and/or size for viewport"
 msgstr "Position et / ou taille de vue non finies"
+

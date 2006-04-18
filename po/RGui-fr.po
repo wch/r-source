@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: RGui 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-04-03 10:08+0100\n"
-"PO-Revision-Date: 2005-12-06 16:49+0100\n"
+"PO-Revision-Date: 2006-04-18 08:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -588,9 +588,8 @@ msgid "Select directory for file 'Rconsole'"
 msgstr "Sélectionnez le répertoire pour le fichier 'Rconsole'"
 
 #: preferences.c:415
-#, fuzzy
 msgid "Select 'Rconsole' file"
-msgstr "Sélectionner un fichier"
+msgstr "Sélectionner un fichier 'Rconsole'"
 
 #: preferences.c:594
 #, c-format
@@ -607,7 +606,7 @@ msgstr "Appliquer"
 
 #: preferences.c:740
 msgid "Load"
-msgstr ""
+msgstr "Charger"
 
 #: rui.c:105
 msgid "Select file to source"
@@ -836,9 +835,8 @@ msgid "Select file"
 msgstr "Sélectionner un fichier"
 
 #: rui.c:1108
-#, fuzzy
 msgid "'mname' is limited to 1000 bytes"
-msgstr "'mname' est limité à 100 caractères"
+msgstr "'mname' est limité à 1000 bytes"
 
 #: rui.c:1150
 #, c-format
@@ -846,9 +844,8 @@ msgid "menu %s does not exist"
 msgstr "le menu %s n'existe pas"
 
 #: rui.c:1204
-#, fuzzy
 msgid "'menu' is limited to 500 bytes"
-msgstr "'menu' est limité à 50 caractères"
+msgstr "'menu' est limité à 500 bytes"
 
 #: rui.c:1214
 msgid "base menu does not exist"
@@ -859,9 +856,8 @@ msgid "failed to allocate menu"
 msgstr "erreur lors de la création du menu"
 
 #: rui.c:1245 rui.c:1366
-#, fuzzy
 msgid "menu + item is limited to 1000 bytes"
-msgstr "menu + entrée est limité à 100 caractères"
+msgstr "menu + entrée est limité à 1000 bytes"
 
 #: rui.c:1253 rui.c:1335
 msgid "menu does not exist"
@@ -1171,3 +1167,20 @@ msgstr "Changement de page : attente de confirmation..."
 #: ../library/grDevices/src/devWindows.c:3044
 msgid "Click or hit ENTER for next page"
 msgstr "Cliquez ou appuyez ENTREE pour la page suivante"
+
+#~ msgid ""
+#~ "The language for menus cannot be changed on a\n"
+#~ " running console.\n"
+#~ "\n"
+#~ "Save the preferences and restart Rgui to apply to menus.\n"
+#~ msgstr ""
+#~ "Le language des menus ne peut être changé sur une\n"
+#~ "console en cours d'exécution.\n"
+#~ "\n"
+#~ "Sauvez les préférences et redémarrez Rgui pour les appliquer.\n"
+
+#~ msgid "Choose a folder"
+#~ msgstr "Choisissez un répertoire"
+
+#~ msgid "Browse"
+#~ msgstr "Explorer"

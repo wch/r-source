@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2006-03-09 16:42\n"
-"PO-Revision-Date: 2005-12-06 14:27+0100\n"
+"PO-Revision-Date: 2006-04-18 08:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,9 +76,8 @@ msgstr "impossible de fermer le périphérique 1 (périphérique null)"
 msgid "cannot supply 'which' and 'device' at the same time"
 msgstr "fixer 'which' et 'device' en même temps n'est pas autorisé"
 
-#, fuzzy
 msgid "cannot copy from the null device"
-msgstr "impossible de copier vers le périphérique null"
+msgstr "impossible de copier du périphérique null"
 
 msgid "cannot copy to the null device"
 msgstr "impossible de copier vers le périphérique null"
@@ -96,7 +95,7 @@ msgid "can only print from screen device"
 msgstr "seul un périphérique écran peut être imprimé"
 
 msgid "need to specify one of 'width' and 'height'"
-msgstr ""
+msgstr "il faut spécifier 'width' ou 'height'"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "dev.control() appelé sans périphérique graphique ouvert"
@@ -108,8 +107,7 @@ msgid "invalid arguments in '%s' (need named args)"
 msgstr "arguments incorrects dans '%s' (les arguments doivent être nommés)"
 
 msgid "'name.opt' must be character, name of an existing list"
-msgstr ""
-"'name.opt' doit être une chaîne de caractère ou le nom d'une liste existante"
+msgstr "'name.opt' doit être une chaîne de caractère ou le nom d'une liste existante"
 
 msgid "cannot reset non-existent '%s'"
 msgstr "impossible de réinitialiser '%s' car il n'existe pas"
@@ -127,59 +125,52 @@ msgid "invalid PDF version"
 msgstr "version de PDF incorrecte"
 
 msgid "Invalid font type"
-msgstr ""
+msgstr "Type de police incorrect"
 
-#, fuzzy
 msgid "invalid family name in font specification"
-msgstr "spécification de police X11 incorrecte :"
+msgstr "nom de famille incorrect dans la spécification de la police"
 
-#, fuzzy
 msgid "invalid metric information in font specification"
-msgstr "spécification de police X11 incorrecte :"
+msgstr "information de métrique incorrecte dans la spécification de police"
 
-#, fuzzy
 msgid "invalid encoding in font specification"
-msgstr "spécification de police X11 incorrecte :"
+msgstr "encodage incorrect dans la spécification de police"
 
 msgid "Not a CID font"
-msgstr ""
+msgstr "Ce n'est pas une police CID"
 
-#, fuzzy
 msgid "invalid CMap name in font specification"
-msgstr "spécification de police X11 incorrecte :"
+msgstr "nom CMap incorrect dans la spécification de police"
 
-#, fuzzy
 msgid "invalid 'cmapEncoding' in font specification"
-msgstr "spécification de police X11 incorrecte :"
+msgstr "'cmapEncoding' incorrect dans la spécification de police"
 
-#, fuzzy
 msgid "invalid PDF resource in font specification"
-msgstr "spécification de police X11 incorrecte :"
+msgstr "ressource PDF incorrecte dans la spécification de police"
 
 msgid "Invalid font database name"
-msgstr ""
+msgstr "Nom de base de données de polices incorrect"
 
-#, fuzzy
 msgid "font %s already in use"
-msgstr "déjà utilisée"
+msgstr "police %s déjà utilisée"
 
 msgid "invalid arguments in '%s' (must be font names)"
 msgstr "arguments incorrects dans '%s' (il faut des noms de police)"
 
 msgid "unknown font"
-msgstr ""
+msgstr "fonte inconnue"
 
 msgid "font encoding mismatch '%s'/'%s'"
-msgstr ""
+msgstr "incohérence d'encodage pour la police '%s/%s'"
 
 msgid "'file' must be a non-empty character string"
 msgstr "'file' doit être une chaîne de caractère non vide"
 
 msgid "Invalid output format"
-msgstr ""
+msgstr "Format de sortie incorrect"
 
 msgid "status %d in running command '%s'"
-msgstr ""
+msgstr "statut %d dans la commande en cours d'exécution '%s'"
 
 msgid "no current device to record from"
 msgstr "aucun périphérique à partir duquel enregistrer"
@@ -188,12 +179,10 @@ msgid "argument is not of class \"recordedplot\""
 msgstr "l'argument n'est pas de classe \"recordedplot\""
 
 msgid "loading snapshot from pre-2.0.0 R version"
-msgstr ""
-"chargement d'un instantané graphique à partir d'une version de R pre-2.0.0"
+msgstr "chargement d'un instantané graphique à partir d'une version de R pre-2.0.0"
 
 msgid "loading snapshot from different R version"
-msgstr ""
-"chargement d'un instantané graphique à partir d'une version de R différente"
+msgstr "chargement d'un instantané graphique à partir d'une version de R différente"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' doit indiquer une étendue des valeurs, donc être de longueur 2"
@@ -226,9 +215,7 @@ msgid "Available devices are %s"
 msgstr "Les périphériques disponibles sont %s"
 
 msgid "quartz() device interactivity reduced without an event loop manager"
-msgstr ""
-"interactivité réduite (sans gestion des événements) dans les périphériques "
-"quartz()"
+msgstr "interactivité réduite (sans gestion des événements) dans les périphériques quartz()"
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "police Quartz incorrecte : doit être 4 chaînes de caractères"
@@ -237,16 +224,13 @@ msgid "invalid arguments in quartzFonts (must be font names)"
 msgstr "arguments incorrects dans quartzFonts (il faut des noms de police)"
 
 msgid "invalid arguments in quartzFonts (need named args)"
-msgstr ""
-"arguments incorrects dans quartzFonts (les arguments doivent être nommés)"
+msgstr "arguments incorrects dans quartzFonts (les arguments doivent être nommés)"
 
 msgid "invalid X11 font specification:"
 msgstr "spécification de police X11 incorrecte :"
 
 msgid "can only bring windows devices to the front"
-msgstr ""
-"seules les fenêtres des périphériques graphiques peuvent être amenées au "
-"premier plan"
+msgstr "seules les fenêtres des périphériques graphiques peuvent être amenées au premier plan"
 
 msgid "no such device"
 msgstr "aucun périphérique ne correspond"
@@ -264,8 +248,7 @@ msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr "arguments incorrects dans 'windowsFonts' (il faut des noms de police)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr ""
-"arguments incorrects dans 'windowsFonts' (les arguments doivent être nommés)"
+msgstr "arguments incorrects dans 'windowsFonts' (les arguments doivent être nommés)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
@@ -291,3 +274,4 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
 msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"
+
