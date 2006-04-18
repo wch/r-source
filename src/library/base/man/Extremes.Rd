@@ -52,6 +52,7 @@ pmin(\dots, na.rm=FALSE)
 
   \code{max} and \code{min} are generic functions: methods can be defined
   for them individually or via the \code{\link{Summary}} group generic.
+  For this to work properly, the arguments \code{\dots} should be unnamed.
 
   By definition the min/max of any vector containing an \code{NaN} is
   \code{NaN}, except that the min/max of any vector containing an \code{NA}

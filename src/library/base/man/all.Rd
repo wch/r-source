@@ -16,6 +16,7 @@ all(\dots, na.rm = FALSE)
 \details{
   This is a generic function: methods can be defined for it
   directly or via the \code{\link{Summary}} group generic.
+  For this to work properly, the arguments \code{\dots} should be unnamed.
 }
 \value{
   Given a sequence of logical arguments, a logical value indicating

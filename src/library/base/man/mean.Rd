@@ -26,7 +26,10 @@ mean(x, \dots)
   applied column by column.
   
   If \code{trim} is zero (the default),
-  the arithmetic mean of the values in \code{x} is computed.
+  the arithmetic mean of the values in \code{x} is computed, as a
+  numeric or complex vector of length one.  If any argument is
+  not logical (coerced to numeric), integer, numeric or complex,
+  \code{NA} is returned, with a warning.
 
   If \code{trim} is non-zero, a symmetrically trimmed mean is computed
   with a fraction of \code{trim} observations deleted from each end

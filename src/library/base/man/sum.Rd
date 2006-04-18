@@ -22,6 +22,7 @@ sum(\dots, na.rm = FALSE)
 \details{
   This is a generic function: methods can be defined for it
   directly or via the \code{\link{Summary}} group generic.
+  For this to work properly, the arguments \code{\dots}  should be unnamed.
 
   If \code{na.rm} is \code{FALSE} an \code{NA}
   value in any of the arguments will cause
@@ -29,6 +30,8 @@ sum(\dots, na.rm = FALSE)
   \code{NA} values are ignored.
 
   Logical true values are regarded as one, false values as zero.
+  For historical reasons, \code{NULL} is accepted and treated as if it
+  were \code{numeric(0)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
