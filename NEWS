@@ -76,6 +76,12 @@ DEPRECATED & DEFUNCT
 	S for use with is.loaded(), but are not so required in R. 
 
 
+C-LEVEL FACILITIES
+
+    o	The variables controlling stack checking are made available to
+	Rinterface.h to front-ends embedding R: see 'Writing R Extensions'
+
+
 BUG FIXES
 
     o	The name of a Fortran symbol reported to be missing by

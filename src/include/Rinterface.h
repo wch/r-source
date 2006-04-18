@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2004  The R Development Core Team.
+ *  Copyright (C) 1998--2006  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,8 @@
 
 /* This header file is to provide hooks for external GUIs such as
    GNOME and Cocoa.  It is only used on Unix-alikes.  All entries
-   here should be documented in doc/manual/R-exts.texi            */
+   here should be documented in doc/manual/R-exts.texi
+*/
 
 #ifndef RINTERFACE_H_
 #define RINTERFACE_H_
@@ -79,6 +80,14 @@ extern FILE * R_Outputfile;
 void R_setStartTime(void);
 void fpu_setup(Rboolean);
 
+/* duplicating Defn.h */
+#if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
+ typedef unsigned long uintptr_t;
+#endif
+
+extern uintptr_t R_CStackLimit;	/* C stack limit */
+extern uintptr_t R_CStackStart;	/* Initial stack address */
+
 /* formerly in src/unix/devUI.h */
 
 #ifdef R_INTERFACE_PTRS
@@ -104,14 +113,14 @@ extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
 
-/* These two are not used by R itself, but are used by the GNOME front end
-   and the tcltk package */
-extern int  (*R_timeout_handler)();
-extern long R_timeout_val;
-
 #ifdef HAVE_AQUA
 extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
 #endif
+
+/* These two are not used by R itself, but are used by the GNOME front-end
+   and the tcltk package */
+extern int  (*R_timeout_handler)();
+extern long R_timeout_val;
 
 #endif
 
