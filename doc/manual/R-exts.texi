@@ -515,13 +515,15 @@ line per topic that @code{data()} will find, in the format @samp{foo} if
 @code{data(foo)} provides @samp{bar} and @samp{bah}.
 
 The @file{demo} subdirectory is for @R{} scripts (for running via
-@code{demo()}) which demonstrate some of the functionality of the
-package.  The script files must start with a (lower or upper case)
-letter@footnote{This is enforced as from @R{} 2.3.0.} and have one of
-the extensions @file{.R} or @file{.r}.  If present, the @file{demo}
-subdirectory should also have a @file{00Index} file with one line for
-each demo, giving its name and a description.  (Note that it is not
-possible to generate this index file automatically.)
+@code{demo()}) that demonstrate some of the functionality of the package.
+Demos may be interactive and are not checked automatically, so if testing is
+desired use code in the @file{tests} directory.  The script files must
+start with a (lower or upper case) letter@footnote{This is enforced as
+from @R{} 2.3.0.} and have one of the extensions @file{.R} or @file{.r}.
+If present, the @file{demo} subdirectory should also have a
+@file{00Index} file with one line for each demo, giving its name and a
+description separated by white space. (Note that it is not possible to
+generate this index file automatically.)
 
 The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.  Subdirectories of @file{inst} should not
