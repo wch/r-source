@@ -27,7 +27,9 @@ make.link(link)
     \item{valideta}{\code{function(eta)}\{ \code{TRUE} if
         \code{eta} is in the domain of \code{linkinv} \}.}
 }
-\seealso{\code{\link{glm}}, \code{\link{family}}.}
+\seealso{
+  \code{\link{power}}, \code{\link{glm}}, \code{\link{family}}.
+}
 \examples{
 str(make.link("logit"))
 
