@@ -6905,7 +6905,9 @@ to access a FORTRAN common block from C
 
 On most current platforms these are all the same, but it is unwise to
 rely on this.  Note that names with underscores are not legal in FORTRAN
-77, and are not portably handled by the above macros.
+77, and are not portably handled by the above macros.  (Also, all
+FORTRAN names for use by @R{} are lower case, but this is not enforced
+by the macros.)
 
 For example, suppose we want to call R's normal random numbers from
 FORTRAN.  We need a C wrapper along the lines of
@@ -8112,6 +8114,7 @@ our GUI callbacks to be called during the @R{} mainloop.
 @menu
 * Setting R callbacks::         
 * Meshing event loops::         
+* Threading issues::            
 @end menu
 
 @node Setting R callbacks, Meshing event loops, Embedding R under Unix-alikes, Embedding R under Unix-alikes
@@ -8297,7 +8300,7 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @end deftypefun
 
 
-@node Meshing event loops,  , Setting R callbacks, Embedding R under Unix-alikes
+@node Meshing event loops, Threading issues, Setting R callbacks, Embedding R under Unix-alikes
 @subsection Meshing event loops
 
 One of the most difficult issues in interfacing @R{} to a front-end is
@@ -8379,6 +8382,37 @@ not attempt to keep itself alive whilst @R{} is waiting on sockets.  The
 ability to add a polled handler as @code{R_timeout_handler} is used by
 the @pkg{tcltk} package.
 
+
+@node Threading issues,  , Meshing event loops, Embedding R under Unix-alikes
+@subsection Threading issues
+
+Enbedded @R{} is designed to be run in the main thread, and all the
+testing is done in that context.  There is a potential issue with the
+stack-checking mechanism where threads are involved.  This uses two
+variables declared in the internal headers
+
+@example
+extern uintptr_t R_CStackLimit;	/* C stack limit */
+extern uintptr_t R_CStackStart;	/* Initial stack address */
+@end example
+
+@noindent
+Note that @code{uintptr_t} is a C99 type for which a substitute
+@code{unsigned long} is defined in @R{} if needed.
+
+These will be set@footnote{at least on platforms where the values are
+available, that is having @code{getrlimit} and on Linux or having
+@code{sysctl} supporting @code{KERN_USRSTACK}, including FreeBSD and
+MacOS X.} when @code{R_initialize_R} is called, to values appropriate to
+the main thread.  Stack-checking can be disabled by seting
+@code{R_CStackLimit = (uintptr_t)-1}, but it is better to if possible
+set appropriate values.  (What these are and how to determine them are
+OS-specific, and the stack size limit may differ for secondary threads.
+If you have a choice of stack size, at least 8Mb is recommended.)
+
+You may also want to consider how signals are handled: @R{} sets signal
+handlers for several signals, including @code{SIGINT}, @code{SIGSEGV},
+@code{SIGPIPE}, @code{SIGUSR1} and @code{SIGUSR2}.
 
 
 @node Embedding R under Windows,  , Embedding R under Unix-alikes, Linking GUIs and other front-ends to R
