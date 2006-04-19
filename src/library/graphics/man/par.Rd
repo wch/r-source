@@ -433,9 +433,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{tcl}}{The length of tick marks as a fraction of the
       height of a line of text.  The default value is \code{-0.5};
       setting \code{tcl = NA} sets \code{tck = -0.01} which is S' default.}
-    \item{\code{tmag}}{A number specifying the enlargement of text of
-      the main title relative to the other annotating text of the plot.
-      Defaults to \code{1.2}.}
+    \item{\code{tmag}}{Currently unused: defaults to \code{1.2}.}
     \item{\code{usr}}{A vector of the form \code{c(x1, x2, y1, y2)}
       giving the extremes of the user coordinates of the plotting
       region.  When a logarithmic scale is in use (i.e.,
