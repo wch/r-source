@@ -2827,7 +2827,7 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *  Parsing Entry Points:
  *
  *  The Following entry points provide language parsing facilities.
- *  Note that there are separate entry points for parsing IOBuffers
+ *  Note that there are separate entry points for parsing IoBuffers
  *  (i.e. interactve use), files and R character strings.
  *
  *  The entry points provide the same functionality, they just
@@ -2840,7 +2840,7 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *
  *	SEXP R_Parse1Vector(TextBuffer *text, int gencode, ParseStatus *status)
  *
- *	SEXP R_Parse1Buffer(IOBuffer *buffer, int gencode, ParseStatus *status)
+ *	SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
  *
  *
  *  The success of the parse is indicated as folllows:
@@ -2858,9 +2858,9 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *
  *	SEXP R_ParseFile(FILE *fp, int n, ParseStatus *status)
  *
- *	SEXP R_ParseVector(TextBuffer *text, int n, ParseStatus *status)
+ *	SEXP R_ParseVector(SEXP *text, int n, ParseStatus *status)
  *
- *	SEXP R_ParseBuffer(IOBuffer *buffer, int n, ParseStatus *status)
+ *	SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status)
  *
  *  Here, status is 1 for a successful parse and 0 if parsing failed
  *  for some reason.
