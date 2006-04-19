@@ -66,8 +66,16 @@ glm <- function(formula, family = gaussian, data, weights,
                    offset = offset, family = family, control = control,
                    intercept = attr(mt, "intercept") > 0)
 
-    ## empty models don't have an intercept!
-    if(any(offset) && attr(mt, "intercept") > 0) {
+    ## This calculated the null deviance from the intercept-only model
+    ## if there is one, otherwise from the offset-only model.
+    ## We need to recalculate by a proper fit if there is intercept and
+    ## offset.
+    ##
+    ## The glm.fit calculation could be wrong if the link depends on the
+    ## observations, so we allow the null deviance to be forced to be
+    ## re-calculated by setting an offset (provided there is an intercept).
+    ## Prior to 2.4.0 this was only done for non-zero offsets.
+    if(length(offset) && attr(mt, "intercept") > 0) {
 	fit$null.deviance <-
 	    glm.fit(x = X[,"(Intercept)",drop=FALSE], y = Y, weights = weights,
                     offset = offset, family = family,

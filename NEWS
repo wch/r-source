@@ -48,6 +48,11 @@ NEW FEATURES
 	The internal storage of row.names = 1:n just records 'n' for
 	efficiency with very long vectors.
 
+    o	make.link() now returns an object of class "link-glm".
+	The GLM families accept an object of this class for their
+	'link' argument, which allows user-specified link functions.
+	Also, quasi() allows user-specified variance functions.
+
 
 DEPRECATED & DEFUNCT
 
@@ -105,6 +110,10 @@ BUG FIXES
     o	The Summary() methods for data.frame, Date, POSIXct, POSIXlt
 	and difftime all required an argument which can match 'x',
 	although the generics did not.
+
+    o	glm() now recalculates the null deviance whenever there is an
+	offset, even if it is exactly zero, to avoid a discontinuity
+	in that case.
 
 
 

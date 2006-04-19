@@ -167,7 +167,10 @@ glm.fit(x, y, weights = rep(1, nobs),
     assuming that the dispersion is known).}
   \item{null.deviance}{The deviance for the null model, comparable with
     \code{deviance}. The null model will include the offset, and an
-    intercept if there is one in the model}
+    intercept if there is one in the model.  Note that this will be
+    incorrect if the link function depends on the data other than
+    through the fitted mean: specify a zero offset to force a correct
+    calculation.}
   \item{iter}{the number of iterations of IWLS used.}
   \item{weights}{the \emph{working} weights, that is the weights
     in the final iteration of the IWLS fit.}
