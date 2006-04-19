@@ -8375,8 +8375,9 @@ set appropriate values.  (What these are and how to determine them are
 OS-specific, and the stack size limit may differ for secondary threads.
 If you have a choice of stack size, at least 8Mb is recommended.)
 
-You may also want to consider who signals are handled: @R{} sets signal
-handlers for several signals.
+You may also want to consider how signals are handled: @R{} sets signal
+handlers for several signals, including @code{SIGINT}, @code{SIGSEGV},
+@code{SIGPIPE}, @code{SIGUSR1} and @code{SIGUSR2}.
 
 
 @node Embedding R under Windows,  , Embedding R under Unix-alikes, Linking GUIs and other front-ends to R
