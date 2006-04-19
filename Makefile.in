@@ -238,6 +238,14 @@ install-R-framework:
 	@## the resulting libR will point dyld to the fat libR regardless of its origin
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/lib" && \
 	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" $(Rexeclibdir)/libR.dylib)
+	@(if test -e $(Rexeclibdir)/libRlapack.dylib; then \
+	  find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
+	  xargs -n 1 install_name_tool -change \
+	  `otool -L $(Rexeclibdir)/libRlapack.dylib |sed -n -e '2 s/.\(.*\) (compat.*/\1/p'` \
+	  "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libRlapack.dylib" ; \
+	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libRlapack.dylib" \
+	  $(Rexeclibdir)/libRlapack.dylib; \
+	fi)
 	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders && \
 	  cp src/include/config.h $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/ && \
 	  find $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders -name .svn | xargs rm -rf)
