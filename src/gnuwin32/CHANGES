@@ -10,6 +10,9 @@ R 2.4.0
 The language for menus and messages can be set in the 'Rconsole' file and
 (for future messages/sessions) from the GUI preferences.
 
+The initial setting for console buffering can be set in the 'Rconsole'
+file and (for future sessions) from the GUI preferences.
+
 
 
 R 2.3.0

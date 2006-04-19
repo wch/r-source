@@ -107,7 +107,7 @@ typedef struct structConsoleData *ConsoleData;
 
 ConsoleData newconsoledata(font f, int rows, int cols,
     int bufbytes, int buflines,
-    rgb fg, rgb ufg, rgb bg, int kind);
+    rgb fg, rgb ufg, rgb bg, int kind, int buffered);
 
 void freeConsoleData(ConsoleData p);
 void setfirstvisible(control c, int fv);

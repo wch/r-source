@@ -65,3 +65,7 @@ ygraphics = 0
 
 ## Language for messages
 language = 
+
+
+## Default setting for console buffering: 'yes' or 'no'
+buffered = yes

@@ -311,7 +311,7 @@ extern int R_HistorySize;  /* from Defn.h */
 
 ConsoleData
 newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
-	       rgb fg, rgb ufg, rgb bg, int kind)
+	       rgb fg, rgb ufg, rgb bg, int kind, int buffered)
 {
     ConsoleData p;
 
@@ -360,6 +360,7 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
     p->mx1 = 14;
     p->sel = 0;
     p->input = 0;
+    p->lazyupdate = buffered;
     return (p);
 }
 
@@ -1640,14 +1641,14 @@ int fontsty, pointsize;
 int consoler = 25, consolec = 80, consolex = 0, consoley = 0;
 int pagerrow = 25, pagercol = 80;
 int pagerMultiple = 1, haveusedapager = 0;
-int consolebufb = DIMLBUF, consolebufl = MLBUF;
+int consolebufb = DIMLBUF, consolebufl = MLBUF, consolebuffered = 1;
 
 void
 setconsoleoptions(char *fnname,int fnsty, int fnpoints,
                   int rows, int cols, int consx, int consy,
 		  rgb nfg, rgb nufg, rgb nbg, rgb high,
 		  int pgr, int pgc, int multiplewindows, int widthonresize,
-		  int bufbytes, int buflines)
+		  int bufbytes, int buflines, int buffered)
 {
     char msg[LF_FACESIZE + 128];
     strncpy(fontname, fnname, LF_FACESIZE);
@@ -1688,6 +1689,7 @@ setconsoleoptions(char *fnname,int fnsty, int fnpoints,
     setWidthOnResize = widthonresize;
     consolebufb = bufbytes;
     consolebufl = buflines;
+    consolebuffered = buffered;
 }
 
 void consoleprint(console c)
@@ -1878,7 +1880,7 @@ console newconsole(char *name, int flags)
     p = newconsoledata((consolefn) ? consolefn : FixedFont,
 		       consoler, consolec, consolebufb, consolebufl,
 		       consolefg, consoleuser, consolebg,
-		       CONSOLE);
+		       CONSOLE, consolebuffered);
     if (!p) return NULL;
     c = (console) newwindow(name, rect(consolex, consoley, WIDTH, HEIGHT),
 			    flags | TrackMouse | VScrollbar | HScrollbar);
