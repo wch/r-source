@@ -36,7 +36,7 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
     when the background color is transparent.}
   \item{fonts}{X11 font description strings into which weight, slant and
     size will be substituted.  There are two, the first for fonts 1 to 4
-    and the second for font 5, the symbol font.}
+    and the second for font 5, the symbol font. See section Fonts.}
   \item{xpos, ypos}{initial position of the top left corner of the
     window, in pixels.  Negative values are from the opposite corner,
     e.g. \code{xpos=-100} says the top right corner should be 100 pixels
@@ -58,15 +58,6 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   are approximated by the closest value in the cube.  The default
   strategy for pseudocolor displays is \code{"pseudo"}.
 
-  An initial/default font family for the device can be specified via
-  the \code{fonts} argument, but
-  if a device-independent R graphics font family is specified
-  (e.g., via \code{par(family=)} in the graphics package),
-  the X11 device makes use of the X11 font database
-  (see \code{X11Fonts}) to
-  convert the R graphics font family
-  to an X11-specific font family description.  
-
   \bold{Note:} All \code{X11} devices share a \code{colortype} which is
   set by the first device to be opened.  To change the \code{colortype}
   you need to close \emph{all} open \code{X11} devices then open one
@@ -86,6 +77,30 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   The initial size and position are only hints, and may not be acted on
   by the window manager.
 }
+\section{Fonts}{
+  An initial/default font family for the device can be specified via
+  the \code{fonts} argument, but if a device-independent R graphics font
+  family is specified (e.g., via \code{par(family=)} in the graphics
+  package), the X11 device makes use of the X11 font database (see
+  \code{X11Fonts}) to convert the R graphics font family to an
+  X11-specific font family description.
+
+  X11 chooses fonts by patching to a pattern, and it is quite possible
+  that it will choose a font in the wrong encoding or which does not
+  contain glyphs for the your language (particularly common in
+  \code{iso10646-1} fonts.
+  
+  The \code{fonts} argument is a two-element character vector, and the
+  first element will be crucial in successfully using
+  non-Western-European fonts.  Settings that have proved useful include
+
+  \code{"-*-mincho-\%s-\%s-*--\%d-*-*-*-*-*-*-*"} for CJK languages and
+  \code{"-cronyx-helvetica-\%s-\%s-*--\%d-*-*-*-*-*-*-*"} for Russian.
+
+  For UTF-8 locales, the \code{XLC_LOCALE} databases provide mappings
+  between character encodings, and you may need to add an entry for your
+  locale (e.g. Fedora Core 3 lacks one for \code{ru_RU.utf8}).
+}
 \section{Resources}{
   The standard X11 resource \code{geometry} can be use to specify the
   window position and/or size, but will be overridden by values
@@ -93,7 +108,8 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   that the resource specifies the width and height in pixels and not in
   inches.
 }
+
 \seealso{
-  \code{\link{Devices}}.
+  \code{\link{Devices}},\code{\link{X11Fonts}}.
 }
 \keyword{device}
