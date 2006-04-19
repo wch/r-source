@@ -77,6 +77,8 @@ DEPRECATED & DEFUNCT
 	been removed (use the fields in the DESCRIPTION file instead):
 	-s --save --no-save --lazy --no-lazy --lazy-data --no-lazy-data
 
+    o	Graphical parameter 'tmag' is obsolete.
+
     o	symbol.C() and symbol.For() are deprecated.  They are required in
 	S for use with is.loaded(), but are not so required in R. 
 
@@ -571,6 +573,8 @@ DEPRECATED & DEFUNCT
 	The following command-line options to INSTALL are deprecated
 	(use the fields in the DESCRIPTION file instead):
 	-s --save --no-save --lazy --no-lazy --lazy-data --no-lazy-data
+
+    o	Graphical parameter 'tmag' (which is long unused) is deprecated.
 
 
 INTERNATIONALIZATION

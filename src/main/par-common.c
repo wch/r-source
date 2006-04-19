@@ -227,11 +227,6 @@
 	else if (!R_FINITE(Rf_dpptr(dd)->tck))
 	    R_DEV__(tck) = -0.01; /* S Default -- was 0.02 till R 1.5.x */
     }
-    else if (streql(what, "tmag")) {
-	lengthCheck(what, value, 1, call);	x = asReal(value);
-	posRealCheck(x, what);
-	R_DEV__(tmag) = x;
-    }
     else if (streql(what, "xaxp")) {
 	value = coerceVector(value, REALSXP);
 	lengthCheck(what, value, 3, call);

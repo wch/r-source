@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2005 Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997-2006 Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -120,7 +120,6 @@ ParTable[] = {
     { "srt",		 0 },
     { "tck",		 0 },
     { "tcl",		 0 },
-    { "tmag",		 0 },
     { "usr",		 1 },
     { "xaxp",		 0 },
     { "xaxs",		 0 },
@@ -133,6 +132,7 @@ ParTable[] = {
     { "ylog",		 1 },
     /* Obsolete pars */
     { "type",		-2},
+    { "tmag",           -2},
     /* Non-pars that might get passed to Specify2 */
     { "asp",		-3},
     { "main",		-3},
@@ -1055,10 +1055,6 @@ static SEXP Query(char *what, DevDesc *dd)
 	value = allocVector(REALSXP, 1);
 	REAL(value)[0] = Rf_dpptr(dd)->tcl;
     }
-    else if (streql(what, "tmag")) {
-	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = Rf_dpptr(dd)->tmag;
-    }
     else if (streql(what, "usr")) {
 	value = allocVector(REALSXP, 4);
 	if (Rf_gpptr(dd)->xlog) {
@@ -1137,7 +1133,7 @@ static SEXP Query(char *what, DevDesc *dd)
 	value = allocVector(LGLSXP, 1);
 	INTEGER(value)[0] = Rf_dpptr(dd)->ylog;
     }
-    else if (streql(what, "type")) {
+    else if (ParCode(what) == -2) { 
 	warning(_("graphical parameter \"%s\" is obsolete"), what);
 	value = R_NilValue;
     }

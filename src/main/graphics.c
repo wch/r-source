@@ -2132,7 +2132,6 @@ void attribute_hidden GInit(GPar *dp)
     dp->las = 0;
     dp->tck = NA_REAL;
     dp->tcl = -0.5;
-    dp->tmag = 1.2;
     dp->xaxp[0] = 0.0;
     dp->xaxp[1] = 1.0;
     dp->xaxp[2] = 5.0;
@@ -4900,7 +4899,6 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->srt = Rf_dpSavedptr(dd)->srt;
     Rf_dpptr(dd)->tck = Rf_dpSavedptr(dd)->tck;
     Rf_dpptr(dd)->tcl = Rf_dpSavedptr(dd)->tcl;
-    Rf_dpptr(dd)->tmag = Rf_dpSavedptr(dd)->tmag;
     Rf_dpptr(dd)->xaxp[0] = Rf_dpSavedptr(dd)->xaxp[0];
     Rf_dpptr(dd)->xaxp[1] = Rf_dpSavedptr(dd)->xaxp[1];
     Rf_dpptr(dd)->xaxp[2] = Rf_dpSavedptr(dd)->xaxp[2];
