@@ -24,7 +24,8 @@ quasipoisson(link = "log")
 \alias{print.family}
 \arguments{
   \item{link}{a specification for the model link function.  This can be
-    a name, a character string, or an object of class
+    a name/expression, a character string, a one-element character
+    vector or an object of class
     \code{"\link[=make.link]{link-glm}"} (provided it is not specified
     via one of the standard names given next).
 
@@ -39,7 +40,7 @@ quasipoisson(link = "log")
      and \code{"log"};
     the \code{poisson} family the links \code{"log"}, \code{"identity"}, 
     and \code{"sqrt"} and the \code{inverse.gaussian} family the links
-    \code{"1/mu^2"} (not as a name), \code{"inverse"}, \code{"identity"}
+    \code{"1/mu^2"}, \code{"inverse"}, \code{"identity"}
     and \code{"log"}.
     
     The \code{quasi} family accepts the links \code{"logit"}, \code{"probit"},
@@ -50,11 +51,13 @@ quasipoisson(link = "log")
   }
   \item{variance}{for all families other than \code{quasi}, the
     variance function is determined by the family.  The \code{quasi}
-    family will accept the character string specifications \code{"constant"},
-    \code{"mu(1-mu)"}, \code{"mu"}, \code{"mu^2"} and \code{"mu^3"} for
-    the variance function, or a list containing components
-    \code{varfun}, \code{vaildmu}, \code{dev.resids}, \code{initialize}
-    and \code{name}.
+    family will accept the character string (or unquoted as a
+    name/expression) specifications
+    \code{"constant"}, \code{"mu(1-mu)"}, \code{"mu"}, \code{"mu^2"}
+    and \code{"mu^3"} for the variance function, or a list containing
+    components \code{varfun}, \code{validmu}, \code{dev.resids},
+    \code{initialize} and \code{name}.
+    }
   \item{object}{the function \code{family} accesses the \code{family}
     objects which are stored within objects created by modelling
     functions (e.g., \code{glm}).}

@@ -140,6 +140,7 @@ poisson <- function (link = "log")
     }
     if (linktemp %in% c("log", "identity", "sqrt"))
 	stats <- make.link(linktemp)
+    else if (is.character(link)) stats <- make.link(link)
     else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
@@ -193,6 +194,7 @@ quasipoisson <- function (link = "log")
     }
     if (linktemp %in% c("log", "identity", "sqrt"))
 	stats <- make.link(linktemp)
+    else if(is.character(link)) stats <- make.link(link)
     else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
@@ -243,6 +245,7 @@ gaussian <- function (link = "identity")
     }
     if (linktemp %in% c("inverse", "log", "identity"))
 	stats <- make.link(linktemp)
+    else if(is.character(link)) stats <- make.link(link)
     else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
@@ -294,6 +297,7 @@ binomial <- function (link = "logit")
     }
     if (linktemp %in% c("logit", "probit", "cloglog", "cauchit", "log"))
         stats <- make.link(linktemp)
+    else if(is.character(link)) stats <- make.link(link)
     else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
@@ -370,6 +374,7 @@ quasibinomial <- function (link = "logit")
     }
     if (linktemp %in% c("logit", "probit", "cloglog", "cauchit", "log"))
  	stats <- make.link(linktemp)
+    else if(is.character(link)) stats <- make.link(link)
     else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
@@ -432,6 +437,7 @@ Gamma <- function (link = "inverse")
     }
     if (linktemp %in% c("inverse", "log", "identity"))
 	stats <- make.link(linktemp)
+    else if(is.character(link)) stats <- make.link(link)
     else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
@@ -487,8 +493,9 @@ inverse.gaussian <- function(link = "1/mu^2")
                 stop("'link' is invalid", domain=NA)
         }
     }
-    if (inktemp %in% c("inverse", "log", "identity", "1/mu^2"))
+    if (linktemp %in% c("inverse", "log", "identity", "1/mu^2"))
 	stats <- make.link(linktemp)
+    else if(is.character(link)) stats <- make.link(link)
     else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
@@ -528,62 +535,65 @@ inverse.gaussian <- function(link = "1/mu^2")
 quasi <- function (link = "identity", variance = "constant")
 {
     nm <- linktemp <- substitute(link)
-    if (is.name(nm)) nm <- deparse(nm)
-    if (is.character(nm) &&
-        nm %in% c("logit", "probit", "cloglog", "identity", "inverse", "log",
+    if (!is.character(nm)) nm <- deparse(nm)
+    if (nm %in% c("logit", "probit", "cloglog", "identity", "inverse", "log",
                   "1/mu^2", "sqrt"))
         stats <- make.link(nm)
+    else if(is.character(link)) stats <- make.link(link)
     else {
         stats <- link
         nm <- if(!is.null(stats$name)) stats$name else deparse(linktemp)
     }
-    if (is.character(variance)) {
-        variance_nm <- variance
-        switch(variance,
-               "constant" = {
-                   varfun <- function(mu) rep.int(1, length(mu))
-                   dev.resids <- function(y, mu, wt) wt * ((y - mu)^2)
+    vtemp <- substitute(variance)
+    if (!is.character(vtemp)) vtemp <- deparse(vtemp)
+    variance_nm <- vtemp
+    switch(vtemp,
+           "constant" = {
+               varfun <- function(mu) rep.int(1, length(mu))
+               dev.resids <- function(y, mu, wt) wt * ((y - mu)^2)
                    validmu <- function(mu) TRUE
-                   initialize <- expression({n <- rep.int(1, nobs); mustart <- y})
-               },
-               "mu(1-mu)" = {
-                   varfun <- function(mu) mu * (1 - mu)
-                   validmu <- function(mu) all(mu>0) && all(mu<1)
-                   dev.resids <- function(y, mu, wt)
-                       2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
-                                 (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
-                   initialize <- expression({n <- rep.int(1, nobs)
-                                             mustart <- pmax(0.001, pmin(0.999, y))})
-               },
-               "mu" = {
-                   varfun <- function(mu) mu
-                   validmu <- function(mu) all(mu>0)
-                   dev.resids <- function(y, mu, wt)
-                       2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
-                   ## 0.1 fudge here matches poisson: S has 1/6.
-                   initialize <- expression({n <- rep.int(1, nobs)
-                                             mustart <- y + 0.1 * (y == 0)})
-               },
-               "mu^2" = {
-                   varfun <- function(mu) mu^2
-                   validmu <- function(mu) all(mu>0)
-                   dev.resids <- function(y, mu, wt)
+               initialize <- expression({n <- rep.int(1, nobs); mustart <- y})
+           },
+           "mu(1-mu)" = {
+               varfun <- function(mu) mu * (1 - mu)
+               validmu <- function(mu) all(mu>0) && all(mu<1)
+               dev.resids <- function(y, mu, wt)
+                   2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
+                             (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
+               initialize <- expression({n <- rep.int(1, nobs)
+                                         mustart <- pmax(0.001, pmin(0.999, y))})
+           },
+           "mu" = {
+               varfun <- function(mu) mu
+               validmu <- function(mu) all(mu>0)
+               dev.resids <- function(y, mu, wt)
+                   2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
+               ## 0.1 fudge here matches poisson: S has 1/6.
+               initialize <- expression({n <- rep.int(1, nobs)
+                                         mustart <- y + 0.1 * (y == 0)})
+           },
+           "mu^2" = {
+               varfun <- function(mu) mu^2
+               validmu <- function(mu) all(mu>0)
+               dev.resids <- function(y, mu, wt)
 		   pmax(-2 * wt * (log(ifelse(y == 0, 1, y)/mu) - (y - mu)/mu), 0)
-                   initialize <- expression({n <- rep.int(1, nobs)
-                                             mustart <- y + 0.1 * (y == 0)})
-               },
-               "mu^3" = {
-                   varfun <- function(mu) mu^3
-                   validmu <- function(mu) all(mu>0)
-                   dev.resids <- function(y, mu, wt)
-                       wt * ((y - mu)^2)/(y * mu^2)
-                   initialize <- expression({n <- rep.int(1, nobs)
-                   mustart <- y + 0.1 * (y == 0)})
-               },
-               stop(gettextf('\'variance\' "%s" is invalid: possible values are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"', variance_nm), domain = NA)
+               initialize <- expression({n <- rep.int(1, nobs)
+                                         mustart <- y + 0.1 * (y == 0)})
+           },
+           "mu^3" = {
+               varfun <- function(mu) mu^3
+               validmu <- function(mu) all(mu>0)
+               dev.resids <- function(y, mu, wt)
+                   wt * ((y - mu)^2)/(y * mu^2)
+               initialize <- expression({n <- rep.int(1, nobs)
+                                         mustart <- y + 0.1 * (y == 0)})
+           },
+           variance_nm <- NA
+           )# end switch(.)
 
-               )# end switch(.)
-    } else {
+    if(is.na(variance_nm)) {
+        if(is.character(variance))
+            stop(gettextf('\'variance\' "%s" is invalid: possible values are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"', variance_nm), domain = NA)
         ## so we really meant the object.
         varfun <- variance$varfun
         validmu <- variance$validmu

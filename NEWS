@@ -115,6 +115,11 @@ BUG FIXES
 	offset, even if it is exactly zero, to avoid a discontinuity
 	in that case.
 
+    o	Amongst families, quasi() accepted an expression for link and
+	no other did.  Now all accept an expression which evaluates to
+	a one-element character vector (although e.g. logit is taken
+	as a name and not an expression).
+
 
 
 
