@@ -448,6 +448,8 @@ DEPRECATED & DEFUNCT
 	(use the fields in the DESCRIPTION file instead):
 	-s --save --no-save --lazy --no-lazy --lazy-data --no-lazy-data
 
+    o	Graphical parameter 'tmag' (which is long unused) is deprecated.
+
 
 INTERNATIONALIZATION
 
