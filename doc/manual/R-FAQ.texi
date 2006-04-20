@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-04-14
+@set FAQ_DATE @value{FAQ_YEAR}-04-20
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 2
@@ -2542,6 +2542,8 @@ Extensions of package @strong{distr}.
 Simulation classes based on package @strong{distr}.
 @item distrTEst
 Estimation and Testing classes based on package @strong{distr}.
+@item diveMove
+Dive analysis and calibration.
 @item doBy
 Facilities for groupwise computations.
 @item dprep
