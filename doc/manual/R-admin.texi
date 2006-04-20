@@ -2496,18 +2496,19 @@ When X11 was designed, most displays were around 75dpi, whereas today
 they are of the order of 100dpi or even higher.  If you find that X11()
 is reporting missing font sizes, especially larger ones, it is likely
 that you have not installed the 100dpi versions of the X11 fonts.  The
-details differ by system, but will likely have something like
-
+names and details differ by system, but will likely have something like
+Fedora Core 5's
 @example
-fonts-xorg-75dpi-6.8.2-0.FC3.1
-fonts-xorg-100dpi-6.8.2-0.FC3.1
-fonts-xorg-base-6.8.2-0.FC3.1
-fonts-xorg-truetype-6.8.2-0.FC3.1
-fonts-xorg-cyrillic-6.8.2-0.FC3.1
+xorg-x11-fonts-75dpi
+xorg-x11-fonts-100dpi
+xorg-x11-fonts-truetype
+xorg-x11-fonts-Type1
+xorg-x11-fonts-cyrillic
 @end example
 
 @noindent
-and you need to ensure that the @samp{-100dpi} versions are installed.
+and you need to ensure that the @samp{-100dpi} versions are installed
+and on the X11 font path (check via @command{xset -q}).
 
 More complicated problems can occur in non-Western-European locales, so
 if you are using one, the first thing to check is that things work in
@@ -2529,7 +2530,7 @@ listing).  If you find none, it is likely that you need to install
 further fonts, such as @samp{fonts-xorg-cyrillic} shown in the listing
 above.
 
-Multi-byte locales, most commonly UTF-8, are even more complicated.
+Multi-byte locales (most commonly UTF-8) are even more complicated.
 There are few fonts in @samp{iso10646-1}, the Unicode encoding, and they
 only contain a subset of the available glyphs (and are often fixed-width
 designed for use in terminals).  In such locales @emph{fontsets} are
@@ -2543,12 +2544,18 @@ can be displayed when running in @code{ja_JP.utf8} but not when running
 in @code{en_GB.utf8} on the same machine.
 
 On some systems scalable fonts are available covering a wide range of
-glyphs.  One source are TrueType fonts, and these can provide high
+glyphs.  One source is TrueType fonts, and these can provide high
 coverage.  Another is Type 1 fonts: the URW set of Type 1 fonts provides
-standard typefaces such a Helvetica with a large coverage of glyphs than
-the standard X11 bitmaps, including Cyrillic.  These are generally not
-part of the default install, and the X server will need to be configured
-to use them.
+standard typefaces such as Helvetica with a larger coverage of Unicode
+glyphs than the standard X11 bitmaps, including Cyrillic.  These are
+generally not part of the default install, and the X server may need to
+be configured to use them.  They might be under the X11 @file{fonts}
+directory or elsewhere, for example,
+
+@example
+/usr/share/fonts/default/Type1
+/usr/share/fonts/ja/TrueType
+@end example
 
 
 @node Linux, Mac OS X, X11 issues, Platform notes
