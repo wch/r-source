@@ -143,7 +143,11 @@ users).
 
 A patched version of the current release, @samp{r-patched} and the
 current development version, @samp{r-devel}, are available as daily
-tarballs and via access to the R Subversion repository.
+tarballs and via access to the R Subversion repository.  (For the two
+weeks prior to the release of a minor (2.x.0) version, @samp{r-patched}
+will refer to beta/release candidates of the upcoming release, the
+patched version of the current release being available only via
+Subversion.)
 
 The tarballs are available from
 @url{ftp://ftp.stat.math.ethz.ch/pub/Software/R/,
@@ -192,8 +196,9 @@ Certificate information:
 (currently, there is no ``trusted certificate'').  You can accept this
 certificate permanently and will not be asked about it anymore.
 
-Note that retrieving the sources by e.g. @command{wget -r} or @command{svn export}
-from that URL will not work: the Subversion information is needed to build @R{}.
+Note that retrieving the sources by e.g. @command{wget -r} or
+@command{svn export} from that URL will not work: the Subversion
+information is needed to build @R{}.
 
 The Subversion repository does not contain the current sources for the
 recommended packages, which can be obtained by @command{rsync} or
@@ -613,8 +618,6 @@ targets to uninstall DVI, info and PDF manuals in
 
 @node Sub-architectures,  , Uninstallation, Installing R under Unix-alikes
 @section Sub-architectures
-
-@strong{This is an experimental feature that may be released in @R{} 2.3.0.}
 
 Some platforms can support closely related builds of @R{} which can share
 all but the executables and dynamic objects.  Examples include builds
@@ -2467,6 +2470,7 @@ of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 @menu
+* X11 issues::                  
 * Linux::                       
 * Mac OS X::                    
 * Solaris::                     
@@ -2478,7 +2482,83 @@ of compilers and support libraries.
 * New platforms::               
 @end menu
 
-@node Linux, Mac OS X, Platform notes, Platform notes
+@node X11 issues, Linux, Platform notes, Platform notes
+@section X11 issues
+
+The @samp{X11()} graphics device is the one started automatically on
+Unix-alikes when plotting.  As its name implies, it displays on a (local
+or remote) X server, and relies on the services and in particular the
+fonts provided by the X server.  So if you sometimes use @R{} at a
+console and sometimes remotely from an X11 session running on a Windows
+machine, you may have to setup the fonts differently for the two usages.
+
+When X11 was designed, most displays were around 75dpi, whereas today
+they are of the order of 100dpi or even higher.  If you find that X11()
+is reporting missing font sizes, especially larger ones, it is likely
+that you have not installed the 100dpi versions of the X11 fonts.  The
+names and details differ by system, but will likely have something like
+Fedora Core 5's
+@example
+xorg-x11-fonts-75dpi
+xorg-x11-fonts-100dpi
+xorg-x11-fonts-truetype
+xorg-x11-fonts-Type1
+xorg-x11-fonts-cyrillic
+@end example
+
+@noindent
+and you need to ensure that the @samp{-100dpi} versions are installed
+and on the X11 font path (check via @command{xset -q}).
+
+More complicated problems can occur in non-Western-European locales, so
+if you are using one, the first thing to check is that things work in
+the @code{C} locale.  The likely issues are a failure to find any fonts
+or glyphs being rendered incorrectly (often as a pair of ASCII
+characters).  X11 works by being asked for a font specification and
+coming up with its idea of a close match.  For text (as distinct from
+the symbols used by plotmath), the specification is the first element of
+the option @code{"X11fonts"} which defaults to
+
+@example
+"-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+@end example
+
+If you are using a single-byte locale, for example 8859-2 in Eastern
+Europe or KOI8-R in Russian, use @command{xlsfonts} to find an
+appropriate family of fonts in your encoding (the last field in the
+listing).  If you find none, it is likely that you need to install
+further fonts, such as @samp{fonts-xorg-cyrillic} shown in the listing
+above.
+
+Multi-byte locales (most commonly UTF-8) are even more complicated.
+There are few fonts in @samp{iso10646-1}, the Unicode encoding, and they
+only contain a subset of the available glyphs (and are often fixed-width
+designed for use in terminals).  In such locales @emph{fontsets} are
+used, made up of fonts encoded in other encodings.  If the locale you are
+using has an entry in the @samp{XLC_LOCALE} directory (typically
+@file{/usr/X11R6/lib/X11/locale}, it is likely that all you need to do
+is to pick a suitable font specification that has fonts in the encodings
+specified there.  If not, you may have to get hold of a suitable
+locale entry for X11.  This may mean that, for example, Japanese text
+can be displayed when running in @code{ja_JP.utf8} but not when running
+in @code{en_GB.utf8} on the same machine.
+
+On some systems scalable fonts are available covering a wide range of
+glyphs.  One source is TrueType fonts, and these can provide high
+coverage.  Another is Type 1 fonts: the URW set of Type 1 fonts provides
+standard typefaces such as Helvetica with a larger coverage of Unicode
+glyphs than the standard X11 bitmaps, including Cyrillic.  These are
+generally not part of the default install, and the X server may need to
+be configured to use them.  They might be under the X11 @file{fonts}
+directory or elsewhere, for example,
+
+@example
+/usr/share/fonts/default/Type1
+/usr/share/fonts/ja/TrueType
+@end example
+
+
+@node Linux, Mac OS X, X11 issues, Platform notes
 @section Linux
 @cindex Linux
 

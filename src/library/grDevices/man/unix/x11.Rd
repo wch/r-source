@@ -94,8 +94,8 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   first element will be crucial in successfully using
   non-Western-European fonts.  Settings that have proved useful include
 
-  \code{"-*-mincho-\%s-\%s-*--\%d-*-*-*-*-*-*-*"} for CJK languages and
-  \code{"-cronyx-helvetica-\%s-\%s-*--\%d-*-*-*-*-*-*-*"} for Russian.
+  \code{"-*-mincho-\%s-\%s-*-*-\%d-*-*-*-*-*-*-*"} for CJK languages and
+  \code{"-cronyx-helvetica-\%s-\%s-*-*-\%d-*-*-*-*-*-*-*"} for Russian.
 
   For UTF-8 locales, the \code{XLC_LOCALE} databases provide mappings
   between character encodings, and you may need to add an entry for your
