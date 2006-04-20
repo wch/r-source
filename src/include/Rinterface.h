@@ -80,6 +80,7 @@ extern FILE * R_Outputfile;
 void R_setStartTime(void);
 void fpu_setup(Rboolean);
 
+#ifdef CSTACK_DEFNS
 /* duplicating Defn.h */
 #if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
  typedef unsigned long uintptr_t;
@@ -87,6 +88,7 @@ void fpu_setup(Rboolean);
 
 extern uintptr_t R_CStackLimit;	/* C stack limit */
 extern uintptr_t R_CStackStart;	/* Initial stack address */
+#endif
 
 /* formerly in src/unix/devUI.h */
 
