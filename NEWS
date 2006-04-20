@@ -55,6 +55,9 @@ NEW FEATURES
 
     o	regexpr() now accepts 0-length 'text' inputs.
 
+    o	Sys.getlocale() and Sys.setlocale() support LC_MESSAGES, 
+	LC_PAPER and LC_MEASUREMENT if the platform does.
+
 
 DEPRECATED & DEFUNCT
 

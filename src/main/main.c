@@ -688,6 +688,12 @@ void setup_Rmainloop(void)
     setlocale(LC_MESSAGES,""); /* language for messages */
 #endif
     /* NB: we do not set LC_NUMERIC */
+#ifdef LC_PAPER
+    setlocale(LC_PAPER,"");
+#endif
+#ifdef LC_MEASUREMENT
+    setlocale(LC_MEASUREMENT,"");
+#endif
 #endif
 #ifdef ENABLE_NLS
     /* This ought to have been done earlier, but be sure */
