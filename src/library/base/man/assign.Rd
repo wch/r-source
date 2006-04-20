@@ -62,7 +62,7 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   \code{\link{environment}}.
 }
 \examples{
-for(i in 1:6) { #-- Create objects  'r1', 'r2', ... 'r6' --
+for(i in 1:6) { #-- Create objects  'r.1', 'r.2', ... 'r.6' --
  nam <- paste("r",i, sep=".")
  assign(nam, 1:i)
 }
