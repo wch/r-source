@@ -53,6 +53,8 @@ NEW FEATURES
 	'link' argument, which allows user-specified link functions.
 	Also, quasi() allows user-specified variance functions.
 
+    o	regexpr() now accepts 0-length 'text' inputs.
+
 
 DEPRECATED & DEFUNCT
 
