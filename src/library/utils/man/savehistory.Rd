@@ -61,7 +61,7 @@ timestamp(stamp = date(),
   These variables are read at the time of saving, so can be altered
   within a session by the use of \code{\link{Sys.putenv}}.
 
-  \code{history} shows only unqiue matching lines if \code{pattern} is
+  \code{history} shows only unique matching lines if \code{pattern} is
   supplied.
   
   The \code{timestamp} function writes a timestamp (or other message)
