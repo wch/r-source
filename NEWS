@@ -127,6 +127,11 @@ BUG FIXES
     o	The LaTeX version of the package reference manual was omitting
 	some topics, and was not sorting the foo-package topic first.
 
+    o  trace() now accepts arguments where= and signature= for the
+        old-style trace (no tracer or exit, edit==FALSE) and just
+        prints a message on entry.  Also the undocumented feature of
+        where=function now works for generic functions as well.
+
 
 
 
