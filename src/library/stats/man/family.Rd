@@ -24,13 +24,12 @@ quasipoisson(link = "log")
 \alias{print.family}
 \arguments{
   \item{link}{a specification for the model link function.  This can be
-    a name/expression, a character string, a one-element character
+    a name/expression, a literal character string, a length-one character
     vector or an object of class
     \code{"\link[=make.link]{link-glm}"} (provided it is not specified
     via one of the standard names given next).
 
-    As a name or character string,
-    the \code{gaussian} family accepts the links \code{"identity"},
+    The \code{gaussian} family accepts the links \code{"identity"},
     \code{"log"} and \code{"inverse"};
     the \code{binomial} family the links \code{"logit"},
     \code{"probit"}, \code{"cauchit"}, (corresponding to logistic,
@@ -49,15 +48,15 @@ quasipoisson(link = "log")
     the function \code{\link{power}} can be used to create a
     power link function.
   }
-  \item{variance}{for all families other than \code{quasi}, the
-    variance function is determined by the family.  The \code{quasi}
-    family will accept the character string (or unquoted as a
-    name/expression) specifications
-    \code{"constant"}, \code{"mu(1-mu)"}, \code{"mu"}, \code{"mu^2"}
-    and \code{"mu^3"} for the variance function, or a list containing
-    components \code{varfun}, \code{validmu}, \code{dev.resids},
-    \code{initialize} and \code{name}.
-    }
+  \item{variance}{for all families other than \code{quasi}, the variance
+    function is determined by the family.  The \code{quasi} family will
+    accept the literal character string (or unquoted as a name/expression)
+    specifications \code{"constant"}, \code{"mu(1-mu)"}, \code{"mu"},
+    \code{"mu^2"} and \code{"mu^3"}, a length-one character vector
+    taking one of those values, or a list containing components
+    \code{varfun}, \code{validmu}, \code{dev.resids}, \code{initialize}
+    and \code{name}.
+  }
   \item{object}{the function \code{family} accesses the \code{family}
     objects which are stored within objects created by modelling
     functions (e.g., \code{glm}).}
@@ -82,6 +81,20 @@ quasipoisson(link = "log")
   variance proportional to mean as in the quasi-binomial model, note
   that \code{glm} does not compute maximum-likelihood estimates in that
   model.  The behaviour of S is closer to the quasi- variants. 
+}
+\note{
+  The \code{link} and \code{variance} arguments have rather awkward
+  semantics for back-compatibility.  The recommended way is to supply
+  them is as quoted character strings, but they can also be supplied
+  unquoted (as names or expressions).  In addition, they can also be
+  supplied as a length-one character vector giving the name of one of
+  the options, or as a list (for \code{link}, of class \code{"link-glm"}).
+
+  This is potentially ambiguous: supplying \code{link=logit} could mean
+  the unquoted name of a link or the value of object \code{logit}.  It
+  is interpreted if possible as the name of an allowed link, then
+  as an object.  (You can force the interpretation to always be the value of
+  an object via \code{logit[1]}.)
 }
 \value{
   An object of class \code{"family"} (which has a concise print method).

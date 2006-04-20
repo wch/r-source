@@ -140,8 +140,10 @@ poisson <- function (link = "log")
     }
     if (linktemp %in% c("log", "identity", "sqrt"))
 	stats <- make.link(linktemp)
-    else if (is.character(link)) stats <- make.link(link)
-    else {
+    else if (is.character(link)) {
+        stats <- make.link(link)
+        linktemp <- link
+    } else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
             stats <- link
@@ -194,8 +196,10 @@ quasipoisson <- function (link = "log")
     }
     if (linktemp %in% c("log", "identity", "sqrt"))
 	stats <- make.link(linktemp)
-    else if(is.character(link)) stats <- make.link(link)
-    else {
+    else if (is.character(link)) {
+        stats <- make.link(link)
+        linktemp <- link
+    } else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
             stats <- link
@@ -245,8 +249,10 @@ gaussian <- function (link = "identity")
     }
     if (linktemp %in% c("inverse", "log", "identity"))
 	stats <- make.link(linktemp)
-    else if(is.character(link)) stats <- make.link(link)
-    else {
+    else if (is.character(link)) {
+        stats <- make.link(link)
+        linktemp <- link
+    } else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
             stats <- link
@@ -297,8 +303,10 @@ binomial <- function (link = "logit")
     }
     if (linktemp %in% c("logit", "probit", "cloglog", "cauchit", "log"))
         stats <- make.link(linktemp)
-    else if(is.character(link)) stats <- make.link(link)
-    else {
+    else if (is.character(link)) {
+        stats <- make.link(link)
+        linktemp <- link
+    } else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
             stats <- link
@@ -374,8 +382,10 @@ quasibinomial <- function (link = "logit")
     }
     if (linktemp %in% c("logit", "probit", "cloglog", "cauchit", "log"))
  	stats <- make.link(linktemp)
-    else if(is.character(link)) stats <- make.link(link)
-    else {
+    else if (is.character(link)) {
+        stats <- make.link(link)
+        linktemp <- link
+    } else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
             stats <- link
@@ -495,8 +505,10 @@ inverse.gaussian <- function(link = "1/mu^2")
     }
     if (linktemp %in% c("inverse", "log", "identity", "1/mu^2"))
 	stats <- make.link(linktemp)
-    else if(is.character(link)) stats <- make.link(link)
-    else {
+    else if (is.character(link)) {
+        stats <- make.link(link)
+        linktemp <- link
+    } else {
         ## what else shall we allow?  At least objects of class link-glm.
         if(inherits(link, "link-glm")) {
             stats <- link
@@ -534,15 +546,17 @@ inverse.gaussian <- function(link = "1/mu^2")
 
 quasi <- function (link = "identity", variance = "constant")
 {
-    nm <- linktemp <- substitute(link)
-    if (!is.character(nm)) nm <- deparse(nm)
-    if (nm %in% c("logit", "probit", "cloglog", "identity", "inverse", "log",
-                  "1/mu^2", "sqrt"))
-        stats <- make.link(nm)
-    else if(is.character(link)) stats <- make.link(link)
-    else {
+    linktemp <- substitute(link)
+    if (!is.character(linktemp)) linktemp <- deparse(linktemp)
+    if (linktemp %in% c("logit", "probit", "cloglog", "identity",
+                        "inverse", "log", "1/mu^2", "sqrt"))
+        stats <- make.link(linktemp)
+    else if (is.character(link)) {
+        stats <- make.link(link)
+        linktemp <- link
+    } else {
         stats <- link
-        nm <- if(!is.null(stats$name)) stats$name else deparse(linktemp)
+        linktemp <- if(!is.null(stats$name)) stats$name else deparse(linktemp)
     }
     vtemp <- substitute(variance)
     if (!is.character(vtemp)) vtemp <- deparse(vtemp)
@@ -603,7 +617,7 @@ quasi <- function (link = "identity", variance = "constant")
     }
     aic <- function(y, n, mu, wt, dev) NA
     structure(list(family = "quasi",
-		   link = nm,
+		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
 		   variance = varfun,
