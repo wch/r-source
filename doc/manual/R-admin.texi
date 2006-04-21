@@ -75,7 +75,7 @@ The current version of this document is @value{VERSION}.
 * Add-on packages::             
 * Internationalization::        
 * Choosing between 32- and 64-bit builds::  
-* Essential and useful other programs in Unix::  
+* Essential and useful other programs under Unix::  
 * Configuration on Unix::       
 * Platform notes::              
 * Building the GNOME console::  
@@ -267,7 +267,7 @@ the rest of this chapter we consider only building from the sources.
 @section Simple compilation
 
 First review the essential and useful tools and libraries in
-@ref{Essential and useful other programs in Unix}, and install those you
+@ref{Essential and useful other programs under Unix}, and install those you
 want or need.  Ensure that the environment variable @env{TMPDIR} is
 either unset (and @file{/tmp} exists and can be written in and executed
 from) or points to a valid temporary directory.
@@ -299,10 +299,8 @@ make check
 @noindent
 Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported
-discrepancies.  (Also, the @file{d-p-q-r-tests.R} is random and will
-fail about 1 in 50 runs, so if this fails please re-run @command{make
-check}.)  To re-run the tests including those successfully run you would
-need
+discrepancies. To re-run the tests including those successfully run you
+would need
 
 @example
 make check FORCE=FORCE
@@ -438,9 +436,10 @@ Modern fonts.  We have provided four alternatives:
 
 @table @code
 @item times
-Using standard PostScript fonts.  This works well both for on-screen
-viewing and for printing, and is the default.  The one disadvantage is
-that the Usage and Examples sections may come out rather wide.
+(The default.) Using standard PostScript fonts.  This works well both
+for on-screen viewing and for printing, and is the default.  The one
+disadvantage is that the Usage and Examples sections may come out rather
+wide.
 
 @item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as
@@ -469,11 +468,10 @@ to examine the logs carefully.  This was the default in @R{} version
 1.x.y.
 @end table
 
-Both Unix and Windows installations default to @code{times}.  The choice
-can be overridden by setting the environment variable @env{R_RD4PDF}.
-(On Unix, this will be picked up at install time.)  The default value is
-@code{times,hyper}: omit @code{hyper} if you do not want hyperlinks,
-e.g. for printing.
+The default can be overridden by setting the environment variable
+@env{R_RD4PDF}.  (On Unix, this will be picked up at install time.)  The
+default value is @code{times,hyper}: omit @code{hyper} if you do not
+want hyperlinks, e.g. for printing.
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
@@ -671,9 +669,10 @@ perhaps for some network-mounted systems).
 
 Installation is @emph{via} the installer @file{@value{RWVERSION}.exe}.
 Just double-click on the icon and follow the instructions.  You can
-uninstall @R{} from the Control Panel.  (Note that you will probably be
-asked to choose a language for installation, and that choice applies to
-both installation and un-installation but not to running @R{} itself.)
+uninstall @R{} from the Control Panel.  (Note that you will probably
+(depending on the Windows language settings) be asked to choose a
+language for installation, and that choice applies to both installation
+and un-installation but not to running @R{} itself.)
 
 See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
@@ -690,9 +689,7 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 * Getting the source files::    
 * Building the core files::     
 * Building the bitmap files::   
-* Windows internationalization::  
 * Checking the build::          
-* Building the recommended packages::  
 * Building the manuals::        
 * Building the installer::      
 * Cross-building on ix86 Linux::  
@@ -727,8 +724,8 @@ tar zxvf R-@value{VERSIONno}.tgz
 
 @noindent
 to create the source tree in @var{R_HOME}.  @strong{Beware}: do use
-@command{tar} to extract the sources rather than broken tools such as
-WinZip that don't understand about symbolic links.
+@command{tar} to extract the sources rather than tools such as WinZip
+that do not understand about symbolic links.
 
 It is also possible to obtain the source code using Subversion; see 
 @ref{Obtaining R} for details.
@@ -773,7 +770,7 @@ AthlonXP chips are available in the @file{windows/contrib/ATLAS} area on
 Another possibility is to use AMD's AMD Core Math Library (ACML)
 @url{http://www.amd.com/acml, @code{www.amd.com/@/acml}}.  To use the
 Cygwin-compiled version (Cygwin itself is not needed, at least
-currently), install @file{acml-2-7-0-win32-g77.exe} (or later) and edit
+currently), install @file{acml-3-0-0-win32-g77.exe} (or later) and edit
 @file{@var{R_HOME}/@/src/@/gnuwin32/MkRules} to define
 @code{USE_ACML=YES} and set @code{ACML_PATH} to the path to
 @file{libacml.a}.  If you also set @code{USE_ACML_LAPACK=YES}, ACML will
@@ -800,7 +797,7 @@ contains tabs and some editors (e.g., WinEdt) silently remove them.
 Then run
 
 @example
-make
+make all recommended
 @end example
 
 @noindent
@@ -815,9 +812,10 @@ The file @file{bin/Rchtml.dll} is only built if CHM help is specified in
 binary distribution.
 
 @item
-We have had reports that earlier versions of Norton Anti-Virus lock up
-the machine when @code{windres} is run, so you may need to disable
-it. (Norton Anti-Virus 2002 causes no problems.)
+We have had reports that earlier versions of anti-virus software locking
+up the machine, but not for several years.  However, aggressive
+anti-virus checking such as the on-access scanning of Sophos can slow
+the build down several-fold.
 
 @item
 By default Doug Lea's @code{malloc} in the file
@@ -831,19 +829,19 @@ imposes a considerable performance penalty.
 You can run a parallel make by e.g.
 
 @example
-make -j2
+make -j2 all
+make recommended
 @end example
 
 @noindent
-but this is only likely to be worthwhile on a dual-processor (or
-perhaps a hyperthreaded P4) machine with ample (at least 384Mb) of
-memory.  On a dual AthlonMP it reduced the build time by about 30%
-whereas on a single P4HT it reduced it by 10%.  Note that this may
-sometimes stop and have to be restarted.
+but this is only likely to be worthwhile on a dual-processor/dual-core
+machine with ample (at least 384Mb) of memory.  (On a dual AthlonMP it
+reduced the build time by about 30%.)  Note that this may sometimes stop
+and have to be restarted.
 
 @end itemize
 
-@node Building the bitmap files, Windows internationalization, Building the core files, Building from source
+@node Building the bitmap files, Checking the build, Building the core files, Building from source
 @subsection Building the bitmap files
 @cindex Rbitmap.dll
 
@@ -867,44 +865,38 @@ Once everything is set up in directory @file{bitmap}, @code{make}
 in that directory or @code{make bitmapdll} in the parent directory
 should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
 
-@node Windows internationalization, Checking the build, Building the bitmap files, Building from source
-@subsection Windows internationalization
-
-This version of @R{} can be built with support for the multi-byte
-character sets used in Chinese, Japanese and Korean versions of Windows.
-
-Define @code{SUPPORT_MBCS} in @file{config.h} to enable support in the
-@R{} engine for multi-byte character sets.  (This is the default in the
-sources.)  This also enables support for multi-byte locales in
-@code{Rterm}, the @code{Rgui} console, pager, data and script editors
-(this is based loosely on the Japanization patches by Nakama and Okada).
-
-@node Checking the build, Building the recommended packages, Windows internationalization, Building from source
+@node Checking the build, Building the manuals, Building the bitmap files, Building from source
 @subsection Checking the build
 
-You can test a build by (optionally) building the recommended packages
-(see below) and running @code{make check}.  You may need to set
-@env{TMPDIR} to the absolute path to a suitable temporary directory:
-the default is @samp{c:/TEMP}.  (Use forward slashes and do not use a
-path including spaces.)
+You can test a build by running @code{make check}.  You may need to set
+@env{TMPDIR} to the absolute path to a suitable temporary directory: the
+default is @samp{c:/TEMP}.  (Use forward slashes and do not use a path
+including spaces.)
 
-@node Building the recommended packages, Building the manuals, Checking the build, Building from source
-@subsection Building the recommended packages
-
-The recommended packages can be built by
-
-@example
-make recommended
-@end example
-
-@noindent
-and checked by
+The recommended packages can be  checked by
 
 @example
 make check-recommended
 @end example
 
-@node Building the manuals, Building the installer, Building the recommended packages, Building from source
+Other levels of checking are
+
+@example
+make check-devel
+@end example
+
+@noindent
+for a more thorough check of the @R{} functionality, and
+
+@example
+make check-all
+@end example
+
+@noindent
+for @code{check-devel} and @code{check-recommended}.
+
+
+@node Building the manuals, Building the installer, Checking the build, Building from source
 @subsection Building the manuals
 
 The PDF manuals can be made by
@@ -957,7 +949,6 @@ building all the parts in the sequence:
 
 @example
 Rpwd.exe @r{(a utility needed in the build)}
-rbuild-no-mbcs @r{(the non-East Asian version of @file{R.dll})}
 rbuild @r{(the executables, the @acronym{FAQ} docs etc.)}
 rpackage @r{(the base packages)}
 htmldocs @r{(the @acronym{HTML} documentation)}
@@ -973,10 +964,8 @@ crandir @r{(the @acronym{CRAN} distribution directory)}
 The parts can be made individually if a full build is not needed, but
 earlier parts must be built before later ones.  (The @file{Makefile}
 doesn't enforce this dependency---some build targets force a lot of
-computation even if all files are up to date.)  The first, third, fourth
-and fifth targets are the default build if just @samp{make} is run, but
-the second (which builds the default version of @file{R.dll}) needs to
-be run first.
+computation even if all files are up to date.)  The first four targets
+are the default build if just @samp{make} is run.
 
 If you want to customize the installation by adding extra packages,
 replace @code{make rinstaller} by something like
@@ -1064,9 +1053,9 @@ cross-building, so it is left in the old format.
 @cindex Mac OS X
 
 The @file{bin/macosx} directory of a @acronym{CRAN} site contains
-binaries for MacOS X (at the time of writing only for PowerPC) for a
-base distribution and a large number of add-on packages from
-@acronym{CRAN} to run on Mac OS X version 10.3.0 or higher.
+binaries for MacOS X for a base distribution and a large number of
+add-on packages from @acronym{CRAN} to run on Mac OS X version 10.3.0 or
+higher.
 
 The simplest way is to use @file{R.dmg}.  Just double-click on the
 icon and the disk image file will be mounted. Read the
@@ -1136,10 +1125,10 @@ first one which is set and points to a writable area is used.  If none
 do, the final default is @file{/tmp} on Unix-alikes and the value of
 @env{R_USER} on Windows.
 
-Some systems are set up to remove files and directories periodically
-from @file{/tmp}, for example by a @command{cron} job running
-@command{tmpwatch}.  Set @env{TMPDIR} to another directory before
-running long-running jobs on such a system.
+Some Unix-alike systems are set up to remove files and directories
+periodically from @file{/tmp}, for example by a @command{cron} job
+running @command{tmpwatch}.  Set @env{TMPDIR} to another directory
+before running long-running jobs on such a system.
 
 @node Add-on packages, Internationalization, Running R, Top
 @chapter Add-on packages
@@ -1247,12 +1236,12 @@ the extension @samp{tgz}.  The R GUI provides for installation of either
 binary or source packages, from @acronym{CRAN} or local files.
 
 @menu
-* Customizing compilation under Unix::  
-* Customizing compilation in Windows::  
+* Customizing package compilation under Unix::  
+* Customizing package compilation under Windows::  
 @end menu
 
-@node Customizing compilation under Unix, Customizing compilation in Windows, Installing packages, Installing packages
-@subsection Customizing compilation under Unix
+@node Customizing package compilation under Unix, Customizing package compilation under Windows, Installing packages, Installing packages
+@subsection Customizing package compilation under Unix
 
 The R system and package-specific compilation flags can be overridden or
 added to by setting the appropriate Make variables in the personal file
@@ -1266,8 +1255,8 @@ reasonable amount of diagnostic messaging (``warnings'') when compiling,
 such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the Gnu
 Compiler Collection.
 
-@node Customizing compilation in Windows,  , Customizing compilation under Unix, Installing packages
-@subsection Customizing compilation in Windows
+@node Customizing package compilation under Windows,  , Customizing package compilation under Unix, Installing packages
+@subsection Customizing package compilation under Windows
 @findex MakeDll
 @findex Makevars.win
 @findex HELP
@@ -1467,6 +1456,7 @@ versions @code{x.y.z} and containing @file{.zip} files.
 
 @item 
 @code{"mac.binary"}: located at @code{bin/macosx/powerpc/contrib/x.y}
+or @code{bin/macosx/i686/contrib/x.y}
 for @R{} versions @code{x.y.z} and containing @file{.tgz} files.
 @end itemize
 
@@ -1505,11 +1495,11 @@ it is enabled by default in source builds, but support for `East Asian'
 (Chinese/Japanese/Korean) languages is only enabled in the binary
 install if it is selected in the installer.
 
-All versions of @R{} support all single-byte character sets that the
+All builds of @R{} support all single-byte character sets that the
 underlying OS can handle.  These are interpreted according to the
 @cindex Locale
 current @code{locale}, a sufficiently complicated topic to merit a
-separate section.  Fully internationalized versions can also handle most
+separate section.  Fully internationalized builds can also handle most
 multi-byte locales, in which a single character is represented by one,
 two or more consecutive bytes: examples of such locales are those using
 UTF-8 (becoming standard under Linux) and those for Chinese, Japanese
@@ -1517,8 +1507,7 @@ and Korean.  Note that only some of the graphics devices can handle
 multi-byte or even non-Latin-1 character sets.
 
 The other aspect of the internationalization is support of the
-translation of messages.  This is enabled in almost all builds of @R{}
-as from version 2.1.0.
+translation of messages.  This is enabled in almost all builds of @R{}.
 
 @menu
 * Locales::                     
@@ -1604,7 +1593,7 @@ for how users can set their locales. As with Windows, end users will
 generally only see lists of languages/territories.
 
 Internally Mac OS X uses a form similar to Linux but without specifying
-the encoding (which is @code{.UTF-8}).
+the encoding (which is @code{UTF-8}).
 
 
 @node Localization of messages,  , Locales, Internationalization
@@ -1664,13 +1653,13 @@ Spain and these will by default also be used in Spanish-speaking Latin
 American countries, and also for @code{pt_BR}, which are used for
 Brazlian locales but not for locales specifying Portugal.
 
-Translations in the right language but the wrong charset can generally
-be made use of by on-the-fly re-encoding.  The @env{LANGUAGE} variable
-(only) can be a colon-separated list, for example @code{se:de}, giving a
-set of languages in decreasing order of preference.  One special value
-is @code{en@@quot}, which can be used in a UTF-8 locale to have
-English/American error messages with pairs of quotes translated to
-Unicode directional quotes.
+Translations in the right language but the wrong charset be made use of
+by on-the-fly re-encoding (on systems that support it).  The
+@env{LANGUAGE} variable (only) can be a colon-separated list, for
+example @code{se:de}, giving a set of languages in decreasing order of
+preference.  One special value is @code{en@@quot}, which can be used in
+a UTF-8 locale to have English/American error messages with pairs of
+quotes translated to Unicode directional quotes.
 
 If no suitable translation catalogue is found or a particular message is
 not translated in any suitable catalogue, English is used.
@@ -1679,7 +1668,7 @@ See @url{http://developer.r-project.org/Translations.html,
 @code{developer.r-project.org/@/Translations.html}} for how to prepare
 and install translation catalogues.
 
-@node Choosing between 32- and 64-bit builds, Essential and useful other programs in Unix, Internationalization, Top
+@node Choosing between 32- and 64-bit builds, Essential and useful other programs under Unix, Internationalization, Top
 @chapter Choosing between 32- and 64-bit builds
 
 @menu
@@ -1688,16 +1677,19 @@ and install translation catalogues.
 
 Many current CPUs have both 32- and 64-bit sets of instructions: this
 has long been true for UltraSparc and more recently for MIPS, PPC and
-@cputype{x86_64}.  Many OSes running on such CPUs offer the choice of
-building a 32-bit or a 64-bit version of R (and details are given below
-under specific OSes).  For most a 32-bit version is the default, but for
-some (e.g., @cputype{x86_64}) 64-bit is.
+@cputype{x86_64} (AMD Opteron and Athlon64, Intel Xeon and
+Pentium/'Core' supporting EM64T).  Many OSes running on such CPUs offer
+the choice of building a 32-bit or a 64-bit version of R (and details
+are given below under specific OSes).  For most a 32-bit version is the
+default, but for some (e.g., @cputype{x86_64}) 64-bit is.
 
 All current versions of @R{} use 32-bit integers and
-@acronym{IEC}@tie{}60559@footnote{also known as @acronym{IEC}@tie{}559 and
-@acronym{IEEE}@tie{}754} double-precision reals, and so compute to the
-same accuracy and with the same limits on the sizes of numerical
-quantities.  The principal difference is in the size of the pointers.
+@acronym{IEC}@tie{}60559@footnote{also known as @acronym{IEC}@tie{}559
+and @acronym{IEEE}@tie{}754} double-precision reals, and so compute to
+the same precision@footnote{at least when storing quantities: the on-FPU
+precision is allowed to vary} and with the same limits on the sizes of
+numerical quantities.  The principal difference is in the size of the
+pointers.
 
 64-bit builds have both advantages and disadvantages:
 @itemize
@@ -1734,7 +1726,8 @@ collection. So 64-bit versions of @R{} will typically run slower than
 @end itemize
 
 So, for speed you may want to use a 32-bit build, but to handle large
-datasets (and perhaps large files) a 64-bit build.
+datasets (and perhaps large files) a 64-bit build.  You can build both
+and install them in the same place: @xref{Sub-architectures}.
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}, some of which stem from the
@@ -1749,13 +1742,13 @@ several years off.
 @section Windows
 
 Currently the Windows build of @R{} is a 32-bit executable.  This runs
-happily on Windows 64 on AMD64 and EM64T, but is limited to a 3GB
-address space.  It will not be possible to build a native version for
-Windows 64 until suitable compilers are available, and currently
-(mid-2005) that is not in prospect.
+happily on Windows 64 on AMD64 and EM64T, but is limited to (we are
+told) a 2GB address space.  It will not be possible to build a native
+version for Windows 64 until suitable compilers are available, and
+currently (mid-2006) that is not in prospect.
 
-@node Essential and useful other programs in Unix, Configuration on Unix, Choosing between 32- and 64-bit builds, Top
-@appendix Essential and useful other programs in Unix
+@node Essential and useful other programs under Unix, Configuration on Unix, Choosing between 32- and 64-bit builds, Top
+@appendix Essential and useful other programs under Unix
 
 This appendix gives details of programs you will need to build @R{} on
 Unix-like platforms, or which will be used by @R{} if found by
@@ -1772,7 +1765,7 @@ installed.
 * Useful libraries and programs::  
 @end menu
 
-@node Essential programs, Useful libraries and programs, Essential and useful other programs in Unix, Essential and useful other programs in Unix
+@node Essential programs, Useful libraries and programs, Essential and useful other programs under Unix, Essential and useful other programs under Unix
 @section Essential programs
 
 You need a means of compiling C and FORTRAN 77 (see @ref{Using
@@ -1816,15 +1809,16 @@ If you want to build from the R Subversion repository you need Perl,
 @cindex Subversion
 
 
-@node Useful libraries and programs,  , Essential programs, Essential and useful other programs in Unix
+@node Useful libraries and programs,  , Essential programs, Essential and useful other programs under Unix
 @section Useful libraries and programs
 
-The use of multi-byte characters, conversion between encodings and the
-@R{} @code{iconv} function depend on having the system @code{iconv}
-function: this is part of recent versions of @code{glibc} and many
-Unixes.  You can also install @acronym{GNU} @code{libiconv} (which is
-not the same as that in @code{glibc}), possibly as a plug-in
-replacement: see @url{http://www.gnu.org/software/libiconv/,
+The use of multi-byte characters, conversion between encodings
+(including for translated messages) and the @R{} @code{iconv} function
+depend on having the system @code{iconv} function: this is part of
+recent versions of @code{glibc} and many Unixes.  You can also install
+@acronym{GNU} @code{libiconv} (which is not the same as that in
+@code{glibc}), possibly as a plug-in replacement: see
+@url{http://www.gnu.org/software/libiconv/,
 @code{www.gnu.org/software/libiconv}}.  Note that the @R{} usage
 requires @code{iconv} to be able to translate between @code{"latin1"}
 and @code{"UTF-8"}, to recognize @code{""} as the current encoding and
@@ -1832,17 +1826,18 @@ to translate to and from the Unicode wide-character formats
 @code{"UCS-[24][BL]E"} -- this is not true of most commercial Unixes.
 
 The ability to use translated messages makes use of @code{gettext} and
-most likely needs @acronym{GNU} @code{gettext}: you do need this to
-work with new translations, but otherwise that contained in the R
+most likely needs @acronym{GNU} @code{gettext}: you do need this to work
+with new translations, but otherwise the version contained in the R
 sources will be used if no suitable external @code{gettext} is found.
 
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
-appropriate headers and libraries installed: @code{jpeg} (version 6b
-or later) or @code{libpng} (version 1.2.3 or later) and @code{zlib}
+appropriate headers and libraries installed: @code{jpeg} (version 6b or
+later) or @code{libpng} (version 1.2.3 or later) and @code{zlib}
 (version 1.1.3 or later) respectively.
 
-The @code{bitmap} and @code{dev2bitmap} devices use ghostscript
-(@url{http://www.cs.wisc.edu/~ghost, @code{www.cs.wisc.edu/~ghost}}).
+The @code{bitmap} and @code{dev2bitmap} devices and also
+@code{embedFonts()} use ghostscript (@url{http://www.cs.wisc.edu/~ghost,
+@code{www.cs.wisc.edu/~ghost}}).
 
 If you have them installed (including the appropriate headers and of
 recent enough versions), @code{zlib}, @code{libbz2} and PCRE will be
@@ -1882,7 +1877,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, setting the paths to the correct config
 files will most likely be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk from 8.3 to 8.4.11 have been used successfully: 8.0 is
+Versions of Tcl/Tk from 8.3 to 8.4.13 have been used successfully: 8.0 is
 no longer supported.
 
 
@@ -1940,7 +1935,9 @@ It has been reported that on some RedHat-based Linux systems it is
 necessary to set @code{OMP_NUM_THREADS=1} (to disable multiple threads)
 in the environment when using a multi-threaded Goto BLAS, but others run
 happily with multiple threads.  That environment variable should be set
-when using @R{} profiling.
+when using @R{} profiling.  (In some applications, allowing multiple
+threads slowed the computations down several-fold, so it can be helpful
+to restrict the number of threads.)
 
 For Intel processors under Linux, Intel's Math Kernel Library
 (@url{http://www.intel.com/software/products/mkl/,
@@ -1966,7 +1963,7 @@ single-threaded only) we could use
 
 @noindent
 if the appropriate library directory such as
-@file{/opt/acml2.7.0/gnu64/lib} is in the @env{LD_LIBRRARY_PATH}.  For
+@file{/opt/acml3.1.0/gnu64/lib} is in the @env{LD_LIBRRARY_PATH}.  For
 other compilers, see the ACML documentation.  Although the documentation
 is unclear, 32-bit versions of ACML do run on other @cputype{ia32} chips
 such as AthlonMP and P4.
@@ -1988,7 +1985,7 @@ missing @code{drotm}, @code{drotmg} and @code{zdrot}).
 
 On some systems it is necessary that an external BLAS was built with the
 same FORTRAN compiler used to build @R{}: known problems are with @R{}
-built with @command{gfortran}  @pxref{Using gfortran}.
+built with @command{gfortran},  @pxref{Using gfortran}.
 
 
 @cindex LAPACK library
@@ -1997,7 +1994,7 @@ cope with BLAS libraries which contain a copy of LAPACK (such as
 @code{libsunperf} on Solaris, @code{vecLib} on Mac OS X and ACML on
 @cputype{ix86}/@cputype{x86_64} Linux).  However, the likely performance
 gains are thought to be small (and may be negative), and the default is
-not to search for a suitable LAPACK library, this is definitely
+not to search for a suitable LAPACK library, and this is definitely
 @strong{not} recommended.  You can specify a specific LAPACK library or
 a search for a generic library by the configuration option
 @option{--with-lapack}.  The default for @option{--with-lapack} is to
@@ -2071,7 +2068,7 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 @pkg{quantreg} will need to be re-installed.
 
 
-@node Configuration on Unix, Platform notes, Essential and useful other programs in Unix, Top
+@node Configuration on Unix, Platform notes, Essential and useful other programs under Unix, Top
 @appendix Configuration on Unix
 
 @menu
@@ -2135,31 +2132,31 @@ way.
 @node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
 @section Internationalization support
 
-@R{} supports multi-byte character sets (@acronym{MBCS}), in particular
-for UTF-8 locales (which are usually identified by suffix @code{.utf8},
-something like @code{en_GB.utf8}@footnote{AIX has to be different: it
-has @code{EN_US.UTF-8}!}.  UTF-8 is an encoding of Unicode and in
-principle covers all human languages simultaneously: however, a given
-system may not have fonts capable of displaying more than a few of these
-languages.
+@R{} can be compiled with support for multi-byte character sets
+(@acronym{MBCS}), in particular for UTF-8 locales (which are usually
+identified by suffix @code{.utf8}, something like
+@code{en_GB.utf8}@footnote{AIX has to be different: it has
+@code{EN_US.UTF-8}!}.  UTF-8 is an encoding of Unicode and in principle
+covers all human languages simultaneously: however, a given system may
+not have fonts capable of displaying more than a few of these languages.
 
-Support for UTF-8 is selected at @command{configure} time (unless
-disabled with @option{--disable-mbcs}).  This will check for a large
-number of features, notably support for the C99/UNIX98 wide character
-functions, for UTF-8 or MBCS support in X11 and for @command{iconv} with
-a rich enough functionality.  If enough of these are found, @code{MBCS}
-will be listed as one of the ``Additional capabilities''.  Then if @R{}
-is started in a UTF-8 locale it assumes that the terminal will supply
-and display UTF-8-encoded characters@footnote{You may have to set this
-with @code{luit}, but it should be the default in a window manager
-session started in UTF-8.}.  If run in a single-byte locale, @R{}
-behaves almost exactly as if it was configured with
-@option{--disable-mbcs}.
+Support for MBCS is selected if possible at @command{configure} time
+(unless disabled with @option{--disable-mbcs}).  This will check for a
+large number of features, notably support for the C99/UNIX98 wide
+character functions, for UTF-8 or MBCS support in X11 and for
+@command{iconv} with a rich enough functionality.  If enough of these
+are found, @code{MBCS} will be listed as one of the ``Additional
+capabilities''.  Then if @R{} is started in a UTF-8 locale it assumes
+that the terminal will supply and display UTF-8-encoded
+characters@footnote{You may have to set this with @code{luit}, but it
+should be the default in a window manager session started in UTF-8.}.
+If run in a single-byte locale, @R{} behaves almost exactly as if it was
+configured with @option{--disable-mbcs}.
 
-A version of @R{} with MBCS support can also be run in other multi-byte
-locales, for example those using the EUC-JP, EUC-KR and EUC-TW encodings
-on Unix-alikes and the code pages for Chinese, Japanese and Korean on
-Windows.
+A version of @R{} built with MBCS support can also be run in other
+multi-byte locales, for example those using the EUC-JP, EUC-KR and
+EUC-TW encodings on Unix-alikes and the code pages for Chinese, Japanese
+and Korean on Windows.
 
 Translation of messages is supported via GNU @code{gettext} unless
 disabled by the configure option @option{--disable-nls} or the
@@ -2225,6 +2222,14 @@ One common variable to change is @env{R_PAPERSIZE}, which defaults to
 @samp{a4}, not @samp{letter}.  (Valid values are @samp{a4},
 @samp{letter}, @samp{legal} and @samp{executive}.)
 
+This is used both when configuring @R{} to set the default, and when
+running @R{} to override the default.
+
+The configure default will most often be @samp{a4} if @env{R_PAPERSIZE}
+is unset.  (If the (Debian Linux) program @command{paperconf} is found
+or the environment variable @env{PAPERSIZE} is set, these are used to
+produce the default.)
+
 @node Setting the browser, Compilation flags, Setting paper size, Configuration variables
 @subsection Setting the browser
 
@@ -2263,9 +2268,9 @@ The default settings for making the manuals are controlled by
 
 To compile @R{}, you will most likely find it easiest to use GNU
 @command{make}.  On Solaris 2.6/7/8 in particular, you need a version of
-@acronym{GNU} @command{make} different from 3.77; 3.79.1 works fine, as
-does the Sun @command{make}.  The native @command{make} is reported to
-fail on SGI Irix 6.5 and Alpha/OSF1 (aka Tru64).
+@acronym{GNU} @command{make} different from 3.77; 3.79.1 and later work
+fine, as does the Sun @command{make}.  The native @command{make} is
+reported to fail on SGI Irix 6.5 and Alpha/OSF1 (aka Tru64).
 
 To build in a separate directory you need a @command{make} that uses the
 @code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
@@ -2375,9 +2380,9 @@ Some versions of @command{g95} (from @url{http://www.g95.org,
 
 On @code{x86_64} systems there is an incompatibility in the return
 conventions for double-complex functions between @command{gfortran} and
-@command{g77} which results in the final example in @code{example(eigen)}
-hanging or segfaulting under external BLASs built under @command{g77},
-as well as with Dr Goto's BLAS.  As from @R{} 2.2.0 this should be
+@command{g77} which results in the final example in
+@code{example(eigen)} hanging or segfaulting under external BLASs built
+under @command{g77}, as well as with Dr Goto's BLAS.  This should be
 detected by a @command{configure} test.
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on Unix
@@ -2494,10 +2499,11 @@ machine, you may have to setup the fonts differently for the two usages.
 
 When X11 was designed, most displays were around 75dpi, whereas today
 they are of the order of 100dpi or even higher.  If you find that X11()
-is reporting missing font sizes, especially larger ones, it is likely
-that you have not installed the 100dpi versions of the X11 fonts.  The
-names and details differ by system, but will likely have something like
-Fedora Core 5's
+is reporting@footnote{for example, @code{X11 font at size 14 could not
+be loaded}.} missing font sizes, especially larger ones, it is likely
+that you are not using scalable fonts and have not installed the 100dpi
+versions of the X11 fonts.  The names and details differ by system, but
+will likely have something like Fedora Core 5's
 @example
 xorg-x11-fonts-75dpi
 xorg-x11-fonts-100dpi
@@ -2508,7 +2514,11 @@ xorg-x11-fonts-cyrillic
 
 @noindent
 and you need to ensure that the @samp{-100dpi} versions are installed
-and on the X11 font path (check via @command{xset -q}).
+and on the X11 font path (check via @command{xset -q}).  The
+@samp{X11()} device does try to set a pointsize and not a pixel size:
+laptop users may find the default setting of 12 too large (although very
+frequently laptop screens are set to a fictitious dpi to appear like a
+scaled-down desktop screen).
 
 More complicated problems can occur in non-Western-European locales, so
 if you are using one, the first thing to check is that things work in
@@ -2523,25 +2533,28 @@ the option @code{"X11fonts"} which defaults to
 "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
 @end example
 
-If you are using a single-byte locale, for example 8859-2 in Eastern
-Europe or KOI8-R in Russian, use @command{xlsfonts} to find an
+If you are using a single-byte encoding, for example ISO 8859-2 in
+Eastern Europe or KOI8-R in Russian, use @command{xlsfonts} to find an
 appropriate family of fonts in your encoding (the last field in the
 listing).  If you find none, it is likely that you need to install
-further fonts, such as @samp{fonts-xorg-cyrillic} shown in the listing
-above.
+further font packages, such as @samp{xorg-x11-fonts-cyrillic} shown in
+the listing above.
 
-Multi-byte locales (most commonly UTF-8) are even more complicated.
+Multi-byte encodings (most commonly UTF-8) are even more complicated.
 There are few fonts in @samp{iso10646-1}, the Unicode encoding, and they
 only contain a subset of the available glyphs (and are often fixed-width
 designed for use in terminals).  In such locales @emph{fontsets} are
-used, made up of fonts encoded in other encodings.  If the locale you are
-using has an entry in the @samp{XLC_LOCALE} directory (typically
+used, made up of fonts encoded in other encodings.  If the locale you
+are using has an entry in the @samp{XLC_LOCALE} directory (typically
 @file{/usr/X11R6/lib/X11/locale}, it is likely that all you need to do
 is to pick a suitable font specification that has fonts in the encodings
-specified there.  If not, you may have to get hold of a suitable
-locale entry for X11.  This may mean that, for example, Japanese text
-can be displayed when running in @code{ja_JP.utf8} but not when running
-in @code{en_GB.utf8} on the same machine.
+specified there.  If not, you may have to get hold of a suitable locale
+entry for X11.  This may mean that, for example, Japanese text can be
+displayed when running in @code{ja_JP.utf8} but not when running in
+@code{en_GB.utf8} on the same machine (although on some systems many
+UTF-8 X11 locales are aliased to @code{en_US.utf8} which covers several
+character sets, e.g. ISO 8859-1 (Western European), JISX0208 (Kanji),
+KSC5601 (Korean), GB2312 (Chinese Han) and JISX0201 (Kana)).
 
 On some systems scalable fonts are available covering a wide range of
 glyphs.  One source is TrueType fonts, and these can provide high
@@ -2620,11 +2633,11 @@ is specified.
 
 @R{} used to include the compiler flag @option{-mieee-fp}, but it seems
 this was really an alias for the linker flag @option{-lieee}.  Neither
-are needed for a modern Linux (e.g.@: using @code{glibc} 2.2 or 2.3) but
+are needed for a modern Linux (e.g.@: using @code{glibc} 2.2/3/4) but
 could conceivably be needed on an older version.  @code{glibc} 2.1
 required @option{-D__NO_MATH_INLINES} to achieve
-@acronym{IEC}@tie{}60059-compliance for @code{exp}, and this is included in
-@code{R_XTRA_CFLAGS} if required.
+@acronym{IEC}@tie{}60059-compliance for @code{exp}, and this is included
+in @code{R_XTRA_CFLAGS} if required.
 
 Several Linux distributions have shipped unreleased versions of
 @command{gcc}@tie{}4.0.0 and its FORTRAN compiler @command{gfortran}
@@ -2764,8 +2777,7 @@ Compiler Suite' (aka Forte@tie{}7), and less regularly on Solaris@tie{}9
 and 10.  @acronym{GNU} @command{make} was needed prior to
 Solaris@tie{}2.7 for building other than in the source tree, and is
 sometimes needed to establish the correct dependencies when rebuilding.
-@R{} 2.2.1-patched has been built on Solaris 7 (@command{make install}
-failed in @R 2.2.1).
+@R{} 2.2.1-patched has been built on Solaris 7.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
@@ -3133,8 +3145,9 @@ in @code{CFLAGS} in AIX@tie{}5.x (and does not work correctly with
 AIX@tie{}4.x).  We believe that the patch applied since obviates the
 need for this.  He tested @R{}@tie{}2.2.1@tie{}beta on AIX@tie{}5.2.
 
-It seems that AIX@tie{}5.3 defines the macro @samp{SOCKLEN_T} and so
-@R{} versions prior to 2.3.0 cannot be compiled on that version of AIX.
+Pre-release versions of @R{} 2.3.0 have been built on AIX@tie{}5.3.
+(This defines the macro @samp{SOCKLEN_T} and so earlier versions of @R{}
+cannot be compiled on that version of AIX.)
 
 
 @node New platforms,  , AIX, Platform notes
@@ -3360,7 +3373,8 @@ Note that there appears not to be a Sun Java plugin for 64-bit browsers
 on @cputype{x86_64} Linux:
 (@url{http://forum.java.sun.com/thread.jspa?threadID=568127&tstart=75,
 @code{forum.java.sun.com/thread.jspa?threadID=568127&tstart=75}}) but
-32-bit browsers have been used on that platform.
+32-bit browsers have been used on that platform, and a Blackdown Java
+plugin is available.
 
 
 @node Java Virtual Machines on Unix, Java Virtual Machines on Windows, Java Virtual Machines on Linux , Enabling search in HTML help
