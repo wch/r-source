@@ -1622,9 +1622,9 @@ correspond to XPG language names and so @env{LANGUAGE} may need to be
 set.  (One example is @samp{LC_ALL=es} on Windows which sets the locale
 to Estonian and the language to Spanish.)
 
-Note that you should not expect to be able to change the language once R
-is running, and so @env{LC_MESSAGES} is not supported by
-@code{Sys.setlocale}.
+It is usually possible (not Windows) to change the language once @R{} is
+running @emph{via} @code{Sys.setlocale("LC_MESSAGES", "new_locale")},
+but not by setting environment variables such as @env{LANGUAGE}.
 
 Messages are divided into @emph{domains}, and translations may be
 available for some or all messages in a domain.  @R{} makes use of the
@@ -2494,10 +2494,11 @@ machine, you may have to setup the fonts differently for the two usages.
 
 When X11 was designed, most displays were around 75dpi, whereas today
 they are of the order of 100dpi or even higher.  If you find that X11()
-is reporting missing font sizes, especially larger ones, it is likely
-that you have not installed the 100dpi versions of the X11 fonts.  The
-names and details differ by system, but will likely have something like
-Fedora Core 5's
+is reporting@footnote{for example, @code{X11 font at size 14 could not
+be loaded}.} missing font sizes, especially larger ones, it is likely
+that you are not using scalable fonts and have not installed the 100dpi
+versions of the X11 fonts.  The names and details differ by system, but
+will likely have something like Fedora Core 5's
 @example
 xorg-x11-fonts-75dpi
 xorg-x11-fonts-100dpi
@@ -2508,7 +2509,11 @@ xorg-x11-fonts-cyrillic
 
 @noindent
 and you need to ensure that the @samp{-100dpi} versions are installed
-and on the X11 font path (check via @command{xset -q}).
+and on the X11 font path (check via @command{xset -q}).  The
+@samp{X11()} device does try to set a pointsize and not a pixel size:
+laptop users may find the default setting of 12 too large (although very
+frequently laptop screens are set to a fictitious dpi to appear like a
+scaled-down desktop screen).
 
 More complicated problems can occur in non-Western-European locales, so
 if you are using one, the first thing to check is that things work in
@@ -2523,25 +2528,28 @@ the option @code{"X11fonts"} which defaults to
 "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
 @end example
 
-If you are using a single-byte locale, for example 8859-2 in Eastern
-Europe or KOI8-R in Russian, use @command{xlsfonts} to find an
+If you are using a single-byte encoding, for example ISO 8859-2 in
+Eastern Europe or KOI8-R in Russian, use @command{xlsfonts} to find an
 appropriate family of fonts in your encoding (the last field in the
 listing).  If you find none, it is likely that you need to install
-further fonts, such as @samp{fonts-xorg-cyrillic} shown in the listing
-above.
+further font packages, such as @samp{xorg-x11-fonts-cyrillic} shown in
+the listing above.
 
-Multi-byte locales (most commonly UTF-8) are even more complicated.
+Multi-byte encodings (most commonly UTF-8) are even more complicated.
 There are few fonts in @samp{iso10646-1}, the Unicode encoding, and they
 only contain a subset of the available glyphs (and are often fixed-width
 designed for use in terminals).  In such locales @emph{fontsets} are
-used, made up of fonts encoded in other encodings.  If the locale you are
-using has an entry in the @samp{XLC_LOCALE} directory (typically
+used, made up of fonts encoded in other encodings.  If the locale you
+are using has an entry in the @samp{XLC_LOCALE} directory (typically
 @file{/usr/X11R6/lib/X11/locale}, it is likely that all you need to do
 is to pick a suitable font specification that has fonts in the encodings
-specified there.  If not, you may have to get hold of a suitable
-locale entry for X11.  This may mean that, for example, Japanese text
-can be displayed when running in @code{ja_JP.utf8} but not when running
-in @code{en_GB.utf8} on the same machine.
+specified there.  If not, you may have to get hold of a suitable locale
+entry for X11.  This may mean that, for example, Japanese text can be
+displayed when running in @code{ja_JP.utf8} but not when running in
+@code{en_GB.utf8} on the same machine (although on some systems many
+UTF-8 X11 locales are aliased to @code{en_US.utf8} which covers several
+character sets, e.g. ISO 8859-1 (Western European), JISX0208 (Kanji),
+KSC5601 (Korean), GB2312 (Chinese Han) and JISX0201 (Kana)).
 
 On some systems scalable fonts are available covering a wide range of
 glyphs.  One source is TrueType fonts, and these can provide high

@@ -41,9 +41,9 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   available on Unix and is available on Windows.
 
   The first seven categories described here are those specified by
-  POSIX.  \code{LC_MESSAGES} will be \code{"C"} on systems that do not
-  support message translation.  Trying to use an unsupported category is
-  an error for \code{Sys.setlocale}.
+  POSIX.  \code{"LC_MESSAGES"} will be \code{"C"} on systems that do not
+  support message translation, and is not supported on Windows.  Trying
+  to use an unsupported category is an error for \code{Sys.setlocale}.
 
   Note that setting \code{"LC_ALL"} as from \R 2.1.0 sets only
   \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and

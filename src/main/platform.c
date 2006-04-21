@@ -1107,10 +1107,13 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
 	break;
 #ifdef LC_MESSAGES
+/* this seems to exist in MinGW, but it does not work in Windows */
+#ifndef Win32
     case 7:
 	cat = LC_MESSAGES;
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
 	break;
+#endif
 #endif
 #ifdef LC_PAPER
     case 8:

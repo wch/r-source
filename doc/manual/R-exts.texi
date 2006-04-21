@@ -8355,7 +8355,8 @@ the @pkg{tcltk} package.
 Enbedded @R{} is designed to be run in the main thread, and all the
 testing is done in that context.  There is a potential issue with the
 stack-checking mechanism where threads are involved.  This uses two
-variables declared in @file{Rinterface.h} as
+variables declared in @file{Rinterface.h} (if @code{CSTACK_DEFNS} is
+defined) as
 
 @example
 extern uintptr_t R_CStackLimit;	/* C stack limit */
