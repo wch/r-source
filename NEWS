@@ -11,8 +11,8 @@
 
 USER-VISIBLE CHANGES
 
-    o   The startup message now prints first the version string and
-        then the copyright notice (to be more similar to R --version).
+    o	The startup message now prints first the version string and
+	then the copyright notice (to be more similar to R --version).
 
 
 NEW FEATURES
@@ -55,7 +55,7 @@ NEW FEATURES
 
     o	regexpr() now accepts 0-length 'text' inputs.
 
-    o	Sys.getlocale() and Sys.setlocale() support LC_MESSAGES, 
+    o	Sys.getlocale() and Sys.setlocale() support LC_MESSAGES,
 	LC_PAPER and LC_MEASUREMENT if the platform does.
 
 
@@ -85,7 +85,7 @@ DEPRECATED & DEFUNCT
     o	Graphical parameter 'tmag' is obsolete.
 
     o	symbol.C() and symbol.For() are deprecated.  They are required in
-	S for use with is.loaded(), but are not so required in R. 
+	S for use with is.loaded(), but are not so required in R.
 
 
 C-LEVEL FACILITIES
@@ -112,7 +112,7 @@ BUG FIXES
     o	min(), max(), sum() and prod() gave nonsensical answers with
 	an empty list or raw argument.
 
-    o	sum() on a data frame did not allow multiple arguments.  (PR#8385)
+    o	sum() on a data frame did not allow multiple arguments.	 (PR#8385)
 
     o	The Summary() methods for data.frame, Date, POSIXct, POSIXlt
 	and difftime all required an argument which can match 'x',
@@ -126,14 +126,16 @@ BUG FIXES
 	no other did.  Now all accept an expression which evaluates to
 	a one-element character vector (although e.g. logit is taken
 	as a name and not an expression).
-	
+
     o	The LaTeX version of the package reference manual was omitting
 	some topics, and was not sorting the foo-package topic first.
 
-    o  trace() now accepts arguments where= and signature= for the
-        old-style trace (no tracer or exit, edit==FALSE) and just
-        prints a message on entry.  Also the undocumented feature of
-        where=function now works for generic functions as well.
+    o	trace() now accepts arguments where= and signature= for the
+	old-style trace (no tracer or exit, edit==FALSE) and just
+	prints a message on entry.  Also the undocumented feature of
+	where=function now works for generic functions as well.
+
+    o	plot(lm(y ~ 1)) now works also for 'which = 5'.
 
 
 
@@ -390,7 +392,7 @@ NEW FEATURES
     o	splinefun() returns a function that now also has a 'deriv' argument
 	and can provide up to the 3rd derivative of the interpolating
 	spline, thanks to Berwin Turlach.
-	
+
     o	stopifnot(A) now gives a better error message when A has NAs, and
 	uses "not all TRUE" when A has length >= 2.
 
@@ -1200,7 +1202,7 @@ BUG FIXES
 	left margin.  (PR#8681)
 
     o	r <- glm(.....); all.equal(r,r) # now gives TRUE instead of an error
-    
+
     o	plot.acf() with a multiple time series was sometimes
 	miscalculating the 'ylim' value for the plot after the first.
 	(PR#8705)

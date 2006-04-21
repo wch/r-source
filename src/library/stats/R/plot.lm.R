@@ -46,9 +46,8 @@ function (x, which = c(1:3,5), ## was which = 1:4,
         rs[is.infinite(rs)] <- NaN
     }
     if (any(show[5:6])) { # using 'leverages'
-	hatval <- hatvalues(x)
-        r.hat <- range(hatval, na.rm = TRUE) # though should never have NA
-        isConst.hat <- diff(r.hat) < 1e-10 * mean(hatval)
+        r.hat <- range(hii, na.rm = TRUE) # though should never have NA
+        isConst.hat <- all(r.hat == 0) || diff(r.hat) < 1e-10 * mean(hii)
     }
     if (any(show[c(1, 3)]))
 	l.fit <- if (isGlm)
@@ -155,6 +154,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	    ylim <- extendrange(r= ylim, f = 0.08)
 	    show.r <- order(-cook)[iid]
 	}
+        do.plot <- TRUE
         if(isConst.hat) { ## leverages are all the same
             caption[5] <- "Constant Leverage:\n Residuals vs Factor Levels"
             ## plot against  factor-level combinations instead
@@ -163,30 +163,38 @@ function (x, which = c(1:3,5), ## was which = 1:4,
             dcl <- aterms$dataClasses[ - aterms$response ]
             facvars <- names(dcl)[dcl %in% c("factor", "ordered")]
             mf <- model.frame(x)[facvars]# better than x$model
-            ## now re-order the factor levels *along* factor-effects
-            ## using a "robust" method {not requiring dummy.coef}:
-            effM <- mf
-            for(j in seq(length=ncol(mf)))
-                effM[,j] <- sapply(split(yh, mf[,j]), mean)[mf[,j]]
-            dm <- data.matrix(mf)[do.call(order, effM), , drop = FALSE]
-            ## #{levels} for each of the factors:
-            nf <- length(nlev <- unlist(unname(lapply(x$xlevels, length))))
-            ff <- if(nf == 1) 1 else rev(cumprod(c(1, nlev[nf:2])))
-            xx <- facval <- (dm-1) %*% ff
+            if(ncol(mf) > 0) {
+                ## now re-order the factor levels *along* factor-effects
+                ## using a "robust" method {not requiring dummy.coef}:
+                effM <- mf
+                for(j in seq(length=ncol(mf)))
+                    effM[,j] <- sapply(split(yh, mf[,j]), mean)[mf[,j]]
+                dm <- data.matrix(mf)[do.call(order, effM), , drop = FALSE]
+                ## #{levels} for each of the factors:
+                nf <- length(nlev <- unlist(unname(lapply(x$xlevels, length))))
+                ff <- if(nf == 1) 1 else rev(cumprod(c(1, nlev[nf:2])))
+                xx <- facval <- (dm-1) %*% ff
 
-            plot(facval, rs, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
-                 ylim = ylim, xaxt = "n",
-                 main = main, xlab = "Factor Level Combinations",
-                 ylab = ylab23, type = "n", ...)
-            axis(1, at = ff[1]*(1:nlev[1] - 1/2) - 1/2,
-                 labels= x$xlevels[[1]][order(sapply(split(yh,mf[,1]), mean))])
-            mtext(paste(facvars[1],":"), side = 1, line = 0.25, adj=-.05)
-            abline(v = ff[1]*(0:nlev[1]) - 1/2, col="gray", lty="F4")
-            panel(facval, rs, ...)
-            abline(h = 0, lty = 3, col = "gray")
+                plot(facval, rs, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
+                     ylim = ylim, xaxt = "n",
+                     main = main, xlab = "Factor Level Combinations",
+                     ylab = ylab23, type = "n", ...)
+                axis(1, at = ff[1]*(1:nlev[1] - 1/2) - 1/2,
+                     labels= x$xlevels[[1]][order(sapply(split(yh,mf[,1]), mean))])
+                mtext(paste(facvars[1],":"), side = 1, line = 0.25, adj=-.05)
+                abline(v = ff[1]*(0:nlev[1]) - 1/2, col="gray", lty="F4")
+                panel(facval, rs, ...)
+                abline(h = 0, lty = 3, col = "gray")
+            }
+	    else { # no factors
+		message("hat values (leverages) are all = ",format(mean(r.hat)),
+			"\n and there are no factor predictors; no plot no. 5")
+                frame()
+                do.plot <- FALSE
+            }
         }
         else { ## Residual vs Leverage
-            xx <- hatval
+            xx <- hii
             ## omit hatvalues of 1.
             xx[xx >= 1] <- NA
 
@@ -218,21 +226,23 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                      cex.axis = cex.id, col.axis = 2)
             }
         }# if(const h_ii) .. else ..
-        mtext(caption[5], 3, 0.25)
-	if (id.n > 0) {
-	    y.id <- rs[show.r]
-	    y.id[y.id < 0] <- y.id[y.id < 0] - strheight(" ")/3
-	    text.id(xx[show.r], y.id, show.r)
+	if (do.plot) {
+	    mtext(caption[5], 3, 0.25)
+	    if (id.n > 0) {
+		y.id <- rs[show.r]
+		y.id[y.id < 0] <- y.id[y.id < 0] - strheight(" ")/3
+		text.id(xx[show.r], y.id, show.r)
+	    }
 	}
     }
     if (show[6]) {
 	ymx <- max(cook, na.rm = TRUE)*1.025
-	g <- hatval/(1-hatval)
+	g <- hii/(1-hii)
         g[is.infinite(g)] <- NaN
 	plot(g, cook, xlim = c(0, max(g, na.rm=TRUE)), ylim = c(0, ymx),
 	     main = main, xlab = "Leverage", ylab = "Cook's distance",
 	     xaxt = "n", type = "n", ...)
-	athat <- pretty(hatval)
+	athat <- pretty(hii)
 	axis(1, at = athat/(1-athat), labels = paste(athat))
 	panel(g, cook, ...)
 	if (one.fig)
