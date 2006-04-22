@@ -101,9 +101,3 @@ plot(x, x^0.9, type="l", log="xy")
 
 plot(as.Date("2001/1/1") + 12*(1:9), 1:9)
 ## used bad 'xlab/ylab' in some versions of R 2.2.0(unstable)
-
-op <- par(mfrow = c(2,2), mar = .1+c(3,3,2,1), mgp = c(1.5, .6, 0))
-y <- rt(200, df= 3)
-plot(lm(y ~ 1))
-par(op)
-## 4th plot (which = 5: "leverages") failed in 2.2.0 <= R <= 2.3.0

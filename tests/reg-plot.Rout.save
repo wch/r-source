@@ -1,6 +1,6 @@
 
-R version 2.4.0 Under development (unstable) (2006-04-21 r37879)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2005-10-31 r36106)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
+'help.start()' for a HTML browser interface to help.
 Type 'q()' to quit R.
 
 > #### Regression tests for GRAPHICS & PLOTS
@@ -127,12 +127,4 @@ Error in plot.xy(xy.coords(x, y), type = type, ...) :
 > 
 > plot(as.Date("2001/1/1") + 12*(1:9), 1:9)
 > ## used bad 'xlab/ylab' in some versions of R 2.2.0(unstable)
-> 
-> op <- par(mfrow = c(2,2), mar = .1+c(3,3,2,1), mgp = c(1.5, .6, 0))
-> y <- rt(200, df= 3)
-> plot(lm(y ~ 1))
-hat values (leverages) are all = 0.005
- and there are no factor predictors; no plot no. 5
-> par(op)
-> ## 4th plot (which = 5: "leverages") failed in 2.2.0 <= R <= 2.3.0
 > 
