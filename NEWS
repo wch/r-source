@@ -58,6 +58,11 @@ NEW FEATURES
     o	Sys.getlocale() and Sys.setlocale() support LC_MESSAGES,
 	LC_PAPER and LC_MEASUREMENT if the platform does.
 
+    o	The \uxxxx notation for Unicode characters in input strings
+	can now be used on any platform which supports MBCS, even if
+	the current locale is not MBCS (provided that the Unicode
+	character is valid in the current character set).
+
 
 DEPRECATED & DEFUNCT
 
