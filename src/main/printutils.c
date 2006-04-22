@@ -153,7 +153,7 @@ char *EncodeReal(double x, int w, int d, int e, char cdec)
 	else snprintf(buff, NB, "%*s", w, "-Inf");
     }
     else if (e) {
-#ifndef Win32
+#ifndef Win32_0
 	if(d) {
 	    sprintf(fmt,"%%#%d.%de", w, d);
 	    snprintf(buff, NB, fmt, x);

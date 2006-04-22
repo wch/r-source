@@ -153,7 +153,7 @@
 
 /* Define to 1 if you have the declaration of `vasprintf', and to 0 if you
    don't. */
-#define HAVE_DECL_VASPRINTF 0
+#define HAVE_DECL_VASPRINTF 1
 
 /* Define to 1 if you have the declaration of `vsnprintf', and to 0 if you
    don't. */
@@ -617,7 +617,7 @@
 #define HAVE_UNSIGNED_LONG_LONG 1
 
 /* Define to 1 if you have the `vasprintf' function. */
-/* #undef HAVE_VASPRINTF */
+#define HAVE_VASPRINTF 1
 
 /* Define to 1 if you have the `va_copy' function. */
 #define HAVE_VA_COPY 1
@@ -924,6 +924,30 @@
 /* Define to unsigned long or unsigned long long if <stdint.h> and
    <inttypes.h> don't define. */
 /* #undef uintmax_t */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+int trio_printf(const char *format, ...);
+int trio_vprintf(const char *format, va_list args);
+int trio_fprintf(FILE *file, const char *format, ...);
+int trio_sprintf(char *buffer, const char *format, ...);
+int trio_vsprintf(char *buffer, const char *format, va_list args);
+int trio_vfprintf(FILE *file, const char *format, va_list args);
+int trio_snprintf(char *buffer, size_t max, const char *format, ...);
+int trio_vsnprintf(char *buffer, size_t bufferSize, const char *format,
+		   va_list args);
+int trio_vasprintf(char **ret, const char *format, va_list args);
+
+#define printf trio_printf
+#define vprintf trio_vprintf
+#define fprintf trio_fprintf
+#define vfprintf trio_vfprintf
+#define sprintf trio_sprintf
+#define snprintf trio_snprintf
+#define vsprintf trio_vsprintf
+#define vsnprintf trio_vsnprintf
+#define vasprintf trio_vasprintf
 
 
 #endif /* not R_CONFIG_H */

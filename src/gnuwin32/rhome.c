@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2000  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1999--2006  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#undef sprintf
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>

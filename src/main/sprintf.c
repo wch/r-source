@@ -248,7 +248,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				    error("%s", 
 					  _("use format %f, %e or %g for numeric objects"));
 				if (R_FINITE(x)) {
-#ifdef Win32
+#ifdef Win32_0
 				    if (strcspn(fmtp, "eEgG") < strlen(fmtp)) {
 					/* needs e+00 -> e+0 fix, taking field
 					   width into account */

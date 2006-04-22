@@ -194,7 +194,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		} /* if(do_fg) for(i..) */
 	    else
 		for (i=0; i < nn; i++) {
-#ifdef Win32
+#ifdef Win32_0
 		    sprintf(result[i], form, wid + 1, dig, ((double *)x)[i]);
 		    {
 			/* change e+/-00n to e+/-0n etc */

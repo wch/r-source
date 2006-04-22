@@ -13,6 +13,10 @@ The language for menus and messages can be set in the 'Rconsole' file and
 The initial setting for console buffering can be set in the 'Rconsole'
 file and (for future sessions) from the GUI preferences.
 
+The C-level printf functions have been replaced by those from the trio
+library, which ensures a higher level of C99 compliance without the
+need for lots of Windows-specific workarounds.
+
 
 
 R 2.3.0

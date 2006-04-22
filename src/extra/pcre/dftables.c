@@ -52,6 +52,7 @@ make use of its code from here in order to be consistent. */
 #define DFTABLES          /* pcre_maketables.c notices this */
 #include "pcre_maketables.c"
 
+#undef fprintf /* remapped on Windows */
 
 int main(int argc, char **argv)
 {

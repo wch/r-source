@@ -1,0 +1,19 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+ifdef DEBUG
+ DEFS+=-g
+endif
+
+CFLAGS	= -O3 $(DEFS)
+OBJS	= triostr.o trio.o trionan.o
+TARGETLIB = libtrio.a
+
+all: $(TARGETLIB)
+
+$(TARGETLIB): $(OBJS)
+	$(AR) ruv $(TARGETLIB) $(OBJS)
+	$(RANLIB) $(TARGETLIB)
+
+clean:
+	rm -f *~ core $(OBJS) $(TARGETLIB)
