@@ -413,7 +413,7 @@ ls.str <-
 {
     nms <- ls(..., envir = envir, pattern = pattern)
     r <- sapply(nms, function(n)
-		if(exists(n, envir= envir, mode= mode)) n else as.character(NA))
+		if(exists(n, envir= envir, mode= mode, inherits=TRUE)) n else as.character(NA))
     names(r) <- NULL
     structure(r[!is.na(r)], envir = envir, mode = mode, class = "ls_str")
 }
