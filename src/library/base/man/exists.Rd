@@ -44,7 +44,9 @@ exists(x, where = -1, envir = , frame, mode = "any",
   If \code{mode} is specified then only objects of that type are sought.
   The \code{mode} may specify one of the collections \code{"numeric"} and
   \code{"function"} (see \code{\link{mode}}): any member of the
-  collection will suffice.
+  collection will suffice.  (This is true even if a member of a
+  collection is specified, so for example \code{mode="special"} will
+  seek any type of function.)
 }
 \value{
   Logical, true if and only if an object of the correct name and mode is

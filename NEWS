@@ -1127,6 +1127,10 @@ BUG FIXES
 	which failed with gcc 3.3.x on ix86 Linux.  We now use a less
 	fragile test (and lose a negligible amount of accuracy).
 
+    o	ls.str() was missing inherits=FALSE, and so could have
+	reported on an object of the same name but a different mode in
+	the enclosure of the given environment.
+
 
 
 

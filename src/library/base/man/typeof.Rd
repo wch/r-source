@@ -21,7 +21,7 @@ typeof(x)
   \code{"closure"} (function), \code{"special"} and \code{"builtin"}
   (basic functions and operators), \code{"environment"}, and others that
   are unlikely to be seen at user level (\code{"symbol"},
-  \code{"pairlist"}, \code{"environment"}, \code{"promise"},
+  \code{"pairlist"}, \code{"promise"},
   \code{"language"}, \code{"char"}, \code{"..."}, \code{"any"},
   \code{"expression"}, \code{"externalptr"}, \code{"bytecode"} and
   \code{"weakref"}).

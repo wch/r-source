@@ -412,10 +412,9 @@ ls.str <-
     function(pos = 1, pattern, ..., envir = as.environment(pos), mode = "any")
 {
     nms <- ls(..., envir = envir, pattern = pattern)
-    r <- sapply(nms, function(n)
-		if(exists(n, envir= envir, mode= mode)) n else as.character(NA))
-    names(r) <- NULL
-    structure(r[!is.na(r)], envir = envir, mode = mode, class = "ls_str")
+    r <- unlist(lapply(nms, function(n)
+                       exists(n, envir= envir, mode= mode, inherits=FALSE)))
+    structure(nms[r], envir = envir, mode = mode, class = "ls_str")
 }
 
 lsf.str <- function(pos = 1, ..., envir = as.environment(pos))
