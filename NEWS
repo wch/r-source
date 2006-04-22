@@ -990,6 +990,9 @@ BUG FIXES
 	reported on an object of the same name but a different mode in
 	the enclosure of the given environment.
 
+    o	logLik.nls assumed that sigma^2 had been estimated, but did
+	not count this in the 'df' attribute.
+
 
 
 
