@@ -1049,9 +1049,9 @@ SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef LC_MEASUREMENT
     case 9: cat = LC_MEASUREMENT; break;
 #endif
-    default: cat = -1;
+    default: cat = NA_INTEGER;
     }
-    if(cat >= 0) p = setlocale(cat, NULL);
+    if(cat != NA_INTEGER) p = setlocale(cat, NULL);
     PROTECT(ans = allocVector(STRSXP, 1));
     if(p) SET_STRING_ELT(ans, 0, mkChar(p));
     else  SET_STRING_ELT(ans, 0, mkChar(""));
