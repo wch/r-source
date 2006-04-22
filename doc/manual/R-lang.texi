@@ -1570,8 +1570,9 @@ x$"a"
 @cindex index
 
 For vectors and matrices the @code{[[} forms are rarely used, although
-they have some slight semantic differences from the @code{[} form, in that
-it drops any @code{names} or @code{dimnames} attribute.  When indexing
+they have some slight semantic differences from the @code{[} form (e.g.
+it drops any @code{names} or @code{dimnames} attribute, and that partial
+matching is used for character indices).  When indexing
 multi-dimensional structures with a single index, @code{x[[i]]} or
 @code{x[i]} will return the @code{i}th sequential element of @code{x}.
 
@@ -1659,6 +1660,9 @@ The factor levels are never used.  If so desired, use
 ``irrelevant'' attributes from the result.  Only @code{names} and in
 multi-dimensional arrays @code{dim} and @code{dimnames} attributes are
 retained.
+
+@item
+@strong{NULL}.  This is treated as if it were @code{integer(0)}.
 
 @end itemize
 
