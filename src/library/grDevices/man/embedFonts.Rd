@@ -31,6 +31,14 @@ embedFonts(file, format, outfile = file, fontpaths = "", options = "")
   If the special font is not installed for ghostscript,
   you will need to tell ghostscript where the font is, using
   something like \code{options="-sFONTPATH=path/to/font"}.
+
+  This function relies on a suitable ghostscript executable being in
+  your path, or the environment variable \code{R_GSCMD} (the same as
+  \code{\link{bitmap}}) being set as the full path to the ghostscript
+  executable.
+#ifdef windows
+  For Windows users, this should be the path to \code{gswin32c.exe}.
+#endif
 }
 \value{
   The shell command used to invoke ghostscript is returned
