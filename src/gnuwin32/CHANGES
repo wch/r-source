@@ -17,6 +17,10 @@ The C-level printf functions have been replaced by those from the trio
 library, which ensures a higher level of C99 compliance without the
 need for lots of Windows-specific workarounds.
 
+Entry points which are hidden in libR.so on Unix are now also hidden
+in R.dll.  (Just over half the entry points are hidden, which speeds up
+loading.)
+
 
 
 R 2.3.0

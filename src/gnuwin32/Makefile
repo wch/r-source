@@ -182,8 +182,12 @@ fixed/fixdesc:
 
 dllversion.o: ../include/Rversion.h
 
-## this one needs R.dll as the name
 R.dll: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
+	@$(ECHO) EXPORTS > R.def
+	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' | sort > R0.def
+	@comm -3 R0.def Rdll.hide >> R.def
+	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ R.def $^ $($*-DLLLIBS) $(DLLLIBS)
+	@$(RM) R.def R0.def
 
 Rdll: makeMakedeps libRblas.dll.a ../../bin/R.dll
 
