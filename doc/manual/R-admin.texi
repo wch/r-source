@@ -1116,7 +1116,11 @@ of many of which are set in file @file{R_HOME/etc/Renviron} (there are
 none set by default on Windows and hence no such file).  These are set
 at @command{configure} time, and you would not normally want to change
 them -- a possible exception is @env{R_PAPERSIZE} (@pxref{Setting paper
-size}).
+size}).  As from @R{} 2.4.0 the paper size will be deduced from the
+@samp{LC_PAPER} locale category if it exists and @env{R_PAPERSIZE} is
+unset, and this will normally produce the right choice from @code{a4} and 
+@code{letter} on modern Unix-alikes (but can always be overridden by
+setting @env{R_PAPERSIZE}).
 
 Various environment variables can be set to determine where @R{} creates
 its per-session temporary directory.  The environment variables
@@ -2223,7 +2227,8 @@ One common variable to change is @env{R_PAPERSIZE}, which defaults to
 @samp{letter}, @samp{legal} and @samp{executive}.)
 
 This is used both when configuring @R{} to set the default, and when
-running @R{} to override the default.
+running @R{} to override the default.  It is also used to set the
+papersize when making DVI and PDF manuals.
 
 The configure default will most often be @samp{a4} if @env{R_PAPERSIZE}
 is unset.  (If the (Debian Linux) program @command{paperconf} is found

@@ -165,10 +165,11 @@ getOption(x)
       \env{R\_PAPERSIZE} when \R is started: if that is unset or invalid
       it defaults to
 #ifdef unix
-      \code{"a4"}.}
+      a value derived from the locale category \code{LC_PAPER}, or
+      if that is unavailable to a default set when \R was built.}
 #endif
 #ifdef windows
-    \code{"a4"}, or \code{"letter"} in US and Canadian locales.}
+      \code{"a4"}, or \code{"letter"} in US and Canadian locales.}
 #endif
 
     \item{\code{printcmd}:}{the command used by \code{\link{postscript}}

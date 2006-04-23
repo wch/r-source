@@ -63,6 +63,13 @@ NEW FEATURES
 	the current locale is not MBCS (provided that the Unicode
 	character is valid in the current character set).
 
+    o   The way option("papersize") is set has been changed.  On platforms
+        which support the LC_PAPER locale category, the setting is taken
+        first from the R_PAPERSIZE environment variable at run time, then
+        from the LC_PAPER category ("letter" for _US and _CA locales and
+        "a4" otherwise).  On other platforms (including Windows and older
+        Unixen), the choice is unchanged.
+
 
 DEPRECATED & DEFUNCT
 
