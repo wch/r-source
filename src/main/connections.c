@@ -226,9 +226,12 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 #else
     if(res >= BUFSIZE) { /* res is the desired output length */
 	usedRalloc = TRUE;
-	b = R_alloc(res + 1, sizeof(char));
-	vsprintf(b, format, ap);
-    } else if(res < 0) { /* just a failure indication -- e.g. Windows */
+	/* apparently some implementations count short,
+	   <http://unixpapa.com/incnote/stdio.html>
+	   so add some margin here */
+	b = R_alloc(res + 101, sizeof(char));
+	vsnprintf(b, res+100, format, ap);
+    } else if(res < 0) { /* just a failure indication */
 	usedRalloc = TRUE;
 	b = R_alloc(10*BUFSIZE, sizeof(char));
 	res = vsnprintf(b, 10*BUFSIZE, format, ap);
@@ -239,7 +242,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	}
     }
 #endif /* HAVE_VASPRINTF */
-#else
+#else  /* no VA_COPY */
     res = vsnprintf(buf, BUFSIZE, format, ap);
     if(res >= BUFSIZE || res < 0) { 
 	/* res is the desired output length or just a failure indication */
@@ -255,7 +258,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	Rboolean again = FALSE;
 	int ninit = strlen(con->init_out);
 	do {
-	    onb = BUFSIZE; /* space for nul */
+	    onb = BUFSIZE; /* leave space for nul */
 	    ob = outbuf;
 	    if(ninit) {
 		strcpy(ob, con->init_out);
