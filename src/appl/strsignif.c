@@ -71,10 +71,6 @@
 #include <string.h>
 #include <math.h>
 
-#ifdef Win32
-#include <ctype.h>
-#endif
-
 #include <R_ext/Error.h>	/* error */
 #include <R_ext/Memory.h>	/* R_alloc */
 #include <R_ext/Applic.h>
@@ -194,23 +190,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		} /* if(do_fg) for(i..) */
 	    else
 		for (i=0; i < nn; i++) {
-#ifdef Win32_0
-		    sprintf(result[i], form, wid + 1, dig, ((double *)x)[i]);
-		    {
-			/* change e+/-00n to e+/-0n etc */
-			char *p = result[i];
-			int ii, len = strlen(p);
-			if (tolower(p[len-5]) == 'e' &&
-			    (p[len-4] == '+' || p[len-4] == '-') &&
-			    p[len-3] == '0' &&
-			    isdigit(p[len-2]) && isdigit(p[len-1])) {
-			    for(ii = len-3; ii <= len; ii++) p[ii] = p[ii+1];
-			} else
-			    sprintf(result[i], form, wid, dig, ((double *)x)[i]);
-		    }
-#else
 		    sprintf(result[i], form, wid, dig, ((double *)x)[i]);
-#endif
 		}
 	} else
 	    error(_(".C(..): 'type' must be \"real\" for this format"));

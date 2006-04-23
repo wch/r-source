@@ -248,56 +248,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				    error("%s", 
 					  _("use format %f, %e or %g for numeric objects"));
 				if (R_FINITE(x)) {
-#ifdef Win32_0
-				    if (strcspn(fmtp, "eEgG") < strlen(fmtp)) {
-					/* needs e+00 -> e+0 fix, taking field
-					   width into account */
-					int width=0, prec=0, ii, len;
-					char *p;
-					Rboolean have_prec = FALSE;
-					for(p = fmtp; *p; p++) {
-					    if(*p == '.') have_prec = TRUE;
-					    if(isdigit(*p)) {
-						if(have_prec) prec = 10*prec + *p - '0';
-						else width = 10*width + *p - '0';
-					    }
-					}
-					if (!have_prec) prec = 6;
-					if (width > 0) {
-					    char fmt3[MAXLINE+1], *q = fmt3;
-					    for(p = fmtp; *p; *p++) {
-						if(isdigit(*p)) break;
-						*q++ = *p;
-					    }
-					    q += sprintf(q, "%d", width + 1);
-					    for( ; *p; *p++) if(!isdigit(*p)) break;
-					    for( ; *p; *p++) *q++ = *p;
-					    *q = '\0';
-					    sprintf(bit, fmt3, x);
-					    p = bit;
-					    len = strlen(p);
-					    if (tolower(p[len-5]) == 'e' &&
-						(p[len-4] == '+' || p[len-4] == '-') &&
-						p[len-3] == '0' &&
-						isdigit(p[len-2]) && isdigit(p[len-1])) {
-						for(ii = len-3; ii <= len; ii++) 
-						    p[ii] = p[ii+1];
-					    } else sprintf(bit, fmtp, x);
-					} else {
-					    sprintf(bit, fmtp, x);
-					    p = bit;
-					    len = strlen(p);
-					    if (tolower(p[len-5]) == 'e' &&
-						(p[len-4] == '+' || p[len-4] == '-') &&
-						p[len-3] == '0' &&
-						isdigit(p[len-2]) && isdigit(p[len-1])) {
-						for(ii = len-3; ii <= len; ii++) 
-						    p[ii] = p[ii+1];
-					    }
-					}
-				    } else
-#endif
-					sprintf(bit, fmtp, x);
+				    sprintf(bit, fmtp, x);
 				} else {
 				    char *p = strchr(fmtp, '.');
 				    if (p) {
