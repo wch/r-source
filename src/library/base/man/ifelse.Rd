@@ -21,7 +21,7 @@ is \code{TRUE} or \code{FALSE}.
   \code{yes} will be evaluated if and only if any element of \code{test}
   is true, and analogously for \code{no}.
 
-  Missing values in \code{test} giving missing values in the result.
+  Missing values in \code{test} give missing values in the result.
 }
 \value{
   A vector of the same length and attributes (including

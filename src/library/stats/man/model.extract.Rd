@@ -15,8 +15,8 @@ model.weights(x)
  \item{component}{literal character string or name. The name of a
    component to extract, such as \code{"weights"}, \code{"subset"}.}
  \item{type}{One of \code{"any"}, \code{"numeric"}, \code{"double"}.
-   Using the either of latter two coerces the result to have
-   storage mode \code{"double"}.}
+   Using either of latter two coerces the result to have storage mode
+   \code{"double"}.}
 }
 \description{Returns the response, offset, subset, weights or other
   special components of a model frame passed as optional arguments to
