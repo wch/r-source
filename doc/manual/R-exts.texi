@@ -8841,10 +8841,10 @@ list'' in @file{tests/no-segfault.Rin}.
 @appendix R coding standards
 
 @R{} is meant to run on a wide variety of platforms, including Linux and
-most variants of Unix as well as 32-bit Windows versions and on the
-Power Mac.  Therefore, when extending @R{} by either adding to the @R{}
-base distribution or by providing an add-on package, one should not rely
-on features specific to only a few supported platforms, if this can be
+most variants of Unix as well as 32-bit Windows versions and on MacOS X.
+Therefore, when extending @R{} by either adding to the @R{} base
+distribution or by providing an add-on package, one should not rely on
+features specific to only a few supported platforms, if this can be
 avoided.  In particular, although most @R{} developers use @acronym{GNU}
 tools, they should not employ the @acronym{GNU} extensions to standard
 tools.  Whereas some other software packages explicitly rely on e.g.@:
@@ -8856,14 +8856,16 @@ The following tools can ``safely be assumed'' for @R{} extensions.
 
 @itemize @bullet
 @item
-An ISO 9899, also known as ISO C89 or @acronym{ANSI} C compiler.  If you
-do not have access to this C standard, refer to the 2nd edition of Brian
-W. Kernighan & Dennis M. Ritchie, @cite{The C Programming Language}.
-Any extensions, such as @acronym{POSIX} or ISO C99, must be tested for,
-typically using Autoconf (@pxref{Configure and cleanup}).
+As from @R{} 2.3.0 an ISO C99 C compiler.  Note that extensions such as
+@acronym{POSIX} 1003.1 must be tested for, typically using Autoconf
+(@pxref{Configure and cleanup}), unless you are sure they are supported
+on all mainstream @R{} platforms (including Windows and MacOS X).
+Packages will be more portable if written assuming only C89, but this
+should not be done where using C99 features will make for cleaner or
+more robust code.
 
 @item
-A FORTRAN 77 compiler or @command{f2c}, the FORTRAN-to-C converter.
+A FORTRAN 77 compiler (but not FORTRAN 9x).
 
 @item
 A simple @command{make}, considering the features of @command{make} in
