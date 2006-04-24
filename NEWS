@@ -15,6 +15,11 @@ BUG FIXES
 
     o	sum() on a data frame did not allow multiple arguments.	 (PR#8385)
 
+    o	The \uxxxx notation for Unicode characters in input strings
+	can now be used on any platform which supports MBCS, even if
+	the current locale is not MBCS (provided that the Unicode
+	character is valid in the current character set).
+
 
 
 		CHANGES IN R VERSION 2.3.0
@@ -262,7 +267,7 @@ NEW FEATURES
     o	splinefun() returns a function that now also has a 'deriv' argument
 	and can provide up to the 3rd derivative of the interpolating
 	spline, thanks to Berwin Turlach.
-	
+
     o	stopifnot(A) now gives a better error message when A has NAs, and
 	uses "not all TRUE" when A has length >= 2.
 
@@ -1079,7 +1084,7 @@ BUG FIXES
 	left margin.  (PR#8681)
 
     o	r <- glm(.....); all.equal(r,r) # now gives TRUE instead of an error
-    
+
     o	plot.acf() with a multiple time series was sometimes
 	miscalculating the 'ylim' value for the plot after the first.
 	(PR#8705)

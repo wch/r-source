@@ -3553,35 +3553,33 @@ static int StringValue(int c)
 		c = val;
 	    }
 	    else if(c == 'u') {
-		if(!mbcslocale) 
-		     error(_("\\uxxxx sequences are only valid in multibyte locales"));
-#if defined(SUPPORT_MBCS)
-		else {	
-		    wint_t val = 0; int i, ext; size_t res;
-		    char buff[5]; Rboolean delim = FALSE;
-		    if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
-		    for(i = 0; i < 4; i++) {
-			c = xxgetc();
-			if(c >= '0' && c <= '9') ext = c - '0';
-			else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
-			else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
-			else {xxungetc(c); break;}
-			val = 16*val + ext;
-		    }
-		    if(delim)
-			if((c = xxgetc()) != '}')
-			    error(_("invalid \\u{xxxx} sequence"));
-		
-		    res = ucstomb(buff, val, NULL);
-		    if((int)res <= 0) {
-			if(delim)
-			    error(_("invalid \\u{xxxx} sequence"));
-			else
-			    error(_("invalid \\uxxxx sequence"));
-		    }
-		    for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
-		    c = buff[res - 1]; /* pushed below */
+#ifndef SUPPORT_MBCS
+		error(_("\\uxxxx sequences not supported"));
+#else
+		wint_t val = 0; int i, ext; size_t res;
+		char buff[5]; Rboolean delim = FALSE;
+		if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
+		for(i = 0; i < 4; i++) {
+		    c = xxgetc();
+		    if(c >= '0' && c <= '9') ext = c - '0';
+		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
+		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
+		    else {xxungetc(c); break;}
+		    val = 16*val + ext;
 		}
+		if(delim)
+		    if((c = xxgetc()) != '}')
+			error(_("invalid \\u{xxxx} sequence"));
+		
+		res = ucstomb(buff, val, NULL);
+		if((int)res <= 0) {
+		    if(delim)
+			error(_("invalid \\u{xxxx} sequence"));
+		    else
+			error(_("invalid \\uxxxx sequence"));
+		}
+		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
+		c = buff[res - 1]; /* pushed below */
 #endif
 	    }
 	    else if(c == 'U') {
