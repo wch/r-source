@@ -17,7 +17,7 @@ match.call <-
 pmatch <-
     function(x, table, nomatch=NA, duplicates.ok=FALSE)
 {
-    y <- .Internal(pmatch(x,table,duplicates.ok))
+    y <- .Internal(pmatch(as.character(x), as.character(table), duplicates.ok))
     y[y == 0] <- nomatch
     y
 }
@@ -46,7 +46,7 @@ match.arg <- function (arg, choices, several.ok = FALSE)
 charmatch <-
     function(x, table, nomatch=NA)
 {
-    y <- .Internal(charmatch(x,table))
+    y <- .Internal(charmatch(as.character(x), as.character(table)))
     y[is.na(y)] <- nomatch
     y
 }

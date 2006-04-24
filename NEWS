@@ -20,6 +20,15 @@ BUG FIXES
 	the current locale is not MBCS (provided that the Unicode
 	character is valid in the current character set).
 
+    o	charmatch() and pmatch() did not specify they applied only to
+	character vectors.  Now they do, and attempt to coerce 'x' and
+	'target' to character before attempting matching.
+
+    o	The Summary() methods for data.frame, Date, POSIXct, POSIXlt
+	and difftime all required an argument which can match 'x',
+	although the generics did not.
+
+
 
 
 		CHANGES IN R VERSION 2.3.0
