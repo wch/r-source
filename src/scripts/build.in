@@ -287,10 +287,10 @@ foreach my $pkg (@ARGV) {
     $log->message("checking for LF line-endings in source files");
     if($is_bundle) {
 	foreach my $ppkg (@bundlepkgs) {
-	    &fix_CRLF_in_source_files(&file_path($pkgname, $ppkg));
+	    &fix_CRLF_in_source_files(&file_path($pkgname, $ppkg), $log);
 	}
     } else {
-	&fix_CRLF_in_source_files($pkgname);
+	&fix_CRLF_in_source_files($pkgname, $log);
     }
 
     sub empty_dir_check {
@@ -624,7 +624,7 @@ sub update_Rd_index {
 }
 
 sub fix_CRLF_in_source_files {
-    my ($pkgname) = @_;
+    my ($pkgname, $log) = @_;
 
     if(-d "$pkgname/src") {
 	my @src_files = &list_files_with_exts("$pkgname/src", "(c|h|f|cc|cpp)");
