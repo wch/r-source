@@ -70,6 +70,10 @@ NEW FEATURES
         "a4" otherwise).  On other platforms (including Windows and older
         Unixen), the choice is unchanged.
 
+    o   axis.POSIXct() uses a different algorithm for ranges of 2 to
+	50 days that will mark days are midnight in the current
+	timezone (even if the graph crosses a DST change).
+
 
 DEPRECATED & DEFUNCT
 
