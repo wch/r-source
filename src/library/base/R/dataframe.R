@@ -1217,10 +1217,14 @@ Ops.data.frame <- function(e1, e2 = NULL)
 		nrow=length(rn), dimnames=list(rn,cn))
 }
 
-Summary.data.frame <- function(x, ...)
+Summary.data.frame <- function(..., na.rm)
 {
-    x <- as.matrix(x)
-    if(!is.numeric(x) && !is.complex(x))
-	stop("only defined on a data frame with all numeric or complex variables")
-    NextMethod(.Generic)
+    args <- list(...)
+    args <- lapply(args, function(x) {
+        x <- as.matrix(x)
+        if(!is.numeric(x) && !is.complex(x))
+            stop("only defined on a data frame with all numeric or complex variables")
+        x
+    })
+    do.call(.Generic, c(args, na.rm=na.rm))
 }

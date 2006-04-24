@@ -261,8 +261,12 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 
 
 /* do_summary provides a variety of data summaries
-	op : 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod */
-/* NOTE: mean() is rather different as only one arg and no na.rm. */
+	op : 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod
+ */
+/* NOTE: mean() is rather different as only one arg and no na.rm, and
+ * dispatch is from an R-level generic, this being a special case of
+ * mean.default.
+ */
 
 SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -317,7 +321,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	    COMPLEX(ans)[0].i = si;
 	    break;
 	default:
-	    errorcall_return(call, R_MSG_mode);
+	    errorcall(call, R_MSG_type, type2str(TYPEOF(x)));
 	}
 	UNPROTECT(1);
 	return ans;
@@ -340,11 +344,13 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     switch(iop) {
     case 0:/* sum */
     /* we need to find out if _all_ the arguments are integer or logical
-       in advance, as we might overflow before we find out */
+       in advance, as we might overflow before we find out.  NULL is
+       documented to be the same as integer(0).
+    */
 	a = args;
 	int_a = 1;
 	while (a != R_NilValue) {
-	    if(!isInteger(CAR(a)) &&  !isLogical(CAR(a))) {
+	    if(!isInteger(CAR(a)) &&  !isLogical(CAR(a)) && !isNull(CAR(a))) {
 		int_a = 0;
 		break;
 	    }
@@ -408,7 +414,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    else	  updated = rmax(REAL(a), length(a), &tmp, narm);
 		    break;
 		default:
-		    goto badmode;
+		    goto invalid_type;
 		}
 
 		if(updated) {/* 'a' had non-NA elements; --> "add" tmp or itmp*/
@@ -479,7 +485,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    break;
 		default:
-		    goto badmode;
+		    goto invalid_type;
 		}
 
 		break;/* sum() part */
@@ -510,15 +516,28 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    break;
 		default:
-		    goto badmode;
+		    goto invalid_type;
 		}
 
 		break;/* prod() part */
 
 	    }/* switch(iop) */
 
-	} else { /*len(a)=0*/
-	    if(TYPEOF(a) == CPLXSXP && (iop == 2 || iop == 3)) goto badmode;
+	} else { /* len(a)=0 */
+	    /* Even though this has length zero it can still be invalid,
+	       e.g. list() or raw() */
+	    switch(TYPEOF(a)) {
+	    case LGLSXP:
+	    case INTSXP:
+	    case REALSXP:
+	    case NILSXP:  /* OK historically, e.g. PR#1283 */
+		break;
+	    case CPLXSXP:
+		if (iop == 2 || iop == 3) goto invalid_type;
+		break;
+	    default:
+		goto invalid_type;
+	    }
 	    if(ans_type < TYPEOF(a) && ans_type != CPLXSXP) {
 		if(!empty && ans_type == INTSXP)
 		    zcum.r = Int2Real(icum);
@@ -559,8 +578,9 @@ na_answer: /* only INTSXP case curently used */
     }
     return ans;
 
-badmode:
-    errorcall_return(call, R_MSG_mode);
+invalid_type:
+    errorcall(call, R_MSG_type, type2char(TYPEOF(a)));
+    return R_NilValue;
 }/* do_summary */
 
 SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -665,7 +685,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 			goto bad;
 		}
 		else
-		    goto bad_mode;
+		    errorcall(call, R_MSG_type, type2char(TYPEOF(CAR(t))));
 	}
 	/* FIXME : Need to be careful with the use of isVector() */
 	/* since this includes the new list structure and expressions. */
@@ -688,7 +708,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 			goto bad;
 		}
 		else
-		    goto bad_mode;
+		    errorcall(call, R_MSG_type, "unknown");
 	    }
 
 	}
@@ -706,7 +726,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 		goto bad;
 	}
 	else
-	    goto bad_mode;
+	    errorcall(call, R_MSG_type, type2char(TYPEOF(CAR(s))));
     }
     PROTECT(rval = allocVector(LGLSXP, len));
     for (i = 0; i < len; i++)
@@ -742,7 +762,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 			break;
 		    default:
 			UNPROTECT(1);
-			goto bad_mode;
+			errorcall(call, R_MSG_type, type2char(TYPEOF(u)));
 		    }
 		}
 	    }
@@ -774,7 +794,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 			break;
 		    default:
 			UNPROTECT(1);
-			goto bad_mode;
+			errorcall(call, R_MSG_type, type2char(TYPEOF(u)));
 		    }
 		}
 	    }
@@ -802,7 +822,7 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    break;
 		default:
 		    UNPROTECT(1);
-		    goto bad_mode;
+		    errorcall(call, R_MSG_type, type2char(TYPEOF(u)));
 		}
 	    }
 	}
@@ -812,7 +832,5 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 
  bad:
     errorcall(call, _("not all arguments have the same length"));
-
- bad_mode:
-    errorcall_return(call, R_MSG_mode);
+    return R_NilValue; /* -Wall */
 }

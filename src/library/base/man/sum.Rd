@@ -1,21 +1,22 @@
 \name{sum}
-\title{Sum of Vector Elements}
-\usage{
-sum(\dots, na.rm = FALSE)
-}
 \alias{sum}
+\title{Sum of Vector Elements}
 \description{
   \code{sum} returns the sum of all the values
   present in its arguments.
 }
+\usage{
+sum(\dots, na.rm = FALSE)
+}
 \arguments{
   \item{\dots}{numeric or complex or logical vectors.}
-  \item{na.rm}{logical. Should missing values be removed?}
+  \item{na.rm}{logical.  Should missing values be removed?}
 }
 \value{
   The sum. If all of \code{\dots} are of type integer or logical, then
   the sum is integer, and in that case the result will be \code{NA} (with a
-  warning) if integer overflow occurs.
+  warning) if integer overflow occurs.  Otherwise it is a length-one
+  numeric or complex vector.
 
   \strong{NB:} the sum of an empty set is zero, by definition.
 }

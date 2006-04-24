@@ -41,7 +41,8 @@
 
 #define R_MSG_subs_o_b	_("subscript out of bounds")
 #define R_MSG_ob_nonsub	_("object is not subsettable")
-#define R_MSG_mode	_("invalid 'mode' of argument")
+#define R_MSG_mode	_("invalid argument 'mode'")
+#define R_MSG_type	_("invalid 'type' (%s) of argument")
 #define R_MSG_list_vec	_("applies only to lists and vectors")
 
 /*---- Packaged Error & Warning Messages ---- 
