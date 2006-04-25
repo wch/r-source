@@ -13,6 +13,9 @@ The language for menus and messages can be set in the 'Rconsole' file and
 The initial setting for console buffering can be set in the 'Rconsole'
 file and (for future sessions) from the GUI preferences.
 
+C-level changes
+---------------
+
 The C-level printf functions have been replaced by those from the trio
 library, which ensures a higher level of C99 compliance without the
 need for lots of Windows-specific workarounds.
@@ -26,9 +29,9 @@ loading.)
 R 2.3.0 patched
 ===============
 
-The font size can be set to values not in the drop down list.  (The
-number of choices in the list was also increased.)  Font names not in
-the list can be chosen.
+In the GUI preferences editor, the font size can be set to values not
+in the drop down list.  (The number of choices in the list has been
+increased.)  Font names not in the drop-down font list can be chosen.
 
 
 
