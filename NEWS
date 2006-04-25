@@ -53,26 +53,19 @@ NEW FEATURES
 	'link' argument, which allows user-specified link functions.
 	Also, quasi() allows user-specified variance functions.
 
-    o	regexpr() now accepts 0-length 'text' inputs.
-
     o	Sys.getlocale() and Sys.setlocale() support LC_MESSAGES,
 	LC_PAPER and LC_MEASUREMENT if the platform does.
 
-    o	The \uxxxx notation for Unicode characters in input strings
-	can now be used on any platform which supports MBCS, even if
-	the current locale is not MBCS (provided that the Unicode
-	character is valid in the current character set).
-
-    o   The way option("papersize") is set has been changed.  On platforms
+    o	The way option("papersize") is set has been changed.  On platforms
         which support the LC_PAPER locale category, the setting is taken
         first from the R_PAPERSIZE environment variable at run time, then
         from the LC_PAPER category ("letter" for _US and _CA locales and
         "a4" otherwise).  On other platforms (including Windows and older
         Unixen), the choice is unchanged.
 
-    o   axis.POSIXct() uses a different algorithm for ranges of 2 to
-	50 days that will mark days are midnight in the current
-	timezone (even if the graph crosses a DST change).
+    o	axis.POSIXct() uses a different algorithm for ranges of 2 to 50
+	days that will mark days as midnight in the current timezone
+	(even if the graph crosses a DST change).
 
 
 DEPRECATED & DEFUNCT
@@ -121,19 +114,6 @@ BUG FIXES
 	MBCSs like UTF-8 and the Windows DBCSes which have non-ASCII
 	lead bytes and always worked correctly.)
 
-    o	charmatch() and pmatch() did not specify they applied only to
-	character vectors.  Now they do, and attempt to coerce 'x' and
-	'target' to character before attempting matching.
-
-    o	min(), max(), sum() and prod() gave nonsensical answers with
-	an empty list or raw argument.
-
-    o	sum() on a data frame did not allow multiple arguments.	 (PR#8385)
-
-    o	The Summary() methods for data.frame, Date, POSIXct, POSIXlt
-	and difftime all required an argument which can match 'x',
-	although the generics did not.
-
     o	glm() now recalculates the null deviance whenever there is an
 	offset, even if it is exactly zero, to avoid a discontinuity
 	in that case.
@@ -161,6 +141,32 @@ BUG FIXES
 	*	       2.3 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.3.0 Patched
+
+BUG FIXES
+
+    o	min(), max(), sum() and prod() gave nonsensical answers with
+	an empty list or raw argument.
+
+    o	sum() on a data frame did not allow multiple arguments.	 (PR#8385)
+
+    o	The \uxxxx notation for Unicode characters in input strings
+	can now be used on any platform which supports MBCS, even if
+	the current locale is not MBCS (provided that the Unicode
+	character is valid in the current character set).
+
+    o	charmatch() and pmatch() did not specify they applied only to
+	character vectors.  Now they do, and attempt to coerce 'x' and
+	'target' to character before attempting matching.
+
+    o	The Summary() methods for data.frame, Date, POSIXct, POSIXlt
+	and difftime all required an argument which can match 'x',
+	although the generics did not.
+
+    o	regexpr() now accepts 0-length 'text' inputs.
+
 
 
 		CHANGES IN R VERSION 2.3.0
