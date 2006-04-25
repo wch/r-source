@@ -1197,8 +1197,8 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     useBytes = asLogical(CAR(args)); args = CDR(args);
     if (useBytes == NA_INTEGER || !fixed_opt) useBytes = 0;
 
-    if (length(pat) < 1 || length(text) < 1)
-	errorcall(call, R_MSG_IA);
+    /* allow 'text' to be zero-length from 2.3.1 */
+    if (length(pat) < 1) errorcall(call, R_MSG_IA);
     if (!isString(pat)) PROTECT(pat = coerceVector(pat, STRSXP));
     else PROTECT(pat);
     if ( STRING_ELT(pat,0) == NA_STRING)

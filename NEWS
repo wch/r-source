@@ -28,6 +28,7 @@ BUG FIXES
 	and difftime all required an argument which can match 'x',
 	although the generics did not.
 
+    o	regexpr() now accepts 0-length 'text' inputs.
 
 
 
