@@ -61,7 +61,7 @@ static int cmatch(char *col, char **list)
 
 
 static char *StyleList[] = {"normal", "bold", "italic", NULL};
-static char *PointsList[] = {"6", "7", "8", "9", "10", "11", "12", "14", "16", "18", NULL};
+static char *PointsList[] = {"6", "7", "8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "32", "36", NULL};
 static char *FontsList[] = {"Courier", "Courier New", "FixedSys", "FixedFont", "Lucida Console", "Terminal", "BatangChe", "DotumChe", "GulimChe", "MingLiU", "MS Gothic", "MS Mincho", "NSimSun", NULL};
 
 
@@ -666,14 +666,14 @@ static void showDialog(Gui gui)
     f_font = newdropfield(FontsList, rect(50, 100, 120, 20), NULL);
     tt_font = newcheckbox("TrueType only", rect(180, 100, 110, 20), NULL);
     if (gui->tt_font) check(tt_font);
-    setlistitem(f_font, cmatch(gui->font, FontsList));
+    settext(f_font, gui->font);
 
     l_point = newlabel("size", rect(310, 100, 30, 20), AlignLeft);
     d_point = newdropfield(PointsList, rect(345, 100, 50, 20), NULL);
     sprintf(buf, "%d", gui->pointsize);
-    setlistitem(d_point, cmatch(buf, PointsList));
+    settext(d_point, buf);
     l_style = newlabel("style", rect(410, 100, 40, 20), AlignLeft);
-    f_style = newdropfield(StyleList, rect(450, 100, 80, 20), NULL);
+    f_style = newdroplist(StyleList, rect(450, 100, 80, 20), NULL);
     setlistitem(f_style, cmatch(gui->style, StyleList));
 
 /* Console size, set widthonresize */
