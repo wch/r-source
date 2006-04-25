@@ -1129,7 +1129,7 @@ listbox newdropfield(char *list[], rect r, scrollfn fn)
 			  r, NULL);
 	if (! obj)
 		return obj;
-	obj->kind = DroplistObject;
+	obj->kind = DropfieldObject;
 	obj->hit = fn;
 
 	changelistbox(obj, list);

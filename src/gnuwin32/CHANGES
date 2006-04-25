@@ -23,6 +23,15 @@ loading.)
 
 
 
+R 2.3.0 patched
+===============
+
+The font size can be set to values not in the drop down list.  (The
+number of choices in the list was also increased.)  Font names not in
+the list can be chosen.
+
+
+
 R 2.3.0
 =======
 
