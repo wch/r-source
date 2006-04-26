@@ -30,6 +30,9 @@ BUG FIXES
 
     o	regexpr() now accepts 0-length 'text' inputs.
 
+    o	help.search() no longer errors out on a wrongly installed package
+	(with no "hsearch.rds" file).
+
 
 
 		CHANGES IN R VERSION 2.3.0
