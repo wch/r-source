@@ -145,21 +145,23 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    if(length(path) == 0)
 		stop(gettextf("could not find package '%s'", p), domain = NA)
 
-            ## Hsearch 'Meta/hsearch.rds' indices were introduced in
-            ## R 1.8.0.  If they are missing, we really cannot use
-            ## the package (as library() will refuse to load it).
-	    if(file.exists(hsearch_file <-
-			   file.path(path, "Meta", "hsearch.rds")))
-		hDB <- .readRDS(hsearch_file)
-	    if(!is.null(hDB)) {
-		## Fill up possibly missing information.
-		if(is.na(match("Encoding", colnames(hDB[[1]]))))
-		    hDB[[1]] <- cbind(hDB[[1]], Encoding = "")
-                hDB[[1]][, "LibPath"] <- path
-		## Put the hsearch index for the np-th package into the
-		## np-th row of the matrix used for aggregating.
-		dbMat[np, seq(along = hDB)] <- hDB
+	    ## Hsearch 'Meta/hsearch.rds' indices were introduced in
+	    ## R 1.8.0.	 If they are missing, we really cannot use
+	    ## the package (as library() will refuse to load it).
+	    if(file.exists(hs_file <- file.path(path, "Meta", "hsearch.rds"))) {
+		hDB <- .readRDS(hs_file)
+		if(!is.null(hDB)) {
+		    ## Fill up possibly missing information.
+		    if(is.na(match("Encoding", colnames(hDB[[1]]))))
+			hDB[[1]] <- cbind(hDB[[1]], Encoding = "")
+		    hDB[[1]][, "LibPath"] <- path
+		    ## Put the hsearch index for the np-th package into the
+		    ## np-th row of the matrix used for aggregating.
+		    dbMat[np, seq(along = hDB)] <- hDB
+		} else if(verbose)
+		    cat("package",p, "has empty hsearch data - strangely\n")
 	    }
+	    else warning("no hsearch.rds meta data for package ", p)
 	}
 
 	if(verbose)  {

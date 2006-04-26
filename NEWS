@@ -57,11 +57,11 @@ NEW FEATURES
 	LC_PAPER and LC_MEASUREMENT if the platform does.
 
     o	The way option("papersize") is set has been changed.  On platforms
-        which support the LC_PAPER locale category, the setting is taken
-        first from the R_PAPERSIZE environment variable at run time, then
-        from the LC_PAPER category ("letter" for _US and _CA locales and
-        "a4" otherwise).  On other platforms (including Windows and older
-        Unixen), the choice is unchanged.
+	which support the LC_PAPER locale category, the setting is taken
+	first from the R_PAPERSIZE environment variable at run time, then
+	from the LC_PAPER category ("letter" for _US and _CA locales and
+	"a4" otherwise).  On other platforms (including Windows and older
+	Unixen), the choice is unchanged.
 
     o	axis.POSIXct() uses a different algorithm for ranges of 2 to 50
 	days that will mark days as midnight in the current timezone
@@ -166,6 +166,9 @@ BUG FIXES
 	although the generics did not.
 
     o	regexpr() now accepts 0-length 'text' inputs.
+
+    o	help.search() no longer errors out on a wrongly installed package
+	(with no "hsearch.rds" file).
 
 
 
