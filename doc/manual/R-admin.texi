@@ -370,8 +370,8 @@ make vignettes
 @end example
 
 @noindent
-which makes the @samp{grid} vignettes (which are contained in the tarballs):
-it takes several minutes.
+which makes the @pkg{grid} vignettes (which are contained in the
+tarballs):  it takes several minutes.
 
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or
@@ -1268,8 +1268,8 @@ Compiler Collection.
 @findex WINHELP
 
 This section describes ways to customize package compilation using the
-standard C / C++ / FORTRAN compilers and tools.  For instructions on using
-non-standard tools, see the @file{README.packages} file.
+standard C, C++ and FORTRAN compilers and tools.  For instructions on
+using non-standard tools, see the @file{README.packages} file.
 
 The Makefiles can be customized: in particular the name of the DLL can
 be set (for example we once needed @code{integrate-DLLNM=adapt}), the
@@ -1445,23 +1445,24 @@ Utilities such as @code{install.packages} can be pointed at any
 CRAN-style repository, and @R{} users may want to set up their own.  The
 `base' of a repository is a URL such as
 @url{http://www.omegahat.org/R}: this must be an URL scheme that
-@code{download.packages} supports (which also includes @code{ftp://} and
-@code{file://}).  Under that base URL there should be directory trees
+@code{download.packages} supports (which also includes @samp{ftp://} and
+@samp{file://}).  Under that base URL there should be directory trees
 for one or more of the following types of package distributions:
 
 @itemize
 @item 
-@code{"source"}: located at @code{src/contrib} and containing
+@code{"source"}: located at @file{src/contrib} and containing
 @file{.tar.gz} files.
 
 @item 
-@code{"win.binary"}: located at @code{bin/windows/contrib/x.y} for @R{}
-versions @code{x.y.z} and containing @file{.zip} files.
+@code{"win.binary"}: located at @file{bin/windows/contrib/@var{x.y}} for
+@R{} versions @var{x.y.z} and containing @file{.zip} files.
 
 @item 
-@code{"mac.binary"}: located at @code{bin/macosx/powerpc/contrib/x.y}
-or @code{bin/macosx/i686/contrib/x.y}
-for @R{} versions @code{x.y.z} and containing @file{.tgz} files.
+@code{"mac.binary"}: located at
+@file{bin/macosx/powerpc/contrib/@var{x.y}} or
+@file{bin/macosx/i686/contrib/@var{x.y}} for @R{} versions @var{x.y.z}
+and containing @file{.tgz} files.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -1779,7 +1780,7 @@ compiler should be @acronym{IEC}@tie{}60059@footnote{also known as
 possible.  @R{} tries to choose suitable flags for the C compilers it
 knows about, but you may have to set @code{CFLAGS} suitably.  For recent
 versions of @command{gcc} with @code{glibc} this means including
-@code{-std=gnu99} in @code{CFLAGS} (@code{-std=c99} excludes POSIX
+@option{-std=gnu99} in @code{CFLAGS} (@option{-std=c99} excludes POSIX
 functionality).
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
@@ -1925,9 +1926,10 @@ since the basic BLAS is incomplete.
 
 Another tuned BLAS which is available for some processors under Linux is
 by Kazushige Goto, currently available @emph{for academic use only}
-(after registering) via@*
-@url{http://www.tacc.utexas.edu/resources/software/software.php}.@*
-(Recent versions are multi-threaded only.)  Once this is installed, it
+(after registering) via
+@url{http://www.tacc.utexas.edu/resources/software/software.php,
+@code{www.tacc.utexas.edu/resources/software/software.php}}.
+(Recent versions are multi-@/threaded only.)  Once this is installed, it
 can be used by configuring with
 
 @example
