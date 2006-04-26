@@ -1878,8 +1878,14 @@ function(package, dir, lib.loc = NULL)
             ## See registerS3method() in namespace.R.
             defenv <-
                 if (g %in% S3_group_generics) .BaseNamespaceEnv
-                else if (typeof(genfun) == "closure") environment(genfun)
-                else .BaseNamespaceEnv
+                else {
+                    if(.isMethodsDispatchOn()
+                       && methods::is(genfun, "genericFunction"))
+                        genfun <-
+                            methods::slot(genfun, "default")@methods$ANY
+                    if (typeof(genfun) == "closure") environment(genfun)
+                    else .BaseNamespaceEnv
+                }
             if(!exists(".__S3MethodsTable__.", envir = defenv,
                        inherits = FALSE)) {
                 ## Happens e.g. if for some reason, we get "plot" as
