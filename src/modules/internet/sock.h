@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2001   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998-2006   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,12 +16,15 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, 
+ *  MA 02110-1301  USA
  */
 
-#if defined Win32 && !defined _SSIZE_T_
-typedef int ssize_t;
-#endif
+/* POSIX says ssize_t is defined in unistd.h, but apparently on 
+   RH9 it is not.  (Dominick Samperi, R-devel, 2006-04-27)
+   So include sys/types.h and remove Win32 special casing.
+*/
+#include <sys/types.h>
 
 typedef unsigned short Sock_port_t;
 
