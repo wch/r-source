@@ -8,6 +8,7 @@
 
 		CHANGES IN R VERSION 2.3.0 Patched
 
+
 BUG FIXES
 
     o	min(), max(), sum() and prod() gave nonsensical answers with
@@ -32,6 +33,10 @@ BUG FIXES
 
     o	help.search() no longer errors out on a wrongly installed package
 	(with no "hsearch.rds" file).
+
+    o	Serializing (e.g. via save()) is better protected against C
+	stack overflow, which will now abort the save but no longer
+	crash the R process on some platforms.
 
 
 
