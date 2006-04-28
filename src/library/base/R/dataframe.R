@@ -890,9 +890,9 @@ rbind.data.frame <- function(..., deparse.level = 1)
     Make.row.names <- function(nmi, ri, ni, nrow)
     {
 	if(nchar(nmi) > 0) {
-	    if(ni > 1)
-		paste(nmi, ri, sep = ".")
-	    else nmi[ri]
+            if(ni == 0) character(0)  # PR8506
+	    else if(ni > 1) paste(nmi, ri, sep = ".")
+	    else nmi
 	}
 	else if(nrow > 0 && identical(ri, 1:ni))
 	    seq(from = nrow + 1, length = ni)
