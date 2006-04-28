@@ -1,6 +1,6 @@
 #! /bin/sh
 # texi2dvi --- produce DVI (or PDF) files from Texinfo (or LaTeX) sources.
-# $Id: texi2dvi,v 1.3 2004/02/17 16:59:46 karl Exp $
+# $Id: texi2dvi,v 1.34 2004/12/01 18:35:36 karl Exp $
 #
 # Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2001,
 # 2002, 2003, 2004 Free Software Foundation, Inc.
@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, you can either send email to this
 # program's maintainer or write to: The Free Software Foundation,
-# Inc.; 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
+# Inc.; 59 Temple Place, Suite 330; Boston, MA 02111-1307, USA.
 #
 # Original author: Noah Friedman.
 #
@@ -27,10 +27,10 @@
 # the `--debug' option when making a bug report.
 
 # This string is expanded by rcs automatically when this file is checked out.
-rcs_revision='$Rev$'
+rcs_revision='$Revision$'
 rcs_version=`set - $rcs_revision; echo $2`
 program=`echo $0 | sed -e 's!.*/!!'`
-version="texi2dvi (GNU Texinfo 4.7) $rcs_version
+version="texi2dvi (GNU Texinfo 4.8) $rcs_version
 
 Copyright (C) 2004 Free Software Foundation, Inc.
 There is NO warranty.  You may redistribute this software
@@ -65,7 +65,8 @@ TeX tuning:
   -I DIR               search DIR for Texinfo files
   -l, --language=LANG  specify the LANG of FILE (LaTeX or Texinfo)
   -p, --pdf            use pdftex or pdflatex for processing
-  -t, --command=CMD    insert CMD in copy of input file;
+  -r, --recode         call recode before TeX to translate input characters
+  -t, --command=CMD    insert CMD in copy of input file
    or --texinfo=CMD    multiple values accumulate
 
 The values of the BIBTEX, LATEX (or PDFLATEX), MAKEINDEX, MAKEINFO,
@@ -89,6 +90,7 @@ miincludes=     # makeinfo include path
 oformat=dvi
 oname=          # --output
 quiet=          # by default let the tools' message be displayed
+recode=false
 set_language=
 textra=         # Extra TeX commands to insert in the input file.
 textra_cmd=     # sed command to insert TEXTRA where appropriate
@@ -114,7 +116,7 @@ CDPATH=${ZSH_VERSION+.}$path_sep
 : ${EGREP=egrep}
 
 # return true if program $1 is somewhere in PATH, else false.
-# 
+#
 findprog () {
   foundprog=false
   for dir in `echo $PATH | tr "$path_sep" " "`; do
@@ -170,7 +172,6 @@ while test x"$1" != x"$arg_sep"; do
     -@ ) escape=@;;
     # Silently and without documentation accept -b and --b[atch] as synonyms.
     -b | --b*) batch=true;;
-    -q | -s | --q* | --s*) quiet=t; batch=true;;
     -c | --c*) clean=t;;
     -D | --d*) debug=t;;
     -e | -E | --e*) expand=t;;
@@ -189,6 +190,8 @@ while test x"$1" != x"$arg_sep"; do
                 *) oname="$orig_pwd/$1";;
       esac;;
     -p | --p*) oformat=pdf;;
+    -q | -s | --q* | --s*) quiet=t; batch=true;;
+    -r | --r*) recode=true;;
     -t | --tex* | --com* ) shift; textra="$textra\\
 "`echo "$1" | sed 's/\\\\/\\\\\\\\/g'`;;
     -v | --vers*) echo "$version"; exit 0;;
@@ -229,7 +232,7 @@ esac
 
 
 # We can't do much without tex.
-# 
+#
 if findprog ${TEX:-tex}; then :; else cat <<EOM
 You don't have a working TeX binary (${TEX:-tex}) installed anywhere in
 your PATH, and texi2dvi cannot proceed without one.  If you want to use
@@ -249,7 +252,7 @@ fi
 # didn't explicitly specify.  We don't check for elatex and pdfelatex
 # because (as of 2003), the LaTeX team has asked that new distributions
 # use etex by default anyway.
-# 
+#
 # End up with the TEX and PDFTEX variables set to what we are going to use.
 if test -z "$TEX"; then
   if findprog etex; then TEX=etex; else TEX=tex; fi
@@ -310,34 +313,32 @@ cat <<EOF >$uncomment_iftex_sed
 s/^@c texi2dvi//
 EOF
 
-# A shell script that computes the list of xref files.
+# Compute the list of xref files.
 # Takes the filename (without extension) of which we look for xref
 # files as argument.  The index files must be reported last.
-get_xref_files=$utildir/get_xref.sh
-cat <<\EOF >$get_xref_files
-#! /bin/sh
-
-# Get list of xref files (indexes, tables and lists).
-# Find all files having root filename with a two-letter extension,
-# saves the ones that are really Texinfo-related files.  .?o? catches
-# many files: .toc, .log, LaTeX tables and lists, FiXme's .lox, maybe more.
-for this_file in "$1".?o? "$1".aux "$1".?? "$1".idx; do
-  # If file is empty, skip it.
-  test -s "$this_file" || continue
-  # If the file is not suitable to be an index or xref file, don't
-  # process it.  It's suitable if the first character is a
-  # backslash or right quote, as long as the first line isn't
-  # \input texinfo.
-  first_character=`sed -n '1s/^\(.\).*$/\1/p;q' $this_file`
-  if (test "x$first_character" = "x\\" \
-      && sed 1q $this_file | grep -v '^\\input *texinfo' >/dev/null) \
-     || test "x$first_character" = "x'"; then
-    xref_files="$xref_files ./$this_file"
-  fi
-done
-echo "$xref_files"
-EOF
-chmod 500 $get_xref_files
+get_xref_files ()
+{
+  # Get list of xref files (indexes, tables and lists).
+  # Find all files having root filename with a two-letter extension,
+  # saves the ones that are really Texinfo-related files.  .?o? catches
+  # many files: .toc, .log, LaTeX tables and lists, FiXme's .lox, maybe more.
+  for this_file in "$1".?o? "$1".aux "$1".?? "$1".idx; do
+    # If file is empty, skip it.
+    test -s "$this_file" || continue
+    # If the file is not suitable to be an index or xref file, don't
+    # process it.  It's suitable if the first character is a
+    # backslash or right quote or at, as long as the first line isn't
+    # \input texinfo.
+    first_character=`sed -n '1s/^\(.\).*$/\1/p;q' $this_file`
+    if (test "x$first_character" = "x\\" \
+        && sed 1q $this_file | grep -v '^\\input *texinfo' >/dev/null) \
+       || test "x$first_character" = "x'" \
+       || test "x$first_character" = "x@"; then
+      xref_files="$xref_files ./$this_file"
+    fi
+  done
+  echo "$xref_files"
+}
 
 # File descriptor usage:
 # 0 standard input
@@ -404,12 +405,16 @@ for command_line_filename in ${1+"$@"}; do
   tmpdir_xtr=$tmpdir/xtr
   filename_xtr=$tmpdir_xtr/$filename_noext.$ext
 
+  # _rcd.  The Texinfo file recoded in 7bit.
+  tmpdir_rcd=$tmpdir/rcd
+  filename_rcd=$tmpdir_rcd/$filename_noext.$ext
+
   # _bak.  Copies of the previous xref files (another round is run if
   # they differ from the new one).
   tmpdir_bak=$tmpdir/bak
 
   # Make all those directories and give up if we can't succeed.
-  mkdir $tmpdir_src $tmpdir_xtr $tmpdir_bak || exit 1
+  mkdir $tmpdir_src $tmpdir_xtr $tmpdir_rcd $tmpdir_bak || exit 1
 
   # Source file might include additional sources.
   # We want `.:$orig_pwd' before anything else.  (We'll add `.:' later
@@ -488,6 +493,7 @@ for command_line_filename in ${1+"$@"}; do
     [lL]a[tT]e[xX] | *.ltx | *.tex)
       # Assume a LaTeX file.  LaTeX needs bibtex and uses latex for
       # compilation.  No makeinfo.
+      language=latex
       bibtex=${BIBTEX:-bibtex}
       makeinfo= # no point in running makeinfo on latex source.
       texindex=${MAKEINDEX:-makeindex}
@@ -502,11 +508,18 @@ for command_line_filename in ${1+"$@"}; do
 
     *)
       # Assume a Texinfo file.  Texinfo files need makeinfo, texindex and tex.
+      language=texinfo
       bibtex=
       texindex=${TEXINDEX:-texindex}
       textra_cmd='/^@setfilename/a'
       if test $oformat = dvi; then
-        tex=$TEX
+        # MetaPost also uses the TEX environment variable.  If the user
+        # has set TEX=latex for that reason, don't bomb out.
+        if echo $TEX | grep 'latex$' >/dev/null; then
+          tex=tex  # don't bother trying to find etex
+        else
+          tex=$TEX
+        fi
       else
         tex=$PDFTEX
       fi
@@ -554,7 +567,7 @@ for command_line_filename in ${1+"$@"}; do
   # If possible, make TeX report error locations in GNU format.
   tex_args=
   case $tex_help in
-    *file-line-error-style*) tex_args="$tex_args --file-line-error-style";;
+    *file-line-error*) tex_args="$tex_args --file-line-error";;
   esac
 
   # Tell TeX to be batch if requested.  (\batchmode does not show
@@ -585,8 +598,28 @@ for command_line_filename in ${1+"$@"}; do
   if test -n "$textra"; then
     $verbose "Inserting extra commands: $textra"
     sed "$textra_cmd\\
-$textra" "$filename_input" >$filename_xtr
+$textra" "$filename_input" >"$filename_xtr"
     filename_input=$filename_xtr
+  fi
+
+  # If this is a Texinfo file with a specified input encoding, and
+  # recode is available, then recode to plain 7 bit Texinfo.
+  if test $language = texinfo; then
+    pgm='s/\(^\|.* \)@documentencoding  *\([^ ][^ ]*\)\( .*\|$\)/\2/  
+	t found                                                
+	d                                                     
+	:found                                               
+	q'
+    encoding=`sed -e "$pgm" "$filename_input"`
+    if $recode && test -n "$encoding" && findprog recode; then
+      $verbose "Recoding from $encoding to Texinfo."
+      if recode "$encoding"..texinfo <"$filename_input" >"$filename_rcd" \
+         && test -s "$filename_rcd"; then
+        filename_input=$filename_rcd
+      else
+        $verbose "Recoding failed, using original input."
+      fi
+    fi
   fi
 
   # If clean mode was specified, then move to the temporary directory.
@@ -596,7 +629,7 @@ $textra" "$filename_input" >$filename_xtr
   fi
 
   while :; do # will break out of loop below
-    orig_xref_files=`$get_xref_files "$filename_noext"`
+    orig_xref_files=`get_xref_files "$filename_noext"`
 
     # Save copies of originals for later comparison.
     if test -n "$orig_xref_files"; then
@@ -657,9 +690,9 @@ $textra" "$filename_input" >$filename_xtr
     fi
 
     # Finally, run TeX.
-    cmd="$tex $tex_args $filename_input"
-    $verbose "Running $cmd ..."
-    if $cmd >&5; then :; else
+    cmd="$tex $tex_args"
+    $verbose "Running $cmd $filename_input ..."
+    if $cmd "$filename_input" >&5; then :; else
       echo "$0: $tex exited with bad status, quitting." >&2
       echo "$0: see $filename_noext.log for errors." >&2
       test "$clean" = t \
@@ -681,7 +714,7 @@ $textra" "$filename_input" >$filename_xtr
     fi
 
     # Check if xref files changed.
-    new_xref_files=`$get_xref_files "$filename_noext"`
+    new_xref_files=`get_xref_files "$filename_noext"`
     $verbose "Original xref files = `echo $orig_xref_files | sed 's|\./||g'`"
     $verbose "New xref files      = `echo $new_xref_files | sed 's|\./||g'`"
 
@@ -721,8 +754,8 @@ $textra" "$filename_input" >$filename_xtr
     $thumbpdf "$filename_noext" >&5 ||
       fatal "$thumbpdf exited with bad status, quitting."
 
-    $verbose "Running $cmd ..."
-    if $cmd >&5; then :; else
+    $verbose "Running $cmd $filename_input..."
+    if $cmd "$filename_input" >&5; then :; else
       echo "$0: $tex exited with bad status, quitting." >&2
       echo "$0: see $filename_noext.log for errors." >&2
       test "$clean" = t \
