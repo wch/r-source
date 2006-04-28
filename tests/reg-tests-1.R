@@ -4173,3 +4173,9 @@ y <- rt(200, df= 3)
 plot(lm(y ~ 1))
 par(op)
 ## 4th plot (which = 5: "leverages") failed in 2.2.0 <= R <= 2.3.0
+
+
+## Re-fix PR#8506
+z <- rbind(x = data.frame(a = 1, b = 2), y = data.frame(a = 1, b = 2))
+stopifnot(row.names(z) == c("x", "y"))
+## were NAs (and failed to print) in 2.3.0
