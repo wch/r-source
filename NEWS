@@ -38,6 +38,8 @@ BUG FIXES
 	stack overflow, which will now abort the save but no longer
 	crash the R process on some platforms.
 
+    o	make uninstall works better on a build using a named subarchitecture.
+
 
 
 		CHANGES IN R VERSION 2.3.0
