@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-04-21
+@set FAQ_DATE @value{FAQ_YEAR}-04-28
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2325,8 +2325,11 @@ random effects) distributions.
 Bayes Inference for Marketing/Micro-econometrics.
 @item bayesmix
 Bayesian mixture models of univariate Gaussian distributions using JAGS.
-@item baymvb
-Bayesian analysis of multivariate binary data.
+@c <COMMENT>
+@c Moved to the Archive on 2006-04-28 (2.3.0 Error; no response).
+@c @item baymvb
+@c Bayesian analysis of multivariate binary data.
+@c </COMMENT>
 @item betareg
 Beta regression for modeling rates and proportions.
 @item bicreduc
