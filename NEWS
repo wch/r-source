@@ -102,6 +102,9 @@ C-LEVEL FACILITIES
     o	The variables controlling stack checking are made available via
 	Rinterface.h to front-ends embedding R: see 'Writing R Extensions'
 
+    o	R_SignalHandlers (defined in Rinterface.h) can be set to 0 to
+	suppress the R signal handlers in front-ends embedding R.
+
 
 BUG FIXES
 
