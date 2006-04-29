@@ -101,4 +101,3 @@ plot(x, x^0.9, type="l", log="xy")
 
 plot(as.Date("2001/1/1") + 12*(1:9), 1:9)
 ## used bad 'xlab/ylab' in some versions of R 2.2.0(unstable)
-
