@@ -59,13 +59,13 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     if(ask) {
 	if(.Device == "null device") {
 	    def.dev <- getOption("device")
-	    assign("..example.device..", function() {
+	    assign("._example.device_.", function() {
 		get(def.dev)()
 		par(ask = ask)
 	    }, envir = .GlobalEnv)
-	    oo <- options(device = "..example.device..")
-	    on.exit({par(ask = FALSE); options(oo)})
-
+	    oo <- options(device = "._example.device_.")
+	    on.exit({par(ask = FALSE); options(oo)
+		     rm(list="._example.device_.", envir = .GlobalEnv)})
 	} else { ## have active device already
 	    op <- par(ask = ask)
 	    on.exit(par(op))
