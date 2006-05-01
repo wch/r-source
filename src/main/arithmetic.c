@@ -62,7 +62,7 @@ int matherr(struct exception *exc)
     case UNDERFLOW:
 	exc->retval = 0.0;
 	break;
-	/* 
+	/*
 	   There are cases TLOSS and PLOSS which are ignored here.
 	   According to the Solaris man page, there are for
 	   trigonometric algorithms and not needed for good ones.
@@ -143,7 +143,7 @@ int R_IsNaN(double x)
     return 0;
 }
 
-/* ISNAN uses isnan, which is undefined by C++ headers 
+/* ISNAN uses isnan, which is undefined by C++ headers
    This workaround is called only when ISNAN() is used
    in a user code in a file with __cplusplus defined */
 
@@ -153,7 +153,7 @@ int R_isnancpp(double x)
 }
 
 
-/* <FIXME> Simplify this mess.  Not used inside R 
+/* <FIXME> Simplify this mess.  Not used inside R
    if isfinite works, and if finite works only in packages */
 int R_finite(double x)
 {
@@ -369,7 +369,7 @@ SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     else yarray = yts = yattr = FALSE;
 
     /* If either x or y is a matrix with length 1 and the other is a
-       vector, we want to coerce the matrix to be a vector. 
+       vector, we want to coerce the matrix to be a vector.
        Do we want to?  We don't do it!  BDR 2004-03-06
     */
 
@@ -455,7 +455,7 @@ SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     else class = tsp = NULL; /* -Wall */
 
     if (mismatch)
-	warningcall(lcall, 
+	warningcall(lcall,
 		    _("longer object length\n\tis not a multiple of shorter object length"));
 
     /* need to preserve object here, as *_binary copies class attributes */
@@ -829,7 +829,7 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	UNPROTECT(1);
 	return ans;
     }
-    
+
     /* Copy attributes from longer argument. */
 
     if (n1 > n2)
@@ -925,7 +925,7 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 42: return MATH1(digamma);
     case 43: return MATH1(trigamma);
 	/* case 44: return MATH1(tetragamma);
-	   case 45: return MATH1(pentagamma); 
+	   case 45: return MATH1(pentagamma);
 	   removed in 2.0.0
 	*/
 
@@ -1142,8 +1142,8 @@ SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return complex_math1(call, op, args, env);
 	else
 	    return math1(CAR(args), atan, call);
-    /* prior to 2.3.0, 2 args were allowed, 
-       but this was never documented */ 
+    /* prior to 2.3.0, 2 args were allowed,
+       but this was never documented */
     default:
 	error(_("%d arguments passed to 'atan' which requires 1"), n);
     }
@@ -1395,7 +1395,7 @@ SEXP attribute_hidden do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
     default:
-	errorcall(call, 
+	errorcall(call,
 		  _("unimplemented real function of %d numeric arguments"), 3);
     }
     return op;			/* never used; to keep -Wall happy */
@@ -1574,9 +1574,7 @@ SEXP attribute_hidden do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
     case  4: return Math4_1(args, dnbeta);
     case  5: return Math4_2(args, pnbeta);
     case  6: return Math4_2(args, qnbeta);
-#ifdef UNIMP
     case  7: return Math4_1(args, dnf);
-#endif
     case  8: return Math4_2(args, pnf);
     case  9: return Math4_2(args, qnf);
 #ifdef UNIMP
@@ -1714,7 +1712,7 @@ SEXP attribute_hidden do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
     case  3: return Math5(args, q...);
 #endif
     default:
-	errorcall(call, 
+	errorcall(call,
 		  _("unimplemented real function of %d numeric arguments"), 5);
     }
     return op;			/* never used; to keep -Wall happy */

@@ -11,7 +11,7 @@
   degrees of freedom (and optional non-centrality parameter \code{ncp}).
 }
 \usage{
-df(x, df1, df2, log = FALSE)
+df(x, df1, df2, ncp = 0, log = FALSE)
 pf(q, df1, df2, ncp = 0, lower.tail = TRUE, log.p = FALSE)
 qf(p, df1, df2, ncp = 0, lower.tail = TRUE, log.p = FALSE)
 rf(n, df1, df2, ncp = 0)
@@ -62,12 +62,14 @@ rf(n, df1, df2, ncp = 0)
   non-central distributions.
 }
 \source{
-  For \code{df}, computed via a binomial probability, code contributed by
-  Catherine Loader (see \code{\link{dbinom}}).
+  For \code{df}, and \code{cdf == 0}, computed via a binomial
+  probability, code contributed by Catherine Loader (see \code{\link{dbinom}});
+  for \code{cdf != 0}, computed via a \code{\link{dbeta}},
+  code contributed by Peter Ruckdeschel.
 
   For \code{pf}, via \code{\link{pbeta}} (or for large \code{df2}, via
   \code{\link{pchisq}}).
-  
+
   For \code{qf}, via \code{\link{qchisq}} for large \code{df2}, else via
   \code{\link{qbeta}}.
 }

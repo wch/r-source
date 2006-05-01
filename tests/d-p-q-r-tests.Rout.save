@@ -1,6 +1,6 @@
 
-R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 alpha (2006-04-03 r37628)
+R version 2.4.0 Under development (unstable) (2006-05-01 r37953)
+Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1069,6 +1069,12 @@ Warning messages:
 2: non-integer x = -0.000020 
 > ## very small negatives were rounded to 0 in R 2.2.1 and earlier
 > 
+> ## df(*, ncp):
+> x <- seq(0, 10, length=101)
+> h <- 1e-7
+> dx.h <- (pf(x+h, 7, 5, ncp= 2.5) - pf(x-h, 7, 5, ncp= 2.5)) / (2*h)
+> stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tol = 1e-6))# (1.50 | 1.65)e-8
+> 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  2.53 0.03 2.55 0 0 
+Time elapsed:  3.753 0.017 3.787 0 0 
 > 

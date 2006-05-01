@@ -547,4 +547,10 @@ stopifnot(pbinom(x0, size = 3, prob = 0.1) == 0,
           dbinom(x0, 3, 0.1) == 0) # d*() warns about non-integer
 ## very small negatives were rounded to 0 in R 2.2.1 and earlier
 
+## df(*, ncp):
+x <- seq(0, 10, length=101)
+h <- 1e-7
+dx.h <- (pf(x+h, 7, 5, ncp= 2.5) - pf(x-h, 7, 5, ncp= 2.5)) / (2*h)
+stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tol = 1e-6))# (1.50 | 1.65)e-8
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

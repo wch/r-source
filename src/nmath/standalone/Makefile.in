@@ -26,7 +26,7 @@ SOURCES_NMATH = \
 	dunif.c punif.c qunif.c runif.c \
 	dnorm.c pnorm.c qnorm.c rnorm.c \
 	dlnorm.c plnorm.c qlnorm.c rlnorm.c \
-	df.c pf.c qf.c rf.c \
+	df.c pf.c qf.c rf.c dnf.c \
 	dt.c pt.c qt.c rt.c dnt.c \
 	dchisq.c pchisq.c qchisq.c rchisq.c rnchisq.c \
 	dbinom.c pbinom.c qbinom.c rbinom.c \

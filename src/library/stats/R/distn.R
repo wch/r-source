@@ -143,7 +143,10 @@ rchisq <- function(n, df, ncp=0) {
     else .Internal(rnchisq(n, df, ncp))
 }
 
-df <- function(x, df1, df2, log = FALSE) .Internal(df(x, df1, df2, log))
+df <- function(x, df1, df2, ncp=0, log = FALSE) {
+    if(missing(ncp)) .Internal(df(x, df1, df2, log))
+    else .Internal(dnf(x, df1, df2, ncp, log))
+}
 pf <- function(q, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
     if(missing(ncp)) .Internal(pf(q, df1, df2, lower.tail, log.p))
     else .Internal(pnf(q, df1, df2, ncp, lower.tail, log.p))

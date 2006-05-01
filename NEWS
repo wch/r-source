@@ -72,6 +72,9 @@ NEW FEATURES
 
     o	dev.interactive() now has an optional argument 'orNone'.
 
+    o	df() now has a noncentrality argument 'ncp', based on a
+	contribution by Peter Ruckdeschel.
+
 
 DEPRECATED & DEFUNCT
 
