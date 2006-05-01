@@ -9,7 +9,7 @@
 \usage{
 example(topic, package = NULL, lib.loc = NULL,
         local = FALSE, echo = TRUE, verbose = getOption("verbose"),
-        setRNG = FALSE,
+        setRNG = FALSE, ask = dev.interactive(orNone = TRUE),
         prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""))
 }
 \arguments{
@@ -33,6 +33,8 @@ example(topic, package = NULL, lib.loc = NULL,
       = TRUE} sets the same state as \code{R CMD \link{check}} does for
     running a package's examples.  This is currently equivalent to
     \code{setRNG = \{RNGkind("default", "default"); set.seed(1)\}}.}
+  \item{ask}{logical indicating if \code{\link{par}(ask=TRUE)} should be
+    called before graphical output happens from the example code.}
   \item{prompt.echo}{character; gives the prompt to be used if
     \code{echo = TRUE}.}
 }

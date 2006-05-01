@@ -67,6 +67,11 @@ NEW FEATURES
 	days that will mark days as midnight in the current timezone
 	(even if the graph crosses a DST change).
 
+    o	example() gains an argument 'ask' which defaults to "TRUE when
+	sensible".
+
+    o	dev.interactive() now has an optional argument 'orNone'.
+
 
 DEPRECATED & DEFUNCT
 
@@ -134,8 +139,6 @@ BUG FIXES
 	prints a message on entry.  Also the undocumented feature of
 	where=function now works for generic functions as well.
 
-    o	plot(lm(y ~ 1)) now works also for 'which = 5'.
-
 
 
 
@@ -182,6 +185,8 @@ BUG FIXES
 
     o	rbind()ing dataframes with a single row could lead to a
 	corrupt data frame (a problem with the fix to PR#8506).
+
+    o	plot(lm(y ~ 1)) now works also for 'which = 5'.
 
 
 
