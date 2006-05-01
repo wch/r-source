@@ -64,7 +64,8 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 		par(ask = ask)
 	    }, envir = .GlobalEnv)
 	    oo <- options(device = "._example.device_.")
-	    on.exit({par(ask = FALSE); options(oo)
+	    on.exit({if(.Device != "null device") par(ask = FALSE)
+		     options(oo)
 		     rm(list="._example.device_.", envir = .GlobalEnv)})
 	} else { ## have active device already
 	    op <- par(ask = ask)
