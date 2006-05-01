@@ -5,7 +5,12 @@
   Test if an interactive graphics device is in use.
 }
 \usage{
-dev.interactive()
+dev.interactive(orNone = FALSE)
+}
+\arguments{
+  \item{orNone}{logical; if \code{TRUE}, the function also returns
+    \code{TRUE} when \code{\link{.Device} == "null device"} and
+    \code{\link{getOption}("device")} is among the interactive devices.}
 }
 \value{
   \code{dev.interactive()} returns a logical, \code{TRUE} iff an
