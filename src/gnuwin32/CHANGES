@@ -11,6 +11,10 @@ The font size can be set to values not in the drop down list.  (The
 number of choices in the list was also increased.)  Font names not in
 the list can be chosen.
 
+The MinGW C function was wcrtomb was only working for Latin-1
+characters. This affected the specification of pch as character, and
+some little-used aspects of plotmath.
+
 
 
 R 2.3.0
