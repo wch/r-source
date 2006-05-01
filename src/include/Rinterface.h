@@ -125,12 +125,12 @@ extern int  (*R_timeout_handler)();
 extern long R_timeout_val;
 
 #endif
-extern int R_SignalHandlers;
-
 
 #ifdef __SYSTEM__
 # undef extern
 #endif
+
+extern int R_SignalHandlers;
 
 #ifdef __cplusplus
 }
