@@ -9,7 +9,7 @@
 \usage{
 example(topic, package = NULL, lib.loc = NULL,
         local = FALSE, echo = TRUE, verbose = getOption("verbose"),
-        setRNG = FALSE, ask = dev.interactive(orNone = TRUE),
+        setRNG = FALSE, ask = echo && dev.interactive(orNone = TRUE),
         prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""))
 }
 \arguments{

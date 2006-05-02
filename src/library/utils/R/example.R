@@ -1,7 +1,7 @@
 example <-
 function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
-         ask = dev.interactive(orNone = TRUE),
+         ask = echo && dev.interactive(orNone = TRUE),
 	 prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
     topic <- substitute(topic)
