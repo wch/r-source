@@ -1,9 +1,7 @@
-require(graphics); require(datasets)
-if(dev.cur() <= 1) get(getOption("device"))()
+require(datasets)
+require(graphics)
+opar <- par(ask = dev.interactive(orNone = TRUE))
 
-opar <- par(ask = interactive() &&
-            (.Device %in% c("X11", "GTK", "gnome", "windows","quartz")))
-# For source
 
 ## Here is some code which illustrates some of the differences between
 ## R and S graphics capabilities.  Note that colors are generally specified
