@@ -33,7 +33,7 @@ In the GUI preferences editor, the font size can be set to values not
 in the drop down list.  (The number of choices in the list has been
 increased.)  Font names not in the drop-down font list can be chosen.
 
-The MinGW C function was wcrtomb was only working for Latin-1
+The MinGW C function wcrtomb was only working for Latin-1
 characters. This affected the specification of pch as character, and
 some little-used aspects of plotmath.
 
