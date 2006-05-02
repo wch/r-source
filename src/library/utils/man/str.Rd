@@ -91,10 +91,11 @@ str( lsfit(1:9,1:9), width = 60, strict.width = "cut")
 str( lsfit(1:9,1:9), width = 60, strict.width = "wrap")
 op <- options(); str(op) # save first;
                          # otherwise internal options() is used.
-need.dev <- !exists(".Device") || is.null(.Device)
-if(need.dev) postscript()
-str(par()); if(need.dev) graphics.off()
-
+need.dev <- !exists(".Device") || is.null(.Device) || .Device == "null device"
+{ if(need.dev) postscript()
+  str(par())
+  if(need.dev) graphics.off()
+}
 ch <- letters[1:12]; is.na(ch) <- 3:5
 str(ch) # character NA's
 
