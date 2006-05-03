@@ -46,7 +46,7 @@ merge(x, y, \dots)
   contribute one row each.\cr
   If the \code{by.*} vectors are of length 0, the result, \code{r}, is the
   \dQuote{Cartesian product} of \code{x} and \code{y}, i.e.,
-  \code{dim(r) = c(nrow(x)*nrow, ncol(x) + ncol(y))}.
+  \code{dim(r) = c(nrow(x)*nrow(y), ncol(x) + ncol(y))}.
 
   If \code{all.x} is true, all the non matching cases of \code{x} are
   appended to the result as well, with \code{NA} filled in the
