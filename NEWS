@@ -75,6 +75,8 @@ NEW FEATURES
     o	df() now has a noncentrality argument 'ncp', based on a
 	contribution by Peter Ruckdeschel.
 
+    o	pie() now allows expressions for 'labels'.
+
 
 DEPRECATED & DEFUNCT
 

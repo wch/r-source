@@ -1,8 +1,8 @@
 pie <-
     function (x, labels = names(x), edges = 200, radius = 0.8,
               clockwise = FALSE, init.angle = if(clockwise) 90 else 0,
-              density = NULL, angle = 45, col = NULL, border = NULL, lty = NULL,
-              main = NULL, ...)
+              density = NULL, angle = 45, col = NULL, border = NULL,
+              lty = NULL, main = NULL, ...)
 {
     if (!is.numeric(x) || any(is.na(x) | x <= 0))
 	stop("'x' values must be positive.")
@@ -22,7 +22,8 @@ pie <-
     plot.window(xlim, ylim, "", asp = 1)
     if (is.null(col))
         col <- if(is.null(density))
-            c("white", "lightblue", "mistyrose", "lightcyan", "lavender", "cornsilk")
+            c("white", "lightblue", "mistyrose", "lightcyan",
+              "lavender", "cornsilk")
         else par("fg")
     col <- rep(col, length.out = nx)
     border <- rep(border, length.out = nx)
@@ -40,9 +41,10 @@ pie <-
 	polygon(c(P$x, 0), c(P$y, 0), density = density[i], angle = angle[i],
                 border = border[i], col = col[i], lty = lty[i])
 	P <- t2xy(mean(x[i + 0:1]))
-        if(!is.na(lab <- labels[i]) && lab != "") {
+        lab <-  as.character(labels[i])
+        if(!is.na(lab) && nchar(lab)) {
             lines(c(1, 1.05)*P$x, c(1, 1.05)*P$y)
-            text(1.1*P$x, 1.1*P$y, lab, xpd = TRUE,
+            text(1.1*P$x, 1.1*P$y, labels[i], xpd = TRUE,
                  adj = ifelse(P$x < 0, 1, 0), ...)
         }
     }
