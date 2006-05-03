@@ -18,17 +18,17 @@ Hershey
     joining up the points with straight lines.  This intimate knowledge of
     the outline of each character means that \R can arbitrarily transform
     the characters, which can mean that the vector fonts look better
-    for rotated and 3d text.
+    for rotated and 3d text.  This works for Latin-1 and Cyrillic
+    characters, only.
     \item this implementation was adapted from the GNU libplot library
     which provides support for non-ASCII and non-English fonts.  This means
     that it is possible, for example, to produce weird plotting symbols and
     Japanese characters.
   }
 
-  For historical reasons,
-  when using the \code{\link{text}} function, Hershey fonts may also be
-  selected via the \code{vfont} argument, which is a character vector
-  of length 2 (see below for valid values).
+  For historical reasons, when using the \code{\link{text}} function,
+  Hershey fonts may also be selected via the \code{vfont} argument,
+  which is a character vector of length 2 (see below for valid values).
 
   Drawback:\cr
 You cannot use mathematical expressions (\code{\link{plotmath}}) with
@@ -54,13 +54,12 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
   }
 
   In the old, \code{vfont} specification for the \code{text} function,
-  the Hershey font is 
-  specified by a typeface (e.g., \code{serif} or \code{sans serif})
-  and a fontindex or \dQuote{style} (e.g., \code{plain} or \code{italic}).
-  The first element of \code{vfont} specifies the typeface and the second
-  element specifies the fontindex.  The first table
-  produced by \code{demo(Hershey)} shows the character \code{a} produced
-  by each of the different fonts.
+  the Hershey font is specified by a typeface (e.g., \code{serif} or
+  \code{sans serif}) and a fontindex or \dQuote{style} (e.g.,
+  \code{plain} or \code{italic}). The first element of \code{vfont}
+  specifies the typeface and the second element specifies the fontindex.
+  The first table produced by \code{demo(Hershey)} shows the character
+  \code{a} produced by each of the different fonts.
 
   The available \code{typeface} and \code{fontindex} values are
   available as list components of the variable \code{Hershey}.
@@ -144,16 +143,19 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
     }
 
     \item{Cyrillic Characters:}{cyrillic characters are implemented
-      according to the K018-R encoding.  On a US keyboard, these can be
-      produced using the Serif typeface and Cyrillic (or Oblique Cyrillic)
-      fontindex and specifying an octal code in the range 300 to 337 for
-      lower case characters or 340 to 377 for upper case characters.
-      The fifth table in \code{demo(Hershey)} shows the octal codes for
-      the available cyrillic characters.
+      according to the K018-R encoding, and can be used directly in such
+      a locale using the Serif typeface and Cyrillic (or Oblique Cyrillic)
+      fontindex.  Alternatively they can be specified via an octal code
+      in the range 300 to 337 for lower case characters or 340 to 377 for
+      upper case characters. The fifth table in \code{demo(Hershey)} shows the
+      octal codes for the available cyrillic characters.
+
+      Cyrillic has to be selected via a \code{("serif", fontindex)} pair
+      rather than via a font family.
     }
 
     \item{Japanese Characters:}{83 Hiragana, 86 Katakana, and 603 Kanji
-      characters are implemented according to the EUC (Extended Unix Code)
+      characters are implemented according to the EUC-JP (Extended Unix Code)
       encoding. Each character is identified by a unique hexadecimal code.
       The Hiragana characters
       are in the range 0x2421 to 0x2473, Katakana are in the range 0x2521 to

@@ -13,7 +13,7 @@ make.table <- function(nr, nc) {
     savepar <- par(mar=rep(0, 4), pty="s")
     plot(c(0, nc*2 + 1), c(0, -(nr + 1)),
          type="n", xlab="", ylab="", axes=FALSE)
-    savepar
+    invisible(savepar)
 }
 
 get.r <- function(i, nr)     i %% nr + 1
@@ -52,8 +52,8 @@ draw.sample.cell("serif", "plain", "a", i, nr); i <- i + 1
 draw.sample.cell("serif", "italic", "a", i, nr); i <- i + 1
 draw.sample.cell("serif", "bold", "a", i, nr); i <- i + 1
 draw.sample.cell("serif", "bold italic", "a", i, nr); i <- i + 1
-draw.sample.cell("serif", "cyrillic", "a", i, nr); i <- i + 1
-draw.sample.cell("serif", "oblique cyrillic", "a", i, nr); i <- i + 1
+draw.sample.cell("serif", "cyrillic", "\301", i, nr); i <- i + 1
+draw.sample.cell("serif", "oblique cyrillic", "\301", i, nr); i <- i + 1
 draw.sample.cell("serif", "EUC", "a", i, nr); i <- i + 1
 draw.sample.cell("sans serif", "plain", "a", i, nr); i <- i + 1
 draw.sample.cell("sans serif", "italic", "a", i, nr); i <- i + 1
@@ -366,19 +366,11 @@ draw.vf.cell(tf, fi, "\\ul", i, nr); i<-i+1; { "underscore"}
 nr <- 25
 nc <- 3
 make.table(nr, nc)
+## octal escape codes, as decimals
 code <- c(300:307,310:317,320:327,330:337,340:347,350:357,360:367,370:377,
           243,263)
-string <- c(
-"\300","\301","\302","\303","\304","\305","\306","\307",
-"\310","\311","\312","\313","\314","\315",
-"\316","\317","\320","\321","\322","\323",
-"\324","\325","\326","\327","\330","\331",
-"\332","\333","\334","\335","\336","\337",
-"\340","\341","\342","\343","\344","\345","\346","\347",
-"\350","\351","\352","\353","\354","\355",
-"\356","\357","\360","\361","\362","\363",
-"\364","\365","\366","\367","\370","\371",
-"\372","\373","\374","\375","\376","\377","\243","\263")
+ocode <- 64*(code%/%100) + 8*(code%/%10)%%10 + code%%10
+string <- rawToChar(as.raw(ocode), multiple=TRUE)
 draw.title("Cyrillic Octal Codes", i = 0, nr ,nc)
 for (i in 1:66)
     draw.vf.cell(tf, "cyrillic", string[i], i-1, nr,
