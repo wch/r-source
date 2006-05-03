@@ -193,6 +193,9 @@ BUG FIXES
 
     o	dbeta(0, 1, a, 0) now correctly gives 'a' (limit) instead of 0.
 
+    o	demo(Hershey) was failing on the Cyrillic octal codes in locales
+	(e.g. UTF-8) in which these are invalid.
+
 
 
 		CHANGES IN R VERSION 2.3.0
