@@ -22,11 +22,10 @@ rErr <- function(approx, true, eps = .Options$rErr.eps)
 	   true - approx)     # absolute error (e.g. when true=0)
 }
 ## Numerical equality: Here want "rel.error" almost always:
-All.eq <- function(x,y)
+All.eq <- function(x,y) {
     all.equal.numeric(x,y, tolerance= 64*.Machine$double.eps,
-                      scale = {r <- mean(abs(x),na.rm=TRUE)
-                               if(r > 0) r else 0})
-
+                      scale = max(0, mean(abs(x), na.rm=TRUE)))
+}
 if(!interactive())
     .Random.seed <- c(0,rep(7654, 3))
 
@@ -547,10 +546,19 @@ stopifnot(pbinom(x0, size = 3, prob = 0.1) == 0,
           dbinom(x0, 3, 0.1) == 0) # d*() warns about non-integer
 ## very small negatives were rounded to 0 in R 2.2.1 and earlier
 
+## dbeta(*, ncp):
+a <- rlnorm(100)
+stopifnot(All.eq(a, dbeta(0, 1, a, ncp=0)),
+          dbeta(0, 0.9, 2.2, ncp = c(0, a)) == Inf
+          )
+## the first gave 0, the 2nd NaN in R <= 2.3.0
+
 ## df(*, ncp):
 x <- seq(0, 10, length=101)
 h <- 1e-7
 dx.h <- (pf(x+h, 7, 5, ncp= 2.5) - pf(x-h, 7, 5, ncp= 2.5)) / (2*h)
-stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tol = 1e-6))# (1.50 | 1.65)e-8
+stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tol = 1e-6),# (1.50 | 1.65)e-8
+          All.eq(df(0, 2, 4, ncp=x), df(1e-300, 2, 4, ncp=x))
+          )
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

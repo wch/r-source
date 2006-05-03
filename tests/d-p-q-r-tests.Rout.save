@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-05-01 r37953)
+R version 2.4.0 Under development (unstable) (2006-05-03 r37973)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -39,11 +39,10 @@ Type 'q()' to quit R.
 + 	   true - approx)     # absolute error (e.g. when true=0)
 + }
 > ## Numerical equality: Here want "rel.error" almost always:
-> All.eq <- function(x,y)
+> All.eq <- function(x,y) {
 +     all.equal.numeric(x,y, tolerance= 64*.Machine$double.eps,
-+                       scale = {r <- mean(abs(x),na.rm=TRUE)
-+                                if(r > 0) r else 0})
-> 
++                       scale = max(0, mean(abs(x), na.rm=TRUE)))
++ }
 > if(!interactive())
 +     .Random.seed <- c(0,rep(7654, 3))
 > 
@@ -1069,12 +1068,21 @@ Warning messages:
 2: non-integer x = -0.000020 
 > ## very small negatives were rounded to 0 in R 2.2.1 and earlier
 > 
+> ## dbeta(*, ncp):
+> a <- rlnorm(100)
+> stopifnot(All.eq(a, dbeta(0, 1, a, ncp=0)),
++           dbeta(0, 0.9, 2.2, ncp = c(0, a)) == Inf
++           )
+> ## the first gave 0, the 2nd NaN in R <= 2.3.0
+> 
 > ## df(*, ncp):
 > x <- seq(0, 10, length=101)
 > h <- 1e-7
 > dx.h <- (pf(x+h, 7, 5, ncp= 2.5) - pf(x-h, 7, 5, ncp= 2.5)) / (2*h)
-> stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tol = 1e-6))# (1.50 | 1.65)e-8
+> stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tol = 1e-6),# (1.50 | 1.65)e-8
++           All.eq(df(0, 2, 4, ncp=x), df(1e-300, 2, 4, ncp=x))
++           )
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  3.753 0.017 3.787 0 0 
+Time elapsed:  3.633 0.028 4.151 0 0 
 > 

@@ -26,7 +26,7 @@
  *	The density function of the non-central F distribution ---
  *  obtained by differentiating the corresp. cumulative distribution function
  *  using dnbeta.
- *  For n1 < 2, since the F density has a singularity as x  -> Inf.
+ *  For n1 < 2, since the F density has a singularity as x -> Inf.
  */
 
 #include "nmath.h"
@@ -41,21 +41,24 @@ double dnf(double x, double n1, double n2, double ncp, int give_log)
 	return x + n2 + n1 + ncp;
 #endif
 
-     /* want to compare dnf(ncp=0) behavior with df() one:
-      *     if (ncp == 0)
-      * 	return df(x, n1, n2, give_log); */
+    /* want to compare dnf(ncp=0) behavior with df() one, hence *NOT* :
+     * if (ncp == 0)
+     *   return df(x, n1, n2, give_log); */
 
     if (n1 <= 0. || n2 <= 0. || ncp < 0) ML_ERR_return_NAN;
     if (x < 0.)	 return(R_D__0);
-    if (!R_FINITE(ncp)) ML_ERR_return_NAN;
-    /* FIXME the following is not correct e.g. for n1 < 2, ncp=1 */
-    if (x == 0.) return(n1 > 2 ? R_D__0 : (n1 == 2 ? R_D__1 : ML_POSINF));
+    if (!R_FINITE(ncp)) /* ncp = +Inf -- FIXME?: in some cases, limit exists */
+	ML_ERR_return_NAN;
+
+    /* This is not correct for  n1 == 2, ncp > 0 - and seems unneeded:
+     *  if (x == 0.) return(n1 > 2 ? R_D__0 : (n1 == 2 ? R_D__1 : ML_POSINF));
+     */
     if (!R_FINITE(n1) && !R_FINITE(n2)) { /* both +Inf */
-	/* PR: not sure about this (taken form ncp==0)  -- FIXME ? */
+	/* PR: not sure about this (taken from  ncp==0)  -- FIXME ? */
 	if(x == 1.) return ML_POSINF;
 	/* else */  return R_D__0;
     }
-    if (!R_FINITE(n2)) /* must be +Inf by now */
+    if (!R_FINITE(n2)) /* i.e.  = +Inf */
 	return n1* dnchisq(x*n1, n1, ncp, give_log);
     /*	 ==  dngamma(x, n1/2, 2./n1, ncp, give_log)  -- but that does not exist */
     if (n1 > 1e14 && ncp < 1e7) {
