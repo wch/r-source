@@ -44,6 +44,8 @@ int attribute_hidden R_OutputCon; /* used in printutils.c */
 
 #ifdef HAVE_FCNTL_H
 # include <fcntl.h>
+/* Solaris defines open as open64 under some circumstances */
+# undef open
 #endif
 
 /* This should work on Win64, as long is 4 bytes but long long is 8 bytes. */
