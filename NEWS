@@ -191,6 +191,8 @@ BUG FIXES
 
     o	plot(lm(y ~ 1)) now works also for 'which = 5'.
 
+    o	dbeta(0, 1, a, 0) now correctly gives 'a' (limit) instead of 0.
+
 
 
 		CHANGES IN R VERSION 2.3.0
