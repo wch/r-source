@@ -26,7 +26,10 @@ variable.names(object, \dots)
 \value{
   A character vector.
 }
-\seealso{\code{\link{lm}}}
+\seealso{\code{\link{lm}}; further, \code{\link{all.names}},
+  \code{\link{all.vars}} for functions with a similar name but only slightly
+  related purpose.
+}
 \examples{
 x <- 1:20
 y <-  x + (x/4 - 2)^3 + rnorm(20, s=3)
