@@ -108,7 +108,20 @@ hist.default <-
 	     axes = axes, labels = labels, ...)
 	invisible(r)
     }
-    else r
+    else { ## plot is FALSE
+        ## make an effort to warn about "non sensical" arguments:
+        nf <- names(formals()) ## all formals but those:
+        nf <- nf[is.na(match(nf, c("x", "breaks", "freq", "nclass", "plot")))]
+        missE <- lapply(nf, function(n)
+                        substitute(missing(.), list(. = as.name(n))))
+        not.miss <- ! sapply(missE, eval, envir = environment())
+        if(any(not.miss))
+            warning(sprintf(ngettext(sum(not.miss),
+                                     "argument %s is not made use of",
+                                     "arguments %s are not made use of"),
+                            paste(sQuote(nf[not.miss]), collapse=", ")))
+        r
+    }
 }
 
 plot.histogram <-

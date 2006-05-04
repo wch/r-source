@@ -1805,3 +1805,9 @@ try(max(raw()))
 try(sum(raw()))
 try(prod(raw()))
 ## Inf, -Inf, list(NULL) etc in 2.2.1
+
+r <- hist(rnorm(100), plot = FALSE, breaks = 12,
+          ## arguments which don't make sense for plot=FALSE - give a warning:
+          right = FALSE, col = "blue")
+## gave no warning in 2.3.0 and earlier
+

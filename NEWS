@@ -77,6 +77,8 @@ NEW FEATURES
 
     o	pie() now allows expressions for 'labels'.
 
+    o	hist(*, plot=FALSE) now warns about unused arguments.
+
 
 DEPRECATED & DEFUNCT
 

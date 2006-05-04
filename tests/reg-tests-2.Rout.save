@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-04-18 r37827)
+R version 2.4.0 Under development (unstable) (2006-05-03 r37975)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5171,4 +5171,12 @@ Error in sum(..., na.rm = na.rm) : invalid 'type' (raw) of argument
 > try(prod(raw()))
 Error in prod(..., na.rm = na.rm) : invalid 'type' (raw) of argument
 > ## Inf, -Inf, list(NULL) etc in 2.2.1
+> 
+> r <- hist(rnorm(100), plot = FALSE, breaks = 12,
++           ## arguments which don't make sense for plot=FALSE - give a warning:
++           right = FALSE, col = "blue")
+Warning message:
+arguments 'right', 'col' are not made use of in: hist.default(rnorm(100), plot = FALSE, breaks = 12, right = FALSE,  
+> ## gave no warning in 2.3.0 and earlier
+> 
 > 
