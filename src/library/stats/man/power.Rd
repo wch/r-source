@@ -12,7 +12,7 @@ power(lambda = 1)
         \lambda}{eta = mu^lambda}.
 }
 \details{
-    If \code{lambda} is non-negative, it is taken as zero, and the log
+    If \code{lambda} is non-positive, it is taken as zero, and the log
     link is obtained.  The default \code{lambda = 1} gives the identity
     link.
 }
