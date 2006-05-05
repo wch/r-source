@@ -4148,7 +4148,7 @@ options(op)
 
 
 ## PR#8718
-a<-matrix(2,2,2)
+a <- matrix(2,2,2)
 apply(a,1,"$","a")
 apply(a,1,sum)
 ## first apply was corrupting apply() code in 2.2.1
@@ -4179,3 +4179,10 @@ par(op)
 z <- rbind(x = data.frame(a = 1, b = 2), y = data.frame(a = 1, b = 2))
 stopifnot(row.names(z) == c("x", "y"))
 ## were NAs (and failed to print) in 2.3.0
+
+dd <- data.frame(x = 3:4)
+stopifnot(identical(rownames(dd), row.names(dd)),
+          identical(rownames(dd), c("1", "2")))
+## one was integer in an intermediate version of "pre 2.4.0"
+
+stopifnot(is.na(mean(NA))) ## failed in R 2.3.0

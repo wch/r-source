@@ -290,7 +290,14 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	case LGLSXP:
 	case INTSXP:
 	    PROTECT(ans = allocVector(REALSXP, 1));
-	    for (i = 0; i < n; i++) s += INTEGER(x)[i];
+	    for (i = 0; i < n; i++) {
+		if(INTEGER(x)[i] == NA_INTEGER) {
+		    REAL(ans)[0] = R_NaReal;
+		    UNPROTECT(1);
+		    return ans;
+		}
+		s += INTEGER(x)[i];
+	    }
 	    REAL(ans)[0] = s/n;
 	    break;
 	case REALSXP:
@@ -435,7 +442,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 			    (iop == 3 && tmp > zcum.r))	zcum.r = tmp;
 		    }
 		}/*updated*/ else {
-		    /*-- in what cases does this happen here at all? 
+		    /*-- in what cases does this happen here at all?
 		      -- if there are no non-missing elements.
 		     */
 		    DbgP2(" NOT updated [!! RARE !!]: int_a=%d\n", int_a);
