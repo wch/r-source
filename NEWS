@@ -51,6 +51,8 @@ BUG FIXES
     o	demo(Hershey) was failing on the Cyrillic octal codes in locales
 	(e.g. UTF-8) in which these are invalid.
 
+    o	mean(NA) now gives NA again (as mean(as.double(NA)) always did).
+
 
 
 		CHANGES IN R VERSION 2.3.0
