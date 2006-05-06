@@ -109,15 +109,6 @@ DEPRECATED & DEFUNCT
 	S for use with is.loaded(), but are not so required in R.
 
 
-C-LEVEL FACILITIES
-
-    o	The variables controlling stack checking are made available via
-	Rinterface.h to front-ends embedding R: see 'Writing R Extensions'
-
-    o	R_SignalHandlers (defined in Rinterface.h) can be set to 0 to
-	suppress the R signal handlers in front-ends embedding R.
-
-
 BUG FIXES
 
     o	The name of a Fortran symbol reported to be missing by
@@ -138,9 +129,6 @@ BUG FIXES
 	a one-element character vector (although e.g. logit is taken
 	as a name and not an expression).
 
-    o	The LaTeX version of the package reference manual was omitting
-	some topics, and was not sorting the foo-package topic first.
-
     o	trace() now accepts arguments where= and signature= for the
 	old-style trace (no tracer or exit, edit==FALSE) and just
 	prints a message on entry.  Also the undocumented feature of
@@ -157,6 +145,15 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.3.0 Patched
+
+
+C-LEVEL FACILITIES
+
+    o	The variables controlling stack checking are made available to
+        Rinterface.h to front-ends embedding R: see 'Writing R Extensions'
+
+    o	R_SignalHandlers (defined in Rinterface.h) can be set to 0 to
+        suppress the R signal handlers in front-ends embedding R.
 
 
 BUG FIXES
@@ -183,6 +180,9 @@ BUG FIXES
 
     o	help.search() no longer errors out on a wrongly installed package
 	(with no "hsearch.rds" file).
+	
+    o	The LaTeX version of the package reference manual was omitting
+	some topics, and was not sorting the foo-package topic first.
 
     o	Serializing (e.g. via save()) is better protected against C
 	stack overflow, which will now abort the conversion but no
@@ -202,7 +202,6 @@ BUG FIXES
 	(e.g. UTF-8) in which these are invalid.
 
     o	mean(NA) now gives NA again (as mean(as.double(NA)) always did).
-
 
 
 		CHANGES IN R VERSION 2.3.0
