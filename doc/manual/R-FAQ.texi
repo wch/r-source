@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-05-02
+@set FAQ_DATE @value{FAQ_YEAR}-05-06
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -1965,6 +1965,8 @@ Functions for computing the NPMLE for censored and truncated data.
 @item JLLprod
 Nonparametric estimation of homothetic and generalized homothetic
 production functions.
+@item JGR
+Java Gui for R.
 @item JavaGD
 Java Graphics Device.
 @item JointGLM
@@ -1997,6 +1999,8 @@ represented as the product of two matrices.
 Functions and datasets from the main package of Venables and Ripley,
 ``Modern Applied Statistics with S''.  Contained in the @file{VR}
 bundle.  @emph{Recommended}.
+@item MBESS
+Methods for the Behavioral, Educational, and Social Sciences.
 @item MCMCpack
 Markov chain Monte Carlo (MCMC) package: functions for posterior
 simulation for a number of statistical models.
