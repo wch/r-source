@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2004  The R Development Core Team.
+ *  Copyright (C) 1998--2006  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,8 @@
 
 /* This header file is to provide hooks for external GUIs such as
    GNOME and Cocoa.  It is only used on Unix-alikes.  All entries
-   here should be documented in doc/manual/R-exts.texi            */
+   here should be documented in doc/manual/R-exts.texi
+*/
 
 #ifndef RINTERFACE_H_
 #define RINTERFACE_H_
@@ -118,6 +119,8 @@ extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
 #ifdef __SYSTEM__
 # undef extern
 #endif
+
+extern int R_SignalHandlers;
 
 #ifdef __cplusplus
 }

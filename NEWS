@@ -9,6 +9,12 @@
 		CHANGES IN R VERSION 2.3.0 Patched
 
 
+C-LEVEL FACILITIES
+
+    o   R_SignalHandlers (defined in Rinterface.h) can be set to 0 to
+        suppress the R signal handlers in front-ends embedding R.
+
+
 BUG FIXES
 
     o	min(), max(), sum() and prod() gave nonsensical answers with

@@ -440,14 +440,17 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 {
     char *s, buf[1024];
 
-    /* First check for stack overflow */
-    if(signum == SIGSEGV && (ip != (siginfo_t *)0)) {
+    /* First check for stack overflow if we know the stack position.
+       We assume anything within 16Mb beyond the stack end is a stack overflow.
+     */
+    if(signum == SIGSEGV && (ip != (siginfo_t *)0) && 
+       (long) R_CStackStart != -1) {
 	long addr = (long) ip->si_addr;
 	long diff = (R_CStackDir > 0) ? R_CStackStart - addr:
 	    addr - R_CStackStart;
 	long upper = 0x1000000;  /* 16Mb */
-	if((long) R_CStackLimit != -1) upper = R_CStackLimit + 0x100000;
-	if(diff > 0 && diff < 0x1000000) {
+	if((long) R_CStackLimit != -1) upper += R_CStackLimit;
+	if(diff > 0 && diff < upper) {
 	    REprintf(_("Error: segfault from C stack overflow\n"));
 	    jump_to_toplevel();	
 	}    
@@ -641,6 +644,7 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
 }
 
 
+int R_SignalHandlers = 1;  /* Exposed in R_interface.h */
 
 /* Use this to allow e.g. Win32 malloc to call warning.
    Don't use R-specific type, e.g. Rboolean */
@@ -786,7 +790,7 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    init_signal_handlers();
+    if (R_SignalHandlers) init_signal_handlers();
     if (!doneit) {
 	doneit = 1;
 	R_ReplFile(fp, baseEnv, 0, 0);
