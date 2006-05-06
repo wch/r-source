@@ -39,6 +39,9 @@ BUG FIXES
 
     o	help.search() no longer errors out on a wrongly installed package
 	(with no "hsearch.rds" file).
+	
+    o	The LaTeX version of the package reference manual was omitting
+	some topics, and was not sorting the foo-package topic first.
 
     o	Serializing (e.g. via save()) is better protected against C
 	stack overflow, which will now abort the conversion but no
