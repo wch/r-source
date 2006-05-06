@@ -11,7 +11,10 @@
 
 C-LEVEL FACILITIES
 
-    o   R_SignalHandlers (defined in Rinterface.h) can be set to 0 to
+    o	The variables controlling stack checking are made available to
+        Rinterface.h to front-ends embedding R: see 'Writing R Extensions'
+
+    o	R_SignalHandlers (defined in Rinterface.h) can be set to 0 to
         suppress the R signal handlers in front-ends embedding R.
 
 
@@ -61,7 +64,6 @@ BUG FIXES
 	(e.g. UTF-8) in which these are invalid.
 
     o	mean(NA) now gives NA again (as mean(as.double(NA)) always did).
-
 
 
 		CHANGES IN R VERSION 2.3.0
