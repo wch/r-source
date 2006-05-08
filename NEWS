@@ -66,6 +66,9 @@ BUG FIXES
     o	mean on an integer (or logical) vector was treating NAs as
 	actual values (unless na.rm = TRUE).
 
+    o	mean on a complex vector was calculated incorrectly in
+        code to improve precision (PR#8842, John Peters).
+
     o	Graphical parameters bg, cex, col, lty, and lwd were being
 	checked as being of length one even by functions title() that
 	ignored them.  (Functions such as lines() and points() allow
