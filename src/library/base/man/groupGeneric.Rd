@@ -43,8 +43,9 @@ Summary.factor(x, \dots)
 ## S3 methods have prototypes:
 Math(x, \dots)
 Ops(e1, e2)
-Summary(x, \dots)
 Complex(z)
+Summary(x, \dots)
+\method{Summary}{data.frame}(\dots, na.rm)
 
 ## S4 methods have prototypes:
 Arith(e1, e2)
