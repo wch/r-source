@@ -361,19 +361,21 @@ str.default <-
 	if(is.na(le)) { warning("'str.default': 'le' is NA"); le <- 0}
 
 	if(char.like) {
-	    en_object <- encodeString(object)
+	    ## if object is very long, drop the rest which won't be used anyway:
+	    max.len <- max(100, width %/% 3 + 1, if(!missing(vec.len)) vec.len)
+	    if(le > max.len) object <- object[1:max.len]
+	    encObj <- encodeString(object, quote= '"', na= FALSE)
+					#O: encodeString(object)
 	    v.len <-
 		if(missing(vec.len)) {
-		    max(1,sum(cumsum(3 + if(le>0) nchar(en_object, type="w") else 0) <
+		    max(1,sum(cumsum(3 + if(le>0) nchar(encObj, type="w") else 0) <
 			      width - (4 + 5*nest.lev + nchar(str1, type="w"))))
-                }
-	    ## `5*ne..' above is fudge factor
+		}		      # '5*ne..' above is fudge factor
 		else round(v.len)
 	    ile <- min(le, v.len)
-	    if(ile >= 1)  # truncate if LONG char:
-		object <- maybe_truncate(encodeString(object,
-						      quote= '"', na= FALSE))
-					#en_object[1:ile]
+	    if(ile >= 1) ## truncate if LONG char:
+		object <- maybe_truncate(encObj[1:ile])
+					#O: encodeString(object, quote= '"', na= FALSE)
 	    formObj <- function(x) paste(as.character(x), collapse=" ")
 	}
 	else {

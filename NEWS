@@ -180,7 +180,7 @@ BUG FIXES
 
     o	help.search() no longer errors out on a wrongly installed package
 	(with no "hsearch.rds" file).
-	
+
     o	The LaTeX version of the package reference manual was omitting
 	some topics, and was not sorting the foo-package topic first.
 
@@ -210,6 +210,8 @@ BUG FIXES
 	them to be of length > 1, so they might be passed through
 	... to other high-level graphical functions which then
 	rejected them.)
+
+    o	str() now is fast again for large character vectors.
 
 
 
