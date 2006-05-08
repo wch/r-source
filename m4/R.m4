@@ -2953,12 +2953,16 @@ if test "$want_mbcs_support" = yes ; then
 fi
 ## it seems IRIX has wctrans but not wctrans_t: we check this when we
 ## know we have the headers and wctrans().
+## Also Solaris 2.6 (very old) seems to be missing mbstate_t
 if test "$want_mbcs_support" = yes ; then
-  AC_CHECK_TYPES([wctrans_t], , , [#include <wchar.h>
+  AC_CHECK_TYPES([wctrans_t, mbstate_t], , , [#include <wchar.h>
        #include <wctype.h>])
   if test $ac_cv_type_wctrans_t != yes; then
     want_mbcs_support=no
   fi 
+  if test $ac_cv_type_mbstate_t != yes; then
+    want_mbcs_support=no
+  fi
 fi
 if test "x${want_mbcs_support}" = xyes; then
 AC_DEFINE(SUPPORT_UTF8, 1, [Define this to enable support for UTF-8 locales.])

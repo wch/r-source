@@ -390,6 +390,9 @@
 /* Define to 1 if you have the `mbrtowc' function. */
 #undef HAVE_MBRTOWC
 
+/* Define to 1 if the system has the type `mbstate_t'. */
+#undef HAVE_MBSTATE_T
+
 /* Define to 1 if you have the `mbstowcs' function. */
 #undef HAVE_MBSTOWCS
 
