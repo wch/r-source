@@ -918,11 +918,12 @@ static cp2charset_table cp2charset [] = {
 int getcharset(void)
 {
     int i, cp = localeCP;
-    if (!is_NT) 
-	/* From Nakama's patch.  I don't know the reason for this
-	   as Win9x should support these CHARSET names. */
+    if (is_NT) 
 	return (DEFAULT_CHARSET);
     else
+	/* If SHIFTJIS_CHARSET is not specified in the case of Windows9x,
+	   even if it will output this to emf, a
+	   character does not come out exactly. */
 	for (i = 0; i < sizeof(cp2charset)/sizeof(cp2charset_table); i++)
 	    if (cp == cp2charset[i].codepage) return(cp2charset[i].charset);
     return(ANSI_CHARSET);
