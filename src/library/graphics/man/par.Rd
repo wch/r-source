@@ -196,7 +196,11 @@ par(\dots, no.readonly = FALSE)
       \code{\link{plot.default}} have an \emph{argument} of this name
       which multiplies this graphical parameter.}
     \item{\code{cex.axis}}{The magnification to be used for axis
-      annotation relative to the current setting of \code{cex}.}
+      annotation relative to the current setting of \code{cex}.
+      (Some functions such as \code{\link{points}} accept a vector of values
+      which are recycled.  Other uses will take just the first value if
+      a vector of length greater than one is supplied.)
+    }
     \item{\code{cex.lab}}{The magnification to be used for x and y
       labels relative to the current setting of \code{cex}.}
     \item{\code{cex.main}}{The magnification to be used for main titles
@@ -206,7 +210,11 @@ par(\dots, no.readonly = FALSE)
     \item{\code{cin}}{\emph{\bold{R.O.}}; character size
       \code{(width, height)} in inches.}
     \item{\code{col}}{A specification for the default plotting color.  A
-      description of how colors are specified is given below.}
+      description of how colors are specified is given below.
+      (Some functions such as \code{\link{lines}} accept a vector of values
+      which are recycled.  Other uses will take just the first value if
+      a vector of length greater than one is supplied.)
+    }
     \item{\code{col.axis}}{The color to be used for axis annotation.}
     \item{\code{col.lab}}{The color to be used for x and y labels.}
     \item{\code{col.main}}{The color to be used for plot main titles.}
@@ -335,10 +343,18 @@ par(\dots, no.readonly = FALSE)
       Alternatively, a string of up to 8 characters (from \code{c(1:9,
 	"A":"F")}) may be given, giving the length of line segments
       which are alternatively drawn and skipped.  See section
-      \sQuote{Line Type Specification} below.}
+      \sQuote{Line Type Specification} below.
+
+      Some functions such as \code{\link{lines}} accept a vector of values
+      which are recycled.  Other uses will take just the first value if
+      a vector of length greater than one is supplied.
+    }
     \item{\code{lwd}}{The line width, a \emph{positive} number,
       defaulting to \code{1}.  The interpretation is device-specific,
       and some devices do not implement line widths less than one.
+      (Some functions such as \code{\link{lines}} accept a vector of values
+      which are recycled.  Other uses will take just the first value if
+      a vector of length greater than one is supplied.)
     }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
 	left, top, right)} which gives the margin size specified in
