@@ -6361,22 +6361,22 @@ Terminate all graphics devices on the list, except the null device.
 @section Dynamic graphics
 @cindex Dynamic graphics
 
-@R{} does not (currently) have a builtin function for dynamic graphics,
-for example to rotate point clouds or to ``brush'' (interactively
-highlight) plots.  However, extensive dynamic graphics facilities are
-available in the system XGobi by Swayne, Cook and Buja available from
+@R{} does not have builtin capabilities for dynamic or
+interactive graphics, e.g. rotating point clouds or to ``brushing''
+(interactively highlighting) points. However, extensive dynamic graphics
+facilities are available in the system GGobi by Swayne, Cook and Buja
+available from
 
 @quotation
-@url{http://www.research.att.com/areas/stat/xgobi/}
+@url{http://www.ggobi.org/}
 @end quotation
 
 @noindent
-and these can be accessed from @R{} via the package @pkg{xgobi}.
-XGobi currently runs under the X Windows system on either UNIX or
-Windows, and @R{} interfaces are available for each.
+and these can be accessed from @R{} via the package @pkg{rggobi}, described at
+@url{http://www.ggobi.org/rggobi}.
 
-A development of XGobi called GGobi is under development: see
-@url{http://www.ggobi.org}.
+Also, package @pkg{rgl} provides ways to interact with 3D plots, for example
+of surfaces.
 
 @node Packages, A sample session, Graphics, Top
 @chapter Packages
