@@ -7,10 +7,8 @@ lm <- function (formula, data, subset, weights, na.action,
     ret.y <- y
     cl <- match.call()
     mf <- match.call(expand.dots = FALSE)
-#    mf$singular.ok <- mf$model <- mf$method <- NULL
-#    mf$x <- mf$y <- mf$qr <- mf$contrasts <- mf$... <- NULL
-    m <- match(c("formula", "data", "subset", "weights", "na.action",
-                 "offset"), names(mf), 0)
+    m <- match(c("formula", "data", "subset", "weights", "na.action", "offset"),
+	       names(mf), 0)
     mf <- mf[c(1, m)]
     mf$drop.unused.levels <- TRUE
     mf[[1]] <- as.name("model.frame")
