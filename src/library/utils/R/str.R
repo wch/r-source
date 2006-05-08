@@ -361,6 +361,9 @@ str.default <-
 	if(is.na(le)) { warning("'str.default': 'le' is NA"); le <- 0}
 
 	if(char.like) {
+	    ## if object is very long, drop the rest which won't be used anyway:
+	    max.len <- max(100, width %/% 3 + 1, if(!missing(vec.len)) vec.len)
+	    if(le > max.len) object <- object[1:max.len]
 	    en_object <- encodeString(object)
 	    v.len <-
 		if(missing(vec.len)) {
