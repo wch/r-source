@@ -4185,4 +4185,17 @@ stopifnot(identical(rownames(dd), row.names(dd)),
           identical(rownames(dd), c("1", "2")))
 ## one was integer in an intermediate version of "pre 2.4.0"
 
-stopifnot(is.na(mean(NA))) ## failed in R 2.3.0
+
+## mean on integer vector ignored NAs
+stopifnot(is.na(mean(NA)))
+## failed in R 2.3.0
+
+
+## title etc failed if passed col etc of length > 1
+plot(1:2)
+title("foo", col=1:3)
+title("foo", cex=1:3)
+title("foo", lty=1:3)
+title("foo", lwd=1:3)
+title("foo", bg=4:7)
+## threw errors in R <= 2.3.0

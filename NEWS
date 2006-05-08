@@ -201,7 +201,16 @@ BUG FIXES
     o	demo(Hershey) was failing on the Cyrillic octal codes in locales
 	(e.g. UTF-8) in which these are invalid.
 
-    o	mean(NA) now gives NA again (as mean(as.double(NA)) always did).
+    o	mean on an integer (or logical) vector was treating NAs as
+	actual values (unless na.rm = TRUE).
+
+    o	Graphical parameters bg, cex, col, lty, and lwd were being
+	checked as being of length one even by functions title() that
+	ignored them.  (Functions such as lines() and points() allow
+	them to be of length > 1, so they might be passed through
+	... to other high-level graphical functions which then
+	rejected them.)
+
 
 
 		CHANGES IN R VERSION 2.3.0

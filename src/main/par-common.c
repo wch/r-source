@@ -55,29 +55,28 @@
 	R_DEV__(cexaxis) = x;
     }
     else if (streql(what, "col")) {
-	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
-	/*	naIntCheck(ix, what); */
-	R_DEV__(col) = ix;
+	/* col can be a vector of length > 1, so pick off first value
+	   (as e.g. pch always did) */
+	if (!isVector(value) || LENGTH(value) < 1) par_error(what);
+	R_DEV__(col) = RGBpar(value, 0);
     }
     else if (streql(what, "col.main")) {
 	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
 	/*	naIntCheck(ix, what); */
 	R_DEV__(colmain) = ix;
+	R_DEV__(col) = RGBpar(value, 0);
     }
     else if (streql(what, "col.lab")) {
-	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
-	/*	naIntCheck(ix, what); */
-	R_DEV__(collab) = ix;
+	lengthCheck(what, value, 1, call);
+	R_DEV__(collab) = RGBpar(value, 0);
     }
     else if (streql(what, "col.sub")) {
-	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
-	/*	naIntCheck(ix, what); */
-	R_DEV__(colsub) = ix;
+	lengthCheck(what, value, 1, call);
+	R_DEV__(colsub) = RGBpar(value, 0);
     }
     else if (streql(what, "col.axis")) {
-	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
-	/*	naIntCheck(ix, what); */
-	R_DEV__(colaxis) = ix;
+	lengthCheck(what, value, 1, call);
+	R_DEV__(colaxis) = RGBpar(value, 0);
     }
     else if (streql(what, "crt")) {
 	lengthCheck(what, value, 1, call);	x = asReal(value);
@@ -157,11 +156,16 @@
 	R_DEV__(lmitre) = x;
     }
     else if (streql(what, "lty")) {
-	lengthCheck(what, value, 1, call);
+	/* lty can be a vector of length > 1, so pick off first value
+	   (as e.g. pch always did) */
+	if (!isVector(value) || LENGTH(value) < 1)
+	    par_error(what);
 	R_DEV__(lty) = LTYpar(value, 0);
     }
     else if (streql(what, "lwd")) {
-	lengthCheck(what, value, 1, call);	x = asReal(value);
+	/* lwd can be a vector of length > 1, so pick off first value
+	   (as e.g. pch always did) */
+	x = asReal(value);
 	posRealCheck(x, what);
 	R_DEV__(lwd) = x;
     }
