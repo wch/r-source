@@ -137,7 +137,7 @@ print insfile $lines2;
 print insfile <<END;
 
 [Icons]
-Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Components: html
+Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\index.html"; Components: html
 
 [Types]
 Name: "user"; Description: {cm:user}
