@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-05-06
+@set FAQ_DATE @value{FAQ_YEAR}-05-09
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -484,10 +484,10 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2006-03-27:
+@c Linux binaries as of 2006-05-08:
 @c
 @c debian
-@c   stable  i386   2.2.1  Christian T. Steigies <cts@debian.org>
+@c   stable  i386   2.3.0  Christian T. Steigies <cts@debian.org>
 @c   oldstable
 @c           i386   2.1.1  Christian T. Steigies <cts@debian.org>
 @c mandrake
@@ -495,10 +495,10 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c redhat
 @c   fc3     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 2.2.1  Brian Ripley
-@c   fc4     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
-@c           x86_64 2.2.1  Martyn Plummer <plummer@iarc.fr>
+@c   fc4     i386   2.3.0  Martyn Plummer <plummer@iarc.fr>
+@c           x86_64 2.3.0  Martyn Plummer <plummer@iarc.fr>
 @c   fc5     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
-@c           x86_64 2.2.1  Martyn Plummer <plummer@iarc.fr>
+@c           x86_64 2.3.0  Martyn Plummer <plummer@iarc.fr>
 @c   el3     i386   2.2.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c   el4     i386   2.2.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c           x86_64 2.2.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
@@ -513,8 +513,8 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c           x86_64 2.1.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   9.3     i586   2.2.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           x86_64 2.2.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   10.0    i586   2.2.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           x86_64 2.2.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   10.0    i586   2.3.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           x86_64 2.3.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux
 @c   3.2     i386   2.2.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
@@ -3367,8 +3367,11 @@ Kernel density estimation with global bandwidth selection via
 @item pls
 Partial Least Squares Regression (PLSR) and Principal Component
 Regression (PCR).
-@item pls.pcr
-Multivariate regression by PLS and PCR.
+@c <COMMENT>
+@c Moved to the Archive on 2006-05-09 as requested by the maintainer.
+@c @item pls.pcr
+@c Multivariate regression by PLS and PCR.
+@c </COMMENT>
 @item plsgenomics
 PLS analyses for genomics.
 @c <COMMENT>
@@ -3531,6 +3534,8 @@ the use of the metasim engine to build and run individual based
 population genetics simulations.
 @item roblm
 Robust regression estimators.
+@item robust
+Insightful robust package.
 @item robustbase
 Basic Robust Statistics.
 @item rpart
