@@ -101,7 +101,7 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     x = CAR(args); args = CDR(args);
     if (TYPEOF(x) == CLOSXP) envir = CLOENV(x);
-    else envir = R_BaseEnv;
+    else envir = R_NilValue;
     PROTECT(envir);
 
     fn = CAR(args); args = CDR(args);
