@@ -1431,6 +1431,16 @@ SEXP attribute_hidden do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     return old;
 }
 
+/* reports memory use to profiler in eval.c */
+
+void attribute_hidden get_current_mem(unsigned long *smallvsize, unsigned long *largevsize, unsigned long *nodes){
+
+	*smallvsize=R_SmallVallocSize;
+	*largevsize=R_LargeVallocSize;
+	*nodes=R_NodesInUse;
+	return;
+	
+}
 
 SEXP attribute_hidden do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1620,6 +1630,8 @@ char *R_alloc(long nelem, int eltsize)
     }
     else return NULL;
 }
+
+
 
 /* S COMPATIBILITY */
 

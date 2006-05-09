@@ -79,6 +79,8 @@ NEW FEATURES
 
     o	hist(*, plot=FALSE) now warns about unused arguments.
 
+    o   Experimental support for memory-use profiling in memRprof, tracemem
+
 
 DEPRECATED & DEFUNCT
 

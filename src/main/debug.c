@@ -96,3 +96,85 @@ SEXP R_traceOnOff(SEXP onOff) {
 }
 
 Rboolean R_current_trace_state() { return GET_TRACE_STATE; }
+
+
+/* memory tracing */
+/* report when a traced object is duplicated */
+
+SEXP attribute_hidden do_memtrace(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef R_MEMORY_PROFILING
+    SEXP object;
+    char buffer[20];
+
+    checkArity(op, args);
+
+    object=CAR(args);
+    if (TYPEOF(object) == CLOSXP || 
+	TYPEOF(object) == BUILTINSXP ||
+	TYPEOF(object) == SPECIALSXP)
+	    errorcall(call, "argument must not be a function");
+
+    if(object == R_NilValue)
+	    errorcall(call, "cannot trace NULL");
+
+    if(TYPEOF(object) == ENVSXP || TYPEOF(object) == PROMSXP)
+	    errorcall(call,"memtrace is not useful for promise and environment objects");
+    if(TYPEOF(object) == EXTPTRSXP || TYPEOF(object) == WEAKREFSXP)
+	    errorcall(call,"memtrace is not useful for weak reference or pointer objects");
+
+    SET_TRACE(object, 1);
+    sprintf(buffer, "<%p>", object);
+    return mkString(buffer);
+#else
+    errorcall(call,"R not compiled with memory profiling");
+    return R_NilValue;
+#endif
+}
+
+SEXP attribute_hidden do_memuntrace(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef R_MEMORY_PROFILING
+    SEXP object;
+
+    checkArity(op, args);
+
+    object=CAR(args);
+    if (TYPEOF(object) == CLOSXP || 
+	TYPEOF(object) == BUILTINSXP ||
+	TYPEOF(object) == SPECIALSXP)
+	    errorcall(call, "argument must not be a function");
+
+    if (TRACE(object))
+	    SET_TRACE(object, 0);
+#else
+    error(call,"R not compiled with memory profiling");
+#endif
+    return R_NilValue;
+}
+
+
+#ifndef R_MEMORY_PROFILING
+void memtrace_report(SEXP object){
+     return;
+}
+#else
+void memtrace_report(SEXP old, SEXP new){
+    RCNTXT *cptr;
+ 
+    if (!R_current_trace_state()) return;
+    Rprintf("memtrace[%p->%p]: ",old,new);
+    for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
+	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
+	    && TYPEOF(cptr->call) == LANGSXP) {
+	    SEXP fun = CAR(cptr->call);
+	    Rprintf("%s ",
+		    TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
+		    "<Anonymous>");
+	}
+    }
+    Rprintf("\n");
+
+}
+
+#endif /* R_MEMORY_PROFILING */

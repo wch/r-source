@@ -98,6 +98,10 @@ static Rboolean bc_profiling = FALSE;
 
 static FILE *R_ProfileOutfile = NULL;
 static int R_Profiling = 0;
+static int R_Mem_Profiling=0;
+extern void get_current_mem(long *,long *,long *); /* in memory.c */
+extern unsigned long get_duplicate_counter(void);  /* in duplicate.c */
+extern void reset_duplicate_counter(void);         /* in duplicate.c */
 
 #ifdef Win32
 HANDLE MainThread;
@@ -142,6 +146,14 @@ static void doprof(int sig)
 {
     RCNTXT *cptr;
     int newline = 0;
+    unsigned long bigv, smallv, nodes;
+    if (R_Mem_Profiling){
+	    get_current_mem(&smallv, &bigv, &nodes);
+	    if (!newline) newline = 1;
+	    fprintf(R_ProfileOutfile, ":%ld:%ld:%ld:%ld:", smallv, bigv,
+                     nodes*sizeof(SEXPREC), get_duplicate_counter());
+	    reset_duplicate_counter();
+    }
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
@@ -187,7 +199,7 @@ static void R_EndProfiling()
 double R_getClockIncrement(void);
 #endif
 
-static void R_InitProfiling(char * filename, int append, double dinterval)
+static void R_InitProfiling(char * filename, int append, double dinterval, int mem_profiling)
 {
 #ifndef Win32
     struct itimerval itv;
@@ -210,8 +222,15 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     R_ProfileOutfile = fopen(filename, append ? "a" : "w");
     if (R_ProfileOutfile == NULL)
 	error(_("Rprof: cannot open profile file '%s'"), filename);
-    fprintf(R_ProfileOutfile, "sample.interval=%d\n", interval);
+    if(mem_profiling)
+	fprintf(R_ProfileOutfile, "memory profiling: sample.interval=%d\n", interval);
+    else
+	fprintf(R_ProfileOutfile, "sample.interval=%d\n", interval);
 
+    R_Mem_Profiling=mem_profiling;
+    if (mem_profiling)
+	reset_duplicate_counter();
+    
 #ifdef Win32
     /* need to duplicate to make a real handle */
     DuplicateHandle(Proc, GetCurrentThread(), Proc, &MainThread,
@@ -237,7 +256,7 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
 SEXP attribute_hidden do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     char *filename;
-    int append_mode;
+    int append_mode, mem_profiling;
     double dinterval;
 
 #ifdef BC_PROFILING
@@ -251,9 +270,10 @@ SEXP attribute_hidden do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("invalid '%s' argument"), "filename");
     append_mode = asLogical(CADR(args));
     dinterval = asReal(CADDR(args));
+    mem_profiling = asLogical(CADDDR(args));
     filename = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
     if (strlen(filename))
-	R_InitProfiling(filename, append_mode, dinterval);
+	    R_InitProfiling(filename, append_mode, dinterval, mem_profiling);
     else
 	R_EndProfiling();
     return R_NilValue;

@@ -825,6 +825,7 @@ SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
 SEXP mat2indsub(SEXP, SEXP);
 SEXP match(SEXP, SEXP, int);
+void memtrace_report(SEXP, SEXP);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
 /* SEXP mkComplex(char *s); */
 /* SEXP mkEnv(SEXP, SEXP, SEXP); */
