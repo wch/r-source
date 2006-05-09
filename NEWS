@@ -9,9 +9,20 @@
 		CHANGES IN R VERSION 2.3.0 Patched
 
 
+NEW FEATURES
+
+    o	In lm() and glm(), offsets are allowed to be length 1 (and
+	if so are replicated to the number of cases).
+
+    o	The \uxxxx notation for Unicode characters in input strings
+	can now be used on any platform which supports MBCS, even if
+	the current locale is not MBCS (provided that the Unicode
+	character is valid in the current character set).
+
+
 C-LEVEL FACILITIES
 
-    o	The variables controlling stack checking are made available to
+    o	The variables controlling stack checking are made available via
         Rinterface.h to front-ends embedding R: see 'Writing R Extensions'
 
     o	R_SignalHandlers (defined in Rinterface.h) can be set to 0 to
@@ -24,11 +35,6 @@ BUG FIXES
 	an empty list or raw argument.
 
     o	sum() on a data frame did not allow multiple arguments.	 (PR#8385)
-
-    o	The \uxxxx notation for Unicode characters in input strings
-	can now be used on any platform which supports MBCS, even if
-	the current locale is not MBCS (provided that the Unicode
-	character is valid in the current character set).
 
     o	charmatch() and pmatch() did not specify they applied only to
 	character vectors.  Now they do, and attempt to coerce 'x' and
@@ -63,22 +69,27 @@ BUG FIXES
     o	demo(Hershey) was failing on the Cyrillic octal codes in locales
 	(e.g. UTF-8) in which these are invalid.
 
-    o	mean on an integer (or logical) vector was treating NAs as
+    o	mean() on an integer (or logical) vector was treating NAs as
 	actual values (unless na.rm = TRUE).
 
-    o	mean on a complex vector was calculated incorrectly in
+    o	mean() on a complex vector was calculated incorrectly in
         code to improve precision (PR#8842, John Peters).
 
     o	Graphical parameters bg, cex, col, lty, and lwd were being
-	checked as being of length one even by functions title() that
-	ignored them.  (Functions such as lines() and points() allow
-	them to be of length > 1, so they might be passed through
-	... to other high-level graphical functions which then
-	rejected them.)
+	checked as being of length one even by functions such as
+	title() that ignored them.  (Functions such as lines() and
+	points() allow them to be of length > 1, so they might be
+	passed through ... to other high-level graphical functions
+	which then used to reject them.)
 
     o	str() now is fast again for large character vectors.
     
-    o	edit() would default to .BaseEnv, instead of .GlobalEnv.
+    o	edit() would default the environment of a function to .BaseEnv,
+	instead of to .GlobalEnv.
+    
+    o	lm() and glm() coerce their 'weights' and 'offset' values to
+	vector to avoid problems with specifying them as 1D or n x 1
+	arrays.
 
 
 
@@ -1183,7 +1194,8 @@ NEW FEATURES
 	the keyboard).
 
     o	There is now a comprehensive French translation of the messages,
-	thanks to Philippe Grosjean.
+	thanks to Philippe Grosjean, Frederic Lehobey, Jean Thioulouse
+	and Emmanuel Paradis.
 
 
 DEPRECATED & DEFUNCT

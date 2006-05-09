@@ -28,10 +28,11 @@ lm(formula, data, subset, weights, na.action,
   \item{subset}{an optional vector specifying a subset of observations
     to be used in the fitting process.}
 
-  \item{weights}{an optional vector of weights to be used
-    in the fitting process. If specified, weighted least squares is used
-    with weights \code{weights} (that is, minimizing \code{sum(w*e^2)});
-    otherwise ordinary least squares is used.}
+  \item{weights}{an optional vector of weights to be used in the fitting
+    process.  Should be \code{NULL} or a numeric vector.
+    If non-NULL, weighted least squares is used with weights
+    \code{weights} (that is, minimizing \code{sum(w*e^2)}); otherwise
+    ordinary least squares is used.}
 
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
@@ -57,8 +58,11 @@ lm(formula, data, subset, weights, na.action,
 
   \item{offset}{this can be used to specify an \emph{a priori}
     known component to be included in the linear predictor
-    during fitting.  An \code{\link{offset}} term can be included in the
-    formula instead or as well, and if both are specified their sum is used.}
+    during fitting.  This should be \code{NULL} or a numeric vector of
+    length either one or equal to the number of cases.
+    One or more \code{\link{offset}} terms can be included in the
+    formula instead or as well, and if both are specified their sum is
+    used.  See \code{\link{model.offset}}.}
 
   \item{\dots}{additional arguments to be passed to the low level
     regression fitting functions (see below).}

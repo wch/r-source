@@ -378,17 +378,22 @@ model.frame.default <-
     data
 }
 
+## we don't assume weights are numeric or a vector, leaving this to the
+## calling application
 model.weights <- function(x) x$"(weights)"
+
+## we do check that offsets are numeric.
 model.offset <- function(x) {
     offsets <- attr(attr(x, "terms"),"offset")
     if(length(offsets) > 0) {
 	ans <- x$"(offset)"
-        if (is.null(ans))
-	   ans <- 0
+        if (is.null(ans)) ans <- 0
 	for(i in offsets) ans <- ans+x[[i]]
 	ans
     }
-    else x$"(offset)"
+    else ans <- x$"(offset)"
+    if(!is.null(ans) && !is.numeric(ans)) stop("'offset' must be numeric")
+    ans
 }
 
 model.matrix <- function(object, ...) UseMethod("model.matrix")

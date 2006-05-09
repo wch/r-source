@@ -22,11 +22,17 @@ lm <- function (formula, data, subset, weights, na.action,
                 domain = NA)
     mt <- attr(mf, "terms") # allow model.frame to update it
     y <- model.response(mf, "numeric")
-    w <- model.weights(mf)
-    offset <- model.offset(mf)
-    if(!is.null(offset) && length(offset) != NROW(y))
-	stop(gettextf("number of offsets is %d, should equal %d (number of observations)",
-                     length(offset), NROW(y)), domain = NA)
+    ## avoid any problems with 1D or nx1 arrays by as.vector.
+    w <- as.vector(model.weights(mf))
+    if(!is.null(w) && !is.numeric(w))
+        stop("'weights' must be a numeric vector")
+    offset <- as.vector(model.offset(mf))
+    if(!is.null(offset)) {
+        if(length(offset) == 1) offset <- rep(offset, NROW(y))
+        else if(length(offset) != NROW(y))
+            stop(gettextf("number of offsets is %d, should equal %d (number of observations)",
+                          length(offset), NROW(y)), domain = NA)
+    }
 
     if (is.empty.model(mt)) {
 	x <- NULL

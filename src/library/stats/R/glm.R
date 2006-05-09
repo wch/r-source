@@ -49,13 +49,19 @@ glm <- function(formula, family = gaussian, data, weights,
     }
     ## null model support
     X <- if (!is.empty.model(mt)) model.matrix(mt, mf, contrasts) else matrix(,NROW(Y),0)
-    weights <- model.weights(mf)
-    offset <- model.offset(mf)
+    ## avoid any problems with 1D or nx1 arrays by as.vector.
+    weights <- as.vector(model.weights(mf))
+    if(!is.null(weights) && !is.numeric(weights))
+        stop("'weights' must be a numeric vector")
+    offset <- as.vector(model.offset(mf))
     ## check weights and offset
     if( !is.null(weights) && any(weights < 0) )
 	stop("negative weights not allowed")
-    if(!is.null(offset) && length(offset) != NROW(Y))
-	stop(gettextf("number of offsets is %d should equal %d (number of observations)", length(offset), NROW(Y)), domain = NA)
+    if(!is.null(offset)) {
+        if(length(offset) == 1) offset <- rep(offset, NROW(Y))
+        else if(length(offset) != NROW(Y))
+            stop(gettextf("number of offsets is %d should equal %d (number of observations)", length(offset), NROW(Y)), domain = NA)
+    }
     ## these allow starting values to be expressed in terms of other vars.
     mustart <- model.extract(mf, "mustart")
     etastart <- model.extract(mf, "etastart")
@@ -118,6 +124,7 @@ glm.fit <-
 	weights <- rep.int(1, nobs)
     if (is.null(offset))
 	offset <- rep.int(0, nobs)
+
     ## get family functions:
     variance <- family$variance
     dev.resids <- family$dev.resids
