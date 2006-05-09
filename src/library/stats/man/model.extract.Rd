@@ -30,7 +30,10 @@ model.weights(x)
 
   \code{model.offset} and \code{model.response} are equivalent to
   \code{model.extract(, "offset")} and \code{model.extract(, "response")}
-  respectively.
+  respectively.  \code{model.offset} sums any terms specified by
+  \code{\link{offset}} terms in the formula or by \code{offset} arguments
+  in the call producing the model frame: it does check that the offset
+  is numeric.
 
   \code{model.weights} is slightly different from
   \code{model.frame(, "weights")} in not naming the vector it returns.

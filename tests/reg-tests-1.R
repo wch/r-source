@@ -4199,3 +4199,11 @@ title("foo", lty=1:3)
 title("foo", lwd=1:3)
 title("foo", bg=4:7)
 ## threw errors in R <= 2.3.0
+
+
+## glm did not allow array offsets
+df1 <- data.frame(u=1:10,
+                  v=rpois(10,10),
+                  z=array(1,10, dimnames=list(1:10)))
+glm(v ~ u+offset(log(z)), data=df1, family=poisson)
+## was error in R <= 2.3.0
