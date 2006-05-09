@@ -57,7 +57,7 @@ glm <- function(formula, family = gaussian, data, weights,
     ## check weights and offset
     if( !is.null(weights) && any(weights < 0) )
 	stop("negative weights not allowed")
-    if(!is.null(offset) {
+    if(!is.null(offset)) {
         if(length(offset) == 1) offset <- rep(offset, NROW(Y))
         else if(length(offset) != NROW(Y))
             stop(gettextf("number of offsets is %d should equal %d (number of observations)", length(offset), NROW(Y)), domain = NA)

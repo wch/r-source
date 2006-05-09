@@ -25,7 +25,7 @@ lm <- function (formula, data, subset, weights, na.action,
     if(!is.null(w) && !is.numeric(w))
         stop("'weights' must be a numeric vector")
     offset <- as.vector(model.offset(mf))
-    if(!is.null(offset) {
+    if(!is.null(offset)) {
         if(length(offset) == 1) offset <- rep(offset, NROW(y))
         else if(length(offset) != NROW(y))
             stop(gettextf("number of offsets is %d, should equal %d (number of observations)",

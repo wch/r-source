@@ -392,7 +392,7 @@ model.offset <- function(x) {
 	ans
     }
     else ans <- x$"(offset)"
-    if(!is.numeric(ans)) stop("'offset' must be numeric")
+    if(!is.null(ans) && !is.numeric(ans)) stop("'offset' must be numeric")
     ans
 }
 
