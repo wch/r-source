@@ -217,6 +217,8 @@ BUG FIXES
 	rejected them.)
 
     o	str() now is fast again for large character vectors.
+    
+    o	edit() would default to .BaseEnv, instead of .GlobalEnv.
 
 
 
