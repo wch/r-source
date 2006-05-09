@@ -155,7 +155,7 @@ SEXP attribute_hidden do_memuntrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 #ifndef R_MEMORY_PROFILING
-void memtrace_report(SEXP object){
+void memtrace_report(SEXP old, SEXP new){
      return;
 }
 #else
