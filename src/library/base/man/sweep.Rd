@@ -15,7 +15,8 @@ sweep(x, MARGIN, STATS, FUN="-", \dots)
   \item{STATS}{the summary statistic which is to be swept out.}
   \item{FUN}{the function to be used to carry out the sweep.  In the
     case of binary operators such as \code{"/"} etc., the function name
-    must be quoted.}
+    must backquoted or quoted. (\code{FUN} is found by a call to
+    \code{\link{match.fun}}.)}
   \item{\dots}{optional arguments to \code{FUN}.}
 }
 \value{

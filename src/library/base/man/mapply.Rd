@@ -19,12 +19,12 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
           USE.NAMES = TRUE)
 }
 \arguments{
-  \item{FUN}{Function to apply }
-  \item{\dots}{Arguments to vectorise over (list or vector) }
-  \item{MoreArgs}{A list of other arguments to \code{FUN} }
-  \item{SIMPLIFY}{Attempt to reduce the result to a vector or matrix? }
+  \item{FUN}{Function to apply, found via \code{\link{match.fun}}.}
+  \item{\dots}{Arguments to vectorise over (list or vector).}
+  \item{MoreArgs}{A list of other arguments to \code{FUN}.}
+  \item{SIMPLIFY}{Attempt to reduce the result to a vector or matrix?}
   \item{USE.NAMES}{If the first \dots argument is character and the
-    result doesn't already have names, use it as the names}
+    result does not already have names, use it as the names.}
   \item{vectorize.args}{A character vector of arguments which should be
     vectorized.  Defaults to all arguments to \code{FUN}.}
 }

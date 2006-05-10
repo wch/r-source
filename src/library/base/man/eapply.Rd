@@ -6,9 +6,10 @@ eapply(env, FUN, \dots, all.names = FALSE)
 \alias{eapply}
 \arguments{
   \item{env}{environment to be used.}
-  \item{FUN}{the function to be applied.
+  \item{FUN}{the function to be applied, found \emph{via}
+    \code{\link{match.fun}}.
     In the case of functions like \code{+},
-    \code{\%*\%}, etc., the function name must be quoted.}
+    \code{\%*\%}, etc., the function name must be backquoted or quoted.}
   \item{\dots}{optional arguments to \code{FUN}.}
   \item{all.names}{a logical indicating whether to apply the function to
     all values}
