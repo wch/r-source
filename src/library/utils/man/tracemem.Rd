@@ -1,6 +1,6 @@
 \name{tracemem}
 \alias{tracemem}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{untracemem}
 \title{Trace copying of objects}
 \description{
 This function marks an object so that a message is printed whenever the
@@ -12,7 +12,6 @@ major cause of hard-to-predict memory use in R.
 tracemem(x)
 untracemem(x)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{An R object, not a function or environment or \code{NULL}}
 }
@@ -43,8 +42,7 @@ A string for identifying the object in the trace output.
 
   \url{http://developer.r-project.org/memory-profiling.html}
 }
-\examples{
-\dontrun{
+\examples{\dontrun{
 a<-1:10
 tracemem(a)
 ## b and a share memory
@@ -58,11 +56,6 @@ lm(d~a+log(b))
 
 ## this doesn't use duplicate and so is not traced
 f<-b+1
-
-
-}
-
-
-}
-\keyword{utilities}% at least one, from doc/KEYWORDS
+}}
+\keyword{utilities}
 
