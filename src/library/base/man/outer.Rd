@@ -16,10 +16,8 @@ X \%o\% Y
 \arguments{
   \item{X, Y}{First and second arguments for function \code{FUN}.
     Typically a vector or array.}
-  \item{FUN}{a function to use on the outer products.
-    It may be specified by a character string, when the function is
-    found by calling \code{\link{match.fun}} (except for the special
-    case \code{"*"}.}
+  \item{FUN}{a function to use on the outer products, found \emph{via}
+    \code{\link{match.fun}} (except for the special case \code{"*"}).}
   \item{\dots}{optional arguments to be passed to \code{FUN}.}
 }
 \details{

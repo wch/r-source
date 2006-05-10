@@ -11,9 +11,9 @@ replicate(n, expr, simplify = TRUE)
 \alias{replicate}
 \arguments{
   \item{X}{list or (atomic) vector to be used.}
-  \item{FUN}{the function to be applied to each element of \code{X}.
-    In the case of functions like \code{+}, \code{\%*\%}, etc.,
-    the function name must be quoted.}
+  \item{FUN}{the function to be applied to each element of \code{X}:
+    see Details.  In the case of functions like \code{+}, \code{\%*\%}, etc.,
+    function name must be backquoted or quoted.}
   \item{\dots}{optional arguments to \code{FUN}.}
   \item{simplify}{logical; should the result be simplified to a vector
     or matrix if possible?}
@@ -36,6 +36,11 @@ replicate(n, expr, simplify = TRUE)
   random number generation).
 }
 \details{
+  \code{FUN} is found by a call to \code{\link{match.fun}} and typically
+  is either a function or a symbol (e.g. a backquoted name) or a
+  character string specifying a function to be searched for from the 
+  environment of the call to \code{lapply}. 
+
   Function \code{FUN} must be able to accept as input any of the
   elements of \code{X}.  If the latter is an atomic vector, \code{FUN}
   will always be passed a length-one vector.
