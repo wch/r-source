@@ -104,6 +104,11 @@ static int gc_count = 0;
 # define FORCE_GC 0
 #endif
 
+#ifdef R_MEMORY_PROFILING
+static void R_ReportAllocation(R_size_t);
+static void R_ReportNewPage();
+#endif
+
 extern SEXP framenames;
 
 #define GC_PROT(X) {int __t = gc_inhibit_torture; \
@@ -610,6 +615,9 @@ static void GetNewPage(int node_class)
     page = malloc(R_PAGE_SIZE);
     if (page == NULL)
 	mem_err_heap((R_size_t) NodeClassSize[node_class]);
+#ifdef R_MEMORY_PROFILING
+    R_ReportNewPage();
+#endif 
     page->next = R_GenHeap[node_class].pages;
     R_GenHeap[node_class].pages = page;
     R_GenHeap[node_class].PageCount++;
@@ -1954,6 +1962,9 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		    s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC));
 		}
 		if (s != NULL) success = TRUE;
+#ifdef R_MEMORY_PROFILING
+		R_ReportAllocation(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC));
+#endif		
 	    }
 	    if (! success) {
 		/* reset the vector heap limit */
@@ -2585,3 +2596,109 @@ int (HASHVALUE)(SEXP x) { return HASHVALUE(x); }
 
 void (SET_HASHASH)(SEXP x, int v) { SET_HASHASH(x, v); }
 void (SET_HASHVALUE)(SEXP x, int v) { SET_HASHVALUE(x, v); }
+
+/*******************************************/
+/* Non-sampling memory use profiler
+   reports all large vector heap 
+   allocations and all calls to GetNewPage */
+/*******************************************/
+
+#ifndef R_MEMORY_PROFILING
+
+SEXP attribute_hidden do_Rprofmem(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+	error(call,_("memory profiling is not available onb this system"));
+}
+
+#else
+static int R_IsMemReporting;
+static FILE *R_MemReportingOutfile;
+static R_size_t R_MemReportingThreshold;
+
+
+
+
+static void R_OutputStackTrace(FILE *file){
+    int newline=0;
+    RCNTXT *cptr;
+
+    for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
+	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
+	    && TYPEOF(cptr->call) == LANGSXP) {
+		SEXP fun = CAR(cptr->call);
+		if (!newline) newline = 1;
+		fprintf(file, "\"%s\" ",
+		    TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
+		    "<Anonymous>");
+	}
+    }
+    if (newline) fprintf(file, "\n");
+}
+
+static void R_ReportAllocation(R_size_t size){
+    int newline=0;
+    
+    if (R_IsMemReporting){
+	if(size>R_MemReportingThreshold){
+	   fprintf(R_MemReportingOutfile,"%ld :", (unsigned long) size);
+	   R_OutputStackTrace(R_MemReportingOutfile);
+	}
+    } 
+    return;
+}
+
+static void R_ReportNewPage(void){
+    int newline=0;
+
+    if (R_IsMemReporting){
+	fprintf(R_MemReportingOutfile,"new page:");
+	R_OutputStackTrace(R_MemReportingOutfile);
+    }
+    return;
+}
+
+
+static void R_EndMemReporting(){
+     if(R_MemReportingOutfile != NULL){
+	  fflush(R_MemReportingOutfile);
+	  fclose(R_MemReportingOutfile);
+	  R_MemReportingOutfile=NULL;
+     }
+     R_IsMemReporting=0;
+     return;
+}
+
+static void R_InitMemReporting(char *filename, int append, 
+			       R_size_t threshold)
+{
+    if(R_MemReportingOutfile != NULL) R_EndMemReporting();
+    R_MemReportingOutfile = fopen(filename, append ? "a" : "w");
+    if (R_MemReportingOutfile == NULL)
+	error(_("Rprofmem: cannot open output file '%s'"), filename);
+    R_MemReportingThreshold=threshold;
+    R_IsMemReporting=1;
+    return;
+};
+
+
+
+SEXP attribute_hidden do_Rprofmem(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    char *filename;
+    R_size_t threshold;
+    int append_mode;
+
+    checkArity(op, args);
+    if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
+	errorcall(call, _("invalid '%s' argument"), "filename");
+    append_mode = asLogical(CADR(args));
+    filename = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
+    threshold = REAL(CADDR(args))[0];
+    if (strlen(filename))
+	 R_InitMemReporting(filename, append_mode, threshold);
+    else
+	 R_EndMemReporting();
+    return R_NilValue;
+}
+
+#endif /* R_MEMORY_PROFILING */

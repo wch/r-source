@@ -70,6 +70,9 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   of the \R source tree).
 
   \code{\link{summaryRprof}}
+
+  \code{\link{tracemem}}, \code{\link{Rprofmem}} for other ways to track
+  memory use.
 }
 \examples{
 \dontrun{Rprof()

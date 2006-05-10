@@ -403,6 +403,7 @@ SEXP do_Rhome(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rmultinom(SEXP, SEXP, SEXP, SEXP);
 SEXP do_RNGkind(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Rprof(SEXP, SEXP, SEXP, SEXP);
+SEXP do_Rprofmem(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rownames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rowscols(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sample(SEXP, SEXP, SEXP, SEXP);

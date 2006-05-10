@@ -3271,7 +3271,8 @@ Rd2dvi} also the tools to build packages from source as described in the
 
 @menu
 * Tidying R code::              
-* Profiling R code::            
+* Profiling R code for speed::            
+* Profiling R code for memory use::            
 * Profiling compiled code::     
 @end menu
 
@@ -3346,8 +3347,8 @@ See @ref{R coding standards} for style options within the ESS[S] mode
 recommended for the source code of @R{} itself.
 
 
-@node Profiling R code, Profiling compiled code, Tidying R code, Tidying and profiling R code
-@section Profiling R code
+@node Profiling R code for speed, Profiling R code for memory use, Tidying R code, Tidying and profiling R code
+@section Profiling R code for speed
 @cindex Profiling
 @findex Rprof
 
@@ -3460,6 +3461,97 @@ memory, and this takes an appreciable amount of time which profiling
 will charge to whichever function happens to provoke it.  It may be
 useful to compare profiling code immediately after a call to @code{gc()}
 with a profiling run without a preceding call to @code{gc}.
+
+@node Profiling R code for memory use, Profiling compiled code, Profiling R code for speed, Tidying and profiling R code
+@section Profiling R code for memory use
+@cindex Profiling
+@cindex Memory use
+@findex Rprofmem
+@findex tracemem
+
+Measuring memory use in @R{} code is useful either when the code takes
+more memory than is conveniently available or when memory allocation
+and copying of objects is responsible for slow code.
+
+There are three ways to profile memory use over time in R code. All
+three require @R{} to have been compiled with
+@code{R_MEMORY_PROFILING} defined. All can be misleading, for
+different reasons.
+
+@c This needs examples. They will come.
+
+The first method uses the sampling profiler @code{Rprof} described in
+the previous section, with the option
+@code{memory.profiling=TRUE}. This writes the total @R{} memory
+allocation in small vectors, large vectors, and cons cells or nodes at
+each sampling interval. It also writes out the number of calls to the
+internal function @code{duplicate}, which is called to copy R
+objects. @code{summaryRprof} provides summaries of this information.
+The main reason that this can be misleading is that the memory use is
+attributed to the function running at the end of the sampling
+interval. A second reason is that garbage collection can make the
+amount of memory in use decrease, so a function appears to use little
+memory. Running under @code{gctorture} helps with both problems: it
+slows down the code to effectively increase the sampling frequency and
+it makes each garbage collection release a smaller of memory.
+
+The second method uses a memory-allocation profiler,
+@code{Rprofmem()}, which writes out a stack trace to an output file
+every time a large vector is allocated (with a user-specified
+threshold for `large') or a new page of memory is allocated for the R
+heap. Summary functions for this output are still being designed. This
+can be misleading if a function creates and then deletes an object,
+repeatedly using the same memory but building up a large total of
+allocations.
+
+Running the example from the previous section with
+@smallexample
+> Rprofmem("boot.memprof",threshold=1000)
+> storm.boot <- boot(rs, storm.bf, R = 4999)
+> Rprofmem(NULL)
+@end smallexample
+shows that apart from some initial and final work in @code{boot} there
+are no vector allocations over 1000 bytes.
+
+The third method involves tracing copies made of a specific
+(presumably large) R object. Calling @code{tracemem} on an object
+marks it so that a message is printed to standard output when the
+object is copied. This approach can be misleading because not all
+memory allocation happens via @code{duplicate}, and because
+@code{duplicate} may be called on a component of an object such as a
+data frame rather than on the whole object. It may be helpful to use
+@code{tracemem} on these components.
+
+
+In the example above we can run @code{tracemem} on the data frame @code{st}
+@smallexample
+> tracemem(st)
+[1] "<0x9abd5e0>"
+> storm.boot <- boot(rs, storm.bf, R = 4)
+memtrace[0x9abd5e0->0x92a6d08]: statistic boot
+memtrace[0x92a6d08->0x92a6d80]: $<-.data.frame $<- statistic boot
+memtrace[0x92a6d80->0x92a6df8]: $<-.data.frame $<- statistic boot
+memtrace[0x9abd5e0->0x9271318]: statistic boot
+memtrace[0x9271318->0x9271390]: $<-.data.frame $<- statistic boot
+memtrace[0x9271390->0x9271408]: $<-.data.frame $<- statistic boot
+memtrace[0x9abd5e0->0x914f558]: statistic boot
+memtrace[0x914f558->0x914f5f8]: $<-.data.frame $<- statistic boot
+memtrace[0x914f5f8->0x914f670]: $<-.data.frame $<- statistic boot
+memtrace[0x9abd5e0->0x972cbf0]: statistic boot
+memtrace[0x972cbf0->0x972cc68]: $<-.data.frame $<- statistic boot
+memtrace[0x972cc68->0x972cd08]: $<-.data.frame $<- statistic boot
+memtrace[0x9abd5e0->0x98ead98]: statistic boot
+memtrace[0x98ead98->0x98eae10]: $<-.data.frame $<- statistic boot
+memtrace[0x98eae10->0x98eae88]: $<-.data.frame $<- statistic boot
+@end smallexample
+The object is duplicated fifteen times, three times for each of the
+@code{R+1} calls to @code{storm.bf}.  This is surprising, since none of the duplications happen inside @code{nls}. Stepping through @code{storm.bf} in the debugger shows that all three happen in the line
+@smallexample
+st$Time <- st$fit + rs[i]
+@end smallexample
+Data frames are slower than matrices and this is an example of why.
+Using @code{tracemem(st$Viscosity)} does not reveal any additional
+copying.
 
 @node Profiling compiled code,  , Profiling R code, Tidying and profiling R code
 @section Profiling compiled code
