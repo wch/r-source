@@ -226,7 +226,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 
     xt <- xt + x.intersp * xchar
     if(plot) {
-	if (!is.null(title)) text(left + w/2, top - ymax, labels = title,
+	if (!is.null(title)) text2(left + w/2, top - ymax, labels = title,
 				  adj = c(0.5, 0), cex = cex, col = text.col)
 
 	text2(xt, yt, labels = legend, adj = adj, cex = cex, col = text.col)

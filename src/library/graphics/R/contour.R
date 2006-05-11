@@ -33,9 +33,10 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
         localPlotWindow <-
             function(xlim, ylim, ..., main, sub, xlab, ylab, outer, line)
                 plot.window(xlim, ylim, ...)
+        localTitle <- function(..., log) title(...)
 	plot.new()
-	localPlotWindow(xlim, ylim, log = "", ...)
-	title(...)
+	localPlotWindow(xlim, ylim, ...)
+	localTitle(...)
     }
     ##- don't lose  dim(.)
     if (!is.double(z)) storage.mode(z) <- "double"
