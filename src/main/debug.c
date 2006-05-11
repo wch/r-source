@@ -148,7 +148,7 @@ SEXP attribute_hidden do_memuntrace(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TRACE(object))
 	    SET_TRACE(object, 0);
 #else
-    error(call,"R not compiled with memory profiling");
+    errorcall(call,"R not compiled with memory profiling");
 #endif
     return R_NilValue;
 }
