@@ -3271,8 +3271,8 @@ Rd2dvi} also the tools to build packages from source as described in the
 
 @menu
 * Tidying R code::              
-* Profiling R code for speed::            
-* Profiling R code for memory use::            
+* Profiling R code for speed::  
+* Profiling R code for memory use::  
 * Profiling compiled code::     
 @end menu
 
@@ -3281,7 +3281,7 @@ available for others to use is worth documenting, tidying up and perhaps
 optimizing. The last two of these activities are the subject of this
 chapter.
 
-@node Tidying R code, Profiling R code, Tidying and profiling R code, Tidying and profiling R code
+@node Tidying R code, Profiling R code for speed, Tidying and profiling R code, Tidying and profiling R code
 @section Tidying R code
 @cindex Tidying R code
 
@@ -3553,7 +3553,7 @@ Data frames are slower than matrices and this is an example of why.
 Using @code{tracemem(st$Viscosity)} does not reveal any additional
 copying.
 
-@node Profiling compiled code,  , Profiling R code, Tidying and profiling R code
+@node Profiling compiled code,  , Profiling R code for memory use, Tidying and profiling R code
 @section Profiling compiled code
 @cindex Profiling
 

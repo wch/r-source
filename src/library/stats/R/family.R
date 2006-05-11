@@ -391,7 +391,7 @@ quasibinomial <- function (link = "logit")
             stats <- link
             if(!is.null(stats$name)) linktemp <- stats$name
         } else {
-            stop(sQuote(linktemp), ' link not available for quasibinomial family, available links are "logit", ", ""probit" and "cloglog"')
+            stop(sQuote(linktemp), ' link not available for quasibinomial family, available links are "logit", "probit", "cloglog", "cauchit" and "log"')
         }
     }
     variance <- function(mu) mu * (1 - mu)
