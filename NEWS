@@ -82,8 +82,8 @@ NEW FEATURES
     o	Experimental support for memory-use profiling via Rprof(),
         summaryRprof(), Rprofmem() and tracemem().
 
-    o	print.summary.[g]lm and print.glm make use of naprint() to
-	report when na.action altered the model frame.
+    o	print.summary.{aov,glm,lm,nls} and print.{aov,glm} make use of
+	naprint() to report when na.action altered the model frame.
 
 
 DEPRECATED & DEFUNCT

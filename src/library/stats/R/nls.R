@@ -598,6 +598,7 @@ summary.nls <-
         ans$correlation <- (XtXinv * resvar)/outer(se, se)
         ans$symbolic.cor <- symbolic.cor
     }
+    ans$na.action <- object$na.action
     class(ans) <- "summary.nls"
     ans
 }
@@ -630,6 +631,7 @@ print.summary.nls <-
             }
         }
     }
+    if(nchar(mess <- naprint(x$na.action))) cat("  (", mess, ")\n", sep="")
     cat("\n")
     invisible(x)
 }
