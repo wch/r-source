@@ -160,6 +160,8 @@ NEW FEATURES
 	the current locale is not MBCS (provided that the Unicode
 	character is valid in the current character set).
 
+    o	The quasibinomial() family now allows the "cauchit" link. (PR#8851)
+
 
 C-LEVEL FACILITIES
 
