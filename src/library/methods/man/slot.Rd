@@ -4,7 +4,7 @@
 \alias{@<-}
 \alias{slotNames}
 \alias{.slotNames}
-\title{ The Slots in an Object from a Formal Class }
+\title{The Slots in an Object from a Formal Class}
 \description{
   These functions return or set information about the individual slots
   in an object.
@@ -25,10 +25,10 @@ slotNames(x)
 %%   such that it doesn't special-case class representations!
 %%
 \arguments{
-  \item{object}{ An object from a formally defined class.}
-  \item{name}{ The character-string name of the slot. The name must be a
+  \item{object}{An object from a formally defined class.}
+  \item{name}{The character-string name of the slot. The name must be a
     valid slot name:  see Details below.}
-  \item{value}{ A new value for the named slot.  The value must be
+  \item{value}{A new value for the named slot.  The value must be
     valid for this slot in this object's class.}
   \item{x}{Either the name of a class or an object from that class.
     Print \code{\link{getClass}(class)} to see the full description of
@@ -43,10 +43,10 @@ slotNames(x)
   replace the formally defined slots for the object.  The operator
   takes a fixed name, which can be unquoted if it is syntactically a
   name in the language.  A slot name can be any non-empty string, but
-  if the name is not made up of letters, numbers, and \code{"."}, it
-  needs to be quoted.
+  if the name is not made up of letters, numbers, and \code{.}, it
+  needs to be quoted (by backticks or single or double quotes).
 
-  In the case of the \code{slot} function, the slot name can be any
+  In the case of the \code{slot} function, \code{name} can be any
   expression that evaluates to a valid slot in the class definition.
   Generally, the only reason to use the functional form rather than
   the simpler operator is \emph{because} the slot name has to be computed.
@@ -62,8 +62,14 @@ slotNames(x)
   error.
 
   Note that currently, \code{slotNames()} behaves particularly for class
-  representation objects -- this is considered bogous and likely to be
+  representation objects -- this is considered bogus and likely to be
   changed.
+
+  Currently the \code{\link{@}} extraction operator and \code{slot}
+  function do no checking, neither that \code{object} has a formal class
+  nor that \code{name} is a valid slot name for the class.  (They will
+  extract the attribute of the given name if it exists from any \R object.)
+  The replacement forms do check (at least if \code{check=TRUE}).
 }
 \references{
   The R package \pkg{methods} implements, with a few exceptions, the
