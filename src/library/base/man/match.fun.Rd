@@ -46,8 +46,9 @@ match.fun(FUN, descend = TRUE)
   actually needed by anything.  It may go away in the future.
 
   It is impossible to fully foolproof this.  If one \code{attach}es a
-  list or data frame containing a character object with the same name
-  of a system function, it will be used.
+  list or data frame containing a length-one character vector with the
+  same name as a function, it may be used (although namespaces
+  will help).
 }
 \seealso{
   \code{\link{match.arg}}, \code{\link{get}}
