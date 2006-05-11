@@ -79,8 +79,11 @@ NEW FEATURES
 
     o	hist(*, plot=FALSE) now warns about unused arguments.
 
-    o   Experimental support for memory-use profiling in Rprof,
-        summaryRprof, Rprofmem, tracemem
+    o	Experimental support for memory-use profiling via Rprof(),
+        summaryRprof(), Rprofmem() and tracemem().
+
+    o	print.summary.[g]lm and print.glm make use of naprint() to
+	report when na.action altered the model frame.
 
 
 DEPRECATED & DEFUNCT

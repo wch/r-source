@@ -303,7 +303,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     se <- sqrt(diag(R) * resvar)
     est <- z$coefficients[Qr$pivot[p1]]
     tval <- est/se
-    ans <- z[c("call", "terms")]
+    ans <- z[c("call", "terms", "na.action")]
     ans$residuals <- r
     ans$coefficients <-
 	cbind(est, se, tval, 2*pt(abs(tval), rdf, lower.tail = FALSE))
@@ -375,6 +375,7 @@ print.summary.lm <-
     ##
     cat("\nResidual standard error:",
 	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
+    if(nchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
     if (!is.null(x$fstatistic)) {
 	cat("Multiple R-Squared:", formatC(x$r.squared, digits=digits))
 	cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared,digits=digits),
