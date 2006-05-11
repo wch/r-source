@@ -13,10 +13,12 @@ object@name
   \item{name}{The character-string name of the slot.}
 }
 \details{
-  These operators support the formal classes of package \pkg{methods}.
+  This operator supports the formal classes of package \pkg{methods}, and
+  is disabled unless the \pkg{methods} is loaded.
   See \code{\link[methods]{slot}} for further details.
+
   Currently there is no checking that the object is an instance of a
-  class.
+  formal class, nor that \code{name} is a slot name.
 }
 \seealso{
   \code{\link{Extract}},
