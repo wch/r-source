@@ -74,7 +74,7 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
 		 NAOK = TRUE, DUP = FALSE, PACKAGE = "base") $code - 1
     }
     if (!add)
-	plot(0, 0, xlim = xlim, ylim = ylim, type = "n", xaxs = xaxs,
+	plot(NA, NA, xlim = xlim, ylim = ylim, type = "n", xaxs = xaxs,
 	     yaxs = yaxs, xlab = xlab, ylab = ylab, ...)
     ## need plot set up before we do this
     if (length(x) <= 1) x <- par("usr")[1:2]

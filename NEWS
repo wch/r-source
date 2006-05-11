@@ -90,6 +90,11 @@ BUG FIXES
     o	lm() and glm() coerce their 'weights' and 'offset' values to
 	vector to avoid problems with specifying them as 1D or n x 1
 	arrays.
+	
+    o	image() with one or both axes on log scales would give a
+	spurious warning; contour() would give an error.
+	
+    o	legend() with log axes would place the title in the wrong place.
 
 
 
