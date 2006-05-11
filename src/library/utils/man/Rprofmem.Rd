@@ -1,14 +1,12 @@
 \name{Rprofmem}
 \alias{Rprofmem}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{Enable Profiling of R's memory use}
+\title{Enable Profiling of R's Memory Use}
 \description{
  Enable or disable reporting of memory allocation in R.
 }
 \usage{
 Rprofmem(filename = "Rprofmem.out", append = FALSE, threshold = 0)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{filename}{The file to be used for recording the memory
     allocations. Set to \code{NULL} or \code{""} to disable reporting. }
@@ -18,7 +16,7 @@ Rprofmem(filename = "Rprofmem.out", append = FALSE, threshold = 0)
   }
 }
 \details{
- Enabling profiling automatically disables any existing profiling to
+  Enabling profiling automatically disables any existing profiling to
   another or the same file.
 
   Profiling writes the call stack to the specified file every time
@@ -36,21 +34,22 @@ Rprofmem(filename = "Rprofmem.out", append = FALSE, threshold = 0)
   as other R and C profilers.
   }
 \value{
-None  
+  None  
 }
 
-\seealso{ The R sampling profiler, \code{\link{Rprof}} also collects
-  memory information
+\seealso{
+  The R sampling profiler, \code{\link{Rprof}} also collects
+  memory information.
 
   \code{\link{tracemem}} traces duplications of specific objects.
 
   The "Writing R Extensions" manual section on "Tidying and profiling R code"
 }
-\examples{
-Rprofmem("Rprofmem.out",threshold=1000)
+\examples{\dontrun{
+## not supported unless R is compiled to support it.
+Rprofmem("Rprofmem.out", threshold=1000)
 example(glm)
 Rprofmem(NULL)
-noquote(readLines("Rprofmem.out",n=5))
-}
-\keyword{utilities}% at least one, from doc/KEYWORDS
-
+noquote(readLines("Rprofmem.out", n=5))
+}}
+\keyword{utilities}
