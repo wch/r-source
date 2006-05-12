@@ -85,6 +85,9 @@ NEW FEATURES
     o	print.summary.{aov,glm,lm,nls} and print.{aov,glm} make use of
 	naprint() to report when na.action altered the model frame.
 
+    o	The "data.frame" and "matrix" methods for rowsum() gain an 'na.rm'
+	argument.
+
 
 DEPRECATED & DEFUNCT
 

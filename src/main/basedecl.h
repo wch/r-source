@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2003	The R Development Core Team.
+ *  Copyright (C) 2002-2006	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -61,8 +61,8 @@ SEXP R_getRegisteredRoutines(SEXP);
 SEXP R_isMethodsDispatchOn(SEXP);
 SEXP R_traceOnOff(SEXP);
 
-SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP);
-SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP);
+SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP, SEXP);
+SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP do_mapply(SEXP, SEXP, SEXP, SEXP);
 
 SEXP R_r2dtable(SEXP, SEXP, SEXP);
