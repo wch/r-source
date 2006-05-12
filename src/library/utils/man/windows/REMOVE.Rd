@@ -22,6 +22,6 @@
   be installed.  
 }
 \seealso{
-  \code{\link{INSTALL}}
+  \code{\link{INSTALL}}, \code{\link{remove.packages}}
 }
 \keyword{utilities}

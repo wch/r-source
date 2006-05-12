@@ -286,7 +286,7 @@ contrib.url(repos, type = getOption("pkgType"))
   give an error if called on such a system.
 }
 \seealso{
-  \code{\link{installed.packages}}.
+  \code{\link{installed.packages}}, \code{\link{remove.packages}}
   
   See \code{\link{download.file}} for how to handle proxies and
   other options to monitor file transfers.
@@ -298,7 +298,8 @@ contrib.url(repos, type = getOption("pkgType"))
 \examples{
 
 \dontrun{
-  install.packages(c("XML_0.99-5.tar.gz", "../../Interfaces/Perl/RSPerl_0.8-0.tar.gz"),
+  install.packages(c("XML_0.99-5.tar.gz",
+                     "../../Interfaces/Perl/RSPerl_0.8-0.tar.gz"),
                    repos = NULL,
                    configure.args = c(XML = '--with-xml-config=xml-config',
                                       RSPerl = "--with-modules='IO Fcntl'"))
