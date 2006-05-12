@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-05-10
+@set FAQ_DATE @value{FAQ_YEAR}-05-12
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -487,7 +487,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2006-05-08:
+@c Linux binaries as of 2006-05-12:
 @c
 @c debian
 @c   stable  i386   2.3.0  Christian T. Steigies <cts@debian.org>
@@ -496,8 +496,8 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c mandrake
 @c   10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat
-@c   fc3     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
-@c           x86_64 2.2.1  Brian Ripley
+@c   fc3     i386   2.3.0  Martyn Plummer <plummer@iarc.fr>
+@c           x86_64 2.3.0  Brian Ripley
 @c   fc4     i386   2.3.0  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 2.3.0  Martyn Plummer <plummer@iarc.fr>
 @c   fc5     i386   2.2.1  Martyn Plummer <plummer@iarc.fr>
@@ -519,7 +519,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   10.0    i586   2.3.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           x86_64 2.3.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux
-@c   3.2     i386   2.2.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
+@c   3.2     i386   2.3.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
@@ -1851,6 +1851,8 @@ Differential Evolution Optimization.
 @item DICOM
 Import and manipulate medical imaging data using the Digital Imaging and
 Communications in Medicine (DICOM) Standard.
+@item DPpackage
+Semiparametric Bayesian analysis using Dirichlet process priors.
 @item Davies
 Functions for the Davies quantile function and the Generalized Lambda
 distribution.
