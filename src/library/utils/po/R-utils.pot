@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 13:06\n"
+"POT-Creation-Date: 2006-05-12 08:45\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -263,6 +263,9 @@ msgstr ""
 msgid "could not find package '%s'"
 msgstr ""
 
+msgid "no hsearch.rds meta data for package"
+msgstr ""
+
 msgid "removing all entries with invalid multi-byte character data"
 msgstr ""
 
@@ -507,6 +510,9 @@ msgid "'object' does not have valid levels()"
 msgstr ""
 
 msgid "'str.default': 'le' is NA"
+msgstr ""
+
+msgid "profile does not contain memory information"
 msgstr ""
 
 msgid "no events were recorded"

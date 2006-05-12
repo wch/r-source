@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-27 15:42\n"
+"POT-Creation-Date: 2006-05-12 08:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -710,6 +710,9 @@ msgstr ""
 msgid "unable to optimize from these starting value(s)"
 msgstr ""
 
+msgid "invalid argument 'lambda'"
+msgstr ""
+
 msgid "link not recognised"
 msgstr ""
 
@@ -749,7 +752,7 @@ msgstr ""
 msgid "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
 
-msgid "link not available for quasibinomial family, available links are \"logit\", \", \"\"probit\" and \"cloglog\""
+msgid "link not available for quasibinomial family, available links are \"logit\", \"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
@@ -885,6 +888,9 @@ msgid "'family' not recognized"
 msgstr ""
 
 msgid "invalid 'method':"
+msgstr ""
+
+msgid "'weights' must be a numeric vector"
 msgstr ""
 
 msgid "negative weights not allowed"
@@ -1358,6 +1364,9 @@ msgstr ""
 msgid "factor '%s' has new level(s) %s"
 msgstr ""
 
+msgid "'offset' must be numeric"
+msgstr ""
+
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr ""
 
@@ -1485,6 +1494,12 @@ msgid "'which' must be in 1:6"
 msgstr ""
 
 msgid "'id.n' must be in {1,..,%d}"
+msgstr ""
+
+msgid "hat values (leverages) are all ="
+msgstr ""
+
+msgid "and there are no factor predictors; no plot no. 5"
 msgstr ""
 
 msgid "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
@@ -1984,6 +1999,11 @@ msgstr ""
 
 msgid        "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "%d observation deleted due to missingness"
+msgid_plural "%d observations deleted due to missingness"
 msgstr[0]    ""
 msgstr[1]    ""
 

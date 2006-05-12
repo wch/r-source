@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-27 15:42\n"
+"POT-Creation-Date: 2006-05-12 08:44\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -738,6 +738,10 @@ msgstr "초기값이 주어지고 있지 않습니다"
 msgid "unable to optimize from these starting value(s)"
 msgstr "이러한 초기값으로부터 최적화를 할수가 없습니다"
 
+#, fuzzy
+msgid "invalid argument 'lambda'"
+msgstr "무효인 인수 'omit'입니다"
+
 msgid "link not recognised"
 msgstr "인정 받지 않는 link입니다"
 
@@ -798,13 +802,14 @@ msgid ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "또는 1열이 성공수, 2열이 실패수인 2열의 행렬입니다"
 
+#, fuzzy
 msgid ""
 "link not available for quasibinomial family, available links are \"logit\", "
-"\", \"\"probit\" and \"cloglog\""
+"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
-"은(는) 동일한 2항 패밀리에게 이용 할수 있는 link가 아닙니다. 이용할수 있는 "
-"\"logit\",\n"
-"\"probit\" 그리고 \"cloglog\" 입니다"
+"링크\"%s\"는 2항 패밀리에서 이용 할수 있는 link가 아닙니다. 이용 할수 있는 "
+"link는 \n"
+"\"logit\", \"probit\",\"cloglog\", cauchit\" 그리고 \"log\" 입니다"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "동일한 2항 패밀리에 대해서 y는 0과 1의 vector가 아니면 되지 않습니다"
@@ -956,6 +961,10 @@ msgstr "'family'를 확인 할수 없습니다"
 
 msgid "invalid 'method':"
 msgstr "무효인 'method' 입니다:"
+
+#, fuzzy
+msgid "'weights' must be a numeric vector"
+msgstr "'y' 수치 벡터가 아니면 되지 않습니다"
 
 msgid "negative weights not allowed"
 msgstr "negative 중량감은 허용되지 않습니다"
@@ -1462,6 +1471,10 @@ msgstr "변수 '%s'는 인자가 아닙니다"
 msgid "factor '%s' has new level(s) %s"
 msgstr "인자 '%s'에는 새로운 레벨(level(s) %s가 있습니다"
 
+#, fuzzy
+msgid "'offset' must be numeric"
+msgstr "'x'는 수치가 아니면 되지 않습니다"
+
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()로 모델 프레임과 모델식의 편성이 적당하지 않습니다"
 
@@ -1598,6 +1611,12 @@ msgstr "'which'는 1:4에서 없으면 되지 않습니다"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' {1,..,%d}에서 없으면 되지 않습니다"
+
+msgid "hat values (leverages) are all ="
+msgstr ""
+
+msgid "and there are no factor predictors; no plot no. 5"
+msgstr ""
 
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
@@ -2127,8 +2146,21 @@ msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
 msgstr[0] "개의 에러 terms가 있습니다. 하나만 허용됩니다"
 
+msgid "%d observation deleted due to missingness"
+msgid_plural "%d observations deleted due to missingness"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid ""
+#~ "link not available for quasibinomial family, available links are \"logit"
+#~ "\", \", \"\"probit\" and \"cloglog\""
+#~ msgstr ""
+#~ "은(는) 동일한 2항 패밀리에게 이용 할수 있는 link가 아닙니다. 이용할수 있"
+#~ "는 \"logit\",\n"
+#~ "\"probit\" 그리고 \"cloglog\" 입니다"
