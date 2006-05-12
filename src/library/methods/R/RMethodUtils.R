@@ -235,7 +235,7 @@ getAllMethods <-
           fdef <- getGeneric(f, TRUE, where)
       }
       else if(is.function(fdef) && search) {
-          warning(gettextf("'%s' from '%s' is a non-generic function; no methods available", f, packageName(gwhere)), domain = NA)
+          warning(gettextf("'%s' from '%s' is a non-generic function; no methods available", f, getPackageName(gwhere)), domain = NA)
           return(NULL)
       }
       else
