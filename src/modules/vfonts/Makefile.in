@@ -22,7 +22,8 @@ DISTFILES = \
 	dllversion.rc
 
 vfonts_la = vfonts$(SHLIB_EXT)
-vfonts_la_LIBADD = $(LIBR)
+## AIX needs LIBM
+vfonts_la_LIBADD = $(LIBR) $(LIBM)
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 

@@ -25,7 +25,8 @@ DISTFILES = \
 	Makefile.in $(SOURCES) $(HEADERS)
 
 R_X11_la = R_X11$(SHLIB_EXT)
-R_X11_la_LIBADD = $(ALL_X_LIBS) $(BITMAP_LIBS) $(LIBR)
+## AIX needs LIBM
+R_X11_la_LIBADD = $(ALL_X_LIBS) $(BITMAP_LIBS) $(LIBR) $(LIBM)
 
 all: Makefile Makedeps R
 
