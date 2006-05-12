@@ -47,22 +47,8 @@
   Packages that require the methods package, and that use functions such
   as \code{\link{setMethod}} or \code{\link{setClass}},
   should be installed either (preferably) using lazy-loading or by
-  creating a binary image.
-
-  \strong{The following mechanism is deprecated:} use the flags such as
-  \code{LazyLoad} and \code{SaveImage} instead.
-  The presence of a file named
-  \file{install.R} in the package's main directory causes an image to
-  be saved.  Note that the file is not in the \file{R} subdirectory: all
-  the code in that subdirectory is used to construct the binary image.
-  Normally, the file \file{install.R} will be empty; if it does contain
-  R expressions
-  these will be evaluated when the package is attached, e.g. by a call to
-  the function \code{\link{library}}.  (Specifically, the source code
-  evaluated for a package with a saved image consists of a suitable
-  definition of \code{.First.lib} to ensure loading of the saved
-  image, followed by the R code in file \file{install.R}, if any.)
-
+  creating a binary image: use the flags \code{LazyLoad} and
+  \code{SaveImage} in the \file{DESCRIPTION} file to ensure this.
 }
 \seealso{
   \code{\link{REMOVE}} and \code{\link{library}} for information on
