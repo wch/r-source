@@ -303,7 +303,8 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     se <- sqrt(diag(R) * resvar)
     est <- z$coefficients[Qr$pivot[p1]]
     tval <- est/se
-    ans <- z[c("call", "terms", "na.action")]
+    ans <- z[c("call", "terms")]
+    if(!is.null(z$na.action)) ans$na.action <- z$na.action
     ans$residuals <- r
     ans$coefficients <-
 	cbind(est, se, tval, 2*pt(abs(tval), rdf, lower.tail = FALSE))
