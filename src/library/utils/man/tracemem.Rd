@@ -38,7 +38,7 @@ A string for identifying the object in the trace output.
 
 \seealso{\code{\link{trace}}
   
-  \code{\link{memRprof}}
+  \code{\link{Rprofmem}}
 
   \url{http://developer.r-project.org/memory-profiling.html}
 }
