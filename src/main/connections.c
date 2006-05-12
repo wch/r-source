@@ -44,7 +44,7 @@ int attribute_hidden R_OutputCon; /* used in printutils.c */
 
 #ifdef HAVE_FCNTL_H
 # include <fcntl.h>
-/* Solaris defines open as open64 under some circumstances */
+/* Solaris and AIX define open as open64 under some circumstances */
 # undef open
 #endif
 

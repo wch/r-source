@@ -45,6 +45,8 @@ static void  in_R_FTPClose(void *ctx);
 
 #ifdef HAVE_FCNTL_H
 # include <fcntl.h>
+/* Solaris and AIX define open as open64 under some circumstances */
+# undef open
 #endif
 
 /* ------------------- internet access functions  --------------------- */
