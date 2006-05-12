@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-27 15:42\n"
+"POT-Creation-Date: 2006-05-12 08:33\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -806,12 +806,13 @@ msgstr ""
 "o una matrice di 2 colonne dove la prima colonna contiene il numero di "
 "successi e la seconda colonna il numero di insuccessi"
 
+#, fuzzy
 msgid ""
 "link not available for quasibinomial family, available links are \"logit\", "
-"\", \"\"probit\" and \"cloglog\""
+"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
-"link non disponibile per la famiglia quasibinomiale, i link disponibili sono "
-"\"logit\", \", \"\"probit\" e \"cloglog\""
+"link \"%s\" non disponibile per la famiglia binomiale,i link disponibili "
+"sono \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" e \"log\""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "per la famiglia quasibinomial, y deve essere un vettore di 0 e 1"
@@ -959,6 +960,10 @@ msgstr "'family' non riconosciuta"
 
 msgid "invalid 'method':"
 msgstr "'method' non valido:"
+
+#, fuzzy
+msgid "'weights' must be a numeric vector"
+msgstr "'y' deve essere un vettore numerico"
 
 msgid "negative weights not allowed"
 msgstr "non sono ammessi pesi negativi"
@@ -1461,6 +1466,10 @@ msgstr "la variabile '%s' non è di tipo factor"
 msgid "factor '%s' has new level(s) %s"
 msgstr "variabile factor '%s' ha nuovi livelli %s"
 
+#, fuzzy
+msgid "'offset' must be numeric"
+msgstr "'x' deve essere numeric"
+
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model frame e formula non coincidono in model.matrix()"
 
@@ -1597,6 +1606,12 @@ msgstr "'which' deve essere in 1:6"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' deve essere in {1,..,%d}"
+
+msgid "hat values (leverages) are all ="
+msgstr ""
+
+msgid "and there are no factor predictors; no plot no. 5"
+msgstr ""
 
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
@@ -2140,3 +2155,10 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid ""
+#~ "link not available for quasibinomial family, available links are \"logit"
+#~ "\", \", \"\"probit\" and \"cloglog\""
+#~ msgstr ""
+#~ "link non disponibile per la famiglia quasibinomiale, i link disponibili "
+#~ "sono \"logit\", \", \"\"probit\" e \"cloglog\""

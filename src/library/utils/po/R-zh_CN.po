@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 12:45\n"
+"POT-Creation-Date: 2006-05-12 08:33\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -299,6 +299,9 @@ msgstr "变元'help.db'已经不再用了"
 
 msgid "could not find package '%s'"
 msgstr "找不到程序包'%s'"
+
+msgid "no hsearch.rds meta data for package"
+msgstr ""
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "删除所有多字節字符数据出错的分錄"

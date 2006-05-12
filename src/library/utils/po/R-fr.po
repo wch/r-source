@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 12:45\n"
+"POT-Creation-Date: 2006-05-12 08:33\n"
 "PO-Revision-Date: 2006-04-18 09:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -310,6 +310,9 @@ msgstr "l'argument 'help.db' est obsolète"
 
 msgid "could not find package '%s'"
 msgstr "impossible de trouver le packages '%s'"
+
+msgid "no hsearch.rds meta data for package"
+msgstr ""
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr ""

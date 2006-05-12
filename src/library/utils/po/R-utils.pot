@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 12:45\n"
+"POT-Creation-Date: 2006-05-12 08:33\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -261,6 +261,9 @@ msgid "argument 'help.db' is deprecated"
 msgstr ""
 
 msgid "could not find package '%s'"
+msgstr ""
+
+msgid "no hsearch.rds meta data for package"
 msgstr ""
 
 msgid "removing all entries with invalid multi-byte character data"

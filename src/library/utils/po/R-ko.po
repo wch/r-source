@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 12:45\n"
+"POT-Creation-Date: 2006-05-12 08:33\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -306,6 +306,9 @@ msgstr "인수 'help.db'는 반대합니다"
 
 msgid "could not find package '%s'"
 msgstr "패키지 '%s'를 검색할수 가 없었습니다"
+
+msgid "no hsearch.rds meta data for package"
+msgstr ""
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "무효의 다중 바이트 문자 데이터를 갖춘 엔트리가 모두 제거하였습니다"

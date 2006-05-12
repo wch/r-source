@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-27 15:42\n"
+"POT-Creation-Date: 2006-05-12 08:33\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -783,12 +783,13 @@ msgid ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "或是有两个列的矩阵，第一列是成功的计数，第二列是失败的计数"
 
+#, fuzzy
 msgid ""
 "link not available for quasibinomial family, available links are \"logit\", "
-"\", \"\"probit\" and \"cloglog\""
+"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
-"quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \", "
-"\"\"probit\"和\"cloglog\""
+"binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \"\"probit"
+"\", \"cloglog\", \"cauchit\"和\"log\""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "quasibinomial分布族中的y必需由0和1组成的向量"
@@ -936,6 +937,10 @@ msgstr "'family'设定得不对"
 
 msgid "invalid 'method':"
 msgstr "'method'有错:"
+
+#, fuzzy
+msgid "'weights' must be a numeric vector"
+msgstr "'y'必需是数值向量"
 
 msgid "negative weights not allowed"
 msgstr "不能有负重量"
@@ -1422,6 +1427,10 @@ msgstr "变量'%s'不是因子"
 msgid "factor '%s' has new level(s) %s"
 msgstr "因子'%s'有新的层次%s"
 
+#, fuzzy
+msgid "'offset' must be numeric"
+msgstr "'x'必需为数值"
+
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()里的模型框和公式不相配"
 
@@ -1552,6 +1561,12 @@ msgstr "'which'必需在1:6之间"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n'必需在{1,..,%d}中"
+
+msgid "hat values (leverages) are all ="
+msgstr ""
+
+msgid "and there are no factor predictors; no plot no. 5"
+msgstr ""
 
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
@@ -2067,3 +2082,10 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid ""
+#~ "link not available for quasibinomial family, available links are \"logit"
+#~ "\", \", \"\"probit\" and \"cloglog\""
+#~ msgstr ""
+#~ "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \", "
+#~ "\"\"probit\"和\"cloglog\""
