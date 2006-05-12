@@ -1,5 +1,6 @@
 \name{remove.packages}
 \alias{remove.packages}
+\concept{uninstall}
 \title{Remove Installed Packages}
 \description{
   Removes installed packages/bundles and updates index information
