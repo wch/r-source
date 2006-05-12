@@ -9,7 +9,7 @@
 \method{edit}{data.frame}(name, factor.mode = c("character", "numeric"),
      edit.row.names = any(row.names(name) != 1:nrow(name)), \dots)
 
-\method{edit}{matrix}(name, edit.row.names = any(rownames(name) != 1:nrow(name)), \dots)
+\method{edit}{matrix}(name, edit.row.names = = !is.null(dn[[1]]), \dots)
 }
 \arguments{
   \item{name}{A data frame or matrix.}
@@ -38,8 +38,21 @@
   the mode of logical columns is not supported.
 
   The columns are coerced on input to numeric unless logical, character
-  or factor (which may well not be what you want), and character columns
-  not protected by \code{\link{I}()} will be coerced to factor on return.
+  or factor (which may well not be what you want).
+
+  For a data frame, the row names will be taken from the original object
+  if \code{edit.row.names = FALSE} and the number of rows is unchanged,
+  and from the edited output if \code{edit.row.names = TRUE} and there
+  are no duplicates.  (If the \code{row.names} column is incomplete, it
+  is extended by entries like \code{row223}.)  In all other cases the
+  row names are replaced by \code{seq(length=nrows)}.
+
+  For a matrix, colnames will be added (of the form \code{col7}) if
+  needed.  The rownames will be taken from the original object if
+  \code{edit.row.names = FALSE} and the number of rows is unchanged
+  (otherwise \code{NULL}), and from the edited output if
+  \code{edit.row.names = TRUE}.  (If the \code{row.names} column is
+  incomplete, it is extended by entries like \code{row223}.)
 }
 \value{
   The edited data frame.

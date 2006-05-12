@@ -21,6 +21,9 @@ NEW FEATURES
 
     o	The quasibinomial() family now allows the "cauchit" link. (PR#8851)
 
+    o	edit.data.frame() no longer (silently) coerces character columns
+	to factor.
+
 
 C-LEVEL FACILITIES
 
@@ -97,6 +100,15 @@ BUG FIXES
 	spurious warning; contour() would give an error.
 	
     o	legend() with log axes would place the title in the wrong place.
+	
+    o	edit.data.frame() was not returning factors edited with
+	factor.mode="numeric" to factors.
+
+    o	edit.matrix() tried to set rownames and colnames from the
+	original matrix even if the sizes had been altered, and
+	ignored changes made to the column names.  edit.row.names has
+	a more sensible default (if the rownames are non-NULL).
+
 
 
 
