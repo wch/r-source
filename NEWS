@@ -80,13 +80,16 @@ NEW FEATURES
     o	hist(*, plot=FALSE) now warns about unused arguments.
 
     o	Experimental support for memory-use profiling via Rprof(),
-        summaryRprof(), Rprofmem() and tracemem().
+	summaryRprof(), Rprofmem() and tracemem().
 
     o	print.summary.{aov,glm,lm,nls} and print.{aov,glm} make use of
 	naprint() to report when na.action altered the model frame.
 
     o	The "data.frame" and "matrix" methods for rowsum() gain an 'na.rm'
 	argument.
+
+    o	new function combn(x, m, ..) for computing on all combinations of
+	size 'm' (for small 'm' !).
 
 
 DEPRECATED & DEFUNCT
@@ -143,10 +146,10 @@ BUG FIXES
 	prints a message on entry.  Also the undocumented feature of
 	where=function now works for generic functions as well.
 
-    o  callNextMethod() failed for recursive use when the methods had
-        nonstandard argument lists.  Now enforces the semantic rule
-        that the inheritance is fixed when the method containing the
-        callNextMethod() is installed.  See Details in the documentation.
+    o	callNextMethod() failed for recursive use when the methods had
+	nonstandard argument lists.  Now enforces the semantic rule
+	that the inheritance is fixed when the method containing the
+	callNextMethod() is installed.	See Details in the documentation.
 
 
 
@@ -239,19 +242,19 @@ BUG FIXES
 	which then used to reject them.)
 
     o	str() now is fast again for large character vectors.
-    
+
     o	edit() would default the environment of a function to .BaseEnv,
 	instead of to .GlobalEnv.
-    
+
     o	lm() and glm() coerce their 'weights' and 'offset' values to
 	vector to avoid problems with specifying them as 1D or n x 1
 	arrays.
-	
+
     o	image() with one or both axes on log scales would give a
 	spurious warning; contour() would give an error.
-	
+
     o	legend() with log axes would place the title in the wrong place.
-	
+
     o	edit.data.frame() was not returning factors edited with
 	factor.mode="numeric" to factors.
 
