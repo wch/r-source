@@ -17,10 +17,10 @@
             mlist <- insertMethod(mlist, signature, names(signature), NULL, FALSE)
     }
     ## and now redo method selection.  Note the use of
-    ## method@target, not the actual environment to force a consistent
+    ## method@defined, not the actual environment to force a consistent
     ## nextMethod in the methods list object for the generic.  (Inconsistent
     ## results are possible with next methods)
-    value <- selectMethod(f, method@target, optional, TRUE, mlist)
+    value <- selectMethod(f, method@defined, optional, TRUE, mlist)
     if(!is(value, "MethodWithNext") && is(value, "MethodDefinition") &&
        .hasCallNextMethod(value@.Data)) {
         ## complete the chain of callNextMethod's

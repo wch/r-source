@@ -143,6 +143,10 @@ BUG FIXES
 	prints a message on entry.  Also the undocumented feature of
 	where=function now works for generic functions as well.
 
+    o  callNextMethod() failed for recursive use when the methods had
+        nonstandard argument lists.  Now enforces the semantic rule
+        that the inheritance is fixed when the method containing the
+        callNextMethod() is installed.  See Details in the documentation.
 
 
 
