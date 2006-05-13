@@ -1441,12 +1441,14 @@ SEXP attribute_hidden do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* reports memory use to profiler in eval.c */
 
-void attribute_hidden get_current_mem(unsigned long *smallvsize, unsigned long *largevsize, unsigned long *nodes){
-
-	*smallvsize=R_SmallVallocSize;
-	*largevsize=R_LargeVallocSize;
-	*nodes=R_NodesInUse;
-	return;
+void attribute_hidden get_current_mem(unsigned long *smallvsize, 
+				      unsigned long *largevsize,
+				      unsigned long *nodes)
+{
+    *smallvsize=R_SmallVallocSize;
+    *largevsize=R_LargeVallocSize;
+    *nodes=(R_NodesInUse*sizeof(SEXPREC));
+     return;
 	
 }
 
