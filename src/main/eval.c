@@ -99,7 +99,7 @@ static Rboolean bc_profiling = FALSE;
 static FILE *R_ProfileOutfile = NULL;
 static int R_Profiling = 0;
 static int R_Mem_Profiling=0;
-extern void get_current_mem(long *,long *,long *); /* in memory.c */
+extern void get_current_mem(unsigned long *,unsigned long *,unsigned long *); /* in memory.c */
 extern unsigned long get_duplicate_counter(void);  /* in duplicate.c */
 extern void reset_duplicate_counter(void);         /* in duplicate.c */
 
@@ -111,9 +111,19 @@ static void doprof()
 {
     RCNTXT *cptr;
     char buf[1100];
+    unsigned long bigv, smallv, nodes;
+    int len;
 
     buf[0] = '\0';
     SuspendThread(MainThread);
+    if (R_Mem_Profiling){
+	    get_current_mem(&smallv, &bigv, &nodes);
+	    if((len = strlen(buf)) < 1000) {
+	    	sprintf(buf+len, ":%ld:%ld:%ld:%ld:", smallv, bigv,
+                     nodes*sizeof(SEXPREC), get_duplicate_counter());
+            }      
+	    reset_duplicate_counter();
+    }
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {

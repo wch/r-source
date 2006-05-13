@@ -41,6 +41,10 @@ ifdef DEBUG
 else
  DLLFLAGS=-s
 endif
+ifdef R_MEMORY_PROFILING
+ OPTFLAGS+=-DR_MEMORY_PROFILING
+endif
+
 OPTFLAGS_M=$(OPTFLAGS)
 
 ifneq ($(strip $(BUILD)),CROSS)
