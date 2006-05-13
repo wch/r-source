@@ -151,7 +151,7 @@ package.skeleton <-
     outConn <- file(outFile, "w")
     sink(outConn, type = "output")
     yy <- try({ promptPackage(name, filename = file.path(path, name, "man",
-                                                   paste(name, "package.Rd", sep=".")),
+                                                   paste(name, "package.Rd", sep="-")),
                               lib.loc = path);
                 sapply(list,
 		     function(item) {
