@@ -2730,7 +2730,7 @@ Rboolean R_EnvironmentIsLocked(SEXP env)
     if (env == R_BaseEnv)
 	return FALSE;
     else
-	return FRAME_IS_LOCKED(env);
+	return FRAME_IS_LOCKED(env) != 0;
 }
 
 SEXP attribute_hidden do_lockEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -2857,12 +2857,12 @@ Rboolean R_BindingIsActive(SEXP sym, SEXP env)
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
-	return IS_ACTIVE_BINDING(sym);
+	return IS_ACTIVE_BINDING(sym) != 0;
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
 	if (binding == R_NilValue)
 	    error(_("no binding for \"%s\""), CHAR(PRINTNAME(sym)));
-	return IS_ACTIVE_BINDING(binding);
+	return IS_ACTIVE_BINDING(binding) != 0;
     }
 }
 

@@ -388,7 +388,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "keep.source")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    errorcall(call, _("keep.source parameter invalid"));
-		k = asInteger(argi);
+		k = asLogical(argi);
 		R_KeepSource = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
@@ -418,7 +418,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "check.bounds")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    errorcall(call, _("check.bounds parameter invalid"));
-		k = asInteger(argi);
+		k = asLogical(argi);
 		/* R_CheckBounds = k; */
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
@@ -456,7 +456,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "echo")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    errorcall(call, _("echo parameter invalid"));
-		k = asInteger(argi);
+		k = asLogical(argi);
 		/* Should be quicker than checking options(echo)
 		   every time R prompts for input:
 		   */
