@@ -6406,9 +6406,10 @@ command like
 > library(boot)
 @end example
 
-Users connected to the Internet can use the @code{available.packages()}
-function (available through the @code{Packages} menu in the Windows and
-RAqua GUIs) to automatically update and install packages.
+Users connected to the Internet can use the @code{install.packages()}
+and @code{update.packages()} functions (available through the
+@code{Packages} menu in the Windows and RAqua GUIs) to automatically
+install and update packages.
 
 To see which packages are currently loaded, use
 
@@ -6417,8 +6418,14 @@ To see which packages are currently loaded, use
 @end example
 
 @noindent
-to display the search list.  A few packages may be loaded but not
-available on the search list (@pxref{Namespaces}).
+to display the search list.  Some packages may be loaded but not
+available on the search list (@pxref{Namespaces}): these will be
+included in the list given by
+
+@example
+> loadedNamespaces()
+@end example
+
 
 To see a list of all available help topics in an installed package,
 use
