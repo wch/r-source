@@ -121,6 +121,12 @@ DEPRECATED & DEFUNCT
 	S for use with is.loaded(), but are not so required in R.
 
 
+C-LEVEL FACILITIES
+
+    o	The convenience function ScalarLogical now coerces all
+	non-zero non-NA values to TRUE.
+
+
 BUG FIXES
 
     o	The name of a Fortran symbol reported to be missing by
