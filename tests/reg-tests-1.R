@@ -4207,3 +4207,14 @@ df1 <- data.frame(u=1:10,
                   z=array(1,10, dimnames=list(1:10)))
 glm(v ~ u+offset(log(z)), data=df1, family=poisson)
 ## was error in R <= 2.3.0
+
+
+## invalid values of a logical vector from bindingIsLocked
+## Martin Morgan, R-devel, 2006-05-14
+e <- new.env()
+e$x <- 1
+e$y <- 2
+lockBinding("x", e)
+stopifnot(bindingIsLocked("x", e), bindingIsLocked("x", e)==TRUE,
+          !bindingIsLocked("y", e), bindingIsLocked("y", e)==FALSE)
+## on some systems in R <= 2.3.0, bindingIsLocked("x", e)==TRUE was false

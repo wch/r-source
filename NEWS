@@ -109,6 +109,8 @@ BUG FIXES
 	ignored changes made to the column names.  edit.row.names has
 	a more sensible default (if the rownames are non-NULL).
 
+    o	bindingIsLocked() was returning invalid values of a logical vector.
+
 
 
 

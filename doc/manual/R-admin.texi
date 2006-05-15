@@ -3090,8 +3090,8 @@ port would be greatly appreciated.
 @section AIX
 @cindex AIX
 
-On AIX 4.3.3 and AIX 5.1/2 (and probably latter), it was found that the
-use of ``run time linking'' (as opposed to normal AIX style linking) was
+On AIX@tie{}4.3.3 and AIX@tie{}5.[123], it was found that the use of
+``run time linking'' (as opposed to normal AIX style linking) was
 required.  For this, the @R{} main program must be linked to the runtime
 linker with the @option{-brtl} linker option, and shareable objects must
 be enabled for runtime linking with the @option{-G} linker option.
@@ -3104,6 +3104,8 @@ When setting @code{MAIN_LDFLAGS} and @code{SHLIB_LDFLAGS} accordingly,
 note that linker flags must be escaped using @samp{-Wl,} if
 @command{gcc} is used for linking: use @samp{MAIN_LDFLAGS="-Wl,brtl"}
 and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
+
+We understand that @option{--enable-R-shlib} does not work under AIX.
 
 Tim Hoar <thoar at cgd dot ucar dot edu> reported success building
 @R{} 1.9.0 under AIX 5.1 in 64-bit mode with
@@ -3123,27 +3125,31 @@ CXXFLAGS='-O -qstrict'
 and the @code{X11()} device worked.  [His system required the
 @file{Makeconf} file to be edited to replace @file{/lib/crt0.o} by
 @file{/lib/crt0_64.o} in @code{R_XTRA_LIBS}, but @command{configure} now
-tries to detect this.]
-
-Paul Boutros reported success building @R{}@tie{}2.0.1 under
-AIX@tie{}5.2 with @command{gcc}@tie{}3.3.2 using
-
-@example
-OBJECT_MODE=64
-MAIN_LDFLAGS=-Wl,-brtl
-SHLIB_LDFLAGS=-Wl,-G
-@end example
-
-@noindent
-(note it is @code{Wl} (W ell) not @code{W1} (W one)).
-
-We understand that @option{--enable-R-shlib} does not work under AIX.
+tries to detect this.  There are no recent reports of building @R{} with
+the AIX compilers, only @command{gcc}.]
 
 Ei-ji Nakama has reported that @file{src/main/regex.c} in
 @R{}@tie{}2.2.0 has to be compiled with @option{-D_LINUX_SOURCE_COMPAT}
 in @code{CFLAGS} in AIX@tie{}5.x (and does not work correctly with
 AIX@tie{}4.x).  We believe that the patch applied since obviates the
 need for this.  He tested @R{}@tie{}2.2.1@tie{}beta on AIX@tie{}5.2.
+
+Jagat Sheth reported being able to build @R{} 2.3.0 patched on AIX@tie{}5.2
+using @command{gcc}@tie{}4.1.0 and
+
+@example
+CC=/usr/local/bin/gcc
+F77=/usr/local/bin/gfortran
+CXX=/usr/local/bin/g++
+MAIN_LDFLAGS=-Wl,-brtl
+SHLIB_LDFLAGS=-Wl,-G
+CFLAGS='-g -O'
+FFLAGS='-O'
+CXXFLAGS='-g -O'
+./configure --disable-nls
+@end example
+@noindent
+(note it is @code{Wl} (W ell) not @code{W1} (W one)).
 
 Pre-release versions of @R{} 2.3.0 have been built on AIX@tie{}5.3.
 (This defines the macro @samp{SOCKLEN_T} and so earlier versions of @R{}
@@ -3536,11 +3542,12 @@ You need a recent version of the MinGW port of @command{gcc} from
 @url{http://www.murdoch-sutherland.com/Rtools/,
 @code{www.murdoch-sutherland.com/@/Rtools}} for updates.
 
-In late 2005 there was an installer @code{MinGW-5.0.0.exe} in the
-`Proposed' section.  Using this, select the @samp{Candidate} package and
-add the @samp{g++} and @samp{g77} compilers to the @samp{MinGW base
-tools}: components will be downloaded from Sourceforge and unpacked.
-Note that you do need the @samp{Candidate} compilers (@code{gcc-3.4.5}).
+There may be an installer in the `Proposed' section, which can be used
+if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If
+using this, select the @samp{Candidate} package and add the @samp{g++}
+and @samp{g77} compilers to the @samp{MinGW base tools}: components will
+be downloaded from Sourceforge and unpacked.  Note that
+@file{MinGW-5.0.2.exe} uses outdated versions of the components.)
 
 An alternative is to download the components individually, currently
 
