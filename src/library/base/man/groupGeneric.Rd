@@ -36,15 +36,16 @@ Ops.data.frame(e1, e2 = NULL)
 Ops.factor(e1, e2)
 Ops.ordered(e1, e2)
 
-Summary.data.frame(x, \dots)
+Summary.data.frame(\dots, na.rm)
 Summary.factor(x, \dots)
 }
 \usage{
 ## S3 methods have prototypes:
 Math(x, \dots)
 Ops(e1, e2)
-Summary(x, \dots)
 Complex(z)
+Summary(x, \dots)
+\method{Summary}{data.frame}(\dots, na.rm)
 
 ## S4 methods have prototypes:
 Arith(e1, e2)
