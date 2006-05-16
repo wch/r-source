@@ -88,8 +88,12 @@ NEW FEATURES
     o	The "data.frame" and "matrix" methods for rowsum() gain an 'na.rm'
 	argument.
 
-    o	new function combn(x, m, ..) for computing on all combinations of
+    o	New function combn(x, m, ..) for computing on all combinations of
 	size 'm' (for small 'm' !).
+
+    o	merge() works more efficiently when there are relatively few
+	matches between the data frames (for example, for 1-1
+	matching).  The order of the result is changed for 'sort = FALSE'.
 
 
 DEPRECATED & DEFUNCT

@@ -20,8 +20,8 @@ merge(x, y, \dots)
 \arguments{
   \item{x, y}{data frames, or objects to be coerced to one}
   \item{by, by.x, by.y}{specifications of the common columns. See Details.}
-  \item{all}{logical; \code{all=L} is shorthand for \code{all.x=L} and
-    \code{all.y=L}.}
+  \item{all}{logical; \code{all = L} is shorthand for \code{all.x = L} and
+    \code{all.y = L}.}
   \item{all.x}{logical; if \code{TRUE}, then extra rows will be added to
     the output, one for each row in \code{x} that has no matching row in
     \code{y}.  These rows will have \code{NA}s in those columns that are
@@ -58,15 +58,15 @@ merge(x, y, \dots)
   these have \code{suffixes} (\code{".x"} and \code{".y"} by default)
   appended to make the names of the result unique.
 
-  The current implementation uses a double loop over the rows of
-  \code{x} and \code{y} and so will be slow if both are very large and
-  there are relatively few matches (for example, if row pairs match at
-  most once).
+  Prior to \R 2.4.0 the complexity was proportional to the product of
+  the numbers of rows of \code{x} and \code{y}.  As from \R 2.4.0 it is
+  proportional to the length of the answer, which can be much less if
+  there are few matches (for example, only 1--1 matches).
 }
 \value{
   A data frame.  The rows are by default lexicographically sorted on the
-  common columns, but are otherwise in the order in which they occurred
-  in \code{y}.  The columns are the common columns followed by the
+  common columns, but for \code{sort=FALSE} are in an unspecified order.
+  The columns are the common columns followed by the
   remaining columns in \code{x} and then those in \code{y}.  If the
   matching involved row names, an extra column \code{Row.names} is added
   at the left, and in all cases the result has no special row names.
