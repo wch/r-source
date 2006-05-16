@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-18 12:45+0100\n"
+"POT-Creation-Date: 2006-05-16 19:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -425,139 +425,139 @@ msgstr ""
 msgid "Font family not found in Windows font database"
 msgstr ""
 
-#: devWindows.c:990
+#: devWindows.c:993
 msgid "plot history seems corrupted"
 msgstr ""
 
-#: devWindows.c:997
+#: devWindows.c:1000
 msgid "no plot history!"
 msgstr ""
 
-#: devWindows.c:1700
+#: devWindows.c:1703
 #, c-format
 msgid "filename too long in %s() call"
 msgstr ""
 
-#: devWindows.c:1704 devWindows.c:1733
+#: devWindows.c:1707 devWindows.c:1736
 msgid "Unable to load Rbitmap.dll"
 msgstr ""
 
-#: devWindows.c:1709 devWindows.c:1742
+#: devWindows.c:1712 devWindows.c:1745
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr ""
 
-#: devWindows.c:1717 devWindows.c:1745
+#: devWindows.c:1720 devWindows.c:1748
 msgid "Unable to allocate bitmap"
 msgstr ""
 
-#: devWindows.c:1723 devWindows.c:1751 devWindows.c:2030
+#: devWindows.c:1726 devWindows.c:1754 devWindows.c:2033
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr ""
 
-#: devWindows.c:1739
+#: devWindows.c:1742
 msgid "filename too long in jpeg() call"
 msgstr ""
 
-#: devWindows.c:1769
+#: devWindows.c:1772
 msgid "filename too long in win.metafile() call"
 msgstr ""
 
-#: devWindows.c:1779
+#: devWindows.c:1782
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr ""
 
-#: devWindows.c:1781
+#: devWindows.c:1784
 msgid "Unable to open clipboard to write metafile"
 msgstr ""
 
-#: devWindows.c:1791
+#: devWindows.c:1794
 msgid "can't find any fonts"
 msgstr ""
 
-#: devWindows.c:1987
+#: devWindows.c:1990
 msgid "Insufficient memory for resize. Killing device"
 msgstr ""
 
-#: devWindows.c:2015
+#: devWindows.c:2018
 msgid "A clipboard metafile can store only one figure."
 msgstr ""
 
-#: devWindows.c:2021
+#: devWindows.c:2024
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr ""
 
-#: devWindows.c:2431 devWindows.c:3019
+#: devWindows.c:2434 devWindows.c:3022
 msgid "R Graphics"
 msgstr ""
 
-#: devWindows.c:2676
+#: devWindows.c:2679
 msgid "option 'windowsTimeouts' should be integer"
 msgstr ""
 
-#: devWindows.c:2698
+#: devWindows.c:2701
 msgid "invalid device number in savePlot"
 msgstr ""
 
-#: devWindows.c:2700
+#: devWindows.c:2703
 msgid "invalid device in savePlot"
 msgstr ""
 
-#: devWindows.c:2703
+#: devWindows.c:2706
 msgid "invalid filename argument in savePlot"
 msgstr ""
 
-#: devWindows.c:2708
+#: devWindows.c:2711
 msgid "invalid type argument in savePlot"
 msgstr ""
 
-#: devWindows.c:2731
+#: devWindows.c:2734
 msgid "unknown type in savePlot"
 msgstr ""
 
-#: devWindows.c:2806 devWindows.c:2842 devWindows.c:2874 devWindows.c:2909
+#: devWindows.c:2809 devWindows.c:2845 devWindows.c:2877 devWindows.c:2912
 msgid "processing of the plot ran out of memory"
 msgstr ""
 
-#: devWindows.c:2822 devWindows.c:2855 devWindows.c:2888
+#: devWindows.c:2825 devWindows.c:2858 devWindows.c:2891
 msgid "Impossible to load Rbitmap.dll"
 msgstr ""
 
-#: devWindows.c:2894
+#: devWindows.c:2897
 msgid "Impossible to open "
 msgstr ""
 
-#: devWindows.c:2935
+#: devWindows.c:2938
 msgid "invalid width or height in devWindows"
 msgstr ""
 
-#: devWindows.c:2940
+#: devWindows.c:2943
 msgid "invalid value of 'recording' in devWindows"
 msgstr ""
 
-#: devWindows.c:2944
+#: devWindows.c:2947
 msgid "invalid value of 'resize' in devWindows"
 msgstr ""
 
-#: devWindows.c:2952
+#: devWindows.c:2955
 msgid "invalid value of 'canvas' in devWindows"
 msgstr ""
 
-#: devWindows.c:2963
+#: devWindows.c:2966
 msgid "invalid value of 'buffered' in devWindows"
 msgstr ""
 
-#: devWindows.c:2969
+#: devWindows.c:2972
 msgid "invalid value of 'bg' in devWindows"
 msgstr ""
 
-#: devWindows.c:2991
+#: devWindows.c:2994
 msgid "unable to start device devWindows"
 msgstr ""
 
-#: devWindows.c:3064
+#: devWindows.c:3067
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr ""

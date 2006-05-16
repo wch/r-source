@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 12:45\n"
+"POT-Creation-Date: 2006-05-16 19:47\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -858,7 +858,8 @@ msgstr "'by' は列数にマッチしなければなりません"
 msgid "'by' must match number of columns"
 msgstr "'by' は列数にマッチしなければなりません"
 
-msgid "'by' must specify column(s)"
+#, fuzzy
+msgid "'by' must specify column(s) as numbers, names or logical"
 msgstr "'by' は列を指定しなければなりません"
 
 msgid "'by' must specify valid column(s)"

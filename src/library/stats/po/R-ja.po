@@ -1438,9 +1438,8 @@ msgstr "変数 %s は因子ではありません"
 msgid "factor '%s' has new level(s) %s"
 msgstr "因子 '%s' には新しい水準 %s があります"
 
-#, fuzzy
 msgid "'offset' must be numeric"
-msgstr "'x' は数値でなければなりません"
+msgstr "'offset' は数値でなければなりません"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix() でモデルフレームとモデル式の組合せが不適当です"

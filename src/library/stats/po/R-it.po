@@ -637,9 +637,8 @@ msgstr "'x' e 'g' devono avere la stessa lunghezza"
 msgid "'weights' must all be finite"
 msgstr "i predittori devono essere tutti numerici"
 
-#, fuzzy
 msgid "'weights' must not be negative"
-msgstr "'x' deve essere non negativo"
+msgstr "'weights' deve essere non negativo"
 
 msgid "sum(weights) != 1  -- will not get true density"
 msgstr ""
@@ -806,12 +805,11 @@ msgstr ""
 "o una matrice di 2 colonne dove la prima colonna contiene il numero di "
 "successi e la seconda colonna il numero di insuccessi"
 
-#, fuzzy
 msgid ""
 "link not available for quasibinomial family, available links are \"logit\", "
 "\"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
-"link \"%s\" non disponibile per la famiglia binomiale,i link disponibili "
+"link \"%s\" non disponibile per la famiglia quasibinomiale, i link disponibili "
 "sono \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" e \"log\""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
@@ -961,9 +959,8 @@ msgstr "'family' non riconosciuta"
 msgid "invalid 'method':"
 msgstr "'method' non valido:"
 
-#, fuzzy
 msgid "'weights' must be a numeric vector"
-msgstr "'y' deve essere un vettore numerico"
+msgstr "'weights' deve essere un vettore numerico"
 
 msgid "negative weights not allowed"
 msgstr "non sono ammessi pesi negativi"
@@ -1129,9 +1126,8 @@ msgstr "'m' è minore di 1"
 msgid "'r' is less than 0"
 msgstr "'r' è minori di 0"
 
-#, fuzzy
 msgid "'m' must be numeric with non-negative integers"
-msgstr "'x' deve essere un intero non negativo"
+msgstr "'m' deve essere un intero non negativo"
 
 msgid "unknown named kernel"
 msgstr "nome kernel sconosciuto"
@@ -1466,9 +1462,8 @@ msgstr "la variabile '%s' non è di tipo factor"
 msgid "factor '%s' has new level(s) %s"
 msgstr "variabile factor '%s' ha nuovi livelli %s"
 
-#, fuzzy
 msgid "'offset' must be numeric"
-msgstr "'x' deve essere numeric"
+msgstr "'offset' deve essere numeric"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model frame e formula non coincidono in model.matrix()"

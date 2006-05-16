@@ -813,12 +813,11 @@ msgstr ""
 "ou une matrice à 2 colonnes où la col 1 est le nombre de succès et la col 2 "
 "le nombre d'échecs"
 
-#, fuzzy
 msgid ""
 "link not available for quasibinomial family, available links are \"logit\", "
 "\"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
-"le lien \"%s\" n'est pas possible pour la famille binomial ; les liens "
+"le lien \"%s\" n'est pas possible pour la famille quasibinomial ; les liens "
 "possibles sont \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" et \"log\""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
@@ -972,9 +971,8 @@ msgstr "'family' non reconnu"
 msgid "invalid 'method':"
 msgstr "'method' incorrect"
 
-#, fuzzy
 msgid "'weights' must be a numeric vector"
-msgstr "'y' doit être un vecteur numérique"
+msgstr "'weights' doit être un vecteur numérique"
 
 msgid "negative weights not allowed"
 msgstr "poids négatifs non autorisés"
@@ -1494,9 +1492,8 @@ msgstr "la variable '%s' n'est pas un facteur"
 msgid "factor '%s' has new level(s) %s"
 msgstr "le facteur '%s' a un(des) nouveau(x) niveau(x) %s"
 
-#, fuzzy
 msgid "'offset' must be numeric"
-msgstr "'x' doit être numérique"
+msgstr "'offset' doit être numérique"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr ""

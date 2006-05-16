@@ -783,12 +783,11 @@ msgid ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "或是有两个列的矩阵，第一列是成功的计数，第二列是失败的计数"
 
-#, fuzzy
 msgid ""
 "link not available for quasibinomial family, available links are \"logit\", "
 "\"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
-"binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \"\"probit"
+"quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \"\"probit"
 "\", \"cloglog\", \"cauchit\"和\"log\""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
@@ -1427,9 +1426,8 @@ msgstr "变量'%s'不是因子"
 msgid "factor '%s' has new level(s) %s"
 msgstr "因子'%s'有新的层次%s"
 
-#, fuzzy
 msgid "'offset' must be numeric"
-msgstr "'x'必需为数值"
+msgstr "'offset'必需为数值"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()里的模型框和公式不相配"

@@ -800,12 +800,11 @@ msgstr ""
 "ou uma matriz com 2 colunas, onde a coluna 1 é o num. de sucessos e a coluna "
 "2 é o num. de fracassos"
 
-#, fuzzy
 msgid ""
 "link not available for quasibinomial family, available links are \"logit\", "
 "\"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
-"ligação \"%s\" não disponível para família binomial, ligações disponíveis "
+"ligação \"%s\" não disponível para família quasibinomial, ligações disponíveis "
 "são \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" e \"log\""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
@@ -955,9 +954,8 @@ msgstr "'family' não reconhecido"
 msgid "invalid 'method':"
 msgstr "'method' inválido:"
 
-#, fuzzy
 msgid "'weights' must be a numeric vector"
-msgstr "'y' deve ser um vetor numérico"
+msgstr "'weights' deve ser um vetor numérico"
 
 msgid "negative weights not allowed"
 msgstr "pesos negativos não permitidos"
@@ -1462,9 +1460,8 @@ msgstr "variável '%s' não é um fator"
 msgid "factor '%s' has new level(s) %s"
 msgstr "fator '%s' tem novo(s) nívei(s) %s"
 
-#, fuzzy
 msgid "'offset' must be numeric"
-msgstr "'x' deve ser numérico"
+msgstr "'offset' deve ser numérico"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "estrutura do modelo e da fórmula incompatível em model.matrix()"
