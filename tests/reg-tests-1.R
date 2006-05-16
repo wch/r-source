@@ -4218,3 +4218,11 @@ lockBinding("x", e)
 stopifnot(bindingIsLocked("x", e), bindingIsLocked("x", e)==TRUE,
           !bindingIsLocked("y", e), bindingIsLocked("y", e)==FALSE)
 ## on some systems in R <= 2.3.0, bindingIsLocked("x", e)==TRUE was false
+
+
+## merge.data.frame was not making column names unique when
+## doing a Cartesian product.
+DF <- data.frame(col=1:3)
+DF2 <- merge(DF, DF, by=numeric(0))
+stopifnot(identical(names(DF2), c("col.x", "col.y")))
+## both were 'col' in 2.3.0.

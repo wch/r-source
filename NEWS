@@ -271,6 +271,10 @@ BUG FIXES
 
     o	bindingIsLocked() was returning invalid values of a logical vector.
 
+    o	merge.data.frame() did not make the column names unique (by
+	appending elements of 'suffixes') when performing a Cartesian
+	product.  (PR#8676)
+
 
 
 
