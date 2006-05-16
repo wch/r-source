@@ -755,9 +755,12 @@ static void HelpExpose(window w, rect r)
 
 	if (xd->resize) {
 	    GA_Resize(dd);
-	    xd->replaying = TRUE;
-	    GEplayDisplayList(gdd);
-	    xd->replaying = FALSE;
+	    /* avoid trying to replay list if there has been no drawing */
+	    if(gdd->dirty) {
+		xd->replaying = TRUE;
+		GEplayDisplayList(gdd);
+		xd->replaying = FALSE;
+	    }
 	    R_ProcessEvents();
 	} else
 	    SHOW;
