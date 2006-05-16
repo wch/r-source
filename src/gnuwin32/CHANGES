@@ -18,6 +18,9 @@ a character, and some little-used aspects of plotmath.
 The installer generated a link in the Program menu to a no-longer
 existent help page.
 
+Opening a device via windows(resize="fixed") would sometimes fail with
+a message about 'outer margins too large'. (PR#8857)
+
 
 
 R 2.3.0
