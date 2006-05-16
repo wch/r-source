@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:31+0100\n"
+"POT-Creation-Date: 2006-05-16 19:39+0100\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -128,9 +128,9 @@ msgstr ""
 #: src/main/saveload.c:2032 src/main/saveload.c:2284 src/main/saveload.c:2333
 #: src/main/sysutils.c:396 src/main/sysutils.c:398 src/main/sysutils.c:400
 #: src/main/unique.c:593 src/main/util.c:665 src/main/util.c:668
-#: src/modules/internet/internet.c:252 src/modules/internet/internet.c:258
-#: src/modules/internet/internet.c:264 src/modules/internet/internet.c:267
-#: src/modules/internet/internet.c:271 src/unix/sys-std.c:921
+#: src/modules/internet/internet.c:254 src/modules/internet/internet.c:260
+#: src/modules/internet/internet.c:266 src/modules/internet/internet.c:269
+#: src/modules/internet/internet.c:273 src/unix/sys-std.c:921
 #: src/unix/sys-std.c:943
 #, c-format
 msgid "invalid '%s' argument"
@@ -2029,7 +2029,7 @@ msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 
-#: src/main/connections.c:3614 src/modules/internet/internet.c:463
+#: src/main/connections.c:3614 src/modules/internet/internet.c:465
 msgid "unsupported URL scheme"
 msgstr ""
 
@@ -6285,69 +6285,69 @@ msgstr ""
 msgid "There must be at least three control points"
 msgstr ""
 
-#: src/modules/internet/internet.c:91
+#: src/modules/internet/internet.c:93
 msgid "unknown URL scheme"
 msgstr ""
 
-#: src/modules/internet/internet.c:160 src/modules/internet/internet.c:164
-#: src/modules/internet/internet.c:170 src/modules/internet/internet.c:182
+#: src/modules/internet/internet.c:162 src/modules/internet/internet.c:166
+#: src/modules/internet/internet.c:172 src/modules/internet/internet.c:184
 msgid "allocation of url connection failed"
 msgstr ""
 
-#: src/modules/internet/internet.c:254
+#: src/modules/internet/internet.c:256
 msgid "only first element of 'url' argument used"
 msgstr ""
 
-#: src/modules/internet/internet.c:260
+#: src/modules/internet/internet.c:262
 msgid "only first element of 'destfile' argument used"
 msgstr ""
 
-#: src/modules/internet/internet.c:274
+#: src/modules/internet/internet.c:276
 msgid "Download progress"
 msgstr ""
 
-#: src/modules/internet/internet.c:294 src/modules/internet/internet.c:378
-#: src/modules/internet/internet.c:459
+#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:380
+#: src/modules/internet/internet.c:461
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr ""
 
-#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:313
-#: src/modules/internet/internet.c:391
+#: src/modules/internet/internet.c:298 src/modules/internet/internet.c:315
+#: src/modules/internet/internet.c:393
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr ""
 
-#: src/modules/internet/internet.c:316 src/modules/internet/internet.c:394
+#: src/modules/internet/internet.c:318 src/modules/internet/internet.c:396
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr ""
 
-#: src/modules/internet/internet.c:323 src/modules/internet/internet.c:401
+#: src/modules/internet/internet.c:325 src/modules/internet/internet.c:403
 msgid "opened URL\n"
 msgstr ""
 
-#: src/modules/internet/internet.c:374 src/modules/internet/internet.c:455
+#: src/modules/internet/internet.c:376 src/modules/internet/internet.c:457
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr ""
 
-#: src/modules/internet/internet.c:490 src/modules/internet/internet.c:717
+#: src/modules/internet/internet.c:492 src/modules/internet/internet.c:719
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr ""
 
-#: src/modules/internet/internet.c:661 src/modules/internet/internet.c:817
+#: src/modules/internet/internet.c:663 src/modules/internet/internet.c:819
 msgid "InternetOpenUrl timed out"
 msgstr ""
 
-#: src/modules/internet/internet.c:688 src/modules/internet/internet.c:702
-#: src/modules/internet/internet.c:839 src/modules/internet/internet.c:848
+#: src/modules/internet/internet.c:690 src/modules/internet/internet.c:704
+#: src/modules/internet/internet.c:841 src/modules/internet/internet.c:850
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr ""
 
-#: src/modules/internet/internet.c:752
+#: src/modules/internet/internet.c:754
 msgid "Internet read timed out"
 msgstr ""
 

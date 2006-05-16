@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:31+0100\n"
+"POT-Creation-Date: 2006-05-16 19:39+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -135,9 +135,9 @@ msgstr "'names' non valido in R_unlink"
 #: src/main/saveload.c:2032 src/main/saveload.c:2284 src/main/saveload.c:2333
 #: src/main/sysutils.c:396 src/main/sysutils.c:398 src/main/sysutils.c:400
 #: src/main/unique.c:593 src/main/util.c:665 src/main/util.c:668
-#: src/modules/internet/internet.c:252 src/modules/internet/internet.c:258
-#: src/modules/internet/internet.c:264 src/modules/internet/internet.c:267
-#: src/modules/internet/internet.c:271 src/unix/sys-std.c:921
+#: src/modules/internet/internet.c:254 src/modules/internet/internet.c:260
+#: src/modules/internet/internet.c:266 src/modules/internet/internet.c:269
+#: src/modules/internet/internet.c:273 src/unix/sys-std.c:921
 #: src/unix/sys-std.c:943
 #, c-format
 msgid "invalid '%s' argument"
@@ -473,14 +473,13 @@ msgid "object is not subsettable"
 msgstr "questo oggetto non è indicizzabile"
 
 #: src/include/Errormsg.h:44
-#, fuzzy
 msgid "invalid argument 'mode'"
-msgstr "argomento non valido"
+msgstr "argomento 'mode' non valido"
 
 #: src/include/Errormsg.h:45
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'type' (%s) of argument"
-msgstr "argomento 'mode' non valido"
+msgstr "argomento 'type' (%s) non valido"
 
 #: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
@@ -2082,7 +2081,7 @@ msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 
-#: src/main/connections.c:3614 src/modules/internet/internet.c:463
+#: src/main/connections.c:3614 src/modules/internet/internet.c:465
 msgid "unsupported URL scheme"
 msgstr "schema URL non supportato"
 
@@ -3420,9 +3419,8 @@ msgid "input buffer overflow"
 msgstr "overflow buffer di input"
 
 #: src/main/gram.y:1751
-#, fuzzy
 msgid "\\uxxxx sequences not supported"
-msgstr "'onMouseDown' non supportata"
+msgstr ""
 
 #: src/main/gram.y:1766 src/main/gram.y:1771
 msgid "invalid \\u{xxxx} sequence"
@@ -6442,69 +6440,69 @@ msgstr ""
 msgid "There must be at least three control points"
 msgstr "deve esserci un primo argomento"
 
-#: src/modules/internet/internet.c:91
+#: src/modules/internet/internet.c:93
 msgid "unknown URL scheme"
 msgstr "schema URL sconosciuto"
 
-#: src/modules/internet/internet.c:160 src/modules/internet/internet.c:164
-#: src/modules/internet/internet.c:170 src/modules/internet/internet.c:182
+#: src/modules/internet/internet.c:162 src/modules/internet/internet.c:166
+#: src/modules/internet/internet.c:172 src/modules/internet/internet.c:184
 msgid "allocation of url connection failed"
 msgstr "allocazione della connessione 'url' fallita"
 
-#: src/modules/internet/internet.c:254
+#: src/modules/internet/internet.c:256
 msgid "only first element of 'url' argument used"
 msgstr "solo il primo elemento di 'url' viene utilizzato"
 
-#: src/modules/internet/internet.c:260
+#: src/modules/internet/internet.c:262
 msgid "only first element of 'destfile' argument used"
 msgstr "solo il primo elemento di 'destifle' viene utilizzato"
 
-#: src/modules/internet/internet.c:274
+#: src/modules/internet/internet.c:276
 msgid "Download progress"
 msgstr "Progressione caricamento"
 
-#: src/modules/internet/internet.c:294 src/modules/internet/internet.c:378
-#: src/modules/internet/internet.c:459
+#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:380
+#: src/modules/internet/internet.c:461
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "impossibile aprire URL '%s'"
 
-#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:313
-#: src/modules/internet/internet.c:391
+#: src/modules/internet/internet.c:298 src/modules/internet/internet.c:315
+#: src/modules/internet/internet.c:393
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "impossibile aprire file destinazione '%s'"
 
-#: src/modules/internet/internet.c:316 src/modules/internet/internet.c:394
+#: src/modules/internet/internet.c:318 src/modules/internet/internet.c:396
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "provo con l'URL '%s'\n"
 
-#: src/modules/internet/internet.c:323 src/modules/internet/internet.c:401
+#: src/modules/internet/internet.c:325 src/modules/internet/internet.c:403
 msgid "opened URL\n"
 msgstr "URL aperto\n"
 
-#: src/modules/internet/internet.c:374 src/modules/internet/internet.c:455
+#: src/modules/internet/internet.c:376 src/modules/internet/internet.c:457
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "lunghezza caricamento %d != lunghezza prevista %d"
 
-#: src/modules/internet/internet.c:490 src/modules/internet/internet.c:717
+#: src/modules/internet/internet.c:492 src/modules/internet/internet.c:719
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "apertura non riuscita: stato HTTP '%d %s'"
 
-#: src/modules/internet/internet.c:661 src/modules/internet/internet.c:817
+#: src/modules/internet/internet.c:663 src/modules/internet/internet.c:819
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl fuori tempo massimo"
 
-#: src/modules/internet/internet.c:688 src/modules/internet/internet.c:702
-#: src/modules/internet/internet.c:839 src/modules/internet/internet.c:848
+#: src/modules/internet/internet.c:690 src/modules/internet/internet.c:704
+#: src/modules/internet/internet.c:841 src/modules/internet/internet.c:850
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl non riuscita: '%s'"
 
-#: src/modules/internet/internet.c:752
+#: src/modules/internet/internet.c:754
 msgid "Internet read timed out"
 msgstr "Lettura da Internet fuori tempo massimo"
 

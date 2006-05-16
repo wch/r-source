@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:31+0100\n"
+"POT-Creation-Date: 2006-05-16 19:39+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -129,9 +129,9 @@ msgstr "R_unlink 的 'names' 無效"
 #: src/main/saveload.c:2032 src/main/saveload.c:2284 src/main/saveload.c:2333
 #: src/main/sysutils.c:396 src/main/sysutils.c:398 src/main/sysutils.c:400
 #: src/main/unique.c:593 src/main/util.c:665 src/main/util.c:668
-#: src/modules/internet/internet.c:252 src/modules/internet/internet.c:258
-#: src/modules/internet/internet.c:264 src/modules/internet/internet.c:267
-#: src/modules/internet/internet.c:271 src/unix/sys-std.c:921
+#: src/modules/internet/internet.c:254 src/modules/internet/internet.c:260
+#: src/modules/internet/internet.c:266 src/modules/internet/internet.c:269
+#: src/modules/internet/internet.c:273 src/unix/sys-std.c:921
 #: src/unix/sys-std.c:943
 #, c-format
 msgid "invalid '%s' argument"
@@ -2038,7 +2038,7 @@ msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr "file(\"\") 只支援 open = \"w+\" 與 open = \"w+b\": 使用前者"
 
-#: src/main/connections.c:3614 src/modules/internet/internet.c:463
+#: src/main/connections.c:3614 src/modules/internet/internet.c:465
 msgid "unsupported URL scheme"
 msgstr "不支援這種 URL 方案"
 
@@ -6333,69 +6333,69 @@ msgstr "至少必須有四個控制點"
 msgid "There must be at least three control points"
 msgstr "至少必須有三個控制點"
 
-#: src/modules/internet/internet.c:91
+#: src/modules/internet/internet.c:93
 msgid "unknown URL scheme"
 msgstr "沒有這種 URL 格式"
 
-#: src/modules/internet/internet.c:160 src/modules/internet/internet.c:164
-#: src/modules/internet/internet.c:170 src/modules/internet/internet.c:182
+#: src/modules/internet/internet.c:162 src/modules/internet/internet.c:166
+#: src/modules/internet/internet.c:172 src/modules/internet/internet.c:184
 msgid "allocation of url connection failed"
 msgstr "url 連結指派失敗"
 
-#: src/modules/internet/internet.c:254
+#: src/modules/internet/internet.c:256
 msgid "only first element of 'url' argument used"
 msgstr "只用 'url' 引數的第一個元素"
 
-#: src/modules/internet/internet.c:260
+#: src/modules/internet/internet.c:262
 msgid "only first element of 'destfile' argument used"
 msgstr "只用 'destfile' 引數的第一個元素"
 
-#: src/modules/internet/internet.c:274
+#: src/modules/internet/internet.c:276
 msgid "Download progress"
 msgstr "正在下載"
 
-#: src/modules/internet/internet.c:294 src/modules/internet/internet.c:378
-#: src/modules/internet/internet.c:459
+#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:380
+#: src/modules/internet/internet.c:461
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "無法開啟 URL '%s'"
 
-#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:313
-#: src/modules/internet/internet.c:391
+#: src/modules/internet/internet.c:298 src/modules/internet/internet.c:315
+#: src/modules/internet/internet.c:393
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "無法開啟 destfile '%s'"
 
-#: src/modules/internet/internet.c:316 src/modules/internet/internet.c:394
+#: src/modules/internet/internet.c:318 src/modules/internet/internet.c:396
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "試開URL '%s'\n"
 
-#: src/modules/internet/internet.c:323 src/modules/internet/internet.c:401
+#: src/modules/internet/internet.c:325 src/modules/internet/internet.c:403
 msgid "opened URL\n"
 msgstr "開啟了 URL\n"
 
-#: src/modules/internet/internet.c:374 src/modules/internet/internet.c:455
+#: src/modules/internet/internet.c:376 src/modules/internet/internet.c:457
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "下載的長度 %d != 報告的長度 %d"
 
-#: src/modules/internet/internet.c:490 src/modules/internet/internet.c:717
+#: src/modules/internet/internet.c:492 src/modules/internet/internet.c:719
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "無法開啟: HTTP 狀態是 '%d%s'"
 
-#: src/modules/internet/internet.c:661 src/modules/internet/internet.c:817
+#: src/modules/internet/internet.c:663 src/modules/internet/internet.c:819
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl 已經逾時"
 
-#: src/modules/internet/internet.c:688 src/modules/internet/internet.c:702
-#: src/modules/internet/internet.c:839 src/modules/internet/internet.c:848
+#: src/modules/internet/internet.c:690 src/modules/internet/internet.c:704
+#: src/modules/internet/internet.c:841 src/modules/internet/internet.c:850
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl 失敗: '%s'"
 
-#: src/modules/internet/internet.c:752
+#: src/modules/internet/internet.c:754
 msgid "Internet read timed out"
 msgstr "網際網路讀取逾時"
 
