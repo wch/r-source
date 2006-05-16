@@ -24,20 +24,14 @@ rbind(\dots, deparse.level = 1)
     names, see the \sQuote{Value} section below.}
 }
 \details{
-  The functions \code{cbind} and \code{rbind} are S3 generic, with methods
-  for data frames.  The data frame method will be used if an argument is
-  a data frame and the rest are vectors or matrices.  There can be other
-  methods; in particular, there is one for time series objects.
+  The functions \code{cbind} and \code{rbind} are S3 generic, with
+  methods for data frames.  The data frame method will be used if at
+  least one argument is a data frame and the rest are vectors or
+  matrices.  There can be other methods; in particular, there is one for
+  time series objects.
 
-  In the matrix case, all the vectors/matrices must be atomic (see
+  In the default method, all the vectors/matrices must be atomic (see
   \code{\link{vector}}) or lists (e.g., not expressions).
-
-  The \code{rbind} data frame method takes the classes of the columns
-  from the first
-  data frame.  Factors have their levels expanded as necessary (in
-  the order of the levels of the levelsets of the factors encountered)
-  and the result is an ordered factor if and only if all the components
-  were ordered factors.  (The last point differs from S-PLUS.)
 
   If there are several matrix arguments, they must all have the same
   number of columns (or rows) and this will be the number of columns (or
@@ -54,8 +48,15 @@ rbind(\dots, deparse.level = 1)
 
   For \code{cbind} (\code{rbind}), vectors of zero length (including
   \code{NULL}) are ignored unless the result would have zero rows
-  (columns),  for S compatibility.
+  (columns), for S compatibility.
   (Zero-extent matrices do not occur in S3 and are not ignored in \R.)
+
+  The \code{rbind} data frame method takes the classes of the columns
+  from the first data frame, and matches columns by name (rather than by
+  position).  Factors have their levels expanded as necessary (in
+  the order of the levels of the levelsets of the factors encountered)
+  and the result is an ordered factor if and only if all the components
+  were ordered factors.  (The last point differs from S-PLUS.)
 }
 \value{
   A matrix or data frame combining the \code{\dots} arguments
@@ -63,7 +64,7 @@ rbind(\dots, deparse.level = 1)
 
   For \code{cbind} (\code{rbind}) the column (row) names are taken from
   the \code{colnames} (\code{rownames}) of the arguments if these are
-  matrix-like. Otherwise from the names of the arguments or where those
+  matrix-like.  Otherwise from the names of the arguments or where those
   are not supplied and \code{deparse.level > 0}, by deparsing the
   expressions given, for \code{deparse.level = 1} only if that gives a
   sensible name (a \sQuote{symbol}, see \code{\link{is.symbol}}).

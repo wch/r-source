@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-05-03 r37975)
+R version 2.4.0 Under development (unstable) (2006-05-16 r38076)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5179,4 +5179,26 @@ Warning message:
 arguments 'right', 'col' are not made use of in: hist.default(rnorm(100), plot = FALSE, breaks = 12, right = FALSE,  
 > ## gave no warning in 2.3.0 and earlier
 > 
+> 
+> ## rbind.data.frame on permuted cols (PR#8868)
+> d1 <- data.frame(x=1:10, y=letters[1:10], z=1:10)
+> d2 <- data.frame(y=LETTERS[1:5], z=5:1, x=7:11)
+> rbind(d1, d2)
+    x y  z
+1   1 a  1
+2   2 b  2
+3   3 c  3
+4   4 d  4
+5   5 e  5
+6   6 f  6
+7   7 g  7
+8   8 h  8
+9   9 i  9
+10 10 j 10
+11  7 A  5
+12  8 B  4
+13  9 C  3
+14 10 D  2
+15 11 E  1
+> ## got factor y  wrong in 2.3.0
 > 

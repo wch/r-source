@@ -1811,3 +1811,9 @@ r <- hist(rnorm(100), plot = FALSE, breaks = 12,
           right = FALSE, col = "blue")
 ## gave no warning in 2.3.0 and earlier
 
+
+## rbind.data.frame on permuted cols (PR#8868)
+d1 <- data.frame(x=1:10, y=letters[1:10], z=1:10)
+d2 <- data.frame(y=LETTERS[1:5], z=5:1, x=7:11)
+rbind(d1, d2)
+## got factor y  wrong in 2.3.0
