@@ -207,8 +207,8 @@ install.packages <-
         }
     }
 
-    pkgs <- unique(pkgs) # in case ask for more than one from a bundle
-    foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
+    foundpkgs <- download.packages(unique(pkgs), destdir = tmpd,
+                                   available = available,
                                    contriburl = contriburl, method = method,
                                    type = "source")
 
