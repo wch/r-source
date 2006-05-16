@@ -11,6 +11,7 @@ merge.data.frame <-
     fix.by <- function(by, df)
     {
         ## fix up 'by' to be a valid set of cols by number: 0 is row.names
+        if(is.null(by)) by <- numeric(0)
         by <- as.vector(by)
         nc <- ncol(df)
         if(is.character(by))
@@ -21,7 +22,7 @@ merge.data.frame <-
         } else if(is.logical(by)) {
             if(length(by) != nc) stop("'by' must match number of columns")
             by <- seq(along = by)[by]
-        } else stop("'by' must specify column(s)")
+        } else stop("'by' must specify column(s) as numbers, names or logical")
         if(any(is.na(by))) stop("'by' must specify valid column(s)")
         unique(by)
     }
@@ -34,7 +35,15 @@ merge.data.frame <-
         stop("'by.x' and 'by.y' specify different numbers of columns")
     if(l.b == 0) {
         ## was: stop("no columns to match on")
-        ## return the cartesian product of x and y :
+        ## return the cartesian product of x and y, fixing up common names
+        nm <- nm.x <- names(x)
+        nm.y <- names(y)
+        has.common.nms <- any(cnm <- nm.x %in% nm.y)
+        if(has.common.nms) {
+            names(x)[cnm] <- paste(nm.x[cnm], suffixes[1], sep="")
+            cnm <- nm.y %in% nm
+            names(y)[cnm] <- paste(nm.y[cnm], suffixes[2], sep="")
+        }
         ij <- expand.grid(1:nx, 1:ny)
         res <- cbind(x[ij[,1], , drop = FALSE], y[ij[,2], , drop = FALSE])
     }
