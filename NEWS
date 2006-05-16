@@ -115,6 +115,10 @@ BUG FIXES
 	appending elements of 'suffixes') when performing a Cartesian
 	product.  (PR#8676)
 
+    o	rbind.data.frame() matches up the names of columns (which was
+	undocumented), but failed to do so when checking if it was
+	dealing with a factor column.  (PR#8868)
+
 
 
 

@@ -951,16 +951,17 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		    has.dim[j] <- length(dim(xj)) == 2
 		}
 	    }
-	    else for(j in 1:nvar)
-                if(facCol[j]) {
-                    xij <- xi[[j]]
-                    if(is.null(pi) || is.na(jj <- pi[[j]])) jj <- j
+	    else for(j in 1:nvar) {
+                xij <- xi[[j]]
+                if(is.null(pi) || is.na(jj <- pi[[j]])) jj <- j
+                if(facCol[jj]) {
                     if(length(lij <- levels(xij)) > 0) {
                         all.levs[[jj]] <- unique(c(all.levs[[jj]], lij))
-                        ordCol[j] <- ordCol[j] & is.ordered(xij)
+                        ordCol[jj] <- ordCol[jj] & is.ordered(xij)
                     } else if(is.character(xij))
                         all.levs[[jj]] <- unique(c(all.levs[[jj]], xij))
                 }
+            }
 	}
 	else if(is.list(xi)) {
 	    ni <- range(sapply(xi, length))
