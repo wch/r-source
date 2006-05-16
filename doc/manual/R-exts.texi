@@ -848,7 +848,33 @@ provide all the auxiliary routines.]
 
 The macros @code{BLAS_LIBS} and @code{FLIBS} should always be included
 @emph{after} @code{LAPACK_LIBS}.
+
+@item SAFE_FFLAGS
+@vindex SAFE_FFLAGS
+A macro containing flags which are needed to circumvent
+over-optimization of Fortran code: it is typically @samp{-g -O2
+-ffloat-store} on @samp{ix86} platforms using @command{g77} or
+@command{gfortran}.
 @end table
+
+Note that @file{Makevars} should not normally contain targets, as it is
+included before the default @file{Makefile} and @command{make} is called
+without an explicit target.  To circumvent that, use a suitable phony
+target before any actual targets: for example @pkg{fastICA} has
+
+@smallexample
+SLAMC_FFLAGS=$(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(SAFE_FFLAGS)
+
+all: $(SHLIB)
+
+slamc.o: slamc.f
+        $(F77) $(SLAMC_FFLAGS) -c -o slamc.o slamc.f
+@end smallexample
+
+@noindent
+to ensure that the LAPACK routines find some constants without infinite
+looping.
+
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
