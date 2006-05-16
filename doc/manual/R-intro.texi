@@ -6408,8 +6408,9 @@ command like
 
 Users connected to the Internet can use the @code{install.packages()}
 and @code{update.packages()} functions (available through the
-@code{Packages} menu in the Windows and RAqua GUIs) to automatically
-install and update packages.
+@code{Packages} menu in the Windows and RAqua GUIs, @pxref{Installing
+packages, , , R-admin, R Installation and Adminstration}) to install and
+update packages.
 
 To see which packages are currently loaded, use
 
