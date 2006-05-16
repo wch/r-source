@@ -5001,17 +5001,19 @@ create the object files directly from the command line).
 @vindex PKG_LIBS
 Similarly, variable @code{PKG_LIBS} in @file{Makevars} can be used for
 additional @samp{-l} and @samp{-L} flags to be passed to the linker when
-building the shared object.  Flags which are set in file
-@file{etc/Makeconf} can be overridden by the environment variable
-@env{MAKEFLAGS} (at least for systems using @acronym{GNU} @code{make}),
-as in (Bourne shell syntax)
+building the shared object.  (On most systems the @code{PKG_*} flags can
+be set in the environment instead of in @file{Makevars}.)
+
+Flags which are set in file @file{etc/Makeconf} can be overridden by the
+environment variable @env{MAKEFLAGS} (at least for systems using
+@acronym{GNU} @code{make}), as in (Bourne shell syntax)
 
 @example
 MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
 @end example
 
 @noindent
-or by using a @file{Makefile}.
+or by using a @file{Makefile}.  
 
 Note that as @code{R CMD SHLIB} uses Make, it will not remake a shared
 object just because the flags have changed, and if @code{test.c} and
