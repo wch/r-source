@@ -508,6 +508,16 @@ SEXP dcdr(SEXP l)
 }
 
 /* merge(xinds, yinds, all.x, all.y) */
+/* xinds, yinds are along x and y rows matching into numeric common indices,
+   with 0 for non-matches.  all.x and all.y are boolean.
+   The return value is a list with 4 elements (xi, yi, x.alone, y.alone),
+   which are index vectors for rows of x or y.
+
+   The double loop over rows of x and y makes this slow if there are
+   sparse matches.  An alternative would be to loop over the values of
+   c(xinds, yinds), and for each find all the matches in x and y and
+   combine them.  That would change the ordering.
+*/
 SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP xi, yi, ansx, ansy, ans, ansnames, x_lone, y_lone;
@@ -525,21 +535,20 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("'all.x' must be TRUE or FALSE"));
     if(!LENGTH(ans = CADDDR(args))|| NA_LOGICAL == (all_y = asLogical(ans)))
 	errorcall(call, _("'all.y' must be TRUE or FALSE"));
+
     /* 1. determine result sizes */
-    if(all_x) {
-	for (i = 0; i < nx; i++)
-	    if (INTEGER(xi)[i] == 0) nx_lone++;
-    }
+    if(all_x)
+	for (i = 0; i < nx; i++) if (INTEGER(xi)[i] == 0) nx_lone++;
     for (j = 0; j < ny; j++)
 	if ((y = INTEGER(yi)[j]) > 0) {
-	    for (i = 0; i < nx; i++) {
-		if (INTEGER(xi)[i] == y) nans++;
-	    }
+	    for (i = 0; i < nx; i++) if (INTEGER(xi)[i] == y) nans++;
         } else /* y == 0 */ if (all_y) ny_lone++;
+
     /* 2. allocate and store result components */
     PROTECT(ans = allocVector(VECSXP, 4));
     ansx = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 0, ansx);
     ansy = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 1, ansy);
+
     if(all_x) {
 	x_lone = allocVector(INTSXP, nx_lone);
 	SET_VECTOR_ELT(ans, 2, x_lone);
@@ -547,19 +556,21 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < nx; i++)
 	    if (INTEGER(xi)[i] == 0) INTEGER(x_lone)[ll++] = i + 1;
     }
+
     if(all_y) {
 	y_lone = allocVector(INTSXP, ny_lone);
 	SET_VECTOR_ELT(ans, 3, y_lone);
 	ll = 0;
     } else
-	y_lone = R_NilValue;
+	y_lone = R_NilValue; /* -Wall, as unused */
+
     for (j = 0, k = 0; j < ny; j++)
 	if ((y = INTEGER(yi)[j]) > 0) {
 	    for (i = 0; i < nx; i++)
 		if (INTEGER(xi)[i] == y) {
-		INTEGER(ansx)[k]   = i + 1;
-		INTEGER(ansy)[k++] = j + 1;
-	    }
+		    INTEGER(ansx)[k]   = i + 1;
+		    INTEGER(ansy)[k++] = j + 1;
+		}
 	} else /* y == 0 */ if (all_y) INTEGER(y_lone)[ll++] = j + 1;
 
     PROTECT(ansnames = allocVector(STRSXP, 4));

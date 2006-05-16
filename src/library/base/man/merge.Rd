@@ -57,6 +57,11 @@ merge(x, y, \dots)
   If the remaining columns in the data frames have any common names,
   these have \code{suffixes} (\code{".x"} and \code{".y"} by default)
   appended to make the names of the result unique.
+
+  The current implementation uses a double loop over the rows of
+  \code{x} and \code{y} and so will be slow if both are very large and
+  there are relatively few matches (for example, if row pairs match at
+  most once).
 }
 \value{
   A data frame.  The rows are by default lexicographically sorted on the
