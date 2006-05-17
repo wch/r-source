@@ -13,9 +13,9 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
     Daniell smoothers to be used to smooth the periodogram.}
   \item{kernel}{alternatively, a kernel smoother of class
     \code{"tskernel"}.}
-  \item{taper}{proportion of data to taper.  A split cosine bell taper
-    is applied to this proportion of the data at the beginning and
-    end of the series.}
+  \item{taper}{specifies theproportion of data to taper.  A split
+    cosine bell taper is applied to this proportion of the data at the
+    beginning and end of the series.}
   \item{pad}{proportion of data to pad. Zeros are added to the end of
     the series to increase its length by the proportion \code{pad}.}
   \item{fast}{logical; if \code{TRUE}, pad the series to a highly composite
