@@ -422,7 +422,14 @@ other software.  It should be possible to read in the files using
 there need be no connection between the name of the file and the R
 objects created by it.  The @R{} code files should only create R objects
 and not call functions with side effects such as @code{require} and
-@code{options}.
+@code{options}.  For portable packages only ASCII characters (and the 
+control characters tab, formfeed, LF and CR) should be used in code
+files.  Other characters are accepted in comments, but then the comments
+may not be readable in e.g. a UTF-8 locale.  Non-ASCII characters in
+actual code (including in character strings) are liable to cause errors
+in some locales.  Using the @code{\uxxxx} notation in character
+strings is more (but not fully) portable as it allows the package to
+be installed in (for instance) Latin-1 and UTF-8 locales.
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of @R{} objects) this will be
@@ -1086,7 +1093,9 @@ To allow a @file{configure} script to generate suitable files, files
 ending in @samp{.in} will be allowed in the @file{R} directory.
 
 @item
-The R files are checked for syntax errors.
+The R files are checked for syntax errors.  Byte which are non-ASCII
+are reported as warnings, but these should be regarded as errors unless
+it is known that the package will always be used in the same locale.
 
 @item
 The R files are checked for correct calls to @code{library.dynam} (with

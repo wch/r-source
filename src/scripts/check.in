@@ -1081,7 +1081,8 @@ sub check_pkg {
     }
     $log->result("OK") unless $any;
 
-    ## Check R code for syntax errors.
+    ## Check R code for syntax errors and for non-ASCII chars which
+    ## might be syntax errors in some locales.
 
     if(!$is_base_pkg && (-d "R")) {
 	$log->checking("R files for syntax errors");
@@ -1102,6 +1103,16 @@ sub check_pkg {
 	    $log->print("Syntax error in file '$Rfile'\n");
 	    exit(1);
 	}
+	else {
+	    $log->result("OK");
+	}
+	$log->checking("R files for non-ASCII chars");
+	my @out = R_runR("tools:::.check_package_ASCII_code('.')",
+			 "${R_opts} --slave");
+	if(scalar(@out) > 0) {
+	    $log->warning();
+	    $log->print("Non-ASCII char(s) in file(s) '$out[0]'\n");
+	}	
 	else {
 	    $log->result("OK");
 	}
