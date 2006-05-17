@@ -15,9 +15,9 @@
     of object files which are automagically made from their sources,
     and archive (\code{*.a}) and library linking commands.
   }
-  \item{dllname}{the full name of the shared library to be built,
-    including the extension \file{.dll}.  If not given, the name of
-    the DLL is taken from the first source file.}
+  \item{dllname}{the name of the shared library to be built, optionally
+    including the extension \file{.dll}.  If not given, the name of the
+    DLL is taken from the first source or object file specified.}
   \item{options}{Further options to control the processing.  Use
     \code{R CMD SHLIB --help} for a current list.  The most useful one
     is \code{-d} to build a debug DLL.}
@@ -37,9 +37,7 @@
   Items in \code{files} with extensions \code{.c}, \code{.cpp},
   \code{.cc}, \code{.C}, \code{.f}, \code{.f90} and \code{f95} are
   regarded as source files, and those with extension \code{.o} as object
-  files.  All other items are passed to the linker: note that any linker
-  commands such as \code{-L} and \code{-l} should be preceded by
-  \code{--} to avoid interpretation as options.
+  files.  All other items are passed to the linker.
 }
 \seealso{
   \code{\link{dyn.load}}, \code{\link{library.dynam}}.

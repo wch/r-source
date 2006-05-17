@@ -8,16 +8,16 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R shared library builder ${version}
 
-Copyright (C) 2000-2005 The R Core Development Team.
+Copyright (C) 2000-2006 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
-usage="Usage: R CMD SHLIB [options] files
+usage="Usage: R CMD SHLIB [options] files|linker options
 
 Build a shared library for dynamic loading from the specified source or
 object files (which are automagically made from their sources) or 
-linker options -L, -lor *.a.  If not given via '--output', the name for 
-the library is determined from the first file.
+linker options.  If not given via '--output', the name for the shared
+library is determined from the first source of object file.
 
 Options:
   -h, --help		print short help message and exit

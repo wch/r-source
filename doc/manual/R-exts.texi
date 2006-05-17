@@ -4981,13 +4981,14 @@ for more information.
 @findex R CMD SHLIB
 
 Under Unix, shared objects for loading into @R{} can be created using
-@code{R CMD SHLIB}.  This accepts as arguments a list of files which
+@command{R CMD SHLIB}.  This accepts as arguments a list of files which
 must be object files (with extension @file{.o}) or C, C++, or FORTRAN
 sources (with extensions @file{.c}, @file{.cc} or @file{.cpp} or
-@file{.C}, and @file{.f}, respectively).  See @kbd{R CMD SHLIB --help},
-or the on-line help for @code{SHLIB}, for usage information.  If
-compiling the source files does not work ``out of the box'', you can
-specify additional flags by setting some of the variables
+@file{.C}, and @file{.f} or @file{.f90} or @file{.f95}, respectively) or
+commands to be passed to the linker.  See @kbd{R CMD SHLIB --help}, or
+the on-line help for @code{SHLIB}, for usage information.  If compiling
+the source files does not work ``out of the box'', you can specify
+additional flags by setting some of the variables
 @vindex PKG_CPPFLAGS
 @code{PKG_CPPFLAGS} (for the C preprocessor, typically @samp{-I} flags),
 @vindex PKG_CFLAGS
@@ -5002,7 +5003,8 @@ create the object files directly from the command line).
 Similarly, variable @code{PKG_LIBS} in @file{Makevars} can be used for
 additional @samp{-l} and @samp{-L} flags to be passed to the linker when
 building the shared object.  (On most systems the @code{PKG_*} flags can
-be set in the environment instead of in @file{Makevars}.)
+be set in the environment instead of in @file{Makevars}, but they can
+also be set as part of the command line of @command{R CMD SHLIB}.)
 
 Flags which are set in file @file{etc/Makeconf} can be overridden by the
 environment variable @env{MAKEFLAGS} (at least for systems using
