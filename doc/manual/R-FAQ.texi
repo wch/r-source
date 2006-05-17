@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-05-12
+@set FAQ_DATE @value{FAQ_YEAR}-05-16
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2346,6 +2346,8 @@ Beta regression for modeling rates and proportions.
 @item bicreduc
 Reduction algorithm for the NPMLE for the distribution function of
 bivariate interval-censored data.
+@item biglm
+Linear regression for data too large to fit in memory.
 @item bim
 Bayesian interval mapping diagnostics:  functions to interpret QTLCart
 and Bmapqtl samples.
@@ -3753,6 +3755,8 @@ State SPace models In R.
 @c Density, distribution, quantile and hazard functions of a stable
 @c variate; generalized linear models for the parameters of a stable
 @c distribution.
+@item startupmsg
+Utilities for start-up messages.
 @c <COMMENT>
 @c Merged into foreign.
 @c @item stataread
