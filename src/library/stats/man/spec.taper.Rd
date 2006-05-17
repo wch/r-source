@@ -6,25 +6,22 @@ spec.taper(x, p = 0.1)
 }
 \arguments{
  \item{x}{A univariate or multivariate time series}
- \item{p}{The total proportion to be tapered, either a scalar or a
-   vector of the length of the number of series.}
+ \item{p}{The proportion to be tapered at each end of the series,
+   either a scalar (giving the proportion for all series)
+   or a vector of the length of the number of series (giving the
+   proportion for each series..}
 }
 \description{
   Apply a cosine-bell taper to a time series.
 }
 \details{
-  The cosine-bell taper is applied to the first and last \code{p[i]/2}
+  The cosine-bell taper is applied to the first and last \code{p[i]}
   observations of time series \code{x[, i]}.
 }
 \value{
   A new time series object.
 }
-\author{Kurt Hornik, B.D. Ripley}
-\note{From package \pkg{MASS}.}
-
 \seealso{
-  \code{\link{spec.pgram}},
-  \code{\link{cpgram}}
+  \code{\link{spec.pgram}}, \code{\link{cpgram}}
 }
-
 \keyword{ts}
