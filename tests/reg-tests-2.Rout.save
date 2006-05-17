@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-05-16 r38076)
+R version 2.4.0 Under development (unstable) (2006-05-16 r38086)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5200,5 +5200,15 @@ arguments 'right', 'col' are not made use of in: hist.default(rnorm(100), plot =
 13  9 C  3
 14 10 D  2
 15 11 E  1
-> ## got factor y  wrong in 2.3.0
+> # got factor y  wrong in 2.3.0
+> # and failed with duplicated col names.
+> d1 <- data.frame(x=1:2, y=5:6, x=8:9, check.names=FALSE)
+> d2 <- data.frame(x=3:4, x=-(1:2), y=8:9, check.names=FALSE)
+> rbind(d1, d2)
+  x y  x
+1 1 5  8
+2 2 6  9
+3 3 8 -1
+4 4 9 -2
+> ## corrupt in 2.3.0
 > 
