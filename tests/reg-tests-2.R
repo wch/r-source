@@ -1805,3 +1805,15 @@ try(max(raw()))
 try(sum(raw()))
 try(prod(raw()))
 ## Inf, -Inf, list(NULL) etc in 2.2.1
+
+
+## rbind.data.frame on permuted cols (PR#8868)
+d1 <- data.frame(x=1:10, y=letters[1:10], z=1:10)
+d2 <- data.frame(y=LETTERS[1:5], z=5:1, x=7:11)
+rbind(d1, d2)
+# got factor y  wrong in 2.3.0
+# and failed with duplicated col names.
+d1 <- data.frame(x=1:2, y=5:6, x=8:9, check.names=FALSE)
+d2 <- data.frame(x=3:4, x=-(1:2), y=8:9, check.names=FALSE)
+rbind(d1, d2)
+## corrupt in 2.3.0

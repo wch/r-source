@@ -882,9 +882,14 @@ rbind.data.frame <- function(..., deparse.level = 1)
     {
 	if(all(clabs == nmi))
 	    NULL
-	else if(all(nii <- match(nmi, clabs, 0)))
-	    nii
-	else stop("names don't match previous names:\n\t",
+	else if(length(nmi) == length(clabs) &&
+                all(nii <- match(nmi, clabs, 0))) {
+            ## we need unique matches here
+	    m <- pmatch(nmi, clabs, 0)
+            if(any(m == 0))
+                stop("names do not match previous names")
+            m
+	} else stop("names do not match previous names:\n\t",
                   paste(nmi[nii == 0], collapse = ", "))
     }
     Make.row.names <- function(nmi, ri, ni, nrow)

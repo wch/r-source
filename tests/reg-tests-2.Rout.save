@@ -1,6 +1,6 @@
 
 R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Patched (2006-04-24 r37913)
+Version 2.3.0 Patched (2006-05-16 r38088)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -5171,4 +5171,37 @@ Error in sum(..., na.rm = na.rm) : invalid 'type' (raw) of argument
 > try(prod(raw()))
 Error in prod(..., na.rm = na.rm) : invalid 'type' (raw) of argument
 > ## Inf, -Inf, list(NULL) etc in 2.2.1
+> 
+> 
+> ## rbind.data.frame on permuted cols (PR#8868)
+> d1 <- data.frame(x=1:10, y=letters[1:10], z=1:10)
+> d2 <- data.frame(y=LETTERS[1:5], z=5:1, x=7:11)
+> rbind(d1, d2)
+    x y  z
+1   1 a  1
+2   2 b  2
+3   3 c  3
+4   4 d  4
+5   5 e  5
+6   6 f  6
+7   7 g  7
+8   8 h  8
+9   9 i  9
+10 10 j 10
+11  7 A  5
+21  8 B  4
+31  9 C  3
+41 10 D  2
+51 11 E  1
+> # got factor y  wrong in 2.3.0
+> # and failed with duplicated col names.
+> d1 <- data.frame(x=1:2, y=5:6, x=8:9, check.names=FALSE)
+> d2 <- data.frame(x=3:4, x=-(1:2), y=8:9, check.names=FALSE)
+> rbind(d1, d2)
+   x y  x
+1  1 5  8
+2  2 6  9
+11 3 8 -1
+21 4 9 -2
+> ## corrupt in 2.3.0
 > 
