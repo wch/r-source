@@ -15,9 +15,9 @@ or later for copying conditions.  There is NO warranty."
 usage="Usage: R CMD SHLIB [options] files
 
 Build a shared library for dynamic loading from the specified source or
-object files (which are automagically made from their sources).  If not
-given via '--output', the name for the library is determined from the
-first file.
+object files (which are automagically made from their sources) or 
+linker options -L, -lor *.a.  If not given via '--output', the name for 
+the library is determined from the first file.
 
 Options:
   -h, --help		print short help message and exit
@@ -35,6 +35,7 @@ shlib_libadd='@SHLIB_LIBADD@'
 with_cxx=false
 with_f77=false
 with_f9x=false
+pkg_libs=
 
 while test -n "${1}"; do
   case ${1} in
@@ -73,6 +74,9 @@ while test -n "${1}"; do
       fi
       objs="${objs} `echo ${1} | sed 's/\.[^\.][^\.]*$/.o/'`"
       ;;
+    *)
+      pkg_libs="${pkg_libs} ${1}"
+    ;;
   esac
   shift
 done
@@ -110,6 +114,9 @@ else
       makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS) ${shlib_libadd}'"
     fi
   fi
+fi
+if test -n "${pkg_libs}"; then
+  makeargs="${makeargs} PKG_LIBS='${pkg_libs}'"
 fi
 
 eval ${MAKE} ${makefiles} ${makeargs} ${makeobjs}

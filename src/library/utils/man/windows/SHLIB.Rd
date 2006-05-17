@@ -1,18 +1,20 @@
 \name{SHLIB}
+\alias{SHLIB}
 \title{Build a DLL for Dynamic Loading}
 \description{
   The given source files are first compiled.  All specified object files
   are then linked into a shared library which can be loaded into \R
   using \code{dyn.load} or \code{library.dynam}.
 }
-\alias{SHLIB}
 \usage{
 \special{R CMD SHLIB [options] [-o dllname] files}
 }
 \arguments{
   \item{files}{a list of names of (typically) source files to be
     compiled and included in the library.  You can also include the names
-    of object files which are automagically made from their sources.}
+    of object files which are automagically made from their sources,
+    and archive (\code{*.a}) and library linking commands.
+  }
   \item{dllname}{the full name of the shared library to be built,
     including the extension \file{.dll}.  If not given, the name of
     the DLL is taken from the first source file.}
@@ -31,6 +33,13 @@
   \sQuote{Writing R Extensions} for how to customize it (for example to
   add \code{cpp} flags and to add libraries to the link step) and for
   details of some of its quirks.
+
+  Items in \code{files} with extensions \code{.c}, \code{.cpp},
+  \code{.cc}, \code{.C}, \code{.f}, \code{.f90} and \code{f95} are
+  regarded as source files, and those with extension \code{.o} as object
+  files.  All other items are passed to the linker: note that any linker
+  commands such as \code{-L} and \code{-l} should be preceded by
+  \code{--} to avoid interpretation as options.
 }
 \seealso{
   \code{\link{dyn.load}}, \code{\link{library.dynam}}.
@@ -38,4 +47,7 @@
   The \sQuote{R Installation and Administration} and \sQuote{Writing R 
   Extensions} manuals.
 }
+\examples{\dontrun{
+rcmd SHLIB -o my.dll a.f b.f -- -L/AMD/acml3.1.0/gnu32/lib -lacml
+}}
 \keyword{utilities}

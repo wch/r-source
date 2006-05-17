@@ -131,6 +131,11 @@ C-LEVEL FACILITIES
 	non-zero non-NA values to TRUE.
 
 
+UTILITIES
+
+    o	R CMD SHLIB now handles (as linker commands) -L*, -l* and *.a.
+
+
 BUG FIXES
 
     o	The name of a Fortran symbol reported to be missing by
