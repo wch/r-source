@@ -56,9 +56,9 @@ sub R_version {
     my ($name, $version) = @_;
 
     print STDERR <<END;
-$name $version
+'$name' SVN revision $version
 
-Copyright (C) 1997-2005 R Core Development Team.
+Copyright (C) 1997-2006 R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty.
 END
