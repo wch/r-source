@@ -138,7 +138,7 @@ C-LEVEL FACILITIES
 UTILITIES
 
     o	R CMD SHLIB now handles (as linker commands) -L*, -l* and *.a.
- 
+
    o	R CMD check now warns if there are non-ASCII characters in the
 	R code (as these will likely be syntax errors in some locale).
 
@@ -182,7 +182,7 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.3.0 Patched
+		CHANGES IN R VERSION 2.3.1
 
 
 NEW FEATURES
