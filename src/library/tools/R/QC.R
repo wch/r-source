@@ -3555,7 +3555,7 @@ function(x, ...)
             if(any(bad)) wrong_things <- c(wrong_things, f)
         }
     }
-    if(length(wrong_things)) cat(wrong_things, "\n")
+    if(length(wrong_things)) cat(wrong_things, sep="\n")
     invisible(wrong_things)
 }
 

@@ -1106,12 +1106,16 @@ sub check_pkg {
 	else {
 	    $log->result("OK");
 	}
-	$log->checking("R files for non-ASCII chars");
+	$log->checking("R files for non-ASCII characters");
 	my @out = R_runR("tools:::.check_package_ASCII_code('.')",
 			 "${R_opts} --slave");
 	if(scalar(@out) > 0) {
 	    $log->warning();
-	    $log->print("Non-ASCII char(s) in file(s) '$out[0]'\n");
+	    $log->print(join(" ", @out)."\n");
+	    $log->print(wrap("", "",
+			     ("Portable packages must use only ASCII",
+			      "characters in their R code,\n",
+			      "except perhaps in comments.\n")));
 	}	
 	else {
 	    $log->result("OK");
