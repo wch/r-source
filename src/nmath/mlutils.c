@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2004 Ross Ihaka and the R Development Core Team
+ *  Copyright (C) 1998-2006 Ross Ihaka and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
+# undef fprintf
 #endif
 #include "nmath.h"
 
