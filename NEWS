@@ -95,6 +95,8 @@ NEW FEATURES
 	matches between the data frames (for example, for 1-1
 	matching).  The order of the result is changed for 'sort = FALSE'.
 
+    o	Added an as.data.frame method for class "ftable".
+
 
 DEPRECATED & DEFUNCT
 

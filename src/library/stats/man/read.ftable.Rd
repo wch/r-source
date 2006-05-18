@@ -1,7 +1,6 @@
 \name{read.ftable}
 \alias{read.ftable}
 \alias{write.ftable}
-\alias{as.table.ftable}
 \title{Manipulate Flat Contingency Tables}
 \description{Read, write and coerce \dQuote{flat} contingency tables.}
 \usage{
@@ -10,8 +9,6 @@ read.ftable(file, sep = "", quote = "\"",
 
 write.ftable(x, file = "", quote = TRUE, append = FALSE,
              digits = getOption("digits"))
-
-\method{as.table}{ftable}(x, \dots)
 }
 \arguments{
   \item{file}{either a character string naming a file or a connection
@@ -60,10 +57,6 @@ write.ftable(x, file = "", quote = TRUE, append = FALSE,
 
   \code{write.ftable} writes a flat table to a file, which is useful for
   generating \dQuote{pretty} ASCII representations of contingency tables.
-
-  \code{as.table.ftable} converts a contingency table in flat matrix
-  form to one in standard array form.  This is a method for the generic
-  function \code{as.table}.
 }
 \seealso{
   \code{\link{ftable}} for more information on flat contingency tables.

@@ -330,3 +330,6 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
               col.vars = col.vars,
               class = "ftable")
 }
+
+as.data.frame.ftable <- function(x, row.names = NULL, optional = FALSE)
+    as.data.frame(as.table(x), row.names, optional)
