@@ -23,14 +23,14 @@ table(\dots, exclude = c(NA, NaN), dnn = list.names(...),
 as.table(x, \dots)
 is.table(x)
 
-as.data.frame.table(x, row.names = NULL, optional = FALSE,
-                    responseName = "Freq")
+\method{as.data.frame}{table}(x, row.names = NULL, \dots,
+              responseName = "Freq")
 }
 \arguments{
   \item{\dots}{objects which can be interpreted as factors (including
     character strings), or a list (or data frame) whose components can
-    be so interpreted.  (For \code{as.table}, arguments passed to
-    specific methods.)}
+    be so interpreted.  (For \code{as.table} and \code{as.data.frame},
+    arguments passed to specific methods.)}
   \item{exclude}{values to use in the exclude argument of \code{\link{factor}}
     when interpreting non-factor objects; if specified, levels to remove
     from all factors in \code{\dots}.}
@@ -42,8 +42,6 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE,
     \code{"table"} for the \code{as.data.frame} method.}
   \item{row.names}{a character vector giving the row names for the data
     frame.}
-  \item{optional}{a logical controlling whether row names are set.
-    Currently not used.}
   \item{responseName}{The name to be used for the column of
     table entries, usually counts.}
 }
@@ -75,10 +73,6 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE,
 
   Only when \code{exclude} is specified (i.e., not by default), will
   \code{table} drop levels of factor arguments potentially.
-
-  Note that \code{as.data.frame.table} is also the \code{"table"} method
-  for \code{\link{as.data.frame}}, but the \code{responseName} argument
-  can only be given if it is called explicitly.
 }
 \seealso{Use \code{\link{ftable}} for printing (and more) of
   multidimensional tables.

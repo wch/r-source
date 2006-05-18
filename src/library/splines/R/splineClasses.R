@@ -313,8 +313,7 @@ asVector <- ## coerce object to a vector.
 
 asVector.xyVector <- function(object) object$y
 
-as.data.frame.xyVector <-
-    function(x, row.names, optional) data.frame(x = x$x, y = x$y)
+as.data.frame.xyVector <- function(x, ...) data.frame(x = x$x, y = x$y)
 
 plot.xyVector <- function(x, ...)
 {

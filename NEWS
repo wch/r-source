@@ -97,6 +97,8 @@ NEW FEATURES
 
     o	Added an as.data.frame method for class "ftable".
 
+    o	as.data.frame() gains a '...' argument.
+
 
 DEPRECATED & DEFUNCT
 

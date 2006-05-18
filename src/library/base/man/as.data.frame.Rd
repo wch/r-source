@@ -26,7 +26,7 @@
   Functions to check if an object is a data frame, or coerce it if possible.
 }
 \usage{
-as.data.frame(x, row.names = NULL, optional = FALSE)
+as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
 is.data.frame(x)
 }
 \arguments{
@@ -35,6 +35,7 @@ is.data.frame(x)
     names for the data frame.  Missing values are not allowed.}
   \item{optional}{logical. If \code{TRUE}, setting row names and
     converting column names (to syntactic names) is optional.}
+  \item{\dots}{additional arguments to be passed to or from methods.}
 }
 \value{
   \code{as.data.frame} returns a data frame, normally with all row names

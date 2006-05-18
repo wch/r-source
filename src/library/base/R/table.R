@@ -144,8 +144,8 @@ function(x, digits = max(1, getOption("digits") - 3), ...)
     invisible(x)
 }
 
-as.data.frame.table <- function(x, row.names = NULL, optional = FALSE,
-                                responseName = "Freq")
+as.data.frame.table <-
+    function(x, row.names = NULL, ..., responseName = "Freq")
 {
     x <- as.table(x)
     ex <- quote(data.frame(do.call("expand.grid", dimnames(x)),

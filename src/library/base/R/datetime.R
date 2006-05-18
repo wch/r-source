@@ -718,9 +718,9 @@ round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
     x
 }
 
-as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE, ...)
 {
-    value <- as.data.frame.POSIXct(as.POSIXct(x), row.names, optional)
+    value <- as.data.frame.POSIXct(as.POSIXct(x), row.names, optional, ...)
     if (!optional)
         names(value) <- deparse(substitute(x))[[1]]
     value

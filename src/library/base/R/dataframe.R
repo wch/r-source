@@ -81,12 +81,12 @@ dimnames.data.frame <- function(x) list(row.names(x), names(x))
     x
 }
 
-as.data.frame <- function(x, row.names = NULL, optional = FALSE) {
+as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...) {
     if(is.null(x))			# can't assign class to NULL
 	return(as.data.frame(list()))
     UseMethod("as.data.frame")
 }
-as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.default <- function(x, ...)
     stop(gettextf("cannot coerce class \"%s\" into a data.frame", class(x)),
          domain = NA)
 
@@ -94,7 +94,7 @@ as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
 ###  Here are methods ensuring that the arguments to "data.frame"
 ###  are in a form suitable for combining into a data frame.
 
-as.data.frame.data.frame <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.data.frame <- function(x, row.names = NULL, ...)
 {
     cl <- oldClass(x)
     i <- match("data.frame", cl)
@@ -111,7 +111,7 @@ as.data.frame.data.frame <- function(x, row.names = NULL, optional = FALSE)
 }
 
 ## prior to 1.8.0 this coerced names - PR#3280
-as.data.frame.list <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.list <- function(x, row.names = NULL, optional=FALSE, ...)
 {
     ## need to protect names in x.
     cn <- names(x)
@@ -132,7 +132,7 @@ as.data.frame.list <- function(x, row.names = NULL, optional = FALSE)
     x
 }
 
-as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     nrows <- length(x)
     nm <- paste(deparse(substitute(x), width.cutoff=500), collapse=" ")
@@ -152,12 +152,12 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
     value
 }
 
-as.data.frame.ts <- function(x, row.names=NULL, optional=FALSE)
+as.data.frame.ts <- function(x, ...)
 {
     if(is.matrix(x))
-	as.data.frame.matrix(x, row.names, optional)
+	as.data.frame.matrix(x, ...)
     else
-	as.data.frame.vector(x, row.names, optional)
+	as.data.frame.vector(x, ...)
 }
 
 as.data.frame.raw  <- as.data.frame.vector
@@ -167,12 +167,12 @@ as.data.frame.integer <- as.data.frame.vector
 as.data.frame.numeric <- as.data.frame.vector
 as.data.frame.complex <- as.data.frame.vector
 
-as.data.frame.character <- function(x, row.names = NULL, optional = FALSE)
-    as.data.frame.vector(factor(x), row.names, optional)
+as.data.frame.character <- function(x, ...)
+    as.data.frame.vector(factor(x), ...)
 
 as.data.frame.logical <- as.data.frame.vector
 
-as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     d <- dim(x)
     nrows <- d[1]; ir <- seq(length = nrows)
@@ -203,7 +203,8 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE)
     value
 }
 
-as.data.frame.model.matrix <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.model.matrix <-
+    function(x, row.names = NULL, optional = FALSE, ...)
 {
     d <- dim(x)
     nrows <- d[1]
@@ -224,15 +225,15 @@ as.data.frame.model.matrix <- function(x, row.names = NULL, optional = FALSE)
     value
 }
 
-as.data.frame.array <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.array <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     d <- dim(x)
     if(length(d) == 1) { ## same as as.data.frame.vector, but deparsed here
-        value <- as.data.frame.vector(drop(x), row.names, optional)
+        value <- as.data.frame.vector(drop(x), row.names, optional, ...)
         if(!optional) names(value) <- deparse(substitute(x))[[1]]
         value
     } else if (length(d) == 2) {
-        as.data.frame.matrix(x, row.names, optional)
+        as.data.frame.matrix(x, row.names, optional, ...)
     } else {
         dn <- dimnames(x)
         dim(x) <- c(d[1], prod(d[-1]))
@@ -242,14 +243,14 @@ as.data.frame.array <- function(x, row.names = NULL, optional = FALSE)
                 if(is.null(dn[[i]])) dn[[i]] <- seq(len=d[i])
             colnames(x) <- interaction(expand.grid(dn[-1]))
         }
-        as.data.frame.matrix(x, row.names, optional)
+        as.data.frame.matrix(x, row.names, optional, ...)
     }
 }
 
 ## will always have a class here
 "[.AsIs" <- function(x, i, ...) structure(NextMethod("["), class = class(x))
 
-as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     ## why not remove class and NextMethod here?
     if(length(dim(x))==2)
