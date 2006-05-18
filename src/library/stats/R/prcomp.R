@@ -7,6 +7,8 @@ prcomp.default <-
     x <- scale(x, center = center, scale = scale.)
     cen <- attr(x, "scaled:center")
     sc <- attr(x, "scaled:scale")
+    if(any(sc == 0))
+        stop("cannot rescale a constant/zero column to unit variance")
     s <- svd(x, nu = 0)
     s$d <- s$d / sqrt(max(1, nrow(x) - 1))
     if (!is.null(tol)) {
