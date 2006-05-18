@@ -1167,7 +1167,11 @@ The examples provided by the package's documentation are run.
 @code{\examples} to create executable example code.)
 
 Of course, released packages should be able to run at least their own
-examples.
+examples.  Each example is run in a `clean' environment (so earlier
+examples cannot be assumed to have been run), and with the variables
+@code{T} and @code{F} redefined to generate an error unless they are set
+in the example: @xref{Logical vectors, , Logical vectors, R-intro, An
+Introduction to R}.
 
 @item
 If the package sources contain a @file{tests} directory then the tests
