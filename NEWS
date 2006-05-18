@@ -88,19 +88,19 @@ BUG FIXES
 	which then used to reject them.)
 
     o	str() now is fast again for large character vectors.
-    
+
     o	edit() would default the environment of a function to .BaseEnv,
 	instead of to .GlobalEnv.
-    
+
     o	lm() and glm() coerce their 'weights' and 'offset' values to
 	vector to avoid problems with specifying them as 1D or n x 1
 	arrays.
-	
+
     o	image() with one or both axes on log scales would give a
 	spurious warning; contour() would give an error.
-	
+
     o	legend() with log axes would place the title in the wrong place.
-	
+
     o	edit.data.frame() was not returning factors edited with
 	factor.mode="numeric" to factors.
 
