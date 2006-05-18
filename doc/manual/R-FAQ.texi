@@ -3251,6 +3251,8 @@ Tools to create and modify network objects, which can represent a range
 of relational data types.
 @item neural
 RBF and MLP neural networks with graphical user interface.
+@item newallelic
+A fast, unbiased and exact allelic exact test.
 @item nice
 Get or set UNIX priority (niceness) of running R process.
 @item nlme
