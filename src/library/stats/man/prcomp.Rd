@@ -93,6 +93,9 @@ prcomp(x, \dots)
   is generally the preferred method for numerical accuracy.  The
   \code{print} method for the these objects prints the results in a nice
   format and the \code{plot} method produces a scree plot.
+
+  Note that \code{scale = TRUE} cannot be used if there are zero or
+  constant (for \code{center = TRUE}) variables.
 }
 \note{
   The signs of the columns of the rotation matrix are arbitrary, and

@@ -34,7 +34,8 @@ princomp(x, \dots)
   \item{x}{a numeric matrix or data frame which provides the data for the
     principal components analysis.}
   \item{cor}{a logical value indicating whether the calculation should
-    use the correlation matrix or the covariance matrix.}
+    use the correlation matrix or the covariance matrix.  (The
+    correlation matrix can only be used if there are no constant variables.)}
   \item{scores}{a logical value indicating whether the score on each
     principal component should be calculated.}
   \item{covmat}{a covariance matrix, or a covariance list as returned by
@@ -99,7 +100,7 @@ princomp(x, \dots)
   the scores (if requested): see \code{\link{napredict}}.
 
   \code{princomp} only handles so-called R-mode PCA, that is feature
-  extraction of variables. If a data matrix is supplied (possibly via a
+  extraction of variables.  If a data matrix is supplied (possibly via a
   formula) it is required that there are at least as many units as
   variables.  For Q-mode PCA use \code{\link{prcomp}}.
 }

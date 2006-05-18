@@ -61,6 +61,8 @@ princomp.default <-
     if(!is.numeric(cv)) stop("PCA applies only to numerical variables")
     if (cor) {
         sds <- sqrt(diag(cv))
+        if(any(sds == 0))
+            stop("cannot use cor=TRUE with a constant variable")
         cv <- cv/(sds %o% sds)
     }
     edc <- eigen(cv, symmetric = TRUE)
