@@ -56,6 +56,10 @@ isTRUE(x)
   outcome is ambiguous.  In other words \code{NA & TRUE} evaluates to
   \code{NA}, but \code{NA & FALSE} evaluates to \code{FALSE}.  See the
   examples below.
+
+  See \link{Syntax} for the precedence of these operators: unlike many
+  other languages (including S) the AND and OR operators do not have the
+  same precedence (the AND operators are higher than the OR operators).
 }
 \value{
   For \code{!}, a logical or raw vector of the same length as \code{x}.
