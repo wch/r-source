@@ -26,8 +26,8 @@ loading.)
 
 
 
-R 2.3.0 patched
-===============
+R 2.3.1
+=======
 
 In the GUI preferences editor, the font size can be set to values not
 in the drop down list.  (The number of choices in the list has been
