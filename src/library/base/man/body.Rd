@@ -17,7 +17,7 @@ body(fun, envir = parent.frame()) <- value
 \value{
   \code{body} returns the body of the function specified.
 
-  The assignment form sets the body of a function to the list on the
+  The replacement form sets the body of a function to the list on the
   right hand side.
 }
 \details{

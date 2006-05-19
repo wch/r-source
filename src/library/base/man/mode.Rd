@@ -24,7 +24,7 @@ storage.mode(x) <- value
   relying on the output of \code{\link{typeof}(x)}, see the example
   below.
 
-  The two assignment versions are currently identical.  Both
+  The two replacement versions are currently identical.  Both
   \code{mode(x) <- "newmode"} and \code{storage.mode(x) <- "newmode"} change
   the \code{mode} or \code{storage.mode} of object \code{x} to
   \code{newmode}.  This is only supported if there is an appropriate
@@ -35,8 +35,8 @@ storage.mode(x) <- value
 
   As storage mode \code{"single"} is only a pseudo-mode in \R, it will
   not be reported by \code{mode} or \code{storage.mode}: use
-  \code{attr(object, "Csingle")} to examine this. However, the
-  assignment versions can be used to set the mode to \code{"single"},
+  \code{attr(object, "Csingle")} to examine this.  However, the
+  replacement versions can be used to set the mode to \code{"single"},
   which sets the real mode to \code{"double"} and the \code{"Csingle"}
   attribute to \code{TRUE}. Setting any other mode will remove this
   attribute.

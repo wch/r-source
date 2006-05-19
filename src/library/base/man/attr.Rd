@@ -16,13 +16,12 @@ attr(x, which) <- value
   \item{value}{an object, the new value of the attribute.}
 }
 \value{
-  This function provides access to a single object attribute.  The
-  simple form above returns the value of the named attribute.  The
-  assignment form causes the named attribute to take the value on the
-  right of the assignment symbol.
+  These functions provide access to a single attribute of an object.  The
+  first form returns the value of the named attribute.  The
+  replacement form causes the named attribute to take the value specified.
 
-  The first form first looks for an exact match to \code{code} amongst the
-  attributed of \code{x}, then a partial match.  If no exact match is
+  The first form first looks for an exact match to \code{which} amongst the
+  attributes of \code{x}, then a partial match.  If no exact match is
   found and more than one partial match is found, the result is \code{NULL}.
 
   Note that some attributes (namely \code{class}, \code{comment},
