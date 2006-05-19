@@ -321,7 +321,7 @@ lazyload:
             (if test -s $(SPKG0)/R_PROFILE.R; then cat $(SPKG0)/R_PROFILE.R; fi; \
 	      $(ECHO) "invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); .getRequiredPackages(\"$(SPKG0)/DESCRIPTION\",useImports=TRUE); Sys.putenv('R_CROSS_BUILD'='$(R_X_BUILD)'); tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")") | \
 	      R_DEFAULT_PACKAGES=$(R_START_PACKAGES) \
-	      LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null || exit 1; \
+	      LC_ALL=C R_OSTYPE=windows $(REXE) > /dev/null || exit 1; \
 	    rm -f $(DPKG)/R/all.rda ; \
 	    if test -r install.R ; then \
 	      echo "WARNING:use of install.R is no longer supported" ; \
@@ -335,7 +335,7 @@ lazydata:
 	    $(ECHO)  "  preparing package $(PKG) for lazy data loading" ; \
 	    $(ECHO) "invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); tools:::data2LazyLoadDB(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
 	      R_CROSS_BUILD=$(R_X_BUILD) R_DEFAULT_PACKAGES=NULL \
-	      LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null  || exit 1; \
+	      LC_ALL=C R_OSTYPE=windows $(REXE) > /dev/null  || exit 1; \
 	  fi ; \
 	fi
 

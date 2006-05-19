@@ -13,6 +13,13 @@ The language for menus and messages can be set in the 'Rconsole' file and
 The initial setting for console buffering can be set in the 'Rconsole'
 file and (for future sessions) from the GUI preferences.
 
+Installing packages (in particular saving an image and preparing for
+lazy-loading and lazydata) is now done in a C locale for consistency
+with Unix.  (This will only possibly affect CJK locales, where some
+checks on the validity of symbols and strings might be
+locale-dependent.)
+
+
 C-level changes
 ---------------
 
