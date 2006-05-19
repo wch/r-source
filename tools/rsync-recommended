@@ -36,7 +36,7 @@ fi
     --exclude=Makefile.in --exclude=Makefile --exclude=".svn" \
     --exclude="CVS*" --exclude=.cvsignore --exclude="*.tgz" \
     "${CRAN_RSYNC}"/src/contrib/${version}/Recommended/ . || \
-    (echo "*** rsync failed to update Recommended files ***" && exit 1)
+    { echo "*** rsync failed to update Recommended files ***" && exit 1; }
 
   ## Link each package to a simplified name so that Make has an easier
   ## time.  Notice that as far as Make is concerned, the symlinks have
