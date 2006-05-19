@@ -468,6 +468,21 @@ for system datasets that are not intended to be user-accessible via
 @file{R} directory to allow a @file{configure} script to generate
 suitable files,
 
+Only ASCII characters (and the control characters tab, formfeed, LF and
+CR) should be used in code files.  Other characters are accepted in
+comments, but then the comments may not be readable in e.g. a UTF-8
+locale.  Non-ASCII characters in object names will
+normally@footnote{This is true for OSes which implement the @samp{C}
+locale, unless neither lazy-loading nor saving an image are used, in
+which case it would fail if loaded in a @samp{C} locale. (Windows' idea
+of the @samp{C} locale uses the WinAnsi charset.)} fail when the
+package is installed.  Any byte will be allowed@footnote{It is good
+practice to encode them as octal or hex escape sequences.} in a quoted
+character string (but @code{\uxxxx} escapes should not be used), but
+non-ASCII character strings may not be usable in some locales and may
+display incorrectly in others.
+
+
 @findex .First.lib
 @findex .Last.lib
 @findex library.dynam
@@ -4831,13 +4846,14 @@ for more information.
 @findex R CMD SHLIB
 
 Under Unix, shared objects for loading into @R{} can be created using
-@code{R CMD SHLIB}.  This accepts as arguments a list of files which
+@command{R CMD SHLIB}.  This accepts as arguments a list of files which
 must be object files (with extension @file{.o}) or C, C++, or FORTRAN
 sources (with extensions @file{.c}, @file{.cc} or @file{.cpp} or
-@file{.C}, and @file{.f}, respectively).  See @kbd{R CMD SHLIB --help},
-or the on-line help for @code{SHLIB}, for usage information.  If
-compiling the source files does not work ``out of the box'', you can
-specify additional flags by setting some of the variables
+@file{.C}, and @file{.f} or @file{.f90} or @file{.f95}, respectively).
+See @kbd{R CMD SHLIB --help}, or the on-line help for @code{SHLIB}, for
+usage information.  If compiling the source files does not work ``out of
+the box'', you can specify additional flags by setting some of the
+variables
 @vindex PKG_CPPFLAGS
 @code{PKG_CPPFLAGS} (for the C preprocessor, typically @samp{-I} flags),
 @vindex PKG_CFLAGS
@@ -8856,7 +8872,7 @@ The programming and session management utilities
 @example
 @group
 debug    undebug    trace  untrace
-browser  proc.time
+browser  proc.time  gc.time
 @end group
 @end example
 
@@ -8887,13 +8903,11 @@ efficiency reasons:
 :          ~          c           list
 call       as.call    as.character
 expression  substitute  as.environment
-invisible
+UseMethod  invisible  standardGeneric
 .C         .Fortran   .Call       .External
 .Call.graphics        .External.graphics
-.subset    .subset2
-.primTrace            .primUntrace
-reg.finalizer         gc.time
-UseMethod             standardGeneric
+.subset    .subset2   .primTrace  .primUntrace
+reg.finalizer
 @end group
 @end example
 
