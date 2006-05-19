@@ -4,12 +4,12 @@
 See the file NEWS for changes that affect all versions of R.
 
 
-R 2.3.0 patched
-===============
+R 2.3.1
+=======
 
-The font size can be set to values not in the drop down list.  (The
-number of choices in the list was also increased.)  Font names not in
-the list can be chosen.
+In the GUI preferences editor, the font size can be set to values not
+in the drop down list.  (The number of choices in the list has been
+increased.)  Font names not in the drop-down font list can be chosen.
 
 The MinGW C function wcrtomb was only working for Latin-1 characters,
 and it had been replaced.  This affected the specification of 'pch' as
