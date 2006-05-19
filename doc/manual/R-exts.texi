@@ -5005,7 +5005,7 @@ Under Unix, shared objects for loading into @R{} can be created using
 @command{R CMD SHLIB}.  This accepts as arguments a list of files which
 must be object files (with extension @file{.o}) or C, C++, or FORTRAN
 sources (with extensions @file{.c}, @file{.cc} or @file{.cpp} or
-@file{.C}, and @file{.f} or @file{.f90} or @file{.f95}, respectively) or
+!@file{.C}, and @file{.f} or @file{.f90} or @file{.f95}, respectively) or
 commands to be passed to the linker.  See @kbd{R CMD SHLIB --help}, or
 the on-line help for @code{SHLIB}, for usage information.  If compiling
 the source files does not work ``out of the box'', you can specify
@@ -9029,7 +9029,7 @@ The programming and session management utilities
 @example
 @group
 debug    undebug    trace  untrace
-browser  proc.time
+browser  proc.time  gc.time
 @end group
 @end example
 

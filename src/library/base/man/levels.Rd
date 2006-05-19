@@ -13,7 +13,7 @@ levels(x) <- value
   The first form returns the value of the levels of its argument
   and the second sets the attribute.
 
-  The assignment form (\code{"levels<-"}) of \code{levels} is a generic
+  The replacement form (\code{"levels<-"}) of \code{levels} is a generic
   function and new methods can be written for it.
   The most important method is that for \code{\link{factor}}s:
 }
@@ -26,7 +26,7 @@ levels(x) <- value
     rename the levels.}
 }
 \details{
-  For the factor assignment method, a \code{NA} in \code{value}
+  For the factor replacement method, a \code{NA} in \code{value}
   causes that level to be removed from the levels and the elements
   formerly with that level to be replaced by \code{NA}.
 }

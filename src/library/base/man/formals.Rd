@@ -18,7 +18,7 @@ formals(fun, envir = parent.frame()) <- value
   \code{formals} returns the formal argument list of the function
   specified.
 
-  The assignment form sets the formals of a function to the list on the
+  The replacment form sets the formals of a function to the list on the
   right hand side.
 }
 \details{

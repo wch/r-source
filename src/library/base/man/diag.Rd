@@ -30,7 +30,7 @@ diag(x) <- value
   dimension of the returned matrix can be specified by \code{nrow} and
   \code{ncol} (the default is square).
 
-  The assignment form sets the diagonal of the matrix \code{x} to the
+  The replacement form sets the diagonal of the matrix \code{x} to the
   given value(s).
 }
 \note{
