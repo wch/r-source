@@ -173,6 +173,10 @@ BUG FIXES
 	that the inheritance is fixed when the method containing the
 	callNextMethod() is installed.	See Details in the documentation.
 
+    o	UseMethod() looked for the defining environment of 'generic' as if
+	it were the current function, although some functions are 
+	generic for methods of a different generic.
+
 
 
 	**************************************************

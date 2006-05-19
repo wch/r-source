@@ -712,9 +712,6 @@ Rboolean R_HasFancyBindings(SEXP rho);
 void Rf_errorcall(SEXP, const char*, ...);
 void Rf_warningcall(SEXP, const char*, ...);
 
-/* Experimental Changes in Dispatching */
-void R_SetUseNamespaceDispatch(Rboolean val);
-
 /* Save/Load Interface */
 #define R_XDR_DOUBLE_SIZE 8
 #define R_XDR_INTEGER_SIZE 4
