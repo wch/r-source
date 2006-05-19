@@ -177,6 +177,8 @@ BUG FIXES
 	it were the current function, although some functions are 
 	generic for methods of a different generic.
 
+	Lookup for S3 methods is confined to functions.
+
 
 
 	**************************************************
