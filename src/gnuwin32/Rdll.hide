@@ -126,7 +126,6 @@
  R_TextBufferGetc
  R_TextBufferInit
  R_ToplevelExec
- R_UseNamespaceDispatch
  R_VSize
  R_Verbose
  R_WarnLength
