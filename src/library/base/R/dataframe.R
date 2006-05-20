@@ -169,7 +169,8 @@ as.data.frame.integer <- as.data.frame.vector
 as.data.frame.numeric <- as.data.frame.vector
 as.data.frame.complex <- as.data.frame.vector
 
-as.data.frame.character <- function(x, ..., charToFactor = TRUE)
+as.data.frame.character <-
+    function(x, ..., charToFactor = getOption("charToFactor"))
     as.data.frame.vector(if(charToFactor) factor(x) else x, ...)
 
 as.data.frame.logical <- as.data.frame.vector
@@ -282,7 +283,7 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
 
 data.frame <-
     function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE,
-             charToFactor = TRUE)
+             charToFactor = getOption("charToFactor"))
 {
     data.row.names <-
 	if(check.rows && missing(row.names))

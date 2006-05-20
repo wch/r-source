@@ -1,7 +1,7 @@
 example <-
 function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
-         ask = echo && dev.interactive(orNone = TRUE),
+         ask = getOption("example.ask"),
 	 prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
     topic <- substitute(topic)
@@ -56,6 +56,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     if(length(grep("^### Encoding: ", zz)) > 0 &&
        !identical(Sys.getlocale("LC_CTYPE"), "C"))
 	encoding <- substring(zz, 15)
+    if(ask == "default") ask <- echo && dev.interactive(orNone = TRUE)
     if(ask) {
 	if(.Device == "null device") {
 	    def.dev <- getOption("device")

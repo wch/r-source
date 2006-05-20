@@ -52,7 +52,10 @@ getOption(x)
       many (simulated) smooths should be added.  This is currently only
       used by \code{\link[stats]{plot.lm}}.}
 
-    \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
+    \item{\code{charToFactor}:}{The default setting for arguments of
+      \code{\link{data.frame}} and \code{\link{read.table}}.}
+
+      \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
       true, a \link{warning} is produced whenever a \dQuote{generalized
       vector} (atomic or \code{\link{list}}) is extended, by something
       like \code{x <- 1:3; x[5] <- 6}.}
@@ -355,6 +358,9 @@ getOption(x)
     \item{\code{editor}:}{sets the default text editor, e.g., for
       \code{\link{edit}}.  Set from the environment variable
       \code{VISUAL} on UNIX.}
+
+    \item{\code{example.ask}:}{default for the \code{ask} argument of
+      \code{\link{example}}.}
 
     \item{\code{help.try.all.packages}:}{default for an argument of
       \code{\link{help}}.}

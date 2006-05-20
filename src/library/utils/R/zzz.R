@@ -8,7 +8,8 @@
         list(help.try.all.packages = FALSE,
              internet.info = 2,
              pkgType = .Platform$pkgType,
-             str = list(strict.width = "no"))
+             str = list(strict.width = "no"),
+             example.ask = "default")
     extra <-
         if(.Platform$OS.type == "windows") {
             list(mailer = "none",

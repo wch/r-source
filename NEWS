@@ -68,7 +68,8 @@ NEW FEATURES
 	(even if the graph crosses a DST change).
 
     o	example() gains an argument 'ask' which defaults to "TRUE when
-	sensible".
+	sensible", but the default can be overridden by setting option
+	'example.ask'.
 
     o	dev.interactive() now has an optional argument 'orNone'.
 

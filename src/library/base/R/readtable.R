@@ -20,7 +20,7 @@ function(x, na.strings = "NA", as.is = FALSE, dec = ".")
 
 read.table <-
 function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
-         row.names, col.names, as.is = FALSE,
+         row.names, col.names, as.is = !getOption("charToFactor"),
          na.strings = "NA", colClasses = NA,
          nrows = -1, skip = 0,
          check.names = TRUE, fill = !blank.lines.skip,

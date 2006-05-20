@@ -9,7 +9,7 @@
 }
 \usage{
 data.frame(\dots, row.names = NULL, check.rows = FALSE,
-           check.names = TRUE, charToFactor = TRUE)
+           check.names = TRUE, charToFactor = getOption("charToFactor"))
 }
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
