@@ -77,7 +77,7 @@ NEW FEATURES
 
     o	pie() now allows expressions for 'labels'.
 
-    o	hist(*, plot=FALSE) now warns about unused arguments.
+    o	hist(*, plot = FALSE) now warns about unused arguments.
 
     o	Experimental support for memory-use profiling via Rprof(),
 	summaryRprof(), Rprofmem() and tracemem().
@@ -98,6 +98,8 @@ NEW FEATURES
     o	Added an as.data.frame method for class "ftable".
 
     o	as.data.frame() gains a '...' argument.
+
+    o	data.frame() has a new argument 'charToFactor'.
 
 
 DEPRECATED & DEFUNCT

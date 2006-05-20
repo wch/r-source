@@ -27,6 +27,8 @@
 }
 \usage{
 as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
+\method{as.data.frame}{character}(x, \dots, charToFactor = TRUE)
+
 is.data.frame(x)
 }
 \arguments{
@@ -36,6 +38,8 @@ is.data.frame(x)
   \item{optional}{logical. If \code{TRUE}, setting row names and
     converting column names (to syntactic names) is optional.}
   \item{\dots}{additional arguments to be passed to or from methods.}
+  \item{charToFactor}{logical: should the character vector be converted
+    to a factor?}
 }
 \value{
   \code{as.data.frame} returns a data frame, normally with all row names

@@ -9,11 +9,11 @@
 }
 \usage{
 data.frame(\dots, row.names = NULL, check.rows = FALSE,
-           check.names = TRUE)
+           check.names = TRUE, charToFactor = TRUE)
 }
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
-    \code{tag=value}.  Component names are created based on the tag (if
+    \code{tag = value}.  Component names are created based on the tag (if
     present) or the deparsed argument itself.}
   \item{row.names}{\code{NULL} or a single integer or character string
     specifying a column to be used as row names, or a character or
@@ -25,6 +25,8 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE,
     syntactically valid variable names and are not duplicated.
     If necessary they are adjusted (by \code{\link{make.names}})
     so that they are.}
+  \item{charToFactor}{logical: should the character vector be converted
+    to a factor?}
 }
 \value{
   A data frame, a matrix-like structure whose columns may be of

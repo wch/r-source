@@ -86,6 +86,7 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...) {
 	return(as.data.frame(list()))
     UseMethod("as.data.frame")
 }
+
 as.data.frame.default <- function(x, ...)
     stop(gettextf("cannot coerce class \"%s\" into a data.frame", class(x)),
          domain = NA)
@@ -111,11 +112,12 @@ as.data.frame.data.frame <- function(x, row.names = NULL, ...)
 }
 
 ## prior to 1.8.0 this coerced names - PR#3280
-as.data.frame.list <- function(x, row.names = NULL, optional=FALSE, ...)
+as.data.frame.list <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     ## need to protect names in x.
     cn <- names(x)
-    m <- match(c("row.names", "check.rows", "check.names"), cn, 0)
+    m <- match(c("row.names", "check.rows", "check.names", "charToFactor"),
+               cn, 0)
     if(any(m > 0)) {
         cn[m] <- paste("..adfl.", cn[m], sep="")
         names(x) <- cn
@@ -135,7 +137,7 @@ as.data.frame.list <- function(x, row.names = NULL, optional=FALSE, ...)
 as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     nrows <- length(x)
-    nm <- paste(deparse(substitute(x), width.cutoff=500), collapse=" ")
+    nm <- paste(deparse(substitute(x), width.cutoff = 500), collapse=" ")
     if(is.null(row.names)) {
 	if (nrows == 0)
 	    row.names <- character(0)
@@ -167,8 +169,8 @@ as.data.frame.integer <- as.data.frame.vector
 as.data.frame.numeric <- as.data.frame.vector
 as.data.frame.complex <- as.data.frame.vector
 
-as.data.frame.character <- function(x, ...)
-    as.data.frame.vector(factor(x), ...)
+as.data.frame.character <- function(x, ..., charToFactor = TRUE)
+    as.data.frame.vector(if(charToFactor) factor(x) else x, ...)
 
 as.data.frame.logical <- as.data.frame.vector
 
@@ -279,7 +281,8 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
 ###  It does everything by calling the methods presented above.
 
 data.frame <-
-    function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE)
+    function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE,
+             charToFactor = TRUE)
 {
     data.row.names <-
 	if(check.rows && missing(row.names))
@@ -318,7 +321,12 @@ data.frame <-
     vlist <- vnames <- as.list(vnames)
     nrows <- ncols <- integer(n)
     for(i in 1:n) {
-	xi <- as.data.frame(x[[i]], optional=TRUE)
+        ## do it this way until all as.data.frame methods have been updated
+	xi <- if(is.character(x[[i]]))
+                 as.data.frame(x[[i]], optional = TRUE,
+                               charToFactor = charToFactor)
+        else as.data.frame(x[[i]], optional = TRUE)
+
 	rowsi <- attr(xi, "row.names")
 	ncols[i] <- length(xi)
 	namesi <- names(xi)
