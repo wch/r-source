@@ -81,14 +81,16 @@ double dnt(double x, double df, double ncp, int give_log)
     if(!R_FINITE(df) || df > 1e8)
 	return dnorm(x, ncp, 1., give_log);
 
-    /* Consider two cases: x==0 or not */
     /* Do calculations on log scale to stabilize */
-    if (x != 0) {
+
+    /* Consider two cases: x ~= 0 or not */
+    if (fabs(x) > sqrt(df * DBL_EPSILON)) {
 	u = log(df) - log(fabs(x)) +
 	    log(fabs(pnt(x*sqrt((df+2)/df), df+2, ncp, 1, 0) -
 		     pnt(x, df, ncp, 1, 0)));
+	/* FIXME: the above still suffers from cancellation (but not horribly) */
     }
-    else {
+    else {  /* x ~= 0 : -> same value as for  x = 0 */
 	u = lgammafn((df+1)/2) - lgammafn(df/2)
 	    - .5*(log(M_PI) + log(df) + ncp*ncp);
     }

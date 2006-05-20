@@ -515,8 +515,12 @@ dt(1, 1e6, ncp=1)
 dt(1, 1e7, ncp=1)
 dt(1, 1e8, ncp=1)
 dt(1, 1e10, ncp=1) # = Inf
-options(oo)
 ## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.
+
+sml.x <- c(10^-c(2:8,100), 0)
+cbind(x = sml.x, `dt(x,*)` = dt(sml.x, df = 2, ncp=1))
+## small 'x' used to suffer from cancellation
+options(oo)
 
 ## PR#7099 : pf() with large df1 or df2:
 nu <- 2^seq(25,34, 0.5)
