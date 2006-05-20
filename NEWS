@@ -177,7 +177,7 @@ BUG FIXES
 	callNextMethod() is installed.	See Details in the documentation.
 
     o	UseMethod() looked for the defining environment of 'generic' as if
-	it were the current function, although some functions are 
+	it were the current function, although some functions are
 	generic for methods of a different generic.
 
 	Lookup for S3 methods is confined to functions.
@@ -326,6 +326,9 @@ BUG FIXES
 
 	If rbind() was used on data frames with duplicated names it
 	produced a corrupt data frame.
+
+    o	dt(x, df, ncp= not.0) now longer gives erratic values for
+	|x| < ~1e-12.  (PR#8874)
 
 
 
