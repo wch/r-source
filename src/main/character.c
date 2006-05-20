@@ -1325,7 +1325,10 @@ static SEXP gregexpr_Regexc(const regex_t *reg, const char *string,
             st = regmatch[0].rm_so;
             INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
             INTEGER(matchlenbuf)[matchIndex] = regmatch[0].rm_eo - st;
-            offset = st + 1;
+            if (INTEGER(matchlenbuf)[matchIndex] == 0)
+                offset = st + 1;
+            else
+                offset = regmatch[0].rm_eo;
 #ifdef SUPPORT_MBCS
             if(!useBytes && mbcslocale) {
                 int mlen = regmatch[0].rm_eo - st;
@@ -1402,8 +1405,8 @@ static SEXP gregexpr_fixed(char *pattern, char *string, int useBytes)
         INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
         INTEGER(matchlenbuf)[matchIndex] = patlen;
         while(!foundAll) {
-            string += st + 1;
-            curpos += st + 1;
+            string += st + patlen;
+            curpos += st + patlen;
             st = fgrep_one(pattern, string, useBytes);
             if (st >= 0) {
                 if ((matchIndex + 1) == bufsize) {
