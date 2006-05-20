@@ -66,10 +66,10 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
     if(!R_FINITE(t))
 	return (t < 0) ? R_DT_0 : R_DT_1;
     if (t >= 0.) {
-	negdel = FALSE;	tt = t;		del = delta;
+	negdel = FALSE; tt = t;	 del = delta;
     }
     else {
-	negdel = TRUE;		tt = -t;	del = -delta;
+	negdel = TRUE;	tt = -t; del = -delta;
     }
 
     if (df > 4e5 || del*del > 2*M_LN2*(-(DBL_MIN_EXP))) {
@@ -113,12 +113,13 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 	s = .5 - p;
 	a = .5;
 	b = .5 * df;
-	rxb = pow(1. - x, b);
+	rxb = pow(1. - x, b); /* ~ 1 - b*x for tiny x */
 	albeta = M_LN_SQRT_PI + lgammafn(b) - lgammafn(.5 + b);
 	xodd = pbeta(x, a, b, /*lower*/TRUE, /*log_p*/FALSE);
 	godd = 2. * rxb * exp(a * log(x) - albeta);
-	xeven = 1. - rxb;
-	geven = b * x * rxb;
+	tnc = b * x;
+	xeven = (tnc < DBL_EPSILON) ? tnc : 1. - rxb;
+	geven = tnc * rxb;
 	tnc = p * xodd + q * xeven;
 
 	/* repeat until convergence or iteration limit */
