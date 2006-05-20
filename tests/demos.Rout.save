@@ -1,6 +1,6 @@
 
-R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2006-03-12 r37517)
+R version 2.4.0 Under development (unstable) (2006-05-16 r38074)
+Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -598,16 +598,13 @@ In addition: Warning messages:
 	demo(graphics)
 	---- ~~~~~~~~
 
-> require(graphics)
-[1] TRUE
-
 > require(datasets)
 [1] TRUE
 
-> if (dev.cur() <= 1) get(getOption("device"))()
+> require(graphics)
+[1] TRUE
 
-> opar <- par(ask = interactive() && (.Device %in% c("X11", 
-    "GTK", "gnome", "windows", "quartz")))
+> opar <- par(ask = dev.interactive(orNone = TRUE))
 
 > x <- rnorm(50)
 
@@ -778,16 +775,13 @@ In addition: Warning messages:
 	demo(image)
 	---- ~~~~~
 
-> require(graphics)
-[1] TRUE
-
 > require(datasets)
 [1] TRUE
 
-> if (dev.cur() <= 1) get(getOption("device"))()
+> require(graphics)
+[1] TRUE
 
-> opar <- par(ask = interactive() && (.Device %in% c("X11", 
-    "GTK", "windows", "quartz")))
+> opar <- par(ask = dev.interactive(orNone = TRUE))
 
 > x <- 10 * (1:nrow(volcano))
 
@@ -882,18 +876,13 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 	demo(persp)
 	---- ~~~~~
 
-> require(graphics)
-[1] TRUE
-
 > require(datasets)
 [1] TRUE
 
-> if (dev.cur() <= 1) get(getOption("device"))()
+> require(graphics)
+[1] TRUE
 
-> is.dev.interactive <- .Device %in% c("X11", "GTK", 
-    "gnome", "quartz", "windows", "JavaGD")
-
-> op <- par(ask = is.dev.interactive)
+> opar <- par(ask = dev.interactive(orNone = TRUE))
 
 > x <- seq(-10, 10, length = 50)
 
@@ -988,7 +977,7 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 > persp(x, y, 2 * z, theta = 110, phi = 40, col = fcol, 
     scale = FALSE, ltheta = -120, shade = 0.4, border = NA, box = FALSE)
 
-> par(op)
+> par(opar)
 
 
 	demo(glm.vr)
@@ -1267,5 +1256,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.89 0.06 1.97 0 0 
+Time elapsed:  1.902 0.076 2.036 0 0 
 > 
