@@ -353,11 +353,21 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
            mycoef <- function(x) stop("not this one")
            UseMethod("mycoef")
        }
+
+	The generic need not be a closure (Henrik Bengtsson writes
+	UseMethod("$"), although only functions are documented.)
     */
     val = findVar1(install(CHAR(STRING_ELT(generic, 0))), ENCLOS(env),
-		   CLOSXP, TRUE); /* That has evaluated promises */
-    defenv = CLOENV(val);
-    
+		   FUNSXP, TRUE); /* That has evaluated promises */
+    if(TYPEOF(val) == CLOSXP) defenv = CLOENV(val);
+    else defenv = ENCLOS(env);
+/*
+    if(defenv !=  ENCLOS(env)) {
+        printf("*** problem ***\n");
+	PrintValue(generic);
+	PrintValue(ENCLOS(env));
+    }
+*/  
 
     if (nargs > 2)  /* R-lang says there should be a warning */
 	warningcall(call, _("arguments after the first two are ignored"));
