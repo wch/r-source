@@ -146,12 +146,15 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                                load(zfile, envir = envir),
                                TXT = , txt = , tab =
                                assign(name,
-                                      read.table(zfile, header = TRUE),
+                                      ## ensure default has not been
+                                      ## overridden by options(charToFactor)
+                                      read.table(zfile, header = TRUE,
+                                                 as.is = FALSE),
                                       envir = envir),
                                CSV = , csv =
                                assign(name,
                                       read.table(zfile, header = TRUE,
-                                                 sep = ";"),
+                                                 sep = ";", as.is = FALSE),
                                       envir = envir),
                                found <- FALSE)
                     }
