@@ -15,8 +15,8 @@ UseMethod(generic, object)
 NextMethod(generic = NULL, object = NULL, \dots)
 }
 \arguments{
-  \item{generic}{a character string naming a function. Required for
-    \code{UseMethod}.}
+  \item{generic}{a character string naming a function (and not a
+    built-in operator).  Required for \code{UseMethod}.}
   \item{object}{for \code{UseMethod}: an object whose class will
     determine the method to be dispatched.  Defaults to the first
     argument of the enclosing function.}
@@ -33,13 +33,14 @@ NextMethod(generic = NULL, object = NULL, \dots)
   that integer vectors have class \code{c("integer", "numeric")} and
   real vectors have class \code{c("double", "numeric")}.
 
-  When a generic function \code{fun} is applies to an object with class
-  attribute \code{c("first", "second")}, the system searches for a
-  function called \code{fun.first} and, if it finds it, applied it to
-  the object.  If no such function is found a function called
-  \code{fun.second} is tried.  If no class name produces a suitable
-  function, the function \code{fun.default} is used, if it exists, or an
-  error results.
+  When a function calling \code{UseMethod("fun")} is applied to an
+  object with class attribute \code{c("first", "second")}, the system
+  searches for a function called \code{fun.first} and, if it finds it,
+  applies it to the object.  If no such function is found a function
+  called \code{fun.second} is tried.  If no class name produces a
+  suitable function, the function \code{fun.default} is used, if it
+  exists, or an error results.  [Prior to \R 2.4.0, any object of the
+  name is searched for, but only if a function is found is it used.]
 
   Function \code{\link{methods}} can be used to find out about the
   methods for a particular generic function or class.
@@ -91,8 +92,8 @@ NextMethod(generic = NULL, object = NULL, \dots)
   environment in which the generic is defined (typically a name space).
   So methods for a generic function need to either be available in the
   environment of the call to the generic, or they must be registered.
-  It does not matter whether they are visible in the environment in
-  which the generic is defined.
+  (It does not matter whether they are visible in the environment in
+  which the generic is defined.)
 }
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,
@@ -104,6 +105,16 @@ NextMethod(generic = NULL, object = NULL, \dots)
   meant for \R internal use only.
 }
 \section{Warning}{
+  The internal code assumes that when \code{UseMethod} is used that
+  \code{"generic"} is the name of the enclosing function, and so any
+  registered methods will be found in the name space defining the
+  enclosing function.  This is not correct, and functions can be generic
+  and dispatch on a different generic (an example is
+  \code{\link{coefficients}}): this will only work if the other generic
+  is defined in the same name space.  It also means that it is incorrect
+  to use a \link{primitive} function or operator (e.g. \code{"$"}) for
+  \code{generic}.
+
   Prior to \R 2.1.0 \code{UseMethod} accepted a call with no arguments
   and tried to deduce the generic from the context.  This was
   undocumented on the help page.  It is allowed but
