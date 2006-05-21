@@ -27,7 +27,7 @@
 }
 \usage{
 as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
-\method{as.data.frame}{character}(x, \dots, charToFactor = TRUE)
+\method{as.data.frame}{character}(x, \dots, charToFactor = getOption("charToFactor"))
 
 is.data.frame(x)
 }
