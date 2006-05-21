@@ -6,6 +6,7 @@
 \alias{.getRequiredPackages}
 \alias{.getRequiredPackages2}
 \alias{testPlatformEquivalence}
+\alias{.isMethodsDispatchOn}
 
 \title{Internal Functions in the Base Package}
 \description{
@@ -27,6 +28,8 @@
                       useImports = FALSE)
 
 testPlatformEquivalence(built, run)
+
+.isMethodsDispatchOn()
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -86,6 +89,10 @@ testPlatformEquivalence(built, run)
   The default function omits the \code{vendor} part and allows small 
   mismatches elsewhere.  Cognescenti can replace this function in the
   \code{base} namespace.
+
+  The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if
+  the S4 method dispatch has been turned on in the evaluator (usually by
+  loading package \pkg{methods}).  It is meant for \R internal use only.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character
