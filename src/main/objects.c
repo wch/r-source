@@ -360,7 +360,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     val = findVar1(install(CHAR(STRING_ELT(generic, 0))), ENCLOS(env),
 		   FUNSXP, TRUE); /* That has evaluated promises */
     if(TYPEOF(val) == CLOSXP) defenv = CLOENV(val);
-    else defenv = R_BaseNameSpace;
+    else defenv = R_BaseNamespace;
 /*
     if(defenv !=  ENCLOS(env)) {
         printf("*** problem ***\n");
