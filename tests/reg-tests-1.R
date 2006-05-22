@@ -4226,3 +4226,10 @@ DF <- data.frame(col=1:3)
 DF2 <- merge(DF, DF, by=numeric(0))
 stopifnot(identical(names(DF2), c("col.x", "col.y")))
 ## both were 'col' in 2.3.0.
+
+
+## Looking up generic in UseMethod
+mycoef <- function(object, ....) UseMethod("coef")
+x <- list(coefficients=1:3)
+mycoef(x)
+## failed to find default method < 2.4.0

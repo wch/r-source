@@ -322,11 +322,9 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 /* "usemethod". Things like [ and [[ call usemethod directly, */
 /* hence do_usemethod should just be an interface to usemethod. */
 
-SEXP Rf_findVar1w(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits);
-
 SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, generic = R_NilValue /* -Wall */, obj;
+    SEXP ans, generic = R_NilValue /* -Wall */, obj, val;
     SEXP callenv, defenv;
     int nargs;
     RCNTXT *cptr;
@@ -358,15 +356,18 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	The generic need not be a closure (Henrik Bengtsson writes
 	UseMethod("$"), although only functions are documented.)
-
-	Unfortunately some packages are in the habit of replacing 
-	generic functions in other namespaces!  So we need to know where we
-	found the function, not jusr use its enclosure.
     */
-    defenv = Rf_findVar1w(install(CHAR(STRING_ELT(generic, 0))), ENCLOS(env),
-			  FUNSXP, TRUE);
-    /* if not generic is found, just use pre-2.4.0 value */
-    if(isNull(defenv)) defenv = ENCLOS(env);
+    val = findVar1(install(CHAR(STRING_ELT(generic, 0))), ENCLOS(env),
+		   FUNSXP, TRUE); /* That has evaluated promises */
+    if(TYPEOF(val) == CLOSXP) defenv = CLOENV(val);
+    else defenv = R_BaseNamespace;
+/*
+    if(defenv !=  ENCLOS(env)) {
+        printf("*** problem ***\n");
+	PrintValue(generic);
+	PrintValue(ENCLOS(env));
+    }
+*/  
 
     if (nargs > 2)  /* R-lang says there should be a warning */
 	warningcall(call, _("arguments after the first two are ignored"));

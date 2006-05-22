@@ -209,7 +209,6 @@
  Rf_dpSavedptr
  Rf_dpptr
  Rf_findVar1
- Rf_findVar1w
  Rf_findcontext
  Rf_framedepth
  Rf_freeCSymbol
