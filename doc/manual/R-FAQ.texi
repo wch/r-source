@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-05-16
+@set FAQ_DATE @value{FAQ_YEAR}-05-19
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2510,8 +2510,11 @@ Server-side and client-side tools for @acronym{CRAN} task views.
 Miscellaneous functions by Christian W. Hoffmann.
 @item cyclones
 Cyclone identification.
-@item data.table
-Just like a data frame but without rownames.
+@c <COMMENT>
+@c Moved to Archive on 2006-05-19 as requested by the maintainer.
+@c @item data.table
+@c Just like a data frame but without rownames.
+@c </COMMENT>
 @item date
 Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms @samp{8/30/53},
@@ -2530,6 +2533,8 @@ control, and full keyboard input.
 @item deldir
 Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
 tesselation (with respect to the entire plane) of a planar point set.
+@item delt
+Estimation of multivariate densities with adaptive histograms.
 @item denpro
 Visualization of multivariate density functions and estimates with level 
 set trees and shape trees, and visualization of multivariate data with
@@ -3177,6 +3182,8 @@ Estimation of monotone regression and variance functions in
 nonparametric models.
 @item monoProc
 Strictly monotone smoothing procedure.
+@item mprobit
+Multivariate probit model for binary/ordinal response.
 @c <COMMENT>
 @c Moved to the Archive on 2005-07-27 as requested by Witold Eryk Wolski
 @c <W.E.Wolski@ncl.ac.uk> (package now in BioC).
