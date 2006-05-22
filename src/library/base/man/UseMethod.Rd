@@ -91,7 +91,10 @@ NextMethod(generic = NULL, object = NULL, \dots)
   So methods for a generic function need to be available in the
   environment of the call to the generic, or they must be registered.
   (It does not matter whether they are visible in the environment in
-  which the generic is defined.)
+  which the generic is defined.)  Where the generic is defined is found
+  by searching for a function of name \code{generic}.  (There can be no
+  check that this is actually as S3 generic as an S4 generic can take over
+  an S3 generic.)
 }
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,

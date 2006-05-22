@@ -1113,6 +1113,52 @@ findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits, Rboolean doGet)
     return (R_UnboundValue);
 }
 
+/* version of findVar1 that reports where it found the function:
+   used in do_usemethod.
+ */
+SEXP attribute_hidden
+Rf_findVar1w(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
+{
+    SEXP vl;
+    while (rho != R_BaseEnv && rho != R_EmptyEnv) {
+	vl = findVarInFrame3(rho, symbol, TRUE);
+
+	if (vl != R_UnboundValue) {
+	    if (mode == ANYSXP) return vl;
+	    if (TYPEOF(vl) == PROMSXP) {
+		PROTECT(vl);
+		vl = eval(vl, rho);
+		UNPROTECT(1);
+	    }
+	    if (TYPEOF(vl) == mode) return vl;
+	    if (mode == FUNSXP && (TYPEOF(vl) == CLOSXP ||
+				   TYPEOF(vl) == BUILTINSXP ||
+				   TYPEOF(vl) == SPECIALSXP))
+		return (rho);
+	}
+	if (inherits)
+	    rho = ENCLOS(rho);
+	else
+	    return (R_NilValue);
+    }
+    if (rho == R_BaseEnv) {
+	vl = SYMBOL_BINDING_VALUE(symbol);
+	if (vl != R_UnboundValue) {
+	    if (mode == ANYSXP) return vl;
+	    if (TYPEOF(vl) == PROMSXP) {
+		PROTECT(vl);
+		vl = eval(vl, rho);
+		UNPROTECT(1);
+	    }
+	    if (TYPEOF(vl) == mode) return vl;
+	    if (mode == FUNSXP && (TYPEOF(vl) == CLOSXP ||
+				   TYPEOF(vl) == BUILTINSXP ||
+				   TYPEOF(vl) == SPECIALSXP))
+		return (rho);
+	}
+    }
+    return (R_NilValue);
+}
 
 /* 
    ddVal:
