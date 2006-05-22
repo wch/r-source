@@ -101,6 +101,8 @@ NEW FEATURES
     o	as.data.frame() gains a '...' argument.
 
     o	data.frame() has a new argument 'charToFactor'.
+	[*Experimental*: this and the default for read.table(as.is) are
+	set from the global option 'charToFactor'.]
 
 
 DEPRECATED & DEFUNCT
