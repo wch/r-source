@@ -42,6 +42,8 @@ static SEXP bcEval(SEXP, SEXP);
 static Rboolean bc_profiling = FALSE;
 #endif
 
+static int R_Profiling = 0;
+
 #ifdef R_PROFILING
 
 /* BDR 2000-07-15
@@ -97,7 +99,6 @@ static Rboolean bc_profiling = FALSE;
 #endif /* not Win32 */
 
 static FILE *R_ProfileOutfile = NULL;
-static int R_Profiling = 0;
 
 #ifdef Win32
 HANDLE MainThread;
