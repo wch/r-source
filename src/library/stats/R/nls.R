@@ -439,6 +439,9 @@ nls <-
     formula <- as.formula(formula)
     algorithm <- match.arg(algorithm)
 
+    if(!is.list(data) && !is.environment(data))
+        stop("'data' must be a list or an environment")
+
     mf <- match.call()                  # for creating the model frame
     varNames <- all.vars(formula) # parameter and variable names from formula
     mWeights <- missing(weights)
