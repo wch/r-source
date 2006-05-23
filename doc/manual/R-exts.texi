@@ -930,7 +930,7 @@ if test [ -n "$odbc_lib_path" ] ; then
    AC_SUBST([LIBS],[" -L$@{odbc_lib_path@} $@{LIBS@}"])
 else
   if test [ -n "$@{ODBC_LIBS@}" ] ; then
-     AC_SUBST([LIBS],["-I$@{ODBC_LIBS@} $@{LIBS@}"])
+     AC_SUBST([LIBS],["-L$@{ODBC_LIBS@} $@{LIBS@}"])
   fi
 fi
 
