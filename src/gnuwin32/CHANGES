@@ -50,6 +50,10 @@ existent help page.
 Opening a device via windows(resize="fixed") would sometimes fail with
 a message about 'outer margins too large'. (PR#8857)
 
+Sys.setlocale() interprets LC_CTYPE=C as a request for CP1252, as the
+startup code long has.  (This is necessary to avoid various crashes
+in the runtime code.)
+
 
 
 R 2.3.0
