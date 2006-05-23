@@ -68,9 +68,15 @@ as.POSIXlt(x, tz = "")
 #ifdef windows
   Windows documents a specification of the form \code{GST-1GDT}, but
   seems always to apply the US rules for changing to/from DST with such a
-  specification.  There appears to be no documented way to apply
+  specification.  (There appears to be no documented way to apply
   timezones using other DST rules except to switch to the timezone,
-  e.g. from the Control Panel.
+  e.g. from the Control Panel.)  So valid time zone values are of the
+  forms \code{EST5EDT} for a timezone 5 hours west of GMT called
+  \code{EST} when daylight saving is in force and \code{EDT} when it is
+  not, \code{HST10} for \sQuote{Hawaii-Aleutian Standard Time} (which has no
+  DST), and \code{CST-9:30} for the Northern Territory of Australia.
+  The abbreviations have to be exactly 3 letters, and have no meaning
+  other than a labels on the output.
 #endif
 }
 \value{
@@ -101,6 +107,19 @@ floor(unclass(z)/86400)       # the number of days since 1970-01-01
 unlist(unclass(z))            # a list shown as a named vector
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
+#ifdef windows
+as.POSIXlt(Sys.time(), "EST5EDT")  # the current time in New York
+as.POSIXlt(Sys.time(), "HST10")    # the current time in Hawaii
+as.POSIXlt(Sys.time(), "CST-9:30") # the current time in Darwin
+#endif
+#ifdef unix
+\dontrun{## These may not be correct names on your system
+as.POSIXlt(Sys.time(), "EST5EDT")  # the current time in New York
+as.POSIXlt(Sys.time(), "EST" )     # ditto, ignoring DST
+as.POSIXlt(Sys.time(), "HST")      # the current time in Hawaii
+as.POSIXlt(Sys.time(), "Australia/Darwin")
+}
+#endif
 }
 \keyword{utilities}
 \keyword{chron}
