@@ -18,7 +18,7 @@
 \details{
   This will stop at the first error, so if you want all the \code{pkgs}
   to be tried, call this via a shell \code{for} or \code{foreach} loop.
-  
+
   If used as \code{R CMD INSTALL pkgs} without explicitly specifying
   \code{lib}, packages are installed into the library tree rooted at the
   first directory given in the environment variable \env{R\_LIBS} if
@@ -34,7 +34,7 @@
   \file{pkg\_version.tar.gz} as obtained from CRAN: these are then
   extracted in a temporary directory.  Finally, binary package/bundle
   archive files (as created by \code{R CMD build --binary} can be supplied.
-  
+
   Some package sources contain a \file{configure} script that can be
   passed arguments or variables via the option \option{--configure-args}
   and \option{--configure-vars}, respectively, if necessary.  The latter
@@ -46,7 +46,7 @@
     Administration} for more information.  (If these are used more than
   once on the command line, only the last instance is used.)  One can
   bypass the configure mechanism using the option \option{--no-configure}.
-  
+
   If \option{--no-docs} is given, no help files are built.  Options
   \option{--no-text}, \option{--no-html}, and \option{--no-latex} suppress
   creating the text, HTML, and LaTeX versions, respectively.  The
@@ -73,7 +73,9 @@
   \code{\link{REMOVE}} and \code{\link{library}} for information on
   using several library trees;
   \code{\link{update.packages}} for automatic update of packages using
-  the internet;
+  the internet (or other \R level installation of packages, such as by
+  \code{install.packages});
+
   the section on \dQuote{Add-on packages} in \dQuote{R Installation and
     Administration} and
   the chapter on \dQuote{Creating R packages} in \dQuote{Writing \R
