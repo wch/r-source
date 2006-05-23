@@ -228,7 +228,7 @@ sub checkloop {
 
 sub macro_subs { # does macro substitution on $complete_text
     print STDERR "\n-- macro_subs:" if $debug;
-    $complete_text =~ s/\\linkS4class\{(.*)\}/\\link[=$1-class]{$1}/g;
+    $complete_text =~ s/\\linkS4class\{([^}]*)\}/\\link[=$1-class]{$1}/g;
 }
 
 
