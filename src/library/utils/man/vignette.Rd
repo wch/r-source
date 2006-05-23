@@ -14,7 +14,7 @@ vignette(topic, package = NULL, lib.loc = NULL)
 }
 \arguments{
   \item{topic}{a character string giving the (base) name of the vignette
-    to view. If omitted, all available vignettes are listed.}
+    to view. If omitted, all vignettes from all installed packages are listed.}
   \item{package}{a character vector with the names of packages to
     search through, or \code{NULL} in which case \emph{all} available
     packages in the library trees specified by \code{lib.loc} are
@@ -35,15 +35,15 @@ vignette(topic, package = NULL, lib.loc = NULL)
 #endif
   If several vignettes have PDF versions with base name identical to
   \code{topic}, the first one found is used. The \code{edit} method
-  extracts the R code from the vignette to a temporary file and opens
-  the file in an editor.
-  
-  If no topics are given, the available vignettes are listed.  The
+  extracts the \R code from the vignette to a temporary file and
+  opens the file in an editor (see \code{\link{edit}}).
+
+  If no topics are given, all available vignettes are listed.  The
   corresponding information is returned in an object of class
   \code{"packageIQR"}.  The structure of this class is experimental.
 }
 \examples{
-## List vignettes in all attached packages
+## List vignettes from all *installed* packages (can take long!):
 vignette()
 
 \dontrun{
@@ -65,5 +65,5 @@ vignette("rotated", package="grid")
 }
 }
 \keyword{documentation}
-  
-  
+
+

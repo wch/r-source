@@ -31,7 +31,7 @@
     is to be logarithmic, \code{"y"} if the y axis is to be logarithmic
     and \code{"xy"} or \code{"yx"} if both axes are to be logarithmic.}
 
-  \item{main}{a main title for the plot.}
+  \item{main}{a main title for the plot, see also \code{\link{title}}.}
   \item{sub}{a sub title for the plot.}
   \item{xlab}{a label for the x axis, defaults to a description of \code{x}.}
   \item{ylab}{a label for the y axis, defaults to a description of \code{y}.}
@@ -51,7 +51,8 @@
     taken place.}
 
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
-  \item{\dots}{other graphical parameters (see\code{\link{par}}).}
+  \item{\dots}{other graphical parameters (see \code{\link{par}} and
+    section \sQuote{Details} below).}
 }
 \details{
   Commonly used graphical parameters are:
@@ -70,6 +71,9 @@
       default.  This works as a multiple of \code{\link{par}("cex")}.
       \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
     \item{\code{lty}}{the line type, see \code{\link{par}}.}
+    \item{\code{cex.main, col.lab, font.sub}, etc}{settings for main- and
+      sub-title and axis annotation, see \code{\link{title}} and
+      \code{\link{par}}.}
     \item{\code{lwd}}{the line width, see \code{\link{par}}.}
   }
 }
