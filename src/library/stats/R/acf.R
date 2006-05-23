@@ -140,7 +140,7 @@ plot.acf <-
             str(par("mfrow","cex", "cex.main","cex.axis","cex.lab","cex.sub"))
         }
     }
-    
+
     if (is.null(ylim)) {
         ## Calculate a common scale
         ylim <- range(x$acf[, 1:nser, 1:nser], na.rm = TRUE)
@@ -198,7 +198,7 @@ ccf <- function(x, y, lag.max = NULL,
     type <- match.arg(type)
     if(is.matrix(x) || is.matrix(y))
         stop("univariate time series only")
-    X <- na.action(ts.union(as.ts(x), as.ts(y)))
+    X <- na.action(ts.intersect(as.ts(x), as.ts(y)))
     colnames(X) <- c(deparse(substitute(x)), deparse(substitute(y)))
     acf.out <- acf(X, lag.max = lag.max, plot = FALSE, type = type)
     lag <- c(rev(acf.out$lag[-1,2,1]), acf.out$lag[,1,2])
