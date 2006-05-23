@@ -61,7 +61,7 @@ as.POSIXlt(x, tz = "")
   prepended to the path to a file (by default under
   \file{/usr/share/zoneinfo} or \file{/usr/lib/zoneinfo}
   (or even \file{/usr/share/lib/zoneinfo} on Solaris)),
-  for example \file{EST5EDT} of \file{GB} or \file{Europe/Paris}.  See
+  for example \file{EST5EDT} or \file{GB} or \file{Europe/Paris}.  See
   \url{http://www.twinsun.com/tz/tz-link.htm} for more details and
   references.
 #endif
