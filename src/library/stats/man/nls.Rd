@@ -25,7 +25,7 @@ nls(formula, data, start, control, algorithm,
   \item{formula}{a nonlinear model formula including variables and
     parameters.}
   \item{data}{an optional data frame in which to evaluate the variables in
-    \code{formula}.}
+    \code{formula}.  Can also be a list or an environment, but not a matrix.}
   \item{start}{a named list or named numeric vector of starting estimates.}
   \item{control}{an optional list of control settings.  See
     \code{\link{nls.control}} for the names of the settable control
