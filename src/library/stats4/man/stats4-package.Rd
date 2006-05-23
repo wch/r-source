@@ -10,7 +10,7 @@
   using the \link[methods:methods-package]{S version 4} class system.
 
   The methods currently support maximum likelihood (function
-  \code{\link{mle}()} returning class \code{"\link[=mle-class]{mle}"}),
+  \code{\link{mle}()} returning class \code{"\linkS4class{mle}"}),
   including methods for \code{\link[=AIC-methods]{AIC}} and \code{\link{BIC}}
   for model selection.
 }

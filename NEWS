@@ -332,6 +332,8 @@ BUG FIXES
     o	dt(x, df, ncp= not.0) now longer gives erratic values for
 	|x| < ~1e-12.  (PR#8874)
 
+    o	\code{\linkS4class{.}} now works.
+
 
 
 
