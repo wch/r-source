@@ -55,6 +55,11 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   machine.
 }
 \section{Warning}{
+#ifdef windows
+  Setting \code{"LC_CTYPE"} to \code{"C"} causes problems in the C
+  code, so it is interpreted as an English locale in CP1252.
+  
+#endif
   Setting \code{"LC_NUMERIC"} may cause \R to function
   anomalously, so gives a warning.  (The known problems are with
   input conversion in locales with \code{,} as the decimal point.)
