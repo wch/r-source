@@ -71,7 +71,7 @@ nls(formula, data, start, control, algorithm,
   \code{\link{formula}}, \code{\link{logLik}}, \code{\link{predict}},
   \code{\link{print}}, \code{\link{profile}}, \code{\link{residuals}},
   \code{\link{summary}}, \code{\link{vcov}} and \code{\link{weights}}.
-  
+
   Variables in \code{formula} are looked for first in \code{data}, then
   the environment of \code{formula} and finally along the search path.
   Functions in \code{formula} are searched for first in the environment
@@ -88,7 +88,7 @@ nls(formula, data, start, control, algorithm,
   \deqn{y=f(x,\theta)}{y = f(x, theta)} because the criterion amounts to
   comparing two components of the round-off error.  If you wish to test
   \code{nls} on artificial data please add a noise component, as shown
-  in the example below.  
+  in the example below.
 
   The \code{algorithm = "port"} code appears unfinished, and does
   not even check that the starting value is within the bounds.
@@ -134,6 +134,10 @@ DNase1 <- subset(DNase, Run == 1)
 ## using a selfStart model
 fm1DNase1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
 summary(fm1DNase1)
+## the coefficients only:
+coef(fm1DNase1)
+## including their SE, etc:
+coef(summary(fm1DNase1))
 
 ## using conditional linearity
 fm2DNase1 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
@@ -187,7 +191,7 @@ nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 \dontrun{
 nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
      trace = TRUE)
-}       
+}
 }
 \keyword{nonlinear}
 \keyword{regression}
