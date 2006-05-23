@@ -3011,6 +3011,8 @@ Generic functions and standard methods for Trellis-based displays.
 Lazy learning for local regression.
 @item ldDesign
 Design of experiments for detection of linkage disequilibrium,
+@item ldbounds
+Lan-DeMets method for group sequential boundaries.
 @item leaps
 A package which performs an exhaustive search for the best subsets of a
 given set of potential regressors, using a branch-and-bound algorithm,
