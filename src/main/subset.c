@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2005   The R Development Core Team
+ *  Copyright (C) 1997-2006   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -824,7 +824,10 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (NAMED(x) > NAMED(ans))
 	    SET_NAMED(ans, NAMED(x));
     } else if(isVectorList(x)) {
-	ans = duplicate(VECTOR_ELT(x, offset));
+	/* did unconditional duplication before 2.4.0 */
+	ans = VECTOR_ELT(x, offset);
+	if (NAMED(x) > NAMED(ans))
+	    SET_NAMED(ans, NAMED(x));
     } else {
 	ans = allocVector(TYPEOF(x), 1);
 	switch (TYPEOF(x)) {
@@ -995,7 +998,7 @@ SEXP R_subset3_dflt(SEXP x, SEXP input)
 		break;
 	    }
 	}
-	if(havematch ==1) {
+	if(havematch == 1) {
 	    y = VECTOR_ELT(x, imatch);
 	    if (NAMED(x) > NAMED(y))
 		SET_NAMED(y, NAMED(x));

@@ -104,6 +104,10 @@ NEW FEATURES
 	[*Experimental*: this and the default for read.table(as.is) are
 	set from the global option 'charToFactor'.]
 
+    o	[[ on a list does not duplicate the extracted element unless
+	necessary.  (It did not duplicate in other cases, e.g. a
+	pairlist.)
+
 
 DEPRECATED & DEFUNCT
 
