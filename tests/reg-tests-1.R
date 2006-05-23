@@ -4220,6 +4220,12 @@ stopifnot(bindingIsLocked("x", e), bindingIsLocked("x", e)==TRUE,
 ## on some systems in R <= 2.3.0, bindingIsLocked("x", e)==TRUE was false
 
 
+## ccf on non-aligned time series
+x <- ts(rnorm(100), start=1)
+y <- ts(rnorm(120), start=3)
+ccf(x, y)
+## needed na.action=na.contiguous in 2.3.0
+
 ## merge.data.frame was not making column names unique when
 ## doing a Cartesian product.
 DF <- data.frame(col=1:3)

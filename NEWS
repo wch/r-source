@@ -147,6 +147,10 @@ BUG FIXES
 
     o	\code{\linkS4class{.}} now works.
 
+    o	ccf() aligns time series by ts.intersect() rather than
+	ts.union() and so is less likely to need a non-default
+	na.action.  (PR#8893)
+
 
 
 
