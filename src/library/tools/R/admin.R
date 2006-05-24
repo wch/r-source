@@ -637,7 +637,7 @@ function(dir, packages)
     for(file in manfiles) {
         fn <- sub(".*/man/", "", file)
         cat(file=con, "% --- Source file: ", fn, " ---\n", sep="")
-        writeLines(readLines(file), con) # will ensure final \n
+        writeLines(readLines(file, warn = FALSE), con) # will ensure final \n
         ## previous format had (sometimes) blank line before \eof, but
         ## this is not needed.
         cat(file=con, "\\eof\n")

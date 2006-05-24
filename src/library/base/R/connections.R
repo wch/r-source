@@ -2,13 +2,13 @@ stdin <- function() .Internal(stdin())
 stdout <- function() .Internal(stdout())
 stderr <- function() .Internal(stderr())
 
-readLines <- function(con = stdin(), n = -1, ok = TRUE)
+readLines <- function(con = stdin(), n = -1, ok = TRUE, warn = TRUE)
 {
     if(is.character(con)) {
         con <- file(con, "r")
         on.exit(close(con))
     }
-    .Internal(readLines(con, n, ok))
+    .Internal(readLines(con, n, ok, warn))
 }
 
 

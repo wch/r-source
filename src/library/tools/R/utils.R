@@ -137,7 +137,7 @@ function(file, topic)
         else file(file, "r")
         on.exit(close(file))
     }
-    valid_lines <- lines <- readLines(file)
+    valid_lines <- lines <- readLines(file, warn = FALSE)
     valid_lines[is.na(nchar(lines, "c"))] <- ""
     patt <- paste("^% --- Source file:.*/", topic, ".Rd ---$", sep="")
     if(length(top <- grep(patt, valid_lines)) != 1)
@@ -533,7 +533,7 @@ function(con)
         con <- if(length(grep("\\.gz$", con))) gzfile(con, "r") else file(con, "r")
         on.exit(close(con))
     }
-    .try_quietly(readLines(con))
+    .try_quietly(readLines(con, warn=FALSE))
 }
 
 ### ** .read_description

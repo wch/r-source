@@ -3536,15 +3536,12 @@ function(x, ...)
 
     code_dir <- file.path(dir, "R")
     wrong_things <- character(0)
-    ## suppress warnings from readLines
-    op <- options(warn=-1)
-    on.exit(options(op))
     if(file_test("-d", code_dir)) {
         R_files <- list_files_with_type(code_dir, "code",
                                         full.names = FALSE,
                                         OS_subdirs = OS_subdirs)
         for(f in R_files) {
-            text <- readLines(file.path(code_dir, f))
+            text <- readLines(file.path(code_dir, f), warn = FALSE)
             ## remove comments, even trailing comments
             ## this does not respect quotes ....
             text <- gsub("#.*$", "", text)

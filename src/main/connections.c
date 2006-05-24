@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-5   The R Development Core Team.
+ *  Copyright (C) 2000-6   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2440,12 +2440,12 @@ int Rconn_printf(Rconnection con, const char *format, ...)
 }
 
 
-/* readLines(con = stdin(), n = 1, ok = TRUE) */
+/* readLines(con = stdin(), n = 1, ok = TRUE, warn = TRUE) */
 #define BUF_SIZE 1000
 SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, ans2;
-    int i, n, nn, nnn, ok, nread, c, nbuf, buf_size = BUF_SIZE;
+    int i, n, nn, nnn, ok, warn, nread, c, nbuf, buf_size = BUF_SIZE;
     Rconnection con = NULL;
     Rboolean wasopen;
     char *buf;
@@ -2456,10 +2456,13 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(asInteger(CAR(args)));
     n = asInteger(CADR(args));
     if(n == NA_INTEGER)
-	errorcall(call, _("invalid value for 'n'"));
+	errorcall(call, _("invalid value for '%s'"), "n");
     ok = asLogical(CADDR(args));
     if(ok == NA_LOGICAL)
-	errorcall(call, _("invalid value for 'ok'"));
+	errorcall(call, _("invalid value for '%s'"), "ok");
+    warn = asLogical(CADDDR(args));
+    if(warn == NA_LOGICAL)
+	errorcall(call, _("invalid value for '%s'"), "warn");
     if(!con->canread)
 	errorcall(call, _("cannot read from this connection"));
     wasopen = con->isopen;
@@ -2510,8 +2513,9 @@ no_more_lines:
     if(nbuf > 0) { /* incomplete last line */
 	if(con->text && con->blocking) {
 	    nread++;
-	    warning(_("incomplete final line found by readLines on '%s'"),
-		    con->description);
+	    if(warn)
+		warning(_("incomplete final line found by readLines on '%s'"),
+			con->description);
 	} else {
 	    /* push back the rest */
 	    con_pushback(con, 0, buf);
@@ -2678,17 +2682,17 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     swhat = CAR(args); args = CDR(args);
     if(!isString(swhat) || length(swhat) != 1)
-	error(_("invalid value of 'what'"));
+	error(_("invalid value for '%s'"), "what");
     what = CHAR(STRING_ELT(swhat, 0));
     n = asInteger(CAR(args)); args = CDR(args);
-    if(n == NA_INTEGER || n < 0) error(_("invalid value of 'n'"));
+    if(n == NA_INTEGER || n < 0) error(_("invalid value for '%s'"), "n");
     size = asInteger(CAR(args)); args = CDR(args);
     signd = asLogical(CAR(args)); args = CDR(args);
     if(signd == NA_LOGICAL)
-	error(_("invalid value of 'signed'"));
+	error(_("invalid value for '%s'"), "signed");
     swap = asLogical(CAR(args));
     if(swap == NA_LOGICAL)
-	error(_("invalid value of 'swap'"));
+	error(_("invalid value for '%s'"), "swap");
     if(!isRaw) {
 	if(!con->canread)
 	    error(_("cannot read from this connection"));
@@ -2890,7 +2894,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
     size = asInteger(CADDR(args));
     swap = asLogical(CADDDR(args));
     if(swap == NA_LOGICAL)
-	error(_("invalid value of 'swap'"));
+	error(_("invalid value for '%s'"), "swap");
     len = LENGTH(object);
     if(len == 0) {
 	if(isRaw) return allocVector(RAWSXP, 0); else return R_NilValue;
@@ -3194,7 +3198,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	usesep = TRUE;
 	if (!isString(sep) || length(sep) != 1)
-	    error(_("invalid value of 'sep'"));
+	    error(_("invalid value for '%s'"), "sep");
 	ssep = CHAR(STRING_ELT(sep, 0));
 	slen = strlen(ssep) + 1;
     }
@@ -3431,11 +3435,11 @@ SEXP attribute_hidden do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
     icon = asInteger(CAR(args));
     closeOnExit = asLogical(CADR(args));
     if(closeOnExit == NA_LOGICAL)
-	error(_("invalid value for 'closeOnExit'"));
+	error(_("invalid value for '%s'"), "closeOnExit");
     errcon = asLogical(CADDR(args));
-    if(errcon == NA_LOGICAL) error(_("invalid value for 'type'"));
+    if(errcon == NA_LOGICAL) error(_("invalid value for '%s'"), "type");
     tee = asLogical(CADDDR(args));
-    if(tee == NA_LOGICAL) error(_("invalid value for 'split'"));
+    if(tee == NA_LOGICAL) error(_("invalid value for '%s'"), "split");
 
 #ifndef HAVE_VA_COPY
     if(tee) error(_("this platform does not support 'split=TRUE'"));
@@ -3465,7 +3469,7 @@ SEXP attribute_hidden do_sinknumber(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     errcon = asLogical(CAR(args));
     if(errcon == NA_LOGICAL)
-	error(_("invalid value for 'type'"));
+	error(_("invalid value for '%s'"), "type");
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = errcon ? R_SinkNumber : R_ErrorCon;
     UNPROTECT(1);

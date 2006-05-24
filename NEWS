@@ -110,6 +110,8 @@ NEW FEATURES
 
     o	predict.lm() gains a 'pred.var' argument.  (Wishlist PR#8877.)
 
+    o	readLines() has a new argument 'warn' to suppress warnings.
+
 
 DEPRECATED & DEFUNCT
 
