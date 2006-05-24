@@ -629,6 +629,8 @@ predict.lm <-
     if (!is.null(offset))
 	predictor <- predictor + offset
     interval <- match.arg(interval)
+    if (missing(newdata) && interval == "prediction")
+        stop("prediction intervals are only relevant to new data")
     type <- match.arg(type)
     if(se.fit || interval != "none") {
 	res.var <-
