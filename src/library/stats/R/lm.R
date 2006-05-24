@@ -597,7 +597,7 @@ predict.lm <-
     function(object, newdata, se.fit = FALSE, scale = NULL, df = Inf,
 	     interval = c("none", "confidence", "prediction"),
 	     level = .95,  type = c("response", "terms"),
-	     terms = NULL, na.action = na.pass, ...)
+	     terms = NULL, na.action = na.pass, pred.var = res.var, ...)
 {
     tt <- terms(object)
     if(missing(newdata) || is.null(newdata)) {
@@ -723,7 +723,7 @@ predict.lm <-
 	tfrac <- qt((1 - level)/2, df)
 	hwid <- tfrac * switch(interval,
 			       confidence = sqrt(ip),
-			       prediction = sqrt(ip+res.var)
+			       prediction = sqrt(ip+pred.var)
 			       )
 	if(type != "terms") {
 	    predictor <- cbind(predictor, predictor + hwid %o% c(1, -1))

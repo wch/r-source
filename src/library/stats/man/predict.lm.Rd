@@ -10,7 +10,7 @@
 \method{predict}{lm}(object, newdata, se.fit = FALSE, scale = NULL, df = Inf, 
         interval = c("none", "confidence", "prediction"),
         level = 0.95, type = c("response", "terms"),
-        terms = NULL, na.action = na.pass, \dots)
+        terms = NULL, na.action = na.pass, pred.var = res.var, \dots)
 }
 \arguments{
   \item{object}{Object of class inheriting from \code{"lm"}}
@@ -26,6 +26,8 @@
   \item{terms}{If \code{type="terms"}, which terms (default is all terms)}
   \item{na.action}{function determining what should be done with missing
     values in \code{newdata}.  The default is to predict \code{NA}.}
+  \item{pred.var}{the variance(s) for future observations to be assumed
+    for prediction intervals.  See Detais.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
@@ -54,8 +56,11 @@
   with residual value \code{NA}.  See also \code{\link{napredict}}.
 
   The prediction intervals are for a single observation at each case in
-  \code{newdata} (which must be supplied) with error variance
-  \eqn{\sigma^2}{sigma^2} as estimated during the fitting.
+  \code{newdata} (which must be supplied) with error variance(s)
+  \code{pred.var}.  This can be a multiple of \code{res.var}, the estimated
+  value of \eqn{\sigma^2}{sigma^2}: the default is to assume that future
+  observations have the same error variance (before weighting) as those
+  used for fitting.
 }
 \value{
   \code{predict.lm} produces a vector of predictions or a matrix of

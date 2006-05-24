@@ -108,6 +108,8 @@ NEW FEATURES
 	necessary.  (It did not duplicate in other cases, e.g. a
 	pairlist.)
 
+    o	predict.lm() gains a 'pred.var' argument.  (Wishlist PR#8877.)
+
 
 DEPRECATED & DEFUNCT
 
