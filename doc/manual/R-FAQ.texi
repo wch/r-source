@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-05-19
+@set FAQ_DATE @value{FAQ_YEAR}-05-24
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2289,6 +2289,8 @@ Adaptive Wavelet transforms for signal denoising.
 Analysis of growth curve experiments.
 @item akima
 Linear or cubic spline interpolation for irregularly gridded data.
+@item allelic
+A fast, unbiased and exact allelic exact test.
 @item alr3
 Methods and data to accompany the textbook ``Applied Linear Regression''
 by S. Weisberg, 2005, Wiley.
