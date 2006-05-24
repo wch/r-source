@@ -29,7 +29,7 @@ options(show.error.messages = TRUE)
 options(scipen = 0)
 options(max.print = 10000)# not yet exercised in 'core R'
 options(add.smooth = TRUE)# currently only used in 'plot.lm'
-options(charToFactor = TRUE)
+options(stringsAsFactors = TRUE)
 
 local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        if(identical(dp, "")) # marginally faster to do methods last

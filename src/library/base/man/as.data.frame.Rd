@@ -27,7 +27,8 @@
 }
 \usage{
 as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
-\method{as.data.frame}{character}(x, \dots, charToFactor = getOption("charToFactor"))
+\method{as.data.frame}{character}(x, \dots,
+              stringsAsFactors = default.stringsAsFactors())
 
 is.data.frame(x)
 }
@@ -38,7 +39,7 @@ is.data.frame(x)
   \item{optional}{logical. If \code{TRUE}, setting row names and
     converting column names (to syntactic names) is optional.}
   \item{\dots}{additional arguments to be passed to or from methods.}
-  \item{charToFactor}{logical: should the character vector be converted
+  \item{stringsAsFactors}{logical: should the character vector be converted
     to a factor?}
 }
 \value{

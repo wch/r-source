@@ -52,9 +52,6 @@ getOption(x)
       many (simulated) smooths should be added.  This is currently only
       used by \code{\link[stats]{plot.lm}}.}
 
-    \item{\code{charToFactor}:}{The default setting for arguments of
-      \code{\link{data.frame}} and \code{\link{read.table}}.}
-
       \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
       true, a \link{warning} is produced whenever a \dQuote{generalized
       vector} (atomic or \code{\link{list}}) is extended, by something
@@ -196,6 +193,9 @@ getOption(x)
     \item{\code{show.error.messages}:}{a logical.  Should error messages
       be printed?  Intended for use with \code{\link{try}} or a
       user-installed error handler.}
+
+    \item{\code{stringsAsFactors}:}{The default setting for arguments of
+      \code{\link{data.frame}} and \code{\link{read.table}}.}
 
     \item{\code{texi2dvi}:}{used by the unexported function
       \code{texi2dvi} in namespace \pkg{tools}.}

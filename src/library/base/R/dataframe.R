@@ -116,7 +116,7 @@ as.data.frame.list <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     ## need to protect names in x.
     cn <- names(x)
-    m <- match(c("row.names", "check.rows", "check.names", "charToFactor"),
+    m <- match(c("row.names", "check.rows", "check.names", "stringsAsFactors"),
                cn, 0)
     if(any(m > 0)) {
         cn[m] <- paste("..adfl.", cn[m], sep="")
@@ -169,9 +169,19 @@ as.data.frame.integer <- as.data.frame.vector
 as.data.frame.numeric <- as.data.frame.vector
 as.data.frame.complex <- as.data.frame.vector
 
+default.stringsAsFactors <- function()
+{
+    val <- getOption("stringsAsFactors")
+    if(is.null(val)) val <- TRUE
+    if(!is.logical(val) || is.na(val) || length(val) != 1)
+        stop("options('stringsAsFactors') not set to TRUE or FALSE")
+    val
+}
+
+
 as.data.frame.character <-
-    function(x, ..., charToFactor = getOption("charToFactor"))
-    as.data.frame.vector(if(charToFactor) factor(x) else x, ...)
+    function(x, ..., stringsAsFactors = default.stringsAsFactors())
+    as.data.frame.vector(if(stringsAsFactors) factor(x) else x, ...)
 
 as.data.frame.logical <- as.data.frame.vector
 
@@ -283,7 +293,7 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
 
 data.frame <-
     function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE,
-             charToFactor = getOption("charToFactor"))
+             stringsAsFactors = default.stringsAsFactors())
 {
     data.row.names <-
 	if(check.rows && missing(row.names))
@@ -325,7 +335,7 @@ data.frame <-
         ## do it this way until all as.data.frame methods have been updated
 	xi <- if(is.character(x[[i]]))
                  as.data.frame(x[[i]], optional = TRUE,
-                               charToFactor = charToFactor)
+                               stringsAsFactors = stringsAsFactors)
         else as.data.frame(x[[i]], optional = TRUE)
 
 	rowsi <- attr(xi, "row.names")
@@ -1198,9 +1208,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
     value <- list()
     ## set up call as op(left, right)
     FUN <- get(.Generic, envir = parent.frame(), mode="function")
-    f <- if (unary)
-	quote(FUN(left))
-    else quote(FUN(left, right))
+    f <- if (unary) quote(FUN(left)) else quote(FUN(left, right))
     lscalar <- rscalar <- FALSE
     if(lclass && rclass) {
 	rn <- row.names(e1)

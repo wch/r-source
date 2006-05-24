@@ -1,6 +1,7 @@
 \name{data.frame}
 \title{Data Frames}
 \alias{data.frame}
+\alias{default.stringsAsFactors}
 \description{
   This function creates data frames, tightly coupled
   collections of variables which share many of the properties of
@@ -9,7 +10,10 @@
 }
 \usage{
 data.frame(\dots, row.names = NULL, check.rows = FALSE,
-           check.names = TRUE, charToFactor = getOption("charToFactor"))
+           check.names = TRUE,
+           stringsAsFactors = default.stringsAsFactors())
+
+default.stringsAsFactors()
 }
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
@@ -25,8 +29,8 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE,
     syntactically valid variable names and are not duplicated.
     If necessary they are adjusted (by \code{\link{make.names}})
     so that they are.}
-  \item{charToFactor}{logical: should the character vector be converted
-    to a factor?}
+  \item{stringsAsFactors}{logical: should character vectors be converted
+    to factors?}
 }
 \value{
   A data frame, a matrix-like structure whose columns may be of
@@ -62,6 +66,10 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE,
   not a column (by name or number).
 
   Names are removed from vector inputs not protected by \code{\link{I}}.
+
+  \code{default.stringsAsFactors} is a utility that takes
+  \code{\link{getOption}("stringsAsFactors")} and ensures the result is
+  \code{TRUE} or \code{FALSE}.
 }
 \note{
   In versions of \R prior to 2.4.0 \code{row.names} had to be
