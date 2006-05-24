@@ -34,13 +34,20 @@ vignette(topic, package = NULL, lib.loc = NULL)
   The program specified by the \code{pdfviewer} option is used for this.
 #endif
   If several vignettes have PDF versions with base name identical to
-  \code{topic}, the first one found is used. The \code{edit} method
-  extracts the \R code from the vignette to a temporary file and
-  opens the file in an editor (see \code{\link{edit}}).
-
+  \code{topic}, the first one found is used.
+  
   If no topics are given, all available vignettes are listed.  The
   corresponding information is returned in an object of class
-  \code{"packageIQR"}.  The structure of this class is experimental.
+  \code{"packageIQR"}.
+
+  The \code{edit} method
+  extracts the \R code from the vignette to a temporary file and
+  opens the file in an editor (see \code{\link{edit}}). This makes it
+  very easy to execute the commands line by line, modify them in any way
+  you want to help you test variants, etc.. An alternative way of
+  extracting the \R code from the vignette is to run
+  \code{\link{Stangle}} on the source code of the vignette,
+  see the examples below.
 }
 \examples{
 ## List vignettes from all *installed* packages (can take long!):
@@ -56,6 +63,10 @@ print(v1)
 
 ## Now let us have a closer look at the code
 edit(v1)
+
+## An alternative way of extracting the code,
+## R file is written to current working directory
+Stangle(v1$file)
 
 ## A package can have more than one vignette (package grid has several):
 vignette(package="grid")
