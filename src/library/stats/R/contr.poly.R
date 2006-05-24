@@ -106,7 +106,7 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE)
 predict.poly <- function(object, newdata, ...)
 {
     if(missing(newdata)) return(object)
-    if(is.null(coefs <- attr(object, "coefs")))
+    if(is.null(attr(object, "coefs")))
        poly(newdata, degree = max(attr(object, "degree")), raw = TRUE)
     else
        poly(newdata, degree = max(attr(object, "degree")),

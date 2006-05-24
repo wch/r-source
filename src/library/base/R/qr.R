@@ -191,7 +191,7 @@ qr.fitted <- function(qr, y, k=qr$rank)
 	     as.double(qr$qraux),
 	     y,
 	     ny,
-	     xb = (yy <- y),# incl. {dim}names
+	     xb = y,# incl. {dim}names
              DUP=FALSE, PACKAGE="base")$xb
 }
 
