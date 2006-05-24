@@ -4,7 +4,7 @@
 \alias{predict.mlm}
 \concept{regression}
 \description{
-  Predicted values based on linear model object
+  Predicted values based on linear model object.
 }
 \usage{
 \method{predict}{lm}(object, newdata, se.fit = FALSE, scale = NULL, df = Inf, 
@@ -19,9 +19,10 @@
   \item{se.fit}{A switch indicating if standard errors are required.}
   \item{scale}{Scale parameter for std.err. calculation}
   \item{df}{Degrees of freedom for scale}
-  \item{interval}{Type of interval calculation}
+  \item{interval}{Type of interval calculation.  \code{"prediction"} is
+    only allowed if \code{newdata} is supplied.}
   \item{level}{Tolerance/confidence level}
-  \item{type}{Type of prediction (response or model term)}
+  \item{type}{Type of prediction (response or model term).}
   \item{terms}{If \code{type="terms"}, which terms (default is all terms)}
   \item{na.action}{function determining what should be done with missing
     values in \code{newdata}.  The default is to predict \code{NA}.}
@@ -51,6 +52,10 @@
   the residuals, whereas if \code{na.action = na.exclude} they will
   appear (in predictions, standard errors or interval limits),
   with residual value \code{NA}.  See also \code{\link{napredict}}.
+
+  The prediction intervals are for a single observation at each case in
+  \code{newdata} (which must be supplied) with error variance
+  \eqn{\sigma^2}{sigma^2} as estimated during the fitting.
 }
 \value{
   \code{predict.lm} produces a vector of predictions or a matrix of
