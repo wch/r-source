@@ -151,6 +151,10 @@ BUG FIXES
 	ts.union() and so is less likely to need a non-default
 	na.action.  (PR#8893)
 
+    o	optim(method="CG") could return a value that did not
+	correspond to $par for very badly behaved functions on which
+	the second phase of the line search failed.  (PR#8786)
+
 
 
 

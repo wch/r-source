@@ -961,7 +961,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
 			    if (reltest + X[i] == reltest + Bvec[i])
 				count++;
 			}
-			if (count < n) {
+			if (count < n) { /* point is different */
 			    f = fminfn(n, Bvec, ex);
 			    funcount++;
 			    accpoint = (R_FINITE(f) &&
@@ -970,7 +970,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
 			    if (!accpoint) {
 				steplength *= stepredn;
 				if (trace) Rprintf("*");
-			    }
+			    } else *Fmin = f; /* we improved, so update value */
 			}
 		    } while (!(count == n || accpoint));
 		    if (count < n) {
@@ -985,7 +985,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
 			    if (f < *Fmin) {
 				*Fmin = f;
 				if (trace) Rprintf(" i< ");
-			    } else {
+			    } else { /* reset Bvec to match lowest point */
 				if (trace) Rprintf(" i> ");
 				for (i = 0; i < n; i++)
 				    Bvec[i] = X[i] + steplength * t[i];
