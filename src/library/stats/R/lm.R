@@ -664,11 +664,11 @@ predict.lm <-
 	## asgn <- attrassign(mm, tt) :
 	aa <- attr(mm, "assign")
 	ll <- attr(tt, "term.labels")
-	if (attr(tt, "intercept") > 0)
+	hasintercept <- attr(tt, "intercept") > 0
+	if (hasintercept)
 	    ll <- c("(Intercept)", ll)
 	aaa <- factor(aa, labels = ll)
 	asgn <- split(order(aa), aaa)
-	hasintercept <- attr(tt, "intercept") > 0
 	if (hasintercept) {
 	    asgn$"(Intercept)" <- NULL
 	    if(!mmDone) { mm <- model.matrix(object); mmDone <- TRUE }
