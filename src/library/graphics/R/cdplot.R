@@ -23,15 +23,15 @@ function(formula, data = list(),
     y <- mf[,1]
     if(!is.factor(y))
         stop("dependent variable should be a factor")
-    x <- mf[,2]	
+    x <- mf[,2]
     if(!is.numeric(x))
         stop("explanatory variable should be numeric")
 
     ## graphical parameters
     if(is.null(xlab)) xlab <- names(mf)[2]
     if(is.null(ylab)) ylab <- names(mf)[1]
-    if(is.null(yaxlabels)) yaxlables <- levels(y)
-    
+    if(is.null(yaxlabels)) yaxlabels <- levels(y)
+
     ## call default interface
 
     cdplot(x, y, plot = plot, tol.ylab = tol.ylab, bw = bw, n = n,
@@ -57,10 +57,10 @@ function(x, y,
     if(is.null(col)) col <- gray.colors(length(levels(y)))
     col <- rep(col, length.out = length(levels(y)))
     if(is.null(yaxlabels)) yaxlabels <- levels(y)
-    
+
     ## unconditional density of x
     dx <- if(is.null(from) & is.null(to)) density(x, bw = bw, n = n, ...)
-    else density(x, bw = bw, from = from, to = to, n = n, ...)	  
+    else density(x, bw = bw, from = from, to = to, n = n, ...)
     x1 <- dx$x
 
     ## setup conditional values
@@ -70,7 +70,7 @@ function(x, y,
 
     ## setup return value
     rval <- list()
-    
+
     for(i in 1:(ny-1)) {
         dxi <- density(x[y %in% levels(y)[1:i]], bw = dx$bw, n = n, from = min(dx$x), to = max(dx$x), ...)
         y1[i,] <- dxi$y/dx$y * yprop[i]
@@ -98,7 +98,7 @@ function(x, y,
             polygon(c(x1, rev(x1)), c(y1[i+1,], rev(y1[i,])), col = col[i], border = border)
         }
         axis(1)
-    
+
         equidist <- any(diff(y1[,1]) < tol.ylab)
         if(equidist)
             axis(2, at = seq(1/(2*ny), 1-1/(2*ny), by = 1/ny), labels = yaxlabels, tick = FALSE)
@@ -107,7 +107,7 @@ function(x, y,
         axis(4)
         box()
     }
-  
+
     ## return conditional density functions
     invisible(rval)
 }
