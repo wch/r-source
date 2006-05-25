@@ -582,7 +582,7 @@ SEXP attribute_hidden do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
    value is TRUE if fun returns normally, FALSE if it results in a
    jump to top level. */
 
-Rboolean attribute_hidden R_ToplevelExec(void (*fun)(void *), void *data)
+Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
 {
     RCNTXT thiscontext;
     RCNTXT * volatile saveToplevelContext;
