@@ -1,7 +1,7 @@
 \name{delayedAssign}
 \alias{delayedAssign}
-\concept{promise}
-\concept{promises}
+\alias{promise}
+\alias{promises}
 \title{Delay Evaluation}
 \description{
 \code{delayedAssign} creates a \emph{promise} to evaluate the given
