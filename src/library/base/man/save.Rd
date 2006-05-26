@@ -1,8 +1,6 @@
 \name{save}
 \alias{save}
 \alias{save.image}
-\alias{sys.save.image}
-\alias{sys.load.image}
 \title{Save R Objects}
 \description{
   \code{save} writes an external representation of \R objects to the
@@ -21,10 +19,11 @@ save(\dots, list = character(0),
      compress = !ascii)
 
 save.image(file = ".RData", version = NULL, ascii = FALSE,
+<<<<<<< .working
            compress = FALSE, safe = TRUE)
-
-sys.load.image(name, quiet)
-sys.save.image(name)
+=======
+           compress = !ascii, safe = TRUE)
+>>>>>>> .merge-right.r38201
 }
 \arguments{
   \item{\dots}{the names of the objects to be saved.}
@@ -48,31 +47,25 @@ sys.save.image(name)
     \code{file} if the save succeeds.  This preserves an existing
     workspace \code{file} if the save fails, but at the cost of using
     extra disk space during the save.}
-  \item{name}{name of image file to save or load.}
-  \item{quiet}{logical specifying whether a message should be printed.}
 }
 \details{
+  The names of the objects specified either as symbols in \code{\dots} or
+  as a character vector in \code{list} are used to look up the objects
+  from environment \code{envir}.  The objects are not evaluated, so
+  \link{promises} are saved (together with their evaluation
+  environments).
+
   All \R platforms use the XDR representation of binary objects in
   binary save-d files, and these are portable across all \R platforms.
   (ASCII saves used to be useful for moving data between platforms but
   are now only of historical interest.)
 
   Default values for the \code{ascii}, \code{compress}, \code{safe} and
-  \code{version} arguments can be modified with
-  the \code{save.defaults} option (used both by \code{save} and
-  \code{save.image}), see also the example section below.
-  If a \code{save.image.defaults}
-  option is set it overrides \code{save.defaults} for function
-  \code{save.image} (which allows to have different defaults).
-
-  \code{sys.save.image} is a system function that is called by \code{q()}
-  and its GUI analogs; \code{sys.load.image} is called by the startup code.
-  These functions should not be called directly and are subject to change.
-
-  \code{sys.save.image} closes all connections first, to ensure that it
-  is able to open a connection to save the image.  This is appropriate
-  when called from \code{q()} and allies, but reinforces the warning
-  that it should not be called directly.
+  \code{version} arguments can be modified with the \code{save.defaults}
+  option (used both by \code{save} and \code{save.image}), see also the
+  example section below.  If a \code{save.image.defaults} option is set
+  it overrides \code{save.defaults} for function \code{save.image}
+  (which allows this to have different defaults).
 
   It is possible to compress later (with \code{gzip}) a file saved with
   \code{compress = FALSE}: the effect is the same as saving with
@@ -86,8 +79,8 @@ sys.save.image(name)
 
   Saved \R objects are binary files, even those saved with
   \code{ascii = TRUE}, so ensure that they are transferred without
-  conversion of end of line markers.  The lines are delimited by LF on
-  all platforms.
+  conversion of end of line markers and of 8-bit characters.  The lines
+  are delimited by LF on all platforms.
 
   Although the default version has not changed since \R 1.4.0, this
   does not mean that saved files are necessarily backwards conpatible.
