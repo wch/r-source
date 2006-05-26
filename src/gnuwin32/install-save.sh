@@ -31,7 +31,7 @@ fi
 R_PACKAGE_NAME=${pkg}
 export R_PACKAGE_NAME
 
-if ${R_SAVE_IMAGE}; then
+if test "x${R_SAVE_IMAGE}" = "xtrue"; then
     echo "  save image"
     if test "x${BUILD}" = "xCROSS"; then
         mkdir -p ${lib1}/${pkg}
