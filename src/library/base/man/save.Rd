@@ -19,11 +19,7 @@ save(\dots, list = character(0),
      compress = !ascii)
 
 save.image(file = ".RData", version = NULL, ascii = FALSE,
-<<<<<<< .working
            compress = FALSE, safe = TRUE)
-=======
-           compress = !ascii, safe = TRUE)
->>>>>>> .merge-right.r38201
 }
 \arguments{
   \item{\dots}{the names of the objects to be saved.}
