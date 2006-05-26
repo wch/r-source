@@ -2,6 +2,7 @@ sessionInfo <- function(package=NULL)
 {
     z <- list()
     z$R.version <- R.Version()
+    z$locale <- Sys.getlocale()
 
     if(is.null(package)){
         package <- grep("^package:", search(), value=TRUE)
@@ -24,6 +25,8 @@ print.sessionInfo <- function(x, ...)
 {
     cat(x$R.version$version.string, "\n")
     cat(x$R.version$platform, "\n\n")
+    cat("locale:\n")
+    cat(x$locale, "\n\n", sep="")
     cat("attached base packages:\n")
     print(x$basePkgs)
     if(!is.null(x$otherPkgs)){
@@ -31,7 +34,7 @@ print.sessionInfo <- function(x, ...)
         print(sapply(x$otherPkgs,
                      function(x) x$Version))
     }
-
+    x
 }
 
 toLatex.sessionInfo <- function(object, ...)
@@ -40,6 +43,7 @@ toLatex.sessionInfo <- function(object, ...)
     z <- c("\\begin{itemize}",
            paste("  \\item ", object$R.version$version.string,
                  ", \\verb|", object$R.version$platform, "|", sep=""),
+           paste("  \\item Locale: \\verb|", object$locale, "|", sep=""),
            strwrap(paste("\\item Base packages:",
                          paste(sort(object$basePkgs), collapse=", ")),
                    indent=2, exdent=4))
@@ -56,5 +60,3 @@ toLatex.sessionInfo <- function(object, ...)
     class(z) <- "Latex"
     z
 }
-
-
