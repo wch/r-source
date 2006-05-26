@@ -6,6 +6,8 @@
 \alias{.getRequiredPackages}
 \alias{.getRequiredPackages2}
 \alias{testPlatformEquivalence}
+\alias{sys.save.image}
+\alias{sys.load.image}
 
 \title{Internal Functions in the Base Package}
 \description{
@@ -27,6 +29,9 @@
                       useImports = FALSE)
 
 testPlatformEquivalence(built, run)
+
+sys.load.image(name, quiet)
+sys.save.image(name)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -40,10 +45,11 @@ testPlatformEquivalence(built, run)
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{file}{The full path to the \file{DESCRIPTION} file of a package.}
-  \item{quietly}{logical: should progress messages be given.}
+  \item{quietly}{logical: should message(s) be printed.}
   \item{pkginfo}{A processed \file{DESCRIPTION} file of class
     \code{"packageDescription2"}.}
   \item{built, run}{platform strings of the form \code{"cpu-vendor-os"}.}
+  \item{name}{name of image file to save or load.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
@@ -86,6 +92,15 @@ testPlatformEquivalence(built, run)
   The default function omits the \code{vendor} part and allows small 
   mismatches elsewhere.  Cognescenti can replace this function in the
   \code{base} namespace.
+
+  \code{sys.save.image} is a system function that is called by \code{q()}
+  and its GUI analogs; \code{sys.load.image} is called by the startup code.
+  These functions should not be called directly and are subject to change.
+
+  \code{sys.save.image} closes all connections first, to ensure that it
+  is able to open a connection to save the image.  This is appropriate
+  when called from \code{q()} and allies, but reinforces the warning
+  that it should not be called directly.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character
