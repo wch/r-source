@@ -40,7 +40,7 @@ dimnames(x) <- value
   dimension of \code{x}.
 
   For the \code{"data.frame"} method both dimnames must be non-null, and
-  the rownames must be contain no duplicates nor missing values.
+  the rownames must contain no duplicates nor missing values.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
