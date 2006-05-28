@@ -487,7 +487,7 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
     switch (PRIMVAL(op)) {
     case 1: /* parent */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for 'n'"));
+	    errorcall(call, _("invalid value for '%s'"), "n");
 	nframe = framedepth(cptr);
 	rval = allocVector(INTSXP,1);
 	i = nframe;
@@ -499,11 +499,11 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return rval;
     case 2: /* call */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for 'which'"));
+	    errorcall(call, _("invalid value for '%s'"), "which");
 	return R_syscall(n, cptr);
     case 3: /* frame */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for 'which'"));
+	    errorcall(call, _("invalid value for '%s'"), "which");
 	return R_sysframe(n, cptr);
     case 4: /* sys.nframe */
 	rval = allocVector(INTSXP, 1);

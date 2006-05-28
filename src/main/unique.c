@@ -494,10 +494,6 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
 
 SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#ifdef NOTMOVED
-    SEXP x, table;
-    SEXPTYPE type;
-#endif
     int nomatch;
 
     checkArity(op, args);
@@ -506,23 +502,8 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 	|| (!isVector(CADR(args)) && !isNull(CADR(args))))
 	error(_("'match' requires vector arguments"));
 
-    /* Coerce to a common type; type == NILSXP is ok here.
-     * Note that R's match() does only coerce factors (to character).
-     * Hence, coerce to character or to `higher' type
-     * (given that we have "Vector" or NULL) */
-#ifdef NOTMOVED
-    if(TYPEOF(CAR(args))  >= STRSXP || TYPEOF(CADR(args)) >= STRSXP)
-	type = STRSXP;
-    else type = TYPEOF(CAR(args)) < TYPEOF(CADR(args)) ?
-	     TYPEOF(CADR(args)) : TYPEOF(CAR(args));
-    x = SETCAR(args, coerceVector(CAR(args), type));
-    table = SETCADR(args, coerceVector(CADR(args), type));
-    nomatch = asInteger(CAR(CDDR(args)));
-    return match(table, x, nomatch);
-#else
     nomatch = asInteger(CAR(CDDR(args)));
     return match(CADR(args), CAR(args), nomatch);
-#endif
 }
 
 SEXP match(SEXP itable, SEXP ix, int nmatch)
@@ -536,10 +517,8 @@ SEXP match(SEXP itable, SEXP ix, int nmatch)
      * Note that R's match() does only coerce factors (to character).
      * Hence, coerce to character or to `higher' type
      * (given that we have "Vector" or NULL) */
-    if(TYPEOF(ix)  >= STRSXP || TYPEOF(itable) >= STRSXP)
-        type = STRSXP;
-    else type = TYPEOF(ix) < TYPEOF(itable) ?
-             TYPEOF(itable) : TYPEOF(ix);
+    if(TYPEOF(ix)  >= STRSXP || TYPEOF(itable) >= STRSXP) type = STRSXP;
+    else type = TYPEOF(ix) < TYPEOF(itable) ? TYPEOF(itable) : TYPEOF(ix);
     PROTECT(x = coerceVector(ix, type));
     PROTECT(table = coerceVector(itable, type));
 
