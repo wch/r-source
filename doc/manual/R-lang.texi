@@ -1510,8 +1510,8 @@ supplied (see @ref{Arguments}).
 
 @cindex type
 As the elements of an atomic vector must be of the same type there are
-multiple types of @code{NA} values. There is one case where this is
-particularly important to the user. The default type of @code{NA} is
+multiple types of @code{NA} values.  There is one case where this is
+particularly important to the user.  The default type of @code{NA} is
 @code{logical}, unless coerced to some other type, so the appearance of
 a missing value may trigger logical rather than numeric indexing (see
 @ref{Indexing} for details).
@@ -1523,16 +1523,22 @@ return this value. In particular, @samp{FALSE & NA} is @code{FALSE},
 @samp{TRUE | NA} is @code{TRUE}.  @code{NA} is not equal to any other
 value or to itself; testing for @code{NA} is done using @code{is.na}.
 @findex is.na
+However, an @code{NA} value will match another @code{NA} value in
+@code{match}.
 
-Numeric calculations whose result is undefined, such as @samp{0/0}
-produce (on most, if not all, platforms) the value @code{NaN}. This
-exists only in the @code{double} type.  The function @code{is.nan} is
-provided to check specifically for @code{NaN}, @code{is.na} also returns
-@code{TRUE} for @code{NaN}.
-@cindex coercion
-Coercing @code{NaN} to logical or integer
-type gives an @code{NA} of the appropriate type.
+Numeric calculations whose result is undefined, such as @samp{0/0},
+produce the value @code{NaN}.  This exists only in the @code{double}
+type and for real or imaginary components of the complex type.  The
+function @code{is.nan} is provided to check specifically for
 @findex is.nan
+@code{NaN}, @code{is.na} also returns @code{TRUE} for @code{NaN}.
+@cindex coercion
+Coercing @code{NaN} to logical or integer type gives an @code{NA} of the
+appropriate type, but coercion to character gives the string
+@code{"NaN"}.  @code{NaN} values are incomparable so tests of equality
+or collation involving @code{NaN} will result in @code{NA}.  They are
+regarded as matching any @code{NaN} value (and no other value, not even
+@code{NA}) by @code{match}.
 
 The @code{NA} of character type is as from R 1.5.0 distinct from the
 string @code{"NA"}.  Programmers who need to specify an explicit string

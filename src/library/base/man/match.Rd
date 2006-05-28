@@ -16,8 +16,8 @@ match(x, table, nomatch = NA, incomparables = FALSE)
 x \%in\% table
 }
 \arguments{
-  \item{x}{vector: the values to be matched.}
-  \item{table}{vector: the values to be matched against.}
+  \item{x}{vector or \code{NULL}: the values to be matched.}
+  \item{table}{vector or \code{NULL}: the values to be matched against.}
   \item{nomatch}{the value to be returned in the case when no match is
     found.  Note that it is coerced to \code{integer}.}
   \item{incomparables}{a vector of values that cannot be matched.  Any
@@ -26,15 +26,15 @@ x \%in\% table
     value, meaning that all values can be matched.}
 }
 \value{
-  In both cases, a vector of the same length as \code{x}.
+  A vector of the same length as \code{x}.
 
   \code{match}: An integer vector giving the position in \code{table} of
   the first match if there is a match, otherwise \code{nomatch}.
 
-  If \code{x[i]} is found to equal \code{table[j]}
-  then the value returned in the \code{i}-th position of the return value is
-  \code{j}, for the smallest possible \code{j}.  If no match is found,
-  the value is \code{nomatch}.
+  If \code{x[i]} is found to equal \code{table[j]} then the value
+  returned in the \code{i}-th position of the return value is \code{j},
+  for the smallest possible \code{j}.  If no match is found, the value
+  is \code{nomatch}.
 
   \code{\%in\%}: A logical vector, indicating if a match was located for
   each element of \code{x}.
@@ -43,13 +43,18 @@ x \%in\% table
   \code{\%in\%} is currently defined as \cr
   \code{"\%in\%" <- function(x, table) match(x, table, nomatch = 0) > 0}
 
-  Factors are converted to character vectors, and then \code{x} and
-  \code{table} are coerced to a common type (the later of the two types
-  in R's ordering, logical < integer < numeric < complex < character < list)
-  before matching.
+  Factors, raw vectors and lists are converted to character vectors, and
+  then \code{x} and \code{table} are coerced to a common type (the later
+  of the two types in R's ordering, logical < integer < numeric <
+  complex < character) before matching.
 
   Matching for lists is potentially very slow and best avoided except in
   simple cases.
+
+  Exactly what matches what is to some extent a matter of definition.
+  For all types, \code{NA} matches \code{NA} and no other value.
+  For real and complex values, \code{NaN} values are regarded
+  as matching any other \code{NaN} value, but not matching \code{NA}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
