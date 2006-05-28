@@ -40,6 +40,8 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
   \code{duplicates.ok} true, the differences being that it
   differentiates between no match and an ambiguous partial match,  it
   does match empty strings, and it does not allow multiple exact matches.
+
+  \code{NA} values are treated as if they were the string constant \code{"NA"}.
 }
 \value{
   A numeric vector of integers (including \code{NA} if \code{nomatch =
