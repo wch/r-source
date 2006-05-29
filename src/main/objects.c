@@ -225,9 +225,6 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
     /* of the formals to the generic in it. */
 
     PROTECT(newrho = allocSExp(ENVSXP));
-    /*
-    PROTECT(op = findFun(CAR(cptr->call), cptr->sysparent));
-    */
     op = CAR(cptr->call);
     switch (TYPEOF(op)) {
     case SYMSXP:

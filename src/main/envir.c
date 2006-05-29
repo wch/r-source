@@ -1223,10 +1223,8 @@ SEXP dynamicfindVar(SEXP symbol, RCNTXT *cptr)
   functions.
 
   NEEDED: This needs to be modified so that a search for an arbitrary mode can
-  be made.  Then findVar and findFun could become same function
-
-  <FIXME> this throws an error if R_BaseEnv is in the search path 
-  and not otherwise. 
+  be made.  Then findVar and findFun could become same function.
+  NB: they behave differently on failure.
 */
 
 SEXP findFun(SEXP symbol, SEXP rho)
@@ -1263,8 +1261,10 @@ SEXP findFun(SEXP symbol, SEXP rho)
 	if (TYPEOF(SYMBOL_BINDING_VALUE(symbol)) == PROMSXP)
 	    return eval(SYMBOL_BINDING_VALUE(symbol), rho);
 	return SYMBOL_BINDING_VALUE(symbol);
-    }
-    return (R_UnboundValue);
+    } else
+	error(_("could not find function \"%s\""), CHAR(PRINTNAME(symbol)));
+    /* NOT REACHED */
+    return R_UnboundValue;
 }
 
 
