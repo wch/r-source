@@ -29,7 +29,7 @@ estVar(object, ...)
   \code{estVar} returns a matrix with the estimated variances and
   covariances.
 }
-\seealso{\code{\link{mauchley.test}}, \code{\link{anova.mlm}}}
+\seealso{\code{\link{mauchly.test}}, \code{\link{anova.mlm}}}
 %% TODO: Have this in datasets w/full docs
 \examples{
 # Lifted from Baron+Li:
