@@ -14,6 +14,12 @@ USER-VISIBLE CHANGES
     o	The startup message now prints first the version string and
 	then the copyright notice (to be more similar to R --version).
 
+    o	save() by default evaluates promise objects.  The old behaviour
+	(to save the promise and its evaluation environment) can be
+	obtained by setting the new argument 'eval.promises' to FALSE.
+	(Note that this does not apply to promises embedded in
+	objects, only to top-level objects.)
+
 
 NEW FEATURES
 
@@ -100,9 +106,9 @@ NEW FEATURES
 
     o	as.data.frame() gains a '...' argument.
 
-    o	data.frame() has a new argument 'charToFactor'.
+    o	data.frame() has a new argument 'stringsAsFactor'.
 	[*Experimental*: this and the default for read.table(as.is) are
-	set from the global option 'charToFactor'.]
+	set from the global option 'stringsAsFactors'.]
 
     o	[[ on a list does not duplicate the extracted element unless
 	necessary.  (It did not duplicate in other cases, e.g. a
@@ -110,7 +116,8 @@ NEW FEATURES
 
     o	predict.lm() gains a 'pred.var' argument.  (Wishlist PR#8877.)
 
-    o	readLines() has a new argument 'warn' to suppress warnings.
+    o	readLines() has a new argument 'warn' to suppress warnings:
+	the default behaviour is still to warn.
 
 
 DEPRECATED & DEFUNCT
@@ -168,8 +175,9 @@ BUG FIXES
 	lead bytes and always worked correctly.)
 
     o	glm() now recalculates the null deviance whenever there is an
-	offset, even if it is exactly zero, to avoid a discontinuity
-	in that case.
+	offset (even if it is exactly zero to avoid a discontinuity in
+	that case, since the calculations with and without offset are
+	done by different algorithms).
 
     o	Amongst families, quasi() accepted an expression for link and
 	no other did.  Now all accept an expression which evaluates to
@@ -190,7 +198,9 @@ BUG FIXES
 	it were the current function, although some functions are
 	generic for methods of a different generic.
 
-	Lookup for S3 methods is confined to functions.
+	Lookup for S3 methods is confined to functions: previously a 
+	non-function 'fun.class' could have masked a function on the
+	same name. 
 
 
 

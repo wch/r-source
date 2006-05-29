@@ -24,7 +24,7 @@ load <- function (file, envir = parent.frame())
 save <- function(..., list = character(0),
                  file = stop("'file' must be specified"),
                  ascii = FALSE, version = NULL, envir = parent.frame(),
-                 compress = !ascii)
+                 compress = !ascii, eval.promises = TRUE)
 {
     opts <- getOption("save.defaults")
     if (missing(compress) && ! is.null(opts$compress))
@@ -36,7 +36,8 @@ save <- function(..., list = character(0),
     names <- as.character( substitute( list(...)))[-1]
     list<- c(list, names)
     if (! is.null(version) && version == 1)
-        invisible(.Internal(save(list, file, ascii, version, envir)))
+        invisible(.Internal(save(list, file, ascii, version, envir,
+                                 eval.promises)))
     else {
         if (is.character(file)) {
             if (file == "") stop("'file' must be non-empty string")
@@ -49,7 +50,8 @@ save <- function(..., list = character(0),
         else stop("bad file argument")
         if(isOpen(con) && summary(con)$text != "binary")
             stop("can only save to a binary connection")
-        invisible(.Internal(saveToConn(list, con, ascii, version, envir)))
+        invisible(.Internal(saveToConn(list, con, ascii, version, envir,
+                                       eval.promises)))
     }
 }
 

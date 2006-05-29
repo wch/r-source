@@ -16,7 +16,7 @@
 save(\dots, list = character(0),
      file = stop("'file' must be specified"),
      ascii = FALSE, version = NULL, envir = parent.frame(),
-     compress = !ascii)
+     compress = !ascii, eval.promises = TRUE)
 
 save.image(file = ".RData", version = NULL, ascii = FALSE,
            compress = !ascii, safe = TRUE)
@@ -38,6 +38,8 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \item{compress}{logical specifying whether saving to a named file is to
     use compression.  Ignored when \code{file} is a connection and for
     workspace format version 1.}
+  \item{eval.promises}{logical: should objects which are promises be
+    forced before saving?}
   \item{safe}{logical.  If \code{TRUE}, a temporary file is used for
     creating the saved workspace.  The temporary file is renamed to
     \code{file} if the save succeeds.  This preserves an existing
@@ -47,9 +49,10 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 \details{
   The names of the objects specified either as symbols in \code{\dots} or
   as a character vector in \code{list} are used to look up the objects
-  from environment \code{envir}.  The objects are not evaluated, so
-  \link{promises} are saved (together with their evaluation
-  environments).
+  from environment \code{envir}.  By default \link{promises} are
+  evaluated, but if \code{eval.promises = FALSE} promises are saved
+  (together with their evaluation environments).  (Promises embedded in
+  objects are always saved unevaluated.)
 
   All \R platforms use the XDR representation of binary objects in
   binary save-d files, and these are portable across all \R platforms.

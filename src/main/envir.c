@@ -1225,6 +1225,8 @@ SEXP dynamicfindVar(SEXP symbol, RCNTXT *cptr)
   NEEDED: This needs to be modified so that a search for an arbitrary mode can
   be made.  Then findVar and findFun could become same function
 
+  <FIXME> this throws an error if R_BaseEnv is in the search path 
+  and not otherwise. 
 */
 
 SEXP findFun(SEXP symbol, SEXP rho)

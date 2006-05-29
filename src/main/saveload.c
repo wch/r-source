@@ -1907,8 +1907,8 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* save(list, file, ascii, version, environment) */
 
-    SEXP s, t, source;
-    int len, j, version;
+    SEXP s, t, source, tmp;
+    int len, j, version, ep;
     FILE *fp;
     RCNTXT cntxt;
 
@@ -1926,10 +1926,13 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	version = asInteger(CADDDR(args));
     if (version == NA_INTEGER || version <= 0)
-	error(_("bad version value"));
+	error(_("invalid value for '%s'"), "version");
     source = CAR(nthcdr(args,4));
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
-	error(_("bad environment"));
+	error(_("invalid value for '%s'"), "environment");
+    ep = asLogical(CAR(nthcdr(args,5)));
+    if (ep == NA_LOGICAL)
+	error(_("invalid value for '%s'"), "eval.promises");
 
     fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(CADR(args), 0))), "wb");
     if (!fp)
@@ -1947,10 +1950,16 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     t = s;
     for (j = 0; j < len; j++, t = CDR(t)) {
 	SET_TAG(t, install(CHAR(STRING_ELT(CAR(args), j))));
-	SETCAR(t, findVar(TAG(t), source));
-	if (CAR(t) == R_UnboundValue)
+	tmp = findVar(TAG(t), source);
+	if (tmp == R_UnboundValue)
 	    error(_("object '%s' not found"), CHAR(PRINTNAME(TAG(t))));
-    }
+ 	if(ep && TYPEOF(tmp) == PROMSXP) {
+	    PROTECT(tmp);
+	    tmp = eval(tmp, source);
+	    UNPROTECT(1);
+	}
+	SETCAR(t, tmp);
+   }
 
     R_SaveToFileV(s, fp, INTEGER(CADDR(args))[0], version);
 
@@ -2170,9 +2179,9 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* saveToConn(list, conn, ascii, version, environment) */
 
-    SEXP s, t, source, list;
+    SEXP s, t, source, list, tmp;
     Rboolean ascii, wasopen;
-    int len, j, version;
+    int len, j, version, ep;
     Rconnection con;
     struct R_outpstream_st out;
     R_pstream_format_t type;
@@ -2195,9 +2204,15 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	version = asInteger(CADDDR(args));
     if (version == NA_INTEGER || version <= 0)
-	error(_("bad version value"));
+	error(_("invalid value for '%s'"), "version");
     if (version < 2)
 	error(_("cannot save to connections in version %d format"), version);
+    source = CAR(nthcdr(args,4));
+    if (source != R_NilValue && TYPEOF(source) != ENVSXP)
+	error(_("invalid value for '%s'"), "environment");
+    ep = asLogical(CAR(nthcdr(args,5)));
+    if (ep == NA_LOGICAL)
+	error(_("invalid value for '%s'"), "eval.promises");
 
     source = CAR(nthcdr(args,4));
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
@@ -2235,8 +2250,15 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     for (j = 0; j < len; j++, t = CDR(t)) {
 	SET_TAG(t, install(CHAR(STRING_ELT(list, j))));
 	SETCAR(t, findVar(TAG(t), source));
-	if (CAR(t) == R_UnboundValue)
+	tmp = findVar(TAG(t), source);
+	if (tmp == R_UnboundValue)
 	    error(_("object '%s' not found"), CHAR(PRINTNAME(TAG(t))));
+ 	if(ep && TYPEOF(tmp) == PROMSXP) {
+	    PROTECT(tmp);
+	    tmp = eval(tmp, source);
+	    UNPROTECT(1);
+	}
+	SETCAR(t, tmp);
     }
 
     R_Serialize(s, &out);
