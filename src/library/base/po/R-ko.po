@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-16 19:47\n"
+"POT-Creation-Date: 2006-05-29 07:58\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -322,7 +322,12 @@ msgstr "이하의 존재하지 않는 열중의 요소치환입니다"
 msgid "only a single element should be replaced"
 msgstr "다만 하나의 요소만에 옮겨놓을수 있어야 할것이 아닙니다"
 
-msgid "names don't match previous names:"
+#, fuzzy
+msgid "names do not match previous names"
+msgstr "전이 이하와 같은 이전의 이름과 match하지 않습니다 :"
+
+#, fuzzy
+msgid "names do not match previous names:"
 msgstr "전이 이하와 같은 이전의 이름과 match하지 않습니다 :"
 
 msgid "invalid list argument: all variables should have the same length"

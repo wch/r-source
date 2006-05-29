@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-05-16 19:39+0100\n"
+"POT-Creation-Date: 2006-05-29 07:56+0100\n"
 "PO-Revision-Date: 2006-04-15 23:34-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -114,8 +114,8 @@ msgstr "неправильные 'имяs' в R_unlink"
 #: src/main/envir.c:1654 src/main/envir.c:1661 src/main/envir.c:1772
 #: src/main/envir.c:1780 src/main/envir.c:1788 src/main/envir.c:1802
 #: src/main/envir.c:1808 src/main/envir.c:2365 src/main/envir.c:2646
-#: src/main/envir.c:3181 src/main/eval.c:251 src/main/eval.c:1545
-#: src/main/eval.c:1569 src/main/eval.c:1573 src/main/model.c:1580
+#: src/main/envir.c:3181 src/main/eval.c:252 src/main/eval.c:1546
+#: src/main/eval.c:1570 src/main/eval.c:1574 src/main/model.c:1580
 #: src/main/model.c:1588 src/main/optim.c:229 src/main/paste.c:71
 #: src/main/paste.c:163 src/main/paste.c:170 src/main/paste.c:177
 #: src/main/paste.c:182 src/main/paste.c:187 src/main/paste.c:192
@@ -124,8 +124,8 @@ msgstr "неправильные 'имяs' в R_unlink"
 #: src/main/platform.c:868 src/main/platform.c:905 src/main/platform.c:908
 #: src/main/platform.c:911 src/main/platform.c:914 src/main/platform.c:917
 #: src/main/platform.c:995 src/main/platform.c:1035 src/main/platform.c:1065
-#: src/main/platform.c:1067 src/main/platform.c:1100 src/main/platform.c:1204
-#: src/main/platform.c:1447 src/main/platform.c:1485 src/main/plot3d.c:2463
+#: src/main/platform.c:1067 src/main/platform.c:1113 src/main/platform.c:1217
+#: src/main/platform.c:1460 src/main/platform.c:1498 src/main/plot3d.c:2463
 #: src/main/plot3d.c:2467 src/main/plot3d.c:2472 src/main/plot3d.c:2476
 #: src/main/plot3d.c:2480 src/main/plot3d.c:2484 src/main/print.c:172
 #: src/main/print.c:178 src/main/print.c:200 src/main/random.c:465
@@ -454,7 +454,7 @@ msgstr "второй аргумент должен быть текстовой строкой"
 msgid "second argument must be a list"
 msgstr "второй аргумент должен быть списком"
 
-#: src/include/Errormsg.h:42 src/main/eval.c:2623 src/main/subscript.c:228
+#: src/include/Errormsg.h:42 src/main/eval.c:2624 src/main/subscript.c:228
 #: src/main/subscript.c:333 src/main/subscript.c:336 src/main/subscript.c:436
 msgid "subscript out of bounds"
 msgstr "подгруппа выходит за пределы"
@@ -1071,7 +1071,7 @@ msgstr "повторный формальный аргумент 'use.имяs'"
 msgid "argument not a list"
 msgstr "аргумент не является списком"
 
-#: src/main/bind.c:874 src/main/eval.c:1853 src/main/eval.c:1863
+#: src/main/bind.c:874 src/main/eval.c:1854 src/main/eval.c:1864
 #: src/main/objects.c:278 src/main/objects.c:317 src/main/objects.c:671
 #: src/main/objects.c:689
 #, c-format
@@ -1100,7 +1100,7 @@ msgstr "количества колонок матриц должны соответствовать (см. аргумент %d)"
 #: src/main/envir.c:1763 src/main/envir.c:2395 src/main/envir.c:2452
 #: src/main/envir.c:2725 src/main/envir.c:2758 src/main/envir.c:2778
 #: src/main/envir.c:2800 src/main/envir.c:2834 src/main/envir.c:2854
-#: src/main/envir.c:3169 src/main/envir.c:3175 src/main/eval.c:3406
+#: src/main/envir.c:3169 src/main/envir.c:3175 src/main/eval.c:3407
 #: src/main/objects.c:177 src/main/objects.c:183 src/main/saveload.c:2028
 #: src/main/saveload.c:2281 src/main/saveload.c:2330 src/main/serialize.c:2158
 msgid "use of NULL environment is deprecated"
@@ -1438,7 +1438,7 @@ msgstr "не могу преобразовать в вектор"
 msgid "list argument expected"
 msgstr "ожидается аргумент-список"
 
-#: src/main/coerce.c:1325 src/main/eval.c:3403 src/main/eval.c:3410
+#: src/main/coerce.c:1325 src/main/eval.c:3404 src/main/eval.c:3411
 msgid "invalid environment"
 msgstr "неправильное окружение"
 
@@ -2265,7 +2265,7 @@ msgstr "нулевой аргумент"
 msgid "bad environment"
 msgstr "плохое окружение"
 
-#: src/main/deparse.c:358 src/main/eval.c:2492
+#: src/main/deparse.c:358 src/main/eval.c:2493
 #, c-format
 msgid "Object \"%s\" not found"
 msgstr "Объект \"%s\" не найден"
@@ -2691,7 +2691,7 @@ msgstr "Список  ... не содержит %d элементов"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d использовано в неправильном контексте, нет ... чтобы найти"
 
-#: src/main/envir.c:1252 src/main/eval.c:351 src/main/eval.c:2495
+#: src/main/envir.c:1252 src/main/eval.c:352 src/main/eval.c:2496
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "аргумент \"%s\" пропущен, умолчаний нет"
@@ -3030,293 +3030,293 @@ msgstr "перезагрузка не в стеке"
 msgid "not in a try context"
 msgstr "не в контексте 'try'"
 
-#: src/main/eval.c:212
+#: src/main/eval.c:213
 #, c-format
 msgid "Rprof: cannot open profile file '%s'"
 msgstr "Rprof: не могу открыть файл профиля '%s'"
 
-#: src/main/eval.c:245
+#: src/main/eval.c:246
 msgid "can't use R profiling while byte code profiling"
 msgstr ""
 "не могу использовать R-профилирование покуда включено побайтное "
 "профилирование"
 
-#: src/main/eval.c:264
+#: src/main/eval.c:265
 msgid "R profiling is not available on this system"
 msgstr "R-профилирование недоступно в этой системе"
 
-#: src/main/eval.c:291
+#: src/main/eval.c:292
 msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr ""
 "исполнение расположено слишком глубоко: неопределенная рекурсия / options"
 "(expressions=)?"
 
-#: src/main/eval.c:341 src/main/eval.c:430 src/main/eval.c:1390
-#: src/main/eval.c:1439 src/main/eval.c:1493 src/main/eval.c:1720
-#: src/main/eval.c:3057 src/main/eval.c:3149
+#: src/main/eval.c:342 src/main/eval.c:431 src/main/eval.c:1391
+#: src/main/eval.c:1440 src/main/eval.c:1494 src/main/eval.c:1721
+#: src/main/eval.c:3058 src/main/eval.c:3150
 msgid "'...' used in an incorrect context"
 msgstr "'...' использовано в неправильном контексте"
 
-#: src/main/eval.c:347 src/main/eval.c:789
+#: src/main/eval.c:348 src/main/eval.c:790
 #, c-format
 msgid "object \"%s\" not found"
 msgstr "объект \"%s\" не найден"
 
-#: src/main/eval.c:353 src/main/eval.c:2496
+#: src/main/eval.c:354 src/main/eval.c:2497
 msgid "argument is missing, with no default"
 msgstr "аргумент пропущен, умолчаний нет"
 
-#: src/main/eval.c:368 src/main/eval.c:2440
+#: src/main/eval.c:369 src/main/eval.c:2441
 msgid "recursive default argument reference"
 msgstr "рекурсивная ссылка на аргумент по умолчанию"
 
-#: src/main/eval.c:426 src/main/eval.c:3005
+#: src/main/eval.c:427 src/main/eval.c:3006
 msgid "attempt to apply non-function"
 msgstr "попытка применить не-функцию"
 
-#: src/main/eval.c:717
+#: src/main/eval.c:718
 #, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "не могу найти символ \"%s\" в окружении общей функции"
 
-#: src/main/eval.c:735
+#: src/main/eval.c:736
 #, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "символ \"%s\" не находится окружении метода"
 
-#: src/main/eval.c:845
+#: src/main/eval.c:846
 msgid "the condition has length > 1 and only the first element will be used"
 msgstr "длина условия > 1, будет использован только первый элемент"
 
-#: src/main/eval.c:848
+#: src/main/eval.c:849
 msgid "missing value where TRUE/FALSE needed"
 msgstr "пропущенное значение, а нужно TRUE/FALSE"
 
-#: src/main/eval.c:849
+#: src/main/eval.c:850
 msgid "argument is not interpretable as logical"
 msgstr "аргумент не интерпретируется как логический"
 
-#: src/main/eval.c:850
+#: src/main/eval.c:851
 msgid "argument is of length zero"
 msgstr "аргумент нулевой длины"
 
-#: src/main/eval.c:894
+#: src/main/eval.c:895
 msgid "non-symbol loop variable"
 msgstr "несимвольная переменная цикла"
 
-#: src/main/eval.c:961
+#: src/main/eval.c:962
 msgid "invalid for() loop sequence"
 msgstr "неправильная циклическая последовательность for()"
 
-#: src/main/eval.c:1090
+#: src/main/eval.c:1091
 msgid "'...' not allowed in return"
 msgstr "'...' не разрешен при возврате"
 
-#: src/main/eval.c:1104
+#: src/main/eval.c:1105
 msgid "multi-argument returns are deprecated"
 msgstr "многоаргументные возвраты не рекомендуются"
 
-#: src/main/eval.c:1107
+#: src/main/eval.c:1108
 msgid "empty expression in return value"
 msgstr "пустое выражение в возвращаемом значении"
 
-#: src/main/eval.c:1163
+#: src/main/eval.c:1164
 msgid "invalid (NULL) left side of assignment"
 msgstr "неправильная (NULL) левая сторона присваивания"
 
-#: src/main/eval.c:1185
+#: src/main/eval.c:1186
 msgid "target of assignment expands to non-language object"
 msgstr "цель присваивания раскрывается в неязыковой объект"
 
-#: src/main/eval.c:1224
+#: src/main/eval.c:1225
 msgid "cannot do complex assignments in base namespace"
 msgstr "не могу делать комплексные присваивания в базовом пространстве имен"
 
-#: src/main/eval.c:1226
+#: src/main/eval.c:1227
 msgid "cannot do complex assignments in base environment"
 msgstr "не могу делать комплексные присваивания в базовом окружении"
 
-#: src/main/eval.c:1239 src/main/eval.c:1257
+#: src/main/eval.c:1240 src/main/eval.c:1258
 msgid "invalid function in complex assignment"
 msgstr "неправильная функция в комплексном присвоении"
 
-#: src/main/eval.c:1241 src/main/eval.c:1259
+#: src/main/eval.c:1242 src/main/eval.c:1260
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "слишком длинное имя в '%s'"
 
-#: src/main/eval.c:1333
+#: src/main/eval.c:1334
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "неправильная (do_set) левая сторона в присвоении"
 
-#: src/main/eval.c:1348
+#: src/main/eval.c:1349
 msgid "invalid assignment left-hand side"
 msgstr "неправильная левая сторона присвоения"
 
-#: src/main/eval.c:1523
+#: src/main/eval.c:1524
 msgid "invalid formal argument list for \"function\""
 msgstr "неправильный список формальных аргументов для \"функция\""
 
-#: src/main/eval.c:1566
+#: src/main/eval.c:1567
 msgid "numeric 'envir' arg not of length one"
 msgstr "числовой аргумент 'envir' не единичной длины"
 
-#: src/main/eval.c:1584 src/main/eval.c:1603
+#: src/main/eval.c:1585 src/main/eval.c:1604
 msgid "restarts not supported in 'eval'"
 msgstr "перезапуск не поддерживается в 'eval'"
 
-#: src/main/eval.c:1650
+#: src/main/eval.c:1651
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall' вызвано снаружи вложения"
 
-#: src/main/eval.c:1714
+#: src/main/eval.c:1715
 msgid "value in '...' is not a promise"
 msgstr "значение в '...' не является перспективным"
 
-#: src/main/eval.c:1907 src/main/objects.c:663
+#: src/main/eval.c:1908 src/main/objects.c:663
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "слишком длинное имя вызова в '%s'"
 
-#: src/main/eval.c:1928
+#: src/main/eval.c:1929
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "у %s слишком длинное общее имя"
 
-#: src/main/eval.c:1960
+#: src/main/eval.c:1961
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Несовместимые методы (\"%s\", \"%s\") для \"%s\""
 
-#: src/main/eval.c:2024
+#: src/main/eval.c:2025
 msgid "dispatch error"
 msgstr "ошибка отправки"
 
-#: src/main/eval.c:2404
+#: src/main/eval.c:2405
 msgid "node stack overflow"
 msgstr "переполнение стека узла"
 
-#: src/main/eval.c:2410
+#: src/main/eval.c:2411
 msgid "integer stack overflow"
 msgstr "переполнение стека целых чисел"
 
-#: src/main/eval.c:2478
+#: src/main/eval.c:2479
 msgid "Bad opcode"
 msgstr "Неправильный 'opcode'"
 
-#: src/main/eval.c:2625
+#: src/main/eval.c:2626
 msgid "not a vector object"
 msgstr "не векторный объект"
 
-#: src/main/eval.c:2633 src/main/eval.c:2655 src/main/eval.c:2679
-#: src/main/eval.c:2703
+#: src/main/eval.c:2634 src/main/eval.c:2656 src/main/eval.c:2680
+#: src/main/eval.c:2704
 msgid "can only handle simple real vectors"
 msgstr "могу работать только с простыми действительными векторами"
 
-#: src/main/eval.c:2642 src/main/eval.c:2689
+#: src/main/eval.c:2643 src/main/eval.c:2690
 msgid "not a simple vector"
 msgstr "не простой вектор"
 
-#: src/main/eval.c:2659 src/main/eval.c:2707 src/main/subassign.c:909
+#: src/main/eval.c:2660 src/main/eval.c:2708 src/main/subassign.c:909
 #: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "неправильное количество подгрупп"
 
-#: src/main/eval.c:2670 src/main/eval.c:2721
+#: src/main/eval.c:2671 src/main/eval.c:2722
 msgid "not a simple matrix"
 msgstr "не простая матрица"
 
-#: src/main/eval.c:2755
+#: src/main/eval.c:2756
 msgid "bytecode version mismatch; using eval"
 msgstr "несоответствие версии байтового кода; использую eval"
 
-#: src/main/eval.c:2760
+#: src/main/eval.c:2761
 msgid "bytecode version is too old"
 msgstr "версия байтового кода слишком старая"
 
-#: src/main/eval.c:2761
+#: src/main/eval.c:2762
 msgid "bytecode version is too new"
 msgstr "версия байтового кода слишком новая"
 
-#: src/main/eval.c:2766
+#: src/main/eval.c:2767
 msgid "byte code version mismatch"
 msgstr "несоответствие версии байтового кода"
 
-#: src/main/eval.c:2782
+#: src/main/eval.c:2783
 msgid "missing value where logical needed"
 msgstr "пропущенное значение, а нужно логическое"
 
-#: src/main/eval.c:2783
+#: src/main/eval.c:2784
 msgid "argument of if(*) is not interpretable as logical"
 msgstr "аргумент if(*) не интерпретируется как логический"
 
-#: src/main/eval.c:2817
+#: src/main/eval.c:2818
 msgid "invalid sequence argument in for loop"
 msgstr "неправильная последовательность аргументов в цикле 'for'"
 
-#: src/main/eval.c:2967 src/main/eval.c:2988 src/main/eval.c:3095
+#: src/main/eval.c:2968 src/main/eval.c:2989 src/main/eval.c:3096
 msgid "not a BUILTIN function"
 msgstr "не BUILTIN-функция"
 
-#: src/main/eval.c:3083
+#: src/main/eval.c:3084
 msgid "bad function"
 msgstr "неправильная функция"
 
-#: src/main/eval.c:3116
+#: src/main/eval.c:3117
 msgid "not a SPECIAL function"
 msgstr "не SPECIAL-функция"
 
-#: src/main/eval.c:3345
+#: src/main/eval.c:3346
 msgid "cannot find index for threaded code address"
 msgstr "не могу найти индекс для нитевого адреса кода"
 
-#: src/main/eval.c:3423
+#: src/main/eval.c:3424
 msgid "invalid symbol"
 msgstr "неправильный символ"
 
-#: src/main/eval.c:3467
+#: src/main/eval.c:3468
 msgid "argument is not a byte code object"
 msgstr "аргумент не является объектом байтового кода"
 
-#: src/main/eval.c:3490
+#: src/main/eval.c:3491
 msgid "bad file name"
 msgstr "неправильное имя файла"
 
-#: src/main/eval.c:3494 src/main/eval.c:3515
+#: src/main/eval.c:3495 src/main/eval.c:3516
 msgid "unable to open 'file'"
 msgstr "не могу открыть 'file'"
 
-#: src/main/eval.c:3509 src/main/saveload.c:1921
+#: src/main/eval.c:3510 src/main/saveload.c:1921
 msgid "'file' must be non-empty string"
 msgstr "'file' должен быть непустой строкой"
 
-#: src/main/eval.c:3511 src/main/saveload.c:1923 src/main/saveload.c:2190
+#: src/main/eval.c:3512 src/main/saveload.c:1923 src/main/saveload.c:2190
 #: src/main/serialize.c:1723
 msgid "'ascii' must be logical"
 msgstr "'ascii' должно быть логическим"
 
-#: src/main/eval.c:3540 src/main/eval.c:3547
+#: src/main/eval.c:3541 src/main/eval.c:3548
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: буфер слишком мал"
 
-#: src/main/eval.c:3580
+#: src/main/eval.c:3581
 msgid "code must be a generic vector"
 msgstr "код должен быть общим вектором"
 
-#: src/main/eval.c:3619
+#: src/main/eval.c:3620
 msgid "profile timer in use"
 msgstr "используется профильный таймер"
 
-#: src/main/eval.c:3621
+#: src/main/eval.c:3622
 msgid "already byte code profiling"
 msgstr "уже есть побайтное профилирование"
 
-#: src/main/eval.c:3639
+#: src/main/eval.c:3640
 msgid "setting profile timer failed"
 msgstr "установить профильный таймер не удалось"
 
-#: src/main/eval.c:3656
+#: src/main/eval.c:3657
 msgid "not byte code profiling"
 msgstr "не побайтное профилирование"
 
@@ -4571,36 +4571,36 @@ msgstr "имя файла слишком длинное"
 msgid "file.access() is not implemented on this system"
 msgstr "file.access() в этой системе не разработан"
 
-#: src/main/platform.c:1092
+#: src/main/platform.c:1105
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "установка 'LC_NUMERIC' может заставить R странно себя вести"
 
-#: src/main/platform.c:1106
+#: src/main/platform.c:1119
 msgid "OS reports request cannot be honored"
 msgstr "запрос на отчеты ОС не уважается"
 
-#: src/main/platform.c:1251
+#: src/main/platform.c:1264
 msgid "invalid value of 'what' argument"
 msgstr "неправильное значение what-аргумента"
 
-#: src/main/platform.c:1396
+#: src/main/platform.c:1409
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' должен быть единичным текстовым вектором"
 
-#: src/main/platform.c:1402
+#: src/main/platform.c:1415
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() не способна разрешить хост '%s'"
 
-#: src/main/platform.c:1409
+#: src/main/platform.c:1422
 msgid "unknown format returned by gethostbyname"
 msgstr "'gethostbyname' вернул неизвестный формат"
 
-#: src/main/platform.c:1420
+#: src/main/platform.c:1433
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 
-#: src/main/platform.c:1467 src/main/platform.c:1509
+#: src/main/platform.c:1480 src/main/platform.c:1522
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' уже существует"

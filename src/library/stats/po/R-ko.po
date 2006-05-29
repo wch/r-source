@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:33\n"
+"POT-Creation-Date: 2006-05-29 07:58\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1259,6 +1259,9 @@ msgstr ""
 "한 예측을 하고 있을\n"
 "가능성이 있습니다"
 
+msgid "prediction intervals are only relevant to new data"
+msgstr ""
+
 msgid "'object' has no 'effects' component"
 msgstr "오브젝트는 효과성분을 가지지 않습니다"
 
@@ -1549,6 +1552,10 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "파라미터의 초기 추정값으로 구매 행렬이 특이합니다"
 
+#, fuzzy
+msgid "'data' must be a list or an environment"
+msgstr "'newdata'는 행렬 또는 데이터 프레임이 아니면 되지 않습니다"
+
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""
 
@@ -1657,6 +1664,9 @@ msgstr "'x' 그리고 'y'가 match 하지 않습니다"
 msgid "wrong number of columns in 'x'"
 msgstr "'x'에서 열수가 잘못되어 있습니다"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr ""
+
 msgid "PCA applies only to numerical variables"
 msgstr "PCA 는 수치 변수에만 적용 할수 없지 않습니다"
 
@@ -1684,6 +1694,9 @@ msgstr "'x'와 'covmat'의 쌍방이 주어졌습니다. 'x'는 무시됩니다"
 
 msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp'에서 cases는 변수로부터 많지 않으면 되지 않습니다"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "공분산 행렬이 비부치정부호가 아닙니다"

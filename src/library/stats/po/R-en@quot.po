@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.3.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:33\n"
-"PO-Revision-Date: 2006-05-12 08:33\n"
+"POT-Creation-Date: 2006-05-29 07:58\n"
+"PO-Revision-Date: 2006-05-29 07:58\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1246,6 +1246,9 @@ msgstr "model 1"
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "prediction from a rank-deficient fit may be misleading"
 
+msgid "prediction intervals are only relevant to new data"
+msgstr "prediction intervals are only relevant to new data"
+
 msgid "'object' has no 'effects' component"
 msgstr "‘object’ has no ‘effects’ component"
 
@@ -1527,6 +1530,9 @@ msgstr "setVarying : ‘vary’ length must match length of parameters"
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "singular gradient matrix at initial parameter estimates"
 
+msgid "'data' must be a list or an environment"
+msgstr "‘data’ must be a list or an environment"
+
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "Upper or lower bounds ignored unless algorithm = “port”"
 
@@ -1628,6 +1634,9 @@ msgstr "mismatched ‘x’ and ‘y’"
 msgid "wrong number of columns in 'x'"
 msgstr "wrong number of columns in ‘x’"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr "cannot rescale a constant/zero column to unit variance"
+
 msgid "PCA applies only to numerical variables"
 msgstr "PCA applies only to numerical variables"
 
@@ -1655,6 +1664,9 @@ msgstr "both ‘x’ and ‘covmat’ were supplied: ‘x’ will be ignored"
 
 msgid "'princomp' can only be used with more units than variables"
 msgstr "‘princomp’ can only be used with more units than variables"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr "cannot use cor=TRUE with a constant variable"
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "covariance matrix is not non-negative definite"

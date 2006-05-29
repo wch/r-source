@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:33\n"
+"POT-Creation-Date: 2006-05-29 07:58\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -804,8 +804,8 @@ msgid ""
 "link not available for quasibinomial family, available links are \"logit\", "
 "\"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
-"ligação \"%s\" não disponível para família quasibinomial, ligações disponíveis "
-"são \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" e \"log\""
+"ligação \"%s\" não disponível para família quasibinomial, ligações "
+"disponíveis são \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" e \"log\""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "para a família quasi-binomial, y deve ser um vetor de 0's e 1's"
@@ -1253,6 +1253,9 @@ msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""
 "predição a partir de um ajuste com posto deficiente pode ser engadonara"
 
+msgid "prediction intervals are only relevant to new data"
+msgstr ""
+
 msgid "'object' has no 'effects' component"
 msgstr "'object' não tem componente 'effects'"
 
@@ -1540,6 +1543,10 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "matriz gradiente singular nas estimativas iniciais dos parâmetros"
 
+#, fuzzy
+msgid "'data' must be a list or an environment"
+msgstr "'newdata' deve ser uma matriz um data frame"
+
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""
 "Limites superiores ou inferiores ignorados a não ser que o algoritmo seja = "
@@ -1644,6 +1651,9 @@ msgstr "'x' e 'y' não pareados"
 msgid "wrong number of columns in 'x'"
 msgstr "número de colunas errado em 'x'"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr ""
+
 msgid "PCA applies only to numerical variables"
 msgstr "PCA se aplica somente para variáveis numéricas"
 
@@ -1671,6 +1681,9 @@ msgstr "tanto 'x' quando 'covmat' foram especificados: 'x' vai ser ignorado"
 
 msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp' só pode ser usado com mais unidades do que variáveis"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "matriz de covariância não é não-negativa definida"

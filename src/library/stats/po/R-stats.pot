@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:33\n"
+"POT-Creation-Date: 2006-05-29 07:58\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1169,6 +1169,9 @@ msgstr ""
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""
 
+msgid "prediction intervals are only relevant to new data"
+msgstr ""
+
 msgid "'object' has no 'effects' component"
 msgstr ""
 
@@ -1439,6 +1442,9 @@ msgstr ""
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr ""
 
+msgid "'data' must be a list or an environment"
+msgstr ""
+
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""
 
@@ -1532,6 +1538,9 @@ msgstr ""
 msgid "wrong number of columns in 'x'"
 msgstr ""
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr ""
+
 msgid "PCA applies only to numerical variables"
 msgstr ""
 
@@ -1554,6 +1563,9 @@ msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
 msgstr ""
 
 msgid "'princomp' can only be used with more units than variables"
+msgstr ""
+
+msgid "cannot use cor=TRUE with a constant variable"
 msgstr ""
 
 msgid "covariance matrix is not non-negative definite"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:33\n"
+"POT-Creation-Date: 2006-05-29 07:58\n"
 "PO-Revision-Date: 2006-04-18 09:00+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1276,6 +1276,9 @@ msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""
 "les prédiction venant d'un modèle de rang faible peuvent être trompeuses"
 
+msgid "prediction intervals are only relevant to new data"
+msgstr ""
+
 msgid "'object' has no 'effects' component"
 msgstr "'object' n'a pas de composante 'effects'"
 
@@ -1574,6 +1577,10 @@ msgid "singular gradient matrix at initial parameter estimates"
 msgstr ""
 "matrice de gradient singulière pour les estimations initiales des paramètres"
 
+#, fuzzy
+msgid "'data' must be a list or an environment"
+msgstr "'newdata' doit être une matrice ou un tableau de données"
+
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""
 "Limites hautes et basses ignorées, à moins d'utiliser l'algorithme \"port\""
@@ -1682,6 +1689,9 @@ msgstr "'x' et 'y' ne correspondent pas"
 msgid "wrong number of columns in 'x'"
 msgstr "le nombre de colonnes de 'x' est incorrect"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr ""
+
 msgid "PCA applies only to numerical variables"
 msgstr "l'ACP ne s'applique qu'à des valeurs numériques"
 
@@ -1711,6 +1721,9 @@ msgid "'princomp' can only be used with more units than variables"
 msgstr ""
 "'princomp' ne peut être utilisé que si le nombre d'unités est supérieur au "
 "nombre de variables"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "la matrice de covariance contient des valeurs négatives définies"

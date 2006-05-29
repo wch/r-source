@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:33\n"
+"POT-Creation-Date: 2006-05-29 07:58\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -787,8 +787,8 @@ msgid ""
 "link not available for quasibinomial family, available links are \"logit\", "
 "\"probit\", \"cloglog\", \"cauchit\" and \"log\""
 msgstr ""
-"quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \"\"probit"
-"\", \"cloglog\", \"cauchit\"和\"log\""
+"quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", "
+"\"\"probit\", \"cloglog\", \"cauchit\"和\"log\""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "quasibinomial分布族中的y必需由0和1组成的向量"
@@ -1226,6 +1226,9 @@ msgstr "模型1"
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "用秩缺乏拟合来进行预测的结果很可能不可靠"
 
+msgid "prediction intervals are only relevant to new data"
+msgstr ""
+
 msgid "'object' has no 'effects' component"
 msgstr "'object'没有'effects'组件"
 
@@ -1505,6 +1508,10 @@ msgstr "setVarying : vary的长度必需同参数的长度相符"
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "参数初始估计值里有奇异梯度矩阵"
 
+#, fuzzy
+msgid "'data' must be a list or an environment"
+msgstr "'newdata'必需是矩阵或是数据框"
+
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "除非algorithm = \"port\"，上限或下限将略过不用"
 
@@ -1604,6 +1611,9 @@ msgstr "'x'和'y'不相配"
 msgid "wrong number of columns in 'x'"
 msgstr "'x'里的列数不对"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr ""
+
 msgid "PCA applies only to numerical variables"
 msgstr "PCA只适用于数值变量"
 
@@ -1629,6 +1639,9 @@ msgstr "同时提供了'x'和'covmat': 'x'略过不用"
 
 msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp'只能在单位比变量多的情况下使用"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "协方差矩阵不是非负定矩阵"

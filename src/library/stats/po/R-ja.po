@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:33\n"
+"POT-Creation-Date: 2006-05-29 07:58\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1234,6 +1234,9 @@ msgstr ""
 "ランク落ちした状態での当てはめをしているので誤った予測をしている可能性があり"
 "ます"
 
+msgid "prediction intervals are only relevant to new data"
+msgstr ""
+
 msgid "'object' has no 'effects' component"
 msgstr "オブジェクト('object')は効果('effects')成分を持ちません"
 
@@ -1516,6 +1519,10 @@ msgstr "setVarying: 'vary' 長はパラメータの長さに一致しなけれ�
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "パラメータの初期値で勾配行列が特異です"
 
+#, fuzzy
+msgid "'data' must be a list or an environment"
+msgstr "'x' は行列かデータフレームでなければなりません"
+
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "algorithm = \"port\" でない限り上限もしくは下限は無視されます"
 
@@ -1622,6 +1629,9 @@ msgstr "'x' 及び 'y' が合致しません"
 msgid "wrong number of columns in 'x'"
 msgstr "'x' の列数が間違っています"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr ""
+
 msgid "PCA applies only to numerical variables"
 msgstr "PCA は数値変数にしか適用できません"
 
@@ -1647,6 +1657,9 @@ msgstr "'x' と 'covmat' の双方が与えられました。'x' は無視され
 
 msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp' では，ケースは変数より多くなければなりません"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "共分散行列が非負値定符号ではありません"

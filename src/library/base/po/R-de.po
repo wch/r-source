@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-16 19:47\n"
+"POT-Creation-Date: 2006-05-29 07:58\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -329,7 +329,12 @@ msgstr "ersetze Element in nicht existierender Spalte:"
 msgid "only a single element should be replaced"
 msgstr "nur ein einzelnes Element sollte ersetzt werden"
 
-msgid "names don't match previous names:"
+#, fuzzy
+msgid "names do not match previous names"
+msgstr "names passt nicht zu den vorhergehenden names:"
+
+#, fuzzy
+msgid "names do not match previous names:"
 msgstr "names passt nicht zu den vorhergehenden names:"
 
 msgid "invalid list argument: all variables should have the same length"
