@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-05-24
+@set FAQ_DATE @value{FAQ_YEAR}-05-29
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2287,6 +2287,8 @@ A collection of tools for the analysis of habitat selection by animals.
 Adaptive Wavelet transforms for signal denoising.
 @item agce
 Analysis of growth curve experiments.
+@item agsemisc
+Miscellaneous plotting and utility functions.
 @item akima
 Linear or cubic spline interpolation for irregularly gridded data.
 @item allelic
@@ -4997,6 +4999,7 @@ dir /opt/R/src/unix
 * How can I capture or ignore errors in a long simulation?::  
 * Why are powers of negative numbers wrong?::  
 * How can I save the result of each iteration in a loop into a separate file?::  
+* Why are p-values not displayed when using lmer()?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -5849,7 +5852,7 @@ R> as.list(quote(-2^2))
 2^2
 @end example
 
-@node How can I save the result of each iteration in a loop into a separate file?,  , Why are powers of negative numbers wrong?, R Miscellanea
+@node How can I save the result of each iteration in a loop into a separate file?, Why are p-values not displayed when using lmer()?, Why are powers of negative numbers wrong?, R Miscellanea
 @section How can I save the result of each iteration in a loop into a separate file?
 
 One way is to use @code{paste()} (or @code{sprintf()}) to concatenate a
@@ -5865,6 +5868,13 @@ for(i in 1:100) @{
   save(list = "some_object", file = fp)
 @}
 @end example
+
+@node Why are p-values not displayed when using lmer()?,  , How can I save the result of each iteration in a loop into a separate file?, R Miscellanea
+@section Why are @math{p}-values not displayed when using lmer()?
+
+Doug Bates has kindly provided an extensive response in a post to the 
+r-help list, which can be reviewed at
+@uref{https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html}.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
