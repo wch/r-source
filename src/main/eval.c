@@ -407,10 +407,16 @@ SEXP eval(SEXP e, SEXP rho)
 	tmp = PRVALUE(e);
 	break;
     case LANGSXP:
-	if (TYPEOF(CAR(e)) == SYMSXP)
+	if (TYPEOF(CAR(e)) == SYMSXP) {
 	    PROTECT(op = findFun(CAR(e), rho));
-	else
+	    /* findFun will not normally fail, but will if R_BaseEnv 
+	       is not searched */
+	    if(op == R_UnboundValue)
+		error(_("could not find function \"%s\""),
+		      CHAR(PRINTNAME(CAR(e))));
+	} else
 	    PROTECT(op = eval(CAR(e), rho));
+
 	if(TRACE(op) && R_current_trace_state()) {
 	    Rprintf("trace: ");
 	    PrintValue(e);
