@@ -68,7 +68,9 @@ lfactorial(x)
     \ge 1}{k >= 1} as \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)...(n-k+1) / k!},
   as \eqn{1} for \eqn{k = 0} and as \eqn{0} for negative \eqn{k}.
   \cr \code{choose(*,k)} uses direct arithmetic (instead of
-  \code{[l]gamma} calls) for small \code{k}, for speed and accuracy reasons.
+  \code{[l]gamma} calls) for small \code{k}, for speed and accuracy
+  reasons.  Note the function \code{\link[utils]{combn}} (package
+  \pkg{utils}) for enumeration of all possible combinations.
 
   The \code{gamma}, \code{lgamma}, \code{digamma} and \code{trigamma}
   functions are generic: methods can be defined for them individually or

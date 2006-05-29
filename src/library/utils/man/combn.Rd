@@ -41,6 +41,10 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
   \email{stvjc@channing.harvard.edu};
   small changes by the R core team.
 }
+\seealso{
+  \code{\link{choose}} for fast computation of the \emph{number} of
+  combinations.
+}
 \examples{
 combn(letters[1:4], 2)
 (m <- combn(10, 5, min))   # minimum value in each combination
