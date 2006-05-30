@@ -52,8 +52,8 @@ rwilcox(nn, m, n)
 }
 \section{Warning}{
   These functions can use large amounts of memory and stack (and even crash
-  \R if the stack limit is exceeded) if and one sample is large
-  (several thousands or more).
+  \R if the stack limit is exceeded and stack-checking is not in place)
+  if one sample is large (several thousands or more).
 }
 \source{
   These are calculated via recursion, based on \code{cwilcox(k, m, n)},
