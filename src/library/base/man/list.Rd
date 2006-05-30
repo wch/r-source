@@ -5,7 +5,6 @@ list(\dots)
 pairlist(\dots)
 
 as.list(x, \dots)
-%as.list.default(x, \dots)
 as.pairlist(x)
 as.list.environment(x, all.names=FALSE, \dots)
 
@@ -31,22 +30,22 @@ alist(\dots)
   \item{\dots}{objects.}
   \item{x}{object to be coerced or tested.}
   \item{all.names}{a logical indicating whether to copy all values in
-    \code{as.list.environment}/}
+    \code{as.list.environment}.}
 }
 \details{
   Most lists in \R internally are \emph{Generic Vectors}, whereas
-  traditional \emph{dotted pair} lists (as in LISP) are still available.
+  traditional \emph{dotted pair} lists (as in LISP) are still available
+  but rarely seen by users.
 
   The arguments to \code{list} or \code{pairlist} are of the form
-  \code{value} or \code{tag=value}.
-  The functions return a list composed of its arguments
-  with each value either tagged or untagged,
-  depending on how the argument was specified.
+  \code{value} or \code{tag=value}.  The functions return a list or
+  dotted pair list composed of its arguments with each value either
+  tagged or untagged, depending on how the argument was specified.
 
-  \code{alist} is like \code{list}, except in the handling of tagged
-  arguments with no value. These are handled as if they described
-  function arguments with no default (cf. \code{\link{formals}}), whereas
-  \code{list} simply ignores them.
+  \code{alist} handles its arguments as if they described function
+  arguments.  So the values are not evaluated, and tagged arguments with
+  no value are allowed whereas \code{list} simply ignores them.
+  \code{alist} is most often used in conjunction with \code{\link{formals}}.
 
   \code{as.list} attempts to coerce its argument to list type.
   For functions, this returns the concatenation of the list of formals
@@ -89,7 +88,7 @@ vector("list", 5)
 # Argument lists
 f <- function()x
 # Note the specification of a "..." argument:
-formals(f) <- al <- alist(x=, y=2, \dots=)
+formals(f) <- al <- alist(x=, y=2+3, \dots=)
 f
 al
 
