@@ -106,8 +106,9 @@ glm.fit(x, y, weights = rep(1, nobs),
   A typical predictor has the form \code{response ~ terms} where
   \code{response} is the (numeric) response vector and \code{terms} is a
   series of terms which specifies a linear predictor for \code{response}.
-  For \code{binomial} models the response can also be specified as a
-  \code{\link{factor}} (when the first level denotes failure and all
+  For \code{binomial} and \code{quasibinomial} families the response can
+  also be specified as a \code{\link{factor}} (when the first level
+  denotes failure and all
   others success) or as a two-column matrix with the columns giving the
   numbers of successes and failures.  A terms specification of the form
   \code{first + second} indicates all the terms in \code{first} together
