@@ -5,8 +5,8 @@ list(\dots)
 pairlist(\dots)
 
 as.list(x, \dots)
+\method{as.list}{environment}(x, all.names = FALSE, \dots)
 as.pairlist(x)
-as.list.environment(x, all.names=FALSE, \dots)
 
 is.list(x)
 is.pairlist(x)
@@ -49,7 +49,7 @@ alist(\dots)
 
   \code{as.list} attempts to coerce its argument to list type.
   For functions, this returns the concatenation of the list of formals
-  arguments and the function body. For expressions, the list of
+  arguments and the function body.  For expressions, the list of
   constituent calls is returned.
 
   \code{is.list} returns \code{TRUE} iff its argument
@@ -60,10 +60,13 @@ alist(\dots)
   \code{is.list} and \code{is.pairlist} are generic: you can write
   methods to handle specific classes of objects, see \link{InternalMethods}.
 
-  \code{as.list.environment} copies the named values from an environment
-  to a list.  The user can request that all named objects are copied
-  (normally names that begin with a dot are not).  The output is not
-  sorted and no parent environments are searched.
+  The \code{"\link{environment}"} method for \code{as.list} copies the
+  name-value pairs (for names not beginning with a dot) from an
+  environment to a named list.  The user can request that all named
+  objects are copied.  The list is in no particular order (the order
+  depends on the order of creation of objects and whether the
+  environmnent is hashed).  No parent environments are searched.  (Objects
+  copied are duplicated so this can be an expensive operation.)
 
   An empty pairlist, \code{pairlist()} is the same as \code{NULL}.  This
   is different from \code{list()}.
@@ -86,7 +89,7 @@ plot(pts)
 vector("list", 5)
 
 # Argument lists
-f <- function()x
+f <- function() x
 # Note the specification of a "..." argument:
 formals(f) <- al <- alist(x=, y=2+3, \dots=)
 f
