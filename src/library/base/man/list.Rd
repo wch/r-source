@@ -1,5 +1,18 @@
 \name{list}
+\alias{list}
+\alias{pairlist}
+\alias{alist}
+\alias{as.list}
+\alias{as.list.default}
+\alias{as.list.data.frame}
+\alias{as.list.environment}
+\alias{as.pairlist}
+\alias{is.list}
+\alias{is.pairlist}
 \title{Lists -- Generic and Dotted Pairs}
+\description{
+  Functions to construct, coerce and check for all kinds of \R lists.
+}
 \usage{
 list(\dots)
 pairlist(\dots)
@@ -13,29 +26,16 @@ is.pairlist(x)
 
 alist(\dots)
 }
-\alias{list}
-\alias{pairlist}
-\alias{alist}
-\alias{as.list}
-\alias{as.list.default}
-\alias{as.list.data.frame}
-\alias{as.list.environment}
-\alias{as.pairlist}
-\alias{is.list}
-\alias{is.pairlist}
-\description{
-  Functions to construct, coerce and check for all kinds of \R lists.
-}
 \arguments{
   \item{\dots}{objects.}
   \item{x}{object to be coerced or tested.}
-  \item{all.names}{a logical indicating whether to copy all values in
-    \code{as.list.environment}.}
+  \item{all.names}{a logical indicating whether to copy all values or
+    (default) only those whose names do not begin with a dot.}
 }
 \details{
   Most lists in \R internally are \emph{Generic Vectors}, whereas
-  traditional \emph{dotted pair} lists (as in LISP) are still available
-  but rarely seen by users.
+  traditional \emph{dotted pair} lists (as in LISP) are available
+  but rarely seen by users (except as \code{\list{formals}} of functions).
 
   The arguments to \code{list} or \code{pairlist} are of the form
   \code{value} or \code{tag=value}.  The functions return a list or
@@ -48,7 +48,7 @@ alist(\dots)
   \code{alist} is most often used in conjunction with \code{\link{formals}}.
 
   \code{as.list} attempts to coerce its argument to list type.
-  For functions, this returns the concatenation of the list of formals
+  For functions, this returns the concatenation of the list of formal
   arguments and the function body.  For expressions, the list of
   constituent calls is returned.
 
@@ -84,6 +84,8 @@ alist(\dots)
 # create a plotting structure
 pts <- list(x=cars[,1], y=cars[,2])
 plot(pts)
+
+is.pairlist(.Options)  # a user-level pairlist
 
 ## "pre-allocate" an empty list of length 5
 vector("list", 5)
