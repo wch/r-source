@@ -3344,6 +3344,8 @@ Multiple imputation for multivariate panel or clustered data.
 Functions and datasets for fitting models to Panel data.
 @item papply
 Parallel apply function using MPI.
+@item partitions
+Additive partitions of integers.
 @item partsm
 Periodic AutoRegressive Time Series Models.
 @item party
