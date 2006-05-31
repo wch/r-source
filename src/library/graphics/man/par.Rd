@@ -547,7 +547,7 @@ par(\dots, no.readonly = FALSE)
   built-in table of line types (1 = solid, 2 = dashed, etc, see
   \code{lty} above) or directly as the lengths of on/off stretches of
   line.  This is done with a string of an even number (up to eight)
-  of characters, namely non-zero
+  of characters, namely \emph{non-zero}
   (hexadecimal) digits which give the lengths in consecutive positions
   in the string.  For example, the string \code{"33"} specifies three
   units on followed by three off and \code{"3313"} specifies three units
@@ -559,6 +559,11 @@ par(\dots, no.readonly = FALSE)
   \code{c("44", "13", "1343", "73", "2262")}.
 
   Note that \code{NA} is not a valid value for \code{lty}.
+
+  Prior to \R 2.4.0, zero hex digits were accepted and handled in a
+  device-dependent way, e.g. \code{X11()} mapped them to one, \code{pdf()}
+  regarded zero as terminating the string and \code{windows()} gave a
+  zero-length stretch.
 }
 
 \note{

@@ -4396,6 +4396,8 @@ unsigned int LTYpar(SEXP value, int ind)
 	    error(_("invalid line type: must be length 2, 4, 6 or 8"));
 	for(; *p; p++) {
 	    digit = hexdigit(*p);
+	    if(digit == 0)
+		error(_("invalid line type: zeroes are not allowed"));
 	    code  |= (digit<<shift);
 	    shift += 4;
 	}

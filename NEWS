@@ -197,13 +197,19 @@ BUG FIXES
 	that the inheritance is fixed when the method containing the
 	callNextMethod() is installed.	See Details in the documentation.
 
-    o	UseMethod() looked for the defining environment of 'generic' as if
-	it were the current function, although some functions are
+    o	UseMethod() looked for the defining environment of 'generic' as
+	if it were the current function, although some functions are
 	generic for methods of a different generic.
 
 	Lookup for S3 methods is confined to functions: previously a
-	non-function 'fun.class' could have masked a function on the
+	non-function 'fun.class' could have masked a function of the
 	same name.
+
+    o	Line types (lty) specified as hex strings were documented not to
+	allow zero, but some devices accepted zero and handled it in a
+	device-dependent way.  Now it is an error on all devices.
+	(PR#8914)
+
 
 
 
