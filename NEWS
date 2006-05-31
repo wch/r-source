@@ -156,7 +156,7 @@ BUG FIXES
 	the second phase of the line search failed.  (PR#8786)
 
     o	print.ts() could fail on a corrupt time series: it now warns and
-	does hthe best it can.
+	does the best it can.
 
 
 
