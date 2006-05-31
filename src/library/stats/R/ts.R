@@ -720,6 +720,12 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
     else y
 }
 
+"[<-.ts" <- function (x, i, j, value) {
+    y <- NextMethod("[<-")
+    if (NROW(y) != NROW(x)) stop("only replacement of elements is allowed")
+    y
+}
+
 t.ts <- function(x) {
     cl <- oldClass(x)
     other <- !(cl %in% c("ts","mts"))

@@ -4235,11 +4235,11 @@ stopifnot(identical(names(DF2), c("col.x", "col.y")))
 ## both were 'col' in 2.3.0.
 
 
-## print.ts did not check integrity of tsp.
-x <- ts(rnorm(6), frequency=7); x[8] <- NA; x
-x <- ts(rnorm(6), frequency=4); x[8] <- NA; x
-x <- ts(rnorm(6), frequency=12); x[8] <- NA; x
-## Some failed in 2.3.0: now all warn
+## [<- could extend a ts but not change tsp.
+xx <- x <- ts(rnorm(6), frequency=7)
+try(x[8] <- NA)
+stopifnot(identical(x, xx))
+## Allowed in R < 2.4.0, but corrupted tsp.
 
 
 ## Looking up generic in UseMethod

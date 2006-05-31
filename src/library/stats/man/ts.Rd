@@ -60,9 +60,11 @@ is.ts(x)
   will attempt to align time axes, and subsetting to extract subsets of
   series can be used (e.g., \code{EuStockMarkets[, "DAX"]}).  However,
   subsetting the first (or only) dimension will return a matrix or
-  vector, as will matrix subsetting.  There is a method for \code{\link{t}}
-  that transposes the series as a matrix (a one-column matrix if a vector)
-  and hence returns a result that does not inherit from class \code{"ts"}.
+  vector, as will matrix subsetting.  Subassignment can be used to
+  replace values but not to extend a series (see \code{\link{window}}).
+  There is a method for \code{\link{t}} that transposes the series as a
+  matrix (a one-column matrix if a vector) and hence returns a result
+  that does not inherit from class \code{"ts"}.
 
   The value of argument \code{frequency} is used when the series is
   sampled an integral number of times in each unit time interval.  For

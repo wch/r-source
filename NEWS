@@ -184,7 +184,7 @@ BUG FIXES
 
     o	Amongst families, quasi() accepted an expression for link and
 	no other did.  Now all accept an expression which evaluates to
-	a one-element character vector (although e.g. logit is taken
+	a one-element character vector (although e.g. 'logit' is taken
 	as a name and not an expression).
 
     o	trace() now accepts arguments where= and signature= for the
@@ -209,6 +209,10 @@ BUG FIXES
 	allow zero, but some devices accepted zero and handled it in a
 	device-dependent way.  Now it is an error on all devices.
 	(PR#8914)
+
+    o	Subassignment for a time series can no longer extend the series:
+	it used to be able to but failed to adjust the tsp attributes.
+	Now window() must be used.
 
 
 
@@ -370,7 +374,7 @@ BUG FIXES
 	the second phase of the line search failed.  (PR#8786)
 
     o	print.ts() could fail on a corrupt time series: it now warns and
-	does hthe best it can.
+	does the best it can.
 
 
 
