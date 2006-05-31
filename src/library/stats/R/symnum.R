@@ -1,8 +1,9 @@
 symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
-		   symbols =	 c(" ", ".", ",", "+", "*", "B"),
+		   symbols = if(numeric.x) c(" ", ".", ",", "+", "*", "B")
+		   else c(".", "|"),
 		   legend = length(symbols) >= 3,
-		   na = "?", eps = 1e-5,
-		   corr = missing(cutpoints),
+		   na = "?", eps = 1e-5, numeric.x = is.numeric(x),
+		   corr = missing(cutpoints) && numeric.x,
 		   show.max = if(corr) "1", show.min = NULL,
 		   abbr.colnames = has.colnames,
 		   lower.triangular = corr && is.numeric(x) && is.matrix(x),
@@ -14,8 +15,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
     if(length(x) == 0)
 	return(noquote(if(is.null(d <- dim(x)))character(0) else array("", dim=d)))
     has.na <- any(nax <- is.na(x))
-    num.x <- is.numeric(x)## !is.logical(x)
-    if(num.x) {
+    if(numeric.x) {
 	force(corr) # missingness..
 	cutpoints <- sort(cutpoints)
 	if(corr) cutpoints <- c(0, cutpoints, 1)
@@ -52,12 +52,10 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	    iS[which(ii)[!is.na(x[ii]) & (abs(x[ii] - minc) < eps)]] <- 1#-> symbol[1]
 	}
     }
-    else if(!is.logical(x))
-	stop("'x' must be numeric or logical")
-    else  { ## logical x : no need for cut(points)
-	if(missing(symbols))		# different default
-	    symbols <- c(".","|")
-	else if(length(symbols) != 2)
+##     else if(!is.logical(x))
+## 	stop("'x' must be numeric or logical")
+    else  { ## assume logical x : no need for cut(points)
+	if(!missing(symbols) && length(symbols) != 2)
 	    stop("must have 2 'symbols' for logical 'x' argument")
 	iS <- x + 1 # F = 1,  T = 2
     }
@@ -67,7 +65,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	    ans[nax] <- na
 	ans[!nax] <- symbols[iS[!nax]]
     } else ans <- symbols[iS]
-    if(num.x) {
+    if(numeric.x) {
 	if(!is.null(show.max)) ans[x >= maxc - eps] <-
 	    if(is.character(show.max)) show.max else format(maxc, dig=1)
 	if(!is.null(show.min)) ans[x <= minc + eps] <-

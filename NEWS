@@ -119,6 +119,9 @@ NEW FEATURES
     o	readLines() has a new argument 'warn' to suppress warnings:
 	the default behaviour is still to warn.
 
+    o	symnum() has a new argument 'numeric.x' particularly useful for
+	handling 0/1 data.
+
 
 DEPRECATED & DEFUNCT
 
@@ -198,9 +201,9 @@ BUG FIXES
 	it were the current function, although some functions are
 	generic for methods of a different generic.
 
-	Lookup for S3 methods is confined to functions: previously a 
+	Lookup for S3 methods is confined to functions: previously a
 	non-function 'fun.class' could have masked a function on the
-	same name. 
+	same name.
 
 
 
