@@ -338,6 +338,14 @@ print.ts <- function(x, calendar, ...)
     fr.x <- frequency(x)
     if(missing(calendar))
 	calendar <- any(fr.x == c(4,12))
+    ## sanity check
+    Tsp <- tsp(x)
+    nn <- 1 + round((Tsp[2] - Tsp[1]) * Tsp[3])
+    if(NROW(x) != nn) {
+        warning(gettextf("series is corrupt: length %d with 'tsp' implying %d",
+                         NROW(x), nn), domain=NA, call.=FALSE)
+        calendar <- FALSE
+    }
     if(!calendar)
         header <- function(x) {
             if((fr.x <- frequency(x))!= 1)

@@ -4226,12 +4226,20 @@ y <- ts(rnorm(120), start=3)
 ccf(x, y)
 ## needed na.action=na.contiguous in 2.3.0
 
+
 ## merge.data.frame was not making column names unique when
 ## doing a Cartesian product.
 DF <- data.frame(col=1:3)
 DF2 <- merge(DF, DF, by=numeric(0))
 stopifnot(identical(names(DF2), c("col.x", "col.y")))
 ## both were 'col' in 2.3.0.
+
+
+## print.ts did not check integrity of tsp.
+x <- ts(rnorm(6), frequency=7); x[8] <- NA; x
+x <- ts(rnorm(6), frequency=4); x[8] <- NA; x
+x <- ts(rnorm(6), frequency=12); x[8] <- NA; x
+## Some failed in 2.3.0: now all warn
 
 
 ## Looking up generic in UseMethod
