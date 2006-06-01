@@ -1031,7 +1031,7 @@ do_cleanup () {
     ## Only need to do this in case we successfully installed at least
     ## *one* package ... well not so sure for bundles.
     cp "${R_DOC_DIR}/html/R.css" "${lib}"
-    chmod 644 "${lib}/R.css"
+    chmod 644 "${lib}/R.css" 2>/dev/null
     if test "${lib}" = "`cd \"${R_HOME}/library\" && ${GETWD}`"; then
       cat "${R_HOME}"/library/*/CONTENTS \
         > "${R_DOC_DIR}"/html/search/index.txt
