@@ -159,7 +159,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 		    ## np-th row of the matrix used for aggregating.
 		    dbMat[np, seq(along = hDB)] <- hDB
 		} else if(verbose)
-		    cat("package",p, "has empty hsearch data - strangely\n")
+		    cat("package", p, "has empty hsearch data - strangely\n")
 	    }
 	    else warning("no hsearch.rds meta data for package ", p)
 	}
@@ -256,13 +256,12 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    NROW(db$Keywords), " keywords),\n",
 	    sep = "")
     if(!is.null(package)) {
-	## Argument 'package' was given but we built a larger hsearch db
-	## to save for future invocations.  Need to check that all given
-	## packages exist, and only search the given ones.
+	## Argument 'package' was given.  Need to check that all given
+	## packages exist in the db, and only search the given ones.
 	pos_in_hsearch_db <-
 	    match(package, unique(db$Base[, "Package"]), nomatch = 0)
 	if(any(pos_in_hsearch_db) == 0)
-	    stop(gettextf("could not find package '%s'",
+	    stop(gettextf("no information in the data base for package '%s': need 'rebuild = TRUE'?",
 			  package[pos_in_hsearch_db == 0][1]), domain = NA)
 	db <-
 	    lapply(db,
