@@ -224,6 +224,16 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.3.1 patched
+
+
+BUG FIXES
+
+    o	help.search() incorrectly documented where the data base was
+	saved and what was in it.
+
+
+
 		CHANGES IN R VERSION 2.3.1
 
 
@@ -265,7 +275,7 @@ INSTALLATION CHANGES
 	- AIX 5.2/gcc issues with needing -lm when making modules X11
           and vfonts.
 
-	- Some versions of Solaris and AIX had a fcntl.h that
+	- Some versions of Solaris and AIX had an fcntl.h that
 	  redefined 'open' to be 'open64' and thereby broke
 	  compilation of src/main/connections.c and elsewhere.
 
@@ -343,7 +353,7 @@ BUG FIXES
 
     o	edit.matrix() tried to set rownames and colnames from the
 	original matrix even if the sizes had been altered, and
-	ignored changes made to the column names.  edit.row.names has
+	ignored changes made to the column names.  'edit.row.names' has
 	a more sensible default (if the rownames are non-NULL).
 
     o	bindingIsLocked() was returning invalid values of a logical
