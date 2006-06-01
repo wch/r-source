@@ -171,7 +171,7 @@ vignetteMetaRE <- function(tag)
           "\\{([^}]*)\\}", sep = "")
 
 vignetteInfo <- function(file) {
-    lines <- readLines(file)
+    lines <- readLines(file, warn = FALSE)
     ## <FIXME>
     ## Can only proceed with lines with are valid in the current
     ## locale ... (or should we try to iconv() from latin1?)
