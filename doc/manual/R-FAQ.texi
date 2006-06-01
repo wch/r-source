@@ -1892,6 +1892,8 @@ Statistical analysis in epidemiology, with functions for demographic and
 epidemiological analysis in the Lexis diagram.
 @item FLCore
 Core package of FLR, fisheries modeling in R.
+@item FLEDA
+Exploratory Data Analysis for FLR.
 @item FactoMineR
 Factor analysis and data mining with R.
 @item Fahrmeir
