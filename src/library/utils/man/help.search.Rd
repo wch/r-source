@@ -49,7 +49,9 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     built and saved help data base, or \code{NULL}.}
   \item{verbose}{logical; if \code{TRUE}, the search process is traced.}
   \item{rebuild}{a logical indicating whether the help data base should
-    be rebuilt.}
+    be rebuilt.  It will be necessary to rebuild the data base if the
+    \code{package} or \code{lib.loc} arguments are changed from a previous
+    call to \code{help.search} in the same session.}
   \item{agrep}{if \code{NULL} (the default unless \code{keyword} is
     used) and the character string to
     be matched consists of alphanumeric characters, whitespace or a dash
@@ -64,14 +66,16 @@ help.search(pattern, fields = c("alias", "concept", "title"),
 \details{
   Upon installation of a package, a pre-built help.search index is
   serialized as \file{hsearch.rds} in the \file{Meta} directory.  These
-  files are used to create the database.
+  files are used to create the data base.
 
   The arguments \code{apropos} and \code{whatis} play a role similar to
   the Unix commands with the same names.
 
-  If possible, the help data base is saved to the file \file{help.db} in
-  the \file{.R} subdirectory of the user's home directory or the current
-  working directory.
+  If possible, the help data base is saved in memory or (if memory
+  limits have been set: see \code{\link{mem.limits}}) to a file in the
+  session temporary directory for use by subsequent calls in the
+  session.  If different packages are to be searched, call
+  \code{help.search(rebuild = TRUE)}.
 
   Note that currently, the aliases in the matching help files are not
   displayed.
