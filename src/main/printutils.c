@@ -560,7 +560,11 @@ void Rcons_vprintf(const char *format, va_list arg)
 #endif
 }
 
+#ifdef HAVE_VA_COPY
 void Rvprintf(const char *format, va_list arg)
+#else
+void Rvprintf(const char *format, va_list arg, ...)
+#endif
 {
     int i=0, con_num=R_OutputCon;
     Rconnection con;
@@ -573,9 +577,9 @@ void Rvprintf(const char *format, va_list arg)
 
     do{
       con = getConnection(con_num);
-      /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
 #ifdef HAVE_VA_COPY
       va_copy(argcopy, arg);
+      /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
       (con->vfprintf)(con, format, argcopy);
       va_end(argcopy);
 #else /* don't support sink(,split=TRUE) */
@@ -586,7 +590,7 @@ void Rvprintf(const char *format, va_list arg)
       con->fflush(con);
       con_num = getActiveSink(i++);
 #ifndef HAVE_VA_COPY
-      if (con_num>0) error("Internal error: this platform does not support split output")
+      if (con_num>0) error("Internal error: this platform does not support split output");
 #endif
     } while(con_num>0);
 
