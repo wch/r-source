@@ -47,8 +47,8 @@ str.default <-
 				 give.attr= give.attr, give.length= give.length,
 				 width = width, nest.lev = nest.lev,
 				 indent.str = indent.str, comp.str= comp.str,
-				 no.list= no.list, envir = envir,
-				 strict.width = "no", ...) )
+				 no.list= no.list || is.data.frame(object),
+				 envir = envir, strict.width = "no", ...) )
 	if(strict.width == "wrap") {
 	    nind <- nchar(indent.str) + 2
 	    ss <- strwrap(ss, width = width, exdent = nind)
