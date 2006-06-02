@@ -28,7 +28,11 @@ extern "C" {
 
 void Rprintf(char*, ...);
 void REprintf(char*, ...);
+#ifdef HAVE_VA_COPY
 void Rvprintf(const char*, va_list);
+#else
+void Rvprintf(const char*, ...);
+#endif
 void REvprintf(const char*, va_list);
 
 #ifdef  __cplusplus

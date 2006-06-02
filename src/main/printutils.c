@@ -635,13 +635,16 @@ void Rcons_vprintf(const char *format, va_list arg)
 #ifdef HAVE_VA_COPY
 void Rvprintf(const char *format, va_list arg)
 #else
-void Rvprintf(const char *format, va_list arg, ...)
+void Rvprintf(const char *format,  ...)
 #endif
 {
     int i=0, con_num=R_OutputCon;
     Rconnection con;
+#ifdef HAVE_VA_COPY
     va_list argcopy;
+#endif
     static int printcount = 0;
+
     if (++printcount > 100) {
 	R_CheckUserInterrupt();
 	printcount = 0 ;
@@ -655,9 +658,10 @@ void Rvprintf(const char *format, va_list arg, ...)
       (con->vfprintf)(con, format, argcopy);
       va_end(argcopy);
 #else /* don't support sink(,split=TRUE) */
-      va_start(arg, format);
-      (con->vfprintf)(con, format, arg);
-      va_end(arg);
+      va_list(ap);
+      va_start(ap, format);
+      (con->vfprintf)(con, format, ap);
+      va_end(ap);
 #endif
       con->fflush(con);
       con_num = getActiveSink(i++);
