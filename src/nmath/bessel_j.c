@@ -51,7 +51,7 @@ double bessel_j(double x, double alpha)
 	return ML_NAN;
     }
     if (alpha < 0) {
-	/* Using Abramowitz & Stegun  9.1.2 
+	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
 	return(bessel_j(x, -alpha) * cos(M_PI * alpha) +
 	       bessel_y(x, -alpha) * sin(M_PI * alpha));
@@ -201,8 +201,10 @@ static void J_bessel(double *x, double *alpha, long *nb,
 	*ncalc = *nb;
 	if(*x > xlrg_BESS_IJ) {
 	    ML_ERROR(ME_RANGE, "J_bessel");
+	    /* indeed, the limit is 0,
+	     * but the cutoff happens too early */
 	    for(i=1; i <= *nb; i++)
-		b[i] = ML_POSINF;/* FIXME : +Inf is really nonsense */
+		b[i] = 0.; /*was ML_POSINF (really nonsense) */
 	    return;
 	}
 	intx = (long) (*x);
@@ -234,7 +236,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 		if (*x <= 0.) {
 		    for (n = 2; n <= *nb; ++n)
 			b[n] = 0.;
-		} 
+		}
 		else {
 		    /* ----------------------------------------------
 		       Calculate higher order functions.
@@ -290,7 +292,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 		    t = (gnu - (xk - 3.)) * (gnu + (xk - 3.));
 		    capp = (capp + 1. / fact[k - 2]) * s * t  * xin;
 		    capq = (capq + 1. / fact[k - 1]) * s * t1 * xin;
-		    
+
 		}
 		capp += 1.;
 		capq = (capq + 1.) * (gnu * gnu - 1.) * (.125 / *x);
@@ -309,7 +311,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 		    b[j] = gnu * b[j - 1] / *x - b[j - 2];
 	}
 	else {
-	    /* rtnsig_BESS <= x && ( x <= 25 || intx+1 < *nb ) :	
+	    /* rtnsig_BESS <= x && ( x <= 25 || intx+1 < *nb ) :
 	       --------------------------------------------------------
 	       Use recurrence to generate results.
 	       First initialize the calculation of P*S.
@@ -407,7 +409,7 @@ L190:
 	    aa = 1. / p;
 	    m = n / 2;
 	    em = (double)m;
-	    m = (n << 1) - (m << 2);/* = 2 n - 4 (n/2)	
+	    m = (n << 1) - (m << 2);/* = 2 n - 4 (n/2)
 				       = 0 for even, 2 for odd n */
 	    if (m == 0)
 		sum = 0.;
@@ -434,7 +436,7 @@ L190:
 		    alp2em = em + em + nu;
 		    if (n == 1)
 			break;
-		    
+
 		    alpem = em - 1. + nu;
 		    if (alpem == 0.)
 			alpem = 1.;
@@ -453,7 +455,7 @@ L190:
 			alp2em = nu;
 		    sum += b[1] * alp2em;
 		    goto L250;
-		} 
+		}
 		else {/*-- nb >= 2 : ---------------------------
 			Calculate and store b[NB-1].
 			----------------------------------------*/
@@ -477,7 +479,7 @@ L190:
 
 	    /* if (n - 2 != 0) */
 	    /* --------------------------------------------------------
-	       Calculate via difference equation and store b[N], 
+	       Calculate via difference equation and store b[N],
 	       until N = 2.
 	       -------------------------------------------------------- */
 	    for (n = n-1; n >= 2; n--) {
@@ -524,7 +526,7 @@ L250:
 	    }
 	}
 
-    } 
+    }
     else {
       /* Error return -- X, NB, or ALPHA is out of range : */
 	b[1] = 0.;

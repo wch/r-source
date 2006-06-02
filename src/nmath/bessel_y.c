@@ -50,7 +50,7 @@ double bessel_y(double x, double alpha)
 	return ML_NAN;
     }
     if (alpha < 0) {
-	/* Using Abramowitz & Stegun  9.1.2 
+	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
 	return(bessel_y(x, -alpha) + bessel_j(x, -alpha) * sin(-M_PI * alpha));
     }
@@ -203,9 +203,11 @@ static void Y_bessel(double *x, double *alpha, long *nb,
     nu = *alpha;
     if (*nb > 0 && 0. <= nu && nu < 1.) {
 	if(ex < DBL_MIN || ex > xlrg_BESS_Y) {
-	    ML_ERROR(ME_RANGE, "Y_bessel");
+	    /* Warning is not really appropriate, give
+	     * proper limit:
+	     * ML_ERROR(ME_RANGE, "Y_bessel"); */
 	    *ncalc = *nb;
-	    if(ex > xlrg_BESS_Y)  by[0]=ML_POSINF;
+	    if(ex > xlrg_BESS_Y)  by[0]= 0.; /*was ML_POSINF */
 	    else if(ex < DBL_MIN) by[0]=ML_NEGINF;
 	    for(i=0; i < *nb; i++)
 		by[i] = by[0];
