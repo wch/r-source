@@ -495,7 +495,7 @@ unloadNamespace <- function(ns) {
     users <- getNamespaceUsers(ns)
     print(ns)
     if (length(users) != 0)
-        stop(gettextf("name space '%s' is still used by: ",
+        stop(gettextf("name space '%s' is still used by: '%s'",
                       getNamespaceName(ns),
                       paste(sQuote(users), collapse = ", ")),
              domain = NA)
