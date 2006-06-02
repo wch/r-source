@@ -54,7 +54,10 @@ model.matrix(object, \dots)
 
   There is an attribute \code{"assign"}, an integer vector with an entry
   for each column in the matrix giving the term in the formula which
-  gave rise to the column.
+  gave rise to the column.  Value \code{0} corresponds to the intercept
+  (if any), and positive values to terms in the order given by the
+  \code{terms.labels} attribute of the \code{terms} structure
+  corresponding to \code{object}.
   
   If there are any factors in terms in the model, there is an attribute
   \code{"contrasts"}, a named list with an entry for each factor.  This

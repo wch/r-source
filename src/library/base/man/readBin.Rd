@@ -58,7 +58,8 @@ writeBin(object, con, size = NA, endian = .Platform$endian)
 
   \code{readBin} and \code{writeBin} read and write C-style
   zero-terminated character strings.  Input strings are limited to 10000
-  characters.  \code{\link{readChar}} and \code{\code{writeChar}}
+  characters.  \code{\link{readChar}} and \code{\link{writeChar}} can
+  be used to read and write fixed-length strings.
   
   Handling \R's missing and special (\code{Inf}, \code{-Inf} and
   \code{NaN}) values is discussed in the \emph{R Data Import/Export} manual.
