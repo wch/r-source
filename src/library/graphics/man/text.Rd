@@ -85,8 +85,8 @@ text(x, \dots)
   select ISO-8895-15 (Latin-9) which has the Euro as character 165: this
   can also be used for \code{\link{postscript}} and \code{\link{pdf}}.
 #ifdef unix
-  
-  The Euro should be rendered correctly by \code{link{X11}} in UTF-8
+
+  The Euro should be rendered correctly by \code{\link{X11}} in UTF-8
   locales, but the corresponding single-byte encoding in
   \code{\link{postscript}} and \code{\link{pdf}} will be to be selected
   as \code{ISOLatin9.enc}.
