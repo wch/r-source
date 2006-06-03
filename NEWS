@@ -14,6 +14,11 @@ BUG FIXES
     o	help.search() incorrectly documented where the data base was
 	saved and what was in it.
 
+    o	str(<data.frame>, strict.width=.) produced an extraneous first line.
+
+    o	improve bessel[IJKY]() out-of-range checks; for instance,
+	besselI(0, nu) no longer warns.
+
 
 
 		CHANGES IN R VERSION 2.3.1
