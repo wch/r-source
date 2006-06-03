@@ -436,7 +436,7 @@ static SEXP R_HashResize(SEXP table)
   R_HashSizeCheck
 
   Hash table size rechecking function.	Compares the load factor
-  (size/# of primary slots used).  to a praticular threshhold value.
+  (size/# of primary slots used)  to a particular threshhold value.
   Returns true if the table needs to be resized.
 
 */
@@ -642,9 +642,8 @@ static void R_FlushGlobalCacheFromUserTable(SEXP udb)
     tb = (R_ObjectTable*) R_ExternalPtrAddr(udb);
     names = tb->objects(tb);
     n = length(names);
-    for(i = 0; i < n ; i++) {
+    for(i = 0; i < n ; i++)
 	R_FlushGlobalCache(Rf_install(CHAR(STRING_ELT(names,i))));
-    }
 }
 
 static void R_AddGlobalCache(SEXP symbol, SEXP place)
@@ -1995,42 +1994,61 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 
     pos = asInteger(CADR(args));
     if (pos == NA_INTEGER)
-	error(("attach: 'pos' must be an integer"));
+	error(("'pos' must be an integer"));
 
     name = CADDR(args);
     if (!isValidStringF(name))
-	error(_("attach: invalid object name"));
+	error(_("invalid value for '%s'"), "name");
 
     isSpecial = IS_USER_DATABASE(CAR(args));
 
     if(!isSpecial) {
-      if (!isNewList(CAR(args)))
-   	   error(_("attach only works for lists and data frames"));
-      SETCAR(args, VectorToPairList(CAR(args)));
+	if (isNewList(CAR(args))) {
+	    SETCAR(args, VectorToPairList(CAR(args)));
    
+	    for (x = CAR(args); x != R_NilValue; x = CDR(x))
+		if (TAG(x) == R_NilValue)
+		    error(_("attach: all elements must be named"));
+	    PROTECT(s = allocSExp(ENVSXP));
+	    SET_FRAME(s, duplicate(CAR(args)));
+	} else if (isEnvironment(CAR(args))) {
+	    SEXP p, loadenv = CAR(args);
+
+	    PROTECT(s = allocSExp(ENVSXP));
+	    if (HASHTAB(loadenv) != R_NilValue) {
+		int i, n;
+		n = length(HASHTAB(loadenv));
+		for (i = 0; i < n; i++) {
+		    p = VECTOR_ELT(HASHTAB(loadenv), i);
+		    while (p != R_NilValue) {
+			defineVar(TAG(p), duplicate(CAR(p)), s);
+			p = CDR(p);
+		    }
+		}
+		/* FIXME: duplicate the hash table and assign here */
+	    } else {
+		for(p = FRAME(loadenv); p != R_NilValue; p = CDR(p))
+		    defineVar(TAG(p), duplicate(CAR(p)), s);
+	    }
+	} else {
+	    error(_("'attach' only works for lists, data frames and environments"));
+	    s = R_NilValue; /* -Wall */
+	}
    
-      for (x = CAR(args); x != R_NilValue; x = CDR(x))
-   	   if (TAG(x) == R_NilValue)
-   	       error(_("attach: all elements must be named"));
-      PROTECT(s = allocSExp(ENVSXP));
-      setAttrib(s, install("name"), name);
+	/* Connect FRAME(s) into HASHTAB(s) */
+	if (length(s) < HASHMINSIZE)
+	    hsize = HASHMINSIZE;
+	else
+	    hsize = length(s);
+	
+	SET_HASHTAB(s, R_NewHashTable(hsize, HASHTABLEGROWTHRATE));
+	s = R_HashFrame(s);
    
-      SET_FRAME(s, duplicate(CAR(args)));
-   
-      /* Connect FRAME(s) into HASHTAB(s) */
-      if (length(s) < HASHMINSIZE)
-   	   hsize = HASHMINSIZE;
-      else
-   	   hsize = length(s);
-   
-      SET_HASHTAB(s, R_NewHashTable(hsize, HASHTABLEGROWTHRATE));
-      s = R_HashFrame(s);
-   
-      /* FIXME: A little inefficient */
-      while (R_HashSizeCheck(HASHTAB(s))) {
-   	   SET_HASHTAB(s, R_HashResize(HASHTAB(s)));
-      }
-    } else {
+	/* FIXME: A little inefficient */
+	while (R_HashSizeCheck(HASHTAB(s)))
+	    SET_HASHTAB(s, R_HashResize(HASHTAB(s)));
+
+    } else { /* is a user object */
         /* Having this here (rather than below) means that the onAttach routine
            is called before the table is attached. This may not be necessary or
            desirable. */
@@ -2039,8 +2057,10 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tb->onAttach(tb);
         s = allocSExp(ENVSXP);
         SET_HASHTAB(s, CAR(args));
+	setAttrib(s, R_ClassSymbol, getAttrib(HASHTAB(s), R_ClassSymbol));
     }
 
+    setAttrib(s, install("name"), name);
     for (t = R_GlobalEnv; ENCLOS(t) != R_BaseEnv && pos > 2; t = ENCLOS(t))
 	pos--;
 
@@ -2061,8 +2081,6 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	UNPROTECT(1);
     } else {
-	setAttrib(s, R_ClassSymbol, getAttrib(HASHTAB(s), R_ClassSymbol));
-	setAttrib(s, install("name"), name);
 #ifdef USE_GLOBAL_CACHE
         R_FlushGlobalCacheFromUserTable(HASHTAB(s));
 	MARK_AS_GLOBAL_FRAME(s);

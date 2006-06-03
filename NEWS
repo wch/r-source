@@ -122,6 +122,8 @@ NEW FEATURES
     o	symnum() has a new argument 'numeric.x' particularly useful for
 	handling 0/1 data.
 
+    o	attach() can now attach a copy of an environment.
+
 
 DEPRECATED & DEFUNCT
 

@@ -7,8 +7,8 @@ attach(what, pos = 2, name = deparse(substitute(what)),
 \alias{attach}
 \arguments{
   \item{what}{\dQuote{database}.  This may currently be a
-    \code{data.frame} or \code{list} or a \R data file created with
-    \code{\link{save}}.}
+    \code{data.frame} or a \code{list} or a \R data file created with
+    \code{\link{save}} or \code{NULL} or an environment.  See also Details.}
   \item{pos}{integer specifying position in \code{\link{search}()} where
     to attach.}
   \item{name}{alternative way to specify the database to be attached.}
@@ -29,9 +29,9 @@ attach(what, pos = 2, name = deparse(substitute(what)),
   that name in the databases listed by \code{\link{search}}.  The first
   name of the appropriate type is used.
 
-  By attaching a data frame to the search path it is possible to refer
-  to the variables in the data frame by their names alone, rather than
-  as components of the data frame (eg in the example below,
+  By attaching a data frame (or list) to the search path it is possible
+  to refer to the variables in the data frame by their names alone,
+  rather than as components of the data frame (e.g. in the example below,
   \code{height} rather than \code{women$height}).
 
   By default the database is attached in position 2 in the search path,
@@ -41,18 +41,23 @@ attach(what, pos = 2, name = deparse(substitute(what)),
   cannot attach at \code{pos=1}.
 
   The database is not actually attached.  Rather, a new environment is
-  created on the search path and the elements of a list (including columns
-  of a dataframe) or objects in a save file are \emph{copied} into the
-  new environment.  If you use \code{\link{<<-}} or \code{\link{assign}}
-  to assign to an attached database, you only alter the attached copy,
-  not the original object.  (Normal assignment will place a modified
-  version in the user's workspace: see the examples.)
+  created on the search path and the elements of a list (including
+  columns of a data frame) or objects in a save file or an environment
+  are \emph{copied} into the new environment.  If you use
+  \code{\link{<<-}} or \code{\link{assign}} to assign to an attached
+  database, you only alter the attached copy, not the original object.
+  (Normal assignment will place a modified version in the user's
+  workspace: see the examples.)
   For this reason \code{attach} can lead to confusion.
 
   One useful \sQuote{trick} is to use \code{what = NULL} (or equivalently a
   length-zero list) to create a new environment on the search path into
   which objects can be assigned by \code{\link{assign}} or
-  \code{\link{sys.source}}.
+  \code{\link{load}} or \code{\link{sys.source}}.
+
+  There are hooks to attach user-defined table objects of class
+  \code{"UserDefinedDatabase"}, supported by the Omegahat package
+  \pkg{RObjectTables}.  See \url{http://www.omegahat.org/RObjectTables/}.
 }
 \value{
   The \code{\link{environment}} is returned invisibly with a
