@@ -347,10 +347,11 @@ make
 @end example
 
 @noindent
-and so on, as described further below.  This has the advantage of always
-keeping your source tree ``clean''.  (You may need @acronym{GNU}
-@command{make} to allow this, and the pathname of the build directory
-should not contain spaces.)
+and so on, as described further below.  This has the advantage of
+always keeping your source tree ``clean'' and is particularly
+recommended when you work with a version of @R{} from Subversion.
+(You may need @acronym{GNU} @command{make} to allow this, and the
+pathname of the build directory should not contain spaces.)
 
 @cindex Help pages
 Make will also build plain text help pages as well as @HTML{} and
@@ -490,7 +491,8 @@ After
 make
 make check
 @end example
-
+(or, when building outside the source,
+@code{@var{TOP_SRCDIR}/configure}, etc)
 @noindent
 have been completed successfully, you can install the complete @R{} tree
 to your system by typing
