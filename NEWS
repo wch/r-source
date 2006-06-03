@@ -164,7 +164,7 @@ UTILITIES
 
     o	R CMD SHLIB now handles (as linker commands) -L*, -l* and *.a.
 
-   o	R CMD check now warns if there are non-ASCII characters in the
+    o	R CMD check now warns if there are non-ASCII characters in the
 	R code (as these will likely be syntax errors in some locale).
 
 
@@ -233,6 +233,11 @@ BUG FIXES
 
     o	help.search() incorrectly documented where the data base was
 	saved and what was in it.
+
+    o	str(<data.frame>, strict.width=.) produced an extraneous first line.
+
+    o	improve bessel[IJKY]() out-of-range checks; for instance,
+	besselI(0, nu) no longer warns.
 
 
 
