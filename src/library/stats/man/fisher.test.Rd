@@ -150,7 +150,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
 ##  tea was added to the cup first.  To test, she was given 8 cups of
 ##  tea, in four of which milk was added first.  The null hypothesis
 ##  is that there is no association between the true order of pouring
-##  and the women's guess, the alternative that there is a positive
+##  and the woman's guess, the alternative that there is a positive
 ##  association (that the odds ratio is greater than 1).
 TeaTasting <-
 matrix(c(3, 1, 1, 3),
