@@ -10,7 +10,7 @@ unlist(x, recursive = TRUE, use.names = TRUE)
 }
 \alias{unlist}
 \arguments{
-  \item{x}{A list or vector.}
+  \item{x}{An \R object, typically a list or vector.}
   \item{recursive}{logical.  Should unlisting be applied to list
     components of \code{x}?}
   \item{use.names}{logical.  Should names be preserved?}
@@ -31,8 +31,9 @@ unlist(x, recursive = TRUE, use.names = TRUE)
 
   Where possible the list elements are coerced to a common mode during
   the unlisting, and so the result often ends up as a character
-  vector.  Raw and logical vectors can be coerced to integer, integer to
-  double, double to complex and any other atomic mode to character.
+  vector.  Vectors will be corced to the highest type of the components
+  in the hierarchy NULL < raw < logical < integer < real < complex < character
+  < list < expression: pairlists are treated as lists.
 
   A list is a (generic) vector, and the simplified vector might still be
   a list (and might be unchanged).  Non-vector elements of the list
@@ -42,7 +43,13 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   has individual residuals as components.)
 }
 \value{
-  A vector of an appropriate mode to hold the list components.
+  \code{NULL} or an expression or a vector of an appropriate mode to
+  hold the list components.
+  
+  The output type is determined from the highest type
+  of the components in the hierarchy raw < logical < integer < real <
+  complex < character < list < expression, after coercion of pairlists
+  to lists.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
