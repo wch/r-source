@@ -13,9 +13,19 @@ c(\dots, recursive=FALSE)
 }
 \arguments{
   \item{\dots}{objects to be concatenated.}
-  \item{recursive}{logical. If \code{recursive = TRUE}, the function
-    recursively descends through lists combining all their elements
-    into a vector.}
+  \item{recursive}{logical.  If \code{recursive = TRUE}, the function
+    recursively descends through lists (and pairlists) combining all
+    their elements into a vector.}
+}
+\details{
+  The output type is determined from the highest type of the components
+  in the hierarchy NULL < raw < logical < integer < real < complex < character
+  < list < expression.  Pairlists are treated as lists, but non-vector
+  components (such names and calls) are treated as one-element lists
+  which cannot be unlisted even if \code{recursive = TRUE}.
+}
+\value{
+  \code{NULL} or an expression or a vector of an appropriate mode.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

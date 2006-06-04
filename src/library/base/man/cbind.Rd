@@ -71,6 +71,12 @@ rbind(\dots, deparse.level = 1)
 
   The names will depend on whether data frames are included:
   see the examples.
+
+  If a matrix is created, its type is determined from the highest type
+  of the inputs in the hierarchy NULL < raw < logical < integer < real <
+  complex < character < list (after coercion of pairlists
+  to lists) and all other inputs are coerced to the output type.
+  (Note that expressions in the input will result in an error.)
 }
 \note{
   The method dispatching is \emph{not} done via
