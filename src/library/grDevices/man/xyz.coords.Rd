@@ -20,8 +20,10 @@ xyz.coords(x, y = NULL, z = NULL, xlab = NULL, ylab = NULL, zlab = NULL,
     variables;
     if the argument is a list containing components \code{x},
     \code{y} and \code{z}, these are assumed to define plotting coordinates;
-    if the argument is a matrix with three columns, the first is
-    assumed to contain the x values, etc.
+    if the argument is a matrix or \code{\link{data.frame}} with three
+    or more columns, the first is
+    assumed to contain the x values, the 2nd the y ones, and the 3rd the
+    z ones -- independently of any column names that \code{x} may have.
 
     Alternatively two arguments \code{x} and \code{y} can be provided
     (leaving \code{z = NULL}).  One may be real, the other complex;
