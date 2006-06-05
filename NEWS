@@ -216,6 +216,9 @@ BUG FIXES
 	it used to be able to but failed to adjust the tsp attributes.
 	Now window() must be used.
 
+    o	Function AIC in package stats4 was not dispatching correctly
+	on S4 classes via logLik() because of namespace issues.
+
 
 
 
