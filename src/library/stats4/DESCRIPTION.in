@@ -7,4 +7,4 @@ Description: Statistical Functions using S4 classes
 Maintainer: R Core Team <R-core@r-project.org>
 Depends: graphics, stats, methods
 SaveImage: yes
-License: GPL
+License: GPL Version 2 or later.
