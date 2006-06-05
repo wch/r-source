@@ -969,7 +969,7 @@ SEXP findVar(SEXP symbol, SEXP rho)
     	rho = R_BaseEnv;
     }    
 
-    if (!isEnvironment(rho)) error(_("argument to %s is not an environment"), "findVar");
+    if (!isEnvironment(rho)) error(_("argument to '%s' is not an environment"), "findVar");
     
 #ifdef USE_GLOBAL_CACHE
     /* This first loop handles local frames, if there are any.  It
@@ -1555,7 +1555,7 @@ SEXP attribute_hidden do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     name = CAR(args);
     if (!isString(name))
-	errorcall(call, _("invalid first argument to remove()"));
+	errorcall(call, _("invalid first argument"));
     args = CDR(args);
 
     envarg = CAR(args);
@@ -1647,7 +1647,7 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     */
 
     if (isString(CAR(CDDR(args)))) {
-	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), 0)),"function"))
+	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), 0)), "function"))
 	    gmode = FUNSXP;
 	else
 	    gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), 0)));
@@ -1773,7 +1773,7 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
       errorcall(call, _("invalid '%s' argument"), "mode");
 
     if( nmode != nvals && nmode != 1 )
-      errorcall(call, _("wrong length for 'mode' argument"));
+      errorcall(call, _("wrong length for '%s' argument"), "mode");
 
     ifnotfound = CAR(nthcdr(args, 3));
     nifnfnd = length(ifnotfound);
@@ -1781,7 +1781,7 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
       errorcall(call, _("invalid '%s' argument"), "ifnotfound");
 
     if( nifnfnd != nvals && nifnfnd != 1 )
-      errorcall(call, _("wrong length for 'ifnotfound' argument"));
+      errorcall(call, _("wrong length for '%s' argument"), "ifnotfound");
      
     if (isLogical(CAR(nthcdr(args, 4))))
 	ginherits = LOGICAL(CAR(nthcdr(args, 4)))[0];
@@ -1888,7 +1888,7 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( isString(sym) && length(sym)==1 )
         s = sym = install(CHAR(STRING_ELT(CAR(args), 0)));
     if (!isSymbol(sym))
-	errorcall(call, _("invalid use of missing"));
+	errorcall(call, _("invalid use of 'missing'"));
 
     if (DDVAL(sym)) {
         ddv = ddVal(sym);
@@ -1913,7 +1913,7 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else goto havebinding;
     }
     else  /* it wasn't an argument to the function */
-	errorcall(call, _("missing can only be used for arguments"));
+	errorcall(call, _("'missing' can only be used for arguments"));
 
  havebinding:
 
@@ -2008,7 +2008,7 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
    
 	    for (x = CAR(args); x != R_NilValue; x = CDR(x))
 		if (TAG(x) == R_NilValue)
-		    error(_("attach: all elements must be named"));
+		    error(_("all elements of a list must be named"));
 	    PROTECT(s = allocSExp(ENVSXP));
 	    SET_FRAME(s, duplicate(CAR(args)));
 	} else if (isEnvironment(CAR(args))) {
@@ -2119,7 +2119,7 @@ SEXP attribute_hidden do_detach(SEXP call, SEXP op, SEXP args, SEXP env)
     for (t = R_GlobalEnv ; ENCLOS(t) != R_BaseEnv && pos > 2 ; t = ENCLOS(t))
 	pos--;
     if (pos != 2) {
-	error(("detach: invalid 'pos' given"));
+	error(("invalid '%s' argument"), "pos");
 	s = t;	/* for -Wall */
     }
     else {
@@ -2707,7 +2707,7 @@ SEXP attribute_hidden do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
 	warning(_("using 'as.environment(NULL)' is defunct"));
 	return R_BaseEnv;
     default:
-	errorcall(call, _("invalid object for as.environment"));
+	errorcall(call, _("invalid object for 'as.environment'"));
 	return R_NilValue;	/* -Wall */
     }
 }
