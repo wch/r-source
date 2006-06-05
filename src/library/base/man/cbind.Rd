@@ -15,7 +15,9 @@ cbind(\dots, deparse.level = 1)
 rbind(\dots, deparse.level = 1)
 }
 \arguments{
-  \item{\dots}{vectors or matrices.  These can be given as named arguments.}
+  \item{\dots}{vectors or matrices.  These can be given as named
+    arguments.  Other \R objects will be coerced as appropriate: see
+    Details and Value.}
   \item{deparse.level}{integer controlling the construction of labels in
     the case of \dQuote{non-matrix-like} arguments (i.e., for the
     default method):\cr
@@ -31,7 +33,10 @@ rbind(\dots, deparse.level = 1)
   time series objects.
 
   In the default method, all the vectors/matrices must be atomic (see
-  \code{\link{vector}}) or lists (e.g., not expressions).
+  \code{\link{vector}}) or lists (e.g., not expressions).  Expressions
+  are not allowed.  Language objects (such as formulae and calls) and
+  pairlists will be coerced to lists: other objects (such as names and
+  external pointers) will be included as elements in a list result.
 
   If there are several matrix arguments, they must all have the same
   number of columns (or rows) and this will be the number of columns (or
@@ -60,7 +65,8 @@ rbind(\dots, deparse.level = 1)
 }
 \value{
   A matrix or data frame combining the \code{\dots} arguments
-  column-wise or row-wise.
+  column-wise or row-wise.  (Exception: if all the inputs are
+  \code{NULL}, the value is \code{NULL}.)
 
   For \code{cbind} (\code{rbind}) the column (row) names are taken from
   the \code{colnames} (\code{rownames}) of the arguments if these are
@@ -72,11 +78,10 @@ rbind(\dots, deparse.level = 1)
   The names will depend on whether data frames are included:
   see the examples.
 
-  If a matrix is created, its type is determined from the highest type
-  of the inputs in the hierarchy NULL < raw < logical < integer < real <
-  complex < character < list (after coercion of pairlists
-  to lists) and all other inputs are coerced to the output type.
-  (Note that expressions in the input will result in an error.)
+  If a matrix is created, it will be a list if any of the inputs is not
+  NULL nor an atomic vector.   Otherwise its type is determined from the
+  highest type of the inputs in the hierarchy NULL < raw < logical <
+  integer < real < complex < character < list.
 }
 \note{
   The method dispatching is \emph{not} done via

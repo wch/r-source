@@ -239,6 +239,8 @@ BUG FIXES
     o	improve bessel[IJKY]() out-of-range checks; for instance,
 	besselI(0, nu) no longer warns.
 
+    o	cbind() on some non-vector objects (e.g. names) segfaulted.
+
 
 
 		CHANGES IN R VERSION 2.3.1
