@@ -1,6 +1,6 @@
 ## we need this stats4::logLik to avoid stats namespace issues
 setGeneric("AIC", useAsDefault=function(object, ..., k = 2)
-           stats::AIC(stats4::logLik(object),  ..., k = 2))
+           stats::AIC(stats4::logLik(object),  ..., k = k))
 
 setGeneric("BIC", function(object, ...) standardGeneric("BIC"))
 
