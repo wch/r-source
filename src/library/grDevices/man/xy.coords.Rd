@@ -2,9 +2,8 @@
 \title{Extracting Plotting Structures}
 \description{
   \code{xy.coords} is used by many functions to obtain
-  x and y coordinates for plotting.
-  The use of this common mechanism across all \R functions
-  produces a measure of consistency.
+  x and y coordinates for plotting.  The use of this common mechanism
+  across all relevant \R functions produces a measure of consistency.
 }
 \usage{
 xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
@@ -23,7 +22,7 @@ xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
 }
 \details{
   An attempt is made to interpret the arguments \code{x} and \code{y} in
-  a way suitable for plotting.
+  a way suitable for bivariate plotting (or other bivariate procedures).
 
   If \code{y} is \code{NULL} and \code{x} is a
   \describe{
@@ -36,8 +35,11 @@ xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
     \item{time series:}{the x values are taken to be
       \code{\link{time}(x)} and the y values to be the time series.}
 
-    \item{matrix with two columns:}{the first is assumed to contain the
-      x values and the second the y values.}
+    \item{matrix or \code{\link{data.frame}} with two or more
+      columns:}{the first is assumed to contain the x values and the
+      second the y values.  \emph{Note} that is also true if \code{x}
+      has columns named \code{"x"} and \code{"y"}; these names will be
+      irrelevant here.}
   }
   In any other case, the \code{x} argument is coerced to a vector and
   returned as \bold{y} component where the resulting \code{x} is just
