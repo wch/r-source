@@ -122,7 +122,7 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
 
   The \code{perl = TRUE} option is only implemented for single-byte and
   UTF-8 encodings, and will warn if used in a non-UTF-8 multi-byte
-  locale (unless \code{useBytes = FALSE}).
+  locale (unless \code{useBytes = TRUE}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
