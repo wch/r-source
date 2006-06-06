@@ -35,9 +35,10 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
 \arguments{
   \item{pattern}{character string containing a \link{regular expression}
     (or character string for \code{fixed = TRUE}) to be matched
-    in the given character vector.  Coerced to character if possible.}
-  \item{x, text}{a character vector where matches are sought.
-    Coerced to character if possible.}
+    in the given character vector.  Coerced to by \code{as.character} to
+    a character string if possible.}
+  \item{x, text}{a character vector where matches are sought. Coerced by
+    \code{as.character} to a character vector if possible.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{extended}{if \code{TRUE}, extended regular expression matching
@@ -87,10 +88,10 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
 \value{
   For \code{grep} a vector giving either the indices of the elements of
   \code{x} that yielded a match or, if \code{value} is \code{TRUE}, the
-  matched elements.
+  matched elements of \code{x} (after coercion).
 
   For \code{sub} and \code{gsub} a character vector of the same length
-  as the original.
+  as \code[x}.
 
   For \code{regexpr} an integer vector of the same length as \code{text}
   giving the starting position of the first match, or \eqn{-1} if there
@@ -122,7 +123,7 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
 
   The \code{perl = TRUE} option is only implemented for single-byte and
   UTF-8 encodings, and will warn if used in a non-UTF-8 multi-byte
-  locale (unless \code{useBytes = FALSE}).
+  locale (unless \code{useBytes = TRUE}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

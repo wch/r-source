@@ -13,8 +13,10 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
 }
 \arguments{
   \item{pattern}{a non-empty character string to be matched (\emph{not}
-    a regular expression!)}
-  \item{x}{character vector where matches are sought.}
+    a regular expression!).  Coerced by \code{as.character} to a string
+    if possible.}
+  \item{x}{character vector where matches are sought.  Coerced by
+    \code{as.character} to a character vector if possible.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{value}{if \code{FALSE}, a vector containing the (integer)

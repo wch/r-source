@@ -2,24 +2,30 @@ grep <-
 function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
          value = FALSE, fixed = FALSE, useBytes = FALSE)
 {
-  ## behaves like == for NA pattern
-  if (is.na(pattern)){
-    if(value)
-      return(rep.int(as.character(NA), length(x)))
-    else
-      return(rep.int(NA, length(x)))
-  }
+    pattern <- as.character(pattern)
+    x <- as.character(x)
+    ## behaves like == for NA pattern
+    if (is.na(pattern)){
+        if(value)
+            return(rep.int(as.character(NA), length(x)))
+        else
+            return(rep.int(NA, length(x)))
+    }
 
-  if(perl)
-    .Internal(grep.perl(pattern, x, ignore.case, value, useBytes))
-  else
-    .Internal(grep(pattern, x, ignore.case, extended, value, fixed, useBytes))
+    if(perl)
+        .Internal(grep.perl(pattern, x, ignore.case, value, useBytes))
+    else
+        .Internal(grep(pattern, x, ignore.case, extended, value, fixed,
+                       useBytes))
 }
 
 sub <-
 function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 {
+    pattern <- as.character(pattern)
+    replacement <- as.character(replacement)
+    x <- as.character(x)
     if (is.na(pattern))
         return(rep.int(as.character(NA), length(x)))
 
@@ -34,10 +40,13 @@ gsub <-
 function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 {
-  if (is.na(pattern))
-      return(rep.int(as.character(NA), length(x)))
+    pattern <- as.character(pattern)
+    replacement <- as.character(replacement)
+    x <- as.character(x)
+    if (is.na(pattern))
+        return(rep.int(as.character(NA), length(x)))
 
-  if(perl)
+    if(perl)
         .Internal(gsub.perl(pattern, replacement, x, ignore.case, useBytes))
     else
         .Internal(gsub(pattern, replacement, x, ignore.case,
@@ -48,6 +57,8 @@ regexpr <-
 function(pattern, text, extended = TRUE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
+    pattern <- as.character(pattern)
+    text <- as.character(text)
     if(perl)
         .Internal(regexpr.perl(pattern, text, useBytes))
     else
@@ -58,6 +69,8 @@ gregexpr <-
 function(pattern, text, extended = TRUE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
+    pattern <- as.character(pattern)
+    text <- as.character(text)
     if(perl)
       .Internal(gregexpr.perl(pattern, text, useBytes))
     else
@@ -68,13 +81,15 @@ agrep <-
 function(pattern, x, ignore.case = FALSE, value = FALSE,
          max.distance = 0.1)
 {
-  ## behaves like == for NA pattern
-   if (is.na(pattern)){
-     if (value)
-       return(rep.int(as.character(NA), length(x)))
-     else
-       return(rep.int(NA, length(x)))
-   }
+    pattern <- as.character(pattern)
+    x <- as.character(x)
+    ## behaves like == for NA pattern
+    if (is.na(pattern)){
+        if (value)
+            return(rep.int(as.character(NA), length(x)))
+        else
+            return(rep.int(NA, length(x)))
+    }
 
     if(!is.character(pattern)
        || (length(pattern) < 1)
@@ -88,8 +103,7 @@ function(pattern, x, ignore.case = FALSE, value = FALSE,
             max.distance <- ceiling(n * max.distance)
         max.insertions <- max.deletions <- max.substitutions <-
             max.distance
-    }
-    else {
+    } else {
         ## partial matching
         table <- c("all", "deletions", "insertions", "substitutions")
         ind <- pmatch(names(max.distance), table)
