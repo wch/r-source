@@ -124,6 +124,9 @@ NEW FEATURES
 
     o	attach() can now attach a copy of an environment.
 
+    o	help.search() now rebuilds the database if 'package' specifies a
+	package not in the saved database.
+
 
 DEPRECATED & DEFUNCT
 

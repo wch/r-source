@@ -85,9 +85,14 @@ function(pattern, fields = c("alias", "concept", "title"),
 	   !identical(attr(db, "ctype"), Sys.getlocale("LC_CTYPE"))
 	   )
 	    rebuild <- TRUE
+        ## We also need to rebuild if 'packages' was used before and has
+        ## changed.
+        if (!is.null(package) &&
+            any(! package %in% db$Base[, "Package"]))
+            rebuild <- TRUE
     }
     if(rebuild) {
-	if(verbose) cat("Rebuilding the data base ..\n")
+	if(verbose) cat("Rebuilding the data base ...\n")
 	## Check whether we can save the hsearch db lateron.
 	if(all(is.na(mem.limits()))) {
 	    save_db <- save_db_to_memory <- TRUE
@@ -102,16 +107,10 @@ function(pattern, fields = c("alias", "concept", "title"),
 		save_db <- TRUE
 	}
 
-	## If we cannot save the help db only use the given packages.
-	## <NOTE>
-	## Why don't we just use the given packages?  The current logic
-	## for rebuilding cannot figure out that rebuilding is needed
-	## the next time (unless we use the same given packages) ...
 	packages_in_hsearch_db <- if(!is.null(package))
 	    package
 	else
 	    .packages(all.available = TRUE, lib.loc = lib.loc)
-	## </NOTE>
 
 	## Create the hsearch db.
 	contents_DCF_fields <-
@@ -212,7 +211,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 		    db[[i]][ind, ] <- iconv(db[[i]][ind, ], enc, "")
 		}
 	    }
-	    if(verbose) cat("done\n")
+	    if(verbose) cat(" done\n")
 	}
 	## Let us be defensive about invalid multi-byte character data
 	## here.  We simple remove all Rd objects with at least one
@@ -230,7 +229,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	}
 
 	if(save_db) {
-	    if(verbose) cat("saving the database ..")
+	    if(verbose) cat("saving the database ...")
 	    attr(db, "LibPaths") <- lib.loc
 	    attr(db, "mtime") <- Sys.time()
 	    attr(db, "ctype") <- Sys.getlocale("LC_CTYPE")
@@ -260,6 +259,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	## packages exist in the db, and only search the given ones.
 	pos_in_hsearch_db <-
 	    match(package, unique(db$Base[, "Package"]), nomatch = 0)
+        ## This should not happen for R >= 2.4.0
 	if(any(pos_in_hsearch_db) == 0)
 	    stop(gettextf("no information in the data base for package '%s': need 'rebuild = TRUE'?",
 			  package[pos_in_hsearch_db == 0][1]), domain = NA)
