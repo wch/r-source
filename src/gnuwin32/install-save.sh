@@ -55,7 +55,7 @@ if test "x${R_SAVE_IMAGE}" = "xtrue"; then
     fi
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       echo "invisible(.libPaths(c(.Library,\"${lib}\",.libPaths()))); .getRequiredPackages()"; \
-      ${code_cmd}) | ${R_EXE} ${R_SAVE_EXE} LC_ALL=C
+      ${code_cmd}) | LC_ALL=C ${R_EXE} ${R_SAVE_EXE}
     if test ${?} -ne 0; then
       echo "execution of package source for '${pkg}' failed"
       exit 1
