@@ -251,6 +251,8 @@ BUG FIXES
 
     o	cbind() on some non-vector objects (e.g. names) segfaulted.
 
+    o	xy.coords(numeric(0)) gave a misleading error message.
+
 
 
 		CHANGES IN R VERSION 2.3.1

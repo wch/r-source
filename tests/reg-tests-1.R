@@ -4242,6 +4242,9 @@ cbind(as.name("foo"), 1:3)
 x[,1]
 ## last is 3 x 2 list matrix
 
+## empty point set
+r <- xy.coords(numeric(0))
+## gave an error with misleading message in 2.3.1
 
 ## [<- could extend a ts but not change tsp.
 xx <- x <- ts(rnorm(6), frequency=7)
