@@ -496,15 +496,15 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c mandrake
 @c   10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat
-@c   fc3     i386   2.3.0  Martyn Plummer <plummer@iarc.fr>
-@c           x86_64 2.3.0  Brian Ripley
-@c   fc4     i386   2.3.0  Martyn Plummer <plummer@iarc.fr>
-@c           x86_64 2.3.0  Martyn Plummer <plummer@iarc.fr>
+@c   fc3     i386   2.3.1  Martyn Plummer <plummer@iarc.fr>
+@c           x86_64 2.3.1  Brian Ripley
+@c   fc4     i386   2.3.1  Martyn Plummer <plummer@iarc.fr>
+@c           x86_64 2.3.1  Martyn Plummer <plummer@iarc.fr>
 @c   fc5     i386   2.3.1  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 2.3.0  Martyn Plummer <plummer@iarc.fr>
 @c   el3     i386   2.2.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c   el4     i386   2.2.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c           x86_64 2.2.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
+@c           x86_64 2.3.0  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -519,7 +519,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   10.0    i586   2.3.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           x86_64 2.3.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux
-@c   3.2     i386   2.3.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
+@c   3.2     i386   2.3.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
@@ -2629,6 +2629,8 @@ Graphical and tabular effect displays, e.g., of interactions, for linear
 and generalised linear models.
 @item eha
 A package for survival and event history analysis.
+@item eiPack
+Ecological inference and higher-dimension data management.
 @item elasticnet
 Elastic net regularization and variable selection.
 @item ellipse
@@ -3369,6 +3371,9 @@ Package for Analysis of Space-Time Ecological Series.
 Frontend to PBAT to run within R.
 @item pcaPP
 Robust PCA by Projection Pursuit.
+@item pcalg
+Standard and robust estimation of the skeleton (ugraph) of a Directed
+Acyclic Graph (DAG) via the PC algorithm.
 @item pcurve
 Fits a principal curve to a numeric multivariate dataset in arbitrary
 dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis and
