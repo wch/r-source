@@ -75,6 +75,7 @@
     \code{cov.unscaled}, if \code{correlation = TRUE} is specified.}
   \item{symbolic.cor}{(only if \code{correlation} is true.)  The value
     of the argument \code{symbolic.cor}.}
+  \item{na.action}{from \code{object}, if present there.}
 }
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{summary}}.
