@@ -77,6 +77,7 @@ NO_PERL5_MSG="\
 ***    http://cran.r-project.org/"
 
 : ${R_ARCH=@R_ARCH@}
+SED=@SED@
 
 if mkdir -p . 2>/dev/null; then
   MKDIR_P="mkdir -p"
@@ -117,9 +118,9 @@ stars="*"
 . "${R_SHARE_DIR}/sh/dcf.sh"	# get_dcf_field()
 
 tilde_expand () {
-    h=`echo "${HOME}" | sed 's,/,\\\/,g'`
+    h=`echo "${HOME}" | ${SED} 's,/,\\\/,g'`
     ## (Need to escape whatever we use as sed delimiter.)
-    echo "$1" | sed "s/^~/${h}/"
+    echo "$1" | ${SED} "s/^~/${h}/"
 }
 
 get_packages () {
@@ -133,7 +134,7 @@ get_packages () {
         ## Try being defensive about missing final newlines, or extra
 	## empty lines.
         (cat "${1}/${p}/DESCRIPTION.in" "${1}/DESCRIPTION"
-	 echo) | sed '/^ *$/d' > "${1}/${p}/DESCRIPTION"
+	 echo) | ${SED} '/^ *$/d' > "${1}/${p}/DESCRIPTION"
       fi
     done
   else
@@ -240,11 +241,11 @@ while test -n "${1}"; do
     -l|--library)
       lib="${2}"; shift ;;
     --library=*)
-      lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+      lib=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     --configure-args=*)
-      configure_args=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+      configure_args=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     --configure-vars=*)
-      configure_vars=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+      configure_vars=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
     --fake)
       fake=true ;;
     --no-lock)
@@ -259,7 +260,7 @@ while test -n "${1}"; do
 	pkgname=`basename "${1}"`
 	## Also allow for 'package.tgz' ...
 	pkgname=`basename "${pkgname}" .tgz`
-	pkgname=`echo "${pkgname}" | sed 's/_.*//'`
+	pkgname=`echo "${pkgname}" | ${SED} 's/_.*//'`
 	## Note that we use '-m' so that modification dates are *not*
 	## preserved when untarring the sources.  This is necessary to
 	## ensure that the preformatted help pages are always rebuilt.
@@ -534,7 +535,7 @@ do_install_source () {
     if ${debug}; then set -x; fi
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
     if test -f src/Makefile; then
-      arch=`echo ${R_ARCH} | sed s+^/++`
+      arch=`echo ${R_ARCH} | ${SED} -e 's+^/++'`
       message "arch - ${arch}"
       cd src;
       makefiles="-f \"${R_SHARE_DIR}\"/make/shlib.mk -f Makefile"
@@ -560,7 +561,7 @@ do_install_source () {
 	## sub-architecture
 	if test -x ../configure; then
 	  if test -n "${R_ARCH}"; then
-	    arch=`echo ${R_ARCH} | sed s+^/++`
+	    arch=`echo ${R_ARCH} | ${SED} -e 's+^/++'`
 	    message "arch - ${arch}"
 	  fi
 	  sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
@@ -634,7 +635,7 @@ do_install_source () {
 	## of the directive enables unambiguous symbol resolution w/out
 	## 'PACKAGE' arguments.  However, empty directives are not
 	## really meant to work ...
-	sed -e 's/useDynLib.*/useDynLib("")/' NAMESPACE > \
+	${SED} -e 's/useDynLib.*/useDynLib("")/' NAMESPACE > \
 	  "${R_PACKAGE_DIR}/NAMESPACE"
         ## </NOTE>
       else
@@ -933,7 +934,7 @@ do_install () {
   depends=`get_dcf_field Depends DESCRIPTION`
   depends=`echo "${depends}" | grep 'R *('`
   if test "${depends}"; then
-    depends=`echo "${depends}" | sed 's/.*R *(\([^)]*\)).*/\1/;s/=/= /'`
+    depends=`echo "${depends}" | ${SED} 's/.*R *(\([^)]*\)).*/\1/;s/=/= /'`
     dep_operator=`set - ${depends}; echo ${1}`
     dep_version=`set - ${depends}; echo ${2}`
     ## Currently, only operators '<=' and '>=' are supported.  Hence we

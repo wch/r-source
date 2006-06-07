@@ -253,6 +253,9 @@ BUG FIXES
 
     o	xy.coords(numeric(0)) gave a misleading error message.
 
+    o	INSTALL has been changed to avoid a few problems with the
+	base (not XPG4) Solaris sed.
+
 
 
 		CHANGES IN R VERSION 2.3.1
