@@ -55,7 +55,7 @@ xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE
 	    if(is.factor(x)) x <- as.numeric(x)
 	    xlab <- "Index"
 	    y <- x
-	    x <- 1:length(x)
+	    x <- seq(along = x)
 	}
     }
     ## to allow e.g. lines, points, identify to be used with plot.POSIXlt

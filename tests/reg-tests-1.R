@@ -4232,3 +4232,16 @@ DF <- data.frame(col=1:3)
 DF2 <- merge(DF, DF, by=numeric(0))
 stopifnot(identical(names(DF2), c("col.x", "col.y")))
 ## both were 'col' in 2.3.0.
+
+
+## cbind segfaulted if coercion of the result to list failed.
+cbind(as.name("foo"), 1:3)
+# segfaulted in 2.3.1
+(x <- cbind(y ~ x, 1))
+x[,1]
+## last is 3 x 2 list matrix
+
+## empty point set
+r <- xy.coords(numeric(0))
+## gave an error with misleading message in 2.3.1
+

@@ -21,6 +21,7 @@ BUG FIXES
 
     o	cbind() on some non-vector objects (e.g. names) segfaulted.
 
+    o	xy.coords(numeric(0)) gave a misleading error message.
 
     o	INSTALL has been changed to avoid a few problems with the
 	base (not XPG4) Solaris sed.
