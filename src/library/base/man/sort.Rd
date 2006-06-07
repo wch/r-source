@@ -70,7 +70,10 @@ is.unsorted(x, na.rm = FALSE)
 
   As from \R 2.3.0, all attributes are removed from the return value
   except names, which are sorted.  (If \code{partial} is specified even
-  the names are removed.)
+  the names are removed.)  Note that this means that the returned value
+  has no class, except for factors and ordered factors (which are
+  treated specially and whose result is transformed back to the original
+  class).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
