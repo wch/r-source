@@ -67,6 +67,13 @@
 #include <config.h>
 #endif
 
+/* need to do this before including Print.h */
+#if !HAVE_VA_COPY && HAVE___VA_COPY
+# define va_copy __va_copy
+# undef HAVE_VA_COPY
+# define HAVE_VA_COPY 1
+#endif
+
 #include <Defn.h>
 #include <Rmath.h>
 #include <Print.h>
@@ -576,11 +583,6 @@ void REprintf(char *format, ...)
 int vasprintf(char **strp, const char *fmt, va_list ap);
 #endif
 
-#if !HAVE_VA_COPY && HAVE___VA_COPY
-# define va_copy __va_copy
-# undef HAVE_VA_COPY
-# define HAVE_VA_COPY 1
-#endif
 
 #ifdef HAVE_VA_COPY
 # define R_BUFSIZE BUFSIZE
