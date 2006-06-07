@@ -22,6 +22,9 @@ BUG FIXES
     o	cbind() on some non-vector objects (e.g. names) segfaulted.
 
 
+    o	INSTALL has been changed to avoid a few problems with the
+	base (not XPG4) Solaris sed.
+
 
 		CHANGES IN R VERSION 2.3.1
 
