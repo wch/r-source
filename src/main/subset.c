@@ -675,6 +675,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	setAttrib(ans, R_DimSymbol, getAttrib(ax, R_DimSymbol));
 	setAttrib(ans, R_DimNamesSymbol, getAttrib(ax, R_DimNamesSymbol));
 	setAttrib(ans, R_NamesSymbol, getAttrib(ax, R_NamesSymbol));
+	SET_NAMED(ans, NAMED(ax)); /* PR#7924 */
     }
     else {
 	PROTECT(ans);

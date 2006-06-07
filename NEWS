@@ -226,6 +226,8 @@ BUG FIXES
     o	Function AIC in package stats4 was not dispatching correctly
 	on S4 classes via logLik() because of namespace issues.
 
+    o   Subsetting LANGSXPs could break call-by-value illusion (PR#7924)
+        (patch from Keven Hendricks)
 
 
 
