@@ -17,20 +17,15 @@ body(fun, envir = parent.frame()) <- value
 \value{
   \code{body} returns the body of the function specified.
 
-  The replacement form sets the body of a function to the list on the
-  right hand side.
+  The replacement form sets the body of a function to the
+  expression/list on the right hand side, and resets the environment of
+  the function.
 }
 \details{
   For the first form, \code{fun} can be a character string
   naming the function to be manipulated, which is searched for from the
   parent environment.
   If it is not specified, the function calling \code{body} is used.
-}
-\note{
-  For ancient historical reasons, \code{envir = NULL} uses the global
-  environment rather than the base environment.  
-  Please use \code{envir = \link{globalenv}()} instead if this is what you want,
-  as the special handling of \code{NULL} may change in a future release.
 }
 \seealso{
   \code{\link{alist}},
