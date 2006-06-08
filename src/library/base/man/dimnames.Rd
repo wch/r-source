@@ -25,8 +25,9 @@ dimnames(x) <- value
   \code{value} can have names, and these will be used to label the
   dimensions of the array where appropriate.
 
-  For an array/matrix, vector and factor components of \code{value} will
-  be coerced to character, but no other coercions are done.
+  The replacement method for arrays/matrices coerces vector and factor
+  values of \code{value} to character, but does not dispatch methods for
+  \code{as.character}.
 
   Both have methods for data frames.  The dimnames of a data frame are
   its \code{\link{row.names}} and its \code{\link{names}}.  For the

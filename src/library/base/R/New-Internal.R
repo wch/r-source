@@ -213,7 +213,7 @@ encodeString <- function(x, width = 0, quote = "", na.encode = TRUE,
 l10n_info <- function() .Internal(l10n_info())
 
 iconv <- function(x, from, to, sub = NA)
-    .Internal(iconv(x, from, to, as.character(sub)))
+    .Internal(iconv(as.character(x), from, to, as.character(sub)))
 
 iconvlist <- function()
 {
