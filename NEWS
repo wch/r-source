@@ -26,6 +26,9 @@ BUG FIXES
     o	INSTALL has been changed to avoid a few problems with the
 	base (not XPG4) Solaris sed.
 
+    o	There was a problems in src/main/printutils.c on platforms
+	that did not have va_copy.
+
 
 		CHANGES IN R VERSION 2.3.1
 
