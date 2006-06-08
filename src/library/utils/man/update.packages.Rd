@@ -91,8 +91,8 @@ contrib.url(repos, type = getOption("pkgType"))
   \item{available}{an object listing packages available at the repositories
     as returned by \code{available.packages}.}
   \item{lib}{character vector giving the library directories where to
-    install the packages.  Recycled as needed.  If missing, defaults to
-    \code{\link{.libPaths}()[1]} with a warning.}
+    install the packages.  Recycled as needed.}  If missing, defaults to
+    \code{\link{.libPaths}()[1]}.}
   \item{ask}{logical indicating whether to ask user before packages
     are actually downloaded and installed, or the character string
     \code{"graphics"}, which brings up a widget to allow the user to
