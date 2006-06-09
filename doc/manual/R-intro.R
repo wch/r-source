@@ -2,7 +2,7 @@
 ####  -- in a way that this should be(come) an executable script.
 
 options(digits=5, width=65)##--- for outputs !
-options(stringsAsFactor=TRUE) ## factory-fresh defaults
+options(stringsAsFactors=TRUE) ## factory-fresh defaults
 
 ## 2. Simple Manipulations
 
