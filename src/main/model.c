@@ -1345,7 +1345,7 @@ SEXP attribute_hidden do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < nc; i++) {
 	    ans = VECTOR_ELT(data, i);
 	    if (TYPEOF(ans) < LGLSXP ||
-		TYPEOF(ans) > REALSXP)
+		TYPEOF(ans) > STRSXP)
 		errorcall(call, _("invalid variable type for '%s'"),
 			  CHAR(STRING_ELT(names, i)));
 	    if (nrows(ans) != nr)
@@ -1599,9 +1599,15 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* This could be generated, so need to protect it */
     PROTECT(rnames = getAttrib(vars, R_RowNamesSymbol));
 
-    /* This section of the code checks the types of the variables */
-    /* in the model frame.  Note that it should really only check */
-    /* the variables if they appear in a term in the model. */
+    /* This section of the code checks the types of the variables
+       in the model frame.  Note that it should really only check
+       the variables if they appear in a term in the model.
+       Because it does not, we need to allow other types here, as they 
+       might well occur on the LHS.
+       The R code converts all character variables in the model frame to 
+       factors, so the only types that ought to be here are logical, 
+       integer (including factor), numeric and complex.
+     */
 
     PROTECT(variable = allocVector(VECSXP, nVar));
     PROTECT(nlevs = allocVector(INTSXP, nVar));
@@ -1627,8 +1633,6 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
 	else if (isLogical(var_i)) {
-	    /* currently this cannot happen as R code turns 
-	       logical into factor when setting contrasts */ 
 	    LOGICAL(ordered)[i] = 0;
 	    INTEGER(nlevs)[i] = 2;
 	    INTEGER(columns)[i] = ncols(var_i);
@@ -1640,8 +1644,14 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(nlevs)[i] = 0;
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
-	else
-	    errorcall(call, _("invalid variable type"));
+	else {
+	    LOGICAL(ordered)[i] = 0;
+	    INTEGER(nlevs)[i] = 0;
+	    INTEGER(columns)[i] = ncols(var_i);
+	}
+/*	else
+	    errorcall(call, _("invalid variable type for '%s'"),
+	    CHAR(STRING_ELT(vnames, i))); */
     }
 
     /* If there is no intercept we look through the factor pattern */
@@ -1823,8 +1833,9 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			    else
 				warningcall(call, _("term names will be truncated"));
 			}
-		    }
-		    else {
+		    } else if (isComplex(var_i)) {
+			errorcall(call, _("complex variables are not currently allowed in model matrices"));
+		    } else { /* numeric */
 			x = ColumnNames(var_i);
 			ll = ncols(var_i);
 			addp = CHAR(STRING_ELT(vnames, i));

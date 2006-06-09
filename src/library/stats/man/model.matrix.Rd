@@ -34,7 +34,8 @@ model.matrix(object, \dots)
   \code{model.frame(object)} or, more precisely, by evaluating
   \code{attr(terms(object), "variables")}.  If it is a data frame,
   there may be other columns and the order of columns is not important.
-
+  Any character variables are coerced to factors, with a warning.
+  
   If \code{contrasts.arg} is specified for a factor it overrides the
   default factor coding for that variable and any \code{"contrasts"}
   attribute set by \code{\link{C}} or \code{\link{contrasts}}.

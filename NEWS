@@ -132,6 +132,12 @@ NEW FEATURES
 	which should be character via as.character rather than
 	internally (so method dispatch takes place, e.g. for factors).
 
+    o	Complex and character vectors are now allowed in model frames
+	(there was a previously undocumented restriction to logical,
+	integer and numeric types.).  Character vectors in a formula
+	passed to model.matrix() are converted to factors and coded
+	accordingly.
+
 
 DEPRECATED & DEFUNCT
 
