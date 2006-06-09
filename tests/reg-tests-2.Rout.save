@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-05-16 r38086)
+R version 2.4.0 Under development (unstable) (2006-06-09 r38316)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -22,6 +22,10 @@ Type 'q()' to quit R.
 > RNGversion("1.6.2")
 Warning message:
 Buggy version of Kinderman-Ramage generator used. in: RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage") 
+> 
+> ## force standard handling for data frames
+> options(stringsAsFactors=TRUE)
+> 
 > 
 > ### moved from various .Rd files
 > ## abbreviate

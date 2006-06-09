@@ -1,5 +1,8 @@
 postscript("reg-tests-1.ps", encoding = "ISOLatin1.enc")
 
+## force standard handling for data frames
+options(stringsAsFactors=TRUE)
+
 ## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
 ## Comments: moved from aggregate.Rd

@@ -106,9 +106,10 @@ NEW FEATURES
 
     o	as.data.frame() gains a '...' argument.
 
-    o	data.frame() has a new argument 'stringsAsFactor'.
-	[*Experimental*: this and the default for read.table(as.is) are
-	set from the global option 'stringsAsFactors'.]
+    o	data.frame() has a new argument 'stringsAsFactor'.  This and
+	the default for read.table(as.is=) are set from the new global
+	option 'stringsAsFactors' via the utility function
+	default.stringsAsFactors().
 
     o	[[ on a list does not duplicate the extracted element unless
 	necessary.  (It did not duplicate in other cases, e.g. a

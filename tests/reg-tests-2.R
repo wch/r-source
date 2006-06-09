@@ -4,6 +4,10 @@
 postscript("reg-tests-2.ps", encoding = "ISOLatin1.enc")
 RNGversion("1.6.2")
 
+## force standard handling for data frames
+options(stringsAsFactors=TRUE)
+
+
 ### moved from various .Rd files
 ## abbreviate
 for(m in 1:5) {

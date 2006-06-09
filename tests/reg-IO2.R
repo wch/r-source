@@ -1,4 +1,8 @@
 ## tests of boundary cases in read.table()
+
+## force standard handling for character cols
+options(stringsAsFactors=TRUE)
+
 # empty file
 file.create("foo1")
 try(read.table("foo1")) # fails
