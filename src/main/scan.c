@@ -1683,15 +1683,6 @@ no_more_lines:
    quote is a numeric vector
  */
 
-static void writecon(Rconnection con, char *format, ...)
-{
-    va_list(ap);
-    va_start(ap, format);
-    /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
-    (con->vfprintf)(con, format, ap);
-    va_end(ap);
-}
-
 static Rboolean isna(SEXP x, int indx)
 {
     Rcomplex rc;
@@ -1859,12 +1850,12 @@ SEXP attribute_hidden do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(i = 0; i < nr; i++) {
 	    if(i % 1000 == 999) R_CheckUserInterrupt();
 	    if(!isNull(rnames))
-		writecon(con, "%s%s",
-			 EncodeElement2(rnames, i, quote_rn, qmethod,
-					&strBuf, cdec), csep);
+		Rconn_printf(con, "%s%s",
+			     EncodeElement2(rnames, i, quote_rn, qmethod,
+					    &strBuf, cdec), csep);
 	    for(j = 0; j < nc; j++) {
 		xj = VECTOR_ELT(x, j);
-		if(j > 0) writecon(con, "%s", csep);
+		if(j > 0) Rconn_printf(con, "%s", csep);
 		if(isna(xj, i)) tmp = cna;
 		else {
 		    if(!isNull(levels[j])) {
@@ -1885,9 +1876,9 @@ SEXP attribute_hidden do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    }
 		    /* if(cdec) change_dec(tmp, cdec, TYPEOF(xj)); */
 		}
-		writecon(con, "%s", tmp);
+		Rconn_printf(con, "%s", tmp);
 	    }
-	    writecon(con, "%s", ceol);
+	    Rconn_printf(con, "%s", ceol);
 	}
 
     } else { /* A matrix */
@@ -1901,20 +1892,20 @@ SEXP attribute_hidden do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(i = 0; i < nr; i++) {
 	    if(i % 1000 == 999) R_CheckUserInterrupt();
 	    if(!isNull(rnames))
-		writecon(con, "%s%s",
-			 EncodeElement2(rnames, i, quote_rn, qmethod,
-					&strBuf, cdec), csep);
+		Rconn_printf(con, "%s%s",
+			     EncodeElement2(rnames, i, quote_rn, qmethod,
+					    &strBuf, cdec), csep);
 	    for(j = 0; j < nc; j++) {
-		if(j > 0) writecon(con, "%s", csep);
+		if(j > 0) Rconn_printf(con, "%s", csep);
 		if(isna(x, i + j*nr)) tmp = cna;
 		else {
 		    tmp = EncodeElement2(x, i + j*nr, quote_col[j], qmethod,
 					&strBuf, cdec);
 		    /* if(cdec) change_dec(tmp, cdec, TYPEOF(x)); */
 		}
-		writecon(con, "%s", tmp);
+		Rconn_printf(con, "%s", tmp);
 	    }
-	    writecon(con, "%s", ceol);
+	    Rconn_printf(con, "%s", ceol);
 	}
 
     }

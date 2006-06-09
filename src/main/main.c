@@ -770,10 +770,8 @@ void setup_Rmainloop(void)
 #endif
     R_Toplevel.cend = NULL;
     R_Toplevel.intsusp = FALSE;
-#ifdef NEW_CONDITION_HANDLING
     R_Toplevel.handlerstack = R_HandlerStack;
     R_Toplevel.restartstack = R_RestartStack;
-#endif
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 
     R_Warnings = R_NilValue;
@@ -1039,9 +1037,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_Visible = 0;
 	}
 	R_GlobalContext = &thiscontext;
-#ifdef NEW_CONDITION_HANDLING
 	R_InsertRestartHandlers(&thiscontext, TRUE);
-#endif
 	R_BrowseLevel = savebrowselevel;
 	R_ReplConsole(rho, savestack, R_BrowseLevel);
 	endcontext(&thiscontext);

@@ -230,13 +230,11 @@ void warning(const char *format, ...)
 /* temporary hook to allow experimenting with alternate warning mechanisms */
 static void (*R_WarningHook)(SEXP, char *) = NULL;
 
-#ifdef NEW_CONDITION_HANDLING
 /* declarations for internal condition handling */
 
 static void vsignalError(SEXP call, const char *format, va_list ap);
 static void vsignalWarning(SEXP call, const char *format, va_list ap);
 static void invokeRestart(SEXP, SEXP);
-#endif
 
 static void reset_inWarning(void *data)
 {
@@ -325,24 +323,9 @@ static void warningcall_dflt(SEXP call, const char *format,...)
 void warningcall(SEXP call, const char *format, ...)
 {
     va_list(ap);
-#ifdef NEW_CONDITION_HANDLING
     va_start(ap, format);
     vsignalWarning(call, format, ap);
     va_end(ap);
-#else
-    if (R_WarningHook != NULL) {
-	char buf[BUFSIZE];
-	va_start(ap, format);
-	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength), format, ap);
-	va_end(ap);
-	R_WarningHook(call, buf);
-	return;
-    }
-
-    va_start(ap, format);
-    vwarningcall_dflt(call, format, ap);
-    va_end(ap);
-#endif
 }
 
 static void cleanup_PrintWarnings(void *data)
@@ -522,11 +505,9 @@ void errorcall(SEXP call, const char *format,...)
 {
     va_list(ap);
 
-#ifdef NEW_CONDITION_HANDLING
     va_start(ap, format);
     vsignalError(call, format, ap);
     va_end(ap);
-#endif
 
     if (R_ErrorHook != NULL) {
 	char buf[BUFSIZE];
@@ -571,7 +552,6 @@ void error(const char *format, ...)
 
 static void try_jump_to_restart(void)
 {
-#ifdef NEW_CONDITION_HANDLING
     SEXP list;
 
     for (list = R_RestartStack; list != R_NilValue; list = CDR(list)) {
@@ -587,18 +567,6 @@ static void try_jump_to_restart(void)
 	    }
 	}
     }
-#else
-    RCNTXT *c;
-
-    for (c = R_GlobalContext; c; c = c->nextcontext) {
-	if (IS_RESTART_BIT_SET(c->callflag)) {
-	    inError=0;
-	    findcontext(CTXT_RESTART, c->cloenv, R_RestartToken);
-	}
-	if (c->callflag == CTXT_TOPLEVEL)
-	    break;
-    }
-#endif
 }
 
 /* Unwind the call stack in an orderly fashion */
@@ -1165,7 +1133,6 @@ SEXP R_GetTraceback(int skip)
     return s;
 }
 
-#ifdef NEW_CONDITION_HANDLING
 static SEXP mkHandlerEntry(SEXP class, SEXP parentenv, SEXP handler, SEXP rho,
 			   SEXP result, int calling)
 {
@@ -1557,7 +1524,6 @@ SEXP attribute_hidden do_invokeRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
     invokeRestart(CAR(args), CADR(args));
     return R_NilValue; /* not reached */
 }
-#endif
 
 SEXP attribute_hidden do_addTryHandlers(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1566,8 +1532,6 @@ SEXP attribute_hidden do_addTryHandlers(SEXP call, SEXP op, SEXP args, SEXP rho)
 	! R_GlobalContext->callflag & CTXT_FUNCTION)
 	errorcall(call, _("not in a try context"));
     SET_RESTART_BIT_ON(R_GlobalContext->callflag);
-#ifdef NEW_CONDITION_HANDLING
     R_InsertRestartHandlers(R_GlobalContext, FALSE);
-#endif
     return R_NilValue;
 }

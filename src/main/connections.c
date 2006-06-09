@@ -2532,15 +2532,6 @@ no_more_lines:
     return ans2;
 }
 
-static void writecon(Rconnection con, char *format, ...)
-{
-    va_list(ap);
-    va_start(ap, format);
-    /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
-    (con->vfprintf)(con, format, ap);
-    va_end(ap);
-}
-
 /* writeLines(text, con = stdout(), sep = "\n") */
 SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -2565,8 +2556,8 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!con->open(con)) error(_("cannot open the connection"));
     }
     for(i = 0; i < length(text); i++)
-	writecon(con, "%s%s", CHAR(STRING_ELT(text, i)),
-		 CHAR(STRING_ELT(sep, 0)));
+	Rconn_printf(con, "%s%s", CHAR(STRING_ELT(text, i)),
+		     CHAR(STRING_ELT(sep, 0)));
     if(!wasopen) con->close(con);
     return R_NilValue;
 }

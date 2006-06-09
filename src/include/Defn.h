@@ -21,9 +21,12 @@
 #ifndef DEFN_H_
 #define DEFN_H_
 
+/* seems unused */
 #define COUNTING
 
 #define BYTECODE
+
+/* probably no longer needed */
 #define NEW_CONDITION_HANDLING
 
 /* To test the write barrier used by the generational collector,
@@ -386,10 +389,8 @@ typedef struct RCNTXT {
     void *cenddata;		/* data for C "on.exit" thunk */
     char *vmax;		        /* top of R_alloc stack */
     int intsusp;                /* interrupts enables */
-#ifdef NEW_CONDITION_HANDLING
     SEXP handlerstack;          /* condition handler stack */
     SEXP restartstack;          /* stack of available restarts */
-#endif
 #ifdef BYTECODE
     SEXP *nodestack;
 # ifdef BC_INT_STACK
@@ -576,10 +577,8 @@ extern void 	R_setupHistory();
 extern0 int	R_CollectWarnings INI_as(0);	/* the number of warnings */
 extern0 SEXP	R_Warnings;	    /* the warnings and their calls */
 extern0 int	R_ShowErrorMessages INI_as(1);	/* show error messages? */
-#ifdef NEW_CONDITION_HANDLING
 extern0 SEXP	R_HandlerStack;	/* Condition handler stack */
 extern0 SEXP	R_RestartStack;	/* Stack of available restarts */
-#endif
 
 LibExtern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
 LibExtern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
@@ -812,9 +811,7 @@ void InitOptions(void);
 void Init_R_Variables(SEXP);
 void InitTempDir(void);
 void initStack(void);
-#ifdef NEW_CONDITION_HANDLING
 void R_InsertRestartHandlers(RCNTXT *, Rboolean);
-#endif
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 Rboolean isMethodsDispatchOn(void);
 int isValidName(char *);
