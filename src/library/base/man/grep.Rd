@@ -62,7 +62,11 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
 }
 \details{
   Arguments which should be character strings or character vectors are
-  coerced to character if possible.
+  coerced to character if possible, using internal code and not
+  methods of \code{\link{as.character}}.  This means that classes are
+  ignored and in particular factors and \code{"POSIXct"} objects are
+  coerced to character versions of their integer values.  (This will
+  change in \R 2.4.0.)
 
   The two \code{*sub} functions differ only in that \code{sub} replaces
   only the first occurrence of a \code{pattern} whereas \code{gsub}
@@ -87,7 +91,7 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
 \value{
   For \code{grep} a vector giving either the indices of the elements of
   \code{x} that yielded a match or, if \code{value} is \code{TRUE}, the
-  matched elements.
+  matched elements (after coercion to character if relevant).
 
   For \code{sub} and \code{gsub} a character vector of the same length
   as the original.
