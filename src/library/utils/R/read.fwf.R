@@ -63,7 +63,7 @@ function(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
         cat(file = FILE, sapply(raw, doone),
             sep = c(rep(sep, length.out = length(first)-1), "\n"))
 
-        if (length(raw) < thisblock) break
+        if (nread < thisblock) break
         if (n > 0) n <- n - length(raw)
     })
 
