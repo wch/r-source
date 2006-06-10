@@ -24,7 +24,7 @@
   variables.  The name of the site file is the one pointed to by the
   environment variable \env{R\_ENVIRON}; if this is unset or empty,
   \file{\$R\_HOME/etc/Renviron.site} is used (if it exists, which it
-  does not in a \dQuote{factory-fresh} installation except on Windows).
+  does not in a \dQuote{factory-fresh} installation).
   The user files searched for are \file{.Renviron} in the current or in
   the user's home directory (in that order).
   See \bold{Details} for how the files are read.

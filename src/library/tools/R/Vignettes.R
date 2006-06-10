@@ -153,8 +153,9 @@ buildVignettes <-function(package, dir, lib.loc = NULL, quiet=TRUE)
     }
 
     if(have.makefile) {
-        yy <- system(Sys.getenv("MAKE"))
-        if(yy>0) stop("running make failed")
+    	make <- Sys.getenv("MAKE")
+        yy <- system(make)
+        if(make == "" || yy>0) stop("running make failed")
     }
     else {
         f <- list.files()
