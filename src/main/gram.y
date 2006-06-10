@@ -1197,8 +1197,12 @@ SEXP R_Parse(int n, ParseStatus *status)
                 break;
             case PARSE_INCOMPLETE:
             case PARSE_ERROR:
+		UNPROTECT(1);
+		return R_NilValue;
+		break;
             case PARSE_EOF:
-                rval = R_NilValue;
+		*status=PARSE_OK;
+		i=n;
                 break;
             }
         }

@@ -236,6 +236,11 @@ BUG FIXES
     o   Subsetting LANGSXPs could break call-by-value illusion (PR#7924)
         (patch from Keven Hendricks)
 
+    o   parse() with n>1 gave a syntax error if fewer than n statements
+        were available (now pads with NULLs)
+
+    o   parse() with n>1 gave strange results on some syntax errors (PR#8815)
+
 
 
 	**************************************************
