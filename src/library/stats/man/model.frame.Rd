@@ -96,9 +96,10 @@ model.frame(formula, \dots)
   Note that \emph{all} the variables in the formula are included in the
   data frame, even those preceded by \code{-}.
 
-  Only variables whose type is logical, integer, real, complex or
+  Only variables whose type is raw, logical, integer, real, complex or
   character can be included in a model frame: this includes classed
-  variables such as factors (whose underlying type is integer).
+  variables such as factors (whose underlying type is integer), but
+  excludes lists.
 }
 \value{
   A \code{\link{data.frame}} containing the variables used in

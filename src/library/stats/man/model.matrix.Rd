@@ -35,6 +35,8 @@ model.matrix(object, \dots)
   \code{attr(terms(object), "variables")}.  If it is a data frame,
   there may be other columns and the order of columns is not important.
   Any character variables are coerced to factors, with a warning.
+  After coercion, all the variables used in RHD of the formula must be
+  logical, integer, numeric or factor.
   
   If \code{contrasts.arg} is specified for a factor it overrides the
   default factor coding for that variable and any \code{"contrasts"}

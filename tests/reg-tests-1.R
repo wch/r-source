@@ -4266,9 +4266,11 @@ mycoef(x)
 ## regression tests on changes to model.frame and model.matrix
 A <- data.frame(y = 1:10, z = 1:10+1i,
                 x = rep(c("a", "b"), each = 5),
+                r = as.raw(1:10),
                 stringsAsFactors = FALSE)
-model.frame(z ~ x+y, data = A) # includes character and complex
+model.frame(z ~ x+y+r, data = A) # includes character, raw and complex
 lm(z ~ x+y, data = A) # complex response, character RHS
-# but we do not allow complex variables on the rhs
+# but we do not allow complex nor raw variables on the rhs
 stopifnot(inherits(try(model.matrix(y ~ x+z, data = A)), "try-error"))
+stopifnot(inherits(try(model.matrix(y ~ r, data = A)), "try-error"))
 ## new in 2.4.0

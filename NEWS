@@ -102,7 +102,7 @@ NEW FEATURES
 	matches between the data frames (for example, for 1-1
 	matching).  The order of the result is changed for 'sort = FALSE'.
 
-    o	Added an as.data.frame method for class "ftable".
+    o	Added an as.data.frame() method for class "ftable".
 
     o	as.data.frame() gains a '...' argument.
 
@@ -132,11 +132,11 @@ NEW FEATURES
 	which should be character via as.character rather than
 	internally (so method dispatch takes place, e.g. for factors).
 
-    o	Complex and character vectors are now allowed in model frames
-	(there was a previously undocumented restriction to logical,
-	integer and numeric types.).  Character vectors in a formula
-	passed to model.matrix() are converted to factors and coded
-	accordingly.
+    o	Raw, complex and character vectors are now allowed in model
+	frames (there was a previously undocumented restriction to
+	logical, integer and numeric types.).  Character vectors in a
+	formula passed to model.matrix() are converted to factors and
+	coded accordingly.
 
 
 DEPRECATED & DEFUNCT
@@ -227,7 +227,7 @@ BUG FIXES
 	(PR#8914)
 
     o	Subassignment for a time series can no longer extend the series:
-	it used to be able to but failed to adjust the tsp attributes.
+	it used to attempt to but failed to adjust the tsp attributes.
 	Now window() must be used.
 
     o	Function AIC in package stats4 was not dispatching correctly
@@ -236,10 +236,10 @@ BUG FIXES
     o   Subsetting LANGSXPs could break call-by-value illusion (PR#7924)
         (patch from Keven Hendricks)
 
-    o   parse() with n>1 gave a syntax error if fewer than n statements
-        were available (now pads with NULLs)
+    o   parse() with n > 1 gave a syntax error if fewer than n statements
+        were available (now pads with NULLs).
 
-    o   parse() with n>1 gave strange results on some syntax errors (PR#8815)
+    o   parse() with n > 1 gave strange results on some syntax errors (PR#8815)
 
 
 
@@ -260,7 +260,7 @@ BUG FIXES
 
     o	str(<data.frame>, strict.width=.) produced an extraneous first line.
 
-    o	improve bessel[IJKY]() out-of-range checks; for instance,
+    o	Improve bessel[IJKY]() out-of-range checks; for instance,
 	besselI(0, nu) no longer warns.
 
     o	cbind() on some non-vector objects (e.g. names) segfaulted.
@@ -270,7 +270,7 @@ BUG FIXES
     o	INSTALL has been changed to avoid a few problems with the
 	base (not XPG4) Solaris sed.
 
-    o	There was a problems in src/main/printutils.c on platforms
+    o	There were problems in src/main/printutils.c on platforms
 	that did not have va_copy.
 
 
