@@ -1196,7 +1196,7 @@ int winaddmenu(char * name, char *errmsg)
     if (getMenu(name))
     	return 0;	/* Don't add repeats */
 
-    if (nmenus > alloc_menus) {
+    if (nmenus >= alloc_menus) {
 	if(alloc_menus <= 0) {
 	    alloc_menus = 10;
 	    usermenus = (menu *) malloc(sizeof(menu) * alloc_menus);

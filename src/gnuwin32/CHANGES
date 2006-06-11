@@ -33,6 +33,13 @@ loading.)
 
 
 
+R 2.3.1 patched
+===============
+
+winMenuAdd() could crash when too many menus were added.
+
+
+
 R 2.3.1
 =======
 
