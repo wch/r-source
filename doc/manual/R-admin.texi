@@ -78,7 +78,6 @@ The current version of this document is @value{VERSION}.
 * Essential and useful other programs under Unix::  
 * Configuration on Unix::       
 * Platform notes::              
-* Building the GNOME console::  
 * Enabling search in HTML help::  
 * The Windows toolset::         
 * Function and variable index::  
@@ -2473,7 +2472,7 @@ which are always required, for example to force @acronym{IEC}@tie{}60559
 compliance.
 
 
-@node Platform notes, Building the GNOME console, Configuration on Unix, Top
+@node Platform notes, Enabling search in HTML help, Configuration on Unix, Top
 @appendix Platform notes
 
 This section provides some notes on building @R{} on different Unix-like
@@ -3223,98 +3222,7 @@ feel free to use the @samp{R-devel} mailing list to ask questions.  We
 have had a fair amount of practice at porting @R{} to new platforms
 @enddots{}
 
-
-
-@node Building the GNOME console, Enabling search in HTML help, Platform notes, Top
-@appendix Building the @acronym{GNOME} console
-
-This interface is experimental and incomplete.  The console offers a
-basic command line editing and history mechanism, along with tool and
-button bars that give a point-and-click console to some @R{} commands.
-Many of the features of the console are currently stubs, and the console
-is no longer under development: it has been kept available as an example
-of adding a front-end to @R{}.
-
-A @code{gtk()} graphics device (a port of the @code{x11()} device to
-@acronym{GDK} (the GIMP Drawing Kit)) is available from @acronym{CRAN}
-as package @pkg{gtkDevice}: this cooperates rather better with the
-console than the @code{x11()} device.
-
-The sources for the @acronym{GNOME} console for @R{} are now available
-as package @pkg{gnomeGUI} on @acronym{CRAN} and @emph{via} Subversion by
-@cindex Subversion
-
-@example
-svn co https://svn.r-project.org/R-packages/trunk/gnomeGUI
-@end example
-
-You need to have built @R{} first with the @option{--enable-R-shlib}
-option, and installed @R{} to where you are going to use it from.
-
-Please check you have all the requirements.  You need at least the
-following packages or later installed:
-
-@example
-audiofile-0.2.1
-esound-0.2.23
-glib-1.2.10
-gtk+-1.2.10
-imlib-1.9.10
-ORBit-0.5.12
-gnome-libs-1.4.1.2
-libxml-1.8.16
-libglade-0.17
-@end example
-
-@noindent
-It is preferable to have a complete installation of the @acronym{GNOME}
-desktop environment.  If you use Linux, then this should be provided
-with your distribution.  (Note: @samp{libglade2} is not a suitable
-version of @samp{libglade}.)
-
-Remember that some package management systems (such as @acronym{RPM} and
-deb) make a distinction between the user version of a package and the
-developer version.  The latter usually has the same name but with the
-extension @samp{-devel} or @samp{-dev}.  If you use a pre-packaged
-version of @acronym{GNOME} then you must have the developer versions of
-the above packages in order to compile the R-GNOME console.
-
-It is possible to install the front-end in the same way as an @R{}
-package, via @code{R CMD INSTALL} or @code{install.packages}.
-
-For greater control, it can be configured and built independently of
-@R{}.  Create a build directory, and from there run
-
-@example
-/path/to/gnomeGUI/configure R_HOME=/path/to/R/installation
-make
-make install
-@end example
-
-@noindent
-This installs the two files @file{bin/exec/Rgnome} and
-@file{share/glade/gnome-interface.glade} in @file{@var{R_HOME}}.
-
-The full list of options to this @command{configure} is
-
-@table @option
-@item R_HOME
-the directory (containing @file{bin/R}) of the @R{} installation
-@item --with-gnome
-specify the prefix for the @acronym{GNOME} dirs
-@item --with-gnome-includes=@var{DIR}
-specify location of @acronym{GNOME} headers
-@item --with-gnome-libs=@var{DIR}
-specify location of @acronym{GNOME} libs
-@item --with-libglade-config=@var{LIBGLADE_CONFIG}
-specify location of @command{libglade-config}
-@end table
-
-How to invoke the GNOME console is described under @ref{Invoking R, , ,
-R-intro, R Introduction and Administration}: in brief, use command-line
-option @option{--gui=gnome}.
-
-@node Enabling search in HTML help, The Windows toolset, Building the GNOME console, Top
+@node Enabling search in HTML help, The Windows toolset, Platform notes, Top
 @appendix Enabling search in @HTML{} help
 
 There is a search engine available from the front page of the @HTML{}
