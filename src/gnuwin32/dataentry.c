@@ -57,6 +57,7 @@ static Rboolean R_de_up;
 #define BOXW(x) (min(((x<100 && nboxchars==0)?boxw[x]:box_w),WIDTH-boxw[0]-2*bwidth-2))
 
 #define FIELDWIDTH 10
+#define BUFSIZE 200
 
 /* Local Function Definitions */
 
@@ -118,7 +119,7 @@ static int ndecimal;                    /* count decimal points */
 static int ne;                          /* count exponents */
 static int nneg;			/* indicate whether its a negative */
 static int clength;                     /* number of characters currently entered */
-static char buf[200];
+static char buf[BUFSIZE];
 static char *bufp;
 static int bwidth;			/* width of the border */
 static int hwidth;			/* width of header  */
@@ -768,7 +769,7 @@ static void closerect(void)
 
     if (CellModified || CellEditable) {
 	if (CellEditable) {
-	    strcpy(buf, gettext(celledit));
+	    strncpy(buf, gettext(celledit), BUFSIZE-1);
 	    clength = strlen(buf);
 	    hide(celledit);
 	    del(celledit);
@@ -819,18 +820,18 @@ static void closerect(void)
    the print area and print it, left adjusted if necessary; clear the
    area of previous text; */
 
-/* This version will only display 200 chars, but the maximum col width
+/* This version will only display BUFSIZE chars, but the maximum col width
    will not allow that many */
 static void printstring(char *ibuf, int buflen, int row, int col, int left)
 {
     int x_pos, y_pos, bw, fw, bufw;
-    char buf[201];
+    char buf[BUFSIZE+1];
 
     find_coords(row, col, &x_pos, &y_pos);
     if (col == 0) bw = boxw[0]; else bw = BOXW(col+colmin-1);
     cleararea(x_pos + 1, y_pos + 1, bw - 1, box_h - 1,
 	      (row==0 || col==0) ? bbg:p->bg);
-    fw = min(200, (bw - 8)/FW);
+    fw = min(BUFSIZE, (bw - 8)/FW);
     bufw = min(fw, buflen);
     strncpy(buf, ibuf, bufw);
     buf[bufw] = '\0';
@@ -1327,6 +1328,7 @@ static Rboolean initwin(void)
     show(de); /* a precaution, as PD reports transparent windows */
     BringToTop(de, 0);
     R_de_up = TRUE;
+    buf[BUFSIZE-1] = '\0';
     return FALSE;
 }
 
@@ -1341,10 +1343,10 @@ static int isnumeric, popupcol;
 static void popupclose(control c)
 {
     SEXP tvec;
-    char buf[30], clab[25];
+    char buf[BUFSIZE], clab[25];
     int i;
-
-    strcpy(buf, gettext(varname));
+    buf[BUFSIZE-1] = '\0';
+    strncpy(buf, gettext(varname), BUFSIZE-1);
     if(!strlen(buf)) {
 	askok(G_("column names cannot be blank"));
 	return;
@@ -1417,7 +1419,7 @@ static void de_paste(control c)
 
     closerect();
     if ( clipboardhastext() &&
-	 !getstringfromclipboard(buf, 1999) ) {
+	 !getstringfromclipboard(buf, BUFSIZE-1) ) {
 	/* set current cell to first line of clipboard */
 	CellModified = TRUE;
 	if ((p = strchr(buf, '\n'))) *p = '\0';

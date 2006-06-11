@@ -36,7 +36,9 @@ loading.)
 R 2.3.1 patched
 ===============
 
-winMenuAdd() could crash when too many menus were added.
+winMenuAdd() could crash when too many menus were added.  (PR#8961)
+
+The data editor could crash when too much was pasted into it.
 
 
 
