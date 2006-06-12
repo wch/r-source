@@ -50,7 +50,9 @@ x != y
 
   Missing values (\code{\link{NA}}) and \code{\link{NaN}} values are
   regarded as non-comparable even to themselves, so comparisons
-  involving them will always result in \code{NA}.
+  involving them will always result in \code{NA}.  Missing values can
+  also result when character strings are compared and one is not valid
+  in the current collation locale. 
 }
 \value{
   A vector of logicals indicating the result of the element by element
