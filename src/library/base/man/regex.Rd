@@ -51,8 +51,22 @@
   \code{[0123456789]} matches any single digit, and \code{[^abc]} matches
   anything except the characters \code{a}, \code{b} or \code{c}.  A range
   of characters may be specified by giving the first and last characters,
-  separated by a hyphen.  (Character ranges are interpreted in the
-  collation order of the current locale.)
+  separated by a hyphen.  (Because their interpretation is so
+  system-dependent, they are best avoided.)
+
+  The precise way character ranges are interpreted depends on the values
+  of \code{perl} and \code{ignore.case}.  For basic and extended regular
+  expressions the the collation order is taken from the OS's
+  implementation of the setting of the locale category
+  \code{LC_COLLATE}, so \code{[W-Z]} may include \code{x} and if it
+  does may or may not include \code{w}.  (In most English locales the
+  collation order is \code{wWxXyYzZ}.)  For caseless matching the
+  characters in a range are interpreted as if in lower case, so in an
+  English locale \code{[W-z]} matches \code{WXYZwxyz}.
+
+  For Perl regexps, the ranges are interpreted in the numerical order of
+  the characters, either as bytes in an 8-bit locale or as Unicode
+  points in a UTF-8 locale.
 
   Certain named classes of characters are predefined.  Their
   interpretation depends on the \emph{locale} (see \link{locales}); the
