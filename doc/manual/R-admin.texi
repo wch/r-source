@@ -134,7 +134,7 @@ cat R-@var{x}.@var{y}.@var{z}-split.* > R-@var{x}.@var{y}.@var{z}.tgz
 and proceed as above.  If you want the build to be usable by a group of
 users, set @code{umask} before unpacking so that the files will be
 readable by the target group (e.g., @code{umask 022} to be usable by all
-users).
+users).  (Keep this setting of @code{umask} whilst building and installing.)
 
 
 @node Getting patched and development versions,  , Getting and unpacking the sources, Obtaining R
