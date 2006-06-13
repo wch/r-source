@@ -29,6 +29,11 @@ BUG FIXES
     o	There was a problems in src/main/printutils.c on platforms
 	that did not have va_copy.
 
+    o	[pq]unif allowed infinite ranges but handled them
+	inconsistently. (PR#8958)
+
+	[pq]unif claimed to allow min == max but did not do so.
+
 
 		CHANGES IN R VERSION 2.3.1
 
