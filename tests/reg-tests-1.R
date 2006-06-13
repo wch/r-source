@@ -4238,12 +4238,24 @@ stopifnot(identical(names(DF2), c("col.x", "col.y")))
 ## both were 'col' in 2.3.0.
 
 
+## [pq]unif were not consistent on infinite ranges.
+stopifnot(is.na(qunif(.5, 0, Inf)))
+## was Inf in 2.3.1.
+stopifnot(is.na(punif(1, 0, Inf)))
+## was 0 in 2.3.1
+## and failed on zero ranges despite the documentation.
+stopifnot(punif(c(0, 1, 2), 1, 1) == c(0, 1, 1))
+stopifnot(qunif(c(0, 0.5, 1), 1, 1) == 1)
+## were all NaN on 2.3.1
+
+
 ## cbind segfaulted if coercion of the result to list failed.
 cbind(as.name("foo"), 1:3)
 # segfaulted in 2.3.1
 (x <- cbind(y ~ x, 1))
 x[,1]
 ## last is 3 x 2 list matrix
+
 
 ## empty point set
 r <- xy.coords(numeric(0))
