@@ -979,11 +979,12 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-#ifdef HAVE_ACCESS
-# ifdef HAVE_UNISTD_H
-#  include <unistd.h>
-# endif
+/* needed for access, and perhaps for realpath */
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif
 
+#ifdef HAVE_ACCESS
 SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ans;
@@ -1577,6 +1578,10 @@ SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #ifndef Win32 /* in src/gnuwin32/extra.c */
+#ifndef HAVE_DECL_REALPATH
+extern char *realpath(const char *path, char *resolved_path);
+#endif
+
 SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #if defined(HAVE_GETCWD) && defined(HAVE_REALPATH)

@@ -1483,7 +1483,7 @@ R_CHECK_FUNCS([getpwuid], [#include <pwd.h>])
 R_CHECK_FUNCS([sigaction sigaltstack sigemptyset], [#include <signal.h>])
 R_CHECK_FUNCS([va_copy __va_copy], [#include <stdarg.h>])
 R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
-R_CHECK_FUNCS([realpath setenv system unsetenv], [#include <stdlib.h>])
+R_CHECK_FUNCS([setenv system unsetenv], [#include <stdlib.h>])
 R_CHECK_FUNCS([strcoll strerror], [#include <string.h>])
 R_CHECK_FUNCS([getrlimit getrusage], [#include <sys/resource.h>])
 R_CHECK_FUNCS([mkfifo stat], [#include <sys/stat.h>])
@@ -1500,6 +1500,11 @@ AC_CHECK_DECLS([putenv], , , [#include <stdlib.h>])
 ## this is a GNU extension so usually hidden
 AC_CHECK_FUNCS(vasprintf)
 AC_CHECK_DECLS([vasprintf], , , [#include <stdio.h>])
+## this is a BSD extension. Some systems have it in unistd.h.
+AC_CHECK_FUNCS(realpath)
+AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>
+#include <unistd.h>])
+
 
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames

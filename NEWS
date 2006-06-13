@@ -182,6 +182,12 @@ UTILITIES
 	R code (as these will likely be syntax errors in some locale).
 
 
+INSTALLATION
+
+    o	The C function realpath (used by normalizePath()) is hidden on 
+	some systems and we try harder to find it.
+
+
 BUG FIXES
 
     o	The name of a Fortran symbol reported to be missing by

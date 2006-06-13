@@ -129,6 +129,10 @@
    */
 #undef HAVE_DECL_PUTENV
 
+/* Define to 1 if you have the declaration of `realpath', and to 0 if you
+   don't. */
+#undef HAVE_DECL_REALPATH
+
 /* Define to 1 if you have the declaration of `siglongjmp', and to 0 if you
    don't. */
 #undef HAVE_DECL_SIGLONGJMP
