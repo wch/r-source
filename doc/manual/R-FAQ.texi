@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-06-06
+@set FAQ_DATE @value{FAQ_YEAR}-06-13
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -3410,6 +3410,8 @@ Converts S trees to @HTML{}/Perl files for interactive tree traversal.
 @item pixmap
 Functions for import, export, plotting and other manipulations of
 bitmapped images.
+@item plm
+Linear models for panel data.
 @item plotrix
 Various useful functions for enhancing plots.
 @item plugdensity
