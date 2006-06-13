@@ -1566,11 +1566,11 @@ exportPattern("^[^\\.]")
 @noindent
 exports all variables that do not start with a period.
 
-All packages implicitly import the base name space.  Variables from
-other packages need to be imported explicitly using the directives
-@code{import} and @code{importFrom}.  The @code{import} directive
-imports all exported variables from the specified package(s).  Thus the
-directives
+A package with a name space implicitly imports the base name space.
+Variables exported from other packages with name spaces need to be
+imported explicitly using the directives @code{import} and
+@code{importFrom}.  The @code{import} directive imports all exported
+variables from the specified package(s).  Thus the directives
 
 @findex import
 @example
@@ -1579,9 +1579,9 @@ import(foo, bar)
 
 @noindent
 specifies that all exported variables in the packages @pkg{foo} and
-@pkg{bar} are to be imported.  If only some of the variables from a
-package are needed, then they can be imported using @code{importFrom}.
-The directive
+@pkg{bar} are to be imported.  If only some of the exported variables
+from a package are needed, then they can be imported using
+@code{importFrom}.  The directive
 
 @findex importFrom
 @example
@@ -1592,14 +1592,14 @@ importFrom(foo, f, g)
 specifies that the exported variables @code{f} and @code{g} of the
 package @pkg{foo} are to be imported.
 
-If a package only needs one function from another package it can use a
-fully qualified variable reference in the code instead of a formal
-import.  A fully qualified reference to the function @code{f} in package
-@pkg{foo} is of the form @code{foo::f}.  This is less efficient than a
-formal import and also loses the advantage of recording all dependencies
-in the @file{NAMESPACE} file, so this approach is usually not
-recommended.  Evaluating @code{foo::f} will cause package @pkg{foo} to
-be loaded, but not attached, if it was not loaded already.
+If a package only needs one (exported) object from another package it
+can use a fully qualified variable reference in the code instead of a
+formal import.  A fully qualified reference to the function @code{f} in
+package @pkg{foo} is of the form @code{foo::f}.  This is less efficient
+than a formal import and also loses the advantage of recording all
+dependencies in the @file{NAMESPACE} file, so this approach is usually
+not recommended.  Evaluating @code{foo::f} will cause package @pkg{foo}
+to be loaded, but not attached, if it was not loaded already.
 
 @node Registering S3 methods, Load hooks, Specifying imports and exports, Package name spaces
 @subsection Registering S3 methods
