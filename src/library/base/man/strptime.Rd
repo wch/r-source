@@ -59,9 +59,12 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 
   The details of the formats are system-specific, but the following are
   defined by the ISO C / POSIX standard for \code{strftime} and are
-  likely to be widely available.  Any character in the format string other than
-  the \code{\%} escape sequences is interpreted literally
-  (and \code{\%\%} gives \code{\%}).
+  likely to be widely available.  A \emph{conversion specification} is
+  introduced by \code{\%}, usually followed by a single letter or
+  \code{O} or \code{E} and then a single letter.
+  Any character in the format string not part of a conversion specification
+  is interpreted literally (and \code{\%\%} gives \code{\%}).  Commonly
+  implemented conversion specifications include
   \describe{
     \item{\code{\%a}}{Abbreviated weekday name in the current locale.}
     \item{\code{\%A}}{Full weekday name in the current locale.}
@@ -114,7 +117,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       is the last week of the previous year, and the next week is week 1.}
   }
 
-  Other format specifiers in common use include
+  Other comversion specifications in common use include
   \describe{
     \item{\code{\%D}}{Locale-specific date format such as \code{\%m/\%d/\%y}.}
     \item{\code{\%k}}{The 24-hour clock time with single digits preceded
@@ -137,6 +140,10 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \code{\link{getOption}("digits.secs")}, or if that is unset, \code{n = 3}).
   Further, for \code{strptime} \code{\%OS} will input seconds including
   fractional seconds.
+
+  The behaviour of other conversion specifications (and even if other
+  character sequences commencing with \code{\%} \emph{are} conversion
+  specifications) is system-specific.
 
   \code{ISOdatetime} and \code{ISOdate} are convenience wrappers for
   \code{strptime}, that differ only in their defaults and that
