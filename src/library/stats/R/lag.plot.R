@@ -38,9 +38,14 @@ lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1:lags,
             else n2mfrow(tot.lags)
 
     ## Plotting
-    opar <- par(mfrow = layout, mar = c(1.1,1.1, .5,.5) + is.mat*c(0,.5,0,.5),
-                oma = oma, ask = ask)
-    on.exit(par(opar))
+    ## avoid resetting mfrow and using margins for just one plot
+    mlayout <- any(layout > 1)
+    if(mlayout) {
+        opar <- par(mfrow = layout,
+                    mar = c(1.1,1.1, .5,.5) + is.mat*c(0,.5,0,.5),
+                    oma = oma, ask = ask)
+        on.exit(par(opar))
+    }
     nR <- layout[1]
     nC <- layout[2]
 
@@ -57,35 +62,41 @@ lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1:lags,
                 ii <- 1 + ii %% nR
             ##  plot.ts(x,y) *does* a lag plot -> text, ...
             plot(lag(X,ll), X, xlim = xl, ylim = xl, asp = asp,
-                 xlab = paste("lag",ll), ylab = nam, mgp = c(0,0,0),
-                 axes = FALSE, type = type,
+                 xlab = paste("lag",ll), ylab = nam,
+                 mgp = if(mlayout) c(0,0,0),
+                 axes = !mlayout, type = type,
                  xy.lines = do.lines, xy.labels = labels,
                  col.lab = if(newX) "red",
                  font.lab = if(newX) 2, ...)
             box()
             if(diag) abline(c(0,1), lty = 2, col = diag.col)
 
-            if (jj ==  1 && ii %% 2 == 1 && !newX)
-                axis(2, xpd=NA)
-            if (ii ==  1 && jj %% 2 == 1)
-                axis(3, xpd=NA)
+            if(mlayout) {
+                if (jj ==  1 && ii %% 2 == 1 && !newX)
+                    axis(2, xpd=NA)
+                if (ii ==  1 && jj %% 2 == 1)
+                    axis(3, xpd=NA)
 
-            do.4 <- (ii %% 2 == 0 && (jj == nC ||
-                           ## very last one:
-                           (i == nser && ll == set.lags[lags])))
-            if (do.4) axis(4, xpd=NA)
-            if (jj %% 2 == 0 && ii == nR)
-                axis(1, xpd=NA)
+                do.4 <- (ii %% 2 == 0 && (jj == nC ||
+                               ## very last one:
+                               (i == nser && ll == set.lags[lags])))
+                if (do.4) axis(4, xpd=NA)
+                if (jj %% 2 == 0 && ii == nR)
+                    axis(1, xpd=NA)
 
-            if(newX) {
-                newX <- FALSE
-                if(!do.4) axis(4, xpd = NA, mgp = c(0,.6,0))
+                if(newX) {
+                    newX <- FALSE
+                    if(!do.4) axis(4, xpd = NA, mgp = c(0,.6,0))
+                }
             }
 
-            if (!is.null(main) &&
-                (jj == nC && ii == nR)  || ll == set.lags[lags])
-                mtext(main, 3, 3, outer = TRUE, at = 0.5,
-                      cex = cex.main, font = font.main)
+            if (!mlayout)
+                if (!is.null(main)) title(main = main)
+                else
+                    if (!is.null(main) &&
+                        (jj == nC && ii == nR)  || ll == set.lags[lags])
+                        mtext(main, 3, 3, outer = TRUE, at = 0.5,
+                              cex = cex.main, font = font.main)
         }
     }
     invisible(NULL)

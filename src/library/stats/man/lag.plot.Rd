@@ -9,7 +9,7 @@
 \usage{
 lag.plot(x, lags = 1, layout = NULL, set.lags = 1:lags,
          main = NULL, asp = 1,
-         font.main=par("font.main"), cex.main=par("cex.main"),
+         font.main = par("font.main"), cex.main = par("cex.main"),
          diag = TRUE, diag.col = "gray", type = "p", oma = NULL,
          ask = NULL, do.lines = (n <= 150), labels = do.lines, \dots)
 }
@@ -30,10 +30,20 @@ lag.plot(x, lags = 1, layout = NULL, set.lags = 1:lags,
   \item{type}{plot type to be used, but see \code{\link{plot.ts}} about
     its restricted meaning.}
   \item{oma}{outer margins, see \code{\link{par}}.}
-  \item{ask}{logical; if true, the user is asked before a new page is started.}
+  \item{ask}{logical or \code{NULL}; if true, the user is asked to
+    confirm before a new page is started.}
   \item{do.lines}{logical indicating if lines should be drawn.}
   \item{labels}{logical indicating if labels should be used.}
   \item{\dots}{Further arguments to \code{\link{plot.ts}}.}
+}
+\details{
+  If just one plot is produced, this is a conventional plot.  If more
+  than one plot is to be produced, \code{par(mfrow)} and several other
+  graphics parameters will be set, so it is not (easily) possible to mix
+  such lag plots with other plots on the same page.
+
+  If \code{ask = NULL}, \code{par(ask = TRUE)} will be called if more than
+  one page of plots is to be produced and the session is interactive.
 }
 \note{
   It is more flexible and has different default behaviour than

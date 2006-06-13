@@ -138,6 +138,9 @@ NEW FEATURES
 	formula passed to model.matrix() are converted to factors and
 	coded accordingly.
 
+    o	lag.plot() produces a conventional plot (not setting mfrow) if
+	only one plot is to be produced.
+
 
 DEPRECATED & DEFUNCT
 
