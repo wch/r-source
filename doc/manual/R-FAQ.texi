@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-06-13
+@set FAQ_DATE @value{FAQ_YEAR}-06-16
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -1900,6 +1900,9 @@ Factor analysis and data mining with R.
 Data from the book ``Multivariate Statistical Modelling Based
 on Generalized Linear Models'' by Ludwig Fahrmeir and Gerhard Tutz
 (1994),  Springer.
+@item Flury
+Data sets from from ``A First Course in Multivariate Statistics'' by
+Bernard Flury (1997), Springer.
 @item FortranCallsR
 Simple Fortran/C/R interface example.
 @item FracSim
@@ -2941,6 +2944,8 @@ Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
 @item hybridHclust
 Hybrid hierarchical clustering via mutual clusters.
+@item ifa
+Independent Factor Analysis.
 @item ifs
 Iterated Function Systems distribution function estimator.
 @item igraph
@@ -3126,6 +3131,9 @@ approximations.
 @item mblm
 Median-based Linear models, using Theil-Sen single or Siegel repeated
 medians.
+@item mboost
+Gradient boosting for fitting generalized linear, additive and
+interaction models.
 @item mcgibbsit
 Warnes and Raftery's MCGibbsit MCMC diagnostic.
 @item mclust
@@ -3229,6 +3237,9 @@ Multiple comparison procedures for the one-way layout.
 @c Multidimensional descriptive statistics: factorial methods and
 @c classification.
 @c </COMMENT>
+@item multic
+Quantitative linkage analysis tools using the variance components
+approach.
 @item multilevel
 Analysis of multilevel data by organizational and social psychologists.
 @item multinomRob
@@ -3250,6 +3261,9 @@ preparation, macro functions, and more.
 ML estimation for multivariate normal data with missing values.
 @item mvnormtest
 Generalization of the Shapiro-Wilk test for multivariate variables.
+@item mvtnormpcs
+Multivariate Normal and @math{T} Distribution functions of Dunnett
+(1989).
 @item mvoutlier
 Multivariate outlier detection based on robust estimates of location and
 covariance structure.
@@ -3427,6 +3441,8 @@ Regression (PCR).
 @c </COMMENT>
 @item plsgenomics
 PLS analyses for genomics.
+@item poLCA
+POlytomous variable Latent Class Analysis.
 @c <COMMENT>
 @c Outdated on CRAN along with 1.5.0 release as we do not have an active
 @c maintainer to fix outstanding quality problems.
