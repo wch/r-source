@@ -3,6 +3,7 @@
 \alias{curveGrob}
 \alias{arcCurvature}
 \title{ Draw a Curve Between Locations }
+\concept{connector}
 \description{
   These functions create and draw a curve from one location
   to another.
