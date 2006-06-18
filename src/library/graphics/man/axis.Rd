@@ -22,8 +22,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     of character strings or expressions to be placed at the tickpoints.
     If this is specified as strings or expressions, \code{at} should be
     supplied and they should be the same length.}
-  \item{tick}{a logical value specifying whether tickmarks should be
-    drawn}.
+  \item{tick}{a logical value specifying whether tickmarks and an axis line
+    should be drawn}.
   \item{line}{the number of lines into the margin which the axis will
     be drawn.  If not \code{NA} this overrides the value of the
     graphical parameter \code{mgp[3]}.  The relative placing of
