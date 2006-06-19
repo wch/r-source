@@ -54,10 +54,12 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   converted (e.g. by \code{\link{as.character}} or \code{\link{format}})
   before being passed to \code{cat}.
 
-  \code{cat} converts numeric/complex vectors in the same way as
+  \code{cat} converts numeric/complex elements in the same way as
   \code{print} (and not in the same way as \code{\link{as.character}}
   which is used by the S equivalent), so \code{\link{options}}
-  \code{"digits"} and \code{"scipen"} are relevant.
+  \code{"digits"} and \code{"scipen"} are relevant.  However, it uses
+  the minimum field width necessary for each element, rather than the
+  same field width for all elements.
 }
 \value{
   None (invisible \code{NULL}).
