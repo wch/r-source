@@ -10,19 +10,19 @@ jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480,
      pointsize = 12, quality = 75, bg = "white", res = NA, \dots)
 
 png(filename = "Rplot\%03d.png", width = 480, height = 480,
-    pointsize = 12, bg = "white",  res = NA,\dots)
+    pointsize = 12, bg = "white",  res = NA, \dots)
 }
-\synopsis{
-jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480,
-     pointsize = 12, quality = 75, gamma = 1,
-     colortype = getOption("X11colortype"), maxcubesize = 256,
-     bg = "white", fonts = getOption("X11fonts"), res = NA)
+% \synopsis{
+% jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480,
+%      pointsize = 12, quality = 75, gamma = 1,
+%      colortype = getOption("X11colortype"), maxcubesize = 256,
+%      bg = "white", fonts = getOption("X11fonts"), res = NA)
 
-png(filename ="Rplot\%03d.png", width = 480, height = 480,
-    pointsize = 12, gamma = 1, colortype = getOption("X11colortype"),
-    maxcubesize = 256, bg = "white", fonts = getOption("X11fonts"),
-    res = NA)
-}
+% png(filename ="Rplot\%03d.png", width = 480, height = 480,
+%     pointsize = 12, gamma = 1, colortype = getOption("X11colortype"),
+%     maxcubesize = 256, bg = "white", fonts = getOption("X11fonts"),
+%     res = NA)
+% }
 \arguments{
   \item{filename}{the name of the output file.
     The page number is substituted if a C integer format is included in

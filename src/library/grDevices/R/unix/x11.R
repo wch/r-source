@@ -23,23 +23,48 @@ x11 <- X11
 
 
 png <- function(filename = "Rplot%03d.png",
-                width=480, height=480, pointsize=12,
-                gamma = 1, colortype = getOption("X11colortype"),
-                maxcubesize = 256, bg = "white",
-                fonts = getOption("X11fonts"), res = NA)
+                width = 480, height = 480, pointsize = 12,
+                bg = "white",  res = NA, ...)
+{
+    dots <- list(...)
+    d <- list(gamma = 1, colortype = getOption("X11colortype"),
+              maxcubesize = 256, fonts = getOption("X11fonts"))
+    d[names(dots)] <- dots[names(dots)]
     .Internal(X11(paste("png::", filename, sep=""),
-                  width, height, pointsize, gamma,
-                  colortype, maxcubesize, bg, bg, fonts, res, 0, 0))
+                  width, height, pointsize, d$gamma,
+                  d$colortype, d$maxcubesize, bg, bg, d$fonts, res, 0, 0))
+}
 
 jpeg <- function(filename = "Rplot%03d.jpeg",
-                 width=480, height=480, pointsize=12,
-                 quality = 75,
-                 gamma = 1, colortype = getOption("X11colortype"),
-                 maxcubesize = 256, bg = "white",
-                 fonts = getOption("X11fonts"), res = NA)
+                 width = 480, height = 480, pointsize = 12, quality = 75,
+                 bg = "white", res = NA, ...)
+{
+    dots <- list(...)
+    d <- list(gamma = 1, colortype = getOption("X11colortype"),
+              maxcubesize = 256, fonts = getOption("X11fonts"))
+    d[names(dots)] <- dots[names(dots)]
     .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
-                  width, height, pointsize, gamma,
-                  colortype, maxcubesize, bg, bg, fonts, res, 0, 0))
+                  width, height, pointsize, d$gamma,
+                  d$colortype, d$maxcubesize, bg, bg, d$fonts, res, 0, 0))
+}
+## png <- function(filename = "Rplot%03d.png",
+##                 width=480, height=480, pointsize=12,
+##                 gamma = 1, colortype = getOption("X11colortype"),
+##                 maxcubesize = 256, bg = "white",
+##                 fonts = getOption("X11fonts"), res = NA)
+##     .Internal(X11(paste("png::", filename, sep=""),
+##                   width, height, pointsize, gamma,
+##                   colortype, maxcubesize, bg, bg, fonts, res, 0, 0))
+
+## jpeg <- function(filename = "Rplot%03d.jpeg",
+##                  width=480, height=480, pointsize=12,
+##                  quality = 75,
+##                  gamma = 1, colortype = getOption("X11colortype"),
+##                  maxcubesize = 256, bg = "white",
+##                  fonts = getOption("X11fonts"), res = NA)
+##     .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
+##                   width, height, pointsize, gamma,
+##                   colortype, maxcubesize, bg, bg, fonts, res, 0, 0))
 
 ####################
 # X11 font database
