@@ -3454,7 +3454,8 @@ function(x)
     code_dir <- file.path(dir, "R")
     if(file_test("-d", code_dir)) {
         all_files <- mydir(code_dir)
-        R_files <- c("sysdata.rda",
+        ## Under Windows, need a Makefile for methods.
+        R_files <- c("sysdata.rda", "Makefile.win",
                      list_files_with_type(code_dir, "code",
                                           full.names = FALSE,
                                           OS_subdirs = OS_subdirs))
