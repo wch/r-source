@@ -10,39 +10,46 @@
 
 lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1:lags,
                      main = NULL, asp = 1,
-                     font.main = par("font.main"), cex.main = par("cex.main"),
                      diag = TRUE, diag.col = "gray", type = "p", oma = NULL,
                      ask = NULL, do.lines = (n <= 150), labels = do.lines, ...)
 {
+    lAxis <- function(side , ..., mgp, xpd, panel, Mgp)
+        if(missing(Mgp)) axis(side, ..., xpd = NA)
+        else axis(side, ..., xpd = NA, mgp = Mgp)
+
     xnam <- deparse(substitute(x))
     is.mat <- !is.null(ncol(x))
     nser <- ncol(x <- as.ts(as.matrix(x)))
     n <- nrow(x)
 
-    if(is.null(oma)) {
-        oma <- rep(2, 4)
-        if (!is.null(main)) oma[3] <- oma[3] + 3*cex.main
-    }
     if(missing(lags) && !missing(set.lags))
         lags <- length(set.lags <- as.integer(set.lags))
     tot.lags <- nser * lags
 
-    if(is.null(ask))
+    if(is.null(ask)) {
+        if (.Device == "null device") get(getOption("device"))()
         ask <-
-            if(is.null(layout)) par("ask")## FALSE, since will have big layout
-            else (interactive() && .Device != "postscript" &&
-                  prod(layout) < tot.lags)
+            if(is.null(layout)) par("ask") ## FALSE, since will have big layout
+            else (dev.interactive() && prod(layout) < tot.lags)
+    }
     if(is.null(layout))
         layout <-
             if(prod(pmf <- par("mfrow")) >= tot.lags) pmf
             else n2mfrow(tot.lags)
 
     ## Plotting
-    ## avoid resetting mfrow and using margins for just one plot
+    ## avoid resetting mfrow and using outer margins for just one plot
     mlayout <- any(layout > 1)
     if(mlayout) {
+        dots <- list(...)
+        cex.main <- dots$cex.main
+        if(is.null(cex.main)) cex.main <- par("cex.main")
+        if(is.null(oma)) {
+            oma <- rep(2, 4)
+            if (!is.null(main)) oma[3] <- oma[3] + 3*cex.main
+        }
         opar <- par(mfrow = layout,
-                    mar = c(1.1,1.1, .5,.5) + is.mat*c(0,.5,0,.5),
+                    mar = c(1.1, 1.1, 0.5, 0.5) + is.mat*c(0, 0.5, 0, 0.5),
                     oma = oma, ask = ask)
         on.exit(par(opar))
     }
@@ -61,42 +68,47 @@ lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1:lags,
             if(jj == 1) #  new row
                 ii <- 1 + ii %% nR
             ##  plot.ts(x,y) *does* a lag plot -> text, ...
-            plot(lag(X,ll), X, xlim = xl, ylim = xl, asp = asp,
-                 xlab = paste("lag",ll), ylab = nam,
-                 mgp = if(mlayout) c(0,0,0),
-                 axes = !mlayout, type = type,
-                 xy.lines = do.lines, xy.labels = labels,
-                 col.lab = if(newX) "red",
-                 font.lab = if(newX) 2, ...)
-            box()
-            if(diag) abline(c(0,1), lty = 2, col = diag.col)
-
             if(mlayout) {
+                plot(lag(X, ll), X, xlim = xl, ylim = xl, asp = asp,
+                     xlab = paste("lag", ll), ylab = nam,
+                     mgp = if(mlayout) c(0,0,0),
+                     axes = FALSE, type = type,
+                     xy.lines = do.lines, xy.labels = labels,
+                     col.lab = if(newX) "red",
+                     font.lab = if(newX) 2,
+                     ...)
+                box(...) # pass bty along
                 if (jj ==  1 && ii %% 2 == 1 && !newX)
-                    axis(2, xpd=NA)
+                    lAxis(2, ...)
                 if (ii ==  1 && jj %% 2 == 1)
-                    axis(3, xpd=NA)
+                    lAxis(3, ...)
 
                 do.4 <- (ii %% 2 == 0 && (jj == nC ||
                                ## very last one:
                                (i == nser && ll == set.lags[lags])))
-                if (do.4) axis(4, xpd=NA)
-                if (jj %% 2 == 0 && ii == nR)
-                    axis(1, xpd=NA)
+                if (do.4) lAxis(4, ...)
+                if (jj %% 2 == 0 && ii == nR) lAxis(1, ...)
 
                 if(newX) {
                     newX <- FALSE
-                    if(!do.4) axis(4, xpd = NA, mgp = c(0,.6,0))
+                    if(!do.4) lAxis(4, Mgp = c(0,.6,0), ...)
                 }
+            } else  {
+                plot(lag(X, ll), X, xlim = xl, ylim = xl, asp = asp,
+                     xlab = paste("lag", ll), ylab = nam,
+                     type = type,
+                     xy.lines = do.lines, xy.labels = labels,
+                     main = main, ...)
             }
+            if(diag) abline(c(0,1), lty = 2, col = diag.col)
 
-            if (!mlayout)
-                if (!is.null(main)) title(main = main)
-                else
-                    if (!is.null(main) &&
-                        (jj == nC && ii == nR)  || ll == set.lags[lags])
-                        mtext(main, 3, 3, outer = TRUE, at = 0.5,
-                              cex = cex.main, font = font.main)
+            if (mlayout && !is.null(main)) {
+                font.main <- dots$font.main
+                if(is.null(font.main)) font.main <- par("font.main")
+                if ((jj == nC && ii == nR)  || ll == set.lags[lags])
+                    mtext(main, 3, 3, outer = TRUE, at = 0.5,
+                          cex = cex.main, font = font.main)
+            }
         }
     }
     invisible(NULL)
