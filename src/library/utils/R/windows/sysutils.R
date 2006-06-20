@@ -9,10 +9,12 @@ getClipboardFormats <- function()
     
 readClipboard <- function(format = 1, raw = FALSE) {
     result <- .Internal(readClipboard(format, raw))
-    if (!is.null(result) && !raw)
-    	strsplit(result,"\r\n")[[1]]
-    else
-     	result
+    if (!is.null(result) && !raw) {
+    	result <- strsplit(result,"\r\n")[[1]]
+    	if (length(result) == 1) result <- strsplit(result,"\n")[[1]]
+    	if (length(result) == 1) result <- strsplit(result,"\r")[[1]]
+    }
+    result
 }
 
 writeClipboard <- function(str, format = 1)
