@@ -185,7 +185,8 @@ as.data.frame.character <-
 
 as.data.frame.logical <- as.data.frame.vector
 
-as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ...)
+as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ..., 
+                                 stringsAsFactors = default.stringsAsFactors())
 {
     d <- dim(x)
     nrows <- d[1]; ir <- seq(length = nrows)
@@ -198,7 +199,7 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ...)
     if(any(empty <- nchar(collabs)==0))
 	collabs[empty] <- paste("V", ic, sep = "")[empty]
     value <- vector("list", ncols)
-    if(mode(x) == "character") {
+    if(mode(x) == "character" && stringsAsFactors) {
 	for(i in ic)
 	    value[[i]] <- as.factor(x[,i])
     } else {
