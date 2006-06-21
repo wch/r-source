@@ -924,6 +924,8 @@ void R_fixslash(char *s)
     } else
 #endif
 	for (; *p; p++) if (*p == '\\') *p = '/';
+	/* preserve network shares */
+	if(s[0] == '/' && s[1] == '/') s[0] = s[1] = '\\';
 }
 
 void R_fixbackslash(char *s)

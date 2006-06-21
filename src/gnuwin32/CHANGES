@@ -40,6 +40,9 @@ winMenuAdd() could crash when too many menus were added.  (PR#8961)
 
 The data editor could crash when too much was pasted into it.
 
+dirname() converted paths involving network shares to forward slashes.
+(PR#8892)
+
 
 
 R 2.3.1
