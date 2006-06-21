@@ -27,7 +27,8 @@ dirname(path)
 #ifdef windows
 
   On Windows this will accept either \code{\\} or \code{/} as the directory
-  separator, but \code{dirname} will return a path using \code{/}.
+  separator, but \code{dirname} will return a path using \code{/}
+  (except if a network share, when the leading \code{\\\\} will be preserved).
 #endif
 }
 \value{
