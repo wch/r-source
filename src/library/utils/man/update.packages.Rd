@@ -60,12 +60,12 @@ contrib.url(repos, type = getOption("pkgType"))
     Can be \code{NULL} to install from local \file{.zip} files.
 #endif
   }
-  \item{contriburl}{URL(s) of the contrib section of the
-    repositories. Use this argument only if your CRAN mirror is
+  \item{contriburl}{URL(s) of the contrib sections of the
+    repositories.  Use this argument only if your repository mirror is
     incomplete, e.g., because you burned only the \file{contrib} section on a
     CD.  Overrides argument \code{repos}.
 #ifdef unix
-    Can be \code{NULL} to install from local \file{.tar.gz} files.
+    Can also be \code{NULL} to install from local \file{.tar.gz} files.
 #endif
 #ifdef windows
     Can also be \code{NULL} to install from local \file{.zip} files.
