@@ -1,6 +1,6 @@
 # Copyright (C) 1997-1999  Adrian Trapletti
 #
-### Copyright (C) 1999-2005  The R Development Core Team
+### Copyright (C) 1999-2006  The R Development Core Team
 
 
 kernel <- function (coef, m = length(coef)+1, r, name="unknown")
@@ -171,17 +171,17 @@ kernapply.ts <- function (x, k, circular = FALSE, ...)
     ts (y, end=end(x), frequency=frequency(x))
 }
 
-kernapply.tskernel <- function (x, k2, ...)
+kernapply.tskernel <- function (x, k, ...)
 {
     if (!is.tskernel(x))
-        stop ("'k1' is not a kernel")
-    if (!is.tskernel(x))
-        stop ("'k2' is not a kernel")
-    n <- k2$m
+        stop ("'x' is not a kernel")
+    if (!is.tskernel(k))
+        stop ("'k' is not a kernel")
+    n <- k$m
     xx <- c(rep(0,n), x[-x$m:x$m], rep(0,n))
-    coef <- kernapply(xx, k2, circular = TRUE)
+    coef <- kernapply(xx, k, circular = TRUE)
     m <- length(coef)%/%2
     kernel(coef[(m+1):length(coef)],m,
            paste("Composite(", attr(x, "name"), ",",
-                 attr(k2, "name"), ")", sep=""))
+                 attr(k, "name"), ")", sep=""))
 }

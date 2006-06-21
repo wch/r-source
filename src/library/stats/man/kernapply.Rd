@@ -5,20 +5,19 @@
 \alias{kernapply.ts}
 \alias{kernapply.tskernel}
 \alias{kernapply.vector}
-\synopsis{
-kernapply(x, ...)
-kernapply.default(x, k, circular = FALSE, ...)
-kernapply.ts(x, k, circular = FALSE, ...)
-kernapply.vector(x, k, circular = FALSE, ...)
-kernapply.tskernel(x, k2, ...)
-}
 \usage{
-kernapply(x, k, circular = FALSE, \dots) 
-kernapply(k1, k2)
+kernapply(x, \dots)
+
+\method{kernapply}{default}(x, k, circular = FALSE, \dots)
+\method{kernapply}{ts}(x, k, circular = FALSE, \dots)
+\method{kernapply}{vector}(x, k, circular = FALSE, \dots)
+
+\method{kernapply}{tskernel}(x, k, \dots)
+}
 }
 \arguments{
-  \item{k, k1, k2}{smoothing \code{"tskernel"} objects.}
-  \item{x}{an input vector, matrix, or time series to be smoothed.}
+  \item{x}{an input vector, matrix, time series or kernel to be smoothed.}
+  \item{k}{smoothing \code{"tskernel"} object.}
   \item{circular}{a logical indicating whether the input sequence to be
     smoothed is treated as circular, i.e., periodic.}
   \item{\dots}{arguments passed to or from other methods.}
