@@ -253,9 +253,7 @@ BUG FIXES
     o	lag.plot() now respects graphical parameters for the axes.
 
     o	using a wrong link in family() now gives more consistent error messages.
-    
-    o	subassignment within raw arrays of 3 or more dimensions was not 
-    	implemented.
+
 
 
 
@@ -294,6 +292,9 @@ BUG FIXES
 	inconsistently. (PR#8958)
 
 	[pq]unif claimed to allow min == max but did not do so.
+    
+    o	subassignment within raw arrays of 3 or more dimensions was not 
+    	implemented.	
 
 
 		CHANGES IN R VERSION 2.3.1
