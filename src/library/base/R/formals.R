@@ -12,11 +12,11 @@ body <- function(fun = sys.function(sys.parent())) {
 
 alist <- function (...) as.list(sys.call())[-1]
 
-"body<-" <- function (fun, envir = parent.frame(), value) {
+"body<-" <- function (fun, envir = environment(fun), value) {
     if (is.expression(value)) value <- value[[1]]
     as.function(c(formals(fun), value), envir)
 }
 
-"formals<-" <- function (fun, envir = parent.frame(), value)
+"formals<-" <- function (fun, envir = environment(fun), value)
     as.function(c(value, body(fun)), envir)
 

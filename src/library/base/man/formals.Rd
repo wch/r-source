@@ -7,7 +7,7 @@
 }
 \usage{
 formals(fun = sys.function(sys.parent()))
-formals(fun, envir = parent.frame()) <- value
+formals(fun, envir = environment(fun)) <- value
 }
 \arguments{
   \item{fun}{a function object, or see Details.}
@@ -25,8 +25,8 @@ formals(fun, envir = parent.frame()) <- value
   specified, as a \code{\link{pairlist}}.
 
   The replacment form sets the formals of a function to the
-  list/pairlist on the right hand side, and resets the environment of
-  the function.
+  list/pairlist on the right hand side, and (potentially) resets the
+  environment of the function.
 }
 \seealso{
   \code{\link{args}} for a \dQuote{human-readable} version,

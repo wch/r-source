@@ -7,7 +7,7 @@
 }
 \usage{
 body(fun = sys.function(sys.parent()))
-body(fun, envir = parent.frame()) <- value
+body(fun, envir = environment(fun)) <- value
 }
 \arguments{
   \item{fun}{a function object, or see Details.}
@@ -18,8 +18,8 @@ body(fun, envir = parent.frame()) <- value
   \code{body} returns the body of the function specified.
 
   The replacement form sets the body of a function to the
-  expression/list on the right hand side, and resets the environment of
-  the function.
+  expression/list on the right hand side, and (potentially) resets the
+  environment of the function.
 }
 \details{
   For the first form, \code{fun} can be a character string

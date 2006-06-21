@@ -141,6 +141,10 @@ NEW FEATURES
     o	lag.plot() produces a conventional plot (not setting mfrow) if
 	only one plot is to be produced.
 
+    o	body<-() and formals<-() default to envir = environment(fun),
+	that is they do not by default change the environment.
+	(Previously they changed it to parent.frame().)
+
 
 DEPRECATED & DEFUNCT
 
