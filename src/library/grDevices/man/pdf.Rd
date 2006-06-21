@@ -7,12 +7,6 @@
   \code{pdf} starts the graphics device driver for producing PDF
   graphics.
 }
-\synopsis{
-pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
-    width = 6, height = 6, onefile = TRUE, family,
-    title = "R Graphics Output", fonts = NULL, version = "1.1",
-    paper = "special", \dots)
-}
 \usage{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, family = "Helvetica",
