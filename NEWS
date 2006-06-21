@@ -294,7 +294,7 @@ BUG FIXES
 
 	[pq]unif claimed to allow min == max but did not do so.
     
-    o	subassignment within raw arrays of 3 or more dimensions was not 
+    o	Subassignment within raw arrays of 3 or more dimensions was not 
     	implemented.	
 
 
