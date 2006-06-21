@@ -13,6 +13,12 @@
   (if called without arguments) default values for the arguments to
   \code{postscript}.
 }
+\synopsis{
+postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
+           onefile = TRUE, family, title = "R Graphics Output",
+           fonts = NULL, \dots)
+ps.options(\dots, reset = FALSE, override.check = FALSE)
+}
 %% The definitive doc is the source :-)
 %% 	../../../main/devices.c  &   ../../../unix/devPS.c
 \usage{
@@ -23,7 +29,10 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            pagecentre, print.it, command,
            title = "R Graphics Output", fonts = NULL)
 
-ps.options(\dots, reset = FALSE, override.check = FALSE)
+ps.options(paper, horizontal, width, height, family, encoding,
+           pointsize, bg, fg,
+           onefile = TRUE, print.it = FALSE, append = FALSE,
+           reset = FALSE, override.check = FALSE)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
@@ -85,17 +94,15 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
   \item{command}{the command to be used for \dQuote{printing}.  Defaults to
     option \code{"printcmd"}; this can also be selected as
     \code{"default"}.}
+  \item{append}{logical; currently \bold{disregarded}; just there for
+    compatibility reasons.}
+  \item{reset, override.check}{logical arguments passed to
+    \code{\link{check.options}}.  See the Examples.}
   \item{title}{title string to embed in the file.}
   \item{fonts}{a character vector specifying additional \R graphics font
     family names for font families whose declarations will be included
     in the PostScript file and are available for use with the device.
     See Details.}
-  \item{\dots}{arguments \code{paper}, \code{horizontal}, \code{width},
-    \code{height}, \code{family}, \code{encoding}, \code{pointsize},
-    \code{bg}, \code{fg}, \code{onefile}, \code{print.it}, and
-    \code{append} (ignored) can be supplied.}
-  \item{reset, override.check}{logical arguments passed to
-    \code{\link{check.options}}.  See the Examples.}
 }
 \details{
   \code{postscript} opens the file \code{file} and the PostScript

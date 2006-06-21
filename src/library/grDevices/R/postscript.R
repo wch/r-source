@@ -126,16 +126,12 @@ guessEncoding <- function(family)
 
 ##--> source in devPS.c :
 
-postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
-                       onefile = TRUE, paper, family, encoding, bg, fg,
-                       width, height, horizontal, pointsize,
-                       pagecentre, print.it, command,
-                       title = "R Graphics Output", fonts = NULL)
+postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
+                        onefile = TRUE, family,
+                        title = "R Graphics Output",
+                        fonts = NULL, ...)
 {
-    Call <- as.list(match.call())[-1]
-    Call[c("file", "family", "title", "fonts")] <- NULL
-    new <- lapply(Call, function(x) eval.parent(x, 2)) # eval them
-
+    new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
@@ -198,15 +194,13 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
     invisible()
 }
 
-pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
-                width = 6, height = 6, onefile = TRUE, family = "Helvetica",
-                title = "R Graphics Output", fonts = NULL, version = "1.1",
-                paper = "special", encoding, bg, fg, pointsize)
+pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
+                 width = 6, height = 6, onefile = TRUE, family,
+                 title = "R Graphics Output", fonts = NULL, version="1.1",
+                 paper = "special", ...)
 {
     # paper explicit because "special" (not "default") by default
-    Call <- as.list(match.call())[-1]
-    Call[c("file", "width", "height", "family", "title", "fonts", "version")] <- NULL
-    new <- lapply(Call, function(x) eval.parent(x, 2))
+    new <- list(onefile=onefile, paper=paper, ...)# eval
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
