@@ -16,7 +16,7 @@ BUG FIXES
 
     o	str(<data.frame>, strict.width=.) produced an extraneous first line.
 
-    o	improve bessel[IJKY]() out-of-range checks; for instance,
+    o	Improve bessel[IJKY]() out-of-range checks; for instance,
 	besselI(0, nu) no longer warns.
 
     o	cbind() on some non-vector objects (e.g. names) segfaulted.
@@ -26,13 +26,16 @@ BUG FIXES
     o	INSTALL has been changed to avoid a few problems with the
 	base (not XPG4) Solaris sed.
 
-    o	There was a problems in src/main/printutils.c on platforms
+    o	There were problems in src/main/printutils.c on platforms
 	that did not have va_copy.
 
     o	[pq]unif allowed infinite ranges but handled them
 	inconsistently. (PR#8958)
 
 	[pq]unif claimed to allow min == max but did not do so.
+    
+    o	Subassignment within raw arrays of 3 or more dimensions was not 
+    	implemented.	
 
 
 		CHANGES IN R VERSION 2.3.1
