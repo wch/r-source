@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-06-16
+@set FAQ_DATE @value{FAQ_YEAR}-06-21
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2859,6 +2859,8 @@ Classification using generalized partial least squares for two-group and
 multi-group (more than 2 group) classification.
 @item gplots
 Various functions to draw plots.
+@item grImport
+Importing vector graphics.
 @item grasper
 Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
@@ -3047,6 +3049,8 @@ and also performs searches using a number of less time-consuming
 techniques.
 @item lgtdl
 A set of methods for longitudinal data objects.
+@item lhs
+Latin Hypercube Samples.
 @item limma
 LInear Models for MicroArray data.
 @item linprog
@@ -3887,6 +3891,8 @@ Time tracking for developers.
 Simple mechanism for placing R graphics in a Tk widget.
 @item tlnise
 Two-level normal independent sampling estimation.
+@item triangle
+Standard distribution functions for the triangle distribution.
 @item tree
 Classification and regression trees.
 @item treeglia
