@@ -1066,6 +1066,11 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    SET_VECTOR_ELT(x, ii, VECTOR_ELT(y, i % ny));
 	    break;
 
+	case 2424: /* raw <- raw */
+
+	    RAW(x)[ii] = RAW(y)[i % ny];
+	    break;
+	    
 	default:
 	error(_("incompatible types (from %s to %s) in array subset assignment"),
 		  type2char(which%100), type2char(which/100));

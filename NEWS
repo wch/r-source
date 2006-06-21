@@ -253,6 +253,9 @@ BUG FIXES
     o	lag.plot() now respects graphical parameters for the axes.
 
     o	using a wrong link in family() now gives more consistent error messages.
+    
+    o	subassignment within raw arrays of 3 or more dimensions was not 
+    	implemented.
 
 
 
