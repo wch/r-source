@@ -112,7 +112,9 @@ as.data.frame.data.frame <- function(x, row.names = NULL, ...)
 }
 
 ## prior to 1.8.0 this coerced names - PR#3280
-as.data.frame.list <- function(x, row.names = NULL, optional = FALSE, ...)
+as.data.frame.list <-
+    function(x, row.names = NULL, optional = FALSE, ...,
+             stringsAsFactors = default.stringsAsFactors())
 {
     ## need to protect names in x.
     cn <- names(x)
@@ -122,7 +124,8 @@ as.data.frame.list <- function(x, row.names = NULL, optional = FALSE, ...)
         cn[m] <- paste("..adfl.", cn[m], sep="")
         names(x) <- cn
     }
-    x <- eval(as.call(c(expression(data.frame), x, check.names = !optional)))
+    x <- eval(as.call(c(expression(data.frame), x, check.names = !optional,
+                        stringsAsFactors = stringsAsFactors)))
     if(any(m > 0)) names(x) <- sub("^\\.\\.adfl\\.", "", names(x))
     if(!is.null(row.names)) {
 	# row.names <- as.character(row.names)
@@ -185,7 +188,7 @@ as.data.frame.character <-
 
 as.data.frame.logical <- as.data.frame.vector
 
-as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ..., 
+as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ...,
                                  stringsAsFactors = default.stringsAsFactors())
 {
     d <- dim(x)
@@ -334,7 +337,7 @@ data.frame <-
     nrows <- ncols <- integer(n)
     for(i in 1:n) {
         ## do it this way until all as.data.frame methods have been updated
-	xi <- if(is.character(x[[i]]))
+	xi <- if(is.character(x[[i]]) || is.list(x[[i]]))
                  as.data.frame(x[[i]], optional = TRUE,
                                stringsAsFactors = stringsAsFactors)
         else as.data.frame(x[[i]], optional = TRUE)

@@ -4286,3 +4286,15 @@ lm(z ~ x+y, data = A) # complex response, character RHS
 stopifnot(inherits(try(model.matrix(y ~ x+z, data = A)), "try-error"))
 stopifnot(inherits(try(model.matrix(y ~ r, data = A)), "try-error"))
 ## new in 2.4.0
+
+
+## tests of stringsAsFactors
+a <- letters[1:8]
+aa <- matrix(a, 4, 2)
+aaa <- list(aaa=letters[20:23])
+colnames(aa) <- paste("aa", 1:2, sep=".")
+(A <- data.frame(a=a[1:4], aa, aaa, stringsAsFactors = FALSE))
+stopifnot(all(sapply(A, class) == "character"))
+stopifnot(class(as.data.frame(list(a=a), stringsAsFactors = TRUE)$a)
+          == "factor")
+## new in 2.4.0
