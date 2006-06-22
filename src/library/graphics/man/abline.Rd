@@ -9,13 +9,6 @@ abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
        coef = NULL, untf = FALSE, col = par("col"),
        lty = par("lty"), lwd = par("lwd"), ...)
 }
-\usage{
-abline(a, b, untf = FALSE, \dots)
-abline(h=, untf = FALSE, \dots)
-abline(v=, untf = FALSE, \dots)
-abline(coef=, untf = FALSE, \dots)
-abline(reg=, untf = FALSE, \dots)
-}
 \arguments{
   \item{a, b}{the intercept and slope, single values.}
   \item{untf}{logical asking whether to \emph{untransform}.  See Details.}
@@ -28,6 +21,14 @@ abline(reg=, untf = FALSE, \dots)
     characteristics \code{lend}, \code{ljoin} and \code{lmitre}.}
 }
 \details{
+  Typical usages are
+\preformatted{
+abline(a, b, untf = FALSE, \dots)
+abline(h=, untf = FALSE, \dots)
+abline(v=, untf = FALSE, \dots)
+abline(coef=, untf = FALSE, \dots)
+abline(reg=, untf = FALSE, \dots)
+}
   The first form specifies the line in intercept/slope form
   (alternatively \code{a} can be specified on its own and is taken to
   contain the slope and intercept in vector form).
@@ -50,7 +51,7 @@ abline(reg=, untf = FALSE, \dots)
 
   The graphical parameters \code{col}, \code{lty} and \code{lwd}
   can be specified; see \code{\link{par}} for details.  For the
-  \code{h=} and \code{v=} cases they can be vectors of length greater
+  \code{h=} and \code{v=} usages they can be vectors of length greater
   than one, recycled as necessary.
 }
 \references{

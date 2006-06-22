@@ -6,20 +6,14 @@
 \description{
   Generate regular sequences.
 }
-\synopsis{
-seq(...)
-seq.default(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
-            length.out = NULL, along.with = NULL, ...)
-}
 \usage{
 from:to
    a:b
 
-seq(from, to)
-seq(from, to, by= )
-seq(from, to, length.out= )
-seq(along.with= )
-seq(from)
+seq(\dots)
+
+\method{seq}{default}(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
+    length.out = NULL, along.with = NULL, \dots)
 }
 \arguments{
   \item{from}{starting value of sequence.}
@@ -27,7 +21,8 @@ seq(from)
   \item{by}{increment of the sequence.}
   \item{length.out}{desired length of the sequence.}
   \item{along.with}{take the length from the length of this argument.}
-  \item{a,b}{\code{\link{factor}}s of same length.}
+  \item{\dots}{arguments passed to or from methods.}
+  \item{a, b}{\code{\link{factor}}s of same length.}
 }
 \details{
   The binary operator \code{:} has two meanings: for factors \code{a:b} is
@@ -40,8 +35,14 @@ seq(from)
   arguments when programming.
 
   Function \code{seq} is generic, and only the default method is
-  described here.
-
+  described here.  Typical usages are
+\preformatted{
+seq(from, to)
+seq(from, to, by= )
+seq(from, to, length.out= )
+seq(along.with= )
+seq(from)
+}
   The operator \code{:} and the \code{seq(from, to)} form generate the
   sequence \code{from, from+1, \dots, to}.
 
@@ -50,12 +51,15 @@ seq(from)
   \code{to - from} and \code{by} of opposite signs is an error.
 
   The third generates a sequence of \code{length.out} equally spaced
-  values from \code{from} to \code{to}.
+  values from \code{from} to \code{to}.  (\code{length.out} is usually
+  abbreviated to \code{length}.)
 
-  The fourth form generates the sequence \code{1, 2, \dots, length(along.with)}.
+  The fourth form generates the sequence \code{1, 2, \dots,
+    length(along.with)}.  (\code{along.with} is usually abbreviated to
+  \code{along}.) 
 
   The last generates the sequence \code{1, 2, \dots, length(from)}
-  (as if argument \code{along} had been specified),
+  (as if argument \code{along.with} had been specified),
   \emph{unless} the argument is numeric of length 1 when it is
   interpreted as \code{1:from} (even for \code{seq(0)} for
   compatibility with S).
