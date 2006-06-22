@@ -2599,10 +2599,10 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 		     * drawn on clipping boundary when there is a fill
 		     */
 		    tmpcol = gc.col;
-		    gc.col = NA_INTEGER;
+		    gc.col = R_TRANWHITE;
 		    GEPolygon(5, xxx, yyy, &gc, dd);
 		    gc.col = tmpcol;
-		    gc.fill = NA_INTEGER;
+		    gc.fill = R_TRANWHITE;
 		    GEPolygon(5, xxx, yyy, &gc, dd);
 		}
 	    }
