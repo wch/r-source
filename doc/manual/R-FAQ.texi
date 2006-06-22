@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-06-21
+@set FAQ_DATE @value{FAQ_YEAR}-06-22
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2104,6 +2104,9 @@ ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
 @item RFA
 Regional Frequency Analysis.
+@item RGtk2
+Facilities for programming graphical interfaces using Gtk (the Gimp Tool
+Kit) version 2.
 @item RGrace
 Mouse/menu driven interactive plotting application.
 @item RGraphics
