@@ -1,38 +1,21 @@
 \name{postscript}
 \alias{postscript}
-\alias{ps.options}
-%\alias{.PostScript.Options}
 \alias{.ps.prolog}
 \concept{encoding}
 \title{PostScript Graphics}
 \description{
   \code{postscript} starts the graphics device driver for producing
   PostScript graphics.
-
-  The auxiliary function \code{ps.options} can be used to set and view
-  (if called without arguments) default values for the arguments to
-  \code{postscript}.
-}
-\synopsis{
-postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
-           onefile = TRUE, family, title = "R Graphics Output",
-           fonts = NULL, \dots)
-ps.options(\dots, reset = FALSE, override.check = FALSE)
 }
 %% The definitive doc is the source :-)
 %% 	../../../main/devices.c  &   ../../../unix/devPS.c
 \usage{
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
-           onefile = TRUE,
-           paper, family, encoding, bg, fg,
+           onefile = TRUE, family,
+           title = "R Graphics Output", fonts = NULL,
+           encoding, bg, fg,
            width, height, horizontal, pointsize,
-           pagecentre, print.it, command,
-           title = "R Graphics Output", fonts = NULL)
-
-ps.options(paper, horizontal, width, height, family, encoding,
-           pointsize, bg, fg,
-           onefile = TRUE, print.it = FALSE, append = FALSE,
-           reset = FALSE, override.check = FALSE)
+           paper, pagecentre, print.it, command)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
@@ -46,23 +29,17 @@ ps.options(paper, horizontal, width, height, family, encoding,
     For use with \code{onefile = FALSE} give a \code{printf} format such
     as \code{"Rplot\%03d.ps"} (the default in that case).
   }
-  \item{paper}{the size of paper in the printer.  The choices are
-    \code{"a4"}, \code{"letter"}, \code{"legal"} and
-    \code{"executive"} (and these can be capitalized).
-    Also, \code{"special"} can be used, when the \code{width}
-    and \code{height} specify the paper size.  A further choice is
-    \code{"default"}, which is the default.  If this is selected, the
-    papersize is taken from the option \code{"papersize"}
-    if that is set and to \code{"a4"} if it is unset or empty.}
-  \item{horizontal}{the orientation of the printed image, a
-    logical.  Defaults to true, that is landscape orientation on paper
-    sizes with width less than height.}
-  \item{width, height}{the width and height of the graphics region in
-    inches.  The default is to use the entire page less a 0.25 inch
-    border on each side.}
+  \item{onefile}{logical: if true (the default) allow multiple figures
+    in one file.  If false, generate a file name containing the page
+    number and use an EPSF header and no \code{DocumentMedia} comment.}
   \item{family}{the initial font family to be used, normally as a
     character string.  See the section \sQuote{Families}.  This defaults
     to \code{"Helvetica"}.}
+  \item{title}{title string to embed in the file.}
+  \item{fonts}{a character vector specifying additional \R graphics font
+    family names for font families whose declarations will be included
+    in the PostScript file and are available for use with the device.
+    See Details.}
   \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
     \file{"ISOLatin1.enc"} unless the locale is recognized as
@@ -78,15 +55,26 @@ ps.options(paper, horizontal, width, height, family, encoding,
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.
   }
-  \item{pointsize}{the default point size to be used.  Strictly
-    speaking, in bp, that is 1/72 of an inch, but approximately in points.}
   \item{bg}{the default background color to be used.
     If \code{"transparent"} (or an equivalent specification), no
     background is painted.}
   \item{fg}{the default foreground color to be used.}
-  \item{onefile}{logical: if true (the default) allow multiple figures
-    in one file.  If false, generate a file name containing the page
-    number and use an EPSF header and no \code{DocumentMedia} comment.}
+  \item{width, height}{the width and height of the graphics region in
+    inches.  The default is to use the entire page less a 0.25 inch
+    border on each side.}
+  \item{horizontal}{the orientation of the printed image, a
+    logical.  Defaults to true, that is landscape orientation on paper
+    sizes with width less than height.}
+  \item{pointsize}{the default point size to be used.  Strictly
+    speaking, in bp, that is 1/72 of an inch, but approximately in points.}
+  \item{paper}{the size of paper in the printer.  The choices are
+    \code{"a4"}, \code{"letter"}, \code{"legal"} and
+    \code{"executive"} (and these can be capitalized).
+    Also, \code{"special"} can be used, when the \code{width}
+    and \code{height} specify the paper size.  A further choice is
+    \code{"default"}, which is the default.  If this is selected, the
+    papersize is taken from the option \code{"papersize"}
+    if that is set and to \code{"a4"} if it is unset or empty.}
   \item{pagecentre}{logical: should the device region be centred on the
     page? -- defaults to true.}
   \item{print.it}{logical: should the file be printed when the device is
@@ -94,15 +82,6 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \item{command}{the command to be used for \dQuote{printing}.  Defaults to
     option \code{"printcmd"}; this can also be selected as
     \code{"default"}.}
-  \item{append}{logical; currently \bold{disregarded}; just there for
-    compatibility reasons.}
-  \item{reset, override.check}{logical arguments passed to
-    \code{\link{check.options}}.  See the Examples.}
-  \item{title}{title string to embed in the file.}
-  \item{fonts}{a character vector specifying additional \R graphics font
-    family names for font families whose declarations will be included
-    in the PostScript file and are available for use with the device.
-    See Details.}
 }
 \details{
   \code{postscript} opens the file \code{file} and the PostScript
@@ -153,10 +132,6 @@ ps.options(paper, horizontal, width, height, family, encoding,
   changed by changing that vector.  (This is only advisable for
   PostScript experts: the standard version is in
   \code{namespace:grDevices}.)
-
-  \code{ps.options} needs to be called before calling \code{postscript},
-  and the default values it sets can be overridden by supplying
-  arguments to \code{postscript}.
 
   A PostScript device has a default family, which can be set by the user
   via \code{family}.  If other font families are to be used when drawing
@@ -293,7 +268,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \code{\link{postscriptFonts}},
   \code{\link{Devices}},
   {\code{\link{check.options}} which is called from both
-    \code{ps.options} and \code{postscript}}.
+    \code{\link{ps.options}} and \code{postscript}}.
 }
 \author{
   Support for Computer Modern fonts is based on a contribution by
@@ -355,14 +330,5 @@ xx <- seq(0, 7, length=701)
 yy <- sin(xx)/xx; yy[1] <- 1
 plot(xx,yy)                     # produce the desired graph(s)
 }
-
-ps.options(bg = "pink")
-utils::str(ps.options(reset = TRUE))
-
-### ---- error checking of arguments: ----
-ps.options(width=0:12, onefile=0, bg=pi)
-# override the check for 'onefile', but not the others:
-utils::str(ps.options(width=0:12, onefile=1, bg=pi,
-                      override.check = c(FALSE,TRUE,FALSE)))
 }
 \keyword{device}

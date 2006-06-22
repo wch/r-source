@@ -126,12 +126,26 @@ guessEncoding <- function(family)
 
 ##--> source in devPS.c :
 
-postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
-                        onefile = TRUE, family,
-                        title = "R Graphics Output",
-                        fonts = NULL, ...)
+postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
+                       onefile = TRUE, family,
+                       title = "R Graphics Output", fonts = NULL,
+                       encoding, bg, fg,
+                       width, height, horizontal, pointsize,
+                       paper, pagecentre, print.it, command)
 {
-    new <- list(onefile=onefile, ...)# eval
+    new <- list(onefile = onefile)
+    if(!missing(paper)) new$paper <- paper
+    if(!missing(encoding)) new$encoding <- encoding
+    if(!missing(bg)) new$bg <- bg
+    if(!missing(fg)) new$fg <- fg
+    if(!missing(width)) new$width <- width
+    if(!missing(height)) new$height <- height
+    if(!missing(horizontal)) new$horizontal <- horizontal
+    if(!missing(pointsize)) new$pointsize <- pointsize
+    if(!missing(pagecentre)) new$pagecentre <- pagecentre
+    if(!missing(print.it)) new$print.it <- print.it
+    if(!missing(command)) new$command <- command
+
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
@@ -194,13 +208,23 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
     invisible()
 }
 
-pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
-                 width = 6, height = 6, onefile = TRUE, family,
-                 title = "R Graphics Output", fonts = NULL, version="1.1",
-                 paper = "special", ...)
+pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
+                width = 6, height = 6, onefile = TRUE, family = "Helvetica",
+                title = "R Graphics Output", fonts = NULL, version = "1.1",
+                paper = "special", encoding, bg, fg, pointsize, pagecentre)
 {
+    new <- list(onefile = onefile)
+    if(!missing(paper)) new$paper <- paper
+    if(!missing(encoding)) new$encoding <- encoding
+    if(!missing(bg)) new$bg <- bg
+    if(!missing(fg)) new$fg <- fg
+    if(!missing(pointsize)) new$pointsize <- pointsize
+    if(!missing(pagecentre)) new$pagecentre <- pagecentre
+
     # paper explicit because "special" (not "default") by default
-    new <- list(onefile=onefile, paper=paper, ...)# eval
+    Call <- as.list(match.call())[-1]
+    Call[c("file", "width", "height", "family", "title", "fonts", "version")] <- NULL
+    new <- lapply(Call, function(x) eval.parent(x, 2))
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)

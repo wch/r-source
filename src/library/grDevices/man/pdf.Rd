@@ -7,17 +7,11 @@
   \code{pdf} starts the graphics device driver for producing PDF
   graphics.
 }
-\synopsis{
-pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
-    width = 6, height = 6, onefile = TRUE, family,
-    title = "R Graphics Output", fonts = NULL, version = "1.1",
-    paper = "special", \dots)
-}
 \usage{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, family = "Helvetica",
     title = "R Graphics Output", fonts = NULL, version = "1.1",
-    paper = "special", encoding, bg, fg, pointsize)
+    paper = "special", encoding, bg, fg, pointsize, pagecentre)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -32,6 +26,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     number.}
   \item{family}{the font family to be used, see \code{\link{postscript}}.}
   \item{title}{title string to embed in the file.}
+  \item{fonts}{a character vector specifying \R graphics font family
+    names for fonts which will be included in the PDF file.}
+  \item{version}{a string describing the PDF version that will be
+    used to produce output.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} and
     \code{"executive"} (and these can be capitalized).
@@ -41,16 +39,14 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     papersize is taken from the option \code{"papersize"}
     if that is set and to \code{"a4"} if it is unset or empty.}
   \item{encoding}{the name of an encoding file.  See
-    \code{\link{postscript}} for details.
-  }
-  \item{pointsize}{the default point size to be used.  Strictly
-    speaking, in bp, that is 1/72 of an inch, but approximately in points.}
+    \code{\link{postscript}} for details.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
-  \item{fonts}{a character vector specifying \R graphics font family
-    names for fonts which will be included in the PDF file.}
-  \item{version}{a string describing the PDF version that will be
-    used to produce output.}
+  \item{pointsize}{the default point size to be used.  Strictly
+    speaking, in bp, that is 1/72 of an inch, but approximately in points.}
+  \item{pagecentre}{logical: should the device region be centred on the
+    page? -- defaults to true, but is only relevant for
+    \code{paper != "special"}.}
 }
 \details{
   \code{pdf()} opens the file \code{file} and the PDF commands needed to
