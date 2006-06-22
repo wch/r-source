@@ -17,7 +17,10 @@ rbind(\dots, deparse.level = 1)
 \arguments{
   \item{\dots}{vectors or matrices.  These can be given as named
     arguments.  Other \R objects will be coerced as appropriate: see
-    Details and Value.}
+    section Details and Value.  (For the \code{"data.frame"} method of
+    \code{cbind} these can be further arguments to
+    \code{\link{data.frame}} such as \code{stringsAsFactors} and
+    \code{check.names}.)}
   \item{deparse.level}{integer controlling the construction of labels in
     the case of \dQuote{non-matrix-like} arguments (i.e., for the
     default method):\cr
@@ -33,10 +36,10 @@ rbind(\dots, deparse.level = 1)
   time series objects.
 
   In the default method, all the vectors/matrices must be atomic (see
-  \code{\link{vector}}) or lists (e.g., not expressions).  Expressions
-  are not allowed.  Language objects (such as formulae and calls) and
-  pairlists will be coerced to lists: other objects (such as names and
-  external pointers) will be included as elements in a list result.
+  \code{\link{vector}}) or lists.  Expressions are not allowed.
+  Language objects (such as formulae and calls) and pairlists will be
+  coerced to lists: other objects (such as names and external pointers)
+  will be included as elements in a list result.
 
   If there are several matrix arguments, they must all have the same
   number of columns (or rows) and this will be the number of columns (or
