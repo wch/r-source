@@ -17,7 +17,7 @@ pkg = tcltk
 
 R_EXE = $(top_builddir)/bin/R --vanilla
 
-RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/unix/zzz.R`
 
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
@@ -28,7 +28,7 @@ all: Makefile DESCRIPTION
 	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R ; \
 	  else \
 	    $(SHELL) $(top_srcdir)/tools/copy-if-change \
-	      $(srcdir)/R/unix/zzz.Rstub \
+	      $(srcdir)/R/unix/zzzstub.R \
 	      $(top_builddir)/library/$(pkg)/R/$(pkg) ; \
 	  fi)
 	@if test @use_tcltk@ = yes; then \
