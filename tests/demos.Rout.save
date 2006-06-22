@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-05-16 r38074)
+R version 2.4.0 Under development (unstable) (2006-06-22 r38388)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -57,8 +57,8 @@ Type 'q()' to quit R.
     "\nNumber of builtin functions:\t", sum(base.is.f), "\n\t starting with 'is.' :\t ", 
     length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
 
-Number of base objects:		 1033 
-Number of builtin functions:	 1023 
+Number of base objects:		 1034 
+Number of builtin functions:	 1024 
 	 starting with 'is.' :	  46 
 
 > is.method <- function(fname) {
@@ -1256,5 +1256,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.902 0.076 2.036 0 0 
+Time elapsed:  2.024 0.064 2.089 0 0 
 > 
