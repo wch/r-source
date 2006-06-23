@@ -41,11 +41,12 @@ function(file = NULL)
                        character()
                })
 
-    data.frame(Name = I(sub(" +.*", "", db[, "Name"])),
+    data.frame(Name = sub(" +.*", "", db[, "Name"]),
                MIBenum = as.integer(db[, "MIBenum"]),
-               Source = I(db[, "Source"]),
+               Source = db[, "Source"],
                Aliases = I(Aliases),
-               MIME = I(MIME))
+               MIME = I(MIME),
+               stringsAsFactors = FALSE)
 }
 
 charset_to_Unicode <- local({
