@@ -261,7 +261,7 @@ function(dir, outDir)
     writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
                outFile)
     # use fast version of file.append that ensures LF between files
-    if(!all(.Internal(codeFiles.append(outFile, codeFiles))))
+    if(!all(.file_append_ensuring_LFs(outFile, codeFiles)))
         stop("unable to write code files")
     ## </NOTE>
 

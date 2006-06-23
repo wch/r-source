@@ -231,6 +231,16 @@ function(x, ...)
     out
 }
 
+### ** .file_append_ensuring_LFs
+
+.file_append_ensuring_LFs <-
+function(file1, file2)
+{
+    ## Use a fast version of file.append() that ensures LF between
+    ## files.
+    .Internal(codeFiles.append(file1, file2))
+}
+
 ### ** .find_owner_env
 
 .find_owner_env <-
@@ -593,7 +603,9 @@ function(dir, env)
     on.exit(unlink(con))
     if(!file.create(con))
         stop("unable to create ", con)
-    if(!all(file.append(con, list_files_with_type(dir, "code"))))
+    if(!all(.file_append_ensuring_LFs(con,
+                                      list_files_with_type(dir,
+                                                           "code"))))
         stop("unable to write code files")
     .source_assignments(con, env)
 }

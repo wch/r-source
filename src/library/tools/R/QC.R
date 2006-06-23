@@ -1622,7 +1622,9 @@ function(package, dir, file, lib.loc = NULL,
         file <- tempfile()
         on.exit(unlink(file))
         if(!file.create(file)) stop("unable to create ", file)
-        if(!all(file.append(file, list_files_with_type(code_dir, "code"))))
+        if(!all(.file_append_ensuring_LFs(file,
+                                          list_files_with_type(code_dir,
+                                                               "code"))))
             stop("unable to write code files")
     }
     else if(missing(file)) {
