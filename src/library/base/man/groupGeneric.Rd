@@ -1,4 +1,5 @@
 \name{groupGeneric}
+\alias{S3groupGeneric}
 \alias{.Method}
 \alias{.Generic}
 \alias{.Group}
@@ -12,57 +13,32 @@
 \alias{Arith}
 \alias{Compare}
 \alias{Complex}
-\alias{Math2}
 \alias{group generic} % used in class.Rd
 \concept{group generic}
-\title{Group Generic Functions}
+\title{S3 Group Generic Functions}
 \description{
-  Group generic functions can be defined with either S3 and S4 methods
-  (with different groups).  Methods are defined for the group of functions
-  as a whole.
+  Group generic methods can be defined for four pre-specified groups of
+  functions, \code{Math}, \code{Ops}, \code{Summary} and \code{Complex}.
+  (There are no objects of these names in base \R, but there are in the
+  \pkg{methods} package.)
 
   A method defined for an individual member of the group takes
   precedence over a method defined for the group as a whole.
-
-  When package \pkg{methods} is attached there are objects visible with
-  the names of the group generics: these functions should never be
-  called directly (a suitable error message will result if they are).
 }
-\synopsis{
-Math.data.frame(x, \dots)
-Math.factor(x, \dots)
-
-Ops.data.frame(e1, e2 = NULL)
-Ops.factor(e1, e2)
-Ops.ordered(e1, e2)
-
-Summary.data.frame(\dots, na.rm)
-Summary.factor(\dots, na.rm)
-}
-\usage{
-## S3 methods have prototypes:
+\usage{% we can get away with this as there is an exception in codoc
+## S3 methods for group generics have prototypes:
 Math(x, \dots)
 Ops(e1, e2)
 Complex(z)
 Summary(\dots, na.rm = FALSE)
-
-## S4 methods have prototypes:
-Arith(e1, e2)
-Compare(e1, e2)
-Ops(e1, e2)
-Math(x)
-Math2(x, digits)
-Summary(x, \dots, na.rm = FALSE)
-Complex(z)
 }
 \arguments{
   \item{x, z, e1, e2}{objects.}
-  \item{digits}{number of digits to be used in \code{round} or \code{signif}.}
-  \item{\dots}{further arguments passed to or from methods.}
+  \item{\dots}{further arguments passed to methods.}
   \item{na.rm}{logical: should missing values be removed?}
 }
 
-\section{S3 Group Dispatching}{
+\details{
   %% --------------- grep -nw DispatchGroup src/*/*[ch]
 
   There are four \emph{groups} for which S3 methods can be written,
@@ -147,81 +123,27 @@ Complex(z)
   dispatch on, say, \code{Ops.integer} would be too slow.
 
   The number of arguments supplied for \code{"Math"} group generic
-  methods is not checked prior to dispatch. (Most have default methods
+  methods is not checked prior to dispatch.  (Most have default methods
   expecting one argument, but three expect two.)
-}
-\section{S4 Group Dispatching}{
-  When package \pkg{methods} is attached (which it is by default),
-  formal (S4) methods can be defined for groups.
-
-  The functions belonging to the various groups are as follows:
-  \describe{
-    \item{\code{Arith}}{\code{"+"}, \code{"-"}, \code{"*"}, \code{"^"},
-      \code{"\%\%"}, \code{"\%/\%"}, \code{"/"}}
-    \item{\code{Compare}}{\code{"=="}, \code{">"}, \code{"<"},
-      \code{"!="}, \code{"<="}, \code{">="}}
-    \item{\code{Ops}}{\code{"Arith"}, \code{"Compare"}}
-    \item{\code{Math}}{\code{"log"}, \code{"sqrt"}, \code{"log10"},
-      \code{"cumprod"}, \code{"abs"}, \code{"acos"}, \code{"acosh"},
-      \code{"asin"}, \code{"asinh"}, \code{"atan"}, \code{"atanh"},
-      \code{"ceiling"}, \code{"cos"}, \code{"cosh"}, \code{"cumsum"},
-      \code{"exp"}, \code{"floor"}, \code{"gamma"}, \code{"lgamma"},
-      \code{"sin"}, \code{"sinh"}, \code{"tan"}, \code{"tanh"},
-      \code{"trunc"}}
-    \item{\code{Math2}}{\code{"round"}, \code{"signif"}}
-    \item{\code{Summary}}{\code{"max"}, \code{"min"}, \code{"range"},
-      \code{"prod"}, \code{"sum"}, \code{"any"}, \code{"all"}}
-    \item{\code{Complex}}{\code{"Arg"}, \code{"Conj"}, \code{"Im"},
-      \code{"Mod"}, \code{"Re"}}
-  }
-  Functions with the group names exist in the \pkg{methods} package but
-  should not be called directly.
-
-  All the functions in these groups (other than the group generics
-  themselves) are basic functions in \R.  They are not by default S4 generic
-  functions, and many of them are defined as primitives, meaning that
-  they do not have formal arguments.  However, you can still define
-  formal methods for them.  The effect of doing so is to create an S4 generic
-  function with the appropriate arguments, in the environment where the
-  method definition is to be stored.  It all works more or less as you
-  might expect, admittedly via a bit of trickery in the background.
-
-  Note: currently those members which are not primitive functions must
-  have been converted to S4 generic functions (preferably
-  \emph{before} setting an S4 group generic method) as it only sets
-  methods for known S4 generics.  This can be done by a call to
-  \code{setGeneric}, for example \code{setGeneric("round", group="Math2")}.
 }
 \references{
   Appendix A, \emph{Classes and Methods} of\cr
   Chambers, J. M.  and Hastie, T. J. eds (1992)
   \emph{Statistical Models in S.}
   Wadsworth & Brooks/Cole.
-
-  Chambers, J. M. (1998) \emph{Programming with Data.} Springer, pp. 352--4.
 }
 \seealso{
   \code{\link{methods}} for methods of non-Internal generic functions.
+
+  \link[methods]{S4groupGeneric} for group generics for S4 methods.
 }
 \examples{
 d.fr <- data.frame(x=1:9, y=rnorm(9))
-data.class(1 + d.fr) == "data.frame" ##-- add to d.f. ...
+class(1 + d.fr) == "data.frame" ##-- add to d.f. ...
 
-if(.isMethodsDispatchOn()) {# package "methods" is attached or loaded
-  methods("Math")
-  methods("Ops")
-  methods("Summary")
-
-  setClass("testComplex", representation(zz = "complex"))
-  ## method for whole group "Complex"
-  setMethod("Complex", "testComplex",
-            function(z) c("groupMethod", callGeneric(z@zz)))
-  ## exception for Arg() :
-  setMethod("Arg", "testComplex",
-            function(z) c("ArgMethod", Arg(z@zz)))
-  z1 <- 1+2i
-  z2 <- new("testComplex", zz = z1)
-  stopifnot(identical(Mod(z2), c("groupMethod", Mod(z1))))
-  stopifnot(identical(Arg(z2), c("ArgMethod", Arg(z1))))
-}}
+methods("Math")
+methods("Ops")
+methods("Summary")
+methods("Complex")  # none in base R
+}
 \keyword{methods}
