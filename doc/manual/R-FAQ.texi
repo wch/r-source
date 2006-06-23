@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-06-22
+@set FAQ_DATE @value{FAQ_YEAR}-06-23
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -1775,6 +1775,8 @@ binary distributions of R.)
 @item AMORE
 A MORE flexible neural network package, providing the TAO robust neural
 network algorithm.
+@item AdaptFit
+Adaptive semiparametic regression.
 @item AlgDesign
 Algorithmic experimental designs.  Calculates exact and approximate
 theory experimental designs for D, A, and I criteria.
@@ -2523,6 +2525,8 @@ Quantile regression for randomly censored data.
 @item cslogistic
 Likelihood and posterior analysis of conditionally specified logistic
 regression models.
+@item cts
+Continuous time autoregressive models and the Kalman filter.
 @item ctv
 Server-side and client-side tools for @acronym{CRAN} task views.
 @item cwhmisc
