@@ -4,10 +4,9 @@
 \description{
   This function adds one or more straight lines through the current plot.
 }
-\synopsis{
+\usage{
 abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
-       coef = NULL, untf = FALSE, col = par("col"),
-       lty = par("lty"), lwd = par("lwd"), ...)
+       coef = NULL, untf = FALSE, ...)
 }
 \arguments{
   \item{a, b}{the intercept and slope, single values.}
@@ -15,10 +14,11 @@ abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
   \item{h}{the y-value(s) for horizontal line(s).}
   \item{v}{the x-value(s) for vertical line(s).}
   \item{coef}{a vector of length two giving the intercept and slope.}
-  \item{reg}{an object with a \code{coef} component.  See Details.}
-  \item{\dots}{graphical parameters such as \code{col}, \code{lty} and
-    \code{lwd} (possibly as vectors: see Details) and the line
-    characteristics \code{lend}, \code{ljoin} and \code{lmitre}.}
+  \item{reg}{an object with a \code{\link{coef}} method.  See Details.}
+  \item{\dots}{graphical parameters such as
+    \code{col}, \code{lty} and \code{lwd} (possibly as vectors: see
+    Details) and the line characteristics \code{lend}, \code{ljoin} and
+    \code{lmitre}.}
 }
 \details{
   Typical usages are
@@ -39,10 +39,10 @@ abline(reg=, untf = FALSE, \dots)
   The \code{coef} form specifies the line by a vector containing the
   slope and intercept.
 
-  \code{reg} is a regression object which contains \code{reg$coef}.  If
-  it is of length 1 then the value is taken to be the slope of a line
-  through the origin, otherwise, the first 2 values are taken to be the
-  intercept and slope.
+  \code{reg} is a regression object with a \code{\link{coef}} method.
+  If this returns a vector of length 1 then the value is taken to be the
+  slope of a line through the origin, otherwise, the first 2 values are
+  taken to be the intercept and slope.
 
   If \code{untf} is true, and one or both axes are log-transformed, then
   a curve is drawn corresponding to a line in original coordinates,
