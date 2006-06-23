@@ -37,15 +37,14 @@ Ops.factor(e1, e2)
 Ops.ordered(e1, e2)
 
 Summary.data.frame(\dots, na.rm)
-Summary.factor(x, \dots)
+Summary.factor(\dots, na.rm)
 }
 \usage{
 ## S3 methods have prototypes:
 Math(x, \dots)
 Ops(e1, e2)
 Complex(z)
-Summary(x, \dots)
-\method{Summary}{data.frame}(\dots, na.rm)
+Summary(\dots, na.rm = FALSE)
 
 ## S4 methods have prototypes:
 Arith(e1, e2)
@@ -71,17 +70,11 @@ Complex(z)
   \code{"Complex"} groups.  These are not \R objects, but methods can be
   supplied for them and base \R contains \code{\link{factor}},
   \code{\link{data.frame}} and \code{\link{difftime}} methods for
-  the first three groups.
-  (There are also a \code{\link{ordered}} method for \code{Ops},
-  \code{\link{POSIXt}} methods for \code{Math} and \code{Ops}, as well as a
+  the first three groups.  (There are also a \code{\link{ordered}}
+  method for \code{Ops}, \code{\link{POSIXt}} and \code{\link{Date}}
+  methods for \code{Math} and \code{Ops}, \code{\link{package_version}}
+  methods for \code{Ops} and \code{Summary}, as well as a
   \code{\link{ts}} method for \code{Ops} in package \pkg{stats}.)
-
-%   A function \emph{\code{f}} belonging to one of these groups must be
-%   \code{\link{.Internal}} or \code{\link{.Primitive}} and will
-%   automatically be using \emph{\code{<grp>.<class> (ob)}} when
-%   \emph{\code{f(<ob>)}} is called, \emph{\code{f}} belongs to group
-%   \emph{\code{<grp>}} and \emph{\code{<ob>}} is of
-%   \code{\link[base]{class}} \emph{\code{<class>}}.
 
   \enumerate{
     \item Group \code{"Math"}:
@@ -156,11 +149,6 @@ Complex(z)
   The number of arguments supplied for \code{"Math"} group generic
   methods is not checked prior to dispatch. (Most have default methods
   expecting one argument, but three expect two.)
-
-  All of the members of the \code{Summary} group have a last argument
-  \code{na.rm}, so a \code{Summary} group method can be written with
-  argument list \code{function(..., na.rm)}, and methods should be
-  prepared to handle a \code{na.rm} argument.
 }
 \section{S4 Group Dispatching}{
   When package \pkg{methods} is attached (which it is by default),

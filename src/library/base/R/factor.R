@@ -1,5 +1,5 @@
-factor <- function (x=character(), levels = sort(unique.default(x), 
-                    na.last = TRUE), labels=levels, exclude = NA, 
+factor <- function (x=character(), levels = sort(unique.default(x),
+                    na.last = TRUE), labels=levels, exclude = NA,
                     ordered = is.ordered(x))
 {
     exclude <- as.vector(exclude, typeof(x))
@@ -109,7 +109,7 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
 Math.factor <- function(x, ...) {
     stop(.Generic, " not meaningful for factors")
 }
-Summary.factor <- function(x, ...) {
+Summary.factor <- function(..., na.rm) {
     stop(.Generic, " not meaningful for factors")
 }
 Ops.factor <- function(e1, e2)

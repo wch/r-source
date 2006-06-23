@@ -107,12 +107,12 @@ function(e1, e2)
 }
 
 Summary.package_version <-
-function(x, ..., na.rm)
+function(..., na.rm)
 {
     ok <- switch(.Generic, max = , min = TRUE, FALSE)
     if(!ok)
         stop(.Generic, " not defined for package_version objects")
-    x <- list(x, ...)
+    x <- list(...)
     x <- do.call("c", lapply(x, as.package_version))
     ## <FIXME> which.max/min automatically remove NAs
     switch(.Generic,

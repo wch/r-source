@@ -139,12 +139,12 @@ Ops.Date <- function(e1, e2)
 Math.Date <- function (x, ...)
     stop(.Generic, " not defined for Date objects")
 
-Summary.Date <- function (x, ...)
+Summary.Date <- function (..., na.rm)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok) stop(.Generic, " not defined for Date objects")
     val <- NextMethod(.Generic)
-    class(val) <- oldClass(x)
+    class(val) <- oldClass(list(...)[[1]])
     val
 }
 
