@@ -47,8 +47,8 @@
   not known and there are no residual degrees of freedom from which to
   estimate it.  In that case the estimate is \code{NaN}.)
 
-  Aliased coefficients are omitted in the returned object but (as from \R
-  1.8.0) restored by the \code{print} method.
+  Aliased coefficients are omitted in the returned object but restored
+  by the \code{print} method.
 
   Correlations are printed to two decimal places (or symbolically): to
   see the actual correlations print \code{summary(object)$correlation}

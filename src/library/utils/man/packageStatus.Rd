@@ -40,8 +40,7 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
 \details{
   The URLs in \code{repositories} should be full paths to the
   appropriate contrib sections of the repositories.  The default is
-  \code{contrib.url(getOption("repos"))}.  (Prior to \R 2.1.0 this was
-  hardcoded as the CRAN and Bioconductor repositories.)
+  \code{contrib.url(getOption("repos"))}.
   
   There are \code{print} and \code{summary} methods for the
   \code{"packageStatus"} objects: the \code{print} method gives a brief

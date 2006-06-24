@@ -62,7 +62,7 @@
 \note{
   Variables are first looked for in \code{newdata} and then searched for
   in the usual way (which will include the environment of the formula
-  used in the fit).  As from \R 2.0.0 a warning will be given if the
+  used in the fit).  A warning will be given if the
   variables found are not of the same length as those in \code{newdata}
   if it was supplied.
 }

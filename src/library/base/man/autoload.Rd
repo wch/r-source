@@ -30,8 +30,7 @@ autoloader(name, package, \dots)
   which autoloading has been promised.
 }
 \value{
-  This function is invoked for its side-effect.  It has no return value as
-  of \R 1.7.0.
+  This function is invoked for its side-effect.  It has no return value.
 }
 \seealso{
   \code{\link{delayedAssign}}, \code{\link{library}}

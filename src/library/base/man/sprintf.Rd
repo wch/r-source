@@ -76,19 +76,19 @@ gettextf(fmt, \dots, domain = NULL)
     \item{a space}{Prefix a space if the first number is not a sign}
     \item{\code{0}}{For numbers, pad to the field width with leading zeros}
   }
-  Further, as from \R 2.1.0, immediately after \code{\%} may come
-  \code{1$} to \code{99$} to refer to the numbered argument: this allows
-  arguments to be referenced out of order and is mainly intended for
-  translators of error messages.  If this is done it is best if all
-  formats are numbered: if not the unnumbered ones process the arguments
-  in order.  See the examples.
+  Further, immediately after \code{\%} may come \code{1$} to \code{99$}
+  to refer to the numbered argument: this allows arguments to be
+  referenced out of order and is mainly intended for translators of
+  error messages.  If this is done it is best if all formats are
+  numbered: if not the unnumbered ones process the arguments in order.
+  See the examples.
 
-  As from \R 2.2.0, a field width or precision (but not both) may be
-  indicated by an asterisk \code{*}. In this case an argument specifies
-  the desired number. A negative field width is taken as a '-' flag
-  followed by a positive field width. A negative precision is taken as
-  if the precision were omitted. The \code{*1$} to \code{*99$} notation
-  for arguments referenced out of order is also supported.
+  A field width or precision (but not both) may be indicated by an
+  asterisk \code{*}. In this case an argument specifies the desired
+  number. A negative field width is taken as a '-' flag followed by a
+  positive field width. A negative precision is taken as if the
+  precision were omitted. The \code{*1$} to \code{*99$} notation for
+  arguments referenced out of order is also supported.
 
   The result has a length limit, probably 8192 bytes, and attempts
   to exceed this may result in an error, or truncation with a warning.

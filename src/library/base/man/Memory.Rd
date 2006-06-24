@@ -22,8 +22,8 @@ mem.limits(nsize = NA, vsize = NA)
   \item{N}{Number of nested \code{PROTECT} calls.}.
 }
 \details{
-  \R has a variable-sized workspace (from version 1.2.0). There is now
-  much less need to set memory options than previously, and most
+  \R has a variable-sized workspace. There is
+  much less need to set memory options than prior to \R 1.2.0, and most
   users will never need to set these.  They are provided both as a way
   to control the overall memory usage (which can also be done
 #ifdef unix

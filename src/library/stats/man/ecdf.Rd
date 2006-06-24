@@ -48,12 +48,6 @@ ecdf(x)
   For \code{ecdf}, a function of class \code{"ecdf"}, inheriting from the
   \code{"\link{stepfun}"} class.
 }
-\section{Warning}{
-  Prior to \R 2.1.0, \code{ecdf} treated ties differently, so had
-  multiple jumps of size \eqn{1/n} at tied observations.  This was not
-  the most common definition, and could be very slow for large datasets
-  with many ties.
-}
 \author{
   Martin Maechler, \email{maechler@stat.math.ethz.ch}.\cr
   Corrections by R-core.

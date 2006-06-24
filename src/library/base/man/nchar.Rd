@@ -52,13 +52,12 @@ nchar(x, type = "bytes")
 }
 \note{
   This does \strong{not} by default give the number of characters that
-  will be used to \code{print()} the string, although it was documented
-  to do so up to \R 2.0.1.  Use \code{\link{encodeString}} to find the
-  characters used to print the string.
+  will be used to \code{print()} the string.  Use
+  \code{\link{encodeString}} to find the characters used to print the
+  string.
 
-  As from \R 2.1.0 embedded \code{nul} bytes are included in the byte
-  count (but not the final \code{nul}): previously the count stopped
-  immediately before the first \code{nul}.
+  Embedded \code{nul} bytes are included in the byte count (but not the
+  final \code{nul}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -180,10 +180,6 @@ isIncomplete(con)
   unflushed output.
 }
 \section{Encoding}{
-  \strong{Note:} prior to \R 2.1.0 there was a byte-by-byte encoding
-  option applied to input only.  This has been replaced by a more
-  comprehensive scheme.
-
   The encoding of the input/output stream of a connection in \emph{text}
   mode can be specified by name, in the same way as it would be given to
   \code{\link{iconv}}: see that help page for how to find out what names are

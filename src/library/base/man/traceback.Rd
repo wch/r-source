@@ -20,7 +20,7 @@ traceback(x = NULL)
   The stack of the last uncaught error is stored as a list of deparsed
   calls in \code{.Traceback}, which \code{traceback} prints in a
   user-friendly format.  The stack of deparsed calls always contains all
-  function calls and (as from \R 2.3.0) all foreign function calls (such
+  function calls and all foreign function calls (such
   as \code{\link{.Call}}): if profiling is in progress it will include
   all other calls to primitive functions.
 

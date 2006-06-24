@@ -44,9 +44,8 @@ image(x, \dots)
     breakpoint than colour.}
   \item{oldstyle}{logical. If true the midpoints of the colour intervals
     are equally spaced, and \code{zlim[1]} and \code{zlim[2]} were taken
-    to be midpoints. (This was the default prior to \R 1.1.0.)
-    The current default is to have colour intervals of equal lengths
-    between the limits.}
+    to be midpoints.  The default is to have colour intervals of equal
+    lengths between the limits.}
   \item{\dots}{graphical parameters for \code{\link{plot}} may also be
     passed as arguments to this function, as can the plot aspect ratio
     \code{asp} and \code{axes} (see \code{\link{plot.window}}).}

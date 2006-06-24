@@ -37,7 +37,7 @@ is.unsorted(x, na.rm = FALSE)
   guaranteed to have a bigger index in the sorted array.  (This is included
   for efficiency, and many of the options are not available for partial
   sorting.  It is only substantially more efficient if \code{partial} has a
-  handful of elements, and as from \R 2.3.0 a full sort is done if there
+  handful of elements, and a full sort is done if there
   are more than 10.)  Names are discarded for partial sorting.
 
   The sort order for character vectors will depend on the collating
@@ -68,7 +68,7 @@ is.unsorted(x, na.rm = FALSE)
   if \code{method == "quick"} ties may be reversed in the ordering,
   unlike \code{sort.list}, as quicksort is not stable.
 
-  As from \R 2.3.0, all attributes are removed from the return value
+  All attributes are removed from the return value
   except names, which are sorted.  (If \code{partial} is specified even
   the names are removed.)  Note that this means that the returned value
   has no class, except for factors and ordered factors (which are

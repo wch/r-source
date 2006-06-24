@@ -99,7 +99,7 @@ co.intervals(x, number = 6, overlap = 0.5)
   within a given coordinate system: thus \code{plot} and \code{boxplot}
   are not panel functions.
 
-  As from \R 2.0.0 the rendering of arguments \code{xlab} and
+  The rendering of arguments \code{xlab} and
   \code{ylab} is not controlled by \code{\link{par}} arguments
   \code{cex.lab} and \code{font.lab} even though they are plotted by
   \code{\link{mtext}} rather than \code{\link{title}}.

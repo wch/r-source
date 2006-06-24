@@ -55,9 +55,6 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
     accurate angle judgements.}
   This statement is based on the empirical investigations of Cleveland
   and McGill as well as investigations by perceptual psychologists.
-
-  Prior to \R 1.5.0 this was known as \code{piechart}, which is the name
-  of a Trellis function, so the name was changed to be compatible with S.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

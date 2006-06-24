@@ -28,7 +28,8 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
   \item{bg}{default background colour.}
  \item{res}{The nominal resolution in dpi which will be recorded in the
    bitmap file, if a positive integer.}
-  \item{\dots}{additional arguments to the \code{\link{X11}} device.}
+ \item{\dots}{additional arguments to the underlying
+   \code{\link{X11}} device.}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other

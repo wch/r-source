@@ -58,7 +58,7 @@ points(x, \dots)
       side 0.01 inch (scaled by \code{cex}).  In addition, if \code{cex =
 	1} (the default), each side is at least one pixel (1/72 inch on
       the \code{\link{pdf}}, \code{\link{postscript}} and
-      \code{\link{xfig}} devices).  (The details were changed for \R 2.1.0.)
+      \code{\link{xfig}} devices).
     }
     \item{\code{col}}{color code or name, see \code{\link{par}}.}
     \item{\code{bg}}{background (\dQuote{fill}) color for the open plot

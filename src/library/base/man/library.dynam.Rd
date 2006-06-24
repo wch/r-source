@@ -62,10 +62,7 @@ library.dynam.unload(chname, libpath,
 
   \code{.dynLibs} is used for getting (with no argument) or setting the
   shared libraries which are currently loaded by packages (using
-  \code{library.dynam}).  Versions of \R prior to 2.1.0 simply recorded
-  the (names of) packages which had loaded shared libraries.  Versions
-  of \R prior to 1.6.0 used an internal global variable \code{.Dyn.libs}
-  for storing this information: this variable is now defunct.
+  \code{library.dynam}).
 }
 \value{
   If \code{chname} is not specified, \code{library.dynam} returns an

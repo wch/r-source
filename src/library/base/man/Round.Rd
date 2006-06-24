@@ -58,7 +58,7 @@ zapsmall(x, digits = getOption("digits"))
   \code{0.1} or \code{0.2}).
 
   For \code{signif} the recognized values of \code{digits} are
-  \code{1...22}.  As from \R 2.2.0 complex numbers are rounded to retain
+  \code{1...22}.  Complex numbers are rounded to retain
   the specified number of digits in the larger of the components.  Each
   element of the vector is rounded individually, unlike printing.
 }

@@ -79,8 +79,8 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
 	line width, point character, point size expansion, color, and
 	background color.  The default \code{medpch= NA} suppresses the
 	point, and \code{medlty="blank"} does so for the line.
-	Note that (since R 2.1.0) \code{medlwd} defaults to
-      \eqn{3\times}{3 *} the \dQuote{default} \code{lwd}.}
+	Note that\code{medlwd} defaults to
+	\eqn{3\times}{3 *} the \dQuote{default} \code{lwd}.}
       \item{whisklty, whisklwd, whiskcol:}{whisker line type, width, and
 	color.}
       \item{staplelty, staplelwd, staplecol:}{staple (= end of whisker) line

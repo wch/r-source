@@ -160,10 +160,6 @@
   written using \code{.Call} or \code{.External}, so this is now only a
   minor issue.
 
-  (Prior to \R version 1.2.0 there has a third danger, that objects
-  could be moved in memory by the garbage collector. The current garbage
-  collector never moves objects.)
-
   It is safe and useful to set \code{DUP=FALSE} if you do not change any
   of the variables that might be affected, e.g.,
 

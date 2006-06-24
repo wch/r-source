@@ -174,11 +174,6 @@
   The backreference \code{\\N}, where N is a single digit, matches the
   substring previously matched by the Nth parenthesized subexpression of
   the regular expression.
-
-  Before \R 2.1.0 \R attempted to support traditional usage by assuming
-  that \code{\{} is not special if it would be the start of an invalid
-  interval specification.  (POSIX allows this behaviour as an extension but
-  we no longer support it.)
 }
 \section{Basic Regular Expressions}{
   This section covers the regular expressions allowed if \code{extended
@@ -287,18 +282,9 @@
   and recursive patterns are not covered here.
 }
 \author{
-  This help page is based on the documentation of GNU grep 2.4.2 (from
-  which the C code used by \R used to be taken) the \code{pcre} man
-  page from PCRE 3.9 and the \code{pcrepattern} man page from PCRE 4.4.
-}
-\note{
-  Prior to \R 2.1.0 the implementation used was that of GNU \code{grep 2.4.2}:
-  as from \R 2.1.0 it is that of \code{glibc 2.3.3}.  The latter is more
-  strictly compliant and rejects some extensions that used to be
-  allowed.
-
-  The change was made both because bugs were becoming apparent in the
-  previous code and to allow support of multibyte character sets.
+  This help page is based on the documentation of GNU grep 2.4.2, the
+  \code{pcre} man page from PCRE 3.9 and the \code{pcrepattern} man page
+  from PCRE 4.4.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},

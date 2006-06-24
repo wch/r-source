@@ -55,7 +55,7 @@ write.dcf(x, file = "", append = FALSE,
   tag name of a fields is never used in a record, then \code{NA} is
   returned.  If there are multiple records with the same tag name, the
   last one encountered is returned.  Malformed lines are ignored
-  (with a warning as from \R 2.3.0).
+  (with a warning).
 }    
 \seealso{
   \code{\link{write.table}}.

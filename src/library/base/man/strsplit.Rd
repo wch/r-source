@@ -45,8 +45,7 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
   \code{split = character(0)}, including in the examples below.
 
   Note that spltting into single characters can be done via
-  \code{split=character(0)} or \code{split=""}; the two are equivalent
-  as from \R 1.9.0.
+  \code{split=character(0)} or \code{split=""}; the two are equivalent.
 
   A missing value of \code{split} does not split the the corresponding
   element(s) of \code{x} at all.

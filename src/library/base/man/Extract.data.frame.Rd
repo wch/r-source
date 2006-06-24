@@ -153,7 +153,7 @@ sw
 
 ## matrices in a data frame
 A <- data.frame(x=1:3, y=I(matrix(4:6)), z=I(matrix(letters[1:9],3,3)))
-A[1:3, "y"] # a matrix, was a vector prior to 1.8.0
+A[1:3, "y"] # a matrix
 A[1:3, "z"] # a matrix
 A[, "y"]    # a matrix
 }

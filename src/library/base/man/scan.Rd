@@ -161,8 +161,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   doubling them.  However, if \code{sep = "\\n"} it is assumed
   by default that one wants to read entire lines verbatim.
 
-  Quoting is only interpreted in character fields, and as from \R 1.8.0
-  in \code{NULL} fields (which might be skipping character fields).
+  Quoting is only interpreted in character fields and in \code{NULL}
+  fields (which might be skipping character fields).
 
   Note that since \code{sep} is a separator and not a terminator,
   reading a file by \code{scan("foo", sep="\\n", blank.lines.skip=FALSE)}
@@ -176,11 +176,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   with a comment character (possibly after white space with the default
   separator) are treated as blank lines.
 
-  As from \R 2.1.0, \code{scan} attempts to share storage with
-  character strings that have already been read in the call.
-  If an upper bound on the number of character strings cannot be deduced
-  from \code{nmax} or \code{n}, sharing is used for the first 10000
-  unique strings which are read in.
+  \code{scan} attempts to share storage with character strings that have
+  already been read in the call. If an upper bound on the number of
+  character strings cannot be deduced from \code{nmax} or \code{n},
+  sharing is used for the first 10000 unique strings which are read in.
 
   There is a check for a user interrupt every 1000 lines if \code{what}
   is a list, otherwise every 10000 items.

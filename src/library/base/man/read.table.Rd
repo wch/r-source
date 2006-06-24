@@ -205,8 +205,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   to the header must have the comment character in the first non-blank
   column.
 
-  As from \R 1.9.0 quoted fields with embedded newlines are supported
-  except after a comment character.
+  Quoted fields with embedded newlines are supported except after a
+  comment character.
 }
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include

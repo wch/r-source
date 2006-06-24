@@ -18,7 +18,7 @@ capabilities(what = NULL)
     \item{png}{Is the \code{\link{png}} function operational?}
     \item{tcltk}{Is the \pkg{tcltk} package operational?}
     \item{X11}{(Unix)  Are the \code{X11} graphics device and the
-      X11-based data editor available?  As from \R 2.1.0 this loads the
+      X11-based data editor available?  This loads the
       X11 module if not already loaded, and checks that the default
       display can be contacted unless a \code{X11} device has already
       been used.}

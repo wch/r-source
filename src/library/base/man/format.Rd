@@ -105,8 +105,7 @@ format(x, \dots)
   in a common format.
 
   For numeric or complex \code{x}, dims and dimnames are preserved on
-  matrices/arrays and names on vectors: as from \R 2.2.0 no other
-  attributes are copied.
+  matrices/arrays and names on vectors: no other attributes are copied.
 
   If \code{x} is a list, the result is a character vector obtained by
   applying \code{format.default(x, \dots)} to each element of the list

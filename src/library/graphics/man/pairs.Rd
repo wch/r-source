@@ -84,7 +84,7 @@ pairs(x, \dots)
   often be ignored within a panel.  However, for the formula method and
   \code{na.action = na.omit}, all cases which contain a missing values for
   any of the variables are omitted completely (including when the scales
-  are selected).  (The latter was the default behaviour prior to \R 2.0.0.)
+  are selected).
 }
 \author{
   Enhancements for \R 1.0.0 contributed by Dr. Jens

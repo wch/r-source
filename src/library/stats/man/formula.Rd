@@ -70,9 +70,9 @@ as.formula(object, env = parent.frame())
   \code{y ~ a + I(b+c)}, the term \code{b+c} is to be
   interpreted as the sum of \code{b} and \code{c}.
 
-  As from \R 1.8.0 variable names can be quoted by backticks \code{`like
-    this`} in formulae, although there is no guarantee that all code
-  using formulae will accept such non-syntactic names.
+  Variable names can be quoted by backticks \code{`like this`} in
+  formulae, although there is no guarantee that all code using formulae
+  will accept such non-syntactic names.
 
   When \code{formula} is called on a fitted model object, either a
   specific method is used (such as that for class \code{"nls"}) of the

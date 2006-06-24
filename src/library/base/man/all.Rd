@@ -29,10 +29,6 @@ all(\dots, na.rm = FALSE)
   If \code{na.rm = FALSE} and \code{x} consists of a mix of \code{TRUE}
   and \code{NA} values, the value is \code{NA}.
 }
-\note{
-  Prior to \R 2.1.0, only \code{NULL} and logical, integer, numeric
-  and complex vectors were accepted.
-}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

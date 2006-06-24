@@ -49,8 +49,6 @@ is.integer(x)
   \code{is.integer} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
   There is a method for factors which returns \code{FALSE}.
-  (Prior to \R 2.0.0, there was no such method and for most (but not
-  all) factors \code{is.integer} returned \code{TRUE}.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

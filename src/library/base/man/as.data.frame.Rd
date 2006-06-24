@@ -65,7 +65,7 @@ is.data.frame(x)
   \code{"\link{POSIXlt}"} which are coerced to class
   \code{"\link{POSIXct}"}.
 
-  As from \R 1.9.0 arrays can be converted.  One-dimensional arrays are
+  Arrays can be converted to data frames.  One-dimensional arrays are
   treated like vectors and two-dimensional arrays like matrices.  Arrays
   with more than two dimensions are converted to matrices by
   \sQuote{flattening} all dimensions after the first and creating
@@ -81,10 +81,6 @@ is.data.frame(x)
   or dimnames of \code{x}, otherwise are the integer sequence
   starting at one.  Few of the methods check for duplicated row names.
   Names are removed from vector columns unless \code{\link{I}}.
-}
-\note{
-  In versions of \R prior to 1.4.0 logical columns were converted to
-  factors (as in S3 but not S4).
 }
 \references{
   Chambers, J. M. (1992)

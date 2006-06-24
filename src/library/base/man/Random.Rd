@@ -136,7 +136,7 @@ set.seed(seed, kind = NULL)
   to reproduce work later, call \code{set.seed} rather than set
   \code{.Random.seed}.
 
-  As from \R 1.8.0, \code{.Random.seed} is only looked for in the user's
+  The object \code{.Random.seed} is only looked for in the user's
   workspace.
 
   All the supplied uniform generators return 32-bit integer values that

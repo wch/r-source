@@ -33,7 +33,7 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
     The values are chosen so that they are 1, 2 or 5 times a power of 10.
 }
 \details{
-  As from \R 2.0.0 \code{pretty} ignores non-finite values in \code{x}.
+  \code{pretty} ignores non-finite values in \code{x}.
   
   Let \code{d <- max(x) - min(x)} \eqn{\ge 0}{>= 0}.
   If \code{d} is not (very close) to 0, we let \code{c <- d/n},

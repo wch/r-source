@@ -45,9 +45,8 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   support message translation, and is not supported on Windows.  Trying
   to use an unsupported category is an error for \code{Sys.setlocale}.
 
-  Note that setting \code{"LC_ALL"} as from \R 2.1.0 sets only
-  \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and
-  \code{"LC_TIME"}.
+  Note that setting \code{"LC_ALL"} sets only \code{"LC_COLLATE"},
+  \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and \code{"LC_TIME"}.
 }
 \value{
   A character string of length one describing the locale in use (after

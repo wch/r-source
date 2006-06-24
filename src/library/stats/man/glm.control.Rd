@@ -47,7 +47,6 @@ glm.D93X <- glm(counts ~ outcome + treatment, family=poisson(),
                 trace = TRUE, epsilon = 1e-14)
 options(oo)
 coef(glm.D93X) # the last two are closer to 0 than in ?glm's  glm.D93
-# put less so than in R < 1.8.0 when the default was 1e-4
 }
 \keyword{optimize}
 \keyword{models}

@@ -245,9 +245,9 @@ par(\dots, no.readonly = FALSE)
       default device fonts will be used.
       Standard values are \code{"serif"}, \code{"sans"},
       \code{"mono"}, and \code{"symbol"} and the \link{Hershey}
-      font families are also available.  Different devices
-      may define others.  Some devices will ignore this setting
-      completely.  As from \R 2.3.0 this can be specified inline for
+      font families are also available.  (Different devices
+      may define others, and some devices will ignore this setting
+      completely.)  This can be specified inline for
       \code{\link{text}}.}
     \item{\code{fg}}{The color to be used for the foreground of plots.
       This is the default color used for things like axes and boxes
@@ -305,7 +305,6 @@ par(\dots, no.readonly = FALSE)
 	\item{\code{1}}{and \code{"butt"} mean butt line caps;}
 	\item{\code{2}}{and \code{"square"} mean square line caps.}
       }
-      As from \R 2.3.0 this can be specified inline.
     }
     \item{\code{lheight}}{The line height multiplier.
       The height of a line of text (used to vertically space
@@ -320,16 +319,12 @@ par(\dots, no.readonly = FALSE)
 	\item{\code{1}}{and \code{"mitre"} mean mitred line joins;}
 	\item{\code{2}}{and \code{"bevel"} mean bevelled line joins.}
       }
-
-      As from \R 2.3.0 this can be specified inline.
     }
     \item{\code{lmitre}}{The line mitre limit.
       This controls when mitred line joins are automatically
       converted into bevelled line joins.  The
       value must be larger than 1 and the default is 10.  Not all
       devices will honour this setting.
-
-      As from \R 2.3.0 this can be specified inline.
     }
     \item{\code{lty}}{The line type.
       Line types can either be specified as an integer (0=blank,

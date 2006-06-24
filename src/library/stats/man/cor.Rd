@@ -71,7 +71,7 @@ cov2cor(V)
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
   of the (co)variance for i.i.d. observations.
   These functions return \code{\link{NA}} when there is only one
-  observation (whereas S-PLUS has been returning \code{NaN}), and %from \R 1.2.3
+  observation (whereas S-PLUS has been returning \code{NaN}), and 
   fail if \code{x} has length zero.
 
   For \code{cor()}, if \code{method} is \code{"kendall"} or
@@ -86,9 +86,6 @@ cov2cor(V)
   ranks are calculated depending on the value of \code{use}, either
   based on complete observations, or based on pairwise completeness with
   reranking for each pair.
-
-  Prior to R 2.1.0, the ranking was done removing only cases that are missing
-  on the variable itself.
 
   Scaling a covariance matrix into a correlation one can be achieved in
   many ways, mathematically most appealing by multiplication with a

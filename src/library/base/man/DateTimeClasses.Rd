@@ -132,8 +132,8 @@
   current time zone.
 }
 \section{Sub-section Accuracy}{
-  Class \code{"POSIXct"} has always been able to express fractions of a
-  second, and as from \R 2.3.0, class \code{"POSIXlt"} can also.
+  Classes \code{"POSIXct"} and  \code{"POSIXlt"} are able to express
+  fractions of a second.
   (Conversion of fractions between the two forms may not be exact, but
   will have better than microsecond accuracy.)
 

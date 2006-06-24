@@ -206,10 +206,9 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   because of potential problems with line endings and OS-specific help
   files.
 
-  As of version 2.0.0, the package name given to \code{library} and
-  \code{require} must match the name given in the package's
-  \code{DESCRIPTION} file exactly, even on case-insensitive file systems
-  such as MS Windows.
+  The package name given to \code{library} and \code{require} must match
+  the name given in the package's \code{DESCRIPTION} file exactly, even
+  on case-insensitive file systems such as MS Windows.
 }
 \seealso{
   \code{\link{.libPaths}}, \code{\link{.packages}}.

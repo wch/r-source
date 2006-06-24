@@ -116,10 +116,6 @@ barplot(height, \dots)
   If \code{beside} is true, use \code{colMeans(mp)} for the
   midpoints of each \emph{group} of bars, see example.
 }
-\note{
-  Prior to \R 1.6.0, \code{barplot} behaved as if \code{axis.lty = 1},
-  unintentionally.
-}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

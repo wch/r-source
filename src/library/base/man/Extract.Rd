@@ -159,9 +159,8 @@ x$name
   When replacing (that is using indexing on the lhs of an
   assignment) \code{NA} does not select any element to be replaced.  As
   there is ambiguity as to whether an element of the rhs should
-  be used or not (and \R handled this inconsistently prior to \R 2.0.0),
-  this is only allowed if the rhs value is of length one (so the two
-  interpretations would have the same outcome).
+  be used or not, this is only allowed if the rhs value is of length one
+  (so the two interpretations would have the same outcome).
 }
 \section{Argument matching}{
   Note that these operations do not match their index arguments in the

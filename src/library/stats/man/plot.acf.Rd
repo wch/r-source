@@ -38,8 +38,6 @@
   \item{mar, oma, mgp, xpd, cex.main}{graphics parameters as in
     \code{\link{par}(*)}, by default adjusted to use smaller than
     default margins for multivariate \code{x} only.
-    % drop the following line after year 2002
-    \code{xpd = NA} used to be the default for R version <= 1.4.0.
   }
   \item{verbose}{logical.  Should \R report extra information on
     progress?}

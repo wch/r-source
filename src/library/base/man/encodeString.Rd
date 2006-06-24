@@ -49,8 +49,8 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
 }
 \note{
   The default for \code{width} is different from \code{format.default},
-  which as of \R 2.2.0 does similar things for character vectors (but
-  without encoding using escapes).
+  which does similar things for character vectors but without encoding
+  using escapes.
 }
 \value{
   A character vector of the same length as \code{x}, with the same
