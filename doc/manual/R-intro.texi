@@ -795,7 +795,7 @@ of numbers.  For example @code{1:30} is the vector @code{c(1, 2,
 The colon operator has high priority within an expression, so, for
 example @code{2*1:15} is the vector @code{c(2, 4, @dots{}, 28, 30)}.
 Put @code{n <- 10} and compare the sequences @code{1:n-1} and
-@code{1:(n-1)}.  
+@code{1:(n-1)}.
 
 The construction @code{30:1} may be used to generate a sequence
 backwards.
@@ -4559,7 +4559,7 @@ Short form: @code{resid(@var{object})}.
 @findex step
 @item step(@var{object})
 Select a suitable model by adding or dropping terms and preserving
-hierarchies.  The model with the largest value of AIC (Akaike's An
+hierarchies.  The model with the smallest value of AIC (Akaike's An
 Information Criterion) discovered in the stepwise search is returned.
 
 @findex summary
