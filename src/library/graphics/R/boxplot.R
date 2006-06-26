@@ -2,10 +2,10 @@ boxplot <- function(x, ...) UseMethod("boxplot")
 
 boxplot.default <-
 function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
-         notch = FALSE, outline = TRUE, names, plot = TRUE,
-         border = par("fg"), col = NULL, log = "",
-         pars = list(boxwex = 0.8, staplewex = 0.5, outwex = 0.5),
-         horizontal = FALSE, add = FALSE, at = NULL)
+	 notch = FALSE, outline = TRUE, names, plot = TRUE,
+	 border = par("fg"), col = NULL, log = "",
+	 pars = list(boxwex = 0.8, staplewex = 0.5, outwex = 0.5),
+	 horizontal = FALSE, add = FALSE, at = NULL)
 {
     args <- list(x, ...)
     namedargs <-
@@ -24,33 +24,33 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     else {
 	if(is.null(attr(groups, "names")))
 	    attr(groups, "names") <- 1:n
-        names <- attr(groups, "names")
+	names <- attr(groups, "names")
     }
     cls <- sapply(groups, function(x) class(x)[1])
     cl <- if(all(cls == cls[1])) cls[1] else NULL
     for(i in 1:n)
 	groups[i] <- list(boxplot.stats(unclass(groups[[i]]), range)) # do.conf=notch)
-    stats <- matrix(0,nr=5,nc=n)
-    conf  <- matrix(0,nr=2,nc=n)
+    stats <- matrix(0, nr=5, nc=n)
+    conf  <- matrix(0, nr=2, nc=n)
     ng <- out <- group <- numeric(0)
     ct <- 1
     for(i in groups) {
 	stats[,ct] <- i$stats
-        conf [,ct] <- i$conf
-        ng <- c(ng, i$n)
-        if((lo <- length(i$out))) {
-            out   <- c(out,i$out)
-            group <- c(group, rep.int(ct, lo))
-        }
-        ct <- ct+1
+	conf [,ct] <- i$conf
+	ng <- c(ng, i$n)
+	if((lo <- length(i$out))) {
+	    out	  <- c(out,i$out)
+	    group <- c(group, rep.int(ct, lo))
+	}
+	ct <- ct+1
     }
     if(length(cl) && cl != "numeric") oldClass(stats) <- cl
     z <- list(stats = stats, n = ng, conf = conf, out = out, group = group,
-              names = names)
+	      names = names)
     if(plot) {
 	bxp(z, width, varwidth = varwidth, notch = notch, log = log,
-            border = border, boxfill = col, pars = pars,
-            outline = outline, horizontal = horizontal, add = add, at = at)
+	    border = border, boxfill = col, pars = pars,
+	    outline = outline, horizontal = horizontal, add = add, at = at)
 	invisible(z)
     }
     else z
@@ -60,10 +60,10 @@ boxplot.formula <-
     function(formula, data = NULL, ..., subset, na.action = NULL)
 {
     if(missing(formula) || (length(formula) != 3))
-        stop("'formula' missing or incorrect")
+	stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
-        m$data <- as.data.frame(data)
+	m$data <- as.data.frame(data)
     m$... <- NULL
     m$na.action <- na.action # force use of default for this method
     m[[1]] <- as.name("model.frame")
@@ -74,8 +74,8 @@ boxplot.formula <-
 
 bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 		notch.frac = 0.5, log = "", border=par("fg"),
-                pars = NULL, frame.plot = axes, horizontal = FALSE,
-                add = FALSE, at = NULL, show.names = NULL, ...)
+		pars = NULL, frame.plot = axes, horizontal = FALSE,
+		add = FALSE, at = NULL, show.names = NULL, ...)
 {
     pars <- c(pars, list(...))
 
@@ -104,22 +104,22 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	    if(!notch) notch.frac <- 1
 	    wntch <- notch.frac*wid
 
-            ## the box filling over which to draw the rest:
-            xypolygon(xx, yy, lty = "blank", col = boxfill[i])
-            ## Median
+	    ## the box filling over which to draw the rest:
+	    xypolygon(xx, yy, lty = "blank", col = boxfill[i])
+	    ## Median
 	    xysegments(xP(x, -wntch), stats[3],
 		       xP(x, +wntch), stats[3],
 		       lty = medlty[i], lwd = medlwd[i], col = medcol[i])
 	    xypoints(x, stats[3],
 		     pch = medpch[i], cex = medcex[i], col= medcol[i], bg = medbg[i])
-            ## Whiskers
+	    ## Whiskers
 	    xysegments(rep.int(x, 2), stats[c(1,5)],
 		       rep.int(x, 2), stats[c(2,4)],
 		       lty = whisklty[i], lwd = whisklwd[i], col = whiskcol[i])
 	    xysegments(rep.int(xP(x, -wid * staplewex), 2), stats[c(1,5)],
 		       rep.int(xP(x, +wid * staplewex), 2), stats[c(1,5)],
 		       lty= staplelty[i], lwd= staplelwd[i], col= staplecol[i])
-            ## finally the box borders
+	    ## finally the box borders
 	    xypolygon(xx, yy, lty= boxlty[i], lwd= boxlwd[i], border= boxcol[i])
 
 	    if ((nout <- length(out)) > 0) { ## Outliers
@@ -132,11 +132,11 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 
 	    if(any(inf <- !is.finite(out))) {
 		## FIXME: should MARK on plot !! (S-plus doesn't either)
-                warning(sprintf(ngettext(length(unique(out[inf])),
-                                 "Outlier (%s) in boxplot %d is not drawn",
-                                 "Outliers (%s) in boxplot %d are not drawn"),
-                                paste(unique(out[inf]), collapse=", "), x),
-                        domain = NA)
+		warning(sprintf(ngettext(length(unique(out[inf])),
+				 "Outlier (%s) in boxplot %d is not drawn",
+				 "Outliers (%s) in boxplot %d are not drawn"),
+				paste(unique(out[inf]), collapse=", "), x),
+			domain = NA)
 	    }
 	}
     } ## bplt
@@ -170,23 +170,23 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	## switch(log, x="y", y="x", log) ??
 	if (horizontal)
 	    plot.window(ylim = c(0.5, n + 0.5), xlim = ylim, log = log,
-                        xaxs=pars$yaxs)
+			xaxs = pars$yaxs)
 	else
 	    plot.window(xlim = c(0.5, n + 0.5), ylim = ylim, log = log,
-                        yaxs = pars$yaxs)
+			yaxs = pars$yaxs)
     }
     xlog <- (par("ylog") && horizontal) || (par("xlog") && !horizontal)
 
     pcycle <- function(p, def1, def2=NULL)# or rather NA {to be rep()ed}?
 	rep(if(length(p)) p else if(length(def1)) def1 else def2,
-            length.out = n)
+	    length.out = n)
     boxlty    <- pcycle(pars$boxlty,	pars$lty, par("lty"))
     boxlwd    <- pcycle(pars$boxlwd,	pars$lwd, par("lwd"))
     boxcol    <- pcycle(pars$boxcol,	border)
     boxfill   <- pcycle(pars$boxfill,	par("bg"))
     boxwex    <- pcycle(pars$boxwex,	0.8 * {
-        if(n <= 1) 1 else
-        quantile(diff(sort(if(xlog) log(at) else at)), 0.10) })
+	if(n <= 1) 1 else
+	quantile(diff(sort(if(xlog) log(at) else at)), 0.10) })
     medlty    <- pcycle(pars$medlty,	pars$lty, par("lty"))
     medlwd    <- pcycle(pars$medlwd,	3*pars$lwd, 3*par("lwd"))
     medpch    <- pcycle(pars$medpch,	as.integer(NA))# NA when that works
@@ -200,12 +200,12 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     staplelwd <- pcycle(pars$staplelwd, pars$lwd, par("lwd"))
     staplecol <- pcycle(pars$staplecol, border)
     staplewex <- pcycle(pars$staplewex,	0.5)
-    outlty    <- pcycle(pars$outlty,    "blank")
-    outlwd    <- pcycle(pars$outlwd,    pars$lwd, par("lwd"))
-    outpch    <- pcycle(pars$outpch,    pars$pch, par("pch"))
-    outcex    <- pcycle(pars$outcex,    pars$cex, par("cex"))
-    outcol    <- pcycle(pars$outcol,    border)
-    outbg     <- pcycle(pars$outbg,     pars$bg,  par("bg"))
+    outlty    <- pcycle(pars$outlty,	"blank")
+    outlwd    <- pcycle(pars$outlwd,	pars$lwd, par("lwd"))
+    outpch    <- pcycle(pars$outpch,	pars$pch, par("pch"))
+    outcex    <- pcycle(pars$outcex,	pars$cex, par("cex"))
+    outcol    <- pcycle(pars$outcol,	border)
+    outbg     <- pcycle(pars$outbg,	pars$bg,  par("bg"))
     outwex    <- pcycle(pars$outwex,	0.5)
 
     width <-
@@ -219,14 +219,14 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	else rep.int(boxwex, n)
 
     if(horizontal) {
-        xypoints <- function(x, y, ...) points(y, x, ...)
-        xypolygon <- function(x, y, ...) polygon(y, x, ...)
-        xysegments <- function(x0, y0, x1, y1, ...) segments(y0, x0, y1, x1, ...)
+	xypoints <- function(x, y, ...) points(y, x, ...)
+	xypolygon <- function(x, y, ...) polygon(y, x, ...)
+	xysegments <- function(x0, y0, x1, y1, ...) segments(y0, x0, y1, x1, ...)
     }
     else {
-        xypoints <- points
-        xypolygon <- polygon
-        xysegments <- segments
+	xypoints <- points
+	xypolygon <- polygon
+	xysegments <- segments
     }
 
     for(i in 1:n)
@@ -248,9 +248,9 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	do.call("Axis", c(list(x = z$stats, side = 2 - horizontal), ax.pars))
     }
     do.call("title",
-            pars[names(pars) %in% c("main", "cex.main", "col.main",
-                                    "sub", "cex.sub", "col.sub",
-                                    "xlab", "ylab", "cex.lab", "col.lab")])
+	    pars[names(pars) %in% c("main", "cex.main", "col.main",
+				    "sub", "cex.sub", "col.sub",
+				    "xlab", "ylab", "cex.lab", "col.lab")])
     if(frame.plot)
 	box()
     invisible(at)
