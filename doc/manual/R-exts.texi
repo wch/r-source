@@ -3563,12 +3563,12 @@ collection. Memory is allocated at well-defined times in an @R{}
 program, but is freed whenever the garbage collector happens to run.
 
 @menu
-* Memory statistics from Rprof::
-* Tracking memory allocations::                     
-* Tracing copies of an object::                     
+* Memory statistics from Rprof::  
+* Tracking memory allocations::  
+* Tracing copies of an object::  
 @end menu
 
-@node Memory statistics from Rprof, Tracking memory allocations, , Profiling R code for memory use
+@node Memory statistics from Rprof, Tracking memory allocations, Profiling R code for memory use, Profiling R code for memory use
 @subsection Memory statistics from @code{Rprof}
 @findex Rprof
 @findex summaryRprof
@@ -3611,7 +3611,7 @@ Running the example from the previous section with
 shows that apart from some initial and final work in @code{boot} there
 are no vector allocations over 1000 bytes.
 
-@node  Tracing copies of an object, , Tracking memory allocations, Profiling R code for memory use
+@node  Tracing copies of an object,  , Tracking memory allocations, Profiling R code for memory use
 @subsection Tracing copies of an object
 @findex tracemem
 @findex untracemem

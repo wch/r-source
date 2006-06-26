@@ -363,6 +363,7 @@ scope of this document: see the package's Web page at
 @menu
 * Variations on read.table::    
 * Fixed-width-format files::    
+* Data Interchange Format (DIF)::  
 * Using scan directly::         
 * Re-shaping data::             
 * Flat contingency tables::     
@@ -624,7 +625,7 @@ format; @code{read.DIF("clipboard")} can read it from there directly.
 It is slightly more robust than @code{read.table("clipboard")} in
 handling spreadsheets with empty cells.
 
-@node Using scan directly, Re-shaping data, Fixed-width-format files, Spreadsheet-like data
+@node Using scan directly, Re-shaping data, Data Interchange Format (DIF), Spreadsheet-like data
 @section  Using @code{scan} directly
 @findex scan
 
