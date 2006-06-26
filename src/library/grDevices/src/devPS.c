@@ -6145,7 +6145,7 @@ static void PDF_NewPage(R_GE_gcontext *gc,
 	    snprintf(buf, 512, pd->filename, pd->fileno + 1); /* file 1 to start */
 	    pd->pdffp = R_fopen(R_ExpandFileName(buf), "wb");
 	    if (!pd->pdffp)
-		error(_("cannot open 'pdf' file argument '%s'\n  please shut down the PDFdevice"), buf);
+		error(_("cannot open 'pdf' file argument '%s'\n  please shut down the PDF device"), buf);
 	    PDF_startfile(pd);
 	}
     }
