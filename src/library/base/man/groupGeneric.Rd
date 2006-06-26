@@ -46,7 +46,7 @@ Summary(\dots, na.rm = FALSE)
   \code{"Complex"} groups.  These are not \R objects, but methods can be
   supplied for them and base \R contains \code{\link{factor}},
   \code{\link{data.frame}} and \code{\link{difftime}} methods for
-  the first three groups.  (There are also a \code{\link{ordered}}
+  the first three groups.  (There is also a \code{\link{ordered}}
   method for \code{Ops}, \code{\link{POSIXt}} and \code{\link{Date}}
   methods for \code{Math} and \code{Ops}, \code{\link{package_version}}
   methods for \code{Ops} and \code{Summary}, as well as a
@@ -98,11 +98,13 @@ Summary(\dots, na.rm = FALSE)
       \code{"<"}, \code{"<="}, \code{">="}, \code{">"}
       % do_relop() [relop.c:35]:   if (DispatchGroup("Ops", ...))
     }
-    The classes of both arguments are considered in dispatching.  If a
-    method is found for just one or the same method is found for both,
-    it is used.  If different methods are found, there is a warning
-    about \sQuote{incompatible methods}: in that case or if no method is
-    found for either argument the default method is used.
+    The classes of both arguments are considered in dispatching. For
+    each argument its vector of classes is examined to see if there is a
+    matching specific or \code{Ops} method.  If a method is found for
+    just one argument or the same method is found for both, it is used.
+    If different methods are found, there is a warning about
+    \sQuote{incompatible methods}: in that case or if no method is found
+    for either argument the internal method is used.
 
     \item Group \code{"Summary"}:
     \itemize{
@@ -132,7 +134,8 @@ Summary(\dots, na.rm = FALSE)
 
   The number of arguments supplied for \code{"Math"} group generic
   methods is not checked prior to dispatch.  (Most have default methods
-  expecting one argument, but three expect two.)
+  expecting one argument, but \code{log}, \code{round} and \code{signif}
+  expect two.)
 }
 \references{
   Appendix A, \emph{Classes and Methods} of\cr
