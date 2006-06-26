@@ -106,8 +106,8 @@ function(x, ...)
             msg <- gettextf("Help on topic '%s' was found in the following packages:",
                             topic)
             paths <- dirname(dirname(paths))
-            txt <- formatDL(c(gettext("Package"), basename(paths)),
-                            c(gettext("Library"), dirname(paths)),
+            txt <- formatDL(c("Package", basename(paths)),
+                            c("Library", dirname(paths)),
                             indent = 22)
             writeLines(c(strwrap(msg), "", paste(" ", txt), ""))
             if(interactive()) {
@@ -122,7 +122,8 @@ function(x, ...)
                 }
                 txt <- paste(titles, " {", basename(paths), "}", sep="")
                 ## FIXME: use html page for HTML help.
-                res <- menu(txt, title = "Choose one", graphics = TRUE)
+                res <- menu(txt, title = gettext("Choose one"),
+                            graphics = TRUE)
                 if(res > 0) file <- p[res]
             } else {
                 writeLines(gettext("\nUsing the first match ..."))
