@@ -140,6 +140,9 @@ NEW FEATURES
 
     o	lag.plot() produces a conventional plot (not setting mfrow) if
 	only one plot is to be produced.
+	
+    o	read.DIF() can read Data Interchange Format files, and (in
+	Windows) this format on the clipboard.
 
     o	body<-() and formals<-() default to envir = environment(fun),
 	that is they do not by default change the environment.
