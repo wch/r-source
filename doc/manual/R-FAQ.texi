@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-06-23
+@set FAQ_DATE @value{FAQ_YEAR}-06-26
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2438,6 +2438,8 @@ Augmented convex hull plots: informative and nice plots for grouped
 bivariate data.
 @item changeLOS
 Change in length of hospital stay (LOS).
+@item chemCal
+Calibration functions for analytical chemistry.
 @item chron
 A package for working with chronological objects (times and dates).
 @item circular
@@ -3551,6 +3553,8 @@ Rank regression estimator for the AFT model with right censored data.
 @c @item ratetables
 @c US national and state mortality data (requires @strong{survival4} and
 @c @strong{date}), for use with @strong{survival4}.
+@item rattle
+A graphical user interface for data mining in R using GTK.
 @item rbugs
 Functions to prepare files needed for running BUGS in batch mode, and
 running BUGS from R.  Support for Linux systems with Wine is emphasized.
