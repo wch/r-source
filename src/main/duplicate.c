@@ -2,6 +2,7 @@
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *            (C) 2004  The R Foundation
+ *  Copyright (C) 1998-2006 the R Development Core Group.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,7 +38,9 @@
 
 /* This macro pulls out the common code in copying an atomic vector.
    The special handling of the scalar case (__n__ == 1) seems to make
-   a small but measurable difference, at least for some cases. */
+   a small but measurable difference, at least for some cases.
+   <FIXME>: surely memcpy would be faster here?
+*/
 #define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from) do {\
   int __n__ = LENGTH(from);\
   PROTECT(from); \
@@ -71,9 +74,9 @@
 
 /* For memory profiling.  */
 /* We want a count of calls to duplicate from outside 
-   which requires a wrapper function 
+   which requires a wrapper function.
 
-   The original duplicate() function is now duplicate1()
+   The original duplicate() function is now duplicate1().
    
    I don't see how to make the wrapper go away when R_PROFILING
    is not defined, because we still need to be able to 
@@ -82,14 +85,17 @@
 static SEXP duplicate1(SEXP);
 
 #ifdef R_PROFILING
-static unsigned long duplicate_counter=-1;
+static unsigned long duplicate_counter = -1;
 
-unsigned long get_duplicate_counter(void){
-	return duplicate_counter;
+unsigned long get_duplicate_counter(void)
+{
+    return duplicate_counter;
 }
-void reset_duplicate_counter(void){
-       duplicate_counter=0;
-       return;
+
+void reset_duplicate_counter(void)
+{
+    duplicate_counter = 0;
+    return;
 }
 #endif
 
@@ -99,9 +105,9 @@ SEXP duplicate(SEXP s){
 #ifdef R_PROFILING
     duplicate_counter++;	
 #endif
-    t=duplicate1(s);
+    t = duplicate1(s);
 #ifdef R_MEMORY_PROFILING
-    if (TRACE(s) && !(TYPEOF(s)==CLOSXP || TYPEOF(s) == BUILTINSXP || 
+    if (TRACE(s) && !(TYPEOF(s) == CLOSXP || TYPEOF(s) == BUILTINSXP || 
 		      TYPEOF(s) == SPECIALSXP || TYPEOF(s) == PROMSXP || 
 		      TYPEOF(s) == ENVSXP)){
 	    memtrace_report(s,t);
