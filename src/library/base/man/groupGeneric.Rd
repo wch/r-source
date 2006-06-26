@@ -82,6 +82,7 @@ Summary(\dots, na.rm = FALSE)
       \item \code{cumsum}, \code{cumprod}, \code{cummax}, \code{cummin}
       % do_cum()   [cum.c:140]:    if (DispatchGroup("Math", ...))
     }
+    This group dispatches on \code{x}.
 
     \item Group \code{"Ops"}:
     \itemize{
@@ -97,6 +98,11 @@ Summary(\dots, na.rm = FALSE)
       \code{"<"}, \code{"<="}, \code{">="}, \code{">"}
       % do_relop() [relop.c:35]:   if (DispatchGroup("Ops", ...))
     }
+    The classes of both arguments are considered in dispatching.  If a
+    method is found for just one or the same method is found for both,
+    it is used.  If different methods are found, there is a warning
+    about \sQuote{incompatible methods}: in that case or if no method is
+    found for either argument the default method is used.
 
     \item Group \code{"Summary"}:
     \itemize{
@@ -108,12 +114,14 @@ Summary(\dots, na.rm = FALSE)
       % do_summary() [summary.c:322]: if(DispatchGroup("Summary",...))
       \item \code{range}
     }
+    This group dispatches on the first argument supplied.
 
     \item Group \code{Complex}:
     \itemize{
       \item \code{Arg}, \code{Conj}, \code{Im}, \code{Mod}, \code{Re}
       % do_cmathfuns() [complex.c:267]: if(DispatchGroup("Complex",...))
     }
+    This group dispatches on \code{z}.
   }
 
   Note that a method will used for either one of these groups or one of

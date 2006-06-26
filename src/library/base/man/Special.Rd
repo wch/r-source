@@ -74,7 +74,7 @@ lfactorial(x)
 
   The \code{gamma}, \code{lgamma}, \code{digamma} and \code{trigamma}
   functions are generic: methods can be defined for them individually or
-  via the \code{\link{Math}} group generic.
+  via the \code{\link[base]{Math}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

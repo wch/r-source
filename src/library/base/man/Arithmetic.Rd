@@ -62,8 +62,9 @@ x \%/\% y
 }
 \details{
   The binary arithmetic operators are generic functions: methods can be
-  written for them individually or via the \code{\link{Ops}}) group generic
-  function.
+  written for them individually or via the \code{\link[base]{Ops}})
+  group generic function.  (See \code{\link[base]{Ops}} for how dispatch
+  is computed.)
   
   If applied to arrays the result will be an array if this is sensible
   (for example it will not if the recycling rule has been invoked).

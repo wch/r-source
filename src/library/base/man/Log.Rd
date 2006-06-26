@@ -49,7 +49,7 @@ log1p(x)
 }
 \details{
   \code{exp} and \code{log} are generic functions: methods can be defined
-  for them individually or via the \code{\link{Math}} group generic.
+  for them individually or via the \code{\link[base]{Math}} group generic.
 
   \code{log10} and \code{log2} are only special cases, but will be computed
   more efficiently and accurately where supported by the OS.

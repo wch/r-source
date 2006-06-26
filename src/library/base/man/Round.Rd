@@ -46,7 +46,8 @@ zapsmall(x, digits = getOption("digits"))
 }
 \details{
   All but \code{zapsmall} are generic functions: methods can be
-  defined for them individually or via the \code{\link{Math}} group generic.
+  defined for them individually or via the \code{\link[base]{Math}}
+  group generic.
 
   Note that for rounding off a 5, the IEC 60559 standard is expected to
   be used, \dQuote{\emph{go to the even digit}}.

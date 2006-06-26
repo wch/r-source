@@ -48,8 +48,9 @@ pmin(\dots, na.rm=FALSE)
   \code{\link{dim}}) are transferred from the first argument (if applicable).
 
   \code{max} and \code{min} are generic functions: methods can be defined
-  for them individually or via the \code{\link{Summary}} group generic.
-  For this to work properly, the arguments \code{\dots} should be unnamed.
+  for them individually or via the \code{\link[base]{Summary}} group generic.
+  For this to work properly, the arguments \code{\dots} should be
+  unnamed, and dispatch is on the first argument.
 
   By definition the min/max of any vector containing an \code{NaN} is
   \code{NaN}, except that the min/max of any vector containing an \code{NA}
