@@ -221,10 +221,6 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(!missing(pointsize)) new$pointsize <- pointsize
     if(!missing(pagecentre)) new$pagecentre <- pagecentre
 
-    # paper explicit because "special" (not "default") by default
-    Call <- as.list(match.call())[-1]
-    Call[c("file", "width", "height", "family", "title", "fonts", "version")] <- NULL
-    new <- lapply(Call, function(x) eval.parent(x, 2))
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
