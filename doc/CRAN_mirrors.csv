@@ -1,7 +1,7 @@
 Name,Country,City,URL,Host,Maintainer
 "Australia (QLD)",Australia,Brisbane,http://cran.au.r-project.org/,"PlanetMirror, Brisbane",hostmaster@iseek.com.au
 "Australia (VIC)",Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne",cran@ms.unimelb.edu.au
-Austria,Austria,Wien,http://cran.at.r-project.org/,"Technische Universitaet Wien",CRAN@R-project.org
+Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversitaet Wien",CRAN@R-project.org
 "Brazil (PR)",Brazil,Curitiba,http://cran.br.r-project.org/,"Universidade Federal do Parana","Paulo J. Ribeiro Jr <paulojus@est.ufpr.br>"
 "Brazil (MG)",Brazil,Vicosa,http://www.insecta.ufv.br/CRAN/,"Federal University of Vicosa",
 "Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro",oswaldo@fiocruz.br
@@ -10,12 +10,14 @@ Austria,Austria,Wien,http://cran.at.r-project.org/,"Technische Universitaet Wien
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","Brad McNeney <mcneney@sfu.ca>"
 "Canada (ON)",Canada,Toronto,http://probability.ca/cran/,"University of Toronto","Jeffrey S. Rosenthal <jeff at math.toronto.edu>"
 China,China,Nanjing,http://www.lmbe.seu.edu.cn/CRAN/,"Southeast University, Nanjing",xsun@seu.edu.cn
+Croatia,Croatia,Zagreb,http://june.irb.hr/r/,"Rudjer Boskovic Institute",mislav.malenica@irb.hr
 Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirror@dotsrc.org
 "France (Toulouse)",France,Toulouse,http://cran.fr.r-project.org/,"CICT, Toulouse","David Allouche <allouche@tlse.toulouse.inra.fr>"
 "France (Lyon)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <jthioulouse@biomserv.univ-lyon1.fr>"
 "France (Paris)",France,Paris,http://mirror.internet.tp/cran/,"Boese Internet, Paris","Pelle Boese <pelle@boese.biz>"
 "Germany (Frankfurt)",Germany,Frankfurt,http://cran.xedio.de/,xedio.mediastudios,"Carsten Zedler <c.zedler@xedio.de>"
 "Germany (Hamburg)",Germany,Hamburg,http://pangora.org/cran/,"Pangora GmbH, Hamburg",mirror@pangora.org
+"Germany (Hannover)",Germany,Hannover,http://cran.mirroring.de/,"Maske & Glembotzky Opensource Mirroring GbR, Hannover",admin@mirroring.de
 "Germany (Koeln)",Germany,Koeln,http://cran.miscellaneousmirror.org/,"Miscellaneousdata.de, Koeln","Simon Hardy-Francis <simonhf@gmail.com>"
 "Germany (Mainz)",Germany,Mainz,http://umfragen.sowi.uni-mainz.de/CRAN/,"University of Mainz",
 "Germany (Muenchen)",Germany,Muenchen,http://cran.rakanu.com/,"Rakanu.com, Muenchen","Carsten Zedler <info@rakanu.com>"
@@ -28,6 +30,7 @@ Hungary,Hungary,Budapest,http://cran.hu.r-project.org/,"Semmelweis University","
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo@dssm.unipa.it, alf@dssm.unipa.it"
 Israel,Israel,Tel-Aviv,http://cran.active.co.il/,"Activetech Ltd, Tel-Aviv","""Rami Addady"" <rami@active.co.il>"
 "Japan (Aizu)",Japan,Aizu,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN,"University of Aizu",
+"Japan (Tokyo)",Japan,Tokyo,ftp://ftp.ecc.u-tokyo.ac.jp/CRAN/,"University of Tokyo","Teru KAMOGASHIRA <teru@sodan.ecc.u-tokyo.ac.jp>"
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",
 Korea,Korea,Seoul,http://bibscvs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skon@kr.FreeBSD.org>"
 Netherlands,Netherlands,Amsterdam,http://cran.nedmirror.nl/,"Nedmirror, Amsterdam",mirror@nedmirror.nl
