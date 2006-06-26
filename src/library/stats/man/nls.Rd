@@ -26,7 +26,10 @@ nls(formula, data, start, control, algorithm,
     parameters.}
   \item{data}{an optional data frame in which to evaluate the variables in
     \code{formula}.  Can also be a list or an environment, but not a matrix.}
-  \item{start}{a named list or named numeric vector of starting estimates.}
+  \item{start}{a named list or named numeric vector of starting
+    estimates.  Since R 2.4.0, when \code{start} is missing, a very
+    cheap guess for \code{start} is tried (if \code{algorithm != "plinear"}).
+  }
   \item{control}{an optional list of control settings.  See
     \code{\link{nls.control}} for the names of the settable control
     values and their effect.}
@@ -166,10 +169,10 @@ weighted.MM <- function(resp, conc, Vm, K)
 {
     ## Purpose: exactly as white book p. 451 -- RHS for nls()
     ##  Weighted version of Michaelis-Menten model
-    ## ------------------------------------------------------------
+    ## ----------------------------------------------------------
     ## Arguments: 'y', 'x' and the two parameters (see book)
-    ## ------------------------------------------------------------
-    ## Author: Martin Maechler, Date: 23 Mar 2001, 18:48
+    ## ----------------------------------------------------------
+    ## Author: Martin Maechler, Date: 23 Mar 2001
 
     pred <- (Vm * conc)/(K + conc)
     (resp - pred) / sqrt(pred)
@@ -184,14 +187,25 @@ summary(Pur.wt)
 ## artificial data with noise but not to artificial data
 ## without noise.
 x <- 1:10
-y <- x                                  # perfect fit
+y <- 2*x + 3                            # perfect fit
 yeps <- y + rnorm(length(y), sd = 0.01) # added noise
 nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
-     trace = TRUE)
+    trace = TRUE)
 \dontrun{
+## terminates in an error, because convergence cannot be confirmed:
 nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
      trace = TRUE)
 }
+
+## nls() internal very cheap guess for starting values can be sufficient:
+
+x <- -(1:100)/10
+y <- 100 + 10 * exp(x / 2) + rnorm(x)/10
+nlmod <- nls(y ~  Const + A * exp(B * x), trace=TRUE)
+
+plot(x,y, main = "nls(*), data, true function and fit, n=100")
+curve(100 + 10 * exp(x / 2), col=4, add = TRUE)
+lines(x, predict(nlmod), col=2)
 }
 \keyword{nonlinear}
 \keyword{regression}

@@ -152,6 +152,10 @@ NEW FEATURES
 	'ties = mean' which makes them applicable also when 'x' has
 	duplicated values.
 
+    o	x <- 1:20; y <- rnorm(x); nls(y ~ A*exp(-x^2/sig)) no longer
+	returns an unhelpful error message. In this and similar cases, it
+	now tries a wild guess for starting values.
+
 
 DEPRECATED & DEFUNCT
 
