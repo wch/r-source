@@ -154,8 +154,8 @@ struct sxpinfo_struct {
     unsigned int gp    : 16;
     unsigned int mark  :  1;
     unsigned int debug :  1;
-    unsigned int trace :  1;
-    unsigned int fin   :  1;  /* has finalizer installed */
+    unsigned int trace :  1;  /* functions and memory tracing */
+    unsigned int fin   :  1;  /* currently unused */
     unsigned int gcgen :  1;  /* old generation number */
     unsigned int gccls :  3;  /* node class */
 }; /*		    Tot: 32 */
