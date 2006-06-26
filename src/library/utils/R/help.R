@@ -74,11 +74,12 @@ function(topic, offline = FALSE, package = NULL, lib.loc = NULL,
 print.help_files_with_topic <-
 function(x, ...)
 {
-    if (.Platform$GUI=="AQUA") {
+    if (.Platform$GUI == "AQUA") {
         .Internal(aqua.custom.print("help-files", x))
 	return(invisible(x))
     }
     topic <- attr(x, "topic")
+    type <- attr(x, "type")
     paths <- as.character(x)
     if(!length(paths)) {
         writeLines(c(gettextf("No documentation for '%s' in specified packages and libraries:",
@@ -98,25 +99,38 @@ function(x, ...)
                                     c(gettext("Library"),
                                       dirname(paths)),
                                     indent = 22))))
-    }
-    else {
+    } else {
         if(length(paths) > 1) {
             file <- paths[1]
+            p <- paths
             msg <- gettextf("Help on topic '%s' was found in the following packages:",
                             topic)
             paths <- dirname(dirname(paths))
-            writeLines(c(strwrap(msg), "",
-                         paste(" ",
-                               formatDL(c(gettext("Package"),
-                                          basename(paths)),
-                                        c(gettext("Library"),
-                                          dirname(paths)),
-                                        indent = 22)),
-                         gettext("\nUsing the first match ...")))
+            txt <- formatDL(c(gettext("Package"), basename(paths)),
+                            c(gettext("Library"), dirname(paths)),
+                            indent = 22)
+            writeLines(c(strwrap(msg), "", paste(" ", txt), ""))
+            if(interactive()) {
+                fp <- file.path(paths, "Meta", "hsearch.rds")
+                tp <- basename(p)
+                titles <- tp
+                for (i in seq(along = fp)) {
+                    tmp <- try(.readRDS(fp[i])[[1]])
+                    titles[i] <- if(inherits(tmp, "try-error"))
+                        "unknown title" else
+                    tmp[tmp[,"name"] == tp[i], "title"]
+                }
+                txt <- paste(titles, " {", basename(paths), "}", sep="")
+                ## FIXME: use html page for HTML help.
+                res <- menu(txt, title = "Choose one", graphics = TRUE)
+                if(res > 0) file <- p[res]
+            } else {
+                writeLines(gettext("\nUsing the first match ..."))
+            }
         }
         else
             file <- paths
-        type <- attr(x, "type")
+
         if(type == "html") {
             if(file.exists(file))
                 .show_help_on_topic_as_HTML(file, topic)

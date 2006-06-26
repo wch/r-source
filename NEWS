@@ -145,6 +145,9 @@ NEW FEATURES
 	that is they do not by default change the environment.
 	(Previously they changed it to parent.frame().)
 
+    o	If help() finds multiple help files for a given topic, a menu
+	of titles is used to allow interactive choice.
+
 
 DEPRECATED & DEFUNCT
 
