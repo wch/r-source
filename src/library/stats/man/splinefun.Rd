@@ -8,10 +8,10 @@
   performing the interpolation.
 }
 \usage{
-splinefun(x, y = NULL, method = "fmm")
+splinefun(x, y = NULL, method = "fmm", ties = mean)
 
 spline(x, y = NULL, n = 3*length(x), method = "fmm",
-       xmin = min(x), xmax = max(x))
+       xmin = min(x), xmax = max(x), ties = mean)
 }
 \arguments{
   \item{x,y}{vectors giving the coordinates of the points to be
@@ -23,6 +23,9 @@ spline(x, y = NULL, n = 3*length(x), method = "fmm",
     spanning the interval [\code{xmin}, \code{xmax}].}
   \item{xmin}{left-hand endpoint of the interpolation interval.}
   \item{xmax}{right-hand endpoint of the interpolation interval.}
+  \item{ties}{Handling of tied \code{x} values.  Either a function
+    with a single vector argument returning a single number result or
+    the string \code{"ordered"}.}
 }
 \details{
   The inputs can contain missing values which are deleted, so at least
@@ -97,6 +100,16 @@ curve(f(x, deriv=1), 1, 10, col = 2, lwd = 1.5)
 curve(f(x, deriv=2), 1, 10, col = 2, lwd = 1.5, n = 401)
 curve(f(x, deriv=3), 1, 10, col = 2, lwd = 1.5, n = 401)
 par(op)
+
+## An example with ties (non-unique  x values):
+set.seed(1); x <- round(rnorm(30), 1); y <- sin(pi * x) + rnorm(30)/10
+plot(x,y, main="spline(x,y)  when x has ties")
+lines(spline(x,y, n= 201), col = 2)
+## visualizes the non-unique ones:
+tx <- table(x); mx <- as.numeric(names(tx[tx > 1]))
+ry <- matrix(unlist(tapply(y, match(x,mx), range, simplify=FALSE)),
+             ncol=2, byrow=TRUE)
+segments(mx, ry[,1], mx, ry[,2], col = "blue", lwd = 2)
 }
 \keyword{math}
 \keyword{dplot}

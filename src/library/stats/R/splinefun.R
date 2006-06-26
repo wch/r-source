@@ -1,27 +1,40 @@
-splinefun <- function(x, y=NULL, method="fmm")
+#### 'spline' and 'splinefun' are very similar --- keep in sync!
+####  also consider ``compatibility'' with  'approx' and 'approxfun'
+
+splinefun <- function(x, y=NULL, method = "fmm", ties = mean)
 {
     x <- xy.coords(x, y)
     y <- x$y
     x <- x$x
+    nx <- length(x)
     method <- pmatch(method, c("periodic", "natural", "fmm"))
     if(is.na(method))
-	stop("splinefun: invalid interpolation method")
+	stop("invalid interpolation method")
     if(any(o <- is.na(x) | is.na(y))) {
 	o <- !o
 	x <- x[o]
 	y <- y[o]
+	nx <- length(x)
     }
-    if(is.unsorted(x)) {
-	o <- order(x)
-	x <- x[o]
-	y <- y[o]
+    if (!identical(ties, "ordered")) {
+	if (length(ux <- unique(x)) < nx) {
+	    if (missing(ties))
+		warning("collapsing to unique 'x' values")
+	    y <- as.vector(tapply(y,x,ties))# as.v: drop dim & dimn.
+	    x <- sort(ux)
+	    nx <- length(x)
+	    rm(ux)
+	} else {
+	    o <- order(x)
+	    x <- x[o]
+	    y <- y[o]
+	}
     }
-    nx <- length(x)# = length(y), ensured by xy.coords(.)
+    if(nx == 0) stop("zero non-NA points")
     if(method == 1 && y[1] != y[nx]) { # periodic
 	warning("spline: first and last y values differ - using y[1] for both")
 	y[nx] <- y[1]
     }
-    if(nx == 0) stop("zero non-NA points")
     z <- .C("spline_coef",
 	    method=as.integer(method),
 	    n=as.integer(nx),

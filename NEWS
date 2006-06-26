@@ -148,6 +148,10 @@ NEW FEATURES
     o	If help() finds multiple help files for a given topic, a menu
 	of titles is used to allow interactive choice.
 
+    o	spline() and splinefun() now follow approx[fun] to have an argument
+	'ties = mean' which makes them applicable also when 'x' has
+	duplicated values.
+
 
 DEPRECATED & DEFUNCT
 
@@ -260,7 +264,7 @@ BUG FIXES
 
     o	lag.plot() now respects graphical parameters for the axes.
 
-    o	Using a wrong link in family() now gives more consistent error 
+    o	Using a wrong link in family() now gives more consistent error
 	messages.
 
 
@@ -300,9 +304,9 @@ BUG FIXES
 	inconsistently. (PR#8958)
 
 	[pq]unif claimed to allow min == max but did not do so.
-    
-    o	Subassignment within raw arrays of 3 or more dimensions was not 
-    	implemented.	
+
+    o	Subassignment within raw arrays of 3 or more dimensions was not
+    	implemented.
 
 
 
