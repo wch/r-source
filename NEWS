@@ -38,6 +38,8 @@ BUG FIXES
     	implemented.	
 
 
+    o	environment<-() did not even check if duplication was required.
+
 
 		CHANGES IN R VERSION 2.3.1
 

@@ -189,23 +189,27 @@ SEXP attribute_hidden do_envir(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP env;
+    SEXP env, s = CAR(args);
     checkArity(op, args);
     env = CADR(args);
 
     if (TYPEOF(CAR(args)) == CLOSXP 
         && (isEnvironment(env) || isNull(env))) {
-	if (isNull(env)) {
+	if (isNull(env))
 	    warning(_("use of NULL environment is deprecated"));
-	    env = R_BaseEnv;
-	}     
-	SET_CLOENV(CAR(args), env);
+	if(NAMED(s) > 1) {
+	    /* partial duplicate */
+	    s = allocSExp(CLOSXP);
+	    SET_FORMALS(s, FORMALS(CAR(args)));
+	    SET_BODY(s, BODY(CAR(args)));
+	}
+	SET_CLOENV(s, env);
     }
     else if (isNull(env) || isEnvironment(env))
-	setAttrib(CAR(args), R_DotEnvSymbol, env);
+	setAttrib(s, R_DotEnvSymbol, env);
     else
 	errorcall(call, _("replacement object is not an environment"));
-    return CAR(args);
+    return s;
 }
 
 
