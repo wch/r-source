@@ -133,6 +133,9 @@ Ops.Date <- function(e1, e2)
     boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
                       "!=" = , "<=" = , ">=" = TRUE, FALSE)
     if (!boolean) stop(.Generic, " not defined for Date objects")
+    ## allow character args to be coerced to dates
+    if (is.character(e1)) e1 <- as.Date(e1)
+    if (is.character(e2)) e2 <- as.Date(e2)
     NextMethod(.Generic)
 }
 

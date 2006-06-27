@@ -142,7 +142,7 @@ NEW FEATURES
 	only one plot is to be produced.
 	
     o	read.DIF() can read Data Interchange Format files, and (in
-	Windows) this format on the clipboard.
+	Windows) this format from the clipboard.
 
     o	body<-() and formals<-() default to envir = environment(fun),
 	that is they do not by default change the environment.
@@ -158,6 +158,12 @@ NEW FEATURES
     o	x <- 1:20; y <- rnorm(x); nls(y ~ A*exp(-x^2/sig)) no longer
 	returns an unhelpful error message. In this and similar cases, it
 	now tries a wild guess for starting values.
+
+    o	Ops.difftime() now handles unary minus and plus.
+
+    o	Ops.Date() and Ops.POSIXt() now allow character arguments
+	(which are coerced to the appropriate class before comparison,
+	for Ops.POSIXt() using the current time zone).
 
 
 DEPRECATED & DEFUNCT
