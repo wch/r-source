@@ -9260,6 +9260,7 @@ The first five bits of the @code{sxpinfo} header specify one of 32
 * SEXPTYPEs::                   
 * Rest of header::              
 * The 'data'::                  
+* Allocation classes::          
 @end menu
 
 @node SEXPTYPEs, Rest of header, SEXPs, SEXPs
@@ -9274,30 +9275,30 @@ easily be reused.
 @quotation
 @multitable {no} {SPECIALSXPXXX} {DOUBLE PRECISION}
 @headitem no @tab  SEXPTYPE@tab  Description
-@item @code{0}   @tab @code{NILSXP}     @tab @code{NULL}
-@item @code{1}   @tab @code{SYMSXP}     @tab @code{symbols}
+@item @code{0}   @tab @code{NILSXP}      @tab @code{NULL}
+@item @code{1}   @tab @code{SYMSXP}      @tab @code{symbols}
 @item @code{2}   @tab @code{LISTSXP}     @tab @code{pairlists}
-@item @code{3}   @tab @code{CLOSXP}     @tab @code{closures}
-@item @code{4}   @tab @code{ENVSXP}     @tab @code{environments}
+@item @code{3}   @tab @code{CLOSXP}      @tab @code{closures}
+@item @code{4}   @tab @code{ENVSXP}      @tab @code{environments}
 @item @code{5}   @tab @code{PROMSXP}     @tab @code{promises}
 @item @code{6}   @tab @code{LANGSXP}     @tab @code{language objects}
-@item @code{7}   @tab @code{SPECIALSXP}     @tab @code{special functions
+@item @code{7}   @tab @code{SPECIALSXP}  @tab @code{special functions
 (primitives)}
-@item @code{8}   @tab @code{BUILTINSXP}     @tab @code{builtin functions
-(internal functions)}
+@item @code{8}   @tab @code{BUILTINSXP}  @tab @code{builtin functions
+(.Internal functions)}
 @item @code{9}   @tab @code{CHARSXP}     @tab @code{internal character strings}
 @item @code{10}   @tab @code{LGLSXP}     @tab @code{logical vectors}
 @item @code{13}   @tab @code{INTSXP}     @tab @code{integer vectors}
-@item @code{14}   @tab @code{REALSXP}     @tab @code{numeric vectors}
-@item @code{15}   @tab @code{CPLXSXP}     @tab @code{complex vectors}
+@item @code{14}   @tab @code{REALSXP}    @tab @code{numeric vectors}
+@item @code{15}   @tab @code{CPLXSXP}    @tab @code{complex vectors}
 @item @code{16}   @tab @code{STRSXP}     @tab @code{character vectors}
 @item @code{17}   @tab @code{DOTSXP}     @tab @code{dot-dot-dot object}
 @item @code{18}   @tab @code{ANYSXP}     @tab @code{make "any" args work}
 @item @code{19}   @tab @code{VECSXP}     @tab @code{list (generic vector)}
-@item @code{20}   @tab @code{EXPRSXP}     @tab @code{expression vector}
-@item @code{21}   @tab @code{BCODESXP}     @tab @code{byte code}
-@item @code{22}   @tab @code{EXTPTRSXP}     @tab @code{external pointer}
-@item @code{23}   @tab @code{WEAKREFSXP}     @tab @code{weak reference}
+@item @code{20}   @tab @code{EXPRSXP}    @tab @code{expression vector}
+@item @code{21}   @tab @code{BCODESXP}   @tab @code{byte code}
+@item @code{22}   @tab @code{EXTPTRSXP}  @tab @code{external pointer}
+@item @code{23}   @tab @code{WEAKREFSXP} @tab @code{weak reference}
 @item @code{24}   @tab @code{RAWSXP}     @tab @code{raw vector}
 @end multitable
 @end quotation
@@ -9388,7 +9389,7 @@ can be accessed and set by the @code{LEVELS} and @code{SETLEVELS}
 macros, which names appear to date back to the internal factor and
 ordered types and are now used in only one place in the code.  The
 @code{gp} field is serialized/unserialized for the @code{SEXPTYPE}s
-except @code{NILSXP}, @code{SYMSXP} and @code{ENVSXP}.
+other than @code{NILSXP}, @code{SYMSXP} and @code{ENVSXP}.
 
 If we label the bits from 0, bits 14 and 15 of @code{gp} are used for
 `fancy bindings'.  Bit 14 is used to lock a binding or an environment,
@@ -9402,13 +9403,14 @@ reserves the first four bits.
 The macros @code{ARGUSED} and @code{SET_ARGUSED} are used when matching
 actual and formal function arguments, and take the values 0:2.
 
-The macros @code{MISSING} and @code{SET_MISSINS} are used for pairlists
+The macros @code{MISSING} and @code{SET_MISSING} are used for pairlists
 of arguments.  Four bits are reserved, but only two are used (and
 exactly what for is not explained).
 
-Bit 0 is used by macros @code{DDVAL} and @code{SET_DDVAL}. The latter is
-apparently only used in @code{mkSYMSXP}, so this seems confined to the
-@code{SYMSXP} type.
+Bit 0 is used by macros @code{DDVAL} and @code{SET_DDVAL}.  This
+indicated that a @code{SYMSXP} is one of the symbols @code{..n} which
+are implicitly created when @code{...} is processed, and so indicates
+that it may need to be looked up in a @code{DOTSXP}.
 
 Bit 0 is used for @code{PRSEEN}, a flag to indicate if a promise has
 already been seen during the evaluation of the promise (and so to avoid
@@ -9428,7 +9430,7 @@ marks the order of the interaction.  This is in principle unlimited
 usage could easily be replaced by one not making use of @code{gp}.)
 
 
-@node The 'data',  , Rest of header, SEXPs
+@node The 'data', Allocation classes, Rest of header, SEXPs
 @subsection The 'data'
 
 A @code{SEXPREC} is a C structure containing the 32-bit header as
@@ -9553,6 +9555,17 @@ NULL.
 @code{length}, @code{truelength} followed by a block of bytes.
 
 @end table
+
+@node Allocation classes,  , The 'data', SEXPs
+@subsection Allocation classes
+
+As we have seen, the field @code{gccls} in the header is three bits to
+label up to 8 classes of nodes.  Non-vector nodes are of class 0, and
+'small' vector nodes are currently of classes 1 to 6, with 'large'
+vector nodes being of class 7.  The 'small' vector nodes are able to
+store vector data of up to 8, 16, 32, 64, 128  and 256 bytes: larger
+vectors are @code{malloc}ed individually whereas the 'small' nodes are
+allocated from pages of about 2000 bytes.
 
 @node Function and variable index, Concept index, R Internal Structures, Top
 @unnumbered Function and variable index
