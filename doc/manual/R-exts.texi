@@ -78,6 +78,7 @@ The current version of this document is @value{VERSION}.
 * Linking GUIs and other front-ends to R::  
 * R (internal) programming miscellanea::  
 * R coding standards::          
+* R Internal Structures::       
 * Function and variable index::  
 * Concept index::               
 @end menu
@@ -9080,7 +9081,7 @@ computer).  If the new function, for example, accesses the Internet, or
 requires @acronym{GUI} interaction, please add its name to the ``stop
 list'' in @file{tests/no-segfault.Rin}.
 
-@node R coding standards, Function and variable index, R (internal) programming miscellanea, Top
+@node R coding standards, R Internal Structures, R (internal) programming miscellanea, Top
 @appendix R coding standards
 
 @R{} is meant to run on a wide variety of platforms, including Linux and
@@ -9223,7 +9224,337 @@ which has been determined not to display the structure clearly enough
 when using narrow fonts.)
 
 
-@node Function and variable index, Concept index, R coding standards, Top
+@node R Internal Structures, Function and variable index, R coding standards, Top
+@appendix R Internal Structures
+
+This appendix is the beginnings of documentation about @R{} internal
+structures: it is intended to moved out of this manual in due course.
+It is written for the R core team and others studying the code in the
+@file{src/main} directory.
+
+@menu
+* SEXPs::                       
+@end menu
+
+@node SEXPs,  , R Internal Structures, R Internal Structures
+@section SEXPs
+
+What @R{} users think of as @emph{variables} or @emph{objects} are
+symbols which are bound to a value.  The value can be thought of as
+either a @code{SEXP} (a pointer), or the structure it points to, a
+@code{SEXPREC} (and there are alternative forms use for vectors, namely
+@code{VECSXP} pointing to @code{VECTOR_SEXPREC} structures).
+So the basic building blocks of @R{} objects are often called
+@emph{nodes}, meaning @code{SEXPREC}s or @code{VECTOR_SEXPREC}s.
+
+Both types of node structure have as their first three fields a 32-bit
+@code{sxpinfo} header and then three pointers (to the attributes and the
+previous and next node in a doubly-linked list), and then some further
+fields.  On a 32-bit platform a node occupies 28 bytes: on a 64-bit
+platform typically 56 bytes (depending on alignment constraints).
+
+The first five bits of the @code{sxpinfo} header specify one of 32
+@code{SEXPTYPE}s.  
+
+@menu
+* SEXPTYPEs::                   
+* Rest of header::              
+* The 'data'::                  
+@end menu
+
+@node SEXPTYPEs, Rest of header, SEXPs, SEXPs
+@subsection SEXPTYPEs
+
+Currently @code{SEXPTYPE}s 0:10 and 13:24 are in use.  Values 11 and 12 were
+used for internal factors and ordered factors and have since been
+withdrawn.  Note that the @code{SEXPTYPE}s are stored in @code{save}d
+objects and that the ordering of the types is used, so the gap cannot
+easily be reused.
+
+@quotation
+@multitable {no} {SPECIALSXPXXX} {DOUBLE PRECISION}
+@headitem no @tab  SEXPTYPE@tab  Description
+@item @code{0}   @tab @code{NILSXP}     @tab @code{NULL}
+@item @code{1}   @tab @code{SYMSXP}     @tab @code{symbols}
+@item @code{2}   @tab @code{LISTSXP}     @tab @code{pairlists}
+@item @code{3}   @tab @code{CLOSXP}     @tab @code{closures}
+@item @code{4}   @tab @code{ENVSXP}     @tab @code{environments}
+@item @code{5}   @tab @code{PROMSXP}     @tab @code{promises}
+@item @code{6}   @tab @code{LANGSXP}     @tab @code{language objects}
+@item @code{7}   @tab @code{SPECIALSXP}     @tab @code{special functions
+(primitives)}
+@item @code{8}   @tab @code{BUILTINSXP}     @tab @code{builtin functions
+(internal functions)}
+@item @code{9}   @tab @code{CHARSXP}     @tab @code{internal character strings}
+@item @code{10}   @tab @code{LGLSXP}     @tab @code{logical vectors}
+@item @code{13}   @tab @code{INTSXP}     @tab @code{integer vectors}
+@item @code{14}   @tab @code{REALSXP}     @tab @code{numeric vectors}
+@item @code{15}   @tab @code{CPLXSXP}     @tab @code{complex vectors}
+@item @code{16}   @tab @code{STRSXP}     @tab @code{character vectors}
+@item @code{17}   @tab @code{DOTSXP}     @tab @code{dot-dot-dot object}
+@item @code{18}   @tab @code{ANYSXP}     @tab @code{make "any" args work}
+@item @code{19}   @tab @code{VECSXP}     @tab @code{list (generic vector)}
+@item @code{20}   @tab @code{EXPRSXP}     @tab @code{expression vector}
+@item @code{21}   @tab @code{BCODESXP}     @tab @code{byte code}
+@item @code{22}   @tab @code{EXTPTRSXP}     @tab @code{external pointer}
+@item @code{23}   @tab @code{WEAKREFSXP}     @tab @code{weak reference}
+@item @code{24}   @tab @code{RAWSXP}     @tab @code{raw vector}
+@end multitable
+@end quotation
+
+Many of these will be familiar from @R{} level: the atomic vector types
+are @code{LGLSXP}, @code{INTSXP}, @code{REALSXP}, @code{CPLXSP},
+@code{STRSXP} and @code{RAWSXP}.  Lists are @code{VECSXP}, expressions
+@code{EXPRSXP} and names @code{SYMSXP}.  Language objects
+(@code{LANGSXP}) cover calls, formulae and so on.  Pairlists
+(@code{LISTSXP}, the name going back to the origins of @R{} as a
+Scheme-like language) are rarely seen at @R{} level, but are for example
+used for argument lists.  Character vectors are effectively lists all of
+whose elements are @code{CHARSXP}, a type that is rarely visible at @R{}
+level.
+
+The functions are of types @code{CLOSXP}, @code{SPECIALSXP} and
+@code{BUILTINSXP}: where @code{SEXPTYPE}s are stored in an integer
+these are sometimes lumped into a pseudo-type @code{FUNSXP} with code
+99.  Functions defined via @code{function} are of type @code{CLOSXP} and
+have formals, body and environment.
+
+@node Rest of header, The 'data', SEXPTYPEs, SEXPs
+@subsection Rest of header
+
+The @code{sxpinfo} header is currently defined as a 32-bit C structure by
+
+@example
+struct sxpinfo_struct @{
+    SEXPTYPE type      :  5;  /* discussed above */
+    unsigned int obj   :  1;  /* is this an object with a class attribute? */
+    unsigned int named :  2;  /* used to control copying */
+    unsigned int gp    : 16;  /* general purpose, see below */
+    unsigned int mark  :  1;  /* mark object as used in GC */
+    unsigned int debug :  1;
+    unsigned int trace :  1;
+    unsigned int fin   :  1;  /* unused */
+    unsigned int gcgen :  1;  /* generation for GC */
+    unsigned int gccls :  3;  /* class of node for GC */
+@};  /*              Tot: 32 */
+@end example
+
+The @code{debug} bit is used for closures and environments.  For
+closures it is set by @code{debug()} and unset by @code{undebug()}, and
+indicates that evaluations of the function should be run under the
+browser.  For environments it indicates whether the browsing is in
+single-step mode.
+
+The @code{trace} bit is used for functions for @code{trace()} and for
+other objects when tracing duplications (see @code{tracemem}).
+
+The @code{named} bits are set and accessed by the @code{SET_NAMED} and
+@code{NAMED}, and take values @code{0}, @code{1} and @code{2}.  @R{} has
+a `call by value' illusion, so an assignment like
+@example
+b <- a
+@end example
+
+@noindent
+appears to make a copy of @code{a} and refer to it as @code{b}.
+However, if neither @code{a} nor @code{b} are subsequently altered they
+is no need to copy.  So when an object is altered, the @code{NAMED}
+value is consulted.  A value of @code{2} means that the object must be
+duplicated before being changed.  (Note that this does not say that it
+is necessary to duplicate, only that it should be duplicated whether
+necessary or not.)  A value of @code{0} means that it is known that no
+other @code{SEXP} shares data with this object, and so it may safely be
+altered.  A value of @code{1} is used for situations like
+
+@example
+dim(a) <- c(7, 2)
+@end example
+
+@noindent
+where in principle two copies of @code{a} exist for the duration of the
+computation as (in principle)
+
+@example
+a <- `dim<-`(a, c(7, 2))
+@end example
+
+@noindent
+but for no longer, and so some internal functions can be optimized to
+make use of this.
+
+The remaining bits are by definition `general purpose', and the
+following description results from detective work on the sources.  They
+can be accessed and set by the @code{LEVELS} and @code{SETLEVELS}
+macros, which names appear to date back to the internal factor and
+ordered types and are now used in only one place in the code.  The
+@code{gp} field is serialized/unserialized for the @code{SEXPTYPE}s
+except @code{NILSXP}, @code{SYMSXP} and @code{ENVSXP}.
+
+If we label the bits from 0, bits 14 and 15 of @code{gp} are used for
+`fancy bindings'.  Bit 14 is used to lock a binding or an environment,
+and bit 15 is used to indicate an active binding.  (For the definition
+of an `active binding' see the header comments in file
+@file{src/main/envir.c}.)
+
+Almost all other uses seem to be only of bits 0 and 1, although one
+reserves the first four bits.
+
+The macros @code{ARGUSED} and @code{SET_ARGUSED} are used when matching
+actual and formal function arguments, and take the values 0:2.
+
+The macros @code{MISSING} and @code{SET_MISSINS} are used for pairlists
+of arguments.  Four bits are reserved, but only two are used (and
+exactly what for is not explained).
+
+Bit 0 is used by macros @code{DDVAL} and @code{SET_DDVAL}. The latter is
+apparently only used in @code{mkSYMSXP}, so this seems confined to the
+@code{SYMSXP} type.
+
+Bit 0 is used for @code{PRSEEN}, a flag to indicate if a promise has
+already been seen during the evaluation of the promise (and so to avoid
+recursive loops).
+
+Bit 0 is used for @code{HASHASH}, on the @code{PRINTNAME} of the
+@code{TAG} of the frame of an environment.
+
+Bits 0 and 1 are used directly for weak references (to indicate ready to
+finalize, finalize on exit).
+
+Finally, @code{SETLEVELS} and @code{LEVELS} are used by that name for
+the internal code for @code{terms.formula} to compute the @code{order}
+attribute of the result.  This is computed on an internal pairlist, and
+marks the order of the interaction.  This is in principle unlimited
+(although no test is done) and could in principle exceed 15.  (This
+usage could easily be replaced by one not making use of @code{gp}.)
+
+
+@node The 'data',  , Rest of header, SEXPs
+@subsection The 'data'
+
+A @code{SEXPREC} is a C structure containing the 32-bit header as
+described above, three pointers (to the attributes, previous and next
+node) and the node data, a union
+
+@example
+union @{
+    struct primsxp_struct primsxp;
+    struct symsxp_struct symsxp;
+    struct listsxp_struct listsxp;
+    struct envsxp_struct envsxp;
+    struct closxp_struct closxp;
+    struct promsxp_struct promsxp;
+@} u;
+@end example
+
+@noindent
+All of these apart from the first (an int) are three pointers, so the
+union takes up three words.
+
+The vector types are @code{RAWSXP}, @code{CHARSXP}, @code{LGLSXP},
+@code{INTSXP}, @code{REALSXP}, @code{CPLXSXP}, @code{STRSXP},
+@code{VECSXP}, @code{EXPRSXP} and @code{WEAKREFSXP}.  Remember that such
+types are a @code{VECTOR_SEXPREC}, which again consists of the header
+and the same three pointers, but followed by two integers giving the
+length and 'true length' of the vector, and then followed by the data
+(aligned as required: on most 32-bit systems with a 24-byte
+@code{VECTOR_SEXPREC} node the data can follow immediately after the
+node).  The data is a block of memory of the appropriate length to store
+'true length' elements (rounded up to a multiple of 8 bytes, with the
+8-byte blocks being the 'Vcells' referred in the documentation for
+@code{gc()}.
+
+The 'data' for the various types are given in the table below.  A lot of
+this is interpretation, i.e. the types are not checked.
+
+@table @code
+@item NILSXP
+
+There is only one object of type @code{NILSXP}, @code{R_NilValue}, with
+no data.
+
+@item SYMSXP
+Pointers to three nodes, the name, value and internal, accessed by
+@code{PRINTNAME} (a @code{CHARSXP}), @code{SYMVALUE} and @code{INTERNAL}.
+(If the symbol's value is a primitive or internal function, the last is
+a pointer to the appropriate @code{SEXPREC}.)
+
+@item LISTSXP
+Pointers to the CAR, CDR (usually a @code{LISTSXP} or NULL) and TAG
+(usually a @code{CHARSXP}).
+
+@item CLOSXP
+Pointers to the formals (a pairlist), the body and environment.
+
+@item ENVSXP
+Pointers to the frame, enclosing environment and hash table (NULL or a
+@code{VECSXP}).  A frame is a tagged pairlist with tag the symbol and
+CAR the bound value.
+
+@item PROMSXP
+Pointers to the value, expression and environment (in which to evaluate
+the expression).  Once an promise has been evaluated, the environment is
+set to NULL.
+
+@item LANGSXP
+A special type of @code{LISTSXP} used for function calls.  (The CAR
+gives the function, perhaps as symbol, and the CDR the argument list.)
+
+@item SPECIALSXP
+@itemx BUILTINSXP
+An integer giving the offset into the table of primitives/.Internals.
+
+@item CHARSXP
+@code{length}, @code{truelength} followed by a block of bytes (allowing
+for the @code{nul} terminator).
+
+@item LGLSXP
+@itemx INTSXP
+@code{length}, @code{truelength} followed by a block of C @code{int}s
+
+@item REALSXP
+@code{length}, @code{truelength} followed by a block of C @code{double}s
+
+@item CPLXSXP
+@code{length}, @code{truelength} followed by a block of C99
+@code{double complex}s, or equivalent structures.
+
+@item STRSXP
+@code{length}, @code{truelength} followed by a block of pointers
+(@code{CHARSXP}s).
+
+@item DOTSXP
+A special type of @code{LISTSXP} for the value bound to a @code{...}
+symbol: it should be a pairlist of promises.
+
+@item ANYSXP
+This is used as a place holder for any type: there are no actual objects
+of this type.
+
+@item VECSXP
+@itemx EXPRSXP
+@code{length}, @code{truelength} followed by a block of pointers. These
+are internally identical (and identical to @code{STRSXP}) but differ in
+the interpretations placed on the elememts.
+
+@item BCODESXP
+For the future byte-code compiler
+
+@item EXTPTRSXP
+Has three pointers, to the pointer, the protection value (an @R{} object
+which if alive protects this object) and a tag (a @code{CHARSXP}?).
+
+@item WEAKREFSXP
+A @code{WEAKREFSXP} is a special @code{VECSXP} of length 4, with
+elements 'key', 'value', 'finalizer' and 'next'.  The 'key' is NULL, an
+environment or an external pointer, and the finalizer is a function or
+NULL.
+
+@item RAWSXP
+@code{length}, @code{truelength} followed by a block of bytes.
+
+@end table
+
+@node Function and variable index, Concept index, R Internal Structures, Top
 @unnumbered Function and variable index
 
 @printindex vr
