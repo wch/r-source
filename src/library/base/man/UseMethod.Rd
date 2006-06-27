@@ -3,14 +3,18 @@
 \alias{UseMethod}
 \alias{NextMethod}
 \alias{S3Methods}
+\alias{.Method}
+\alias{.Generic}
+\alias{.Class}
 \description{
   \R possesses a simple generic function mechanism which can be used for
   an object-oriented style of programming.  Method dispatch takes place
-  based on the class of the first argument to the generic function or on
+  based on the class(es) of the first argument to the generic function or of
   the object supplied as an argument to \code{UseMethod} or \code{NextMethod}.
 }
 \usage{
 UseMethod(generic, object)
+
 NextMethod(generic = NULL, object = NULL, \dots)
 }
 \arguments{
@@ -43,21 +47,6 @@ NextMethod(generic = NULL, object = NULL, \dots)
   Function \code{\link{methods}} can be used to find out about the
   methods for a particular generic function or class.
 
-  Now for some obscure details that need to appear somewhere.  These
-  comments will be slightly different than those in Chambers(1992).
-  (See also the draft \sQuote{R Language Definition}.)
-  \code{UseMethod} creates a \dQuote{new} function call with
-  arguments matched as they came in to the generic.  Any local variables
-  defined before the call to \code{UseMethod} are retained (unlike S).  Any
-  statements after the call to \code{UseMethod} will not be evaluated as
-  \code{UseMethod} does not return.  \code{UseMethod} can be called with
-  more than two arguments: a warning will be given and additional
-  arguments ignored.  (They are not completely ignored in S.)  If it is
-  called with just one argument, the class of the first argument of the
-  enclosing function is used as \code{object}: unlike S this is the first
-  actual argument passed and not the current value of the object of that
-  name.
-
   \code{UseMethod} is a primitive function so positional matching is
   used and names of supplied arguments are ignored.
 
@@ -66,18 +55,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   the first argument to the function containing \code{NextMethod} if a
   method was invoked directly).  Normally \code{NextMethod} is used with
   only one argument, \code{generic}, but if further arguments are
-  supplied these modify the call to the next method. It does this by
-  creating a special call frame for that method.  If no new arguments
-  are supplied, the arguments will be the same in number, order and name
-  as those to the current method but their values will be promises to
-  evaluate their name in the current method and environment.  Any named
-  arguments matched to \code{\dots} are handled specially: they either
-  replace existing arguments of the same name or are appended to the
-  argument list.  They are passed on as the promise that was supplied as
-  an argument to the current environment. (S does this differently!)  If
-  they have been evaluated in the current (or a previous environment)
-  they remain evaluated.  (This is a complex area, and subject to
-  change: see the draft \sQuote{R Language Definition}.)
+  supplied these modify the call to the next method.
 
   \code{NextMethod} should not be called except in methods called by
   \code{UseMethod}. In particular it will not work inside anonymous
@@ -93,10 +71,78 @@ NextMethod(generic = NULL, object = NULL, \dots)
   (It does not matter whether they are visible in the environment in
   which the generic is defined.)
 }
+\section{Technical Details}{
+  Now for some obscure details that need to appear somewhere.  These
+  comments will be slightly different than those in Chambers(1992).
+  (See also the draft \sQuote{R Language Definition}.)
+  \code{UseMethod} creates a \dQuote{new} function call with
+  arguments matched as they came in to the generic.  Any local variables
+  defined before the call to \code{UseMethod} are retained (unlike S).  Any
+  statements after the call to \code{UseMethod} will not be evaluated as
+  \code{UseMethod} does not return.  \code{UseMethod} can be called with
+  more than two arguments: a warning will be given and additional
+  arguments ignored.  (They are not completely ignored in S.)  If it is
+  called with just one argument, the class of the first argument of the
+  enclosing function is used as \code{object}: unlike S this is the first
+  actual argument passed and not the current value of the object of that
+  name.
+
+  \code{NextMethod} works by creating a special call frame for the next
+  method.  If no new arguments are supplied, the arguments will be the
+  same in number, order and name as those to the current method but
+  their values will be promises to evaluate their name in the current
+  method and environment.  Any named arguments matched to \code{\dots}
+  are handled specially: they either replace existing arguments of the
+  same name or are appended to the argument list.  They are passed on as
+  the promise that was supplied as an argument to the current
+  environment. (S does this differently!)  If they have been evaluated
+  in the current (or a previous environment) they remain evaluated.
+  (This is a complex area, and subject to change: see the draft
+  \sQuote{R Language Definition}.)
+
+  You will see objects such as \code{.Generic}, \code{.Method}, and
+  \code{.Class} used in methods.  These are set in the environment
+  within which the method is evaluated by the dispatch mechanism, which
+  is as follows:
+  \enumerate{
+    \item Find the context for the calling function (the generic): this
+    gives us the unevaluated arguments for the original call.
+    \item Evaluate the object (usually an argument) to be used for
+    dispatch, and find a method (possibly the default method) or throw
+    an error.
+    \item Create an environment for evaluating the method and insert
+    special variables (see below) into that environment.  Also copy any
+    variables in the environment of the generic that are not formal (or
+    actual) arguments.
+    \item Fix up the argument list to be the arguments of the call
+    matched to the formals of the method.
+  }
+  \code{.Generic} is a length-one character vector naming the generic function.
+
+  \code{.Method} is a character vector (normally of length one) naming
+  the method function.  (For functions in the group generic
+  \code{\link[base]{Ops}} it is of length two.)
+
+  \code{.Class} is a character vector of classes used to find the next
+  method.  \code{NextMethod} adds an attribute \code{"previous"} to
+  \code{.Class} giving the \code{.Class} last used for dispatch, and
+  shifts \code{.Class} along to that used for dispatch.
+
+  \code{.GenericCallEnv} and \code{.GenericDefEnv} are the environments
+  of the call to be generic and defining the generic respectively.  (The
+  latter is used to find methods registered for the generic.)
+
+  Note that \code{.Class} is set when the generic is called, and is
+  unchanged if the class of the dispatching argument is changed in a
+  method.  It is possible to change the method that \code{NextMethod}
+  would dispatch by manipulating \code{.Class}, but \sQuote{this is not
+    recommended unless you understand the inheritance mechanism
+    thoroughly} (Chambers \& Hastie, 1992, p. 469).
+}
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,
   it is recommended to use the more flexible and robust \emph{S4} scheme
-  provided in the \pkg{methods} package. 
+  provided in the \pkg{methods} package.
 }
 \section{Warning}{
   Prior to \R 2.1.0 \code{UseMethod} accepted a call with no arguments
@@ -106,7 +152,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
 }
 \seealso{
   The draft \sQuote{R Language Definition}.
-  
+
   \code{\link{methods}}, \code{\link[base]{class}}, \code{\link{getS3method}}.
 }
 \references{

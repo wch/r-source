@@ -1,9 +1,6 @@
 \name{groupGeneric}
 \alias{S3groupGeneric}
-\alias{.Method}
-\alias{.Generic}
 \alias{.Group}
-\alias{.Class}
 \alias{Math}
 \alias{Math.data.frame}
 \alias{Ops}
@@ -98,6 +95,11 @@ Summary(\dots, na.rm = FALSE)
       \code{"<"}, \code{"<="}, \code{">="}, \code{">"}
       % do_relop() [relop.c:35]:   if (DispatchGroup("Ops", ...))
     }
+    This group contains both binary and unary operators (\code{+},
+    \code{-} and \code{!}): when a unary operator is encountered the
+    \code{Ops} method is called with one argument and \code{e2} is
+    missing.
+    
     The classes of both arguments are considered in dispatching. For
     each argument its vector of classes is examined to see if there is a
     matching specific or \code{Ops} method.  If a method is found for
@@ -136,6 +138,19 @@ Summary(\dots, na.rm = FALSE)
   methods is not checked prior to dispatch.  (Most have default methods
   expecting one argument, but \code{log}, \code{round} and \code{signif}
   expect two.)
+}
+\section{Technical Details}{
+  The details of method dispatch and variables such as \code{.Generic}
+  are discussed in the help for \code{\link{UseMethod}}.  There are a
+  few small differences:
+  \itemize{
+    \item For the operators of group \code{Ops}, the object
+    \code{.Method} is a length-two character vector with elements the
+    methods selected for the left and right arguments respectively.  (If
+    no method was selected, the corresponding element is \code{""}.)
+    \item Object \code{.Group} records the group used for dispatch (if
+    a specific method is used this is \code{""}).
+  }
 }
 \references{
   Appendix A, \emph{Classes and Methods} of\cr
