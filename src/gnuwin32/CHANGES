@@ -43,6 +43,8 @@ The data editor could crash when too much was pasted into it.
 dirname() converted paths involving network shares to forward slashes.
 (PR#8892)
 
+R could crash when very low on memory. (PR#8981)
+
 
 
 R 2.3.1
