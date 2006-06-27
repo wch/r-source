@@ -62,16 +62,16 @@ x \%/\% y
 }
 \details{
   The binary arithmetic operators are generic functions: methods can be
-  written for them individually or via the \code{\link[base]{Ops}})
-  group generic function.  (See \code{\link[base]{Ops}} for how dispatch
-  is computed.)
-  
+  written for them individually or via the
+  \code{\link[base:groupGeneric]{Ops}}) group generic function.  (See
+  \code{\link[base:groupGeneric]{Ops}} for how dispatch is computed.)
+
   If applied to arrays the result will be an array if this is sensible
   (for example it will not if the recycling rule has been invoked).
 
   Logical vectors will be coerced to numeric vectors, \code{FALSE}
   having value 0 and \code{TRUE} having value one.
-  
+
   \code{1 ^ y} and \code{y ^ 0} are \code{1}, \emph{always}.
   \code{x ^ y} should also give the proper \dQuote{limit} result when
   either argument is infinite (i.e., \code{+- \link{Inf}}).
@@ -93,7 +93,7 @@ x \%/\% y
   mathematical functions.
 
   \code{\link{Syntax}} for operator precedence.
-  
+
   \code{\link{\%*\%}} for matrix multiplication.
 }
 \examples{

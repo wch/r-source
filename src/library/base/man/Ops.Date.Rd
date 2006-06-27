@@ -5,10 +5,10 @@
 
 \title{Operators on the Date Class}
 \description{
-  Operators for the \code{\link{"Date"}} class.
+  Operators for the \code{"\link{Date}"} class.
 
-  There is an \code{\link[base]{Ops}} method and specific methods for
-  \code{+} and \code{-} for the \code{\link{Date}} class.
+  There is an \code{\link[base:groupGeneric]{Ops}} method and specific
+  methods for \code{+} and \code{-} for the \code{\link{Date}} class.
 }
 \usage{
 \special{date + x}

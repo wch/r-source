@@ -48,7 +48,8 @@ pmin(\dots, na.rm=FALSE)
   \code{\link{dim}}) are transferred from the first argument (if applicable).
 
   \code{max} and \code{min} are generic functions: methods can be defined
-  for them individually or via the \code{\link[base]{Summary}} group generic.
+  for them individually or via the \code{\link[base:groupGeneric]{Summary}}
+  group generic.
   For this to work properly, the arguments \code{\dots} should be
   unnamed, and dispatch is on the first argument.
 

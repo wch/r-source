@@ -24,9 +24,9 @@ x != y
 }
 \details{
   The binary comparison operators are generic functions: methods can be
-  written for them individually or via the \code{\link[base]{Ops}})
-  group generic function.  (See \code{\link[base]{Ops}} for how dispatch
-  is computed.)
+  written for them individually or via the
+  \code{\link[base:groupGeneric]{Ops}}) group generic function.  (See
+  \code{\link[base:groupGeneric]{Ops}} for how dispatch is computed.)
 
   Comparison of strings in character vectors is lexicographic within the
   strings using the collating sequence of the locale in use: see

@@ -121,7 +121,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
 
   \code{.Method} is a character vector (normally of length one) naming
   the method function.  (For functions in the group generic
-  \code{\link[base]{Ops}} it is of length two.)
+  \code{\link[base:groupGeneric]{Ops}} it is of length two.)
 
   \code{.Class} is a character vector of classes used to find the next
   method.  \code{NextMethod} adds an attribute \code{"previous"} to

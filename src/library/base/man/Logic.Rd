@@ -49,8 +49,8 @@ isTRUE(x)
 
   The operators \code{!}, \code{&} and \code{|} are generic functions:
   methods can be written for them individually or via the
-  \code{\link[base]{Ops}}) group generic function.  (See
-  \code{\link[base]{Ops}} for how dispatch is computed.)
+  \code{\link[base:groupGeneric]{Ops}}) group generic function.  (See
+  \code{\link[base:groupGeneric]{Ops}} for how dispatch is computed.)
 
   \code{\link{NA}} is a valid logical object.  Where a component of
   \code{x} or \code{y} is \code{NA}, the result will be \code{NA} if the

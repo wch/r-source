@@ -25,7 +25,7 @@ atanh(x)
 }
 \details{
    These are generic functions: methods can be defined for them
-   individually or via the \code{\link[base]{Math}} group generic.
+   individually or via the \code{\link[base:groupGeneric]{Math}} group generic.
 
    Branch cuts are consistent with the inverse trigonometric functions
    \code{asin()} et seq, and agree with those defined in Abramowitz and

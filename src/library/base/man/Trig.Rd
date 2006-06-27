@@ -34,7 +34,8 @@ atan2(y, x)
   \eqn{\pi/2}).
 
   All except \code{atan2} are generic functions: methods can be defined
-  for them individually or via the \code{\link[base]{Math}} group generic.
+  for them individually or via the \code{\link[base:groupGeneric]{Math}}
+  group generic.
 }
 \section{Complex values}{
    For the inverse trigonometric functions, branch cuts are defined as in

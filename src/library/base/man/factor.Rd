@@ -126,10 +126,11 @@ as.ordered(x)
 }
 \section{Comparison operators and group generic methods}{
   There are \code{"factor"} and \code{"ordered"} methods for the
-  \link{group generic} \code{\link[base]{Ops}}, which provide methods for the
-  \link{Comparison} operators.  (The rest of the group and the
-  \code{\link[base]{Math}} and \code{\link[base]{Summary}} groups
-  generate an error as they are not meaningful for factors.)
+  \link{group generic} \code{\link[base:groupGeneric]{Ops}}, which
+  provide methods for the \link{Comparison} operators.  (The rest of the
+  group and the \code{\link[base:groupGeneric]{Math}} and
+  \code{\link[base:groupGeneric]{Summary}} groups generate an error as
+  they are not meaningful for factors.)
 
   Only \code{==} and \code{!=} can be used for factors: a factor can
   only be compared to another factor with an identical set of levels

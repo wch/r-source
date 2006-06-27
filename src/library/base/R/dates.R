@@ -112,7 +112,7 @@ summary.Date <- function(object, digits = 12, ...)
 {
     coerceTimeUnit <- function(x)
     {
-        round(switch(attr(x,"units"),
+        round(switch(attr(x, "units"),
                secs = x/86400, mins = x/1440, hours = x/24,
                days = x, weeks = 7*x))
     }
@@ -130,8 +130,9 @@ Ops.Date <- function(e1, e2)
 {
     if (nargs() == 1)
         stop("unary ", .Generic, " not defined for Date objects")
-    boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
-                      "!=" = , "<=" = , ">=" = TRUE, FALSE)
+    boolean <- switch(.Generic, "<" =, ">" =, "==" =,
+                      "!=" =, "<=" =, ">=" = TRUE,
+                      FALSE)
     if (!boolean) stop(.Generic, " not defined for Date objects")
     ## allow character args to be coerced to dates
     if (is.character(e1)) e1 <- as.Date(e1)

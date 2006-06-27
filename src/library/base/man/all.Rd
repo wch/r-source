@@ -15,7 +15,7 @@ all(\dots, na.rm = FALSE)
 }
 \details{
   This is a generic function: methods can be defined for it
-  directly or via the \code{\link[base]{Summary}} group generic.
+  directly or via the \code{\link[base:groupGeneric]{Summary}} group generic.
   For this to work properly, the arguments \code{\dots} should be
   unnamed, and dispatch is on the first argument.
 }

@@ -25,30 +25,32 @@ as.difftime(tim, format = "\%X")
 \method{round}{difftime}(x, digits = 0)
 }
 \arguments{
-  \item{time1, time2}{date-time objects.}
+  \item{time1, time2}{\link[base:DateTimeClasses]{date-time} or
+    \link[base:Dates]{date} objects.}
   \item{tz}{a timezone specification to be used for the conversion.
     System-specific, but \code{""} is the current time zone, and
     \code{"GMT"} is UTC.}
   \item{units}{character.  Units in which the results are desired. Can
     be abbreviated.}
   \item{tim}{character string specifying a time interval.}
-  \item{format}{character specifying the format of \code{tim}.}
+  \item{format}{character specifying the format of \code{tim}: see
+    \code{\link{strptime}}.  The default is a locale-specific time format.}
   \item{x}{an object inheriting from class \code{"difftime"}.}
   \item{digits}{integer.  Number of significant digits to retain.}
 }
 \details{
   Function \code{difftime} takes a difference of two date/time objects
-  (of either class) and returns an object of class \code{"difftime"}
+  and returns an object of class \code{"difftime"}
   with an attribute indicating the units.  There is a \code{\link{round}}
   method for objects of this class, as well as methods for the
-  group-generic (see \code{\link[base]{Ops}}) logical and
+  group-generic (see \code{\link[base:groupGeneric]{Ops}}) logical and
   arithmetic operations.
 
   If \code{units = "auto"}, a suitable set of units is chosen, the largest
   possible (excluding \code{"weeks"}) in which all the absolute
   differences are greater than one.
 
-  Subtraction of two date-time objects gives an object of this class,
+  Subtraction of date-time objects gives an object of this class,
   by calling \code{difftime} with \code{units="auto"}.  Alternatively,
   \code{as.difftime()} works on character-coded time intervals.
 
