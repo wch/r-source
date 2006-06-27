@@ -784,7 +784,7 @@ do_install_source () {
   fi
   if ${thislazy}; then
     message "preparing package for lazy loading"
-    (echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages(); tools:::makeLazyLoading(\"${R_PACKAGE_NAME}\", \"${lib}\")") | \
+    (echo "options(warn=1); invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages(); tools:::makeLazyLoading(\"${R_PACKAGE_NAME}\", \"${lib}\")") | \
       R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" --vanilla --slave
     if test ${?} -ne 0; then
       error "lazy loading failed for package '${pkg_name}'"
