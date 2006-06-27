@@ -4298,3 +4298,20 @@ stopifnot(all(sapply(A, class) == "character"))
 stopifnot(class(as.data.frame(list(a=a), stringsAsFactors = TRUE)$a)
           == "factor")
 ## new in 2.4.0
+
+
+## failure to duplicate in environment<-().
+## Thomas Petzoldt, R-help, 2006-06-23.
+envfun <- function(L) {
+  p <- parent.frame()
+  assign("test", L$test, p)
+  environment(p$test) <- p
+}
+solver <- function(L) envfun(L)
+L <- list(test = function() 1 + 2)
+
+environment(L$test)
+solver(L)
+(e <- environment(L$test))
+stopifnot(identical(e, .GlobalEnv))
+## failed to look at NAMED

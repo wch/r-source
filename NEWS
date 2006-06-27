@@ -321,6 +321,8 @@ BUG FIXES
     o	Subassignment within raw arrays of 3 or more dimensions was not
     	implemented.
 
+    o	environment<-() did not even check if duplication was required.
+
 
 
 		CHANGES IN R VERSION 2.3.1
