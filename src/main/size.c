@@ -41,6 +41,7 @@ static R_size_t objectsize(SEXP s)
     int i;
     R_size_t cnt = 0, vcnt = 0;
     SEXP tmp, dup;
+    Rboolean isVec = FALSE;
     
     switch (TYPEOF(s)) {
     case NILSXP:
@@ -66,16 +67,20 @@ static R_size_t objectsize(SEXP s)
 	break;
     case CHARSXP:
 	vcnt = BYTE2VEC(length(s)+1);
+	isVec = TRUE;
 	break;
     case LGLSXP:
     case INTSXP:
 	vcnt = INT2VEC(length(s));
+	isVec = TRUE;
 	break;
     case REALSXP:
 	vcnt = FLOAT2VEC(length(s));
+	isVec = TRUE;
 	break;
     case CPLXSXP:
 	vcnt = COMPLEX2VEC(length(s));
+	isVec = TRUE;
 	break;
     case STRSXP:
 	vcnt = PTR2VEC(length(s));
@@ -85,6 +90,7 @@ static R_size_t objectsize(SEXP s)
 	    if(tmp != NA_STRING && !LOGICAL(dup)[i]) 
 		cnt += objectsize(tmp);
 	}
+	isVec = TRUE;
 	break;
     case DOTSXP:
     case ANYSXP:
@@ -97,6 +103,7 @@ static R_size_t objectsize(SEXP s)
 	vcnt = PTR2VEC(length(s));
 	for (i = 0; i < length(s); i++)
 	    cnt += objectsize(VECTOR_ELT(s, i));
+	isVec = TRUE;
 	break;
     case BCODESXP:
 	break;
@@ -112,9 +119,19 @@ static R_size_t objectsize(SEXP s)
     default:
 	UNIMPLEMENTED_TYPE("object.size", s);
     }
-    cnt += 8 * vcnt;
-    /* add in node space */
-    cnt += sizeof(SEXPREC);
+    /* add in node space:
+       we need to take into account the rounding up that goes on 
+       in the node classes. */
+    if(isVec) {
+	cnt += sizeof(SEXPREC_ALIGN);
+	if (vcnt > 16) cnt += 8*vcnt;
+	else if (vcnt > 8) cnt += 128;
+	else if (vcnt > 6) cnt += 64;
+	else if (vcnt > 4) cnt += 48;
+	else if (vcnt > 2) cnt += 32;
+	else if (vcnt > 1) cnt += 16;
+	else if (vcnt > 0) cnt += 8;
+    } else cnt += sizeof(SEXPREC);
     /* add in attributes */
     cnt += objectsize(ATTRIB(s));
     return(cnt);
