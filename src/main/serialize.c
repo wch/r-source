@@ -645,7 +645,7 @@ static int HashGet(SEXP item, SEXP ht)
  * Type/Flag Packing and Unpacking
  *
  * To reduce space consumption for serializing code (lots of list
- * structure) the type a9at most 8 bits), several single bit flags,
+ * structure) the type (at most 8 bits), several single bit flags,
  * and the sxpinfo gp field (LEVELS, 16 bits) are packed into a single
  * integer.  The integer is signed, so this shouldn't be pushed too
  * far.  It assumes at least 28 bits, but that should be no problem.
@@ -860,7 +860,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	default: hastag = FALSE;
 	}
 	flags = PackFlags(TYPEOF(s), LEVELS(s), OBJECT(s),
-                             ATTRIB(s) != R_NilValue, hastag);
+			  ATTRIB(s) != R_NilValue, hastag);
 	OutInteger(stream, flags);
 	switch (TYPEOF(s)) {
 	case LISTSXP:
