@@ -470,14 +470,6 @@ typedef enum {
 */
 #define R_EOF	-1
 
-/* MAGIC Numbers for files */
-#define R_MAGIC_BINARY 1975
-#define R_MAGIC_ASCII  1976
-#define R_MAGIC_XDR    1977
-
-#define R_MAGIC_BINARY_VERSION16 1971
-#define R_MAGIC_ASCII_VERSION16	 1972
-
 
 /*--- Global Variables ---------------------------------------------------- */
 

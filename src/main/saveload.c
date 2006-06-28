@@ -63,6 +63,14 @@
 #define R_MAGIC_CORRUPT    998
 #define R_MAGIC_MAYBE_TOONEW 997
 
+/* pre-1 formats (R < 0.99.0) */
+#define R_MAGIC_BINARY 1975
+#define R_MAGIC_ASCII  1976
+#define R_MAGIC_XDR    1977
+#define R_MAGIC_BINARY_VERSION16 1971
+#define R_MAGIC_ASCII_VERSION16	 1972
+
+
 /* Static Globals, DIE, DIE, DIE! */
 
 
