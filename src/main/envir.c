@@ -1834,7 +1834,7 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
   do_missing
 
   This function tests whether the symbol passed as its first argument
-  is ia "missing argument to the current closure.  rho is the
+  is a missing argument to the current closure.  rho is the
   environment that missing was called from.
 
 */
@@ -1894,7 +1894,7 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
         ddv = ddVal(sym);
 	sym = R_DotsSymbol;
     }
-    rval=allocVector(LGLSXP,1);
+    rval = allocVector(LGLSXP,1);
 
     t = findVarLocInFrame(rho, sym, NULL);
     if (t != R_NilValue) {
