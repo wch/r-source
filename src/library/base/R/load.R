@@ -12,7 +12,7 @@ load <- function (file, envir = parent.frame())
             if(regexpr("RD[ABX][12]\r", magic) == 1)
                 stop("input has been corrupted, with LF replaced by CR")
             ## Not a version 2 magic number, so try the old way.
-            warning(gettextf("file '%s' has magic number '%s'\nUse of save versions prior to 2 is deprecated",
+            warning(gettextf("file '%s' has magic number '%s'\n   Use of save versions prior to 2 is deprecated",
                              basename(file), gsub("[\n\r]*", "", magic)),
                     domain = NA, call. = FALSE)
             return(.Internal(load(file, envir)))
