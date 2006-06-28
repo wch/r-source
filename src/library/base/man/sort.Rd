@@ -40,6 +40,9 @@ is.unsorted(x, na.rm = FALSE)
   handful of elements, and a full sort is done if there
   are more than 10.)  Names are discarded for partial sorting.
 
+  Complex values are sorted first by the real part, then the imaginary
+  part.
+  
   The sort order for character vectors will depend on the collating
   sequence of the locale in use: see \code{\link{Comparison}}.
 
@@ -53,12 +56,12 @@ is.unsorted(x, na.rm = FALSE)
 
   Method \code{"quick"} uses Singleton's Quicksort implementation and is
   only available when \code{x} is numeric (double or integer) and
-  \code{partial} is \code{NULL}.  It is normally somewhat faster than
-  Shellsort (perhaps twice as fast on vectors of length a million) but
-  has poor performance in the rare worst case.
-  (Peto's modification using a pseudo-random midpoint is used to make
-  the worst case rarer.)  This is not a stable sort, and ties may be
-  reordered.
+  \code{partial} is \code{NULL}.  (For other types of \code{x} Shellsort
+  is used, silently.)  It is normally somewhat faster than Shellsort
+  (perhaps twice as fast on vectors of length a million) but has poor
+  performance in the rare worst case. (Peto's modification using a
+  pseudo-random midpoint is used to make the worst case rarer.)  This is
+  not a stable sort, and ties may be reordered.
 }
 \value{
   For \code{sort} the sorted vector unless

@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-06-09 r38316)
+R version 2.4.0 Under development (unstable) (2006-06-27 r38432)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5215,4 +5215,15 @@ arguments 'right', 'col' are not made use of in: hist.default(rnorm(100), plot =
 3 3 8 -1
 4 4 9 -2
 > ## corrupt in 2.3.0
+> 
+> 
+> ## sort.list on complex vectors was unimplemented prior to 2.4.0
+> x <- rep(2:1, c(2, 2)) + 1i*c(4, 1, 2, 3)
+> (o <- sort.list(x))
+[1] 3 4 2 1
+> x[o]
+[1] 1+2i 1+3i 2+1i 2+4i
+> sort(x)  # for a cross-check
+[1] 1+2i 1+3i 2+1i 2+4i
+> ##
 > 

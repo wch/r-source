@@ -4315,3 +4315,9 @@ solver(L)
 (e <- environment(L$test))
 stopifnot(identical(e, .GlobalEnv))
 ## failed to look at NAMED
+
+
+## sort.list(<a factor>, method="radix") stopped working at some point
+x <- factor(sample(letters, 1000, replace=TRUE))
+o <- sort.list(x, method = "radix")
+## failed in 2.3.1

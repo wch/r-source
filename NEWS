@@ -165,6 +165,9 @@ NEW FEATURES
 	(which are coerced to the appropriate class before comparison,
 	for Ops.POSIXt() using the current time zone).
 
+    o	sort.list() now implements complex vectors (PR#9039), and how
+	complex numbers are sorted is now documented.
+
 
 DEPRECATED & DEFUNCT
 
@@ -279,6 +282,8 @@ BUG FIXES
 
     o	Using a wrong link in family() now gives more consistent error
 	messages.
+
+    o	sort.list(method="radix") works on factors again.
 
 
 

@@ -95,7 +95,8 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
         else stop("method=\"quick\" is only for numeric 'x'")
     }
     if(method == "radix") {
-        if(!is.integer(x)) stop("method=\"radix\" is only for integer 'x'")
+        if(!typeof(x) == "integer") # do want to allow factors here
+            stop("method=\"radix\" is only for integer 'x'")
         if(is.na(na.last))
             return(.Internal(radixsort(x[!is.na(x)], TRUE, decreasing)))
         else

@@ -1826,3 +1826,11 @@ d1 <- data.frame(x=1:2, y=5:6, x=8:9, check.names=FALSE)
 d2 <- data.frame(x=3:4, x=-(1:2), y=8:9, check.names=FALSE)
 rbind(d1, d2)
 ## corrupt in 2.3.0
+
+
+## sort.list on complex vectors was unimplemented prior to 2.4.0
+x <- rep(2:1, c(2, 2)) + 1i*c(4, 1, 2, 3)
+(o <- sort.list(x))
+x[o]
+sort(x)  # for a cross-check
+##

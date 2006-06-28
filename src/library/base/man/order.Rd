@@ -36,6 +36,12 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   The sort used is \emph{stable} (except for \code{method = "quick"}),
   so any unresolved ties will be left in their original ordering.
 
+  Complex values are sorted first by the real part, then the imaginary
+  part.
+  
+  The sort order for character vectors will depend on the collating
+  sequence of the locale in use: see \code{\link{Comparison}}.
+
   The default method for \code{sort.list} is a good compromise.
   Method \code{"quick"} is only supported for numeric \code{x} with
   \code{na.last=NA}, and is not stable, but will be faster for long vectors.
