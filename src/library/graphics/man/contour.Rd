@@ -76,7 +76,12 @@ contour(x, \dots)
   Notice that \code{contour} interprets the \code{z} matrix as a table of
   \code{f(x[i], y[j])} values, so that the x axis corresponds to row
   number and the y axis to column number, with column 1 at the bottom,
-  i.e. a 90 degree clockwise rotation of the conventional textual layout.
+  i.e. a 90 degree clockwise rotation of the conventional textual
+  layout.
+
+  Alternatively, use \code{\link[lattice]{contourplot}} from the
+  \pkg{lattice} package where the \code{\link{formula}} notation allows
+  to use vectors \code{x,y,z} of the same length.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -85,9 +90,10 @@ contour(x, \dots)
 }
 \seealso{
   \code{\link[grDevices]{contourLines}},
-    \code{\link{filled.contour}} for \dQuote{color-filled} contours,
-  \code{\link{image}} and the graphics demo which can be invoked as
-  \code{demo(graphics)}.
+  \code{\link{filled.contour}} for \dQuote{color-filled} contours,
+  \code{\link[lattice]{contourplot}} (and \code{\link[lattice]{levelplot}})
+  from package \pkg{lattice}.  Further, \code{\link{image}} and the
+  graphics demo which can be invoked as \code{demo(graphics)}.
 }
 \examples{
 x <- -6:16
@@ -131,7 +137,7 @@ contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE,
              vfont = c("sans serif", "plain"))
 templines <- function(clines) {
   lines(clines[[2]], clines[[3]])
-}  
+}
 invisible(lapply(line.list, templines))
 par(opar)
 }
