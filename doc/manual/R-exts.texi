@@ -9234,9 +9234,10 @@ It is written for the R core team and others studying the code in the
 
 @menu
 * SEXPs::                       
+* Serialization Formats::       
 @end menu
 
-@node SEXPs,  , R Internal Structures, R Internal Structures
+@node SEXPs, Serialization Formats, R Internal Structures, R Internal Structures
 @section SEXPs
 
 What @R{} users think of as @emph{variables} or @emph{objects} are
@@ -9408,7 +9409,10 @@ actual and formal function arguments, and take the values 0, 1 and 2.
 
 The macros @code{MISSING} and @code{SET_MISSING} are used for pairlists
 of arguments.  Four bits are reserved, but only two are used (and
-exactly what for is not explained).
+exactly what for is not explained).  It seems that bit 0 is used by
+@code{matchArgs} to mark missingness on the returned argument list, and
+bit 1 is used to mark the use of a default value for an argument copied
+to the evaluation frame of a closure.
 
 Bit 0 is used by macros @code{DDVAL} and @code{SET_DDVAL}.  This
 indicates that a @code{SYMSXP} is one of the symbols @code{..n} which
@@ -9569,6 +9573,79 @@ vector nodes being of class 7.  The 'small' vector nodes are able to
 store vector data of up to 8, 16, 32, 48, 64 and 128 bytes: larger
 vectors are @code{malloc}ed individually whereas the 'small' nodes are
 allocated from pages of about 2000 bytes.
+
+
+@node Serialization Formats,  , SEXPs, R Internal Structures
+@section Serialization Formats
+
+Serialized versions of @R{} objects are used by @code{load}/@code{save}
+and also at a lower level by @code{.saveRDS}/@code{.readRDS} and
+@code{serialize}/@code{unserialize}.  These differ in what they
+serialize to (a file, a connection, a raw vector) and whether they are
+intended to serialize a single object or a collection of objects
+(typically a workspace).
+
+@R{} has used the same serialization format since @R 1.4.0 in December
+2001.  Reading of earlier formats is still supported via @code{load},
+but they are not described here.  (Files of these formats can still be
+found in @file{data} directories of packages.) The current serialization
+format is called `version 2', and has been expanded in back-compatible
+ways since @R{} 1.4.0, for example to support additional
+@code{SEXTYPES}.
+
+@code{save()} works by first creating a tagged pairlist of objects to be
+saved, and then saving that single object preceded by a single-line
+header (typically @code{RDX2\n} for a binary save).  @code{load} reads
+the header line, unserializes a single object (a pairlist or a vector
+list) and assigns the elements of the list in the appropriate
+environment.
+
+Serialization in @R{} needs to take into account that objects may
+contain references to environments, which then have enclosing
+environments and so on.  Environments recognized as package or name
+space environments are saved by name.
+
+Further, there are `reference objects' which are not duplicated on copy
+and should should remain shared on unserialization.  These are weak
+references, external pointers and environments other than those
+associated with packages, name spaces and the global environment.  These
+are handled via a hash table, and references after the first are written
+out as reference marker indexed by the table entry.
+
+Serialization first writes a header indicating the format (normally
+@code{X\n} for an XDR format binary save) and the version number of the
+format and of two @R{} versions (as integers).  (Unserialization
+interprets the two versions as the version of @R{} which wrote the file
+followed by the minimal version of @R{} needed to read the format.)
+Serialization then writes out the object recursively using function
+@code{WriteItem} in file @file{src/main/serialize.c}.
+
+Some objects are written as if they were @code{SEXPTYPE}s: such
+pseudo-SEXPTYPES cover @code{R_NilValue}, @code{R_EmptyEnv},
+@code{R_BaseEnv}, @code{R_GlobalEnv}, @code{R_UnboundValue},
+@code{R_MissingArg} and @code{R_BaseNamespace}.
+
+For all @code{SEXPTYPE}s except @code{NILSXP}, @code{SYMSXP} and
+@code{ENVSXP} serialization starts with a integer with the
+@code{SEXPTYPE} in bits 0:7@footnote{only 0:4 will currently be used for
+@code{SEXPTYPE}s but values 241:255 are used for pseudo-SEXPTYPES.}
+followed by the object bit, two bits indicating if there is an attribute
+and a tag (for the dotted pair types), an unused bit and then the
+@code{gp} field@footnote{Currently the only relevant bits are 0:1,
+14:15.} in bits 12:27.  Dotted pair objects write their attributes (if
+any), tag (if any), CAR and then CDR (using tail recursion): other
+objects write their attributes after themselves.  Atomic ector objects
+write their length followed by the data: generic vector objects write
+the length followed by a call to @code{WriteItem} for each element.  The
+code for @code{CHARSXP}s special-cases @code{NA_STRING} and writes it as
+length @code{-1} with no data.
+
+Environments are treated in several ways: as we have seen, some are
+written as specific pseudo-SEXPTYPEs.  Package and name space
+environments are written with pseudo-SEXPTYPEs followed by the name.
+`Normal' environments are written on as @code{ENVSXP}s with an integer
+indicating if the environment is locked followed by the enclosure,
+frame, tag and attributes.
 
 @node Function and variable index, Concept index, R Internal Structures, Top
 @unnumbered Function and variable index
