@@ -617,7 +617,7 @@ do_install_source () {
         do_exit_on_error
       fi
     if test -f "R/sysdata.rda"; then
-      echo "tools:::sysdata2LazyLoadDB(\"R/sysdata.rda\", \"${R_PACKAGE_DIR}/R\")" | \
+      echo "options(warn=1); tools:::sysdata2LazyLoadDB(\"R/sysdata.rda\", \"${R_PACKAGE_DIR}/R\")" | \
         R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla > /dev/null ; \
       if test ${?} -ne 0; then \
         error "unable to build sysdata DB for package '${pkg_name}'" ; \

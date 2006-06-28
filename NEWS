@@ -197,6 +197,12 @@ DEPRECATED & DEFUNCT
     o	symbol.C() and symbol.For() are deprecated.  They are required in
 	S for use with is.loaded(), but are not so required in R.
 
+    o	load()ing an object saved in one of the formats used prior to
+	R 1.4.0 is deprecated.  Such objects should be re-saved in the
+	current format.
+
+    o	save(version = 1) is now deprecated.
+
 
 C-LEVEL FACILITIES
 
