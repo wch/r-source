@@ -35,7 +35,7 @@ save <- function(..., list = character(0),
     if (missing(ascii) && ! is.null(opts$ascii))
         ascii <- opts$ascii
     if (missing(version)) version <- opts$version
-    if (version < 2)
+    if (!is.null(version) && version < 2)
         warning("Use of save versions prior to 2 is deprecated")
 
     names <- as.character( substitute( list(...)))[-1]
