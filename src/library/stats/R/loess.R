@@ -212,7 +212,8 @@ predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
 {
     if(!inherits(object, "loess"))
 	stop("first argument must be a \"loess\" object")
-    if(is.null(newdata) & (se == FALSE)) return(fitted(object))
+    if(is.null(newdata) && !se)
+	return(fitted(object))
 
     if(is.null(newdata)) newx <- object$x
     else {
