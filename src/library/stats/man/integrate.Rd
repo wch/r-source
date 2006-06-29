@@ -47,6 +47,10 @@ integrate(f, lower, upper, subdivisions=100,
   just using a large number as the endpoint.  This increases the chance
   of a correct answer -- any function whose integral over an infinite
   interval is finite must be near zero for most of that interval.
+  
+  \code{f} must accept a vector of inputs and produce a vector of function
+  evaluations at those points.  The \code{\link{Vectorize}} function
+  may be helpful to convert \code{f} to this form.
 }
 \value{
   A list of class \code{"integrate"} with components
@@ -83,7 +87,10 @@ integrate(integrand, lower = 0, upper = 10)
 integrate(integrand, lower = 0, upper = 100000)
 integrate(integrand, lower = 0, upper = 1000000, stop.on.error = FALSE)
 
-try(integrate(function(x) 2, 0, 1))  ## no vectorizable function
+## some functions do not handle vector input properly
+f <- function(x) 2  
+try(integrate(f, 0, 1)) 
+integrate(Vectorize(f), 0, 1)  ## correct
 integrate(function(x) rep(2, length(x)), 0, 1)  ## correct
 
 ## integrate can fail if misused
