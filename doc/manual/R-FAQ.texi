@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-06-26
+@set FAQ_DATE @value{FAQ_YEAR}-06-28
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2077,6 +2077,9 @@ Generalized Pareto distribution and Peaks Over Threshold.
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
 penalisations.  Also includes some other multiway methods.
+@item PearsonICA
+Independent component analysis using score functions from the Pearson
+system.
 @item ProbForecastGOP
 Probabilistic weather field forecasts using the Geostatistical Output
 Perturbation method introduced by Gel, Raftery and Gneiting (2004).
@@ -3781,6 +3784,9 @@ Statistics with S'' by W. Venables and B. Ripley.  Contained in the
 @item spatialCovariance
 Computation of spatial covariance matrices for data on rectangles using
 one dimensional numerical integration and analytic results.
+@item spatialkernel
+Nonparameteric estimation of spatial segregation in a multivariate point
+process.
 @item spatstat
 Data analysis and modelling of two-dimensional point patterns, including
 multitype points and spatial covariates.
@@ -3873,6 +3879,8 @@ Functions for survival analysis, including penalised likelihood.
 @emph{Recommended}.
 @item survrec
 Survival analysis for recurrent event data.
+@item svcR
+A support vector machine technique for clustering.
 @item svmpath
 Computes the entire regularization path for the two-class svm classifier
 with essentialy the same cost as a single SVM fit.
