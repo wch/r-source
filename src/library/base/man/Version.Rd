@@ -1,20 +1,21 @@
 \name{R.Version}
 \title{Version Information}
-\usage{
-R.Version()
-R.version
-R.version.string
-}
 \alias{R.Version}
 \alias{R.version}
 \alias{version}
 \alias{R.version.string}
+\usage{
+R.Version()
+R.version
+R.version.string
+version
+}
 \description{
-    \code{R.Version()} provides detailed information about the version of
-    \R running. \cr
-    \code{R.version} is a variable (a \code{\link{list}}) holding this
-    information (and \code{version} is a copy of it for
-    S compatibility).
+  \code{R.Version()} provides detailed information about the version of
+  \R running.
+    
+  \code{R.version} is a variable (a \code{\link{list}}) holding this
+  information (and \code{version} is a copy of it for S compatibility).
 }
 \value{
  \code{R.Version} returns a list with character-string components
@@ -33,7 +34,7 @@ R.version.string
   \item{day}{the day the version was released}
   \item{svn rev}{the Subversion revision number, which should be either
     \code{"unknown"} or a single number. (A range of numbers or a number
-    with \code{M} or \code{S} appended indicates inconsistencies in the
+    with \samp{M} or \samp{S} appended indicates inconsistencies in the
     sources used to build this version of \R.)
   }
   \item{language}{always \code{"R"}.}
@@ -50,8 +51,8 @@ R.version.string
   different versions of the OS may report different values of
   \code{R.version$os}, as may different versions of \R.
 
-   \code{R.version.string} is a copy of \code{R.version$version.string}
-   for simplicity and backwards compatibility.
+  \code{R.version.string} is a copy of \code{R.version$version.string}
+  for simplicity and backwards compatibility.
 }
 \seealso{
   \code{\link[utils]{sessionInfo}} which provides additional
