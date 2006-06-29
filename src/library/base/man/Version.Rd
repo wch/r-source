@@ -54,8 +54,9 @@ R.version.string
    for simplicity and backwards compatibility.
 }
 \seealso{
-  \code{\link{getRversion}},
-  \code{\link{.Platform}}
+  \code{\link[utils]{sessionInfo}} which provides additional
+  information;
+  \code{\link{getRversion}}, \code{\link{.Platform}}
 }
 \examples{
 R.version$os # to check how lucky you are ...

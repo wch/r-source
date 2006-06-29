@@ -22,7 +22,7 @@ bug.report(subject = "",
 \description{
   Invokes an editor to write a bug report and optionally mail it to the
   automated r-bugs repository at \email{r-bugs@r-project.org}.  Some standard
-  information on the current version and configuration of \R are 
+  information on the current version and configuration of \R are
   included automatically.
 }
 \details{
@@ -101,7 +101,7 @@ bug.report(subject = "",
   not hypotheses or categorizations.  It is always easier to report the
   facts, but people seem to prefer to strain to posit explanations and
   report them instead.  If the explanations are based on guesses about
-  how \R is implemented, they will be useless; we will have to try to 
+  how \R is implemented, they will be useless; we will have to try to
   figure out what the facts must have been to lead to such
   speculations.  Sometimes this is impossible.  But in any case, it is
   unnecessary work for us.
@@ -142,7 +142,8 @@ bug.report(subject = "",
   Bug reports on \strong{contributed packages} should be sent to the
   package maintainer rather than to r-bugs.
 }
-\seealso{R FAQ} 
+\seealso{R FAQ, also \code{\link{sessionInfo}()} from which you may add
+  to the bug report.}
 \author{This help page is adapted from the Emacs manual and the R FAQ}
 \keyword{utilities}
 \keyword{error}

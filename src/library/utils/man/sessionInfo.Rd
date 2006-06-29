@@ -4,7 +4,7 @@
 \alias{toLatex.sessionInfo}
 \alias{print.sessionInfo}
 \description{
-  Print version information about R and attached packages.
+  Print version information about \R and attached packages.
 }
 \usage{
 sessionInfo(package=NULL)
@@ -18,8 +18,10 @@ sessionInfo(package=NULL)
   \item{object}{an object of class \code{"sessionInfo"}.}
   \item{\dots}{currently not used.}
 }
-\keyword{misc}
+\seealso{\code{\link{R.version}}
+}
 \examples{
 sessionInfo()
 toLatex(sessionInfo())
 }
+\keyword{misc}
