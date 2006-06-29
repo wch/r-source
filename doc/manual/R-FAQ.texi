@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-06-28
+@set FAQ_DATE @value{FAQ_YEAR}-06-29
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -3730,6 +3730,8 @@ Routines for the statistical analysis of shapes, including procrustes
 analysis, displaying shapes and principal components, testing for mean
 shape difference, thin-plate spline transformation grids and edge
 superimposition methods.
+@item simecol
+SIMulation of ECOLogical (and other) dynamic systems.
 @item simex
 SIMEX and MCSIMEX algorithms for measurement error models.
 @item simpleboot
@@ -3777,6 +3779,9 @@ more.
 @item spBayes
 Fit Gaussian models with potentially complex hierarchical error
 structures by Markov chain Monte Carlo (MCMC).
+@item spatclus
+Arbitrarily shaped multiple spatial cluster detection for case event
+data.
 @item spatial
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with S'' by W. Venables and B. Ripley.  Contained in the
