@@ -140,7 +140,7 @@ NEW FEATURES
 
     o	lag.plot() produces a conventional plot (not setting mfrow) if
 	only one plot is to be produced.
-	
+
     o	read.DIF() can read Data Interchange Format files, and (in
 	Windows) this format from the clipboard.
 
@@ -167,6 +167,10 @@ NEW FEATURES
 
     o	sort.list() now implements complex vectors (PR#9039), and how
 	complex numbers are sorted is now documented.
+
+    o	expand.grid() now has an argument 'KEEP.OUT.ATTRS' which can
+	suppress (the potentially expensive) "out.attrs" attribute. It no
+	longer returns an extraneous 'colnames' attribute.
 
 
 DEPRECATED & DEFUNCT
