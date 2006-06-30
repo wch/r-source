@@ -5,7 +5,7 @@
 \title{Plot Columns of Matrices}
 \usage{
 matplot(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL,
-        col = 1:6, cex = NULL,
+        col = 1:6, cex = NULL, bg = NA,
         xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
         \dots, add = FALSE, verbose = getOption("verbose"))
 
@@ -47,6 +47,10 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
   \item{cex}{vector of character expansion sizes, used cyclically.
     This works as a multiple of \code{\link{par}("cex")}.  \code{NULL} is
     equivalent to \code{1.0}. }
+  \item{bg}{vector of (\dQuote{fill}) colors for the open plot
+    symbols given by \code{pch=21:25} as in \code{\link{points}}.  The
+    default \code{NA} corresponds to the one of the underlying function
+    \code{\link{plot.xy}}.}
   \item{xlab, ylab}{titles for x and y axes, as in \code{\link{plot}}.}
   \item{xlim, ylim}{ranges of x and y axes, as in \code{\link{plot}}.}
   \item{\dots}{Graphical parameters (see \code{\link{par}}) and any further
@@ -94,6 +98,8 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
 matplot((-4:5)^2, main = "Quadratic") # almost identical to plot(*)
 sines <- outer(1:20, 1:4, function(x, y) sin(x / 20 * pi * y))
 matplot(sines, pch = 1:4, type = "o", col = rainbow(ncol(sines)))
+matplot(sines, type = "b", pch = 21:23, col = 2:5, bg = 2:5,
+        main = "matplot(...., pch = 21:23, bg = 2:5)")
 
 x <- 0:50/50
 matplot(x, outer(x, 1:8, function(x, k) sin(k*pi * x)),

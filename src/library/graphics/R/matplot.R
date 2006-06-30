@@ -10,15 +10,15 @@ matlines  <-
 	    add=TRUE, ...)
 
 matplot <- function(x, y, type = "p",
-		    lty = 1:5, lwd = 1, pch=NULL, col=1:6, cex=NULL,
+		    lty = 1:5, lwd = 1, pch=NULL, col=1:6, cex=NULL, bg=NA,
 		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
 		    ..., add= FALSE, verbose = getOption("verbose"))
 {
     paste.ch <- function(chv) paste('"',chv,'"', sep="", collapse=" ")
     str2vec <- function(string) {
 	if(nchar(string, type="c")[1] > 1)
-            strsplit(string[1], NULL)[[1]]
-        else string
+	    strsplit(string[1], NULL)[[1]]
+	else string
     }
     ## These from plot.default :
     xlabel <- if (!missing(x)) deparse(substitute(x))# else NULL
@@ -65,16 +65,17 @@ matplot <- function(x, y, type = "p",
     if(length(lwd) < k) lwd <- rep(lwd, length.out = k)
     if(length(pch) < k) pch <- rep(pch, length.out = k)
     if(length(col) < k) col <- rep(col, length.out = k)
+    if(length(bg) < k)	bg  <- rep(bg,	length.out = k)
     if(length(cex) < k) cex <- rep(cex, length.out = k)
     ii <- 1:k
     if(!add) {
 	ii <- ii[-1]
 	plot(x[,1],y[,1], type=type[1], xlab=xlab, ylab=ylab,
-	     xlim = xlim, ylim = ylim,
-	     lty=lty[1], lwd=lwd[1], pch=pch[1], col=col[1], cex=cex[1], ...)
+	     xlim = xlim, ylim = ylim, lty=lty[1], lwd=lwd[1],
+	     pch=pch[1], col=col[1], cex=cex[1], bg=bg[1], ...)
     }
     for (i in ii) {
 	lines(x[,i], y[,i], type=type[i], lty=lty[i],
-	      lwd=lwd[i], pch=pch[i], col=col[i], cex=cex[i])
+	      lwd=lwd[i], pch=pch[i], col=col[i], cex=cex[i], bg=bg[i])
     }
 }
