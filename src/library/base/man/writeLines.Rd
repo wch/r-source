@@ -14,7 +14,7 @@ writeLines(text, con = stdout(), sep = "\n")
     each line of text.}
 }
 \details{
-  If the \code{con} is a character string, the function call
+  If the \code{con} is a character string, the function calls
   \code{\link{file}} to obtain a file connection which is opened for
   the duration of the function call.
 
