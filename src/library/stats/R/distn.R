@@ -232,7 +232,7 @@ qt <- function(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
 }
 rt <- function(n, df, ncp = 0) {
     if(ncp == 0) .Internal(rt(n, df))
-    else rnorm(n, ncp)/(rchisq(n, df)/sqrt(df))
+    else rnorm(n, ncp)/sqrt(rchisq(n, df)/df)
 }
 
 ptukey <- function(q, nmeans, df, nranges=1, lower.tail = TRUE, log.p = FALSE)

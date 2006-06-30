@@ -127,6 +127,9 @@ dkwtest("weibull",shape = 4,scale = 4)
 dkwtest("hyper", m=60, n=100, k=50)
 dkwtest("hyper", m=6, n=10, k=5)
 dkwtest("hyper", m=600, n=1000, k=500)
-        
+
+## regression test for non-central t bug
+dkwtest("t", df=20, ncp=3)
+
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
 
