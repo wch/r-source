@@ -301,8 +301,9 @@ BUG FIXES
 	account the smaller header and also the fixed sizes used in
 	the node classes for small vector objects).
 
-    o   rt() was wrong for non-central t-distributions (reported by 
-        Long Qu).
+    o   rt() was wrong for non-central t-distributions. qt() was wrong 
+        for non-central distributions far enough in the left tail 
+        (reported by Long Qu). PR#9050
 
 
 

@@ -4321,3 +4321,8 @@ stopifnot(identical(e, .GlobalEnv))
 x <- factor(sample(letters, 1000, replace=TRUE))
 o <- sort.list(x, method = "radix")
 ## failed in 2.3.1
+
+## qt() bisection search: PR#9050
+x <- -2:2
+stopifnot(isTRUE(all.equal(x, qt(pt(x, df=20, ncp=1),df=20,ncp=1))))
+
