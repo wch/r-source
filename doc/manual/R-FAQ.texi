@@ -2164,6 +2164,8 @@ balloon-borne instrument).
 Implementation of random variables by means of S4 classes and methods.
 @item RandomFields
 Creating random fields using various methods.
+@item Rassist
+Student-friendly package to mask common functions.
 @item Rcmdr
 A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the @strong{tcltk} package.
@@ -3704,6 +3706,8 @@ regression models (GLMs).
 Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach.
+@item sensitivity
+Sensitivity analysis.
 @item seqinr
 Exploratory data analysis and data visualization for biological sequence
 (DNA and protein) data.
