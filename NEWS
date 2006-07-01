@@ -301,10 +301,12 @@ BUG FIXES
 	account the smaller header and also the fixed sizes used in
 	the node classes for small vector objects).
 
-    o   rt() was wrong for non-central t-distributions. qt() was wrong 
-        for non-central distributions far enough in the left tail 
+    o   rt() was wrong for non-central t-distributions. qt() was wrong
+        for non-central distributions far enough in the left tail
         (reported by Long Qu). PR#9050
 
+    o	R CMD Rdconv --type=Ssgm no longer drops a \keyword{} if it is the
+	only one (one letter typo patch by Bill Dunlap). PR#9051
 
 
 
