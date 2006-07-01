@@ -46,11 +46,11 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE)
     if(nd <- length(dots)) {
         if(nd == 1 && length(dots[[1]]) == 1) # unnamed degree
             degree <- dots[[1]]
-        else return(polym(x, ..., degree = degree))
+        else return(polym(x, ..., degree = degree, raw = raw))
     }
     if(is.matrix(x)) {
         m <- unclass(as.data.frame(cbind(x, ...)))
-        return(do.call("polym", c(m, degree=degree)))
+        return(do.call("polym", c(m, degree = degree, raw = raw)))
     }
     if(degree < 1)
         stop("'degree' must be at least 1")

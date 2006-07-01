@@ -4326,3 +4326,9 @@ o <- sort.list(x, method = "radix")
 x <- -2:2
 stopifnot(isTRUE(all.equal(x, qt(pt(x, df=20, ncp=1),df=20,ncp=1))))
 
+## poly() didn't pass 'raw' to polym()
+x <- -3:3
+y <- 10*(1:7)
+stopifnot(identical(poly (x,y, degree = 2, raw = TRUE),
+		    polym(x,y, degree = 2, raw = TRUE)))
+## failed in 2.3.1
