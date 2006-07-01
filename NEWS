@@ -46,6 +46,8 @@ BUG FIXES
     o	R CMD Rdconv --type=Ssgm no longer drops a \keyword{} if it is the
 	only one (one letter typo patch by Bill Dunlap). PR#9051
 
+    o	poly(x,y, .., raw = TRUE) now does follow 'raw'.
+
 
 
 		CHANGES IN R VERSION 2.3.1
