@@ -1,5 +1,10 @@
 \name{influence.measures}
 \title{Regression Deletion Diagnostics}
+%
+\concept{studentized residuals}
+\concept{standardized residuals}
+\concept{Cook's distances}
+%
 \alias{influence.measures}
 \alias{print.infl}
 \alias{summary.infl}
