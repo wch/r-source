@@ -352,6 +352,8 @@ BUG FIXES
 
     o	poly(x,y, .., raw = TRUE) now does follow 'raw'.
 
+    o	plot(0/ -1:1, type = "s") now works; PR#9046
+
 
 
 		CHANGES IN R VERSION 2.3.1

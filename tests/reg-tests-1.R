@@ -4332,3 +4332,14 @@ y <- 10*(1:7)
 stopifnot(identical(poly (x,y, degree = 2, raw = TRUE),
 		    polym(x,y, degree = 2, raw = TRUE)))
 ## failed in 2.3.1
+
+## plot.xy( type = "s" | "S" ) was missing an initial test: PR#9046
+types <- c("p", "l", "b", "o", "h", "s", "S")
+p <- palette(hcl(h = seq(30,330, length= length(types))))
+plot(c(1,6), c(-.4, 1.5), type="n", ann = FALSE);  off <- 1:6 / 16
+for(i in seq(types)) {
+    lines(i*off /-1:4, type = types[i], col = i, pch = types[i])
+    mtext(types[i], 4, line= .5, at = i*off[6]/4, col = i, las = 1)
+}
+palette(p)# restored to previous
+## failed in 2.3.1
