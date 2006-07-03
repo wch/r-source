@@ -78,7 +78,16 @@ getExportedValue <- function(ns, name) {
 "::" <- function(pkg, name) {
     pkg <- as.character(substitute(pkg))
     name <- as.character(substitute(name))
-    getExportedValue(pkg, name)
+    ns <- tryCatch(asNamespace(pkg), hasNoNamespaceError = function(e) NULL)
+    if (is.null(ns)) {
+        pos <- match(paste("package", pkg, sep=":"), search(), 0)
+        if (pos == 0)
+            stop(gettextf(paste("package '%s' has no name space and",
+                                "is not on the search path"), pkg),
+                 domain = NA)
+        get(name,pos = 2, inherits = FALSE)
+    }
+    else getExportedValue(pkg, name)
 }
 
 ":::" <- function(pkg, name) {
@@ -266,9 +275,18 @@ loadNamespace <- function (package, lib.loc = NULL,
         bindTranslations(package, pkgpath)
         package.lib <- dirname(pkgpath)
         package <- basename(pkgpath) # need the versioned name
-        if (! packageHasNamespace(package, package.lib))
-            stop(gettextf("package '%s' does not have a name space", package),
-                 domain = NA)
+        if (! packageHasNamespace(package, package.lib)) {
+            hasNoNamespaceError <- function (package, package.lib,
+                                             call = NULL) {
+                class <- c("hasNoNamespaceError", "error", "condition")
+                msg <- gettextf("package '%s' does not have a name space",
+                                package)
+                structure(list(message = msg, package = package,
+                               package.lib = package.lib, call = call),
+                          class = class)
+            }
+            stop(hasNoNamespaceError(package, package.lib))
+        }
 
         ## create namespace; arrange to unregister on error
         ## <FIXME PRE-R-NG>

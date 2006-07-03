@@ -27,6 +27,9 @@ USER-VISIBLE CHANGES
         to any non-empty value when R is started. Only applies to new
         class definitions, via a call to setClass().
 
+    o	The :: operator now also works for packages without name spaces
+        that are on the serch path.
+
 
 NEW FEATURES
 
