@@ -1083,7 +1083,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     /* Optional argument: "hadj" */
-    if (length(CAR(args)) != 1) 
+    if (length(CAR(args)) != 1)
 	errorcall(call, _("'hadj' must be of length one"));
     hadj = asReal(CAR(args));
     args = CDR(args);
@@ -1502,17 +1502,17 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     sy = R_NilValue;		/* -Wall */			\
     sxy = CAR(args);						\
     if (isNewList(sxy) && length(sxy) >= 2) {			\
-	internalTypeCheck(call, sx = VECTOR_ELT(sxy, 0), REALSXP);	\
-	internalTypeCheck(call, sy = VECTOR_ELT(sxy, 1), REALSXP);	\
+	internalTypeCheck(call, sx = VECTOR_ELT(sxy, 0), REALSXP); \
+	internalTypeCheck(call, sy = VECTOR_ELT(sxy, 1), REALSXP); \
     }								\
     else if (isList(sxy) && length(sxy) >= 2) {			\
 	internalTypeCheck(call, sx = CAR(sxy), REALSXP);	\
 	internalTypeCheck(call, sy = CADR(sxy), REALSXP);	\
     }								\
     else							\
-	errorcall(call, _("invalid plotting structure"));		\
+	errorcall(call, _("invalid plotting structure"));	\
     if (LENGTH(sx) != LENGTH(sy))				\
-	error(_("'x' and 'y' lengths differ in %s()"), subname);	\
+	error(_("'x' and 'y' lengths differ in %s()"), subname);\
     n = LENGTH(sx);						\
     args = CDR(args)
 
@@ -1646,11 +1646,11 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
 	    if ((R_FINITE(xx) && R_FINITE(yy)) &&
 		(R_FINITE(xold) && R_FINITE(yold))) {
-		if(n0 == 0) {xtemp[n0] = xold; ytemp[n0++] = yold;}
-		xtemp[n0] = xx; ytemp[n0++] = yold;
-		xtemp[n0] = xx;	ytemp[n0++] = yy;		
-	    } else if ((R_FINITE(xold) && R_FINITE(yold)) &&
-		     !(R_FINITE(xx) && R_FINITE(yy))) {
+		if(n0 == 0) { xtemp[n0] = xold; ytemp[n0++] = yold; }
+		xtemp[n0] = xx; ytemp[n0++] = yold;/* <-only diff 's' <-> 'S' */
+		xtemp[n0] = xx;	ytemp[n0++] = yy;
+	    } else if( (R_FINITE(xold) && R_FINITE(yold)) &&
+		       !(R_FINITE(xx)  && R_FINITE(yy))	  && n0 > 0) {
 		GPolyline(n0, xtemp, ytemp, DEVICE, dd);
 		n0 = 0;
 	    }
@@ -1678,9 +1678,9 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 		(R_FINITE(xold) && R_FINITE(yold))) {
 		if(n0 == 0) {xtemp[n0] = xold; ytemp[n0++] = yold;}
 		xtemp[n0] = xold; ytemp[n0++] = yy;
-		xtemp[n0] = xx;	ytemp[n0++] = yy;		
-	    } else if ((R_FINITE(xold) && R_FINITE(yold)) &&
-		     !(R_FINITE(xx) && R_FINITE(yy))) {
+		xtemp[n0] = xx;	ytemp[n0++] = yy;
+	    } else if( (R_FINITE(xold) && R_FINITE(yold)) &&
+		       !(R_FINITE(xx)  && R_FINITE(yy))	  && n0 > 0) {
 		GPolyline(n0, xtemp, ytemp, DEVICE, dd);
 		n0 = 0;
 	    }
