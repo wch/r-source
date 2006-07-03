@@ -4325,6 +4325,7 @@ o <- sort.list(x, method = "radix")
 ## qt() bisection search: PR#9050
 x <- -2:2
 stopifnot(isTRUE(all.equal(x, qt(pt(x, df=20, ncp=1),df=20,ncp=1))))
+## failed in 2.3.1
 
 ## poly() didn't pass 'raw' to polym()
 x <- -3:3
@@ -4342,4 +4343,9 @@ for(i in seq(types)) {
     mtext(types[i], 4, line= .5, at = i*off[6]/4, col = i, las = 1)
 }
 palette(p)# restored to previous
+## failed in 2.3.1
+
+## qf for large df2
+stopifnot(isTRUE(all.equal(qf(0.9,df1=1,df2=1e10,ncp=0),
+                           qf(0.9,df1=1,df2=1e10))))
 ## failed in 2.3.1

@@ -312,6 +312,9 @@ BUG FIXES
 	account the smaller header and also the fixed sizes used in
 	the node classes for small vector objects).
 
+    o   rf() was wrong for non-central F (PR#9055). qf() was wrong for 
+        non-central F with denominator df > 1e8.
+
 
 
 	**************************************************

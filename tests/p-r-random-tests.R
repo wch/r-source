@@ -130,6 +130,9 @@ dkwtest("hyper", m=600, n=1000, k=500)
 
 ## regression test for non-central t bug
 dkwtest("t", df=20, ncp=3)
+## regression test for non-central F bug
+dkwtest("f", df1=10, df2=2, ncp=3)
+
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
 

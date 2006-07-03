@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-06-30 r38463)
+R version 2.4.0 Under development (unstable) (2006-07-03 r38476)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -271,8 +271,13 @@ hyper(m = 600, n = 1000, k = 500) PASSED
 > dkwtest("t", df=20, ncp=3)
 t(df = 20, ncp = 3) PASSED
 [1] TRUE
+> ## regression test for non-central F bug
+> dkwtest("f", df1=10, df2=2, ncp=3)
+f(df1 = 10, df2 = 2, ncp = 3) PASSED
+[1] TRUE
+> 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.704 0.012 2.72 0 0 
+Time elapsed:  2.8 0.024 2.825 0 0 
 > 
 > 
