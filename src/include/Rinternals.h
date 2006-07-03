@@ -101,6 +101,7 @@ typedef unsigned int SEXPTYPE;
 #define EXTPTRSXP   22    /* external pointer */
 #define WEAKREFSXP  23    /* weak reference */
 #define RAWSXP      24    /* raw bytes */
+#define S4SXP      25    /* S4, non-vector */
 
 #define FUNSXP      99    /* Closure or Builtin or Special */
 
@@ -131,6 +132,7 @@ typedef enum {
     EXTPTRSXP   = 22,   /* external pointer */
     WEAKREFSXP  = 23,   /* weak reference */
     RAWSXP      = 24,   /* raw bytes */
+    S4SXP         = 25,   /* S4 non-vector */
 
     FUNSXP	= 99	/* Closure or Builtin */
 } SEXPTYPE;
@@ -558,6 +560,7 @@ SEXP Rf_EnsureString(SEXP);
 SEXP Rf_allocArray(SEXPTYPE, SEXP);
 SEXP Rf_allocMatrix(SEXPTYPE, int, int);
 SEXP Rf_allocList(int);
+SEXP Rf_allocS4Object();
 SEXP Rf_allocSExp(SEXPTYPE);
 SEXP Rf_allocVector(SEXPTYPE, R_len_t);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
@@ -815,6 +818,7 @@ int R_system(char *);
 #ifndef R_NO_REMAP
 #define allocArray		Rf_allocArray
 #define allocList		Rf_allocList
+#define allocS4Object      Rf_allocS4Object
 #define allocMatrix		Rf_allocMatrix
 #define allocSExp		Rf_allocSExp
 #define allocString		Rf_allocString

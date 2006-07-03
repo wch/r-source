@@ -423,6 +423,7 @@ static R_size_t R_NodesInUse = 0;
   case CPLXSXP: \
   case WEAKREFSXP: \
   case RAWSXP: \
+  case S4SXP: \
     break; \
   case STRSXP: \
   case EXPRSXP: \
@@ -2034,6 +2035,14 @@ SEXP allocList(int n)
     }
     return result;
 }
+
+SEXP allocS4Object()
+{
+   SEXP s;
+   GC_PROT(s = allocSExpNonCons(S4SXP));
+   return s;
+}
+
 
 /* "gc" a mark-sweep or in-place generational garbage collector */
 

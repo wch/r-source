@@ -665,6 +665,11 @@ void PrintValueRec(SEXP s,SEXP env)
     case WEAKREFSXP:
 	Rprintf("<weak reference>\n");
 	break;
+    case S4SXP:
+      /*  we got here because no show method, usually no class.
+       Print the "slots" as attributes, since we don't know the class */
+	Rprintf("<S4 Type Object>\n");
+	break;
     default:
 	UNIMPLEMENTED_TYPE("PrintValueRec", s);
     }
@@ -794,17 +799,12 @@ void PrintValueEnv(SEXP s, SEXP env)
     if(isObject(s)) {
 	/* The intention here is to call show() on S4 objects, otherwise
 	   print(), so S4 methods for show() have precedence over those for
-	   print(). We decided not to do this, at least for now.
+	   print(), to conform with the "green book", p. 332
 	*/
-        /*if(isMethodsDispatchOn()) {
-	    SEXP class = getAttrib(s, R_ClassSymbol);
-	    if(length(class) == 1) {
-		char str[201];
-		snprintf(str, 200, ".__C__%s", CHAR(STRING_ELT(class, 0)));
-		if(findVar(install(str), env) != R_UnboundValue)
+        if(isMethodsDispatchOn()) {
+	  if(R_seemsS4Object(s))
 		    autoprint = "show";
-	    }
-	}*/
+	}
 	PROTECT(call = lang2(install(autoprint), s));
 	eval(call, env);
 	UNPROTECT(1);

@@ -220,6 +220,12 @@ static SEXP duplicate1(SEXP s)
     case PROMSXP:
 	return s;
 	break;
+    case S4SXP:
+        PROTECT(s);
+	PROTECT(t = allocS4Object());
+	DUPLICATE_ATTRIB(t, s);
+	UNPROTECT(2);
+	break;
     default:
 	UNIMPLEMENTED_TYPE("duplicate", s);
 	t = s;/* for -Wall */

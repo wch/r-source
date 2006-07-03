@@ -53,6 +53,11 @@ removeGeneric("f")
 
 
 ## print/show dispatch  [moved from  ./reg-tests-2.R ]
+## The results  have waffled back and forth.
+## Currently (R 2.4.0) the intent is that automatic printing of S4
+## objects should correspond to a call to show(), as per the green
+## book, p. 332.  Therefore, the show() method is called, once defined,
+## for auto-printing foo, regardless of the S3 or S4 print() method.
 setClass("bar", representation(a="numeric"))
 foo <- new("bar", a=pi)
 foo
@@ -63,7 +68,9 @@ setMethod("show", "bar", function(object){cat("show method\n")})
 show(foo)
 foo
 print(foo)
-print(foo, digits = 4)
+# suppressed because output depends on current choice of S4 type or
+# not.  Can reinstate when S4 type is obligatory
+# print(foo, digits = 4)
 
 print.bar <- function(x, ...) cat("print method\n")
 foo
@@ -74,6 +81,9 @@ setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
 foo
 print(foo)
 show(foo)
+## calling print() with more than one argument suppresses the show()
+## method, largely to prevent an infinite loop if there is in fact no
+## show() method for this class.  A better solution would be desirable.
 print(foo, digits = 4)
 
 setClassUnion("integer or NULL", members = c("integer","NULL"))

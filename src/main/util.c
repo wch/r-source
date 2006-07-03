@@ -207,6 +207,7 @@ TypeTable[] = {
 #endif
     { "weakref",	WEAKREFSXP },
     { "raw",		RAWSXP },
+    { "S4",		S4SXP },
     /* aliases : */
     { "numeric",	REALSXP	   },
     { "name",		SYMSXP	   },

@@ -1290,6 +1290,10 @@ SEXP R_do_new_object(SEXP class_def)
 Rboolean R_seemsS4Object(SEXP object)  {
   static SEXP R_packageSymbol = NULL;
   SEXP class;
+  if(!isObject(object))
+    return FALSE;
+  if(TYPEOF(object) == S4SXP)
+    return TRUE;
   if(!R_packageSymbol)
     R_packageSymbol = install("package");
   class = getAttrib(object, R_ClassSymbol);

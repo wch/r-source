@@ -162,6 +162,9 @@ Rboolean compute_identical(SEXP x, SEXP y)
 	  #define PRENV(x)	((x)->u.promsxp.env)
 	  return(compute_identical(subsititute(PREXPR(x), PRENV(x)),
 	  subsititute(PREXPR(y), PRENV(y))));*/
+    case S4SXP:
+        /* attributes already tested, so all slots identical */
+        return TRUE;
     default:
 	/* these are all supposed to be types that represent constant
 	   entities, so no further testing required ?? */

@@ -1085,6 +1085,12 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	sprintf(tpb, "<weak reference>");
 	print2buff(tpb, d);
 	break;
+    case S4SXP:
+      d->sourceable = FALSE;
+      print2buff("<S4 object of class ", d);
+      deparse2buff(getAttrib(s, R_ClassSymbol), d);
+      print2buff(">", d);
+      break;
     default:
     	d->sourceable = FALSE;
 	UNIMPLEMENTED_TYPE("deparse2buff", s);

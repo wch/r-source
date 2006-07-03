@@ -112,7 +112,7 @@ prototype <- function(...)
         names <- names[!data]
     }
     else
-        obj <- list()
+        obj <- defaultPrototype()
     for(i in seq(along = names))
         slot(obj, names[[i]], FALSE) <- props[[i]]
     new("classPrototypeDef", object = obj, slots = names, dataPart = dataPart)

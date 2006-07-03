@@ -47,3 +47,4 @@ SEXP R_set_el_named(SEXP object, SEXP what, SEXP value);
 SEXP R_set_slot(SEXP obj, SEXP name, SEXP value);
 SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef);
 SEXP do_substitute_direct(SEXP f, SEXP env);
+SEXP Rf_allocS4Object();

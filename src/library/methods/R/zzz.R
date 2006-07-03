@@ -100,6 +100,9 @@
     }
     if(Sys.getenv("R_S4_BIND") == "active")
         methods:::bind_activation(TRUE)
+    ## choose the default form for S4 objects
+    if(nchar(Sys.getenv("R_S4_Type")))
+             .useS4Prototype(TRUE, asNamespace(pkgName))
 }
 
 .onUnload <- function(libpath) {

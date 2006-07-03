@@ -934,6 +934,8 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    OutInteger(stream, LENGTH(s));
 	    OutVec(stream, s, RAW_ELT, OutByte);
 	    break;
+	case S4SXP:
+	  break; /* only attributes (i.e., slots) count */
 	default:
 	    error(_("WriteItem: unknown type %i"), TYPEOF(s));
 	}
@@ -1358,6 +1360,9 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    length = InInteger(stream);
 	    PROTECT(s = allocVector(type, length));
 	    InVec(stream, s, SET_RAW_ELT, InByte, length);
+	    break;
+	case S4SXP:
+	    PROTECT(s = allocS4Object());
 	    break;
 	default:
 	    s = R_NilValue; /* keep compiler happy */

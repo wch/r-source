@@ -518,11 +518,24 @@ newBasic <-
       stop(msg, domain = NA)
 }
 
+.defaultPrototype <-
+  list()
+
+## this non-exported function turns on or off
+## the use of the S4 type as class prototype
+.useS4Prototype <- function(on = TRUE, where  = .methodsNamespace) {
+    if(on)
+     pp <- .Call("Rf_allocS4Object",PACKAGE="methods")
+    else
+     pp <-  list()
+    .assignOverBinding(".defaultPrototype", where=where, pp, FALSE)
+}
+
 defaultPrototype <-
     ## the starting prototype for a non-virtual class
     ## Should someday be a non-vector sexp type
     function()
-    list()
+    .defaultPrototype
 
 reconcilePropertiesAndPrototype <-
   ## makes a list or a structure look like a prototype for the given class.

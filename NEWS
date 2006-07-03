@@ -20,6 +20,13 @@ USER-VISIBLE CHANGES
 	(Note that this does not apply to promises embedded in
 	objects, only to top-level objects.)
 
+    o The default prototype object for S4 classes will have its own
+        internal type in 2.4, as opposed to being an empty list (the
+        cause of several errors in the current code).  Currently
+        optional, turned on by setting environment variable R_S4_Type
+        to any non-empty value when R is started. Only applies to new
+        class definitions, via a call to setClass().
+
 
 NEW FEATURES
 
@@ -208,6 +215,10 @@ DEPRECATED & DEFUNCT
 	current format.
 
     o	save(version = 1) is now deprecated.
+
+    o  some changes have been made to automatic printing of S4
+        objects, to make this correspond to a call to show(), as per
+        Programming with Data.
 
 
 C-LEVEL FACILITIES
