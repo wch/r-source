@@ -183,6 +183,9 @@ NEW FEATURES
 	longer returns an extraneous 'colnames' attribute.
 
     o	matplot() now accepts a 'bg' argument similarly to plot.default() etc.
+    
+    o	A new option("quit.with.no.save") has been added; when TRUE, q() does
+    	not offer to save the workspace.
 
 
 DEPRECATED & DEFUNCT

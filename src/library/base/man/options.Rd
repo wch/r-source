@@ -180,6 +180,10 @@ getOption(x)
 
     \item{\code{prompt}:}{a string, used for \R's prompt; should usually
       end in a blank (\code{" "}).}
+      
+    \item{\code{quit.with.no.save}:}{logical.  If set and \code{TRUE}, 
+      the user prompt when quitting will not include an option to
+      save the workspace.  See \code{\link{quit}}.}
 
     \item{\code{save.defaults}, \code{save.image.defaults}:}{
       see \code{\link{save}}.}
