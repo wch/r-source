@@ -82,9 +82,11 @@ function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
     ## na.print handled here
     if(any(ina <- is.na(x)))
 	xx[ina] <- na.print
-    if(is.integer(x) && zero.print != "0" && any(i0 <- !ina & x == 0))
+
+    if(zero.print != "0" && any(i0 <- !ina & x == 0) && all(x == round(x)))
 	## MM thinks this should be an option for many more print methods...
 	xx[i0] <- sub("0", zero.print, xx[i0])
+
     ## Numbers get right-justified by format(), irrespective of 'justify'.
     ## We need to keep column headers aligned.
     if (is.numeric(x) || is.complex(x))

@@ -2,7 +2,7 @@
 \title{Cross Tabulation and Table Creation}
 \alias{table}
 \alias{summary.table}
-\alias{print.summary.table}
+\alias{print.summary.table}%% {print.table} is in ./print.Rd
 \alias{as.data.frame.table}
 \alias{as.table}
 \alias{as.table.default}
@@ -75,7 +75,8 @@ is.table(x)
   \code{table} drop levels of factor arguments potentially.
 }
 \seealso{Use \code{\link{ftable}} for printing (and more) of
-  multidimensional tables.
+  multidimensional tables.  \code{\link{margin.table}},
+  \code{\link{prop.table}}, \code{\link{addmargins}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -114,11 +115,13 @@ table(b)
 table(b, exclude="B")
 d <- factor(rep(c("A","B","C"), 10), levels=c("A","B","C","D","E"))
 table(d, exclude="B")
+print(table(b,d), zero.print = ".")
 
 ## NA counting:
 is.na(d) <- 3:4
 d <- factor(d, exclude=NULL)
 d[1:7]
 table(d, exclude = NULL)
+
 }
 \keyword{category}
