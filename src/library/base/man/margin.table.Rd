@@ -17,6 +17,9 @@ margin.table(x, margin=NULL)
   newbies, except that if \code{margin} has length zero you get
   \code{sum(x)}.
 }
+\seealso{
+  \code{\link{prop.table}} and \code{\link[stats]{addmargins}}.
+}
 \value{
   The relevant marginal table.  The class of \code{x} is copied to the
   output table, except in the summation case.

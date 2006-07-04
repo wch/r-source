@@ -20,15 +20,15 @@ USER-VISIBLE CHANGES
 	(Note that this does not apply to promises embedded in
 	objects, only to top-level objects.)
 
-    o The default prototype object for S4 classes will have its own
-        internal type in 2.4, as opposed to being an empty list (the
-        cause of several errors in the current code).  Currently
-        optional, turned on by setting environment variable R_S4_Type
-        to any non-empty value when R is started. Only applies to new
-        class definitions, via a call to setClass().
+    o	The default prototype object for S4 classes will have its own
+	internal type in 2.4, as opposed to being an empty list (the
+	cause of several errors in the current code).  Currently
+	optional, turned on by setting environment variable R_S4_Type
+	to any non-empty value when R is started. Only applies to new
+	class definitions, via a call to setClass().
 
     o	The :: operator now also works for packages without name spaces
-        that are on the serch path.
+	that are on the serch path.
 
 
 NEW FEATURES
@@ -183,9 +183,12 @@ NEW FEATURES
 	longer returns an extraneous 'colnames' attribute.
 
     o	matplot() now accepts a 'bg' argument similarly to plot.default() etc.
-    
+
     o	A new option("quit.with.no.save") has been added; when TRUE, q() does
-    	not offer to save the workspace.
+	not offer to save the workspace.
+
+    o	print.table(T, zero.print= ch) now also replaces 0 by ch when T is
+	non-integer with integer entries.
 
 
 DEPRECATED & DEFUNCT
@@ -217,14 +220,14 @@ DEPRECATED & DEFUNCT
 	S for use with is.loaded(), but are not so required in R.
 
     o	load()ing an object saved in one of the formats used prior to
-	R 1.4.0 is deprecated.  Such objects should be re-saved in the
+	R 1.4.0 is deprecated.	Such objects should be re-saved in the
 	current format.
 
     o	save(version = 1) is now deprecated.
 
     o  some changes have been made to automatic printing of S4
-        objects, to make this correspond to a call to show(), as per
-        Programming with Data.
+	objects, to make this correspond to a call to show(), as per
+	Programming with Data.
 
 
 C-LEVEL FACILITIES
@@ -298,8 +301,8 @@ BUG FIXES
     o	Function AIC in package stats4 was not dispatching correctly
 	on S4 classes via logLik() because of namespace issues.
 
-    o   Subsetting LANGSXPs could break call-by-value illusion (PR#7924)
-        (patch from Kevin Hendricks).
+    o	Subsetting LANGSXPs could break call-by-value illusion (PR#7924)
+	(patch from Kevin Hendricks).
 
     o	parse() with n > 1 gave a syntax error if fewer than n statements
 	were available (now pads with NULLs).
@@ -318,8 +321,11 @@ BUG FIXES
 	account the smaller header and also the fixed sizes used in
 	the node classes for small vector objects).
 
-    o   rf() was wrong for non-central F (PR#9055). qf() was wrong for 
-        non-central F with denominator df > 1e8.
+    o	rf() was wrong for non-central F (PR#9055). qf() was wrong for
+	non-central F with denominator df > 1e8.
+
+    o	addmargins(T, ...) now returns a "table" when 'T' is a "table", as
+	its help page has always suggested.
 
 
 
@@ -359,7 +365,7 @@ BUG FIXES
 	[pq]unif claimed to allow min == max but did not do so.
 
     o	Subassignment within raw arrays of 3 or more dimensions was not
-    	implemented.
+	implemented.
 
     o	environment<-() did not even check if duplication was required.
 

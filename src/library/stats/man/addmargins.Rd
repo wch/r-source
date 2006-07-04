@@ -24,17 +24,17 @@
 }
 
 \arguments{
-  \item{A}{A table or array.  The function uses the presence of the
-    \code{"dim"} and \code{"dimnames"} attributes of \code{A}}
-  \item{margin}{Vector of dimensions over which to form margins.  Margins
+  \item{A}{table or array.  The function uses the presence of the
+    \code{"dim"} and \code{"dimnames"} attributes of \code{A}.}
+  \item{margin}{vector of dimensions over which to form margins.  Margins
     are formed in the order in which dimensions are specified in
     \code{margin}.}
-  \item{FUN}{List of the same length as \code{margin}, each element of
+  \item{FUN}{list of the same length as \code{margin}, each element of
     the list being either a function or a list of functions.  Names of
     the list elements will appear as levels in dimnames of the result.
     Unnamed list elements will have names constructed:  the name
     of a function or a constructed name based on the position in the table.}
-  \item{quiet}{Logical which suppresses the message telling the order in
+  \item{quiet}{logical which suppresses the message telling the order in
     which the margins were computed.}
 }
 
@@ -45,12 +45,12 @@
 }
 
 \value{
-  A table with the same number of dimensions as A, but with extra levels
-  of the dimensions mentioned in \code{margin}.  The number of levels
-  added to each dimension is the length of the entries in \code{FUN}.
-  A message with the order of computation of margins is printed.
+  A table or array with the same number of dimensions as \code{A}, but
+  with extra levels of the dimensions mentioned in \code{margin}.  The
+  number of levels added to each dimension is the length of the entries
+  in \code{FUN}.  A message with the order of computation of margins is
+  printed.
 }
-
 \author{
   Bendix Carstensen, Steno Diabetes Center \& Department of
   Biostatistics, University of Copenhagen,
@@ -68,6 +68,9 @@ Bee <- sample(c("Hum", "Buzz"), 177, replace = TRUE)
 Sea <- sample(c("White", "Black", "Red", "Dead"), 177, replace = TRUE)
 (A <- table(Aye, Bee, Sea))
 addmargins(A)
+\dontshow{
+stopifnot(is.table(addmargins(A)))
+}
 ftable(A)
 ftable(addmargins(A))
 
@@ -89,8 +92,13 @@ round(sweep(addmargins(B, 2, list(list(All = sum, N = sqsm))), 1,
 mB <-  addmargins(B, 2, FUN = list(list(Total = sum)))
 round(ftable(sweep(addmargins(mB, 1, list(list(All = sum, N = sqsm))), 2,
                    apply(mB,2,sum)/100, "/")), 1)
-}
 
-\keyword{ manip }
-\keyword{ methods }
-\keyword{ array }
+## Zero.Printing table+margins:
+set.seed(1)
+x <- sample( 1:7, 20, replace=TRUE)
+y <- sample( 1:7, 20, replace=TRUE)
+tx <- addmargins( table(x, y) )
+print(tx, zero.print = ".")
+}
+\keyword{manip}
+\keyword{array}
