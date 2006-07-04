@@ -22,6 +22,9 @@ locale-dependent.)
 The installer can set defaults for MDI/SDI display, help style, and
 default action on q().  Custom builds of R can change these defaults.
 
+If CHM help is selected, but is not present (e.g. a package was cross-
+compiled on Unix), the help system defaults to text help.
+
 
 C-level changes
 ---------------

@@ -152,8 +152,14 @@ function(x, ...)
                 err <- .C("Rchtml", hlpfile, basename(file),
                           err = integer(1), PACKAGE = "Rchtml")$err
                 if(err) stop("CHM file could not be displayed")
-            } else
-                stop(gettextf("No CHM help for '%s' in package '%s' is available:\nthe CHM file for the package is missing", topic, thispkg), domain = NA)
+            } else {
+            	warning(gettextf("No CHM help for '%s' in package '%s' is available:\nthe CHM file for the package is missing", topic, thispkg), domain = NA)
+            	att <- attributes(x)
+            	x <- sub("/chm/([^/]*$)", "/help/\\1", x)
+            	attributes(x) <- att
+            	attr(x, "type") <- "help"
+            	print(x)
+            }		
         }
         else if(type == "help") {
             zfile <- zip.file.extract(file, "Rhelp.zip")
