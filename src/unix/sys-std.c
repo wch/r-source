@@ -786,6 +786,7 @@ void attribute_hidden Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 		default:
 		    goto qask;
 		}
+	    }
 	} else
 	    saveact = SaveAction;
     }
