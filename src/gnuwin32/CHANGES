@@ -19,6 +19,9 @@ with Unix.  (This will only possibly affect CJK locales, where some
 checks on the validity of symbols and strings might be
 locale-dependent.)
 
+The installer can set defaults for MDI/SDI display, help style, and
+default action on q().  Custom builds of R can change these defaults.
+
 
 C-level changes
 ---------------

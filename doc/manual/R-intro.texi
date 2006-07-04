@@ -7046,9 +7046,10 @@ invoking @code{RGui.exe}.
 @item --mdi
 @itemx --sdi
 @itemx --no-mdi
-Control whether @code{Rgui} will operate as an MDI program (the default,
-with multiple child windows within one main window) or an SDI application
-(with multiple top-level windows for the console, graphics and pager).
+Control whether @code{Rgui} will operate as an MDI program 
+(with multiple child windows within one main window) or an SDI application
+(with multiple top-level windows for the console, graphics and pager).  The 
+command-line setting overrides the setting in the user's @file{Rconsole} file.
 
 @item --debug
 Enable the ``Break to debugger'' menu item in @code{Rgui}, and trigger

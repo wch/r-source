@@ -26,6 +26,10 @@ my $startdir=cwd();
 my $RVER, $RVER0;
 my $RW=$ARGV[0];
 my $SRCDIR=$ARGV[1];
+my $MDISDI=$ARGV[2];
+my $HelpStyle=$ARGV[3];
+my $QuitOption=$ARGV[4];
+
 $SRCDIR =~ s+/+\\+g; # need DOS-style paths
 my $iconpars="WorkingDir: \"{app}\"" ;
 ## add to the target command line as in the next example
@@ -162,6 +166,11 @@ Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
 
 var
   NoAdminPage: TOutputMsgWizardPage;
+  SelectOptionsPage: TInputOptionWizardPage;
+  MDISDIPage: TInputOptionWizardPage;
+  HelpStylePage: TInputOptionWizardPage;
+  QuitOptionPage: TInputOptionWizardPage;
+  
 
 function IsAdmin: boolean;
 begin
@@ -177,11 +186,126 @@ procedure InitializeWizard;
 begin
   NoAdminPage := CreateOutputMsgPage(wpWelcome, SetupMessage(msgInformationTitle), 
     CustomMessage(\'adminprivilegesrequired\'), CustomMessage(\'adminexplanation\'));
+  
+  SelectOptionsPage := CreateInputOptionPage(wpSelectComponents,
+    \'Startup options\', \'Do you want to customize the startup options?\',
+    \'Please specify yes or no, then click Next.\',
+    True, False);
+  SelectOptionsPage.Add('Yes (customized startup)');
+  SelectOptionsPage.Add('No (accept defaults)');
+  SelectOptionsPage.SelectedValueIndex := 1;
+  
+  MDISDIPage := CreateInputOptionPage(SelectOptionsPage.ID,
+    \'Display Mode\', \'Do you prefer the MDI or SDI interface?\',
+    \'Please specify MDI or SDI, then click Next.\',
+    True, False);
+  MDISDIPage.Add('MDI (one big window)');
+  MDISDIPage.Add('SDI (separate windows)');
+  
+  HelpStylePage := CreateInputOptionPage(MDISDIPage.ID,
+    \'Help Style\', \'Which form of help display do you prefer?\',
+    \'Please specify plain text, CHM help, or HTML help, then click Next.\',
+    True, False);
+  HelpStylePage.Add(\'Plain text\');
+  HelpStylePage.Add(\'CHM help (Windows default)\');
+  HelpStylePage.Add(\'HTML help\');
+  
+  QuitOptionPage := CreateInputOptionPage(HelpStylePage.ID,
+    \'Quitting\', \'When quitting R, should the the default be to save the workspace?\',
+    \'Please specify yes or no, then click Next.\',
+    True, False);
+  QuitOptionPage.Add(\'Yes (default to saving the workspace)\');
+  QuitOptionPage.Add(\'No (default to discarding the workspace)\');
+  
+  case GetPreviousData(\'MDISDI\', \'\') of
+    \'MDI\': MDISDIPage.SelectedValueIndex := 0;
+    \'SDI\': MDISDIPage.SelectedValueIndex := 1;
+  else
+    MDISDIPage.SelectedValueIndex := ${MDISDI};
+  end;
+
+  case GetPreviousData(\'HelpStyle\', \'\') of
+    \'plain\': HelpStylePage.SelectedValueIndex := 0;
+    \'CHM\':   HelpStylePage.SelectedValueIndex := 1;
+    \'HTML\':  HelpStylePage.SelectedValueIndex := 2;
+  else
+    HelpStylePage.SelectedValueIndex := ${HelpStyle};
+  end;
+  
+  case GetPreviousData(\'QuitOption\', \'\') of
+    \'yes\': QuitOptionPage.SelectedValueIndex := 0;
+    \'no\':   QuitOptionPage.SelectedValueIndex := 1;
+  else
+    QuitOptionPage.SelectedValueIndex := ${QuitOption};
+  end;  
+  
+end;
+
+procedure RegisterPreviousData(PreviousDataKey: Integer);
+var
+  MDISDI: String;
+  HelpStyle: String;
+  QuitOption: String;
+begin
+  { Store the settings so we can restore them next time }
+  case MDISDIPage.SelectedValueIndex of
+    0: MDISDI := \'MDI\';
+    1: MDISDI := \'SDI\';
+  end;
+  SetPreviousData(PreviousDataKey, \'MDISDI\', MDISDI);
+  case HelpStylePage.SelectedValueIndex of
+    0: HelpStyle := \'plain\';
+    1: HelpStyle := \'CHM\';
+    2: HelpStyle := \'HTML\';
+  end;
+  SetPreviousData(PreviousDataKey, \'HelpStyle\', HelpStyle);  
+  case QuitOptionPage.SelectedValueIndex of
+    0: QuitOption := \'yes\';
+    1: QuitOption := \'no\';
+  end;
+  SetPreviousData(PreviousDataKey, \'QuitOption\', QuitOption);   
+end;
+
+procedure SetCommentMarker(var lines: TArrayOfString; option: String; active: boolean);
+var
+  i : integer;
+begin
+  for i := 0 to pred(GetArrayLength(lines)) do
+    if pos(option, lines[i]) > 0 then 
+    begin
+      if active then
+        lines[i][1] := \' \'
+      else
+        lines[i][1] := \'#\';
+      exit;
+    end;
+end;
+  
+procedure EditOptions();
+var
+  lines : TArrayOfString;
+  filename : String;
+begin
+  filename := ExpandConstant(CurrentFilename);
+  LoadStringsFromFile(filename, lines);
+  
+  SetCommentMarker(lines, \'MDI = yes\', MDISDIPage.SelectedValueIndex = 0);
+  SetCommentMarker(lines, \'MDI = no\', MDISDIPage.SelectedValueIndex = 1);
+  
+  SetCommentMarker(lines, \'options(chmhelp\', HelpStylePage.SelectedValueIndex = 1);
+  SetCommentMarker(lines, \'options(htmlhelp\', HelpStylePage.SelectedValueIndex = 2);
+  
+  SetCommentMarker(lines, \'options(quit.with.no.save\', QuitOptionPage.SelectedValueIndex = 1);
+  
+  SaveStringsToFile(filename, lines, False);
 end;
 
 function ShouldSkipPage(PageID: Integer): boolean;
 begin
   if PageID = NoAdminPage.ID then Result := IsAdmin
+  else if (PageID = MDISDIPage.ID) or (PageID = HelpStylePage.ID) 
+       or (PageID = QuitOptionPage.ID) then 
+    Result := SelectOptionsPage.SelectedValueIndex = 1
   else Result := false;
 end;
 
@@ -224,7 +348,6 @@ close insfile;
 sub listFiles {
     $fn = $File::Find::name;
     $fn =~ s+^./++;
-    my $newname = "";
     if (!(-d $_)) {
 	$fn =~ s+/+\\+g;
 	$dir = $fn;
@@ -293,8 +416,10 @@ sub listFiles {
 	    $component = "main";
 	}
 
-	$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; Flags: ignoreversion; Components: $component\n";
-	$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; DestName: \"$newname\"; Flags: ignoreversion; Components: $component\n" if $newname ne "";
+	$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; Flags: ignoreversion; Components: $component";
+	$lines="$lines; AfterInstall: EditOptions()" if $_ eq "etc\\Rprofile.site"
+	                                             || $_ eq "etc\\Rconsole";
+	$lines="$lines\n";
 
 	print insfile $lines;
     }
