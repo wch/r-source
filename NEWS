@@ -30,6 +30,12 @@ USER-VISIBLE CHANGES
     o	The :: operator now also works for packages without name spaces
 	that are on the serch path.
 
+    o   The functions read.csv, read.csv2, read.delim, read.delim2 now 
+        default the comment.char argument to "". (These functions are
+        designed to read files produced by other software, which might 
+	use the # character inside fields, but not likely use it for 
+	comments.)
+
 
 NEW FEATURES
 

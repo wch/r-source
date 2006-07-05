@@ -227,25 +227,29 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 
 read.csv <-
 function (file, header = TRUE, sep = ",", quote="\"", dec=".",
-          fill = TRUE, ...)
+          fill = TRUE, comment.char="", ...)
     read.table(file = file, header = header, sep = sep,
-               quote = quote, dec = dec, fill = fill, ...)
+               quote = quote, dec = dec, fill = fill,
+               comment.char=comment.char,  ...)
 
 read.csv2 <-
 function (file, header = TRUE, sep = ";", quote="\"", dec=",",
-          fill = TRUE, ...)
+          fill = TRUE, comment.char="",...)
     read.table(file = file, header = header, sep = sep,
-               quote = quote, dec = dec, fill = fill, ...)
+               quote = quote, dec = dec, fill = fill,
+               comment.char=comment.char, ...)
 
 read.delim <-
 function (file, header = TRUE, sep = "\t", quote="\"", dec=".",
-          fill = TRUE, ...)
+          fill = TRUE, comment.char="",...)
     read.table(file = file, header = header, sep = sep,
-               quote = quote, dec = dec, fill = fill, ...)
+               quote = quote, dec = dec, fill = fill,
+               comment.char=comment.char, ...)
 
 read.delim2 <-
 function (file, header = TRUE, sep = "\t", quote="\"", dec=",",
-          fill = TRUE, ...)
+          fill = TRUE, comment.char="",...)
     read.table(file = file, header = header, sep = sep,
-               quote = quote, dec = dec, fill = fill, ...)
+               quote = quote, dec = dec, fill = fill,
+               comment.char=comment.char, ...)
 

@@ -20,16 +20,16 @@ read.table(file, header = FALSE, sep = "", quote = "\"'",
            stringsAsFactors = default.stringsAsFactors())
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
-         fill = TRUE, \dots)
+         fill = TRUE, comment.char="", \dots)
 
 read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",",
-          fill = TRUE, \dots)
+          fill = TRUE, comment.char="", \dots)
 
 read.delim(file, header = TRUE, sep = "\t", quote="\"", dec=".",
-           fill = TRUE, \dots)
+           fill = TRUE, comment.char="", \dots)
 
 read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
-            fill = TRUE, \dots)
+            fill = TRUE, comment.char="", \dots)
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from.
@@ -197,7 +197,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   as field separator.  Similarly, \code{read.delim} and
   \code{read.delim2} are for reading delimited files, defaulting to the
   TAB character for the delimiter.  Notice that \code{header = TRUE} and
-  \code{fill = TRUE} in these variants.
+  \code{fill = TRUE} in these variants, and that the comment character
+  is disabled.
 
   The rest of the line after a comment character is skipped; quotes
   are not processed in comments.  Complete comment lines are allowed
