@@ -1786,6 +1786,18 @@ R_version <- function()
 @}
 @end example
 
+Using argument @code{.fixes} allows an automatic prefix to be added to
+the registered symbols, which can be useful when working with an
+existing package.  For example, package @pkg{KernSmmoth} has
+
+@example
+useDynLib(KernSmooth, .registration = TRUE, .fixes = "F_")
+@end example
+
+@noindent
+which makes the @R{} variables corresponding to the Fortran symbols
+@code{F_bkde} and so on, and so avoid clashes with @R{} code in the namespace.
+
 
 More information about this symbol lookup, along with some approaches
 for customizing it, is available from
