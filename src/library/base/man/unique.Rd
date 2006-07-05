@@ -7,10 +7,12 @@
 \title{Extract Unique Elements}
 \description{
   \code{unique} returns a vector, data frame or array like \code{x}
-  but with duplicate  elements removed.
+  but with duplicate elements removed.
 }
 \usage{
 unique(x, incomparables = FALSE, \dots)
+
+\method{unique}{matrix}(x, incomparables = FALSE, MARGIN = 1, \dots)
 
 \method{unique}{array}(x, incomparables = FALSE, MARGIN = 1, \dots)
 }
@@ -29,13 +31,21 @@ unique(x, incomparables = FALSE, \dots)
   The array method calculates for each element of the dimension
   specified by \code{MARGIN} if the remaining dimensions are identical
   to those for an earlier element (in row-major order).  This would most
-  commonly be used to find unique rows (the default) or columns
+  commonly be used for matrices to find unique rows (the default) or columns
   (with \code{MARGIN = 2}).
 }
 \value{
-  An object of the same type of \code{x}. but if
-  an element is equal to one with a smaller index, it is removed.
-  Dimensions of arrays are not dropped.
+  For a vector, an object of the same type of \code{x}, but with only
+  one copy of each duplicated element.  No attributes are copied (so
+  the result has no names).
+
+  For a data frame, a data frame is returned with the same columns but
+  possibly fewer rows (and with row names from the first occurrences of
+  the unique rows).
+  
+  A matrix or array is subsetted by \code{[, drop = FALSE]}, so
+  dimensions and dimnames are copied appropriately, and the result
+  always has the same number of dimensions as \code{x}.
 }
 \section{Warning}{
   Using this for lists is potentially slow, especially if the elements
