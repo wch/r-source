@@ -9313,6 +9313,7 @@ easily be reused.
 @item @code{22}   @tab @code{EXTPTRSXP}  @tab @code{external pointer}
 @item @code{23}   @tab @code{WEAKREFSXP} @tab @code{weak reference}
 @item @code{24}   @tab @code{RAWSXP}     @tab @code{raw vector}
+@item @code{25}   @tab @code{S4SXP}      @tab @code{S4 classes not of simple type}
 @end multitable
 @end quotation
 
@@ -9333,6 +9334,12 @@ these are sometimes lumped into a pseudo-type @code{FUNSXP} with code
 99.  Functions defined via @code{function} are of type @code{CLOSXP} and
 have formals, body and environment.
 
+The @code{SEXPTYPE} @code{S4SXP} was introduced in @R{} 2.4.0 for S4
+classes which were previously represented as empty lists, that is
+objects which do not consist solely of a simple type such as an atomic
+vector or function.
+
+
 @node Rest of header, The 'data', SEXPTYPEs, SEXPs
 @subsection Rest of header
 
@@ -9347,7 +9354,7 @@ struct sxpinfo_struct @{
     unsigned int mark  :  1;  /* mark object as 'in use' in GC */
     unsigned int debug :  1;
     unsigned int trace :  1;
-    unsigned int fin   :  1;  /* unused */
+    unsigned int spare :  1;  /* unused */
     unsigned int gcgen :  1;  /* generation for GC */
     unsigned int gccls :  3;  /* class of node for GC */
 @};  /*              Tot: 32 */
