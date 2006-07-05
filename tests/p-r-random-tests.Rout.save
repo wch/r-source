@@ -1,6 +1,6 @@
 
-R version 2.4.0 Under development (unstable) (2006-06-30 r38463)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R : Copyright 2006, The R Foundation for Statistical Computing
+Version 2.3.1 Patched (2006-07-03 r38485)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -266,13 +266,8 @@ hyper(m = 6, n = 10, k = 5) PASSED
 > dkwtest("hyper", m=600, n=1000, k=500)
 hyper(m = 600, n = 1000, k = 500) PASSED
 [1] TRUE
-> 
-> ## regression test for non-central t bug
-> dkwtest("t", df=20, ncp=3)
-t(df = 20, ncp = 3) PASSED
-[1] TRUE
-> 
+>         
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.704 0.012 2.72 0 0 
+Time elapsed:  3.343 0.021 3.368 0 0 
 > 
 > 
