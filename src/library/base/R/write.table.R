@@ -4,6 +4,10 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
           col.names = TRUE, qmethod = c("escape", "double"))
 {
     qmethod <- match.arg(qmethod)
+    if(is.logical(quote) && (length(quote) != 1 || is.na(quote)))
+        stop("'quote' must be 'TRUE', 'FALSE' or numeric")
+    ## quote column names unless quote == FALSE (see help).
+    quoteC <- if(is.logical(quote)) quote else TRUE
 
     if(!is.data.frame(x) && !is.matrix(x)) x <- data.frame(x)
 
@@ -86,7 +90,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     if(!is.null(col.names)) {
 	if(append)
 	    warning("appending column names to file")
-	if(length(quote))
+	if(quoteC)
 	    col.names <- paste("\"", gsub('"', qstring, col.names),
                                "\"", sep = "")
         writeLines(paste(col.names, collapse = sep), file, sep = eol)

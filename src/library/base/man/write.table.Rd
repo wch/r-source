@@ -23,11 +23,12 @@ write.csv2(\dots)
     \code{""} indicates output to the console.}
   \item{append}{logical.  If \code{TRUE}, the output is appended to the
     file.  If \code{FALSE}, any existing file of the name is destroyed.}
-  \item{quote}{a logical value or a numeric vector.  If \code{TRUE}, any
-    character or factor columns will be surrounded by double quotes.  If
-    a numeric vector, its elements are taken as the indices of the
-    columns to quote.  In both cases, row and column names
-    are quoted if they are written.  If \code{FALSE}, nothing is quoted.}
+  \item{quote}{a logical value (\code{TRUE} or \code{FALSE}) or a
+    numeric vector.  If \code{TRUE}, any character or factor columns
+    will be surrounded by double quotes.  If a numeric vector, its
+    elements are taken as the indices of columns to quote.  In both
+    cases, row and column names are quoted if they are written.  If
+    \code{FALSE}, nothing is quoted.}
   \item{sep}{the field separator string.  Values within each row of
     \code{x} are separated by this string.}
   \item{eol}{the character(s) to print at the end of each line (row).}
@@ -40,7 +41,7 @@ write.csv2(\dots)
   \item{col.names}{either a logical value indicating whether the column
     names of \code{x} are to be written along with \code{x}, or a
     character vector of column names to be written.  See the section on
-    \sQuote{CSV files} for the meaning of \code{col.names=NA}.}
+    \sQuote{CSV files} for the meaning of \code{col.names = NA}.}
   \item{qmethod}{a character string specifying how to deal with embedded
     double quote characters when quoting strings.  Must be one of
     \code{"escape"} (default), in which case the quote character is
@@ -69,6 +70,9 @@ write.csv2(\dots)
   any class information for a matrix is discarded and non-atomic
   (e.g. list) matrices are coerced to character.
 
+  Only columns which have been converted to character will be quoted if
+  specified by \code{quote}.
+
   The \code{dec} argument only applies to columns that are not subject
   to conversion to character because they have a class or are part of a
   matrix-like column (or matrix), in particular to columns protected by
@@ -86,7 +90,7 @@ write.csv2(\dots)
 \section{CSV files}{
   By default there is no column name for a column of row names.  If
   \code{col.names = NA} and \code{row.names = TRUE} a blank column name
-  is added, which is the convention for CSV files to be read by
+  is added, which is the convention used for CSV files to be read by
   spreadsheets.
 
   \code{write.csv} and \code{write.csv2} provide convenience wrappers

@@ -1834,3 +1834,23 @@ x <- rep(2:1, c(2, 2)) + 1i*c(4, 1, 2, 3)
 x[o]
 sort(x)  # for a cross-check
 ##
+
+
+## PR#9044 write.table(quote=TRUE, row.names=FALSE) did not quote column names
+m <- matrix(1:9, nrow=3, dimnames=list(c("A","B","C"),  c("I","II","III")))
+write.table(m)
+write.table(m, col.names=FALSE)
+write.table(m, row.names=FALSE)
+# wrong < 2.3.1 patched.
+write.table(m, quote=FALSE)
+write.table(m, col.names=FALSE, quote=FALSE)
+write.table(m, row.names=FALSE, quote=FALSE)
+d <- as.data.frame(m)
+write.table(d)
+write.table(d, col.names=FALSE)
+write.table(d, row.names=FALSE)
+write.table(d, quote=FALSE)
+write.table(d, col.names=FALSE, quote=FALSE)
+write.table(d, row.names=FALSE, quote=FALSE)
+write.table(m, quote=numeric(0)) # not the same as FALSE
+##

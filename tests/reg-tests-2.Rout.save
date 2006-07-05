@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-06-27 r38432)
+R version 2.4.0 Under development (unstable) (2006-07-05 r38485)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5225,5 +5225,73 @@ arguments 'right', 'col' are not made use of in: hist.default(rnorm(100), plot =
 [1] 1+2i 1+3i 2+1i 2+4i
 > sort(x)  # for a cross-check
 [1] 1+2i 1+3i 2+1i 2+4i
+> ##
+> 
+> 
+> ## PR#9044 write.table(quote=TRUE, row.names=FALSE) did not quote column names
+> m <- matrix(1:9, nrow=3, dimnames=list(c("A","B","C"),  c("I","II","III")))
+> write.table(m)
+"I" "II" "III"
+"A" 1 4 7
+"B" 2 5 8
+"C" 3 6 9
+> write.table(m, col.names=FALSE)
+"A" 1 4 7
+"B" 2 5 8
+"C" 3 6 9
+> write.table(m, row.names=FALSE)
+"I" "II" "III"
+1 4 7
+2 5 8
+3 6 9
+> # wrong < 2.3.1 patched.
+> write.table(m, quote=FALSE)
+I II III
+A 1 4 7
+B 2 5 8
+C 3 6 9
+> write.table(m, col.names=FALSE, quote=FALSE)
+A 1 4 7
+B 2 5 8
+C 3 6 9
+> write.table(m, row.names=FALSE, quote=FALSE)
+I II III
+1 4 7
+2 5 8
+3 6 9
+> d <- as.data.frame(m)
+> write.table(d)
+"I" "II" "III"
+"A" 1 4 7
+"B" 2 5 8
+"C" 3 6 9
+> write.table(d, col.names=FALSE)
+"A" 1 4 7
+"B" 2 5 8
+"C" 3 6 9
+> write.table(d, row.names=FALSE)
+"I" "II" "III"
+1 4 7
+2 5 8
+3 6 9
+> write.table(d, quote=FALSE)
+I II III
+A 1 4 7
+B 2 5 8
+C 3 6 9
+> write.table(d, col.names=FALSE, quote=FALSE)
+A 1 4 7
+B 2 5 8
+C 3 6 9
+> write.table(d, row.names=FALSE, quote=FALSE)
+I II III
+1 4 7
+2 5 8
+3 6 9
+> write.table(m, quote=numeric(0)) # not the same as FALSE
+"I" "II" "III"
+"A" 1 4 7
+"B" 2 5 8
+"C" 3 6 9
 > ##
 > 
