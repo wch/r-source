@@ -30,7 +30,7 @@ BUG FIXES
 	that did not have va_copy.
 
     o	[pq]unif allowed infinite ranges but handled them
-	inconsistently. (PR#8958)
+	inconsistently.  (PR#8958)
 
 	[pq]unif claimed to allow min == max but did not do so.
 
@@ -41,14 +41,16 @@ BUG FIXES
 
     o	rt() was wrong for non-central t-distributions. qt() was wrong
 	for non-central distributions far enough in the left tail
-	(reported by Long Qu). PR#9050
+	(reported by Long Qu).  (PR#9050)
 
     o	R CMD Rdconv --type=Ssgm no longer drops a \keyword{} if it is the
-	only one (one letter typo patch by Bill Dunlap). PR#9051
+	only one (one letter typo patch by Bill Dunlap).  (PR#9051)
 
     o	poly(x,y, .., raw = TRUE) now does follow 'raw'.
 
-    o	plot(0/ -1:1, type = "s") now works; PR#9046
+    o	plot(0/ -1:1, type = "s") now works.  (PR#9046)
+
+    o	write.table(row.name=FALSE) does now quote column names. (PR#9044)
 
 
 
