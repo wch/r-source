@@ -168,7 +168,7 @@ static SEXP EnlargeVector(SEXP x, R_len_t newlen)
    fail; namely, S4SXP */
 static SEXP embedInVector(SEXP v)
 {
-    SEXP ans, tmp;
+    SEXP ans;
     PROTECT(ans = allocVector(VECSXP, 1));
     SET_VECTOR_ELT(ans, 0, v);
     UNPROTECT(1);
