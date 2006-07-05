@@ -106,11 +106,6 @@ int R_Proxy_askyesnocancel (char* pMsg)
   return 1;
 }
 
-int R_Proxy_askokcancel (char* pMsg)
-{
-  return 1;
-}
-
 int R_Proxy_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
   return 0;
@@ -289,8 +284,6 @@ int R_Proxy_init (char const* pParameterString)
   Rp->ShowMessage = R_Proxy_askok;
 
   Rp->YesNoCancel = R_Proxy_askyesnocancel;
-  Rp->OkCancel = R_Proxy_askokcancel;
-  
   Rp->Busy = R_Proxy_Busy;
   Rp->R_Quiet = 1;
 #if 1

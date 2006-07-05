@@ -104,7 +104,6 @@ int main (int argc, char **argv)
     Rp->CallBack = myCallBack;
     Rp->ShowMessage = askok;
     Rp->YesNoCancel = askyesnocancel;
-    Rp->OkCancel = askokcancel;
     Rp->Busy = myBusy;
 
     Rp->R_Quiet = TRUE;

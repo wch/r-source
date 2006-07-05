@@ -28,7 +28,6 @@ my $RW=$ARGV[0];
 my $SRCDIR=$ARGV[1];
 my $MDISDI=$ARGV[2];
 my $HelpStyle=$ARGV[3];
-my $QuitOption=$ARGV[4];
 
 $SRCDIR =~ s+/+\\+g; # need DOS-style paths
 my $iconpars="WorkingDir: \"{app}\"" ;
@@ -169,8 +168,6 @@ var
   SelectOptionsPage: TInputOptionWizardPage;
   MDISDIPage: TInputOptionWizardPage;
   HelpStylePage: TInputOptionWizardPage;
-  QuitOptionPage: TInputOptionWizardPage;
-  
 
 function IsAdmin: boolean;
 begin
@@ -210,13 +207,6 @@ begin
   HelpStylePage.Add(\'CHM help (Windows default)\');
   HelpStylePage.Add(\'HTML help\');
   
-  QuitOptionPage := CreateInputOptionPage(HelpStylePage.ID,
-    \'Quitting\', \'When quitting R, should the the default be to save the workspace?\',
-    \'Please specify yes or no, then click Next.\',
-    True, False);
-  QuitOptionPage.Add(\'Yes (default to saving the workspace)\');
-  QuitOptionPage.Add(\'No (default to discarding the workspace)\');
-  
   case GetPreviousData(\'MDISDI\', \'\') of
     \'MDI\': MDISDIPage.SelectedValueIndex := 0;
     \'SDI\': MDISDIPage.SelectedValueIndex := 1;
@@ -232,20 +222,12 @@ begin
     HelpStylePage.SelectedValueIndex := ${HelpStyle};
   end;
   
-  case GetPreviousData(\'QuitOption\', \'\') of
-    \'yes\': QuitOptionPage.SelectedValueIndex := 0;
-    \'no\':   QuitOptionPage.SelectedValueIndex := 1;
-  else
-    QuitOptionPage.SelectedValueIndex := ${QuitOption};
-  end;  
-  
 end;
 
 procedure RegisterPreviousData(PreviousDataKey: Integer);
 var
   MDISDI: String;
   HelpStyle: String;
-  QuitOption: String;
 begin
   { Store the settings so we can restore them next time }
   case MDISDIPage.SelectedValueIndex of
@@ -259,11 +241,6 @@ begin
     2: HelpStyle := \'HTML\';
   end;
   SetPreviousData(PreviousDataKey, \'HelpStyle\', HelpStyle);  
-  case QuitOptionPage.SelectedValueIndex of
-    0: QuitOption := \'yes\';
-    1: QuitOption := \'no\';
-  end;
-  SetPreviousData(PreviousDataKey, \'QuitOption\', QuitOption);   
 end;
 
 procedure SetCommentMarker(var lines: TArrayOfString; option: String; active: boolean);
@@ -295,16 +272,13 @@ begin
   SetCommentMarker(lines, \'options(chmhelp\', HelpStylePage.SelectedValueIndex = 1);
   SetCommentMarker(lines, \'options(htmlhelp\', HelpStylePage.SelectedValueIndex = 2);
   
-  SetCommentMarker(lines, \'options(quit.with.no.save\', QuitOptionPage.SelectedValueIndex = 1);
-  
   SaveStringsToFile(filename, lines, False);
 end;
 
 function ShouldSkipPage(PageID: Integer): boolean;
 begin
   if PageID = NoAdminPage.ID then Result := IsAdmin
-  else if (PageID = MDISDIPage.ID) or (PageID = HelpStylePage.ID) 
-       or (PageID = QuitOptionPage.ID) then 
+  else if (PageID = MDISDIPage.ID) or (PageID = HelpStylePage.ID) then 
     Result := SelectOptionsPage.SelectedValueIndex = 1
   else Result := false;
 end;

@@ -73,7 +73,6 @@ typedef struct
     blah3 CallBack;
     blah4 ShowMessage;
     blah5 YesNoCancel;
-    blah5 OkCancel;
     blah6 Busy;
     UImode CharacterMode;
 #endif

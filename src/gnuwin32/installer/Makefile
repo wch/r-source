@@ -13,9 +13,6 @@ MDISDI = 0
 ## Default help style, 0=plain text, 1=CHM, 2=HTML
 HelpStyle = 1
 
-## Default quit option to save workspace, 0=yes, 1=no
-QuitOption = 0
-
 FULLVERSION=`cat ../../../VERSION`
 RPREFIX = $(shell perl ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
@@ -108,7 +105,7 @@ fixups:
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
 
 R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums
-	perl JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(QuitOption)
+	perl JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle)
 
 $(RPREFIX).exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1

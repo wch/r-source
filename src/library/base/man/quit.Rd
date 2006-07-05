@@ -28,10 +28,6 @@ quit(save = "default", status = 0, runLast = TRUE)
     prompted and can also decide \emph{not} to quit.  The default is to
     ask in interactive use but may be overridden by command-line
     arguments (which must be supplied in non-interactive use).
-    
-    If \code{option("quit.with.no.save")} is set to \code{TRUE}, the
-    prompt will not include an option to save the workspace, it will only
-    confirm that the user really intends to quit.
 
     Immediately \emph{before} terminating, the function \code{.Last()}
     is executed if it exists and \code{runLast} is true. If in
