@@ -155,7 +155,7 @@ qf <- function(p, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
 rf <- function(n, df1, df2, ncp = 0)
 {
     if(ncp == 0) .Internal(rf(n, df1, df2))
-    else rchisq(n, df1, ncp=ncp)/rchisq(n, df2)
+    else (rchisq(n, df1, ncp=ncp)/df1)/(rchisq(n, df2)/df2)
 }
 
 dgeom <- function(x, prob, log = FALSE) .Internal(dgeom(x, prob, log))

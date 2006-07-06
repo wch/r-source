@@ -36,7 +36,7 @@ double qnf(double p, double n1, double n2, double ncp, int lower_tail,
     R_Q_P01_boundaries(p, 0, ML_POSINF);
 
     if (n2 > 1e8) /* avoid problems with +Inf and loss of accuracy */
-	return pnchisq(p, n1, ncp, lower_tail, log_p)/n1;
+	return qnchisq(p, n1, ncp, lower_tail, log_p)/n1;
 
     y = qnbeta(p, n1 / 2., n2 / 2., ncp, lower_tail, log_p);
     return y/(1-y) * (n2/n1);

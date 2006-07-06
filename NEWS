@@ -30,12 +30,12 @@ BUG FIXES
 	that did not have va_copy.
 
     o	[pq]unif allowed infinite ranges but handled them
-	inconsistently.  (PR#8958)
+	inconsistently.	 (PR#8958)
 
 	[pq]unif claimed to allow min == max but did not do so.
 
     o	Subassignment within raw arrays of 3 or more dimensions was not
-    	implemented.
+	implemented.
 
     o	environment<-() did not even check if duplication was required.
 
@@ -50,7 +50,10 @@ BUG FIXES
 
     o	plot(0/ -1:1, type = "s") now works.  (PR#9046)
 
-    o	write.table(row.name=FALSE) does now quote column names. (PR#9044)
+    o	write.table(row.names=FALSE) does now quote column names. (PR#9044)
+
+    o	rf() was wrong for non-central F (PR#9055). qf() was wrong for
+	non-central F with denominator df > 1e8.
 
 
 
@@ -76,10 +79,10 @@ NEW FEATURES
 C-LEVEL FACILITIES
 
     o	The variables controlling stack checking are made available via
-        Rinterface.h to front-ends embedding R: see 'Writing R Extensions'
+	Rinterface.h to front-ends embedding R: see 'Writing R Extensions'
 
     o	R_SignalHandlers (defined in Rinterface.h) can be set to 0 to
-        suppress the R signal handlers in front-ends embedding R.
+	suppress the R signal handlers in front-ends embedding R.
 
 
 INSTALLATION CHANGES
@@ -90,16 +93,16 @@ INSTALLATION CHANGES
 	- Changes related to older header files, e.g. on Redhat 8.0/9.
 
 	- Problems with 'make install' on older (<3) versions of bash
-          on Solaris and elsewhere.
+	  on Solaris and elsewhere.
 
 	- AIX 5.2/gcc issues with needing -lm when making modules X11
-          and vfonts.
+	  and vfonts.
 
 	- Some versions of Solaris and AIX had an fcntl.h that
 	  redefined 'open' to be 'open64' and thereby broke
 	  compilation of src/main/connections.c and elsewhere.
 
-    o   'make uninstall' works better on a build using a named
+    o	'make uninstall' works better on a build using a named
 	subarchitecture.
 
 
@@ -145,7 +148,7 @@ BUG FIXES
 	actual values (unless na.rm = TRUE).
 
     o	mean() on a complex vector was calculated incorrectly in
-        code to improve precision (PR#8842, John Peters).
+	code to improve precision (PR#8842, John Peters).
 
     o	Graphical parameters bg, cex, col, lty, and lwd were being
 	checked as being of length one even by functions such as
@@ -273,7 +276,7 @@ NEW FEATURES
 
     o	[pq]chisq() are considerably more accurate for moderate (up to
 	80) values of ncp, and lower.tail = FALSE is fully supported
-	in that region.  (They are somewhat slower than before.)
+	in that region.	 (They are somewhat slower than before.)
 
     o	chol(pivot = TRUE) now gives a warning if used on a (numerically)
 	non-positive-definite matrix.
@@ -361,7 +364,7 @@ NEW FEATURES
 
     o	page() accepts general R objects, not just names (and
 	previously undocumented) character strings.  This allows the
-	object to be specified as a call, for example.  More options
+	object to be specified as a call, for example.	More options
 	are allowed in its '...' argument.
 
     o	pairs() allows a wider class of inputs, including data frames
@@ -538,7 +541,7 @@ NEW FEATURES
 
 	New function Cstack_info() reports on stack size and usage.
 
-    	options(expressions) reverts to the default of 5000 now
+	options(expressions) reverts to the default of 5000 now
 	stack checking is in place.
 
     o	Package tcltk does not try to initialize Tk on Unix-alikes
@@ -1021,9 +1024,9 @@ BUG FIXES
 	(possibly incorrect) 'NO FILE'.
 
     o	window() did not allow non-overlapping ranges with
-	extend = TRUE.	(PR#8545)
+	extend = TRUE.  (PR#8545)
 
-    o	pbinom(size = 0) now returns correct values (not NaN).	(PR#8560)
+    o	pbinom(size = 0) now returns correct values (not NaN).  (PR#8560)
 
     o	[dp]binom(x, *) for x < 0 now always returns 0. (PR#8700)
 	analogous change in pgeom(), pnbinom() and ppois().
@@ -1146,15 +1149,15 @@ BUG FIXES
     o	Worked around a Solaris restriction which meant that
 	Sys.sleep() was only effective for times of up to one second.
 
-    o   sink(, split=TRUE) now works correctly, but is allowed only on
-        platforms that support va_copy or __va_copy.  (PR#8716)
+    o	sink(, split=TRUE) now works correctly, but is allowed only on
+	platforms that support va_copy or __va_copy.  (PR#8716)
 
     o	factanal(), prcomp() and princomp() now only check that columns
 	in the model frame that will be used are numeric (they
 	previously also checked columns which were part of negative terms
 	in the formula).
 
-    o   Misuse of $ in apply could corrupt memory.  (PR#8718)
+    o	Misuse of $ in apply could corrupt memory.  (PR#8718)
 
     o	apply() could fail if the function returned NULL (e.g. if
 	there was a single row).
@@ -1172,7 +1175,7 @@ BUG FIXES
     o	Rdconv -t Ssgm failed if it encountered \link[opt]{arg}.
 
     o	uniroot() did not give a warning (as documented) if it failed
-	to converge in 'maxiter' steps.  (PR#8751)
+	to converge in 'maxiter' steps.	 (PR#8751)
 
     o	eapply() (and as.list.environment()) did not work for the base
 	environment/namespace.  (PR#8761)
@@ -1432,7 +1435,7 @@ BUG FIXES
 
     o	Subassignment of a vector which increased the length of the
 	vector _and_ had the wrong length of replacement could
-	occasionally segfault.	(This has been there since at least
+	occasionally segfault.  (This has been there since at least
 	mid 1997.)
 
     o	The registration of .Fortran symbols was broken: these could
@@ -1756,7 +1759,7 @@ NEW FEATURES
 
     o	source() closes its input file after parsing it rather than
 	after executing the commands, as used to happen prior to
-	2.1.0.	(This is probably only significant on Windows where
+	2.1.0.  (This is probably only significant on Windows where
 	the file is locked for a much shorter time.)
 
     o	split(), split<-(), unsplit() now have a new argument 'drop = FALSE',
@@ -2407,7 +2410,7 @@ BUG FIXES
 
     o	Printing the result of an unbalanced model.tables() call
 	sometimes got confused if terms() had rearranged interaction
-	terms.	(PR#7829)
+	terms.  (PR#7829)
 
     o	.Platform$pkgType was wrong on the CRAN MacOS X build, and
 	.install.macbinary() was missing.
@@ -2514,7 +2517,7 @@ BUG FIXES
     o	Workaround added for FreeBSD which does not have alloca.h _and_
 	does not allow alloca() to be declared.
 
-    o	identify() now respects 'cex'.	(PR#660)
+    o	identify() now respects 'cex'.  (PR#660)
 
 	Warnings from identify() are now printed immediately even on
 	consoles with delayed printing.
@@ -2610,7 +2613,7 @@ NEW FEATURES
 
     o	The cov() function in the non-Pearson cases now ranks data after
 	removal of missing values, not before.	The pairwise-complete
-	method should now be consistent with cor.test.	(Code
+	method should now be consistent with cor.test.  (Code
 	contributed by Shigenobu Aoki.)
 
     o	Added delayedAssign() function to replace delay(), which is now
@@ -2688,7 +2691,7 @@ NEW FEATURES
 	structures.
 
     o	legend() now accepts positioning by keyword, e.g. "topleft",
-	and can put a title within the legend.	(Suggested by Elizabeth
+	and can put a title within the legend.  (Suggested by Elizabeth
 	Purdom in PR#7400.)
 
     o	mahalanobis() now has a '...' argument which is passed to solve()
@@ -3463,7 +3466,7 @@ BUG FIXES
 	e.g.  gsub("^12", "x", "1212") was "xx".
 
     o	[g]sub(perl = TRUE) was giving random results for a 0-length
-	initial match.	(PR#7742)
+	initial match.  (PR#7742)
 
     o	[g]sub was ignoring most 0-length matches, including all initial
 	ones.  Note that substitutions such as gsub("[[:space:]]*", "
