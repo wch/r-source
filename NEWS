@@ -57,7 +57,7 @@ BUG FIXES
 
     o	The C function dummy_vfprint had a potential memory leak.  This
 	showed up with some connections when used with output of more
-	that 100,000 bytes in a single call.
+	than 10,000 bytes in a single call.
 
 
 
