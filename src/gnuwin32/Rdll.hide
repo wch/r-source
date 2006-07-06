@@ -47,6 +47,7 @@
  GRecording
  GuiBusy
  InitBrowseCallbackProc@16
+ InitDynload
  Init_R_Variables
  LeftMatrixColumnLabel
  LoadInitFile
@@ -58,6 +59,7 @@
  MainThread
  MatrixColumnLabel
  MatrixRowLabel
+ NextConnection
  OutDec
  PrintUsage
  ProfileEvent
@@ -248,6 +250,9 @@
  RguiPackageMenu
  Rgui_Edit
  Rgui_configure
+ Ri18n_iswctype
+ Ri18n_wcswidth
+ Ri18n_wctype
  RightMatrixColumnLabel
  Rm_calloc
  Rm_cfree
@@ -326,10 +331,15 @@
  apse_set_deletions
  apse_set_insertions
  apse_set_substitutions
+ balanc_
+ balbak_
  baseRegisterIndex
  bratio
  breaktodebugger
  brighter
+ cbabk2_
+ cbal_
+ cdiv_
  char_to_string
  check_doc_file
  child_id
@@ -337,9 +347,16 @@
  cmd_show
  color_image
  compare_strings
+ complex_binary
+ complex_math1
+ complex_math2
+ complex_unary
  compress
  compress2
  compressBound
+ compute_identical
+ comqr_
+ comqr2_
  con_pushback
  console1_image
  console_ctrlkeyin
@@ -382,8 +399,10 @@
  copy_image
  copy_string
  copypaste_image
+ corth_
  crc32_combine
  csduplicated
+ csroot_
  current
  current_menu
  current_menubar
@@ -419,6 +438,7 @@
  do_RNGkind
  do_Rhome
  do_Rprof
+ do_Rprofmem
  do_abbrev
  do_abline
  do_abs
@@ -668,6 +688,8 @@
  do_memlimits
  do_memoryprofile
  do_memsize
+ do_memtrace
+ do_memuntrace
  do_menu
  do_merge
  do_mget
@@ -875,6 +897,9 @@
  editorchecksave
  editorcleanall
  editorsetfont
+ elmhes_
+ eltran_
+ epslon_
  erase_image
  find_object
  find_valid_sibling
@@ -949,6 +974,10 @@
  help_image
  helpmenuact
  hide_window
+ hqr_
+ hqr2_
+ htribk_
+ htridi_
  hwndClient
  hwndFrame
  hwndMain
@@ -1032,6 +1061,7 @@
  memjoin
  memlength
  memrealloc
+ memtrace_report
  menuclear
  menuconfig
  menueditornew
@@ -1051,6 +1081,7 @@
  newconsoledata
  newpager
  newxbuf
+ nl_Rdummy
  numwinmenus
  oldfillellipse
  open1_image
@@ -1096,6 +1127,7 @@
  pow
  prev_instance
  protect_object
+ pythag_
  raise
  realp0_
  remove_context
@@ -1139,6 +1171,11 @@
  this_instance
  to_c_string
  to_dos_string
+ tql1_
+ tql2_
+ tqlrat_
+ tred1_
+ tred2_
  tree_search
  trio_append
  trio_append_max
@@ -1169,6 +1206,7 @@
  trio_format_date_max
  trio_fpclassify
  trio_fpclassify_and_signbit
+ trio_fprintf
  trio_fprintfv
  trio_fscanf
  trio_fscanfv
@@ -1215,6 +1253,7 @@
  trio_print_ref
  trio_print_string
  trio_print_uint
+ trio_printf
  trio_printfv
  trio_printv_ref
  trio_register
@@ -1239,9 +1278,11 @@
  trio_set_upper
  trio_set_width
  trio_signbit
+ trio_snprintf
  trio_snprintfcat
  trio_snprintfv
  trio_span_function
+ trio_sprintf
  trio_sprintfv
  trio_sscanf
  trio_sscanfv
@@ -1291,7 +1332,9 @@
  trio_vprint_ref
  trio_vprintf
  trio_vscanf
+ trio_vsnprintf
  trio_vsnprintfcat
+ trio_vsprintf
  trio_vsscanf
  trio_xstring_append
  trio_xstring_append_char
@@ -1313,6 +1356,30 @@
  xbufaddc
  xbufdel
  xbufgrow
+ xdr_bool
+ xdr_bytes
+ xdr_char
+ xdr_double
+ xdr_enum
+ xdr_float
+ xdr_free
+ xdr_int
+ xdr_long
+ xdr_netobj
+ xdr_opaque
+ xdr_short
+ xdr_string
+ xdr_u_char
+ xdr_u_int
+ xdr_u_long
+ xdr_u_short
+ xdr_union
+ xdr_void
+ xdr_wrapstring
+ xdrmem_create
+ xdrstdio_create
+ yychar
+ yylval
  zError
  z_errmsg
  zcalloc
