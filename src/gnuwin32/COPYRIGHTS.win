@@ -61,7 +61,7 @@ see R_HOME/Tcl/license.terms for the license.
     California, Sun Microsystems, Inc., and other parties. [...]
 
 
-src/extra/*
+src/extra/trio/* (except compat.c)
 
 From trio-1.11 (http://daniel.haxx.se/projects/trio/)
 

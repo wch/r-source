@@ -6,7 +6,7 @@ ifdef DEBUG
 endif
 
 CFLAGS	= -O3 $(DEFS)
-OBJS	= triostr.o trio.o trionan.o
+OBJS	= compat.o triostr.o trio.o trionan.o
 TARGETLIB = libtrio.a
 
 all: $(TARGETLIB)
