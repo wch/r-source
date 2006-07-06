@@ -1382,6 +1382,8 @@ DYLIB_EXT="${SHLIB_EXT}"
 dylib_ldflags="${SHLIB_LDFLAGS}"
 LIBR_LDFLAGS=""
 RLAPACK_LDFLAGS=""
+## Darwin doesn't allow undefined symbols in dylibs, others do
+dylib_undefined_allowed=yes
 case "${host_os}" in
   aix*)
     ## Pure guesswork so far
@@ -1391,6 +1393,7 @@ case "${host_os}" in
   darwin*)
     DYLIB_EXT=".dylib"
     dylib_ldflags="-dynamiclib"
+    dylib_undefined_allowed=no
     MAJR_VERSION=`echo "${PACKAGE_VERSION}" | sed  -e "s/[[\.]][[1-9]]$/.0/"` 
     LIBR_LDFLAGS="-dynamiclib -install_name libR.dylib -compatibility_version ${MAJR_VERSION}  -current_version ${PACKAGE_VERSION}  -headerpad_max_install_names"
     RLAPACK_LDFLAGS="-install_name \$(Rexeclibdir)/libRlapack.dylib"
@@ -1422,6 +1425,8 @@ else
     DYLIB_LDFLAGS="${dylib_ldflags}"
   fi
 fi
+
+AM_CONDITIONAL(DYLIB_UNDEFINED_ALLOWED, [test "x${dylib_undefined_allowed}" = xyes])
 
 AC_SUBST(MAIN_LD)
 AC_SUBST(MAIN_LDFLAGS)
