@@ -29,7 +29,8 @@ Sys.timezone()
   in microsecond increments.
 #endif
 #ifdef windows
-  On Windows, it increments in clock ticks, 1/60 of a second.
+  On Windows, it increments in clock ticks (1/60 of a second) reported
+  to millisecond accuracy.
 #endif
 
   \code{Sys.Date} returns an object of class \code{"Date"} (see \link{Date}).
