@@ -30,10 +30,10 @@ USER-VISIBLE CHANGES
     o	The :: operator now also works for packages without name spaces
 	that are on the serch path.
 
-    o   The functions read.csv, read.csv2, read.delim, read.delim2 now 
+    o   The functions read.csv, read.csv2, read.delim, read.delim2 now
         default the comment.char argument to "". (These functions are
-        designed to read files produced by other software, which might 
-	use the # character inside fields, but not likely use it for 
+        designed to read files produced by other software, which might
+	use the # character inside fields, but not likely use it for
 	comments.)
 
 
@@ -228,7 +228,7 @@ DEPRECATED & DEFUNCT
 
     o	save(version = 1) is now deprecated.
 
-    o  some changes have been made to automatic printing of S4
+    o   some changes have been made to automatic printing of S4
 	objects, to make this correspond to a call to show(), as per
 	Programming with Data.
 
@@ -324,9 +324,6 @@ BUG FIXES
 	account the smaller header and also the fixed sizes used in
 	the node classes for small vector objects).
 
-    o	rf() was wrong for non-central F (PR#9055). qf() was wrong for
-	non-central F with denominator df > 1e8.
-
     o	addmargins(T, ...) now returns a "table" when 'T' is a "table", as
 	its help page has always suggested.
 
@@ -383,7 +380,11 @@ BUG FIXES
 
     o	plot(0/ -1:1, type = "s") now works.  (PR#9046)
 
-    o	write.table(row.name=FALSE) does now quote column names. (PR#9044)
+    o	write.table(row.names=FALSE) does now quote column names. (PR#9044)
+
+    o	rf() was wrong for non-central F (PR#9055). qf() was wrong for
+	non-central F with denominator df > 1e8.
+
 
 
 
