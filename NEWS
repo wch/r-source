@@ -21,19 +21,19 @@ USER-VISIBLE CHANGES
 	objects, only to top-level objects.)
 
     o	The default prototype object for S4 classes will have its own
-	internal type in 2.4, as opposed to being an empty list (the
+	internal type in 2.4.x, as opposed to being an empty list (the
 	cause of several errors in the current code).  Currently
 	optional, turned on by setting environment variable R_S4_Type
-	to any non-empty value when R is started. Only applies to new
+	to any non-empty value when R is started.  Only applies to new
 	class definitions, via a call to setClass().
 
     o	The :: operator now also works for packages without name spaces
 	that are on the serch path.
 
     o   The functions read.csv, read.csv2, read.delim, read.delim2 now
-        default the comment.char argument to "". (These functions are
+        default the comment.char argument to "".  (These functions are
         designed to read files produced by other software, which might
-	use the # character inside fields, but not likely use it for
+	use the # character inside fields, but are unlikely to use it for
 	comments.)
 
 
@@ -190,7 +190,7 @@ NEW FEATURES
 
     o	matplot() now accepts a 'bg' argument similarly to plot.default() etc.
 
-    o	print.table(T, zero.print= ch) now also replaces 0 by ch when T is
+    o	print.table(T, zero.print=ch) now also replaces 0 by ch when T is
 	non-integer with integer entries.
 
 
@@ -228,9 +228,9 @@ DEPRECATED & DEFUNCT
 
     o	save(version = 1) is now deprecated.
 
-    o   some changes have been made to automatic printing of S4
+    o	Some changes have been made to automatic printing of S4
 	objects, to make this correspond to a call to show(), as per
-	Programming with Data.
+	'Programming with Data'.
 
 
 C-LEVEL FACILITIES
@@ -329,6 +329,7 @@ BUG FIXES
 
 
 
+
 	**************************************************
 	*						 *
 	*	       2.3 SERIES NEWS			 *
@@ -387,7 +388,7 @@ BUG FIXES
 
     o	The C function dummy_vfprint had a potential memory leak.  This
 	showed up with some connections when used with output of more
-	that 100,000 bytes in a single call.
+	than 100,000 bytes in a single call.
 
 
 
