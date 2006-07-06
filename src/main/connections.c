@@ -223,8 +223,10 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
     res = vsnprintf(buf, BUFSIZE, format, aq);
     va_end(aq);
 #ifdef HAVE_VASPRINTF
-    if(res >= BUFSIZE || res < 0)
+    if(res >= BUFSIZE || res < 0) {
 	vasprintf(&b, format, ap);
+	usedVasprintf = TRUE;
+    }
 #else
     if(res >= BUFSIZE) { /* res is the desired output length */
 	usedRalloc = TRUE;
