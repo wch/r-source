@@ -49,7 +49,7 @@ SEXP attribute_hidden do_ident(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* do the two objects compute as identical? */
-Rboolean compute_identical(SEXP x, SEXP y)
+Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 {
 
     if(x == y)

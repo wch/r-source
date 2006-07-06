@@ -73,7 +73,7 @@ static int SinkCons[NSINKS], SinkConsClose[NSINKS], R_SinkSplit[NSINKS];
 
 /* ------------- admin functions (see also at end) ----------------- */
 
-int NextConnection()
+int attribute_hidden NextConnection()
 {
     int i;
     for(i = 3; i < NCONNECTIONS; i++)

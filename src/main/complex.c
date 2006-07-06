@@ -42,7 +42,7 @@
 # define hypot pythag
 #endif
 
-SEXP complex_unary(ARITHOP_TYPE code, SEXP s1)
+SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1)
 {
     int i, n;
 #ifndef HAVE_C99_COMPLEX
@@ -183,7 +183,7 @@ double complex mycpow (double complex X, double complex Y)
 	i2 = (++i2 == n2) ? 0 : i2,\
 	++i)
 
-SEXP complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
+SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 {
     int i,i1, i2, n, n1, n2;
 #ifndef HAVE_C99_COMPLEX
@@ -773,7 +773,7 @@ static Rboolean cmath1(void (*f)(), Rcomplex *x, Rcomplex *y, int n)
     return(naflag);
 }
 
-SEXP complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y;
     int n;
@@ -867,7 +867,7 @@ static SEXP cmath2(SEXP op, SEXP sa, SEXP sb, void (*f)())
 
 	/* Complex Functions of Two Arguments */
 
-SEXP complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     switch (PRIMVAL(op)) {
     case 10001:

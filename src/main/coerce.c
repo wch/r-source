@@ -370,7 +370,7 @@ SEXP StringFromComplex(Rcomplex x, int *warn)
 	return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei, OutDec));
 }
 
-SEXP StringFromRaw(Rbyte x, int *warn)
+static SEXP StringFromRaw(Rbyte x, int *warn)
 {
     char buf[3];
     sprintf(buf, "%02x", x);
