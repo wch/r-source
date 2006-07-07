@@ -779,8 +779,8 @@ be used to provide the LAPACK library for R itself and any packages
 using @code{$LAPACK_LIBS} built under that setting.
 
 There used to be support for Kazushige Goto's BLAS, but this is no
-longer available for Windows, and it seems that it will in future only
-to be offered via a source-code licence.
+longer available in binary form for Windows, and it seems that it will
+in future only to be offered via a source-code licence.
 
 @end itemize
 
@@ -1901,6 +1901,16 @@ no longer supported.
 @subsection Linear algebra
 @cindex BLAS library
 
+@menu
+* BLAS::                        
+* Shared BLAS::                 
+* LAPACK::                      
+* Caveats::                     
+@end menu
+
+@node BLAS, Shared BLAS, Linear algebra, Linear algebra
+@subsubsection BLAS
+
 The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
 Linear Algebra Subprograms, @url{http://www.netlib.org/blas/faq.html,
 @code{www.netlib.org/blas/faq.html}}) routines.  Some are
@@ -1936,15 +1946,15 @@ Users of Fedora Core 4 Extras will want to use
 since the basic BLAS is incomplete.
 
 Another tuned BLAS which is available for some processors under Linux is
-by Kazushige Goto, currently available @emph{for academic use only}
-(after registering) via
+by Kazushige Goto.  This has been made available in several formats, and
+is currently (April 2006) vailable only as source code.  For
+@emph{academic use only} (after registering) it can be obtained via
 @url{http://www.tacc.utexas.edu/resources/software/software.php,
-@code{www.tacc.utexas.edu/resources/software/software.php}}.
-(Recent versions are multi-@/threaded only.)  Once this is installed, it
-can be used by configuring with
+@code{www.tacc.utexas.edu/resources/software/software.php}}.  Once this
+is built and installed, it can be used by configuring with
 
 @example
---with-blas="-lgoto -lpthread"
+--with-blas=-lgoto
 @end example
 
 @noindent
@@ -1985,6 +1995,28 @@ other compilers, see the ACML documentation.  Although the documentation
 is unclear, 32-bit versions of ACML do run on other @cputype{ia32} chips
 such as AthlonMP and P4.
 
+You will need double-precision and double-complex versions of the BLAS,
+but not single-precision nor complex routines.  This is checked by
+@command{configure}, as some incomplete BLAS libraries have been found
+(e.g., the generic BLAS supplied with Fedora Core 3 and 4 Extras is
+missing @code{drotm}, @code{drotmg} and @code{zdrot}).
+
+An ATLAS `tuned' BLAS can also be used on Windows: see @pxref{Getting the
+source files} when building from source, and
+@url{http://CRAN.R-project.org/bin/windows/rw-FAQ.html, R Windows
+@acronym{FAQ}} for adding pre-compiled support to binary versions.
+Other BLASs can also be used when building from source.
+
+Note that under Unix (but not under Windows) if @R{} is compiled against
+a non-default BLAS and @option{--enable-BLAS-shlib} is not used, then
+all BLAS-using packages must also be.  So if @R{} is re-built after
+ATLAS is installed, then packages such as @pkg{quantreg} will need to be
+re-installed.
+
+
+@node Shared BLAS, LAPACK, BLAS, Linear algebra
+@subsubsection Shared BLAS
+
 Note that the BLAS library will be used for several add-on packages as
 well as for @R{} itself.  This means that it is better to use a
 shared/dynamic BLAS library, as most of a static library will be
@@ -1994,16 +2026,43 @@ this can be a problem with ATLAS on some platforms (including
 @cputype{x86_64}) as it is not by default built with
 position-independent code.
 
-You will need double-precision and double-complex versions of the BLAS,
-but not single-precision nor complex routines.  This is checked by
-@command{configure}, as some incomplete BLAS libraries have been found
-(e.g., the generic BLAS supplied with Fedora Core 3 and 4 Extras is
-missing @code{drotm}, @code{drotmg} and @code{zdrot}).
+@R{} 2.4.0 and later offer the option of compiling the BLAS into a
+shared/dynamic library @code{libRblas} by specifying the option
+@option{--enable-BLAS-shlib}.  If no external BLAS is specified (or
+found by @command{configure}), this compiles the @R{} internal BLAS into
+a shared/dynamic library stored in @file{R_HOME/lib}, and links both
+@R{} itself and all the add-on packages against that library.  If an
+external BLAS is found, @code{libRblas} is linked against it.
 
-On some systems it is necessary that an external BLAS was built with the
-same FORTRAN compiler used to build @R{}: known problems are with @R{}
-built with @command{gfortran},  @pxref{Using gfortran}.
+This has both advantages and disadvantages.
 
+@itemize
+@item
+It saves space by having only a single copy of the BLAS routines, which
+is helpful if there is an external static BLAS such as is normal for
+ATLAS.  (There would only be one copy of @R{}'s internal BLAS, and also
+of an external dynamic BLAS library.)
+
+@item
+It is easy to change the BLAS without making to re-install @R{} and all
+the add-on packages, since all references to the BLAS go through
+@code{libRblas}, and that can be replaced.  Note though that any dynamic
+libraries the replacement links to will need to be found by the linker:
+this may need the library path to be changed in @file{etc/ldpaths}.
+
+Another option to change the BLAS in use is to symlink a dynamic BLAS
+library (such as ACML or Goto's) to @file{R_HOME/lib/libRblas.so}.
+
+@item
+There are performance disadvantages in using a shared BLAS, which is why
+it is not the default.  Probably the most important is when @R{}'s
+internal BLAS is used and @R{} is @emph{not} built as a shared library,
+when it is possible to build the BLAS into @file{R.bin} without using
+position-independent code.
+@end itemize
+
+@node LAPACK, Caveats, Shared BLAS, Linear algebra
+@subsubsection LAPACK
 
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
@@ -2068,22 +2127,17 @@ Please @strong{do} bear in mind that using @option{--with-lapack} is
 `definitely @strong{not} recommended': it is provided @strong{only}
 because it is necessary on some platforms.
 
+@node Caveats,  , LAPACK, Linear algebra
+@subsubsection Caveats
+
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this means
 that on Sun Sparc using the native compilers the flag @option{-dalign}
 is needed so @code{libsunperf} can be used.
 
-An ATLAS `tuned' BLAS can also be used on Windows: see @pxref{Getting the
-source files} when building from source, and
-@url{http://CRAN.R-project.org/bin/windows/rw-FAQ.html, R Windows
-@acronym{FAQ}} for adding pre-compiled support to binary versions.
-Other BLASs can also be used when building from source.
-
-Note that under Unix (but not under Windows) if @R{} is compiled
-against a non-default BLAS, then all BLAS-using packages must also be.
-So if @R{} is re-built after ATLAS is installed, then packages such as
-@pkg{quantreg} will need to be re-installed.
-
+On some systems it is necessary that an external BLAS/LAPACK was built
+with the same FORTRAN compiler used to build @R{}: known problems are
+with @R{} built with @command{gfortran}, @pxref{Using gfortran}.
 
 @node Configuration on Unix, Platform notes, Essential and useful other programs under Unix, Top
 @appendix Configuration on Unix
@@ -2123,6 +2177,8 @@ use readline library (if available) [yes]
 attempt to compile support for @code{Rprof()} [yes]
 @item --enable-R-shlib
 build @R{} as a shared/dynamic library [no]
+@item --enable-BLAS-shlib
+build the BLAS as a shared/dynamic library [no]
 @end table
 
 @noindent
@@ -2144,6 +2200,9 @@ code in packages installed on a @R{} system linked with
 @option{--enable-R-shlib} are linked against the dynamic library and so
 such packages cannot be used from a @R{} system built in the default
 way.
+
+If you need to re-configure @R{} with different options you may need to run
+@code{make clean} or even @code{make distclean} before doing so.
 
 
 @node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
@@ -2400,8 +2459,8 @@ On @code{x86_64} systems there is an incompatibility in the return
 conventions for double-complex functions between @command{gfortran} and
 @command{g77} which results in the final example in
 @code{example(eigen)} hanging or segfaulting under external BLASs built
-under @command{g77}, as well as with Dr Goto's BLAS.  This should be
-detected by a @command{configure} test.
+under @command{g77}, as well as with earlier binary versions of Dr
+Goto's BLAS.  This should be detected by a @command{configure} test.
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on Unix
 @section Compile and load flags

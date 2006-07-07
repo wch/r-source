@@ -252,6 +252,10 @@ INSTALLATION
     o	The C function realpath (used by normalizePath()) is hidden on
 	some systems and we try harder to find it.
 
+    o	There is a new option --enable-BLAS-shlib, which compiles the
+	BLAS into a dynamic library -lRblas and links against that.
+	For the pros and cons see the R-admin manual.
+
 
 BUG FIXES
 

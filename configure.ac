@@ -232,7 +232,13 @@ AC_ARG_ENABLE([R-shlib],
                 [build the shared/dynamic library 'libR' @<:@no@:>@])],
 [want_R_shlib="${enableval}"],
 [want_R_shlib="${want_R_framework}"])
-## processed after GNOME, which can set this.
+AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
+if test "${want_R_shlib}" = yes; then
+  LIBR="-L\$(R_HOME)/lib\$(R_ARCH) -lR"
+else
+  LIBR=
+fi
+AC_SUBST(LIBR)
 
 ## Enable maintainer-specific portions of Makefiles.
 AC_ARG_ENABLE([maintainer-mode],
@@ -261,6 +267,13 @@ AC_ARG_ENABLE([mbcs],
                 [enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
 [want_mbcs_support="${enableval}"],
 [want_mbcs_support=yes])
+
+AC_ARG_ENABLE([BLAS-shlib],
+[AC_HELP_STRING([--enable-BLAS-shlib],
+                [build BLAS into a shared library @<:@no@:>@])],
+[use_blas_shlib="${enableval}"],
+[use_blas_shlib=no])
+AM_CONDITIONAL(BLAS_SHLIB, [test "x${use_blas_shlib}" = xyes])
 
 
 ### ** Optional packages.
@@ -357,15 +370,6 @@ AC_ARG_WITH([valgrind-instrumentation],
                 [Level of additional instrumentation for Valgrind (0/1/2) @<:@0@:>@])],
 [valgrind_level=${withval}],
 [valgrind_level=0])
-
-## needs to come after GNOME
-AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
-if test "${want_R_shlib}" = yes; then
-  LIBR="-L\$(R_HOME)/lib\$(R_ARCH) -lR"
-else
-  LIBR=
-fi
-AC_SUBST(LIBR)
 
 ## <FIXME>
 ## Completely disable using libtool for building shlibs until libtool
@@ -1602,6 +1606,15 @@ if test "${use_blas}" = yes; then
   R_BLAS_LIBS
 fi
 
+## This version is used to build a shared BLAS lib
+BLAS_LIBS0=${BLAS_LIBS}
+AC_SUBST(BLAS_LIBS0)
+
+if test "${use_blas_shlib}" = yes; then
+  ## set BLAS_LIBS to point at local version
+  BLAS_LIBS="-L\$(R_HOME)/lib\$(R_ARCH) -lRblas"
+fi
+
 AM_CONDITIONAL(USE_VECLIB_G95FIX, [test "x${use_veclib_g95fix}" = xyes])
 AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
 
@@ -1828,7 +1841,7 @@ case "${host_os}" in
     ;;
 esac
 for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
-           ${TCLTK_LIBS} ${GNOME_LIBS}; do
+           ${TCLTK_LIBS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
@@ -2096,7 +2109,10 @@ r_options=
 if test "${want_R_framework}" = yes; then
   R_SH_VAR_ADD(r_options, [framework], [, ])
 elif test "${want_R_shlib}" = yes; then
-  R_SH_VAR_ADD(r_options, [shared library], [, ])
+  R_SH_VAR_ADD(r_options, [shared R library], [, ])
+fi
+if test "${use_blas_shlib}" = yes; then
+  R_SH_VAR_ADD(r_options, [shared BLAS], [, ])
 fi
 if test "${want_R_profiling}" = yes; then
   R_SH_VAR_ADD(r_options, [R profiling], [, ])

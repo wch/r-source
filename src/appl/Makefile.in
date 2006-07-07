@@ -37,8 +37,9 @@ SOURCES_F = \
 	eigen.f \
 	lminfl.f
 DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS_BLAS = @USE_EXTERNAL_BLAS_FALSE@ blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \
-  @USE_EXTERNAL_BLAS_FALSE@ blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
+  @BLAS_SHLIB_FALSE@ $(OBJECTS_BLAS)
 HEADERS =
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
@@ -47,10 +48,13 @@ DISTFILES = COPYRIGHT COPYRIGHT.ftn README lowess.doc \
 	$(HEADERS) \
 	$(SOURCES_C) \
 	$(SOURCES_F) \
-	blas.f cmplxblas.f
+	blas.f cmplxblas.f blas00.c
 
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 @WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
+
+Rblas_la = libRblas$(DYLIB_EXT)
+Rblas_la_LIBADD = @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(FLIBS)
 
 all: Makefile Makedeps R
 
@@ -65,6 +69,8 @@ R: Makefile
 	@$(MAKE) Makedeps
 @WANT_R_SHLIB_FALSE@	@$(MAKE) libappl.a
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
+@BLAS_SHLIB_TRUE@	@$(MAKE) $(Rblas_la)
+@BLAS_SHLIB_TRUE@	@$(MAKE) rhome="$(abs_top_builddir)" Rblas_install
 
 libappl.a: $(OBJECTS)
 	rm -f $@
@@ -74,15 +80,41 @@ libappl.a: $(OBJECTS)
 stamp-lo: $(OBJECTS)
 	@touch $@
 
+ext-blas.o: blas.f
+	$(F77) $(ALL_FFLAGS_LO) -c -o $@ $<
+
+ext-cmplxblas.o: cmplxblas.f
+	$(F77) $(ALL_FFLAGS_LO) -c -o ext-cmplxblas.o $(srcdir)/cmplxblas.f
+
+@USE_EXTERNAL_BLAS_FALSE@$(Rblas_la):: ext-blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ ext-cmplxblas.o
+@USE_EXTERNAL_BLAS_FALSE@	$(DYLIB_LINK) -o $(Rblas_la) ext-blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ ext-cmplxblas.o $(Rblas_la_LIBADD)
+
+blas00.o: blas00.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c -o $@ $<
+
+@USE_EXTERNAL_BLAS_TRUE@$(Rblas_la): blas00.o
+@USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@
+
+Rblas_install: $(Rblas_la)
+	@$(MKINSTALLDIRS) $(Rexeclibdir)
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rblas_la) \
+	  $(Rexeclibdir)/$(Rblas_la)
+
+
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo $(Rblas_la)
+
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
 
-install install-strip uninstall TAGS info dvi check:
+install:
+@BLAS_SHLIB_TRUE@	@$(MKINSTALLDIRS) "$(Rexeclibdir)"
+@BLAS_SHLIB_TRUE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rblas_la) "$(Rexeclibdir)/$(Rblas_la)"
+
+install-strip uninstall TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
