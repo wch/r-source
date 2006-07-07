@@ -1959,12 +1959,17 @@ is built and installed, it can be used by configuring with
 
 @noindent
 It has been reported that on some RedHat-based Linux systems it is
-necessary to set @code{OMP_NUM_THREADS=1} (to disable multiple threads)
+necessary to set @code{GOTO_NUM_THREADS=1} (to disable multiple threads)
 in the environment when using a multi-threaded Goto BLAS, but others run
 happily with multiple threads.  That environment variable should be set
 when using @R{} profiling.  (In some applications, allowing multiple
 threads slowed the computations down several-fold, so it can be helpful
 to restrict the number of threads.)
+
+Note that currently (July 2006) a multi-threaded Goto BLAS will be built
+if and only if the building is on a multi-processor system (counting
+multiple cores and hyperthreading), and at run time the default number
+of threads is the number of CPUs detected.
 
 For Intel processors under Linux, Intel's Math Kernel Library
 (@url{http://www.intel.com/software/products/mkl/,
