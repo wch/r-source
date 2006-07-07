@@ -135,7 +135,7 @@ cat R-@var{x}.@var{y}.@var{z}-split.* > R-@var{x}.@var{y}.@var{z}.tgz
 and proceed as above.  If you want the build to be usable by a group of
 users, set @code{umask} before unpacking so that the files will be
 readable by the target group (e.g., @code{umask 022} to be usable by all
-users).
+users).  (Keep this setting of @code{umask} whilst building and installing.)
 
 
 @node Getting patched and development versions,  , Getting and unpacking the sources, Obtaining R
@@ -347,10 +347,11 @@ make
 @end example
 
 @noindent
-and so on, as described further below.  This has the advantage of always
-keeping your source tree ``clean''.  (You may need @acronym{GNU}
-@command{make} to allow this, and the pathname of the build directory
-should not contain spaces.)
+and so on, as described further below.  This has the advantage of
+always keeping your source tree ``clean'' and is particularly
+recommended when you work with a version of @R{} from Subversion.
+(You may need @acronym{GNU} @command{make} to allow this, and the
+pathname of the build directory should not contain spaces.)
 
 @cindex Help pages
 Make will also build plain text help pages as well as @HTML{} and
@@ -370,8 +371,8 @@ make vignettes
 @end example
 
 @noindent
-which makes the @samp{grid} vignettes (which are contained in the tarballs):
-it takes several minutes.
+which makes the @pkg{grid} vignettes (which are contained in the
+tarballs):  it takes several minutes.
 
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or
@@ -490,7 +491,8 @@ After
 make
 make check
 @end example
-
+(or, when building outside the source,
+@code{@var{TOP_SRCDIR}/configure}, etc)
 @noindent
 have been completed successfully, you can install the complete @R{} tree
 to your system by typing
@@ -778,8 +780,8 @@ be used to provide the LAPACK library for R itself and any packages
 using @code{$LAPACK_LIBS} built under that setting.
 
 There used to be support for Kazushige Goto's BLAS, but this is no
-longer available for Windows, and it seems that it will in future only
-to be offered via a source-code licence.
+longer available in binary form for Windows, and it seems that it will
+in future only to be offered via a source-code licence.
 
 @end itemize
 
@@ -1264,8 +1266,8 @@ Compiler Collection.
 @findex WINHELP
 
 This section describes ways to customize package compilation using the
-standard C / C++ / FORTRAN compilers and tools.  For instructions on using
-non-standard tools, see the @file{README.packages} file.
+standard C, C++ and FORTRAN compilers and tools.  For instructions on
+using non-standard tools, see the @file{README.packages} file.
 
 The Makefiles can be customized: in particular the name of the DLL can
 be set (for example we once needed @code{integrate-DLLNM=adapt}), the
@@ -1441,23 +1443,24 @@ Utilities such as @code{install.packages} can be pointed at any
 CRAN-style repository, and @R{} users may want to set up their own.  The
 `base' of a repository is a URL such as
 @url{http://www.omegahat.org/R}: this must be an URL scheme that
-@code{download.packages} supports (which also includes @code{ftp://} and
-@code{file://}).  Under that base URL there should be directory trees
+@code{download.packages} supports (which also includes @samp{ftp://} and
+@samp{file://}).  Under that base URL there should be directory trees
 for one or more of the following types of package distributions:
 
 @itemize
 @item 
-@code{"source"}: located at @code{src/contrib} and containing
+@code{"source"}: located at @file{src/contrib} and containing
 @file{.tar.gz} files.
 
 @item 
-@code{"win.binary"}: located at @code{bin/windows/contrib/x.y} for @R{}
-versions @code{x.y.z} and containing @file{.zip} files.
+@code{"win.binary"}: located at @file{bin/windows/contrib/@var{x.y}} for
+@R{} versions @var{x.y.z} and containing @file{.zip} files.
 
 @item 
-@code{"mac.binary"}: located at @code{bin/macosx/powerpc/contrib/x.y}
-or @code{bin/macosx/i686/contrib/x.y}
-for @R{} versions @code{x.y.z} and containing @file{.tgz} files.
+@code{"mac.binary"}: located at
+@file{bin/macosx/powerpc/contrib/@var{x.y}} or
+@file{bin/macosx/i686/contrib/@var{x.y}} for @R{} versions @var{x.y.z}
+and containing @file{.tgz} files.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -1775,7 +1778,7 @@ compiler should be @acronym{IEC}@tie{}60059@footnote{also known as
 possible.  @R{} tries to choose suitable flags for the C compilers it
 knows about, but you may have to set @code{CFLAGS} suitably.  For recent
 versions of @command{gcc} with @code{glibc} this means including
-@code{-std=gnu99} in @code{CFLAGS} (@code{-std=c99} excludes POSIX
+@option{-std=gnu99} in @code{CFLAGS} (@option{-std=c99} excludes POSIX
 functionality).
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
@@ -1920,24 +1923,30 @@ Users of Fedora Core 4 Extras will want to use
 since the basic BLAS is incomplete.
 
 Another tuned BLAS which is available for some processors under Linux is
-by Kazushige Goto, currently available @emph{for academic use only}
-(after registering) via@*
-@url{http://www.tacc.utexas.edu/resources/software/software.php}.@*
-(Recent versions are multi-threaded only.)  Once this is installed, it
-can be used by configuring with
+by Kazushige Goto.  This has been made available in several formats, and
+is currently (April 2006) vailable only as source code.  For
+@emph{academic use only} (after registering) it can be obtained via
+@url{http://www.tacc.utexas.edu/resources/software/software.php,
+@code{www.tacc.utexas.edu/resources/software/software.php}}.  Once this
+is built and installed, it can be used by configuring with
 
 @example
---with-blas="-lgoto -lpthread"
+--with-blas=-lgoto
 @end example
 
 @noindent
 It has been reported that on some RedHat-based Linux systems it is
-necessary to set @code{OMP_NUM_THREADS=1} (to disable multiple threads)
+necessary to set @code{GOTO_NUM_THREADS=1} (to disable multiple threads)
 in the environment when using a multi-threaded Goto BLAS, but others run
 happily with multiple threads.  That environment variable should be set
 when using @R{} profiling.  (In some applications, allowing multiple
 threads slowed the computations down several-fold, so it can be helpful
 to restrict the number of threads.)
+
+Note that currently (July 2006) a multi-threaded Goto BLAS will be built
+if and only if the building is on a multi-processor system (counting
+multiple cores and hyperthreading), and at run time the default number
+of threads is the number of CPUs detected.
 
 For Intel processors under Linux, Intel's Math Kernel Library
 (@url{http://www.intel.com/software/products/mkl/,
@@ -2128,6 +2137,9 @@ code in packages installed on a @R{} system linked with
 such packages cannot be used from a @R{} system built in the default
 way.
 
+If you need to re-configure @R{} with different options you may need to run
+@code{make clean} or even @code{make distclean} before doing so.
+
 
 @node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
 @section Internationalization support
@@ -2223,7 +2235,8 @@ One common variable to change is @env{R_PAPERSIZE}, which defaults to
 @samp{letter}, @samp{legal} and @samp{executive}.)
 
 This is used both when configuring @R{} to set the default, and when
-running @R{} to override the default.
+running @R{} to override the default.  It is also used to set the
+papersize when making DVI and PDF manuals.
 
 The configure default will most often be @samp{a4} if @env{R_PAPERSIZE}
 is unset.  (If the (Debian Linux) program @command{paperconf} is found
@@ -2382,8 +2395,8 @@ On @code{x86_64} systems there is an incompatibility in the return
 conventions for double-complex functions between @command{gfortran} and
 @command{g77} which results in the final example in
 @code{example(eigen)} hanging or segfaulting under external BLASs built
-under @command{g77}, as well as with Dr Goto's BLAS.  This should be
-detected by a @command{configure} test.
+under @command{g77}, as well as with earlier binary versions of Dr
+Goto's BLAS.  This should be detected by a @command{configure} test.
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on Unix
 @section Compile and load flags
