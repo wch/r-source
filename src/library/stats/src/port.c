@@ -1,3 +1,22 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2005-2006   The R Development Core Team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+ */
+
 #include "port.h"
 
 #include <R_ext/Constants.h>
@@ -307,13 +326,14 @@ double* check_gv(SEXP gr, SEXP hs, SEXP rho, int n, double *gv, double *hv)
 	SEXP hval = PROTECT(eval(hs, rho));
 	SEXP dim = getAttrib(hval, R_DimSymbol);
 	int i, j, pos;
+	double *rhval = REAL(hval);
 
 	if (!isReal(hval) || LENGTH(dim) != 2 ||
 	    INTEGER(dim)[0] != n || INTEGER(dim)[1] != n)
 	    error(_("Hessian function must return a square numeric matrix of order %d"),
 		  n);
 	for (i = 0, pos = 0; i < n; i++) /* copy lower triangle row-wise */
-	    for (j = 0; j <= i; j++) hv[pos++] = REAL(hval)[i + j * n];
+	    for (j = 0; j <= i; j++) hv[pos++] = rhval[i + j * n];
 	UNPROTECT(1);
     }
     UNPROTECT(1);
@@ -372,10 +392,11 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 
     if ((LENGTH(lowerb) == n) && (LENGTH(upperb) == n)) {
 	if (isReal(lowerb) && isReal(upperb)) {
+	    double *rl=REAL(lowerb), *ru=REAL(upperb);
 	    b = Calloc(2*n, double);
 	    for (i = 0; i < n; i++) {
-		b[2*i] = REAL(lowerb)[i];
-		b[2*i + 1] = REAL(upperb)[i];
+		b[2*i] = rl[i];
+		b[2*i + 1] = ru[i];
 	    }
 	} else error(_("'lower' and 'upper' must be numeric vectors"));
     }
@@ -524,10 +545,11 @@ SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
 
     if ((LENGTH(lowerb) == n) && (LENGTH(upperb) == n)) {
 	if (isReal(lowerb) && isReal(upperb)) {
+	    double *rl=REAL(lowerb), *ru=REAL(upperb);
 	    b = Calloc(2*n, double);
 	    for (i = 0; i < n; i++) {
-		b[2*i] = REAL(lowerb)[i];
-		b[2*i + 1] = REAL(upperb)[i];
+		b[2*i] = rl[i];
+		b[2*i + 1] = ru[i];
 	    }
 	} else error(_("'lowerb' and 'upperb' must be numeric vectors"));
     }

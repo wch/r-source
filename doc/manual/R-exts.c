@@ -13,15 +13,16 @@
 SEXP out(SEXP x, SEXP y)
 {
     int i, j, nx, ny;
-    double tmp;
+    double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
     SEXP ans, dim, dimnames, dd;
 
     nx = length(x); ny = length(y);
     PROTECT(ans = allocVector(REALSXP, nx*ny));
+    rans = REAL(ans);
     for(i = 0; i < nx; i++) {
-	tmp = REAL(x)[i];
+	tmp = rx[i];
 	for(j = 0; j < ny; j++)
-	    REAL(ans)[i + nx*j] = tmp * REAL(y)[j];
+	    rans[i + nx*j] = tmp * ry[j];
     }
     PROTECT(dim = allocVector(INTSXP, 2));
     INTEGER(dim)[0] = nx; INTEGER(dim)[1] = ny;
