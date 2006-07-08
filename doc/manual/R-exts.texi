@@ -158,7 +158,7 @@ The @file{DESCRIPTION}, @file{INDEX}, @file{install.R} and
 
 The optional files @file{configure} and @file{cleanup} are (Bourne
 shell) script files which are executed before and (provided that option
-@option{--clean} was given) after installation on Unix, see
+@option{--clean} was given) after installation on Unix-alikes, see
 @ref{Configure and cleanup}.
 
 @cindex COPYING file
@@ -620,8 +620,8 @@ Subdirectory @file{po} is used for files related to @emph{localization}:
 
 Sometimes it is convenient to distribute several packages as a
 @emph{bundle}.  (An example is @pkg{VR} which contains four packages.)
-The installation procedures on both Unix and Windows can handle package
-bundles.
+The installation procedures on both Unix-alikes and Windows can handle
+package bundles.
 
 The @file{DESCRIPTION} file of a bundle has a @samp{Bundle}
 field and no @samp{Package} field, as in
@@ -1356,7 +1356,7 @@ be in arbitrary format, however we strongly recommend to provide them in
 PDF format, such that users on all platforms can easily read them.
 To ensure that they can be accessed from a browser, the file names
 should start with an ASCII letter and be entirely in ASCII letters or
-digits or minus or underscore
+digits or minus or underscore.
 
 A special case are documents in Sweave format, which we call
 @emph{package vignettes}.  Sweave allows the integration of @LaTeX{}
@@ -4525,7 +4525,7 @@ R's memory management facilities and will corrupt the object and the R
 session.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
-C as @code{float *} or FORTRAN as @code{REAL} by setting the attribute
+C as @code{float *} or to FORTRAN as @code{REAL} by setting the attribute
 @code{Csingle}, most conveniently by using the @R{} functions
 @code{as.single}, @code{single} or @code{storage.mode}.  This is
 intended only to be used to aid interfacing to existing C or FORTRAN
@@ -4611,9 +4611,9 @@ can lead to wrong results or hard-to-catch errors.
 @findex dyn.load
 @findex dyn.unload
 
-Compiled code to be used with @R{} is loaded as a shared object (Unix,
-@pxref{Creating shared objects} for more information) or DLL
-(Windows).
+Compiled code to be used with @R{} is loaded as a shared object (Unix
+and MacOS X, @pxref{Creating shared objects} for more information) or
+DLL (Windows).
 
 The shared object/DLL is loaded by @code{dyn.load} and unloaded by
 @code{dyn.unload}.  Unloading is not normally necessary, but it is
@@ -4630,7 +4630,7 @@ file.path(path1, path2, paste("mylib", .Platform$dynlib.ext, sep=""))
 @end example
 
 @noindent
-for platform independence.  On Unix systems the path supplied to
+for platform independence.  On Unix-alike systems the path supplied to
 @code{dyn.load} can be an absolute path, one relative to the current
 directory or, if it starts with @samp{~}, relative to the user's home
 directory.
@@ -4649,17 +4649,17 @@ omitted}.  Note that the first argument, @code{chname}, should
 @strong{not} be @code{package} since this will not work if the package
 is installed under another name (as it will be with a versioned install).
 
-Under some Unix systems there is a choice of how the symbols are
+Under some Unix-alike systems there is a choice of how the symbols are
 resolved when the object is loaded, governed by the arguments
 @code{local} and @code{now}.  Only use these if really necessary: in
 particular using @code{now=FALSE} and then calling an unresolved symbol
 will terminate @R{} unceremoniously.
 
-R provides a way of executing some code automatically when a object/DLL
+@R{} provides a way of executing some code automatically when a object/DLL
 is either loaded or unloaded.  This can be used, for example, to
-register native routines with R's dynamic symbol mechanism, initialize
+register native routines with @R{}'s dynamic symbol mechanism, initialize
 some data in the native code, or initialize a third party library.  On
-loading a DLL, R will look for a routine within that DLL named
+loading a DLL, @R{} will look for a routine within that DLL named
 @code{R_init_@var{lib}} where @var{lib} is the name of the DLL file with
 the extension removed.  For example, in the command
 
@@ -4712,29 +4712,31 @@ which occurrence is meant.
 @section Registering native routines
 @cindex Registering native routines
 
+By `native' routine, we mean an entry point in compiled code.
+
 In calls to @code{.C}, @code{.Call}, @code{.Fortran} and
-@code{.External}, R must locate the specified native routine by looking
-in the appropriate shared object/DLL.  By default, R uses the operating
+@code{.External}, @R{} must locate the specified native routine by looking
+in the appropriate shared object/DLL.  By default, @R{} uses the operating
 system-specific dynamic loader to lookup the symbol.  Alternatively, the
-author of the DLL can explicitly register routines with R and use a
+author of the DLL can explicitly register routines with @R{} and use a
 single, platform-independent mechanism for finding the routines in the
 DLL.  One can use this registration mechanism to provide additional
 information about a routine, including the number and type of the
-arguments, and also make it available to S programmers under a different
+arguments, and also make it available to @R{} programmers under a different
 name.  In the future, registration may be used to implement a form of
 ``secure'' or limited native access.
 
-To register routines with R, one calls the C routine
+To register routines with @R{}, one calls the C routine
 @code{R_registerRoutines}.  This is typically done when the DLL is first
 loaded within the initialization routine @code{R_init_@var{dll name}}
 described in @ref{dyn.load and dyn.unload}.  @code{R_registerRoutines}
-takes 5 arguments.  The first is the @code{DllInfo} object passed by R
-to the initialization routine. This is where R stores the information
-about the methods.  The remaining 4 arguments are arrays describing the
-routines for each of the 4 different interfaces: @code{.C},
-@code{.Call}, @code{.Fortran} and @code{.External}.  Each argument is a
-@code{NULL}-terminated array of the element types given in the following
-table:
+takes 5 arguments.  The first is the @code{DllInfo} object passed by
+@R{} to the initialization routine. This is where @R{} stores the
+information about the methods.  The remaining 4 arguments are arrays
+describing the routines for each of the 4 different interfaces:
+@code{.C}, @code{.Call}, @code{.Fortran} and @code{.External}.  Each
+argument is a @code{NULL}-terminated array of the element types given in
+the following table:
 
 @quotation
 @multitable {@code{.External  }} {@code{R_ExternalMethodDef}}
@@ -4747,11 +4749,11 @@ table:
 
 Currently, the @code{R_ExternalMethodDef} is the same as
 @code{R_CallMethodDef} type and contains fields for the name of the
-routine by which it can be accessed in R, a pointer to the actual native
+routine by which it can be accessed in @R{}, a pointer to the actual native
 symbol (i.e., the routine itself), and the number of arguments the
 routine expects.  For routines with a variable number of arguments
 invoked via the @code{.External} interface, one specifies @code{-1} for
-the number of arguments which tells R not to check the actual number
+the number of arguments which tells @R{} not to check the actual number
 passed.  For example, if we had a routine named @code{myCall} defined as
 
 @example
@@ -4779,7 +4781,7 @@ with the same number of elements as the number of parameters for the
 routine.  The types array should contain the @code{SEXP} types
 describing the expected type of the argument. (Technically, the elements
 of the types array are of type @code{R_NativePrimitiveArgType} which is
-just an unsigned integer.)  The R types and corresponding type
+just an unsigned integer.)  The @R{} types and corresponding type
 identifiers are provided in the following table:
 
 @quotation
@@ -4810,8 +4812,8 @@ R_CMethodDef cMethods[] = @{
 
 One can also specify whether each argument is used simply as input, or
 as output, or as both input and output.  The style field in the
-description of a method is used for this.  The purpose is to allow R to
-more efficiently transfer values across the R-C/FORTRAN interface by
+description of a method is used for this.  The purpose is to allow @R{}
+to transfer values more efficiently across the R-C/FORTRAN interface by
 avoiding copying values when it is not necessary. Typically, one omits
 this information in the registration data.
 
@@ -4833,8 +4835,7 @@ This routine will be invoked when R loads the shared object/DLL named
 @code{myLib}.  The last two arguments in the call to
 @code{R_registerRoutines} are for the routines accessed by
 @code{.Fortran} and @code{.External} interfaces.  In our example, these
-are given as @code{NULL} since we don't have any routines of these
-types.
+are given as @code{NULL} since we have no routines of these types.
 
 When R unloads a shared object/DLL, any registered routines are
 automatically removed. There is no (direct) facility for unregistering
@@ -4845,11 +4846,12 @@ in the R source tree (e.g., @pkg{stats}).  Also, there is a
 brief, high-level introduction in @emph{R News} (volume 1/3, September
 2001, pages 20-23).
 
-Additionally, there are (experimental) tools that can be used to
-automate the generation of the code to register the routines for a
-collection of C files. See the @code{GccTranslationUnit} module on the
-Omegahat Web site at @url{http://www.omegahat.org/GccTranslationUnit/}
-for more information.
+@c These tools are not currently operational.
+@c Additionally, there are (experimental) tools that can be used to
+@c automate the generation of the code to register the routines for a
+@c collection of C files. See the @code{GccTranslationUnit} module on the
+@c Omegahat Web site at @url{http://www.omegahat.org/GccTranslationUnit/}
+@c for more information.
 
 
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
@@ -4923,7 +4925,7 @@ In Windows the same command works, but files @file{Makevars.win} or
 binary Windows distribution for installing source packages to be
 installed.)  For details of building DLLs with a variety of compilers,
 see @samp{README.packages} and
-@url{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
+@url{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/} .
 
 
 @node Interfacing C++ code, Handling R objects in C, Creating shared objects, System and foreign language interfaces
@@ -5003,8 +5005,8 @@ void X_main () @{
 Compiling and linking should be done with the C++ compiler-linker
 (rather than the C compiler-linker or the linker itself); otherwise, the
 C++ initialization code (and hence the constructor of the static
-variable @code{Y}) are not called.  On a properly configured Unix or
-Windows system, one can simply use
+variable @code{Y}) are not called.  On a properly configured system, one
+can simply use
 
 @example
 R CMD SHLIB X.cc X_main.cc
@@ -5043,9 +5045,9 @@ guarantee that the output will appear in the R console, and indeed it
 will not on the R for Windows console.  Use R code or the C entry points
 (@pxref{Printing}) for all I/O if at all possible.
 
-@R{} header files are C and not C++ header files and should be included
-within an @code{extern "C"} block.  (This is not always necessary but
-helps in reading C++ code.)
+Some @R{} header files are C and not C++ header files and should be
+included within an @code{extern "C"} block: for clarity this is
+advisable for all @R{} header files.
 
 
 @node Handling R objects in C, Interface functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
@@ -5068,10 +5070,9 @@ If a user really wants to write C code using internal @R{} data
 structures, then that can be done using the @code{.Call} and
 @code{.External} function.  The syntax for the calling function in @R{}
 in each case is similar to that of @code{.C}, but the two functions have
-rather different C interfaces.  Generally the @code{.Call} interface
-(which is modelled on the interface of the same name in @Sl{} version 4)
-is a little simpler to use, but @code{.External} is a little more
-general.
+different C interfaces.  Generally the @code{.Call} interface (which is
+modelled on the interface of the same name in @Sl{} version 4) is a
+little simpler to use, but @code{.External} is a little more general.
 @findex .Call
 @findex .External
 
@@ -5116,8 +5117,8 @@ SEXP convolveE(SEXP args)
 @end example
 
 @noindent
-Here @code{args} is a @code{LISTSXP}, a Lisp-style list from which the
-arguments can be extracted.
+Here @code{args} is a @code{LISTSXP}, a Lisp-style pairlist from which
+the arguments can be extracted.
 
 In each case the @R{} objects are available for manipulation via a set
 of functions and macros defined in the header file @file{Rinternals.h}
@@ -5130,13 +5131,14 @@ look at other alternatives.  First, consider working in interpreted @R{}
 code; if this is fast enough, this is normally the best option.  You
 should also see if using @code{.C} is enough.  If the task to be
 performed in C is simple enough requiring no call to @R{}, @code{.C}
-suffices.  The new interfaces are recent additions to @Sl{} and @R{},
-and a great deal of useful code has been written using just @code{.C}
-before they were available.  The @code{.Call} and @code{.External}
-interfaces allow much more control, but they also impose much greater
-responsibilities so need to be used with care.  Neither @code{.Call} nor
-@code{.External} copy their arguments.  You should treat arguments you
-receive through these interfaces as read-only.
+suffices.  The new interfaces are relatively recent additions to @Sl{}
+and @R{}, and a great deal of useful code has been written using just
+@code{.C} before they were available.  The @code{.Call} and
+@code{.External} interfaces allow much more control, but they also
+impose much greater responsibilities so need to be used with care.
+Neither @code{.Call} nor @code{.External} copy their arguments.  You
+should treat arguments you receive through these interfaces as
+read-only.
 
 There are two approaches that can be taken to handling @R{} objects from
 within C code.  The first (historically) is to use the macros and
@@ -5198,8 +5200,7 @@ force the variant object to the right type.
 We need to know a little about the way @R{} handles memory allocation.
 The memory allocated for @R{} objects is not freed by the user; instead,
 the memory is from time to time @dfn{garbage collected}.  That is, some
-or all of the allocated memory not being used is freed.  (Prior to @R{}
-1.2, objects could be moved, too.)
+or all of the allocated memory not being used is freed.
 
 The @R{} object types are represented by a C structure defined by a
 typedef @code{SEXPREC} in @file{Rinternals.h}.  It contains several
@@ -5209,13 +5210,15 @@ things among which are pointers to data blocks and to other
 If you create an @R{} object in your C code, you must tell @R{} that you
 are using the object by using the @code{PROTECT} macro on a pointer to
 the object. This tells @R{} that the object is in use so it is not
-destroyed.  Notice that it is the object which is protected, not the
-pointer variable.  It is a common mistake to believe that if you invoked
-@code{PROTECT(@var{p})} at some point then @var{p} is protected from
-then on, but that is not true once a new object is assigned to @var{p}.
+destroyed during garbage collection.  Notice that it is the object which
+is protected, not the pointer variable.  It is a common mistake to
+believe that if you invoked @code{PROTECT(@var{p})} at some point then
+@var{p} is protected from then on, but that is not true once a new
+object is assigned to @var{p}.
 
 Protecting an R object automatically protects all the @R{} objects
-pointed to in the corresponding @code{SEXPREC}.
+pointed to in the corresponding @code{SEXPREC}, for example all elements
+of a protected list are automatically protected.
 
 The programmer is solely responsible for housekeeping the calls to
 @code{PROTECT}.  There is a corresponding macro @code{UNPROTECT} that
@@ -5396,6 +5399,11 @@ unused.
 All the coercion functions do their own error-checking, and generate
 @code{NA}s with a warning or stop with an error as appropriate.
 
+Note that these coercion functions are @emph{not} the same as calling
+@code{as.numeric} (and so on) in @R{} code, as they do not dispatch on
+the class of the object.  Thus it is normally preferable to do the
+coercion in the calling @R{} code.
+
 So far we have only seen how to create and coerce @R{} objects from C
 code, and how to extract the numeric data from numeric @R{} vectors.
 These can suffice to take us a long way in interfacing @R{} objects to
@@ -5539,10 +5547,10 @@ installed.
 @subsection Classes
 @cindex Classes
 
-In @R{} the class is just the attribute named @code{"class"} so it can
-be handled as such, but there is a shortcut @code{classgets}.  Suppose
-we want to give the return value in our example the class @code{"mat"}.
-We can use
+In @R{} the (S3) class is just the attribute named @code{"class"} so it
+can be handled as such, but there is a shortcut @code{classgets}.
+Suppose we want to give the return value in our example the class
+@code{"mat"}.  We can use
 
 @example
 @group
@@ -5569,9 +5577,9 @@ from a C character array, which we do using the function
 @subsection Handling lists
 @cindex Handling lists
 
-Some care is needed with lists, as @R{} has moved from using LISP-like
-lists (now called ``pairlists'') to S-like generic vectors.  As a
-result, the appropriate test for an object of mode @code{list} is
+Some care is needed with lists, as @R{} moved early on from using
+LISP-like lists (now called ``pairlists'') to S-like generic vectors.
+As a result, the appropriate test for an object of mode @code{list} is
 @code{isNewList}, and we need @code{allocVector(VECSXP, @var{n}}) and
 @emph{not} @code{allocList(@var{n})}.
 
@@ -6139,7 +6147,7 @@ used by
 @end example
 
 @noindent
-Function @code{lang2} creates an executable `list' of two elements, but
+Function @code{lang2} creates an executable pairlist of two elements, but
 this will only be clear to those with a knowledge of a LISP-like
 language.
 
@@ -6517,17 +6525,17 @@ SEXP menu_ttest3()
     ParseStatus status;
    ...
     if(done == 1) @{
-	PROTECT(cmdSexp = allocVector(STRSXP, 1));
-	SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
-	cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status));
-	if (status != PARSE_OK) @{
-	    UNPROTECT(2);
-	    error("invalid call %s", cmd);
-	@}
-	/* Loop is needed here as EXPSEXP will be of length > 1 */
-	for(i = 0; i < length(cmdexpr); i++)
-	    ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
-	UNPROTECT(2);
+        PROTECT(cmdSexp = allocVector(STRSXP, 1));
+        SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
+        cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status));
+        if (status != PARSE_OK) @{
+            UNPROTECT(2);
+            error("invalid call %s", cmd);
+        @}
+        /* Loop is needed here as EXPSEXP will be of length > 1 */
+        for(i = 0; i < length(cmdexpr); i++)
+            ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
+        UNPROTECT(2);
     @}
     return ans;
 @}
@@ -6878,8 +6886,10 @@ latter is often mendacious and @code{isfinite} is only available on a
 few platforms, on which @code{R_FINITE} is a macro expanding to
 @code{isfinite}.
 
-Currently @code{ISNAN} is a macro calling @code{isnan}, although this
-was not necessarily true before @R{} 2.0.0.
+Currently in C code @code{ISNAN} is a macro calling @code{isnan},
+although this was not necessarily true before @R{} 2.0.0.  (Since this
+gives problems on some C++ systems, if the @R{} headers is called from
+C++ code a function call is used.)
 
 You can check for @code{Inf} or @code{-Inf} by testing equality to
 @code{R_PosInf} or @code{R_NegInf}, and set (but not test) an @code{NA}
@@ -7775,8 +7785,9 @@ packages making extensive use of inlining include their own configure code.
 
 It is possible to build @code{Mathlib}, the @R{} set of mathematical
 functions documented in @file{Rmath.h}, as a standalone library
-@file{libRmath} under Unix and Windows.  (This includes the functions
-documented in @ref{Numerical analysis subroutines} as from that header file.)
+@file{libRmath} under both Unix and Windows.  (This includes the
+functions documented in @ref{Numerical analysis subroutines} as from
+that header file.)
 
 The library is not built automatically when @R{} is installed, but can
 be built in the directory @file{src/nmath/standalone} in the @R{}
@@ -7898,8 +7909,7 @@ functions generic.  In this chapter we give guidelines for doing so,
 with examples of the problems caused by not adhering to them.
 
 This chapter only covers the `informal' class system copied from S3,
-and not with the formal methods of package @pkg{methods} of @R{} 1.4.0
-and later.
+and not with the S4 (formal) methods of package @pkg{methods}.
 
 The key function for methods is @code{NextMethod}, which dispatches the
 next method.  It is quite typical for a method function to make a few
@@ -8455,8 +8465,8 @@ variables declared in @file{Rinterface.h} (if @code{CSTACK_DEFNS} is
 defined) as
 
 @example
-extern uintptr_t R_CStackLimit;	/* C stack limit */
-extern uintptr_t R_CStackStart;	/* Initial stack address */
+extern uintptr_t R_CStackLimit; /* C stack limit */
+extern uintptr_t R_CStackStart; /* Initial stack address */
 @end example
 
 @noindent
