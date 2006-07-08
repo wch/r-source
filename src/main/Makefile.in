@@ -170,7 +170,7 @@ $(RLIBS):
 libR: $(libR_la)
 
 $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
-	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_OBJECTS) `ls ../appl/*.o ../nmath/*.o ../unix/*.o  2>/dev/null` $(libR_la_LIBADD)
+	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_OBJECTS) `ls ../appl/*.o ../nmath/*.o ../unix/*.o  2>/dev/null|grep -v /ext-` $(libR_la_LIBADD)
 
 install-lib-local: $(libR_la)
 	@$(MAKE) rhome="$(abs_top_builddir)" install-lib
