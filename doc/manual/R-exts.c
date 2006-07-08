@@ -253,7 +253,7 @@ SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
 SEXP numeric_deriv(SEXP args)
 {
     SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
-    double tt, xx, delta, eps = sqrt(DOUBLE_EPS);
+    double tt, xx, delta, eps = sqrt(DOUBLE_EPS), *rgr, *rans;
     int start, i, j;
 
     expr = CADR(args);
@@ -264,6 +264,7 @@ SEXP numeric_deriv(SEXP args)
 
     PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
     PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
+    rgr = REAL(gradient); rans = REAL(ans);
 
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) {
 	PROTECT(par = findVar(install(CHAR(STRING_ELT(theta, i))), rho));
@@ -273,8 +274,7 @@ SEXP numeric_deriv(SEXP args)
 	REAL(par)[0] += delta;
 	PROTECT(ans1 = coerceVector(eval(expr, rho), REALSXP));
 	for(j = 0; j < LENGTH(ans); j++)
-	    REAL(gradient)[j + start] =
-		(REAL(ans1)[j] - REAL(ans)[j])/delta;
+            rgr[j + start] = (REAL(ans1)[j] - rans[j])/delta;
 	REAL(par)[0] = tt;
 	UNPROTECT(2); /* par, ans1 */
     }
