@@ -6351,7 +6351,7 @@ user-visible form of list in @R{}.  A pairlist is a linked list (with
 @code{CAR(t)}) and names or tags (set by @code{SET_TAG}).  In this call
 there are to be three items, a symbol (pointing to the function to be
 called) and two argument values, the first unnamed and the second named.
-Setting the type makes this a call which can be evaluated.
+Setting the type to @code{LANGSXP} makes this a call which can be evaluated.
 
 @menu
 * Zero-finding::                
@@ -9263,10 +9263,11 @@ It is written for the R core team and others studying the code in the
 
 @menu
 * SEXPs::                       
+* Argument evaluation::         
 * Serialization Formats::       
 @end menu
 
-@node SEXPs, Serialization Formats, R Internal Structures, R Internal Structures
+@node SEXPs, Argument evaluation, R Internal Structures, R Internal Structures
 @section SEXPs
 
 What @R{} users think of as @emph{variables} or @emph{objects} are
@@ -9336,14 +9337,22 @@ easily be reused.
 
 Many of these will be familiar from @R{} level: the atomic vector types
 are @code{LGLSXP}, @code{INTSXP}, @code{REALSXP}, @code{CPLXSP},
-@code{STRSXP} and @code{RAWSXP}.  Lists are @code{VECSXP}, expressions
-@code{EXPRSXP} and names @code{SYMSXP}.  Language objects
-(@code{LANGSXP}) cover calls, formulae and so on.  Pairlists
-(@code{LISTSXP}, the name going back to the origins of @R{} as a
-Scheme-like language) are rarely seen at @R{} level, but are for example
-used for argument lists.  Character vectors are effectively lists all of
-whose elements are @code{CHARSXP}, a type that is rarely visible at @R{}
-level.
+@code{STRSXP} and @code{RAWSXP}.  Lists are @code{VECSXP} and names
+(also known as symbols) are @code{SYMSXP}.  Pairlists (@code{LISTSXP},
+the name going back to the origins of @R{} as a Scheme-like language)
+are rarely seen at @R{} level, but are for example used for argument
+lists.  Character vectors are effectively lists all of whose elements
+are @code{CHARSXP}, a type that is rarely visible at @R{} level.
+
+Language objects (@code{LANGSXP}) cover calls, formulae and so on.
+Internally they are pairlists with first element a reference@footnote{a
+pointer to a function or a symbol to look up the function by name, or an
+language object to be evaluated to give a function.} to the function to
+be called with remaining elements the actual arguments for the call (and
+with the tags if present giving the specified argument names).
+
+Expressions are of type @code{EXPRSXP}: they are a vector of language
+objects most often seen as the result of @code{parse()}.
 
 The functions are of types @code{CLOSXP}, @code{SPECIALSXP} and
 @code{BUILTINSXP}: where @code{SEXPTYPE}s are stored in an integer
@@ -9546,7 +9555,10 @@ set to NULL.
 
 @item LANGSXP
 A special type of @code{LISTSXP} used for function calls.  (The CAR
-gives the function, perhaps as a symbol, and the CDR the argument list.)
+references the function (perhaps via a symbol or language object), and
+the CDR the argument list with tags for named arguments.)
+@R{}-level `language objects' are mainly @code{LANGSXP}s, but can be
+symbols (@code{SYMSXP}s) or expression vectors (@code{EXPRSXP}s).
 
 @item SPECIALSXP
 @itemx BUILTINSXP
@@ -9581,7 +9593,7 @@ of this type.
 
 @item VECSXP
 @itemx EXPRSXP
-@code{length}, @code{truelength} followed by a block of pointers. These
+@code{length}, @code{truelength} followed by a block of pointers.  These
 are internally identical (and identical to @code{STRSXP}) but differ in
 the interpretations placed on the elememts.
 
@@ -9615,7 +9627,61 @@ vectors are @code{malloc}ed individually whereas the 'small' nodes are
 allocated from pages of about 2000 bytes.
 
 
-@node Serialization Formats,  , SEXPs, R Internal Structures
+@node Argument evaluation, Serialization Formats, SEXPs, R Internal Structures
+@section Argument evaluation
+
+As we have seen, functions in @R{} come in three types, closures
+(@code{SEXPTYPE} @code{CLOSXP}), specials (@code{SPECIALSXP}) and
+builtins (@code{BUILTINSXP}).  In this section we consider when (and if)
+the actual arguments of function calls are evaluated.  The rules are
+different for the internal (special/builtin) and R-level functions.
+
+For a call to a closure, the actual and formal arguments are matched and
+a call (another @code{LANGSXP}) is constructed.  The process first
+replaces the actual argument list by a list of promises to the values
+supplied.  It then constructs a new environment which contains the names
+of the formal parameters matched to actual or default values: all the
+matched values are promises, the defaults as promises to be evaluated in
+the environment just created.  That environment is then used for the
+evaluation of the body of the function, and promises will be forced (and
+hence actual or default arguments evaluated) when they are encountered.
+
+If the closure is an S3 generic (that is, contains a call to
+@code{UseMethod}) the evaluation process is the same until the
+@code{UseMethod} call is encountered.  At that point the argument on
+which to do dispatch (normally the first) will be evaluated if it has
+not been already.  If a method has been found which is a closure, a new
+evaluation environment is created for it containing the matched
+arguments of the method plus any new variables defined so far during the
+evaluation of the body of the generic.  (Note that this means changes to
+the values of the formal arguments in the body of the generic are
+discarded when calling the method, but @emph{actual} argument promises
+which have been forced retain the values found when they were forced.
+On the other hand, missing arguments have values which are promises to
+use the default supplied by the method and not the generic.)  If the
+method found is a special or builtin it is called with the matched
+argument list of promises (possibly already forced) used for the generic.
+
+The essential difference@footnote{There is currently one other
+difference: when profiling builtin functions are counted but specials
+are not.} between special and builtin functions is that the arguments of
+specials are not evaluated before the C code is called, and those of
+builtins are.  In each case positional matching of arguments is used.
+Note that being a special/builtin is separate from being primitive or
+@code{.Internal}: @code{function} is a special primitive, @code{+} is a
+builtin primiitve, @code{switch} is a special @code{.Internal} and
+@code{grep} is a builtin @code{.Internal}.
+
+Many of the internal functions are internal generics, which for specials
+means that they do not evaluate their arguments on call, but the C code
+starts with a call to @code{DispatchOrEval}.  The latter evaluates the
+first argument, and looks for a method based on its class.  If it finds
+a method, it dispatches to that method with a call based on promises to
+evaluate the remaining arguments.  If no method is found, the remaining
+arguments are evaluated before return to the internal generic.
+
+
+@node Serialization Formats,  , Argument evaluation, R Internal Structures
 @section Serialization Formats
 
 Serialized versions of @R{} objects are used by @code{load}/@code{save}
@@ -9625,12 +9691,12 @@ serialize to (a file, a connection, a raw vector) and whether they are
 intended to serialize a single object or a collection of objects
 (typically a workspace).
 
-@R{} has used the same serialization format since @R 1.4.0 in December
+@R{} has used the same serialization format since @R{} 1.4.0 in December
 2001.  Reading of earlier formats is still supported via @code{load},
-but they are not described here.  (Files of these formats can still be
-found in @file{data} directories of packages.) The current serialization
-format is called `version 2', and has been expanded in back-compatible
-ways since @R{} 1.4.0, for example to support additional
+but they are not described here.  (Files of most of these formats can
+still be found in @file{data} directories of packages.) The current
+serialization format is called `version 2', and has been expanded in
+back-compatible ways since @R{} 1.4.0, for example to support additional
 @code{SEXTYPES}.
 
 @code{save()} works by first creating a tagged pairlist of objects to be
@@ -9642,15 +9708,14 @@ environment.
 
 Serialization in @R{} needs to take into account that objects may
 contain references to environments, which then have enclosing
-environments and so on.  Environments recognized as package or name
-space environments are saved by name.
-
-Further, there are `reference objects' which are not duplicated on copy
-and should should remain shared on unserialization.  These are weak
-references, external pointers and environments other than those
-associated with packages, name spaces and the global environment.  These
-are handled via a hash table, and references after the first are written
-out as reference marker indexed by the table entry.
+environments and so on.  (Environments recognized as package or name
+space environments are saved by name.)  Further, there are `reference
+objects' which are not duplicated on copy and should should remain
+shared on unserialization.  These are weak references, external pointers
+and environments other than those associated with packages, name spaces
+and the global environment.  These are handled via a hash table, and
+references after the first are written out as a reference marker indexed
+by the table entry.
 
 Serialization first writes a header indicating the format (normally
 @code{X\n} for an XDR format binary save) and the version number of the
@@ -9669,21 +9734,22 @@ For all @code{SEXPTYPE}s except @code{NILSXP}, @code{SYMSXP} and
 @code{ENVSXP} serialization starts with a integer with the
 @code{SEXPTYPE} in bits 0:7@footnote{only 0:4 will currently be used for
 @code{SEXPTYPE}s but values 241:255 are used for pseudo-SEXPTYPES.}
-followed by the object bit, two bits indicating if there is an attribute
-and a tag (for the dotted pair types), an unused bit and then the
-@code{gp} field@footnote{Currently the only relevant bits are 0:1,
-14:15.} in bits 12:27.  Dotted pair objects write their attributes (if
-any), tag (if any), CAR and then CDR (using tail recursion): other
-objects write their attributes after themselves.  Atomic ector objects
-write their length followed by the data: generic vector objects write
-the length followed by a call to @code{WriteItem} for each element.  The
-code for @code{CHARSXP}s special-cases @code{NA_STRING} and writes it as
-length @code{-1} with no data.
+followed by the object bit, two bits indicating if there are any
+attributes and if there is a tag (for the pairlist types), an unused bit
+and then the @code{gp} field@footnote{Currently the only relevant bits
+are 0:1, 14:15.} in bits 12:27.  Pairlist-like objects write their
+attributes (if any), tag (if any), CAR and then CDR (using tail
+recursion): other objects write their attributes after themselves.
+Atomic vector objects write their length followed by the data: generic
+vector-list objects write the length followed by a call to
+@code{WriteItem} for each element.  The code for @code{CHARSXP}s
+special-cases @code{NA_STRING} and writes it as length @code{-1} with no
+data.
 
 Environments are treated in several ways: as we have seen, some are
 written as specific pseudo-SEXPTYPEs.  Package and name space
 environments are written with pseudo-SEXPTYPEs followed by the name.
-`Normal' environments are written on as @code{ENVSXP}s with an integer
+`Normal' environments are written out as @code{ENVSXP}s with an integer
 indicating if the environment is locked followed by the enclosure,
 frame, tag and attributes.
 
