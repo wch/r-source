@@ -15,6 +15,7 @@ mode <- function(x) {
 "storage.mode<-" <-
 "mode<-" <- function(x, value)
 {
+    if (storage.mode(x)==value) return(x)
     mde <- paste("as.",value,sep="")
     atr <- attributes(x)
     x <- eval(call(mde,x), parent.frame())
