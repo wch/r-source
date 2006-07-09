@@ -434,8 +434,8 @@ SEXP eval(SEXP e, SEXP rho)
 	    RCNTXT cntxt;
 	    PROTECT(tmp = evalList(CDR(e), rho));
 	    R_Visible = 1 - PRIMPRINT(op);
-	    /* We used to do insert a context only if profiling,
-	       but helps for tracebacks too. */
+	    /* We used to insert a context only if profiling,
+	       but helps for tracebacks on .C etc. */
 	    if (R_Profiling || (PPINFO(op).kind == PP_FOREIGN)) {
 		begincontext(&cntxt, CTXT_BUILTIN, e,
 			     R_BaseEnv, R_BaseEnv, R_NilValue, R_NilValue);

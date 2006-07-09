@@ -567,6 +567,7 @@ void PrintValueRec(SEXP s,SEXP env)
 	break;
     case SPECIALSXP:
     case BUILTINSXP:
+	/* This is OK as .Internals are not visible to be printed */
 	Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
 	break;
     case CHARSXP:

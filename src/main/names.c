@@ -65,8 +65,8 @@
  *		Y=1 says that this is an internal function which must
  *		    be accessed with a	.Internal(.) call, any other value is
  *		    accessible directly and printed in R as ".Primitive(..)".
- *		Z=1 says evaluate arguments before calling and
- *		Z=0 says don't evaluate.
+ *		Z=1 says evaluate arguments before calling (BUILTINSXP) and
+ *		Z=0 says don't evaluate (SPECIALSXP).
  *
  * arity:	How many arguments are required/allowed;  "-1"	meaning ``any''
  *
@@ -81,7 +81,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {
 
 /* Language Related Constructs */
-
+\
 /* printname	c-entry		offset	eval	arity	pp-kind	     precedence	rightassoc
  * ---------	-------		------	----	-----	-------      ----------	----------*/
 {"if",		do_if,		0,	0,	-1,	{PP_IF,	     PREC_FN,	  1}},
@@ -1091,10 +1091,9 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
     if (flag) R_Visible = 0;
     UNPROTECT(1);
-    if (save != R_PPStackTop) {
+    if (save != R_PPStackTop)
 	REprintf("stack imbalance in internal %s, %d then %d",
-	       PRIMNAME(INTERNAL(fun)), save, R_PPStackTop);
-    }
+		 PRIMNAME(INTERNAL(fun)), save, R_PPStackTop);
     return (args);
 }
 #undef __R_Names__
