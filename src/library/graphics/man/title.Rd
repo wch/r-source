@@ -36,10 +36,11 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   greek letters, fractions, etc.
 }
 \details{
-  The labels passed to title can be simple strings or expressions,
-  or they can be a list containing the string to be plotted, and
-  a selection of the optional modifying graphical parameters
-  \code{cex=}, \code{col=} and \code{font=}.
+  The labels passed to \code{title} can be a character vector or a
+  language object (names, calls or expressions), or a list
+  containing the string to be plotted, and a selection of the optional
+  modifying graphical parameters \code{cex=}, \code{col=} and
+  \code{font=}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -5,7 +5,7 @@
 is.language(x)
 }
 \description{
-  \code{is.language} returns \code{TRUE} if \code{x} is either a
+  \code{is.language} returns \code{TRUE} if \code{x} is a
   variable \code{\link{name}}, a \code{\link{call}}, or an
   \code{\link{expression}}.
 }

@@ -15,10 +15,11 @@ Axis(x = NULL, at = NULL, \dots, side, labels = NULL)
     to be drawn on.  The axis is placed as follows: 1=below,
     2=left, 3=above and 4=right.}
   \item{labels}{this can either be a logical value specifying whether
-    (numerical) annotations are to be made at the tickmarks, or a vector
-    of character strings or expressions to be placed at the tickpoints.
-    If this is specified as strings or expressions, \code{at} should be
-    supplied and they should be the same length.}
+    (numerical) annotations are to be made at the tickmarks, or a
+    character or expression vector of labels to be placed at the
+    tickpoints. If this is specified as a character or expression
+    vector, \code{at} should be supplied and they should be the same
+    length.}
   \item{\dots}{Arguments to be passed to methods and perhaps then to
     \code{\link{axis}}.}
 }

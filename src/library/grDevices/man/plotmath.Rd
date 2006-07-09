@@ -3,11 +3,15 @@
 \title{Mathematical Annotation in R}
 \description{
   If the \code{text} argument to one of the text-drawing functions
-  (\code{\link{text}}, \code{\link{mtext}}, \code{\link{axis}}) in \R
-  is an expression, the argument is interpreted as a mathematical
-  expression and the output will be formatted according to TeX-like
-  rules.  Expressions can also be used for titles, subtitles and
-  x- and y-axis labels (but not for axis labels on \code{persp} plots).
+  (\code{\link{text}}, \code{\link{mtext}}, \code{\link{axis}},
+  \code{\link{legend}}) in \R is an expression, the argument is
+  interpreted as a mathematical expression and the output will be
+  formatted according to TeX-like rules.  Expressions can also be used
+  for titles, subtitles and x- and y-axis labels (but not for axis
+  labels on \code{persp} plots).
+
+  In most cases other language objects (names and calls) are coerced to
+  expressions and so can also be used.
 }
 \details{
   A mathematical expression must obey the normal rules of syntax for any
@@ -160,6 +164,7 @@ theta <- 1.23 ; mtext(bquote(hat(theta) == .(theta)))
 for(i in 2:9)
     text(i,i+1, substitute(list(xi,eta) == group("(",list(x,y),")"),
                            list(x=i, y=i+1)))
+## note that both of these use calls rather than expressions.
 
 plot(1:10, 1:10)
 text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))

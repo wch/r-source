@@ -10,7 +10,7 @@ strheight(s, units = "user", cex = NULL)
   \item{s}{character vector or \code{\link{expression}}s whose string
     widths in plotting units are to be determined.  An attempt is made
     to coerce other vectors to character, and other language objects
-    to expressions.}
+    (names and calls) to expressions.}
   \item{units}{character indicating in which units \code{s} is measured;
     should be one of \code{"user"}, \code{"inches"}, \code{"figure"};
     partial matching is performed.}

@@ -21,9 +21,9 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   \item{x, y}{the x and y co-ordinates to be used to position the legend.
     They can be specified by keyword or in any way which is accepted by
     \code{\link{xy.coords}}: See Details.}
-  \item{legend}{a vector of text values or an \code{\link{expression}}
-    of length \eqn{\ge 1}{>= 1}, or a \code{\link{call}} (as resulting
-    from \code{\link{substitute}}) to appear in the legend.}
+  \item{legend}{a character vector or language object (a name, call or
+    \code{\link{expression}} vector)
+    of length \eqn{\ge 1}{>= 1} to appear in the legend.}
   \item{fill}{if specified, this argument will cause boxes filled
     with the specified colors (or shaded in the specified colors)
     to appear beside the legend text.}
@@ -32,7 +32,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     legend.  One of these two \emph{must} be specified for line drawing.}
   \item{pch}{the plotting symbols appearing in the legend, either as
     vector of 1-character strings, or one (multi character)
-    string. \emph{Must} be specified for symbol drawing.}
+    string.  \emph{Must} be specified for symbol drawing.}
   \item{angle}{angle of shading lines.}
   \item{density}{the density of shading lines, if numeric and
     positive. If \code{NULL} or negative or \code{NA} color filling

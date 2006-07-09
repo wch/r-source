@@ -11,7 +11,8 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
 }
 \alias{mtext}
 \arguments{
-  \item{text}{one or more character strings or expressions.}
+  \item{text}{one or more character strings or language objects (names,
+    calls or expressions).}
   \item{side}{on which side of the plot (1=bottom, 2=left, 3=top, 4=right).}
   \item{line}{on which MARgin line, starting at 0 counting outwards.}
   \item{outer}{use outer margins if available.}
