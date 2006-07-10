@@ -50,14 +50,14 @@ extern void *Rm_realloc(void * p, size_t n);
 
 /* Declarations for Valgrind.
 
-   These are controlled by the 
+   These are controlled by the
      --with-valgrind-instrumentation=
    option to configure, which sets VALGRIND_LEVEL to the
    supplied value (default 0) and defines NVALGRIND if
    the value is 0.
 
    level 0 is no additional instrumentation
-   level 1 marks uninitialized numeric, logical, integer vectors 
+   level 1 marks uninitialized numeric, logical, integer vectors
            and R_alloc memory
    level 2 marks free memory as inaccessible
 
@@ -78,7 +78,7 @@ extern void *Rm_realloc(void * p, size_t n);
 #endif
 
 
-#ifndef VALGRIND_LEVEL 
+#ifndef VALGRIND_LEVEL
 #define VALGRIND_LEVEL 0
 #endif
 
@@ -214,7 +214,7 @@ static R_size_t R_MaxVSize = R_SIZE_T_MAX;
 static R_size_t R_MaxNSize = R_SIZE_T_MAX;
 static int vsfac = 1; /* current units for vsize: changes at initialization */
 
-R_size_t attribute_hidden R_GetMaxVSize(void) 
+R_size_t attribute_hidden R_GetMaxVSize(void)
 {
     if (R_MaxVSize == R_SIZE_T_MAX) return R_SIZE_T_MAX;
     return R_MaxVSize*vsfac;
@@ -226,8 +226,8 @@ void attribute_hidden R_SetMaxVSize(R_size_t size)
     if (size / vsfac >= R_VSize) R_MaxVSize = (size+1)/sizeof(VECREC);
 }
 
-R_size_t attribute_hidden R_GetMaxNSize(void) 
-{ 
+R_size_t attribute_hidden R_GetMaxNSize(void)
+{
     return R_MaxNSize;
 }
 
@@ -618,7 +618,7 @@ static void GetNewPage(int node_class)
 	mem_err_heap((R_size_t) NodeClassSize[node_class]);
 #ifdef R_MEMORY_PROFILING
     R_ReportNewPage();
-#endif 
+#endif
     page->next = R_GenHeap[node_class].pages;
     R_GenHeap[node_class].pages = page;
     R_GenHeap[node_class].PageCount++;
@@ -631,7 +631,7 @@ static void GetNewPage(int node_class)
 	SNAP_NODE(s, base);
 #if  VALGRIND_LEVEL > 1
 	if (NodeClassSize[node_class]>0)
-	    VALGRIND_MAKE_NOACCESS(DATAPTR(s), NodeClassSize[node_class]*sizeof(VECREC));	
+	    VALGRIND_MAKE_NOACCESS(DATAPTR(s), NodeClassSize[node_class]*sizeof(VECREC));
 #endif
 	s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	SET_NODE_CLASS(s, node_class);
@@ -928,7 +928,7 @@ static SEXP NewWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit)
 	break;
     default: error(_("can only weakly reference/finalize reference objects"));
     }
-	
+
     PROTECT(key);
     PROTECT(val = NAMED(val) ? duplicate(val) : val);
     PROTECT(fin);
@@ -1136,7 +1136,7 @@ void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
 SEXP attribute_hidden do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int onexit;
-    
+
     checkArity(op, args);
 
     if (TYPEOF(CAR(args)) != ENVSXP && TYPEOF(CAR(args)) != EXTPTRSXP)
@@ -1147,7 +1147,7 @@ SEXP attribute_hidden do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
     onexit = asLogical(CADDR(args));
     if(onexit == NA_LOGICAL)
 	errorcall(call, _("third argument must be 'TRUE' or 'FALSE'"));
-    
+
     R_RegisterFinalizerEx(CAR(args), CADR(args), onexit);
     return R_NilValue;
 }
@@ -1327,7 +1327,7 @@ static void RunGenCollect(R_size_t size_needed)
 
     /* mark nodes ready for finalizing */
     CheckFinalizers();
-    
+
     /* process the weak reference chain */
     for (s = R_weak_refs; s != R_NilValue; s = WEAKREF_NEXT(s)) {
 	FORWARD_NODE(s);
@@ -1360,7 +1360,7 @@ static void RunGenCollect(R_size_t size_needed)
     for (i = 0; i < NUM_NODE_CLASSES; i++)
 	R_GenHeap[i].Free = NEXT_NODE(R_GenHeap[i].New);
 
- 
+
     /* update heap statistics */
     R_Collected = R_NSize;
     R_SmallVallocSize = 0;
@@ -1438,7 +1438,7 @@ SEXP attribute_hidden do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* reports memory use to profiler in eval.c */
 
-void attribute_hidden get_current_mem(unsigned long *smallvsize, 
+void attribute_hidden get_current_mem(unsigned long *smallvsize,
 				      unsigned long *largevsize,
 				      unsigned long *nodes)
 {
@@ -1446,7 +1446,7 @@ void attribute_hidden get_current_mem(unsigned long *smallvsize,
     *largevsize=R_LargeVallocSize;
     *nodes=(R_NodesInUse*sizeof(SEXPREC));
      return;
-	
+
 }
 
 SEXP attribute_hidden do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1474,13 +1474,13 @@ SEXP attribute_hidden do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     INTEGER(value)[3] = 10. * (R_VSize - VHEAP_FREE())/Mega * vsfac + 0.999;
     INTEGER(value)[6] = 10. * R_NSize/Mega * sizeof(SEXPREC) + 0.999;
     INTEGER(value)[7] = 10. * R_VSize/Mega * vsfac + 0.999;
-    INTEGER(value)[8] = (R_MaxNSize < R_SIZE_T_MAX) ? 
+    INTEGER(value)[8] = (R_MaxNSize < R_SIZE_T_MAX) ?
 	(10. * R_MaxNSize/Mega * sizeof(SEXPREC) + 0.999) : NA_INTEGER;
-    INTEGER(value)[9] = (R_MaxVSize < R_SIZE_T_MAX) ? 
+    INTEGER(value)[9] = (R_MaxVSize < R_SIZE_T_MAX) ?
 	(10. * R_MaxVSize/Mega * vsfac + 0.999) : NA_INTEGER;
     if (reset_max){
 	    R_N_maxused = INTEGER(value)[0];
-	    R_V_maxused = INTEGER(value)[1];	    
+	    R_V_maxused = INTEGER(value)[1];
     }
     INTEGER(value)[10] = (R_N_maxused < INT_MAX) ? R_N_maxused : NA_INTEGER;
     INTEGER(value)[11] = (R_V_maxused < INT_MAX) ? R_V_maxused : NA_INTEGER;
@@ -1705,7 +1705,7 @@ static SEXP allocSExpNonCons(SEXPTYPE t)
     TAG(s) = R_NilValue;
     ATTRIB(s) = R_NilValue;
 #if VALGRIND_LEVEL > 2
-    VALGRIND_MAKE_READABLE(s, sizeof(*s)); 
+    VALGRIND_MAKE_READABLE(s, sizeof(*s));
 #endif
     return s;
 }
@@ -1725,7 +1725,7 @@ SEXP cons(SEXP car, SEXP cdr)
     }
     GET_FREE_NODE(s);
 #if VALGRIND_LEVEL > 2
-    VALGRIND_MAKE_READABLE(s, sizeof(*s)); 
+    VALGRIND_MAKE_READABLE(s, sizeof(*s));
 #endif
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = LISTSXP;
@@ -1901,7 +1901,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     case LISTSXP:
 	return allocList(length);
     default:
-	error(_("invalid type/length (%d/%d) in vector allocation"), 
+	error(_("invalid type/length (%d/%d) in vector allocation"),
 	      type, length);
     }
 
@@ -1936,7 +1936,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     if (size > 0) {
 	if (node_class < NUM_SMALL_NODE_CLASSES) {
 	    CLASS_GET_FREE_NODE(node_class, s);
-#if VALGRIND_LEVEL > 2	    
+#if VALGRIND_LEVEL > 2
 	    VALGRIND_MAKE_WRITABLE(s, 4); /* sizeof sxpinfo_struct */
 #endif
 #if VALGRIND_LEVEL > 1
@@ -1961,7 +1961,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		if (s != NULL) success = TRUE;
 #ifdef R_MEMORY_PROFILING
 		R_ReportAllocation(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC));
-#endif		
+#endif
 	    }
 	    if (! success) {
 		/* reset the vector heap limit */
@@ -2011,12 +2011,12 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
  	VALGRIND_MAKE_WRITABLE(CHAR(s), actual_size);
 #endif
 	CHAR(s)[length] = 0;
-    } 
+    }
     else if (type == REALSXP){
 #if VALGRIND_LEVEL > 0
 	VALGRIND_MAKE_WRITABLE(REAL(s), actual_size);
 #endif
-    } 
+    }
     else if (type == INTSXP){
 #if VALGRIND_LEVEL > 0
 	VALGRIND_MAKE_WRITABLE(INTEGER(s), actual_size);
@@ -2159,7 +2159,7 @@ SEXP attribute_hidden do_memlimits(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
     int nsize, vsize;
     R_size_t tmp;
-    
+
     checkArity(op, args);
     nsize = asInteger(CAR(args));
     vsize = asInteger(CADR(args));
@@ -2313,7 +2313,7 @@ void *R_chk_calloc(size_t nelem, size_t elsize)
 	return(NULL);
 #endif
     p = calloc(nelem, elsize);
-    if(!p) error(_("Calloc could not allocate (%d of %d) memory"), 
+    if(!p) error(_("Calloc could not allocate (%d of %d) memory"),
 		 nelem, elsize);
     return(p);
 }
@@ -2425,19 +2425,79 @@ void (SET_OBJECT)(SEXP x, int v) { SET_OBJECT(x, v); }
 void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(x, v); }
 void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
 
+
+#define USE_TYPE_CHECKING
+
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(x); }
 int (TRUELENGTH)(SEXP x) { return TRUELENGTH(x); }
-char *(R_CHAR)(SEXP x) { return CHAR(x); }
-SEXP (STRING_ELT)(SEXP x, int i) { return STRING_ELT(x, i); }
-SEXP (VECTOR_ELT)(SEXP x, int i) { return VECTOR_ELT(x, i); }
+char *(R_CHAR)(SEXP x) {
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != CHARSXP) 
+	error("%s() can only be applied to a '%s', not a '%s'", 
+	      "CHAR", "CHARSXP", type2char(TYPEOF(x)));
+#endif
+    return CHAR(x);
+}
+SEXP (STRING_ELT)(SEXP x, int i) {
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != STRSXP)
+	error("%s() can only be applied to a '%s', not a '%s'", 
+	      "STRING_ELT", "STRSXP", type2char(TYPEOF(x)));
+#endif
+    return STRING_ELT(x, i);
+}
+SEXP (VECTOR_ELT)(SEXP x, int i) {
+/* We need to allow vector-like types here
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != VECSXP && TYPEOF(x) != EXPRSXP)
+	error("%s() can only be applied to a '%s', not a '%s'", 
+	      "VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
+#endif
+*/
+    return VECTOR_ELT(x, i);
+}
 int (LEVELS)(SEXP x) { return LEVELS(x); }
 
-int *(LOGICAL)(SEXP x) { return LOGICAL(x); }
-int *(INTEGER)(SEXP x) { return INTEGER(x); }
-Rbyte *(RAW)(SEXP x) { return RAW(x); }
-double *(REAL)(SEXP x) { return REAL(x); }
-Rcomplex *(COMPLEX)(SEXP x) { return COMPLEX(x); }
+int *(LOGICAL)(SEXP x) {
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != LGLSXP) 
+	error("%s() can only be applied to a '%s', not a '%s'", 
+	      "LOGICAL", "LGLSXP", type2char(TYPEOF(x)));
+#endif
+  return LOGICAL(x); 
+}
+int *(INTEGER)(SEXP x) {
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != INTSXP && TYPEOF(x) != LGLSXP)
+	error("INT() can only be applied to a INTSXP or a LGLSXP");
+#endif
+    return INTEGER(x); 
+}
+Rbyte *(RAW)(SEXP x) { 
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != RAWSXP) 
+	error("%s() can only be applied to a '%s', not a '%s'", 
+	      "RAW", "RAWSXP", type2char(TYPEOF(x)));
+#endif
+    return RAW(x); 
+}
+double *(REAL)(SEXP x) { 
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != REALSXP) 
+	error("%s() can only be applied to a '%s', not a '%s'", 
+	      "REAL", "REALSXP", type2char(TYPEOF(x)));
+#endif
+    return REAL(x); 
+}
+Rcomplex *(COMPLEX)(SEXP x) { 
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != CPLXSXP)
+	error("%s() can only be applied to a '%s', not a '%s'", 
+	      "COMPLEX", "CPLXSXP", type2char(TYPEOF(x)));
+#endif
+    return COMPLEX(x); 
+}
 SEXP *(STRING_PTR)(SEXP x) { return STRING_PTR(x); }
 SEXP *(VECTOR_PTR)(SEXP x)
 {
@@ -2447,14 +2507,37 @@ SEXP *(VECTOR_PTR)(SEXP x)
 
 void (SETLENGTH)(SEXP x, int v) { SETLENGTH(x, v); }
 void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(x, v); }
-void (SET_STRING_ELT)(SEXP x, int i, SEXP v) { CHECK_OLD_TO_NEW(x, v); STRING_ELT(x, i) = v; }
-SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) { CHECK_OLD_TO_NEW(x, v); return VECTOR_ELT(x, i) =v; }
+
+void (SET_STRING_ELT)(SEXP x, int i, SEXP v) { 
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != STRSXP)
+	error("%s() can only be applied to a '%s', not a '%s'", 
+	      "SET_STRING_ELT", "STRSXP", type2char(TYPEOF(x)));
+    if(TYPEOF(v) != CHARSXP && TYPEOF(v) != NILSXP)
+       error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'", 
+	     type2char(TYPEOF(v)));
+#endif
+    CHECK_OLD_TO_NEW(x, v);
+    STRING_ELT(x, i) = v; 
+}
+
+SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) { 
+/*  we need to allow vector-like types here
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != VECSXP)
+	error("%s() can only be applied to a '%s', not a '%s'", 
+	      "SET_VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
+#endif
+*/
+    CHECK_OLD_TO_NEW(x, v); 
+    return VECTOR_ELT(x, i) = v; 
+}
 int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(x, v); }
 
 /* List Accessors */
 SEXP (TAG)(SEXP e) { return TAG(e); }
 SEXP (CAR)(SEXP e) { return CAR(e); }
-SEXP (CDR)(SEXP e) {return CDR(e); }
+SEXP (CDR)(SEXP e) { return CDR(e); }
 SEXP (CAAR)(SEXP e) { return CAAR(e); }
 SEXP (CDAR)(SEXP e) { return CDAR(e); }
 SEXP (CADR)(SEXP e) { return CADR(e); }
@@ -2604,7 +2687,7 @@ void (SET_HASHVALUE)(SEXP x, int v) { SET_HASHVALUE(x, v); }
 
 /*******************************************/
 /* Non-sampling memory use profiler
-   reports all large vector heap 
+   reports all large vector heap
    allocations and all calls to GetNewPage */
 /*******************************************/
 
@@ -2642,13 +2725,13 @@ static void R_OutputStackTrace(FILE *file)
 static void R_ReportAllocation(R_size_t size)
 {
     int newline=0;
-    
+
     if (R_IsMemReporting){
 	if(size>R_MemReportingThreshold){
 	   fprintf(R_MemReportingOutfile,"%ld :", (unsigned long) size);
 	   R_OutputStackTrace(R_MemReportingOutfile);
 	}
-    } 
+    }
     return;
 }
 
@@ -2675,7 +2758,7 @@ static void R_EndMemReporting()
      return;
 }
 
-static void R_InitMemReporting(char *filename, int append, 
+static void R_InitMemReporting(char *filename, int append,
 			       R_size_t threshold)
 {
     if(R_MemReportingOutfile != NULL) R_EndMemReporting();
