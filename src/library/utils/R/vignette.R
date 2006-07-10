@@ -32,7 +32,7 @@ function(topic, package = NULL, lib.loc = NULL)
                 if(sum(ok)>1){
                     ## <FIXME>
                     ## Should really offer a menu to select from.
-                    warning(gettextf("vignette '%d' found more than once,\nusing the one found in '%s'", topic, dirname(pdf[idx])),
+                    warning(gettextf("vignette '%s' found more than once,\nusing the one found in '%s'", topic, dirname(pdf[idx])),
                             call. = FALSE, domain = NA)
                     ## </FIXME>
                 }

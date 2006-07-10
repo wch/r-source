@@ -394,6 +394,9 @@ BUG FIXES
 	showed up with some connections when used with output of more
 	than 100,000 bytes in a single call.
 
+    o   vignette() did not work if more than one vigentte with the
+        same name were installed.
+
 
 
 
