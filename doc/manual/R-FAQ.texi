@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-06-29
+@set FAQ_DATE @value{FAQ_YEAR}-07-10
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -1912,6 +1912,8 @@ Simulation of one- and two-dimensional fractional and multifractional
 Levy motions.
 @item FunCluster
 Functional profiling of cDNA microarray expression data.
+@item GAMBoost
+Generalized additive models by likelihood based boosting.
 @item GDD
 Platform and X11 independent device for creating bitmaps (png, gif and
 jpeg) using the GD graphics library.
@@ -2083,6 +2085,8 @@ system.
 @item ProbForecastGOP
 Probabilistic weather field forecasts using the Geostatistical Output
 Perturbation method introduced by Gel, Raftery and Gneiting (2004).
+@item ProbeR
+Reliability for gene expression from Affymetrix chip.
 @item QCA
 Qualitative Comparative Analysis for crisp sets.
 @item QCAGUI
@@ -2164,8 +2168,6 @@ balloon-borne instrument).
 Implementation of random variables by means of S4 classes and methods.
 @item RandomFields
 Creating random fields using various methods.
-@item Rassist
-Student-friendly package to mask common functions.
 @item Rcmdr
 A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the @strong{tcltk} package.
@@ -3039,6 +3041,8 @@ documentation in Italian.
 Least Angle Regression, Lasso and Forward Stagewise: efficient
 procedures for fitting an entire lasso sequence with the cost of a
 single least squares fit.
+@item laser
+Likelihood Analysis of Speciation/Extinction Rates from phylogenies.
 @item lasso2
 Routines and documentation for solving regression problems while
 imposing an L1 constraint on the estimates, based on the algorithm of
@@ -3234,6 +3238,8 @@ nonparametric models.
 Strictly monotone smoothing procedure.
 @item mprobit
 Multivariate probit model for binary/ordinal response.
+@item mratios
+Inferences for ratios of coefficients in the general linear model.
 @c <COMMENT>
 @c Moved to the Archive on 2005-07-27 as requested by Witold Eryk Wolski
 @c <W.E.Wolski@ncl.ac.uk> (package now in BioC).
@@ -3370,6 +3376,8 @@ Functions for NetWorkSpaces and Sleigh.
 @item odesolve
 An interface for the Ordinary Differential Equation (ODE) solver lsoda.
 ODEs are expressed as R functions.
+@item odfWeave
+Sweave processing of Open Document Format (ODF) files.
 @item onion
 A collection of routines to manipulate and visualize quaternions and
 octonions.
@@ -3856,6 +3864,8 @@ Utilities for start-up messages.
 @c </COMMENT>
 @item statmod
 Miscellaneous biostatistical modelling functions.
+@item stepPlr
+L2 penalized logistic regression with a stepwise variable selection.
 @item stepwise
 A stepwise approach to identifying recombination breakpoints in a
 sequence alignment.
@@ -3910,6 +3920,8 @@ Student's @math{t} variables.
 Transmission/disequilibrium tests for extended marker haplotypes.
 @item tensor
 Tensor product of arrays.
+@item tensorA
+Advanced tensors arithmetic with named indices.
 @item tgp
 Bayesian regression and adaptive sampling with Treed Gaussian Process
 models.
@@ -3941,6 +3953,8 @@ Time Series Factor Analysis.
 @item tuneR
 Collection of tools to analyze music, handle wave files, transcription,
 etc.
+@item tutoR
+Student-friendly package to mask common functions.
 @item twang
 Toolkit for Weighting and Analysis of Nonequivalent Groups.
 @item tweedie
