@@ -495,8 +495,8 @@ INLINE_FUN Rboolean isNumeric(SEXP s)
 INLINE_FUN SEXP ScalarLogical(int x)
 {
     SEXP ans = allocVector(LGLSXP, 1);
-    if (x == NA_LOGICAL) INTEGER(ans)[0] = NA_LOGICAL;
-    else INTEGER(ans)[0] = (x != 0);
+    if (x == NA_LOGICAL) LOGICAL(ans)[0] = NA_LOGICAL;
+    else LOGICAL(ans)[0] = (x != 0);
     return ans;
 }
 
