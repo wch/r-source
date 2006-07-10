@@ -243,6 +243,9 @@ void copyVector(SEXP s, SEXP t)
     ns = LENGTH(s);
     switch (TYPEOF(s)) {
     case STRSXP:
+	for (i = 0; i < ns; i++)
+	    SET_STRING_ELT(s, i, STRING_ELT(t, i % nt));
+	break;
     case EXPRSXP:
 	for (i = 0; i < ns; i++)
 	    SET_VECTOR_ELT(s, i, VECTOR_ELT(t, i % nt));

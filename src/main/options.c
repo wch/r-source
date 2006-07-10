@@ -294,7 +294,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(names = allocVector(STRSXP, n));
 	i = 0;
 	while (options != R_NilValue) {
-	    SET_VECTOR_ELT(names, i, PRINTNAME(TAG(options)));
+	    SET_STRING_ELT(names, i, PRINTNAME(TAG(options)));
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(options)));
 	    options = CDR(options); i++;
 	}
@@ -304,7 +304,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(value2 = allocVector(VECSXP, n));
 	PROTECT(names2 = allocVector(STRSXP, n));
 	for(i = 0; i < n; i++) {
-	    SET_VECTOR_ELT(names2, i, VECTOR_ELT(names, indx[i]));
+	    SET_STRING_ELT(names2, i, VECTOR_ELT(names, indx[i]));
 	    SET_VECTOR_ELT(value2, i, VECTOR_ELT(value, indx[i]));
 	}
 	setAttrib(value2, R_NamesSymbol, names2);

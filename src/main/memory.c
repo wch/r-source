@@ -2426,7 +2426,7 @@ void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(x, v); }
 void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
 
 
-/* #define USE_TYPE_CHECKING */
+#define USE_TYPE_CHECKING
 
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(x); }
@@ -2448,13 +2448,15 @@ SEXP (STRING_ELT)(SEXP x, int i) {
     return STRING_ELT(x, i);
 }
 SEXP (VECTOR_ELT)(SEXP x, int i) {
-/* We need to allow vector-like types here
 #ifdef USE_TYPE_CHECKING
-    if(TYPEOF(x) != VECSXP && TYPEOF(x) != EXPRSXP)
+    /* We need to allow vector-like types here */
+    if(TYPEOF(x) != VECSXP && 
+       TYPEOF(x) != EXPRSXP && 
+       TYPEOF(x) != WEAKREFSXP) {
 	error("%s() can only be applied to a '%s', not a '%s'", 
 	      "VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
+    }
 #endif
-*/
     return VECTOR_ELT(x, i);
 }
 int (LEVELS)(SEXP x) { return LEVELS(x); }
@@ -2470,7 +2472,8 @@ int *(LOGICAL)(SEXP x) {
 int *(INTEGER)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != INTSXP && TYPEOF(x) != LGLSXP)
-	error("INT() can only be applied to a INTSXP or a LGLSXP");
+	error("INT() can only be applied to a INTSXP or a LGLSXP, not a '%s'",
+	      type2char(TYPEOF(x)));
 #endif
     return INTEGER(x); 
 }
@@ -2522,13 +2525,18 @@ void (SET_STRING_ELT)(SEXP x, int i, SEXP v) {
 }
 
 SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) { 
-/*  we need to allow vector-like types here
 #ifdef USE_TYPE_CHECKING
-    if(TYPEOF(x) != VECSXP)
+    /*  we need to allow vector-like types here */
+    if(TYPEOF(x) != VECSXP && TYPEOF(x) != STRSXP && 
+       TYPEOF(x) != EXPRSXP &&
+       TYPEOF(x) != WEAKREFSXP) {
+	/* char *xx=NULL;
+	PrintValue(x);
+	*xx='a'; */
 	error("%s() can only be applied to a '%s', not a '%s'", 
 	      "SET_VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
+    }
 #endif
-*/
     CHECK_OLD_TO_NEW(x, v); 
     return VECTOR_ELT(x, i) = v; 
 }
