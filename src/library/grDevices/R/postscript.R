@@ -214,7 +214,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                 paper = "special", encoding, bg, fg, pointsize, pagecentre)
 {
     new <- list(onefile = onefile)
-    if(!missing(paper)) new$paper <- paper
+    new$paper <- paper
     if(!missing(encoding)) new$encoding <- encoding
     if(!missing(bg)) new$bg <- bg
     if(!missing(fg)) new$fg <- fg
