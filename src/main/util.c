@@ -44,10 +44,17 @@
 Rboolean tsConform(SEXP x, SEXP y)
 {
     if ((x = getAttrib(x, R_TspSymbol)) != R_NilValue &&
-	(y = getAttrib(y, R_TspSymbol)) != R_NilValue)
-	return INTEGER(x)[0] == INTEGER(x)[0] &&
-	    INTEGER(x)[1] == INTEGER(x)[1] &&
-	    INTEGER(x)[2] == INTEGER(x)[2];
+	(y = getAttrib(y, R_TspSymbol)) != R_NilValue) {
+	if(TYPEOF(x) == INTSXP && TYPEOF(y) == INTSXP)
+	    return INTEGER(x)[0] == INTEGER(x)[0] &&
+	        INTEGER(x)[1] == INTEGER(x)[1] &&
+	        INTEGER(x)[2] == INTEGER(x)[2];
+	else if(TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP)
+            return REAL(x)[0] == REAL(x)[0] &&
+                REAL(x)[1] == REAL(x)[1] &&
+                REAL(x)[2] == REAL(x)[2];
+	/* else fall through */
+    }
     return FALSE;
 }
 

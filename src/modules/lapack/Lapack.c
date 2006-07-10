@@ -91,7 +91,7 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values)
     int *xdims, n, lwork, info = 0, ov;
     char jobv[1], uplo[1], range[1];
     SEXP values, ret, nm, x, z = R_NilValue;
-    double *work, *rx, *rvalues, tmp;
+    double *work, *rx, *rvalues, tmp, *rz = NULL;
     int liwork, *iwork, itmp, m;
     double vl = 0.0, vu = 0.0, abstol = 0.0;
     /* valgrind seems to think vu should be set, but it is documented
@@ -113,13 +113,16 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values)
     rvalues = REAL(values);
 
     range[0] = 'A';
-    if (!ov) PROTECT(z = allocMatrix(REALSXP, n, n));
+    if (!ov) {
+	PROTECT(z = allocMatrix(REALSXP, n, n));
+	rz = REAL(z);
+    }
     isuppz = (int *) R_alloc(2*n, sizeof(int));
     /* ask for optimal size of work arrays */
     lwork = -1; liwork = -1;
     F77_CALL(dsyevr)(jobv, range, uplo, &n, rx, &n,
 		     &vl, &vu, &il, &iu, &abstol, &m, rvalues,
-		     REAL(z), &n, isuppz,
+		     rz, &n, isuppz,
 		     &tmp, &lwork, &itmp, &liwork, &info);
     if (info != 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "dsyevr");
@@ -130,7 +133,7 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values)
     iwork = (int *) R_alloc(liwork, sizeof(int));
     F77_CALL(dsyevr)(jobv, range, uplo, &n, rx, &n,
 		     &vl, &vu, &il, &iu, &abstol, &m, rvalues,
-		     REAL(z), &n, isuppz,
+		     rz, &n, isuppz,
 		     work, &lwork, iwork, &liwork, &info);
     if (info != 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "dsyevr");

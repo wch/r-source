@@ -917,6 +917,10 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    OutVec(stream, s, COMPLEX_ELT, OutComplex);
 	    break;
 	case STRSXP:
+	    OutInteger(stream, LENGTH(s));
+	    for (i = 0; i < LENGTH(s); i++)
+		WriteItem(STRING_ELT(s, i), ref_table, stream);
+	    break;
 	case VECSXP:
 	case EXPRSXP:
 	    OutInteger(stream, LENGTH(s));
