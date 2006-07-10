@@ -77,11 +77,14 @@ SEXP unitData(SEXP unit, int index) {
     SEXP data = getAttrib(unit, install("data"));
     if (isNull(data))
 	result = R_NilValue;
-    else {
+    else if(TYPEOF(data) == VECSXP) {
 	/* Recycle data if necessary 
 	 */
 	int n = LENGTH(data);
 	result = VECTOR_ELT(data, index % n);
+    } else {
+	warning("unit attribute 'data' is of incorrect type");
+	return R_NilValue;
     }
     return result;
 }
