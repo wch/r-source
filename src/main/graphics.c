@@ -4276,7 +4276,18 @@ unsigned int RGBpar(SEXP x, int i)
     if(isString(x)) {
 	return str2col(CHAR(STRING_ELT(x, i)));
     }
-    else if(isInteger(x) || isLogical(x)) {
+    else if(isLogical(x)) {
+        if(LOGICAL(x)[i] == NA_LOGICAL)
+            /*
+             * Paul 01/07/04
+             * Used to be set to NA_INTEGER (see comment in name2col).
+             */
+            return R_TRANWHITE;
+        indx = LOGICAL(x)[i] - 1;
+        if(indx < 0) return Rf_dpptr(CurrentDevice())->bg;
+        else return R_ColorTable[indx % R_ColorTableSize];
+    }
+    else if(isInteger(x)) {
 	if(INTEGER(x)[i] == NA_INTEGER)
 	    /*
 	     * Paul 01/07/04

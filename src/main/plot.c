@@ -292,10 +292,10 @@ SEXP FixupFont(SEXP font, int dflt)
 	ans = allocVector(INTSXP, 1);
 	INTEGER(ans)[0] = dflt;
     }
-    else if (isInteger(font) || isLogical(font)) {
+    else if (isLogical(font)) {
 	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++) {
-	    k = INTEGER(font)[i];
+	    k = LOGICAL(font)[i];
 #ifndef Win32
 	    if (k < 1 || k > 4) k = NA_INTEGER;
 #else
@@ -303,6 +303,18 @@ SEXP FixupFont(SEXP font, int dflt)
 #endif
 	    INTEGER(ans)[i] = k;
 	}
+    }
+    else if (isInteger(font)) {
+        ans = allocVector(INTSXP, n);
+        for (i = 0; i < n; i++) {
+            k = INTEGER(font)[i];
+#ifndef Win32
+            if (k < 1 || k > 4) k = NA_INTEGER;
+#else
+            if (k < 1 || k > 32) k = NA_INTEGER;
+#endif
+            INTEGER(ans)[i] = k;
+        }
     }
     else if (isReal(font)) {
 	ans = allocVector(INTSXP, n);

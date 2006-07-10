@@ -249,6 +249,11 @@ static void IntegerAnswer(SEXP x, struct BindData *data)
 	for (i = 0; i < n; i++)
 	    IntegerAnswer(VECTOR_ELT(x, i), data);
 	break;
+    case LGLSXP:
+        n = LENGTH(x);
+        for (i = 0; i < n; i++)
+            INTEGER(data->ans_ptr)[data->ans_length++] = LOGICAL(x)[i];
+        break;
     default:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)

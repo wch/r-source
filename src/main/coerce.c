@@ -1605,6 +1605,9 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     else dims = names = R_NilValue;
     switch (TYPEOF(x)) {
     case LGLSXP:
+       for (i = 0; i < n; i++)
+            LOGICAL(ans)[i] = (LOGICAL(x)[i] == NA_LOGICAL);
+        break;
     case INTSXP:
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = (INTEGER(x)[i] == NA_INTEGER);

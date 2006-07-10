@@ -61,6 +61,11 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	    ii--;
 	switch (mode) {
 	case LGLSXP:
+            if (0 <= ii && ii < nx && ii != NA_LOGICAL)
+                LOGICAL(result)[i] = LOGICAL(x)[ii];
+            else
+                LOGICAL(result)[i] = NA_INTEGER;
+            break;
 	case INTSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
 		INTEGER(result)[i] = INTEGER(x)[ii];
@@ -249,6 +254,8 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		iijj = ii + jj * nr;
 		switch (TYPEOF(x)) {
 		case LGLSXP:
+                    LOGICAL(result)[ij] = LOGICAL(x)[iijj];
+                    break;
 		case INTSXP:
 		    INTEGER(result)[ij] = INTEGER(x)[iijj];
 		    break;

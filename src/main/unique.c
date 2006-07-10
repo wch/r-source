@@ -139,6 +139,12 @@ static int shash(SEXP x, int indx, HashData *d)
     return scatter(k, d);
 }
 
+static int lequal(SEXP x, int i, SEXP y, int j)
+{
+    return (LOGICAL(x)[i] == LOGICAL(y)[j]);
+}
+
+
 static int iequal(SEXP x, int i, SEXP y, int j)
 {
     return (INTEGER(x)[i] == INTEGER(y)[j]);
@@ -285,7 +291,7 @@ static void HashTableSetup(SEXP x, HashData *d)
     switch (TYPEOF(x)) {
     case LGLSXP:
 	d->hash = lhash;
-	d->equal = iequal;
+	d->equal = lequal;
 	MKsetup(3, d);
 	break;
     case INTSXP:
