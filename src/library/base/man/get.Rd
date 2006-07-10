@@ -23,7 +23,7 @@ mget(x, envir, mode = "any",
   \item{mode}{the mode or type of object sought: see the Details section.}
   \item{inherits}{should the enclosing frames of the environment be
     searched?}
-  \item{ifnotfound}{A \code{list} of values to be used if the item is
+  \item{ifnotfound}{A \code{\link{list}} of values to be used if the item is
     not found.}
 }
 \details{
@@ -89,6 +89,6 @@ get("\%o\%")
 
 ##test mget
 e1 <- new.env()
-mget(letters, e1, ifnotfound=LETTERS)
+mget(letters, e1, ifnotfound = as.list(LETTERS))
 }
 \keyword{data}

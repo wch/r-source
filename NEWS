@@ -394,8 +394,11 @@ BUG FIXES
 	showed up with some connections when used with output of more
 	than 100,000 bytes in a single call.
 
-    o   vignette() did not work if more than one vigentte with the
-        same name were installed.
+    o	vignette() did not work if more than one vignette with the
+        same name was installed.
+
+    o	mget() did not check that 'ifnotfound' was a list, and worked
+	incorrectly if it was a list of length > 1.
 
 
 

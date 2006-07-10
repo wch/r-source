@@ -1706,22 +1706,18 @@ static SEXP gfind(char *name, SEXP env, SEXPTYPE mode, SEXP ifnotfound,
   rval = findVar1mode(t1, env, mode, inherits, 1);
 
   if (rval == R_UnboundValue) {
-    if( isFunction(ifnotfound) ) {
-      PROTECT(var = mkString(name));
-      PROTECT(R_fcall = LCONS(ifnotfound, LCONS( var, R_NilValue)));
-      rval = eval(R_fcall, enclos);
-      UNPROTECT(2);
-    }
-    else
-      rval = ifnotfound;
+      if( isFunction(ifnotfound) ) {
+	  PROTECT(var = mkString(name));
+	  PROTECT(R_fcall = LCONS(ifnotfound, LCONS( var, R_NilValue)));
+	  rval = eval(R_fcall, enclos);
+	  UNPROTECT(2);
+      } else
+	  rval = ifnotfound;
   }
   
   /* We need to evaluate if it is a promise */
-  if (TYPEOF(rval) == PROMSXP)
-    rval = eval(rval, env);
-  
-  if (!isNull(rval) && NAMED(rval) == 0)
-    SET_NAMED(rval, 1);
+  if (TYPEOF(rval) == PROMSXP) rval = eval(rval, env);
+  if (!isNull(rval) && NAMED(rval) == 0) SET_NAMED(rval, 1);
   return rval;
 }
 
@@ -1763,25 +1759,24 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isNull(env)) {
 	error(_("use of NULL environment is defunct"));
 	env = R_BaseEnv;
-    } else      
-    if( !isEnvironment(env) )
-      errorcall(call, _("second argument must be an environment"));
+    } else if( !isEnvironment(env) )
+	errorcall(call, _("second argument must be an environment"));
 
     mode = CAR(nthcdr(args, 2));
     nmode = length(mode);
     if( !isString(mode) )
-      errorcall(call, _("invalid '%s' argument"), "mode");
+	errorcall(call, _("invalid '%s' argument"), "mode");
 
     if( nmode != nvals && nmode != 1 )
-      errorcall(call, _("wrong length for '%s' argument"), "mode");
+	errorcall(call, _("wrong length for '%s' argument"), "mode");
 
     ifnotfound = CAR(nthcdr(args, 3));
     nifnfnd = length(ifnotfound);
     if( !isVector(ifnotfound) )
-      errorcall(call, _("invalid '%s' argument"), "ifnotfound");
+	errorcall(call, _("invalid '%s' argument"), "ifnotfound");
 
     if( nifnfnd != nvals && nifnfnd != 1 )
-      errorcall(call, _("wrong length for '%s' argument"), "ifnotfound");
+	errorcall(call, _("wrong length for '%s' argument"), "ifnotfound");
      
     if (isLogical(CAR(nthcdr(args, 4))))
 	ginherits = LOGICAL(CAR(nthcdr(args, 4)))[0];
@@ -1796,27 +1791,25 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i = 0; i < nvals; i++) {
       if (isString(mode)) {
 	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )), "function"))
-	  gmode = FUNSXP;
+	    gmode = FUNSXP;
 	else
 	  gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )));
       } else {
-	errorcall(call, _("invalid '%s' argument"), "mode");
-	gmode = FUNSXP; /* -Wall */
+	  errorcall(call, _("invalid '%s' argument"), "mode");
+	  gmode = FUNSXP; /* -Wall */
       }
 
       /* is the mode provided one of the real modes */
       if( gmode == (SEXPTYPE) (-1)) 
-	errorcall(call, _("invalid '%s' argument"), "mode");
+	  errorcall(call, _("invalid '%s' argument"), "mode");
 
-
-      if( nifnfnd == 1 ) {
-	if( TYPEOF(ifnotfound) == VECSXP )
+      
+      if( TYPEOF(ifnotfound) != VECSXP )
+	  errorcall(call, _("invalid '%s' argument"), "ifnotfound");
+      if( nifnfnd == 1 )
 	  PROTECT(ifnfnd = VECTOR_ELT(ifnotfound, 0));
-	else
-	  PROTECT(ifnfnd = ifnotfound);
-      }
       else
-	PROTECT(ifnfnd = getOneVal(ifnotfound, i));
+	  PROTECT(ifnfnd = VECTOR_ELT(ifnotfound, i));
 
       SET_VECTOR_ELT(ans, i, gfind(CHAR(STRING_ELT(x,i % nvals)), env, gmode,
 				   ifnfnd, ginherits, rho)); 
