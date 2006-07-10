@@ -611,12 +611,15 @@ static void RestoreSEXP(SEXP s, FILE *fp, InputRoutines *m, NodeInfo *node, int 
 	    INTEGER(s)[j] = m->InInteger(fp, d);
 	break;
     case STRSXP:
+	len = m->InInteger(fp, d);
+	for (j = 0; j < len; j++)
+	    SET_STRING_ELT(s, j, OffsetToNode(m->InInteger(fp, d), node));
+	break;
     case VECSXP:
     case EXPRSXP:
 	len = m->InInteger(fp, d);
-	for (j = 0; j < len; j++) {
+	for (j = 0; j < len; j++)
 	    SET_VECTOR_ELT(s, j, OffsetToNode(m->InInteger(fp, d), node));
-	}
 	break;
     default: error(_("bad SEXP type in data file"));
     }
@@ -1214,9 +1217,9 @@ static SEXP NewReadVec(SEXPTYPE type, SEXP sym_table, SEXP env_table, FILE *fp, 
 	break;
     case STRSXP:
 	do {								
-		int cnt;						
-		for (cnt = 0; cnt < length(my_vec); ++cnt)
-			SET_STRING_ELT(my_vec, cnt, InCHARSXP(fp, m, d));
+	    int cnt;						
+	    for (cnt = 0; cnt < length(my_vec); ++cnt)
+		SET_STRING_ELT(my_vec, cnt, InCHARSXP(fp, m, d));
 	} while (0);
 	break;
     case VECSXP:
@@ -1231,7 +1234,8 @@ static SEXP NewReadVec(SEXPTYPE type, SEXP sym_table, SEXP env_table, FILE *fp, 
     return my_vec;
 }
 
-static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp, InputRoutines *m, SaveLoadData *d)
+static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp, 
+			 InputRoutines *m, SaveLoadData *d)
 {
     SEXPTYPE type;
     SEXP s;
