@@ -506,8 +506,8 @@ char *EncodeElement(SEXP x, int indx, int quote, char dec)
 
     switch(TYPEOF(x)) {
     case LGLSXP:
-	formatLogical(&INTEGER(x)[indx], 1, &w);
-	res = EncodeLogical(INTEGER(x)[indx], w);
+	formatLogical(&LOGICAL(x)[indx], 1, &w);
+	res = EncodeLogical(LOGICAL(x)[indx], w);
 	break;
     case INTSXP:
 	formatInteger(&INTEGER(x)[indx], 1, &w);
