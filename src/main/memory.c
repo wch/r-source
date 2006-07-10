@@ -2426,7 +2426,7 @@ void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(x, v); }
 void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
 
 
-#define USE_TYPE_CHECKING
+/* #define USE_TYPE_CHECKING */
 
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(x); }
