@@ -398,7 +398,7 @@ void PrintWarnings(void)
     names = CAR(ATTRIB(R_Warnings));
     for(i=0; i<R_CollectWarnings; i++) {
 	SET_VECTOR_ELT(s, i, VECTOR_ELT(R_Warnings, i));
-	SET_VECTOR_ELT(t, i, VECTOR_ELT(names, i));
+	SET_STRING_ELT(t, i, STRING_ELT(names, i));
     }
     setAttrib(s, R_NamesSymbol, t);
     defineVar(install("last.warning"), s, R_GlobalEnv);

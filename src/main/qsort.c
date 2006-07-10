@@ -76,8 +76,8 @@ SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	SET_VECTOR_ELT(ans, 0, sx);
 	SET_VECTOR_ELT(ans, 1, indx);
-	SET_VECTOR_ELT(ansnames, 0, mkChar("x"));
-	SET_VECTOR_ELT(ansnames, 1, mkChar("ix"));
+	SET_STRING_ELT(ansnames, 0, mkChar("x"));
+	SET_STRING_ELT(ansnames, 1, mkChar("ix"));
 	setAttrib(ans, R_NamesSymbol, ansnames);
 	UNPROTECT(4);
 	return ans;
