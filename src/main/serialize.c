@@ -1336,6 +1336,11 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    InVec(stream, s, SET_COMPLEX_ELT, InComplex, length);
 	    break;
 	case STRSXP:
+	    length = InInteger(stream);
+	    PROTECT(s = allocVector(type, length));
+	    for (count = 0; count < length; ++count)
+		SET_STRING_ELT(s, count, ReadItem(ref_table, stream));
+	    break;
 	case VECSXP:
 	case EXPRSXP:
 	    length = InInteger(stream);

@@ -149,13 +149,23 @@ SEXP R_initMethodDispatch(SEXP envir)
     UNPROTECT(1);
 
 
-    /* some special lists of primitive skeleton calls */
-    R_PreserveObject(R_short_skeletons =
-		     findVar(Rf_install(".ShortPrimitiveSkeletons"), 
-			     Methods_Namespace));
-    R_PreserveObject(R_empty_skeletons =
-		     findVar(Rf_install(".EmptyPrimitiveSkeletons"), 
-			     Methods_Namespace));
+    /* Some special lists of primitive skeleton calls.
+       These will be promises under lazy-loading.
+     */
+    PROTECT(R_short_skeletons =
+	    findVar(Rf_install(".ShortPrimitiveSkeletons"),
+		    Methods_Namespace));
+    if(TYPEOF(R_short_skeletons) == PROMSXP)
+	R_short_skeletons = eval(R_short_skeletons, Methods_Namespace);
+    R_PreserveObject(R_short_skeletons);
+    UNPROTECT(1);
+    PROTECT(R_empty_skeletons =
+	    findVar(Rf_install(".EmptyPrimitiveSkeletons"), 
+		    Methods_Namespace));
+    if(TYPEOF(R_empty_skeletons) == PROMSXP)
+	R_empty_skeletons = eval(R_empty_skeletons, Methods_Namespace);
+    R_PreserveObject(R_empty_skeletons);
+    UNPROTECT(1);
     if(R_short_skeletons == R_UnboundValue || 
        R_empty_skeletons == R_UnboundValue)
 	error(_("could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"));
