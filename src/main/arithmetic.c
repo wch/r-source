@@ -639,6 +639,20 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 	    INTEGER(ans)[i] = NA_INTEGER;
 	return ans;
 	} */
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(s1) || TRACE(s2)){
+       if (TRACE(s1) && TRACE(s2)){
+	  if (n1>n2)
+	      memtrace_report(s1,ans);
+	  else 
+	      memtrace_report(s2, ans);
+       } else if (TRACE(s1))
+	   memtrace_report(s1,ans);
+       else /* only s2 */
+	   memtrace_report(s2, ans);
+       SET_TRACE(ans, 1);
+    }
+#endif
 
     switch (code) {
     case PLUSOP:
@@ -779,6 +793,20 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 
     n = (n1 > n2) ? n1 : n2;
     PROTECT(ans = allocVector(REALSXP, n));
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(s1) || TRACE(s2)){
+       if (TRACE(s1) && TRACE(s2)){
+	  if (n1>n2)
+	      memtrace_report(s1,ans);
+	  else 
+	      memtrace_report(s2, ans);
+       } else if (TRACE(s1))
+	   memtrace_report(s1,ans);
+       else /* only s2 */
+	   memtrace_report(s2, ans);
+       SET_TRACE(ans, 1);
+    }
+#endif
 
 /*    if (n1 < 1 || n2 < 1) {
       for (i = 0; i < n; i++)
@@ -862,6 +890,12 @@ static SEXP math1(SEXP sa, double(*f)(), SEXP lcall)
     /* coercion can lose the object bit */
     PROTECT(sa = coerceVector(sa, REALSXP));
     PROTECT(sy = allocVector(REALSXP, n));
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(sa)){
+       memtrace_report(sa, sy);
+       SET_TRACE(sy, 1);
+    }
+#endif
     a = REAL(sa);
     y = REAL(sy);
     naflag = 0;
@@ -986,6 +1020,21 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(), SEXP lcall)
 
     SETUP_Math2;
 
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(sa) || TRACE(sb)){
+       if (TRACE(sa) && TRACE(sb)){
+	  if (na>nb)
+	      memtrace_report(sa, sy);
+	  else 
+	      memtrace_report(sb, sy);
+       } else if (TRACE(sa))
+	   memtrace_report(sa, sy);
+       else /* only s2 */
+	   memtrace_report(sb, sy);
+       SET_TRACE(sy, 1);
+    }
+#endif
+
     mod_iterate(na, nb, ia, ib) {
 	ai = a[ia];
 	bi = b[ib];
@@ -1029,6 +1078,21 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI, double (*f)(), SEXP lcall)
     SETUP_Math2;
     m_opt = asInteger(sI);
 
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(sa) || TRACE(sb)){
+       if (TRACE(sa) && TRACE(sb)){
+	  if (na>nb)
+	      memtrace_report(sa, sy);
+	  else 
+	      memtrace_report(sb, sy);
+       } else if (TRACE(sa))
+	   memtrace_report(sa, sy);
+       else /* only s2 */
+	   memtrace_report(sb, sy);
+       SET_TRACE(sy, 1);
+    }
+#endif
+
     mod_iterate(na, nb, ia, ib) {
 	ai = a[ia];
 	bi = b[ib];
@@ -1055,6 +1119,21 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2, double (*f)(), SEXP lc
     SETUP_Math2;
     i_1 = asInteger(sI1);
     i_2 = asInteger(sI2);
+
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(sa) || TRACE(sb)){
+       if (TRACE(sa) && TRACE(sb)){
+	  if (na>nb)
+	      memtrace_report(sa, sy);
+	  else 
+	      memtrace_report(sb, sy);
+       } else if (TRACE(sa))
+	   memtrace_report(sa, sy);
+       else /* only s2 */
+	   memtrace_report(sb, sy);
+       SET_TRACE(sy, 1);
+    }
+#endif
 
     mod_iterate(na, nb, ia, ib) {
 	ai = a[ia];
@@ -1235,6 +1314,18 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)(), SEXP lcall)
 
     SETUP_Math3;
 
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(sa) || TRACE(sb) || TRACE(sc)){
+       if (TRACE(sa))
+	  memtrace_report(sa,sy);
+       else if (TRACE(sb))
+	  memtrace_report(sb, sy);
+       else if (TRACE(sc))
+	  memtrace_report(sc,sy);
+       SET_TRACE(sy, 1);
+    }
+#endif
+
     mod_iterate3 (na, nb, nc, ia, ib, ic) {
 	ai = a[ia];
 	bi = b[ib];
@@ -1281,6 +1372,18 @@ static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI, double (*f)(), SEXP lcal
     SETUP_Math3;
     i_1 = asInteger(sI);
 
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(sa) || TRACE(sb) || TRACE(sc)){
+       if (TRACE(sa))
+	  memtrace_report(sa,sy);
+       else if (TRACE(sb))
+	  memtrace_report(sb, sy);
+       else if (TRACE(sc))
+	  memtrace_report(sc,sy);
+       SET_TRACE(sy, 1);
+    }
+#endif
+
     mod_iterate3 (na, nb, nc, ia, ib, ic) {
 	ai = a[ia];
 	bi = b[ib];
@@ -1308,6 +1411,19 @@ static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ, double (*f)(), 
     SETUP_Math3;
     i_1 = asInteger(sI);
     i_2 = asInteger(sJ);
+
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(sa) || TRACE(sb) || TRACE(sc)){
+       if (TRACE(sa))
+	  memtrace_report(sa,sy);
+       else if (TRACE(sb))
+	  memtrace_report(sb, sy);
+       else if (TRACE(sc))
+	  memtrace_report(sc,sy);
+       SET_TRACE(sy, 1);
+    }
+#endif
+
 
     mod_iterate3 (na, nb, nc, ia, ib, ic) {
 	ai = a[ia];

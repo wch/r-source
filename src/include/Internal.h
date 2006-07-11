@@ -298,6 +298,7 @@ SEXP do_Math2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_matrix(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memlimits(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memtrace(SEXP, SEXP, SEXP, SEXP);
+SEXP do_memretrace(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memuntrace(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memoryprofile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_menu(SEXP, SEXP, SEXP, SEXP);

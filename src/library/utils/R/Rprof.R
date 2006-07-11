@@ -12,3 +12,6 @@ Rprofmem <- function(filename = "Rprofmem.out", append = FALSE, threshold=0)
 
 tracemem <- function(x) {.Internal(memtrace(x))}
 untracemem <- function(x) {.Internal(memuntrace(x))}
+retracemem <- function(x, previous=NULL) {.Internal(memretrace(x, previous))}
+
+

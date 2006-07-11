@@ -134,6 +134,7 @@ SEXP attribute_hidden do_memtrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 
+
 SEXP attribute_hidden do_memuntrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef R_MEMORY_PROFILING
@@ -161,11 +162,9 @@ void memtrace_report(SEXP old, SEXP new){
      return;
 }
 #else
-void memtrace_report(SEXP old, SEXP new){
+static void memtrace_stack_dump(void){
     RCNTXT *cptr;
- 
-    if (!R_current_trace_state()) return;
-    Rprintf("memtrace[%p->%p]: ",old,new);
+
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
@@ -177,6 +176,46 @@ void memtrace_report(SEXP old, SEXP new){
     }
     Rprintf("\n");
 
+
+}
+void memtrace_report(SEXP old, SEXP new){
+    if (!R_current_trace_state()) return;
+    Rprintf("memtrace[%p->%p]: ",old,new);
+    memtrace_stack_dump();
 }
 
 #endif /* R_MEMORY_PROFILING */
+
+SEXP attribute_hidden do_memretrace(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef R_MEMORY_PROFILING
+    SEXP object, origin, ans;
+    char buffer[20];
+
+    checkArity(op, args);
+
+    object = CAR(args);
+    if (TYPEOF(object) == CLOSXP || 
+	TYPEOF(object) == BUILTINSXP ||
+	TYPEOF(object) == SPECIALSXP)
+	    errorcall(call, "argument must not be a function");
+
+    origin = CADR(args);
+
+    if (TRACE(object)){
+	    sprintf(buffer, "<%p>", object);
+	    ans= mkString(buffer);
+    } else ans=R_NilValue;
+
+    if (origin!=R_NilValue){
+       SET_TRACE(object, 1);
+       if (R_current_trace_state()) {
+	       Rprintf("memtrace[%s->%p]: ",CHAR(STRING_ELT(origin, 0)), object);
+	       memtrace_stack_dump();
+       }
+    }
+    return ans;
+#else
+    return R_NilValue;
+#endif
+}

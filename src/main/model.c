@@ -1791,6 +1791,7 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(xnames = allocVector(STRSXP, nc));
 
+
     /* Here we loop over the terms in the model and, within each */
     /* term, loop over the corresponding columns of the design */
     /* matrix, assembling the names. */
@@ -1880,6 +1881,13 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(x = allocMatrix(REALSXP, n, nc));
 
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(vars)){
+       memtrace_report(vars, x);
+       SET_TRACE(x, 1);
+    }
+#endif
+
     /* a) Begin with a column of 1s for the intercept. */
 
     if ((jnext = jstart = intrcept) != 0) {
@@ -1897,6 +1905,12 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (INTEGER(columns)[i] == 0)
 		continue;
 	    var_i = VECTOR_ELT(variable, i);
+#ifdef R_MEMORY_PROFILING
+	    if (TRACE(var_i)){
+	       memtrace_report(var_i, x);	    
+	       SET_TRACE(x, 1);
+	    }
+#endif
 	    fik = INTEGER(factors)[i + k * nVar];
 	    if (fik) {
 		switch(fik) {

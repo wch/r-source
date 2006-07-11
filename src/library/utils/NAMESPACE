@@ -21,7 +21,7 @@ export("?", CRAN.packages, Rprof,Rprofmem, RSiteSearch, URLdecode, URLencode,
        read.fortran, read.socket, recover, remove.packages,
        savehistory, select.list, sessionInfo, setRepositories, str,
        summaryRprof, tail, timestamp, topicName, toBibtex, toLatex,
-       tracemem, untracemem,
+       tracemem, untracemem, retracemem,
        update.packageStatus, update.packages, upgrade, url.show, vi,
        vignette, write.socket, wsbrowser, xedit, xemacs)
 
