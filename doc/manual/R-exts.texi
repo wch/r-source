@@ -4590,6 +4590,7 @@ $7 = 5
 * Interface functions .Call and .External::  
 * Evaluating R expressions from C::  
 * Parsing R code from C::       
+* Vector accessor functions::   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -6662,7 +6663,7 @@ having the symbol @code{R_DimNamesSymbol}.  Finally we set the gradient
 matrix as the gradient attribute of @code{ans}, unprotect the remaining
 protected locations and return the answer @code{ans}.
 
-@node Parsing R code from C,  , Evaluating R expressions from C, System and foreign language interfaces
+@node Parsing R code from C, Vector accessor functions, Evaluating R expressions from C, System and foreign language interfaces
 @section Parsing R code from C
 @cindex Parsing R code from C
 
@@ -6711,6 +6712,28 @@ Note that a single line of text may give rise to more than one @R{}
 expression.
 
 
+@node Vector accessor functions,  , Parsing R code from C, System and foreign language interfaces
+@section Vector accessor functions 
+
+The vector accessors like @code{REAL} and @code{INTEGER} and
+@code{VECTOR_ELT} are @emph{functions} when used in @R{} extensions.
+(For efficiency they are macros when used in the @R{} source code, apart
+from @code{SET_STRING_ELT} and @code{SET_VECTOR_ELT} which are always
+functions.)
+
+As from @R{} 2.4.0 the accessor functions check that they are being used
+on an appropriate type of @code{SEXP}.  By default an certain amount of
+misuse is allowed where the internal representation is the same: for
+example @code{LOGICAL} can be used on a @code{INTSXP} and
+@code{SET_VECTOR_ELT} on a @code{STRSXP}.  Strict checking can be
+enabled by compiling @R{} (specifically @file{src/main/memory.c}) with
+@samp{USE_TEST_CHECKING_STRICT} defined.
+
+If efficiency is essential, the macro versions of the accessors can be 
+obtained by defining @samp{USE_RINTERNALS} before including
+@file{Rinternals.h}.  If you find it necessary to do so, please do test
+that your code compiled without @samp{USE_RINTERNALS} defined as this
+provides a stricter test that the accessors have been used correctly.
 
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code
