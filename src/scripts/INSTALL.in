@@ -863,7 +863,7 @@ do_install_source () {
   ## When installing from a source directory under version control, we
   ## should really exclude the subdirs CVS, .svn (Subversion) and
   ## .arch-ids (arch).
-  for d in CVS .svn .arch-ids; do
+  for d in CVS .svn .arch-ids .git; do
     find "${R_PACKAGE_DIR}" -name ${d} -type d -prune \
       -exec rm -rf \{\} \; 2>/dev/null
   done

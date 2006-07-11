@@ -181,6 +181,7 @@ foreach my $pkg (@ARGV) {
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^CVS$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.svn$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.arch-ids$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.git$/);
 	## Windows DLL resource file
 	push(@exclude_patterns, "^src/" . $pkgname . "_res\\.rc");
 	my $filename = $File::Find::name;
@@ -331,7 +332,7 @@ foreach my $pkg (@ARGV) {
     } else {
 	&fix_unneeded_dirs($pkgname);
     }
-    
+
     ## Finalize.
     if($opt_binary) {
 	$log->message("building binary distribution");
@@ -514,7 +515,7 @@ sub cleanup_pkg {
 
     chdir($pkg);
     my $pkgdir = R_cwd();
-    my $pkgname = basename($pkgdir);    
+    my $pkgname = basename($pkgdir);
 
     if(-d "src") {
 	chdir("src");
@@ -540,10 +541,10 @@ sub cleanup_pkg {
 		R_system("${R::Vars::MAKE} $makefiles clean");
 	    } else {
 		## Also cleanup possible Windows leftovers ...
-		unlink((<*.o *.s[lo] *.dylib>, 
+		unlink((<*.o *.s[lo] *.dylib>,
 			"$pkgname.a", "$pkgname.dll", "$pkgname.def"));
 		rmtree(".libs") if (-d ".libs");
-		rmtree("_libs") if (-d "_libs");		
+		rmtree("_libs") if (-d "_libs");
 	    }
 	}
     }
@@ -553,10 +554,10 @@ sub cleanup_pkg {
 	$log->message("running cleanup");
 	R_system("./cleanup");
     }
-    
+
     1;
 }
-    
+
 
 sub unlink_junk_files {
     unlink($_) if /^(\.RData|\.Rhistory)$/;
