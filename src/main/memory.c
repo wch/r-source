@@ -2426,7 +2426,7 @@ void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(x, v); }
 void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
 
 
-#define USE_TYPE_CHECKING_STRICT
+/* #define USE_TYPE_CHECKING_STRICT */
 #if defined(USE_TYPE_CHECKING_STRICT) && !defined(USE_TYPE_CHECKING)
 # define USE_TYPE_CHECKING
 #endif
