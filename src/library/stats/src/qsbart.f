@@ -1,5 +1,7 @@
 C An interface to sbart() --- fewer arguments BUT unspecified scrtch() dimension
 C
+C NB: this routine alters ws.
+C
       subroutine qsbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &	   coef,sz,lev,
      &	   crit,iparms,spar,parms,

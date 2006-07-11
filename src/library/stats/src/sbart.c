@@ -48,6 +48,7 @@ void F77_SUB(sbart)
    n		number of data points
    ys(n)	vector of length n containing the observations
    ws(n)	vector containing the weights given to each data point
+                NB: the code alters the values here.
    xs(n)	vector containing the ordinates of the observations
    ssw          `centered weighted sum of y^2'
    nk		number of b-spline coefficients to be estimated
