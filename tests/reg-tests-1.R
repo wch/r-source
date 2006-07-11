@@ -4322,6 +4322,7 @@ x <- factor(sample(letters, 1000, replace=TRUE))
 o <- sort.list(x, method = "radix")
 ## failed in 2.3.1
 
+
 ## qt() bisection search: PR#9050
 x <- -2:2
 stopifnot(isTRUE(all.equal(x, qt(pt(x, df=20, ncp=1),df=20,ncp=1))))
@@ -4334,6 +4335,7 @@ stopifnot(identical(poly (x,y, degree = 2, raw = TRUE),
 		    polym(x,y, degree = 2, raw = TRUE)))
 ## failed in 2.3.1
 
+
 ## plot.xy( type = "s" | "S" ) was missing an initial test: PR#9046
 types <- c("p", "l", "b", "o", "h", "s", "S")
 p <- palette(hcl(h = seq(30,330, length= length(types))))
@@ -4345,7 +4347,26 @@ for(i in seq(types)) {
 palette(p)# restored to previous
 ## failed in 2.3.1
 
+
 ## qf for large df2
 stopifnot(isTRUE(all.equal(qf(0.9,df1=1,df2=1e10,ncp=0),
                            qf(0.9,df1=1,df2=1e10))))
 ## failed in 2.3.1
+
+
+## some regression tests of as.vector() and as.list()
+x <- list(a=1, b=2)
+stopifnot(identical(x, as.list(x)))  # was said to drop names
+x <- pairlist(a=1, b=2)
+stopifnot(is.list(x))
+xx <- as.vector(x, "list")
+stopifnot(typeof(xx) == "list")
+stopifnot(!identical(x, xx))
+stopifnot(identical(names(x), names(xx)))
+
+x <- expression(a=2+3, b=pi)
+xx <- as.vector(x, "list") # not allowed in 2.3.1
+stopifnot(identical(names(x), names(xx)))
+xx <- as.list(x)           # lost names in 2.3.1
+stopifnot(identical(names(x), names(xx)))
+## was incorrectly documented in 2.3.1

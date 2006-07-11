@@ -193,6 +193,14 @@ NEW FEATURES
     o	print.table(T, zero.print=ch) now also replaces 0 by ch when T is
 	non-integer with integer entries.
 
+    o	as.list(<an expression>) is now handled by internal code and
+	no longer loses attributes such as names.
+
+	as.list(<a list>) no longer duplicates (unnecessarily).
+
+    o	lapply(<a pairlist>) now coerces to a list (rather than traverse
+	the pairlist from the beginning for each item).
+
 
 DEPRECATED & DEFUNCT
 

@@ -1,7 +1,13 @@
 lapply <- function (X, FUN, ...)
 {
     FUN <- match.fun(FUN)
-    if (!is.list(X)) X <- as.list(X)
+###    if (!is.list(X)) X <- as.list(X)
+###    This failed to coerce a pairlist, which was then repeatedly coerced
+###    in the internal code
+###    As from 2.4.0 as.list() does not duplicate a list, but
+###    internal lapply insists that its arguments are symbols.
+###    Should we call as.list on objects, which typically are classed lists?
+    if(typeof(X) != "list") X <- as.list(X)
     rval <-.Internal(lapply(X, FUN))
     names(rval) <- names(X)
     return(rval)

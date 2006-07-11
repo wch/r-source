@@ -21,7 +21,9 @@ is.character(x)
 \details{
   \code{as.character} and \code{is.character} are generic: you can
   write methods to handle specific classes of objects,
-  see \link{InternalMethods}.
+  see \link{InternalMethods}.  Further, for \code{as.character} the
+  default method calls \code{\link{as.vector}}, so dispatch is first on
+  methods for \code{as.character} and then for methods for \code{as.vector}.
 
   \code{as.character} represents real and complex numbers to 15 decimal
   places (technically the compiler's setting of the ISO C constant

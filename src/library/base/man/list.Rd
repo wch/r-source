@@ -11,7 +11,7 @@
 \alias{is.pairlist}
 \title{Lists -- Generic and Dotted Pairs}
 \description{
-  Functions to construct, coerce and check for all kinds of \R lists.
+  Functions to construct, coerce and check for both kinds of \R lists.
 }
 \usage{
 list(\dots)
@@ -27,7 +27,7 @@ is.pairlist(x)
 alist(\dots)
 }
 \arguments{
-  \item{\dots}{objects.}
+  \item{\dots}{objects, possibly named.}
   \item{x}{object to be coerced or tested.}
   \item{all.names}{a logical indicating whether to copy all values or
     (default) only those whose names do not begin with a dot.}

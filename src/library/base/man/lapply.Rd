@@ -10,7 +10,8 @@ replicate(n, expr, simplify = TRUE)
 \alias{sapply}
 \alias{replicate}
 \arguments{
-  \item{X}{list or (atomic) vector to be used.}
+  \item{X}{list or (atomic) vector to be used.  Coerced by
+    \code{\link{as.list}}.}
   \item{FUN}{the function to be applied to each element of \code{X}:
     see Details.  In the case of functions like \code{+}, \code{\%*\%}, etc.,
     function name must be backquoted or quoted.}
@@ -24,7 +25,7 @@ replicate(n, expr, simplify = TRUE)
   \item{expr}{expression to evaluate repeatedly.}
 }
 \description{
-  \code{lapply} returns a list of the same length as \code{X}.  Each
+  \code{lapply} returns a list of the same length as \code{X}, each
   element of which is the result of applying \code{FUN} to the
   corresponding element of \code{X}.
 
@@ -37,13 +38,13 @@ replicate(n, expr, simplify = TRUE)
 }
 \details{
   \code{FUN} is found by a call to \code{\link{match.fun}} and typically
-  is either a function or a symbol (e.g. a backquoted name) or a
+  is specifed as a function or a symbol (e.g. a backquoted name) or a
   character string specifying a function to be searched for from the 
   environment of the call to \code{lapply}. 
 
   Function \code{FUN} must be able to accept as input any of the
   elements of \code{X}.  If the latter is an atomic vector, \code{FUN}
-  will always be passed a length-one vector.
+  will always be passed a length-one vector of the same type as \code{X}.
   
   Simplification in \code{sapply} is only attempted if \code{X} has
   length greater than zero and if the return values from all elements
