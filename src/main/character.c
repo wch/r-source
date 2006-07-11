@@ -2019,7 +2019,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     nmatches = 0;
     for(i = 0 ; i < n ; i++) {
         if (STRING_ELT(vec, i) == NA_STRING) {
-            INTEGER(ind)[i] = 0;
+            LOGICAL(ind)[i] = 0;
             continue;
         }
         str = CHAR(STRING_ELT(vec, i));
@@ -2036,10 +2036,10 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
         if(apse_match(aps,
                       (unsigned char *)str,
                       (apse_size_t)strlen(str))) {
-            INTEGER(ind)[i] = 1;
+            LOGICAL(ind)[i] = 1;
             nmatches++;
         }
-        else INTEGER(ind)[i] = 0;
+        else LOGICAL(ind)[i] = 0;
     }
     apse_destroy(aps);
 
@@ -2048,13 +2048,13 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
             : allocVector(INTSXP, nmatches));
     if(value_opt) {
         for(j = i = 0 ; i < n ; i++) {
-            if(INTEGER(ind)[i])
+            if(LOGICAL(ind)[i])
                 SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
         }
     }
     else {
         for(j = i = 0 ; i < n ; i++) {
-            if(INTEGER(ind)[i]==1)
+            if(LOGICAL(ind)[i]==1)
                 INTEGER(ans)[j++] = i + 1;
         }
     }

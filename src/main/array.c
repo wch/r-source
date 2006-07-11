@@ -1076,7 +1076,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     /* handle the resize */
-    PROTECT(resize = coerceVector(CADDR(args), INTSXP));
+    PROTECT(resize = coerceVector(CADDR(args), LGLSXP));
     if (LOGICAL(resize)[0])
 	setAttrib(r, R_DimSymbol, dimsr);
     else
