@@ -97,6 +97,8 @@ smooth.spline <-
     iparms <- as.integer(c(icrit,ispar, contr.sp$maxit))
     names(iparms) <- c("icrit", "ispar", "iter")
 
+    ## This used DUP = FALSE which was dangerous since it does change
+    ## its arguments.
     fit <- .Fortran(R_qsbart,		# code in ../src/qsbart.f
 		    as.double(penalty),
 		    as.double(dofoff),
@@ -118,8 +120,8 @@ smooth.spline <-
 		    scrtch = double((17 + 0) * nk + 1),
 		    ld4  = as.integer(4),
 		    ldnk = as.integer(1),
-		    ier = integer(1),
-		    DUP = FALSE
+		    ier = integer(1)
+		    #, DUP = FALSE
 		    )[c("coef","ty","lev","spar","parms","crit","iparms","ier")]
 
     lev <- fit$lev
