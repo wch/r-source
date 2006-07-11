@@ -24,7 +24,7 @@ mget(x, envir, mode = "any",
   \item{inherits}{should the enclosing frames of the environment be
     searched?}
   \item{ifnotfound}{A \code{\link{list}} of values to be used if the item is
-    not found.}
+    not found: it will be coerced to list if necessary.}
 }
 \details{
   The \code{pos} argument can specify the environment in which to look

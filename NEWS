@@ -398,11 +398,12 @@ BUG FIXES
         same name was installed.
 
     o	mget() did not check that 'ifnotfound' was a list, and worked
-	incorrectly if it was a list of length > 1.
+	incorrectly if it was a list of length > 1.  Now 'ifnotfound'
+	is (if possible) coerced to a list.
 
     o	The internal check for conformance of time series assumed that the
-	'tsp' attribute was integer, when it would be numeric for a
-	seasonal time series. 
+	'tsp' attribute was integer, when it was enforced to be
+	numeric by the attribute-setting code.
 
 
 
