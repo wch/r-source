@@ -449,7 +449,6 @@
  do_agrep
  do_allnames
  do_aperm
- do_apply
  do_args
  do_arith
  do_arrows
