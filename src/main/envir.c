@@ -1757,7 +1757,6 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     env = CADR(args);
     if (isNull(env)) {
 	warning(_("use of NULL environment is deprecated"));
-	env = R_BaseEnv;
     } else if( !isEnvironment(env) )
 	errorcall(call, _("second argument must be an environment"));
 
@@ -1769,7 +1768,7 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( nmode != nvals && nmode != 1 )
       errorcall(call, _("wrong length for 'mode' argument"));
 
-    ifnotfound = CAR(nthcdr(args, 3));
+    PROTECT(ifnotfound = coerceVector(CAR(nthcdr(args, 3)), VECSXP));
     nifnfnd = length(ifnotfound);
     if( !isVector(ifnotfound) )
 	errorcall(call, _("invalid '%s' argument"), "ifnotfound");
@@ -1798,7 +1797,7 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 	  gmode = FUNSXP; /* -Wall */
       }
 
-      /* is the mode provided one of the real modes */
+      /* is the mode provided one of the real modes? */
       if( gmode == (SEXPTYPE) (-1)) 
 	  errorcall(call, _("invalid '%s' argument"), "mode");
 
@@ -1806,18 +1805,16 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
       if( TYPEOF(ifnotfound) != VECSXP )
 	  errorcall(call, _("invalid '%s' argument"), "ifnotfound");
       if( nifnfnd == 1 )
-	  PROTECT(ifnfnd = VECTOR_ELT(ifnotfound, 0));
+	  ifnfnd = VECTOR_ELT(ifnotfound, 0);
       else
-	  PROTECT(ifnfnd = VECTOR_ELT(ifnotfound, i));
+	  ifnfnd = VECTOR_ELT(ifnotfound, i);
 
       SET_VECTOR_ELT(ans, i, gfind(CHAR(STRING_ELT(x,i % nvals)), env, gmode,
 				   ifnfnd, ginherits, rho)); 
-
-      UNPROTECT(1);
     }
 
     setAttrib(ans, R_NamesSymbol, duplicate(x));
-    UNPROTECT(1);
+    UNPROTECT(2);
     return(ans);
 }
 
