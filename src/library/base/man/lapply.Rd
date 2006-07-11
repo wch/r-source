@@ -1,20 +1,21 @@
 \name{lapply}
+\alias{lapply}
+\alias{sapply}
+\alias{replicate}
 \title{Apply a Function over a List or Vector}
 \usage{
 lapply(X, FUN, \dots)
+
 sapply(X, FUN, \dots, simplify = TRUE, USE.NAMES = TRUE)
 
 replicate(n, expr, simplify = TRUE)
 }
-\alias{lapply}
-\alias{sapply}
-\alias{replicate}
 \arguments{
-  \item{X}{list or (atomic) vector to be used.  Coerced by
-    \code{\link{as.list}}.}
+  \item{X}{a vector (atomic or list) or an expressions vector.  Other
+    objects (such as a pairlist) will be coerced internally to a list.}
   \item{FUN}{the function to be applied to each element of \code{X}:
     see Details.  In the case of functions like \code{+}, \code{\%*\%}, etc.,
-    function name must be backquoted or quoted.}
+    the function name must be backquoted or quoted.}
   \item{\dots}{optional arguments to \code{FUN}.}
   \item{simplify}{logical; should the result be simplified to a vector
     or matrix if possible?}
@@ -22,7 +23,8 @@ replicate(n, expr, simplify = TRUE)
     use \code{X} as \code{\link{names}} for the result unless it had names
     already.}
   \item{n}{number of replications.}
-  \item{expr}{expression to evaluate repeatedly.}
+  \item{expr}{expression (language object, usually a call)
+    to evaluate repeatedly.}
 }
 \description{
   \code{lapply} returns a list of the same length as \code{X}, each
