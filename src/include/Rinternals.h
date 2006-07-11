@@ -524,7 +524,6 @@ LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 /* Type Coercions of all kinds */
 
 SEXP Rf_asChar(SEXP);
-SEXP Rf_ascommon(SEXP, SEXP, SEXPTYPE);
 SEXP Rf_coerceVector(SEXP, SEXPTYPE);
 SEXP Rf_coerceList(SEXP, SEXPTYPE);
 void Rf_CoercionWarning(int);/* warning code */
@@ -825,7 +824,6 @@ int R_system(char *);
 #define applyClosure		Rf_applyClosure
 #define arraySubscript		Rf_arraySubscript
 #define asChar			Rf_asChar
-#define ascommon		Rf_ascommon
 #define asComplex		Rf_asComplex
 #define asInteger		Rf_asInteger
 #define asLogical		Rf_asLogical

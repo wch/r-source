@@ -1246,7 +1246,7 @@ static SEXP asFunction(SEXP x)
     return f;
 }
 
-SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
+static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 {
     /* -> as.vector(..) or as.XXX(.) : coerce 'u' to 'type' : */
     SEXP v;
