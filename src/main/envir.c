@@ -1496,6 +1496,18 @@ static int RemoveVariable(SEXP name, int hashcode, SEXP env)
     if (FRAME_IS_LOCKED(env))
 	error(_("cannot remove bindings from a locked environment"));
 
+    if (env == R_BaseEnv) {
+	/* we have just installed the symbol, so it is there */
+	found = (SYMVALUE(name) != R_UnboundValue);
+	if (TYPEOF(name) != SYMSXP) error(_("not a symbol"));
+	if (R_BindingIsLocked(name, R_BaseEnv))
+	    error(_("cannot unbind a locked binding"));
+	if (R_BindingIsActive(name, R_BaseEnv))
+	    error(_("cannot unbind an active binding"));
+	SET_SYMVALUE(name, R_UnboundValue);
+	return found;
+    }
+
     if(IS_USER_DATABASE(env)) {
 	R_ObjectTable *table;
         table = (R_ObjectTable *) R_ExternalPtrAddr(HASHTAB(env));
@@ -2926,15 +2938,16 @@ SEXP attribute_hidden do_bndIsActive(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarLogical(R_BindingIsActive(sym, env));
 }
 
+/* This is a .Internal with no wrapper */
 SEXP attribute_hidden do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP sym;
     checkArity(op, args);
     sym = CAR(args);
     if (TYPEOF(sym) != SYMSXP) error(_("not a symbol"));
-    if (R_BindingIsLocked(sym, R_NilValue))
+    if (R_BindingIsLocked(sym, R_BaseEnv))
         error(_("cannot unbind a locked binding"));
-    if (R_BindingIsActive(sym, R_NilValue))
+    if (R_BindingIsActive(sym, R_BaseEnv))
         error(_("cannot unbind an active binding"));
     SET_SYMVALUE(sym, R_UnboundValue);
     return R_NilValue;
