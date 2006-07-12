@@ -3395,10 +3395,9 @@ static double *dnd_hght;
 static double *dnd_xpos;
 static double dnd_hang;
 static double dnd_offset;
-static SEXP *dnd_llabels;
 
-
-static void drawdend(int node, double *x, double *y, DevDesc *dd)
+static void drawdend(int node, double *x, double *y, SEXP dnd_llabels,
+		     DevDesc *dd)
 {
 /* Recursive function for 'hclust' dendrogram drawing:
  * Do left + Do right + Do myself
@@ -3413,22 +3412,22 @@ static void drawdend(int node, double *x, double *y, DevDesc *dd)
     *y = dnd_hght[node-1];
     /* left part  */
     k = dnd_lptr[node-1];
-    if (k > 0) drawdend(k, &xl, &yl, dd);
+    if (k > 0) drawdend(k, &xl, &yl, dnd_llabels, dd);
     else {
 	xl = dnd_xpos[-k-1];
 	yl = (dnd_hang >= 0) ? *y - dnd_hang : 0;
-	if(dnd_llabels[-k-1] != NA_STRING)
-	    GText(xl, yl-dnd_offset, USER, CHAR(dnd_llabels[-k-1]),
+	if(STRING_ELT(dnd_llabels, -k-1) != NA_STRING)
+	    GText(xl, yl-dnd_offset, USER, CHAR(STRING_ELT(dnd_llabels, -k-1)),
 		  1.0, 0.3, 90.0, dd);
     }
     /* right part */
     k = dnd_rptr[node-1];
-    if (k > 0) drawdend(k, &xr, &yr, dd);
+    if (k > 0) drawdend(k, &xr, &yr, dnd_llabels, dd);
     else {
 	xr = dnd_xpos[-k-1];
 	yr = (dnd_hang >= 0) ? *y - dnd_hang : 0;
-	if(dnd_llabels[-k-1] != NA_STRING)
-	    GText(xr, yr-dnd_offset, USER, CHAR(dnd_llabels[-k-1]),
+	if(STRING_ELT(dnd_llabels, -k-1) != NA_STRING)
+	    GText(xr, yr-dnd_offset, USER, CHAR(STRING_ELT(dnd_llabels, -k-1)),
 		  1.0, 0.3, 90.0, dd);
     }
     xx[0] = xl; yy[0] = yl;
@@ -3445,7 +3444,7 @@ SEXP attribute_hidden do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
     double x, y;
     int n;
 
-    SEXP originalArgs;
+    SEXP originalArgs, dnd_llabels;
     DevDesc *dd;
 
     dd = CurrentDevice();
@@ -3490,7 +3489,7 @@ SEXP attribute_hidden do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
     /* labels */
     if (TYPEOF(CAR(args)) != STRSXP || length(CAR(args)) != n+1)
 	goto badargs;
-    dnd_llabels = STRING_PTR(CAR(args));
+    dnd_llabels = CAR(args);
     args = CDR(args);
 
     GSavePars(dd);
@@ -3504,7 +3503,7 @@ SEXP attribute_hidden do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rf_gpptr(dd)->xpd = 1;
 
     GMode(1, dd);
-    drawdend(n, &x, &y, dd);
+    drawdend(n, &x, &y, dnd_llabels, dd);
     GMode(0, dd);
     GRestorePars(dd);
     /* NOTE: only record operation if no "error"  */
