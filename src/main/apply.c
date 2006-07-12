@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-6  the R Development Core Team
+ *  Copyright (C) 2000-4  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,30 +21,26 @@
 #include <config.h>
 #endif
 
-#include <Defn.h>
+#include "Defn.h"
+
+/* Code to handle lapply/apply */
 
 /* .Internal(lapply(X, FUN)) */
 
 SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP R_fcall, ans, X, FUN, ind, tmp, names;
-    int i, n, type;
+    SEXP R_fcall, ans, X, FUN, ind, tmp;
+    int i, n;
 
     checkArity(op, args);
     X = CAR(args);
-    PROTECT(X = eval(X, rho));
-    type = TYPEOF(X);
-    if(type == VECSXP || (type >= LGLSXP && type <= STRSXP) ||
-       type == RAWSXP || type == EXPRSXP)
-	/* [[ works perfectly well without coercion */ ;
-    else {
-	SEXP XX = coerceVector(X, VECSXP);
-	UNPROTECT(1);
-	PROTECT(X = XX);
-    }
-    n = length(X);
     FUN = CADR(args);
-    args = CDR(args); /* Drop X from arg list */
+    if (!isSymbol(X) || !isSymbol(FUN))
+	errorcall(call, _("arguments must be symbolic"));
+    n = length(eval(X, rho));
+    if (n == NA_INTEGER)
+	errorcall(call, _("invalid length"));
+    args = CDR(args);
 
     /* Build call: FUN(X[[<ind>]], ...) */
 
@@ -52,6 +48,7 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
        allocation and not PROTECT the result (LCONS does memory
        protection of its args internally), but not both of them,
        since the computation of one may destroy the other */
+
 
     PROTECT(ind = allocVector(INTSXP, 1));
     PROTECT(tmp = LCONS(R_Bracket2Symbol, LCONS(X, LCONS(ind, R_NilValue))));
@@ -62,9 +59,7 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	INTEGER(ind)[0] = i + 1;
 	SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
     }
-    names = getAttrib(X, R_NamesSymbol);
-    if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
-    UNPROTECT(5);
+    UNPROTECT(4);
     return ans;
 }
 
