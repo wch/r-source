@@ -425,7 +425,9 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	}
 	break;
     case VECSXP:
-	if (!dup) return (void*)VECTOR_PTR(s); /***** Dangerous to GC!!! */
+	if(!dup)
+	    error(_("lists must be duplicated in .C"));
+	/* if (!dup) return (void*)VECTOR_PTR(s); ***** Dangerous to GC!!! */
   	n = length(s);
 	lptr = (SEXP*)R_alloc(n, sizeof(SEXP));
 	for (i = 0 ; i < n ; i++) {

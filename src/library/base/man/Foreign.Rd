@@ -160,6 +160,9 @@
   written using \code{.Call} or \code{.External}, so this is now only a
   minor issue.
 
+  In addition, character vectors and lists cannot be used with
+  \code{DUP=FALSE}.
+  
   It is safe and useful to set \code{DUP=FALSE} if you do not change any
   of the variables that might be affected, e.g.,
 

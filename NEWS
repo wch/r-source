@@ -250,7 +250,10 @@ C-LEVEL FACILITIES
 	SET_VECTOR_ELT now check that they are called on the
 	correct SEXPTYPE (or at least on a compatible one).  See
 	`Writing R Extensions' for the details and for a stricter
-	test regime.
+
+    o	It is no longer possible to pass list variables to 
+	.C(DUP = FALSE): it would have given rise to obscure garbage
+	collection errors.
 
 
 UTILITIES
