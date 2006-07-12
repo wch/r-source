@@ -110,7 +110,7 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 		}
 	}
 	if (!ISNAN(y[l])) {
-	    double *rr;
+	    double *rr = NULL /* -Wall */;
 	    if(lop) rr = REAL(resid);
 	    resid0 = y[l];
 	    for (i = 0; i < p; i++)
@@ -132,7 +132,7 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 		for (j = 0; j < p; j++)
 		    P[i + j * p] = Pnew[i + j * p] - M[i] * M[j] / gain;
 	} else {
-	    double *rr;
+	    double *rr = NULL /* -Wall */;
 	    if(lop) rr = REAL(resid);
 	    for (i = 0; i < p; i++)
 		a[i] = anew[i];
