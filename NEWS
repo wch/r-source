@@ -409,7 +409,7 @@ BUG FIXES
 	than 100,000 bytes in a single call.
 
     o	vignette() did not work if more than one vignette with the
-        same name was installed.
+        same name was installed  (PR#9069).
 
     o	mget() did not check that 'ifnotfound' was a list, and worked
 	incorrectly if it was a list of length > 1.  Now 'ifnotfound'
@@ -418,6 +418,9 @@ BUG FIXES
     o	The internal check for conformance of time series assumed that the
 	'tsp' attribute was integer, when it was enforced to be
 	numeric by the attribute-setting code.
+
+    o   Sweave() did not treat \begin{document} in comments correctly 
+        (PR#9073).
 
 
 

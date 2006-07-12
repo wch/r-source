@@ -531,7 +531,7 @@ RweaveLatexWritedoc <- function(object, chunk)
         object$havesty <- TRUE
 
     if(!object$havesty){
-        chunk <- gsub("\\\\begin\\{document\\}",
+        chunk <- sub("^[[:space:]]*\\\\begin\\{document\\}",
                       paste("\\\\usepackage{",
                             object$styfile,
                             "}\n\\\\begin{document}", sep=""),
