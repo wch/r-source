@@ -1,3 +1,4 @@
+ BINDING_IS_LOCKED
  BM_norm_keep
  BZ2_blockSort
  BZ2_bsInitWrite
@@ -46,10 +47,12 @@
  EhiWakeUp
  GRecording
  GuiBusy
+ IS_ACTIVE_BINDING
  InitBrowseCallbackProc@16
  InitDynload
  Init_R_Variables
  LeftMatrixColumnLabel
+ LOCK_BINDING
  LoadInitFile
  MDIFrame
  MDIStatus
@@ -267,7 +270,9 @@
  Rrowsum_df
  Rrowsum_matrix
  Rwin_rename
+ SET_ACTIVE_BINDING_BIT
  TopmostDialogs
+ UNLOCK_BINDING
  UseInternet2
  WrongArgCount
  _dist_code
