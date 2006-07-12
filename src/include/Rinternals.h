@@ -816,7 +816,7 @@ int R_system(char *);
 #ifndef R_NO_REMAP
 #define allocArray		Rf_allocArray
 #define allocList		Rf_allocList
-#define allocS4Object      Rf_allocS4Object
+#define allocS4Object		Rf_allocS4Object
 #define allocMatrix		Rf_allocMatrix
 #define allocSExp		Rf_allocSExp
 #define allocString		Rf_allocString

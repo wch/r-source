@@ -2426,7 +2426,8 @@ void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(x, v); }
 void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
 
 
-/* #define USE_TYPE_CHECKING_STRICT */
+#define USE_TYPE_CHECKING
+
 #if defined(USE_TYPE_CHECKING_STRICT) && !defined(USE_TYPE_CHECKING)
 # define USE_TYPE_CHECKING
 #endif
@@ -2461,9 +2462,9 @@ SEXP (VECTOR_ELT)(SEXP x, int i) {
        TYPEOF(x) != WEAKREFSXP)
 	error("%s() can only be applied to a '%s', not a '%s'", 
 	      "VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
-#elif USE_TYPE_CHECKING
+#elif defined(USE_TYPE_CHECKING)
     /* also allow STRSXP */
-    if(TYPEOF(x) != VECSXP && TYPEOF(x) != STRSXP 
+    if(TYPEOF(x) != VECSXP && TYPEOF(x) != STRSXP &&
        TYPEOF(x) != EXPRSXP && 
        TYPEOF(x) != WEAKREFSXP)
 	error("%s() can only be applied to a '%s', not a '%s'", 
@@ -2479,7 +2480,7 @@ int *(LOGICAL)(SEXP x) {
     if(TYPEOF(x) != LGLSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "LOGICAL",  "LGLSXP", type2char(TYPEOF(x)));
-#elif USE_TYPE_CHECKING
+#elif defined(USE_TYPE_CHECKING)
     /* Currently harmless, and quite widely used */
     if(TYPEOF(x) != LGLSXP && TYPEOF(x) != INTSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
@@ -2557,9 +2558,9 @@ SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) {
 	error("%s() can only be applied to a '%s', not a '%s'", 
 	      "SET_VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
     }
-#elif USE_TYPE_CHECKING
+#elif defined(USE_TYPE_CHECKING)
     /* also allow STRSXP */
-    if(TYPEOF(x) != VECSXP && TYPESXP != STRSXP
+    if(TYPEOF(x) != VECSXP && TYPEOF(x) != STRSXP &&
        TYPEOF(x) != EXPRSXP && TYPEOF(x) != WEAKREFSXP) {
 	error("%s() can only be applied to a '%s', not a '%s'", 
 	      "SET_VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
@@ -2720,6 +2721,17 @@ int (HASHVALUE)(SEXP x) { return HASHVALUE(x); }
 
 void (SET_HASHASH)(SEXP x, int v) { SET_HASHASH(x, v); }
 void (SET_HASHVALUE)(SEXP x, int v) { SET_HASHVALUE(x, v); }
+
+/* Bindings accessors */
+Rboolean attribute_hidden 
+(IS_ACTIVE_BINDING)(SEXP b) {return IS_ACTIVE_BINDING(b);}
+Rboolean attribute_hidden
+(BINDING_IS_LOCKED)(SEXP b) {return BINDING_IS_LOCKED(b);}
+void attribute_hidden 
+(SET_ACTIVE_BINDING_BIT)(SEXP b) {SET_ACTIVE_BINDING_BIT(b);}
+void attribute_hidden (LOCK_BINDING)(SEXP b) {LOCK_BINDING(b);}
+void attribute_hidden (UNLOCK_BINDING)(SEXP b) {UNLOCK_BINDING(b);}
+
 
 /*******************************************/
 /* Non-sampling memory use profiler

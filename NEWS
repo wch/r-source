@@ -252,6 +252,12 @@ C-LEVEL FACILITIES
     o	The convenience function ScalarLogical now coerces all
 	non-zero non-NA values to TRUE.
 
+    o	The vector accessor functions such as INTEGER, REAL and
+	SET_VECTOR_ELT now check that they are called on the
+	correct SEXPTYPE (or at least on a compatible one).  See
+	`Writing R Extensions' for the details and for a stricter
+	test regime.
+
 
 UTILITIES
 
