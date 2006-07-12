@@ -1243,7 +1243,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /*  FIXME: We need to ensure that this works for hashed
         environments.  This code only works for unhashed ones.  the
-        syntax error here is a delibrate marker so I don't forget that
+        syntax error here is a deliberate marker so I don't forget that
         this needs to be done.  The code used in "missing" will help
         here.  */
 

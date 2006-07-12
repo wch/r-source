@@ -776,6 +776,8 @@ void setup_Rmainloop(void)
 
     R_Warnings = R_NilValue;
 
+    /* This could equally well be R_BaseEnv, as they only differ in what
+       the enclosure is considered to be */
     baseEnv = R_BaseNamespace;
 
     /* Set up some global variables */
