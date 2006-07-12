@@ -243,17 +243,19 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define MARK(x)		((x)->sxpinfo.mark)
 #define TYPEOF(x)	((x)->sxpinfo.type)
 #define NAMED(x)	((x)->sxpinfo.named)
+#define TRACE(x)	((x)->sxpinfo.trace)
+#define LEVELS(x)	((x)->sxpinfo.gp)
 #define SET_OBJECT(x,v)	(((x)->sxpinfo.obj)=(v))
 #define SET_TYPEOF(x,v)	(((x)->sxpinfo.type)=(v))
 #define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
+#define SET_TRACE(x,v)	(((x)->sxpinfo.trace)=(v))
+#define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=(v))
 
 /* Vector Access Macros */
 #define LENGTH(x)	(((VECSEXP) (x))->vecsxp.length)
 #define TRUELENGTH(x)	(((VECSEXP) (x))->vecsxp.truelength)
 #define SETLENGTH(x,v)		((((VECSEXP) (x))->vecsxp.length)=(v))
 #define SET_TRUELENGTH(x,v)	((((VECSEXP) (x))->vecsxp.truelength)=(v))
-#define LEVELS(x)	((x)->sxpinfo.gp)
-#define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=(v))
 
 /* Under the generational allocator the data for vector nodes comes
    immediately after the node structure, so the data address is a
@@ -297,9 +299,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define BODY(x)		((x)->u.closxp.body)
 #define CLOENV(x)	((x)->u.closxp.env)
 #define DEBUG(x)	((x)->sxpinfo.debug)
-#define TRACE(x)	((x)->sxpinfo.trace)
 #define SET_DEBUG(x,v)	(((x)->sxpinfo.debug)=(v))
-#define SET_TRACE(x,v)	(((x)->sxpinfo.trace)=(v))
 
 /* Symbol Access Macros */
 #define PRINTNAME(x)	((x)->u.symsxp.pname)

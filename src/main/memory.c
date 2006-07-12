@@ -2419,11 +2419,15 @@ int (OBJECT)(SEXP x) { return OBJECT(x); }
 int (MARK)(SEXP x) { return MARK(x); }
 int (TYPEOF)(SEXP x) { return TYPEOF(x); }
 int (NAMED)(SEXP x) { return NAMED(x); }
+int (TRACE)(SEXP x) { return TRACE(x); }
+int (LEVELS)(SEXP x) { return LEVELS(x); }
 
 void (SET_ATTRIB)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); ATTRIB(x) = v; }
 void (SET_OBJECT)(SEXP x, int v) { SET_OBJECT(x, v); }
 void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(x, v); }
 void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
+void (SET_TRACE)(SEXP x, int v) { SET_TRACE(x, v); }
+int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(x, v); }
 
 
 #define USE_TYPE_CHECKING
@@ -2435,6 +2439,8 @@ void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(x); }
 int (TRUELENGTH)(SEXP x) { return TRUELENGTH(x); }
+void (SETLENGTH)(SEXP x, int v) { SETLENGTH(x, v); }
+void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(x, v); }
 
 char *(R_CHAR)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
@@ -2472,8 +2478,6 @@ SEXP (VECTOR_ELT)(SEXP x, int i) {
 #endif
     return VECTOR_ELT(x, i);
 }
-
-int (LEVELS)(SEXP x) { return LEVELS(x); }
 
 int *(LOGICAL)(SEXP x) {
 #ifdef USE_TYPE_CHECKING_STRICT
@@ -2533,9 +2537,6 @@ SEXP *(VECTOR_PTR)(SEXP x)
   return NULL;
 }
 
-void (SETLENGTH)(SEXP x, int v) { SETLENGTH(x, v); }
-void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(x, v); }
-
 void (SET_STRING_ELT)(SEXP x, int i, SEXP v) { 
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != STRSXP)
@@ -2569,7 +2570,7 @@ SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) {
     CHECK_OLD_TO_NEW(x, v); 
     return VECTOR_ELT(x, i) = v; 
 }
-int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(x, v); }
+
 
 /* List Accessors */
 SEXP (TAG)(SEXP e) { return TAG(e); }
@@ -2669,13 +2670,11 @@ SEXP (FORMALS)(SEXP x) { return FORMALS(x); }
 SEXP (BODY)(SEXP x) { return BODY(x); }
 SEXP (CLOENV)(SEXP x) { return CLOENV(x); }
 int (DEBUG)(SEXP x) { return DEBUG(x); }
-int (TRACE)(SEXP x) { return TRACE(x); }
 
 void (SET_FORMALS)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); FORMALS(x) = v; }
 void (SET_BODY)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); BODY(x) = v; }
 void (SET_CLOENV)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); CLOENV(x) = v; }
 void (SET_DEBUG)(SEXP x, int v) { SET_DEBUG(x, v); }
-void (SET_TRACE)(SEXP x, int v) { SET_TRACE(x, v); }
 
 /* Primitive Accessors */
 int (PRIMOFFSET)(SEXP x) { return PRIMOFFSET(x); }
