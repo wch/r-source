@@ -23,7 +23,8 @@ package_version(x, strict = TRUE)
 getRversion()
 }
 \arguments{
-  \item{x}{a character vector with package version strings.}
+  \item{x}{a character vector with package version strings, or an R
+    version object as obtained by \code{\link{R.version}}.}
   \item{strict}{a logical indicating whether invalid package versions
     should results in an error (default) or not.}
 }

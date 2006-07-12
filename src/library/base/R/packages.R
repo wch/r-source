@@ -17,6 +17,9 @@
 package_version <-
 function(x, strict = TRUE)
 {
+    ## Special-case R version lists.
+    if(is.list(x) && all(c("major", "minor") %in% names(x)))
+        return(Recall(paste(x[c("major", "minor")], collapse = ".")))
     x <- as.character(x)
     y <- rep.int(list(integer()), length(x))
     valid_package_version_regexp <-
@@ -165,4 +168,4 @@ function(x, name)
 as.data.frame.package_version <- as.data.frame.vector
 
 getRversion <- function()
-    package_version(paste(R.version[c("major", "minor")], collapse = "."))
+    package_version(R.version)
