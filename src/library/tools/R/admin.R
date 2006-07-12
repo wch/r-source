@@ -457,9 +457,9 @@ function(src_dir, out_dir, packages)
     ## See @file{src/library/Makefile.in}.
 
     for(p in unlist(strsplit(packages, "[[:space:]]+")))
-        tools:::.install_package_indices(file.path(src_dir, p),
+        .install_package_indices(file.path(src_dir, p),
                                          file.path(out_dir, p))
-    tools:::unix.packages.html(.Library)
+    unix.packages.html(.Library)
     invisible()
 }
 

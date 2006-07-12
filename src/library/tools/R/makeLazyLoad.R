@@ -103,7 +103,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
         stop(gettextf("there is no package called '%s'", package),
              domain = NA)
     dataDir <- file.path(pkgpath, "data")
-    if(tools:::file_test("-d", dataDir)) {
+    if(file_test("-d", dataDir)) {
         if(file.exists(file.path(dataDir, "Rdata.rds")) &&
 	    file.exists(file.path(dataDir, paste(package, "rdx", sep="."))) &&
 	    file.exists(file.path(dataDir, paste(package, "rdb", sep="."))) ){
@@ -112,8 +112,8 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 	else {
             dataEnv <- new.env(hash=TRUE)
             tmpEnv <- new.env()
-            f0 <- files <- tools:::list_files_with_type(dataDir, "data")
-            files <- unique(basename(tools:::file_path_sans_ext(files)))
+            f0 <- files <- list_files_with_type(dataDir, "data")
+            files <- unique(basename(file_path_sans_ext(files)))
             dlist <- vector("list", length(files))
             names(dlist) <- files
             loaded <- character(0)
