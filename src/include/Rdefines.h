@@ -21,7 +21,7 @@
 #define R_DEFINES_H
 
 #if !defined(R_R_H) && !defined(R_S_H)
-/* user forget to include R.h or S.h */
+/* user forgot to include R.h or S.h */
 #include <R_ext/Memory.h>
 #include <R_ext/RS.h>
 #endif
@@ -61,7 +61,9 @@
 #define IS_NUMERIC(x)		isReal(x)
 #define IS_CHARACTER(x)		isString(x)
 #define IS_COMPLEX(x)		isComplex(x)
+/* NB: is this right? It means atomic or VECSXP or EXPRSXP */
 #define IS_VECTOR(x)		isVector(x)
+/* And this cannot be right: isVectorList(x)? */
 #define IS_LIST(x)		IS_VECTOR(x)
 #define IS_RAW(x)		(TYPEOF(x) == RAWSXP)
 
@@ -79,6 +81,9 @@
 #define NUMERIC_POINTER(x)	REAL(x)
 #define CHARACTER_POINTER(x)	STRING_PTR(x)
 #define COMPLEX_POINTER(x)	COMPLEX(x)
+/* Use of VECTOR_PTR will fail unless USE_RINTERNALS is in use
+   This is probably unused.
+*/
 #define LIST_POINTER(x)		VECTOR_PTR(x)
 #define RAW_POINTER(x)		RAW(x)
 
@@ -96,6 +101,10 @@
 #define NUMERIC_DATA(x)		(REAL(x))
 #define CHARACTER_DATA(x)	(STRING_PTR(x))
 #define COMPLEX_DATA(x)		(COMPLEX(x))
+/* Use of VECTOR_PTR will fail unless USE_RINTERNALS is in use
+   VECTOR_DATA seems unused, and RECURSIVE_DATA is used only in
+   the Expat part of XML.
+*/
 #define RECURSIVE_DATA(x)	(VECTOR_PTR(x))
 #define VECTOR_DATA(x)		(VECTOR_PTR(x))
 
