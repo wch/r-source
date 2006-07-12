@@ -27,7 +27,6 @@
 #include <config.h>
 #endif
 
-//#define USE_RINTERNALS /* needed for STRING_PTR */
 #include <Defn.h> /* => Utils.h with the protos from here */
 #include <Rmath.h>
 
