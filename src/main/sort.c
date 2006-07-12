@@ -27,7 +27,7 @@
 #include <config.h>
 #endif
 
-#define USE_RINTERNALS /* needed for STRING_PTR */
+//#define USE_RINTERNALS /* needed for STRING_PTR */
 #include <Defn.h> /* => Utils.h with the protos from here */
 #include <Rmath.h>
 
@@ -669,11 +669,26 @@ void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 {
     int c, i, j, h, t, lo = 0, hi = n-1;
     int itmp, *isna, numna = 0;
-    int *ix = INTEGER(key);
-    double *x = REAL(key);
-    Rcomplex *cx = COMPLEX(key);
-    SEXP *sx = STRING_PTR(key);
+    int *ix;
+    double *x;
+    Rcomplex *cx;
+    SEXP *sx;
     
+    switch (TYPEOF(key)) {
+    case LGLSXP:
+    case INTSXP:
+	ix = INTEGER(key);
+	break;
+    case REALSXP:
+	x = REAL(key);
+	break;
+    case STRSXP:
+	sx = STRING_PTR(key);
+ 	break;
+    case CPLXSXP:
+	cx = COMPLEX(key);
+ 	break;
+    }
 
     /* First sort NAs to one end */
     isna = (int *) malloc(n * sizeof(int));
@@ -690,7 +705,7 @@ void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 	break;
     case CPLXSXP:
 	for (i = 0; i < n; i++) isna[i] = ISNAN(cx[i].r) || ISNAN(cx[i].i);
-	break;
+ 	break;
     default:
 	UNIMPLEMENTED_TYPE("orderVector1", key);
     }
