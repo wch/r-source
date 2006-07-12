@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2001, 2004-5  the R Development Core Team
+ *  Copyright (C) 2000, 2001, 2004-6  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
  *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
+
+/* We need to know the sizes of certain internal structures */
 #define USE_RINTERNALS
 
 #ifdef HAVE_CONFIG_H
@@ -32,7 +34,7 @@
       important.
    2) an object gets charged for all the space allocated on the heap
       and all the nodes specifically due to it, but not for the 
-      space for its name nor for builtins it references
+      space for its name nor for .Internals it references.
 */
 SEXP csduplicated(SEXP x);  /* from unique.c */
 
