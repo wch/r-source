@@ -207,7 +207,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   files.
 
   The package name given to \code{library} and \code{require} must match
-  the name given in the package's \code{DESCRIPTION} file exactly, even
+  the name given in the package's \file{DESCRIPTION} file exactly, even
   on case-insensitive file systems such as MS Windows.
 }
 \seealso{

@@ -54,7 +54,7 @@
   Anything needed for the functioning of the name space should be
   handled at load/unload times by the \code{.onLoad} and
   \code{.onUnload} hooks.  For example, shared libraries can be loaded
-  (unless done by a \code{useDynib} directive in the \code{NAMESPACE}
+  (unless done by a \code{useDynLib} directive in the \file{NAMESPACE}
   file) and initialized in \code{.onLoad} and unloaded in
   \code{.onUnload}.  Use \code{.onAttach} only for actions that are
   needed only when the package becomes visible to the user, for example

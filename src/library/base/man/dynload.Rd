@@ -52,7 +52,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   \emph{R Installation and Administration} manuals for how to
   create and install 
   a suitable shared library.  Note that unlike some versions of
-  S-PLUS, \code{dyn.load} does not load an object (\code{.o}) file but a
+  S-PLUS, \code{dyn.load} does not load an object (\file{.o}) file but a
   shared library or DLL.
 
   Unfortunately a very few platforms (Compaq Tru64) do not handle the

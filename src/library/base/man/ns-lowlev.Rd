@@ -48,7 +48,7 @@ saveNamespaceImage(package, rdafile, lib.loc = NULL,
   \code{unloadNamespace} can be used to force
   a name space to be unloaded.  An error is signaled if the name space
   is imported by other loaded name spaces.  If defined, a hook
-  function \code{\code{.onUnload}} is run
+  function \code{\link{.onUnload}} is run
   before removing the name space from the internal registry.
   \code{unloadNamespace} will first \code{\link{detach}} a package of
   the same name if one is on the path, thereby running a
