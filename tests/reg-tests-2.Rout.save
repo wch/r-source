@@ -5299,7 +5299,7 @@ I II III
 > ## removing variable from baseenv
 > try(remove("ls", envir=baseenv()))
 Error in remove("ls", envir = baseenv()) : 
-	cannot remove variables from base environment
+	cannot remove variables from the base environment
 > try(remove("ls", envir=asNamespace("base")))
 Error in remove("ls", envir = asNamespace("base")) : 
 	cannot remove variables from base namespace
