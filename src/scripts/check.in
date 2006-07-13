@@ -111,6 +111,8 @@ my $R_check_weave_vignettes =
     &R_getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE");
 my $R_check_subdirs_strict =
     &R_getenv("_R_CHECK_SUBDIRS_STRICT_", "default");
+my $R_check_Rd_xrefs =
+    &R_getenv("_R_CHECK_RD_XREFS_", "TRUE");
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
@@ -143,6 +145,8 @@ $R_check_all_non_ISO_C =
     &config_val_to_logical($R_check_all_non_ISO_C);
 $R_check_weave_vignettes =
     &config_val_to_logical($R_check_weave_vignettes);
+$R_check_Rd_xrefs =
+    &config_val_to_logical($R_check_Rd_xrefs);
 
 $opt_subdirs = $R_check_subdirs_strict if $opt_subdirs eq "";
 
@@ -1079,6 +1083,21 @@ sub check_pkg {
 			      "used by R.\n")));
 	}
     }
+    ## Valid CITATION metadata?
+    ## For the time being, only try parsing inst/CITATION ...
+    my $file = &file_path("inst", "CITATION");
+    if(-f $file) {
+	my $Rcmd = "invisible(tryCatch(parse(\"${file}\"), ";
+	$Rcmd .= "error = function(e) writeLines(conditionMessage(e))))";
+        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->warning() unless $any;
+	    $any++;
+	    $log->print("Invalid citation information in 'inst/CITATION':\n");
+	    $log->print("  " . join("\n  ", @out) . "\n");
+	}
+    }
     $log->result("OK") unless $any;
 
     ## Check R code for syntax errors and for non-ASCII chars which
@@ -1086,32 +1105,27 @@ sub check_pkg {
 
     if(!$is_base_pkg && (-d "R")) {
 	$log->checking("R files for syntax errors");
-	## <NOTE>
-	## We could/should really check *all* OS specific subdirs here.
-	my @R_files = &list_files_with_type("R", "code");
-	## </NOTE>
-	my $Rcmd = "RFiles <- c(\"";
-	$Rcmd .= join("\",\n\"", @R_files) . "\")\n";
-	$Rcmd .= "for(f in RFiles)\n";
-	$Rcmd .= "if(inherits(try(parse(f)), \"try-error\")) stop(f)\n";
+	my $Rcmd = "tools:::.check_package_code_syntax(\"R\")";
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
-	@out = grep(/^Error:/, @out);
+	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
-	    my $Rfile = $out[0];
-	    $Rfile =~ s/^Error: *//;
 	    $log->error();
-	    $log->print("Syntax error in file '$Rfile'\n");
+	    $log->print(join("\n", @out) . "\n");
 	    exit(1);
 	}
 	else {
 	    $log->result("OK");
 	}
+	
 	$log->checking("R files for non-ASCII characters");
 	my @out = R_runR("tools:::.check_package_ASCII_code('.')",
 			 "${R_opts} --slave");
 	if(scalar(@out) > 0) {
 	    $log->warning();
-	    $log->print(join(" ", @out)."\n");
+	    $log->print(wrap("", "",
+			     ("Found the following files with",
+			      "non-ASCII characters:\n")));
+	    $log->print("  " . join("\n  ", @out) . "\n");
 	    $log->print(wrap("", "",
 			     ("Portable packages must use only ASCII",
 			      "characters in their R code,\n",
@@ -1125,6 +1139,17 @@ sub check_pkg {
     ## Check usage of library.dynam (if any).
 
     if(!$is_base_pkg && (-d "R")) {
+	## <FIXME>
+	## This really needs to be changed:
+	## * If a package is installed for lazy-loading, we don't really
+	##   check the code.
+	## * We should also take care of library.dynam.unload().
+	## * What if someone used 'foo.so'?
+	## Etc ...
+	## Write an R function for doing this (.check_package_code_shlib
+	## maybe) and move into the "checking R files for possible
+	## problems" section ...
+	## </FIXME>
 	$log->checking("R files for library.dynam");
 	my @R_files;
 	if($opt_install) {
@@ -1345,38 +1370,28 @@ sub check_pkg {
     ## quite clear about this, but CRAN policy has for a long time
     ## enforced anchoring links to targets (aliases) from non-base
     ## packages.
-    ##
-    ## For the time being, if the package is installed only run the test
-    ## if the internal environment variable _R_CHECK_RD_XREFS_ is set to
-    ## something "true".  Most likely one should always run the check if
-    ## no install log is used.
+    ## </NOTE>
 
-    if(-d "man") {
-	my $R_check_Rd_xrefs = &R_getenv("_R_CHECK_RD_XREFS_", "FALSE");
-	$R_check_Rd_xrefs = &config_val_to_logical($R_check_Rd_xrefs);
+    if($R_check_Rd_xrefs && (-d "man")) {
+	$log->checking("Rd cross-references");
 
-	if(($opt_install && $R_check_Rd_xrefs) || !$opt_install) {
-
-	    $log->checking("Rd cross-references");
-
-	    my $Rcmd = "options(warn=1)\n";
-	    if($opt_install) {
-		$Rcmd .= "tools:::.check_Rd_xrefs(package = \"${pkgname}\")\n";
-	    }
-	    else {
-		$Rcmd .= "tools:::.check_Rd_xrefs(dir = \"${pkgdir}\")\n";
-	    }
-
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES=NULL");
-	    @out = grep(!/^\>/, @out);
-	    if(scalar(@out) > 0) {
-		$log->warning();
-		$log->print(join("\n", @out) . "\n");
-	    }
-	    else {
-		$log->result("OK");
-	    }
+	my $Rcmd = "options(warn=1)\n";
+	if($opt_install) {
+	    $Rcmd .= "tools:::.check_Rd_xrefs(package = \"${pkgname}\")\n";
+	}
+	else {
+	    $Rcmd .= "tools:::.check_Rd_xrefs(dir = \"${pkgdir}\")\n";
+	}
+	
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	}
+	else {
+	    $log->result("OK");
 	}
     }
 
