@@ -248,6 +248,7 @@
  Rf_setRVector
  Rf_stirlerr
  Rf_substituteList
+ Rf_unbindVar
  RguiCommonHelp
  RguiPackageMenu
  Rgui_Edit

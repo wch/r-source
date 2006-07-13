@@ -590,30 +590,31 @@ void attribute_hidden InitGlobalEnv()
 #ifdef USE_GLOBAL_CACHE
 static int hashIndex(SEXP symbol, SEXP table)
 {
-  SEXP c = PRINTNAME(symbol);
-  if( !HASHASH(c) ) {
-    SET_HASHVALUE(c, R_Newhashpjw(CHAR(c)));
-    SET_HASHASH(c, 1);
-  }
-  return HASHVALUE(c) % HASHSIZE(table);
+    SEXP c = PRINTNAME(symbol);
+    if( !HASHASH(c) ) {
+	SET_HASHVALUE(c, R_Newhashpjw(CHAR(c)));
+	SET_HASHASH(c, 1);
+    }
+    return HASHVALUE(c) % HASHSIZE(table);
 }
 
 static void R_FlushGlobalCache(SEXP sym)
 {
-  SEXP entry = R_HashGetLoc(hashIndex(sym, R_GlobalCache), sym, R_GlobalCache);
-  if (entry != R_NilValue)
-    SETCAR(entry, R_UnboundValue);
+    SEXP entry = R_HashGetLoc(hashIndex(sym, R_GlobalCache), sym, 
+			      R_GlobalCache);
+    if (entry != R_NilValue)
+	SETCAR(entry, R_UnboundValue);
 }
 
 static void R_FlushGlobalCacheFromTable(SEXP table)
 {
-  int i, size;
-  SEXP chain;
-  size = HASHSIZE(table);
-  for (i = 0; i < size; i++) {
-    for (chain = VECTOR_ELT(table, i); chain != R_NilValue; chain = CDR(chain))
-      R_FlushGlobalCache(TAG(chain));
-  }
+    int i, size;
+    SEXP chain;
+    size = HASHSIZE(table);
+    for (i = 0; i < size; i++) {
+	for (chain = VECTOR_ELT(table, i); chain != R_NilValue; chain = CDR(chain))
+	    R_FlushGlobalCache(TAG(chain));
+    }
 }
 
 /**
@@ -635,30 +636,31 @@ static void R_FlushGlobalCacheFromUserTable(SEXP udb)
 
 static void R_AddGlobalCache(SEXP symbol, SEXP place)
 {
-  int oldpri = HASHPRI(R_GlobalCache);
-  R_HashSet(hashIndex(symbol, R_GlobalCache), symbol, R_GlobalCache, place,
-	    FALSE);
-  if (oldpri != HASHPRI(R_GlobalCache) &&
-      HASHPRI(R_GlobalCache) > 0.85 * HASHSIZE(R_GlobalCache)) {
-    R_GlobalCache = R_HashResize(R_GlobalCache);
-    SETCAR(R_GlobalCachePreserve, R_GlobalCache);
-  }
+    int oldpri = HASHPRI(R_GlobalCache);
+    R_HashSet(hashIndex(symbol, R_GlobalCache), symbol, R_GlobalCache, place,
+	      FALSE);
+    if (oldpri != HASHPRI(R_GlobalCache) &&
+	HASHPRI(R_GlobalCache) > 0.85 * HASHSIZE(R_GlobalCache)) {
+	R_GlobalCache = R_HashResize(R_GlobalCache);
+	SETCAR(R_GlobalCachePreserve, R_GlobalCache);
+    }
 }
 
 static SEXP R_GetGlobalCache(SEXP symbol)
 {
-  SEXP vl = R_HashGet(hashIndex(symbol, R_GlobalCache), symbol, R_GlobalCache);
-  switch(TYPEOF(vl)) {
-  case SYMSXP:
-    if (vl == R_UnboundValue) /* avoid test?? */
-      return R_UnboundValue;
-    else return SYMBOL_BINDING_VALUE(vl);
-  case LISTSXP:
-    return BINDING_VALUE(vl);
-  default:
-    error(_("invalid cached value in R_GetGlobalCache"));
-    return R_NilValue;
-  }
+    SEXP vl = R_HashGet(hashIndex(symbol, R_GlobalCache), symbol, 
+			R_GlobalCache);
+    switch(TYPEOF(vl)) {
+    case SYMSXP:
+	if (vl == R_UnboundValue) /* avoid test?? */
+	    return R_UnboundValue;
+	else return SYMBOL_BINDING_VALUE(vl);
+    case LISTSXP:
+	return BINDING_VALUE(vl);
+    default:
+	error(_("invalid cached value in R_GetGlobalCache"));
+	return R_NilValue;
+    }
 }
 #endif /* USE_GLOBAL_CACHE */
 
@@ -678,34 +680,34 @@ static SEXP R_GetGlobalCache(SEXP symbol)
 
 static SEXP RemoveFromList(SEXP thing, SEXP list, int *found)
 {
-  if (list == R_NilValue) {
-    *found = 0;
-    return R_NilValue;
-  }
-  else if (TAG(list) == thing) {
-    *found = 1;
-    return CDR(list);
-  }
-  else {
-    SEXP last = list;
-    SEXP next = CDR(list);
-    while (next != R_NilValue) {
-      if (TAG(next) == thing) {
-	*found = 1;
-	SETCDR(last, CDR(next));
-	return list;
-      }
-      else {
-	last = next;
-	next = CDR(next);
-      }
+    if (list == R_NilValue) {
+	*found = 0;
+	return R_NilValue;
     }
-    *found = 0;
-    return list;
-  }
+    else if (TAG(list) == thing) {
+	*found = 1;
+	return CDR(list);
+    }
+    else {
+	SEXP last = list;
+	SEXP next = CDR(list);
+	while (next != R_NilValue) {
+	    if (TAG(next) == thing) {
+		*found = 1;
+		SETCDR(last, CDR(next));
+		return list;
+	    }
+	    else {
+		last = next;
+		next = CDR(next);
+	    }
+	}
+	*found = 0;
+	return list;
+    }
 }
 
-void unbindVar(SEXP symbol, SEXP rho)
+void attribute_hidden unbindVar(SEXP symbol, SEXP rho)
 {
     int hashcode;
     SEXP c;
@@ -729,6 +731,7 @@ void unbindVar(SEXP symbol, SEXP rho)
 	}
     }
     else {
+	/* This case is currently unused */
 	c = PRINTNAME(symbol);
 	if( !HASHASH(c) ) {
 	    SET_HASHVALUE(c, R_Newhashpjw(CHAR(c)));
@@ -736,6 +739,8 @@ void unbindVar(SEXP symbol, SEXP rho)
 	}
 	hashcode = HASHVALUE(c) % HASHSIZE(HASHTAB(rho));
 	R_HashDelete(hashcode, symbol, HASHTAB(rho));
+	/* we have no record here if deletion worked */
+	if (rho == R_GlobalEnv) R_DirtyImage = 1;
     }
 }
 
@@ -1287,6 +1292,11 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
     }
 
     if (rho == R_BaseNamespace || rho == R_BaseEnv) {
+	if (FRAME_IS_LOCKED(rho)) {
+	    if(SYMVALUE(symbol) == R_UnboundValue)
+		error(_("cannot add binding of '%s' to the base environment"), 
+		      CHAR(PRINTNAME(symbol)));
+	}
 #ifdef USE_GLOBAL_CACHE
 	R_FlushGlobalCache(symbol);
 #endif
@@ -1359,6 +1369,11 @@ static SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
     }
 
     if (rho == R_BaseNamespace) {
+	if (FRAME_IS_LOCKED(rho)) {
+	    if(SYMVALUE(symbol) == R_UnboundValue)
+		error(_("cannot add binding of '%s' to the base namespace"), 
+		      CHAR(PRINTNAME(symbol)));
+	}
 #ifdef USE_GLOBAL_CACHE
 	R_FlushGlobalCache(symbol);
 #endif
@@ -1440,6 +1455,11 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
 
 void gsetVar(SEXP symbol, SEXP value, SEXP rho)
 {
+    if (FRAME_IS_LOCKED(rho)) {
+	if(SYMVALUE(symbol) == R_UnboundValue)
+	    error(_("cannot add binding of '%s' to the base environment"), 
+		  CHAR(PRINTNAME(symbol)));
+    }
 #ifdef USE_GLOBAL_CACHE
     R_FlushGlobalCache(symbol);
 #endif
@@ -2678,8 +2698,20 @@ SEXP attribute_hidden do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 void R_LockEnvironment(SEXP env, Rboolean bindings)
 {
-    if (env == R_BaseEnv || env == R_BaseNamespace)
-	error(_("locking the base environment is not supported yet"));
+    if (env == R_BaseEnv || env == R_BaseNamespace) {
+	if (bindings) {
+	    SEXP s;
+	    int j;
+	    for (j = 0; j < HSIZE; j++)
+		for (s = R_SymbolTable[j]; s != R_NilValue; s = CDR(s))
+		    if(SYMVALUE(CAR(s)) != R_UnboundValue) 
+			LOCK_BINDING(CAR(s));
+	}
+#ifdef NOTYET
+	LOCK_FRAME(env);
+#endif
+	return;
+    }
 
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
@@ -2710,10 +2742,7 @@ Rboolean R_EnvironmentIsLocked(SEXP env)
     	error(_("use of NULL environment is defunct"));
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
-    if (env == R_BaseEnv || env == R_BaseNamespace)
-	return FALSE;
-    else
-	return FRAME_IS_LOCKED(env) != 0;
+    return FRAME_IS_LOCKED(env) != 0;
 }
 
 SEXP attribute_hidden do_lockEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -2753,7 +2782,7 @@ void R_LockBinding(SEXP sym, SEXP env)
     }
 }
 
-static void R_unLockBinding(SEXP sym, SEXP env)
+void R_unLockBinding(SEXP sym, SEXP env)
 {
     if (TYPEOF(sym) != SYMSXP)
 	error(_("not a symbol"));

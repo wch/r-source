@@ -28,13 +28,18 @@ USER-VISIBLE CHANGES
 	class definitions, via a call to setClass().
 
     o	The :: operator now also works for packages without name spaces
-	that are on the serch path.
+	that are on the search path.
 
     o   The functions read.csv, read.csv2, read.delim, read.delim2 now
         default the comment.char argument to "".  (These functions are
         designed to read files produced by other software, which might
 	use the # character inside fields, but are unlikely to use it for
 	comments.)
+
+    o   [Experimental]  The bindings in the base environment/namespace
+	(currently the same thing) are now locked.  This means that
+	the values of base functions cannot be changed except via
+	assignInNamespace() and similar tricks.
 
 
 NEW FEATURES
@@ -172,7 +177,7 @@ NEW FEATURES
 	duplicated values.
 
     o	x <- 1:20; y <- rnorm(x); nls(y ~ A*exp(-x^2/sig)) no longer
-	returns an unhelpful error message. In this and similar cases, it
+	returns an unhelpful error message.  In this and similar cases, it
 	now tries a wild guess for starting values.
 
     o	Ops.difftime() now handles unary minus and plus.
@@ -250,6 +255,7 @@ C-LEVEL FACILITIES
 	SET_VECTOR_ELT now check that they are called on the
 	correct SEXPTYPE (or at least on a compatible one).  See
 	`Writing R Extensions' for the details and for a stricter
+	test regime.
 
     o	It is no longer possible to pass list variables to 
 	.C(DUP = FALSE): it would have given rise to obscure garbage
@@ -348,8 +354,8 @@ BUG FIXES
     o	addmargins(T, ...) now returns a "table" when 'T' is a "table", as
 	its help page has always suggested.
 
-    o	remove() new explicitly precludes removing variables in
-	baseenv() (this was previously ignored).
+    o	remove() new explicitly precludes removing variables from
+	baseenv() and throws an error (this was previously ignored).
 
     o	Saving the workspace now works as has long been intended,
 	that is it is saved only if something has been

@@ -776,8 +776,8 @@ void setup_Rmainloop(void)
 
     R_Warnings = R_NilValue;
 
-    /* This could equally well be R_BaseEnv, as they only differ in what
-       the enclosure is considered to be */
+    /* This is the same as R_BaseEnv, but this marks the environment
+       of functions as the namespace and not the package. */
     baseEnv = R_BaseNamespace;
 
     /* Set up some global variables */
@@ -809,6 +809,14 @@ void setup_Rmainloop(void)
     */
 
     R_LoadProfile(R_OpenSysInitFile(), baseEnv);
+#ifdef NOTYET
+    /* These are the same bindings, so only lock them once */
+    R_LockEnvironment(R_BaseNamespace, FALSE);
+#endif
+    R_LockEnvironment(R_BaseEnv, TRUE); /* only locks bindings for now */
+    /* At least temporarily unlock some bindings uses in graphics */
+    R_unLockBinding(install(".Device"), R_BaseEnv);
+    R_unLockBinding(install(".Devices"), R_BaseEnv);
 
     if (strcmp(R_GUIType, "Tk") == 0) {
 	char buf[256];
