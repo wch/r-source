@@ -341,6 +341,12 @@ local({
     eval(substitute(function() {out}, list(out=out)), envir=NULL)
 })
 
+### ** .identity
+
+.identity <-
+function(x)
+    x
+
 ### ** .is_ASCII
 
 .is_ASCII <-
@@ -581,7 +587,7 @@ function(file, envir)
     on.exit(options(oop))
     assignmentSymbolLM <- as.symbol("<-")
     assignmentSymbolEq <- as.symbol("=")
-    exprs <- try(parse(n = -1, file = file))
+    exprs <- parse(n = -1, file = file)
     if(length(exprs) == 0)
         return(invisible())
     for(e in exprs) {
@@ -607,7 +613,12 @@ function(dir, env)
                                       list_files_with_type(dir,
                                                            "code"))))
         stop("unable to write code files")
-    .source_assignments(con, env)
+    tryCatch(.source_assignments(con, env),
+             error =
+             function(e)
+             stop("cannot source package code\n",
+                  conditionMessage(e),
+                  call. = FALSE))
 }
 
 ### * .split_dependencies
@@ -678,7 +689,7 @@ function(expr)
                                                collapse = "\n"),
                                          call. = FALSE)
                                 }),
-                   error = function(e) e,
+                   error = .identity,
                    finally = {
                        sink(type = "message")
                        sink(type = "output")

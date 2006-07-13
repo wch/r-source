@@ -39,7 +39,7 @@ function(file)
     ## First split into paragraph chunks separated by whitespace-only
     ## lines.
     for(chunk in unlist(strsplit(x, "\n[ \t\n]*\n"))) {
-        entries <- try({
+        entries <- tryCatch({
             if(regexpr("\(   \|\t\)", chunk) == -1)
                 NULL
             else {
@@ -53,8 +53,9 @@ function(file)
                                 collapse = " ")
                       })))
             }
-        })
-        if(!inherits(entries, "try-error") && NCOL(entries) == 2)
+        },
+                            error = .identity)
+        if(!inherits(entries, "error") && NCOL(entries) == 2)
             y <- rbind(y, entries)
     }
     colnames(y) <- c("Item", "Description")

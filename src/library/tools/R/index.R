@@ -80,13 +80,16 @@ function(demoDir)
     if(!length(demoTopics)) return(matrix("", 0, 2))
     demoIndex <- cbind(demoTopics, "")
     if(file_test("-f", INDEX <- file.path(demoDir, "00Index"))) {
-        demoEntries <- try(read.00Index(INDEX))
-        if(inherits(demoEntries, "try-error"))
+        demoEntries <- tryCatch(read.00Index(INDEX),
+                                error = .identity)
+        if(inherits(demoEntries, "error"))
             warning(gettextf("cannot read index information in file '%s'",
                              INDEX),
                     domain = NA)
-        idx <- match(demoTopics, demoEntries[ , 1], 0)
-        demoIndex[which(idx != 0), 2] <- demoEntries[idx, 2]
+        else {
+            idx <- match(demoTopics, demoEntries[ , 1], 0)
+            demoIndex[which(idx != 0), 2] <- demoEntries[idx, 2]
+        }
     }
     dimnames(demoIndex) <- NULL
     demoIndex
@@ -101,11 +104,12 @@ function(demoDir)
         stop(gettextf("directory '%s' does not exist", demoDir),
              domain = NA)
     info_from_build <- .build_demo_index(demoDir)
-    info_from_index <- try(read.00Index(file.path(demoDir, "00Index")))
-    if(inherits(info_from_index, "try-error"))
-        stop(gettextf("cannot read index information in file '%s'",
-                      file.path(demoDir, "00Index")),
-             domain = NA)
+    info_from_index <-
+        tryCatch(read.00Index(file.path(demoDir, "00Index")),
+                 error = function(e)
+                 stop(gettextf("cannot read index information in file '%s'",
+                               file.path(demoDir, "00Index")),
+                      domain = NA))
     bad_entries <-
         list(missing_from_index =
              info_from_build[grep("^[[:space:]]*$",

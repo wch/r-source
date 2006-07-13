@@ -41,10 +41,7 @@ function(package, dir, lib.loc = NULL)
         code_env <- new.env()
         code_dir <- file.path(dir, "R")
         if(file_test("-d", code_dir)) {
-            yy <- try(.source_assignments_in_code_dir(code_dir, code_env))
-            if(inherits(yy, "try-error")) {
-                stop("cannot source package code")
-            }
+            .source_assignments_in_code_dir(code_dir, code_env)
             sys_data_file <- file.path(code_dir, "sysdata.rda")
             if(file_test("-f", sys_data_file))
                 load(sys_data_file, code_env)
@@ -347,8 +344,8 @@ function(package, dir, lib.loc = NULL,
             S3Table <- get(".__S3MethodsTable__.", envir = ns_env)
             functions_in_S3Table <- ls(S3Table, all.names = TRUE)
             objects_in_ns <-
-                objects(envir = ns_env, all.names = TRUE) %w/o%
-            c(".__NAMESPACE__.", ".__S3MethodsTable__.")
+                (objects(envir = ns_env, all.names = TRUE) %w/o%
+                 c(".__NAMESPACE__.", ".__S3MethodsTable__."))
             objects_in_code_or_namespace <-
                 unique(c(objects_in_code, objects_in_ns))
             objects_in_ns <- objects_in_ns %w/o% objects_in_code
@@ -380,10 +377,7 @@ function(package, dir, lib.loc = NULL,
         is_base <- package_name == "base"
 
         code_env <- new.env()
-        yy <- try(.source_assignments_in_code_dir(code_dir, code_env))
-        if(inherits(yy, "try-error")) {
-            stop("cannot source package code")
-        }
+        .source_assignments_in_code_dir(code_dir, code_env)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -698,7 +692,7 @@ function(x, ...)
     ## in extract-usage.pl (now removed) only dealt with the *functions*
     ## so all variables would come out as 'without usage information' ...
     ## As we can always access the information via
-    ##    attr(codoc("foo"), "codeNotInUsages")
+    ##    attr(codoc("foo"), "objects_in_code_not_in_usages")
     ## disable reporting this for the time being ...
     ## <COMMENT>
     ##     objects_in_code_not_in_usages <-
@@ -1396,10 +1390,7 @@ function(package, dir, lib.loc = NULL)
         is_base <- basename(dir) == "base"
 
         code_env <- new.env()
-        yy <- try(.source_assignments_in_code_dir(code_dir, code_env))
-        if(inherits(yy, "try-error")) {
-            stop("cannot source package code")
-        }
+        .source_assignments_in_code_dir(code_dir, code_env)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -1827,10 +1818,7 @@ function(package, dir, lib.loc = NULL)
         is_base <- basename(dir) == "base"
 
         code_env <- new.env()
-        yy <- try(.source_assignments_in_code_dir(code_dir, code_env))
-        if(inherits(yy, "try-error")) {
-            stop("cannot source package code")
-        }
+        .source_assignments_in_code_dir(code_dir, code_env)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -2119,10 +2107,7 @@ function(package, dir, lib.loc = NULL)
         is_base <- basename(dir) == "base"
 
         code_env <- new.env()
-        yy <- try(.source_assignments_in_code_dir(code_dir, code_env))
-        if(inherits(yy, "try-error")) {
-            stop("cannot source package code")
-        }
+        .source_assignments_in_code_dir(code_dir, code_env)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -2555,7 +2540,7 @@ function(db)
     names(db_aliases) <- names(db)
 
     for(f in names(db)) {
-        x <- tryCatch(Rd_parse(text = db[[f]]), error = function(e) e)
+        x <- tryCatch(Rd_parse(text = db[[f]]), error = .identity)
 
         if(inherits(x, "error")) {
             files_with_surely_bad_Rd[[f]] <- conditionMessage(x)
@@ -3053,16 +3038,16 @@ function(dir)
     mfile <- paths[1]
 
     lines <-
-        try(system(sprintf("%s -f %s -f %s",
-                           Sys.getenv("MAKE"),
-                           shQuote(mfile),
-                           shQuote(file.path(R.home("share"),
-                                             "make", "check.mk"))),
-                   intern = TRUE,
-                   if(identical(.Platform$OS.type, "unix"))
-                   ignore.stderr = TRUE),
-            silent = TRUE)
-    if(!length(lines) || inherits(lines, "try-error"))
+        tryCatch(system(sprintf("%s -f %s -f %s",
+                                Sys.getenv("MAKE"),
+                                shQuote(mfile),
+                                shQuote(file.path(R.home("share"),
+                                                  "make", "check.mk"))),
+                        intern = TRUE,
+                        if(identical(.Platform$OS.type, "unix"))
+                        ignore.stderr = TRUE),
+                 error = .identity)
+    if(!length(lines) || inherits(lines, "error"))
         return(bad_flags)
 
     ## Try to be careful ...
@@ -3204,7 +3189,6 @@ function(x, ...)
     }
     x
 }
-
 
 ### * as.alist.call
 
@@ -3530,7 +3514,8 @@ function(x, ...)
 
 ### * .check_package_ASCII_code
 
-.check_package_ASCII_code <- function(dir)
+.check_package_ASCII_code <-
+function(dir)
 {
     OS_subdirs <- c("unix", "windows")
     if(!file_test("-d", dir))
@@ -3559,6 +3544,22 @@ function(x, ...)
     if(length(wrong_things)) cat(wrong_things, sep="\n")
     invisible(wrong_things)
 }
+
+### * .check_package_code_syntax
+
+.check_package_code_syntax <-
+function(dir)
+{
+    for(f in list_files_with_type(dir, "code",
+                                  OS_subdirs = c("unix", "windows")))
+        tryCatch(parse(f),
+                 error = function(e)
+                 writeLines(c(sprintf("File '%s':", f),
+                              sprintf("  %s",
+                                      unlist(strsplit(conditionMessage(e),
+                                                      "\n"))))))
+}
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
