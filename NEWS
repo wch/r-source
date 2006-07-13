@@ -351,6 +351,10 @@ BUG FIXES
     o	remove() new explicitly precludes removing variables in
 	baseenv() (this was previously ignored).
 
+    o	Saving the workspace now works as has long been intended,
+	that is it is saved only if something has been
+	added/deleted/changed during the current session.
+
 
 
 

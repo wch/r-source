@@ -724,7 +724,7 @@ void unbindVar(SEXP symbol, SEXP rho)
 	SEXP list;
 	list = RemoveFromList(symbol, FRAME(rho), &found);
 	if (found) {
-	    R_DirtyImage = 1;
+	    if (rho == R_GlobalEnv) R_DirtyImage = 1;
 	    SET_FRAME(rho, list);
 	}
     }
@@ -1268,10 +1268,18 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
     int hashcode;
     SEXP frame, c;
 
-    /* My reading is that R_DirtyImage should only be set if assigning
-       to R_GlobalEnv. */
-    R_DirtyImage = 1;
-    if (rho != R_BaseNamespace && rho != R_BaseEnv && rho != R_EmptyEnv) {
+    /* R_DirtyImage should only be set if assigning to R_GlobalEnv. */
+    if (rho == R_GlobalEnv) R_DirtyImage = 1;
+
+    if (rho == R_EmptyEnv) 
+	error(_("cannot assign values in the empty environment"));
+    
+    if (rho == R_BaseNamespace || rho == R_BaseEnv) {
+#ifdef USE_GLOBAL_CACHE
+	R_FlushGlobalCache(symbol);
+#endif
+	SET_SYMBOL_BINDING_VALUE(symbol, value);
+    } else {
 #ifdef USE_GLOBAL_CACHE
 	if (IS_GLOBAL_FRAME(rho))
 	    R_FlushGlobalCache(symbol);
@@ -1287,6 +1295,7 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 	}
 
 	if (HASHTAB(rho) == R_NilValue) {
+	    /* First check for an existing binding */
 	    frame = FRAME(rho);
 	    while (frame != R_NilValue) {
 		if (TAG(frame) == symbol) {
@@ -1314,12 +1323,6 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 		SET_HASHTAB(rho, R_HashResize(HASHTAB(rho)));
 	}
     }
-    else if (rho == R_BaseNamespace || rho == R_BaseEnv) {
-#ifdef USE_GLOBAL_CACHE
-	R_FlushGlobalCache(symbol);
-#endif
-	SET_SYMBOL_BINDING_VALUE(symbol, value);
-    } else error(_("cannot assign values in the empty environment"));
 }
 
 
@@ -1400,17 +1403,21 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
 {
     SEXP vl;
     while (rho != R_BaseEnv && rho != R_EmptyEnv) {
-	R_DirtyImage = 1;
         if (rho == R_BaseNamespace && SYMVALUE(symbol) == R_UnboundValue)
 	    /* do not assign into base unless variable binding exists */
 	    vl = R_NilValue;
 	else
 	    vl = setVarInFrame(rho, symbol, value);
-	if (vl != R_NilValue) return;
+	if (vl != R_NilValue) {
+	    if (rho == R_GlobalEnv) R_DirtyImage = 1;
+	    return;
+	}
 	rho = ENCLOS(rho);
     }
-    if (rho == R_BaseEnv)
+    if (rho == R_BaseEnv) {
+	R_DirtyImage = 1;
     	defineVar(symbol, value, R_GlobalEnv);
+    }
 }
 
 
@@ -1419,14 +1426,13 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
 
   gsetVar
 
-  Assignment in the system environment.	 Here we assign directly into
-  the system environment.
+  Assignment in the base environment.	 Here we assign directly into
+  the base environment.
 
 */
 
 void gsetVar(SEXP symbol, SEXP value, SEXP rho)
 {
-    R_DirtyImage = 1;
 #ifdef USE_GLOBAL_CACHE
     R_FlushGlobalCache(symbol);
 #endif
@@ -1509,7 +1515,7 @@ static int RemoveVariable(SEXP name, int hashcode, SEXP env)
 	int idx = hashcode % HASHSIZE(hashtab);
 	list = RemoveFromList(name, VECTOR_ELT(hashtab, idx), &found);
 	if (found) {
-	    R_DirtyImage = 1;
+	    if(env == R_GlobalEnv) R_DirtyImage = 1;
 	    SET_VECTOR_ELT(hashtab, idx, list);
 #ifdef USE_GLOBAL_CACHE
 	    if (IS_GLOBAL_FRAME(env))
@@ -1520,7 +1526,7 @@ static int RemoveVariable(SEXP name, int hashcode, SEXP env)
     else {
 	list = RemoveFromList(name, FRAME(env), &found);
 	if (found) {
-	    R_DirtyImage = 1;
+	    if(env == R_GlobalEnv) R_DirtyImage = 1;
 	    SET_FRAME(env, list);
 #ifdef USE_GLOBAL_CACHE
 	    if (IS_GLOBAL_FRAME(env))
@@ -2908,7 +2914,10 @@ SEXP attribute_hidden do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP sym;
     checkArity(op, args);
     sym = CAR(args);
+
     if (TYPEOF(sym) != SYMSXP) error(_("not a symbol"));
+    /* This is not quite the same as SET_SYMBOL_BINDING_VALUE as it
+       does not allow active bindings to be unbound */
     if (R_BindingIsLocked(sym, R_BaseEnv))
         error(_("cannot unbind a locked binding"));
     if (R_BindingIsActive(sym, R_BaseEnv))
