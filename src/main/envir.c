@@ -757,10 +757,12 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
     int hashcode;
     SEXP frame, c;
 
+    /* These are more a question of being unimplemented. */
     if (rho == R_BaseEnv)
         error(_("cannot get binding from base environment"));
     if (rho == R_BaseNamespace)
         error(_("cannot get binding from base namespace"));
+
     if (rho == R_EmptyEnv)
     	return(R_NilValue);
 
@@ -1274,6 +1276,16 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
     if (rho == R_EmptyEnv) 
 	error(_("cannot assign values in the empty environment"));
     
+    /* cannot check if this is a global frame (as code used to) */
+    if(IS_USER_DATABASE(rho)) {
+	R_ObjectTable *table;
+	table = (R_ObjectTable *) R_ExternalPtrAddr(HASHTAB(rho));
+	if(table->assign == NULL)
+	    error(_("cannot assign variables to this database"));
+	table->assign(CHAR(PRINTNAME(symbol)), value, table);
+	return;
+    }
+
     if (rho == R_BaseNamespace || rho == R_BaseEnv) {
 #ifdef USE_GLOBAL_CACHE
 	R_FlushGlobalCache(symbol);
@@ -1284,15 +1296,6 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 	if (IS_GLOBAL_FRAME(rho))
 	    R_FlushGlobalCache(symbol);
 #endif
-
-	if(IS_USER_DATABASE(rho)) {
-	    R_ObjectTable *table;
-	    table = (R_ObjectTable *) R_ExternalPtrAddr(HASHTAB(rho));
-	    if(table->assign == NULL)
-		error(_("cannot assign variables to this database"));
-	    table->assign(CHAR(PRINTNAME(symbol)), value, table);
-            return;
-	}
 
 	if (HASHTAB(rho) == R_NilValue) {
 	    /* First check for an existing binding */
@@ -1325,7 +1328,6 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
     }
 }
 
-
 /*----------------------------------------------------------------------
 
   setVarInFrame
@@ -1333,18 +1335,26 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
   Assign a new value to a symbol in a frame.  Return the symbol if
   successful and R_NilValue if not.
 
+  [This appears to need updating: it ignores locking and the global
+  cache (other than for base), for example.
+  Taken static in 2.4.0: not called for emptyenv or baseenv.]
 */
 
-SEXP attribute_hidden setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
+static SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 {
     int hashcode;
     SEXP frame, c;
+
+    /* R_DirtyImage should only be set if assigning to R_GlobalEnv. */
+    if (rho == R_GlobalEnv) R_DirtyImage = 1;
+
+    if (rho == R_EmptyEnv) return R_NilValue;
 
     if(IS_USER_DATABASE(rho)) {
 	R_ObjectTable *table;
         table = (R_ObjectTable *) R_ExternalPtrAddr(HASHTAB(rho));
         if(table->assign == NULL)
-	    error(_("cannot remove variables from this database"));
+	    error(_("cannot assign variables to this database"));
         return(table->assign(CHAR(PRINTNAME(symbol)), value, table));
     }
 
@@ -1355,8 +1365,6 @@ SEXP attribute_hidden setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 	SET_SYMBOL_BINDING_VALUE(symbol, value);
 	return symbol;
     }
-    else if (rho == R_EmptyEnv)
-        error(_("cannot assign values in the empty environment"));
     else if (HASHTAB(rho) == R_NilValue) {
 	frame = FRAME(rho);
 	while (frame != R_NilValue) {
@@ -1385,7 +1393,6 @@ SEXP attribute_hidden setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
     }
     return R_NilValue; /* -Wall */
 }
-
 
 
 /*----------------------------------------------------------------------
@@ -2735,6 +2742,8 @@ void R_LockBinding(SEXP sym, SEXP env)
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
+	/* It is a symbol, so must have a binding even if it is
+	   R_UnboundSymbol */
 	LOCK_BINDING(sym);
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
@@ -2753,6 +2762,8 @@ static void R_unLockBinding(SEXP sym, SEXP env)
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
+	/* It is a symbol, so must have a binding even if it is
+	   R_UnboundSymbol */
 	UNLOCK_BINDING(sym);
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
@@ -2807,6 +2818,8 @@ Rboolean R_BindingIsLocked(SEXP sym, SEXP env)
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
+	/* It is a symbol, so must have a binding even if it is
+	   R_UnboundSymbol */
 	return BINDING_IS_LOCKED(sym) != 0;
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
@@ -2825,6 +2838,8 @@ Rboolean R_BindingIsActive(SEXP sym, SEXP env)
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
+	/* It is a symbol, so must have a binding even if it is
+	   R_UnboundSymbol */
 	return IS_ACTIVE_BINDING(sym) != 0;
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);

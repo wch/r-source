@@ -18,13 +18,11 @@ extern int snprintf (char *s, size_t n, const char *format, ...);
 #endif
 
 
-/* from Defn.h */
+/* from Defn.h: it might be better actually to include that */
 #define type2str		Rf_type2str
 SEXP type2str(SEXPTYPE);
 #define type2symbol		Rf_type2symbol
 SEXP type2symbol(SEXPTYPE);
-#define setVarInFrame		Rf_setVarInFrame
-SEXP setVarInFrame(SEXP, SEXP, SEXP);
 #define streql(s, t)	(!strcmp((s), (t)))
 void R_PreserveObject(SEXP);
 
@@ -59,6 +57,7 @@ SEXP R_primitive_methods(SEXP op);
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist);
 void R_set_quick_method_check(R_stdGen_ptr_t);
 SEXP R_do_slot(SEXP obj, SEXP name); 
+
 
 /* the following utilities are included here for now, as statics.  But
    they will eventually be C implementations of slot, data.class,

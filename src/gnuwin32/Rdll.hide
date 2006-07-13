@@ -246,7 +246,6 @@
  Rf_regexec
  Rf_setIVector
  Rf_setRVector
- Rf_setVarInFrame
  Rf_stirlerr
  Rf_substituteList
  RguiCommonHelp

@@ -716,7 +716,6 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define PrintWarnings		Rf_PrintWarnings
 # define promiseArgs		Rf_promiseArgs
 # define RemoveClass		Rf_RemoveClass
-# define setVarInFrame		Rf_setVarInFrame
 # define sortVector		Rf_sortVector
 # define ssort			Rf_ssort
 # define str2type		Rf_str2type
@@ -874,7 +873,6 @@ SEXP R_set_class(SEXP, SEXP, SEXP);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);
-SEXP setVarInFrame(SEXP, SEXP, SEXP);
 void sortVector(SEXP, Rboolean);
 void ssort(SEXP*,int);
 SEXPTYPE str2type(char*);
