@@ -1,6 +1,7 @@
 \name{Quotes}
 \alias{Quotes}
 \alias{backtick}
+\alias{backquote}
 \alias{'}%'
 \alias{"}%"
 \alias{`}%`
@@ -43,7 +44,7 @@
     \code{\\unnnn}\tab Unicode character with given code (1--4 hex digits)\cr
     \code{\\Unnnnnnnn}\tab Unicode character with given code (1--8 hex digits)\cr
   }
-  The last two are only supported on versions of \R built with with MBCS
+  The last two are only supported on versions of \R built with MBCS
   support, and the last is not supported on Windows.  (They are an error
   if used where not supported.)  All except the Unicode escape sequences
   are also supported when reading character strings from a connection by

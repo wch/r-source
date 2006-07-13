@@ -32,22 +32,27 @@ x = value
 
   The operators \code{<<-} and \code{->>} cause a search to made through
   the environment for an existing definition of the variable being
-  assigned.  If such a variable is found then its value is redefined,
-  otherwise assignment takes place globally.  Note that their semantics
-  differ from that in the S language, but are useful in conjunction with
-  the scoping rules of \R.  See \sQuote{The R Language Definition}
-  manual for further details and examples.
+  assigned.  If such a variable is found (and its binding is not locked)
+  then its value is redefined, otherwise assignment takes place in the
+  global environment.  Note that their semantics differ from that in the
+  S language, but are useful in conjunction with the scoping rules of
+  \R.  See \sQuote{The R Language Definition} manual for further details
+  and examples.
 
   In all the assignment operator expressions, \code{x} can be a name
   or an expression defining a part of an object to be replaced (e.g.,
-  \code{z[[1]]}).  The name does not need to be quoted, though it can
-  be.
+  \code{z[[1]]}).  A syntactic name does not need to be quoted,
+  though it can be (preferably by \link{backtick}s).
 
   The leftwards forms of assignment \code{<- = <<-} group right to left,
   the other from left to right.
 }
 \value{
   \code{value}.  Thus one can use \code{a <- b <- c <- 6}.
+}
+\note{
+  Currently the base environment is ignored in the search for a binding
+  by  \code{<<-} and \code{->>}: this is probably a bug.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -55,13 +55,13 @@ mget(x, envir, mode = "any",
   environment.
 
   For \code{mget} multiple values are returned in a named
-  \code{list}. This is true even if only one value is requested. The
+  \code{list}.  This is true even if only one value is requested. The
   value in \code{mode} and \code{ifnotfound} can be either the same length
-  as the number of requested items or of length 1. The argument
+  as the number of requested items or of length 1.  The argument
   \code{ifnotfound} must be a list containing either the value to use if
   the requested item is not found or a function of one argument which
-  will be called if the item is not found. The argument is the name of
-  the item being requested. The default value for \code{inherits} is
+  will be called if the item is not found, with argument the name of
+  the item being requested.  The default value for \code{inherits} is
   \code{FALSE}, in contrast to the default behavior for \code{get}.
 
   \code{mode} here is a mixture of the meanings of \code{\link{typeof}}
