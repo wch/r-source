@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-07-10
+@set FAQ_DATE @value{FAQ_YEAR}-07-13
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2906,6 +2906,8 @@ interface and can be used to create R devices as embedded components in
 a GUI using a Gtk drawing area widget, e.g., using RGtk.
 @item gtools
 Various functions to help manipulate data.
+@item gvlma
+Global Validation of Linear Models Assumptions.
 @item hapassoc
 Likelihood inference of trait associations with SNP haplotypes and other 
 attributes using the EM Algorithm.
@@ -3297,6 +3299,8 @@ Multivariate partitioning.
 Multivariate normal and @math{t} distributions.
 @item nFDR
 Nonparametric Estimate of FDR Based on Bernstein polynomials.
+@item nFactors
+Non-graphical solution to the Cattell Scree Test.
 @item ncdf
 Interface to Unidata netCDF data files.
 @item ncomplete
