@@ -1857,15 +1857,6 @@ write.table(m, quote=numeric(0)) # not the same as FALSE
 
 
 ## removing variable from baseenv
-assign("foobar", 27, envir=baseenv())
-foobar
-base::foobar
-remove("foobar", envir=baseenv())
-# test that is has gone and we get a warning
-try(foobar)
-remove("foobar", envir=baseenv())
-# undocumented alternative
-assign("foobar", 27, envir=baseenv())
-.Internal(mkUnbound(as.name("foobar")))
-try(foobar)
-## failed to remove in 2.3.1
+try(remove("ls", envir=baseenv()))
+try(remove("ls", envir=asNamespace("base")))
+## no message in 2.3.1

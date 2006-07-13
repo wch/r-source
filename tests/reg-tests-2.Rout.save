@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-07-12 r38581)
+R version 2.4.0 Under development (unstable) (2006-07-12 r38585)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5297,23 +5297,11 @@ I II III
 > 
 > 
 > ## removing variable from baseenv
-> assign("foobar", 27, envir=baseenv())
-> foobar
-[1] 27
-> base::foobar
-[1] 27
-> remove("foobar", envir=baseenv())
-> # test that is has gone and we get a warning
-> try(foobar)
-Error in try(foobar) : object "foobar" not found
-> remove("foobar", envir=baseenv())
-Warning message:
-remove: variable "foobar" was not found 
-> # undocumented alternative
-> assign("foobar", 27, envir=baseenv())
-> .Internal(mkUnbound(as.name("foobar")))
-NULL
-> try(foobar)
-Error in try(foobar) : object "foobar" not found
-> ## failed to remove in 2.3.1
+> try(remove("ls", envir=baseenv()))
+Error in remove("ls", envir = baseenv()) : 
+	cannot remove variables from base environment
+> try(remove("ls", envir=asNamespace("base")))
+Error in remove("ls", envir = asNamespace("base")) : 
+	cannot remove variables from base namespace
+> ## no message in 2.3.1
 > 

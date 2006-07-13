@@ -42,7 +42,11 @@ rm    (\dots, list = character(0), pos = -1,
   access the currently active function calls).
   The \code{envir} argument is an alternative way to specify an
   environment, but is primarily there for back compatibility.
-   }
+
+  It is not allowed to remove variables from the base environment and
+  base namespace, nor from any environment which is locked (see
+  \code{\link{lockEnvironment}}).
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

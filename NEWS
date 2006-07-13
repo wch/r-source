@@ -348,8 +348,8 @@ BUG FIXES
     o	addmargins(T, ...) now returns a "table" when 'T' is a "table", as
 	its help page has always suggested.
 
-    o	remove() can now remove variables in baseenv() (this was
-	previously ignored).
+    o	remove() new explicitly precludes removing variables in
+	baseenv() (this was previously ignored).
 
 
 

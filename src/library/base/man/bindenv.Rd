@@ -31,22 +31,23 @@ bindingIsActive(sym, env)
 }
 \details{
   The function \code{lockEnvironment} locks its environment argument,
-  which must be a proper environment, not NULL.  Locking the NULL
-  (base) environment may be supported later.  Locking the environment
-  prevents adding or removing variable bindings from the environment.
-  Changing the value of a variable is still possible unless the binding
-  has been locked.
+  which must be a normal environment (not base).  (Locking the base
+  environment and namespace may be supported later.)  Locking the
+  environment prevents adding or removing variable bindings from the
+  environment. Changing the value of a variable is still possible unless
+  the binding has been locked.  The namespace environments of packages
+  with namespaces are locked when loaded.
 
   \code{lockBinding} locks individual bindings in the specified
-  environment.  The value of a locked binding cannot be changed.
-  Locked bindings may be removed from an environment unless the
-  environment is locked.
+  environment.  The value of a locked binding cannot be changed. Locked
+  bindings may be removed from an environment unless the environment is
+  locked.
 
-  \code{makeActiveBinding} installs \code{fun} so that getting the
-  value of \code{sym} calls \code{fun} with no arguments, and assigning
-  to \code{sym} calls \code{fun} with one argument, the value to be
-  assigned.  This allows things like C variables linked to R variables
-  and variables linked to data bases to be implemented.  It may also
+  \code{makeActiveBinding} installs \code{fun} so that getting the value
+  of \code{sym} calls \code{fun} with no arguments, and assigning to
+  \code{sym} calls \code{fun} with one argument, the value to be
+  assigned.  This allows the implementation of things like C variables
+  linked to \R variables and variables linked to databases.  It may also
   be useful for making thread-safe versions of some system globals.
 }
 \examples{
