@@ -1746,6 +1746,11 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
   is a missing argument to the current closure.  rho is the
   environment that missing was called from.
 
+  isMissing is called on the not-yet-evaluated value of an argument,
+  if this is a symbol, as it could be a missing argument that has been
+  passed down.  So 'symbol' is the promise value, and 'rho' its
+  evaluation argument.
+
 */
 
 static int isMissing(SEXP symbol, SEXP rho)
