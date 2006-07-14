@@ -1128,7 +1128,7 @@ the standard ones.
 
 @item
 A check is made for missing documentation entries, such as undocumented
-user-level objects in the package
+user-level objects in the package.
 
 @item
 Documentation for functions, data sets, and S4 classes is checked for
