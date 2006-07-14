@@ -49,7 +49,6 @@ print <<_EOF_;
 ### * <HEADER>
 ###
 attach(NULL, name = "CheckExEnv")
-assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
 ## add some hooks to label plot pages for base and grid graphics
 setHook("plot.new", ".newplot.hook")
 setHook("persp", ".newplot.hook")
@@ -61,6 +60,7 @@ assign("cleanEx",
            RNGkind("default", "default")
 	   set.seed(1)
    	   options(warn = 1)
+	   .CheckExEnv <- as.environment("CheckExEnv")
 	   delayedAssign("T", stop("T used instead of TRUE"),
 		  assign.env = .CheckExEnv)
 	   delayedAssign("F", stop("F used instead of FALSE"),
@@ -74,11 +74,11 @@ assign("cleanEx",
 	       warning("items ", paste(missitems, collapse=", "),
 		       " have been removed from the search path")
        },
-       env = .CheckExEnv)
-assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) # for now
-assign("ptime", proc.time(), env = .CheckExEnv)
+       pos = "CheckExEnv")
+assign("..nameEx", "__{must remake R-ex/*.R}__", pos = "CheckExEnv") # for now
+assign("ptime", proc.time(), pos = "CheckExEnv")
 grDevices::postscript("$PKG-Ex.ps")
-assign("par.postscript", graphics::par(no.readonly = TRUE), env = .CheckExEnv)
+assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
 options(warn = 1)    
 _EOF_
@@ -88,8 +88,8 @@ if($PKG eq "tcltk") {
 } elsif($PKG ne "base") {
     print "library('$PKG')\n\n";
 }
-print "assign(\".oldSearch\", search(), env = .CheckExEnv)\n";
-print "assign(\".oldNS\", loadedNamespaces(), env = .CheckExEnv)\n";
+print "assign(\".oldSearch\", search(), pos = 'CheckExEnv')\n";
+print "assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n";
 
 ### * Loop over all R files, and edit a few of them ...
 foreach my $file (@Rfiles) {
@@ -122,7 +122,7 @@ foreach my $file (@Rfiles) {
 
     if($have_par) {
 	## if there were 'par()' calls, now reset them:
-	print "graphics::par(get(\"par.postscript\", env = .CheckExEnv))\n";
+	print "graphics::par(get(\"par.postscript\", pos = 'CheckExEnv'))\n";
     }
     if($have_contrasts) {
 	## if contrasts were set, now reset them:
@@ -136,7 +136,7 @@ foreach my $file (@Rfiles) {
 print <<_EOF_;
 ### * <FOOTER>
 ###
-cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\\n")
+cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\\n")
 grDevices::dev.off()
 ###
 ### Local variables: ***
