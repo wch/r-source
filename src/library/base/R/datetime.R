@@ -14,8 +14,8 @@ as.POSIXlt <- function(x, tz = "")
             if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
         }
 	if(is.na(xx) ||
-           !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%S")) ||
-	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%S")) ||
+           !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%OS")) ||
+	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%OS")) ||
 	   !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M")) ||
 	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M")) ||
 	   !is.na(strptime(xx, f <- "%Y-%m-%d")) ||

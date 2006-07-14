@@ -209,6 +209,9 @@ NEW FEATURES
     o	lapply(<a pairlist>) now coerces to a list (rather than traverse
 	the pairlist from the beginning for each item).
 
+    o	as.POSIX[ct]t can now convert character strings containing
+	fractional seconds.
+
 
 DEPRECATED & DEFUNCT
 
