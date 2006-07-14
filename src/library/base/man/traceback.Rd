@@ -27,7 +27,7 @@ traceback(x = NULL)
   Errors which are caught \emph{via} \code{\link{try}} or
   \code{\link{tryCatch}} do not generate a traceback, so what is printed
   is the call sequence for the last uncaught error, and not necessarily
-  the last error.
+  for the last error.
 }
 \value{
   \code{traceback()} returns nothing, but prints the deparsed call stack
@@ -35,6 +35,10 @@ traceback(x = NULL)
   the first line for each call is labelled by the frame number.  The
   number of lines printed per call can be limited by setting
   \code{\link{options}(deparse.max.lines)}.
+}
+\section{Warning}{
+  It has never been documented where \code{.Traceback} is stored or
+  that it is visible, and this is subject to change.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

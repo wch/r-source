@@ -9290,6 +9290,7 @@ It is written for the R core team and others studying the code in the
 * Argument evaluation::         
 * The write barrier::           
 * Serialization Formats::       
+* Internal use of global and base environments::  
 @end menu
 
 @node SEXPs, Environments and variable lookup, R Internal Structures, R Internal Structures
@@ -9920,7 +9921,7 @@ For background papers see
 @url{http://www.stat.uiowa.edu/~luke/R/barrier.html} and
 @url{http://www.stat.uiowa.edu/~luke/R/gengcnotes.html}.
 
-@node Serialization Formats,  , The write barrier, R Internal Structures
+@node Serialization Formats, Internal use of global and base environments, The write barrier, R Internal Structures
 @section Serialization Formats
 
 Serialized versions of @R{} objects are used by @code{load}/@code{save}
@@ -9991,6 +9992,50 @@ environments are written with pseudo-SEXPTYPEs followed by the name.
 `Normal' environments are written out as @code{ENVSXP}s with an integer
 indicating if the environment is locked followed by the enclosure,
 frame, tag and attributes.
+
+
+@node Internal use of global and base environments,  , Serialization Formats, R Internal Structures
+@section Internal use of global and base environments
+
+This section notes known use by the system of these environments: the
+intention is to minimize or eliminate them.
+
+@menu
+* Base environment::            
+* Global environment::          
+@end menu
+
+@node Base environment, Global environment, Internal use of global and base environments, Internal use of global and base environments
+@subsection Base environment
+
+The graphics devices system maintains two variables @code{.Device} and
+@code{.Devices} in the base environment: both are always set.  The
+variable @code{.Devices} gives a list of character vectors of the names
+of open devices, and @code{.Device} is the element corresponding to the
+currently active device.  The null device will always be open.
+
+There appears to be a variable @code{.Options}, a pairlist giving the
+current options settings.  But in fact this is just a symbol with a
+value assigned, and so shows up as a base variable.
+
+Similarly, the evaluator creates a symbol @code{.Last.value} which
+appears as a variable in the base environment.
+
+@node Global environment,  , Base environment, Internal use of global and base environments
+@subsection Global environment
+
+The seed for the random number generator is stored in object
+@code{.Random.seed} in the global environment.
+
+Errors can give rise to objects @code{.Traceback} and
+@code{last.warning} in the global environment.  Other error handlers may
+give rise to others: for example @code{dump.frames} by default produces
+@code{last.dump}.
+
+The @code{windows()} device makes use of a variable @code{.SavedPlots}
+to store display lists of saved plots for later display.  This is
+regarded as a variable created by the user.
+
 
 @node Function and variable index, Concept index, R Internal Structures, Top
 @unnumbered Function and variable index

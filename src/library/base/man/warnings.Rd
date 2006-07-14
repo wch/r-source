@@ -1,5 +1,6 @@
 \name{warnings}
 \alias{warnings}
+\alias{last.warning}
 \title{Print Warning Messages}
 \description{
   \code{warnings} prints the top-level variable \code{last.warning} in a
@@ -18,7 +19,7 @@ warnings(\dots)
 }
 \details{
   See the decription of \code{\link{options}("warn")} for the
-  circumstances under which there is a \code{last.warning} variable and
+  circumstances under which there is a \code{last.warning} object and
   \code{warnings()} is used.  In essence this is if \code{options(warn =
     0)} and \code{warning} has been called at least once.
 
@@ -26,6 +27,10 @@ warnings(\dots)
   warning (possibly even in a previous session with a saved workspace),
   and not to the last warning, for example if \code{options(warn)} has
   been changed or if a catastrophic error occurred.
+}
+\section{Warning}{
+  It has never been documented where \code{last.warning} is stored or
+  that it is visible, and this is subject to change.
 }
 \seealso{
   \code{\link{warning}}.
