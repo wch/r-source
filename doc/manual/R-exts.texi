@@ -9560,7 +9560,8 @@ no data.
 Pointers to three nodes, the name, value and internal, accessed by
 @code{PRINTNAME} (a @code{CHARSXP}), @code{SYMVALUE} and
 @code{INTERNAL}.  (If the symbol's value is a @code{.Internal} function,
-the last is a pointer to the appropriate @code{SEXPREC}.)
+the last is a pointer to the appropriate @code{SEXPREC}.)  Many symbols
+have @code{SYMVALUE} @code{R_UnboundValue}.
 
 @item LISTSXP
 Pointers to the CAR, CDR (usually a @code{LISTSXP} or NULL) and TAG
@@ -9711,7 +9712,7 @@ default the equivalent of packages are added at the end).
 @R{} has a variant on the @Sl{} model.  There is a search path (also
 returned by @code{search()}) which consists of the global environment
 (aka user workspace) followed by environments which have been attached
-and finally to the base environment.  Note that unlike @Sl{} it is not
+and finally the base environment.  Note that unlike @Sl{} it is not
 possible to attach environments before the workspace nor after the base
 environment.
 
@@ -9809,6 +9810,72 @@ first argument, and looks for a method based on its class.  If it finds
 a method, it dispatches to that method with a call based on promises to
 evaluate the remaining arguments.  If no method is found, the remaining
 arguments are evaluated before return to the internal generic.
+
+@menu
+* Missingness::                 
+* Dot-dot-dot arguments::       
+@end menu
+
+@node Missingness, Dot-dot-dot arguments, Argument evaluation, Argument evaluation
+@subsection Missingness
+
+Actual arguments to (non-internal) @R{} functions can be fewer than are
+required to match the formal arguments of the function.  Having
+unmatched formal arguments will not matter if the argument is never used
+(by lazy evaluation),  but when the argument is evaluated, either its
+default value is evaluated (within the evaluation environment of the
+function) or an error is thrown with a message along the lines of
+
+@example
+argument "foobar" is missing, with no default
+@end example
+
+Internally missingness is handled by two mechanisms. The object
+@code{R_MissingArg} is used to indicate that a formal argument has no
+(default) value.  When matching the actual arguments to the formal
+arguments, a new argument list is constructed from the formals all of
+whose values are @code{R_MissingArg}, and with the first @code{MISSING}
+bit set.  Then whenever a formal argument is matched to an actual
+argument, the corresponding member of the new argument list has its
+value set to that of the matched actual argument, and if that is not
+@code{R_MissingArg} the missing bit is unset.
+
+This new argument list is used to form the evaluation frame for the
+function, and if named arguments are subsequently given a new value
+(before they are evaluated) the missing bit is cleared.
+
+Missingness of arguments can be interrogated via the @code{missing()}
+function.  An argument is clearly missing if its missing bit is set or
+if the value is @code{R_MissingArg}.  However, missingness can be passed
+on from function to function, for using a formal argument as an actual
+argument in a function call does not count as evaluation.  So
+@code{missing()} has to examine the value (a promise) of a
+non-yet-evaluated formal argument to see if it might be missing, which
+might involve investigating a promise and so on @dots{}.
+
+@node Dot-dot-dot arguments,  , Missingness, Argument evaluation
+@subsection Dot-dot-dot arguments
+
+Dot-dot-dot arguments are convenient, but complicate the internal code
+for argument evaluation.
+
+The formals of a function with a @code{...} argument represent that as a
+single argument like any other argument, with tag the symbol
+@code{R_DotsSymbol}.  When the actual arguments are matched to the
+formals, the value of the @code{...} argument is of @code{SEXPTYPE}
+@code{DOTSXP}, a pairlist of promises (as used for matched arguments)
+but distinguished by the @code{SEXPTYPE}.
+
+Recall that the evaluation frame for a function initially contains
+the @code{name=value} pairs from the matched call, and hence this will
+be true for @code{...} as well.  The elements of the value of @code{...}
+are referred to by the special symbols @code{..1}, @code{..2}, @dots{}
+which have the @code{DDVAL} bit set: when one of these is encountered it
+is looked up (via @code{ddfndVar}) in the value of the @code{...} symbol
+in the evaluation frame.
+
+Arguments matched to a @code{...} argument can be missing.
+
 
 @node The write barrier, Serialization Formats, Argument evaluation, R Internal Structures
 @section The write barrier and the garbage collector
