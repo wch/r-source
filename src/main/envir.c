@@ -109,7 +109,7 @@
   SEXP __b__ = (b); \
   SEXP __val__ = (val); \
   if (BINDING_IS_LOCKED(__b__)) \
-    error(_("cannot change value of a locked binding")); \
+    error(_("cannot change value of locked binding for '%s'"), CHAR(PRINTNAME(__b__))); \
   if (IS_ACTIVE_BINDING(__b__)) \
     setActiveValue(CAR(__b__), __val__); \
   else \
@@ -120,7 +120,7 @@
   SEXP __sym__ = (sym); \
   SEXP __val__ = (val); \
   if (BINDING_IS_LOCKED(__sym__)) \
-    error(_("cannot change value of a locked binding")); \
+    error(_("cannot change value of locked binding for '%s'"), CHAR(PRINTNAME(__sym__))); \
   if (IS_ACTIVE_BINDING(__sym__)) \
     setActiveValue(SYMVALUE(__sym__), __val__); \
   else \
@@ -2619,7 +2619,10 @@ void R_LockEnvironment(SEXP env, Rboolean bindings)
 		    if(SYMVALUE(CAR(s)) != R_UnboundValue)
 			LOCK_BINDING(CAR(s));
 	}
+#ifdef NOT_YET
+	/* causes problems with Matrix */
 	LOCK_FRAME(env);
+#endif
 	return;
     }
 
