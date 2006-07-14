@@ -102,9 +102,10 @@ cbind <- function(..., deparse.level = 1)
 }
 
 ## To be active, the above cbind() must "replace" cbind() in "base".
-## This may be called on loading method, see ./zzz.R
+## This may be called on loading methods, see ./zzz.R
 bind_activation <- function(on = TRUE) {
     ## 'bind' : cbind && rbind
+    ## as from 2.4.0 this saving is done in base, so could simplify code
     base.ns <- getNamespace("base")
     saved <- exists(".__H__.cbind", envir = base.ns, inherits = FALSE)
     if(was.on <- saved)

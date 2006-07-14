@@ -58,12 +58,16 @@ args <- function(name).Internal(args(name))
 ##- attr <- function(x, which).Internal(attr(x, which))
 ##- "attr<-" <- function(x, which, value).Internal("attr<-"(x, which, value))
 
-cbind <- function(..., deparse.level = 1) {
+cbind <- function(..., deparse.level = 1)
     .Internal(cbind(deparse.level, ...))
-}
-rbind <- function(..., deparse.level = 1) {
+
+rbind <- function(..., deparse.level = 1)
     .Internal(rbind(deparse.level, ...))
-}
+
+## for methods:::bind_activation
+.__H__.cbind <- cbind
+.__H__.rbind <- rbind
+
 
 # convert deparsing options to bitmapped integer
 

@@ -269,6 +269,9 @@ UTILITIES
     o	R CMD check now warns if there are non-ASCII characters in the
 	R code (as these will likely be syntax errors in some locale).
 
+    o	The test script produced by massage-Examples.pl no longer
+	writes in the base environment.
+
 
 INSTALLATION
 

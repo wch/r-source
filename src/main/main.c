@@ -809,11 +809,12 @@ void setup_Rmainloop(void)
     */
 
     R_LoadProfile(R_OpenSysInitFile(), baseEnv);
-#ifdef NOTYET
     /* These are the same bindings, so only lock them once */
-    R_LockEnvironment(R_BaseNamespace, FALSE);
+    R_LockEnvironment(R_BaseNamespace, TRUE);
+#ifdef NOTYET
+    /* methods package needs to trample here */
+    R_LockEnvironment(R_BaseEnv, TRUE);
 #endif
-    R_LockEnvironment(R_BaseEnv, TRUE); /* only locks bindings for now */
     /* At least temporarily unlock some bindings uses in graphics */
     R_unLockBinding(install(".Device"), R_BaseEnv);
     R_unLockBinding(install(".Devices"), R_BaseEnv);

@@ -2619,9 +2619,7 @@ void R_LockEnvironment(SEXP env, Rboolean bindings)
 		    if(SYMVALUE(CAR(s)) != R_UnboundValue)
 			LOCK_BINDING(CAR(s));
 	}
-#ifdef NOTYET
 	LOCK_FRAME(env);
-#endif
 	return;
     }
 
