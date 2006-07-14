@@ -113,6 +113,9 @@ my $R_check_subdirs_strict =
     &R_getenv("_R_CHECK_SUBDIRS_STRICT_", "default");
 my $R_check_Rd_xrefs =
     &R_getenv("_R_CHECK_RD_XREFS_", "TRUE");
+my $R_check_use_codetools =
+    &R_getenv("_R_CHECK_USE_CODETOOLS_", "FALSE");
+
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
@@ -147,6 +150,8 @@ $R_check_weave_vignettes =
     &config_val_to_logical($R_check_weave_vignettes);
 $R_check_Rd_xrefs =
     &config_val_to_logical($R_check_Rd_xrefs);
+$R_check_use_codetools =
+    &config_val_to_logical($R_check_use_codetools);
 
 $opt_subdirs = $R_check_subdirs_strict if $opt_subdirs eq "";
 
@@ -1136,66 +1141,6 @@ sub check_pkg {
 	}
     }
 
-    ## Check usage of library.dynam (if any).
-
-    if(!$is_base_pkg && (-d "R")) {
-	## <FIXME>
-	## This really needs to be changed:
-	## * If a package is installed for lazy-loading, we don't really
-	##   check the code.
-	## * We should also take care of library.dynam.unload().
-	## * What if someone used 'foo.so'?
-	## Etc ...
-	## Write an R function for doing this (.check_package_code_shlib
-	## maybe) and move into the "checking R files for possible
-	## problems" section ...
-	## </FIXME>
-	$log->checking("R files for library.dynam");
-	my @R_files;
-	if($opt_install) {
-	    ## Only need to check the installed file (if installed).
-	    @R_files = (&file_path($library, $pkgname, "R", $pkgname));
-	}
-	else {
-	    ## Otherwise (if the package was not installed), we need to
-	    ## check all R code files.
-	    ## <NOTE>
-	    ## We could/should really check all OS specific subdirs here.
-	    @R_files = &list_files_with_type("R", "code");
-	    ## </NOTE>
-	}
-	my $any = 0;
-	my $ext;
-	foreach my $file (@R_files) {
-	    last if $any;
-	    open(FILE, "< $file")
-	      or die "Error: cannot open file '$file' for reading\n";
-	    while(<FILE>) {
-		if(/library.dynam\(\"(.*?)\"/o) {
-		    my $arg = $1;
-		    if($arg =~ /\.(so|sl|dll)$/) {
-			$ext = $1;
-			$any++;
-			last;
-		    }
-		}
-	    }
-	    close(FILE);
-	}
-	if($any == 0) {
-	    $log->result("OK");
-	}
-	else {
-	    $log->error();
-	    $log->print("library.dynam() used with extension '.$ext'.\n");
-	    $log->print(wrap("", "",
-			     ("The system-specific extension for",
-			      "shared libraries should not be added.\n",
-			      "See ?library.dynam\n")));
-	    exit(1);
-	}
-    }
-
     ## Check whether methods have all arguments of the corresponding
     ## generic.
 
@@ -1302,26 +1247,46 @@ sub check_pkg {
     ## Activated only via setting the internal environment variable
     ## _R_CHECK_USE_CODETOOLS_ to something "true".
 
-    my $R_check_use_codetools =
-	&R_getenv("_R_CHECK_USE_CODETOOLS_", "FALSE");
-    $R_check_use_codetools =
-	&config_val_to_logical($R_check_use_codetools);
+    ## Also do the library.dynam() tests here.
 
-    if($R_check_use_codetools && $opt_install && (-d "R")) {
+    if(-d "R") {
 	$log->checking("R code for possible problems");
 
-	my $Rcmd = "options(warn=1)\n";
-	$Rcmd .= "tools:::.check_code_usage_in_package(package = \"${pkgname}\")\n";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-                         "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
-	@out = grep(!/^\>/, @out);
-	if(scalar(@out) > 0) {
-	    $log->warning();
-	    $log->print(join("\n", @out) . "\n");
+	my $any;
+
+	if(!$is_base_pkg) {
+	    my $Rcmd = "tools:::.check_package_code_shlib(\"R\")";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    @out = grep(!/^\>/, @out);
+	    if(scalar(@out) > 0) {
+		$log->error();
+		$log->print(wrap("", "",
+				 "Incorrect (un)loading of package",
+				 "shared libraries.\n"));
+		$log->print(join("\n", @out) . "\n");
+		$log->print(wrap("", "",
+				 ("The system-specific extension for",
+				  "shared libraries must not be added.\n",
+				  "See ?library.dynam.\n")));
+		
+		exit(1);
+	    }
 	}
-	else {
-	    $log->result("OK");
+
+	if($R_check_use_codetools && $opt_install) {
+	    my $Rcmd = "options(warn=1)\n";
+	    $Rcmd .= "tools:::.check_code_usage_in_package(package = \"${pkgname}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
+	    @out = grep(!/^\>/, @out);
+	    if(scalar(@out) > 0) {
+		$any++;
+		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+	    }
 	}
+	
+	$log->result("OK") unless $any;
     }
 
     ## Check R documentation files.

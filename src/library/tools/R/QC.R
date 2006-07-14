@@ -3560,6 +3560,57 @@ function(dir)
                                                       "\n"))))))
 }
 
+### * .check_package_code_shlib
+
+.check_package_code_shlib <-
+function(dir) {
+    ## <NOTE>
+    ## This is very similar to what happens with checkTnF() etc.
+    ## We should really have a more general-purpose tree walker.
+    ## </NOTE>
+
+    ## Workhorse function.
+    filter <- function(file) {
+        matches <- list()
+        walker <- function(e) {
+            if((length(e) > 1)
+               && is.call(e)
+               && as.character(e[[1]]) %in% c("library.dynam",
+                                              "library.dynam.unload")
+               && is.character(e[[2]])
+               && (regexpr("\\.(so|sl|dll)$", e[[2]]) > -1)
+               )
+                matches <<- c(matches, list(e))
+            if(is.recursive(e))
+                for(i in seq(along = e)) Recall(e[[i]])
+        }
+        exprs <- parse(file)
+        for(i in seq(along = exprs)) walker(exprs[[i]])
+        matches
+    }
+    
+    code_files <-
+        list_files_with_type(dir, "code",
+                             OS_subdirs = c("unix", "windows"))
+    x <- lapply(code_files, filter)
+    names(x) <- code_files
+    x <- x[sapply(x, length) > 0]
+
+    ## Because we really only need this for calling from R CMD check, we
+    ## produce output here in case we found something.
+    for(fname in names(x)) {
+        writeLines(gettextf("File '%s':", fname))
+        xfname <- x[[fname]]
+        for(i in seq(along = xfname)) {
+            writeLines(strwrap(gettextf("found %s",
+                                        paste(deparse(xfname[[i]]),
+                                              collapse = "")),
+                               indent = 2, exdent = 4))
+        }
+    }
+
+    invisible(x)
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***
