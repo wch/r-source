@@ -5916,8 +5916,8 @@ code making the modification to do the duplication, even if it is
 @code{x} whose value is being modified after @code{y <- x}.
 
 The case @code{NAMED(foo) == 1} allows some optimization, but it can be
-ignored (and duplication done whenever @code{NAMED(foo) > 0}).  This
-optimization is unlikely to be worthwhile in user code.  It is intended
+ignored (and duplication done whenever @code{NAMED(foo) > 0}).  (This
+optimization is not currently usable in user code.)  It is intended
 for use within assignment functions.  Suppose we used
 
 @example
@@ -5941,10 +5941,9 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-Another possible example of optimizing @code{NAMED(foo) == 1} is inside
-@code{.Call} code which alters an argument and the calling @R{} code is
-written to be aware that the argument will be altered.
-
+Currently all arguments to a @code{.Call} call will have @code{NAMED}
+set to 2, and so users must assumed that they need to be duplicated
+before alteration.
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
 @section Interface functions @code{.Call} and @code{.External}
