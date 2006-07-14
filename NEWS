@@ -41,6 +41,9 @@ USER-VISIBLE CHANGES
 	the values of base functions cannot be changed except via
 	assignInNamespace() and similar tricks.
 
+	The base namespace is sealed (like other namespaces) but the
+	base environment can be added to.
+
 
 NEW FEATURES
 
