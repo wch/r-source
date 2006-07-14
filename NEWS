@@ -354,12 +354,17 @@ BUG FIXES
     o	addmargins(T, ...) now returns a "table" when 'T' is a "table", as
 	its help page has always suggested.
 
-    o	remove() new explicitly precludes removing variables from
+    o	remove() now explicitly precludes removing variables from
 	baseenv() and throws an error (this was previously ignored).
 
     o	Saving the workspace now works as has long been intended,
 	that is it is saved only if something has been
 	added/deleted/changed during the current session.
+
+    o	The search for bindings in <<-, ->> and assign(inherits=TRUE)
+	was omitting the base package, although this was not
+	documented.  Now the base package is included (but most
+	bindings there are locked).
 
 
 
@@ -391,7 +396,7 @@ BUG FIXES
     o	INSTALL has been changed to avoid a few problems with the
 	base (not XPG4) Solaris sed.
 
-    o	There were problems in src/main/printutils.c on platforms
+    o	There were problems in src/main/printutils.c on some platforms
 	that did not have va_copy.
 
     o	[pq]unif allowed infinite ranges but handled them
@@ -432,7 +437,7 @@ BUG FIXES
 	is (if possible) coerced to a list.
 
     o	The internal check for conformance of time series assumed that the
-	'tsp' attribute was integer, when it was enforced to be
+	'tsp' attribute was integer, whereas it was enforced to be
 	numeric by the attribute-setting code.
 
     o   Sweave() did not treat \begin{document} in comments correctly 

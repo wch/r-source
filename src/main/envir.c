@@ -1336,17 +1336,17 @@ static SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
     given value to the first symbol encountered.  If no symbol is
     found then a binding is created in the global environment.
 
-    FIXME:
-    Maybe this is supposed to assign into base if a binding exists
-    there, but it does not do so.  It does assign into the base namespace
-    if that is on the search and the symbol exists there.
-    To change this, test for rho != R_EmptyEnv only.
+    Changed in R 2.4.0 to look in the base environment (previously the
+    search stopped befor the base environment, but would (and still
+    does) assign into the base namespace if that is on the search and
+    the symbol existed there).
+
 */
 
 void setVar(SEXP symbol, SEXP value, SEXP rho)
 {
     SEXP vl;
-    while (rho != R_BaseEnv && rho != R_EmptyEnv) {
+    while (rho != R_EmptyEnv) {
 	vl = setVarInFrame(rho, symbol, value);
 	if (vl != R_NilValue) return;
 	rho = ENCLOS(rho);

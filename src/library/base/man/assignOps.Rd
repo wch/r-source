@@ -51,8 +51,8 @@ x = value
   \code{value}.  Thus one can use \code{a <- b <- c <- 6}.
 }
 \note{
-  Currently the base environment is ignored in the search for a binding
-  by  \code{<<-} and \code{->>}: this is probably a bug.
+  Prior to \R 2.4.0 the base environment was ignored in the search for a
+  binding by \code{<<-} and \code{->>}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

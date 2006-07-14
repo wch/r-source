@@ -53,8 +53,8 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   there is no existing binding and the environment is locked.
 }
 \note{
-  Currently the base environment is ignored in the search for a binding
-  by \code{inherits = TRUE}: this is probably a bug.
+  Prior to \R 2.4.0 the base environment was ignored in the search for a
+  binding by \code{inherits = TRUE}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
