@@ -3,6 +3,8 @@
 \alias{rbind}
 \alias{cbind.data.frame}
 \alias{rbind.data.frame}
+\alias{.__H__.cbind}
+\alias{.__H__.rbind}
 \concept{insert}
 \title{Combine R Objects by Rows or Columns}
 \description{
