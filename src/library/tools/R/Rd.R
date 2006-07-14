@@ -175,17 +175,18 @@ function(RdFiles)
 
     RdFiles <- path.expand(RdFiles[file_test("-f", RdFiles)])
 
-    if(length(RdFiles) == 0)
-        return(data.frame(File = character(0),
+    if(length(RdFiles) == 0) {
+        out <- data.frame(File = character(0),
                           Name = character(0),
                           Type = character(0),
                           Title = character(0),
-                          Aliases = I(list()),
-                          Concepts = I(list()),
-                          Keywords = I(list()),
                           Encoding = character(),
-                          stringsAsFactors = FALSE))
-               
+                          stringsAsFactors = FALSE)
+        out$Aliases <- list()
+        out$Concepts <- list()
+        out$Keywords <- list()
+        return(out)
+    }
 
     entries <- c("Name", "Type", "Title", "Aliases", "Concepts",
                  "Keywords", "Encoding")
@@ -216,16 +217,18 @@ function(RdFiles)
     title <- sub("^[[:space:]]+", "", title)
     title <- sub("[[:space:]]+$", "", title)
 
-    data.frame(File = basename(RdFiles),
-               Name = unlist(contents[ , "Name"]),
-               Type = unlist(contents[ , "Type"]),
-               Title = title,
-               Aliases = I(contents[ , "Aliases"]),
-               Concepts = I(contents[ , "Concepts"]),
-               Keywords = I(contents[ , "Keywords"]),
-               Encoding = unlist(contents[ , "Encoding"]),
-               row.names = NULL,     # avoid trying to compute row names
-               stringsAsFactors = FALSE)
+    out <- data.frame(File = basename(RdFiles),
+                      Name = unlist(contents[ , "Name"]),
+                      Type = unlist(contents[ , "Type"]),
+                      Title = title,
+                      Encoding = unlist(contents[ , "Encoding"]),
+                      row.names = NULL, # avoid trying to compute row
+                                        # names
+                      stringsAsFactors = FALSE)
+    out$Aliases <- contents[ , "Aliases"]
+    out$Concepts <- contents[ , "Concepts"]
+    out$Keywords <- contents[ , "Keywords"]
+    out
 }
 
 ### * .write_contents_as_RDS
