@@ -214,13 +214,15 @@ function(vignetteDir)
     vignetteFiles <-
         path.expand(list_files_with_type(vignetteDir, "vignette"))
 
-    if(length(vignetteFiles) == 0)
-        return(data.frame(File = character(0),
-                          Title = character(0),
-                          Depends = I(list()),
-                          Keywords = I(list()),
+    if(length(vignetteFiles) == 0) {
+        out <- data.frame(File = character(),
+                          Title = character(),
                           PDF = character(),
-                          stringsAsFactors = FALSE))
+                          stringsAsFactors = FALSE)
+        out$Depends <- list()
+        out$Keywords <- list()
+        return(out)
+    }
 
     contents <- vector("list", length = length(vignetteFiles) * 4)
     dim(contents) <- c(length(vignetteFiles), 4)
@@ -256,13 +258,15 @@ function(vignetteDir)
     vignettePDFs[!file_test("-f", vignettePDFs)] <- ""
     vignettePDFs <- basename(vignettePDFs)
 
-    data.frame(File = unlist(contents[, "File"]),
-               Title = vignetteTitles,
-               Depends = I(contents[, "Depends"]),
-               Keywords = I(contents[, "Keywords"]),
-               PDF = vignettePDFs,
-               row.names = NULL,     # avoid trying to compute row names
-               stringsAsFactors = FALSE)
+    out <- data.frame(File = unlist(contents[, "File"]),
+                      Title = vignetteTitles,
+                      PDF = vignettePDFs,
+                      row.names = NULL, # avoid trying to compute row
+                                        # names
+                      stringsAsFactors = FALSE)
+    out$Depends <- contents[, "Depends"]
+    out$Keywords <- contents[, "Keywords"]
+    out
 }
 
 ### * .check_vignette_index
