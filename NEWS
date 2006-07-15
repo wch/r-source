@@ -212,6 +212,9 @@ NEW FEATURES
     o	as.POSIX[ct]t can now convert character strings containing
 	fractional seconds.
 
+    o	The character vector used by an output textConnection() has
+	locked bindings whilst the connection is open.
+
 
 DEPRECATED & DEFUNCT
 
@@ -256,6 +259,10 @@ DEPRECATED & DEFUNCT
 
     o	traceback() gains a 'max.lines' argument.
 	.Traceback is no longer stored in the workspace.
+
+    o	options("par.ask.default") allows the default for par("ask")
+	to be set for a newly-opened device.  (Defaults to FALSE, the
+	previous behaviour.)
 
 
 C-LEVEL FACILITIES

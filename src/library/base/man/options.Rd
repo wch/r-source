@@ -277,6 +277,9 @@ getOption(x)
       and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
 
+    \item{\code{par.ask.default}:}{logical.  The default for
+      \code{\link{par}("ask")} when a device is opened.}
+
 #ifdef unix
     \item{\code{X11colortype}:}{The default colour type for
       \code{\link{X11}} devices.  Default \code{"true"}.}

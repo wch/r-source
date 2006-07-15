@@ -1846,15 +1846,25 @@ static void outtext_close(Rconnection con)
 	PROTECT(tmp = lengthgets(this->data, ++this->len));
 	SET_STRING_ELT(tmp, this->len - 1, mkChar(this->lastline));
 	defineVar(this->namesymbol, tmp, VECTOR_ELT(OutTextData, idx));
+	SET_NAMED(tmp, 2);
 	this->data = tmp;
 	UNPROTECT(1);
     }
+    R_unLockBinding(this->namesymbol, VECTOR_ELT(OutTextData, idx));
+    /* moved to _destroy 
     SET_VECTOR_ELT(OutTextData, idx, R_NilValue);
+    */
 }
 
 static void outtext_destroy(Rconnection con)
 {
     Routtextconn this = (Routtextconn)con->private;
+    int idx = ConnIndex(con);
+    /* OutTextData is preserved, and that implies that the environment 
+       we are writing it and hence the character vector is protected.
+       However, this could be quite expensive.
+    */
+    SET_VECTOR_ELT(OutTextData, idx, R_NilValue);
     free(this->lastline); free(this);
 }
 
@@ -1905,12 +1915,16 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	q = Rf_strchr(p, '\n');
 	if(q) {
 	    int idx = ConnIndex(con);
+	    SEXP env = VECTOR_ELT(OutTextData, idx);
 	    *q = '\0';
 	    PROTECT(tmp = lengthgets(this->data, ++this->len));
 	    SET_STRING_ELT(tmp, this->len - 1, mkChar(p));
-	    defineVar(this->namesymbol, tmp, VECTOR_ELT(OutTextData, idx));
+	    R_unLockBinding(this->namesymbol, env);
+	    defineVar(this->namesymbol, tmp, env);
 	    this->data = tmp;
+	    SET_NAMED(tmp, 2);
 	    UNPROTECT(1);
+	    R_LockBinding(this->namesymbol, env);
 	} else {
 	    /* retain the last line */
 	    if(strlen(p) >= this->lastlinelength) {
@@ -1937,6 +1951,8 @@ static void outtext_init(Rconnection con, char *mode, int idx)
 	/* create variable pointed to by con->description */
 	PROTECT(val = allocVector(STRSXP, 0));
 	defineVar(this->namesymbol, val, VECTOR_ELT(OutTextData, idx));
+	/* Not clear if this is needed, but be conservative */
+	SET_NAMED(val, 2);
 	UNPROTECT(1);
     } else {
 	/* take over existing variable */
@@ -1946,7 +1962,9 @@ static void outtext_init(Rconnection con, char *mode, int idx)
 	    warning(_("text connection: appending to a non-existent char vector"));
 	    PROTECT(val = allocVector(STRSXP, 0));
 	    defineVar(this->namesymbol, val, VECTOR_ELT(OutTextData, idx));
+	    SET_NAMED(val, 2);
 	    UNPROTECT(1);
+	    R_LockBinding(this->namesymbol, VECTOR_ELT(OutTextData, idx));
 	}
     }
     this->len = LENGTH(val);
@@ -2018,10 +2036,8 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     error(_("invalid '%s' argument"), "open");
     open = CHAR(STRING_ELT(sopen, 0));
     venv = CADDDR(args);
-    if (isNull(venv)) {
+    if (isNull(venv))
 	error(_("use of NULL environment is defunct"));
-	venv = R_BaseEnv;
-    } else      
     if (!isEnvironment(venv))
 	error(_("invalid '%s' argument"), "environment");
     ncon = NextConnection();

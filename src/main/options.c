@@ -136,6 +136,18 @@ int GetOptionDigits(SEXP rho)
 }
 
 
+int attribute_hidden Rf_GetOptionParAsk()
+{
+    int ask;
+    ask = asLogical(GetOption(install("par.ask.default"), R_BaseEnv));
+    if(ask == NA_LOGICAL) {
+	warning(_("invalid par(\"par.ask.default\"), using FALSE"));
+	return FALSE;
+    }
+   return ask != 0;
+}
+
+
 /* Change the value of an option or add a new option or, */
 /* if called with value R_NilValue, remove that option. */
 

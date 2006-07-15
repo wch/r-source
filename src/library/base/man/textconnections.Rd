@@ -32,7 +32,9 @@ textConnection(object, open = "r", local = FALSE)
   \code{\link{isIncomplete}} will indicate if there is an incomplete
   final line.  Closing the connection will output the final line,
   complete or not.  (A line is complete once it has been terminated by
-  end-of-line, represented by \code{"\\n"} in \R.)
+  end-of-line, represented by \code{"\\n"} in \R.)  The output character
+  vector has locked bindings (see \code{\link{lockBinding}}) until
+  \code{code} is called on the connection.
 
   Opening a text connection with \code{mode = "a"} will attempt to
   append to an existing character vector with the given name in the

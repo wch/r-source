@@ -23,10 +23,10 @@
 	else "postscript"
     } else "postscript"
 
-    op.utils <- c(list(locatorBell = TRUE), extras, device=device)
+    op.utils <- c(list(locatorBell = TRUE, par.ask.default = FALSE),
+                  extras, device=device)
     toset <- !(names(op.utils) %in% names(op))
     if(any(toset)) options(op.utils[toset])
 
     initPSandPDFfonts()
 }
-
