@@ -388,7 +388,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    if(res >= 0) { /* res = 0 is a terminator */
 		k = wc;
 		/* To be portable, treat \0 explicitly */
-		if(res == 0) {k == 0; wc = L'\0';}
+		if(res == 0) {k = 0; wc = L'\0';}
 		if(0x20 <= k && k < 0x7f && iswprint(wc)) {
 		    switch(wc) {
 		    case L'\\': *q++ = '\\'; *q++ = '\\'; *p++;
