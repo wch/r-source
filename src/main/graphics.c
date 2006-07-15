@@ -2071,15 +2071,13 @@ void GSetupAxis(int axis, DevDesc *dd)
 
  * Typically called from  do_<dev>(.)  as  GInit(&dd->dp)
  */
-int Rf_GetOptionParAsk(); /* from options.c */
-
 void attribute_hidden GInit(GPar *dp)
 {
     dp->state = 0;
     dp->valid = FALSE;
 
     dp->ann = TRUE;
-    dp->ask = Rf_GetOptionParAsk();
+    dp->ask = FALSE;
     dp->err = 0;
     dp->bty = 'o';
 
