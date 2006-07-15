@@ -216,8 +216,8 @@ getOption(x)
       is zero (the default) warnings are stored until the top--level
       function returns.  If fewer than 10 warnings were signalled they
       will be printed otherwise a message saying how many (max 50) were
-      signalled.  A top--level variable called \code{last.warning} is
-      created and can be viewed through the function
+      signalled.  An object called \code{last.warning} is
+      created and can be printed through the function
       \code{\link{warnings}}.  If \code{warn} is one, warnings are
       printed as they occur.  If \code{warn} is two or larger all
       warnings are turned into errors.}

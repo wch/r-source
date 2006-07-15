@@ -401,7 +401,8 @@ void PrintWarnings(void)
 	SET_STRING_ELT(t, i, STRING_ELT(names, i));
     }
     setAttrib(s, R_NamesSymbol, t);
-    defineVar(install("last.warning"), s, R_GlobalEnv);
+    SET_SYMVALUE(install("last.warning"), s);
+    /* defineVar(install("last.warning"), s, R_GlobalEnv); */
     UNPROTECT(2);
 
     endcontext(&cntxt);
@@ -653,12 +654,14 @@ static void jump_to_top_ex(Rboolean traceback,
        non-interactive session */
     if (R_Interactive || haveHandler) {
 	/* write traceback if requested, unless we're already doing it
-	   or there is an inconsistenty between inError and oldInError
+	   or there is an inconsistency between inError and oldInError
 	   (which should not happen) */
 	if (traceback && inError < 2 && inError == oldInError) {
 	    inError = 2;
 	    PROTECT(s = R_GetTraceback(0));
-	    setVar(install(".Traceback"), s, R_GlobalEnv);
+	    SET_SYMVALUE(install(".Traceback"), s);
+	    /* should have been defineVar
+	       setVar(install(".Traceback"), s, R_GlobalEnv); */
 	    UNPROTECT(1);
 	    inError = oldInError;
 	}

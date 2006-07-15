@@ -3803,6 +3803,7 @@ prints the message argument and returns execution to top-level.
 @node warning, on.exit, stop, Exception handling
 @section warning
 @findex warning
+@findex warnings
 
 The function @code{warning} takes a single argument that is a character
 string.  The behaviour of a call to @code{warning} depends on the value
@@ -3811,13 +3812,14 @@ ignored.  If it is zero, they are stored and printed after the top-level
 function has completed.  If it is one, they are printed as they occur
 and if it is 2 (or larger) warnings are turned into errors.
 
-If @code{"warn"} is zero (the default), a top-level variable
-@code{last.warning} is created and the messages associated with each
-call to @code{warning} are stored, sequentially, in this vector.  If
-there are fewer than 10 warnings they are printed after the function has
-finished evaluating.  If there are more than 10 then a message
-indicating how many warnings occurred is printed.  In either case
-@code{last.warning} contains the vector of messages.
+If @code{"warn"} is zero (the default), a variable @code{last.warning}
+is created and the messages associated with each call to @code{warning}
+are stored, sequentially, in this vector.  If there are fewer than 10
+warnings they are printed after the function has finished evaluating.
+If there are more than 10 then a message indicating how many warnings
+occurred is printed.  In either case @code{last.warning} contains the
+vector of messages, and @code{warnings} provides a way to access and
+print it.
 
 @node on.exit, Error options, warning, Exception handling
 @section on.exit
@@ -4044,7 +4046,7 @@ trace: "[<-"(*tmp*, 3, value = 4)
 @findex traceback
 
 When an error has caused a jump to top-level a special variable called
-@code{.Traceback} is placed into the top-level workspace.
+@code{.Traceback} is placed into the base environment.
 @code{.Traceback} is a character vector with one entry for each function
 call that was active at the time the error occurred.  An examination of
 @code{.Traceback} can be carried out by a call to @code{traceback}.

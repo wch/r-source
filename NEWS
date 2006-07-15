@@ -251,6 +251,12 @@ DEPRECATED & DEFUNCT
 	objects, to make this correspond to a call to show(), as per
 	'Programming with Data'.
 
+    o	warnings() is now an accessor function for 'last.warning' (which
+	is no longer stored in the workspace) with a print() method.
+
+    o	traceback() gains a 'max.lines' argument.
+	.Traceback is no longer stored in the workspace.
+
 
 C-LEVEL FACILITIES
 
