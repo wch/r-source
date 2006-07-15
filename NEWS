@@ -391,6 +391,10 @@ BUG FIXES
 	documented.  Now the base package is included (but most
 	bindings there are locked).
 
+   o	dweibull(0, shape) was NaN not Inf for shape < 1.  Also, the
+	help for dgamma and dweibull gave support as x > 0, but
+	returned non-zero values for x = 0.  (PR#9080)
+
 
 
 
