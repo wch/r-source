@@ -35,7 +35,7 @@ alist(\dots)
 \details{
   Most lists in \R internally are \emph{Generic Vectors}, whereas
   traditional \emph{dotted pair} lists (as in LISP) are available
-  but rarely seen by users (except as \code{\list{formals}} of functions).
+  but rarely seen by users (except as \code{\link{formals}} of functions).
 
   The arguments to \code{list} or \code{pairlist} are of the form
   \code{value} or \code{tag=value}.  The functions return a list or
@@ -47,10 +47,12 @@ alist(\dots)
   no value are allowed whereas \code{list} simply ignores them.
   \code{alist} is most often used in conjunction with \code{\link{formals}}.
 
-  \code{as.list} attempts to coerce its argument to list type.
-  For functions, this returns the concatenation of the list of formal
+  \code{as.list} attempts to coerce its argument to a list.  For
+  functions, this returns the concatenation of the list of formal
   arguments and the function body.  For expressions, the list of
-  constituent calls is returned.
+  constituent calls is returned.  \code{as.list} is generic, and as the
+  default method calls \code{\link{as.vector}(mode="list")} methods for
+  \code{as.vector} may be invoked.
 
   \code{is.list} returns \code{TRUE} iff its argument
   is a \code{list} \emph{or} a \code{pairlist} of \code{length} \eqn{> 0}.
