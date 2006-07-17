@@ -399,6 +399,7 @@ ComplexAnswer(SEXP x, struct BindData *data)
 	    }
 	    data->ans_length++;
 	}
+	break;
     case INTSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++) {
@@ -413,10 +414,10 @@ ComplexAnswer(SEXP x, struct BindData *data)
 	    }
 	    data->ans_length++;
 	}
+	break;
     default:
 	error(_("type '%s' is unimplemented in '%s'"), 
 	      type2char(TYPEOF(x)), "ComplexAnswer");
-	break;
     }
 }
 
