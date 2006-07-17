@@ -23,8 +23,8 @@ is.vector(x, mode = "any")
   is most convenient).
 
   \code{is.vector} returns \code{TRUE} if \code{x} is a vector (of mode
-  logical, integer, real, complex, character, raw or list if not specified)
-  and \code{FALSE} otherwise.
+  logical, integer, real, complex, character, raw or list if not
+  specified) or expression and \code{FALSE} otherwise.
 }
 \details{
   The atomic modes are \code{"logical"}, \code{"integer"}, \code{"numeric"},
