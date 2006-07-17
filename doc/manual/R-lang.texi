@@ -1672,7 +1672,7 @@ retained.
 
 @end itemize
 
-Indexing with a missing (i.e.@: @code{NA}) value give an @code{NA}
+Indexing with a missing (i.e.@: @code{NA}) value gives an @code{NA}
 result.  This rule applies also to the case of logical indexing,
 i.e.@: the elements of @code{x} that have an @code{NA} selector in
 @code{i} get included in the result, but their value will be @code{NA}.
