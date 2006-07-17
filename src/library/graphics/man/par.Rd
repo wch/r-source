@@ -177,7 +177,9 @@ par(\dots, no.readonly = FALSE)
       plots they produce with axis titles and overall titles.  The
       default is to do annotation.}
     \item{\code{ask}}{logical.  If \code{TRUE}, the user is asked for
-      input, before a new figure is drawn.}
+      input, before a new figure is drawn.  As this applies to the
+      device, it also affects output by packages \pkg{grid} and
+      \pkg{lattice}.}
     \item{\code{bg}}{The color to be used for the background of plots.
       When called from \code{par()} it also sets \code{new=FALSE}.
       A description of how colors are specified is given below.
