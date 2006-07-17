@@ -1,17 +1,13 @@
 lapply <- function (X, FUN, ...)
 {
     FUN <- match.fun(FUN)
-###    if (!is.list(X)) X <- as.list(X)
-###    This failed to coerce a pairlist, which was then repeatedly coerced
-###    in the internal code
-###    As from 2.4.0 as.list() does not duplicate a list, but
-###    internal lapply insists that its arguments are symbols.
-###    Should we call as.list on objects, which typically are classed lists?
-    if(typeof(X) != "list") X <- as.list(X)
-    rval <-.Internal(lapply(X, FUN))
-    names(rval) <- names(X)
-    return(rval)
+    ## internal code handles all vector types, including expressions
+    ## However, it would be OK to have attributes which is.vector
+    ## disallows.
+    if(!is.vector(X) || is.object(X)) X <- as.list(X)
+    .Internal(lapply(X, FUN))
 }
+
 if(FALSE) {
 lapply <- function(X, FUN, ...) {
     FUN <- match.fun(FUN)

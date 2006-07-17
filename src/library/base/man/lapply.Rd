@@ -1,16 +1,18 @@
 \name{lapply}
+\alias{lapply}
+\alias{sapply}
+\alias{replicate}
 \title{Apply a Function over a List or Vector}
 \usage{
 lapply(X, FUN, \dots)
+
 sapply(X, FUN, \dots, simplify = TRUE, USE.NAMES = TRUE)
 
 replicate(n, expr, simplify = TRUE)
 }
-\alias{lapply}
-\alias{sapply}
-\alias{replicate}
 \arguments{
-  \item{X}{list or (atomic) vector to be used.  Coerced by
+  \item{X}{a vector (atomic or list) or an expressions vector.  Other
+    objects (including classed objects) will be coerced by
     \code{\link{as.list}}.}
   \item{FUN}{the function to be applied to each element of \code{X}:
     see Details.  In the case of functions like \code{+}, \code{\%*\%}, etc.,
@@ -22,7 +24,8 @@ replicate(n, expr, simplify = TRUE)
     use \code{X} as \code{\link{names}} for the result unless it had names
     already.}
   \item{n}{number of replications.}
-  \item{expr}{expression (language object, e.g. a call) to evaluate repeatedly.}
+  \item{expr}{expression (language object, usually a call)
+    to evaluate repeatedly.}
 }
 \description{
   \code{lapply} returns a list of the same length as \code{X}, each

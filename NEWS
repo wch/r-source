@@ -206,7 +206,11 @@ NEW FEATURES
 
 	as.list(<a list>) no longer duplicates (unnecessarily).
 
-    o	lapply(<a pairlist>) now coerces to a list (rather than traverse
+    o	lapply() does much copying.  Vector X are handled without
+	duplication, and other types are coerced via as.list().  (As a
+	result, package 'boot' runs its examples 4% faster.)
+
+	lapply(<a pairlist>) now coerces to a list (rather than traverse
 	the pairlist from the beginning for each item).
 
     o	as.POSIX[ct]t can now convert character strings containing
