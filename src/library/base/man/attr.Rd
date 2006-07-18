@@ -13,7 +13,8 @@ attr(x, which) <- value
   \item{x}{an object whose attributes are to be accessed.}
   \item{which}{a character string specifying which attribute is to be
     accessed.}
-  \item{value}{an object, the new value of the attribute.}
+  \item{value}{an object, the new value of the attribute, or \code{NULL}
+    to remove the attribute.}
 }
 \value{
   These functions provide access to a single attribute of an object.  The

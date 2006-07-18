@@ -9285,6 +9285,7 @@ It is written for the R core team and others studying the code in the
 @menu
 * SEXPs::                       
 * Environments and variable lookup::  
+* Attributes (internal)::       
 * Argument evaluation::         
 * The write barrier::           
 * Serialization Formats::       
@@ -9653,7 +9654,7 @@ vectors are @code{malloc}ed individually whereas the 'small' nodes are
 allocated from pages of about 2000 bytes.
 
 
-@node Environments and variable lookup, Argument evaluation, SEXPs, R Internal Structures
+@node Environments and variable lookup, Attributes (internal), SEXPs, R Internal Structures
 @section Environments and variable lookup
 
 What users think of as `variables' are symbols which are bound to
@@ -9757,7 +9758,50 @@ environment: the internal code diverts lookups in its frame to the
 global symbol table.
 
 
-@node Argument evaluation, The write barrier, Environments and variable lookup, R Internal Structures
+@node Attributes (internal), Argument evaluation, Environments and variable lookup, R Internal Structures
+@section Attributes (internal)
+
+As we have seen, every @code{SEXPREC} has a pointer to the attributes of
+the node.  The attributes can be accessed/set by the macros/functions
+@code{ATTRIB} and @code{SET_ATTRIB}, but such direct access is normally
+only used to check if the attributes as @code{NULL}, the default.
+Otherwise access goes through the functions @code{getAttrib} and
+@code{setAttrib} which impose restrictions on the attributes.
+
+The code assumes that the attributes of a node are either
+@code{R_NilValue} or a pairlist of non-zero length.  The attributes are
+normally named (via tags on the pairlist).  The replacement function
+@code{attributes<-} ensures that @code{"dim"} precedes @code{"dimnames"}
+in the list.  Attribute @code{"dim"} is one of many that is treated
+specially: the values are checked, and any @code{"names"} and
+@code{"dimnames"} attributed are removed.  Similarly, you cannot set
+@code{"dimnames"} without having set @code{"dim"}, and the value
+assigned must be a list of the correct length and with elements of the
+correct lengths.
+
+Other attributes which are given special treatment are @code{"names"},
+@code{"class"}, @code{"tsp"}, @code{"comments"} and @code{"row.names"}.
+For pairlist-like objects the names are not stored as an attribute but
+(as symbols) as tags: however the @R{} interface makes them look like
+conventional attributes (one reason why the @code{"names"} attribute has
+to be treated specially).  The C code ensures that the @code{"tsp"}
+attribute is real, the frequency is positive and the implied length
+agrees with the number of rows of the object being assigned to.  Classes
+and comments are restricted to character vectors, and assigning a
+zero-length comment or class removes the attribute.  Integer row names
+are converted to and from the internal compact representation.
+
+Care needs to be taken when adding attributes to objects of the types
+with non-standard copying semantics.  There is only one object of type
+@code{NILSXP}, @code{R_NilValue}, and that should never have attributes
+(and this is excluded in @code{installAttrib}.  For environments,
+external pointers and weak references, the attributes should be relevant
+to all uses of the object: it is for example reasonable to have a name
+for an environment, and also a @code{"path"} attribute for those
+environments populated from @R{} code in a package.
+
+
+@node Argument evaluation, The write barrier, Attributes (internal), R Internal Structures
 @section Argument evaluation
 
 As we have seen, functions in @R{} come in three types, closures

@@ -8,7 +8,7 @@ comment(x) <- value
 \alias{comment<-}
 \arguments{
  \item{x}{any \R object}
- \item{value}{a \code{character} vector}
+ \item{value}{a \code{character} vector, or \code{NULL}.}
 }
 \description{
   These functions set and query a \emph{comment}
@@ -17,6 +17,9 @@ comment(x) <- value
 
   Contrary to other \code{\link{attributes}}, the \code{comment} is not
   printed (by \code{\link{print}} or \code{\link{print.default}}).
+
+  Assigning \code{NULL} or a zero-length character vector removes the
+  comment.
 }
 \seealso{
   \code{\link{attributes}} and \code{\link{attr}} for \dQuote{normal}
