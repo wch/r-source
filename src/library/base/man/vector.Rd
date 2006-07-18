@@ -36,7 +36,8 @@ is.vector(x, mode = "any")
   results of atomic mode.
   
   Note that factors are \emph{not} vectors;  \code{is.vector} returns
-  \code{FALSE} and \code{as.vector} converts to character mode.
+  \code{FALSE} and \code{as.vector} converts to a character vector for
+  \code{mode = "any"}.
 }
 \value{
   For \code{vector}, a vector of the given length and mode.  Logical

@@ -1860,3 +1860,20 @@ write.table(m, quote=numeric(0)) # not the same as FALSE
 try(remove("ls", envir=baseenv()))
 try(remove("ls", envir=asNamespace("base")))
 ## no message in 2.3.1
+
+
+## tests of behaviour of factors
+(x <- factor(LETTERS[1:5])[2:4])
+x[2]
+x[[2]]
+stopifnot(identical(x[2], x[[2]]))
+as.list(x)
+unlist(as.list(x))
+stopifnot(identical(x, unlist(as.list(x))))
+as.vector(x, "list")
+sapply(x, na.pass)
+stopifnot(identical(x, sapply(x, na.pass)))
+## changed in 2.4.0
+
+
+### end of tests added in 2.4.0 ###

@@ -27,22 +27,23 @@ USER-VISIBLE CHANGES
 	to any non-empty value when R is started.  Only applies to new
 	class definitions, via a call to setClass().
 
-    o	The :: operator now also works for packages without name spaces
-	that are on the search path.
-
     o   The functions read.csv, read.csv2, read.delim, read.delim2 now
         default the comment.char argument to "".  (These functions are
         designed to read files produced by other software, which might
 	use the # character inside fields, but are unlikely to use it for
 	comments.)
 
-    o   [Experimental]  The bindings in the base environment/namespace
-	(currently the same thing) are now locked.  This means that
-	the values of base functions cannot be changed except via
+    o	The bindings in the base environment/namespace (currently the
+	same thing) are now locked.  This means that the values of
+	base functions cannot be changed except via
 	assignInNamespace() and similar tricks.
 
-	The base namespace is sealed (like other namespaces) but the
-	base environment can be added to.
+    o	[[ on a factor now returns a one-element factor (and not an
+	integer), as.list() on a factor returns a list of one-element
+	factors (and not of character vectors), and unlist() on a list
+	of factors returns a factor (and not an integer vector).
+	These changes may affect the results of sapply() and lapply()
+	applied to factors.
 
 
 NEW FEATURES
@@ -206,7 +207,7 @@ NEW FEATURES
 
 	as.list(<a list>) no longer duplicates (unnecessarily).
 
-    o	lapply() does much copying.  Vector X are handled without
+    o	lapply() does much less copying.  Vector X are handled without
 	duplication, and other types are coerced via as.list().  (As a
 	result, package 'boot' runs its examples 4% faster.)
 
@@ -217,7 +218,10 @@ NEW FEATURES
 	fractional seconds.
 
     o	The character vector used by an output textConnection() has
-	locked bindings whilst the connection is open.
+	a locked binding whilst the connection is open.
+
+    o	The :: operator now also works for packages without name spaces
+	that are on the search path.
 
 
 DEPRECATED & DEFUNCT

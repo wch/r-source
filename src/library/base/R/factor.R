@@ -62,7 +62,8 @@ nlevels <- function(x) length(levels(x))
 
 as.vector.factor <- function(x, mode="any")
 {
-    if(mode== "any" || mode== "character" || mode== "logical" || mode== "list")
+    if(mode=="list") as.list(x)
+    else if(mode== "any" || mode== "character" || mode== "logical")
 	as.vector(levels(x)[x], mode)
     else
 	as.vector(unclass(x), mode)
@@ -73,6 +74,13 @@ as.character.factor <- function(x,...)
     cx <- levels(x)[x]
     if("NA" %in% levels(x)) cx[is.na(x)] <- "<NA>"
     cx
+}
+
+as.list.factor <- function(x,...)
+{
+    res <- vector("list", length(x))
+    for(i in seq(along=x)) res[[i]] <- x[i]
+    res
 }
 
 ## for `factor' *and* `ordered' :
@@ -164,6 +172,15 @@ Ops.factor <- function(e1, e2)
     attr(x,"levels") <- lx
     class(x) <- cx
     x
+}
+"[[.factor" <- function(x, i)
+{
+    y <- NextMethod("[[")
+    attr(y,"contrasts")<-attr(x,"contrasts")
+    ## NB factor has levels before class in attribute list (PR#6799)
+    attr(y,"levels")<-attr(x,"levels")
+    class(y) <- oldClass(x)
+    y
 }
 
 ## ordered factors ...

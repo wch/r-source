@@ -18,16 +18,23 @@ unlist(x, recursive = TRUE, use.names = TRUE)
 \details{
   \code{unlist} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
-  
-  If \code{recursive = FALSE}, the function will not recurse beyond
-  the first level items in \code{x}.
 
-  \code{x} can be a vector, but then \code{unlist} does nothing useful,
+  If \code{x} has length zero the result is \code{NULL}.
+  
+  If \code{recursive = FALSE}, the function will not recurse beyond the
+  first level items in \code{x}.  In that case factors are treated
+  specially, and is all elements of \code{x} are factors (or ordered
+  factors) then the result will be a factor with levels the union of the
+  level sets of the elements, in the order the levels occur in the level
+  sets of the elements (which means that if all the elements have the
+  same level set, that is the level set of the result).
+
+  \code{x} can be an atomic vector, but then \code{unlist} does nothing useful,
   not even drop names.
 
   By default, \code{unlist} tries to retain the naming
-  information present in \code{x}.
-  If \code{use.names = FALSE} all naming information is dropped.
+  information present in \code{x}.  If \code{use.names = FALSE} all
+  naming information is dropped.
 
   Where possible the list elements are coerced to a common mode during
   the unlisting, and so the result often ends up as a character

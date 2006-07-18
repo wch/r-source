@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-07-12 r38585)
+R version 2.4.0 Under development (unstable) (2006-07-17 r38631)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5304,4 +5304,55 @@ Error in remove("ls", envir = baseenv()) :
 Error in remove("ls", envir = asNamespace("base")) : 
 	cannot remove variables from base namespace
 > ## no message in 2.3.1
+> 
+> 
+> ## tests of behaviour of factors
+> (x <- factor(LETTERS[1:5])[2:4])
+[1] B C D
+Levels: A B C D E
+> x[2]
+[1] C
+Levels: A B C D E
+> x[[2]]
+[1] C
+Levels: A B C D E
+> stopifnot(identical(x[2], x[[2]]))
+> as.list(x)
+[[1]]
+[1] B
+Levels: A B C D E
+
+[[2]]
+[1] C
+Levels: A B C D E
+
+[[3]]
+[1] D
+Levels: A B C D E
+
+> unlist(as.list(x))
+[1] B C D
+Levels: A B C D E
+> stopifnot(identical(x, unlist(as.list(x))))
+> as.vector(x, "list")
+[[1]]
+[1] B
+Levels: A B C D E
+
+[[2]]
+[1] C
+Levels: A B C D E
+
+[[3]]
+[1] D
+Levels: A B C D E
+
+> sapply(x, na.pass)
+[1] B C D
+Levels: A B C D E
+> stopifnot(identical(x, sapply(x, na.pass)))
+> ## changed in 2.4.0
+> 
+> 
+> ### end of tests added in 2.4.0 ###
 > 
