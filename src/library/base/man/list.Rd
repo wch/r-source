@@ -6,6 +6,7 @@
 \alias{as.list.default}
 \alias{as.list.data.frame}
 \alias{as.list.environment}
+\alias{as.list.factor}
 \alias{as.pairlist}
 \alias{is.list}
 \alias{is.pairlist}

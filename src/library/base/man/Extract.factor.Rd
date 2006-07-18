@@ -2,11 +2,14 @@
 \title{Extract or Replace Parts of a Factor}
 \alias{[.factor}
 \alias{[<-.factor}
+\alias{[[.factor}
 \description{
   Extract or replace subsets of factors.
 }
 \usage{
 x[i, drop = FALSE]
+
+x[[i]]
 
 x[i] <- value
 }
@@ -18,7 +21,8 @@ x[i] <- value
     character.}
 }
 \value{
-  A factor with the same set of levels as \code{x} unless \code{drop=TRUE}.
+  A factor with the same set of levels as \code{x} unless
+  \code{drop=TRUE}.  (Prior to \R 2.4.0, \code{[[} returned the integer code.)
 }
 \details{
   When unused levels are dropped the ordering of the remaining levels is
