@@ -223,6 +223,10 @@ NEW FEATURES
     o	The :: operator now also works for packages without name spaces
 	that are on the search path.
 
+    o	Recursive rapply() which is similar to lapply but used
+	recursively and can restrict the classes of elements to which
+	it is applied.
+
 
 DEPRECATED & DEFUNCT
 

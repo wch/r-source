@@ -71,7 +71,7 @@ replicate(n, expr, simplify = TRUE)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{apply}}, \code{\link{tapply}}.
+  \code{\link{apply}}, \code{\link{tapply}}, \code{\link{rapply}}.
 }
 \examples{
 x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE,FALSE,FALSE,TRUE))

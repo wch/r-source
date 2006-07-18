@@ -22,12 +22,14 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   If \code{x} has length zero the result is \code{NULL}.
   
   If \code{recursive = FALSE}, the function will not recurse beyond the
-  first level items in \code{x}.  In that case factors are treated
-  specially, and is all elements of \code{x} are factors (or ordered
-  factors) then the result will be a factor with levels the union of the
-  level sets of the elements, in the order the levels occur in the level
-  sets of the elements (which means that if all the elements have the
-  same level set, that is the level set of the result).
+  first level items in \code{x}.
+
+  Factors are treated specially.  If all non-list elements of \code{x}
+  are factors (or ordered factors) then the result will be a factor with
+  levels the union of the level sets of the elements, in the order the
+  levels occur in the level sets of the elements (which means that if
+  all the elements have the same level set, that is the level set of the
+  result).
 
   \code{x} can be an atomic vector, but then \code{unlist} does nothing useful,
   not even drop names.

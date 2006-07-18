@@ -647,6 +647,7 @@
  do_isfinite
  do_isincomplete
  do_isinfinite
+ do_islistfactor
  do_isloaded
  do_isna
  do_isnan
@@ -766,6 +767,7 @@
  do_random3
  do_range
  do_rank
+ do_rapply
  do_rawShift
  do_rawToBits
  do_rawToChar
