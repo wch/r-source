@@ -4370,3 +4370,14 @@ stopifnot(identical(names(x), names(xx)))
 xx <- as.list(x)           # lost names in 2.3.1
 stopifnot(identical(names(x), names(xx)))
 ## was incorrectly documented in 2.3.1
+
+
+## subsetting arrays preserved attributes, although it did not for arrays
+x <- structure(1:8, names=letters[1:8], comm="a comment", dim = c(2,2,2))
+stopifnot(is.null(attr(x[,,], "comm")))
+x <- structure(1:8, names=letters[1:8], comm="a comment", dim = c(2,4))
+stopifnot(is.null(attr(x[,], "comm")))
+x <- structure(1:8, names=letters[1:8], comm="a comment")
+stopifnot(!is.null(attr(x[], "comm")))  # this does preserve
+stopifnot(is.null(attr(x[1:8], "comm")))
+##  2.3.1 preserved the first.

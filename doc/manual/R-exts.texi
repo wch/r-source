@@ -9800,6 +9800,46 @@ to all uses of the object: it is for example reasonable to have a name
 for an environment, and also a @code{"path"} attribute for those
 environments populated from @R{} code in a package.
 
+When should attributes be preserved under operations on an object?
+Scalar functions (those which operate element-by-element on a vector and
+whose output is similar to the input) should preserve attributes (except
+perhaps class, and if they do preserve class they need to preserve the
+@code{OBJECT} bit).  Binary operations normally call
+@findex copyMostAttributes
+@code{copyMostAttributes} to copy most attributes from the longer
+argument (and if they are of the same length from both, preferring the
+values on the first).  Here `most' means all except the @code{names},
+@code{dim} and @code{dimnames} which are set appropriately by the code
+for the operator.
+
+Subsetting (other than by an empty index) generally drops all attributes
+except @code{names}, @code{dim} and @code{dimnames} which are reset as
+appropriate.  On the other hand, subassignment generally preserves
+attributes even if the length is changed.  Coercion drops all attributes.
+
+@example
+> x <- structure(1:8, names=letters[1:8], comm="a comment")
+> x[]
+a b c d e f g h
+1 2 3 4 5 6 7 8
+attr(,"comm")
+[1] "a comment"
+> x[1:3]
+a b c
+1 2 3
+> x[3] <- 3
+> x
+a b c d e f g h
+1 2 3 4 5 6 7 8
+attr(,"comm")
+[1] "a comment"
+> x[9] <- 9
+> x
+a b c d e f g h
+1 2 3 4 5 6 7 8 9
+attr(,"comm")
+[1] "a comment"
+@end example
 
 @node Argument evaluation, The write barrier, Attributes (internal), R Internal Structures
 @section Argument evaluation

@@ -403,6 +403,9 @@ BUG FIXES
 	help for dgamma and dweibull gave support as x > 0, but
 	returned non-zero values for x = 0.  (PR#9080)
 
+    o	Subsetting arrays no longer preserves attributes (it was
+	removed for matrices in 1998).
+
 
 
 

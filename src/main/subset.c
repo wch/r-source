@@ -491,7 +491,8 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	setAttrib(result, R_DimNamesSymbol, xdims);
 	UNPROTECT(1);
     }
-    copyMostAttrib(x, result);
+    /* This was removed for matrices in 1998
+       copyMostAttrib(x, result); */
     /* Free temporary memory */
     vmaxset(vmaxsave);
     if (drop)

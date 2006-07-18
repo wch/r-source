@@ -53,7 +53,10 @@ alist(\dots)
   constituent calls is returned.  \code{as.list} is generic, and as the
   default method calls \code{\link{as.vector}(mode="list")} methods for
   \code{as.vector} may be invoked.  As from \R 2.4.0, \code{as.list}
-  turns a factor into a list of one-element factors.
+  turns a factor into a list of one-element factors.  All attributes
+  will be dropped unless the argument already is a list.  (This is
+  inconsistent with functions such as \code{\link{as.character}}, and is
+  for efficiency since lists can be expensive to copy.)
 
   \code{is.list} returns \code{TRUE} iff its argument
   is a \code{list} \emph{or} a \code{pairlist} of \code{length} \eqn{> 0}.
