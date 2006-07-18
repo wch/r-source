@@ -156,29 +156,27 @@ heightDetails.lines <- function(x) {
     unit(bounds[4], "inches")
 }
 
-linesGrob <- function(x=unit(c(0, 1), "npc", units.per.obs),
-                      y=unit(c(0, 1), "npc", units.per.obs),
-                      default.units="npc", units.per.obs=FALSE,
+linesGrob <- function(x=unit(c(0, 1), "npc"),
+                      y=unit(c(0, 1), "npc"),
+                      default.units="npc", 
                       arrow=NULL,
                       name=NULL, gp=gpar(), vp=NULL) {
   # Allow user to specify unitless vector;  add default units
   if (!is.unit(x))
-    x <- unit(x, default.units, units.per.obs)
+    x <- unit(x, default.units)
   if (!is.unit(y))
-    y <- unit(y, default.units, units.per.obs)
+    y <- unit(y, default.units)
   grob(x=x, y=y, 
        arrow=arrow, name=name, gp=gp, vp=vp, cl="lines")
 }
 
-# Specify "units.per.obs=TRUE" to give a unit or units per (x, y) pair
-grid.lines <- function(x=unit(c(0, 1), "npc", units.per.obs),
-                       y=unit(c(0, 1), "npc", units.per.obs),
-                       default.units="npc", units.per.obs=FALSE,
+grid.lines <- function(x=unit(c(0, 1), "npc"),
+                       y=unit(c(0, 1), "npc"),
+                       default.units="npc", 
                        arrow=NULL,
                        name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
   lg <- linesGrob(x=x, y=y, 
-                  default.units=default.units,
-                  units.per.obs=units.per.obs, arrow=arrow,
+                  default.units=default.units, arrow=arrow,
                   name=name, gp=gp, vp=vp)
   if (draw)
     grid.draw(lg)
@@ -342,33 +340,31 @@ heightDetails.segments <- function(x) {
     unit(bounds[4], "inches")
 }
 
-# Specify "units.per.obs=TRUE" to give a unit or units per (x, y) pair
 segmentsGrob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
                          x1=unit(1, "npc"), y1=unit(1, "npc"),
-                         default.units="npc", units.per.obs=FALSE,
+                         default.units="npc", 
                          arrow=NULL,
                          name=NULL, gp=gpar(), vp=NULL) {
   # Allow user to specify unitless vector;  add default units
   if (!is.unit(x0))
-    x0 <- unit(x0, default.units, units.per.obs)
+    x0 <- unit(x0, default.units)
   if (!is.unit(x1))
-    x1 <- unit(x1, default.units, units.per.obs)
+    x1 <- unit(x1, default.units)
   if (!is.unit(y0))
-    y0 <- unit(y0, default.units, units.per.obs)
+    y0 <- unit(y0, default.units)
   if (!is.unit(y1))
-    y1 <- unit(y1, default.units, units.per.obs)
+    y1 <- unit(y1, default.units)
   grob(x0=x0, y0=y0, x1=x1, y1=y1, arrow=arrow, name=name, gp=gp, vp=vp,
        cl="segments")
 }
 
 grid.segments <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
                           x1=unit(1, "npc"), y1=unit(1, "npc"),
-                          default.units="npc", units.per.obs=FALSE,
+                          default.units="npc", 
                           arrow=NULL,
                           name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
   sg <- segmentsGrob(x0=x0, y0=y0, x1=x1, y1=y1,
                      default.units=default.units,
-                     units.per.obs=units.per.obs,
                      arrow=arrow,
                      name=name, gp=gp, vp=vp)
   if (draw)

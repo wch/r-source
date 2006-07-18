@@ -172,6 +172,9 @@ valid.data <- function(units, data) {
                 if (depth(data[[i]]) > 1)
                     stop("'gPath' must have depth 1 in 'grobwidth/height' units")
         }
+    # Make sure that where no data is required, the data is NULL
+    if (!all(sapply(data[!(str.units | grob.units)], is.null)))
+        stop("Non-NULL value supplied for plain unit")
     data
 }
 

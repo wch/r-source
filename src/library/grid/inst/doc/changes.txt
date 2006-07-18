@@ -4,6 +4,16 @@ Changes from grid_2.3.0 to grid_2.4.0:
 1.  Bug fix for colour used when drawing a rectangle in a
     rotated viewport (reported by Olaf Burger).
 
+2.  Removed 'units.per.obs' argument from grid.lines() and 
+    grid.segments() 
+
+    (This is a bug fix;  should have been removed long ago).
+
+3.  Added extra check on 'data' argument of unit(), which means
+    that if you supply a non-NULL value where the 'unit' is
+    not "str[width|height]" or "grob[x|y|width|height]", you
+    get an error.  This may impact on existing code.
+
 
 Changes from grid_2.2.0 to grid_2.3.0:
 ------------------------------------

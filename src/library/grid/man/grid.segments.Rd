@@ -8,12 +8,12 @@
 \usage{
 grid.segments(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
               x1 = unit(1, "npc"), y1 = unit(1, "npc"),
-              default.units = "npc", units.per.obs = FALSE,
+              default.units = "npc", 
               arrow = NULL,
               name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
 segmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
               x1 = unit(1, "npc"), y1 = unit(1, "npc"),
-              default.units = "npc", units.per.obs = FALSE,
+              default.units = "npc", 
               arrow = NULL, name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
@@ -24,8 +24,6 @@ segmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
     segments. }
   \item{y1}{ Numeric indicating the stopping y-values of the line segments.}
   \item{default.units}{ A string. }
-  \item{units.per.obs}{ A boolean indicating whether distinct units are
-    given for each x/y-value. }
   \item{arrow}{A list describing arrow heads to place at either end
     of the line segments, as produced by the \code{arrow} function.}
   \item{name}{ A character identifier. }

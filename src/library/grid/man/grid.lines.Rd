@@ -8,14 +8,14 @@
   These functions create and draw a series of lines.
 }
 \usage{
-grid.lines(x = unit(c(0, 1), "npc", units.per.obs),
-          y = unit(c(0, 1), "npc", units.per.obs), 
-          default.units = "npc", units.per.obs = FALSE,
+grid.lines(x = unit(c(0, 1), "npc"),
+          y = unit(c(0, 1), "npc"), 
+          default.units = "npc", 
           arrow = NULL, name = NULL,
           gp=gpar(), draw = TRUE, vp = NULL)
-linesGrob(x = unit(c(0, 1), "npc", units.per.obs),
-          y = unit(c(0, 1), "npc", units.per.obs), 
-          default.units = "npc", units.per.obs = FALSE,
+linesGrob(x = unit(c(0, 1), "npc"),
+          y = unit(c(0, 1), "npc"), 
+          default.units = "npc", 
           arrow = NULL, name = NULL,
           gp=gpar(), vp = NULL)
 grid.polyline(...)
@@ -31,8 +31,6 @@ polylineGrob(x = unit(c(0, 1), "npc"),
   \item{y}{A numeric vector or unit object specifying y-values.}
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y} are only given as numeric vectors.}  
-  \item{units.per.obs}{A logical value to indicate whether each
-    individual (x, y) location has its own unit(s) specified.}
   \item{arrow}{A list describing arrow heads to place at either end
     of the line, as produced by the \code{arrow} function.}
   \item{name}{ A character identifier. }
