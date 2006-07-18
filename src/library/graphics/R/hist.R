@@ -119,7 +119,8 @@ hist.default <-
             warning(sprintf(ngettext(sum(not.miss),
                                      "argument %s is not made use of",
                                      "arguments %s are not made use of"),
-                            paste(sQuote(nf[not.miss]), collapse=", ")))
+                            paste(sQuote(nf[not.miss]), collapse=", ")),
+		    domain = NA)
         r
     }
 }

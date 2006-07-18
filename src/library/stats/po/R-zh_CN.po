@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:44\n"
+"POT-Creation-Date: 2006-07-18 13:23\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -122,6 +122,10 @@ msgstr "模型里没有上範疇"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "这个模型没有AIC定义，因此不能用'step'这一功能"
+
+#, fuzzy
+msgid "'A' must be an array or table"
+msgstr "'x'必需是矩阵或是数据框"
 
 msgid ""
 "length of FUN, %d,\n"
@@ -734,9 +738,8 @@ msgstr "变元'omit'不对"
 msgid "link not recognised"
 msgstr "没有这样的鏈結"
 
-msgid ""
-"link \"%s\" not available for Poisson family; available links are \"identity"
-"\", \"log\" and \"sqrt\""
+#, fuzzy
+msgid "link \"%s\" not available for poisson family; available links are %s"
 msgstr ""
 "Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log\"和"
 "\"sqrt\""
@@ -744,9 +747,9 @@ msgstr ""
 msgid "negative values not allowed for the Poisson family"
 msgstr "Poisson分布族不能用负数"
 
+#, fuzzy
 msgid ""
-"link \"%s\" not available for quasipoisson family; available links are "
-"\"identity\", \"log\" and \"sqrt\""
+"link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
 "quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log"
 "\"和\"sqrt\""
@@ -754,9 +757,8 @@ msgstr ""
 msgid "negative values not allowed for the quasiPoisson family"
 msgstr "quasiPoisson分布族不能用负数"
 
-msgid ""
-"link \"%s\" not available for gaussian family, available links are \"inverse"
-"\", \"log\" and \"identity\""
+#, fuzzy
+msgid "link \"%s\" not available for gaussian family; available links are %s"
 msgstr ""
 "gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"inverse\", \"log\"和"
 "\"identity\""
@@ -764,12 +766,11 @@ msgstr ""
 msgid "cannot find valid starting values: please specify some"
 msgstr "找不到有效的初始值: 请设定"
 
-msgid ""
-"link \"%s\" not available for binomial family, available links are \"logit"
-"\", \"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#, fuzzy
+msgid "link \"%s\" not available for binomial family; available links are %s"
 msgstr ""
-"binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \"\"probit"
-"\", \"cloglog\", \"cauchit\"和\"log\""
+"Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log\"和"
+"\"sqrt\""
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "y值必需满足0 <= y <= 1"
@@ -789,18 +790,16 @@ msgstr "或是有两个列的矩阵，第一列是成功的计数，第二列是
 
 #, fuzzy
 msgid ""
-"link not available for quasibinomial family, available links are \"logit\", "
-"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+"link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
-"binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \"\"probit"
-"\", \"cloglog\", \"cauchit\"和\"log\""
+"quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log"
+"\"和\"sqrt\""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "quasibinomial分布族中的y必需由0和1组成的向量"
 
-msgid ""
-"link \"%s\" not available for gamma family, available links are \"inverse\", "
-"\"\"log\" and \"identity\""
+#, fuzzy
+msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr ""
 "gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"inverse\", \"\"log\"和"
 "\"identity\""
@@ -808,12 +807,12 @@ msgstr ""
 msgid "non-positive values not allowed for the gamma family"
 msgstr "gamma分布族不允许有负值"
 
+#, fuzzy
 msgid ""
-"link \"%s\" not available for inverse gauss family, available links are "
-"\"inverse\", \"1/mu^2\", \"log\" and \"identity\""
+"link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
-"逆gauss分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"inverse\", \"1/mu^2"
-"\", \"log\"和\"identity\""
+"gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"inverse\", \"log\"和"
+"\"identity\""
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "inverse.gaussian分布族只允许正值"
@@ -1128,11 +1127,9 @@ msgstr "'x'比内核'k'要短"
 msgid "'kernapply' is not available for object 'x'"
 msgstr "'kernapply'不适用于目标对象 'x'"
 
-msgid "'k1' is not a kernel"
-msgstr "'k1'不是内核"
-
-msgid "'k2' is not a kernel"
-msgstr "'k2'不是内核"
+#, fuzzy
+msgid "'x' is not a kernel"
+msgstr "'k'不是内核"
 
 msgid "empty cluster: try a better set of initial centers"
 msgstr "空的群集: 请试试更精确一点的初始中心集"
@@ -1230,6 +1227,9 @@ msgstr "模型1"
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "用秩缺乏拟合来进行预测的结果很可能不可靠"
+
+msgid "prediction intervals are only relevant to new data"
+msgstr ""
 
 msgid "'object' has no 'effects' component"
 msgstr "'object'没有'effects'组件"
@@ -1438,6 +1438,10 @@ msgstr "'x'必需为数值"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()里的模型框和公式不相配"
 
+#, fuzzy
+msgid "variable '%s' converted to a factor"
+msgstr "变量'%s'不是因子"
+
 msgid "invalid 'contrasts.arg' argument"
 msgstr "'contrasts.arg'变元不对"
 
@@ -1510,6 +1514,30 @@ msgstr "setVarying : vary的长度必需同参数的长度相符"
 
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "参数初始估计值里有奇异梯度矩阵"
+
+#, fuzzy
+msgid "'data' must be a list or an environment"
+msgstr "'newdata'必需是矩阵或是数据框"
+
+#, fuzzy
+msgid "No starting values specified"
+msgstr "没有设定初始值"
+
+#, fuzzy
+msgid "No starting values specified for some parameters."
+msgstr "没有设定初始值"
+
+msgid "Intializing"
+msgstr ""
+
+msgid "to '1.'."
+msgstr ""
+
+msgid "Consider specifying 'start' or using a selfStart model"
+msgstr ""
+
+msgid "parameters without starting value in 'data':"
+msgstr ""
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "除非algorithm = \"port\"，上限或下限将略过不用"
@@ -1610,6 +1638,9 @@ msgstr "'x'和'y'不相配"
 msgid "wrong number of columns in 'x'"
 msgstr "'x'里的列数不对"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr ""
+
 msgid "PCA applies only to numerical variables"
 msgstr "PCA只适用于数值变量"
 
@@ -1635,6 +1666,9 @@ msgstr "同时提供了'x'和'covmat': 'x'略过不用"
 
 msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp'只能在单位比变量多的情况下使用"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "协方差矩阵不是非负定矩阵"
@@ -1822,14 +1856,8 @@ msgstr "必需设定'spans'或正确的内核"
 msgid "coverage probability out of range [0,1)"
 msgstr "覆蓋機率在值域 0,1) 外"
 
-msgid "spline: invalid interpolation method"
-msgstr "spline: 内插方法不对"
-
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 第一个和最后一个y的值不相等 -用y[1]"
-
-msgid "splinefun: invalid interpolation method"
-msgstr "splinefun: 内插方法不对"
 
 #, fuzzy
 msgid "'deriv' must be between 0 and 3"
@@ -1883,9 +1911,6 @@ msgstr "'cutpoints'的数目必需比符号的数目小一个"
 msgid "number of 'cutpoints' must be one more than number of symbols"
 msgstr "'cutpoints'的数目必需比符号的数目多一个"
 
-msgid "'x' must be numeric or logical"
-msgstr "'x'必需是数值或逻辑值"
-
 msgid "must have 2 'symbols' for logical 'x' argument"
 msgstr "逻辑'x'变元必需有两个'symbols'"
 
@@ -1930,6 +1955,9 @@ msgstr "非时间序列的长度不对"
 
 msgid "time series contains internal NAs"
 msgstr "时间序列含内部NA"
+
+msgid "series is corrupt: length %d with 'tsp' implying %d"
+msgstr ""
 
 msgid "cannot plot more than 10 series as \"multiple\""
 msgstr "无法将多于10个序列画成\"multiple\""
@@ -1977,6 +2005,10 @@ msgid ""
 "number of values supplied is not a sub-multiple of the number of values to "
 "be replaced"
 msgstr "设定的值数目不是要替换值数目的倍数"
+
+#, fuzzy
+msgid "only replacement of elements is allowed"
+msgstr "提供了太多的替换值"
 
 msgid "'model' must be list"
 msgstr "'model'必需是串列"
@@ -2091,6 +2123,43 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid ""
+#~ "link \"%s\" not available for binomial family, available links are \"logit"
+#~ "\", \"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#~ msgstr ""
+#~ "binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", "
+#~ "\"\"probit\", \"cloglog\", \"cauchit\"和\"log\""
+
+#, fuzzy
+#~ msgid ""
+#~ "link not available for quasibinomial family, available links are \"logit"
+#~ "\", \"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#~ msgstr ""
+#~ "binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", "
+#~ "\"\"probit\", \"cloglog\", \"cauchit\"和\"log\""
+
+#~ msgid ""
+#~ "link \"%s\" not available for inverse gauss family, available links are "
+#~ "\"inverse\", \"1/mu^2\", \"log\" and \"identity\""
+#~ msgstr ""
+#~ "逆gauss分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"inverse\", \"1/mu^2"
+#~ "\", \"log\"和\"identity\""
+
+#~ msgid "'k1' is not a kernel"
+#~ msgstr "'k1'不是内核"
+
+#~ msgid "'k2' is not a kernel"
+#~ msgstr "'k2'不是内核"
+
+#~ msgid "spline: invalid interpolation method"
+#~ msgstr "spline: 内插方法不对"
+
+#~ msgid "splinefun: invalid interpolation method"
+#~ msgstr "splinefun: 内插方法不对"
+
+#~ msgid "'x' must be numeric or logical"
+#~ msgstr "'x'必需是数值或逻辑值"
 
 #~ msgid ""
 #~ "link not available for quasibinomial family, available links are \"logit"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-18 13:06+0100\n"
+"POT-Creation-Date: 2006-07-18 13:22+0100\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -25,11 +25,11 @@ msgstr "이동 중앙값의 bandwidth/span가 n보다 큽니다"
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "qunsari()에서 확률이 [0,1]의 범위외입니다"
 
-#: arima.c:71 arima.c:178 arima.c:354
+#: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
 msgstr "부적절한 인수의 유형입니다"
 
-#: arima.c:413 arima.c:497 pacf.c:311 pacf.c:351
+#: arima.c:418 arima.c:502 pacf.c:314 pacf.c:354
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0에서 100개의 파라미터까지만 변환 할수 없습니다"
 
@@ -50,12 +50,12 @@ msgstr "distance() : 부적절한 distance"
 msgid "Value %d out of range (0, 1)"
 msgstr ""
 
-#: family.c:40 family.c:53 family.c:70
+#: family.c:41 family.c:55 family.c:73
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr ""
 
-#: family.c:99 family.c:102
+#: family.c:106 family.c:109
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr ""
@@ -116,7 +116,7 @@ msgstr "반복수가 최대치 %d를 넘었습니다"
 msgid "'theta' should be of type character"
 msgstr "'theta'는 문자 유형이 아니면 되지 않습니다"
 
-#: nls.c:204 port.c:359
+#: nls.c:204 port.c:379
 msgid "use of NULL environment is defunct"
 msgstr ""
 
@@ -146,84 +146,84 @@ msgstr ""
 msgid "bad Starma struct"
 msgstr "부적절한 Starma struct입니다"
 
-#: pacf.c:227
+#: pacf.c:228
 #, c-format
 msgid "starma error code %d"
 msgstr "starma 에러 코드는 %d입니다"
 
-#: pacf.c:290
+#: pacf.c:293
 #, c-format
 msgid "forkal error code %d"
 msgstr "forkal 에러 code는 %d입니다"
 
-#: pacf.c:454
+#: pacf.c:457
 msgid "invalid value of lag.max"
 msgstr "부적절한 lag.max 값입니다"
 
-#: port.c:111
+#: port.c:130
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr ""
 
-#: port.c:304
+#: port.c:323
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr ""
 
-#: port.c:313
+#: port.c:333
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 
-#: port.c:363
+#: port.c:383
 msgid "'rho' must be an environment"
 msgstr "'rho'는 환경이 나오지 않으면 되지 않습니다"
 
-#: port.c:365 port.c:512
+#: port.c:385 port.c:533
 msgid "'d' must be a nonempty numeric vector"
 msgstr ""
 
-#: port.c:367
+#: port.c:387
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 
-#: port.c:370
+#: port.c:390
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
-#: port.c:380
+#: port.c:401
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr ""
 
-#: port.c:426
+#: port.c:447
 msgid "'getElement' applies only to named lists"
 msgstr ""
 
-#: port.c:447
+#: port.c:468
 #, c-format
 msgid "%s$%s() not found"
 msgstr ""
 
-#: port.c:460
+#: port.c:481
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
-#: port.c:481
+#: port.c:502
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 
-#: port.c:494
+#: port.c:515
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:513
+#: port.c:534
 msgid "m must be a list"
 msgstr "m는 리스트가 아니면 되지 않습니다"
 
-#: port.c:532
+#: port.c:554
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-10 14:49+0100\n"
+"POT-Creation-Date: 2006-07-18 13:22+0100\n"
 "PO-Revision-Date: 2005-05-25 16:44+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -79,23 +79,23 @@ msgstr ""
 "현재의 grid 상태를 저장 유지할수가 없습니다.디바이스를 너무 많이 열고 있지 않"
 "습니까?"
 
-#: unit.c:258 unit.c:408 unit.c:1138 unit.c:1218 unit.c:1298 unit.c:1378
+#: unit.c:261 unit.c:411 unit.c:1141 unit.c:1221 unit.c:1301 unit.c:1381
 msgid "Unimplemented unit function"
 msgstr "unit함수는 실제 적용되지 않습니다"
 
-#: unit.c:827 unit.c:1573
+#: unit.c:830 unit.c:1576
 msgid "Illegal unit or unit not yet implemented"
 msgstr "부적절한 unit 또는 아직 적용되어있지 않는 unit입니다"
 
-#: unit.c:1706
+#: unit.c:1709
 msgid "Invalid unit"
 msgstr "부적절한 unit입니다"
 
-#: unit.c:1722
+#: unit.c:1725
 msgid "Units must be character"
 msgstr "units는 문자형태일 필요가 있습니다"
 
-#: unit.c:1725
+#: unit.c:1728
 msgid "Units must be of length > 0"
 msgstr "units의 길이는 0보다 클 필요가 있습니다"
 

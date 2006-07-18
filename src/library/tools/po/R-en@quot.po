@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-24 11:58\n"
-"PO-Revision-Date: 2006-01-24 11:58\n"
+"POT-Creation-Date: 2006-07-18 13:23\n"
+"PO-Revision-Date: 2006-07-18 13:23\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -41,9 +41,6 @@ msgstr "you must specify ‘package’ or ‘dir’"
 
 msgid "directory '%s' does not exist"
 msgstr "directory ‘%s’ does not exist"
-
-msgid "cannot source package code"
-msgstr "cannot source package code"
 
 msgid "neither code nor data objects found"
 msgstr "neither code nor data objects found"
@@ -337,6 +334,9 @@ msgstr "Non-portable flags in variable '%s':"
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Missing link(s) in documentation object '%s':"
 
+msgid "found %s"
+msgstr "found %s"
+
 msgid "argument 'lines' must be a character vector"
 msgstr "argument ‘lines’ must be a character vector"
 
@@ -538,6 +538,9 @@ msgstr "running texi2dvi on ‘%s’ failed"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "file ‘%s’ is not in valid DCF format"
+
+msgid "cannot source package code"
+msgstr "cannot source package code"
 
 msgid "Call sequence:"
 msgstr "Call sequence:"

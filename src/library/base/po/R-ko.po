@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 13:05\n"
+"POT-Creation-Date: 2006-07-18 13:22\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -232,6 +232,9 @@ msgstr ""
 msgid "supplied %d row names for %d rows"
 msgstr "%d개의 행명이 %d개의 행에 제공되었습니다"
 
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr ""
+
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "'data.frame'의 인수에 행명(항목 &d)가 적당하지 않습니다"
 
@@ -324,7 +327,12 @@ msgstr "이하의 존재하지 않는 열중의 요소치환입니다"
 msgid "only a single element should be replaced"
 msgstr "다만 하나의 요소만에 옮겨놓을수 있어야 할것이 아닙니다"
 
-msgid "names don't match previous names:"
+#, fuzzy
+msgid "names do not match previous names"
+msgstr "전이 이하와 같은 이전의 이름과 match하지 않습니다 :"
+
+#, fuzzy
+msgid "names do not match previous names:"
 msgstr "전이 이하와 같은 이전의 이름과 match하지 않습니다 :"
 
 msgid "invalid list argument: all variables should have the same length"
@@ -792,11 +800,19 @@ msgstr ""
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "입력 오류가 발생되어지고 있습니다. LF가 CR로 옮겨 놓을 수가 있습니다"
 
+msgid ""
+"file '%s' has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+
 msgid "bad 'file' argument"
 msgstr "잘못한 'file' 인수입니다"
 
 msgid "'file' must be specified"
 msgstr "'file'가 지정되지 않으면 안됩니다"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr ""
 
 msgid "'file' must be non-empty string"
 msgstr "'file'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
@@ -858,7 +874,8 @@ msgstr "'by'에 열수가 일치하지 않으면 되지 않습니다"
 msgid "'by' must match number of columns"
 msgstr "'by'에 열수가 일치하지 않으면 되지 않습니다"
 
-msgid "'by' must specify column(s)"
+#, fuzzy
+msgid "'by' must specify column(s) as numbers, names or logical"
 msgstr "'by'는 column(s)를 지정하지 않으면 되지 않습니다"
 
 msgid "'by' must specify valid column(s)"
@@ -880,6 +897,14 @@ msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'는 'namespace:%s' 로부터  export된 오브젝트가 아닙니다"
+
+#, fuzzy
+msgid "package '%s' has no name space and"
+msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
+
+#, fuzzy
+msgid "is not on the search path"
+msgstr "'%s'는 탐색 패스에서는 검색되지 않았습니다. pos = 2를 사용합니다"
 
 msgid "%s failed in 'attachNamespace'"
 msgstr "%s는 'attachNamespace'에 실패했습니다"
@@ -944,7 +969,8 @@ msgstr "name space '%s'가 적재 되었습니다"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s는 unloadNamespace(%s)에 실패했습니다"
 
-msgid "name space '%s' is still used by:"
+#, fuzzy
+msgid "name space '%s' is still used by: '%s'"
 msgstr "이름 '%s' 여전히 이하에 의해 사용되어 있습니다"
 
 msgid "imperative name space directives are disabled"
@@ -1077,11 +1103,20 @@ msgstr "'k'는 너무 큽니다"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "pivoting 조작이 발생하도록 큰'ncol'이 필요합니다"
 
+msgid "No DIF data on clipboard"
+msgstr ""
+
+msgid "row and column counts not found"
+msgstr ""
+
+msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "Unrecognized value indicator"
+msgstr ""
+
 msgid "no lines available in input"
 msgstr "입력에 이용 가능한 행이 없습니다"
-
-msgid "empty beginning of file"
-msgstr "파일의 개시 부분이 비어 있습니다"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "header 그리고 'col.names'가 다른 길이입니다"
@@ -1092,7 +1127,8 @@ msgstr "열명보다 많은 열이 있습니다"
 msgid "more column names than columns"
 msgstr "열보다 많은 열명이 있습니다"
 
-msgid "first five rows are empty: giving up"
+#, fuzzy
+msgid "rows are empty: giving up"
 msgstr "최초의 5행이 비어 있습니다: 그만둡니다"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1109,6 +1145,12 @@ msgstr "'as.is'는 잘못된 길이 %d !=cols = %d를 가집니다"
 
 msgid "invalid 'row.names' specification"
 msgstr "무효인 'row.names'의 지정입니다"
+
+msgid "empty beginning of file"
+msgstr "파일의 개시 부분이 비어 있습니다"
+
+msgid "first five rows are empty: giving up"
+msgstr "최초의 5행이 비어 있습니다: 그만둡니다"
 
 msgid "'x' must be a vector"
 msgstr "'x'는 벡터가 아니면 되지 않습니다"
@@ -1309,6 +1351,9 @@ msgstr "이용 할수 있는 traceback가 없습니다"
 
 msgid "argument to 'which' is not logical"
 msgstr "'which'에서 인수는 논리값이 아닙니다"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr ""
 
 msgid "invalid numbers in 'quote'"
 msgstr "'quote'에서 무효인 수치가 있습니다"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 13:05\n"
+"POT-Creation-Date: 2006-07-18 13:22\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,6 +227,9 @@ msgstr ""
 msgid "supplied %d row names for %d rows"
 msgstr ""
 
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr ""
+
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
 
@@ -317,7 +320,10 @@ msgstr ""
 msgid "only a single element should be replaced"
 msgstr ""
 
-msgid "names don't match previous names:"
+msgid "names do not match previous names"
+msgstr ""
+
+msgid "names do not match previous names:"
 msgstr ""
 
 msgid "invalid list argument: all variables should have the same length"
@@ -758,10 +764,16 @@ msgstr ""
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr ""
 
+msgid "file '%s' has magic number '%s'\n   Use of save versions prior to 2 is deprecated"
+msgstr ""
+
 msgid "bad 'file' argument"
 msgstr ""
 
 msgid "'file' must be specified"
+msgstr ""
+
+msgid "Use of save versions prior to 2 is deprecated"
 msgstr ""
 
 msgid "'file' must be non-empty string"
@@ -824,7 +836,7 @@ msgstr ""
 msgid "'by' must match number of columns"
 msgstr ""
 
-msgid "'by' must specify column(s)"
+msgid "'by' must specify column(s) as numbers, names or logical"
 msgstr ""
 
 msgid "'by' must specify valid column(s)"
@@ -840,6 +852,12 @@ msgid "Tracing functions requires the methods package, but unable to load method
 msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
+msgstr ""
+
+msgid "package '%s' has no name space and"
+msgstr ""
+
+msgid "is not on the search path"
 msgstr ""
 
 msgid "%s failed in 'attachNamespace'"
@@ -902,7 +920,7 @@ msgstr ""
 msgid "%s failed in unloadNamespace(%s)"
 msgstr ""
 
-msgid "name space '%s' is still used by:"
+msgid "name space '%s' is still used by: '%s'"
 msgstr ""
 
 msgid "imperative name space directives are disabled"
@@ -1031,10 +1049,19 @@ msgstr ""
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 
-msgid "no lines available in input"
+msgid "No DIF data on clipboard"
 msgstr ""
 
-msgid "empty beginning of file"
+msgid "row and column counts not found"
+msgstr ""
+
+msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "Unrecognized value indicator"
+msgstr ""
+
+msgid "no lines available in input"
 msgstr ""
 
 msgid "header and 'col.names' are of different lengths"
@@ -1046,7 +1073,7 @@ msgstr ""
 msgid "more column names than columns"
 msgstr ""
 
-msgid "first five rows are empty: giving up"
+msgid "rows are empty: giving up"
 msgstr ""
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1062,6 +1089,12 @@ msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr ""
 
 msgid "invalid 'row.names' specification"
+msgstr ""
+
+msgid "empty beginning of file"
+msgstr ""
+
+msgid "first five rows are empty: giving up"
 msgstr ""
 
 msgid "'x' must be a vector"
@@ -1257,6 +1290,9 @@ msgid "No traceback available"
 msgstr ""
 
 msgid "argument to 'which' is not logical"
+msgstr ""
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
 msgstr ""
 
 msgid "invalid numbers in 'quote'"

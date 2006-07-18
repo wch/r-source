@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 08:46\n"
+"POT-Creation-Date: 2006-07-18 13:22\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -231,6 +231,9 @@ msgstr ""
 msgid "supplied %d row names for %d rows"
 msgstr "%d 個の行名が %d 個の行に提供されました"
 
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr ""
+
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "'data.frame' の引数中の行名(項目 %d)が不適当です"
 
@@ -325,7 +328,12 @@ msgstr "以下の存在しない列中の要素の置き換えです："
 msgid "only a single element should be replaced"
 msgstr "ただ一つの要素しか置き換えられるべきではありません"
 
-msgid "names don't match previous names:"
+#, fuzzy
+msgid "names do not match previous names"
+msgstr "名前が以下のような以前の名前と一致しません："
+
+#, fuzzy
+msgid "names do not match previous names:"
 msgstr "名前が以下のような以前の名前と一致しません："
 
 msgid "invalid list argument: all variables should have the same length"
@@ -794,11 +802,19 @@ msgstr ""
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "入力は混乱しています。LF が CR で置き換えられています"
 
+msgid ""
+"file '%s' has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+
 msgid "bad 'file' argument"
 msgstr "誤った 'file' 引数です"
 
 msgid "'file' must be specified"
 msgstr "'file' が指定されなければなりません"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr ""
 
 msgid "'file' must be non-empty string"
 msgstr "'file' は空でない文字列でなければなりません"
@@ -860,7 +876,8 @@ msgstr "'by' は列数にマッチしなければなりません"
 msgid "'by' must match number of columns"
 msgstr "'by' は列数にマッチしなければなりません"
 
-msgid "'by' must specify column(s)"
+#, fuzzy
+msgid "'by' must specify column(s) as numbers, names or logical"
 msgstr "'by' は列を指定しなければなりません"
 
 msgid "'by' must specify valid column(s)"
@@ -882,6 +899,14 @@ msgstr ""
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""
 "'%s' は 'namespace:%s' からエクスポートされたオブジェクトではありません"
+
+#, fuzzy
+msgid "package '%s' has no name space and"
+msgstr "パッケージ '%s' は名前空間を持っていません"
+
+#, fuzzy
+msgid "is not on the search path"
+msgstr "'%s' は検索パス上には見つかりませんでした。pos = 2 を使用します"
 
 msgid "%s failed in 'attachNamespace'"
 msgstr "%s は 'attachNamespace' で失敗しました"
@@ -945,7 +970,8 @@ msgstr "名前空間 '%s' がロードされました"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s は unloadNamespace(%s) で失敗しました"
 
-msgid "name space '%s' is still used by:"
+#, fuzzy
+msgid "name space '%s' is still used by: '%s'"
 msgstr "名前空間 '%s' まだ以下により使用されています："
 
 msgid "imperative name space directives are disabled"
@@ -1080,11 +1106,20 @@ msgstr "'k' は大きすぎます"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "ピボット操作が起きたので、より大きな 'ncol' 値が必要です"
 
+msgid "No DIF data on clipboard"
+msgstr ""
+
+msgid "row and column counts not found"
+msgstr ""
+
+msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "Unrecognized value indicator"
+msgstr ""
+
 msgid "no lines available in input"
 msgstr "入力に利用可能な行がありません"
-
-msgid "empty beginning of file"
-msgstr "ファイルの開始部分が空です"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "ヘッダーと 'col.names' が異なった長さです"
@@ -1095,7 +1130,8 @@ msgstr "列名よりも多くの列があります"
 msgid "more column names than columns"
 msgstr "列数よりも多くの列名があります"
 
-msgid "first five rows are empty: giving up"
+#, fuzzy
+msgid "rows are empty: giving up"
 msgstr "最初の 5 行が空です。お手上げです"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1112,6 +1148,12 @@ msgstr "'as.is' は間違った長さ %d != cols = %d を持ちます"
 
 msgid "invalid 'row.names' specification"
 msgstr "無効な 'row.names' の指定です"
+
+msgid "empty beginning of file"
+msgstr "ファイルの開始部分が空です"
+
+msgid "first five rows are empty: giving up"
+msgstr "最初の 5 行が空です。お手上げです"
 
 msgid "'x' must be a vector"
 msgstr "'x' はベクトルでなければなりません"
@@ -1310,6 +1352,9 @@ msgstr "利用できる traceback がありません"
 
 msgid "argument to 'which' is not logical"
 msgstr "'which' への引数は論理値ではありません"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr ""
 
 msgid "invalid numbers in 'quote'"
 msgstr "'quote' 中に無効な数値があります"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:44\n"
+"POT-Creation-Date: 2006-07-18 13:23\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -121,6 +121,10 @@ msgstr "상위의 scope는 모델을 포함하고 있지 않습니다"
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
 "AIC는 이 모델에서 정의 되지 않습니다, 따라서 'step'를 진행시킬 수가 없습니다"
+
+#, fuzzy
+msgid "'A' must be an array or table"
+msgstr "'x'는 행렬이거나 데이터 프레임이 아니면 되지 않습니다"
 
 msgid ""
 "length of FUN, %d,\n"
@@ -746,9 +750,7 @@ msgid "link not recognised"
 msgstr "인정 받지 않는 link입니다"
 
 #, fuzzy
-msgid ""
-"link \"%s\" not available for Poisson family; available links are \"identity"
-"\", \"log\" and \"sqrt\""
+msgid "link \"%s\" not available for poisson family; available links are %s"
 msgstr ""
 "link\"%s\"는 포아송 패밀리에서 이용할수가 없습니다: 이용 할수 있는 link는\n"
 "\"identity\",\"log\" 및 \"sqrt\" 입니다"
@@ -756,9 +758,9 @@ msgstr ""
 msgid "negative values not allowed for the Poisson family"
 msgstr "포아송 패밀리에서 negative 값은 허용되지 않습니다"
 
+#, fuzzy
 msgid ""
-"link \"%s\" not available for quasipoisson family; available links are "
-"\"identity\", \"log\" and \"sqrt\""
+"link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
 "link \"%s\"는 동일한 포아송 패밀리에서 이용 할수가 없습니다. 이용 할수있는 "
 "link는 \n"
@@ -767,9 +769,8 @@ msgstr ""
 msgid "negative values not allowed for the quasiPoisson family"
 msgstr "동일한 포아송 패밀리에는 negative의 값은 허용되지 않습니다"
 
-msgid ""
-"link \"%s\" not available for gaussian family, available links are \"inverse"
-"\", \"log\" and \"identity\""
+#, fuzzy
+msgid "link \"%s\" not available for gaussian family; available links are %s"
 msgstr ""
 "링크\"%s\"는 정규 패밀리에서 이용 할수 있는 link가 아닙니다. 이용 할수 있는 "
 "link는 \n"
@@ -778,13 +779,11 @@ msgstr ""
 msgid "cannot find valid starting values: please specify some"
 msgstr "유효한 초기값을 검색해낼 수가 없습니다: 무엇인가를 지정해주십시오"
 
-msgid ""
-"link \"%s\" not available for binomial family, available links are \"logit"
-"\", \"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#, fuzzy
+msgid "link \"%s\" not available for binomial family; available links are %s"
 msgstr ""
-"링크\"%s\"는 2항 패밀리에서 이용 할수 있는 link가 아닙니다. 이용 할수 있는 "
-"link는 \n"
-"\"logit\", \"probit\",\"cloglog\", cauchit\" 그리고 \"log\" 입니다"
+"link\"%s\"는 포아송 패밀리에서 이용할수가 없습니다: 이용 할수 있는 link는\n"
+"\"identity\",\"log\" 및 \"sqrt\" 입니다"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "y의 값은 [0,1]사이에 아니면 되지 않습니다"
@@ -804,19 +803,17 @@ msgstr "또는 1열이 성공수, 2열이 실패수인 2열의 행렬입니다"
 
 #, fuzzy
 msgid ""
-"link not available for quasibinomial family, available links are \"logit\", "
-"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+"link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
-"링크\"%s\"는 2항 패밀리에서 이용 할수 있는 link가 아닙니다. 이용 할수 있는 "
+"link \"%s\"는 동일한 포아송 패밀리에서 이용 할수가 없습니다. 이용 할수있는 "
 "link는 \n"
-"\"logit\", \"probit\",\"cloglog\", cauchit\" 그리고 \"log\" 입니다"
+"\"identity\",\"log\" 그리고 \"sqrt\" 입니다"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "동일한 2항 패밀리에 대해서 y는 0과 1의 vector가 아니면 되지 않습니다"
 
-msgid ""
-"link \"%s\" not available for gamma family, available links are \"inverse\", "
-"\"\"log\" and \"identity\""
+#, fuzzy
+msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr ""
 "link\"%s\"는 감마 패밀리에서 이용 할수 있는 링크가 아닙니다.이용 할 수 있"
 "는 \n"
@@ -825,12 +822,13 @@ msgstr ""
 msgid "non-positive values not allowed for the gamma family"
 msgstr "정확하지 않는 값은 gamma family에서 허용되지 않습니다"
 
+#, fuzzy
 msgid ""
-"link \"%s\" not available for inverse gauss family, available links are "
-"\"inverse\", \"1/mu^2\", \"log\" and \"identity\""
+"link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
-"link\"%s\"는 역정규 패밀리 때문에 이용할수 있는 link는\n"
-"\"inverse\",\"1/mu^2\" ,\"log\" 그리고 \"identity\"입니다 "
+"링크\"%s\"는 정규 패밀리에서 이용 할수 있는 link가 아닙니다. 이용 할수 있는 "
+"link는 \n"
+"\"inverse\", \"log\" 그리고 \"identity\"입니다"
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "역정규 패밀리에서 정의값만 허용되지 않습니다"
@@ -1154,11 +1152,9 @@ msgstr "'x'는 kernel 'k'보다 짧습니다"
 msgid "'kernapply' is not available for object 'x'"
 msgstr "'kernapply'는 오브젝트 'x'에 때문에 이용 할수가 없습니다"
 
-msgid "'k1' is not a kernel"
-msgstr "'k1'는 kernel이 아닙니다"
-
-msgid "'k2' is not a kernel"
-msgstr "'k2'는 kernel이 아닙니다"
+#, fuzzy
+msgid "'x' is not a kernel"
+msgstr "'k'는 kernel이 아닙니다"
 
 msgid "empty cluster: try a better set of initial centers"
 msgstr "비어 있는 cluster; 보다 좋은 초기 중심을 시도합시다"
@@ -1262,6 +1258,9 @@ msgstr ""
 "링크(rank-deficient)가 떨어지고 한 상태에서의 적용시키고를 하고 있으므로 잘못"
 "한 예측을 하고 있을\n"
 "가능성이 있습니다"
+
+msgid "prediction intervals are only relevant to new data"
+msgstr ""
 
 msgid "'object' has no 'effects' component"
 msgstr "오브젝트는 효과성분을 가지지 않습니다"
@@ -1478,6 +1477,10 @@ msgstr "'x'는 수치가 아니면 되지 않습니다"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()로 모델 프레임과 모델식의 편성이 적당하지 않습니다"
 
+#, fuzzy
+msgid "variable '%s' converted to a factor"
+msgstr "변수 '%s'는 인자가 아닙니다"
+
 msgid "invalid 'contrasts.arg' argument"
 msgstr "무효인 대비 인수('contrasts.arg')입니다"
 
@@ -1552,6 +1555,30 @@ msgstr ""
 
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "파라미터의 초기 추정값으로 구매 행렬이 특이합니다"
+
+#, fuzzy
+msgid "'data' must be a list or an environment"
+msgstr "'newdata'는 행렬 또는 데이터 프레임이 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "No starting values specified"
+msgstr "초기값이 주어지고 있지 않습니다"
+
+#, fuzzy
+msgid "No starting values specified for some parameters."
+msgstr "초기값이 주어지고 있지 않습니다"
+
+msgid "Intializing"
+msgstr ""
+
+msgid "to '1.'."
+msgstr ""
+
+msgid "Consider specifying 'start' or using a selfStart model"
+msgstr ""
+
+msgid "parameters without starting value in 'data':"
+msgstr ""
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""
@@ -1661,6 +1688,9 @@ msgstr "'x' 그리고 'y'가 match 하지 않습니다"
 msgid "wrong number of columns in 'x'"
 msgstr "'x'에서 열수가 잘못되어 있습니다"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr ""
+
 msgid "PCA applies only to numerical variables"
 msgstr "PCA 는 수치 변수에만 적용 할수 없지 않습니다"
 
@@ -1688,6 +1718,9 @@ msgstr "'x'와 'covmat'의 쌍방이 주어졌습니다. 'x'는 무시됩니다"
 
 msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp'에서 cases는 변수로부터 많지 않으면 되지 않습니다"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "공분산 행렬이 비부치정부호가 아닙니다"
@@ -1879,14 +1912,8 @@ msgstr "'span' 또는 유효한 kernel을 지정하지 않으면 되지 않습�
 msgid "coverage probability out of range [0,1)"
 msgstr "coverage 확률이 범위 [0,1]외입니다"
 
-msgid "spline: invalid interpolation method"
-msgstr "splline:무효인 보간법입니다"
-
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 최초와 마지막 y값이 다른 y[1]을 양쪽 모두를 위해서 사용합니다"
-
-msgid "splinefun: invalid interpolation method"
-msgstr "splinefun: 무효인 보간법입니다"
 
 #, fuzzy
 msgid "'deriv' must be between 0 and 3"
@@ -1942,9 +1969,6 @@ msgstr "'cutpoints'의 수는 기호의 수부터 하나 적지 않으면 되지
 msgid "number of 'cutpoints' must be one more than number of symbols"
 msgstr "'cutpoints'의 수는 기호의 수부터 하나 많지 않으면 되지 않습니다"
 
-msgid "'x' must be numeric or logical"
-msgstr "'x'는 수치나 논리치가 아니면 안됩니다"
-
 msgid "must have 2 'symbols' for logical 'x' argument"
 msgstr "논리적인 'x' 인수에 대해서는 2 개의 심벌이 필요합니다"
 
@@ -1989,6 +2013,9 @@ msgstr "올바른 길이가 나오지 않는 비시계열입니다"
 
 msgid "time series contains internal NAs"
 msgstr "시계열은 내부에 NA값을 포함하고 있습니다"
+
+msgid "series is corrupt: length %d with 'tsp' implying %d"
+msgstr ""
 
 msgid "cannot plot more than 10 series as \"multiple\""
 msgstr "10 계열을 넘어가는 다중 plot은 할수가 없습니다"
@@ -2039,6 +2066,10 @@ msgid ""
 msgstr ""
 "주어진 값의 수는 옮겨놓을 수 있어야 할 값의 수를 정수로 나눈것이 되지 있지 않"
 "습니다"
+
+#, fuzzy
+msgid "only replacement of elements is allowed"
+msgstr "치환해야 할 값이 너무 많습니다"
 
 msgid "'model' must be list"
 msgstr "'model'는 리스트일 필요가 있습니다"
@@ -2156,6 +2187,45 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid ""
+#~ "link \"%s\" not available for binomial family, available links are \"logit"
+#~ "\", \"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#~ msgstr ""
+#~ "링크\"%s\"는 2항 패밀리에서 이용 할수 있는 link가 아닙니다. 이용 할수 있"
+#~ "는 link는 \n"
+#~ "\"logit\", \"probit\",\"cloglog\", cauchit\" 그리고 \"log\" 입니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "link not available for quasibinomial family, available links are \"logit"
+#~ "\", \"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#~ msgstr ""
+#~ "링크\"%s\"는 2항 패밀리에서 이용 할수 있는 link가 아닙니다. 이용 할수 있"
+#~ "는 link는 \n"
+#~ "\"logit\", \"probit\",\"cloglog\", cauchit\" 그리고 \"log\" 입니다"
+
+#~ msgid ""
+#~ "link \"%s\" not available for inverse gauss family, available links are "
+#~ "\"inverse\", \"1/mu^2\", \"log\" and \"identity\""
+#~ msgstr ""
+#~ "link\"%s\"는 역정규 패밀리 때문에 이용할수 있는 link는\n"
+#~ "\"inverse\",\"1/mu^2\" ,\"log\" 그리고 \"identity\"입니다 "
+
+#~ msgid "'k1' is not a kernel"
+#~ msgstr "'k1'는 kernel이 아닙니다"
+
+#~ msgid "'k2' is not a kernel"
+#~ msgstr "'k2'는 kernel이 아닙니다"
+
+#~ msgid "spline: invalid interpolation method"
+#~ msgstr "splline:무효인 보간법입니다"
+
+#~ msgid "splinefun: invalid interpolation method"
+#~ msgstr "splinefun: 무효인 보간법입니다"
+
+#~ msgid "'x' must be numeric or logical"
+#~ msgstr "'x'는 수치나 논리치가 아니면 안됩니다"
 
 #~ msgid ""
 #~ "link not available for quasibinomial family, available links are \"logit"

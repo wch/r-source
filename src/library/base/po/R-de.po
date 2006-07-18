@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 13:05\n"
+"POT-Creation-Date: 2006-07-18 13:22\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -234,6 +234,9 @@ msgstr "ungültige 'row.names', Länge %d für data frame mit %d Zeilen"
 msgid "supplied %d row names for %d rows"
 msgstr "%d Zeilennamen für %d Zeilen angegeben"
 
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr ""
+
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
 "Zeilennamen passen nicht zu den Argumenten für 'data.frame', Element %d"
@@ -331,7 +334,12 @@ msgstr "ersetze Element in nicht existierender Spalte:"
 msgid "only a single element should be replaced"
 msgstr "nur ein einzelnes Element sollte ersetzt werden"
 
-msgid "names don't match previous names:"
+#, fuzzy
+msgid "names do not match previous names"
+msgstr "names passt nicht zu den vorhergehenden names:"
+
+#, fuzzy
+msgid "names do not match previous names:"
 msgstr "names passt nicht zu den vorhergehenden names:"
 
 msgid "invalid list argument: all variables should have the same length"
@@ -792,11 +800,19 @@ msgstr "Paket '%s' %s ist geladen, aber %s %s wird von '%s' benötigt"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "Eingabe wurde korrumpiert, LF wurde ersetzt durch CR"
 
+msgid ""
+"file '%s' has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+
 msgid "bad 'file' argument"
 msgstr "unbrauchbares 'file' Argument"
 
 msgid "'file' must be specified"
 msgstr "'file' muss angegeben werden"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr ""
 
 msgid "'file' must be non-empty string"
 msgstr "'file' muss nicht-leere Zeichenkette sein"
@@ -860,7 +876,8 @@ msgstr "'by' muss zu den Anzahlen der Spalten passen"
 msgid "'by' must match number of columns"
 msgstr "'by' muss zur Anzahl der Spalten passen"
 
-msgid "'by' must specify column(s)"
+#, fuzzy
+msgid "'by' must specify column(s) as numbers, names or logical"
 msgstr "'by' muss Spalte(n) spezifizieren"
 
 msgid "'by' must specify valid column(s)"
@@ -881,6 +898,14 @@ msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' ist kein von 'namespace:%s' exportiertes Objekt"
+
+#, fuzzy
+msgid "package '%s' has no name space and"
+msgstr "Paket '%s' hat keinen Namensraum"
+
+#, fuzzy
+msgid "is not on the search path"
+msgstr "'%s' nicht im Suchpfad gefunden, nutze pos = 2"
 
 msgid "%s failed in 'attachNamespace'"
 msgstr "%s in 'attachNamespace' fehlgeschlagen"
@@ -943,7 +968,8 @@ msgstr "Namensraum '%s' ist geladen"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s in unloadNamespace(%s) fehlgeschlagen"
 
-msgid "name space '%s' is still used by:"
+#, fuzzy
+msgid "name space '%s' is still used by: '%s'"
 msgstr "Namensraum '%s' wird noch benutzt durch:"
 
 msgid "imperative name space directives are disabled"
@@ -1074,11 +1100,20 @@ msgstr "'k' ist zu groß"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "benötige größeren Wert für 'ncol', da Pivotierung aufgetreten"
 
+msgid "No DIF data on clipboard"
+msgstr ""
+
+msgid "row and column counts not found"
+msgstr ""
+
+msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "Unrecognized value indicator"
+msgstr ""
+
 msgid "no lines available in input"
 msgstr "keine Zeilen in der Eingabe verfügbar"
-
-msgid "empty beginning of file"
-msgstr "leerer Dateianfang"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "Header und 'col.names' haben unterschiedliche Längen"
@@ -1089,7 +1124,8 @@ msgstr "mehr Spalten als Spaltennamen"
 msgid "more column names than columns"
 msgstr "mehr Spaltennamen als Spalten"
 
-msgid "first five rows are empty: giving up"
+#, fuzzy
+msgid "rows are empty: giving up"
 msgstr "die ersten 5 Zeilen sind leer: gebe auf"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1106,6 +1142,12 @@ msgstr "'as.is' hat die falsche Länge %d != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "ungültige 'row.names' Spezifikation"
+
+msgid "empty beginning of file"
+msgstr "leerer Dateianfang"
+
+msgid "first five rows are empty: giving up"
+msgstr "die ersten 5 Zeilen sind leer: gebe auf"
 
 msgid "'x' must be a vector"
 msgstr "'x' muss ein Vektor sein"
@@ -1302,6 +1344,9 @@ msgstr "Kein traceback vefügbar"
 
 msgid "argument to 'which' is not logical"
 msgstr "Argument zu 'which' ist nicht boolesch"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr ""
 
 msgid "invalid numbers in 'quote'"
 msgstr "ungültige Zahlen in 'quote'"

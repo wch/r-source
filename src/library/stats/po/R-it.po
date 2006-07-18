@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:44\n"
+"POT-Creation-Date: 2006-07-18 13:23\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -122,6 +122,10 @@ msgstr "scope superiore non include il modello"
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
 "l'AIC non è definito per questo modello, quindi 'step' non può procedere"
+
+#, fuzzy
+msgid "'A' must be an array or table"
+msgstr "'x' deve essere una matrice o un data frame"
 
 msgid ""
 "length of FUN, %d,\n"
@@ -754,9 +758,8 @@ msgstr "argomento 'omit' non valido"
 msgid "link not recognised"
 msgstr "link non riconosciuta"
 
-msgid ""
-"link \"%s\" not available for Poisson family; available links are \"identity"
-"\", \"log\" and \"sqrt\""
+#, fuzzy
+msgid "link \"%s\" not available for poisson family; available links are %s"
 msgstr ""
 "link \"%s\" non disponibile per la famiglia poisson; i link disponibili sono "
 "\"identity\", \"log\" e \"sqrt\""
@@ -764,9 +767,9 @@ msgstr ""
 msgid "negative values not allowed for the Poisson family"
 msgstr "valori negativi non ammissibili per la famiglia Poisson"
 
+#, fuzzy
 msgid ""
-"link \"%s\" not available for quasipoisson family; available links are "
-"\"identity\", \"log\" and \"sqrt\""
+"link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
 "link \"%s\" non disponibile per la famiglia quasipoisson; i link disponibili "
 "sono \"identity\", \"log\" e \"sqrt\""
@@ -774,9 +777,8 @@ msgstr ""
 msgid "negative values not allowed for the quasiPoisson family"
 msgstr "valori negativi non ammissibili per la famiglia quasiPoisson"
 
-msgid ""
-"link \"%s\" not available for gaussian family, available links are \"inverse"
-"\", \"log\" and \"identity\""
+#, fuzzy
+msgid "link \"%s\" not available for gaussian family; available links are %s"
 msgstr ""
 "link \"%s\" non disponibile per la famiglia gaussian, i link disponibili "
 "sono \"inverse\", \"log\" e \"identity\""
@@ -785,12 +787,11 @@ msgid "cannot find valid starting values: please specify some"
 msgstr ""
 "non riesco a trovare valori iniziali validi: si prega di specificarne alcuni"
 
-msgid ""
-"link \"%s\" not available for binomial family, available links are \"logit"
-"\", \"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#, fuzzy
+msgid "link \"%s\" not available for binomial family; available links are %s"
 msgstr ""
-"link \"%s\" non disponibile per la famiglia binomiale,i link disponibili "
-"sono \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" e \"log\""
+"link \"%s\" non disponibile per la famiglia poisson; i link disponibili sono "
+"\"identity\", \"log\" e \"sqrt\""
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "i valori di y devono essere 0 <= y <= 1"
@@ -812,18 +813,16 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"link not available for quasibinomial family, available links are \"logit\", "
-"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+"link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
-"link \"%s\" non disponibile per la famiglia binomiale,i link disponibili "
-"sono \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" e \"log\""
+"link \"%s\" non disponibile per la famiglia quasipoisson; i link disponibili "
+"sono \"identity\", \"log\" e \"sqrt\""
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "per la famiglia quasibinomial, y deve essere un vettore di 0 e 1"
 
-msgid ""
-"link \"%s\" not available for gamma family, available links are \"inverse\", "
-"\"\"log\" and \"identity\""
+#, fuzzy
+msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr ""
 "link \"%s\" non disponibile per la famiglia gamma, i link disponibili sono "
 "\"inverse\", \"\"log\" e \"identity\""
@@ -831,12 +830,12 @@ msgstr ""
 msgid "non-positive values not allowed for the gamma family"
 msgstr "valori non positivi non sono ammessi per la famiglia gamma"
 
+#, fuzzy
 msgid ""
-"link \"%s\" not available for inverse gauss family, available links are "
-"\"inverse\", \"1/mu^2\", \"log\" and \"identity\""
+"link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
-"link \"%s\" non disponibile per la famiglia gaussiana inversa, i link "
-"disponibili sono \"inverse\", \"1/mu^2\", \"log\" e \"identity\""
+"link \"%s\" non disponibile per la famiglia gaussian, i link disponibili "
+"sono \"inverse\", \"log\" e \"identity\""
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "sono ammessi solo valori positivi per la famiglia gaussiana inversa"
@@ -1158,11 +1157,9 @@ msgstr "'x' è più piccolo del kernel 'k'"
 msgid "'kernapply' is not available for object 'x'"
 msgstr "'kernapply' non disponibile per l'oggetto 'x'"
 
-msgid "'k1' is not a kernel"
-msgstr "'k1' non è un kernel"
-
-msgid "'k2' is not a kernel"
-msgstr "'k2' non è un kernel"
+#, fuzzy
+msgid "'x' is not a kernel"
+msgstr "'k' non è un kernel"
 
 msgid "empty cluster: try a better set of initial centers"
 msgstr "cluster vuoto: provare con un insieme di centri iniziali migliore"
@@ -1263,6 +1260,9 @@ msgstr "modello 1"
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "previsione da una stima non a rango pieno può essere non corretta"
+
+msgid "prediction intervals are only relevant to new data"
+msgstr ""
 
 msgid "'object' has no 'effects' component"
 msgstr "'object' non ha la componente 'effects'"
@@ -1477,6 +1477,10 @@ msgstr "'x' deve essere numeric"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model frame e formula non coincidono in model.matrix()"
 
+#, fuzzy
+msgid "variable '%s' converted to a factor"
+msgstr "la variabile '%s' non è di tipo factor"
+
 msgid "invalid 'contrasts.arg' argument"
 msgstr "argomento 'contrasts.arg' non valido"
 
@@ -1551,6 +1555,30 @@ msgstr ""
 
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "matrice gradiente singolare per le stime iniziali dei parametri"
+
+#, fuzzy
+msgid "'data' must be a list or an environment"
+msgstr "'newdata' deve essere una matrice o un data frame"
+
+#, fuzzy
+msgid "No starting values specified"
+msgstr "valori iniziali non specificati"
+
+#, fuzzy
+msgid "No starting values specified for some parameters."
+msgstr "valori iniziali non specificati"
+
+msgid "Intializing"
+msgstr ""
+
+msgid "to '1.'."
+msgstr ""
+
+msgid "Consider specifying 'start' or using a selfStart model"
+msgstr ""
+
+msgid "parameters without starting value in 'data':"
+msgstr ""
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""
@@ -1656,6 +1684,9 @@ msgstr "'x' e 'y' non coincidenti"
 msgid "wrong number of columns in 'x'"
 msgstr "numero di colonne sbagliate in 'x'"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr ""
+
 msgid "PCA applies only to numerical variables"
 msgstr "PCA si applica solo a variabili numeriche"
 
@@ -1683,6 +1714,9 @@ msgstr "specificati sia 'x' che 'covmat': 'x' verrà ignorata"
 
 msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp' si può usare solo quando ci sono più unità che variabili"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "la matrice di covarianza non è definita non-negativa"
@@ -1873,15 +1907,9 @@ msgstr "specificare 'spans' o un kernel valido"
 msgid "coverage probability out of range [0,1)"
 msgstr "probabilità di copertura oltre [0,1)"
 
-msgid "spline: invalid interpolation method"
-msgstr "spline: metodo interpolazione non valido"
-
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr ""
 "spline: il primo e l'ultimo valore di y sono diversi - uso y[1] per entrambi"
-
-msgid "splinefun: invalid interpolation method"
-msgstr "splinefun: metodo interpolazione non valido"
 
 #, fuzzy
 msgid "'deriv' must be between 0 and 3"
@@ -1935,9 +1963,6 @@ msgstr "il numero di 'cutpoints' deve essere inferiore al numero di simboli"
 msgid "number of 'cutpoints' must be one more than number of symbols"
 msgstr "il numero di 'cutpoints' deve essere uno più di quello dei simboli"
 
-msgid "'x' must be numeric or logical"
-msgstr "'x' deve essere numeric o logical"
-
 msgid "must have 2 'symbols' for logical 'x' argument"
 msgstr "deve avere 2 'symbols' se l'argomento 'x' è logical"
 
@@ -1982,6 +2007,9 @@ msgstr "non-serie storica della lunghezza sbagliata"
 
 msgid "time series contains internal NAs"
 msgstr "serie storica contenente valori interni NA"
+
+msgid "series is corrupt: length %d with 'tsp' implying %d"
+msgstr ""
 
 msgid "cannot plot more than 10 series as \"multiple\""
 msgstr "non posso disegnare più di 10 serie in \"multiple\""
@@ -2032,6 +2060,10 @@ msgid ""
 msgstr ""
 "il numero di valori specificati per la sostituzione non sono un "
 "sottomultiplo del numero di valori che devono essere sostituiti"
+
+#, fuzzy
+msgid "only replacement of elements is allowed"
+msgstr "indicati troppo valori da sostituire"
 
 msgid "'model' must be list"
 msgstr "'model' deve essere di tipo list"
@@ -2164,6 +2196,43 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid ""
+#~ "link \"%s\" not available for binomial family, available links are \"logit"
+#~ "\", \"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#~ msgstr ""
+#~ "link \"%s\" non disponibile per la famiglia binomiale,i link disponibili "
+#~ "sono \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" e \"log\""
+
+#, fuzzy
+#~ msgid ""
+#~ "link not available for quasibinomial family, available links are \"logit"
+#~ "\", \"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#~ msgstr ""
+#~ "link \"%s\" non disponibile per la famiglia binomiale,i link disponibili "
+#~ "sono \"logit\", \"\"probit\", \"cloglog\", \"cauchit\" e \"log\""
+
+#~ msgid ""
+#~ "link \"%s\" not available for inverse gauss family, available links are "
+#~ "\"inverse\", \"1/mu^2\", \"log\" and \"identity\""
+#~ msgstr ""
+#~ "link \"%s\" non disponibile per la famiglia gaussiana inversa, i link "
+#~ "disponibili sono \"inverse\", \"1/mu^2\", \"log\" e \"identity\""
+
+#~ msgid "'k1' is not a kernel"
+#~ msgstr "'k1' non è un kernel"
+
+#~ msgid "'k2' is not a kernel"
+#~ msgstr "'k2' non è un kernel"
+
+#~ msgid "spline: invalid interpolation method"
+#~ msgstr "spline: metodo interpolazione non valido"
+
+#~ msgid "splinefun: invalid interpolation method"
+#~ msgstr "splinefun: metodo interpolazione non valido"
+
+#~ msgid "'x' must be numeric or logical"
+#~ msgstr "'x' deve essere numeric o logical"
 
 #~ msgid ""
 #~ "link not available for quasibinomial family, available links are \"logit"

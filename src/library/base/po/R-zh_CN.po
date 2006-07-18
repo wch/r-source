@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 13:05\n"
+"POT-Creation-Date: 2006-07-18 13:22\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -234,6 +234,9 @@ msgstr "'row.names'不对，长度%d与数据框的%d行不相配"
 msgid "supplied %d row names for %d rows"
 msgstr "%d行名与%d行不相配"
 
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr ""
+
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "'data.frame'变元里%d单元中行名不匹配"
 
@@ -325,7 +328,12 @@ msgstr "替换不存在列里的单元："
 msgid "only a single element should be replaced"
 msgstr "只能替换一个单元"
 
-msgid "names don't match previous names:"
+#, fuzzy
+msgid "names do not match previous names"
+msgstr "名字同原来已有的名字不相对"
+
+#, fuzzy
+msgid "names do not match previous names:"
 msgstr "名字同原来已有的名字不相对"
 
 msgid "invalid list argument: all variables should have the same length"
@@ -776,11 +784,19 @@ msgstr "载入了程辑包'%1$s' %2$s，但'%5$s'需要%3$s %4$s "
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "输入有破损，LF被CR取代"
 
+msgid ""
+"file '%s' has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+
 msgid "bad 'file' argument"
 msgstr "'file'变元不对"
 
 msgid "'file' must be specified"
 msgstr "必需设定'file'的值"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr ""
 
 msgid "'file' must be non-empty string"
 msgstr "'file'的值必需是长度大于0的字符串"
@@ -842,7 +858,8 @@ msgstr "'by'的长度一定得和列的长度相同"
 msgid "'by' must match number of columns"
 msgstr "'by'的长度一定得和列的长度相同"
 
-msgid "'by' must specify column(s)"
+#, fuzzy
+msgid "'by' must specify column(s) as numbers, names or logical"
 msgstr "'by'一定得指定列"
 
 msgid "'by' must specify valid column(s)"
@@ -861,6 +878,14 @@ msgstr "追蹤函数需要方法程辑包，但在载入方法名字空间的时
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："
+
+#, fuzzy
+msgid "package '%s' has no name space and"
+msgstr "程辑包'%s'没有名字空间"
+
+#, fuzzy
+msgid "is not on the search path"
+msgstr "'%s'在搜索路径上不存在，用pos=2"
 
 msgid "%s failed in 'attachNamespace'"
 msgstr "'attachNamespace'里%s出错"
@@ -922,7 +947,8 @@ msgstr "名字空间'%s'没有载入"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s出错：unloadNamespace(%s)"
 
-msgid "name space '%s' is still used by:"
+#, fuzzy
+msgid "name space '%s' is still used by: '%s'"
 msgstr "名字空间'%s'仍用于："
 
 msgid "imperative name space directives are disabled"
@@ -1053,11 +1079,20 @@ msgstr "'k'值太大"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "需要大一点的'ncol'值，因为有主轴"
 
+msgid "No DIF data on clipboard"
+msgstr ""
+
+msgid "row and column counts not found"
+msgstr ""
+
+msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "Unrecognized value indicator"
+msgstr ""
+
 msgid "no lines available in input"
 msgstr "输入里内容"
-
-msgid "empty beginning of file"
-msgstr "文件开头是空白的"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "'header'和'col.names'的长度应当一致"
@@ -1068,7 +1103,8 @@ msgstr "列数比列名多"
 msgid "more column names than columns"
 msgstr "列名比列数多"
 
-msgid "first five rows are empty: giving up"
+#, fuzzy
+msgid "rows are empty: giving up"
 msgstr "最先的五行都是空白的：停止工作"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1085,6 +1121,12 @@ msgstr "'as.is'的长度不对%d  != cols = %d "
 
 msgid "invalid 'row.names' specification"
 msgstr "'row.names'的设定不对"
+
+msgid "empty beginning of file"
+msgstr "文件开头是空白的"
+
+msgid "first five rows are empty: giving up"
+msgstr "最先的五行都是空白的：停止工作"
 
 msgid "'x' must be a vector"
 msgstr "'x'必需为向量"
@@ -1282,6 +1324,9 @@ msgstr "无traceback"
 
 msgid "argument to 'which' is not logical"
 msgstr "'which'的变元不是逻辑值"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr ""
 
 msgid "invalid numbers in 'quote'"
 msgstr "'quote'里的数不对"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-01-24 11:58\n"
+"POT-Creation-Date: 2006-07-18 13:23\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -19,9 +19,6 @@ msgstr "specificare 'package' o 'dir'"
 
 msgid "directory '%s' does not exist"
 msgstr "la directory '%s' non esiste"
-
-msgid "cannot source package code"
-msgstr "impossibile leggere codice sorgente del pacchetto"
 
 msgid "neither code nor data objects found"
 msgstr "non trovati codice o oggetti di tipo data"
@@ -321,6 +318,9 @@ msgstr ""
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
 
+msgid "found %s"
+msgstr ""
+
 msgid "argument 'lines' must be a character vector"
 msgstr "argomento 'lines' deve essere un vettore carattere"
 
@@ -532,6 +532,9 @@ msgstr "esecuzione texi2dvi su '%s' fallita"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "il fil e'%s' non è in formato DCF valido"
+
+msgid "cannot source package code"
+msgstr "impossibile leggere codice sorgente del pacchetto"
 
 msgid "Call sequence:"
 msgstr "Successione delle chiamate:"

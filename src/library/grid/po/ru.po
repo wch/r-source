@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-10 14:49+0100\n"
+"POT-Creation-Date: 2006-07-18 13:22+0100\n"
 "PO-Revision-Date: 2006-04-16 21:42-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -17,18 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: grid.c:209
 msgid "Cannot clip to rotated viewport"
 msgstr "Не могу обрезать для повернутой оконницы"
 
-#: grid.c:641
-#: grid.c:646
-#: grid.c:735
-#: grid.c:740
+#: grid.c:641 grid.c:646 grid.c:735 grid.c:740
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
-msgstr "Не могу извлечь оконницу верхнего уровня (выводы grid и graphics смешались?)"
+msgstr ""
+"Не могу извлечь оконницу верхнего уровня (выводы grid и graphics смешались?)"
 
 #: grid.c:931
 msgid "attempt to plot on null device"
@@ -78,33 +77,26 @@ msgstr "сингулярная трансформационная матрица"
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Не могу сохранить состояние grid. Открыто слишком много устройств?"
 
-#: unit.c:258
-#: unit.c:408
-#: unit.c:1138
-#: unit.c:1218
-#: unit.c:1298
-#: unit.c:1378
+#: unit.c:261 unit.c:411 unit.c:1141 unit.c:1221 unit.c:1301 unit.c:1381
 msgid "Unimplemented unit function"
 msgstr "Не разработанная единичная функция"
 
-#: unit.c:827
-#: unit.c:1573
+#: unit.c:830 unit.c:1576
 msgid "Illegal unit or unit not yet implemented"
 msgstr "Неправильная или не разработанная единица"
 
-#: unit.c:1706
+#: unit.c:1709
 msgid "Invalid unit"
 msgstr "Неправильная единица"
 
-#: unit.c:1722
+#: unit.c:1725
 msgid "Units must be character"
 msgstr "Единицы должен быть буквами"
 
-#: unit.c:1725
+#: unit.c:1728
 msgid "Units must be of length > 0"
 msgstr "Единицы должны быть длиной > 0"
 
 #: viewport.c:317
 msgid "Non-finite location and/or size for viewport"
 msgstr "Не-конечное положение и/или размер оконницы"
-

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:44\n"
+"POT-Creation-Date: 2006-07-18 13:28\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -168,15 +168,6 @@ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 msgstr ""
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
-msgstr ""
-
-msgid "argument %s is not made use of"
-msgstr ""
-
-msgid "arguments %s are not made use of"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"

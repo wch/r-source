@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 08:46\n"
+"POT-Creation-Date: 2006-07-18 13:22\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -235,6 +235,9 @@ msgstr "'row.names' inválido, comprimento %d para um data frame com %d linhas"
 msgid "supplied %d row names for %d rows"
 msgstr "especificados %d nomes de linhas para %d linhas"
 
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr ""
+
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
 "pareamento errado de nomes de linhas nos argumentos de 'data.frame', item %d"
@@ -334,7 +337,12 @@ msgstr "substituindo elemento em coluna não existente:"
 msgid "only a single element should be replaced"
 msgstr "somente um único elemento deve ser substituido"
 
-msgid "names don't match previous names:"
+#, fuzzy
+msgid "names do not match previous names"
+msgstr "nomes não pareiam com os nomes anteriores:"
+
+#, fuzzy
+msgid "names do not match previous names:"
 msgstr "nomes não pareiam com os nomes anteriores:"
 
 msgid "invalid list argument: all variables should have the same length"
@@ -798,11 +806,19 @@ msgstr "pacote '%s' %s está carregado, mas %s %s é exigido por '%s'"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "entrada foi corrompida, com LF substituido por CR"
 
+msgid ""
+"file '%s' has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+
 msgid "bad 'file' argument"
 msgstr "argumento 'file' inválido"
 
 msgid "'file' must be specified"
 msgstr "'file' deve ser especificado"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr ""
 
 msgid "'file' must be non-empty string"
 msgstr "'file' deve ser uma string não vazia"
@@ -866,7 +882,8 @@ msgstr "'by' deve ser compatível com o número de colunas"
 msgid "'by' must match number of columns"
 msgstr "'by' deve ser compatível com o número de colunas"
 
-msgid "'by' must specify column(s)"
+#, fuzzy
+msgid "'by' must specify column(s) as numbers, names or logical"
 msgstr "'by' deve especificar coluna(s)"
 
 msgid "'by' must specify valid column(s)"
@@ -887,6 +904,14 @@ msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' não é um objeto exportado de 'namespace:%s'"
+
+#, fuzzy
+msgid "package '%s' has no name space and"
+msgstr "pacote '%s' não tem um espaõ de nomes"
+
+#, fuzzy
+msgid "is not on the search path"
+msgstr "'%s' não encontrado no caminho de procura, usando pos = 2"
 
 msgid "%s failed in 'attachNamespace'"
 msgstr "%s falhou em 'attachNamespace'"
@@ -949,7 +974,8 @@ msgstr "espaço de nomes '%s' não carregado"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s falhou em unloadNamespace(%s)"
 
-msgid "name space '%s' is still used by:"
+#, fuzzy
+msgid "name space '%s' is still used by: '%s'"
 msgstr "espaço de nomes '%s' ainda em uso por:"
 
 msgid "imperative name space directives are disabled"
@@ -1082,11 +1108,20 @@ msgstr "'k' é muito grande"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "necessário valor maior de 'ncol', pois houve pivotamento"
 
+msgid "No DIF data on clipboard"
+msgstr ""
+
+msgid "row and column counts not found"
+msgstr ""
+
+msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "Unrecognized value indicator"
+msgstr ""
+
 msgid "no lines available in input"
 msgstr "nenhuma linha disponível na entrada"
-
-msgid "empty beginning of file"
-msgstr "começo de arquivo vazio"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "'header' e 'col.names' têm comprimentos diferentes"
@@ -1097,7 +1132,8 @@ msgstr "mais colunas que nomes de colunas"
 msgid "more column names than columns"
 msgstr "mais nomes de colunas que colunas"
 
-msgid "first five rows are empty: giving up"
+#, fuzzy
+msgid "rows are empty: giving up"
 msgstr "cinco primeiras linhas vazias: desistindo"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1114,6 +1150,12 @@ msgstr "'as.is' tem o comprimento errado %d != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "especificação de 'row.names' inválida"
+
+msgid "empty beginning of file"
+msgstr "começo de arquivo vazio"
+
+msgid "first five rows are empty: giving up"
+msgstr "cinco primeiras linhas vazias: desistindo"
 
 msgid "'x' must be a vector"
 msgstr "'x' deve ser um vetor"
@@ -1311,6 +1353,9 @@ msgstr "Nenhum rastreamento disponível"
 
 msgid "argument to 'which' is not logical"
 msgstr "argumento para 'which' não é lógico"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr ""
 
 msgid "invalid numbers in 'quote'"
 msgstr "números inválidos em 'quote'"

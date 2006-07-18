@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-04-17 08:09+0100\n"
+"POT-Creation-Date: 2006-07-18 13:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,146 +24,146 @@ msgstr ""
 msgid "invalid list for substitution"
 msgstr ""
 
-#: methods_list_dispatch.c:161
+#: methods_list_dispatch.c:170
 msgid ""
 "could not find the skeleton calls for 'methods' (package detached?): expect "
 "very bad things to happen"
 msgstr ""
 
-#: methods_list_dispatch.c:285
+#: methods_list_dispatch.c:294
 #, c-format
 msgid ""
 "no \"allMethods\" slot found in object of class \"%s\" used as methods list "
 "for function '%s'"
 msgstr ""
 
-#: methods_list_dispatch.c:366
+#: methods_list_dispatch.c:375
 #, c-format
 msgid ""
 "S language method selection got an error when called from internal dispatch "
 "for function '%s'"
 msgstr ""
 
-#: methods_list_dispatch.c:417
+#: methods_list_dispatch.c:426
 #, c-format
 msgid "no '%s' object in environment of function '%s'"
 msgstr ""
 
-#: methods_list_dispatch.c:470
+#: methods_list_dispatch.c:479
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr ""
 
-#: methods_list_dispatch.c:473
+#: methods_list_dispatch.c:482
 #, c-format
 msgid ""
 "No generic function definition found for '%s' in the supplied environment"
 msgstr ""
 
-#: methods_list_dispatch.c:594
+#: methods_list_dispatch.c:603
 #, c-format
 msgid ""
 "invalid  generic function object for method selection for function '%s': "
 "expected a function or a primitive, got an object of class \"%s\""
 msgstr ""
 
-#: methods_list_dispatch.c:609
+#: methods_list_dispatch.c:618
 #, c-format
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 
-#: methods_list_dispatch.c:635
+#: methods_list_dispatch.c:644
 msgid "invalid object (non-function) used as method"
 msgstr ""
 
-#: methods_list_dispatch.c:652
+#: methods_list_dispatch.c:661
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr ""
 
-#: methods_list_dispatch.c:659
+#: methods_list_dispatch.c:668
 #, c-format
 msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
 "a name, got an object of class \"%s\""
 msgstr ""
 
-#: methods_list_dispatch.c:662
+#: methods_list_dispatch.c:671
 msgid "use of NULL environment is defunct"
 msgstr ""
 
-#: methods_list_dispatch.c:666
+#: methods_list_dispatch.c:675
 #, c-format
 msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
 "dispatch: got an object of class \"%s\""
 msgstr ""
 
-#: methods_list_dispatch.c:692
+#: methods_list_dispatch.c:701
 #, c-format
 msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
 "'argument' slot)"
 msgstr ""
 
-#: methods_list_dispatch.c:703
+#: methods_list_dispatch.c:712
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') '...' and related variables cannot "
 "be used for methods dispatch"
 msgstr ""
 
-#: methods_list_dispatch.c:706
+#: methods_list_dispatch.c:715
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') the 'environment' argument for "
 "dispatch must be an R environment; got an object of class \"%s\""
 msgstr ""
 
-#: methods_list_dispatch.c:720 methods_list_dispatch.c:731
+#: methods_list_dispatch.c:729 methods_list_dispatch.c:740
 #, c-format
 msgid ""
 "unable to find the argument '%s' in selecting a method for function '%s'"
 msgstr ""
 
-#: methods_list_dispatch.c:738
+#: methods_list_dispatch.c:747
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr ""
 
-#: methods_list_dispatch.c:745
+#: methods_list_dispatch.c:754
 #, c-format
 msgid ""
 "recursive use of function '%s' in method selection, with no default method"
 msgstr ""
 
-#: methods_list_dispatch.c:776
+#: methods_list_dispatch.c:785
 msgid ""
 "internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
 "frame of the method call"
 msgstr ""
 
-#: methods_list_dispatch.c:807
+#: methods_list_dispatch.c:816
 msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
 "corresponding '...' argument"
 msgstr ""
 
-#: methods_list_dispatch.c:819
+#: methods_list_dispatch.c:828
 msgid "error in evaluating a 'primitive' next method"
 msgstr ""
 
-#: methods_list_dispatch.c:875
+#: methods_list_dispatch.c:884
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 
-#: methods_list_dispatch.c:879
+#: methods_list_dispatch.c:888
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr ""
 
-#: methods_list_dispatch.c:883
+#: methods_list_dispatch.c:892
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr ""

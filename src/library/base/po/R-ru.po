@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 13:05\n"
+"POT-Creation-Date: 2006-07-18 13:22\n"
 "PO-Revision-Date: 2006-04-16 21:00-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -237,6 +237,9 @@ msgstr "неправильные 'row.names', длиной %d для таблицы данных с %d строками"
 msgid "supplied %d row names for %d rows"
 msgstr "предложено %d имен для %d строк"
 
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr ""
+
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "несоответствие имен строк в аргументах 'data.frame', позиция %d"
 
@@ -330,7 +333,12 @@ msgstr "замена элемента в несуществующей колонке:"
 msgid "only a single element should be replaced"
 msgstr "только одиночный элемент можно заменить"
 
-msgid "names don't match previous names:"
+#, fuzzy
+msgid "names do not match previous names"
+msgstr "имена не соответствуют прежним именам:"
+
+#, fuzzy
+msgid "names do not match previous names:"
 msgstr "имена не соответствуют прежним именам:"
 
 msgid "invalid list argument: all variables should have the same length"
@@ -785,11 +793,19 @@ msgstr "пакет '%s' %s загружен, но %s %s требуется для '%s'"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "ввод поврежден, LF заменен на CR"
 
+msgid ""
+"file '%s' has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+
 msgid "bad 'file' argument"
 msgstr "неправильный аргумент 'file'"
 
 msgid "'file' must be specified"
 msgstr "должен быть указан 'file'"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr ""
 
 msgid "'file' must be non-empty string"
 msgstr "'file' должен быть непустой строкой"
@@ -852,7 +868,8 @@ msgstr "'by' должен соответствовать номерам колонок"
 msgid "'by' must match number of columns"
 msgstr "'by' должен соответствовать числу колонок"
 
-msgid "'by' must specify column(s)"
+#, fuzzy
+msgid "'by' must specify column(s) as numbers, names or logical"
 msgstr "'by' должен определять колонк(и)"
 
 msgid "'by' must specify valid column(s)"
@@ -873,6 +890,14 @@ msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
+
+#, fuzzy
+msgid "package '%s' has no name space and"
+msgstr "пакет '%s' не имеет пространства имен"
+
+#, fuzzy
+msgid "is not on the search path"
+msgstr "'%s' не найден в пути поиска, использую pos = 2"
 
 msgid "%s failed in 'attachNamespace'"
 msgstr "%s не удалось в 'attachNamespace'"
@@ -934,7 +959,8 @@ msgstr "пространство имен '%s' загружено"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s не удалось в unloadNamespace(%s)"
 
-msgid "name space '%s' is still used by:"
+#, fuzzy
+msgid "name space '%s' is still used by: '%s'"
 msgstr "пространство имен '%s' еще используется:"
 
 msgid "imperative name space directives are disabled"
@@ -1064,11 +1090,20 @@ msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 "нужно большее значение 'ncol', так как происходит выбор ведущего элемента"
 
+msgid "No DIF data on clipboard"
+msgstr ""
+
+msgid "row and column counts not found"
+msgstr ""
+
+msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "Unrecognized value indicator"
+msgstr ""
+
 msgid "no lines available in input"
 msgstr "во вводе нет строк"
-
-msgid "empty beginning of file"
-msgstr "пустое начало строки"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "заголовок и 'col.names' разной длины"
@@ -1079,7 +1114,8 @@ msgstr "больше колонок, чем их имен"
 msgid "more column names than columns"
 msgstr "больше имен, чем колонок"
 
-msgid "first five rows are empty: giving up"
+#, fuzzy
+msgid "rows are empty: giving up"
 msgstr "первые пять строк пустые: отказ"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1096,6 +1132,12 @@ msgstr "у 'as.is' неправильная длина %d  != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "неправильное указание 'row.names'"
+
+msgid "empty beginning of file"
+msgstr "пустое начало строки"
+
+msgid "first five rows are empty: giving up"
+msgstr "первые пять строк пустые: отказ"
 
 msgid "'x' must be a vector"
 msgstr "'x' должен быть вектором"
@@ -1292,6 +1334,9 @@ msgstr "Трассировка недоступна"
 
 msgid "argument to 'which' is not logical"
 msgstr "аргумент 'which' не является логическим"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr ""
 
 msgid "invalid numbers in 'quote'"
 msgstr "неправильные числа в 'quote'"

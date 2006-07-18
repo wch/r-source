@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-04-18 13:05\n"
-"PO-Revision-Date: 2006-04-18 13:05\n"
+"POT-Creation-Date: 2006-07-18 13:22\n"
+"PO-Revision-Date: 2006-07-18 13:22\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -249,6 +249,9 @@ msgstr "invalid 'row.names', length %d for a data frame with %d rows"
 msgid "supplied %d row names for %d rows"
 msgstr "supplied %d row names for %d rows"
 
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr "options('stringsAsFactors') not set to TRUE or FALSE"
+
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "mismatch of row names in arguments of 'data.frame', item %d"
 
@@ -341,8 +344,11 @@ msgstr "replacing element in non-existent column:"
 msgid "only a single element should be replaced"
 msgstr "only a single element should be replaced"
 
-msgid "names don't match previous names:"
-msgstr "names don't match previous names:"
+msgid "names do not match previous names"
+msgstr "names do not match previous names"
+
+msgid "names do not match previous names:"
+msgstr "names do not match previous names:"
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr "invalid list argument: all variables should have the same length"
@@ -794,11 +800,21 @@ msgstr "package ‘%s’ %s is loaded, but %s %s is required by ‘%s’"
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "input has been corrupted, with LF replaced by CR"
 
+msgid ""
+"file '%s' has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+"file ‘%s’ has magic number ‘%s’\n"
+"   Use of save versions prior to 2 is deprecated"
+
 msgid "bad 'file' argument"
 msgstr "bad ‘file’ argument"
 
 msgid "'file' must be specified"
 msgstr "‘file’ must be specified"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr "Use of save versions prior to 2 is deprecated"
 
 msgid "'file' must be non-empty string"
 msgstr "‘file’ must be non-empty string"
@@ -860,8 +876,8 @@ msgstr "‘by’ must match numbers of columns"
 msgid "'by' must match number of columns"
 msgstr "‘by’ must match number of columns"
 
-msgid "'by' must specify column(s)"
-msgstr "‘by’ must specify column(s)"
+msgid "'by' must specify column(s) as numbers, names or logical"
+msgstr "‘by’ must specify column(s) as numbers, names or logical"
 
 msgid "'by' must specify valid column(s)"
 msgstr "‘by’ must specify valid column(s)"
@@ -881,6 +897,12 @@ msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "‘%s’ is not an exported object from ‘namespace:%s’"
+
+msgid "package '%s' has no name space and"
+msgstr "package ‘%s’ has no name space and"
+
+msgid "is not on the search path"
+msgstr "is not on the search path"
 
 msgid "%s failed in 'attachNamespace'"
 msgstr "%s failed in ‘attachNamespace’"
@@ -942,8 +964,8 @@ msgstr "name space ‘%s’ is loaded"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s failed in unloadNamespace(%s)"
 
-msgid "name space '%s' is still used by:"
-msgstr "name space ‘%s’ is still used by:"
+msgid "name space '%s' is still used by: '%s'"
+msgstr "name space ‘%s’ is still used by: ‘%s’"
 
 msgid "imperative name space directives are disabled"
 msgstr "imperative name space directives are disabled"
@@ -1071,11 +1093,20 @@ msgstr "‘k’ is too large"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "need larger value of ‘ncol’ as pivoting occurred"
 
+msgid "No DIF data on clipboard"
+msgstr "No DIF data on clipboard"
+
+msgid "row and column counts not found"
+msgstr "row and column counts not found"
+
+msgid "Unrecognized special data value"
+msgstr "Unrecognized special data value"
+
+msgid "Unrecognized value indicator"
+msgstr "Unrecognized value indicator"
+
 msgid "no lines available in input"
 msgstr "no lines available in input"
-
-msgid "empty beginning of file"
-msgstr "empty beginning of file"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "header and ‘col.names’ are of different lengths"
@@ -1086,8 +1117,8 @@ msgstr "more columns than column names"
 msgid "more column names than columns"
 msgstr "more column names than columns"
 
-msgid "first five rows are empty: giving up"
-msgstr "first five rows are empty: giving up"
+msgid "rows are empty: giving up"
+msgstr "rows are empty: giving up"
 
 msgid "not all columns named in 'colClasses' exist"
 msgstr "not all columns named in ‘colClasses’ exist"
@@ -1103,6 +1134,12 @@ msgstr "‘as.is’ has the wrong length %d  != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "invalid ‘row.names’ specification"
+
+msgid "empty beginning of file"
+msgstr "empty beginning of file"
+
+msgid "first five rows are empty: giving up"
+msgstr "first five rows are empty: giving up"
 
 msgid "'x' must be a vector"
 msgstr "‘x’ must be a vector"
@@ -1298,6 +1335,9 @@ msgstr "No traceback available"
 
 msgid "argument to 'which' is not logical"
 msgstr "argument to ‘which’ is not logical"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr "‘quote’ must be 'TRUE', ‘FALSE’ or numeric"
 
 msgid "invalid numbers in 'quote'"
 msgstr "invalid numbers in ‘quote’"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:44\n"
-"PO-Revision-Date: 2006-05-12 08:44\n"
+"POT-Creation-Date: 2006-07-18 13:23\n"
+"PO-Revision-Date: 2006-07-18 13:23\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -137,6 +137,9 @@ msgstr "upper scope does not include model term(s) %s"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "AIC is not defined for this model, so ‘step’ cannot proceed"
+
+msgid "'A' must be an array or table"
+msgstr "‘A’ must be an array or table"
 
 msgid ""
 "length of FUN, %d,\n"
@@ -751,42 +754,28 @@ msgstr "invalid argument ‘lambda’"
 msgid "link not recognised"
 msgstr "link not recognised"
 
-msgid ""
-"link \"%s\" not available for Poisson family; available links are \"identity"
-"\", \"log\" and \"sqrt\""
-msgstr ""
-"link “%s” not available for Poisson family; available links are “identity”, "
-"“log” and “sqrt”"
+msgid "link \"%s\" not available for poisson family; available links are %s"
+msgstr "link “%s” not available for poisson family; available links are %s"
 
 msgid "negative values not allowed for the Poisson family"
 msgstr "negative values not allowed for the Poisson family"
 
 msgid ""
-"link \"%s\" not available for quasipoisson family; available links are "
-"\"identity\", \"log\" and \"sqrt\""
+"link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
-"link “%s” not available for quasipoisson family; available links are "
-"“identity”, “log” and “sqrt”"
+"link “%s” not available for quasipoisson family; available links are %s"
 
 msgid "negative values not allowed for the quasiPoisson family"
 msgstr "negative values not allowed for the quasiPoisson family"
 
-msgid ""
-"link \"%s\" not available for gaussian family, available links are \"inverse"
-"\", \"log\" and \"identity\""
-msgstr ""
-"link “%s” not available for gaussian family, available links are “inverse”, "
-"“log” and “identity”"
+msgid "link \"%s\" not available for gaussian family; available links are %s"
+msgstr "link “%s” not available for gaussian family; available links are %s"
 
 msgid "cannot find valid starting values: please specify some"
 msgstr "cannot find valid starting values: please specify some"
 
-msgid ""
-"link \"%s\" not available for binomial family, available links are \"logit"
-"\", \"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
-msgstr ""
-"link “%s” not available for binomial family, available links are “logit”, "
-"\"\"probit“, ”cloglog“, ”cauchit“ and ”log\""
+msgid "link \"%s\" not available for binomial family; available links are %s"
+msgstr "link “%s” not available for binomial family; available links are %s"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "y values must be 0 <= y <= 1"
@@ -806,31 +795,23 @@ msgstr ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 
 msgid ""
-"link not available for quasibinomial family, available links are \"logit\", "
-"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+"link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
-"link not available for quasibinomial family, available links are “logit”, "
-"“probit”, “cloglog”, “cauchit” and “log”"
+"link “%s” not available for quasibinomial family; available links are %s"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "for the quasibinomial family, y must be a vector of 0 and 1's"
 
-msgid ""
-"link \"%s\" not available for gamma family, available links are \"inverse\", "
-"\"\"log\" and \"identity\""
-msgstr ""
-"link “%s” not available for gamma family, available links are “inverse”, "
-"\"\"log“ and ”identity\""
+msgid "link \"%s\" not available for gamma family; available links are %s"
+msgstr "link “%s” not available for gamma family; available links are %s"
 
 msgid "non-positive values not allowed for the gamma family"
 msgstr "non-positive values not allowed for the gamma family"
 
 msgid ""
-"link \"%s\" not available for inverse gauss family, available links are "
-"\"inverse\", \"1/mu^2\", \"log\" and \"identity\""
+"link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
-"link “%s” not available for inverse gauss family, available links are "
-"“inverse”, “1/mu^2”, “log” and “identity”"
+"link “%s” not available for inverse.gaussian family; available links are %s"
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "positive values only allowed for the inverse.gaussian family"
@@ -1146,11 +1127,8 @@ msgstr "‘x’ is shorter than kernel ‘k’"
 msgid "'kernapply' is not available for object 'x'"
 msgstr "‘kernapply’ is not available for object ‘x’"
 
-msgid "'k1' is not a kernel"
-msgstr "‘k1’ is not a kernel"
-
-msgid "'k2' is not a kernel"
-msgstr "‘k2’ is not a kernel"
+msgid "'x' is not a kernel"
+msgstr "‘x’ is not a kernel"
 
 msgid "empty cluster: try a better set of initial centers"
 msgstr "empty cluster: try a better set of initial centers"
@@ -1248,6 +1226,9 @@ msgstr "model 1"
 
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "prediction from a rank-deficient fit may be misleading"
+
+msgid "prediction intervals are only relevant to new data"
+msgstr "prediction intervals are only relevant to new data"
 
 msgid "'object' has no 'effects' component"
 msgstr "‘object’ has no ‘effects’ component"
@@ -1458,6 +1439,9 @@ msgstr "‘offset’ must be numeric"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model frame and formula mismatch in model.matrix()"
 
+msgid "variable '%s' converted to a factor"
+msgstr "variable ‘%s’ converted to a factor"
+
 msgid "invalid 'contrasts.arg' argument"
 msgstr "invalid ‘contrasts.arg’ argument"
 
@@ -1529,6 +1513,27 @@ msgstr "setVarying : ‘vary’ length must match length of parameters"
 
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "singular gradient matrix at initial parameter estimates"
+
+msgid "'data' must be a list or an environment"
+msgstr "‘data’ must be a list or an environment"
+
+msgid "No starting values specified"
+msgstr "No starting values specified"
+
+msgid "No starting values specified for some parameters."
+msgstr "No starting values specified for some parameters."
+
+msgid "Intializing"
+msgstr "Intializing"
+
+msgid "to '1.'."
+msgstr "to '1.'."
+
+msgid "Consider specifying 'start' or using a selfStart model"
+msgstr "Consider specifying ‘start’ or using a selfStart model"
+
+msgid "parameters without starting value in 'data':"
+msgstr "parameters without starting value in 'data':"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "Upper or lower bounds ignored unless algorithm = “port”"
@@ -1631,6 +1636,9 @@ msgstr "mismatched ‘x’ and ‘y’"
 msgid "wrong number of columns in 'x'"
 msgstr "wrong number of columns in ‘x’"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr "cannot rescale a constant/zero column to unit variance"
+
 msgid "PCA applies only to numerical variables"
 msgstr "PCA applies only to numerical variables"
 
@@ -1658,6 +1666,9 @@ msgstr "both ‘x’ and ‘covmat’ were supplied: ‘x’ will be ignored"
 
 msgid "'princomp' can only be used with more units than variables"
 msgstr "‘princomp’ can only be used with more units than variables"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr "cannot use cor=TRUE with a constant variable"
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "covariance matrix is not non-negative definite"
@@ -1845,14 +1856,8 @@ msgstr "must specify ‘spans’ or a valid kernel"
 msgid "coverage probability out of range [0,1)"
 msgstr "coverage probability out of range [0,1)"
 
-msgid "spline: invalid interpolation method"
-msgstr "spline: invalid interpolation method"
-
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: first and last y values differ - using y[1] for both"
-
-msgid "splinefun: invalid interpolation method"
-msgstr "splinefun: invalid interpolation method"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "‘deriv’ must be between 0 and 3"
@@ -1905,9 +1910,6 @@ msgstr "number of ‘cutpoints’ must be one less than number of symbols"
 msgid "number of 'cutpoints' must be one more than number of symbols"
 msgstr "number of ‘cutpoints’ must be one more than number of symbols"
 
-msgid "'x' must be numeric or logical"
-msgstr "‘x’ must be numeric or logical"
-
 msgid "must have 2 'symbols' for logical 'x' argument"
 msgstr "must have 2 ‘symbols’ for logical ‘x’ argument"
 
@@ -1952,6 +1954,9 @@ msgstr "non-time series not of the correct length"
 
 msgid "time series contains internal NAs"
 msgstr "time series contains internal NAs"
+
+msgid "series is corrupt: length %d with 'tsp' implying %d"
+msgstr "series is corrupt: length %d with ‘tsp’ implying %d"
 
 msgid "cannot plot more than 10 series as \"multiple\""
 msgstr "cannot plot more than 10 series as “multiple”"
@@ -2001,6 +2006,9 @@ msgid ""
 msgstr ""
 "number of values supplied is not a sub-multiple of the number of values to "
 "be replaced"
+
+msgid "only replacement of elements is allowed"
+msgstr "only replacement of elements is allowed"
 
 msgid "'model' must be list"
 msgstr "‘model’ must be list"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:44\n"
+"POT-Creation-Date: 2006-07-18 13:23\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -117,6 +117,10 @@ msgstr "上位のスコープはモデル項 %s を含んでいません"
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
 "AIC はこのモデルには定義されません、従って 'step' を進めることができません"
+
+#, fuzzy
+msgid "'A' must be an array or table"
+msgstr "'x' は行列かデータフレームでなければなりません"
 
 msgid ""
 "length of FUN, %d,\n"
@@ -735,9 +739,8 @@ msgstr "無効な引数 'omit' です"
 msgid "link not recognised"
 msgstr "というリンクはポアッソンファミリに対しては利用できません。"
 
-msgid ""
-"link \"%s\" not available for Poisson family; available links are \"identity"
-"\", \"log\" and \"sqrt\""
+#, fuzzy
+msgid "link \"%s\" not available for poisson family; available links are %s"
 msgstr ""
 "リンク '%s' はポアソンファミリには利用できません。利用できるリンクは "
 "\"identity\", \"log\" 及び \"sqrt\" です"
@@ -745,9 +748,9 @@ msgstr ""
 msgid "negative values not allowed for the Poisson family"
 msgstr "ポアソンファミリには負の値は許されません"
 
+#, fuzzy
 msgid ""
-"link \"%s\" not available for quasipoisson family; available links are "
-"\"identity\", \"log\" and \"sqrt\""
+"link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
 "リンク\"%s\"は疑似ポアソンファミリには利用できません。利用できるリンクは "
 "\"identity\", \"log\" 及び \"sqrt\" です"
@@ -755,9 +758,8 @@ msgstr ""
 msgid "negative values not allowed for the quasiPoisson family"
 msgstr "疑似ポアッソンファミリには負の値は許されません"
 
-msgid ""
-"link \"%s\" not available for gaussian family, available links are \"inverse"
-"\", \"log\" and \"identity\""
+#, fuzzy
+msgid "link \"%s\" not available for gaussian family; available links are %s"
 msgstr ""
 "リンク\"%s\"は正規ファミリに利用できるリンクではありません。利用できるリンク"
 "は \"inverse\", \"log\" 及び \"identity\" です"
@@ -765,12 +767,11 @@ msgstr ""
 msgid "cannot find valid starting values: please specify some"
 msgstr "有効な初期値を見つけることができません: 何か指定してください"
 
-msgid ""
-"link \"%s\" not available for binomial family, available links are \"logit"
-"\", \"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#, fuzzy
+msgid "link \"%s\" not available for binomial family; available links are %s"
 msgstr ""
-"リンク\"%s\"は二項ファミリに利用できるリンクではありません。利用できるリンク"
-"は \"logit\", \"probit\", \"cloglog\", \"cauchit\" 及び \"log\" です"
+"リンク '%s' はポアソンファミリには利用できません。利用できるリンクは "
+"\"identity\", \"log\" 及び \"sqrt\" です"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "y の値は [0,1] 中でなければなりません"
@@ -791,18 +792,16 @@ msgstr "もしくは、第一列が成功数、第二列が失敗数である 2 
 
 #, fuzzy
 msgid ""
-"link not available for quasibinomial family, available links are \"logit\", "
-"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+"link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
-"リンク\"%s\"は二項ファミリに利用できるリンクではありません。利用できるリンク"
-"は \"logit\", \"probit\", \"cloglog\", \"cauchit\" 及び \"log\" です"
+"リンク\"%s\"は疑似ポアソンファミリには利用できません。利用できるリンクは "
+"\"identity\", \"log\" 及び \"sqrt\" です"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "疑似二項ファミリに対しては、y は 0 と 1 のベクトルでなければなりません"
 
-msgid ""
-"link \"%s\" not available for gamma family, available links are \"inverse\", "
-"\"\"log\" and \"identity\""
+#, fuzzy
+msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr ""
 "リンク\"%s\"はガンマファミリに利用できるリンクではありません。利用できるリン"
 "クは \"inverse\", \"log\" 及び \"identity\" です"
@@ -810,12 +809,12 @@ msgstr ""
 msgid "non-positive values not allowed for the gamma family"
 msgstr "正でない値はガンマファミリには許されません"
 
+#, fuzzy
 msgid ""
-"link \"%s\" not available for inverse gauss family, available links are "
-"\"inverse\", \"1/mu^2\", \"log\" and \"identity\""
+"link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
-"リンク\"%s\"は逆正規ファミリのために利用できるリンクではありません。利用でき"
-"るリンクは \"inverse\", \"1/mu^2\", \"log\"  及び \"identity\" です"
+"リンク\"%s\"は正規ファミリに利用できるリンクではありません。利用できるリンク"
+"は \"inverse\", \"log\" 及び \"identity\" です"
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "逆正規ファミリでは正の値しか許されません"
@@ -1133,11 +1132,9 @@ msgstr "'x' はカーネル 'k' より短いです"
 msgid "'kernapply' is not available for object 'x'"
 msgstr "'kernapply' はオブジェクト 'x' のために利用できません"
 
-msgid "'k1' is not a kernel"
-msgstr "'k1' はカーネルではありません"
-
-msgid "'k2' is not a kernel"
-msgstr "'k2' はカーネルではありません"
+#, fuzzy
+msgid "'x' is not a kernel"
+msgstr "'k' はカーネルではありません"
 
 msgid "empty cluster: try a better set of initial centers"
 msgstr "空のクラスタ: より良い初期中心を試みましょう"
@@ -1237,6 +1234,9 @@ msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""
 "ランク落ちした状態での当てはめをしているので誤った予測をしている可能性があり"
 "ます"
+
+msgid "prediction intervals are only relevant to new data"
+msgstr ""
 
 msgid "'object' has no 'effects' component"
 msgstr "オブジェクト('object')は効果('effects')成分を持ちません"
@@ -1449,6 +1449,10 @@ msgstr "'x' は数値でなければなりません"
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix() でモデルフレームとモデル式の組合せが不適当です"
 
+#, fuzzy
+msgid "variable '%s' converted to a factor"
+msgstr "変数 %s は因子ではありません"
+
 msgid "invalid 'contrasts.arg' argument"
 msgstr "無効な 'contrasts.arg' 引数です"
 
@@ -1520,6 +1524,30 @@ msgstr "setVarying: 'vary' 長はパラメータの長さに一致しなけれ�
 
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "パラメータの初期値で勾配行列が特異です"
+
+#, fuzzy
+msgid "'data' must be a list or an environment"
+msgstr "'x' は行列かデータフレームでなければなりません"
+
+#, fuzzy
+msgid "No starting values specified"
+msgstr "初期値が与えられていません"
+
+#, fuzzy
+msgid "No starting values specified for some parameters."
+msgstr "初期値が与えられていません"
+
+msgid "Intializing"
+msgstr ""
+
+msgid "to '1.'."
+msgstr ""
+
+msgid "Consider specifying 'start' or using a selfStart model"
+msgstr ""
+
+msgid "parameters without starting value in 'data':"
+msgstr ""
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "algorithm = \"port\" でない限り上限もしくは下限は無視されます"
@@ -1627,6 +1655,9 @@ msgstr "'x' 及び 'y' が合致しません"
 msgid "wrong number of columns in 'x'"
 msgstr "'x' の列数が間違っています"
 
+msgid "cannot rescale a constant/zero column to unit variance"
+msgstr ""
+
 msgid "PCA applies only to numerical variables"
 msgstr "PCA は数値変数にしか適用できません"
 
@@ -1652,6 +1683,9 @@ msgstr "'x' と 'covmat' の双方が与えられました。'x' は無視され
 
 msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp' では，ケースは変数より多くなければなりません"
+
+msgid "cannot use cor=TRUE with a constant variable"
+msgstr ""
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "共分散行列が非負値定符号ではありません"
@@ -1839,14 +1873,8 @@ msgstr "'span' か、有効なカーネルを指定しなければなりませ�
 msgid "coverage probability out of range [0,1)"
 msgstr "被覆確率が範囲 [0,1) 外です"
 
-msgid "spline: invalid interpolation method"
-msgstr "spline: 無効な補間法です"
-
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 最初と最後の y 値が異なります ‐ y[1] を双方のために使用します"
-
-msgid "splinefun: invalid interpolation method"
-msgstr "splinefun: 無効な補間法です"
 
 msgid "'deriv' must be between 0 and 3"
 msgstr "'deriv' は 0 と 3 の間になければなりません"
@@ -1900,9 +1928,6 @@ msgstr "'cutpoints' の数は記号の数より一つ少なくなければなり
 msgid "number of 'cutpoints' must be one more than number of symbols"
 msgstr "'cutpoints' の数は記号の数より一つ多くなければなりません"
 
-msgid "'x' must be numeric or logical"
-msgstr "'x'は数値か論理値でなければなりません"
-
 msgid "must have 2 'symbols' for logical 'x' argument"
 msgstr "論理的な 'x' 引数に対しては 2 つのシンボルが必要です"
 
@@ -1947,6 +1972,9 @@ msgstr "正しい長さでない非時系列です"
 
 msgid "time series contains internal NAs"
 msgstr "時系列は内部に NA 値を含んでいます"
+
+msgid "series is corrupt: length %d with 'tsp' implying %d"
+msgstr ""
 
 msgid "cannot plot more than 10 series as \"multiple\""
 msgstr "10系列を越える多重プロットはできません"
@@ -1996,6 +2024,10 @@ msgid ""
 msgstr ""
 "与えられた値の数は、置き換えられるべき値の数を整数で割ったものになっていませ"
 "ん"
+
+#, fuzzy
+msgid "only replacement of elements is allowed"
+msgstr "置き換えるべき値が多すぎます"
 
 msgid "'model' must be list"
 msgstr "'model' はリストである必要があります"
@@ -2110,6 +2142,43 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
 msgstr[1] "モデル式中にパラメータ(複数) %s がありません"
+
+#~ msgid ""
+#~ "link \"%s\" not available for binomial family, available links are \"logit"
+#~ "\", \"\"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#~ msgstr ""
+#~ "リンク\"%s\"は二項ファミリに利用できるリンクではありません。利用できるリン"
+#~ "クは \"logit\", \"probit\", \"cloglog\", \"cauchit\" 及び \"log\" です"
+
+#, fuzzy
+#~ msgid ""
+#~ "link not available for quasibinomial family, available links are \"logit"
+#~ "\", \"probit\", \"cloglog\", \"cauchit\" and \"log\""
+#~ msgstr ""
+#~ "リンク\"%s\"は二項ファミリに利用できるリンクではありません。利用できるリン"
+#~ "クは \"logit\", \"probit\", \"cloglog\", \"cauchit\" 及び \"log\" です"
+
+#~ msgid ""
+#~ "link \"%s\" not available for inverse gauss family, available links are "
+#~ "\"inverse\", \"1/mu^2\", \"log\" and \"identity\""
+#~ msgstr ""
+#~ "リンク\"%s\"は逆正規ファミリのために利用できるリンクではありません。利用で"
+#~ "きるリンクは \"inverse\", \"1/mu^2\", \"log\"  及び \"identity\" です"
+
+#~ msgid "'k1' is not a kernel"
+#~ msgstr "'k1' はカーネルではありません"
+
+#~ msgid "'k2' is not a kernel"
+#~ msgstr "'k2' はカーネルではありません"
+
+#~ msgid "spline: invalid interpolation method"
+#~ msgstr "spline: 無効な補間法です"
+
+#~ msgid "splinefun: invalid interpolation method"
+#~ msgstr "splinefun: 無効な補間法です"
+
+#~ msgid "'x' must be numeric or logical"
+#~ msgstr "'x'は数値か論理値でなければなりません"
 
 #~ msgid ""
 #~ "link not available for quasibinomial family, available links are \"logit"

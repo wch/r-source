@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:45\n"
+"POT-Creation-Date: 2006-07-18 13:23\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -106,6 +106,22 @@ msgstr "패키지 '%s'의  DESCRIPTION 파일에서 date 필드가 있습니다"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "패키지 DESCRIPTION 파일로부터'%s'때문에 year를 결정할수 없었습니다"
+
+msgid "Argument m has"
+msgstr ""
+
+msgid "elements: only the first used"
+msgstr ""
+
+msgid "m < 0"
+msgstr ""
+
+msgid "n < m"
+msgstr ""
+
+#, fuzzy
+msgid "'FUN' must be a function or NULL"
+msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
 msgid "'package' must be a character string or NULL"
 msgstr "'package'는 문자열이나 NULL이어야만 합니다"
@@ -248,6 +264,9 @@ msgstr "라이브러리"
 msgid "Help on topic '%s' was found in the following packages:"
 msgstr "topic '%s'에서 help는 다음의 패키지로 검색되었습니다"
 
+msgid "Choose one"
+msgstr ""
+
 msgid "Using the first match ..."
 msgstr "첫번째 match를 사용해주십시오..."
 
@@ -312,6 +331,10 @@ msgstr ""
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "무효의 다중 바이트 문자 데이터를 갖춘 엔트리가 모두 제거하였습니다"
+
+msgid ""
+"no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep' 명세는 적적하지 않습니다"
@@ -598,8 +621,9 @@ msgstr "유형 정보를 회복할 수 없었습니다"
 msgid "no events were recorded"
 msgstr "events는 기록되지 않았습니다"
 
+#, fuzzy
 msgid ""
-"vignette '%d' found more than once,\n"
+"vignette '%s' found more than once,\n"
 "using the one found in '%s'"
 msgstr ""
 "vignette(당초무늬) '%d'로 검색된것을 사용하고,\n"

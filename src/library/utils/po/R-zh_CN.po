@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-05-12 08:45\n"
+"POT-Creation-Date: 2006-07-18 13:23\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -110,6 +110,22 @@ msgstr "程序包'%s'里的DESCRIPTION文件中没有日期这一域"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "没有从程序包的DESCRIPTION文件中为'%s'确定年份"
+
+msgid "Argument m has"
+msgstr ""
+
+msgid "elements: only the first used"
+msgstr ""
+
+msgid "m < 0"
+msgstr ""
+
+msgid "n < m"
+msgstr ""
+
+#, fuzzy
+msgid "'FUN' must be a function or NULL"
+msgstr "'package'的值必需是字符串或NULL"
 
 msgid "'package' must be a character string or NULL"
 msgstr "'package'的值必需是字符串或NULL"
@@ -241,6 +257,9 @@ msgstr "图书馆"
 msgid "Help on topic '%s' was found in the following packages:"
 msgstr "在以下的程序包里找到了与'%s'题目有关的帮助文件:"
 
+msgid "Choose one"
+msgstr ""
+
 msgid "Using the first match ..."
 msgstr "用第一个相配…"
 
@@ -305,6 +324,10 @@ msgstr ""
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "删除所有多字節字符数据出错的分錄"
+
+msgid ""
+"no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep'设定得不对"
@@ -573,8 +596,9 @@ msgstr "无法恢復种类的信息"
 msgid "no events were recorded"
 msgstr "没有记录下任何事件"
 
+#, fuzzy
 msgid ""
-"vignette '%d' found more than once,\n"
+"vignette '%s' found more than once,\n"
 "using the one found in '%s'"
 msgstr ""
 "有多个'%d'小文品，\n"
