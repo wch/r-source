@@ -174,55 +174,44 @@ parts of the structure is used.
 The following table describes the possible values returned by
 @code{typeof} and what they are.
 
-@c FIXME: Actually, the *VALUES* returned by typeof() are character
-@c strings.
-
 @quotation
 @multitable @columnfractions 0.2 0.7
-@item @code{NULL}
-@tab Null
-@item @code{symbol}
-@tab a variable name
-@item @code{pairlist}
-@tab a pairlist object
-@item @code{closure} @tab a function
-@item @code{environment} @tab an environment
+@item @code{"NULL"} @tab NULL
+@item @code{"symbol"} @tab a variable name
+@item @code{"pairlist"}@tab a pairlist object (mainly internal)
+@item @code{"closure"} @tab a function
+@item @code{"environment"} @tab an environment
 @cindex evaluation, lazy
-@item @code{promise}  @tab an object used to implement lazy evaluation 
-@item @code{language} @tab an @R{} language construct
-@item @code{special}  @tab a built-in function that does not evaluate its
-arguments
-@item @code{builtin} @tab a built-in function that evaluates its
-arguments
-@c FIXME: in SEXPTYPE but not here ...
-@c @item @code{char} @ a `scalar' string object (internal only) ***
-@c </FIXME>
-@item @code{logical} @tab a vector containing logical values
-@item @code{integer} @tab a vector containing integer values
-@item @code{double}  @tab a vector containing real values
-@item @code{complex} @tab a vector containing complex values
-@item @code{character} @tab a vector containing character values
-@item @code{...} @tab the special variable length argument ***
-@item @code{any} @tab a special type that matches all types ***
-@item @code{expression} @tab an expression object
-@item @code{list} @tab a list
-@c FIXME: in SEXPTYPE but not here ...
-@c @item BCODESXP @tab byte code
-@c </FIXME>
-@item @code{externalptr} @tab an external pointer object
-@item @code{weakref} @tab a weak reference object
-@item @code{raw} @tab a vector containing bytes
+@item @code{"promise"}  @tab an object used to implement lazy evaluation 
+@item @code{"language"} @tab an @R{} language construct
+@item @code{"special"}  @tab an internal function that does not evaluate its arguments
+@item @code{"builtin"} @tab an internal function that evaluates its arguments
+@item @code{"char"} @tab a `scalar' string object (internal only) ***
+@item @code{"logical"} @tab a vector containing logical values
+@item @code{"integer"} @tab a vector containing integer values
+@item @code{"double"}  @tab a vector containing real values
+@item @code{"complex"} @tab a vector containing complex values
+@item @code{"character"} @tab a vector containing character values
+@item @code{"..."} @tab the special variable length argument ***
+@item @code{"any"} @tab a special type that matches all types: there are no objects of this type
+@item @code{"expression"} @tab an expression object
+@item @code{"list"} @tab a list
+@item @code{"bytecode"} @tab byte code (internal only) ***
+@item @code{"externalptr"} @tab an external pointer object
+@item @code{"weakref"} @tab a weak reference object
+@item @code{"raw"} @tab a vector containing bytes
+@item @code{"S4"} @tab an S4 object which is not a simple object
 @end multitable
 @end quotation
 
 @noindent
-I don't think that the user can get a hold of items marked with a `***';
-at least not easily; counter examples would be appreciated.
+Users cannot easily get hold of objects of types marked with a `***'.
+
 
 @findex mode
 @cindex mode
 Function @code{mode} gives information about the @dfn{mode} of an object
-in the sense of Becker, Chambers & Wilks (1988), and is fully compatible
+in the sense of Becker, Chambers & Wilks (1988), and is more compatible
 with other implementations of the @Sl{} language.
 @c FIXME:
 @c Should say that many R functions, such as vector(), actually have an
@@ -279,7 +268,7 @@ an object is of the correct type.
 * Expression objects::          
 * Function objects::            
 * NULL object::                 
-* Built-in objects and special forms::  
+* Builtin objects and special forms::  
 * Promise objects::             
 * Dot-dot-dot::                 
 * Environment objects::         
@@ -388,7 +377,8 @@ Symbols refer to @R{}
 objects.  The
 @cindex name
 name of any @R{} object is usually a
-symbol.  Symbols can be created through the function @code{quote}.
+symbol.  Symbols can be created through the functions @code{as.name} and
+@code{quote}.
 
 @cindex symbol
 @cindex mode
@@ -486,7 +476,7 @@ structures using @code{as.list} and @code{as.function}.
 These have been included to provide compatibility with @Sl{} and their
 use is discouraged.
 
-@node NULL object, Built-in objects and special forms, Function objects, Basic types
+@node NULL object, Builtin objects and special forms, Function objects, Basic types
 @subsection NULL
 
 There is a special object called @code{NULL}.  It is used whenever there
@@ -500,17 +490,20 @@ test for @code{NULL} use @code{is.null}.  You cannot set attributes on
 @code{NULL}.
 
 
-@node Built-in objects and special forms, Promise objects, NULL object, Basic types
-@subsection Built-in objects and  special forms
+@node Builtin objects and special forms, Promise objects, NULL object, Basic types
+@subsection Builtin objects and  special forms
 
-These two kinds of object contain the built-in
+These two kinds of object contain the builtin
 @cindex function
-functions of @R{}, i.e.,
-those that are displayed as @code{.Primitive} in code listings.  The
-difference between the two lies in the argument handling.  Built-in
-functions have all their arguments evaluated and passed to the primitive
-function, in accordance with @emph{call-by-value}, whereas special
-functions pass the unevaluated expressions to the internal function.
+@cindex .Primitive
+@cindex .Internal
+functions of @R{}, i.e., those that are displayed as @code{.Primitive}
+in code listings (as well as those accessed via the @code{.Internal}
+function and hence not user-visible as objects).  The difference between
+the two lies in the argument handling.  Builtin functions have all
+their arguments evaluated and passed to the internal function, in
+accordance with @emph{call-by-value}, whereas special functions pass the
+unevaluated arguments to the internal function.
 
 From the @R{} language, these objects are just another kind of function,
 except that their definition cannot be listed.  The @code{typeof}
@@ -518,7 +511,7 @@ function can distinguish them from interpreted
 @cindex function
 functions.
 
-@node Promise objects, Dot-dot-dot, Built-in objects and special forms, Basic types
+@node Promise objects, Dot-dot-dot, Builtin objects and special forms, Basic types
 @subsection Promise objects
 
 @cindex promise
@@ -554,10 +547,11 @@ way to use @R{} code to determine the environment of a promise.
 @node Dot-dot-dot, Environment objects, Promise objects, Basic types
 @subsection Dot-dot-dot
 
-The @samp{...} object type is stored as a type of list.  The components
-of @samp{...} can be accessed in the usual list manner from C code, but
-is not easily accessed as an object in interpreted code.  The object can
-be captured as a list, so for example in @code{table} one sees
+The @samp{...} object type is stored as a type of pairlist.  The
+components of @samp{...} can be accessed in the usual pairlist manner
+from C code, but is not easily accessed as an object in interpreted
+code.  The object can be captured as a list, so for example in
+@code{table} one sees
 
 @example
     args <- list(...)
@@ -590,7 +584,7 @@ It is the direct parent of the environment of the base package
 @findex baseenv 
 (available through the @code{baseenv()} function). Formerly
 @code{baseenv()} had the special value @code{NULL}, but as from
-version 2.3.0, the use of @code{NULL} as an environment is deprecated.
+version 2.4.0, the use of @code{NULL} as an environment is defunct.
 
 Environments are created implicitly by function calls, as described in
 @ref{Function objects} and @ref{Lexical environment}.  In this case the
@@ -605,11 +599,11 @@ use of @code{ls}, @code{get} and @code{assign} as well as @code{eval} and
 The @code{parent.env} function may be used to access the enclosure of
 an environment.
 
-Unlike other @R{} objects, environments are not copied when passed to
-functions or used in assignments. 
-Thus, if you assign the same environment to several symbols and change one,
-the others will change too.  In particular, assigning attributes to an
-environment can lead to surprises.
+Unlike most other @R{} objects, environments are not copied when passed
+to functions or used in assignments.  Thus, if you assign the same
+environment to several symbols and change one, the others will change
+too.  In particular, assigning attributes to an environment can lead to
+surprises.
 
 @node Pairlist objects, Any-type, Environment objects, Basic types
 @subsection Pairlist objects
@@ -629,6 +623,7 @@ traditional Lisp and originally referred to the address and decrement
 registers on an early 60's IBM computer).
 @c FIXME: Check: Is it *required* that TAG is a STRSXP and CDR is a
 @c LISTSXP?? (or NULL of course).
+@c Well, it is CHARSXP.
 
 Pairlists are handled in the @R{} language in exactly the same way as
 generic vectors (``lists'').  In particular, elements are accessed using
@@ -654,6 +649,7 @@ coercion should not be done.
 
 @node Attributes, Special compound objects, Basic types, Objects
 @section Attributes
+@cindex attributes
 
 @cindex object
 All objects except @code{NULL} can have one or more attributes attached
@@ -673,7 +669,7 @@ functions (e.g.@: @code{levels<-}
 for factors) and these should be used when available. In addition to
 hiding details of implementation they may perform additional operations.
 @R{} attempts to intercept calls to @code{attr<-} and to
-@code{attributes<-} that involve the special attributes and to enforce
+@code{attributes<-} that involve the special attributes and enforces
 the consistency checks.
 
 Matrices and arrays are simply vectors with the attribute @code{dim} and
@@ -692,6 +688,7 @@ in @ref{Object-oriented programming}.
 * Dimnames::                    
 * Classes::                     
 * Time series attributes::      
+* Copying of attributes::       
 @end menu
 
 @node Names, Dimensions, Attributes, Attributes
@@ -756,12 +753,37 @@ available specific creation and
 @cindex coercion
 coercion functions should be preferred.
 
-@node Time series attributes,  , Classes, Attributes
+@node Time series attributes, Copying of attributes, Classes, Attributes
 @subsection Time series attributes
 
 The @code{tsp} attribute is used to hold parameters of time series,
 start, end, and frequency.  This construction is mainly used to handle
 series with periodic substructure such as monthly or quarterly data.
+
+@node Copying of attributes,  , Time series attributes, Attributes
+@subsection Copying of attributes
+
+Whether attributes should be copied when an object is altered is a
+complex area, but there are some general rules.
+
+Scalar functions (those which operate element-by-element on a vector and
+whose output is similar to the input) should preserve attributes (except
+perhaps class.
+
+Binary operations normally copy most attributes from the longer argument
+(and if they are of the same length from both, preferring the values on
+the first).  Here `most' means all except the @code{names}, @code{dim}
+and @code{dimnames} which are set appropriately by the code for the
+operator.
+
+Subsetting (other than by an empty index) generally drops all attributes
+except @code{names}, @code{dim} and @code{dimnames} which are reset as
+appropriate.  On the other hand, subassignment generally preserves
+attributes even if the length is changed.  Coercion drops all
+attributes.
+
+Sorting drops all attributes except names, which are sorted along with
+the object.
 
 @node Special compound objects,  , Attributes, Objects
 @section Special compound objects
@@ -1133,7 +1155,7 @@ below.
 
 Except for the syntax, there is no difference between applying an
 operator and calling a function.  In fact, @code{x + y} can equivalently
-be written @code{"+"(x, y)}.  Notice that since @samp{+} is a
+be written @code{`+`(x, y)}.  Notice that since @samp{+} is a
 non-standard function name, it needs to be quoted.
 
 @cindex vector
@@ -1150,8 +1172,8 @@ finer points relating to vectorized operations will be discussed in
 @ref{Elementary arithmetic operations}.
 @c FIXME insert reference
 
-To access individual elements of a vector, one generally uses the
-@code{x[i]} construction.
+To access individual elements of an atomic vector, one generally uses
+the @code{x[i]} construction.
 
 @example
 > x <- rnorm(5)
@@ -1175,7 +1197,7 @@ Indexing constructs can also appear on the right hand side of an
 assignment.
 
 Like the other operators, indexing is really done by functions, and one
-could have used  @code{"["(x, 2)} instead of @code{x[2]}.
+could have used  @code{`[`(x, 2)} instead of @code{x[2]}.
 
 @R{}'s indexing operations contain many advanced features which are
 further described in @ref{Indexing}.
@@ -2113,7 +2135,7 @@ packages.
 @menu
 * Writing functions::           
 * Functions as objects::        
-* Evaluation::                                  
+* Evaluation::                  
 @end menu
 
 @node Writing functions, Functions as objects, Functions, Functions
@@ -2968,8 +2990,8 @@ Values for lookup:
 @section Group methods
 
 For several types of
-@cindex function, built-in
-built-in functions @R{} provides a dispatching
+@cindex function, internal
+internal functions @R{} provides a dispatching
 mechanism for operators.  This means that operators such as @code{==} or
 @code{<} can have their behaviour modified for members of special
 classes.  The functions and operators have been grouped into three
@@ -4318,7 +4340,7 @@ following pairs are @emph{not} equivalent
 @node Reserved words, Special operators, Identifiers, Tokens
 @subsection Reserved words
 
-The following identifiers have a special meaning and should not be used
+The following identifiers have a special meaning and cannot be used
 for object names
 
 @example
