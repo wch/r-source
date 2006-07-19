@@ -5347,6 +5347,7 @@ right type.
 * Classes::                     
 * Handling lists::              
 * Finding and setting variables::  
+* Some convenience functions::  
 * Named objects and copying::   
 @end menu
 
@@ -5801,7 +5802,7 @@ and enables us to say
 @end group
 @end example
 
-@node Finding and setting variables, Named objects and copying, Handling lists, Handling R objects in C
+@node Finding and setting variables, Some convenience functions, Handling lists, Handling R objects in C
 @subsection Finding and setting variables
 @cindex Finding variables
 @cindex Setting variables
@@ -5861,7 +5862,49 @@ a new binding with the specified value is created in the global
 environment.  This corresponds to @code{assign(symbol, value, envir =
 rho, inherits = TRUE)}.
 
-@node Named objects and copying,  , Finding and setting variables, Handling R objects in C
+@node Some convenience functions, Named objects and copying, Finding and setting variables, Handling R objects in C
+@subsection Some convenience functions
+
+Some operations are done so frequently that there are convenience
+functions to handle them.  Suppose we wanted to pass a single logical
+argument @code{ignore_quotes}: we could use
+
+@example
+    int ign;
+
+    ign = asLogical(ignore_quotes);
+    if(ign == NA_LOGICAL) error("'ignore_quotes' must be TRUE or FALSE");
+@end example
+
+@noindent
+which will do any coercion needed, and return @code{NA_LOGICAL} if the
+value passed was @code{NA} or coercion failed.  There are also
+@code{asInteger}, @code{asReal} and @code{asComplex}.  The function
+@code{asChar} returns a @code{CHARSXP}.  All of these functions ignore
+any elements of an imput vector after the first.
+
+To return a length-one real vector we can use
+
+@example
+    double x;
+
+    ...
+    return ScalarReal(x);
+@end example
+
+@noindent
+and there are versions of this for all the atomic vector types (those for
+a length-one character vector being @code{ScalarString} with argument a
+@code{CHARSXP} and @code{mkString} with argument @code{char *}).
+
+Some of the @code{isXXXX} functions differ from their apparent
+@R{}-level counterparts: for example @code{isVector} is true for any
+atomic vector type (@code{isVectorAtomic}) and for lists and expressions
+(@code{isVectorList}) (with no check on attributes).  @code{isMatrix} is
+a test of a length-2 @code{"dim"} attribute.
+
+
+@node Named objects and copying,  , Some convenience functions, Handling R objects in C
 @subsection Named objects and copying
 @findex duplicate
 @cindex Copying objects
