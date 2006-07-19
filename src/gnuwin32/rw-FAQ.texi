@@ -1215,10 +1215,6 @@ a @emph{just-in-time} debugger to catch crashes, consider
 That will be able to pinpoint the error, most effectively if you build a
 version of R with debugging information as described below.
 
-You need to choose the type of debugging symbols via @code{G_FLAG} is
-@file{MkRules}: it defaults to @option{-g} (@code{stabs} format) but
-modern debuggers can use the more efficient @option{-gdwarf-2}.
-
 First, build a version of the R system with debugging information by
 
 @example

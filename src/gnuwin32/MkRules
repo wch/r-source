@@ -14,7 +14,7 @@ else
 WINHELP = CHM # NO or CHM
 endif
 
-# a better alternative is to use -gdwarf-2 here, if the debugger supports it
+# an alternative is to use -g here, if the debugger supports only stabs.
 G_FLAG=-gdwarf-2
 
 ## ============== configuration macros for building R ===================
