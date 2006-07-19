@@ -135,7 +135,7 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
        in UTF-8.
     */
     int i;
-    char *p, quote, prev ='\0';
+    char *p, quote= '\0', prev ='\0';
     Rboolean ign, inquote = FALSE;
     
     if(TYPEOF(text) != STRSXP) error("invalid input");
@@ -148,13 +148,17 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
 	    if(!inquote && *p == '#') break;
 	    if(!inquote || ign) {
 		if((unsigned int) *p > 127) {
-		    /* Rprintf("found %x\n", (unsigned int) *p); */
+		    /* Rprintf("%s\n", CHAR(STRING_ELT(text, i)));
+		       Rprintf("found %x\n", (unsigned int) *p); */
 		    return ScalarLogical(TRUE);
 		}
 	    }
 	    if(prev != '\\' && (*p == '"' || *p == '\'')) {
-		quote = *p;
-		inquote = !inquote;
+		if(inquote && *p == quote) {
+		    inquote = FALSE;
+		} else if(!inquote) {
+		    quote = *p; inquote = TRUE;
+		}
 	    }
 	}
     }
