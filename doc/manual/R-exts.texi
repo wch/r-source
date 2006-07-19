@@ -10146,16 +10146,17 @@ value assigned, and so shows up as a base variable.
 Similarly, the evaluator creates a symbol @code{.Last.value} which
 appears as a variable in the base environment.
 
+Errors can give rise to objects @code{.Traceback} and
+@code{last.warning} in the global environment.
+
 @node Global environment,  , Base environment, Internal use of global and base environments
 @subsection Global environment
 
 The seed for the random number generator is stored in object
 @code{.Random.seed} in the global environment.
 
-Errors can give rise to objects @code{.Traceback} and
-@code{last.warning} in the global environment.  Other error handlers may
-give rise to others: for example @code{dump.frames} by default produces
-@code{last.dump}.
+Some error handlers may give rise to objects in the global environment:
+for example @code{dump.frames} by default produces @code{last.dump}.
 
 The @code{windows()} device makes use of a variable @code{.SavedPlots}
 to store display lists of saved plots for later display.  This is

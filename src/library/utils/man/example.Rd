@@ -37,7 +37,9 @@ example(topic, package = NULL, lib.loc = NULL,
     \code{\link{par}(ask=TRUE)} should be called before graphical output
     happens from the example code.  The value \code{"default"} (the
     factory-fresh default) means to ask if \code{echo == TRUE} and the
-    graphics device appears to be interactive.}
+    graphics device appears to be interactive.  This parameter applies
+    both to any currently opened device and to any devices opened by the
+    example code.}
   \item{prompt.echo}{character; gives the prompt to be used if
     \code{echo = TRUE}.}
 }

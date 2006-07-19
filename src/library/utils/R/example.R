@@ -58,20 +58,14 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	encoding <- substring(zz, 15)
     if(ask == "default") ask <- echo && dev.interactive(orNone = TRUE)
     if(ask) {
-	if(.Device == "null device") {
-	    def.dev <- getOption("device")
-	    assign("._example.device_.", function() {
-		get(def.dev)()
-		par(ask = ask)
-	    }, envir = .GlobalEnv)
-	    oo <- options(device = "._example.device_.")
-	    on.exit({if(.Device != "null device") par(ask = FALSE)
-		     options(oo)
-		     rm(list="._example.device_.", envir = .GlobalEnv)})
-	} else { ## have active device already
-	    op <- par(ask = ask)
-	    on.exit(par(op))
-	}
+	if(.Device != "null device") {
+            ## NB, this is somewhat dangerous as the device may have
+            ## changed during the example.
+	    opar <- par(ask = TRUE)
+            on.exit(par(opar))
+        }
+        op <- options(par.ask.default = TRUE)
+        on.exit(options(op), add = TRUE)
     }
     source(zfile, local, echo = echo, prompt.echo = prompt.echo,
 	   verbose = verbose, max.deparse.length = 250,
