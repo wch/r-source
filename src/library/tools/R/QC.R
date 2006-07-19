@@ -3515,7 +3515,7 @@ function(x, ...)
 ### * .check_package_ASCII_code
 
 .check_package_ASCII_code <-
-function(dir)
+function(dir, respect_quotes = FALSE)
 {
     OS_subdirs <- c("unix", "windows")
     if(!file_test("-d", dir))
@@ -3531,14 +3531,8 @@ function(dir)
                                         OS_subdirs = OS_subdirs)
         for(f in R_files) {
             text <- readLines(file.path(code_dir, f), warn = FALSE)
-            ## remove comments, even trailing comments
-            ## this does not respect quotes ....
-            text <- gsub("#.*$", "", text)
-            as_raw <- unlist(lapply(text, charToRaw))
-            bad <- as_raw > as.raw(0x7f) | as_raw < as.raw(0x20)
-	    bad <- bad & as_raw != as.raw(0x09) & as_raw != as.raw(0x0C)
-	    ## allow tabs and formfeeds
-            if(any(bad)) wrong_things <- c(wrong_things, f)
+            if(.Call(check_nonASCII, text, !respect_quotes))
+                wrong_things <- c(wrong_things, f)
         }
     }
     if(length(wrong_things)) cat(wrong_things, sep="\n")
@@ -3588,7 +3582,7 @@ function(dir) {
         for(i in seq(along = exprs)) walker(exprs[[i]])
         matches
     }
-    
+
     code_files <-
         list_files_with_type(dir, "code",
                              OS_subdirs = c("unix", "windows"))

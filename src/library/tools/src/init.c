@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003   The R Development Core Team.
+ *  Copyright (C) 2003-6   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ void Renctest(char **x)
 static const R_CallMethodDef callMethods[] = {
     {"delim_match", (DL_FUNC) &delim_match, 2},
     {"Rmd5", (DL_FUNC) &Rmd5, 1},
+    {"check_nonASCII", (DL_FUNC) &check_nonASCII, 2},
     {NULL, NULL, 0}
 };
 

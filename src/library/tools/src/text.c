@@ -122,3 +122,41 @@ delim_match(SEXP x, SEXP delims)
     UNPROTECT(2);
     return(ans);
 }
+
+SEXP
+check_nonASCII(SEXP text, SEXP ignore_quotes)
+{
+    /* Check if all the lines in 'text' are ASCII, after removing
+       comments and ignoring the contents of quotes (unless ignore_quotes)
+       (which might span more than one line and might be escaped).
+
+       This cannot be entirely correct, as quotes and \ might occur as 
+       part of another character in a MBCS: but this does not happen 
+       in UTF-8.
+    */
+    int i;
+    char *p, quote, prev ='\0';
+    Rboolean ign, inquote = FALSE;
+    
+    if(TYPEOF(text) != STRSXP) error("invalid input");
+    ign = asLogical(ignore_quotes);
+    if(ign == NA_LOGICAL) error("'ignore_quotes' must be TRUE or FALSE");
+
+    for (i = 0; i < LENGTH(text); i++) {
+	p = CHAR(STRING_ELT(text, i));
+	for(; *p; prev = *(p++)) {
+	    if(!inquote && *p == '#') break;
+	    if(!inquote || ign) {
+		if((unsigned int) *p > 127) {
+		    /* Rprintf("found %x\n", (unsigned int) *p); */
+		    return ScalarLogical(TRUE);
+		}
+	    }
+	    if(prev != '\\' && (*p == '"' || *p == '\'')) {
+		quote = *p;
+		inquote = !inquote;
+	    }
+	}
+    }
+    return ScalarLogical(FALSE);
+}
