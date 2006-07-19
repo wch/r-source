@@ -738,7 +738,6 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define onintr			Rf_onintr
 # define onsigusr1              Rf_onsigusr1
 # define onsigusr2              Rf_onsigusr2
-# define PairToVectorList	Rf_PairToVectorList
 # define parse			Rf_parse
 # define PrintGreeting		Rf_PrintGreeting
 # define PrintVersion		Rf_PrintVersion
@@ -811,7 +810,6 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 #define FORSOURCING		31
 
 /* Coercion functions */
-SEXP Rf_PairToVectorList(SEXP x);
 int Rf_LogicalFromString(SEXP, int*);
 int Rf_IntegerFromString(SEXP, int*);
 double Rf_RealFromString(SEXP, int*);

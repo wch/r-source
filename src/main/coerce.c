@@ -379,7 +379,7 @@ static SEXP StringFromRaw(Rbyte x, int *warn)
 
 /* Conversion between the two list types (LISTSXP and VECSXP). */
 
-SEXP attribute_hidden PairToVectorList(SEXP x)
+SEXP PairToVectorList(SEXP x)
 {
     SEXP xptr, xnew, xnames;
     int i, len = 0, named = 0;

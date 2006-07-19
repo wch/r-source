@@ -209,7 +209,6 @@
  Rf_MakeNativeSymbolRef
  Rf_MakeRegisteredNativeSymbol
  Rf_OneIndex
- Rf_PairToVectorList
  Rf_PrintGreeting
  Rf_PrintVersion
  Rf_PrintVersionString

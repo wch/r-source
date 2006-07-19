@@ -525,6 +525,7 @@ LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 
 SEXP Rf_asChar(SEXP);
 SEXP Rf_coerceVector(SEXP, SEXPTYPE);
+SEXP Rf_PairToVectorList(SEXP x);
 SEXP Rf_VectorToPairList(SEXP x);
 
 
@@ -897,6 +898,7 @@ int R_system(char *);
 #define NonNullStringMatch	Rf_NonNullStringMatch
 #define nrows			Rf_nrows
 #define nthcdr			Rf_nthcdr
+#define PairToVectorList	Rf_PairToVectorList
 #define pmatch			Rf_pmatch
 #define psmatch			Rf_psmatch
 #define PrintDefaults		Rf_PrintDefaults
