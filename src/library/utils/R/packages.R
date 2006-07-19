@@ -64,8 +64,10 @@ available.packages <-
                 on.exit()
             } # end of download vs cached
         } # end of localcran vs online
-        res0 <- cbind(res0, Repository = repos)
-        res <- rbind(res, res0)
+        if (length(res0)) {
+            res0 <- cbind(res0, Repository = repos)
+            res <- rbind(res, res0)
+        }
     }
     ## ignore packages which don't fit our version of R
     if(length(res)) {

@@ -10,7 +10,12 @@
     link.html.help<-function(verbose = FALSE, ...)
     {
         html <- getOption("htmlhelp")
-        if (!is.null(html) && html) make.packages.html()
+        # update only if temporary help files exist
+        if (!is.null(html) && html && file.exists(paste(tempdir(),"/.R/doc",sep=''))) {
+            #.Script("sh", "help-links.sh", paste(tempdir(), paste(.libPaths(),
+            #                                                      collapse = " ")))
+            make.packages.html()
+        }
     }
     untar<-function(what, where)
     {
