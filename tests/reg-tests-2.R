@@ -1876,4 +1876,10 @@ stopifnot(identical(x, sapply(x, na.pass)))
 ## changed in 2.4.0
 
 
+## as.character on a factor with "NA" level
+as.character(as.factor(c("AB", "CD", NA)))
+as.character(as.factor(c("NA", "CD", NA)))  # use <NA> is 2.3.x
+as.vector(as.factor(c("NA", "CD", NA)))     # but this did not
+## used <NA> before
+
 ### end of tests added in 2.4.0 ###

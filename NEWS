@@ -410,6 +410,10 @@ BUG FIXES
     o	Subsetting arrays no longer preserves attributes (it was
 	removed for matrices in 1998).
 
+    o	The "factor" method of as.character() no longer maps level
+	"NA" to "<NA>" (a legacy of before there were NA character
+	strings).
+
 
 
 

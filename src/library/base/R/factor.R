@@ -69,12 +69,7 @@ as.vector.factor <- function(x, mode="any")
 	as.vector(unclass(x), mode)
 }
 
-as.character.factor <- function(x,...)
-{
-    cx <- levels(x)[x]
-    if("NA" %in% levels(x)) cx[is.na(x)] <- "<NA>"
-    cx
-}
+as.character.factor <- function(x,...) levels(x)[x]
 
 as.list.factor <- function(x,...)
 {

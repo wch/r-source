@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-07-17 r38631)
+R version 2.4.0 Under development (unstable) (2006-07-19 r38642)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5353,6 +5353,15 @@ Levels: A B C D E
 > stopifnot(identical(x, sapply(x, na.pass)))
 > ## changed in 2.4.0
 > 
+> 
+> ## as.character on a factor with "NA" level
+> as.character(as.factor(c("AB", "CD", NA)))
+[1] "AB" "CD" NA  
+> as.character(as.factor(c("NA", "CD", NA)))  # use <NA> is 2.3.x
+[1] "NA" "CD" NA  
+> as.vector(as.factor(c("NA", "CD", NA)))     # but this did not
+[1] "NA" "CD" NA  
+> ## used <NA> before
 > 
 > ### end of tests added in 2.4.0 ###
 > 
