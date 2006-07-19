@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-CFLAGS = -I../../include -I. -O3 -DWIN32
+CFLAGS=-I../../include -I. -DWIN32 $(OPTFLAGS)
 
 ## done this way for parallel make
 all:

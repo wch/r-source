@@ -2,7 +2,7 @@ include ../MkRules
 R_HOME = ../../..
 
 ifdef DEBUG
-  OPTFLAGS=-g
+  OPTFLAGS=$(G_FLAG) -O3 -Wall
   LINKFLAGS=
   DLLFLAGS=
 else

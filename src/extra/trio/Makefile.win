@@ -1,12 +1,8 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-ifdef DEBUG
- DEFS+=-g
-endif
-
-CFLAGS	= -O3 $(DEFS)
-OBJS	= compat.o triostr.o trio.o trionan.o
+CFLAGS=$(OPTFLAGS)
+OBJS = compat.o triostr.o trio.o trionan.o
 TARGETLIB = libtrio.a
 
 all: $(TARGETLIB)

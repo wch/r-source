@@ -2,7 +2,7 @@
 include ../../gnuwin32/MkRules
 
 ifdef DEBUG
- OPTFLAGS=-g -O3 -Wall
+ OPTFLAGS=$(G_FLAG) -O3 -Wall
  DLLFLAGS=
 else
  OPTFLAGS=-O3 -Wall -pedantic

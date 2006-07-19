@@ -2,13 +2,7 @@ include ../MkRules
 
 all: makeMakedeps ga.a
 
-ifdef DEBUG
-  DEBUGFLAG=-g
-else
-  DEBUGFLAG=
-endif
-
-CFLAGS=-I. -I.. -I../../include -Wall $(DEBUGFLAG)  -O3 -DINDLL -DR_DLL_BUILD
+CFLAGS=-I. -I.. -I../../include $(OPTFLAGS) -DINDLL -DR_DLL_BUILD
 SOURCES=$(filter-out graphappmain.c, $(wildcard *.c))
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 

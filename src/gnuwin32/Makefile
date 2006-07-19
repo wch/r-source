@@ -35,8 +35,8 @@ PKGDIR = $(RHOME)/src/library
 OPTFLAGS=-O3 -Wall -pedantic -std=gnu99
 FOPTFLAGS=-O3 -Wall
 ifdef DEBUG
- OPTFLAGS+=-g
- FOPTFLAGS+=-g
+ OPTFLAGS+=$(G_FLAG)
+ FOPTFLAGS+=$(G_FLAG)
  DLLFLAGS=
 else
  DLLFLAGS=-s
@@ -45,6 +45,7 @@ ifdef R_MEMORY_PROFILING
  OPTFLAGS+=-DR_MEMORY_PROFILING
 endif
 
+# used when compiling src/main: needed for memory.c
 OPTFLAGS_M=$(OPTFLAGS)
 
 ifneq ($(strip $(BUILD)),CROSS)
@@ -162,10 +163,10 @@ rlibs:
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
-	$(MAKE) --no-print-directory -C ./graphapp
-	$(MAKE) --no-print-directory -C ./getline
+	$(MAKE) --no-print-directory -C ./graphapp OPTFLAGS='$(OPTFLAGS)'
+	$(MAKE) --no-print-directory -C ./getline OPTFLAGS='$(OPTFLAGS)'
 	@for ex in pcre bzip2 zlib xdr trio; do \
-	  $(MAKE) --no-print-directory -C ../extra/$${ex} -f Makefile.win || exit 1; \
+	  $(MAKE) --no-print-directory -C ../extra/$${ex} OPTFLAGS='$(OPTFLAGS)' -f Makefile.win || exit 1; \
 	done
 
 rmodules:

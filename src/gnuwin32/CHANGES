@@ -37,6 +37,9 @@ Entry points which are hidden in libR.so on Unix are now also hidden
 in R.dll.  (Just over half the entry points are hidden, which speeds up
 loading.)
 
+It is possible to select (in MkRules) the type of debug symbol used,
+and it is intended to default this to dwarf-2 in due course.
+
 
 
 R 2.3.1 patched
