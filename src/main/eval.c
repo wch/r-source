@@ -2239,16 +2239,18 @@ enum {
 
 SEXP R_unary(SEXP, SEXP, SEXP);
 SEXP R_binary(SEXP, SEXP, SEXP, SEXP);
-SEXP attribute_hidden do_math1(SEXP, SEXP, SEXP, SEXP);
-SEXP attribute_hidden do_relop_dflt(SEXP, SEXP, SEXP, SEXP);
-SEXP attribute_hidden do_logic(SEXP, SEXP, SEXP, SEXP);
-SEXP attribute_hidden do_subset_dflt(SEXP, SEXP, SEXP, SEXP);
-SEXP attribute_hidden do_subassign_dflt(SEXP, SEXP, SEXP, SEXP);
-SEXP attribute_hidden do_c_dflt(SEXP, SEXP, SEXP, SEXP);
-SEXP attribute_hidden do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
-SEXP attribute_hidden do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_math1(SEXP, SEXP, SEXP, SEXP);
+SEXP do_relop_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_logic(SEXP, SEXP, SEXP, SEXP);
+SEXP do_subset_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_subassign_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
+/* now in Defn.h 
 SEXP R_subset3_dflt(SEXP, SEXP);
 SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
+*/
 
 #define DO_FAST_RELOP2(op,a,b) do { \
     double __a__ = (a), __b__ = (b); \

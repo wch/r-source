@@ -943,8 +943,8 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_subset3_dflt(CAR(ans), STRING_ELT(input, 0));
 }
 
-/* in Rinternals.h */
-SEXP R_subset3_dflt(SEXP x, SEXP input)
+/* used in eval.c */
+SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input)
 {
     SEXP y, nlist;
     int slen;

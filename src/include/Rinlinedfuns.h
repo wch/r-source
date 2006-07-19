@@ -577,11 +577,11 @@ INLINE_FUN int asLogical(SEXP x)
 	case LGLSXP:
 	    return LOGICAL(x)[0];
 	case INTSXP:
-	    return LogicalFromInteger(INTEGER(x)[0], &warn);
+	    return Rf_LogicalFromInteger(INTEGER(x)[0], &warn);
 	case REALSXP:
-	    return LogicalFromReal(REAL(x)[0], &warn);
+	    return Rf_LogicalFromReal(REAL(x)[0], &warn);
 	case CPLXSXP:
-	    return LogicalFromComplex(COMPLEX(x)[0], &warn);
+	    return Rf_LogicalFromComplex(COMPLEX(x)[0], &warn);
 	default:
 	    UNIMPLEMENTED_TYPE("asLogical", x);
 	}
@@ -596,16 +596,16 @@ INLINE_FUN int asInteger(SEXP x)
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	    return IntegerFromLogical(LOGICAL(x)[0], &warn);
+	    return Rf_IntegerFromLogical(LOGICAL(x)[0], &warn);
 	case INTSXP:
 	    return INTEGER(x)[0];
 	case REALSXP:
-	    res = IntegerFromReal(REAL(x)[0], &warn);
-	    CoercionWarning(warn);
+	    res = Rf_IntegerFromReal(REAL(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
 	    return res;
 	case CPLXSXP:
-	    res = IntegerFromComplex(COMPLEX(x)[0], &warn);
-	    CoercionWarning(warn);
+	    res = Rf_IntegerFromComplex(COMPLEX(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
 	    return res;
 	default:
 	    UNIMPLEMENTED_TYPE("asInteger", x);
@@ -622,18 +622,18 @@ INLINE_FUN double asReal(SEXP x)
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	    res = RealFromLogical(LOGICAL(x)[0], &warn);
-	    CoercionWarning(warn);
+	    res = Rf_RealFromLogical(LOGICAL(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
 	    return res;
 	case INTSXP:
-	    res = RealFromInteger(INTEGER(x)[0], &warn);
-	    CoercionWarning(warn);
+	    res = Rf_RealFromInteger(INTEGER(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
 	    return res;
 	case REALSXP:
 	    return REAL(x)[0];
 	case CPLXSXP:
-	    res = RealFromComplex(COMPLEX(x)[0], &warn);
-	    CoercionWarning(warn);
+	    res = Rf_RealFromComplex(COMPLEX(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
 	    return res;
 	default:
 	    UNIMPLEMENTED_TYPE("asReal", x);
@@ -652,11 +652,11 @@ INLINE_FUN Rcomplex asComplex(SEXP x)
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	    return ComplexFromLogical(LOGICAL(x)[0], &warn);
+	    return Rf_ComplexFromLogical(LOGICAL(x)[0], &warn);
 	case INTSXP:
-	    return ComplexFromInteger(INTEGER(x)[0], &warn);
+	    return Rf_ComplexFromInteger(INTEGER(x)[0], &warn);
 	case REALSXP:
-	    return ComplexFromReal(REAL(x)[0], &warn);
+	    return Rf_ComplexFromReal(REAL(x)[0], &warn);
 	case CPLXSXP:
 	    return COMPLEX(x)[0];
 	default:

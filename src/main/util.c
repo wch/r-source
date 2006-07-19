@@ -154,33 +154,6 @@ SEXP asChar(SEXP x)
 }
 
 
-R_len_t asVecSize(SEXP x)
-{
-    int warn = 0, res;
-    double d;
-
-    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
-	switch (TYPEOF(x)) {
-	case LGLSXP:
-	    res = IntegerFromLogical(LOGICAL(x)[0], &warn);
-	    if(res == NA_INTEGER) error(_("vector size cannot be NA"));
-	    return res;
-	case INTSXP:
-	    res = INTEGER(x)[0];
-	    if(res == NA_INTEGER) error(_("vector size cannot be NA"));
-	    return res;
-	case REALSXP:
-	    d = REAL(x)[0];
-	    if(d < 0) error(_("vector size cannot be negative"));
-	    if(d > R_LEN_T_MAX) error(_("vector size specified is too large"));
-	    return (R_size_t) d;
-	default:
-	    UNIMPLEMENTED_TYPE("asVecSize", x);
-	}
-    }
-    return -1;
-}
-
 
 const static struct {
     const char * const str;
@@ -394,7 +367,7 @@ Rboolean StringFalse(char *name)
     return FALSE;
 }
 
-SEXP EnsureString(SEXP s)
+SEXP attribute_hidden EnsureString(SEXP s)
 {
     switch(TYPEOF(s)) {
     case SYMSXP:

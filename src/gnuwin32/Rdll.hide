@@ -168,14 +168,20 @@
  R_run_onexits
  R_serializeb
  R_signgam
+ R_subset3_dflt
  R_syscall
  R_sysframe
  R_sysfunction
  R_sysparent
  Rconsolecmd
  Rconsolesetwidth
+ Rf_ComplexFromInteger
+ Rf_ComplexFromLogical
+ Rf_ComplexFromReal
+ Rf_ComplexFromString
  Rf_DispatchGroup
  Rf_DispatchOrEval
+ Rf_EnsureString
  Rf_FixupCex
  Rf_FixupCol
  Rf_FixupFont
@@ -197,20 +203,29 @@
  Rf_InitMemory
  Rf_InitOptions
  Rf_InitTempDir
+ Rf_IntegerFromString
+ Rf_LogicalFromString
  Rf_MakeDLLInfo
  Rf_MakeNativeSymbolRef
  Rf_MakeRegisteredNativeSymbol
  Rf_OneIndex
+ Rf_PairToVectorList
  Rf_PrintGreeting
  Rf_PrintVersion
  Rf_PrintVersionString
  Rf_ProcessInlinePars
  Rf_RGB2rgb
  Rf_RGBA2rgb
+ Rf_RealFromString
+ Rf_StringFromComplex
+ Rf_StringFromInteger
+ Rf_StringFromLogical
+ Rf_StringFromReal
  Rf_VectorIndex
  Rf_bd0
  Rf_chebyshev_eval
  Rf_chebyshev_init
+ Rf_copyMostAttribNoTs
  Rf_convertToC
  Rf_dpSavedptr
  Rf_dpptr

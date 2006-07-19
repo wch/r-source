@@ -52,6 +52,21 @@
 
 #define MAXELTSIZE 8192 /* The largest string size */
 
+#include <R_ext/Complex.h>
+void Rf_CoercionWarning(int);/* warning code */
+int Rf_LogicalFromInteger(int, int*);
+int Rf_LogicalFromReal(double, int*);
+int Rf_LogicalFromComplex(Rcomplex, int*);
+int Rf_IntegerFromLogical(int, int*);
+int Rf_IntegerFromReal(double, int*);
+int Rf_IntegerFromComplex(Rcomplex, int*);
+double Rf_RealFromLogical(int, int*);
+double Rf_RealFromInteger(int, int*);
+double Rf_RealFromComplex(Rcomplex, int*);
+Rcomplex Rf_ComplexFromLogical(int, int*);
+Rcomplex Rf_ComplexFromInteger(int, int*);
+Rcomplex Rf_ComplexFromReal(double, int*);
+
 #define CALLED_FROM_DEFN_H 1
 #include <Rinternals.h>		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
@@ -653,6 +668,12 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define checkArity		Rf_checkArity
 # define CheckFormals		Rf_CheckFormals
 # define CleanEd		Rf_CleanEd
+# define CoercionWarning       	Rf_CoercionWarning
+# define ComplexFromInteger	Rf_ComplexFromInteger
+# define ComplexFromLogical	Rf_ComplexFromLogical
+# define ComplexFromReal	Rf_ComplexFromReal
+# define ComplexFromString	Rf_ComplexFromString
+# define copyMostAttribNoTs	Rf_copyMostAttribNoTs
 # define DataFrameClass		Rf_DataFrameClass
 # define ddfindVar		Rf_ddfindVar
 # define deparse1		Rf_deparse1
@@ -688,10 +709,18 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define InitOptions		Rf_InitOptions
 # define InitTempDir		Rf_InitTempDir
 # define initStack		Rf_initStack
+# define IntegerFromComplex	Rf_IntegerFromComplex
+# define IntegerFromLogical	Rf_IntegerFromLogical
+# define IntegerFromReal	Rf_IntegerFromReal
+# define IntegerFromString	Rf_IntegerFromString
 # define internalTypeCheck	Rf_internalTypeCheck
 # define isValidName		Rf_isValidName
 # define jump_to_toplevel	Rf_jump_to_toplevel
 # define levelsgets		Rf_levelsgets
+# define LogicalFromComplex	Rf_LogicalFromComplex
+# define LogicalFromInteger	Rf_LogicalFromInteger
+# define LogicalFromReal	Rf_LogicalFromReal
+# define LogicalFromString	Rf_LogicalFromString
 # define mainloop		Rf_mainloop
 # define mat2indsub		Rf_mat2indsub
 # define Mbrtowc		Rf_mbrtowc
@@ -709,16 +738,25 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define onintr			Rf_onintr
 # define onsigusr1              Rf_onsigusr1
 # define onsigusr2              Rf_onsigusr2
+# define PairToVectorList	Rf_PairToVectorList
 # define parse			Rf_parse
 # define PrintGreeting		Rf_PrintGreeting
 # define PrintVersion		Rf_PrintVersion
 # define PrintVersionString    	Rf_PrintVersionString
 # define PrintWarnings		Rf_PrintWarnings
 # define promiseArgs		Rf_promiseArgs
+# define RealFromComplex	Rf_RealFromComplex
+# define RealFromInteger	Rf_RealFromInteger
+# define RealFromLogical	Rf_RealFromLogical
+# define RealFromString		Rf_RealFromString
 # define RemoveClass		Rf_RemoveClass
 # define sortVector		Rf_sortVector
 # define ssort			Rf_ssort
 # define str2type		Rf_str2type
+# define StringFromComplex	Rf_StringFromComplex
+# define StringFromInteger	Rf_StringFromInteger
+# define StringFromLogical	Rf_StringFromLogical
+# define StringFromReal		Rf_StringFromReal
 # define StrToInternal		Rf_StrToInternal
 # define substituteList		Rf_substituteList
 # define tsConform		Rf_tsConform
@@ -772,6 +810,18 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 #define SIMPLEDEPARSE		0
 #define FORSOURCING		31
 
+/* Coercion functions */
+SEXP Rf_PairToVectorList(SEXP x);
+int Rf_LogicalFromString(SEXP, int*);
+int Rf_IntegerFromString(SEXP, int*);
+double Rf_RealFromString(SEXP, int*);
+Rcomplex Rf_ComplexFromString(SEXP, int*);
+SEXP Rf_StringFromLogical(int, int*);
+SEXP Rf_StringFromInteger(int, int*);
+SEXP Rf_StringFromReal(double, int*);
+SEXP Rf_StringFromComplex(Rcomplex, int*);
+SEXP Rf_EnsureString(SEXP);
+
 /* Other Internally Used Functions */
 
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
@@ -779,6 +829,7 @@ void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP, SEXP);
 void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);
 void CleanEd(void);
+void copyMostAttribNoTs(SEXP, SEXP);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean,int);
@@ -925,6 +976,12 @@ char *EncodeString(SEXP, int, int, Rprt_adj);
 /* main/sort.c */
 void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 		  Rboolean decreasing);
+
+/* main/subset.c */
+SEXP R_subset3_dflt(SEXP, SEXP);
+
+/* main/subassign.c */
+SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 
 
 #ifdef SUPPORT_MBCS /* implies we have this header */
