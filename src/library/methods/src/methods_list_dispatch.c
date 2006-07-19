@@ -16,50 +16,6 @@
 extern int snprintf (char *s, size_t n, const char *format, ...);
 #endif
 
-
-#if 0
-/* from Defn.h: it might be better actually to include that */
-#define type2str		Rf_type2str
-SEXP type2str(SEXPTYPE);
-#define type2symbol		Rf_type2symbol
-SEXP type2symbol(SEXPTYPE);
-#define streql(s, t)	(!strcmp((s), (t)))
-void R_PreserveObject(SEXP);
-
-SEXP Rf_append(SEXP, SEXP);
-
-/* environment cell access */
-typedef struct R_varloc_st *R_varloc_t;
-R_varloc_t R_findVarLocInFrame(SEXP, SEXP);
-SEXP R_GetVarLocValue(R_varloc_t);
-SEXP R_GetVarLocSymbol(R_varloc_t);
-void R_SetVarLocValue(R_varloc_t, SEXP);
-Rboolean R_GetVarLocMISSING(R_varloc_t);
-
-/* from Defn.h */
-typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP, SEXP);
-R_stdGen_ptr_t R_get_standardGeneric_ptr(); /* get method */
-R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t, SEXP); /* set method */
-
-
-/* attrib.c */
-SEXP R_data_class(SEXP obj, int singleString);
-
-
-/* from main/subassign.c */
-SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val);
-
-/* from main/objects.c */
-SEXP R_deferred_default_method();
-SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef, 
-		       SEXP mlist);
-SEXP R_primitive_methods(SEXP op);
-SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist);
-void R_set_quick_method_check(R_stdGen_ptr_t);
-SEXP R_do_slot(SEXP obj, SEXP name); 
-#endif
-
-
 /* the following utilities are included here for now, as statics.  But
    they will eventually be C implementations of slot, data.class,
    etc. */
@@ -71,9 +27,9 @@ static SEXP R_loadMethod(SEXP f, SEXP fname, SEXP ev);
 /* objects, mostly symbols, that are initialized once to save a little time */
 static int initialized = 0;
 static SEXP s_dot_Methods, s_skeleton, s_expression, s_function,
-  s_getAllMethods, s_objectsEnv, s_MethodsListSelect,
-  s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_generic,
-  s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
+    s_getAllMethods, s_objectsEnv, s_MethodsListSelect,
+    s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_generic,
+    s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
     s_argument, s_allMethods;
 static SEXP R_FALSE, R_TRUE;
 
@@ -94,7 +50,8 @@ static char *check_single_string(SEXP, Rboolean, char *);
 static char *check_symbol_or_string(SEXP obj, Rboolean nonEmpty, char *what);
 static char *class_string(SEXP obj);
 
-static void init_loadMethod() {
+static void init_loadMethod()
+{
     R_target = install("target");
     R_defined = install("defined");
     R_nextMethod = install("nextMethod");
@@ -174,17 +131,6 @@ SEXP R_initMethodDispatch(SEXP envir)
 }
 
 
-#ifdef UNUSED
-/* return a symbol containing mode (well, actually, typeof) obj */
-static SEXP R_mode(SEXP obj)
-{
-    return type2symbol(TYPEOF(obj));
-}
-#endif
-
-/* the  SEXP for the data.class string (roughly, the green book class function) */
-
-
 /* simplified version of do_subset2_dflt, with no partial matching */
 static SEXP R_element_named(SEXP obj, char * what)
 {
@@ -226,53 +172,6 @@ SEXP R_set_el_named(SEXP object, SEXP what, SEXP value)
 
 /*  */
 static int n_ov = 0;
-#ifdef UNUSED
-static SEXP ov_mlists[50], ov_methods[50];
-static int max_ov = 50;
-/* should make this flexible via malloc, realloc */
-static SEXP getOverride(SEXP mlist)
-{
-    int i;
-    for(i=0; i<n_ov; i++)
-	if(ov_mlists[i] == mlist)
-	    return ov_methods[i];
-    return R_NilValue;
-}
-
-static SEXP setOverride(SEXP mlist, SEXP value)
-{
-    int i;
-    for(i=0; i<n_ov; i++) {
-	if(ov_mlists[i] == mlist) { /* set or clear */
-	    if(value)
-		ov_methods[i] = value;
-	    else {
-		ov_mlists[i] = NULL;
-		if(i+1 == n_ov)
-			n_ov--;
-	    }
-	    return value;
-	}
-	else if(!ov_mlists[i]) {
-	    ov_mlists[i] = mlist;
-	    ov_methods[i] = value;
-	    return value;
-	}
-    }
-    if(!value)
-	    return value;
-    if(n_ov >= max_ov) {
-	/* should flex, but for now ... */
-	n_ov = 0;
-	error("more than %d nested methods list searches (system error?)", 
-	      n_ov);
-    }
-    ov_mlists[n_ov] = mlist;
-    ov_methods[n_ov] = value;
-    n_ov++;
-    return value;
-}
-#endif
 
 SEXP R_clear_method_selection()
 {
@@ -331,23 +230,6 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
 }
 
 /* call some S language functions */
-#ifdef UNUSED
-static SEXP R_S_getAllMethods(SEXP fname, SEXP fdef)
-{
-    SEXP e, val, call;
-    PROTECT(call = allocVector(LANGSXP, 3));
-    SETCAR(call, s_getAllMethods);
-    e = CDR(call);
-    SETCAR(e, fname);
-    e = CDR(e);
-    SETCAR(e, fdef);
-    /* We don't do checking here:  the calls from do_dispatch check
-     * argument types. */
-    val = eval(call, Methods_Namespace);
-    UNPROTECT(1);
-    return(val);
-}
-#endif
 
 static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
 				  SEXP f_env)
@@ -375,55 +257,6 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
     return val;
 }
 
-#ifdef UNUSED
-static SEXP R_S_syscall(int n, SEXP ev)
-{
-    SEXP e, val, arg;
-    PROTECT(e = allocVector(LANGSXP, 2));
-    PROTECT(arg = NEW_INTEGER(1));
-    INTEGER_DATA(arg)[0] = n;
-    SETCAR(e, s_sys_dot_call);
-    SETCAR(CDR(e), arg);
-    val = eval(e, ev);
-    UNPROTECT(2);
-    return val;
-}
-
-static SEXP R_S_sysfunction(int n, SEXP ev)
-{
-    SEXP e, val, arg;
-    PROTECT(e = allocVector(LANGSXP, 2));
-    PROTECT(val = Rf_findFun(s_sys_dot_function, R_GlobalEnv));
-    PROTECT(arg = NEW_INTEGER(1));
-    INTEGER_DATA(arg)[0] = n;
-    SETCAR(e, val);
-    SETCAR(CDR(e), arg);
-    val = eval(e, ev);
-    UNPROTECT(3);
-    return val;
-}
-#endif
-
-#if 0 /* -Wall warns and this confuses users */
-static SEXP R_get_function_env(SEXP obj, SEXP fname)
-{
-    if(TYPEOF(obj) != CLOSXP)
-	error("object retrieved for '%s' was not a function",
-	      CHAR_STAR(fname));
-    return CLOENV(obj);
-}
-
-
-static SEXP R_get_from_f_env(SEXP env, SEXP what, SEXP fname)
-{
-    SEXP obj;
-    obj = findVarInFrame(env, what);
-    if(obj == R_UnboundValue)
-	error(_("no '%s' object in environment of function '%s'"),
-	      CHAR_STAR(what), CHAR_STAR(fname));
-    return obj;
-}
-#endif
 
 /* quick tests for generic and non-generic functions.  May mistakenly
    identify non-generics as generics:  a class with data part of type
@@ -483,90 +316,6 @@ SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env)
     return value;
 }
 
-#ifdef UNUSED
-static SEXP get_skeleton(SEXP symbol, SEXP generic)
-{
-    SEXP vl = R_UnboundValue;
-    if(generic == R_NilValue)
-	return R_NilValue; /* a primitive ? */
-    /* get the skeleton call stored in the generic function, to use in case
-       a call to this generic occurs in the S language code to merge
-       methods and for the arguments to .Primitive methods */
-    vl = GET_ATTR(generic, s_skeleton);
-    if(vl == R_NilValue)
-	error("invalid generic function for '%s': no 'skeleton' slot defined",
-	      CHAR_STAR(symbol));
-    return vl;
-}
-
-typedef enum {STANDARD, SUBSET, SUBSET_GETS, ELEMENT,
-		     ELEMENT_GETS} primitive_type;
-
-static primitive_type primitive_case(SEXP fname, SEXP op)
-{
-    /* assume fname is or has been made into a symbol */
-    char *string;
-    /* the only nonstandards are currently SPECIAL, not BUILTIN */
-    if(TYPEOF(op) == BUILTINSXP)
-	return STANDARD;
-    string = CHAR(PRINTNAME(fname));
-    switch(string[0]) {
-    case '[':
-	switch(string[1]) {
-	case '\0': return SUBSET;
-	case '[':
-	    switch(string[2]) {
-	    case '<':
-		return (fname == s_element_gets ? ELEMENT_GETS : STANDARD);
-	    case '\0': return ELEMENT;
-	    default: return STANDARD;
-	    }
-	case '<': return (fname == s_subset_gets ? SUBSET_GETS : STANDARD);
-	default: return STANDARD;
-	}
-    default: return STANDARD;
-    }
-}
-
-static SEXP nonstandard_primitive(primitive_type which, SEXP skeleton,
-				  SEXP prim, SEXP ev)
-{
-    SEXP call, frame, val, p1, p2; int nargs, i;
-    frame = R_S_sysfunction(-1, ev);
-    PROTECT(call = R_S_syscall(0, ev));
-    nargs = length(call)-1;
-    switch(which) {
-    case SUBSET: case ELEMENT:
-	switch(nargs) {
-	case 2: val = f_x_i_skeleton; break;
-	case 1: val = f_x_skeleton; break;
-	default: val = skeleton; break;
-	}
-	break;
-    case SUBSET_GETS: case ELEMENT_GETS:
-	switch(nargs) {
-	case 3: val = fgets_x_i_skeleton; break;
-	case 2: val = fgets_x_skeleton; break;
-	default: val = skeleton; break;
-	}
-	break;
-    default:
-	val = skeleton; break;
-    }
-    PROTECT(val = duplicate(val));
-    /* the primitive call must have the correct pattern of missing
-       actual arguments */
-    p1 = CDR(call); p2 = CDR(val);
-    for(i=0; i<nargs; i++) {
-	if(CAR(p1) == R_MissingArg)
-	    SETCAR(p2, R_MissingArg);
-	p1 = CDR(p1); p2 = CDR(p2);
-    }
-    SETCAR(val, prim);
-    UNPROTECT(2);
-    return(val);
-}
-#endif
 
 /* C version of the standardGeneric R function. */
 SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
@@ -920,7 +669,8 @@ SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name)
     return ans;
 }
 
-SEXP R_identC(SEXP e1, SEXP e2) {
+SEXP R_identC(SEXP e1, SEXP e2)
+{
     if(TYPEOF(e1) == STRSXP  && TYPEOF(e1) == STRSXP &&
        length(e1) == 1 && length(e2) == 1 &&
        streql(CHAR(STRING_ELT(e1, 0)), CHAR(STRING_ELT(e2, 0))))
