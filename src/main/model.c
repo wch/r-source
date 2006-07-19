@@ -796,7 +796,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     intercept = 1;
     parity = 1;
     response = 0;
-    PROTECT(varlist = lcons(install("list"), R_NilValue));
+    PROTECT(varlist = LCONS(install("list"), R_NilValue));
     ExtractVars(CAR(args), 1);
     UNPROTECT(1);
     SETCAR(a, varlist);

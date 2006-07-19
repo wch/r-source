@@ -394,7 +394,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 
 static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
-    SEXP dim, indx;
+    SEXP dim, indx, newnames;
     int i, ii, iy, n, nx, ny, stretch, which;
     double ry;
 
@@ -627,11 +627,10 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	warningcall(call, "sub assignment (*[*] <- *) not done; __bug?__");
     }
     /* Check for additional named elements. */
-    /* Note we are using a horrible hack in makeSubscript */
-    /* Which passes the additional names back in the attribute */
-    /* slot of the generated subscript vector.  (Shudder!) */
-    if (ATTRIB(indx) != R_NilValue) {
-	SEXP newnames = ATTRIB(indx);
+    /* Note makeSubscript passes the additional names back as the names
+       attribute of the generated subscript vector */
+    newnames = getAttrib(indx, R_NamesSymbol);
+    if (newnames != R_NilValue) {
 	SEXP oldnames = getAttrib(x, R_NamesSymbol);
 	if (oldnames != R_NilValue) {
 	    for (i = 0; i < n; i++) {

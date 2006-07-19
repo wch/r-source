@@ -440,10 +440,10 @@ static SEXP stringSubscript(SEXP s, int ns, int nx, SEXP names,
 	}
 	INTEGER(indx)[i] = sub;
     }
-    /* Ghastly hack!  We attach the new names to the attribute */
-    /* slot on the returned subscript vector. */
+    /* We return the new names as the names attribute of the returned
+       subscript vector. */
     if (extra != nnames)
-	SET_ATTRIB(indx, indexnames);
+	setAttrib(indx, R_NamesSymbol, indexnames);
     if (canstretch)
 	*stretch = extra;
     UNPROTECT(4);
@@ -538,7 +538,7 @@ int_vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
 		    StringEltGetter strg, SEXP x, Rboolean in)
 {
     int ns;
-    SEXP ans=R_NilValue, tmp;
+    SEXP ans = R_NilValue, tmp;
 
     ns = length(s);
     /* special case for simple indices -- does not duplicate */
@@ -549,7 +549,7 @@ int_vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
 	    return s;
 	}
     }
-    PROTECT(s=duplicate(s));
+    PROTECT(s = duplicate(s));
     SET_ATTRIB(s, R_NilValue);
     switch (TYPEOF(s)) {
     case NILSXP:

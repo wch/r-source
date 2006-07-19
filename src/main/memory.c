@@ -1716,12 +1716,12 @@ SEXP cons(SEXP car, SEXP cdr)
 {
     SEXP s;
     if (FORCE_GC || NO_FREE_NODES()) {
-      PROTECT(car);
-      PROTECT(cdr);
-      R_gc_internal(0);
-      UNPROTECT(2);
-      if (NO_FREE_NODES())
-	mem_err_cons();
+	PROTECT(car);
+	PROTECT(cdr);
+	R_gc_internal(0);
+	UNPROTECT(2);
+	if (NO_FREE_NODES())
+	    mem_err_cons();
     }
     GET_FREE_NODE(s);
 #if VALGRIND_LEVEL > 2
@@ -2407,6 +2407,12 @@ void R_SetExternalPtrProtected(SEXP s, SEXP p)
     EXTPTR_PROT(s) = p;
 }
 
+#define USE_TYPE_CHECKING
+
+#if defined(USE_TYPE_CHECKING_STRICT) && !defined(USE_TYPE_CHECKING)
+# define USE_TYPE_CHECKING
+#endif
+
 
 /* The following functions are replacements for the accessor macros.
    They are used by code that does not have direct access to the
@@ -2414,7 +2420,14 @@ void R_SetExternalPtrProtected(SEXP s, SEXP p)
    implement the write barrier. */
 
 /* General Cons Cell Attributes */
-SEXP (ATTRIB)(SEXP x) { return ATTRIB(x); }
+SEXP (ATTRIB)(SEXP x) {
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(x) != LISTSXP) 
+	error("%s() can only be applied to a '%s', not a '%s'", 
+	      "ATTRIB", "pairlist", type2char(TYPEOF(x)));
+#endif
+    return ATTRIB(x); 
+}
 int (OBJECT)(SEXP x) { return OBJECT(x); }
 int (MARK)(SEXP x) { return MARK(x); }
 int (TYPEOF)(SEXP x) { return TYPEOF(x); }
@@ -2422,19 +2435,21 @@ int (NAMED)(SEXP x) { return NAMED(x); }
 int (TRACE)(SEXP x) { return TRACE(x); }
 int (LEVELS)(SEXP x) { return LEVELS(x); }
 
-void (SET_ATTRIB)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); ATTRIB(x) = v; }
+void (SET_ATTRIB)(SEXP x, SEXP v) { 
+#ifdef USE_TYPE_CHECKING
+    if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP) 
+	error("value of 'SET_ATTRIB' must be a pairlist or NULL, not a '%s'", 
+	      type2char(TYPEOF(x)));
+#endif
+    CHECK_OLD_TO_NEW(x, v); 
+    ATTRIB(x) = v; 
+}
 void (SET_OBJECT)(SEXP x, int v) { SET_OBJECT(x, v); }
 void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(x, v); }
 void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
 void (SET_TRACE)(SEXP x, int v) { SET_TRACE(x, v); }
 int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(x, v); }
 
-
-#define USE_TYPE_CHECKING
-
-#if defined(USE_TYPE_CHECKING_STRICT) && !defined(USE_TYPE_CHECKING)
-# define USE_TYPE_CHECKING
-#endif
 
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(x); }
@@ -2455,7 +2470,7 @@ SEXP (STRING_ELT)(SEXP x, int i) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "STRING_ELT", "STRSXP", type2char(TYPEOF(x)));
+	      "STRING_ELT", "charcter vector", type2char(TYPEOF(x)));
 #endif
     return STRING_ELT(x, i);
 }
@@ -2467,14 +2482,14 @@ SEXP (VECTOR_ELT)(SEXP x, int i) {
        TYPEOF(x) != EXPRSXP && 
        TYPEOF(x) != WEAKREFSXP)
 	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
+	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
 #elif defined(USE_TYPE_CHECKING)
     /* also allow STRSXP */
     if(TYPEOF(x) != VECSXP && TYPEOF(x) != STRSXP &&
        TYPEOF(x) != EXPRSXP && 
        TYPEOF(x) != WEAKREFSXP)
 	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
+	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
 #endif
     return VECTOR_ELT(x, i);
 }
@@ -2483,12 +2498,12 @@ int *(LOGICAL)(SEXP x) {
 #ifdef USE_TYPE_CHECKING_STRICT
     if(TYPEOF(x) != LGLSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "LOGICAL",  "LGLSXP", type2char(TYPEOF(x)));
+	      "LOGICAL",  "logical", type2char(TYPEOF(x)));
 #elif defined(USE_TYPE_CHECKING)
     /* Currently harmless, and quite widely used */
     if(TYPEOF(x) != LGLSXP && TYPEOF(x) != INTSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
-	      "LOGICAL",  "LGLSXP", type2char(TYPEOF(x)));
+	      "LOGICAL",  "logical", type2char(TYPEOF(x)));
 #endif
   return LOGICAL(x); 
 }
@@ -2497,7 +2512,7 @@ int *(INTEGER)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != INTSXP && TYPEOF(x) != LGLSXP)
         error("%s() can only be applied to a '%s', not a '%s'",
-	      "INTEGER", "INTSXP", type2char(TYPEOF(x)));
+	      "INTEGER", "integer", type2char(TYPEOF(x)));
 #endif
     return INTEGER(x); 
 }
@@ -2506,7 +2521,7 @@ Rbyte *(RAW)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != RAWSXP) 
 	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "RAW", "RAWSXP", type2char(TYPEOF(x)));
+	      "RAW", "raw", type2char(TYPEOF(x)));
 #endif
     return RAW(x); 
 }
@@ -2515,7 +2530,7 @@ double *(REAL)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != REALSXP) 
 	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "REAL", "REALSXP", type2char(TYPEOF(x)));
+	      "REAL", "numeric", type2char(TYPEOF(x)));
 #endif
     return REAL(x); 
 }
@@ -2524,7 +2539,7 @@ Rcomplex *(COMPLEX)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != CPLXSXP)
 	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "COMPLEX", "CPLXSXP", type2char(TYPEOF(x)));
+	      "COMPLEX", "complex", type2char(TYPEOF(x)));
 #endif
     return COMPLEX(x); 
 }
@@ -2541,7 +2556,7 @@ void (SET_STRING_ELT)(SEXP x, int i, SEXP v) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "SET_STRING_ELT", "STRSXP", type2char(TYPEOF(x)));
+	      "SET_STRING_ELT", "character vector", type2char(TYPEOF(x)));
     if(TYPEOF(v) != CHARSXP && TYPEOF(v) != NILSXP)
        error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'", 
 	     type2char(TYPEOF(v)));
@@ -2557,14 +2572,14 @@ SEXP (SET_VECTOR_ELT)(SEXP x, int i, SEXP v) {
        TYPEOF(x) != EXPRSXP &&
        TYPEOF(x) != WEAKREFSXP) {
 	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "SET_VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
+	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
     }
 #elif defined(USE_TYPE_CHECKING)
     /* also allow STRSXP */
     if(TYPEOF(x) != VECSXP && TYPEOF(x) != STRSXP &&
        TYPEOF(x) != EXPRSXP && TYPEOF(x) != WEAKREFSXP) {
 	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "SET_VECTOR_ELT", "VECSXP", type2char(TYPEOF(x)));
+	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
     }
 #endif
     CHECK_OLD_TO_NEW(x, v); 
