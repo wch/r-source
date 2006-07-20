@@ -293,6 +293,9 @@ C-LEVEL FACILITIES
 	.C(DUP = FALSE): it would have given rise to obscure garbage
 	collection errors.
 
+    o	R_ParseVector was returning with an object protected in the
+	parser if the status was PARSE_INCOMPLETE or PARSE_ERROR.
+
 
 UTILITIES
 
