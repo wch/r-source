@@ -227,6 +227,7 @@ NEW FEATURES
 	recursively and can restrict the classes of elements to which
 	it is applied.
 
+    o   setwd now returns the current directory, silently, before changing
 
 DEPRECATED & DEFUNCT
 

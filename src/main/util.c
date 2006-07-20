@@ -603,12 +603,10 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include <windows.h>
 #endif
 
-SEXP attribute_hidden do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP static intern_getwd()
 {
     SEXP rval = R_NilValue;
     char buf[2 * PATH_MAX];
-
-    checkArity(op, args);
 
 #ifdef R_GETCWD
     R_GETCWD(buf, PATH_MAX);
@@ -620,24 +618,37 @@ SEXP attribute_hidden do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(rval);
 }
 
+SEXP attribute_hidden do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+
+    checkArity(op, args);
+
+    return(intern_getwd());
+}
+
+
 #if defined(Win32) && defined(_MSC_VER)
 #include <direct.h> /* for chdir */
 #endif
 
 SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s = R_NilValue;	/* -Wall */
+    SEXP s = R_NilValue, wd = R_NilValue;	/* -Wall */
     const char *path;
 
     checkArity(op, args);
     if (!isPairList(args) || !isValidString(s = CAR(args)))
 	errorcall(call, _("character argument expected"));
+
+    /* get current directory to return */
+    wd = intern_getwd();
+
     path = R_ExpandFileName(CHAR(STRING_ELT(s, 0)));
 #ifdef HAVE_CHDIR
     if(chdir(path) < 0)
 #endif
 	errorcall(call, _("cannot change working directory"));
-    return(R_NilValue);
+    return(wd);
 }
 
 /* remove portion of path before file separator if one exists */

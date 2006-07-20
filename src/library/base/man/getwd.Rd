@@ -23,8 +23,8 @@ setwd(dir)
   \code{getwd} returns a character vector, or \code{NULL} if the
   working directory is not available on that platform.
 
-  \code{setwd} returns \code{NULL} invisibly.  It will give an error if
-  it does not succeed.
+  \code{setwd} returns the currrent directory, before the change, invisibly.  
+  It will give an error if it does not succeed.
 }
 \examples{
 (WD <- getwd())
