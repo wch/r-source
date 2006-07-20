@@ -9558,6 +9558,9 @@ Bit 0 is used for @code{HASHASH}, on the @code{PRINTNAME} of the
 Bits 0 and 1 are used for weak references (to indicate 'ready to
 finalize', 'finalize on exit').
 
+Bit 0 is used by the condition handling system (on a @code{VECSXP}) to
+indicate a calling handler.
+
 @c Finally, @code{SETLEVELS} and @code{LEVELS} are used by that name for
 @c the internal code for @code{terms.formula} to compute the @code{order}
 @c attribute of the result.  This is computed on an internal pairlist, and
