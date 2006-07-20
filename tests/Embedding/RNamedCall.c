@@ -39,7 +39,7 @@ source(const char *name)
    SETCAR(CDR(e), tmp = NEW_CHARACTER(1));
    SET_STRING_ELT(tmp, 0, COPY_TO_USER_STRING("foo.R"));
 
-   Test_tryEval(e, NULL);
+   R_tryEval(e, R_GlobalEnv, NULL);
 }
 
 /* 
@@ -91,7 +91,7 @@ bar1()
 
     SETCAR(e, Rf_install("foo"));
     Rf_PrintValue(e);
-    Test_tryEval(e, NULL);
+    R_tryEval(e, R_GlobalEnv, NULL);
 
     UNPROTECT(n);
 }

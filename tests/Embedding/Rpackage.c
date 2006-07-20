@@ -23,14 +23,14 @@ doSplinesExample()
   SETCAR(e, Rf_install("library"));
   SETCAR(CDR(e), mkString("splines"));
 
-  Test_tryEval(e, NULL);
+  R_tryEval(e, R_GlobalEnv, NULL);
   UNPROTECT(1);
 
   PROTECT(e = allocVector(LANGSXP, 2));
   SETCAR(e, Rf_install("example"));
   SETCAR(CDR(e), mkString("ns"));
    
-  Test_tryEval(e, &errorOccurred);
+  R_tryEval(e, R_GlobalEnv, &errorOccurred);
 
   UNPROTECT(1);
 }

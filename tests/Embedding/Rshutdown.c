@@ -29,7 +29,7 @@ callLength(SEXP obj)
     SETCAR(e, Rf_install("length"));
     SETCAR(CDR(e), obj);
 
-    PROTECT(val = Test_tryEval(e, &errorOccurred));
+    PROTECT(val = R_tryEval(e, R_GlobalEnv, &errorOccurred));
     len = INTEGER(val)[0];
     UNPROTECT(2);
    
