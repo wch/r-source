@@ -78,7 +78,8 @@ static void printAttributes(SEXP, SEXP, Rboolean);
 static char tagbuf[TAGBUFLEN + 5];
 
 
-void attribute_hidden PrintDefaults(SEXP rho)
+/* Used in X11 module for dataentry */
+void PrintDefaults(SEXP rho)
 {
     R_print.na_string = NA_STRING;
     R_print.na_string_noquote = mkChar("<NA>");
