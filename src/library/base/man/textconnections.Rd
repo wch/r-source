@@ -40,7 +40,7 @@ textConnection(object, open = "r", local = FALSE)
   append to an existing character vector with the given name in the
   user's workspace or the calling environment.  If none is found (even
   if an object exists of the right name but the wrong type) a new
-  character vector wil be created, with a warning.
+  character vector will be created, with a warning.
 
   You cannot \code{seek} on a text connection, and \code{seek} will
   always return zero as the position.
