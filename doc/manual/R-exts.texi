@@ -9558,12 +9558,12 @@ Bit 0 is used for @code{HASHASH}, on the @code{PRINTNAME} of the
 Bits 0 and 1 are used for weak references (to indicate 'ready to
 finalize', 'finalize on exit').
 
-Finally, @code{SETLEVELS} and @code{LEVELS} are used by that name for
-the internal code for @code{terms.formula} to compute the @code{order}
-attribute of the result.  This is computed on an internal pairlist, and
-marks the order of the interaction.  This is in principle unlimited
-(although no test is done) and could in principle exceed 15.  (This
-usage could easily be replaced by one not making use of @code{gp}.)
+@c Finally, @code{SETLEVELS} and @code{LEVELS} are used by that name for
+@c the internal code for @code{terms.formula} to compute the @code{order}
+@c attribute of the result.  This is computed on an internal pairlist, and
+@c marks the order of the interaction.  This is in principle unlimited
+@c (although no test is done) and could in principle exceed 15.  (This
+@c usage could easily be replaced by one not making use of @code{gp}.)
 
 
 @node The 'data', Allocation classes, Rest of header, SEXPs

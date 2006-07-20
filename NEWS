@@ -414,6 +414,9 @@ BUG FIXES
 	"NA" to "<NA>" (a legacy of before there were NA character
 	strings).
 
+    o	terms(keep.order=TRUE) was not returning a valid "order"
+	attribute.
+
 
 
 

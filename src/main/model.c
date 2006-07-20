@@ -708,7 +708,7 @@ static SEXP ExpandDots(SEXP object, SEXP value);
 
 SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP a, ans, v, pattern, formula, varnames, term, termlabs;
+    SEXP a, ans, v, pattern, formula, varnames, term, termlabs, ord;
     SEXP specials, t, data, rhs;
     int i, j, k, l, n, keepOrder, allowDot;
 
@@ -872,9 +872,10 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Step 3: Reorder the model terms by BitCount, otherwise
        preserving their order. */
 
-    if (!keepOrder) {
+    PROTECT(ord = allocVector(INTSXP, nterm));
+    {
 	SEXP sCounts;
-	int *counts, bitmax = 0;
+	int *counts, bitmax = 0, *iord = INTEGER(ord), m = 0;
 
 	PROTECT(pattern = allocVector(VECSXP, nterm));
 	PROTECT(sCounts = allocVector(INTSXP, nterm));
@@ -885,14 +886,20 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	for (n = 0; n < nterm; n++) 
 	    if(counts[n] > bitmax) bitmax = counts[n];
-	call = formula;
-	for (i = 0; i <= bitmax; i++) /* can order 0 occur? */
+	if(keepOrder) {
 	    for (n = 0; n < nterm; n++)
-		if (counts[n] == i) {
-		    SETCAR(call, VECTOR_ELT(pattern, n));
-		    SETLEVELS(CAR(call), i);
-		    call = CDR(call);
-		}
+		iord[n] = counts[n];
+	} else {   
+	    call = formula;
+	    m = 0;
+	    for (i = 0; i <= bitmax; i++) /* can order 0 occur? */
+		for (n = 0; n < nterm; n++)
+		    if (counts[n] == i) {
+			SETCAR(call, VECTOR_ELT(pattern, n));
+			call = CDR(call);
+			iord[m++] = i;
+		    }
+	}
 	UNPROTECT(2);
     }
     
@@ -1025,8 +1032,12 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     SETCAR(a, allocVector(INTSXP, nterm));
     n = 0;
-    for (call = formula; call != R_NilValue; call = CDR(call))
-	INTEGER(CAR(a))[n++] = LEVELS(CAR(call));
+    {
+	int *ia = INTEGER(CAR(a)), *iord = INTEGER(ord);
+	for (call = formula; call != R_NilValue; call = CDR(call), n++) 
+	    ia[n] = iord[n];
+    }
+    
     SET_TAG(a, install("order"));
     a = CDR(a);
 
@@ -1045,7 +1056,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SETCDR(a, R_NilValue);  /* truncate if necessary */
     SET_OBJECT(ans, 1);
 
-    UNPROTECT(2);
+    UNPROTECT(3);
     return ans;
 }
 

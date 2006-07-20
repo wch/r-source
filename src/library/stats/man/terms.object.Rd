@@ -61,6 +61,9 @@
 ## and term labels as column names, both as character vectors. 
 attr(tf, "specials")    # index 's' variable(s)
 rownames(attr(tf, "factors"))[attr(tf, "specials")$s]
+
+## we can keep the order by
+terms(y ~ x + x:z + s(x), specials = "s", keep.order = TRUE)
 }
 %%--- MM: I would really like instructive examples here...
 \keyword{models}
