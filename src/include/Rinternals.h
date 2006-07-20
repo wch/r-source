@@ -527,6 +527,11 @@ SEXP Rf_asChar(SEXP);
 SEXP Rf_coerceVector(SEXP, SEXPTYPE);
 SEXP Rf_PairToVectorList(SEXP x);
 SEXP Rf_VectorToPairList(SEXP x);
+int Rf_asLogical(SEXP x);
+int Rf_asInteger(SEXP x);
+double Rf_asReal(SEXP x);
+Rcomplex Rf_asComplex(SEXP x);
+    
 
 
 /* Other Internally Used Functions */

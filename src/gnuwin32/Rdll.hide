@@ -177,6 +177,7 @@
  R_unary
  Rconsolecmd
  Rconsolesetwidth
+ Rf_CoercionWarning
  Rf_ComplexFromInteger
  Rf_ComplexFromLogical
  Rf_ComplexFromReal
@@ -206,7 +207,13 @@
  Rf_InitMemory
  Rf_InitOptions
  Rf_InitTempDir
+ Rf_IntegerFromComplex
+ Rf_IntegerFromLogical
+ Rf_IntegerFromReal
  Rf_IntegerFromString
+ Rf_LogicalFromComplex
+ Rf_LogicalFromInteger
+ Rf_LogicalFromReal
  Rf_LogicalFromString
  Rf_OneIndex
  Rf_PrintDefaults
@@ -218,6 +225,9 @@
  Rf_ProcessInlinePars
  Rf_RGB2rgb
  Rf_RGBA2rgb
+ Rf_RealFromComplex
+ Rf_RealFromInteger
+ Rf_RealFromLogical
  Rf_RealFromString
  Rf_Specify2
  Rf_StringFromComplex

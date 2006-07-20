@@ -78,7 +78,7 @@ const static char * const falsenames[] = {
   } \
 } while (0)
 
-void CoercionWarning(int warn)
+void attribute_hidden CoercionWarning(int warn)
 {
 /* FIXME: Use
    =====
@@ -108,16 +108,16 @@ static double R_strtol(const char *nptr, char **endptr)
 	    else if('a' <= *p && *p <= 'f') ret = 16*ret + (*p -'a' + 10);
 	    else if('A' <= *p && *p <= 'F') ret = 16*ret + (*p -'A' + 10);
 	    else goto done;
-	}    
+	}
     }
-    
+
     for(p = nptr; p; p++) {
 	if(*p == '+') continue;
 	if(*p == '-') { sign = -1; continue;}
 	if('0' <= *p && *p <= '9') ret = 10*ret + (*p -'0');
-	else goto done;	
+	else goto done;
     }
-	
+
 done:
     if(endptr) *endptr = (char *)p;
     return sign*ret;
@@ -147,25 +147,29 @@ double R_strtod(const char *c, char **end)
     return x;
 }
 
-int LogicalFromInteger(int x, int *warn)
+int attribute_hidden
+LogicalFromInteger(int x, int *warn)
 {
     return (x == NA_INTEGER) ?
 	NA_LOGICAL : (x != 0);
 }
 
-int LogicalFromReal(double x, int *warn)
+int attribute_hidden
+LogicalFromReal(double x, int *warn)
 {
     return ISNAN(x) ?
 	NA_LOGICAL : (x != 0);
 }
 
-int LogicalFromComplex(Rcomplex x, int *warn)
+int attribute_hidden
+LogicalFromComplex(Rcomplex x, int *warn)
 {
     return (ISNAN(x.r) || ISNAN(x.i)) ?
 	NA_LOGICAL : (x.r != 0 || x.i != 0);
 }
 
-int attribute_hidden LogicalFromString(SEXP x, int *warn)
+int attribute_hidden
+LogicalFromString(SEXP x, int *warn)
 {
     if (x != R_NaString) {
 	int i;
@@ -179,13 +183,15 @@ int attribute_hidden LogicalFromString(SEXP x, int *warn)
     return NA_LOGICAL;
 }
 
-int IntegerFromLogical(int x, int *warn)
+int attribute_hidden
+IntegerFromLogical(int x, int *warn)
 {
     return (x == NA_LOGICAL) ?
 	NA_INTEGER : x;
 }
 
-int IntegerFromReal(double x, int *warn)
+int attribute_hidden
+IntegerFromReal(double x, int *warn)
 {
     if (ISNAN(x))
 	return NA_INTEGER;
@@ -196,7 +202,8 @@ int IntegerFromReal(double x, int *warn)
     return x;
 }
 
-int IntegerFromComplex(Rcomplex x, int *warn)
+int attribute_hidden
+IntegerFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_INTEGER;
@@ -210,7 +217,8 @@ int IntegerFromComplex(Rcomplex x, int *warn)
 }
 
 
-int attribute_hidden IntegerFromString(SEXP x, int *warn)
+int attribute_hidden
+IntegerFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
@@ -233,13 +241,15 @@ int attribute_hidden IntegerFromString(SEXP x, int *warn)
     return NA_INTEGER;
 }
 
-double RealFromLogical(int x, int *warn)
+double attribute_hidden
+RealFromLogical(int x, int *warn)
 {
     return (x == NA_LOGICAL) ?
 	NA_REAL : x;
 }
 
-double RealFromInteger(int x, int *warn)
+double attribute_hidden
+RealFromInteger(int x, int *warn)
 {
     if (x == NA_INTEGER)
 	return NA_REAL;
@@ -247,7 +257,8 @@ double RealFromInteger(int x, int *warn)
 	return x;
 }
 
-double RealFromComplex(Rcomplex x, int *warn)
+double attribute_hidden
+RealFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_REAL;
@@ -256,7 +267,8 @@ double RealFromComplex(Rcomplex x, int *warn)
     return x.r;
 }
 
-double attribute_hidden RealFromString(SEXP x, int *warn)
+double attribute_hidden
+RealFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
@@ -270,7 +282,8 @@ double attribute_hidden RealFromString(SEXP x, int *warn)
     return NA_REAL;
 }
 
-Rcomplex attribute_hidden ComplexFromLogical(int x, int *warn)
+Rcomplex attribute_hidden
+ComplexFromLogical(int x, int *warn)
 {
     Rcomplex z;
     if (x == NA_LOGICAL) {
@@ -284,7 +297,8 @@ Rcomplex attribute_hidden ComplexFromLogical(int x, int *warn)
     return z;
 }
 
-Rcomplex attribute_hidden ComplexFromInteger(int x, int *warn)
+Rcomplex attribute_hidden
+ComplexFromInteger(int x, int *warn)
 {
     Rcomplex z;
     if (x == NA_INTEGER) {
@@ -298,7 +312,8 @@ Rcomplex attribute_hidden ComplexFromInteger(int x, int *warn)
     return z;
 }
 
-Rcomplex attribute_hidden ComplexFromReal(double x, int *warn)
+Rcomplex attribute_hidden
+ComplexFromReal(double x, int *warn)
 {
     Rcomplex z;
     if (ISNAN(x)) {
@@ -312,7 +327,8 @@ Rcomplex attribute_hidden ComplexFromReal(double x, int *warn)
     return z;
 }
 
-Rcomplex attribute_hidden ComplexFromString(SEXP x, int *warn)
+Rcomplex attribute_hidden
+ComplexFromString(SEXP x, int *warn)
 {
     double xr, xi;
     Rcomplex z;
@@ -1383,7 +1399,7 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isNull(envir)) {
 	error(_("use of NULL environment is defunct"));
 	envir = R_BaseEnv;
-    } else    
+    } else
     if (!isEnvironment(envir))
 	errorcall(call, _("invalid environment"));
 
@@ -1402,9 +1418,9 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     CheckFormals(args);
     PROTECT(body = VECTOR_ELT(arglist, n-1));
-    /* the main (only?) thing to rule out is body being 
+    /* the main (only?) thing to rule out is body being
        a function already. If we test here then
-       mkCLOSXP can continue to overreact when its 
+       mkCLOSXP can continue to overreact when its
        test fails (PR#1880, 7535, 7702) */
     if(isList(body) || isLanguage(body) || isSymbol(body)
        || isExpression(body) || isVector(body)
@@ -1455,6 +1471,109 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_TAG(ans, R_NilValue);
     return ans;
 }
+
+
+/* int, not Rboolean, for NA_LOGICAL : */
+int asLogical(SEXP x)
+{
+    int warn = 0;
+
+    if (isVectorAtomic(x)) {
+	if (LENGTH(x) < 1)
+	    return NA_LOGICAL;
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	    return LOGICAL(x)[0];
+	case INTSXP:
+	    return Rf_LogicalFromInteger(INTEGER(x)[0], &warn);
+	case REALSXP:
+	    return Rf_LogicalFromReal(REAL(x)[0], &warn);
+	case CPLXSXP:
+	    return Rf_LogicalFromComplex(COMPLEX(x)[0], &warn);
+	default:
+	    UNIMPLEMENTED_TYPE("asLogical", x);
+	}
+    }
+    return NA_LOGICAL;
+}
+
+int asInteger(SEXP x)
+{
+    int warn = 0, res;
+
+    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	    return Rf_IntegerFromLogical(LOGICAL(x)[0], &warn);
+	case INTSXP:
+	    return INTEGER(x)[0];
+	case REALSXP:
+	    res = Rf_IntegerFromReal(REAL(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
+	    return res;
+	case CPLXSXP:
+	    res = Rf_IntegerFromComplex(COMPLEX(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
+	    return res;
+	default:
+	    UNIMPLEMENTED_TYPE("asInteger", x);
+	}
+    }
+    return NA_INTEGER;
+}
+
+double asReal(SEXP x)
+{
+    int warn = 0;
+    double res;
+
+    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	    res = Rf_RealFromLogical(LOGICAL(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
+	    return res;
+	case INTSXP:
+	    res = Rf_RealFromInteger(INTEGER(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
+	    return res;
+	case REALSXP:
+	    return REAL(x)[0];
+	case CPLXSXP:
+	    res = Rf_RealFromComplex(COMPLEX(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
+	    return res;
+	default:
+	    UNIMPLEMENTED_TYPE("asReal", x);
+	}
+    }
+    return NA_REAL;
+}
+
+Rcomplex asComplex(SEXP x)
+{
+    int warn = 0;
+    Rcomplex z;
+
+    z.r = NA_REAL;
+    z.i = NA_REAL;
+    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	    return Rf_ComplexFromLogical(LOGICAL(x)[0], &warn);
+	case INTSXP:
+	    return Rf_ComplexFromInteger(INTEGER(x)[0], &warn);
+	case REALSXP:
+	    return Rf_ComplexFromReal(REAL(x)[0], &warn);
+	case CPLXSXP:
+	    return COMPLEX(x)[0];
+	default:
+	    UNIMPLEMENTED_TYPE("asComplex", x);
+	}
+    }
+    return z;
+}
+
 
 /* return the type (= "detailed mode") of the SEXP */
 SEXP attribute_hidden do_typeof(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1727,7 +1846,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LIST_VEC_NA(s);
 	}
 	break;
-    case RAWSXP: 
+    case RAWSXP:
 	/* no such thing as a raw NA */
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = 0;
@@ -2033,7 +2152,7 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
         error(_("do.call: could not find parent environment"));
     */
-    
+
     UNPROTECT(1);
     return call;
 }
@@ -2072,7 +2191,7 @@ SEXP substitute(SEXP lang, SEXP rho)
 	    	}
 	    	if (rho != R_GlobalEnv)
 		    return t;
-	    }		    
+	    }
 	}
 	return (lang);
     case LANGSXP:
@@ -2097,7 +2216,7 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
     	    h = R_UnboundValue;	/* so there is no substitution below */
     	else
 	    h = findVarInFrame3(rho, CAR(el), TRUE);
-	if (h == R_UnboundValue) 
+	if (h == R_UnboundValue)
 	    return LCONS(R_DotsSymbol, substituteList(CDR(el), rho));
 	if (h == R_NilValue  || h == R_MissingArg)
 	    return substituteList(CDR(el), rho);
