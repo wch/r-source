@@ -5903,6 +5903,19 @@ atomic vector type (@code{isVectorAtomic}) and for lists and expressions
 (@code{isVectorList}) (with no check on attributes).  @code{isMatrix} is
 a test of a length-2 @code{"dim"} attribute.
 
+There are a series of small macros/functions to help construct pairlists
+and language objects (whose internal structures just differ by
+@code{SEXPTYPE}.  Function @code{CONS(u, v)} is the basic building
+block: is constructs a pairlist from @code{u} followed by @code{v}
+(which is a pairlist or @code{R_NilValue}).  @code{LCONS} is a variant
+that constructs a language object.  Functions @code{list1} to
+@code{list4} construct a pairlist from one to four items, and
+@code{lang1} to @code{lang4} do the same for a language object (a
+function to call plus zero to three arguments).  Function @code{elt} and
+@code{lastElt} find the @var{i}th element and the last element of a
+pairlist, and @code{nthcdr} returns a pointer to the @var{n}th position
+in the pairlist (whose @code{CAR} is the @var{n}th item).
+
 
 @node Named objects and copying,  , Some convenience functions, Handling R objects in C
 @subsection Named objects and copying
@@ -9009,11 +9022,12 @@ axis <- function(side, at = NULL, labels = NULL, ...)
 @end example
 
 However, for reasons of convenience and also efficiency (as there is
-some overhead in using the @code{.Internal} interface), there are
-exceptions which can be accessed directly.  Note that these functions
-make no use of @R{} code, and hence are very different from the usual
-interpreted functions.  In particular, @code{args} and @code{body}
-return @code{NULL} for such objects.
+some overhead in using the @code{.Internal} interface wrapped in a
+function closure), there are exceptions which can be accessed directly.
+Note that these functions make no use of @R{} code, and hence are very
+different from the usual interpreted functions.  In particular,
+@code{args} and @code{body} return @code{NULL} for such objects, and
+argument matching is purely positional.
 
 The list of these ``primitive'' functions is subject to change:
 currently, it includes the following.
@@ -9153,7 +9167,7 @@ efficiency reasons:
 @group
 :          ~          c           list
 call       as.call    as.character
-expression  substitute  as.environment
+expression substitute as.environment
 UseMethod  invisible  standardGeneric
 .C         .Fortran   .Call       .External
 .Call.graphics        .External.graphics
@@ -9349,11 +9363,13 @@ So the basic building blocks of @R{} objects are often called
 Both types of node structure have as their first three fields a 32-bit
 @code{sxpinfo} header and then three pointers (to the attributes and the
 previous and next node in a doubly-linked list), and then some further
-fields.  On a 32-bit platform a node occupies 28 bytes: on a 64-bit
-platform typically 56 bytes (depending on alignment constraints).
+fields.  On a 32-bit platform a node@footnote{strictly, a @code{SEXPREC}
+node; @code{VECTOR_SEXPREC} nodes are slightly smaller but followed by
+data in the node.} occupies 28 bytes: on a 64-bit platform typically 56
+bytes (depending on alignment constraints).
 
-The first five bits of the @code{sxpinfo} header specify one of 32
-@code{SEXPTYPE}s.  
+The first five bits of the @code{sxpinfo} header specify one of up to 32
+@code{SEXPTYPE}s.
 
 @menu
 * SEXPTYPEs::                   
@@ -9365,14 +9381,14 @@ The first five bits of the @code{sxpinfo} header specify one of 32
 @node SEXPTYPEs, Rest of header, SEXPs, SEXPs
 @subsection SEXPTYPEs
 
-Currently @code{SEXPTYPE}s 0:10 and 13:24 are in use.  Values 11 and 12 were
+Currently @code{SEXPTYPE}s 0:10 and 13:25 are in use.  Values 11 and 12 were
 used for internal factors and ordered factors and have since been
 withdrawn.  Note that the @code{SEXPTYPE}s are stored in @code{save}d
 objects and that the ordering of the types is used, so the gap cannot
 easily be reused.
 
 @quotation
-@multitable {no} {SPECIALSXPXXX} {DOUBLE PRECISION}
+@multitable {no} {SPECIALSXPXXX} {S4 classes not of simple type}
 @headitem no @tab  SEXPTYPE@tab  Description
 @item @code{0}   @tab @code{NILSXP}      @tab @code{NULL}
 @item @code{1}   @tab @code{SYMSXP}      @tab @code{symbols}
@@ -9381,10 +9397,8 @@ easily be reused.
 @item @code{4}   @tab @code{ENVSXP}      @tab @code{environments}
 @item @code{5}   @tab @code{PROMSXP}     @tab @code{promises}
 @item @code{6}   @tab @code{LANGSXP}     @tab @code{language objects}
-@item @code{7}   @tab @code{SPECIALSXP}  @tab @code{special functions
-(primitives)}
-@item @code{8}   @tab @code{BUILTINSXP}  @tab @code{builtin functions
-(.Internal)}
+@item @code{7}   @tab @code{SPECIALSXP}  @tab @code{special functions}
+@item @code{8}   @tab @code{BUILTINSXP}  @tab @code{builtin functions}
 @item @code{9}   @tab @code{CHARSXP}     @tab @code{internal character strings}
 @item @code{10}   @tab @code{LGLSXP}     @tab @code{logical vectors}
 @item @code{13}   @tab @code{INTSXP}     @tab @code{integer vectors}
@@ -9412,12 +9426,13 @@ are rarely seen at @R{} level, but are for example used for argument
 lists.  Character vectors are effectively lists all of whose elements
 are @code{CHARSXP}, a type that is rarely visible at @R{} level.
 
-Language objects (@code{LANGSXP}) cover calls, formulae and so on.
-Internally they are pairlists with first element a reference@footnote{a
-pointer to a function or a symbol to look up the function by name, or an
-language object to be evaluated to give a function.} to the function to
-be called with remaining elements the actual arguments for the call (and
-with the tags if present giving the specified argument names).
+Language objects (@code{LANGSXP}) are calls (including formulae and so
+on).  Internally they are pairlists with first element a
+reference@footnote{a pointer to a function or a symbol to look up the
+function by name, or a language object to be evaluated to give a
+function.} to the function to be called with remaining elements the
+actual arguments for the call (and with the tags if present giving the
+specified argument names).
 
 Expressions are of type @code{EXPRSXP}: they are a vector of language
 objects most often seen as the result of @code{parse()}.
@@ -9475,14 +9490,14 @@ appears to make a copy of @code{a} and refer to it as @code{b}.
 However, if neither @code{a} nor @code{b} are subsequently altered there
 is no need to copy.  What really happens is that a new symbol @code{b}
 is bound to the same value as @code{a} and the @code{named} field on the
-object is set (in this case to @code{2}).  When an object is about to be
-altered, the @code{named} field is consulted.  A value of @code{2} means
-that the object must be duplicated before being changed.  (Note that
-this does not say that it is necessary to duplicate, only that it should
-be duplicated whether necessary or not.)  A value of @code{0} means that
-it is known that no other @code{SEXP} shares data with this object, and
-so it may safely be altered.  A value of @code{1} is used for situations
-like
+value object is set (in this case to @code{2}).  When an object is about
+to be altered, the @code{named} field is consulted.  A value of @code{2}
+means that the object must be duplicated before being changed.  (Note
+that this does not say that it is necessary to duplicate, only that it
+should be duplicated whether necessary or not.)  A value of @code{0}
+means that it is known that no other @code{SEXP} shares data with this
+object, and so it may safely be altered.  A value of @code{1} is used
+for situations like
 
 @example
 dim(a) <- c(7, 2)
@@ -9500,7 +9515,7 @@ a <- `dim<-`(a, c(7, 2))
 but for no longer, and so some internal functions can be optimized to
 avoid a copy in this case.
 
-The remaining bits are by definition `general purpose', and the
+The @code{gp} bits are by definition `general purpose', and the
 following description results from detective work on the sources.  They
 can be accessed and set by the @code{LEVELS} and @code{SETLEVELS}
 macros, which names appear to date back to the internal factor and
@@ -9552,7 +9567,7 @@ usage could easily be replaced by one not making use of @code{gp}.)
 
 
 @node The 'data', Allocation classes, Rest of header, SEXPs
-@subsection The 'data'
+@subsection The `data'
 
 A @code{SEXPREC} is a C structure containing the 32-bit header as
 described above, three pointers (to the attributes, previous and next
@@ -9571,14 +9586,14 @@ union @{
 
 @noindent
 All of these alternatives apart from the first (an @code{int}) are three
-pointers, so the union takes up three words.
+pointers, so the union occupies three words.
 
 The vector types are @code{RAWSXP}, @code{CHARSXP}, @code{LGLSXP},
 @code{INTSXP}, @code{REALSXP}, @code{CPLXSXP}, @code{STRSXP},
 @code{VECSXP}, @code{EXPRSXP} and @code{WEAKREFSXP}.  Remember that such
 types are a @code{VECTOR_SEXPREC}, which again consists of the header
 and the same three pointers, but followed by two integers giving the
-length and 'true length'@footnote{This is almost unused.  The only
+length and `true length'@footnote{This is almost unused.  The only
 current use is for hash tables of environments (@code{VECSXP}s), where
 @code{length} is the size of the table and @code{truelength} is the
 number of primary slots in use, and for the reference hash tables in
@@ -9586,11 +9601,11 @@ serialization(@code{VECSXP}s), where @code{truelength} is the number of
 slots in use.} of the vector, and then followed by the data (aligned as
 required: on most 32-bit systems with a 24-byte @code{VECTOR_SEXPREC}
 node the data can follow immediately after the node).  The data is a
-block of memory of the appropriate length to store 'true length'
+block of memory of the appropriate length to store `true length'
 elements (rounded up to a multiple of 8 bytes, with the 8-byte blocks
-being the 'Vcells' referred in the documentation for @code{gc()}).
+being the `Vcells' referred in the documentation for @code{gc()}).
 
-The 'data' for the various types are given in the table below.  A lot of
+The `data' for the various types are given in the table below.  A lot of
 this is interpretation, i.e. the types are not checked.
 
 @table @code
@@ -9607,32 +9622,34 @@ the last is a pointer to the appropriate @code{SEXPREC}.)  Many symbols
 have @code{SYMVALUE} @code{R_UnboundValue}.
 
 @item LISTSXP
-Pointers to the CAR, CDR (usually a @code{LISTSXP} or NULL) and TAG
-(usually a @code{CHARSXP}).
+Pointers to the CAR, CDR (usually a @code{LISTSXP} or @code{NULL}) and TAG
+(usually a @code{SYMSXP}).
 
 @item CLOSXP
 Pointers to the formals (a pairlist), the body and the environment.
 
 @item ENVSXP
-Pointers to the frame, enclosing environment and hash table (NULL or a
+Pointers to the frame, enclosing environment and hash table (@code{NULL} or a
 @code{VECSXP}).  A frame is a tagged pairlist with tag the symbol and
 CAR the bound value.
 
 @item PROMSXP
 Pointers to the value, expression and environment (in which to evaluate
 the expression).  Once an promise has been evaluated, the environment is
-set to NULL.
+set to @code{NULL}.
 
 @item LANGSXP
 A special type of @code{LISTSXP} used for function calls.  (The CAR
 references the function (perhaps via a symbol or language object), and
-the CDR the argument list with tags for named arguments.)
-@R{}-level `language objects' are mainly @code{LANGSXP}s, but can be
-symbols (@code{SYMSXP}s) or expression vectors (@code{EXPRSXP}s).
+the CDR the argument list with tags for named arguments.)  @R{}-level
+documentation references to `expressions' / `language objects' are
+mainly @code{LANGSXP}s, but can be symbols (@code{SYMSXP}s) or
+expression vectors (@code{EXPRSXP}s).
 
 @item SPECIALSXP
 @itemx BUILTINSXP
-An integer giving the offset into the table of primitives/.Internals.
+An integer giving the offset into the table of
+primitives/@code{.Internals}.
 
 @item CHARSXP
 @code{length}, @code{truelength} followed by a block of bytes (allowing
@@ -9641,6 +9658,7 @@ for the @code{nul} terminator).
 @item LGLSXP
 @itemx INTSXP
 @code{length}, @code{truelength} followed by a block of C @code{int}s
+(which are 32 bits on all @R{} platforms).
 
 @item REALSXP
 @code{length}, @code{truelength} followed by a block of C @code{double}s
@@ -9651,11 +9669,11 @@ for the @code{nul} terminator).
 
 @item STRSXP
 @code{length}, @code{truelength} followed by a block of pointers
-(@code{CHARSXP}s).
+(@code{SEXP}s pointing to @code{CHARSXP}s).
 
 @item DOTSXP
 A special type of @code{LISTSXP} for the value bound to a @code{...}
-symbol: it should be a pairlist of promises.
+symbol: a pairlist of promises.
 
 @item ANYSXP
 This is used as a place holder for any type: there are no actual objects
@@ -9672,17 +9690,19 @@ For the future byte-code compiler
 
 @item EXTPTRSXP
 Has three pointers, to the pointer, the protection value (an @R{} object
-which if alive protects this object) and a tag (a @code{CHARSXP}?).
+which if alive protects this object) and a tag (a @code{SYMSXP}?).
 
 @item WEAKREFSXP
 A @code{WEAKREFSXP} is a special @code{VECSXP} of length 4, with
-elements 'key', 'value', 'finalizer' and 'next'.  The 'key' is NULL, an
-environment or an external pointer, and the finalizer is a function or
-NULL.
+elements @samp{key}, @samp{value}, @samp{finalizer} and @samp{next}.
+The @samp{key} is @code{NULL}, an environment or an external pointer,
+and the @samp{finalizer} is a function or @code{NULL}.
 
 @item RAWSXP
 @code{length}, @code{truelength} followed by a block of bytes.
 
+@item S4SXP
+two unused pointers and a tag.
 @end table
 
 @node Allocation classes,  , The 'data', SEXPs
@@ -9690,11 +9710,11 @@ NULL.
 
 As we have seen, the field @code{gccls} in the header is three bits to
 label up to 8 classes of nodes.  Non-vector nodes are of class 0, and
-'small' vector nodes are currently of classes 1 to 6, with 'large'
-vector nodes being of class 7.  The 'small' vector nodes are able to
-store vector data of up to 8, 16, 32, 48, 64 and 128 bytes: larger
-vectors are @code{malloc}ed individually whereas the 'small' nodes are
-allocated from pages of about 2000 bytes.
+`small' vector nodes are of classes 1 to 6, with `large' vector nodes
+being of class 7.  The `small' vector nodes are able to store vector
+data of up to 8, 16, 32, 48, 64 and 128 bytes: larger vectors are
+@code{malloc}-ed individually whereas the `small' nodes are allocated
+from pages of about 2000 bytes.
 
 
 @node Environments and variable lookup, Attributes (internal), SEXPs, R Internal Structures
@@ -9713,15 +9733,15 @@ at @uref{http://www.omegahat.org/RObjectTables/}.
 
 The base environment is special.  There is an @code{ENVSXP} environment
 with enclosure the empty environment @code{R_EmptyEnv}, but the frame of
-that environment is not used (and nor is its enclosure).  Rather its
-bindings are part of the global symbol table, being those symbols in the
-global symbol table whose values are not @code{R_UnboundValue}.  When
-@R{} is started the internal functions are installed (by C code) in the
-symbol table, with primitive functions having values and
-@code{.Internal} functions having what would be their values in the
-field accessed by the @code{INTERNAL} macro.  Then @code{.Platform} and
-@code{.Machine} are computed and the base package is loaded into the base
-environment followed by the system profile.
+that environment is not used.  Rather its bindings are part of the
+global symbol table, being those symbols in the global symbol table
+whose values are not @code{R_UnboundValue}.  When @R{} is started the
+internal functions are installed (by C code) in the symbol table, with
+primitive functions having values and @code{.Internal} functions having
+what would be their values in the field accessed by the @code{INTERNAL}
+macro.  Then @code{.Platform} and @code{.Machine} are computed and the
+base package is loaded into the base environment followed by the system
+profile.
 
 The frames of environments (and the symbol table) are normally hashed
 for faster access (including insertion and deletion).
@@ -9775,8 +9795,8 @@ which is taken once the search reaches the global environment.
 @subsection Name spaces
 
 Name spaces are environments associated with packages (and once again
-the base package is special and will be treated later).  A package
-@code{@var{pkg}} with a name space defines two environments
+the base package is special and will be considered separately).  A
+package @code{@var{pkg}} with a name space defines two environments
 @code{namespace:@var{pkg}} and @code{package:@var{pkg}}: it is
 @code{package:@var{pkg}} that can be @code{attach}ed and form part of
 the search path.
@@ -9796,48 +9816,50 @@ environment, so the search from a package namespace goes via the
 The base name space environment @code{R_BaseNamespace} is another
 @code{ENVSXP} that is special-cased.  It is effectively the same thing
 as the base environment @code{R_BaseEnv} @emph{except} that its
-enclosure is considered as the global environment rather than the empty
-environment: the internal code diverts lookups in its frame to the
-global symbol table.
+enclosure is the global environment rather than the empty environment:
+the internal code diverts lookups in its frame to the global symbol
+table.
 
 
 @node Attributes (internal), Argument evaluation, Environments and variable lookup, R Internal Structures
 @section Attributes (internal)
 
 As we have seen, every @code{SEXPREC} has a pointer to the attributes of
-the node.  The attributes can be accessed/set by the macros/functions
-@code{ATTRIB} and @code{SET_ATTRIB}, but such direct access is normally
-only used to check if the attributes as @code{NULL}, the default.
-Otherwise access goes through the functions @code{getAttrib} and
-@code{setAttrib} which impose restrictions on the attributes.
+the node (default @code{R_NilValue}.  The attributes can be accessed/set
+by the macros/functions @code{ATTRIB} and @code{SET_ATTRIB}, but such
+direct access is normally only used to check if the attributes as
+@code{NULL} or to reset them.  Otherwise access goes through the
+functions @code{getAttrib} and @code{setAttrib} which impose
+restrictions on the attributes.
 
 The code assumes that the attributes of a node are either
-@code{R_NilValue} or a pairlist of non-zero length.  The attributes are
-normally named (via tags on the pairlist).  The replacement function
-@code{attributes<-} ensures that @code{"dim"} precedes @code{"dimnames"}
-in the list.  Attribute @code{"dim"} is one of many that is treated
-specially: the values are checked, and any @code{"names"} and
-@code{"dimnames"} attributed are removed.  Similarly, you cannot set
-@code{"dimnames"} without having set @code{"dim"}, and the value
-assigned must be a list of the correct length and with elements of the
-correct lengths.
+@code{R_NilValue} or a pairlist of non-zero length (and this is checked
+by @code{SET_ATTRIB}.  The attributes are normally named (via tags on
+the pairlist).  The replacement function @code{attributes<-} ensures
+that @code{"dim"} precedes @code{"dimnames"} in the list.  Attribute
+@code{"dim"} is one of many that is treated specially: the values are
+checked, and any @code{"names"} and @code{"dimnames"} attributes are
+removed.  Similarly, you cannot set @code{"dimnames"} without having set
+@code{"dim"}, and the value assigned must be a list of the correct
+length and with elements of the correct lengths.
 
-Other attributes which are given special treatment are @code{"names"},
-@code{"class"}, @code{"tsp"}, @code{"comments"} and @code{"row.names"}.
-For pairlist-like objects the names are not stored as an attribute but
-(as symbols) as tags: however the @R{} interface makes them look like
-conventional attributes (one reason why the @code{"names"} attribute has
-to be treated specially).  The C code ensures that the @code{"tsp"}
-attribute is real, the frequency is positive and the implied length
-agrees with the number of rows of the object being assigned to.  Classes
-and comments are restricted to character vectors, and assigning a
-zero-length comment or class removes the attribute.  Integer row names
-are converted to and from the internal compact representation.
+The other attributes which are given special treatment are
+@code{"names"}, @code{"class"}, @code{"tsp"}, @code{"comments"} and
+@code{"row.names"}.  For pairlist-like objects the names are not stored
+as an attribute but (as symbols) as tags: however the @R{} interface
+makes them look like conventional attributes (one reason why the
+@code{"names"} attribute has to be treated specially).  The C code
+ensures that the @code{"tsp"} attribute is an @code{REALSXP}, the
+frequency is positive and the implied length agrees with the number of
+rows of the object being assigned to.  Classes and comments are
+restricted to character vectors, and assigning a zero-length comment or
+class removes the attribute.  Integer row names are converted to and
+from the internal compact representation.
 
 Care needs to be taken when adding attributes to objects of the types
 with non-standard copying semantics.  There is only one object of type
 @code{NILSXP}, @code{R_NilValue}, and that should never have attributes
-(and this is excluded in @code{installAttrib}.  For environments,
+(and this is enforced in @code{installAttrib}).  For environments,
 external pointers and weak references, the attributes should be relevant
 to all uses of the object: it is for example reasonable to have a name
 for an environment, and also a @code{"path"} attribute for those
@@ -9857,8 +9879,9 @@ for the operator.
 
 Subsetting (other than by an empty index) generally drops all attributes
 except @code{names}, @code{dim} and @code{dimnames} which are reset as
-appropriate.  On the other hand, subassignment generally preserves
-attributes even if the length is changed.  Coercion drops all attributes.
+appropriate.  On the other hand, subassignment generally preserves such
+attributes even if the length is changed.  Coercion drops all
+attributes. For example:
 
 @example
 > x <- structure(1:8, names=letters[1:8], comm="a comment")
@@ -9891,17 +9914,19 @@ As we have seen, functions in @R{} come in three types, closures
 (@code{SEXPTYPE} @code{CLOSXP}), specials (@code{SPECIALSXP}) and
 builtins (@code{BUILTINSXP}).  In this section we consider when (and if)
 the actual arguments of function calls are evaluated.  The rules are
-different for the internal (special/builtin) and R-level functions.
+different for the internal (special/builtin) and R-level functions
+(closures).
 
 For a call to a closure, the actual and formal arguments are matched and
-a call (another @code{LANGSXP}) is constructed.  The process first
-replaces the actual argument list by a list of promises to the values
-supplied.  It then constructs a new environment which contains the names
-of the formal parameters matched to actual or default values: all the
-matched values are promises, the defaults as promises to be evaluated in
-the environment just created.  That environment is then used for the
-evaluation of the body of the function, and promises will be forced (and
-hence actual or default arguments evaluated) when they are encountered.
+a matched call (another @code{LANGSXP}) is constructed.  This process
+first replaces the actual argument list by a list of promises to the
+values supplied.  It then constructs a new environment which contains
+the names of the formal parameters matched to actual or default values:
+all the matched values are promises, the defaults as promises to be
+evaluated in the environment just created.  That environment is then
+used for the evaluation of the body of the function, and promises will
+be forced (and hence actual or default arguments evaluated) when they
+are encountered.
 
 If the closure is an S3 generic (that is, contains a call to
 @code{UseMethod}) the evaluation process is the same until the
@@ -9960,10 +9985,10 @@ Internally missingness is handled by two mechanisms. The object
 @code{R_MissingArg} is used to indicate that a formal argument has no
 (default) value.  When matching the actual arguments to the formal
 arguments, a new argument list is constructed from the formals all of
-whose values are @code{R_MissingArg}, and with the first @code{MISSING}
-bit set.  Then whenever a formal argument is matched to an actual
-argument, the corresponding member of the new argument list has its
-value set to that of the matched actual argument, and if that is not
+whose values are @code{R_MissingArg} with the first @code{MISSING} bit
+set.  Then whenever a formal argument is matched to an actual argument,
+the corresponding member of the new argument list has its value set to
+that of the matched actual argument, and if that is not
 @code{R_MissingArg} the missing bit is unset.
 
 This new argument list is used to form the evaluation frame for the
@@ -9982,8 +10007,8 @@ might involve investigating a promise and so on @dots{}.
 @node Dot-dot-dot arguments,  , Missingness, Argument evaluation
 @subsection Dot-dot-dot arguments
 
-Dot-dot-dot arguments are convenient, but complicate the internal code
-for argument evaluation.
+Dot-dot-dot arguments are convenient when writing functions, but
+complicate the internal code for argument evaluation.
 
 The formals of a function with a @code{...} argument represent that as a
 single argument like any other argument, with tag the symbol
@@ -9992,13 +10017,13 @@ formals, the value of the @code{...} argument is of @code{SEXPTYPE}
 @code{DOTSXP}, a pairlist of promises (as used for matched arguments)
 but distinguished by the @code{SEXPTYPE}.
 
-Recall that the evaluation frame for a function initially contains
-the @code{name=value} pairs from the matched call, and hence this will
-be true for @code{...} as well.  The elements of the value of @code{...}
-are referred to by the special symbols @code{..1}, @code{..2}, @dots{}
-which have the @code{DDVAL} bit set: when one of these is encountered it
-is looked up (via @code{ddfndVar}) in the value of the @code{...} symbol
-in the evaluation frame.
+Recall that the evaluation frame for a function initially contains the
+@code{name=value} pairs from the matched call, and hence this will be
+true for @code{...} as well.  The value of @code{...} is a (special)
+pairlist whose elements are referred to by the special symbols
+@code{..1}, @code{..2}, @dots{} which have the @code{DDVAL} bit set:
+when one of these is encountered it is looked up (via @code{ddfndVar})
+in the value of the @code{...} symbol in the evaluation frame.
 
 Arguments matched to a @code{...} argument can be missing.
 
@@ -10007,8 +10032,8 @@ Arguments matched to a @code{...} argument can be missing.
 @section The write barrier and the garbage collector
 
 @R{} has since version 1.2.0 had a generational garbage collector, and
-as we have seen, bit @code{gcgen} in the @code{sxpinfo} header is used
-in the implementation of this.  This is used in conjunction with the
+bit @code{gcgen} in the @code{sxpinfo} header is used in the
+implementation of this.  This is used in conjunction with the
 @code{mark} bit to identify two previous generations.
 
 There are three levels of collections.  Level 0 collects only the
@@ -10020,15 +10045,15 @@ Further, if a level-@var{n} collection fails to provide 20% free space
 level @var{n+1}.  (The R-level function @code{gc()} performs a level-2
 collection.)
 
-The problem is to efficiently `age' the objects, especially list-like
-objects (including @code{STRSXP}s).  This is done by ensuring that the
-elements of a list are regarded as at least as old as the list
-@emph{when they are assigned}.  This is handled by the functions
-@code{SET_VECTOR_ELT} and @code{SET_STRING_ELT}, which is why they are
-functions and not macros.  Ensuring the integrity of such operations is
-termed the @code{write barrier} and is done by making the @code{SEXP}
-opaque and only providing access via functions (which cannot be used as
-lvalues in assignments in C).
+A generational collector needs to efficiently `age' the objects,
+especially list-like objects (including @code{STRSXP}s).  This is done
+by ensuring that the elements of a list are regarded as at least as old
+as the list @emph{when they are assigned}.  This is handled by the
+functions @code{SET_VECTOR_ELT} and @code{SET_STRING_ELT}, which is why
+they are functions and not macros.  Ensuring the integrity of such
+operations is termed the @code{write barrier} and is done by making the
+@code{SEXP} opaque and only providing access via functions (which cannot
+be used as lvalues in assignments in C).
 
 All code in @R{} extensions is by default behind the write barrier.  The
 only way to obtain direct access to the internals of the @code{SEXPREC}s
@@ -10066,7 +10091,7 @@ back-compatible ways since @R{} 1.4.0, for example to support additional
 
 @code{save()} works by first creating a tagged pairlist of objects to be
 saved, and then saving that single object preceded by a single-line
-header (typically @code{RDX2\n} for a binary save).  @code{load} reads
+header (typically @code{RDX2\n} for a binary save).  @code{load()} reads
 the header line, unserializes a single object (a pairlist or a vector
 list) and assigns the elements of the list in the appropriate
 environment.
@@ -10147,7 +10172,7 @@ Similarly, the evaluator creates a symbol @code{.Last.value} which
 appears as a variable in the base environment.
 
 Errors can give rise to objects @code{.Traceback} and
-@code{last.warning} in the global environment.
+@code{last.warning} in the base environment.
 
 @node Global environment,  , Base environment, Internal use of global and base environments
 @subsection Global environment
