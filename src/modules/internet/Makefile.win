@@ -24,14 +24,19 @@ CFLAGS=$(OPTFLAGS) -I../../include -I../../gnuwin32 -DHAVE_CONFIG_H
 	@$(RM) internet.def
 
 internet2.o: internet.c
-	$(CC)  $(CFLAGS) -DUSE_WININET -c $< -o $@
+	@echo "making $@ from $<"
+	@$(CC)  $(CFLAGS) -DUSE_WININET -c $< -o $@
 
 clean:
 	@$(RM) Makedeps *.d *.o *.def *.dll
 
 # Dependencies
 dllversion.o: ../../include/Rversion.h
-DEPS=$(CSOURCES:.c=.d)
+DEPS=$(CSOURCES:.c=.d) internet2.d
+
+internet2.d: internet.c
+	$(CC) $(DEPARG) $(CFLAGS) -DUSE_WININET $< -o $@
+
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps
