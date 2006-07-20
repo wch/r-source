@@ -27,7 +27,7 @@
   \item{intercept}{Either 0, indicating no intercept is to be fit, or 1
     indicating that an intercept is to be fit.}
   \item{order}{A vector of the same length as \code{term.labels}
-    indicating the order of interaction for each term }
+    indicating the order of interaction for each term.}
   \item{response}{The index of the variable (in variables) of the
     response (the left hand side of the formula). Zero, if there is no
     response.}
