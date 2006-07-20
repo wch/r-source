@@ -680,7 +680,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 /* Now defined differently in Specify2() : */
 #define R_DEV__(_P_) Rf_gpptr(dd)->_P_
 
-void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
+void attribute_hidden Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 {
     double x;
     int ix = 0, ptype = ParCode(what);

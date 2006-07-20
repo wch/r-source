@@ -59,7 +59,7 @@ INLINE_FUN SEXP mkChar(const char *name)
 
 /*  length - length of objects  */
 
-int envlength(SEXP rho);
+int Rf_envlength(SEXP rho);
 
 INLINE_FUN R_len_t length(SEXP s)
 {
@@ -87,7 +87,7 @@ INLINE_FUN R_len_t length(SEXP s)
 	}
 	return i;
     case ENVSXP:
-	return envlength(s);
+	return Rf_envlength(s);
     default:
 	return 1;
     }

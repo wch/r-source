@@ -279,7 +279,7 @@ void copyVector(SEXP s, SEXP t)
     }
 }
 
-void copyListMatrix(SEXP s, SEXP t, Rboolean byrow)
+void attribute_hidden copyListMatrix(SEXP s, SEXP t, Rboolean byrow)
 {
     SEXP pt, tmp;
     int i, j, nr, nc, ns;

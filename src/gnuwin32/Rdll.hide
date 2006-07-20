@@ -179,6 +179,7 @@
  Rf_ComplexFromLogical
  Rf_ComplexFromReal
  Rf_ComplexFromString
+ Rf_CustomPrintValue
  Rf_DispatchGroup
  Rf_DispatchOrEval
  Rf_EnsureString
@@ -209,21 +210,27 @@
  Rf_MakeNativeSymbolRef
  Rf_MakeRegisteredNativeSymbol
  Rf_OneIndex
+ Rf_PrintDefaults
  Rf_PrintGreeting
+ Rf_PrintValueEnv
+ Rf_PrintValueRec
  Rf_PrintVersion
  Rf_PrintVersionString
  Rf_ProcessInlinePars
  Rf_RGB2rgb
  Rf_RGBA2rgb
  Rf_RealFromString
+ Rf_Specify2
  Rf_StringFromComplex
  Rf_StringFromInteger
  Rf_StringFromLogical
  Rf_StringFromReal
  Rf_VectorIndex
+ Rf_arraySubscript
  Rf_bd0
  Rf_chebyshev_eval
  Rf_chebyshev_init
+ Rf_copyListMatrix
  Rf_copyMostAttribNoTs
  Rf_convertToC
  Rf_dpSavedptr
@@ -245,6 +252,11 @@
  Rf_lgammacor
  Rf_lookupCachedSymbol
  Rf_mat2indsub
+ Rf_makeSubscript
+ Rf_matchArg
+ Rf_matchArgExact
+ Rf_matchArgs
+ Rf_matchPar
  Rf_mkCLOSXP
  Rf_mkPROMISE
  Rf_mkSYMSXP
@@ -264,6 +276,7 @@
  Rf_stirlerr
  Rf_substituteList
  Rf_unbindVar
+ Rf_vectorSubscript
  RguiCommonHelp
  RguiPackageMenu
  Rgui_Edit

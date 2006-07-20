@@ -538,16 +538,12 @@ SEXP Rf_allocS4Object();
 SEXP Rf_allocSExp(SEXPTYPE);
 SEXP Rf_allocVector(SEXPTYPE, R_len_t);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
-                       SEXP (*)(SEXP, int), SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
 SEXP Rf_cons(SEXP, SEXP);
-void Rf_copyListMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyMostAttrib(SEXP, SEXP);
 void Rf_copyVector(SEXP, SEXP);
 SEXP Rf_CreateTag(SEXP);
-void Rf_CustomPrintValue(SEXP,SEXP);
 void Rf_defineVar(SEXP, SEXP, SEXP);
 SEXP Rf_dimgets(SEXP, SEXP);
 SEXP Rf_dimnamesgets(SEXP, SEXP);
@@ -555,9 +551,6 @@ SEXP Rf_DropDims(SEXP);
 SEXP Rf_duplicate(SEXP);
 SEXP Rf_duplicated(SEXP);
 SEXP Rf_eval(SEXP, SEXP);
-SEXP Rf_EvalArgs(SEXP, SEXP, int);
-SEXP Rf_evalList(SEXP, SEXP);
-SEXP Rf_evalListKeepMissing(SEXP, SEXP);
 SEXP Rf_findFun(SEXP, SEXP);
 SEXP Rf_findVar(SEXP, SEXP);
 SEXP Rf_findVarInFrame(SEXP, SEXP);
@@ -578,12 +571,7 @@ Rboolean Rf_isUnsorted(SEXP);
 SEXP Rf_ItemName(SEXP, int);
 SEXP Rf_lengthgets(SEXP, R_len_t);
 SEXP R_lsInternal(SEXP, Rboolean);
-SEXP Rf_makeSubscript(SEXP, SEXP, int *);
 SEXP Rf_match(SEXP, SEXP, int);
-SEXP Rf_matchArg(SEXP, SEXP*);
-SEXP Rf_matchArgExact(SEXP, SEXP*);
-SEXP Rf_matchArgs(SEXP, SEXP);
-SEXP Rf_matchPar(char*, SEXP*);
 SEXP Rf_namesgets(SEXP, SEXP);
 Rboolean Rf_NonNullStringMatch(SEXP, SEXP);
 int Rf_ncols(SEXP);
@@ -591,10 +579,7 @@ int Rf_nrows(SEXP);
 SEXP Rf_nthcdr(SEXP, int);
 Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
 Rboolean Rf_psmatch(char *, char *, Rboolean);
-void Rf_PrintDefaults(SEXP);
 void Rf_PrintValue(SEXP);
-void Rf_PrintValueEnv(SEXP, SEXP);
-void Rf_PrintValueRec(SEXP, SEXP);
 SEXP Rf_protect(SEXP);
 SEXP Rf_rownamesgets(SEXP,SEXP);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
@@ -602,14 +587,12 @@ void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
 Rboolean Rf_StringBlank(SEXP);
 SEXP Rf_substitute(SEXP,SEXP);
-SEXP R_tryEval(SEXP e, SEXP env, int *ErrorOccurred);
 void Rf_unprotect(int);
 void Rf_unprotect_ptr(SEXP);
-SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP),
-                        SEXP (*)(SEXP, int), SEXP);
 
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
+SEXP R_tryEval(SEXP e, SEXP env, int *ErrorOccurred);
 
 				/* return(.) NOT reached : for -Wall */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
@@ -786,13 +769,12 @@ int R_system(char *);
 #ifndef R_NO_REMAP
 #define allocArray		Rf_allocArray
 #define allocList		Rf_allocList
-#define allocS4Object		Rf_allocS4Object
 #define allocMatrix		Rf_allocMatrix
+#define allocS4Object		Rf_allocS4Object
 #define allocSExp		Rf_allocSExp
 #define allocString		Rf_allocString
 #define allocVector		Rf_allocVector
 #define applyClosure		Rf_applyClosure
-#define arraySubscript		Rf_arraySubscript
 #define asChar			Rf_asChar
 #define asComplex		Rf_asComplex
 #define asInteger		Rf_asInteger
@@ -802,12 +784,10 @@ int R_system(char *);
 #define coerceVector		Rf_coerceVector
 #define conformable		Rf_conformable
 #define cons			Rf_cons
-#define copyListMatrix		Rf_copyListMatrix
 #define copyMatrix		Rf_copyMatrix
 #define copyMostAttrib		Rf_copyMostAttrib
 #define copyVector		Rf_copyVector
 #define CreateTag		Rf_CreateTag
-#define CustomPrintValue	Rf_CustomPrintValue
 #define defineVar		Rf_defineVar
 #define dimgets			Rf_dimgets
 #define dimnamesgets		Rf_dimnamesgets
@@ -815,13 +795,8 @@ int R_system(char *);
 #define duplicate		Rf_duplicate
 #define duplicated		Rf_duplicated
 #define elt			Rf_elt
-#define emptyEnv		Rf_emptyEnv
-#define EnsureString		Rf_EnsureString
 #define errorcall		Rf_errorcall
 #define eval			Rf_eval
-#define EvalArgs		Rf_EvalArgs
-#define evalList		Rf_evalList
-#define evalListKeepMissing	Rf_evalListKeepMissing
 #define findFun			Rf_findFun
 #define findVar			Rf_findVar
 #define findVarInFrame		Rf_findVarInFrame
@@ -884,12 +859,7 @@ int R_system(char *);
 #define list3			Rf_list3
 #define list4			Rf_list4
 #define listAppend		Rf_listAppend
-#define makeSubscript		Rf_makeSubscript
 #define match			Rf_match
-#define matchArg		Rf_matchArg
-#define matchArgExact		Rf_matchArgExact
-#define matchArgs		Rf_matchArgs
-#define matchPar		Rf_matchPar
 #define mkChar			Rf_mkChar
 #define mkString		Rf_mkString
 #define namesgets		Rf_namesgets
@@ -901,10 +871,7 @@ int R_system(char *);
 #define PairToVectorList	Rf_PairToVectorList
 #define pmatch			Rf_pmatch
 #define psmatch			Rf_psmatch
-#define PrintDefaults		Rf_PrintDefaults
 #define PrintValue		Rf_PrintValue
-#define PrintValueEnv		Rf_PrintValueEnv
-#define PrintValueRec		Rf_PrintValueRec
 #define protect			Rf_protect
 #define rownamesgets		Rf_rownamesgets
 #define ScalarComplex		Rf_ScalarComplex
@@ -921,7 +888,6 @@ int R_system(char *);
 #define unprotect		Rf_unprotect
 #define unprotect_ptr		Rf_unprotect_ptr
 #define VectorToPairList	Rf_VectorToPairList
-#define vectorSubscript         Rf_vectorSubscript
 #define warningcall		Rf_warningcall
 #endif
 

@@ -197,6 +197,7 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
 
 /* begincontext - begin an execution context */
 
+/* begincontext and endcontext are used in dataentry.c and modules */
 void begincontext(RCNTXT * cptr, int flags,
 		  SEXP syscall, SEXP env, SEXP sysp,
 		  SEXP promargs, SEXP callfun)

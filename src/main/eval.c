@@ -31,6 +31,7 @@
 
 #include "Defn.h"
 
+static SEXP evalListKeepMissing(SEXP el, SEXP rho);
 
 #ifdef BYTECODE
 static SEXP bcEval(SEXP, SEXP);
@@ -720,6 +721,7 @@ static SEXP R_dot_Methods = NULL;
 static SEXP R_dot_defined = NULL;
 static SEXP R_dot_target = NULL;
 
+/* called from methods_list_dispatch.c */
 SEXP R_execMethod(SEXP op, SEXP rho)
 {
     SEXP call, arglist, callerenv, newrho, next, val;
@@ -1395,7 +1397,8 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* because it is does not cause growth of the pointer protection stack, */
 /* and because it is a little more efficient. */
 
-SEXP evalList(SEXP el, SEXP rho)
+/* called in names.c and objects.c */
+SEXP attribute_hidden evalList(SEXP el, SEXP rho)
 {
     SEXP ans, h, tail;
 
@@ -1441,7 +1444,7 @@ SEXP evalList(SEXP el, SEXP rho)
 /* form below because it is does not cause growth of the pointer */
 /* protection stack, and because it is a little more efficient. */
 
-SEXP evalListKeepMissing(SEXP el, SEXP rho)
+static SEXP evalListKeepMissing(SEXP el, SEXP rho)
 {
     SEXP ans, h, tail;
 
@@ -1546,7 +1549,8 @@ SEXP attribute_hidden promiseArgs(SEXP el, SEXP rho)
 
 /* Check that each formal is a symbol */
 
-void CheckFormals(SEXP ls)
+/* used in coerce.c */
+void attribute_hidden CheckFormals(SEXP ls)
 {
     if (isList(ls)) {
 	for (; ls != R_NilValue; ls = CDR(ls))
@@ -1707,7 +1711,7 @@ SEXP attribute_hidden do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP EvalArgs(SEXP el, SEXP rho, int dropmissing)
+static SEXP EvalArgs(SEXP el, SEXP rho, int dropmissing)
 {
     if(dropmissing) return evalList(el, rho);
     else return evalListKeepMissing(el, rho);

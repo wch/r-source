@@ -664,6 +664,7 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
+# define arraySubscript		Rf_arraySubscript
 # define begincontext		Rf_begincontext
 # define checkArity		Rf_checkArity
 # define CheckFormals		Rf_CheckFormals
@@ -673,7 +674,9 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define ComplexFromLogical	Rf_ComplexFromLogical
 # define ComplexFromReal	Rf_ComplexFromReal
 # define ComplexFromString	Rf_ComplexFromString
+# define copyListMatrix		Rf_copyListMatrix
 # define copyMostAttribNoTs	Rf_copyMostAttribNoTs
+# define CustomPrintValue	Rf_CustomPrintValue
 # define DataFrameClass		Rf_DataFrameClass
 # define ddfindVar		Rf_ddfindVar
 # define deparse1		Rf_deparse1
@@ -683,8 +686,11 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define dynamicfindVar		Rf_dynamicfindVar
 # define EncodeRaw              Rf_EncodeRaw
 # define EncodeString           Rf_EncodeString
+# define EnsureString 		Rf_EnsureString
 # define endcontext		Rf_endcontext
+# define envlength		Rf_envlength
 # define ErrorMessage		Rf_ErrorMessage
+# define evalList		Rf_evalList
 # define factorsConform		Rf_factorsConform
 # define FetchMethod		Rf_FetchMethod
 # define findcontext		Rf_findcontext
@@ -722,7 +728,12 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define LogicalFromReal	Rf_LogicalFromReal
 # define LogicalFromString	Rf_LogicalFromString
 # define mainloop		Rf_mainloop
+# define makeSubscript		Rf_makeSubscript
 # define mat2indsub		Rf_mat2indsub
+# define matchArg		Rf_matchArg
+# define matchArgExact		Rf_matchArgExact
+# define matchArgs		Rf_matchArgs
+# define matchPar		Rf_matchPar
 # define Mbrtowc		Rf_mbrtowc
 # define mkCLOSXP		Rf_mkCLOSXP
 # define mkComplex              Rf_mkComplex
@@ -739,7 +750,10 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define onsigusr1              Rf_onsigusr1
 # define onsigusr2              Rf_onsigusr2
 # define parse			Rf_parse
+# define PrintDefaults		Rf_PrintDefaults
 # define PrintGreeting		Rf_PrintGreeting
+# define PrintValueEnv		Rf_PrintValueEnv
+# define PrintValueRec		Rf_PrintValueRec
 # define PrintVersion		Rf_PrintVersion
 # define PrintVersionString    	Rf_PrintVersionString
 # define PrintWarnings		Rf_PrintWarnings
@@ -765,6 +779,7 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define type2symbol		Rf_type2symbol
 # define unbindVar		Rf_unbindVar
 # define usemethod		Rf_usemethod
+# define vectorSubscript	Rf_vectorSubscript
 # define warningcall		Rf_warningcall
 # define WarningMessage		Rf_WarningMessage
 # define yyparse		Rf_yyparse
@@ -823,11 +838,15 @@ SEXP Rf_EnsureString(SEXP);
 /* Other Internally Used Functions */
 
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
+SEXP arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
+		    SEXP (*)(SEXP, int), SEXP);
 void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP, SEXP);
 void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);
 void CleanEd(void);
+void copyListMatrix(SEXP, SEXP, Rboolean);
 void copyMostAttribNoTs(SEXP, SEXP);
+void CustomPrintValue(SEXP,SEXP);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean,int);
@@ -838,6 +857,7 @@ SEXP duplicated(SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
 int envlength(SEXP);
+SEXP evalList(SEXP, SEXP);
 int factorsConform(SEXP, SEXP);
 SEXP FetchMethod(char *, char *, SEXP);
 void findcontext(int, SEXP, SEXP);
@@ -875,8 +895,12 @@ void R_JumpToContext(RCNTXT *, int, SEXP);
 void jump_to_toplevel(void);
 SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
+SEXP makeSubscript(SEXP, SEXP, int *);
 SEXP mat2indsub(SEXP, SEXP);
-SEXP match(SEXP, SEXP, int);
+SEXP matchArg(SEXP, SEXP*);
+SEXP matchArgExact(SEXP, SEXP*);
+SEXP matchArgs(SEXP, SEXP);
+SEXP matchPar(char*, SEXP*);
 void memtrace_report(SEXP, SEXP);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
 /* SEXP mkComplex(char *s); */
@@ -895,7 +919,10 @@ RETSIGTYPE onsigusr1(int);
 RETSIGTYPE onsigusr2(int);
 int OneIndex(SEXP, SEXP, int, int, SEXP*, int);
 SEXP parse(FILE*, int);
+void PrintDefaults(SEXP);
 void PrintGreeting(void);
+void PrintValueEnv(SEXP, SEXP);
+void PrintValueRec(SEXP, SEXP);
 void PrintVersion(char *);
 void PrintVersionString(char *);
 void PrintWarnings(void);
@@ -942,6 +969,8 @@ void unmarkPhase(void);
 #endif
 SEXP R_LookupMethod(SEXP, SEXP, SEXP, SEXP);
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
+SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP),
+                        SEXP (*)(SEXP, int), SEXP);
 
 /* ../main/errors.c : */
 void ErrorMessage(SEXP, int, ...);
