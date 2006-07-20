@@ -235,7 +235,6 @@
  Rf_StringFromLogical
  Rf_StringFromReal
  Rf_VectorIndex
- Rf_arraySubscript
  Rf_bd0
  Rf_chebyshev_eval
  Rf_chebyshev_init

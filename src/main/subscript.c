@@ -496,7 +496,9 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
     return R_NilValue;
 }
 
-SEXP attribute_hidden
+/* This is used by packages arules and cba. Seems dangerous as the 
+   typedef is not exported */
+SEXP
 arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
 	       StringEltGetter strg, SEXP x)
 {

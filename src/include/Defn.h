@@ -664,7 +664,6 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
-# define arraySubscript		Rf_arraySubscript
 # define begincontext		Rf_begincontext
 # define checkArity		Rf_checkArity
 # define CheckFormals		Rf_CheckFormals
@@ -838,8 +837,6 @@ SEXP Rf_EnsureString(SEXP);
 /* Other Internally Used Functions */
 
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
-SEXP arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
-		    SEXP (*)(SEXP, int), SEXP);
 void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP, SEXP);
 void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);

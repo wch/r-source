@@ -543,6 +543,8 @@ SEXP Rf_allocS4Object();
 SEXP Rf_allocSExp(SEXPTYPE);
 SEXP Rf_allocVector(SEXPTYPE, R_len_t);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
+SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
+                       SEXP (*)(SEXP, int), SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
 SEXP Rf_cons(SEXP, SEXP);
 void Rf_copyMatrix(SEXP, SEXP, Rboolean);
@@ -597,7 +599,7 @@ void Rf_unprotect_ptr(SEXP);
 
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
-SEXP R_tryEval(SEXP e, SEXP env, int *ErrorOccurred);
+SEXP R_tryEval(SEXP, SEXP, int *);
 
 				/* return(.) NOT reached : for -Wall */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
@@ -780,6 +782,7 @@ int R_system(char *);
 #define allocString		Rf_allocString
 #define allocVector		Rf_allocVector
 #define applyClosure		Rf_applyClosure
+#define arraySubscript		Rf_arraySubscript
 #define asChar			Rf_asChar
 #define asComplex		Rf_asComplex
 #define asInteger		Rf_asInteger
