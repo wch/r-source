@@ -27,9 +27,9 @@ USER-VISIBLE CHANGES
 	to any non-empty value when R is started.  Only applies to new
 	class definitions, via a call to setClass().
 
-    o   The functions read.csv, read.csv2, read.delim, read.delim2 now
-        default the comment.char argument to "".  (These functions are
-        designed to read files produced by other software, which might
+    o	The functions read.csv, read.csv2, read.delim, read.delim2 now
+	default the comment.char argument to "".  (These functions are
+	designed to read files produced by other software, which might
 	use the # character inside fields, but are unlikely to use it for
 	comments.)
 
@@ -208,7 +208,7 @@ NEW FEATURES
 	as.list(<a list>) no longer duplicates (unnecessarily).
 
     o	lapply() does much less copying.  Vector X are handled without
-	duplication, and other types are coerced via as.list().  (As a
+	duplication, and other types are coerced via as.list().	 (As a
 	result, package 'boot' runs its examples 4% faster.)
 
 	lapply(<a pairlist>) now coerces to a list (rather than traverse
@@ -223,11 +223,26 @@ NEW FEATURES
     o	The :: operator now also works for packages without name spaces
 	that are on the search path.
 
+    o	Some changes have been made to automatic printing of S4
+	objects, to make this correspond to a call to show(), as per
+	'Programming with Data'.
+
+    o	warnings() is now an accessor function for 'last.warning' (which
+	is no longer stored in the workspace) with a print() method.
+
+    o	traceback() gains a 'max.lines' argument.
+	.Traceback is no longer stored in the workspace.
+
+    o	options("par.ask.default") allows the default for par("ask")
+	to be set for a newly-opened device.  (Defaults to FALSE, the
+	previous behaviour.)
+
     o	Recursive rapply() which is similar to lapply but used
 	recursively and can restrict the classes of elements to which
 	it is applied.
 
-    o   setwd now returns the current directory, silently, before changing
+    o	setwd() now returns the current directory, silently, before changing
+
 
 DEPRECATED & DEFUNCT
 
@@ -263,20 +278,6 @@ DEPRECATED & DEFUNCT
 
     o	save(version = 1) is now deprecated.
 
-    o	Some changes have been made to automatic printing of S4
-	objects, to make this correspond to a call to show(), as per
-	'Programming with Data'.
-
-    o	warnings() is now an accessor function for 'last.warning' (which
-	is no longer stored in the workspace) with a print() method.
-
-    o	traceback() gains a 'max.lines' argument.
-	.Traceback is no longer stored in the workspace.
-
-    o	options("par.ask.default") allows the default for par("ask")
-	to be set for a newly-opened device.  (Defaults to FALSE, the
-	previous behaviour.)
-
 
 C-LEVEL FACILITIES
 
@@ -289,7 +290,7 @@ C-LEVEL FACILITIES
 	`Writing R Extensions' for the details and for a stricter
 	test regime.
 
-    o	It is no longer possible to pass list variables to 
+    o	It is no longer possible to pass list variables to
 	.C(DUP = FALSE): it would have given rise to obscure garbage
 	collection errors.
 
@@ -497,7 +498,7 @@ BUG FIXES
 	'tsp' attribute was integer, whereas it was enforced to be
 	numeric by the attribute-setting code.
 
-    o   Sweave() did not treat \begin{document} in comments correctly 
+    o   Sweave() did not treat \begin{document} in comments correctly
         (PR#9073).
 
 
