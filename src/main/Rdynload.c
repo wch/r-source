@@ -145,13 +145,14 @@ static int CountDLL = 0;
 
 static DllInfo LoadedDLL[MAX_NUM_DLLS];
 
-int addDLL(char *dpath, char *name, HINSTANCE handle);
-SEXP Rf_MakeDLLInfo(DllInfo *info);
+static int addDLL(char *dpath, char *name, HINSTANCE handle);
+static SEXP Rf_MakeDLLInfo(DllInfo *info);
 
 static SEXP createRSymbolObject(SEXP sname, DL_FUNC f,
 				R_RegisteredNativeSymbol *symbol,
 				Rboolean withRegistrationInfo);
 
+static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path);
 
 attribute_hidden OSDynSymbol Rf_osDynSymbol;
 attribute_hidden OSDynSymbol *R_osDynSymbol = &Rf_osDynSymbol;
@@ -170,11 +171,13 @@ InitDynload()
    InitFunctionHashing();
 }
 
+#ifdef UNUSED
 DllInfo *
 getBaseDllInfo()
 {
     return(&LoadedDLL[0]);
 }
+#endif
 
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value)
 {
@@ -185,17 +188,21 @@ Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value)
   return(old);
 }
 
-void R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
-		   Rf_DotCSymbol *sym);
-void R_addCallRoutine(DllInfo *info,
-		      const R_CallMethodDef * const croutine,
-		      Rf_DotCallSymbol *sym);
-void R_addFortranRoutine(DllInfo *info,
-			 const R_FortranMethodDef * const croutine,
-			 Rf_DotFortranSymbol *sym);
-void R_addExternalRoutine(DllInfo *info,
-			  const R_ExternalMethodDef * const croutine,
-	      	          Rf_DotExternalSymbol *sym);
+static void 
+R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
+	      Rf_DotCSymbol *sym);
+static void 
+R_addCallRoutine(DllInfo *info,
+		 const R_CallMethodDef * const croutine,
+		 Rf_DotCallSymbol *sym);
+static void 
+R_addFortranRoutine(DllInfo *info,
+		    const R_FortranMethodDef * const croutine,
+		    Rf_DotFortranSymbol *sym);
+static void 
+R_addExternalRoutine(DllInfo *info,
+		     const R_ExternalMethodDef * const croutine,
+		     Rf_DotExternalSymbol *sym);
 
 
 /*
@@ -311,7 +318,7 @@ R_setArgStyles(const R_FortranMethodDef * const croutine,
 	       sizeof(R_NativeArgStyle) * croutine->numArgs);
 }
 
-void attribute_hidden
+static void
 R_addFortranRoutine(DllInfo *info,
 		    const R_FortranMethodDef * const croutine,
 		    Rf_DotFortranSymbol *sym)
@@ -325,7 +332,7 @@ R_addFortranRoutine(DllInfo *info,
        R_setArgStyles(croutine, sym);
 }
 
-void attribute_hidden
+static void
 R_addExternalRoutine(DllInfo *info,
 		     const R_ExternalMethodDef * const croutine,
 		     Rf_DotExternalSymbol *sym)
@@ -337,7 +344,7 @@ R_addExternalRoutine(DllInfo *info,
 
 
 
-void attribute_hidden
+static void
 R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
 	      Rf_DotCSymbol *sym)
 {
@@ -351,7 +358,7 @@ R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
 
 }
 
-void attribute_hidden
+static void
 R_addCallRoutine(DllInfo *info, const R_CallMethodDef * const croutine,
 		 Rf_DotCallSymbol *sym)
 {
@@ -360,25 +367,31 @@ R_addCallRoutine(DllInfo *info, const R_CallMethodDef * const croutine,
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
 }
 
-void attribute_hidden
+static void
 Rf_freeCSymbol(Rf_DotCSymbol *sym)
 {
     free(sym->name);
 }
 
-void attribute_hidden
+static void
 Rf_freeCallSymbol(Rf_DotCallSymbol *sym)
 {
     free(sym->name);
 }
 
-void attribute_hidden
+static void
+Rf_freeExternalSymbol(Rf_DotCallSymbol *sym)
+{
+    free(sym->name);
+}
+
+static void
 Rf_freeFortranSymbol(Rf_DotFortranSymbol *sym)
 {
     free(sym->name);
 }
 
-void attribute_hidden
+static void
 Rf_freeDllInfo(DllInfo *info)
 {
     int i;
@@ -393,6 +406,11 @@ Rf_freeDllInfo(DllInfo *info)
 	for(i = 0; i < info->numCallSymbols; i++)
 	    Rf_freeCallSymbol(info->CallSymbols+i);
 	free(info->CallSymbols);
+    }
+    if(info->ExternalSymbols) {
+	for(i = 0; i < info->numExternalSymbols; i++)
+	    Rf_freeExternalSymbol(info->ExternalSymbols+i);
+	free(info->ExternalSymbols);
     }
     if(info->FortranSymbols) {
 	for(i = 0; i < info->numFortranSymbols; i++)
@@ -537,8 +555,8 @@ static DllInfo* AddDLL(char *path, int asLocal, int now)
     return info;
 }
 
-attribute_hidden
-DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
+
+static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
 {
     char *dpath,  DLLname[PATH_MAX], *p;
     DllInfo *info;
@@ -579,7 +597,7 @@ DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     return(info);
 }
 
-int attribute_hidden
+static int
 addDLL(char *dpath, char *DLLname, HINSTANCE handle)
 {
     int ans = CountDLL;
@@ -608,7 +626,7 @@ addDLL(char *dpath, char *DLLname, HINSTANCE handle)
     return(ans);
 }
 
-Rf_DotCSymbol *
+static Rf_DotCSymbol *
 Rf_lookupRegisteredCSymbol(DllInfo *info, const char *name)
 {
     int i;
@@ -620,7 +638,7 @@ Rf_lookupRegisteredCSymbol(DllInfo *info, const char *name)
     return(NULL);
 }
 
-Rf_DotFortranSymbol *
+static Rf_DotFortranSymbol *
 Rf_lookupRegisteredFortranSymbol(DllInfo *info, const char *name)
 {
     int i;
@@ -632,7 +650,7 @@ Rf_lookupRegisteredFortranSymbol(DllInfo *info, const char *name)
     return((Rf_DotFortranSymbol*)NULL);
 }
 
-Rf_DotCallSymbol *
+static Rf_DotCallSymbol *
 Rf_lookupRegisteredCallSymbol(DllInfo *info, const char *name)
 {
     int i;
@@ -644,7 +662,7 @@ Rf_lookupRegisteredCallSymbol(DllInfo *info, const char *name)
     return((Rf_DotCallSymbol*)NULL);
 }
 
-Rf_DotExternalSymbol *
+static Rf_DotExternalSymbol *
 Rf_lookupRegisteredExternalSymbol(DllInfo *info, const char *name)
 {
     int i;
@@ -656,7 +674,7 @@ Rf_lookupRegisteredExternalSymbol(DllInfo *info, const char *name)
     return((Rf_DotExternalSymbol*)NULL);
 }
 
-DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
+static DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
 				 R_RegisteredNativeSymbol *symbol)
 {
     int fail = 0;
@@ -729,8 +747,9 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
     return((DL_FUNC) NULL);
 }
 
-DL_FUNC R_dlsym(DllInfo *info, char const *name,
-		R_RegisteredNativeSymbol *symbol)
+DL_FUNC attribute_hidden
+R_dlsym(DllInfo *info, char const *name,
+	R_RegisteredNativeSymbol *symbol)
 {
     char buf[MAXIDSIZE+1];
     DL_FUNC f;
@@ -903,7 +922,7 @@ int moduleCdynload(char *module, int local, int now)
   NativeSymbol and can be used to relay symbols from
   one library to another.
  */
-SEXP attribute_hidden
+static SEXP
 Rf_MakeNativeSymbolRef(DL_FUNC f)
 {                     
   SEXP ref, klass;
@@ -929,7 +948,7 @@ freeRegisteredNativeSymbolCopy(SEXP ref)
        free(ptr);
 }
 
-SEXP attribute_hidden
+static SEXP
 Rf_MakeRegisteredNativeSymbol(R_RegisteredNativeSymbol *symbol)
 {                     
   SEXP ref, klass;
@@ -988,7 +1007,7 @@ Rf_makeDllInfoReference(HINSTANCE inst)
  name of the DLL and whether we only look for symbols that have been
  registered in this DLL or do we also use dynamic lookup.
  */
-SEXP attribute_hidden
+static SEXP
 Rf_MakeDLLInfo(DllInfo *info)
 {
     SEXP ref, elNames, tmp;

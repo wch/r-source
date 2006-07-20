@@ -178,6 +178,7 @@ static SEXP getActiveValue(SEXP fun)
 
 */
 
+/* Why is this extern?  Only used in this file */
 extern int R_Newhashpjw(char *s)
 {
     char *p;
@@ -312,7 +313,8 @@ static SEXP R_NewHashTable(int size, int growth_rate)
   size/growth settings.  The only non-static hash table function.
 */
 
-SEXP R_NewHashedEnv(SEXP enclos)
+SEXP attribute_hidden
+R_NewHashedEnv(SEXP enclos)
 {
     SEXP s;
 

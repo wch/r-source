@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001  The R Development Core Team.
+ *  Copyright (C) 2001-6  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -194,14 +194,6 @@ extern int nCPFun;
 
 
 DL_FUNC Rf_lookupCachedSymbol(const char *name, const char *pkg, int all);
-
-Rf_DotCSymbol *Rf_lookupRegisteredCSymbol(DllInfo *info, const char *name);
-Rf_DotCallSymbol *Rf_lookupRegisteredCallSymbol(DllInfo *info, const char *name);
-DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path);
-
-
-DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name, 
-				  R_RegisteredNativeSymbol *symbol);
 
 DL_FUNC R_dlsym(DllInfo *info, char const *name, R_RegisteredNativeSymbol *symbol);
 

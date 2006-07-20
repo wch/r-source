@@ -66,6 +66,7 @@
  OutDec
  PrintUsage
  ProfileEvent
+ R_AllocStringBuffer
  R_BCNodeStackBase
  R_BCNodeStackEnd
  R_BCNodeStackTop
@@ -82,12 +83,14 @@
  R_FileExists
  R_FileMtime
  R_FreeSEXP
+ R_FreeStringBuffer
  R_FunTab
  R_GetMaxNSize
  R_GetMaxVSize
  R_HandlerStack
  R_HiddenFile
  R_InitialData
+ R_InsertRestartHandlers
  R_IoBufferFree
  R_IoBufferGetc
  R_IoBufferPutc
@@ -98,6 +101,7 @@
  R_Log10
  R_NHeap
  R_NSize
+ R_NewHashedEnv
  R_OutputCon
  R_PPStack
  R_PPStackSize
@@ -116,7 +120,6 @@
  R_ParseGeneral
  R_ParseText
  R_Quiet
- R_RegisterDLL
  R_RestartStack
  R_RestartToken
  R_ReturnedValue
@@ -140,13 +143,11 @@
  R_XDREncodeDouble
  R_XDREncodeInteger
  R_YesNoCancel
- R_addCRoutine
- R_addCallRoutine
- R_addExternalRoutine
- R_addFortranRoutine
+ R_binary
  R_compress1
  R_dec_min_exponent
  R_decompress1
+ R_dlsym
  R_fixbackslash
  R_fixslash
  R_getClockIncrement
@@ -173,6 +174,7 @@
  R_sysframe
  R_sysfunction
  R_sysparent
+ R_unary
  Rconsolecmd
  Rconsolesetwidth
  Rf_ComplexFromInteger
@@ -206,9 +208,6 @@
  Rf_InitTempDir
  Rf_IntegerFromString
  Rf_LogicalFromString
- Rf_MakeDLLInfo
- Rf_MakeNativeSymbolRef
- Rf_MakeRegisteredNativeSymbol
  Rf_OneIndex
  Rf_PrintDefaults
  Rf_PrintGreeting
@@ -238,10 +237,6 @@
  Rf_findVar1
  Rf_findcontext
  Rf_framedepth
- Rf_freeCSymbol
- Rf_freeCallSymbol
- Rf_freeDllInfo
- Rf_freeFortranSymbol
  Rf_gamma_cody
  Rf_gammalims
  Rf_get1index
@@ -341,7 +336,6 @@
  _tr_init
  _tr_stored_block
  _tr_tally
- addDLL
  adler32
  adler32_combine
  app_control_proc

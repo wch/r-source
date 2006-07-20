@@ -1391,7 +1391,8 @@ static void signalInterrupt(void)
     UNPROTECT(1);
 }
 
-void R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)
+void attribute_hidden
+R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)
 {
     SEXP class, rho, entry, name;
 

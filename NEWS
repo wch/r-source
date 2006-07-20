@@ -417,6 +417,8 @@ BUG FIXES
     o	terms(keep.order=TRUE) was not returning a valid "order"
 	attribute.
 
+    o	The DLL registration code was not freeing External symbols.
+
 
 
 

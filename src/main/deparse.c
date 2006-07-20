@@ -141,7 +141,8 @@ static void vec2buff(SEXP, LocalParseData *);
 static void linebreak(Rboolean *lbreak, LocalParseData *);
 static void deparse2(SEXP, SEXP, LocalParseData *);
 
-void R_AllocStringBuffer(int blen, DeparseBuffer *buf)
+void attribute_hidden
+R_AllocStringBuffer(int blen, DeparseBuffer *buf)
 {
     if(blen >= 0) {
 	if(blen*sizeof(char) < buf->bufsize) return;
@@ -165,7 +166,8 @@ void R_AllocStringBuffer(int blen, DeparseBuffer *buf)
     }
 }
 
-void R_FreeStringBuffer(DeparseBuffer *buf)
+void attribute_hidden
+R_FreeStringBuffer(DeparseBuffer *buf)
 {
     if (buf->data != NULL) {
 	free(buf->data);

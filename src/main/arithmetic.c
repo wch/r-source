@@ -337,7 +337,7 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
     } \
 } while (0)
 
-SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
+SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 {
     SEXP class, dims, tsp, xnames, ynames, val;
     int mismatch = 0, nx, ny, xarray, yarray, xts, yts;
@@ -509,7 +509,7 @@ SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     return val;
 }
 
-SEXP R_unary(SEXP call, SEXP op, SEXP s1)
+SEXP attribute_hidden R_unary(SEXP call, SEXP op, SEXP s1)
 {
     switch (TYPEOF(s1)) {
     case LGLSXP:
