@@ -85,7 +85,7 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   \code{X11Fonts}) to convert the R graphics font family to an
   X11-specific font family description.
 
-  X11 chooses fonts by patching to a pattern, and it is quite possible
+  X11 chooses fonts by matching to a pattern, and it is quite possible
   that it will choose a font in the wrong encoding or which does not
   contain glyphs for the your language (particularly common in
   \code{iso10646-1} fonts.
