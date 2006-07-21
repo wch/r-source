@@ -146,7 +146,7 @@ please bug.report() [R_run_onexits]"));
 /* R_restore_globals - restore global variables from a target context
    before a LONGJMP.  The target context itself is not restored here
    since this is done slightly differently in jumpfun below, in
-   errors.c:jump_now, and in main.c:ParseBrwoser.  Eventually these
+   errors.c:jump_now, and in main.c:ParseBrowser.  Eventually these
    three should be unified so there is only one place where a LONGJMP
    occurs. */
 
