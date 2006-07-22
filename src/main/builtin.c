@@ -562,7 +562,7 @@ SEXP attribute_hidden do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* vector(mode="logical", length=0) */
 SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    R_len_t len, i;
+    R_len_t len /*, i*/;
     SEXP s;
     SEXPTYPE mode;
     checkArity(op, args);
@@ -592,16 +592,19 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	      CHAR(STRING_ELT(s, 0)));
     }
     if (mode == INTSXP || mode == LGLSXP)
-	for (i = 0; i < len; i++)
-	    INTEGER(s)[i] = 0;
+	memset(INTEGER(s), 0, len*sizeof(int));
+        /*for (i = 0; i < len; i++) INTEGER(s)[i] = 0; */
     else if (mode == REALSXP)
-	for (i = 0; i < len; i++)
-	    REAL(s)[i] = 0.;
+	memset(REAL(s), 0, len*sizeof(double));
+	/*for (i = 0; i < len; i++) REAL(s)[i] = 0.;*/
     else if (mode == CPLXSXP)
+	memset(COMPLEX(s), 0, len*sizeof(Rcomplex));
+    /*
 	for (i = 0; i < len; i++) {
 	    COMPLEX(s)[i].r = 0.;
 	    COMPLEX(s)[i].i = 0.;
 	}
+    */
     else if (mode == RAWSXP)
 	memset(RAW(s), 0, len);
     /* other cases: list/expression have "NULL", ok */

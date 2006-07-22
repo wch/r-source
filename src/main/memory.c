@@ -1140,7 +1140,8 @@ SEXP attribute_hidden do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if (TYPEOF(CAR(args)) != ENVSXP && TYPEOF(CAR(args)) != EXTPTRSXP)
-	errorcall(call, _("first argument must be environment or external pointer"));
+	errorcall(call, 
+		  _("first argument must be environment or external pointer"));
     if (TYPEOF(CADR(args)) != CLOSXP)
 	errorcall(call, _("second argument must be a function"));
 
@@ -1442,11 +1443,10 @@ void attribute_hidden get_current_mem(unsigned long *smallvsize,
 				      unsigned long *largevsize,
 				      unsigned long *nodes)
 {
-    *smallvsize=R_SmallVallocSize;
-    *largevsize=R_LargeVallocSize;
-    *nodes=(R_NodesInUse*sizeof(SEXPREC));
-     return;
-
+    *smallvsize = R_SmallVallocSize;
+    *largevsize = R_LargeVallocSize;
+    *nodes = R_NodesInUse * sizeof(SEXPREC);
+    return;
 }
 
 SEXP attribute_hidden do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1613,6 +1613,8 @@ char *R_alloc(long nelem, int eltsize)
     if (dsize > 0) { /* precaution against integer overflow */
 	SEXP s;
 #if SIZEOF_LONG > 4
+	/* In this case by allocating larger units we can get up to
+	   size(double) * (2^31 - 1) bytes, approx 16Gb */
 	if(dsize < R_LEN_T_MAX)
 	    s = allocString(size); /**** avoid extra null byte?? */
 	else if(dsize < sizeof(double) * (R_LEN_T_MAX - 1))
@@ -1654,16 +1656,18 @@ char *S_alloc(long nelem, int eltsize)
 
 char *S_realloc(char *p, long new, long old, int size)
 {
-    int i, nold;
+    int /*i,*/ nold;
     char *q;
     /* shrinking is a no-op */
     if(new <= old) return p;
     q = R_alloc(new, size);
     nold = old * size;
-    for(i = 0; i < nold; i++)
+    memcpy(q, p, nold);
+    memset(q + nold, 0, new*size - nold);
+    /* for(i = 0; i < nold; i++)
 	q[i] = p[i];
     for(i = nold; i < new*size; i++)
-	q[i] = 0;
+        q[i] = 0; */
     return q;
 }
 
@@ -1759,13 +1763,13 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
     SEXP v, n, newrho;
 
     if (FORCE_GC || NO_FREE_NODES()) {
-      PROTECT(namelist);
-      PROTECT(valuelist);
-      PROTECT(rho);
-      R_gc_internal(0);
-      UNPROTECT(3);
-      if (NO_FREE_NODES())
-	mem_err_cons();
+	PROTECT(namelist);
+	PROTECT(valuelist);
+	PROTECT(rho);
+	R_gc_internal(0);
+	UNPROTECT(3);
+	if (NO_FREE_NODES())
+	    mem_err_cons();
     }
     GET_FREE_NODE(newrho);
 #if VALGRIND_LEVEL > 2
@@ -1794,12 +1798,12 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 {
     SEXP s;
     if (FORCE_GC || NO_FREE_NODES()) {
-      PROTECT(expr);
-      PROTECT(rho);
-      R_gc_internal(0);
-      UNPROTECT(2);
-      if (NO_FREE_NODES())
-	mem_err_cons();
+	PROTECT(expr);
+	PROTECT(rho);
+	R_gc_internal(0);
+	UNPROTECT(2);
+	if (NO_FREE_NODES())
+	    mem_err_cons();
     }
     GET_FREE_NODE(s);
 #if VALGRIND_LEVEL > 2
@@ -1820,7 +1824,9 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 
 /* allocString is now in Rinlinedfuns.h */
 
-/* Allocate a vector object on the heap */
+/* Allocate a vector object.  This ensures only validity of list-like
+   SEXPTYPES (as the elements must be initialized).  Initializing of
+   other vector types is done in do_makevector */
 
 SEXP allocVector(SEXPTYPE type, R_len_t length)
 {
@@ -1906,19 +1912,19 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     }
 
     if (size <= NodeClassSize[1]) {
-      node_class = 1;
-      alloc_size = NodeClassSize[1];
+	node_class = 1;
+	alloc_size = NodeClassSize[1];
     }
     else {
-      node_class = LARGE_NODE_CLASS;
-      alloc_size = size;
-      for (i = 2; i < NUM_SMALL_NODE_CLASSES; i++) {
-	if (size <= NodeClassSize[i]) {
-	  node_class = i;
-	  alloc_size = NodeClassSize[i];
-	  break;
+	node_class = LARGE_NODE_CLASS;
+	alloc_size = size;
+	for (i = 2; i < NUM_SMALL_NODE_CLASSES; i++) {
+	    if (size <= NodeClassSize[i]) {
+		node_class = i;
+		alloc_size = NodeClassSize[i];
+		break;
+	    }
 	}
-      }
     }
 
     /* save current R_VSize to roll back adjustment if malloc fails */
@@ -2022,6 +2028,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	VALGRIND_MAKE_WRITABLE(INTEGER(s), actual_size);
 #endif
     }
+    /* <FIXME> why not valgrindify LGLSXP, CPLXSXP and RAWSXP/ */
     return s;
 }
 
@@ -2030,9 +2037,8 @@ SEXP allocList(int n)
     int i;
     SEXP result;
     result = R_NilValue;
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; i++)
 	result = CONS(R_NilValue, result);
-    }
     return result;
 }
 
@@ -2123,9 +2129,9 @@ static void R_gc_internal(R_size_t size_needed)
     R_V_maxused = R_MAX(R_V_maxused, R_VSize - VHEAP_FREE());
 
     BEGIN_SUSPEND_INTERRUPTS {
-      gc_start_timing();
-      RunGenCollect(size_needed);
-      gc_end_timing();
+	gc_start_timing();
+	RunGenCollect(size_needed);
+	gc_end_timing();
     } END_SUSPEND_INTERRUPTS;
 
     if (gc_reporting) {
@@ -2190,7 +2196,7 @@ SEXP attribute_hidden do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     BEGIN_SUSPEND_INTERRUPTS {
       int gen;
 
-      /* run a full GC to make sure that all stuff in use in in Old space */
+      /* run a full GC to make sure that all stuff in use is in Old space */
       num_old_gens_to_collect = NUM_OLD_GENERATIONS;
       R_gc();
       for (gen = 0; gen < NUM_OLD_GENERATIONS; gen++) {
@@ -2227,6 +2233,7 @@ static void reset_pp_stack(void *data)
     R_size_t *poldpps = data;
     R_PPStackSize =  *poldpps;
 }
+
 SEXP protect(SEXP s)
 {
     if (R_PPStackTop >= R_PPStackSize) {
@@ -2256,7 +2263,7 @@ void unprotect(int l)
     if (R_PPStackTop >=  l)
 	R_PPStackTop -= l;
     else
-	error(_("unprotect(): stack imbalance"));
+	error(_("unprotect(): only %d protected items"), R_PPStackTop);
 }
 
 
@@ -2317,6 +2324,7 @@ void *R_chk_calloc(size_t nelem, size_t elsize)
 		 nelem, elsize);
     return(p);
 }
+
 void *R_chk_realloc(void *ptr, size_t size)
 {
     void *p;
@@ -2325,6 +2333,7 @@ void *R_chk_realloc(void *ptr, size_t size)
     if(!p) error(_("Realloc could not re-allocate (size %d) memory"), size);
     return(p);
 }
+
 void R_chk_free(void *ptr)
 {
     /* S-PLUS warns here, but there seems no reason to do so */
@@ -2604,78 +2613,78 @@ void (SET_TAG)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); TAG(x) = v; }
 
 SEXP (SETCAR)(SEXP x, SEXP y)
 {
-  if (x == NULL || x == R_NilValue)
-    error(_("bad value"));
-  CHECK_OLD_TO_NEW(x, y);
-  CAR(x) = y;
-  return y;
+    if (x == NULL || x == R_NilValue)
+	error(_("bad value"));
+    CHECK_OLD_TO_NEW(x, y);
+    CAR(x) = y;
+    return y;
 }
 
 SEXP (SETCDR)(SEXP x, SEXP y)
 {
-  if (x == NULL || x == R_NilValue)
-    error(_("bad value"));
-  CHECK_OLD_TO_NEW(x, y);
-  CDR(x) = y;
-  return y;
+    if (x == NULL || x == R_NilValue)
+	error(_("bad value"));
+    CHECK_OLD_TO_NEW(x, y);
+    CDR(x) = y;
+    return y;
 }
 
 SEXP (SETCADR)(SEXP x, SEXP y)
 {
-  SEXP cell;
-  if (x == NULL || x == R_NilValue ||
-      CDR(x) == NULL || CDR(x) == R_NilValue)
-    error(_("bad value"));
-  cell = CDR(x);
-  CHECK_OLD_TO_NEW(cell, y);
-  CAR(cell) = y;
-  return y;
+    SEXP cell;
+    if (x == NULL || x == R_NilValue ||
+	CDR(x) == NULL || CDR(x) == R_NilValue)
+	error(_("bad value"));
+    cell = CDR(x);
+    CHECK_OLD_TO_NEW(cell, y);
+    CAR(cell) = y;
+    return y;
 }
 
 SEXP (SETCADDR)(SEXP x, SEXP y)
 {
-  SEXP cell;
-  if (x == NULL || x == R_NilValue ||
-      CDR(x) == NULL || CDR(x) == R_NilValue ||
-      CDDR(x) == NULL || CDDR(x) == R_NilValue)
-    error(_("bad value"));
-  cell = CDDR(x);
-  CHECK_OLD_TO_NEW(cell, y);
-  CAR(cell) = y;
-  return y;
+    SEXP cell;
+    if (x == NULL || x == R_NilValue ||
+	CDR(x) == NULL || CDR(x) == R_NilValue ||
+	CDDR(x) == NULL || CDDR(x) == R_NilValue)
+	error(_("bad value"));
+    cell = CDDR(x);
+    CHECK_OLD_TO_NEW(cell, y);
+    CAR(cell) = y;
+    return y;
 }
 
 #define CDDDR(x) CDR(CDR(CDR(x)))
 
 SEXP (SETCADDDR)(SEXP x, SEXP y)
 {
-  SEXP cell;
-  if (x == NULL || x == R_NilValue ||
-      CDR(x) == NULL || CDR(x) == R_NilValue ||
-      CDDR(x) == NULL || CDDR(x) == R_NilValue ||
-      CDDDR(x) == NULL || CDDDR(x) == R_NilValue)
-    error(_("bad value"));
-  cell = CDDDR(x);
-  CHECK_OLD_TO_NEW(cell, y);
-  CAR(cell) = y;
-  return y;
+    SEXP cell;
+    if (x == NULL || x == R_NilValue ||
+	CDR(x) == NULL || CDR(x) == R_NilValue ||
+	CDDR(x) == NULL || CDDR(x) == R_NilValue ||
+	CDDDR(x) == NULL || CDDDR(x) == R_NilValue)
+	error(_("bad value"));
+    cell = CDDDR(x);
+    CHECK_OLD_TO_NEW(cell, y);
+    CAR(cell) = y;
+    return y;
 }
 
 #define CD4R(x) CDR(CDR(CDR(CDR(x))))
 
 SEXP (SETCAD4R)(SEXP x, SEXP y)
 {
-  SEXP cell;
-  if (x == NULL || x == R_NilValue ||
-      CDR(x) == NULL || CDR(x) == R_NilValue ||
-      CDDR(x) == NULL || CDDR(x) == R_NilValue ||
-      CDDDR(x) == NULL || CDDDR(x) == R_NilValue ||
-      CD4R(x) == NULL || CD4R(x) == R_NilValue)
-    error(_("bad value"));
-  cell = CD4R(x);
-  CHECK_OLD_TO_NEW(cell, y);
-  CAR(cell) = y;
-  return y;
+    SEXP cell;
+    if (x == NULL || x == R_NilValue ||
+	CDR(x) == NULL || CDR(x) == R_NilValue ||
+	CDDR(x) == NULL || CDDR(x) == R_NilValue ||
+	CDDDR(x) == NULL || CDDDR(x) == R_NilValue ||
+	CD4R(x) == NULL || CD4R(x) == R_NilValue)
+	error(_("bad value"));
+    cell = CD4R(x);
+    CHECK_OLD_TO_NEW(cell, y);
+    CAR(cell) = y;
+    return y;
 }
 
 void (SET_MISSING)(SEXP x, int v) { SET_MISSING(x, v); }
@@ -2762,21 +2771,21 @@ SEXP attribute_hidden do_Rprofmem(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #else
-static int R_IsMemReporting;
+static int R_IsMemReporting;  /* Rboolean more appropriate? */
 static FILE *R_MemReportingOutfile;
 static R_size_t R_MemReportingThreshold;
 
 static void R_OutputStackTrace(FILE *file)
 {
-    int newline=0;
+    int newline = 0;
     RCNTXT *cptr;
 
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
 	if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
-		SEXP fun = CAR(cptr->call);
-		if (!newline) newline = 1;
-		fprintf(file, "\"%s\" ",
+	    SEXP fun = CAR(cptr->call);
+	    if (!newline) newline = 1;
+	    fprintf(file, "\"%s\" ",
 		    TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
 		    "<Anonymous>");
 	}
@@ -2786,12 +2795,12 @@ static void R_OutputStackTrace(FILE *file)
 
 static void R_ReportAllocation(R_size_t size)
 {
-    int newline=0;
+    int newline = 0;
 
-    if (R_IsMemReporting){
-	if(size>R_MemReportingThreshold){
-	   fprintf(R_MemReportingOutfile,"%ld :", (unsigned long) size);
-	   R_OutputStackTrace(R_MemReportingOutfile);
+    if (R_IsMemReporting) {
+	if(size > R_MemReportingThreshold) {
+	    fprintf(R_MemReportingOutfile,"%ld :", (unsigned long) size);
+	    R_OutputStackTrace(R_MemReportingOutfile);
 	}
     }
     return;
@@ -2799,10 +2808,10 @@ static void R_ReportAllocation(R_size_t size)
 
 static void R_ReportNewPage(void)
 {
-    int newline=0;
+    int newline = 0;
 
-    if (R_IsMemReporting){
-	fprintf(R_MemReportingOutfile,"new page:");
+    if (R_IsMemReporting) {
+	fprintf(R_MemReportingOutfile, "new page:");
 	R_OutputStackTrace(R_MemReportingOutfile);
     }
     return;
@@ -2811,13 +2820,14 @@ static void R_ReportNewPage(void)
 
 static void R_EndMemReporting()
 {
-     if(R_MemReportingOutfile != NULL){
-	  fflush(R_MemReportingOutfile);
-	  fclose(R_MemReportingOutfile);
-	  R_MemReportingOutfile=NULL;
-     }
-     R_IsMemReporting=0;
-     return;
+    if(R_MemReportingOutfile != NULL) {
+	/* does not fclose always flush? */
+	fflush(R_MemReportingOutfile);
+	fclose(R_MemReportingOutfile);
+	R_MemReportingOutfile=NULL;
+    }
+    R_IsMemReporting = 0;
+    return;
 }
 
 static void R_InitMemReporting(char *filename, int append,
@@ -2827,8 +2837,8 @@ static void R_InitMemReporting(char *filename, int append,
     R_MemReportingOutfile = fopen(filename, append ? "a" : "w");
     if (R_MemReportingOutfile == NULL)
 	error(_("Rprofmem: cannot open output file '%s'"), filename);
-    R_MemReportingThreshold=threshold;
-    R_IsMemReporting=1;
+    R_MemReportingThreshold = threshold;
+    R_IsMemReporting = 1;
     return;
 }
 
@@ -2845,9 +2855,9 @@ SEXP attribute_hidden do_Rprofmem(SEXP call, SEXP op, SEXP args, SEXP rho)
     filename = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
     threshold = REAL(CADDR(args))[0];
     if (strlen(filename))
-	 R_InitMemReporting(filename, append_mode, threshold);
+	R_InitMemReporting(filename, append_mode, threshold);
     else
-	 R_EndMemReporting();
+	R_EndMemReporting();
     return R_NilValue;
 }
 
