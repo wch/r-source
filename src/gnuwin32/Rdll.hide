@@ -102,6 +102,7 @@
  R_NHeap
  R_NSize
  R_NewHashedEnv
+ R_Newhashpjw
  R_OutputCon
  R_PPStack
  R_PPStackSize
