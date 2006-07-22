@@ -47,10 +47,10 @@ local(expr, envir = new.env())
   \code{eval(expr, parent.frame(n))}.
 
   If \code{envir} is a list (such as a data frame) or pairlist, it is
-  copied into a temporary environment (with enclosure \code{enclos}, and
-  the temporary environment is used for evaluation.  So if \code{expr}
-  changes any of the components named in the (pair)list, the changes are
-  lost.
+  copied into a temporary environment (with enclosure \code{enclos}),
+  and the temporary environment is used for evaluation.  So if
+  \code{expr} changes any of the components named in the (pair)list, the
+  changes are lost.
 
   If \code{envir} is \code{NULL} it is interpreted as an empty list so
   no values could be found in \code{envir} and look-up goes directly to
@@ -90,7 +90,7 @@ mEx <- expression(2^2^3); mEx; 1 + eval(mEx)
 eval({ xx <- pi; xx^2}) ; xx
 
 a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, list(a=1)), list(b=5)) # == 10
-a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, -1), list(b=5))         # == 12
+a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, -1), list(b=5))        # == 12
 
 ev <- function() {
    e1 <- parent.frame()
@@ -102,6 +102,9 @@ ev <- function() {
 }
 tst.ev <- function(a = 7) { x <- pi; y <- 1; ev() }
 tst.ev()#-> aa : 7,  eval : 4.14
+
+a <- list(a=3, b=4)
+with(a, a <- 5) # alters the copy of a from the list, discarded.
 
 ##
 ## Example of evalq()
