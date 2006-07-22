@@ -178,8 +178,8 @@ static SEXP getActiveValue(SEXP fun)
 
 */
 
-/* Why is this extern?  Only used in this file */
-extern int R_Newhashpjw(char *s)
+/* was extern: used in this file and names.c */
+int attribute_hidden R_Newhashpjw(char *s)
 {
     char *p;
     unsigned h = 0, g;
