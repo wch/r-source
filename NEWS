@@ -422,7 +422,11 @@ BUG FIXES
     o	terms(keep.order=TRUE) was not returning a valid "order"
 	attribute.
 
-    o	The DLL registration code was not freeing External symbols.
+    o	The DLL registration code was not freeing .External symbols.
+
+    o	The internet download routines expected URLs of less than 4096
+	bytes, but did not check.  Now this is checked, and http: URLs
+	are allowed up to 40960 bytes.
 
 
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-3  The R Development Core Team.
+ *  Copyright (C) 2001-6  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -286,6 +286,8 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
             cur += 3;
 	    break;
 	}
+	if(indx >= 4095)
+	    RxmlMessage(2, _("RxmlNanoFTPScanURL: overlong (invalid?) URL"));
 	buf[indx++] = *cur++;
     }
     if (*cur == 0) return;
@@ -297,6 +299,8 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
 	if(p) {
 	    while(1) {
 		if(cur[0] == ':' || cur[0] == '@') break;
+		if(indx >= 4095)
+		    RxmlMessage(2, _("RxmlNanoFTPScanURL: overlong (invalid?) URL"));
 		buf[indx++] = *cur++;
 	    }
 	    buf[indx] = 0;
@@ -306,6 +310,8 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
 		cur++;
 		while(1) {
 		    if(cur[0] == '@') break;
+		    if(indx >= 4095)
+			RxmlMessage(2, _("RxmlNanoFTPScanURL: overlong (invalid?) URL"));
 		    buf[indx++] = *cur++;
 		}
 		buf[indx] = 0;
@@ -338,6 +344,8 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
 	    indx = 0;
 	    break;
 	}
+	if(indx >= 4095)
+	    RxmlMessage(2, _("RxmlNanoFTPScanURL: overlong (invalid?) URL"));
 	buf[indx++] = *cur++;
     }
     if (*cur == 0)
@@ -345,8 +353,11 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
     else {
         indx = 0;
         buf[indx] = 0;
-	while (*cur != 0)
+	while (*cur != 0) {
+	    if(indx >= 4095)
+		RxmlMessage(2, _("RxmlNanoFTPScanURL: overlong (invalid?) URL"));
 	    buf[indx++] = *cur++;
+	}
 	buf[indx] = 0;
 	ctxt->path = xmlMemStrdup(buf);
     }
@@ -389,6 +400,8 @@ RxmlNanoFTPScanProxy(const char *URL) {
             cur += 3;
 	    break;
 	}
+	if(indx >= 4095)
+	    RxmlMessage(2, _("RxmlNanoFTPScanProxy: overlong (invalid?) URL"));
 	buf[indx++] = *cur++;
     }
     if (*cur == 0) return;
@@ -416,6 +429,8 @@ RxmlNanoFTPScanProxy(const char *URL) {
 	    indx = 0;
 	    break;
 	}
+	if(indx >= 4095)
+	    RxmlMessage(2, _("RxmlNanoFTPScanProxy: overlong (invalid?) URL"));
 	buf[indx++] = *cur++;
     }
 }
