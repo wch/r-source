@@ -1822,7 +1822,7 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 /* All vector objects  must be a multiple of sizeof(ALIGN) */
 /* bytes so that alignment is preserved for all objects */
 
-/* allocString is now in Rinlinedfuns.h */
+/* allocString is now a macro */
 
 /* Allocate a vector object.  This ensures only validity of list-like
    SEXPTYPES (as the elements must be initialized).  Initializing of

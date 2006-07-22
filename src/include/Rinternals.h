@@ -772,6 +772,9 @@ FILE *R_popen(char *, char *);
 #endif
 int R_system(char *);
 
+/* now a macro */
+#define allocString(n)		Rf_allocVector(CHARSXP, n)
+#define Rf_allocString(n)      	Rf_allocVector(CHARSXP, n)
 
 #ifndef R_NO_REMAP
 #define allocArray		Rf_allocArray
@@ -779,7 +782,7 @@ int R_system(char *);
 #define allocMatrix		Rf_allocMatrix
 #define allocS4Object		Rf_allocS4Object
 #define allocSExp		Rf_allocSExp
-#define allocString		Rf_allocString
+/*#define allocString		Rf_allocString*/
 #define allocVector		Rf_allocVector
 #define applyClosure		Rf_applyClosure
 #define arraySubscript		Rf_arraySubscript
@@ -903,7 +906,7 @@ int R_system(char *);
 #include "Rinlinedfuns.h"
 #else
 /* need remapped names here for use with R_NO_REMAP */
-SEXP Rf_allocString(int);
+/*SEXP Rf_allocString(int);*/
 Rcomplex Rf_asComplex(SEXP);
 int Rf_asInteger(SEXP);
 int Rf_asLogical(SEXP);

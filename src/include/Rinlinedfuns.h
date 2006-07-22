@@ -38,14 +38,6 @@
 /* define inline-able functions */
 
 
-/* from memory.c */
-
-/* "allocString" allocate a string on the (vector) heap. */
-INLINE_FUN SEXP allocString(int length)
-{
-    return allocVector(CHARSXP, length);
-}
-
 /* from dstruct.c */
 
 /* mkChar - make a character (CHARSXP) variable */
