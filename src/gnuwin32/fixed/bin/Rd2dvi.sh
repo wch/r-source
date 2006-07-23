@@ -339,7 +339,7 @@ status=0
 
 miktex=`latex --version | grep ^MiKTeX | wc -l`
 if test "${miktex}" = "1"; then
-R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
+R_TEXOPTS=--include-directory=${R_HOME}/share/texmf
 else
 R_TEXOPTS=
 fi
