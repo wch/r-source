@@ -16,6 +16,8 @@ dirname() converted paths involving network shares to forward slashes.
 
 R could crash when very low on memory. (PR#8981)
 
+Due to a typo, R CMD Rd2dvi would not work with MiKTeX.
+
 
 
 R 2.3.1
