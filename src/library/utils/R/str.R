@@ -85,9 +85,10 @@ str.default <-
 
     #NOT yet:if(has.class <- !is.null(cl <- class(object)))
     if(has.class <- !is.null(cl <- attr(object, "class"))) { # S3 or S4 class
-	## FIXME: a kludge
-	S4 <- !is.null(attr(cl, "package")) || cl == "classRepresentation"
-	## better, but needs 'methods':	  length(methods::getSlots(cl)) > 0
+	## The new way (R-2.4.0, with R_S4_type activated) :
+	S4 <- typeof(object) == "S4"
+	if(!S4) ## old kludge for compatibility (of old saved objects):
+	    S4 <- !is.null(attr(cl, "package")) || cl == "classRepresentation"
     }
     mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
