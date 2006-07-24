@@ -2479,7 +2479,7 @@ SEXP (STRING_ELT)(SEXP x, int i) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "STRING_ELT", "charcter vector", type2char(TYPEOF(x)));
+	      "STRING_ELT", "character vector", type2char(TYPEOF(x)));
 #endif
     return STRING_ELT(x, i);
 }
