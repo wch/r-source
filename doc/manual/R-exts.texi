@@ -9343,6 +9343,7 @@ It is written for the R core team and others studying the code in the
 * SEXPs::                       
 * Environments and variable lookup::  
 * Attributes (internal)::       
+* Contexts::                    
 * Argument evaluation::         
 * The write barrier::           
 * Serialization Formats::       
@@ -9824,7 +9825,7 @@ the internal code diverts lookups in its frame to the global symbol
 table.
 
 
-@node Attributes (internal), Argument evaluation, Environments and variable lookup, R Internal Structures
+@node Attributes (internal), Contexts, Environments and variable lookup, R Internal Structures
 @section Attributes (internal)
 
 As we have seen, every @code{SEXPREC} has a pointer to the attributes of
@@ -9910,7 +9911,97 @@ attr(,"comm")
 [1] "a comment"
 @end example
 
-@node Argument evaluation, The write barrier, Attributes (internal), R Internal Structures
+
+@node Contexts, Argument evaluation, Attributes (internal), R Internal Structures
+@section Contexts
+
+@emph{Contexts} are the internal mechanism used to keep track of where a
+computation has got to (and from where), so that control-flow construct
+can work and reasonable information can be produced on error conditions,
+(such as traceback) and otherwise (the @code{sys.xxx} functions).
+
+Execution contexts are a stack of C @code{structs}:
+
+@example
+typedef struct RCNTXT @{
+    struct RCNTXT *nextcontext;	/* The next context up the chain */
+    int callflag;		/* The context "type" */
+    JMP_BUF cjmpbuf;		/* C stack and register information */
+    int cstacktop;		/* Top of the pointer protection stack */
+    int evaldepth;	        /* evaluation depth at inception */
+    SEXP promargs;		/* Promises supplied to closure */
+    SEXP callfun;		/* The closure called */
+    SEXP sysparent;		/* Environment the closure was called from */
+    SEXP call;			/* The call that effected this context*/
+    SEXP cloenv;		/* The environment */
+    SEXP conexit;		/* Interpreted "on.exit" code */
+    void (*cend)(void *);	/* C "on.exit" thunk */
+    void *cenddata;		/* Data for C "on.exit" thunk */
+    char *vmax;		        /* Top of the R_alloc stack */
+    int intsusp;                /* Interrupts are suspended */
+    SEXP handlerstack;          /* Condition handler stack */
+    SEXP restartstack;          /* Stack of available restarts */
+@} RCNTXT, *context;
+@end example
+
+@noindent
+plus additional fields for the future byte-code compiler.  The `types'
+are from
+
+@example
+enum @{
+    CTXT_TOPLEVEL = 0,  /* toplevel context */
+    CTXT_NEXT	  = 1,  /* target for 'next' */
+    CTXT_BREAK	  = 2,  /* target for 'break' */
+    CTXT_LOOP	  = 3,	/* 'break' OR 'next' target */
+    CTXT_FUNCTION = 4,  /* function closure */
+    CTXT_CCODE	  = 8,  /* other functions that need error cleanup */
+    CTXT_RETURN	  = 12, /* return() from a closure */
+    CTXT_BROWSER  = 16, /* return target on exit from browser */
+    CTXT_GENERIC  = 20, /* rather, running an S3 method */
+    CTXT_RESTART  = 32, /* a call to 'restart' was made from a closure */
+    CTXT_BUILTIN  = 64  /* builtin internal function */
+@};
+@end example
+
+@noindent
+where the @code{CTXT_FUNCTION} bit is on wherever function closures are
+involved.
+
+Contexts are created by a call to @code{begincontext} and ended by a
+call to @code{end context}: code can search up the stack for a
+particular type of context via @code{findcontext} (and jump there) or
+jump to a specific context via @code{R_JumpToContext}.
+@code{R_ToplevelContext} is the `idle' state (normally the command
+prompt), and @code{R_GlobalContext} is the top of the stack.
+
+Note that whilst all calls to closures set a context, those to special
+internal functions never do, and those to builtin internal functions
+have done so only recently (and prior to that only when profiling).
+
+Dispatching from a S3 generic (via @code{UseMethod} or its internal
+equivalent) or calling @code{NextMethod} sets the context type to
+@code{CTXT_GENERIC}.  This is used to set the @code{sysparent} of the
+method call to that of the @code{generic}, so the method appears to have
+been called in place of the generic rather than from the generic.
+
+The @R{} @code{sys.frame} and @code{sys.call} work by counting calls to
+closures (type @code{CTXT_FUNCTION}) from either end of the context
+stack.
+
+Note that the @code{sysparent} element of the structure is not the same
+thing as @code{sys.parent()}.  Element @code{sysparent} is primarily
+used in managing changes of the function being evaluated, i.e. by
+@code{Recall} and method dispatch.
+
+@code{CTXT_CCODE} contexts are currently used in @code{cat()},
+@code{load()}, @code{scan()} and @code{write.table()} (to close the
+connection on error), by @code{PROTECT}, serialization (to recover from
+errors, e.g. free buffers) and within the error handling code (to raise
+the C stack limit and reset some variables).
+
+
+@node Argument evaluation, The write barrier, Contexts, R Internal Structures
 @section Argument evaluation
 
 As we have seen, functions in @R{} come in three types, closures
@@ -10028,7 +10119,7 @@ pairlist whose elements are referred to by the special symbols
 when one of these is encountered it is looked up (via @code{ddfndVar})
 in the value of the @code{...} symbol in the evaluation frame.
 
-Arguments matched to a @code{...} argument can be missing.
+Values of arguments matched to a @code{...} argument can be missing.
 
 
 @node The write barrier, Serialization Formats, Argument evaluation, R Internal Structures
@@ -10082,7 +10173,9 @@ and also at a lower level by @code{.saveRDS}/@code{.readRDS} and
 @code{serialize}/@code{unserialize}.  These differ in what they
 serialize to (a file, a connection, a raw vector) and whether they are
 intended to serialize a single object or a collection of objects
-(typically a workspace).
+(typically a workspace).  @code{save} writes a header indicating the
+format at the beginning of the file (a single LF-terninated line) which
+the lower-level versions do not.
 
 @R{} has used the same serialization format since @R{} 1.4.0 in December
 2001.  Reading of earlier formats is still supported via @code{load},
