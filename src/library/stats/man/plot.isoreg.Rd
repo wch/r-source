@@ -1,9 +1,10 @@
 \name{plot.isoreg}
 \alias{plot.isoreg}
+\alias{lines.isoreg}
 %\alias{print.isoreg}
 \title{Plot Method for isoreg  Objects}
 \description{
-  The \code{\link{plot}} method for
+  The \code{\link{plot}} and \code{\link{lines}} method for
   \R objects of class \code{\link{isoreg}}.
 }
 \usage{
@@ -15,6 +16,9 @@
       mar = if (both) 0.1 + c(3.5, 2.5, 1, 1) else par("mar"),
       mgp = if (both) c(1.6, 0.7, 0) else par("mgp"),
       grid = length(x$x) < 12, \dots)
+\method{lines}{isoreg}(x, col = "red", lwd = 1.5,
+       do.points = FALSE, cex = 1.5, pch = 13, \dots)
+
 %\method{print}{isoreg}(x, digits = getOption("digits"), \dots)
 }
 \arguments{
@@ -33,12 +37,20 @@
     true, \code{\link{grid}()} is used for the first plot, where as
     vertical lines are drawn at \dQuote{touching} points for the
     cumulative plot.}
+  \item{do.points}{for \code{lines()}: logical indicating if the step
+    points should be drawn as well (and as they are drawn in \code{plot()}).}
+  \item{col, lwd, cex, pch}{graphical arguments for \code{lines()},
+    where \code{cex} and \code{pch} are only used when \code{do.points}
+    is \code{TRUE}.}
   \item{\dots}{further arguments passed to and from methods.}
 %  \item{digits}{integer indicating number of digits to use for printing.}
 }
 \seealso{\code{\link{isoreg}} for computation of \code{isoreg} objects.}
 \examples{
 example(isoreg) # for the examples there
+
+plot(y3, main = "simple plot(.)  +  lines(<isoreg>)")
+lines(ir3)
 
 ## 'same' plot as above, "proving" that only ranks of 'x' are important
 plot(isoreg(2^(1:9), c(1,0,4,3,3,5,4,2,0)), plot.t = "row", log = "x")

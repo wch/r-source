@@ -243,6 +243,8 @@ NEW FEATURES
 
     o	setwd() now returns the current directory, silently, before changing
 
+    o	lines() gains a simple method for isoreg() results.
+
 
 DEPRECATED & DEFUNCT
 
