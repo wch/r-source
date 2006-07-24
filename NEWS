@@ -510,6 +510,8 @@ BUG FIXES
     o   Sweave() did not treat \begin{document} in comments correctly
         (PR#9073).
 
+    o	diff(x) gave wrong result when x was "POSIXlt" object.
+
 
 
 

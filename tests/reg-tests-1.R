@@ -4381,3 +4381,9 @@ x <- structure(1:8, names=letters[1:8], comm="a comment")
 stopifnot(!is.null(attr(x[], "comm")))  # this does preserve
 stopifnot(is.null(attr(x[1:8], "comm")))
 ##  2.3.1 preserved the first.
+
+## diff() for POSIX(cl)t :
+ds1 <- diff(lsec <- .leap.seconds[1:12])
+(ds2 <- diff(llsec <- as.POSIXlt(lsec))) # in days
+stopifnot(ds1 == ds2)
+## gave nonsense for POSIXlt upto 2.3.1
