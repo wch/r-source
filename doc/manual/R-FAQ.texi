@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-07-13
+@set FAQ_DATE @value{FAQ_YEAR}-07-23
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2021,6 +2021,8 @@ simulation for a number of statistical models.
 @item MEMSS
 Data sets and sample analyses from ``Mixed-effects Models in S and
 S-PLUS'' by J. Pinheiro and D. Bates, 2000, Springer.
+@item MKLE
+Maximum kernel likelihood estimation.
 @item MNP
 Fitting Bayesian Multinomial Probit models via Markov chain Monte Carlo.
 Along with the standard Multinomial Probit model, it can also fit models
@@ -2095,6 +2097,8 @@ QCA Graphical User Interface.
 Read and write of MAT files together with R-to-Matlab connectivity.
 @item R.oo
 R object-oriented programming with or without references.
+@item R.rsp
+R server pages.
 @item R.utils
 Utility classes and methods useful when programming in R and developing
 R packages.
@@ -2124,6 +2128,8 @@ Chapman & Hall/CRC.
 @item RII
 Estimation of the relative index of inequality for interval-censored
 data using natural cubic splines.
+@item RJaCGH
+Reversible Jump MCMC for the analysis of CGH arrays.
 @item RLMM
 A genotype calling algorithm for Affymetrix SNP arrays.
 @item RMySQL
@@ -2150,6 +2156,8 @@ An interface to ScaLAPACK functions from R.
 @item RSvgDevice
 A graphics device for R that uses the new w3.org @XML{} standard for
 Scalable Vector Graphics.
+@item RTisean
+R interface to Tisean algorithms.
 @item RUnit
 Functions implementing a standard Unit Testing framework, with
 additional code inspection and report generation tools.
@@ -2259,6 +2267,8 @@ Air quality data of Switzerland for one year in 30 min resolution.
 A set of demonstration functions that can be used in a classroom to
 demonstrate statistical concepts, or on your own to better understand
 the concepts or the programming.
+@item TwoWaySurvival
+Additive two-way hazards modeling of right censored survival data.
 @item UNF
 Tools for creating universal numeric fingerprints for data.
 @item USPS
@@ -3618,6 +3628,8 @@ R version of GENetic Optimization Using Derivatives.
 Interface between R and GGobi.
 @item rgl
 3D visualization device system (OpenGL).
+@item rhosp
+Side effect risks in hospital: simulation and estimation.
 @item rimage
 Functions for image processing, including Sobel filter, rank filters,
 fft, histogram equalization, and reading @acronym{JPEG} files.
@@ -3683,6 +3695,8 @@ Model-robust standard error estimators for time series and longitudinal
 data.
 @item sca
 Simple Component Analysis.
+@item scaleboot
+Approximately unbiased @math{p}-values via multiscale bootstrap.
 @item scape
 functions to import and plot results from statistical catch-at-age
 models, used in fisheries stock assessments.
@@ -3948,6 +3962,8 @@ A constrained two-dimensional Delaunay triangulation package.
 Goodness-of-fit tests allowing for left truncated data.
 @item trust
 Local optimization using two derivatives and trust regions.
+@item tsDyn
+Time series analysis based on dynamical systems theory.
 @item tseries
 Package for time series analysis with emphasis on non-linear modelling.
 @item tseriesChaos
@@ -3990,6 +4006,8 @@ Variable selection using random forests.
 Interactive variogram diagnostics.
 @item varmixt
 Mixture model on the variance for the analysis of gene expression data.
+@item vars
+VAR modeling.
 @item vcd
 Functions and data sets based on the book ``Visualizing Categorical
 Data'' by Michael Friendly.
