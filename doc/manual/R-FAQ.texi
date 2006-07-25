@@ -2508,6 +2508,8 @@ and multivariate problems.
 Mapping between assorted color spaces.
 @item combinat
 Combinatorics utilities.
+@item compOverlapCorr
+Comparing overlapping correlation coefficients.
 @item compositions
 Functions for the consistent analysis of compositional data (e.g.,
 portions of substances) and positive numbers (e.g., concentrations).
@@ -3405,6 +3407,8 @@ Ornstein-Uhlenbeck models for phylogenetic comparative hypotheses.
 A collection of some tests commonly used for identifying outliers.
 @item oz
 Functions for plotting Australia's coastline and state boundaries.
+@item paleoTS
+Modeling evolution in paleontological time-series.
 @item pamr
 Pam: Prediction Analysis for Microarrays.
 @item pan
