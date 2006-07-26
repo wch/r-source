@@ -118,6 +118,8 @@ static R_size_t objectsize(SEXP s)
     case RAWSXP:
 	vcnt = BYTE2VEC(length(s));
 	break;
+    case S4SXP:
+        break;
     default:
 	UNIMPLEMENTED_TYPE("object.size", s);
     }
