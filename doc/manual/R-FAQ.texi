@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-07-25
+@set FAQ_DATE @value{FAQ_YEAR}-07-27
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -4006,6 +4006,8 @@ Maximum likelihood computations for Tweedie exponential family models.
 Interface to Unidata's routines to convert units.
 @item ump
 Uniformly Most Powerful tests.
+@item unbalhaar
+Function estimation via Unbalanced Haar wavelets.
 @item untb
 Ecological drift under the UNTB (Unified Neutral Theory of
 Biodiversity).
