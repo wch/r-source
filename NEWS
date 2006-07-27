@@ -244,6 +244,9 @@ NEW FEATURES
     o	setwd() now returns the current directory, silently, before changing
 
     o	lines() gains a simple method for isoreg() results.
+   
+    o  trace() now creates a new class for the traced object if
+        required.  This allows tracing of user-defined subclasses of "function".
 
 
 DEPRECATED & DEFUNCT

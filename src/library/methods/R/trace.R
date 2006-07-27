@@ -138,8 +138,12 @@
             }
         }
         original <- .untracedFunction(def)
-         ## calls .makeTracedFunction via the initialize method for "traceable"
-        newFun <- new(.traceClassName(class(original)),
+         ## calls .makeTracedFunction via the initialize method for
+        ## "traceable"
+        traceClass <- .traceClassName(class(original))
+        if(is.null(getClassDef(traceClass)))
+          traceClass <- .makeTraceClass(traceClass, class(original))
+        newFun <- new(traceClass,
                       def = if(doEdit) def else original, tracer = tracer, exit = exit, at = at,
                       print = print, doEdit = edit)
     }
@@ -320,7 +324,8 @@
 }
 
 .traceClassName <- function(className) {
-    paste(className, "WithTrace", sep="")
+    className[] <- paste(className, "WithTrace", sep="")
+    className
 }
 
 trySilent <- function(expr) {
@@ -423,3 +428,23 @@ trySilent <- function(expr) {
         pname <- .searchNamespaceNames(whereF)
     list(pname=pname, whereF = whereF)
 }
+
+.makeTraceClass <- function(traceClassName, className) {
+  ## called because the traceClassName not a class
+  ## first check whether it may exist but not in the same package
+  if(isClass(as.character(traceClassName)))
+    return(as.character(traceClassName))
+  message("Constructing traceable class \"",traceClassName, "\"")
+  env <- .classEnv(className)
+  if(environmentIsLocked(env)) {
+    message("Environment of class \"", className,
+            "\" is locked; using base environment for new class")
+    env <- baseenv()
+    packageSlot(traceClassName) <- NULL
+  }
+  setClass(traceClassName,
+                 contains = c(className, "traceable"), where = env)
+  traceClassName
+}
+
+  
