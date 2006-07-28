@@ -62,6 +62,7 @@ static char sccsid[] = "@(#)xdr.c 1.35 87/08/12";
 #include <rpc/xdr.h>
 
 /* R-specific */
+void REprintf(char*, ...);
 #define fprintf(a, b) REprintf(b)
 
 
@@ -350,7 +351,7 @@ xdr_opaque(xdrs, cp, cnt)
 	register u_int cnt;
 {
 	register u_int rndup;
-	static crud[BYTES_PER_XDR_UNIT];
+	static int crud[BYTES_PER_XDR_UNIT];
 
 	/*
 	 * if no data we are done
@@ -541,6 +542,9 @@ xdr_string(xdrs, cpp, maxsize)
 	case XDR_ENCODE:
 		size = strlen(sp);
 		break;
+	case XDR_DECODE:
+	        /* size not used: just keep compilers happy */
+	        break;
 	}
 	if (! xdr_u_int(xdrs, &size)) {
 		return (FALSE);
