@@ -12,7 +12,11 @@ else
 endif
 CFLAGS=$(OPTFLAGS) -I../../include
 
-all: $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
+
+.PHONY : all makeMakedeps
+
+all: makeMakedeps \
+     $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
      $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
      $(R_HOME)/bin/Rproxy.dll $(R_HOME)/bin/R.exe \
      $(R_HOME)/bin/md5check.exe
@@ -80,7 +84,7 @@ Rpwd.exe: rpwd.o rcico.o
 rcmd.o R.o rgui.o rterm.o RSetReg.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
 
 clean:
-	$(RM) *.o *.obj *.exe *~ *.exp *.def *.dll *.lib *.a
+	$(RM) *.o *.obj *.exe *~ *.exp *.def *.dll *.lib *.a *.d Makedeps
 
 bdx_util-CFLAGS=-D_IN_RPROXY_
 bdx_com-CFLAGS=-D_IN_RPROXY_
@@ -99,3 +103,15 @@ Rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
 $(R_HOME)/bin/Rproxy.dll: Rproxy.dll
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) Rproxy.dll $@	
+
+CSOURCES=$(filter-out R.c rcmd.c rpwd.c rtest.c, $(wildcard *.c)) \
+  ../graphapp/graphappmain.c
+DEPS=$(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+ifneq ($(strip $(DEPS)),)
+	@cat $(DEPS) >> Makedeps
+endif
+
+-include Makedeps
