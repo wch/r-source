@@ -46,7 +46,7 @@ $(R_HOME)/bin/md5check.exe: md5check.exe
 	$(CP) $^ $@	
 
 graphappmain.o: ../graphapp/graphappmain.c
-	$(CC) -c -o $@ -I../graphapp $(CFLAGS) $^
+	$(CC) -c -o $@ -I../graphapp $(CFLAGS) ../graphapp/graphappmain.c
 
 rgui-CFLAGS=-DWin32
 rterm-CFLAGS=-DWin32
