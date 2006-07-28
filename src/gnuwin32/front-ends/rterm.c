@@ -29,7 +29,7 @@
 
 extern void cmdlineoptions(int, char **);
 extern void readconsolecfg();
-extern int initapp(int, char **);
+extern int GA_initapp(int, char **);
 extern void Rf_mainloop(void);
 __declspec(dllimport) extern UImode CharacterMode;
 __declspec(dllimport) extern int UserBreak;
@@ -68,7 +68,7 @@ int AppMain (int argc, char **argv)
     cmdlineoptions(argc, argv);
     mainThreadId = GetCurrentThreadId() ;
     signal(SIGBREAK, my_onintr);
-    initapp(0, NULL);
+    GA_initapp(0, NULL);
     readconsolecfg();
     if(R_Interactive) {
 	gl_hist_init(R_HistorySize, 1);

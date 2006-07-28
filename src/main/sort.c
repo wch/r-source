@@ -177,7 +177,8 @@ void R_csort(Rcomplex *x, int n)
 }
 
 
-void ssort(SEXP *x, int n)
+/* used in platform.c */
+void attribute_hidden ssort(SEXP *x, int n)
 {
     SEXP v;
 #define TYPE_CMP scmp
@@ -347,7 +348,7 @@ static void R_csort2(Rcomplex *x, int n, Rboolean decreasing)
 	}
 }
 
-void ssort2(SEXP *x, int n, Rboolean decreasing)
+static void ssort2(SEXP *x, int n, Rboolean decreasing)
 {
     SEXP v;
     int i, j, h, t;
@@ -663,8 +664,8 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 /* Needs indx set to 1...n initially.
    Also used by do_options.
  */
-void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
-		  Rboolean decreasing)
+void attribute_hidden
+orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing)
 {
     int c, i, j, h, t, lo = 0, hi = n-1;
     int itmp, *isna, numna = 0;

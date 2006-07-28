@@ -136,7 +136,7 @@ static void complex_pow(Rcomplex *r, Rcomplex *a, Rcomplex *b)
 #ifdef Win32
 /* Need this because the system one is explicitly linked 
    against MSVCRT's pow, and gets (0+0i)^Y as 0+0i for all Y */
-double complex mycpow (double complex X, double complex Y)
+static double complex mycpow (double complex X, double complex Y)
 {
   double complex Res;
   if (X == 0.0) {
@@ -164,7 +164,7 @@ double complex mycpow (double complex X, double complex Y)
 #else /* not Win32 */
 /* reason for this: glibc gets (0+0i)^y = Inf+NaNi for y < 0
 */
-double complex mycpow (double complex X, double complex Y)
+static double complex mycpow (double complex X, double complex Y)
 {
     double tmp = cimag(Y);
     if (X == 0.0 && tmp == 0) {
@@ -406,7 +406,7 @@ static void z_rround(Rcomplex *r, Rcomplex *x, Rcomplex *p)
 }
 
 #define MAX_DIGITS 22
-void z_prec_r(Rcomplex *r, Rcomplex *x, double digits)
+void attribute_hidden z_prec_r(Rcomplex *r, Rcomplex *x, double digits)
 {
     double m = 0.0, m1, m2;
     int dig, mag;

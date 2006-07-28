@@ -45,18 +45,135 @@
  DefaultPalette
  DialogSelectFile
  EhiWakeUp
+ GA_MDIFrame
+ GA_MDIStatus
+ GA_MDIToolbar
+ GA_TopmostDialogs
+ GA_active_windows
+ GA_add_context
+ GA_add_strings
+ GA_adjust_menu
+ GA_app_doc_proc@16
+ GA_app_drawstate
+ GA_app_initialised
+ GA_app_name
+ GA_app_timer_procedure@16
+ GA_app_win_proc@16
+ GA_app_work_proc@16
+ GA_apply_to_list
+ GA_brighter
+ GA_char_to_string
+ GA_child_id
+ GA_cmd_show
+ GA_color_image
+ GA_compare_strings
+ GA_console1_image
+ GA_copy1_image
+ GA_copy_image
+ GA_copy_string
+ GA_copypaste_image
+ GA_current
+ GA_current_menu
+ GA_current_menubar
+ GA_current_window
+ GA_cut_image
+ GA_darker
+ GA_dc
+ GA_decrease_refcount
+ GA_del_all_contexts
+ GA_del_context
+ GA_del_string
+ GA_deletion_traversal
+ GA_erase_image
+ GA_find_object
+ GA_find_valid_sibling
+ GA_finish_contexts
+ GA_finish_events
+ GA_finish_objects
+ GA_fix_brush
+ GA_float_to_string
+ GA_getSysFontSize
+ GA_get_context
+ GA_get_grey_pixel
+ GA_get_image_pixel
+ GA_get_modeless
+ GA_get_monochrome_pixel
+ GA_getcliprect
+ GA_getstringfromclipboard
+ GA_goldfillellipse
+ GA_hAccel
+ GA_handle_control
+ GA_handle_findreplace
+ GA_handle_menu_id
+ GA_handle_menu_key
+ GA_has_transparent_pixels
+ GA_help_image
+ GA_hide_window
+ GA_hwndClient
+ GA_hwndFrame
+ GA_hwndMain
+ GA_imagedepth
+ GA_imageheight
+ GA_imagewidth
+ GA_increase_refcount
+ GA_init_contexts
+ GA_init_cursors
+ GA_init_events
+ GA_init_fonts
+ GA_init_menus
+ GA_init_objects
+ GA_int_to_string
+ GA_isNT
+ GA_keystate
+ GA_load_gif
+ GA_memalloc
+ GA_memexpand
+ GA_memfree
+ GA_memjoin
+ GA_memlength
+ GA_memrealloc
+ GA_menus_active
+ GA_move_to_front
+ GA_myAppendMenu
+ GA_myMessageBox
+ GA_new_font_object
+ GA_new_object
+ GA_new_string
+ GA_oldfillellipse
+ GA_open1_image
+ GA_open_image
+ GA_paste1_image
+ GA_paste_image
+ GA_prev_instance
+ GA_protect_object
+ GA_remove_context
+ GA_richeditfind
+ GA_richeditreplace
+ GA_save_gif
+ GA_save_image
+ GA_screen_coords
+ GA_show_window
+ GA_simple_window
+ GA_string_diff
+ GA_string_length
+ GA_the_brush
+ GA_the_pen
+ GA_this_instance
+ GA_to_c_string
+ GA_to_dos_string
+ GA_tree_search
+ GA_updatestatus
+ GA_win_rgb
  GRecording
+ GetCurrentWinPos
  GuiBusy
  IS_ACTIVE_BINDING
  InitBrowseCallbackProc@16
  InitDynload
  Init_R_Variables
- LeftMatrixColumnLabel
  LOCK_BINDING
+ LeftMatrixColumnLabel
  LoadInitFile
- MDIFrame
- MDIStatus
- MDIToolbar
  MDIset
  MDIsize
  MainThread
@@ -73,10 +190,14 @@
  R_BrowseLevel
  R_BrowseLines
  R_CStackDir
+ R_ChooseFile
+ R_CleanUp
+ R_ClearerrConsole
  R_CollectWarnings
  R_Collected
  R_CommentSxp
  R_ConsoleIob
+ R_EditFiles
  R_ErrorCon
  R_Expressions
  R_Expressions_keep
@@ -126,9 +247,13 @@
  R_ReturnedValue
  R_SaveToFile
  R_SaveToFileV
+ R_SetMaxNSize
  R_SetMaxVSize
+ R_SetOptionWarn
+ R_SetOptionWidth
  R_SetWin32
  R_ShowErrorMessages
+ R_ShowFiles
  R_StdinEnc
  R_SymbolTable
  R_TextBufferFree
@@ -144,8 +269,10 @@
  R_XDREncodeDouble
  R_XDREncodeInteger
  R_YesNoCancel
+ R_Zero_Hack
  R_binary
  R_compress1
+ R_current_trace_state
  R_dec_min_exponent
  R_decompress1
  R_dlsym
@@ -164,7 +291,10 @@
  R_lazyLoadDBflush
  R_lazyLoadDBinsertValue
  R_max_memory
+ R_newunz
+ R_newurl
  R_osDynSymbol
+ R_possible_dispatch
  R_print
  R_restore_globals
  R_run_onexits
@@ -239,9 +369,10 @@
  Rf_bd0
  Rf_chebyshev_eval
  Rf_chebyshev_init
+ Rf_con_pushback
+ Rf_convertToC
  Rf_copyListMatrix
  Rf_copyMostAttribNoTs
- Rf_convertToC
  Rf_dpSavedptr
  Rf_dpptr
  Rf_findVar1
@@ -251,13 +382,14 @@
  Rf_gammalims
  Rf_get1index
  Rf_gpptr
+ Rf_internalTypeCheck
  Rf_isNAcol
  Rf_labelformat
  Rf_lfastchoose
  Rf_lgammacor
  Rf_lookupCachedSymbol
- Rf_mat2indsub
  Rf_makeSubscript
+ Rf_mat2indsub
  Rf_matchArg
  Rf_matchArgExact
  Rf_matchArgs
@@ -278,10 +410,15 @@
  Rf_regexec
  Rf_setIVector
  Rf_setRVector
+ Rf_ssort
  Rf_stirlerr
  Rf_substituteList
  Rf_unbindVar
  Rf_vectorSubscript
+ Rf_yychar
+ Rf_yylval
+ Rf_yynerrs
+ Rf_yyparse
  RguiCommonHelp
  RguiPackageMenu
  Rgui_Edit
@@ -304,7 +441,6 @@
  Rrowsum_matrix
  Rwin_rename
  SET_ACTIVE_BINDING_BIT
- TopmostDialogs
  UNLOCK_BINDING
  UseInternet2
  WrongArgCount
@@ -349,18 +485,9 @@
  adler32
  adler32_combine
  app_control_proc
- app_control_procedure@16
- app_doc_proc@16
- app_drawstate
  app_init_printf
- app_initialised
- app_name
  app_timer_proc
- app_timer_procedure@16
- app_win_proc@16
- app_work_proc@16
  applyGUI
- apply_to_list
  apse_create
  apse_destroy
  apse_match
@@ -373,17 +500,11 @@
  baseRegisterIndex
  bratio
  breaktodebugger
- brighter
  cbabk2_
  cbal_
  cdiv_
- char_to_string
  check_doc_file
- child_id
  closeconsole
- cmd_show
- color_image
- compare_strings
  complex_binary
  complex_math1
  complex_math2
@@ -392,10 +513,8 @@
  compress2
  compressBound
  compute_identical
- comqr_
  comqr2_
- con_pushback
- console1_image
+ comqr_
  console_ctrlkeyin
  console_mousedown
  console_mousedrag
@@ -432,24 +551,12 @@
  consolewrites
  consolex
  consoley
- copy1_image
- copy_image
- copy_string
- copypaste_image
  corth_
  crc32_combine
  csduplicated
  csroot_
- current
- current_menu
- current_menubar
- current_window
- cut_image
- darker
  dbinom_raw
  dblep0_
- dc
- decrease_refcount
  deflateBound
  deflateCopy
  deflateParams
@@ -458,11 +565,7 @@
  deflateSetHeader
  deflateTune
  deflate_copyright
- del_all_contexts
- del_context
- del_string
  deleditordata
- deletion_traversal
  do_AT
  do_Cstack_info
  do_D
@@ -724,6 +827,7 @@
  do_matrix
  do_memlimits
  do_memoryprofile
+ do_memretrace
  do_memsize
  do_memtrace
  do_memuntrace
@@ -938,14 +1042,6 @@
  elmhes_
  eltran_
  epslon_
- erase_image
- find_object
- find_valid_sibling
- finish_contexts
- finish_events
- finish_objects
- fix_brush
- float_to_string
  fontname
  fontsty
  framenames
@@ -962,16 +1058,10 @@
  getIdentification
  getParseContext
  getRUser
- getSysFontSize
  getWindowTitle
  get_R_HOME
- get_context
  get_crc_table
- get_grey_pixel
- get_image_pixel
- get_modeless
- get_monochrome_pixel
- getcliprect
+ get_duplicate_counter
  getline
  getusermenuname
  gl_hist_next
@@ -982,7 +1072,6 @@
  gl_setwidth
  gl_strwidth
  gl_tab_hook
- goldfillellipse
  gzclearerr
  gzclose
  gzdirect
@@ -1002,27 +1091,12 @@
  gztell
  gzungetc
  gzwrite
- hAccel
- handle_control
- handle_findreplace
- handle_menu_id
- handle_menu_key
- has_transparent_pixels
  haveusedapager
- help_image
  helpmenuact
- hide_window
- hqr_
  hqr2_
+ hqr_
  htribk_
  htridi_
- hwndClient
- hwndFrame
- hwndMain
- imagedepth
- imageheight
- imagewidth
- increase_refcount
  independent_calloc
  independent_comalloc
  inflateBack
@@ -1038,19 +1112,10 @@
  inflate_copyright
  inflate_fast
  inflate_table
- init_contexts
- init_cursors
- init_events
- init_fonts
- init_menus
- init_objects
- int_to_string
  internal_ShowFile
  internal_shellexec
  intpr0_
  isMethodsDispatchOn
- is_NT
- keystate
  libintl_bind_textdomain_codeset
  libintl_bindtextdomain
  libintl_dcigettext
@@ -1083,7 +1148,6 @@
  libintl_vwprintf
  libintl_wprintf
  loadRconsole
- load_gif
  localeCP
  locale_charset
  mallinfo
@@ -1093,37 +1157,22 @@
  mallopt
  mb_char_len
  mbswidth
- memalloc
- memexpand
- memfree
- memjoin
- memlength
- memrealloc
  memtrace_report
  menuclear
  menuconfig
  menueditornew
  menueditoropen
- menus_active
  mkPRIMSXP
  mkdtemp
- move_to_front
- myAppendMenu
- myMessageBox
  nCPFun
  newWpipe
- new_font_object
- new_object
- new_string
  newconsole
  newconsoledata
  newpager
  newxbuf
  nl_Rdummy
  numwinmenus
- oldfillellipse
- open1_image
- open_image
+ orderVector1
  pR_ShowMessage
  pagerMultiple
  pagerbclose
@@ -1131,8 +1180,6 @@
  pagerhighlight
  pagerrow
  parseError
- paste1_image
- paste_image
  pause
  pcre_callout
  pcre_compile
@@ -1163,30 +1210,24 @@
  pnchisq_raw
  pointsize
  pow
- prev_instance
- protect_object
  pythag_
  raise
  realp0_
- remove_context
+ reset_duplicate_counter
  restoredpSaved
- richeditfind
- richeditreplace
  rpipeClose
  rpipeGetc
  rpipeGets
  rpipeOpen
  runerror
- save_gif
- save_image
  selectfolder
  setCURCOL
  setTitle
  setWidthOnResize
+ set_workspace_name
  setconsoleoptions
  setfirstcol
  setfirstvisible
- show_window
  sigaction
  sigaddset
  sigblock
@@ -1201,20 +1242,12 @@
  sigrelse
  sigsetmask
  sigsuspend
- simple_window
- string_diff
- string_length
- the_brush
- the_pen
- this_instance
- to_c_string
- to_dos_string
+ switch_stdout
  tql1_
  tql2_
  tqlrat_
  tred1_
  tred2_
- tree_search
  trio_append
  trio_append_max
  trio_aprintf
@@ -1388,9 +1421,15 @@
  trio_xstring_set
  trio_xstring_substring
  uncompress
- updatestatus
+ utf8clen
+ wcrtomb
  winNewFrameConfirm
- win_rgb
+ winaddmenu
+ winaddmenuitem
+ windelmenu
+ windelmenuitem
+ windelmenus
+ wingetmenuitems
  xbufaddc
  xbufdel
  xbufgrow
@@ -1416,10 +1455,9 @@
  xdr_wrapstring
  xdrmem_create
  xdrstdio_create
- yychar
- yylval
  zError
  z_errmsg
+ z_prec_r
  zcalloc
  zcfree
  zlibCompileFlags

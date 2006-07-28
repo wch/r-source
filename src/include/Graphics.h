@@ -435,7 +435,9 @@ double R_Log10(double);
 
 void ProcessInlinePars(SEXP, DevDesc*, SEXP call);
 void Specify2(char*, SEXP, DevDesc*, SEXP call);
+#ifdef UNUSED
 void RecordGraphicsCall(SEXP);
+#endif
 
 SEXP FixupPch(SEXP, int);
 SEXP FixupLty(SEXP, int);

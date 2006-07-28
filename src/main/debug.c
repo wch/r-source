@@ -95,7 +95,8 @@ SEXP R_traceOnOff(SEXP onOff) {
     return value;
 }
 
-Rboolean R_current_trace_state() { return GET_TRACE_STATE; }
+Rboolean attribute_hidden
+R_current_trace_state() { return GET_TRACE_STATE; }
 
 
 /* memory tracing */

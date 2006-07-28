@@ -781,6 +781,9 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define vectorSubscript	Rf_vectorSubscript
 # define warningcall		Rf_warningcall
 # define WarningMessage		Rf_WarningMessage
+# define yychar			Rf_yychar
+# define yylval			Rf_yylval
+# define yynerrs		Rf_yynerrs
 # define yyparse		Rf_yyparse
 
 /* Platform Dependent Gui Hooks */

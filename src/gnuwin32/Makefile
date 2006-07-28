@@ -189,8 +189,8 @@ dllversion.o: ../include/Rversion.h
 
 R.dll: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 	@$(ECHO) EXPORTS > R.def
-	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' | sort > R0.def
-	@comm -3 R0.def Rdll.hide >> R.def
+	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' | sort | uniq > R0.def
+	@comm -23 R0.def Rdll.hide >> R.def
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ R.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) R.def R0.def
 

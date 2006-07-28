@@ -839,8 +839,6 @@ static void menunextplot(control m)
     xd->clicked = 2;
 }
 
-void  fixslash(char *);
-
 static void menufilebitmap(control m)
 {
     NewDevDesc *dd = (NewDevDesc *) getdata(m);
@@ -857,7 +855,6 @@ static void menufilebitmap(control m)
       fn = askfilesave(G_("Jpeg file"), "");
     }
     if (!fn) return;
-    fixslash(fn);
     gsetcursor(xd->gawin, WatchCursor);
     show(xd->gawin);
     if (m==xd->mpng) SaveAsPng(dd, fn);
@@ -878,7 +875,6 @@ static void menups(control m)
     setuserfilter(G_("Postscript files (*.ps)\0*.ps\0All files (*.*)\0*.*\0\0"));
     fn = askfilesave(G_("Postscript file"), "");
     if (!fn) return;
-    fixslash(fn);
     SaveAsPostscript(dd, fn);
 }
 
@@ -891,7 +887,6 @@ static void menupdf(control m)
     setuserfilter(G_("PDF files (*.pdf)\0*.pdf\0All files (*.*)\0*.*\0\0"));
     fn = askfilesave(G_("PDF file"), "");
     if (!fn) return;
-    fixslash(fn);
     SaveAsPDF(dd, fn);
 }
 
@@ -904,7 +899,6 @@ static void menuwm(control m)
     setuserfilter(G_("Enhanced metafiles (*.emf)\0*.emf\0All files (*.*)\0*.*\0\0"));
     fn = askfilesave(G_("Enhanced metafiles"), "");
     if (!fn) return;
-    fixslash(fn);
     if(strlen(fn) > 512) {
 	askok(G_("file path selected is too long: only 512 bytes are allowed"));
 	return;
@@ -2061,6 +2055,7 @@ static void GA_NewPage(R_GE_gcontext *gc,
     SH;
 }
 
+#ifdef UNUSED
 static void deleteGraphMenus(int devnum)
 {
     char prefix[15];
@@ -2068,6 +2063,7 @@ static void deleteGraphMenus(int devnum)
     sprintf(prefix, "$Graph%i", devnum);
     windelmenus(prefix);
 }
+#endif
 
 	/********************************************************/
 	/* device_Close is called when the device is killed	*/
@@ -2100,9 +2096,11 @@ static void GA_Close(NewDevDesc *dd)
 	
 	del(xd->bm);
 	if (xd == GA_xd) GA_xd = NULL;
+	/* graphapp will do this for us
 	deleteGraphMenus(devNumber((DevDesc*) dd) + 1);
+	*/
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
-      SaveAsBitmap(dd, xd->res_dpi);
+	SaveAsBitmap(dd, xd->res_dpi);
     } 
     del(xd->font);
     del(xd->gawin);
@@ -2705,7 +2703,6 @@ SEXP savePlot(SEXP args)
     if (!isString(filename) || LENGTH(filename) != 1)
 	error(_("invalid filename argument in savePlot"));
     fn = CHAR(STRING_ELT(filename, 0));
-    fixslash(fn);
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
 	error(_("invalid type argument in savePlot"));

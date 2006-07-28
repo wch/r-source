@@ -1073,6 +1073,8 @@ SEXP do_shortpath(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
 	GetShortPathName(CHAR(STRING_ELT(paths, i)), tmp, MAX_PATH);
+	/* documented to return paths using \, which the API call does
+	   not necessarily do */
 	R_fixbackslash(tmp);
 	SET_STRING_ELT(ans, i, mkChar(tmp));
     }

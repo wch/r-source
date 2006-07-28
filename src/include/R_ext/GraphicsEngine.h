@@ -230,6 +230,15 @@ void GEunregisterSystem(int registerIndex);
 
 SEXP GEHandleEvent(GEevent event, NewDevDesc *dev, SEXP data);
 
+#define fromDeviceX		GEfromDeviceX
+#define toDeviceX		GEtoDeviceX
+#define fromDeviceY		GEfromDeviceY
+#define toDeviceY		GEtoDeviceY
+#define fromDeviceWidth		GEfromDeviceWidth
+#define toDeviceWidth		GEtoDeviceWidth
+#define fromDeviceHeight	GEfromDeviceHeight
+#define toDeviceHeight		GEtoDeviceHeight
+
 double fromDeviceX(double value, GEUnit to, GEDevDesc *dd); 
 double toDeviceX(double value, GEUnit from, GEDevDesc *dd);
 double fromDeviceY(double value, GEUnit to, GEDevDesc *dd); 

@@ -31,6 +31,7 @@
 /*           This operation is non-destructive     */
 /*           i.e. first and second are duplicated  */
 
+#ifdef UNUSED
 SEXP Rf_append(SEXP first, SEXP second)
 {
     SEXP e;
@@ -45,6 +46,7 @@ SEXP Rf_append(SEXP first, SEXP second)
     SETCDR(e, second);
     return first;
 }
+#endif
 
 
 /*  mkPRIMSXP - return a builtin function      */

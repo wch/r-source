@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2005   The R Development Core Team.
+ *  Copyright (C) 2000-2006   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -144,6 +144,10 @@ typedef struct gzconn {
     Rboolean allow;
 } *Rgzconn;
 #endif
+
+#define init_con	Rf_init_con
+#define con_close	Rf_con_close
+#define con_pushback	Rf_con_pushback
 
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);

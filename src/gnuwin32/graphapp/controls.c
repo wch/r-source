@@ -655,6 +655,8 @@ void *getdata(control obj)
 		return NULL;
 }
 
+/* These two are in none of the headers */
+#ifdef UNUSED
 void _setextradata(control obj, void *data)
 {
 	if (obj)
@@ -668,6 +670,7 @@ void *_getextradata(control obj)
 	else
 		return NULL;
 }
+#endif
 
 /*
  *  Set the text of an object. This will set the names appearing
@@ -843,19 +846,20 @@ rect objrect(object obj)
 
 	switch (obj->kind)
 	{
-	  case Image8: case Image32:
+	case Image8: case Image32:
 		img = (image) obj;
 		r = rect(0,0,img->width,img->height);
 		break;
-	  case BitmapObject:
-	  case FontObject: case CursorObject:
-	 case PrinterObject:
+	case BitmapObject:
+	case FontObject: 
+	case CursorObject:
+	case PrinterObject:
 		r = obj->rect;
 		break;
-	 case MetafileObject:
+	case MetafileObject:
 		r = obj->rect;
 		break;
-	  default:
+	default:
 		GetClientRect(obj->handle, (RECT *) &r);
 		break;
 	}

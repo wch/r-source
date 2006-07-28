@@ -70,7 +70,7 @@ extern void R_SetParams(Rstart);
 extern void setup_term_ui(void);
 extern char *getRHOME();
 extern void end_Rmainloop(), R_ReplDLLinit();
-extern void askok(char *);
+extern void GA_askok(char *);
 
 int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 			     char* pDisplay,
@@ -97,7 +97,7 @@ static int s_EvalInProgress = 0;
 
 void R_Proxy_askok (char* pMsg)
 {
-  askok(pMsg);
+  GA_askok(pMsg);
   return;
 }
 

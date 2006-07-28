@@ -21,7 +21,8 @@
 
 /* <UTF8>
    char here is mainly either ASCII or handled as a whole.
-   isBlankString has been be improved.
+   isBlankString has been improved.
+   do_basename and do_dirname now work in chars.
 */
 
 
@@ -100,7 +101,7 @@ int ncols(SEXP s)
 const static char type_msg[] = "invalid type passed to internal function\n";
 
 
-void internalTypeCheck(SEXP call, SEXP s, SEXPTYPE type)
+void attribute_hidden internalTypeCheck(SEXP call, SEXP s, SEXPTYPE type)
 {
     if (TYPEOF(s) != type) {
 	if (call)
@@ -387,7 +388,7 @@ SEXP attribute_hidden EnsureString(SEXP s)
     return s;
 }
 
-
+/* used in modules */
 void checkArity(SEXP op, SEXP args)
 {
     if (PRIMARITY(op) >= 0 && PRIMARITY(op) != length(args))
@@ -690,7 +691,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    char  buf[PATH_MAX], *p, fsp = FILESEP[0];
+    char buf[PATH_MAX], *p, fsp = FILESEP[0];
     int i, n;
 
     checkArity(op, args);
@@ -717,6 +718,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else {
 	    while(p > buf && *p == fsp
 #ifdef Win32
+		  /* this covers both drives and network shares */
 		  && (p > buf+2 || *(p-1) != ':')
 #endif
 		) --p;

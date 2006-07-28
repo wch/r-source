@@ -1222,11 +1222,13 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
     return obj;
 }
 
+#ifdef UNUSED
 SEXP R_pseudo_null() {
     if(pseudo_NULL == 0)
 	init_slot_handling();
     return pseudo_NULL;
 }
+#endif
 
 
 /* the @ operator, and its assignment form.  Processed much like $

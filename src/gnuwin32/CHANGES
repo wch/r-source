@@ -25,6 +25,9 @@ Custom builds of R can change these defaults.
 If CHM help is selected, but is not present (e.g. a package was cross-
 compiled on Unix), the help system defaults to text help.
 
+The menu items for source and load/save images and drag-and-drop can
+now be used for paths on network shares (starting with \\).
+
 
 C-level changes
 ---------------
@@ -38,9 +41,12 @@ in R.dll.  (Just over half the entry points are hidden, which speeds up
 loading.)
 
 It is possible to select (in MkRules) the type of debug symbol used,
-and this now defaults to dwarf-2 (which is more efficient than the
-previous default of stabs).  More parts of R are now built with debug
+and this now defaults to 'dwarf-2' (which is more efficient than the
+previous default of 'stabs').  More parts of R are now built with debug
 symbols when DEBUG=T.
+
+The symbols in graphapp are now remapped to start with GA_, so any
+code making use of graphapp will need to be recompiled.
 
 
 

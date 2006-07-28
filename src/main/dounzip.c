@@ -45,6 +45,7 @@ static int R_mkdir(char *path)
 #ifdef Win32
     char local[PATH_MAX];
     strcpy(local, path);
+    /* need DOS paths on Win 9x */
     R_fixbackslash(local);
     return mkdir(local);
 #endif
@@ -361,7 +362,9 @@ Rconnection R_newunz(char *description, char *mode)
 
        /* =================== second part ====================== */
 
-/* From minizip contribution to zlib 1.1.3, reformatted by indent */
+/* From minizip contribution to zlib 1.1.3, reformatted by indent,
+   unz_copyright is now static.
+*/
 
 /* unzip.c -- IO on .zip files using zlib
    Version 0.15 beta, Mar 19th, 1998,
@@ -421,7 +424,7 @@ extern int errno;
 #define SEEK_SET    0
 #endif
 
-const char unz_copyright[] =
+static const char unz_copyright[] =
 " unzip 0.15 Copyright 1998 Gilles Vollant ";
 
 /* unz_file_info_interntal contain internal info about a file in zipfile*/
