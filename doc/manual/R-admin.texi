@@ -1759,9 +1759,13 @@ several years off.
 
 Currently the Windows build of @R{} is a 32-bit executable.  This runs
 happily on Windows 64 on AMD64 and EM64T, but is limited to (we are
-told) a 2GB address space.  It will not be possible to build a native
+told) a 2GB address space.  It will not be possible to provide a native
 version for Windows 64 until suitable compilers are available, and
-currently (mid-2006) that is not in prospect.
+currently (mid-2006) that is not in prospect.@footnote{It is likely that
+commercial 64-bit compilers could be used, but those we have looked at
+do not work in the same way as the MinGW compilers so extensive changes
+to the build system would be needed.  Also, end users would need to have
+the same compilers to install extension packages.}
 
 @node Essential and useful other programs under Unix, Configuration on Unix, Choosing between 32- and 64-bit builds, Top
 @appendix Essential and useful other programs under Unix
