@@ -159,7 +159,7 @@ SEXP attribute_hidden do_memuntrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 #ifndef R_MEMORY_PROFILING
-void memtrace_report(SEXP old, SEXP new){
+void attribute_hidden memtrace_report(SEXP old, SEXP new) {
      return;
 }
 #else
@@ -179,7 +179,7 @@ static void memtrace_stack_dump(void){
 
 
 }
-void memtrace_report(SEXP old, SEXP new){
+void attribute_hidden memtrace_report(SEXP old, SEXP new) {
     if (!R_current_trace_state()) return;
     Rprintf("memtrace[%p->%p]: ",old,new);
     memtrace_stack_dump();

@@ -87,12 +87,13 @@ static SEXP duplicate1(SEXP);
 #ifdef R_PROFILING
 static unsigned long duplicate_counter = -1;
 
-unsigned long get_duplicate_counter(void)
+unsigned long  attribute_hidden
+get_duplicate_counter(void)
 {
     return duplicate_counter;
 }
 
-void reset_duplicate_counter(void)
+void attribute_hidden reset_duplicate_counter(void)
 {
     duplicate_counter = 0;
     return;

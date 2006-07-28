@@ -231,7 +231,7 @@ R_size_t attribute_hidden R_GetMaxNSize(void)
     return R_MaxNSize;
 }
 
-void R_SetMaxNSize(R_size_t size)
+void attribute_hidden R_SetMaxNSize(R_size_t size)
 {
     if (size >= R_NSize) R_MaxNSize = size;
 }

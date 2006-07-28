@@ -324,7 +324,7 @@ static int null_fflush(Rconnection con)
     return 0;
 }
 
-Rconnection R_newunz(char *description, char *mode)
+Rconnection attribute_hidden R_newunz(char *description, char *mode)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));

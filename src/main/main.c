@@ -44,7 +44,7 @@
 #endif
 
 #ifdef ENABLE_NLS
-void nl_Rdummy()
+void attribute_hidden nl_Rdummy()
 {
     /* force this in as packages use it */
     dgettext("R", "dummy - do not translate");
