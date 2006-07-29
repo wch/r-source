@@ -41,7 +41,7 @@ make.rgb <-
     toXYZ <- function(rgb,...) { dogamma(rgb) %*% M }
     toRGB <- function(xyz,...) { ungamma(xyz %*% solve(M)) }
 
-    if (is.null(name)) name <- deparse(sys.call())
+    if (is.null(name)) name <- deparse(sys.call())[1]
     rval <- list(toXYZ = toXYZ, fromXYZ = toRGB, gamma = gamma,
                  reference.white = white, name = name)
     class(rval) <- c("RGBcolorConverter", "colorConverter")

@@ -94,9 +94,6 @@ xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE
     return(list(x=as.real(x), y=as.real(y), xlab=xlab, ylab=ylab))
 }
 
-
-## the obvious analog of  xy.coords() -- in ./plot.R
-
 xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 		       log = NULL, recycle = FALSE)
 {
