@@ -37,7 +37,8 @@ coplot <-
 	     number = 6, overlap = 0.5, xlim, ylim, ...)
 {
     deparen <- function(expr) {
-	while (is.language(expr) && !is.name(expr) && deparse(expr[[1]])== "(")
+	while (is.language(expr) && !is.name(expr) &&
+               deparse(expr[[1]])[1] == "(")
 	    expr <- expr[[2]]
 	expr
     }
@@ -51,12 +52,12 @@ coplot <-
 	bad.formula()
     y <- deparen(formula[[2]])
     rhs <- deparen(formula[[3]])
-    if (deparse(rhs[[1]]) != "|")
+    if (deparse(rhs[[1]])[1] != "|")
 	bad.formula()
     x <- deparen(rhs[[2]])
     rhs <- deparen(rhs[[3]])
     if (is.language(rhs) && !is.name(rhs)
-	&& (deparse(rhs[[1]]) == "*" || deparse(rhs[[1]]) == "+")) {
+	&& (deparse(rhs[[1]])[1] == "*" || deparse(rhs[[1]])[1] == "+")) {
 	have.b <- TRUE
 	a <- deparen(rhs[[2]])
 	b <- deparen(rhs[[3]])
