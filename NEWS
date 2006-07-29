@@ -302,6 +302,9 @@ C-LEVEL FACILITIES
     o	allocString is now a macro, so packages using it will need to
 	be reinstalled.
 
+    o	R_ParseVector was returning with object(s) protected in the
+	parser if the status was PARSE_INCOMPLETE or PARSE_ERROR.
+
 
 UTILITIES
 

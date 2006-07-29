@@ -1179,9 +1179,11 @@ SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
 attribute_hidden
 SEXP R_Parse(int n, ParseStatus *status)
 {
+    volatile int savestack;
     int i;
     SEXP t, rval;
     ParseContextInit();
+    savestack = R_PPStackTop;
     if (n >= 0) {
         PROTECT(rval = allocVector(EXPRSXP, n));
         for (i = 0 ; i < n ; i++) {
@@ -1197,11 +1199,11 @@ SEXP R_Parse(int n, ParseStatus *status)
                 break;
             case PARSE_INCOMPLETE:
             case PARSE_ERROR:
-		UNPROTECT(1);
+		R_PPStackTop = savestack;
 		return R_NilValue;
 		break;
             case PARSE_EOF:
-		*status=PARSE_OK;
+		*status = PARSE_OK;
 		i=n;
                 break;
             }
