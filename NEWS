@@ -241,12 +241,17 @@ NEW FEATURES
 	recursively and can restrict the classes of elements to which
 	it is applied.
 
-    o	setwd() now returns the current directory, silently, before changing
+    o	setwd() now returns the current directory, silently, before changing.
 
     o	lines() gains a simple method for isoreg() results.
    
-    o  trace() now creates a new class for the traced object if
-        required.  This allows tracing of user-defined subclasses of "function".
+    o	trace() now creates a new class for the traced object if
+        required.  This allows tracing of user-defined subclasses of
+        "function".
+
+    o	The internal internet download functions have some new
+	features from libxml 2.6.26, including the ability to read
+	gzip-encoded https:// URLs.
 
 
 DEPRECATED & DEFUNCT

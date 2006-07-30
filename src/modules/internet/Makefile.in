@@ -24,7 +24,8 @@ DISTFILES = \
 internet_la = internet$(SHLIB_EXT)
 internet_la_LIBADD = $(LIBR)
 
-ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@
+ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
+ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@ $(ZLIB_CPPFLAGS)
 
 all: Makefile Makedeps R
 
