@@ -771,7 +771,7 @@ AthlonXP chips are available in the @file{windows/contrib/ATLAS} area on
 Another possibility is to use AMD's AMD Core Math Library (ACML)
 @url{http://www.amd.com/acml, @code{www.amd.com/@/acml}}.  To use the
 Cygwin-compiled version (Cygwin itself is not needed, at least
-currently), install @file{acml-3-0-0-win32-g77.exe} (or later) and edit
+currently), install @file{acml-3-5-0-win32-g77.exe} (or later) and edit
 @file{@var{R_HOME}/@/src/@/gnuwin32/MkRules} to define
 @code{USE_ACML=YES} and set @code{ACML_PATH} to the path to
 @file{libacml.a}.  If you also set @code{USE_ACML_LAPACK=YES}, ACML will
@@ -1958,7 +1958,7 @@ is currently (April 2006) vailable only as source code.  For
 is built and installed, it can be used by configuring with
 
 @example
---with-blas=-lgoto
+--with-blas="-lgoto"
 @end example
 
 @noindent
@@ -1999,10 +1999,12 @@ single-threaded only) we could use
 
 @noindent
 if the appropriate library directory such as
-@file{/opt/acml3.1.0/gnu64/lib} is in the @env{LD_LIBRRARY_PATH}.  For
+@file{/opt/acml3.5.0/gnu64/lib} is in the @env{LD_LIBRRARY_PATH}.  For
 other compilers, see the ACML documentation.  Although the documentation
 is unclear, 32-bit versions of ACML do run on other @cputype{ia32} chips
-such as AthlonMP and P4.
+such as AthlonMP and P4.  There is now a multithreaded version of
+ACML available for @command{gfortran} which makes use of @code{libgomp}
+(and the latter must be installed).
 
 You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.  This is checked by
