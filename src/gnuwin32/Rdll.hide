@@ -1104,7 +1104,6 @@
  inflateBackInit_
  inflateCopy
  inflateGetHeader
- inflateInit2_
  inflatePrime
  inflateSetDictionary
  inflateSync
