@@ -265,7 +265,7 @@ ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../bin -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas
+	   -L../../bin -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas -lg2c
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
