@@ -1096,11 +1096,15 @@
  htridi_
  independent_calloc
  independent_comalloc
+ inflate
  inflateBack
  inflateBackEnd
  inflateBackInit_
  inflateCopy
+ inflateEnd
  inflateGetHeader
+ inflateInit2_
+ inflateInit_
  inflatePrime
  inflateSetDictionary
  inflateSync

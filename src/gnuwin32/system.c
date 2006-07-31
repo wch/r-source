@@ -62,6 +62,7 @@ Rboolean UseInternet2 = FALSE;
 extern SA_TYPE SaveAction; /* from ../main/startup.c */
 Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
 
+/* used in devWindows.c */
 int RbitmapAlreadyLoaded = 0;
 HINSTANCE hRbitmapDll;
 
