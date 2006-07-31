@@ -86,12 +86,6 @@
 #include "inffast.h"
 
 
-#ifdef HAVE_VISIBILITY_ATTRIBUTE
-# define attribute_visible __attribute__ ((visibility ("default")))
-#else
-# define attribute_visible
-#endif
-
 #ifdef MAKEFIXED
 #  ifndef BUILDFIXED
 #    define BUILDFIXED
@@ -148,8 +142,7 @@ int value;
     return Z_OK;
 }
 
-int ZEXPORT attribute_visible
-inflateInit2_(strm, windowBits, version, stream_size)
+int ZEXPORT inflateInit2_(strm, windowBits, version, stream_size)
 z_streamp strm;
 int windowBits;
 const char *version;
@@ -559,7 +552,7 @@ unsigned out;
    will return Z_BUF_ERROR if it has not reached the end of the stream.
  */
 
-int ZEXPORT attribute_visible inflate(strm, flush)
+int ZEXPORT inflate(strm, flush)
 z_streamp strm;
 int flush;
 {
@@ -1160,7 +1153,7 @@ int flush;
     return ret;
 }
 
-int ZEXPORT attribute_visible inflateEnd(strm)
+int ZEXPORT inflateEnd(strm)
 z_streamp strm;
 {
     struct inflate_state FAR *state;
