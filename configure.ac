@@ -1711,6 +1711,29 @@ AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to speci
 ## KERN_USRSTACK support (BSD, Darwin, ...)
 R_KERN_USRSTACK
 
+## check for visible __libc_stack_end on Linux
+case "${host_os}" in
+  linux*)
+    AC_CACHE_CHECK([for visible __lib_stack_end], 
+    [r_cv_libc_stack_end],
+    [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include "confdefs.h"
+#include <stdlib.h>
+extern void * __libc_stack_end;
+
+int main () {
+    exit(0);
+}
+  ]])], [r_cv_libc_stack_end=yes], [r_cv_libc_stack_end=no], 
+    [r_cv_libc_stack_end=no])])
+
+  if test "${r_cv_libc_stack_end}" = yes; then
+    AC_DEFINE(HAVE_LIBC_STACK_END, 1, [Define if __libc_stack_end is visible.])
+  fi
+esac
+
+AC
+
 ### * Miscellaneous.
 
 ## Printing.

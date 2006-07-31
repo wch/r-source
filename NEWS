@@ -339,6 +339,8 @@ INSTALLATION
 	BLAS into a dynamic library -lRblas and links against that.
 	For the pros and cons see the R-admin manual.
 
+    o	There is now a test for visible __libc_stack_end on Linux systems.
+
 
 BUG FIXES
 

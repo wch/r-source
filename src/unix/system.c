@@ -117,7 +117,7 @@ void R_setupHistory()
 #  include <sys/time.h>
 # endif
 # include <sys/resource.h>
-# ifdef linux
+# ifdef HAVE_LIBC_STACK_END
 extern void * __libc_stack_end;
 # endif
 # ifdef HAVE_KERN_USRSTACK
@@ -157,7 +157,7 @@ int Rf_initialize_R(int ac, char **av)
 	lim2 = (unsigned long) rlim.rlim_max; /* Usually unlimited */
         R_CStackLimit = lim1 < lim2 ? lim1 : lim2;
     }
-#if defined(linux)
+#if defined(HAVE_LIBC_STACK_END)
     R_CStackStart = (uintptr_t) __libc_stack_end;
 #elif defined(HAVE_KERN_USRSTACK)
     {
