@@ -253,6 +253,10 @@ NEW FEATURES
 	features from libxml 2.6.26, including the ability to read
 	gzip-encoded https:// URLs.
 
+    o	parse() now returns up to 'n' expressions, rather than fill
+	the expressions vector with NULL.  (This is now compatible
+	with S.)
+
 
 DEPRECATED & DEFUNCT
 

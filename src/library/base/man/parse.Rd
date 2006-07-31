@@ -13,7 +13,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?")
     file or a URL to read the expressions from.
     If \code{file} is \code{""} and \code{text} is missing or \code{NULL}
     then input is taken from the console.}
-  \item{n}{the number of expressions to parse.  If \code{n} is
+  \item{n}{the maximum number of expressions to parse.  If \code{n} is
     \code{NULL} or negative the input is parsed in its entirety.}
   \item{text}{character vector.  The text to parse.  Elements are treated
     as if they were lines of a file.}
@@ -38,9 +38,6 @@ parse(file = "", n = NULL, text = NULL, prompt = "?")
   See \code{\link{source}} for the limits on the size of functions
   that can be parsed (by default).
 
-  If \code{n} is a positive integer and fewer than \code{n} expressions
-  are parsed then the result is completed by \code{NULL} expressions.
-
   When input is taken from the console, \code{n = NULL} is equivalent to
   \code{n = 1}, and \code{n < 0} will read until an EOF character is read.
 #ifdef windows
@@ -48,8 +45,10 @@ parse(file = "", n = NULL, text = NULL, prompt = "?")
 #endif
 }
 \value{
-  An object of type \code{"\link{expression}"}, with \code{n} elements if
-  specified as a non-negative integer.
+  An object of type \code{"\link{expression}"}, with up to \code{n}
+  elements if specified as a non-negative integer.
+
+  A syntax error (including an incomplete expression) will throw an error.
 }
 \examples{
 cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file="xyz.Rdmped")
