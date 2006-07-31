@@ -310,6 +310,11 @@ C-LEVEL FACILITIES
     o	R_ParseVector was returning with object(s) protected in the
 	parser if the status was PARSE_INCOMPLETE or PARSE_ERROR.
 
+    o	MacOS X did not like having LSAME in both BLAS and LAPACK
+	libraries, so it is no longer part of the R-internal LAPACK.
+	If an external BLAS does not contain LSAME (although it seems
+	that nowadays all do), one is provided.
+
 
 UTILITIES
 

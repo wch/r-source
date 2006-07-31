@@ -2111,10 +2111,12 @@ if test "${r_cv_prog_f77_append_underscore}" = yes; then
   dgemm=dgemm_
   sgemm=sgemm_
   xerbla=xerbla_
+  lsame=lsame_
 else
   dgemm=dgemm
   sgemm=sgemm
   xerbla=xerbla
+  lsame=lsame
 fi
 
 acx_blas_save_LIBS="${LIBS}"
@@ -2338,10 +2340,12 @@ void blas_set () {
   F77_SYMBOL(drotmg)();
   F77_SYMBOL(dsbmv)();
   F77_SYMBOL(dscal)();
+  F77_SYMBOL(dsdot)();
   F77_SYMBOL(dspmv)();
   F77_SYMBOL(dspr)();
   F77_SYMBOL(dspr2)();
   F77_SYMBOL(dspmv)();
+  F77_SYMBOL(dswap)();
   F77_SYMBOL(dsymm)();
   F77_SYMBOL(dsymv)();
   F77_SYMBOL(dsyr)();
@@ -2365,7 +2369,6 @@ void blas_set () {
   F77_SYMBOL(dtpsv)();
   F77_SYMBOL(dtrmm)();
   F77_SYMBOL(dtrmv)();
-  F77_SYMBOL(dtrsv)();
   F77_SYMBOL(dtrsm)();
   F77_SYMBOL(dtrsv)();
 /* cmplblas */
@@ -2438,6 +2441,15 @@ fi
   AC_MSG_RESULT([${r_cv_complete_blas}])
 fi
 
+## now test for lsame in the BLAS:
+if test "${acx_blas_ok}" = yes; then
+    LIBS="${acx_blas_save_LIBS} ${BLAS_LIBS} ${FLIBS}"
+    AC_CACHE_CHECK([for ${lsame} in external BLAS], [r_cv_lsame],
+    [AC_TRY_LINK([void ${xerbla}(char *srname, int *info){}], ${lsame}(),
+      [r_cv_lsame=yes], [r_cv_lsame=no])])
+fi
+
+AM_CONDITIONAL(BUILD_LSAME, [test "x${r_cv_lsame}" = xno])
 LIBS="${acx_blas_save_LIBS}"
 
 AC_SUBST(BLAS_LIBS)
