@@ -103,10 +103,10 @@ members are listed at @url{http://cran.r-project.org/mirrors.html,
 @cindex Sources for R
 
 The simplest way is to download the most recent
-@file{R-@var{x}.@var{y}.@var{z}.tgz} file, and unpack it with
+@file{R-@var{x}.@var{y}.@var{z}.tar.gz} file, and unpack it with
 
 @example
-tar xvfz R-@var{x}.@var{y}.@var{z}.tgz
+tar xvfz R-@var{x}.@var{y}.@var{z}.tar.gz
 @end example
 
 @noindent
@@ -115,7 +115,7 @@ systems you need at least to have the @command{gzip} program installed.
 Then you can use
 
 @example
-gzip -dc R-@var{x}.@var{y}.@var{z}.tgz | tar xvf -
+gzip -dc R-@var{x}.@var{y}.@var{z}.tar.gz | tar xvf -
 @end example
 
 The pathname of the directory into which the sources are unpacked should
@@ -123,11 +123,11 @@ not contain spaces, as @command{make} (specifically @acronym{GNU}
 @command{make} 3.80) does not expect spaces.
 
 If you need to transport the sources on floppy disks, you can download
-the @file{R-@var{x}.@var{y}.@var{z}.tgz-split.*} files and paste them
+the @file{R-@var{x}.@var{y}.@var{z}.tar.gz-split.*} files and paste them
 together at the destination with (Unix)
 
 @example
-cat R-@var{x}.@var{y}.@var{z}-split.* > R-@var{x}.@var{y}.@var{z}.tgz
+cat R-@var{x}.@var{y}.@var{z}-split.* > R-@var{x}.@var{y}.@var{z}.tar.gz
 @end example
 
 @noindent
@@ -714,13 +714,13 @@ You need to collect the following sets of files:
 @itemize
 
 @item
-Get the @R{} source code @file{R-@value{VERSIONno}.tgz} from
+Get the @R{} source code @file{R-@value{VERSIONno}.tar.gz} from
 @acronym{CRAN}.  Open a command window (or another shell) at a
 directory @emph{whose path does not contain spaces}.  We will call this
 directory @var{R_HOME} below.  Run
 
 @example
-tar zxvf R-@value{VERSIONno}.tgz
+tar zxvf R-@value{VERSIONno}.tar.gz
 @end example
 
 @noindent
@@ -1021,9 +1021,9 @@ You will need @code{Perl}, @command{zip} and @command{unzip} installed
 and @command{makeinfo} version 4.7 or later (part of GNU
 @code{texinfo}).
 
-You also need the R source (@file{R-@value{VERSIONno}.tgz}).
+You also need the R source (@file{R-@value{VERSIONno}.tar.gz}).
 
-Then: untar @file{R-@value{VERSIONno}.tgz} somewhere, and
+Then: untar @file{R-@value{VERSIONno}.tar.gz} somewhere, and
 
 @example
 cd /somewhere/R-@value{VERSIONno}/src/gnuwin32
@@ -1089,7 +1089,7 @@ and install some tools as explained in the document. Than you have to
 expand the @R{} sources and configure @R{} appropriately, for example
 
 @example
-tar zxvf R-@value{VERSIONno}.tgz
+tar zxvf R-@value{VERSIONno}.tar.gz
 cd R-@value{VERSIONno}
 ./configure --with-blas='-framework vecLib' --with-lapack \
   --with-aqua --enable-R-framework
