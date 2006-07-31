@@ -36324,6 +36324,11 @@ echo "$as_me:$LINENO: result: $r_cv_lsame" >&5
 echo "${ECHO_T}$r_cv_lsame" >&6
 fi
 
+LIBS="${acx_blas_save_LIBS}"
+
+
+
+fi
 
 
 if test "x${r_cv_lsame}" = xno; then
@@ -36334,11 +36339,6 @@ else
   BUILD_LSAME_FALSE=
 fi
 
-LIBS="${acx_blas_save_LIBS}"
-
-
-
-fi
 
 ## This version is used to build a shared BLAS lib
 BLAS_LIBS0=${BLAS_LIBS}

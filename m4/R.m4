@@ -2449,7 +2449,6 @@ if test "${acx_blas_ok}" = yes; then
       [r_cv_lsame=yes], [r_cv_lsame=no])])
 fi
 
-AM_CONDITIONAL(BUILD_LSAME, [test "x${r_cv_lsame}" = xno])
 LIBS="${acx_blas_save_LIBS}"
 
 AC_SUBST(BLAS_LIBS)
