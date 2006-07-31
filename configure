@@ -43106,8 +43106,6 @@ _ACEOF
   fi
 esac
 
-AC
-
 ### * Miscellaneous.
 
 ## Printing.
@@ -43515,7 +43513,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:43518:" \
+echo "$as_me:43516:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5

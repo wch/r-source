@@ -1732,8 +1732,6 @@ int main () {
   fi
 esac
 
-AC
-
 ### * Miscellaneous.
 
 ## Printing.
