@@ -446,6 +446,9 @@ BUG FIXES
 	bytes, but did not check.  Now this is checked, and http: URLs
 	are allowed up to 40960 bytes.
 
+   o	parse(n=-1) threw a stack-imbalance error, and parse(n=3) did
+	not cope correctly with EOF during input.
+
 
 
 

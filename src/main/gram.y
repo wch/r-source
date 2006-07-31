@@ -1182,6 +1182,7 @@ SEXP R_Parse(int n, ParseStatus *status)
     volatile int savestack;
     int i;
     SEXP t, rval;
+
     ParseContextInit();
     savestack = R_PPStackTop;
     if (n >= 0) {
@@ -1204,7 +1205,7 @@ SEXP R_Parse(int n, ParseStatus *status)
 		break;
             case PARSE_EOF:
 		*status = PARSE_OK;
-		i=n;
+		i = n;
                 break;
             }
         }
@@ -1224,7 +1225,7 @@ SEXP R_Parse(int n, ParseStatus *status)
                 break;
             case PARSE_INCOMPLETE:
             case PARSE_ERROR:
-                UNPROTECT(1);
+		R_PPStackTop = savestack;
                 return R_NilValue;
                 break;
             case PARSE_EOF:
@@ -1324,10 +1325,12 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt)
     SEXP rval, t;
     char *bufp, buf[1024];
     int c, i, prompt_type = 1;
+    volatile int savestack;
 
     R_IoBufferWriteReset(buffer);
     buf[0] = '\0';
     bufp = buf;
+    savestack = R_PPStackTop;
     if (n >= 0) {
 	PROTECT(rval = allocVector(EXPRSXP, n));
 	for (i = 0 ; i < n ; i++) {
@@ -1335,14 +1338,12 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt)
 	    if(!*bufp) {
 		if(R_ReadConsole(Prompt(prompt, prompt_type),
 				 (unsigned char *)buf, 1024, 1) == 0)
-		    return R_NilValue;
+		    goto error;
 		bufp = buf;
 	    }
 	    while ((c = *bufp++)) {
 		R_IoBufferPutc(c, buffer);
-		if (c == ';' || c == '\n') {
-		    break;
-		}
+		if (c == ';' || c == '\n') break;
 	    }
 	    t = R_Parse1Buffer(buffer, 1, status);
 	    switch(*status) {
@@ -1354,13 +1355,16 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt)
 		break;
 	    case PARSE_INCOMPLETE:
 	    case PARSE_ERROR:
-	    case PARSE_EOF:
 		rval = R_NilValue;
+		/* Fall through */
+	    case PARSE_EOF:
+		goto error;
 		break;
 	    }
 	}
-	UNPROTECT(1);
+    error:
 	R_IoBufferWriteReset(buffer);
+	R_PPStackTop = savestack;
 	return rval;
     }
     else {
@@ -1369,14 +1373,12 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt)
 	    if (!*bufp) {
 		if(R_ReadConsole(Prompt(prompt, prompt_type),
 				 (unsigned char *)buf, 1024, 1) == 0)
-		   return R_NilValue;
+		    goto eof;
 		bufp = buf;
 	    }
 	    while ((c = *bufp++)) {
 		R_IoBufferPutc(c, buffer);
-		if (c == ';' || c == '\n') {
-		    break;
-		}
+		if (c == ';' || c == '\n') break;
 	    }
 	    rval = R_Parse1Buffer(buffer, 1, status);
 	    switch(*status) {
@@ -1388,24 +1390,26 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt)
 	    case PARSE_INCOMPLETE:
 	    case PARSE_ERROR:
 		R_IoBufferWriteReset(buffer);
-		UNPROTECT(1);
+		R_PPStackTop = savestack;
 		return R_NilValue;
 		break;
 	    case PARSE_EOF:
-		R_IoBufferWriteReset(buffer);
-		t = CDR(t);
-		rval = allocVector(EXPRSXP, length(t));
-		for (n = 0 ; n < LENGTH(rval) ; n++) {
-		    SET_VECTOR_ELT(rval, n, CAR(t));
-		    t = CDR(t);
-		}
-		UNPROTECT(1);
-		*status = PARSE_OK;
-		return rval;
+		goto eof;
 		break;
 	    }
 	}
     }
+eof:
+    R_IoBufferWriteReset(buffer);
+    t = CDR(t);
+    rval = allocVector(EXPRSXP, length(t));
+    for (n = 0 ; n < LENGTH(rval) ; n++) {
+	SET_VECTOR_ELT(rval, n, CAR(t));
+	t = CDR(t);
+    }
+    *status = PARSE_OK;
+    R_PPStackTop = savestack;
+    return rval;
 }
 
 

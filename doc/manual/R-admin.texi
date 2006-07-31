@@ -1951,7 +1951,7 @@ since the basic BLAS is incomplete.
 
 Another tuned BLAS which is available for some processors under Linux is
 by Kazushige Goto.  This has been made available in several formats, and
-is currently (April 2006) vailable only as source code.  For
+is currently (April 2006) available only as source code.  For
 @emph{academic use only} (after registering) it can be obtained via
 @url{http://www.tacc.utexas.edu/resources/software/software.php,
 @code{www.tacc.utexas.edu/resources/software/software.php}}.  Once this
@@ -2034,7 +2034,7 @@ shared/dynamic BLAS library, as most of a static library will be
 compiled into the @R{} executable and each BLAS-using package.  In any
 case, the BLAS library must be usable with dynamically-loadable code:
 this can be a problem with ATLAS on some platforms (including
-@cputype{x86_64}) as it is not by default built with
+Linux on @cputype{x86_64}) as it is not by default built with
 position-independent code.
 
 @R{} 2.4.0 and later offer the option of compiling the BLAS into a
@@ -2466,7 +2466,7 @@ in place.
 Some versions of @command{g95} (from @url{http://www.g95.org,
 @code{www.g95.org}}) have the same problem.
 
-On @code{x86_64} systems there is an incompatibility in the return
+On Linux @code{x86_64} systems there is an incompatibility in the return
 conventions for double-complex functions between @command{gfortran} and
 @command{g77} which results in the final example in
 @code{example(eigen)} hanging or segfaulting under external BLASs built
@@ -3377,7 +3377,7 @@ on @cputype{x86_64} Linux:
 (@url{http://forum.java.sun.com/thread.jspa?threadID=568127&tstart=75,
 @code{forum.java.sun.com/thread.jspa?threadID=568127&tstart=75}}) but
 32-bit browsers have been used on that platform, and a Blackdown Java
-plugin is available.
+plugin is available (but failed when tried on FC3).
 
 
 @node Java Virtual Machines on Unix, Java Virtual Machines on Windows, Java Virtual Machines on Linux , Enabling search in HTML help
