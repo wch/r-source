@@ -36,7 +36,7 @@ void *R_FTPOpen(const char *url);
 int   R_FTPRead(void *ctx, char *dest, int len);
 void  R_FTPClose(void *ctx);
 
-void *	RxmlNanoHTTPOpen(const char *URL, char **contentType, int cacheOK);
+void *	RxmlNanoHTTPOpen(const char *URL, char **contentType, const char *headers, int cacheOK);
 int	RxmlNanoHTTPRead(void *ctx, void *dest, int len);
 void	RxmlNanoHTTPClose(void *ctx);
 int 	RxmlNanoHTTPReturnCode(void *ctx);

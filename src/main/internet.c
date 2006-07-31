@@ -129,7 +129,7 @@ void *R_HTTPOpen(const char *url)
 {
     if(!initialized) internet_Init();
     if(initialized > 0)
-	return (*ptr->HTTPOpen)(url, 0);
+	return (*ptr->HTTPOpen)(url, NULL, 0);
     else {
 	error(_("internet routines cannot be loaded"));
 	return NULL;

@@ -9,7 +9,8 @@
              internet.info = 2,
              pkgType = .Platform$pkgType,
              str = list(strict.width = "no"),
-             example.ask = "default")
+             example.ask = "default",
+             HTTPUserAgent = defaultUserAgent())
     extra <-
         if(.Platform$OS.type == "windows") {
             list(mailer = "none",
