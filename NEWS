@@ -11,6 +11,10 @@
 
 USER-VISIBLE CHANGES
 
+    o   .Deprecated and .Defunct take a new parameter, msg, that allows
+        for the specification of the message printed and facilitates
+        deprecation of calling sequences etc.
+
     o	The startup message now prints first the version string and
 	then the copyright notice (to be more similar to R --version).
 
@@ -257,6 +261,8 @@ NEW FEATURES
 	the expressions vector with NULL.  (This is now compatible
 	with S.)
 
+    o   There is an option HTTPUserAgent to set the User Agent in R
+        download requests etc. Patch from S. Falcon
 
 DEPRECATED & DEFUNCT
 
