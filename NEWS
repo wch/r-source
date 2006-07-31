@@ -255,7 +255,7 @@ NEW FEATURES
 
     o	The internal internet download functions have some new
 	features from libxml 2.6.26, including the ability to read
-	gzip-encoded https:// URLs.
+	gzip-encoded http:// URLs.
 
     o	parse() now returns up to 'n' expressions, rather than fill
 	the expressions vector with NULL.  (This is now compatible
@@ -263,6 +263,7 @@ NEW FEATURES
 
     o   There is an option HTTPUserAgent to set the User Agent in R
         download requests etc. Patch from S. Falcon
+
 
 DEPRECATED & DEFUNCT
 
