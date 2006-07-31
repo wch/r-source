@@ -1,5 +1,6 @@
 void blas_dummy()
 {
+/* blas.o */
     dasum_();
     daxpy_();
     dcopy_();
@@ -15,23 +16,14 @@ void blas_dummy()
     drotmg_();
     dsbmv_();
     dscal_();
+    dsdot_();
     dspmv_();
     dspr_();
     dspr2_();
-    dspmv_();
+    dswap_();
     dsymm_();
     dsymv_();
     dsyr_();
-    dsyr2_();
-    dsyr2k_();
-    dsyrk_();
-    dtbmv_();
-    dtrsm_();
-    idamax_();
-    lsame_();
-    dgemv_();
-    dger_();
-    dsymv_();
     dsyr2_();
     dsyr2k_();
     dsyrk_();
@@ -41,9 +33,10 @@ void blas_dummy()
     dtpsv_();
     dtrmm_();
     dtrmv_();
-    dtrsv_();
     dtrsm_();
     dtrsv_();
+    idamax_();
+    lsame_();
 /* cmplxblas.o */
     dcabs1_();
     dzasum_();
