@@ -2429,14 +2429,7 @@ void R_SetExternalPtrProtected(SEXP s, SEXP p)
    implement the write barrier. */
 
 /* General Cons Cell Attributes */
-SEXP (ATTRIB)(SEXP x) {
-#ifdef USE_TYPE_CHECKING
-    if(TYPEOF(x) != LISTSXP) 
-	error("%s() can only be applied to a '%s', not a '%s'", 
-	      "ATTRIB", "pairlist", type2char(TYPEOF(x)));
-#endif
-    return ATTRIB(x); 
-}
+SEXP (ATTRIB)(SEXP x) { return ATTRIB(x); }
 int (OBJECT)(SEXP x) { return OBJECT(x); }
 int (MARK)(SEXP x) { return MARK(x); }
 int (TYPEOF)(SEXP x) { return TYPEOF(x); }
