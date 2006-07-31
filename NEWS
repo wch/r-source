@@ -449,6 +449,8 @@ BUG FIXES
    o	parse(n=-1) threw a stack-imbalance error, and parse(n=3) did
 	not cope correctly with EOF during input.
 
+   o	Zero-column data frames had no names (rather than character(0)).
+
 
 
 

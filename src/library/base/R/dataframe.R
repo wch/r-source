@@ -327,7 +327,8 @@ data.frame <-
     x <- list(...)
     n <- length(x)
     if(n < 1)
-	return(structure(list(), row.names = character(0),
+	return(structure(list(), names = character(0),
+                         row.names = character(0),
 			 class = "data.frame"))
     vnames <- names(x)
     if(length(vnames) != n)
@@ -442,7 +443,8 @@ data.frame <-
 	    return(as.matrix(x)[i])  # desperate measures
 	y <- NextMethod("[")
         nm <- names(y)
-	if(any(is.na(nm))) stop("undefined columns selected")
+        ## zero-column data frames prior to 2.4.0 had no names.
+	if(!is.null(nm) && any(is.na(nm))) stop("undefined columns selected")
         ## added in 1.8.0
         if(any(duplicated(nm))) names(y) <- make.unique(nm)
 	return(structure(y, class = oldClass(x),

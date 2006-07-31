@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-07-19 r38642)
+R version 2.4.0 Under development (unstable) (2006-07-31 r38727)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -373,7 +373,7 @@ NULL data frame with 0 rows
 > dput(d00)
 structure(list(), .Names = character(0), row.names = integer(0), class = "data.frame")
 > dput(d000)
-structure(list(), row.names = character(0), class = "data.frame")
+structure(list(), .Names = character(0), row.names = character(0), class = "data.frame")
 > stopifnot(identical(d, cbind(d, d0)),
 +           identical(d, cbind(d0, d)),
 +           identical(d, rbind(d,d.0)),
@@ -5362,6 +5362,15 @@ Levels: A B C D E
 > as.vector(as.factor(c("NA", "CD", NA)))     # but this did not
 [1] "NA" "CD" NA  
 > ## used <NA> before
+> 
+> 
+> ## [ on a zero-column data frame, names of such
+> data.frame()[FALSE]
+NULL data frame with 0 rows
+> names(data.frame())
+character(0)
+> # gave NULL names and hence spurious warning.
+> 
 > 
 > ### end of tests added in 2.4.0 ###
 > 

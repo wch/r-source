@@ -1882,4 +1882,11 @@ as.character(as.factor(c("NA", "CD", NA)))  # use <NA> is 2.3.x
 as.vector(as.factor(c("NA", "CD", NA)))     # but this did not
 ## used <NA> before
 
+
+## [ on a zero-column data frame, names of such
+data.frame()[FALSE]
+names(data.frame())
+# gave NULL names and hence spurious warning.
+
+
 ### end of tests added in 2.4.0 ###
