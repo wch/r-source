@@ -747,7 +747,7 @@ rep.POSIXlt <- function(x, times, ...)
 diff.POSIXt <- function (x, lag = 1, differences = 1, ...)
 {
     ismat <- is.matrix(x)
-    r <- if(inherits(x, "POSIXlt") as.POSIXct(x) else x
+    r <- if(inherits(x, "POSIXlt")) as.POSIXct(x) else x
     xlen <- if (ismat) dim(x)[1] else length(r)
     if (length(lag) > 1 || length(differences) > 1 || lag < 1 || differences < 1)
         stop("'lag' and 'differences' must be integers >= 1")
