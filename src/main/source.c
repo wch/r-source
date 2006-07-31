@@ -124,7 +124,6 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     R_ParseError = 0;
-    R_ParseCnt = 0;
 
     ifile = asInteger(CAR(args));                       args = CDR(args);
 

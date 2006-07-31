@@ -169,7 +169,6 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if((fp = R_fopen(R_ExpandFileName(filename), "r")) == NULL)
 	errorcall(call, _("unable to open file to read"));
-    R_ParseCnt = 0;
     x = PROTECT(R_ParseFile(fp, -1, &status));
     fclose(fp);
     if (status != PARSE_OK)

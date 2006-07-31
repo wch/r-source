@@ -233,14 +233,12 @@
  R_Parse1General
  R_Parse1Vector
  R_ParseBuffer
- R_ParseCnt
  R_ParseConn
  R_ParseContext
  R_ParseContextLast
  R_ParseError
  R_ParseFile
  R_ParseGeneral
- R_ParseText
  R_Quiet
  R_RestartStack
  R_RestartToken

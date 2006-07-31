@@ -1008,7 +1008,6 @@ void InitNames()
     SET_ATTRIB(R_RestartToken, R_NilValue);
     /* Parser Structures */
     R_CommentSxp = R_NilValue;
-    R_ParseText = R_NilValue;
     /* String constants (CHARSXP values */
     /* Note: changed from mkChar so mkChar can see if it is getting
        "NA" and then return NA_STRING rather than alloc a new CHAR */

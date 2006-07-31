@@ -1628,7 +1628,6 @@ static int ConsoleGetchar()
 	    R_ClearerrConsole();
 	    return R_EOF;
 	}
-	R_ParseCnt++;
 	ConsoleBufp = ConsoleBuf;
 	ConsoleBufCnt = strlen((char *)ConsoleBuf);
 	ConsoleBufCnt--;
