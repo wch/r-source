@@ -228,7 +228,6 @@
  R_PPStack
  R_PPStackSize
  R_PPStackTop
- R_Parse
  R_Parse1File
  R_Parse1General
  R_Parse1Vector

@@ -1114,6 +1114,7 @@ static int file_getc(void)
     return R_fgetc(fp_parse);
 }
 
+/* used in main.c and this file */
 attribute_hidden
 SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
 {
@@ -1133,6 +1134,7 @@ static int buffer_getc()
     return R_IoBufferGetc(iob);
 }
 
+/* Used only in main.c, rproxy_impl.c  and this file */
 attribute_hidden
 SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 {
@@ -1152,6 +1154,8 @@ static int text_getc()
     return R_TextBufferGetc(txtb);
 }
 
+
+/* unused */
 attribute_hidden
 SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
 {
@@ -1164,6 +1168,7 @@ SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
     return R_CurrentExpr;
 }
 
+/* Not used */
 attribute_hidden
 SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
 		     int gencode, ParseStatus *status)
@@ -1176,8 +1181,7 @@ SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
     return R_CurrentExpr;
 }
 
-attribute_hidden
-SEXP R_Parse(int n, ParseStatus *status)
+static SEXP R_Parse(int n, ParseStatus *status)
 {
     volatile int savestack;
     int i;
@@ -1244,6 +1248,7 @@ SEXP R_Parse(int n, ParseStatus *status)
     }
 }
 
+/* used in edit.c */
 attribute_hidden
 SEXP R_ParseFile(FILE *fp, int n, ParseStatus *status)
 {
@@ -1268,6 +1273,7 @@ static int con_getc(void)
     return (last = c);
 }
 
+/* used in source.c */
 attribute_hidden
 SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status)
 {
@@ -1278,7 +1284,7 @@ SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status)
     return R_Parse(n, status);
 }
 
-/* This one is public */
+/* This one is public, and used in source.c */
 SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
 {
     SEXP rval;
@@ -1293,6 +1299,7 @@ SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
     return rval;
 }
 
+/* not used */
 attribute_hidden
 SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
 		    ParseStatus *status)
@@ -1319,6 +1326,7 @@ static char *Prompt(SEXP prompt, int type)
     }
 }
 
+/* used in source.c */
 attribute_hidden
 SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt)
 {
@@ -1403,10 +1411,8 @@ eof:
     R_IoBufferWriteReset(buffer);
     t = CDR(t);
     rval = allocVector(EXPRSXP, length(t));
-    for (n = 0 ; n < LENGTH(rval) ; n++) {
+    for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
-	t = CDR(t);
-    }
     *status = PARSE_OK;
     R_PPStackTop = savestack;
     return rval;
