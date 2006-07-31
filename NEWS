@@ -310,11 +310,6 @@ C-LEVEL FACILITIES
     o	R_ParseVector was returning with object(s) protected in the
 	parser if the status was PARSE_INCOMPLETE or PARSE_ERROR.
 
-    o	MacOS X did not like having LSAME in both BLAS and LAPACK
-	libraries, so it is no longer part of the R-internal LAPACK.
-	If an external BLAS does not contain LSAME (although it seems
-	that nowadays all do), one is provided.
-
 
 UTILITIES
 
@@ -338,6 +333,12 @@ INSTALLATION
     o	There is a new option --enable-BLAS-shlib, which compiles the
 	BLAS into a dynamic library -lRblas and links against that.
 	For the pros and cons see the R-admin manual.
+
+    o	MacOS X did not like having LSAME in both BLAS and LAPACK
+	libraries, so it is no longer part of the R-internal LAPACK.
+	If an external BLAS does not contain LSAME (although it seems
+	that nowadays all do), one is provided when
+	--enable-BLAS-shlib is used (which may be necessary).
 
     o	There is now a test for visible __libc_stack_end on Linux systems.
 
