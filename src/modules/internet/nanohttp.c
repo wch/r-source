@@ -40,7 +40,7 @@
 #include <config.h>
 #endif
 
-#define HAVE_ZLIB_H
+#undef HAVE_ZLIB_H
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
