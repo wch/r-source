@@ -17,23 +17,14 @@ void blas_dummy()
     F77_CALL(drotmg)();
     F77_CALL(dsbmv)();
     F77_CALL(dscal)();
+    F77_CALL(dsdot)();
     F77_CALL(dspmv)();
     F77_CALL(dspr)();
     F77_CALL(dspr2)();
-    F77_CALL(dspmv)();
+    F77_CALL(dswap)();
     F77_CALL(dsymm)();
     F77_CALL(dsymv)();
     F77_CALL(dsyr)();
-    F77_CALL(dsyr2)();
-    F77_CALL(dsyr2k)();
-    F77_CALL(dsyrk)();
-    F77_CALL(dtbmv)();
-    F77_CALL(dtrsm)();
-    F77_CALL(idamax)();
-    F77_CALL(lsame)();
-    F77_CALL(dgemv)();
-    F77_CALL(dger)();
-    F77_CALL(dsymv)();
     F77_CALL(dsyr2)();
     F77_CALL(dsyr2k)();
     F77_CALL(dsyrk)();
@@ -43,9 +34,10 @@ void blas_dummy()
     F77_CALL(dtpsv)();
     F77_CALL(dtrmm)();
     F77_CALL(dtrmv)();
-    F77_CALL(dtrsv)();
     F77_CALL(dtrsm)();
     F77_CALL(dtrsv)();
+    F77_CALL(idamax)();
+    F77_CALL(lsame)();
 /* cmplxblas.o */
     F77_CALL(dcabs1)();
     F77_CALL(dzasum)();
