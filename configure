@@ -36158,22 +36158,10 @@ void blas_set () {
   F77_SYMBOL(dspmv)();
   F77_SYMBOL(dspr)();
   F77_SYMBOL(dspr2)();
-  F77_SYMBOL(dspmv)();
   F77_SYMBOL(dswap)();
   F77_SYMBOL(dsymm)();
   F77_SYMBOL(dsymv)();
   F77_SYMBOL(dsyr)();
-  F77_SYMBOL(dsyr2)();
-  F77_SYMBOL(dsyr2k)();
-  F77_SYMBOL(dsyrk)();
-  F77_SYMBOL(dtbmv)();
-  F77_SYMBOL(dtrsm)();
-  F77_SYMBOL(idamax)();
-  /* F77_SYMBOL(lsame)(); */
-  F77_SYMBOL(dcabs1)();
-  F77_SYMBOL(dgemv)();
-  F77_SYMBOL(dger)();
-  F77_SYMBOL(dsymv)();
   F77_SYMBOL(dsyr2)();
   F77_SYMBOL(dsyr2k)();
   F77_SYMBOL(dsyrk)();
@@ -36185,7 +36173,10 @@ void blas_set () {
   F77_SYMBOL(dtrmv)();
   F77_SYMBOL(dtrsm)();
   F77_SYMBOL(dtrsv)();
-/* cmplblas */
+  F77_SYMBOL(idamax)();
+  /* F77_SYMBOL(lsame)();*/
+/* cmplxblas */
+  F77_SYMBOL(dcabs1)();
   F77_SYMBOL(dzasum)();
   F77_SYMBOL(dznrm2)();
   F77_SYMBOL(izamax)();
@@ -43513,7 +43504,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:43516:" \
+echo "$as_me:43507:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -50753,7 +50744,7 @@ esac
 
           ac_config_headers="$ac_config_headers src/include/config.h"
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ac_config_files="$ac_config_files Makeconf Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron etc/ldpaths m4/Makefile po/Makefile.in share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/bzip2/Makefile src/extra/intl/Makefile src/extra/pcre/Makefile src/extra/xdr/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h0 src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/datasets/DESCRIPTION src/library/datasets/Makefile src/library/graphics/DESCRIPTION src/library/graphics/Makefile src/library/grDevices/DESCRIPTION src/library/grDevices/Makefile src/library/grDevices/src/Makefile src/library/grid/DESCRIPTION src/library/grid/Makefile src/library/grid/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/profile/Makefile src/library/stats/DESCRIPTION src/library/stats/Makefile src/library/stats/src/Makefile src/library/stats4/DESCRIPTION src/library/stats4/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/tools/src/Makefile src/library/utils/DESCRIPTION src/library/utils/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE src/scripts/R.sh src/scripts/Rdconv src/scripts/Rprof src/scripts/SHLIB src/scripts/Sd2Rd src/scripts/build src/scripts/check src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ac_config_files="$ac_config_files Makeconf Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron etc/ldpaths m4/Makefile po/Makefile.in share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/blas/Makefile src/extra/bzip2/Makefile src/extra/intl/Makefile src/extra/pcre/Makefile src/extra/xdr/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h0 src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/datasets/DESCRIPTION src/library/datasets/Makefile src/library/graphics/DESCRIPTION src/library/graphics/Makefile src/library/grDevices/DESCRIPTION src/library/grDevices/Makefile src/library/grDevices/src/Makefile src/library/grid/DESCRIPTION src/library/grid/Makefile src/library/grid/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/profile/Makefile src/library/stats/DESCRIPTION src/library/stats/Makefile src/library/stats/src/Makefile src/library/stats4/DESCRIPTION src/library/stats4/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/tools/src/Makefile src/library/utils/DESCRIPTION src/library/utils/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE src/scripts/R.sh src/scripts/Rdconv src/scripts/Rprof src/scripts/SHLIB src/scripts/Sd2Rd src/scripts/build src/scripts/check src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
 
 
           ac_config_commands="$ac_config_commands stamp-h"
@@ -51469,6 +51460,7 @@ do
   "src/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
   "src/appl/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/appl/Makefile" ;;
   "src/extra/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/extra/Makefile" ;;
+  "src/extra/blas/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/extra/blas/Makefile" ;;
   "src/extra/bzip2/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/extra/bzip2/Makefile" ;;
   "src/extra/intl/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/extra/intl/Makefile" ;;
   "src/extra/pcre/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/extra/pcre/Makefile" ;;

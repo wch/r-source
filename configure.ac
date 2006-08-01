@@ -1991,6 +1991,7 @@ AC_CONFIG_FILES(
   src/Makefile
   src/appl/Makefile
   src/extra/Makefile
+  src/extra/blas/Makefile
   src/extra/bzip2/Makefile
   src/extra/intl/Makefile
   src/extra/pcre/Makefile

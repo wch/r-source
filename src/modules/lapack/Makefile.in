@@ -65,7 +65,7 @@ DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
 dlamc.o: dlamc.f
 	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
 
-lsame.o: $(top_srcdir)/src/appl/lsame.f
+lsame.o: $(top_srcdir)/src/extra/blas/lsame.f
 	$(F77) $(ALL_FFLAGS) -c $< -o $@
 
 R: Makefile

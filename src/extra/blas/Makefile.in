@@ -1,0 +1,41 @@
+#
+# ${R_HOME}/src/extra/blas/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/extra/blas
+R_HOME = $(top_builddir)
+
+include $(top_builddir)/Makeconf
+
+SOURCES = blas00.c blas.f cmplxblas.f lsame.f
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(SOURCES_C)
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+R:
+
+mostlyclean: clean
+clean:
+	@-rm -f *.o
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean
+
+install install-strip uninstall TAGS info dvi check:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in Makefile.win Rblas.def \
+  $(SOURCES) $(HEADERS)
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done

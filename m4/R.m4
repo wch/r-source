@@ -2344,22 +2344,10 @@ void blas_set () {
   F77_SYMBOL(dspmv)();
   F77_SYMBOL(dspr)();
   F77_SYMBOL(dspr2)();
-  F77_SYMBOL(dspmv)();
   F77_SYMBOL(dswap)();
   F77_SYMBOL(dsymm)();
   F77_SYMBOL(dsymv)();
   F77_SYMBOL(dsyr)();
-  F77_SYMBOL(dsyr2)();
-  F77_SYMBOL(dsyr2k)();
-  F77_SYMBOL(dsyrk)();
-  F77_SYMBOL(dtbmv)();
-  F77_SYMBOL(dtrsm)();
-  F77_SYMBOL(idamax)();
-  /* F77_SYMBOL(lsame)(); */
-  F77_SYMBOL(dcabs1)();
-  F77_SYMBOL(dgemv)();
-  F77_SYMBOL(dger)();
-  F77_SYMBOL(dsymv)();
   F77_SYMBOL(dsyr2)();
   F77_SYMBOL(dsyr2k)();
   F77_SYMBOL(dsyrk)();
@@ -2371,7 +2359,10 @@ void blas_set () {
   F77_SYMBOL(dtrmv)();
   F77_SYMBOL(dtrsm)();
   F77_SYMBOL(dtrsv)();
-/* cmplblas */
+  F77_SYMBOL(idamax)();
+  /* F77_SYMBOL(lsame)();*/
+/* cmplxblas */
+  F77_SYMBOL(dcabs1)();
   F77_SYMBOL(dzasum)();
   F77_SYMBOL(dznrm2)();
   F77_SYMBOL(izamax)();
