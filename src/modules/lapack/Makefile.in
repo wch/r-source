@@ -22,8 +22,8 @@ HEADERS = Lapack.h
 LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
   @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f
 ## need lsame in lapack only if BLAS does not provide it
-## which is if we have a directly linked external BLAS without it.
-LIBOBJECTS = $(LIBSOURCES:.f=.o) @BLAS_SHLIB_FALSE@@USE_EXTERNAL_BLAS_TRUE@@BUILD_LSAME_TRUE@lsame.o
+## which happens if we have an external BLAS without it.
+LIBOBJECTS = $(LIBSOURCES:.f=.o) @USE_EXTERNAL_BLAS_TRUE@@BUILD_LSAME_TRUE@lsame.o
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
