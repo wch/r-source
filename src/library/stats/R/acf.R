@@ -199,7 +199,7 @@ ccf <- function(x, y, lag.max = NULL,
     if(is.matrix(x) || is.matrix(y))
         stop("univariate time series only")
     X <- na.action(ts.intersect(as.ts(x), as.ts(y)))
-    colnames(X) <- c(deparse(substitute(x)), deparse(substitute(y)))
+    colnames(X) <- c(deparse(substitute(x))[1], deparse(substitute(y))[1])
     acf.out <- acf(X, lag.max = lag.max, plot = FALSE, type = type)
     lag <- c(rev(acf.out$lag[-1,2,1]), acf.out$lag[,1,2])
     y   <- c(rev(acf.out$acf[-1,2,1]), acf.out$acf[,1,2])

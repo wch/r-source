@@ -464,6 +464,9 @@ BUG FIXES
 	not cope correctly with EOF during input.
 
    o	Zero-column data frames had no names (rather than character(0)).
+   
+   o	by() and acf() could get confused when they used very long
+   	expressions as names.
 
 
 

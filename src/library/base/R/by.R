@@ -8,7 +8,7 @@ by.data.frame <- function(data, INDICES, FUN, ...)
     if(!is.list(INDICES)) { # record the names for print.by
         IND <- vector("list", 1)
         IND[[1]] <- INDICES
-        names(IND) <- deparse(substitute(INDICES))
+        names(IND) <- deparse(substitute(INDICES))[1]
     } else IND <- INDICES
     FUNx <- function(x) FUN(data[x,], ...)
     nd <- nrow(data)
