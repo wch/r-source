@@ -89,13 +89,14 @@ front-ends/Rpwd.exe:
 	$(MAKE) --no-print-directory -C front-ends Rpwd
 
 ## watch out: R.dll and Rblas.dll depend on each other.
+## so build import library R.dll then Rblas.dll
 rbuild:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
 	@$(MAKE) --no-print-directory libRblas.dll.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
-	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
+	@$(MAKE) --no-print-directory Rblas CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
 
 ## used to build skeletal versions of packages, enough to run
@@ -237,41 +238,16 @@ htmldocs:
 
 #                          ===== BLAS ======
 
-Rblas: ../../bin/Rblas.dll
+Rblas:
+	@$(MAKE) --no-print-directory -C ../extra/blas -f Makefile.win \
+	  FFLAGS='$(FOPTFLAGS)'
 
 Rblas-clean:
-	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o
+	@$(MAKE) --no-print-directory -C ../extra/blas -f Makefile.win clean
 
-libRblas.dll.a:  Rblas.def
+libRblas.dll.a:  ../extra/blas/Rblas.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
-	  --def Rblas.def --output-lib $@
-
-## suppress lots of warnings: this is a dummy
-blas00.o: ../extra/blas/blas00.c
-	$(CC) -O3 -I../include  -c $< -o $@
-blas.o: ../extra/blas/blas.f
-	$(F77) $(FFLAGS) -c $< -o $@
-cmplxblas.o: ../extra/blas/cmplxblas.f
-	$(F77) $(FOPTFLAGS) -c $< -o $@
-
-## Rblas.dll imports xerbla_ from R.dll
-ifeq ($(strip $(USE_ACML)),YES)
-../../bin/Rblas.dll: blas00.o dllversion.o
-	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../bin -lR  -L"$(ACML_PATH)" -lacml $(FLIBS)
-else
-ifeq ($(strip $(USE_ATLAS)),YES)
-../../bin/Rblas.dll: blas00.o dllversion.o
-	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def \
-	   -L../../bin -lR  -L"$(ATLAS_PATH)" -lf77blas -latlas -lg2c
-else
-../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
-	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L../../bin -lR $(FLIBS)
-endif
-endif
+	  --def $< --output-lib $@
 
 
 #                          ===== Packages ======
@@ -466,6 +442,7 @@ cleanwin:
 	$(MAKE) -C ../extra/zlib -f Makefile.win distclean
 	$(MAKE) -C ../extra/intl -f Makefile.win clean
 	$(MAKE) -C ../extra/trio -f Makefile.win clean
+	$(MAKE) -C ../extra/blas -f Makefile.win clean
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean
 
