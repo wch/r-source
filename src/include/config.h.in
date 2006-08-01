@@ -804,6 +804,9 @@
    compiler calls it, or to nothing if it is not supported. */
 #undef R_INLINE
 
+/* Define this to enable memory profiling. */
+#undef R_MEMORY_PROFILING
+
 /* Define this to be the name of the OS of your system. */
 #undef R_OS
 

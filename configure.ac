@@ -185,6 +185,19 @@ else
 fi],
 [want_R_profiling=yes])
 
+## Allow the user to specify support for memory profiling.
+AC_ARG_ENABLE([memory-profiling],
+[AC_HELP_STRING([--enable-memory-profiling],
+                [attempt to compile support for Rmemprof(), tracemem() @<:@yes@:>@])],
+[if test "${enableval}" = no; then
+  want_memory_profiling=no
+elif test "${enableval}" = yes; then
+  want_memory_profiling=yes
+else
+  want_memory_profiling=no
+fi],
+[want_memory_profiling=no])
+
 ## Allow the user to specify building an R framework (Darwin).
 AC_ARG_ENABLE([R-framework],
 [AC_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],
@@ -1698,6 +1711,11 @@ if test "${want_R_profiling}" = yes; then
 fi
 AC_SUBST(R_PROFILING)
 
+## R profiling.
+if test "${want_memory_profiling}" = yes; then
+  AC_DEFINE(R_MEMORY_PROFILING, 1, [Define this to enable memory profiling.])
+fi
+
 ## Large-file-support
 AC_SYS_LARGEFILE
 AC_FUNC_FSEEKO
@@ -2139,6 +2157,9 @@ if test "${use_blas_shlib}" = yes; then
 fi
 if test "${want_R_profiling}" = yes; then
   R_SH_VAR_ADD(r_options, [R profiling], [, ])
+fi
+if test "${want_memory_profiling}" = yes; then
+  R_SH_VAR_ADD(r_options, [memory profiling], [, ])
 fi
 if test "${use_maintainer_mode}" = yes; then
   R_SH_VAR_ADD(r_options, [maintainer mode], [, ])

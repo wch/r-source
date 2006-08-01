@@ -3531,8 +3531,9 @@ Measuring memory use in @R{} code is useful either when the code takes
 more memory than is conveniently available or when memory allocation
 and copying of objects is responsible for slow code. There are three
 ways to profile memory use over time in @R{} code. All three require
-@R{} to have been compiled with @code{R_MEMORY_PROFILING} defined. All
-can be misleading, for different reasons.
+@R{} to have been compiled with @code{--enable-memory-profiling},
+which is not the default. All can be misleading, for different
+reasons.
 
 In understanding the memory profiles it is useful to know a little
 more about @R{}'s memory allocation. Looking at the results of
@@ -3629,14 +3630,14 @@ are no vector allocations over 1000 bytes.
 @findex tracemem
 @findex untracemem
 
-The third method of memory profiling involves tracing copies made of a specific
-(presumably large) R object. Calling @code{tracemem} on an object
-marks it so that a message is printed to standard output when the
-object is copied. This approach can be misleading because not all
-memory allocation happens via @code{duplicate}, and because
-@code{duplicate} may be called on a component of an object such as a
-data frame rather than on the whole object. It may be helpful to use
-@code{tracemem} on these components.
+The third method of memory profiling involves tracing copies made of a
+specific (presumably large) R object. Calling @code{tracemem} on an
+object marks it so that a message is printed to standard output when
+the object is copied via @code{duplicate} or coercion to another type,
+or when a new object of the same size is created in arithmetic
+operations. The main reason that this can be misleading is that
+copying of subsets or components of an object is not tracked. It may
+be helpful to use @code{tracemem} on these components.
 
 
 In the example above we can run @code{tracemem} on the data frame @code{st}
