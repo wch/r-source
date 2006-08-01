@@ -49,16 +49,17 @@ R-sources:
 	  done; \
 	fi
 
+R_EXE=../../bin/R CMD
+
 tests: $(PROGRAMS)
-	(R_HOME=$(top_builddir); export R_HOME; ./Rtest --silent)
-	(R_HOME=$(top_builddir); export R_HOME; ./RNamedCall --silent)
-	(R_HOME=$(top_builddir); export R_HOME; ./RParseEval --silent)
-	(R_HOME=$(top_builddir); export R_HOME; ./Rpackage --silent)
-	(R_HOME=$(top_builddir); export R_HOME; ./Rerror --silent)
-	(R_HOME=$(top_builddir); export R_HOME; ./Rplot --silent)
-	(R_HOME=$(top_builddir); export R_HOME; \
-	  ./Rpostscript --silent --no-save)
-	(R_HOME=$(top_builddir); export R_HOME; ./tryEval --silent)
+	$(R_EXE) ./Rtest --silent
+	$(R_EXE) ./RNamedCall --silent
+	$(R_EXE) ./RParseEval --silent
+	$(R_EXE) ./Rpackage --silent
+	$(R_EXE) ./Rerror --silent
+	$(R_EXE) ./Rplot --silent
+	$(R_EXE) ./Rpostscript --silent --no-save
+	$(R_EXE) ./tryEval --silent
 
 Rtest: Rtest.o embeddedRCall.o
 	$(R_CMD_LINK) -o $@ Rtest.o embeddedRCall.o $(LIBR)
