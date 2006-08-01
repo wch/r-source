@@ -347,8 +347,7 @@ INSTALLATION
     o	MacOS X did not like having LSAME in both BLAS and LAPACK
 	libraries, so it is no longer part of the R-internal LAPACK.
 	If an external BLAS does not contain LSAME (although it seems
-	that nowadays all do), one is provided when
-	--enable-BLAS-shlib is used (which may be necessary).
+	that nowadays all do), one is provided.
 
     o	There is now a test for visible __libc_stack_end on Linux systems.
 

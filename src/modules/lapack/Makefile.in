@@ -21,7 +21,9 @@ HEADERS = Lapack.h
 
 LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
   @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f
-LIBOBJECTS = $(LIBSOURCES:.f=.o)
+## need lsame in lapack only if BLAS does not provide it
+## which is if we have a directly linked external BLAS without it.
+LIBOBJECTS = $(LIBSOURCES:.f=.o) @BLAS_SHLIB_FALSE@@USE_EXTERNAL_BLAS_TRUE@@BUILD_LSAME_TRUE@lsame.o
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
@@ -62,6 +64,9 @@ Makedeps: Makefile $(DEPENDS)
 DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
 dlamc.o: dlamc.f
 	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
+
+lsame.o: $(top_srcdir)/src/appl/lsame.f
+	$(F77) $(ALL_FFLAGS) -c $< -o $@
 
 R: Makefile
 	@$(MAKE) Makedeps
