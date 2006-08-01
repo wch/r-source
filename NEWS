@@ -74,6 +74,8 @@ BUG FIXES
         (PR#9073).
 
     o	diff(x) gave wrong result when x was "POSIXlt" object.
+    
+    o	title() could crash R when passed a long vector. (PR#9115)
 
 
 

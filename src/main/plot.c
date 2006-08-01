@@ -2606,6 +2606,7 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	col = Rf_gpptr(dd)->colmain;
 	font = Rf_gpptr(dd)->fontmain;
 	GetTextArg(call, Main, &Main, &col, &cex, &font);
+	protect(Main);	
 	Rf_gpptr(dd)->col = col;
 	Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * cex;
 	Rf_gpptr(dd)->font = font;
@@ -2647,12 +2648,14 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 			  adjy, 0.0, dd);
 	  }
 	}
+	unprotect(1);
     }
     if (sub != R_NilValue) {
 	cex = Rf_gpptr(dd)->cexsub;
 	col = Rf_gpptr(dd)->colsub;
 	font = Rf_gpptr(dd)->fontsub;
 	GetTextArg(call, sub, &sub, &col, &cex, &font);
+	protect(sub);
 	Rf_gpptr(dd)->col = col;
 	Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * cex;
 	Rf_gpptr(dd)->font = font;
@@ -2679,12 +2682,14 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 		    GMtext(CHAR(string), 1, vpos, where, hpos, 0, 0.0, dd);
 	    }
 	}
+	unprotect(1);
     }
     if (xlab != R_NilValue) {
 	cex = Rf_gpptr(dd)->cexlab;
 	col = Rf_gpptr(dd)->collab;
 	font = Rf_gpptr(dd)->fontlab;
 	GetTextArg(call, xlab, &xlab, &col, &cex, &font);
+	protect(xlab);
 	Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * cex;
 	Rf_gpptr(dd)->col = col;
 	Rf_gpptr(dd)->font = font;
@@ -2711,12 +2716,14 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 		    GMtext(CHAR(string), 1, vpos + i, where, hpos, 0, 0.0, dd);
 	    }
 	}
+	unprotect(1);
     }
     if (ylab != R_NilValue) {
 	cex = Rf_gpptr(dd)->cexlab;
 	col = Rf_gpptr(dd)->collab;
 	font = Rf_gpptr(dd)->fontlab;
 	GetTextArg(call, ylab, &ylab, &col, &cex, &font);
+	protect(ylab);
 	Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * cex;
 	Rf_gpptr(dd)->col = col;
 	Rf_gpptr(dd)->font = font;
@@ -2743,6 +2750,7 @@ SEXP attribute_hidden do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 		    GMtext(CHAR(string), 2, vpos - i, where, hpos, 0, 0.0, dd);
 	    }
 	}
+	unprotect(1);
     }
     GMode(0, dd);
     GRestorePars(dd);
