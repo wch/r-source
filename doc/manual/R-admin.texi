@@ -1971,9 +1971,9 @@ threads slowed the computations down several-fold, so it can be helpful
 to restrict the number of threads.)
 
 Note that currently (July 2006) a multi-threaded Goto BLAS will be built
-if and only if the building is on a multi-processor system (counting
-multiple cores and hyperthreading), and at run time the default number
-of threads is the number of CPUs detected.
+by default if and only if the building is on a multi-processor system
+(counting multiple cores and hyperthreading), and at run time the
+default number of threads is the number of CPUs detected.
 
 For Intel processors under Linux, Intel's Math Kernel Library
 (@url{http://www.intel.com/software/products/mkl/,
@@ -2063,6 +2063,16 @@ this may need the library path to be changed in @file{etc/ldpaths}.
 
 Another option to change the BLAS in use is to symlink a dynamic BLAS
 library (such as ACML or Goto's) to @file{R_HOME/lib/libRblas.so}.
+For example, just
+
+@example
+mv R_HOME/lib/libRblas.so R_HOME/lib/libRblas.so.keep
+ln -s /opt/acml3.5.0/gnu64/lib/libacml.so R_HOME/lib/libRblas.so
+@end example
+
+@noindent
+will change the BLAS in use to ACML.  (A similar link works for Goto
+1.03, even a multithreaded one, unlike Goto 1.00.)
 
 @item
 There may be performance disadvantages in using a shared BLAS, which is
@@ -2070,7 +2080,7 @@ why it is not the default.  Probably the most important is when @R{}'s
 internal BLAS is used and @R{} is @emph{not} built as a shared library,
 when it is possible to build the BLAS into @file{R.bin} without using
 position-independent code.  However, experiments showed that in many
-cases using a shared BLAS was faster in that case.
+cases using a shared BLAS was sometimes faster in that case.
 @end itemize
 
 @node LAPACK, Caveats, Shared BLAS, Linear algebra
