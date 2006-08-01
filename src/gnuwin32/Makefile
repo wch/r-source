@@ -247,11 +247,11 @@ libRblas.dll.a:  Rblas.def
 	  --def Rblas.def --output-lib $@
 
 ## suppress lots of warnings: this is a dummy
-blas00.o: ../appl/blas00.c
+blas00.o: ../extra/blas/blas00.c
 	$(CC) -O3 -I../include  -c $< -o $@
-blas.o: ../appl/blas.f
+blas.o: ../extra/blas/blas.f
 	$(F77) $(FFLAGS) -c $< -o $@
-cmplxblas.o: ../appl/cmplxblas.f
+cmplxblas.o: ../extra/blas/cmplxblas.f
 	$(F77) $(FOPTFLAGS) -c $< -o $@
 
 ## Rblas.dll imports xerbla_ from R.dll
