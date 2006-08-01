@@ -244,7 +244,7 @@ src/main/apse.h
 src/extra/pcre/LICENCE
 src/extra/pcre/*.[ch]
 
-   Copyright (c) 1997-2005 University of Cambridge
+   Copyright (c) 1997-2006 University of Cambridge
    All rights reserved.
 
 See file src/extra/pcre/LICENCE.  For binary builds of R that requires

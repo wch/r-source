@@ -263,6 +263,8 @@ NEW FEATURES
     o   There is an option HTTPUserAgent to set the User Agent in R
         download requests etc. Patch from S. Falcon
 
+    o	PCRE has been updated to version 6.7.
+
 
 DEPRECATED & DEFUNCT
 

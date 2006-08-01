@@ -2065,11 +2065,12 @@ Another option to change the BLAS in use is to symlink a dynamic BLAS
 library (such as ACML or Goto's) to @file{R_HOME/lib/libRblas.so}.
 
 @item
-There are performance disadvantages in using a shared BLAS, which is why
-it is not the default.  Probably the most important is when @R{}'s
+There may be performance disadvantages in using a shared BLAS, which is
+why it is not the default.  Probably the most important is when @R{}'s
 internal BLAS is used and @R{} is @emph{not} built as a shared library,
 when it is possible to build the BLAS into @file{R.bin} without using
-position-independent code.
+position-independent code.  However, experiments showed that in many
+cases using a shared BLAS was faster in that case.
 @end itemize
 
 @node LAPACK, Caveats, Shared BLAS, Linear algebra
