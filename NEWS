@@ -355,6 +355,15 @@ INSTALLATION
 	systems (since it is not visible on some recent glibc's
 	built from the sources).
 
+    o	MacOS X 10.3 and higher now use two-level namespaces, single
+	module in a shared library and allow undefined symbols to be
+	resolved at run-time. This implies that common symbols are now
+	allowed in package libraries. --enable-BLAS-shlib is supported
+	for internal BLAS, external BLAS framework and external static
+	BLAS. External dynamic library BLAS is NOT supported. (But it
+	can be easily used by replacing internal BLAS library file
+	later.)	MacOS X <10.3 does not support --enable-BLAS-shlib.
+
 
 BUG FIXES
 

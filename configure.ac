@@ -246,11 +246,32 @@ AC_ARG_ENABLE([R-shlib],
 [want_R_shlib="${enableval}"],
 [want_R_shlib="${want_R_framework}"])
 AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
+
+## Build separate shared library containing R's BLAS if desired 
+AC_ARG_ENABLE([BLAS-shlib],
+[AC_HELP_STRING([--enable-BLAS-shlib],
+                [build BLAS into a shared library @<:@no@:>@])],
+[use_blas_shlib="${enableval}"],
+[use_blas_shlib=no])
+AM_CONDITIONAL(BLAS_SHLIB, [test "x${use_blas_shlib}" = xyes])
+
 if test "${want_R_shlib}" = yes; then
   LIBR="-L\$(R_HOME)/lib\$(R_ARCH) -lR"
 else
   LIBR=
 fi
+case "${host_os}" in
+  darwin*)
+    ## In order to allow the R build to be relocatable, we strip paths from
+    ## all shlibs we build and rely on DYLD_LIBRARY_PATH. Unfortunately
+    ## Darwin linker ignores it at build-time and doesn't use -L to
+    ## resolve dylib dependencies, so libRblas will not be found unless
+    ## we tell ld where it lives. I don't know of any more elegant solution :/
+    if test "x${use_blas_shlib}" = xyes; then
+      LIBR="${LIBR} -dylib_file libRblas.dylib:\$(R_HOME)/lib\$(R_ARCH)/libRblas.dylib"
+    fi
+  ;;
+esac
 AC_SUBST(LIBR)
 
 ## Enable maintainer-specific portions of Makefiles.
@@ -280,13 +301,6 @@ AC_ARG_ENABLE([mbcs],
                 [enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
 [want_mbcs_support="${enableval}"],
 [want_mbcs_support=yes])
-
-AC_ARG_ENABLE([BLAS-shlib],
-[AC_HELP_STRING([--enable-BLAS-shlib],
-                [build BLAS into a shared library @<:@no@:>@])],
-[use_blas_shlib="${enableval}"],
-[use_blas_shlib=no])
-AM_CONDITIONAL(BLAS_SHLIB, [test "x${use_blas_shlib}" = xyes])
 
 
 ### ** Optional packages.
@@ -1127,6 +1141,7 @@ if test "${GXX}" = yes; then
 fi
 
 ## Step 3.  Individual platform overrides.
+dylib_undefined_allowed=yes
 case "${host_os}" in
   aix*)
     use_exportfiles=yes
@@ -1140,10 +1155,9 @@ case "${host_os}" in
     SHLIB_LIBADD="\$(LIBM)"
     ;;
   darwin*)
-    cpicflags="-fPIC -fno-common"
-    cxxpicflags="-fPIC -fno-common"
-    fpicflags="-fPIC -fno-common"
-
+    darwin_pic="-fPIC"
+    dylib_undefined_allowed=no
+    darwin_dylib_ldflags="-dynamiclib"
     ## Used to need this for GUI and quartz device, but neither are in
     ## R or libR.dylib any longer (2.1.0).
     ## main_ldflags="-framework Carbon"
@@ -1162,11 +1176,34 @@ case "${host_os}" in
       ## the paths to these change when installing.
       ## The Darwin 1.[012] special casing is from libtool and could be
       ## eliminated ('-flat_namespace' is the default if available).
+      ## FIXME: Rblas is entirely untested and possibly doesn't work
+      ## for any darwin before darwin7!
       darwin1.[[012]]*)
-        shlib_ldflags="-bundle -undefined suppress" ;;
+        shlib_ldflags="-bundle -undefined suppress"
+        darwin_pic="${darwin_pic} -fno-common"
+        ;;
+      darwin[[56]]*)
+	shlib_ldflags="-flat_namespace -bundle -undefined suppress"
+        darwin_pic="${darwin_pic} -fno-common"
+        ;;
+      ## * recent ld has -single_module so it doesn't need -fno-common
+      ##   we have to use dylib instead of a bundle
+      ## * dylib+single_module+flat_namespace=pretty much what other platforms call .so
+      ##   but there can be no multiple symbols (due to flat namespace)
+      ## * since 10.3 we can also use -undefined dynamic_lookup which allows us to
+      ##   use two-level namespace and still have undefined symbols
       *)
-	shlib_ldflags="-flat_namespace -bundle -undefined suppress" ;;
+        dylib_undefined_allowed=yes
+	shlib_ldflags="-dynamiclib -Wl,-macosx_version_min -Wl,10.3 -undefined dynamic_lookup -single_module -multiply_defined suppress"
+	## we use the same method for shlib and dylib now
+	darwin_dylib_ldflags="${shlib_ldflags}"
+	## side note: we could use flat namespace instead, but there is an exception:
+	## * libRblas must be 2-level, dyn lookup because of xerbla which is undefined
+        ;;
     esac
+    cpicflags="${darwin_pic}"
+    cxxpicflags="${darwin_pic}"
+    fpicflags="${darwin_pic}"
     shlib_cxxldflags="${shlib_ldflags}"
     if test "${ac_cv_lib_cc_dynamic_main}" = yes; then
       ## Could also try grepping LIBS for '-lcc_dynamic' ...
@@ -1399,8 +1436,7 @@ DYLIB_EXT="${SHLIB_EXT}"
 dylib_ldflags="${SHLIB_LDFLAGS}"
 LIBR_LDFLAGS=""
 RLAPACK_LDFLAGS=""
-## Darwin doesn't allow undefined symbols in dylibs, others do
-dylib_undefined_allowed=yes
+RBLAS_LDFLAGS=""
 case "${host_os}" in
   aix*)
     ## Pure guesswork so far
@@ -1409,11 +1445,12 @@ case "${host_os}" in
     ;;
   darwin*)
     DYLIB_EXT=".dylib"
-    dylib_ldflags="-dynamiclib"
-    dylib_undefined_allowed=no
+    dylib_ldflags="${darwin_dylib_ldflags}"
     MAJR_VERSION=`echo "${PACKAGE_VERSION}" | sed  -e "s/[[\.]][[1-9]]$/.0/"` 
-    LIBR_LDFLAGS="-dynamiclib -install_name libR.dylib -compatibility_version ${MAJR_VERSION}  -current_version ${PACKAGE_VERSION}  -headerpad_max_install_names"
-    RLAPACK_LDFLAGS="-install_name \$(Rexeclibdir)/libRlapack.dylib"
+    LIBR_LDFLAGS="-install_name libR.dylib -compatibility_version ${MAJR_VERSION}  -current_version ${PACKAGE_VERSION}  -headerpad_max_install_names"
+    RLAPACK_LDFLAGS="-install_name libRlapack.dylib -compatibility_version ${MAJR_VERSION} -current_version ${PACKAGE_VERSION}  -headerpad_max_install_names"
+    ## don't use version in libRblas so we can replace it with any BLAS implementation
+    RBLAS_LDFLAGS="-install_name libRblas.dylib -headerpad_max_install_names"
     ;;
   hpux*)
     ## Needs to avoid embedding a relative path ../../../bin.
@@ -1465,6 +1502,7 @@ system.])
 AM_CONDITIONAL(USE_EXPORTFILES, [test "x${use_exportfiles}" = xyes])
 AC_SUBST(DYLIB_EXT)
 AC_SUBST(LIBR_LDFLAGS)
+AC_SUBST(RBLAS_LDFLAGS)
 AC_SUBST(RLAPACK_LDFLAGS)
 AC_SUBST(LAPACK_LDFLAGS)
 AC_SUBST(FW_VERSION)
@@ -1621,6 +1659,84 @@ fi
 
 ## This version is used to build a shared BLAS lib
 BLAS_LIBS0=${BLAS_LIBS}
+## external BLAS + shared BLAS lib = we need to pass symbols through
+## this may require some magic
+if test "${acx_blas_ok}" = yes -a "${use_blas_shlib}" = yes; then
+  case "${host_os}" in
+    darwin*)
+    ## test whether we can see symbols through the proxy BLAS library
+    ## this test could be modified to not be Darwin-specific,
+    ## however the fix is darwin-specific
+    if test "${r_cv_prog_f77_append_underscore}" = yes; then
+      dgemm=dgemm_
+      xerbla=xerbla_
+    else
+      dgemm=dgemm
+      xerbla=xerbla
+    fi
+    AC_MSG_CHECKING([whether external BLAS is visible through libRblas])
+    AC_CACHE_VAL([r_cv_blas0_passthrough],[
+[cat > conftestl.c <<EOF
+  void ${dgemm}();
+  void dummy() { ${dgemm}(); }
+EOF]
+echo "${CC} ${CFLAGS} conftestl.c ${SHLIB_LDFLAGS} -o libconftest${DYLIB_EXT} ${LIBS} ${BLAS_LIBS}" >&AS_MESSAGE_LOG_FD
+${CC} ${CFLAGS} conftestl.c ${SHLIB_LDFLAGS} -o libconftest${DYLIB_EXT} ${LIBS} ${BLAS_LIBS} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
+[cat > conftest.c <<EOF
+void ${dgemm}();
+void ${xerbla}(char *srname, int *info){};
+int main(int argc, char **argv) { if (argc<0) ${dgemm}(); return 0; }
+EOF]
+if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
+  if ${CC} ${LDFLAGS} -o conftest${ac_exeext} \
+       conftest.${ac_objext} -L. -lconftest \
+       1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
+  then
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
+    if test ${?} = 0; then
+	r_cv_blas0_passthrough=yes
+    fi
+  fi
+fi
+])
+if test -n "${r_cv_blas0_passthrough}"; then
+r_cv_blas0_passthrough=yes
+AC_MSG_RESULT([yes])
+else
+AC_MSG_RESULT([no])
+AC_MSG_CHECKING([can it be fixed by using -sub_umbrella])
+ac_test_BLAS_LIBS=`echo "${BLAS_LIBS}"|sed -e s/-framework/-sub_umbrella/`
+rm -f libconftest.dylib
+echo "${CC} ${CFLAGS} conftestl.c ${SHLIB_LDFLAGS} -o libconftest${DYLIB_EXT} ${LIBS} ${BLAS_LIBS} ${ac_test_BLAS_LIBS}" >&AS_MESSAGE_LOG_FD
+${CC} ${CFLAGS} conftestl.c ${SHLIB_LDFLAGS} -o libconftest${DYLIB_EXT} ${LIBS} ${BLAS_LIBS} ${ac_test_BLAS_LIBS} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
+if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
+  if ${CC} ${LDFLAGS} -o conftest${ac_exeext} \
+       conftest.${ac_objext} -L. -lconftest \
+       1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
+  then
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
+    if test ${?} = 0; then
+        r_cv_blas0_passthrough=yes
+    fi
+  fi
+fi
+if test -n "${r_cv_blas0_passthrough}"; then
+r_cv_blas0_passthrough=yes
+AC_MSG_RESULT([yes])
+BLAS_LIBS0="${BLAS_LIBS} ${ac_test_BLAS_LIBS}"
+else
+AC_MSG_RESULT([no])
+AC_MSG_ERROR([Cannot build Rblas shared library such that it makes external BLAS visible.
+An alternative is to use internal BLAS instead and replace
+libRblas.dylib with the external BLAS library after R is built.])
+fi
+fi
+    rm -f conftest.c conftest.o conftestl.c libconftest.dylib
+    ;;
+  esac
+fi
 AC_SUBST(BLAS_LIBS0)
 
 if test "${use_blas_shlib}" = yes; then

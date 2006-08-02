@@ -17,7 +17,8 @@ ALL_FFLAGS = $(ALL_FFLAGS_LO)
 SOURCES = blas00.c blas.f cmplxblas.f
 
 Rblas_la = libRblas$(DYLIB_EXT)
-Rblas_la_LIBADD = @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(FLIBS)
+Rblas_la_LIBADD = @RBLAS_LDFLAGS@ @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(FLIBS)
+Rblas_la_LIBADD0 = @RBLAS_LDFLAGS@
 
 all: Makefile @BLAS_SHLIB_TRUE@ R
 
@@ -29,10 +30,10 @@ R:
 	@$(MAKE) rhome="$(abs_top_builddir)" Rblas_install
 
 @USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
-@USE_EXTERNAL_BLAS_FALSE@	$(DYLIB_LINK) -o $(Rblas_la) blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o $(Rblas_la_LIBADD)
+@USE_EXTERNAL_BLAS_FALSE@	$(DYLIB_LINK) -o $(Rblas_la) blas.o $(Rblas_la_LIBADD) @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
 
 @USE_EXTERNAL_BLAS_TRUE@$(Rblas_la): blas00.o
-@USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@
+@USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@ $(Rblas_la_LIBADD0)
 
 Rblas_install: $(Rblas_la)
 	@$(MKINSTALLDIRS) $(Rexeclibdir)
