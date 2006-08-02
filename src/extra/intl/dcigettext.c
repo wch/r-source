@@ -237,7 +237,7 @@ struct known_translation_t
   size_t translation_length;
 
   /* Pointer to the string in question.  */
-  char msgid[ZERO];
+  __extension__ char msgid[ZERO];
 };
 
 /* Root of the search tree with known translations.  We can use this
