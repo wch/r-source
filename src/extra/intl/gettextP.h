@@ -134,7 +134,10 @@ struct binding
   char *dirname;
   int codeset_cntr;	/* Incremented each time codeset changes.  */
   char *codeset;
-  __extension__ char domainname[ZERO];
+#ifdef __GNUC__
+  __extension__ 
+#endif
+  char domainname[ZERO];
 };
 
 /* A counter which is incremented each time some previous translations
