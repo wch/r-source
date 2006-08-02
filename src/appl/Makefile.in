@@ -47,8 +47,7 @@ DISTFILES = COPYRIGHT COPYRIGHT.ftn README lowess.doc \
 	Makefile.in Makefile.win \
 	$(HEADERS) \
 	$(SOURCES_C) \
-	$(SOURCES_F) \
-	blas.f cmplxblas.f
+	$(SOURCES_F)
 
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 @WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
@@ -74,6 +73,11 @@ libappl.a: $(OBJECTS)
 
 stamp-lo: $(OBJECTS)
 	@touch $@
+
+blas.o: $(top_srcdir)/src/extra/blas/blas.f
+	$(F77) $(ALL_FFLAGS) -c $< -o $@
+cmplxblas.o: $(top_srcdir)/src/extra/blas/cmplxblas.f
+	$(F77) $(ALL_FFLAGS) -c $< -o $@
 
 mostlyclean: clean
 clean:
