@@ -391,7 +391,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		if(res == 0) {k = 0; wc = L'\0';}
 		if(0x20 <= k && k < 0x7f && iswprint(wc)) {
 		    switch(wc) {
-		    case L'\\': *q++ = '\\'; *q++ = '\\'; *p++;
+		    case L'\\': *q++ = '\\'; *q++ = '\\'; p++;
 			break;
 		    case L'\'':
 		    case L'"':
