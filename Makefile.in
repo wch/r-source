@@ -238,29 +238,25 @@ install-R-framework:
 	@## the resulting libR will point dyld to the fat libR regardless of its origin
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/lib" && \
 	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" $(Rexeclibdir)/libR.dylib)
-	@(if test -e $(Rexeclibdir)/libRlapack.dylib; then \
-	  find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
-	  xargs -n 1 install_name_tool -change \
-	  `otool -L $(Rexeclibdir)/libRlapack.dylib |sed -n -e '2 s/.\(.*\) (compat.*/\1/p'` \
-	  "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libRlapack.dylib" ; \
-	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libRlapack.dylib" \
-	  $(Rexeclibdir)/libRlapack.dylib; \
-	fi)
+	@(for lib in Rlapack Rblas R; do \
+	   if test -e "$(Rexeclibdir)/lib$${lib}.dylib"; then echo "  lib$${lib}"; \
+	    find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
+	    xargs -n 1 install_name_tool -change \
+	    `otool -L $(Rexeclibdir)/lib$${lib}.dylib |sed -n -e '2 s/.\(.*\) (compat.*/\1/p'` \
+	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" ; \
+	    install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" \
+	    "$(Rexeclibdir)/lib$${lib}.dylib"; \
+	    if [ "$(Rexeclibdir)" != "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib" ]; then \
+	      $(srcdir)/tools/updatefat "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" "$(Rexeclibdir)/lib$${lib}.dylib"; \
+	    fi; \
+           fi; \
+          done)
 	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders && \
 	  cp src/include/config.h $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/ && \
 	  find $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders -name .svn | xargs rm -rf)
-
 	@(install_name_tool -change libR.dylib \
 	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \
 	    $(Rexecbindir2)/R)
-	@(find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -exec install_name_tool \
-	  -change libR.dylib "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \{\} \;)
-	@(if [ "$(Rexeclibdir)" != "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib" ]; then \
-	    $(srcdir)/tools/updatefat "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" "$(Rexeclibdir)/libR.dylib"; \
-	    if [ -e "$(Rexeclibdir)/libRlapack.dylib" ]; then \
-	      $(srcdir)/tools/updatefat "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libRlapack.dylib" "$(Rexeclibdir)/libRlapack.dylib"; \
-	    fi \
-	  fi )
 	@(if [ -n "${R_ARCH}" ]; then \
 	  if [ "${R_ARCH}" != /ppc -a "${R_ARCH}" != /i386 -a "${R_ARCH}" != /ppc64 ]; then \
 	    echo "\
@@ -269,7 +265,8 @@ install-R-framework:
 	    for f in `ls "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/${R_ARCH}/"*.h|xargs basename`; do \
 	      echo "/* This is an automatically generated universal stub for architecture-dependent headers. */~#ifdef __i386__~#include <i386/$$f>~#else~#ifdef __ppc__~#include <ppc/$$f>~#else~#ifdef __ppc64__~#include <ppc64/$$f>~#else~#error Cannot determine the correct architecture. To force a certain configuration, include architecture-specific include path *before* general R headers path.~#endif~#endif~#endif" |sed -e 'y/~/\n/' > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/$$f"; \
 	    done; \
-	  fi \
+	  fi; \
 	fi )
+	@( echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>~<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">~<plist version=\"1.0\">~<dict>~ <key>CFBundleIdentifier</key>~ <string>org.r-project.R-framework</string>~ <key>CFBundleInfoDictionaryVersion</key>~ <string>6.0</string>~ <key>CFBundleName</key>~ <string>R</string>~ <key>CFBundlePackageType</key>~ <string>FMWK</string>~ <key>CFBundleVersion</key>~ <string>$(VERSION)</string>~</dict>~</plist>" |sed -e 'y/~/\n/' > $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/Info.plist)
 
 TAGS:
