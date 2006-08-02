@@ -2111,12 +2111,10 @@ if test "${r_cv_prog_f77_append_underscore}" = yes; then
   dgemm=dgemm_
   sgemm=sgemm_
   xerbla=xerbla_
-  lsame=lsame_
 else
   dgemm=dgemm
   sgemm=sgemm
   xerbla=xerbla
-  lsame=lsame
 fi
 
 acx_blas_save_LIBS="${LIBS}"
@@ -2360,7 +2358,7 @@ void blas_set () {
   F77_SYMBOL(dtrsm)();
   F77_SYMBOL(dtrsv)();
   F77_SYMBOL(idamax)();
-  /* F77_SYMBOL(lsame)();*/
+  F77_SYMBOL(lsame)();
 /* cmplxblas */
   F77_SYMBOL(dcabs1)();
   F77_SYMBOL(dzasum)();
@@ -2430,14 +2428,6 @@ fi
     BLAS_LIBS=""
   fi
   AC_MSG_RESULT([${r_cv_complete_blas}])
-fi
-
-## now test for lsame in the BLAS:
-if test "${acx_blas_ok}" = yes; then
-    LIBS="${acx_blas_save_LIBS} ${BLAS_LIBS} ${FLIBS}"
-    AC_CACHE_CHECK([for ${lsame} in external BLAS], [r_cv_lsame],
-    [AC_TRY_LINK([void ${xerbla}(char *srname, int *info){}], ${lsame}(),
-      [r_cv_lsame=yes], [r_cv_lsame=no])])
 fi
 
 LIBS="${acx_blas_save_LIBS}"

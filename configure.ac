@@ -1618,7 +1618,6 @@ fi
 if test "${use_blas}" = yes; then
   R_BLAS_LIBS
 fi
-AM_CONDITIONAL(BUILD_LSAME, [test "x${r_cv_lsame}" = xno])
 
 ## This version is used to build a shared BLAS lib
 BLAS_LIBS0=${BLAS_LIBS}

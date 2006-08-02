@@ -2024,6 +2024,9 @@ all BLAS-using packages must also be.  So if @R{} is re-built after
 ATLAS is installed, then packages such as @pkg{quantreg} will need to be
 re-installed.
 
+As from @R{} 2.4.0 an external BLAS is required to supply the Fortran
+entry point @code{LSAME}: we know of no current exceptions.
+
 
 @node Shared BLAS, LAPACK, BLAS, Linear algebra
 @subsubsection Shared BLAS
