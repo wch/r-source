@@ -5,7 +5,7 @@ all: ../../../bin/Rblas.dll
 
 ## suppress lots of warnings: this is a dummy
 blas00.o: blas00.c
-	$(CC) -O3 -I../include  -c $< -o $@
+	$(CC) -O3 -I../../include  -c $< -o $@
 
 ## Rblas.dll imports xerbla_ from R.dll
 ifeq ($(strip $(USE_ACML)),YES)

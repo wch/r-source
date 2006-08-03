@@ -250,10 +250,9 @@ AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
 ## Build separate shared library containing R's BLAS if desired 
 AC_ARG_ENABLE([BLAS-shlib],
 [AC_HELP_STRING([--enable-BLAS-shlib],
-                [build BLAS into a shared library @<:@no@:>@])],
+                [build BLAS into a shared library @<:@perhaps@:>@])],
 [use_blas_shlib="${enableval}"],
-[use_blas_shlib=no])
-AM_CONDITIONAL(BLAS_SHLIB, [test "x${use_blas_shlib}" = xyes])
+[use_blas_shlib="unset"])
 
 if test "${want_R_shlib}" = yes; then
   LIBR="-L\$(R_HOME)/lib\$(R_ARCH) -lR"
@@ -308,10 +307,10 @@ AC_ARG_ENABLE([mbcs],
 ## BLAS.
 AC_ARG_WITH([blas],
 [AC_HELP_STRING([--with-blas],
-                [use BLAS library, or specify it @<:@yes@:>@])],
+                [use BLAS library, or specify it @<:@no@:>@])],
 [R_ARG_USE(blas)],
 [use_blas=unset])
-# default is "yes" except on MacOS X
+# default is "no" except on MacOS X
 
 ## LAPACK.
 AC_ARG_WITH([lapack],
@@ -1638,7 +1637,7 @@ R_CHECK_FRAMEWORK(cblas_cdotu_sub, vecLib)
 ## </NOTE>
 ## The defaults are different on MacOS X
 if test "${use_blas}" = "unset"; then
-  use_blas=yes
+  use_blas=no
   case "${host_os}" in
     darwin*)
       if test "${have_vecLib_fw}" = "yes"; then
@@ -1653,12 +1652,29 @@ if test "${use_blas}" = "unset"; then
       ;;
   esac
 fi
+
 if test "${use_blas}" = yes; then
+  ## may acx_blas_ok to yes
   R_BLAS_LIBS
 fi
 
+if test "${acx_blas_ok}" != "yes"; then
+  case "${host_os}" in
+    darwin*|aix*)
+      ;;
+    *)
+      if test "${use_blas_shlib}" = "unset"; then
+        use_blas_shlib="yes"
+      fi
+      ;;
+ esac
+fi
+
+AM_CONDITIONAL(BLAS_SHLIB, [test "x${use_blas_shlib}" = xyes])
+
 ## This version is used to build a shared BLAS lib
 BLAS_LIBS0=${BLAS_LIBS}
+
 ## external BLAS + shared BLAS lib = we need to pass symbols through
 ## this may require some magic
 if test "${acx_blas_ok}" = yes -a "${use_blas_shlib}" = yes; then

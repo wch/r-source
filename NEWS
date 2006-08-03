@@ -245,7 +245,7 @@ NEW FEATURES
 	recursively and can restrict the classes of elements to which
 	it is applied.
 
-    o	setwd() now returns the current directory, silently, before changing.
+    o	setwd() now returns the previously current directory (invisibly).
 
     o	lines() gains a simple method for isoreg() results.
    
@@ -260,8 +260,8 @@ NEW FEATURES
 	the expressions vector with NULL.  (This is now compatible
 	with S.)
 
-    o   There is an option HTTPUserAgent to set the User Agent in R
-        download requests etc. Patch from S. Falcon
+    o   There is an option "HTTPUserAgent" to set the User Agent in R
+        download requests etc.  Patch from S. Falcon
 
     o	PCRE has been updated to version 6.7.
 
@@ -346,6 +346,10 @@ INSTALLATION
 	BLAS into a dynamic library -lRblas and links against that.
 	For the pros and cons see the R-admin manual.
 
+	The defaults are now --without-blas (so you have explicitly to
+	ask for an external BLAS), and --enable-BLAS-shlib unless
+	a usable external BLAS is found or on AIX or MacOS X.
+
     o	MacOS X did not like having LSAME in both BLAS and LAPACK
 	libraries, so it is no longer part of the R-internal LAPACK.
 	We now require an external BLAS to provide LSAME: it seems
@@ -358,11 +362,12 @@ INSTALLATION
     o	MacOS X 10.3 and higher now use two-level namespaces, single
 	module in a shared library and allow undefined symbols to be
 	resolved at run-time. This implies that common symbols are now
-	allowed in package libraries. --enable-BLAS-shlib is supported
+	allowed in package libraries.  --enable-BLAS-shlib is supported
 	for internal BLAS, external BLAS framework and external static
-	BLAS. External dynamic library BLAS is NOT supported. (But it
-	can be easily used by replacing internal BLAS library file
-	later.)	MacOS X <10.3 does not support --enable-BLAS-shlib.
+	BLAS.  An external dynamic library BLAS is NOT supported.
+	(But it can be easily used by replacing internal BLAS library
+	file later.)  MacOS X < 10.3 does not support
+	--enable-BLAS-shlib.
 
 
 BUG FIXES
@@ -371,10 +376,10 @@ BUG FIXES
 	.Fortran() is now the actual name.  (What was reported to be
 	an 'entry point' was missing the common leading underscore.)
 
-    o	print() on a MBCS character string now works properly a character
-	at a time rather than a byte at time.  (This does not affect
-	MBCSs like UTF-8 and the Windows DBCSes which have non-ASCII
-	lead bytes and always worked correctly.)
+    o	print() on a MBCS character string now works properly a
+	character at a time rather than a byte at time.  (This does
+	not affect MBCSs like UTF-8 and the Windows DBCSes which have
+	non-ASCII lead bytes and always worked correctly.)
 
     o	glm() now recalculates the null deviance whenever there is an
 	offset (even if it is exactly zero to avoid a discontinuity in
@@ -413,14 +418,14 @@ BUG FIXES
 	it used to attempt to but failed to adjust the tsp attributes.
 	Now window() must be used.
 
-    o	Function AIC in package stats4 was not dispatching correctly
+    o	Function AIC() in package stats4 was not dispatching correctly
 	on S4 classes via logLik() because of namespace issues.
 
     o	Subsetting LANGSXPs could break call-by-value illusion (PR#7924)
 	(patch from Kevin Hendricks).
 
     o	parse() with n > 1 gave a syntax error if fewer than n statements
-	were available (now pads with NULLs).
+	were available.
 
     o	parse() with n > 1 gave strange results on some syntax errors.
 	(PR#8815)

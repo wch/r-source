@@ -2359,6 +2359,7 @@ void blas_set () {
   F77_SYMBOL(dtrsv)();
   F77_SYMBOL(idamax)();
   F77_SYMBOL(lsame)();
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
 /* cmplxblas */
   F77_SYMBOL(dcabs1)();
   F77_SYMBOL(dzasum)();
@@ -2399,6 +2400,7 @@ void blas_set () {
   F77_SYMBOL(ztrmv)();
   F77_SYMBOL(ztrsm)();
   F77_SYMBOL(ztrsv)();
+#endif
 }
 int main ()
 {
