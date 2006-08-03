@@ -24,6 +24,10 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#if __MINGW32_MAJOR_VERSION == 3 && __MINGW32_MINOR_VERSION < 10
+#error mingw-runtime version 3.10 or later is required
+#endif
+
 int main (int argc, char **argv)
 {
     /* tasks:

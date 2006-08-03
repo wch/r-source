@@ -49,6 +49,19 @@ The symbols in graphapp are now remapped to start with GA_, so any
 code making use of graphapp will need to be recompiled.
 
 
+Building R
+----------
+
+mingw-runtime >= 3.10 is required to build R (a bug fix in the handing
+of MBCS code is required).  This is enforced by a check in building
+Rpwd.exe.
+
+At the time of writing mingw-runtime-3.10 was not listed on the MinGW
+downloads page, but it is available from
+
+http://prdownloads.sourceforge.net/mingw/mingw-runtime-3.10.tar.gz?download
+
+
 
 R 2.3.1 patched
 ===============
