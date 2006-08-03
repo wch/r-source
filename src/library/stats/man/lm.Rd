@@ -172,6 +172,15 @@ lm(formula, data, subset, weights, na.action,
   The underlying low level functions,
   \code{\link{lm.fit}} for plain, and \code{\link{lm.wfit}} for weighted
   regression fitting.
+
+  More \code{lm()} examples are available e.g., in
+  \code{\link[datasets]{anscombe}},
+  \code{\link[datasets]{attitude}},
+  \code{\link[datasets]{freeny}},
+  \code{\link[datasets]{LifeCycleSavings}},
+  \code{\link[datasets]{longley}},
+  \code{\link[datasets]{stackloss}},
+  \code{\link[datasets]{swiss}}.
 }
 \references{
   Chambers, J. M. (1992)
@@ -212,5 +221,7 @@ par(opar)
 ## model frame :
 stopifnot(identical(lm(weight ~ group, method = "model.frame"),
                     model.frame(lm.D9)))
+
+### less simple examples in "See Also" above
 }
 \keyword{regression}
