@@ -45,5 +45,5 @@ localcharset.o: localcharset.h
 printf.o: printf-args.h printf-args.c printf-parse.h wprintf-parse.h xsize.h \
    printf-parse.c vasnprintf.h vasnwprintf.h vasnprintf.c
 
-clean:
+distclean clean:
 	rm -f *.a *.o libgnuintl.h libintl.h
