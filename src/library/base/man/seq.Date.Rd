@@ -24,6 +24,8 @@
     \code{"week"}, \code{"month"} or \code{"year"}.  This can optionally be
     preceded by a (positive or negative) integer and a space,
     or followed by \code{"s"}.
+
+    See \code{\link{seq.POSIXt}} for the details of \code{"month"}.
   }
 }
 \value{

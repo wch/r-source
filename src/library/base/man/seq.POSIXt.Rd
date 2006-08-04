@@ -28,12 +28,16 @@
   }
   The difference between \code{"day"} and \code{"DSTday"} is that the
   former ignores changes to/from daylight savings time and the latter takes
-  the same clock time each day.  (\code{"week"} ignores DST, but
-  \code{"7 DSTdays"}) can be used as an alternative.  \code{"month"} and
-  \code{"year"} allow for DST.)
+  the same clock time each day.  (\code{"week"} ignores DST (it is a
+  period of 144 hours), but \code{"7 DSTdays"}) can be used as an
+  alternative.  \code{"month"} and \code{"year"} allow for DST.)
 
   The timezone of the result is taken from \code{from}: remember than
   GMT does not have daylight savings time.
+
+  Using \code{"month"} first advances the month without changing the
+  day: if this results in an invalid day of the month, it is counted
+  forward into the next month: see the examples.
 }
 \value{
   A vector of class \code{"POSIXct"}.
@@ -45,6 +49,7 @@
 seq(ISOdate(1910,1,1), ISOdate(1999,1,1), "years")
 ## by month
 seq(ISOdate(2000,1,1), by = "month", length = 12)
+seq(ISOdate(2000,1,31), by = "month", length = 4)
 ## quarters
 seq(ISOdate(1990,1,1), ISOdate(2000,1,1), by = "3 months")
 ## days vs DSTdays: use c() to lose the timezone.
