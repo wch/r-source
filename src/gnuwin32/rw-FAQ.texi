@@ -121,7 +121,7 @@ Chinese/Japanese/Korean support changed in R @samp{2.3.0}.
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win32.exe} of about 27Mb.  This contains all the
+installer @samp{@RWVER@-win32.exe} of about 28Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
 There are also links on that page to the @samp{r-patched} and
