@@ -77,7 +77,7 @@ This FAQ is for the Windows port of R: it describes features specific to
 that version.  The main R FAQ can be found at
 
 @display
-@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html}.
+@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html}.
 @end display
 
 The information here applies only to recent versions of R for Windows,
