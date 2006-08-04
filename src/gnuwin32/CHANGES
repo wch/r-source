@@ -29,6 +29,12 @@ compiled on Unix), the help system defaults to text help.
 The menu items for source and load/save images and drag-and-drop can
 now be used for paths on network shares (starting with \\).
 
+getGraphicsEvent() now writes its prompt to the standard output stream,
+so it can be captured by sink() or capture.output().
+
+getGraphicsEvent() now leaves the standard graphics window menus in 
+place, so those functions are available while waiting for an event.
+
 
 C-level changes
 ---------------

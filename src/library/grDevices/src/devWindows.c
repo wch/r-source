@@ -3067,11 +3067,11 @@ static SEXP GA_getEvent(SEXP eventRho, char* prompt)
     dd->dev->gettingEvent = TRUE;
     show(xd->gawin);
     addto(xd->gawin);
-    gchangemenubar(xd->mbarconfirm);
+    gchangemenubar(xd->mbar);
     gchangepopup(xd->gawin, NULL);
     setstatus(prompt);
-    R_WriteConsole(prompt, strlen(prompt));
-    R_WriteConsole("\n", 1);
+    Rprintf(prompt, strlen(prompt));
+    Rprintf("\n", 1);
     R_FlushConsole();
     settext(xd->gawin, prompt);
     xd->eventResult = NULL;
