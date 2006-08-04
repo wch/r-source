@@ -49,6 +49,9 @@ USER-VISIBLE CHANGES
 	These changes may affect the results of sapply() and lapply()
 	applied to factors.
 
+    o	str(<data.frame>) now uses 'data.frame' instead of `data.frame';
+	this may affect some strict (Package) tests.
+
 
 NEW FEATURES
 
@@ -248,7 +251,7 @@ NEW FEATURES
     o	setwd() now returns the previously current directory (invisibly).
 
     o	lines() gains a simple method for isoreg() results.
-   
+
     o	trace() now creates a new class for the traced object if
         required.  This allows tracing of user-defined subclasses of
         "function".
@@ -264,6 +267,10 @@ NEW FEATURES
         download requests etc.  Patch from S. Falcon
 
     o	PCRE has been updated to version 6.7.
+
+    o	str(x) does not print the S3 "class" attribute when it's the same
+	as 'mode' (which is printed anyway, possibly abbreviated) and it
+	puts it beside mode for atomic objects such as S3 class "table".
 
 
 DEPRECATED & DEFUNCT
@@ -486,7 +493,7 @@ BUG FIXES
 	not cope correctly with EOF during input.
 
    o	Zero-column data frames had no names (rather than character(0)).
-   
+
    o	by() and acf() could get confused when they used very long
    	expressions as names.
 
@@ -568,7 +575,7 @@ BUG FIXES
         (PR#9073).
 
     o	diff(x) gave wrong result when x was "POSIXlt" object.
-    
+
     o	title() could crash R when passed a long vector. (PR#9115)
 
 

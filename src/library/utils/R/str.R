@@ -14,7 +14,7 @@ str.data.frame <- function(object, ...)
     cl <- oldClass(object); cl <- cl[cl != "data.frame"]  #- not THIS class
     if(0 < length(cl)) cat("Classes", cl, " and ")
 
-    cat("`data.frame':	", nrow(object), " obs. of  ",
+    cat("'data.frame':	", nrow(object), " obs. of  ",
 	(p <- length(object)), " variable", if(p != 1)"s", if(p > 0)":",
 	"\n",sep="")
 
@@ -153,8 +153,8 @@ str.default <-
     } else { #- not function, not list
 	if(is.vector(object)
 	   || (is.array(object) && is.atomic(object))
-	   || is.vector(object, mode='language')
-	   || is.vector(object, mode='symbol')## R bug(<=0.50-a4) should be part
+	   || is.vector(object, mode= "language")
+	   || is.vector(object, mode= "symbol")## R bug(<=0.50-a4) should be part
 	   ) { ##-- Splus: FALSE for 'named vectors'
 	    if(is.atomic(object)) {
 		##-- atomic:   numeric	complex	 character  logical
@@ -174,6 +174,12 @@ str.default <-
 		} else if(!is.null(names(object))) {
 		    mod <- paste("Named", mod)
 		    std.attr <- std.attr[std.attr != "names"]
+		}
+		if(has.class && length(cl) == 1) {
+		    if(cl != mod && substr(cl, 1,nchar(mod)) != mod)
+			mod <- P0("'",cl,"' ", mod)
+		    ## don't show the class *twice*
+		    std.attr <- c(std.attr, "class")
 		}
 		str1 <-
 		    if(le == 1 && !is.array(object)) paste(NULL, mod)
