@@ -12,6 +12,7 @@ another front end.  To build it
 - to make with VC++,
 
 	copy ..\R.dll and ..\..\..\Rblas.dll to this directory
+	(cd ..; make R.exp)
 	lib /def:..\R.exp /machine:ix86 /out:Rdll.lib
 	cl /MT /Ox /I..\..\include /I.. rtest.c Rdll.lib
 

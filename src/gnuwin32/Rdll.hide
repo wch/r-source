@@ -190,7 +190,6 @@
  R_BrowseLines
  R_CStackDir
  R_ChooseFile
- R_CleanUp
  R_ClearerrConsole
  R_CollectWarnings
  R_Collected
@@ -1054,7 +1053,6 @@
  getIdentification
  getParseContext
  getWindowTitle
- get_R_HOME
  get_crc_table
  get_current_mem
  get_duplicate_counter

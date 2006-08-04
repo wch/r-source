@@ -195,6 +195,14 @@ R.dll: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ R.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) R.def R0.def
 
+R.exp: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
+	@$(ECHO) LIBRARY R.dll > R.exp
+	@$(ECHO) EXPORTS >> R.exp
+	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' | sort | uniq > R0.def
+	@comm -23 R0.def Rdll.hide >> R.exp
+	@$(RM) R0.def
+
+
 Rdll: makeMakedeps libRblas.dll.a ../../bin/R.dll
 
 ../../bin/R.dll: FORCE

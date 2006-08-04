@@ -30,10 +30,8 @@ Using Visual C++
 You may if you prefer use Visual C++ to make the DLLs (unless they use
 Fortran source!). First build the import library Rdll.lib by
 
-	pexports R.dll > R.exp
+	make R.exp
 	lib /def:R.exp /out:Rdll.lib
-
-(pexports is part of the mingw-utils bundle.)
 
 Then you can compile the objects and build the DLL by
 
@@ -79,8 +77,8 @@ bcc32 -u- -6 -O2 -WDE convolve.c
 
 You can build an import library for R.dll by
 
-pexports R.dll > R.def
-implib R.lib R.def
+make R.exp
+implib R.lib R.exp
 
 and then add R.lib to the bcc32 command line, for example (from
 Venables & Ripley's `S Programming')

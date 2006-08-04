@@ -8,7 +8,6 @@ else
   LINKFLAGS=-s
 endif
 
-LIBS=-L../../../lib $(LIBUNICOWS) -lR
 CFLAGS=-Wall
 
 rtest-CFLAGS=-I.. -I../../include $(DEBUGFLAG)
@@ -24,6 +23,6 @@ Rblas.dll: ../../../bin/Rblas.dll
 	$(CP) -p $^ $@
 
 clean:
-	$(RM) rtest.o Rtest.exe *~ R.dll
+	$(RM) rtest.o Rtest.exe *~ R.dll Rblas.dll
 
 
