@@ -32,7 +32,46 @@
 #include "../win-nls.h"
 #include "internal.h"
 #include "ga.h"
-#include "../shext.h"		/* for selectfolder */
+
+#include <shlobj.h>
+
+static int CALLBACK
+InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData )
+{
+    if (uMsg == BFFM_INITIALIZED)
+	SendMessage(hwnd, BFFM_SETSELECTION, 1, lpData);
+    return(0);
+}
+
+/* browse for a folder under the Desktop, return the path in the argument */
+
+static void selectfolder(char *folder, char *title)
+{
+    char buf[MAX_PATH];
+    LPMALLOC g_pMalloc;
+    HWND hwnd=0;
+    BROWSEINFO bi;
+    LPITEMIDLIST pidlBrowse;
+
+    /* Get the shell's allocator. */
+    if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return;
+
+    bi.hwndOwner = hwnd;
+    bi.pidlRoot = NULL;
+    bi.pszDisplayName = buf;
+    bi.lpszTitle = title;
+    bi.ulFlags = BIF_RETURNONLYFSDIRS;
+    bi.lpfn = (BFFCALLBACK) InitBrowseCallbackProc;
+    bi.lParam = (int) folder;
+
+    /* Browse for a folder and return its PIDL. */
+    pidlBrowse = SHBrowseForFolder(&bi);
+    if (pidlBrowse != NULL) {
+	SHGetPathFromIDList(pidlBrowse, folder);
+        g_pMalloc->lpVtbl->Free(g_pMalloc, pidlBrowse);
+    }
+}
+
 
 #define BUFSIZE _MAX_PATH
 static char strbuf[BUFSIZE];

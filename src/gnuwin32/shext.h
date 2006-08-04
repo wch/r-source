@@ -18,6 +18,4 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-void selectfolder(char *folder, char *title);
-
-int ShellGetPersonalDirectory(char *folder);  /* Folder is assumed to be at least MAX_PATH long */
+int ShellGetPersonalDirectory(char *folder);

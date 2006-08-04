@@ -23,44 +23,8 @@
 #include <windows.h>
 #include <shlobj.h>
 
-int CALLBACK
-InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData )
-{
-    if (uMsg == BFFM_INITIALIZED)
-	SendMessage(hwnd, BFFM_SETSELECTION, 1, lpData);
-    return(0);
-}
-
-/* browse for a folder under the Desktop, return the path in the argument */
-
-void selectfolder(char *folder, char *title)
-{
-    char buf[MAX_PATH];
-    LPMALLOC g_pMalloc;
-    HWND hwnd=0;
-    BROWSEINFO bi;
-    LPITEMIDLIST pidlBrowse;
-
-    /* Get the shell's allocator. */
-    if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return;
-
-    bi.hwndOwner = hwnd;
-    bi.pidlRoot = NULL;
-    bi.pszDisplayName = buf;
-    bi.lpszTitle = title;
-    bi.ulFlags = BIF_RETURNONLYFSDIRS;
-    bi.lpfn = (BFFCALLBACK) InitBrowseCallbackProc;
-    bi.lParam = (int) folder;
-
-    /* Browse for a folder and return its PIDL. */
-    pidlBrowse = SHBrowseForFolder(&bi);
-    if (pidlBrowse != NULL) {
-	SHGetPathFromIDList(pidlBrowse, folder);
-        g_pMalloc->lpVtbl->Free(g_pMalloc, pidlBrowse);
-    }
-}
-
-int ShellGetPersonalDirectory(char *folder)  /* Folder is assumed to be at least MAX_PATH long */
+static int ShellGetPersonalDirectory(char *folder)
+  /* Folder is assumed to be at least MAX_PATH long */
 {
     LPMALLOC g_pMalloc;
     LPITEMIDLIST pidlUser;
@@ -83,10 +47,9 @@ int ShellGetPersonalDirectory(char *folder)  /* Folder is assumed to be at least
 
 static char RUser[MAX_PATH];
 #include <winbase.h>
-#include "shext.h"		/* for ShellGetPersonalDirectory */
 extern void R_Suicide(char *s);
 
-char * getRUser()
+char *getRUser()
 {
    /*
     * try R_USER then HOME then Windows homes then working directory

@@ -69,6 +69,7 @@ extern void R_DefParams(Rstart);
 extern void R_SetParams(Rstart);
 extern void setup_term_ui(void);
 extern char *getRHOME();
+extern char *getRUser();
 extern void end_Rmainloop(), R_ReplDLLinit();
 extern void GA_askok(char *);
 
@@ -211,8 +212,6 @@ int R_Proxy_parse_parameters (char const* pParameterString,
   return 0;
 }
 
-#include "../shext.h" /* for ShellGetPersonalDirectory */
-
 /* 00-02-18 | baier | R_Proxy_init() now takes parameter string, parse it */
 /* 03-06-01 | baier | now we add %R_HOME%\bin to %PATH% */
 int R_Proxy_init (char const* pParameterString)
@@ -220,8 +219,7 @@ int R_Proxy_init (char const* pParameterString)
   structRstart rp;
   Rstart Rp = &rp;
   char Rversion[25];
-  static char RUser[MAX_PATH], RHome[MAX_PATH];
-  char *p, *q;
+  static char RHome[MAX_PATH];
 
   sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
   if(strcmp(getDLLVersion(), Rversion) != 0) {
@@ -251,6 +249,9 @@ int R_Proxy_init (char const* pParameterString)
 
   Rp->rhome = RHome;
 
+#if 0
+  /* This a copy using a private entry point of a function
+     documented in R-exts. */
   /*
    * try R_USER then HOME then Windows homes then working directory
    */
@@ -276,7 +277,9 @@ int R_Proxy_init (char const* pParameterString)
   p = RUser + (strlen(RUser) - 1);
 
   if (*p == '/' || *p == '\\') *p = '\0';
-  Rp->home = RUser;
+#endif
+
+  Rp->home = getRUser();
   Rp->CharacterMode = LinkDLL;
   Rp->ReadConsole = R_Proxy_ReadConsole;
   Rp->WriteConsole = R_Proxy_WriteConsole;
