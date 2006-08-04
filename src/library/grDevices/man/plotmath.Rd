@@ -129,6 +129,9 @@
   allowed as synonyms for \code{theta1}, \code{phi1} and \code{sigma1}.
 
   \code{sigma1} is also known as \code{stigma}, its Unicode name.
+
+  Control characters (e.g. \code{\\n}) are not interpreted in character
+  strings in plotmath, unlike normal plotting.
 }
 \references{
   Murrell, P. and Ihaka, R. (2000) An approach to providing

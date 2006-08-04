@@ -47,7 +47,11 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
 #ifdef windows
 and \code{\link{choose.files}}
 #endif
-for interactive selection.}
+for interactive selection.
+
+  \code{\link{glob2rx}} to convert wildcards (as used by system file
+  commands and shells) to regular expressions.
+}
 \examples{
 list.files(R.home())
 ## Only files starting with a-l or r (*including* uppercase):
