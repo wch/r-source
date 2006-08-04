@@ -77,11 +77,8 @@ $(lapack_la): $(lapack_la_OBJECTS)
 
 ## Include BLAS here, as with (static) ATLAS that pulls all the
 ## BLAS routines into one place.
-$(Rlapack_la): $(LIBOBJECTS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/Rlapack.exp
-	$(DYLIB_LINK) @RLAPACK_LDFLAGS@ -o $@ $(LIBOBJECTS) @BLAS_LIBS@ $(Rlapack_la_LIBADD)
-
-$(top_builddir)/etc/Rlapack.exp: $(LIBOBJECTS)
-	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(LIBOBJECTS)
+$(Rlapack_la): $(LIBOBJECTS)
+	$(DYLIB_LINK) -o $@ $(LIBOBJECTS) @BLAS_LIBS@ $(Rlapack_la_LIBADD)
 
 Rlapack_install: $(Rlapack_la) 
 	@$(MKINSTALLDIRS) $(Rexeclibdir)

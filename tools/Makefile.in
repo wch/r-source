@@ -25,7 +25,6 @@ DISTFILES = README \
 	install-info.pl \
 	install-sh \
 	keywords2html.pl \
-	ldAIX4 \
 	link-recommended \
 	linkcheck.pl \
 	ltmain.sh \

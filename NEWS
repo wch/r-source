@@ -369,6 +369,12 @@ INSTALLATION
 	file later.)  MacOS X < 10.3 does not support
 	--enable-BLAS-shlib.
 
+    o	configure now defaults to 'run-time linking' on AIX (and AIX <
+	4.2 is no longer allowed), using -bexpall rather than
+	export/import files.  If this works, it will allow R to be
+	built in the same way as other Unix-alikes, including with R
+	as a shared library and with a shared BLAS.
+
 
 BUG FIXES
 

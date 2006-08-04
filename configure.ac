@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2005 R Core Team
+### Copyright (C) 1998-2006 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -1056,7 +1056,7 @@ AC_SUBST(R_XTRA_LIBS)
 ## user did not provide defaults, an error results.  A warning is given
 ## if nothing was obtained for SHLIB_CXXLDFLAGS.
 ##
-## Note also that some systems (notably AIX) do not allow for unresolved
+## Note also that some systems (formerly AIX) do not allow for unresolved
 ## symbols at link time.  For such systems, we link against -lm (in case
 ## it exists) when building a shlib module via SHLIB_LIBADD.
 
@@ -1142,15 +1142,25 @@ fi
 ## Step 3.  Individual platform overrides.
 dylib_undefined_allowed=yes
 case "${host_os}" in
+  aix[123]*|aix4.[01]*)
+    ## These need a form of linking we no longer support
+    AC_MSG_ERROR([AIX prior to 4.2 is not supported])
+    ;;
   aix*)
-    use_exportfiles=yes
+    ## now use run-time linking
+    # use_exportfiles=yes
     ## All AIX code is PIC.
     cpicflags=
     cxxpicflags=
     fpicflags=
+    ## not clear if this is correct for native compilers
     wl="-Wl,"
-    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp ${wl}-bM:SRE"
-    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
+    ## libtool suggests that ia64 needs -Bexport and not -brtl
+    ## but we have no confirmation.
+    main_ldflags="${wl}-brtl ${wl}-bexpall"
+    shlib_ldflags="${wl}-G ${wl}-bexpall ${wl}-bnoentry"
+#    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp ${wl}-bM:SRE"
+#    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
     SHLIB_LIBADD="\$(LIBM)"
     ;;
   darwin*)
@@ -1305,6 +1315,7 @@ case "${host_os}" in
     fi
     ;;
   openbsd*)
+    ## looks like ${wl} is not defined here.  Perhaps in libtool code?
     if test -z "`echo __ELF__ | $CC -E - | grep __ELF__`"; then
       main_ldflags="${wl}-export-dynamic"
       shlib_ldflags="-shared -fPIC"
@@ -1438,9 +1449,9 @@ RLAPACK_LDFLAGS=""
 RBLAS_LDFLAGS=""
 case "${host_os}" in
   aix*)
-    ## Pure guesswork so far
-    RLAPACK_LDFLAGS="${wl}-bE:\$(top_builddir)/etc/Rlapack.exp"
-    LAPACK_LDFLAGS="${wl}-bI:\$(R_HOME)/etc/Rlapack.exp"
+    ## Not needed for -brtl linking
+    # RLAPACK_LDFLAGS="${wl}-bE:\$(top_builddir)/etc/Rlapack.exp"
+    # LAPACK_LDFLAGS="${wl}-bI:\$(R_HOME)/etc/Rlapack.exp"
     ;;
   darwin*)
     DYLIB_EXT=".dylib"

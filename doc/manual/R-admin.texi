@@ -3263,6 +3263,26 @@ port would be greatly appreciated.
 @section AIX
 @cindex AIX
 
+We no longer support AIX prior to 4.2, and @command{configure} will
+throw an error on such systems.  On later systems, ``run time linking''
+linking is used, and this corresponds to setting (when using @code{gcc}:
+omit @code{-Wl,} for the native compilers).
+
+@example
+MAIN_LDFLAGS="-Wl,-brtl -Wl,-bexpall"
+SHLIB_LDFLAGS="-Wl,-G -Wl,-bexpall -Wl,-bnoentry"
+@end example
+
+@noindent
+(which @command{configure} does for you by default).  (There is some
+suggestion (e.g. by @command{libtool}) that for an @cputype{ia64}
+AIX@tie{}5.x system these may not be the appropriate flags but such a
+system is untested.)
+
+
+The rest of this section is historical, as the default @code{*_LDFLAGS}
+were changed in @R{}@tie{}2.4.0.
+
 On AIX@tie{}4.3.3 and AIX@tie{}5.[123], it was found that the use of
 ``run time linking'' (as opposed to normal AIX style linking) was
 required.  For this, the @R{} main program must be linked to the runtime

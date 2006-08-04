@@ -19,9 +19,7 @@ INSTFILES = repositories
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(INSTFILES) $(SOURCES)
 
-EXPORTFILES = @USE_EXPORTFILES_TRUE@ R.exp Rlapack.exp
-
-CLEANFILES = $(EXPORTFILES)
+CLEANFILES =
 DISTCLEANFILES = $(OBJECTS) Makefile
 
 all: Makefile R
@@ -54,15 +52,11 @@ R: $(OBJECTS)
 	  done \
 	fi
 
-install: installdirs @USE_EXPORTFILES_TRUE@ install-exports
+install: installdirs
 	@echo "installing $(subdir) ..."
 	@$(INSTALL_DATA) $(srcdir)/repositories "$(rhome)/$(subdir)"
 	@for f in $(OBJECTS); do \
 	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)$(R_ARCH)"; \
-	done
-install-exports:
-	@for f in $(EXPORTFILES); do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
 	done
 installdirs:
 	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)$(R_ARCH)"
@@ -73,7 +67,7 @@ uninstall:
 	@if test -d "$(rhome)/$(subdir)" \
 	  && test "`cd \"$(rhome)\"; $(GETWD)`" \
 	       != "`cd $(top_builddir); $(GETWD)`"; then \
-	  (cd "$(rhome)/$(subdir)" && rm -f $(INSTFILES) $(EXPORTFILES)); \
+	  (cd "$(rhome)/$(subdir)" && rm -f $(INSTFILES); \
 	  (cd "$(rhome)/$(subdir)$(R_ARCH)" && rm -f $(OBJECTS)); \
 	  if test -n "$(R_ARCH)"; then \
 	    rmdir "$(rhome)/$(subdir)$(R_ARCH)" 2> /dev/null ; \
