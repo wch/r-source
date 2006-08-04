@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-08-03
+@set FAQ_DATE @value{FAQ_YEAR}-08-04
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2198,6 +2198,8 @@ An illustration of the use of the Rcpp R/C++ interface library.
 Electrical properties of resistor networks.
 @item Rfwdmv
 Forward Search for Multivariate Data.
+@item Rigroup
+Provides small integer group functions.
 @item Rlab
 Functions and data sets for the NCSU ST370 class.
 @item Rlsf
@@ -3538,6 +3540,8 @@ Distance based parametric bootstrap tests for clustering, mainly thought
 for presence-absence data (clustering of species distribution maps).
 Jaccard and Kulczynski distance measures, clustering of MDS scores, and
 nearest neighbor based noise detection.
+@item prettyR
+Pretty descriptive stats.
 @item princurve
 Fits a principal curve to a matrix of points in arbitrary dimension.
 @item proto
@@ -5137,6 +5141,7 @@ dir /opt/R/src/unix
 * Why are powers of negative numbers wrong?::  
 * How can I save the result of each iteration in a loop into a separate file?::  
 * Why are p-values not displayed when using lmer()?::  
+* Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -6006,12 +6011,33 @@ for(i in 1:100) @{
 @}
 @end example
 
-@node Why are p-values not displayed when using lmer()?,  , How can I save the result of each iteration in a loop into a separate file?, R Miscellanea
+@node Why are p-values not displayed when using lmer()?, Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?, How can I save the result of each iteration in a loop into a separate file?, R Miscellanea
 @section Why are @math{p}-values not displayed when using lmer()?
 
 Doug Bates has kindly provided an extensive response in a post to the 
 r-help list, which can be reviewed at
 @uref{https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html}.
+
+@node Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?,  , Why are p-values not displayed when using lmer()?, R Miscellanea
+@section Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?
+
+Output from @code{polygon()} (and other functions calling
+@code{polygon()}) with the argument @code{border=NA} or
+@code{border="transparent"} should suppress border lines between
+polygons for all graphics devices.
+
+PDF output from R can be made in many ways, both directly, and through
+for example Postscript or Windows Metafiles converted to PDF in external
+software. In Adobe Reader, the default setting for line art, such as
+polygons, is to smooth, which produces the impression of thin borders.
+Adobe Reader does this both for PDF files written by R or through other
+software.
+
+This is irritating, especially when using Adobe Reader for presentation.
+The unwanted effect can be removed by turning off smoothing for line
+art: use the `Edit | Preferences | Page Display | Smooth line art' menu
+in Adobe Reader 7.0.
+
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
