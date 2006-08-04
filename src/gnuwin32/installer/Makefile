@@ -13,6 +13,9 @@ MDISDI = 0
 ## Default help style, 0=plain text, 1=CHM, 2=HTML
 HelpStyle = 1
 
+## Default internet connection, 0=Standard, 1=Internet2
+Internet = 0
+
 FULLVERSION=`cat ../../../VERSION`
 RPREFIX = $(shell perl ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
@@ -105,7 +108,7 @@ fixups:
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
 
 R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums
-	perl JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle)
+	perl JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet)
 
 $(RPREFIX).exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1

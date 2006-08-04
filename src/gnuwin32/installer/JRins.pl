@@ -28,11 +28,11 @@ my $RW=$ARGV[0];
 my $SRCDIR=$ARGV[1];
 my $MDISDI=$ARGV[2];
 my $HelpStyle=$ARGV[3];
+my $Internet=$ARGV[4];
 
 $SRCDIR =~ s+/+\\+g; # need DOS-style paths
-my $iconpars="WorkingDir: \"{app}\"" ;
-## add to the target command line as in the next example
-# my $iconpars="Parameters: \"--sdi\"; WorkingDir: \"{app}\"" ;
+
+## add to the target command line in the CmdParms function below
 
 open ver, "< ../../../VERSION";
 $RVER = <ver>;
@@ -105,10 +105,10 @@ Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries
 
 
 [Icons]
-Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; $iconpars
+Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; WorkingDir: "{app}"; Parameters: {code:CmdParms}
 Name: "{group}\\Uninstall R $RVER"; Filename: "{uninstallexe}"
-Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; $iconpars
-Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; Tasks: quicklaunchicon; $iconpars
+Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: {code:CmdParms}
+Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"; Parameters: {code:CmdParms}
 
 
 [Registry] 
@@ -168,7 +168,8 @@ var
   SelectOptionsPage: TInputOptionWizardPage;
   MDISDIPage: TInputOptionWizardPage;
   HelpStylePage: TInputOptionWizardPage;
-
+  InternetPage: TInputOptionWizardPage;
+  
 function IsAdmin: boolean;
 begin
   Result := IsAdminLoggedOn or IsPowerUserLoggedOn;
@@ -207,6 +208,14 @@ begin
   HelpStylePage.Add(\'CHM help (Windows default)\');
   HelpStylePage.Add(\'HTML help\');
   
+  InternetPage := CreateInputOptionPage(HelpStylePage.ID,
+    \'Internet Access\', 
+    \'Do you want to use internet2.dll, to make use of Internet Explorer proxy settings?\',
+    \'Please specify Standard or Internet2, then click Next.\',
+    True, False);
+  InternetPage.Add(\'Standard\');
+  InternetPage.Add(\'Internet2\');
+    
   case GetPreviousData(\'MDISDI\', \'\') of
     \'MDI\': MDISDIPage.SelectedValueIndex := 0;
     \'SDI\': MDISDIPage.SelectedValueIndex := 1;
@@ -222,12 +231,20 @@ begin
     HelpStylePage.SelectedValueIndex := ${HelpStyle};
   end;
   
+  case GetPreviousData(\'Internet\', \'\') of
+    \'Standard\': InternetPage.SelectedValueIndex := 0;
+    \'Internet2\': InternetPage.SelectedValueIndex := 1;
+  else
+    InternetPage.SelectedValueIndex := ${Internet};
+  end;  
+  
 end;
 
 procedure RegisterPreviousData(PreviousDataKey: Integer);
 var
   MDISDI: String;
   HelpStyle: String;
+  Internet: String;
 begin
   { Store the settings so we can restore them next time }
   case MDISDIPage.SelectedValueIndex of
@@ -241,6 +258,11 @@ begin
     2: HelpStyle := \'HTML\';
   end;
   SetPreviousData(PreviousDataKey, \'HelpStyle\', HelpStyle);  
+  case InternetPage.SelectedValueIndex of
+    0: Internet := \'Standard\';
+    1: Internet := \'Internet2\';
+  end;
+  SetPreviousData(PreviousDataKey, \'Internet\', Internet);
 end;
 
 procedure SetCommentMarker(var lines: TArrayOfString; option: String; active: boolean);
@@ -275,10 +297,17 @@ begin
   SaveStringsToFile(filename, lines, False);
 end;
 
+function CmdParms(Param:String): String;
+begin
+  Result := \'\';
+  if InternetPage.SelectedValueIndex = 1 then
+    Result := \'--internet2\';
+end;
+
 function ShouldSkipPage(PageID: Integer): boolean;
 begin
   if PageID = NoAdminPage.ID then Result := IsAdmin
-  else if (PageID = MDISDIPage.ID) or (PageID = HelpStylePage.ID) then 
+  else if (PageID = MDISDIPage.ID) or (PageID = HelpStylePage.ID) or (PageID = InternetPage.ID) then 
     Result := SelectOptionsPage.SelectedValueIndex = 1
   else Result := false;
 end;
