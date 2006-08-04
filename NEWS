@@ -272,6 +272,9 @@ NEW FEATURES
 	as 'mode' (which is printed anyway, possibly abbreviated) and it
 	puts it beside mode for atomic objects such as S3 class "table".
 
+    o	head(x, n) and tail(x, n) now also work for negative arguments,
+	thanks to Vincent Goulet.
+
 
 DEPRECATED & DEFUNCT
 
