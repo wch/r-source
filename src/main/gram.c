@@ -175,9 +175,7 @@ static void yyerror(char *);
 static int yylex();
 int yyparse(void);
 
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#endif
+/* alloca.h inclusion is now covered by Defn.h */
 
 #define yyconst const
 
