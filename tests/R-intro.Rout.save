@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-06-09 r38316)
+R version 2.4.0 Under development (unstable) (2006-08-05 r38802)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -461,7 +461,7 @@ incomef   act nsw nt qld sa tas vic wa
 29  vic   58 (55,65]
 30  act   43 (35,45]
 > str(accountants)
-`data.frame':	30 obs. of  3 variables:
+'data.frame':	30 obs. of  3 variables:
  $ home: Factor w/ 8 levels "act","nsw","nt",..: 6 5 4 2 2 3 8 8 4 7 ...
  $ loot: num  60 49 40 61 64 60 59 54 62 69 ...
  $ shot: Factor w/ 4 levels "(35,45]","(45,55]",..: 3 2 1 3 3 3 3 2 3 4 ...
