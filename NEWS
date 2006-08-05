@@ -358,7 +358,8 @@ INSTALLATION
 
 	The defaults are now --without-blas (so you have explicitly to
 	ask for an external BLAS), and --enable-BLAS-shlib unless
-	a usable external BLAS is found or on AIX or MacOS X.
+	a usable external BLAS is found or on AIX or on MacOS X 10.2
+	and earlier.
 
     o	MacOS X did not like having LSAME in both BLAS and LAPACK
 	libraries, so it is no longer part of the R-internal LAPACK.
@@ -372,12 +373,11 @@ INSTALLATION
     o	MacOS X 10.3 and higher now use two-level namespaces, single
 	module in a shared library and allow undefined symbols to be
 	resolved at run-time. This implies that common symbols are now
-	allowed in package libraries.  --enable-BLAS-shlib is supported
+	allowed in package libraries. --enable-BLAS-shlib is supported
 	for internal BLAS, external BLAS framework and external static
-	BLAS.  An external dynamic library BLAS is NOT supported.
-	(But it can be easily used by replacing internal BLAS library
-	file later.)  MacOS X < 10.3 does not support
-	--enable-BLAS-shlib.
+	BLAS.  An external dynamic library BLAS is NOT supported. (But
+	it can be easily used by replacing internal BLAS library file
+	later.)  MacOS X < 10.3 does not support --enable-BLAS-shlib.
 
     o	configure now defaults to 'run-time linking' on AIX (and AIX <
 	4.2 is no longer allowed), using -bexpall rather than

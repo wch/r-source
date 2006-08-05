@@ -259,19 +259,6 @@ if test "${want_R_shlib}" = yes; then
 else
   LIBR=
 fi
-case "${host_os}" in
-  darwin*)
-    ## In order to allow the R build to be relocatable, we strip paths from
-    ## all shlibs we build and rely on DYLD_LIBRARY_PATH. Unfortunately
-    ## Darwin linker ignores it at build-time and doesn't use -L to
-    ## resolve dylib dependencies, so libRblas will not be found unless
-    ## we tell ld where it lives. I don't know of any more elegant solution :/
-    if test "x${use_blas_shlib}" = xyes; then
-      LIBR="${LIBR} -dylib_file libRblas.dylib:\$(R_HOME)/lib\$(R_ARCH)/libRblas.dylib"
-    fi
-  ;;
-esac
-AC_SUBST(LIBR)
 
 ## Enable maintainer-specific portions of Makefiles.
 AC_ARG_ENABLE([maintainer-mode],
@@ -1202,7 +1189,9 @@ case "${host_os}" in
       ## * since 10.3 we can also use -undefined dynamic_lookup which allows us to
       ##   use two-level namespace and still have undefined symbols
       *)
-        dylib_undefined_allowed=yes
+        ## FIXME: strictly speaking it should be "yes" but libRblas still
+	## needs -lgfortran because the sharing is a one-way street
+        ## dylib_undefined_allowed=yes
 	shlib_ldflags="-dynamiclib -Wl,-macosx_version_min -Wl,10.3 -undefined dynamic_lookup -single_module -multiply_defined suppress"
 	## we use the same method for shlib and dylib now
 	darwin_dylib_ldflags="${shlib_ldflags}"
@@ -1646,23 +1635,6 @@ R_CHECK_FRAMEWORK(cblas_cdotu_sub, vecLib)
 ## This has to come *after* checking for Fortran 77 compiler/converter
 ## characteristics (notably name mangling and FLIBS).
 ## </NOTE>
-## The defaults are different on MacOS X
-if test "${use_blas}" = "unset"; then
-  use_blas=no
-  case "${host_os}" in
-    darwin*)
-      if test "${have_vecLib_fw}" = "yes"; then
-        with_blas="-framework vecLib"
-        if test "${use_lapack}" = "unset"; then
-          use_lapack="yes"
-          with_lapack=""
-        fi
-      fi
-      ;;
-    *)
-      ;;
-  esac
-fi
 
 if test "${use_blas}" = yes; then
   ## may acx_blas_ok to yes
@@ -1671,17 +1643,31 @@ fi
 
 if test "${acx_blas_ok}" != "yes"; then
   case "${host_os}" in
-    darwin*|aix*)
+    darwin[1-6]*|aix*)
       ;;
     *)
       if test "${use_blas_shlib}" = "unset"; then
         use_blas_shlib="yes"
       fi
       ;;
- esac
+  esac
 fi
 
 AM_CONDITIONAL(BLAS_SHLIB, [test "x${use_blas_shlib}" = xyes])
+
+case "${host_os}" in
+  darwin*)
+    ## In order to allow the R build to be relocatable, we strip paths
+    ## from all shlibs and rely on DYLD_LIBRARY_PATH. Unfortunately
+    ## Darwin linker ignores it at build-time and doesn't use -L to
+    ## resolve dylib dependencies, so libRblas will not be found unless
+    ## we tell ld where it lives. I don't know of any more elegant solution :/
+    if test "x${use_blas_shlib}" = xyes; then
+      LIBR="${LIBR} -dylib_file libRblas.dylib:\$(R_HOME)/lib\$(R_ARCH)/libRblas.dylib"
+    fi
+  ;;
+esac
+AC_SUBST(LIBR)
 
 ## This version is used to build a shared BLAS lib
 BLAS_LIBS0=${BLAS_LIBS}
@@ -2253,11 +2239,12 @@ if test "${use_readline}" = yes; then
 fi
 if test "${acx_blas_ok}" = "yes"; then
   ## Try to figure out which BLAS was used.
-  case "${BLAS_LIBS}" in
+  case "${BLAS_LIBS0}" in
     *-latlas*) r_blas=ATLAS ;;
     *-lsgemm*) r_blas=PhiPack ;;
     *sunperf*) r_blas=SunPerf ;;
     *-lessl*)  r_blas=ESSL ;;
+    *vecLib*)  r_blas=vecLib ;;
     "")        r_blas=none ;;
     *)         r_blas=generic ;;
   esac
