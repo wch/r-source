@@ -2034,6 +2034,8 @@ simulation for a number of statistical models.
 @item MEMSS
 Data sets and sample analyses from ``Mixed-effects Models in S and
 S-PLUS'' by J. Pinheiro and D. Bates, 2000, Springer.
+@item MFDA
+Model Based Functional Data Analysis.
 @item MKLE
 Maximum kernel likelihood estimation.
 @item MNP
