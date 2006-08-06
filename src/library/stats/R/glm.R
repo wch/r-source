@@ -708,9 +708,9 @@ residuals.glm <-
 	     ...)
 {
     type <- match.arg(type)
-    y <- object$y
     r <- object$residuals
     mu	<- object$fitted.values
+    if(is.null(y <- object$y)) y <- mu + r
     wts <- object$prior.weights
     res <- switch(type,
 		  deviance = if(object$df.res > 0) {

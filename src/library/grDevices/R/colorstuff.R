@@ -10,39 +10,39 @@ col2rgb <- function(col, alpha=FALSE) {
 gray <- function(level) .Internal(gray(level))
 grey <- gray
 
-rgb <- function(red, green, blue, alpha,
-                names=NULL, maxColorValue = 1)
+rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 {
-  if (missing(alpha)) {
-    alphaspec <- FALSE
-    alpha <- maxColorValue
-  } else {
-    alphaspec <- TRUE
-  }
-  ## in the first case, (r,g,b) are (coerced to) integer, otherwise
-  ## double.
-  if(maxColorValue == 255)
-    result <- .Internal(rgb256(red, green, blue, alpha, names))
-  else
-    result <- .Internal(rgb(red, green, blue, alpha, maxColorValue, names))
-  # If alpha not specified only return #RRGGBB
-  if (!alphaspec)
-    result <- substr(result, 1, 7)
-  result
+    if (missing(alpha)) {
+        alphaspec <- FALSE
+        alpha <- maxColorValue
+    } else {
+        alphaspec <- TRUE
+    }
+    ## in the first case, (r,g,b) are (coerced to) integer, otherwise
+    ## double.
+    if(maxColorValue == 255)
+        result <- .Internal(rgb256(red, green, blue, alpha, names))
+    else
+        result <- .Internal(rgb(red, green, blue, alpha, maxColorValue, names))
+    ## If alpha not specified only return #RRGGBB
+    if (!alphaspec)
+        structure(substr(result, 1, 7), names=names(result))
+    else result
 }
 
-hsv <- function(h=1, s=1, v=1, gamma=1, alpha) {
-  if (missing(alpha)) {
-    alphaspec <- FALSE
-    alpha <- 1
-  } else {
-    alphaspec <- TRUE
-  }
-  result <- .Internal(hsv(h, s, v, gamma, alpha))
-  # If alpha not specified only return #RRGGBB
-  if (!alphaspec)
-    result <- substr(result, 1, 7)
-  result
+hsv <- function(h=1, s=1, v=1, gamma=1, alpha)
+{
+    if (missing(alpha)) {
+        alphaspec <- FALSE
+        alpha <- 1
+    } else {
+        alphaspec <- TRUE
+    }
+    result <- .Internal(hsv(h, s, v, gamma, alpha))
+    ## If alpha not specified only return #RRGGBB
+    if (!alphaspec)
+        structure(substr(result, 1, 7), names=names(result))
+    else result
 }
 
 hcl <-
@@ -51,14 +51,13 @@ function (h = 0, c = 35, l = 85, alpha, fixup = TRUE)
     if (missing(alpha)) {
         alphaspec <- FALSE
         alpha <- 1
-    }
-    else {
+    } else {
         alphaspec <- TRUE
     }
     result <- .Internal(hcl(h, c, l, alpha, fixup))
     if (!alphaspec)
-        result <- substr(result, 1, 7)
-    result
+        structure(substr(result, 1, 7), names=names(result))
+    else result
 }
 
 rgb2hsv <- function(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)

@@ -4382,8 +4382,28 @@ stopifnot(!is.null(attr(x[], "comm")))  # this does preserve
 stopifnot(is.null(attr(x[1:8], "comm")))
 ##  2.3.1 preserved the first.
 
+
 ## diff() for POSIX(cl)t :
 ds1 <- diff(lsec <- .leap.seconds[1:12])
 (ds2 <- diff(llsec <- as.POSIXlt(lsec))) # in days
 stopifnot(ds1 == ds2)
-## gave nonsense for POSIXlt upto 2.3.1
+## gave different result for POSIXlt up to 2.3.1
+
+
+## format(trim = TRUE, big.mark=",") did not work correctly (PR#9118)
+(a <- format(c(-1,1,10,999,1e6), trim=TRUE))
+(b <- format(c(-1,1,10,999,1e6), big.mark=",", trim=TRUE))
+stopifnot(a[1:4] == b[1:4])
+## no trim in 2.3.1 if big.mark was used.
+
+
+## residuals.glm needed 'y = TRUE' (PR#9124)
+# example for poisson GLM from ?glm
+d.AD <- data.frame(treatment = gl(3,3), outcome = gl(3,1,9),
+                   counts = c(18,17,15,20,10,20,25,13,12))
+glm.D93 <- glm(counts ~ outcome + treatment, family = poisson,
+               data = d.AD, y = FALSE)
+residuals(glm.D93, type = "deviance")
+residuals(glm.D93, type = "pearson")
+residuals(glm.D93, type = "response")
+## all failed in 2.3.1

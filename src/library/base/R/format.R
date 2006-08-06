@@ -37,7 +37,7 @@ format.default <-
 			 small.interval = small.interval,
 			 decimal.mark = decimal.mark,
 			 zero.print = zero.print,
-			 preserve.width = "common")
+			 preserve.width = if (trim) "individual" else "common")
 	       )
     }
 }
