@@ -75,7 +75,18 @@ BUG FIXES
 
     o	diff(x) gave wrong result when x was "POSIXlt" object.
     
-    o	title() could crash R when passed a long vector. (PR#9115)
+    o	title() could crash R when passed a long non-character vector.
+	(PR#9115)
+
+    o	Functions rgb(), hsv() and hcl() lost names unless 'alpha' was
+	specified.  (In part, PR#9118)
+
+    o	The residuals() method for "glm" failed unless 'y = TRUE' for
+	the fit: it now works for "working" and "partial" residuals
+	and gives a useful error message for other types. (PR#9124)
+
+    o	R CMD Rdconv did not close the .Rd file, which matters on Windows.
+	(PR#9126)
 
 
 

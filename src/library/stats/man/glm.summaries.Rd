@@ -33,6 +33,8 @@
   residuals, whereas if \code{na.action = na.exclude} they will appear,
   with residual value \code{NA}.  See also \code{\link{naresid}}.
 
+  Only \code{"working"} and \code{"partial"} residuals are available if
+  the fit was done with \code{y = FALSE}.
 }
 \seealso{
   \code{\link{glm}} for computing \code{glm.obj}, \code{\link{anova.glm}};

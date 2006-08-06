@@ -74,7 +74,10 @@ my @special_commands = ("command", "env", "file", "kbd", "option",
 sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version)
 
     $Rdname = $_[0];
-    open(rdfile, "<$Rdname") or die "Rdconv(): Couldn't open '$Rdname': $!\n";
+    open(my $rdfile, "<$Rdname") or 
+	die "Rdconv(): Couldn't open '$Rdname': $!\n";
+    ## This was not previously being closesd: now closed when
+    ## goes out of scope.
 
     $type = $_[1];
     $debug = $_[2];
@@ -120,7 +123,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version)
     my $skip_level;
     my @skip_state;
     my $skip;
-    while(<rdfile>){
+    while(<$rdfile>){
 	$_ = expand $_;
 	s/\r//;
 	## <FIXME>
