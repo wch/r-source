@@ -84,7 +84,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{x, y}{For \code{glm}:
     logical values indicating whether the response vector and model
     matrix used in the fitting process should be returned as components
-    of the returned value.  Do not set \code{y = FALSE} if response,
+    of the returned value.  Do not set \code{y = FALSE} if accurate response,
     deviance or Pearson residuals are required.
 
     For \code{glm.fit}: \code{x} is a design matrix of dimension \code{n

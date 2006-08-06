@@ -1889,4 +1889,18 @@ names(data.frame())
 # gave NULL names and hence spurious warning.
 
 
+## residuals from zero-weight glm fits
+d.AD <- data.frame(treatment = gl(3,3), outcome = gl(3,1,9),
+                   counts = c(18,17,15,20,10,20,25,13,12))
+fit <- glm(counts ~ outcome + treatment, family = poisson,
+           data = d.AD, weights = c(0, rep(1,8)))
+residuals(fit, type="working") # first was NA < 2.4.0
+## working residuals were NA for zero-weight cases.
+fit2 <- glm(counts ~ outcome + treatment, family = poisson,
+           data = d.AD, weights = c(0, rep(1,8)), y = FALSE)
+# the recovery of y seems to be only to single precision.
+for(z in c("response", "working", "deviance", "pearson"))
+    stopifnot(all.equal(residuals(fit, type=z), residuals(fit2, type=z),
+                        scale = 1, tol = 1e-6))
+
 ### end of tests added in 2.4.0 ###

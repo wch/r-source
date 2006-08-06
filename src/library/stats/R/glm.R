@@ -307,8 +307,9 @@ glm.fit <-
         ## than 0 for non-estimable parameters
         if (fit$rank < nvars) coef[fit$pivot][seq(fit$rank+1, nvars)] <- NA
         xxnames <- xnames[fit$pivot]
-        residuals <- rep.int(NA, nobs)
-        residuals[good] <- z - (eta - offset)[good] # z does not have offset in.
+        residuals <-  (y - mu)/mu.eta.val
+##        residuals <- rep.int(NA, nobs)
+##        residuals[good] <- z - (eta - offset)[good] # z does not have offset in.
         fit$qr <- as.matrix(fit$qr)
         nr <- min(sum(good), nvars)
         if (nr < nvars) {
@@ -709,13 +710,16 @@ residuals.glm <-
 {
     type <- match.arg(type)
     y <- object$y
-    switch(type,
-           deviance=,pearson=,response=
-           if(is.null(y)) stop("'y' values are not available in this fit")
-           )
     r <- object$residuals
     mu	<- object$fitted.values
     wts <- object$prior.weights
+    switch(type,
+           deviance=,pearson=,response=
+           if(is.null(y)) {
+               mu.eta <- object$family$mu.eta
+               eta <- object$linear.predictors
+               y <-  mu + r * mu.eta(eta)
+           })
     res <- switch(type,
 		  deviance = if(object$df.res > 0) {
 		      d.res <- sqrt(pmax((object$family$dev.resids)(y, mu, wts), 0))

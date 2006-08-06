@@ -500,6 +500,12 @@ BUG FIXES
    o	by() and acf() could get confused when they used very long
    	expressions as names.
 
+   o	residual(<glm object>, type="working") was NA for cases with
+	zero weight, whereas they are well-defined even though the
+	case was not used during the fitting and the value is now
+	returned.  This allows residuals to be computed from fits with
+	'y = FALSE'.
+
 
 
 
@@ -550,7 +556,7 @@ BUG FIXES
     o	R CMD Rdconv --type=Ssgm no longer drops a \keyword{} if it is the
 	only one (one letter typo patch by Bill Dunlap).  (PR#9051)
 
-    o	poly(x,y, .., raw = TRUE) now does follow 'raw'.
+    o	poly(x, y, .., raw = TRUE) now does follow 'raw'.
 
     o	plot(0/ -1:1, type = "s") now works.  (PR#9046)
 
@@ -591,7 +597,6 @@ BUG FIXES
 
     o	R CMD Rdconv did not close the .Rd file, which matters on Windows.
 	(PR#9126)
-
 
 
 

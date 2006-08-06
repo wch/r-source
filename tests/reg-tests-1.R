@@ -4405,10 +4405,7 @@ glm.D93 <- glm(counts ~ outcome + treatment, family = poisson,
                data = d.AD, y = FALSE)
 residuals(glm.D93, type = "working")
 residuals(glm.D93, type = "partial")
-res <- try(residuals(glm.D93, type = "response"))
-stopifnot(inherits(res, "try-error"))
-res <- try(residuals(glm.D93, type = "deviance"))
-stopifnot(inherits(res, "try-error"))
-res <- try(residuals(glm.D93, type = "pearson"))
-stopifnot(inherits(res, "try-error"))
+residuals(glm.D93, type = "response")
+residuals(glm.D93, type = "deviance")
+residuals(glm.D93, type = "pearson")
 ## all failed in 2.3.1
