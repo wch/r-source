@@ -4403,7 +4403,12 @@ d.AD <- data.frame(treatment = gl(3,3), outcome = gl(3,1,9),
                    counts = c(18,17,15,20,10,20,25,13,12))
 glm.D93 <- glm(counts ~ outcome + treatment, family = poisson,
                data = d.AD, y = FALSE)
-residuals(glm.D93, type = "deviance")
-residuals(glm.D93, type = "pearson")
-residuals(glm.D93, type = "response")
+residuals(glm.D93, type = "working")
+residuals(glm.D93, type = "partial")
+res <- try(residuals(glm.D93, type = "response"))
+stopifnot(inherits(res, "try-error"))
+res <- try(residuals(glm.D93, type = "deviance"))
+stopifnot(inherits(res, "try-error"))
+res <- try(residuals(glm.D93, type = "pearson"))
+stopifnot(inherits(res, "try-error"))
 ## all failed in 2.3.1

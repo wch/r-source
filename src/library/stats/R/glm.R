@@ -708,9 +708,13 @@ residuals.glm <-
 	     ...)
 {
     type <- match.arg(type)
+    y <- object$y
+    switch(type,
+           deviance=,pearson=,response=
+           if(is.null(y)) stop("'y' values are not available in this fit")
+           )
     r <- object$residuals
     mu	<- object$fitted.values
-    if(is.null(y <- object$y)) y <- mu + r
     wts <- object$prior.weights
     res <- switch(type,
 		  deviance = if(object$df.res > 0) {
@@ -723,9 +727,9 @@ residuals.glm <-
 		  partial = r
 		  )
     if(!is.null(object$na.action))
-      res<- naresid(object$na.action, res)
-    if (type=="partial") ## need to avoid doing naresid() twice.
-      res<-res+predict(object, type="terms")
+        res <- naresid(object$na.action, res)
+    if (type == "partial") ## need to avoid doing naresid() twice.
+        res <- res+predict(object, type="terms")
     res
 }
 
