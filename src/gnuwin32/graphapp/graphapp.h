@@ -343,7 +343,6 @@ typedef void (*dropfn)(control c, char *data);
 #define getbackground		GA_getbackground
 #define getbitmapdata		GA_getbitmapdata
 #define getbitmapdata2		GA_getbitmapdata2
-#define getcharset		GA_getcharset
 #define getcliprect		GA_getcliprect
 #define getcurrentline		GA_getcurrentline
 #define getdata		GA_getdata

@@ -31,6 +31,8 @@ extern unsigned int TopmostDialogs; /* from dialogs.c */
 #include <wchar.h>
 #define alloca(x) __builtin_alloca((x)) /* always GNUC */
 
+static int getcharset(void);
+
 static HDC GETHDC(drawing d)
 {
     if (!d) {
@@ -915,7 +917,7 @@ static cp2charset_table cp2charset [] = {
 /* Used to set the charset for the font in the console/pager/editor.
    As from 2.3.0 these use wchar on NT, but the charset still 
    seems to affect the font chosen. */
-int getcharset(void)
+static int getcharset(void)
 {
     int i, cp = localeCP;
     if (is_NT) 

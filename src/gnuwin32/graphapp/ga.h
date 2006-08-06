@@ -159,7 +159,6 @@ void  gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 font  gnewfont(drawing d,char *face, int style, int size, double rot);
 int   ghasfixedwidth(font f);
 field newfield_no_border(char *text, rect r);
-int   getcharset(void);
 
 #ifdef SUPPORT_UTF8
 void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj);
