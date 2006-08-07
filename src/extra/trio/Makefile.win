@@ -8,8 +8,6 @@ TARGETLIB = libtrio.a
 all: $(TARGETLIB)
 
 $(TARGETLIB): $(OBJS)
-	$(AR) ruv $(TARGETLIB) $(OBJS)
-	$(RANLIB) $(TARGETLIB)
 
-clean:
-	rm -f *~ core $(OBJS) $(TARGETLIB)
+distclean clean:
+	$(RM) *~ core $(OBJS) $(TARGETLIB)
