@@ -24,7 +24,8 @@ load(file, envir = parent.frame())
   format will result in a error.
 
   An object saved as a \code{\link{pairlist}} will be coerced to a
-  \code{list}, silently.
+  \code{list}, silently.  (This includes attributes which were
+  pairlists.)
   
   Loading from an earlier version will give a warning about the
   \sQuote{magic number}: magic numbers \code{1971:1977} are from \R <
@@ -44,13 +45,19 @@ load(file, envir = parent.frame())
 }
 \examples{
 ## save all data
+xx <- pi # to ensure there is some data
 save(list = ls(all=TRUE), file= "all.Rdata")
+rm(xx)
 
 ## restore the saved values to the current environment
-load("all.Rdata")
-
+local({
+   load("all.Rdata")
+   ls()
+})
 ## restore the saved values to the user's workspace
 load("all.Rdata", .GlobalEnv)
+
+unlink("all.Rdata")
 
 \dontrun{
 con <- url("http://some.where.net/R/data/kprats.rda")
