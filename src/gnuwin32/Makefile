@@ -386,8 +386,13 @@ data-%:
 
 #                          ===== cleaning ======
 
+EXTRA_DIRS = blas bzip2 intl pcre trio xdr zlib
+
 clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o ../*/*.a *.a ../*/*.d ../*/Makedeps fixed/fixdesc
+	@for d in $(EXTRA_DIRS); do \
+	  $(MAKE) -C ../extra/$${d} -f Makefile.win clean; \
+	done
 	-$(MAKE) --no-print-directory -C ../../doc/manual -f Makefile.win distclean
 	-$(MAKE) --no-print-directory -C ../nmath/standalone -f Makefile.win distclean
 	-$(MAKE) --no-print-directory -C ../modules -f Makefile.win clean
@@ -398,6 +403,9 @@ clean: cleanwin $(PKGCLEAN)
 	done
 
 distclean: clean clean-recommended
+	@for d in $(EXTRA_DIRS); do \
+	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
+	done
 	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/iconv.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h \
@@ -435,22 +443,13 @@ veryclean: distclean
 	$(RM) ../../doc/FAQ ../../doc/RESOURCES ../../doc/html/resources.html \
 	  ../../SVN-REVISION # not in SVN sources
 
-
 cleanwin:
-	$(RM) *.o *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 \
-	   .RData .Rhistory Makedeps *.d
+	$(RM) *.o *.dll *.a *~ \#*\# .RData .Rhistory Makedeps *.d
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
 	$(MAKE) -C getline clean
 	$(MAKE) -C help clean
 	$(MAKE) -C front-ends clean
-	$(MAKE) -C ../extra/xdr -f Makefile.win distclean
-	$(MAKE) -C ../extra/pcre -f Makefile.win distclean
-	$(MAKE) -C ../extra/bzip2 -f Makefile.win clean
-	$(MAKE) -C ../extra/zlib -f Makefile.win distclean
-	$(MAKE) -C ../extra/intl -f Makefile.win clean
-	$(MAKE) -C ../extra/trio -f Makefile.win clean
-	$(MAKE) -C ../extra/blas -f Makefile.win clean
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean
 

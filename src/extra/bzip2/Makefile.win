@@ -12,8 +12,10 @@ OBJS=$(CSOURCES:.c=.o)
 
 libbz2.a: $(OBJS)
 
-distclean clean:
-	$(RM) *.o *~ libbz2.a *.d Makedeps
+clean:
+	$(RM) *.o *~ *.d Makedeps
+distclean: clean
+	@$(RM) libbz2.a
 
 # Dependencies
 DEPS=$(CSOURCES:.c=.d)

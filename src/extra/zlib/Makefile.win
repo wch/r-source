@@ -12,9 +12,9 @@ CFLAGS=-I../../include -DHAVE_CONFIG_H $(OPTFLAGS)
 libz.a: $(OBJECTS)
 
 clean:
-	$(RM) *.o *~ *.d Makedeps
+	@$(RM) *.o *~ *.d Makedeps
 distclean: clean
-	$(RM) libz.a
+	@$(RM) libz.a
 
 # Dependencies
 DEPS=$(SOURCES:.c=.d)

@@ -28,10 +28,10 @@ chartables.h: chartables.h.win
 endif
 
 clean:
-	$(RM) *.o *~ libpcre.a *.d Makedeps
+	@$(RM) *.o *~ *.d Makedeps
 
 distclean: clean
-	$(RM) chartables.h dftables.exe
+	@$(RM) libpcre.a chartables.h dftables.exe
 
 # Dependencies
 DEPS=$(CSOURCES:.c=.d)

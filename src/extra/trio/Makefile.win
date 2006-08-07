@@ -9,5 +9,7 @@ all: $(TARGETLIB)
 
 $(TARGETLIB): $(OBJS)
 
-distclean clean:
-	$(RM) *~ core $(OBJS) $(TARGETLIB)
+clean:
+	@$(RM) *~ $(OBJS)
+distclean: clean
+	@$(RM) $(TARGETLIB)
