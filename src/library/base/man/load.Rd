@@ -23,6 +23,9 @@ load(file, envir = parent.frame())
   connection a warning will be given, but any input not in the current
   format will result in a error.
 
+  An object saved as a \code{\link{pairlist}} will be coerced to a
+  \code{list}, silently.
+  
   Loading from an earlier version will give a warning about the
   \sQuote{magic number}: magic numbers \code{1971:1977} are from \R <
   0.99.0, and \code{R[ADX]1} from \R 0.99.0 to \R 1.3.1.
