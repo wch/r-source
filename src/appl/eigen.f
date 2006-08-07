@@ -845,7 +845,7 @@ C      IF (IEND) 180, 150, 105
       IF (IEND .GT. 0) GOTO 180
       IF (IEND .EQ. 0) GOTO 150
 C     .......... FOR I=IGH-1 STEP -1 UNTIL LOW+1 DO -- ..........
-  105 DO 140 II = 1, IEND
+      DO 140 II = 1, IEND
          I = IGH - II
          IF (ORTR(I) .EQ. 0.0D0 .AND. ORTI(I) .EQ. 0.0D0) GO TO 140
          IF (HR(I,I-1) .EQ. 0.0D0 .AND. HI(I,I-1) .EQ. 0.0D0) GO TO 140
@@ -2073,7 +2073,7 @@ C         IF (Q) 710, 600, 800
          IF (Q .GT. 0.0D0) GOTO 710
          IF (Q .LT. 0.0D0) GOTO 800
 C     .......... REAL VECTOR ..........
-  600    M = EN
+         M = EN
          H(EN,EN) = 1.0D0
          IF (NA .EQ. 0) GO TO 800
 C     .......... FOR I=EN-1 STEP -1 UNTIL 1 DO -- ..........

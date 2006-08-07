@@ -2816,7 +2816,7 @@ SEXP attribute_hidden do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP a, b, h, v, untf, col, lty, lwd;
     int i, ncol, nlines, nlty, nlwd, lstart, lstop;
-    double aa, bb, x[2], y[2];
+    double aa, bb, x[2], y[2]={0.,0.} /* -Wall */;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 

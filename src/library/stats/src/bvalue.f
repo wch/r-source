@@ -78,28 +78,28 @@ c     initialize
       data i/1/
 
       bvalue = 0.
-      if (jderiv .ge. k)		go to 99
+      if (jderiv .ge. k) go to 99
 c
 c  *** find  i	s.t.  1 <= i < n+k  and	 t(i) < t(i+1) and
 c      t(i) <= x < t(i+1) . if no such i can be found,	x  lies
-c      outside the support of  the spline  f  and  bvalue = 0.
+c      outside the support of the spline  f and bvalue = 0.
 c  {this case is handled in the calling R code}
 c      (the asymmetry in this choice of	 i  makes  f  rightcontinuous)
       if( (x.ne.t(n+1)) .or. (t(n+1).ne.t(n+k)) ) then
-	 i = interv ( t, n+k, x, 0, 0, i, mflag)
-	 if (mflag .ne. 0) then
+         i = interv ( t, n+k, x, 0, 0, i, mflag)
+         if (mflag .ne. 0) then
             call rwarn("bvalue()  mflag != 0: should never happen!")
             go to 99
          endif
       else
-	 i = n
+         i = n
       endif
 
 c  *** if k = 1 (and jderiv = 0), bvalue = bcoef(i).
       km1 = k - 1
       if (km1 .le. 0) then
-	 bvalue = bcoef(i)
-					go to 99
+         bvalue = bcoef(i)
+         go to 99
       endif
 c
 c  *** store the k b-spline coefficients relevant for the knot interval
@@ -110,7 +110,7 @@ c     to t(n+k) appropriately.
       jcmin = 1
       imk = i - k
       if (imk .ge. 0) then
- 8       do 9 j=1,km1
+         do 9 j=1,km1
             dm(j) = x - t(i+1-j)
  9       continue
       else
@@ -166,7 +166,7 @@ c
 c  *** compute value at  x  in (t(i),t(i+1)) of jderiv-th derivative,
 c     given its relevant b-spline coeffs in aj(1),...,aj(k-jderiv).
 
- 30   if (jderiv .ne. km1) then
+      if (jderiv .ne. km1) then
          jdrvp1 = jderiv + 1
          do 33 j=jdrvp1,km1
             kmj = k-j
@@ -179,7 +179,7 @@ c     given its relevant b-spline coeffs in aj(1),...,aj(k-jderiv).
  33      continue
       endif
 
- 39   bvalue = aj(1)
+      bvalue = aj(1)
 c
    99 return
       end

@@ -2691,7 +2691,7 @@ void clipPoint (Edge b, double x, double y,
 		double *xout, double *yout, int *cnt, int store,
 		GClipRect *clip, GClipState *cs)
 {
-    double ix, iy;
+    double ix = 0.0, iy = 0.0 /* -Wall */;
 
     if (!cs[b].first) {
 	/* No previous point exists for this edge. */
@@ -2742,7 +2742,7 @@ static
 void closeClip (double *xout, double *yout, int *cnt, int store,
 		GClipRect *clip, GClipState *cs)
 {
-    double ix, iy;
+    double ix = 0.0, iy = 0.0 /* -Wall */;
     Edge b;
 
     for (b = Left; b <= Top; b++) {

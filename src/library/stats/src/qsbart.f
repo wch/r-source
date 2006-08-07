@@ -3,20 +3,20 @@ C
 C NB: this routine alters ws.
 C
       subroutine qsbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
-     &	   coef,sz,lev,
-     &	   crit,iparms,spar,parms,
-     &	   isetup, scrtch, ld4,ldnk,ier)
+     &     coef,sz,lev,
+     &     crit,iparms,spar,parms,
+     &     isetup, scrtch, ld4,ldnk,ier)
 c
       integer n,nk,isetup, iparms(3), ld4,ldnk,ier
       double precision penalt,dofoff, xs(n),ys(n),ws(n),ssw,
-     &	   knot(nk+4), coef(nk),sz(n),lev(n),
-     &	   crit, spar, parms(4),
-     &	   scrtch(*)
+     &     knot(nk+4), coef(nk),sz(n),lev(n),
+     &     crit, spar, parms(4),
+     &     scrtch(*)
 C	   ^^^^^^^^ dimension (9+2*ld4+nk)*nk = (17 + nk)*nk
 
       call sbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
-     &	   coef,sz,lev, crit,
-     &	   iparms(1),spar,iparms(2),iparms(3),
+     &     coef,sz,lev, crit,
+     &     iparms(1),spar,iparms(2),iparms(3),
 c	   = icrit   spar   ispar    iter
      &	   parms(1),parms(2),parms(3),parms(4),
 c	   = lspar   uspar    tol      eps

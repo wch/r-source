@@ -1257,8 +1257,8 @@ c     Identity -> identi
 c     L -> o
 c     X -> b
       execnt=execnt+1
-      if(k .gt. nf-1)	call ehg182(104)
-      if(k .gt. 15)	call ehg182(105)
+      if(k .gt. nf-1) call ehg182(104)
+      if(k .gt. 15)   call ehg182(105)
       do 3 identi=1,n
          psi(identi)=identi
     3 continue
@@ -1283,7 +1283,7 @@ c           top of while loop
                i=i+1
                if(.not.(i.lt.nf))then
                   call ehg182(123)
-		  goto 7
+                  goto 7
                end if
                goto 6
 c           bottom of while loop
@@ -1380,8 +1380,8 @@ c     Identity -> identi
 c     X -> b
       execnt=execnt+1
 c     l2fit with trace(L)
-      if(k .gt. nf-1)	call ehg182(104)
-      if(k .gt. 15)	call ehg182(105)
+      if(k .gt. nf-1) call ehg182(104)
+      if(k .gt. 15)   call ehg182(105)
       if(trl.ne.0)then
          do 3 i5=1,n
             diagl(i5)=0
@@ -1969,7 +1969,7 @@ c           right son
             lo(nc)=m+1
             hi(nc)=u
             call ehg125(p,nv,v,vhit,nvmax,d,k,xi(p),2**(k-1),2**(d-k),
-     +		 c(1,p),c(1,lo(p)),c(1,hi(p)))
+     +                  c(1,p),c(1,lo(p)),c(1,hi(p)))
          end if
          p=p+1
          l=lo(p)

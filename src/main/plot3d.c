@@ -2450,7 +2450,7 @@ SEXP attribute_hidden do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP col, border, xlab, ylab, zlab;
     double theta, phi, r, d;
     double ltheta, lphi;
-    double expand, xc, yc, zc, xs, ys, zs;
+    double expand, xc = 0.0, yc = 0.0, zc = 0.0, xs = 0.0, ys = 0.0, zs = 0.0;
     int i, j, scale, ncol, dobox, doaxes, nTicks, tickType;
     DevDesc *dd;
 

@@ -278,28 +278,28 @@ C REPEAT
       iter=iter+1
       asrold=asr
       do 11 j=1,n
-	 s=0d0
-	 do 21 i=1,q
- 21	    s=s+ww(i)*b(i)*y(i,j)
-	 sc(j,13)=s
+         s=0d0
+         do 21 i=1,q
+ 21         s=s+ww(i)*b(i)*y(i,j)
+         sc(j,13)=s
 11    continue
       call oneone(max0(jfl,iter-1),p,n,w,sw,sc(1,13),x,a,f,t,
-     &	     asr,sc,g,dp,edf)
+     &                 asr,sc,g,dp,edf)
       do 31 i=1,q
-	s=0d0
-	do 41 j=1,n
- 41	   s=s+w(j)*y(i,j)*f(j)
-	b(i)=s/sw
+        s=0d0
+        do 41 j=1,n
+ 41        s=s+w(j)*y(i,j)*f(j)
+        b(i)=s/sw
 31    continue
       asr=0d0
       do 51 i=1,q
-	 s=0d0
-	 do 61 j=1,n
- 61	    s=s+w(j)*(y(i,j)-b(i)*f(j))**2
-	 asr=asr+ww(i)*s/sw
+         s=0d0
+         do 61 j=1,n
+ 61         s=s+w(j)*(y(i,j)-b(i)*f(j))**2
+         asr=asr+ww(i)*s/sw
 51    continue
       if((q .ne. 1) .and. (iter .le. maxit) .and. (asr .gt. 0d0)
-     &	     .and. (asrold-asr)/asrold .ge. conv) goto 1000
+     &      .and. (asrold-asr)/asrold .ge. conv) goto 1000
       return
       end
 
@@ -1184,7 +1184,7 @@ c spans : span values for the three running linear smoothers.
 c spans(1) : tweeter span.
 c spans(2) : midrange span.
 c spans(3) : woofer span.
-c	(these span values should be changed only with care.)
+c       (these span values should be changed only with care.)
 c big : a large representable floating point number.
 c sml : a small number. should be set so that (sml)**(10.0) does
 c       not cause floating point underflow.
