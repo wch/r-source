@@ -3405,40 +3405,6 @@ C
       SAVE BIG, MACHEP, TINY
 C
       DATA BIG/0.D+0/, MACHEP/-1.D+0/, TINY/1.D+0/, ZERO/0.D+0/
-      DATA VN(1,1),VN(2,1)/'EPSL','ON..'/
-      DATA VN(1,2),VN(2,2)/'PHMN','FC..'/
-      DATA VN(1,3),VN(2,3)/'PHMX','FC..'/
-      DATA VN(1,4),VN(2,4)/'DECF','AC..'/
-      DATA VN(1,5),VN(2,5)/'INCF','AC..'/
-      DATA VN(1,6),VN(2,6)/'RDFC','MN..'/
-      DATA VN(1,7),VN(2,7)/'RDFC','MX..'/
-      DATA VN(1,8),VN(2,8)/'TUNE','R1..'/
-      DATA VN(1,9),VN(2,9)/'TUNE','R2..'/
-      DATA VN(1,10),VN(2,10)/'TUNE','R3..'/
-      DATA VN(1,11),VN(2,11)/'TUNE','R4..'/
-      DATA VN(1,12),VN(2,12)/'TUNE','R5..'/
-      DATA VN(1,13),VN(2,13)/'AFCT','OL..'/
-      DATA VN(1,14),VN(2,14)/'RFCT','OL..'/
-      DATA VN(1,15),VN(2,15)/'XCTO','L...'/
-      DATA VN(1,16),VN(2,16)/'XFTO','L...'/
-      DATA VN(1,17),VN(2,17)/'LMAX','0...'/
-      DATA VN(1,18),VN(2,18)/'LMAX','S...'/
-      DATA VN(1,19),VN(2,19)/'SCTO','L...'/
-      DATA VN(1,20),VN(2,20)/'DINI','T...'/
-      DATA VN(1,21),VN(2,21)/'DTIN','IT..'/
-      DATA VN(1,22),VN(2,22)/'D0IN','IT..'/
-      DATA VN(1,23),VN(2,23)/'DFAC','....'/
-      DATA VN(1,24),VN(2,24)/'DLTF','DC..'/
-      DATA VN(1,25),VN(2,25)/'DLTF','DJ..'/
-      DATA VN(1,26),VN(2,26)/'DELT','A0..'/
-      DATA VN(1,27),VN(2,27)/'FUZZ','....'/
-      DATA VN(1,28),VN(2,28)/'RLIM','IT..'/
-      DATA VN(1,29),VN(2,29)/'COSM','IN..'/
-      DATA VN(1,30),VN(2,30)/'HUBE','RC..'/
-      DATA VN(1,31),VN(2,31)/'RSPT','OL..'/
-      DATA VN(1,32),VN(2,32)/'SIGM','IN..'/
-      DATA VN(1,33),VN(2,33)/'ETA0','....'/
-      DATA VN(1,34),VN(2,34)/'BIAS','....'/
 C
       DATA VM(1)/1.0D-3/, VM(2)/-0.99D+0/, VM(3)/1.0D-3/, VM(4)/1.0D-2/,
      1     VM(5)/1.2D+0/, VM(6)/1.D-2/, VM(7)/1.2D+0/, VM(8)/0.D+0/,
@@ -3455,7 +3421,6 @@ C
      5     VX(29)/1.D+0/, VX(31)/1.D+0/, VX(32)/1.D+0/, VX(33)/1.D+0/,
      6     VX(34)/1.D+0/
 C
-      DATA VARNM(1)/'P'/, VARNM(2)/'P'/, SH(1)/'S'/, SH(2)/'H'/
       DATA CNGD(1),CNGD(2),CNGD(3)/'---C','HANG','ED V'/,
      1     DFLT(1),DFLT(2),DFLT(3)/'NOND','EFAU','LT V'/
       DATA IJMP/33/, JLIM(1)/0/, JLIM(2)/24/, JLIM(3)/0/, JLIM(4)/24/,
