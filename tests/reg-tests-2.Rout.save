@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-08-05 r38803)
+R version 2.4.0 Under development (unstable) (2006-08-06 r38809)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5379,16 +5379,15 @@ character(0)
 +            data = d.AD, weights = c(0, rep(1,8)))
 > residuals(fit, type="working") # first was NA < 2.4.0
           1           2           3           4           5           6 
--0.31250002  0.15546875 -0.13231383 -0.11111111 -0.20909090  0.34622820 
+-0.31250000  0.15546875 -0.13231383 -0.11111111 -0.20909091  0.34622824 
           7           8           9 
- 0.11111111  0.02818182 -0.19226304 
+ 0.11111111  0.02818182 -0.19226306 
 > ## working residuals were NA for zero-weight cases.
 > fit2 <- glm(counts ~ outcome + treatment, family = poisson,
 +            data = d.AD, weights = c(0, rep(1,8)), y = FALSE)
-> # the recovery of y seems to be only to single precision.
 > for(z in c("response", "working", "deviance", "pearson"))
 +     stopifnot(all.equal(residuals(fit, type=z), residuals(fit2, type=z),
-+                         scale = 1, tol = 1e-6))
++                         scale = 1, tol = 1e-10))
 > 
 > ### end of tests added in 2.4.0 ###
 > 

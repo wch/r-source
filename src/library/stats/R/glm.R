@@ -307,7 +307,8 @@ glm.fit <-
         ## than 0 for non-estimable parameters
         if (fit$rank < nvars) coef[fit$pivot][seq(fit$rank+1, nvars)] <- NA
         xxnames <- xnames[fit$pivot]
-        residuals <-  (y - mu)/mu.eta.val
+        ## update by accurate calculation, including 0-weight cases.
+        residuals <-  (y - mu)/mu.eta(eta)
 ##        residuals <- rep.int(NA, nobs)
 ##        residuals[good] <- z - (eta - offset)[good] # z does not have offset in.
         fit$qr <- as.matrix(fit$qr)

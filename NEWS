@@ -489,8 +489,8 @@ BUG FIXES
     o	The DLL registration code was not freeing .External symbols.
 
     o	The internet download routines expected URLs of less than 4096
-	bytes, but did not check.  Now this is checked, and http: URLs
-	are allowed up to 40960 bytes.
+	bytes, but did not check.  Now this is checked, and http:// URLs
+	are allowed to be up to 40960 bytes.
 
    o	parse(n=-1) threw a stack-imbalance error, and parse(n=3) did
 	not cope correctly with EOF during input.
@@ -500,11 +500,15 @@ BUG FIXES
    o	by() and acf() could get confused when they used very long
    	expressions as names.
 
-   o	residual(<glm object>, type="working") was NA for cases with
-	zero weight, whereas they are well-defined even though the
-	case was not used during the fitting and the value is now
-	returned.  This allows residuals to be computed from fits with
-	'y = FALSE'.
+   o	residuals(<glm object>, type="working") was NA for cases with
+	zero weight (whereas they are well-defined even though the
+	case was not used during the fitting) and the actual value is
+	now returned.  This allows residuals to be computed from fits
+	with 'y = FALSE'.
+
+	The residuals in a fitted "glm" object are computed more
+	accurately: the previous formula was subject to cancellation.
+
 
 
 
