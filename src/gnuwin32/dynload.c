@@ -87,6 +87,17 @@ static void R_deleteCachedSymbols(DllInfo *dll)
 	}
 }
 
+#ifndef _MCW_EM
+_CRTIMP unsigned int __cdecl 
+_controlfp (unsigned int unNew, unsigned int unMask);
+_CRTIMP unsigned int __cdecl _clearfp (void);
+/* Control word masks for unMask */
+#define	_MCW_EM		0x0008001F	/* Error masks */
+#define	_MCW_IC		0x00040000	/* Infinity */
+#define	_MCW_RC		0x00000300	/* Rounding */
+#define	_MCW_PC		0x00030000	/* Precision */
+#endif
+
 HINSTANCE R_loadLibrary(const char *path, int asLocal, int now)
 {
     HINSTANCE tdlh;

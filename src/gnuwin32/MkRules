@@ -3,7 +3,7 @@
 
 ## ===== configuration macros for building packages or R  ===============
 
-# Alternatives MINGW (mingw), CROSS (Linux)
+# Alternatives MINGW (mingw), CROSS (Linux) GFORTRAN (experimental gcc 4.2.0)
 BUILD=MINGW
 
 HELP = YES
@@ -26,8 +26,8 @@ LEA_MALLOC=YES
 USE_ATLAS=NO
 ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 
-# Set to YES and specify the path to libacml.a 
-# if you want to use the AMD's ACML BLAS.
+# If you want to use AMD's ACML BLAS,
+# set to YES and specify the path to libacml.a 
 USE_ACML=NO
 ACML_PATH=c:/Program Files/AMD/acml3.5.0/gnu32/lib
 ## Set this to YES if you want to use ACML's LAPACK not R's.
@@ -91,23 +91,33 @@ else # cross-builds
 R_TEXOPTS=
 endif
 
+DEPARG=-MM
+MINGW32LDFLAG=
+
 ifeq ($(strip $(BUILD)),MINGW)
 BINPREF=
 MINGW32CFLAG=
-MINGW32LDFLAG=
+F77=g77
 FLIBS=-lg2c
 AWK=gawk
-## only safe for gcc >= 3.1
-DEPARG=-MM
+endif
+
+ifeq ($(strip $(BUILD)),GFORTRAN)
+BINPREF=
+MINGW32CFLAG=
+F77=gfortran
+FLIBS=-lgfortran
+AWK=gawk
 endif
 
 ifeq ($(strip $(BUILD)),CROSS)
 MINGW32CFLAG=-isystem $(HEADER)
-MINGW32LDFLAG=
+F77=$(BINPREF)g77
 FLIBS=-lg2c
 AWK=awk
-DEPARG=-MM
 endif
+
+
 
 BLAS_LIBS= -L$(RHOME)/bin -lRblas
 ifeq ($(strip $(USE_ACML_LAPACK)),YES)
@@ -129,7 +139,6 @@ MKDIR=mkdir
 CAT=cat
 CC=$(BINPREF)gcc $(MINGW32CFLAG)
 CXX=$(BINPREF)g++ $(MINGW32CFLAG)
-F77=$(BINPREF)g77
 AS=$(BINPREF)as
 DLL_LDMAIN=gcc
 DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
