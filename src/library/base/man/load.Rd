@@ -22,10 +22,6 @@ load(file, envir = parent.frame())
   can be read from a connection.  If no input is available on a
   connection a warning will be given, but any input not in the current
   format will result in a error.
-
-  An object saved as a \code{\link{pairlist}} will be coerced to a
-  \code{list}, silently.  (This includes attributes which were
-  pairlists.)
   
   Loading from an earlier version will give a warning about the
   \sQuote{magic number}: magic numbers \code{1971:1977} are from \R <
@@ -39,6 +35,10 @@ load(file, envir = parent.frame())
   \code{ascii = TRUE}, so ensure that they are transferred without
   conversion of end of line markers.  \code{load} tries to detect this
   case and give an informative error message.
+}
+\note{
+  Prior to  \R 2.4.0 an object saved as a \code{\link{pairlist}} was
+  coerced to a \code{list}, silently (and undocumented). 
 }
 \seealso{
   \code{\link{save}}, \code{\link{download.file}}.

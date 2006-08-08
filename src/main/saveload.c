@@ -722,6 +722,7 @@ static SEXP DataLoad(FILE *fp, int startup, InputRoutines *m, int version, SaveL
     return OffsetToNode(i, &node);
 }
 
+#ifdef UNUSED
 /* These functions convert old (pairlist) lists into new */
 /* (vectorlist) lists.	The conversion can be defeated by */
 /* hiding things inside closures, but it is doubtful that */
@@ -759,7 +760,7 @@ static SEXP ConvertPairToVector(SEXP obj)
     SET_ATTRIB(obj, ConvertAttributes(ATTRIB(obj)));
     return obj;
 }
-
+#endif
 
 /* ----- V e r s i o n -- O n e -- S a v e / R e s t o r e ----- */
 
@@ -2001,7 +2002,7 @@ static SEXP RestoreToEnv(SEXP ans, SEXP aenv)
 	    error(_("not a valid named list"));
 	for (i = 0; i < LENGTH(ans); i++) {
 	    SEXP sym = install(CHAR(STRING_ELT(names, i)));
-	    defineVar(sym, ConvertPairToVector(VECTOR_ELT(ans, i)), aenv);
+	    defineVar(sym, VECTOR_ELT(ans, i), aenv);
 	}
 	UNPROTECT(2);
 	return names;
@@ -2017,7 +2018,7 @@ static SEXP RestoreToEnv(SEXP ans, SEXP aenv)
     PROTECT(a = ans);
     while (a != R_NilValue) {
 	SET_STRING_ELT(names, cnt++, PRINTNAME(TAG(a)));
-        defineVar(TAG(a), ConvertPairToVector(CAR(a)), aenv);
+        defineVar(TAG(a), CAR(a), aenv);
         a = CDR(a);
     }
     UNPROTECT(2);

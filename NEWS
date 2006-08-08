@@ -49,9 +49,6 @@ USER-VISIBLE CHANGES
 	These changes may affect the results of sapply() and lapply()
 	applied to factors.
 
-    o	str(<data.frame>) now uses 'data.frame' instead of `data.frame';
-	this may affect some strict (Package) tests.
-
 
 NEW FEATURES
 
@@ -272,8 +269,14 @@ NEW FEATURES
 	as 'mode' (which is printed anyway, possibly abbreviated) and it
 	puts it beside mode for atomic objects such as S3 class "table".
 
+    o	str(<data.frame>) now uses 'data.frame' instead of `data.frame';
+	this may affect some strict (Package) tests.
+
     o	head(x, n) and tail(x, n) now also work for negative arguments,
 	thanks to Vincent Goulet.
+
+    o	load() no longer coerces pairlists to lists (which was
+	undocumented, but has been happening since 1998).
 
 
 DEPRECATED & DEFUNCT
