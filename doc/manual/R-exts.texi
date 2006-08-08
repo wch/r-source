@@ -483,7 +483,9 @@ contains user-level objects which are for ``internal'' use only, it
 should provide a file @file{@var{pkg}-internal.Rd} which documents all
 such objects, and clearly states that these are not meant to be called
 by the user.  See e.g.@: the sources for package @pkg{grid} in the @R{}
-distribution for an example.
+distribution for an example.  Note that packages which use internal
+objects extensively should hide those objects in a name space, when they
+do not need to be documented (@pxref{Package name spaces}).
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix} or @file{windows}.
@@ -1113,7 +1115,7 @@ arguments of the corresponding generic, and whether the final argument
 of replacement functions is called @samp{value}.  All foreign function
 calls (@code{.C}, @code{.Fortran}, @code{.Call} and @code{.External}
 calls) are tested to see if they have a @code{PACKAGE} argument, and if
-not, whether the appropriate DLL might be deduced from the namespace of
+not, whether the appropriate DLL might be deduced from the name space of
 the package.  Any other calls are reported.  (The check is generous, and
 users may want to supplement this by examining the output of
 @code{tools::checkFF("mypkg", verbose=TRUE)}, especially if the
@@ -1470,16 +1472,15 @@ allows the package writer to specify which variables in the package
 should be @emph{exported} to make them available to package users, and
 which variables should be @emph{imported} from other packages.
 
-The current mechanism@footnote{Alternative approaches are under
-consideration and may replace this approach in future @R{} releases.}
-for specifying a name space for a package is to place a @file{NAMESPACE}
-file in the top level package directory.  This file contains @emph{name
-space directives} describing the imports and exports of the name space.
-Additional directives register any shared objects to be loaded and any
-S3-style methods that are provided.  Note that although the file looks
-like @R{} code (and often has @R{}-style comments) it is not processed
-as @R{} code.  Only very simple conditional processing of @code{if}
-statements is implemented as of @R{} 1.9.0.
+The current mechanism for specifying a name space for a package is to
+place a @file{NAMESPACE} file in the top level package directory.  This
+file contains @emph{name space directives} describing the imports and
+exports of the name space.  Additional directives register any shared
+objects to be loaded and any S3-style methods that are provided.  Note
+that although the file looks like @R{} code (and often has @R{}-style
+comments) it is not processed as @R{} code.  Only very simple
+conditional processing of @code{if} statements is implemented as of @R{}
+1.9.0.
 
 Like other packages, packages with name spaces are loaded and attached
 to the search path by calling @code{library}.  Only the exported
@@ -1494,6 +1495,10 @@ bindings cannot be changed.  Sealing allows a simpler implementation
 strategy for the name space mechanism.  Sealing also allows code
 analysis and compilation tools to accurately identify the definition
 corresponding to a global variable reference in a function body.
+
+Note that adding a name space to a package changes the search strategy.
+The package name space comes first in the search, then the imports, then
+the base name space and then the normal search path.
 
 @menu
 * Specifying imports and exports::  
@@ -1796,7 +1801,8 @@ useDynLib(KernSmooth, .registration = TRUE, .fixes = "F_")
 
 @noindent
 which makes the @R{} variables corresponding to the Fortran symbols
-@code{F_bkde} and so on, and so avoid clashes with @R{} code in the namespace.
+@code{F_bkde} and so on, and so avoid clashes with @R{} code in the name
+space.
 
 
 More information about this symbol lookup, along with some approaches
@@ -1932,7 +1938,7 @@ directive.  All generics for which formal methods are defined need to be
 declared in an @code{exportMethods} directive, and where the generics
 are formed by taking over existing functions, those functions need to be
 imported (explicitly unless they are defined in the @code{base}
-namespace).
+name space).
 
 In addition, a package using classes and methods defined in another
 package needs to import them, with directives
@@ -2225,7 +2231,7 @@ settings).
 
 Mechanisms to support the automatic translation of @R{} @code{stop},
 @code{warning} and @code{message} messages are in place, provided the
-package has a namespace.  They make use of message catalogs in the same
+package has a name space.  They make use of message catalogs in the same
 way as C-level messages, but using domain @code{R-@var{pkg}} rather than
 @code{@var{pkg}}.  Translation of character strings inside @code{stop},
 @code{warning} and @code{message} calls is automatically enabled, as
@@ -2247,7 +2253,7 @@ same name, and will choose an appropriate singular or plural form for
 the selected language depending on the value of its first argument
 @code{n}.
 
-Packages without namespaces will need to use @code{domain="R-@var{pkg}"}
+Packages without name spaces will need to use @code{domain="R-@var{pkg}"}
 explicitly in calls to @code{stop}, @code{warning}, @code{message},
 @code{gettext}/@code{gettextf} and @code{ngettext}.
 
@@ -4195,7 +4201,7 @@ Browse[1]> n
 @end example
 @noindent
 For your own functions, it may be as easy to use @code{fix} to insert
-temporary code, but @code{trace} can help with functions in a namespace
+temporary code, but @code{trace} can help with functions in a name space
 (as can @code{fixInNamespace}).  Alternatively, use
 @code{trace(,edit=TRUE)} to insert code visually.
 
@@ -4708,7 +4714,7 @@ specific shared object (or use @code{"base"} for code compiled into
 package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from the body of a function defined in a package with a
-namespace, the shared object loaded by the first (if any)
+name space, the shared object loaded by the first (if any)
 @code{useDynLib} directive will be used.)
 
 For @code{.C} only you can specify an @code{ENCODING} argument: this
@@ -8426,7 +8432,7 @@ foo.default <- base::foo
 argument list, one can e.g.@: use @code{formals(foo.default) <-
 c(formals(foo.default), alist(... = ))}.)
 
-The same idea can be applied for functions in other packages with namespaces.
+The same idea can be applied for functions in other packages with name spaces.
 
 @node Linking GUIs and other front-ends to R, R (internal) programming miscellanea, Generic functions and methods, Top
 @chapter Linking GUIs and other front-ends to R
@@ -9939,7 +9945,7 @@ explicit imports from other name spaces, and the enclosure of
 @emph{that} environment is the base name space.  (So the illusion of the
 imports being in the name space environment is created via the
 environment tree.)  The enclosure of the base name space is the global
-environment, so the search from a package namespace goes via the
+environment, so the search from a package name space goes via the
 (explicit and implicit) imports to the standard `search path'.
 
 The base name space environment @code{R_BaseNamespace} is another
