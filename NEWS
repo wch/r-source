@@ -385,6 +385,10 @@ INSTALLATION
 	built in the same way as other Unix-alikes, including with R
 	as a shared library and with a shared BLAS.
 
+    o	The configure test for 'whether mixed C/Fortran code can be
+	run' has been improved as on one system that test passed but
+	the Fortran run-time library was broken.
+
 
 BUG FIXES
 

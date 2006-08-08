@@ -27773,6 +27773,12 @@ else
       subroutine cftest(a, b, x, y)
       integer a(3), b(2)
       double precision x(3), y(3)
+
+      b(1) = a(3)/a(2)
+      b(2) = a(3) - a(1)*a(2)
+      y(1) = dble(a(3))/x(2)
+      y(2) = x(3)*x(1)
+      y(3) = (x(2)/x(1)) ** a(1)
       end
 EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&5 2>&5
@@ -43601,7 +43607,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:43604:" \
+echo "$as_me:43610:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5

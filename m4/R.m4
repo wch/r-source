@@ -931,6 +931,9 @@ fi
 ## Check whether the C/Fortran set up produces runnable code, as
 ## a preliminary to the compatibility tests.
 ## May fail if Fortran shared libraries are not in the library path.
+## As from 2.4.0 use the same code as the compatibility test, as
+## on at least one system the latter actually used -lgfortran
+## (which was broken) and the previous test here did not.
 AC_DEFUN([R_PROG_F77_CAN_RUN],
 [AC_REQUIRE([AC_CHECK_LIBM])
 AC_MSG_CHECKING([whether mixed C/Fortran code can be run])
@@ -939,6 +942,12 @@ AC_CACHE_VAL([r_cv_prog_f77_can_run],
       subroutine cftest(a, b, x, y)
       integer a(3), b(2)
       double precision x(3), y(3)
+
+      b(1) = a(3)/a(2)
+      b(2) = a(3) - a(1)*a(2)
+      y(1) = dble(a(3))/x(2)
+      y(2) = x(3)*x(1)
+      y(3) = (x(2)/x(1)) ** a(1)
       end
 EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
