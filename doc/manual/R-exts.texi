@@ -132,6 +132,7 @@ Other types of extensions are supported as from @R{} 2.1.0:
 * Package name spaces::         
 * Writing portable packages::   
 * Diagnostic messages::         
+* Linking to other packages::   
 * Localization::                
 * Package types::               
 @end menu
@@ -2056,7 +2057,7 @@ CMD check} checks for.
 
 @end itemize
 
-@node Diagnostic messages, Localization, Writing portable packages, Creating R packages
+@node Diagnostic messages, Linking to other packages, Writing portable packages, Creating R packages
 @section Diagnostic messages
 
 Now that diagnostic messages can be made available for translation, it
@@ -2152,7 +2153,62 @@ in another language one might need to say `There is no package in library
 
 @end itemize
 
-@node Localization, Package types, Diagnostic messages, Creating R packages
+@node Linking to other packages, Localization, Diagnostic messages, Creating R packages
+@section Linking to other packages
+
+It is sometimes desirable for compiled code in one package to be able to
+link to compiled code in other packages, and an experimental mechanism
+to do so has been provided in @R{} 2.4.0.
+
+A package that wishes to link to other packages needs to declare them as
+a comma-separated list in the field @code{LinkingTo} in the
+@file{DESCRIPTION} file.  For example
+
+@example
+Depends: link2, link3
+LinkingTo: link2, link3
+@end example
+
+It should also depend on those packages for they have to be installed
+prior to this one, and loaded prior to this one (so the path to their
+compiled code can be found).
+
+The other thing the package doing the linking needs to do is to declare
+this in its @code{dyn.load} call, possibly via @code{library.dynam} or
+@code{useDynLib}, for example
+
+@example
+.First.lib <- function(libname, pkgname)
+    library.dynam("link1", pkgname, libname, linkingTo=c("link2", "link3"))
+@end example
+
+This then arranges that the @file{include} directories in the installed
+linked-to packages are added to the include paths for C and C++ code,
+and that the @file{libs} directories of those packages are made
+available both at link time and run time: it is up to the package doing
+the linking to use @code{PKG_LIBS} to link to a suitable library object.
+
+@menu
+* Arranging to be linked to::   
+@end menu
+
+@node Arranging to be linked to,  , Linking to other packages, Linking to other packages
+@subsection Arranging to be linked to
+
+A package to be linked to has to arrange to export the information
+required.  Currently these is no formal interface for doing so.
+
+C/C++ header files should be in @file{inst/include} to be installed into
+the directory @file{include} of the installed package.
+
+Linking in a platform-independent way is tricky.  On Windows
+@option{-lfoo} will link to @code{foo.dll}, on Linux to @code{libfoo.so}
+and on MacOS X to @code{libfoo.dylib}.  Perhaps the best approach is for
+the package doing the linking to have @code{PKG_LIBS=-lfoo} and for the
+linked-to package to have @file{src/Makefile} and
+@file{src/Makefile.win} that creates suitable libraries.
+
+@node Localization, Package types, Linking to other packages, Creating R packages
 @section Localization
 
 @R{} 2.1.0 introduced mechanisms to translate the R- and C-level error

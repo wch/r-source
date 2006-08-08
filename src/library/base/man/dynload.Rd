@@ -8,7 +8,7 @@
   Fortran subroutine is available.
 }
 \usage{
-dyn.load(x, local = TRUE, now = TRUE)
+dyn.load(x, local = TRUE, now = TRUE, linkingTo = NULL)
 dyn.unload(x)
 
 is.loaded(symbol, PACKAGE = "", type = "")
@@ -32,6 +32,12 @@ is.loaded(symbol, PACKAGE = "", type = "")
     to ignore missing symbols. Whether this has any effect is system-dependent.
 #ifdef windows
     It is ignored on Windows.
+#endif
+  }
+  \item{linkingTo}{\code{NULL} or a character vector.  Indicates one or
+    more loaded packages (by name) to which to link the DLL.
+#ifdef unix
+    Currently only used on Windows.
 #endif
   }
   \item{symbol}{a character string giving a symbol name.}

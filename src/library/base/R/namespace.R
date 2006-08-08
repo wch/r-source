@@ -366,7 +366,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             dynLibs <- nsInfo$dynlibs
             for (i in seq(along = dynLibs)) {
                lib <- dynLibs[i]
-               dlls[[ lib ]]  <- library.dynam(lib, package, package.lib)
+               dlls[[lib]]  <- library.dynam(lib, package, package.lib)
                assignNativeRoutines(dlls[[lib]], lib, env, nsInfo$nativeRoutines[[lib]])
 
                ## If the DLL has a name as in useDynLib( alias = foo ),
@@ -944,14 +944,14 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                    importMethods <<- c(importMethods, list(imp))
                },
                useDynLib = {
-                    ## This attempts to process as much of the information as possible
-                    ## when NAMESPACE is parsed rather than when it is loaded and creates
-                    ## NativeRoutineMap objects to handle the mapping of symbols to R variable
-                    ## names.
+                   ## This attempts to process as much of the information as possible
+                   ## when NAMESPACE is parsed rather than when it is loaded and creates
+                   ## NativeRoutineMap objects to handle the mapping of symbols to R variable
+                   ## names.
 
-                    ## The name is the second element after useDynLib
+                   ## The name is the second element after useDynLib
                    dyl <- as.character(e[2])
-                    ## We ensure uniqueness at the end.
+                   ## We ensure uniqueness at the end.
                    dynlibs <<- structure(c(dynlibs, dyl),
                                          names = c(names(dynlibs),
                                                    ifelse(!is.null(names(e)) && names(e)[2] != "",
@@ -989,18 +989,18 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                        fixes <- c("", "")
                        idx <- match(".fixes", names(symNames))
                        if(!is.na(idx)) {
-                         ## Take .fixes and treat it as a call, e.g. c("pre", "post")
-                         ## or a regular name as the prefix.
-                         if(symNames[idx] != "") {
-                           e <- parse(text = symNames[idx])[[1]]
-                           if(is.call(e))
-                             val <- eval(e)
-                           else
-                             val <- as.character(e)
-                           if(length(val))
-                             fixes[seq(along = val)] <- val
-                         }
-                         symNames <- symNames[-idx]
+                           ## Take .fixes and treat it as a call, e.g. c("pre", "post")
+                           ## or a regular name as the prefix.
+                           if(symNames[idx] != "") {
+                               e <- parse(text = symNames[idx])[[1]]
+                               if(is.call(e))
+                                   val <- eval(e)
+                               else
+                                   val <- as.character(e)
+                               if(length(val))
+                                   fixes[seq(along = val)] <- val
+                           }
+                           symNames <- symNames[-idx]
                        }
 
                        ## Deal with a .registration entry. It must be
@@ -1009,8 +1009,8 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                        useRegistration <- FALSE
                        idx <- match(".registration", names(symNames))
                        if(!is.na(idx)) {
-                         useRegistration <- as.logical(symNames[idx])
-                         symNames <- symNames[-idx]
+                           useRegistration <- as.logical(symNames[idx])
+                           symNames <- symNames[-idx]
                        }
 
                        ## Now merge into the NativeRoutineMap.
