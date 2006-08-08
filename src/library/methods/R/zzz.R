@@ -27,6 +27,10 @@
     if(identical(saved, FALSE)) {
         cat("initializing class and method definitions now ...")
         on.exit(assign(".saveImage", NA, envir = where))
+        ## set up default prototype (uses .Call so has be at load time)
+        assign(".defaultPrototype",
+                .Call("Rf_allocS4Object",PACKAGE="methods"),
+               envir = where)
         assign(".SealedClasses", character(), envir = where)
         .InitClassDefinition(where)
         assign("possibleExtends", .possibleExtends, envir = where)
@@ -100,9 +104,6 @@
     }
     if(Sys.getenv("R_S4_BIND") == "active")
         methods:::bind_activation(TRUE)
-    ## choose the default form for S4 objects
-    if(nchar(Sys.getenv("R_S4_Type")))
-             .useS4Prototype(TRUE, asNamespace(pkgName))
 }
 
 .onUnload <- function(libpath) {

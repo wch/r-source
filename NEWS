@@ -25,11 +25,10 @@ USER-VISIBLE CHANGES
 	objects, only to top-level objects.)
 
     o	The default prototype object for S4 classes will have its own
-	internal type in 2.4.x, as opposed to being an empty list (the
-	cause of several errors in the current code).  Currently
-	optional, turned on by setting environment variable R_S4_Type
-	to any non-empty value when R is started.  Only applies to new
-	class definitions, via a call to setClass().
+	internal type in 2.4.0, as opposed to being an empty list (the
+	cause of several errors in the current code).  Note that old
+	binary objects, including class definitions, will be
+	inconsistent with the type, and should be recreated.
 
     o	The functions read.csv, read.csv2, read.delim, read.delim2 now
 	default the comment.char argument to "".  (These functions are

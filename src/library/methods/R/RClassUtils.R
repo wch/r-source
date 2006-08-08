@@ -437,13 +437,13 @@ assignClassDef <-
                   access = list(), className = character(), package = character(),
                   subclasses = list(), versionKey = .newExternalptr(),
                   sealed = FALSE)
-    proto <- list()
+    proto <- defaultPrototype()
     pnames <- names(protoSlots)
     for(i in seq(along=protoSlots))
         slot(proto, pnames[[i]], FALSE) <- protoSlots[[i]]
     classRepClass <- .classNameFromMethods("classRepresentation")
     class(proto) <- classRepClass
-    object <- list()
+    object <- defaultPrototype()
     class(object) <- classRepClass
     slot(object, "slots", FALSE) <- defSlots
     slot(object, "className", FALSE) <- classRepClass
@@ -518,8 +518,6 @@ newBasic <-
       stop(msg, domain = NA)
 }
 
-.defaultPrototype <-
-  list()
 
 ## this non-exported function turns on or off
 ## the use of the S4 type as class prototype
