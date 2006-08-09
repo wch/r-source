@@ -85,7 +85,7 @@ getExportedValue <- function(ns, name) {
             stop(gettextf(paste("package '%s' has no name space and",
                                 "is not on the search path"), pkg),
                  domain = NA)
-        get(name,pos = 2, inherits = FALSE)
+        get(name,pos = pos, inherits = FALSE)
     }
     else getExportedValue(pkg, name)
 }
