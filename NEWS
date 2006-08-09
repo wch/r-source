@@ -345,6 +345,10 @@ UTILITIES
     o	R CMD check now tests Rd cross-references by default, and tests
     	for (syntactically) valid CITATION metadata.
 
+	R CMD check now tests that the package can be loaded, and that
+	the package and namespace (if there is one) can each be loaded
+	in startup code (before the standard packages are loaded).
+
     o	The test script produced by massage-Examples.pl no longer
 	writes in the base environment.
 
