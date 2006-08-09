@@ -1145,6 +1145,67 @@ sub check_pkg {
 	}
     }
 
+    
+    ## Check we can actually load the package
+
+    if($opt_install) {
+	$log->checking("the package can be loaded");
+	my $Rcmd = "library(${pkgname})";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	@out = grep(!/^\>/, @out);
+	if(scalar(grep(/^Error/, @out,)) > 0) {
+	    $log->error();
+	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "",
+			     ("\nIt looks like this package",
+			      "has a loading problem: see the messages",
+			      "for details.\n")));
+	} else {
+	    $log->result("OK");
+	}
+	$log->checking("the package can be loaded with stated dependencies");
+	my $Rcmd = "library(${pkgname})";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(grep(/^Error/, @out,)) > 0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "",
+			     ("\nIt looks like this package",
+			      "(or one of its dependent packages)",
+			      "has an unstated dependence on a standard",
+			      "package.  All dependencies must be",
+			      "declared in DESCRIPTION.\n")));
+	    $log->print(wrap("", "", @msg_DESCRIPTION));
+	} else {
+	    $log->result("OK");
+	}
+    }
+
+    ## and if it has a namespace, that we can load just the namespace
+
+    if($opt_install && -f "${pkgdir}/NAMESPACE") {
+	$log->checking("the name space can be loaded with stated dependencies");	my $Rcmd = "loadNamespace(\"${pkgname}\")";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(grep(/^Error/, @out,)) > 0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "",
+			     ("\nA namespace must be able to be loaded",
+			      "with just the base namespace loaded:",
+			      "otherwise if the namespace gets loaded by a",
+			      "saved object, the session will be unable",
+			      "to start.\n\n",
+			      "Probably some imports need to be declared",
+			      "in the NAMESPACE file.\n")));
+	} else {
+	    $log->result("OK");
+	}
+    }
+
     ## Check whether methods have all arguments of the corresponding
     ## generic.
 
@@ -1402,67 +1463,6 @@ sub check_pkg {
 	    $log->result("OK");
 	}
     }
-    
-    ## Check we can actually load the package
-
-    if($opt_install) {
-	$log->checking("the package can be loaded");
-	my $Rcmd = "library(${pkgname})";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet");
-	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out,)) > 0) {
-	    $log->error();
-	    $log->print(join("\n", @out) . "\n");
-	    $log->print(wrap("", "",
-			     ("\nIt looks like this package",
-			      "has a loading problem: see the messages",
-			      "for details.\n")));
-	} else {
-	    $log->result("OK");
-	}
-	$log->checking("the package can be loaded with stated dependencies");
-	my $Rcmd = "library(${pkgname})";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES=NULL");
-	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out,)) > 0) {
-	    $log->warning();
-	    $log->print(join("\n", @out) . "\n");
-	    $log->print(wrap("", "",
-			     ("\nIt looks like this package",
-			      "(or one of its dependent packages)",
-			      "has an unstated dependence on a standard",
-			      "package.  All dependencies must be",
-			      "declared in DESCRIPTION.\n")));
-	    $log->print(wrap("", "", @msg_DESCRIPTION));
-	} else {
-	    $log->result("OK");
-	}
-    }
-
-    ## and if it has a namespace, that we can load just the namespace
-
-    if($opt_install && -f "${pkgdir}/NAMESPACE") {
-	$log->checking("the name space can be loaded with stated dependencies");	my $Rcmd = "loadNamespace(\"${pkgname}\")";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES=NULL");
-	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out,)) > 0) {
-	    $log->warning();
-	    $log->print(join("\n", @out) . "\n");
-	    $log->print(wrap("", "",
-			     ("\nA namespace must be able to be loaded",
-			      "with just the base namespace loaded:",
-			      "otherwise if the namespace gets loaded by a",
-			      "saved object, the session will be unable",
-			      "to start.\n\n",
-			      "Probably some imports need to be declared",
-			      "in the NAMESPACE file.\n")));
-	} else {
-	    $log->result("OK");
-	}
-    }
-
     ## Check for code/documentation mismatches.
 
     if($opt_codoc && (-d "man")) {
