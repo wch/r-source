@@ -241,8 +241,12 @@ ifneq ($(strip $(LOBJS)),)
 	elif test -r "${HOME}/.R/Makevars"; then \
 	  makefiles="$${makefiles} -f \"${HOME}/.R/Makevars\""; \
 	fi; \
+	CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | $(REXE)`; \
+	CLINK_LDFLAGS=`echo "tools:::.find_clink_paths(file='DESCRIPTION')" | $(REXE)`; \
 	$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
-	  $${makefiles} DLLNAME=$(DLLNAME)
+	  DLLNAME=$(DLLNAME) CLINK_CPPFLAGS=$${CLINK_CPPFLAGS} \
+	  CLINK_LDFLAGS=$${CLINK_LDFLAGS} \
+	  $${makefiles}
 	@$(ECHO) "  ... DLL made"
 endif
 else
