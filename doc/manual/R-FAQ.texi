@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-08-04
+@set FAQ_DATE @value{FAQ_YEAR}-08-11
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -1849,6 +1849,8 @@ Graphical modeling for contingency tables using CoCo.
 @c @item CoCoAn
 @c Constrained Correspondence Analysis.
 @c </COMMENT>
+@item CompetingRiskFrailty
+Competing risk model with frailties for right censored survival data.
 @item DAAG
 Various data sets used in examples and exercises in ``Data Analysis and
 Graphics Using R'' by John H. Maindonald and W. John Brown, 2003.
@@ -1942,8 +1944,12 @@ Gamma Test data analysis.
 @item GenKern
 Functions for generating and manipulating generalised binned kernel
 density estimates.
+@item GeneCycle
+Identification of periodically expressed genes.
 @item GeneNT
 Relevance or Dependency network and signaling pathway discovery.
+@item GeneNet
+Modeling and inferring gene networks.
 @item GeneTS
 A package for analysing multiple gene expression time series data.
 Currently, implements methods for cell cycle analysis and for inferring
@@ -2026,6 +2032,8 @@ represented as the product of two matrices.
 Functions and datasets from the main package of Venables and Ripley,
 ``Modern Applied Statistics with S''.  Contained in the @file{VR}
 bundle.  @emph{Recommended}.
+@item MBA
+Multilevel @math{B}-spline Approximation.
 @item MBESS
 Methods for the Behavioral, Educational, and Social Sciences.
 @item MCMCpack
@@ -2410,6 +2418,8 @@ Bayesian interval mapping diagnostics:  functions to interpret QTLCart
 and Bmapqtl samples.
 @item bindata
 Generation of correlated artificial binary data.
+@item binom
+Binomial confidence intervals for several parameterizations.
 @item biopara
 Self-contained parallel system for R.
 @item bitops
@@ -2985,6 +2995,8 @@ higher order inference for nonlinear heteroscedastic models.
 Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
 @item hopach
 Hierarchical Ordered Partitioning and Collapsing Hybrid (HOPACH).
+@item hot
+Computation on micro-arrays.
 @item howmany
 A lower bound for the number of correct rejections.
 @item httpRequest
