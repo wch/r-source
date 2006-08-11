@@ -20,6 +20,7 @@ eval_R_command(const char *funcName, int argc, char *argv[])
     */
     R_tryEval(e, R_GlobalEnv, &errorOccurred);
 
+    end_R();
     UNPROTECT(2);   
     return(0);
 }
@@ -37,4 +38,10 @@ init_R(int argc, char **argv)
 	argv = defaultArgv;
     }
     Rf_initEmbeddedR(argc, argv);
+}
+
+void
+end_R()
+{
+    end_Rmainloop();
 }

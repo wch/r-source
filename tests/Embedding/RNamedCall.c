@@ -15,6 +15,7 @@ main(int argc, char *argv[])
     source("foo.R");
     bar1();
 
+    end_R();
     return(0);
 }
 

@@ -16,5 +16,6 @@ main(int argc, char *argv[])
     R_tryEval(VECTOR_ELT(e,0), R_GlobalEnv, &hadError);
     UNPROTECT(2);
 
+    end_R();
     return(0);
 }

@@ -34,5 +34,6 @@ main(int argc, char *argv[])
     eval(e, R_GlobalEnv);
     UNPROTECT(1);
 
+    end_R();
     return(0);
 }

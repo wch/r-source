@@ -23,6 +23,8 @@ main(int argc, char *argv[])
     }
    
     UNPROTECT(1);
+
+    end_Rmainloop();
     
     return(0);
 }
