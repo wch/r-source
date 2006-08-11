@@ -1,27 +1,5 @@
-dyn.load <- function(x, local=TRUE, now=TRUE, linkingTo=NULL)
-{
-    if(length(linkingTo) && .Platform$OS.type == "windows") {
-        if(!is.character(linkingTo))
-            stop("'linkingTo' must be a character vector")
-        tmp <- match(paste("package", linkingTo, sep=":"), search())
-        if(any(is.na(tmp))) {
-            msg <-
-                sprintf(ngettext(sum(is.na(tmp)),
-                                 "linking to package %s not found on search path",
-                                 "linking to packages %s not found on search path"),
-                                 paste(sQuote(linkingTo[is.na(tmp)]),
-                                       collapse=", "))
-            stop(msg, domain = NA)
-        }
-        path <- Sys.getenv("PATH")
-        path2 <- paste(path, tmp, sep=.Platform$path.sep)
-        Sys.putenv(paste("PATH=", path2, sep=""))
-        res <- .Internal(dyn.load(x, as.logical(local), as.logical(now)))
-        Sys.putenv(paste("PATH=", path, sep=""))
-        res
-    } else
-        .Internal(dyn.load(x, as.logical(local), as.logical(now)))
-}
+dyn.load <- function(x, local=TRUE, now=TRUE)
+    .Internal(dyn.load(x, as.logical(local), as.logical(now)))
 
 dyn.unload <- function(x)
     .Internal(dyn.unload(x))

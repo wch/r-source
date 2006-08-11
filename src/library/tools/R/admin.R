@@ -680,25 +680,6 @@ function(dir, packages)
     return(invisible())
 }
 
-.find_clink_paths <- function(pkgs, lib.loc = NULL, file = NULL)
-{
-    ## given a character string of comma-separated package names,
-    ## find where the packages are installed and generate
-    ## -L"/path/to/package/libs" ...
-
-    if(!is.null(file)) {
-        tmp <- read.dcf(file, "LinkingTo")[1,1]
-        if(is.na(tmp)) return(invisible())
-        pkgs <- tmp
-    }
-    pkgs <- strsplit(pkgs[1], ",[:blank]*")[[1]]
-    paths <- .find.package(pkgs, lib.loc, quiet=TRUE)
-    if(length(paths))
-        cat(paste(paste('-L"', paths, '/libs"', sep=""), collapse=" "))
-    return(invisible())
-}
-
-
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
