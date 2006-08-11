@@ -32,7 +32,7 @@ main(int argc, char *argv[])
     R_tryEval(e, R_GlobalEnv, &errorOccurred);
     UNPROTECT(1);
 
-    R_CleanUp(SA_NOSAVE, 0, FALSE);
+    end_R();
 
     return(0);
 }
