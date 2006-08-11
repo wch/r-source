@@ -1160,6 +1160,7 @@ sub check_pkg {
 			     ("\nIt looks like this package",
 			      "has a loading problem: see the messages",
 			      "for details.\n")));
+	    exit(1);
 	} else {
 	    $log->result("OK");
 	}
