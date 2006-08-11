@@ -32,7 +32,8 @@ optim(par, fn, gr = NULL,
  \item{control}{A list of control parameters. See \bold{Details}.}
  \item{hessian}{Logical. Should a numerically differentiated Hessian
    matrix be returned?}
- \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.}
+ \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.
+   Beware of partial matching to earlier arguments.}
 }
 \details{
   By default this function performs minimization, but it will maximize
@@ -179,6 +180,23 @@ optim(par, fn, gr = NULL,
     that this is the Hessian of the unconstrained problem even if the
     box constraints are active.}
 }
+\note{
+  \code{optim} will work with one-dimensional \code{par}s, but the
+  default method does not work well (and will warn).  Use
+  \code{\link{optimize}} instead.
+}
+\source{
+  The code for methods \code{"Nelder-Mead"}, \code{"BFGS"} and
+  \code{"CG"} was based originally on Pascal code in Nash (1990) that was
+  translated by \code{p2c} and then hand-optimized.  Dr Nash has agreed
+  that the code can be made freely available.
+
+  The code for method \code{"L-BFGS-B"} is based on Fortran code by Zhu,
+  Byrd, Lu-Chen and Nocedal obtained from Netlib (file
+  \file{opt/lbfgs\_bcm.shar}: another version is in \file{toms/778}).
+
+  The code for method \code{"SANN"} was contributed by A. Trapletti.
+}
 \references{
   Belisle, C. J. P. (1992) Convergence theorems for a class of simulated
   annealing algorithms on \eqn{R^d}{Rd}. \emph{J Applied Probability},
@@ -199,22 +217,6 @@ optim(par, fn, gr = NULL,
 
   Nocedal, J. and Wright, S. J. (1999) \emph{Numerical Optimization}.
   Springer.
-}
-\note{
-  \code{optim} will work with one-dimensional \code{par}s, but the
-  default method does not work well (and will warn).  Use
-  \code{\link{optimize}} instead.
-
-  The code for methods \code{"Nelder-Mead"}, \code{"BFGS"} and
-  \code{"CG"} was based originally on Pascal code in Nash (1990) that was
-  translated by \code{p2c} and then hand-optimized.  Dr Nash has agreed
-  that the code can be made freely available.
-
-  The code for method \code{"L-BFGS-B"} is based on Fortran code by Zhu,
-  Byrd, Lu-Chen and Nocedal obtained from Netlib (file
-  \file{opt/lbfgs\_bcm.shar}: another version is in \file{toms/778}).
-
-  The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
 
 \seealso{

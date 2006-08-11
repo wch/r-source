@@ -22,7 +22,8 @@ optimise(f = , interval = , lower = min(interval),
     to be searched.}
   \item{maximum}{logical. Should we maximize or minimize (the default)?}
   \item{tol}{the desired accuracy.}
-  \item{\dots}{additional arguments to \code{f}.}
+  \item{\dots}{additional named or unnamed arguments to be passed
+    to \code{f} (but beware of partial matching to other arguments).}
 }
 \description{
   The function \code{optimize} searches the interval from
@@ -59,13 +60,17 @@ optimise(f = , interval = , lower = min(interval),
   solution, even when \code{f} is constant in there, see the last
   example.
 
-  It uses a C translation of Fortran code (from Netlib) based on the
-  Algol 60 procedure \code{localmin} given in the reference.
+  \code{f} will be called as \code{f(\var{x}, ...)} for a numeric value
+  of \var{x}.
 }
 \value{
   A list with components \code{minimum} (or \code{maximum})
   and \code{objective} which give the location of the minimum (or maximum)
   and the value of the function at that point.
+}
+\source{
+  A C translation of Fortran code \url{http://www.netlib.org/fmm/fmin.f}
+  based on the Algol 60 procedure \code{localmin} given in the reference.
 }
 \references{
   Brent, R. (1973)

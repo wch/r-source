@@ -13,7 +13,8 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
   \item{upper}{the upper end point of the interval to be searched.}
   \item{tol}{the desired accuracy (convergence tolerance).}
   \item{maxiter}{the maximum number of iterations.}
-  \item{\dots}{additional arguments to \code{f}.}
+  \item{\dots}{additional named or unnamed arguments to be passed
+    to \code{f} (but beware of partial matching to other arguments).}
 }
 \description{
   The function \code{uniroot} searches the interval from \code{lower}
@@ -31,12 +32,18 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
 
   If the algorithm does not converge in \code{maxiter} steps, a warning
   is printed and the current approximation is returned.
+
+  \code{f} will be called as \code{f(\var{x}, ...)} for a numeric value
+  of \var{x}.
 }
 \value{
   A list with four components: \code{root} and \code{f.root} give the
   location of the root and the value of the function evaluated at that
   point. \code{iter} and \code{estim.prec} give the number of iterations
   used and an approximate estimated precision for \code{root}.
+}
+\source{
+  Based on \file{zeroin.c} in \url{http://www.netlib.org/c/brent.shar}.
 }
 \references{
   Brent, R. (1973)
