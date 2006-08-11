@@ -39,6 +39,9 @@ place, so those functions are available while waiting for an event.
 C-level changes
 ---------------
 
+There is now a similar embedding interface to that under Unix, using
+Rf_initEmbeddedR.
+
 The C-level printf functions have been replaced by those from the trio
 library, which ensures a higher level of C99 compliance without the
 need for lots of Windows-specific workarounds.
