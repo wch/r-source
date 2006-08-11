@@ -943,7 +943,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	    else nmi
 	}
 	else if(nrow > 0 && identical(ri, 1:ni))
-	    seq(from = nrow + 1, length = ni)
+	    as.integer(seq(from = nrow + 1, length = ni))
 	else ri
     }
     allargs <- list(...)
