@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka
  *			      and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -24,9 +24,12 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+#include <Defn.h>
+#include <Rdevices.h> /* KillAllDevices */
 
 int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
 void setup_Rmainloop(void); /* in main.c */
+void fpu_setup(Rboolean start);  /* in ../unix/sys-std.c */
 
 
 /*
@@ -59,4 +62,22 @@ int Rf_initEmbeddedR(int argc, char **argv)
     Rf_initialize_R(argc, argv);
     setup_Rmainloop();
     return(1);
+}
+
+/* use fatal !=0 for emergency bail out */
+void Rf_endEmbeddedR(int fatal)
+{
+    unsigned char buf[1024];
+    char * tmpdir;
+
+    R_RunExitFinalizers();
+    CleanEd();
+    if(!fatal) KillAllDevices();
+    if((tmpdir = R_TempDir)) {
+	snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
+	R_system((char *)buf);
+    }
+    if(!fatal && R_CollectWarnings)
+	PrintWarnings();	/* from device close and .Last */
+    fpu_setup(FALSE); 
 }
