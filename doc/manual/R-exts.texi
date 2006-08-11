@@ -8913,6 +8913,18 @@ The @code{R} DLL is mainly written in C and has @code{_cdecl} entry
 points.  Calling it directly will be tricky except from C code (or C++
 with a little care).
 
+There is a version of the Unix interface callng 
+
+@example
+int Rf_initialize_R(int ac, char **av);
+@end example
+
+@noindent
+which is an entry point in @file{R.dll}.  Examples of its use (and a
+suitable @file{Makefile}) can be found in the @file{tests/Embedding}
+directory of the sources.  Note that those examples are not general, and
+it may be necessary to shut @R{} down more carefully, as discussed below.
+
 Examples of calling @file{R.dll} directly are provided in the directory
 @file{src/@/gnuwin32/@/front-ends}, including @file{Rproxy.dll} used by
 @code{StatConnector} and a simple command-line front end @file{rtest.c}
@@ -9026,7 +9038,7 @@ int main (int argc, char **argv)
 /* only get here on EOF (not q()) */
     R_CleanUp(SA_DEFAULT, 0, 1);
 #endif
-    end_Rmainloop();
+    end_Rmainloop(); /* will not return */
     return 0;
 @}
 @end smallexample
