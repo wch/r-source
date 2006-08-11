@@ -277,6 +277,10 @@ NEW FEATURES
     o	load() no longer coerces pairlists to lists (which was
 	undocumented, but has been happening since 1998).
 
+    o	interaction(..., drop=TRUE) now gives the same result as
+	interaction(...)[,drop=TRUE] (it used to sometimes give a
+	different order for the levels).
+
 
 DEPRECATED & DEFUNCT
 
@@ -518,6 +522,8 @@ BUG FIXES
 
 	The residuals in a fitted "glm" object are computed more
 	accurately: the previous formula was subject to cancellation.
+
+   o	loess() now checks the validity of its 'control' argument.
 
 
 

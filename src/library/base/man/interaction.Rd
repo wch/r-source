@@ -7,7 +7,7 @@ interaction(\dots, drop = FALSE, sep = ".")
 \arguments{
   \item{\dots}{the factors for which interaction is to be computed, or a
     single list giving those factors.}
-  \item{drop}{if \code{drop} is \code{TRUE}, empty factor levels
+  \item{drop}{if \code{drop} is \code{TRUE}, unused factor levels
     are dropped from the result.  The default is to retain all
     factor levels.}
   \item{sep}{string to construct the new level labels by joining the
@@ -21,6 +21,10 @@ interaction(\dots, drop = FALSE, sep = ".")
   A factor which represents the interaction of the given factors.
   The levels are labelled as the levels of the individual factors joined
   by \code{sep}, i.e. \code{.} by default.
+
+  As from \R 2.4.0 the levels are ordered so the level of the first
+  factor varies fastest, then the second and so on.  This is the reverse
+  of lexicographic ordering.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)

@@ -29,7 +29,7 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     drop.square <- match(nmx, nmx[drop.square], 0) > 0
     parametric <- match(nmx, nmx[parametric], 0) > 0
     if(!match(degree, 0:2, 0)) stop("'degree' must be 0, 1 or 2")
-    iterations <- if(family=="gaussian") 1 else control$iterations
+    iterations <- if(family == "gaussian") 1 else control$iterations
     if(!missing(enp.target))
 	if(!missing(span))
 	    warning("both 'span' and 'enp.target' specified: 'span' will be used")
@@ -37,6 +37,11 @@ function(formula, data, weights, subset, na.action, model = FALSE,
 	    tau <- switch(degree+1, 1, D+1, (D+1)*(D+2)/2) - sum(drop.square)
 	    span <- 1.2 * tau/enp.target
 	}
+    ## Let's add sanity checks on control
+    if(!is.list(control) || !is.character(control$surface) ||
+       !is.character(control$statistics) || !is.character(control$trace.hat) ||
+       !is.numeric(control$cell) || !is.numeric(iterations))
+        stop("invalid 'control' argument")
     fit <- simpleLoess(y, x, w, span, degree, parametric, drop.square,
 		       normalize, control$statistics, control$surface,
 		       control$cell, iterations, control$trace.hat)

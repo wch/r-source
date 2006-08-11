@@ -12,20 +12,11 @@ interaction <- function(..., drop = FALSE, sep = ".")
     lvs <- NULL
     for(i in narg:1) {
         f <- args[[i]]
-	if (!is.factor(f))
-	    f <- factor(f)
+	if (!is.factor(f)) f <- factor(f)
 	l <- levels(f)
 	ans <- ans * length(l) + as.integer(f) - 1
 	lvs <- if (i == narg) l	else as.vector(outer(l, lvs, paste, sep=sep))
     }
-    ans <- ans + 1
-    if (drop) {
-	f <- unique(ans[!is.na(ans)])
-	ans <- match(ans, f)
-	lvs <- lvs[f]
-    }
-    ans <- as.integer(ans)
-    levels(ans) <- lvs
-    class(ans) <- "factor"
-    ans
+    ans <- structure(as.integer(ans+1), levels=lvs, class="factor")
+    ans[ ,drop=drop]
 }
