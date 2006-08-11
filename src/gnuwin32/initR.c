@@ -81,7 +81,7 @@ int Rf_initEmbeddedR(int argc, char **argv)
     sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
     if(strcmp(getDLLVersion(), Rversion) != 0) {
         fprintf(stderr, "Error: R.DLL version does not match\n");
-	return -1;
+	exit(1);
     }
 
     R_setStartTime();
@@ -89,7 +89,7 @@ int Rf_initEmbeddedR(int argc, char **argv)
     if((RHome = get_R_HOME()) == NULL) {
 	fprintf(stderr, 
 		"R_HOME must be set in the environment or Registry\n");
-	return -2;
+	exit(2);
     }
     Rp->rhome = RHome;
     Rp->home = getRUser();
