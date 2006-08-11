@@ -60,7 +60,8 @@ static SEXP row_names_gets(SEXP vec , SEXP val)
 	    UNPROTECT(1);
 	    return ans;
 	} 
-    }
+    } else if(!isString(val))
+	error("row names must be character or integer");
     return installAttrib(vec, R_RowNamesSymbol, val);
 }
 
