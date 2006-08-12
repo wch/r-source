@@ -1,3 +1,4 @@
+#-*- Makefile -*-
 include ../MkRules
 
 ifdef DEBUG
@@ -8,7 +9,7 @@ else
   LINKFLAGS=-s
 endif
 
-CFLAGS=-Wall
+CFLAGS=-Wall -O2 -pedantic
 
 rtest-CFLAGS=-I.. -I../../include $(DEBUGFLAG)
 Rtest.exe: rtest.o R.dll Rblas.dll

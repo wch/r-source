@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2004  R Development Core Team
+ *  Copyright (C) 1998--2006  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,26 +22,14 @@
 #include <windows.h>
 #include <stdio.h>
 #include <Rversion.h>
+#define LibExtern __declspec(dllimport) extern
+#include <Rembedded.h>
 #include <R_ext/RStartup.h>
 /* for askok and askyesnocancel */
-#include "graphapp/graphapp.h"
+#include <graphapp/graphapp.h>
 
 /* for signal-handling code */
 #include <psignal.h>
-
-void R_Suicide(char*); /* In Rinterface.h */
-void R_CleanUp(SA_TYPE, int, int); /* from Startup.h */
-
-/* one way to allow user interrupts: called in ProcessEvents */
-__declspec(dllimport) int UserBreak;
-
-/* calls into the R DLL */
-extern char *getDLLVersion(), *getRUser(), *get_R_HOME();
-extern void R_DefParams(Rstart), R_SetParams(Rstart), R_setStartTime();
-extern void setup_term_ui(void), ProcessEvents(void);
-extern void run_Rmainloop(void), end_Rmainloop(void), R_ReplDLLinit(void);
-extern int R_ReplDLLdo1();
-
 
 /* simple input, simple output */
 
@@ -122,14 +110,13 @@ int main (int argc, char **argv)
     setup_Rmainloop();
 #ifdef SIMPLE_CASE
     run_Rmainloop();
-    end_Rmainloop();
 #else
     R_ReplDLLinit();
     while(R_ReplDLLdo1() > 0) {
 /* add user actions here if desired */
     }
 /* only get here on EOF (not q()) */
-    end_Rmainloop();
 #endif
+    Rf_endEmbeddedR(0);
     return 0;
 }
