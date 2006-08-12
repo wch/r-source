@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-08-11
+@set FAQ_DATE @value{FAQ_YEAR}-08-12
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2769,6 +2769,8 @@ Functional Data Analysis: analysis of data where the basic observation
 is a function of some sort.
 @item fdim
 Functions for calculating fractal dimension.
+@item fdrtool
+Estimation and control of (local) False Discovery Rates.
 @item femmeR
 Output analysis of FEMME model results.
 @item fgac
@@ -3610,6 +3612,8 @@ best.
 Raking survey datasets by re-weighting.
 @item randaes
 Random number generator based on AES cipher.
+@item randomSurvivalForest
+Ishwaran and Kogalur's random survival forest.
 @item randomForest
 Breiman's random forest classifier.
 @item rankreg
