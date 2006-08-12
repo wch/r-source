@@ -23,21 +23,20 @@
  *
  ******************************************************************************/
 
-#define NONAMELESSUNION
 #include <windows.h>
-#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-/*#include "globalvar.h"
-#undef CharacterMode
-#undef R_Interactive*/
+
 #include <config.h>
 #include <Rversion.h>
-#include <Startup.h>
+#define LibExtern __declspec(dllimport) extern
+#include <Rembedded.h>
+#include <R_ext/RStartup.h>
 #include "bdx_SEXP.h"
 #include "SC_proxy.h"
 #include "rproxy.h"
 #include "rproxy_impl.h"
+/* <FIXME> These are private header files */
 #include <IOStuff.h>
 #include <Parse.h>
 #include <Graphics.h>
@@ -50,27 +49,9 @@ struct _R_Proxy_init_parameters
   int nsize_valid;
 };
 
-/* 01-12-07 | baier | no more extern for exported variables (crashes!) */
-/*#define R_GlobalEnv (*__imp_R_GlobalEnv)
-#define R_Visible (*__imp_R_Visible)
-#define R_EvalDepth (*__imp_R_EvalDepth)
-#define R_DimSymbol (*__imp_R_DimSymbol)*/
-
-/*
-extern SEXP R_GlobalEnv;
-extern int R_Visible;
-extern int R_EvalDepth;
-extern SEXP R_DimSymbol;
-*/
 
 /* calls into the R DLL */
-extern char *getDLLVersion();
-extern void R_DefParams(Rstart);
-extern void R_SetParams(Rstart);
-extern void setup_term_ui(void);
 extern char *getRHOME();
-extern char *getRUser();
-extern void end_Rmainloop(), R_ReplDLLinit();
 extern void GA_askok(char *);
 
 int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
@@ -229,6 +210,7 @@ int R_Proxy_init (char const* pParameterString)
 
   R_DefParams(Rp);
 
+  /* <FIXME> the documented interface is get_R_HOME() */
   /* first, try process-local environment space (CRT) */
   if (getenv("R_HOME")) {
       strcpy(RHome, getenv("R_HOME"));
@@ -572,7 +554,8 @@ int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
 
 int R_Proxy_term ()
 {
-  end_Rmainloop();
+  /* end_Rmainloop(); note, this never returns */
+  Rf_endEmbeddedR(0);
 
   return SC_PROXY_OK;
 }
