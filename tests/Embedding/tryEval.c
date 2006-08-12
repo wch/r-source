@@ -1,5 +1,5 @@
 #include <Rinternals.h>
-extern int Rf_initEmbeddedR(int argc, char *argv[]);
+#include <Rembedded.h>
 
 int 
 main(int argc, char *argv[])

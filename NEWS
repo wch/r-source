@@ -338,6 +338,11 @@ C-LEVEL FACILITIES
     o	R_ParseVector was returning with object(s) protected in the
 	parser if the status was PARSE_INCOMPLETE or PARSE_ERROR.
 
+    o	There is a new function Rf_endEmbeddedR to properly terminated
+	a session started by Rf_initEmbeddedR, and both are now
+	available on Windows as well as on Unix-alikes.  These and
+	related functions are now declared in header <Rembedded.h>.
+
 
 UTILITIES
 

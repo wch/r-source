@@ -1,7 +1,5 @@
+#include <Rembedded.h>
 #include "embeddedRCall.h"
-
-extern int Rf_initEmbeddedR(int argc, char *argv[]);
-extern void Rf_endEmbeddedR(int fatal);
 
 int
 eval_R_command(const char *funcName, int argc, char *argv[])

@@ -37,9 +37,7 @@ extern "C" {
 /* this duplication will be removed in due course */
 
 extern Rboolean R_Interactive;	/* TRUE during interactive use*/
-extern Rboolean	R_Quiet;	/* Be as quiet as possible */
 extern Rboolean	R_Slave;	/* Run as a slave process */
-extern Rboolean	R_Verbose;	/* Be verbose */
 
 extern void R_RestoreGlobalEnv(void);
 extern void R_RestoreGlobalEnvFromFile(const char *, Rboolean);
@@ -124,7 +122,7 @@ extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
 extern int  (*R_timeout_handler)();
 extern long R_timeout_val;
 
-#endif
+#endif /* R_INTERFACE_PTRS */
 
 #ifdef __SYSTEM__
 # undef extern

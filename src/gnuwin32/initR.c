@@ -16,14 +16,17 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-#define Win32
+#include <config.h>
+#include <Defn.h>
+#include <Rembedded.h>
+
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <stdio.h>
 #include <Rversion.h>
 #include <R_ext/RStartup.h>
 /* for askok and askyesnocancel */
-#include "graphapp/graphapp.h"
+#include "graphapp/ga.h"
 
 /* for signal-handling code */
 #include <psignal.h>
@@ -72,7 +75,7 @@ static void my_onintr(int sig)
     UserBreak = 1;
 }
 
-int Rf_initEmbeddedR(int argc, char **argv)
+int Rf_initialize_R(int argc, char **argv)
 {
     structRstart rp;
     Rstart Rp = &rp;
@@ -114,7 +117,28 @@ int Rf_initEmbeddedR(int argc, char **argv)
 
     signal(SIGBREAK, my_onintr);
     setup_term_ui(); /* initialize graphapp, eventloop, read Rconsole */ 
-    setup_Rmainloop();
-
+ 
     return 0;
+}
+
+int Rf_initEmbeddedR(int argc, char **argv)
+{
+    Rf_initialize_R(argc, argv);
+    setup_Rmainloop();
+    return(1);
+}
+
+/* use fatal !=0 for emergency bail out */
+void Rf_endEmbeddedR(int fatal)
+{
+    R_RunExitFinalizers();
+    CleanEd();
+    R_CleanTempDir();
+    if(!fatal){
+	Rf_KillAllDevices();
+	AllDevicesKilled = TRUE;
+    }
+    if(!fatal && R_CollectWarnings)
+	PrintWarnings();	/* from device close and .Last */
+    app_cleanup();
 }

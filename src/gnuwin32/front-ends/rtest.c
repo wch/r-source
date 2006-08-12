@@ -129,8 +129,7 @@ int main (int argc, char **argv)
 /* add user actions here if desired */
     }
 /* only get here on EOF (not q()) */
-    R_CleanUp(SA_DEFAULT, 0, 1);
-#endif
     end_Rmainloop();
+#endif
     return 0;
 }
