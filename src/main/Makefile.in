@@ -43,7 +43,7 @@ SOURCES_F = \
 ## If the substitutes are needed, the corresponding objects are put by
 ## configure in @LIBOBJS@ @ALLOCA@
 EXTRA_SOURCES_C = \
-	Rmain.c Rembedded.c \
+	Rmain.c \
 	alloca.c acosh.c asinh.c atanh.c \
 	mkdtemp.c \
 	snprintf.c strdup.c strncasecmp.c \
@@ -108,7 +108,7 @@ R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)
 R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ $(RLIBS) $(COMMON_DEPENDENCIES)
 
 libR_la = libR$(DYLIB_EXT)
-libR_la_OBJECTS = Rembedded.o $(OBJECTS)
+libR_la_OBJECTS = $(OBJECTS)
 ## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)

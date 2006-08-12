@@ -21,7 +21,7 @@ HEADERS = Runix.h hpdlfcn.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-  Makefile.in $(SOURCES_C_BASE) \
+  Makefile.in $(SOURCES_C_BASE) Rembedded.c \
   $(HEADERS) hpdlfcn.c system.txt
 
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
@@ -52,7 +52,7 @@ libunix.a: $(OBJECTS)
 	$(AR) cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
-stamp-lo: $(OBJECTS)
+stamp-lo: $(OBJECTS) Rembedded.o
 	@touch $@
 
 mostlyclean: clean
