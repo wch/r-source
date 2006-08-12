@@ -62,8 +62,8 @@ ISDIR=C:/packages/Inno51
 ## ====== configuration macros for building packages ================
 
 ## For a package using F90/95 set the name or path of gfortran.exe 
-## or g95.exe.  No spaces.
-F95=c:/packages/gfortran/bin/gfortran
+## or g95.exe.  Spaces allowed.
+F95=c:/MinGW/bin/gfortran
 F95FLAGS=-O3 $(PKG_FCFLAGS)
 
 ## =================== cross-compilation settings  =================
