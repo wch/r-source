@@ -14,13 +14,13 @@ CSOURCES=$(wildcard -f *.c)
 CXXSOURCES=$(wildcard -f *.cc *.cpp *.C)
 FSOURCES=$(wildcard -f *.f)
 FCSOURCES=$(wildcard -f *.f90 *.f95)
-OBJSA=$(foreach i,$(CSOURCES) $(FSOURCES) $(CXXSOURCES),$(basename $i).o)
+OBJSA=$(foreach i,$(CSOURCES) $(FSOURCES) $(CXXSOURCES) $(FCSOURCES),$(basename $i).o)
 
 include $(RHOME)/src/gnuwin32/MkRules
 
 ifneq ($(strip $(FCSOURCES)),)
 # don't assume F95 can be cross-compiled in the same way
-  DLL=$(F95)
+  DLL="$(F95)"
 else
 
 ifneq ($(strip $(CXXSOURCES)),)

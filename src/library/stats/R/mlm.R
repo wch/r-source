@@ -230,7 +230,7 @@ anova.mlm <-
         pp <- nrow(T)
         if(rk > 0) {
             p1 <- 1:rk
-            comp <- object$effects[p1,]
+            comp <- object$effects[p1, , drop=FALSE]
             asgn <- object$assign[object$qr$pivot][p1]
             nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
             tlabels <- nmeffects[1 + unique(asgn)]

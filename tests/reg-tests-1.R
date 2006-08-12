@@ -4274,3 +4274,12 @@ stopifnot(inherits(res, "try-error"))
 res <- try(residuals(glm.D93, type = "pearson"))
 stopifnot(inherits(res, "try-error"))
 ## all failed in 2.3.1
+
+
+## anova.mlm failed
+dat<-matrix( c(9,7,8,8,12,11,8,13,     6,5,6,3,6,7,10,9,
+               10,13,8,13,12,14,14,16, 9,11,13,14,16,12,15,14),
+            ncol = 4, dimnames = list(s=1:8, c=1:4))
+mlmfit <- lm(dat ~ 1)
+anova(mlmfit, X = ~1)
+## worked in 2.2.1, failed in 2.3.1

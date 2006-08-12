@@ -88,6 +88,9 @@ BUG FIXES
     o	R CMD Rdconv did not close the .Rd file, which matters on Windows.
 	(PR#9126)
 
+    o	anova.mlm() could fail if applied to a single model.
+
+
 
 
 		CHANGES IN R VERSION 2.3.1
