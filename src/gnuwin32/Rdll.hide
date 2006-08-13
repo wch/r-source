@@ -36,7 +36,6 @@
  BZ2_indexIntoF
  BZ2_rNums
  CPFun
- CharBusy
  CharacterMode
  ColorDataBase
  ConsoleAcceptCmd
@@ -165,7 +164,6 @@
  GA_win_rgb
  GRecording
  GetCurrentWinPos
- GuiBusy
  IS_ACTIVE_BINDING
  InitDynload
  Init_R_Variables
@@ -1108,7 +1106,6 @@
  inflate_copyright
  inflate_fast
  inflate_table
- internal_ShowFile
  internal_shellexec
  intpr0_
  isMethodsDispatchOn

@@ -359,13 +359,13 @@ void R_ClearerrConsole()
  *  3) ACTIONS DURING (LONG) COMPUTATIONS
  */
 
-void GuiBusy(int which)
+static void GuiBusy(int which)
 {
     if (which == 1) gsetcursor(RConsole, WatchCursor);
     if (which == 0) gsetcursor(RConsole, ArrowCursor);
 }
 
-void CharBusy(int which)
+static void CharBusy(int which)
 {
 }
 
@@ -515,15 +515,6 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
     return 1;
 }
 
-int internal_ShowFile(char *file, char *header)
-{
-    SEXP pager = GetOption(install("pager"), R_BaseEnv);
-    char *files[1], *headers[1];
-
-    files[0] = file;
-    headers[0] = header;
-    return R_ShowFiles(1, files, headers, "File", 0, CHAR(STRING_ELT(pager, 0)));
-}
 
     /*
        This function can be used to open the named files in text editors, with the
