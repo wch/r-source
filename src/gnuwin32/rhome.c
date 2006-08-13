@@ -33,7 +33,7 @@
 
 static char rhomebuf[MAX_PATH];
 
-/* <MBCS-FIXME> We can't just use Rf_strchr as this is called 
+/* <MBCS-FIXME> We can't just use Rf_strchr as this is called
    from front-ends */
 #define GOBACKONESLASH \
   p = strrchr(rhomebuf,'\\'); \
@@ -44,6 +44,7 @@ static char rhomebuf[MAX_PATH];
   } \
   *p = '\0'
 
+/* get R_HOME from the module path: used in Rgui and Rterm */
 char *getRHOME()
 {
     DWORD nc;
@@ -54,7 +55,7 @@ char *getRHOME()
     GOBACKONESLASH;
     GOBACKONESLASH;
     /* make sure no spaces in path */
-    for (p = rhomebuf; *p; p++) 
+    for (p = rhomebuf; *p; p++)
 	if (isspace(*p)) { hasspace = 1; break; }
     if (hasspace)
 	GetShortPathName(rhomebuf, rhomebuf, MAX_PATH);
@@ -69,20 +70,28 @@ char *getDLLVersion()
     return (DLLversion);
 }
 
+/* get R_HOME from environment or registry: used in embedded apps */
 char *get_R_HOME()
 {
     LONG rc;
     HKEY hkey;
     DWORD keytype = REG_SZ, cbData = sizeof(rhomebuf);
 
+    /* First try the C environment space */
     if(getenv("R_HOME")) {
         strncpy(rhomebuf, getenv("R_HOME"), MAX_PATH);
 	return (rhomebuf);
-    } 
-    rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\R-core\\R", 0, 
+    }
+
+    /* Then the Windows API environment space */
+    if (GetEnvironmentVariable ("R_HOME", rhomebuf, sizeof (rhomebuf)) > 0)
+	return (rhomebuf);
+
+    /* And then the registry */
+    rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\R-core\\R", 0,
 		      KEY_READ, &hkey);
     if (rc == ERROR_SUCCESS) {
-	rc = RegQueryValueEx(hkey, "InstallPath", 0, &keytype, 
+	rc = RegQueryValueEx(hkey, "InstallPath", 0, &keytype,
 			     (LPBYTE) rhomebuf, &cbData);
 	RegCloseKey (hkey);
     } else return NULL;

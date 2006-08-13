@@ -47,7 +47,7 @@ extern int R_ReplDLLdo1();
    frequently. See rterm.c and ../system.c for one approach using
    a separate thread for input.
 */
-int myReadConsole(char *prompt, char *buf, int len, int addtohistory)
+static int myReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     fputs(prompt, stdout);
     fflush(stdout);
@@ -55,17 +55,17 @@ int myReadConsole(char *prompt, char *buf, int len, int addtohistory)
     else return 0;
 }
 
-void myWriteConsole(char *buf, int len)
+static void myWriteConsole(char *buf, int len)
 {
     printf("%s", buf);
 }
 
-void myCallBack()
+static void myCallBack()
 {
     /* called during i/o, eval, graphics in ProcessEvents */
 }
 
-void myBusy(int which)
+static void myBusy(int which)
 {
     /* set a busy cursor ... if which = 1, unset if which = 0 */
 }
@@ -81,8 +81,8 @@ int Rf_initialize_R(int argc, char **argv)
     Rstart Rp = &rp;
     char Rversion[25], *RHome;
 
-    sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
-    if(strcmp(getDLLVersion(), Rversion) != 0) {
+    snprintf(Rversion, 25, "%s.%s", R_MAJOR, R_MINOR);
+    if(strncmp(getDLLVersion(), Rversion, 25) != 0) {
         fprintf(stderr, "Error: R.DLL version does not match\n");
 	exit(1);
     }
