@@ -40,9 +40,9 @@ C-level changes
 ---------------
 
 There is now a similar embedding interface to that under Unix, using
-Rf_initEmbeddedR.
+Rf_initEmbeddedR / Rf_endEmbeddedR.
 
-The C-level printf functions have been replaced by those from the trio
+The C-level *printf functions have been replaced by those from the trio
 library, which ensures a higher level of C99 compliance without the
 need for lots of Windows-specific workarounds.
 
@@ -62,7 +62,7 @@ code making use of graphapp will need to be recompiled.
 Building R
 ----------
 
-mingw-runtime >= 3.10 is required to build R (a bug fix in the handing
+mingw-runtime >= 3.10 is required to build R (a bug fix in the handling
 of MBCS code is required).  This is enforced by a check in building
 Rpwd.exe.
 
@@ -86,6 +86,9 @@ dirname() converted paths involving network shares to forward slashes.
 R could crash when very low on memory. (PR#8981)
 
 Due to a typo, R CMD Rd2dvi would not work with MiKTeX.
+
+Objects from Fortran 9X sources no longer need to be declared to R CMD
+SHLIB/INSTALL via OBJS in Makevars.win.
 
 
 
