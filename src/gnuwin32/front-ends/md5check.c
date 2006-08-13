@@ -165,7 +165,7 @@ int main (int argc, char **argv)
 #endif
 	    continue;
 	} else {
-	    for(j = 0; j < 16; j++) sprintf (out+2*j, "%02x", resblock[j]);
+	    for(j = 0; j < 16; j++) snprintf (out+2*j, 2, "%02x", resblock[j]);
 	    if(strcmp(onfile, out) == 0) {
 #ifdef DEBUG
 		printf("OK\n");

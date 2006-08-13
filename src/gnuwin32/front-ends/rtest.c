@@ -71,7 +71,7 @@ int main (int argc, char **argv)
     Rstart Rp = &rp;
     char Rversion[25], *RHome;
 
-    sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
+    snprintf(Rversion, 25, "%s.%s", R_MAJOR, R_MINOR);
     if(strcmp(getDLLVersion(), Rversion) != 0) {
         fprintf(stderr, "Error: R.DLL version does not match\n");
         exit(1);
@@ -98,8 +98,6 @@ int main (int argc, char **argv)
     Rp->R_Interactive = FALSE;
     Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_NOSAVE;
-    R_SetParams(Rp); /* so R_ShowMessage is set */
-    R_SizeFromEnv(Rp);
     R_SetParams(Rp);
     R_set_command_line_arguments(argc, argv);
 

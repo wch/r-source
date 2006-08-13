@@ -44,7 +44,7 @@ extern void saveConsoleTitle();
 static char Rversion[25];
 char *getRVersion()
 {
-    sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
+    snprintf(Rversion, 25, "%s.%s", R_MAJOR, R_MINOR);
     return(Rversion);
 }
 

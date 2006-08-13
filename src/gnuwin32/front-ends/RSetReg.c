@@ -36,7 +36,7 @@ int main (int argc, char **argv)
     HKEY hkey, hkey2;
     
 
-    sprintf(version, "%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
+    snprintf(version, 40, "%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
 
     if(argc > 1) { /* remove the keys */
 	printf("unregistering R ... ");
