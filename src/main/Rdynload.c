@@ -1318,3 +1318,49 @@ R_getRegisteredRoutines(SEXP dll)
 }
 
 #endif
+
+/* Experimental interface for exporting and importing functions and
+   data from one package for use from C code in a package.  The
+   registration part probably ought to be integrated with the other
+   registrations.  The naming of these routines may be less than
+   ideal. */
+
+static SEXP CEntryTable = NULL;
+
+static SEXP get_package_CEntry_table(char *package)
+{
+    SEXP penv, pname;
+
+    if (CEntryTable == NULL) {
+	CEntryTable = R_NewHashedEnv(R_NilValue);
+	R_PreserveObject(CEntryTable);
+    }
+    pname = install(package);
+    penv = findVarInFrame(CEntryTable, pname);
+    if (penv == R_UnboundValue) {
+	penv = R_NewHashedEnv(R_NilValue);
+	defineVar(pname, penv, CEntryTable);
+    }
+    return penv;
+}
+
+
+void R_RegisterCCallable(char *package, char *name, DL_FUNC fptr)
+{
+    SEXP penv = get_package_CEntry_table(package);
+    SEXP eptr = R_MakeExternalPtr((void *) fptr, R_NilValue, R_NilValue);
+    PROTECT(eptr);
+    defineVar(install(name), eptr, penv);
+    UNPROTECT(1);
+}
+
+DL_FUNC R_GetCCallable(char *package, char *name)
+{
+    SEXP penv = get_package_CEntry_table(package);
+    SEXP eptr = findVarInFrame(penv, install(name));
+    if (eptr == R_UnboundValue)
+	error(_("function '%s' not provided by package '%s'"), package, name);
+    else if (TYPEOF(eptr) != EXTPTRSXP) 
+	error(_("table entry must be an external pointer"));
+    return (DL_FUNC) R_ExternalPtrAddr(eptr);
+}

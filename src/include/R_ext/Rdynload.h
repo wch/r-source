@@ -102,4 +102,12 @@ int moduleCdynload(char *module, int local, int now);
 
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
 
+/* Experimental interface for exporting and importing functions from
+   one package for use from C code in a package.  The registration
+   part probably ought to be integrated with the other registrations.
+   The naming of these routines may be less than ideal. */
+
+void R_RegisterCCallable(char *package, char *name, DL_FUNC fptr);
+DL_FUNC R_GetCCallable(char *package, char *name);
+
 #endif /* R_EXT_DYNLOAD_H_ */
