@@ -18,6 +18,9 @@ R could crash when very low on memory. (PR#8981)
 
 Due to a typo, R CMD Rd2dvi would not work with MiKTeX.
 
+Objects from Fortran 9X sources no longer need to be declared to R CMD
+SHLIB/INSTALL via OBJS in Makevars.win.
+
 
 
 R 2.3.1
