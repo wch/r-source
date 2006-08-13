@@ -108,8 +108,6 @@ int Rf_initialize_R(int argc, char **argv)
     Rp->R_Interactive = TRUE;
     Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_NOSAVE;
-    R_SetParams(Rp); /* so R_ShowMessage is set */
-    R_SizeFromEnv(Rp);
     R_SetParams(Rp);
     R_set_command_line_arguments(argc, argv);
 
