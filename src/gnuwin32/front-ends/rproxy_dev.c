@@ -293,8 +293,8 @@ static void R_Proxy_Graphics_Polyline (int pCount,
 	  lX[i] = pX[i];
 	  lY[i] = pY[i];
 
-	  sprintf (x,"Polyline: coord %d is %f/%f (was %f/%f)\n",
-		   i,lX[i],lY[i],pX[i],pY[i]);
+	  snprintf (x, 1000, "Polyline: coord %d is %f/%f (was %f/%f)\n",
+		    i,lX[i],lY[i],pX[i],pY[i]);
 	  /*	  OutputDebugString (x); */
 
 	}

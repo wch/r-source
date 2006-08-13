@@ -40,8 +40,8 @@ int bdx_trace_printf(char const* pFormat,...)
   static char __tracebuf[2048];
 
   va_list lArgs;
-  va_start(lArgs,pFormat);
-  vsprintf(__tracebuf,pFormat,lArgs);
+  va_start(lArgs, pFormat);
+  vsnprintf(__tracebuf, 2048, pFormat, lArgs);
   OutputDebugString(__tracebuf);
   return 0;
 }
