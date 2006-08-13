@@ -134,8 +134,11 @@ release.
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-You need Windows 95 or later.  There is no specific version for
-Windows64, but the standard 32-bit version should work.
+You need Windows 95 or later.  There is no specific version for Windows
+64, but the standard 32-bit version has been proven to work.  Some
+features only work on an NT-based version of Windows (and some work
+better on such an OS).  We do minimally test releases on Windows 98 and
+NT4, but only test thoroughly on XP and later.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
