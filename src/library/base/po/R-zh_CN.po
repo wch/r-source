@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:22\n"
+"POT-Creation-Date: 2006-08-13 09:20\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -638,6 +638,10 @@ msgstr "'max.distance'的组成部分不能有负值"
 
 msgid "matrix should be square"
 msgstr "矩阵必需的正方形的"
+
+#, fuzzy
+msgid "'object' must be a list"
+msgstr "'subset'必需是逻辑值"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "这是R%s，程辑包'%s'需要%s %s "

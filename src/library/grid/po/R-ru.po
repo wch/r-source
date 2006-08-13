@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-27 15:42\n"
+"POT-Creation-Date: 2006-08-13 09:20\n"
 "PO-Revision-Date: 2006-04-16 22:29-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -370,6 +370,9 @@ msgstr "Не предложено 'grob' для единицы 'grobwidth/height'"
 
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr "'gPath' должен иметь глубину 1 в единицах 'grobwidth/height'"
+
+msgid "Non-NULL value supplied for plain unit"
+msgstr ""
 
 msgid "Operator '%s' not meaningful for units"
 msgstr "Оператор '%s' не имеет значения для единиц"

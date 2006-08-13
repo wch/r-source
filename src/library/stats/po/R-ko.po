@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:23\n"
+"POT-Creation-Date: 2006-08-13 09:21\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1283,6 +1283,10 @@ msgstr "'degree'는 0,1 또는 2 입니다"
 
 msgid "both 'span' and 'enp.target' specified: 'span' will be used"
 msgstr "'span'와 'enp.target'의 쌍방이 지정되었습니다.'span'가 사용됩니다"
+
+#, fuzzy
+msgid "invalid 'control' argument"
+msgstr "무효인 대비 인수('contrasts.arg')입니다"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "1-4개의 예측자만에 허용되지 않습니다"

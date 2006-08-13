@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:23\n"
+"POT-Creation-Date: 2006-08-13 09:21\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1258,6 +1258,10 @@ msgstr "'degree' は 0, 1 または 2 です"
 
 msgid "both 'span' and 'enp.target' specified: 'span' will be used"
 msgstr "'span' と 'enp.target' の双方が指定されました。'span' が使われます"
+
+#, fuzzy
+msgid "invalid 'control' argument"
+msgstr "無効な 'contrasts.arg' 引数です"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "1-4 個の予測子しか許されません"

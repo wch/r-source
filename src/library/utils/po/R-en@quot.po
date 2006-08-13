@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:23\n"
-"PO-Revision-Date: 2006-07-18 13:23\n"
+"POT-Creation-Date: 2006-08-13 09:21\n"
+"PO-Revision-Date: 2006-08-13 09:21\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -586,6 +586,12 @@ msgstr "last record incomplete, %d lines discarded"
 
 msgid "transfer failure"
 msgstr "transfer failure"
+
+msgid "HTTPUserAgent"
+msgstr "HTTPUserAgent"
+
+msgid "option must be a length one character vector or NULL"
+msgstr "option must be a length one character vector or NULL"
 
 msgid "invalid 'socket' argument"
 msgstr "invalid ‘socket’ argument"

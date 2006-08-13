@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-09 16:42\n"
+"POT-Creation-Date: 2006-08-13 09:20\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1113,6 +1113,15 @@ msgstr "환경/패키지 \"%s\"로 심벌 \"%s\"의 결합에 관해서 할당�
 msgid ""
 "setting a method over the binding of symbol '%s' in environment/package '%s'"
 msgstr "환경/패키지 '%s'에서 심벌 '%s'의 결합에 관한 메소드를 세트합니다"
+
+msgid "Constructing traceable class \""
+msgstr ""
+
+msgid "Environment of class \""
+msgstr ""
+
+msgid "\" is locked; using base environment for new class"
+msgstr ""
 
 msgid "not a package name: '%s'"
 msgstr "패키지명이 아닙니다:'%s'"

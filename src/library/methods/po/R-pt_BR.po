@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-03-09 16:42\n"
+"POT-Creation-Date: 2006-08-13 09:20\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -562,7 +562,9 @@ msgstr ","
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
 "\"%s\""
-msgstr "um método de validade deve ser uma função de um argumento, mas foi obtido um objeto de classe \"%s\""
+msgstr ""
+"um método de validade deve ser uma função de um argumento, mas foi obtido um "
+"objeto de classe \"%s\""
 
 msgid "unable to find required package '%s'"
 msgstr "impossível encontrar o pacote necessário '%s'"
@@ -1006,6 +1008,16 @@ msgstr ""
 
 msgid ""
 "setting a method over the binding of symbol '%s' in environment/package '%s'"
+msgstr ""
+
+msgid "Constructing traceable class \""
+msgstr ""
+
+#, fuzzy
+msgid "Environment of class \""
+msgstr "Um objeto de classe \""
+
+msgid "\" is locked; using base environment for new class"
 msgstr ""
 
 msgid "not a package name: '%s'"

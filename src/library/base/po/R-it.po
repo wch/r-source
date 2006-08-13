@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:22\n"
+"POT-Creation-Date: 2006-08-13 09:20\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -660,6 +660,10 @@ msgstr "le componenti di 'max.distance' devono essere non negative"
 
 msgid "matrix should be square"
 msgstr "la matrice deve essere quadrata"
+
+#, fuzzy
+msgid "'object' must be a list"
+msgstr "'subset' deve essere di tipo logico"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "Questo è R %s, il pacchetto '%s' necessita di %s %s"

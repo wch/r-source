@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:23\n"
+"POT-Creation-Date: 2006-08-13 09:21\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -589,6 +589,13 @@ msgstr "마지막 불완전한 레코드 ,%d 라인이 없어져버렸습니다"
 
 msgid "transfer failure"
 msgstr "전송이 실패했습니다"
+
+msgid "HTTPUserAgent"
+msgstr ""
+
+#, fuzzy
+msgid "option must be a length one character vector or NULL"
+msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
 msgid "invalid 'socket' argument"
 msgstr "무효의 'socket' 인수입니다"
