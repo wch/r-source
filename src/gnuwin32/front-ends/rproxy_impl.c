@@ -28,19 +28,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define NEW
 #include <config.h>
+
+#ifdef NEW
+# include <Rinternals.h>
+#else
+# include <Defn.h>
+#endif
 #include <Rversion.h>
-#define LibExtern __declspec(dllimport) extern
 #include <Rembedded.h>
 #include <R_ext/RStartup.h>
+#include <R_ext/GraphicsDevice.h>
+#include <graphapp.h>
+
 #include "bdx_SEXP.h"
 #include "SC_proxy.h"
 #include "rproxy.h"
 #include "rproxy_impl.h"
-/* <FIXME> The next two are private header files */
-#include <IOStuff.h>
-#include <Parse.h>
-#include <R_ext/GraphicsDevice.h>
+
+#ifdef NEW
+# include <R_ext/Parse.h>
+#else
+/* <FIXME> Thees are private header files */
+# include <IOStuff.h>
+# include <Parse.h>
+#endif
 
 struct _R_Proxy_init_parameters
 {
@@ -53,7 +66,6 @@ struct _R_Proxy_init_parameters
 
 /* calls into the R DLL */
 extern char *getRHOME();
-extern void GA_askok(char *);
 
 int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 			     char* pDisplay,
@@ -76,17 +88,19 @@ int R_Proxy_printf(char const* pFormat,...)
   return 0;
 }
 
+#ifndef NEW
 static int s_EvalInProgress = 0;
+#endif
 
 static void R_Proxy_askok (char* pMsg)
 {
-  GA_askok(pMsg);
+  askok(pMsg);
   return;
 }
 
 static int R_Proxy_askyesnocancel (char* pMsg)
 {
-  return 1;
+  return YES;
 }
 
 static int 
@@ -98,9 +112,7 @@ R_Proxy_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 static void R_Proxy_WriteConsole(char *buf, int len)
 {
   if (__output_device)
-    {
       __output_device->vtbl->write_string (__output_device,buf);
-    }
 }
 
 static void R_Proxy_CallBack()
@@ -114,6 +126,8 @@ static void R_Proxy_Busy(int which)
 }
 
 
+#ifdef UNUSED
+/* <FIXME> unused here */
 int R_Proxy_parse_parameters (char const* pParameterString,
 			      struct _R_Proxy_init_parameters* pParameterStruct)
 {
@@ -127,6 +141,7 @@ int R_Proxy_parse_parameters (char const* pParameterString,
    */
   return 0;
 }
+#endif
 
 /* 00-02-18 | baier | R_Proxy_init() now takes parameter string, parse it */
 /* 03-06-01 | baier | now we add %R_HOME%\bin to %PATH% */
@@ -146,6 +161,7 @@ int R_Proxy_init (char const* pParameterString)
   R_DefParams(Rp);
 
   /* <FIXME> the documented interface is get_R_HOME() */
+
   /* first, try process-local environment space (CRT) */
   if (getenv("R_HOME")) {
       strcpy(RHome, getenv("R_HOME"));
@@ -165,7 +181,6 @@ int R_Proxy_init (char const* pParameterString)
   }
 
   Rp->rhome = RHome;
-
   Rp->home = getRUser();
   Rp->CharacterMode = LinkDLL;
   Rp->ReadConsole = R_Proxy_ReadConsole;
@@ -175,8 +190,8 @@ int R_Proxy_init (char const* pParameterString)
   Rp->YesNoCancel = R_Proxy_askyesnocancel;
   Rp->Busy = R_Proxy_Busy;
   Rp->R_Quiet = 1;
-  Rp->RestoreAction = 0; /* no restore */
-  Rp->SaveAction = 2;    /* no save */
+  Rp->RestoreAction = SA_NORESTORE;
+  Rp->SaveAction = SA_NOSAVE; /* had 2, with comment 'no save' which is 3 */
 
   R_SetParams(Rp);
   R_set_command_line_arguments(0, NULL);
@@ -187,6 +202,37 @@ int R_Proxy_init (char const* pParameterString)
 
   return SC_PROXY_OK;
 }
+
+#ifdef NEW
+int R_Proxy_evaluate (char const* pCmd, BDX_Data** pData)
+{
+    SEXP lSexp;
+    int lRc = SC_PROXY_OK, evalError = 0;
+    ParseStatus lStatus;
+    SEXP lResult;
+
+    lSexp = R_ParseVector(mkString(pCmd), 1, &lStatus);
+    /* This is an EXPRSXP: we assume just one expression */
+
+    switch (lStatus) {
+    case PARSE_OK:
+	PROTECT(lSexp);
+	lResult = R_tryEval(VECTOR_ELT(lSexp, 0), R_GlobalEnv, &evalError);
+	UNPROTECT(1);
+	if(evalError) lRc = SC_PROXY_ERR_EVALUATE_STOP;
+	else lRc = SEXP2BDX(lResult, pData);
+	break;
+    case PARSE_INCOMPLETE:
+	lRc = SC_PROXY_ERR_PARSE_INCOMPLETE;
+	break;
+    default:
+	lRc = SC_PROXY_ERR_PARSE_INVALID;
+	break;
+    }
+    return lRc;
+}
+
+#else
 
 /* 01-06-05 | baier | SETJMP and fatal error handling around eval() */
 /* 04-08-01 | baier | ref-counting in case of error */
@@ -205,24 +251,17 @@ int R_Proxy_evaluate (char const* pCmd, BDX_Data** pData)
   s_EvalInProgress = 0;
 
   R_IoBufferInit (&lBuffer);
-  R_IoBufferPuts ((char*) pCmd,&lBuffer);
-  R_IoBufferPuts ("\n",&lBuffer);
+  R_IoBufferPuts ((char*) pCmd, &lBuffer);
+  R_IoBufferPuts ("\n", &lBuffer);
 
-  /* don't generate code, just a try */
   R_IoBufferReadReset (&lBuffer);
-  lSexp = R_Parse1Buffer (&lBuffer,0,&lStatus);
+  lSexp = R_Parse1Buffer (&lBuffer, 1, &lStatus);
+  PrintValue(lSexp);
 
   switch (lStatus)
     {
-    case PARSE_NULL:
-      /* we forget the IoBuffer "lBuffer", so don't do anything here */
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
     case PARSE_OK:
-      /* now generate code */
-      R_IoBufferReadReset (&lBuffer);
-      lSexp = R_Parse1Buffer (&lBuffer, 1, &lStatus);
-      R_Visible = 0;
+      R_Visible = 0; /* Not printing, so not used */
       R_EvalDepth = 0;
       PROTECT(lSexp);
       {
@@ -233,8 +272,10 @@ int R_Proxy_evaluate (char const* pCmd, BDX_Data** pData)
 
 	if (!s_EvalInProgress)
 	  {
+	      /* <FIXME> This does not set .Last.value, does not
+		 print result and does not print warnings */
 	    s_EvalInProgress = 1;
-	    lResult = eval (lSexp,rho);
+	    lResult = eval (lSexp, rho);
 	    memcpy(R_Toplevel.cjmpbuf, lJmpBuf, sizeof(lJmpBuf));
 	    s_EvalInProgress = 0;
 	  }
@@ -248,23 +289,48 @@ int R_Proxy_evaluate (char const* pCmd, BDX_Data** pData)
       /* no last value */
       UNPROTECT(1);
       break;
-    case PARSE_ERROR:
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
     case PARSE_INCOMPLETE:
       lRc = SC_PROXY_ERR_PARSE_INCOMPLETE;
       break;
-    case PARSE_EOF:
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
     default:
-      /* never reached */
-      lRc = SC_PROXY_ERR_UNKNOWN;
+      lRc = SC_PROXY_ERR_PARSE_INVALID;
       break;
     }
 
   return lRc;
 }
+#endif
+
+#ifdef NEW
+int R_Proxy_evaluate_noreturn (char const* pCmd)
+{
+    SEXP lSexp;
+    int lRc = SC_PROXY_OK, evalError = 0;
+    ParseStatus lStatus;
+    SEXP lResult;
+
+    lSexp = R_ParseVector(mkString(pCmd), 1, &lStatus);
+    /* It would make sense to allow multiple expressions here */
+  
+    switch (lStatus) {
+    case PARSE_OK:
+	PROTECT(lSexp);
+	lResult = R_tryEval(VECTOR_ELT(lSexp, 0), R_GlobalEnv, &evalError);
+	UNPROTECT(1);
+	if(evalError) lRc = SC_PROXY_ERR_EVALUATE_STOP;
+	else lRc = SC_PROXY_OK;
+	break;
+    case PARSE_INCOMPLETE:
+	lRc = SC_PROXY_ERR_PARSE_INCOMPLETE;
+	break;
+    default:
+	lRc = SC_PROXY_ERR_PARSE_INVALID;
+	break;
+    }
+    return lRc;
+}
+
+#else
 
 /* 01-06-05 | baier | SETJMP and fatal error handling around eval() */
 /* 04-08-01 | baier | ref-counting in case of error */
@@ -282,27 +348,19 @@ int R_Proxy_evaluate_noreturn (char const* pCmd)
   s_EvalInProgress = 0;
 
   R_IoBufferInit (&lBuffer);
-  R_IoBufferPuts ((char*) pCmd,&lBuffer);
-  R_IoBufferPuts ("\n",&lBuffer);
+  R_IoBufferPuts ((char*) pCmd, &lBuffer);
+  R_IoBufferPuts ("\n", &lBuffer);
 
-  /* don't generate code, just a try */
   R_IoBufferReadReset (&lBuffer);
-  lSexp = R_Parse1Buffer (&lBuffer, 0, &lStatus);
+  lSexp = R_Parse1Buffer (&lBuffer, 1, &lStatus);
+  PrintValue(lSexp);
 
   switch (lStatus)
     {
-    case PARSE_NULL:
-      /* we forget the IoBuffer "lBuffer", so don't do anything here */
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
     case PARSE_OK:
-      /* now generate code */
-      R_IoBufferReadReset (&lBuffer);
-      lSexp = R_Parse1Buffer (&lBuffer, 1, &lStatus);
       R_Visible = 0;
       R_EvalDepth = 0;
       PROTECT(lSexp);
-      /* at the moment, discard the result of the eval */
       {
 	JMP_BUF lJmpBuf;
 	memcpy(lJmpBuf, R_Toplevel.cjmpbuf, sizeof(lJmpBuf));
@@ -312,7 +370,7 @@ int R_Proxy_evaluate_noreturn (char const* pCmd)
 	if (!s_EvalInProgress)
 	  {
 	    s_EvalInProgress = 1;
-	    eval (lSexp,rho);
+	    eval (lSexp, rho);
 	    memcpy(R_Toplevel.cjmpbuf, lJmpBuf, sizeof(lJmpBuf));
 	    s_EvalInProgress = 0;
 	  }
@@ -326,25 +384,35 @@ int R_Proxy_evaluate_noreturn (char const* pCmd)
       UNPROTECT(1);
       lRc = SC_PROXY_OK;
       break;
-    case PARSE_ERROR:
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
     case PARSE_INCOMPLETE:
       lRc = SC_PROXY_ERR_PARSE_INCOMPLETE;
       break;
-    case PARSE_EOF:
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
     default:
-      /* never reached */
-      lRc = SC_PROXY_ERR_UNKNOWN;
+      lRc = SC_PROXY_ERR_PARSE_INVALID;
       break;
     }
 
   return lRc;
 }
+#endif
 
-int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData)
+#ifdef NEW
+int R_Proxy_get_symbol (char const* pSymbol, BDX_Data** pData)
+{
+    SEXP lVar = findVar (install((char*) pSymbol), R_GlobalEnv);
+
+    if (lVar == R_UnboundValue) {
+	RPROXY_TRACE(printf(">> %s is an unbound value\n", pSymbol));
+	return SC_PROXY_ERR_INVALIDSYMBOL;
+    } else if(SEXP2BDX(lVar, pData) == 0)
+	return SC_PROXY_OK;
+    else
+	return SC_PROXY_ERR_UNSUPPORTEDTYPE;
+}
+
+#else
+
+int R_Proxy_get_symbol (char const* pSymbol, BDX_Data** pData)
 {
   IoBuffer lBuffer;
   SEXP lSexp;
@@ -395,14 +463,15 @@ int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData)
 	}
       }
     }
-  return SC_PROXY_OK;
+  return SC_PROXY_OK; /* Really? - gets here on invalid input! */
 }
+#endif
 
 /* 04-02-19 | baier | don't PROTECT strings in a vector, new data structs */
 /* 04-03-02 | baier | removed traces */
 /* 04-10-15 | baier | no more BDX_VECTOR (only BDX_ARRAY) */
 /* 05-05-16 | baier | use BDX2SEXP, clean-up */
-int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
+int R_Proxy_set_symbol (char const* pSymbol, BDX_Data const* pData)
 {
   SEXP lSymbol = 0;
   SEXP lData = 0;
