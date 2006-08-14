@@ -29,7 +29,7 @@ PROGRAMS = Rtest Rplot Rpostscript Rerror RNamedCall RParseEval Rpackage tryEval
 
 ## <FIXME>
 ## Currently Rshutdown.c is not used.
-DISTFILES = Makefile.in index.html \
+DISTFILES = Makefile.in Makefile.win index.html \
   $(SOURCES_R) $(SOURCES_C) $(HEADERS) \
   Rshutdown.c
 ## </FIXME>
