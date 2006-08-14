@@ -21,21 +21,24 @@
 #define R_PARSE_H
 
 #include <R_ext/Parse.h>
+#include <IOStuff.h>
 
-	/* Parse A Single Expression */
-
-SEXP R_Parse1File(FILE*, int, ParseStatus *);
-SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *);
-SEXP R_Parse1Vector(TextBuffer*, int, ParseStatus *);
-SEXP R_Parse1General(int (*)(), int (*)(), int, ParseStatus *);
-
-	/* Parse Several Expressions */
-
-SEXP R_ParseFile(FILE*, int, ParseStatus *);
-SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP);
+/* Public interface */
 /* SEXP R_ParseVector(SEXP, int, ParseStatus *); in R_ext/Parse.h */
-SEXP R_ParseGeneral(int (*)(), int (*)(), int, ParseStatus *);
 
+/* Private interface */
+SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *); /* in ReplIteration,
+						       R_ReplDLLdo1 */
+SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP); /* in source.c */
+SEXP R_Parse1File(FILE*, int, ParseStatus *); /* in R_ReplFile */
+SEXP R_ParseFile(FILE*, int, ParseStatus *);  /* in edit.c */
+
+/* Unused */
+#ifdef PARSE_UNUSED
+SEXP R_Parse1General(int (*)(), int (*)(), int, ParseStatus *);
+SEXP R_ParseGeneral(int (*)(), int (*)(), int, ParseStatus *);
+SEXP R_Parse1Vector(TextBuffer*, int, ParseStatus *);
+#endif
 
 #ifndef HAVE_RCONNECTION_TYPEDEF
 typedef struct Rconn  *Rconnection;

@@ -224,15 +224,12 @@
  R_PPStackSize
  R_PPStackTop
  R_Parse1File
- R_Parse1General
- R_Parse1Vector
  R_ParseBuffer
  R_ParseConn
  R_ParseContext
  R_ParseContextLast
  R_ParseError
  R_ParseFile
- R_ParseGeneral
  R_Quiet
  R_RestartStack
  R_RestartToken

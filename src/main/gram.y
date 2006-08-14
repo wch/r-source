@@ -1031,6 +1031,7 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *	SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
  *
  *	SEXP R_Parse1Vector(TextBuffer *text, int gencode, ParseStatus *status)
+ *      [Unused]
  *
  *	SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
  *
@@ -1154,7 +1155,7 @@ static int text_getc()
 
 
 /* unused */
-attribute_hidden
+#ifdef PARSE_UNUSED
 SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
 {
     ParseInit();
@@ -1165,8 +1166,11 @@ SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
     R_Parse1(status);
     return R_CurrentExpr;
 }
+#endif
 
-/* Not used */
+
+#ifdef PARSE_UNUSED
+/* Not used, and note ungetc is no longer needed */
 attribute_hidden
 SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
 		     int gencode, ParseStatus *status)
@@ -1178,6 +1182,7 @@ SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
     R_Parse1(status);
     return R_CurrentExpr;
 }
+#endif
 
 static SEXP R_Parse(int n, ParseStatus *status)
 {
@@ -1271,8 +1276,8 @@ SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
     return rval;
 }
 
-/* not used */
-attribute_hidden
+#ifdef PARSE_UNUSED
+/* Not used, and note ungetc is no longer needed */
 SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
 		    ParseStatus *status)
 {
@@ -1281,6 +1286,7 @@ SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
     ptr_getc = ggetc;
     return R_Parse(n, status);
 }
+#endif
 
 static char *Prompt(SEXP prompt, int type)
 {
