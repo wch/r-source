@@ -41,10 +41,7 @@ R: Makefile $(OBJECTS) svnonly
 	done
 
 svnonly:
-	@if test ! -f "$(srcdir)/resources.html" || test -f non-tarball ; then \
-	  (cd ../manual && $(MAKE) html-non-svn) ; \
-	  touch non-tarball ; \
-	else \
+	@if test -f "$(srcdir)/resources.html"; then \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	    for f in $(NON_SVN_INSTFILES); do \
 	      $(INSTALL_DATA) $(srcdir)/$${f} . ; \
@@ -101,8 +98,8 @@ distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@if test -f non-tarball ; then \
-	  rm -f $(NON_SVN_INSTFILES) non-tarball ; \
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  rm -f $(NON_SVN_INSTFILES); \
 	fi
 	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean

@@ -89,17 +89,15 @@ distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-	@if test -f non-tarball ; then \
-	  rm -f $(NON_SVN_INSTFILES) non-tarball ; \
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  rm -f $(NON_SVN_INSTFILES); \
 	fi
 	-@rm -f Makefile R.1
 maintainer-clean: distclean
 
 
 svnonly:
-	@if test ! -f "$(srcdir)/FAQ" ; then \
-	  touch non-tarball ; \
-	else \
+	@if test -f "$(srcdir)/FAQ" ; then \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	    for f in $(NON_SVN_INSTFILES); do \
 	      $(INSTALL_DATA) $(srcdir)/$${f} .; \
