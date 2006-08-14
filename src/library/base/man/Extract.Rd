@@ -71,7 +71,7 @@ x$name
   below on recursive objects.
 
   Subsetting (except by an empty index) will drop all attributes except
-  \code{names}, \code{dim} and \code{dinmanes}.
+  \code{names}, \code{dim} and \code{dimnames}.
 
   Indexing can occur on the right-hand-side of an expression for
   extraction, or on the left-hand-side for replacement. When an index
