@@ -123,7 +123,7 @@ function(x, ...)
                 txt <- paste(titles, " {", basename(paths), "}", sep="")
                 ## FIXME: use html page for HTML help.
                 res <- menu(txt, title = gettext("Choose one"),
-                            graphics = TRUE)
+                            graphics = getOption("menu.graphics"))
                 if(res > 0) file <- p[res]
             } else {
                 writeLines(gettext("\nUsing the first match ..."))
@@ -159,7 +159,7 @@ function(x, ...)
             	attributes(x) <- att
             	attr(x, "type") <- "help"
             	print(x)
-            }		
+            }
         }
         else if(type == "help") {
             zfile <- zip.file.extract(file, "Rhelp.zip")

@@ -5,7 +5,7 @@
   Interact with the user to choose a CRAN mirror.
 }
 \usage{
-chooseCRANmirror(graphics = TRUE)
+chooseCRANmirror(graphics = getOption("menu.graphics"))
 }
 \arguments{
   \item{graphics}{Logical.

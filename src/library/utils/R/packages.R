@@ -499,7 +499,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 }
 
 
-chooseCRANmirror <- function(graphics = TRUE)
+chooseCRANmirror <- function(graphics = getOption("menu.graphics"))
 {
     if(!interactive()) stop("cannot choose a CRAN mirror non-interactively")
     m <- try(read.csv(url("http://cran.r-project.org/CRAN_mirrors.csv"),
@@ -516,7 +516,7 @@ chooseCRANmirror <- function(graphics = TRUE)
     invisible()
 }
 
-setRepositories <- function(graphics=TRUE)
+setRepositories <- function(graphics = getOption("menu.graphics"))
 {
     if(!interactive()) stop("cannot set repositories non-interactively")
     p <- file.path(Sys.getenv("HOME"), ".R", "repositories")

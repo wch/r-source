@@ -84,7 +84,9 @@ type?topic
 
   If multiple help files matching \code{topic} are found, in interactive
   use a menu is presented for the user to choose one: otherwise the
-  first on the search path is used.
+  first on the search path is used.  (The menu will be a graphical menu
+  if possible if \code{\link{getOption}("menu.graphics")} is true, the
+  default.)
 
 #ifdef unix
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is

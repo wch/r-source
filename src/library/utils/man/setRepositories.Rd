@@ -5,7 +5,7 @@
   Interact with the user to choose the package repositories to be used.
 }
 \usage{
-setRepositories(graphics = TRUE)
+setRepositories(graphics = getOption("menu.graphics"))
 }
 \arguments{
   \item{graphics}{Logical.

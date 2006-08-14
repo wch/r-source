@@ -10,7 +10,8 @@
              pkgType = .Platform$pkgType,
              str = list(strict.width = "no"),
              example.ask = "default",
-             HTTPUserAgent = defaultUserAgent())
+             HTTPUserAgent = defaultUserAgent(),
+             menu.graphics = TRUE)
     extra <-
         if(.Platform$OS.type == "windows") {
             list(mailer = "none",
