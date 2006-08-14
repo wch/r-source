@@ -495,9 +495,20 @@ vignettes:
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 RVER-PAT = $(shell version=`cut -d' ' -f1 ../../VERSION | sed -n 1p`; if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then version=`echo $${version} | sed 's/\.[0-9]*$$//'`; echo "$${version}-patched"; else echo "$${version}"; fi)
+SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
-docfiles:
-	$(MAKE) -f Makefile.docfiles
+docfiles: rw-FAQ ../../doc/html/rw-FAQ.html
+
+../../doc/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION
+	@echo "making rw-FAQ.html"
+	@$(SED) $(SEDVER) $< | \
+	  makeinfo --no-split --html --no-headers --number-sections -o $@ 
+
+rw-FAQ: rw-FAQ.texi ../../VERSION
+	@echo "making rw-FAQ"
+	@$(SED) $(SEDVER) $< | \
+	  makeinfo --no-headers --number-sections -o $@
+
 
 bitmapdll:
 	$(MAKE) -C bitmap

@@ -111,6 +111,7 @@ Chinese/Japanese/Korean support changed in R @samp{2.3.0}.
 * Does R support automation?::  
 * The Internet download functions fail.::  
 * Entering certain characters crashes Rgui.::  
+* What does 'DLL attempted to change FPU control word' mean?::  
 * Other strange crashes.::      
 @end menu
 
@@ -155,8 +156,9 @@ group for R).
 
 Choose a working directory for R.  You will have a shortcut to
 @file{@RWVER@\bin\Rgui.exe} on your desktop and/or somewhere on the
-Start menu file tree.  Right-click each shortcut, select
-Properties... and change the `Start in' field to your working directory.
+Start menu file tree, and perhaps also in the Quick Launch bar.
+Right-click each shortcut, select Properties... and change the `Start
+in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the Target
 field (@emph{after} any final double quote), for example @code{--sdi
@@ -303,8 +305,8 @@ R can be compiled to use a different memory manager which might be better
 at using large amounts of memory, but is substantially slower (making R
 several times slower on some tasks).
 
-In this version of R, the executables support up to 3Gb per process
-under suitably enabled versions of Windows (see
+The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3Gb
+per process under suitably enabled versions of Windows (see
 @uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}).
 
 
@@ -548,7 +550,7 @@ The second version will prompt the user for the proxy username and
 password when HTTP downloads are first used.
 
 
-@node Entering certain characters crashes Rgui., Other strange crashes., The Internet download functions fail., Installation and Usage
+@node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
 
 This used to happen occasionally, and all the occurrences we have solved
@@ -569,9 +571,22 @@ This fix has solved other problems too, for example incorrect results in
 the date-time functions.  However, you are probably better off
 re-installing Windows.
 
+@node What does 'DLL attempted to change FPU control word' mean?, Other strange crashes., Entering certain characters crashes Rgui., Installation and Usage
+@section What does 'DLL attempted to change FPU control word' mean?
 
+This is a @emph{warning} which indicates that R has taken action to
+correct the action of some (non-R) DLL which has just been loaded and
+has changed the floating point control word (in its initialization code)
+to a setting incompatible with that needed for R.  This is not good
+practice on the part of the DLL, and often indicates that it needs to be
+updated.  (It was common with DLLs compiled in early versions of Visual C++.)
 
-@node Other strange crashes.,  , Entering certain characters crashes Rgui., Installation and Usage
+Unfortunately, because DLLs may load other DLLs it is not possible for R
+to track which DLL caused the problem.
+
+See also @code{?dyn.load)}.
+
+@node Other strange crashes.,  , What does 'DLL attempted to change FPU control word' mean?, Installation and Usage
 @section Other strange crashes.
 
 Some users have found that @code{Rgui.exe} fails to start, exiting with
@@ -587,8 +602,8 @@ crash.
 
 These errors are essentially impossible for us to fix or work around
 beyond the measures already taken (which were increased in R 2.3.0).
-The only solution we know of is for the user to replace the buggy driver
-that is causing the error.
+The only solution we know of is for the user to replace the buggy system
+component that is causing the error.
 
 
 @newchap{}
