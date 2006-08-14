@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2005  The R Development Core Team
+ *  Copyright (C) 1999-2006  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,8 @@ typedef int (*blah1) (char *, char *, int, int);
 typedef void (*blah2) (char *, int);
 typedef void (*blah3) ();
 typedef void (*blah4) (char *);
+/* Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
+   symbolic constants in graphapp.h */
 typedef int (*blah5) (char *);
 typedef void (*blah6) (int);
 typedef enum {RGui, RTerm, LinkDLL} UImode;
