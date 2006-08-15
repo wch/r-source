@@ -250,7 +250,7 @@ getOption(x)
     \code{expressions} \tab \code{5000}\cr
     \code{keep.source} \tab \code{interactive()}\cr
     \code{keep.source.pkgs} \tab \code{FALSE}\cr
-    \code{max.print} \tab \code{1000}\cr
+    \code{max.print} \tab \code{10000}\cr
     \code{OutDec} \tab \code{"."}\cr
     \code{prompt} \tab \code{"> "}\cr
     \code{scipen} \tab \code{0} \cr
