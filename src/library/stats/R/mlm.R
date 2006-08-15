@@ -146,7 +146,7 @@ mauchly.test.SSD <- function(object, Sigma=diag(nrow=p),
             )
           )
 
-    retval <- list(statistic=z,p.value=pval,
+    retval <- list(statistic=c(W=exp(logW)),p.value=pval,
                    method=c("Mauchley's test of sphericity", transformnote),
                    data.name=paste("SSD matrix from",
                    deparse(object$call), collapse=" "))

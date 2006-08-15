@@ -48,6 +48,10 @@ USER-VISIBLE CHANGES
 	These changes may affect the results of sapply() and lapply()
 	applied to factors.
 
+    o   mauchly.test now returns the W statistic (for comparability 
+        with SAS and SPSS), rather than the z (which was accidentally
+        not named in the output)
+
 
 NEW FEATURES
 
