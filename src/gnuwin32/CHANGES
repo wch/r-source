@@ -73,6 +73,7 @@ http://prdownloads.sourceforge.net/mingw/mingw-runtime-3.10.tar.gz?download
 
 
 
+
 R 2.3.1 patched
 ===============
 
@@ -89,6 +90,12 @@ Due to a typo, R CMD Rd2dvi would not work with MiKTeX.
 
 Objects from Fortran 9X sources no longer need to be declared to R CMD
 SHLIB/INSTALL via OBJS in Makevars.win.
+
+There is a new option to make a .msi Microsoft Installer, intended for
+use by sysadmins doing automated installs.  See the 'R Installation
+and Administration Manual'.  (Thanks to David del Campo (Dept of
+Statistics, University of Oxford) for suggesting WiX and building a
+prototype installer.)
 
 
 

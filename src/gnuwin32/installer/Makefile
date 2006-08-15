@@ -31,7 +31,8 @@ GW32_FILES = MkRules MakePkg MakeDll Rpwd.exe pwd.pl makeDllRes.pl install-save.
 # we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf
 
-all: $(RPREFIX).exe
+all: $(RPREFIX)-win32.exe
+msi: $(RPREFIX)-win32.msi
 
 imagedir:
 	$(RM) -r $(RPREFIX)
@@ -107,17 +108,44 @@ fixups:
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
 
+
+## for Inno Setup installer
+
 R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums
 	perl JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet)
 
-$(RPREFIX).exe: R.iss
+$(RPREFIX)-win32.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
 
+
+## for MSI installer
+
+uuidgen.exe: uuidgen.o
+	$(CC) -o $@ $< -lole32
+
+# currently use about 4200
+uuids: uuidgen.exe
+	uuidgen 10000 > $@
+
+files.wxs: imagedir fixups md5sums
+	"$(WIXDIR)/tallow" -1 -d $(RPREFIX) > $@
+
+R.wxs: WIXins.pl uuids files.wxs
+	perl WIXins.pl $(RPREFIX) $(RPREFIX)
+
+$(RPREFIX)-win32.msi: R.wxs License.rtf
+	"$(WIXDIR)/candle" R.wxs > $(RPREFIX).log 2>&1
+	"$(WIXDIR)/light" -out $@ R.wixobj $(WIXDIR)/wixui.wixlib \
+	  -loc $(WIXDIR)/WixUI_en-us.wxl >> $(RPREFIX).log 2>&1
+
+
+
 clean:
-	rm -rf R.iss *.log $(RPREFIX) 
+	rm -rf R.iss *.log $(RPREFIX) R.wxs files.wxs R.wixobj \
+	  uuidgen.o uuidgen.exe uuids
 
 distclean: clean
-	rm -f $(RPREFIX)-win32.exe
+	rm -f $(RPREFIX)-win32.*
 
 myR:
 	$(CAT) $(IMAGEDIR)/library/*/CONTENTS >  \

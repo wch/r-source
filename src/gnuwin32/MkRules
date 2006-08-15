@@ -59,6 +59,11 @@ TCL_VERSION = 84
 # location where Inno Setup 5.1.x was installed. Spaces allowed.
 ISDIR=C:/packages/Inno51
 
+## ====== configuration macros for building MSI installer ===========
+
+# location where WiX was installed. Spaces allowed, slashes required.
+WIXDIR=C:/packages/WiX
+
 ## ====== configuration macros for building packages ================
 
 ## For a package using F90/95 set the name or path of gfortran.exe 
