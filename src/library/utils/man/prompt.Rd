@@ -57,7 +57,7 @@ prompt(object, filename = NULL, name = NULL, \dots)
 \section{Warning}{
   The default filename may not be a valid filename under limited file
   systems (e.g. those on Windows).
-  
+
   Currently, calling \code{prompt} on a non-function object assumes that
   the object is in fact a data set and hence documents it as such.  This
   may change in future versions of \R.  Use \code{\link{promptData}} to
@@ -67,6 +67,9 @@ prompt(object, filename = NULL, name = NULL, \dots)
   \code{\link{promptData}}, \code{\link{help}} and the chapter on
   \dQuote{Writing \R documentation} in \dQuote{Writing \R Extensions}
   (see the \file{doc/manual} subdirectory of the \R source tree).
+
+  For creation of many help pages (for a package),
+  see \code{\link{package.skeleton}}.
 
   To prompt the user for input, see \code{\link{readline}}.
 }
