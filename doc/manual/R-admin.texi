@@ -1001,9 +1001,9 @@ make rinstaller MDISDI=1
 @end example
 
 @noindent
-will create an installer that defaults to installing @R{} to run in SDI mode.  
-See @file{src/gnuwin32/installer/Makefile} for the 
-names and values to set.
+will create an installer that defaults to installing @R{} to run in SDI
+mode.  See @file{src/gnuwin32/installer/Makefile} for the names and
+values that can be set.
 
 @node Building the MSI installer, Cross-building on ix86 Linux, Building the Inno Setup installer, Building from source
 @subsection Building the MSI installer
@@ -1012,14 +1012,15 @@ It is also possible to build an installer for use with Microsoft
 Installer.  This is intended for use by sysadmins doing automated
 installs, and is not recommended for causal use.
 
-It depend on the Windows Installer XML (WiX) toolset available from
+It makes use of the Windows Installer XML (WiX) toolkit available from
 @url{http://wix.sourceforge.net/}: we tested version 2.0.  (This needs
 the .NET 1.1 framework installed: it ran on a vanilla Windows XP SP2
-machine.)  Once WiX is installed, set the path to its home directory in
-@file{MkRules}.
+machine. Probably Windows 2000 or later is required by some of the
+features used.)  Once WiX is installed, set the path to its home
+directory in @file{MkRules}.
 
 You need to have the files for a complete R build, including bitmap and
-Tcl/Tk support and the manuals, as well as the recommended packages
+Tcl/Tk support and the manuals, as well as the recommended packages.
 Then
 
 @example

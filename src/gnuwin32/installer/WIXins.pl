@@ -341,6 +341,9 @@ foreach $n (sort values %trans) {
     print insfile "      <ComponentRef Id='$n' />\n";
 }
 
+## look up local Windows system32 directory
+my $WINDOWS = Win32::GetFolderPath(Win32::CSIDL_SYSTEM);
+
 print insfile <<END;
     </Feature>
 
@@ -370,7 +373,7 @@ print insfile <<END;
     <UIRef Id="WixUI_Mondo" />
     <UIRef Id="WixUI_ErrorProgressText" />
 
-    <Icon Id="shell32.dll" SourceFile="c:\\Windows\\system32\\shell32.dll" />
+    <Icon Id="shell32.dll" SourceFile="$WINDOWS\\shell32.dll" />
 
   </Product>
 </Wix>
