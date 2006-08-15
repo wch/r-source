@@ -693,7 +693,8 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 * Building the bitmap files::   
 * Checking the build::          
 * Building the manuals::        
-* Building the installer::      
+* Building the Inno Setup installer::  
+* Building the MSI installer::  
 * Cross-building on ix86 Linux::  
 @end menu
 
@@ -898,7 +899,7 @@ make check-all
 for @code{check-devel} and @code{check-recommended}.
 
 
-@node Building the manuals, Building the installer, Checking the build, Building from source
+@node Building the manuals, Building the Inno Setup installer, Checking the build, Building from source
 @subsection Building the manuals
 
 The PDF manuals can be made by
@@ -930,8 +931,8 @@ in your path).
 See the @ref{Making the manuals} section in the Unix section for
 setting options such as the paper size.
 
-@node Building the installer, Cross-building on ix86 Linux, Building the manuals, Building from source
-@subsection Building the installer
+@node Building the Inno Setup installer, Building the MSI installer, Building the manuals, Building from source
+@subsection Building the Inno Setup installer
 
 You need to have the files for a complete R build, including bitmap and
 Tcl/Tk support and the manuals, as well as the recommended packages and
@@ -995,7 +996,37 @@ executable with the standard name, @file{@value{RWVERSION}.exe}, so
 please rename it to indicate that it is customized.
 
 
-@node Cross-building on ix86 Linux,  , Building the installer, Building from source
+@node Building the MSI installer, Cross-building on ix86 Linux, Building the Inno Setup installer, Building from source
+@subsection Building the MSI installer
+
+It is also possible to build an installer for use with Microsoft
+Installer.  This is intended for use by sysadmins doing automated
+installs, and is not recommended for causal use.
+
+It depend on the Windows Installer XML (WiX) toolset available from
+@url{http://wix.sourceforge.net/}: we tested version 2.0.  (This needs
+the .NET 1.1 framework installed: it ran on a vanilla Windows XP SP2
+machine.)  Once WiX is installed, set the path to its home directory in
+@file{MkRules}.
+
+You need to have the files for a complete R build, including bitmap and
+Tcl/Tk support and the manuals, as well as the recommended packages
+Then
+
+@example
+cd installer
+make msi
+@end example
+
+@noindent
+which will results in a file of about 40Mb with a name like
+@file{R-2.4.0-win32.msi}.  This can be double-clicked to be installed,
+but those who need it will know what to do with it.
+
+Thanks to David del Campo (Dept of Statistics, University of Oxford)
+for suggesting WiX and building a prototype installer.
+
+@node Cross-building on ix86 Linux,  , Building the MSI installer, Building from source
 @subsection Cross-building on ix86 Linux
 
 It is possible to cross-build @R{} or packages on @cputype{ix86} Linux,
