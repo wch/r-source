@@ -28,9 +28,12 @@ stopifnot <- function(...)
 	return(invisible())
     mc <- match.call()
     for(i in 1:n)
-	if(!(is.logical(r <- eval(ll[[i]])) && !any(is.na(r)) && all(r)))
-	    stop(paste(deparse(mc[[i+1]]),
-		       " is not ", if(length(r) > 1) "all ", "TRUE", sep=''), call.= FALSE)
+	if(!(is.logical(r <- eval(ll[[i]])) && !any(is.na(r)) && all(r))) {
+	    ch <- deparse(mc[[i+1]], width.cutoff = 60)
+	    if(length(ch) > 1) ch <- paste(ch[1], "....")
+	    stop(paste(ch, " is not ", if(length(r) > 1)"all ", "TRUE", sep=''),
+		 call.= FALSE)
+	}
 }
 
 warning <- function(..., call. = TRUE, immediate. = FALSE, domain = NULL)

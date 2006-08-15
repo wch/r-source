@@ -4283,3 +4283,11 @@ dat<-matrix( c(9,7,8,8,12,11,8,13,     6,5,6,3,6,7,10,9,
 mlmfit <- lm(dat ~ 1)
 anova(mlmfit, X = ~1)
 ## worked in 2.2.1, failed in 2.3.1
+
+
+## stopifnot(<expr>)  for a long expression (do not wrap the following line!!):
+r <- try(stopifnot(c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O")),
+	 silent = TRUE)
+if(length(grep("TRUE.*TRUE",r)))
+    stop("stopifnot() gives bad message for long expression")
+## happened in 2.3.[01]

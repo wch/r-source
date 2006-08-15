@@ -90,6 +90,8 @@ BUG FIXES
 
     o	anova.mlm() could fail if applied to a single model.
 
+    o	stopifnot(<FALSE-expr>) now gives a better message for a *long* expression.
+
 
 
 
