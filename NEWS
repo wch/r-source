@@ -292,6 +292,12 @@ NEW FEATURES
 	out, so C stack overflow is less likely.  (PR#8141, fix by
 	Kevin Hendricks)
 
+    o	integer(0) now prints as that rather than "numeric(0)" (it
+	always deparsed as "integer(0)").
+
+    o	apply() now works as documented when applied over 2 or more
+	margins with one of zero extent.  (It used to drop dimensions.)
+
 
 DEPRECATED & DEFUNCT
 

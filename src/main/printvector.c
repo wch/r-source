@@ -199,7 +199,7 @@ void printVector(SEXP x, int indx, int quote)
 #define PRINT_V_0						\
 	switch (TYPEOF(x)) {					\
 	case LGLSXP:	Rprintf("logical(0)\n");	break;	\
-	case INTSXP:						\
+	case INTSXP:	Rprintf("integer(0)\n");	break;	\
 	case REALSXP:	Rprintf("numeric(0)\n");	break;	\
 	case CPLXSXP:	Rprintf("complex(0)\n");	break;	\
 	case STRSXP:	Rprintf("character(0)\n");	break;	\

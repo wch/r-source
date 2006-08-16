@@ -1902,4 +1902,14 @@ for(z in c("response", "working", "deviance", "pearson"))
     stopifnot(all.equal(residuals(fit, type=z), residuals(fit2, type=z),
                         scale = 1, tol = 1e-10))
 
+## apply on arrays with zero extents
+## Robin Hankin, R-help, 2006-02-13
+A <- array(0, c(3, 0, 4))
+dimnames(A) <- list(a = letters[1:3], b = NULL, c = LETTERS[1:4])
+f <- function(x) 5
+apply(A, 1:2, f)
+apply(A, 1, f)
+apply(A, 2, f)
+## dropped dims in 2.3.1
+
 ### end of tests added in 2.4.0 ###

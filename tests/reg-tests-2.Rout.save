@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-08-06 r38809)
+R version 2.4.0 Under development (unstable) (2006-08-16 r38893)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -2650,7 +2650,7 @@ character(0)
 9 
 10
 attr(,"assign")
-numeric(0)
+integer(0)
 > 
 > (fit <- lm(y ~ x + 0))
 
@@ -3470,7 +3470,7 @@ onUnload 'stats4' A
 > 
 > ## rep(0-length-vector, length.out > 0)
 > rep(integer(0), length.out=0)
-numeric(0)
+integer(0)
 > rep(integer(0), length.out=10)
  [1] NA NA NA NA NA NA NA NA NA NA
 > typeof(.Last.value)
@@ -3933,11 +3933,11 @@ list(y, offset(x), z)
 attr(,"offset")
 [1] 2
 attr(,"factors")
-numeric(0)
+integer(0)
 attr(,"term.labels")
 character(0)
 attr(,"order")
-numeric(0)
+integer(0)
 attr(,"intercept")
 [1] 1
 attr(,"response")
@@ -4532,9 +4532,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > x[rbind(c(1,1), c(2,2), c(3,0))]
 [1] 1 5
 > x[rbind(c(1,0), c(0,2), c(3,0))]
-numeric(0)
+integer(0)
 > x[rbind(c(1,0), c(0,0), c(3,0))]
-numeric(0)
+integer(0)
 > x[rbind(c(1,1), c(2,2), c(1,2))]
 [1] 1 5 4
 > x[rbind(c(1,1), c(2,NA), c(1,2))]
@@ -5388,6 +5388,20 @@ character(0)
 > for(z in c("response", "working", "deviance", "pearson"))
 +     stopifnot(all.equal(residuals(fit, type=z), residuals(fit2, type=z),
 +                         scale = 1, tol = 1e-10))
+> 
+> ## apply on arrays with zero extents
+> ## Robin Hankin, R-help, 2006-02-13
+> A <- array(0, c(3, 0, 4))
+> dimnames(A) <- list(a = letters[1:3], b = NULL, c = LETTERS[1:4])
+> f <- function(x) 5
+> apply(A, 1:2, f)
+numeric(0)
+> apply(A, 1, f)
+a b c 
+5 5 5 
+> apply(A, 2, f)
+numeric(0)
+> ## dropped dims in 2.3.1
 > 
 > ### end of tests added in 2.4.0 ###
 > 
