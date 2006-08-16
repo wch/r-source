@@ -4426,3 +4426,10 @@ r <- try(stopifnot(c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
 if(length(grep("TRUE.*TRUE",r)))
     stop("stopifnot() gives bad message for long expression")
 ## happened in 2.3.[01]
+
+
+## rownames on 0-extent matrix (PR#9136)
+A <- matrix(NA, 0, 0)
+stopifnot(identical(rownames(A, do.NULL = FALSE), character(0)))
+stopifnot(identical(colnames(A, do.NULL = FALSE), character(0)))
+## were 'row' etc in 2.3.1.
