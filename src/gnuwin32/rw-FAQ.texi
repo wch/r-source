@@ -179,6 +179,8 @@ Run the program @file{bin\md5check.exe}.
 This compares checksums on all the installed files with those put into
 the installer, and will report any changed or missing files.
 
+(It only works if R was installed from the Inno Setup installer.)
+
 @node Can I customize the installation?, How do I run it?, How do I check an installation?, Installation and Usage
 @section Can I customize the installation?
 
