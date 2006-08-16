@@ -26,8 +26,8 @@ dimnames(x) <- value
   dimensions of the array where appropriate.
 
   The replacement method for arrays/matrices coerces vector and factor
-  values of \code{value} to character, but does not dispatch methods for
-  \code{as.character}.
+  elements of \code{value} to character, but does not dispatch methods for
+  \code{as.character}.  It coerces zero-length elements to \code{NULL}.
 
   Both have methods for data frames.  The dimnames of a data frame are
   its \code{\link{row.names}} and its \code{\link{names}}.  For the
@@ -37,11 +37,11 @@ dimnames(x) <- value
 \value{
   The dimnames of a matrix or array can be \code{NULL} or a list of the
   same length as \code{dim(x)}.  If a list, its components are either
-  \code{NULL} or a character vector the length of the appropriate
-  dimension of \code{x}.
+  \code{NULL} or a character vector with positive length of the
+  appropriate dimension of \code{x}.
 
-  For the \code{"data.frame"} method both dimnames must be non-null, and
-  the rownames must contain no duplicates nor missing values.
+  For the \code{"data.frame"} method both dimnames are character
+  vectors, and the rownames must contain no duplicates nor missing values.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

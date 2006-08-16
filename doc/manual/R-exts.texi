@@ -9966,7 +9966,8 @@ that @code{"dim"} precedes @code{"dimnames"} in the list.  Attribute
 checked, and any @code{"names"} and @code{"dimnames"} attributes are
 removed.  Similarly, you cannot set @code{"dimnames"} without having set
 @code{"dim"}, and the value assigned must be a list of the correct
-length and with elements of the correct lengths.
+length and with elements of the correct lengths (and all zero-length
+elements are replaced by @code{NULL}).
 
 The other attributes which are given special treatment are
 @code{"names"}, @code{"class"}, @code{"tsp"}, @code{"comments"} and
