@@ -251,6 +251,8 @@ install-R-framework:
 	    "$(Rexeclibdir)/lib$${lib}.dylib"; \
 	    if [ "$(Rexeclibdir)" != "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib" ]; then \
 	      $(srcdir)/tools/updatefat "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" "$(Rexeclibdir)/lib$${lib}.dylib"; \
+	      install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" \
+	      "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib"; \
 	    fi; \
            fi; \
           done)
