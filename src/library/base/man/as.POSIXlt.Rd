@@ -77,7 +77,7 @@ as.POSIXlt(x, tz = "")
   not, \code{HST10} for \sQuote{Hawaii-Aleutian Standard Time} (which has no
   DST), and \code{CST-9:30} for the Northern Territory of Australia.
   The abbreviations have to be exactly 3 letters, and have no meaning
-  other than a labels on the output.
+  other than as labels on the output.
 #endif
 }
 \value{
