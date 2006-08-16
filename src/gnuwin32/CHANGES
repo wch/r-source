@@ -13,12 +13,6 @@ The language for menus and messages can be set in the 'Rconsole' file and
 The initial setting for console buffering can be set in the 'Rconsole'
 file and (for future sessions) from the GUI preferences.
 
-Installing packages (in particular saving an image and preparing for
-lazy-loading and lazydata) is now done in a C locale for consistency
-with Unix.  (This will only possibly affect CJK locales, where some
-checks on the validity of symbols and strings might be
-locale-dependent.)
-
 The installer can set defaults for MDI/SDI display, help style, and
 use of the --internet2 startup option.  Custom builds of R can change
 these defaults.
@@ -34,6 +28,19 @@ so it can be captured by sink() or capture.output().
 
 getGraphicsEvent() now leaves the standard graphics window menus in 
 place, so those functions are available while waiting for an event.
+
+iconv.dll has been updated to 1.11, which has some improvements for
+CJK languages under Windows (e.g. support for the Euro).
+
+
+Installing packages
+-------------------
+
+Installing packages (in particular saving an image and preparing for
+lazy-loading and lazydata) is now done in a C locale for consistency
+with Unix.  (This will only possibly affect CJK locales, where some
+checks on the validity of symbols and strings might be
+locale-dependent.)
 
 
 C-level changes
@@ -94,7 +101,7 @@ SHLIB/INSTALL via OBJS in Makevars.win.
 There is a new option to make a .msi Microsoft Installer, intended for
 use by sysadmins doing automated installs.  See the 'R Installation
 and Administration Manual'.  (Thanks to David del Campo (Dept of
-Statistics, University of Oxford) for suggesting WiX and building a
+Statistics, University of Oxford) for suggesting this and building a
 prototype installer.)
 
 
@@ -118,7 +125,7 @@ a message about 'outer margins too large'. (PR#8857)
 
 Sys.setlocale() interprets LC_CTYPE=C as a request for CP1252, as the
 startup code long has.  (This is necessary to avoid various crashes
-in the runtime code.)
+in the MinGW runtime code.)
 
 
 
