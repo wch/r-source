@@ -247,6 +247,9 @@ install-R-framework:
 	    xargs -n 1 install_name_tool -change \
 	    `otool -L $(Rexeclibdir)/lib$${lib}.dylib |sed -n -e '2 s/.\(.*\) (compat.*/\1/p'` \
 	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" ; \
+	    find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
+	    xargs -n 1 install_name_tool -change lib$${lib}.dylib \
+	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" ; \
 	    install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" \
 	    "$(Rexeclibdir)/lib$${lib}.dylib"; \
 	    if [ "$(Rexeclibdir)" != "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib" ]; then \
