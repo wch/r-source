@@ -102,7 +102,7 @@ NEW FEATURES
 	Unixen), the choice is unchanged.
 
     o	axis.POSIXct() uses a different algorithm for ranges of 2 to 50
-	days that will mark days as midnight in the current timezone
+	days that will mark days at midnight in the current timezone
 	(even if the graph crosses a DST change).
 
     o	example() gains an argument 'ask' which defaults to "TRUE when
@@ -173,8 +173,8 @@ NEW FEATURES
     o	lag.plot() produces a conventional plot (not setting mfrow) if
 	only one plot is to be produced.
 
-    o	read.DIF() can read Data Interchange Format files, and (in
-	Windows) this format from the clipboard.
+    o	New function read.DIF() to read Data Interchange Format files,
+	and (on Windows) this format from the clipboard.
 
     o	body<-() and formals<-() default to envir = environment(fun),
 	that is they do not by default change the environment.
@@ -221,7 +221,7 @@ NEW FEATURES
 	lapply(<a pairlist>) now coerces to a list (rather than traverse
 	the pairlist from the beginning for each item).
 
-    o	as.POSIX[ct]t can now convert character strings containing
+    o	as.POSIX[cl]t can now convert character strings containing
 	fractional seconds.
 
     o	The character vector used by an output textConnection() has
@@ -264,7 +264,7 @@ NEW FEATURES
 	with S.)
 
     o   There is an option "HTTPUserAgent" to set the User Agent in R
-        download requests etc.  Patch from S. Falcon
+        download requests etc.  Patch from S. Falcon.
 
     o	PCRE has been updated to version 6.7.
 
@@ -272,8 +272,8 @@ NEW FEATURES
 	as 'mode' (which is printed anyway, possibly abbreviated) and it
 	puts it beside mode for atomic objects such as S3 class "table".
 
-    o	str(<data.frame>) now uses 'data.frame' instead of `data.frame';
-	this may affect some strict (Package) tests.
+    o	str(<data.frame>) now outputs 'data.frame' instead of
+	`data.frame'; this may affect some strict (Package) tests.
 
     o	head(x, n) and tail(x, n) now also work for negative arguments,
 	thanks to Vincent Goulet.
@@ -287,6 +287,10 @@ NEW FEATURES
 
     o	There is a new option("menu.graphics") which controls if
 	graphical menus should be used when available.
+
+    o	The C function substituteList now has tail recursion expanded
+	out, so C stack overflow is less likely.  (PR#8141, fix by
+	Kevin Hendricks)
 
 
 DEPRECATED & DEFUNCT
@@ -632,7 +636,8 @@ BUG FIXES
 
     o	anova.mlm() could fail if applied to a single model.
 
-    o	stopifnot(<FALSE-expr>) now gives a better message for a *long* expression.
+    o	stopifnot(<FALSE-expr>) now gives a better message for a *long*
+	expression.
 
 
 
