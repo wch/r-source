@@ -162,9 +162,9 @@ print insfile <<END;
         </Directory>
       </Directory>
       <Directory Id="DesktopFolder" Name="Desktop">
-        <Component Id="desktopshortcut0" DiskId="1" Guid="9DFBA72B-7077-4057-9A4E-AE924B1CCD9C">
+        <Component Id="desktopshortcut0" DiskId="1" Guid="$uuids{907}">
           <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R" LongName="R $RVER"
-           WorkingDirectory="INSTALLDIR" Target="[!file21]" />
+           WorkingDirectory="INSTALLDIR" Target="[!$rgui]" />
         </Component>
       </Directory>
 
@@ -172,9 +172,9 @@ print insfile <<END;
         <Directory Id="Microsoft" Name="MS" LongName="Microsoft">
           <Directory Id="InternetExplorer" Name="IE" LongName="Internet Explorer">
             <Directory Id="QuickLaunch" Name="QLaunch" LongName="Quick Launch">
-              <Component Id="quickshortcut0" DiskId="1" Guid="42A85558-364A-49DC-A85B-7EBF5C3F9708">
-                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R" LongName="R 2.3.0"
-                 WorkingDirectory="INSTALLDIR" Target="[!file21]" />
+              <Component Id="quickshortcut0" DiskId="1" Guid="$uuids{908}">
+                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R" LongName="R $RVER"
+                 WorkingDirectory="INSTALLDIR" Target="[!$rgui]" />
               </Component>
             </Directory>
           </Directory>
@@ -207,12 +207,12 @@ print insfile <<END;
       <Component Id="registry5" Guid="$uuids{905}">
         <Registry Id="RDataCommand" Root="HKCR" 
          Key="RWorkspace\\shell\\open\\command" Type="string" KeyPath="yes" 
-         Value="&quot;[!file21]&quot; &quot;%1&quot;" />
+         Value="&quot;[!$rgui]&quot; &quot;%1&quot;" />
       </Component>
       <Component Id="registry6" Guid="$uuids{906}">
         <Registry Id="RDataDefaultIcon" Root="HKCR" 
          Key="RWorkspace\\DefaultIcon" Type="string" KeyPath="yes" 
-         Value="[!file21],0" />
+         Value="[!$rgui],0" />
       </Component>
     </Directory>
 
@@ -341,6 +341,9 @@ foreach $n (sort values %trans) {
     print insfile "      <ComponentRef Id='$n' />\n";
 }
 
+## look up local Windows system32 directory
+my $WINDOWS = Win32::GetFolderPath(Win32::CSIDL_SYSTEM);
+
 print insfile <<END;
     </Feature>
 
@@ -370,7 +373,7 @@ print insfile <<END;
     <UIRef Id="WixUI_Mondo" />
     <UIRef Id="WixUI_ErrorProgressText" />
 
-    <Icon Id="shell32.dll" SourceFile="c:\\Windows\\system32\\shell32.dll" />
+    <Icon Id="shell32.dll" SourceFile="$WINDOWS\\shell32.dll" />
 
   </Product>
 </Wix>
