@@ -541,6 +541,8 @@ BUG FIXES
 
    o	loess() now checks the validity of its 'control' argument.
 
+   o	rownames(<0-row matrix>, do.NULL=FALSE) was wrong.  (PR#9136)
+
 
 
 

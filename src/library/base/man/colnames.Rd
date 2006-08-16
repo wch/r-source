@@ -22,8 +22,8 @@ colnames(x) <- value
   \item{prefix}{for created names.}
   \item{value}{a valid value for that component of
     \code{\link{dimnames}(x)}.  For a matrix or array this is either
-    \code{NULL} or a character vector of length the appropriate
-    dimension.}
+    \code{NULL} or a character vector of non-zero length equal to the
+    appropriate dimension.}
 }
 \details{
   The extractor functions try to do something sensible for any
