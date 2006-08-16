@@ -29810,7 +29810,42 @@ fi ;;
         ## FIXME: strictly speaking it should be "yes" but libRblas still
 	## needs -lgfortran because the sharing is a one-way street
         ## dylib_undefined_allowed=yes
+	echo "$as_me:$LINENO: checking whether linker supports dynamic lookup" >&5
+echo $ECHO_N "checking whether linker supports dynamic lookup... $ECHO_C" >&6
 	shlib_ldflags="-dynamiclib -Wl,-macosx_version_min -Wl,10.3 -undefined dynamic_lookup -single_module -multiply_defined suppress"
+	if test "${r_cv_has_dynlookup+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+cat > conftest.c <<EOF
+  void dummy() { }
+EOF
+echo "${CC} ${CFLAGS} conftest.c ${shlib_ldflags} -o libconftest${DYLIB_EXT} ${LIBS}" >&5
+if ${CC} ${CFLAGS} conftest.c ${shlib_ldflags} -o libconftest${DYLIB_EXT} ${LIBS} 1>&5 2>&5; then
+   r_cv_has_dynlookup=yes
+   echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+else
+   r_cv_has_dynlookup=no
+   echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+   { echo "$as_me:$LINENO: WARNING: ***  Please consider updating your Xcode tools. ***" >&5
+echo "$as_me: WARNING: ***  Please consider updating your Xcode tools. ***" >&2;}
+fi
+rm -f libconftest${DYLIB_EXT} conftest.c
+
+fi
+
+	if test -n "${FORCE_FLAT_NAMESPACE}"; then
+	   { echo "$as_me:$LINENO: WARNING: Use of flat namespace is requested by user." >&5
+echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
+	   r_cv_has_dynlookup=forced-no
+	fi
+	if test "${r_cv_has_dynlookup}" != "yes"; then
+	   shlib_ldflags="-dynamiclib -flat_namespace -undefined suppress -single_module -multiply_defined suppress"
+	   dylib_undefined_allowed=yes
+	fi
+
 	## we use the same method for shlib and dylib now
 	darwin_dylib_ldflags="${shlib_ldflags}"
 	## side note: we could use flat namespace instead, but there is an exception:
@@ -43607,7 +43642,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:43610:" \
+echo "$as_me:43645:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5

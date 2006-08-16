@@ -421,6 +421,12 @@ INSTALLATION
 	run' has been improved as on one system that test passed but
 	the Fortran run-time library was broken.
 
+    o	Dynamic libraries and modules use flat namespace on MacOS X
+	10.3 and higher if either Xcode tools don't support dynamic
+	lookup (Xcode <	2.3) or FORCE_FLAT_NAMESPACE environment
+	variable is set. The latter was introduced temporarily for
+	testing purposes and may go away soon.
+
 
 BUG FIXES
 

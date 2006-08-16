@@ -1192,7 +1192,32 @@ case "${host_os}" in
         ## FIXME: strictly speaking it should be "yes" but libRblas still
 	## needs -lgfortran because the sharing is a one-way street
         ## dylib_undefined_allowed=yes
+	AC_MSG_CHECKING([whether linker supports dynamic lookup])
 	shlib_ldflags="-dynamiclib -Wl,-macosx_version_min -Wl,10.3 -undefined dynamic_lookup -single_module -multiply_defined suppress"
+	AC_CACHE_VAL([r_cv_has_dynlookup],[
+[cat > conftest.c <<EOF
+  void dummy() { }
+EOF]
+echo "${CC} ${CFLAGS} conftest.c ${shlib_ldflags} -o libconftest${DYLIB_EXT} ${LIBS}" >&AS_MESSAGE_LOG_FD
+if ${CC} ${CFLAGS} conftest.c ${shlib_ldflags} -o libconftest${DYLIB_EXT} ${LIBS} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
+   r_cv_has_dynlookup=yes
+   AC_MSG_RESULT([yes])
+else
+   r_cv_has_dynlookup=no
+   AC_MSG_RESULT([no])
+   AC_MSG_WARN([***  Please consider updating your Xcode tools. ***])
+fi
+rm -f libconftest${DYLIB_EXT} conftest.c
+])
+	if test -n "${FORCE_FLAT_NAMESPACE}"; then
+	   AC_MSG_WARN([Use of flat namespace is requested by user.])
+	   r_cv_has_dynlookup=forced-no
+	fi
+	if test "${r_cv_has_dynlookup}" != "yes"; then
+	   shlib_ldflags="-dynamiclib -flat_namespace -undefined suppress -single_module -multiply_defined suppress"
+	   dylib_undefined_allowed=yes
+	fi
+	
 	## we use the same method for shlib and dylib now
 	darwin_dylib_ldflags="${shlib_ldflags}"
 	## side note: we could use flat namespace instead, but there is an exception:
