@@ -166,7 +166,7 @@
   Some Unix-like systems (especially Linux ones) do not have \code{"TZ"}
   set, yet have internal code that expects it (as does POSIX).  We have
   tried to work around this, but if you get unexpected results try
-  setting \code{"TZ"}.
+  setting \code{"TZ"}.  See \code{\link{as.POSIXlt}} for valid settings.
 }
 \examples{
 (z <- Sys.time())             # the current date, as class "POSIXct"

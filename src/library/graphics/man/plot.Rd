@@ -7,11 +7,12 @@ plot(x, y, \dots)
 \arguments{
   \item{x}{the coordinates of points in the plot. Alternatively, a
       single plotting structure, function or \emph{any \R object with a
-          \code{plot} method} can be provided.}
+        \code{plot} method} can be provided.}
   \item{y}{the y coordinates of points in the plot, \emph{optional}
-      if \code{x} is an appropriate structure.}
-  \item{\dots}{graphical parameters can be given as arguments to
-    \code{plot}.  Many methods will also accept the following arguments:
+    if \code{x} is an appropriate structure.}
+  \item{\dots}{Arguments to be passed to methods, such as graphical
+    parameters (see \code{\link{par}}).
+    Many methods will accept the following arguments:
 
     \item{\code{type}}{what type of plot should be drawn.  Possible types are
       \itemize{
@@ -34,6 +35,8 @@ plot(x, y, \dots)
     \item{\code{sub}}{a sub title for the plot: see \code{\link{title}}.}
     \item{\code{xlab}}{a title for the x axis: see \code{\link{title}}.}
     \item{\code{ylab}}{a title for the y axis: see \code{\link{title}}.}
+    \item{\code{asp}}{the \eqn{y/x} aspect ratio,
+      see \code{\link{plot.window}}.}
   }
 }
 \description{

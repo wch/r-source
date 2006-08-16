@@ -1,5 +1,7 @@
 \name{plot.window}
 \alias{plot.window}
+\alias{asp}
+\concept{aspect ratio}
 \title{Set up World Coordinates for Graphics Window}
 \description{
   This function sets up the world coordinate system for a graphics

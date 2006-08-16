@@ -36,7 +36,12 @@ Sys.timezone()
   \code{Sys.Date} returns an object of class \code{"Date"} (see \link{Date}).
 
   \code{Sys.timezone} returns an OS-specific character string, possibly
-  an empty string.
+  an empty string.  It may be possible to set the timezone via the
+  environment variable \code{"TZ"}: see \code{\link{as.POSIXlt}}.
+#ifdef windows
+  Windows is notorious for naming its timezones differently from the
+  official names.
+#endif
 }
 \seealso{
   \code{\link{date}} for the system time in a fixed-format character

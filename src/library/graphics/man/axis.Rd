@@ -39,7 +39,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{lty, lwd}{line type, width for the axis line and the tick marks.}
   \item{col}{color for the axis line and the tick marks.  Here
     \code{NULL} means to use \code{par("fg")}, possibly specified inline.}
-  \item{hadj}{adjustment (see \code{\link{par}("adj")} for all labels
+  \item{hadj}{adjustment (see \code{\link{par}("adj")}) for all labels
     \emph{parallel} (\sQuote{horizontal}) to the reading direction.  If
     this is not a finite value, the default is used (centring for
     strings parallel to the axis, justification of the end nearest the
@@ -90,7 +90,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \code{\link{par}("xaxp")} or \code{"yaxp"} and
   \code{\link{par}("xlog")} (or \code{"ylog"}).  Note that these
   locations may change if an on-screen plot is resized (for example, if
-  the \code{plot} argument \code{\link[graphics:plot.window]{asp}} is set).
+  the \code{plot} argument \code{asp} (see \code{\link{plot.window}}) is set.)
 
   If \code{labels} is not specified, the numeric values supplied or
   calculated for \code{at} are converted to character strings as if they
