@@ -2158,16 +2158,17 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* do_substitute has two arguments, an expression and an environment */
-/* (optional).	Symbols found in the expression are substituted with their */
-/* values as found in the environment.	There is no inheritance so only */
-/* the supplied environment is searched. If no environment is specified */
-/* the environment in which substitute was called is used.  If the */
-/* specified environment is R_GlobalEnv it is converted to R_NilValue, for */
-/* historical reasons. */
-/* In substitute(), R_NilValue signals that no substitution should be done, only */
-/* extraction of promise expressions. */
-/* Arguments to do_substitute should not be evaluated. */
+/* 
+   do_substitute has two arguments, an expression and an environment
+   (optional).	Symbols found in the expression are substituted with their
+   values as found in the environment.	There is no inheritance so only
+   the supplied environment is searched. If no environment is specified
+   the environment in which substitute was called is used.  If the
+   specified environment is R_GlobalEnv it is converted to R_NilValue, for
+   historical reasons. In substitute(), R_NilValue signals that no 
+   substitution should be done, only extraction of promise expressions.
+   Arguments to do_substitute should not be evaluated.
+*/
 
 SEXP substitute(SEXP lang, SEXP rho)
 {
@@ -2182,13 +2183,11 @@ SEXP substitute(SEXP lang, SEXP rho)
 		if (TYPEOF(t) == PROMSXP) {
 		    do {
 			t = PREXPR(t);
-		    }
-		    while(TYPEOF(t) == PROMSXP);
+		    } while(TYPEOF(t) == PROMSXP);
 		    return t;
 	    	}
-	    	else if (TYPEOF(t) == DOTSXP) {
+	    	else if (TYPEOF(t) == DOTSXP)
 		    error(_("... used in an incorrect context"));
-	    	}
 	    	if (rho != R_GlobalEnv)
 		    return t;
 	    }
@@ -2202,47 +2201,55 @@ SEXP substitute(SEXP lang, SEXP rho)
 }
 
 
-/* Work through a list doing substitute on the */
-/* elements taking particular care to handle ... */
-
+/* Work through a list doing substitute on the
+   elements taking particular care to handle '...' */
 
 SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 {
-    SEXP h, t;
-    if (isNull(el))
-	return el;
-    if (CAR(el) == R_DotsSymbol) {
-    	if (rho == R_NilValue)
-    	    h = R_UnboundValue;	/* so there is no substitution below */
-    	else
-	    h = findVarInFrame3(rho, CAR(el), TRUE);
-	if (h == R_UnboundValue)
-	    return LCONS(R_DotsSymbol, substituteList(CDR(el), rho));
-	if (h == R_NilValue  || h == R_MissingArg)
-	    return substituteList(CDR(el), rho);
-	if (TYPEOF(h) == DOTSXP) {
-	    PROTECT(h = substituteList(h, R_NilValue));
-	    PROTECT(t = substituteList(CDR(el), rho));
-	    t = listAppend(h, t);
-	    UNPROTECT(2);
-	    return t;
+    SEXP h, p = R_NilValue, res = R_NilValue;
+
+    if (isNull(el)) return el;
+
+    while (el != R_NilValue) {
+	/* walk along the pairlist, substituting elements.
+	   res is the result
+	   p is the current last element
+	   h is the element currently being processed
+	 */
+	if (CAR(el) == R_DotsSymbol) {
+	    if (rho == R_NilValue)
+		h = R_UnboundValue;	/* so there is no substitution below */
+	    else
+		h = findVarInFrame3(rho, CAR(el), TRUE);
+	    if (h == R_UnboundValue)
+		h = LCONS(R_DotsSymbol, R_NilValue);
+	    else if (h == R_NilValue  || h == R_MissingArg)
+		h = R_NilValue;
+	    else if (TYPEOF(h) == DOTSXP)
+		h = substituteList(h, R_NilValue);
+	    else
+		error(_("... used in an incorrect context"));
+	} else {
+	    h = substitute(CAR(el), rho);
+	    if (isLanguage(el))
+		h = LCONS(h, R_NilValue);
+	    else
+		h = CONS(h, R_NilValue);
+	    SET_TAG(h, TAG(el));
 	}
-	error(_("... used in an incorrect context"));
-	return R_NilValue; /* to suppress warning */
+	if (h != R_NilValue) {
+	    if (res == R_NilValue)
+		PROTECT(res = h);
+	    else
+		SETCDR(p, h);
+	    /* now set 'p': dots might have expanded to a list of length > 1 */
+	    while (CDR(h) != R_NilValue) h = CDR(h);
+	    p = h;
+	}
+	el = CDR(el);
     }
-    else {
-	/* This could involve deep recursion on long lists, so do tail
-	 * first to avoid overflowing the protect stack */
-	PROTECT(t = substituteList(CDR(el), rho));
-	PROTECT(h = substitute(CAR(el), rho));
-	if (isLanguage(el))
-	    t = LCONS(h, t);
-	else
-	    t = CONS(h, t);
-	SET_TAG(t, TAG(el));
-	UNPROTECT(2);
-	return t;
-    }
+    if(res != R_NilValue) UNPROTECT(1);
+    return res;
 }
 
 SEXP attribute_hidden do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
