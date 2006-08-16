@@ -31,7 +31,7 @@ Entering printable keys generally inserts new text into the buffer (unless
 in overwrite mode, see below).  Other special keys can be used to modify
 the text in the buffer.  In the description of the keys below, ^n means
 Control-n, or holding the CONTROL key down while pressing "n".  Errors
-will ring the terminal bell.
+will ring the terminal bell.  A 'word' is delimited by spaces.
 
 left/right, ^F/^B   : Move cursor forward/backward one character.
 up/down,    ^P/^N   : Move to previous/next item on history list.
