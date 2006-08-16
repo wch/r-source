@@ -172,7 +172,7 @@ print insfile <<END;
         <Directory Id="Microsoft" Name="MS" LongName="Microsoft">
           <Directory Id="InternetExplorer" Name="IE" LongName="Internet Explorer">
             <Directory Id="QuickLaunch" Name="QLaunch" LongName="Quick Launch">
-              <Component Id="quickshortcut0" DiskId="1" Guid="$uuids{908}>
+              <Component Id="quickshortcut0" DiskId="1" Guid="$uuids{908}">
                 <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R" LongName="R $RVER"
                  WorkingDirectory="INSTALLDIR" Target="[!$rgui]" />
               </Component>
