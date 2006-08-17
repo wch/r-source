@@ -14,15 +14,21 @@ head.default <- function(x, n = 6, ...)
 }
 
 ## head.matrix and tail.matrix are now exported (to be used for other classes)
-head.matrix <- function(x, n = 6, ...)
+head.data.frame <- head.matrix <- function(x, n = 6, ...)
 {
     stopifnot(length(n) == 1)
     n <- if (n < 0) max(nrow(x) + n, 0) else min(n, nrow(x))
     x[seq(length = n), , drop=FALSE]
 }
-head.data.frame <- head.table <- head.matrix
+head.table  <- function(x, n = 6, ...) {
+    (if(length(dim(x)) == 2) head.matrix else head.default)(x, n=n)
+}
 
-head.ftable <- function(x, n = 6, ...) head.matrix(format(x), n = n, ...)
+head.ftable <- function(x, n = 6, ...) {
+    r <- format(x)
+    dimnames(r) <- list(rep.int("", nrow(r)), rep.int("", ncol(r)))
+    noquote(head.matrix(r, n = n + nrow(r) - nrow(x), ...))
+}
 
 head.function <- function(x, n = 6, ...)
 {
@@ -60,9 +66,17 @@ tail.matrix <- function(x, n = 6, addrownums = TRUE, ...)
     	rownames(ans) <- paste("[", sel, ",]", sep="")
     ans
 }
-tail.table <- tail.matrix
+tail.table  <- function(x, n = 6, addrownums = TRUE, ...) {
+    (if(length(dim(x)) == 2) tail.matrix else tail.default)(x, n=n,
+	      addrownums = addrownums, ...)
+}
 
-tail.ftable <- function(x, n = 6, ...) tail.matrix(format(x), n = n, ...)
+tail.ftable <- function(x, n = 6, addrownums = FALSE, ...) {
+    r <- format(x)
+    dimnames(r) <- list(if(!addrownums) rep.int("", nrow(r)),
+			rep.int("", ncol(r)))
+    noquote(tail.matrix(r, n = n, addrownums = addrownums, ...))
+}
 
 tail.function <- function(x, n = 6, ...)
 {
