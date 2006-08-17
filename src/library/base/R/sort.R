@@ -70,6 +70,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
         if(any(diff(sapply(z, length)) != 0))
             stop("argument lengths differ")
         ans <- sapply(z, is.na)
+        if(is.list(ans)) return(integer(0)) # happens for 0-length input
         ok <- if(is.matrix(ans)) !apply(ans, 1, any) else !any(ans)
         if(all(!ok)) return(integer(0))
         z[[1]][!ok] <- NA

@@ -11,10 +11,6 @@
 
 USER-VISIBLE CHANGES
 
-    o   .Deprecated and .Defunct take a new parameter, msg, that allows
-        for the specification of the message printed and facilitates
-        deprecation of calling sequences etc.
-
     o	The startup message now prints first the version string and
 	then the copyright notice (to be more similar to R --version).
 
@@ -48,7 +44,7 @@ USER-VISIBLE CHANGES
 	These changes may affect the results of sapply() and lapply()
 	applied to factors.
 
-    o   mauchly.test now returns the W statistic (for comparability
+    o	mauchly.test() now returns the W statistic (for comparability 
         with SAS and SPSS), rather than the z (which was accidentally
         not named in the output)
 
@@ -298,10 +294,11 @@ NEW FEATURES
     o	integer(0) now prints as that rather than "numeric(0)" (it
 	always deparsed as "integer(0)").
 
-    o	apply() now works as documented when applied over 2 or more
-	margins with one of zero extent.  (It used to drop dimensions.)
+    o   .Deprecated and .Defunct take a new parameter, msg, that allows
+        for the specification of the message printed and facilitates
+        deprecation of calling sequences etc.
 
-    o	There's now a format() method for "ftable"s.
+    o	There is now a format() method for "ftable"s.
 
 
 DEPRECATED & DEFUNCT
@@ -560,12 +557,17 @@ BUG FIXES
 
     o	rownames(<0-row matrix>, do.NULL=FALSE) was wrong.  (PR#9136)
 
-    o	head() and tail() now also work rowwise for "table" and "ftable"
+    o	apply() now works as documented when applied over 2 or more
+	margins with one of zero extent.  (It used to drop dimensions.)
+
+    o	head() and tail() now also work row-wise for "table" and "ftable"
 	objects.
 
     o	NextMethod could throw an error/crash if called from a method
 	that was called directly rather than from a generic (so
 	.Method was unset).
+
+    o	order(x, na.last = NA) failed for a zero-length x.
 
 
 
