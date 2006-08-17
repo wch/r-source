@@ -57,8 +57,8 @@ getOption(x)
       vector} (atomic or \code{\link{list}}) is extended, by something
       like \code{x <- 1:3; x[5] <- 6}.}
 
-    \item{\code{continue}:}{a string setting the prompt used for lines
-      which continue over one line.}
+    \item{\code{continue}:}{a non-empty string setting the prompt used
+      for lines which continue over one line.}
 
     \item{\code{defaultPackages}:}{the packages that are attached by
       default when \R starts up.  Initially set from value of the
@@ -178,8 +178,8 @@ getOption(x)
       to be piped to \file{stdin} or to be given a single filename
       argument.}
 
-    \item{\code{prompt}:}{a string, used for \R's prompt; should usually
-      end in a blank (\code{" "}).}
+    \item{\code{prompt}:}{a non-empty string to be used for \R's prompt;
+      should usually end in a blank (\code{" "}).}
 
     \item{\code{save.defaults}, \code{save.image.defaults}:}{
       see \code{\link{save}}.}
@@ -358,7 +358,8 @@ getOption(x)
       If this is unset (the default), 0, negative or \code{NA}, variable
       cell widths are used.}
 
-    \item{\code{editor}:}{sets the default text editor, e.g., for
+    \item{\code{editor}:}{a non-empty string.
+      Sets the default text editor, e.g., for
       \code{\link{edit}}.  Set from the environment variable
       \code{VISUAL} on UNIX.}
 
