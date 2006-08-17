@@ -1031,7 +1031,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	}
 	else if(length(xi) > 0) {
 	    rows[[i]] <- nrow <- nrow + 1
-	    rlabs[[i]] <- if(nchar(nmi) > 0) nmi else nrow
+	    rlabs[[i]] <- if(nchar(nmi) > 0) nmi else as.integer(nrow)
 	}
     }
     nvar <- length(clabs)
