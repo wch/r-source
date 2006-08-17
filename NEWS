@@ -278,6 +278,9 @@ NEW FEATURES
     o	head(x, n) and tail(x, n) now also work for negative arguments,
 	thanks to Vincent Goulet.
 
+    o	head.matrix() and tail.matrix() are no longer hidden to be used
+	for building head() and tail() methods for other classes.
+
     o	load() no longer coerces pairlists to lists (which was
 	undocumented, but has been happening since 1998).
 
@@ -556,6 +559,9 @@ BUG FIXES
    o	loess() now checks the validity of its 'control' argument.
 
    o	rownames(<0-row matrix>, do.NULL=FALSE) was wrong.  (PR#9136)
+
+   o	head() and tail() now also work rowwise for "table" and "ftable"
+	objects.
 
 
 

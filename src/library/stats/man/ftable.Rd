@@ -1,8 +1,8 @@
 \name{ftable}
+\title{Flat Contingency Tables}
 \alias{ftable}
 \alias{ftable.default}
 \alias{print.ftable}
-\title{Flat Contingency Tables}
 \description{Create \dQuote{flat} contingency tables.}
 \usage{
 ftable(x, \dots)
@@ -89,7 +89,7 @@ x
 ftable(x, row.vars = c(2, 4))
 
 ## Start with expressions, use table()'s "dnn" to change labels
-ftable(mtcars$cyl, mtcars$vs, mtcars$am, mtcars$gear, row.vars = c(2, 4), 
+ftable(mtcars$cyl, mtcars$vs, mtcars$am, mtcars$gear, row.vars = c(2, 4),
        dnn = c("Cylinders", "V/S", "Transmission", "Gears"))
- }
+}
 \keyword{category}
