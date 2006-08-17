@@ -519,7 +519,7 @@ BUG FIXES
 	documented.  Now the base package is included (but most
 	bindings there are locked).
 
-   o	dweibull(0, shape) was NaN not Inf for shape < 1.  Also, the
+    o	dweibull(0, shape) was NaN not Inf for shape < 1.  Also, the
 	help for dgamma and dweibull gave support as x > 0, but
 	returned non-zero values for x = 0.  (PR#9080)
 
@@ -539,15 +539,15 @@ BUG FIXES
 	bytes, but did not check.  Now this is checked, and http:// URLs
 	are allowed to be up to 40960 bytes.
 
-   o	parse(n=-1) threw a stack-imbalance error, and parse(n=3) did
+    o	parse(n=-1) threw a stack-imbalance error, and parse(n=3) did
 	not cope correctly with EOF during input.
 
-   o	Zero-column data frames had no names (rather than character(0)).
+    o	Zero-column data frames had no names (rather than character(0)).
 
-   o	by() and acf() could get confused when they used very long
+    o	by() and acf() could get confused when they used very long
    	expressions as names.
 
-   o	residuals(<glm object>, type="working") was NA for cases with
+    o	residuals(<glm object>, type="working") was NA for cases with
 	zero weight (whereas they are well-defined even though the
 	case was not used during the fitting) and the actual value is
 	now returned.  This allows residuals to be computed from fits
@@ -556,12 +556,16 @@ BUG FIXES
 	The residuals in a fitted "glm" object are computed more
 	accurately: the previous formula was subject to cancellation.
 
-   o	loess() now checks the validity of its 'control' argument.
+    o	loess() now checks the validity of its 'control' argument.
 
-   o	rownames(<0-row matrix>, do.NULL=FALSE) was wrong.  (PR#9136)
+    o	rownames(<0-row matrix>, do.NULL=FALSE) was wrong.  (PR#9136)
 
-   o	head() and tail() now also work rowwise for "table" and "ftable"
+    o	head() and tail() now also work rowwise for "table" and "ftable"
 	objects.
+
+    o	NextMethod could throw an error/crash if called from a method
+	that was called directly rather than from a generic (so
+	.Method was unset).
 
 
 

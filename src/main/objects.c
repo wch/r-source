@@ -707,12 +707,17 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_STRING_ELT(s, j, duplicate(STRING_ELT(class, i++)));
     setAttrib(s, install("previous"), class);
     defineVar(install(".Class"), s, m);
-    /* for Ops we need `method' to be a vector */
-    PROTECT(method = duplicate(method));
-    for(j = 0; j < length(method); j++){
-       if (strlen(CHAR(STRING_ELT(method,j))))
-	   SET_STRING_ELT(method,j,  mkChar(buf));
-    }
+    /* It is possible that it a method was called directly that
+	'method' is unset */
+    if (method != R_UnboundValue) {
+ 	/* for Ops we need `method' to be a vector */
+	PROTECT(method = duplicate(method));
+	for(j = 0; j < length(method); j++) {
+	    if (strlen(CHAR(STRING_ELT(method,j))))
+		SET_STRING_ELT(method, j,  mkChar(buf));
+        }
+    } else
+	PROTECT(method = mkString(buf));
     defineVar(install(".Method"), method, m);
     defineVar(install(".GenericCallEnv"), callenv, m);
     defineVar(install(".GenericDefEnv"), defenv, m);

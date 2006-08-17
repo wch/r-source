@@ -4433,3 +4433,9 @@ A <- matrix(NA, 0, 0)
 stopifnot(identical(rownames(A, do.NULL = FALSE), character(0)))
 stopifnot(identical(colnames(A, do.NULL = FALSE), character(0)))
 ## were 'row' etc in 2.3.1.
+
+
+## misuse of a method (from package mmlcr)
+model.matrix.lm(height ~ weight, women)
+# although it is an incorrect call, it should not crash in NextMethod.
+## fixed in 2.4.0
