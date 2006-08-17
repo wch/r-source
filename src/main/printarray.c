@@ -27,7 +27,7 @@
  *  See ./format.c	 for the  format_FOO_  functions used below.
  */
 
-/* <UTF8> char here is handled as a whole, 
+/* <UTF8> char here is handled as a whole,
    but lengths were used as display widths */
 
 #ifdef HAVE_CONFIG_H
@@ -71,7 +71,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
     for (j = 0; j < c; j++) {
 	formatLogical(&x[j * r], r, &w[j]);
 	if (!isNull(cl)) {
-	    if(STRING_ELT(cl, j) == NA_STRING) 
+	    if(STRING_ELT(cl, j) == NA_STRING)
 		clabw = R_print.na_width_noquote;
 	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
@@ -146,7 +146,7 @@ static void printIntegerMatrix(SEXP sx, int offset, int r, int c,
     for (j = 0; j < c; j++) {
 	formatInteger(&x[j * r], r, &w[j]);
 	if (!isNull(cl)) {
-	    if(STRING_ELT(cl, j) == NA_STRING) 
+	    if(STRING_ELT(cl, j) == NA_STRING)
 		clabw = R_print.na_width_noquote;
 	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
@@ -228,7 +228,7 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
     for (j = 0; j < c; j++) {
 	formatReal(&x[j * r], r, &w[j], &d[j], &e[j], 0);
 	if (!isNull(cl)) {
-	    if(STRING_ELT(cl, j) == NA_STRING) 
+	    if(STRING_ELT(cl, j) == NA_STRING)
 		clabw = R_print.na_width_noquote;
 	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
@@ -322,7 +322,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 		      &wr[j], &dr[j], &er[j],
 		      &wi[j], &di[j], &ei[j], 0);
 	if (!isNull(cl)) {
-	    if(STRING_ELT(cl, j) == NA_STRING) 
+	    if(STRING_ELT(cl, j) == NA_STRING)
 		clabw = R_print.na_width_noquote;
 	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
@@ -407,7 +407,7 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
     for (j = 0; j < c; j++) {
 	formatString(&x[j * r], r, &w[j], quote);
 	if (!isNull(cl)) {
-	    if(STRING_ELT(cl, j) == NA_STRING) 
+	    if(STRING_ELT(cl, j) == NA_STRING)
 		clabw = R_print.na_width_noquote;
 	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
@@ -489,7 +489,7 @@ static void printRawMatrix(SEXP sx, int offset, int r, int c,
     for (j = 0; j < c; j++) {
 	formatRaw(&x[j * r], r, &w[j]);
 	if (!isNull(cl)) {
-	    if(STRING_ELT(cl, j) == NA_STRING) 
+	    if(STRING_ELT(cl, j) == NA_STRING)
 		clabw = R_print.na_width_noquote;
 	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
@@ -537,7 +537,7 @@ static void printRawMatrix(SEXP sx, int offset, int r, int c,
 void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 		 SEXP rl, SEXP cl, char *rn, char *cn)
 {
-    int r, c;
+    int r, c, r1;
 
     r = INTEGER(dim)[0];
     c = INTEGER(dim)[1];
@@ -549,6 +549,10 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
     if (r == 0 && c == 0) {
 	Rprintf("<0 x 0 matrix>\n");
 	return;
+    }
+    r1 = r;
+    if(R_print.max < r * c) {
+	r  = R_print.max / c;
     }
     switch (TYPEOF(x)) {
     case LGLSXP:
@@ -573,19 +577,19 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
     default:
 	UNIMPLEMENTED_TYPE("printMatrix", x);
     }
+    if(r < r1)
+	Rprintf(" [[ reached getOption(\"max.print\") -- omitted %d more rows ]]\n",
+		r1 - r);
 }
 
-static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right, 
+static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right,
                               SEXP dimnames)
 {
 /* == printArray(.) */
-    SEXP dn, dnn;
-    int i, j, k, l, b, nb, ndim;
-    int nr, nc;
-    int has_dimnames = 0, has_dnn = 0;
+
+    int ndim = LENGTH(dim);
     char *rn = NULL, *cn = NULL;
 
-    ndim = LENGTH(dim);
     if (ndim == 1)
 	printVector(x, 1, quote);
     else if (ndim == 2) {
@@ -594,17 +598,19 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right,
 	printMatrix(x, 0, dim, quote, 0, rl, cl, rn, cn);
     }
     else {
-	SEXP dn0, dn1;
-	nr = INTEGER(dim)[0];
-	nc = INTEGER(dim)[1];
-	b = nr * nc;
-	nb = 1;
-	for (i = 2 ; i < ndim ; i++)
+	SEXP dn, dnn, dn0, dn1;
+	int i, j, has_dimnames, has_dnn, nb;
+	int nr = INTEGER(dim)[0];
+	int nc = INTEGER(dim)[1];
+	int b = nr * nc;
+	for (i = 2, nb = 1; i < ndim; i++)
 	    nb *= INTEGER(dim)[i];
-	dnn = R_NilValue;	/* -Wall */
 	if (dimnames == R_NilValue) {
+	    has_dimnames = 0;
+	    has_dnn = 0;
 	    dn0 = R_NilValue;
 	    dn1 = R_NilValue;
+	    dnn = R_NilValue; /* -Wall */
 	}
 	else {
 	    dn0 = VECTOR_ELT(dimnames, 0);
@@ -618,10 +624,10 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right,
 	    }
 	}
 	for (i = 0; i < nb; i++) {
+	    int k = 1;
 	    Rprintf(", ");
-	    k = 1;
 	    for (j = 2 ; j < ndim; j++) {
-		l = (i / k) % INTEGER(dim)[j] + 1;
+		int l = (i / k) % INTEGER(dim)[j] + 1;
 		if (has_dimnames &&
 		    ((dn = VECTOR_ELT(dimnames, j)) != R_NilValue)) {
 		    if ( has_dnn )

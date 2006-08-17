@@ -43,6 +43,7 @@ typedef struct {
     int gap;
     int quote;
     int right;
+    int max;
     SEXP na_string;
     SEXP na_string_noquote;
 } R_print_par_t;

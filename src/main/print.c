@@ -90,6 +90,8 @@ void PrintDefaults(SEXP rho)
     R_print.digits = GetOptionDigits(rho);
     R_print.scipen = asInteger(GetOption(install("scipen"), rho));
     if (R_print.scipen == NA_INTEGER) R_print.scipen = 0;
+    R_print.max = asInteger(GetOption(install("max.print"), rho));
+    if (R_print.max == NA_INTEGER) R_print.max = 99999;
     R_print.gap = 1;
     R_print.width = GetOptionWidth(rho);
 }
@@ -114,6 +116,7 @@ SEXP attribute_hidden do_visibleflag(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #endif
 
+/* This is *only* called via outdated R_level prmatrix() : */
 SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int quote;
@@ -244,7 +247,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	    case LGLSXP:
 		if (LENGTH(tmp) == 1) {
 		    formatLogical(LOGICAL(tmp), 1, &w);
-		    snprintf(pbuf, 115, "%s", 
+		    snprintf(pbuf, 115, "%s",
 			     EncodeLogical(LOGICAL(tmp)[0], w));
 		} else
 		    snprintf(pbuf, 115, "Logical,%d", LENGTH(tmp));
@@ -265,7 +268,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	    case REALSXP:
 		if (LENGTH(tmp) == 1) {
 		    formatReal(REAL(tmp), 1, &w, &d, &e, 0);
-		    snprintf(pbuf, 115, "%s", 
+		    snprintf(pbuf, 115, "%s",
 			     EncodeReal(REAL(tmp)[0], w, d, e, OutDec));
 		} else
 		    snprintf(pbuf, 115, "Numeric,%d", LENGTH(tmp));
@@ -275,7 +278,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		    Rcomplex *x = COMPLEX(tmp);
 		    formatComplex(x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
 		    if (ISNA(x[0].r) || ISNA(x[0].i))
-			snprintf(pbuf, 115, "%s", 
+			snprintf(pbuf, 115, "%s",
 				 EncodeReal(NA_REAL, w, 0, 0, OutDec));
 		    else
 			snprintf(pbuf, 115, "%s", EncodeComplex(x[0],
@@ -540,7 +543,7 @@ static void PrintEnvir(SEXP rho)
     if (rho == R_GlobalEnv)
 	Rprintf("<environment: R_GlobalEnv>\n");
     else if (rho == R_BaseEnv)
-    	Rprintf("<environment: base>\n");	
+    	Rprintf("<environment: base>\n");
     else if (rho == R_EmptyEnv)
     	Rprintf("<environment: R_EmptyEnv>\n");
     else if (R_IsPackageEnv(rho))

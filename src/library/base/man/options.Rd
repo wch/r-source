@@ -137,12 +137,12 @@ getOption(x)
     \item{\code{mailer}:}{default mailer used by
       \code{\link{bug.report}()}.  Can be \code{"none"}.}
 
-    \item{\code{max.print}:}{integer, defaulting to \code{10000}.
+    \item{\code{max.print}:}{integer, defaulting to \code{99999}.
       \code{\link{print}} or \code{\link{show}} methods can make use of
       this option, to limit the amount of information that is printed,
-      typically to something in the order \code{max.print} lines.
-
-      This is not yet used in base \R.}
+      typically to something in the order \code{max.print}
+      \emph{entries}.  Currently only used for printing matrix-like
+      objects.}
 
     \item{\code{OutDec}:}{one-character string.  The character to be
       used as the decimal point in output conversions, that is in
@@ -250,7 +250,7 @@ getOption(x)
     \code{expressions} \tab \code{5000}\cr
     \code{keep.source} \tab \code{interactive()}\cr
     \code{keep.source.pkgs} \tab \code{FALSE}\cr
-    \code{max.print} \tab \code{10000}\cr
+    \code{max.print} \tab \code{99999}\cr
     \code{OutDec} \tab \code{"."}\cr
     \code{prompt} \tab \code{"> "}\cr
     \code{scipen} \tab \code{0} \cr

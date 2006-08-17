@@ -26,8 +26,9 @@ options(warn = 0)
 options(timeout = 60)
 options(encoding = "native.enc")
 options(show.error.messages = TRUE)
+## keep in sync with PrintDefaults() in  ../../main/print.c :
 options(scipen = 0)
-options(max.print = 10000)# not yet exercised in 'core R'
+options(max.print = 99999)# max. #{entries} in internal printMatrix()
 options(add.smooth = TRUE)# currently only used in 'plot.lm'
 options(stringsAsFactors = TRUE)
 

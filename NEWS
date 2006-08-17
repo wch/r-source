@@ -44,9 +44,14 @@ USER-VISIBLE CHANGES
 	These changes may affect the results of sapply() and lapply()
 	applied to factors.
 
-    o	mauchly.test() now returns the W statistic (for comparability 
+    o	mauchly.test() now returns the W statistic (for comparability
         with SAS and SPSS), rather than the z (which was accidentally
         not named in the output)
+
+    o	options(max.print = N) where N defaults to 99999
+	now cuts printing of large matrix-like objects after N entries.
+	The current setup is experimental, and may well change before
+	release.
 
 
 NEW FEATURES
