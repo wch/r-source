@@ -38,6 +38,7 @@
     \code{x \%+-\% y}   \tab x plus or minus y \cr
     \code{x \%/\% y}   \tab x divided by y \cr
     \code{x \%*\% y}   \tab x times y \cr
+    \code{x \%.\% y}   \tab x cdot y \cr
     \code{x[i]}   \tab x subscript i \cr
     \code{x^2}    \tab x superscript 2 \cr
     \code{paste(x, y, z)} \tab juxtapose x, y, and z \cr

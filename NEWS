@@ -305,6 +305,10 @@ NEW FEATURES
 
     o	There is now a format() method for "ftable"s.
 
+    o   There is a new '%.%' operator for mathematical annotations
+        (plotmath) which draws a centred multiplication dot
+        (a \cdot in LaTeX), thanks to Uwe Ligges.
+
 
 DEPRECATED & DEFUNCT
 

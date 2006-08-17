@@ -54,6 +54,7 @@ draw.plotmath.cell(expression(x / y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(x %+-% y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(x %/% y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(x %*% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x %.% y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(-x), i, nr); i <- i + 1
 draw.plotmath.cell(expression(+x), i, nr); i <- i + 1
 draw.title.cell("Sub/Superscripts", i, nr); i <- i + 1

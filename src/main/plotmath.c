@@ -1336,6 +1336,7 @@ static SymTab BinTable[] = {
     { "%/%",		0270 },
     { "%intersection%", 0307 },
     { "%union%",	0310 },
+    { "%.%",            0327 }, /* cdot or dotmath */
     { NULL,		   0 }
 };
 
