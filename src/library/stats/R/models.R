@@ -410,7 +410,8 @@ model.matrix.default <- function(object, data = environment(object),
                          names(data))
 	if (any(is.na(reorder)))
 	    stop("model frame and formula mismatch in model.matrix()")
-	data <- data[,reorder, drop=FALSE]
+	if(!identical(reorder, seq(length = ncol(data))))
+	    data <- data[,reorder, drop=FALSE]
     }
     int <- attr(t, "response")
     if(length(data)) { # otherwise no rhs terms, so skip all this
