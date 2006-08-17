@@ -13,12 +13,16 @@ head.default <- function(x, n = 6, ...)
     x[seq(len = n)]
 }
 
-head.data.frame <- head.matrix <- function(x, n = 6, ...)
+## head.matrix and tail.matrix are now exported (to be used for other classes)
+head.matrix <- function(x, n = 6, ...)
 {
     stopifnot(length(n) == 1)
     n <- if (n < 0) max(nrow(x) + n, 0) else min(n, nrow(x))
-    x[seq(len = n), , drop=FALSE]
+    x[seq(length = n), , drop=FALSE]
 }
+head.data.frame <- head.table <- head.matrix
+
+head.ftable <- function(x, n = 6, ...) head.matrix(format(x), n = n, ...)
 
 head.function <- function(x, n = 6, ...)
 {
@@ -56,6 +60,9 @@ tail.matrix <- function(x, n = 6, addrownums = TRUE, ...)
     	rownames(ans) <- paste("[", sel, ",]", sep="")
     ans
 }
+tail.table <- tail.matrix
+
+tail.ftable <- function(x, n = 6, ...) tail.matrix(format(x), n = n, ...)
 
 tail.function <- function(x, n = 6, ...)
 {

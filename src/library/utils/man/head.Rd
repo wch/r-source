@@ -3,31 +3,39 @@
 \alias{head.default}
 \alias{head.data.frame}
 \alias{head.function}
+\alias{head.ftable}
+\alias{head.table}
 \alias{head.matrix}
 \alias{tail}
 \alias{tail.default}
 \alias{tail.data.frame}
 \alias{tail.function}
+\alias{tail.ftable}
+\alias{tail.table}
 \alias{tail.matrix}
 \title{
   Return the First or Last Part of an Object
 }
 \description{
-  Returns the first or last parts of a vector, matrix, data frame or function.
-  Since \code{head()} and \code{tail()} are generic functions, they may
-  also have been extended to other classes.
+  Returns the first or last parts of a vector, matrix, table, data frame
+  or function.  Since \code{head()} and \code{tail()} are generic
+  functions, they may also have been extended to other classes.
 }
 \usage{
 head(x, \dots)
 \method{head}{default}(x, n = 6, \dots)
 \method{head}{data.frame}(x, n = 6, \dots)
 \method{head}{matrix}(x, n = 6, \dots)
+\method{head}{ftable}(x, n = 6, \dots)
+\method{head}{table}(x, n = 6, \dots)
 \method{head}{function}(x, n = 6, \dots)
 
 tail(x, \dots)
 \method{tail}{default}(x, n = 6, \dots)
 \method{tail}{data.frame}(x, n = 6, \dots)
 \method{tail}{matrix}(x, n = 6, addrownums = TRUE, \dots)
+\method{tail}{ftable}(x, n = 6, addrownums = TRUE, \dots)
+\method{tail}{table}(x, n = 6, addrownums = TRUE, \dots)
 \method{tail}{function}(x, n = 6, \dots)
 }
 \arguments{
@@ -41,9 +49,10 @@ tail(x, \dots)
   \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{
-  For matrices and data frames, \code{head()} (\code{tail()}) returns
+  For matrices, tables and data frames, \code{head()} (\code{tail()}) returns
   the first (last) \code{n} rows when \code{n > 0} or all but the
-  last (first) \code{n} rows when \code{n < 0}. For functions, the
+  last (first) \code{n} rows when \code{n < 0}.  \code{head.matrix()} and
+  \code{tail.matrix()} are exported.  For functions, the
   lines of the deparsed function are returned as character strings.
 
   If a matrix has no row names, then \code{tail()} will add row names of

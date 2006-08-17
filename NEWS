@@ -48,7 +48,7 @@ USER-VISIBLE CHANGES
 	These changes may affect the results of sapply() and lapply()
 	applied to factors.
 
-    o   mauchly.test now returns the W statistic (for comparability 
+    o   mauchly.test now returns the W statistic (for comparability
         with SAS and SPSS), rather than the z (which was accidentally
         not named in the output)
 
@@ -297,6 +297,8 @@ NEW FEATURES
 
     o	apply() now works as documented when applied over 2 or more
 	margins with one of zero extent.  (It used to drop dimensions.)
+
+    o	There's now a format() method for "ftable"s.
 
 
 DEPRECATED & DEFUNCT

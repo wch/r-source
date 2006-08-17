@@ -151,12 +151,10 @@ as.table.ftable <- function(x, ...)
     x
 }
 
-write.ftable <- function(x, file = "", quote = TRUE, append = FALSE,
-                         digits = getOption("digits"))
+format.ftable <- function(x, quote = TRUE, digits = getOption("digits"))
 {
     if(!inherits(x, "ftable"))
         stop("'x' must be an \"ftable\" object")
-    ox <- x
     charQuote <- function(s)
         if(quote) paste("\"", s, "\"", sep = "") else s
     makeLabels <- function(lst) {
@@ -189,11 +187,17 @@ write.ftable <- function(x, file = "", quote = TRUE, append = FALSE,
     DATA <- rbind(if(length(xcv)) t(makeLabels(xcv)),
                   rep("", times = ncol(x)),
                   format(unclass(x), digits = digits))
-    x <- cbind(apply(LABS, 2, format, justify = "left"),
-               apply(DATA, 2, format, justify = "right"))
-    cat(t(x), file = file, append = append,
-        sep = c(rep(" ", ncol(x) - 1), "\n"))
-    invisible(ox)
+    cbind(apply(LABS, 2, format, justify = "left"),
+	  apply(DATA, 2, format, justify = "right"))
+}
+
+write.ftable <- function(x, file = "", quote = TRUE, append = FALSE,
+			 digits = getOption("digits"))
+{
+    r <- format.ftable(x, quote = quote, digits = digits)
+    cat(t(r), file = file, append = append,
+	sep = c(rep(" ", ncol(r) - 1), "\n"))
+    invisible(x)
 }
 
 print.ftable <- function(x, digits = getOption("digits"), ...)
