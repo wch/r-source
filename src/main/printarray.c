@@ -542,18 +542,17 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
     r = INTEGER(dim)[0];
     c = INTEGER(dim)[1];
     /* PR#850 */
-    if ((rl!=R_NilValue) && (r>length(rl)))
+    if ((rl != R_NilValue) && (r>length(rl)))
 	error(_("too few row labels"));
-    if ((cl!=R_NilValue) && (c>length(cl)))
+    if ((cl != R_NilValue) && (c>length(cl)))
 	error(_("too few column labels"));
     if (r == 0 && c == 0) {
 	Rprintf("<0 x 0 matrix>\n");
 	return;
     }
     r1 = r;
-    if(R_print.max < r * c) {
-	r  = R_print.max / c;
-    }
+    /* Need to avoid integer overflow here */
+    if(c > 0 && R_print.max / c < r) r  = R_print.max / c;
     switch (TYPEOF(x)) {
     case LGLSXP:
 	printLogicalMatrix(x, offset, r, c, rl, cl, rn, cn);
