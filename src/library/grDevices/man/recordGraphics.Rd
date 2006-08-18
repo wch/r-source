@@ -1,6 +1,5 @@
 \name{recordGraphics}
 \alias{recordGraphics}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Record graphics operations }
 \description{
   Records arbitrary code on the graphics engine display list.
@@ -11,7 +10,6 @@
 \usage{
 recordGraphics(expr, list, env)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{expr}{object of mode \code{\link{expression}} or \code{call} or
     an \dQuote{unevaluated expression}.}
@@ -31,21 +29,19 @@ recordGraphics(expr, list, env)
   All three arguments are saved on the graphics engine display list
   so that on a device resize or copying between devices, the original
   evaluation environment can be recreated and the code can be
-  reevaluated to reproduce the graphical output.
+  re-evaluated to reproduce the graphical output.
 }
-\section{Warning }{
+\section{Warning}{
   This function is not intended for general use.  Incorrect or
-  improper use
-  of this function could lead to unintended and/or undesirable
-  results.
+  improper use of this function could lead to unintended and/or
+  undesirable results.
 
   An example of acceptable use is querying the current state
   of a graphics device or graphics system setting and then
   calling a graphics function.
 
   An example of improper use would be calling the \code{assign} function
-  to performing assignments in the
-  global environment.
+  to performing assignments in the global environment.
 } 
 \seealso{\code{\link{eval}} }
 \examples{
@@ -59,4 +55,4 @@ recordGraphics(
   list(),
   getNamespace("graphics"))
 }
-\keyword{ device }% at least one, from doc/KEYWORDS
+\keyword{ device }
