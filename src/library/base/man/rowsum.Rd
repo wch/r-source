@@ -19,16 +19,16 @@ rowsum(x, group, reorder = TRUE, \dots)
 }
 \arguments{
   \item{x}{a matrix, data frame or vector of numeric data.  Missing
-  values are allowed.  A numeric vector will be treated as a column vector.}
-  \item{group}{a vector giving the grouping, with one element per row of
-    \code{x}.  Missing values will be treated as another group and a
-    warning will be given.}
+    values are allowed.  A numeric vector will be treated as a column vector.}
+  \item{group}{a vector or factor giving the grouping, with one element
+    per row of \code{x}.  Missing values will be treated as another
+    group and a warning will be given.}
   \item{reorder}{if \code{TRUE}, then the result will be in order of
     \code{sort(unique(group))}, if \code{FALSE}, it will be in the order
     that rows were encountered. }
   \item{na.rm}{logical (\code{TRUE} or \code{FALSE}).  Should \code{NA}
     values be discarded?}
-  \item{\dots}{other arguments for future methods}
+  \item{\dots}{other arguments to be passed to or from methods}
 }
 \value{
   A matrix or data frame containing the sums.  There will be one row per
