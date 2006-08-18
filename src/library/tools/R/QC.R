@@ -1904,13 +1904,14 @@ function(package, dir, lib.loc = NULL)
         }
         dotsPos <- which(gArgs == "...")
         ipos <- if(length(dotsPos) > 0)
-            seq(from = 1, length = dotsPos - 1)
+            seq(from = 1, length = dotsPos[1] - 1)
         else
             seq(along = gArgs)
 
+        ## careful, this could match multiply in incorrect funs.
         dotsPos <- which(mArgs == "...")
         if(length(dotsPos) > 0)
-            ipos <- ipos[seq(from = 1, length = dotsPos - 1)]
+            ipos <- ipos[seq(from = 1, length = dotsPos[1] - 1)]
         posMatchOK <- identical(gArgs[ipos], mArgs[ipos])
         argMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0
         if(posMatchOK && argMatchOK)

@@ -496,7 +496,7 @@ function(package)
              "kappa.tri",
              "max.col",
              "print.atomic", "print.coefmat",
-             "rep.int", "round.POSIXt"),
+             "rep.int", "round.POSIXt", "sort.int", "sort.list"),
              Hmisc = "t.test.cluster",
              HyperbolicDist = "log.hist",
              MASS = c("frequency.polygon",
