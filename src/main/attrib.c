@@ -39,12 +39,7 @@ static SEXP commentgets(SEXP, SEXP);
 static SEXP row_names_gets(SEXP vec , SEXP val)
 {
     SEXP ans;
-    /* temporary fix */
-    if(TYPEOF(val) == REALSXP) {
-	warning("row names should be 'integer', not 'double'");
-	val = coerceVector(val, INTSXP); 
-	/* we can get away without protection here */
-    } else if(isInteger(val)) {
+    if(isInteger(val)) {
 	Rboolean OK_compact = TRUE;
 	int i, n = LENGTH(val);
 	if(n == 2 && INTEGER(val)[0] == NA_INTEGER) {
