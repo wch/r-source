@@ -83,13 +83,10 @@ str.default <-
     ## NON interesting attributes:
     std.attr <- "names"
 
-    #NOT yet:if(has.class <- !is.null(cl <- class(object)))
-    if(has.class <- !is.null(cl <- attr(object, "class"))) { # S3 or S4 class
-	## The new way (R-2.4.0, with R_S4_type activated) :
-	S4 <- typeof(object) == "S4"
-	if(!S4) ## old kludge for compatibility (of old saved objects):
-	    S4 <- !is.null(attr(cl, "package")) || cl == "classRepresentation"
-    }
+    cl <-
+	if((S4 <- typeof(object) == "S4"))
+	    class(object) else attr(object, "class")
+    has.class <- S4 || !is.null(cl) # S3 or S4
     mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
 
@@ -98,7 +95,7 @@ str.default <-
 	else { dp <- deparse(ao); paste(dp[-length(dp)], collapse="\n") },"\n")
     } else if (is.null(object))
 	cat(" NULL\n")
-    else if(has.class && S4) {
+    else if(S4) {
 	a <- sapply(methods::.slotNames(object), methods::slot,
                     object=object, simplify = FALSE)
 	cat("Formal class", " '", paste(cl, collapse = "', '"),
