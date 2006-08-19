@@ -1149,7 +1149,7 @@ sub check_pkg {
     ## Check we can actually load the package
 
     if($opt_install) {
-	$log->checking("the package can be loaded");
+	$log->checking("whether the package can be loaded");
 	my $Rcmd = "library(${pkgname})";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(!/^\>/, @out);
@@ -1164,7 +1164,7 @@ sub check_pkg {
 	} else {
 	    $log->result("OK");
 	}
-	$log->checking("the package can be loaded with stated dependencies");
+	$log->checking("whether the package can be loaded with stated dependencies");
 	my $Rcmd = "library(${pkgname})";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
@@ -1187,7 +1187,8 @@ sub check_pkg {
     ## and if it has a namespace, that we can load just the namespace
 
     if($opt_install && -f "${pkgdir}/NAMESPACE") {
-	$log->checking("the name space can be loaded with stated dependencies");	my $Rcmd = "loadNamespace(\"${pkgname}\")";
+	$log->checking("whether the name space can be loaded with stated dependencies");
+	my $Rcmd = "loadNamespace(\"${pkgname}\")";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);

@@ -6,7 +6,7 @@
 \alias{duplicated.array}
 \title{Determine Duplicate Elements}
 \description{
-  Determines which elements of a vector of data frame are duplicates
+  Determines which elements of a vector or data frame are duplicates
   of elements with smaller subscripts, and returns a logical vector
   indicating which elements (rows) are duplicates.
 }

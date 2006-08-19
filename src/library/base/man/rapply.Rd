@@ -13,7 +13,7 @@ rapply(object, f, classes = "ANY", deflt = NULL,
   \item{f}{A function of a single argument.}
   \item{classes}{A character vector of \code{\link{class}} names, or
     \code{"ANY"} to match any class.}
-  \item{deflt}{The default result (not used if \code{how = "replace"}.}
+  \item{deflt}{The default result (not used if \code{how = "replace"}).}
   \item{how}{A character string matching the three possibilities given:
     see Details.}
   \item{\dots}{additional arguments passed to the call to \code{f}.}

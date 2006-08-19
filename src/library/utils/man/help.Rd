@@ -75,7 +75,7 @@ type?topic
 \details{
   \code{topic} is not optional: if it is omitted \R will give a hint as
   to suitable topics if a package is specified, to available packages if
-  \code{\lib.loc} only is specified, and help on \code{help} itself if
+  \code{lib.loc} only is specified, and help on \code{help} itself if
   nothing is specified.  (In all cases this will be text help.)
   
   In the case of unary and binary operators and control-flow special
