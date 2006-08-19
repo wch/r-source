@@ -222,7 +222,7 @@ iconv <- function(x, from, to, sub = NA)
 iconvlist <- function()
 {
     int <- .Internal(iconv(NULL, "", "", ""))
-    if(length(int)) return(sort(int))
+    if(length(int)) return(sort.int(int))
     icfile <- system.file("iconvlist", package="utils")
     if(!nchar(icfile)) stop("'iconvlist' is not available on this system")
     ext <- readLines(icfile)
@@ -234,7 +234,7 @@ iconvlist <- function()
         ext <- grep("//$", ext, value = TRUE)
         ext <- sub("//$", "", ext)
     }
-    sort(unlist(strsplit(ext, "[[:space:]]")))
+    sort.int(unlist(strsplit(ext, "[[:space:]]")))
 }
 
 Cstack_info <- function() .Internal(Cstack_info())

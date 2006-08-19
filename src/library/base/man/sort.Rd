@@ -1,5 +1,8 @@
 \name{sort}
 \alias{sort}
+\alias{sort.default}
+\alias{sort.POSIXlt}
+\alias{sort.int}
 \alias{is.unsorted}
 \title{Sorting or Ordering Vectors}
 \description{
@@ -8,26 +11,39 @@
   variable, e.g., for sorting data frames, see \code{\link{order}}.
 }
 \usage{
-sort(x, partial = NULL, na.last = NA, decreasing = FALSE,
-     method = c("shell", "quick"), index.return = FALSE)
+sort(x, decreasing = FALSE, \dots)
+
+\method{sort}{default}(x, decreasing = FALSE, na.last = NA, \dots)
+
+sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
+         method = c("shell", "quick"), index.return = FALSE)
 
 is.unsorted(x, na.rm = FALSE)
 }
 \arguments{
-  \item{x}{a numeric, complex, character or logical vector, or a factor.}
-  \item{partial}{a vector of indices for partial sorting.}
+  \item{x}{for \code{sort}, an R object with a class or a numeric,
+    complex, character or logical vector.  For \code{sort.int}, a
+    numeric, complex, character or logical vector, or a factor.}
+  \item{decreasing}{logical.  Should the sort be increasing or decreasing?
+     Not available for partial sorting.}
+  \item{\dots}{arguments to be passed to or from methods or (for the
+    default methods and objects without a class) to \code{sim.int}.}
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
-  \item{decreasing}{logical.  Should the sort be increasing or decreasing?
-     Not available for partial sorting.}
-  \item{method}{character specifying the algorithm used.}
+  \item{partial}{\code{NULL} or an integer vector of indices for
+    partial sorting.}
+  \item{method}{character string specifying the algorithm used.}
   \item{index.return}{logical indicating if the ordering index vector should
     be returned as well; this is only available for a few cases, the default
     \code{na.last = NA} and full sorting of non-factors.}
   \item{na.rm}{logical.  Should missing values be removed?}
 }
 \details{
+  \code{sort} is a generic function for which methods can be written,
+  and \code{sort.int} is the internal method which is compatible
+  with S if only the first three arguments are used.
+  
   If \code{partial} is not \code{NULL}, it is taken to contain indices
   of elements of \code{x} which are to be placed in their correct
   positions by partial sorting.  After the sort, the values specified in
@@ -64,7 +80,15 @@ is.unsorted(x, na.rm = FALSE)
   not a stable sort, and ties may be reordered.
 }
 \value{
-  For \code{sort} the sorted vector unless
+  For \code{sort}, the result depends on the S3 method which is
+  dispatched.  If \code{x} does not have a class the rest of this section
+  applies.  For classed objects which do not have a specific method the
+  default method will be used and is equivalent to \code{x[order(x,
+    ...)]}: this depends on the class having a suitable method for
+  \code{[} (and also that \code{\link{order}} will work, which is not
+  the case for a class based on a list).
+ 
+  For \code{sort.int} the sorted vector unless
   \code{index.return} is true, when the result is
   a list with components named \code{x} and \code{ix} containing the
   sorted numbers and the ordering index vector.  In the latter case,
@@ -114,24 +138,22 @@ sort(c(10:3,2:12), method = "qu", index=TRUE) # is not
 \dontrun{## Small speed comparison simulation:
 N <- 2000
 Sim <- 20
-rep <- 50 # << adjust to your CPU
+rep <- 1000 # << adjust to your CPU
 c1 <- c2 <- numeric(Sim)
 for(is in 1:Sim){
   x <- rnorm(N)
-  c1[is] <- system.time(for(i in 1:rep) sort(x, method = "shell"),
-                        gcFirst = TRUE)[1]
-  c2[is] <- system.time(for(i in 1:rep) sort(x, method = "quick"),
-                        gcFirst = TRUE)[1]
-  stopifnot(sort(x, meth = "s") == sort(x, meth = "q"))
+  c1[is] <- system.time(for(i in 1:rep) sort(x, method = "shell"))[1]
+  c2[is] <- system.time(for(i in 1:rep) sort(x, method = "quick"))[1]
+  stopifnot(sort(x, method = "s") == sort(x, method = "q"))
 }
-100 * rbind(ShellSort = c1, QuickSort = c2)
+rbind(ShellSort = c1, QuickSort = c2)
 cat("Speedup factor of quick sort():\n")
 summary({qq <- c1 / c2; qq[is.finite(qq)]})
 
 ## A larger test
-x <- rnorm(1e6)
-system.time(x1 <- sort(x, method = "shell"), gcFirst = TRUE)
-system.time(x2 <- sort(x, method = "quick"), gcFirst = TRUE)
+x <- rnorm(1e7)
+system.time(x1 <- sort(x, method = "shell"))
+system.time(x2 <- sort(x, method = "quick"))
 stopifnot(identical(x1, x2))
 }}
 \keyword{univar}

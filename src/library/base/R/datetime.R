@@ -771,3 +771,8 @@ duplicated.POSIXlt <- function(x, incomparables = FALSE, ...)
 
 unique.POSIXlt <- function(x, incomparables = FALSE, ...)
     x[!duplicated(x, incomparables, ...)]
+
+# ---- additions in 2.4.0 -----
+
+sort.POSIXlt <- function(x, decreasing = FALSE, na.last = NA, ...)
+    x[order(as.POSIXct(x), na.last = na.last, decreasing = decreasing)]

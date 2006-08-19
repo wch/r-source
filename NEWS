@@ -53,6 +53,11 @@ USER-VISIBLE CHANGES
 	The current setup is experimental, and may well change before
 	release.
 
+    o	sort(x, decreasing = FALSE, ...) is now a generic function.
+	This means that 'partial' is no longer the second argument,
+	and calls which used positional matching may be incorrect: we
+	try to detect them.
+
 
 NEW FEATURES
 
@@ -309,6 +314,13 @@ NEW FEATURES
         (plotmath) which draws a centred multiplication dot
         (a \cdot in LaTeX), thanks to Uwe Ligges.
 
+    o	The function sort() is now sort.int(), with a new generic
+	function sort() which behaves in the same way (except for the
+	order of its argument list) for objects without a class, and
+	relies on the '[' method for objects with a class (unless a
+	specific method has been written, as it has for class
+	"POSIXlt").
+
 
 DEPRECATED & DEFUNCT
 
@@ -366,7 +378,7 @@ C-LEVEL FACILITIES
     o	R_ParseVector was returning with object(s) protected in the
 	parser if the status was PARSE_INCOMPLETE or PARSE_ERROR.
 
-    o	There is a new function Rf_endEmbeddedR to properly terminated
+    o	There is a new function Rf_endEmbeddedR to properly terminate
 	a session started by Rf_initEmbeddedR, and both are now
 	available on Windows as well as on Unix-alikes.  These and
 	related functions are now declared in header <Rembedded.h>.
@@ -432,11 +444,11 @@ INSTALLATION
 	run' has been improved as on one system that test passed but
 	the Fortran run-time library was broken.
 
-    o	Dynamic libraries and modules use flat namespace on MacOS X
+    o	Dynamic libraries and modules use a flat namespace on MacOS X
 	10.3 and higher if either Xcode tools don't support dynamic
-	lookup (Xcode <	2.3) or FORCE_FLAT_NAMESPACE environment
-	variable is set. The latter was introduced temporarily for
-	testing purposes and may go away soon.
+	lookup (Xcode < 2.3) or the FORCE_FLAT_NAMESPACE environment
+	variable is set.  (The latter was introduced temporarily for
+	testing purposes and may go away soon.)
 
 
 BUG FIXES
@@ -572,7 +584,7 @@ BUG FIXES
     o	head() and tail() now also work row-wise for "table" and "ftable"
 	objects.
 
-    o	NextMethod could throw an error/crash if called from a method
+    o	NextMethod() could throw an error/crash if called from a method
 	that was called directly rather than from a generic (so
 	.Method was unset).
 

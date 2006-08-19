@@ -132,19 +132,19 @@ Ops.factor <- function(e1, e2)
 	e2 <- l2[e2]
     }
     if (all(nchar(.Method)) && (length(l1) != length(l2) ||
-				!all(sort(l2) == sort(l1))))
+				!all(sort.int(l2) == sort.int(l1))))
 	stop("level sets of factors are different")
     value <- NextMethod(.Generic)
     value[nas] <- NA
     value
 }
 
-"[.factor" <- function(x, i, drop=FALSE)
+"[.factor" <- function(x, i, drop = FALSE)
 {
     y <- NextMethod("[")
     attr(y,"contrasts")<-attr(x,"contrasts")
     ## NB factor has levels before class in attribute list (PR#6799)
-    attr(y,"levels")<-attr(x,"levels")
+    attr(y,"levels") <- attr(x,"levels")
     class(y) <- oldClass(x)
     if ( drop ) factor(y) else y
 }

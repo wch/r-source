@@ -20,7 +20,8 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   \item{\dots}{a sequence of numeric, complex, character or logical
     vectors, all of the same length.}
   \item{x}{a vector.}
-  \item{partial}{vector of indices for partial sorting.}
+  \item{partial}{vector of indices for partial sorting.
+    (Non-\code{NULL} values are not implemented.)}
   \item{decreasing}{logical. Should the sort order be increasing or
     decreasing?}
   \item{na.last}{for controlling the treatment of \code{NA}s.
@@ -52,6 +53,11 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   \code{partial} is supplied for compatibility with other
   implementations of S, but no other values are accepted and ordering is
   always complete.
+}
+\note{
+  \code{sort.list} can get called by mistake as a method for
+  \code{\link{sort}} with a list argument, and gives a suitable error
+  message for list \code{x}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -100,18 +106,19 @@ z <- cbind(a, b)
 (o <- order(a, b, na.last = NA)); z[o, ]
 
 \dontrun{
-##  speed examples for long vectors: timings are immediately after gc()
+##  speed examples for long vectors:
 x <- factor(sample(letters, 1e6, replace=TRUE))
-system.time(o <- sort.list(x)) ## 4 secs
+system.time(o <- sort.list(x)) ## 1.2 secs
 stopifnot(!is.unsorted(x[o]))
-system.time(o <- sort.list(x, method="quick", na.last=NA)) # 0.4 sec
+system.time(o <- sort.list(x, method="quick", na.last=NA)) # 0.15 sec
 stopifnot(!is.unsorted(x[o]))
-system.time(o <- sort.list(x, method="radix")) # 0.04 sec
+system.time(o <- sort.list(x, method="radix")) # 0.02 sec
 stopifnot(!is.unsorted(x[o]))
 xx <- sample(1:26, 1e7, replace=TRUE)
-system.time(o <- sort.list(xx, method="radix")) # 0.4 sec
+system.time(o <- sort.list(xx, method="radix")) # 0.2 sec
 xx <- sample(1:100000, 1e7, replace=TRUE)
-system.time(o <- sort.list(xx, method="radix")) # 4 sec
+system.time(o <- sort.list(xx, method="radix")) # 0.8 sec
+system.time(o <- sort.list(xx, method="quick", na.last=NA)) # 1.4 sec
 }}
 \keyword{univar}
 \keyword{manip}
