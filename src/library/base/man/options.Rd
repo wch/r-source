@@ -378,7 +378,7 @@ getOption(x)
       printed on URL downloads etc.  Default is 2, for failure causes.
       Set to 1 or 0 to get more information.}
 
-    \item{\code{menu.grapbics}:}{Logical: should graphical menus to be
+    \item{\code{menu.graphics}:}{Logical: should graphical menus be
       used if available?.  Defaults to \code{TRUE}.  Currently applies
       to \code{\link{chooseCRANmirror}}, \code{\link{setRepositories}}
       and to select from multiple help files in \code{\link{help}}.}
