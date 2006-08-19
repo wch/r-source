@@ -89,8 +89,11 @@ NEW FEATURES
 	row.names() will always return a character vector, but direct
 	access to the attribute may not.
 
-	The internal storage of row.names = 1:n just records 'n' for
+	The internal storage of row.names = 1:n just records 'n', for
 	efficiency with very long vectors.
+
+    o	The "row.names" attribute must be a character or integer
+	vector, and this is now enforced by the C code.
 
     o	make.link() now returns an object of class "link-glm".
 	The GLM families accept an object of this class for their
