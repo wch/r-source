@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-08-12
+@set FAQ_DATE @value{FAQ_YEAR}-08-18
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2771,8 +2771,12 @@ is a function of some sort.
 Functions for calculating fractal dimension.
 @item fdrtool
 Estimation and control of (local) False Discovery Rates.
+@item feature
+Feature significance for multivariate kernel density estimation.
 @item femmeR
 Output analysis of FEMME model results.
+@item ffmanova
+Fifty-fifty MANOVA.
 @item fgac
 Families of Generalized Archimedean Copulas.
 @item fields
@@ -2844,6 +2848,8 @@ distributions.
 Genetic analysis package for both population and family data.
 @c Includes @strong{pathmix} for path analysis of pairs of relatives,
 @c and @strong{pointer} for complex segregation analysis.
+@item gbev
+Gradient Boosted regression trees with Errors-in-Variables.
 @item gbm
 Generalized Boosted Regression Models: implements extensions to Freund
 and Schapire's AdaBoost algorithm and J. Friedman's gradient boosting
@@ -3302,6 +3308,8 @@ misclassification rates.
 Hazard function estimation in survival analysis.
 @item multcomp
 Multiple comparison procedures for the one-way layout.
+@item multcompView
+Visualizations of paired comparisons.
 @c <COMMENT>
 @c Removed from CRAN on 2004-10-20 due to possible legal problems.
 @c @item multidim
@@ -3542,6 +3550,8 @@ manipulations.
 Statistical and POPulation GENetics.
 @item portfolio
 Classes for analyzing and implementing portfolios.
+@item powell
+Optimizes a function using Powell's UObyQA algorithm.
 @item powerpkg
 Power analyses for the affected sib pair and the TDT design.
 @item ppc
@@ -3612,6 +3622,8 @@ best.
 Raking survey datasets by re-weighting.
 @item randaes
 Random number generator based on AES cipher.
+@item random
+True random numbers using random.org.
 @item randomSurvivalForest
 Ishwaran and Kogalur's random survival forest.
 @item randomForest
@@ -3694,6 +3706,8 @@ Robust regression estimators.
 Insightful robust package.
 @item robustbase
 Basic Robust Statistics.
+@item rpanel
+Simple interactive controls for R using the tcltk package.
 @item rpart
 Recursive PARTitioning and regression trees.  @emph{Recommended}.
 @item rpart.permutation
