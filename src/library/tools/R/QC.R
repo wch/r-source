@@ -2239,7 +2239,7 @@ function(package, dir, file, lib.loc = NULL)
     }
     else if(!missing(file)) {
         if(!file_test("-f", file))
-            stop(gettext("file '%s' does not exist", file),
+            stop(gettextf("file '%s' does not exist", file),
                  domain = NA)
         else
             code_files <- file
