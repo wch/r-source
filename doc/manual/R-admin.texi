@@ -767,7 +767,13 @@ Optionally, you can install a version of ATLAS
 @code{math-atlas.sourceforge.net}}) tuned to your system for fast linear
 algebra routines. Pre-built @file{Rblas.dll} for various Pentium and
 AthlonXP chips are available in the @file{windows/contrib/ATLAS} area on
-@acronym{CRAN}.
+@acronym{CRAN}.  If you are building R from source, there are macros
+@code{USE_ATLAS} and @code{ATLAS_PATH} in the file @file{MkRules}.  Set
+@code{USE_ATLAS = YES} and @code{ATLAS_PATH} to where the ATLAS
+libraries are located.  You will need to make the libraries
+yourself@footnote{We do this using the Cygwin compilers, often with
+some difficulty.}: none of the binaries we have seen are compiled for
+the correct compiler.
 
 Another possibility is to use AMD's AMD Core Math Library (ACML)
 @url{http://www.amd.com/acml, @code{www.amd.com/@/acml}}.  To use the
