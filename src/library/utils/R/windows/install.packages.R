@@ -18,15 +18,17 @@
         ## dir over to the appropriate install dir.
         tmpDir <- tempfile(, lib)
         if (!dir.create(tmpDir))
-            stop(sprintf(gettext("unable to create temporary directory '%s'"),
-                         normalizePath(tmpDir)), domain = NA, call. = FALSE)
+            stop(gettextf("unable to create temporary directory '%s'",
+                          normalizePath(tmpDir)),
+                 domain = NA, call. = FALSE)
         cDir <- getwd()
         on.exit(setwd(cDir), add = TRUE)
         res <- zip.unpack(pkg, tmpDir)
         setwd(tmpDir)
         res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
         if(!is.na(res) && res) {
-            cat(sprintf(gettext("package '%s' successfully unpacked and MD5 sums checked\n"), pkgname))
+            cat(gettextf("package '%s' successfully unpacked and MD5 sums checked\n",
+                         pkgname))
             flush.console()
         }
 
@@ -43,7 +45,8 @@
             for (curPkg in pkgs) res <- res &
             tools::checkMD5sums(pkgname, file.path(tmpDir, curPkg))
             if(!is.na(res) && res) {
-                cat(sprintf(gettext("bundle '%s' successfully unpacked and MD5 sums checked\n"), pkgname))
+                cat(gettextf("bundle '%s' successfully unpacked and MD5 sums checked\n",
+                             pkgname))
                 flush.console()
             }
         } else pkgs <- pkgname
@@ -110,15 +113,13 @@
                     ## remove our temp dir
                     ret <- file.rename(file.path(tmpDir, curPkg), instPath)
                     if(!ret)
-                        warning(sprintf(gettext(
-                             "unable to move temporary installation '%s' to '%s'"),
-                                        normalizePath(file.path(tmpDir, curPkg)),
-                                        normalizePath(instPath)),
+                        warning(gettextf("unable to move temporary installation '%s' to '%s'",
+                                         normalizePath(file.path(tmpDir, curPkg)),
+                                         normalizePath(instPath)),
                                 domain = NA, call. = FALSE, immediate. = TRUE)
                 } else {
-                    warning(sprintf(gettext(
-                             "cannot remove prior installation of package '%s'"),
-                                    curPkg),
+                    warning(gettextf("cannot remove prior installation of package '%s'",
+                                     curPkg),
                             domain = NA, call. = FALSE, immediate. = TRUE)
                 }
             }
@@ -269,6 +270,6 @@ zip.unpack <- function(zipname, dest)
         } else {
             .Internal(int.unzip(zipname, NULL, dest))
         }
-    } else stop(sprintf(gettext("zipfile '%s' not found"), zipname),
+    } else stop(gettextf("zipfile '%s' not found", zipname),
                 domain = NA)
 }
