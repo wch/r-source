@@ -14,6 +14,9 @@ Changes from grid_2.3.0 to grid_2.4.0:
     not "str[width|height]" or "grob[x|y|width|height]", you
     get an error.  This may impact on existing code.
 
+4.  Radii in grid.circle() are now silently converted to their
+    absolute value (negative values used to trigger an error).
+
 
 Changes from grid_2.2.0 to grid_2.3.0:
 ------------------------------------
