@@ -151,7 +151,7 @@ as.table.ftable <- function(x, ...)
     x
 }
 
-format.ftable <- function(x, quote = TRUE, digits = getOption("digits"))
+format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
 {
     if(!inherits(x, "ftable"))
         stop("'x' must be an \"ftable\" object")

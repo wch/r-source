@@ -11,7 +11,7 @@ read.ftable(file, sep = "", quote = "\"",
 write.ftable(x, file = "", quote = TRUE, append = FALSE,
              digits = getOption("digits"))
 
-\method{format}{ftable}(x, quote = TRUE, digits = getOption("digits"))
+\method{format}{ftable}(x, quote = TRUE, digits = getOption("digits"), \dots)
 }
 \arguments{
   \item{file}{either a character string naming a file or a connection
