@@ -237,6 +237,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	Free(buff);
     }
+    SET_ATTRIB(s, duplicate(ATTRIB(x)));
     UNPROTECT(1);
     return s;
 }
@@ -693,30 +694,32 @@ donesc:
 
 SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans;
+    SEXP x, ans;
     int i, len, minlen, uclass;
     Rboolean warn = FALSE;
 
     checkArity(op,args);
+    x = CAR(args);
 
-    if (!isString(CAR(args)))
+    if (!isString(x))
 	errorcall_return(call, 
 			 _("the first argument must be a character vector"));
-    len = length(CAR(args));
+    len = length(x);
 
     PROTECT(ans = allocVector(STRSXP, len));
     minlen = asInteger(CADR(args));
     uclass = asLogical(CAR(CDDR(args)));
     for (i = 0 ; i < len ; i++) {
-	if (STRING_ELT(CAR(args),i) == NA_STRING)
+	if (STRING_ELT(x, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
-	    warn = warn | !utf8strIsASCII(CHAR(STRING_ELT(CAR(args), i)));
+	    warn = warn | !utf8strIsASCII(CHAR(STRING_ELT(x, i)));
 	    SET_STRING_ELT(ans, i,
-			   stripchars(STRING_ELT(CAR(args), i), minlen));
+			   stripchars(STRING_ELT(x, i), minlen));
 	}
     }
     if(warn) warningcall(call, _("abbreviate used with non-ASCII chars"));
+    SET_ATTRIB(ans, duplicate(ATTRIB(x)));
     UNPROTECT(1);
     return(ans);
 }
@@ -1165,6 +1168,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if (!fixed_opt) regfree(&reg);
+    SET_ATTRIB(ans, duplicate(ATTRIB(vec)));
     UNPROTECT(1);
     return ans;
 }
@@ -1581,6 +1585,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
                 }
             }
         }
+    SET_ATTRIB(y, duplicate(ATTRIB(x)));
     UNPROTECT(1);
     return(y);
 }
@@ -1906,6 +1911,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
             }
         }
 
+    SET_ATTRIB(y, duplicate(ATTRIB(x)));
     UNPROTECT(1);
     return(y);
 }
@@ -2032,10 +2038,19 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
             ? allocVector(STRSXP, nmatches)
             : allocVector(INTSXP, nmatches));
     if(value_opt) {
+	SEXP nmold = getAttrib(vec, R_NamesSymbol), nm;
         for(j = i = 0 ; i < n ; i++) {
             if(LOGICAL(ind)[i])
                 SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
         }
+	/* copy across names and subset */
+	if (!isNull(nmold)) {
+	    nm = allocVector(STRSXP, nmatches);
+	    for (i = 0, j = 0; i < n ; i++)
+		if (LOGICAL(ind)[i])
+		    SET_STRING_ELT(nm, j++, STRING_ELT(nmold, i));
+	    setAttrib(ans, R_NamesSymbol, nm);
+	}
     }
     else {
         for(j = i = 0 ; i < n ; i++) {
@@ -2432,6 +2447,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
         SET_STRING_ELT(s, i, mkChar(cbuff.data));
     }
     if(len > 0) DeallocBuffer(&cbuff);
+    SET_ATTRIB(s, duplicate(ATTRIB(x)));
     UNPROTECT(2);
     return s;
 }

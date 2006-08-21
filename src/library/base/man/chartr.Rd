@@ -15,7 +15,8 @@ toupper(x)
 casefold(x, upper = FALSE)
 }
 \arguments{
-  \item{x}{a character vector.}
+  \item{x}{a character vector, or an object that can be coerced to
+    character by \code{\link{as.character}}.}
   \item{old}{a character string specifying the characters to be
     translated.}
   \item{new}{a character string specifying the translations.}
@@ -36,8 +37,14 @@ casefold(x, upper = FALSE)
   \code{casefold} is a wrapper for \code{tolower} and \code{toupper}
   provided for compatibility with S-PLUS.
 }
-\seealso{\code{\link{sub}} and \code{\link{gsub}} for other
-  substitutions in strings.}
+\value{
+  A character vector of the same length and with the same attributes as
+  \code{x} (after possible coercion).
+}
+\seealso{
+  \code{\link{sub}} and \code{\link{gsub}} for other
+  substitutions in strings.
+}
 \examples{
 x <- "MiXeD cAsE 123"
 chartr("iXs", "why", x)

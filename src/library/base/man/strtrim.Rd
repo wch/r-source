@@ -9,7 +9,7 @@ strtrim(x, width)
 }
 \arguments{
   \item{x}{a character vector, or an object which can be coerced to a
-    character vector.}
+    character vector by \code{\link{as.character}}.}
   \item{width}{Positive integer values: recycled to the length of \code{x}.}
 }
 \details{
@@ -22,7 +22,8 @@ strtrim(x, width)
   there might be double-width characters in character vectors
 }
 \value{
-  A character vector of the same length as \code{x}.
+  A character vector of the same length and with the same attributes
+  as \code{x} (after possible coercion).
 }
 
 \examples{

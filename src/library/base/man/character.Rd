@@ -45,7 +45,10 @@ is.character(x)
   extracts the first element of length-one character vectors.
 
   \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of character type or not.
+  whether its argument is of character type or not.  (Methods should
+  always return \code{FALSE} for classes which are not based on a
+  character vector, but can return \code{FALSE} even for those which
+  are.)
 }
 \note{
   \code{as.character} truncates components of language objects to 500

@@ -1,9 +1,14 @@
-strtrim <- function(x, width) .Internal(strtrim(x, width))
+strtrim <- function(x, width)
+{
+    if(!is.character(x)) x <- as.character(x)
+    .Internal(strtrim(x, width))
+}
 
 strwrap <-
 function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
-         prefix = "", simplify = TRUE) {
-
+         prefix = "", simplify = TRUE)
+{
+    if(!is.character(x)) x <- as.character(x)
     ## Useful variables.
     indentString <- paste(rep.int(" ", indent), collapse = "")
     exdentString <- paste(rep.int(" ", exdent), collapse = "")

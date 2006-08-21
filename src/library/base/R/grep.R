@@ -27,7 +27,7 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
 {
     pattern <- as.character(pattern)
     replacement <- as.character(replacement)
-    x <- as.character(x)
+    if(!is.character(x)) x <- as.character(x)
     if (is.na(pattern))
         return(rep.int(as.character(NA), length(x)))
 
@@ -44,7 +44,7 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
 {
     pattern <- as.character(pattern)
     replacement <- as.character(replacement)
-    x <- as.character(x)
+    if(!is.character(x)) x <- as.character(x)
     if (is.na(pattern))
         return(rep.int(as.character(NA), length(x)))
 
@@ -84,11 +84,12 @@ function(pattern, x, ignore.case = FALSE, value = FALSE,
          max.distance = 0.1)
 {
     pattern <- as.character(pattern)
-    x <- as.character(x)
+    if(!is.character(x)) x <- as.character(x)
     ## behaves like == for NA pattern
     if (is.na(pattern)){
         if (value)
-            return(rep.int(as.character(NA), length(x)))
+            return(structure(rep.int(as.character(NA), length(x)),
+                             names = names(x)))
         else
             return(rep.int(NA, length(x)))
     }

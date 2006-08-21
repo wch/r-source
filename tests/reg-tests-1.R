@@ -4261,6 +4261,7 @@ x[,1]
 r <- xy.coords(numeric(0))
 ## gave an error with misleading message in 2.3.1
 
+
 ## [<- could extend a ts but not change tsp.
 xx <- x <- ts(rnorm(6), frequency=7)
 try(x[8] <- NA)
@@ -4328,6 +4329,7 @@ x <- -2:2
 stopifnot(isTRUE(all.equal(x, qt(pt(x, df=20, ncp=1),df=20,ncp=1))))
 ## failed in 2.3.1
 
+
 ## poly() didn't pass 'raw' to polym()
 x <- -3:3
 y <- 10*(1:7)
@@ -4372,7 +4374,7 @@ stopifnot(identical(names(x), names(xx)))
 ## was incorrectly documented in 2.3.1
 
 
-## subsetting arrays preserved attributes, although it did not for arrays
+## subsetting arrays preserved attributes, although it did not for matrices
 x <- structure(1:8, names=letters[1:8], comm="a comment", dim = c(2,2,2))
 stopifnot(is.null(attr(x[,,], "comm")))
 x <- structure(1:8, names=letters[1:8], comm="a comment", dim = c(2,4))
@@ -4453,7 +4455,9 @@ z <- grep("a", xx, value = TRUE)
 stopifnot(!is.null(names(z)), names(z) == xx[1])
 z <- grep("a", xx, value = TRUE, perl = TRUE)
 stopifnot(!is.null(names(z)), names(z) == xx[1])
-## perl=TRUE did not in 2.3.1, all did not for pre-2.4.0
+z <- agrep("a", xx, value = TRUE)
+stopifnot(!is.null(names(z)), names(z) == xx[1:3])
+## perl=TRUE, agrep did not in 2.3.1, all did not for pre-2.4.0
 x[2] <- xx[2] <- NA
 z <- grep(NA, x, value = TRUE)
 stopifnot(identical(names(z), names(xx)))
@@ -4462,5 +4466,7 @@ stopifnot(identical(names(z), names(xx)))
 z <- grep(NA, xx, value = TRUE)
 stopifnot(identical(names(z), names(xx)))
 z <- grep(NA, xx, value = TRUE, perl = TRUE)
+stopifnot(identical(names(z), names(xx)))
+z <- agrep(NA, xx, value = TRUE)
 stopifnot(identical(names(z), names(xx)))
 ## always dropped names on NA matches < 2.4.0

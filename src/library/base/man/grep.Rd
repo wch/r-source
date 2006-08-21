@@ -92,7 +92,7 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
   other attributes).
 
   For \code{sub} and \code{gsub} a character vector of the same length
-  as \code{x}.
+  and with the same attributes as \code{x} (after possible coercion).
 
   For \code{regexpr} an integer vector of the same length as \code{text}
   giving the starting position of the first match, or \eqn{-1} if there

@@ -169,9 +169,23 @@ NEW FEATURES
     o	help.search() now rebuilds the database if 'package' specifies a
 	package not in the saved database.
 
-    o	agrep(), grep() and related functions now coerce arguments
-	which should be character via as.character() rather than
-	internally (so method dispatch takes place, e.g. for factors).
+    o	agrep(), grep(), strwrap(), strtrim(), substr() and
+	related functions now coerce arguments which should be
+	character via as.character() rather than internally (so method
+	dispatch takes place, e.g. for factors).
+
+	chartr(), charfold(), tolower() and toupper() now coerce their
+	main argument to a character vector via as.character().
+
+	Functions which work element-by-element on character vectors
+	to give a character result now preserve attributes including
+	names, dims and dimnames.  Such functions include charfold(),
+	chartr(), gsub(), strtrim(), sub(), substr(), tolower() and
+	toupper().  (Note that coercion of a non-character argument
+	may lose the attributes.)
+
+	agrep(value = TRUE) preserves names for compatibility with
+	grep().
 
     o	Raw, complex and character vectors are now allowed in model
 	frames (there was a previously undocumented restriction to

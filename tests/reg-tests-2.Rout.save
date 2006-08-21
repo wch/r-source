@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-08-16 r38905)
+R version 2.4.0 Under development (unstable) (2006-08-21 r38936)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -3179,7 +3179,7 @@ Error in "[.data.frame"(x, 1, c("a", "c")) :
 > 
 > ## methods(class = ) with namespaces, .Primitives etc (many missing in 1.7.x):
 > meth2gen <- function(cl)
-+     noquote(sub(paste("\\.",cl,"$",sep=""),"", methods(class = cl)))
++     noquote(sub(paste("\\.",cl,"$",sep=""),"", c(methods(class = cl))))
 > meth2gen("data.frame")
  [1] $<-           Math          Ops           Summary       [            
  [6] [<-           [[            [[<-          aggregate     as.data.frame

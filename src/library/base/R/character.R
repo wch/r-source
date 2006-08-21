@@ -3,23 +3,24 @@ strsplit <- function(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
                        as.logical(fixed), as.logical(perl)))
 
 substr <- function(x, start, stop)
+{
+    if(!is.character(x)) x <- as.character(x)
     .Internal(substr(x, as.integer(start), as.integer(stop)))
+}
 
 substring <- function(text,first,last=1000000)
 {
-    storage.mode(text) <- "character"
+    if(!is.character(text)) x <- as.character(text)
     n <- max(lt <- length(text), length(first), length(last))
     if(lt && lt < n) text <- rep(text, length.out = n)
     substr(text, first, last)
 }
 
-"substr<-" <- function(x, start, stop, value)
+`substr<-` <- function(x, start, stop, value)
     .Internal(substrgets(x, as.integer(start), as.integer(stop), value))
 
-"substring<-" <- function(text, first, last=1000000, value)
-{
-    "substr<-"(text, first, last, value)
-}
+`substring<-` <- function(text, first, last=1000000, value)
+    `substr<-`(text, first, last, value)
 
 abbreviate <-
     function(names.arg, minlength = 4, use.classes = TRUE, dot = FALSE)
@@ -65,9 +66,19 @@ make.names <- function(names, unique = FALSE, allow_ = TRUE)
 
 make.unique <- function (names, sep = ".") .Internal(make.unique(names, sep))
 
-chartr <- function(old, new, x) .Internal(chartr(old, new, x))
-tolower <- function(x) .Internal(tolower(x))
-toupper <- function(x) .Internal(toupper(x))
+chartr <- function(old, new, x)
+{
+    if(!is.character(x)) x <- as.character(x)
+    .Internal(chartr(old, new, x))
+}
+tolower <- function(x) {
+    if(!is.character(x)) x <- as.character(x)
+    .Internal(tolower(x))
+}
+toupper <- function(x) {
+    if(!is.character(x)) x <- as.character(x)
+    .Internal(toupper(x))
+}
 
 casefold <- function(x, upper = FALSE)
     if(upper) toupper(x) else tolower(x)

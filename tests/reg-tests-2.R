@@ -1014,7 +1014,7 @@ try(x[1, c("a", "c")])
 
 ## methods(class = ) with namespaces, .Primitives etc (many missing in 1.7.x):
 meth2gen <- function(cl)
-    noquote(sub(paste("\\.",cl,"$",sep=""),"", methods(class = cl)))
+    noquote(sub(paste("\\.",cl,"$",sep=""),"", c(methods(class = cl))))
 meth2gen("data.frame")
 meth2gen("dendrogram")
 ## --> the output may need somewhat frequent updating..

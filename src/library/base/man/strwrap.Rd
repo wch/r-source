@@ -13,7 +13,8 @@ strwrap(x, width = 0.9 * getOption("width"), indent = 0,
         exdent = 0, prefix = "", simplify = TRUE)
 }
 \arguments{
-  \item{x}{a character vector}
+  \item{x}{a character vector, or an object which can be converted to a
+    character vector by \code{\link{as.character}}.}
   \item{width}{a positive integer giving the target column for wrapping
     lines in the output.}
   \item{indent}{a non-negative integer giving the indentation of the
