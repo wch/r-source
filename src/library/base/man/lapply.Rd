@@ -42,13 +42,13 @@ replicate(n, expr, simplify = TRUE)
 \details{
   \code{FUN} is found by a call to \code{\link{match.fun}} and typically
   is specified as a function or a symbol (e.g. a backquoted name) or a
-  character string specifying a function to be searched for from the 
-  environment of the call to \code{lapply}. 
+  character string specifying a function to be searched for from the
+  environment of the call to \code{lapply}.
 
   Function \code{FUN} must be able to accept as input any of the
   elements of \code{X}.  If the latter is an atomic vector, \code{FUN}
   will always be passed a length-one vector of the same type as \code{X}.
-  
+
   Simplification in \code{sapply} is only attempted if \code{X} has
   length greater than zero and if the return values from all elements
   of \code{X} are all of the same (positive) length.  If the common
@@ -71,7 +71,10 @@ replicate(n, expr, simplify = TRUE)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{apply}}, \code{\link{tapply}}, \code{\link{rapply}}.
+  \code{\link{apply}}, \code{\link{tapply}},
+  \code{\link{mapply}} for applying a function to \bold{m}ultiple
+  arguments, and \code{\link{rapply}} for a \bold{r}ecursive version of
+  \code{lapply()}.
 }
 \examples{
 x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE,FALSE,FALSE,TRUE))
