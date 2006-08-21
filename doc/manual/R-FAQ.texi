@@ -3033,6 +3033,8 @@ Implementation of the Iterated Convex Minorant Algorithm for the Cox
 proportional hazard model for interval censored event data.
 @c  @item integrate
 @c  Adaptive quadrature in up to 20 dimensions.
+@item iplots
+Interactive graphics for R.
 @item ipred
 Improved predictive models by direct and indirect bootstrap aggregation
 in classification and regression as well as resampling based estimators
