@@ -4435,7 +4435,32 @@ stopifnot(identical(colnames(A, do.NULL = FALSE), character(0)))
 ## were 'row' etc in 2.3.1.
 
 
-## misuse of a method (from package mmlcr)
+## misuse of a method (based on example from package mmlcr)
 model.matrix.lm(height ~ weight, women)
 # although it is an incorrect call, it should not crash in NextMethod.
 ## fixed in 2.4.0
+
+
+## grep(value = TRUE) sometimes preserved names, sometimes not
+x <- 1:3
+xx <- letters[1:3]
+names(x) <- names(xx) <- xx
+z <- grep(1, x, value = TRUE)
+stopifnot(!is.null(names(z)), names(z) == xx[1])
+z <- grep(1, x, value = TRUE, perl = TRUE)
+stopifnot(!is.null(names(z)), names(z) == xx[1])
+z <- grep("a", xx, value = TRUE)
+stopifnot(!is.null(names(z)), names(z) == xx[1])
+z <- grep("a", xx, value = TRUE, perl = TRUE)
+stopifnot(!is.null(names(z)), names(z) == xx[1])
+## perl=TRUE did not in 2.3.1, all did not for pre-2.4.0
+x[2] <- xx[2] <- NA
+z <- grep(NA, x, value = TRUE)
+stopifnot(identical(names(z), names(xx)))
+z <- grep(NA, x, value = TRUE, perl = TRUE)
+stopifnot(identical(names(z), names(xx)))
+z <- grep(NA, xx, value = TRUE)
+stopifnot(identical(names(z), names(xx)))
+z <- grep(NA, xx, value = TRUE, perl = TRUE)
+stopifnot(identical(names(z), names(xx)))
+## always dropped names on NA matches < 2.4.0

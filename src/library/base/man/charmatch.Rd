@@ -5,8 +5,9 @@ charmatch(x, table, nomatch = NA)
 }
 \alias{charmatch}
 \arguments{
-  \item{x}{the values to be matched: coerced to a character vector.}
-  \item{table}{the values to be matched against: coerced to a character
+  \item{x}{the values to be matched: converte to a character vector by
+    \code{\link{as.character}}.}
+  \item{table}{the values to be matched against: converted to a character
     vector.}
   \item{nomatch}{the value to be returned at non-matching positions.}
 }

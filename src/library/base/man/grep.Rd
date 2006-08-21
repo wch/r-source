@@ -35,10 +35,10 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
 \arguments{
   \item{pattern}{character string containing a \link{regular expression}
     (or character string for \code{fixed = TRUE}) to be matched
-    in the given character vector.  Coerced to by \code{as.character} to
-    a character string if possible.}
-  \item{x, text}{a character vector where matches are sought. Coerced by
-    \code{as.character} to a character vector if possible.}
+    in the given character vector.  Coerced by
+    \code{\link{as.character}} to a character string if possible.}
+  \item{x, text}{a character vector where matches are sought, or an
+    object which can be coerced by \code{as.character} to a character vector.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{extended}{if \code{TRUE}, extended regular expression matching
@@ -75,10 +75,10 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
   The regular expressions used are those specified by POSIX 1003.2,
   either extended or basic, depending on the value of the
   \code{extended} argument, unless \code{perl = TRUE} when they are
-  those of PCRE,
-  \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}.
+  those of PCRE, \url{http://www.pcre.org/}.
   (The exact set of patterns supported may depend on the version of
-  PCRE installed on the system in use.)
+  PCRE installed on the system in use, if \R was configured to use the
+  system PCRE.  \R's internal copy used PCRE 6.7.)
 
   \code{useBytes} is only used if \code{fixed = TRUE} or \code{perl = TRUE}.
   For \code{grep} its main effect is to avoid errors/warnings about
@@ -88,7 +88,8 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
 \value{
   For \code{grep} a vector giving either the indices of the elements of
   \code{x} that yielded a match or, if \code{value} is \code{TRUE}, the
-  matched elements of \code{x} (after coercion).
+  matched elements of \code{x} (after coercion, preserving names but no
+  other attributes).
 
   For \code{sub} and \code{gsub} a character vector of the same length
   as \code{x}.

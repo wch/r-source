@@ -170,7 +170,7 @@ NEW FEATURES
 	package not in the saved database.
 
     o	agrep(), grep() and related functions now coerce arguments
-	which should be character via as.character rather than
+	which should be character via as.character() rather than
 	internally (so method dispatch takes place, e.g. for factors).
 
     o	Raw, complex and character vectors are now allowed in model
@@ -592,6 +592,9 @@ BUG FIXES
 	.Method was unset).
 
     o	order(x, na.last = NA) failed for a zero-length x.
+
+    o	grep(pat, x, value = TRUE, perl = L) preserved names for
+	L == TRUE && !is.na(pat) but not otherwise.  Now it always does.
 
 
 

@@ -41,6 +41,8 @@ is.character(x)
 
   \code{as.character} attempts to coerce its argument to character type;
   like \code{\link{as.vector}} it strips attributes including names.
+  For lists it deparses the elements individually, except that it
+  extracts the first element of length-one character vectors.
 
   \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of character type or not.

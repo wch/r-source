@@ -5,8 +5,9 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
 }
 \alias{pmatch}
 \arguments{
-  \item{x}{the values to be matched: coerced to a character vector.}
-  \item{table}{the values to be matched against: coerced to a character
+  \item{x}{the values to be matched: converted to a character vector by
+    \code{\link{as.character}}.}
+  \item{table}{the values to be matched against: converted to a character
     vector.}
   \item{nomatch}{the value to be returned at non-matching or multiply
     partially matching positions.}

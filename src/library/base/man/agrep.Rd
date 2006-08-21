@@ -48,7 +48,8 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
 }
 \value{
   Either a vector giving the indices of the elements that yielded a
-  match, of, if \code{value} is \code{TRUE}, the matched elements.
+  match, of, if \code{value} is \code{TRUE}, the matched elements (after
+  coercion and wihout names, unlike \code{\link{grep}}).
 }
 \author{
   David Meyer \email{David.Meyer@wu-wien.ac.at} (based on C code

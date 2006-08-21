@@ -6,7 +6,7 @@ paste(\dots, sep = " ", collapse = NULL)
 }
 \alias{paste}
 \arguments{
-  \item{\dots}{one or more \R objects, to be coerced to character vectors.}
+  \item{\dots}{one or more \R objects, to be converted to character vectors.}
   \item{sep}{a character string to separate the terms.}
   \item{collapse}{an optional character string to separate the results.}
 }
@@ -14,7 +14,8 @@ paste(\dots, sep = " ", collapse = NULL)
   Concatenate vectors after converting to character.
 }
 \details{
-  \code{paste} converts its arguments to character strings, and
+  \code{paste} converts its arguments (\emph{via}
+  \code{\link{as.character}}) to character strings, and
   concatenates them (separating them by the string given by \code{sep}).
   If the arguments are vectors, they are concatenated term-by-term to
   give a character vector result.  Vector arguments are recycled as
