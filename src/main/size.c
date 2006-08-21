@@ -117,6 +117,7 @@ static R_size_t objectsize(SEXP s)
     /* WEAKREFSXP is internally a vector */
     case RAWSXP:
 	vcnt = BYTE2VEC(length(s));
+	isVec = TRUE;
 	break;
     case S4SXP:
         break;

@@ -348,7 +348,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     ans = allocVector(INTSXP, 1);
     len = length(CAR(args));
-    INTEGER(ans)[0] = (len < INT_MAX) ? len : NA_INTEGER;
+    INTEGER(ans)[0] = (len <= INT_MAX) ? len : NA_INTEGER;
     return ans;
 }
 

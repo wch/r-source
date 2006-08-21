@@ -19,6 +19,8 @@ length(x) <- value
   The default method currently returns an \code{\link{integer}} of
   length 1.  Since this may change in the future and may
   differ for other methods, programmers should not rely on it.
+  (Should the length exceed the maximum representable integer, it is
+  returned as \code{NA}.)
 
   For vectors (including lists) and factors the length is the number of
   elements.  For an environment it is the number of objects in the
