@@ -53,6 +53,7 @@ export(
        # Creating and modifying grobs (and gTrees)
        "grid.grob",
        "grob", "gList", "gTree", "gPath",
+       "grobName",
        "grid.get", "grid.set", "grid.add", "grid.remove", "grid.edit",
        "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob",
        "gEdit", "gEditList", "applyEdit", "applyEdits",
