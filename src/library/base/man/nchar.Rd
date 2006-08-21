@@ -40,15 +40,20 @@ nchar(x, type = "bytes")
   \code{\link{deparse}} first will be required.
 }
 \value{
-  An integer vector giving the size of each string,
+  An integer vector giving the size of each element,
   currently always \code{2} for missing values (for \code{NA}).
 
-  Not all platforms will return a non-missing value for \code{type="width"}.
+  Not all platforms will return a non-missing value for
+  \code{type = "width"}.
 
-  If the string is invalid in a multi-byte character set such as UTF-8,
-  the number of characters and the width will be \code{NA}.  Otherwise
+  If an element is invalid in a multi-byte character set such as UTF-8,
+  its number of characters and the width will be \code{NA}.  Otherwise
   the number of characters will be non-negative, so
   \code{!is.na(nchar(x, "chars"))} is a test of validity.
+
+  The result does not have names even if the input did.  However for
+  historical reasons, the dimensions and dimnames of an array input
+  are preserved.
 }
 \note{
   This does \strong{not} by default give the number of characters that
