@@ -60,7 +60,11 @@ rep.int(x, times)
   (\code{0} for raw vectors) and \code{NULL} for a list.  
 }
 \value{
-  A vector of the same class as \code{x}.
+  A vector of the same type as \code{x}.
+
+  \code{rep.int} returns no attributes.
+
+  \code{rep.default} gives the result names.
 }
 \note{
   If the original vector has names, these are also replicated and so

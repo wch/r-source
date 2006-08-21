@@ -6,7 +6,8 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
 }
 \alias{abbreviate}
 \arguments{
-  \item{names.arg}{a vector of names to be abbreviated.}
+  \item{names.arg}{a character vector of names to be abbreviated, or an
+    object to be coerced to a character vector by \code{\link{as.character}}.}
   \item{minlength}{the minimum length of the abbreviations.}
   \item{use.classes}{logical (currently ignored by \R).}
   \item{dot}{logical; should a dot (\code{"."}) be appended?}
@@ -45,7 +46,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   \code{names.arg} have unique abbreviations.
 
   The character version of \code{names.arg} is attached to the returned
-  value as a names argument.
+  value as a names argument: no other attributes are retained.
 }
 \section{Warning}{
   This is really only suitable for English, and does not work correctly with
