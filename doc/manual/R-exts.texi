@@ -9952,17 +9952,21 @@ table.
 As we have seen, every @code{SEXPREC} has a pointer to the attributes of
 the node (default @code{R_NilValue}.  The attributes can be accessed/set
 by the macros/functions @code{ATTRIB} and @code{SET_ATTRIB}, but such
-direct access is normally only used to check if the attributes as
-@code{NULL} or to reset them.  Otherwise access goes through the
-functions @code{getAttrib} and @code{setAttrib} which impose
-restrictions on the attributes.
+direct access is normally@footnote{An exception is the internal code for
+@code{terms.formula} which directly manipulates the attributes.} only
+used to check if the attributes are @code{NULL} or to reset them.
+Otherwise access goes through the functions @code{getAttrib} and
+@code{setAttrib} which impose restrictions on the attributes.  One thing
+to watch is that if you copy attributes from one object to another you
+may (un)set the @code{"class"} attribute and so need to copy the object
+bit as well.
 
 The code assumes that the attributes of a node are either
 @code{R_NilValue} or a pairlist of non-zero length (and this is checked
-by @code{SET_ATTRIB}.  The attributes are normally named (via tags on
+by @code{SET_ATTRIB}).  The attributes are normally named (via tags on
 the pairlist).  The replacement function @code{attributes<-} ensures
 that @code{"dim"} precedes @code{"dimnames"} in the list.  Attribute
-@code{"dim"} is one of many that is treated specially: the values are
+@code{"dim"} is one of several that is treated specially: the values are
 checked, and any @code{"names"} and @code{"dimnames"} attributes are
 removed.  Similarly, you cannot set @code{"dimnames"} without having set
 @code{"dim"}, and the value assigned must be a list of the correct
@@ -9979,8 +9983,9 @@ ensures that the @code{"tsp"} attribute is an @code{REALSXP}, the
 frequency is positive and the implied length agrees with the number of
 rows of the object being assigned to.  Classes and comments are
 restricted to character vectors, and assigning a zero-length comment or
-class removes the attribute.  Integer row names are converted to and
-from the internal compact representation.
+class removes the attribute.  Setting or removing a @code{"class"}
+attribute sets the object bit appropriately.  Integer row names are
+converted to and from the internal compact representation.
 
 Care needs to be taken when adding attributes to objects of the types
 with non-standard copying semantics.  There is only one object of type

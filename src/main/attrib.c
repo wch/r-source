@@ -412,6 +412,9 @@ SEXP classgets(SEXP vec, SEXP class)
 	    /* we had more exhaustive checks here.  Now that */
 	    /* use JMCs interpreted code, we don't need this */
 	    /* FIXME : The whole "classgets" may as well die. */
+
+	    /* HOWEVER, it is the way that the object bit gets set/unset */
+
 	    installAttrib(vec, R_ClassSymbol, class);
 	    SET_OBJECT(vec, 1);
 	}

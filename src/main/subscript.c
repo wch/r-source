@@ -553,6 +553,7 @@ int_vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
     }
     PROTECT(s = duplicate(s));
     SET_ATTRIB(s, R_NilValue);
+    SET_OBJECT(s, 0);
     switch (TYPEOF(s)) {
     case NILSXP:
 	*stretch = 0;

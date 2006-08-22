@@ -1053,8 +1053,9 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SETCAR(a, mkString("terms"));
     SET_TAG(a, install("class"));
-    SETCDR(a, R_NilValue);  /* truncate if necessary */
     SET_OBJECT(ans, 1);
+
+    SETCDR(a, R_NilValue);  /* truncate if necessary */
 
     UNPROTECT(3);
     return ans;
@@ -1247,6 +1248,7 @@ SEXP attribute_hidden do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* value, but it can't hurt. */
 
     SET_ATTRIB(new, R_NilValue);
+    SET_OBJECT(new, 0);
     setAttrib(new, R_DotEnvSymbol, getAttrib(old, R_DotEnvSymbol)); 
     
     return new;
