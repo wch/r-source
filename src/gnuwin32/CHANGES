@@ -20,8 +20,9 @@ these defaults.
 If CHM help is selected, but is not present (e.g. a package was cross-
 compiled on Unix), the help system defaults to text help.
 
-The menu items for source and load/save images and drag-and-drop can
-now be used for paths on network shares (starting with \\).
+The menu items for source and load/save workspace/history and
+drag-and-drop can now be used for paths on network shares (starting
+with \\).
 
 getGraphicsEvent() now writes its prompt to the standard output stream,
 so it can be captured by sink() or capture.output().

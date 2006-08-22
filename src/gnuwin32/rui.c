@@ -102,13 +102,6 @@ static void double_backslashes(char *s, char *out)
 	    *out++ = *p;
 	} else *out++ = *p;
     *out = '\0';
-#ifdef UNUSED
-/* I don't know why we need this!!!! 
-   Probably from the days when askfilename was used for directories.
- */
-    if (!strcmp(&s[strlen(s) - 2], ".*"))
-	s[strlen(s) - 2] = '\0';
-#endif
 }
 
 
@@ -145,30 +138,33 @@ static void menudisplay(control m)
 
 static void menuloadimage(control m)
 {
-    char *fn, local[MAX_PATH];
+    char *fn, s[2*MAX_PATH];
 
     if (!ConsoleAcceptCmd) return;
     setuserfilter("R images (*.RData)\0*.RData\0R images - old extension (*.rda)\0*.rda\0All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Select image to load"), "");
 /*    show(RConsole); */
     if (fn) {
-	double_backslashes(fn, local);
-	snprintf(cmd, 1024, "load(\"%s\")", local);
+	double_backslashes(fn, s);
+	snprintf(cmd, 1024, "load(\"%s\")", s);
 	consolecmd(RConsole, cmd);
     }
 }
 
 static void menusaveimage(control m)
 {
-    char *fn, local[MAX_PATH];
+    char *fn, s[2*MAX_PATH];
 
     if (!ConsoleAcceptCmd) return;
     setuserfilter("R images (*.RData)\0*.RData\0All files (*.*)\0*.*\0\0");
     fn = askfilesave(G_("Save image in"), ".RData");
 /*    show(RConsole); */
     if (fn) {
-	double_backslashes(fn, local);
-	snprintf(cmd, 1024, "save.image(\"%s\")", local);
+	double_backslashes(fn, s);
+	/* need to remove any trailing '.*' that gets added if 
+	   there is no extension */
+	if (!strcmp(&s[strlen(s) - 2], ".*")) s[strlen(s) - 2] = '\0';
+	snprintf(cmd, 1024, "save.image(\"%s\")", s);
 	consolecmd(RConsole, cmd);
     }
 }
@@ -179,20 +175,21 @@ static void menuloadhistory(control m)
 
     setuserfilter("All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Load history from"), R_HistoryFile);
-/*    show(RConsole); */
     if (fn) gl_loadhistory(fn);
 }
 
 static void menusavehistory(control m)
 {
-    char *fn;
+    char *s;
 
     setuserfilter("All files (*.*)\0*.*\0\0");
     fn = askfilesave(G_("Save history in"), R_HistoryFile);
-/*    show(RConsole); */
-    if (fn) {
+    if (s) {
+	/* need to remove any trailing '.*' that gets added if 
+	   there is no extension */
+	if (!strcmp(&s[strlen(s) - 2], ".*")) s[strlen(s) - 2] = '\0';
 	R_setupHistory(); /* re-read the history size */
-	gl_savehistory(fn, R_HistorySize);
+	gl_savehistory(s, R_HistorySize);
     }
 }
 
