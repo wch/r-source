@@ -522,7 +522,7 @@ setRepositories <- function(graphics = getOption("menu.graphics"))
     p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
     if(!file.exists(p))
         p <- file.path(R.home("etc"), "repositories")
-    a <- read.delim(p, header=TRUE,
+    a <- read.delim(p, header=TRUE, comment.char="#",
                     colClasses=c(rep("character", 3), rep("logical", 4)))
     thisType <- a[[getOption("pkgType")]]
     a <- a[thisType, 1:3]
