@@ -949,6 +949,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 } /* do_unlist */
 
 
+#ifdef UNUSED
 #define LNAMBUF 100
 
 SEXP FetchMethod(char *generic, char *classname, SEXP env)
@@ -965,6 +966,7 @@ SEXP FetchMethod(char *generic, char *classname, SEXP env)
 	method = R_NilValue;
     return method;
 }
+#endif
 
 /* cbind(deparse.level, ...) and rbind(deparse.level, ...) : */
 SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -973,6 +975,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     char *generic;
     int mode, deparse_level;
     struct BindData data;
+    char buf[512];
 
     /* since R 2.2.0: first argument "deparse.level" */
     deparse_level = asInteger(eval(CAR(args), env));
@@ -1013,8 +1016,12 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	    classlist = getAttrib(obj, R_ClassSymbol);
 	    for (i = 0; i < length(classlist); i++) {
 		classname = STRING_ELT(classlist, i);
-		classmethod = FetchMethod(generic, CHAR(classname), env);
-		if (classmethod != R_NilValue) {
+		if(strlen(generic) + strlen(CHAR(classname)) + 2 > 512)
+		    error(_("class name too long in '%s'"), generic);
+		sprintf(buf, "%s.%s", generic, CHAR(classname));
+		classmethod = R_LookupMethod(install(buf), env, env, 
+					     R_BaseNamespace);
+		if (classmethod != R_UnboundValue) {
 		    if (class == R_NilValue) {
 			/* There is no previous class */
 			/* We use this method. */

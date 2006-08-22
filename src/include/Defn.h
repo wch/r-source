@@ -689,7 +689,6 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define ErrorMessage		Rf_ErrorMessage
 # define evalList		Rf_evalList
 # define factorsConform		Rf_factorsConform
-# define FetchMethod		Rf_FetchMethod
 # define findcontext		Rf_findcontext
 # define findVar1		Rf_findVar1
 # define FrameClassFix		Rf_FrameClassFix
@@ -857,7 +856,6 @@ void endcontext(RCNTXT*);
 int envlength(SEXP);
 SEXP evalList(SEXP, SEXP);
 int factorsConform(SEXP, SEXP);
-SEXP FetchMethod(char *, char *, SEXP);
 void findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 void FrameClassFix(SEXP);

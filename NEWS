@@ -614,6 +614,8 @@ BUG FIXES
     o	grep(pat, x, value = TRUE, perl = L) preserved names for
 	L == TRUE && !is.na(pat) but not otherwise.  Now it always does.
 
+    o	[rc]bind() now find registered methods and not just visible ones.
+
 
 
 

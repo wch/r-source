@@ -8,7 +8,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        aggregate.default, aggregate.ts, AIC, alias, anova, anova.glm,
        anova.glmlist, anova.lm, anova.lmlist, anova.mlm, aov, approx,
        approxfun, as.formula, as.ts, ave, binomial, bw.bcv, bw.nrd,
-       bw.nrd0, bw.SJ, bw.ucv, C, case.names, cbind.ts, coef,
+       bw.nrd0, bw.SJ, bw.ucv, C, case.names, coef,
        coefficients, complete.cases, confint, confint.default,
        constrOptim, contr.SAS, contr.helmert, contr.poly, contr.sum,
        contr.treatment, contrasts, "contrasts<-", convolve,
@@ -97,6 +97,7 @@ S3method(as.table, ftable)
 S3method(as.ts, default)
 S3method(case.names, default)
 S3method(case.names, lm)
+S3method(cbind, ts)
 S3method(coef, aov)
 S3method(coef, default)
 S3method(coef, listof)
