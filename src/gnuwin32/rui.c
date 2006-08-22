@@ -183,7 +183,7 @@ static void menusavehistory(control m)
     char *s;
 
     setuserfilter("All files (*.*)\0*.*\0\0");
-    fn = askfilesave(G_("Save history in"), R_HistoryFile);
+    s = askfilesave(G_("Save history in"), R_HistoryFile);
     if (s) {
 	/* need to remove any trailing '.*' that gets added if 
 	   there is no extension */
