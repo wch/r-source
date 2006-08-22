@@ -24,10 +24,10 @@ nchar(x, type = "bytes")
     \item{\code{chars}}{The number of human-readable characters.}
     \item{\code{width}}{The number of columns \code{cat} will use to
       print the string in a monospaced font.  The same as \code{chars}
-      if this cannot be calculated (which is currently common).}
+      if this cannot be calculated.}
   }
-  These will often be the same, and always will be in single-byte
-  locales. There will be differences between the first two with
+  These will often be the same, and almost always will be in single-byte
+  locales.  There will be differences between the first two with
   multibyte character sequences, e.g. in UTF-8 locales.
   If the byte stream contains embedded \code{nul} bytes,
   \code{type = "bytes"} looks at all the bytes whereas the other two
@@ -35,25 +35,20 @@ nchar(x, type = "bytes")
   first \code{nul} byte.
   
   The internal equivalent of the default method of
-  \code{\link{as.character}} is performed on \code{x}.  If you want to
-  operate on non-vector objects passing them through
-  \code{\link{deparse}} first will be required.
+  \code{\link{as.character}} is performed on \code{x} (so there is no
+  method dispatch).  If you want to operate on non-vector objects
+  passing them through \code{\link{deparse}} first will be required.
 }
 \value{
-  An integer vector giving the size of each element,
+  An integer vector giving the sizes of each element,
   currently always \code{2} for missing values (for \code{NA}).
-
-  Not all platforms will return a non-missing value for
-  \code{type = "width"}.
 
   If an element is invalid in a multi-byte character set such as UTF-8,
   its number of characters and the width will be \code{NA}.  Otherwise
   the number of characters will be non-negative, so
   \code{!is.na(nchar(x, "chars"))} is a test of validity.
 
-  The result does not have names even if the input did.  However for
-  historical reasons, the dimensions and dimnames of an array input
-  are preserved.
+  Names, dims and dimnames are copied from the input.
 }
 \note{
   This does \strong{not} by default give the number of characters that

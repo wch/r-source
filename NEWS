@@ -175,7 +175,8 @@ NEW FEATURES
 	dispatch takes place, e.g. for factors).
 
 	chartr(), charfold(), tolower() and toupper() now coerce their
-	main argument to a character vector via as.character().
+	main argument if necessary to a character vector via
+	as.character().
 
 	Functions which work element-by-element on character vectors
 	to give a character result now preserve attributes including
@@ -186,6 +187,9 @@ NEW FEATURES
 
 	agrep(value = TRUE) preserves names for compatibility with
 	grep().
+
+	nchar() has always preserved dims/dimnames (undocumented
+	before) and now also preserves names.
 
     o	Raw, complex and character vectors are now allowed in model
 	frames (there was a previously undocumented restriction to
@@ -398,7 +402,7 @@ C-LEVEL FACILITIES
     o	There is a new function Rf_endEmbeddedR to properly terminate
 	a session started by Rf_initEmbeddedR, and both are now
 	available on Windows as well as on Unix-alikes.  These and
-	related functions are now declared in header <Rembedded.h>.
+	related functions are declared in a new header <Rembedded.h>.
 
 
 UTILITIES
@@ -451,9 +455,9 @@ INSTALLATION
 	it can be easily used by replacing internal BLAS library file
 	later.)  MacOS X < 10.3 does not support --enable-BLAS-shlib.
 
-    o	configure now defaults to 'run-time linking' on AIX (and AIX <
-	4.2 is no longer allowed), using -bexpall rather than
-	export/import files.  If this works, it will allow R to be
+    o	configure now defaults to 'run-time linking' on AIX 
+	(and AIX < 4.2 is no longer allowed), using -bexpall rather
+	than export/import files.  If this works, it allows R to be
 	built in the same way as other Unix-alikes, including with R
 	as a shared library and with a shared BLAS.
 

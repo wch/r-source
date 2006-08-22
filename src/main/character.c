@@ -140,16 +140,16 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else {
 #ifdef SUPPORT_MBCS
 		if(mbcslocale) {
-		xi = CHAR(STRING_ELT(x, i));
-		nc = mbstowcs(NULL, xi, 0);
-		if(nc >= 0) {
-		    AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
-		    wc = (wchar_t *) cbuff.data;
-		    mbstowcs(wc, xi, nc + 1);
-		    INTEGER(s)[i] = Ri18n_wcswidth(wc, 2147483647);
-		    if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
-		} else
-		    INTEGER(s)[i] = NA_INTEGER;
+		    xi = CHAR(STRING_ELT(x, i));
+		    nc = mbstowcs(NULL, xi, 0);
+		    if(nc >= 0) {
+			AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
+			wc = (wchar_t *) cbuff.data;
+			mbstowcs(wc, xi, nc + 1);
+			INTEGER(s)[i] = Ri18n_wcswidth(wc, 2147483647);
+			if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
+		    } else
+			INTEGER(s)[i] = NA_INTEGER;
 		} else
 #endif
 		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
@@ -160,6 +160,8 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 #if defined(SUPPORT_MBCS)
     DeallocBuffer(&cbuff);
 #endif
+    if ((d = getAttrib(x, R_NamesSymbol)) != R_NilValue)
+	setAttrib(s, R_NamesSymbol, d);
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
 	setAttrib(s, R_DimSymbol, d);
     if ((d = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
