@@ -134,7 +134,8 @@ cat R-@var{x}.@var{y}.@var{z}-split.* > R-@var{x}.@var{y}.@var{z}.tar.gz
 and proceed as above.  If you want the build to be usable by a group of
 users, set @code{umask} before unpacking so that the files will be
 readable by the target group (e.g., @code{umask 022} to be usable by all
-users).  (Keep this setting of @code{umask} whilst building and installing.)
+users).  (Keep this setting of @code{umask} whilst building and
+installing.)
 
 
 @node Getting patched and development versions,  , Getting and unpacking the sources, Obtaining R
@@ -195,7 +196,7 @@ Certificate information:
 (currently, there is no ``trusted certificate'').  You can accept this
 certificate permanently and will not be asked about it anymore.
 
-Note that retrieving the sources by e.g. @command{wget -r} or
+Note that retrieving the sources by e.g.@: @command{wget -r} or
 @command{svn export} from that URL will not work: the Subversion
 information is needed to build @R{}.
 
@@ -430,9 +431,9 @@ a different papersize, you should first delete the file
 
 There are some issues with making the reference manual, and in
 particular with the PDF version @file{refman.pdf}.  The help files
-contain both ISO Latin1 characters (e.g. in @file{text.Rd}) and upright
-quotes, neither of which are contained in the standard @LaTeX{} Computer
-Modern fonts.  We have provided four alternatives:
+contain both ISO Latin1 characters (e.g.@: in @file{text.Rd}) and
+upright quotes, neither of which are contained in the standard @LaTeX{}
+Computer Modern fonts.  We have provided four alternatives:
 
 @table @code
 @item times
@@ -471,7 +472,7 @@ to examine the logs carefully.  This was the default in @R{} version
 The default can be overridden by setting the environment variable
 @env{R_RD4PDF}.  (On Unix, this will be picked up at install time.)  The
 default value is @code{times,hyper}: omit @code{hyper} if you do not
-want hyperlinks, e.g. for printing.
+want hyperlinks, e.g.@: for printing.
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
@@ -490,11 +491,12 @@ After
 make
 make check
 @end example
-(or, when building outside the source,
-@code{@var{TOP_SRCDIR}/configure}, etc)
+
 @noindent
-have been completed successfully, you can install the complete @R{} tree
-to your system by typing
+(or, when building outside the source,
+@code{@var{TOP_SRCDIR}/configure}, etc) have been completed
+successfully, you can install the complete @R{} tree to your system by
+typing
 
 @example
 make install
@@ -503,12 +505,12 @@ make install
 @noindent
 This will install to the following directories:
 
-@table @file
-@item @var{prefix}/bin or @var{bindir}
+@table @asis
+@item @file{@var{prefix}/bin} or @file{@var{bindir}}
 the front-end shell script
-@item @var{prefix}/man/man1 or @var{mandir}/man1
+@item @file{@var{prefix}/man/man1} or @file{@var{mandir}/man1}
 the man page
-@item @var{prefix}/@var{LIBnn}/R or @var{libdir}/R
+@item @file{@var{prefix}/@var{LIBnn}/R} or @file{@var{libdir}/R}
 all the rest (libraries, on-line help system, @dots{}).  Here
 @var{LIBnn} is usually @samp{lib}, but may be @samp{lib64} on some
 64-bit Linux systems.
@@ -546,14 +548,11 @@ Configure options @option{--bindir} and @option{--mandir} are supported
 and govern where a copy of the @command{R} script and the @command{man}
 page are installed.
 
-The configure option @option{--libdir} controls where the main @R{} files
-are installed: the default is
-
-@c <FIXME: What is EPREFIX?>
-@example
-libdir=EPREFIX/$@{LIBnn@}
-@end example
-@c </FIXME>
+The configure option @option{--libdir} controls where the main @R{}
+files are installed: the default is @samp{@var{eprefix}/@var{LIBnn}},
+where @var{eprefix} is the prefix used for installing
+architecture-dependent files, defaults to @var{prefix}, and can be set
+via the configure option @option{--exec-prefix}.
 
 All of @code{bindir} and @code{mandir} and @code{libdir} can also be
 specified on the @command{make install} command line.
@@ -592,7 +591,7 @@ make install-pdf
 Once again, it is optional to specify @code{prefix}.  
 
 More precise control is possible.  For info, the setting used is that of
-@code{infodir} (default @code{@var{prefix}/info}, set by configure
+@code{infodir} (default @samp{@var{prefix}/info}, set by configure
 option @option{--infodir}).  The DVI and PDF files are installed into
 the @R{} @file{doc} tree, set by the @command{make} variable
 @code{rdocdir}.
@@ -618,16 +617,17 @@ targets to uninstall DVI, info and PDF manuals in
 @node Sub-architectures,  , Uninstallation, Installing R under Unix-alikes
 @section Sub-architectures
 
-Some platforms can support closely related builds of @R{} which can share
-all but the executables and dynamic objects.  Examples include builds
-under Solaris for different chips (in particular, 32- and 64-bit
+Some platforms can support closely related builds of @R{} which can
+share all but the executables and dynamic objects.  Examples include
+builds under Solaris for different chips (in particular, 32- and 64-bit
 builds), 64- and 32- bit builds on @cputype{x86_64} Linux and different
-CPUs (@cputype{ppc}, @cputype{ppc64} and @cputype{i386}) under MacOS 10.4.
+CPUs (@cputype{ppc}, @cputype{ppc64} and @cputype{i386}) under MacOS
+10.4.
 
 @R{} supports the idea of architecture-specific builds, specified by
 adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
 @var{name} can be anything non-empty, and is used to name subdirectories
-of @file{lib}, @code{etc}, @code{include} and @code{libs}.  Example
+of @file{lib}, @file{etc}, @file{include} and @file{libs}.  Example
 names from other systems are the use of @file{sparcv9} on Solaris and
 @file{32} by @code{gcc} on @cputype{x86_64} Linux.
 
@@ -662,7 +662,7 @@ R --arch=@var{name} CMD INSTALL --libs-only @var{pkg(s)}
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000, ME, XP and 2003
-(at least) on Intel x86 and clones (including AMD64/EM64T ships and
+(at least) on Intel x86 and clones (including AMD64/EM64T chips and
 Windows 64).
 
 Your file system must allow long file names (as is likely except
@@ -733,9 +733,10 @@ It is also possible to obtain the source code using Subversion; see
 @ref{Obtaining R} for details.
 
 @item
-Extract the international character support file @file{iconv.dll} from@*
-@url{http://www.murdoch-sutherland.com/Rtools/iconv.zip}@* 
-and put it in @file{@var{R_HOME}/@/src/@/gnuwin32/@/unicode}.
+Extract the international character support file @file{iconv.dll} from
+@url{http://www.murdoch-sutherland.com/Rtools/iconv.zip,
+@code{www.@/murdoch-@/sutherland.com/@/Rtools/@/iconv.zip}} and put it in
+@file{@var{R_HOME}/@/src/@/gnuwin32/@/unicode}.
 
 @item
 The TclTk support files are in
@@ -783,7 +784,7 @@ currently), install @file{acml-3-5-0-win32-g77.exe} (or later) and edit
 @code{USE_ACML=YES} and set @code{ACML_PATH} to the path to
 @file{libacml.a}.  If you also set @code{USE_ACML_LAPACK=YES}, ACML will
 be used to provide the LAPACK library for R itself and any packages
-using @code{$LAPACK_LIBS} built under that setting.
+using @code{LAPACK_LIBS} built under that setting.
 
 There used to be support for Kazushige Goto's BLAS, but this is no
 longer available in binary form for Windows, and it seems that it will
@@ -1016,7 +1017,7 @@ values that can be set.
 
 It is also possible to build an installer for use with Microsoft
 Installer.  This is intended for use by sysadmins doing automated
-installs, and is not recommended for causal use.
+installs, and is not recommended for casual use.
 
 It makes use of the Windows Installer XML (WiX) toolkit available from
 @url{http://wix.sourceforge.net/}: we tested version 2.0.  (This needs
@@ -1055,9 +1056,8 @@ There is currently a complete set of tools at
 @code{www.stats.ox.ac.uk/@/pub/@/Rtools/@/mingw-cross5.tar.bz2}} (Just
 unpack this somewhere and put its @file{bin} directory in your path.)
 
-You will need @code{Perl}, @command{zip} and @command{unzip} installed
-and @command{makeinfo} version 4.7 or later (part of GNU
-@code{texinfo}).
+You will need Perl, @command{zip} and @command{unzip} installed and
+@command{makeinfo} version 4.7 or later (part of GNU @code{texinfo}).
 
 You also need the R source (@file{R-@value{VERSIONno}.tar.gz}).
 
@@ -1144,8 +1144,8 @@ you want to build @R{} for use with @code{R.app} Console, and imply
 These options configure @R{} to be built and installed as a framework
 called @file{R.framework}.  The default path for @file{R.framework} is
 @file{/Library/Frameworks} but this can be changed at configure time
-specifying the flag @option{--enable-R-framework[=DIR]} or at install
-time as
+specifying the flag @option{--enable-R-framework[=@var{DIR}]} or at
+install time as
 
 @example
 make prefix=/where/you/want/R.framework/to/go install
@@ -1161,14 +1161,14 @@ How to start @R{} and what command-line options are available is discussed
 in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
 
 @R{} makes use of a number of environment variables, the default values
-of many of which are set in file @file{R_HOME/etc/Renviron} (there are
-none set by default on Windows and hence no such file).  These are set
-at @command{configure} time, and you would not normally want to change
-them -- a possible exception is @env{R_PAPERSIZE} (@pxref{Setting paper
-size}).  As from @R{} 2.4.0 the paper size will be deduced from the
-@samp{LC_PAPER} locale category if it exists and @env{R_PAPERSIZE} is
-unset, and this will normally produce the right choice from @code{a4} and 
-@code{letter} on modern Unix-alikes (but can always be overridden by
+of many of which are set in file @file{@var{R_HOME}/etc/Renviron} (there
+are none set by default on Windows and hence no such file).  These are
+set at @command{configure} time, and you would not normally want to
+change them -- a possible exception is @env{R_PAPERSIZE} (@pxref{Setting
+paper size}).  As from @R{} 2.4.0 the paper size will be deduced from
+the @samp{LC_PAPER} locale category if it exists and @env{R_PAPERSIZE}
+is unset, and this will normally produce the right choice from @samp{a4}
+and @samp{letter} on modern Unix-alikes (but can always be overridden by
 setting @env{R_PAPERSIZE}).
 
 Various environment variables can be set to determine where @R{} creates
@@ -1539,7 +1539,7 @@ specific country and language.
 covered English and most Western European languages (if not necessarily
 their currency symbols).  What characters are valid in names was taken
 from the current locale.  In general other locales with single-byte
-encodings worked, but e.g. @code{postscript()} and @code{pdf()} needed
+encodings worked, but e.g.@: @code{postscript()} and @code{pdf()} needed
 to be told about the encoding in use.
 
 Full internationalization can be enabled when @R{} is built under
@@ -1619,8 +1619,8 @@ Chinese.
 @subsection Locales under Linux
 
 Modern Linux uses the XPG locale specifications which have the form
-@code{en_GB}, @code{en_GB.utf8}, @code{aa_ER.utf8@@saaho},
-@code{de_AT.iso885915@@euro}, the components being in the order listed
+@samp{en_GB}, @samp{en_GB.utf8}, @samp{aa_ER.utf8@@saaho},
+@samp{de_AT.iso885915@@euro}, the components being in the order listed
 above.  (See @command{man locale} and @command{locale -a} for more
 details.)  Similar schemes (but often in different cases) are used by
 most Unix-alikes.
@@ -1696,22 +1696,23 @@ too.
 
 Translations are looked for by domain according to the currently
 specified language, as specifically as possible, so for example an
-Austrian (@code{de_AT}) translation catalogue will be used in preference
-to a generic German one (@code{de}) for an Austrian user.  However, if a
+Austrian (@samp{de_AT}) translation catalogue will be used in preference
+to a generic German one (@samp{de}) for an Austrian user.  However, if a
 specific translation catalogue exists but does not contain a
 translation, the less specific catalogues are consulted.  For example,
-@R{} has catalogues for @code{en_GB} that translate the Americanisms
-(e.g., @code{gray}) in the standard messages into English.  Two other
-examples: there are catalogues for @code{es}, which is Spanish as written in
-Spain and these will by default also be used in Spanish-speaking Latin
-American countries, and also for @code{pt_BR}, which are used for
-Brazlian locales but not for locales specifying Portugal.
+@R{} has catalogues for @samp{en_GB} that translate the Americanisms
+(e.g., @samp{gray}) in the standard messages into English.  Two other
+examples: there are catalogues for @samp{es}, which is Spanish as
+written in Spain and these will by default also be used in
+Spanish-speaking Latin American countries, and also for @samp{pt_BR},
+which are used for Brazlian locales but not for locales specifying
+Portugal.
 
 Translations in the right language but the wrong charset be made use of
 by on-the-fly re-encoding (on systems that support it).  The
 @env{LANGUAGE} variable (only) can be a colon-separated list, for
-example @code{se:de}, giving a set of languages in decreasing order of
-preference.  One special value is @code{en@@quot}, which can be used in
+example @samp{se:de}, giving a set of languages in decreasing order of
+preference.  One special value is @samp{en@@quot}, which can be used in
 a UTF-8 locale to have English/American error messages with pairs of
 quotes translated to Unicode directional quotes.
 
@@ -1786,11 +1787,11 @@ and install them in the same place: @xref{Sub-architectures}.
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}, some of which stem from the
 use of 32-bit integers (especially in FORTRAN code).  On all versions of
-@R{}, the maximum length (number of elements) of a vector is 2^31 -1,
-about 2 billion, and on 64-bit systems the size of a block of memory
-allocated is limited to 2^34 -1 bytes (8GB).  It is anticipated these
-will be raised eventually but routine use of 8GB objects is (in 2005)
-several years off.
+@R{}, the maximum length (number of elements) of a vector is
+@math{2^{31}-1}, about 2 billion, and on 64-bit systems the size of a
+block of memory allocated is limited to @math{2^{34}-1} bytes (8GB).  It
+is anticipated these will be raised eventually but routine use of 8GB
+objects is (in 2005) several years off.
 
 @node Windows,  , Choosing between 32- and 64-bit builds, Choosing between 32- and 64-bit builds
 @section Windows
@@ -2148,8 +2149,9 @@ shared/dynamic BLAS library, as most of a static library will be
 compiled into the @R{} executable and each BLAS-using package.
 
 @R{} 2.4.0 and later offer the option of compiling the BLAS into a
-dynamic library @code{libRblas} stored in @file{R_HOME/lib} and linking
-both @R{} itself and all the add-on packages against that library.
+dynamic library @code{libRblas} stored in @file{@var{R_HOME}/lib} and
+linking both @R{} itself and all the add-on packages against that
+library.
 
 This is the default on most platforms unless an external BLAS is
 specified and found: for the latter it can be used by specifying the
@@ -2170,7 +2172,7 @@ the most likely is when @R{}'s internal BLAS is used and @R{} is
 @emph{not} built as a shared library, when it is possible to build the
 BLAS into @file{R.bin} without using position-independent code.
 However, experiments showed that in many cases using a shared BLAS was
-as fast, provided high levels (e.g. @option{-O3}) of compiler
+as fast, provided high levels (e.g., @option{-O3}) of compiler
 optimization are used.
 
 @item
@@ -2182,12 +2184,12 @@ this may need the library path to be changed in @file{etc/ldpaths}.
 @end itemize
 
 Another option to change the BLAS in use is to symlink a dynamic BLAS
-library (such as ACML or Goto's) to @file{R_HOME/lib/libRblas.so}.
+library (such as ACML or Goto's) to @file{@var{R_HOME}/lib/libRblas.so}.
 For example, just
 
 @example
-mv R_HOME/lib/libRblas.so R_HOME/lib/libRblas.so.keep
-ln -s /opt/acml3.5.0/gnu64/lib/libacml.so R_HOME/lib/libRblas.so
+mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
+ln -s /opt/acml3.5.0/gnu64/lib/libacml.so @var{R_HOME}/lib/libRblas.so
 @end example
 
 will change the BLAS in use to ACML.  A similar link works for Goto
@@ -2233,9 +2235,9 @@ Intel's Math Kernel Library suppies a full LAPACK which can be used via
 @end example
 
 @noindent
-or @code{-lmkl_lapack32}: @code{-lmkl_lapack} is static and not PIC.
-However, the version 8.0.1.006 we tested failed a regression test in the
-complex LAPACK.
+or @samp{-lmkl_lapack32}: library @code{mkl_lapack} is static and not
+PIC.  However, the version 8.0.1.006 we tested failed a regression test
+in the complex LAPACK.
 
 If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
@@ -2253,7 +2255,7 @@ Fedora Core 4 Extras @code{-llapack} in September 2005 and 64-bit
 versions of the libraries: for example @code{libsunperf} from Sun Forte
 6.x was missing the entry point for @code{DLANGE} and @code{vecLib} has
 omitted the BLAS routine @code{LSAME}.  For problems compiling LAPACK
-using recent versions of @samp{gcc} on @cputype{ix86} Linux, see
+using recent versions of @code{gcc} on @cputype{ix86} Linux, see
 @ref{New platforms}: these problems have surfaced in Fedora Core 3's
 distribution, for example.
 
@@ -2344,9 +2346,9 @@ If you need to re-configure @R{} with different options you may need to run
 
 @R{} can be compiled with support for multi-byte character sets
 (@acronym{MBCS}), in particular for UTF-8 locales (which are usually
-identified by suffix @code{.utf8}, something like
-@code{en_GB.utf8}@footnote{AIX has to be different: it has
-@code{EN_US.UTF-8}!}.  UTF-8 is an encoding of Unicode and in principle
+identified by suffix @samp{.utf8}, something like
+@samp{en_GB.utf8}@footnote{AIX has to be different: it has
+@samp{EN_US.UTF-8}!}.  UTF-8 is an encoding of Unicode and in principle
 covers all human languages simultaneously: however, a given system may
 not have fonts capable of displaying more than a few of these languages.
 
@@ -2393,7 +2395,7 @@ other than their default, you can do that by either editing the file
 set) or on the command line as
 
 @example
-./configure VAR=@var{value}
+./configure @var{VAR}=@var{value}
 @end example
 
 @noindent
@@ -2456,14 +2458,14 @@ readline, in non-system directories, use the variables @code{LDFLAGS}
 (for libraries, using @samp{-L} flags to be passed to the linker) and
 @code{CPPFLAGS} (for header files, using @samp{-I} flags to be passed to
 the C/C++ preprocessors), respectively, to specify these locations.
-These default to @code{LDFLAGS=-L/usr/local/lib}
-(@code{/usr/local/lib64} on most 64-bit Linux OSes) and
-@code{CPPFLAGS=-I/usr/local/include} to catch the most common cases.  If
-libraries are still not found, then maybe your compiler/linker does not
-support re-ordering of @option{-L} and @option{-l} flags (this has been
-reported to be a problem on HP-UX with the native @command{cc}).  In
-this case, use a different compiler (or a front end shell script which
-does the re-ordering).
+These default to @samp{-L/usr/local/lib} (@code{LDFLAGS},
+@samp{-L/usr/local/lib64} on most 64-bit Linux OSes) and
+@samp{-I/usr/local/include} (@code{CPPFLAGS}) to catch the most common
+cases.  If libraries are still not found, then maybe your
+compiler/linker does not support re-ordering of @option{-L} and
+@option{-l} flags (this has been reported to be a problem on HP-UX with
+the native @command{cc}).  In this case, use a different compiler (or a
+front end shell script which does the re-ordering).
 
 @node Making manuals,  , Compilation flags, Configuration variables
 @subsection Making manuals
@@ -2572,7 +2574,7 @@ appropriately.
 @subsection Using gfortran
 
 @command{gfortran} is the F95 compiler that is part of
-@command{gcc}@tie{}4.x.y.
+@command{gcc}@tie{}4.@var{x}.@var{y}.
 
 There was a problem with the version in the @command{gcc}@tie{}4.0.0
 release and most pre-releases.  At least on @cputype{ix86} and
@@ -2589,11 +2591,11 @@ in place.
 Some versions of @command{g95} (from @url{http://www.g95.org,
 @code{www.g95.org}}) have the same problem.
 
-On Linux @code{x86_64} systems there is an incompatibility in the return
-conventions for double-complex functions between @command{gfortran} and
-@command{g77} which results in the final example in
-@code{example(eigen)} hanging or segfaulting under external BLASs built
-under @command{g77}, as well as with earlier binary versions of Dr
+On Linux @cputype{x86_64} systems there is an incompatibility in the
+return conventions for double-complex functions between
+@command{gfortran} and @command{g77} which results in the final example
+in @code{example(eigen)} hanging or segfaulting under external BLASs
+built under @command{g77}, as well as with earlier binary versions of Dr
 Goto's BLAS.  This should be detected by a @command{configure} test.
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on Unix
@@ -2761,10 +2763,10 @@ are using has an entry in the @samp{XLC_LOCALE} directory (typically
 is to pick a suitable font specification that has fonts in the encodings
 specified there.  If not, you may have to get hold of a suitable locale
 entry for X11.  This may mean that, for example, Japanese text can be
-displayed when running in @code{ja_JP.utf8} but not when running in
-@code{en_GB.utf8} on the same machine (although on some systems many
-UTF-8 X11 locales are aliased to @code{en_US.utf8} which covers several
-character sets, e.g. ISO 8859-1 (Western European), JISX0208 (Kanji),
+displayed when running in @samp{ja_JP.utf8} but not when running in
+@samp{en_GB.utf8} on the same machine (although on some systems many
+UTF-8 X11 locales are aliased to @samp{en_US.utf8} which covers several
+character sets, e.g.@: ISO 8859-1 (Western European), JISX0208 (Kanji),
 KSC5601 (Korean), GB2312 (Chinese Han) and JISX0201 (Kana)).
 
 On some systems scalable fonts are available covering a wide range of
@@ -2894,15 +2896,18 @@ LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
 @end example
 
 @noindent
-@R{} will add @code{-mp} in @code{R_XTRA_@{C,F,CXX@}FLAGS} to maintain
+@R{} will add @samp{-mp} in @code{R_XTRA_@{C,F,CXX@}FLAGS} to maintain
 correct @acronym{IEC}@tie{}60559 arithmetic.  The flag @option{-wd188}
 suppresses a large number of warnings about the enumeration type
 @samp{Rboolean}.  Because the Intel C compiler sets @samp{__GNUC__}
 without complete emulation of @command{gcc}, we suggest adding
+@c <FIXME>
+@c Should this be CPPFLAGS?
 @code{CPPFLAG=-no-gcc}.
+@c </FIXME>
 
-For some comments on building on an Itanium (@samp{ia64}) Linux system
-with @command{gcc} or the Intel compilers see
+For some comments on building on an Itanium (@cputype{ia64}) Linux
+system with @command{gcc} or the Intel compilers see
 @url{http://www.nakama.ne.jp/memo/ia64_linux/,
 @code{www.nakama.ne.jp/memo/ia64_linux}}.
 
@@ -2927,7 +2932,7 @@ LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
 
 @noindent
 Note particularly the last, which is needed to ensure that a shared
-version of @code{libc} is found.  The flag @code{-Kieee} ensures strict
+version of @code{libc} is found.  The flag @option{-Kieee} ensures strict
 compilance to IEC60659.  Also,
 @url{http://@/www.amd.com/@/us-en/@/assets/@/content_type/@/DownloadableAssets/@/dwamd_PGI_nov603.pdf}
 suggests that @option{-pc64} may be desirable.
@@ -2952,7 +2957,7 @@ If you use the X window manager and prefer @code{Terminal.app} to
 the existence of a @env{DISPLAY} environment variable to determine
 whether an X system is running.  This affects the default graphics
 device for the commmand-line version of R and the behaviour of the
-@code{png()} and @code{jpeg} devices.
+@code{png} and @code{jpeg} devices.
 
 
 @cindex BLAS library
@@ -3012,7 +3017,7 @@ strongly recommended you compile @command{gcc} from the sources
 yourself.
 
 It was reported by Mike Pacey that Sun Forte 9 requires
-@code{-xopenmp=stubs} added to @code{LDFLAGS}.
+@samp{-xopenmp=stubs} added to @code{LDFLAGS}.
 
 When using the SunPro compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will
@@ -3029,7 +3034,7 @@ support it.)
 We have found little performance difference between @command{gcc} and
 @command{cc} but considerable benefit from using a SunPro Fortran
 compiler: the @command{gcc}/@command{f77} combination worked well.  For
-many C++ applications Forte 7 requires @code{-lCstd}, which the
+many C++ applications Forte 7 requires @samp{-lCstd}, which the
 configure script will add to @code{SHLIB_CXXLDFLAGS} if it identifies
 the compiler correctly.
 
@@ -3063,9 +3068,9 @@ LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end example
 
 @noindent
-replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.0.x.
-Note that @samp{/usr/local/lib/sparcv9} may need to be in the
-@samp{LD_LIBRARY_PATH} during configuration.
+replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.0.x.  Note
+that @file{/usr/local/lib/sparcv9} may need to be in the
+@env{LD_LIBRARY_PATH} during configuration.
 
 Solaris on Sparc CPUs need @samp{PIC} and not @samp{pic} versions of
 @env{CPICFLAGS} and @env{FPICFLAGS} since the @samp{pic} version only
@@ -3262,7 +3267,8 @@ tests to fail unless Arthur Olson's timezone data
 @code{-ltz} is added to the list of libraries (for example, in
 environment variable @env{LIBS}).
 
-The flag @code{-OPT:IEEE_NaN_inf=ON} is added for the native compilers.
+The flag @option{-OPT:IEEE_NaN_inf=ON} is added for the native
+compilers.
 
 
 @node Alpha/OSF1, Alpha/FreeBSD, IRIX, Platform notes
@@ -3283,7 +3289,7 @@ longer needed, and @command{configure} no longer sets it, but it does
 set @option{-ieee_with_inexact} for the C compiler and @option{-fpe3}
 for the FORTRAN compiler (and @option{-mieee-with-inexact} and
 @option{-mieee} for @command{gcc}/@command{g77}) (in the appropriate
-@code{R_XTRA_*} flags.
+@code{R_XTRA_*} flags).
 
 
 @node Alpha/FreeBSD, AIX, Alpha/OSF1, Platform notes
@@ -3304,7 +3310,7 @@ port would be greatly appreciated.
 We no longer support AIX prior to 4.2, and @command{configure} will
 throw an error on such systems.  On later systems, ``run time linking''
 linking is used, and this corresponds to setting (when using @code{gcc}:
-omit @code{-Wl,} for the native compilers).
+omit @samp{-Wl,} for the native compilers).
 
 @example
 MAIN_LDFLAGS="-Wl,-brtl -Wl,-bexpall"
@@ -3313,7 +3319,7 @@ SHLIB_LDFLAGS="-Wl,-G -Wl,-bexpall -Wl,-bnoentry"
 
 @noindent
 (which @command{configure} does for you by default).  (There is some
-suggestion (e.g. by @command{libtool}) that for an @cputype{ia64}
+suggestion (e.g.@: by @command{libtool}) that for an @cputype{ia64}
 AIX@tie{}5.x system these may not be the appropriate flags but such a
 system is untested.)
 
@@ -3380,7 +3386,7 @@ CXXFLAGS='-g -O'
 ./configure --disable-nls
 @end example
 @noindent
-(note it is @code{Wl} (W ell) not @code{W1} (W one)).
+(note it is @samp{Wl} (W ell) not @samp{W1} (W one)).
 
 Pre-release versions of @R{} 2.3.0 have been built on AIX@tie{}5.3.
 (This defines the macro @samp{SOCKLEN_T} and so earlier versions of @R{}
@@ -3502,15 +3508,15 @@ been used.
 
 Other useful links are for Mozilla,
 @url{http://plugindoc.mozdev.org/faqs/java.html,
-@code{plugindoc.mozdev.org/@/faqs/@/java.html}}@*
+@code{plugindoc.mozdev.org/@/faqs/@/java.html}}
 and
 @url{http://www.mozilla.org/releases/mozilla1.7/installation-extras.html,
-@code{www.mozilla.org/@/releases/@/mozilla1.7/@/installation-extras.html}},@*
+@code{www.@/mozilla.org/@/releases/@/mozilla1.7/@/installation-extras.html}},
 for Konqueror @url{http://www.konqueror.org/javahowto/,
-@code{www.konqueror.org/@/javahowto/}},@*
+@code{www.@/konqueror.org/@/javahowto/}},
 for Opera
 @url{http://www.opera.com/support/search/supsearch.dml?index=459,
-@code{www.opera.com/@/support/@/search/@/supsearch.dml?@/index=459}}@*
+@code{www.opera.com/@/support/@/search/@/supsearch.dml?@/index=459}}
 and for Debian GNU/Linux
 @url{http://www.debian.org/doc/manuals/debian-java-faq/,
 @code{www.debian.org/@/doc/@/manuals/@/debian-java-faq/}}.
@@ -3608,29 +3614,29 @@ The Microsoft @HTML{} Help Workshop
 The Inno Setup installer
 @end itemize
 
-Your path should include `.' first, then the @file{bin} directories of
-the tools, perl, minGW, and @LaTeX{}, as well as the Help Workshop directory.
-Do not use filepaths containing spaces: you can always use the
-short forms (found by @code{dir /x} at the Windows command line).  
-It is essential that the directory containing the
-command line tools comes first or second in the path:  there are
-typically like-named tools in other directories, and they will
-@strong{not} work.  The ordering of the other directories is less
-important, but if in doubt, use the order above.
+Your path should include @file{.} first, then the @file{bin} directories
+of the tools, Perl, MinGW, and @LaTeX{}, as well as the Help Workshop
+directory.  Do not use filepaths containing spaces: you can always use
+the short forms (found by @code{dir /x} at the Windows command line).
+It is essential that the directory containing the command line tools
+comes first or second in the path:  there are typically like-named tools
+in other directories, and they will @strong{not} work.  The ordering of
+the other directories is less important, but if in doubt, use the order
+above.
 
-Edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to set the appropriate paths as
-needed and to set the type(s) of help that you want built.
+Edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to set the appropriate
+paths as needed and to set the type(s) of help that you want built.
 @strong{Beware}: @file{MkRules} contains tabs and some editors
-(e.g. WinEdt) silently remove them.
+(e.g., WinEdt) silently remove them.
 
 Set the appropriate environment variables.
  
-Our toolset contains copies of Cygwin dlls that may conflict
+Our toolset contains copies of Cygwin DLLs that may conflict
 with other ones on your system if both are in the path
 at once.  The normal recommendation is to delete the older ones;
 however, at one time we found our tools did not work with a newer
-version of the Cygwin dlls, so it is safest not to have
-any other version of the Cygwin dlls in your path.
+version of the Cygwin DLLs, so it is safest not to have
+any other version of the Cygwin DLLs in your path.
 
 @menu
 * The command line tools::      
@@ -3659,7 +3665,7 @@ at @url{http://www.murdoch-sutherland.com/Rtools/tools.zip,
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
 (including that at the mingw site).  There were also problems with
-several earlier versions of the cygwin tools and dll.  To avoid
+several earlier versions of the cygwin tools and DLL.  To avoid
 frustration, please use our tool set, and make sure it is at the front
 of your path (including before the Windows system directories).  If you
 are using a Windows shell, type @code{PATH} at the prompt to find out.
@@ -3684,8 +3690,8 @@ You need a recent version of the MinGW port of @command{gcc} from
 
 There may be an installer in the `Proposed' section, which can be used
 if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If
-using this, select the @samp{Candidate} package and add the @samp{g++}
-and @samp{g77} compilers to the @samp{MinGW base tools}: components will
+using this, select the @samp{Candidate} package and add the @code{g++}
+and @code{g77} compilers to the @samp{MinGW base tools}: components will
 be downloaded from Sourceforge and unpacked.)
 
 An alternative is to download the components individually, currently
@@ -3710,9 +3716,9 @@ build of @R{} itself.
 @section The Microsoft @HTML{} Help Workshop
 
 To make compiled html (@file{.chm}) files you will need the Microsoft
-@HTML{} Help Workshop, currently available for download at@*
+@HTML{} Help Workshop, currently available for download at
 @url{http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp,
-@code{msdn.microsoft.com/@/library/@/en-us/@/htmlhelp/@/html/@/hwmicrosofthtmlhelpdownloads.asp}}@*
+@code{msdn.microsoft.com/@/library/@/en-us/@/htmlhelp/@/html/@/hwmicrosofthtmlhelpdownloads.asp}}
 and @url{http://www.microsoft.com/office/ork/xp/appndx/appa06.htm,
 @code{www.microsoft.com/@/office/@/ork/@/xp/@/appndx/@/appa06.htm}}.
 
