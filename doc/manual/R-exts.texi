@@ -5019,6 +5019,36 @@ brief, high-level introduction in @emph{R News} (volume 1/3, September
 @c Omegahat Web site at @url{http://www.omegahat.org/GccTranslationUnit/}
 @c for more information.
 
+In addition to registering C routines to be called by R, it can at times
+be useful for one package to make some of its C routines available to be
+called by C code in another package.  An experimental interface to
+support this is now available.  The interface consists of two routines
+declared as
+
+@example
+void R_RegisterCCallable(char *package, char *name, DL_FUNC fptr);
+DL_FUNC R_GetCCallable(char *package, char *name);
+@end example
+
+A package @pkg{packA} that wants to make a C routine @code{myCfun}
+available to C code in other packages would include the call
+
+@example
+R_RegisterCCallable("packA", "myCfun", myCfun);
+@end example
+
+in its initialization function @code{R_init_packA}.  A package
+@pkg{packB} that wants to use this routine would retrieve the function
+pointer with a call of the form
+
+@example
+p_myCfun = R_GetCCallable("packA", "myCfun");
+@end example
+
+The author of @pkg{packB} is responsible for insuring that
+@code{p_myCfun} has an appropriate declaration. In the future R may
+provide some automated tools to simplify exporting larger numbers of
+routines along with appropriate header information.
 
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared objects

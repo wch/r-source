@@ -404,6 +404,12 @@ C-LEVEL FACILITIES
 	available on Windows as well as on Unix-alikes.  These and
 	related functions are declared in a new header <Rembedded.h>.
 
+    o	There is a new interface allowing one package to make C routines
+        available to C code in other packages.  The interface consists
+        of the routines R_RegisterCCallable and R_GetCCallable.  These
+        functions are declared in <R_ext/Rdynload.h>. This interface
+        is experimental and subject to change.
+
 
 UTILITIES
 
