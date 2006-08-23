@@ -78,8 +78,6 @@ void set_workspace_name(char *fn); /* ../main/startup.c */
 
 /* used to avoid some flashing during cleaning up */
 Rboolean AllDevicesKilled = FALSE;
-int   setupui(void);
-void  delui(void);
 int (*R_YesNoCancel)(char *s);
 
 static DWORD mainThreadId;
@@ -97,8 +95,7 @@ static void (*my_R_Busy)(int);
  *   Called at I/O, during eval etc to process GUI events.
  */
 
-void (* R_tcldo)();
-static void tcl_do_none() {}
+void (* R_tcldo)() = NULL; /* Initialized to be sure */
 
 void R_ProcessEvents(void)
 {
@@ -935,7 +932,6 @@ int cmdlineoptions(int ac, char **av)
     }
     Rp->rhome = R_Home;
 
-    R_tcldo = tcl_do_none;
     Rp->home = getRUser();
     R_SetParams(Rp);
 
@@ -956,10 +952,10 @@ int cmdlineoptions(int ac, char **av)
     return 0;
 }
 
+/* only for back-compatibility */
 void setup_term_ui()
 {
     initapp(0, 0);
-    R_tcldo = tcl_do_none;
     readconsolecfg();
 }
 

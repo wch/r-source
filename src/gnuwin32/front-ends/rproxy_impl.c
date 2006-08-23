@@ -196,7 +196,8 @@ int R_Proxy_init (char const* pParameterString)
   R_SetParams(Rp);
   R_set_command_line_arguments(0, NULL);
 
-  setup_term_ui();
+  GA_initapp(0, 0);
+  readconsolecfg();
   setup_Rmainloop();
   R_ReplDLLinit();
 

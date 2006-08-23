@@ -114,7 +114,8 @@ int Rf_initialize_R(int argc, char **argv)
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 
     signal(SIGBREAK, my_onintr);
-    setup_term_ui(); /* initialize graphapp, eventloop, read Rconsole */ 
+    GA_initapp(0, 0);
+    readconsolecfg();
  
     return 0;
 }
