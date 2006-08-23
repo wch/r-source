@@ -492,14 +492,15 @@ subdirectories named @file{unix} or @file{windows}.
 
 The C, C++, or FORTRAN@footnote{Note that Ratfor is not supported.  If
 you have Ratfor source code, you need to convert it to FORTRAN.  Only
-FORTRAN-77 is supported on all platforms, but some also support
-FORTRAN-95.  If you want to ship Ratfor source files, please do so in a
-subdirectory of @file{src} and not in the main subdirectory.} source
-files for the compiled code are in @file{src}, plus optionally file
-@file{Makevars} or @file{Makefile}.  When a package is installed using
-@code{R CMD INSTALL}, Make is used to control compilation and linking
-into a shared object for loading into @R{}.  There are default variables
-and rules for this (determined when @R{} is configured and recorded in
+FORTRAN-77 (which we write in upper case) is supported on all platforms,
+but some also support Fortran-95 (for which we use title case).  If you
+want to ship Ratfor source files, please do so in a subdirectory of
+@file{src} and not in the main subdirectory.} source files for the
+compiled code are in @file{src}, plus optionally file @file{Makevars} or
+@file{Makefile}.  When a package is installed using @code{R CMD
+INSTALL}, Make is used to control compilation and linking into a shared
+object for loading into @R{}.  There are default variables and rules for
+this (determined when @R{} is configured and recorded in
 @file{@var{R_HOME}/etc/Makeconf}).  These rules can be tweaked by
 setting macros in a file @file{src/Makevars} (@pxref{Using Makevars}).
 Note that this mechanism should be general enough to eliminate the need
@@ -1003,7 +1004,7 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 @node Using F95 code,  , Configure example, Configure and cleanup
 @subsection Using F95 code
 
-@R{} currently does not distinguish between FORTRAN 77 and FORTRAN 90/95
+@R{} currently does not distinguish between FORTRAN 77 and Fortran 90/95
 code, and assumes all FORTRAN comes in source files with extension
 @code{.f}.  Commercial Unix systems tyically use a F95 compiler, but
 only since the release of @code{gcc 4.0.0} in April 2005 have Linux and
@@ -1011,7 +1012,7 @@ other non-commercial OSes had much support for F95.  The compiler used
 for @R{} on Windows is a F77 compiler.
 
 This means that portable packages need to be written in correct
-FORTRAN 77, which will also be valid FORTRAN 95.  See
+FORTRAN 77, which will also be valid Fortran 95.  See
 @uref{http://developer.r-project.org/Portability.html} for reference
 resources.  In particular, @emph{free source form} F95 code is not
 portable.
@@ -1019,13 +1020,13 @@ portable.
 On some systems an alternative F95 compiler is available: from the
 @code{gcc} family this might be @command{gfortran} or @command{g95}.
 Configuring @R{} will try to find a compiler which (from its name)
-appears to be a FORTRAN 90/95 compiler, and set it in macro @samp{FC}.
+appears to be a Fortran 90/95 compiler, and set it in macro @samp{FC}.
 Note that it does not check that such a compiler is fully (or even
-partially) compliant with FORTRAN 90/95.  Packages making use of
-FORTRAN 90/95 features should use file extension @samp{.f90} or
+partially) compliant with Fortran 90/95.  Packages making use of
+Fortran 90/95 features should use file extension @samp{.f90} or
 @samp{.f95} for the source files: the variable @code{PKG_FCFLAGS}
 specifies any special flags to be used.  There is no guarantee that
-compiled FORTRAN 90/95 code can be mixed with any other type of code,
+compiled Fortran 90/95 code can be mixed with any other type of code,
 nor that a build of @R{} will have support for such packages.
 
 There is a MinGW build of @command{gfortran} available from
@@ -1034,7 +1035,7 @@ build@footnote{Remember to set @env{LIBRARY_PATH} to point to your MinGW
 @file{lib} directory} of @command{g95} from @uref{http://www.g95.org}.
 Set @code{F95} in @code{MkRules} to point to the installed compiler.
 Then @command{R CMD SHLIB} and @command{R CMD INSTALL} work for
-packages containing FORTRAN 90/95 source code.
+packages containing Fortran 90/95 source code.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -4638,7 +4639,7 @@ symbol name as known to C or FORTRAN, that is the function or subroutine
 name.  (That the symbol is loaded can be tested by, for example,
 @code{is.loaded("cg")}: it is no longer necessary or correct to use
 @code{symbol.For}.)  (Note that the underscore is not a valid character
-in a FORTRAN 77 symbol name, and on versions of @R{} prior to 2.4.0
+in a FORTRAN symbol name, and on versions of @R{} prior to 2.4.0
 @code{.Fortran} may not correctly translate names containing
 underscores.)
 
@@ -9367,7 +9368,7 @@ should not be done where using C99 features will make for cleaner or
 more robust code.
 
 @item
-A FORTRAN 77 compiler (but not FORTRAN 9x).
+A FORTRAN 77 compiler (but not Fortran 9x).
 
 @item
 A simple @command{make}, considering the features of @command{make} in

@@ -1425,7 +1425,7 @@ Some variables that may be used include:
 @item
 @code{PKG_FFLAGS=} to specify options to the FORTRAN 77 compiler.
 @item
-@code{PKG_FCFLAGS=} to specify options to the FORTRAN 95 compiler (if
+@code{PKG_FCFLAGS=} to specify options to the Fortran 95 compiler (if
 specified).
 @item
 @code{PKG_LIBS=} to specify options to the linking step making the DLL.
@@ -2545,7 +2545,7 @@ FORTRAN @code{double precision} is equivalent to a C @code{double}
 pointer.  This is checked during the configuration process.
 
 Some of the FORTRAN code makes use of @code{COMPLEX*16} variables, which
-is a FORTRAN 90 extension.  This is checked for at configure
+is a Fortran 90 extension.  This is checked for at configure
 time@footnote{as well as its equivalence to the @code{Rcomplex}
 structure defined in @file{R_ext/Complex.h}.}, but you may need to avoid
 compiler flags@footnote{In particular, avoid @command{g77}'s
@@ -3027,8 +3027,8 @@ fail.  The maximal set of optimization options known to work on Sparc is
 support it.)
 
 We have found little performance difference between @command{gcc} and
-@command{cc} but considerable benefit from using a SunPro FORTRAN
-compiler: the @command{gcc}/@command{f77} combination works well.  For
+@command{cc} but considerable benefit from using a SunPro Fortran
+compiler: the @command{gcc}/@command{f77} combination worked well.  For
 many C++ applications Forte 7 requires @code{-lCstd}, which the
 configure script will add to @code{SHLIB_CXXLDFLAGS} if it identifies
 the compiler correctly.
