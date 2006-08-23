@@ -78,10 +78,10 @@ static void internet_Init(void)
 {
     int res;
 #ifdef Win32
-    res = UseInternet2 ? moduleCdynload("internet2", 1, 1) : 
-	moduleCdynload("internet", 1, 1);
+    res = UseInternet2 ? R_moduleCdynload("internet2", 1, 1) : 
+	R_moduleCdynload("internet", 1, 1);
 #else
-    res = moduleCdynload("internet", 1, 1);
+    res = R_moduleCdynload("internet", 1, 1);
 #endif
     initialized = -1;
     if(!res) return;

@@ -896,7 +896,7 @@ SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-int moduleCdynload(char *module, int local, int now)
+int R_moduleCdynload(char *module, int local, int now)
 {
     char dllpath[PATH_MAX], *p = getenv("R_HOME");
     DllInfo *res;

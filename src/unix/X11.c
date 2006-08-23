@@ -51,7 +51,7 @@ int attribute_hidden R_X11_Init(void)
 	warning(_("X11 module is not available under this GUI"));
 	return initialized;
     }
-    res = moduleCdynload("R_X11", 1, 1);
+    res = R_moduleCdynload("R_X11", 1, 1);
     if(!res) return initialized;
     if(!ptr->access)
 	error(_("X11 routines cannot be accessed in module"));

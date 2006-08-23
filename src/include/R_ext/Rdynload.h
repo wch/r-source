@@ -98,7 +98,7 @@ typedef enum {R_ANY_SYM=0, R_C_SYM, R_CALL_SYM, R_FORTRAN_SYM, R_EXTERNAL_SYM} N
 DL_FUNC R_FindSymbol(char const *, char const *, 
                        R_RegisteredNativeSymbol *symbol);
 
-int moduleCdynload(char *module, int local, int now);
+int R_moduleCdynload(char *module, int local, int now);
 
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
 

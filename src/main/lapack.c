@@ -51,7 +51,7 @@ static int initialized = 0;
 
 static void La_Init(void)
 {
-    int res = moduleCdynload("lapack", 1, 1);
+    int res = R_moduleCdynload("lapack", 1, 1);
     initialized = -1;
     if(!res) return;
     if(!ptr->svd)

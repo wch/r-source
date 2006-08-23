@@ -575,7 +575,6 @@ SEXP Rf_install(char const *);
 Rboolean Rf_isFree(SEXP);
 Rboolean Rf_isFunction(SEXP);
 Rboolean Rf_isUnsorted(SEXP);
-SEXP Rf_ItemName(SEXP, int);
 SEXP Rf_lengthgets(SEXP, R_len_t);
 SEXP R_lsInternal(SEXP, Rboolean);
 SEXP Rf_match(SEXP, SEXP, int);
@@ -856,7 +855,6 @@ int R_system(char *);
 #define isVectorAtomic		Rf_isVectorAtomic
 #define isVectorizable		Rf_isVectorizable
 #define isVectorList		Rf_isVectorList
-#define ItemName		Rf_ItemName
 #define lang1			Rf_lang1
 #define lang2			Rf_lang2
 #define lang3			Rf_lang3

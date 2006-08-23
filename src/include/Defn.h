@@ -717,6 +717,7 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 # define IntegerFromString	Rf_IntegerFromString
 # define internalTypeCheck	Rf_internalTypeCheck
 # define isValidName		Rf_isValidName
+# define ItemName		Rf_ItemName
 # define jump_to_toplevel	Rf_jump_to_toplevel
 # define levelsgets		Rf_levelsgets
 # define LogicalFromComplex	Rf_LogicalFromComplex
@@ -967,6 +968,9 @@ SEXP R_LookupMethod(SEXP, SEXP, SEXP, SEXP);
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
 SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP),
                         SEXP (*)(SEXP, int), SEXP);
+
+/* ../main/bind.c */
+SEXP ItemName(SEXP, int);
 
 /* ../main/errors.c : */
 void ErrorMessage(SEXP, int, ...);
