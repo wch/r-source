@@ -11,12 +11,12 @@ La.svd(x, nu = min(n, p), nv = min(n, p),
 \arguments{
   \item{x}{a real or complex matrix whose SVD decomposition is to be computed.}
   \item{nu}{the number of left  singular vectors to be computed.
-    This must be one of \code{0}, \code{nrow(x)} and \code{ncol(x)},
-    except for the default options for real matrices.}
+    This must between \code{0} and \code{n = nrow(x)}.}
   \item{nv}{the number of right singular vectors to be computed.
-    This must be one of \code{0} and \code{ncol(x)}.}
+    This must be between \code{0} and \code{p = ncol(x)}.}
   \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
-    \R < 1.7.0)?}
+    \R < 1.7.0)?  In this case \code{nu} must be \code{0},
+    \code{nrow(x)} or \code{ncol(x)}.}
   \item{method}{The LAPACK routine to use in the real case.}
 }
 \description{
@@ -26,7 +26,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p),
   The singular value decomposition plays an important role in many
   statistical techniques.  \code{svd} and \code{La.svd} provide two
   slightly different interfaces.  The main functions used are
-  the LAPACK routines DGESDD and ZGESVD; \code{svd(LINPACK=TRUE)}
+  the LAPACK routines DGESDD and ZGESVD; \code{svd(LINPACK = TRUE)}
   provides an interface to the LINPACK routine DSVDC, purely for
   backwards compatibility.
   
@@ -38,13 +38,15 @@ La.svd(x, nu = min(n, p), nv = min(n, p),
   \R 2.3.0, using \code{method="dgesvd"} is deprecated.
 
   Computing the singular vectors is the slow part for large matrices.
+  The computation will be more efficient if \code{nu <= min(n, p)} and
+  \code{nv <= min(n, p)}, and even more efficient if one or both are zero.
 
   Unsuccessful results from the underlying LAPACK code will result in an
   error giving a positive error code: these can only be interpreted by
   detailed study of the FORTRAN code.
 }
 \value{
-  The SVD decomposition of the matrix as computed by LINPACK,
+  The SVD decomposition of the matrix as computed by LAPACK/LINPACK,
   \deqn{ \bold{X = U D V'},} where \eqn{\bold{U}} and \eqn{\bold{V}} are
   orthogonal, \eqn{\bold{V'}} means \emph{V transposed}, and
   \eqn{\bold{D}} is a diagonal matrix with the singular
@@ -52,11 +54,12 @@ La.svd(x, nu = min(n, p), nv = min(n, p),
   which is verified in the examples, below.
 
   The returned value is a list with components
-  \item{d}{a vector containing the singular values of \code{x}.}
+  \item{d}{a vector containing the singular values of \code{x}, of
+    length \code{min(n, p)}.}
   \item{u}{a matrix whose columns contain the left singular vectors of
-    \code{x}, present if \code{nu > 0}}
+    \code{x}, present if \code{nu > 0}.  Dimension \code{c(n, nu)}.}
   \item{v}{a matrix whose columns contain the right singular vectors of
-    \code{x}, present if \code{nv > 0}.}
+    \code{x}, present if \code{nv > 0}.  Dimension \code{c(p, nv)}.}
 
   For \code{La.svd} the return value replaces \code{v} by \code{vt}, the
   (conjugated if complex) transpose of \code{v}.
@@ -76,8 +79,6 @@ La.svd(x, nu = min(n, p), nv = min(n, p),
 }
 \seealso{
   \code{\link{eigen}}, \code{\link{qr}}.
-
-  \code{\link{capabilities}} to test for IEEE 754 arithmetic.
 }
 \examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
