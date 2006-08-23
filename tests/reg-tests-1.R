@@ -4470,3 +4470,12 @@ stopifnot(identical(names(z), names(xx)))
 z <- agrep(NA, xx, value = TRUE)
 stopifnot(identical(names(z), names(xx)))
 ## always dropped names on NA matches < 2.4.0
+
+
+oo <- options(max.print = 20)
+cc <- capture.output(women)
+options(oo)
+c2 <- capture.output(women[1:10,])
+stopifnot(length(cc) == 1 + 20/2 + 1,
+	  identical(cc[-12], c2[1:11]))
+## was wrong for some days in Aug.2006
