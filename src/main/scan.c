@@ -45,7 +45,6 @@
 /* The size of vector initially allocated by scan */
 #define SCAN_BLOCKSIZE		1000
 /* The size of the console buffer */
-#define CONSOLE_BUFFER_SIZE	1024
 #define CONSOLE_PROMPT_SIZE	256
 
 #define NO_COMCHAR 100000 /* won't occur even in Unicode */

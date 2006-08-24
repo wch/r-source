@@ -33,6 +33,9 @@ place, so those functions are available while waiting for an event.
 iconv.dll has been updated to 1.11, which has some improvements for
 CJK languages under Windows (e.g. support for the Euro).
 
+Using lines of more than 1000 chars in an R file in batch mode could
+crash R.
+
 
 Installing packages
 -------------------

@@ -59,6 +59,9 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   used a guide.  If \code{encoding} has two or more elements, they are
   tried in turn until the file/URL can be read without error in the
   trial encoding.
+
+  Unlike input from a console, lines in the file or on a connection can
+  contain an unlimited number of characters.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

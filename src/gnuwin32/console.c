@@ -1544,7 +1544,8 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
 		    }
 		    cur_line[max_byte] = '\n';
 		    cur_line[max_byte + 1] = '\0';
-		    strcpy(buf, cur_line);
+		    /* just to be safe: we have not allowed max_byte > len-2 */
+		    strncpy(buf, cur_line, len);
 		    p->r = -1;
 		    cur_line[max_byte] = '\0';
 		    if (max_byte && addtohistory)  gl_histadd(cur_line);

@@ -475,6 +475,9 @@ command is syntactically complete.  This prompt may be changed by the
 user.  We will generally omit the continuation prompt
 and indicate continuation by simple indenting.
 
+Command lines entered at the console are limited to 1024 bytes (not
+characters): many of the consoles will not allow you to enter more.
+
 @node Recall and correction of previous commands, Executing commands from or diverting output to a file, R commands; case sensitivity etc, Introduction and preliminaries
 @section Recall and correction of previous commands
 
@@ -500,9 +503,9 @@ statistical system FAQ}.
 @section Executing commands from or diverting output to a file
 @cindex Diverting input and output
 
-If commands are stored in an external file, say @file{commands.R} in the
-working directory @file{work}, they may be executed at any time in an
-@R{} session with the command
+If commands@footnote{of unlimited length.} are stored in an external
+file, say @file{commands.R} in the working directory @file{work}, they
+may be executed at any time in an @R{} session with the command
 
 @example
 > source("commands.R")
@@ -6949,8 +6952,10 @@ skipped: this can be useful to retrieve values from it with
 @end table
 
 Note that input and output can be redirected in the usual way (using
-@samp{<} and @samp{>}).  Warning and error messages are sent to the
-error channel (@code{stderr}) except on Windows 9X/ME.
+@samp{<} and @samp{>}), but the line width limit of 1024 bytes still
+applies (and lines will be truncated with no warning).  Warning and error
+messages are sent to the error channel (@code{stderr}) except on Windows
+9X/ME.
 
 The command @code{R CMD} allows the invocation of various tools which
 are useful in conjunction with @R{}, but not intended to be called

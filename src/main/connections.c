@@ -1614,9 +1614,6 @@ static Rconnection newclp(char *url, char *mode)
 
 /* ------------------- terminal connections --------------------- */
 
-/* The size of the console buffer */
-#define CONSOLE_BUFFER_SIZE	1024
-
 static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
 static unsigned char *ConsoleBufp;
 static int  ConsoleBufCnt;

@@ -51,6 +51,7 @@ void attribute_hidden nl_Rdummy()
 }
 #endif
 
+
 /* The 'real' main() program is in ../<SYSTEM>/system.c */
 /* e.g. ../unix/system.c */
 
@@ -202,7 +203,8 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
     if(!*state->bufp) {
 	    R_Busy(0);
 	    if (R_ReadConsole(R_PromptString(browselevel, state->prompt_type),
-			      state->buf, 1024, 1) == 0) return(-1);
+			      state->buf, CONSOLE_BUFFER_SIZE, 1) == 0)
+		return(-1);
 	    state->bufp = state->buf;
     }
 #ifdef SHELL_ESCAPE
@@ -294,7 +296,8 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 
     R_IoBufferWriteReset(&R_ConsoleIob);
     state.buf[0] = '\0';
-    state.buf[1024] = '\0'; /* stopgap measure if line > 1024 chars */
+    state.buf[CONSOLE_BUFFER_SIZE] = '\0'; 
+    /* stopgap measure if line > CONSOLE_BUFFER_SIZE chars */
     state.bufp = state.buf;
     if(R_Verbose)
 	REprintf(" >R_ReplConsole(): before \"for(;;)\" {main.c}\n");
@@ -306,7 +309,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 }
 
 
-static unsigned char DLLbuf[1024], *DLLbufp;
+static unsigned char DLLbuf[CONSOLE_BUFFER_SIZE], *DLLbufp;
 
 void R_ReplDLLinit()
 {
@@ -327,7 +330,8 @@ int R_ReplDLLdo1()
 
     if(!*DLLbufp) {
 	R_Busy(0);
-	if (R_ReadConsole(R_PromptString(0, prompt_type), DLLbuf, 1024, 1) == 0)
+	if (R_ReadConsole(R_PromptString(0, prompt_type), DLLbuf,
+			  CONSOLE_BUFFER_SIZE, 1) == 0)
 	    return -1;
 	DLLbufp = DLLbuf;
     }
@@ -433,12 +437,11 @@ static void win32_segv(int signum)
 
    2005-12-17 BDR */
 
-#define CONSOLE_BUFFER_SIZE 1024
-static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
+static unsigned char ConsoleBuf[CONSOLE_BUFFER_SIZE];
 
 static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 {
-    char *s, buf[1024];
+    char *s, buf[MAX_PATH+20];
 
     /* First check for stack overflow if we know the stack position.
        We assume anything within 16Mb beyond the stack end is a stack overflow.
@@ -568,7 +571,7 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 	}
     }
     REprintf("aborting ...\n");
-    snprintf(buf, 1024, "rm -rf %s", R_TempDir);
+    snprintf(buf, MAX_PATH+20, "rm -rf %s", R_TempDir);
     R_system(buf);
     /* now do normal behaviour, e.g. core dump */
     signal(signum, SIG_DFL);

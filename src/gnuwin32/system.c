@@ -258,9 +258,9 @@ ThreadedReadConsole(char *prompt, char *buf, int len, int addtohistory)
 static int
 CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
-   int res = getline(prompt,buf,len);
-   if (addtohistory) gl_histadd(buf);
-   return !res;
+    int res = getline(prompt,buf,len);
+    if (addtohistory) gl_histadd(buf);
+    return !res;
 }
 
 /*3: (as InThreadReadConsole) and 4: non-interactive */
@@ -270,17 +270,16 @@ static int
 FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 {
     int ll, err = 0;
-    char inbuf[1001];
+
     if (!R_Slave) {
 	fputs(prompt, stdout);
 	fflush(stdout);
     }
-    if (fgets(inbuf, len, stdin) == NULL)
-	return 0;
+    if (fgets(buf, len, stdin) == NULL) return 0;
     /* translate if necessary */
     if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
-	size_t res, inb = strlen(inbuf), onb = len;
-	char *ib = inbuf, *ob = buf;
+	size_t res, inb = strlen(buf), onb = len;
+	char *ib = buf, *ob = buf;
 	if(!cd) {
 	    cd = Riconv_open("", R_StdinEnc);
 	    if(!cd) error(_("encoding '%s' is not recognised"), R_StdinEnc);
@@ -289,13 +288,14 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 	*ob = '\0';
 	err = res == (size_t)(-1);
 	/* errors lead to part of the input line being ignored */
-	if(err) fputs(_("<ERROR: invalid input in encoding> "), stdout);
-    } else strncpy(buf, inbuf, strlen(inbuf)+1);
-    
+	if(err) fputs(_("<ERROR: invalid input in encoding>\n"), stdout);
+    }
+
 /* according to system.txt, should be terminated in \n, so check this
    at eof or error */
     ll = strlen((char *)buf);
-    if ((err || feof(stdin)) && buf[ll - 1] != '\n' && ll < len) {
+    if ((err || feof(stdin))
+	&& buf[ll - 1] != '\n' && ll < len) {
 	buf[ll++] = '\n'; buf[ll] = '\0';
     }
     if (!R_Interactive && !R_Slave)
@@ -630,7 +630,7 @@ void R_SetWin32(Rstart Rp)
 	R_CStackStart = top;
 	R_CStackLimit = top - bottom;
     }
-    
+
     R_CStackDir = 1;
     R_Home = Rp->rhome;
     if(strlen(R_Home) >= MAX_PATH) R_Suicide("Invalid R_HOME");
@@ -939,7 +939,7 @@ int cmdlineoptions(int ac, char **av)
  *  Since users' expectations for save/no-save will differ, we decided
  *  that they should be forced to specify in the non-interactive case.
  */
-    if (!R_Interactive && Rp->SaveAction != SA_SAVE && 
+    if (!R_Interactive && Rp->SaveAction != SA_SAVE &&
 	Rp->SaveAction != SA_NOSAVE)
 	R_Suicide(_("you must specify '--save', '--no-save' or '--vanilla'"));
 

@@ -790,6 +790,8 @@ LibExtern AccuracyInfo R_AccuracyInfo;
 #define	R_FILE		2
 #define R_TEXT		3
 
+/* The maximum length of input line which will be asked for */
+#define CONSOLE_BUFFER_SIZE 1024
 int	R_ReadConsole(char*, unsigned char*, int, int);
 void	R_WriteConsole(char*, int);
 void	R_ResetConsole(void);

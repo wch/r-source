@@ -8947,7 +8947,8 @@ void Rf_endEmbeddedR(int fatal);
 @noindent
 which is an entry point in @file{R.dll}.  Examples of its use (and a
 suitable @file{Makefile.win}) can be found in the @file{tests/Embedding}
-directory of the sources.
+directory of the sources.  You may need to ensure that
+@file{@var{R_HOME}/bin} is in your @env{PATH} so the R DLLs are found.
 
 Examples of calling @file{R.dll} directly are provided in the directory
 @file{src/@/gnuwin32/@/front-ends}, including @file{Rproxy.dll} used by
