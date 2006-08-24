@@ -1614,13 +1614,14 @@ static Rconnection newclp(char *url, char *mode)
 
 /* ------------------- terminal connections --------------------- */
 
-static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
+static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE+1];
 static unsigned char *ConsoleBufp;
 static int  ConsoleBufCnt;
 
 static int ConsoleGetchar()
 {
     if (--ConsoleBufCnt < 0) {
+	ConsoleBuf[CONSOLE_BUFFER_SIZE] = '\0';
 	if (R_ReadConsole("", ConsoleBuf, CONSOLE_BUFFER_SIZE, 0) == 0) {
 	    R_ClearerrConsole();
 	    return R_EOF;

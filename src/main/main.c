@@ -172,7 +172,7 @@ typedef struct {
   ParseStatus    status;
   int            prompt_type;
   int            browselevel;
-  unsigned char  buf[1025];
+  unsigned char  buf[CONSOLE_BUFFER_SIZE+1];
   unsigned char *bufp;
 } R_ReplState;
 
@@ -309,7 +309,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 }
 
 
-static unsigned char DLLbuf[CONSOLE_BUFFER_SIZE], *DLLbufp;
+static unsigned char DLLbuf[CONSOLE_BUFFER_SIZE+1], *DLLbufp;
 
 void R_ReplDLLinit()
 {
@@ -317,7 +317,7 @@ void R_ReplDLLinit()
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     R_IoBufferWriteReset(&R_ConsoleIob);
     prompt_type = 1;
-    DLLbuf[0] = '\0';
+    DLLbuf[0] = DLLbuf[CONSOLE_BUFFER_SIZE] = '\0';
     DLLbufp = DLLbuf;
 }
 

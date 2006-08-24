@@ -279,7 +279,8 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
     /* translate if necessary */
     if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
 	size_t res, inb = strlen(buf), onb = len;
-	char *ib = buf, *ob = buf;
+	char obuf[CONSOLE_BUFFER_SIZE+1];
+	char *ib = buf, *ob = obuf;
 	if(!cd) {
 	    cd = Riconv_open("", R_StdinEnc);
 	    if(!cd) error(_("encoding '%s' is not recognised"), R_StdinEnc);
@@ -289,6 +290,7 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 	err = res == (size_t)(-1);
 	/* errors lead to part of the input line being ignored */
 	if(err) fputs(_("<ERROR: invalid input in encoding>\n"), stdout);
+	strncpy((char *)buf, obuf, len);
     }
 
 /* according to system.txt, should be terminated in \n, so check this
@@ -298,6 +300,7 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 	&& buf[ll - 1] != '\n' && ll < len) {
 	buf[ll++] = '\n'; buf[ll] = '\0';
     }
+
     if (!R_Interactive && !R_Slave)
 	fputs(buf, stdout);
     return 1;

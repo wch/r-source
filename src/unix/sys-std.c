@@ -594,7 +594,7 @@ Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
 #if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
 	    size_t res, inb = strlen((char *)buf), onb = len;
-	    char obuf[1001];
+	    char obuf[CONSOLE_BUFFER_SIZE+1];
 	    char *ib = (char *)buf, *ob = obuf;
 	    if(!cd) {
 		cd = Riconv_open("", R_StdinEnc);

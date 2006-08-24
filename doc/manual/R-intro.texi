@@ -6957,7 +6957,8 @@ skipped: this can be useful to retrieve values from it with
 
 Note that input and output can be redirected in the usual way (using
 @samp{<} and @samp{>}), but the line width limit of 1024 bytes still
-applies (and lines will be truncated with no warning).  Warning and error
+applies@footnote{although longer lines may work, there is no guarantee
+since they will be read in chunks of 1024 bytes.}.  Warning and error
 messages are sent to the error channel (@code{stderr}) except on Windows
 9X/ME.
 

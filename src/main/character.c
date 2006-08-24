@@ -775,7 +775,7 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else if (!isalpha(0xff & (int) this[0])) need_prefix = TRUE;
 	}
 	if (need_prefix) {
-	    tmp = Calloc(l+1+1, char);
+	    tmp = Calloc(l+2, char);
 	    strcpy(tmp, "X");
 	    strcat(tmp, CHAR(STRING_ELT(arg, i)));
 	} else {
@@ -815,7 +815,7 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* else leave alone */
 	    }
 	}
-	l=strlen(tmp);
+	l = strlen(tmp);
 	SET_STRING_ELT(ans, i, allocString(l));
 	strcpy(CHAR(STRING_ELT(ans, i)), tmp);
 	/* do we have a reserved word?  If so the name is invalid */
