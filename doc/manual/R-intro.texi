@@ -1617,7 +1617,7 @@ creating and handling arrays, and in particular the special case of
 matrices.
 
 A dimension vector is a vector of non-negative integers.  If its length is
-@math{k} then the array is @math{k}-dimensional, e.g. a matrix is a
+@math{k} then the array is @math{k}-dimensional, e.g.@ a matrix is a
 @math{2}-dimensional array.  The dimensions are indexed from one up to
 the values given in the dimension vector.
 
@@ -1778,6 +1778,10 @@ However a simpler direct way of producing this matrix is to use
 @example
 > N <- table(blocks, varieties)
 @end example
+
+Index matrices must be numerical: any other form of matrix (e.g.@ a
+logical or character matrix) supplied as a matrix is treated as an
+indexing vector.
 
 @node The array() function, The outer product of two arrays, Index matrices, Arrays and matrices
 @section The @code{array()} function
@@ -6367,7 +6371,7 @@ Terminate all graphics devices on the list, except the null device.
 @cindex Dynamic graphics
 
 @R{} does not have builtin capabilities for dynamic or
-interactive graphics, e.g. rotating point clouds or to ``brushing''
+interactive graphics, e.g.@ rotating point clouds or to ``brushing''
 (interactively highlighting) points. However, extensive dynamic graphics
 facilities are available in the system GGobi by Swayne, Cook and Buja
 available from
@@ -7017,7 +7021,7 @@ to obtain usage information for each of the tools accessible via the
 @appendixsec Invoking R under Windows
 
 There are two ways to run @R{} under Windows.  Within a terminal window
-(e.g. @code{cmd.exe} or @code{command.com} or a more capable shell), the
+(e.g.@ @code{cmd.exe} or @code{command.com} or a more capable shell), the
 methods described in the previous section may be used, invoking by
 @code{R.exe} or more directly by @code{Rterm.exe}.  (These are
 principally intended for batch use.)  For interactive use, there is a
