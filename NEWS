@@ -339,8 +339,10 @@ NEW FEATURES
 	function sort() which behaves in the same way (except for the
 	order of its argument list) for objects without a class, and
 	relies on the '[' method for objects with a class (unless a
-	specific method has been written, as it has for class
-	"POSIXlt").
+	specific method has been written, as it has for class "POSIXlt").
+
+    o	The subset and subassign methods for factors now handle factor
+	matrices, and dim() can be set on a factor.
 
 
 DEPRECATED & DEFUNCT
@@ -621,6 +623,8 @@ BUG FIXES
 	L == TRUE && !is.na(pat) but not otherwise.  Now it always does.
 
     o	[rc]bind() now find registered methods and not just visible ones.
+
+    o	Printing a factor no longer ignores names and dim/dimnames.
 
 
 

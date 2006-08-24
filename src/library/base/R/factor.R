@@ -84,9 +84,16 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
 {
     ord <- is.ordered(x)
     if (length(x) <= 0)
-        cat(if(ord)"ordered" else "factor","(0)\n",sep="")
-    else
-        print(as.character(x), quote = quote, ...)
+        cat(if(ord)"ordered" else "factor", "(0)\n", sep = "")
+    else {
+        ## The idea here is to preserve all relevant attributes such as
+        ## names and dims
+        xx <- x
+        class(xx) <- NULL
+        levels(xx) <- NULL
+        xx[] <- as.character(x)
+        print(xx, quote = quote, ...)
+    }
     maxl <- if(is.null(max.levels)) TRUE else max.levels
     if (maxl) {
         n <- length(lev <- encodeString(levels(x), quote=ifelse(quote, '"', '')))
@@ -139,7 +146,7 @@ Ops.factor <- function(e1, e2)
     value
 }
 
-"[.factor" <- function(x, i, drop = FALSE)
+"[.factor" <- function(x, ..., drop = FALSE)
 {
     y <- NextMethod("[")
     attr(y,"contrasts")<-attr(x,"contrasts")
@@ -149,7 +156,7 @@ Ops.factor <- function(e1, e2)
     if ( drop ) factor(y) else y
 }
 
-"[<-.factor" <- function(x, i, value)
+"[<-.factor" <- function(x, ..., value)
 {
     lx <- levels(x)
     cx <- oldClass(x)
@@ -160,10 +167,7 @@ Ops.factor <- function(e1, e2)
     if (any(is.na(m) & !is.na(value)))
 	warning("invalid factor level, NAs generated")
     class(x) <- NULL
-    if (missing(i))
-	x[] <- m
-    else
-        x[i] <- m
+    x[...] <- m
     attr(x,"levels") <- lx
     class(x) <- cx
     x

@@ -1912,4 +1912,22 @@ apply(A, 1, f)
 apply(A, 2, f)
 ## dropped dims in 2.3.1
 
+
+## print a factor with names
+structure(factor(1:4), names = letters[1:4])
+## dropped names < 2.4.0
+
+
+## some tests of factor matrices
+A <- factor(7:12)
+dim(A) <- c(2, 3)
+A
+str(A)
+A[, 1:2]
+A[, 1:2, drop=TRUE]
+A[1,1] <- "9"
+A
+## misbehaved < 2.4.0
+
+
 ### end of tests added in 2.4.0 ###

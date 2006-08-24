@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-08-21 r38936)
+R version 2.4.0 Under development (unstable) (2006-08-24 r38969)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5405,6 +5405,43 @@ a b c
 > apply(A, 2, f)
 numeric(0)
 > ## dropped dims in 2.3.1
+> 
+> 
+> ## print a factor with names
+> structure(factor(1:4), names = letters[1:4])
+a b c d 
+1 2 3 4 
+Levels: 1 2 3 4
+> ## dropped names < 2.4.0
+> 
+> 
+> ## some tests of factor matrices
+> A <- factor(7:12)
+> dim(A) <- c(2, 3)
+> A
+     [,1] [,2] [,3]
+[1,] 7    9    11  
+[2,] 8    10   12  
+Levels: 7 8 9 10 11 12
+> str(A)
+ factor [1:2, 1:3] 7 8 9 10 ...
+ - attr(*, "levels")= chr [1:6] "7" "8" "9" "10" ...
+> A[, 1:2]
+     [,1] [,2]
+[1,] 7    9   
+[2,] 8    10  
+Levels: 7 8 9 10 11 12
+> A[, 1:2, drop=TRUE]
+[1] 7  8  9  10
+Levels: 7 8 9 10
+> A[1,1] <- "9"
+> A
+     [,1] [,2] [,3]
+[1,] 9    9    11  
+[2,] 8    10   12  
+Levels: 7 8 9 10 11 12
+> ## misbehaved < 2.4.0
+> 
 > 
 > ### end of tests added in 2.4.0 ###
 > 

@@ -7,15 +7,15 @@
   Extract or replace subsets of factors.
 }
 \usage{
-x[i, drop = FALSE]
+x[\dots, drop = FALSE]
 
 x[[i]]
 
-x[i] <- value
+x[\dots] <- value
 }
 \arguments{
   \item{x}{a factor}
-  \item{i}{a specification of indices -- see \code{\link{Extract}}.}
+  \item{\dots, i}{a specification of indices -- see \code{\link{Extract}}.}
   \item{drop}{logical.  If true, unused levels are dropped.}
   \item{value}{character: a set of levels.  Factor values are coerced to
     character.}
