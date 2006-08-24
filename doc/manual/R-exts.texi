@@ -188,7 +188,7 @@ names.  In addition, files with names @samp{con}, @samp{prn},
 possible ``extensions'', are disallowed.  Also, file names in the same
 directory must not differ only by case (see the previous paragraph).
 In addition, the names of @samp{.Rd} files will be used in URLs and so
-must be ASCII and not contain @code{%}.
+must be @acronym{ASCII} and not contain @code{%}.
 
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
@@ -234,8 +234,8 @@ start with a space or tab.  The @samp{Package}, @samp{Version},
 @samp{Maintainer} fields are mandatory, the remaining fields
 (@samp{Date}, @samp{Depends}, @samp{URL}, @dots{}) are optional.
 
-The @file{DESCRIPTION} file should be written entirely in ASCII for
-maximal portability.
+The @file{DESCRIPTION} file should be written entirely in
+@acronym{ASCII} for maximal portability.
 
 The @samp{Package} and @samp{Version} fields give the name and the
 version of the package, respectively.  The name should consist of
@@ -245,7 +245,7 @@ non-negative integers separated by single @samp{.} or @samp{-}
 characters.  The canonical form is as shown in the example, and a
 version such as @samp{0.01} or @samp{0.01.0} will be handled as if it
 were @samp{0.1-0}.  (Translation packages are allowed names of the form
-@code{Translation-ll}.)
+@samp{Translation-@var{ll}}.)
 
 The @samp{License} field should contain an explicit statement or a
 well-known abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD}, or
@@ -374,8 +374,8 @@ The optional @samp{ZipData} field controls whether the automatic
 Windows build will zip up the data directory or no: set this to
 @samp{no} if your package will not work with a zipped data directory.
 
-If the @file{DESCRIPTION} file is not entirely in ASCII it should
-contain an @samp{Encoding} field specifying an encoding.  This is
+If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
+should contain an @samp{Encoding} field specifying an encoding.  This is
 currently used as the encoding of the @file{DESCRIPTION} file itself,
 and may in the future be taken as the encoding for other documentation
 in the package.  Only encoding names @code{latin1}, @code{latin2} and
@@ -433,19 +433,19 @@ for system datasets that are not intended to be user-accessible via
 @file{R} directory to allow a @file{configure} script to generate
 suitable files,
 
-Only ASCII characters (and the control characters tab, formfeed, LF and
-CR) should be used in code files.  Other characters are accepted in
-comments, but then the comments may not be readable in e.g. a UTF-8
-locale.  Non-ASCII characters in object names will
-normally@footnote{This is true for OSes which implement the @samp{C}
-locale, unless neither lazy-loading nor saving an image are used, in
-which case it would fail if loaded in a @samp{C} locale. (Windows' idea
-of the @samp{C} locale uses the WinAnsi charset.)} fail when the
-package is installed.  Any byte will be allowed@footnote{It is good
-practice to encode them as octal or hex escape sequences.} in a quoted
-character string (but @code{\uxxxx} escapes should not be used), but
-non-ASCII character strings may not be usable in some locales and may
-display incorrectly in others.
+Only @acronym{ASCII} characters (and the control characters tab,
+formfeed, LF and CR) should be used in code files.  Other characters are
+accepted in comments, but then the comments may not be readable in
+e.g.@: a UTF-8 locale.  Non-@acronym{ASCII} characters in object names
+will normally@footnote{This is true for OSes which implement the
+@samp{C} locale, unless neither lazy-loading nor saving an image are
+used, in which case it would fail if loaded in a @samp{C}
+locale. (Windows' idea of the @samp{C} locale uses the WinAnsi
+charset.)} fail when the package is installed.  Any byte will be
+allowed@footnote{It is good practice to encode them as octal or hex
+escape sequences.} in a quoted character string (but @code{\uxxxx}
+escapes should not be used), but non-@acronym{ASCII} character strings
+may not be usable in some locales and may display incorrectly in others.
 
 
 @findex .First.lib
@@ -453,14 +453,14 @@ display incorrectly in others.
 @findex library.dynam
 Various @R{} functions in a package can be used to initialize and clean
 up.  For packages without a name space, these are @code{.First.lib} and
-@code{.Last.lib}.  (For packages with a name space, @xref{Load hooks}.)
+@code{.Last.lib}.  (@xref{Load hooks}, for packages with a name space.)
 It is conventional to define these functions in a file called
 @file{zzz.R}.  If @code{.First.lib} is defined in a package, it is
 called with arguments @code{libname} and @code{pkgname} after the
 package is loaded and attached.  (If a package is installed with version
 information, the package name includes the version information, e.g.@:
-@samp{ash_1.0.9}.)  A common use is to call @code{library.dynam()}
-inside @code{.First.lib()} to load compiled code: another use is to call
+@samp{ash_1.0.9}.)  A common use is to call @code{library.dynam}
+inside @code{.First.lib} to load compiled code: another use is to call
 those functions with side effects.  If @code{.Last.lib} exists in a
 package it is called (with argument the full path to the installed
 package) just before the package is detached.  It is uncommon to detach
@@ -471,21 +471,21 @@ call @code{library.dynam.unload} to unload compiled code.
 The @file{man} subdirectory should contain (only) documentation files
 for the objects in the package in @dfn{R documentation} (Rd) format.
 The documentation files to be installed must start with a (lower or
-upper case ASCII) letter or digit@footnote{This is enforced as from @R{}
-2.3.0.}  and have the extension @file{.Rd} (the default) or @file{.rd}.
-Further, the names must be valid in @samp{file://} URLs, which
-means@footnote{More precisely, they can contain the English alphanumeric
-characters and the symbols @samp{$ - _ . + ! ' ( ) , ; @ = &}.}
-they must be entirely ASCII and not contain @samp{%}.  @xref{Writing R
-documentation files}, for more information.  Note that all user-level
-objects in a package should be documented; if a package @var{pkg}
-contains user-level objects which are for ``internal'' use only, it
-should provide a file @file{@var{pkg}-internal.Rd} which documents all
-such objects, and clearly states that these are not meant to be called
-by the user.  See e.g.@: the sources for package @pkg{grid} in the @R{}
-distribution for an example.  Note that packages which use internal
-objects extensively should hide those objects in a name space, when they
-do not need to be documented (@pxref{Package name spaces}).
+upper case @acronym{ASCII}) letter or digit@footnote{This is enforced as
+from @R{} 2.3.0.}  and have the extension @file{.Rd} (the default) or
+@file{.rd}.  Further, the names must be valid in @samp{file://} URLs,
+which means@footnote{More precisely, they can contain the English
+alphanumeric characters and the symbols @samp{$ - _ . + ! ' ( ) , ; @ =
+&}.}  they must be entirely @acronym{ASCII} and not contain @samp{%}.
+@xref{Writing R documentation files}, for more information.  Note that
+all user-level objects in a package should be documented; if a package
+@var{pkg} contains user-level objects which are for ``internal'' use
+only, it should provide a file @file{@var{pkg}-internal.Rd} which
+documents all such objects, and clearly states that these are not meant
+to be called by the user.  See e.g.@: the sources for package @pkg{grid}
+in the @R{} distribution for an example.  Note that packages which use
+internal objects extensively should hide those objects in a name space,
+when they do not need to be documented (@pxref{Package name spaces}).
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix} or @file{windows}.
@@ -907,7 +907,7 @@ this by running @command{autoconf} in the top-level package directory
 (containing @file{configure.ac}).
 
 @quotation
-@cartouche
+@c @cartouche
 @smallexample
 AC_INIT([RODBC], 1.1.5) dnl package name, version
 
@@ -975,9 +975,10 @@ AC_SUBST(LIBS)
 dnl and do subsitution in the src/Makevars.in
 AC_OUTPUT(src/Makevars)
 @end smallexample
-@end cartouche
+@c @end cartouche
 @end quotation
 
+@noindent
 where @file{src/Makevars.in} would be simply
 
 @quotation
@@ -1105,9 +1106,10 @@ To allow a @file{configure} script to generate suitable files, files
 ending in @samp{.in} will be allowed in the @file{R} directory.
 
 @item
-The R files are checked for syntax errors.  Bytes which are non-ASCII
-are reported as warnings, but these should be regarded as errors unless
-it is known that the package will always be used in the same locale.
+The R files are checked for syntax errors.  Bytes which are
+non-@acronym{ASCII} are reported as warnings, but these should be
+regarded as errors unless it is known that the package will always be
+used in the same locale.
 
 @item
 The R files are checked for correct calls to @code{library.dynam} (with
@@ -1306,8 +1308,8 @@ Future versions of R will enhance this customization mechanism, and
 provide a similar scheme for @code{R CMD build}.
 
 There are other internal settings that can be changed via environment
-variables @code{_R_CHECK_*_}: see the Perl source code.  One that may be
-interesting is @code{_R_CHECK_USE_CODETOOLS_} to make use of the
+variables @w{@code{_R_CHECK_*_}:} see the Perl source code.  One that
+may be interesting is @code{_R_CHECK_USE_CODETOOLS_} to make use of the
 @pkg{codetools} package available from
 @url{http://www.stat.uiowa.edu/~luke/R/codetools}.
 
@@ -1323,10 +1325,10 @@ the contents will be copied to subdirectory @file{doc} when the package
 is installed.  Pointers from package help indices to the installed
 documents are automatically created.  Documents in @file{inst/doc} can
 be in arbitrary format, however we strongly recommend to provide them in
-PDF format, such that users on all platforms can easily read them.
-To ensure that they can be accessed from a browser, the file names
-should start with an ASCII letter and be entirely in ASCII letters or
-digits or minus or underscore.
+PDF format, such that users on all platforms can easily read them.  To
+ensure that they can be accessed from a browser, the file names should
+start with an @acronym{ASCII} letter and be entirely in @acronym{ASCII}
+letters or digits or minus or underscore.
 
 A special case are documents in Sweave format, which we call
 @emph{package vignettes}.  Sweave allows the integration of @LaTeX{}
@@ -1348,7 +1350,8 @@ PDF version in the package sources it is not necessary that the
 vignettes can be compiled at install time, i.e., the package author can
 use private @LaTeX{} extensions which are only available on his machine.
 Only the @R{} code inside the vignettes is part of the checking
-procedure, typesetting manuals is not part of the package QC.
+procedure, typesetting manuals is not part of the package quality
+control.
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format.  If no @file{Makefile} is found in directory
@@ -1411,7 +1414,7 @@ principle, packages must pass @code{R CMD check} without warnings to be
 admitted to the main @acronym{CRAN} package area.
 
 When all the testing is done, upload the @file{.tar.gz} file, using
-@code{anonymous} as log-in name and your e-mail address as password, to
+@samp{anonymous} as log-in name and your e-mail address as password, to
 
 @example
 @url{ftp://cran.R-project.org/incoming/}
@@ -1778,12 +1781,12 @@ causes the DLL to be loaded and also for the @R{} variables @code{foo},
 @code{bar_sym}, @code{R_call_sym} and @code{R_version_sym} to be
 defined in the package's name space.
 
-Note that the names for the @R{} variables are taken from the entry in the
-registration information and do not need to be the same as the name of
-the native routine.  This allows the creator of the registration
+Note that the names for the @R{} variables are taken from the entry in
+the registration information and do not need to be the same as the name
+of the native routine.  This allows the creator of the registration
 information to map the native symbols to non-conflicting variable names
-in @R{}, e.g. @code{R_version} to @code{R_version_sym} for use in an @R{}
-function such as
+in @R{}, e.g.@: @code{R_version} to @code{R_version_sym} for use in an
+@R{} function such as
 
 @example
 R_version <- function()
@@ -1794,7 +1797,7 @@ R_version <- function()
 
 Using argument @code{.fixes} allows an automatic prefix to be added to
 the registered symbols, which can be useful when working with an
-existing package.  For example, package @pkg{KernSmmoth} has
+existing package.  For example, package @pkg{KernSmooth} has
 
 @example
 useDynLib(KernSmooth, .registration = TRUE, .fixes = "F_")
@@ -2015,15 +2018,15 @@ not accept C++ comments.
 @item
 Do be very careful with passing arguments between @R{}, C and
 @acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit
-on most @R{} platforms (including those used by the @acronym{CRAN}
-maintainers), but 64-bit on many modern Unix and Linux platforms.  It is
-rather unlikely that the use of @code{long} in C code has been thought
-through: if you need a longer type than @code{int} you should use a
-configure test for a C99 type such as @code{int_fast64_t} (and failing
-that, @code{long long}) and typedef your own type to be @code{long} or
-@code{long long}, or use another suitable type (such as @code{size_t}).
-Note that @code{integer} in @acronym{FORTRAN} corresponds to @code{int}
-in C on all @R{} platforms.
+on most @R{} platforms (including those mostly used by the
+@acronym{CRAN} maintainers), but 64-bit on many modern Unix and Linux
+platforms.  It is rather unlikely that the use of @code{long} in C code
+has been thought through: if you need a longer type than @code{int} you
+should use a configure test for a C99 type such as @code{int_fast64_t}
+(and failing that, @code{long long}) and typedef your own type to be
+@code{long} or @code{long long}, or use another suitable type (such as
+@code{size_t}).  Note that @code{integer} in @acronym{FORTRAN}
+corresponds to @code{int} in C on all @R{} platforms.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
@@ -2277,7 +2280,7 @@ of which need write permission in the @R{} installation tree.
 This is a rather general mechanism, designed for adding new front-ends
 such as the @pkg{gnomeGUI} package.  If a @file{configure} file is found
 in the top-level directory of the package it is executed, and then if a
-@code{Makefile} is found (often gener\ated by @file{configure}),
+@code{Makefile} is found (often generated by @file{configure}),
 @code{make} is called.  If @code{R CMD INSTALL --clean} is used
 @code{make clean} is called.  No other action is taken.
 
@@ -2352,9 +2355,9 @@ which can be processed into a variety of formats, including @LaTeX{},
 script @command{Rdconv} in @file{@var{R_HOME}/bin} and by the
 installation scripts for packages.
 
-The @R{} distribution contains about 1000 such files which can be found
-in the @file{src/library/@var{pkg}/man} directories of the @R{} source
-tree, where @var{pkg} stands for the standard packages which are
+The @R{} distribution contains more than 1200 such files which can be
+found in the @file{src/library/@var{pkg}/man} directories of the @R{}
+source tree, where @var{pkg} stands for the standard packages which are
 included in the @R{} distribution.
 
 As an example, let us look at the file
@@ -2472,7 +2475,7 @@ example).
 Title information for the Rd file.  This should be capitalized, not end
 in a period, and not use any markup (which would cause problems for
 hypertext search).  Use of characters other than English text and
-punctuation (e.g. @code{<}) may limit portability.
+punctuation (e.g., @samp{<}) may limit portability.
 
 @item \description@{@dots{}@}
 @findex \description
@@ -2780,7 +2783,7 @@ by using the functions @code{promptClass()} and @code{promptMethods()}
 from package @pkg{methods}.  If it is necessary or desired to provide an
 explicit function declaration (in a @code{\usage} section) for an S4
 method (e.g., if it has ``surprising arguments'' to be mentioned
-explicitly) , one can use the special markup
+explicitly), one can use the special markup
 
 @example
 \S4method@{@var{generic}@}@{@var{signature_list}@}(@var{argument_list})
@@ -2807,10 +2810,10 @@ methods.
 @subsection Documenting packages
 
 Packages may have an overview man page with an @code{\alias}
-@code{@var{pkgname}-package}, e.g. @code{utils-package} for the
-@code{utils} package, when @code{package?@var{pkgname}} will open that
+@code{@var{pkgname}-package}, e.g.@: @samp{utils-package} for the
+@pkg{utils} package, when @code{package?@var{pkgname}} will open that
 help page.  If a topic named @code{@var{pkgname}} does not exist in
-another .Rd file, it is helpful to use this as an additional
+another Rd file, it is helpful to use this as an additional
 @code{\alias}.
 
 Skeletons of documentation for a package can be generated using the
@@ -2915,32 +2918,32 @@ type from those the computer outputs.
 @findex \samp
 Indicate text that is a literal example of a sequence of characters.
 
-@item \pkg@{@var{package-name}@}
+@item \pkg@{@var{package_name}@}
 @findex \pkg
 Indicate the name of an @R{} package.
 
-@item \file@{@var{file-name}@}
+@item \file@{@var{file_name}@}
 @findex \file
 Indicate the name of a file.  Note that special characters do need to be
 escaped.
-@item \email@{@var{email-address}@}
+@item \email@{@var{email_address}@}
 @findex \email
 Indicate an electronic mail address.
-@item \url@{@var{uniform-resource-locator}@}
+@item \url@{@var{uniform_resource_locator}@}
 @findex \url
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
 Web.
 
-@item \var@{@var{metasyntactic-variable}@}
+@item \var@{@var{metasyntactic_variable}@}
 @findex \var
 Indicate a metasyntactic variable.
-@item \env@{@var{environment-variable}@}
+@item \env@{@var{environment_variable}@}
 @findex \env
 Indicate an environment variable.
 @item \option@{@var{option}@}
 @findex \option
 Indicate a command-line option.
-@item \command@{@var{command-name}@}
+@item \command@{@var{command_name}@}
 @findex \command
 Indicate the name of a command.
 @item \dfn@{@var{term}@}
@@ -2989,7 +2992,7 @@ centring.)  The second argument consists of an arbitrary number of
 lines separated by @code{\cr}, and with fields separated by @code{\tab}.
 For example:
 
-@smallexample
+@example
 @group
   \tabular@{rlll@}@{
     [,1] \tab Ozone   \tab numeric \tab Ozone (ppb)\cr
@@ -3000,7 +3003,7 @@ For example:
     [,6] \tab Day     \tab numeric \tab Day of month (1--31)
   @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 There must be the same number of fields on each line as there are
@@ -3015,10 +3018,10 @@ contain only spaces).
 The markup @code{\link@{@var{foo}@}} (usually in the combination
 @code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help for
 @var{foo}.  Here @var{foo} is a @emph{topic}, that is the argument of
-@code{\alias} markup in another .Rd file (possibly in another package).
-Hyperlinks are supported in some of the formats to which .Rd files are
-converted, for example @HTML{} and PDF, but ignored in others, e.g. the
-text and S nroff formats.
+@code{\alias} markup in another Rd file (possibly in another package).
+Hyperlinks are supported in some of the formats to which Rd files are
+converted, for example @HTML{} and PDF, but ignored in others, e.g.@:
+the text and S nroff formats.
 
 One main usage of @code{\link} is in the @code{\seealso} section of the
 help page, @pxref{Rd format}.
@@ -3039,14 +3042,14 @@ There are two other forms of optional argument specified as
 @code{\link[@var{pkg:bar}]@{@var{foo}@}} to link to the package
 @var{pkg}, to @emph{files} @file{@var{foo}.html} and
 @file{@var{bar}.html} respectively.  These are rarely needed, perhaps to
-refer to not-yet-installed packages (but there the HTML help system will
-resolve the link at run time) or in the normally undesirable event that
-more than one package offers help on a topic@footnote{a common example
-in CRAN packages is @code{\link[mgcv]@{gam@}}.} (in which case the
-present package has precedence so this is only needed to refer to other
-packages).  They are only in used in (C)HTML help (and not for
-hyperlinks in latex nor S sgml conversions of help pages), and link to
-the file rather than the topic (since there is no way to know which
+refer to not-yet-installed packages (but there the @HTML{} help system
+will resolve the link at run time) or in the normally undesirable event
+that more than one package offers help on a topic@footnote{a common
+example in CRAN packages is @code{\link[mgcv]@{gam@}}.} (in which case
+the present package has precedence so this is only needed to refer to
+other packages).  They are only in used in (C)HTML help (and not for
+hyperlinks in @LaTeX{} nor S sgml conversions of help pages), and link
+to the file rather than the topic (since there is no way to know which
 topics are in which files in an uninstalled package).
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation files
@@ -3162,9 +3165,9 @@ and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @findex \enc
 Text which might need to be represented differently in different
 encodings should be marked by @code{\enc}, e.g.@:
-@code{\enc@{J@"oreskog@}@{Joreskog@}} where the first argument will be used
-where encodings are allowed and the second should be ASCII (and is used
-for e.g.@: the text conversion).
+@code{\enc@{J@"oreskog@}@{Joreskog@}} where the first argument will be
+used where encodings are allowed and the second should be
+@acronym{ASCII} (and is used for e.g.@: the text conversion).
 
 @node Indices, Platform-specific sections, Insertions, Writing R documentation files
 @section Indices
@@ -3193,7 +3196,8 @@ contains
 so that e.g.@: @kbd{help.search("Spearman")} will succeed in finding the
 help page for the test for association between paired samples using
 Spearman's @eqn{\rho, rho}.  (Note that concepts are not currently
-supported by the HTML search accessed @emph{via} @samp{help.start()}.)
+supported by the @HTML{} search accessed @emph{via}
+@samp{help.start()}.)
 
 (Note that @code{help.search()} only uses ``sections'' of documentation
 objects with no additional markup.)
@@ -3240,21 +3244,23 @@ can be put in a @file{unix} or @file{windows} subdirectory.
 @section Encoding
 @cindex encoding
 
-@code{Rd} files are text files and so it is impossible to deduce the
-encoding they are written in: ASCII, UTF-8, Latin-1, Latin-9 @emph{etc}.
-So the @code{\encoding@{@}} directive must be used to specify the
-encoding if it is not ASCII.  This is used when creating the header of
-the @HTML{} conversion (if not present, for back-compatibility the
-processing to HTML assumes that the file is in Latin-1 (ISO-8859-1)) and
-to make a comment in the examples file.  It is also used to indicate to
-@LaTeX{} how to process the file (see below).
+Rd files are text files and so it is impossible to deduce the encoding
+they are written in: @acronym{ASCII}, UTF-8, Latin-1, Latin-9
+@emph{etc}.  So the @code{\encoding@{@}} directive must be used to
+specify the encoding if it is not @acronym{ASCII}.  This is used when
+creating the header of the @HTML{} conversion (if not present, for
+back-compatibility the processing to @HTML{} assumes that the file is in
+Latin-1 (ISO-8859-1)) and to make a comment in the examples file.  It is
+also used to indicate to @LaTeX{} how to process the file (see below).
 
-Wherever possible, avoid non-ASCII chars in @code{Rd} files, and even
-symbols such as @code{< > $ ^ & | @ ~ *} outside verbatim environments
-(since they may disappear in fonts designed to render text).
+Wherever possible, avoid non-@acronym{ASCII} chars in Rd files, and even
+symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},
+@samp{|}, @samp{@@}, @samp{~}, and @samp{*} outside verbatim
+environments (since they may disappear in fonts designed to render
+text).
 
-For convenience, encoding names @code{latin1} and @code{latin2} are
-always recognized: these and @code{UTF-8} are likely to work fairly
+For convenience, encoding names @samp{latin1} and @samp{latin2} are
+always recognized: these and @samp{UTF-8} are likely to work fairly
 widely.
 
 The @code{\enc} command (@pxref{Insertions}) can be used to provide
@@ -3538,7 +3544,7 @@ Measuring memory use in @R{} code is useful either when the code takes
 more memory than is conveniently available or when memory allocation
 and copying of objects is responsible for slow code. There are three
 ways to profile memory use over time in @R{} code. All three require
-@R{} to have been compiled with @code{--enable-memory-profiling},
+@R{} to have been compiled with @option{--enable-memory-profiling},
 which is not the default. All can be misleading, for different
 reasons.
 
@@ -3554,9 +3560,11 @@ memory for larger vectors is obtained directly from the operating
 system.
 
 Some memory allocation is obvious in interpreted code, for example,
+
 @smallexample
 y <- x + 1
 @end smallexample
+
 @noindent
 allocates memory for a new vector @code{y}. Other memory allocation is
 less obvious and occurs because @code{R} is forced to make good on its
@@ -3564,6 +3572,7 @@ promise of `call-by-value' argument passing.  When an argument is
 passed to a function it is not immediately copied. Copying occurs (if
 necessary) only when the argument is modified.  This can lead to
 surprising memory use. For example, in the `survey' package we have
+
 @smallexample
 print.svycoxph <- function (x, ...)
 @{
@@ -3573,6 +3582,7 @@ print.svycoxph <- function (x, ...)
     NextMethod()
 @}
 @end smallexample
+
 @noindent
 It may not be obvious that the assignment to @code{x$call} will cause
 the entire object @code{x} to be copied.  This copying to preserve the
@@ -3623,11 +3633,13 @@ allocated for the R heap. Summary functions for this output are still
 being designed. 
 
 Running the example from the previous section with
+
 @smallexample
 > Rprofmem("boot.memprof",threshold=1000)
 > storm.boot <- boot(rs, storm.bf, R = 4999)
 > Rprofmem(NULL)
 @end smallexample
+
 @noindent
 shows that apart from some initial and final work in @code{boot} there
 are no vector allocations over 1000 bytes.
@@ -3647,7 +3659,9 @@ copying of subsets or components of an object is not tracked. It may
 be helpful to use @code{tracemem} on these components.
 
 
-In the example above we can run @code{tracemem} on the data frame @code{st}
+In the example above we can run @code{tracemem} on the data frame
+@code{st}
+
 @smallexample
 > tracemem(st)
 [1] "<0x9abd5e0>"
@@ -3668,12 +3682,15 @@ memtrace[0x9abd5e0->0x98ead98]: statistic boot
 memtrace[0x98ead98->0x98eae10]: $<-.data.frame $<- statistic boot
 memtrace[0x98eae10->0x98eae88]: $<-.data.frame $<- statistic boot
 @end smallexample
+
 @noindent
 The object is duplicated fifteen times, three times for each of the
 @code{R+1} calls to @code{storm.bf}.  This is surprising, since none of the duplications happen inside @code{nls}. Stepping through @code{storm.bf} in the debugger shows that all three happen in the line
+
 @smallexample
 st$Time <- st$fit + rs[i]
 @end smallexample
+
 Data frames are slower than matrices and this is an example of why.
 Using @code{tracemem(st$Viscosity)} does not reveal any additional
 copying.
@@ -3703,8 +3720,8 @@ executable or shared object.
 
 @subsubsection sprof
 
-You cam select shared objects to be profiled with @command{sprof} by setting
-the environment variable @env{LD_PROFILE}.  For example
+You can select shared objects to be profiled with @command{sprof} by
+setting the environment variable @env{LD_PROFILE}.  For example
 
 @example
 % setenv LD_PROFILE /path/to/R_HOME/library/stats/libs/stats.so
@@ -3856,8 +3873,8 @@ also accepted
 
 Enter `step-through' mode.  In this mode, hitting return executes the
 next line of code (more precisely one line and any continuation lines).
-Typing @code{c} will continue to the end of the current context, e.g. to
-the end of the current loop or function.
+Typing @code{c} will continue to the end of the current context, e.g.@:
+to the end of the current loop or function.
 
 @item @code{c}
 
@@ -3904,7 +3921,7 @@ reported to the @R{} mailing lists as being in some package when
 other package or base @R{}.  Here is an example from the regression
 suite.
 
-@example
+@smallexample
 > success <- c(13,12,11,14,14,11,13,11,12)
 > failure <- c(0,0,0,0,0,0,0,2,2)
 > resp <- cbind(success, failure)
@@ -3918,7 +3935,7 @@ Error: no valid set of coefficients has been found: please supply starting value
        mustart = mustart, offset = offset, family = family, control = control,
        intercept = attr(mt, "intercept") > 0)
 1: glm(resp ~ 0 + predictor, family = binomial(link ="log"))
-@end example
+@end smallexample
 
 @noindent
 The calls to the active frames are given in reverse order (starting with
@@ -3930,13 +3947,13 @@ the function calls, which can be limited by setting @code{option}
 Sometimes the traceback will indicate that the error was detected inside
 compiled code, for example (from @code{?nls})
 
-@example
+@smallexample
 Error in nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321), trace = TRUE) :
         step factor 0.000488281 reduced below 'minFactor' of 0.000976563
 >  traceback()
 2: .Call(R_nls_iter, m, ctrl, trace)
 1: nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321), trace = TRUE)
-@end example
+@end smallexample
 
 @noindent
 This will be the case if the innermost call is to @code{.C},
@@ -3944,7 +3961,7 @@ This will be the case if the innermost call is to @code{.C},
 as it is also possible for such code to evaluate @R{} expressions, this
 need not be the innermost call, as in
 
-@example
+@smallexample
 > traceback()
 9: gm(a, b, x)
 8: .Call(R_numeric_deriv, expr, theta, rho, dir)
@@ -3964,7 +3981,7 @@ need not be the innermost call, as in
    @}(c(-0.00760232418963883, 1.00119632515036))
 2: .Call(R_nls_iter, m, ctrl, trace)
 1: nls(yeps ~ gm(a, b, x), start = list(a = 0.12345, b = 0.54321))
-@end example
+@end smallexample
 
 Occasionally @code{traceback()} does not help, and this can be the case
 if S4 method dispatch is involved.  Consider the following example
@@ -4016,11 +4033,11 @@ looking a @emph{post-mortem} dump.  To do so, set
 @command{options(error=dump.frames)} and run the code again.  Then invoke
 @command{debugger()} and explore the dump.  Continuing our example:
 
-@example
+@smallexample
 > options(error = dump.frames)
 > glm(resp ~ 0 + predictor, family = binomial(link ="log"))
 Error: no valid set of coefficients has been found: please supply starting values
-@end example
+@end smallexample
 
 @noindent
 which is the same as before, but an object called @code{last.dump} has
@@ -4029,7 +4046,7 @@ when it is no longer needed.)  We can examine this at a later time by
 calling the function @code{debugger}.
 @findex debugger
 
-@example
+@smallexample
 > debugger()
 Message:  Error: no valid set of coefficients has been found: please supply starting values
 Available environments had calls:
@@ -4037,7 +4054,7 @@ Available environments had calls:
 2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart, mus
 3: stop("no valid set of coefficients has been found: please supply starting values
 Enter an environment number, or 0 to exit  Selection:
-@end example
+@end smallexample
 
 @noindent
 which gives the same sequence of calls as @code{traceback}, but in
@@ -4048,7 +4065,7 @@ browser in that frame.  So we select the function call which spawned the
 error message, and explore some of the variables (and execute two
 function calls).
 
-@example
+@smallexample
 Enter an environment number, or 0 to exit  Selection: 2
 Browsing in the environment with call:
    glm.fit(x = X, y = Y, weights = weights, start = start, etas
@@ -4084,7 +4101,7 @@ Available environments had calls:
 
 Enter an environment number, or 0 to exit  Selection: 0
 > rm(last.dump)
-@end example
+@end smallexample
 
 Because @code{last.dump} can be looked at later or even in another @R{}
 session, post-mortem debugging is possible even for batch usage of @R{}.
@@ -4103,7 +4120,7 @@ example.
 @findex recover
 An alternative error action is to use the function @command{recover()}:
 
-@example
+@smallexample
 > options(error = recover)
 > glm(resp ~ 0 + predictor, family = binomial(link = "log"))
 Error: no valid set of coefficients has been found: please supply starting values
@@ -4114,7 +4131,7 @@ Enter a frame number, or 0 to exit
 2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart
 
 Selection:
-@end example
+@end smallexample
 
 @noindent
 which is very similar to @code{dump.frames}.  However, we can examine
@@ -4132,7 +4149,7 @@ that is to use @command{debug}.  This inserts a call to the browser
 at the beginning of the function, starting in step-through mode.  So in
 our example we could use
 
-@example
+@smallexample
 > debug(glm.fit)
 > glm(resp ~ 0 + predictor, family = binomial(link ="log"))
 debugging in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,
@@ -4158,7 +4175,7 @@ Browse[1]> mu
 1.0000000 0.9999978 0.9999888 0.9999441 0.9997206 0.9986039 0.9930389 0.9656755
         9
 0.8397616
-@end example
+@end smallexample
 
 @noindent
 (The prompt @code{Browse[1]>} indicates that this is the first level of
@@ -4270,7 +4287,7 @@ where @file{mypkg-Ex.R} is a set of examples, e.g.@: the file created in
 memory reads of `uninitialised values' that are the result of compiler
 optimization, so can be worth checking under an unoptimized compile.  We
 know there will be some small memory leaks from @code{readline} and @R{}
-itself -- these are memory areas that are in use right up to the end of
+itself --- these are memory areas that are in use right up to the end of
 the @R{} session.  Expect this to run around 20x slower than without
 @code{valgrind}, and in some cases even slower than that.  Current
 versions@footnote{Although this is supposed to have been improved,
@@ -4283,9 +4300,9 @@ so you may need to build a version of @R{} specifically to use with
 On platforms supported by @code{valgrind} you can build a version of
 @R{} with extra instrumentation to help @code{valgrind} detect errors in
 the use of memory allocated from the @R{} heap.  The configure option is
-@option{--with-valgrind-instrumentation=level}, where @code{level} is 0,
-1, or 2.  Level 0 is the default and does not add any anything.  Level 1
-will detect use of uninitialised memory and has little impact on
+@option{--with-valgrind-instrumentation=@var{level}}, where @var{level}
+is 0, 1, or 2.  Level 0 is the default and does not add any anything.
+Level 1 will detect use of uninitialised memory and has little impact on
 speed. Level 2 will detect many other memory use bugs but makes @R{}
 much slower when running under @code{valgrind}.  Using this in
 conjuction with @code{gctorture} can be even more effective (and even
@@ -4326,7 +4343,7 @@ example the stack trace was enough to isolate and fix the bug, which
 was in @code{tsc_transpose}, and in this example running under
 @code{gctorture()} did not provide any additional information. When
 the stack trace is not sufficiently informative the option
-@code{--db-attach=yes} to @code{valgrind} may be helpful. This starts a
+@option{--db-attach=yes} to @code{valgrind} may be helpful. This starts a
 post-mortem debugger (by default @code{gdb}) so that variables in the
 C code can be inspected (@pxref{Inspecting R objects}).
 
@@ -4478,7 +4495,8 @@ Continue execution of R by typing @kbd{signal 0@key{RET}}.
 
 Under Windows signals may not be able to be used, and if so the procedure is
 more complicated.  See the rw-FAQ and
-@uref{http://www.stats.uwo.ca/faculty/murdoch/software/debuggingR/gdb.shtml}.
+@uref{http://www.stats.uwo.ca/faculty/murdoch/software/debuggingR/gdb.shtml,
+@code{www.stats.uwo.ca/faculty/murdoch/@/software/@/debuggingR/@/gdb.shtml}}.
 
 
 @node Inspecting R objects,  , Finding entry points, Debugging compiled code
@@ -5343,8 +5361,8 @@ within C code.  The first (historically) is to use the macros and
 functions that have been used to implement the core parts of @R{}
 through @code{.Internal} calls.  A public subset of these is defined in
 the header file @file{Rinternals.h} in the directory
-@file{R_INCLUDE_DIR} (default @file{@var{R_HOME}/include}) that should
-be available on any @R{} installation.
+@file{@var{R_INCLUDE_DIR}} (default @file{@var{R_HOME}/include}) that
+should be available on any @R{} installation.
 
 Another approach is to use @R{} versions of the macros and functions
 defined for the @Sl{} version 4 interface @code{.Call}, which are
@@ -6024,7 +6042,7 @@ which is computed as
 
 @example
 x <- 1:10
-x <- "foo<-"(x)
+x <- "foo<-"(x, 3)
 @end example
 
 @noindent
@@ -6905,7 +6923,8 @@ Weak reference objects are created by one of
 
 @example
 SEXP R_MakeWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit);
-SEXP R_MakeWeakRefC(SEXP key, SEXP val, R_CFinalizer_t fin, Rboolean onexit);
+SEXP R_MakeWeakRefC(SEXP key, SEXP val, R_CFinalizer_t fin,
+                    Rboolean onexit);
 @end example
 
 @noindent
@@ -6922,8 +6941,9 @@ void R_RunWeakRefFinalizer(SEXP w);
 @end example
 
 A toy example of the use of weak references can be found at
-@url{http://www.stat.uiowa.edu/~luke/R/references/weakfinex.html}, but
-that is used to add finalizers to external pointers which can now be
+@url{http://www.stat.uiowa.edu/~luke/R/references/weakfinex.html,
+@code{www.@/stat.@/uiowa.@/edu/@/~luke/@/R/references/@/weakfinex.html}},
+but that is used to add finalizers to external pointers which can now be
 done more directly.
 
 
@@ -7052,7 +7072,7 @@ which allocates @var{n} units of @var{size} bytes each.  A typical usage
 x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
 @end example
 
-There is a similar calls, @code{S_alloc} (for compatibility with older
+There is a similar call, @code{S_alloc} (for compatibility with older
 versions of @Sl{}) which zeroes the memory allocated,
 
 @example
@@ -7627,7 +7647,7 @@ still works when both @var{a} and @var{b} are between @code{1e200} and
 @code{1e300} (in @acronym{IEEE} double precision).
 @end deftypefun
 
-@deftypefun double log1p (@var{x})
+@deftypefun double log1p (double @var{x})
 Computes @code{log(1 + @var{x})} (@emph{log 1 @b{p}lus x}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
@@ -7637,12 +7657,12 @@ in @file{Rmath.h}, but is (probably) in @file{math.h} which
 prior to 1.5.0, the entry point @code{Rf_log1p} is still provided.
 @end deftypefun
 
-@deftypefun double log1pmx (@var{x})
+@deftypefun double log1pmx (double @var{x})
 Computes @code{log(1 + @var{x}) - @var{x}} (@emph{log 1 @b{p}lus x @b{m}inus @b{x}}),
 accurately even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 @end deftypefun
 
-@deftypefun double expm1 (@var{x})
+@deftypefun double expm1 (double @var{x})
 Computes @code{exp(@var{x}) - 1} (@emph{exp x @b{m}inus 1}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
@@ -7651,7 +7671,7 @@ in @file{Rmath.h}, but is (probably) in @file{math.h} which
 @file{Rmath.h} includes.
 @end deftypefun
 
-@deftypefun double lgamma1p (@var{x})
+@deftypefun double lgamma1p (double @var{x})
 Computes @code{log(gamma(@var{x} + 1))} (@emph{log(gamma(1 @b{p}lus x))}),
 accurately even for small @var{x}, i.e., @eqn{0 < x < 0.5, 0 < x < 0.5}.
 @end deftypefun
@@ -8027,7 +8047,6 @@ HSV to RGB and back.  Note that all colours must be in [0,1].
 @deftypefun void rgb2hsv (double @var{r}, double @var{g}, double @var{b}, double *@var{h}, double *@var{s}, double *@var{v})
 @end deftypefun
 
-
 A system-independent interface to produce the name of a temporary
 file is provided as
 
@@ -8238,8 +8257,8 @@ to read the seeds).
 @section Organization of header files
 
 The header files which @R{} installs are in directory
-@file{R_INCLUDE_DIR} (default @file{R_HOME/include}).  This currently
-contains
+@file{@var{R_INCLUDE_DIR}} (default @file{@var{R_HOME}/include}).  This
+currently contains
 
 @quotation
 @multitable @columnfractions 0.30 0.55
@@ -8483,9 +8502,9 @@ shared library can be used to run @R{} from alternative front-end
 programs.  We will assume this has been done for the rest of this
 section.
 
-The command-line @R{} front-end, @file{R_HOME/bin/exec/R} is one such
-example, and the unbundled @acronym{GNOME} and MacOS X consoles are
-others.  The source for @file{R_HOME/bin/exec/R} is in file
+The command-line @R{} front-end, @file{@var{R_HOME}/bin/exec/R} is one
+such example, and the unbundled @acronym{GNOME} and MacOS X consoles are
+others.  The source for @file{@var{R_HOME}/bin/exec/R} is in file
 @file{src/main/Rmain.c} and is very simple
 
 @example
@@ -8504,9 +8523,10 @@ int main(int ac, char **av)
 @end example
 
 @noindent
-indeed, misleadingly simple.  Remember that @file{R_HOME/bin/exec/R} is
-run from a shell script @file{R_HOME/bin/R} which sets up the
-environment for the executable, and this is used for
+indeed, misleadingly simple.  Remember that
+@file{@var{R_HOME}/bin/exec/R} is run from a shell script
+@file{@var{R_HOME}/bin/R} which sets up the environment for the
+executable, and this is used for
 
 @itemize @bullet
 @item
@@ -8535,11 +8555,11 @@ R CMD exec/R
 
 @noindent
 will both work in a standard @R{} installation. (@command{R CMD} looks
-first for executables in @file{R_HOME/bin}.)  If you do not want to run
-your front-end in this way, you need to ensure that @env{R_HOME} is set
-and @env{LD_LIBRARY_PATH} is suitable.  (The latter might well be, but
-modern Unix/Linux systems do not normally include @file{/usr/local/lib},
-and @R{} does look there for system components.)
+first for executables in @file{@var{R_HOME}/bin}.)  If you do not want
+to run your front-end in this way, you need to ensure that @env{R_HOME}
+is set and @env{LD_LIBRARY_PATH} is suitable.  (The latter might well
+be, but modern Unix/Linux systems do not normally include
+@file{/usr/local/lib}, and @R{} does look there for system components.)
 
 The other senses in which this example is too simple are that all the
 internal defaults are used and that control is handed over to the
@@ -8580,7 +8600,7 @@ setting up various parts of @R{} to talk to our GUI, and arranging for
 our GUI callbacks to be called during the @R{} mainloop.
 
 One issue to watch is that on some platforms @code{Rf_initEmbeddedR} and
-@code{Rf_endEmbeddedR} change the settings of the FPU (e.g. to allow
+@code{Rf_endEmbeddedR} change the settings of the FPU (e.g.@: to allow
 errors to be trapped and to set extended precision registers).
 
 @menu
@@ -9065,7 +9085,7 @@ front-ends may allow a looser match.
 Find and set the @R{} home directory and the user's home directory.  The
 former may be available from the Windows Registry: it will normally be
 in @code{HKEY_LOCAL_MACHINE\Software\R-core\R\InstallPath} and can be
-set there by running the program @file{R_HOME\bin\RSetReg.exe}.
+set there by running the program @file{@var{R_HOME}\bin\RSetReg.exe}.
 
 @item
 Define startup conditions and callbacks via the @code{Rstart} structure.
@@ -9440,8 +9460,8 @@ also formatting it properly.  The @R{} Core Team recommends to use a
 basic indentation of 4 for @R{} and C (and most likely also Perl) code,
 and 2 for documentation in Rd format.  Emacs users can implement this
 indentation style by putting the following in one of their startup
-files.  (For @acronym{GNU} Emacs 20: for @acronym{GNU} Emacs 21 use
-customization to set the @code{c-default-style} to @code{"bsd"} and
+files.  (For @acronym{GNU} Emacs 20: for @acronym{GNU} Emacs 21 or later
+use customization to set the @code{c-default-style} to @code{"bsd"} and
 @code{c-basic-offset} to @code{4}.)
 
 @smallexample
@@ -9546,29 +9566,29 @@ easily be reused.
 @multitable {no} {SPECIALSXPXXX} {S4 classes not of simple type}
 @headitem no @tab  SEXPTYPE@tab  Description
 @item @code{0}   @tab @code{NILSXP}      @tab @code{NULL}
-@item @code{1}   @tab @code{SYMSXP}      @tab @code{symbols}
-@item @code{2}   @tab @code{LISTSXP}     @tab @code{pairlists}
-@item @code{3}   @tab @code{CLOSXP}      @tab @code{closures}
-@item @code{4}   @tab @code{ENVSXP}      @tab @code{environments}
-@item @code{5}   @tab @code{PROMSXP}     @tab @code{promises}
-@item @code{6}   @tab @code{LANGSXP}     @tab @code{language objects}
-@item @code{7}   @tab @code{SPECIALSXP}  @tab @code{special functions}
-@item @code{8}   @tab @code{BUILTINSXP}  @tab @code{builtin functions}
-@item @code{9}   @tab @code{CHARSXP}     @tab @code{internal character strings}
-@item @code{10}   @tab @code{LGLSXP}     @tab @code{logical vectors}
-@item @code{13}   @tab @code{INTSXP}     @tab @code{integer vectors}
-@item @code{14}   @tab @code{REALSXP}    @tab @code{numeric vectors}
-@item @code{15}   @tab @code{CPLXSXP}    @tab @code{complex vectors}
-@item @code{16}   @tab @code{STRSXP}     @tab @code{character vectors}
-@item @code{17}   @tab @code{DOTSXP}     @tab @code{dot-dot-dot object}
-@item @code{18}   @tab @code{ANYSXP}     @tab @code{make "any" args work}
-@item @code{19}   @tab @code{VECSXP}     @tab @code{list (generic vector)}
-@item @code{20}   @tab @code{EXPRSXP}    @tab @code{expression vector}
-@item @code{21}   @tab @code{BCODESXP}   @tab @code{byte code}
-@item @code{22}   @tab @code{EXTPTRSXP}  @tab @code{external pointer}
-@item @code{23}   @tab @code{WEAKREFSXP} @tab @code{weak reference}
-@item @code{24}   @tab @code{RAWSXP}     @tab @code{raw vector}
-@item @code{25}   @tab @code{S4SXP}      @tab @code{S4 classes not of simple type}
+@item @code{1}   @tab @code{SYMSXP}      @tab symbols
+@item @code{2}   @tab @code{LISTSXP}     @tab pairlists
+@item @code{3}   @tab @code{CLOSXP}      @tab closures
+@item @code{4}   @tab @code{ENVSXP}      @tab environments
+@item @code{5}   @tab @code{PROMSXP}     @tab promises
+@item @code{6}   @tab @code{LANGSXP}     @tab language objects
+@item @code{7}   @tab @code{SPECIALSXP}  @tab special functions
+@item @code{8}   @tab @code{BUILTINSXP}  @tab builtin functions
+@item @code{9}   @tab @code{CHARSXP}     @tab internal character strings
+@item @code{10}   @tab @code{LGLSXP}     @tab logical vectors
+@item @code{13}   @tab @code{INTSXP}     @tab integer vectors
+@item @code{14}   @tab @code{REALSXP}    @tab numeric vectors
+@item @code{15}   @tab @code{CPLXSXP}    @tab complex vectors
+@item @code{16}   @tab @code{STRSXP}     @tab character vectors
+@item @code{17}   @tab @code{DOTSXP}     @tab dot-dot-dot object
+@item @code{18}   @tab @code{ANYSXP}     @tab make ``any'' args work
+@item @code{19}   @tab @code{VECSXP}     @tab list (generic vector)
+@item @code{20}   @tab @code{EXPRSXP}    @tab expression vector
+@item @code{21}   @tab @code{BCODESXP}   @tab byte code
+@item @code{22}   @tab @code{EXTPTRSXP}  @tab external pointer
+@item @code{23}   @tab @code{WEAKREFSXP} @tab weak reference
+@item @code{24}   @tab @code{RAWSXP}     @tab raw vector
+@item @code{25}   @tab @code{S4SXP}      @tab S4 classes not of simple type
 @end multitable
 @end quotation
 
@@ -9611,16 +9631,16 @@ The @code{sxpinfo} header is defined as a 32-bit C structure by
 
 @example
 struct sxpinfo_struct @{
-    SEXPTYPE type      :  5;  /* discussed above */
-    unsigned int obj   :  1;  /* is this an object with a class attribute? */
-    unsigned int named :  2;  /* used to control copying */
-    unsigned int gp    : 16;  /* general purpose, see below */
-    unsigned int mark  :  1;  /* mark object as 'in use' in GC */
+    SEXPTYPE type      :  5;  /* @r{discussed above} */
+    unsigned int obj   :  1;  /* @r{is this an object with a class attribute?} */
+    unsigned int named :  2;  /* @r{used to control copying} */
+    unsigned int gp    : 16;  /* @r{general purpose, see below} */
+    unsigned int mark  :  1;  /* @r{mark object as `in use' in GC} */
     unsigned int debug :  1;
     unsigned int trace :  1;
-    unsigned int spare :  1;  /* unused */
-    unsigned int gcgen :  1;  /* generation for GC */
-    unsigned int gccls :  3;  /* class of node for GC */
+    unsigned int spare :  1;  /* @r{unused} */
+    unsigned int gcgen :  1;  /* @r{generation for GC} */
+    unsigned int gccls :  3;  /* @r{class of node for GC} */
 @};  /*              Tot: 32 */
 @end example
 
@@ -9841,10 +9861,10 @@ of this type.
 @itemx EXPRSXP
 @code{length}, @code{truelength} followed by a block of pointers.  These
 are internally identical (and identical to @code{STRSXP}) but differ in
-the interpretations placed on the elememts.
+the interpretations placed on the elements.
 
 @item BCODESXP
-For the future byte-code compiler
+For the future byte-code compiler.
 
 @item EXTPTRSXP
 Has three pointers, to the pointer, the protection value (an @R{} object
@@ -10007,7 +10027,7 @@ length and with elements of the correct lengths (and all zero-length
 elements are replaced by @code{NULL}).
 
 The other attributes which are given special treatment are
-@code{"names"}, @code{"class"}, @code{"tsp"}, @code{"comments"} and
+@code{"names"}, @code{"class"}, @code{"tsp"}, @code{"comment"} and
 @code{"row.names"}.  For pairlist-like objects the names are not stored
 as an attribute but (as symbols) as tags: however the @R{} interface
 makes them look like conventional attributes (one reason why the
@@ -10078,29 +10098,29 @@ attr(,"comm")
 @emph{Contexts} are the internal mechanism used to keep track of where a
 computation has got to (and from where), so that control-flow construct
 can work and reasonable information can be produced on error conditions,
-(such as traceback) and otherwise (the @code{sys.xxx} functions).
+(such as traceback) and otherwise (the @code{sys.@var{xxx}} functions).
 
 Execution contexts are a stack of C @code{structs}:
 
 @example
 typedef struct RCNTXT @{
-    struct RCNTXT *nextcontext;	/* The next context up the chain */
-    int callflag;		/* The context "type" */
-    JMP_BUF cjmpbuf;		/* C stack and register information */
-    int cstacktop;		/* Top of the pointer protection stack */
-    int evaldepth;	        /* evaluation depth at inception */
-    SEXP promargs;		/* Promises supplied to closure */
-    SEXP callfun;		/* The closure called */
-    SEXP sysparent;		/* Environment the closure was called from */
-    SEXP call;			/* The call that effected this context*/
-    SEXP cloenv;		/* The environment */
-    SEXP conexit;		/* Interpreted "on.exit" code */
-    void (*cend)(void *);	/* C "on.exit" thunk */
-    void *cenddata;		/* Data for C "on.exit" thunk */
-    char *vmax;		        /* Top of the R_alloc stack */
-    int intsusp;                /* Interrupts are suspended */
-    SEXP handlerstack;          /* Condition handler stack */
-    SEXP restartstack;          /* Stack of available restarts */
+    struct RCNTXT *nextcontext;	/* @r{The next context up the chain} */
+    int callflag;               /* @r{The context `type'} */
+    JMP_BUF cjmpbuf;            /* @r{C stack and register information} */
+    int cstacktop;              /* @r{Top of the pointer protection stack} */
+    int evaldepth;              /* @r{Evaluation depth at inception} */
+    SEXP promargs;              /* @r{Promises supplied to closure} */
+    SEXP callfun;               /* @r{The closure called} */
+    SEXP sysparent;             /* @r{Environment the closure was called from} */
+    SEXP call;                  /* @r{The call that effected this context} */
+    SEXP cloenv;                /* @r{The environment} */
+    SEXP conexit;               /* @r{Interpreted @code{on.exit} code} */
+    void (*cend)(void *);       /* @r{C @code{on.exit} thunk} */
+    void *cenddata;             /* @r{Data for C @code{on.exit} thunk} */
+    char *vmax;                 /* @r{Top of the @code{R_alloc} stack} */
+    int intsusp;                /* @r{Interrupts are suspended} */
+    SEXP handlerstack;          /* @r{Condition handler stack} */
+    SEXP restartstack;          /* @r{Stack of available restarts} */
 @} RCNTXT, *context;
 @end example
 
@@ -10110,17 +10130,17 @@ are from
 
 @example
 enum @{
-    CTXT_TOPLEVEL = 0,  /* toplevel context */
-    CTXT_NEXT	  = 1,  /* target for 'next' */
-    CTXT_BREAK	  = 2,  /* target for 'break' */
-    CTXT_LOOP	  = 3,	/* 'break' OR 'next' target */
-    CTXT_FUNCTION = 4,  /* function closure */
-    CTXT_CCODE	  = 8,  /* other functions that need error cleanup */
-    CTXT_RETURN	  = 12, /* return() from a closure */
-    CTXT_BROWSER  = 16, /* return target on exit from browser */
-    CTXT_GENERIC  = 20, /* rather, running an S3 method */
-    CTXT_RESTART  = 32, /* a call to 'restart' was made from a closure */
-    CTXT_BUILTIN  = 64  /* builtin internal function */
+    CTXT_TOPLEVEL = 0,  /* @r{toplevel context} */
+    CTXT_NEXT     = 1,  /* @r{target for @code{next}} */
+    CTXT_BREAK    = 2,  /* @r{target for @code{break}} */
+    CTXT_LOOP     = 3,  /* @r{@code{break} or @code{next} target} */
+    CTXT_FUNCTION = 4,  /* @r{function closure} */
+    CTXT_CCODE    = 8,  /* @r{other functions that need error cleanup} */
+    CTXT_RETURN   = 12, /* @r{@code{return()} from a closure} */
+    CTXT_BROWSER  = 16, /* @r{return target on exit from browser} */
+    CTXT_GENERIC  = 20, /* @r{rather, running an S3 method} */
+    CTXT_RESTART  = 32, /* @r{a call to @code{restart} was made from a closure} */
+    CTXT_BUILTIN  = 64  /* @r{builtin internal function} */
 @};
 @end example
 
@@ -10129,7 +10149,7 @@ where the @code{CTXT_FUNCTION} bit is on wherever function closures are
 involved.
 
 Contexts are created by a call to @code{begincontext} and ended by a
-call to @code{end context}: code can search up the stack for a
+call to @code{endcontext}: code can search up the stack for a
 particular type of context via @code{findcontext} (and jump there) or
 jump to a specific context via @code{R_JumpToContext}.
 @code{R_ToplevelContext} is the `idle' state (normally the command
@@ -10157,8 +10177,8 @@ used in managing changes of the function being evaluated, i.e. by
 @code{CTXT_CCODE} contexts are currently used in @code{cat()},
 @code{load()}, @code{scan()} and @code{write.table()} (to close the
 connection on error), by @code{PROTECT}, serialization (to recover from
-errors, e.g. free buffers) and within the error handling code (to raise
-the C stack limit and reset some variables).
+errors, e.g.@: free buffers) and within the error handling code (to
+raise the C stack limit and reset some variables).
 
 
 @node Argument evaluation, The write barrier, Contexts, R Internal Structures
@@ -10272,9 +10292,9 @@ formals, the value of the @code{...} argument is of @code{SEXPTYPE}
 but distinguished by the @code{SEXPTYPE}.
 
 Recall that the evaluation frame for a function initially contains the
-@code{name=value} pairs from the matched call, and hence this will be
-true for @code{...} as well.  The value of @code{...} is a (special)
-pairlist whose elements are referred to by the special symbols
+@code{@var{name}=@var{value}} pairs from the matched call, and hence
+this will be true for @code{...} as well.  The value of @code{...} is a
+(special) pairlist whose elements are referred to by the special symbols
 @code{..1}, @code{..2}, @dots{} which have the @code{DDVAL} bit set:
 when one of these is encountered it is looked up (via @code{ddfndVar})
 in the value of the @code{...} symbol in the evaluation frame.
@@ -10305,7 +10325,7 @@ by ensuring that the elements of a list are regarded as at least as old
 as the list @emph{when they are assigned}.  This is handled by the
 functions @code{SET_VECTOR_ELT} and @code{SET_STRING_ELT}, which is why
 they are functions and not macros.  Ensuring the integrity of such
-operations is termed the @code{write barrier} and is done by making the
+operations is termed the @dfn{write barrier} and is done by making the
 @code{SEXP} opaque and only providing access via functions (which cannot
 be used as lvalues in assignments in C).
 
@@ -10364,7 +10384,7 @@ references after the first are written out as a reference marker indexed
 by the table entry.
 
 Serialization first writes a header indicating the format (normally
-@code{X\n} for an XDR format binary save) and the version number of the
+@samp{X\n} for an XDR format binary save) and the version number of the
 format and of two @R{} versions (as integers).  (Unserialization
 interprets the two versions as the version of @R{} which wrote the file
 followed by the minimal version of @R{} needed to read the format.)
@@ -10372,14 +10392,14 @@ Serialization then writes out the object recursively using function
 @code{WriteItem} in file @file{src/main/serialize.c}.
 
 Some objects are written as if they were @code{SEXPTYPE}s: such
-pseudo-SEXPTYPES cover @code{R_NilValue}, @code{R_EmptyEnv},
+pseudo-@code{SEXPTYPE}s cover @code{R_NilValue}, @code{R_EmptyEnv},
 @code{R_BaseEnv}, @code{R_GlobalEnv}, @code{R_UnboundValue},
 @code{R_MissingArg} and @code{R_BaseNamespace}.
 
 For all @code{SEXPTYPE}s except @code{NILSXP}, @code{SYMSXP} and
 @code{ENVSXP} serialization starts with a integer with the
 @code{SEXPTYPE} in bits 0:7@footnote{only 0:4 will currently be used for
-@code{SEXPTYPE}s but values 241:255 are used for pseudo-SEXPTYPES.}
+@code{SEXPTYPE}s but values 241:255 are used for pseudo-@code{SEXPTYPE}s.}
 followed by the object bit, two bits indicating if there are any
 attributes and if there is a tag (for the pairlist types), an unused bit
 and then the @code{gp} field@footnote{Currently the only relevant bits
@@ -10393,11 +10413,11 @@ special-cases @code{NA_STRING} and writes it as length @code{-1} with no
 data.
 
 Environments are treated in several ways: as we have seen, some are
-written as specific pseudo-SEXPTYPEs.  Package and name space
-environments are written with pseudo-SEXPTYPEs followed by the name.
-`Normal' environments are written out as @code{ENVSXP}s with an integer
-indicating if the environment is locked followed by the enclosure,
-frame, tag and attributes.
+written as specific pseudo-@code{SEXPTYPE}s.  Package and name space
+environments are written with pseudo-@code{SEXPTYPE}s followed by the
+name.  `Normal' environments are written out as @code{ENVSXP}s with an
+integer indicating if the environment is locked followed by the
+enclosure, frame, tag and attributes.
 
 
 @node Internal use of global and base environments, Modules, Serialization Formats, R Internal Structures
@@ -10452,46 +10472,46 @@ regarded as a variable created by the user.
 chosen to be loaded `on demand' rather than linked as dynamic libraries
 or incorporated into the main executable/dynamic library.
 
-For a few of these (e.g. @code{vfonts}) the issue is size: the database
-for the Hershey fonts is included in the C code of the module and was at
-one time an appreciable part of the codebase for a rarely used feature.
-However, for most of the modules the motivation has been the amount of
-(often optional) code they will bring in via libraries to which they are
-linked.
+For a few of these (e.g.@: @code{vfonts}) the issue is size: the
+database for the Hershey fonts is included in the C code of the module
+and was at one time an appreciable part of the codebase for a rarely
+used feature.  However, for most of the modules the motivation has been
+the amount of (often optional) code they will bring in via libraries to
+which they are linked.
 
-@table @code
+@table @asis
 
-@item internet
+@item @code{internet}
 The internal HTTP and FTP clients and socket support, which link to
 system-specific support libraries.
 
-@item lapack
+@item @code{lapack}
 The code which makes use of the LAPACK library, and is linked to
 @file{libRlapack} or an external LAPACK library.
 
-@item vfonts
+@item @code{vfonts}
 The Hershey font databases and the code to draw from them.
 
-@item X11
+@item @code{X11}
 (Unix-alikes only.)
 The @code{X11()}, @code{jpeg()} and @code{png()} devices. These are
 optional, and link to the @code{X11}, @code{jpeg} and @code{libpng}
 libraries.
 
-@item Rbitmap.dll
+@item @file{Rbitmap.dll}
 (Windows only.)  The code for the BMP, JPEG and PNG devices and for
 saving on-screen graphs to those formats. This is technically optional,
 and needs source code not in the tarball.
 
-@item Rchmtl.dll
+@item @file{Rchmtl.dll}
 (Windows only.)  A link to an ActiveX control that displays Compiled
-HTML help.  This is optional, and only compiled if CHTML is specified.
+@HTML{} help.  This is optional, and only compiled if CHTML is specified.
 
-@item iconv.dll
+@item @file{iconv.dll}
 (Windows only.)  A DLL compiled via Visual C++ which contains the
 routines to convert between character sets. 
 
-@item internet2.dll
+@item @file{internet2.dll}
 (Windows only.)  An alternative version of the internet access routines,
 compiled against Internet Explorer internals (and so loads
 @file{wininet.dll} and @file{wsock32.dll}).
