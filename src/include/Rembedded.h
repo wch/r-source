@@ -62,7 +62,8 @@ LibExtern int UserBreak;
 extern Rboolean AllDevicesKilled;
 extern void editorcleanall();
 extern int GA_initapp(int, char **);
-extern void GA_appcleanup();    
+extern void GA_appcleanup();
+extern void readconsolecfg();
 #endif
 
 #ifdef __cplusplus

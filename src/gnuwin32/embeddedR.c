@@ -31,9 +31,6 @@
 /* for signal-handling code */
 #include <psignal.h>
 
-/* for readconsolecfg */
-#include "rui.h"
-
 /* one way to allow user interrupts: called in ProcessEvents */
 extern int UserBreak;
 
