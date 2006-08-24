@@ -734,7 +734,7 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP arg, ans;
     int i, l, n, allow_;
-    char *p, *this;
+    char *p, *this, *tmp;
     Rboolean need_prefix;
 
     checkArity(op ,args);
@@ -775,46 +775,56 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else if (!isalpha(0xff & (int) this[0])) need_prefix = TRUE;
 	}
 	if (need_prefix) {
-	    SET_STRING_ELT(ans, i, allocString(l + 1));
-	    strcpy(CHAR(STRING_ELT(ans, i)), "X");
-	    strcat(CHAR(STRING_ELT(ans, i)), CHAR(STRING_ELT(arg, i)));
+	    tmp = Calloc(l+1+1, char);
+	    strcpy(tmp, "X");
+	    strcat(tmp, CHAR(STRING_ELT(arg, i)));
 	} else {
-	    SET_STRING_ELT(ans, i, allocString(l));
-	    strcpy(CHAR(STRING_ELT(ans, i)), CHAR(STRING_ELT(arg, i)));
+	    tmp = Calloc(l+1, char);
+	    strcpy(tmp, CHAR(STRING_ELT(arg, i)));
 	}
-	this = CHAR(STRING_ELT(ans, i));
 #ifdef SUPPORT_MBCS
 	if (mbcslocale) {
 	    /* This cannot lengthen the string, so safe to overwrite it.
 	       Would also be possible a char at a time.
 	     */
-	    int nc = mbstowcs(NULL, this, 0);
+	    int nc = mbstowcs(NULL, tmp, 0);
 	    wchar_t *wstr = Calloc(nc+1, wchar_t), *wc;
 	    if(nc >= 0) {
-		mbstowcs(wstr, this, nc+1);
+		mbstowcs(wstr, tmp, nc+1);
 		for(wc = wstr; *wc; wc++) {
 		    if (*wc == L'.' || (allow_ && *wc == L'_')) 
 			/* leave alone */;
 		    else if(!iswalnum((int)*wc)) *wc = L'.';
+		    /* If it changes into dot here,
+		     * length will become short on mbcs.
+		     * The name which became short will contain garbage.
+		     * cf. 
+		     *   >  make.names(c("\u30fb"))
+		     *   [1] "X.\0"
+		     */
 		}
-		wcstombs(this, wstr, strlen(this)+1);
+		wcstombs(tmp, wstr, strlen(tmp)+1);
 		Free(wstr);
 	    } else errorcall(call, _("invalid multibyte string %d"), i+1);
 	} else
 #endif
 	{
-	    for (p = this; *p; p++) {
+	    for (p = tmp; *p; p++) {
 		if (*p == '.' || (allow_ && *p == '_')) /* leave alone */;
 		else if(!isalnum(0xff & (int)*p)) *p = '.';
 		/* else leave alone */
 	    }
 	}
+	l=strlen(tmp);
+	SET_STRING_ELT(ans, i, allocString(l));
+	strcpy(CHAR(STRING_ELT(ans, i)), tmp);
 	/* do we have a reserved word?  If so the name is invalid */
-	if (!isValidName(this)) {
-	    SET_STRING_ELT(ans, i, allocString(strlen(this) + 1));
-	    strcpy(CHAR(STRING_ELT(ans, i)), this);
+	if (!isValidName(tmp)) {
+	    SET_STRING_ELT(ans, i, allocString(strlen(tmp) + 1));
+	    strcpy(CHAR(STRING_ELT(ans, i)), tmp);
 	    strcat(CHAR(STRING_ELT(ans, i)), ".");
 	}
+	Free(tmp);
     }
     UNPROTECT(1);
     return ans;
