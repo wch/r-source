@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-08-21
+@set FAQ_DATE @value{FAQ_YEAR}-08-25
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2257,6 +2257,8 @@ examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item SIN
 A SINful approach to selection of Gaussian Graphical Markov Models.
+@item SQLiteDF
+Stores data frames and matrices in SQLite tables.
 @item SciViews
 A bundle of packages to implement a full reusable GUI API for R.
 Contains @strong{svGUI} with the main GUI features, @strong{svDialogs}
@@ -2652,6 +2654,8 @@ Simulation classes based on package @strong{distr}.
 Estimation and Testing classes based on package @strong{distr}.
 @item diveMove
 Dive analysis and calibration.
+@item dlm
+Maximum likelihood and Bayesian analysis of Dynamic Linear Models.
 @item doBy
 Facilities for groupwise computations.
 @item dprep
@@ -4015,6 +4019,8 @@ Bayesian regression and adaptive sampling with Treed Gaussian Process
 models.
 @item time
 Time tracking for developers.
+@item titecrm
+TIme-To-Event Continual Reassessment Method and calibration tools.
 @item tkrplot
 Simple mechanism for placing R graphics in a Tk widget.
 @item tlnise
@@ -4111,6 +4117,8 @@ Export data to @LaTeX{} and @HTML{} tables.
 @item zicounts
 Fit classical, zero-inflated and interval censored count data regression
 models.
+@item zipfR
+Statistical models for word frequency distributions.
 @item zoo
 A class with methods for totally ordered indexed observations such as
 irregular time series.
