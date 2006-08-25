@@ -162,7 +162,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"!",		do_logic,	3,	1,	1,	{PP_UNARY,   PREC_NOT,	  0}},
 {"&&",		do_logic2,	1,	0,	2,	{PP_BINARY,  PREC_AND,	  0}},
 {"||",		do_logic2,	2,	0,	2,	{PP_BINARY,  PREC_OR,	  0}},
-{":",		do_seq,		0,	1,	2,	{PP_BINARY2, PREC_COLON,  0}},
+{":",		do_colon,	0,	1,	2,	{PP_BINARY2, PREC_COLON,  0}},
 {"~",		do_tilde,	0,	0,	2,	{PP_BINARY,  PREC_TILDE,  0}},
 
 
@@ -608,7 +608,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"gcinfo",	do_gcinfo,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"gctorture",	do_gctorture,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"memory.profile",do_memoryprofile, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"rep",		do_rep,		0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"rep.int",	do_rep_int,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"list",	do_makelist,	1,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"split",	do_split,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"symbol.C",	do_symbol,	0,	1,	1,	{PP_FOREIGN, PREC_FN,	0}},
