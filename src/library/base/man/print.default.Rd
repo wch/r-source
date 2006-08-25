@@ -7,7 +7,7 @@
 \title{Default Printing}
 \usage{
 \method{print}{default}(x, digits = NULL, quote = TRUE, na.print = NULL,
-      print.gap = NULL, right = FALSE, \dots)
+      print.gap = NULL, right = FALSE, max = NULL, \dots)
 }
 \arguments{
   \item{x}{the object to be printed.}
@@ -27,6 +27,11 @@
     \dQuote{columns} in printed vectors, matrices and arrays.}
   \item{right}{logical, indicating whether or not strings should be
     right aligned.  The default is left alignment.}
+  \item{max}{a non-null value for \code{max} specifies the approximate
+    maximum number entries to be printed.  The default, \code{NULL},
+    uses \code{\link{getOption}(max.print)}; use that help page for more
+    details.}
+  }
   \item{\dots}{further arguments to be passed to or from other
     methods.  They are ignored in this function.}
 }
@@ -75,7 +80,7 @@
   \code{0x7f}) are printed in the same way, as-is if printable, otherwise
   via ANSI escape sequences or 3-digit octal escapes as described for
   single-byte locales.
-  
+
   Multi-byte non-printing characters are printed as an escape sequence
   of the form \code{\uxxxx}
 #ifndef windows
@@ -114,5 +119,9 @@ pi
 print(pi, digits = 16)
 LETTERS[1:16]
 print(LETTERS, quote = FALSE)
+
+M <- cbind(I=1, matrix(1:10000, nc=10, dimnames=list(NULL, LETTERS[1:10])))
+head(M) # makes more sense than
+print(M, max= 1000)# prints 90 rows and a message about omitting 910
 }
 \keyword{print}

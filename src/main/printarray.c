@@ -30,6 +30,7 @@
 /* <UTF8> char here is handled as a whole,
    but lengths were used as display widths */
 
+#include <stdlib.h> /* for div() */
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -40,6 +41,15 @@
 /* We need display width of a string */
 int Rstrwid(char *str, int slen, int quote);  /* from printutils.c */
 #define strwidth(x) Rstrwid(x, strlen(x), 0)
+
+/* ceil_DIV(a,b) :=  ceil(a / b)  in _int_ arithmetic : */
+static R_INLINE
+int ceil_DIV(int a, int b)
+{
+    div_t div_res = div(a, b);
+    return div_res.quot + ((div_res.rem != 0) ? 1 : 0);
+}
+
 
 /* This is the first (of 6)  print<TYPE>Matrix()  functions.
  * We define macros that will be re-used in the other functions,
@@ -392,14 +402,12 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 /* 'rl' and 'cl' are dimnames(.)[[1]] and dimnames(.)[[2]]  whereas
  * 'rn' and 'cn' are the  names(dimnames(.))
  */
-    int r, c, r_pr;
-
-    r = INTEGER(dim)[0];
-    c = INTEGER(dim)[1];
+    int r = INTEGER(dim)[0];
+    int c = INTEGER(dim)[1], r_pr;
     /* PR#850 */
-    if ((rl != R_NilValue) && (r>length(rl)))
+    if ((rl != R_NilValue) && (r > length(rl)))
 	error(_("too few row labels"));
-    if ((cl != R_NilValue) && (c>length(cl)))
+    if ((cl != R_NilValue) && (c > length(cl)))
 	error(_("too few column labels"));
     if (r == 0 && c == 0) {
 	Rprintf("<0 x 0 matrix>\n");
@@ -407,6 +415,7 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
     }
     r_pr = r;
     if(c > 0 && R_print.max / c < r) /* avoid integer overflow */
+	/* using floor(), not ceil(), since 'c' could be huge: */
 	r_pr = R_print.max / c;
     switch (TYPEOF(x)) {
     case LGLSXP:
@@ -431,8 +440,10 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
     default:
 	UNIMPLEMENTED_TYPE("printMatrix", x);
     }
-    if(r_pr < r)
-	Rprintf(" [[ reached getOption(\"max.print\") -- omitted %d more rows ]]\n",
+    if(r_pr < r) /* FIXME? use _P() and "Defn.h" ? */
+	Rprintf(ngettext(" [ reached getOption(\"max.print\") -- omitted last row ]]\n",
+			 " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n",
+			 r - r_pr),
 		r - r_pr);
 }
 
@@ -453,10 +464,11 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right,
     }
     else { /* ndim >= 3 */
 	SEXP dn, dnn, dn0, dn1;
-	int i, j, has_dimnames, has_dnn, nb;
-	int nr = INTEGER(dim)[0];
+	int i, j, has_dimnames, has_dnn, nb, nb_pr;
+	int nr = INTEGER(dim)[0], nr_last;
 	int nc = INTEGER(dim)[1];
 	int b = nr * nc;
+	Rboolean max_reached;
 
 	if (dimnames == R_NilValue) {
 	    has_dimnames = 0;
@@ -481,11 +493,23 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right,
 	 *       are printed as matrices -- if options("max.print") allows */
 	for (i = 2, nb = 1; i < ndim; i++)
 	    nb *= INTEGER(dim)[i];
-	if(b > 0 && R_print.max / b < nb)
-	    nb = R_print.max / b;
-
-	for (i = 0; i < nb; i++) {
-	    int k = 1;
+	max_reached = (b > 0 && R_print.max / b < nb);
+	if (max_reached) { /* i.e., also  b > 0, nr > 0, nc > 0, nb > 0 */
+	    /* nb_pr := the number of matrix slices to be printed */
+	    nb_pr = ceil_DIV(R_print.max, b);
+	    /* for the last, (nb_pr)th matrix slice, use only nr_last rows;
+	     *  using floor(), not ceil(), since 'nc' could be huge: */
+	    nr_last = (R_print.max - b * (nb_pr - 1)) / nc;
+	    if(nr_last == 0) { nb_pr--; nr_last = nr; }
+	} else {
+	    nb_pr = nb;
+	    nr_last = nr;
+	}
+	for (i = 0; i < nb_pr; i++) {
+	    int k = 1, use_nr = nr;
+	    if (i == nb_pr - 1) { /* for the last slice :*/
+		use_nr = nr_last;
+	    }
 	    Rprintf(", ");
 	    for (j = 2 ; j < ndim; j++) {
 		int l = (i / k) % INTEGER(dim)[j] + 1;
@@ -504,26 +528,33 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right,
 	    Rprintf("\n\n");
 	    switch (TYPEOF(x)) {
 	    case LGLSXP:
-		printLogicalMatrix(x, i * b, nr/*FIXME*/, nr, nc, dn0, dn1, rn, cn);
+		printLogicalMatrix(x, i * b, use_nr, nr, nc, dn0, dn1, rn, cn);
 		break;
 	    case INTSXP:
-		printIntegerMatrix(x, i * b, nr/*FIXME*/, nr, nc, dn0, dn1, rn, cn);
+		printIntegerMatrix(x, i * b, use_nr, nr, nc, dn0, dn1, rn, cn);
 		break;
 	    case REALSXP:
-		printRealMatrix   (x, i * b, nr/*FIXME*/, nr, nc, dn0, dn1, rn, cn);
+		printRealMatrix   (x, i * b, use_nr, nr, nc, dn0, dn1, rn, cn);
 		break;
 	    case CPLXSXP:
-		printComplexMatrix(x, i * b, nr/*FIXME*/, nr, nc, dn0, dn1, rn, cn);
+		printComplexMatrix(x, i * b, use_nr, nr, nc, dn0, dn1, rn, cn);
 		break;
 	    case STRSXP:
 		if (quote) quote = '"';
-		printStringMatrix (x, i * b, nr/*FIXME*/, nr, nc, quote, right, dn0, dn1, rn, cn);
+		printStringMatrix (x, i * b, use_nr, nr, nc,
+				   quote, right, dn0, dn1, rn, cn);
 		break;
 	    case RAWSXP:
-		printRawMatrix    (x, i * b, nr/*FIXME*/, nr, nc, dn0, dn1, rn, cn);
+		printRawMatrix    (x, i * b, use_nr, nr, nc, dn0, dn1, rn, cn);
 		break;
 	    }
 	    Rprintf("\n");
+	}
+
+	if(max_reached && nb_pr < nb) {
+	    Rprintf(" [ reached getOption(\"max.print\") -- omitted");
+	    if(nr_last < nr) Rprintf(" %d row(s) and", nr - nr_last);
+	    Rprintf(" %d matrix slice(s) ]\n", nb - nb_pr);
 	}
     }
 }

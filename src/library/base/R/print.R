@@ -2,12 +2,13 @@ print <- function(x, ...) UseMethod("print")
 
 ##- Need '...' such that it can be called as  NextMethod("print", ...):
 print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
-                          print.gap = NULL, right = FALSE, ...)
+                          print.gap = NULL, right = FALSE, max = NULL, ...)
 {
     noOpt <- missing(digits) && missing(quote) && missing(na.print) &&
-      missing(print.gap) && missing(right) && length(list(...)) == 0
-    .Internal(print.default(x, digits, quote, na.print, print.gap, right,
-                            noOpt))
+	missing(print.gap) && missing(right) && missing(max) &&
+	length(list(...)) == 0
+    .Internal(print.default(x, digits, quote, na.print, print.gap, right, max,
+			    noOpt))
 }
 
 prmatrix <-

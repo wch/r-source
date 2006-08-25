@@ -140,9 +140,9 @@ getOption(x)
     \item{\code{max.print}:}{integer, defaulting to \code{99999}.
       \code{\link{print}} or \code{\link{show}} methods can make use of
       this option, to limit the amount of information that is printed,
-      typically to something in the order \code{max.print}
-      \emph{entries}.  Currently only used for printing matrix-like
-      objects.}
+      to something in the order of (and typically slightly less than)
+      \code{max.print} \emph{entries}.  Currently only used for printing
+      matrix-like objects.}
 
     \item{\code{OutDec}:}{one-character string.  The character to be
       used as the decimal point in output conversions, that is in
