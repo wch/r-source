@@ -28,12 +28,11 @@
   \item{right}{logical, indicating whether or not strings should be
     right aligned.  The default is left alignment.}
   \item{max}{a non-null value for \code{max} specifies the approximate
-    maximum number entries to be printed.  The default, \code{NULL},
-    uses \code{\link{getOption}(max.print)}; use that help page for more
+    maximum number of entries to be printed.  The default, \code{NULL},
+    uses \code{\link{getOption}(max.print)}; see that help page for more
     details.}
-  }
   \item{\dots}{further arguments to be passed to or from other
-    methods.  They are ignored in this function.}
+    methods.  They are ignored in this function.}  
 }
 \details{
   The default for printing \code{NA}s is to print \code{NA} (without
