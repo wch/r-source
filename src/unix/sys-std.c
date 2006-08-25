@@ -516,7 +516,7 @@ static void popReadline()
 
 static void readline_handler(char *line)
 {
-    int l = strlen(line), buflen = rl_top->readline_len;
+    int l, buflen = rl_top->readline_len;
 
     popReadline();
 
@@ -532,6 +532,7 @@ static void readline_handler(char *line)
 	   the caller.
 	*/
 	strncpy((char *)rl_top->readline_buf, line, buflen);
+	l = strlen(line);
 	if(l < buflen - 1) {
 	    rl_top->readline_buf[l] = '\n';
 	    rl_top->readline_buf[l+1] = '\0';
