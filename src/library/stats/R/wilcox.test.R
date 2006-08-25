@@ -83,7 +83,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                ql <- n*(n+1)/2 - qu
                                uci <- diffs[qu]
                                lci <- diffs[ql+1]
-                               achieved.alpha<-2*psignrank(trunc(qu),n)
+                               achieved.alpha<-2*psignrank(trunc(qu)-1,n)
                                if (achieved.alpha-alpha > (alpha)/2){
                                  warning("Requested conf.level not achievable")
                                  conf.level<-1-signif(achieved.alpha,2)
@@ -94,7 +94,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                qu <- qsignrank(alpha, n)
                                if(qu == 0) qu <- 1
                                uci <- diffs[qu]
-                               achieved.alpha<-psignrank(trunc(qu),n)
+                               achieved.alpha<-psignrank(trunc(qu)-1,n)
                                if (achieved.alpha-alpha > (alpha)/2){
                                  warning("Requested conf.level not achievable")
                                  conf.level<-1-signif(achieved.alpha,2)
@@ -106,7 +106,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                if(qu == 0) qu <- 1
                                ql <- n*(n+1)/2 - qu
                                lci <- diffs[ql+1]
-                               achieved.alpha<-psignrank(trunc(qu),n)
+                               achieved.alpha<-psignrank(trunc(qu)-1,n)
                                if (achieved.alpha-alpha > (alpha)/2){
                                  warning("Requested conf.level not achievable")
                                  conf.level<-1-signif(achieved.alpha,2)
@@ -290,7 +290,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                ql <- n.x*n.y - qu
                                uci <- diffs[qu]
                                lci <- diffs[ql + 1]
-                               achieved.alpha<-2*pwilcox(trunc(qu),n.x,n.y)
+                               achieved.alpha<-2*pwilcox(trunc(qu)-1,n.x,n.y)
                                if (achieved.alpha-alpha > alpha/2){
                                  warning("Requested conf.level not achievable")
                                  conf.level<-1-achieved.alpha
@@ -301,7 +301,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                qu <- qwilcox(alpha, n.x, n.y)
                                if(qu == 0) qu <- 1
                                uci <- diffs[qu]
-                               achieved.alpha<-2*pwilcox(trunc(qu),n.x,n.y)
+                               achieved.alpha<-2*pwilcox(trunc(qu)-1,n.x,n.y)
                                if (achieved.alpha-alpha > alpha/2){
                                  warning("Requested conf.level not achievable")
                                  conf.level<-1-achieved.alpha
@@ -313,7 +313,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                if(qu == 0 ) qu <- 1
                                ql <- n.x*n.y - qu
                                lci <- diffs[ql + 1]
-                               achieved.alpha<-2*pwilcox(trunc(qu),n.x,n.y)
+                               achieved.alpha<-2*pwilcox(trunc(qu)-1,n.x,n.y)
                                if (achieved.alpha-alpha > alpha/2){
                                  warning("Requested conf.level not achievable")
                                  conf.level<-1-achieved.alpha

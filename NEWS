@@ -637,6 +637,8 @@ BUG FIXES
 
     o	Command-line arguments after --encoding were ignored.
 
+    o   The check for impossible confidence levels was off by one in
+        wilcox.test (PR#8557)
 
 
 
