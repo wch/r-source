@@ -1318,9 +1318,12 @@ static void consoleunputc(control c)
 {
     ConsoleData p = getdata(c);
 
-    p->numkeys += 1;
-    if (p->firstkey > 0) p->firstkey -= 1;
-    else p->firstkey = NKEYS - 1 ;
+    if(p->clp) p->pclp--;
+    else {
+	p->numkeys += 1;
+	if (p->firstkey > 0) p->firstkey -= 1;
+	else p->firstkey = NKEYS - 1;
+    }
 }
 
 /* This scrolls as far left as possible */
@@ -1417,7 +1420,8 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
 	    USER(NUMLINES - 1) = prompt_wid;
 	    p->needredraw = 1;
 	}
-        if(chtype && (max_byte < len - 2)) { /* not a control char */
+        if(chtype && (max_byte <= len - 2 - MB_CUR_MAX)) { 
+	    /* not a control char: we need to fit in the char\n\0 */
 	    int i;
 	    if(mbcslocale) {
 		char s[9];
@@ -1532,8 +1536,8 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
 		    cur_byte += r_len - l_len;
 		}
 		break;
-	    default:   /* An unknown control char */
-		if (chtype || (cur_char=='\n') || (cur_char==EOFKEY)) {
+	    default:   /* Another control char, or overflow */
+		if (chtype || (cur_char == '\n') || (cur_char == EOFKEY)) {
 		    if (chtype) {
 			if (cur_byte == max_byte) {
 			    consoleunputc(c);
@@ -1542,13 +1546,17 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
 			    break;
 			}
 		    }
-		    cur_line[max_byte] = '\n';
-		    cur_line[max_byte + 1] = '\0';
-		    /* just to be safe: we have not allowed max_byte > len-2 */
+		    if((cur_char == '\n') || (cur_char == EOFKEY)) {
+			cur_line[max_byte] = '\n';
+			cur_line[max_byte + 1] = '\0';
+		    } else {
+			cur_line[max_byte] = '\0';
+		    }
+		    /* just to be safe */
 		    strncpy(buf, cur_line, len);
 		    p->r = -1;
 		    cur_line[max_byte] = '\0';
-		    if (max_byte && addtohistory)  gl_histadd(cur_line);
+		    if (max_byte && addtohistory) gl_histadd(cur_line);
 		    xbuffixl(p->lbuf);
 		    consolewrites(c, "\n");
 		    REDRAW;
