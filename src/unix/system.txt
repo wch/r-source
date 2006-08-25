@@ -27,11 +27,12 @@
  *    int   R_ReadConsole(char *prompt, char *buf, int buflen, int hist)
  *
  *  This function prints the given prompt at the console and then
- *  does a gets(3)-like operation, transferring up to "buflen" characters
- *  into the buffer "buf".  The last two characters are set to "\n\0"
- *  to preserve sanity.	 If "hist" is non-zero, then the line is added
- *  to any command history which is being maintained.  Note that this
- *  is one natural place from which to run an event loop.
+ *  does an fgets(3)-like operation, transferring up to "buflen" bytes
+ *  into the buffer "buf".  This should be zero-terminated, and end
+ *  with "\n\0" if there is no more input available (but not if the 
+ *  input line exceeds "buflen" bytes).  If "hist" is non-zero, then
+ *  the line is added to any command history which is being maintained.
+ *  Note that this is one natural place from which to run an event loop.
  *
  *    void  R_WriteConsole(char *buf, int buflen)
  *

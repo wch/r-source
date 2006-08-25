@@ -279,15 +279,15 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
     /* translate if necessary */
     if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
 	size_t res, inb = strlen(buf), onb = len;
-	char obuf[CONSOLE_BUFFER_SIZE+1];
-	char *ib = buf, *ob = obuf;
+	char *ib = buf, *ob, *obuf;
+	ob = obuf = alloca(len+1);
 	if(!cd) {
 	    cd = Riconv_open("", R_StdinEnc);
 	    if(!cd) error(_("encoding '%s' is not recognised"), R_StdinEnc);
 	}
 	res = Riconv(cd, &ib, &inb, &ob, &onb);
 	*ob = '\0';
-	err = res == (size_t)(-1);
+	err = (res == (size_t)(-1));
 	/* errors lead to part of the input line being ignored */
 	if(err) fputs(_("<ERROR: invalid input in encoding>\n"), stdout);
 	strncpy((char *)buf, obuf, len);

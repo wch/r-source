@@ -344,6 +344,9 @@ NEW FEATURES
     o	The subset and subassign methods for factors now handle factor
 	matrices, and dim() can be set on a factor.
 
+    o	The (somewhat soft) 1023/4 byte limit on command lines is now
+	documented in 'An Introduction to R'.
+
 
 DEPRECATED & DEFUNCT
 
@@ -624,7 +627,10 @@ BUG FIXES
 
     o	[rc]bind() now find registered methods and not just visible ones.
 
-    o	Printing a factor no longer ignores names and dim/dimnames.
+    o	Printing a factor no longer ignores attributes such as names and
+	dim/dimnames.
+
+    o	Command-line arguments after --encoding were ignored.
 
 
 

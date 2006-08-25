@@ -475,8 +475,10 @@ command is syntactically complete.  This prompt may be changed by the
 user.  We will generally omit the continuation prompt
 and indicate continuation by simple indenting.
 
-Command lines entered at the console are limited to 1024 bytes (not
-characters): many of the consoles will not allow you to enter more.
+Command lines entered at the console are limited@footnote{some of the
+consoles will not allow you to enter more, and amongst those which do
+some will silently discard the excess and some will use it as the start
+of the next line.} to about 1024 bytes (not characters).
 
 @node Recall and correction of previous commands, Executing commands from or diverting output to a file, R commands; case sensitivity etc, Introduction and preliminaries
 @section Recall and correction of previous commands
@@ -6956,11 +6958,9 @@ skipped: this can be useful to retrieve values from it with
 @end table
 
 Note that input and output can be redirected in the usual way (using
-@samp{<} and @samp{>}), but the line width limit of 1024 bytes still
-applies@footnote{although longer lines may work, there is no guarantee
-since they will be read in chunks of 1024 bytes.}.  Warning and error
-messages are sent to the error channel (@code{stderr}) except on Windows
-9X/ME.
+@samp{<} and @samp{>}), but the line length limit of 1024 bytes still
+applies.  Warning and error messages are sent to the error channel
+(@code{stderr}) except on Windows 9X/ME.
 
 The command @code{R CMD} allows the invocation of various tools which
 are useful in conjunction with @R{}, but not intended to be called
