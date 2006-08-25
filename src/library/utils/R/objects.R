@@ -358,3 +358,14 @@ print.getAnywhere <- function(x, ...)
     if(length(i) == 1) x$objs[[i]]
     else x$objs[i]
 }
+
+argsAnywhere <- function(x) {
+        name<-as.character(substitute(x))
+        fs<-do.call(getAnywhere, list(name))
+        if (sum(!fs$dups)==0)
+            return(NULL)
+        if (sum(!fs$dups)>1)
+            sapply(fs$objs[!fs$dups],
+                   function(f) if (is.function(f)) args(f))
+        else args(fs$objs[[1]])
+}

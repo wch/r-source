@@ -350,6 +350,8 @@ NEW FEATURES
 	entries.  print(x, ..., max = N) does the same the for default
 	method and those building on print.default().
 
+    o   argsAnywhere() works like args() on non-exported functions.
+
 
 DEPRECATED & DEFUNCT
 
