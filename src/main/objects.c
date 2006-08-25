@@ -107,8 +107,10 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
 		    PRIMNAME(op), save, R_PPStackTop);
 	}
     }
-    /* Is it actually possible to have a .Internal as a method?
-       How would it be found (they are not visible by name)?
+    /* In other places we add a context to builtins when profiling,
+       but we have not bothered here (as there seem to be no primitives 
+       used as methods, and this would have to be a primitive to be
+       found).
      */
     else if (TYPEOF(op) == BUILTINSXP) {
 	int save = R_PPStackTop;
