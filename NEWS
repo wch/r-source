@@ -355,6 +355,11 @@ NEW FEATURES
     o	The maximum number of open connections has been increased from
 	50 to 128.
 
+    o   rep() is now a primitive function and under some conditions
+	very much faster: rep.int() still a little faster (but does
+	less). (Because it is primitive there are minor changes to the
+	call semantics: see the help page.)
+
 
 DEPRECATED & DEFUNCT
 

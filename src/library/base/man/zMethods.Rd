@@ -54,6 +54,7 @@
   \code{\link{is.recursive}},
   \code{\link{is.single}},
   \code{\link{is.symbol}}.
+  \code{\link{rep}}.
 }
 \seealso{
   \code{\link{methods}} for the methods of non-Internal generic functions.

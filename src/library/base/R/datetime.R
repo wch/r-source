@@ -730,16 +730,15 @@ as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE, ...)
 
 # ---- additions in 1.8.0 -----
 
-rep.POSIXct <- function(x, times,  ...)
+rep.POSIXct <- function(x, ...)
 {
     y <- NextMethod()
     structure(y, class=c("POSIXt", "POSIXct"), tzone = attr(x, "tzone"))
 }
 
-rep.POSIXlt <- function(x, times, ...)
+rep.POSIXlt <- function(x, ...)
 {
-    y <- if(missing(times)) lapply(x, rep, ...)
-       else lapply(x, rep, times=times, ...)
+    y <- lapply(x, rep, ...)
     attributes(y) <- attributes(x)
     y
 }

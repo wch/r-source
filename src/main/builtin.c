@@ -631,6 +631,8 @@ SEXP lengthgets(SEXP x, R_len_t len)
 	names = allocVector(STRSXP, len);
     else names = R_NilValue;	/*- just for -Wall --- should we do this ? */
     switch (TYPEOF(x)) {
+    case NILSXP:
+	break;
     case LGLSXP:
     case INTSXP:
 	for (i = 0; i < len; i++)

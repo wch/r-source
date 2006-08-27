@@ -342,7 +342,7 @@ round.Date <- function(x, ...)
 ## must avoid truncating dates prior to 1970-01-01 forwards.
 trunc.Date <- function(x) round(x - 0.4999999)
 
-rep.Date <- function(x, times, ...)
+rep.Date <- function(x, ...)
 {
     y <- NextMethod()
     structure(y, class="Date")

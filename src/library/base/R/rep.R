@@ -1,3 +1,4 @@
+if(FALSE) {
 rep <- function(x, times, ...) UseMethod("rep")
 
 rep.default <- function(x, times, length.out, each, ...)
@@ -19,5 +20,12 @@ rep.default <- function(x, times, length.out, each, ...)
 	return(r[if(length.out > 0) 1:length.out else integer(0)])
     return(r)
 }
+}
 
 rep.int <- function(x, times) .Internal(rep.int(x, times))
+
+rep.factor <- function(x, ...)
+{
+    y <- NextMethod()
+    structure(y, class=class(x), levels=levels(x))
+}

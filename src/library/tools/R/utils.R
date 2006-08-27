@@ -266,7 +266,7 @@ function()
       "is.complex", "is.double", "is.environment", "is.function",
       "is.integer", "is.language", "is.logical", "is.list", "is.matrix",
       "is.na", "is.nan", "is.null", "is.numeric", "is.object",
-      "is.pairlist", "is.recursive", "is.single", "is.symbol",
+      "is.pairlist", "is.recursive", "is.single", "is.symbol","rep",
       ## and also the members of the group generics from groupGeneric.Rd
       "abs", "sign", "sqrt", "floor", "ceiling", "trunc", "round", "signif",
       "exp", "log", "cos", "sin", "tan", "acos", "asin", "atan",

@@ -9,14 +9,12 @@
   the generic \code{rep} function.
 }
 \usage{
-unit.rep(x, times, length.out)
+unit.rep(x, \dots)
 }
 \arguments{
   \item{x}{ An object of class \code{"unit"}. }
-  \item{times}{integer.  A vector giving the number of times to repeat
-    each element.  Either of length 1 or \code{length(x)}. }
-  \item{length.out}{integer.  (Optional.)  The desired length of the
-    output vector.}
+  \item{\dots}{arguments to be passed to \code{\link{rep}} such as
+    \code{times} and \code{length.out}.}
 }
 \value{
   An object of class \code{"unit"}.

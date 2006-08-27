@@ -131,20 +131,18 @@ SEXP attribute_hidden do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
     return seq_colon(call, CAR(args), CADR(args));
 }
 
-/* It is assumed that type-checking has been done in rep */
 static SEXP rep2(SEXP s, SEXP ncopy)
 {
     int i, na, nc, n, j;
     SEXP a, t, u;
 
-    t = coerceVector(ncopy, INTSXP);
-    PROTECT(t);
+    PROTECT(t = coerceVector(ncopy, INTSXP));
 
     nc = length(ncopy);
     na = 0;
     for (i = 0; i < nc; i++) {
 	if (INTEGER(t)[i] == NA_INTEGER || INTEGER(t)[i]<0)
-	    error(_("invalid number of copies in rep()"));
+	    error(_("invalid number of copies in rep.int()"));
 	na += INTEGER(t)[i];
     }
 
@@ -236,10 +234,10 @@ static SEXP rep1(SEXP s, SEXP ncopy)
 	return rep2(s, ncopy);
 
     if ((length(ncopy) != 1))
-	error(_("invalid number of copies in rep()"));
+	error(_("invalid number of copies in rep.int()"));
 
     if ((nc = asInteger(ncopy)) == NA_INTEGER || nc < 0)/* nc = 0 ok */
-	error(_("invalid number of copies in rep()"));
+	error(_("invalid number of copies in rep.int()"));
 
     ns = length(s);
     na = nc * ns;
@@ -310,4 +308,85 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return rep1(CAR(args), CADR(args));
+}
+
+SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, x, ap, times = R_NilValue /* -Wall */, ind;
+    int i, lx, len = NA_INTEGER, each = 1, nt, nprotect = 3;
+
+    if (DispatchOrEval(call, op, "rep", args, rho, &ans, 0, 0)) return(ans);
+
+    /* This is a primitive, and we have not dispatched to a default method
+       so we manage the argument matching ourselves.  We pretend this is
+       rep(x, times, length.out, each, ...)
+    */
+    PROTECT(ap = CONS(R_NilValue, 
+		      list4(R_NilValue, R_NilValue, R_NilValue, R_NilValue)));
+    SET_TAG(ap,  install("x"));
+    SET_TAG(CDR(ap), install("times"));
+    SET_TAG(CDDR(ap), install("length.out"));
+    SET_TAG(CDR(CDDR(ap)), install("each"));
+    SET_TAG(CDDR(CDDR(ap)), R_DotsSymbol);
+    PROTECT(args = matchArgs(ap, args));
+
+    x = CAR(args); 
+    lx = length(x);
+
+    len = asInteger(CADDR(args));
+    if(len != NA_INTEGER && len < 0) 
+	errorcall(call, _("invalid '%s' argument"), "length.out");
+
+    each = asInteger(CADDDR(args));
+    if(each != NA_INTEGER && each < 0) 
+	errorcall(call, _("invalid '%s' argument"), "each");
+    if(each == NA_INTEGER) each = 1;
+
+    if(lx == 0) {
+	UNPROTECT(2);
+	if(len == NA_INTEGER) return x;
+	else return lengthgets(duplicate(x), len);
+    }
+
+    if(len != NA_INTEGER) { /* takes precedence over times */
+	nt = 1;
+    } else {
+	int it, sum = 0;
+	if(CADR(args) == R_MissingArg) PROTECT(times = ScalarInteger(1));
+	else PROTECT(times = coerceVector(CADR(args), INTSXP));
+	nprotect++;
+	nt = LENGTH(times);
+	if(nt != 1 && nt != lx * each)
+	    errorcall(call, _("invalid '%s' argument"), "times");
+	if(nt == 1) 
+	    sum = lx * INTEGER(times)[0];
+	else {
+	    for(i = 0; i < nt; i++) {
+		it = INTEGER(times)[i];
+		if (it == NA_INTEGER || it < 0)
+		    errorcall(call, _("invalid '%s' argument"), "times2");
+		sum += it;
+	    }
+	}
+	len = sum * each;
+    }
+    PROTECT(ind = allocVector(INTSXP, len));
+    if(nt == 1)
+	for(i = 0; i < len; i++) INTEGER(ind)[i] = 1 + ((i/each) % lx);
+    else {
+	int j, k, k2, k3;
+	for(i = 0, k = 0, k2 = 0; i < lx; i++) {
+	    int sum = 0;
+	    for(j = 0; j < each; j++) sum += INTEGER(times)[k++];
+	    for(k3 = 0; k3 < sum; k3++) {
+		INTEGER(ind)[k2++] = i+1;
+		if(k2 == len) goto done;
+	    }
+	}
+    }
+
+done:
+    ans = do_subset_dflt(R_NilValue, R_NilValue, list2(x, ind), rho);
+    UNPROTECT(nprotect);
+    return ans;
 }

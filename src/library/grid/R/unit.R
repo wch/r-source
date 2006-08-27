@@ -119,7 +119,7 @@ grobUnit <- function(unit) {
 dataUnit <- function(unit) {
     stringUnit(unit) | grobUnit(unit)
 }
-    
+
 recycle.data <- function(data, data.per, max.n, units) {
     # FIRST STEP:  check that data needs to be recycled
     if (any(dataUnit(units))) {
@@ -160,7 +160,7 @@ valid.data <- function(units, data) {
                 stop("No string supplied for 'strwidth/height' unit")
     # Make sure that a grob has been specified
     grob.units <- grobUnit(units)
-    if (any(grob.units)) 
+    if (any(grob.units))
         for (i in (1:n)[grob.units]) {
             if (!(length(data) >= i &&
                   (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
@@ -469,7 +469,7 @@ unit.list.from.list <- function(x) {
 # rep'ing unit objects
 #########################
 
-rep.unit.arithmetic <- function(x, times, length.out, ...) {
+rep.unit.arithmetic <- function(x, times=1, length.out, ...) {
     if (length(x) == 0)
         return(x)
     if (!missing(length.out))
@@ -484,24 +484,21 @@ rep.unit.arithmetic <- function(x, times, length.out, ...) {
            "sum"=rep(unit.list(x), times))
 }
 
-rep.unit.list <- function(x, times, length.out, ...) {
+rep.unit.list <- function(x, times=1, length.out, ...) {
     if (length(x) == 0)
         return(x)
     if (!missing(length.out))
         times <- ceiling(length.out/length(x))
-    
+
     # Make use of the subsetting code to replicate the unit list
     # top=FALSE allows the subsetting to go beyond the original length
     "["(x, 1:(length(x)*times), top=FALSE)
 }
 
-rep.unit <- function(x, times, length.out, ...) {
+rep.unit <- function(x, ...) {
     if (length(x) == 0)
         return(x)
-    if (missing(times))
-        times <- ceiling(length.out/length(x))
-    
-    values <- rep(unclass(x), times, length.out, ...)
+    values <- rep(unclass(x), ...)
     # Do I need to replicate the "unit"s?
     units <- attr(x, "unit")
     # If there are any data then they must be explicitly replicated
@@ -509,14 +506,14 @@ rep.unit <- function(x, times, length.out, ...) {
     # vector of values
     data <- recycle.data(attr(x, "data"), TRUE, length(values), units)
     unit <- unit(values, units, data=data)
-    unit    
+    unit
 }
 
 # Vestige from when rep() was not generic
-unit.rep <- function (x, times, length.out)
+unit.rep <- function (x, ...)
 {
   warning("unit.rep has been deprecated in favour of a unit method for the generic rep function")
-  rep(x, times, length.out) 
+  rep(x, ...)
 }
 
 #########################

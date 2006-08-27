@@ -38,7 +38,10 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
   The arguments named in the \code{vectorize.args} argument to
   \code{Vectorize} correspond to the arguments passed in the \code{...}
   list to \code{mapply}.  However, only those that are actually passed
-  will be vectorized; default values will not. See the example below.
+  will be vectorized; default values will not.  See the example below.
+
+  \code{Vectorize} cannot be used with primitive functions as they have
+  no formal list.
 }
 \seealso{
   \code{\link{sapply}},
@@ -51,12 +54,12 @@ mapply(rep, times=1:4, x=4:1)
 
 mapply(rep, times=1:4, MoreArgs=list(x=42))
 
-# Repeat the same using Vectorize
-vrep <- Vectorize(rep)
+# Repeat the same using Vectorize: use rep.int as rep is primitive
+vrep <- Vectorize(rep.int)
 vrep(1:4, 4:1)
 vrep(times=1:4, x=4:1)
 
-vrep <- Vectorize(rep, "times")
+vrep <- Vectorize(rep.int, "times")
 vrep(times=1:4, x=42)
 
 f <- function(x=1:3, y) c(x,y)
