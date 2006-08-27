@@ -352,6 +352,9 @@ NEW FEATURES
 
     o   argsAnywhere() works like args() on non-exported functions.
 
+    o	The maximum number of open connections has been increased from
+	50 to 128.
+
 
 DEPRECATED & DEFUNCT
 

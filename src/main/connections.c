@@ -62,7 +62,7 @@ typedef long long int _lli_t;
   extern UImode  CharacterMode;
 #endif
 
-#define NCONNECTIONS 50
+#define NCONNECTIONS 128 /* snow needs one per slave node */
 #define NSINKS 21
 
 static Rconnection Connections[NCONNECTIONS];
