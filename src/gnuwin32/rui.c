@@ -161,8 +161,6 @@ static void menusaveimage(control m)
 /*    show(RConsole); */
     if (fn) {
 	double_backslashes(fn, s);
-	/* need to remove any trailing '.*' that gets added if 
-	   there is no extension */
 	if (!strcmp(&s[strlen(s) - 2], ".*")) s[strlen(s) - 2] = '\0';
 	snprintf(cmd, 1024, "save.image(\"%s\")", s);
 	consolecmd(RConsole, cmd);
@@ -185,9 +183,6 @@ static void menusavehistory(control m)
     setuserfilter("All files (*.*)\0*.*\0\0");
     s = askfilesave(G_("Save history in"), R_HistoryFile);
     if (s) {
-	/* need to remove any trailing '.*' that gets added if 
-	   there is no extension */
-	if (!strcmp(&s[strlen(s) - 2], ".*")) s[strlen(s) - 2] = '\0';
 	R_setupHistory(); /* re-read the history size */
 	gl_savehistory(s, R_HistorySize);
     }

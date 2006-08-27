@@ -212,24 +212,24 @@ char *askfilenamewithdir(char *title, char *default_name, char *dir)
 }
 
 char *askfilenames(char *title, char *default_name, int multi,
-			       char *filters, int filterindex, char *strbuf, int bufsize,
-			       char *dir)
+		   char *filters, int filterindex,
+		   char *strbuf, int bufsize,
+		   char *dir)
 {
 	int i;
 	OPENFILENAME ofn;
-        char cwd[MAX_PATH]="";
-	if (! default_name)
-		default_name = "";
+        char cwd[MAX_PATH] = "";
+
+	if (!default_name) default_name = "";
 	strcpy(strbuf, default_name);
-        GetCurrentDirectory(MAX_PATH,cwd);
-        if (!strcmp(cod,"")) {
-            if (!dir) strcpy(cod,cwd);
-            else strcpy(cod,dir);
+        GetCurrentDirectory(MAX_PATH, cwd);
+        if (!strcmp(cod, "")) {
+            if (!dir) strcpy(cod, cwd);
+            else strcpy(cod, dir);
         }
 
 	ofn.lStructSize     = sizeof(OPENFILENAME);
-	ofn.hwndOwner       = current_window ?
-				current_window->handle : 0;
+	ofn.hwndOwner       = current_window ? current_window->handle : 0;
 	ofn.hInstance       = 0;
 	ofn.lpstrFilter     = filters;
 	ofn.lpstrCustomFilter = NULL;
@@ -251,16 +251,15 @@ char *askfilenames(char *title, char *default_name, int multi,
 	ofn.lpTemplateName  = NULL;
 
 	if (GetOpenFileName(&ofn) == 0) {
-		GetCurrentDirectory(MAX_PATH,cod);
+		GetCurrentDirectory(MAX_PATH, cod);
 		SetCurrentDirectory(cwd);
 		strbuf[0] = 0;
 		strbuf[1] = 0;
 		return strbuf;
 	} else {
-		GetCurrentDirectory(MAX_PATH,cod);
+		GetCurrentDirectory(MAX_PATH, cod);
 		SetCurrentDirectory(cwd);
-		for (i=0; i<10; i++)
-			if (peekevent()) doevent();
+		for (i = 0; i <  10; i++) if (peekevent()) doevent();
 		return strbuf;
 	}
 }
@@ -283,15 +282,13 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
 {
 	int i;
 	OPENFILENAME ofn;
-        char cwd[MAX_PATH];
+        char *p, cwd[MAX_PATH];
 
-	if (! default_name)
-		default_name = "";
+	if (!default_name) default_name = "";
 	strcpy(strbuf, default_name);
 
 	ofn.lStructSize     = sizeof(OPENFILENAME);
-	ofn.hwndOwner       = current_window ?
-				current_window->handle : 0;
+	ofn.hwndOwner       = current_window ? current_window->handle : 0;
 	ofn.hInstance       = 0;
         ofn.lpstrFilter     = userfilter?userfilter:filter[0];
 	ofn.lpstrCustomFilter = NULL;
@@ -301,10 +298,12 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
 	ofn.nMaxFile        = BUFSIZE;
 	ofn.lpstrFileTitle  = NULL;
 	ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
-	if(dir && strlen(dir) > 0)
-	    ofn.lpstrInitialDir = dir;
-	else {
-	    if (GetCurrentDirectory(MAX_PATH,cwd))
+	if(dir && strlen(dir) > 0) {
+	    strcpy(cwd, dir);
+	    for(p = cwd; *p; p++) if(*p == '/') *p = '\\';
+	    ofn.lpstrInitialDir = cwd;
+	} else {
+	    if (GetCurrentDirectory(MAX_PATH, cwd))
 		ofn.lpstrInitialDir = cwd;
 	    else
 		ofn.lpstrInitialDir = NULL;
@@ -314,17 +313,16 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
                               OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.nFileOffset     = 0;
 	ofn.nFileExtension  = 0;
-	ofn.lpstrDefExt     = "*";
+	ofn.lpstrDefExt     = NULL /* "*" */;
 	ofn.lCustData       = 0L;
 	ofn.lpfnHook        = NULL;
 	ofn.lpTemplateName  = NULL;
 
 	if (GetSaveFileName(&ofn) == 0)
-		return NULL;
+	    return NULL;
 	else {
-		for (i=0; i<10; i++)
-			if (peekevent()) doevent();
-		return strbuf;
+	    for (i = 0; i < 10; i++) if (peekevent()) doevent();
+	    return strbuf;
 	}
 }
 

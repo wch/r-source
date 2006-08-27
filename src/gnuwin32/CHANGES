@@ -109,8 +109,12 @@ SHLIB/INSTALL via OBJS in Makevars.win.
 There is a new option to make a .msi Microsoft Installer, intended for
 use by sysadmins doing automated installs.  See the 'R Installation
 and Administration Manual'.  (Thanks to David del Campo (Dept of
-Statistics, University of Oxford) for suggesting this and building a
+Statistics, University of Oxford) for suggesting WiX and building a
 prototype installer.)
+
+It was intended that saving the GUI preferences would default to the
+home directory, but Windows only accepted paths with \ separators at
+that point, ignoring others with no error message.
 
 
 
