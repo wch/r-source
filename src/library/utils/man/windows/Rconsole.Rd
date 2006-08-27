@@ -52,7 +52,7 @@
 
   If the environment variable \env{R\_USER} is not set, the \R system
   sets it to \env{HOME} if that is set (stripping any trailing slash),
-  otherwise to the Windows ``persona''  directory, 
+  otherwise to the Windows \dQuote{personal}  directory, 
   otherwise to \code{{HOMEDRIVE}{HOMEPATH}} if \code{HOMEDRIVE} and
   \code{HOMEDRIVE} are both set
   otherwise to the working directory.  This is as described in the file
@@ -67,10 +67,12 @@
 }
 \note{
   The \code{GUI preferences} item on the \code{Edit} menu brings up an
-  form which can be used to edit the console settings, and to save them
+  dialog box which can be used to edit the console settings, and to save them
   to a file.
 }
-\author{Guido Masarotto}
+\author{
+  Guido Masarotto and R-core members
+}
 \seealso{\code{\link{windows}}}
 \examples{
 ruser <- Sys.getenv("R_USER")

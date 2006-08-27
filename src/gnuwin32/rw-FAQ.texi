@@ -1056,7 +1056,7 @@ the @file{RHOME\etc} directory called @file{Rconsole} and @file{Rdevga};
 you can keep personal copies in your @file{HOME} directory.  They contain
 comments which should suffice for you to edit them to your
 preferences.  For more details see @code{?Rconsole}.
-There is a Preferences editor invoked from the @code{Edit} menu which
+There is a GUI preferences editor invoked from the @code{Edit} menu which
 can be used to edit the file @file{Rconsole}.
 
 
