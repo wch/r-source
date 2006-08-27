@@ -244,7 +244,7 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
 {
 	int i;
 	OPENFILENAME ofn;
-        char cwd[MAX_PATH];
+        char *p, cwd[MAX_PATH];
 
 	if (! default_name)
 		default_name = "";
@@ -262,10 +262,12 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
 	ofn.nMaxFile        = BUFSIZE;
 	ofn.lpstrFileTitle  = NULL;
 	ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
-	if(dir && strlen(dir) > 0)
-	    ofn.lpstrInitialDir = dir;
-	else {
-	    if (GetCurrentDirectory(MAX_PATH,cwd))
+	if(dir && strlen(dir) > 0) {
+	    strcpy(cwd, dir);
+	    for(p = cwd; *p; p++) if(*p == '/') *p = '\\';
+	    ofn.lpstrInitialDir = cwd;
+	} else {
+	    if (GetCurrentDirectory(MAX_PATH, cwd))
 		ofn.lpstrInitialDir = cwd;
 	    else
 		ofn.lpstrInitialDir = NULL;
