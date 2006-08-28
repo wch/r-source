@@ -34,7 +34,7 @@ tail(x, \dots)
 \method{tail}{default}(x, n = 6, \dots)
 \method{tail}{data.frame}(x, n = 6, \dots)
 \method{tail}{matrix}(x, n = 6, addrownums = TRUE, \dots)
-\method{tail}{ftable}(x, n = 6, addrownums = TRUE, \dots)
+\method{tail}{ftable}(x, n = 6, addrownums = FALSE, \dots)
 \method{tail}{table}(x, n = 6, addrownums = TRUE, \dots)
 \method{tail}{function}(x, n = 6, \dots)
 }
