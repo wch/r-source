@@ -648,6 +648,8 @@ BUG FIXES
     o   The check for impossible confidence levels was off by one in
         wilcox.test (PR#8557)
 
+    o   [[ on an environment could create aliases (PR#8457)
+
 
 
 

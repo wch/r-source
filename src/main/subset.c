@@ -754,11 +754,13 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("wrong arguments for subsetting an environment"));
       ans = findVarInFrame(x, install(CHAR(STRING_ELT(CAR(subs),
 						      0))));
-        if( TYPEOF(ans) == PROMSXP ) {
+      if( TYPEOF(ans) == PROMSXP ) {
 	    PROTECT(ans);
 	    ans = eval(ans, R_GlobalEnv);
 	    UNPROTECT(1);
-      	}   	
+      } else {
+	    SET_NAMED(ans, 2);
+      }
       
       UNPROTECT(1);
       if(ans == R_UnboundValue )
