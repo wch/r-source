@@ -651,7 +651,13 @@ BUG FIXES
     o   The check for impossible confidence levels was off by one in
         wilcox.test (PR#8557)
 
-    o   [[ on an environment could create aliases (PR#8457)
+    o	[[ on an environment could create aliases. (PR#8457)
+
+    o	pt() with a very small non-centrality parameter could give an
+	unduly stringent warning about 'full precision was not
+	achieved'.  (PR#9171)
+
+    o	writeChar() could segfault if 'nchars' was given silly values.
 
 
 

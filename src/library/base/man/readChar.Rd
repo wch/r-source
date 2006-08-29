@@ -15,8 +15,9 @@ writeChar(object, con,
 \arguments{
   \item{con}{A connection object or a character string naming a file.}
   \item{nchars}{integer, giving the lengths in characters of (unterminated)
-    character strings to be read or written.}
-  \item{object}{A character vector to be written to the connection.}
+    character strings to be read or written. Must be >= 0 and not missing.}
+  \item{object}{A character vector to be written to the connection, at
+    least as long as \code{nchars}.}
   \item{eos}{\sQuote{end of string}: character string .  The terminator
     to be written after each string, followed by an ASCII \code{nul};
     use \code{NULL} for no terminator at all.}
