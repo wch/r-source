@@ -212,7 +212,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     if (missing(by)) {
         from <- unclass(as.Date(from))
         to <- unclass(as.Date(to))
-        res <- seq.default(from, to, length.out = length.out)
+        res <- seq(from, to, length.out = length.out)
         return(structure(res, class = "Date"))
     }
 
@@ -239,11 +239,11 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     if(valid <= 2) {
         from <- unclass(as.Date(from))
         if(!is.null(length.out))
-            res <- seq.default(from, by=by, length.out=length.out)
+            res <- seq(from, by=by, length.out=length.out)
         else {
             to <- unclass(as.Date(to))
             ## defeat test in seq.default
-            res <- seq.default(0, to - from, by) + from
+            res <- seq(0, to - from, by) + from
         }
         return(structure(res, class="Date"))
     } else {  # months or years or DSTdays

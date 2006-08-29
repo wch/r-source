@@ -43,8 +43,7 @@ seq.default <-
 	integer(0)
     else if (One) 1:length.out
     else if(missing(by)) {
-	if(from == to || length.out < 2)
-	    by <- 1
+	# if(from == to || length.out < 2) by <- 1
 	if(missing(to))
 	    to <- from + length.out - 1
 	if(missing(from))

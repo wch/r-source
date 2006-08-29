@@ -529,7 +529,7 @@ seq.POSIXt <-
         ## Till (and incl.) 1.6.0 :
         ##- incr <- (to - from)/length.out
         ##- res <- seq.default(from, to, incr)
-        res <- seq.default(from, to, length.out = length.out)
+        res <- seq(from, to, length.out = length.out)
         return(structure(res, class = c("POSIXt", "POSIXct"), tzone=tz))
     }
 
@@ -557,11 +557,11 @@ seq.POSIXt <-
     if(valid <= 5) {
         from <- unclass(as.POSIXct(from))
         if(!is.null(length.out))
-            res <- seq.default(from, by=by, length.out=length.out)
+            res <- seq(from, by=by, length.out=length.out)
         else {
             to <- unclass(as.POSIXct(to))
             ## defeat test in seq.default
-            res <- seq.default(0, to - from, by) + from
+            res <- seq(0, to - from, by) + from
         }
         return(structure(res, class=c("POSIXt", "POSIXct"), tzone=tz))
     } else {  # months or years or DSTdays

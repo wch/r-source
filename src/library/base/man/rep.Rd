@@ -81,10 +81,7 @@ rep.int(x, times)
 
   As from \R 2.4.0, function \code{rep} is a primitive, but (partial)
   matching of argument names is performed as for normal functions.
-  Positional matching can also be used, but for primitives empty
-  arguments are ignored so \code{rep(x,,3)} matches \code{rep(x,
-    times=3)}.  You can no longer pass a missing argument
-  to. e.g. \code{length.out}.
+  You can no longer pass a missing argument to. e.g. \code{length.out}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

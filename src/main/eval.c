@@ -31,7 +31,7 @@
 
 #include "Defn.h"
 
-static SEXP evalListKeepMissing(SEXP el, SEXP rho);
+SEXP evalListKeepMissing(SEXP el, SEXP rho);
 
 #ifdef BYTECODE
 static SEXP bcEval(SEXP, SEXP);
@@ -1444,7 +1444,7 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho)
 /* form below because it is does not cause growth of the pointer */
 /* protection stack, and because it is a little more efficient. */
 
-static SEXP evalListKeepMissing(SEXP el, SEXP rho)
+SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 {
     SEXP ans, h, tail;
 
@@ -1832,16 +1832,16 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	}
     }
     if(!argsevald) {
-    if (dots)
-	/* The first call argument was ... and may contain more than the
-	   object, so it needs to be evaluated here.  The object should be
-	   in a promise, so evaluating it again should be no problem. */
-	*ans = EvalArgs(args, rho, dropmissing);
-    else {
-	PROTECT(*ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing)));
-	SET_TAG(*ans, CreateTag(TAG(args)));
-	UNPROTECT(1);
-    }
+	if (dots)
+	    /* The first call argument was ... and may contain more than the
+	       object, so it needs to be evaluated here.  The object should be
+	       in a promise, so evaluating it again should be no problem. */
+	    *ans = EvalArgs(args, rho, dropmissing);
+	else {
+	    PROTECT(*ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing)));
+	    SET_TAG(*ans, CreateTag(TAG(args)));
+	    UNPROTECT(1);
+	}
     }
     else *ans = args;
 #else

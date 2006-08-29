@@ -366,6 +366,8 @@
  Rf_copyMostAttribNoTs
  Rf_dpSavedptr
  Rf_dpptr
+ Rf_evalList
+ Rf_evalListKeepMissing
  Rf_findVar1
  Rf_findcontext
  Rf_framedepth

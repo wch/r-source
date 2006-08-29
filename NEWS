@@ -360,6 +360,9 @@ NEW FEATURES
 	less). (Because it is primitive there are minor changes to the
 	call semantics: see the help page.)
 
+    o   There is a new primitive seq.int() which is slightly more
+	restricted than seq() but often very much faster.
+
 
 DEPRECATED & DEFUNCT
 
@@ -573,9 +576,9 @@ BUG FIXES
     o	remove() now explicitly precludes removing variables from
 	baseenv() and throws an error (this was previously ignored).
 
-    o	Saving the workspace now works as has long been intended,
-	that is it is saved only if something has been
-	added/deleted/changed during the current session.
+    o	Saving the workspace at the end of a session now works as has
+	long been intended, that is it is saved only if something has
+	been added/deleted/changed during the current session.
 
     o	The search for bindings in <<-, ->> and assign(inherits=TRUE)
 	was omitting the base package, although this was not

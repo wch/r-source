@@ -9,8 +9,8 @@
 \details{
   % -------------------- grep -nw DispatchOrEval src/*/*[ch]
   %                         --------------
-  The following builtin functions are \emph{generic} as well, i.e., you
-  can write \code{\link{methods}} for them:
+  The following primitive and internal functions are \emph{generic},
+  i.e., you can write \code{\link{methods}} for them:
 
   \code{\link{[}},            % do_subset()          [subset.c:464]
   \code{\link{[[}},           % do_subset2()         [subset.c:567]
@@ -53,8 +53,9 @@
   \code{\link{is.pairlist}},
   \code{\link{is.recursive}},
   \code{\link{is.single}},
-  \code{\link{is.symbol}}.
-  \code{\link{rep}}.
+  \code{\link{is.symbol}},
+  \code{\link{rep}} and
+  \code{\link{seq.int}}.
 }
 \seealso{
   \code{\link{methods}} for the methods of non-Internal generic functions.
