@@ -49,7 +49,7 @@ tail(x, \dots)
   \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{
-  For matrices, tables and data frames, \code{head()} (\code{tail()}) returns
+  For matrices, 2-dim tables and data frames, \code{head()} (\code{tail()}) returns
   the first (last) \code{n} rows when \code{n > 0} or all but the
   last (first) \code{n} rows when \code{n < 0}.  \code{head.matrix()} and
   \code{tail.matrix()} are exported.  For functions, the
@@ -61,7 +61,8 @@ tail(x, \dots)
     FALSE} suppresses this behaviour.
 }
 \value{
-  An object (usually) like \code{x} but generally smaller.
+  An object (usually) like \code{x} but generally smaller.  For
+  \code{\link{ftable}} objects \code{x}, a transformed \code{format(x)}.
 }
 \author{
   Patrick Burns, improved and corrected by R-Core. Negative argument
@@ -82,5 +83,7 @@ tail(freeny.x)
 tail(freeny.y)
 
 tail(library)
+
+head(ftable(Titanic))
 }
 \keyword{ manip }
