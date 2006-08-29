@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:20\n"
+"POT-Creation-Date: 2006-08-29 06:15\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1202,6 +1202,11 @@ msgstr "调用solve.default于\"qr\"对象：用'qr.solve'"
 msgid "singular matrix 'a' in solve"
 msgstr "solve里的'a'是奇异矩阵"
 
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
+msgstr ""
+
 msgid "'index.return' only for non-factors"
 msgstr "'index.return'只能适用于非因子"
 
@@ -1219,6 +1224,11 @@ msgstr "'partial'非有限"
 
 msgid "argument lengths differ"
 msgstr "变元的长度不一样"
+
+msgid ""
+"'x' must be atomic for 'sort.list'\n"
+"Have you called 'sort' on a list?"
+msgstr ""
 
 msgid "method=\"quick\" is only for numeric 'x'"
 msgstr "method=\"quick\"只适用于数值的'x'"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:20\n"
+"POT-Creation-Date: 2006-08-29 06:15\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1223,6 +1223,11 @@ msgstr "solve.default mit einem \"qr\" Objekt aufgerufen: benutze 'qr.solve'"
 msgid "singular matrix 'a' in solve"
 msgstr "singuläre Matrix 'a' in 'solve'"
 
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
+msgstr ""
+
 msgid "'index.return' only for non-factors"
 msgstr "'index.return' nur für Nicht-Faktoren"
 
@@ -1240,6 +1245,11 @@ msgstr "nicht endliches 'partial'"
 
 msgid "argument lengths differ"
 msgstr "Argumentlängen unterschiedlich"
+
+msgid ""
+"'x' must be atomic for 'sort.list'\n"
+"Have you called 'sort' on a list?"
+msgstr ""
 
 msgid "method=\"quick\" is only for numeric 'x'"
 msgstr "Methode=\"quick\" nur für numerisches 'x'"

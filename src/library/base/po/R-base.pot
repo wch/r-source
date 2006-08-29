@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:20\n"
+"POT-Creation-Date: 2006-08-29 06:15\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1169,6 +1169,9 @@ msgstr ""
 msgid "singular matrix 'a' in solve"
 msgstr ""
 
+msgid "'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?"
+msgstr ""
+
 msgid "'index.return' only for non-factors"
 msgstr ""
 
@@ -1185,6 +1188,9 @@ msgid "non-finite 'partial'"
 msgstr ""
 
 msgid "argument lengths differ"
+msgstr ""
+
+msgid "'x' must be atomic for 'sort.list'\nHave you called 'sort' on a list?"
 msgstr ""
 
 msgid "method=\"quick\" is only for numeric 'x'"

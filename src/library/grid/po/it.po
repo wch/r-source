@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:22+0100\n"
+"POT-Creation-Date: 2006-08-29 06:15+0100\n"
 "PO-Revision-Date: 2005-04-17 17:30+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -50,11 +50,7 @@ msgstr ""
 msgid "Non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:2373
-msgid "Invalid circle radius (must be non-negative)"
-msgstr "Raggio del cerchio non valido (deve essere non negativo)"
-
-#: grid.c:3067
+#: grid.c:3065
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossibile tagliare su una viewport ruotata"
 
@@ -97,3 +93,6 @@ msgstr "unit devono avere lunghezza > 0"
 #: viewport.c:317
 msgid "Non-finite location and/or size for viewport"
 msgstr "Posizione e/o ampiezza della viewport non finita"
+
+#~ msgid "Invalid circle radius (must be non-negative)"
+#~ msgstr "Raggio del cerchio non valido (deve essere non negativo)"

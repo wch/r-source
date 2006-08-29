@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grid 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:22+0100\n"
+"POT-Creation-Date: 2006-08-29 06:15+0100\n"
 "PO-Revision-Date: 2006-04-18 08:46+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -50,11 +50,7 @@ msgstr "Il faut au moins deux points pour tracer une flêche"
 msgid "Non-finite control point in Xspline"
 msgstr "Point de contrôle non fini dans Xspline"
 
-#: grid.c:2373
-msgid "Invalid circle radius (must be non-negative)"
-msgstr "Rayon de cercle incorrect (doit être positif ou nul)"
-
-#: grid.c:3067
+#: grid.c:3065
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossible de couper au rectangle pivoté"
 
@@ -98,3 +94,6 @@ msgstr "Les unités doivent être de longueur > 0"
 #: viewport.c:317
 msgid "Non-finite location and/or size for viewport"
 msgstr "Position et / ou taille de vue non finies"
+
+#~ msgid "Invalid circle radius (must be non-negative)"
+#~ msgstr "Rayon de cercle incorrect (doit être positif ou nul)"
