@@ -1930,4 +1930,16 @@ A
 ## misbehaved < 2.4.0
 
 
+## [dpqr]t with vector ncp
+nc <- c(0, 0.0001, 1)
+dt(1.8, 10, nc)
+pt(1.8, 10, nc)
+qt(0.95, 10, nc)
+## gave warnings in 2.3.1, short answer for qt.
+dt(1.8, 10, -nc[-1])
+pt(1.8, 10, -nc[-1])
+qt(0.95, 10, -nc[-1])
+## qt in 2.3.1 did not allow negative ncp.
+
+
 ### end of tests added in 2.4.0 ###

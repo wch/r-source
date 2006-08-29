@@ -215,23 +215,20 @@ qpois <- function(p, lambda, lower.tail = TRUE, log.p = FALSE)
     .Internal(qpois(p, lambda, lower.tail, log.p))
 rpois <- function(n, lambda) .Internal(rpois(n, lambda))
 
-dt <- function(x, df, ncp=0, log = FALSE) {
-    if(missing(ncp))
-	.Internal(dt(x, df, log))
-    else
-	.Internal(dnt(x, df, ncp, log))
+dt <- function(x, df, ncp = 0, log = FALSE) {
+    if(missing(ncp)) .Internal(dt(x, df, log))
+    else .Internal(dnt(x, df, ncp, log))
 }
-
-pt <- function(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE) {
-    if(ncp == 0) .Internal(pt(q, df, lower.tail, log.p))
+pt <- function(q, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
+    if(missing(ncp)) .Internal(pt(q, df, lower.tail, log.p))
     else .Internal(pnt(q, df, ncp, lower.tail, log.p))
 }
 qt <- function(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
-    if(ncp == 0) .Internal(qt(p, df, lower.tail, log.p))
+    if(missing(ncp)) .Internal(qt(p, df, lower.tail, log.p))
     else .Internal(qnt(p, df, ncp, lower.tail, log.p))
 }
 rt <- function(n, df, ncp = 0) {
-    if(ncp == 0) .Internal(rt(n, df))
+    if(missing(ncp)) .Internal(rt(n, df))
     else rnorm(n, ncp)/sqrt(rchisq(n, df)/df)
 }
 

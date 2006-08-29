@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-08-24 r38969)
+R version 2.4.0 Under development (unstable) (2006-08-29 r39004)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5441,6 +5441,24 @@ Levels: 7 8 9 10
 [2,] 8    10   12  
 Levels: 7 8 9 10 11 12
 > ## misbehaved < 2.4.0
+> 
+> 
+> ## [dpqr]t with vector ncp
+> nc <- c(0, 0.0001, 1)
+> dt(1.8, 10, nc)
+[1] 0.08311639 0.08312972 0.26650393
+> pt(1.8, 10, nc)
+[1] 0.9489739 0.9489641 0.7584267
+> qt(0.95, 10, nc)
+[1] 1.812461 1.812579 3.041742
+> ## gave warnings in 2.3.1, short answer for qt.
+> dt(1.8, 10, -nc[-1])
+[1] 0.08310306 0.01074629
+> pt(1.8, 10, -nc[-1])
+[1] 0.9489837 0.9949472
+> qt(0.95, 10, -nc[-1])
+[1] 1.8123429 0.6797902
+> ## qt in 2.3.1 did not allow negative ncp.
 > 
 > 
 > ### end of tests added in 2.4.0 ###

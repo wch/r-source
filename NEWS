@@ -663,6 +663,9 @@ BUG FIXES
 
     o	writeChar() could segfault if 'nchars' was given silly values.
 
+    o	qt() and rt() did not work for vector 'ncp', and qt() did not
+	work for negative 'ncp'.
+
 
 
 

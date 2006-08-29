@@ -26,7 +26,8 @@ rt(n, df, ncp = 0)
       = Inf} is allowed.  For \code{qt} only values of at least one are
     currently supported.}
   \item{ncp}{non-centrality parameter \eqn{\delta};
-    currently for \code{pt()} and \code{dt()}, only for \code{ncp <= 37.62}.}
+    currently for \code{pt()} and \code{dt()}, only for
+    \code{abs(ncp) <= 37.62}.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
