@@ -363,7 +363,9 @@ NEW FEATURES
     o   There is a new primitive seq.int() which is slightly more
 	restricted than seq() but often very much faster.
 
-    o   legend() has new parameters box.lwd and box.lty.
+    o   legend() has new parameters 'box.lwd' and 'box.lty'.
+
+    o   r2dtable() has been moved to package 'stats'.
 
 
 DEPRECATED & DEFUNCT

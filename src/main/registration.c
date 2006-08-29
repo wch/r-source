@@ -210,11 +210,6 @@ static R_CallMethodDef callMethods [] = {
     /* mapply */
     CALLDEF(do_mapply, 4),
 
-    /* in ../main/random.c to generate 'sequences' of random 2-d tables
-     * using Patefield's algorithm.
-     */
-    CALLDEF(R_r2dtable, 3),
-
     /* Methods related routines. */
     CALLDEF(R_isMethodsDispatchOn, 1),
     CALLDEF(R_traceOnOff, 1),
