@@ -28,9 +28,9 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
   the final color corresponds to \eqn{(r^{\gamma}, g^{\gamma}, b^{\gamma})}.
 }
 \seealso{
-  \code{\link{hcl}},
+  \code{\link{hcl}} for a perceptually based version of \code{hsv()},
+  \code{\link{rgb}} and \code{\link{rgb2hsv}} for RGB to HSV conversion;
   \code{\link{rainbow}},
-  \code{\link{rgb}},
   \code{\link{gray}}.
 }
 \examples{

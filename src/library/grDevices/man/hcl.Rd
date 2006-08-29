@@ -28,7 +28,7 @@ hcl(h = 0, c = 35, l = 85, alpha, fixup = TRUE)
 This function corresponds to polar coordinates in the CIE-LUV
 color space. Steps of equal size in this space correspond to
 approximately equal peceptual changes in color.  Thus, \code{hcl}
-can be thought of as a perceptually based version of \code{hsv}.
+can be thought of as a perceptually based version of \code{\link{hsv}}.
 
 The function is primarily intended as a way of computing
 colors for filling areas in plots where area corresponds to a
