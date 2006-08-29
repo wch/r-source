@@ -10,5 +10,5 @@ r2dtable <- function(n, r, c)
 	stop("arguments 'r' and 'c' must have the same sums")
     .Call("R_r2dtable",
 	  as.integer(n), as.integer(r), as.integer(c),
-          PACKAGE = "stats")
+          PACKAGE = "base")
 }

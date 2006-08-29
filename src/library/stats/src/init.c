@@ -31,8 +31,6 @@
 #include "ts.h"
 #include <R_ext/Rdynload.h>
 
-SEXP R_r2dtable(SEXP n, SEXP r, SEXP c);
-
 static R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
 					   INTSXP, REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
 static R_NativePrimitiveArgType fishersim_t[10] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
@@ -157,7 +155,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"logit_linkinv", (DL_FUNC) &logit_linkinv, 1},
     {"logit_mu_eta", (DL_FUNC) &logit_mu_eta, 1},
     {"binomial_dev_resids", (DL_FUNC) &binomial_dev_resids, 3},
-    {"R_r2dtable", (DL_FUNC) &R_r2dtable, 3},
     {NULL, NULL, 0}
 };
 
