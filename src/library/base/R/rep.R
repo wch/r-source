@@ -4,7 +4,7 @@ rep <- function(x, times, ...) UseMethod("rep")
 rep.default <- function(x, times, length.out, each, ...)
 {
     if (length(x) == 0)
-        return(if(missing(length.out)) x else x[seq(len=length.out)])
+        return(if(missing(length.out)) x else x[seq_len(length.out)])
     if (!missing(each)) {
         tm <- .Internal(rep.int(each, length(x)))
         nm <- names(x)

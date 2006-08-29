@@ -95,7 +95,7 @@ rainbow <-
     if ((n <- as.integer(n[1])) > 0) {
 	if(start == end || any(c(start,end) < 0)|| any(c(start,end) > 1))
 	    stop("'start' and 'end' must be distinct and in [0, 1].")
-	hsv(h = seq(start, ifelse(start > end, 1, 0) + end, length= n) %% 1,
+	hsv(h = seq.int(start, ifelse(start > end, 1, 0) + end, length= n) %% 1,
 	    s, v, gamma)
     } else character(0)
 }
@@ -106,10 +106,10 @@ topo.colors <- function (n)
 	j <- n %/% 3
 	k <- n %/% 3
 	i <- n - j - k
-	c(if(i > 0) hsv(h= seq(from = 43/60, to = 31/60, length = i)),
-	  if(j > 0) hsv(h= seq(from = 23/60, to = 11/60, length = j)),
-	  if(k > 0) hsv(h= seq(from = 10/60, to =  6/60, length = k),
-			s= seq(from = 1,     to = 0.3,	 length = k), v = 1))
+	c(if(i > 0) hsv(h= seq.int(from = 43/60, to = 31/60, length = i)),
+	  if(j > 0) hsv(h= seq.int(from = 23/60, to = 11/60, length = j)),
+	  if(k > 0) hsv(h= seq.int(from = 10/60, to =  6/60, length = k),
+			s= seq.int(from = 1,     to = 0.3,	 length = k), v = 1))
     } else character(0)
 }
 
@@ -120,12 +120,12 @@ terrain.colors <- function (n)
 	h <- c(4/12, 2/12, 0/12)
 	s <- c(1, 1, 0)
 	v <- c(0.65, 0.9, 0.95)
-	c(hsv(h = seq(h[1], h[2], length = k),
-	      s = seq(s[1], s[2], length = k),
-	      v = seq(v[1], v[2], length = k)),
-	  hsv(h = seq(h[2], h[3], length = n - k + 1)[-1],
-	      s = seq(s[2], s[3], length = n - k + 1)[-1],
-	      v = seq(v[2], v[3], length = n - k + 1)[-1]))
+	c(hsv(h = seq.int(h[1], h[2], length = k),
+	      s = seq.int(s[1], s[2], length = k),
+	      v = seq.int(v[1], v[2], length = k)),
+	  hsv(h = seq.int(h[2], h[3], length = n - k + 1)[-1],
+	      s = seq.int(s[2], s[3], length = n - k + 1)[-1],
+	      v = seq.int(v[2], v[3], length = n - k + 1)[-1]))
     } else character(0)
 }
 
@@ -136,7 +136,7 @@ heat.colors <- function (n)
 	i <- n - j
 	c(rainbow(i, start = 0, end = 1/6),
 	  if (j > 0)
-	  hsv(h = 1/6, s = seq(from= 1-1/(2*j), to= 1/(2*j), length = j),
+	  hsv(h = 1/6, s = seq.int(from= 1-1/(2*j), to= 1/(2*j), length = j),
 	      v = 1))
     } else character(0)
 }
@@ -149,13 +149,13 @@ cm.colors <- function (n)
 	l1 <- k + 1 - even.n
 	l2 <- n - k + even.n
 	c(if(l1 > 0)
-	  hsv(h =  6/12, s= seq(.5, ifelse(even.n,.5/k,0), length = l1), v = 1),
+	  hsv(h =  6/12, s= seq.int(.5, ifelse(even.n,.5/k,0), length = l1), v = 1),
 	  if(l2 > 1)
-	  hsv(h = 10/12, s= seq(0, 0.5, length = l2)[-1], v = 1))
+	  hsv(h = 10/12, s= seq.int(0, 0.5, length = l2)[-1], v = 1))
     } else character(0)
 }
 
 gray.colors <-
 function(n, start = 0.3, end = 0.9, gamma = 2.2)
-    gray(seq(from = start^gamma, to = end^gamma, length = n)^(1/gamma))
+    gray(seq.int(from = start^gamma, to = end^gamma, length = n)^(1/gamma))
 grey.colors <- gray.colors

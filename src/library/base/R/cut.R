@@ -10,8 +10,8 @@ cut.default <- function (x, breaks, labels=NULL, include.lowest = FALSE,
 	nb <- as.integer(breaks + 1)# one more than #{intervals}
 	dx <- diff(rx <- range(x,na.rm=TRUE))
 	if(dx==0) dx <- rx[1]
-	breaks <- seq(rx[1] - dx/1000,
-		      rx[2] + dx/1000, len=nb)
+	breaks <- seq.int(rx[1] - dx/1000,
+                          rx[2] + dx/1000, len=nb)
     } else nb <- length(breaks <- sort.int(as.double(breaks)))
     if (any(duplicated(breaks))) stop("'breaks' are not unique")
     codes.only <- FALSE
@@ -47,5 +47,5 @@ cut.default <- function (x, breaks, labels=NULL, include.lowest = FALSE,
 	       NAOK= TRUE, DUP = FALSE, PACKAGE = "base") $code
     ## NB this relies on passing NAOK in that position!
     if(codes.only) code
-    else factor(code, seq(labels), labels)
+    else factor(code, seq_along(labels), labels)
 }

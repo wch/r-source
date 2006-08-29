@@ -172,7 +172,7 @@ profile.nls <-
                 abs(tau[count] - tau[count - 1])
             pars[-par] <- pmin(upper[-par], pmax(lower[-par], pars[-par]))
         }
-        ind <- seq(len=count)
+        ind <- seq_len(count)
         tau[ind] <- tau[rev(ind)]
         par.vals[ind,  ] <- par.vals[rev(ind),  ]
         sgn <- 1
@@ -197,7 +197,7 @@ profile.nls <-
                 abs(tau[count] - tau[count - 1])
             pars[-par] <- pmin(upper[-par], pmax(lower[-par], pars[-par]))
         }
-        ind <- seq(len=count)
+        ind <- seq_len(count)
         out[[par]] <- structure(list(tau = tau[ind], par.vals =
                                      par.vals[ind,  , drop=FALSE]),
                                 class = "data.frame",
@@ -235,7 +235,7 @@ plot.profile.nls <- function(x, levels, conf = c(99, 95, 90, 80, 50)/100,
     nm <- names(obj)
     opar <- par(mar = c(5, 4, 1, 1) + 0.1)
     if (absVal) {
-        for (i in seq(along = nm)) {
+        for (i in seq_along(nm)) {
             sp <- splines::interpSpline(obj[[i]]$par.vals[,i], obj[[i]]$tau)
             bsp <- splines::backSpline(sp)
             xlim <- predict(bsp, c(-mlev, mlev))$y
@@ -257,7 +257,7 @@ plot.profile.nls <- function(x, levels, conf = c(99, 95, 90, 80, 50)/100,
             }
         }
     } else {
-        for (i in seq(along = nm)) {
+        for (i in seq_along(nm)) {
             sp <- splines::interpSpline(obj[[i]]$par.vals[,i], obj[[i]]$tau)
             bsp <- splines::backSpline(sp)
             xlim <- predict(bsp, c(-mlev, mlev))$y

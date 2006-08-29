@@ -96,7 +96,7 @@ findFunction <-
 {
     allWhere <- .findAll(f, where)
     ok <- rep(FALSE, length(allWhere))
-    for(i in seq(along = ok)) {
+    for(i in seq_along(ok)) {
         wherei <- allWhere[[i]]
         if(exists(f, wherei, inherits = FALSE)) {
             fdef <-get(f, wherei)

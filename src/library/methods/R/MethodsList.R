@@ -39,7 +39,7 @@ makeMethodsList <-
     if(any(duplicated(mnames)))
         stop(gettextf("duplicate element names in 'MethodsList' at level %d: %s",
              level, paste("\"", unique(mnames[duplicated(mnames)]), "\"", collapse=", ")), domain = NA)
-    for(i in seq(along=object)) {
+    for(i in seq_along(object)) {
         eli <- el(object, i)
         if(is(eli, "function")
            || is(eli, "MethodsList")) {}
@@ -266,7 +266,7 @@ MethodsListSelect <-
         if(thisInherit)  {
             allSelections <- inheritedSubMethodLists(arg, fromClass, mlist, env)
             allClasses <- names(allSelections)
-            for(i in seq(along = allSelections)) {
+            for(i in seq_along(allSelections)) {
                 selection <- allSelections[[i]]
                 fromClass <- allClasses[[i]]
                 if(is(selection, "function"))
@@ -384,7 +384,7 @@ inheritedSubMethodLists <-
           ## the ordering of the superclasses of thisClass
           superClasses <- names(classDef@contains)
           classes <- superClasses[!is.na(match(superClasses, classes))]
-          for(which in seq(along=classes)) {
+          for(which in seq_along(classes)) {
               tryClass <- el(classes, which)
               ## TODO:  There is potential bug here:  If the is relation is conditional,
               ## we should not cache this selection.  Needs another trick in the environment
@@ -396,7 +396,7 @@ inheritedSubMethodLists <-
           }
       }
       else {
-          for(which in seq(along = classes)) {
+          for(which in seq_along(classes)) {
               tryClass <- el(classes, which)
               tryClassDef <- getClassDef(tryClass, ev)
               if(!is.null(tryClassDef) &&
@@ -444,7 +444,7 @@ matchSignature <-
                       fun@generic, length(sigClasses), length(signature)),
              domain = NA)
     if(is.null(names(signature))) {
-        which <- seq(length = length(signature))
+        which <- seq_along(signature)
         if(length(which) > length(anames))
           stop(gettextf("more elements in the method signature (%s) than in the generic  %s(%s)",
                paste(signature, collapse=", "), fun@generic,
@@ -527,7 +527,7 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
       for(i in 1:n)
         labels[[i]] <- paste(signatures[[i]], collapse = ", ")
     }
-    for(i in seq(length=length(methods))) {
+    for(i in seq_along(methods)) {
       cat(file=con, (if(includeDefs) "## Signature:" else ""), labels[[i]])
       method <- methods[[i]]
       if(includeDefs) {
@@ -590,7 +590,7 @@ promptMethods <- function(f, filename = NULL, methods)
     labels <- character(n)
     aliases <- character(n)
     fullName <- topicName("methods", f)
-    for(i in seq(length = n)) {
+    for(i in seq_len(n)) {
         sigi <- paste("\"", signatures[[i]], "\"", sep ="")
         labels[[i]] <-
             paste(args[[i]], sigi, collapse = ", ", sep = " = ")
@@ -653,7 +653,7 @@ linearizeMlist <-
         classes <- list()
         arguments <- list()
         argname <- as.character(mlist@argument)
-        for(i in seq(along = cnames)) {
+        for(i in seq_along(cnames)) {
             mi <- methods[[i]]
             if(is.function(mi)) {
                 value <- c(value, list(mi))
@@ -690,7 +690,7 @@ listFromMlist <-
     argName <- as.character(slot(mlist, "argument"))
     sigs <- list()
     methods <- list()
-    for(i in seq(along = methodSlot)) {
+    for(i in seq_along(methodSlot)) {
         thisMethod <- el(methodSlot, i)
         thisClass <- el(mnames, i)
         elNamed(prefix, argName) <- thisClass
@@ -713,7 +713,7 @@ listFromMlist <-
         newArg <- c(argName, as.character(def@argument))
         newDefs <- def@allMethods
         newSigs <- as.list(names(newDefs))
-        for(j in seq(along = newDefs))
+        for(j in seq_along(newDefs))
             mlist <- Recall(mlist, newArg, c(Class, newSigs[[j]]), fromClass,
                             newDefs[[j]])
     }

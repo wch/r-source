@@ -13,7 +13,7 @@ menu <- function(choices, graphics = FALSE, title = "")
     }
     nc <- length(choices)
     if(length(title) && nchar(title[1])) cat(title[1], "\n")
-    op <- paste(format(seq(length=nc)), ": ", choices, sep="")
+    op <- paste(format(seq_len(nc)), ": ", choices, sep="")
     if(nc > 10) {
         fop <- format(op)
         nw <- nchar(fop[1], "w") + 2

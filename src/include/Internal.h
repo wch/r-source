@@ -383,7 +383,7 @@ SEXP do_regFinaliz(SEXP, SEXP, SEXP, SEXP);
 SEXP do_relop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_relop_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_remove(SEXP, SEXP, SEXP, SEXP);
-SEXP do_rep(SEXP, SEXP, SEXP, SEXP); /* not yet implemented */
+SEXP do_rep(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rep_int(SEXP, SEXP, SEXP, SEXP);
 SEXP do_repeat(SEXP, SEXP, SEXP, SEXP);
 SEXP do_replay(SEXP, SEXP, SEXP, SEXP);
@@ -407,7 +407,9 @@ SEXP do_savehistory(SEXP, SEXP, SEXP, SEXP);
 SEXP do_scan(SEXP, SEXP, SEXP, SEXP);
 SEXP do_search(SEXP, SEXP, SEXP, SEXP);
 SEXP do_segments(SEXP, SEXP, SEXP, SEXP);
-SEXP do_seq(SEXP, SEXP, SEXP, SEXP); /* not yet implemented */
+SEXP do_seq(SEXP, SEXP, SEXP, SEXP);
+SEXP do_seq_along(SEXP, SEXP, SEXP, SEXP);
+SEXP do_seq_len(SEXP, SEXP, SEXP, SEXP);
 SEXP do_serializeToConn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setlocale(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setseed(SEXP, SEXP, SEXP, SEXP);

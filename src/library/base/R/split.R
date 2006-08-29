@@ -19,7 +19,7 @@ split.default <- function(x, f, drop = FALSE, ...)
 }
 
 split.data.frame <- function(x, f, drop = FALSE, ...)
-    lapply(split(seq(length=nrow(x)), f, drop = drop, ...),
+    lapply(split(seq_len(nrow(x)), f, drop = drop, ...),
            function(ind) x[ind, , drop = FALSE])
 
 "split<-" <- function(x, f, drop = FALSE, ..., value) UseMethod("split<-")
@@ -32,7 +32,7 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
 
 "split<-.default" <- function(x, f, drop = FALSE, ..., value)
 {
-    ix <- split(seq(along = x), f, drop = drop, ...)
+    ix <- split(seq_along(x), f, drop = drop, ...)
     n <- length(value)
     j <- 0
     for (i in ix) {
@@ -51,7 +51,7 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
 
 "split<-.data.frame" <- function(x, f, drop = FALSE, ..., value)
 {
-    ix <- split(seq(along = x), f, drop = drop, ...)
+    ix <- split(seq_along(x), f, drop = drop, ...)
     n <- length(value)
     j <- 0
     for (i in ix) {

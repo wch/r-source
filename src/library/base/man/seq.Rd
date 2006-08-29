@@ -3,10 +3,13 @@
 \alias{seq}
 \alias{seq.default}
 \alias{seq.int}
+\alias{seq_along}
+\alias{seq_len}
 \description{
   Generate regular sequences.  \code{seq} is a standard generic with a
   default method.  \code{seq.int} is an internal generic which can be
-  much faster but has a few restrictions.
+  much faster but has a few restrictions.  \code{seq_along} and
+  \code{seq_len} are very fast primitives for two common cases.
 }
 \usage{
 seq(\dots)
@@ -14,20 +17,24 @@ seq(\dots)
 \method{seq}{default}(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
     length.out = NULL, along.with = NULL, \dots)
 
-seq.int(from, to, by. length.out, along.with, \dots)
+seq.int(from, to, by, length.out, along.with, \dots)
+
+seq_along(along.with)
+seq_len(length.out)
 }
 \arguments{
   \item{\dots}{arguments passed to or from methods.}
   \item{from, to}{the starting and (maximal) end value of the sequence.}
   \item{by}{number: increment of the sequence.}
   \item{length.out}{desired length of the sequence.  A
-    non-negative number, which will be rounded up if fractional.}
+    non-negative number, which for \code{seq} and \code{seq.int} will be
+    rounded up if fractional.}
   \item{along.with}{take the length from the length of this argument.}
 }
 \details{
-  The interpretation of the unnamed arguments of \code{seq} is
-  \emph{not} standard, and it is recommended always to name the
-  arguments when programming.
+  The interpretation of the unnamed arguments of \code{seq} and
+  \code{seq.int} is \emph{not} standard, and it is recommended always to
+  name the arguments when programming.
 
   Both \code{seq} are \code{seq.int} are generic, and only the default
   method is described here.  Typical usages are
@@ -48,11 +55,12 @@ seq(length.out= )
 
   The third generates a sequence of \code{length.out} equally spaced
   values from \code{from} to \code{to}.  (\code{length.out} is usually
-  abbreviated to \code{length} or \code{len}.)
+  abbreviated to \code{length} or \code{len}, and \code{seq_len} is much
+  faster.)
 
   The fourth form generates the sequence \code{1, 2, \dots,
     length(along.with)}.  (\code{along.with} is usually abbreviated to
-  \code{along}.) 
+  \code{along}, and \code{seq_along} is much faster.) 
 
   The fifth form generates the sequence \code{1, 2, \dots, length(from)}
   (as if argument \code{along.with} had been specified),

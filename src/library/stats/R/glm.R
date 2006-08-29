@@ -335,7 +335,7 @@ glm.fit <-
     names(y) <- ynames
     if(!EMPTY)
         names(fit$effects) <-
-            c(xxnames[seq(len=fit$rank)], rep.int("", sum(good) - fit$rank))
+            c(xxnames[seq_len(fit$rank)], rep.int("", sum(good) - fit$rank))
     ## calculate null deviance -- corrected in glm() if offset and intercept
     wtdmu <-
 	if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)

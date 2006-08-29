@@ -337,7 +337,7 @@ model.frame.default <-
                              nr, nr2), call.=FALSE)
     }
     if(is.null(attr(formula, "predvars"))) {
-        for (i in seq(along = varnames))
+        for (i in seq_along(varnames))
             predvars[[i+1]] <- makepredictcall(variables[[i]], vars[[i+1]])
         attr(formula, "predvars") <- predvars
     }
@@ -410,7 +410,7 @@ model.matrix.default <- function(object, data = environment(object),
                          names(data))
 	if (any(is.na(reorder)))
 	    stop("model frame and formula mismatch in model.matrix()")
-	if(!identical(reorder, seq(length = ncol(data))))
+	if(!identical(reorder, seq_len(ncol(data))))
 	    data <- data[,reorder, drop=FALSE]
     }
     int <- attr(t, "response")

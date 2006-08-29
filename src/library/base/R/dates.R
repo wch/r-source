@@ -212,7 +212,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     if (missing(by)) {
         from <- unclass(as.Date(from))
         to <- unclass(as.Date(to))
-        res <- seq(from, to, length.out = length.out)
+        res <- seq.int(from, to, length.out = length.out)
         return(structure(res, class = "Date"))
     }
 
@@ -239,30 +239,30 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     if(valid <= 2) {
         from <- unclass(as.Date(from))
         if(!is.null(length.out))
-            res <- seq(from, by=by, length.out=length.out)
+            res <- seq.int(from, by=by, length.out=length.out)
         else {
             to <- unclass(as.Date(to))
             ## defeat test in seq.default
-            res <- seq(0, to - from, by) + from
+            res <- seq.int(0, to - from, by) + from
         }
         return(structure(res, class="Date"))
     } else {  # months or years or DSTdays
         r1 <- as.POSIXlt(from)
         if(valid == 4) {
             if(missing(to)) { # years
-                yr <- seq(r1$year, by = by, length = length.out)
+                yr <- seq.int(r1$year, by = by, length = length.out)
             } else {
                 to <- as.POSIXlt(to)
-                yr <- seq(r1$year, to$year, by)
+                yr <- seq.int(r1$year, to$year, by)
             }
             r1$year <- yr
             res <- .Internal(POSIXlt2Date(r1))
         } else if(valid == 3) { # months
             if(missing(to)) {
-                mon <- seq(r1$mon, by = by, length = length.out)
+                mon <- seq.int(r1$mon, by = by, length = length.out)
             } else {
                 to <- as.POSIXlt(to)
-                mon <- seq(r1$mon, 12*(to$year - r1$year) + to$mon, by)
+                mon <- seq.int(r1$mon, 12*(to$year - r1$year) + to$mon, by)
             }
             r1$mon <- mon
             res <- .Internal(POSIXlt2Date(r1))
@@ -302,7 +302,7 @@ cut.Date <-
         start <- .Internal(POSIXlt2Date(start))
         if (length(by2) == 2) incr <- incr * as.integer(by2[1])
 	maxx <- max(x, na.rm = TRUE)
-	breaks <- seq(start, maxx + incr, breaks)
+	breaks <- seq.int(start, maxx + incr, breaks)
 	breaks <- breaks[1:(1+max(which(breaks < maxx)))]
     } else stop("invalid specification of 'breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels,

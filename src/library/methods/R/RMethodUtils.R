@@ -289,7 +289,7 @@ mergeMethods <-
     tmp <- listFromMlist(m2)
     sigs <- el(tmp, 1)
     methods <- el(tmp, 2)
-    for(i in seq(along=sigs)) {
+    for(i in seq_along(sigs)) {
       sigi <- el(sigs, i)
       args <- names(sigi)
       m1 <- insertMethod(m1, as.character(sigi), args, el(methods, i), FALSE)
@@ -331,7 +331,7 @@ conformMethod <-
     if(!any(omitted))
         return(signature)
     label <- paste("In method for function \"", f,"\": ", sep="")
-    if(!all(diff(seq(along=fnames)[!omitted]) > 0))
+    if(!all(diff(seq_along(fnames)[!omitted]) > 0))
         stop(label, "formal arguments in method and function do not appear in the same order")
     signature <- c(signature, rep("ANY", length(fnames)-length(signature)))
     if(any(is.na(match(signature[omitted], c("ANY", "missing"))))) {
@@ -510,7 +510,7 @@ mlistMetaName <-
           if(length(name) > 1 && !identical(package, "")) {
               value <- name
               name <- paste(name, package, sep=":")
-              for(i in seq(along = value))
+              for(i in seq_along(value))
                   value[[i]] = methodsPackageMetaName("M", name[[i]])
           }
           else if(nchar(package))
@@ -666,7 +666,7 @@ MethodAddCoerce <- function(method, argName, thisClass, methodClass)
         }
         else if(is(method, "MethodsList")) {
             methods <- method@allMethods
-            for(i in seq(along=methods))
+            for(i in seq_along(methods))
                 methods[[i]] <- Recall(methods[[i]], addExpr)
             method@allMethods <- methods
         }
@@ -704,7 +704,7 @@ balanceMethodsList <- function(mlist, args, check = TRUE) {
             ## add methods.  If you roll your own, tough luck!
             return(mlist)
     }
-    for(i in seq(along = methods)) {
+    for(i in seq_along(methods)) {
         el <- methods[[i]]
         if(is(el, "MethodsList"))
             el <- Recall(el, moreArgs, FALSE)
@@ -734,7 +734,7 @@ sigToEnv <- function(signature, generic) {
     value <- new.env(parent = parent)
     classes <- as.character(signature)
     args <- names(signature)
-    for(i in seq(along=args))
+    for(i in seq_along(args))
         assign(args[[i]], classes[[i]], envir = value)
     ## missing args in signature have class "ANY"
     if(length(args) < length(genericSig))
@@ -883,7 +883,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
 
 .GenericInPrimitiveMethods <- function(mlist, f) {
     methods <- mlist@methods
-    for(i in seq(along = methods)) {
+    for(i in seq_along(methods)) {
         mi <- methods[[i]]
         if(is(mi, "function")) {
             body(mi, envir = environment(mi)) <-
@@ -941,7 +941,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     slist <- lapply(c(old, new), as.name)
     names(slist) <- c(new, old)
     vlist <- dlist
-    for(i in seq(along = vlist))
+    for(i in seq_along(vlist))
         vlist[[i]] <- do.call("substitute", list(vlist[[i]], slist))
     dnames <- names(dlist)
     whereNames <- match(old, dnames)
@@ -955,7 +955,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
 ## The search list, or a namespace's static search list, or an environment
 .envSearch <- function(env = topenv(parent.frame())) {
     if(identical(env, .GlobalEnv))
-        seq(along = search())
+        seq_along(search())
     else if(isNamespace(env) && !isBaseNamespace(env)) {
         ## the static environments for this namespace, ending with the base namespace
         value <- list(env)
@@ -1096,7 +1096,7 @@ matchDefaults <- function(method, generic) {
 getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
     .recMembers <- function(members, where) {
         all = vector("list", length(members))
-        for(i in seq(along=members)) {
+        for(i in seq_along(members)) {
             what <- members[[i]]
             f <- getGeneric(what, FALSE, where)
             if(!is.null(f))

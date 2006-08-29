@@ -32,7 +32,7 @@ function(x, file = "", append = FALSE,
     nc <- ncol(x)
 
     eor <- character(nr * nc)
-    eor[seq(1, nr - 1) * nc] <- "\n"    # newline for end of record
+    eor[seq.int(1, nr - 1) * nc] <- "\n"    # newline for end of record
 
     writeLines(paste(formatDL(rep.int(colnames(x), nr), c(t(x)), style =
                      "list", width = width, indent = indent),

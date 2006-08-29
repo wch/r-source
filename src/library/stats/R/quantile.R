@@ -24,7 +24,7 @@ quantile.default <-
             x <- sort(x, partial = unique(c(lo, hi)))
             i <- index > lo
             qs <- x[lo]
-            i <- seq(along=i)[i & !is.na(i)]
+            i <- seq_along(i)[i & !is.na(i)]
             h <- (index - lo)[i]
 ##          qs[i] <- qs[i] + .minus(x[hi[i]], x[lo[i]]) * (index[i] - lo[i])
             qs[i] <- ifelse(h == 0, qs[i], (1 - h) * qs[i] + h * x[hi[i]])

@@ -90,7 +90,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
             if (!is.null(model$na.action))
               ff<-naresid(model$na.action,ff)
 	    ll <- levels(ff)
-	    xlims <- range(seq(along=ll)) + c(-.5, .5)
+	    xlims <- range(seq_along(ll)) + c(-.5, .5)
             xx <- as.numeric(ff) ##need if rug or partial
 	    if(rug) {
 		xlims[1] <- xlims[1]-0.07*diff(xlims)
@@ -99,10 +99,10 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
 	    plot(1,0, type = "n", xlab = xlabs[i], ylab = ylabs[i],
                  xlim = xlims, ylim = ylims, main = main[i],xaxt="n", ...)
             if (use.factor.levels)
-                axis(1,at=seq(along=ll),labels=ll,...)
+                axis(1,at=seq_along(ll),labels=ll,...)
             else
                 axis(1)
-	    for(j in seq(along=ll)) {
+	    for(j in seq_along(ll)) {
 		ww <- which(ff==ll[j])[c(1,1)]
 		jf <- j + c(-.4, .4)
 		lines(jf,tms[ww,i], col=col.term, lwd=lwd.term, ...)

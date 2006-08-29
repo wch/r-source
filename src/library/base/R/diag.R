@@ -34,7 +34,7 @@ diag <- function(x = 1, nrow, ncol = n)
     dx <- dim(x)
     if(length(dx) != 2 || prod(dx) != length(x))
 	stop("only matrix diagonals can be replaced")
-    i <- seq(length=min(dx))
+    i <- seq_len(min(dx))
     if(length(value) != 1 && length(value) != length(i))
 	stop("replacement diagonal has wrong length")
     if(length(i) > 0) x[cbind(i, i)] <- value

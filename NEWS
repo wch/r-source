@@ -361,7 +361,8 @@ NEW FEATURES
 	call semantics: see the help page.)
 
     o   There is a new primitive seq.int() which is slightly more
-	restricted than seq() but often very much faster.
+	restricted than seq() but often very much faster, and
+	primitives seq_along() and seq_len() which are faster still.
 
     o   legend() has new parameters 'box.lwd' and 'box.lty'.
 

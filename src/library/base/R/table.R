@@ -4,7 +4,7 @@ table <- function (..., exclude = c(NA, NaN),
     list.names <- function(...) {
 	l <- as.list(substitute(list(...)))[-1]
 	nm <- names(l)
-	fixup <- if (is.null(nm)) seq(along = l) else nm == ""
+	fixup <- if (is.null(nm)) seq_along(l) else nm == ""
 	dep <- sapply(l[fixup], function(x)
 	    switch (deparse.level + 1,
 		    "", ## 0
@@ -173,7 +173,7 @@ as.table.default <- function(x, ...)
 	    dnx <- vector("list", length(dim(x)))
 	for(i in which(sapply(dnx, is.null)))
 	    dnx[[i]] <-
-                make.unique(LETTERS[seq(from=0, length = dim(x)[i]) %% 26 + 1],
+                make.unique(LETTERS[seq.int(from=0, length = dim(x)[i]) %% 26 + 1],
                             sep = "")
 	dimnames(x) <- dnx
 	class(x) <- c("table", oldClass(x))

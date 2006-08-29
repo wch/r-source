@@ -21,7 +21,7 @@ merge.data.frame <-
                 stop("'by' must match numbers of columns")
         } else if(is.logical(by)) {
             if(length(by) != nc) stop("'by' must match number of columns")
-            by <- seq(along = by)[by]
+            by <- seq_along(by)[by]
         } else stop("'by' must specify column(s) as numbers, names or logical")
         if(any(is.na(by))) stop("'by' must specify valid column(s)")
         unique(by)
@@ -108,7 +108,7 @@ merge.data.frame <-
         y <- y[c(m$yi, if(all.x) rep.int(1:1, nxx), if(all.y) m$y.alone),
                -by.y, drop = FALSE]
         if(all.x)
-            for(i in seq(along = y))
+            for(i in seq_along(y))
                 ## do it this way to invoke methods for e.g. factor
                 is.na(y[[i]]) <- (lxy+1):(lxy+nxx)
 
@@ -121,6 +121,6 @@ merge.data.frame <-
             else sort.list(bx[m$xi]),, drop=FALSE]
     }
 
-    row.names(res) <- seq(length=nrow(res))
+    row.names(res) <- seq_len(nrow(res))
     res
 }

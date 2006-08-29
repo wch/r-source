@@ -227,7 +227,7 @@ withRestarts <- function(expr, ...) {
         specs <- list(...)
         names <- names(specs)
         restarts <- vector("list", length(specs))
-        for (i in seq(along = specs)) {
+        for (i in seq_along(specs)) {
             spec <- specs[[i]]
             name <- names[i]
             if (is.function(spec))

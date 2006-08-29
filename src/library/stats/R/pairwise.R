@@ -80,7 +80,7 @@ function (x, n, p.adjust.method = p.adjust.methods, ...)
         prop.test(x[c(i,j)], n[c(i,j)], ...)$p.value
     }
     level.names <- names(x)
-    if (is.null(level.names)) level.names <- seq(along=x)
+    if (is.null(level.names)) level.names <- seq_along(x)
     PVAL <- pairwise.table(compare.levels, level.names, p.adjust.method)
     ans <- list(method = METHOD, data.name = DNAME,
                 p.value = PVAL, p.adjust.method=p.adjust.method)
@@ -91,10 +91,10 @@ function (x, n, p.adjust.method = p.adjust.methods, ...)
 pairwise.table <-
 function(compare.levels, level.names, p.adjust.method)
 {
-    ix <- seq(along=level.names)
+    ix <- seq_along(level.names)
     names(ix) <- level.names
     pp <- outer(ix[-1], ix[-length(ix)],function(ivec, jvec)
-          sapply(seq(along=ivec), function(k) {
+          sapply(seq_along(ivec), function(k) {
               i<-ivec[k]
               j<-jvec[k]
               if (i > j) compare.levels(i, j) else NA

@@ -160,7 +160,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
         envs <- NULL
         enames <- character(0)
         find <- function(v, keys, vals)
-            for (i in seq(along=keys))
+            for (i in seq_along(keys))
                 if (identical(v, keys[[i]]))
                     return(vals[i])
         getname <- function(e) find(e, envs, enames)
@@ -223,7 +223,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
     }
     else stop("source must be an environment or a list");
 
-    for (i in seq(along = vars)) {
+    for (i in seq_along(vars)) {
         key <- if (is.null(from) || is.environment(from))
             lazyLoadDBinsertVariable(vars[i], from, datafile,
                                      ascii, compress,  envhook)

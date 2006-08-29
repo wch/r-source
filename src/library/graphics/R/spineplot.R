@@ -23,12 +23,12 @@ function(formula, data = list(),
     y <- mf[,1]
     if(!is.factor(y))
         stop("dependent variable should be a factor")
-    x <- mf[,2]	
-  
+    x <- mf[,2]
+
     ## graphical parameters
     if(is.null(xlab)) xlab <- names(mf)[2]
     if(is.null(ylab)) ylab <- names(mf)[1]
-     
+
     spineplot(x, y, breaks = breaks, tol.ylab = tol.ylab, off = off,
               col = col, main = main, xlab = xlab, ylab = ylab,
               xaxlabels = xaxlabels, yaxlabels = yaxlabels,
@@ -71,7 +71,7 @@ function(x, y = NULL,
         ynam <- levels(y)
         ny <- length(ynam)
     }
-    
+
     ## graphical parameters
     if(is.null(col)) col <- gray.colors(ny)
     col <- rep(col, length.out = ny)
@@ -98,7 +98,7 @@ function(x, y = NULL,
         nx <- NROW(tab)
         xaxlabels <- if(is.null(xaxlabels)) breaks else rep(xaxlabels, length.out = (nx+1))
     }
-    
+
     ## compute rectangle positions on y axis
     yat <- rbind(0, apply(prop.table(tab, 1), 1, cumsum))
 
@@ -113,11 +113,11 @@ function(x, y = NULL,
         if(min(ylim) > 1 || max(ylim) < 0) ylim <- c(0, 1)
         else ylim <- c(max(min(ylim), 0), min(max(ylim), 1))
     }
-    
+
     ## setup plot
     plot(0, 0, xlim = xlim, ylim = ylim, type = "n", axes = FALSE,
          xaxs = "i", yaxs = "i", main = main, xlab = xlab, ylab = ylab)
-    
+
     ## compute coordinates
     ybottom <- as.vector(yat[-(ny+1),])
     ytop <- as.vector(yat[-1,])
@@ -134,20 +134,20 @@ function(x, y = NULL,
         axis(1, at = (xat[1:nx] + xat[2:(nx+1)] - off)/2, labels = xaxlabels, tick = FALSE)
     else
         axis(1, at = xat, labels = xaxlabels)
-    
+
     ## 2: axis with level names of y
     yat <- yat[,1]
     equidist <- any(diff(yat) < tol.ylab)
-    yat <- if(equidist) seq(1/(2*ny), 1-1/(2*ny), by = 1/ny)
+    yat <- if(equidist) seq.int(1/(2*ny), 1-1/(2*ny), by = 1/ny)
     else (yat[-1] + yat[-length(yat)])/2
     axis(2, at = yat, labels = yaxlabels, tick = FALSE)
-    
+
     ## 3: none
-    ## 4: simple numeric  
+    ## 4: simple numeric
     axis(4)
     if(!x.categorical) box()
-    
+
     ## return table visualized
     names(dimnames(tab)) <- c(xlab, ylab)
-    invisible(tab)  
+    invisible(tab)
 }

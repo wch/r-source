@@ -341,7 +341,7 @@ str.default <-
 		std.attr <- c(std.attr, "class")
 	    int.surv <- iSurv || is.integer(object)
 	    if(!int.surv) {
-		ob <- if(le > iv.len) object[seq(len=iv.len)] else object
+		ob <- if(le > iv.len) object[seq_len(iv.len)] else object
 		ao <- abs(ob <- ob[!is.na(ob)])
 	    }
 	    else if(iSurv)
@@ -399,7 +399,7 @@ str.default <-
 
     if(give.attr) { ## possible: || has.class && any(cl == 'terms')
 	nam <- names(a)
-	for (i in seq(len=length(a)))
+	for (i in seq_along(a))
 	    if (all(nam[i] != std.attr)) {# only `non-standard' attributes:
 		cat(indent.str, P0('- attr(*, "',nam[i],'")='),sep="")
 		str(a[[i]],

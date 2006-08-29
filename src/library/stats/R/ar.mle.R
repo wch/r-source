@@ -66,7 +66,7 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                 series = series, frequency = xfreq, call = match.call())
     if(order > 0) {
         xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
-        res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq(length=order)])) *
+        res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq_len(order)])) *
             var.pred/n.used
     }
     class(res) <- "ar"

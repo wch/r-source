@@ -25,7 +25,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
     N <- m + n
 
     r <- rank(c(x, y))
-    STATISTIC <- sum(pmin(r, N - r + 1)[seq(along = x)])
+    STATISTIC <- sum(pmin(r, N - r + 1)[seq_along(x)])
     TIES <- (length(r) != length(unique(r)))
 
     if(is.null(exact))
@@ -64,7 +64,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             y <- sort(y)
             ab <- function(sig) {
                 rab <- rank(c(x/sig, y))
-                sum(pmin(rab, N - rab + 1)[seq(along = x)])
+                sum(pmin(rab, N - rab + 1)[seq_along(x)])
             }
             ratio <- outer(x,y,"/")
             aratio <- ratio[ratio >= 0]
@@ -166,7 +166,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             alpha <- 1 - conf.level
             ab <- function(sig, zq) {
                 r <- rank(c(x / sig, y))
-                s <- sum(pmin(r, N -r + 1)[seq(along = x)])
+                s <- sum(pmin(r, N -r + 1)[seq_along(x)])
                 TIES <- (length(r) != length(unique(r)))
                 normalize(s, r, TIES, length(x), length(y)) - zq
             }

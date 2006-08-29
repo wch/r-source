@@ -226,7 +226,7 @@ function(vignetteDir)
 
     contents <- vector("list", length = length(vignetteFiles) * 4)
     dim(contents) <- c(length(vignetteFiles), 4)
-    for(i in seq(along = vignetteFiles))
+    for(i in seq_along(vignetteFiles))
         contents[i, ] <- vignetteInfo(vignetteFiles[i])
     colnames(contents) <- c("File", "Title", "Depends", "Keywords")
 
@@ -307,13 +307,13 @@ function(x, ...)
               "</head><body>",
               paste("<h2>Vignettes of package", pkg,"</h2>"))
 
-    if(is.null(vignetteIndex) || nrow(vignetteIndex)==0){
+    if(is.null(vignetteIndex) || nrow(vignetteIndex)==0) {
         html <- c(html, "Sorry, the package contains no vignette meta-information or index.",
                   "Please browse the <a href=\".\">directory</a>.")
     }
     else{
         html <- c(html, "<dl>")
-        for(k in seq(1, nrow(vignetteIndex))){
+        for(k in seq_len(nrow(vignetteIndex))){
             html <- c(html,
                       paste("<dt><a href=\"", vignetteIndex[k, "PDF"], "\">",
                             vignetteIndex[k, "PDF"], "</a>:", sep=""),

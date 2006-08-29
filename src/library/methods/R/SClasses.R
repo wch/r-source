@@ -74,7 +74,7 @@ representation <-
     ## unlike the S-Plus function, this does not form the class representation,
     ## since set SClass works separately with the slots and extends arguments.
     anames <- allNames(value)
-    for(i in seq(along=value)) {
+    for(i in seq_along(value)) {
         ei <- el(value, i)
         if(!is.character(ei) || length(ei) != 1)
             stop(gettextf("element %d of the representation was not a single character string", i), domain = NA)
@@ -107,13 +107,13 @@ prototype <- function(...)
     if(dataPart) {
         if(sum(data) > 1)
             stop("only one data object (unnamed argument to prototype) allowed")
-        obj <- unclass(props[[seq(along=data)[data] ]])
+        obj <- unclass(props[[seq_along(data)[data] ]])
         props <- props[!data]
         names <- names[!data]
     }
     else
         obj <- defaultPrototype()
-    for(i in seq(along = names))
+    for(i in seq_along(names))
         slot(obj, names[[i]], FALSE) <- props[[i]]
     new("classPrototypeDef", object = obj, slots = names, dataPart = dataPart)
 }
@@ -374,7 +374,7 @@ validObject <- function(object, test = FALSE, complete = FALSE)
     errors <- character()
     slotTypes <- classDef@slots
     slotNames <- names(slotTypes)
-    for(i in seq(along=slotTypes)) {
+    for(i in seq_along(slotTypes)) {
         classi <- slotTypes[[i]]
         sloti <- slot(object, slotNames[[i]])
         classDefi <- getClassDef(classi, where = where)
@@ -519,7 +519,7 @@ initialize <- function(.Object, ...) {
         dataPart <- elNamed(slotDefs, ".Data")
         if(is.null(dataPart)) dataPart <- "missing"
         if(length(supers) > 0) {
-            for(i in rev(seq(along = supers))) {
+            for(i in rev(seq_along(supers))) {
                 obj <- el(supers, i)
                 Classi <- class(obj)
                 ## test some cases that let information be copied into the
@@ -540,7 +540,7 @@ initialize <- function(.Object, ...) {
                     ## look for the common extensions, choose the first
                     ## one in the extensions of Class
                     which <- match(thisExtends, extendsi)
-                    which <- seq(along=which)[!is.na(which)]
+                    which <- seq_along(which)[!is.na(which)]
                     if(length(which) >0 ) {
                         Classi <- thisExtends[which[1]]
                         as(.Object, Classi) <- as(obj, Classi, strict = FALSE)
@@ -562,7 +562,7 @@ initialize <- function(.Object, ...) {
                               Class,
                               paste(snames[is.na(which)], collapse=", ")),
                      domain = NA)
-            for(i in seq(along=snames)) {
+            for(i in seq_along(snames)) {
                 slotName <- el(snames, i)
                 slotClass <- elNamed(slotDefs, slotName)
                 slotClassDef <- getClassDef(slotClass, package=ClassDef@package)

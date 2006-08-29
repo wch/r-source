@@ -278,7 +278,7 @@ setMethod <-
         allWhere <- findFunction(f, where = where)
         generics <-logical(length(allWhere))
         if(length(allWhere)>0) { # put methods into existing generic
-            for(i in seq(along = allWhere)) {
+            for(i in seq_along(allWhere)) {
                 fi <- get(f, allWhere[[i]])
                 geni <- is(fi, "genericFunction")
                 generics[[i]] <- geni
@@ -390,7 +390,7 @@ findMethod <- function(f, signature, where = topenv(parent.frame())) {
     fM <- mlistMetaName(f)
     where <- .findAll(fM, where)
     found <- logical(length(where))
-    for(i in seq(along = where)) {
+    for(i in seq_along(where)) {
         wherei <- where[[i]]
         mi <- get(fM, wherei, inherits=FALSE)
         mi <- getMethod(f, signature, where = wherei, optional = TRUE, mlist = mi)
@@ -612,7 +612,7 @@ signature <-
 {
     value <- list(...)
     names <- names(value)
-    for(i in seq(along=value)) {
+    for(i in seq_along(value)) {
         sigi <- el(value, i)
         if(!is.character(sigi) || length(sigi) != 1)
             stop(gettextf("bad class specified for element %d (should be a single character string)", i), domain = NA)
@@ -745,7 +745,7 @@ removeMethods <-
     if(!all)
         allWhere <- allWhere[1]
     value <- rep(TRUE, length(allWhere))
-    for(i in seq(along=allWhere)) {
+    for(i in seq_along(allWhere)) {
         db <- allWhere[[i]]
         obj <- get(fMetaName, db)
         ## remove non-empty methods list objects
@@ -756,7 +756,7 @@ removeMethods <-
     ## are none for this generic on other databases.
     cacheGenericsMetaData(f, fdef, FALSE, where)
     allWhere <- allWhere[value] # process functions only where methods successfully removed
-    for(i in seq(along=allWhere)) {
+    for(i in seq_along(allWhere)) {
         db <- as.environment(allWhere[[i]])
         if(isGeneric(f, db)) { # note use of isGeneric to work for primitives
             if(environmentIsLocked(db)) {
@@ -876,7 +876,7 @@ callGeneric <- function(...)
             call <- match.call(fdef, call)
             anames <- names(call)
             matched <- !is.na(match(anames, names(formals(fdef))))
-            for(i in seq(along = anames))
+            for(i in seq_along(anames))
                 if(matched[[i]])
                     call[[i]] <- as.name(anames[[i]])
         }

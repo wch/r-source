@@ -75,12 +75,12 @@ Rank  <- function(X, tol=1e-7) qr(X, tol=tol, LAPACK=FALSE)$rank
 
 Thin.row <- function(X, tol=1e-7) {
     QR <- qr(t(X), tol=tol, LAPACK=FALSE)
-    X[QR$pivot[seq(length=QR$rank)],,drop=FALSE]
+    X[QR$pivot[seq_len(QR$rank)],,drop=FALSE]
 }
 
 Thin.col <- function(X, tol=1e-7) {
     QR <- qr(X, tol=tol, LAPACK=FALSE)
-    X[,QR$pivot[seq(length=QR$rank)],drop=FALSE]
+    X[,QR$pivot[seq_len(QR$rank)],drop=FALSE]
 }
 
 
@@ -88,7 +88,7 @@ mauchly.test <- function(object, Sigma=diag(nrow=p),
                           T = Thin.row(proj(M)-proj(X)),
                           M = diag(nrow=p),
                           X = ~0,
-                          idata=data.frame(index=seq(length=p)),...)
+                          idata=data.frame(index=seq_len(p)),...)
 	 UseMethod("mauchly.test")
 
 mauchly.test.mlm <- function(object, ...)
@@ -99,7 +99,7 @@ mauchly.test.SSD <- function(object, Sigma=diag(nrow=p),
                           T = Thin.row(proj(M)-proj(X)),
                           M = diag(nrow=p),
                           X = ~0,
-                          idata=data.frame(index=seq(length=p)),...)
+                          idata=data.frame(index=seq_len(p)),...)
 {
     p <- ncol(object$SSD)
 
@@ -158,7 +158,7 @@ sphericity <- function(object, Sigma=diag(nrow=p),
                           T = Thin.row(proj(M)-proj(X)),
                           M = diag(nrow=p),
                           X = ~0,
-                          idata=data.frame(index=seq(length=p)))
+                          idata=data.frame(index=seq_len(p)))
 {
     p <- ncol(object$SSD)
 
@@ -187,7 +187,7 @@ anova.mlm <-
              T = Thin.row(proj(M) - proj(X)),
              M = diag(nrow = p),
              X = ~0,
-             idata = data.frame(index = seq(length=p)))
+             idata = data.frame(index = seq_len(p)))
 {
     if(length(list(object, ...)) > 1){
         cl <- match.call()
@@ -234,7 +234,7 @@ anova.mlm <-
             asgn <- object$assign[object$qr$pivot][p1]
             nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
             tlabels <- nmeffects[1 + unique(asgn)]
-	    ix <- split(seq(length=nrow(comp)), asgn)
+	    ix <- split(seq_len(nrow(comp)), asgn)
             ss <- lapply(ix, function(i) crossprod(comp[i,,drop=FALSE]))
 # This was broken. Something similar might work if we implement
 #  split.matrix a la split.data.frame
@@ -375,7 +375,7 @@ anova.mlmlist <- function (object, ...,
                            T = Thin.row(proj(M)-proj(X)),
                            M = diag(nrow=p),
                            X = ~0,
-                           idata=data.frame(index=seq(length=p)))
+                           idata=data.frame(index=seq_len(p)))
 {
     objects <- list(object, ...)
     p <- ncol(SSD(object)$SSD)

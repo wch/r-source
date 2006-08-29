@@ -57,7 +57,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     }
     snames <- colnames(x)
     colnames(resid) <- snames
-    dimnames(ar) <- list(seq(length=order), snames, snames)
+    dimnames(ar) <- list(seq_len(order), snames, snames)
     dimnames(var.pred) <- list(snames, snames)
     dimnames(partialacf) <- list(1:order.max, snames, snames)
     res <- list(order = order, ar = ar, var.pred = var.pred,

@@ -54,7 +54,7 @@ function(x, base = NULL)
     ## decrement by 1 one again.
     x <- as.numeric(sapply(x,
                            function(t)
-                           sum(t / base^seq(0, length = length(t)))))
+                           sum(t / base^seq.int(0, length = length(t)))))
     attr(x, "base") <- base
     attr(x, "lens") <- lens
     x
@@ -67,11 +67,11 @@ function(x, base = NULL)
     if(!is.numeric(base)) stop("wrong argument")
     lens <- attr(x, "lens")
     y <- vector("list", length = length(x))
-    for(i in seq(along = x)) {
+    for(i in seq_along(x)) {
         n <- lens[i]
         encoded <- x[i]
         decoded <- integer(n)
-        for(k in seq(length = n)) {
+        for(k in seq_len(n)) {
             decoded[k] <- encoded %/% 1
             encoded <- base * (encoded %% 1)
         }

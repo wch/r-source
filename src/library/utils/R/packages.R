@@ -560,7 +560,7 @@ setRepositories <- function(graphics = getOption("menu.graphics"))
         ## text-mode fallback
         cat(gettext("--- Please select repositories for use in this session ---\n"))
         nc <- length(default)
-        cat("", paste(seq(len=nc), ": ",
+        cat("", paste(seq_len(nc), ": ",
                       ifelse(default, "+", " "), " ", a[, 1],
                       sep=""),
             "", sep="\n")

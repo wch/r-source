@@ -58,7 +58,7 @@ makePrototypeFromClassDef <-
         pnames <- names(attributes(prototype))
     if(length(slots) == 0 && !is.null(prototype))
             return(prototype)
-    for(i in seq(along=extends)) {
+    for(i in seq_along(extends)) {
         what <- el(supers, i)
         exti <- extends[[i]]
         if(identical(exti@simple, FALSE))
@@ -131,7 +131,7 @@ makePrototypeFromClassDef <-
         snames <- snames[iData]
         slots <- slots[iData]
     }
-    for(j in seq(along = snames)) {
+    for(j in seq_along(snames)) {
         name <- el(snames, j)
         i <- match(name, pnames)
         if(is.na(i)) {
@@ -234,7 +234,7 @@ completeClassDefinition <-
         if(length(ext) > 0) {
             superProps <- vector("list", length(ext)+1)
             superProps[[1]] <- properties
-            for(i in seq(along=ext)) {
+            for(i in seq_along(ext)) {
                 eClass <- ext[[i]]
                 if(isClass(eClass, where = where))
                     superProps[[i+1]] <- getClassDef(eClass, where = where)@slots
@@ -271,7 +271,7 @@ completeClassDefinition <-
         }
         ## ensure that each element of the slots is a valid class reference
         undefClasses <- rep(FALSE, length(properties))
-        for(i in seq(along = properties)) {
+        for(i in seq_along(properties)) {
             cli <- properties[[i]]
             if(is.null(packageSlot(cli))) {
                 cliDef <- getClassDef(cli, where)
@@ -348,7 +348,7 @@ superClassDepth <-
     ext <- ClassDef@contains
     ## remove indirect and maybe non-simple superclasses (latter for inferring slots)
     ok <- rep(TRUE, length(ext))
-    for(i in seq(along=ext)) {
+    for(i in seq_along(ext)) {
         exti <- ext[[i]]
         if(.isIndirectExtension(exti) ||
            (simpleOnly && ! exti @simple))
@@ -359,7 +359,7 @@ superClassDepth <-
     notSoFar <- is.na(match(immediate, soFar))
     immediate <- immediate[notSoFar]
     super <- list(label=immediate, depth = rep(1, length(immediate)), ext = ext)
-    for(i  in seq(along = immediate)) {
+    for(i  in seq_along(immediate)) {
         what <- immediate[[i]]
         if(!is.na(match(what, soFar)))
            ## watch out for loops (e.g., matrix/array have mutual is relationship)
@@ -439,7 +439,7 @@ assignClassDef <-
                   sealed = FALSE)
     proto <- defaultPrototype()
     pnames <- names(protoSlots)
-    for(i in seq(along=protoSlots))
+    for(i in seq_along(protoSlots))
         slot(proto, pnames[[i]], FALSE) <- protoSlots[[i]]
     classRepClass <- .classNameFromMethods("classRepresentation")
     class(proto) <- classRepClass
@@ -624,7 +624,7 @@ reconcilePropertiesAndPrototype <-
       }
       ## check for conflicts in the slots
       allProps <- properties
-      for(i in seq(along=superClasses)) {
+      for(i in seq_along(superClasses)) {
           cl <- superClasses[[i]]
           clDef <- getClassDef(cl, where)
           if(is(clDef, "classRepresentation")) {
@@ -686,10 +686,10 @@ reconcilePropertiesAndPrototype <-
       ## An important detail is that these are
       ## set using slot<- with check=FALSE (because the slot will not be there already)
       ## what <- is.na(match(slots, pnames))
-      what <- seq(along=properties)
+      what <- seq_along(properties)
       props <- properties[what]
       what <- slots[what]
-      for(i in seq(along=what)) {
+      for(i in seq_along(what)) {
           propName <- el(what, i)
           if(!identical(propName, ".Data") &&
              is.null(attr(prototype, propName)))
@@ -766,7 +766,7 @@ showExtends <-
 {
     what <- names(ext)
     how <- character(length(ext))
-    for(i in seq(along=ext)) {
+    for(i in seq_along(ext)) {
         eli <- el(ext, i)
         if(is(eli, "SClassExtension")) {
             how[i] <-
@@ -857,7 +857,7 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
 completeExtends <-    function(ClassDef, class2, extensionDef, where) {
     ## check for indirect extensions => already completed
     ext <- ClassDef@contains
-    for(i in seq(along = ext)) {
+    for(i in seq_along(ext)) {
         if(.isIndirectExtension(ext[[i]])) {
             ClassDef <- .uncompleteClassDefinition(ClassDef, "contains")
             break
@@ -876,7 +876,7 @@ completeExtends <-    function(ClassDef, class2, extensionDef, where) {
             .transitiveSubclasses(ClassDef@className, class2, extensionDef, ClassDef@subclasses)
         ## insert the new is relationship, but without any recursive completion
         ## (asserted not to be needed if the subclass slot is complete)
-        for(i in seq(along = subclasses)) {
+        for(i in seq_along(subclasses)) {
             obji <- subclasses[[i]]
             ## don't override existing relations
             ## TODO:  have a metric that picks the "closest" relationship
@@ -892,7 +892,7 @@ completeSubclasses <-
     function(classDef, class2, extensionDef, where, classDef2 = getClassDef(class2, where)) {
     ## check for indirect extensions => already completed
     ext <- classDef@subclasses
-    for(i in seq(along = ext)) {
+    for(i in seq_along(ext)) {
         if(.isIndirectExtension(ext[[i]])) {
             classDef <- .uncompleteClassDefinition(classDef, "subclasses")
             break
@@ -904,7 +904,7 @@ completeSubclasses <-
             .transitiveExtends(class2, classDef@className, extensionDef, classDef@contains)
         ## insert the new is relationship, but without any recursive completion
         ## (asserted not to be needed if the subclass slot is complete)
-        for(i in seq(along = contains)) {
+        for(i in seq_along(contains)) {
             obji <- contains[[i]]
             cli <- contains[[i]]@superClass
             cliDef <- getClassDef(cli, where)
@@ -928,7 +928,7 @@ completeSubclasses <-
     superClassCase <- identical(slotName, "contains")
     fromTo <- ClassDef@className
     what <- names(ext)
-    for(i in seq(along=ext)) {
+    for(i in seq_along(ext)) {
         by <- what[[i]]
         if(isClass(by, where = where)) {
             byDef <- getClass(by, where = where)
@@ -954,7 +954,7 @@ completeSubclasses <-
         ok <- is.na(match(what, className))
         ## A class may not contain itself, directly or indirectly
         ## but a non-simple cyclic relation, involving setIs, is allowed
-        for(i in seq(along = what)[!ok]) {
+        for(i in seq_along(what)[!ok]) {
             exti <- ext[[i]]
             simple <- exti@simple
             if(simple) {
@@ -1145,7 +1145,7 @@ setDataPart <- function(object, value) {
                 subclasses <- ClassDef@subclasses
                 what <- names(subclasses)
                 value <- cl
-                for(i in seq(along = what)) {
+                for(i in seq_along(what)) {
                     ext <- subclasses[[i]]
                     ##TODO:  the following heuristic test for an "original"
                     ## subclass should be replaced by a suitable class (extending SClassExtension)
@@ -1190,7 +1190,7 @@ setDataPart <- function(object, value) {
 ## from that class to `by'
 .transitiveExtends <- function(from, by, byExt, moreExts) {
     what <- names(moreExts)
-    for(i in seq(along = moreExts)) {
+    for(i in seq_along(moreExts)) {
         toExt <- moreExts[[i]]
         to <- what[[i]]
         toExt <- .combineExtends(byExt, toExt, by, to)
@@ -1201,7 +1201,7 @@ setDataPart <- function(object, value) {
 
 .transitiveSubclasses <- function(by, to, toExt, moreExts) {
     what <- names(moreExts)
-    for(i in seq(along = moreExts)) {
+    for(i in seq_along(moreExts)) {
         byExt <- moreExts[[i]]
         byExt <- .combineExtends(byExt, toExt, by, to)
         moreExts[[i]] <- byExt
@@ -1328,7 +1328,7 @@ newClassRepresentation <- function(...) {
     value <- new("classRepresentation")
     slots <- list(...)
     slotNames <- names(slots)
-    for(i in seq(along = slotNames))
+    for(i in seq_along(slotNames))
         slot(value, slotNames[[i]], FALSE) <- slots[[i]]
     value
 }
@@ -1339,7 +1339,7 @@ newClassRepresentation <- function(...) {
     value <- new("classRepresentation")
     slots <- list(...)
     slotNames <- names(slots)
-    for(i in seq(along = slotNames))
+    for(i in seq_along(slotNames))
         slot(value, slotNames[[i]], FALSE) <- slots[[i]]
     value
 }
@@ -1383,7 +1383,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
                           paste(checkFor[!is.na(match(checkFor, locals))], collapse = ", "),
                           paste(newArgs, collapse = ", ")), domain = NA)
         ll <- vector("list", 2*n)
-        for(i in seq(length = n)) {
+        for(i in seq_len(n)) {
             ll[[i]] <- as.name(args[[i]])
             ll[[n+i]] <- as.name(newArgs[[i]])
         }
@@ -1414,7 +1414,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 # the bootstrap version of setting slots in completeClassDefinition
 .mergeClassDefSlots <- function(ClassDef, ...) {
     slots <- list(...); slotNames <- names(slots)
-    for(i in seq(along = slots))
+    for(i in seq_along(slots))
         slot(ClassDef, slotNames[[i]], FALSE) <- slots[[i]]
     ClassDef
 }
@@ -1422,7 +1422,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 ## the real version:  differs only in checking the slot values
 ..mergeClassDefSlots <- function(ClassDef, ...) {
     slots <- list(...); slotNames <- names(slots)
-    for(i in seq(along = slots))
+    for(i in seq_along(slots))
         slot(ClassDef, slotNames[[i]]) <- slots[[i]]
     ClassDef
 }

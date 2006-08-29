@@ -54,6 +54,6 @@ axTicks <- function(side, axp=NULL, usr=NULL, log=NULL) {
                     c(outer(c(1,2,5), x10))[-1])## 3
         r[usr[1] <= log10(r) & log10(r) <= usr[2]]
     } else { # linear
-        seq(axp[1], axp[2], length = 1 + abs(axp[3]))
+        seq.int(axp[1], axp[2], length = 1 + abs(axp[3]))
     }
 }

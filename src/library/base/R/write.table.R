@@ -16,10 +16,10 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         p <- ncol(x)
         d <- dimnames(x)
         if(is.null(d)) d <- list(NULL, NULL)
-        if(is.null(d[[1]])) d[[1]] <- seq(length=nrow(x))
+        if(is.null(d[[1]])) d[[1]] <- seq_len(nrow(x))
         if(is.null(d[[2]]) && p > 0) d[[2]] <-  paste("V", 1:p, sep="")
         if(is.logical(quote) && quote)
-            quote <- if(is.character(x)) seq(length=p) else numeric(0)
+            quote <- if(is.character(x)) seq_len(p) else numeric(0)
     } else {
         qset <- FALSE
         if(is.logical(quote) && quote) {

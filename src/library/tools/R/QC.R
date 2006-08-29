@@ -754,7 +754,7 @@ function(x, ...)
         writeLines(gettextf("Codoc mismatches from documentation object '%s':",
                             fname))
         xfname <- x[[fname]]
-        for(i in seq(along = xfname))
+        for(i in seq_along(xfname))
             writeLines(c(xfname[[i]][["name"]],
                          strwrap(gettextf("Code: %s",
                                           format_args(xfname[[i]][["code"]])),
@@ -1019,7 +1019,7 @@ function(package, lib.loc = NULL)
 
     ## Now go through the aliases.
     data_frames_checked <- character()
-    for(i in seq(along = aliases)) {
+    for(i in seq_along(aliases)) {
         ## Store the documented variable names.
         var_names_in_docs <- sort(Rd_var_names[[i]])
         ## Try finding the variable or data set given by the alias.
@@ -1678,7 +1678,7 @@ function(package, dir, file, lib.loc = NULL,
                     cat(deparse(e[[1]]), "(", deparse(e[[2]]),
                         ", ...): ", parg, "\n", sep = "")
             }
-            for(i in seq(along = e)) Recall(e[[i]])
+            for(i in seq_along(e)) Recall(e[[i]])
         }
     }
 
@@ -1734,7 +1734,7 @@ function(package, dir, file, lib.loc = NULL,
             stop(gettextf("parse error in file '%s'", file),
                  domain = NA)
     }
-    for(i in seq(along = exprs)) find_bad_exprs(exprs[[i]])
+    for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
     class(bad_exprs) <- "checkFF"
     if(verbose)
         invisible(bad_exprs)
@@ -1747,7 +1747,7 @@ function(x, ...)
 {
     if(length(x) > 0) {
         writeLines(gettextf("Foreign function calls without 'PACKAGE' argument:"))
-        for(i in seq(along = x)) {
+        for(i in seq_along(x)) {
             writeLines(paste(deparse(x[[i]][[1]]),
                              "(",
                              deparse(x[[i]][[2]]),
@@ -1904,14 +1904,14 @@ function(package, dir, lib.loc = NULL)
         }
         dotsPos <- which(gArgs == "...")
         ipos <- if(length(dotsPos) > 0)
-            seq(from = 1, length = dotsPos[1] - 1)
+            seq.int(from = 1, length = dotsPos[1] - 1)
         else
-            seq(along = gArgs)
+            seq_along(gArgs)
 
         ## careful, this could match multiply in incorrect funs.
         dotsPos <- which(mArgs == "...")
         if(length(dotsPos) > 0)
-            ipos <- ipos[seq(from = 1, length = dotsPos[1] - 1)]
+            ipos <- ipos[seq.int(from = 1, length = dotsPos[1] - 1)]
         posMatchOK <- identical(gArgs[ipos], mArgs[ipos])
         argMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0
         if(posMatchOK && argMatchOK)
@@ -2262,7 +2262,7 @@ function(package, dir, file, lib.loc = NULL)
                 matches <<- c(matches, list(p))
             }
             else if(is.recursive(e)) {
-                for(i in seq(along = e)) Recall(e[[i]], e)
+                for(i in seq_along(e)) Recall(e[[i]], e)
             }
         }
         if(missing(txt)) {
@@ -2278,7 +2278,7 @@ function(package, dir, file, lib.loc = NULL)
                               file),
                      domain = NA)
         }
-        for(i in seq(along = exprs))
+        for(i in seq_along(exprs))
             find_bad_exprs(exprs[[i]], NULL)
         matches
     }
@@ -2313,7 +2313,7 @@ function(x, ...)
     for(fname in names(x)) {
         writeLines(gettextf("File '%s':", fname))
         xfname <- x[[fname]]
-        for(i in seq(along = xfname)) {
+        for(i in seq_along(xfname)) {
             writeLines(strwrap(gettextf("found T/F in %s",
                                         paste(deparse(xfname[[i]]),
                                               collapse = "")),
@@ -2660,7 +2660,7 @@ function(x, ...)
     if(length(x$files_with_surely_bad_Rd)) {
         writeLines(gettext("Rd files with syntax errors:"))
         bad <- x$files_with_surely_bad_Rd
-        for(i in seq(along = bad)) {
+        for(i in seq_along(bad)) {
             writeLines(c(paste("  ", names(bad)[i], ":", sep = ""),
                          strwrap(bad[[i]], indent = 4, exdent = 4)))
         }
@@ -2678,7 +2678,7 @@ function(x, ...)
         bad <- bad[sapply(bad, length) > 0]
         if(length(bad)) {
             writeLines(gettext("Rd files with likely Rd problems:"))
-            for(i in seq(along = bad)) {
+            for(i in seq_along(bad)) {
                 writeLines(gettextf("Unaccounted top-level text in file '%s':",
                                     names(bad)[i]))
                 tags <- names(bad[[i]])
@@ -2708,8 +2708,8 @@ function(x, ...)
         bad[ , 2] <- sub("aliases", "\\\\alias", bad[ , 2])
         bad[ , 2] <- sub("doc_type", "\\\\docType", bad[ , 2])
         bad[ , 2] <- sub("encoding", "\\\\encoding", bad[ , 2])
-        ind <- split(seq(length = NROW(bad)), bad[, 1])
-        for(i in seq(along = ind)) {
+        ind <- split(seq_len(NROW(bad)), bad[, 1])
+        for(i in seq_along(ind)) {
             writeLines(c(paste(" ", paste(names(ind)[i], ":", sep = "")),
                          paste("   ",
                                apply(bad[ind[[i]], -1, drop = FALSE],
@@ -2722,7 +2722,7 @@ function(x, ...)
         writeLines(gettext("Rd files with non-ASCII section titles:"))
         bad <- x$files_with_non_ASCII_section_titles
         bad <- split(bad[, 2], bad[, 1])
-        for(i in seq(along = bad)) {
+        for(i in seq_along(bad)) {
             writeLines(c(paste(" ", paste(names(bad)[i], ":", sep = "")),
                          strwrap(bad[[i]], indent = 4, exdent = 6),
                          ""))
@@ -2744,7 +2744,7 @@ function(x, ...)
     if(length(x$files_with_missing_mandatory_tags)) {
         bad <- x$files_with_missing_mandatory_tags
         bad <- split(bad[, 1], bad[, 2])
-        for(i in seq(along = bad)) {
+        for(i in seq_along(bad)) {
             writeLines(c(gettextf("Rd files without '%s':",
                                   names(bad)[i]),
                          paste(" ", bad[[i]])))
@@ -2755,7 +2755,7 @@ function(x, ...)
     if(length(x$files_with_duplicated_unique_tags)) {
         bad <- x$files_with_duplicated_unique_tags
         bad <- split(bad[, 1], bad[, 2])
-        for(i in seq(along = bad)) {
+        for(i in seq_along(bad)) {
             writeLines(c(gettextf("Rd files with duplicate '%s':",
                                   names(bad)[i]),
                          paste(" ", bad[[i]])))
@@ -2767,7 +2767,7 @@ function(x, ...)
         writeLines(gettextf("Rd files with unknown sections:"))
         bad <- x$files_with_unknown_tags
         bad <- split(bad[, 2], bad[, 1])
-        for(i in seq(along = bad)) {
+        for(i in seq_along(bad)) {
             writeLines(strwrap(paste(names(bad)[i], ": ",
                                      paste(bad[[i]], collapse = " "),
                                      "\n", sep = ""),
@@ -2780,7 +2780,7 @@ function(x, ...)
         writeLines(gettext("Rd files with non-standard keywords:"))
         bad <- x$files_with_bad_keywords
         bad <- split(bad[, 2], bad[, 1])
-        for(i in seq(along = bad)) {
+        for(i in seq_along(bad)) {
             writeLines(strwrap(paste(names(bad)[i], ": ",
                                      paste(bad[[i]], collapse = " "),
                                      "\n", sep = ""),
@@ -3073,7 +3073,7 @@ function(dir)
                         "x",
                         "q"),
                       collapse = "|"))
-    for(i in seq(along = lines)) {
+    for(i in seq_along(lines)) {
         bad <- grep(bad_flags_regexp, flags[[i]], value = TRUE)
         if(length(bad))
             bad_flags <- c(bad_flags,
@@ -3088,7 +3088,7 @@ print.check_make_vars <-
 function(x, ...)
 {
     if(length(x) > 0) {
-        for(i in seq(along = x)) {
+        for(i in seq_along(x)) {
             writeLines(c(gettextf("Non-portable flags in variable '%s':",
                                   names(x)[i]),
                          sprintf("  %s", paste(x[[i]], collapse = " "))))
@@ -3177,7 +3177,7 @@ print.check_Rd_xrefs <-
 function(x, ...)
 {
     if(length(x) > 0) {
-        for(i in seq(along = x)) {
+        for(i in seq_along(x)) {
             writeLines(gettextf("Missing link(s) in documentation object '%s':",
                                 names(x)[i]))
             .pretty_print(x[[i]])
@@ -3198,7 +3198,7 @@ function(x)
 {
     y <- as.list(x)
     ind <- if(is.null(names(y)))
-        seq(along = y)
+        seq_along(y)
     else
         which(names(y) == "")
     if(any(ind)) {
@@ -3329,7 +3329,7 @@ function(txt)
         }
         else {
             exprs <- c(exprs, yy)
-            lines <- lines[-seq(length = i)]
+            lines <- lines[-seq_len(i)]
         }
     }
     attr(exprs, "bad_lines") <- bad_lines
@@ -3577,10 +3577,10 @@ function(dir) {
                )
                 matches <<- c(matches, list(e))
             if(is.recursive(e))
-                for(i in seq(along = e)) Recall(e[[i]])
+                for(i in seq_along(e)) Recall(e[[i]])
         }
         exprs <- parse(file)
-        for(i in seq(along = exprs)) walker(exprs[[i]])
+        for(i in seq_along(exprs)) walker(exprs[[i]])
         matches
     }
 
@@ -3596,7 +3596,7 @@ function(dir) {
     for(fname in names(x)) {
         writeLines(gettextf("File '%s':", fname))
         xfname <- x[[fname]]
-        for(i in seq(along = xfname)) {
+        for(i in seq_along(xfname)) {
             writeLines(strwrap(gettextf("found %s",
                                         paste(deparse(xfname[[i]]),
                                               collapse = "")),

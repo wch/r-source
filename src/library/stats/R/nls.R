@@ -50,7 +50,7 @@ nlsModel.plinear <- function(form, data, start, wts)
         temp <- start[[i]]
         storage.mode(temp) <- "double"
         assign(i, temp, envir = env)
-        ind[[i]] <- p2 + seq(along = start[[i]])
+        ind[[i]] <- p2 + seq_along(start[[i]])
         p2 <- p2 + length(start[[i]])
     }
     lhs <- eval(form[[2]], envir = env)
@@ -232,7 +232,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
         temp <- start[[i]]
         storage.mode(temp) <- "double"
         assign(i, temp, envir = env)
-        ind[[i]] <- parLength + seq(along = start[[i]])
+        ind[[i]] <- parLength + seq_along(start[[i]])
         parLength <- parLength + length(start[[i]])
     }
     getPars.noVarying <- function()

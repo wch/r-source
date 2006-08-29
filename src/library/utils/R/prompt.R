@@ -63,14 +63,14 @@ function(object, filename = NULL, name = NULL,
         arg.n[arg.n == "..."] <- "\\dots"
     }
     ## Construct the 'call' for \usage.
-    call <- paste0(name, "(")
-    for(i in seq(length = n)) {                       # i-th argument
-        call <- paste0(call, arg.names[i],
+    Call <- paste0(name, "(")
+    for(i in seq_len(n)) {                       # i-th argument
+        Call <- paste0(Call, arg.names[i],
                        if(!is.missing.arg(argls[[i]]))
                        paste0(" = ",
                               paste(deparse(argls[[i]], width.cutoff= 500),
                                     collapse="\n")))
-        if(i != n) call <- paste0(call, ", ")
+        if(i != n) Call <- paste0(Call, ", ")
     }
 
     ## Construct the definition for \examples.
@@ -93,7 +93,7 @@ function(object, filename = NULL, name = NULL,
              paste("  ~~ A concise (1-5 lines) description of what",
                    "the function does. ~~"),
              "}"),
-             usage = c("\\usage{", paste0(call, ")"), "}",
+             usage = c("\\usage{", paste0(Call, ")"), "}",
              paste("%- maybe also 'usage' for other objects",
                    "documented here.")),
              arguments = NULL,

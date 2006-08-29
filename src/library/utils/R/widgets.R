@@ -13,7 +13,7 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
         cat(title, "\n")
         def <- if(is.null(preselect)) rep(FALSE, nc)
         else list %in% preselect
-        op <- paste(format(seq(length=nc)), ": ",
+        op <- paste(format(seq_len(nc)), ": ",
                     ifelse(def, "+", " "), " ", list, sep="")
         if(nc > 10) {
             fop <- format(op)

@@ -243,7 +243,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
             symbols <- getNativeSymbolInfo(symNames, dll, unlist = FALSE,
                                                withRegistrationInfo = TRUE)
-            sapply(seq(along = symNames),
+            sapply(seq_along(symNames),
                     function(i) {
                         ## could vectorize this outside of the loop and assign to different
                         ## variable to maintain the original names.
@@ -364,7 +364,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         if(!nchar(Sys.getenv("R_CROSS_BUILD"))) {
             dlls <- list()
             dynLibs <- nsInfo$dynlibs
-            for (i in seq(along = dynLibs)) {
+            for (i in seq_along(dynLibs)) {
                lib <- dynLibs[i]
                dlls[[ lib ]]  <- library.dynam(lib, package, package.lib)
                assignNativeRoutines(dlls[[lib]], lib, env, nsInfo$nativeRoutines[[lib]])
@@ -426,13 +426,13 @@ loadNamespace <- function (package, lib.loc = NULL,
                 pm <- allMethods[!(allMethods %in% expMethods)]
                 if(length(pm) > 0) {
                     prim <- logical(length(pm))
-                    for(i in seq(along = prim)) {
+                    for(i in seq_along(prim)) {
                         f <- methods::getFunction(pm[[i]], FALSE, FALSE, ns)
                         prim[[i]] <- is.primitive(f)
                     }
                     expMethods <- c(expMethods, pm[prim])
                 }
-                for(i in seq(along = expMethods)) {
+                for(i in seq_along(expMethods)) {
                     mi <- expMethods[[i]]
                     if(!(mi %in% exports) &&
                        exists(mi, envir = ns, mode = "function", inherits = FALSE))
@@ -668,7 +668,7 @@ namespaceImportFrom <- function(self, ns, vars) {
         if(!.isMethodsDispatchOn())
             return(numeric())
         mm <- ".__M__" # methods:::mlistMetaName() is slow
-        seq(along = impvars)[substr(impvars, 1, nchar(mm, type = "c")) == mm]
+        seq_along(impvars)[substr(impvars, 1, nchar(mm, type = "c")) == mm]
     }
     if (is.character(self))
         self <- getNamespace(self)
@@ -722,7 +722,7 @@ namespaceImportFrom <- function(self, ns, vars) {
 }
 
 namespaceImportClasses <- function(self, ns, vars) {
-    for(i in seq(along = vars))
+    for(i in seq_along(vars))
         vars[[i]] <- methods:::classMetaName(vars[[i]])
     namespaceImportFrom(self, asNamespace(ns), vars)
 }
@@ -735,7 +735,7 @@ namespaceImportMethods <- function(self, ns, vars) {
                       methods:::getPackageName(ns),
                       paste(vars[is.na(match(vars, allMlists))],
                             collapse = ", ")), domain = NA)
-    for(i in seq(along = allMlists)) {
+    for(i in seq_along(allMlists)) {
         ## import methods list objects if asked for
         ## or if the corresponding generic was imported
         g <- allMlists[[i]]
@@ -787,7 +787,7 @@ namespaceExport <- function(ns, vars) {
                                          "previous exports %s are being replaced"),
                                 paste(sQuote(expnames[ex]), collapse = ", ")),
                         call. = FALSE, domain = NA)
-            for (i in seq(along = new))
+            for (i in seq_along(new))
                 assign(expnames[i], intnames[i], env = exports)
         }
         makeImportExportNames <- function(spec) {
@@ -998,7 +998,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                            else
                              val <- as.character(e)
                            if(length(val))
-                             fixes[seq(along = val)] <- val
+                             fixes[seq_along(val)] <- val
                          }
                          symNames <- symNames[-idx]
                        }
@@ -1044,7 +1044,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
          importClasses = importClasses, importMethods = importMethods,
          exportClasses = exportClasses, exportMethods = exportMethods,
          dynlibs = dynlibs, nativeRoutines = nativeRoutines,
-         S3methods = S3methods[seq(len = nS3), ,drop = FALSE])
+         S3methods = S3methods[seq_len(nS3), ,drop = FALSE])
 } ## end{parseNamespaceFile}
 
 registerS3method <- function(genname, class, method, envir = parent.frame()) {
@@ -1185,13 +1185,13 @@ registerS3methods <- function(info, package, env)
     if(any(localGeneric)) {
         lin <- Info[localGeneric, , drop = FALSE]
         S3MethodsTable <- get(".__S3MethodsTable__.", envir = env, inherits = FALSE)
-        for(i in seq(len = nrow(lin)))
+        for(i in seq_len(nrow(lin)))
             assign(lin[i,4], get(lin[i,3], envir = env), envir = S3MethodsTable)
     }
 
     ## now the rest
     fin <- Info[!l2, , drop = FALSE]
-    for(i in seq(len = nrow(fin)))
+    for(i in seq_len(nrow(fin)))
         .registerS3method(fin[i, 1], fin[i, 2], fin[i, 3], fin[i, 4], env)
 
     setNamespaceInfo(env, "S3methods",

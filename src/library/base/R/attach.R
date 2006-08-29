@@ -8,7 +8,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
                        ".packageName", ".noGenerics", ".required",
                        ".no_S3_generics")
         sp <- search()
-        for (i in seq(along=sp)) {
+        for (i in seq_along(sp)) {
             if (identical(env, as.environment(i))) {
                 db.pos <- i
                 break
@@ -23,7 +23,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
             gen <- gen[from != ".GlobalEnv"]
             ob <- ob[!(ob %in% gen)]
         }
-        ipos <- seq(along = sp)[-c(db.pos, match(c("Autoloads", "CheckExEnv"), sp, 0))]
+        ipos <- seq_along(sp)[-c(db.pos, match(c("Autoloads", "CheckExEnv"), sp, 0))]
         for (i in ipos) {
             obj.same <- match(objects(i, all = TRUE), ob, nomatch = 0)
             if (any(obj.same > 0)) {

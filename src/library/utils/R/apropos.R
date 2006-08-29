@@ -4,7 +4,7 @@ apropos <- function (what, where = FALSE, mode = "any")
 	what <- as.character(substitute(what))
     x <- character(0)
     check.mode <- mode != "any"
-    for (i in seq(search())) {
+    for (i in seq_along(search())) {
 	ll <- length(li <- ls(pos = i, pattern = what, all.names = TRUE))
 	if (ll) {
 	    if(check.mode)

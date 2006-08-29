@@ -98,7 +98,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ob <- ob[!(ob %in% gen)]
         }
         fst <- TRUE
-        ipos <- seq(along = sp)[-c(lib.pos, match(c("Autoloads", "CheckExEnv"), sp, 0))]
+        ipos <- seq_along(sp)[-c(lib.pos, match(c("Autoloads", "CheckExEnv"), sp, 0))]
         for (i in ipos) {
             obj.same <- match(objects(i, all = TRUE), ob, nomatch = 0)
             if (any(obj.same > 0)) {
@@ -559,7 +559,7 @@ function(chname, package = NULL, lib.loc = NULL,
         if(verbose)
             message(gettextf("shared library '%s' already loaded", chname),
                     domain = NA)
-        return(invisible(dll_list[[ seq(along = dll_list)[ind] ]]))
+        return(invisible(dll_list[[ seq_along(dll_list)[ind] ]]))
     }
     if(.Platform$OS.type == "windows") {
         ## Make it possible to find other DLLs in the same place as

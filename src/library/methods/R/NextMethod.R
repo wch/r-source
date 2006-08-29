@@ -38,7 +38,7 @@
     if(!identical(typeof(def), "closure"))
         return(FALSE)
     def <- as.list(def)
-    for(i in rev(seq(along = def))) {
+    for(i in rev(seq_along(def))) {
         if(is.call(def[[i]]) && !is.na(match("callNextMethod", all.names(def[[i]]))))
             return(TRUE)
     }

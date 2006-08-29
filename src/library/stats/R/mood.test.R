@@ -13,7 +13,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"), ...)
     if ((s <- m + n) < 3)
         stop("not enough observations")
     r <- rank(c(x, y))
-    z <- ((sum((r[seq(along = x)] - (s + 1) / 2)^2) - m * (s^2 - 1) / 12)
+    z <- ((sum((r[seq_along(x)] - (s + 1) / 2)^2) - m * (s^2 - 1) / 12)
           / sqrt(m * n * (s + 1) * (s + 2) * (s - 2) / 180))
     p <- pnorm(z)
     PVAL <- switch(alternative,

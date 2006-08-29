@@ -95,7 +95,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         } else dimnames(qty) <- list(seq(nrow(qty)), NULL)
         qtx <- qr.qty(qr.e, qtx)
         dimnames(qtx) <- list(seq(nrow(qtx)) , dnx)
-        for(i in seq(along=nmstrata)) {
+        for(i in seq_along(nmstrata)) {
             select <- asgn.e==(i-1)
             ni <- sum(select)
             if(!ni) next
@@ -140,7 +140,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
     asgn <- x$assign[x$qr$pivot[1:x$rank]]
     effects <- x$effects
     if(!is.null(effects))
-        effects <- as.matrix(effects)[seq(along=asgn),,drop=FALSE]
+        effects <- as.matrix(effects)[seq_along(asgn),,drop=FALSE]
     rdf <- x$df.resid
     resid <- as.matrix(x$residuals)
     wt <- x$weights
@@ -261,7 +261,7 @@ summary.aov <- function(object, intercept = FALSE, split,
                     term.coefs <- strsplit(df.names[asgn == i], ":", fixed=TRUE)
                     ttc <- sapply(term.coefs, function(x) x[sp])
                     new <- lapply(old, function(x)
-                                  seq(along=ttc)[ttc %in% marg.coefs[x]])
+                                  seq_along(ttc)[ttc %in% marg.coefs[x]])
                     split[[ names[i+1] ]] <- new
                 }
             }
@@ -274,7 +274,7 @@ summary.aov <- function(object, intercept = FALSE, split,
     nterms <- length(uasgn)
     effects <- object$effects
     if(!is.null(effects))
-        effects <- as.matrix(effects)[seq(along=asgn),,drop=FALSE]
+        effects <- as.matrix(effects)[seq_along(asgn),,drop=FALSE]
     rdf <- object$df.resid
     nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))
     coef <- as.matrix(object$coef)
@@ -325,7 +325,7 @@ summary.aov <- function(object, intercept = FALSE, split,
                 if(!missing(split) && !is.na(int <- match(nmi, ns))) {
                     df <- c(df, unlist(lapply(split[[int]], length)))
                     if(is.null(nms <- names(split[[int]])))
-                        nms <- paste("C", seq(along = split[[int]]), sep = "")
+                        nms <- paste("C", seq_along(split[[int]]), sep = "")
                     ss <- c(ss, unlist(lapply(split[[int]],
                                               function(i, e)
                                               sum(e[i]^2), effects[ai, y])))
@@ -460,7 +460,7 @@ print.aovlist <- function(x, ...)
         } else cat("\nGrand Mean:", format(mn[1]), "\n")
         nx <- nx[-1]
     }
-    for(ii in seq(along = nx)) {
+    for(ii in seq_along(nx)) {
         i <- nx[ii]
         cat("\nStratum ", ii, ": ", i, "\n", sep = "")
         xi <- x[[i]]
@@ -481,7 +481,7 @@ summary.aovlist <- function(object, ...)
     }
     x <- vector(length = length(strata), mode = "list")
     names(x) <- paste("Error:", strata)
-    for(i in seq(along = strata))
+    for(i in seq_along(strata))
         x[[i]] <- do.call("summary", c(list(object = object[[i]]), dots))
     class(x) <- "summary.aovlist"
     x
@@ -501,7 +501,7 @@ coef.listof <- function(object, ...)
 {
     val <- vector("list", length(object))
     names(val) <- names(object)
-    for(i in seq(along=object)) val[[i]] <- coef(object[[i]])
+    for(i in seq_along(object)) val[[i]] <- coef(object[[i]])
     class(val) <- "listof"
     val
 }
@@ -524,7 +524,7 @@ se.contrast.aov <-
                       dimnames = list(nmeffect, colnames(contrast)))
         for(i in seq(nterms)) {
             select <- (asgn == uasgn[i])
-            res[i,] <- colSums(effects[seq(along=asgn)[select], , drop = FALSE]^2)
+            res[i,] <- colSums(effects[seq_along(asgn)[select], , drop = FALSE]^2)
         }
         res
     }
@@ -583,7 +583,7 @@ se.contrast.aovlist <-
                       rep.int(n.object - 1, nrow(c.qr) - length(e.assign)))
         res <- vector(length = n.object, mode = "list")
         names(res) <- names(object)
-        for(j in seq(along=names(object))) {
+        for(j in seq_along(names(object))) {
             strata <- object[[j]]
             if(is.qr(strata$qr)) {
                 scontrast <- c.qr[e.assign == (j - 1), , drop = FALSE]
@@ -594,10 +594,10 @@ se.contrast.aovlist <-
                 res.i <-
                     matrix(0, length(uasgn), ncol(effects),
                            dimnames = list(nm[1 + uasgn], colnames(contrast)))
-                for(i in seq(along = uasgn)) {
+                for(i in seq_along(uasgn)) {
                     select <- (asgn == uasgn[i])
                     res.i[i, ] <-
-                        colSums(effects[seq(along=asgn)[select], , drop = FALSE]^2)
+                        colSums(effects[seq_along(asgn)[select], , drop = FALSE]^2)
                 }
                 res[[j]] <- res.i
             }
@@ -657,7 +657,7 @@ se.contrast.aovlist <-
     effic <- eff.aovlist(object)
     ## Need to identify the lowest stratum where each nonzero term appears
     eff.used <- apply(effic, 2,
-                      function(x, ind = seq(length(x))) {
+                      function(x, ind = seq_along(x)) {
                           temp <- (x > 0)
                           if(sum(temp) == 1) temp
                           else max(ind[temp]) == ind
@@ -672,7 +672,7 @@ se.contrast.aovlist <-
     rse.list <- sapply(object[unique(strata.nms)], SS)
     wgt <- matrix(0, nrow = length(var.nms), ncol = ncol(contrast),
                   dimnames = list(var.nms, colnames(contrast)))
-    for(i in seq(length(var.nms)))
+    for(i in seq_along(var.nms))
         wgt[i, ] <- weights[[strata.nms[i]]][var.nms[i], , drop = FALSE]
     rse <- rse.list[strata.nms]
     eff <- effic[eff.used]

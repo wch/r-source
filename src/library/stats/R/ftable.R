@@ -115,9 +115,9 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
         if(!is.null(data) && is.environment(data)) {
             varnames <- names(data)
             if(rhs.has.dot)
-                rvars <- seq(along = varnames)[-cvars]
+                rvars <- seq_along(varnames)[-cvars]
             if(lhs.has.dot)
-                cvars <- seq(along = varnames)[-rvars]
+                cvars <- seq_along(varnames)[-rvars]
         }
         else {
             if(lhs.has.dot || rhs.has.dot)
@@ -162,7 +162,7 @@ format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
         cplensU <- c(1, cumprod(lens))
         cplensD <- rev(c(1, cumprod(rev(lens))))
         y <- NULL
-        for (i in rev(seq(along = lst))) {
+        for (i in rev(seq_along(lst))) {
             ind <- 1 + seq(from = 0, to = lens[i] - 1) * cplensD[i + 1]
             tmp <- character(length = cplensD[i])
             tmp[ind] <- charQuote(lst[[i]])
@@ -297,7 +297,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
             n.col.vars <- length(col.vars)
             if(is.null(names(col.vars)))
                 names(col.vars) <-
-                    paste("Factor", seq(along = col.vars), sep = ".")
+                    paste("Factor", seq_along(col.vars), sep = ".")
             else {
                 nam <- names(col.vars)
                 ind <- which(nchar(nam) == 0)

@@ -55,7 +55,7 @@ smooth.spline <-
     x <- signif(x, 6)
     ux <- unique(sort(x))
     ox <- match(x, ux)
-    tmp <- matrix(unlist(tapply(seq(along=y), ox,
+    tmp <- matrix(unlist(tapply(seq_along(y), ox,
 				function(i,y,w)
 				c(sum(w[i]), sum(w[i]*y[i]),sum(w[i]*y[i]^2)),
 				y = y, w = w)),

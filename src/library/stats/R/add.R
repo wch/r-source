@@ -356,7 +356,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     y <- object$residuals + predict(object)
     na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
     for(i in 1:ns) {
-	ii <- seq(along=asgn)[asgn == ndrop[i]]
+	ii <- seq_along(asgn)[asgn == ndrop[i]]
 	if(all.cols) jj <- setdiff(seq(ncol(x)), ii)
 	else jj <- setdiff(na.coef, ii)
 	z <- if(iswt) lm.wfit(x[, jj, drop = FALSE], y, wt, offset=offset)
@@ -438,7 +438,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     wt <- object$prior.weights
     if(is.null(wt)) wt <- rep.int(1, n)
     for(i in 1:ns) {
-	ii <- seq(along=asgn)[asgn == ndrop[i]]
+	ii <- seq_along(asgn)[asgn == ndrop[i]]
 	jj <- setdiff(seq(ncol(x)), ii)
 	z <-  glm.fit(x[, jj, drop = FALSE], y, wt, offset=object$offset,
 		      family=object$family, control=object$control)

@@ -13,7 +13,7 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
     if(!is.list(by))
         stop("'by' must be a list")
     if(is.null(names(by)))
-        names(by) <- paste("Group", seq(along = by), sep = ".")
+        names(by) <- paste("Group", seq_along(by), sep = ".")
     else {
         nam <- names(by)
         ind <- which(nchar(nam) == 0)
@@ -25,9 +25,9 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
     z <- y[[1]]
     d <- dim(z)
     w <- NULL
-    for (i in seq(along = d)) {
+    for (i in seq_along(d)) {
         j <- rep.int(rep.int(seq(1 : d[i]),
-                     prod(d[seq(length = i - 1)]) * rep.int(1, d[i])),
+                     prod(d[seq_len(i - 1)]) * rep.int(1, d[i])),
                  prod(d[seq(from = i + 1, length = length(d) - i)]))
         w <- cbind(w, dimnames(z)[[i]][j])
     }

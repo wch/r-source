@@ -66,11 +66,11 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     ## clock-wise in equal increments.
     angles <-
 	if(full)
-	    seq(0, 2*pi, length=n.seg+1)[-(n.seg+1)]
+	    seq.int(0, 2*pi, length=n.seg+1)[-(n.seg+1)]
 	else if (draw.segments)
-	    seq(0, pi, length=n.seg+1)[-(n.seg+1)]
+	    seq.int(0, pi, length=n.seg+1)[-(n.seg+1)]
 	else
-	    seq(0, pi, length=n.seg)
+	    seq.int(0, pi, length=n.seg)
 
     if (length(angles) != n.seg)
 	stop("length of 'angles' must equal 'ncol(x)'")
@@ -108,7 +108,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	for (i in 1:n.loc) { ## for each location, draw a segment diagram
 	    px <- py <- numeric()
 	    for (j in 1:n.seg) {
-		k <- seq(from = aangl[j], to = aangl[j+1], by = 1*deg)
+		k <- seq.int(from = aangl[j], to = aangl[j+1], by = 1*deg)
 		px <- c(px, xloc[i], s.x[i,j], x[i,j]*cos(k) + xloc[i], NA)
 		py <- c(py, yloc[i], s.y[i,j], x[i,j]*sin(k) + yloc[i], NA)
 	    }
@@ -145,7 +145,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	if (draw.segments) {
 	    px <- py <- numeric()
 	    for (j in 1:n.seg) {
-		k <- seq(from = aangl[j], to = aangl[j+1], by = 1*deg)
+		k <- seq.int(from = aangl[j], to = aangl[j+1], by = 1*deg)
 		px <- c(px, key.loc[1], key.x[j], len * cos(k) + key.loc[1], NA)
 		py <- c(py, key.loc[2], key.y[j], len * sin(k) + key.loc[2], NA)
 	    }

@@ -296,7 +296,7 @@ replications <- function(formula, data = NULL, na.action)
     dummy <- numeric(length(attr(data, "row.names")))
     notfactor <- !sapply(data, function(x) inherits(x, "factor"))
     balance <- TRUE
-    for(i in seq(length = n)) {
+    for(i in seq_len(n)) {
 	l <- labels[i]
 	if(o[i] < 1 || substring(l, 1, 5) == "Error") { z[[l]] <- NULL; next }
 	select <- vars[f[, i] > 0]
@@ -422,7 +422,7 @@ eff.aovlist <- function(aovlist)
 	lapply(aovlist, function(x)
 	   {
 	       asgn <- x$assign[x$qr$pivot[1:x$rank]]
-	       sp <- split(seq(along=asgn), attr(terms(x), "term.labels")[asgn])
+	       sp <- split(seq_along(asgn), attr(terms(x), "term.labels")[asgn])
                sp <- sp[names(sp) %in% nm]
 	       sapply(sp, function(x, y) {
                    y <- y[x, x, drop = FALSE]

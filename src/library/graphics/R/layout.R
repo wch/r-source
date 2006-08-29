@@ -65,7 +65,7 @@ layout.show <- function(n=1)
 
     o.par <- par(mar=rep.int(0,4))
     on.exit(par(o.par))
-    for (i in seq(length=n)) {
+    for (i in seq_len(n)) {
 	plot.new()
 	box()
 	text(0.5, 0.5, i)

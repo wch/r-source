@@ -8,19 +8,6 @@ lapply <- function (X, FUN, ...)
     .Internal(lapply(X, FUN))
 }
 
-if(FALSE) {
-lapply <- function(X, FUN, ...) {
-    FUN <- match.fun(FUN)
-    if (!is.list(X))
-	X <- as.list(X)
-    rval <- vector("list", length(X))
-    for(i in seq(along = X))
-	rval[i] <- list(FUN(X[[i]], ...))
-    names(rval) <- names(X)		  # keep `names' !
-    return(rval)
-}
-}
-
 rapply <-
     function(object, f, classes = "ANY", deflt = NULL,
              how = c("unlist", "replace", "list"), ...)

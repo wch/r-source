@@ -2,14 +2,14 @@ read.DIF <- function(file, header = FALSE, dec = ".",
          row.names, col.names, as.is = !stringsAsFactors,
          na.strings = "NA", colClasses = NA,
          nrows = -1, skip = 0,
-         check.names = TRUE, 
+         check.names = TRUE,
          blank.lines.skip = TRUE,
          stringsAsFactors = default.stringsAsFactors())
 {
     if (.Platform$OS.type == "windows" && identical(file, "clipboard")) {
 	if (!(5 %in% getClipboardFormats()) ) stop("No DIF data on clipboard")
 	lines <- readClipboard(5)
-    } else 
+    } else
     {
 	lines <- readLines(file)
     }
@@ -68,14 +68,14 @@ read.DIF <- function(file, header = FALSE, dec = ".",
 	    data[row, col] <- stringval
 	}
     }
-    
+
     if(skip > 0) data <- data[-(1:skip),]
- 
+
     ## determine header, no of cols.
     nlines <- nrow(data)
-    
+
     if (!nlines) {
-        if (missing(col.names)) 
+        if (missing(col.names))
             stop("no lines available in input")
         else {
             tmp <- vector("list", length(col.names))
@@ -86,7 +86,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     }
     first <- data[1,]
     if (first[1] == "") first <- first[-1]
-    
+
     col1 <- if(missing(col.names)) length(first) else length(col.names)
     cols <- ncol
 
@@ -137,15 +137,15 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     known <- colClasses %in%
                 c("logical", "integer", "numeric", "complex", "character")
     keep <- !(colClasses %in% "NULL")
-    
+
     if (blank.lines.skip) data <- data[apply(data, 1, function(x) !all(x == "")),]
-    if (nrows > -1 && nrows < nrow(data)) data <- data[seq(length.out = nrows),]
+    if (nrows > -1 && nrows < nrow(data)) data <- data[seq_len(nrows),]
     nlines <- nrow(data)
-    
+
     data[data %in% na.strings] <- NA
     data <- as.data.frame(data, stringsAsFactors = FALSE)
     names(data) <- col.names
- 
+
     ##	now we have the data;
     ##	convert to numeric or factor variables
     ##	(depending on the specified value of "as.is").
@@ -179,9 +179,9 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     do <- keep & !known # & !as.is
     if(rlabp) do[1] <- FALSE # don't convert "row.names"
     for (i in (1:cols)[do]) {
-        data[[i]] <- 
+        data[[i]] <-
             if (is.na(colClasses[i])) {
-            	if (!any(types[,i] == "character")) 
+            	if (!any(types[,i] == "character"))
                     type.convert(data[[i]], as.is = as.is[i], dec = dec,
                                  na.strings = character(0))
                 else data[[i]]
@@ -201,9 +201,9 @@ read.DIF <- function(file, header = FALSE, dec = ".",
 	    data <- data[-1]
             keep <- keep[-1]
 	}
-	else row.names <- as.character(seq(len=nlines))
+	else row.names <- as.character(seq_len(nlines))
     } else if (is.null(row.names)) {
-	row.names <- as.character(seq(len=nlines))
+	row.names <- as.character(seq_len(nlines))
     } else if (is.character(row.names)) {
 	if (length(row.names) == 1) {
 	    rowvar <- (1:cols)[match(col.names, row.names, 0) == 1]

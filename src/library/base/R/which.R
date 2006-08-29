@@ -2,7 +2,7 @@ which <- function(x, arr.ind = FALSE)
 {
     if(!is.logical(x))
 	stop("argument to 'which' is not logical")
-    wh <- seq(along=x)[ll <- x & !is.na(x)]
+    wh <- seq_along(x)[ll <- x & !is.na(x)]
     if ((m <- length(wh)) > 0) {
 	dl <- dim(x)
 	if (is.null(dl) || !arr.ind) {

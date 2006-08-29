@@ -49,9 +49,9 @@ package.dependencies <-
                     x1 <- rep(0, 6)
                     y <- c(R.version$major,
                            strsplit(R.version$minor, ".", fixed=TRUE)[[1]])
-                    x1[seq(along=y)] <- y
+                    x1[seq_along(y)] <- y
                     y <- strsplit(deps[[k]][ok,3], ".", fixed=TRUE)[[1]]
-                    x1[3+seq(along=y)] <- y
+                    x1[3+seq_along(y)] <- y
                     x1 <- format(x1, justify="right")
                     x2 <- paste(x1[4:6], collapse=".")
                     x1 <- paste(x1[1:3], collapse=".")

@@ -5,7 +5,7 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
     {
         vers <- package_version(x)
 	max <- vers[1]
-        for (i in seq(along=vers)) if (max < vers[i]) max <- vers[i]
+        for (i in seq_along(vers)) if (max < vers[i]) max <- vers[i]
 	which(vers == max)[1]
     }
 

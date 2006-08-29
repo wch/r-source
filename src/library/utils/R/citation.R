@@ -159,10 +159,7 @@ as.personList.default <- function(x)
     x <- x[nchar(x)>0]
 
     z <- list()
-    for(k in seq(along=x))
-    {
-        z[[k]] <- as.person(x[k])
-    }
+    for(k in seq_along(x)) z[[k]] <- as.person(x[k])
     class(z) <- "personList"
     z
 }
@@ -233,7 +230,7 @@ citation <- function(package="base", lib.loc = NULL)
     ## base packages without a CITATION file use the base citation
     if((!is.null(desc$Priority)) && (desc$Priority=="base")) {
     	cit <- citation("base")
-    	attr(cit, "header")[1] <- paste("The '", package, "' package is part of R.  ", 
+    	attr(cit, "header")[1] <- paste("The '", package, "' package is part of R.  ",
     	                             attr(cit, "header")[1], sep="")
     	return(cit)
     }

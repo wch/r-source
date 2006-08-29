@@ -70,7 +70,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     col1 <- if(missing(col.names)) length(first) else length(col.names)
     col <- numeric(nlines - 1)
     if (nlines > 1)
-        for (i in seq(along=col))
+        for (i in seq_along(col))
             col[i] <- length(scan(file, what = "", sep = sep,
                                   quote = quote,
                                   nlines = 1, quiet = TRUE, skip = 0,
@@ -198,9 +198,9 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 	    data <- data[-1]
             keep <- keep[-1]
 	}
-	else row.names <- as.character(seq(len=nlines))
+	else row.names <- as.character(seq_len(nlines))
     } else if (is.null(row.names)) {
-	row.names <- as.character(seq(len=nlines))
+	row.names <- as.character(seq_len(nlines))
     } else if (is.character(row.names)) {
 	if (length(row.names) == 1) {
 	    rowvar <- (1:cols)[match(col.names, row.names, 0) == 1]

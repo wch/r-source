@@ -530,7 +530,7 @@ dendrapply <- function(X, FUN, ...)
 	r <- FUN(d, ...)
 	if(!is.leaf(d)) {
             if(!is.list(r)) r <- as.list(r) # fixing unsafe FUN()s
-            for(j in seq(length = length(d)))
+            for(j in seq_along(d))
                 r[[j]] <- Napply(d[[j]])
         }
 	r

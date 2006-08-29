@@ -106,14 +106,14 @@ coplot <-
     if(missing(given.values)) {
 	a.intervals <-
 	    if(a.is.fac) {
-		i <- seq(along = a.levels <- levels(a))
+		i <- seq_along(a.levels <- levels(a))
 		a <- as.numeric(a)
 		cbind(i - 0.5, i + 0.5)
 	    } else co.intervals(unclass(a), number=number[1], overlap=overlap[1])
 	b.intervals <-
 	    if (have.b) {
 		if(b.is.fac) {
-                    i <- seq(along = b.levels <- levels(b))
+                    i <- seq_along(b.levels <- levels(b))
 		    b <- as.numeric(b)
 		    cbind(i - 0.5, i + 0.5)
 		}

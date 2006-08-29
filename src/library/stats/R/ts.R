@@ -177,7 +177,7 @@ as.ts.default <- function(x, ...)
 {
     l <- as.list(substitute(list(...)))[-1]
     nm <- names(l)
-    fixup <- if(is.null(nm)) seq(along = l) else nm == ""
+    fixup <- if(is.null(nm)) seq_along(l) else nm == ""
     ## <NOTE>
     dep <- sapply(l[fixup], function(x) deparse(x)[1])
     ## We could add support for 'deparse.level' here by creating dep
@@ -368,7 +368,7 @@ print.ts <- function(x, calendar, ...)
                 if(NROW(x) <= fr.x && start(x)[1] == end(x)[1]) {
                     ## not more than one period
                     dn1 <- start(x)[1]
-                    dn2 <- dn2[1 + (start(x)[2] - 2 + seq(along=x))%%fr.x]
+                    dn2 <- dn2[1 + (start(x)[2] - 2 + seq_along(x))%%fr.x]
                     x <- matrix(format(x, ...), nrow = 1 , byrow = TRUE,
                                 dimnames = list(dn1, dn2))
                 } else { # more than one period
@@ -509,7 +509,7 @@ plot.ts <-
 		text(xy, labels =
 		     if(is.character(xy.labels)) xy.labels
 		     else if(all(tsp(x) == tsp(y))) formatC(time(x), wid = 1)
-		     else seq(along = x),
+		     else seq_along(x),
 		     col = col, cex = cex)
 	    if(xy.lines)
 		lines(xy, col = col, lty = lty, lwd = lwd,
@@ -537,7 +537,7 @@ plot.ts <-
 	plot.new()
 	plot.window(xlim, ylim, log, ...)
 	if(is.matrix(x)) {
-	    for(i in seq(length=k))
+	    for(i in seq_len(k))
 		lines.default(xy$x, x[,i],
 			      col = col[(i-1) %% length(col) + 1],
 			      lty = lty[(i-1) %% length(lty) + 1],

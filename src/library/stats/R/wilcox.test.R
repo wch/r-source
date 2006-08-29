@@ -257,7 +257,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         n.y <- as.double(length(y))
         if(is.null(exact))
             exact <- (n.x < 50) && (n.y < 50)
-        STATISTIC <- sum(r[seq(along = x)]) - n.x * (n.x + 1) / 2
+        STATISTIC <- sum(r[seq_along(x)]) - n.x * (n.x + 1) / 2
         names(STATISTIC) <- "W"
         TIES <- (length(r) != length(unique(r)))
         if(exact && !TIES) {
@@ -359,7 +359,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 wdiff <- function(d, zq) {
                     dr <- rank(c(x - d, y))
                     NTIES.CI <- table(dr)
-                    dz <- (sum(dr[seq(along = x)])
+                    dz <- (sum(dr[seq_along(x)])
                            - n.x * (n.x + 1) / 2 - n.x * n.y / 2)
                     if(correct) {
                         CORRECTION.CI <-

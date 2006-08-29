@@ -48,7 +48,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     if(is.null(dnx))
         dnx <- vector("list", 3)
     for(i in which(sapply(dnx, is.null)))
-        dnx[[i]] <- LETTERS[seq(length = dim(x)[i])]
+        dnx[[i]] <- LETTERS[seq_len(dim(x)[i])]
     if(is.null(names(dnx)))
         i <- 1 : 3
     else
@@ -86,7 +86,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     }
 
     drawPie <- function(r, from, to, n = 500, color = NA) {
-        p <- 2 * pi * seq(from, to, length = n) / 360
+        p <- 2 * pi * seq.int(from, to, length = n) / 360
         x <- c(cos(p), 0) * r
         y <- c(sin(p), 0) * r
         polygon(x, y, col = color)
@@ -277,14 +277,14 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
         polygon(c(-1,  1, 1, -1),
                 c(-1, -1, 1,  1))
         lines(c(-1, 1), c(0, 0))
-        for(j in seq(from = -0.8, to = 0.8, by = 0.2))
+        for(j in seq.int(from = -0.8, to = 0.8, by = 0.2))
             lines(c(j, j), c(-0.02, 0.02))
-        for(j in seq(from = -0.9, to = 0.9, by = 0.2))
+        for(j in seq.int(from = -0.9, to = 0.9, by = 0.2))
             lines(c(j, j), c(-0.01, 0.01))
         lines(c(0, 0), c(-1, 1))
-        for(j in seq(from = -0.8, to = 0.8, by = 0.2))
+        for(j in seq.int(from = -0.8, to = 0.8, by = 0.2))
             lines(c(-0.02, 0.02), c(j, j))
-        for(j in seq(from = -0.9, to = 0.9, by = 0.2))
+        for(j in seq.int(from = -0.9, to = 0.9, by = 0.2))
             lines(c(-0.01, 0.01), c(j, j))
 
     }

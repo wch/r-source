@@ -104,7 +104,7 @@ plot.table <-
 	if(is.null(ylab)) ylab <- xnam
 	ow <- options(warn = -1)
 	is.num <- !any(is.na(xx <- as.numeric(nx))); options(ow)
-	x0 <- if(is.num) xx else seq(x)
+	x0 <- if(is.num) xx else seq.int(x)
 	plot(x0, unclass(x), type = type,
 	     ylim = ylim, xlab = xlab, ylab = ylab, frame.plot = frame.plot,
 	     lwd = lwd, ..., xaxt = "n")

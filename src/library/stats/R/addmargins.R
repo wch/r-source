@@ -36,7 +36,7 @@ addmargins <-
 	{
 	    n <- names(thelist)
 	    if (is.null(n)) n <- rep("", length(thelist))
-	    for (i in seq(along = thelist)[-1]) {
+	    for (i in seq_along(thelist)[-1]) {
 		if (!is.call(thelist[[i]])) {
 		    if (n[i] == "") n[i] <- as.character(thelist[[i]])
 		} else if (as.character(thelist[[i]][[1]]) == "list")
@@ -71,13 +71,13 @@ addmargins <-
     ## Use the names from FUN and also possibly the names from
     ## sublists of FUN.	 Replace blanks with constructed names
 
-    for(i in seq(along = FUN)) {
+    for(i in seq_along(FUN)) {
 	fnames[[i]] <- names(FUN)[i]
 	if (is.list(FUN[[i]])) {
 	    topname <- fnames[[i]]
 	    fnames[[i]] <- names(FUN[[i]])
 	    blank <- fnames[[i]] == ""
-	    fnames[[i]][blank] <- seq(along = blank)[blank]
+	    fnames[[i]][blank] <- seq_along(blank)[blank]
 	    if (topname == "") {
 		fnames[[i]][blank] <-
 		    paste("Margin ", margin[i], ".", fnames[[i]][blank],

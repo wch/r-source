@@ -17,9 +17,9 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
     ## Now z[[i]][[j]] is a character vector of all "words" in
     ## paragraph j of x[i].
 
-    for(i in seq(along = z)) {
+    for(i in seq_along(z)) {
         yi <- character(0)
-        for(j in seq(along = z[[i]])) {
+        for(j in seq_along(z[[i]])) {
             ## Format paragraph j in x[i].
             words <- z[[i]][[j]]
             nc <- nchar(words, type="w")

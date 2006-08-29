@@ -115,8 +115,8 @@ arima <- function(x, order = c(0, 0, 0),
     xtsp <- tsp(x)
     tsp(x) <- NULL
     Delta <- 1
-    for(i in seq(len = order[2])) Delta <- Delta %+% c(1, -1)
-    for(i in seq(len = seasonal$order[2]))
+    for(i in seq_len(order[2])) Delta <- Delta %+% c(1, -1)
+    for(i in seq_len(seasonal$order[2]))
         Delta <- Delta %+% c(1, rep(0, seasonal$period-1), -1)
     Delta <- - Delta[-1]
     nd <- order[2] + seasonal$order[2]
@@ -158,8 +158,8 @@ arima <- function(x, order = c(0, 0, 0),
     no.optim <- !any(mask)
     if(no.optim) transform.pars <- FALSE
     if(transform.pars) {
-        ind <- arma[1] + arma[2] + seq(length=arma[3])
-        if (any(!mask[seq(length=arma[1])]) || any(!mask[ind])) {
+        ind <- arma[1] + arma[2] + seq_len(arma[3])
+        if (any(!mask[seq_len(arma[1])]) || any(!mask[ind])) {
             warning("some AR parameters were fixed: setting transform.pars = FALSE")
             transform.pars <- FALSE
         }

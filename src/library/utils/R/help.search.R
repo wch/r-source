@@ -156,7 +156,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 		    hDB[[1]][, "LibPath"] <- path
 		    ## Put the hsearch index for the np-th package into the
 		    ## np-th row of the matrix used for aggregating.
-		    dbMat[np, seq(along = hDB)] <- hDB
+		    dbMat[np, seq_along(hDB)] <- hDB
 		} else if(verbose)
 		    cat("package", p, "has empty hsearch data - strangely\n")
 	    }
@@ -191,7 +191,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	## number of the package in the global index.
 	for(i in which(sapply(db, NROW) > 0)) {
 	    db[[i]][, "ID"] <-
-		paste(rep.int(seq(along = packages_in_hsearch_db),
+		paste(rep.int(seq_along(packages_in_hsearch_db),
 			      sapply(dbMat[, i], NROW)),
 		      db[[i]][, "ID"],
 		      sep = "/")
@@ -206,7 +206,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    ## over groups of identical encodings.
 	    for(enc in unique(encoding)) {
 		IDs <- IDs_to_iconv[encoding == enc]
-		for(i in seq(along = db)) {
+		for(i in seq_along(db)) {
 		    ind <- db[[i]][, "ID"] %in% IDs
 		    db[[i]][ind, ] <- iconv(db[[i]][ind, ], enc, "")
 		}
@@ -222,7 +222,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 			  u[rowSums(is.na(nchar(u, "c"))) > 0, "ID"]))
 	if(length(bad_IDs)) {
 	    warning("removing all entries with invalid multi-byte character data")
-	    for(i in seq(along = db)) {
+	    for(i in seq_along(db)) {
 		ind <- db[[i]][, "ID"] %in% bad_IDs
 		db[[i]] <- db[[i]][!ind, ]
 	    }

@@ -4,7 +4,7 @@ manova <- function(...)
     fcall[[1]] <- as.name("aov")
     result <- eval(fcall, parent.frame())
     if(inherits(result, "aovlist")) {
-        for(i in seq(along=result)) {
+        for(i in seq_along(result)) {
             if(!inherits(result[[i]], "maov")) stop("need multiple response")
             class(result[[i]]) <- c("manova", oldClass(result[[i]]))
         }
@@ -31,7 +31,7 @@ summary.manova <-
     nterms <- length(uasgn)
     effects <- object$effects
     if (!is.null(effects))
-        effects <- as.matrix(effects)[seq(along = asgn), , drop = FALSE]
+        effects <- as.matrix(effects)[seq_along(asgn), , drop = FALSE]
     rdf <- object$df.resid
     nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))
     resid <- as.matrix(object$residuals)
@@ -82,7 +82,7 @@ summary.manova <-
             stop(gettextf("residuals have rank %d < %d",
                           rss.qr$rank, ncol(resid)), domain = NA)
         if(!is.null(rss.qr))
-            for(i in seq(len=nterms)[ok]) {
+            for(i in seq_len(nterms)[ok]) {
                 eigs[i, ] <- Re(eigen(qr.coef(rss.qr, ss[[i]]),
                                        symmetric = FALSE)$values)
                 stats[i, 1:4] <-

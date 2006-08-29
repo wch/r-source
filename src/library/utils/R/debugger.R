@@ -74,7 +74,7 @@ recover <-
         n <- n - 1
     ## look for a call inserted by trace() (and don't show frames below)
     ## this level.
-    for(i in rev(seq(length=n))) {
+    for(i in rev(seq_len(n))) {
         calli <- calls[[i]]
         fname <- calli[[1]]
         ## deparse can use more than one line
@@ -87,7 +87,7 @@ recover <-
   ## if no trace, look for the first frame from the bottom that is not
     ## stop or recover
     if(from == 0)
-      for(i in rev(seq(length=n))) {
+      for(i in rev(seq_len(n))) {
         calli <- calls[[i]]
         fname <- calli[[1]]
         if(!is.name(fname) ||

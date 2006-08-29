@@ -19,7 +19,7 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     if(is.null(value)) {
         n <- length(old)
         attr(x, "row.names") <-
-            if(n > 2) c(as.integer(NA), n) else seq(length = n)
+            if(n > 2) c(as.integer(NA), n) else seq_len(n)
         return(x)
     }
     ## do this here, as e.g. POSIXlt changes length when coerced.
@@ -147,7 +147,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...)
 	else if(length(row.names <- names(x)) == nrows &&
 		!any(duplicated(row.names))) {}
 	else if(optional) row.names <- character(nrows)
-	else row.names <- seq(length = nrows)
+	else row.names <- seq_len(nrows)
     }
     names(x) <- NULL # remove names as from 2.0.0
     value <- list(x)
@@ -192,8 +192,8 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ...,
                                  stringsAsFactors = default.stringsAsFactors())
 {
     d <- dim(x)
-    nrows <- d[1]; ir <- seq(length = nrows)
-    ncols <- d[2]; ic <- seq(length = ncols)
+    nrows <- d[1]; ir <- seq_len(nrows)
+    ncols <- d[2]; ic <- seq_len(ncols)
     dn <- dimnames(x)
     ## surely it cannot be right to override the supplied row.names?
     ## changed in 1.8.0
@@ -235,7 +235,7 @@ as.data.frame.model.matrix <-
                           length(row.names), nrows), domain = NA)
     }
     else if(optional) row.names <- character(nrows)
-    else row.names <- seq(length = nrows)
+    else row.names <- seq_len(nrows)
     if(!optional) names(value) <- deparse(substitute(x))[[1]]
     attr(value, "row.names") <- row.names
     class(value) <- "data.frame"
@@ -257,7 +257,7 @@ as.data.frame.array <- function(x, row.names = NULL, optional = FALSE, ...)
         if(!is.null(dn)) {
             if(length(dn[[1]])) rownames(x) <- dn[[1]]
             for(i in 2:length(d))
-                if(is.null(dn[[i]])) dn[[i]] <- seq(len=d[i])
+                if(is.null(dn[[i]])) dn[[i]] <- seq_len(d[i])
             colnames(x) <- interaction(expand.grid(dn[-1]))
         }
         as.data.frame.matrix(x, row.names, optional, ...)
@@ -281,7 +281,7 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
             else if(length(row.names <- names(x)) == nrows &&
                     !any(duplicated(row.names))) {}
             else if(optional) row.names <- character(nrows)
-            else row.names <- seq(length = nrows)
+            else row.names <- seq_len(nrows)
         }
         value <- list(x)
         if(!optional) names(value) <- nm
@@ -412,7 +412,7 @@ data.frame <-
         warning("row names were found from a short variable and have been discarded")
         row.names <- NULL
     }
-    if(length(row.names) == 0) row.names <- seq(length = nr)
+    if(length(row.names) == 0) row.names <- seq_len(nr)
     else if(is.object(row.names) || !is.integer(row.names))
         row.names <- as.character(row.names)
     if(any(is.na(row.names)))
@@ -474,7 +474,7 @@ data.frame <-
 	    cols <- names(x)
 	    if(any(is.na(cols))) stop("undefined columns selected")
 	}
-	for(j in seq(along = x)) {
+	for(j in seq_along(x)) {
 	    xj <- x[[j]]
             ## had drop = drop prior to 1.8.0
 	    x[[j]] <- if(length(dim(xj)) != 2) xj[i] else xj[i, , drop = FALSE]
@@ -556,7 +556,7 @@ data.frame <-
                     stop("rhs is the wrong length for indexing by a logical matrix")
                 n <- 0
                 nv <- nrow(x)
-                for(v in seq(len = dim(i)[2])) {
+                for(v in seq_len(dim(i)[2])) {
                     thisvar <- i[, v, drop = TRUE]
                     nv <- sum(thisvar, na.rm = TRUE)
                     if(nv) {
@@ -598,7 +598,7 @@ data.frame <-
 	    ii <- match(i, rows)
 	    nextra <- sum(new.rows <- is.na(ii))
 	    if(nextra > 0) {
-		ii[new.rows] <- seq(from = nrows + 1, length = nextra)
+		ii[new.rows] <- seq.int(from = nrows + 1, length = nextra)
 		new.rows <- i[new.rows]
 	    }
 	    i <- ii
@@ -620,7 +620,7 @@ data.frame <-
 	    rows <- attr(x, "row.names")
 	    nrows <- length(rows)
 	}
-	iseq <- seq(along = rows)[i]
+	iseq <- seq_along(rows)[i]
 	if(any(is.na(iseq)))
 	    stop("non-existent rows not allowed")
     }
@@ -639,11 +639,11 @@ data.frame <-
 	    jseq <- jj
 	}
 	else if(is.logical(j) || min(j) < 0)
-	    jseq <- seq(along = x)[j]
+	    jseq <- seq_along(x)[j]
 	else {
 	    jseq <- j
 	    if(max(jseq) > nvars) {
-		new.cols <- paste("V", seq(from = nvars + 1, to = max(jseq)),
+		new.cols <- paste("V", seq.int(from = nvars + 1, to = max(jseq)),
                                   sep = "")
 		if(length(new.cols)  != sum(jseq > nvars))
 		    stop("new columns would leave holes after existing columns")
@@ -656,7 +656,7 @@ data.frame <-
 	    }
 	}
     }
-    else jseq <- seq(along = x)
+    else jseq <- seq_along(x)
     ## addition in 1.8.0
     if(any(duplicated(jseq)))
         stop("duplicate subscripts for columns")
@@ -691,7 +691,7 @@ data.frame <-
 	## value <- as.data.frame(value)
         value <- unclass(value) # to avoid data frame indexing
         lens <- sapply(value, NROW)
-        for(k in seq(along=lens)) {
+        for(k in seq_along(lens)) {
             N <- lens[k]
             if(n != N && length(dim(value[[k]])) == 2)
                 stop(gettextf("replacement element %d is a matrix/data frame of %d rows, need %d", k, N, n),
@@ -720,7 +720,7 @@ data.frame <-
 	warning(gettextf("replacement data has %d rows to replace %d rows",
                          nrowv, n), domain = NA)
     ncolv <- dimv[2]
-    jvseq <- seq(len=p)
+    jvseq <- seq_len(p)
     if(ncolv < p) jvseq <- rep(1:ncolv, length.out = p)
     else if(ncolv > p)
 	warning(gettextf("provided %d variables to replace %d variables",
@@ -734,7 +734,7 @@ data.frame <-
         attr(x, "row.names") <- rows
     }
     if(has.i)
-	for(jjj in seq(len=p)) {
+	for(jjj in seq_len(p)) {
 	    jj <- jseq[jjj]
 	    vjj <- value[[ jvseq[[jjj]] ]]
             if(jj <= nvars) {
@@ -809,7 +809,7 @@ data.frame <-
 	ii <- match(i, rows)
 	n <- sum(new.rows <- is.na(ii))
 	if(n > 0) {
-	    ii[new.rows] <- seq(from = nrows + 1, length = n)
+	    ii[new.rows] <- seq.int(from = nrows + 1, length = n)
 	    new.rows <- i[new.rows]
 	}
 	i <- ii
@@ -831,7 +831,7 @@ data.frame <-
 	rows <- attr(x, "row.names")
 	nrows <- length(rows)
     }
-    iseq <- seq(along = rows)[i]
+    iseq <- seq_along(rows)[i]
     if(any(is.na(iseq)))
 	stop("non-existent rows not allowed")
     if(is.character(j)) {
@@ -840,7 +840,7 @@ data.frame <-
 	    stop("replacing element in non-existent column: ", j[is.na(jseq)])
     }
     else if(is.logical(j) || min(j) < 0)
-	jseq <- seq(along = x)[j]
+	jseq <- seq_along(x)[j]
     else {
 	jseq <- j
 	if(max(jseq) > nvars)
@@ -943,7 +943,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	    else nmi
 	}
 	else if(nrow > 0 && identical(ri, 1:ni))
-	    as.integer(seq(from = nrow + 1, length = ni))
+	    as.integer(seq.int(from = nrow + 1, length = ni))
 	else ri
     }
     allargs <- list(...)
@@ -979,7 +979,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		if( !is.null(pi) )
 		    perm[[i]] <- pi
 	    }
-	    rows[[i]] <- seq(from = nrow + 1, length = ni)
+	    rows[[i]] <- seq.int(from = nrow + 1, length = ni)
 	    rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
 	    nrow <- nrow + ni
 	    if(is.null(value)) {
@@ -1016,7 +1016,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	    if(ni[1] == ni[2])
 		ni <- ni[1]
 	    else stop("invalid list argument: all variables should have the same length")
-	    rows[[i]] <- ri <- seq(from = nrow + 1, length = ni)
+	    rows[[i]] <- ri <- seq.int(from = nrow + 1, length = ni)
 	    nrow <- nrow + ni
 	    rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
 	    if(length(nmi <- names(xi)) > 0) {
@@ -1200,7 +1200,7 @@ Math.data.frame <- function (x, ...)
     }
     else {
 	vnames <- names(x)
-	if (is.null(vnames)) vnames <- seq(along=x)
+	if (is.null(vnames)) vnames <- seq_along(x)
 	stop("non-numeric variable in data frame: ", vnames[!mode.ok])
     }
 }
@@ -1252,7 +1252,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
 			    rep.int(1:ncol(e2), rep.int(nrow(e2), ncol(e2))))
 	}
     }
-    for(j in seq(along=cn)) {
+    for(j in seq_along(cn)) {
 	left <- if(!lscalar) e1[[j]] else e1
 	right <-if(!rscalar) e2[[j]] else e2
 	value[[j]] <- eval(f)

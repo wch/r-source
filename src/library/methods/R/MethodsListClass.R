@@ -199,7 +199,7 @@
 	      function(x,y) .Internal(rbind(deparse.level = 0, x,y)))
     setMethod("rbind2", signature(x = "ANY", y = "missing"),
 	      function(x,y) .Internal(rbind(deparse.level = 0, x)))
-    
+
     ## a show() method for the signature class
     setMethod("show", "signature", function(object) {
       message("An object of class \"", class(object), "\"")
@@ -207,7 +207,7 @@
       names(val) <- object@names
       callNextMethod(val)
     } )
-    
+
 ### Uncomment next line if we want special initialize methods for basic classes
 ###    .InitBasicClassMethods(where)
 }
@@ -226,7 +226,7 @@
                 formalNames <- formalNames[-dots]
         }
         if(is.null(sigArgs))
-            names(signature) <- formalNames[seq(along = classes)]
+            names(signature) <- formalNames[seq_along(classes)]
         else if(length(sigArgs) > 0 && any(is.na(match(sigArgs, formalNames))))
             stop(gettextf("the names in signature for method (%s) do not match function's arguments (%s)",
                           paste(sigArgs, collapse = ", "),

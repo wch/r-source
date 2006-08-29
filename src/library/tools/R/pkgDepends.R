@@ -296,7 +296,7 @@ depMtrxToStrings <- function(depMtrx) {
 
 installFoundDepends <- function(depPkgList, ...) {
     urls <- names(depPkgList)
-    for (i in seq(along=depPkgList)) {
+    for (i in seq_along(depPkgList)) {
         if (length(depPkgList[[i]]) > 0)
             utils::install.packages(depPkgList[[i]],
                                     contriburl = urls[i],

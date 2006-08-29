@@ -25,7 +25,7 @@ TukeyHSD <-
     UseMethod("TukeyHSD")
 
 TukeyHSD.aov <-
-    function(x, which = seq(along = tabs), ordered = FALSE,
+    function(x, which = seq_along(tabs), ordered = FALSE,
              conf.level = 0.95, ...)
 {
     mm <- model.tables(x, "means")
@@ -100,7 +100,7 @@ print.TukeyHSD <- function(x, digits=getOption("digits"), ...)
 
 plot.TukeyHSD <- function (x, ...)
 {
-    for (i in seq(along = x)) {
+    for (i in seq_along(x)) {
         xi <- x[[i]][, -4, drop=FALSE] # drop p-values
         yvals <- nrow(xi):1
         plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2), type = "n",

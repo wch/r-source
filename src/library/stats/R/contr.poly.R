@@ -3,7 +3,7 @@ contr.poly <- function (n, scores = 1:n, contrasts = TRUE)
     make.poly <- function(n, scores)
     {
 	y <- scores - mean(scores)
-	X <- outer(y, seq(length=n) - 1, "^")
+	X <- outer(y, seq_len(n) - 1, "^")
 	QR <- qr(X)
 	z <- QR$qr
 	z <- z *(row(z) == col(z))
@@ -70,7 +70,7 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE)
             stop("'degree' must be less than number of points")
         xbar <- mean(x)
         x <- x - xbar
-        X <- outer(x, seq(length = n) - 1, "^")
+        X <- outer(x, seq_len(n) - 1, "^")
         QR <- qr(X)
         z <- QR$qr
         z <- z * (row(z) == col(z))

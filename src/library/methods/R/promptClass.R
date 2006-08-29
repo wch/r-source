@@ -25,7 +25,7 @@ function (clName, filename = NULL, type = "class",
 	o <- sapply(allgen, classesInSig, where = where)
 	genl <- NULL
 	nmok <- names(o)
-	for (i in seq(along = o)) {
+	for (i in seq_along(o)) {
 	    if (!all(is.na(match(unlist(o[[i]]), cl))))
 		genl <- c(genl, nmok[i])
 	}
@@ -63,7 +63,7 @@ function (clName, filename = NULL, type = "class",
 	clDef <- getClassDef(clname)
 	extds <- names(clDef@contains)
 	allslots <- getSlots(clDef) ## establishes all slots, in the right order
-	for(j in rev(seq(along = extds))) {
+	for(j in rev(seq_along(extds))) {
 	    i <- extds[[j]]
 	    slotsi <- getSlots(getClass(i))
 	    if(length(slotsi) > 0)
@@ -164,7 +164,7 @@ function (clName, filename = NULL, type = "class",
 	.meths.body <- "  \\describe{"
 	for (i in 1:nmeths) {
 	    .sigmat <- sigsList(methnms[i], where)
-	    for (j in seq(along = .sigmat)) {
+	    for (j in seq_along(.sigmat)) {
 		if (!all(is.na(match(.sigmat[[j]],clName)))) {
 		    methn.i <- escape(methnms[i])
 		    .meths.body <-

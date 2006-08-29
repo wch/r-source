@@ -55,7 +55,7 @@ xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE
 	    if(is.factor(x)) x <- as.numeric(x)
 	    xlab <- "Index"
 	    y <- x
-	    x <- seq(along = x)
+	    x <- seq_along(x)
 	}
     }
     ## to allow e.g. lines, points, identify to be used with plot.POSIXlt
@@ -119,7 +119,7 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 		xlab <- "Index"
 		y <- x[,1]
 		z <- x[,2]
-		x <- seq(along=y)
+		x <- seq_along(y)
 	    }
 	    else { ## >= 3 columns
 		colnames <- dimnames(x)[[2]]
@@ -172,7 +172,7 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 	    xlab <- "Index"
 	    z <- y
 	    y <- x
-	    x <- seq(along=x)
+	    x <- seq_along(x)
 	}
     }
 

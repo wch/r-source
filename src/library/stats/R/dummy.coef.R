@@ -56,7 +56,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     asgn <- attr(mm,"assign")
     res <- vector("list", length(tl))
     names(res) <- tl
-    for(j in seq(along=tl)) {
+    for(j in seq_along(tl)) {
 	keep <- asgn == j
 	ans <- drop(mm[rn == tl[j], keep, drop=FALSE] %*% coef[keep])
 	names(ans) <- rnn[rn == tl[j]]

@@ -26,7 +26,7 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE)
 			     sep = "")
 	nx <- length(x)
 	orep <- orep/nx
-	x <- x[rep.int(rep.int(seq(length = nx),
+	x <- x[rep.int(rep.int(seq_len(nx),
 			       rep.int(rep.fac, nx)), orep)]
 	## avoid sorting the levels of character variates
 	if(!is.factor(x) && is.character(x)) x <- factor(x, levels = unique(x))
@@ -35,7 +35,7 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE)
     }
     if(KEEP.OUT.ATTRS)
 	attr(cargs, "out.attrs") <- list(dim=d, dimnames=dn)
-    structure(cargs, row.names = seq(length = prod(d)),
+    structure(cargs, row.names = seq_len(prod(d)),
               ## R <= 2.3.x: colnames = nmc,
               class = "data.frame")
 }

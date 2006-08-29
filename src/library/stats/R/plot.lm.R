@@ -167,7 +167,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                 ## now re-order the factor levels *along* factor-effects
                 ## using a "robust" method {not requiring dummy.coef}:
                 effM <- mf
-                for(j in seq(length=ncol(mf)))
+                for(j in seq_len(ncol(mf)))
                     effM[,j] <- sapply(split(yh, mf[,j]), mean)[mf[,j]]
                 dm <- data.matrix(mf)[do.call(order, effM), , drop = FALSE]
                 ## #{levels} for each of the factors:

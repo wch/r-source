@@ -130,7 +130,7 @@ showConnections <- function(all = FALSE)
     set <- getAllConnections()
     if(!all) set <- set[set > 2]
     ans <- matrix("", length(set), 7)
-    for(i in seq(along=set)) ans[i, ] <- unlist(summary.connection(set[i]))
+    for(i in seq_along(set)) ans[i, ] <- unlist(summary.connection(set[i]))
     rownames(ans) <- set
     colnames(ans) <- c("description", "class", "mode", "text", "isopen",
                        "can read", "can write")
@@ -160,7 +160,7 @@ closeAllConnections <- function()
     set <- getAllConnections()
     set <- set[set > 2]
     # and close all user connections.
-    for(i in seq(along=set)) close(getConnection(set[i]))
+    for(i in seq_along(set)) close(getConnection(set[i]))
     invisible()
 }
 

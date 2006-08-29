@@ -37,7 +37,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
                 .Call("La_rs", x, only.values, PACKAGE = "base")
             else
                 .Call("La_rs_cmplx", x, only.values, PACKAGE = "base")
-            ord <- rev(seq(along = z$values))
+            ord <- rev(seq_along(z$values))
         } else {
             z <- if(!complex.x)
                 .Call("La_rg", x, only.values, PACKAGE = "base")
@@ -138,7 +138,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
                      domain = NA)
 	    ind <- z$ivalues > 0
 	    if(any(ind)) {#- have complex (conjugated) values
-		ind <- seq(n)[ind]
+		ind <- seq.int(n)[ind]
 		z$values <- complex(re=z$values,im=z$ivalues)
 		if(!only.values) {
 		    z$vectors[, ind] <- complex(re=z$vectors[,ind],

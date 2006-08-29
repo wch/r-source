@@ -11,7 +11,7 @@ factor <- function (x=character(), levels = sort(unique.default(x),
 	if (nl == length(levels))
 	    as.character(labels)
 	else if(nl == 1)
-	    paste(labels, seq(along = levels), sep = "")
+	    paste(labels, seq_along(levels), sep = "")
 	else
 	    stop(gettextf("invalid labels; length %d should be 1 or %d",
                           nl, length(levels)), domain = NA)
@@ -74,7 +74,7 @@ as.character.factor <- function(x,...) levels(x)[x]
 as.list.factor <- function(x,...)
 {
     res <- vector("list", length(x))
-    for(i in seq(along=x)) res[[i]] <- x[i]
+    for(i in seq_along(x)) res[[i]] <- x[i]
     res
 }
 

@@ -115,7 +115,7 @@
     ## Two steps; first, those classes with a known prototype.  These
     ## can be non-Virtual
     clList <- get(".SealedClasses", envir = envir)
-    for(i in seq(along = .OldClassesPrototypes)) {
+    for(i in seq_along(.OldClassesPrototypes)) {
       el <- .OldClassesPrototypes[[i]]
       if(is.list(el) && length(el) > 1)
         setOldClass(el[[1]], prototype = el[[2]],  where = envir)

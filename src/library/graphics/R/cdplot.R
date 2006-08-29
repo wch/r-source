@@ -101,7 +101,7 @@ function(x, y,
 
         equidist <- any(diff(y1[,1]) < tol.ylab)
         if(equidist)
-            axis(2, at = seq(1/(2*ny), 1-1/(2*ny), by = 1/ny), labels = yaxlabels, tick = FALSE)
+            axis(2, at = seq.int(1/(2*ny), 1-1/(2*ny), by = 1/ny), labels = yaxlabels, tick = FALSE)
         else
             axis(2, at = (y1[-1,1] + y1[-NROW(y1), 1])/2, labels = yaxlabels, tick = FALSE)
         axis(4)

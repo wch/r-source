@@ -56,7 +56,8 @@ methods <- function (generic.function, class)
     knownGenerics <- c(names(.knownS3Generics),
                        tools:::.get_internal_S3_generics())
 
-    an <- lapply(seq(along=(sp <- search())), ls)
+    sp <- search()
+    an <- lapply(seq_along(sp), ls)
     names(an) <- sp
     an <- unlist(an)
     an <- an[!duplicated(an)] # removed masked objects, *keep* names

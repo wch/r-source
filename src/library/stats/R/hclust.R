@@ -227,7 +227,7 @@ function(x)
         return(as.dist(matrix(0, dimnames = list(label, label))))
     }
     children <- vector("list", length(x))
-    for(i in seq(along = x))
+    for(i in seq_along(x))
         children[[i]] <- Recall(x[[i]])
     lens <- sapply(children, attr, "Size")
     m <- matrix(attr(x, "height"), sum(lens), sum(lens))
@@ -238,7 +238,7 @@ function(x)
     ##         m[inds[[i]], inds[[i]]] <- as.matrix(children[[i]])
     hi <- cumsum(lens)
     lo <- c(0, hi[-length(hi)]) + 1
-    for(i in seq(along = x))
+    for(i in seq_along(x))
         m[lo[i] : hi[i], lo[i] : hi[i]] <- as.matrix(children[[i]])
     rownames(m) <- colnames(m) <-
         unlist(sapply(children, attr, "Labels"))

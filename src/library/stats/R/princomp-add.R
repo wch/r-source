@@ -56,7 +56,7 @@ function(x, npcs = min(10, length(x$sdev)),
     main
     type <- match.arg(type)
     pcs <- x$sdev^2
-    xp <- seq(length=npcs)
+    xp <- seq_len(npcs)
     if(type=="barplot")
         barplot(pcs[xp], names = names(pcs[xp]), main = main,
                 ylab = "Variances", ...)

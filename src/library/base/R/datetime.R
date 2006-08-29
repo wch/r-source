@@ -529,7 +529,7 @@ seq.POSIXt <-
         ## Till (and incl.) 1.6.0 :
         ##- incr <- (to - from)/length.out
         ##- res <- seq.default(from, to, incr)
-        res <- seq(from, to, length.out = length.out)
+        res <- seq.int(from, to, length.out = length.out)
         return(structure(res, class = c("POSIXt", "POSIXct"), tzone=tz))
     }
 
@@ -557,31 +557,31 @@ seq.POSIXt <-
     if(valid <= 5) {
         from <- unclass(as.POSIXct(from))
         if(!is.null(length.out))
-            res <- seq(from, by=by, length.out=length.out)
+            res <- seq.int(from, by=by, length.out=length.out)
         else {
             to <- unclass(as.POSIXct(to))
             ## defeat test in seq.default
-            res <- seq(0, to - from, by) + from
+            res <- seq.int(0, to - from, by) + from
         }
         return(structure(res, class=c("POSIXt", "POSIXct"), tzone=tz))
     } else {  # months or years or DSTdays
         r1 <- as.POSIXlt(from)
         if(valid == 7) {
             if(missing(to)) { # years
-                yr <- seq(r1$year, by = by, length = length.out)
+                yr <- seq.int(r1$year, by = by, length = length.out)
             } else {
                 to <- as.POSIXlt(to)
-                yr <- seq(r1$year, to$year, by)
+                yr <- seq.int(r1$year, to$year, by)
             }
             r1$year <- yr
             r1$isdst <- -1
             res <- as.POSIXct(r1)
         } else if(valid == 6) { # months
             if(missing(to)) {
-                mon <- seq(r1$mon, by = by, length = length.out)
+                mon <- seq.int(r1$mon, by = by, length = length.out)
             } else {
                 to <- as.POSIXlt(to)
-                mon <- seq(r1$mon, 12*(to$year - r1$year) + to$mon, by)
+                mon <- seq.int(r1$mon, 12*(to$year - r1$year) + to$mon, by)
             }
             r1$mon <- mon
             r1$isdst <- -1
@@ -592,7 +592,7 @@ seq.POSIXt <-
                 length.out <- 2 + floor((unclass(as.POSIXct(to)) -
                                          unclass(as.POSIXct(from)))/86400)
             }
-            r1$mday <- seq(r1$mday, by = by, length = length.out)
+            r1$mday <- seq.int(r1$mday, by = by, length = length.out)
             r1$isdst <- -1
             res <- as.POSIXct(r1)
             ## now correct if necessary.
@@ -638,7 +638,7 @@ cut.POSIXt <-
         if(valid == 8) incr <- 25*3600
         if (length(by2) == 2) incr <- incr * as.integer(by2[1])
 	maxx <- max(x, na.rm = TRUE)
-	breaks <- seq(start, maxx + incr, breaks)
+	breaks <- seq.int(start, maxx + incr, breaks)
 	breaks <- breaks[1:(1+max(which(breaks < maxx)))]
     } else stop("invalid specification of 'breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels,

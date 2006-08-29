@@ -95,7 +95,7 @@ all.equal.character <-
 	msg <- c(msg, paste("Lengths (", lt, ", ", lc,
 		     ") differ (string compare on first ", ll <- min(lt, lc),
 		     ")", sep = ""))
-	ll <- seq(length = ll)
+	ll <- seq_len(ll)
 	target <- target[ll]
 	current <- current[ll]
     }
@@ -181,13 +181,13 @@ all.equal.list <- function(target, current, check.attributes = TRUE, ...)
 	## } else
 	## </FIXME>
 	if(length(target) == length(current)) {
-	    seq(along = target)
+	    seq_along(target)
 	} else {
             if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
 	    nc <- min(length(target), length(current))
 	    msg <- c(msg, paste("Length mismatch: comparison on first",
 				nc, "components"))
-	    seq(length = nc)
+	    seq_len(nc)
 	}
     for(i in iseq) {
 	mi <- all.equal(target[[i]], current[[i]], check.attributes = check.attributes, ...)

@@ -137,7 +137,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
             if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
             if(valid == 7) { start$mon <- 0; incr <- 366*86400 }
             maxx <- max(x, na.rm = TRUE)
-            breaks <- seq(start, maxx + incr, breaks)
+            breaks <- seq.int(start, maxx + incr, breaks)
             breaks <- breaks[1:(1+max(which(breaks < maxx)))]
         }
         else stop("invalid specification of 'breaks'")
@@ -266,7 +266,7 @@ hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
             if(valid == 4) { start$mon <- 0; incr <- 366 }
             start <- .Internal(POSIXlt2Date(start))
             maxx <- max(x, na.rm = TRUE)
-            breaks <- seq(start, maxx + incr, breaks)
+            breaks <- seq.int(start, maxx + incr, breaks)
             breaks <- breaks[1:(1+max(which(breaks < maxx)))]
         } else stop("invalid specification of 'breaks'")
     }

@@ -10,7 +10,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     conf <- matrix(0, nrow = nvar, ncol = ncon)
     nmar <- 0
     varnames <- names(dimnames(table))
-    for (k in seq(along = margin)) {
+    for (k in seq_along(margin)) {
         tmp <- margin[[k]]
         if (is.character(tmp)) {
             ## Rewrite margin names to numbers
@@ -77,21 +77,21 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     ## See also the code for 'dyadic' below which computes the u_i(B).
     subsets <- function(x) {
         y <- list(vector(mode(x), length = 0))
-        for (i in seq(along = x)) {
+        for (i in seq_along(x)) {
             y <- c(y, lapply(y, "c", x[i]))
         }
         y[-1]
     }
     df <- rep.int(0, 2^nvar)
-    for (k in seq(along = margin)) {
+    for (k in seq_along(margin)) {
         terms <- subsets(margin[[k]])
-        for (j in seq(along = terms))
+        for (j in seq_along(terms))
             df[sum(2 ^ (terms[[j]] - 1))] <- prod(dtab[terms[[j]]] - 1)
     }
 
     ## Rewrite margin numbers to names if possible
     if (!is.null(varnames) && all(nchar(varnames) > 0)) {
-        for (k in seq(along = margin))
+        for (k in seq_along(margin))
             margin[[k]] <- varnames[margin[[k]]]
     } else {
         varnames <- as.character(1 : ntab)
@@ -107,7 +107,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
 
     if (param) {
         fit <- log(fit)
-        terms <- seq(length(df))[df > 0]
+        terms <- seq_along(df)[df > 0]
 
         parlen <- length(terms) + 1
         parval <- list(parlen)

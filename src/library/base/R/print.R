@@ -53,8 +53,8 @@ print.listof <- function(x, ...)
 {
     nn <- names(x)
     ll <- length(x)
-    if(length(nn) != ll) nn <- paste("Component", seq(ll))
-    for(i in seq(length=ll)) {
+    if(length(nn) != ll) nn <- paste("Component", seq.int(ll))
+    for(i in seq_len(ll)) {
 	cat(nn[i], ":\n"); print(x[[i]], ...); cat("\n")
     }
     invisible(x)

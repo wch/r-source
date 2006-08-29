@@ -33,7 +33,7 @@ proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 	    df <- vector("numeric", nterms)
 	    result <- matrix(0, length(object$residuals), nterms)
 	    dimnames(result) <- list(rownames(object$fitted.values), nmeffect)
-	    for(i in seq(along=uasgn)) {
+	    for(i in seq_along(uasgn)) {
 		select <- (asgn == uasgn[i])
 		df[i] <- sum(select)
 		result[, i] <- prj[, select, drop = FALSE] %*% rep.int(1, df[i])
@@ -158,7 +158,7 @@ proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
     n.object <- length(object)
     result <- vector("list", n.object)
     names(result) <- names(object)
-    D1 <- seq(length=NROW(err.qr$qr))
+    D1 <- seq_len(NROW(err.qr$qr))
     if(unweighted.scale) wt <- attr(object, "weights")
     for(i in names(object)) {
 	prj <- proj.lm(object[[i]], onedf = onedf)

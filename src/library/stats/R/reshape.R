@@ -159,7 +159,7 @@ reshape <-
         rval <- data[!duplicated(data[,idvar]),
                      !(names(data) %in% c(timevar,v.names)), drop = FALSE]
 
-        for(i in seq(length = length(times))) {
+        for(i in seq_along(times)) {
             thistime <- data[data[,timevar] %in% times[i],]
             rval[,varying[,i]] <- thistime[match(rval[,idvar],thistime[,idvar]),
                                            v.names]

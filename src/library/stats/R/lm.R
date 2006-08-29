@@ -104,7 +104,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     coef <- z$coefficients
     pivot <- z$pivot
     ## careful here: the rank might be 0
-    r1 <- seq(len=z$rank)
+    r1 <- seq_len(z$rank)
     dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
     nmeffects <- c(dn[pivot[r1]], rep.int("", n - z$rank))
     r2 <- if(z$rank < p) (z$rank+1):p else integer(0)
@@ -186,7 +186,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
-    r1 <- seq(len=z$rank)
+    r1 <- seq_len(z$rank)
     dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
     nmeffects <- c(dn[pivot[r1]], rep.int("", n - z$rank))
     r2 <- if(z$rank < p) (z$rank+1):p else integer(0)
@@ -493,7 +493,7 @@ model.frame.lm <- function(formula, ...)
 variable.names.lm <- function(object, full = FALSE, ...)
 {
     if(full)	dimnames(object$qr$qr)[[2]]
-    else if(object$rank) dimnames(object$qr$qr)[[2]][seq(len=object$rank)]
+    else if(object$rank) dimnames(object$qr$qr)[[2]][seq_len(object$rank)]
     else character(0)
 }
 
@@ -619,7 +619,7 @@ predict.lm <-
     }
     n <- length(object$residuals) # NROW(object$qr$qr)
     p <- object$rank
-    p1 <- seq(len=p)
+    p1 <- seq_len(p)
     piv <- object$qr$pivot[p1]
     if(p < ncol(X) && !(missing(newdata) || is.null(newdata)))
 	warning("prediction from a rank-deficient fit may be misleading")

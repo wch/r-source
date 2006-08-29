@@ -71,7 +71,7 @@ sort.int <-
     if(!is.na(na.last) && has.na)
 	y <- if(!na.last) c(nas, y) else c(y, nas)
     if(isfact)
-        y <- (if (isord) ordered else factor)(y, levels=seq(len=nlev),
+        y <- (if (isord) ordered else factor)(y, levels=seq_len(nlev),
                                               labels=lev)
     y
 }
@@ -90,7 +90,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
         if(all(!ok)) return(integer(0))
         z[[1]][!ok] <- NA
         ans <- do.call("order", c(z, decreasing=decreasing))
-        keep <- seq(along=ok)[ok]
+        keep <- seq_along(ok)[ok]
         ans[ans %in% keep]
     }
 }

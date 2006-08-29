@@ -143,7 +143,7 @@ ar.yw.default <-
                 series=series, frequency=xfreq, call=match.call())
     if(nser == 1 && order > 0)
         res$asy.var.coef <-
-            solve(toeplitz(drop(xacf)[seq(length=order)]))*var.pred/n.used
+            solve(toeplitz(drop(xacf)[seq_len(order)]))*var.pred/n.used
     class(res) <- "ar"
     res
 }
@@ -162,7 +162,7 @@ print.ar <- function(x, digits = max(3, getOption("digits") - 3), ...)
         if(x$order > 0) {
             cat("Coefficients:\n")
             coef <- drop(round(x$ar, digits = digits))
-            names(coef) <- seq(length=x$order)
+            names(coef) <- seq_len(x$order)
             print.default(coef, print.gap = 2)
         }
         if(!is.null(xint <- x$x.intercept) && !is.na(xint))

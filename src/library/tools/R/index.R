@@ -152,7 +152,7 @@ function(contents, packageName)
     if((nr <- NROW(contents)) > 0) {
         ## IDs are used for indexing the Rd objects in the help.search
         ## db.
-        IDs <- seq(length = nr)
+        IDs <- seq_len(nr)
         if(!is.data.frame(contents)) {
             colnames(contents) <-
                 c("Name", "Aliases", "Title", "Keywords")
