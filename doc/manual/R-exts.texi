@@ -9200,7 +9200,8 @@ function closure), there are exceptions which can be accessed directly.
 Note that these functions make no use of @R{} code, and hence are very
 different from the usual interpreted functions.  In particular,
 @code{args} and @code{body} return @code{NULL} for such objects, and
-argument matching is purely positional.
+argument matching is purely positional (with empty positions being
+dropped).
 
 The list of these ``primitive'' functions is subject to change:
 currently, it includes the following.
@@ -9296,6 +9297,7 @@ interactive  is.@emph{xxx}
 symbol.C     symbol.For
 globalenv    baseenv     emptyenv     pos.to.env
 unclass
+seq_along    seq_len
 @end group
 @end example
 
@@ -9345,8 +9347,13 @@ UseMethod  invisible  standardGeneric
 .C         .Fortran   .Call       .External
 .Call.graphics        .External.graphics
 .subset    .subset2   .primTrace  .primUntrace
+rep        seq.int
 @end group
 @end example
+
+@noindent
+@code{rep} and @code{seq.int} manage their own argument matching and so
+do work in the standard way.
 
 @end enumerate
 
