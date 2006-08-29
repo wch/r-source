@@ -20,7 +20,7 @@ update.packages(lib.loc = NULL, repos = getOption("repos"),
                 type = getOption("pkgType"))
 
 available.packages(contriburl = contrib.url(getOption("repos")),
-                   method)
+                   method, fields = NULL)
 
 old.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos),
@@ -157,6 +157,13 @@ contrib.url(repos, type = getOption("pkgType"))
     This is sometimes used to perform additional operations at the end
     of the package installation in addition to removing intermediate files.
   }
+  \item{fields}{a character vector giving the fields to extract from
+    the \code{PACKAGES} file(s) in addition to the default ones, or
+    \code{NULL} (default).  Unavailable fields result in \code{NA}
+    values.
+  }
+}
+
 }
 \details{
   All of these functions work with the names of a package or bundle (and
@@ -252,7 +259,8 @@ contrib.url(repos, type = getOption("pkgType"))
   with one row per package/bundle, row names the package names and
   column names \code{"Package"}, \code{"Version"}, \code{"Priority"},
   \code{"Bundle"}, \code{"Depends"}, \code{"Imports"}, \code{"Suggests"}
-  \code{"Contains"} and \code{"Repository"}.
+  \code{"Contains"} and \code{"Repository"}.  Additional columns can
+  be specified using the \code{fields} argument.
 
   For \code{old.packages}, \code{NULL} or a matrix with one row per
   package/bundle, row names the package names and column names

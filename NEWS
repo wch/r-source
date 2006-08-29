@@ -368,6 +368,9 @@ NEW FEATURES
 
     o   r2dtable() has been moved to package 'stats'.
 
+    o	available.packages() and installed.packages() gain a 'fields'
+	argument thanks to Seth Falcon.
+
 
 DEPRECATED & DEFUNCT
 

@@ -1,5 +1,6 @@
 available.packages <-
-    function(contriburl = contrib.url(getOption("repos")), method)
+    function(contriburl = contrib.url(getOption("repos")), method,
+             fields = NULL)
 {
     .checkRversion <- function(x) {
         if(is.na(xx <- x["Depends"])) return(TRUE)
@@ -9,10 +10,17 @@ available.packages <-
         else TRUE
     }
 
-    flds <- c("Package", "Version", "Priority", "Bundle",
-              "Depends", "Imports", "Suggests", "Contains")
-    res <- matrix(as.character(NA), 0, length(flds) + 1)
-    colnames(res) <- c(flds, "Repository")
+    ## keep the *order* of fields in sync with the one in installed.packages():
+    requiredFields <- c("Package", "Version", "Priority", "Bundle", "Contains",
+			"Depends", "Imports", "Suggests")
+    if (is.null(fields))
+	fields <- requiredFields
+    else {
+	stopifnot(is.character(fields))
+	fields <- unique(c(requiredFields, fields))
+    }
+    res <- matrix(as.character(NA), 0, length(fields) + 1,
+		  dimnames = list(NULL, c(fields, "Repository")))
     for(repos in contriburl) {
         localcran <- length(grep("^file:", repos)) > 0
         if(localcran) {
@@ -23,7 +31,7 @@ available.packages <-
                 if(length(grep("[A-Za-z]:", tmpf)))
                     tmpf <- substring(tmpf, 2)
             }
-            res0 <- read.dcf(file = tmpf, fields = flds)
+            res0 <- read.dcf(file = tmpf)
             if(length(res0)) rownames(res0) <- res0[, "Package"]
         } else {
             dest <- file.path(tempdir(),
@@ -57,7 +65,7 @@ available.packages <-
                             call. = FALSE, immediate. = TRUE, domain = NA)
                     next
                 }
-                res0 <- read.dcf(file = tmpf, fields = flds)
+                res0 <- read.dcf(file = tmpf)
                 if(length(res0)) rownames(res0) <- res0[, "Package"]
                 .saveRDS(res0, dest, compress = TRUE)
                 unlink(tmpf)
@@ -65,7 +73,14 @@ available.packages <-
             } # end of download vs cached
         } # end of localcran vs online
         if (length(res0)) {
-            res0 <- cbind(res0, Repository = repos)
+            missingFields <- fields[!(fields %in% colnames(res0))]
+            if (length(missingFields)) {
+                toadd <- matrix(as.character(NA), nrow=nrow(res0),
+                                ncol=length(missingFields),
+                                dimnames=list(NULL, missingFields))
+                res0 <- cbind(res0, toadd)
+            }
+            res0 <- cbind(res0[, fields], Repository = repos)
             res <- rbind(res, res0)
         }
     }
@@ -307,22 +322,32 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 }
 
 installed.packages <-
-    function(lib.loc = NULL, priority = NULL,  noCache = FALSE)
+    function(lib.loc = NULL, priority = NULL,  noCache = FALSE,
+             fields = NULL)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
-    pkgFlds <- c("Version", "Priority", "Bundle", "Contains", "Depends",
-                 "Suggests", "Imports", "Built")
     if(!is.null(priority)) {
         if(!is.character(priority))
             stop("'priority' must be character or NULL")
         if(any(b <- priority %in% "high"))
             priority <- c(priority[!b], "recommended","base")
     }
-    retval <- matrix("", 0, 2+length(pkgFlds))
+    ## keep the *order* of fields in sync with the one in available.packages():
+    requiredFields <- c("Version", "Priority", "Bundle", "Contains",
+			"Depends", "Imports", "Suggests", "Built")
+    if (is.null(fields))
+	fields <- requiredFields
+    else {
+	stopifnot(is.character(fields))
+	fields <- unique(c(requiredFields, fields))
+    }
+    retval <- matrix("", 0, 2 + length(fields))
     for(lib in lib.loc) {
         dest <- file.path(tempdir(),
-                          paste("libloc_", URLencode(lib, TRUE), ".rds",
+                          paste("libloc_", URLencode(lib, TRUE),
+                                paste(fields, collapse=","),
+                                ".rds",
                                 sep=""))
         if(!noCache && file.exists(dest) &&
             file.info(dest)$mtime > file.info(lib.loc)$mtime) {
@@ -332,12 +357,12 @@ installed.packages <-
             ## this excludes packages without DESCRIPTION files
             pkgs <- .packages(all.available = TRUE, lib.loc = lib)
             for(p in pkgs){
-                desc <- packageDescription(p, lib = lib, fields = pkgFlds,
+                desc <- packageDescription(p, lib = lib, fields = fields,
                                            encoding = NA)
                 ## this gives NA if the package has no Version field
                 if (is.logical(desc)) {
-                    desc <- rep(as.character(NA), length(pkgFlds))
-                    names(desc) <- pkgFlds
+                    desc <- rep(as.character(NA), length(fields))
+                    names(desc) <- fields
                 } else {
                     desc <- unlist(desc)
                     Rver <- strsplit(strsplit(desc["Built"], ";")[[1]][1],
@@ -352,7 +377,7 @@ installed.packages <-
             }
         }
     }
-    colnames(retval) <- c("Package", "LibPath", pkgFlds)
+    colnames(retval) <- c("Package", "LibPath", fields)
     if(length(retval) && !is.null(priority)) {
         keep <- !is.na(pmatch(retval[,"Priority"], priority,
                               duplicates.ok = TRUE))
