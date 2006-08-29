@@ -223,7 +223,7 @@ dt <- function(x, df, ncp=0, log = FALSE) {
 }
 
 pt <- function(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE) {
-    if(missing(ncp)) .Internal(pt(q, df, lower.tail, log.p))
+    if(ncp == 0) .Internal(pt(q, df, lower.tail, log.p))
     else .Internal(pnt(q, df, ncp, lower.tail, log.p))
 }
 qt <- function(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
