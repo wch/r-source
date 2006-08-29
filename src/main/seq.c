@@ -395,6 +395,8 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 done:
     ans = do_subset_dflt(R_NilValue, R_NilValue, list2(x, ind), rho);
+    /* 1D arrays get dimensions preserved */
+    setAttrib(ans, R_DimSymbol, R_NilValue);
     UNPROTECT(nprotect);
     return ans;
 }
