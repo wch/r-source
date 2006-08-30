@@ -614,7 +614,7 @@ mlistMetaName <-
               if(is.null(fdef)) {
                   if(nchar(package)>0)
                     return(methodsPackageMetaName("M",paste(name,package, sep=":")))
-                  fdef <- .getGeneric(name, .GlobalEnv)
+                  fdef <- getGeneric(name)
                   if(!is(fdef, "genericFunction")) 
                         stop(gettextf("the methods object name for '%s' must include the name of the package that contains the generic function, but no generic function of this name was found", name), domain = NA)
                   }
