@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-08-25
+@set FAQ_DATE @value{FAQ_YEAR}-08-30
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2098,6 +2098,9 @@ Arrays with arbitrary offsets.
 Software evolved from fisheries research conducted at the Pacific
 Biological Station (PBS) in Nanaimo, British Columbia, Canada.  Draws
 maps and implements other GIS procedures.
+@item PBSmodelling
+Software to facilitate the design, testing, and operation of computer
+models.
 @item PHYLOGR
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
@@ -2299,6 +2302,8 @@ Johnson distributions, normal scores and generalized hypergeometric
 distributions).
 @item SwissAir
 Air quality data of Switzerland for one year in 30 min resolution.
+@item TWIX
+Trees WIth eXtra splits.
 @item TeachingDemos
 A set of demonstration functions that can be used in a classroom to
 demonstrate statistical concepts, or on your own to better understand
@@ -3598,6 +3603,10 @@ Smoothing splines with penalties on order @math{m} derivatives.
 @item psy
 Various procedures used in psychometry: Kappa, ICC, Cronbach alpha,
 screeplot, PCA and related methods.
+@item psychometric
+Applied psychometric theory: functions useful for correlation theory,
+meta-analysis (validity-generalization), reliability, item analysis,
+inter-rater reliability, and classical utility.
 @item pwr
 Basic functions for power analysis.
 @item pwt
@@ -3920,6 +3929,8 @@ Stochastic Proximity Embedding.
 Approximate Gaussian processes using the Fourier basis.
 @item spectrino
 Spectra organizer, visualization and data extraction from within R.
+@item spgrass6
+Interface between the GRASS 6.0 geographical information system and R.
 @item spgwr
 Geographically weighted regression.
 @item splancs
@@ -4112,6 +4123,8 @@ SOM networks for comparing patterns with peak shifts.
 Robust statistical inference via a weighted likelihood approach.
 @item xgobi
 Interface to the XGobi and XGvis programs for graphical data analysis.
+@item xlsReadWrite
+Natively read and write Excel files.
 @item xtable
 Export data to @LaTeX{} and @HTML{} tables.
 @item zicounts
