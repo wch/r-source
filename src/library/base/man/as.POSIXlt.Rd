@@ -50,6 +50,9 @@ as.POSIXlt(x, tz = "")
   The \code{as.numeric} method converts \code{"POSIXlt"} objects to
   \code{"POSIXct"}.
 
+  If you are given a numeric time as the number of seconds since an
+  epoch, see the examples.
+  
   Where OSes describe their valid timezones can be obscure.  The help
   for \code{tzset} (or \code{_tzset} on Windows) can be helpful, but it
   can also be inaccurate.  There is a cumbersome POSIX specification,
@@ -106,6 +109,11 @@ unclass(z)                    # a large integer
 floor(unclass(z)/86400)       # the number of days since 1970-01-01
 (z <- as.POSIXlt(Sys.time())) # the current date, as class "POSIXlt"
 unlist(unclass(z))            # a list shown as a named vector
+
+## suppose we have a time in seconds since 1960-01-01 00:00:00 GMT
+z <- 1472562988
+ISOdatetime(1960,1,1,0,0,0) + z # late August 2006
+strptime("1960-01-01", "\%Y-\%m-\%d", tz="GNT") + z
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
 #ifdef windows

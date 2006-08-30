@@ -49,6 +49,9 @@ as.Date(x, \ldots)
   \pkg{\link[survival:as.date]{survival}}) and
   \code{"dates"} (from package \pkg{\link[chron]{chron}}).
 
+  See the examples for how to convert a day given as the number of days
+  since an epoch.
+
   The \code{format} and \code{as.character} methods ignore any
   fractional part of the date.
 }
@@ -111,6 +114,9 @@ z
 ## read in date/time info in format 'm/d/y'
 dates <- c("02/27/92", "02/27/92", "01/14/92", "02/28/92", "02/01/92")
 as.Date(dates, "\%m/\%d/\%y")
+
+## date given as number of days since 1900-01-01 (a date in 1989)
+as.Date("1900-01-01") + 32768
 }
 \keyword{utilities}
 \keyword{chron}

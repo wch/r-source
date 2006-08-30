@@ -2,7 +2,8 @@
 \alias{read.DIF}
 \title{Data Input from Spreadsheet}
 \description{
-  Reads a file in Data Interchange Format (DIF) and creates a data frame from it.
+  Reads a file in Data Interchange Format (DIF) and creates a data frame
+  from it.  DIF is a format for data matrices such as single spreadsheets.
 }
 \usage{
 read.DIF(file, header = FALSE, 
@@ -128,8 +129,14 @@ read.DIF(file, header = FALSE,
   \code{\link{data.frame}}.
 }
 \references{
-  \url{http://www.wotsit.org/download.asp?f=dif} for the DIF format specification;
-  the optional header fields are ignored.
+  The DIF format specification can be found by searching on
+  \url{http://www.wotsit.org/}; the optional header fields are ignored.
+  See also
+  \url{http://en.wikipedia.org/wiki/Data_Interchange_Format}.
+
+  The term is likely to lead to confusion: Windows will have a
+  \sQuote{Windows Data Interchange Format (DIF) data format} as part of
+  its WinFX system, which may or may not be compatible.
 }
 \keyword{file}
 \keyword{connection}
