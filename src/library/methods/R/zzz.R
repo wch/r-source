@@ -20,6 +20,9 @@
     initMethodDispatch(where)
     ## temporary empty reference to the package's own namespace
     assign(".methodsNamespace", new.env(), envir = where)
+    useTables <-  (nchar(Sys.getenv("R_NO_METHODS_TABLES")) == 0)
+    .UsingMethodsTables(useTables) ## turn it on (or off)
+    .Call("R_set_method_dispatch", useTables, PACKAGE = "methods")
     saved <- (if(exists(".saveImage", envir = where, inherits = FALSE))
               get(".saveImage", envir = where)
               else
@@ -55,6 +58,8 @@
         for(cl in get(".SealedClasses", where))
             sealClass(cl, where)
         assign(".requirePackage", ..requirePackage, envir = where)
+        assign(".addToMetaTable", ..addToMetaTable, envir = where)
+        .makeGenericTables(where)
         ## TO DO: .InitSubsetMethods(where)
         assign(".saveImage", TRUE, envir = where)
         on.exit()
@@ -86,8 +91,9 @@
             nev <- ev <- as.environment(i)
             ns <- .Internal(getRegisteredNamespace(as.name(getPackageName(ev))))
             if(!is.null(ns)) nev <- asNamespace(ns)
-            if(!exists(".noGenerics", where = nev, inherits = FALSE) &&
-               !identical(getPackageName(ev), "methods"))
+            if(identical(getPackageName(ev), "methods"))
+               next
+            if(!exists(".noGenerics", where = nev, inherits = FALSE))
                 cacheMetaData(ev, TRUE, searchWhere = .GlobalEnv)
         }
     }
@@ -118,6 +124,9 @@
     env <- environment(sys.function())
     ## unlock some bindings that must be modifiable to set methods
     unlockBinding(".BasicFunsList", env)
+    ## following  has to be on attach , not on load, but why???
+    if(.UsingMethodsTables())
+      cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
 }
 
 .Last.lib <- function(libpath) {

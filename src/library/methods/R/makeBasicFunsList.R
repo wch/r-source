@@ -19,7 +19,7 @@
     members <- c("log", "sqrt", "log10", "cumprod", "abs", "acos",
 		 "acosh", "asin", "asinh", "atan", "atanh",
 		 "ceiling", "cos", "cosh", "cumsum", "exp", "floor",
-		 "gamma", "lgamma", "sin", "sinh", "tan", "tanh", "trunc")
+		 "gamma", "lgamma", "sin", "sinh", "tan", "tanh")
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(x) standardGeneric(""),
 				 "Math", env)
@@ -27,10 +27,14 @@
     setGroupGeneric(where=where,"Math", function(x)NULL,
 		    knownMembers = members, package = "base")
 
-    ## The Math2 group (too late now, but it would probably have been
-    ## better to put "trunc" in	 here and call this something like the
-    ## "Truncation" group)
+    ## The Math2 group.  In spite of the documented behaviror, there
+    ## is an S3 method for trun with a SECOND argument.  Until we get
+    ## a better solution, we have to put trunc in the Math2 group.
 
+    funs <- .addBasicGeneric(funs, "trunc",
+			     function(x, digits = 0) standardGeneric(""),
+			     "Math2", env)
+    
     funs <- .addBasicGeneric(funs, "round",
 			     function(x, digits = 0) standardGeneric(""),
 			     "Math2", env)

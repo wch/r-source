@@ -24,6 +24,8 @@
     \item{\code{defined}:}{Object of class \code{"signature"}; the
         signature for which a method was found.  If the method was
         inherited, this will not be identical to \code{target}. }
+      \item{\code{generic}:}{Object of class \code{"character"}; the function
+        for which the method was created. }  
   }
 }
 \section{Extends}{

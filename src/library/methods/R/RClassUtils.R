@@ -420,6 +420,7 @@ assignClassDef <-
       if(!.identC(Class, clName))
           stop(gettextf("assigning as \"%s\" a class representation with internal name \"%s\"",
                         Class, def@className), domain = NA)
+      .cacheClass(clName, def)
       assign(classMetaName(Class), def, where)
   }
 
@@ -771,7 +772,8 @@ showExtends <-
         if(is(eli, "SClassExtension")) {
             how[i] <-
                 if(length(eli@by) > 0)
-                    paste("by class", paste("\"", eli@by, "\"", sep="", collapse = ", "))
+                    paste("by class", paste("\"", eli@by,
+                      "\", distance ",  eli@distance, sep="", collapse = ", "))
                 else if(identical(eli@dataPart, TRUE))
                     "from data part"
                 else "directly"
@@ -1262,6 +1264,7 @@ setDataPart <- function(object, value) {
         toExt@replace <- f
         toExt@by <- toExt@subClass
         toExt@subClass <- byExt@subClass
+        toExt@distance <- toExt@distance + byExt@distance
         toExt
 }
 
@@ -1566,3 +1569,95 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         else
             .requirePackage(package)
     }
+
+## cache and retrieve class definitions  If there is a conflict with
+## packages a list of  classes will be cached
+## See .cacheGeneric, etc. for analogous computations for generics
+.classTable <- new.env(TRUE, baseenv())
+
+.cacheClass <- function(name, def) {
+    if(exists(name, envir = .classTable, inherits = FALSE)) {
+        newpkg <- def@package
+        prev <- get(name, envir = .classTable)
+        if(is(prev, "classRepresentation")) {
+            if(identical(prev, def))
+               return()
+            pkg <- prev@package # start a per-package list
+            if(identical(pkg, newpkg)) # redefinition
+              return(assign(name, def, envir = .classTable))
+            prev <- list(prev)
+            names(prev) <- pkg
+        }
+        i <- match(newpkg, names(prev))
+        if(is.na(i))
+           prev[[newpkg]] <- def
+        else if(identical(def, prev[[i]]))
+          return()
+        else
+            prev[[i]] <- def
+        def <- prev
+    }
+    assign(name, def, envir = .classTable)
+}
+
+.uncacheClass <- function(name, def) {
+    if(exists(name, envir = .classTable, inherits = FALSE)) {
+        newpkg <- def@package
+        prev <- get(name, envir = .classTable)
+        if(is(prev, "classRepresentation"))  # we might worry if  prev not identical?
+            return(remove(list = name, envir = .classTable))
+         i <- match(newpkg, names(prev))
+        if(!is.na(i))
+           prev[[i]] <- NULL
+        else # we might warn about unchaching more than once
+          return()
+        if(length(prev) == 0)
+          return(remove(list = name, envir = .classTable))
+        else if(length(prev) == 1)
+          prev <- prev[[1]]
+        assign(name, prev, envir  = .ClassTable)       
+    }
+}
+
+.getClassFromCache <- function(name, where) {
+    if(exists(name, envir = .classTable, inherits = FALSE)) {
+        value <- get(name, envir = .classTable)
+        if(is.list(value)) { # multiple classes with this name
+            pkg <- packageSlot(name)
+            if(is.null(pkg) && is.character(where))
+              pkg <- where
+            else
+              pkg <- getPackageName(where)
+            pkgs <- names(value)
+            i <- match(pkg, pkgs,0)
+            if(i > 0)
+              return(value[[i]])
+            i <- match("methods", pkgs,0)
+            if(i > 0)
+               return(value[[i]])
+            else
+              return(NULL)
+        }
+        value
+    }
+    else
+      NULL
+}
+
+.scanUnionClass <- function(class, def) {
+    subs <- def@subclasses
+    subNames <- names(subs)
+    for(i in seq(along = subs)) {
+        what <- subNames[[i]]
+        subDef <- getClassDef(what)
+        if(is.null(subDef))
+          warning(
+           gettextf("Undefined member, \"%s\", of union \"%s\" (not added during attach)",
+                    what, def@className))
+        else {
+            subDef@contains[[class]] <- subs[[i]]
+            .cacheClass(what, subDef)
+        }
+    }
+}
+        

@@ -127,14 +127,19 @@ setIs <-
         }
     }
     if(!classDef2@sealed) {
-        where2 <- findClass(class2, where)[[1]]
-        if(!bindingIsLocked(m2, where2)) {
+        where2 <- findClass(classDef2)
+        if(length(where2) > 0) {
+          where2 <- where2[[1]]
+          if(!bindingIsLocked(m2, where2)) {
             elNamed(classDef2@subclasses, class1) <- obj
             if(doComplete)
                 classDef2@subclasses <- completeSubclasses(classDef2, class1, obj, where)
             assignClassDef(class2, classDef2, where2)
+          }
+          .removePreviousCoerce(class1, class2, where, prevIs)
         }
-        .removePreviousCoerce(class1, class2, where, prevIs)
+        else
+          stop(gettextf("Unable to find package environment for class \"%s\" to revise subclass information", class2))
     }
     invisible(classDef)
 }

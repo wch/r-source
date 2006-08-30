@@ -316,7 +316,7 @@ MethodsListSelect <-
 }
 
 emptyMethodsList <-
-  function(mlist, thisClass, sublist = list()) {
+  function(mlist, thisClass = "ANY", sublist = list()) {
     sublist[thisClass] <- list(NULL)
     new("EmptyMethodsList", argument = mlist@argument, sublist = sublist)
   }
@@ -341,11 +341,6 @@ finalDefaultMethod <-
   ## The real default method of this `MethodsList' object,
   ## found by going down the default branch (i.e., class `"ANY"')
   ## until either `NULL' or a function definition is found.
-  ##
-  ## Also works for non-generic functions, which have NULL methods list, by
-  ## returning the function definition.  (This feature is used in standardGeneric to
-  ## ensure that a definition for the function can be found when method searching is
-  ## turned off.)
   function(mlist, fname = "NULL")
 {
     value <- NULL
@@ -737,8 +732,18 @@ listFromMlist <-
 ## Define a trivial version of asMethodDefinition for bootstrapping.
 ## The real version requires several class definitions as well as
 ## methods for as<-
-asMethodDefinition <- function(def, signature = list(), sealed = FALSE)
+asMethodDefinition <- function(def, signature = list(), sealed = FALSE) {
+  if(is.primitive(def))
     def
+  else {
+    value = new("MethodDefinition")
+    value@.Data <- def
+    classes <- .MakeSignature(new("signature"),  def, signature)
+        value@target <- classes
+        value@defined <- classes
+    value
+  }
+  }
 
 .trimMlist <- function(mlist, fromClass) {
   mlist@methods <- mlist@methods[fromClass]

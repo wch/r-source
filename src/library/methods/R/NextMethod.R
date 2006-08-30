@@ -93,7 +93,7 @@ callNextMethod <- function(...) {
     if(is(method, "MethodDefinition")) {
         if(is.null(nextMethod)) {
             if(!is(method, "MethodWithNext")) {
-                method <- addNextMethod(method, f, getMethods(f), envir=methodEnv)
+                method <- addNextMethod(method, f, envir=methodEnv)
                 ## cache the method with the nextMethod included,
                 ## so later calls will load this information.
                 cacheMethod(f, method@target, method, fdef = getGeneric(f))
@@ -109,7 +109,7 @@ callNextMethod <- function(...) {
         ## else, callNextMethod() from another callNextMethod
         method <- nextMethod
         if(!is(method, "MethodWithNext")) {
-            method <- addNextMethod(method, f, getMethods(f), envir=methodEnv)
+            method <- addNextMethod(method, f, envir=methodEnv)
         }
         nextMethod <- method@nextMethod
         ## store the nextmethod in the previous nextmethod's

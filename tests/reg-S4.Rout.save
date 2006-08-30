@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-06-22 r38390)
+R version 2.4.0 Under development (unstable) (2006-08-22 r38953)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -219,25 +219,13 @@ Formal class 'c1' [package ".GlobalEnv"] with 2 slots
 [1] "foo"
 > ## now create objects and call methods:
 > y <- new("Y", bar=2)
-> showMethods("foo")
-
-Function "foo":
- object = "X", arg = "missing"
- object = "X", arg = "logical"
- object = "Y", arg = "missing"
+> ## showMethods("foo")
 > foo(y)
 a Y object with bar = 2 
 > foo(y, arg=TRUE)## Hello World!
 Hello World!
 > ## OK, inheritance worked, and we have
-> showMethods("foo")
-
-Function "foo":
- object = "X", arg = "missing"
- object = "X", arg = "logical"
- object = "Y", arg = "missing"
- object = "Y", arg = "logical"
-    (inherited from object = "X", arg = "logical")
+> ## showMethods("foo")
 > foo(y)
 a Y object with bar = 2 
 > ## still 'Y' -- was 'X object' in R < 2.3

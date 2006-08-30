@@ -173,6 +173,10 @@ The slots would  not be interpreted by S3 code written for \code{lm} objects.
 }
 
 \examples{
+\dontshow{
+## VOODO Why is this needed?
+removeMethods("length")
+}
 setOldClass(c("mlm", "lm"))
 setGeneric("dfResidual", function(model)standardGeneric("dfResidual"))
 setMethod("dfResidual", "lm", function(model)model$df.residual)

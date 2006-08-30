@@ -63,7 +63,10 @@
                             f, paste(formalArgs(fdef), collapse = ", "),
                             paste(formalArgs(fdefault), collapse = ", ")),
                    domain = NA)
-          methods <- MethodsList(name, asMethodDefinition(fdefault))
+          fdefault <- asMethodDefinition(fdefault)
+          if(is(fdefault, "MethodDefinition"))
+            fdefault@generic <- value@generic
+          methods <- MethodsList(name, fdefault)
       }
       value@default <- methods
       assign(".Methods", methods, envir = ev)
@@ -215,9 +218,12 @@ getAllMethods <-
       if(is.null(basicDef)) {
           gwhere <- findFunction(f, where = where)
           if(length(gwhere) == 0)
-              stop(gettextf("'%s' is not a function visible from '%s'",
-                            f, getPackageName(where)), domain = NA)
-          ## TODO: deal with multiple versions
+            return( get(".Methods", envir = environment(fdef)))
+            ##
+             ##  stop(gettextf("'%s' is not a function visible from '%s'",
+             ##              f, getPackageName(where)), domain = NA)
+          ## in detach cases, just return cached version (This code is
+          ## on the way out anyway, with the arrival of methods tables)
           gwhere <- gwhere[[1]]
           if(search)
               fdef <- get(f, gwhere)
@@ -437,7 +443,89 @@ getGeneric <-
 
 ## low-level version
 .getGeneric <- function(f, where) {
-    .Call("R_getGeneric", f, FALSE, as.environment(where), PACKAGE = "methods")
+    ## first look in the cache (which should eventually be done in C for speed perhaps)
+    value <- .getGenericFromCache(f, where)
+    if(is.null(value))
+      .Call("R_getGeneric", f, FALSE, as.environment(where), PACKAGE = "methods")
+    else value
+}
+
+## cache and retrieve generic functions.  If there is a conflict with packages a list of  generics will be cached
+.genericTable <- new.env(TRUE, baseenv())
+
+.cacheGeneric <- function(name, def) {
+    fdef <- def
+    if(exists(name, envir = .genericTable, inherits = FALSE)) {
+        newpkg <- def@package
+        prev <- get(name, envir = .genericTable)
+        if(is.function(prev)) {
+            if(identical(prev, def))
+               return()
+            pkg <- prev@package # start a per-package list
+            if(identical(pkg, newpkg)) # redefinition
+              return(assign(name, def, envir = .genericTable))
+            prev <- list(prev)
+            names(prev) <- pkg
+        }
+        i <- match(newpkg, names(prev))
+        if(is.na(i))
+           prev[[newpkg]] <- def
+        else if(identical(def, prev[[i]]))
+          return()
+        else
+            prev[[i]] <- def
+        def <- prev
+    }
+    if(.UsingMethodsTables())
+      .getMethodsTable(fdef) # force initialization
+    assign(name, def, envir = .genericTable)
+}
+
+.uncacheGeneric <- function(name, def) {
+    if(exists(name, envir = .genericTable, inherits = FALSE)) {
+        newpkg <- def@package
+        prev <- get(name, envir = .genericTable)
+        if(is.function(prev))  # we might worry if  prev not identical
+            return(remove(list = name, envir = .genericTable))
+         i <- match(newpkg, names(prev))
+        if(!is.na(i))
+           prev[[i]] <- NULL
+        else # we might warn about unchaching more than once
+          return()
+        if(length(prev) == 0)
+          return(remove(list = name, envir = .genericTable))
+        else if(length(prev) == 1)
+          prev <- prev[[1]]
+        assign(name, prev, envir  = .GenericTable)       
+    }
+}
+
+.getGenericFromCache <- function(name, where) {
+    if(exists(name, envir = .genericTable, inherits = FALSE)) {
+        value <- get(name, envir = .genericTable)
+        if(is.list(value)) { # multiple generics with this name
+            pkg <- packageSlot(name)
+            if(is.null(pkg) && is.character(where))
+              pkg <- where
+            else
+              pkg <- getPackageName(where)
+            pkgs <- names(value)
+            i <- match(pkg, pkgs,0)
+            if(i > 0)
+              return(value[[i]])
+            i <- match("methods", pkgs,0)
+            if(i > 0)
+               return(value[[i]])
+             i <- match("base", pkgs,0)
+            if(i > 0)
+               return(value[[i]])
+           else
+              return(NULL) 
+        }
+        value
+    }
+    else
+      NULL
 }
 
 getGroup <-
@@ -484,6 +572,8 @@ assignMethodsMetaData <-
   function(f, value, fdef, where, deflt = finalDefaultMethod(value)) {
     assign(mlistMetaName(fdef) # use generic function to get package correct
            , value, where)
+    ## assign the table version too, if not there  TODO:  WHY??
+    .assignMethodsMetaTable(value, fdef, where, FALSE)
     if(is.primitive(deflt))
         setPrimitiveMethods(f, deflt, "reset", fdef, NULL)
     if(is(fdef, "groupGenericFunction")) # reset or turn on members of group
@@ -547,8 +637,12 @@ getGenerics <-
 
 allGenerics <- getGenerics
 
-## faster version for use outside methods
-.getGenerics <- function(where)
+## Find the pattern for methods lists or tables
+## Currently driven by mlists, but eventually these will go away
+## in favor of tables.
+
+## always returns a compatible list, with an option of  prefix
+.getGenerics <- function(where, trim = TRUE)
 {
     if(missing(where)) where <- .envSearch(topenv(parent.frame()))
     else if(is.environment(where)) where <- list(where)
@@ -556,33 +650,66 @@ allGenerics <- getGenerics
     for(i in where) these <- c(these, objects(i, all=TRUE))
     these <- unique(these)
     these <- these[substr(these, 1, 6) == ".__M__"]
-    gsub(".__M__(.*):([^:]+)", "\\1", these)
+    funNames <- gsub(".__M__(.*):([^:]+)", "\\1", these)
+    if(identical(trim, TRUE))
+      funNames
+    else {
+      if(identical(trim, FALSE))
+        these
+      else
+        gsub(".__M__", as.character(trim), these)
+    }
 }
 
 cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(where)) {
     ## a collection of actions performed on attach or detach
     ## to update class and method information.
     generics <- .getGenerics(where)
-    for(f in generics) {
+    pkg <- getPackageName(where)
+     for(f in generics) {
         fdef <- getGeneric(f, FALSE, searchWhere)
         ## silently ignores all generics not visible from searchWhere
         ## (certainly reasonable for attach=FALSE, maybe for namespaces ?)
         if(is(fdef, "genericFunction")) {
-            methods <- getAllMethods(f, fdef, searchWhere)
-            cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
+          if(attach)
+            .cacheGeneric(f, fdef)
+          else if(identical(fdef@package, pkg))
+            .uncacheGeneric(f, fdef)
+          if(.UsingMethodsTables())
+            methods <- .updateMethodsInTable(fdef, where, attach)
+          else
+            methods <- getAllMethods(f, fdef, if(attach) searchWhere
+            else .GlobalEnv)
+          cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
+          }
+        }
+    classes <- getClasses(where)
+    for(cl in classes) {
+        cldef <- getClassDef(cl, searchWhere)
+        if(is(cldef, "classRepresentation")) {
+            if(attach) {
+              .cacheClass(cl, cldef)
+              if(is(cldef, "ClassUnionRepresentation"))
+                .scanUnionClass(cl, cldef) # incorporate subclass info
+             }
+            else if(identical(cldef@package, pkg))
+              .uncacheClass(cl, cldef)
         }
     }
-}
+  }
+
 
 cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.frame()),
-                                  package, methods = getAllMethods(f, fdef, where)) {
+                                  package, methods) {
     if(!is(fdef, "genericFunction")) {
         warning(gettextf("no methods found for '%s'; 'cacheGenericsMetaData' will have no effect", f), domain = NA)
         return(FALSE)
     }
     if(missing(package))
         package <- fdef@package
-    deflt <- finalDefaultMethod(methods)
+### Assetion: methods argument unused except for primitives
+### and then only for the old non-table case.
+    deflt <- finalDefaultMethod(fdef@default) #only to detect primitives
     if(is.primitive(deflt)) {
         if(attach) {
             if(missing(methods))
@@ -610,10 +737,14 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.
         for(ff in members) {
             ffdef <- getGeneric(ff, where = where)
             if(is(ffdef, "genericFunction")) {
+              if(.UsingMethodsTables())
+                Recall(ff,ffdef, attach, where, methods = .getMethodsTable(ffdef))
+              else {
                 ## reform the methods list for the group member, to include
                 ## any group-inherited methods
                 mm <- getAllMethods(ff, ffdef, where = where)
                 Recall(ff, ffdef, attach, where, methods = mm)
+              }
             }
         }
     }
@@ -1004,7 +1135,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     ## called more than nmax levels in could supply this argument
     if(nmax < 1) stop("got a negative maximum number of frames to look at")
     ev <- topenv(parent.frame()) # .GlobalEnv or the environment in which methods is being built.
-    for(back in seq(start = -n, length = nmax)) {
+    for(back in seq(from = -n, length = nmax)) {
         fun <- sys.function(back)
         if(is(fun, "function")) {
             ## Note that "fun" may actually be a method definition, and still will be counted.
@@ -1038,7 +1169,6 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
 }
 
 .genericAssign <- function(f, fdef, methods, where, deflt) {
-    primCase <- is.primitive(deflt)
     ev <- environment(fdef)
     assign(".Methods", methods, ev)
 }
@@ -1118,8 +1248,12 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
         character()
     else {
         members <- f@groupMembers
-        if(recursive)
-            members <- .recMembers(members, f@package)
+        if(recursive) {
+          where <- f@package
+          if(identical(where, "base"))
+            where <- "methods" # no generics actually on base
+            members <- .recMembers(members, .asEnvironmentPackage(where))
+        }
         if(character)
             sapply(members, function(x){
                 if(is(x, "character"))

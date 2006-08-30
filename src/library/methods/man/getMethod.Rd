@@ -20,7 +20,7 @@
   The other functions are support functions: see the details below.
 }
 \usage{
-getMethod(f, signature=character(), where, optional=FALSE, mlist)
+getMethod(f, signature=character(), where, optional=FALSE, mlist, fdef)
 
 findMethod(f, signature, where)
 
@@ -65,10 +65,9 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     \code{getMethodsMetaData(f,where)}.  For \code{selectMethod}, see
     the discussion of argument \code{fdef}.
     }
-  \item{fdef}{In \code{selectMethod}, the \code{MethodsList} object
-    and/or the generic function object can be explicitly supplied.
-    (Unlikely to be used, except in the recursive call that finds
-    matches to more than one argument.)}
+  \item{fdef}{Optionally, the generic function from which the method is 
+      to be retrieved.
+    (Unlikely to be used, except internally in the package source.)}
   \item{env}{The environment in which argument evaluations are done in
     \code{MethodsListSelect}.  Currently must be supplied, but should
     usually be \code{sys.frame(sys.parent())} when calling the function

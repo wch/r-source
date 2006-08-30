@@ -20,6 +20,8 @@
       \code{"MethodDefinition"}}
     \item{\code{defined}:}{Object of class \code{"signature"}, from
       class \code{"MethodDefinition"}} 
+      \item{\code{generic}:}{Object of class \code{"character"}; the function
+        for which the method was created. }  
   }
 }
 \section{Extends}{

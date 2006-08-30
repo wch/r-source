@@ -407,6 +407,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             allMethods <- unique(c(methods:::.getGenerics(ns),
                                    methods:::.getGenerics(parent.env(ns))))
             expMethods <- nsInfo$exportMethods
+            expTables <- character()
             if(length(allMethods) > 0) {
                 expMethods <- unique(c(expMethods,
                                        exports[!is.na(match(exports, allMethods))]))
@@ -416,6 +417,12 @@ loadNamespace <- function (package, lib.loc = NULL,
                                   package,
                                   paste(expMethods[missingMethods], collapse = ", ")),
                          domain = NA)
+                allMethodLists <- unique(c(methods:::.getGenerics(ns, FALSE),
+                                   methods:::.getGenerics(parent.env(ns), FALSE)))
+                tPrefix <- methods:::.TableMetaPrefix()
+                allMethodTables <- unique(c(methods:::.getGenerics(ns, tPrefix),
+                                   methods:::.getGenerics(parent.env(ns), tPrefix)))
+                mlistPattern <- methods:::mlistMetaName()
                 needMethods <- (exports %in% allMethods) & !(exports %in% expMethods)
                 if(any(needMethods))
                     expMethods <- c(expMethods, exports[needMethods])
@@ -437,7 +444,19 @@ loadNamespace <- function (package, lib.loc = NULL,
                     if(!(mi %in% exports) &&
                        exists(mi, envir = ns, mode = "function", inherits = FALSE))
                         exports <- c(exports, mi)
-                    expMethods[[i]] <- methods:::mlistMetaName(mi, ns)
+                    pattern <- paste(mlistPattern, mi, ":", sep="")
+                    ii <- grep(pattern, allMethodLists, fixed = TRUE)
+                    if(length(ii) > 0) {
+                      expMethods[[i]] <- allMethodLists[ii]
+                      if(exists(allMethodTables[[ii]], envir = ns))
+                        expTables <- c(expTables, allMethodTables[[ii]])
+                      else
+                        warning("No methods table for \"", mi, "\"")
+                    }
+                    else { ## but not possible?
+                      warning(gettextf("Failed to find metadata object for \"%s\"", mi))
+                      expMethods[[i]] <- methods:::mlistMetaName(mi, ns)
+                    }
                 }
             }
             else if(length(expMethods) > 0)
@@ -445,7 +464,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                               package,
                               paste(expMethods, collapse = ", ")),
                      domain = NA)
-            exports <- c(exports, expClasses, expMethods)
+            exports <- c(exports, expClasses, expMethods, expTables)
         }
         namespaceExport(ns, exports)
         sealNamespace(ns)

@@ -56,6 +56,11 @@ USER-VISIBLE CHANGES
 	and calls which used positional matching may be incorrect: we
 	try to detect them.
 
+    o  S4 method dispatch has been completely revised to use cached
+        generic functions and to search for the best match among
+        inherited methods.  See ?Methods and
+	  http://developer.r-project.org/howMethodsWork.pdf
+
 
 NEW FEATURES
 
@@ -370,6 +375,11 @@ NEW FEATURES
 
     o	available.packages() and installed.packages() gain a 'fields'
 	argument thanks to Seth Falcon.
+
+    o  S4 generic and class definitions are now cached when the
+        related package is loaded.  Should improve efficiency and also
+        avoid anomalous situations in which a class or generic can't
+        be found.
 
 
 DEPRECATED & DEFUNCT

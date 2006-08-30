@@ -150,11 +150,11 @@ setMethod("foo", signature(object= "X", arg= "logical"),
           function(object, arg) cat("Hello World!\n") )
 ## now create objects and call methods:
 y <- new("Y", bar=2)
-showMethods("foo")
+## showMethods("foo")
 foo(y)
 foo(y, arg=TRUE)## Hello World!
 ## OK, inheritance worked, and we have
-showMethods("foo")
+## showMethods("foo")
 foo(y)
 ## still 'Y' -- was 'X object' in R < 2.3
 

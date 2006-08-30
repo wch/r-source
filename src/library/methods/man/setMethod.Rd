@@ -203,6 +203,8 @@ setMethod("summary", "missing", function() "<No Object>")
 
 stopifnot(identical(summary(), "<No Object>"))
 
+removeMethods("summary")
+
 ## for the primitives
 ## inherited methods
 
@@ -291,6 +293,8 @@ removeMethods("Compare")
 ## repeat the test one more time on the primitives
 
 length(ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1))
+
+removeMethods("length")
 
 ## methods for %*%, which isn't done by the same C code as other ops
 

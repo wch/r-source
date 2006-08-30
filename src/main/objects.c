@@ -1025,6 +1025,17 @@ SEXP R_primitive_methods(SEXP op)
     }
 }
 
+SEXP R_primitive_generic(SEXP op)
+{
+    int offset = PRIMOFFSET(op);
+    if(offset < 0 || offset > curMaxOffset)
+	return R_NilValue;
+    else {
+	SEXP value = prim_generics[offset];
+	return value ? value : R_NilValue;
+    }
+}
+
 /* This is used in the methods package */
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 {

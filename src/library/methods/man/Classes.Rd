@@ -81,9 +81,6 @@
   }
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
-
   The functions in this package emulate the facility for classes and
   methods described in \emph{Programming with Data} (John M. Chambers,
   Springer, 1998).  See this book for further details and examples.

@@ -107,5 +107,8 @@ z1 <- 1+2i
 z2 <- new("testComplex", zz = z1)
 stopifnot(identical(Mod(z2), c("groupMethod", Mod(z1))))
 stopifnot(identical(Arg(z2), c("ArgMethod", Arg(z1))))
-}
+\dontshow{
+removeMethods("Complex")
+removeMethods("Arg")
+}}
 \keyword{methods}

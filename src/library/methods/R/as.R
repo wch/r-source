@@ -14,7 +14,7 @@ as <-
     where <- .classEnv(thisClass)
     coerceFun <- getGeneric("coerce", where = where)
     coerceMethods <- getMethodsForDispatch("coerce", coerceFun)
-    asMethod <- .quickCoerceSelect(thisClass, Class, coerceMethods)
+    asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods)
     if(is.null(asMethod)) {
         sig <-  c(from=thisClass, to = Class)
         packageSlot(sig) <- where
@@ -33,9 +33,12 @@ as <-
                 else if(identical(ext, TRUE))
                     asMethod <- .makeAsMethod(quote(from), TRUE, Class, ClassDef, where)
                 else {
-                    test <- ext@test
-                    asMethod <- .makeAsMethod(ext@coerce, ext@simple, Class, ClassDef, where)
-                    canCache <- (!is(test, "function")) || identical(body(test), TRUE)
+                  test <- ext@test
+                  asMethod <- .makeAsMethod(ext@coerce, ext@simple, Class, ClassDef, where)
+                  canCache <- (!is(test, "function")) || identical(body(test), TRUE)
+                  if(canCache) { # make into method definition
+                    asMethod <- .asCoerceMethod(asMethod, sig, FALSE)
+                  }
                 }
             }
             if(is.null(asMethod) && extends(Class, thisClass)) {
@@ -49,8 +52,9 @@ as <-
                                          c(from = TRUE, to = FALSE),
                                          fdef = coerceFun, mlist = coerceMethods)
             ## cache in the coerce function's environment
-            if(canCache && !is.null(asMethod))
+            if(canCache && !is.null(asMethod)) {
                 cacheMethod("coerce", sig, asMethod, fdef = coerceFun)
+            }
         }
     }
     if(is.null(asMethod))
@@ -61,20 +65,32 @@ as <-
         asMethod(object, strict = FALSE)
 }
 
-.quickCoerceSelect <- function(from, to, methods) {
+.quickCoerceSelect <- function(from, to, fdef, methods) {
     if(is.null(methods))
         return(NULL)
-    allMethods <- methods@allMethods
-    i <- match(from, names(allMethods))
-    if(is.na(i))
-        NULL
-    else {
-        methodsi <- allMethods[[i]]
-        j <- match(to, names(methodsi))
-        if(is.na(j))
-            NULL
+    else if(is.environment(methods)) {
+      ##FIXME:  this may fail if sig's need package informatiion as
+      ##well.  Problem is that we would like new("signature.",...)
+      ##here but that fails when methods package is booting
+        label <- .sigLabel(c(from, to))
+        if(exists(label, envir = methods, inherits = FALSE))
+          get(label, envir = methods)
         else
-            methodsi[[j]]
+          NULL
+    }
+    else {
+        allMethods <- methods@allMethods
+        i <- match(from, names(allMethods))
+        if(is.na(i))
+          NULL
+        else {
+            methodsi <- allMethods[[i]]
+            j <- match(to, names(methodsi))
+            if(is.na(j))
+              NULL
+            else
+              methodsi[[j]]
+        }
     }
 }
 
@@ -111,7 +127,7 @@ as <-
     where <- .classEnv(class(object))
     coerceFun <- getGeneric("coerce<-", where = where)
     coerceMethods <- getMethodsForDispatch("coerce<-", coerceFun)
-    asMethod <- .quickCoerceSelect(thisClass, Class, coerceMethods)
+    asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods)
     if(is.null(asMethod)) {
     sig <-  c(from=thisClass, to = Class)
     canCache <- TRUE
@@ -128,6 +144,9 @@ as <-
                 test <- asMethod@test
                 asMethod <- asMethod@replace
                 canCache <- (!is(test, "function")) || identical(body(test), TRUE)
+                if(canCache) { ##the replace code is a bare function
+                  asMethod <- .asCoerceMethod(asMethod, sig, TRUE)
+                }
            }
          }
         else
@@ -135,9 +154,8 @@ as <-
     }
         ## cache for next call
         if(canCache && !is.null(asMethod))
-            cacheMethod("coerce<-", sig, asMethod, fdef = coerceFun)
-
-    }
+                 cacheMethod("coerce<-", sig, asMethod, fdef = coerceFun)
+     }
     if(is.null(asMethod))
         stop(gettextf("no method or default for as() replacement of \"%s\" with Class=\"%s\"", thisClass, Class), domain = NA)
     asMethod(object, Class, value)
@@ -337,4 +355,23 @@ canCoerce <- function(object, Class) {
     !is.null(selectMethod("coerce", c(class(object), Class),
 			  optional = TRUE,
 			  useInherited = c(from=TRUE, to=FALSE)))
+}
+
+## turn raw function into method for coerce() or coerce<-()
+## Very primitive to survive bootstrap stage, so includes knowledge of
+## the classes and does no checking.
+.asCoerceMethod <- function(def, sig, replace) {
+  if(replace)
+    value <- function(from, to, value)NULL
+  else
+    value <- function(from, to, strict = TRUE) NULL
+  body(value) <- body(def)
+    value = new("MethodDefinition")
+    value@.Data <- def
+    classes <- new("signature")
+    classes@.Data <- sig
+    classes@names <- c("from", "to")
+        value@target <- classes
+        value@defined <- classes
+    value
 }

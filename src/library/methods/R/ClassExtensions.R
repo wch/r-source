@@ -4,7 +4,8 @@
                                                coerce = "function", test = "function",
                                                replace = "function",
                                                simple = "logical", by = "character",
-                                               dataPart = "logical"),
+                                               dataPart = "logical",
+                                               distance = "numeric"),
              where = where)
     assign(".SealedClasses", c(get(".SealedClasses", where), "SClassExtension"), where);
 }
@@ -73,6 +74,9 @@ makeExtends <- function(Class, to,
     packageEnv <- .requirePackage(package)
     class1Defined <- missing(slots) # only at this time can we construct methods
     simple <- is.null(coerce) && is.null(test) && is.null(replace) && (length(by)==0)
+    distance <- 1
+    ##FIX ME:  when by is supplied, should use the existing extension information
+    ## to compute distance
     dataPartClass <- elNamed(slots, ".Data")
     dataPart <- FALSE
     if(simple && !is.null(dataPartClass)) {
@@ -179,7 +183,7 @@ makeExtends <- function(Class, to,
     else
         stop(gettextf("the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"%s\"", class(replace)), domain = NA)
     new("SClassExtension", subClass = Class, superClass = to, package = package, coerce = coerce,
-               test = test, replace = replace, simple = simple, by = by, dataPart = dataPart)
+               test = test, replace = replace, simple = simple, by = by, dataPart = dataPart, distance = distance)
 
 
 }

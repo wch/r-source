@@ -31,6 +31,8 @@ setClass <-
     }
     classDef <- completeClassDefinition(Class, classDef, where, doExtends = FALSE)
     oldDef <- getClassDef(Class, where)
+    if(is(oldDef, "classRepresentation"))
+      .uncacheClass(Class, oldDef)
     if(length(superClasses) == 0)
         assignClassDef(Class, classDef, where)
     else {
@@ -172,6 +174,8 @@ getClassDef <-
     ## generates inf. loop in booting methods package (also for new())
     if(.identC(class(Class), "classRepresentation"))
         return(Class)
+    value <- .getClassFromCache(Class, where)
+    if(is.null(value)) {
     if(length(Class)>1)
         ## S3 class; almost certainly has no packageSLot, but we'll continue anyway
         cname <- classMetaName(Class[[1]])
@@ -187,6 +191,7 @@ getClassDef <-
     }
     if(is.null(value) && exists(cname, where))
         value <- get(cname, where)
+    }
     value
 }
 
@@ -281,20 +286,33 @@ slotNames <- function(x)
 }
 
 
-removeClass <-  function(Class, where) {
+removeClass <-  function(Class, where = topenv(parent.frame())) {
     if(missing(where)) {
-        where <- findClass(Class, topenv(parent.frame()))
-        if(length(where) == 0) {
-            warning(gettextf("\"%s\" is not a class (no action taken)", Class),
+       classEnv <- .classEnv(Class, where, FALSE)
+        classWhere <- findClass(Class, where = classEnv)
+        if(length(classWhere) == 0) {
+            warning(gettextf("Class definition for \"%s\" not found  (no action taken)", Class),
                     domain = NA)
             return(FALSE)
         }
-        if(length(where) > 1)
+        if(length(classWhere) > 1)
             warning(gettextf("class \"%s\" has multiple definitions visible; only the first removed", Class), domain = NA)
-        where <- where[[1]]
+        classWhere <- classWhere[[1]]
     }
+    else classWhere <- where
+    classDef <- getClassDef(Class, where=classWhere)
+    if(length(classDef@subclasses)>0) {
+      subclasses <- names(classDef@subclasses)
+      found <- sapply(subclasses, isClass, where = where)
+      if(any(found))
+        warning("The class to be removed  (\"", Class,
+    "\") has defined subclasses that should also be removed: (",
+                paste(as.character(subclasses[found]), collapse = ", "), ")")
+    }
+    .uncacheClass(Class, classDef)
+    .undefineMethod("initialize", Class, classWhere)
     what <- classMetaName(Class)
-    rm(list=what, pos=where)
+    rm(list=what, pos=classWhere)
     TRUE
 }
 

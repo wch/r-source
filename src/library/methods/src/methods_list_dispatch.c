@@ -11,6 +11,7 @@
 
 #include "RSMethods.h"
 #include "methods.h"
+#include "Rdefines.h"
 
 #if !defined(snprintf) && defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
 extern int snprintf (char *s, size_t n, const char *format, ...);
@@ -32,6 +33,7 @@ static SEXP s_dot_Methods, s_skeleton, s_expression, s_function,
     s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
     s_argument, s_allMethods;
 static SEXP R_FALSE, R_TRUE;
+static Rboolean table_dispatch_on = 1;
 
 /* precomputed skeletons for special primitive calls */
 static SEXP R_short_skeletons, R_empty_skeletons;
@@ -68,12 +70,11 @@ SEXP R_initMethodDispatch(SEXP envir)
 {
     if(envir && !isNull(envir))
 	Methods_Namespace = envir;
-    R_set_standardGeneric_ptr(R_standardGeneric, Methods_Namespace);
     if(!Methods_Namespace)
 	Methods_Namespace = R_GlobalEnv;
     if(initialized)
 	return(envir);
-    R_set_quick_method_check(R_quick_method_check);
+    
     s_dot_Methods = Rf_install(".Methods");
     s_skeleton = Rf_install("skeleton");
     s_expression = Rf_install("expression");
@@ -99,8 +100,13 @@ SEXP R_initMethodDispatch(SEXP envir)
     /* some strings (NOT symbols) */
     s_missing = mkString("missing");
     R_PreserveObject(s_missing);
-
-
+    /*  Initialize method dispatch, using the static */
+    R_set_standardGeneric_ptr(
+			      (table_dispatch_on ? R_dispatchGeneric : R_standardGeneric)
+			      , Methods_Namespace);
+    R_set_quick_method_check(
+			     (table_dispatch_on ? R_quick_dispatch : R_quick_method_check));
+ 
     /* Some special lists of primitive skeleton calls.
        These will be promises under lazy-loading.
      */
@@ -224,6 +230,50 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
 	}
 	/* continue matching args down the tree */
 	methods = R_do_slot(value, s_allMethods);
+    }
+    UNPROTECT(nprotect);
+    return(retValue);
+}
+
+SEXP R_quick_dispatch(SEXP args, SEXP mtable, SEXP fdef)
+{
+    /* Match the list of (evaluated) args to the methods table. */
+    SEXP object, methods, value, retValue = R_NilValue;
+    char *class; int nprotect = 0;
+#define NBUF 200
+    char buf[NBUF]; char *ptr;
+    if(!mtable || TYPEOF(mtable) != ENVSXP)
+	return R_NilValue;
+    buf[0] = '\0'; ptr = buf;
+    /*  doesn't check for nargs() > .SigLength.  Could do so but the search will fail
+     in this case anyway, and the test is not clearly faster  on average */
+    while(!isNull(args)) { 
+	object = CAR(args); args = CDR(args);
+	if(TYPEOF(object) == PROMSXP) {
+	    if(PRVALUE(object) == R_UnboundValue) {
+		SEXP tmp = eval(PRCODE(object), PRENV(object));
+		PROTECT(tmp); nprotect++;
+		SET_PRVALUE(object,  tmp);
+		object = tmp;
+	    }
+	    else
+		object = PRVALUE(object);
+	}
+	class = CHAR(asChar(R_data_class(object, TRUE)));
+	if(ptr - buf + strlen(class) + 2 > NBUF) {
+	  UNPROTECT(nprotect);
+	  return R_NilValue;
+	}
+	/* NB:  this code replicates .SigLabel().  If that changes, e.g. to include
+	 the package, the code here must change too.  Or, better, the two should 
+	use the same C code. */
+	if(ptr > buf) ptr = stpcpy(ptr, "#"); 
+	ptr = stpcpy(ptr, class);
+	value = findVarInFrame(mtable, install(buf));
+	if(value != R_UnboundValue) {
+	  retValue = value;
+	  break;
+	}
     }
     UNPROTECT(nprotect);
     return(retValue);
@@ -677,4 +727,154 @@ SEXP R_identC(SEXP e1, SEXP e2)
 	return R_TRUE;
     else
 	return R_FALSE;
+}
+
+static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev) {
+    static SEXP dotFind = NULL, f; SEXP  e, ee; int error_flag;
+    if(dotFind == NULL) {
+         dotFind = install(".InheritForDispatch");
+	 f = findFun(dotFind, R_MethodsNamespace);
+     }
+    PROTECT(e = allocVector(LANGSXP, 4));
+    SETCAR(e, f); ee = CDR(e);
+    SETCAR(ee, class_objs); ee = CDR(ee);
+    SETCAR(ee, fdef); ee = CDR(ee);
+    SETCAR(ee, mtable);
+    ee = eval(e, ev);
+    UNPROTECT(1);
+    return ee;
+}
+
+static SEXP do_mtable(SEXP fdef, SEXP ev) {
+    static SEXP dotFind = NULL, f; SEXP  e, ee;
+    if(dotFind == NULL) {
+         dotFind = install(".getMethodsTable");
+	 f = findFun(dotFind, R_MethodsNamespace);
+     }
+    PROTECT(e = allocVector(LANGSXP, 4));
+    SETCAR(e, f); ee = CDR(e);
+    SETCAR(ee, fdef);
+    ee = eval(e, ev);
+    UNPROTECT(1);
+    return ee;
+}   
+
+SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
+{
+  static SEXP R_mtable = NULL, R_allmtable, R_sigargs, R_siglength;
+  int nprotect = 0;
+  SEXP mtable, classes, thisClass, sigargs, siglength, f_env, label, method, f, val; char *buf, *bufptr;
+  int nargs, i, lwidth = 0;
+  Rboolean prim_case = FALSE;
+  if(!R_mtable) {
+    R_mtable = install(".MTable");
+    R_allmtable = install(".AllMTable");
+    R_sigargs = install(".SigArgs");
+    R_siglength = install(".SigLength");
+  }
+    switch(TYPEOF(fdef)) {
+    case CLOSXP:
+        f_env = CLOENV(fdef);
+	break;
+    case SPECIALSXP: case BUILTINSXP:
+	PROTECT(fdef = R_primitive_generic(fdef)); nprotect++;
+	if(TYPEOF(fdef) != CLOSXP) {
+	  error(_("Failed to get the generic for the primitive \"%s\""), CHAR_STAR(fname));
+	  return R_NilValue;
+	}
+	f_env = CLOENV(fdef);
+	prim_case = TRUE;
+	break;
+    default:
+      error(_("Expected a generic function or a primitive for dispatch, got an object of class \"%s\""),
+	    class_string(fdef));
+    }
+    PROTECT(mtable = findVarInFrame(f_env, R_allmtable)); nprotect++;
+    if(mtable == R_UnboundValue) {
+      do_mtable(fdef, ev); /* Should initialize the generic */
+      PROTECT(mtable = findVarInFrame(f_env, R_allmtable)); nprotect++;
+    }
+    PROTECT(sigargs = findVarInFrame(f_env, R_sigargs)); nprotect++;
+    PROTECT(siglength = findVarInFrame(f_env, R_siglength)); nprotect++;
+  if(sigargs == R_UnboundValue || siglength == R_UnboundValue || 
+     mtable == R_UnboundValue)
+    error(_("Generic \"%s\" seems not to have been initialized for table dispatch---need to have .SigArgs and .AllMtable assigned in its environment"));
+  nargs = NUMERIC_VALUE(siglength);
+  PROTECT(classes = NEW_LIST(nargs)); nprotect++;
+  for(i=0; i<nargs; i++) {
+    SEXP arg_sym = VECTOR_ELT(sigargs, i);
+    if(is_missing_arg(arg_sym, ev))
+      thisClass = s_missing;
+	else {
+	    /*  get its class */
+	    SEXP arg; int check_err;
+	    PROTECT(arg = R_tryEval(arg_sym, ev, &check_err));
+	    if(check_err)
+		error(_("unable to find the argument '%s' in selecting a method for function '%s'"),
+		      CHAR(PRINTNAME(arg_sym)),CHAR_STAR(fname)); 
+	    PROTECT(thisClass = R_data_class(arg, TRUE)); nprotect++;
+	    UNPROTECT(1); /* for arg */
+	}
+    SET_VECTOR_ELT(classes, i, thisClass);
+    lwidth += strlen(STRING_VALUE(thisClass)) + 1;
+  }
+  /* make the label */
+  label = allocString(lwidth);
+  buf = bufptr = CHAR(label);
+  for(i = 0; i<nargs; i++) {
+    if(i > 0)
+      *bufptr++ = '#';
+    thisClass = VECTOR_ELT(classes, i);
+    strcpy(bufptr, STRING_VALUE(thisClass));
+    while(*bufptr)
+      bufptr++;
+  }
+  method = findVarInFrame(mtable, install(buf));
+  if(method == R_UnboundValue) {
+    method = do_inherited_table(classes, fdef, mtable, ev);
+  }
+  /* the rest of this is identical to R_standardGeneric; hence the f=method to remind us  */
+  f = method;
+    if(isObject(f))
+	f = R_loadMethod(f, fname, ev);
+    switch(TYPEOF(f)) {
+    case CLOSXP:
+	{
+	    SEXP R_execMethod(SEXP, SEXP);
+	    PROTECT(f); nprotect++; /* is this needed?? */
+	    val = R_execMethod(f, ev);
+	}
+	break;
+    case SPECIALSXP: case BUILTINSXP:
+	/* primitives  can't be methods; they arise only as the
+	   default method when a primitive is made generic.  In this
+	   case, return a special marker telling the C code to go on
+	   with the internal computations. */
+      val = R_deferred_default_method();
+      break;
+    default:
+	error(_("invalid object (non-function) used as method"));
+	break;
+    }
+    UNPROTECT(nprotect);
+    return val;
+} 
+
+SEXP R_set_method_dispatch(SEXP onOff) {
+  Rboolean value, prev; SEXP x;
+  prev = table_dispatch_on;
+  value = LOGICAL_VALUE(onOff);
+  if(value == NA_LOGICAL) /*  just return previous*/
+    value = prev;
+  table_dispatch_on = value;
+  if(value != prev) {
+    R_set_standardGeneric_ptr(
+			      (table_dispatch_on ? R_dispatchGeneric : R_standardGeneric)
+			      , Methods_Namespace);
+    R_set_quick_method_check(
+			     (table_dispatch_on ? R_quick_dispatch : R_quick_method_check));
+  }
+  x = NEW_LOGICAL(1);
+  LOGICAL_DATA(x)[0] = prev;
+  return x;
 }

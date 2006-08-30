@@ -36,7 +36,8 @@
     \item{\code{dataPart}:}{A \code{"logical"} flag, \code{TRUE} if
   the extended class is in fact the data part of the subclass.  In
   this case the extended class is a basic class (i.e., a type). }
-  }
+    \item{\code{distance}:}{The distance between the two classes,
+    1 for directly contained classes, plus the number of generations between otherwise. }  }
 }
 
 \section{Methods}{
