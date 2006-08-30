@@ -597,6 +597,11 @@ mlistMetaName <-
       else if(missing(name))
           methodsPackageMetaName("M","")
       else if(is.character(name)) {
+          if(nchar(package) == 0) {
+              pkg <- packageSlot(name)
+              if(!is.null(pkg))
+                package <- pkg
+          }
           if(length(name) > 1 && !identical(package, "")) {
               value <- name
               name <- paste(name, package, sep=":")
@@ -604,20 +609,17 @@ mlistMetaName <-
                   value[[i]] = methodsPackageMetaName("M", name[[i]])
           }
           else if(nchar(package))
-             methodsPackageMetaName("M", paste(name, package, sep=":"))
+             return(methodsPackageMetaName("M", paste(name, package, sep=":")))
           else {
               if(is.null(fdef)) {
                   if(nchar(package)>0)
-                      where <- .requirePackage(package)
-                  else
-                      where <- topenv(parent.frame())
-                  fdef <- getGeneric(name, where = where)
-              }
-              if(is(fdef, "genericFunction"))
-                  methodsPackageMetaName("M", paste(fdef@generic, fdef@package, sep=":"))
-              else
-                  stop(gettextf("the methods object name for '%s' must include the name of the package that contains the generic function, but there is no generic function of this name", name), domain = NA)
+                    return(methodsPackageMetaName("M",paste(name,package, sep=":")))
+                  fdef <- .getGeneric(name, .GlobalEnv)
+                  if(!is(fdef, "genericFunction")) 
+                        stop(gettextf("the methods object name for '%s' must include the name of the package that contains the generic function, but no generic function of this name was found", name), domain = NA)
+                  }
           }
+          methodsPackageMetaName("M", paste(fdef@generic, fdef@package, sep=":"))
       }
       else
           stop(gettextf("no way to associate a generic function with an object of class \"%s\"", class(name)), domain = NA)

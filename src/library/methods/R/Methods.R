@@ -34,8 +34,10 @@ setGeneric <-
         fdef <- useAsDefault
     ## Use the previous function definition to get the default
     ## and to set the package if not supplied.
+    doUncache <- FALSE
     if(is.object(fdef) && is(fdef, "genericFunction")) {
-        .uncacheGeneric(name, fdef)
+        doUncache <- TRUE
+        oldDef <- fdef
         prevDefault <- finalDefaultMethod(getMethods(fdef))
         if(is.null(package))
             package <- fdef@package
@@ -76,6 +78,8 @@ setGeneric <-
                             package = package, signature = signature,
                             genericFunction = genericFunction)
     }
+    if(doUncache)
+      .uncacheGeneric(name, oldDef)
     assign(name, fdef, where)
     .cacheGeneric(name, fdef)
     if(!.UsingMethodsTables() && 
