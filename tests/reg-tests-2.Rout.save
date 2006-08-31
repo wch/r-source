@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-08-29 r39004)
+R version 2.4.0 Under development (unstable) (2006-08-30 r39024)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5459,6 +5459,22 @@ Levels: 7 8 9 10 11 12
 > qt(0.95, 10, -nc[-1])
 [1] 1.8123429 0.6797902
 > ## qt in 2.3.1 did not allow negative ncp.
+> 
+> 
+> ## merge() used to insert row names as factor, not character, so
+> ## sorting was unexpected.
+> A <- data.frame(a = 1:4)
+> row.names(A) <- c("2002-11-15", "2002-12-15", "2003-01-15", "2003-02-15")
+> B <- data.frame(b = 1:4)
+> row.names(B) <- c("2002-09-15", "2002-10-15", "2002-11-15", "2002-12-15")
+> merge(A, B, by=0, all=TRUE)
+   Row.names  a  b
+1 2002-09-15 NA  1
+2 2002-10-15 NA  2
+3 2002-11-15  1  3
+4 2002-12-15  2  4
+5 2003-01-15  3 NA
+6 2003-02-15  4 NA
 > 
 > 
 > ### end of tests added in 2.4.0 ###

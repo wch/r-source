@@ -1942,4 +1942,13 @@ qt(0.95, 10, -nc[-1])
 ## qt in 2.3.1 did not allow negative ncp.
 
 
+## merge() used to insert row names as factor, not character, so
+## sorting was unexpected.
+A <- data.frame(a = 1:4)
+row.names(A) <- c("2002-11-15", "2002-12-15", "2003-01-15", "2003-02-15")
+B <- data.frame(b = 1:4)
+row.names(B) <- c("2002-09-15", "2002-10-15", "2002-11-15", "2002-12-15")
+merge(A, B, by=0, all=TRUE)
+
+
 ### end of tests added in 2.4.0 ###

@@ -49,11 +49,11 @@ merge.data.frame <-
     }
     else {
         if(any(by.x == 0)) {
-            x <- cbind(Row.names = row.names(x), x)
+            x <- cbind(Row.names = I(row.names(x)), x)
             by.x <- by.x + 1
         }
         if(any(by.y == 0)) {
-            y <- cbind(Row.names = row.names(y), y)
+            y <- cbind(Row.names = I(row.names(y)), y)
             by.y <- by.y + 1
         }
         row.names(x) <- 1:nx

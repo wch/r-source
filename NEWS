@@ -376,10 +376,13 @@ NEW FEATURES
     o	available.packages() and installed.packages() gain a 'fields'
 	argument thanks to Seth Falcon.
 
-    o  S4 generic and class definitions are now cached when the
-        related package is loaded.  Should improve efficiency and also
-        avoid anomalous situations in which a class or generic can't
+    o	S4 generic and class definitions are now cached when the related
+        package is loaded.  This should improve efficiency and also
+        avoid anomalous situations in which a class or generic cannot
         be found.
+
+    o	merge() now inserts row names as a character column and not a
+	factor: this makes the default sort order more comprehensible.
 
 
 DEPRECATED & DEFUNCT

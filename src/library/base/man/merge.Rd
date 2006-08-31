@@ -68,8 +68,9 @@ merge(x, y, \dots)
   common columns, but for \code{sort=FALSE} are in an unspecified order.
   The columns are the common columns followed by the
   remaining columns in \code{x} and then those in \code{y}.  If the
-  matching involved row names, an extra column \code{Row.names} is added
-  at the left, and in all cases the result has no special row names.
+  matching involved row names, an extra character column
+  \code{Row.names} is added at the left, and in all cases the result has
+  no special row names.
 }
 \seealso{
   \code{\link{data.frame}},
@@ -78,13 +79,14 @@ merge(x, y, \dots)
 }
 
 \examples{
+## use character columns of names to get sensible sort order
 authors <- data.frame(
-    surname = c("Tukey", "Venables", "Tierney", "Ripley", "McNeil"),
+    surname = I(c("Tukey", "Venables", "Tierney", "Ripley", "McNeil")),
     nationality = c("US", "Australia", "US", "UK", "Australia"),
     deceased = c("yes", rep("no", 4)))
 books <- data.frame(
-    name = c("Tukey", "Venables", "Tierney",
-             "Ripley", "Ripley", "McNeil", "R Core"),
+    name = I(c("Tukey", "Venables", "Tierney",
+             "Ripley", "Ripley", "McNeil", "R Core")),
     title = c("Exploratory Data Analysis",
               "Modern Applied Statistics ...",
               "LISP-STAT",
