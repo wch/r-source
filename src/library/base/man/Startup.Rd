@@ -27,6 +27,9 @@
   does not in a \dQuote{factory-fresh} installation).
   The user files searched for are \file{.Renviron} in the current or in
   the user's home directory (in that order).
+#ifdef windows
+  (See \sQuote{See also} for how the home directory is found on Windows.
+#endif
   See \bold{Details} for how the files are read.
 
   Then \R searches for the site-wide startup profile unless the command
@@ -114,6 +117,11 @@
 #endif
 }
 \seealso{
+#ifdef windows
+  For the definition of the home directory see the rw-FAQ.  It can be
+  found from a running \R by \code{Sys.getenv("R_USER")}.
+
+#endif
   \code{\link{.Last}} for final actions before termination.
   \code{\link{commandArgs}} for accessing the command line arguments.
 
