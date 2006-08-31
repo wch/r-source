@@ -3129,6 +3129,9 @@ Lattice graphics, an implementation of Trellis Graphics functions.
 @emph{Recommended}.
 @item latticeExtra
 Generic functions and standard methods for Trellis-based displays.
+@item lawstat
+Statistical tests widely utilized in biostatistics, public policy and
+law.
 @item lazy
 Lazy learning for local regression.
 @item ldDesign
@@ -3954,6 +3957,8 @@ Sample Size Adjusted for Nonadherence or Variability of input
 parameters.
 @item sspir
 State SPace models In R.
+@item st
+Shrinkage @math{t} statistic.
 @c @item stable
 @c Density, distribution, quantile and hazard functions of a stable
 @c variate; generalized linear models for the parameters of a stable
