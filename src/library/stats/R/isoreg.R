@@ -16,13 +16,16 @@ isoreg <- function(x, y=NULL)
 	      class = "isoreg")
 }
 
-fitted.isoreg <- function(object, ...) {
+fitted.isoreg <- function(object, ...)
+{
     if(object$isOrd) object$yf
     else object$yf[order(object$ord)]
 }
+
 residuals.isoreg <- function(object, ...) object$y - fitted(object)
 
-print.isoreg <- function(x, digits = getOption("digits"), ...) {
+print.isoreg <- function(x, digits = getOption("digits"), ...)
+{
   cat("Isotonic regression from ", deparse(x$call), ",\n", sep="")
   cat("  with", length(x$iKnots), "knots / breaks at obs.nr.", x$iKnots, ";\n")
   if(x$isOrd) cat("  initially ordered 'x'\n")
@@ -76,20 +79,22 @@ plot.isoreg <-
 
     ## Plot of "Data" + Fit
     plot(x0, c(NA,x$y), ..., xlab = xlab, ylab = ylab, main = if(!both) main)
-    with(par.fit, {
-	lines (xx,           x$yf,           col = col, lwd = lwd, type = "S")
-	points(xx[x$iKnots], x$yf[x$iKnots], col = col, cex = cex, pch = pch) })
+    lines (xx, x$yf, col = par.fit$col, lwd = par.fit$lwd, type = "S")
+    points(xx[x$iKnots], x$yf[x$iKnots], col = par.fit$col,
+           cex = par.fit$cex, pch = par.fit$pch)
     if(grid) grid()
     if(both) { ## Cumulative Plot
 	plot (x0, cy, type = "n", xlab = xlab,
-	      ylab = paste("cumsum(",ylab,")",sep=""), ylim = range(cy,cf), ...)
+	      ylab = paste("cumsum(", ylab, ")", sep=""), ylim = range(cy, cf),
+              ...)
         i <- 1:1 + x$iKnots
-	with(par.fit, {
-	    lines(x0, cf, col = col, lwd = lwd)
-	    points(x0[i], cy[i], col = col, cex = cex, pch = pch) })
+        lines(x0, cf, col = par.fit$col, lwd = par.fit$lwd)
+        points(x0[i], cy[i], col = par.fit$col, cex = par.fit$cex,
+               pch = par.fit$pch)
 	if(grid) {
 	    Agrid <- formals("grid")
-	    abline(v = x0[i], col = Agrid$col, lty = Agrid$lty, xpd = !col.wise)
+	    abline(v = x0[i], col = Agrid$col, lty = Agrid$lty,
+                   xpd = !col.wise)
 	}
 	points(x0[-1], cy[-1])# over draw
 	if(!is.null(main2))
