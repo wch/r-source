@@ -80,7 +80,8 @@ available.packages <-
                                 dimnames=list(NULL, missingFields))
                 res0 <- cbind(res0, toadd)
             }
-            res0 <- cbind(res0[, fields], Repository = repos)
+            res0 <- cbind(res0[, fields, drop = FALSE],
+                          Repository = repos)
             res <- rbind(res, res0)
         }
     }
