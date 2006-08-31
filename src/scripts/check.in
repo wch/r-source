@@ -565,6 +565,7 @@ foreach my $pkg (@ARGV) {
 			"(" . join("|", ("^WARNING:",
 					 "^Warning:",
 					 ": warning: .*ISO C",
+					 ": warning: implicit declaration of function",
 					 "missing link\\(s\\):")) . ")";
 		    @lines = grep(/$warn_re/, @lines);
 
@@ -589,6 +590,22 @@ foreach my $pkg (@ARGV) {
 				      @lines);
 			$warn_re = "warning: *ISO C forbids.*" .
 			    "function pointer";
+			@lines = grep(!/$warn_re/, @lines);
+		    }
+
+		    ## Warnings spotted by gcc with
+		    ## '-Wimplicit-function-declaration', which is
+		    ## implied by '-Wall'.  Currently only accessible
+		    ## via an internal environment variable.
+		    my $check_src_flag =
+			&R_getenv("_R_CHECK_SRC_MINUS_W_IMPLICIT_",
+				  "FALSE");
+		    ## (Not quite perfect, as the name should really
+		    ## include 'IMPLICIT_FUNCTION_DECLARATION'.)
+		    $check_src_flag =
+			&config_val_to_logical($check_src_flag);
+		    if(!$check_src_flag) {
+			my $warn_re = "warning: implicit declaration of function";
 			@lines = grep(!/$warn_re/, @lines);
 		    }
 
@@ -1347,8 +1364,25 @@ sub check_pkg {
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
+		$log->warning() unless $any;
 		$any++;
-		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+	    }
+	}
+
+	if($R_check_use_codetools) {
+	    my $Rcmd = "options(warn=1)\n";
+	    if($opt_install) {
+		$Rcmd .= "tools:::.check_T_and_F(package = \"${pkgname}\")\n";
+	    }
+	    else {
+		$Rcmd .= "tools:::.check_T_and_F(dir = \"${pkgdir}\")\n";
+	    }
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    @out = grep(!/^\>/, @out);
+	    if(scalar(@out) > 0) {
+		$log->warning() unless $any;
+		$any++;
 		$log->print(join("\n", @out) . "\n");
 	    }
 	}
