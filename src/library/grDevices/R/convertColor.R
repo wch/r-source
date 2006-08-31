@@ -175,7 +175,7 @@ colorspaces <-
              Z <- X*a+b
 
              c(X = X,Y = Y,Z = Z)
-         }, name = "Luv", white = NULL),
+         }, name = "Luv", white = NULL)
 
          ) # colorspaces
 
