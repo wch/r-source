@@ -12,7 +12,7 @@ lm.influence(model, do.coef = TRUE)
 \alias{influence.lm}
 \alias{influence.glm}
 \arguments{
-  \item{model}{an object as returned by \code{\link{lm}}.}
+  \item{model}{an object as returned by \code{\link{lm}} or \code{\link{glm}}.}
   \item{do.coef}{logical indicating if the changed \code{coefficients}
     (see below) are desired.  These need \eqn{O(n^2 p)} computing time.}
   \item{\dots}{further arguments passed to or from other methods.}
@@ -26,7 +26,9 @@ lm.influence(model, do.coef = TRUE)
   The \code{\link{influence.measures}()} and other functions listed in
   \bold{See Also} provide a more user oriented way of computing a
   variety of regression diagnostics.  These all build on
-  \code{lm.influence}.
+  \code{lm.influence}.  Note that for GLMs (other than the Gaussian
+  family with identity link) these are based on one-step approximations
+  which may be inadequate if a case has high influence.
 
   An attempt is made to ensure that computed hat values that are
   probably one are treated as one, and the corresponding rows in
@@ -50,7 +52,8 @@ lm.influence(model, do.coef = TRUE)
     that aliased coefficients are not included in the matrix.}
   \item{sigma}{a vector whose i-th element contains the estimate
     of the residual standard deviation obtained when the i-th
-    case is dropped from the regression.}
+    case is dropped from the regression.  (The approximations needed for
+    GLMs can result in this being \code{NaN}.)}
   \item{wt.res}{a vector of \emph{weighted} (or for class \code{glm}
     rather \emph{deviance}) residuals.}
 }

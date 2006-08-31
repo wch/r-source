@@ -109,7 +109,8 @@ hat(x, intercept = TRUE)
 
   Values for generalized linear models are approximations, as described
   in Williams (1987) (except that Cook's distances are scaled as
-  \eqn{F} rather than as chi-square values).
+  \eqn{F} rather than as chi-square values).  The approximations can be
+  poor when some cases have large influence.
 
   The optional \code{infl}, \code{res} and \code{sd} arguments are there
   to encourage the use of these direct access functions, in situations
