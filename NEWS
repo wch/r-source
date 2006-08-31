@@ -369,7 +369,7 @@ NEW FEATURES
 	restricted than seq() but often very much faster, and
 	primitives seq_along() and seq_len() which are faster still.
 
-    o   legend() has new parameters 'box.lwd' and 'box.lty'.
+    o   legend() has new arguments 'box.lwd' and 'box.lty'.
 
     o   r2dtable() has been moved to package 'stats'.
 
@@ -448,6 +448,9 @@ C-LEVEL FACILITIES
         of the routines R_RegisterCCallable and R_GetCCallable.  These
         functions are declared in <R_ext/Rdynload.h>. This interface
         is experimental and subject to change.
+
+    o	Stack protection imbalance is now an error rather than sending
+	a chain of messages to stdout/stderr.
 
 
 UTILITIES
