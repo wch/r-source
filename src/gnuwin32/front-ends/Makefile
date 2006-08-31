@@ -84,7 +84,7 @@ Rpwd.exe: rpwd.o rcico.o
 rcmd.o R.o rgui.o rterm.o RSetReg.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
 
 clean:
-	$(RM) *.o *.obj *.exe *~ *.exp *.def *.dll *.lib *.a *.d Makedeps
+	$(RM) *.o *.obj *.exe *~ *.exp *.dll *.lib *.a *.d Makedeps
 
 bdx_util-CFLAGS=-D_IN_RPROXY_
 bdx_com-CFLAGS=-D_IN_RPROXY_
