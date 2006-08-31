@@ -3607,6 +3607,147 @@ function(dir) {
     invisible(x)
 }
 
+### * .check_T_and_F
+
+## T and F checking, next generation.
+##
+## What are we really trying to do?
+##
+## In R, T and F are "just" variables which upon startup are bound to
+## TRUE and FALSE, respectively, in the base package/namespace.  Hence,
+## if code uses "global" variables T and F and dynamic lookup is in
+## place (for packages, if they do not have a namespace), there may be
+## trouble in case T or F were redefined.  So we'd like to warn about
+## these cases.
+##
+## A few things to note:
+## * Package code top-level bindings *to* T and F are not a problem for
+##   packages installed for lazy-loading (as the top-level T and F get
+##   evaluated "appropriately" upon installation.
+## * Code in examples using "global" T and F is always a problem, as
+##   this is evaluated in the global envionment by examples().
+## * There is no problem with package code using T and F as local
+##   variables.
+##
+## Our current idea is the following.  Function findGlobals() in
+## codetools already provides a way to (approximately) determine the
+## globals.  So we can try to get these and report them.
+##
+## Note that findGlobals() only works on closures, so we definitely miss
+## top-level assignments to T or F.  This could be taken care of rather
+## easily, though.
+##
+## Note also that we'd like to help people find where the offending
+## globals were found.  Seems that codetools currently does not offer a
+## way of recording e.g. the parent expression, so we do our own thing
+## based on the legacy checkTnF code.
+
+.check_T_and_F <-
+function(package, dir, lib.loc = NULL)
+{
+    bad_closures <- character()
+    bad_examples <- character()
+
+    find_bad_closures <- function(env) {
+        objects_in_env <- objects(env, all = TRUE) 
+        x <- lapply(objects_in_env,
+                    function(o) {
+                        v <- get(o, env = env)
+                        if (typeof(v) == "closure") 
+                            codetools::findGlobals(v)
+                    })
+        objects_in_env[sapply(x,
+                              function(s) any(s %in% c("T", "F")))]
+    }
+
+    find_bad_examples <- function(txts) {
+        env <- new.env()
+        x <- lapply(txts,
+                    function(txt) {
+                        eval(parse(text =
+                                   paste("FOO <- function() {",
+                                         paste(txt, collapse = "\n"),
+                                         "}",
+                                         collapse = "\n")),
+                             env)
+                        find_bad_closures(env)
+                    })
+        names(txts)[sapply(x, length) > 0]
+    }
+
+    if(!missing(package)) {
+        if(length(package) != 1)
+            stop("argument 'package' must be of length 1")
+        dir <- .find.package(package, lib.loc)
+        if((package != "base")
+           && !packageHasNamespace(package, dirname(dir))) {
+            .load_package_quietly(package, lib.loc)
+            code_env <- .package_env(package)
+            bad_closures <- find_bad_closures(code_env)
+        }
+        example_texts <-
+            .get_example_texts_from_example_dir(file.path(dir, "R-ex"))
+    }
+    else {
+        ## The dir case.
+        if(missing(dir))
+            stop("you must specify 'package' or 'dir'")
+        dir <- file_path_as_absolute(dir)
+        code_dir <- file.path(dir, "R")
+        if(!packageHasNamespace(basename(dir), dirname(dir))
+           && file_test("-d", code_dir)) {
+            code_env <- new.env()
+            .source_assignments_in_code_dir(code_dir, code_env)
+            bad_closures <- find_bad_closures(code_env)
+        }
+        example_texts <- .get_example_texts_from_source_dir(dir)
+    }
+
+    bad_examples <- find_bad_examples(example_texts)
+
+    out <- list(bad_closures = bad_closures,
+                bad_examples = bad_examples)
+    class(out) <- "check_T_and_F"
+    out
+}
+
+.get_example_texts_from_example_dir <-
+function(dir)
+{
+    if(!file_test("-d", dir)) return(NULL)
+    files <- list_files_with_exts(dir, "R")
+    texts <- lapply(files,
+                    function(f) paste(readLines(f, warn = FALSE),
+                                      collapse = "\n"))
+    names(texts) <- files
+    texts
+}
+
+.get_example_texts_from_source_dir <-
+function(dir)
+{
+    if(!file_test("-d", file.path(dir, "man"))) return(NULL)
+    sapply(Rd_db(dir = dir),
+           function(s) {
+               .get_Rd_example_code(paste(Rd_pp(s), collapse = "\n"))
+           })
+}
+
+print.check_T_and_F <- function(x, ...) {
+    if(length(x$bad_closures)) {
+        msg <- gettext("Found possibly global T or F in the following functions:")
+        writeLines(strwrap(msg))
+        .pretty_print(x$bad_closures)
+    }
+    if(length(x$bad_examples)) {
+        msg <- gettext("Found possibly global T or F in the following Rd example files:")
+        writeLines(strwrap(msg))
+        writeLines(paste(" ", x$bad_examples))
+    }
+    invisible(x)
+}
+
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
