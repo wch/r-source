@@ -426,9 +426,10 @@ SEXP eval(SEXP e, SEXP rho)
 	    R_Visible = 1 - PRIMPRINT(op);
 	    tmp = PRIMFUN(op) (e, op, CDR(e), rho);
 	    UNPROTECT(1);
-	    if (save != R_PPStackTop)
-		error("stack imbalance in '%s', %d then %d\n",
-		      PRIMNAME(op), save, R_PPStackTop);
+	    if(save != R_PPStackTop) {
+		Rprintf("stack imbalance in %s, %d then %d\n",
+			PRIMNAME(op), save, R_PPStackTop);
+	    }
 	}
 	else if (TYPEOF(op) == BUILTINSXP) {
 	    int save = R_PPStackTop;
@@ -447,9 +448,10 @@ SEXP eval(SEXP e, SEXP rho)
 	    }
 	    UNPROTECT(1);
 
-	    if (save != R_PPStackTop)
-		error("stack imbalance in '%s', %d then %d\n",
-		      PRIMNAME(op), save, R_PPStackTop);
+	    if(save != R_PPStackTop) {
+		Rprintf("stack imbalance in %s, %d then %d\n",
+			PRIMNAME(op), save, R_PPStackTop);
+	    }
 	}
 	else if (TYPEOF(op) == CLOSXP) {
 	    PROTECT(tmp = promiseArgs(CDR(e), rho));

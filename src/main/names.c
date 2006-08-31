@@ -1097,8 +1097,8 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     if (flag) R_Visible = 0;
     UNPROTECT(1);
     if (save != R_PPStackTop)
-	error("stack imbalance in '%s', %d then %d\n",
-	      PRIMNAME(INTERNAL(fun)), save, R_PPStackTop);
+	REprintf("stack imbalance in internal %s, %d then %d",
+		 PRIMNAME(INTERNAL(fun)), save, R_PPStackTop);
     return (args);
 }
 #undef __R_Names__
