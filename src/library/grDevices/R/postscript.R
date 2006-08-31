@@ -100,7 +100,7 @@ guessEncoding <- function(family)
                           "CP1251" = "CP1251.enc", # Cyrillic
                           "WinAnsi.enc")
                },
-               { lc <- localeToCharset()
+               { lc <- utils::localeToCharset()
                  if(length(lc) == 1)
                      switch(lc,
                             "ISO8859-1" = "ISOLatin1.enc",
