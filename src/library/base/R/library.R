@@ -973,11 +973,10 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
 {
     pkgs <- names(pkgInfo$Depends)
     if (length(pkgs)) {
-        sch <- search()
         pkgname <- pkgInfo$DESCRIPTION["Package"]
         for(pkg in pkgs) {
             z <- pkgInfo$Depends[[pkg]]
-            if ( !paste("package", pkg, sep = ":") %in% sch ) {
+            if ( !paste("package", pkg, sep = ":") %in% search() ) {
                 if (length(z) > 1) {
                     pfile <- system.file("Meta", "package.rds",
                                          package = pkg, lib.loc = lib.loc)
