@@ -169,7 +169,7 @@ p <- 7e-4; df <- 0.9
 abs(1-c(pchisq(qchisq(p, df),df)/p, # was 2.31e-8 for R <= 1.8.1
         pchisq(qchisq(1-p, df,lower=FALSE),df,lower=FALSE)/(1-p),# was 1.618e-11
         pchisq(qchisq(log(p), df,log=TRUE),df, log=TRUE)/log(p), # was 3.181e-9
-        pchisq(qchisq(log(1-p),df,log=T,lower=F),df, log=T,lower=F)/log(1-p),
+        pchisq(qchisq(log(1-p),df,log=T,lower=F),df, log=T,lower=F)/log(1-p)
         )# 32b-i386: (2.2e-16, 0,0, 3.3e-16); Opteron: (2.2e-16, 0,0, 2.2e-15)
     ) < 1e-14
 
