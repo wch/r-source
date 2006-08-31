@@ -38,7 +38,7 @@ setGeneric <-
     if(is.object(fdef) && is(fdef, "genericFunction")) {
         doUncache <- TRUE
         oldDef <- fdef
-        prevDefault <- finalDefaultMethod(getMethods(fdef))
+        prevDefault <- finalDefaultMethod(fdef@default)
         if(is.null(package))
             package <- fdef@package
     }
