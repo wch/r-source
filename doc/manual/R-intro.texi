@@ -1351,7 +1351,7 @@ and vectors can be extended (by missing values) in the same way.
 
 The function @code{attributes(@var{object})}
 @findex attributes
-gives a list of all the non-intrinsic attributes currently defined for
+returns a list of all the non-intrinsic attributes currently defined for
 that object.  The function @code{attr(@var{object}, @var{name})}
 @findex attr
 can be used to select a specific attribute.  These functions are rarely
@@ -1565,8 +1565,8 @@ simple instance (just one factor) what happens can be thought of as
 follows.  The values in the vector are collected into groups
 corresponding to the distinct entries in the factor.  The function is
 then applied to each of these groups individually.  The value is a
-vector of function results, labelled by the levels attribute of the
-factor.
+vector of function results, labelled by the @code{levels} attribute of
+the factor.
 
 The combination of a vector and a labelling factor is an example of what
 is sometimes called a @emph{ragged array}, since the subclass sizes are
@@ -2338,7 +2338,7 @@ code for each entry in a data vector.  The assignment
 
 @noindent
 gives in @code{statefr} a table of frequencies of each state in the
-sample.  The frequencies are ordered and labelled by the levels
+sample.  The frequencies are ordered and labelled by the @code{levels}
 attribute of the factor.  This simple case is equivalent to, but more
 convenient than,
 
@@ -4079,7 +4079,7 @@ at the very end of the session.  An example is given below.
 The class of an object determines how it will be treated by what are
 known as @emph{generic} functions.  Put the other way round, a generic
 function performs a task or action on its arguments @emph{specific to
-the class of the argument itself}.  If the argument lacks any class
+the class of the argument itself}.  If the argument lacks any @code{class}
 attribute, or has a class not catered for specifically by the generic
 function in question, there is always a @emph{default action} provided.
 

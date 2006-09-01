@@ -45,6 +45,9 @@ convE(u, u)
 showArgs <- function(...) .External("showArgs", ...)
 showArgs(u=u, x=x, let=letters)
 
+showArgs1 <- function(...) .Call("showArgs1", list(...))
+showArgs1(u=u, x=x, let=letters)
+
 a <- list(a = 1:5, b = rnorm(10), test = runif(100))
 .Call("lapply", a, quote(sum(x)), new.env())
 

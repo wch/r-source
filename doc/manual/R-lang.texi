@@ -653,7 +653,7 @@ coercion should not be done.
 
 @cindex object
 All objects except @code{NULL} can have one or more attributes attached
-to them.  Attributes are stored as a list where all elements are named.
+to them.  Attributes are stored as a pairlist where all elements are named.
 The list of attributes can be obtained using @code{attributes} and set
 by @code{attributes<-},
 @findex attributes
