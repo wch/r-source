@@ -117,7 +117,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         basis <- basis[, -1 , drop = FALSE]
     }
     qr.const <- qr(t(const))
-    basis <- as.matrix((t(qr.qty(qr.const, t(basis))))[,  - (1:2)])
+    basis <- as.matrix((t(qr.qty(qr.const, t(basis))))[,  - (1:2), drop = FALSE])
     n.col <- ncol(basis)
     if(nas) {
         nmat <- matrix(NA, length(nax), n.col)

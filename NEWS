@@ -676,14 +676,16 @@ BUG FIXES
 
     o	[[ on an environment could create aliases. (PR#8457)
 
-    o	pt() with a very small non-centrality parameter could give an
-	unduly stringent warning about 'full precision was not
+    o	pt() with a very small (or zero) non-centrality parameter could
+	give an unduly stringent warning about 'full precision was not
 	achieved'.  (PR#9171)
 
     o	writeChar() could segfault if 'nchars' was given silly values.
 
     o	qt() and rt() did not work for vector 'ncp', and qt() did not
 	work for negative 'ncp'.
+
+    o	ns() failed to work correctly when 'x' was of length one.
 
 
 
