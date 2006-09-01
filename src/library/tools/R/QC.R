@@ -139,7 +139,7 @@ function(package, dir, lib.loc = NULL)
         ## The test below exempts objects that are generic functions if
         ## there is a visible nongeneric function and the default method
         ## is "derived", by a call to setGeneric.  This test allows
-        ## nondocumentd generics in some cases (e.g., the generic was
+        ## nondocumented generics in some cases (e.g., the generic was
         ## created locally from an inconsistent version).
         ## In the long run we need dynamic documentation.
         if(.isMethodsDispatchOn()) {
@@ -3649,11 +3649,11 @@ function(package, dir, lib.loc = NULL)
     bad_examples <- character()
 
     find_bad_closures <- function(env) {
-        objects_in_env <- objects(env, all = TRUE) 
+        objects_in_env <- objects(env, all = TRUE)
         x <- lapply(objects_in_env,
                     function(o) {
                         v <- get(o, env = env)
-                        if (typeof(v) == "closure") 
+                        if (typeof(v) == "closure")
                             codetools::findGlobals(v)
                     })
         objects_in_env[sapply(x,
