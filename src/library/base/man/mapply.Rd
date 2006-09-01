@@ -6,31 +6,32 @@
   \code{mapply} is a multivariate version of \code{\link{sapply}}.
   \code{mapply} applies \code{FUN} to the first elements of each \dots
   argument, the second elements, the third elements, and so on.
-  Arguments are recycled if necessary. 
-  
+  Arguments are recycled if necessary.
+
   \code{Vectorize} returns a new function that acts as if \code{mapply}
   was called.
 }
 \usage{
 mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE,
-      USE.NAMES = TRUE)
+       USE.NAMES = TRUE)
 
 Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
           USE.NAMES = TRUE)
 }
 \arguments{
-  \item{FUN}{Function to apply, found via \code{\link{match.fun}}.}
-  \item{\dots}{Arguments to vectorise over (list or vector).}
-  \item{MoreArgs}{A list of other arguments to \code{FUN}.}
-  \item{SIMPLIFY}{Attempt to reduce the result to a vector or matrix?}
-  \item{USE.NAMES}{If the first \dots argument is character and the
-    result does not already have names, use it as the names.}
-  \item{vectorize.args}{A character vector of arguments which should be
+  \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
+  \item{\dots}{arguments to vectorise over (list or vector).}
+  \item{MoreArgs}{a list of other arguments to \code{FUN}.}
+  \item{SIMPLIFY}{logical; attempt to reduce the result to a vector or matrix?}
+  \item{USE.NAMES}{logical; use names if the first \dots argument has
+    names, or if it is a character vector, use that character vector as
+    the names.}
+  \item{vectorize.args}{a character vector of arguments which should be
     vectorized.  Defaults to all arguments to \code{FUN}.}
 }
 \value{
   \code{mapply} returns a list, vector, or matrix.
-  
+
   \code{Vectorize} returns a function with the same arguments as \code{FUN},
   but wrapping a call to \code{mapply}.
 }
@@ -62,6 +63,13 @@ vrep(times=1:4, x=4:1)
 vrep <- Vectorize(rep.int, "times")
 vrep(times=1:4, x=42)
 
+mapply(function(x,y) seq_len(x) + y,
+       c(a= 1, b=2, c= 3),  # names from first
+       c(A=10, B=0, C=-10))
+
+word <- function(C,k) paste(rep.int(C,k), collapse='')
+str(mapply(word, LETTERS[1:6], 6:1, SIMPLIFY = FALSE))
+
 f <- function(x=1:3, y) c(x,y)
 vf <- Vectorize(f, SIMPLIFY = FALSE)
 f(1:3,1:3)
@@ -81,7 +89,6 @@ Vm <- seq(140, 310, len=50)
 K <- seq(0, 0.15, len=40)
 SSvals <- outer(Vm, K, vSS, Treated$rate, Treated$conc)
 contour(Vm, K, SSvals, levels=(1:10)^2, xlab="Vm", ylab="K")
-
 }
 \keyword{manip}
 \keyword{utilities}
