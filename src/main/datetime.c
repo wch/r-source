@@ -938,6 +938,7 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("POSIXt"));
     SET_STRING_ELT(class, 1, mkChar("POSIXlt"));
     classgets(ans, class);
+    setAttrib(ans, install("tzone"), mkString("UTC"));
     UNPROTECT(4);
 
     return ans;
