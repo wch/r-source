@@ -1698,7 +1698,7 @@ sub check_pkg {
  	if(R_system($cmd)) {
   	    $log->error();
 	    $log->print("Running massage-Examples to create " .
-			"${pkgname}-Ex.R failed.\n");
+			"'${pkgname}-Ex.R' failed.\n");
   	    exit(1);
         }
         if($is_zipped) {
@@ -1724,7 +1724,7 @@ sub check_pkg {
 	}
 	if(R_system($cmd)) {
 	    $log->error();
-	    $log->print("Running examples in ${pkgname}-Ex.R failed.\n");
+	    $log->print("Running examples in '${pkgname}-Ex.R' failed.\n");
 	    ## Try to spot the offending example right away.
 	    my $txt = join("\n", &read_lines("${pkgname}-Ex.Rout"));
 	    ## Look for the header section anchored by a subsequent call
@@ -1840,6 +1840,25 @@ sub check_pkg {
         print "\n";
         if(R_system("${R::Vars::MAKE} $makefiles $makevars")) {
             $log->error();
+	    ## Don't just fail: try to log where the problem occurred.
+	    ## First, find the test which failed.
+	    my @bad_files = &list_files_with_exts($testdir,
+						  "Rout.fail");
+	    if(scalar(@bad_files) > 0) {
+		## Maybe there was an error without a failing test.
+		my $file = $bad_files[0];
+		## Read in output from the failed test and retain at
+		## most the last 13 lines (13? why not?).
+		my @lines = &read_lines($file);
+		my $to = $#{lines};
+		my $from = ($to >= 12) ? ($to - 12) : 0;
+		@lines = @lines[$from..$to];
+		$file =~ s/out\.fail//;
+		$file = &file_path("tests", basename($file));
+		$log->print("Running the tests in '$file' failed.\n");
+		$log->print("Last 13 lines of output:\n");
+		$log->print("  " . join("\n  ", @lines) . "\n");
+	    }
             exit(1);
         }
         chdir($pkgoutdir);
