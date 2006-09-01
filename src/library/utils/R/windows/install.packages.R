@@ -16,6 +16,7 @@
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
         ## dir over to the appropriate install dir.
+        lib <- normalizePath(lib)
         tmpDir <- tempfile(, lib)
         if (!dir.create(tmpDir))
             stop(gettextf("unable to create temporary directory '%s'",

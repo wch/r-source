@@ -44,6 +44,9 @@ repeated after the paste.
 Installing packages
 -------------------
 
+It is now possible to use relative paths as 'lib' in
+install.packages(), not just absolute ones.
+
 Installing packages (in particular saving an image and preparing for
 lazy-loading and lazydata) is now done in a C locale for consistency
 with Unix.  (This will only possibly affect CJK locales, where some
