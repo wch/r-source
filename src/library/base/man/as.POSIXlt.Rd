@@ -34,7 +34,9 @@ as.POSIXlt(x, tz = "")
   \code{"date"} (from package \pkg{\link[date:as.date]{date}} or
   \pkg{\link[survival:as.date]{survival}}), \code{"chron"} and
   \code{"dates"} (from package \pkg{\link[chron]{chron}}) to these
-  classes.  Dates are treated as being at midnight UTC.
+  classes.  Dates are treated as being at midnight UTC \emph{where it is
+    necessary to assume a timezone} (it is not to go from \code{"Date"}
+  to \code{"POSIXlt"}, for example).
 
   They can also convert character strings of the formats
   \code{"2001-02-03"} and \code{"2001/02/03"} optionally followed by
