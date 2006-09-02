@@ -29,13 +29,13 @@ xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE
 	    if(ncol(x) == 1) {
 		xlab <- "Index"
 		y <- x[,1]
-		x <- 1:length(y)
+		x <- seq_along(y)
 	    }
 	    else {
 		colnames <- dimnames(x)[[2]]
 		if(is.null(colnames)) {
-		    xlab <- paste(ylab,"[,1]",sep="")
-		    ylab <- paste(ylab,"[,2]",sep="")
+		    xlab <- paste(ylab, "[,1]", sep="")
+		    ylab <- paste(ylab, "[,2]", sep="")
 		}
 		else {
 		    xlab <- colnames[1]
@@ -46,8 +46,8 @@ xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE
 	    }
 	}
 	else if(is.list(x)) {
-	    xlab <- paste(ylab,"$x",sep="")
-	    ylab <- paste(ylab,"$y",sep="")
+	    xlab <- paste(ylab, "$x", sep="")
+	    ylab <- paste(ylab, "$y", sep="")
 	    y <- x[["y"]]
 	    x <- x[["x"]]
 	}
