@@ -243,7 +243,7 @@ SEXP do_gsub(SEXP, SEXP, SEXP, SEXP);
 SEXP do_hsv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_hcl(SEXP, SEXP, SEXP, SEXP);
 SEXP do_iconv(SEXP, SEXP, SEXP, SEXP);
-SEXP do_ident(SEXP, SEXP, SEXP, SEXP);
+SEXP do_identical(SEXP, SEXP, SEXP, SEXP);
 SEXP do_identify(SEXP, SEXP, SEXP, SEXP);
 SEXP do_if(SEXP, SEXP, SEXP, SEXP);
 SEXP do_image(SEXP, SEXP, SEXP, SEXP);
@@ -265,9 +265,6 @@ SEXP do_isna(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isnan(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isunsorted(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isvector(SEXP, SEXP, SEXP, SEXP);
-#if 0
-SEXP do_visibleflag(SEXP, SEXP, SEXP, SEXP);
-#endif
 SEXP do_lapply(SEXP, SEXP, SEXP, SEXP);
 SEXP do_layout(SEXP, SEXP, SEXP, SEXP);
 SEXP do_length(SEXP, SEXP, SEXP, SEXP);

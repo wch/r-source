@@ -27,25 +27,19 @@
 
 /* Implementation of identical(x, y) */
 
-Rboolean compute_identical(SEXP x, SEXP y);
 static Rboolean neWithNaN(double x,  double y);
-
-SEXP attribute_hidden do_identical(SEXP x, SEXP y)
-{
-    SEXP ans;
-
-    PROTECT(ans = allocVector(LGLSXP, 1));
-    LOGICAL(ans)[0] = compute_identical(x, y);
-    UNPROTECT(1);
-    return(ans);
-}
 
 /* primitive interface */
 
-SEXP attribute_hidden do_ident(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    SEXP ans;
+
     checkArity(op, args);
-    return do_identical(CAR(args), CADR(args));
+    PROTECT(ans = allocVector(LGLSXP, 1));
+    LOGICAL(ans)[0] = compute_identical(CAR(args), CADR(args));
+    UNPROTECT(1);
+    return(ans);
 }
 
 /* do the two objects compute as identical? */

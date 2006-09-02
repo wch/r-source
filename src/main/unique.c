@@ -256,8 +256,6 @@ static int vhash(SEXP x, int indx, HashData *d)
     return scatter(key, d);
 }
 
-Rboolean compute_identical(SEXP x, SEXP y); /* from identical.c */
-
 static int vequal(SEXP x, int i, SEXP y, int j)
 {
     return compute_identical(VECTOR_ELT(x, i), VECTOR_ELT(y, j));
