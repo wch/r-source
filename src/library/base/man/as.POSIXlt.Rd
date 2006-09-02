@@ -112,6 +112,7 @@ unlist(unclass(z))            # a list shown as a named vector
 
 ## suppose we have a time in seconds since 1960-01-01 00:00:00 GMT
 z <- 1472562988
+# two ways to convert this
 ISOdatetime(1960,1,1,0,0,0) + z # late August 2006
 strptime("1960-01-01", "\%Y-\%m-\%d", tz="GMT") + z
 
