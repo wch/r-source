@@ -65,10 +65,11 @@ function(topic, package = NULL, lib.loc = NULL)
                            file.path(dir, "Meta", "vignette.rds")))
                 entries <- .readRDS(INDEX)
             if(NROW(entries) > 0)
-                vDB <-
-                    rbind(vDB,
-                          cbind(Dir = I(dir),
-                                entries[c("File", "Title", "PDF")]))
+                vDB <- rbind(vDB,
+                             cbind(dir,
+                                   entries$File,
+                                   entries$Title,
+                                   entries$PDF))
         }
 
         ## Now compute info on available PDFs ...

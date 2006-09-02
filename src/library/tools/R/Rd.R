@@ -530,9 +530,9 @@ function(file, text = NULL)
         names(txt) <- paste(tag, collapse = " ")
         rest <- c(rest, txt)
     }
-    list(meta = meta,
-         data = data.frame(tags = I(tags), vals = I(vals)),
-         rest = rest)
+    data <- data.frame(vals = vals, stringsAsFactors = FALSE)
+    data$tags <- tags
+    list(meta = meta, data = data, rest = rest)
 }
 
 ### * Rd_aliases
