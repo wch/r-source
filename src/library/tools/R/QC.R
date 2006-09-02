@@ -740,6 +740,7 @@ function(x, ...)
     if(length(x) == 0)
         return(invisible(x))
     has_only_names <- is.character(x[[1]][[1]][["code"]])
+    
     format_args <- function(s) {
         if(has_only_names) {
             paste("function(", paste(s, collapse = ", "), ")", sep = "")
@@ -750,18 +751,82 @@ function(x, ...)
             gsub("^list", "function", s)
         }
     }
+
+    summarize_mismatches_in_names <- function(nfc, nfd) {
+        if(length(nms <- nfc %w/o% nfd))
+            writeLines(c(gettext("  Argument names in code not in docs:"),
+                         strwrap(paste(nms, collapse = " "),
+                                 indent = 4, exdent = 4)))
+        if(length(nms <- nfd %w/o% nfc))
+            writeLines(c(gettext("  Argument names in docs not in code:"),
+                         strwrap(paste(nms, collapse = " "),
+                                 indent = 4, exdent = 4)))
+        len <- min(length(nfc), length(nfd))
+        if(len) {
+            len <- seq_len(len)
+            nfc <- nfc[len]
+            nfd <- nfd[len]
+            ind <- which(nfc != nfd)
+            len <- length(ind)
+            if(len) {
+                if(len > 3) {
+                    writeLines(gettext("  Mismatches in argument names (first 3):"))
+                    ind <- ind[1 : 3]
+                } else {
+                    writeLines(gettext("  Mismatches in argument names:"))
+                }
+                for(i in ind) {
+                    writeLines(sprintf("    Position: %d Code: %s Docs: %s",
+                                       i, nfc[i], nfd[i]))
+                }
+            }
+        }
+    }
+
+    summarize_mismatches_in_values <- function(ffc, ffd) {
+        ## Be nice, and match arguments by names first.
+        nms <- intersect(names(ffc), names(ffd))
+        vffc <- as.character(ffc[nms])
+        vffd <- as.character(ffd[nms])
+        ind <- which(vffc != vffd)
+        len <- length(ind)
+        if(len) {
+            if(len > 3) {
+                writeLines(gettext("  Mismatches in argument default values (first 3):"))
+                ind <- ind[1 : 3]
+            } else {
+                writeLines(gettext("  Mismatches in argument default values:"))
+            }
+            for(i in ind) {
+                writeLines(sprintf("    Name: %s Code: %s Docs: %s",
+                                   nms[i], vffc[i], vffd[i]))
+            }
+        }
+    }
+    
+    summarize_mismatches <- function(ffc, ffd) {
+        if(has_only_names)
+            summarize_mismatches_in_names(ffc, ffd)
+        else {
+            summarize_mismatches_in_names(names(ffc), names(ffd))
+            summarize_mismatches_in_values(ffc, ffd)
+        }
+    }
+
     for(fname in names(x)) {
         writeLines(gettextf("Codoc mismatches from documentation object '%s':",
                             fname))
         xfname <- x[[fname]]
-        for(i in seq_along(xfname))
+        for(i in seq_along(xfname)) {
+            ffc <- xfname[[i]][["code"]]
+            ffd <- xfname[[i]][["docs"]]
             writeLines(c(xfname[[i]][["name"]],
-                         strwrap(gettextf("Code: %s",
-                                          format_args(xfname[[i]][["code"]])),
+                         strwrap(gettextf("Code: %s", format_args(ffc)),
                                  indent = 2, exdent = 17),
-                         strwrap(gettextf("Docs: %s",
-                                          format_args(xfname[[i]][["docs"]])),
+                         strwrap(gettextf("Docs: %s", format_args(ffd)),
                                  indent = 2, exdent = 17)))
+            summarize_mismatches(ffc, ffd)
+        }
         writeLines("")
     }
 
