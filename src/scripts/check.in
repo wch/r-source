@@ -29,7 +29,6 @@ use Getopt::Long;
 use IO::File;
 use R::Dcf;
 use R::Logfile;
-use R::Rdtools;
 use R::Utils;
 use R::Vars;
 use Text::Wrap;
@@ -115,7 +114,8 @@ my $R_check_Rd_xrefs =
     &R_getenv("_R_CHECK_RD_XREFS_", "TRUE");
 my $R_check_use_codetools =
     &R_getenv("_R_CHECK_USE_CODETOOLS_", "FALSE");
-
+my $R_check_force_suggests =
+    &R_getenv("_R_CHECK_FORCE_SUGGESTS_", "TRUE");
 
 ## Maybe move basic configuration (and documentation) to
 ##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
@@ -152,6 +152,14 @@ $R_check_Rd_xrefs =
     &config_val_to_logical($R_check_Rd_xrefs);
 $R_check_use_codetools =
     &config_val_to_logical($R_check_use_codetools);
+## <NOTE>
+## This looks a bit strange, but tools:::.check_package_depends()
+## currently gets the information about forcing suggests via an
+## environment variable rather than an explicit argument.
+$R_check_force_suggests =
+    &config_val_to_logical($R_check_force_suggests);
+$ENV{"_R_CHECK_FORCE_SUGGESTS"} = $R_check_force_suggests;
+## </NOTE>
 
 $opt_subdirs = $R_check_subdirs_strict if $opt_subdirs eq "";
 
