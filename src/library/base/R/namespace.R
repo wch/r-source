@@ -417,12 +417,12 @@ loadNamespace <- function (package, lib.loc = NULL,
                                   package,
                                   paste(expMethods[missingMethods], collapse = ", ")),
                          domain = NA)
-                allMethodLists <- unique(c(methods:::.getGenerics(ns, FALSE),
-                                   methods:::.getGenerics(parent.env(ns), FALSE)))
+                mlistPattern <- methods:::mlistMetaName()
+                allMethodLists <- unique(c(methods:::.getGenerics(ns, mlistPattern),
+                                   methods:::.getGenerics(parent.env(ns), mlistPattern)))
                 tPrefix <- methods:::.TableMetaPrefix()
                 allMethodTables <- unique(c(methods:::.getGenerics(ns, tPrefix),
                                    methods:::.getGenerics(parent.env(ns), tPrefix)))
-                mlistPattern <- methods:::mlistMetaName()
                 needMethods <- (exports %in% allMethods) & !(exports %in% expMethods)
                 if(any(needMethods))
                     expMethods <- c(expMethods, exports[needMethods])
@@ -677,7 +677,8 @@ namespaceImportFrom <- function(self, ns, vars) {
         expMethods <- get(metaname, envir = expenv)
         if(exists(metaname, envir = impenv, inherits = FALSE)) {
             impMethods <- get(metaname, envir = impenv)
-            assign(metaname, methods:::mergeMethods(impMethods, expMethods), envir = impenv)
+            assign(metaname, methods:::.mergeMethodsTable2(impMethods,
+    expMethods, expenv, metaname), envir = impenv)
             TRUE
         }
         else
@@ -686,7 +687,7 @@ namespaceImportFrom <- function(self, ns, vars) {
     whichMethodMetaNames <- function(impvars) {
         if(!.isMethodsDispatchOn())
             return(numeric())
-        mm <- ".__M__" # methods:::mlistMetaName() is slow
+        mm <- ".__T__" 
         seq_along(impvars)[substr(impvars, 1, nchar(mm, type = "c")) == mm]
     }
     if (is.character(self))
@@ -723,8 +724,15 @@ namespaceImportFrom <- function(self, ns, vars) {
         ## If methods are already in impenv, merge and don't import
         delete <- integer()
         for(i in which)
-            if(mergeImportMethods(impenv, ns, impvars[[i]]))
+            if(mergeImportMethods(impenv, ns, impvars[[i]])) {
                 delete <- c(delete, i)
+                ## eventually mlist objects will disappear, for now
+                ## just don't import any duplicated names
+                mlname = sub("__T","__M", impvars[[i]], fixed=TRUE)
+                ii = match(mlname, impvars, 0)
+                if(ii > 0)
+                  delete <- c(delete, ii)
+            }
         if(length(delete) > 0) {
             impvars <- impvars[-delete]
             impnames <- impnames[-delete]

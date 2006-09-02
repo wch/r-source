@@ -29,7 +29,7 @@ static SEXP R_loadMethod(SEXP f, SEXP fname, SEXP ev);
 static int initialized = 0;
 static SEXP s_dot_Methods, s_skeleton, s_expression, s_function,
     s_getAllMethods, s_objectsEnv, s_MethodsListSelect,
-    s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_generic,
+    s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_generic, s_package,
     s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
     s_argument, s_allMethods;
 static SEXP R_FALSE, R_TRUE;
@@ -86,6 +86,7 @@ SEXP R_initMethodDispatch(SEXP envir)
     s_sys_dot_call = Rf_install("sys.call");
     s_sys_dot_function = Rf_install("sys.function");
     s_generic = Rf_install("generic");
+    s_package = Rf_install("package");
     s_generic_dot_skeleton = Rf_install("generic.skeleton");
     s_subset_gets = Rf_install("[<-");
     s_element_gets = Rf_install("[[<-");
@@ -315,12 +316,14 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
 #define IS_NON_GENERIC(vl) (TYPEOF(vl) == BUILTINSXP ||TYPEOF(vl) == SPECIALSXP || \
             (TYPEOF(vl) == CLOSXP && getAttrib(vl, s_generic) == R_NilValue))
 #define IS_GENERIC(vl) (TYPEOF(vl) == CLOSXP && getAttrib(vl, s_generic) != R_NilValue)
+#define PACKAGE_SLOT(vl) getAttrib(vl, s_package)
 
-static SEXP get_generic(SEXP symbol, SEXP rho)
+static SEXP get_generic(SEXP symbol, SEXP rho, SEXP package)
 {
-    SEXP vl, generic = R_UnboundValue;
+    SEXP vl, generic = R_UnboundValue, gpackage; char * pkg; Rboolean ok;
     if(!isSymbol(symbol))
 	symbol = install(CHAR_STAR(symbol));
+    pkg = CHAR_STAR(package);
     while (rho != R_NilValue) {
 	vl = findVarInFrame(rho, symbol);
 	if (vl != R_UnboundValue) {
@@ -329,7 +332,17 @@ static SEXP get_generic(SEXP symbol, SEXP rho)
 		vl = eval(vl, rho);
 		UNPROTECT(1);
 	    }
+	    ok = FALSE;
 	    if(IS_GENERIC(vl)) {
+	      if(strlen(pkg)) {
+		  gpackage = PACKAGE_SLOT(vl);
+		  check_single_string(gpackage, FALSE, "The \"package\" slot in generic function object");
+		  ok = !strcmp(pkg, CHAR_STAR(gpackage));
+		}
+		else 
+		  ok = TRUE;
+	    }
+	    if(ok) {
 		generic = vl;
 		break;
 	    } else
@@ -340,18 +353,25 @@ static SEXP get_generic(SEXP symbol, SEXP rho)
     /* look in base if either generic is missing */
     if(generic == R_UnboundValue) {
 	vl = SYMVALUE(symbol);
-	if(IS_GENERIC(vl))
+	if(IS_GENERIC(vl)) {
 	    generic = vl;
+	    if(strlen(pkg)) {
+		  gpackage = PACKAGE_SLOT(vl);
+		  check_single_string(gpackage, FALSE, "The \"package\" slot in generic function object");
+		  if(strcmp(pkg, CHAR_STAR(gpackage))) generic = R_UnboundValue;
+		}
+	}
     }
     return generic;
 }
 
-SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env)
+SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package)
 {
     SEXP value;
     if(isSymbol(name)) {}
     else check_single_string(name, TRUE, "The argument \"f\" to getGeneric");
-    value = get_generic(name, env);
+    check_single_string(package, FALSE, "The argument \"package\" to getGeneric"); 
+    value = get_generic(name, env, package);
     if(value == R_UnboundValue) {
 	if(asLogical(mustFind)) {
 	    if(env == R_GlobalEnv)
@@ -521,7 +541,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	    SEXP arg, class_obj; int check_err;
 	    PROTECT(arg = R_tryEval(arg_sym, ev, &check_err)); nprotect++;
 	    if(check_err)
-		error(_("unable to find the argument '%s' in selecting a method for function '%s'"),
+		error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
 		      CHAR(PRINTNAME(arg_sym)),CHAR_STAR(fname)); 
 	    PROTECT(class_obj = R_data_class(arg, TRUE)); nprotect++;
 	    class = CHAR_STAR(class_obj);
@@ -532,7 +552,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	SEXP arg; int check_err;
 	PROTECT(arg = R_tryEval(arg_sym, ev, &check_err)); nprotect++;
 	if(check_err)
-	    error(_("unable to find the argument '%s' in selecting a method for function '%s'"),
+	    error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
 		  CHAR(PRINTNAME(arg_sym)),CHAR_STAR(fname)); 
 	class = CHAR_STAR(arg);
     }
@@ -814,7 +834,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	    SEXP arg; int check_err;
 	    PROTECT(arg = R_tryEval(arg_sym, ev, &check_err));
 	    if(check_err)
-		error(_("unable to find the argument '%s' in selecting a method for function '%s'"),
+		error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
 		      CHAR(PRINTNAME(arg_sym)),CHAR_STAR(fname)); 
 	    PROTECT(thisClass = R_data_class(arg, TRUE)); nprotect++;
 	    UNPROTECT(1); /* for arg */

@@ -396,6 +396,10 @@ setMethod <-
            },
            stop(gettextf("invalid method definition: expected a function, got an object of class \"%s\"", class(definition)), domain = NA)
            )
+    fenv <- environment(fdef)
+    ## check length against active sig. length, reset if necessary in .addToMetaTable
+    nSig <- .getGenericSigLength(fdef, fenv, TRUE)
+    signature <- .matchSigLength(signature, fdef, fenv, TRUE)
     margs  <- (fdef@signature)[1:length(signature)]
     definition <- asMethodDefinition(definition, signature, sealed)
     if(is(definition, "MethodDefinition"))
@@ -408,9 +412,9 @@ setMethod <-
       .cacheMethodInTable(fdef, signature, definition, allMethods) #direct
       .cacheMethodInTable(fdef, signature, definition) # inherited, by default
       if(!identical(where, baseenv()))
-         .addToMetaTable(fdef, signature, definition,where)
+         .addToMetaTable(fdef, signature, definition,where, nSig)
     }
-    else
+    else # but currently unused (9/06)-- should be deleted after testing
       allMethods <- insertMethod(allMethods, signature, margs, definition)
     resetGeneric(f, fdef, allMethods, gwhere, deflt) # Note: gwhere not used by resetGeneric
     ## assigns the methodslist object
@@ -805,10 +809,17 @@ showMethods <-
     }
 }
 
+## this should be made obsolete
 removeMethodsObject <-
     function(f, where = topenv(parent.frame()))
 {
-  what <- mlistMetaName(f)
+    fdef <- getGeneric(f, where=where)
+    if(!is(fdef, "genericFunction")) {
+      warning(gettextf(
+    "No generic function found for \"%s\"; no action taken in removeMethodsObject", f))
+      return(FALSE)
+  }
+  what <- mlistMetaName(f, fdef@package)
   if(!exists(what, where))
       return(FALSE)
   where <- as.environment(where)

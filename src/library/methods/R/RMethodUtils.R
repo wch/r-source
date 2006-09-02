@@ -416,13 +416,11 @@ getGeneric <-
   ##
   ## If there is no definition, throws an error or returns
   ## NULL according to the value of mustFind.
-  function(f, mustFind = FALSE, where = .genEnv(f, topenv(parent.frame()))) {
+  function(f, mustFind = FALSE, where = .genEnv(f, topenv(parent.frame()), package),
+           package = "") {
     if(is.function(f) && is(f, "genericFunction"))
         return(f)
-    value <- if(identical(where, baseenv()))
-        NULL
-      else
-          .getGeneric( f, as.environment(where))
+    value <- .getGeneric( f, where, package)
     if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {
       ## check for primitives
       baseDef <- get(f, "package:base")
@@ -442,11 +440,15 @@ getGeneric <-
   }
 
 ## low-level version
-.getGeneric <- function(f, where) {
+.getGeneric <- function(f, where, package = "") {
     ## first look in the cache (which should eventually be done in C for speed perhaps)
-    value <- .getGenericFromCache(f, where)
-    if(is.null(value))
-      .Call("R_getGeneric", f, FALSE, as.environment(where), PACKAGE = "methods")
+    value <- .getGenericFromCache(f, where, package)
+    if(is.null(value)) {
+      value <- .Call("R_getGeneric", f, FALSE, as.environment(where), package,
+                     PACKAGE = "methods")
+      if(!is.null(value))
+        .cacheGeneric(f, value)
+    }
     else value
 }
 
@@ -500,15 +502,20 @@ getGeneric <-
     }
 }
 
-.getGenericFromCache <- function(name, where) {
+.getGenericFromCache <- function(name, where, pkg = "") {
     if(exists(name, envir = .genericTable, inherits = FALSE)) {
         value <- get(name, envir = .genericTable)
         if(is.list(value)) { # multiple generics with this name
-            pkg <- packageSlot(name)
-            if(is.null(pkg) && is.character(where))
-              pkg <- where
-            else
-              pkg <- getPackageName(where)
+            ## force a check of package name, even if argument is ""
+            if(nchar(pkg) == 0) {
+                if(is.character(where))
+                  pkg <- where
+                else {
+                  pkg <- attr(name, "package")
+                  if(is.null(pkg))
+                    pkg <- getPackageName(where)
+                }
+            }
             pkgs <- names(value)
             i <- match(pkg, pkgs,0)
             if(i > 0)
@@ -522,8 +529,11 @@ getGeneric <-
            else
               return(NULL) 
         }
-        value
-    }
+        else if(nchar(pkg) && !identical(pkg, value@package))
+                NULL
+        else
+          value
+     }
     else
       NULL
 }
@@ -650,16 +660,25 @@ allGenerics <- getGenerics
     else if(is.environment(where)) where <- list(where)
     these <- character()
     for(i in where) these <- c(these, objects(i, all=TRUE))
-    these <- unique(these)
-    these <- these[substr(these, 1, 6) == ".__M__"]
-    funNames <- gsub(".__M__(.*):([^:]+)", "\\1", these)
+    these <- allThese <- unique(these)
+    these <- these[substr(these, 1, 6) == ".__T__"]
+    funNames <- gsub(".__T__(.*):([^:]+)", "\\1", these)
+    if(length(funNames)==0 &&
+       length(these[substr(these, 1, 6) == ".__M__"])>0)
+      warning(gettextf(
+      "Package \"%s\" seems to have out-of-date methods; need to reinstall from source",
+                       getPackageName(where[[1]])))
+    packageNames <- gsub(".__T__(.*):([^:]+(.*))", "\\2", these)
+    attr(funNames, "package") <- packageNames
+    ## Would prefer following, but may be trouble bootstrapping methods
+    ## funNames <- new("ObjectsWithPackage", funNames, package = packageNames)
     if(identical(trim, TRUE))
       funNames
     else {
       if(identical(trim, FALSE))
         these
       else
-        gsub(".__M__", as.character(trim), these)
+        gsub(".__T__", as.character(trim), these)
     }
 }
 
@@ -667,9 +686,14 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
     ## a collection of actions performed on attach or detach
     ## to update class and method information.
     generics <- .getGenerics(where)
+    packages <- attr(generics, "package")
+    if(length(packages) <  length(generics))
+      packages <- rep(packages, length = length(generics))
     pkg <- getPackageName(where)
-     for(f in generics) {
-        fdef <- getGeneric(f, FALSE, searchWhere)
+     for(i in seq(along = generics)) {
+         f <- generics[[i]]
+         pkg <- packages[[i]]
+        fdef <- getGeneric(f, FALSE, searchWhere, pkg)
         ## silently ignores all generics not visible from searchWhere
         ## (certainly reasonable for attach=FALSE, maybe for namespaces ?)
         if(is(fdef, "genericFunction")) {

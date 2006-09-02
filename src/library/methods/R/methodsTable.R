@@ -1,17 +1,55 @@
 options(error=traceback, warn = 1)
 
+### merge version called from namespace imports code.  Hope to avoid using generic
+.mergeMethodsTable2 <- function(table, newtable, envir, metaname) {
+    old <- objects(table, all=TRUE)
+    mm <- 1
+    for( what in old) {
+      mm = get(what, envir =table)
+      if(is(mm, "MethodDefinition")) {
+          mm = length(mm@defined)
+          break
+      }
+    }  
+    new = objects(newtable, all=TRUE)
+    ## check that signature length doesn't change
+    canStore <- TRUE
+    for(what in new) {
+        obj <- get(what, envir = newtable)
+        if(is(obj, "MethodDefinition") &&
+           length(obj@defined) != mm) {
+            canStore <- FALSE
+            break
+        }
+    }
+    if(canStore) {
+        for(what in new)
+          assign(what, get(what, envir = newtable), envir = table)
+        table
+    }
+    else { # rats! have to get the generic function
+        f <- gsub(".__T__(.*):([^:]+)", "\\1", metaname)
+        package <- gsub(".__T__(.*):([^:]+(.*))", "\\2", metaname)
+        generic <- getGeneric(f, TRUE, envir, package)
+        .mergeMethodsTable(generic, table, newtable, TRUE)
+        table
+    }
+}
+
+## action on attach, detach to merge methods tables
 .mergeMethodsTable <- function(generic, table, newtable, add = TRUE) {
   fenv <- environment(generic)
   signature <- generic@signature
   if(!exists(".SigLength", envir = fenv, inherits = FALSE))
      .setupMethodsTables(generic)
   n <- get(".SigLength", envir = fenv)
-  anyLabels <- rep("ANY", n)
+  anySig <- rep("ANY", n)
+  anyLabel <- .sigLabel(anySig)
   newMethods <- objects(newtable, all=TRUE)
   for(what in newMethods) {
     obj <- get(what, envir = newtable)
     if(is.primitive(obj))
-      sig <- anyLabels ## Assert doesn't need to be a signature obj., won't change ns
+      sig <- anySig ## Assert doesn't need to be a signature obj., won't change ns
     else if(is(obj, "MethodDefinition"))
       sig <- obj@defined
     else
@@ -38,7 +76,8 @@ options(error=traceback, warn = 1)
     }
     if(add)
       assign(what, obj, envir = table)
-    else if(exists(what, envir = table, inherits = FALSE))
+    else if(exists(what, envir = table, inherits = FALSE) &&
+            !all(obj@defined == "ANY") ) # remove methods, but not the default
       remove(list = what, envir = table)
     ## else warning?
   }
@@ -629,7 +668,7 @@ outerLabels <- function(labels, new) {
 
 
 .matchSigLength <- function(sig, fdef, fenv, reset = FALSE) {
-  nargs <- get(".SigLength", envir = fenv)
+  nargs <- .getGenericSigLength(fdef, fenv, TRUE)
   n <- length(sig)
   if(n < nargs)
     sig <- c(as.character(sig), rep("ANY", nargs - n))
@@ -663,16 +702,21 @@ outerLabels <- function(labels, new) {
 .TableMetaPrefix <- function()
   methodsPackageMetaName("T","")
 
-.addToMetaTable <- function(fdef, signature, definition, where) {
+.addToMetaTable <- function(fdef, signature, definition, where, nSig) {
   return()
 }
 
 # the real version
-..addToMetaTable <- function(fdef, signature, definition, where) {
+..addToMetaTable <- function(fdef, signature, definition, where,
+                             nSig = .getGenericSigLength(fdef, fenv)) {
+    # TODO:  nSig should be a slot in the table
   tname <- .TableMetaName(fdef@generic, fdef@package)
   where <- as.environment(where)
-  if(exists(tname, envir =where, inherits = FALSE))
+  if(exists(tname, envir =where, inherits = FALSE)) {
      table <- get(tname, envir = where)
+     if(length(signature) > nSig)
+       .resetTable(table, length(signature), fdef@signature[1:length(signature)])
+  }
   else {
     table <- new.env(TRUE, environment(fdef))
     assign(tname, table, envir = where)
@@ -682,10 +726,10 @@ outerLabels <- function(labels, new) {
 
 .makeGenericTables <- function(where) {
   generics <- .getGenerics(where)
-  mlists <- .getGenerics(where, FALSE)
+  mtables <- .getGenerics(where, FALSE)
   for(i in seq(along = generics)) {
     name <- generics[[i]]
-    mlist <- get(mlists[[i]], envir = where)
+    mtable <- get(mtables[[i]], envir = where)
     generic <- .getGeneric(name, where)
     if(is.null(generic)) {
       warning(gettextf(
@@ -693,7 +737,8 @@ outerLabels <- function(labels, new) {
                        name))
       next
     }
-    table <- .mlistAddToTable(generic, mlist)
+    table <- .getMethodsTable(generic)
+    .mergeMethodsTable(generic, table, mtable)
     assign(.TableMetaName(generic@generic, generic@package), table, envir = where)
   }
 }

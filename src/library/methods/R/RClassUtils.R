@@ -1545,8 +1545,9 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 ## they use getClassDef and .getGeneric resp.  Also, .getEnv returns baseenv() rather
 ## than generating an error if no generic found (so getGeneric can return gen'c for prim'ves)
 
-.genEnv <-  function(f, default = .requirePackage("methods")) {
-        package <- packageSlot(f)
+.genEnv <-  function(f, default = .requirePackage("methods"), package = "") {
+        if(nchar(package) == 0)
+          package <- packageSlot(f)
         if(is.null(package)) {
             ## use the default, but check that the object is there, and if not
             ## try a couple of other heuristics
