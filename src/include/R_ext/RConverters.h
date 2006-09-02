@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2001   Robert Gentleman, Ross Ihaka
- *                             and the R Development Core Team
+ *  Copyright (C) 1998-2006   Robert Gentleman, Ross Ihaka
+ *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -30,6 +30,15 @@ extern "C" {
 #endif
 
 #include <Rinternals.h>
+
+#define freeCConverter RC_freeCConverter
+#define R_addToCConverter RC_addToCConverter
+#define R_converterMatchClass RC_converterMatchClass
+#define R_converterMatchClass RC_converterMatchClass
+#define R_getToCConverterByDescription RC_getToCConverterByDescription
+#define R_getToCConverterByIndex RC_getToCConverterByIndex
+#define R_getToCConverterByIndex RC_getToCConverterByIndex
+#define R_removeToCConverter RC_removeToCConverter
 
   /* Context information controlling how the conversion is performed, passed 
      to RObjToCPtr in dotcode.c and the different user level converters. */
@@ -105,7 +114,7 @@ extern "C" {
   Rboolean R_converterMatchClass(SEXP obj, R_CConvertInfo *inf, R_toCConverter *el);
   void freeCConverter(R_toCConverter *el);
 
-  /* The routines correpsonding to the .Internal() providing access to the
+  /* The routines corresponding to the .Internal() providing access to the
      management facilities of the converter list.
   */
   SEXP do_getNumRtoCConverters(SEXP call, SEXP op, SEXP args, SEXP env);
