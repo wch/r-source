@@ -4,10 +4,10 @@
 \alias{attributes<-}
 \alias{mostattributes<-}
 \description{
-  These functions access an object's attribute list.
+  These functions access an object's attributes.
   The first form below returns the object's attribute list.
-  The assignment forms make the list on the right-hand
-  side of the assignment the object's attribute list (if appropriate).
+  The assignment forms uses the list on the right-hand
+  side of the assignment as the object's attributes (if appropriate).
 }
 \usage{
 attributes(obj)
@@ -24,10 +24,13 @@ mostattributes(obj) <- value
   and \code{tsp}) are treated specially and have restrictions on the
   values which can be set.
 
+  Attributes are not stored internally as a list and should be thought
+  of as a set and not a vector.
+
   The \code{mostattributes} assignment takes special care for the
   \code{\link{dim}}, \code{\link{names}} and \code{\link{dimnames}}
-  attributes, and assigns them only when that is valid whereas an
-  \code{attributes} assignment would give an error in that case.
+  attributes, and assigns them only when valid whereas an
+  \code{attributes} assignment would give an error if any are not.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

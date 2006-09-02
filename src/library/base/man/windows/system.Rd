@@ -31,15 +31,15 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
 }
 \value{
   If \code{intern = TRUE}, a character vector giving the output of the
-  command, one line per character string. If the command could not be
-  run or gives an error a \R error is generated.
-  (Output lines of more than 8095 characters will be split.)
+  command, one line per character string.  If the command could not be
+  run or gives an error a \R error is generated.  (Output lines of more
+  than 8095 characters will be split.)
 
   If \code{intern = FALSE}, the return value is an error code, given the
   invisible attribute (so needs to be printed explicitly). If the
   command could not be run for any reason, the value is \code{-1} and
-  an \R warning is generated. Otherwise if \code{wait = FALSE} the value
-  is the error code returned by the command, and if \code{wait = TRUE}
+  an \R warning is generated.  Otherwise if \code{wait = TRUE} the value
+  is the error code returned by the command, and if \code{wait = FALSE}
   it is the zero (the conventional success value),
 
   If \code{intern = FALSE} and \code{show.output.on.console = TRUE}

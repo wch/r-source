@@ -21,7 +21,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE)
   command, one line per character string.  If the command could not be
   run or gives an error this will be reported on the shell's
   \file{stderr} (unless \code{popen} is not supported, when there is an \R
-  error).
+  error).  (Output lines of more than 8095 characters will be split.)
 
   If \code{intern = FALSE}, the return value is a system error code
   (\code{0} for success).
