@@ -1287,6 +1287,9 @@ Default: false.
 Initial setting for @option{--check-subdirs}.
 Default: @samp{default} (which checks only tarballs, and checks in the
 @file{src} only if there is no @file{configure} file).
+@item R_check_force_suggests
+If true, give an error if suggested packages are not available.
+Default: true.
 @end table
 
 Values @samp{1} or a string with lower-cased version @samp{"yes"} or
@@ -2488,29 +2491,24 @@ shortened, the file probably tries to document too much at once.)
 One or more lines showing the synopsis of the function(s) and variables
 documented in the file.  These are set verbatim in typewriter font.
 
-The usage information specified should in general match the function
-definition @emph{exactly} (such that automatic checking for consistency
-between code and documentation is possible).  Otherwise, include a
-@code{\synopsis}
-@findex \synopsis
-section with the actual definition.
+The usage information specified should match the function definition
+@emph{exactly} (such that automatic checking for consistency between
+code and documentation is possible).
 
-For example, @code{abline} is a function for adding a straight line to a
-plot which can be used in several different ways, depending on the named
-arguments specified.  Hence, @file{abline.Rd} contains
+It is no longer advisable to use @code{\synopsis} for the actual
+synopsis and show modified synopses in the @code{\usage}.  Support for
+@code{\synopsis} will be removed eventually.  To indicate that a
+function can be ``used'' in several different ways, depending on the
+named arguments specified, use section @code{\details}.  E.g.,
+@file{abline.Rd} contains
 
 @example
 @group
-\synopsis@{
-abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
-       coef = NULL, untf = FALSE, col = par("col"),
-       lty = par("lty"), lwd = NULL, ...)
-@}
-\usage@{
+\details@{
+  Typical usages are
+\preformatted@{
 abline(a, b, untf = FALSE, \dots)
-abline(h=, untf = FALSE, \dots)
-abline(v=, untf = FALSE, \dots)
-@r{@dots{}}
+......
 @}
 @end group
 @end example
@@ -2603,7 +2601,7 @@ For example, @file{pie.Rd} contains
   Pie charts are a very bad way of displaying information.
   The eye is good at judging linear measures and bad at
   judging relative areas.
-  ...
+  ......
 @}
 @end group
 @end example
@@ -2757,12 +2755,12 @@ be initiated via @kbd{prompt(@var{bar})}.
 @node Documenting S4 classes and methods, Documenting packages, Documenting data sets, Rd format
 @subsection Documenting S4 classes and methods
 
-Structure of and special markup for documenting S4 classes and methods
-are still under development.  There are special ways to use the @samp{?}
-operator, namely @samp{class?@var{topic}} and
-@samp{methods?@var{topic}}, that depend on conventions for the topic
-names used in @code{\alias} entries.  The topic names for S4 classes and
-methods respectively are of the form
+There are special ways to use the @samp{?}  operator, namely
+@samp{class?@var{topic}} and @samp{methods?@var{topic}}, to access
+documentation for S4 classes and methods, respectively.  This mechanism
+depends on conventions for the topic names used in @code{\alias}
+entries.  The topic names for S4 classes and methods respectively are of
+the form
 
 @example
 @var{class}-class
