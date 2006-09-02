@@ -2814,6 +2814,12 @@ Flexible Mixture Modeling: a general framework for finite mixtures of
 regression models using the EM algorithm.
 @item fmri
 Functions for the analysis of fMRI experiments.
+@item forecasting
+A bundle with functions and datasets for forecasting.  Contains
+@strong{forecast} (time series forecasting), @strong{fma} (data sets
+from the book ``Forecasting: Methods and Applications'' by Makridakis,
+Wheelwright & Hyndman, 1998), and @strong{Mcomp} (data from the
+M-competitions).
 @item foreign
 Functions for reading and writing data stored by statistical software
 like Minitab, S, SAS, SPSS, Stata, Systat, etc.  @emph{Recommended}.
