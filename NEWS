@@ -1353,6 +1353,9 @@ NEW FEATURES
 	the treatment of signatures.  A sometimes useful utility,
 	methodSignatureMatrix(), is now exported.
 
+    o	Printing the results of codoc() from package tools now helpfully
+    	summarizes the found code/documentation mismatches.
+
     o	R refrains from printing a final EOL upon exiting the main loop
 	if the quiet flag is on and if the save action is known (e.g. this
 	is true for --slave).
