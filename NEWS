@@ -366,18 +366,18 @@ NEW FEATURES
     o	The maximum number of open connections has been increased from
 	50 to 128.
 
-    o   rep() is now a primitive function and under some conditions
+    o	rep() is now a primitive function and under some conditions
 	very much faster: rep.int() still a little faster (but does
 	less). (Because it is primitive there are minor changes to the
 	call semantics: see the help page.)
 
-    o   There is a new primitive seq.int() which is slightly more
+    o	There is a new primitive seq.int() which is slightly more
 	restricted than seq() but often very much faster, and new
 	primitives seq_along() and seq_len() which are faster still.
 
-    o   legend() has new parameters 'box.lwd' and 'box.lty'.
+    o	legend() has new parameters 'box.lwd' and 'box.lty'.
 
-    o   r2dtable() has been moved to package 'stats'.
+    o	r2dtable() has been moved to package 'stats'.
 
     o	available.packages() and installed.packages() gain a 'fields'
 	argument thanks to Seth Falcon.
