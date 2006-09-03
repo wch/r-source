@@ -860,7 +860,7 @@ SEXP duplicated(SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
 int envlength(SEXP);
-SEXP evalList(SEXP, SEXP);
+SEXP evalList(SEXP, SEXP, SEXP);
 SEXP evalListKeepMissing(SEXP, SEXP);
 int factorsConform(SEXP, SEXP);
 void findcontext(int, SEXP, SEXP);

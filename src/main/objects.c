@@ -114,7 +114,7 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
      */
     else if (TYPEOF(op) == BUILTINSXP) {
 	int save = R_PPStackTop;
-	PROTECT(args = evalList(args, rho));
+	PROTECT(args = evalList(args, rho, op));
 	R_Visible = 1 - PRIMPRINT(op);
 	ans = PRIMFUN(op) (call, op, args, rho);
 	UNPROTECT(1);

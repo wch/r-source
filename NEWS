@@ -699,6 +699,12 @@ BUG FIXES
 	Unmatched empty arguments (such as f(1,,) for a function of
 	one argument) were ignored.  They are now an error.
 
+    o	Calling a builtin with missing arguments used to silently remove
+	them (and this was undocumented).  Now this is an error unless
+	there are only trailing missing arguments, when it is a
+	warning (for the time being: this will be made an error in due
+	course).
+
 
 
 
