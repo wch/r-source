@@ -40,7 +40,7 @@ dkwtest <- function(stub = "norm", ...,
     }
     rval <- (s < qdkwbound(sample.size,pthreshold))
     if (print.result)
-        cat(c(" FAILED\n"," PASSED\n",)[rval+1])
+        cat(c(" FAILED\n"," PASSED\n")[rval+1])
     if (stop.on.failure && !rval)
         stop("dkwtest failed")
     rval
