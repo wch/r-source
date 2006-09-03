@@ -30,13 +30,14 @@
 /* <UTF8> char here is handled as a whole,
    but lengths were used as display widths */
 
-#include <stdlib.h> /* for div() */
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
 #include "Defn.h"
 #include "Print.h"
+
+#include <stdlib.h> /* for div() */
 
 /* We need display width of a string */
 int Rstrwid(char *str, int slen, int quote);  /* from printutils.c */
