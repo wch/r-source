@@ -522,6 +522,7 @@
  consolecancopy
  consolecanpaste
  consoleclear
+ consolecmd
  consolecols
  consolecopy
  consolefg
@@ -754,7 +755,6 @@
  do_hsv
  do_iconv
  do_ident
- do_identical
  do_identify
  do_if
  do_image
