@@ -32,8 +32,7 @@ showSmooth <- function(x, leg.x = 1, leg.y = max(x)) {
 for(x in list(c(4, 6, 2, 2, 6, 3, 6, 6, 5, 2),
               c(3, 2, 1, 4, 5, 1, 3, 2, 4, 5, 2),
               c(2, 4, 2, 6, 1, 1, 2, 6, 3, 1, 6),
-              x1,
-             ))
+              x1))
     print(t(showSmooth(x)))
 
 par(op)
