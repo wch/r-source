@@ -24,6 +24,7 @@ function(package, dir, lib.loc = NULL)
         code_env <- .package_env(package)
 
         code_objs <- ls(envir = code_env, all.names = TRUE)
+        pkgname <- package
     }
     else {
         if(missing(dir))
@@ -34,7 +35,8 @@ function(package, dir, lib.loc = NULL)
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
-        is_base <- basename(dir) == "base"
+        pkgname <- basename(dir)
+        is_base <- pkgname == "base"
 
         all_doc_topics <- Rd_aliases(dir = dir)
 
@@ -136,27 +138,16 @@ function(package, dir, lib.loc = NULL)
         ## <FIXME>
         ## Need to do something about S4 generic functions 'created' by
         ## setGeneric() or setMethod() on 'ordinary' functions.
-        ## The test below exempts objects that are generic functions if
-        ## there is a visible nongeneric function and the default method
-        ## is "derived", by a call to setGeneric.  This test allows
-        ## nondocumented generics in some cases (e.g., the generic was
-        ## created locally from an inconsistent version).
+        ## The test below exempts objects that are generic functions
+        ## which are 'derived', either by importing from another
+        ## package or from a default method.
         ## In the long run we need dynamic documentation.
         if(.isMethodsDispatchOn()) {
             code_objs <-
                 code_objs[sapply(code_objs, function(f) {
                     fdef <- get(f, envir = code_env)
-                    if(methods::is(fdef, "genericFunction")) {
-                        fOther <-
-                            methods::getFunction(f, generic = FALSE,
-                                                 mustFind = FALSE,
-                                                 where = topenv(environment(fdef)))
-                        if(is.null(fOther))
-                            TRUE
-                        else
-                            !methods::is(methods::finalDefaultMethod(methods::getMethodsMetaData(f, code_env)),
-                                         "derivedDefaultMethod")
-                    }
+                    if(methods::is(fdef, "genericFunction"))
+                        fdef@package == pkgname
                     else
                         TRUE
                 }) == TRUE]
@@ -264,7 +255,7 @@ function(package, dir, lib.loc = NULL)
             c(undoc_things,
               list("S4 methods" =
                    unique(sub("([^,]*),(.*)",
-                              "generic \\1 and siglist \\2",
+                              "generic '\\1' and siglist '\\2'",
                               S4_methods))))
     }
 
@@ -740,7 +731,7 @@ function(x, ...)
     if(length(x) == 0)
         return(invisible(x))
     has_only_names <- is.character(x[[1]][[1]][["code"]])
-    
+
     format_args <- function(s) {
         if(has_only_names) {
             paste("function(", paste(s, collapse = ", "), ")", sep = "")
@@ -803,7 +794,7 @@ function(x, ...)
             }
         }
     }
-    
+
     summarize_mismatches <- function(ffc, ffd) {
         if(has_only_names)
             summarize_mismatches_in_names(ffc, ffd)
