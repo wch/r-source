@@ -19,18 +19,19 @@
     vClasses <- c("logical", "numeric", "character",
                   "complex", "integer", "single", "double", "raw",
                   "expression", "list")
+    ## now some pseudo-classes in base, marked specially for new()
     for(.class in vClasses) {
-        setClass(.class, prototype = newBasic(.class), where = envir)
+        .setBaseClass(.class, prototype = newBasic(.class), where = envir)
     }
-    setClass("expression", prototype = expression(), where = envir)
+    .setBaseClass("expression", prototype = expression(), where = envir)
     clList <- c(clList, vClasses)
     nullF <- function()NULL; environment(nullF) <- .GlobalEnv
-    setClass("function", prototype = nullF, where = envir); clList <- c(clList, "function")
+    .setBaseClass("function", prototype = nullF, where = envir); clList <- c(clList, "function")
 
     setClass("language", where = envir); clList <- c(clList, "language")
-    setClass("environment", prototype = new.env(), where = envir); clList <- c(clList, "environment")
+    .setBaseClass("environment", prototype = new.env(), where = envir); clList <- c(clList, "environment")
 
-    setClass("externalptr", prototype = .newExternalptr(), where = envir); clList <- c(clList, "externalptr")
+    .setBaseClass("externalptr", prototype = .newExternalptr(), where = envir); clList <- c(clList, "externalptr")
 
 
     ## NULL is weird in that it has NULL as a prototype, but is not virtual
@@ -41,7 +42,7 @@
     setClass("structure", where = envir); clList <- c(clList, "structure")
     stClasses <- c("matrix", "array") # classes that have attributes, but no class attr.
     for(.class in stClasses) {
-        setClass(.class, prototype = newBasic(.class), where = envir)
+        .setBaseClass(.class, prototype = newBasic(.class), where = envir)
     }
     ## "ts" will be defined below, because it has a formal contains, but its initialize
     ## method uses newBasic, so it needs to be in .BasicClasses
@@ -87,15 +88,15 @@
 
     ## Some class definitions extending "language", delayed to here so
     ## setIs will work.
-    setClass("name", "language", prototype = as.name("<UNDEFINED>"), where = envir); clList <- c(clList, "name")
-    setClass("call", "language", prototype = quote("<undef>"()), where = envir); clList <- c(clList, "call")
-    setClass("{", "language", prototype = quote({}), where = envir); clList <- c(clList, "{")
-    setClass("if", "language", prototype = quote(if(NA) TRUE else FALSE), where = envir); clList <- c(clList, "if")
-    setClass("<-", "language", prototype = quote("<undef>"<-NULL), where = envir); clList <- c(clList, "<-")
-    setClass("for", "language", prototype = quote(for(NAME in logical()) NULL), where = envir); clList <- c(clList, "for")
-    setClass("while", "language", prototype = quote(while(FALSE) NULL), where = envir); clList <- c(clList, "while")
-    setClass("repeat", "language", prototype = quote(repeat{break}), where = envir); clList <- c(clList, "repeat")
-    setClass("(", "language", prototype = quote((NULL)), where = envir); clList <- c(clList, "(")
+    .setBaseClass("name", "language", prototype = as.name("<UNDEFINED>"), where = envir); clList <- c(clList, "name")
+    .setBaseClass("call", "language", prototype = quote("<undef>"()), where = envir); clList <- c(clList, "call")
+    .setBaseClass("{", "language", prototype = quote({}), where = envir); clList <- c(clList, "{")
+    .setBaseClass("if", "language", prototype = quote(if(NA) TRUE else FALSE), where = envir); clList <- c(clList, "if")
+    .setBaseClass("<-", "language", prototype = quote("<undef>"<-NULL), where = envir); clList <- c(clList, "<-")
+    .setBaseClass("for", "language", prototype = quote(for(NAME in logical()) NULL), where = envir); clList <- c(clList, "for")
+    .setBaseClass("while", "language", prototype = quote(while(FALSE) NULL), where = envir); clList <- c(clList, "while")
+    .setBaseClass("repeat", "language", prototype = quote(repeat{break}), where = envir); clList <- c(clList, "repeat")
+    .setBaseClass("(", "language", prototype = quote((NULL)), where = envir); clList <- c(clList, "(")
 
     ## a virtual class used to allow NULL as an indicator that a possible function
     ## is not supplied (used, e.g., for the validity slot in classRepresentation
@@ -131,6 +132,19 @@
         .setOldIs(cl, envir)
     assign(".SealedClasses", c(clList,unique(unlist(.OldClassesList))),  envir)
   }
+
+### create a class definition for one of the pseudo-classes in base
+### The class name does _not_ have a package attribute, which signals
+### the C coded for new() to return an object w/o explicit class
+### attribute, to be consistent with older R code
+.setBaseClass <- function(cl, ..., where) {
+    setClass(cl, ..., where = where)
+    def <- getClassDef(cl, where)
+    def@className <- as.character(def@className)
+    assignClassDef(cl, def, where = where)
+}
+
+
 
 ### The following methods are not currently installed.  (Tradeoff between intuition
 ### of users that new("matrix", ...) should be like matrix(...) vs

@@ -61,6 +61,11 @@ USER-VISIBLE CHANGES
 	inherited methods.  See ?Methods and
 	http://developer.r-project.org/howMethodsWork.pdf
 
+    o	objects created from an S4 class are now marked by an internal flag, 
+        tested by isS4() in R and by macro IS_S4_OBJECT() in C.  This
+        is an efficient and reliable test, and should replace all
+        earlier heuristic tests.
+
 
 NEW FEATURES
 

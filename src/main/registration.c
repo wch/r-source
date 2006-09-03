@@ -218,6 +218,9 @@ static R_CallMethodDef callMethods [] = {
     /* Methods related routines. */
     CALLDEF(R_isMethodsDispatchOn, 1),
     CALLDEF(R_traceOnOff, 1),
+    CALLDEF(R_isS4Object, 1),
+    CALLDEF(R_setS4Object, 2),
+    CALLDEF(R_do_new_object, 1),
 
     /* compression and serialization routines */
     CALLDEF(R_compress1, 1),
@@ -237,6 +240,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_startbcprof, 0),
     CALLDEF(R_stopbcprof, 0),
 #endif
+
 
     {NULL, NULL, 0}
 };

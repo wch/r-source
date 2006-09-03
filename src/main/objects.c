@@ -30,7 +30,7 @@
 #endif
 
 #include "Defn.h"
-#include <R_ext/RS.h> /* for Calloc, Realloc */
+#include <R_ext/RS.h> /* for Calloc, Realloc and for S4 object bit */
 
 static SEXP GetObject(RCNTXT *cptr)
 {
@@ -1290,22 +1290,28 @@ SEXP R_do_new_object(SEXP class_def)
 {
     static SEXP s_virtual = NULL, s_prototype, s_className;
     SEXP e, value;
+    static SEXP R_packageSymbol = NULL;
     if(!s_virtual) {
 	s_virtual = Rf_install("virtual");
 	s_prototype = Rf_install("prototype");
 	s_className = Rf_install("className");
-    }
+        R_packageSymbol = install("package");
+   }
     if(!class_def)
 	error(_("C level NEW macro called with null class definition pointer"));
     e = R_do_slot(class_def, s_virtual);
     if(asLogical(e) != 0)  { /* includes NA, TRUE, or anything other than FALSE */
 	e = R_do_slot(class_def, s_className);
-	error(_("trying to generate an object in C from a virtual class (\"%s\")"),
+	error(_("trying to generate an object from a virtual class (\"%s\")"),
 	      CHAR(asChar(e)));
     }
     e = R_do_slot(class_def, s_className);
     value = duplicate(R_do_slot(class_def, s_prototype));
-    setAttrib(value, R_ClassSymbol, e);
+    if(TYPEOF(value) == S4SXP || getAttrib(e, R_packageSymbol) != R_NilValue)
+      { /* Anything but an object from a base "class" (numeric, matrix,..) */
+	  setAttrib(value, R_ClassSymbol, e);
+	  SET_S4_OBJECT(value);
+      }
     return value;
 }
 
@@ -1322,4 +1328,21 @@ Rboolean R_seemsS4Object(SEXP object)  {
   return (class != R_NilValue &&
 	  getAttrib(class, R_packageSymbol) != R_NilValue) ?
     TRUE: FALSE;
+}
+
+SEXP R_isS4Object(SEXP object) {
+    return IS_S4_OBJECT(object) ? mkTrue() : mkFalse();
+}
+
+SEXP R_setS4Object(SEXP object, SEXP onOff) {
+  Rboolean flag = asLogical(onOff), doSet = FALSE;
+  doSet = (flag && !IS_S4_OBJECT(object)) ||
+    (!flag && IS_S4_OBJECT(object));
+  if(doSet) {
+    if(NAMED(object) == 2)
+      object = duplicate(object);
+    if(flag) SET_S4_OBJECT(object);
+    else UNSET_S4_OBJECT(object);
+  }
+  return object;
 }

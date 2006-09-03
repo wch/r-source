@@ -48,3 +48,13 @@ untrace <- function(what, signature = NULL, where = topenv(parent.frame())) {
 
 tracingState <- function( on = NULL)
     .Call("R_traceOnOff", on, PACKAGE = "base")
+
+isS4 <- function(object)
+    .Call("R_isS4Object", object, PACKAGE = "base")
+
+asS4 <- function(object, value = TRUE) {
+    value <- as(value, "logical")
+    if(length(value) != 1 || is.na(value))
+      stop("Expected a single logical value for the S4 object state")
+    .Call("R_setS4Object", object, value, PACKAGE = "base")
+  }

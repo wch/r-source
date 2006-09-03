@@ -349,12 +349,7 @@ new <-
         ClassDef <- Class
     else
         ClassDef <- getClass(Class, where = topenv(parent.frame()))
-    if(identical(ClassDef@virtual, TRUE)) {
-        stop("trying to use new() on a virtual class")
-    }
-    else
-        value <- ClassDef@prototype
-    class(value) <- ClassDef@className
+    value <- .Call("R_do_new_object", ClassDef, PACKAGE = "base")
     initialize(value, ...)
 }
 

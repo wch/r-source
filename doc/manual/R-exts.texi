@@ -9706,13 +9706,17 @@ a <- `dim<-`(a, c(7, 2))
 but for no longer, and so some internal functions can be optimized to
 avoid a copy in this case.
 
-The @code{gp} bits are by definition `general purpose', and the
-following description results from detective work on the sources.  They
-can be accessed and set by the @code{LEVELS} and @code{SETLEVELS}
-macros, which names appear to date back to the internal factor and
-ordered types and are now used in only a few places in the code.  The
-@code{gp} field is serialized/unserialized for the @code{SEXPTYPE}s
-other than @code{NILSXP}, @code{SYMSXP} and @code{ENVSXP}.
+The @code{gp} bits are by definition `general purpose'.  As of version
+2.4.0 of R, bit 4 (i.e., the fifth bit) is turned on to mark S4 objects.
+Bits 0-3 and bits 14-15 have been used previously as described below
+(from detective work on the sources).
+
+The bits can be accessed and set by the @code{LEVELS} and
+@code{SETLEVELS} macros, which names appear to date back to the internal
+factor and ordered types and are now used in only a few places in the
+code.  The @code{gp} field is serialized/unserialized for the
+@code{SEXPTYPE}s other than @code{NILSXP}, @code{SYMSXP} and
+@code{ENVSXP}.
 
 If we label the bits from 0, bits 14 and 15 of @code{gp} are used for
 `fancy bindings'.  Bit 14 is used to lock a binding or an environment,

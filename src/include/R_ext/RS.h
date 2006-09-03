@@ -46,6 +46,12 @@ extern "C" {
 
 #endif
 
+/* S4 object bit, set by R_do_new_object for all new() calls */
+#define S4_OBJECT_MASK (1<<4)
+#define IS_S4_OBJECT(x) ((x)->sxpinfo.gp & S4_OBJECT_MASK)
+#define SET_S4_OBJECT(x) (((x)->sxpinfo.gp) |= S4_OBJECT_MASK)
+#define UNSET_S4_OBJECT(x) (((x)->sxpinfo.gp) &= ~S4_OBJECT_MASK)
+
 /* S Like Memory Management */
 
 extern void *R_chk_calloc(size_t, size_t);

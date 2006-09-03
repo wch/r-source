@@ -215,8 +215,8 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(tryS4 == NA_LOGICAL)
 	errorcall(call, _("invalid 'tryS4' internal argument"));
 
-    if(tryS4 && isObject(x) && isMethodsDispatchOn())
-      callShow = R_seemsS4Object(x);
+    if(tryS4 && IS_S4_OBJECT(x) && isMethodsDispatchOn())
+      callShow = TRUE;
 
     if(callShow) {
 	SEXP call;
@@ -814,7 +814,7 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 	   print(), to conform with the "green book", p. 332
 	*/
         if(isMethodsDispatchOn()) {
-	  if(R_seemsS4Object(s))
+	  if(IS_S4_OBJECT(s))
 		    autoprint = "show";
 	}
 	PROTECT(call = lang2(install(autoprint), s));

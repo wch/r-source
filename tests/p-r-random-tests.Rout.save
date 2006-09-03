@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-07-03 r38476)
+R version 2.4.0 Under development (unstable) (2006-09-03 r39076)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -67,217 +67,406 @@ Type 'q()' to quit R.
 > 
 > 
 > dkwtest("binom",size =   1,prob = 0.2)
-binom(size = 1, prob = 0.2) PASSED
+binom(size = 1, prob = 0.2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("binom",size =   2,prob = 0.2)
-binom(size = 2, prob = 0.2) PASSED
+binom(size = 2, prob = 0.2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("binom",size = 100,prob = 0.2)
-binom(size = 100, prob = 0.2) PASSED
+binom(size = 100, prob = 0.2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("binom",size = 1e4,prob = 0.2)
-binom(size = 10000, prob = 0.2) PASSED
+binom(size = 10000, prob = 0.2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("binom",size =   1,prob = 0.8)
-binom(size = 1, prob = 0.8) PASSED
+binom(size = 1, prob = 0.8)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("binom",size = 100,prob = 0.8)
-binom(size = 100, prob = 0.8) PASSED
+binom(size = 100, prob = 0.8)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("binom",size = 100,prob = 0.999)
-binom(size = 100, prob = 0.999) PASSED
+binom(size = 100, prob = 0.999)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("pois",lambda =  0.095)
-pois(lambda = 0.095) PASSED
+pois(lambda = 0.095)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("pois",lambda =  0.95)
-pois(lambda = 0.95) PASSED
+pois(lambda = 0.95)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("pois",lambda =  9.5)
-pois(lambda = 9.5) PASSED
+pois(lambda = 9.5)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("pois",lambda = 95)
-pois(lambda = 95) PASSED
+pois(lambda = 95)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("nbinom",size =   1,prob = 0.2)
-nbinom(size = 1, prob = 0.2) PASSED
+nbinom(size = 1, prob = 0.2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("nbinom",size =   2,prob = 0.2)
-nbinom(size = 2, prob = 0.2) PASSED
+nbinom(size = 2, prob = 0.2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("nbinom",size = 100,prob = 0.2)
-nbinom(size = 100, prob = 0.2) PASSED
+nbinom(size = 100, prob = 0.2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("nbinom",size = 1e4,prob = 0.2)
-nbinom(size = 10000, prob = 0.2) PASSED
+nbinom(size = 10000, prob = 0.2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("nbinom",size =   1,prob = 0.8)
-nbinom(size = 1, prob = 0.8) PASSED
+nbinom(size = 1, prob = 0.8)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("nbinom",size = 100,prob = 0.8)
-nbinom(size = 100, prob = 0.8) PASSED
+nbinom(size = 100, prob = 0.8)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("nbinom",size = 100,prob = 0.999)
-nbinom(size = 100, prob = 0.999) PASSED
+nbinom(size = 100, prob = 0.999)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("norm")
-norm() PASSED
+norm()Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("norm",mean = 5,sd = 3)
-norm(mean = 5, sd = 3) PASSED
+norm(mean = 5, sd = 3)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("gamma",shape =  0.1)
-gamma(shape = 0.1) PASSED
+gamma(shape = 0.1)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("gamma",shape =  0.2)
-gamma(shape = 0.2) PASSED
+gamma(shape = 0.2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("gamma",shape = 10)
-gamma(shape = 10) PASSED
+gamma(shape = 10)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("gamma",shape = 20)
-gamma(shape = 20) PASSED
+gamma(shape = 20)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("hyper",m = 40,n = 30,k = 20)
-hyper(m = 40, n = 30, k = 20) PASSED
+hyper(m = 40, n = 30, k = 20)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("hyper",m = 40,n =  3,k = 20)
-hyper(m = 40, n = 3, k = 20) PASSED
+hyper(m = 40, n = 3, k = 20)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("hyper",m =  6,n =  3,k =  2)
-hyper(m = 6, n = 3, k = 2) PASSED
+hyper(m = 6, n = 3, k = 2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("hyper",m =  5,n =  3,k =  2)
-hyper(m = 5, n = 3, k = 2) PASSED
+hyper(m = 5, n = 3, k = 2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("hyper",m =  4,n =  3,k =  2)
-hyper(m = 4, n = 3, k = 2) PASSED
+hyper(m = 4, n = 3, k = 2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > 
 > dkwtest("signrank",n =  1)
-signrank(n = 1) PASSED
+signrank(n = 1)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("signrank",n =  2)
-signrank(n = 2) PASSED
+signrank(n = 2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("signrank",n = 10)
-signrank(n = 10) PASSED
+signrank(n = 10)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("signrank",n = 30)
-signrank(n = 30) PASSED
+signrank(n = 30)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("wilcox",m = 40,n = 30)
-wilcox(m = 40, n = 30) PASSED
+wilcox(m = 40, n = 30)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("wilcox",m = 40,n = 10)
-wilcox(m = 40, n = 10) PASSED
+wilcox(m = 40, n = 10)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("wilcox",m =  6,n =  3)
-wilcox(m = 6, n = 3) PASSED
+wilcox(m = 6, n = 3)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("wilcox",m =  5,n =  3)
-wilcox(m = 5, n = 3) PASSED
+wilcox(m = 5, n = 3)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("wilcox",m =  4,n =  3)
-wilcox(m = 4, n = 3) PASSED
+wilcox(m = 4, n = 3)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("chisq",df =  1)
-chisq(df = 1) PASSED
+chisq(df = 1)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("chisq",df = 10)
-chisq(df = 10) PASSED
+chisq(df = 10)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("logis")
-logis() PASSED
+logis()Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("logis",location = 4,scale = 2)
-logis(location = 4, scale = 2) PASSED
+logis(location = 4, scale = 2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("t",df =  1)
-t(df = 1) PASSED
+t(df = 1)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("t",df = 10)
-t(df = 10) PASSED
+t(df = 10)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("t",df = 40)
-t(df = 40) PASSED
+t(df = 40)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("beta",shape1 = 1, shape2 = 1)
-beta(shape1 = 1, shape2 = 1) PASSED
+beta(shape1 = 1, shape2 = 1)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("beta",shape1 = 2, shape2 = 1)
-beta(shape1 = 2, shape2 = 1) PASSED
+beta(shape1 = 2, shape2 = 1)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("beta",shape1 = 1, shape2 = 2)
-beta(shape1 = 1, shape2 = 2) PASSED
+beta(shape1 = 1, shape2 = 2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("beta",shape1 = 2, shape2 = 2)
-beta(shape1 = 2, shape2 = 2) PASSED
+beta(shape1 = 2, shape2 = 2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("beta",shape1 = .2,shape2 = .2)
-beta(shape1 = 0.2, shape2 = 0.2) PASSED
+beta(shape1 = 0.2, shape2 = 0.2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("cauchy")
-cauchy() PASSED
+cauchy()Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("cauchy",location = 4,scale = 2)
-cauchy(location = 4, scale = 2) PASSED
+cauchy(location = 4, scale = 2)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("f",df1 =  1,df2 =  1)
-f(df1 = 1, df2 = 1) PASSED
+f(df1 = 1, df2 = 1)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("f",df1 =  1,df2 = 10)
-f(df1 = 1, df2 = 10) PASSED
+f(df1 = 1, df2 = 10)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("f",df1 = 10,df2 = 10)
-f(df1 = 10, df2 = 10) PASSED
+f(df1 = 10, df2 = 10)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("f",df1 = 30,df2 =  3)
-f(df1 = 30, df2 = 3) PASSED
+f(df1 = 30, df2 = 3)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > dkwtest("weibull",shape = 1)
-weibull(shape = 1) PASSED
+weibull(shape = 1)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("weibull",shape = 4,scale = 4)
-weibull(shape = 4, scale = 4) PASSED
+weibull(shape = 4, scale = 4)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > ## regression test for PR#7314
 > dkwtest("hyper", m=60, n=100, k=50)
-hyper(m = 60, n = 100, k = 50) PASSED
+hyper(m = 60, n = 100, k = 50)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("hyper", m=6, n=10, k=5)
-hyper(m = 6, n = 10, k = 5) PASSED
+hyper(m = 6, n = 10, k = 5)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > dkwtest("hyper", m=600, n=1000, k=500)
-hyper(m = 600, n = 1000, k = 500) PASSED
+hyper(m = 600, n = 1000, k = 500)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > ## regression test for non-central t bug
 > dkwtest("t", df=20, ncp=3)
-t(df = 20, ncp = 3) PASSED
+t(df = 20, ncp = 3)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > ## regression test for non-central F bug
 > dkwtest("f", df1=10, df2=2, ncp=3)
-f(df1 = 10, df2 = 2, ncp = 3) PASSED
+f(df1 = 10, df2 = 2, ncp = 3)Warning: a final empty element has been omitted
+the part of the args list of 'c' being evaluated was:
+   (" PASSED\n", )
+ PASSED
 [1] TRUE
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.8 0.024 2.825 0 0 
+Time elapsed:  3.741 0.534 5.174 0 0 
 > 
 > 

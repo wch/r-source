@@ -25,6 +25,8 @@
 
 #include "Defn.h"
 
+#include <R_ext/RS.h> /* S4 bit */
+
 /*  duplicate  -  object duplication  */
 
 /*  Because we try to maintain the illusion of call by
@@ -231,8 +233,10 @@ static SEXP duplicate1(SEXP s)
 	UNIMPLEMENTED_TYPE("duplicate", s);
 	t = s;/* for -Wall */
     }
-    if(TYPEOF(t) == TYPEOF(s) ) /* surely it only makes sense in this case*/
+    if(TYPEOF(t) == TYPEOF(s) ) { /* surely it only makes sense in this case*/
 	SET_OBJECT(t, OBJECT(s));
+	(IS_S4_OBJECT(s) ? SET_S4_OBJECT(t) : UNSET_S4_OBJECT(t));
+    }
     return t;
 }
 

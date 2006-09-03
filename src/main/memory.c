@@ -36,6 +36,8 @@
 #include <config.h>
 #endif
 
+#include <R_ext/RS.h> /* for S4 allocation */
+
 #if defined(Win32) && defined(LEA_MALLOC)
 #include <stddef.h>
 extern void *Rm_malloc(size_t n);
@@ -2046,6 +2048,7 @@ SEXP allocS4Object()
 {
    SEXP s;
    GC_PROT(s = allocSExpNonCons(S4SXP));
+   SET_S4_OBJECT(s);
    return s;
 }
 

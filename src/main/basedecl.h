@@ -60,6 +60,9 @@ SEXP R_getRegisteredRoutines(SEXP);
 
 SEXP R_isMethodsDispatchOn(SEXP);
 SEXP R_traceOnOff(SEXP);
+SEXP R_isS4Object(SEXP);
+SEXP R_setS4Object(SEXP, SEXP);
+SEXP R_do_new_object(SEXP);
 
 SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP, SEXP);
