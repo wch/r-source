@@ -183,7 +183,8 @@ SEXP attribute_hidden matchArgExact(SEXP tag, SEXP * list)
 #define SET_ARGUSED(x,v) SETLEVELS(x,v)
 
 
-/* We need to leave supplied unchanged in case we call UseMethod */
+/* We need to leave 'supplied' unchanged in case we call UseMethod */
+/* MULTIPLE_MATCHES was added by RI in Jan 2005 but never activated */
 
 SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied)
 {
@@ -365,12 +366,26 @@ nextarg2:
     }
     else {
 	/* Check that all arguments are used */
+	SEXP unused = R_NilValue, last = R_NilValue;
 	for (b = supplied; b != R_NilValue; b = CDR(b))
-	    if (!ARGUSED(b) && CAR(b) != R_MissingArg)
-		errorcall(R_GlobalContext->call,
-			  _("unused argument(s) (%s ...)"),
-			  /* anything better when b is "untagged" ? : */
-			  TAG(b) != R_NilValue ? CHAR(PRINTNAME(TAG(b))) : "");
+	    /* Uncomment to allow unmatched empty args, as done < 2.4.0 */
+	    if (!ARGUSED(b)/* && CAR(b) != R_MissingArg) */) {
+		if(last == R_NilValue) {
+		    PROTECT(unused = CONS(CAR(b), R_NilValue));
+		    SET_TAG(unused, TAG(b));
+		    last = unused;
+		} else {
+		    SETCDR(last, CONS(CAR(b), R_NilValue));
+		    last = CDR(last);
+		    SET_TAG(last, TAG(b));
+		}
+	    }
+
+	if(last != R_NilValue) {
+	    errorcall(R_GlobalContext->call,
+		      _("unused argument(s) %s"), 
+		      CHAR(STRING_ELT(deparse1line(unused, 0), 0)) + 4);
+	}
     }
     UNPROTECT(1);
     return(actuals);

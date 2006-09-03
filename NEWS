@@ -693,6 +693,12 @@ BUG FIXES
 	attribute values in their pairlists.  Now names are compared
 	on pairlists, and attribute sets are treated as unordered.
 
+    o	If they were unused arguments supplied to a closure, only
+	the first non-empty one was reported, despite the message.
+
+	Unmatched empty arguments (such as f(1,,) for a function of
+	one argument) were ignored.  They are now an error.
+
 
 
 
