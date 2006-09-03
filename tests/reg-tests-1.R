@@ -4479,3 +4479,10 @@ c2 <- capture.output(women[1:10,])
 stopifnot(length(cc) == 1 + 20/2 + 1,
 	  identical(cc[-12], c2[1:11]))
 ## was wrong for some days in Aug.2006
+
+
+## errors in identical()
+stopifnot(!identical(pairlist(a=1, b=2), pairlist(a=1, aa=2)))
+stopifnot(!identical(structure(pi, a=1, b=2), structure(pi, a=1, aa=2)))
+stopifnot(identical(structure(pi, a=1, b=2), structure(pi, b=2, a=1)))
+## ignored names of pairlists, but tested order of attributes < 2.4.0
