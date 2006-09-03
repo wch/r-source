@@ -11,24 +11,29 @@ attr(x, which) <- value
 }
 \arguments{
   \item{x}{an object whose attributes are to be accessed.}
-  \item{which}{a character string specifying which attribute is to be
-    accessed.}
+  \item{which}{a non-empty character string specifying which attribute
+    is to be accessed.}
   \item{value}{an object, the new value of the attribute, or \code{NULL}
     to remove the attribute.}
 }
-\value{
+\details{
   These functions provide access to a single attribute of an object.  The
   first form returns the value of the named attribute.  The
   replacement form causes the named attribute to take the value specified.
 
   The first form first looks for an exact match to \code{which} amongst the
-  attributes of \code{x}, then a partial match.  If no exact match is
-  found and more than one partial match is found, the result is \code{NULL}.
+  attributes of \code{x}, then a unique partial match.
 
   Note that some attributes (namely \code{class}, \code{comment},
   \code{dim}, \code{dimnames}, \code{names}, (from \R 2.4.0) \code{row.names}
   and \code{tsp}) are treated specially and have restrictions on the
   values which can be set.
+
+  Giving \code{which} as a character \code{NA} is interpreted as \code{NA}.
+}
+\value{
+  For the first form, the value of the attribute matched, or \code{NULL}
+  if no exact match is found and no or more than one partial match is found.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

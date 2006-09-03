@@ -45,18 +45,46 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 /* do the two objects compute as identical? */
 Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 {
-
+    SEXP ax, ay;
     if(x == y)
 	return TRUE;
     if(TYPEOF(x) != TYPEOF(y))
 	return FALSE;
     if(OBJECT(x) != OBJECT(y))
 	return FALSE;
-    if(ATTRIB(x) != R_NilValue || ATTRIB(y) != R_NilValue) {
-	if(ATTRIB(x) == R_NilValue || ATTRIB(y) == R_NilValue)
+
+    /* Attributes are special: they should be tagged pairlists.  We
+       don't test them if they are not, and we do not test the order
+       if they are.
+
+       This code is not very efficient, but then neither is using
+       pairlists for attributes.  If long attribute lists become more
+       common (and they are used for S4 slots) we should store them in a hash
+       table.
+    */
+    ax = ATTRIB(x); ay = ATTRIB(y);
+    if(ax != R_NilValue || ay != R_NilValue) {
+	if(ax == R_NilValue || ay == R_NilValue)
 	    return FALSE;
-	if(!compute_identical(ATTRIB(x),ATTRIB(y)))
-	    return FALSE;
+	/* if(!compute_identical(ATTRIB(x),ATTRIB(y))) return FALSE; */
+	if(TYPEOF(ax) != LISTSXP || TYPEOF(ay) != LISTSXP) {
+	    warning(_("ignoring non-pairlist attributes"));
+	} else {
+	    SEXP elx, ely;
+	    if(length(ax) != length(ay)) return FALSE;
+	    /* They are the same length and should have 
+	       unique non-empty non-NA tags */
+	    for(elx = ax; elx != R_NilValue; elx = CDR(elx)) {
+		char *tx = CHAR(PRINTNAME(TAG(elx)));
+		for(ely = ay; ely != R_NilValue; ely = CDR(ely))
+		    if(streql(tx, CHAR(PRINTNAME(TAG(ely))))) {
+			if(!compute_identical(CAR(elx), CAR(ely))) 
+			    return FALSE;
+			break;
+		    }
+		if(ely == R_NilValue) return FALSE;
+	    }
+	}
     }
     switch (TYPEOF(x)) {
     case NILSXP:
@@ -108,6 +136,12 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 	}
 	return TRUE;
     }
+    case CHARSXP:
+    {
+	int n1 = LENGTH(x), n2 = LENGTH(y);
+	if (n1 != n2) return FALSE;
+	if(memcmp(CHAR(x), CHAR(y), n1) != 0) return FALSE;
+    }
     case VECSXP:
     case EXPRSXP: 
     {
@@ -125,6 +159,8 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 	    if(y == R_NilValue)
 		return FALSE;
 	    if(!compute_identical(CAR(x), CAR(y)))
+		return FALSE;
+	    if(!compute_identical(PRINTNAME(TAG(x)), PRINTNAME(TAG(y))))
 		return FALSE;
 	    x = CDR(x);
 	    y = CDR(y);
@@ -152,7 +188,7 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 	return memcmp((void *)RAW(x), (void *)RAW(y), 
 		      length(x) * sizeof(Rbyte)) == 0 ? TRUE : FALSE;
 
-	/*  case PROMSXP: */
+	/*  case PROMSXP: args are evaluated, so will not be seen */
 	/* test for equality of the substituted expression -- or should
 	   we require both expression and environment to be identical? */
 	/*#define PREXPR(x)	((x)->u.promsxp.expr)

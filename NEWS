@@ -298,9 +298,10 @@ NEW FEATURES
 
     o	PCRE has been updated to version 6.7.
 
-    o	str(x) does not print the S3 "class" attribute when it's the same
-	as 'mode' (which is printed anyway, possibly abbreviated) and it
-	puts it beside mode for atomic objects such as S3 class "table".
+    o	str(x) does not print the S3 "class" attribute when it is the
+	same as 'mode' (which is printed anyway, possibly abbreviated)
+	and it puts it beside mode for atomic objects such as S3 class
+	"table".
 
     o	str(<data.frame>) now outputs 'data.frame' instead of
 	`data.frame'; this may affect some strict (Package) tests.
@@ -332,7 +333,7 @@ NEW FEATURES
         for the specification of the message printed and facilitates
         deprecation of calling sequences etc.
 
-    o	There is now a format() method for "ftable"s.
+    o	There is now a format() method for class "ftable".
 
     o   There is a new '%.%' operator for mathematical annotations
         (plotmath) which draws a centred multiplication dot
@@ -366,7 +367,7 @@ NEW FEATURES
 	call semantics: see the help page.)
 
     o   There is a new primitive seq.int() which is slightly more
-	restricted than seq() but often very much faster, and
+	restricted than seq() but often very much faster, and new
 	primitives seq_along() and seq_len() which are faster still.
 
     o   legend() has new parameters 'box.lwd' and 'box.lty'.
@@ -573,8 +574,8 @@ BUG FIXES
     o	Function AIC() in package stats4 was not dispatching correctly
 	on S4 classes via logLik() because of namespace issues.
 
-    o	Subsetting LANGSXPs could break call-by-value illusion (PR#7924)
-	(patch from Kevin Hendricks).
+    o	Subsetting LANGSXPs could break the call-by-value illusion.
+	(PR#7924) (patch from Kevin Hendricks).
 
     o	parse() with n > 1 gave a syntax error if fewer than n statements
 	were available.
@@ -686,6 +687,11 @@ BUG FIXES
 	work for negative 'ncp'.
 
     o	ns() failed to work correctly when 'x' was of length one.
+
+    o	identical() ignored tags on pairlists (including names of
+	attributes) and requiired an identical ordering for
+	attribute values in their pairlists.  Now names are compared
+	on pairlists, and attribute sets are treated as unordered.
 
 
 

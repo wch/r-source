@@ -16,7 +16,7 @@ mostattributes(obj) <- value
 }
 \arguments{
   \item{obj}{an object}
-  \item{value}{an appropriate attribute list, or \code{NULL}.}
+  \item{value}{an appropriate named list of attributes, or \code{NULL}.}
 }
 \details{
   Note that some attributes (namely \code{class}, \code{comment},
@@ -25,7 +25,8 @@ mostattributes(obj) <- value
   values which can be set.
 
   Attributes are not stored internally as a list and should be thought
-  of as a set and not a vector.
+  of as a set and not a vector.  They must have unique
+  names (and \code{NA} is taken as \code{"NA"}, not a missing value).
 
   The \code{mostattributes} assignment takes special care for the
   \code{\link{dim}}, \code{\link{names}} and \code{\link{dimnames}}
