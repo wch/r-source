@@ -33,6 +33,9 @@ dimnames(x) <- value
   its \code{\link{row.names}} and its \code{\link{names}}.  For the
   replacement method each component of \code{value} will be coerced by
   \code{\link{as.character}}.
+
+  For a 1D matrix the \code{\link{names}} are the same thing as the
+  (only) component of the \code{dimnames}.
 }
 \value{
   The dimnames of a matrix or array can be \code{NULL} or a list of the
