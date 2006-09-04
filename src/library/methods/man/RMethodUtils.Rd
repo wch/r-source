@@ -51,7 +51,7 @@
   by the user.
 }
 \usage{
-getGeneric(f, mustFind=FALSE, where)
+getGeneric(f, mustFind=FALSE, where, package)
 
 getGroup(fdef, recursive, where)
 getGroupMembers(group, recursive = FALSE, character = TRUE)
@@ -71,7 +71,8 @@ defaultDumpName(generic, signature)
 
 getAllMethods(f, fdef, where)
 
-doPrimitiveMethod(name, def, call= sys.call(sys.parent()), ev= sys.frame(sys.parent(2)))
+doPrimitiveMethod(name, def, call= sys.call(sys.parent()),
+                  ev = sys.frame(sys.parent(2)))
 
 conformMethod(signature, mnames, fnames, f)
 
