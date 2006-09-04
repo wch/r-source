@@ -1330,19 +1330,20 @@ Rboolean R_seemsS4Object(SEXP object)  {
     TRUE: FALSE;
 }
 
+
 SEXP R_isS4Object(SEXP object) {
-    return IS_S4_OBJECT(object) ? mkTrue() : mkFalse();
+  /* wanted: return isS4(object) ? mkTrue() : mkFalse(); */
+  return IS_S4_OBJECT(object) ? mkTrue() : mkFalse(); ;
 }
 
 SEXP R_setS4Object(SEXP object, SEXP onOff) {
-  Rboolean flag = asLogical(onOff), doSet = FALSE;
-  doSet = (flag && !IS_S4_OBJECT(object)) ||
-    (!flag && IS_S4_OBJECT(object));
-  if(doSet) {
+    Rboolean flag = asLogical(onOff);
+    /* wanted     return asS4(object, flag); */
+   if(flag == IS_S4_OBJECT(object))
+        return object;
     if(NAMED(object) == 2)
-      object = duplicate(object);
+        object = duplicate(object);
     if(flag) SET_S4_OBJECT(object);
     else UNSET_S4_OBJECT(object);
-  }
-  return object;
+    return object;
 }
