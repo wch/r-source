@@ -251,6 +251,12 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_TRACE(x,v)	(((x)->sxpinfo.trace)=(v))
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=(v))
 
+/* S4 object bit, set by R_do_new_object for all new() calls */
+#define S4_OBJECT_MASK (1<<4)
+#define IS_S4_OBJECT(x) ((x)->sxpinfo.gp & S4_OBJECT_MASK)
+#define SET_S4_OBJECT(x) (((x)->sxpinfo.gp) |= S4_OBJECT_MASK)
+#define UNSET_S4_OBJECT(x) (((x)->sxpinfo.gp) &= ~S4_OBJECT_MASK)
+
 /* Vector Access Macros */
 #define LENGTH(x)	(((VECSEXP) (x))->vecsxp.length)
 #define TRUELENGTH(x)	(((VECSEXP) (x))->vecsxp.truelength)
@@ -343,6 +349,11 @@ void (SET_OBJECT)(SEXP x, int v);
 void (SET_TYPEOF)(SEXP x, int v);
 void (SET_NAMED)(SEXP x, int v);
 void SET_ATTRIB(SEXP x, SEXP v);
+
+/* S4 object testing */
+int (IS_S4_OBJECT)(SEXP x);
+void (SET_S4_OBJECT)(SEXP x);
+void (UNSET_S4_OBJECT)(SEXP x);
 
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
@@ -840,6 +851,10 @@ int R_system(char *);
 #define isNull			Rf_isNull
 #define isNumeric		Rf_isNumeric
 #define isObject		Rf_isObject
+  /*see comment in Rinlinedfuns.h
+// #define isS4                     Rf_isS4
+// #define asS4                    Rf_asS4
+*/
 #define isOrdered		Rf_isOrdered
 #define isPairList		Rf_isPairList
 #define isPrimitive		Rf_isPrimitive
@@ -934,6 +949,10 @@ Rboolean Rf_isOrdered(SEXP);
 Rboolean Rf_isPairList(SEXP);
 Rboolean Rf_isPrimitive(SEXP);
 Rboolean Rf_isReal(SEXP);
+  /* see comment in Rinlinedfuns.h 
+  // Rboolean Rf_isS4(SEXP);
+ // SEXP Rf_asS4(SEXP, Rboolean);
+  */
 Rboolean Rf_isString(SEXP);
 Rboolean Rf_isSymbol(SEXP);
 Rboolean Rf_isTs(SEXP);

@@ -2455,6 +2455,10 @@ void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
 void (SET_TRACE)(SEXP x, int v) { SET_TRACE(x, v); }
 int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(x, v); }
 
+/* S4 object testing */
+int (IS_S4_OBJECT)(SEXP x){ return IS_S4_OBJECT(x); }
+void (SET_S4_OBJECT)(SEXP x){ SET_S4_OBJECT(x); }
+void (UNSET_S4_OBJECT)(SEXP x){ UNSET_S4_OBJECT(x); }
 
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(x); }

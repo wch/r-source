@@ -243,6 +243,27 @@ INLINE_FUN Rboolean isObject(SEXP s)
     return OBJECT(s);/* really '1-bit unsigned int' */
 }
 
+/*  The following should work but as of 06/09/04 it generates warnings about 
+    undeclared IS_S4_OBJECT, in spite of being apparently identical to the handling 
+    of isObject() above ------
+INLINE_FUN Rboolean isS4(SEXP s)
+{
+  return IS_S4_OBJECT(s);
+}
+
+INLINE_FUN SEXP asS4(SEXP s, Rboolean flag)
+{
+    if(flag == IS_S4_OBJECT(s))
+        return s;
+    if(NAMED(s) == 2)
+        s = duplicate(s);
+    if(flag) SET_S4_OBJECT(s);
+    else UNSET_S4_OBJECT(s);
+    return s;
+}
+
+*/
+
 INLINE_FUN Rboolean inherits(SEXP s, char *name)
 {
     SEXP class;
