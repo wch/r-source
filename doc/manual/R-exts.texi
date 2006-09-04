@@ -295,8 +295,9 @@ checking version dependencies) before the current package, both when
 @code{library} is called and when saving an image of the package's code
 or preparing for lazy-loading.
 
-The optional @samp{Imports} field lists packages whose namespaces are
-imported from but which do not need to be attached.
+The optional @samp{Imports} field lists packages whose name spaces are
+imported from but which do not need to be attached.  (This includes
+name spaces accessed by the @samp{::} and @samp{:::} operators.)
 
 The optional @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
@@ -309,7 +310,7 @@ is nice to have @pkg{bar}, but not necessary.  The general rules are
 
 @itemize @bullet
 @item
-Packages whose namespace only is needed to load the package using
+Packages whose name space only is needed to load the package using
 @code{library(@var{pkgname})} must be listed in the @samp{Imports}
 field.
 @item
@@ -424,7 +425,7 @@ and not call functions with side effects such as @code{require} and
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of @R{} objects) this will be
-lazy-loaded into the namespace/package environment -- this is intended
+lazy-loaded into the name space/package environment -- this is intended
 for system datasets that are not intended to be user-accessible via
 @code{data}.  Also, files ending in @samp{.in} will be allowed in the
 @file{R} directory to allow a @file{configure} script to generate
