@@ -342,6 +342,13 @@ local({
     eval(substitute(function() {out}, list(out=out)), envir=NULL)
 })
 
+### ** .get_standard_repository_db_fields
+
+.get_standard_repository_db_fields <-
+function()
+    c("Package", "Version", "Priority", "Bundle",
+      "Contains", "Depends", "Imports", "Suggests")
+
 ### ** .identity
 
 .identity <-

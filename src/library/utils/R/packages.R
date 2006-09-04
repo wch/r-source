@@ -10,9 +10,8 @@ available.packages <-
         else TRUE
     }
 
-    ## keep the *order* of fields in sync with the one in installed.packages():
-    requiredFields <- c("Package", "Version", "Priority", "Bundle", "Contains",
-			"Depends", "Imports", "Suggests")
+    requiredFields <-
+        tools:::.get_standard_repository_db_fields()
     if (is.null(fields))
 	fields <- requiredFields
     else {
@@ -334,15 +333,17 @@ installed.packages <-
         if(any(b <- priority %in% "high"))
             priority <- c(priority[!b], "recommended","base")
     }
-    ## keep the *order* of fields in sync with the one in available.packages():
-    requiredFields <- c("Version", "Priority", "Bundle", "Contains",
-			"Depends", "Imports", "Suggests", "Built")
+    requiredFields <-
+        c(tools:::.get_standard_repository_db_fields(), "Built")
     if (is.null(fields))
 	fields <- requiredFields
     else {
 	stopifnot(is.character(fields))
 	fields <- unique(c(requiredFields, fields))
     }
+    ## Don't retain 'Package' and 'LibPath' fields as these are used to
+    ## record name and path of installed packages.
+    fields <- fields[! fields %in% c("Package", "LibPath")]
     retval <- matrix("", 0, 2 + length(fields))
     for(lib in lib.loc) {
         dest <- file.path(tempdir(),
