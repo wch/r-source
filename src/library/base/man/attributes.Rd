@@ -19,10 +19,11 @@ mostattributes(obj) <- value
   \item{value}{an appropriate named list of attributes, or \code{NULL}.}
 }
 \details{
-  Note that some attributes (namely \code{class}, \code{comment},
-  \code{dim}, \code{dimnames}, \code{names}, (from \R 2.4.0) \code{row.names}
-  and \code{tsp}) are treated specially and have restrictions on the
-  values which can be set.
+  Note that some attributes (namely \code{\link{class}},
+  \code{\link{comment}}, \code{\link{dim}}, \code{\link{dimnames}},
+  \code{\link{names}}, (from \R 2.4.0) \code{\link{row.names}} and
+  \code{\link{tsp}}) are treated specially and have restrictions on
+  the values which can be set.
 
   Attributes are not stored internally as a list and should be thought
   of as a set and not a vector.  They must have unique
@@ -32,6 +33,9 @@ mostattributes(obj) <- value
   \code{\link{dim}}, \code{\link{names}} and \code{\link{dimnames}}
   attributes, and assigns them only when valid whereas an
   \code{attributes} assignment would give an error if any are not.
+
+  The names of a pairlist are not stored as attributes, but are reported
+  as if they were (and can be set by the replacement method for attributes).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

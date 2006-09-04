@@ -144,14 +144,13 @@ how to extend @R{} using compiled code.
 @node Objects, Evaluation of expressions, Introduction, Top
 @chapter Objects
 
-@c needs to be clarified. What is a pointer, what is the pointed objcet,
-@c what is the context of the pointed objctt?
+@c needs to be clarified. What is a pointer, what is the pointed object,
+@c what is the context of the pointed object?
 In every computer language
 @cindex variable
-variables provide a means of
-accessing the data stored in memory.  @R{} does not provide direct
-access to the computer's memory but rather provides a number of
-specialized data structures we will refer to as
+variables provide a means of accessing the data stored in memory.  @R{}
+does not provide direct access to the computer's memory but rather
+provides a number of specialized data structures we will refer to as
 @cindex object
 objects.  These objects
 are referred to through symbols or variables.  In @R{}, however, the
@@ -653,9 +652,10 @@ coercion should not be done.
 
 @cindex object
 All objects except @code{NULL} can have one or more attributes attached
-to them.  Attributes are stored as a pairlist where all elements are named.
-The list of attributes can be obtained using @code{attributes} and set
-by @code{attributes<-},
+to them.  Attributes are stored as a pairlist where all elements are
+named, but should be thought of as a set of name=value pairs.  A listing
+of the attributes can be obtained using @code{attributes} and set by
+@code{attributes<-},
 @findex attributes
 @findex attributes<-
 individual components are accessed using @code{attr} and @code{attr<-}.
@@ -663,6 +663,7 @@ individual components are accessed using @code{attr} and @code{attr<-}.
 @findex attr<-
 @c Shouldn't we discuss replacement functions before this?
 
+@c This is a bad example: levels<- is generic.
 Some attributes have special accessor
 @cindex function, accessor
 functions (e.g.@: @code{levels<-}
@@ -764,11 +765,12 @@ series with periodic substructure such as monthly or quarterly data.
 @subsection Copying of attributes
 
 Whether attributes should be copied when an object is altered is a
-complex area, but there are some general rules.
+complex area, but there are some general rules (Becker, Chambers &
+Wilks, 1988, pp. 144--6).
 
 Scalar functions (those which operate element-by-element on a vector and
 whose output is similar to the input) should preserve attributes (except
-perhaps class.
+perhaps class).
 
 Binary operations normally copy most attributes from the longer argument
 (and if they are of the same length from both, preferring the values on
@@ -782,8 +784,9 @@ appropriate.  On the other hand, subassignment generally preserves
 attributes even if the length is changed.  Coercion drops all
 attributes.
 
-Sorting drops all attributes except names, which are sorted along with
-the object.
+The default method for sorting drops all attributes except names, which
+are sorted along with the object.
+
 
 @node Special compound objects,  , Attributes, Objects
 @section Special compound objects

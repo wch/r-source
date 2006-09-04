@@ -17,19 +17,22 @@ attr(x, which) <- value
     to remove the attribute.}
 }
 \details{
-  These functions provide access to a single attribute of an object.  The
-  first form returns the value of the named attribute.  The
-  replacement form causes the named attribute to take the value specified.
+  These functions provide access to a single attribute of an object.
+  The replacement form causes the named attribute to take the value
+  specified (or create a new attribute with the value given).
 
-  The first form first looks for an exact match to \code{which} amongst the
-  attributes of \code{x}, then a unique partial match.
+  The extraction function first looks for an exact match to \code{which}
+  amongst the attributes of \code{x}, then a unique partial match.  The
+  replacement function only uses exact matches.
 
-  Note that some attributes (namely \code{class}, \code{comment},
-  \code{dim}, \code{dimnames}, \code{names}, (from \R 2.4.0) \code{row.names}
-  and \code{tsp}) are treated specially and have restrictions on the
-  values which can be set.
+  Note that some attributes (namely \code{\link{class}},
+  \code{\link{comment}}, \code{\link{dim}}, \code{\link{dimnames}},
+  \code{\link{names}}, (from \R 2.4.0) \code{\link{row.names}} and
+  \code{\link{tsp}}) are treated specially and have restrictions on
+  the values which can be set.
 
-  Giving \code{which} as a character \code{NA} is interpreted as \code{NA}.
+  Specifying \code{which} as a character \code{NA} is interpreted as
+  \code{"NA"} and not as a missing value.
 }
 \value{
   For the first form, the value of the attribute matched, or \code{NULL}

@@ -10050,7 +10050,7 @@ elements are replaced by @code{NULL}).
 The other attributes which are given special treatment are
 @code{"names"}, @code{"class"}, @code{"tsp"}, @code{"comment"} and
 @code{"row.names"}.  For pairlist-like objects the names are not stored
-as an attribute but (as symbols) as tags: however the @R{} interface
+as an attribute but (as symbols) as the tags: however the @R{} interface
 makes them look like conventional attributes (one reason why the
 @code{"names"} attribute has to be treated specially).  The C code
 ensures that the @code{"tsp"} attribute is an @code{REALSXP}, the
@@ -10071,8 +10071,9 @@ for an environment, and also a @code{"path"} attribute for those
 environments populated from @R{} code in a package.
 
 When should attributes be preserved under operations on an object?
-Scalar functions (those which operate element-by-element on a vector and
-whose output is similar to the input) should preserve attributes (except
+Becker, Chambers & Wilks (1988, pp. 144--6) give some guidance.  Scalar
+functions (those which operate element-by-element on a vector and whose
+output is similar to the input) should preserve attributes (except
 perhaps class, and if they do preserve class they need to preserve the
 @code{OBJECT} bit).  Binary operations normally call
 @findex copyMostAttributes
@@ -10424,7 +10425,7 @@ For all @code{SEXPTYPE}s except @code{NILSXP}, @code{SYMSXP} and
 followed by the object bit, two bits indicating if there are any
 attributes and if there is a tag (for the pairlist types), an unused bit
 and then the @code{gp} field@footnote{Currently the only relevant bits
-are 0:1, 14:15.} in bits 12:27.  Pairlist-like objects write their
+are 0:1, 4, 14:15.} in bits 12:27.  Pairlist-like objects write their
 attributes (if any), tag (if any), CAR and then CDR (using tail
 recursion): other objects write their attributes after themselves.
 Atomic vector objects write their length followed by the data: generic

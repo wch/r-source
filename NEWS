@@ -188,10 +188,11 @@ NEW FEATURES
 
 	Functions which work element-by-element on character vectors
 	to give a character result now preserve attributes including
-	names, dims and dimnames.  Such functions include charfold(),
-	chartr(), gsub(), strtrim(), sub(), substr(), tolower() and
-	toupper().  (Note that coercion of a non-character argument
-	may lose the attributes.)
+	names, dims and dimnames (as suggested by the Blue Book
+	p. 144).  Such functions include charfold(), chartr(), gsub(),
+	strtrim(), sub(), substr(), tolower() and toupper().  (Note
+	that coercion of a non-character argument may lose the
+	attributes.)
 
 	agrep(value = TRUE) preserves names for compatibility with
 	grep().
