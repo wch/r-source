@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 SOURCES_TEXI = R-FAQ.texi R-admin.texi R-data.texi R-exts.texi \
-  R-intro.texi R-lang.texi
+  R-intro.texi R-ints.texi R-lang.texi
 DISTFILES = \
 	README \
 	Makefile.in Makefile.win \

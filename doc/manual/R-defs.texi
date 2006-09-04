@@ -34,7 +34,7 @@ $\t\$%
 
 @c -- edit these here alone -- in order keep consistency
 @macro Rcopyright{year}
-Copyright @copyright{} \year\--2005 R Development Core Team
+Copyright @copyright{} \year\--2006 R Development Core Team
 @end macro
 
 @macro permission{}
@@ -59,4 +59,5 @@ approved by the R Development Core Team.
 @set ISBN-exts ISBN 3-900051-11-9
 @set ISBN-intro ISBN 3-900051-12-7
 @set ISBN-lang ISBN 3-900051-13-5
+@set ISBN-ints ISBN 3-900051-14-3
 

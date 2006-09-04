@@ -10,7 +10,7 @@ top_srcdir = ../..
 subdir = doc/manual
 
 SOURCES_TEXI = R-FAQ.texi R-admin.texi R-data.texi R-exts.texi \
-  R-intro.texi R-lang.texi
+  R-intro.texi R-ints.texi R-lang.texi
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
 OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
