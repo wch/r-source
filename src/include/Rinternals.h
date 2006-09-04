@@ -671,6 +671,7 @@ Rboolean R_HasFancyBindings(SEXP rho);
 /* needed for R_load/savehistory handling in front ends */
 void Rf_errorcall(SEXP, const char*, ...);
 void Rf_warningcall(SEXP, const char*, ...);
+void Rf_warningcall_immediate(SEXP, const char*, ...);
 
 /* Save/Load Interface */
 #define R_XDR_DOUBLE_SIZE 8
@@ -898,6 +899,7 @@ int R_system(char *);
 #define unprotect_ptr		Rf_unprotect_ptr
 #define VectorToPairList	Rf_VectorToPairList
 #define warningcall		Rf_warningcall
+#define warningcall_immediate	Rf_warningcall_immediate
 #endif
 
 #if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))

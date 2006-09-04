@@ -16,7 +16,7 @@ suppressWarnings(expr)
   \item{call.}{logical, indicating if the call should become part of the
     warning message.}
   \item{immediate.}{logical, indicating if the call should be output
-    immediately, even if \code{\link{getOption}(warn) = 0}.}
+    immediately, even if \code{\link{getOption}(warn) <= 0}.}
   \item{expr}{expression to evaluate.}
   \item{domain}{see \code{\link{gettext}}. If \code{NA}, messages will
     not be translated.}
@@ -34,9 +34,9 @@ suppressWarnings(expr)
   top--level function has completed; if it is one they are printed as
   they occur and if it is 2 (or larger) warnings are turned into
   errors.  Calling \code{warning(immediate. = TRUE)} turns
-  \code{warn = 0} into \code{warn = 1} for this call only.
+  \code{warn <= 0} into \code{warn = 1} for this call only.
 
-  If \code{warn} is zero (the default), a top-level variable
+  If \code{warn} is zero (the default), a read-only variable
   \code{last.warning} is created.  It contains the warnings which can be
   printed via a call to \code{\link{warnings}}.
 

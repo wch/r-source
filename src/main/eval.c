@@ -1444,12 +1444,14 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP op)
 	    tail = CDR(tail);
 	    SET_TAG(tail, CreateTag(TAG(el)));
 	} else if (CDR(el) == R_NilValue) {
-	    REprintf("Warning: a final empty element has been omitted\n");
+	    warningcall_immediate(R_Nilvalue,
+               "a final empty element has been omitted");
 	    PrintArgs(orig, op);
 	} else if(streql(PRIMNAME(op), "c")
 		  || streql(PRIMNAME(op), "list")) {
 	    /* temporarily special-case c() and list() */
-	    REprintf("Warning: an element is empty and has been omitted\n");
+	    warningcall_immediate(R_Nilvalue,
+	        "an element is empty and has been omitted");
 	    PrintArgs(orig, op);
 	} else { /* It was a missing element */
 	    PrintArgs(orig, op);

@@ -268,10 +268,10 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
     if( w == NA_INTEGER ) /* set to a sensible value */
 	w = 0;
 
-    if(w < 0 || inWarning || inError)  {/* ignore if w<0 or already in here*/
+    if( w <= 0 && immediateWarning ) w = 1;
+
+    if(w < 0 || inWarning || inError) /* ignore if w<0 or already in here*/
 	return;
-    }
-    if( w == 0 && immediateWarning ) w = 1;
 
     /* set up a context which will restore inWarning if there is an exit */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
@@ -326,6 +326,17 @@ void warningcall(SEXP call, const char *format, ...)
     va_start(ap, format);
     vsignalWarning(call, format, ap);
     va_end(ap);
+}
+
+void warningcall_immediate(SEXP call, const char *format, ...)
+{
+    va_list(ap);
+
+    immediateWarning = 1;
+    va_start(ap, format);
+    vwarningcall_dflt(call, format, ap);
+    va_end(ap);
+    immediateWarning = 0;
 }
 
 static void cleanup_PrintWarnings(void *data)

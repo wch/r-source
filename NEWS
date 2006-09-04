@@ -392,6 +392,9 @@ NEW FEATURES
 
     o	mapply() uses names more analogously to lapply(), e.g..
 
+    o	warning(immediate. = TRUE) now applies to
+	getOption("warn") < 0 and not just == 0.
+
 
 DEPRECATED & DEFUNCT
 
