@@ -471,6 +471,7 @@ AC_ARG_VAR([SAFE_FFLAGS],
 	   [Safe Fortran 77 compiler flags for e.g. dlamc.f])
 AC_ARG_VAR([r_arch],
            [Use architecture-dependent subdirs with this name])
+AC_ARG_VAR([DEFS], [C defines for use when compiling R])
 
 if test -z "${r_arch}"; then
   R_ARCH=
@@ -541,6 +542,11 @@ R_PROG_F77
 AC_PROG_CXX
 AC_PROG_CXXCPP
 R_GCC4_VISIBILITY
+
+## This has to be R_DEFS as autoconf overrrides DEFS
+R_DEFS=${DEFS}
+AC_SUBST(R_DEFS)
+
 
 ## Libtool.
 ## (Run this after R_PROG_F77, as AC_PROG_LIBTOOL checks for a
