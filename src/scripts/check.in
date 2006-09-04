@@ -1078,6 +1078,12 @@ sub check_pkg {
 	$any++;
 	$log->print("Subdirectory 'demo' contains no demos.\n");
     }
+    ## Subdirectory 'exec' without files?
+    if((-d "exec") && !&list_files("exec")) {
+	$log->warning() unless $any;
+	$any++;
+	$log->print("Subdirectory 'exec' contains no files.\n");
+    }
     ## Subdirectory 'src' without sources?
     ## <NOTE>
     ## If there is a Makefile (or a Makefile.win), we cannot assume
