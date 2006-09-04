@@ -48,8 +48,8 @@ typedef struct {
 
 struct structHelpMenuItems {
   menuitem mhelp, mmanintro, mmanref, mmandata,
-    mmanext, mmanlang, mmanadmin, mman0, mapropos, mhelpstart, mhelpsearch, 
-    msearchRsite, mFAQ, mrwFAQ, mCRAN;
+    mmanext, mmanint, mmanlang, mmanadmin, mman0, mapropos, mhelpstart, 
+    mhelpsearch, msearchRsite, mFAQ, mrwFAQ, mCRAN;
   menu mman;
 };
 typedef struct structHelpMenuItems *HelpMenuItems;
