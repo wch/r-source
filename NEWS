@@ -396,6 +396,9 @@ NEW FEATURES
     o	warning(immediate. = TRUE) now applies to
 	getOption("warn") < 0 and not just == 0.
 
+    o	There is a new manual 'R Internals' on R internal stuctures
+	plus the former appendices of 'Writing R Extensions'.
+
 
 DEPRECATED & DEFUNCT
 
@@ -463,6 +466,11 @@ C-LEVEL FACILITIES
         of the routines R_RegisterCCallable and R_GetCCallable.  These
         functions are declared in <R_ext/Rdynload.h>. This interface
         is experimental and subject to change.
+
+	In addition, a package can arrange to make use of header
+	files in another (already installed) package via the
+	'LinkingTo' field in the DESCRIPTION file: see 'Writing R
+	Extensions'.
 
 
 UTILITIES

@@ -532,6 +532,9 @@ do_install_source () {
   if test -d src && test "${fake}" != "true"; then
     message "libs"
     has_error=false
+    CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | \
+      "${R_EXE}" --vanilla --slave`
+    export CLINK_CPPFLAGS
     if ${debug}; then set -x; fi
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
     if test -f src/Makefile; then
