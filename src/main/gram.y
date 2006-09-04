@@ -1908,7 +1908,10 @@ static int SymbolValue(int c)
 	        c = xxgetc();
             }
 	    if(c == R_EOF) break;
-	    if(c == '.' || c == '_') continue;
+	    if(c == '.' || c == '_') {
+		clen = 1;
+		continue;
+	    }
 	    clen = mbcs_get_next(c, &wc);
 	    if(!iswalnum(wc)) break;
 	}
