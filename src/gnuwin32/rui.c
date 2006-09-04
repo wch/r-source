@@ -65,7 +65,7 @@ static popup RConsolePopup;
 static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mpastecmds, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mde;
-static int lmanintro, lmanref, lmandata, lmanlang, lmanext, lmanadmin;
+static int lmanintro, lmanref, lmandata, lmanlang, lmanext, lmanint, lmanadmin;
 static menu m;
 static char cmd[1024];
 static HelpMenuItems hmenu;
@@ -467,6 +467,11 @@ static void menumainext(control m)
     internal_shellexec("doc\\manual\\R-exts.pdf");
 }
 
+static void menumainint(control m)
+{
+    internal_shellexec("doc\\manual\\R-ints.pdf");
+}
+
 static void menumainlang(control m)
 {
     internal_shellexec("doc\\manual\\R-lang.pdf");
@@ -839,6 +844,7 @@ static void CheckForManuals()
     lmandata = check_doc_file("doc\\manual\\R-data.pdf");
     lmanlang = check_doc_file("doc\\manual\\R-lang.pdf");
     lmanext = check_doc_file("doc\\manual\\R-exts.pdf");
+    lmanint = check_doc_file("doc\\manual\\R-ints.pdf");
     lmanadmin = check_doc_file("doc\\manual\\R-admin.pdf");
 }
 
@@ -856,7 +862,7 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
 
 
     if (!lmanintro && !lmanref && !lmandata && !lmanlang && !lmanext 
-       && !lmanadmin) {
+       && !lmanint && !lmanadmin) {
 	MCHECK(hmenu->mman0 = newmenuitem(G_("Manuals (in PDF)"), 0, NULL));
 	disable(hmenu->mman0);
     } else {
@@ -876,6 +882,9 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
 	MCHECK(hmenu->mmanext = newmenuitem("Writing R Extensions", 0, 
 				     menumainext));
 	if (!lmanext) disable(hmenu->mmanext);
+	MCHECK(hmenu->mmanint = newmenuitem("R Internals", 0, 
+				     menumainint));
+	if (!lmanint) disable(hmenu->mmanint);
 	MCHECK(hmenu->mmanadmin = newmenuitem("R Installation and Administration", 0, 
 				       menumainadmin));	
 	if (!lmanadmin) disable(hmenu->mmanadmin);
