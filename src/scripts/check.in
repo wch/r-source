@@ -1666,6 +1666,37 @@ sub check_pkg {
 	}
     }
 
+    ## check src/Makevar*, src/Makefile* for correct use of BLAS_LIBS
+    ## FLIBS is not needed on Windows, at least currently (as it is
+    ## statically linked).
+    if(-d "src") {
+	my $any;
+	$log->checking("for portable use of \$BLAS_LIBS");
+	my @makefiles;
+	push(@makefiles, &file_path("src", "Makevars")) 
+	    if (-f &file_path("src", "Makevars"));
+	push(@makefiles, &file_path("src", "Makevars.in")) 
+	    if (-f &file_path("src", "Makevars.in"));
+	push(@makefiles, &file_path("src", "Makefile")) 
+	    if (-f &file_path("src", "Makefile"));
+	push(@makefiles, &file_path("src", "Makefile.in")) 
+	    if (-f &file_path("src", "Makefile.in"));
+	foreach $f (@makefiles)
+	{
+	    open(FILE, "< $f")
+		or die("Error: cannot open file '$f' for reading\n");
+	    while(<FILE>) {
+		if(/\$[\{\(]{0,1}BLAS_LIBS/  && !/FLIBS/) {
+		    $log->warning();
+		    $any++;
+		    chomp;
+		    $log->print("apparently missing \$FLIBS in '".$_."'\n");
+		}
+	    }
+	    close(FILE);
+	}
+	$log->result("OK") unless($any);
+    }
 
     chdir($pkgoutdir);
 
