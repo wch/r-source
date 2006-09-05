@@ -1129,7 +1129,8 @@ sub check_pkg {
     if(-f $file) {
 	my $Rcmd = "invisible(tryCatch(parse(\"${file}\"), ";
 	$Rcmd .= "error = function(e) writeLines(conditionMessage(e))))";
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    $log->warning() unless $any;
@@ -1146,7 +1147,8 @@ sub check_pkg {
     if(!$is_base_pkg && (-d "R")) {
 	$log->checking("R files for syntax errors");
 	my $Rcmd = "tools:::.check_package_code_syntax(\"R\")";
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    $log->error();
@@ -1354,7 +1356,8 @@ sub check_pkg {
 
 	if(!$is_base_pkg) {
 	    my $Rcmd = "tools:::.check_package_code_shlib(\"R\")";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
 		$log->error();
@@ -1374,7 +1377,8 @@ sub check_pkg {
 	if($R_check_use_codetools && $opt_install) {
 	    my $Rcmd = "options(warn=1)\n";
 	    $Rcmd .= "tools:::.check_code_usage_in_package(package = \"${pkgname}\")\n";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
 		$log->warning() unless $any;
@@ -1391,7 +1395,8 @@ sub check_pkg {
 	    else {
 		$Rcmd .= "tools:::.check_T_and_F(dir = \"${pkgdir}\")\n";
 	    }
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
 		$log->warning() unless $any;
@@ -1661,6 +1666,37 @@ sub check_pkg {
 	}
     }
 
+    ## check src/Makevar*, src/Makefile* for correct use of BLAS_LIBS
+    ## FLIBS is not needed on Windows, at least currently (as it is
+    ## statically linked).
+    if(-d "src") {
+	my $any;
+	$log->checking("for portable use of \$BLAS_LIBS");
+	my @makefiles;
+	push(@makefiles, &file_path("src", "Makevars")) 
+	    if (-f &file_path("src", "Makevars"));
+	push(@makefiles, &file_path("src", "Makevars.in")) 
+	    if (-f &file_path("src", "Makevars.in"));
+	push(@makefiles, &file_path("src", "Makefile")) 
+	    if (-f &file_path("src", "Makefile"));
+	push(@makefiles, &file_path("src", "Makefile.in")) 
+	    if (-f &file_path("src", "Makefile.in"));
+	foreach $f (@makefiles)
+	{
+	    open(FILE, "< $f")
+		or die("Error: cannot open file '$f' for reading\n");
+	    while(<FILE>) {
+		if(/\$[\{\(]{0,1}BLAS_LIBS/  && !/FLIBS/) {
+		    $log->warning();
+		    $any++;
+		    chomp;
+		    $log->print("apparently missing \$FLIBS in '".$_."'\n");
+		}
+	    }
+	    close(FILE);
+	}
+	$log->result("OK") unless($any);
+    }
 
     chdir($pkgoutdir);
 
