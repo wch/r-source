@@ -19,12 +19,22 @@ nls.control(maxiter = 50, tol = 1e-05, minFactor = 1/1024)
     successively halved until the residual sum of squares has been
     decreased or until the step-size factor has been reduced below this
     limit.}
+  \item{printEval}{a logical specifying whether the number of evaluations
+    (steps in the gradient direction taken each iteration) is printed.}
+  \item{warnOnly}{a logical specifying whether \code{\link{nls}()} should
+    return instead of signalling an error in the case of termination
+    before convergence.
+    Termination before convergence happens upon completion of \code{maxiter}
+    iterations, in the case of a singular gradient, and in the case that the
+    step-size factor is reduced below \code{minFactor}.}
 }
 \value{
-  A \code{list} with exactly three components:
+  A \code{list} with exactly five components:
   \item{maxiter}{}
   \item{tol}{}
   \item{minFactor}{}
+  \item{printEval}{}
+  \item{warnOnly}{}
   with meanings as explained under \sQuote{Arguments}.
 }
 \references{

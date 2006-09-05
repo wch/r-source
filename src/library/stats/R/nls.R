@@ -57,7 +57,8 @@ nlsModel.plinear <- function(form, data, start, wts)
     storage.mode(lhs) <- "double"
     rhs <- eval(form[[3]], envir = env)
     storage.mode(rhs) <- "double"
-    .swts <- if(!missing(wts)) sqrt(wts) else rep(1, length=length(rhs))
+    .swts <- if(!missing(wts) && (length(wts) != 0))
+        sqrt(wts) else rep(1, length=length(rhs))
     assign(".swts", .swts, envir = env)
     p1 <- if(is.matrix(rhs)) ncol(rhs) else 1
     p <- p1 + p2
@@ -244,7 +245,8 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     useParams <- rep(TRUE, parLength)
     lhs <- eval(form[[2]], envir = env)
     rhs <- eval(form[[3]], envir = env)
-    .swts <- if(!missing(wts)) sqrt(wts) else rep(1, length=length(rhs))
+    .swts <- if(!missing(wts) && (length(wts) != 0))
+        sqrt(wts) else rep(1, length=length(rhs))
     assign(".swts", .swts, envir = env)
     resid <- .swts * (lhs - rhs)
     dev <- sum(resid^2)
@@ -375,9 +377,10 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     m
 }
 
-nls.control <- function(maxiter = 50, tol = 0.00001, minFactor = 1/1024)
-    list(maxiter = maxiter, tol = tol, minFactor = minFactor)
-
+nls.control <- function(maxiter = 50, tol = 0.00001, minFactor = 1/1024,
+			printEval = FALSE, warnOnly = FALSE)
+    list(maxiter = maxiter, tol = tol, minFactor = minFactor,
+	 printEval = printEval, warnOnly = warnOnly)
 
 nls_port_fit <- function(m, start, lower, upper, control, trace)
 {
@@ -522,68 +525,65 @@ nls <-
 	stop("missing or negative weights not allowed")
 
     m <- switch(algorithm,
-                plinear = nlsModel.plinear(formula, mf, start, wts),
-                port = nlsModel(formula, mf, start, wts, upper),
-                nlsModel(formula, mf, start, wts))
+		plinear = nlsModel.plinear(formula, mf, start, wts),
+		port = nlsModel(formula, mf, start, wts, upper),
+		nlsModel(formula, mf, start, wts))
 
     ctrl <- nls.control()
     if(!missing(control)) {
-        control <- as.list(control)
-        ctrl[names(control)] <- control
+	control <- as.list(control)
+	ctrl[names(control)] <- control
     }
     if (algorithm != "port") {
-        if (!missing(lower) || !missing(upper))
-            warning('Upper or lower bounds ignored unless algorithm = "port"')
-        nls.out <- list(m = .Call(R_nls_iter, m, ctrl, trace),
-                        data = substitute(data), call = match.call())
-        ## we need these (evaluated) for profiling
-        nls.out$call$control <- ctrl
-        nls.out$call$trace <- trace
-        nls.out$call$algorithm <- algorithm
-        nls.out$na.action <- attr(mf, "na.action")
-        nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
-        if(model) nls.out$model <- mf
-        if(!mWeights) nls.out$weights <- wts
-        class(nls.out) <- "nls"
-        return(nls.out)
+	if (!missing(lower) || !missing(upper))
+	    warning('Upper or lower bounds ignored unless algorithm = "port"')
+	nls.out <- list(m = .Call(R_nls_iter, m, ctrl, trace),
+			data = substitute(data), call = match.call())
+    }
+    else { ## "port" i.e., PORT algorithm
+	iv <- nls_port_fit(m, start, lower, upper, control, trace)
+	nls.out <- list(m = m, data = substitute(data), call = match.call())
+	nls.out$convergence <- as.integer(if (iv[1] %in% 3:6) 0 else 1)
+	nls.out$message <-
+	    switch(as.character(iv[1]),
+		   "3" = "X-convergence (3)",
+		   "4" = "relative convergence (4)",
+		   "5" = "both X-convergence and relative convergence (5)",
+		   "6" = "absolute function convergence (6)",
+
+		   "7" = "singular convergence (7)",
+		   "8" = "false convergence (8)",
+		   "9" = "function evaluation limit reached without convergence (9)",
+		   "10" = "iteration limit reached without convergence (9)",
+		   "14" = "storage has been allocated (?) (14)",
+
+		   "15" = "LIV too small (15)",
+		   "16" = "LV too small (16)",
+		   "63" = "fn cannot be computed at initial par (63)",
+		   "65" = "gr cannot be computed at initial par (65)",
+		   "300" = "initial par violates constraints")
+	if (is.null(nls.out$message))
+	    nls.out$message <-
+		paste("See PORT documentation.	Code (", iv[1], ")", sep = "")
+	if (nls.out$convergence)
+	    stop(paste("Convergence failure:", nls.out$message))
+
+	## we need these (evaluated) for profiling
+	nls.out$call$lower <- lower
+	nls.out$call$upper <- upper
     }
 
-    iv <- nls_port_fit(m, start, lower, upper, control, trace)
-    nls.out <- list(m = m, data = substitute(data), call = match.call())
     ## we need these (evaluated) for profiling
     nls.out$call$algorithm <- algorithm
-    nls.out$call$lower <- lower
-    nls.out$call$upper <- upper
-    nls.out$call$control <- control
+    nls.out$call$control <- ctrl
     nls.out$call$trace <- trace
-    nls.out$convergence <- as.integer(if (iv[1] %in% 3:6) 0 else 1)
-    nls.out$message <-
-        switch(as.character(iv[1]),
-               "3" = "X-convergence (3)",
-               "4" = "relative convergence (4)",
-               "5" = "both X-convergence and relative convergence (5)",
-               "6" = "absolute function convergence (6)",
 
-               "7" = "singular convergence (7)",
-               "8" = "false convergence (8)",
-               "9" = "function evaluation limit reached without convergence (9)",
-               "10" = "iteration limit reached without convergence (9)",
-               "14" = "storage has been allocated (?) (14)",
-
-               "15" = "LIV too small (15)",
-               "16" = "LV too small (16)",
-               "63" = "fn cannot be computed at initial par (63)",
-               "65" = "gr cannot be computed at initial par (65)",
-               "300" = "initial par violates constraints")
-    if (is.null(nls.out$message))
-        nls.out$message <-
-            paste("See PORT documentation.  Code (", iv[1], ")", sep = "")
-    if (nls.out$convergence)
-        stop(paste("Convergence failure:", nls.out$message))
     nls.out$na.action <- attr(mf, "na.action")
     nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
-    if(model) nls.out$model <- mf
-    if(!mWeights) nls.out$weights <- wts
+    if(model)
+	nls.out$model <- mf
+    if(!mWeights)
+	nls.out$weights <- wts
     class(nls.out) <- "nls"
     nls.out
 }

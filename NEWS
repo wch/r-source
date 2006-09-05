@@ -82,7 +82,7 @@ USER-VISIBLE CHANGES
 	inherited methods.  See ?Methods and
 	http://developer.r-project.org/howMethodsWork.pdf
 
-    o	objects created from an S4 class are now marked by an internal flag, 
+    o	objects created from an S4 class are now marked by an internal flag,
         tested by isS4() in R and by macro IS_S4_OBJECT() in C.  This
         is an efficient and reliable test, and should replace all
         earlier heuristic tests.
@@ -247,6 +247,10 @@ NEW FEATURES
     o	x <- 1:20; y <- rnorm(x); nls(y ~ A*exp(-x^2/sig)) no longer
 	returns an unhelpful error message.  In this and similar cases, it
 	now tries a wild guess for starting values.
+
+	nls.control(* , printEval = FALSE, warnOnly = FALSE) are two new
+	options to help better analyze (non-)convergence of nls(),
+	thanks to Kate Mullen.
 
     o	Ops.difftime() now handles unary minus and plus.
 
