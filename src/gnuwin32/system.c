@@ -784,7 +784,11 @@ int cmdlineoptions(int ac, char **av)
     /* set defaults for R_max_memory. This is set here so that
        embedded applications get no limit */
     GlobalMemoryStatus(&ms);
-    R_max_memory = min(1024 * Mega, ms.dwTotalPhys);
+    /* As from 2.4.0, look at the virtual memsize */
+    if((unsigned int) ms.dwTotalVirtual > 2048*Mega)
+	R_max_memory = min(2560 * Mega, ms.dwTotalPhys);
+    else
+	R_max_memory = min(1536 * Mega, ms.dwTotalPhys);
     /* need enough to start R: fails on a 8Mb system */
     R_max_memory = max(32 * Mega, R_max_memory);
 

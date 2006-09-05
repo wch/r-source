@@ -295,7 +295,7 @@ their names and re-install them from CRAN.
 Indeed there is.  It is set by the command-line flag
 @option{--max-mem-size} (@pxref{How do I install R for Windows?}) and
 defaults to the smaller of the amount of physical RAM in the machine and
-1Gb.  It can be set to any amount between 32Mb and 3Gb.  Be aware though
+1.5Gb.  It can be set to any amount between 32Mb and 3Gb.  Be aware though
 that Windows has (in most versions) a maximum amount of user virtual
 memory of 2Gb.
 
@@ -309,7 +309,14 @@ several times slower on some tasks).
 
 The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3Gb
 per process under suitably enabled versions of Windows (see
-@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}).
+@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}:
+even where this is supported it has to be specifically enabled).
+On such systems, the default for @code{--max-mem-size} is 2.5Gb.
+
+It is possible that the Windows API calls used will give misleading
+results on machines with more than 4Gb of physical RAM (and later ones
+cannot be used as R must run on Windows 2000 and earlier): for safety
+set @code{--max-mem-size} explicitly on such machines.
 
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
