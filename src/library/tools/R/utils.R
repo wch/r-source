@@ -456,16 +456,22 @@ function(fname, envir, mustMatch = TRUE)
 function(package, lib.loc)
 {
     ## Load (reload if already loaded) @code{package} from
-    ## @code{lib.loc}, capturing all output and messages.  All QC
-    ## functions use this for loading packages because R CMD check
-    ## interprets all output as indicating a problem.
-    .try_quietly({
-        pos <- match(paste("package", package, sep = ":"), search())
-        if(!is.na(pos))
-            detach(pos = pos)
-        library(package, lib.loc = lib.loc, character.only = TRUE,
-                verbose = FALSE)
-    })
+    ## @code{lib.loc}, capturing all output and messages.  Don't do
+    ## anything for base, and don't attempt reloading methods, as this
+    ## does not work (most likely a bug).
+    ##
+    ## All QC functions use this for loading packages because R CMD
+    ## check interprets all output as indicating a problem.
+    if(package != "base")
+        .try_quietly({
+            pos <- match(paste("package", package, sep = ":"), search())
+            if(!is.na(pos)) {
+                if(package == "methods") return()
+                detach(pos = pos)
+            }
+            library(package, lib.loc = lib.loc, character.only = TRUE,
+                    verbose = FALSE)
+        })
 }
 
 ### ** .make_file_exts
