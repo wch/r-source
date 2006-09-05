@@ -14,7 +14,7 @@
   \item{digits}{a non-null value for \code{digits} specifies the minimum
     number of significant digits to be printed in values.  The default,
     \code{NULL}, uses \code{\link{getOption}(digits)}.  (For the
-    intepretation for complex numbers see \code{\link{signif}}.)
+    interpretation for complex numbers see \code{\link{signif}}.)
     Non-integer values will be rounded down, and only values
     greater than or equal to one are accepted.
   }
@@ -32,7 +32,7 @@
     uses \code{\link{getOption}(max.print)}; see that help page for more
     details.}
   \item{\dots}{further arguments to be passed to or from other
-    methods.  They are ignored in this function.}  
+    methods.  They are ignored in this function.}
 }
 \details{
   The default for printing \code{NA}s is to print \code{NA} (without
