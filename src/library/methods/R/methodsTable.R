@@ -10,7 +10,7 @@ options(error=traceback, warn = 1)
           mm = length(mm@defined)
           break
       }
-    }  
+    }
     new = objects(newtable, all=TRUE)
     ## check that signature length doesn't change
     canStore <- TRUE
@@ -82,7 +82,7 @@ options(error=traceback, warn = 1)
     ## else warning?
   }
 }
-        
+
 
 .mlistAddToTable <- function(generic, mlist, table = new.env(TRUE, fenv), add = TRUE) {
   fenv <- environment(generic)
@@ -149,7 +149,7 @@ options(error=traceback, warn = 1)
   else
   assign(label, def, envir = table)
 }
-  
+
 
 .resetTable <- function(table, n, signames) {
   ## after updating a methods table, the maximum no. of arguments in
@@ -326,8 +326,8 @@ options(error=traceback, warn = 1)
   ## excluded slot is a list, but with methods tables, elements are just labels
   new("MethodWithNext", method, nextMethod = methods[[1]], excluded =as.list(excluded))
 }
-    
-  
+
+
   ## get the classes of the args
 
 .InheritForDispatch <- function(classes, fdef, mtable) {
@@ -380,7 +380,7 @@ options(error=traceback, warn = 1)
       defClasses[1:length(cl),j] <- cl
   }
     containsDist <- vector("list", nArg)
-    for(i in 1:nArg) 
+    for(i in 1:nArg)
         containsDist[[i]] <- .inhDistances(classDefs[[i]])
     maxDist <- max(unlist(containsDist), na.rm = TRUE) + 1
     ## add up the inheritance distances for each argument (row of defClasses)
@@ -476,7 +476,7 @@ options(error=traceback, warn = 1)
           assign(what, get(what, envir = mtable), envir = allTable)
     }
 }
-                             
+
 .UseMethodsTables <- TRUE
 
 .UsingMethodsTables <- function(onOff = .UseMethodsTables, where  = .methodsNamespace) {
@@ -491,42 +491,49 @@ options(error=traceback, warn = 1)
   prev
 }
 
-.showMethodsTable <- function(generic, includeDefs = FALSE, inherited = FALSE, classes = NULL, printTo = stdout()) {
-  cf <- function(...)cat(file = printTo, sep = "", ...)
-  sigString  <- function(sig) paste(sig@names, "=\"", as.character(sig), "\"",
-                                    sep = "", collapse = ", ")
-  qs <- function(what)paste('"', what, '"', collapse = ", ", sep = "")
- env <- environment(generic)
- signature = generic@signature
- table <- if(inherited) get(".AllMTable", envir = env)
-    else get(".MTable", envir = env)
-  f <- generic@generic
-  p <- packageSlot(f)
-  if(is.null(p)) p <- "base"
-  deflt <- new("signature", generic, "ANY")
- cf("Function: ", f, ", (package ", p, ")\n")
-  labels <- objects(table, all = TRUE)
-  for(what in labels) {
-    m <- get(what, envir = table)
-    if( is(m, "MethodDefinition")) {
-      t <- m@target
-      if(length(t) == 0)
-        t <- deflt
-      d <- m@defined
-      if(length(d) == 0)
-        d <- deflt
-      cf(sigString(t), "\n")
-      if(!identical(t, d))
-        cf("    (inherited from: ", sigString(d), ")\n")
-      if(!.identC(m@generic, f) && length(m@generic) == 1 && nchar(m@generic)>0)
-        cf("    (definition from function \"", m@generic, "\")\n")
+.showMethodsTable <- function(generic, includeDefs = FALSE, inherited = FALSE,
+                              classes = NULL, printTo = stdout())
+{
+    cf <- function(...) cat(file = printTo, sep = "", ...)
+    sigString <- function(sig) paste(sig@names, "=\"", as.character(sig), "\"",
+				     sep = "", collapse = ", ")
+    qs <- function(what)paste('"', what, '"', collapse = ", ", sep = "")
+    env <- environment(generic)
+    signature = generic@signature
+    table <- get(if(inherited) ".AllMTable" else ".MTable", envir = env)
+    f <- generic@generic
+    p <- packageSlot(f)
+    if(is.null(p)) p <- "base"
+    deflt <- new("signature", generic, "ANY")
+    cf("Function: ", f, ", (package ", p, ")\n")
+    labels <- objects(table, all = TRUE)
+
+    if(!is.null(classes) && length(labels) > 0) {
+	sigL <- strsplit(labels, split = "#")
+	keep <- !sapply(sigL, function(x, y) all(is.na(match(x, y))), classes)
+	labels <- labels[keep]
     }
-    if(includeDefs) {
-      if(is(m, "MethodDefinition"))
-        m <- f@.Data
-      cf(deparse(f), sep="\n", "\n")
+    for(what in labels) {
+	m <- get(what, envir = table)
+	if( is(m, "MethodDefinition")) {
+	    t <- m@target
+	    if(length(t) == 0)
+		t <- deflt
+	    d <- m@defined
+	    if(length(d) == 0)
+		d <- deflt
+	    cf(sigString(t), "\n")
+	    if(!identical(t, d))
+		cf("    (inherited from: ", sigString(d), ")\n")
+            if(!.identC(m@generic, f) && length(m@generic) == 1 && nchar(m@generic)>0)
+		cf("    (definition from function \"", m@generic, "\")\n")
+	}
+	if(includeDefs) {
+	    if(is(m, "MethodDefinition"))
+		m <- f@.Data
+	    cf(deparse(f), sep="\n", "\n")
+	}
     }
-  }
 }
 
 ## temporary switch for tables
@@ -597,7 +604,7 @@ useMTable <- function(onOff = NA)
       .setupMethodsTables(fdef)
     get(".SigLength", envir = env)
 }
-  
+
 
 
 .checkGroupSigLength <- function(gnames, generics = lapply(gnames, getGeneric)) {
@@ -632,7 +639,7 @@ useMTable <- function(onOff = NA)
     fdef <- fdefs[[i]]
     if(is.null(fdef))
       next # getGroupMembers returns NULL if  member is not defined
-    if(!is(fdef, "genericFunction")) 
+    if(!is(fdef, "genericFunction"))
       warning("Trying to check signature length of generic \"",
               what, "\", but it is not a  generic function: i = ", i,
               ", funs = ", paste(unlist(funs), collapse = ", "),
@@ -694,7 +701,7 @@ outerLabels <- function(labels, new) {
       length(signames) <- n
       .resetTable(mtable, n, signames)
       .resetInheritedMethods(fenv, mtable)
-}    
+}
 
 .TableMetaName <- function(name, package)
   methodsPackageMetaName("T", paste(name, package, sep=":"))
@@ -751,4 +758,4 @@ outerLabels <- function(labels, new) {
     }
   }
 
-    
+

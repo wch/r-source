@@ -484,18 +484,19 @@ matchSignature <-
 
 showMlist <-
   ## Prints the contents of the MethodsList.  If `includeDefs' the signatures and the
-  ## corresonding definitions will be printed; otherwise, only the signatures.
+  ## corresponding definitions will be printed; otherwise, only the signatures.
   ##
   ## If `includeDefs' is `TRUE', the currently known inherited methods are included;
   ## otherwise, only the directly defined methods.
 function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgNames = TRUE,
-         printTo = stdout()) {
-      if(identical(printTo, FALSE)) {
-          tmp <- tempfile()
-          con <- file(tmp, "w")
-      }
-      else
-          con <- printTo
+         printTo = stdout())
+{
+    if(identical(printTo, FALSE)) {
+        tmp <- tempfile()
+        con <- file(tmp, "w")
+    }
+    else
+        con <- printTo
   object <- linearizeMlist(mlist, inherited)
   methods <- object@methods
   signatures <- object@classes
