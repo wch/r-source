@@ -1686,11 +1686,12 @@ sub check_pkg {
 	    open(FILE, "< $f")
 		or die("Error: cannot open file '$f' for reading\n");
 	    while(<FILE>) {
-		if(/\$[\{\(]{0,1}BLAS_LIBS/  && !/FLIBS/) {
+		if(/PKG_LIBS/ && /\$[\{\(]{0,1}BLAS_LIBS/ && !/FLIBS/) {
 		    $log->warning();
 		    $any++;
 		    chomp;
-		    $log->print("apparently missing \$FLIBS in '".$_."'\n");
+		    s/\r$//;  # some packages have CRLF terminators
+		    $log->print("apparently missing \$(FLIBS) in '".$_."'\n");
 		}
 	    }
 	    close(FILE);
