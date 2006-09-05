@@ -34,6 +34,8 @@ memory.limit(size = NA)
 }
 \seealso{
   \link{Memory-limits} for other limits.
+
+  The rw-FAQ for more details and references.
 }
 \examples{
 memory.size()
