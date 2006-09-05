@@ -2464,8 +2464,11 @@ function(dir)
         ## Not clear whether we want to require *all* namespace package
         ## dependencies listed in DESCRIPTION, or e.g. just the ones on
         ## non-base packages.  Do the latter for time being ...
-        reqs <- reqs %w/o% c(contains, imports, depends,
-                             standard_package_names$base)
+        ## Actually we need to know at least about S4-using packages,
+        ## since we need to reinstall if those change.
+        allowed_imports <-
+            standard_package_names$base %w/o% c("methods", "stats4")
+        reqs <- reqs %w/o% c(contains, imports, depends, allowed_imports)
         ## Note that for bundles we currently cannot have package
         ## dependencies different from bundle ones, and clearly a bundle
         ## cannot depend on something it contains ...

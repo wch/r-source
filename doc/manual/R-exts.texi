@@ -296,8 +296,12 @@ checking version dependencies) before the current package, both when
 or preparing for lazy-loading.
 
 The optional @samp{Imports} field lists packages whose name spaces are
-imported from but which do not need to be attached.  (This includes
-name spaces accessed by the @samp{::} and @samp{:::} operators.)
+imported from but which do not need to be attached.  (This includes name
+spaces accessed by the @samp{::} and @samp{:::} operators.)  Ideally
+this field will include all the standard packages, and it is important
+to include S4-using packages (as their class definitions can change and
+the @file{DESCRIPTION} file is used to decide which packages to
+re-install when this happens).
 
 The optional @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
@@ -847,7 +851,8 @@ need to be included in @code{PKG_LIBS}.  Beware that if it is empty then
 the @R{} executable will contain all the double-precision and
 double-complex BLAS routines, but no single-precision or complex
 routines.  If @code{BLAS_LIBS} is included, then @code{FLIBS} also needs
-to be, as most BLAS libraries are written in FORTRAN.
+to be@footnote{on Unix-alikes: Windows resolves such dependencies at
+link time.}, as most BLAS libraries are written in FORTRAN.
 
 @item LAPACK_LIBS
 @vindex LAPACK_LIBS
@@ -1083,7 +1088,10 @@ run time.  One check is that the package name is not that of a standard
 package, nor of the defunct standard packages (@samp{ctest}, @samp{eda},
 @samp{lqs}, @samp{mle}, @samp{modreg}, @samp{mva}, @samp{nls},
 @samp{stepfun} and @samp{ts}) which are handled specially by
-@code{library}.
+@code{library}.  Another check is that all packages from which the
+@file{NAMESPACE} file inports are listed (in @samp{Depends},
+@samp{Imports} or @samp{Contains}): this is not an exhaustive check of
+the actual imports.
 
 @item
 Available index information (in particular, for demos and vignettes) is

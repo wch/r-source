@@ -399,6 +399,9 @@ NEW FEATURES
     o	There is a new manual 'R Internals' on R internal stuctures
 	plus the former appendices of 'Writing R Extensions'.
 
+    o	median() is now generic, and its default method uses mean()
+	rather than sum() and so is more widely applicable (e.g. to dates).
+
 
 DEPRECATED & DEFUNCT
 
@@ -490,6 +493,12 @@ UTILITIES
 	  startup code (before the standard packages are loaded).
 
 	- tests for an empty 'exec' directory.
+
+	- checks if $(FLIBS) is used when $(BLAS_LIBS) is.
+
+	- throws an error if the standard packages 'methods' and
+          'stats4' are imported from and not declared in the
+          DESCRIPTION file.
 
     o	The test script produced by massage-Examples.pl no longer
 	creates objects in the base environment.
