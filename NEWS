@@ -1,6 +1,25 @@
 			Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       2.5 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.5.0
+
+NEW FEATURES
+
+
+DEPRECATED & DEFUNCT
+
+    o	symbol.C() and symbol.For() are defunct.
+
+
+
+
+	**************************************************
+	*						 *
 	*	       2.4 SERIES NEWS			 *
 	*						 *
 	**************************************************
