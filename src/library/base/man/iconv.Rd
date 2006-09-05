@@ -49,7 +49,8 @@ iconvlist()
   \code{//TRANSLIT} to the \code{to} encoding: see the examples.
 }
 \value{
-  A character vector of the same length and the same attributes as \code{x}.
+  A character vector of the same length and the same attributes as
+  \code{x} (after conversion).
 }
 \note{
   Not all platforms support these functions.  See also

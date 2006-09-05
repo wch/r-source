@@ -89,6 +89,6 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
         autoload("plot", "graphics")
         autoload("points", "graphics")
         autoload("text", "graphics")
-        autoload("xy.coords", "graphics")
+        autoload("xy.coords", "grDevices")
     }
 }
