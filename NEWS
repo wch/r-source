@@ -763,6 +763,8 @@ BUG FIXES
 	arguments, when it is a warning (for the time being: this will
 	be made an error in R 2.5.0).
 
+    o	install.packages() ignored configure.args if the vector was
+	unnamed.
 
 
 
