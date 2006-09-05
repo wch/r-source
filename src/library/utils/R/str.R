@@ -84,7 +84,7 @@ str.default <-
     std.attr <- "names"
 
     cl <-
-	if((S4 <- typeof(object) == "S4"))
+	if((S4 <- isS4(object)))
 	    class(object) else attr(object, "class")
     has.class <- S4 || !is.null(cl) # S3 or S4
     mod <- ""; char.like <- FALSE
