@@ -23,7 +23,7 @@ colorRamp<-function(colors, bias=1, space=c("rgb","Lab"),
     }
 
 
-    interpolate<-switch(interpolate, linear=approxfun, spline=splinefun)
+    interpolate<-switch(interpolate, linear=stats::approxfun, spline=stats::splinefun)
 
     x<-seq.int(0, 1, length=nrow(colors))^{bias}
 
