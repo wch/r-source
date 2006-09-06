@@ -591,6 +591,10 @@ crandir:
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@DATE@/$(DATE)/g" \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rpatched.in > cran/rpatched.html	  
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
+	  -e s/@RVER@/$(RVER)/g \
+	  -e "s/@DATE@/$(DATE)/g" \
+	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rtest.in > cran/rtest.html	  	  
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g cran/release.in > cran/release.htm
 	(cd cran;\
 	 zip dosfiles.zip CHANGES.$(RPREFIX) NEWS.$(RPREFIX) README.$(RPREFIX) ReadMe;\
