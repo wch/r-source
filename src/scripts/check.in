@@ -158,7 +158,12 @@ $R_check_use_codetools =
 ## environment variable rather than an explicit argument.
 $R_check_force_suggests =
     &config_val_to_logical($R_check_force_suggests);
-$ENV{"_R_CHECK_FORCE_SUGGESTS"} = $R_check_force_suggests;
+## And in fact, it gets even stranger ...
+## <FIXME>
+## Compatibility code for old-style interface: sanitize eventually.
+$R_check_force_suggests =
+    $R_check_force_suggests ? "true" : "false";
+$ENV{"_R_CHECK_FORCE_SUGGESTS_"} = $R_check_force_suggests;
 ## </NOTE>
 
 $opt_subdirs = $R_check_subdirs_strict if $opt_subdirs eq "";

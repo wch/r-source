@@ -8516,6 +8516,15 @@ The same idea can be applied for functions in other packages with name spaces.
 @node Linking GUIs and other front-ends to R, Function and variable index, Generic functions and methods, Top
 @chapter Linking GUIs and other front-ends to R
 
+There are a number of ways to build front-ends to @R{}: we take this to
+mean a GUI or other application that has the ability to submit commands
+to @R{} and perhaps to receive results back (not necessarily in a text
+format).  There are other routes besides those described here, for
+example @samp{Rserve} (see @url{http://www.rosuda.org/Rserve}) and
+connections to Java in @samp{SJava} (see
+@url{http://www.omegahat.org/RSJava/} and @samp{JRI}, part of the
+@pkg{rJava} package on CRAN).
+
 @menu
 * Embedding R under Unix-alikes::  
 * Embedding R under Windows::   
@@ -8759,8 +8768,8 @@ SEXP R_addhistory (SEXP call, SEXP op , SEXP args, SEXP env)
 @end example
 
 The @code{R_addhistory} function should return silently if no history
-mechanism is present, as a user may be calling @code{timestamp} purely to write the
-time stamp to the console.
+mechanism is present, as a user may be calling @code{timestamp} purely
+to write the time stamp to the console.
 @end deftypefun
 
 @deftypefun void R_Suicide (char *@var{message})
