@@ -8,7 +8,15 @@
 
 		CHANGES IN R VERSION 2.5.0
 
+USER-VISIBLE CHANGES
+
+
 NEW FEATURES
+
+    o   nls.control(* , printEval = FALSE, warnOnly = FALSE) are two new
+	options to help better analyze (non-)convergence of nls(),
+	thanks to Kate Mullen.
+
 
 
 DEPRECATED & DEFUNCT
@@ -247,10 +255,6 @@ NEW FEATURES
     o	x <- 1:20; y <- rnorm(x); nls(y ~ A*exp(-x^2/sig)) no longer
 	returns an unhelpful error message.  In this and similar cases, it
 	now tries a wild guess for starting values.
-
-	nls.control(* , printEval = FALSE, warnOnly = FALSE) are two new
-	options to help better analyze (non-)convergence of nls(),
-	thanks to Kate Mullen.
 
     o	Ops.difftime() now handles unary minus and plus.
 
