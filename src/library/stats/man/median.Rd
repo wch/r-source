@@ -1,9 +1,10 @@
 \name{median}
 \title{Median Value}
+\alias{median}
+\alias{median.default}
 \usage{
 median(x, na.rm = FALSE)
 }
-\alias{median}
 \arguments{
   \item{x}{an object for which a method has been defined, or a
     numeric vector containing the values whose median is to be computed.}

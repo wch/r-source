@@ -29,7 +29,8 @@ biplot.default <-
     }
     else if(length(col) == 1) col <- c(col, col)
 
-    unsigned.range <- function(x) c(-abs(min(x)), abs(max(x)))
+    unsigned.range <- function(x)
+        c(-abs(min(x, na.rm=TRUE)), abs(max(x, na.rm=TRUE)))
     rangx1 <- unsigned.range(x[, 1])
     rangx2 <- unsigned.range(x[, 2])
     rangy1 <- unsigned.range(y[, 1])
@@ -50,8 +51,8 @@ biplot.default <-
     par(new = TRUE)
     plot(y, axes = FALSE, type = "n", xlim = xlim*ratio, ylim = ylim*ratio,
 	 xlab = "", ylab = "", col = col[1], ...)
-    axis(3, col = col[2])
-    axis(4, col = col[2])
+    axis(3, col = col[2], ...)
+    axis(4, col = col[2], ...)
     box(col = col[1])
     text(y, labels=ylabs, cex = cex[2], col = col[2], ...)
     if(var.axes)
