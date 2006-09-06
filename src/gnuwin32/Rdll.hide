@@ -488,8 +488,6 @@
  apse_set_deletions
  apse_set_insertions
  apse_set_substitutions
- balanc_
- balbak_
  baseRegisterIndex
  bratio
  breaktodebugger
@@ -1032,8 +1030,6 @@
  editorchecksave
  editorcleanall
  editorsetfont
- elmhes_
- eltran_
  epslon_
  fontname
  fontsty
@@ -1085,21 +1081,17 @@
  gzwrite
  haveusedapager
  helpmenuact
- hqr2_
  hqr_
  htribk_
  htridi_
  independent_calloc
  independent_comalloc
- inflate
  inflateBack
  inflateBackEnd
  inflateBackInit_
  inflateCopy
- inflateEnd
  inflateGetHeader
  inflateInit2_
- inflateInit_
  inflatePrime
  inflateSetDictionary
  inflateSync
@@ -1429,9 +1421,7 @@
  xdr_bool
  xdr_bytes
  xdr_char
- xdr_double
  xdr_enum
- xdr_float
  xdr_free
  xdr_int
  xdr_long
@@ -1446,7 +1436,6 @@
  xdr_union
  xdr_void
  xdr_wrapstring
- xdrmem_create
  xdrstdio_create
  zError
  z_errmsg
