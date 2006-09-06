@@ -43,7 +43,9 @@ repeated after the paste.
 Rcmd and R CMD check the name of Perl scripts, so errors like
 'R CMD install' are detected.
 
-The defualt limit for --max-mem-size has been changed: see the rw-FAQ.
+The default limit for --max-mem-size has been changed: see the rw-FAQ.
+
+The .chm files are now given a title identiying the package.
 
 
 Installing packages
