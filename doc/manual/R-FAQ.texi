@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-09-01
+@set FAQ_DATE @value{FAQ_YEAR}-09-06
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -1968,6 +1968,9 @@ MCMC inference from individual genetic data based on a spatial
 statistical model.
 @item GroupSeq
 Computations related to group-seqential boundaries.
+@item HH
+Support software for ``Statistical Analysis and Data Display'' by
+Richard M. Heiberger and Burt Holland, Springer, 2005.
 @item HI
 Simulation from distributions supported by nested hyperplanes.
 @item HSAUR
@@ -3601,6 +3604,8 @@ nearest neighbor based noise detection.
 Pretty descriptive stats.
 @item princurve
 Fits a principal curve to a matrix of points in arbitrary dimension.
+@item proptest
+Tests of the proportional hazards assumption in the Cox model.
 @item proto
 An object oriented system using prototype or object-based (rather than
 class-based) object oriented ideas.
@@ -4054,6 +4059,8 @@ Classification and regression trees.
 @item treeglia
 Stem analysis functions for volume increment and carbon uptake
 assessment from tree-rings.
+@item trimcluster
+Cluster analysis with trimming.
 @item tripack
 A constrained two-dimensional Delaunay triangulation package.
 @item truncgof
