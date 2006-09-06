@@ -56,7 +56,8 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     if(length(grep("^### Encoding: ", zz)) > 0 &&
        !identical(Sys.getlocale("LC_CTYPE"), "C"))
 	encoding <- substring(zz, 15)
-    if(ask == "default") ask <- echo && dev.interactive(orNone = TRUE)
+    if(ask == "default")
+        ask <- echo && grDevices::dev.interactive(orNone = TRUE)
     if(ask) {
 	if(.Device != "null device") {
             ## NB, this is somewhat dangerous as the device may have

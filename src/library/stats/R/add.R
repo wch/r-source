@@ -21,7 +21,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	tt <- scope[i]
 	if(trace > 1) {
             cat("trying +", tt, "\n")
-	    flush.console()
+	    utils::flush.console()
         }
 	nfit <- update(object, as.formula(paste("~ . +", tt)),
                        evaluate = FALSE)
@@ -302,7 +302,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	tt <- scope[i]
 	if(trace > 1) {
             cat("trying -", tt, "\n")
-	    flush.console()
+	    utils::flush.console()
         }
         nfit <- update(object, as.formula(paste("~ . -", tt)),
                        evaluate = FALSE)

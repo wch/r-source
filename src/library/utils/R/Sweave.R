@@ -500,22 +500,22 @@ RweaveLatexRuncode <- function(object, chunk, options)
 
     if(options$fig && options$eval){
         if(options$eps){
-            postscript(file=paste(chunkprefix, "eps", sep="."),
-                       width=options$width, height=options$height,
-                       paper="special", horizontal=FALSE)
+            grDevices::postscript(file=paste(chunkprefix, "eps", sep="."),
+                                  width=options$width, height=options$height,
+                                  paper="special", horizontal=FALSE)
 
             err <- try({SweaveHooks(options, run=TRUE);
                         eval(chunkexps, envir=.GlobalEnv)})
-            dev.off()
+            grDevices::dev.off()
             if(inherits(err, "try-error")) stop(err)
         }
         if(options$pdf){
-            pdf(file=paste(chunkprefix, "pdf", sep="."),
-                width=options$width, height=options$height)
+            grDevices::pdf(file=paste(chunkprefix, "pdf", sep="."),
+                           width=options$width, height=options$height)
 
             err <- try({SweaveHooks(options, run=TRUE);
                         eval(chunkexps, envir=.GlobalEnv)})
-            dev.off()
+            grDevices::dev.off()
             if(inherits(err, "try-error")) stop(err)
         }
         if(options$include)
