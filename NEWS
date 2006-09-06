@@ -525,9 +525,14 @@ UTILITIES
 
 	- checks if $(FLIBS) is used when $(BLAS_LIBS) is.
 
+	- checks that all packages (except non-S4-using standard
+	  packages) used in ::, :::, library() and require() calls are
+	  declared in the DESCRIPTION file, and 'methods' is declared if
+	  S4 classes or methods are set.
+
 	- throws an error if the standard packages 'methods' and
-          'stats4' are imported from and not declared in the
-          DESCRIPTION file.
+          'stats4' are imported from in the NAMESPSCE file and not
+          declared in the DESCRIPTION file.
 
     o	The test script produced by massage-Examples.pl no longer
 	creates objects in the base environment.
