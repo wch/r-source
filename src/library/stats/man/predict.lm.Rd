@@ -10,7 +10,8 @@
 \method{predict}{lm}(object, newdata, se.fit = FALSE, scale = NULL, df = Inf, 
         interval = c("none", "confidence", "prediction"),
         level = 0.95, type = c("response", "terms"),
-        terms = NULL, na.action = na.pass, pred.var = res.var, \dots)
+        terms = NULL, na.action = na.pass, pred.var = res.var/weights,
+        weights = 1, \dots)
 }
 \arguments{
   \item{object}{Object of class inheriting from \code{"lm"}}
@@ -19,15 +20,17 @@
   \item{se.fit}{A switch indicating if standard errors are required.}
   \item{scale}{Scale parameter for std.err. calculation}
   \item{df}{Degrees of freedom for scale}
-  \item{interval}{Type of interval calculation.  \code{"prediction"} is
-    only allowed if \code{newdata} is supplied.}
+  \item{interval}{Type of interval calculation.}
   \item{level}{Tolerance/confidence level}
   \item{type}{Type of prediction (response or model term).}
   \item{terms}{If \code{type="terms"}, which terms (default is all terms)}
   \item{na.action}{function determining what should be done with missing
     values in \code{newdata}.  The default is to predict \code{NA}.}
   \item{pred.var}{the variance(s) for future observations to be assumed
-    for prediction intervals.  See Detais.}
+    for prediction intervals.  See Details.}
+  \item{weights}{variance weights for prediction. This can be a numeric
+    vector or a one-sided model formula. In the latter case, it is
+    interpreted as an expression evaluated in \code{newdata}}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
@@ -56,11 +59,17 @@
   with residual value \code{NA}.  See also \code{\link{napredict}}.
 
   The prediction intervals are for a single observation at each case in
-  \code{newdata} (which must be supplied) with error variance(s)
-  \code{pred.var}.  This can be a multiple of \code{res.var}, the estimated
+  \code{newdata} (or by default, the data used for the fit) with error
+  variance(s) \code{pred.var}. This can be a multiple of \code{res.var},
+  the estimated
   value of \eqn{\sigma^2}{sigma^2}: the default is to assume that future
-  observations have the same error variance (before weighting) as those
-  used for fitting.
+  observations have the same error variance as those
+  used for fitting. If \code{weights} is supplied, the inverse of this
+  is used as a scale factor. For a weighted fit, if the prediction
+  is for the original data frame, \code{weights} defaults to the weights
+  used for the  model fit, with a warning since it might not be the
+  intended result. If the fit was weighted and newdata is given, the
+  default is to assume constant prediction variance, with a warning.
 }
 \value{
   \code{predict.lm} produces a vector of predictions or a matrix of
@@ -82,6 +91,16 @@
   Offsets specified by \code{offset} in the fit by \code{\link{lm}}
   will not be included in predictions, whereas those specified by an
   offset term in the formula will be.
+
+  Notice that prediction variances and prediction intervals always refer
+  to \emph{future} observations, possibly corresponding to the same
+  predictors as used for the fit. The variance of the \emph{residuals}
+  will be smaller.
+  
+  Strictly speaking, the formula used for prediction limits assumes that
+  the degrees of freedom for the fit are the same as those for the
+  residual variance.  This may not be the case if \code{res.var} is
+  not obtained from the fit. 
 }
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{predict}},
@@ -98,6 +117,18 @@ pred.w.plim <- predict(lm(y ~ x), new, interval="prediction")
 pred.w.clim <- predict(lm(y ~ x), new, interval="confidence")
 matplot(new$x,cbind(pred.w.clim, pred.w.plim[,-1]),
         lty=c(1,2,2,3,3), type="l", ylab="predicted y")
+
+## Prediction intervals, special cases
+##  The first three of these throw warnings
+w <- 1 + x^2
+fit <- lm(y ~ x)
+wfit <- lm(y ~ x, weights = w)
+predict(fit, interval = "prediction")
+predict(wfit, interval = "prediction")
+predict(wfit, new, interval = "prediction")
+predict(wfit, new, interval = "prediction", weights = (new$x)^2)
+predict(wfit, new, interval = "prediction", weights = ~x^2)
 }
+
 \keyword{regression}
 

@@ -597,7 +597,8 @@ predict.lm <-
     function(object, newdata, se.fit = FALSE, scale = NULL, df = Inf,
 	     interval = c("none", "confidence", "prediction"),
 	     level = .95,  type = c("response", "terms"),
-	     terms = NULL, na.action = na.pass, pred.var = res.var, ...)
+	     terms = NULL, na.action = na.pass, pred.var = res.var/weights,
+             weights = 1, ...)
 {
     tt <- terms(object)
     if(missing(newdata) || is.null(newdata)) {
@@ -628,9 +629,32 @@ predict.lm <-
     predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
     if (!is.null(offset))
 	predictor <- predictor + offset
+
     interval <- match.arg(interval)
-    if (missing(newdata) && interval == "prediction")
-        stop("prediction intervals are only relevant to new data")
+    if (interval == "prediction") {
+        if (missing(newdata))
+            warning("Predictions on current data refer to _future_ responses\n")
+        if (missing(newdata) && missing(weights))
+        {
+            w <-  weights.default(object)
+            if (!is.null(w)) {
+                weights <- w
+                warning("Assuming prediction variance inversely proportional to weights used for fitting\n")
+            }
+        }
+        if (!missing(newdata) && missing(weights) && !is.null(object$weights) && missing(pred.var))
+            warning("Assuming constant prediction variance even though model fit is weighted\n")
+        if (inherits(weights, "formula")){
+            if (length(weights) != 2)
+                stop("'weights' as formula should be one-sided")
+            d <- if(missing(newdata) || is.null(newdata))
+                model.frame(object)
+            else
+                newdata
+            weights <- eval(weights[[2]], d, environment(weights))
+        }
+    }
+
     type <- match.arg(type)
     if(se.fit || interval != "none") {
 	res.var <-
