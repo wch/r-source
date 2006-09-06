@@ -518,6 +518,7 @@ function(package)
              "gamma.dispersion", "gamma.shape",
              "hist.FD", "hist.scott"),
              XML = "text.SAX",
+             ape = "sort.index",
              car = "scatterplot.matrix",
              grDevices = "boxplot.stats",
              graphics = c("close.screen",

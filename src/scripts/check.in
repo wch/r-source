@@ -394,6 +394,15 @@ foreach my $pkg (@ARGV) {
 		$log->print(join("\n", @out) . "\n");
 		$log->print(wrap("", "", @msg_DESCRIPTION));
 		exit(1);
+	    }
+	    my $Rcmd = "tools:::.check_packages_used(dir=\"${pkgdir}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
+	    @out = grep(!/^\>/, @out);
+	    if(scalar(@out) > 0) {
+		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+		$log->print(wrap("", "", @msg_DESCRIPTION));
 	    } else {
 		$log->result("OK");
 	    }

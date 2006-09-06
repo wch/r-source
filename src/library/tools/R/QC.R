@@ -3666,6 +3666,226 @@ function(dir) {
     invisible(x)
 }
 
+
+### * .check_packages_used
+
+.check_packages_used <-
+function(package, dir, lib.loc = NULL)
+{
+    ## Argument handling.
+    if(!missing(package)) {
+        if(length(package) != 1)
+            stop("argument 'package' must be of length 1")
+        dir <- .find.package(package, lib.loc)
+        ## Using package installed in @code{dir} ...
+        code_dir <- file.path(dir, "R")
+        if(!file_test("-d", code_dir))
+            stop(gettextf("directory '%s' does not contain R code",
+                          dir),
+                 domain = NA)
+        if(basename(dir) != "base")
+            .load_package_quietly(package, lib.loc)
+        code_env <- if(packageHasNamespace(package, dirname(dir)))
+            asNamespace(package)
+        else
+            .package_env(package)
+        dfile <- file.path(dir, "DESCRIPTION")
+        db <- .read_description(dfile)
+     }
+    else if(!missing(dir)) {
+        ## Using sources from directory @code{dir} ...
+        if(!file_test("-d", dir))
+            stop(gettextf("directory '%s' does not exist", dir),
+                 domain = NA)
+        else
+            dir <- file_path_as_absolute(dir)
+        dfile <- file.path(dir, "DESCRIPTION")
+        db <- .read_description(dfile)
+        ## we need to check for a bundle here
+        ## Need this to handle bundles ...
+        if("Contains" %in% names(db))
+            contains <- unlist(strsplit(db["Contains"], " +"))
+        else
+            contains <- character()
+        if(length(contains)) {
+            file <- tempfile()
+            on.exit(unlink(file))
+            if(!file.create(file)) stop("unable to create ", file)
+            for(pkg in contains) {
+                code_dir <- file.path(dir, pkg, "R")
+                if(file_test("-d", code_dir)) {
+                    if(!all(.file_append_ensuring_LFs(file,
+                                                      list_files_with_type(code_dir,
+                                                                           "code"))))
+                        stop("unable to write code files")
+                }
+            }
+        } else {
+            code_dir <- file.path(dir, "R")
+            if(file_test("-d", code_dir)) {
+                file <- tempfile()
+                on.exit(unlink(file))
+                if(!file.create(file)) stop("unable to create ", file)
+                if(!all(.file_append_ensuring_LFs(file,
+                                                  list_files_with_type(code_dir,
+                                                                       "code"))))
+                    stop("unable to write code files")
+            } else {
+                return(invisible())
+            }
+        }
+    }
+    pkg_name <- db["Package"]
+    if("Depends" %in% names(db)) {
+        depends <- unlist(strsplit(db["Depends"], ","))
+        depends <-
+            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", depends)
+        depends <- depends[depends != "R"]
+    }
+    else
+        depends <- character()
+    if("Suggests" %in% names(db)) {
+        suggests <- unlist(strsplit(db["Suggests"], ","))
+        suggests <-
+            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", suggests)
+    }
+    else
+        suggests <- character()
+    if("Imports" %in% names(db)) {
+        imports <- unlist(strsplit(db["Imports"], ","))
+        imports <-
+            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", imports)
+    }
+    else
+        imports <- character()
+    ## Need this to handle bundles ...
+    if("Contains" %in% names(db))
+        contains <- unlist(strsplit(db["Contains"], " +"))
+    else
+        contains <- character()
+
+    ## it is OK to refer to yourself and non-S4 standard packages
+    standard_package_names <-
+        .get_standard_package_names()$base %w/o% c("methods", "stats4")
+    depends_suggests <- c(depends, suggests, pkg_name, contains,
+                          standard_package_names)
+    imports <- c(imports, depends_suggests)
+    ## the first argument could be named, or could be a variable name.
+    ## we just have a stop list here.
+    common_names <- c("pkg", "pkgName", "package", "pos")
+
+    bad_exprs <- character()
+    bad_imports <- character()
+    uses_methods <- FALSE
+    find_bad_exprs <- function(e) {
+        if(is.call(e) || is.expression(e)) {
+            Call <- deparse(e[[1]])[1]
+            if(length(e) >= 2) pkg <- deparse(e[[2]])
+            if(Call %in% c("library", "requires")) {
+                ## Zelig has library()
+                if(length(e) >= 2) {
+                    pkg <- sub('^"(.*)"$', '\\1', pkg)
+                    ## <FIXME> could be inside substitute or a variable
+                    ## and is in e.g. R.oo
+                    if(! pkg %in% c(depends_suggests, common_names))
+                        bad_exprs <<- c(bad_exprs, pkg)
+                }
+            } else if(Call %in%  "::") {
+                ## <FIXME> fathom out if this package has a namespace
+                if(! pkg %in% imports)
+                    bad_imports <<- c(bad_imports, pkg)
+            } else if(Call %in%  ":::") {
+                if(! pkg %in% imports)
+                    bad_imports <<- c(bad_imports, pkg)
+            } else if(Call %in% c("setClass", "setMethod")) {
+                uses_methods <<- TRUE
+            }
+            for(i in seq_along(e)) Recall(e[[i]])
+        }
+    }
+
+    if(!missing(package)) {
+        exprs <- lapply(ls(envir = code_env, all.names = TRUE),
+                        function(f) {
+                            f <- get(f, envir = code_env)
+                            if(typeof(f) == "closure")
+                                body(f)
+                            else
+                                NULL
+                        })
+        if(.isMethodsDispatchOn()) {
+            ## Also check the code in S4 methods.
+            ## This may find things twice.
+            for(f in methods::getGenerics(code_env)) {
+                meths <-
+                    methods::linearizeMlist(methods::getMethodsMetaData(f, code_env))
+                bodies <- lapply(methods::slot(meths, "methods"), body)
+                ## Exclude methods inherited from the 'appropriate'
+                ## parent environment.
+                ## <NOTE>
+                ## Keep this in sync with similar code in undoc().
+                ## Note that direct comparison of
+                ##   lapply(methods::slot(meths, "methods"), environment)
+                ## to code_env is not quite right ...
+                penv <- .Internal(getRegisteredNamespace(as.name(package)))
+                if(is.environment(penv))
+                    penv <- parent.env(penv)
+                else
+                    penv <- parent.env(code_env)
+                if((f %in% methods::getGenerics(penv))
+                    && !is.null(mlist_from_penv <-
+                                methods::getMethodsMetaData(f, penv))) {
+                    classes_from_cenv <-
+                        methods::slot(meths, "classes")
+                    classes_from_penv <-
+                        methods::slot(methods::linearizeMlist(mlist_from_penv),
+                                      "classes")
+                    ind <- is.na(match(.make_signatures(classes_from_cenv),
+                                       .make_signatures(classes_from_penv)))
+                    bodies <- bodies[ind]
+                }
+                ## </NOTE>
+                exprs <- c(exprs, bodies)
+            }
+        }
+    }
+    else {
+        exprs <- try(parse(file = file, n = -1))
+        if(inherits(exprs, "try-error"))
+            stop(gettextf("parse error in file '%s'", file),
+                 domain = NA)
+    }
+
+    for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
+
+    methods_message <-
+        if(uses_methods && !"methods" %in% c(depends, imports))
+            gettext("package 'methods' is used but not declared")
+        else ""
+    res <- list(others = unique(bad_exprs),
+                imports = unique(bad_imports),
+                methods_message = methods_message)
+    class(res) <- "check_packages_used"
+    res
+}
+
+print.check_packages_used <-
+function(x, ...)
+{
+    if(length(x$imports) > 0) {
+        writeLines(gettext("'::' or ':::' imports not declared from"))
+        writeLines(paste(x$imports, collapse=" "))
+    }
+    if(length(x$others) > 0) {
+        writeLines(gettext("'library' or 'require' calls not declared from"))
+        writeLines(paste(x$others, collapse=" "))
+    }
+    if(nchar(x$methods_message))
+        writeLines(x$methods_message)
+    invisible(x)
+}
+
+
 ### * .check_T_and_F
 
 ## T and F checking, next generation.
