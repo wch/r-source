@@ -1,0 +1,70 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://cran.r-project.org/R.css">
+<title>R-@FULLVERSION@ build for Windows</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1>R-@FULLVERSION@ build for Windows</h1>
+
+<p>This directory contains a Windows binary build of the @DATE@ 
+snapshot of R (which will soon become R-@RVER@).</p>
+
+<p>This is a test version of R. <strong>It may contain
+bugs, so please watch results carefully as you use it</strong>.  
+The more bugs that are caught now, the fewer will make it to the next release.</p>
+
+<p>Please don't report bugs
+in this version through the usual R bug reporting system, please report
+them on the r-devel mailing list.</p>
+
+<p>The previous
+official release is available <a href="index.html">here</a>.</p>
+
+<p>Patches to the previous release are incorporated in the build
+available <a href="rpatched.html">here</a>.</p>
+
+<p>The development version (which will eventually become the subsequent
+major release) is available <a href="rdevel.html">here</a>.</p>
+
+<p>In this directory:</p>
+
+<table width="90%" border="0">
+<TBODY>
+  <tr>
+    <td width="19%" valign="top"><a href="README.@RWVER@">README.@RWVER@</a></td>
+    <td width="81%">Installation and other instructions.</td>
+  </tr>
+  <tr>
+    <td width="19%" valign="top"><a href="CHANGES.@RWVER@">CHANGES</a></td>
+    <td width="81%">New features of this Windows version.</td>
+  </tr>
+  <tr>
+    <td width="19%" valign="top"><a href="NEWS.@RWVER@">NEWS</a></td>
+    <td width="81%">New features of all versions.</td>
+  </tr>
+  <tr>
+    <td width="19%" valign="top"><a
+href="@RWVER@-win32.exe">@RWVER@-win32.exe</a></td>
+    <td width="81%">Setup program (about 28 megabytes). Please download this
+    from a <a href="http://cran.r-project.org/mirrors.html">mirror near you</a>. <br>
+    This corresponds to the file named <b>SetupR.exe</b> or
+    <b>rwXXXX.exe</b> in pre-2.2.0 releases.</td>
+  </tr>
+</TBODY>
+</table>
+
+<p> Please see the <a
+href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
+general information about R and the <a href="rw-FAQ.html">R Windows
+FAQ</a> for Windows-specific information, including upgrade
+advice.</p>
+
+<hr>
+
+<p>Last build: @DATE@, by Duncan Murdoch</p>
+</body>
+</html>
