@@ -6,7 +6,8 @@
   nonlinear least squares algorithm.
 }
 \usage{
-nls.control(maxiter = 50, tol = 1e-05, minFactor = 1/1024)
+nls.control(maxiter = 50, tol = 1e-05, minFactor = 1/1024,
+            printEval = FALSE, warnOnly = FALSE)
 }
 \arguments{
   \item{maxiter}{A positive integer specifying the maximum number of

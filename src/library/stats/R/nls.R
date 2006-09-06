@@ -390,14 +390,16 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
     v <- double(105 + (p * (2 * p + 20)))
     .Call(R_port_ivset, 1, iv, v)
     if (length(control)) {
-        control $tol <- control$minFactor <- NULL
-        nms <- names(control)
-        if (!is.list(control) || is.null(nms))
-            stop("control argument must be a named list")
-        cpos <- c(eval.max = 17, maxiter = 18, trace = 19, abs.tol = 31,
-                  rel.tol = 32, x.tol = 33, step.min = 34, step.max = 35,
-                  scale.init = 38, sing.tol = 37, diff.g = 42)
-        pos <- pmatch(nms, names(cpos))
+	if (!is.list(control) || is.null(nms <- names(control)))
+	    stop("control argument must be a named list")
+	## remove those components that do not apply here
+	for(noN in intersect(nms, c("tol", "minFactor", "warnOnly", "printEval")))
+	    control[[noN]] <- NULL
+	nms <- names(control)
+	cpos <- c(eval.max = 17, maxiter = 18, trace = 19, abs.tol = 31,
+		  rel.tol = 32, x.tol = 33, step.min = 34, step.max = 35,
+		  scale.init = 38, sing.tol = 37, diff.g = 42)
+	pos <- pmatch(nms, names(cpos))
         if (any(nap <- is.na(pos))) {
             warning(paste("unrecognized control element(s) named `",
                           paste(nms[nap], collapse = ", "),
