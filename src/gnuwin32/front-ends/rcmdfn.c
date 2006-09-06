@@ -44,7 +44,7 @@ static int pwait(HANDLE p)
 
 void rcmdusage (char *RCMD)
 {
-    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s",
+    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
 	    "where 'command' is one of:\n",
 	    "  INSTALL  Install add-on packages.\n",
 	    "  REMOVE   Remove add-on packages.\n",
@@ -57,7 +57,10 @@ void rcmdusage (char *RCMD)
 	    "           LaTeX, plain text, and S documentation format.\n",
 	    "  Rd2dvi   Convert Rd format to DVI/PDF.\n",
 	    "  Rd2txt   Convert Rd format to text.\n",
-	    "  Sd2Rd    Convert S documentation to Rd format.\n");
+	    "  Sd2Rd    Convert S documentation to Rd format.\n",
+	    "  Stangle  Extract S/R code from  Sweave documentation.\n",
+	    "  Sweave   Process Sweave documentation.\n"
+	    );
 
     fprintf(stderr, "\n%s%s%s%s",
 	    "Use\n  ", RCMD, " command --help\n",
@@ -275,6 +278,12 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    if (strcmp(p, "Rd2dvi") == 0) {
 		strcpy(cmd, "sh "); 
 		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh");
+	    } else if (strcmp(p, "Sweave") == 0) {
+		strcpy(cmd, "sh "); 
+		strcat(cmd, RHome); strcat(cmd, "/bin/Sweave.sh");
+	    } else if (strcmp(p, "Stangle") == 0) {
+		strcpy(cmd, "sh "); 
+		strcat(cmd, RHome); strcat(cmd, "/bin/Stangle.sh");
 	    } else {
 		if (!strcmp(".sh", p + strlen(p) - 3)) {
 		    strcpy(cmd, "sh "); 
