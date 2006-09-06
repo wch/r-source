@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-09-05 r39134)
+R version 2.5.0 Under development (unstable) (2006-09-06 r39147)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -153,6 +153,7 @@ Formal class 'c1' [package ".GlobalEnv"] with 2 slots
 Function: coerce, (package methods)
 from="ANY", to="matrix"
 from="ANY", to="numeric"
+
 > ## {gave wrong result for a while in R 2.4.0}
 > 
 > ## the following showMethods() output tends to generate errors in the tests

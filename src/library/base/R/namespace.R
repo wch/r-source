@@ -657,7 +657,7 @@ namespaceImport <- function(self, ...) {
         namespaceImportFrom(self, asNamespace(ns))
 }
 
-namespaceImportFrom <- function(self, ns, vars) {
+namespaceImportFrom <- function(self, ns, vars, generics) {
     addImports <- function(ns, from, what) {
         imp <- structure(list(what), names = getNamespaceName(from))
         imports <- getNamespaceImports(ns)
@@ -672,17 +672,6 @@ namespaceImportFrom <- function(self, ns, vars) {
         else new[new == ""] <- old[new == ""]
         names(old) <- new
         old
-    }
-    mergeImportMethods <- function(impenv, expenv, metaname) {
-        expMethods <- get(metaname, envir = expenv)
-        if(exists(metaname, envir = impenv, inherits = FALSE)) {
-            impMethods <- get(metaname, envir = impenv)
-            assign(metaname, methods:::.mergeMethodsTable2(impMethods,
-    expMethods, expenv, metaname), envir = impenv)
-            TRUE
-        }
-        else
-            FALSE
     }
     whichMethodMetaNames <- function(impvars) {
         if(!.isMethodsDispatchOn())
@@ -723,15 +712,29 @@ namespaceImportFrom <- function(self, ns, vars) {
     if(length(which)) {
         ## If methods are already in impenv, merge and don't import
         delete <- integer()
-        for(i in which)
-            if(mergeImportMethods(impenv, ns, impvars[[i]])) {
+        for(i in which) {
+            methodsTable <- .mergeImportMethods(impenv, ns, impvars[[i]])
+            if(is.null(methodsTable))
+              {} # first encounter, just import it
+            else
+               { #
                 delete <- c(delete, i)
                 ## eventually mlist objects will disappear, for now
                 ## just don't import any duplicated names
-                mlname = sub("__T","__M", impvars[[i]], fixed=TRUE)
+                mlname = sub("__T__","__M__", impvars[[i]], fixed=TRUE)
                 ii = match(mlname, impvars, 0)
                 if(ii > 0)
                   delete <- c(delete, ii)
+                if(!missing(generics)) {
+                    genName <- generics[[i]]
+                    fdef <- getGeneric(genName, impenv)
+                    if(is.null(fdef))
+                      warning(gettextf("Found methods to import for function \"%s\" but not the generic itself, from package \"%s\"",
+                                       genName, pkg))
+                    else
+                     methods:::.updateMethodsInTable(fdef, ns, TRUE)
+                 }
+            }
             }
         if(length(delete) > 0) {
             impvars <- impvars[-delete]
@@ -756,25 +759,32 @@ namespaceImportClasses <- function(self, ns, vars) {
 
 namespaceImportMethods <- function(self, ns, vars) {
     allVars <- character()
-    allMlists <- methods:::.getGenerics(ns)
-    if(any(is.na(match(vars, allMlists))))
+    allFuns <- methods:::.getGenerics(ns)
+    packages <- attr(allFuns, "package")
+    tPrefix <- methods:::.TableMetaPrefix()
+    pkg <- methods:::getPackageName(ns)
+    allMethodTables <- methods:::.getGenerics(ns, tPrefix)
+    if(any(is.na(match(vars, allFuns))))
         stop(gettextf("requested 'methods' objects not found in environment/package '%s': %s",
-                      methods:::getPackageName(ns),
-                      paste(vars[is.na(match(vars, allMlists))],
+                      pkg,
+                      paste(vars[is.na(match(vars, allFuns))],
                             collapse = ", ")), domain = NA)
-    for(i in seq_along(allMlists)) {
+    for(i in seq_along(allFuns)) {
         ## import methods list objects if asked for
         ## or if the corresponding generic was imported
-        g <- allMlists[[i]]
+        g <- allFuns[[i]]
         if(exists(g, envir = self, inherits = FALSE) # already imported
-           || g %in% vars) # requested explicitly
-            allVars <- c(allVars, methods:::mlistMetaName(g, ns))
+           || g %in% vars) { # requested explicitly
+            tbl <- methods:::.TableMetaName(g, packages[[i]])
+            if(is.null(.mergeImportMethods(self, ns, tbl))) # a new methods table
+               allVars <- c(allVars, tbl) # import it;else, was merged
+        }
         if(g %in% vars && !exists(g, envir = self, inherits = FALSE) &&
            exists(g, envir = ns, inherits = FALSE) &&
            methods:::is(get(g, envir = ns), "genericFunction"))
             allVars <- c(allVars, g)
     }
-    namespaceImportFrom(self, asNamespace(ns), allVars)
+    namespaceImportFrom(self, asNamespace(ns), allVars, allFuns)
 }
 
 importIntoEnv <- function(impenv, impnames, expenv, expnames) {
@@ -1224,3 +1234,15 @@ registerS3methods <- function(info, package, env)
     setNamespaceInfo(env, "S3methods",
                      rbind(info, getNamespaceInfo(env, "S3methods")))
 }
+
+.mergeImportMethods <- function(impenv, expenv, metaname) {
+        expMethods <- get(metaname, envir = expenv)
+        if(exists(metaname, envir = impenv, inherits = FALSE)) {
+            impMethods <- get(metaname, envir = impenv)
+            assign(metaname, methods:::.mergeMethodsTable2(impMethods,
+    expMethods, expenv, metaname), envir = impenv)
+            impMethods
+        }
+        else
+            NULL
+    }

@@ -763,8 +763,8 @@ showMethods <-
     else if(length(f) > 1) {
         value <- character()
         for(ff in f) { ## recall for each
-            mlist <- getMethods(ff, where)
-            if(length(mlist@methods) == 0)
+            fdef <- getGeneric(ff, where = where)
+            if(is.null(fdef))
                 next
             value <- c(value,
                        Recall(ff, where=where, classes=classes,
@@ -774,7 +774,7 @@ showMethods <-
         if(length(value) > 0)
             return(value)
         else
-            return()
+            return(invisible())
     }
     else { ## f of length 1 --- the "working horse" :
         out <- paste("\nFunction \"", f, "\":\n", sep="")
@@ -784,6 +784,7 @@ showMethods <-
             if(.UsingMethodsTables()) {
               .showMethodsTable(getGeneric(f, where), includeDefs, inherited,
                                 classes, printTo = con)
+              cat("\n", file = con)
             }
             else {
               mlist <-  getMethods(f, where)
@@ -807,6 +808,7 @@ showMethods <-
         close(con)
         readLines(tmp)
     }
+    invisible()
 }
 
 ## this should be made obsolete
