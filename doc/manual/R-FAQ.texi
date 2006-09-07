@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-09-06
+@set FAQ_DATE @value{FAQ_YEAR}-09-07
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -649,31 +649,32 @@ a first version of the ``Kernighan & Ritchie of R'', explains
 evaluation, parsing, object oriented programming, computing on the
 language, and so forth.
 @item ``R Installation and Administration'' (@file{R-admin}).
+@item ``R Internals'' (@file{R-ints})
+is a guide to R's internal structures.
+(Added in R 2.4.0.)
 @end itemize
 
 Books on R include
 
 @quotation
 P. Dalgaard (2002), ``Introductory Statistics with R'', Springer: New
-York, ISBN 0-387-95475-9.@*
-@url{http://www.biostat.ku.dk/~pd/ISwR.html}.
+York, ISBN 0-387-95475-9, @url{http://www.biostat.ku.dk/~pd/ISwR.html}.
 
 J. Fox (2002), ``An R and @SPLUS{} Companion to Applied Regression'',
 Sage Publications, ISBN 0-761-92280-6 (softcover) or 0-761-92279-2
-(hardcover),@*
+(hardcover),
 @url{http://socserv.socsci.mcmaster.ca/jfox/Books/Companion/}.
 
 J. Maindonald and J. Braun (2003), ``Data Analysis and Graphics Using R:
 An Example-Based Approach'', Cambridge University Press, ISBN
-0-521-81336-0,@*
-@url{http://wwwmaths.anu.edu.au/~johnm/}.
+0-521-81336-0, @url{http://wwwmaths.anu.edu.au/~johnm/}.
 
 S. M. Iacus and G. Masarotto (2002), ``Laboratorio di statistica con
 R'', McGraw-Hill, ISBN 88-386-6084-0 (in Italian),@*
 @url{http://www.ateneonline.it/LibroAteneo.asp?item_id=1436}.
 
 P. Murrell (2005), ``R Graphics'', Chapman & Hall/CRC, ISBN:
-1-584-88486-X,@*
+1-584-88486-X,
 @url{http://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html}.
 
 @end quotation
@@ -3640,6 +3641,8 @@ cause-and-effect chart.
 Analysis of experimental crosses to identify QTLs.
 @item qtlDesign
 Tools for the design of QTL experiments.
+@item qtlbim
+QTL Bayesian Interval Mapping.
 @item quadprog
 For solving quadratic programming problems.
 @item quantchem
