@@ -508,6 +508,9 @@ UTILITIES
     o	The test script produced by massage-Examples.pl no longer
 	creates objects in the base environment.
 
+    o	New utilties R CMD Stangle and R CMD Sweave for extracting S/R
+    	code from and processing Sweave documentation, respectively.
+
 
 INSTALLATION
 
