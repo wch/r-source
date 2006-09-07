@@ -1096,6 +1096,12 @@ zip -r9X R-@value{VERSIONno}.zip R-@value{VERSIONno}  # or something similar
 We have not found a reliable way to convert base to lazy-loading when
 cross-building, so it is left in the old format.
 
+Also based on this facility is
+@url{http://cran.r-project.org/doc/contrib/Makefile-rcb,
+@file{Makefile-rcb}} by J. Yan and A. J. Rossini.  For details, see the
+Makefile itself, or
+@uref{http://cran.r-project.org/doc/contrib/cross-build.pdf}.
+
 
 @node Installing R under Mac OS X, Running R, Installing R under Windows, Top
 @chapter Installing R under Mac OS X
