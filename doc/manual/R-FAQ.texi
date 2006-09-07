@@ -2051,6 +2051,8 @@ Methods for the Behavioral, Educational, and Social Sciences.
 @item MCMCpack
 Markov chain Monte Carlo (MCMC) package: functions for posterior
 simulation for a number of statistical models.
+@item MChtest
+Monte Carlo hypothesis tests.
 @item MEMSS
 Data sets and sample analyses from ``Mixed-effects Models in S and
 S-PLUS'' by J. Pinheiro and D. Bates, 2000, Springer.
