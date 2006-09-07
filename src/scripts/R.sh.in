@@ -75,6 +75,8 @@ Commands:
   Rd2dvi		Convert Rd format to DVI/PDF
   Rd2txt		Convert Rd format to pretty text
   Sd2Rd			Convert S documentation to Rd format
+  Stangle		Extract S/R code from Sweave documentation
+  Sweave		Process Sweave documentation
   config                Obtain configuration information about R
 
 Please use 'R CMD command --help' to obtain further information about
