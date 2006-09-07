@@ -853,7 +853,7 @@ int Rwin_rename(char *from, char *to)
 
 void R_CleanTempDir()
 {
-    if(R_TempDir) R_unlink(R_TempDir, 1);
+    if(Sys_TempDir) R_unlink(Sys_TempDir, 1);
 }
 
 SEXP do_getClipboardFormats(SEXP call, SEXP op, SEXP args, SEXP rho)
