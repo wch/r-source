@@ -3,7 +3,7 @@ trace <- function(what, tracer, exit, at, print, signature, where = topenv(paren
     if(needsAttach) {
         ns <- try(loadNamespace("methods"))
         if(isNamespace(ns))
-            methods::message("(loaded the methods namespace)")
+            message("(loaded the methods namespace)")
         else
             stop("Tracing functions requires the methods package, but unable to load methods namespace")
     }
