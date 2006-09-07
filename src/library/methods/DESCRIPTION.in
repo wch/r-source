@@ -1,6 +1,7 @@
 Package: methods
 Version: @VERSION@
 Priority: base
+Imports: utils
 Title:  Formal Methods and Classes
 Author: R Development Core Team
 Maintainer: R Core Team <R-core@r-project.org>

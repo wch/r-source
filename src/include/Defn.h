@@ -653,6 +653,8 @@ typedef struct {
 
 LibExtern AccuracyInfo R_AccuracyInfo;
 
+extern0 unsigned int max_contour_segments INI_as(25000);
+
 
 #ifdef __MAIN__
 # undef extern

@@ -402,6 +402,10 @@ NEW FEATURES
     o	median() is now generic, and its default method uses mean()
 	rather than sum() and so is more widely applicable (e.g. to dates).
 
+    o  There is a new option(max.contour.segments=25000) which can be
+       raised to allow extremely complex contour lines in contour()
+       and contourLines().  (PR#9205)
+
 
 DEPRECATED & DEFUNCT
 

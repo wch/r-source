@@ -39,6 +39,9 @@ contourLines(x = seq(0, 1, len = nrow(z)),
   \item{y }{The y-coordinates of the contour.}
 }
 \seealso{
+  \code{\link{options}("max.countour.segments")} for the maximal
+  complexity of a single contour line.
+
   \code{\link[graphics]{contour}}.
 }
 \examples{

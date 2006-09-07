@@ -137,6 +137,11 @@ getOption(x)
     \item{\code{mailer}:}{default mailer used by
       \code{\link{bug.report}()}.  Can be \code{"none"}.}
 
+    \item{\code{max.contour.segments}:}{positive integer, defaulting to
+      \code{250000} and usually not set.  A limit on the number of
+      segments in a single contour line in \code{\link{contour}} or
+      \code{\link{contourLines}}.}
+
     \item{\code{max.print}:}{integer, defaulting to \code{99999}.
       \code{\link{print}} or \code{\link{show}} methods can make use of
       this option, to limit the amount of information that is printed,
