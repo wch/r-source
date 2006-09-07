@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:21\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1235,8 +1235,20 @@ msgstr ""
 "ランク落ちした状態での当てはめをしているので誤った予測をしている可能性があり"
 "ます"
 
-msgid "prediction intervals are only relevant to new data"
+msgid "Predictions on current data refer to _future_ responses"
 msgstr ""
+
+msgid ""
+"Assuming prediction variance inversely proportional to weights used for "
+"fitting"
+msgstr ""
+
+msgid "Assuming constant prediction variance even though model fit is weighted"
+msgstr ""
+
+#, fuzzy
+msgid "'weights' as formula should be one-sided"
+msgstr "'weights' は非負でなければなりません"
 
 msgid "'object' has no 'effects' component"
 msgstr "オブジェクト('object')は効果('effects')成分を持ちません"
@@ -1741,6 +1753,22 @@ msgstr "'na.rm ' が FALSE なら、欠測値及び NaN は許されません"
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs' が範囲 [0,1] 外です"
+
+#, fuzzy
+msgid "invalid argument 'n'"
+msgstr "無効な引数 'omit' です"
+
+#, fuzzy
+msgid "invalid argument 'r'"
+msgstr "無効な引数 'omit' です"
+
+#, fuzzy
+msgid "invalid argument 'c'"
+msgstr "無効な引数 'omit' です"
+
+#, fuzzy
+msgid "arguments 'r' and 'c' must have the same sums"
+msgstr "引数は同じ長さでなければなりません"
 
 msgid "'relevel' only for factors"
 msgstr "'relevel' は因子専用です"

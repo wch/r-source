@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
 "PO-Revision-Date: 2006-04-18 08:33+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -925,6 +925,9 @@ msgstr ""
 "Les fonctions de traçage nécessite le package methods, mais impossible de "
 "charger l'espace de noms de methods"
 
+msgid "Expected a single logical value for the S4 object state"
+msgstr ""
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' n'est pas un objet exporté depuis 'namespace:%s'"
 
@@ -982,6 +985,15 @@ msgstr "classes à exporter non définies dans '%s' : %s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "méthodes à exporter non trouvées dans '%s' : %s"
 
+msgid "No methods table for \""
+msgstr ""
+
+msgid "\""
+msgstr ""
+
+msgid "Failed to find metadata object for \"%s\""
+msgstr ""
+
 msgid "in '%s' methods specified for export, but none defined: %s"
 msgstr ""
 "des méthodes sont spécifées à l'exportation dans '%s', mais aucune n'est "
@@ -1027,6 +1039,11 @@ msgstr "impossible d'importer vers un espace de noms verouillé"
 
 msgid "invalid import target"
 msgstr "cible d'importation incorrecte"
+
+msgid ""
+"Found methods to import for function \"%s\" but not the generic itself, from "
+"package \"%s\""
+msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr ""
@@ -1135,20 +1152,11 @@ msgstr ""
 "une valeur plus grande de 'ncol' est nécessaire car un pivotement s'est "
 "produit"
 
-msgid "No DIF data on clipboard"
-msgstr ""
-
-msgid "row and column counts not found"
-msgstr ""
-
-msgid "Unrecognized special data value"
-msgstr ""
-
-msgid "Unrecognized value indicator"
-msgstr ""
-
 msgid "no lines available in input"
 msgstr "aucune ligne disponible depuis l'entrée"
+
+msgid "empty beginning of file"
+msgstr "début de fichier vide"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "l'entête et 'col.names' n'ont pas la même longueur"
@@ -1159,8 +1167,7 @@ msgstr "plus de colonnes que de noms de colonnes"
 msgid "more column names than columns"
 msgstr "plus de noms de colonnes que de colonnes"
 
-#, fuzzy
-msgid "rows are empty: giving up"
+msgid "first five rows are empty: giving up"
 msgstr "les cinq premières lignes sont vides : abandon"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1177,12 +1184,6 @@ msgstr "'as.is' n'a pas la bonne longueur %d != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "spécification de 'row.names' incorrecte"
-
-msgid "empty beginning of file"
-msgstr "début de fichier vide"
-
-msgid "first five rows are empty: giving up"
-msgstr "les cinq premières lignes sont vides : abandon"
 
 msgid "'x' must be a vector"
 msgstr "'x' doit être un vecteur"
@@ -1350,18 +1351,6 @@ msgstr "impossible de convertir automatiquement en un tableau de contingence"
 msgid "'x' is not an array"
 msgstr "'x' n'est pas un tableau"
 
-msgid "invalid argument 'n'"
-msgstr "argument 'n' incorrect"
-
-msgid "invalid argument 'r'"
-msgstr "argument 'r' incorrect"
-
-msgid "invalid argument 'c'"
-msgstr "argument 'c' incorrect"
-
-msgid "arguments 'r' and 'c' must have the same sums"
-msgstr "les arguments 'r' et 'c' doivent avoir la même somme"
-
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' doit être numérique ou un facteur"
 
@@ -1469,6 +1458,22 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#, fuzzy
+#~ msgid "rows are empty: giving up"
+#~ msgstr "les cinq premières lignes sont vides : abandon"
+
+#~ msgid "invalid argument 'n'"
+#~ msgstr "argument 'n' incorrect"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "argument 'r' incorrect"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "argument 'c' incorrect"
+
+#~ msgid "arguments 'r' and 'c' must have the same sums"
+#~ msgstr "les arguments 'r' et 'c' doivent avoir la même somme"
 
 #~ msgid ""
 #~ "replaced '[<-' by '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"

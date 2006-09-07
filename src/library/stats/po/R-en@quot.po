@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:21\n"
-"PO-Revision-Date: 2006-08-13 09:21\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
+"PO-Revision-Date: 2006-09-07 11:42\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1227,8 +1227,22 @@ msgstr "model 1"
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "prediction from a rank-deficient fit may be misleading"
 
-msgid "prediction intervals are only relevant to new data"
-msgstr "prediction intervals are only relevant to new data"
+msgid "Predictions on current data refer to _future_ responses"
+msgstr "Predictions on current data refer to _future_ responses"
+
+msgid ""
+"Assuming prediction variance inversely proportional to weights used for "
+"fitting"
+msgstr ""
+"Assuming prediction variance inversely proportional to weights used for "
+"fitting"
+
+msgid "Assuming constant prediction variance even though model fit is weighted"
+msgstr ""
+"Assuming constant prediction variance even though model fit is weighted"
+
+msgid "'weights' as formula should be one-sided"
+msgstr "‘weights’ as formula should be one-sided"
 
 msgid "'object' has no 'effects' component"
 msgstr "‘object’ has no ‘effects’ component"
@@ -1723,6 +1737,18 @@ msgstr "missing values and NaN's not allowed if ‘na.rm’ is FALSE"
 
 msgid "'probs' outside [0,1]"
 msgstr "‘probs’ outside [0,1]"
+
+msgid "invalid argument 'n'"
+msgstr "invalid argument ‘n’"
+
+msgid "invalid argument 'r'"
+msgstr "invalid argument ‘r’"
+
+msgid "invalid argument 'c'"
+msgstr "invalid argument ‘c’"
+
+msgid "arguments 'r' and 'c' must have the same sums"
+msgstr "arguments ‘r’ and ‘c’ must have the same sums"
 
 msgid "'relevel' only for factors"
 msgstr "‘relevel’ only for factors"

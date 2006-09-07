@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:21\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1228,8 +1228,20 @@ msgstr "模型1"
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "用秩缺乏拟合来进行预测的结果很可能不可靠"
 
-msgid "prediction intervals are only relevant to new data"
+msgid "Predictions on current data refer to _future_ responses"
 msgstr ""
+
+msgid ""
+"Assuming prediction variance inversely proportional to weights used for "
+"fitting"
+msgstr ""
+
+msgid "Assuming constant prediction variance even though model fit is weighted"
+msgstr ""
+
+#, fuzzy
+msgid "'weights' as formula should be one-sided"
+msgstr "'weights'不能是负数的"
 
 msgid "'object' has no 'effects' component"
 msgstr "'object'没有'effects'组件"
@@ -1724,6 +1736,22 @@ msgstr "'na.rm'如果设为FALSE的话不允许有遺漏值和NaN"
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs'在[0,1] 外"
+
+#, fuzzy
+msgid "invalid argument 'n'"
+msgstr "变元'omit'不对"
+
+#, fuzzy
+msgid "invalid argument 'r'"
+msgstr "变元'omit'不对"
+
+#, fuzzy
+msgid "invalid argument 'c'"
+msgstr "变元'omit'不对"
+
+#, fuzzy
+msgid "arguments 'r' and 'c' must have the same sums"
+msgstr "变元的长度必需一样"
 
 msgid "'relevel' only for factors"
 msgstr "'relevel'只适用于因子"

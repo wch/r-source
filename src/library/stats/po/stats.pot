@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:22+0100\n"
+"POT-Creation-Date: 2006-09-07 11:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,52 +91,52 @@ msgstr ""
 msgid "'m' must be a list"
 msgstr ""
 
-#: nls.c:83 nls.c:88 nls.c:93 nls.c:102 nls.c:107 nls.c:112 nls.c:117
-#: nls.c:122 nls.c:127
+#: nls.c:83 nls.c:88 nls.c:93 nls.c:98 nls.c:103 nls.c:112 nls.c:117 nls.c:122
+#: nls.c:127 nls.c:132 nls.c:137
 #, c-format
 msgid "'%s' absent"
 msgstr ""
 
-#: nls.c:154
+#: nls.c:178 nls.c:182
 msgid "singular gradient"
 msgstr ""
 
-#: nls.c:173
+#: nls.c:202 nls.c:207
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr ""
 
-#: nls.c:181
+#: nls.c:216 nls.c:218
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr ""
 
-#: nls.c:202
+#: nls.c:237
 msgid "'theta' should be of type character"
 msgstr ""
 
-#: nls.c:204 port.c:379
+#: nls.c:239 port.c:379
 msgid "use of NULL environment is defunct"
 msgstr ""
 
-#: nls.c:208
+#: nls.c:243
 msgid "'rho' should be an environment"
 msgstr ""
 
-#: nls.c:210
+#: nls.c:245
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr ""
 
-#: nls.c:227 nls.c:255
+#: nls.c:262 nls.c:290
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr ""
 
-#: nls.c:233
+#: nls.c:268
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr ""
 
-#: nls.c:235
+#: nls.c:270
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr ""

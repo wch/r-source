@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:21\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1172,7 +1172,16 @@ msgstr ""
 msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""
 
-msgid "prediction intervals are only relevant to new data"
+msgid "Predictions on current data refer to _future_ responses"
+msgstr ""
+
+msgid "Assuming prediction variance inversely proportional to weights used for fitting"
+msgstr ""
+
+msgid "Assuming constant prediction variance even though model fit is weighted"
+msgstr ""
+
+msgid "'weights' as formula should be one-sided"
 msgstr ""
 
 msgid "'object' has no 'effects' component"
@@ -1644,6 +1653,18 @@ msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
 msgstr ""
 
 msgid "'probs' outside [0,1]"
+msgstr ""
+
+msgid "invalid argument 'n'"
+msgstr ""
+
+msgid "invalid argument 'r'"
+msgstr ""
+
+msgid "invalid argument 'c'"
+msgstr ""
+
+msgid "arguments 'r' and 'c' must have the same sums"
 msgstr ""
 
 msgid "'relevel' only for factors"

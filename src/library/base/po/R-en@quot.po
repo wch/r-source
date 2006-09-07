@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
-"PO-Revision-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
+"PO-Revision-Date: 2006-09-07 11:42\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -898,6 +898,9 @@ msgstr ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
 
+msgid "Expected a single logical value for the S4 object state"
+msgstr "Expected a single logical value for the S4 object state"
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "‘%s’ is not an exported object from ‘namespace:%s’"
 
@@ -952,6 +955,15 @@ msgstr "in ‘%s’ classes for export not defined: %s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "in ‘%s’ methods for export not found: %s"
 
+msgid "No methods table for \""
+msgstr "No methods table for \""
+
+msgid "\""
+msgstr "\""
+
+msgid "Failed to find metadata object for \"%s\""
+msgstr "Failed to find metadata object for “%s”"
+
 msgid "in '%s' methods specified for export, but none defined: %s"
 msgstr "in ‘%s’ methods specified for export, but none defined: %s"
 
@@ -993,6 +1005,13 @@ msgstr "cannot import into a sealed name space"
 
 msgid "invalid import target"
 msgstr "invalid import target"
+
+msgid ""
+"Found methods to import for function \"%s\" but not the generic itself, from "
+"package \"%s\""
+msgstr ""
+"Found methods to import for function “%s” but not the generic itself, from "
+"package “%s”"
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr "requested ‘methods’ objects not found in environment/package '%s': %s"
@@ -1096,20 +1115,11 @@ msgstr "‘k’ is too large"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "need larger value of ‘ncol’ as pivoting occurred"
 
-msgid "No DIF data on clipboard"
-msgstr "No DIF data on clipboard"
-
-msgid "row and column counts not found"
-msgstr "row and column counts not found"
-
-msgid "Unrecognized special data value"
-msgstr "Unrecognized special data value"
-
-msgid "Unrecognized value indicator"
-msgstr "Unrecognized value indicator"
-
 msgid "no lines available in input"
 msgstr "no lines available in input"
+
+msgid "empty beginning of file"
+msgstr "empty beginning of file"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "header and ‘col.names’ are of different lengths"
@@ -1120,8 +1130,8 @@ msgstr "more columns than column names"
 msgid "more column names than columns"
 msgstr "more column names than columns"
 
-msgid "rows are empty: giving up"
-msgstr "rows are empty: giving up"
+msgid "first five rows are empty: giving up"
+msgstr "first five rows are empty: giving up"
 
 msgid "not all columns named in 'colClasses' exist"
 msgstr "not all columns named in ‘colClasses’ exist"
@@ -1137,12 +1147,6 @@ msgstr "‘as.is’ has the wrong length %d  != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "invalid ‘row.names’ specification"
-
-msgid "empty beginning of file"
-msgstr "empty beginning of file"
-
-msgid "first five rows are empty: giving up"
-msgstr "first five rows are empty: giving up"
 
 msgid "'x' must be a vector"
 msgstr "‘x’ must be a vector"
@@ -1313,18 +1317,6 @@ msgstr "cannot coerce into a table"
 
 msgid "'x' is not an array"
 msgstr "‘x’ is not an array"
-
-msgid "invalid argument 'n'"
-msgstr "invalid argument ‘n’"
-
-msgid "invalid argument 'r'"
-msgstr "invalid argument ‘r’"
-
-msgid "invalid argument 'c'"
-msgstr "invalid argument ‘c’"
-
-msgid "arguments 'r' and 'c' must have the same sums"
-msgstr "arguments ‘r’ and ‘c’ must have the same sums"
 
 msgid "'bin' must be numeric or a factor"
 msgstr "‘bin’ must be numeric or a factor"

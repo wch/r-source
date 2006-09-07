@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -900,6 +900,9 @@ msgstr ""
 "トレース関数は methods パッケージを必要としていますが、メソッドの名前空間を"
 "ロードできません"
 
+msgid "Expected a single logical value for the S4 object state"
+msgstr ""
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""
 "'%s' は 'namespace:%s' からエクスポートされたオブジェクトではありません"
@@ -957,6 +960,15 @@ msgstr "'%s' 中にはエクスポートのためのクラスは見付かりま�
 msgid "in '%s' methods for export not found: %s"
 msgstr "'%s' 中にはエクスポートのためのメソッドは見付かりません： %s"
 
+msgid "No methods table for \""
+msgstr ""
+
+msgid "\""
+msgstr ""
+
+msgid "Failed to find metadata object for \"%s\""
+msgstr ""
+
 msgid "in '%s' methods specified for export, but none defined: %s"
 msgstr ""
 "'%s' 中にエクスポートのためのメソッドが指定されていますが、定義されていませ"
@@ -1002,6 +1014,11 @@ msgstr "封印された名前空間にはインポートできません"
 
 msgid "invalid import target"
 msgstr "無効なインポート対象です"
+
+msgid ""
+"Found methods to import for function \"%s\" but not the generic itself, from "
+"package \"%s\""
+msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr ""
@@ -1110,20 +1127,11 @@ msgstr "'k' は大きすぎます"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "ピボット操作が起きたので、より大きな 'ncol' 値が必要です"
 
-msgid "No DIF data on clipboard"
-msgstr ""
-
-msgid "row and column counts not found"
-msgstr ""
-
-msgid "Unrecognized special data value"
-msgstr ""
-
-msgid "Unrecognized value indicator"
-msgstr ""
-
 msgid "no lines available in input"
 msgstr "入力に利用可能な行がありません"
+
+msgid "empty beginning of file"
+msgstr "ファイルの開始部分が空です"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "ヘッダーと 'col.names' が異なった長さです"
@@ -1134,8 +1142,7 @@ msgstr "列名よりも多くの列があります"
 msgid "more column names than columns"
 msgstr "列数よりも多くの列名があります"
 
-#, fuzzy
-msgid "rows are empty: giving up"
+msgid "first five rows are empty: giving up"
 msgstr "最初の 5 行が空です。お手上げです"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1152,12 +1159,6 @@ msgstr "'as.is' は間違った長さ %d != cols = %d を持ちます"
 
 msgid "invalid 'row.names' specification"
 msgstr "無効な 'row.names' の指定です"
-
-msgid "empty beginning of file"
-msgstr "ファイルの開始部分が空です"
-
-msgid "first five rows are empty: giving up"
-msgstr "最初の 5 行が空です。お手上げです"
 
 msgid "'x' must be a vector"
 msgstr "'x' はベクトルでなければなりません"
@@ -1328,18 +1329,6 @@ msgstr "テーブルに強制変換できません"
 msgid "'x' is not an array"
 msgstr "'x' は配列ではありません"
 
-msgid "invalid argument 'n'"
-msgstr "無効な引数 'n' です"
-
-msgid "invalid argument 'r'"
-msgstr "無効な引数 'r' です"
-
-msgid "invalid argument 'c'"
-msgstr "無効な引数 'c' です"
-
-msgid "arguments 'r' and 'c' must have the same sums"
-msgstr "引数 'r' と 'c' は同じ総和を持たなければなりません"
-
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' は数値または因子でなければなりません"
 
@@ -1447,3 +1436,19 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
 msgstr[1] "警告メッセージ(複数)：\n"
+
+#, fuzzy
+#~ msgid "rows are empty: giving up"
+#~ msgstr "最初の 5 行が空です。お手上げです"
+
+#~ msgid "invalid argument 'n'"
+#~ msgstr "無効な引数 'n' です"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "無効な引数 'r' です"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "無効な引数 'c' です"
+
+#~ msgid "arguments 'r' and 'c' must have the same sums"
+#~ msgstr "引数 'r' と 'c' は同じ総和を持たなければなりません"

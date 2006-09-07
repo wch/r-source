@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:21\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1259,8 +1259,20 @@ msgstr ""
 "한 예측을 하고 있을\n"
 "가능성이 있습니다"
 
-msgid "prediction intervals are only relevant to new data"
+msgid "Predictions on current data refer to _future_ responses"
 msgstr ""
+
+msgid ""
+"Assuming prediction variance inversely proportional to weights used for "
+"fitting"
+msgstr ""
+
+msgid "Assuming constant prediction variance even though model fit is weighted"
+msgstr ""
+
+#, fuzzy
+msgid "'weights' as formula should be one-sided"
+msgstr "'x'는 non-negative가 나오지 않으면 되지 않습니다"
 
 msgid "'object' has no 'effects' component"
 msgstr "오브젝트는 효과성분을 가지지 않습니다"
@@ -1776,6 +1788,22 @@ msgstr "'na.rm'가 FALSE 이라면, 결손값 그리고 NaN는 허용되지 않�
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs'가 범위[0,1]외입니다"
+
+#, fuzzy
+msgid "invalid argument 'n'"
+msgstr "무효인 인수 'omit'입니다"
+
+#, fuzzy
+msgid "invalid argument 'r'"
+msgstr "무효인 인수 'omit'입니다"
+
+#, fuzzy
+msgid "invalid argument 'c'"
+msgstr "무효인 인수 'omit'입니다"
+
+#, fuzzy
+msgid "arguments 'r' and 'c' must have the same sums"
+msgstr "인수는 동일 길이가 나오지 않으면 되지 않습니다"
 
 msgid "'relevel' only for factors"
 msgstr "'relevel'는 인자 전용입니다"

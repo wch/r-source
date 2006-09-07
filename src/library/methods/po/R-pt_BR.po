@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:20\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -93,9 +93,10 @@ msgstr "função '%s' parece ser uma função genérica, mas com nome genérico '%s'"
 msgid "generic function '%s' not found for removal"
 msgstr "função genérica '%s' não encontrada para remoção"
 
+#, fuzzy
 msgid ""
-"invalid argument 'f', expected function or its name, got an object of class "
-"\"%s\""
+"invalid argument \"f\", expected a function or its name, got an object of "
+"class \"%s\""
 msgstr ""
 "argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
 "objeto de classe  \"%s\""
@@ -164,6 +165,10 @@ msgstr "nenhuma função genérica '%s' encontrada"
 msgid "no method found for function '%s' and signature %s"
 msgstr "nenhum método encontrado para a função '%s' e assinatura %s"
 
+#, fuzzy
+msgid "No method found for function \"%s\" and signature %s"
+msgstr "nenhum método encontrado para a função '%s' e assinatura %s"
+
 msgid ""
 "apparent inconsistency in the methods for function '%s'; argument '%s' in "
 "the signature corresponds to '%s' in the methods list object"
@@ -181,10 +186,15 @@ msgstr ""
 msgid "no method defined for function '%s' and signature %s"
 msgstr "nenhum método definido para a função '%s' e assinatura %s"
 
+#, fuzzy
+msgid "No method found for signature %s"
+msgstr "nenhum método encontrado para a genérica '%s'"
+
 msgid "signature must be a vector of classes or an environment"
 msgstr "assinatura deve ser um vetor de classes ou um ambiente"
 
-msgid "'%s' has no methods defined"
+#, fuzzy
+msgid "\"%s\" has no methods defined"
 msgstr "'%s' não tem métodos definidos"
 
 msgid "no unique method corresponding to this signature"
@@ -205,6 +215,10 @@ msgid ""
 msgstr ""
 "primeiro argumento deve ser o(s) nome(s) de funções genérica (foi "
 "especificado objeto de classe \"%s\""
+
+msgid ""
+"No generic function found for \"%s\"; no action taken in removeMethodsObject"
+msgstr ""
 
 msgid ""
 "the environment/package '%s' is locked; cannot remove methods data for '%s'"
@@ -575,6 +589,9 @@ msgstr "Pacote '%s' não está carregado"
 msgid "unable to find an environment containing class \"%s\""
 msgstr "não foi possível encontrar um ambiente contendo a classe \"%s\""
 
+msgid "Undefined member, \"%s\", of union \"%s\" (not added during attach)"
+msgstr ""
+
 msgid ""
 "the function being used as %s in making a generic function for '%s' is "
 "currently traced; the function used will have tracing removed"
@@ -607,9 +624,6 @@ msgid "making a generic for special function \"%s\""
 msgstr ""
 
 msgid "invalid call in method dispatch to '%s' (no default method)"
-msgstr ""
-
-msgid "'%s' is not a function visible from '%s'"
 msgstr ""
 
 msgid "'%s' from '%s' is a non-generic function; no methods available"
@@ -653,10 +667,15 @@ msgstr ""
 
 msgid ""
 "the methods object name for '%s' must include the name of the package that "
-"contains the generic function, but there is no generic function of this name"
+"contains the generic function, but no generic function of this name was found"
 msgstr ""
 
 msgid "no way to associate a generic function with an object of class \"%s\""
+msgstr ""
+
+msgid ""
+"Package \"%s\" seems to have out-of-date methods; need to reinstall from "
+"source"
 msgstr ""
 
 msgid "no methods found for '%s'; 'cacheGenericsMetaData' will have no effect"
@@ -772,13 +791,19 @@ msgid ""
 "object of class \"%s\"; is(value, \"%s\") is not TRUE"
 msgstr ""
 
-msgid "\"%s\" is not a class (no action taken)"
+msgid "Class definition for \"%s\" not found  (no action taken)"
 msgstr ""
 
 msgid "class \"%s\" has multiple definitions visible; only the first removed"
 msgstr ""
 
-msgid "trying to use new() on a virtual class"
+msgid "The class to be removed  (\""
+msgstr ""
+
+msgid "\") has defined subclasses that should also be removed: ("
+msgstr ""
+
+msgid ")"
 msgstr ""
 
 msgid "invalid class \"%s\" object:"
@@ -910,6 +935,12 @@ msgid ""
 "'setClassUnion'"
 msgstr ""
 
+#, fuzzy
+msgid ""
+"Unable to find package environment for class \"%s\" to revise subclass "
+"information"
+msgstr "não foi possível encontrar um ambiente contendo a classe \"%s\""
+
 msgid "class \"%s\" cannot extend class \"%s\""
 msgstr ""
 
@@ -927,6 +958,110 @@ msgid ""
 msgstr ""
 
 msgid "invalid index for function argument"
+msgstr ""
+
+msgid ""
+"Invalid object in meta table of methods for \"%s\", label \"%s\", had class "
+"\"%s\""
+msgstr ""
+
+msgid "Invalid mlist element  for signature \""
+msgstr ""
+
+msgid "\" at level"
+msgstr ""
+
+msgid "( should be methods list or method, had class \""
+msgstr ""
+
+#, fuzzy
+msgid "\")"
+msgstr "\""
+
+#, fuzzy
+msgid "Invalid object in methods table (\""
+msgstr "objeto inválido encontrado como método (classe \"%s\")"
+
+#, fuzzy
+msgid "\"), expected a method, got an object of class \""
+msgstr ""
+"definição de método inválida: uma função era esperada, mas foi especificado "
+"um objeto de classe \"%s\""
+
+msgid "Invalid or unset methods table in generic function \""
+msgstr ""
+
+#, fuzzy
+msgid "Trying to find a methods table in a non-generic function"
+msgstr ""
+"tentando parear com uma assinatura de método um objeto (de classe \"%s\") "
+"que não é uma função genérica"
+
+msgid ""
+"Ambiguous method selection for \"%s\", target \"%s\" (the first of the "
+"signatures shown will be used)\n"
+"%s"
+msgstr ""
+
+msgid "found"
+msgstr ""
+
+msgid "equally good next methods"
+msgstr ""
+
+#, fuzzy
+msgid "unable to find an inherited method for function \""
+msgstr "não foi possível encontrar um ambiente contendo a classe \"%s\""
+
+msgid "\", for signature"
+msgstr ""
+
+msgid ""
+"Internal error in finding inherited methods; didn't return a unique method"
+msgstr ""
+
+msgid ""
+"Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
+msgstr ""
+
+#, fuzzy
+msgid "Methods list for generic \""
+msgstr "nenhum método encontrado para a genérica '%s'"
+
+msgid "\" not found"
+msgstr ""
+
+msgid "Invalid argument to .UsingMethodsTables:  must be TRUE or FALSE %s"
+msgstr ""
+
+msgid "Failed to find expected group generic function:"
+msgstr ""
+
+msgid "Invalid group generic function in search for inherited method (class \""
+msgstr ""
+
+msgid "Trying to check signature length of group generic \""
+msgstr ""
+
+msgid "\", but it is not a group generic"
+msgstr ""
+
+msgid "Trying to check signature length of generic \""
+msgstr ""
+
+#, fuzzy
+msgid "\", but it is not a  generic function: i ="
+msgstr ""
+"não foi possível restaurar '%s', a definição não é um objeto de função "
+"genérico"
+
+msgid ", funs ="
+msgstr ""
+
+msgid "; gnames ="
+msgstr ""
+
+msgid "Could not find generic function \"%s\" to initialize cached methods"
 msgstr ""
 
 msgid ""
@@ -971,6 +1106,11 @@ msgstr ""
 
 msgid "no function definition for '%s' found"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"Can't untrace method for \"%s\"; no method defined for this signature: %s"
+msgstr "nenhum método único correspondente a essa assinatura"
 
 msgid ".TraceWithMethods: untrace case"
 msgstr ""

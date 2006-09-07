@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:20\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -90,9 +90,10 @@ msgstr "함수'%s'는 일반명 '%s'로 이외에, 일반적인 함수인 것처
 msgid "generic function '%s' not found for removal"
 msgstr "제거를 위해서 검색되지 않은 generic 함수 '%s' 입니다"
 
+#, fuzzy
 msgid ""
-"invalid argument 'f', expected function or its name, got an object of class "
-"\"%s\""
+"invalid argument \"f\", expected a function or its name, got an object of "
+"class \"%s\""
 msgstr ""
 "무효의 인수 'f', 함수 또는 그 이름에 예측한 클래스 \n"
 "\"%s\"의 오브젝트를 얻었습니다"
@@ -156,6 +157,10 @@ msgstr "'%s'가 검색되어 일반적인 함수가 아닙니다"
 msgid "no method found for function '%s' and signature %s"
 msgstr "함수'%s' 그리고 기호 %s 때문에 검색되는 메소드가 아닙니다"
 
+#, fuzzy
+msgid "No method found for function \"%s\" and signature %s"
+msgstr "함수'%s' 그리고 기호 %s 때문에 검색되는 메소드가 아닙니다"
+
 msgid ""
 "apparent inconsistency in the methods for function '%s'; argument '%s' in "
 "the signature corresponds to '%s' in the methods list object"
@@ -175,10 +180,15 @@ msgstr ""
 msgid "no method defined for function '%s' and signature %s"
 msgstr "함수 '%s'와 기호 %s를 위해서 정해지는 메소드가 아닙니다"
 
+#, fuzzy
+msgid "No method found for signature %s"
+msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
+
 msgid "signature must be a vector of classes or an environment"
 msgstr "기호는 클래스 또는 환경의 벡터가 아니면 되지 않습니다"
 
-msgid "'%s' has no methods defined"
+#, fuzzy
+msgid "\"%s\" has no methods defined"
 msgstr "'%s'는 메소드를 정해두지 않습니다"
 
 msgid "no unique method corresponding to this signature"
@@ -200,6 +210,10 @@ msgstr ""
 "첫번째 인수는 generic 함수(클래스 \"%s\"의 오브젝트를 얻을수 있습니다)의 이름"
 "이어야만\n"
 "합니다"
+
+msgid ""
+"No generic function found for \"%s\"; no action taken in removeMethodsObject"
+msgstr ""
 
 msgid ""
 "the environment/package '%s' is locked; cannot remove methods data for '%s'"
@@ -571,6 +585,9 @@ msgstr ""
 msgid "unable to find an environment containing class \"%s\""
 msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
 
+msgid "Undefined member, \"%s\", of union \"%s\" (not added during attach)"
+msgstr ""
+
 msgid ""
 "the function being used as %s in making a generic function for '%s' is "
 "currently traced; the function used will have tracing removed"
@@ -614,9 +631,6 @@ msgstr "특별한 함수\"%s\"에 generic적으로 작성합니다"
 
 msgid "invalid call in method dispatch to '%s' (no default method)"
 msgstr "'%s'(디폴트 메소드는 없습니다)에서 메소드 dispatch는 무효의 호출입니다"
-
-msgid "'%s' is not a function visible from '%s'"
-msgstr "'%s'는 '%s'로부터 보이는 함수가 아닙니다"
 
 msgid "'%s' from '%s' is a non-generic function; no methods available"
 msgstr ""
@@ -664,9 +678,10 @@ msgstr "메소드는 최초의 함수 '%s'때문에 정해질수가 없습니다
 msgid "no generic function found for '%s'"
 msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
 
+#, fuzzy
 msgid ""
 "the methods object name for '%s' must include the name of the package that "
-"contains the generic function, but there is no generic function of this name"
+"contains the generic function, but no generic function of this name was found"
 msgstr ""
 "'%s' 메소드 오브젝트 이름은 generic 메소드를 포함한 패키지의 이름을 \n"
 "포함하지 않으면 안됩니다, 그러나 이 이름의 generic인 함수가 없습니다"
@@ -674,6 +689,11 @@ msgstr ""
 msgid "no way to associate a generic function with an object of class \"%s\""
 msgstr ""
 "메소드는 인수 generic 함수를 클래스 \"%s\" 오브젝트와 묶는 방법이 아닙니다"
+
+msgid ""
+"Package \"%s\" seems to have out-of-date methods; need to reinstall from "
+"source"
+msgstr ""
 
 msgid "no methods found for '%s'; 'cacheGenericsMetaData' will have no effect"
 msgstr ""
@@ -823,14 +843,21 @@ msgstr ""
 "클래스 \"%s\"의 오브젝트의 할당은 클래스 '%s'의 오브젝트에서 slot \"%s\"를 \n"
 "유효하지 않습니다; \"%s\" 값이 TRUE가 아닙니다"
 
-msgid "\"%s\" is not a class (no action taken)"
+#, fuzzy
+msgid "Class definition for \"%s\" not found  (no action taken)"
 msgstr "\"%s\"는 클래스(되는 행동이 아닙니다)가 아닙니다"
 
 msgid "class \"%s\" has multiple definitions visible; only the first removed"
 msgstr "클래스 \"%s\"는 복수의 정의를 인정하도록 합니다; 첫번째에만 제거됩니다"
 
-msgid "trying to use new() on a virtual class"
-msgstr "virtual 클래스에서 new() 사용 하도록 시도합니다"
+msgid "The class to be removed  (\""
+msgstr ""
+
+msgid "\") has defined subclasses that should also be removed: ("
+msgstr ""
+
+msgid ")"
+msgstr ""
 
 msgid "invalid class \"%s\" object:"
 msgstr "무효인 클래스 \"%s\" 오브젝트입니다"
@@ -995,6 +1022,12 @@ msgstr ""
 "우 이외는 \n"
 "정의 할수가 없습니다"
 
+#, fuzzy
+msgid ""
+"Unable to find package environment for class \"%s\" to revise subclass "
+"information"
+msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
+
 msgid "class \"%s\" cannot extend class \"%s\""
 msgstr "클래스 \"%s\"는 클래스 \"%s\"를 연장시킬 수가 없습니다"
 
@@ -1018,6 +1051,106 @@ msgstr ""
 
 msgid "invalid index for function argument"
 msgstr "함수 인수를 위한 무효의 인덱스"
+
+msgid ""
+"Invalid object in meta table of methods for \"%s\", label \"%s\", had class "
+"\"%s\""
+msgstr ""
+
+msgid "Invalid mlist element  for signature \""
+msgstr ""
+
+msgid "\" at level"
+msgstr ""
+
+msgid "( should be methods list or method, had class \""
+msgstr ""
+
+msgid "\")"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid object in methods table (\""
+msgstr "메소드(클래스 \"%s\")으로서 검색되는 사이에 잘못된 오브젝트 입니다"
+
+#, fuzzy
+msgid "\"), expected a method, got an object of class \""
+msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
+
+msgid "Invalid or unset methods table in generic function \""
+msgstr ""
+
+#, fuzzy
+msgid "Trying to find a methods table in a non-generic function"
+msgstr ""
+"generic 함수가 아닌 오브젝트(클래스 \"%s\"의 것)에 메소드 기호를 match시키려"
+"고 합니다"
+
+msgid ""
+"Ambiguous method selection for \"%s\", target \"%s\" (the first of the "
+"signatures shown will be used)\n"
+"%s"
+msgstr ""
+
+msgid "found"
+msgstr ""
+
+msgid "equally good next methods"
+msgstr ""
+
+#, fuzzy
+msgid "unable to find an inherited method for function \""
+msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
+
+msgid "\", for signature"
+msgstr ""
+
+msgid ""
+"Internal error in finding inherited methods; didn't return a unique method"
+msgstr ""
+
+msgid ""
+"Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
+msgstr ""
+
+#, fuzzy
+msgid "Methods list for generic \""
+msgstr "generic '%s'때문에 검색되는 메소드가 아닙니다"
+
+#, fuzzy
+msgid "\" not found"
+msgstr "검색되지 않는 오브젝트 '%s' 입니다"
+
+msgid "Invalid argument to .UsingMethodsTables:  must be TRUE or FALSE %s"
+msgstr ""
+
+msgid "Failed to find expected group generic function:"
+msgstr ""
+
+msgid "Invalid group generic function in search for inherited method (class \""
+msgstr ""
+
+msgid "Trying to check signature length of group generic \""
+msgstr ""
+
+msgid "\", but it is not a group generic"
+msgstr ""
+
+msgid "Trying to check signature length of generic \""
+msgstr ""
+
+#, fuzzy
+msgid "\", but it is not a  generic function: i ="
+msgstr "'%s'는 일반적인 함수(또는 여기서 보이지 않습니다)가 아닙니다"
+
+msgid ", funs ="
+msgstr ""
+
+msgid "; gnames ="
+msgstr ""
+
+msgid "Could not find generic function \"%s\" to initialize cached methods"
+msgstr ""
 
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
@@ -1070,6 +1203,11 @@ msgstr ""
 
 msgid "no function definition for '%s' found"
 msgstr "검색되는 '%s' 때문에 함수 정의가 아닙니다"
+
+#, fuzzy
+msgid ""
+"Can't untrace method for \"%s\"; no method defined for this signature: %s"
+msgstr "이 기호와 일치하고 있는 특별한 메소드가 아닙니다"
 
 msgid ".TraceWithMethods: untrace case"
 msgstr ""
@@ -1130,3 +1268,9 @@ msgid "in the method signature for function '%s' no definition for class: %s"
 msgid_plural ""
 "in the method signature for function '%s' no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#~ msgid "'%s' is not a function visible from '%s'"
+#~ msgstr "'%s'는 '%s'로부터 보이는 함수가 아닙니다"
+
+#~ msgid "trying to use new() on a virtual class"
+#~ msgstr "virtual 클래스에서 new() 사용 하도록 시도합니다"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:21\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1256,8 +1256,20 @@ msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""
 "predição a partir de um ajuste com posto deficiente pode ser engadonara"
 
-msgid "prediction intervals are only relevant to new data"
+msgid "Predictions on current data refer to _future_ responses"
 msgstr ""
+
+msgid ""
+"Assuming prediction variance inversely proportional to weights used for "
+"fitting"
+msgstr ""
+
+msgid "Assuming constant prediction variance even though model fit is weighted"
+msgstr ""
+
+#, fuzzy
+msgid "'weights' as formula should be one-sided"
+msgstr "'weights' não pode ser negativo"
 
 msgid "'object' has no 'effects' component"
 msgstr "'object' não tem componente 'effects'"
@@ -1767,6 +1779,22 @@ msgstr "valores faltantes e NaN's não permitidos se 'na.rm' é FALSE"
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs' fora de [0,1]"
+
+#, fuzzy
+msgid "invalid argument 'n'"
+msgstr "argumento 'omit' inválido"
+
+#, fuzzy
+msgid "invalid argument 'r'"
+msgstr "argumento 'omit' inválido"
+
+#, fuzzy
+msgid "invalid argument 'c'"
+msgstr "argumento 'omit' inválido"
+
+#, fuzzy
+msgid "arguments 'r' and 'c' must have the same sums"
+msgstr "argumentos devem ter o mesmo comprimento"
 
 msgid "'relevel' only for factors"
 msgstr "'relevel' somente possível para fatores"

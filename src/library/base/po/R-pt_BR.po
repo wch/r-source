@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -906,6 +906,9 @@ msgstr ""
 "Rastreamento de funções requer o pacote methods, mas não foi possível "
 "carregar o seu espaço de nomes"
 
+msgid "Expected a single logical value for the S4 object state"
+msgstr ""
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' não é um objeto exportado de 'namespace:%s'"
 
@@ -963,6 +966,15 @@ msgstr "em '%s' classes para expor~tação não definidas: %s"
 msgid "in '%s' methods for export not found: %s"
 msgstr "em '%s' métodos para exportação não encontrados: %s"
 
+msgid "No methods table for \""
+msgstr ""
+
+msgid "\""
+msgstr ""
+
+msgid "Failed to find metadata object for \"%s\""
+msgstr ""
+
 msgid "in '%s' methods specified for export, but none defined: %s"
 msgstr "em '%s' métodos especificados para exportação, mas nenhum definido: %s"
 
@@ -1005,6 +1017,11 @@ msgstr "não é possível importar em um espaço de nomes selado"
 
 msgid "invalid import target"
 msgstr "alvo de importação inválido"
+
+msgid ""
+"Found methods to import for function \"%s\" but not the generic itself, from "
+"package \"%s\""
+msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr ""
@@ -1112,20 +1129,11 @@ msgstr "'k' é muito grande"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "necessário valor maior de 'ncol', pois houve pivotamento"
 
-msgid "No DIF data on clipboard"
-msgstr ""
-
-msgid "row and column counts not found"
-msgstr ""
-
-msgid "Unrecognized special data value"
-msgstr ""
-
-msgid "Unrecognized value indicator"
-msgstr ""
-
 msgid "no lines available in input"
 msgstr "nenhuma linha disponível na entrada"
+
+msgid "empty beginning of file"
+msgstr "começo de arquivo vazio"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "'header' e 'col.names' têm comprimentos diferentes"
@@ -1136,8 +1144,7 @@ msgstr "mais colunas que nomes de colunas"
 msgid "more column names than columns"
 msgstr "mais nomes de colunas que colunas"
 
-#, fuzzy
-msgid "rows are empty: giving up"
+msgid "first five rows are empty: giving up"
 msgstr "cinco primeiras linhas vazias: desistindo"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1154,12 +1161,6 @@ msgstr "'as.is' tem o comprimento errado %d != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "especificação de 'row.names' inválida"
-
-msgid "empty beginning of file"
-msgstr "começo de arquivo vazio"
-
-msgid "first five rows are empty: giving up"
-msgstr "cinco primeiras linhas vazias: desistindo"
 
 msgid "'x' must be a vector"
 msgstr "'x' deve ser um vetor"
@@ -1329,18 +1330,6 @@ msgstr "não é possível fazer coerção para tabela"
 msgid "'x' is not an array"
 msgstr "'x' não é um array"
 
-msgid "invalid argument 'n'"
-msgstr "argumento 'n' inválido"
-
-msgid "invalid argument 'r'"
-msgstr "argumento 'r' inválido"
-
-msgid "invalid argument 'c'"
-msgstr "argumento 'c' inválido"
-
-msgid "arguments 'r' and 'c' must have the same sums"
-msgstr "argumentos 'r' e 'c' devem ter a mesma soma"
-
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' deve ser numérico ou um fator"
 
@@ -1447,6 +1436,22 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#, fuzzy
+#~ msgid "rows are empty: giving up"
+#~ msgstr "cinco primeiras linhas vazias: desistindo"
+
+#~ msgid "invalid argument 'n'"
+#~ msgstr "argumento 'n' inválido"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "argumento 'r' inválido"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "argumento 'c' inválido"
+
+#~ msgid "arguments 'r' and 'c' must have the same sums"
+#~ msgstr "argumentos 'r' e 'c' devem ter a mesma soma"
 
 #~ msgid "none of the packages were found"
 #~ msgstr "nenhum dos pacotes foi encontrado"

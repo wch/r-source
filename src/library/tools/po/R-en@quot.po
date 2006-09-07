@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:23\n"
-"PO-Revision-Date: 2006-07-18 13:23\n"
+"POT-Creation-Date: 2006-09-07 11:42\n"
+"PO-Revision-Date: 2006-09-07 11:42\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -71,20 +71,32 @@ msgid ""
 msgstr ""
 "Functions/methods with usage in documentation object ‘%s’ but not in code:"
 
+msgid "Argument names in code not in docs:"
+msgstr "Argument names in code not in docs:"
+
+msgid "Argument names in docs not in code:"
+msgstr "Argument names in docs not in code:"
+
+msgid "Mismatches in argument names (first 3):"
+msgstr "Mismatches in argument names (first 3):"
+
+msgid "Mismatches in argument names:"
+msgstr "Mismatches in argument names:"
+
+msgid "Mismatches in argument default values (first 3):"
+msgstr "Mismatches in argument default values (first 3):"
+
+msgid "Mismatches in argument default values:"
+msgstr "Mismatches in argument default values:"
+
 msgid "Codoc mismatches from documentation object '%s':"
 msgstr "Codoc mismatches from documentation object '%s':"
 
 msgid "Code: %s"
 msgstr "Code: %s"
 
-msgid "code"
-msgstr "code"
-
 msgid "Docs: %s"
 msgstr "Docs: %s"
-
-msgid "docs"
-msgstr "docs"
 
 msgid "S4 class codoc mismatches from documentation object '%s':"
 msgstr "S4 class codoc mismatches from documentation object '%s':"
@@ -94,6 +106,12 @@ msgstr "Slots for class ‘%s’"
 
 msgid "name"
 msgstr "name"
+
+msgid "code"
+msgstr "code"
+
+msgid "docs"
+msgstr "docs"
 
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr "Data codoc mismatches from documentation object '%s':"
@@ -336,6 +354,21 @@ msgstr "Missing link(s) in documentation object '%s':"
 
 msgid "found %s"
 msgstr "found %s"
+
+msgid "package 'methods' is used but not declared"
+msgstr "package ‘methods’ is used but not declared"
+
+msgid "'::' or ':::' imports not declared from"
+msgstr "‘::’ or ‘:::’ imports not declared from"
+
+msgid "'library' or 'require' calls not declared from"
+msgstr "‘library’ or ‘require’ calls not declared from"
+
+msgid "Found possibly global T or F in the following functions:"
+msgstr "Found possibly global T or F in the following functions:"
+
+msgid "Found possibly global T or F in the following Rd example files:"
+msgstr "Found possibly global T or F in the following Rd example files:"
 
 msgid "argument 'lines' must be a character vector"
 msgstr "argument ‘lines’ must be a character vector"
