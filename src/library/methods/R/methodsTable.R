@@ -513,7 +513,8 @@ options(error=traceback, warn = 1)
 	keep <- !sapply(sigL, function(x, y) all(is.na(match(x, y))), classes)
 	labels <- labels[keep]
     }
-    for(what in labels) {
+    if(length(labels) > 0)
+      for(what in labels) {
 	m <- get(what, envir = table)
 	if( is(m, "MethodDefinition")) {
 	    t <- m@target
@@ -530,10 +531,12 @@ options(error=traceback, warn = 1)
 	}
 	if(includeDefs) {
 	    if(is(m, "MethodDefinition"))
-		m <- f@.Data
-	    cf(deparse(f), sep="\n", "\n")
+		m <- m@.Data
+	    cat(deparse(m), sep="\n", "\n", file = printTo)
 	}
-    }
+      }
+    else
+      cf("<No methods>\n")
 }
 
 ## temporary switch for tables

@@ -18,6 +18,7 @@
 \alias{registerS3methods}
 \alias{.__S3MethodsTable__.}
 \alias{.mergeExportMethods}
+\alias{.mergeImportMethods}
 \alias{.knownS3Generics}
 \usage{
 asNamespace(ns, base.OK = TRUE)
@@ -26,7 +27,7 @@ importIntoEnv(impenv, impnames, expenv, expnames)
 isBaseNamespace(ns)
 namespaceExport(ns, vars)
 namespaceImport(self, \dots)
-namespaceImportFrom(self, ns, vars)
+namespaceImportFrom(self, ns, vars, generics)
 namespaceImportClasses(self, ns, vars)
 namespaceImportMethods(self, ns, vars)
 packageHasNamespace(package, package.lib)
@@ -35,6 +36,7 @@ registerS3method(genname, class, method, envir = parent.frame())
 registerS3methods(info, package, env)
 setNamespaceInfo(ns, which, val)
 .mergeExportMethods(new, ns)
+.mergeImportMethods(impenv, expenv, metaname)
 .knownS3Generics
 }
 
@@ -44,6 +46,7 @@ setNamespaceInfo(ns, which, val)
   \item{impenv}{environment.}
   \item{expenv}{name space environment.}
   \item{vars}{character vector.}
+  \item{generics}{optional character vector.}
   \item{self}{name space environment.}
   \item{package}{string naming the package/name space to load.}
   \item{package.lib}{character vector specifying library.}
@@ -55,6 +58,7 @@ setNamespaceInfo(ns, which, val)
   \item{which}{character.}
   \item{val}{any object.}
   \item{\dots}{character arguments.}
+  \item{metaname}{the methods table name.}
 }
 \description{
   Internal name space support functions.  Not intended to be called directly.
