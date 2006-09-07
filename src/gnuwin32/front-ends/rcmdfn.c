@@ -58,7 +58,7 @@ void rcmdusage (char *RCMD)
 	    "  Rd2dvi   Convert Rd format to DVI/PDF.\n",
 	    "  Rd2txt   Convert Rd format to text.\n",
 	    "  Sd2Rd    Convert S documentation to Rd format.\n",
-	    "  Stangle  Extract S/R code from  Sweave documentation.\n",
+	    "  Stangle  Extract S/R code from Sweave documentation.\n",
 	    "  Sweave   Process Sweave documentation.\n"
 	    );
 
