@@ -433,7 +433,7 @@ NEW FEATURES
     o	median() is now generic, and its default method uses mean()
 	rather than sum() and so is more widely applicable (e.g. to dates).
 
-    o  There is a new option(max.contour.segments=25000) which can be
+    o  There is a new option(max.contour.segments = 25000) which can be
        raised to allow extremely complex contour lines in contour()
        and contourLines().  (PR#9205)
 
@@ -498,6 +498,10 @@ C-LEVEL FACILITIES
 	a session started by Rf_initEmbeddedR, and both are now
 	available on Windows as well as on Unix-alikes.  These and
 	related functions are declared in a new header <Rembedded.h>.
+
+	If R_TempDir is set when embedded R is initialized it is
+	assumed to point to a valid session temporary directory: see
+	`Writing R Extensions'.
 
     o	There is a new interface allowing one package to make C routines
         available to C code in other packages.  The interface consists

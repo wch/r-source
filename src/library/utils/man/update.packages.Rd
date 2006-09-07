@@ -113,7 +113,7 @@ contrib.url(repos, type = getOption("pkgType"))
     Can also be a character vector, a subset of
     \code{c("Depends", "Imports", "Suggests")}.
 
-    Only supported if \code{lib} is of length one (or missing)
+    Only supported if \code{lib} is of length one (or missing),
     so it is unambiguous where to install the dependent packages.
   }
   \item{configure.args}{a character vector or a named list.

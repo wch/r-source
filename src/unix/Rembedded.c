@@ -67,16 +67,10 @@ int Rf_initEmbeddedR(int argc, char **argv)
 /* use fatal !=0 for emergency bail out */
 void Rf_endEmbeddedR(int fatal)
 {
-    unsigned char buf[1024];
-    char * tmpdir;
-
     R_RunExitFinalizers();
     CleanEd();
     if(!fatal) KillAllDevices();
-    if((tmpdir = R_TempDir)) {
-	snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
-	R_system((char *)buf);
-    }
+    R_CleanTempDir();
     if(!fatal && R_CollectWarnings)
 	PrintWarnings();	/* from device close and .Last */
     fpu_setup(FALSE); 

@@ -8662,6 +8662,12 @@ One issue to watch is that on some platforms @code{Rf_initEmbeddedR} and
 @code{Rf_endEmbeddedR} change the settings of the FPU (e.g.@: to allow
 errors to be trapped and to set extended precision registers).
 
+The standard code sets up a session temporary directory in the usual
+way, @emph{unless} @code{R_TempDir} is set to a non-NULL value before
+@code{Rf_initEmbeddedR} is called.  In that case the value is assumed to
+contain an existing writable directory (no check is done), and it is not
+cleaned up when @R{} is shut down.
+
 @menu
 * Setting R callbacks::         
 * Meshing event loops::         

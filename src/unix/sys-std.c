@@ -746,12 +746,11 @@ void R_CleanTempDir(void)
 {
     char buf[1024];
 
-    if((R_TempDir)) {
-	snprintf(buf, 1024, "rm -rf %s", R_TempDir);
+    if((Sys_TempDir)) {
+	snprintf(buf, 1024, "rm -rf %s", Sys_TempDir);
 	buf[1023] = '\0';
 	R_system(buf);
     }
-
 }
 
 
