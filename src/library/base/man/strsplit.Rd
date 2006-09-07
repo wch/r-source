@@ -44,8 +44,13 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
   you will see uses with \code{split = NULL} to mean
   \code{split = character(0)}, including in the examples below.
 
-  Note that spltting into single characters can be done via
-  \code{split=character(0)} or \code{split=""}; the two are equivalent.
+  Note that spltting into single characters can be done \emph{via}
+  \code{split=character(0)} or \code{split=""}; the two are
+  equivalent. The definition of \sQuote{character} here depends on the
+  locale (and perhaps OS): in a single-byte locale it is a byte, and in
+  a multi-byte locale it is the unit represented by a \sQuote{wide
+    character} (almost always a Unicode point).
+  
 
   A missing value of \code{split} does not split the the corresponding
   element(s) of \code{x} at all.

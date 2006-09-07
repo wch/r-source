@@ -21,7 +21,8 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
-    o	symbol.C() and symbol.For() are defunct.
+    o	symbol.C() and symbol.For() are defunct, and have been
+	replaced by wrappers that give a warning.
 
     o	Calling a builtin with empty arguments is now always an error.
 

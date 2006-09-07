@@ -110,3 +110,18 @@ format.char <- function(x, width = NULL, flag = "-")
 La.chol <- function(x) .Defunct("chol")
 La.chol2inv <- function(x, size = ncol(x)) .Defunct("chol2inv")
 ## </entry>
+
+## <entry>
+## Deprecated in 2.4.0
+## Defunct in 2.5.0
+symbol.C <- function(name)
+{
+    warning("'symbol.C' is not needed: please remove it", immediate.=TRUE)
+    name
+}
+symbol.For <- function(name)
+{
+    warning("'symbol.For' is not needed: please remove it", immediate.=TRUE)
+    name
+}
+## </entry>
