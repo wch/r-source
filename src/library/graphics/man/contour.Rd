@@ -89,6 +89,9 @@ contour(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{\link{options}("max.countour.segments")} for the maximal
+  complexity of a single contour line.
+
   \code{\link[grDevices]{contourLines}},
   \code{\link{filled.contour}} for \dQuote{color-filled} contours,
   \code{\link[lattice]{contourplot}} (and \code{\link[lattice]{levelplot}})

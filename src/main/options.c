@@ -482,6 +482,14 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		OutDec = CHAR(STRING_ELT(argi, 0))[0];
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
+	    else if (streql(CHAR(namei), "max.contour.segments")) {
+		k = asInteger(argi);
+		if (k < 0 || k  == NA_INTEGER)
+		    errorcall(call,
+			      _("max.contour.segment parameter invalid"));
+		max_contour_segments = k;
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
+	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
