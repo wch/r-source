@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:21\n"
+"POT-Creation-Date: 2006-09-07 11:07\n"
 "PO-Revision-Date: 2006-04-18 09:00+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1808,6 +1808,22 @@ msgstr ""
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs' en dehors de [0,1]"
+
+#, fuzzy
+msgid "invalid argument 'n'"
+msgstr "argument 'omit' incorrect"
+
+#, fuzzy
+msgid "invalid argument 'r'"
+msgstr "argument 'omit' incorrect"
+
+#, fuzzy
+msgid "invalid argument 'c'"
+msgstr "argument 'omit' incorrect"
+
+#, fuzzy
+msgid "arguments 'r' and 'c' must have the same sums"
+msgstr "les arguments doivent avoir la même longueur"
 
 msgid "'relevel' only for factors"
 msgstr "'relevel' n'est utilisable que pour des facteurs"

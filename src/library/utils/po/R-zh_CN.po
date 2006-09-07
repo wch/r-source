@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:21\n"
+"POT-Creation-Date: 2006-09-07 11:08\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -552,6 +552,49 @@ msgstr "函数'%s'和簽署'%s'没有设定方法"
 
 msgid "no documentation for function '%s' and signature '%s'"
 msgstr "函数'%s'和簽署'%s'没有帮助文件"
+
+msgid "No DIF data on clipboard"
+msgstr ""
+
+msgid "row and column counts not found"
+msgstr ""
+
+msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "Unrecognized value indicator"
+msgstr ""
+
+msgid "no lines available in input"
+msgstr ""
+
+msgid "header and 'col.names' are of different lengths"
+msgstr ""
+
+msgid "more columns than column names"
+msgstr ""
+
+msgid "more column names than columns"
+msgstr ""
+
+msgid "rows are empty: giving up"
+msgstr ""
+
+msgid "not all columns named in 'colClasses' exist"
+msgstr ""
+
+msgid "invalid numeric 'as.is' expression"
+msgstr ""
+
+msgid "not all columns named in 'as.is' exist"
+msgstr ""
+
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'row.names' specification"
+msgstr "'agrep'设定得不对"
 
 msgid "missing lengths for some fields"
 msgstr "某些域缺少长度值"

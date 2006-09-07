@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2006-09-07 11:07\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -880,6 +880,9 @@ msgid ""
 "namespace"
 msgstr "追蹤函数需要方法程辑包，但在载入方法名字空间的时候出了错"
 
+msgid "Expected a single logical value for the S4 object state"
+msgstr ""
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："
 
@@ -935,6 +938,15 @@ msgstr "用于出口的'%s'类别不存在：%s"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "用于出口的'%s'方法不存在：%s "
+
+msgid "No methods table for \""
+msgstr ""
+
+msgid "\""
+msgstr ""
+
+msgid "Failed to find metadata object for \"%s\""
+msgstr ""
 
 msgid "in '%s' methods specified for export, but none defined: %s"
 msgstr "用于出口的'%s'方法有设定，但没有定義：%s "
@@ -1083,20 +1095,11 @@ msgstr "'k'值太大"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "需要大一点的'ncol'值，因为有主轴"
 
-msgid "No DIF data on clipboard"
-msgstr ""
-
-msgid "row and column counts not found"
-msgstr ""
-
-msgid "Unrecognized special data value"
-msgstr ""
-
-msgid "Unrecognized value indicator"
-msgstr ""
-
 msgid "no lines available in input"
 msgstr "输入里内容"
+
+msgid "empty beginning of file"
+msgstr "文件开头是空白的"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "'header'和'col.names'的长度应当一致"
@@ -1107,8 +1110,7 @@ msgstr "列数比列名多"
 msgid "more column names than columns"
 msgstr "列名比列数多"
 
-#, fuzzy
-msgid "rows are empty: giving up"
+msgid "first five rows are empty: giving up"
 msgstr "最先的五行都是空白的：停止工作"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1125,12 +1127,6 @@ msgstr "'as.is'的长度不对%d  != cols = %d "
 
 msgid "invalid 'row.names' specification"
 msgstr "'row.names'的设定不对"
-
-msgid "empty beginning of file"
-msgstr "文件开头是空白的"
-
-msgid "first five rows are empty: giving up"
-msgstr "最先的五行都是空白的：停止工作"
 
 msgid "'x' must be a vector"
 msgstr "'x'必需为向量"
@@ -1300,18 +1296,6 @@ msgstr "不能强迫变表"
 msgid "'x' is not an array"
 msgstr "'x'不是陈列"
 
-msgid "invalid argument 'n'"
-msgstr "'n'变元有错"
-
-msgid "invalid argument 'r'"
-msgstr "'r'变元有错"
-
-msgid "invalid argument 'c'"
-msgstr "'c'变元有错"
-
-msgid "arguments 'r' and 'c' must have the same sums"
-msgstr "变元'r'和'c'各自的和必需相等"
-
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin'必需是数值或是因子"
 
@@ -1415,3 +1399,19 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#, fuzzy
+#~ msgid "rows are empty: giving up"
+#~ msgstr "最先的五行都是空白的：停止工作"
+
+#~ msgid "invalid argument 'n'"
+#~ msgstr "'n'变元有错"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "'r'变元有错"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "'c'变元有错"
+
+#~ msgid "arguments 'r' and 'c' must have the same sums"
+#~ msgstr "变元'r'和'c'各自的和必需相等"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:20\n"
+"POT-Creation-Date: 2006-09-07 11:07\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -86,9 +86,10 @@ msgstr "函数'%s'好象是同屬函数，却有'%s'的同屬名字"
 msgid "generic function '%s' not found for removal"
 msgstr "没有'%s'这样的同屬函数，因此不能将之删除"
 
+#, fuzzy
 msgid ""
-"invalid argument 'f', expected function or its name, got an object of class "
-"\"%s\""
+"invalid argument \"f\", expected a function or its name, got an object of "
+"class \"%s\""
 msgstr ""
 "变元'f'不对，应该是函数或函数的名字，但实际上却是类别为\"%s\"的目标对象"
 
@@ -144,6 +145,10 @@ msgstr "不存在'%s'这一同屬函数"
 msgid "no method found for function '%s' and signature %s"
 msgstr "函数'%s'和标记%s没有方法"
 
+#, fuzzy
+msgid "No method found for function \"%s\" and signature %s"
+msgstr "函数'%s'和标记%s没有方法"
+
 msgid ""
 "apparent inconsistency in the methods for function '%s'; argument '%s' in "
 "the signature corresponds to '%s' in the methods list object"
@@ -159,10 +164,15 @@ msgstr ""
 msgid "no method defined for function '%s' and signature %s"
 msgstr "函数'%s'和标记%s没有设定方法"
 
+#, fuzzy
+msgid "No method found for signature %s"
+msgstr "同屬'%s'里不存在任何方法"
+
 msgid "signature must be a vector of classes or an environment"
 msgstr "标记要么是个含类别的向量，要么是个环境"
 
-msgid "'%s' has no methods defined"
+#, fuzzy
+msgid "\"%s\" has no methods defined"
 msgstr "'%s'没有设定任何方法"
 
 msgid "no unique method corresponding to this signature"
@@ -179,6 +189,10 @@ msgid ""
 "first argument should be the name(s) of generic functions (got object of "
 "class \"%s\")"
 msgstr "第一个变元应当为同屬函数的名称(现在却是类别为\"%s\"的目标对象)"
+
+msgid ""
+"No generic function found for \"%s\"; no action taken in removeMethodsObject"
+msgstr ""
 
 msgid ""
 "the environment/package '%s' is locked; cannot remove methods data for '%s'"
@@ -487,6 +501,9 @@ msgstr ""
 msgid "unable to find an environment containing class \"%s\""
 msgstr "找不到包含类别\"%s\"的环境"
 
+msgid "Undefined member, \"%s\", of union \"%s\" (not added during attach)"
+msgstr ""
+
 msgid ""
 "the function being used as %s in making a generic function for '%s' is "
 "currently traced; the function used will have tracing removed"
@@ -526,9 +543,6 @@ msgstr "为特殊函数 \"%s\"制造同屬"
 
 msgid "invalid call in method dispatch to '%s' (no default method)"
 msgstr "给'%s'进行方法分配时的调用出了错(没有默認方法)"
-
-msgid "'%s' is not a function visible from '%s'"
-msgstr "'%s'不是可以从'%s'看得见的函数"
 
 msgid "'%s' from '%s' is a non-generic function; no methods available"
 msgstr "'%2$s'里的'%1$s'是非同屬函数；没有可以用的方法"
@@ -572,15 +586,21 @@ msgstr "无法为基元函数'%s'定义方法"
 msgid "no generic function found for '%s'"
 msgstr "为'%s'找不到同屬函数"
 
+#, fuzzy
 msgid ""
 "the methods object name for '%s' must include the name of the package that "
-"contains the generic function, but there is no generic function of this name"
+"contains the generic function, but no generic function of this name was found"
 msgstr ""
 "'%s'的方法目标对象名字必需有包含了同屬函数的程輯包的名字，但有这个名字的同屬"
 "函数却不存在"
 
 msgid "no way to associate a generic function with an object of class \"%s\""
 msgstr "无法将同屬函数与类别为\"%s\"的目标对象联系起来"
+
+msgid ""
+"Package \"%s\" seems to have out-of-date methods; need to reinstall from "
+"source"
+msgstr ""
 
 msgid "no methods found for '%s'; 'cacheGenericsMetaData' will have no effect"
 msgstr "为'%s'找不到方法；'cacheGenericsMetaData'没有作用"
@@ -706,14 +726,21 @@ msgstr ""
 "不可以在类别为\"%s\"的目标对象中的槽指定类别为\"%s\"的目标对象；is(value, \"%"
 "s\")的值不是TRUE"
 
-msgid "\"%s\" is not a class (no action taken)"
+#, fuzzy
+msgid "Class definition for \"%s\" not found  (no action taken)"
 msgstr "\"%s\"不是类别(无效果)"
 
 msgid "class \"%s\" has multiple definitions visible; only the first removed"
 msgstr "类别\"%s\"有多种定义；只删除了第一个"
 
-msgid "trying to use new() on a virtual class"
-msgstr "不能在虛擬类别上用new()这一函数"
+msgid "The class to be removed  (\""
+msgstr ""
+
+msgid "\") has defined subclasses that should also be removed: ("
+msgstr ""
+
+msgid ")"
+msgstr ""
 
 msgid "invalid class \"%s\" object:"
 msgstr "类别为\"%s\"的目标对象不对:"
@@ -852,6 +879,12 @@ msgid ""
 "'setClassUnion'"
 msgstr "类别\"%s\"被封闭了；除了'setClassUnion'之外无法设定新的父类别"
 
+#, fuzzy
+msgid ""
+"Unable to find package environment for class \"%s\" to revise subclass "
+"information"
+msgstr "找不到包含类别\"%s\"的环境"
+
 msgid "class \"%s\" cannot extend class \"%s\""
 msgstr "类别\"%s\"无法擴充类别\"%s\""
 
@@ -870,6 +903,104 @@ msgstr "类别\"%s\"里的槽必需擴充类别\"%s\"中相应的槽：%s出了�
 
 msgid "invalid index for function argument"
 msgstr "函数变元的索引不对"
+
+msgid ""
+"Invalid object in meta table of methods for \"%s\", label \"%s\", had class "
+"\"%s\""
+msgstr ""
+
+msgid "Invalid mlist element  for signature \""
+msgstr ""
+
+msgid "\" at level"
+msgstr ""
+
+msgid "( should be methods list or method, had class \""
+msgstr ""
+
+msgid "\")"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid object in methods table (\""
+msgstr "作为方法的目标对象(类别是\"%s\")出错"
+
+#, fuzzy
+msgid "\"), expected a method, got an object of class \""
+msgstr "方法定义不对：提供的应该是函数，现在却是个类别为\"%s\"的目标对象"
+
+msgid "Invalid or unset methods table in generic function \""
+msgstr ""
+
+#, fuzzy
+msgid "Trying to find a methods table in a non-generic function"
+msgstr "无法将方法标记同一个不是同属函数的目标对象(类别是\"%s\")相对应起来"
+
+msgid ""
+"Ambiguous method selection for \"%s\", target \"%s\" (the first of the "
+"signatures shown will be used)\n"
+"%s"
+msgstr ""
+
+msgid "found"
+msgstr ""
+
+msgid "equally good next methods"
+msgstr ""
+
+#, fuzzy
+msgid "unable to find an inherited method for function \""
+msgstr "找不到包含类别\"%s\"的环境"
+
+msgid "\", for signature"
+msgstr ""
+
+msgid ""
+"Internal error in finding inherited methods; didn't return a unique method"
+msgstr ""
+
+msgid ""
+"Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
+msgstr ""
+
+#, fuzzy
+msgid "Methods list for generic \""
+msgstr "同屬'%s'里不存在任何方法"
+
+#, fuzzy
+msgid "\" not found"
+msgstr "找不到'%s'这个目标对象"
+
+msgid "Invalid argument to .UsingMethodsTables:  must be TRUE or FALSE %s"
+msgstr ""
+
+msgid "Failed to find expected group generic function:"
+msgstr ""
+
+msgid "Invalid group generic function in search for inherited method (class \""
+msgstr ""
+
+msgid "Trying to check signature length of group generic \""
+msgstr ""
+
+msgid "\", but it is not a group generic"
+msgstr ""
+
+msgid "Trying to check signature length of generic \""
+msgstr ""
+
+#, fuzzy
+msgid "\", but it is not a  generic function: i ="
+msgstr "'%s'不是同屬函数(或从这儿看不到)"
+
+msgid ", funs ="
+msgstr ""
+
+msgid "; gnames ="
+msgstr ""
+
+msgid "Could not find generic function \"%s\" to initialize cached methods"
+msgstr ""
 
 msgid ""
 "inconsistent old-style class information for \"%s\" (maybe mixing old and "
@@ -915,6 +1046,11 @@ msgstr ""
 
 msgid "no function definition for '%s' found"
 msgstr "没有'%s'这样一个函数定义"
+
+#, fuzzy
+msgid ""
+"Can't untrace method for \"%s\"; no method defined for this signature: %s"
+msgstr "这一标记没有与之相对应的唯一方法"
 
 msgid ".TraceWithMethods: untrace case"
 msgstr ""
@@ -972,3 +1108,9 @@ msgid_plural ""
 "in the method signature for function '%s' no definition for classes: %s"
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
 msgstr[1] "函数'%s'的方法标记中没有类别定义：%s"
+
+#~ msgid "'%s' is not a function visible from '%s'"
+#~ msgstr "'%s'不是可以从'%s'看得见的函数"
+
+#~ msgid "trying to use new() on a virtual class"
+#~ msgstr "不能在虛擬类别上用new()这一函数"

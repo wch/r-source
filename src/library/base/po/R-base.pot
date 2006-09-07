@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2006-09-07 11:07\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -854,6 +854,9 @@ msgstr ""
 msgid "Tracing functions requires the methods package, but unable to load methods namespace"
 msgstr ""
 
+msgid "Expected a single logical value for the S4 object state"
+msgstr ""
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""
 
@@ -906,6 +909,15 @@ msgid "in '%s' classes for export not defined: %s"
 msgstr ""
 
 msgid "in '%s' methods for export not found: %s"
+msgstr ""
+
+msgid "No methods table for \""
+msgstr ""
+
+msgid "\""
+msgstr ""
+
+msgid "Failed to find metadata object for \"%s\""
 msgstr ""
 
 msgid "in '%s' methods specified for export, but none defined: %s"
@@ -1052,19 +1064,10 @@ msgstr ""
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 
-msgid "No DIF data on clipboard"
-msgstr ""
-
-msgid "row and column counts not found"
-msgstr ""
-
-msgid "Unrecognized special data value"
-msgstr ""
-
-msgid "Unrecognized value indicator"
-msgstr ""
-
 msgid "no lines available in input"
+msgstr ""
+
+msgid "empty beginning of file"
 msgstr ""
 
 msgid "header and 'col.names' are of different lengths"
@@ -1076,7 +1079,7 @@ msgstr ""
 msgid "more column names than columns"
 msgstr ""
 
-msgid "rows are empty: giving up"
+msgid "first five rows are empty: giving up"
 msgstr ""
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1092,12 +1095,6 @@ msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr ""
 
 msgid "invalid 'row.names' specification"
-msgstr ""
-
-msgid "empty beginning of file"
-msgstr ""
-
-msgid "first five rows are empty: giving up"
 msgstr ""
 
 msgid "'x' must be a vector"
@@ -1260,18 +1257,6 @@ msgid "cannot coerce into a table"
 msgstr ""
 
 msgid "'x' is not an array"
-msgstr ""
-
-msgid "invalid argument 'n'"
-msgstr ""
-
-msgid "invalid argument 'r'"
-msgstr ""
-
-msgid "invalid argument 'c'"
-msgstr ""
-
-msgid "arguments 'r' and 'c' must have the same sums"
 msgstr ""
 
 msgid "'bin' must be numeric or a factor"

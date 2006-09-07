@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2006-09-07 11:07\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -900,6 +900,9 @@ msgstr ""
 "Das Tracing von Funktionen benötigt das Paket methods, aber der Namensraum "
 "von methods kann nicht geladen werden"
 
+msgid "Expected a single logical value for the S4 object state"
+msgstr ""
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' ist kein von 'namespace:%s' exportiertes Objekt"
 
@@ -955,6 +958,15 @@ msgstr "in '%s' sind Klassen nicht für den Export definiert: %s"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "in '%s' sind Methoden nicht für den Export definiert: %s"
+
+msgid "No methods table for \""
+msgstr ""
+
+msgid "\""
+msgstr ""
+
+msgid "Failed to find metadata object for \"%s\""
+msgstr ""
 
 msgid "in '%s' methods specified for export, but none defined: %s"
 msgstr ""
@@ -1104,20 +1116,11 @@ msgstr "'k' ist zu groß"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "benötige größeren Wert für 'ncol', da Pivotierung aufgetreten"
 
-msgid "No DIF data on clipboard"
-msgstr ""
-
-msgid "row and column counts not found"
-msgstr ""
-
-msgid "Unrecognized special data value"
-msgstr ""
-
-msgid "Unrecognized value indicator"
-msgstr ""
-
 msgid "no lines available in input"
 msgstr "keine Zeilen in der Eingabe verfügbar"
+
+msgid "empty beginning of file"
+msgstr "leerer Dateianfang"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "Header und 'col.names' haben unterschiedliche Längen"
@@ -1128,8 +1131,7 @@ msgstr "mehr Spalten als Spaltennamen"
 msgid "more column names than columns"
 msgstr "mehr Spaltennamen als Spalten"
 
-#, fuzzy
-msgid "rows are empty: giving up"
+msgid "first five rows are empty: giving up"
 msgstr "die ersten 5 Zeilen sind leer: gebe auf"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1146,12 +1148,6 @@ msgstr "'as.is' hat die falsche Länge %d != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "ungültige 'row.names' Spezifikation"
-
-msgid "empty beginning of file"
-msgstr "leerer Dateianfang"
-
-msgid "first five rows are empty: giving up"
-msgstr "die ersten 5 Zeilen sind leer: gebe auf"
 
 msgid "'x' must be a vector"
 msgstr "'x' muss ein Vektor sein"
@@ -1320,18 +1316,6 @@ msgstr "kann nicht in eine Tabelle umwandeln"
 msgid "'x' is not an array"
 msgstr "'x' ist kein Array"
 
-msgid "invalid argument 'n'"
-msgstr "ungültiges Argument 'n'"
-
-msgid "invalid argument 'r'"
-msgstr "ungültiges Argument 'r'"
-
-msgid "invalid argument 'c'"
-msgstr "ungültiges Argument 'c'"
-
-msgid "arguments 'r' and 'c' must have the same sums"
-msgstr "Argumente 'r' und 'c' müssen dieselben Summen haben"
-
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' muss numerisch oder Faktor sein"
 
@@ -1438,3 +1422,19 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#, fuzzy
+#~ msgid "rows are empty: giving up"
+#~ msgstr "die ersten 5 Zeilen sind leer: gebe auf"
+
+#~ msgid "invalid argument 'n'"
+#~ msgstr "ungültiges Argument 'n'"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "ungültiges Argument 'r'"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "ungültiges Argument 'c'"
+
+#~ msgid "arguments 'r' and 'c' must have the same sums"
+#~ msgstr "Argumente 'r' und 'c' müssen dieselben Summen haben"

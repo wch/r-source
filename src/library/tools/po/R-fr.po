@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:23\n"
+"POT-Creation-Date: 2006-09-07 11:08\n"
 "PO-Revision-Date: 2006-04-18 09:02+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -55,20 +55,32 @@ msgstr ""
 "Fonctions/méthodes avec 'usage' dans la documentation de l'objet '%s', mais "
 "pas dans le code :"
 
+msgid "Argument names in code not in docs:"
+msgstr ""
+
+msgid "Argument names in docs not in code:"
+msgstr ""
+
+msgid "Mismatches in argument names (first 3):"
+msgstr ""
+
+msgid "Mismatches in argument names:"
+msgstr ""
+
+msgid "Mismatches in argument default values (first 3):"
+msgstr ""
+
+msgid "Mismatches in argument default values:"
+msgstr ""
+
 msgid "Codoc mismatches from documentation object '%s':"
 msgstr "Erreurs 'codoc' pour la documentation de l'objet '%s' :"
 
 msgid "Code: %s"
 msgstr "Code : %s"
 
-msgid "code"
-msgstr "code"
-
 msgid "Docs: %s"
 msgstr "Docs : %s"
-
-msgid "docs"
-msgstr "docs"
 
 msgid "S4 class codoc mismatches from documentation object '%s':"
 msgstr "Erreurs 'codoc' de class S4 pour la documentation de l'objet '%s' :"
@@ -78,6 +90,12 @@ msgstr "Slots de la classe '%s'"
 
 msgid "name"
 msgstr "nom"
+
+msgid "code"
+msgstr "code"
+
+msgid "docs"
+msgstr "docs"
 
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr ""
@@ -332,6 +350,21 @@ msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
 #, fuzzy
 msgid "found %s"
 msgstr "T/F trouvé(s) dans %s"
+
+msgid "package 'methods' is used but not declared"
+msgstr ""
+
+msgid "'::' or ':::' imports not declared from"
+msgstr ""
+
+msgid "'library' or 'require' calls not declared from"
+msgstr ""
+
+msgid "Found possibly global T or F in the following functions:"
+msgstr ""
+
+msgid "Found possibly global T or F in the following Rd example files:"
+msgstr ""
 
 msgid "argument 'lines' must be a character vector"
 msgstr "l'argument 'lines' doit être un vecteur de chaînes de caractères"

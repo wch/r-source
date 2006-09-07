@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:21\n"
-"PO-Revision-Date: 2006-08-13 09:21\n"
+"POT-Creation-Date: 2006-09-07 11:07\n"
+"PO-Revision-Date: 2006-09-07 11:07\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1723,6 +1723,18 @@ msgstr "missing values and NaN's not allowed if ‘na.rm’ is FALSE"
 
 msgid "'probs' outside [0,1]"
 msgstr "‘probs’ outside [0,1]"
+
+msgid "invalid argument 'n'"
+msgstr "invalid argument ‘n’"
+
+msgid "invalid argument 'r'"
+msgstr "invalid argument ‘r’"
+
+msgid "invalid argument 'c'"
+msgstr "invalid argument ‘c’"
+
+msgid "arguments 'r' and 'c' must have the same sums"
+msgstr "arguments ‘r’ and ‘c’ must have the same sums"
 
 msgid "'relevel' only for factors"
 msgstr "‘relevel’ only for factors"

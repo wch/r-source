@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15\n"
+"POT-Creation-Date: 2006-09-07 11:07\n"
 "PO-Revision-Date: 2006-04-16 21:00-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -892,6 +892,9 @@ msgstr ""
 "Трассировка функций требует пакета 'methods', но я не могу загрузить его "
 "пространство имен"
 
+msgid "Expected a single logical value for the S4 object state"
+msgstr ""
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
 
@@ -947,6 +950,15 @@ msgstr "в '%s' классы для экспорта не определены: %s"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "в '%s' методы для экспорта не найдены: %s"
+
+msgid "No methods table for \""
+msgstr ""
+
+msgid "\""
+msgstr ""
+
+msgid "Failed to find metadata object for \"%s\""
+msgstr ""
 
 msgid "in '%s' methods specified for export, but none defined: %s"
 msgstr "в '%s' указаны методы для экспорта, но ни один не определен: %s"
@@ -1094,20 +1106,11 @@ msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 "нужно большее значение 'ncol', так как происходит выбор ведущего элемента"
 
-msgid "No DIF data on clipboard"
-msgstr ""
-
-msgid "row and column counts not found"
-msgstr ""
-
-msgid "Unrecognized special data value"
-msgstr ""
-
-msgid "Unrecognized value indicator"
-msgstr ""
-
 msgid "no lines available in input"
 msgstr "во вводе нет строк"
+
+msgid "empty beginning of file"
+msgstr "пустое начало строки"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr "заголовок и 'col.names' разной длины"
@@ -1118,8 +1121,7 @@ msgstr "больше колонок, чем их имен"
 msgid "more column names than columns"
 msgstr "больше имен, чем колонок"
 
-#, fuzzy
-msgid "rows are empty: giving up"
+msgid "first five rows are empty: giving up"
 msgstr "первые пять строк пустые: отказ"
 
 msgid "not all columns named in 'colClasses' exist"
@@ -1136,12 +1138,6 @@ msgstr "у 'as.is' неправильная длина %d  != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "неправильное указание 'row.names'"
-
-msgid "empty beginning of file"
-msgstr "пустое начало строки"
-
-msgid "first five rows are empty: giving up"
-msgstr "первые пять строк пустые: отказ"
 
 msgid "'x' must be a vector"
 msgstr "'x' должен быть вектором"
@@ -1310,18 +1306,6 @@ msgstr "не могу преобразовать в таблицу"
 msgid "'x' is not an array"
 msgstr "'x' не является многомерной матрицей"
 
-msgid "invalid argument 'n'"
-msgstr "неправильный аргумент 'n'"
-
-msgid "invalid argument 'r'"
-msgstr "неправильный аргумент 'r'"
-
-msgid "invalid argument 'c'"
-msgstr "неправильный аргумент 'c'"
-
-msgid "arguments 'r' and 'c' must have the same sums"
-msgstr "аргументы 'r' и 'c' должны иметь одинаковые суммы"
-
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' должен быть числом или фактором"
 
@@ -1435,3 +1419,19 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#, fuzzy
+#~ msgid "rows are empty: giving up"
+#~ msgstr "первые пять строк пустые: отказ"
+
+#~ msgid "invalid argument 'n'"
+#~ msgstr "неправильный аргумент 'n'"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "неправильный аргумент 'r'"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "неправильный аргумент 'c'"
+
+#~ msgid "arguments 'r' and 'c' must have the same sums"
+#~ msgstr "аргументы 'r' и 'c' должны иметь одинаковые суммы"

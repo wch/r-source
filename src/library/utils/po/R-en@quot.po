@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-08-13 09:21\n"
-"PO-Revision-Date: 2006-08-13 09:21\n"
+"POT-Creation-Date: 2006-09-07 11:08\n"
+"PO-Revision-Date: 2006-09-07 11:08\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -574,6 +574,48 @@ msgstr "no method defined for function ‘%s’ and signature ‘%s’"
 
 msgid "no documentation for function '%s' and signature '%s'"
 msgstr "no documentation for function ‘%s’ and signature ‘%s’"
+
+msgid "No DIF data on clipboard"
+msgstr "No DIF data on clipboard"
+
+msgid "row and column counts not found"
+msgstr "row and column counts not found"
+
+msgid "Unrecognized special data value"
+msgstr "Unrecognized special data value"
+
+msgid "Unrecognized value indicator"
+msgstr "Unrecognized value indicator"
+
+msgid "no lines available in input"
+msgstr "no lines available in input"
+
+msgid "header and 'col.names' are of different lengths"
+msgstr "header and ‘col.names’ are of different lengths"
+
+msgid "more columns than column names"
+msgstr "more columns than column names"
+
+msgid "more column names than columns"
+msgstr "more column names than columns"
+
+msgid "rows are empty: giving up"
+msgstr "rows are empty: giving up"
+
+msgid "not all columns named in 'colClasses' exist"
+msgstr "not all columns named in ‘colClasses’ exist"
+
+msgid "invalid numeric 'as.is' expression"
+msgstr "invalid numeric ‘as.is’ expression"
+
+msgid "not all columns named in 'as.is' exist"
+msgstr "not all columns named in ‘as.is’ exist"
+
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr "‘as.is’ has the wrong length %d  != cols = %d"
+
+msgid "invalid 'row.names' specification"
+msgstr "invalid ‘row.names’ specification"
 
 msgid "missing lengths for some fields"
 msgstr "missing lengths for some fields"
