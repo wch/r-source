@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-08 16:27\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,12 @@ msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
 msgstr ""
 
 msgid "See help(\"Defunct\")"
+msgstr ""
+
+msgid "'symbol.C' is not needed: please remove it"
+msgstr ""
+
+msgid "'symbol.For' is not needed: please remove it"
 msgstr ""
 
 msgid "'%s' is deprecated."
@@ -602,9 +608,6 @@ msgstr ""
 msgid "'subset' must be logical"
 msgstr ""
 
-msgid "'form' must be a two-sided formula"
-msgstr ""
-
 msgid "value for '"
 msgstr ""
 
@@ -851,6 +854,9 @@ msgstr ""
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr ""
 
+msgid "(loaded the methods namespace)"
+msgstr ""
+
 msgid "Tracing functions requires the methods package, but unable to load methods namespace"
 msgstr ""
 
@@ -962,7 +968,7 @@ msgstr ""
 msgid "invalid import target"
 msgstr ""
 
-msgid "Found methods to import for function \"%s\" but not the generic itself, from package \"%s\""
+msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
@@ -1065,39 +1071,6 @@ msgid "'k' is too large"
 msgstr ""
 
 msgid "need larger value of 'ncol' as pivoting occurred"
-msgstr ""
-
-msgid "no lines available in input"
-msgstr ""
-
-msgid "empty beginning of file"
-msgstr ""
-
-msgid "header and 'col.names' are of different lengths"
-msgstr ""
-
-msgid "more columns than column names"
-msgstr ""
-
-msgid "more column names than columns"
-msgstr ""
-
-msgid "first five rows are empty: giving up"
-msgstr ""
-
-msgid "not all columns named in 'colClasses' exist"
-msgstr ""
-
-msgid "invalid numeric 'as.is' expression"
-msgstr ""
-
-msgid "not all columns named in 'as.is' exist"
-msgstr ""
-
-msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr ""
-
-msgid "invalid 'row.names' specification"
 msgstr ""
 
 msgid "'x' must be a vector"
@@ -1287,27 +1260,6 @@ msgid "No traceback available"
 msgstr ""
 
 msgid "argument to 'which' is not logical"
-msgstr ""
-
-msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
-
-msgid "invalid numbers in 'quote'"
-msgstr ""
-
-msgid "invalid 'quote' specification"
-msgstr ""
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
-
-msgid "invalid 'col.names' specification"
-msgstr ""
-
-msgid "appending column names to file"
-msgstr ""
-
-msgid "attempt to change '%s' ignored"
 msgstr ""
 
 msgid "invalid 'digits'"

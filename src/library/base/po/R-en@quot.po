@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
-"PO-Revision-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-08 16:27\n"
+"PO-Revision-Date: 2006-09-08 16:27\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -44,6 +44,12 @@ msgstr "See help(“Defunct”) and help(“%s-defunct”)."
 
 msgid "See help(\"Defunct\")"
 msgstr "See help(“Defunct”)"
+
+msgid "'symbol.C' is not needed: please remove it"
+msgstr "‘symbol.C’ is not needed: please remove it"
+
+msgid "'symbol.For' is not needed: please remove it"
+msgstr "‘symbol.For’ is not needed: please remove it"
 
 msgid "'%s' is deprecated."
 msgstr "‘%s’ is deprecated."
@@ -630,9 +636,6 @@ msgstr "‘subset’ must evaluate to logical"
 msgid "'subset' must be logical"
 msgstr "‘subset’ must be logical"
 
-msgid "'form' must be a two-sided formula"
-msgstr "‘form’ must be a two-sided formula"
-
 msgid "value for '"
 msgstr "value for '"
 
@@ -891,6 +894,9 @@ msgstr "no rows to match"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "‘by.x’ and ‘by.y’ specify different numbers of columns"
 
+msgid "(loaded the methods namespace)"
+msgstr "(loaded the methods namespace)"
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -1006,12 +1012,8 @@ msgstr "cannot import into a sealed name space"
 msgid "invalid import target"
 msgstr "invalid import target"
 
-msgid ""
-"Found methods to import for function \"%s\" but not the generic itself, from "
-"package \"%s\""
-msgstr ""
-"Found methods to import for function “%s” but not the generic itself, from "
-"package “%s”"
+msgid "Found methods to import for function \"%s\" but not the generic itself"
+msgstr "Found methods to import for function “%s” but not the generic itself"
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr "requested ‘methods’ objects not found in environment/package '%s': %s"
@@ -1114,39 +1116,6 @@ msgstr "‘k’ is too large"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "need larger value of ‘ncol’ as pivoting occurred"
-
-msgid "no lines available in input"
-msgstr "no lines available in input"
-
-msgid "empty beginning of file"
-msgstr "empty beginning of file"
-
-msgid "header and 'col.names' are of different lengths"
-msgstr "header and ‘col.names’ are of different lengths"
-
-msgid "more columns than column names"
-msgstr "more columns than column names"
-
-msgid "more column names than columns"
-msgstr "more column names than columns"
-
-msgid "first five rows are empty: giving up"
-msgstr "first five rows are empty: giving up"
-
-msgid "not all columns named in 'colClasses' exist"
-msgstr "not all columns named in ‘colClasses’ exist"
-
-msgid "invalid numeric 'as.is' expression"
-msgstr "invalid numeric ‘as.is’ expression"
-
-msgid "not all columns named in 'as.is' exist"
-msgstr "not all columns named in ‘as.is’ exist"
-
-msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr "‘as.is’ has the wrong length %d  != cols = %d"
-
-msgid "invalid 'row.names' specification"
-msgstr "invalid ‘row.names’ specification"
 
 msgid "'x' must be a vector"
 msgstr "‘x’ must be a vector"
@@ -1344,27 +1313,6 @@ msgstr "No traceback available"
 
 msgid "argument to 'which' is not logical"
 msgstr "argument to ‘which’ is not logical"
-
-msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr "‘quote’ must be 'TRUE', ‘FALSE’ or numeric"
-
-msgid "invalid numbers in 'quote'"
-msgstr "invalid numbers in ‘quote’"
-
-msgid "invalid 'quote' specification"
-msgstr "invalid ‘quote’ specification"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr "col.names = NA makes no sense when row.names = FALSE"
-
-msgid "invalid 'col.names' specification"
-msgstr "invalid ‘col.names’ specification"
-
-msgid "appending column names to file"
-msgstr "appending column names to file"
-
-msgid "attempt to change '%s' ignored"
-msgstr "attempt to change ‘%s’ ignored"
 
 msgid "invalid 'digits'"
 msgstr "invalid ‘digits’"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:41+0100\n"
+"POT-Creation-Date: 2006-09-08 16:26+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -122,9 +122,9 @@ msgstr "R_unlink的'names'不对"
 #: src/main/platform.c:914 src/main/platform.c:917 src/main/platform.c:996
 #: src/main/platform.c:1036 src/main/platform.c:1076 src/main/platform.c:1078
 #: src/main/platform.c:1145 src/main/platform.c:1249 src/main/platform.c:1492
-#: src/main/platform.c:1530 src/main/plot3d.c:2463 src/main/plot3d.c:2467
-#: src/main/plot3d.c:2472 src/main/plot3d.c:2476 src/main/plot3d.c:2480
-#: src/main/plot3d.c:2484 src/main/print.c:176 src/main/print.c:182
+#: src/main/platform.c:1530 src/main/plot3d.c:2459 src/main/plot3d.c:2463
+#: src/main/plot3d.c:2468 src/main/plot3d.c:2472 src/main/plot3d.c:2476
+#: src/main/plot3d.c:2480 src/main/print.c:176 src/main/print.c:182
 #: src/main/print.c:204 src/main/print.c:210 src/main/random.c:465
 #: src/main/random.c:469 src/main/random.c:471 src/main/random.c:473
 #: src/main/saveload.c:2054 src/main/saveload.c:2319 src/main/saveload.c:2368
@@ -133,8 +133,8 @@ msgstr "R_unlink的'names'不对"
 #: src/main/unique.c:576 src/main/util.c:527 src/main/util.c:530
 #: src/modules/internet/internet.c:254 src/modules/internet/internet.c:260
 #: src/modules/internet/internet.c:266 src/modules/internet/internet.c:269
-#: src/modules/internet/internet.c:273 src/unix/sys-std.c:935
-#: src/unix/sys-std.c:957
+#: src/modules/internet/internet.c:273 src/unix/sys-std.c:934
+#: src/unix/sys-std.c:956
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'变元不对"
@@ -186,7 +186,7 @@ msgstr "savehistory只能在Rgui和Rterm里有用"
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "loadhistory只能在Rgui和Rterm有用"
 
-#: src/gnuwin32/extra.c:505 src/unix/sys-std.c:983
+#: src/gnuwin32/extra.c:505 src/unix/sys-std.c:982
 #, fuzzy
 msgid "invalid timestamp"
 msgstr "标签不对"
@@ -204,8 +204,8 @@ msgstr "loadhistory只能在Rgui和Rterm有用"
 #: src/main/optimize.c:197 src/main/platform.c:999 src/main/plot.c:405
 #: src/main/plot.c:598 src/main/plot.c:603 src/main/plot.c:2153
 #: src/main/plot.c:2160 src/main/plot.c:3215 src/main/plot.c:3217
-#: src/main/plot.c:3219 src/main/plot.c:3368 src/main/plot3d.c:1419
-#: src/main/plot3d.c:2541 src/main/plot3d.c:2545 src/main/plot3d.c:2547
+#: src/main/plot.c:3219 src/main/plot.c:3368 src/main/plot3d.c:1415
+#: src/main/plot3d.c:2537 src/main/plot3d.c:2541 src/main/plot3d.c:2543
 #: src/main/scan.c:952 src/main/scan.c:956 src/main/scan.c:958
 #: src/main/scan.c:969 src/main/scan.c:1005 src/main/scan.c:1008
 #: src/main/scan.c:1093 src/main/scan.c:1097 src/main/scan.c:1107
@@ -217,7 +217,7 @@ msgstr "loadhistory只能在Rgui和Rterm有用"
 #: src/main/sysutils.c:147 src/main/util.c:749 src/main/util.c:754
 #: src/main/util.c:762 src/main/util.c:765 src/modules/X11/devX11.c:2464
 #: src/modules/X11/devX11.c:2491 src/modules/X11/devX11.c:2496
-#: src/modules/X11/devX11.c:2501 src/unix/sys-std.c:1030
+#: src/modules/X11/devX11.c:2501 src/unix/sys-std.c:1029
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'值不对"
@@ -1187,8 +1187,8 @@ msgid "'parent' is not an environment"
 msgstr "'parent'不是环境"
 
 #: src/main/builtin.c:377 src/main/builtin.c:407 src/main/platform.c:238
-#: src/main/platform.c:287 src/main/platform.c:290 src/main/plot3d.c:2555
-#: src/main/plot3d.c:2559
+#: src/main/platform.c:287 src/main/platform.c:290 src/main/plot3d.c:2551
+#: src/main/plot3d.c:2555
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "'%s'设定不对"
@@ -2236,7 +2236,7 @@ msgstr "无法为read.dcf分配内存"
 #: src/main/plot.c:1798 src/main/plot.c:1863 src/main/plot.c:1939
 #: src/main/plot.c:2035 src/main/plot.c:2113 src/main/plot.c:2392
 #: src/main/plot.c:2570 src/main/plot.c:2825 src/main/plot.c:3460
-#: src/main/plot.c:3536 src/main/plot.c:3789 src/main/plot3d.c:1382
+#: src/main/plot.c:3536 src/main/plot.c:3789 src/main/plot3d.c:1378
 #: src/main/sprintf.c:139 src/main/sprintf.c:164
 msgid "too few arguments"
 msgstr "变元数目太少"
@@ -3617,7 +3617,7 @@ msgstr "dummy - do not translate"
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr "错误: 本R版本不支持系统命令.\n"
 
-#: src/main/main.c:457
+#: src/main/main.c:458
 #, fuzzy
 msgid "Error: segfault from C stack overflow\n"
 msgstr "整数堆叠上溢"
@@ -4922,95 +4922,95 @@ msgstr "boxplots[, 1:4]不对"
 msgid "invalid symbol type"
 msgstr "符号种类不对"
 
-#: src/main/plot3d.c:725 src/main/plot3d.c:1018
+#: src/main/plot3d.c:721 src/main/plot3d.c:1014
 msgid "contour(): circular/long seglist -- bug.report()!"
 msgstr "contour():圆的/长的seglist -- bug.report()!"
 
-#: src/main/plot3d.c:806 src/main/plot3d.c:1479
+#: src/main/plot3d.c:802 src/main/plot3d.c:1475
 msgid "all z values are equal"
 msgstr "所有的z值都一样"
 
-#: src/main/plot3d.c:808 src/main/plot3d.c:1481
+#: src/main/plot3d.c:804 src/main/plot3d.c:1477
 msgid "all z values are NA"
 msgstr "所有的z值都是NA"
 
-#: src/main/plot3d.c:1443 src/main/plot3d.c:1695
+#: src/main/plot3d.c:1439 src/main/plot3d.c:1691
 msgid "insufficient 'x' or 'y' values"
 msgstr "'x'或'y'值大小不够"
 
-#: src/main/plot3d.c:1446 src/main/plot3d.c:1698
+#: src/main/plot3d.c:1442 src/main/plot3d.c:1694
 msgid "dimension mismatch"
 msgstr "量度不相符"
 
-#: src/main/plot3d.c:1449 src/main/plot3d.c:1701
+#: src/main/plot3d.c:1445 src/main/plot3d.c:1697
 msgid "no contour values"
 msgstr "无等高值"
 
-#: src/main/plot3d.c:1453
+#: src/main/plot3d.c:1449
 msgid "missing 'x' values"
 msgstr "缺少'x'值"
 
-#: src/main/plot3d.c:1455
+#: src/main/plot3d.c:1451
 msgid "increasing 'x' values expected"
 msgstr "'x'值应加大"
 
-#: src/main/plot3d.c:1460
+#: src/main/plot3d.c:1456
 msgid "missing 'y' values"
 msgstr "缺少'y'值"
 
-#: src/main/plot3d.c:1462
+#: src/main/plot3d.c:1458
 msgid "increasing 'y' values expected"
 msgstr "'y'值应加大"
 
-#: src/main/plot3d.c:1467
+#: src/main/plot3d.c:1463
 msgid "invalid NA contour values"
 msgstr "NA等高值不对"
 
-#: src/main/plot3d.c:1766
+#: src/main/plot3d.c:1762
 msgid "invalid x / y values or limits"
 msgstr "x/y的值或极限不对"
 
-#: src/main/plot3d.c:1768
+#: src/main/plot3d.c:1764
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "等高层次不对: 必需严格增加"
 
-#: src/main/plot3d.c:2009
+#: src/main/plot3d.c:2005
 msgid "coordinates outsize specified range"
 msgstr "座标比设定的范围要大"
 
-#: src/main/plot3d.c:2427 src/main/plot3d.c:2440
+#: src/main/plot3d.c:2423 src/main/plot3d.c:2436
 msgid "Axis orientation not calculated"
 msgstr "无法计算座标方位"
 
-#: src/main/plot3d.c:2458
+#: src/main/plot3d.c:2454
 msgid "too few parameters"
 msgstr "参数太少"
 
-#: src/main/plot3d.c:2490
+#: src/main/plot3d.c:2486
 msgid "invalid 'x' limits"
 msgstr "'x'极限不对"
 
-#: src/main/plot3d.c:2492
+#: src/main/plot3d.c:2488
 msgid "invalid 'y' limits"
 msgstr "'y'极限不对"
 
-#: src/main/plot3d.c:2494
+#: src/main/plot3d.c:2490
 msgid "invalid 'z' limits"
 msgstr "'z'极限不对"
 
-#: src/main/plot3d.c:2515
+#: src/main/plot3d.c:2511
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab'必需是长度为1的字符向量"
 
-#: src/main/plot3d.c:2517
+#: src/main/plot3d.c:2513
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab'必需是长度为1的字符向量"
 
-#: src/main/plot3d.c:2519
+#: src/main/plot3d.c:2515
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab'必需是长度为1的字符向量"
 
-#: src/main/plot3d.c:2539
+#: src/main/plot3d.c:2535
 msgid "invalid viewing parameters"
 msgstr "viewing参数不对"
 
@@ -6187,19 +6187,19 @@ msgstr "不支持这种转换"
 msgid "'iconv' is not available on this system"
 msgstr "'iconv'本系统没有这个功能"
 
-#: src/main/sysutils.c:585
+#: src/main/sysutils.c:586
 msgid "cannot mkdir R_TempDir"
 msgstr "无法执行mkdir R_TempDir"
 
-#: src/main/sysutils.c:601
+#: src/main/sysutils.c:602
 msgid "cannot allocate R_TempDir"
 msgstr "无法分配R_TempDir"
 
-#: src/main/sysutils.c:619
+#: src/main/sysutils.c:621
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam里的'tempdir'不对"
 
-#: src/main/sysutils.c:634
+#: src/main/sysutils.c:636
 msgid "cannot find unused tempfile name"
 msgstr "临时文件名都用完了"
 
@@ -7045,33 +7045,33 @@ msgstr "<错误: 编码里的输入不对> "
 msgid "re-encoding is not available on this system"
 msgstr "本系统没有重编码这个功能"
 
-#: src/unix/sys-std.c:872
+#: src/unix/sys-std.c:871
 #, fuzzy, c-format
 msgid ""
 "Cannot open file '%s', reason '%s'\n"
 "\n"
 msgstr "无法打开文件'%2$s'，因为'%1$s'"
 
-#: src/unix/sys-std.c:875
+#: src/unix/sys-std.c:874
 #, fuzzy, c-format
 msgid ""
 "Cannot open file '%s'\n"
 "\n"
 msgstr "无法打开文件'%s'"
 
-#: src/unix/sys-std.c:938 src/unix/sys-std.c:960
+#: src/unix/sys-std.c:937 src/unix/sys-std.c:959
 msgid "'file' argument is too long"
 msgstr "'file'变元太长"
 
-#: src/unix/sys-std.c:944 src/unix/sys-std.c:946
+#: src/unix/sys-std.c:943 src/unix/sys-std.c:945
 msgid "no history mechanism available"
 msgstr "没有历史功能"
 
-#: src/unix/sys-std.c:969 src/unix/sys-std.c:971
+#: src/unix/sys-std.c:968 src/unix/sys-std.c:970
 msgid "no history available to save"
 msgstr "没有可以保存的历史"
 
-#: src/unix/sys-std.c:1075
+#: src/unix/sys-std.c:1074
 msgid "Sys.sleep is not implemented on this system"
 msgstr "本系统没有实现Sys.sleep这一功能"
 

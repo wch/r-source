@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-08 16:27\n"
 "PO-Revision-Date: 2006-04-16 21:00-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -31,6 +31,12 @@ msgstr "См. help(\"Defunct\") и help(\"%s-defunct\")."
 
 msgid "See help(\"Defunct\")"
 msgstr "См. help(\"Defunct\")"
+
+msgid "'symbol.C' is not needed: please remove it"
+msgstr ""
+
+msgid "'symbol.For' is not needed: please remove it"
+msgstr ""
 
 msgid "'%s' is deprecated."
 msgstr "использование '%s' не одобряется."
@@ -624,9 +630,6 @@ msgstr "'subset' должен оцениваться логически"
 msgid "'subset' must be logical"
 msgstr "'subset' должен быть логическим"
 
-msgid "'form' must be a two-sided formula"
-msgstr "'form' должен быть двусторонней формулой"
-
 msgid "value for '"
 msgstr "значение для '"
 
@@ -885,6 +888,9 @@ msgstr "нет соответствующих строк"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' и 'by.y' определяют разные номера колонок"
 
+msgid "(loaded the methods namespace)"
+msgstr ""
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -1003,9 +1009,7 @@ msgstr "не могу импортировать во включенное пространство имен"
 msgid "invalid import target"
 msgstr "неправильное место назначения для импорта"
 
-msgid ""
-"Found methods to import for function \"%s\" but not the generic itself, from "
-"package \"%s\""
+msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
@@ -1110,39 +1114,6 @@ msgstr "'k' слишком велик"
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 "нужно большее значение 'ncol', так как происходит выбор ведущего элемента"
-
-msgid "no lines available in input"
-msgstr "во вводе нет строк"
-
-msgid "empty beginning of file"
-msgstr "пустое начало строки"
-
-msgid "header and 'col.names' are of different lengths"
-msgstr "заголовок и 'col.names' разной длины"
-
-msgid "more columns than column names"
-msgstr "больше колонок, чем их имен"
-
-msgid "more column names than columns"
-msgstr "больше имен, чем колонок"
-
-msgid "first five rows are empty: giving up"
-msgstr "первые пять строк пустые: отказ"
-
-msgid "not all columns named in 'colClasses' exist"
-msgstr "не все колонки, названные в 'colClasses', существуют"
-
-msgid "invalid numeric 'as.is' expression"
-msgstr "неправильное числовое 'as.is'-выражение"
-
-msgid "not all columns named in 'as.is' exist"
-msgstr "не все колонки, названные в 'as.is', существуют"
-
-msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr "у 'as.is' неправильная длина %d  != cols = %d"
-
-msgid "invalid 'row.names' specification"
-msgstr "неправильное указание 'row.names'"
 
 msgid "'x' must be a vector"
 msgstr "'x' должен быть вектором"
@@ -1338,27 +1309,6 @@ msgstr "Трассировка недоступна"
 msgid "argument to 'which' is not logical"
 msgstr "аргумент 'which' не является логическим"
 
-msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
-
-msgid "invalid numbers in 'quote'"
-msgstr "неправильные числа в 'quote'"
-
-msgid "invalid 'quote' specification"
-msgstr "неправильное указание 'quote'"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr "col.names = NA не имеет смысла, если row.names = FALSE"
-
-msgid "invalid 'col.names' specification"
-msgstr "неправильное указание 'col.names'"
-
-msgid "appending column names to file"
-msgstr "добавляю имена колонок к файлу"
-
-msgid "attempt to change '%s' ignored"
-msgstr "попытка изменить '%s' отклонена"
-
 msgid "invalid 'digits'"
 msgstr "неправильные 'digits'"
 
@@ -1424,6 +1374,60 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "'form' must be a two-sided formula"
+#~ msgstr "'form' должен быть двусторонней формулой"
+
+#~ msgid "no lines available in input"
+#~ msgstr "во вводе нет строк"
+
+#~ msgid "empty beginning of file"
+#~ msgstr "пустое начало строки"
+
+#~ msgid "header and 'col.names' are of different lengths"
+#~ msgstr "заголовок и 'col.names' разной длины"
+
+#~ msgid "more columns than column names"
+#~ msgstr "больше колонок, чем их имен"
+
+#~ msgid "more column names than columns"
+#~ msgstr "больше имен, чем колонок"
+
+#~ msgid "first five rows are empty: giving up"
+#~ msgstr "первые пять строк пустые: отказ"
+
+#~ msgid "not all columns named in 'colClasses' exist"
+#~ msgstr "не все колонки, названные в 'colClasses', существуют"
+
+#~ msgid "invalid numeric 'as.is' expression"
+#~ msgstr "неправильное числовое 'as.is'-выражение"
+
+#~ msgid "not all columns named in 'as.is' exist"
+#~ msgstr "не все колонки, названные в 'as.is', существуют"
+
+#~ msgid "'as.is' has the wrong length %d  != cols = %d"
+#~ msgstr "у 'as.is' неправильная длина %d  != cols = %d"
+
+#~ msgid "invalid 'row.names' specification"
+#~ msgstr "неправильное указание 'row.names'"
+
+#~ msgid "invalid numbers in 'quote'"
+#~ msgstr "неправильные числа в 'quote'"
+
+#~ msgid "invalid 'quote' specification"
+#~ msgstr "неправильное указание 'quote'"
+
+#~ msgid "col.names = NA makes no sense when row.names = FALSE"
+#~ msgstr "col.names = NA не имеет смысла, если row.names = FALSE"
+
+#~ msgid "invalid 'col.names' specification"
+#~ msgstr "неправильное указание 'col.names'"
+
+#~ msgid "appending column names to file"
+#~ msgstr "добавляю имена колонок к файлу"
+
+#~ msgid "attempt to change '%s' ignored"
+#~ msgstr "попытка изменить '%s' отклонена"
 
 #, fuzzy
 #~ msgid "rows are empty: giving up"

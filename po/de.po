@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:41+0100\n"
+"POT-Creation-Date: 2006-09-08 16:26+0100\n"
 "PO-Revision-Date: 2006-04-13 10:41+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -122,9 +122,9 @@ msgstr "ungültige 'names' in R_unlink"
 #: src/main/platform.c:914 src/main/platform.c:917 src/main/platform.c:996
 #: src/main/platform.c:1036 src/main/platform.c:1076 src/main/platform.c:1078
 #: src/main/platform.c:1145 src/main/platform.c:1249 src/main/platform.c:1492
-#: src/main/platform.c:1530 src/main/plot3d.c:2463 src/main/plot3d.c:2467
-#: src/main/plot3d.c:2472 src/main/plot3d.c:2476 src/main/plot3d.c:2480
-#: src/main/plot3d.c:2484 src/main/print.c:176 src/main/print.c:182
+#: src/main/platform.c:1530 src/main/plot3d.c:2459 src/main/plot3d.c:2463
+#: src/main/plot3d.c:2468 src/main/plot3d.c:2472 src/main/plot3d.c:2476
+#: src/main/plot3d.c:2480 src/main/print.c:176 src/main/print.c:182
 #: src/main/print.c:204 src/main/print.c:210 src/main/random.c:465
 #: src/main/random.c:469 src/main/random.c:471 src/main/random.c:473
 #: src/main/saveload.c:2054 src/main/saveload.c:2319 src/main/saveload.c:2368
@@ -133,8 +133,8 @@ msgstr "ungültige 'names' in R_unlink"
 #: src/main/unique.c:576 src/main/util.c:527 src/main/util.c:530
 #: src/modules/internet/internet.c:254 src/modules/internet/internet.c:260
 #: src/modules/internet/internet.c:266 src/modules/internet/internet.c:269
-#: src/modules/internet/internet.c:273 src/unix/sys-std.c:935
-#: src/unix/sys-std.c:957
+#: src/modules/internet/internet.c:273 src/unix/sys-std.c:934
+#: src/unix/sys-std.c:956
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "ungültiges '%s' Argument"
@@ -184,7 +184,7 @@ msgstr "'savehistory' kann nur im Rgui und im Rterm benutzt werden"
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' kann nur im Rgui und im Rterm benutzt werden"
 
-#: src/gnuwin32/extra.c:505 src/unix/sys-std.c:983
+#: src/gnuwin32/extra.c:505 src/unix/sys-std.c:982
 msgid "invalid timestamp"
 msgstr "ungültiger Zeitstempel"
 
@@ -200,8 +200,8 @@ msgstr "'loadRconsole' kann nur im Rgui benutzt werden"
 #: src/main/optimize.c:197 src/main/platform.c:999 src/main/plot.c:405
 #: src/main/plot.c:598 src/main/plot.c:603 src/main/plot.c:2153
 #: src/main/plot.c:2160 src/main/plot.c:3215 src/main/plot.c:3217
-#: src/main/plot.c:3219 src/main/plot.c:3368 src/main/plot3d.c:1419
-#: src/main/plot3d.c:2541 src/main/plot3d.c:2545 src/main/plot3d.c:2547
+#: src/main/plot.c:3219 src/main/plot.c:3368 src/main/plot3d.c:1415
+#: src/main/plot3d.c:2537 src/main/plot3d.c:2541 src/main/plot3d.c:2543
 #: src/main/scan.c:952 src/main/scan.c:956 src/main/scan.c:958
 #: src/main/scan.c:969 src/main/scan.c:1005 src/main/scan.c:1008
 #: src/main/scan.c:1093 src/main/scan.c:1097 src/main/scan.c:1107
@@ -213,7 +213,7 @@ msgstr "'loadRconsole' kann nur im Rgui benutzt werden"
 #: src/main/sysutils.c:147 src/main/util.c:749 src/main/util.c:754
 #: src/main/util.c:762 src/main/util.c:765 src/modules/X11/devX11.c:2464
 #: src/modules/X11/devX11.c:2491 src/modules/X11/devX11.c:2496
-#: src/modules/X11/devX11.c:2501 src/unix/sys-std.c:1030
+#: src/modules/X11/devX11.c:2501 src/unix/sys-std.c:1029
 #, c-format
 msgid "invalid '%s' value"
 msgstr "ungültiger '%s' Wert"
@@ -1196,8 +1196,8 @@ msgid "'parent' is not an environment"
 msgstr "'parent' ist keine Umgebung"
 
 #: src/main/builtin.c:377 src/main/builtin.c:407 src/main/platform.c:238
-#: src/main/platform.c:287 src/main/platform.c:290 src/main/plot3d.c:2555
-#: src/main/plot3d.c:2559
+#: src/main/platform.c:287 src/main/platform.c:290 src/main/plot3d.c:2551
+#: src/main/plot3d.c:2555
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "ungültige '%s' Spezifikation"
@@ -2261,7 +2261,7 @@ msgstr "konnte Speicher in C Funktion 'R_AllocStringBuffer' nicht zuteilen"
 #: src/main/plot.c:1798 src/main/plot.c:1863 src/main/plot.c:1939
 #: src/main/plot.c:2035 src/main/plot.c:2113 src/main/plot.c:2392
 #: src/main/plot.c:2570 src/main/plot.c:2825 src/main/plot.c:3460
-#: src/main/plot.c:3536 src/main/plot.c:3789 src/main/plot3d.c:1382
+#: src/main/plot.c:3536 src/main/plot.c:3789 src/main/plot3d.c:1378
 #: src/main/sprintf.c:139 src/main/sprintf.c:164
 msgid "too few arguments"
 msgstr "zu wenig Argumente"
@@ -3649,7 +3649,7 @@ msgid "error: system commands are not supported in this version of R.\n"
 msgstr ""
 "Fehler: Systemkommandos werden in dieser Version von R nicht unterstützt\n"
 
-#: src/main/main.c:457
+#: src/main/main.c:458
 msgid "Error: segfault from C stack overflow\n"
 msgstr "Fehler: segmentation fault wegen eines C-Stack Überlaufes\n"
 
@@ -4977,95 +4977,95 @@ msgstr "ungültige boxplots[, 1:4]"
 msgid "invalid symbol type"
 msgstr "ungültiger Symboltyp"
 
-#: src/main/plot3d.c:725 src/main/plot3d.c:1018
+#: src/main/plot3d.c:721 src/main/plot3d.c:1014
 msgid "contour(): circular/long seglist -- bug.report()!"
 msgstr "contour(): zirkuläre/lange Segmentliste -- bug.report()"
 
-#: src/main/plot3d.c:806 src/main/plot3d.c:1479
+#: src/main/plot3d.c:802 src/main/plot3d.c:1475
 msgid "all z values are equal"
 msgstr "alle z Werte sind gleich"
 
-#: src/main/plot3d.c:808 src/main/plot3d.c:1481
+#: src/main/plot3d.c:804 src/main/plot3d.c:1477
 msgid "all z values are NA"
 msgstr "alle z Werte sind NA"
 
-#: src/main/plot3d.c:1443 src/main/plot3d.c:1695
+#: src/main/plot3d.c:1439 src/main/plot3d.c:1691
 msgid "insufficient 'x' or 'y' values"
 msgstr "zu wenig 'x' oder 'y' Werte"
 
-#: src/main/plot3d.c:1446 src/main/plot3d.c:1698
+#: src/main/plot3d.c:1442 src/main/plot3d.c:1694
 msgid "dimension mismatch"
 msgstr "Dimensionen passen nicht"
 
-#: src/main/plot3d.c:1449 src/main/plot3d.c:1701
+#: src/main/plot3d.c:1445 src/main/plot3d.c:1697
 msgid "no contour values"
 msgstr "keine Konturwerte"
 
-#: src/main/plot3d.c:1453
+#: src/main/plot3d.c:1449
 msgid "missing 'x' values"
 msgstr "fehlende 'x' Werte"
 
-#: src/main/plot3d.c:1455
+#: src/main/plot3d.c:1451
 msgid "increasing 'x' values expected"
 msgstr "'x' Werte aufsteigend erwartet"
 
-#: src/main/plot3d.c:1460
+#: src/main/plot3d.c:1456
 msgid "missing 'y' values"
 msgstr "fehlende 'y' Werte"
 
-#: src/main/plot3d.c:1462
+#: src/main/plot3d.c:1458
 msgid "increasing 'y' values expected"
 msgstr "'y' Werte aufsteigend erwartet"
 
-#: src/main/plot3d.c:1467
+#: src/main/plot3d.c:1463
 msgid "invalid NA contour values"
 msgstr "ungültige NA Werte für Kontur"
 
-#: src/main/plot3d.c:1766
+#: src/main/plot3d.c:1762
 msgid "invalid x / y values or limits"
 msgstr "ungültige x / y Werte oder Grenzen"
 
-#: src/main/plot3d.c:1768
+#: src/main/plot3d.c:1764
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "ungültige Konturwerte: müssen streng monoton ansteigen"
 
-#: src/main/plot3d.c:2009
+#: src/main/plot3d.c:2005
 msgid "coordinates outsize specified range"
 msgstr "Koordinaten außerhalb des angegebenen Bereiches"
 
-#: src/main/plot3d.c:2427 src/main/plot3d.c:2440
+#: src/main/plot3d.c:2423 src/main/plot3d.c:2436
 msgid "Axis orientation not calculated"
 msgstr "Achsenorientierung nicht berechnet"
 
-#: src/main/plot3d.c:2458
+#: src/main/plot3d.c:2454
 msgid "too few parameters"
 msgstr "zu wenig Parameter "
 
-#: src/main/plot3d.c:2490
+#: src/main/plot3d.c:2486
 msgid "invalid 'x' limits"
 msgstr "ungültige Grenzen für 'x'"
 
-#: src/main/plot3d.c:2492
+#: src/main/plot3d.c:2488
 msgid "invalid 'y' limits"
 msgstr "ungültige Grenzen für 'y'"
 
-#: src/main/plot3d.c:2494
+#: src/main/plot3d.c:2490
 msgid "invalid 'z' limits"
 msgstr "ungültige Grenzen für 'z'"
 
-#: src/main/plot3d.c:2515
+#: src/main/plot3d.c:2511
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab' muss ein Charktervektor der Länge 1 sein"
 
-#: src/main/plot3d.c:2517
+#: src/main/plot3d.c:2513
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab' muss ein Charktervektor der Länge 1 sein"
 
-#: src/main/plot3d.c:2519
+#: src/main/plot3d.c:2515
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab' muss ein Charktervektor der Länge 1 sein"
 
-#: src/main/plot3d.c:2539
+#: src/main/plot3d.c:2535
 msgid "invalid viewing parameters"
 msgstr "ungültige Parameter für Ansicht"
 
@@ -6256,19 +6256,19 @@ msgstr "nicht unterstützte Umwandlung"
 msgid "'iconv' is not available on this system"
 msgstr "'iconv' auf diesem System nicht verfügbar"
 
-#: src/main/sysutils.c:585
+#: src/main/sysutils.c:586
 msgid "cannot mkdir R_TempDir"
 msgstr "mkdir R_TempDir geht nicht"
 
-#: src/main/sysutils.c:601
+#: src/main/sysutils.c:602
 msgid "cannot allocate R_TempDir"
 msgstr "kann R_TempDir nicht allozieren"
 
-#: src/main/sysutils.c:619
+#: src/main/sysutils.c:621
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "ungültiges 'tempdir' in R_tmpnam"
 
-#: src/main/sysutils.c:634
+#: src/main/sysutils.c:636
 msgid "cannot find unused tempfile name"
 msgstr "kann keinen ungenutzten temporären Dateinamen finden"
 
@@ -7131,7 +7131,7 @@ msgstr "<Fehler: falsche Eingabe in Kodierung> "
 msgid "re-encoding is not available on this system"
 msgstr "Rekodieren ist auf diesem System nicht verfügbar"
 
-#: src/unix/sys-std.c:872
+#: src/unix/sys-std.c:871
 #, c-format
 msgid ""
 "Cannot open file '%s', reason '%s'\n"
@@ -7140,7 +7140,7 @@ msgstr ""
 "kann Datei '%s' nicht öffnen. Grund '%s'\n"
 "\n"
 
-#: src/unix/sys-std.c:875
+#: src/unix/sys-std.c:874
 #, c-format
 msgid ""
 "Cannot open file '%s'\n"
@@ -7149,19 +7149,19 @@ msgstr ""
 "kann Datei '%s' nicht öffnen\n"
 "\n"
 
-#: src/unix/sys-std.c:938 src/unix/sys-std.c:960
+#: src/unix/sys-std.c:937 src/unix/sys-std.c:959
 msgid "'file' argument is too long"
 msgstr "Argument für 'file' zu lang"
 
-#: src/unix/sys-std.c:944 src/unix/sys-std.c:946
+#: src/unix/sys-std.c:943 src/unix/sys-std.c:945
 msgid "no history mechanism available"
 msgstr "kein History Mechanismus verfügbar"
 
-#: src/unix/sys-std.c:969 src/unix/sys-std.c:971
+#: src/unix/sys-std.c:968 src/unix/sys-std.c:970
 msgid "no history available to save"
 msgstr "keine History zum Sichern verfügbar"
 
-#: src/unix/sys-std.c:1075
+#: src/unix/sys-std.c:1074
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep ist auf diesem System nicht implementiert"
 

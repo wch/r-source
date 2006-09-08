@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-08 16:28\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -215,7 +215,13 @@ msgstr ""
 msgid "'%s' has a help file but no examples file"
 msgstr ""
 
+msgid "test '%s' is not available"
+msgstr ""
+
 msgid "'fix' requires a name"
+msgstr ""
+
+msgid "'form' must be a two-sided formula"
 msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
@@ -557,6 +563,15 @@ msgstr ""
 msgid "option must be a length one character vector or NULL"
 msgstr ""
 
+msgid "'file' must be a character string or connection"
+msgstr ""
+
+msgid "empty beginning of file"
+msgstr ""
+
+msgid "first five rows are empty: giving up"
+msgstr ""
+
 msgid "invalid 'socket' argument"
 msgstr ""
 
@@ -603,6 +618,27 @@ msgid "Enter zero or more numbers separated by space"
 msgstr ""
 
 msgid "Invalid input, please try again"
+msgstr ""
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr ""
+
+msgid "invalid numbers in 'quote'"
+msgstr ""
+
+msgid "invalid 'quote' specification"
+msgstr ""
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
+msgid "invalid 'col.names' specification"
+msgstr ""
+
+msgid "appending column names to file"
+msgstr ""
+
+msgid "attempt to change '%s' ignored"
 msgstr ""
 
 msgid "'subject' missing"

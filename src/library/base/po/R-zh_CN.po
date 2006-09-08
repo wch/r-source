@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-08 16:27\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -27,6 +27,12 @@ msgstr "见help(\"Defunct\"))和help(\"%s-defunct\")。"
 
 msgid "See help(\"Defunct\")"
 msgstr "见help(\"Defunct\"))"
+
+msgid "'symbol.C' is not needed: please remove it"
+msgstr ""
+
+msgid "'symbol.For' is not needed: please remove it"
+msgstr ""
 
 msgid "'%s' is deprecated."
 msgstr "%s不再有用。"
@@ -615,9 +621,6 @@ msgstr "'subset'必需可以被评估成为逻辑值"
 msgid "'subset' must be logical"
 msgstr "'subset'必需是逻辑值"
 
-msgid "'form' must be a two-sided formula"
-msgstr "'form'必需是双边公式"
-
 msgid "value for '"
 msgstr "这个符号的值'"
 
@@ -875,6 +878,9 @@ msgstr "找不到匹配的行"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x'和'by.y'设定了不同数目的列"
 
+msgid "(loaded the methods namespace)"
+msgstr ""
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -991,9 +997,7 @@ msgstr "不能进口到已经封闭了的名字空间"
 msgid "invalid import target"
 msgstr "进口目标有错"
 
-msgid ""
-"Found methods to import for function \"%s\" but not the generic itself, from "
-"package \"%s\""
+msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
@@ -1099,39 +1103,6 @@ msgstr "'k'值太大"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "需要大一点的'ncol'值，因为有主轴"
-
-msgid "no lines available in input"
-msgstr "输入里内容"
-
-msgid "empty beginning of file"
-msgstr "文件开头是空白的"
-
-msgid "header and 'col.names' are of different lengths"
-msgstr "'header'和'col.names'的长度应当一致"
-
-msgid "more columns than column names"
-msgstr "列数比列名多"
-
-msgid "more column names than columns"
-msgstr "列名比列数多"
-
-msgid "first five rows are empty: giving up"
-msgstr "最先的五行都是空白的：停止工作"
-
-msgid "not all columns named in 'colClasses' exist"
-msgstr "'colClasses'里有些列不存在"
-
-msgid "invalid numeric 'as.is' expression"
-msgstr "数值'as.is'表式有错"
-
-msgid "not all columns named in 'as.is' exist"
-msgstr "as.is里有些列名不存在"
-
-msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr "'as.is'的长度不对%d  != cols = %d "
-
-msgid "invalid 'row.names' specification"
-msgstr "'row.names'的设定不对"
 
 msgid "'x' must be a vector"
 msgstr "'x'必需为向量"
@@ -1328,27 +1299,6 @@ msgstr "无traceback"
 msgid "argument to 'which' is not logical"
 msgstr "'which'的变元不是逻辑值"
 
-msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
-
-msgid "invalid numbers in 'quote'"
-msgstr "'quote'里的数不对"
-
-msgid "invalid 'quote' specification"
-msgstr "'quote'的设定不对"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr "当row.names = FALSE时col.names = NA是没有意义的"
-
-msgid "invalid 'col.names' specification"
-msgstr "'col.names'的设定不对"
-
-msgid "appending column names to file"
-msgstr "把列名附加到文件上"
-
-msgid "attempt to change '%s' ignored"
-msgstr "改变'%s'没有起作用"
-
 msgid "invalid 'digits'"
 msgstr "'digits'的值不对"
 
@@ -1404,6 +1354,60 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "'form' must be a two-sided formula"
+#~ msgstr "'form'必需是双边公式"
+
+#~ msgid "no lines available in input"
+#~ msgstr "输入里内容"
+
+#~ msgid "empty beginning of file"
+#~ msgstr "文件开头是空白的"
+
+#~ msgid "header and 'col.names' are of different lengths"
+#~ msgstr "'header'和'col.names'的长度应当一致"
+
+#~ msgid "more columns than column names"
+#~ msgstr "列数比列名多"
+
+#~ msgid "more column names than columns"
+#~ msgstr "列名比列数多"
+
+#~ msgid "first five rows are empty: giving up"
+#~ msgstr "最先的五行都是空白的：停止工作"
+
+#~ msgid "not all columns named in 'colClasses' exist"
+#~ msgstr "'colClasses'里有些列不存在"
+
+#~ msgid "invalid numeric 'as.is' expression"
+#~ msgstr "数值'as.is'表式有错"
+
+#~ msgid "not all columns named in 'as.is' exist"
+#~ msgstr "as.is里有些列名不存在"
+
+#~ msgid "'as.is' has the wrong length %d  != cols = %d"
+#~ msgstr "'as.is'的长度不对%d  != cols = %d "
+
+#~ msgid "invalid 'row.names' specification"
+#~ msgstr "'row.names'的设定不对"
+
+#~ msgid "invalid numbers in 'quote'"
+#~ msgstr "'quote'里的数不对"
+
+#~ msgid "invalid 'quote' specification"
+#~ msgstr "'quote'的设定不对"
+
+#~ msgid "col.names = NA makes no sense when row.names = FALSE"
+#~ msgstr "当row.names = FALSE时col.names = NA是没有意义的"
+
+#~ msgid "invalid 'col.names' specification"
+#~ msgstr "'col.names'的设定不对"
+
+#~ msgid "appending column names to file"
+#~ msgstr "把列名附加到文件上"
+
+#~ msgid "attempt to change '%s' ignored"
+#~ msgstr "改变'%s'没有起作用"
 
 #, fuzzy
 #~ msgid "rows are empty: giving up"

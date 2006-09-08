@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-08 16:28\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -233,8 +233,15 @@ msgstr "找到了多个帮助文件：用程序包'%s'"
 msgid "'%s' has a help file but no examples file"
 msgstr "'%s'含帮助文件但没有示范文件"
 
+#, fuzzy
+msgid "test '%s' is not available"
+msgstr "没有'%s'这种相依关系"
+
 msgid "'fix' requires a name"
 msgstr "'fix'需要名字值"
+
+msgid "'form' must be a two-sided formula"
+msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "在指定的程序包和图书馆里没有与'%s'有关的说明书:"
@@ -615,6 +622,16 @@ msgstr ""
 msgid "option must be a length one character vector or NULL"
 msgstr "'package'的值必需是字符串或NULL"
 
+#, fuzzy
+msgid "'file' must be a character string or connection"
+msgstr "'package'的值必需是字符串或NULL"
+
+msgid "empty beginning of file"
+msgstr ""
+
+msgid "first five rows are empty: giving up"
+msgstr ""
+
 msgid "invalid 'socket' argument"
 msgstr "'套介面'变元不对"
 
@@ -668,6 +685,29 @@ msgstr "输入0个或多个由空格分开的数字"
 
 msgid "Invalid input, please try again"
 msgstr "输入不对，请再试一试"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr ""
+
+msgid "invalid numbers in 'quote'"
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'quote' specification"
+msgstr "'agrep'设定得不对"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'col.names' specification"
+msgstr "'agrep'设定得不对"
+
+msgid "appending column names to file"
+msgstr ""
+
+msgid "attempt to change '%s' ignored"
+msgstr ""
 
 msgid "'subject' missing"
 msgstr "缺少'subject'值"

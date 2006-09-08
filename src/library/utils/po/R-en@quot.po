@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
-"PO-Revision-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-08 16:28\n"
+"PO-Revision-Date: 2006-09-08 16:28\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -250,8 +250,14 @@ msgstr "more than one help file found: using package ‘%s’"
 msgid "'%s' has a help file but no examples file"
 msgstr "‘%s’ has a help file but no examples file"
 
+msgid "test '%s' is not available"
+msgstr "test ‘%s’ is not available"
+
 msgid "'fix' requires a name"
 msgstr "‘fix’ requires a name"
+
+msgid "'form' must be a two-sided formula"
+msgstr "‘form’ must be a two-sided formula"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "No documentation for ‘%s’ in specified packages and libraries:"
@@ -635,6 +641,15 @@ msgstr "HTTPUserAgent"
 msgid "option must be a length one character vector or NULL"
 msgstr "option must be a length one character vector or NULL"
 
+msgid "'file' must be a character string or connection"
+msgstr "‘file’ must be a character string or connection"
+
+msgid "empty beginning of file"
+msgstr "empty beginning of file"
+
+msgid "first five rows are empty: giving up"
+msgstr "first five rows are empty: giving up"
+
 msgid "invalid 'socket' argument"
 msgstr "invalid ‘socket’ argument"
 
@@ -686,6 +701,27 @@ msgstr "Enter zero or more numbers separated by space"
 
 msgid "Invalid input, please try again"
 msgstr "Invalid input, please try again"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr "‘quote’ must be 'TRUE', ‘FALSE’ or numeric"
+
+msgid "invalid numbers in 'quote'"
+msgstr "invalid numbers in ‘quote’"
+
+msgid "invalid 'quote' specification"
+msgstr "invalid ‘quote’ specification"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr "col.names = NA makes no sense when row.names = FALSE"
+
+msgid "invalid 'col.names' specification"
+msgstr "invalid ‘col.names’ specification"
+
+msgid "appending column names to file"
+msgstr "appending column names to file"
+
+msgid "attempt to change '%s' ignored"
+msgstr "attempt to change ‘%s’ ignored"
 
 msgid "'subject' missing"
 msgstr "‘subject’ missing"

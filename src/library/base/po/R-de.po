@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-08 16:27\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -27,6 +27,12 @@ msgstr "Siehe help(\"Defunct\") und help(\"%s-defunct\")."
 
 msgid "See help(\"Defunct\")"
 msgstr "Siehe help(\"Defunct\")"
+
+msgid "'symbol.C' is not needed: please remove it"
+msgstr ""
+
+msgid "'symbol.For' is not needed: please remove it"
+msgstr ""
 
 msgid "'%s' is deprecated."
 msgstr "'%s' ist veraltet."
@@ -629,9 +635,6 @@ msgstr "'subset' muss sich zu booleschem Wert berechnen"
 msgid "'subset' must be logical"
 msgstr "'subset' muss boolesch sein"
 
-msgid "'form' must be a two-sided formula"
-msgstr "'form' muss eine zweiseitige Formel sein"
-
 msgid "value for '"
 msgstr "Wert für '"
 
@@ -893,6 +896,9 @@ msgstr "keine Zeilen zu suchen"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' und 'by.y' geben unterschiedliche Zahlen von Spalten an"
 
+msgid "(loaded the methods namespace)"
+msgstr ""
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -1012,9 +1018,7 @@ msgstr "kann nicht in einen versiegelten Namensraum importieren"
 msgid "invalid import target"
 msgstr "ungültiges Ziel für Import"
 
-msgid ""
-"Found methods to import for function \"%s\" but not the generic itself, from "
-"package \"%s\""
+msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
@@ -1120,39 +1124,6 @@ msgstr "'k' ist zu groß"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "benötige größeren Wert für 'ncol', da Pivotierung aufgetreten"
-
-msgid "no lines available in input"
-msgstr "keine Zeilen in der Eingabe verfügbar"
-
-msgid "empty beginning of file"
-msgstr "leerer Dateianfang"
-
-msgid "header and 'col.names' are of different lengths"
-msgstr "Header und 'col.names' haben unterschiedliche Längen"
-
-msgid "more columns than column names"
-msgstr "mehr Spalten als Spaltennamen"
-
-msgid "more column names than columns"
-msgstr "mehr Spaltennamen als Spalten"
-
-msgid "first five rows are empty: giving up"
-msgstr "die ersten 5 Zeilen sind leer: gebe auf"
-
-msgid "not all columns named in 'colClasses' exist"
-msgstr "nicht alle in 'colClasses' benannten Spalten existieren"
-
-msgid "invalid numeric 'as.is' expression"
-msgstr "ungültiger numerischer 'as.is' Ausdruck"
-
-msgid "not all columns named in 'as.is' exist"
-msgstr "nicht alle Spalten, die in 'as.is' benannt wurden, existieren"
-
-msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr "'as.is' hat die falsche Länge %d != cols = %d"
-
-msgid "invalid 'row.names' specification"
-msgstr "ungültige 'row.names' Spezifikation"
 
 msgid "'x' must be a vector"
 msgstr "'x' muss ein Vektor sein"
@@ -1348,27 +1319,6 @@ msgstr "Kein traceback vefügbar"
 msgid "argument to 'which' is not logical"
 msgstr "Argument zu 'which' ist nicht boolesch"
 
-msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
-
-msgid "invalid numbers in 'quote'"
-msgstr "ungültige Zahlen in 'quote'"
-
-msgid "invalid 'quote' specification"
-msgstr "ungültige 'quote' Spezifikation"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
-
-msgid "invalid 'col.names' specification"
-msgstr "ungültige 'col.names' Spezifikation"
-
-msgid "appending column names to file"
-msgstr "hänge Spaltennamen an Datei an"
-
-msgid "attempt to change '%s' ignored"
-msgstr ""
-
 msgid "invalid 'digits'"
 msgstr "ungültige 'digits'"
 
@@ -1427,6 +1377,54 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "'form' must be a two-sided formula"
+#~ msgstr "'form' muss eine zweiseitige Formel sein"
+
+#~ msgid "no lines available in input"
+#~ msgstr "keine Zeilen in der Eingabe verfügbar"
+
+#~ msgid "empty beginning of file"
+#~ msgstr "leerer Dateianfang"
+
+#~ msgid "header and 'col.names' are of different lengths"
+#~ msgstr "Header und 'col.names' haben unterschiedliche Längen"
+
+#~ msgid "more columns than column names"
+#~ msgstr "mehr Spalten als Spaltennamen"
+
+#~ msgid "more column names than columns"
+#~ msgstr "mehr Spaltennamen als Spalten"
+
+#~ msgid "first five rows are empty: giving up"
+#~ msgstr "die ersten 5 Zeilen sind leer: gebe auf"
+
+#~ msgid "not all columns named in 'colClasses' exist"
+#~ msgstr "nicht alle in 'colClasses' benannten Spalten existieren"
+
+#~ msgid "invalid numeric 'as.is' expression"
+#~ msgstr "ungültiger numerischer 'as.is' Ausdruck"
+
+#~ msgid "not all columns named in 'as.is' exist"
+#~ msgstr "nicht alle Spalten, die in 'as.is' benannt wurden, existieren"
+
+#~ msgid "'as.is' has the wrong length %d  != cols = %d"
+#~ msgstr "'as.is' hat die falsche Länge %d != cols = %d"
+
+#~ msgid "invalid 'row.names' specification"
+#~ msgstr "ungültige 'row.names' Spezifikation"
+
+#~ msgid "invalid numbers in 'quote'"
+#~ msgstr "ungültige Zahlen in 'quote'"
+
+#~ msgid "invalid 'quote' specification"
+#~ msgstr "ungültige 'quote' Spezifikation"
+
+#~ msgid "invalid 'col.names' specification"
+#~ msgstr "ungültige 'col.names' Spezifikation"
+
+#~ msgid "appending column names to file"
+#~ msgstr "hänge Spaltennamen an Datei an"
 
 #, fuzzy
 #~ msgid "rows are empty: giving up"

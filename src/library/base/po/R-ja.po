@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-08 16:27\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -22,6 +22,12 @@ msgstr "help(\"Defunct\") と help(\"%s-defunct\") を見て下さい"
 
 msgid "See help(\"Defunct\")"
 msgstr "help(\"Defunct\") を見て下さい"
+
+msgid "'symbol.C' is not needed: please remove it"
+msgstr ""
+
+msgid "'symbol.For' is not needed: please remove it"
+msgstr ""
 
 msgid "'%s' is deprecated."
 msgstr "'%s' は廃止予定です"
@@ -627,9 +633,6 @@ msgstr "'subset' は論理値として評価されなければなりません"
 msgid "'subset' must be logical"
 msgstr "'subset' は論理値でなければなりません"
 
-msgid "'form' must be a two-sided formula"
-msgstr "'form' は左右の項を持つモデル式でなければなりません"
-
 msgid "value for '"
 msgstr "以下に対する値："
 
@@ -893,6 +896,9 @@ msgstr "マッチすべき行がありません"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' そして 'by.y' は異なった列数を指定しています"
 
+msgid "(loaded the methods namespace)"
+msgstr ""
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -1015,9 +1021,7 @@ msgstr "封印された名前空間にはインポートできません"
 msgid "invalid import target"
 msgstr "無効なインポート対象です"
 
-msgid ""
-"Found methods to import for function \"%s\" but not the generic itself, from "
-"package \"%s\""
+msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
@@ -1126,39 +1130,6 @@ msgstr "'k' は大きすぎます"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "ピボット操作が起きたので、より大きな 'ncol' 値が必要です"
-
-msgid "no lines available in input"
-msgstr "入力に利用可能な行がありません"
-
-msgid "empty beginning of file"
-msgstr "ファイルの開始部分が空です"
-
-msgid "header and 'col.names' are of different lengths"
-msgstr "ヘッダーと 'col.names' が異なった長さです"
-
-msgid "more columns than column names"
-msgstr "列名よりも多くの列があります"
-
-msgid "more column names than columns"
-msgstr "列数よりも多くの列名があります"
-
-msgid "first five rows are empty: giving up"
-msgstr "最初の 5 行が空です。お手上げです"
-
-msgid "not all columns named in 'colClasses' exist"
-msgstr "'colClasses' に名前があげられた列の中に存在しないものがあります"
-
-msgid "invalid numeric 'as.is' expression"
-msgstr "無効な数値 'as.is' 表現式"
-
-msgid "not all columns named in 'as.is' exist"
-msgstr "'as.is' に名前があげられた列の中に存在しないものがあります"
-
-msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr "'as.is' は間違った長さ %d != cols = %d を持ちます"
-
-msgid "invalid 'row.names' specification"
-msgstr "無効な 'row.names' の指定です"
 
 msgid "'x' must be a vector"
 msgstr "'x' はベクトルでなければなりません"
@@ -1356,27 +1327,6 @@ msgstr "利用できる traceback がありません"
 msgid "argument to 'which' is not logical"
 msgstr "'which' への引数は論理値ではありません"
 
-msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
-
-msgid "invalid numbers in 'quote'"
-msgstr "'quote' 中に無効な数値があります"
-
-msgid "invalid 'quote' specification"
-msgstr "無効な 'quote' 指定です"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr "row.names = FALSE の時 col.names = NA は意味をなしません"
-
-msgid "invalid 'col.names' specification"
-msgstr "無効な 'col.names' 指定です"
-
-msgid "appending column names to file"
-msgstr "ファイルへの列名を加えます"
-
-msgid "attempt to change '%s' ignored"
-msgstr "'%s' を変更しようとしましたが無視されます"
-
 msgid "invalid 'digits'"
 msgstr "無効な 'digits' です"
 
@@ -1436,6 +1386,60 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
 msgstr[1] "警告メッセージ(複数)：\n"
+
+#~ msgid "'form' must be a two-sided formula"
+#~ msgstr "'form' は左右の項を持つモデル式でなければなりません"
+
+#~ msgid "no lines available in input"
+#~ msgstr "入力に利用可能な行がありません"
+
+#~ msgid "empty beginning of file"
+#~ msgstr "ファイルの開始部分が空です"
+
+#~ msgid "header and 'col.names' are of different lengths"
+#~ msgstr "ヘッダーと 'col.names' が異なった長さです"
+
+#~ msgid "more columns than column names"
+#~ msgstr "列名よりも多くの列があります"
+
+#~ msgid "more column names than columns"
+#~ msgstr "列数よりも多くの列名があります"
+
+#~ msgid "first five rows are empty: giving up"
+#~ msgstr "最初の 5 行が空です。お手上げです"
+
+#~ msgid "not all columns named in 'colClasses' exist"
+#~ msgstr "'colClasses' に名前があげられた列の中に存在しないものがあります"
+
+#~ msgid "invalid numeric 'as.is' expression"
+#~ msgstr "無効な数値 'as.is' 表現式"
+
+#~ msgid "not all columns named in 'as.is' exist"
+#~ msgstr "'as.is' に名前があげられた列の中に存在しないものがあります"
+
+#~ msgid "'as.is' has the wrong length %d  != cols = %d"
+#~ msgstr "'as.is' は間違った長さ %d != cols = %d を持ちます"
+
+#~ msgid "invalid 'row.names' specification"
+#~ msgstr "無効な 'row.names' の指定です"
+
+#~ msgid "invalid numbers in 'quote'"
+#~ msgstr "'quote' 中に無効な数値があります"
+
+#~ msgid "invalid 'quote' specification"
+#~ msgstr "無効な 'quote' 指定です"
+
+#~ msgid "col.names = NA makes no sense when row.names = FALSE"
+#~ msgstr "row.names = FALSE の時 col.names = NA は意味をなしません"
+
+#~ msgid "invalid 'col.names' specification"
+#~ msgstr "無効な 'col.names' 指定です"
+
+#~ msgid "appending column names to file"
+#~ msgstr "ファイルへの列名を加えます"
+
+#~ msgid "attempt to change '%s' ignored"
+#~ msgstr "'%s' を変更しようとしましたが無視されます"
 
 #, fuzzy
 #~ msgid "rows are empty: giving up"

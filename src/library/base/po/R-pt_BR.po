@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-08 16:27\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -27,6 +27,12 @@ msgstr "Veja help(\"Defunct\") e help(\"%s-defunct\")."
 
 msgid "See help(\"Defunct\")"
 msgstr "Veja help(\"Defunct\")"
+
+msgid "'symbol.C' is not needed: please remove it"
+msgstr ""
+
+msgid "'symbol.For' is not needed: please remove it"
+msgstr ""
 
 msgid "'%s' is deprecated."
 msgstr "'%s' é obsoleto."
@@ -635,9 +641,6 @@ msgstr "'subset' deve poder ser avaliado logicamente"
 msgid "'subset' must be logical"
 msgstr "'subset' deve ser lógico"
 
-msgid "'form' must be a two-sided formula"
-msgstr "'form' deve ser uma fórmula com dois lados"
-
 msgid "value for '"
 msgstr "valor para '"
 
@@ -899,6 +902,9 @@ msgstr "nenhuma linha para parear"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' e 'by.y' especificam números de colunas diferentes"
 
+msgid "(loaded the methods namespace)"
+msgstr ""
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -1018,9 +1024,7 @@ msgstr "não é possível importar em um espaço de nomes selado"
 msgid "invalid import target"
 msgstr "alvo de importação inválido"
 
-msgid ""
-"Found methods to import for function \"%s\" but not the generic itself, from "
-"package \"%s\""
+msgid "Found methods to import for function \"%s\" but not the generic itself"
 msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
@@ -1128,39 +1132,6 @@ msgstr "'k' é muito grande"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr "necessário valor maior de 'ncol', pois houve pivotamento"
-
-msgid "no lines available in input"
-msgstr "nenhuma linha disponível na entrada"
-
-msgid "empty beginning of file"
-msgstr "começo de arquivo vazio"
-
-msgid "header and 'col.names' are of different lengths"
-msgstr "'header' e 'col.names' têm comprimentos diferentes"
-
-msgid "more columns than column names"
-msgstr "mais colunas que nomes de colunas"
-
-msgid "more column names than columns"
-msgstr "mais nomes de colunas que colunas"
-
-msgid "first five rows are empty: giving up"
-msgstr "cinco primeiras linhas vazias: desistindo"
-
-msgid "not all columns named in 'colClasses' exist"
-msgstr "nem todas as colunas com nome em 'colClasses' existem"
-
-msgid "invalid numeric 'as.is' expression"
-msgstr "expressão numérica 'as.is' inválida"
-
-msgid "not all columns named in 'as.is' exist"
-msgstr "nem todas as colunas nomeadas em 'as.is' existem"
-
-msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr "'as.is' tem o comprimento errado %d != cols = %d"
-
-msgid "invalid 'row.names' specification"
-msgstr "especificação de 'row.names' inválida"
 
 msgid "'x' must be a vector"
 msgstr "'x' deve ser um vetor"
@@ -1357,27 +1328,6 @@ msgstr "Nenhum rastreamento disponível"
 msgid "argument to 'which' is not logical"
 msgstr "argumento para 'which' não é lógico"
 
-msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
-
-msgid "invalid numbers in 'quote'"
-msgstr "números inválidos em 'quote'"
-
-msgid "invalid 'quote' specification"
-msgstr "especificação de 'quote' inválida"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr "col.names = NA não faz sentido com quando row.names = FALSE"
-
-msgid "invalid 'col.names' specification"
-msgstr "especificação de 'col.names' inválida"
-
-msgid "appending column names to file"
-msgstr "acrescentando nomes de coluna no arquivo"
-
-msgid "attempt to change '%s' ignored"
-msgstr "tentativa de mudar '%s' ignorada"
-
 msgid "invalid 'digits'"
 msgstr "'digits' inválido"
 
@@ -1436,6 +1386,60 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "'form' must be a two-sided formula"
+#~ msgstr "'form' deve ser uma fórmula com dois lados"
+
+#~ msgid "no lines available in input"
+#~ msgstr "nenhuma linha disponível na entrada"
+
+#~ msgid "empty beginning of file"
+#~ msgstr "começo de arquivo vazio"
+
+#~ msgid "header and 'col.names' are of different lengths"
+#~ msgstr "'header' e 'col.names' têm comprimentos diferentes"
+
+#~ msgid "more columns than column names"
+#~ msgstr "mais colunas que nomes de colunas"
+
+#~ msgid "more column names than columns"
+#~ msgstr "mais nomes de colunas que colunas"
+
+#~ msgid "first five rows are empty: giving up"
+#~ msgstr "cinco primeiras linhas vazias: desistindo"
+
+#~ msgid "not all columns named in 'colClasses' exist"
+#~ msgstr "nem todas as colunas com nome em 'colClasses' existem"
+
+#~ msgid "invalid numeric 'as.is' expression"
+#~ msgstr "expressão numérica 'as.is' inválida"
+
+#~ msgid "not all columns named in 'as.is' exist"
+#~ msgstr "nem todas as colunas nomeadas em 'as.is' existem"
+
+#~ msgid "'as.is' has the wrong length %d  != cols = %d"
+#~ msgstr "'as.is' tem o comprimento errado %d != cols = %d"
+
+#~ msgid "invalid 'row.names' specification"
+#~ msgstr "especificação de 'row.names' inválida"
+
+#~ msgid "invalid numbers in 'quote'"
+#~ msgstr "números inválidos em 'quote'"
+
+#~ msgid "invalid 'quote' specification"
+#~ msgstr "especificação de 'quote' inválida"
+
+#~ msgid "col.names = NA makes no sense when row.names = FALSE"
+#~ msgstr "col.names = NA não faz sentido com quando row.names = FALSE"
+
+#~ msgid "invalid 'col.names' specification"
+#~ msgstr "especificação de 'col.names' inválida"
+
+#~ msgid "appending column names to file"
+#~ msgstr "acrescentando nomes de coluna no arquivo"
+
+#~ msgid "attempt to change '%s' ignored"
+#~ msgstr "tentativa de mudar '%s' ignorada"
 
 #, fuzzy
 #~ msgid "rows are empty: giving up"
