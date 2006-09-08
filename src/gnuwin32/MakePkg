@@ -245,6 +245,7 @@ Dynlib0:
 srcDynlib:
 ifeq ($(strip $(SRCMAKE)),)
 ifneq ($(strip $(LOBJS)),)
+ifneq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "  making DLL ..."
 	@makefiles="-f $(RHOME)/src/gnuwin32/MakeDll" ; \
 	if test -r "${HOME}/.R/Makevars.win"; then \
@@ -257,6 +258,18 @@ ifneq ($(strip $(LOBJS)),)
 	  DLLNAME=$(DLLNAME) CLINK_CPPFLAGS=$${CLINK_CPPFLAGS} \
 	  $${makefiles}
 	@$(ECHO) "  ... DLL made"
+else
+	@$(ECHO) "  making DLL ..."
+	@makefiles="-f $(RHOME)/src/gnuwin32/MakeDll" ; \
+	if test -r "${HOME}/.R/Makevars.win"; then \
+	  makefiles="$${makefiles} -f ${HOME}/.R/Makevars.win"; \
+	elif test -r "${HOME}/.R/Makevars"; then \
+	  makefiles="$${makefiles} -f \"${HOME}/.R/Makevars\""; \
+	fi; \
+	$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
+	  DLLNAME=$(DLLNAME) $${makefiles}
+	@$(ECHO) "  ... DLL made"
+endif
 endif
 else
 	@$(ECHO) "  running src/Makefile.win ..."
