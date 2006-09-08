@@ -158,7 +158,7 @@ heightDetails.lines <- function(x) {
 
 linesGrob <- function(x=unit(c(0, 1), "npc"),
                       y=unit(c(0, 1), "npc"),
-                      default.units="npc", 
+                      default.units="npc",
                       arrow=NULL,
                       name=NULL, gp=gpar(), vp=NULL) {
   # Allow user to specify unitless vector;  add default units
@@ -166,16 +166,16 @@ linesGrob <- function(x=unit(c(0, 1), "npc"),
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  grob(x=x, y=y, 
+  grob(x=x, y=y,
        arrow=arrow, name=name, gp=gp, vp=vp, cl="lines")
 }
 
 grid.lines <- function(x=unit(c(0, 1), "npc"),
                        y=unit(c(0, 1), "npc"),
-                       default.units="npc", 
+                       default.units="npc",
                        arrow=NULL,
                        name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
-  lg <- linesGrob(x=x, y=y, 
+  lg <- linesGrob(x=x, y=y,
                   default.units=default.units, arrow=arrow,
                   name=name, gp=gp, vp=vp)
   if (draw)
@@ -268,7 +268,7 @@ heightDetails.polyline <- function(x) {
 polylineGrob <- function(x=unit(c(0, 1), "npc"),
                          y=unit(c(0, 1), "npc"),
                          id=NULL, id.lengths=NULL,
-                         default.units="npc", 
+                         default.units="npc",
                          arrow=NULL,
                          name=NULL, gp=gpar(), vp=NULL) {
     # Allow user to specify unitless vector;  add default units
@@ -342,7 +342,7 @@ heightDetails.segments <- function(x) {
 
 segmentsGrob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
                          x1=unit(1, "npc"), y1=unit(1, "npc"),
-                         default.units="npc", 
+                         default.units="npc",
                          arrow=NULL,
                          name=NULL, gp=gpar(), vp=NULL) {
   # Allow user to specify unitless vector;  add default units
@@ -360,7 +360,7 @@ segmentsGrob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
 
 grid.segments <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
                           x1=unit(1, "npc"), y1=unit(1, "npc"),
-                          default.units="npc", 
+                          default.units="npc",
                           arrow=NULL,
                           name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
   sg <- segmentsGrob(x0=x0, y0=y0, x1=x1, y1=y1,
@@ -669,7 +669,7 @@ validDetails.xspline <- function(x) {
   if (any(x$shape < -1 || x$shape > 1))
     stop("shape must be between -1 and 1")
   x$open <- as.logical(x$open)
-  if (x$open && 
+  if (x$open &&
       (x$shape[1] != 0 ||
        rep(x$shape, length.out=nx)[nx] != 0)) {
     # warning("First and last shape set to 0")
@@ -743,7 +743,7 @@ heightDetails.xspline <- function(x) {
 
 xsplineGrob <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
                         id=NULL, id.lengths=NULL,
-                        default.units="npc", 
+                        default.units="npc",
                         shape=0, open=TRUE, arrow=NULL, repEnds=TRUE,
                         name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
@@ -1091,8 +1091,8 @@ heightDetails.points <- function(x) {
     unit(bounds[4], "inches")
 }
 
-pointsGrob <- function(x=runif(10),
-                       y=runif(10),
+pointsGrob <- function(x=stats::runif(10),
+                       y=stats::runif(10),
                        pch=1, size=unit(1, "char"),
                        default.units="native",
                        name=NULL, gp=gpar(), vp=NULL) {
@@ -1104,8 +1104,8 @@ pointsGrob <- function(x=runif(10),
        name=name, gp=gp, vp=vp, cl="points")
 }
 
-grid.points <- function(x=runif(10),
-                        y=runif(10),
+grid.points <- function(x=stats::runif(10),
+                        y=stats::runif(10),
                         pch=1, size=unit(1, "char"),
                         default.units="native",
                         name=NULL, gp=gpar(),

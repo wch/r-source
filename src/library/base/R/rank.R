@@ -7,7 +7,8 @@ rank <- function(x, na.last = TRUE,
                 "average"= , "min"= , "max" =
                 .Internal(rank(   x[!nas], ties.method)),
                 "first" = sort.list(sort.list(x[!nas])),
-                "random" = sort.list(order(   x[!nas], runif(sum(!nas)))))
+                "random" = sort.list(order(   x[!nas],
+                stats::runif(sum(!nas)))))
     if(!is.na(na.last) && any(nas)) {
 	## the internal code has ranks in [1, length(y)]
 	storage.mode(x) <- "double"

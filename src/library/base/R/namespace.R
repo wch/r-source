@@ -727,10 +727,9 @@ namespaceImportFrom <- function(self, ns, vars, generics) {
                   delete <- c(delete, ii)
                 if(!missing(generics)) {
                     genName <- generics[[i]]
-                    fdef <- getGeneric(genName, impenv)
+                    fdef <- methods:::getGeneric(genName, impenv)
                     if(is.null(fdef))
-                      warning(gettextf("Found methods to import for function \"%s\" but not the generic itself, from package \"%s\"",
-                                       genName, pkg))
+                      warning(gettextf("Found methods to import for function \"%s\" but not the generic itself"), genName)
                     else
                      methods:::.updateMethodsInTable(fdef, ns, TRUE)
                  }
