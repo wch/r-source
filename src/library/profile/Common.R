@@ -52,45 +52,7 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
                     ' in options("defaultPackages") was not found', call.=FALSE)
     }
     sch <- search()
-    if(! "package:utils" %in% sch) {
-        autoload("example", "utils")
-        autoload("methods", "utils")
-        autoload("str", "utils")
-    }
     if(! "package:stats" %in% sch) {
-        autoload("aov", "stats")
-        autoload("lm", "stats")
-        autoload("lowess", "stats")
-        autoload("model.frame", "stats")
-        autoload("predict", "stats")
-        autoload("quantile", "stats")
-        autoload("rexp", "stats")
-        autoload("rnorm", "stats")
-        autoload("rpois", "stats")
-        autoload("rt", "stats")
-        autoload("runif", "stats")
         autoload("ts", "stats")
-        autoload("var", "stats")
-    }
-    if(! "package:graphics" %in% sch) {
-        autoload("barplot", "graphics")
-        autoload("boxplot", "graphics")
-        autoload("contour", "graphics")
-        autoload("coplot", "graphics")
-        autoload("hist", "graphics")
-        autoload("identify", "graphics")
-        autoload("image", "graphics")
-        autoload("layout", "graphics")
-        autoload("lines", "graphics")
-        autoload("matplot", "graphics")
-        autoload("pairs", "graphics")
-        autoload("par", "graphics")
-        autoload("persp", "graphics")
-        autoload("plot", "graphics")
-        autoload("points", "graphics")
-        autoload("text", "graphics")
-    }
-    if(! "package:grDevices" %in% sch) {
-        autoload("xy.coords", "grDevices")
     }
 }
