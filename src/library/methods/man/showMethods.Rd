@@ -30,8 +30,7 @@ showMethods(f = character(), where = topenv(parent.frame()),
     See \code{\link{selectMethod}} if you want to know what method is
     dispatched for particular classes of arguments.}
   \item{showEmpty}{logical indicating if methods with empty method lists
-    should be shown at all.  Note
-    that \code{FALSE} is \emph{not yet implemented}.}
+    should be shown at all.}
 
   \item{printTo}{The connection on which the printed information will be
     written.  If \code{printTo} is \code{FALSE}, the output will be
@@ -100,8 +99,8 @@ not.there <- !any("package:stats4" == search())
 if(not.there) library(stats4)
 showMethods(class = "mle")                           # not really helpful
 showMethods(class = "mle", where = "package:stats4") # much better
-%% FIXME(2): rather don't show those with  <Empty Methods List>
-if(not.there) detach("package:stats4")
+showMethods(class = "mle", showEmpty = FALSE)        # better still
 
+if(not.there) detach("package:stats4")
 }
 \keyword{methods}

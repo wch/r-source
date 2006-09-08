@@ -82,7 +82,7 @@ setGeneric <-
       .uncacheGeneric(name, oldDef)
     assign(name, fdef, where)
     .cacheGeneric(name, fdef)
-    if(!.UsingMethodsTables() && 
+    if(!.UsingMethodsTables() &&
        length(fdef@group)> 0 && !is.null(getGeneric(fdef@group[[1]], where = where)))
         methods <- getAllMethods(name, fdef, where)
     else
@@ -492,7 +492,7 @@ getMethod <-
         value <- .findMethodInTable(signature, mlist, fdef)
         if(is.null(value) && !optional)
           stop(gettextf('No method found for function "%s" and signature %s',
-                       f, paste(signature, collapse = ", ")))
+                        f, paste(signature, collapse = ", ")))
         return(value)
     }
     i <- 1
@@ -782,9 +782,10 @@ showMethods <-
             cat(file = con, out, "<not a generic function>\n")
         else {
             if(.UsingMethodsTables()) {
-              .showMethodsTable(getGeneric(f, where), includeDefs, inherited,
-                                classes, printTo = con)
-              cat("\n", file = con)
+		## maybe no output for showEmpty=FALSE
+		.showMethodsTable(getGeneric(f, where), includeDefs, inherited,
+				  classes = classes, showEmpty = showEmpty,
+				  printTo = con)
             }
             else {
               mlist <-  getMethods(f, where)
@@ -859,7 +860,7 @@ removeMethods <-
                 f, getPackageName(where)), domain = NA)
         return(FALSE)
     }
-    
+
     methods <- getMethodsForDispatch(f, fdef) # list or table
     if(is.environment(methods)) {
 ##      remove(list=objects(methods, all=TRUE), envir = methods)

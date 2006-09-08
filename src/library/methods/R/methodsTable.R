@@ -492,12 +492,13 @@ options(error=traceback, warn = 1)
 }
 
 .showMethodsTable <- function(generic, includeDefs = FALSE, inherited = FALSE,
-                              classes = NULL, printTo = stdout())
+                              classes = NULL, showEmpty = TRUE, printTo = stdout())
 {
     cf <- function(...) cat(file = printTo, sep = "", ...)
     sigString <- function(sig) paste(sig@names, "=\"", as.character(sig), "\"",
 				     sep = "", collapse = ", ")
-    qs <- function(what)paste('"', what, '"', collapse = ", ", sep = "")
+    qs <- function(what) paste('"', what, '"', collapse = ", ", sep = "")
+    doFun <- function(func, pkg) cf("Function: ", func, ", (package ", pkg, ")\n")
     env <- environment(generic)
     signature = generic@signature
     table <- get(if(inherited) ".AllMTable" else ".MTable", envir = env)
@@ -505,16 +506,22 @@ options(error=traceback, warn = 1)
     p <- packageSlot(f)
     if(is.null(p)) p <- "base"
     deflt <- new("signature", generic, "ANY")
-    cf("Function: ", f, ", (package ", p, ")\n")
     labels <- objects(table, all = TRUE)
-
     if(!is.null(classes) && length(labels) > 0) {
 	sigL <- strsplit(labels, split = "#")
 	keep <- !sapply(sigL, function(x, y) all(is.na(match(x, y))), classes)
 	labels <- labels[keep]
     }
-    if(length(labels) > 0)
-      for(what in labels) {
+    if(length(labels) == 0) {
+	if(showEmpty) {
+	    doFun(f,p)
+	    cf("<No methods>\n\n")
+	}
+	return(invisible())
+    }
+    ## else: non-empty methods list
+    doFun(f,p)
+    for(what in labels) {
 	m <- get(what, envir = table)
 	if( is(m, "MethodDefinition")) {
 	    t <- m@target
@@ -534,9 +541,8 @@ options(error=traceback, warn = 1)
 		m <- m@.Data
 	    cat(deparse(m), sep="\n", "\n", file = printTo)
 	}
-      }
-    else
-      cf("<No methods>\n")
+    }
+    cat("\n", file = printTo)
 }
 
 ## temporary switch for tables
