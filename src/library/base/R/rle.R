@@ -17,7 +17,7 @@ print.rle <- function(x, digits = getOption("digits"), ...)
     cat("Run Length Encoding\n  lengths:")
     str(x$lengths)
     cat("  values :")
-    str(x$values, digits = digits)
+    utils::str(x$values, digits = digits)
     invisible(x)
 }
 

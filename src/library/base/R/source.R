@@ -112,12 +112,12 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    curr.fun <- ei[[1]][[1]]
 	    if (verbose) {
 		cat("curr.fun:")
-		str(curr.fun)
+		utils::str(curr.fun)
 	    }
 	}
 	if (verbose >= 2) {
 	    cat(".... mode(ei[[1]])=", mode(ei[[1]]), "; paste(curr.fun)=")
-	    str(paste(curr.fun))
+	    utils::str(paste(curr.fun))
 	}
 	if (print.eval && yy$visible)
 	    print(yy$value)

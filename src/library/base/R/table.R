@@ -116,7 +116,7 @@ summary.table <- function(object, ...)
 	y <- c(y, list(statistic = statistic,
 		       parameter = parameter,
 		       approx.ok = all(expected >= 5),
-		       p.value = pchisq(statistic, parameter, lower.tail=FALSE),
+		       p.value = stats::pchisq(statistic, parameter, lower.tail=FALSE),
 		       call = attr(object, "call")))
     }
     class(y) <- "summary.table"
