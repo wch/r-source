@@ -843,7 +843,7 @@ do_install_source () {
 
   message "building package indices ..."
   echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::.install_package_indices(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
+    R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package indices failed"
     do_exit_on_error

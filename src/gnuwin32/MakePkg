@@ -317,7 +317,7 @@ endif
 indices:
 	@$(ECHO) "  installing indices"
 	@$(ECHO) "invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); tools:::.install_package_indices('.', '"$(DPKG)"')" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
+	  R_DEFAULT_PACKAGES= LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 # need not have HTML installed when building packages.
 # Do this only if installing into main library, but tricky to figure out.
 # (so we don't bother with being careful).
