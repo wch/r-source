@@ -102,7 +102,7 @@ endif
 
 ## used to build skeletal versions of packages, enough to run
 ## package tools to install them properly
-Rcode: Rcode0 Dynlib
+Rcode: Rcode0 Dynlib0
 
 Rcode0:
 	@$(MKDIR) -p $(DPKG) $(DPKG)/R
@@ -231,6 +231,17 @@ Dynlib: srcDynlib
 	  $(CP) $(SDYNLIB) $(DPKG)/libs ; \
 	fi
 
+Dynlib0:
+	@$(ECHO) "  making DLL ..."
+	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
+	  DLLNAME=$(DLLNAME) -f $(RHOME)/src/gnuwin32/MakeDll
+	@$(ECHO) "  ... DLL made"
+	@if test -f $(SDYNLIB) ; then \
+	  $(ECHO) "  installing DLL" ; \
+	  $(MKDIR) -p $(DPKG)/libs ; \
+	  $(CP) $(SDYNLIB) $(DPKG)/libs ; \
+	fi
+
 srcDynlib:
 ifeq ($(strip $(SRCMAKE)),)
 ifneq ($(strip $(LOBJS)),)
@@ -241,7 +252,7 @@ ifneq ($(strip $(LOBJS)),)
 	elif test -r "${HOME}/.R/Makevars"; then \
 	  makefiles="$${makefiles} -f \"${HOME}/.R/Makevars\""; \
 	fi; \
-	CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | $(REXE)`; \
+	CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | $(REXE) R_DEFAULT_PACKAGES=NULL`; \
 	$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
 	  DLLNAME=$(DLLNAME) CLINK_CPPFLAGS=$${CLINK_CPPFLAGS} \
 	  $${makefiles}
