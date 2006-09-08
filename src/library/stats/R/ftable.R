@@ -221,7 +221,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
         on.exit(unlink(file))
     }
 
-    z <- count.fields(file, sep, quote, skip)
+    z <- utils::count.fields(file, sep, quote, skip)
     n.row.vars <- z[max(which(z == max(z)))] - z[length(z)] + 1
 
     seek(file, where = 0)

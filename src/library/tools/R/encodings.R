@@ -228,9 +228,9 @@ charset_to_Unicode <- local({
 })
 
 Adobe_glyphs <- local({
-    a <- read.table(file.path(R.home("share"), "encodings",
-                              "Adobe-glyphlist"),
-                    col.names=c("adobe", "unicode"), sep=";", as.is=TRUE)
-    a <- a[order(a$unicode, a$adobe),]
-    a
+    a <- scan(file.path(R.home("share"), "encodings", "Adobe-glyphlist"),
+              what=list(adobe="", unicode=""), quiet=TRUE,
+              sep=";", comment.char="#")
+    a <- as.data.frame(a, stringsAsFactors=FALSE)
+    a[order(a$unicode, a$adobe),]
 })

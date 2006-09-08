@@ -26,6 +26,9 @@ export("?", CRAN.packages, Rprof,Rprofmem, RSiteSearch, URLdecode,
        update.packageStatus, update.packages, upgrade, url.show, vi,
        vignette, write.socket, wsbrowser, xedit, xemacs)
 
+export(read.table, read.csv, read.csv2, read.delim, read.delim2,
+       write.table, write.csv, write.csv2, count.fields, type.convert)
+
 S3method("[", getAnywhere)
 S3method(as.character, person)
 S3method(as.character, personList)

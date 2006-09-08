@@ -23,6 +23,9 @@ NEW FEATURES
 
     o   stack() and unstack() have been moved to package utils.
 
+    o	read.table(), write.table() and allies have been moved to package
+	utils.
+
 
 DEPRECATED & DEFUNCT
 
