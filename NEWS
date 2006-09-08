@@ -463,6 +463,8 @@ DEPRECATED & DEFUNCT
 
     o	Graphical parameter 'tmag' is obsolete.
 
+    o	mauchley.test() (package 'stats') is now defunct.
+
     o	symbol.C() and symbol.For() are deprecated.  They are required in
 	S for use with is.loaded(), but are not so required in R.
 

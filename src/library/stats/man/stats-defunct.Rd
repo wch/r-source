@@ -15,6 +15,7 @@
 \alias{lm.fit.null}
 \alias{lm.wfit.null}
 \alias{glm.fit.null}
+\alias{mauchley.test}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -59,6 +60,11 @@ glm.fit.null(x, y, weights, start = NULL,
              family = gaussian(), control = glm.control(),
              intercept = FALSE)
 % </Removed 1.9.0>
+% <Removed 2.4.0>
+mauchley.test(object, Sigma = diag(nrow = p),
+   T = Thin.row(proj(M) - proj(X)), M = diag(nrow = p), X = ~0,
+   idata = data.frame(index = seq(length = p)), ...)
+% </Removed 2.4.0>
 }
 \details{
   The \code{*chisq()} functions now take an optional non-centrality
@@ -80,6 +86,9 @@ glm.fit.null(x, y, weights, start = NULL,
   \code{lm.fit.null} and \code{lm.wfit.null} are superseded by
   \code{lm.fit} and \code{lm.wfit} which handle null models now.
   Similarly, \code{glm.fit.null} is superseded by \code{glm.fit}.
+
+  \code{mauchley.test} was a misspelling of Mauchly's name, corrected
+  by the introduction of \code{\link{mauchly.test}}.
 }
 \seealso{
   \code{\link{Defunct}}
