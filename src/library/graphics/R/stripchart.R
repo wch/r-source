@@ -62,7 +62,7 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	x <- groups[[i]]
 	y <- rep.int(at[i], length(x))
 	if(method == 2) ## jitter
-	    y <- y + runif(length(y), -jitter, jitter)
+	    y <- y + stats::runif(length(y), -jitter, jitter)
 	else if(method == 3) { ## stack
 	    xg <- split(x, factor(x))
 	    xo <- lapply(xg, f)

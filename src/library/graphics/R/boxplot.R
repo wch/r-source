@@ -186,7 +186,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     boxfill   <- pcycle(pars$boxfill,	par("bg"))
     boxwex    <- pcycle(pars$boxwex,	0.8 * {
 	if(n <= 1) 1 else
-	quantile(diff(sort(if(xlog) log(at) else at)), 0.10) })
+	stats::quantile(diff(sort(if(xlog) log(at) else at)), 0.10) })
     medlty    <- pcycle(pars$medlty,	pars$lty, par("lty"))
     medlwd    <- pcycle(pars$medlwd,	3*pars$lwd, 3*par("lwd"))
     medpch    <- pcycle(pars$medpch,	as.integer(NA))# NA when that works

@@ -62,8 +62,8 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	if(.Device != "null device") {
             ## NB, this is somewhat dangerous as the device may have
             ## changed during the example.
-	    opar <- par(ask = TRUE)
-            on.exit(par(opar))
+	    opar <- graphics::par(ask = TRUE)
+            on.exit(graphics::par(opar))
         }
         op <- options(par.ask.default = TRUE)
         on.exit(options(op), add = TRUE)
