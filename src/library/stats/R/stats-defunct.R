@@ -34,12 +34,5 @@ glm.fit.null <- function(x, y, weights , start = NULL,
 ## <entry>
 ## Deprecated in 2.2.1
 ## Defunct in 2.4.0
-mauchley.test <- function(object, Sigma=diag(nrow=p),
-                          T = Thin.row(proj(M)-proj(X)),
-                          M = diag(nrow=p),
-                          X = ~0,
-                          idata=data.frame(index=seq(length=p)),...)
-{
-	.Defunct("mauchly.test")
-}
+mauchley.test <- function(...) .Defunct("mauchly.test")
 ## </entry>
