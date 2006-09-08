@@ -76,13 +76,13 @@ nclass.Sturges <- function(x) ceiling(log2(length(x)) + 1)
 
 nclass.scott <- function(x)
 {
-    h <- 3.5 * sqrt(var(x)) * length(x)^(-1/3)
+    h <- 3.5 * sqrt(stats::var(x)) * length(x)^(-1/3)
     ceiling(diff(range(x))/h)
 }
 
 nclass.FD <- function(x)
 {
-    r <- as.vector(quantile(x, c(0.25, 0.75)))
+    r <- as.vector(stats::quantile(x, c(0.25, 0.75)))
     h <- 2 * (r[2] - r[1]) * length(x)^(-1/3)
     ceiling(diff(range(x))/h)
 }

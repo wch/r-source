@@ -26,7 +26,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
             if(nIknots > 0) {
                 knots <- seq(from = 0, to = 1,
                              length = nIknots + 2)[-c(1, nIknots + 2)]
-                quantile(x[!outside], knots)
+                stats::quantile(x[!outside], knots)
             }
     }
     Aknots <- sort(c(rep(Boundary.knots, ord), knots))
@@ -89,7 +89,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         }
         knots <- if(nIknots > 0) {
             knots <- seq(0, 1, length = nIknots + 2)[-c(1, nIknots + 2)]
-            quantile(x[!outside], knots)
+            stats::quantile(x[!outside], knots)
         } ## else  NULL
     } else nIknots <- length(knots)
     Aknots <- sort(c(rep(Boundary.knots, 4), knots))

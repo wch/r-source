@@ -54,7 +54,7 @@ sunflowerplot <-
         i.rep <- rep.int(i.multi, number[number > 1])
         z <- numeric()
         for(i in i.multi)
-            z <- c(z, 1:number[i] + if(rotate) runif(1) else 0)
+            z <- c(z, 1:number[i] + if(rotate) stats::runif(1) else 0)
         deg <- (2 * pi * z)/number[i.rep]
         segments(x[i.rep], y[i.rep],
                  x[i.rep] + xr * sin(deg),

@@ -54,7 +54,7 @@ plot.design <-
     if(is.data.frame(x)) {
 	if(is.null(y)) { ## nothing to do
 	} else if(inherits(y,"formula")) {
-	    x <- model.frame(y , data = x)
+	    x <- stats::model.frame(y , data = x)
 	}
 	else if(is.numeric(y)) {
 	    x <- cbind(y,x[,sapply(x, is.factor)])
@@ -74,10 +74,10 @@ plot.design <-
 	}
     }
     else if (is.data.frame(data)) {
-	x <- model.frame(x , data = data)
+	x <- stats::model.frame(x , data = data)
     }
     else {
-	x <- model.frame(x)
+	x <- stats::model.frame(x)
     }
 
     i.fac <- sapply(x, is.factor)
