@@ -40,7 +40,7 @@ subset.matrix <- function(x, subset, select, drop = FALSE, ...)
 }
 
 ### Notice use of "illegal" variable name for the first argument
-### This used to be "x", but then you couldn't create a variable 
+### This used to be "x", but then you couldn't create a variable
 ### called "x"...
 
 transform.data.frame <- function (`_data`, ...)
@@ -65,51 +65,3 @@ transform <- function(`_data`,...) UseMethod("transform")
 ## that. This is probably marginally useful at best. --pd
 transform.default <- function(`_data`,...)
     transform.data.frame(data.frame(`_data`),...)
-
-stack.data.frame <- function(x, select, ...)
-{
-    if (!missing(select)) {
-	nl <- as.list(1:ncol(x))
-	names(nl) <- names(x)
-	vars <- eval(substitute(select),nl, parent.frame())
-        x <- x[, vars, drop=FALSE]
-    }
-    x <- x[, unlist(lapply(x, is.vector)), drop = FALSE]
-    data.frame(values = unlist(unname(x)),
-               ind = factor(rep.int(names(x), lapply(x, length))))
-}
-
-stack <- function(x, ...) UseMethod("stack")
-
-stack.default <- function(x, ...)
-{
-    x <- as.list(x)
-    x <- x[unlist(lapply(x, is.vector))]
-    data.frame(values = unlist(unname(x)),
-               ind = factor(rep.int(names(x), lapply(x, length))))
-}
-
-unstack.data.frame <- function(x, form = formula(x), ...)
-{
-    form <- as.formula(form)
-    if (length(form) < 3)
-        stop("'form' must be a two-sided formula")
-    res <- c(tapply(eval(form[[2]], x), eval(form[[3]], x), as.vector))
-    if (length(res) < 2 || any(diff(unlist(lapply(res, length))) != 0))
-        return(res)
-    data.frame(res)
-}
-
-unstack <- function(x, ...) UseMethod("unstack")
-
-unstack.default <- function(x, form, ...)
-{
-    x <- as.list(x)
-    form <- as.formula(form)
-    if (length(form) < 3)
-        stop("'form' must be a two-sided formula")
-    res <- c(tapply(eval(form[[2]], x), eval(form[[3]], x), as.vector))
-    if (length(res) < 2 || any(diff(unlist(lapply(res, length))) != 0))
-        return(res)
-    data.frame(res)
-}

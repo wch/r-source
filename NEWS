@@ -19,6 +19,9 @@ NEW FEATURES
 	thanks to Kate Mullen.
 
     o   file_test() is now also available in package utils.
+	(It is now private in package tools.)
+
+    o   stack() and unstack() have been moved to package utils.
 
 
 DEPRECATED & DEFUNCT

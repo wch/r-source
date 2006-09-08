@@ -20,11 +20,11 @@ export("?", CRAN.packages, Rprof,Rprofmem, RSiteSearch, URLdecode,
        person, personList, pico, prompt, promptData, promptPackage,
        readCitationFile, read.DIF, read.fwf, read.fortran,
        read.socket, recover, remove.packages, savehistory,
-       select.list, sessionInfo, setRepositories, str, summaryRprof,
-       tail, tail.matrix, timestamp, topicName, toBibtex, toLatex,
-       tracemem, untracemem, retracemem, update.packageStatus,
-       update.packages, upgrade, url.show, vi, vignette, write.socket,
-       wsbrowser, xedit, xemacs)
+       select.list, sessionInfo, setRepositories, stack, str,
+       summaryRprof, tail, tail.matrix, timestamp, topicName,
+       toBibtex, toLatex, tracemem, untracemem, retracemem, unstack,
+       update.packageStatus, update.packages, upgrade, url.show, vi,
+       vignette, write.socket, wsbrowser, xedit, xemacs)
 
 S3method("[", getAnywhere)
 S3method(as.character, person)
@@ -59,6 +59,8 @@ S3method(print, socket)
 S3method(print, vignette)
 S3method(prompt, data.frame)
 S3method(prompt, default)
+S3method(stack, data.frame)
+S3method(stack, default)
 S3method(str, data.frame)
 S3method(str, default)
 S3method(summary, packageStatus)
@@ -73,6 +75,8 @@ S3method(toBibtex, citationList)
 S3method(toBibtex, person)
 S3method(toBibtex, personList)
 S3method(toLatex, sessionInfo)
+S3method(unstack, data.frame)
+S3method(unstack, default)
 S3method(upgrade, packageStatus)
 ## can't register update.packageStatus as update is in stats
 ## and would create a cycle.
