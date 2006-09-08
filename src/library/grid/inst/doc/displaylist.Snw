@@ -19,6 +19,7 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
+library(graphics) # for plot()
 library(grid)
 ps.options(pointsize=12)
 options(width=60)

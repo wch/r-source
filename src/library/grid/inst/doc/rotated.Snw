@@ -14,6 +14,7 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
+library(graphics) # for boxplot
 library(grid)
 ps.options(pointsize=12)
 options(width=60)
