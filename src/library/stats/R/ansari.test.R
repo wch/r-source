@@ -164,7 +164,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 
         if(conf.int && !exact) {
             alpha <- 1 - conf.level
-            ab <- function(sig, zq) {
+            ab2 <- function(sig, zq) {
                 r <- rank(c(x / sig, y))
                 s <- sum(pmin(r, N -r + 1)[seq_along(x)])
                 TIES <- (length(r) != length(unique(r)))
@@ -189,13 +189,13 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 ccia <- function(alpha) {
                     ## Check if the statistic exceeds both quantiles
                     ## first.
-                    statu <- ab(srange[1], zq=qnorm(alpha/2))
-                    statl <- ab(srange[2], zq=qnorm(alpha/2, lower=FALSE))
+                    statu <- ab2(srange[1], zq=qnorm(alpha/2))
+                    statl <- ab2(srange[2], zq=qnorm(alpha/2, lower=FALSE))
                     if (statu > 0 || statl < 0) {
                         warning("samples differ in location: cannot compute confidence set, returning NA")
                         return(c(NA, NA))
                     }
-                    u <- uniroot(ab, srange, tol=1e-4,
+                    u <- uniroot(ab2, srange, tol=1e-4,
                                  zq=qnorm(alpha/2))$root
                     l <- uniroot(ab, srange, tol=1e-4,
                                  zq=qnorm(alpha/2, lower=FALSE))$root
@@ -213,13 +213,13 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 })
                 attr(cint, "conf.level") <- conf.level
                 ## Check if the statistic exceeds both quantiles first.
-                statu <- ab(srange[1], zq=0)
-                statl <- ab(srange[2], zq=0)
+                statu <- ab2(srange[1], zq=0)
+                statl <- ab2(srange[2], zq=0)
                 if (statu > 0 || statl < 0) {
                     ESTIMATE <- NA
                     warning("cannot compute estimate, returning NA")
                 } else
-                    ESTIMATE <- uniroot(ab, srange, tol=1e-4, zq=0)$root
+                    ESTIMATE <- uniroot(ab2, srange, tol=1e-4, zq=0)$root
             }
         }
         if(exact && TIES) {
