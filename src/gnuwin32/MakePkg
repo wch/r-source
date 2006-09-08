@@ -232,8 +232,9 @@ Dynlib: srcDynlib
 	fi
 
 Dynlib0:
+ifneq ($(strip $(LOBJS)),)
 	@$(ECHO) "  making DLL ..."
-	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
+	@$(MAKE) --no-print-directory -C $(SPKG)/src RHOME=$(RHOME) \
 	  DLLNAME=$(DLLNAME) -f $(RHOME)/src/gnuwin32/MakeDll
 	@$(ECHO) "  ... DLL made"
 	@if test -f $(SDYNLIB) ; then \
@@ -241,6 +242,7 @@ Dynlib0:
 	  $(MKDIR) -p $(DPKG)/libs ; \
 	  $(CP) $(SDYNLIB) $(DPKG)/libs ; \
 	fi
+endif
 
 srcDynlib:
 ifeq ($(strip $(SRCMAKE)),)
@@ -360,7 +362,7 @@ lazydata:
 	  if ! test -f $(DPKG)/data/Rdata.rdb ; then \
 	    $(ECHO)  "  preparing package $(PKG) for lazy data loading" ; \
 	    $(ECHO) "options(warn=1); invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); tools:::data2LazyLoadDB(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
-	      R_CROSS_BUILD=$(R_X_BUILD) R_DEFAULT_PACKAGES= \
+	      R_CROSS_BUILD=$(R_X_BUILD) R_DEFAULT_PACKAGES=$(R_START_PACKAGES) \
 	      LC_ALL=C R_OSTYPE=windows $(REXE) > /dev/null  || exit 1; \
 	  fi ; \
 	fi
