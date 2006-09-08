@@ -281,12 +281,6 @@ function(x, ..., value) {
 
 as.character.POSIXt <- function(x, ...) format(x, ...)
 
-str.POSIXt <- function(object, ...) {
-    cl <- oldClass(object)
-    cat("'", cl[min(2, length(cl))],"', format:", sep = "")
-    str(format(object), ...)
-}
-
 as.data.frame.POSIXct <- as.data.frame.vector
 
 is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))

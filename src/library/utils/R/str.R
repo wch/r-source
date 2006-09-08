@@ -24,6 +24,12 @@ str.data.frame <- function(object, ...)
     else invisible(NextMethod("str", give.length=FALSE,...))
 }
 
+str.POSIXt <- function(object, ...) {
+    cl <- oldClass(object)
+    cat("'", cl[min(2, length(cl))],"', format:", sep = "")
+    str(format(object), ...)
+}
+
 str.default <-
     function(object, max.level = NA, vec.len = 4, digits.d = 3,
 	     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
