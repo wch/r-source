@@ -19,5 +19,5 @@ jitter <- function(x, factor = 1, amount=NULL)
     } else if(amount == 0)		# only then: S compatibility
 	amount <- factor * (z/50)
 
-    x + runif(length(x),  - amount, amount)
+    x + stats::runif(length(x),  - amount, amount)
 }
