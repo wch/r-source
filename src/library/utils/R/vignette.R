@@ -8,7 +8,7 @@ function(topic, package = NULL, lib.loc = NULL)
     ## Find the directories with a 'doc' subdirectory *possibly*
     ## containing vignettes.
 
-    paths <- paths[tools::file_test("-d", file.path(paths, "doc"))]
+    paths <- paths[file_test("-d", file.path(paths, "doc"))]
 
     vignettes <-
         lapply(paths,
@@ -24,7 +24,7 @@ function(topic, package = NULL, lib.loc = NULL)
         if(any(vidx)) {
 
             pdf <- sub("\\.[[:alpha:]]+$", ".pdf", vignettes)
-            pidx <- tools::file_test("-f", pdf)
+            pidx <- file_test("-f", pdf)
             ok <- vidx & pidx
 
             if(any(ok)){

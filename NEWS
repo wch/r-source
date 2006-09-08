@@ -18,6 +18,7 @@ NEW FEATURES
 	options to help better analyze (non-)convergence of nls(),
 	thanks to Kate Mullen.
 
+    o   file_test() is now also available in package utils.
 
 
 DEPRECATED & DEFUNCT

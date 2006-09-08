@@ -1,7 +1,6 @@
 \name{fileutils}
 \alias{file_path_as_absolute}
 \alias{file_path_sans_ext}
-\alias{file_test}
 \alias{list_files_with_exts}
 \alias{list_files_with_type}
 \title{File Utilities}
@@ -11,18 +10,11 @@
 \usage{
 file_path_as_absolute(x)
 file_path_sans_ext(x)
-file_test(op, x, y)
 list_files_with_exts(dir, exts, all.files = FALSE, full.names = TRUE)
 list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE,
                      OS_subdirs = .OStype())
 }
 \arguments{
-  \item{x,y}{character vectors giving file paths.}
-  \item{op}{a character string specifying the test to be performed.
-    Unary tests (only \code{x} is used) are \code{"-f"} (existence and
-    not being a directory) and \code{"-d"} (existence and directory);
-    binary tests are \code{"-nt"} (newer than, using the modification
-    dates) and \code{"-ot"}.}
   \item{dir}{a character string with the path name to a directory.}
   \item{exts}{a character vector of possible file extensions.}
   \item{all.files}{a logical.  If \code{FALSE} (default), only visible
@@ -47,10 +39,6 @@ list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE,
 
   \code{file_path_sans_ext} returns the file paths without extensions.
   (Only purely alphanumeric extensions are recognized.)
-
-  \code{file_test} performs shell-style file tests.  Note that
-  \code{\link{file.exists}} only tests for existence (\code{test -e} on
-  some systems) but not for not being a directory.
 
   \code{list_files_with_exts} returns the paths or names of the files in
   directory \code{dir} with extension matching one of the elements of

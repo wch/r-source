@@ -25,7 +25,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
     paths <- unique(paths[file.exists(paths)])
 
     ## Find the directories with a 'data' subdirectory.
-    paths <- paths[tools::file_test("-d", file.path(paths, "data"))]
+    paths <- paths[file_test("-d", file.path(paths, "data"))]
 
     dataExts <- tools:::.make_file_exts("data")
 
@@ -38,15 +38,12 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
             entries <- NULL
             ## Use "." as the 'package name' of the working directory.
             packageName <-
-                if(tools::file_test("-f",
-                                    file.path(path, "DESCRIPTION")))
+                if(file_test("-f", file.path(path, "DESCRIPTION")))
                     basename(path)
                 else
                     "."
             ## Check for new-style 'Meta/data.rds'
-            if(tools::file_test("-f",
-                                INDEX <-
-                                file.path(path, "Meta", "data.rds"))) {
+            if(file_test("-f", INDEX <- file.path(path, "Meta", "data.rds"))) {
                 entries <- .readRDS(INDEX)
             } else {
                 ## No index: should only be true for ./data >= 2.0.0
@@ -87,7 +84,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
         found <- FALSE
         for(p in paths) {
             ## does this package have "Rdata" databases?
-            if(tools::file_test("-f", file.path(p, "Rdata.rds"))) {
+            if(file_test("-f", file.path(p, "Rdata.rds"))) {
                 rds <- .readRDS(file.path(p, "Rdata.rds"))
                 if(name %in% names(rds)) {
                     ## found it, so copy objects from database
@@ -104,9 +101,8 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                 }
             }
             ## check for zipped data dir
-            if(tools::file_test("-f", file.path(p, "Rdata.zip"))) {
-                if(tools::file_test("-f",
-                                    fp <- file.path(p, "filelist")))
+            if(file_test("-f", file.path(p, "Rdata.zip"))) {
+                if(file_test("-f", fp <- file.path(p, "filelist")))
                     files <- file.path(p, scan(fp, what="", quiet = TRUE))
                 else {
                     warning(gettextf("file 'filelist' is missing for directory '%s'", p), domain = NA)

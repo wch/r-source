@@ -101,7 +101,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    save_db <- save_db_to_memory <- FALSE
 	    dir <- file.path(tempdir(), ".R")
 	    db_file <- file.path(dir, "hsearch.rds")
-	    if((tools::file_test("-d", dir)
+	    if((file_test("-d", dir)
 		|| ((unlink(dir) == 0) && dir.create(dir)))
 	       && (unlink(db_file) == 0))
 		save_db <- TRUE
