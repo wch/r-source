@@ -85,7 +85,7 @@ function (clName, filename = NULL, type = "class",
     escape <- function(txt) gsub("%", "\\\\%", txt)
 
     if(is.null(filename))
-	filename <- paste0(topicName(type, clName), ".Rd")
+	filename <- paste0(utils::topicName(type, clName), ".Rd")
     whereClass <- find(classMetaName(clName))
     if(length(whereClass) == 0)
 	stop(gettextf("no definition of class \"%s\" found", clName),

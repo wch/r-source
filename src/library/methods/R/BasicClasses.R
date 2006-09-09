@@ -170,13 +170,14 @@
                   }
               })
     setMethod("initialize", "array",
-              function(object, data =   NA, dim = length(data), dimnames = NULL, ...) {
+              function(object, data =   NA, dim = length(data),
+                       dimnames = NULL, ...) {
                   if(nargs() < 2) # guaranteed to be called with object from new
                       object
                   else if(is.array(data) && nargs() == 2 + length(list(...)))
                       .mergeAttrs(data, object, list(...))
                   else {
-                      value <- array(data, nrow, ncol, byrow, dimnames)
+                      value <- array(data, dim, dimnames)
                       .mergeAttrs(value, object, list(...))
                   }
               })
@@ -188,11 +189,12 @@
     deltat = 1, ts.eps = getOption("ts.eps"), names = NULL, ...) {
                   if(nargs() < 2) # guaranteed to be called with object from new
                       object
-                  else if(is.ts(data) && nargs() == 2 + length(list(...)))
+                  else if(stats::is.ts(data) &&
+                          nargs() == 2 + length(list(...)))
                       .mergeAttrs(data, object, list(...))
                   else {
-                      value <- ts(data, start, end, frequency,
-                                  deltat, ts.eps, names = names)
+                      value <- stats::ts(data, start, end, frequency,
+                                         deltat, ts.eps, names = names)
                       .mergeAttrs(value, object, list(...))
                   }
               })

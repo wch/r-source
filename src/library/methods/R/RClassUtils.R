@@ -499,7 +499,7 @@ newBasic <-
                "matrix" = (if (length(list(...)) > 0) matrix(...) else matrix(0, 0, 0)),
 #               "ts" = ts(...),
 # break dependence on package stats
-               "ts" = (if(length(list(...))) ts(...)
+               "ts" = (if(length(list(...))) stats::ts(...)
                else structure(NA, .Tsp = c(1, 1, 1), class = "ts")),
                   {
                       args <- list(...)
@@ -1616,7 +1616,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
           return(remove(list = name, envir = .classTable))
         else if(length(prev) == 1)
           prev <- prev[[1]]
-        assign(name, prev, envir  = .ClassTable)       
+        assign(name, prev, envir  = .ClassTable)
     }
 }
 
@@ -1661,4 +1661,4 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         }
     }
 }
-        
+

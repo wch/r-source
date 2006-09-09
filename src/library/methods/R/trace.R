@@ -105,7 +105,7 @@
     message(".TraceWithMethods: untrace case")
     browser()
   }
-  
+
       if(is.null(signature)) {
         ## ensure that the version to assign is untraced
         if(is(def, "traceable")) {
@@ -236,7 +236,7 @@
         ## insert any requested automatic tracing expressions before editing
         if(!(is.null(tracer) && is.null(exit) && length(at)==0))
             def <- Recall(def, tracer, exit, at, print, FALSE)
-        def2 <- edit(def, editor = editor, file = file)
+        def2 <- utils::edit(def, editor = editor, file = file)
         if(!is.function(def2))
             stop(gettextf("the editing in trace() can only change the body of the function; got an object of class \"%s\"", class(def2)), domain = NA)
         if(!identical(args(def), args(def2)))
@@ -478,4 +478,4 @@ trySilent <- function(expr) {
   traceClassName
 }
 
-  
+
