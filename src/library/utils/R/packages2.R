@@ -43,7 +43,8 @@ install.packages <-
         pkg <- gsub("_\\.(zip|tar\\.gz)", "",
                     gsub(.standard_regexps()$valid_package_version, "", basename(pkg)))
 
-        if(length(pkgs) == 1 && length(names(configure.args)) == 0)
+        if(length(pkgs) == 1 && length(configure.args) &&
+           length(names(configure.args)) == 0)
             return(paste("--configure-args=",
                          shQuote(paste(configure.args, collapse = " ")),
                          sep = ""))
