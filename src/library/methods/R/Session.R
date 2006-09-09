@@ -79,6 +79,6 @@ browseAll <-
   ## continues after the call to browseAll.  Computations done
   ## in the frames will have no effect.
   function() {
-    dump.frames(".BrowserStack")
-    debugger(.BrowserStack)
+    utils::dump.frames(".BrowserStack")
+    utils::debugger(.BrowserStack)
   }

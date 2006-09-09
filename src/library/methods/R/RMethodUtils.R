@@ -498,7 +498,7 @@ getGeneric <-
           return(remove(list = name, envir = .genericTable))
         else if(length(prev) == 1)
           prev <- prev[[1]]
-        assign(name, prev, envir  = .GenericTable)       
+        assign(name, prev, envir  = .GenericTable)
     }
 }
 
@@ -527,7 +527,7 @@ getGeneric <-
             if(i > 0)
                return(value[[i]])
            else
-              return(NULL) 
+              return(NULL)
         }
         else if(nchar(pkg) && !identical(pkg, value@package))
                 NULL
@@ -625,7 +625,7 @@ mlistMetaName <-
                   if(nchar(package)>0)
                     return(methodsPackageMetaName("M",paste(name,package, sep=":")))
                   fdef <- getGeneric(name)
-                  if(!is(fdef, "genericFunction")) 
+                  if(!is(fdef, "genericFunction"))
                         stop(gettextf("the methods object name for '%s' must include the name of the package that contains the generic function, but no generic function of this name was found", name), domain = NA)
                   }
           }
@@ -788,6 +788,7 @@ findUnique <- function(what, message, where = topenv(parent.frame()))
     where <- .findAll(what, where = where)
     if(length(where) > 1) {
         if(missing(message)) {
+            ## <FIXME> no doFind is visible
             if(identical(doFind, findFunction))
                 message <- paste("function ", sQuote(what))
             else

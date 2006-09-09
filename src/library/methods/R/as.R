@@ -217,7 +217,7 @@ setAs <-
                     ll <- list(quote(from), quote(value))
                     names(ll) <- args
                     replace <- substituteDirect(replace, ll)
-                    warning(gettextf("argument names in replace changed to agree with 'coerce<-' generic:\n%s", paste(deparse(bdy), sep="\n    ")),
+                    warning(gettextf("argument names in replace changed to agree with 'coerce<-' generic:\n%s", paste(deparse(replace), sep="\n    ")),
                             domain = NA)
                 }
                 method <- eval(function(from, to, value)NULL)
