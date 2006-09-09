@@ -135,9 +135,12 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                         zfile <- zip.file.extract(file, "Rdata.zip")
                         if(zfile != file) on.exit(unlink(zfile))
                         switch(ext,
-                               R = , r =
-                               sys.source(zfile, chdir = TRUE,
-                                          envir = envir),
+                               R = , r = {
+                                   ## ensure utils is visible
+                                   library(utils)
+                                   sys.source(zfile, chdir = TRUE,
+                                              envir = envir)
+                               },
                                RData = , rdata = , rda =
                                load(zfile, envir = envir),
                                TXT = , txt = , tab =

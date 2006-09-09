@@ -39,6 +39,8 @@ data(\dots, list = character(0), package = NULL, lib.loc = NULL,
     \item files ending \file{.R} or \file{.r} are
     \code{\link{source}()}d in, with the \R working directory changed
     temporarily to the directory containing the respective file.
+    (\code{data} ensures that the \pkg{utils} package is attached, in
+    case it had been run \emph{via} \code{utils::data}.)
 
     \item files ending \file{.RData} or \file{.rda} are
     \code{\link{load}()}ed.
