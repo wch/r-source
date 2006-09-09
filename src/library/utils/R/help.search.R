@@ -237,7 +237,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 		.hsearch_db(db)
 	    else {
 		## If we cannot save to memory, serialize to a file ...
-		.saveRDS(db, file = db_file)
+		.saveRDS(db, file = db_file, compress = TRUE)
 		## and store a promise to unserialize from this file.
 		.hsearch_db(substitute(.readRDS(con),
 				       list(con = db_file)))

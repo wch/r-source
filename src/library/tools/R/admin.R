@@ -316,7 +316,7 @@ function(dir, outDir)
     if(!file_test("-d", docsDir)) {
         if(file_test("-d", dataDir))
             .saveRDS(.build_data_index(dataDir, NULL),
-                     file.path(outDir, "Meta", "data.rds"), compress = TRUE)
+                     file.path(outDir, "Meta", "data.rds"))
         return(invisible())
     }
 
@@ -350,7 +350,7 @@ function(dir, outDir)
                            file.path(outDir, "Meta", "Rd.rds"))
 
     .saveRDS(.build_hsearch_index(contents, packageName),
-             file.path(outDir, "Meta", "hsearch.rds"), compress = TRUE)
+             file.path(outDir, "Meta", "hsearch.rds"))
 
     .write_contents_as_DCF(contents, packageName,
                            file.path(outDir, "CONTENTS"))
@@ -368,7 +368,7 @@ function(dir, outDir)
 
     if(file_test("-d", dataDir))
         .saveRDS(.build_data_index(dataDir, contents),
-                 file.path(outDir, "Meta", "data.rds"), compress = TRUE)
+                 file.path(outDir, "Meta", "data.rds"))
     invisible()
 }
 
@@ -587,7 +587,7 @@ function(dir, outDir)
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
         stop(gettextf("cannot open directory '%s'", outMetaDir),
              domain = NA)
-    .saveRDS(nsInfo, nsInfoFilePath, compress = TRUE)
+    .saveRDS(nsInfo, nsInfoFilePath)
     invisible()
 }
 

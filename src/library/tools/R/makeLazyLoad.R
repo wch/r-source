@@ -137,7 +137,8 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
             if(length(loaded)) {
                 dbbase <- file.path(dataDir, "Rdata")
                 makeLazyLoadDB(dataEnv, dbbase, compress = compress)
-                .saveRDS(dlist, file.path(dataDir, "Rdata.rds"))
+                .saveRDS(dlist, file.path(dataDir, "Rdata.rds"),
+                         compress = compress)
                 print(f0)
                 unlink(f0)
                 if(file.exists(file.path(dataDir, "filelist")))
