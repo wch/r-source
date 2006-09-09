@@ -13,7 +13,7 @@ serialize(object, connection, ascii = FALSE, refhook = NULL)
 unserialize(connection, refhook = NULL)
 
 .saveRDS(object, file = "", ascii = FALSE, version = NULL,
-         compress = FALSE, refhook = NULL)
+         compress = TRUE, refhook = NULL)
 
 .readRDS(file, refhook = NULL)
 }
@@ -59,11 +59,12 @@ unserialize(connection, refhook = NULL)
 }
 \section{Warning}{
   These functions are still experimental.  Names, interfaces and
-  values might change in future versions (and was changed for \R 2.4.0).
-  \code{.saveRDS} and \code{.readRDS} are intended for internal use.
+  values might change in future versions (and the value of
+  \code{serialize} was changed for \R 2.4.0).  \code{.saveRDS} and
+  \code{.readRDS} are intended for internal use.
 }
 \value{
-  For \code{serialize}, \code{NULL} unless \code{connection=NULL}, when
+  For \code{serialize}, \code{NULL} unless \code{connection = NULL}, when
   the result is stored in a raw vector.
 
   For \code{unserialize} and \code{.readRDS}, an \R object.
@@ -73,7 +74,7 @@ unserialize(connection, refhook = NULL)
 \examples{
 x <- serialize(list(1,2,3), NULL)
 unserialize(x)
-## test pre-2.3.0 interface as a length-one character vector
+## test earlier interface as a length-one character vector
 y <- rawToChar(x)
 unserialize(y)
 }

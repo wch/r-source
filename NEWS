@@ -409,6 +409,8 @@ NEW FEATURES
     o	The autoloads introduced at the package re-organization have been
 	almost completely removed: the one that remains is for ts().
 
+    o	The default is now for .saveRDS(compress = TRUE)
+
 
 DEPRECATED & DEFUNCT
 
@@ -515,7 +517,7 @@ UTILITIES
 	  S4 classes or methods are set.
 
 	- throws an error if the standard packages 'methods' and
-          'stats4' are imported from in the NAMESPSCE file and not
+          'stats4' are imported from in the NAMESPACE file and not
           declared in the DESCRIPTION file.
 
     o	The test script produced by massage-Examples.pl no longer

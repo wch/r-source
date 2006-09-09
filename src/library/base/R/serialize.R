@@ -1,6 +1,6 @@
 .saveRDS <-
 function(object, file = "", ascii = FALSE, version = NULL,
-         compress = FALSE, refhook = NULL)
+         compress = TRUE, refhook = NULL)
 {
     if(is.character(file)) {
         if(file == "") stop("'file' must be non-empty string")
