@@ -360,6 +360,7 @@
  Rf_bd0
  Rf_chebyshev_eval
  Rf_chebyshev_init
+ Rf_check_stack_balance
  Rf_con_pushback
  Rf_convertToC
  Rf_copyListMatrix
