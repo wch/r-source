@@ -118,11 +118,13 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE
-                        cat(gettextf("\nAttaching package: '%s'\n\n", package))
+                        message(gettextf("\nAttaching package: '%s'\n",
+                                         package),
+                                domain = NA)
                     }
-                    cat("\n\tThe following object(s) are masked",
-                        if (i < lib.pos) "_by_" else "from", sp[i],
-                        ":\n\n\t", same, "\n\n")
+                    message(paste("\n\tThe following object(s) are masked",
+                                  if (i < lib.pos) "_by_" else "from", sp[i],
+                                  ":\n\n\t", same, "\n"))
                 }
             }
         }
@@ -636,7 +638,8 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 
     if (!loaded) {
 	if (!quietly)
-            cat(gettextf("Loading required package: %s\n", package))
+            message(gettextf("Loading required package: %s\n", package),
+                    domain = NA)
 	value <- library(package, lib.loc = lib.loc, character.only = TRUE,
                          logical = TRUE, warn.conflicts = warn.conflicts,
                          keep.source = keep.source, version = version)
@@ -992,7 +995,9 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                 }
 
                 if (!quietly)
-                    cat(gettextf("Loading required package: %s\n", pkg))
+                    message(gettextf("Loading required package: %s\n",
+                                     pkg),
+                            domain = NA)
                 library(pkg, character.only = TRUE, logical = TRUE,
                         lib.loc = lib.loc) ||
                 stop(gettextf("package '%s' could not be loaded", pkg),
