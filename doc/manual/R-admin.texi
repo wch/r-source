@@ -1916,9 +1916,10 @@ enhancements to work with large file systems on 32-bit platforms.
 
 @menu
 * Tcl/Tk::                      
+* Java support::                
 @end menu
 
-@node Tcl/Tk,  , Useful libraries and programs, Useful libraries and programs
+@node Tcl/Tk, Java support, Useful libraries and programs, Useful libraries and programs
 @subsection Tcl/Tk
 
 The @pkg{tcltk} package needs Tcl/Tk installed: the sources are
@@ -1944,6 +1945,46 @@ files will most likely be necessary to avoid confusion between them.
 
 Versions of Tcl/Tk from 8.3 to 8.4.13 have been used successfully: 8.0 is
 no longer supported.
+
+@node Java support,  , Tcl/Tk, Useful libraries and programs
+@subsection Java support
+
+@command{configure} looks for Java support on the host system, and if it
+finds it sets some settings which are useful for Java-using packages.
+@env{JAVA_HOME} can be set during the @command{configure} run to point
+to a specific JRE/JDK.
+
+Principal amongst these are some library paths to the Java libraries and
+JVM, which are stored in environment variable
+@env{R_JAVA_LD_LIBRARY_PATH} in file @file{R_HOME/etc/ldpaths} (or a
+sub-architecture-specific version).  A typical setting for Sun Java is
+
+@example
+/usr/java/jdk1.5.0_06/jre/lib/amd64/server:/usr/java/jdk1.5.0_06/jre/lib/amd64
+@end example
+
+Note that this unfortunately depends on the exact version of the JRE/JDK
+installed, and so will need updating if the Java installation is
+updated.  This can be done either by editing that file or setting
+@env{R_JAVA_LD_LIBRARY_PATH} (e.g. in @file{~/.Renviron}), or using
+@file{/etc/ld.so.conf} to specify the Java runtime library paths to the
+system.
+
+Other settings are recorded in @file{etc/Makeconf} (or a
+sub-architecture-specific version), e.g.
+
+@example
+JAVA = /usr/bin/java
+JAVAC = /usr/bin/javac
+JAVA_HOME = /usr/java/jdk1.5.0_06/jre
+JAVA_LD_LIBRARY_PATH = $(JAVA_HOME)/lib/amd64/server:$(JAVA_HOME)/lib/amd64:\
+$(JAVA_HOME)/../lib/amd64:/usr/local/lib64
+JAVA_LIBS = -L$(JAVA_HOME)/lib/amd64/server -L$(JAVA_HOME)/lib/amd64 
+            -L$(JAVA_HOME)/../lib/amd64 -L/usr/local/lib64 -ljvm
+@end example
+
+@noindent
+where @samp{JAVA_LIBS} contains flags necessary to link JNI programs.
 
 
 @node Linear algebra,  , Useful libraries and programs, Essential and useful other programs under Unix
@@ -2909,10 +2950,7 @@ correct @acronym{IEC}@tie{}60559 arithmetic.  The flag @option{-wd188}
 suppresses a large number of warnings about the enumeration type
 @samp{Rboolean}.  Because the Intel C compiler sets @samp{__GNUC__}
 without complete emulation of @command{gcc}, we suggest adding
-@c <FIXME>
-@c Should this be CPPFLAGS?
-@code{CPPFLAG=-no-gcc}.
-@c </FIXME>
+@code{CPPFLAGS=-no-gcc}.
 
 For some comments on building on an Itanium (@cputype{ia64}) Linux
 system with @command{gcc} or the Intel compilers see

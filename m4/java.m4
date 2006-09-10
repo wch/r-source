@@ -109,6 +109,10 @@ if test ${acx_java_works} = yes; then
         R_RUN_JAVA(JAVA_LIBS, [-classpath ${getsp_cp} getsp -libs])
         JAVA_LIBS="${JAVA_LIBS} -ljvm"
         R_RUN_JAVA(JAVA_LD_LIBRARY_PATH, [-classpath ${getsp_cp} getsp java.library.path])
+
+	JAVA_LIBS0=`echo ${JAVA_LIBS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+	JAVA_LD_LIBRARY_PATH=`echo ${JAVA_LD_LIBRARY_PATH} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+
 	## FIXME: we may want to figure out whether JAVA_HOME is a symlink
 	## to any paths in JAVA_LD_LIBARARY_PATH in which case we should use
 	## the symlink instead. This would solve versioning problems across
@@ -131,5 +135,5 @@ fi
 AC_SUBST(JAVA_HOME)
 AC_SUBST(JAVA)
 AC_SUBST(JAVA_LD_LIBRARY_PATH)
-AC_SUBST(JAVA_LIBS)
+AC_SUBST(JAVA_LIBS0)
 ])

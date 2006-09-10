@@ -386,6 +386,10 @@ NEW FEATURES
     o	The autoloads introduced at the package re-organization have been
 	almost completely removed: the one that remains is for ts().
 
+    o	The setting of the various Java configuration variables has been
+	improved to refer to JAVA_HOME, and they are now documented in
+	the R-admin manual.
+
 
 CHANGES TO S4 METHODS
 
