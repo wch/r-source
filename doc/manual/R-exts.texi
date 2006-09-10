@@ -295,12 +295,13 @@ checking version dependencies) before the current package, both when
 or preparing for lazy-loading.
 
 The optional @samp{Imports} field lists packages whose name spaces are
-imported from but which do not need to be attached.  (This includes name
-spaces accessed by the @samp{::} and @samp{:::} operators.)  Ideally
-this field will include all the standard packages, and it is important
-to include S4-using packages (as their class definitions can change and
-the @file{DESCRIPTION} file is used to decide which packages to
-re-install when this happens).
+imported from but which do not need to be attached.  Name spaces
+accessed by the @samp{::} and @samp{:::} operators must be listed here,
+or in @samp{Suggests} or @samp{Enhances} (see below).  Ideally this
+field will include all the standard packages, and it is important to
+include S4-using packages (as their class definitions can change and the
+@file{DESCRIPTION} file is used to decide which packages to re-install
+when this happens).
 
 The optional @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
@@ -309,7 +310,13 @@ package vignettes}), and packages loaded in the body of functions.
 E.g., suppose an example from package @pkg{foo} uses a dataset from
 package @pkg{bar}. Then it is not necessary to have @pkg{bar} for
 routine use of @pkg{foo}, unless one wants to execute the examples: it
-is nice to have @pkg{bar}, but not necessary.  The general rules are
+is nice to have @pkg{bar}, but not necessary.
+
+Finally, the optional @samp{Enhances} field lists packages ``enhanced''
+by the package at hand, e.g., by providing methods for classes from
+these packages.
+
+The general rules are
 
 @itemize @bullet
 @item
