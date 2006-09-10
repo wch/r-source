@@ -20,12 +20,6 @@ USER-VISIBLE CHANGES
 	(Note that this does not apply to promises embedded in
 	objects, only to top-level objects.)
 
-    o	The default prototype object for S4 classes will have its own
-	internal type in 2.4.0, as opposed to being an empty list (the
-	cause of several errors in the current code).  Note that old
-	binary objects, including class definitions, will be
-	inconsistent with the type, and should be recreated.
-
     o	The functions read.csv, read.csv2, read.delim, read.delim2 now
 	default the comment.char argument to "".  (These functions are
 	designed to read files produced by other software, which might
@@ -45,26 +39,16 @@ USER-VISIBLE CHANGES
 	applied to factors.
 
     o	mauchly.test() now returns the W statistic (for comparability
-        with SAS and SPSS), rather than the z (which was accidentally
-        not named in the output)
-
-    o	Printing of large matrix-like objects is now cut after
-	approximately 100'000 entries, see options(max.print) below.
+	with SAS and SPSS), rather than the z (which was accidentally
+	not named in the output)
 
     o	sort(x, decreasing = FALSE, ...) is now a generic function.
 	This means that 'partial' is no longer the second argument,
 	and calls which used positional matching may be incorrect: we
 	try to detect them.
 
-    o	S4 method dispatch has been completely revised to use cached
-	generic functions and to search for the best match among
-	inherited methods.  See ?Methods and
-	http://developer.r-project.org/howMethodsWork.pdf
-
-    o	objects created from an S4 class are now marked by an internal flag, 
-        tested by isS4() in R and by macro IS_S4_OBJECT() in C.  This
-        is an efficient and reliable test, and should replace all
-        earlier heuristic tests.
+    o	See the section on 'Changes to S4 methods': all packages
+	depending on 'methods' need to be re-installed.
 
 
 NEW FEATURES
@@ -266,10 +250,6 @@ NEW FEATURES
     o	The :: operator now also works for packages without name spaces
 	that are on the search path.
 
-    o	Some changes have been made to automatic printing of S4
-	objects, to make this correspond to a call to show(), as per
-	'Programming with Data'.
-
     o	warnings() is now an accessor function for 'last.warning' (which
 	is no longer stored in the workspace) with a print() method.
 
@@ -289,8 +269,8 @@ NEW FEATURES
     o	lines() gains a simple method for isoreg() results.
 
     o	trace() now creates a new class for the traced object if
-        required.  This allows tracing of user-defined subclasses of
-        "function".
+	required.  This allows tracing of user-defined subclasses of
+	"function".
 
     o	The internal internet download functions have some new
 	features from libxml 2.6.26.
@@ -300,7 +280,7 @@ NEW FEATURES
 	with S.)
 
     o   There is an option "HTTPUserAgent" to set the User Agent in R
-        download requests etc.  Patch from S. Falcon.
+	download requests etc.  Patch from S. Falcon.
 
     o	PCRE has been updated to version 6.7.
 
@@ -336,14 +316,14 @@ NEW FEATURES
 	always deparsed as "integer(0)").
 
     o   .Deprecated and .Defunct take a new parameter, msg, that allows
-        for the specification of the message printed and facilitates
-        deprecation of calling sequences etc.
+	for the specification of the message printed and facilitates
+	deprecation of calling sequences etc.
 
     o	There is now a format() method for class "ftable".
 
     o   There is a new '%.%' operator for mathematical annotations
-        (plotmath) which draws a centred multiplication dot
-        (a \cdot in LaTeX), thanks to Uwe Ligges.
+	(plotmath) which draws a centred multiplication dot
+	(a \cdot in LaTeX), thanks to Uwe Ligges.
 
     o	The function sort() is now sort.int(), with a new generic
 	function sort() which behaves in the same way (except for the
@@ -383,11 +363,6 @@ NEW FEATURES
     o	available.packages() and installed.packages() gain a 'fields'
 	argument thanks to Seth Falcon.
 
-    o	S4 generic and class definitions are now cached when the related
-        package is loaded.  This should improve efficiency and also
-        avoid anomalous situations in which a class or generic cannot
-        be found.
-
     o	merge() now inserts row names as a character column and not a
 	factor: this makes the default sort order more comprehensible.
 
@@ -409,7 +384,38 @@ NEW FEATURES
     o	The autoloads introduced at the package re-organization have been
 	almost completely removed: the one that remains is for ts().
 
-    o	The default is now for .saveRDS(compress = TRUE)
+    o	The default is now .saveRDS(compress = TRUE)
+
+    o	Printing of large matrix-like objects is now cut after
+	approximately 100'000 entries, see options(max.print) below.
+
+
+CHANGES TO S4 METHODS
+
+    o	The default prototype object for S4 classes will have its own
+	internal type in 2.4.0, as opposed to being an empty list (the
+	cause of several errors in the current code).  Note that old
+	binary objects, including class definitions, will be
+	inconsistent with the type, and should be recreated.
+
+    o	S4 method dispatch has been completely revised to use cached
+	generic functions and to search for the best match among
+	inherited methods.  See ?Methods and
+	http://developer.r-project.org/howMethodsWork.pdf
+
+    o	Objects created from an S4 class are now marked by an internal flag,
+	tested by isS4() in R and by macro IS_S4_OBJECT() in C.  This
+	is an efficient and reliable test, and should replace all
+	earlier heuristic tests.
+
+    o	Some changes have been made to automatic printing of S4
+	objects, to make this correspond to a call to show(), as per
+	'Programming with Data'.
+
+    o	S4 generic and class definitions are now cached when the related
+	package is loaded.  This should improve efficiency and also
+	avoid anomalous situations in which a class or generic cannot
+	be found.
 
 
 DEPRECATED & DEFUNCT
@@ -480,10 +486,10 @@ C-LEVEL FACILITIES
 	`Writing R Extensions'.
 
     o	There is a new interface allowing one package to make C routines
-        available to C code in other packages.  The interface consists
-        of the routines R_RegisterCCallable and R_GetCCallable.  These
-        functions are declared in <R_ext/Rdynload.h>. This interface
-        is experimental and subject to change.
+	available to C code in other packages.  The interface consists
+	of the routines R_RegisterCCallable and R_GetCCallable.  These
+	functions are declared in <R_ext/Rdynload.h>. This interface
+	is experimental and subject to change.
 
 	In addition, a package can arrange to make use of header
 	files in another (already installed) package via the
@@ -497,7 +503,7 @@ UTILITIES
 
     o	R CMD check now:
 
-        - warns if there are non-ASCII characters in the R code (as
+	- warns if there are non-ASCII characters in the R code (as
 	  these will likely be syntax errors in some locale).
 
 	- tests Rd cross-references by default, and tests for
@@ -517,8 +523,8 @@ UTILITIES
 	  S4 classes or methods are set.
 
 	- throws an error if the standard packages 'methods' and
-          'stats4' are imported from in the NAMESPACE file and not
-          declared in the DESCRIPTION file.
+	  'stats4' are imported from in the NAMESPACE file and not
+	  declared in the DESCRIPTION file.
 
     o	The test script produced by massage-Examples.pl no longer
 	creates objects in the base environment.
@@ -546,6 +552,13 @@ INSTALLATION
 	We now require an external BLAS to provide LSAME: it seems
 	that nowadays all do.
 
+    o	The configure test for 'whether mixed C/Fortran code can be
+	run' has been improved as on one system that test passed but
+	the Fortran run-time library was broken.
+
+    o	A precious configure variable DEFS can be set to pass defines
+	(e.g. -DUSE_TYPE_CHECKING_STRICT) to C code when compiling R.
+
     o	There is now a test for visible __libc_stack_end on Linux
 	systems (since it is not visible on some recent glibc's
 	built from the sources).
@@ -570,13 +583,6 @@ INSTALLATION
 	than export/import files.  If this works, it allows R to be
 	built in the same way as other Unix-alikes, including with R
 	as a shared library and with a shared BLAS.
-
-    o	The configure test for 'whether mixed C/Fortran code can be
-	run' has been improved as on one system that test passed but
-	the Fortran run-time library was broken.
-
-    o	A precious configure variable DEFS can be set to pass defines
-	(e.g. -DUSE_TYPE_CHECKING_STRICT) to C code when compiling R.
 
 
 BUG FIXES
@@ -627,7 +633,7 @@ BUG FIXES
 	it used to attempt to but failed to adjust the tsp attributes.
 	Now window() must be used.
 
-    o	Function AIC() in package stats4 was not dispatching correctly
+    o	Function AIC() in package 'stats4' was not dispatching correctly
 	on S4 classes via logLik() because of namespace issues.
 
     o	Subsetting LANGSXPs could break the call-by-value illusion.
@@ -729,7 +735,7 @@ BUG FIXES
     o	Command-line arguments after --encoding were ignored.
 
     o   The check for impossible confidence levels was off by one in
-        wilcox.test (PR#8557)
+	wilcox.test (PR#8557)
 
     o	[[ on an environment could create aliases. (PR#8457)
 
@@ -745,7 +751,7 @@ BUG FIXES
     o	ns() failed to work correctly when 'x' was of length one.
 
     o	identical() ignored tags on pairlists (including names of
-	attributes) and requiired an identical ordering for
+	attributes) and required an identical ordering for
 	attribute values in their pairlists.  Now names are compared
 	on pairlists, and attribute sets are treated as unordered.
 
@@ -766,7 +772,7 @@ BUG FIXES
 
     o	biplot() now works if there are missing values in the data.
 
-    o	biplot() now works passes par() values to all four axis (not
+    o	biplot() now works passes par() values to all four axes (not
 	just those on sides 1 and 2).
 
 
@@ -833,7 +839,7 @@ BUG FIXES
 	than 100,000 bytes in a single call.
 
     o	vignette() did not work if more than one vignette with the
-        same name was installed  (PR#9069).
+	same name was installed  (PR#9069).
 
     o	mget() did not check that 'ifnotfound' was a list, and worked
 	incorrectly if it was a list of length > 1.  Now 'ifnotfound'
@@ -844,7 +850,7 @@ BUG FIXES
 	numeric by the attribute-setting code.
 
     o   Sweave() did not treat \begin{document} in comments correctly
-        (PR#9073).
+	(PR#9073).
 
     o	diff(x) gave wrong result when x was "POSIXlt" object.
 
