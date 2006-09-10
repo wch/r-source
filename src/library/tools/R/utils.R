@@ -253,6 +253,17 @@ function(v, env, last = NA, default = NA) {
     default
 }
 
+### ** .get_contains_from_package_db
+
+.get_contains_from_package_db <-
+function(db)
+{
+    if("Contains" %in% names(db))
+        unlist(strsplit(db["Contains"], " +"))
+    else
+        character()
+}
+
 ### ** .get_internal_S3_generics
 
 .get_internal_S3_generics <-
@@ -309,6 +320,24 @@ function(nsInfo)
               S3_methods_list[idx, 2],
               sep = ".")
     S3_methods_list
+}
+
+### ** .get_requires_from_package_db
+
+.get_requires_from_package_db <-
+function(db, category = c("Depends", "Imports", "Suggests", "Enhances"))
+{
+    category <- match.arg(category)
+    if(category %in% names(db)) {
+        requires <- unlist(strsplit(db[category], ","))
+        requires <-
+            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", requires)
+        if(category == "Depends")
+            requires <- requires[requires != "R"]
+    }
+    else
+        requires <- character()
+    requires
 }
 
 ### ** .get_S3_group_generics

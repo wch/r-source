@@ -2396,33 +2396,11 @@ function(dir)
     package_name <- basename(dir)
     ## (Should really use db["Package"], but then we need to check
     ## whether this is really there ...)
-    if("Depends" %in% names(db)) {
-        depends <- unlist(strsplit(db["Depends"], ","))
-        depends <-
-            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", depends)
-        depends <- depends[depends != "R"]
-    }
-    else
-        depends <- character()
-    if("Suggests" %in% names(db)) {
-        suggests <- unlist(strsplit(db["Suggests"], ","))
-        suggests <-
-            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", suggests)
-    }
-    else
-        suggests <- character()
-    if("Imports" %in% names(db)) {
-        imports <- unlist(strsplit(db["Imports"], ","))
-        imports <-
-            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", imports)
-    }
-    else
-        imports <- character()
+    depends <- .get_requires_from_package_db(db, "Depends")
+    imports <- .get_requires_from_package_db(db, "Imports")
+    suggests <- .get_requires_from_package_db(db, "Suggests")
     ## Need this to handle bundles ...
-    if("Contains" %in% names(db))
-        contains <- unlist(strsplit(db["Contains"], " +"))
-    else
-        contains <- character()
+    contains <- .get_contains_from_package_db(db)
 
     standard_package_names <- .get_standard_package_names()
 
@@ -2970,7 +2948,7 @@ function(dfile)
     ##   Depends/Suggests/Imports, Namespace, Priority.
     ## These must be correct if present.
 
-    val <- db[match(c("Depends", "Suggests", "Imports"),
+    val <- db[match(c("Depends", "Suggests", "Imports", "Enhances"),
                     names(db), nomatch = 0)]
     if(length(val)) {
         depends <- .strip_whitespace(unlist(strsplit(val, ",")))
@@ -3047,7 +3025,7 @@ function(x, ...)
 
     if(any(as.integer(sapply(x$bad_depends_or_suggests_or_imports, length)))) {
         bad <- x$bad_depends_or_suggests_or_imports
-        writeLines(gettext("Malformed Depends or Suggests or Imports field."))
+        writeLines(gettext("Malformed Depends or Suggests or Imports or Enhances field."))
         if(length(bad$bad_dep_entry)) {
             tmp <- c(gettext("Offending entries:"),
                      paste(" ", bad$bad_dep_entry),
@@ -3179,10 +3157,10 @@ function(package, lib.loc = NULL)
     ## for checking.
     ## </NOTE>
 
-    codetools::checkUsagePackage(package,
-                                 report = foo,
-                                 suppressLocalUnused = TRUE,
-                                 skipWith = TRUE)
+    suppressMessages(codetools::checkUsagePackage(package,
+                                                  report = foo,
+                                                  suppressLocalUnused = TRUE,
+                                                  skipWith = TRUE))
     class(out) <- "check_code_usage_in_package"
     out
 }
@@ -3703,10 +3681,7 @@ function(package, dir, lib.loc = NULL)
         db <- .read_description(dfile)
         ## we need to check for a bundle here
         ## Need this to handle bundles ...
-        if("Contains" %in% names(db))
-            contains <- unlist(strsplit(db["Contains"], " +"))
-        else
-            contains <- character()
+        contains <- .get_contains_from_package_db(db)
         if(length(contains)) {
             file <- tempfile()
             on.exit(unlink(file))
@@ -3736,40 +3711,20 @@ function(package, dir, lib.loc = NULL)
         }
     }
     pkg_name <- db["Package"]
-    if("Depends" %in% names(db)) {
-        depends <- unlist(strsplit(db["Depends"], ","))
-        depends <-
-            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", depends)
-        depends <- depends[depends != "R"]
-    }
-    else
-        depends <- character()
-    if("Suggests" %in% names(db)) {
-        suggests <- unlist(strsplit(db["Suggests"], ","))
-        suggests <-
-            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", suggests)
-    }
-    else
-        suggests <- character()
-    if("Imports" %in% names(db)) {
-        imports <- unlist(strsplit(db["Imports"], ","))
-        imports <-
-            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", imports)
-    }
-    else
-        imports <- character()
+    depends <- .get_requires_from_package_db(db, "Depends")
+    imports <- .get_requires_from_package_db(db, "Imports")
+    suggests <- .get_requires_from_package_db(db, "Suggests")
+    enhances <- .get_requires_from_package_db(db, "Enhances")
+   
     ## Need this to handle bundles ...
-    if("Contains" %in% names(db))
-        contains <- unlist(strsplit(db["Contains"], " +"))
-    else
-        contains <- character()
+    contains <- .get_contains_from_package_db(db)
 
     ## it is OK to refer to yourself and non-S4 standard packages
     standard_package_names <-
         .get_standard_package_names()$base %w/o% c("methods", "stats4")
     depends_suggests <- c(depends, suggests, pkg_name, contains,
                           standard_package_names)
-    imports <- c(imports, depends_suggests)
+    imports <- c(imports, depends_suggests, enhances)
     ## the first argument could be named, or could be a variable name.
     ## we just have a stop list here.
     common_names <- c("pkg", "pkgName", "package", "pos")
@@ -3873,12 +3828,12 @@ print.check_packages_used <-
 function(x, ...)
 {
     if(length(x$imports) > 0) {
-        writeLines(gettext("'::' or ':::' imports not declared from"))
-        writeLines(paste(x$imports, collapse=" "))
+        writeLines(gettext("'::' or ':::' imports not declared from:"))
+        .pretty_print(x$imports)
     }
     if(length(x$others) > 0) {
-        writeLines(gettext("'library' or 'require' calls not declared from"))
-        writeLines(paste(x$others, collapse=" "))
+        writeLines(gettext("'library' or 'require' calls not declared from:"))
+        .pretty_print(x$others)
     }
     if(nchar(x$methods_message))
         writeLines(x$methods_message)
