@@ -21,8 +21,8 @@ ansari.test(x, \dots)
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.  You
     can specify just the initial letter.}
-  \item{exact}{a logical indicating whether an exact p-value should be
-    computed.}
+  \item{exact}{a logical indicating whether an exact \eqn{p}-value
+    should be computed.}
   \item{conf.int}{a logical,indicating whether a confidence interval
     should be computed.}
   \item{conf.level}{confidence level of the interval.}
@@ -51,21 +51,25 @@ ansari.test(x, \dots)
   being \eqn{s > 1} (the distribution underlying \code{x} has a larger
   variance, \code{"greater"}) or \eqn{s < 1} (\code{"less"}).
 
-  By default (if \code{exact} is not specified), an exact p-value is
-  computed if both samples contain less than 50 finite values and there
-  are no ties.  Otherwise, a normal approximation is used.
+  By default (if \code{exact} is not specified), an exact \eqn{p}-value
+  is computed if both samples contain less than 50 finite values and
+  there are no ties.  Otherwise, a normal approximation is used.
 
   Optionally, a nonparametric confidence interval and an estimator for
-  \eqn{s} are computed.  If exact p-values are available, an exact
+  \eqn{s} are computed.  If exact \eqn{p}-values are available, an exact
   confidence interval is obtained by the algorithm described in Bauer
   (1972), and the Hodges-Lehmann estimator is employed.  Otherwise, the
   returned confidence interval and point estimate are based on normal
   approximations.
+
+  Note that mid-ranks are used in the case of ties rather than average
+  scores as employed in Hollander & Wolfe (1973).  See, e.g., Hajek,
+  Sidak and Sen (1999), pages 131ff, for more information.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of the Ansari-Bradley test statistic.}
-  \item{p.value}{the p-value of the test.}
+  \item{p.value}{the \eqn{p}-value of the test.}
   \item{null.value}{the ratio of scales \eqn{s} under the null, 1.}
   \item{alternative}{a character string describing the alternative
     hypothesis.}
@@ -86,15 +90,19 @@ ansari.test(x, \dots)
   for \eqn{s^2} in the F test.
 }
 \references{
-  Myles Hollander & Douglas A. Wolfe (1973),
-  \emph{Nonparametric statistical inference}.
-  New York: John Wiley & Sons.
-  Pages 83--92.
-
   David F. Bauer (1972),
   Constructing confidence sets using rank statistics.
   \emph{Journal of the American Statistical Association}
   \bold{67}, 687--690.
+
+  Jaroslav Hajek, Zbynek Sidak & Pranab K. Sen (1999),
+  \emph{Theory of Rank Tests}.
+  San Diego, London: Academic Press.
+
+  Myles Hollander & Douglas A. Wolfe (1973),
+  \emph{Nonparametric statistical inference}.
+  New York: John Wiley & Sons.
+  Pages 83--92.
 }
 \seealso{
   \code{\link{fligner.test}} for a rank-based (nonparametric)
@@ -103,6 +111,10 @@ ansari.test(x, \dots)
   difference in scale parameters;
   \code{\link{var.test}} and \code{\link{bartlett.test}} for parametric
   tests for the homogeneity in variance.
+
+  \code{\link[coin]{ansari_test}} in package \pkg{coin} for exact and
+  approximate \emph{conditional} \eqn{p}-values for the Ansari-Bradley
+  test, as well as different methods for handling ties.
 }
 \examples{
 ## Hollander & Wolfe (1973, p. 86f):
