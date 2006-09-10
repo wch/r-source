@@ -61,11 +61,11 @@ USER-VISIBLE CHANGES
 	(Note that this does not apply to promises embedded in
 	objects, only to top-level objects.)
 
-    o	The functions read.csv, read.csv2, read.delim, read.delim2 now
-	default the comment.char argument to "".  (These functions are
-	designed to read files produced by other software, which might
-	use the # character inside fields, but are unlikely to use it for
-	comments.)
+    o	The functions read.csv(), read.csv2(), read.delim(),
+	read.delim2() now default their 'comment.char' argument to "".
+	(These functions are designed to read files produced by other
+	software, which might use the # character inside fields, but
+	are unlikely to use it for comments.)
 
     o	The bindings in the base environment/namespace (currently the
 	same thing) are now locked.  This means that the values of
@@ -94,114 +94,6 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	serialize(connection = NULL) now returns a raw vector (and not
-	a character string).  unserialize() accepts both old and new
-	formats (and has since 2.3.0).
-
-    o	reg.finalizer() has a new argument 'onexit' to parallel the
-	C-level equivalent R_RegisterFinalizerEx.
-
-    o	.Fortran() will map 'name' to lower case, and will work with
-	'name' containing underscores.
-
-    o	history() gains a 'pattern' argument as suggested by Romain
-	Francois.
-
-    o	save.image() [also called by sys.save.image() and hence from q()]
-	now defaults to saving compressed binary images.  To revert to
-	the previous behaviour set option "save.image.defaults": see
-	?save.image.
-
-    o	The 'row.names' of a data frame may be stored internally as an
-	integer or character vector.  This can result in considerably
-	more compact storage (and more logical row names from rbind)
-	when the row.names are 1:nrow(x).  However, such data frames
-	are not compatible with earlier versions of R: this can be
-	ensured by supplying a character vector as 'row.names'.
-
-	row.names() will always return a character vector, but direct
-	access to the attribute may not.
-
-	The internal storage of row.names = 1:n just records 'n', for
-	efficiency with very long vectors.
-
-    o	The "row.names" attribute must be a character or integer
-	vector, and this is now enforced by the C code.
-
-    o	make.link() now returns an object of class "link-glm".
-	The GLM families accept an object of this class for their
-	'link' argument, which allows user-specified link functions.
-	Also, quasi() allows user-specified variance functions.
-
-    o	Sys.getlocale() and Sys.setlocale() support LC_MESSAGES,
-	LC_PAPER and LC_MEASUREMENT if the platform does.
-
-    o	The way option("papersize") is set has been changed.  On platforms
-	which support the LC_PAPER locale category, the setting is taken
-	first from the R_PAPERSIZE environment variable at run time, then
-	from the LC_PAPER category ("letter" for _US and _CA locales and
-	"a4" otherwise).  On other platforms (including Windows and older
-	Unixen), the choice is unchanged.
-
-    o	axis.POSIXct() uses a different algorithm for ranges of 2 to 50
-	days that will mark days at midnight in the current timezone
-	(even if the graph crosses a DST change).
-
-    o	example() gains an argument 'ask' which defaults to "TRUE when
-	sensible", but the default can be overridden by setting option
-	'example.ask'.
-
-    o	dev.interactive() now has an optional argument 'orNone'.
-
-    o	df() now has a noncentrality argument 'ncp', based on a
-	contribution by Peter Ruckdeschel.
-
-    o	pie() now allows expressions for 'labels'.
-
-    o	hist(*, plot = FALSE) now warns about unused arguments.
-
-    o	Experimental support for memory-use profiling via Rprof(),
-	summaryRprof(), Rprofmem() and tracemem().
-
-    o	print.summary.{aov,glm,lm,nls} and print.{aov,glm} make use of
-	naprint() to report when na.action altered the model frame.
-
-    o	The "data.frame" and "matrix" methods for rowsum() gain an 'na.rm'
-	argument.
-
-    o	New function combn(x, m, ..) for computing on all combinations of
-	size 'm' (for small 'm' !).
-
-    o	merge() works more efficiently when there are relatively few
-	matches between the data frames (for example, for 1-1
-	matching).  The order of the result is changed for 'sort = FALSE'.
-
-    o	Added an as.data.frame() method for class "ftable".
-
-    o	as.data.frame() gains a '...' argument.
-
-    o	data.frame() has a new argument 'stringsAsFactor'.  This and
-	the default for read.table(as.is=) are set from the new global
-	option 'stringsAsFactors' via the utility function
-	default.stringsAsFactors().
-
-    o	[[ on a list does not duplicate the extracted element unless
-	necessary.  (It did not duplicate in other cases, e.g. a
-	pairlist.)
-
-    o	predict.lm() gains a 'pred.var' argument.  (Wishlist PR#8877.)
-
-    o	readLines() has a new argument 'warn' to suppress warnings:
-	the default behaviour is still to warn.
-
-    o	symnum() has a new argument 'numeric.x' particularly useful for
-	handling 0/1 data.
-
-    o	attach() can now attach a copy of an environment.
-
-    o	help.search() now rebuilds the database if 'package' specifies a
-	package not in the saved database.
-
     o	agrep(), grep(), strwrap(), strtrim(), substr() and
 	related functions now coerce arguments which should be
 	character via as.character() rather than internally (so method
@@ -225,28 +117,141 @@ NEW FEATURES
 	nchar() has always preserved dims/dimnames (undocumented
 	before) and now also preserves names.
 
-    o	Raw, complex and character vectors are now allowed in model
-	frames (there was a previously undocumented restriction to
-	logical, integer and numeric types.).  Character vectors in a
-	formula passed to model.matrix() are converted to factors and
-	coded accordingly.
 
-    o	lag.plot() produces a conventional plot (not setting mfrow) if
-	only one plot is to be produced.
+    o   .Deprecated and .Defunct take a new parameter, msg, that allows
+	for the specification of the message printed and facilitates
+	deprecation of calling sequences etc.
 
-    o	New function read.DIF() to read Data Interchange Format files,
-	and (on Windows) this format from the clipboard.
+    o	.Fortran() will map 'name' to lower case, and will work with
+	'name' containing underscores.
+
+    o	The default is now .saveRDS(compress = TRUE)
+
+    o	The :: operator now also works for packages without name spaces
+	that are on the search path.
+
+    o	[[ on a list does not duplicate the extracted element unless
+	necessary.  (It did not duplicate in other cases, e.g. a
+	pairlist.)
+
+    o   argsAnywhere() works like args() on non-exported functions.
+
+    o	as.data.frame() gains a '...' argument.
+
+    o	Added an as.data.frame() method for class "ftable".
+
+    o	as.list(<an expression>) is now handled by internal code and
+	no longer loses attributes such as names.
+
+	as.list(<a list>) no longer duplicates (unnecessarily).
+
+    o	as.POSIX[cl]t can now convert character strings containing
+	fractional seconds.
+
+    o	attach() can now attach a copy of an environment.
+
+    o	available.packages() and installed.packages() gain a 'fields'
+	argument thanks to Seth Falcon.
+
+    o	axis.POSIXct() uses a different algorithm for ranges of 2 to 50
+	days that will mark days at midnight in the current timezone
+	(even if the graph crosses a DST change).
 
     o	body<-() and formals<-() default to envir = environment(fun),
 	that is they do not by default change the environment.
 	(Previously they changed it to parent.frame().)
 
+    o	New function combn(x, m, ..) for computing on all combinations of
+	size 'm' (for small 'm' !).
+
+    o	data.frame() has a new argument 'stringsAsFactor'.  This and
+	the default for read.table(as.is=) are set from the new global
+	option 'stringsAsFactors' via the utility function
+	default.stringsAsFactors().
+
+    o	dev.interactive() now has an optional argument 'orNone'.
+
+    o	df() now has a noncentrality argument 'ncp', based on a
+	contribution by Peter Ruckdeschel.
+
+    o	example() gains an argument 'ask' which defaults to "TRUE when
+	sensible", but the default can be overridden by setting option
+	'example.ask'.
+
+    o	expand.grid() now has an argument 'KEEP.OUT.ATTRS' which can
+	suppress (the potentially expensive) "out.attrs" attribute. It no
+	longer returns an extraneous 'colnames' attribute.
+
+    o	The subset and subassign methods for factors now handle factor
+	matrices, and dim() can be set on a factor.
+
+    o	There is now a format() method for class "ftable".
+
+    o	head(x, n) and tail(x, n) now also work for negative arguments,
+	thanks to Vincent Goulet.
+
+    o	head.matrix() and tail.matrix() are no longer hidden, to be used
+	for building head() and tail() methods for other classes.
+
     o	If help() finds multiple help files for a given topic, a menu
 	of titles is used to allow interactive choice.
 
-    o	spline() and splinefun() now follow approx[fun] to have an argument
-	'ties = mean' which makes them applicable also when 'x' has
-	duplicated values.
+    o	help.search() now rebuilds the database if 'package' specifies a
+	package not in the saved database.
+
+    o	hist(*, plot = FALSE) now warns about unused arguments.
+
+    o	history() gains a 'pattern' argument as suggested by Romain
+	Francois.
+
+    o	integer(0) now prints as that rather than "numeric(0)" (it
+	always deparsed as "integer(0)").
+
+    o	interaction(..., drop=TRUE) now gives the same result as
+	interaction(...)[,drop=TRUE] (it used to sometimes give a
+	different order for the levels).
+
+    o	lag.plot() produces a conventional plot (not setting mfrow) if
+	only one plot is to be produced.
+
+    o	lapply() does much less copying.  Vector X are handled without
+	duplication, and other types are coerced via as.list().	 (As a
+	result, package 'boot' runs its examples 4% faster.)
+
+	lapply(<a pairlist>) now coerces to a list (rather than traverse
+	the pairlist from the beginning for each item).
+
+    o	legend() has new parameters 'box.lwd' and 'box.lty'.
+
+    o	lines() gains a simple method for isoreg() results.
+
+    o	load() no longer coerces pairlists to lists (which was
+	undocumented, but has been happening since 1998).
+
+    o	make.link() now returns an object of class "link-glm".
+	The GLM families accept an object of this class for their
+	'link' argument, which allows user-specified link functions.
+	Also, quasi() allows user-specified variance functions.
+
+    o	mapply() uses names more analogously to lapply(), e.g..
+
+    o	matplot() now accepts a 'bg' argument similarly to plot.default() etc.
+
+    o	median() is now generic, and its default method uses mean()
+	rather than sum() and so is more widely applicable (e.g. to dates).
+
+    o	merge() works more efficiently when there are relatively few
+	matches between the data frames (for example, for 1-1
+	matching).  The order of the result is changed for 'sort = FALSE'.
+
+    o	merge() now inserts row names as a character column and not a
+	factor: this makes the default sort order more comprehensible.
+
+    o	Raw, complex and character vectors are now allowed in model
+	frames (there was a previously undocumented restriction to
+	logical, integer and numeric types.).  Character vectors in a
+	formula passed to model.matrix() are converted to factors and
+	coded accordingly.
 
     o	x <- 1:20; y <- rnorm(x); nls(y ~ A*exp(-x^2/sig)) no longer
 	returns an unhelpful error message.  In this and similar cases, it
@@ -258,72 +263,117 @@ NEW FEATURES
 	(which are coerced to the appropriate class before comparison,
 	for Ops.POSIXt() using the current time zone).
 
-    o	sort.list() now implements complex vectors (PR#9039), and how
-	complex numbers are sorted is now documented.
+    o	There is a new option(max.contour.segments = 25000) which can be
+	raised to allow extremely complex contour lines in contour()
+	and contourLines().  (PR#9205)
 
-    o	expand.grid() now has an argument 'KEEP.OUT.ATTRS' which can
-	suppress (the potentially expensive) "out.attrs" attribute. It no
-	longer returns an extraneous 'colnames' attribute.
+    o	options(max.print = N) where N defaults to 99999
+	now cuts printing of large matrix-like objects after about N
+	entries.  print(x, ..., max = N) does the same the for default
+	method and those building on print.default().
 
-    o	matplot() now accepts a 'bg' argument similarly to plot.default() etc.
+	options("menu.graphics") controls if graphical menus should be
+	used when available.
 
-    o	print.table(T, zero.print=ch) now also replaces 0 by ch when T is
-	non-integer with integer entries.
-
-    o	as.list(<an expression>) is now handled by internal code and
-	no longer loses attributes such as names.
-
-	as.list(<a list>) no longer duplicates (unnecessarily).
-
-    o	lapply() does much less copying.  Vector X are handled without
-	duplication, and other types are coerced via as.list().	 (As a
-	result, package 'boot' runs its examples 4% faster.)
-
-	lapply(<a pairlist>) now coerces to a list (rather than traverse
-	the pairlist from the beginning for each item).
-
-    o	as.POSIX[cl]t can now convert character strings containing
-	fractional seconds.
-
-    o	The character vector used by an output textConnection() has
-	a locked binding whilst the connection is open.
-
-    o	The :: operator now also works for packages without name spaces
-	that are on the search path.
-
-    o	warnings() is now an accessor function for 'last.warning' (which
-	is no longer stored in the workspace) with a print() method.
-
-    o	traceback() gains a 'max.lines' argument.
-	.Traceback is no longer stored in the workspace.
-
-    o	options("par.ask.default") allows the default for par("ask")
+	options("par.ask.default") allows the default for par("ask")
 	to be set for a newly-opened device.  (Defaults to FALSE, the
 	previous behaviour.)
 
-    o	Recursive rapply() which is similar to lapply but used
-	recursively and can restrict the classes of elements to which
-	it is applied.
-
-    o	setwd() now returns the previously current directory (invisibly).
-
-    o	lines() gains a simple method for isoreg() results.
-
-    o	trace() now creates a new class for the traced object if
-	required.  This allows tracing of user-defined subclasses of
-	"function".
-
-    o	The internal internet download functions have some new
-	features from libxml 2.6.26.
+	The way option("papersize") is set has been changed.  On
+	platforms which support the LC_PAPER locale category, the
+	setting is taken first from the R_PAPERSIZE environment
+	variable at run time, then from the LC_PAPER category
+	("letter" for _US and _CA locales and "a4" otherwise).  On
+	other platforms (including Windows and older Unixen), the
+	choice is unchanged.
 
     o	parse() now returns up to 'n' expressions, rather than fill
 	the expressions vector with NULL.  (This is now compatible
 	with S.)
 
-    o   There is an option "HTTPUserAgent" to set the User Agent in R
-	download requests etc.  Patch from S. Falcon.
+    o	pie() now allows expressions for 'labels'.
 
-    o	PCRE has been updated to version 6.7.
+    o   There is a new '%.%' operator for mathematical annotations
+	(plotmath) which draws a centred multiplication dot
+	(a \cdot in LaTeX), thanks to Uwe Ligges.
+
+    o	predict.lm() gains a 'pred.var' argument.  (Wishlist PR#8877.)
+
+    o	print.summary.{aov,glm,lm,nls} and print.{aov,glm} make use of
+	naprint() to report when na.action altered the model frame.
+
+    o	print.table(T, zero.print=ch) now also replaces 0 by ch when T is
+	non-integer with integer entries.
+
+    o	Recursive rapply() which is similar to lapply but used
+	recursively and can restrict the classes of elements to which
+	it is applied.
+
+    o	r2dtable() has been moved to package 'stats'.
+
+    o	New function read.DIF() to read Data Interchange Format files,
+	and (on Windows) this format from the clipboard.
+
+    o	readLines() has a new argument 'warn' to suppress warnings:
+	the default behaviour is still to warn.
+
+    o	reg.finalizer() has a new argument 'onexit' to parallel the
+	C-level equivalent R_RegisterFinalizerEx.
+
+    o	rep() is now a primitive function and under some conditions
+	very much faster: rep.int() still a little faster (but does
+	less). (Because it is primitive there are minor changes to the
+	call semantics: see the help page.)
+
+    o	The 'row.names' of a data frame may be stored internally as an
+	integer or character vector.  This can result in considerably
+	more compact storage (and more logical row names from rbind)
+	when the row.names are 1:nrow(x).  However, such data frames
+	are not compatible with earlier versions of R: this can be
+	ensured by supplying a character vector as 'row.names'.
+
+	row.names() will always return a character vector, but direct
+	access to the attribute may not.
+
+	The internal storage of row.names = 1:n just records 'n', for
+	efficiency with very long vectors.
+
+	The "row.names" attribute must be a character or integer
+	vector, and this is now enforced by the C code.
+
+    o	The "data.frame" and "matrix" methods for rowsum() gain an 'na.rm'
+	argument.
+
+    o	Experimental support for memory-use profiling via Rprof(),
+	summaryRprof(), Rprofmem() and tracemem().
+
+    o	save.image() [also called by sys.save.image() and hence from q()]
+	now defaults to saving compressed binary images.  To revert to
+	the previous behaviour set option "save.image.defaults": see
+	?save.image.
+
+    o	There is a new primitive seq.int() which is slightly more
+	restricted than seq() but often very much faster, and new
+	primitives seq_along() and seq_len() which are faster still.
+
+    o	serialize(connection = NULL) now returns a raw vector (and not
+	a character string).  unserialize() accepts both old and new
+	formats (and has since 2.3.0).
+
+    o	setwd() now returns the previously current directory (invisibly).
+
+    o	The function sort() is now sort.int(), with a new generic
+	function sort() which behaves in the same way (except for the
+	order of its argument list) for objects without a class, and
+	relies on the '[' method for objects with a class (unless a
+	specific method has been written, as it has for class "POSIXlt").
+
+    o	sort.list() now implements complex vectors (PR#9039), and how
+	complex numbers are sorted is now documented.
+
+    o	spline() and splinefun() now follow approx[fun] to have an argument
+	'ties = mean' which makes them applicable also when 'x' has
+	duplicated values.
 
     o	str(x) does not print the S3 "class" attribute when it is the
 	same as 'mode' (which is printed anyway, possibly abbreviated)
@@ -333,102 +383,49 @@ NEW FEATURES
     o	str(<data.frame>) now outputs 'data.frame' instead of
 	`data.frame'; this may affect some strict (Package) tests.
 
-    o	head(x, n) and tail(x, n) now also work for negative arguments,
-	thanks to Vincent Goulet.
+    o	symnum() has a new argument 'numeric.x' particularly useful for
+	handling 0/1 data.
 
-    o	head.matrix() and tail.matrix() are no longer hidden to be used
-	for building head() and tail() methods for other classes.
+    o	Sys.getlocale() and Sys.setlocale() support LC_MESSAGES,
+	LC_PAPER and LC_MEASUREMENT if the platform does.
 
-    o	load() no longer coerces pairlists to lists (which was
-	undocumented, but has been happening since 1998).
+    o	The character vector used by an output textConnection() has
+	a locked binding whilst the connection is open.
 
-    o	interaction(..., drop=TRUE) now gives the same result as
-	interaction(...)[,drop=TRUE] (it used to sometimes give a
-	different order for the levels).
+    o	traceback() gains a 'max.lines' argument.
+	.Traceback is no longer stored in the workspace.
 
-    o	There is a new option("menu.graphics") which controls if
-	graphical menus should be used when available.
+    o	warning(immediate. = TRUE) now applies to
+	getOption("warn") < 0 and not just == 0.
+
+    o	warnings() is now an accessor function for 'last.warning' (which
+	is no longer stored in the workspace) with a print() method.
+
+
+
+    o	The internal internet download functions have some new
+	features from libxml 2.6.26.
+
+    o   There is an option "HTTPUserAgent" to set the User Agent in R
+	download requests etc.  Patch from S. Falcon.
+
+    o	PCRE has been updated to version 6.7.
 
     o	The C function substituteList now has tail recursion expanded
 	out, so C stack overflow is less likely.  (PR#8141, fix by
 	Kevin Hendricks)
 
-    o	integer(0) now prints as that rather than "numeric(0)" (it
-	always deparsed as "integer(0)").
-
-    o   .Deprecated and .Defunct take a new parameter, msg, that allows
-	for the specification of the message printed and facilitates
-	deprecation of calling sequences etc.
-
-    o	There is now a format() method for class "ftable".
-
-    o   There is a new '%.%' operator for mathematical annotations
-	(plotmath) which draws a centred multiplication dot
-	(a \cdot in LaTeX), thanks to Uwe Ligges.
-
-    o	The function sort() is now sort.int(), with a new generic
-	function sort() which behaves in the same way (except for the
-	order of its argument list) for objects without a class, and
-	relies on the '[' method for objects with a class (unless a
-	specific method has been written, as it has for class "POSIXlt").
-
-    o	The subset and subassign methods for factors now handle factor
-	matrices, and dim() can be set on a factor.
-
     o	The (somewhat soft) 1023/4 byte limit on command lines is now
 	documented in 'An Introduction to R'.
-
-    o	options(max.print = N) where N defaults to 99999
-	now cuts printing of large matrix-like objects after about N
-	entries.  print(x, ..., max = N) does the same the for default
-	method and those building on print.default().
-
-    o   argsAnywhere() works like args() on non-exported functions.
 
     o	The maximum number of open connections has been increased from
 	50 to 128.
 
-    o	rep() is now a primitive function and under some conditions
-	very much faster: rep.int() still a little faster (but does
-	less). (Because it is primitive there are minor changes to the
-	call semantics: see the help page.)
-
-    o	There is a new primitive seq.int() which is slightly more
-	restricted than seq() but often very much faster, and new
-	primitives seq_along() and seq_len() which are faster still.
-
-    o	legend() has new parameters 'box.lwd' and 'box.lty'.
-
-    o	r2dtable() has been moved to package 'stats'.
-
-    o	available.packages() and installed.packages() gain a 'fields'
-	argument thanks to Seth Falcon.
-
-    o	merge() now inserts row names as a character column and not a
-	factor: this makes the default sort order more comprehensible.
-
-    o	mapply() uses names more analogously to lapply(), e.g..
-
-    o	warning(immediate. = TRUE) now applies to
-	getOption("warn") < 0 and not just == 0.
-
     o	There is a new manual 'R Internals' on R internal stuctures
 	plus the former appendices of 'Writing R Extensions'.
 
-    o	median() is now generic, and its default method uses mean()
-	rather than sum() and so is more widely applicable (e.g. to dates).
-
-    o	There is a new option(max.contour.segments = 25000) which can be
-	raised to allow extremely complex contour lines in contour()
-	and contourLines().  (PR#9205)
-
     o	The autoloads introduced at the package re-organization have been
 	almost completely removed: the one that remains is for ts().
-
-    o	The default is now .saveRDS(compress = TRUE)
-
-    o	Printing of large matrix-like objects is now cut after
-	approximately 100'000 entries, see options(max.print) below.
 
 
 CHANGES TO S4 METHODS
@@ -457,6 +454,10 @@ CHANGES TO S4 METHODS
 	package is loaded.  This should improve efficiency and also
 	avoid anomalous situations in which a class or generic cannot
 	be found.
+
+    o	trace() now creates a new S4 class for the traced object if
+	required.  This allows tracing of user-defined subclasses of
+	"function".
 
 
 DEPRECATED & DEFUNCT
