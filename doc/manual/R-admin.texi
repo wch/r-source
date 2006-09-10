@@ -1246,7 +1246,7 @@ and toolset (see @ref{The Windows toolset}) installed.
 @findex install.packages
 Alternatively, packages can be downloaded and installed from within
 @R{}.  First set the option @code{CRAN} to your nearest @acronym{CRAN}
-mirror using @command{choooseCRANmirror()}.  Then download
+mirror using @command{chooseCRANmirror()}.  Then download
 and install packages @pkg{pkg1} and @pkg{pkg2} by
 
 @example
