@@ -14,14 +14,14 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o   nls.control(* , printEval = FALSE, warnOnly = FALSE) are two new
+    o	nls.control(* , printEval = FALSE, warnOnly = FALSE) are two new
 	options to help better analyze (non-)convergence of nls(),
 	thanks to Kate Mullen.
 
-    o   file_test() is now also available in package utils.
+    o	file_test() is now also available in package utils.
 	(It is now private in package tools.)
 
-    o   stack() and unstack() have been moved to package utils.
+    o	stack() and unstack() have been moved to package utils.
 
     o	read.table(), write.table() and allies have been moved to package
 	utils.
@@ -35,7 +35,7 @@ DEPRECATED & DEFUNCT
     o	Calling a builtin function with empty arguments is now always an
 	error.
 
-    o   The autoloading of ts() is defunct.
+    o	The autoloading of ts() is defunct.
 
 
 
