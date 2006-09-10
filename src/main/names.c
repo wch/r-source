@@ -25,9 +25,9 @@
 #include <config.h>
 #endif
 
-#define __R_Names__
-#include "Defn.h"
-#include "Print.h"
+#define __R_Names__ /* used in Defn.h for extern on R_FunTab */
+#include <Defn.h>
+#include <Print.h>
 #include "arithmetic.h"
 
 #include <R_ext/RConverters.h>
@@ -1096,9 +1096,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
     if (flag) R_Visible = 0;
     UNPROTECT(1);
-    if (save != R_PPStackTop)
-	REprintf("stack imbalance in internal %s, %d then %d",
-		 PRIMNAME(INTERNAL(fun)), save, R_PPStackTop);
+    check_stack_balance(INTERNAL(fun), save);
     return (args);
 }
 #undef __R_Names__

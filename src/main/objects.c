@@ -102,10 +102,7 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
 	int save = R_PPStackTop;
 	R_Visible = 1 - PRIMPRINT(op);
 	ans = PRIMFUN(op) (call, op, args, rho);
-	if (save != R_PPStackTop) {
-	    Rprintf("stack imbalance in %s, %d then %d\n",
-		    PRIMNAME(op), save, R_PPStackTop);
-	}
+	check_stack_balance(op, save);
     }
     /* In other places we add a context to builtins when profiling,
        but we have not bothered here (as there seem to be no primitives 
@@ -118,10 +115,7 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
 	R_Visible = 1 - PRIMPRINT(op);
 	ans = PRIMFUN(op) (call, op, args, rho);
 	UNPROTECT(1);
-	if (save != R_PPStackTop) {
-	    Rprintf("stack imbalance in %s, %d then %d\n",
-		    PRIMNAME(op), save, R_PPStackTop);
-	}
+	check_stack_balance(op, save);
     }
     else if (TYPEOF(op) == CLOSXP) {
 	ans = applyClosure(call, op, args, rho, newrho);
