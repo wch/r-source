@@ -914,9 +914,9 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int dbg;
+    int dbg, nprotect = 5;
     volatile int i, n, bgn;
-    SEXP sym, body;
+    SEXP sym, body, val0, el;
     volatile SEXP ans, v, val;
     RCNTXT cntxt;
     PROTECT_INDEX vpi, api;
@@ -940,6 +940,36 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT_WITH_INDEX(v = allocVector(TYPEOF(val), 1), &vpi);
     }
     ans = R_NilValue;
+
+
+    if(NAMED(val) > 0) {
+	/* If we have a list, we want to protect ourselves against the
+	 * body of the loop assigning to the element.  So we make a
+	 * shallow copy here */
+	switch(TYPEOF(val)) {
+	case EXPRSXP:
+	case VECSXP:
+	    val0 = val;
+	    PROTECT(val = allocVector(TYPEOF(val0), n)); nprotect++;
+	    for(i = 0; i < n; i++) {
+		el = VECTOR_ELT(val0, i);
+		SET_NAMED(el, 2);
+		SET_VECTOR_ELT(val, i, el);
+	    }
+	    break;
+	case LISTSXP:
+	    val0 = val;
+	    PROTECT(val = allocList(n)); nprotect++;
+	    for(el = val; CDR(val0) != R_NilValue; 
+		val0 = CDR(val0), el = CDR(el)){
+		SET_NAMED(CAR(val0), 2);
+		SETCAR(el, CAR(val0));
+	    }
+	    break;
+	default:
+	    ;
+	}
+    }
 
     dbg = DEBUG(rho);
     bgn = BodyHasBraces(body);
@@ -992,15 +1022,16 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    setVar(sym, CAR(val), rho);
 	    val = CDR(val);
 	    break;
-	default: errorcall(call, _("invalid for() loop sequence"));
+	default:
+	    errorcall(call, _("invalid for() loop sequence"));
 	}
 	REPROTECT(ans = eval(body, rho), api);
     for_next:
-	; /* needed for strict ISO C compilance, according to gcc 2.95.2 */
+	; /* needed for strict ISO C compliance, according to gcc 2.95.2 */
     }
  for_break:
     endcontext(&cntxt);
-    UNPROTECT(5);
+    UNPROTECT(nprotect);
     R_Visible = 0;
     SET_DEBUG(rho, dbg);
     return ans;

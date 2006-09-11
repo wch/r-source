@@ -1,17 +1,19 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-07-02)
+R version 2.5.0 Under development (unstable) (2006-09-11 r39251)
+Copyright (C) 2006 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
 
 > #### Testing  UseMethod() and even more NextMethod()
 > ####
@@ -34,19 +36,19 @@ Type `q()' to quit R.
 > ## The next 4 give a warning each about incompatible methods:
 > x > y
 [1] FALSE FALSE  TRUE
-Warning message: 
+Warning message:
 Incompatible methods (">.foo", ">.bar") for ">" 
 > y < x # should be the same (warning msg not, however)
 [1] FALSE FALSE  TRUE
-Warning message: 
+Warning message:
 Incompatible methods ("Ops.bar", "Ops.foo") for "<" 
 > x == y
 [1] FALSE  TRUE FALSE
-Warning message: 
+Warning message:
 Incompatible methods ("Ops.foo", "Ops.bar") for "==" 
 > x <= y
 [1]  TRUE  TRUE FALSE
-Warning message: 
+Warning message:
 Incompatible methods ("Ops.foo", "Ops.bar") for "<=" 
 > 
 > x > 3 ##[1] ">.foo"
@@ -90,7 +92,7 @@ abc: Before dispatching; x has class `expression':  expression(sin(x))
 'expression' method of abc: abc.expression(e1) 
 > abc(e0[[1]])
 abc: Before dispatching; x has class `(': language, mode "(": (x)
-'(' method of abc: "abc.("(e0[[1]]) 
+'(' method of abc: `abc.(`(e0[[1]]) 
 > abc(e1[[1]])
 abc: Before dispatching; x has class `call': language sin(x)
 abc.default(e1[[1]])
