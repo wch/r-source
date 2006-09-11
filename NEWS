@@ -267,10 +267,10 @@ NEW FEATURES
 	raised to allow extremely complex contour lines in contour()
 	and contourLines().  (PR#9205)
 
-    o	options(max.print = N) where N defaults to 99999
-	now cuts printing of large matrix-like objects after about N
-	entries.  print(x, ..., max = N) does the same the for default
-	method and those building on print.default().
+    o	options(max.print = N) where N defaults to 99999 now cuts printing
+	of large objects after about N entries.  print(x, ..., max = N)
+	does the same the for default method and those building on
+	print.default().
 
 	options("menu.graphics") controls if graphical menus should be
 	used when available.

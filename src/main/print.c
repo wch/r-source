@@ -246,6 +246,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
     if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
 	PROTECT(dims);
 	PROTECT(t = allocArray(STRSXP, dims));
+	/* FIXME: check (ns <= R_print.max +1) ? ns : R_print.max; */
 	for (i = 0 ; i < ns ; i++) {
 	    switch(TYPEOF(PROTECT(tmp = VECTOR_ELT(s, i)))) {
 	    case NILSXP:
@@ -339,7 +340,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	}
 	UNPROTECT(2);
     }
-    else {
+    else { /* .. no dim() .. */
 	names = getAttrib(s, R_NamesSymbol);
 	taglen = strlen(tagbuf);
 	ptag = tagbuf + taglen;
@@ -348,44 +349,49 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	SET_TYPEOF(newcall, LANGSXP);
 
 	if(ns > 0) {
-	for (i = 0 ; i < ns ; i++) {
-	    if (i > 0) Rprintf("\n");
-	    if (names != R_NilValue &&
-		STRING_ELT(names, i) != R_NilValue &&
-		*CHAR(STRING_ELT(names, i)) != '\0') {
-		if (taglen + strlen(CHAR(STRING_ELT(names, i))) > TAGBUFLEN)
-		    sprintf(ptag, "$...");
-		else {
-		    /* we need to distinguish character NA from "NA", which
-		       is a valid (if non-syntactic) name */
-		    if (STRING_ELT(names, i) == NA_STRING)
-			sprintf(ptag, "$<NA>");
-		    else if( isValidName(CHAR(STRING_ELT(names, i))) )
-			sprintf(ptag, "$%s", CHAR(STRING_ELT(names, i)));
-		    else
-			sprintf(ptag, "$`%s`", CHAR(STRING_ELT(names, i)));
+	    int n_pr = (ns <= R_print.max +1) ? ns : R_print.max;
+	    /* '...max +1'  ==> will omit at least 2 ==> plural in msg below */
+	    for (i = 0 ; i < n_pr ; i++) {
+		if (i > 0) Rprintf("\n");
+		if (names != R_NilValue &&
+		    STRING_ELT(names, i) != R_NilValue &&
+		    *CHAR(STRING_ELT(names, i)) != '\0') {
+		    if (taglen + strlen(CHAR(STRING_ELT(names, i))) > TAGBUFLEN)
+			sprintf(ptag, "$...");
+		    else {
+			/* we need to distinguish character NA from "NA", which
+			   is a valid (if non-syntactic) name */
+			if (STRING_ELT(names, i) == NA_STRING)
+			    sprintf(ptag, "$<NA>");
+			else if( isValidName(CHAR(STRING_ELT(names, i))) )
+			    sprintf(ptag, "$%s", CHAR(STRING_ELT(names, i)));
+			else
+			    sprintf(ptag, "$`%s`", CHAR(STRING_ELT(names, i)));
+		    }
 		}
+		else {
+		    if (taglen + IndexWidth(i) > TAGBUFLEN)
+			sprintf(ptag, "$...");
+		    else
+			sprintf(ptag, "[[%d]]", i+1);
+		}
+		Rprintf("%s\n", tagbuf);
+		if(isObject(VECTOR_ELT(s, i))) {
+		    /* need to preserve tagbuf */
+		    strcpy(save, tagbuf);
+		    SETCADR(newcall, VECTOR_ELT(s, i));
+		    eval(newcall, env);
+		    strcpy(tagbuf, save);
+		}
+		else PrintValueRec(VECTOR_ELT(s, i), env);
+		*ptag = '\0';
 	    }
-	    else {
-		if (taglen + IndexWidth(i) > TAGBUFLEN)
-		    sprintf(ptag, "$...");
-		else
-		    sprintf(ptag, "[[%d]]", i+1);
-	    }
-	    Rprintf("%s\n", tagbuf);
-	    if(isObject(VECTOR_ELT(s, i))) {
-		/* need to preserve tagbuf */
-		strcpy(save, tagbuf);
-		SETCADR(newcall, VECTOR_ELT(s, i));
-		eval(newcall, env);
-		strcpy(tagbuf, save);
-	    }
-	    else PrintValueRec(VECTOR_ELT(s, i), env);
-	    *ptag = '\0';
+	    Rprintf("\n");
+	    if(n_pr < ns)
+		Rprintf(" [ reached getOption(\"max.print\") -- omitted %d entries ]]\n",
+			ns - n_pr);
 	}
-	Rprintf("\n");
-	}
-	else {
+	else { /* ns = length(s) == 0 */
 	    /* Formal classes are represented as empty lists */
 	    char *className = NULL;
 	    SEXP class;
