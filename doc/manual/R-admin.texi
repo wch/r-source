@@ -2377,11 +2377,11 @@ the main @R{} executable @file{R.bin} against that library.  This can
 only be done if all the code (including system libraries) can be
 compiled into a dynamic library, and there may be a
 performance@footnote{We have measured 15--20% on i686 Linux and around
-10% on @cputype{x86_64} Linux.} penalty.  So you probably only want
-this if you will be using an application which embeds @R{}.  Note that C
-code in packages installed on a @R{} system linked with
-@option{--enable-R-shlib} are linked against the dynamic library and so
-such packages cannot be used from a @R{} system built in the default
+10% on @cputype{x86_64} Linux.} penalty.  So you probably only want this
+if you will be using an application which embeds @R{}.  Note that C code
+in packages installed on an @R{} system linked with
+@option{--enable-R-shlib} is linked against the dynamic library and so
+such packages cannot be used from an @R{} system built in the default
 way.
 
 If you need to re-configure @R{} with different options you may need to run
@@ -2856,7 +2856,7 @@ compiler.  Searching the @samp{R-help} archives will normally reveal
 what is needed.
 
 It seems that @cputype{ix86} Linux accepts non-PIC code in shared
-libraries, but this is not necessarily do so on other platforms, in
+libraries, but this is not necessarily so on other platforms, in
 particular for 64-bit CPUs such as that for AMD Opteron.  So care can be
 needed with BLAS libraries and when building @R{} as a shared library to
 ensure that position-independent code is used in any static libraries
