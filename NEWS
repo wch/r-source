@@ -390,6 +390,16 @@ NEW FEATURES
 	improved to refer to JAVA_HOME, and they are now documented in
 	the R-admin manual.
 
+    o   It is (again) possible to calculate prediction intervals from
+        lm objects for the original data frame, now with a warning
+        that the intervals refer to future observations. Weighted
+        intervals have also been implemented, with user-specifiable
+        weights. Warnings are given in cases where the default 
+	behaviour might differ from user expectations. See the
+        documentation for details.
+
+
+
 
 CHANGES TO S4 METHODS
 
