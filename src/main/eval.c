@@ -914,9 +914,9 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int dbg, nprotect = 5;
+    int dbg, nm;
     volatile int i, n, bgn;
-    SEXP sym, body, val0, el;
+    SEXP sym, body;
     volatile SEXP ans, v, val;
     RCNTXT cntxt;
     PROTECT_INDEX vpi, api;
@@ -941,39 +941,10 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     ans = R_NilValue;
 
-
-    if(NAMED(val) > 0) {
-	/* If we have a list, we want to protect ourselves against the
-	 * body of the loop assigning to the element.  So we make a
-	 * shallow copy here */
-	switch(TYPEOF(val)) {
-	case EXPRSXP:
-	case VECSXP:
-	    val0 = val;
-	    PROTECT(val = allocVector(TYPEOF(val0), n)); nprotect++;
-	    for(i = 0; i < n; i++) {
-		el = VECTOR_ELT(val0, i);
-		SET_NAMED(el, 2);
-		SET_VECTOR_ELT(val, i, el);
-	    }
-	    break;
-	case LISTSXP:
-	    val0 = val;
-	    PROTECT(val = allocList(n)); nprotect++;
-	    for(el = val; CDR(val0) != R_NilValue; 
-		val0 = CDR(val0), el = CDR(el)){
-		SET_NAMED(CAR(val0), 2);
-		SETCAR(el, CAR(val0));
-	    }
-	    break;
-	default:
-	    ;
-	}
-    }
-
     dbg = DEBUG(rho);
     bgn = BodyHasBraces(body);
 
+    nm = NAMED(val);
     PROTECT_WITH_INDEX(ans, &api);
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
 		 R_NilValue);
@@ -1016,9 +987,13 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    break;
 	case EXPRSXP:
 	case VECSXP:
+	    /* make sure loop variable is a copy if needed */
+	    if(nm > 0) SET_NAMED(VECTOR_ELT(val, i), 2);
 	    setVar(sym, VECTOR_ELT(val, i), rho);
 	    break;
 	case LISTSXP:
+	    /* make sure loop variable is a copy if needed */
+	    if(nm > 0) SET_NAMED(CAR(val), 2);
 	    setVar(sym, CAR(val), rho);
 	    val = CDR(val);
 	    break;
@@ -1031,7 +1006,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
  for_break:
     endcontext(&cntxt);
-    UNPROTECT(nprotect);
+    UNPROTECT(5);
     R_Visible = 0;
     SET_DEBUG(rho, dbg);
     return ans;
