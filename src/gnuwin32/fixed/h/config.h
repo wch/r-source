@@ -341,6 +341,9 @@
 /* Define to 1 if you have the `cc_dynamic' library (-lcc_dynamic). */
 /* #undef HAVE_LIBCC_DYNAMIC */
 
+/* Define if __libc_stack_end is visible. */
+/* #undef HAVE_LIBC_STACK_END */
+
 /* Define to 1 if you have the `dl' library (-ldl). */
 /* #undef HAVE_LIBDL */
 
@@ -775,13 +778,13 @@
 #define PACKAGE_NAME "R"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "R 2.4.0"
+#define PACKAGE_STRING "R 2.5.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "R"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.4.0"
+#define PACKAGE_VERSION "2.5.0"
 
 /* Define if <inttypes.h> exists and defines unusable PRI* macros. */
 /* #undef PRI_MACROS_BROKEN */
@@ -798,6 +801,9 @@
 /* Define as `inline', or `__inline__' or `__inline' if that's what the C
    compiler calls it, or to nothing if it is not supported. */
 #define R_INLINE inline
+
+/* Define this to enable memory profiling. */
+/* #undef R_MEMORY_PROFILING */
 
 /* Define this to be the name of the OS of your system. */
 #define R_OS "mingw32"
@@ -878,7 +884,7 @@
 #define VALGRIND_LEVEL 0
 
 /* Version number of package */
-#define VERSION "2.4.0"
+#define VERSION "2.5.0"
 
 /* Define to 1 if your processor stores words with the most significant byte
    first (like Motorola and SPARC, unlike Intel and VAX). */
