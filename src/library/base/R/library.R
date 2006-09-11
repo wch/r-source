@@ -638,7 +638,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 
     if (!loaded) {
 	if (!quietly)
-            message(gettextf("Loading required package: %s\n", package),
+            message(gettextf("Loading required package: %s", package),
                     domain = NA)
 	value <- library(package, lib.loc = lib.loc, character.only = TRUE,
                          logical = TRUE, warn.conflicts = warn.conflicts,
@@ -995,7 +995,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                 }
 
                 if (!quietly)
-                    message(gettextf("Loading required package: %s\n",
+                    message(gettextf("Loading required package: %s",
                                      pkg),
                             domain = NA)
                 library(pkg, character.only = TRUE, logical = TRUE,

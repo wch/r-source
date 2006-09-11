@@ -783,6 +783,8 @@ BUG FIXES
     o	biplot() now works passes par() values to all four axes (not
 	just those on sides 1 and 2).
 
+    o	[.acf now handles an empty first index.
+
 
 
 
