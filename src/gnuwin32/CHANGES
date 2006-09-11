@@ -63,6 +63,9 @@ with Unix.  (This will only possibly affect CJK locales, where some
 checks on the validity of symbols and strings might be
 locale-dependent.)
 
+There is a new file etc/Makeconf that provides an approximation to the
+Unix version and may help with src/Makefile's.
+
 
 C-level changes
 ---------------
