@@ -212,12 +212,13 @@ ccf <- function(x, y, lag.max = NULL,
     } else return(acf.out)
 }
 
-"[.acf" <- function(x, i, j=1:nser)
+"[.acf" <- function(x, i, j)
 {
-    nser <- ncol(x$lag)
-    ii <- match(i, x$lag[,1,1], nomatch=NA)
-    x$acf <- x$acf[ii,j,j, drop=FALSE]
-    x$lag <- x$lag[ii,j,j, drop=FALSE]
+    if(missing(j)) j <- seq_len(ncol(x$lag))
+    ii <- if(missing(i)) seq_len(nrow(x$lag))
+    else match(i, x$lag[, 1, 1], nomatch = NA)
+    x$acf <- x$acf[ii, j, j, drop = FALSE]
+    x$lag <- x$lag[ii, j, j, drop = FALSE]
     x
 }
 

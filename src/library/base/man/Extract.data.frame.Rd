@@ -11,7 +11,7 @@
 \usage{
 x[i]
 x[i] <- value
-x[i, j, drop = TRUE]
+x[i, j, drop]
 x[i, j] <- value
 
 x[[i]]
@@ -32,7 +32,8 @@ x$name <- value
   }
 
   \item{drop}{logical.  If \code{TRUE} the result is coerced to the
-    lowest possible dimension: however, see the Warning below.}
+    lowest possible dimension.  The default is to drop if only one
+    column is left, but \bold{not} to drop if only one row is left.}
 
   \item{value}{A suitable replacement value: it will be repeated a whole
     number of times if necessary and it may be coerced: see the
@@ -102,8 +103,7 @@ x$name <- value
   inserted as a single column.
 }
 \section{Warning}{
-  Although the default for \code{drop} is \code{TRUE}, the default
-  behaviour when only one \emph{row} is left is equivalent to
+  The default behaviour when only one \emph{row} is left is equivalent to
   specifying \code{drop = FALSE}.  To drop from a data frame to a list,
   \code{drop = TRUE} has to be specified explicitly.
 }
