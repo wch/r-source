@@ -635,16 +635,38 @@ mlistMetaName <-
           stop(gettextf("no way to associate a generic function with an object of class \"%s\"", class(name)), domain = NA)
   }
 
+## utility for getGenerics to return package(s)
+.packageForGeneric <- function(object) {
+    if(is.list(object)) # a list of objects
+      lapply(object, .packageForGeneric)
+    else if(is(object, "genericFunction"))
+      object@package
+    else # ?? possibly a primitive
+      "base"
+}
+
 getGenerics <-
   function(where, searchForm = FALSE) {
-      if(missing(where))
-          where <- .envSearch(topenv(parent.frame()))
-      else if(is.environment(where)) where <- list(where)
-    these <- character()
-    for(i in where) {
-      these <- c(these, objects(i, all=TRUE))
-    }
-    metaNameUndo(unique(these), prefix = "M", searchForm = searchForm)
+      if(missing(where)) {
+          ## all the packages cached ==? all packages with methods
+          ## globally visible.  Assertion based on cacheMetaData + setMethod
+          fnames <- as.list(objects(.genericTable, all=TRUE))
+          packages <- vector("list", length(fnames))
+          for(i in seq(along = fnames)) {
+              obj <- get(fnames[[i]], envir = .genericTable)
+              if(is.list(obj))
+                fnames[[i]] <-  names(obj)
+              packages[[i]] <- .packageForGeneric(obj)
+          }
+          new("ObjectsWithPackage", unlist(fnames), package=unlist(packages))
+      }
+      else {
+          if(is.environment(where)) where <- list(where)
+          these <- character()
+          for(i in where)
+            these <- c(these, objects(i, all=TRUE))
+          metaNameUndo(unique(these), prefix = "M", searchForm = searchForm)
+      }
   }
 
 allGenerics <- getGenerics
@@ -787,13 +809,8 @@ findUnique <- function(what, message, where = topenv(parent.frame()))
 {
     where <- .findAll(what, where = where)
     if(length(where) > 1) {
-        if(missing(message)) {
-            ## <FIXME> no doFind is visible
-            if(identical(doFind, findFunction))
-                message <- paste("function ", sQuote(what))
-            else
-                message <- sQuote(what)
-        }
+        if(missing(message))
+            message <- sQuote(what)
         if(is.list(where))
             where <- unlist(where)
         if(is.numeric(where))

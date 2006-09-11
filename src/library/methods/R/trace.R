@@ -321,8 +321,9 @@
 }
 
 .showTraceable <- function(object) {
-        cat("Object of class \"", class(object), "\"\n")
-        Recall(object@original)
+        cat("Object with tracing code, class \"", class(object),
+        "\"\nOriginal: \n", sep="")
+        callGeneric(object@original)
         cat("\n## (to see the tracing code, look at body(object))\n")
     }
 

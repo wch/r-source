@@ -498,7 +498,7 @@ options(error=traceback, warn = 1)
     sigString <- function(sig) paste(sig@names, "=\"", as.character(sig), "\"",
 				     sep = "", collapse = ", ")
     qs <- function(what) paste('"', what, '"', collapse = ", ", sep = "")
-    doFun <- function(func, pkg) cf("Function: ", func, ", (package ", pkg, ")\n")
+    doFun <- function(func, pkg) cf("Function: ", func, " (package ", pkg, ")\n")
     env <- environment(generic)
     signature = generic@signature
     table <- get(if(inherited) ".AllMTable" else ".MTable", envir = env)

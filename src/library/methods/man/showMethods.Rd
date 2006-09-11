@@ -12,12 +12,12 @@ showMethods(f = character(), where = topenv(parent.frame()),
 }
 \arguments{
   \item{f}{one or more function names.  If omitted, all functions
-    will be examined. }
-  \item{where}{If \code{where} is supplied, the methods definition from
-    that position will be used; otherwise, the current definition is
-    used (which will include inherited methods that have arisen so far
-    in the session). If \code{f} is omitted, \code{where} controls
-    where to look for generic functions.}
+    will be shown that match the other arguments. }
+  \item{where}{Used only when \code{f} is missing, or length 0, to
+      determine which generic functions to examine.
+      If \code{where} is supplied, only the generic functions
+    returned by \code{getGenerics(where)} are eligible for printing.
+    If \code{where} is also missing, all the cached generic functions are considered.}
   \item{classes}{ If argument \code{classes} is supplied, it is a vector
     of class names that restricts the displayed results to those methods
     whose signatures include one or more of those classes. }
@@ -29,24 +29,28 @@ showMethods(f = character(), where = topenv(parent.frame()),
     will not usually appear until it has been used in this session.
     See \code{\link{selectMethod}} if you want to know what method is
     dispatched for particular classes of arguments.}
-  \item{showEmpty}{logical indicating if methods with empty method lists
-    should be shown at all.}
+  \item{showEmpty}{logical indicating whether methods with no defined
+      methods matching the other criteria
+    should be shown at all.  By default, \code{TRUE} if and only if
+    argument \code{f} is not missing.}
 
   \item{printTo}{The connection on which the printed information will be
-    written.  If \code{printTo} is \code{FALSE}, the output will be
+    written; by default, standard output.  If \code{printTo} is \code{FALSE}, the output will be
     collected as a character vector and returned as the value of the
     call to \code{showMethod}.   See \code{\link{show}}.
   }
 }
 \details{
-  The output style is different from S-Plus in that it does not show the
-  database from which the definition comes, but can optionally include
-  the method definitions.
+  The name and package of the generic are followed by the list of
+  signatures for which methods are currently defined, according to the
+  criteria determined by the various arguments.  Note that the package
+  refers to the source of the generic function.  Individual methods
+  for that generic can come from other packages as well.
 }
 \value{
   If \code{printTo} is \code{FALSE}, the character vector that would
   have been printed is returned; otherwise the value is the connection
-  or filename.
+  or filename, via \code{\link{invisible}}.
 }
 \references{
   The R package \pkg{methods} implements, with a few exceptions, the
@@ -58,10 +62,9 @@ showMethods(f = character(), where = topenv(parent.frame()),
   the reference, the R software is an original implementation, so
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
-  interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page
-  \url{http://developer.r-project.org/methodsPackage.html} and the
-  pointers from that page.
+  interface developed more recently than the reference.  See
+  \code{\link{Methods}} and references from there.
+
 }
 \seealso{
   \code{\link{setMethod}}, and \code{\link{GenericFunctions}}
@@ -93,14 +96,11 @@ x = ANY, y = track
 x = track, y = missing
 x = track, y = ANY}
 
-## Show all methods from the same place that a class is defined:
-%% FIXME: should improve the default of 'where'
+%% FIXME: This should be an example of showing methods from a loaded,
+%% but not attached namespace. Except it doesn't work
 not.there <- !any("package:stats4" == search())
 if(not.there) library(stats4)
-showMethods(class = "mle")                           # not really helpful
-showMethods(class = "mle", where = "package:stats4") # much better
-showMethods(class = "mle", showEmpty = FALSE)        # better still
-
+showMethods(class = "mle")
 if(not.there) detach("package:stats4")
 }
 \keyword{methods}

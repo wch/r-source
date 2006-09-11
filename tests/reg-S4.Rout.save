@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-09-06 r39147)
+R version 2.5.0 Under development (unstable) (2006-09-09 r39223)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -150,7 +150,7 @@ Formal class 'c1' [package ".GlobalEnv"] with 2 slots
 > 
 > library(stats4)
 > showMethods("coerce", classes=c("matrix", "numeric"))
-Function: coerce, (package methods)
+Function: coerce (package methods)
 from="ANY", to="matrix"
 from="ANY", to="numeric"
 
