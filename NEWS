@@ -826,6 +826,13 @@ BUG FIXES
 
     o	[.acf now handles an empty first index.
 
+    o	Deparsing uses backticks more consistently to quote
+	non-syntactic names.
+
+    o	Assigning to the symbol in a for() loop with a
+	list/expression/pairlist index could alter the index.  Now the
+	loop variable is explicitly read-only.  (PR#9216)
+
 
 
 

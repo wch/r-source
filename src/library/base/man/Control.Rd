@@ -39,10 +39,10 @@ next
 }
 \details{
   \code{break} breaks out of a \code{for}, \code{while} or \code{repeat}
-  loop; control is transferred to the first statement outside the inner-most loop.
-  \code{next} halts the processing of the current iteration and advances the
-  looping index. Both \code{break} and \code{next} apply only to the innermost 
-  of nested loops.
+  loop; control is transferred to the first statement outside the
+  inner-most loop. \code{next} halts the processing of the current
+  iteration and advances the looping index.  Both \code{break} and
+  \code{next} apply only to the innermost of nested loops.
   
   Note that it is a common mistake to forget to put braces (\code{\{ .. \}})
   around your statements, e.g., after \code{if(..)} or \code{for(....)}.
@@ -54,9 +54,10 @@ next
 
   The index \code{seq} in a \code{for} loop is evaluated at the start of
   the loop; changing it subsequently does not affect the loop.  The
-  variable \code{var} has the same type as \code{seq}.  If \code{seq} is
-  a factor (which is not strictly allowed) then its internal codes are
-  used: the effect is that of \code{\link{as.integer}} not
+  variable \code{var} has the same type as \code{seq}, and is read-only:
+  assigning to it does not alter \code{seq}.  If \code{seq} is a factor
+  (which is not strictly allowed) then its internal codes are used: the
+  effect is that of \code{\link{as.integer}} not
   \code{\link{as.vector}}.
 }
 \value{

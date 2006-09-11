@@ -370,7 +370,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
 		/* figure out if we need to quote the name */
 		if(!isValidName(obj_name))
-		    Rprintf("\"%s\" <-\n", obj_name);
+		    Rprintf("`%s` <-\n", obj_name);
 		else
 		    Rprintf("%s <-\n", obj_name);
 		tval = deparse1(CAR(o), 0, opts);
@@ -387,7 +387,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0, nout = 0; i < nobjs; i++) {
 		if (CAR(o) == R_UnboundValue) continue;
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
-		res = Rconn_printf(con, "\"%s\" <-\n", 
+		res = Rconn_printf(con, "`%s` <-\n", 
 				   CHAR(STRING_ELT(names, i)));
 		if(!havewarned &&
 		   res < strlen(CHAR(STRING_ELT(names, i))) + 4)
@@ -976,9 +976,9 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff("next", d);
 		    break;
 		case PP_SUBASS:
-		    print2buff("\"", d);
+		    print2buff("`", d);
 		    print2buff(CHAR(PRINTNAME(op)), d);
-		    print2buff("\"(", d);
+		    print2buff("`(", d);
 		    args2buff(s, 0, 0, d);
 		    print2buff(")", d);
 		    break;
@@ -1028,9 +1028,9 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			if ( isSymbol(CAR(s)) ){
 			    if ( !isValidName(CHAR(PRINTNAME(CAR(s)))) ){
 
-				print2buff("\"", d);
+				print2buff("`", d);
 				print2buff(CHAR(PRINTNAME(CAR(s))), d);
-				print2buff("\"", d);
+				print2buff("`", d);
 			    } else
 				print2buff(CHAR(PRINTNAME(CAR(s))), d);
 			}

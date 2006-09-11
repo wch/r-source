@@ -1951,4 +1951,15 @@ row.names(B) <- c("2002-09-15", "2002-10-15", "2002-11-15", "2002-12-15")
 merge(A, B, by=0, all=TRUE)
 
 
+## assigning to a list loop index could alter the index (PR#9216)
+L <- list(a = list(txt = "original value"))
+f <- function(LL) {
+    for (ll in LL) ll$txt <- "changed in f"
+    LL
+}
+f(L)
+L
+## both were changed < 2.4.0
+
+
 ### end of tests added in 2.4.0 ###
