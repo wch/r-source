@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-09-07
+@set FAQ_DATE @value{FAQ_YEAR}-09-12
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -1715,10 +1715,15 @@ R-php} is actively developed by Alfredo Pontillo and Angelo Mineo and
 provides both a web interface to R and a set of pre-specified analyses
 that need no R code input.
 
-Finally, @url{http://www.bioconductor.org/, webbioc} is ``an integrated
-web interface for doing microarray analysis using several of the
-Bioconductor packages'' and is designed to be installed at local sites 
+@url{http://www.bioconductor.org/, webbioc} is ``an integrated web
+interface for doing microarray analysis using several of the
+Bioconductor packages'' and is designed to be installed at local sites
 as a shared computing resource.
+
+Finally, @url{http://rwui.cryst.bbk.ac.uk, Rwui} is a web application to
+to create user-friendly web interfaces for R scripts.  All code for the
+web interface is created automatically.  There is no need for the user
+to do any extra scripting or learn any new scripting techniques.
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
@@ -2663,6 +2668,8 @@ Extensions of package @strong{distr}.
 Simulation classes based on package @strong{distr}.
 @item distrTEst
 Estimation and Testing classes based on package @strong{distr}.
+@item distributions
+Probability distributions based on TI-83 Plus.
 @item diveMove
 Dive analysis and calibration.
 @item dlm
@@ -3862,6 +3869,8 @@ Routines for the statistical analysis of shapes, including procrustes
 analysis, displaying shapes and principal components, testing for mean
 shape difference, thin-plate spline transformation grids and edge
 superimposition methods.
+@item sigma2tools
+Test of hypothesis about sigma2.
 @item simecol
 SIMulation of ECOLogical (and other) dynamic systems.
 @item simex
