@@ -376,7 +376,7 @@ static char * get_dialog_string(window w)
 		return NULL;
 	del_string(d->result);
 	if (d->text)	/* question dialog */
-		d->result = new_string(gettext(d->text));
+		d->result = new_string(GA_gettext(d->text));
 
 	return d->result;
 }
@@ -396,7 +396,7 @@ static void browse_button(control c)
     window w = parentwindow(c);
     dialog_data *d = data(w);
     char strbuf[MAX_PATH];
-    strcpy(strbuf, gettext(d->text));
+    strcpy(strbuf, GA_gettext(d->text));
     selectfolder(strbuf, G_("Choose a folder"));
     if(strlen(strbuf)) settext(d->text, strbuf);
 }
@@ -619,9 +619,9 @@ char *askUserPass(char *title)
 	char *user, *pass;
 	static char buf[1000];
 	if (d->hit < YES) /* cancelled */ return "";
-	if (d->text) user = new_string(gettext(d->text));
+	if (d->text) user = new_string(GA_gettext(d->text));
 	else return "";
-	if (d->pass) pass = new_string(gettext(d->pass));
+	if (d->pass) pass = new_string(GA_gettext(d->pass));
 	else return "";
 	snprintf(buf, 1000, "%s:%s", user, pass);
 	return buf;

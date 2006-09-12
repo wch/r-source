@@ -683,7 +683,7 @@ void settext(control obj, char *text)
 		return;
 	if (! text)
 		text = "";
-	if (strcmp(gettext(obj), text) == 0)
+	if (strcmp(GA_gettext(obj), text) == 0)
 		return; /* no changes to be made */
 	if (obj->text) {
 		/* discard prior information */
@@ -725,7 +725,7 @@ void settext(control obj, char *text)
  *  control. This may be a button's name, for example, or
  *  the value inside a text field.
  */
-char *gettext(control obj)
+char *GA_gettext(control obj)
 {
 	static char *empty = "";
 	char *text;

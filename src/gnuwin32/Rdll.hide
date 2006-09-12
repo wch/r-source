@@ -296,7 +296,6 @@
  R_sysfunction
  R_sysparent
  R_unary
- Rconsolecmd
  Rconsolesetwidth
  Rf_CoercionWarning
  Rf_ComplexFromInteger

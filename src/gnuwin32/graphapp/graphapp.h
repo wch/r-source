@@ -196,7 +196,7 @@ typedef void (*dropfn)(control c, char *data);
 #define newmenu    GA_newmenu
 #define newcontrol GA_newcontrol
 #define newwindow  GA_newwindow
-#define gettext    GA_gettext
+/* #define gettext    GA_gettext */
 #define settext    GA_settext
 
 #define R_REMAP
@@ -1047,9 +1047,9 @@ void	activatecontrol(control c);
  */
 
 void	settext(control c, char *newtext);
-char *	gettext(control c);
+char *	GA_gettext(control c);
 #define setname(c,newname) settext(c,newname)
-#define getname(c) gettext(c)
+#define getname(c) GA_gettext(c)
 
 void	settextfont(control c, font f);
 font	gettextfont(control c);

@@ -34,8 +34,8 @@ static void hit_key(window w, int key)
 
 static void apply(button b)
 {
-    v[0] = gettext(var1);
-    v[1] = gettext(var2);
+    v[0] = GA_gettext(var1);
+    v[1] = GA_gettext(var2);
     done = strlen(v[0]) && strlen(v[1]);
     if (!done) askok("all fields must be completed");
 }
@@ -64,8 +64,8 @@ static void create_dialog()
 static void cancel(button b)
 {
     /* need these set to something malloc'ed */
-    v[0] = gettext(var1);
-    v[1] = gettext(var2);
+    v[0] = GA_gettext(var1);
+    v[1] = GA_gettext(var2);
     done = 2;
 }
 
@@ -87,14 +87,14 @@ void menu_ttest(char **vars, int ints[], double level[])
     ints[1] =  ischecked(paired);
     ints[2] =  ischecked(varequal);
     ints[3] = done;
-    level[0] = atof(gettext(lvl));
+    level[0] = atof(GA_gettext(lvl));
     hide(win);
     delobj(bApply);
     delobj(win);
 }
 
 
-extern void consolecmd(window c, char *cmd);
+extern void Rconsolecmd(window c, char *cmd);
 extern __declspec(dllimport) window RConsole;
 
 
@@ -121,8 +121,8 @@ void menu_ttest2()
 		alts[getlistitem(alt)],
 		ischecked(paired) ? "TRUE" : "FALSE",
 		ischecked(varequal) ? "TRUE" : "FALSE",
-		gettext(lvl));
-	consolecmd(RConsole, cmd);
+		GA_gettext(lvl));
+	Rconsolecmd(RConsole, cmd);
     }    
     hide(win);
     delobj(bApply);
@@ -154,7 +154,7 @@ SEXP menu_ttest3()
 		alts[getlistitem(alt)],
 		ischecked(paired) ? "TRUE" : "FALSE",
 		ischecked(varequal) ? "TRUE" : "FALSE",
-		gettext(lvl));
+		GA_gettext(lvl));
     }    
     hide(win);
     delobj(bApply);

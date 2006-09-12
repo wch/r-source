@@ -41,6 +41,8 @@ extern UImode  CharacterMode;
 #include "rui.h"
 #include "editor.h"
 
+#define gettext GA_gettext
+
 #define MCHECK(a) if (!(a)) {del(c); return NULL;}
 RECT *RgetMDIsize();
 

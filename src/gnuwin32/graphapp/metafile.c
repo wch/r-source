@@ -43,7 +43,7 @@ static void private_delmetafile(metafile obj)
 
     if (!obj || (obj->kind != MetafileObject)) return;
     hm = (HENHMETAFILE) CloseEnhMetaFile((HDC) obj->handle);
-    if (strlen(gettext(obj))) { /* real file*/
+    if (strlen(GA_gettext(obj))) { /* real file*/
 	DeleteEnhMetaFile(hm);
 	return;
     }

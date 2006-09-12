@@ -39,6 +39,8 @@
 #include "rui.h"
 #include "preferences.h"
 
+#define gettext GA_gettext
+
 extern char fontname[LF_FACESIZE+1]; /* from console.c */
 extern int consolex, consoley; /* from console.c */
 extern int pagerMultiple, haveusedapager; /* from pager.c */
