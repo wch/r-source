@@ -1,7 +1,7 @@
 #-*- perl -*-
 
 ## Copyright (C) 2001--2002 R Development Core Team
-## Copyright (C) 2003-4       The R Foundation
+## Copyright (C) 2003-4, 2006 The R Foundation
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -49,11 +49,39 @@ print <<_EOF_;
 ### * <HEADER>
 ###
 attach(NULL, name = "CheckExEnv")
-## add some hooks to label plot pages for base and grid graphics
-setHook("plot.new", ".newplot.hook")
-setHook("persp", ".newplot.hook")
-setHook("grid.newpage", ".gridplot.hook")
-
+assign("nameEx", 
+       local({
+	   s <- "__{must remake R-ex/*.R}__"
+           function(new) {
+               if(!missing(new)) s <<- new else s
+           }
+       }),
+       pos = "CheckExEnv")
+## Add some hooks to label plot pages for base and grid graphics
+assign("base_plot_hook",
+       function() {
+           pp <- par(c("mfg","mfcol","oma","mar"))
+           if(all(pp\$mfg[1:2] == c(1, pp\$mfcol[2]))) {
+               outer <- (oma4 <- pp\$oma[4]) > 0; mar4 <- pp\$mar[4]
+               mtext(sprintf("help(\\"%s\\")", nameEx()), side = 4,
+                     line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
+              outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
+           }
+       },
+       pos = "CheckExEnv")
+assign("grid_plot_hook",
+       function() {
+           pushViewport(viewport(width=unit(1, "npc") - unit(1, "lines"),
+                                 x=0, just="left"))
+           grid.text(sprintf("help(\\"%s\\")", nameEx()),
+                     x=unit(1, "npc") + unit(0.5, "lines"),
+                     y=unit(0.8, "npc"), rot=90,
+                     gp=gpar(col="orchid"))
+       },
+       pos = "CheckExEnv")
+setHook("plot.new",     get("base_plot_hook", pos = "CheckExEnv"))
+setHook("persp",        get("base_plot_hook", pos = "CheckExEnv"))
+setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
 assign("cleanEx",
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
@@ -75,7 +103,6 @@ assign("cleanEx",
 		       " have been removed from the search path")
        },
        pos = "CheckExEnv")
-assign("..nameEx", "__{must remake R-ex/*.R}__", pos = "CheckExEnv") # for now
 assign("ptime", proc.time(), pos = "CheckExEnv")
 grDevices::postscript("$PKG-Ex.ps")
 assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
@@ -111,7 +138,7 @@ foreach my $file (@Rfiles) {
     }
     close(FILE);
     if ($have_examples) {
-	print "cleanEx(); ..nameEx <- \"$nm\"\n\n";
+	print "cleanEx(); nameEx(\"$nm\");\n";
     }
 
     print "### * $nm\n\n";
