@@ -1,6 +1,6 @@
 /*******************************************************************************
  *  BDX: Binary Data eXchange format library
- *  Copyright (C) 1999-2005 Thomas Baier
+ *  Copyright (C) 1999-2006 Thomas Baier
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -50,6 +50,12 @@ struct _BDX_Data;
 struct _BDX_Data* WINAPI bdx_alloc();
 void WINAPI bdx_free(struct _BDX_Data* data);
 void WINAPI bdx_trace(struct _BDX_Data* data); /* trace using OutputDebugString() */
+
+/*
+ * control BDX data conversion
+ */
+void bdx_set_datamode(unsigned long pDM);
+unsigned long bdx_get_datamode();
 
 #ifdef __cplusplus
 }
