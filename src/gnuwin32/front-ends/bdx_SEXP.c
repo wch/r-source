@@ -1,6 +1,6 @@
 /*******************************************************************************
  *  BDX: Binary Data eXchange format library
- *  Copyright (C) 1999-2005 Thomas Baier
+ *  Copyright (C) 1999-2006 Thomas Baier
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -38,8 +38,16 @@
  */
 static int EXTPTRSXP2LPSTREAM(RCOM_OBJHANDLE pHandle,
 			      LPSTREAM* pStream);
+#define getSpecialValueFromLogical(x) getSpecialValueFromInteger((x))
+static unsigned long getSpecialValueFromInteger(int pSEXPVal);
 static unsigned long getSpecialValueFromDouble(double pSEXPVal);
 static double getDoubleFromSpecialValue(unsigned long pSpecialValue);
+
+#define BDX_DM_DEFAULT    0UL
+#define BDX_DM_UNDEFINED  ((unsigned long) -1)
+#define BDX_DM_NO_SPECIAL 1UL
+
+static unsigned long s_data_mode = BDX_DM_UNDEFINED;
 
 /* ==========================================================================
    Implementation
@@ -233,6 +241,7 @@ int BDX2SEXP(BDX_Data const* pBDXData,SEXP* pSEXPData)
 /* 05-06-05 | baier | support for special values (R_NaN,...), generic vectors */
 /* 05-06-08 | baier | BDX_SPECIAL for scalars (REALSXP conversions) */
 /* 06-02-15 | baier | fixes for COM objects/EXTPTRSXP */
+/* 06-06-18 | baier | special values also for LOGICAL and INTEGER */
 int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
 {
   BDX_Data* lData;
@@ -242,6 +251,8 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
   int lGeneric = 0;
   SEXP sexp = (SEXP) pSexp; /* to get rid of const/non-const warning */
   double lDoubleValue;
+  int lLogicalValue;
+  int lIntegerValue;
 
   assert(ppBDXData != NULL);
 
@@ -356,10 +367,22 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
 	lData->data.raw_data[i].special_value = BDX_SV_NULL;
 	break;
       case LGLSXP:
-	lData->data.raw_data[i].bool_value = LOGICAL(sexp)[i];
+	/* check special values: R_NaInt */
+	lLogicalValue = LOGICAL(sexp)[i];
+	if(getSpecialValueFromLogical(lLogicalValue) != BDX_SV_UNK) {
+	  lGeneric = 1;
+	} else {
+	  lData->data.raw_data[i].bool_value = lLogicalValue;
+	}
 	break;
       case INTSXP:
-	lData->data.raw_data[i].int_value = INTEGER(sexp)[i];
+	/* check special values: R_NaInt */
+	lIntegerValue = INTEGER(sexp)[i];
+	if(getSpecialValueFromInteger(lIntegerValue) != BDX_SV_UNK) {
+	  lGeneric = 1;
+	} else {
+	  lData->data.raw_data[i].int_value = lIntegerValue;
+	}
 	break;
       case REALSXP:
 	/* check special values: R_NaReal, R_PosInf, R_NaN, R_NegInf */
@@ -437,12 +460,7 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
   /* VECSXP or REALSXP with special values */
   if(lGeneric) {
     if(lData->data.raw_data) {
-      /* REALSXP: memory has been allocated */
-      if(TYPEOF(sexp) != REALSXP) {
-	*ppBDXData = NULL;
-	BDX_ERR(printf("SEXP2BDX: internal error: SXP != REALSXP transformed to BDX_GENERIC\n"));
-	return -1;
-      }
+      /* memory has been allocated */
       free(lData->data.raw_data);
     }
     if((lData->type & BDX_CMASK) == BDX_SCALAR) {
@@ -456,7 +474,34 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
       lData->data.raw_data_with_type =
 	(BDX_RawDataWithType*) calloc(lTotalSize,
 				      sizeof(BDX_RawDataWithType));
-      if(TYPEOF(sexp) == REALSXP) {
+      switch(TYPEOF(sexp)) {
+      case LGLSXP:
+	for(i = 0;i < lTotalSize;i++) {
+	  lData->data.raw_data_with_type[i].type = BDX_SPECIAL;
+	  lData->data.raw_data_with_type[i].raw_data.special_value =
+	    getSpecialValueFromLogical(LOGICAL(sexp)[i]);
+	  if(lData->data.raw_data_with_type[i].raw_data.special_value ==
+	     BDX_SV_UNK) {
+	    lData->data.raw_data_with_type[i].type = BDX_BOOL;
+	    lData->data.raw_data_with_type[i].raw_data.double_value =
+	      LOGICAL(sexp)[i];
+	  }
+	}
+	break;
+      case INTSXP:
+	for(i = 0;i < lTotalSize;i++) {
+	  lData->data.raw_data_with_type[i].type = BDX_SPECIAL;
+	  lData->data.raw_data_with_type[i].raw_data.special_value =
+	    getSpecialValueFromInteger(INTEGER(sexp)[i]);
+	  if(lData->data.raw_data_with_type[i].raw_data.special_value ==
+	     BDX_SV_UNK) {
+	    lData->data.raw_data_with_type[i].type = BDX_INT;
+	    lData->data.raw_data_with_type[i].raw_data.double_value =
+	      LOGICAL(sexp)[i];
+	  }
+	}
+	break;
+      case REALSXP:
 	for(i = 0;i < lTotalSize;i++) {
 	  lData->data.raw_data_with_type[i].type = BDX_SPECIAL;
 	  lData->data.raw_data_with_type[i].raw_data.special_value =
@@ -468,85 +513,89 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
 	      REAL(sexp)[i];
 	  }
 	}
-      } else for(i = 0;i < lTotalSize;i++) {
-	SEXP lElementSexp = VECTOR_ELT(sexp,i);
-	switch(TYPEOF(lElementSexp)) {
-	case NILSXP:
-	  lData->data.raw_data_with_type[i].type = BDX_SPECIAL;
-	  lData->data.raw_data_with_type[i].raw_data.special_value = BDX_SV_NULL;
-	  break;
-	case LGLSXP:
-	  lData->data.raw_data_with_type[i].type = BDX_BOOL;
-	  lData->data.raw_data_with_type[i].raw_data.bool_value =
-	    LOGICAL(lElementSexp)[0];
-	  break;
-	case INTSXP:
-	  lData->data.raw_data_with_type[i].type = BDX_INT;
-	  lData->data.raw_data_with_type[i].raw_data.int_value =
-	    INTEGER(lElementSexp)[0];
-	  break;
-	case REALSXP:
-	  lData->data.raw_data_with_type[i].type = BDX_SPECIAL;
-	  lData->data.raw_data_with_type[i].raw_data.special_value =
-	    getSpecialValueFromDouble(REAL(lElementSexp)[0]);
-	  if(lData->data.raw_data_with_type[i].raw_data.special_value == BDX_SV_UNK) {
-	    lData->data.raw_data_with_type[i].type = BDX_DOUBLE;
-	    lData->data.raw_data_with_type[i].raw_data.double_value =
-	    REAL(lElementSexp)[0];
-	  }
-	  break;
-	case EXTPTRSXP:
-	  lData->data.raw_data_with_type[i].type = BDX_HANDLE;
-	  /*
-	   * according to BDR (mail on r-devel, 05-10-24) an EXTPTRSXP is not
-	   * a vector, therefore LENGTH() does not work
-	   */
-	  lTotalSize = 1; 
-	  /* no EXTPTRSXP for arrays */
-#if 0
-	  if(lTotalSize != 1) {
-	    bdx_free(lData);
-	    BDX_TRACE(printf("SEXP2BDX[2]: EXTPTRSXP in array with %d elements\n",
-				lTotalSize));
-	    return -7;
-	  }
-#endif
-	  {
-	    /* is it a COM object? */
-	    RCOM_OBJHANDLE lHandle = com_getHandle(lElementSexp);
-	    LPSTREAM lStream = NULL;
-	    int lRc = EXTPTRSXP2LPSTREAM(lHandle,&lStream); /* 0 for success */
-	    
-	    /* COM object is marshalled into stream
-	     *
-	     * 1. stream object holds reference to IDispatch
-	     * 2. reference count is increased in the meanwhile
-	     * 3. must use CoGetInterfaceAndReleaseStream() to unmarshal
-	     * 4. Release() must be called on object afterwards
-	     */
-	    if (lRc == 0) {
-	      /* we don't support generic pointers */
-	      lData->data.raw_data_with_type[i].raw_data.ptr = lStream;
-	      lData->type |= BDX_HANDLE;
-	    } else {
-	      lData->type |= BDX_POINTER;
-	      lData->data.raw_data_with_type[i].raw_data.ptr =
-		NULL; /* NULL pointer */
-	      BDX_TRACE(printf("SEXP2BDX: error %d marshalling COM object at index %d\n",
-				  lRc,i));
+	break;
+      default:
+	for(i = 0;i < lTotalSize;i++) {
+	  SEXP lElementSexp = VECTOR_ELT(sexp,i);
+	  switch(TYPEOF(lElementSexp)) {
+	  case NILSXP:
+	    lData->data.raw_data_with_type[i].type = BDX_SPECIAL;
+	    lData->data.raw_data_with_type[i].raw_data.special_value = BDX_SV_NULL;
+	    break;
+	  case LGLSXP:
+	    lData->data.raw_data_with_type[i].type = BDX_SPECIAL;
+	    lData->data.raw_data_with_type[i].raw_data.special_value =
+	      getSpecialValueFromLogical(LOGICAL(lElementSexp)[0]);
+	    if(lData->data.raw_data_with_type[i].raw_data.special_value == BDX_SV_UNK) {
+	      lData->data.raw_data_with_type[i].type = BDX_BOOL;
+	      lData->data.raw_data_with_type[i].raw_data.bool_value =
+		LOGICAL(lElementSexp)[0];
 	    }
+	    break;
+	  case INTSXP:
+	    lData->data.raw_data_with_type[i].type = BDX_SPECIAL;
+	    lData->data.raw_data_with_type[i].raw_data.special_value =
+	      getSpecialValueFromInteger(INTEGER(lElementSexp)[0]);
+	    if(lData->data.raw_data_with_type[i].raw_data.special_value == BDX_SV_UNK) {
+	      lData->data.raw_data_with_type[i].type = BDX_INT;
+	      lData->data.raw_data_with_type[i].raw_data.int_value =
+		INTEGER(lElementSexp)[0];
+	    }
+	    break;
+	  case REALSXP:
+	    lData->data.raw_data_with_type[i].type = BDX_SPECIAL;
+	    lData->data.raw_data_with_type[i].raw_data.special_value =
+	      getSpecialValueFromDouble(REAL(lElementSexp)[0]);
+	    if(lData->data.raw_data_with_type[i].raw_data.special_value == BDX_SV_UNK) {
+	      lData->data.raw_data_with_type[i].type = BDX_DOUBLE;
+	      lData->data.raw_data_with_type[i].raw_data.double_value =
+		REAL(lElementSexp)[0];
+	    }
+	    break;
+	  case EXTPTRSXP:
+	    lData->data.raw_data_with_type[i].type = BDX_HANDLE;
+	    /*
+	     * according to BDR (mail on r-devel, 05-10-24) an EXTPTRSXP is not
+	     * a vector, therefore LENGTH() does not work
+	     */
+	    lTotalSize = 1; 
+	    /* no EXTPTRSXP for arrays */
+	    {
+	      /* is it a COM object? */
+	      RCOM_OBJHANDLE lHandle = com_getHandle(lElementSexp);
+	      LPSTREAM lStream = NULL;
+	      int lRc = EXTPTRSXP2LPSTREAM(lHandle,&lStream); /* 0 for success */
+	      /* COM object is marshalled into stream
+	       *
+	       * 1. stream object holds reference to IDispatch
+	       * 2. reference count is increased in the meanwhile
+	       * 3. must use CoGetInterfaceAndReleaseStream() to unmarshal
+	       * 4. Release() must be called on object afterwards
+	       */
+	      if (lRc == 0) {
+		/* we don't support generic pointers */
+		lData->data.raw_data_with_type[i].raw_data.ptr = lStream;
+		lData->type |= BDX_HANDLE;
+	      } else {
+		lData->type |= BDX_POINTER;
+		lData->data.raw_data_with_type[i].raw_data.ptr =
+		  NULL; /* NULL pointer */
+		BDX_TRACE(printf("SEXP2BDX: error %d marshalling COM object at index %d\n",
+				 lRc,i));
+	      }
+	    }
+	    break;
+	  case STRSXP:
+	    lData->data.raw_data_with_type[i].type = BDX_STRING;
+	    lData->data.raw_data_with_type[i].raw_data.string_value =
+	      strdup(CHAR(STRING_ELT(lElementSexp,0)));
+	    break;
+	  default:
+	    bdx_free(lData);
+	    BDX_TRACE(printf("SEXP2BDX: unsupported SEXP type %d in VECSXP element %d\n",
+			     TYPEOF(lElementSexp),i));
+	    return -6;
 	  }
-	  break;
-	case STRSXP:
-	  lData->data.raw_data_with_type[i].type = BDX_STRING;
-	  lData->data.raw_data_with_type[i].raw_data.string_value =
-	    strdup(CHAR(STRING_ELT(lElementSexp,0)));
-	  break;
-	default:
-	  bdx_free(lData);
-	  BDX_TRACE(printf("SEXP2BDX: unsupported SEXP type %d in VECSXP element %d\n",
-			      TYPEOF(lElementSexp),i));
-	  return -6;
 	}
       }
     }
@@ -554,6 +603,16 @@ int SEXP2BDX(struct SEXPREC const* pSexp,BDX_Data** ppBDXData)
   *ppBDXData = lData;
 
   return 0;
+}
+
+unsigned long bdx_get_datamode()
+{
+  return s_data_mode;
+}
+void bdx_set_datamode(unsigned long pDM)
+{
+  BDX_TRACE(printf("BDX: data mode set to %08x\n",pDM));
+  s_data_mode = pDM;
 }
 
 static int EXTPTRSXP2LPSTREAM(RCOM_OBJHANDLE pHandle,
@@ -584,25 +643,38 @@ static int EXTPTRSXP2LPSTREAM(RCOM_OBJHANDLE pHandle,
 		     hr));
     return -5;
   } else {
-#if 0
-    BDX_TRACE(printf("EXTPTRSXP2LPSTREAM: object %08p marshalled into stream %08p\n",
-		     lUnk,lStream));
-#endif
     *pStream = lStream;
   }
   return 0;
 }
 
+/* 06-06-24 | baier | NaN also transforms to IEEE double NaN for dm=1 */
 static unsigned long getSpecialValueFromDouble(double pSEXPVal)
 {
   if(ISNA(pSEXPVal)) {
     return BDX_SV_NA;
   } else if(pSEXPVal == R_PosInf) {
+    if(bdx_get_datamode() == BDX_DM_NO_SPECIAL) {
+      return BDX_SV_UNK;
+    }
     return BDX_SV_INF;
   } else if(ISNAN(pSEXPVal)) {
+    if(bdx_get_datamode() == BDX_DM_NO_SPECIAL) {
+      return BDX_SV_UNK;
+    }
     return BDX_SV_NAN;
   } else if(pSEXPVal == R_NegInf) {
+    if(bdx_get_datamode() == BDX_DM_NO_SPECIAL) {
+      return BDX_SV_UNK;
+    }
     return BDX_SV_NINF;
+  }
+  return BDX_SV_UNK;
+}
+static unsigned long getSpecialValueFromInteger(int pSEXPVal)
+{
+  if(pSEXPVal == R_NaInt) {
+    return BDX_SV_NA;
   }
   return BDX_SV_UNK;
 }
