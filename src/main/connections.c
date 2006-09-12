@@ -1836,21 +1836,19 @@ static Rconnection newtext(char *description, SEXP text)
 static void outtext_close(Rconnection con)
 {
     Routtextconn this = (Routtextconn)con->private;
-    SEXP tmp;
     int idx = ConnIndex(con);
+    SEXP tmp, env = VECTOR_ELT(OutTextData, idx);
 
-    R_unLockBinding(this->namesymbol, VECTOR_ELT(OutTextData, idx));
+    if(findVarInFrame3(env, this->namesymbol, FALSE) != R_UnboundValue)
+	R_unLockBinding(this->namesymbol, env);
     if(strlen(this->lastline) > 0) {
 	PROTECT(tmp = lengthgets(this->data, ++this->len));
 	SET_STRING_ELT(tmp, this->len - 1, mkChar(this->lastline));
-	defineVar(this->namesymbol, tmp, VECTOR_ELT(OutTextData, idx));
+	defineVar(this->namesymbol, tmp, env);
 	SET_NAMED(tmp, 2);
 	this->data = tmp;
 	UNPROTECT(1);
     }
-    /* moved to _destroy 
-    SET_VECTOR_ELT(OutTextData, idx, R_NilValue);
-    */
 }
 
 static void outtext_destroy(Rconnection con)
@@ -1916,7 +1914,8 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	    *q = '\0';
 	    PROTECT(tmp = lengthgets(this->data, ++this->len));
 	    SET_STRING_ELT(tmp, this->len - 1, mkChar(p));
-	    R_unLockBinding(this->namesymbol, env);
+	    if(findVarInFrame3(env, this->namesymbol, FALSE) != R_UnboundValue)
+		R_unLockBinding(this->namesymbol, env);
 	    defineVar(this->namesymbol, tmp, env);
 	    this->data = tmp;
 	    SET_NAMED(tmp, 2);
