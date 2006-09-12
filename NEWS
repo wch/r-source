@@ -291,7 +291,7 @@ NEW FEATURES
 	the expressions vector with NULL.  (This is now compatible
 	with S.)
 
-    o	pie() now allows expressions for 'labels'.
+    o	pie() now allows expressions for 'labels', and empty slices.
 
     o   There is a new '%.%' operator for mathematical annotations
 	(plotmath) which draws a centred multiplication dot
@@ -832,6 +832,9 @@ BUG FIXES
     o	Assigning to the symbol in a for() loop with a
 	list/expression/pairlist index could alter the index.  Now the
 	loop variable is explicitly read-only.  (PR#9216)
+
+    o	Using old.packages() (and hence update.packages()) on an empty
+	(or non-existent) library failed with an obscure message.
 
 
 

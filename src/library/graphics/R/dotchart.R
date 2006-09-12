@@ -9,6 +9,8 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
     on.exit(par(opar))
     par(cex = cex, yaxs = "i")
 
+    if(!is.numeric(x))
+        stop("'x' must be a numeric vector or matrix")
     n <- length(x)
     if (is.matrix(x)) {
 	if (is.null(labels))

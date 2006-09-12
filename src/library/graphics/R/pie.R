@@ -4,7 +4,7 @@ pie <-
               density = NULL, angle = 45, col = NULL, border = NULL,
               lty = NULL, main = NULL, ...)
 {
-    if (!is.numeric(x) || any(is.na(x) | x <= 0))
+    if (!is.numeric(x) || any(is.na(x) | x < 0))
 	stop("'x' values must be positive.")
     if (is.null(labels))
 	labels <- as.character(1:length(x))

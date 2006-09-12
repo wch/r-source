@@ -15,12 +15,12 @@ stripchart(x, method = "overplot", jitter = 0.1, offset = 1/3,
 }
 \arguments{
   \item{x}{the data from which the plots are to be produced.  The data
-    can be specified as a single vector, or as list of vectors, each
-    corresponding to a component plot.  Alternatively a symbolic
-    specification of the form \code{x ~ g} can be given, indicating the
-    the observations in the vector \code{x} are to be grouped according
-    to the levels of the factor \code{g}.
-    \code{NA}s are allowed in the data.}
+    can be specified as a single numeric vector, or as list of numeric
+    vectors, each corresponding to a component plot.  Alternatively a
+    symbolic specification of the form \code{x ~ g} can be given,
+    indicating the the observations in the vector \code{x} are to be
+    grouped according to the levels of the factor \code{g}. \code{NA}s
+    are allowed in the data.}
   \item{method}{the method to be used to separate coincident points.
     The default method \code{"overplot"} causes such points to be
     overplotted, but it is also possible to specify \code{"jitter"} to

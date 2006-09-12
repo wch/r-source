@@ -11,7 +11,7 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
     lty = NULL, main = NULL, \dots)
 }
 \arguments{
-  \item{x}{a vector of positive quantities.
+  \item{x}{a vector of non-negative numerical quantities.
     The values in \code{x} are displayed as the areas of pie slices.}
   \item{labels}{one or more expressions or character strings giving
     names for the slices.  For empty or \code{NA} (after coercion to
