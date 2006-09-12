@@ -1,17 +1,20 @@
 \name{textConnection}
 \alias{textConnection}
+\alias{textConnectionValue}
 \title{Text Connections}
 \description{
   Input and output text connections.
 }
 \usage{
 textConnection(object, open = "r", local = FALSE)
+
+textConnectionValue(con)
 }
 \arguments{
   \item{object}{character.  A description of the connection. 
     For an input this is an \R character vector object, and for an output
     connection the name for the \R character vector to receive the
-    output.
+    output, or \code{NULL}.
   }
   \item{open}{character.  Either \code{"r"} (or equivalently \code{""})
     for an input connection or \code{"w"} or \code{"a"} for an output
@@ -19,7 +22,7 @@ textConnection(object, open = "r", local = FALSE)
   \item{local}{logical.  Used only for output connections.  If \code{TRUE},
     output is assigned to a variable in the calling environment.  Otherwise
     the global environment is used.}
-}
+  \item{con}{An output text connection.}
 \details{
   An input text connection is opened and the character vector is copied
   at time the connection object is created, and \code{close}
@@ -47,8 +50,10 @@ textConnection(object, open = "r", local = FALSE)
 }
 
 \value{
-  A connection object of class \code{"textConnection"} which inherits
-  from class \code{"connection"}.
+  For \code{textConnection}, a connection object of class
+  \code{"textConnection"} which inherits from class \code{"connection"}.
+
+  For \code{textConnectionValue, a character vector.}
 }
 
 \note{

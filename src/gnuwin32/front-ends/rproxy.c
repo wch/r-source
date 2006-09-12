@@ -33,10 +33,6 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include <Rinternals.h>
-#include <Graphics.h>
-#include <Rdevices.h>
-
 /* static connector information */
 #define CONNECTOR_NAME          "R Statistics Interpreter Connector"
 #define CONNECTOR_DESCRIPTION   "Implements abstract connector interface to R"

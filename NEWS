@@ -836,6 +836,9 @@ BUG FIXES
     o	Using old.packages() (and hence update.packages()) on an empty
 	(or non-existent) library failed with an obscure message.
 
+    o	plot.xy() couild segfault if supplied with an invalid 'col'
+	argument.  (PR#9221)
+
 
 
 

@@ -339,11 +339,11 @@ SEXP FixupCol(SEXP col, unsigned int dflt)
     SEXP ans;
     n = length(col);
     if (n == 0) {
-	ans = allocVector(INTSXP, 1);
+	PROTECT(ans = allocVector(INTSXP, 1));
 	INTEGER(ans)[0] = dflt;
     }
     else {
-	ans = allocVector(INTSXP, n);
+	ans = PROTECT(allocVector(INTSXP, n));
 	if (isList(col))
 	    for (i = 0; i < n; i++) {
 		INTEGER(ans)[i] = RGBpar(CAR(col), 0);
@@ -353,6 +353,7 @@ SEXP FixupCol(SEXP col, unsigned int dflt)
 	    for (i = 0; i < n; i++)
 		INTEGER(ans)[i] = RGBpar(col, i);
     }
+    UNPROTECT(1);
     return ans;
 }
 
