@@ -1,6 +1,6 @@
 /*******************************************************************************
  *  RProxy: Connector implementation between application and R language
- *  Copyright (C) 1999--2006 Thomas Baier
+ *  Copyright (C) 1999--2005 Thomas Baier
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -30,17 +30,20 @@
 #include "SC_proxy.h"
 #include "rproxy.h"
 #include "rproxy_impl.h"
-#include "rproxy_dev.h"
 #include <assert.h>
 #include <stdlib.h>
+
+#include <Defn.h>
+#include <Graphics.h>
+#include <Rdevices.h>
 
 /* static connector information */
 #define CONNECTOR_NAME          "R Statistics Interpreter Connector"
 #define CONNECTOR_DESCRIPTION   "Implements abstract connector interface to R"
-#define CONNECTOR_COPYRIGHT     "(C) 1999-2006, Thomas Baier"
-#define CONNECTOR_LICENSE       "GNU Library General Public License version 2 or greater"
+#define CONNECTOR_COPYRIGHT     "(C) 1999-2005, Thomas Baier"
+#define CONNECTOR_LICENSE       "GNU General Public License version 2 or greater"
 #define CONNECTOR_VERSION_MAJOR "1"
-#define CONNECTOR_VERSION_MINOR "2"
+#define CONNECTOR_VERSION_MINOR "1"
 
 /* interpreter information here at the moment until I know better... */
 #define INTERPRETER_NAME        "R"
@@ -56,7 +59,7 @@ typedef enum
 } R_Proxy_Object_State;
 
 SC_CharacterDevice* __output_device;
-struct __tag_graphics_device __graphics_device;
+SC_GraphicsDevice* __graphics_device;
 
 typedef struct _R_Proxy_Object_Impl
 {
@@ -64,16 +67,6 @@ typedef struct _R_Proxy_Object_Impl
   R_Proxy_Object_State state;
   int                   ref_count;
 } R_Proxy_Object_Impl;
-
-/* 01-01-25 | baier | new parameters */
-/* 06-08-20 | baier | new name, restructured */
-int R_Proxy_Graphics_Driver_CB (R_Proxy_Graphics_CB* pDD,
-				char* pDisplay,
-				double pWidth,
-				double pHeight,
-				double pPointSize,
-				Rboolean pRecording,
-				int pResize);
 
 int SYSCALL R_get_version (R_Proxy_Object_Impl* object,unsigned long* version)
 {
@@ -88,36 +81,33 @@ int SYSCALL R_get_version (R_Proxy_Object_Impl* object,unsigned long* version)
   return SC_PROXY_OK;
 }
 
-extern struct _R_Proxy_init_parameters g_R_Proxy_init_parameters;
-
 /* 00-02-18 | baier | R_init(), R_Proxy_init() now take parameter-string */
 /* 04-10-20 | baier | special state to reuse a running R (rgui) */
-/* 06-06-18 | baier | parse parameters if state is ps_reuser */
 int SYSCALL R_init (R_Proxy_Object_Impl* object,char const* parameters)
 {
   int lRc = SC_PROXY_ERR_UNKNOWN;
 
-  if (object == NULL) {
-    return SC_PROXY_ERR_INVALIDARG;
-  }
+  if (object == NULL)
+    {
+      return SC_PROXY_ERR_INVALIDARG;
+    }
 
-  /* parse parameters */
-  R_Proxy_parse_parameters(parameters,&g_R_Proxy_init_parameters);
+  if (object->state != ps_none)
+    {
+      return SC_PROXY_ERR_INITIALIZED;
+    }
 
-  if(object->state != ps_none) {
-    return SC_PROXY_ERR_INITIALIZED;
-  }
-
-  if(g_R_Proxy_init_parameters.reuseR) {
+  if(strcmp(parameters,"REUSER") == 0) {
     RPROXY_TRACE(printf("R_init: re-use R for proxy DLL (inproc RCOM)\n"));
     object->state = ps_reuser;
     return SC_PROXY_OK;
   }
   lRc = R_Proxy_init (parameters);
 
-  if(lRc == SC_PROXY_OK) {
-    object->state = ps_initialized;
-  }
+  if (lRc == SC_PROXY_OK)
+    {
+      object->state = ps_initialized;
+    }
 
   return lRc;
 }
@@ -166,7 +156,6 @@ int SYSCALL R_retain (R_Proxy_Object_Impl* object)
 }
 
 /* 00-06-19 | baier | release graphics device */
-/* 06-05-17 | baier | changed layout of __graphics_device */
 int SYSCALL R_release (R_Proxy_Object_Impl* object)
 {
   if (object == NULL)
@@ -195,10 +184,11 @@ int SYSCALL R_release (R_Proxy_Object_Impl* object)
       __output_device = NULL;
     }
 
-  if(HASGFXDEV()) {
-    GFXDEV()->vtbl->release (GFXDEV());
-    CLRGFXDEV();
-  }
+  if (__graphics_device)
+    {
+      __graphics_device->vtbl->release (__graphics_device);
+      __graphics_device = NULL;
+    }
 
   free (object);
 
@@ -465,26 +455,34 @@ int SYSCALL R_query_info (R_Proxy_Object_Impl* object,
 
   return SC_PROXY_OK;
 }
+/* 01-01-25 | baier | new parameters */
+int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
+			     char* pDisplay,
+			     double pWidth,
+			     double pHeight,
+			     double pPointSize,
+			     Rboolean pRecording,
+			     int pResize,
+			     struct _SC_GraphicsDevice* pDevice);
 
 
-/* 06-05-17 | baier | changed layout of __graphics_device */
-/* 06-08-20 | baier | use R_Proxy_Graphics_CB, only add device once  */
 int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
 				   struct _SC_GraphicsDevice* device)
 {
   unsigned long lCurrentVersion = 0;
-  static GEDevDesc* lDD = NULL;
 
   if (object == NULL)
     {
       return SC_PROXY_ERR_INVALIDARG;
     }
 
-  if (HASGFXDEV()) {
-    /* remove the graphics device from the set of drivers */
-    GFXDEV()->vtbl->release (GFXDEV());
-    CLRGFXDEV();
-  }
+  if (__graphics_device)
+    {
+      /* remove the graphics device from the set of drivers */
+      /* @TB */
+      __graphics_device->vtbl->release (__graphics_device);
+      __graphics_device = NULL;
+    }
 
   if (device == NULL)
     {
@@ -502,30 +500,31 @@ int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
       return SC_PROXY_ERR_INVALIDINTERFACEVERSION;
     }
 
-  SETGFXDEV(device);
-  GFXDEV()->vtbl->retain (GFXDEV());
+  __graphics_device = device;
+  __graphics_device->vtbl->retain (device);
 
   /* add the graphics device to the set of drivers */
-  if(!lDD) {
-    R_Proxy_Graphics_CB* lDev =
-      (R_Proxy_Graphics_CB*) calloc (1,sizeof (R_Proxy_Graphics_CB));
+  {
+    NewDevDesc* lDev = (NewDevDesc*) calloc (1, sizeof (NewDevDesc));
+    GEDevDesc *lDD;
 
     /* Do this for early redraw attempts */
-    DEVDESC(lDev)->displayList = R_NilValue;
+    lDev->displayList = R_NilValue;
     /* Make sure that this is initialised before a GC can occur.
      * This (and displayList) get protected during GC
      */
-    DEVDESC(lDev)->savedSnapshot = R_NilValue;
-    R_Proxy_Graphics_Driver_CB (lDev,
-				"ActiveXDevice 1",
-				100.0,
-				100.0,
-				10.0,
-				0,
-				0);
+    lDev->savedSnapshot = R_NilValue;
+    R_Proxy_Graphics_Driver (lDev,
+			     "ActiveXDevice 1",
+			     100.0,
+			     100.0,
+			     10.0,
+			     0,
+			     0,
+			     device);
     gsetVar(install(".Device"),
 	    mkString("ActiveXDevice 1"), R_BaseEnv);
-    lDD = GEcreateDevDesc(DEVDESC(lDev));
+    lDD = GEcreateDevDesc(lDev);
     addDevice((DevDesc*) lDD);
     GEinitDisplayList(lDD);
   }

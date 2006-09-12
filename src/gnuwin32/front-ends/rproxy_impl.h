@@ -1,6 +1,6 @@
 /*******************************************************************************
  *  RProxy: Connector implementation between application and R language
- *  Copyright (C) 1999--2006 Thomas Baier
+ *  Copyright (C) 1999--2005 Thomas Baier
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -37,16 +37,6 @@ int R_Proxy_evaluate_noreturn (char const* pCmd);
 int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData);
 int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData);
 int R_Proxy_term ();
-
-/* 06-06-18 | baier | removed vsize and nsize, added dm, reuseR */
-struct _R_Proxy_init_parameters
-{
-  unsigned long dm;     /* data mode */
-  int           reuseR; /* 1 for internal COM server */
-};
-
-int R_Proxy_parse_parameters(char const* pParameterString,
-			     struct _R_Proxy_init_parameters* pParameterStruct);
 
 #ifdef __cplusplus
 }
