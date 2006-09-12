@@ -14,7 +14,7 @@ textConnectionValue(con)
   \item{object}{character.  A description of the connection. 
     For an input this is an \R character vector object, and for an output
     connection the name for the \R character vector to receive the
-    output, or \code{NULL}.
+    output, or \code{NULL} (for none).
   }
   \item{open}{character.  Either \code{"r"} (or equivalently \code{""})
     for an input connection or \code{"w"} or \code{"a"} for an output
@@ -23,6 +23,7 @@ textConnectionValue(con)
     output is assigned to a variable in the calling environment.  Otherwise
     the global environment is used.}
   \item{con}{An output text connection.}
+}
 \details{
   An input text connection is opened and the character vector is copied
   at time the connection object is created, and \code{close}
@@ -37,7 +38,9 @@ textConnectionValue(con)
   complete or not.  (A line is complete once it has been terminated by
   end-of-line, represented by \code{"\\n"} in \R.)  The output character
   vector has locked bindings (see \code{\link{lockBinding}}) until
-  \code{code} is called on the connection.
+  \code{close} is called on the connection.  The character vector can
+  also be retrieved \emph{via} \code{textConnectionValue}, which is the
+  only way to do so if \code{object = NULL}.
 
   Opening a text connection with \code{mode = "a"} will attempt to
   append to an existing character vector with the given name in the
