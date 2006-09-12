@@ -1,6 +1,6 @@
 /*******************************************************************************
  *  BDX: Binary Data eXchange format library
- *  Copyright (C) 1999--2005 Thomas Baier
+ *  Copyright (C) 1999--2006 Thomas Baier
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public

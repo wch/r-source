@@ -3662,13 +3662,13 @@ The Inno Setup installer
 
 Your path should include @file{.} first, then the @file{bin} directories
 of the tools, Perl, MinGW, and @LaTeX{}, as well as the Help Workshop
-directory.  Do not use filepaths containing spaces: you can always use
-the short forms (found by @code{dir /x} at the Windows command line).
-It is essential that the directory containing the command line tools
-comes first or second in the path:  there are typically like-named tools
-in other directories, and they will @strong{not} work.  The ordering of
-the other directories is less important, but if in doubt, use the order
-above.
+directory.  Do not use filepaths containing spaces or on network shares
+(starting @code{\\}): you can always use the short forms (found by
+@code{dir /x} at the Windows command line).  It is essential that the
+directory containing the command line tools comes first or second in the
+path: there are typically like-named tools in other directories, and
+they will @strong{not} work.  The ordering of the other directories is
+less important, but if in doubt, use the order above.
 
 Edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to set the appropriate
 paths as needed and to set the type(s) of help that you want built.
@@ -3677,12 +3677,12 @@ paths as needed and to set the type(s) of help that you want built.
 
 Set the appropriate environment variables.
  
-Our toolset contains copies of Cygwin DLLs that may conflict
-with other ones on your system if both are in the path
-at once.  The normal recommendation is to delete the older ones;
-however, at one time we found our tools did not work with a newer
-version of the Cygwin DLLs, so it is safest not to have
-any other version of the Cygwin DLLs in your path.
+Our toolset contains copies of Cygwin DLLs that may conflict with other
+ones on your system if both are in the path at once.  The normal
+recommendation is to delete the older ones; however, at one time we
+found our tools did not work with a newer version of the Cygwin DLLs, so
+it is safest not to have any other version of the Cygwin DLLs in your
+path.
 
 @menu
 * The command line tools::      

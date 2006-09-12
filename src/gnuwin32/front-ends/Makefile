@@ -94,9 +94,9 @@ rproxy_impl-CFLAGS=-I../../../include
 Rproxy-DLLFLAGS=-mwindows
 Rproxy-DLLLIBS=-L../../../bin -lR -lole32 -luuid -loleaut32
 ## this one needs Rproxy.dll as the LIBRARY line
-Rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
+Rproxy.dll: RProxy.def rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
 	bdx_util.o bdx_SEXP.o bdx_com.o rtico.o
-	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ Rproxy.def $^ $($*-DLLLIBS) $(DLLLIBS)
+	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $^ $($*-DLLLIBS) $(DLLLIBS)
 
 
 $(R_HOME)/bin/Rproxy.dll: Rproxy.dll
