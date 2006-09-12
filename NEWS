@@ -434,6 +434,9 @@ NEW FEATURES
 	improved to refer to JAVA_HOME, and they are now documented in
 	the R-admin manual.
 
+    o	R CMD javareconf script has been added to allow Java
+	configuration to be updated even after R has been installed.
+
 
 CHANGES TO S4 METHODS
 
