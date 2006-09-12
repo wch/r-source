@@ -94,7 +94,7 @@ void menu_ttest(char **vars, int ints[], double level[])
 }
 
 
-extern void consolecmd(window c, char *cmd);
+extern void Rconsolecmd(window c, char *cmd);
 extern __declspec(dllimport) window RConsole;
 
 
@@ -122,7 +122,7 @@ void menu_ttest2()
 		ischecked(paired) ? "TRUE" : "FALSE",
 		ischecked(varequal) ? "TRUE" : "FALSE",
 		gettext(lvl));
-	consolecmd(RConsole, cmd);
+	Rconsolecmd(RConsole, cmd);
     }    
     hide(win);
     delobj(bApply);
