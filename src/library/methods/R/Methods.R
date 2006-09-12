@@ -82,7 +82,7 @@ setGeneric <-
       .uncacheGeneric(name, oldDef)
     assign(name, fdef, where)
     .cacheGeneric(name, fdef)
-    if(!.UsingMethodsTables() && 
+    if(!.UsingMethodsTables() &&
        length(fdef@group)> 0 && !is.null(getGeneric(fdef@group[[1]], where = where)))
         methods <- getAllMethods(name, fdef, where)
     else
@@ -492,7 +492,7 @@ getMethod <-
         value <- .findMethodInTable(signature, mlist, fdef)
         if(is.null(value) && !optional)
           stop(gettextf('No method found for function "%s" and signature %s',
-                       f, paste(signature, collapse = ", ")))
+                        f, paste(signature, collapse = ", ")))
         return(value)
     }
     i <- 1
@@ -742,15 +742,18 @@ showMethods <-
     ##
     function(f = character(), where = topenv(parent.frame()), classes = NULL,
              includeDefs = FALSE, inherited = TRUE,
-             showEmpty = TRUE, printTo = stdout())
+             showEmpty, printTo = stdout())
 {
-## FIXME: improve default for 'where'  and 'showEmpty' (to FALSE)
+    if(missing(showEmpty))
+      showEmpty <- !missing(f)
     if(identical(printTo, FALSE)) {
         tmp <- tempfile()
         on.exit(unlink(tmp))
         con <- file(tmp, "w")
     }
     else con <- printTo
+    ## must resolve showEmpty in line; using an equivalent default
+    ## fails because R resets the "missing()" result for f later on (grumble)
     if(is(f, "function"))
         f <- as.character(substitute(f))
     if(!is(f, "character"))
@@ -761,20 +764,17 @@ showMethods <-
     if(length(f) == 0)
 	cat(file = con, "No applicable functions\n")
     else if(length(f) > 1) {
-        value <- character()
+        if(identical(printTo, FALSE))
+          stop(gettextf("The special case of printTo=FALSE only works when a single generic function is specified"))
         for(ff in f) { ## recall for each
             fdef <- getGeneric(ff, where = where)
             if(is.null(fdef))
                 next
-            value <- c(value,
-                       Recall(ff, where=where, classes=classes,
-                              includeDefs=includeDefs, inherited=inherited,
-                              showEmpty=showEmpty, printTo=printTo))
+            Recall(ff, where=where, classes=classes,
+                   includeDefs=includeDefs, inherited=inherited,
+                   showEmpty=showEmpty, printTo=printTo)
         }
-        if(length(value) > 0)
-            return(value)
-        else
-            return(invisible())
+
     }
     else { ## f of length 1 --- the "working horse" :
         out <- paste("\nFunction \"", f, "\":\n", sep="")
@@ -782,9 +782,10 @@ showMethods <-
             cat(file = con, out, "<not a generic function>\n")
         else {
             if(.UsingMethodsTables()) {
-              .showMethodsTable(getGeneric(f, where), includeDefs, inherited,
-                                classes, printTo = con)
-              cat("\n", file = con)
+		## maybe no output for showEmpty=FALSE
+		.showMethodsTable(getGeneric(f, where), includeDefs, inherited,
+				  classes = classes, showEmpty = showEmpty,
+				  printTo = con)
             }
             else {
               mlist <-  getMethods(f, where)
@@ -808,7 +809,8 @@ showMethods <-
         close(con)
         readLines(tmp)
     }
-    invisible()
+    else
+      invisible(printTo)
 }
 
 ## this should be made obsolete
@@ -859,7 +861,7 @@ removeMethods <-
                 f, getPackageName(where)), domain = NA)
         return(FALSE)
     }
-    
+
     methods <- getMethodsForDispatch(f, fdef) # list or table
     if(is.environment(methods)) {
 ##      remove(list=objects(methods, all=TRUE), envir = methods)

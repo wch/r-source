@@ -187,7 +187,7 @@
                   }
                   else {
                       mat <- rbind(data, pkg)
-		      dimnames(mat) <- list(c("Object:", "From:"),
+		      dimnames(mat) <- list(c("Object:", "Package:"),
 					    rep("", length(data)))
                       show(mat)
                   }

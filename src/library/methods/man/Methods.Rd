@@ -122,9 +122,9 @@ in the active signature.
 First, suppose there is only one argument in the signature and that the class of
 the corresponding object was \code{"dgeMatrix"} (from the
 \code{Matrix} package on CRAN).
-Then the superclasses are .... with distances ....
+This class has two direct superclasses and through these 4 additional superclasses.
 Method selection finds all the methods in the table of directly
-specified methods labeled by one of these class names, or by
+specified methods labeled by one of these classes, or by
 \code{"ANY"}.
 
 When there are multiple arguments in the signature, each argument will
@@ -156,6 +156,7 @@ unions.
 Then the superclasses of those classes are appended (note that only
 the ordering of classes within a particular generation of superclasses
 counts, because only these will have the same distance).
+For further discussion of method selection, see the document  \url{http://developer.r-project.org/howMethodsWork.pdf}.
 
 All this detail about selection is less important than the realization
 that having ambiguous method selection usually means that you need to
@@ -189,14 +190,11 @@ selection can be done explicitly by calling the function \code{\link{selectMetho
   the reference, the R software is an original implementation, so
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
-  interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
-  \url{http://developer.r-project.org/methodsPackage.html} and the
-  pointers from that page.
-}
+  interface developed more recently than the reference.
 \seealso{
   \code{\link{setGeneric}},
   \code{\link{setClass}}
+ and the document  \url{http://developer.r-project.org/howMethodsWork.pdf}.
 }
 \keyword{programming}
 \keyword{classes}
