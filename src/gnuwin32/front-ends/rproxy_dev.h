@@ -28,7 +28,7 @@ extern "C" {
 
 #include "bdx.h"
 
-#include <Defn.h>
+#include <Rinternals.h>
 #include <Graphics.h>
 #include <Rdevices.h>
 

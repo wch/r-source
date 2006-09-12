@@ -24,9 +24,6 @@
 #define DEV_Y 500
 
 #include <config.h>
-#include <Defn.h>
-#include <Graphics.h>
-#include <Rdevices.h>
 #include <stdio.h>
 #include <windows.h>
 

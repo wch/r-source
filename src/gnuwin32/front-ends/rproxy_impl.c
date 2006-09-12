@@ -31,11 +31,7 @@
 #define NEW
 #include <config.h>
 
-#ifdef NEW
-# include <Rinternals.h>
-#else
-# include <Defn.h>
-#endif
+#include <Rinternals.h>
 #include <Rversion.h>
 #include <Rembedded.h>
 #include <R_ext/RStartup.h>
@@ -48,13 +44,7 @@
 #include "rproxy.h"
 #include "rproxy_impl.h"
 
-#ifdef NEW
-# include <R_ext/Parse.h>
-#else
-/* <FIXME> Thees are private header files */
-# include <IOStuff.h>
-# include <Parse.h>
-#endif
+#include <R_ext/Parse.h>
 
 #define TRCBUFSIZE 2048
 
@@ -82,10 +72,6 @@ int R_Proxy_printf(char const* pFormat,...)
   OutputDebugString(__tracebuf);
   return 0;
 }
-
-#ifndef NEW
-static int s_EvalInProgress = 0;
-#endif
 
 static void R_Proxy_askok (char* pMsg)
 {
@@ -307,7 +293,6 @@ int R_Proxy_init (char const* pParameterString)
   return SC_PROXY_OK;
 }
 
-#ifdef NEW
 int R_Proxy_evaluate (char const* pCmd, BDX_Data** pData)
 {
     SEXP lSexp;
@@ -336,76 +321,6 @@ int R_Proxy_evaluate (char const* pCmd, BDX_Data** pData)
     return lRc;
 }
 
-#else
-
-/* 01-06-05 | baier | SETJMP and fatal error handling around eval() */
-/* 04-08-01 | baier | ref-counting in case of error */
-/* 04-10-11 | baier | restore original ref-counting */
-/* 05-05-15 | baier | rework SETJMP code (store/restore jmp_buf) */
-int R_Proxy_evaluate (char const* pCmd, BDX_Data** pData)
-{
-  SEXP rho = R_GlobalEnv;
-  IoBuffer lBuffer;
-  SEXP lSexp;
-  int lRc;
-  ParseStatus lStatus;
-  SEXP lResult;
-
-  /* for SETJMP/LONGJMP */
-  s_EvalInProgress = 0;
-
-  R_IoBufferInit (&lBuffer);
-  R_IoBufferPuts ((char*) pCmd, &lBuffer);
-  R_IoBufferPuts ("\n", &lBuffer);
-
-  R_IoBufferReadReset (&lBuffer);
-  lSexp = R_Parse1Buffer (&lBuffer, 1, &lStatus);
-  PrintValue(lSexp);
-
-  switch (lStatus)
-    {
-    case PARSE_OK:
-      R_Visible = 0; /* Not printing, so not used */
-      R_EvalDepth = 0;
-      PROTECT(lSexp);
-      {
-	JMP_BUF lJmpBuf;
-	memcpy(lJmpBuf, R_Toplevel.cjmpbuf, sizeof(lJmpBuf));
-	SETJMP (R_Toplevel.cjmpbuf);
-	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-
-	if (!s_EvalInProgress)
-	  {
-	      /* <FIXME> This does not set .Last.value, does not
-		 print result and does not print warnings */
-	    s_EvalInProgress = 1;
-	    lResult = eval (lSexp, rho);
-	    memcpy(R_Toplevel.cjmpbuf, lJmpBuf, sizeof(lJmpBuf));
-	    s_EvalInProgress = 0;
-	  }
-	else
-	  {
-	    memcpy(R_Toplevel. cjmpbuf,lJmpBuf, sizeof(lJmpBuf));
-	    return SC_PROXY_ERR_EVALUATE_STOP;
-	  }
-      }
-      lRc = SEXP2BDX(lResult, pData);
-      /* no last value */
-      UNPROTECT(1);
-      break;
-    case PARSE_INCOMPLETE:
-      lRc = SC_PROXY_ERR_PARSE_INCOMPLETE;
-      break;
-    default:
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
-    }
-
-  return lRc;
-}
-#endif
-
-#ifdef NEW
 int R_Proxy_evaluate_noreturn (char const* pCmd)
 {
     SEXP lSexp;
@@ -434,73 +349,6 @@ int R_Proxy_evaluate_noreturn (char const* pCmd)
     return lRc;
 }
 
-#else
-
-/* 01-06-05 | baier | SETJMP and fatal error handling around eval() */
-/* 04-08-01 | baier | ref-counting in case of error */
-/* 04-10-11 | baier | restore original ref-counting */
-/* 05-05-15 | baier | rework SETJMP code (store/restore jmp_buf) */
-int R_Proxy_evaluate_noreturn (char const* pCmd)
-{
-  SEXP rho = R_GlobalEnv;
-  IoBuffer lBuffer;
-  SEXP lSexp;
-  int lRc;
-  ParseStatus lStatus;
-
-  /* for SETJMP/LONGJMP */
-  s_EvalInProgress = 0;
-
-  R_IoBufferInit (&lBuffer);
-  R_IoBufferPuts ((char*) pCmd, &lBuffer);
-  R_IoBufferPuts ("\n", &lBuffer);
-
-  R_IoBufferReadReset (&lBuffer);
-  lSexp = R_Parse1Buffer (&lBuffer, 1, &lStatus);
-  PrintValue(lSexp);
-
-  switch (lStatus)
-    {
-    case PARSE_OK:
-      R_Visible = 0;
-      R_EvalDepth = 0;
-      PROTECT(lSexp);
-      {
-	JMP_BUF lJmpBuf;
-	memcpy(lJmpBuf, R_Toplevel.cjmpbuf, sizeof(lJmpBuf));
-	SETJMP (R_Toplevel.cjmpbuf);
-	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-
-	if (!s_EvalInProgress)
-	  {
-	    s_EvalInProgress = 1;
-	    eval (lSexp, rho);
-	    memcpy(R_Toplevel.cjmpbuf, lJmpBuf, sizeof(lJmpBuf));
-	    s_EvalInProgress = 0;
-	  }
-	else
-	  {
-	    memcpy(R_Toplevel.cjmpbuf, lJmpBuf, sizeof(lJmpBuf));
-	    return SC_PROXY_ERR_EVALUATE_STOP;
-	  }
-      }
-      /* no last value */
-      UNPROTECT(1);
-      lRc = SC_PROXY_OK;
-      break;
-    case PARSE_INCOMPLETE:
-      lRc = SC_PROXY_ERR_PARSE_INCOMPLETE;
-      break;
-    default:
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
-    }
-
-  return lRc;
-}
-#endif
-
-#ifdef NEW
 int R_Proxy_get_symbol (char const* pSymbol, BDX_Data** pData)
 {
     SEXP lVar = findVar (install((char*) pSymbol), R_GlobalEnv);
@@ -513,63 +361,6 @@ int R_Proxy_get_symbol (char const* pSymbol, BDX_Data** pData)
     else
 	return SC_PROXY_ERR_UNSUPPORTEDTYPE;
 }
-
-#else
-
-int R_Proxy_get_symbol (char const* pSymbol, BDX_Data** pData)
-{
-  IoBuffer lBuffer;
-  SEXP lSexp;
-  SEXP lVar;
-  ParseStatus lStatus;
-
-  R_IoBufferInit (&lBuffer);
-  R_IoBufferPuts ((char*) pSymbol, &lBuffer);
-  R_IoBufferPuts ("\n", &lBuffer);
-
-  /* don't generate code, just a try */
-  R_IoBufferReadReset (&lBuffer);
-  lSexp = R_Parse1Buffer (&lBuffer, 0, &lStatus);
-
-  if (lStatus == PARSE_OK)
-    {
-      /* now generate code */
-      R_IoBufferReadReset (&lBuffer);
-      lSexp = R_Parse1Buffer (&lBuffer, 1, &lStatus);
-      R_Visible = 0;
-      R_EvalDepth = 0;
-      PROTECT(lSexp);
-
-      /* check for valid symbol... */
-      if (TYPEOF (lSexp) != SYMSXP)
-	{
-	  RPROXY_TRACE(printf(">> %s is not a symbol\n", pSymbol));
-	  UNPROTECT (1);
-	  return SC_PROXY_ERR_INVALIDSYMBOL;
-	}
-
-      lVar = findVar (lSexp, R_GlobalEnv);
-
-      if (lVar == R_UnboundValue)
-	{
-	  RPROXY_TRACE(printf(">> %s is an unbound value\n", pSymbol));
-	  UNPROTECT (1);
-	  return SC_PROXY_ERR_INVALIDSYMBOL;
-	}
-      {
-	int lRc = SEXP2BDX(lVar, pData);
-	UNPROTECT (1);
-
-	if(lRc == 0) {
-	  return SC_PROXY_OK;
-	} else {
-	  return SC_PROXY_ERR_UNSUPPORTEDTYPE;
-	}
-      }
-    }
-  return SC_PROXY_OK; /* Really? - gets here on invalid input! */
-}
-#endif
 
 /* 04-02-19 | baier | don't PROTECT strings in a vector, new data structs */
 /* 04-03-02 | baier | removed traces */
