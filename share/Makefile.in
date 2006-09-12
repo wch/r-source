@@ -14,7 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 ## subdirectories of R_HOME/share
-SUBDIRS_WITH_NO_BUILD = R encodings licenses make perl sh texmf
+SUBDIRS_WITH_NO_BUILD = R encodings licenses make perl sh texmf java
 ## subdirectories of R_HOME/share/perl
 SUBDIRS_SHARE_PERL = R Text
 
@@ -36,6 +36,7 @@ installdirs:
 	@$(MKINSTALLDIRS) "$(rsharedir)"
 	@$(MKINSTALLDIRS) "$(rsharedir)/R"
 	@$(MKINSTALLDIRS) "$(rsharedir)/encodings"
+	@$(MKINSTALLDIRS) "$(rsharedir)/java"
 	@$(MKINSTALLDIRS) "$(rsharedir)/licenses"
 	@$(MKINSTALLDIRS) "$(rsharedir)/make"
 	@$(MKINSTALLDIRS) "$(rsharedir)/perl"
@@ -52,6 +53,9 @@ install-sources: installdirs
 	done
 	@for f in $(srcdir)/encodings/*; do \
 	  $(INSTALL_DATA) $${f} "$(rsharedir)/encodings"; \
+	done
+	@for f in $(srcdir)/java/*; do \
+	  $(INSTALL_DATA) $${f} "$(rsharedir)/java"; \
 	done
 	@for f in $(srcdir)/licenses/*; do \
 	  $(INSTALL_DATA) $${f} "$(rsharedir)/licenses"; \
