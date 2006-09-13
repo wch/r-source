@@ -90,6 +90,8 @@ export(Rtangle, RtangleSetup, RweaveLatex, RweaveLatexSetup, Stangle,
        RtangleWritedoc, RweaveLatexOptions, RweaveChunkPrefix,
        RweaveEvalWithOpt, RweaveTryStop, SweaveHooks)
 
+export(memory.size, memory.limit)
+
 if(tools:::.OStype() == "unix") {
 export(nsl)
 }
@@ -98,8 +100,8 @@ if(tools:::.OStype() == "windows") {
 export(DLL.version, Filters, choose.dir, choose.files,
        fixup.libraries.URLs, fixup.package.URLs, getClipboardFormats,
        getIdentification, getWindowsHandle, getWindowTitle,
-       link.html.help, loadRconsole, make.search.html, memory.limit,
-       memory.size, readClipboard, setWindowTitle, shortPathName,
+       link.html.help, loadRconsole, make.search.html,
+       readClipboard, setWindowTitle, shortPathName,
        win.version, winDialog, winDialogString, winMenuAdd, winMenuAddItem,
        winMenuDel, winMenuDelItem, winMenuNames, winMenuItems, writeClipboard,
        zip.unpack)
