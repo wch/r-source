@@ -746,7 +746,7 @@ outerLabels <- function(labels, new) {
   for(i in seq(along = generics)) {
     name <- generics[[i]]
     mtable <- get(mtables[[i]], envir = where)
-    generic <- .getGeneric(name, where)
+    generic <- .getGeneric(name, where = where)
     if(is.null(generic)) {
       warning(gettextf(
        "Could not find generic function \"%s\" to initialize cached methods",

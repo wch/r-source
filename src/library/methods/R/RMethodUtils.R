@@ -428,6 +428,8 @@ getGeneric <-
           value <- genericForPrimitive(f)
           if(!is.function(value) && mustFind)
               stop(gettextf("methods cannot be defined for the primitive function '%s'", f), domain = NA)
+          if(is(value, "genericFunction"))
+             value <- .cacheGeneric(f, value)
       }
   }
     if(is.function(value))
@@ -441,18 +443,25 @@ getGeneric <-
 
 ## low-level version
 .getGeneric <- function(f, where, package = "") {
-    ## first look in the cache (which should eventually be done in C for speed perhaps)
-    value <- .getGenericFromCache(f, where, package)
-    if(is.null(value)) {
-      value <- .Call("R_getGeneric", f, FALSE, as.environment(where), package,
+    if(isNamespace(where))
+        value <-.Call("R_getGeneric", f, FALSE, where, package,
                      PACKAGE = "methods")
-      if(!is.null(value))
-        .cacheGeneric(f, value)
+    else {
+        ## first look in the cache (which should eventually be done in C for speed perhaps)
+        value <- .getGenericFromCache(f, where, package)
+        if(is.null(value)) {
+            value <- .Call("R_getGeneric", f, FALSE, as.environment(where), package,
+                           PACKAGE = "methods")
+            ## cache public generics
+            if(!is.null(value))
+              .cacheGeneric(f, value)
+        }
     }
-    else value
+    value
 }
 
-## cache and retrieve generic functions.  If there is a conflict with packages a list of  generics will be cached
+## cache and retrieve generic functions.  If the same generic name
+## appears for multiple packages, a named list of the generics is cached.
 .genericTable <- new.env(TRUE, baseenv())
 
 .cacheGeneric <- function(name, def) {
@@ -462,25 +471,30 @@ getGeneric <-
         prev <- get(name, envir = .genericTable)
         if(is.function(prev)) {
             if(identical(prev, def))
-               return()
-            pkg <- prev@package # start a per-package list
-            if(identical(pkg, newpkg)) # redefinition
-              return(assign(name, def, envir = .genericTable))
-            prev <- list(prev)
+               return(fdef)
+### the following makes the cached version != package
+##                   fdef <- def <- .makeGenericForCache(def)
+            pkg <- prev@package
+            if(identical(pkg, newpkg)) {# redefinition
+                assign(name, def, envir = .genericTable)
+                return(fdef)
+            }
+            prev <- list(prev) # start a per-package list
             names(prev) <- pkg
         }
         i <- match(newpkg, names(prev))
         if(is.na(i))
-           prev[[newpkg]] <- def
+           prev[[newpkg]] <- def # or, .makeGenericForCache(def) as above
         else if(identical(def, prev[[i]]))
-          return()
+          return(fdef)
         else
-            prev[[i]] <- def
+            prev[[i]] <- def # or, .makeGenericForCache(def) as above
         def <- prev
     }
     if(.UsingMethodsTables())
       .getMethodsTable(fdef) # force initialization
     assign(name, def, envir = .genericTable)
+    fdef
 }
 
 .uncacheGeneric <- function(name, def) {
@@ -536,6 +550,29 @@ getGeneric <-
      }
     else
       NULL
+}
+
+## copy the environments in the generic function so later merging into
+## the cached generic will not modify the generic in the package.
+## NOT CURRENTLY USED: see comments in .getGeneric()
+.makeGenericForCache <- function(fdef) {
+    value <- fdef
+    ev <- environment(fdef)
+    environment(value) <- newEv <- new.env(TRUE, parent.env(ev))
+    for(what in objects(ev, all=TRUE)) {
+        obj <- get(what, envir = ev)
+        if(is.environment(obj))
+          obj <- .copyEnv(obj)
+        assign(what, obj, envir = newEv)
+    }
+    value
+}
+
+.copyEnv <- function(env) {
+    value <- new.env(TRUE, parent.env(env))
+    for(what in objects(env))
+      assign(what, get(what, envir = env), envir = value)
+    value
 }
 
 getGroup <-
@@ -717,10 +754,18 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
          pkg <- packages[[i]]
         fdef <- getGeneric(f, FALSE, searchWhere, pkg)
         ## silently ignores all generics not visible from searchWhere
-        ## (certainly reasonable for attach=FALSE, maybe for namespaces ?)
         if(is(fdef, "genericFunction")) {
-          if(attach)
-            .cacheGeneric(f, fdef)
+          if(attach) {
+              env <- as.environment(where)
+              ## all instances of this generic in different attached packages must
+              ## be the cached version of the generic for consistent
+               ## method selection.
+             if(exists(f, envir = env, inherits = FALSE)) {
+                  def <- get(f, envir = env)
+                  if(!identical(def, fdef))
+                    .assignOverBinding(f, fdef,  env, FALSE)
+              }
+          }
           else if(identical(fdef@package, pkg))
             .uncacheGeneric(f, fdef)
           if(.UsingMethodsTables())
