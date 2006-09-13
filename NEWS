@@ -250,6 +250,9 @@ NEW FEATURES
 	other platforms (including Windows and older Unixen), the
 	choice is unchanged.
 
+    o	package.skeleton() gains arguments 'namespace' and
+    	'code_files'.
+
     o	parse() now returns up to 'n' expressions, rather than fill
 	the expressions vector with NULL.  (This is now compatible
 	with S.)
