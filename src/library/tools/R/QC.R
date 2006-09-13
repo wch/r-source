@@ -2422,7 +2422,7 @@ function(dir)
 
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
-    vignette_dir <- file.path(dir, "doc")
+    vignette_dir <- file.path(dir, "inst", "doc")
     if(file_test("-d", vignette_dir)
        && length(list_files_with_type(vignette_dir, "vignette"))) {
         reqs <- unlist(.build_vignette_index(vignette_dir)$Depends)
@@ -2823,7 +2823,8 @@ function(x, ...)
                                      "\n", sep = ""),
                                indent = 2, exdent = 4))
         }
-        msg <- gettext("Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home directory).")
+        msg <-
+        gettext("Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS' in the R documentation directory).")
         writeLines(c(strwrap(msg), ""))
     }
 
