@@ -199,6 +199,10 @@ NEW FEATURES
     o	median() is now generic, and its default method uses mean()
 	rather than sum() and so is more widely applicable (e.g. to dates).
 
+    o	Dummy functions memory.size() and memory.limit() are available
+	on Unix-alikes, for people who have not noticed that documentation
+	is Windows-specific.
+
     o	merge() works more efficiently when there are relatively few
 	matches between the data frames (for example, for 1-1
 	matching).  The order of the result is changed for 'sort = FALSE'.
