@@ -191,6 +191,7 @@ selection can be done explicitly by calling the function \code{\link{selectMetho
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.
+}
 \seealso{
   \code{\link{setGeneric}},
   \code{\link{setClass}}
