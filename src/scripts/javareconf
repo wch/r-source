@@ -64,11 +64,11 @@ if test -z "$JAVA"; then
     for dir in ${JAVA_PATH}; do
 	if test -f "$dir/java"; then
 	    JAVA="$dir/java"
-	    break 3
+	    break
 	fi
     done
+    IFS=${save_IFS}
 fi
-IFS=${save_IFS}
 
 if test -z "$JAVA"; then
     echo "~*** Cannot find any Java interpreter~*** Please make sure 'java' is on you PATH or set JAVA_HOME correspondingly"|${SED} -e 'y/~/\n/' >&2
