@@ -400,6 +400,9 @@ NEW FEATURES
 
 
 
+    o	R CMD javareconf script has been added to allow Java
+	configuration to be updated even after R has been installed.
+
 
 CHANGES TO S4 METHODS
 
