@@ -1839,12 +1839,13 @@ static void outtext_close(Rconnection con)
     int idx = ConnIndex(con);
     SEXP tmp, env = VECTOR_ELT(OutTextData, idx);
 
-    if(findVarInFrame3(env, this->namesymbol, FALSE) != R_UnboundValue)
+    if(!this->namesymbol &&
+       findVarInFrame3(env, this->namesymbol, FALSE) != R_UnboundValue)
 	R_unLockBinding(this->namesymbol, env);
     if(strlen(this->lastline) > 0) {
 	PROTECT(tmp = lengthgets(this->data, ++this->len));
 	SET_STRING_ELT(tmp, this->len - 1, mkChar(this->lastline));
-	defineVar(this->namesymbol, tmp, env);
+	if(this->namesymbol) defineVar(this->namesymbol, tmp, env);
 	SET_NAMED(tmp, 2);
 	this->data = tmp;
 	UNPROTECT(1);
@@ -1914,13 +1915,15 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	    *q = '\0';
 	    PROTECT(tmp = lengthgets(this->data, ++this->len));
 	    SET_STRING_ELT(tmp, this->len - 1, mkChar(p));
-	    if(findVarInFrame3(env, this->namesymbol, FALSE) != R_UnboundValue)
-		R_unLockBinding(this->namesymbol, env);
-	    defineVar(this->namesymbol, tmp, env);
+	    if(this->namesymbol) {
+		if(findVarInFrame3(env, this->namesymbol, FALSE) 
+		   != R_UnboundValue) R_unLockBinding(this->namesymbol, env);
+		defineVar(this->namesymbol, tmp, env);
+		R_LockBinding(this->namesymbol, env);
+	    }
 	    this->data = tmp;
 	    SET_NAMED(tmp, 2);
 	    UNPROTECT(1);
-	    R_LockBinding(this->namesymbol, env);
 	} else {
 	    /* retain the last line */
 	    if(strlen(p) >= this->lastlinelength) {
@@ -1937,29 +1940,35 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
     return res;
 }
 
-static void outtext_init(Rconnection con, char *mode, int idx)
+static void outtext_init(Rconnection con, SEXP stext, char *mode, int idx)
 {
     Routtextconn this = (Routtextconn)con->private;
     SEXP val;
 
-    this->namesymbol = install(con->description);
-    if(strcmp(mode, "w") == 0) {
-	/* create variable pointed to by con->description */
-	PROTECT(val = allocVector(STRSXP, 0));
-	defineVar(this->namesymbol, val, VECTOR_ELT(OutTextData, idx));
-	/* Not clear if this is needed, but be conservative */
-	SET_NAMED(val, 2);
-	UNPROTECT(1);
+    if(stext == R_NilValue) {
+	this->namesymbol = NULL;
+	    /* create variable pointed to by con->description */
+	val = allocVector(STRSXP, 0);
     } else {
-	/* take over existing variable */
-	val = findVar1(this->namesymbol, VECTOR_ELT(OutTextData, idx),
-		       STRSXP, FALSE);
-	if(val == R_UnboundValue) {
-	    warning(_("text connection: appending to a non-existent char vector"));
+	this->namesymbol = install(con->description);
+	if(strcmp(mode, "w") == 0) {
+	    /* create variable pointed to by con->description */
 	    PROTECT(val = allocVector(STRSXP, 0));
 	    defineVar(this->namesymbol, val, VECTOR_ELT(OutTextData, idx));
+	    /* Not clear if this is needed, but be conservative */
 	    SET_NAMED(val, 2);
 	    UNPROTECT(1);
+	} else {
+	    /* take over existing variable */
+	    val = findVar1(this->namesymbol, VECTOR_ELT(OutTextData, idx),
+			   STRSXP, FALSE);
+	    if(val == R_UnboundValue) {
+		warning(_("text connection: appending to a non-existent char vector"));
+		PROTECT(val = allocVector(STRSXP, 0));
+		defineVar(this->namesymbol, val, VECTOR_ELT(OutTextData, idx));
+		SET_NAMED(val, 2);
+		UNPROTECT(1);
+	    }
 	    R_LockBinding(this->namesymbol, VECTOR_ELT(OutTextData, idx));
 	}
     }
@@ -1970,7 +1979,7 @@ static void outtext_init(Rconnection con, char *mode, int idx)
 }
 
 
-static Rconnection newouttext(char *description, SEXP sfile, char *mode,
+static Rconnection newouttext(char *description, SEXP stext, char *mode,
 			      int idx)
 {
     Rconnection new;
@@ -2008,7 +2017,7 @@ static Rconnection newouttext(char *description, SEXP sfile, char *mode,
 	free(new->description); free(new->class); free(new);
 	error(_("allocation of text connection failed"));
     }
-    outtext_init(new, mode, idx);
+    outtext_init(new, stext, mode, idx);
     return new;
 }
 
@@ -2025,11 +2034,9 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "description");
     desc = CHAR(STRING_ELT(sfile, 0));
     stext = CADR(args);
-    if(!isString(stext))
-	error(_("invalid '%s' argument"), "text");
     sopen = CADDR(args);
     if(!isString(sopen) || length(sopen) != 1)
-    error(_("invalid '%s' argument"), "open");
+	error(_("invalid '%s' argument"), "open");
     open = CHAR(STRING_ELT(sopen, 0));
     venv = CADDDR(args);
     if (isNull(venv))
@@ -2037,16 +2044,23 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isEnvironment(venv))
 	error(_("invalid '%s' argument"), "environment");
     ncon = NextConnection();
-    if(!strlen(open) || strncmp(open, "r", 1) == 0)
+    if(!strlen(open) || strncmp(open, "r", 1) == 0) {
+	if(!isString(stext))
+	    error(_("invalid '%s' argument"), "text");
 	con = Connections[ncon] = newtext(desc, stext);
-    else if (strncmp(open, "w", 1) == 0 || strncmp(open, "a", 1) == 0) {
+    } else if (strncmp(open, "w", 1) == 0 || strncmp(open, "a", 1) == 0) {
 	if (OutTextData == NULL) {
 	    OutTextData = allocVector(VECSXP, NCONNECTIONS);
 	    R_PreserveObject(OutTextData);
 	}
 	SET_VECTOR_ELT(OutTextData, ncon, venv);
-	con = Connections[ncon] =
-	    newouttext(CHAR(STRING_ELT(stext, 0)), sfile, open, ncon);
+	if(stext == R_NilValue)
+	    con = Connections[ncon] = newouttext("NULL", stext, open, ncon);
+	else if(isString(stext) && length(stext) == 1)
+	    con = Connections[ncon] =
+		newouttext(CHAR(STRING_ELT(stext, 0)), stext, open, ncon);
+	else
+	    error(_("invalid '%s' argument"), "text");
     }
     else
 	errorcall(call, _("unsupported mode"));
@@ -2061,6 +2075,23 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return ans;
 }
+
+SEXP attribute_hidden do_textconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    Rconnection con=NULL;
+    Routtextconn this;
+    
+    checkArity(op, args);
+    if(!inherits(CAR(args), "textConnection"))
+	errorcall(call, _("'con' is not a textConnection"));
+    con = getConnection(asInteger(CAR(args)));
+    if(!con->canwrite)
+	error(_("'con' is not an output textConnection"));
+    this = (Routtextconn)con->private;
+    return this->data;
+}
+
+
 
 /* ------------------- socket connections  --------------------- */
 

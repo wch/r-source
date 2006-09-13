@@ -84,10 +84,11 @@ socketConnection <- function(host= "localhost", port, server = FALSE,
     .Internal(socketConnection(host, port, server, blocking, open, encoding))
 
 textConnection <- function(object, open = "r", local = FALSE) {
-    if (local) env <- parent.frame()
-    else env <- .GlobalEnv
+    env <- if (local) parent.frame() else .GlobalEnv
     .Internal(textConnection(deparse(substitute(object)), object, open, env))
 }
+
+textConnectionValue <- function(con) .Internal(textConnectionValue(con))
 
 seek <- function(con, ...)
     UseMethod("seek")

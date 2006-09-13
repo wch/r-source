@@ -351,6 +351,9 @@ NEW FEATURES
     o	The character vector used by an output textConnection() has
 	a locked binding whilst the connection is open.
 
+	There is a new function textConnectionValue() to retrieve the
+	value of an output textConnection().
+
     o	traceback() gains a 'max.lines' argument.
 	.Traceback is no longer stored in the workspace.
 
