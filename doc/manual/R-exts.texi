@@ -332,8 +332,8 @@ All packages that are needed to successfully run @code{R CMD check} on
 the package must be listed in one of @samp{Depends} or @samp{Suggests}
 or @samp{Imports}.
 @end itemize
-@noindent
 
+@noindent
 In particular, large packages providing ``only'' data for examples or
 vignettes should be listed in @samp{Suggests} rather than @samp{Depends}
 in order to make lean installations possible.
@@ -2686,9 +2686,11 @@ info).
 @findex \keyword
 @item \keyword@{@var{key}@}
 Each @code{\keyword} entry should specify one of the standard keywords
-(as listed in the file @file{@var{R_DOC_DIR}/KEYWORDS.db}, default
-@file{@var{R_HOME}/doc/KEYWORDS.db}).  There must be at least one
-@code{\keyword} entry, but can be more that one if the @R{} object being
+as listed in file @file{KEYWORDS} in the R documentation directory
+(default @file{@var{R_HOME}/doc}).  Use e.g.@:
+@code{file.show(file.path(R.home("doc"), "KEYWORDS"))} to inspect the
+standard keywords from within R.  There must be at least one
+@code{\keyword} entry, but can be more than one if the @R{} object being
 documented falls into more than one category.
 
 The special keyword @samp{internal} marks a page of internal objects
