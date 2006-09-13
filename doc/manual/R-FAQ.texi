@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-09-12
+@set FAQ_DATE @value{FAQ_YEAR}-09-13
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2706,6 +2706,8 @@ Miscellaneous functions used at the Department of Statistics at TU Wien
 Component Analysis, Latent Class Analysis, support vector machines, and
 fuzzy clustering, shortest path computation, bagged clustering, and some
 more.
+@item eRm
+Estimating extended Rasch models.
 @item eba
 Fitting and testing probabilistic choice models, especially the BTL,
 elimination-by-aspects (EBA), and preference tree (Pretree) models.
