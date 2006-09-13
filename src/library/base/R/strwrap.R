@@ -97,7 +97,10 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
                               sep = "")
             yi <- c(yi, s, prefix)
         }
-        y <- c(y, list(yi[-length(yi)]))
+        y <- if(length(yi))
+            c(y, list(yi[-length(yi)]))
+        else
+            c(y, "")
     }
 
     if(simplify) y <- unlist(y)
