@@ -134,14 +134,14 @@ The first five bits of the @code{sxpinfo} header specify one of up to 32
 @node SEXPTYPEs, Rest of header, SEXPs, SEXPs
 @subsection SEXPTYPEs
 
-@cindex SEXTYPE
+@cindex SEXPTYPE
 Currently @code{SEXPTYPE}s 0:10 and 13:25 are in use.  Values 11 and 12 were
 used for internal factors and ordered factors and have since been
 withdrawn.  Note that the @code{SEXPTYPE}s are stored in @code{save}d
 objects and that the ordering of the types is used, so the gap cannot
 easily be reused.
 
-@cindex SEXTYPE table
+@cindex SEXPTYPE table
 @quotation
 @multitable {no} {SPECIALSXPXXX} {S4 classes not of simple type}
 @headitem no @tab  SEXPTYPE@tab  Description
@@ -436,7 +436,7 @@ expression vectors (@code{EXPRSXP}s).
 @item SPECIALSXP
 @itemx BUILTINSXP
 An integer giving the offset into the table of
-primitives/@code{.Internals}.
+primitives/@code{.Internal}s.
 
 @item CHARSXP
 @code{length}, @code{truelength} followed by a block of bytes (allowing
@@ -1007,7 +1007,7 @@ but they are not described here.  (Files of most of these formats can
 still be found in @file{data} directories of packages.) The current
 serialization format is called `version 2', and has been expanded in
 back-compatible ways since @R{} 1.4.0, for example to support additional
-@code{SEXTYPES}.
+@code{SEXPTYPE}s.
 
 @code{save()} works by first creating a tagged pairlist of objects to be
 saved, and then saving that single object preceded by a single-line
