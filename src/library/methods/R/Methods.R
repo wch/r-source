@@ -16,12 +16,13 @@ setGeneric <-
              useAsDefault = NULL, genericFunction = NULL)
 {
     if(exists(name, "package:base") &&
-       typeof(get(name, "package:base")) != "closure") {
+       typeof(get(name, "package:base")) != "closure") { # primitives
 
         fdef <- getGeneric(name) # will fail if this can't have methods
         msg <- gettextf("'%s' is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed.", name)
         if(nargs() > 1)
             stop(msg, domain = NA)
+        ## generics for primitives are global, so can & must always be cached
         .cacheGeneric(name, fdef)
         return(name)
     }
@@ -783,7 +784,7 @@ showMethods <-
         else {
             if(.UsingMethodsTables()) {
 		## maybe no output for showEmpty=FALSE
-		.showMethodsTable(getGeneric(f, where), includeDefs, inherited,
+		.showMethodsTable(getGeneric(f, where = where), includeDefs, inherited,
 				  classes = classes, showEmpty = showEmpty,
 				  printTo = con)
             }

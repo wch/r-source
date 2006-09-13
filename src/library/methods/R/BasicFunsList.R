@@ -46,7 +46,7 @@ list("!" = function(e1)
     standardGeneric("<<-")
 }
 , "UseMethod" = FALSE
-, "[" = function(x, i, j, ..., drop)
+, "[" = function(x, i, j, ..., drop = TRUE)
 {
     standardGeneric("[")
 }
