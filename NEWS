@@ -318,6 +318,9 @@ NEW FEATURES
     o	New function read.DIF() to read Data Interchange Format files,
 	and (on Windows) this format from the clipboard.
 
+    o	New experimental function readNEWS() to read R's own "NEWS" file
+	and similarly formatted ones.
+
     o	readLines() has a new argument 'warn' to suppress warnings:
 	the default behaviour is still to warn.
 
