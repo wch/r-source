@@ -1359,7 +1359,7 @@ DL_FUNC R_GetCCallable(char *package, char *name)
     SEXP penv = get_package_CEntry_table(package);
     SEXP eptr = findVarInFrame(penv, install(name));
     if (eptr == R_UnboundValue)
-	error(_("function '%s' not provided by package '%s'"), package, name);
+	error(_("function '%s' not provided by package '%s'"), name, package);
     else if (TYPEOF(eptr) != EXTPTRSXP) 
 	error(_("table entry must be an external pointer"));
     return (DL_FUNC) R_ExternalPtrAddr(eptr);
