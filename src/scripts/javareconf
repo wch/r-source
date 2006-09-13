@@ -71,7 +71,7 @@ fi
 IFS=${save_IFS}
 
 if test -z "$JAVA"; then
-    echo "~*** Cannot find any Java interpreter~*** Please make sure 'java' is on you PATH or set JAVA_HOME correspondingly"|${SED} -e 's|~|\n|g' >&2
+    echo "~*** Cannot find any Java interpreter~*** Please make sure 'java' is on you PATH or set JAVA_HOME correspondingly"|${SED} -e 'y/~/\n/' >&2
     exit 1
 fi
 
@@ -79,7 +79,7 @@ echo "Java interpreter : $JAVA"
 jires=`$JAVA -classpath ${tools_classpath} getsp -test`
 if test "$jires" != "Test1234OK"; then
     echo "$jires"
-    echo "~*** Java interpreter doesn't work properly.~"|${SED} -e 's|~|\n|g' >&2
+    echo "~*** Java interpreter doesn't work properly.~"|${SED} -e 'y/~/\n/' >&2
     exit 1
 fi
 
@@ -88,7 +88,7 @@ if test -z "${JAVA_HOME}"; then
 fi
 
 if test -z "${JAVA_HOME}"; then
-    echo "~*** Cannot find Java environemnt.~*** Please set JAVA_HOME correspondingly.~"|${SED} -e 's|~|\n|g' >&2
+    echo "~*** Cannot find Java environemnt.~*** Please set JAVA_HOME correspondingly.~"|${SED} -e 'y/~/\n/' >&2
     exit 1
 fi
 
@@ -97,7 +97,7 @@ echo "Java home path   : ${JAVA_HOME}"
 
 hostos=`uname 2>/dev/null`
 case "$hostos" in
-    darwin*)
+    Darwin*)
 	JAVA_LD_LIBRARY_PATH=
 	JAVA_LIBS="-framework JavaVM"
 	;;
@@ -132,10 +132,13 @@ echo "Updating Java configuration in ${R_HOME}"
 
 files="${R_HOME}/etc${R_ARCH}/Makeconf ${R_HOME}/etc${R_ARCH}/ldpaths"
 for file in $files; do
-    ${SED} -e "s|JAVA =.\{0,\}|JAVA = $JAVA|" -e "s|JAVA_HOME =.\{0,\}|JAVA_HOME = ${JAVA_HOME}|" -e "s|: \${JAVA_HOME=.\{1,\}|: \${JAVA_HOME=${JAVA_HOME}}|" -e "s|: \${R_JAVA_LD_LIBRARY_PATH=.\{1,\}|: \${R_JAVA_LD_LIBRARY_PATH=${JAVA_LD_LIBRARY_PATH_SH}}|" -e "s|JAVA_LIBS =.\{0,\}|JAVA_LIBS = ${JAVA_LIBS}|g" "$file" > "${file}.new"
+    ${SED} -e "s|JAVA =.\{0,\}|JAVA = $JAVA|" -e "s|JAVA_HOME =.\{0,\}|JAVA_HOME = ${JAVA_HOME}|" -e "s|: \${JAVA_HOME=.\{1,\}|: \${JAVA_HOME=${JAVA_HOME}}|" -e "s|: \${R_JAVA_LD_LIBRARY_PATH=.\{1,\}|: \${R_JAVA_LD_LIBRARY_PATH=${JAVA_LD_LIBRARY_PATH_SH}}|" -e "s|JAVA_LIBS =.\{0,\}|JAVA_LIBS = ${JAVA_LIBS}|g" -e "s|JAVA_LD_LIBRARY_PATH =.\{0,\}|JAVA_LD_LIBRARY_PATH = ${JAVA_LD_LIBRARY_PATH}|" "$file" > "${file}.new"
     if test -f "${file}.new"; then
 	mv "${file}" "${file}.old"
 	mv "${file}.new" "${file}"
+    else
+	echo "*** cannot create ${file}.new~*** Please run as root if required.~" | ${SED} -e 'y/~/\n/' >&2
+	exit 1
     fi
 done
 
