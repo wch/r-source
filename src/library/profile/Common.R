@@ -18,6 +18,9 @@ version <- R.version            # for S compatibility
 ## for backwards compatibility only
 R.version.string <- R.version$version.string
 
+## NOTA BENE: options() for non-base package functionality are in places like
+##            --------- ../utils/R/zzz.R
+
 options(keep.source = interactive())
 options(warn = 0)
 # options(repos = c(CRAN="@CRAN@"))
