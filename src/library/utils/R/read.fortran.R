@@ -26,13 +26,10 @@ read.fortran<-function(file, format, ...,as.is=TRUE, colClasses=NA){
 
        if (any(!is.na(decimals) & types>2))
          stop("invalid format")
-       if (as.is)
-         colClasses<-c("numeric","numeric",NA,"character","integer")[types]
-       else
-         colClasses<-c("numeric","numeric",NA,NA,"integer")[types]
-
-       colClasses<-colClasses[!(types==3)]
-       decimals<-decimals[!(types==3)]
+       colClasses <- c("numeric", "numeric", NA,
+                       if(as.is) "character" else NA, "integer")[types]
+       colClasses <- colClasses[!(types==3)]
+       decimals <-   decimals  [!(types==3)]
        lengths[types==3]<- -lengths[types==3]
 
        list(lengths,colClasses,decimals)
