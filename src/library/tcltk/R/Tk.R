@@ -564,7 +564,9 @@ tkpager <- function(file, header, title, delete.file)
         tt <- tktoplevel()
         tkwm.title(tt, if (length(title))
                    title[(i-1) %% length(title)+1] else "")
-        txt <- tktext(tt, bg="grey90", font="courier")
+###        courier font comes out awfully small on some systems
+###        txt <- tktext(tt, bg="grey90", font="courier")
+        txt <- tktext(tt, bg="grey90")
         scr <- tkscrollbar(tt, repeatinterval=5,
                            command=function(...)tkyview(txt,...))
 	tkconfigure(txt,yscrollcommand=function(...)tkset(scr,...))
