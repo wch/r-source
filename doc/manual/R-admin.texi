@@ -2514,6 +2514,15 @@ compiler/linker does not support re-ordering of @option{-L} and
 the native @command{cc}).  In this case, use a different compiler (or a
 front end shell script which does the re-ordering).
 
+These flags can also be used to build a faster-running version of @R{}.
+On most platforms using @command{gcc}, having @samp{-O3} in
+@code{CFLAGS} and @code{FFLAGS} produces worthwhile performance gains.
+On systems using the GNU linker (especially those using @R{} as a shared
+library), it is likely that including @samp{-Wl,-O1} in @code{LDFLAGS}
+is worthwhile, and on upcoming systems@footnote{e.g. Fedora Core 6}
+@samp{'-Wl,-O1,-Bdirect,--hash-style=both'} is recommended at
+@url{http://lwn.net/Articles/192624/}
+
 @node Making manuals,  , Compilation flags, Configuration variables
 @subsection Making manuals
 
@@ -2874,7 +2883,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} we used
+on @cputype{x86_64} with Fedora Core 3 we used
 
 @example
 CFLAGS="-m32 -O2 -g -Wall -pedantic -std=gnu99" 
