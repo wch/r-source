@@ -14,14 +14,14 @@ is.expression(x)
 as.expression(x, \dots)
 }
 \arguments{
-  \item{\dots}{valid \R calls.}
+  \item{\dots}{valid \R calls, symbols or constants.}
   \item{x}{an arbitrary \R object.}
 }
 \details{
   \sQuote{Expression} here is not being used in its colloquial sense,
   that of mathematical expressions.  Those are calls (see
   \code{\link{call}}) in \R, and an \R expression vector is a list of
-  calls, typically as returned by \code{\link{parse}}.
+  calls etc, typically as returned by \code{\link{parse}}.
 
   As an object of mode \code{"expression"} is a list, it can be
   subsetted by both \code{[} and by \code{[[}, the latter extracting
