@@ -22,8 +22,8 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
   \item{recursive}{logical. Should the listing recurse into directories?}
 }
 \description{
-  This function produces a list containing the names of files
-  in the named directory. \code{dir} is an alias.
+  These functions produce a character vector of the names of files
+  in the named directory.
 }
 \value{
   A character vector containing the names of the files in the

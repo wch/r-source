@@ -46,17 +46,21 @@ void NewFrameConfirm(void)
 {
     unsigned char buf[16];
 #ifdef Win32
-    int i;
-    Rboolean haveWindowsDevice;
-    SEXP dotDevices = findVar(install(".Devices"), R_BaseEnv); /* This is a pairlist! */
+	int i;
+	Rboolean haveWindowsDevice;
+	SEXP dotDevices = findVar(install(".Devices"), R_BaseEnv); /* This is a pairlist! */
+#endif
 
+    if(!R_Interactive) return;
+#ifdef Win32
     for(i = 0; i < curDevice(); i++)  /* 0-based */
 	dotDevices = CDR(dotDevices);
     haveWindowsDevice =
 	strcmp(CHAR(STRING_ELT(CAR(dotDevices), 0)), "windows") == 0;
+    
     if (!haveWindowsDevice || !winNewFrameConfirm())
 #endif
-    R_ReadConsole(_("Hit <Return> to see next plot: "), buf, 16, 0);
+	R_ReadConsole(_("Hit <Return> to see next plot: "), buf, 16, 0);
 }
 
 	/* Remember: +1 and/or -1 because C arrays are */
