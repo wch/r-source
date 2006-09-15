@@ -418,8 +418,14 @@ getGeneric <-
   ## NULL according to the value of mustFind.
   function(f, mustFind = FALSE, where = .genEnv(f, topenv(parent.frame()), package),
            package = "") {
-    if(is.function(f) && is(f, "genericFunction"))
+    if(is.function(f)) {
+      if(is(f, "genericFunction"))
         return(f)
+      else if(is.primitive(f))
+        return(genericForPrimitive(.primname(f)))
+      else
+        stop("Argument f must be a string, generic function, or primitive: got an ordinary function")
+    }
     value <- .getGeneric( f, where, package)
     if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {
       ## check for primitives
@@ -1365,3 +1371,6 @@ deletePrimMethods <- function(f, env) {
         .genericAssign(f, fdef, mlist, .GlobalEnv, get(f))
     }
 }
+
+.primname <- function(object)
+  .Call("R_get_primname", object, PACKAGE = "methods")

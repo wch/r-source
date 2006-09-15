@@ -49,3 +49,4 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef);
 SEXP do_substitute_direct(SEXP f, SEXP env);
 SEXP Rf_allocS4Object();
 SEXP R_set_method_dispatch(SEXP onOff);
+SEXP R_get_primname(SEXP op);
