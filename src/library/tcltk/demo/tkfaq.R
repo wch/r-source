@@ -3,7 +3,9 @@ local({
 
     tt <- tktoplevel()
     tkwm.title(tt, "R FAQ")
-    txt <- tktext(tt, bg="white", font="courier")
+#    Gave tiny font on some systems
+#    txt <- tktext(tt, bg="white", font="courier")
+    txt <- tktext(tt, bg="white")
     scr <- tkscrollbar(tt, repeatinterval=5,
                        command=function(...)tkyview(txt,...))
     ## Safest to make sure scr exists before setting yscrollcommand
