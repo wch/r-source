@@ -828,8 +828,12 @@ BUG FIXES
     o	Using old.packages() (and hence update.packages()) on an empty
 	(or non-existent) library failed with an obscure message.
 
-    o	plot.xy() couild segfault if supplied with an invalid 'col'
+    o	plot.xy() could segfault if supplied with an invalid 'col'
 	argument.  (PR#9221)
+
+    o	menu() with graphics=TRUE attempted to use Tcl/Tk on unix even
+	if DISPLAY was not set (in which case Tk is not available and
+	so the attempt is bound to fail).
 
 
 
