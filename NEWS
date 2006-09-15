@@ -649,6 +649,11 @@ INSTALLATION
 	built in the same way as other Unix-alikes, including with R
 	as a shared library and with a shared BLAS.
 
+    o	mac.binary package type now defaults to universal binary. If a
+	repository supports architecture-specific Mac binaries, they
+	can be requested by using "mac.binary.xxx" in contrib.url(),
+	where xxx is the desired architecture.
+
 
 BUG FIXES
 
