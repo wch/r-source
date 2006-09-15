@@ -125,8 +125,10 @@
     ## unlock some bindings that must be modifiable to set methods
     unlockBinding(".BasicFunsList", env)
     ## following  has to be on attach , not on load, but why???
-    if(.UsingMethodsTables())
+    if(.UsingMethodsTables()) {
       cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
+      cacheMetaData(.GlobalEnv, TRUE)
+    }
 }
 
 .Last.lib <- function(libpath) {

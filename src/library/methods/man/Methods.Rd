@@ -18,11 +18,7 @@
   collection of other functions (the methods), all of which agree in
   formal arguments with the generic.  
 
-  In R, the methods are organized as one or more
-  object of class \code{"\link{MethodsList}"}, each of which contains a named
-  list of methods (the \code{methods} slot), and the name of one of the
-  formal arguments to the function (the \code{argument} slot).
-  Each R package will include a methods list object
+  Each R package will include  methods metadata objects
   corresponding to each generic function  for which methods have been
   defined in that package.
   When the package is loaded into an R session, the methods for each
@@ -32,6 +28,10 @@
   dispatch or select methods from the generic, using class inheritance
   and possibly group generic functions to find an applicable method.
   See the \bold{Dispatch} section below.
+  The caching computations ensure that only one version of each
+  generic function is visible globally; although different attached
+  packages may contain a copy of the generic function, these are in
+  fact identical.
 
   The methods for a generic are stored according to the
   corresponding \code{signature} for which the method was defined, in
@@ -40,7 +40,7 @@
   generic function.  Which formal arguments are available, and the
   order in which they appear, are determined by the \code{"signature"}
   slot of the generic function.  By default, the signature of the
-  generic consists of all the formal arguments except \dots{}, in the
+  generic consists of all the formal arguments except \dots, in the
   order they appear in the function definition.
 
   Trailing arguments in the signature will be \emph{inactive}  if no
@@ -52,12 +52,12 @@
   contain the most useful arguments first can help efficiency
   somewhat.)
 
-  All arguments in the signature will be evaluated when the generic
-  function is called, and not according to the traditional lazy
+  All arguments in the signature of the generic function will be evaluated when the
+  function is called, rather than using the traditional lazy
   evaluation rules of S.  Therefore, it's important to \emph{exclude}
   from the signature any arguments that need to be dealt with
   symbolically (such as the first argument to function
-  \code{\link{substitute}}.  Note that only actual arguments are
+  \code{\link{substitute}}).  Note that only actual arguments are
   evaluated, not default expressions.
   A missing argument enters into the method selection as class
   \code{"missing"} and non-missing arguments according to their actual
@@ -65,7 +65,7 @@
 
   As of version 2.4.0 of R, the cached methods are stored in an
   environment object.  The names used for assignment are a
-  concatenation of the class names corresponding to the active
+  concatenation of the class names for the arguments in the active
   signature. 
 
 }
@@ -119,7 +119,7 @@ When a method is to be selected by inheritance, a search is made in
 the table for all methods directly corresponding to a combination of
 either the direct class or one of its superclasses, for each argument
 in the active signature.
-First, suppose there is only one argument in the signature and that the class of
+For an example, suppose there is only one argument in the signature and that the class of
 the corresponding object was \code{"dgeMatrix"} (from the
 \code{Matrix} package on CRAN).
 This class has two direct superclasses and through these 4 additional superclasses.
@@ -129,10 +129,10 @@ specified methods labeled by one of these classes, or by
 
 When there are multiple arguments in the signature, each argument will
 generate a similar  list of inherited classes.
-The possible matches are now all combination of classes from each
+The possible matches are now all the combinations of classes from each
 argument (think of the function \code{outer} generating an array of
-all possible combinations.
-The search now finds all the method matching any of this combination
+all possible combinations).
+The search now finds all the methods matching any of this combination
 of classes.
 The computation of distances also has to combine distances for the
 individual arguments.

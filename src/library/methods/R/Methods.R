@@ -300,7 +300,16 @@ setMethod <-
         f <- fdef@generic
         gwhere <- .genEnv(f)
     }
-    ## slight subtlety:  calling getGeneric vs calling isGeneric
+    else if(is.function(f)) {
+          if(is.primitive(f)) {
+            f <- .primname(f)
+            fdef <- genericForPrimitive(f)
+            gwhere <- .genEnv(f)
+         }
+          else
+            stop("A function for argument \"f\" must be a generic function")
+    }
+      ## slight subtlety:  calling getGeneric vs calling isGeneric
     ## For primitive functions, getGeneric returns the (hidden) generic function,
     ## even if no methods have been defined.  An explicit generic MUST NOT be
     ## for these functions, dispatch is done inside the evaluator.
@@ -426,13 +435,22 @@ setMethod <-
 }
 
 removeMethod <- function(f, signature = character(), where = topenv(parent.frame())) {
-    fdef <- getGeneric(f, where = where)
+    if(is.function(f)) {
+      if(is(f, "genericFunction"))
+         { fdef <- f; f <- f@generic}
+      else if(is.primitive(f))
+        { f <- .primname(f); fdef <- genericForPrimitive(f)}
+      else
+        stop("Function supplied as argument \"f\" must be a generic")
+    }
+    else
+      fdef <- getGeneric(f, where = where)
     if(is.null(fdef)) {
-        warning(gettextf("no generic function '%s' found", f), domain = NA)
+        warning(gettextf("no generic function \"'%s\" found", f), domain = NA)
         return(FALSE)
     }
     if(is.null(getMethod(fdef, signature, optional=TRUE))) {
-        warning(gettextf("no method found for function '%s' and signature %s",
+        warning(gettextf("no method found for function \"%s\" and signature %s",
                          fdef@generic,
                          paste(dQuote(signature), collapse =", ")),
                 domain = NA)
