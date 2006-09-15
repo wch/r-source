@@ -2126,10 +2126,10 @@ the AMD Core Math Library (ACML) @url{http://www.amd.com/acml,
 
 @noindent
 if the appropriate library directory (such as
-@file{/opt/acml3.5.0/gnu64/lib}) is in the @env{LD_LIBRRARY_PATH}.  For
+@file{/opt/acml3.5.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.  For
 other compilers, see the ACML documentation.  Although the documentation
 is unclear, 32-bit versions of ACML do run on other @cputype{ia32} chips
-such as AthlonMP and P4.  There is now a multithreaded version of ACML
+such as AthlonMP and P4.  There is a multithreaded version of ACML
 available for @command{gfortran} which makes use of @code{libgomp} (and
 the latter must be installed).
 
@@ -2190,8 +2190,8 @@ be increased by setting @code{OMP_NUM_THREADS}).
 @node Shared BLAS,  , MKL, BLAS
 @subsubsection Shared BLAS
 
-Note that the BLAS library will be used for several add-on packages as
-well as for @R{} itself.  This means that it is better to use a
+Note that the BLAS library will be used for many of the add-on packages
+as well as for @R{} itself.  This means that it is better to use a
 shared/dynamic BLAS library, as most of a static library will be
 compiled into the @R{} executable and each BLAS-using package.
 
@@ -2236,12 +2236,13 @@ For example, just
 
 @example
 mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
-ln -s /opt/acml3.5.0/gnu64/lib/libacml.so @var{R_HOME}/lib/libRblas.so
+ln -s /opt/acml3.5.0/gfortran64_mp/lib/libacml.so @var{R_HOME}/lib/libRblas.so
 @end example
 
-will change the BLAS in use to ACML.  A similar link works for Goto
-1.03 (even a multithreaded one, unlike Goto 1.00.), and MKL (provided
-its @file{lib} directory is in the run-time library path).
+will change the BLAS in use to multithreaded ACML.  A similar link works
+for Goto 1.06 (even a multithreaded one, unlike Goto 1.00.) and MKL
+(provided the appropriate @file{lib} directory is in the run-time
+library path).
 
 
 @node LAPACK, Caveats, BLAS, Linear algebra
@@ -2883,20 +2884,25 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora Core 3 we used
+on @cputype{x86_64} with Fedora Core 5 we used
 
 @example
 CFLAGS="-m32 -O2 -g -Wall -pedantic -std=gnu99" 
 CXXFLAGS="-m32 -O2 -g" 
 FFLAGS="-m32 -O2 -g"
-LDFLAGS=-m32
+LDFLAGS="-m32 -L/usr/local/lib"
 LIBnn=lib
+@end example
+
+@noindent
+Fedora Core 3 also needed
+@example
 --x-libraries=/usr/X11R6/lib
 @end example
 
 @noindent
-and had to build @code{readline} ourselves as Fedora Core 3 only shipped
-a 64-bit version.
+and in both cases various @cputype{i386} @samp{-devel} RPMs had to be
+added.
 
 64-bit versions of Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
@@ -2940,7 +2946,7 @@ LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
 
 @noindent
 and adding optimization flags failed: at least @file{src/@/main/@/regex.c}
-and @file{src/@/modules/@/lapack/@/dlamc.f} need to be compiled without
+and @file{src/@/modules/@/lapack/@/dlamc.f} needed to be compiled without
 optimization.  For @cputype{x86_64} he used
 
 @example
