@@ -99,7 +99,7 @@ print.dist <-
 	## Better: use an improved prettyNum() function -> ../../base/R/format.R
 	##-	if(any((i <- m == floor(m))))
 	##-	    cf[i] <- sub("0+$", "", cf[i])
-	print(if(diag || upper) cf else cf[-1, -attr(x, "Size")],
+	print(if(diag || upper) cf else cf[-1, -attr(x, "Size"), drop = FALSE],
 	      quote = FALSE, right = right, ...)
     } else {
 	cat(data.class(x),"(0)\n", sep='')
