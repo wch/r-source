@@ -48,7 +48,7 @@ tkStartGUI <- function() {
 
     CRANpackageWidget <- function()
     {
-        CRANurl <- contrib.url(getOption("repos")["CRAN"])
+        CRANurl <- utils::contrib.url(getOption("repos")["CRAN"])
 	l <- utils::available.packages(CRANurl)[,1]
         lvar <- tclVar()
 	tclObj(lvar) <- l
