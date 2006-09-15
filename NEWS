@@ -294,6 +294,8 @@ NEW FEATURES
     o	package.skeleton() gains arguments 'namespace' and
     	'code_files'.
 
+    o	par(ask=TRUE) now only applies to interactive R sessions.
+
     o	parse() now returns up to 'n' expressions, rather than fill
 	the expressions vector with NULL.  (This is now compatible
 	with S.)

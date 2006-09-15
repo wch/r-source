@@ -176,10 +176,11 @@ par(\dots, no.readonly = FALSE)
       functions calling \code{\link{plot.default}} do not annotate the
       plots they produce with axis titles and overall titles.  The
       default is to do annotation.}
-    \item{\code{ask}}{logical.  If \code{TRUE}, the user is asked for
-      input, before a new figure is drawn.  As this applies to the
-      device, it also affects output by packages \pkg{grid} and
-      \pkg{lattice}.}
+    \item{\code{ask}}{logical.  If \code{TRUE} (and the \Rsession is
+      interactive) the user is asked for input, before a new figure is
+      drawn.  As this applies to the device, it also affects output by
+      packages \pkg{grid} and \pkg{lattice}.  It can be set even on
+      non-screen devices.}
     \item{\code{bg}}{The color to be used for the background of plots.
       When called from \code{par()} it also sets \code{new=FALSE}.
       A description of how colors are specified is given below.
