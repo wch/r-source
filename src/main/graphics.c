@@ -2069,7 +2069,7 @@ void GSetupAxis(int axis, DevDesc *dd)
  * This initialises the plot state, plus the other graphical
  * parameters that are not the responsibility of the device initialisation.
 
- * Typically called from  do_<dev>(.)  as  GInit(&dd->dp)
+ * Called from baseCallback.
  */
 int Rf_GetOptionParAsk(); /* from options.c */
 
