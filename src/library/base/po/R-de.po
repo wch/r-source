@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:07\n"
+"POT-Creation-Date: 2006-09-16 09:01\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -682,6 +682,18 @@ msgstr "Siehe unter Note in ?library"
 msgid "Attaching package: '%s'"
 msgstr "Attache Paket: '%s'"
 
+msgid "The following object(s) are masked"
+msgstr ""
+
+msgid "_by_"
+msgstr ""
+
+msgid "from"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
 msgid "package '%s' has been merged into '%s'"
 msgstr "Paket '%s' wurde in '%s' eingebaut"
 
@@ -893,6 +905,9 @@ msgstr "keine Zeilen zu suchen"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' und 'by.y' geben unterschiedliche Zahlen von Spalten an"
 
+msgid "(loaded the methods namespace)"
+msgstr ""
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -1011,6 +1026,9 @@ msgstr "kann nicht in einen versiegelten Namensraum importieren"
 
 msgid "invalid import target"
 msgstr "ungültiges Ziel für Import"
+
+msgid "Found methods to import for function \"%s\" but not the generic itself"
+msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr "verlangte 'methods' Objekte nicht gefunden in Umgebung/Paket '%s': %s"

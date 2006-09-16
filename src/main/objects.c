@@ -1341,3 +1341,14 @@ SEXP R_setS4Object(SEXP object, SEXP onOff) {
     else UNSET_S4_OBJECT(object);
     return object;
 }
+
+SEXP R_get_primname(SEXP object) 
+{
+    SEXP f;
+    if(TYPEOF(object) != BUILTINSXP && TYPEOF(object) != SPECIALSXP)
+	error(_("'R_get_primname' called on a non-primitive"));
+    f = PROTECT(allocVector(STRSXP, 1));
+    SET_STRING_ELT(f, 0, mkChar(PRIMNAME(object)));
+    UNPROTECT(1);
+    return f;
+}

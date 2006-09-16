@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:07\n"
+"POT-Creation-Date: 2006-09-16 09:01\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -680,6 +680,18 @@ msgstr "?library でライブラリのノートを見て下さい"
 msgid "Attaching package: '%s'"
 msgstr "次のパッケージを付け加えます: '%s'"
 
+msgid "The following object(s) are masked"
+msgstr ""
+
+msgid "_by_"
+msgstr ""
+
+msgid "from"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
 msgid "package '%s' has been merged into '%s'"
 msgstr "パッケージ '%s' は '%s' に併合されました"
 
@@ -893,6 +905,9 @@ msgstr "マッチすべき行がありません"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' そして 'by.y' は異なった列数を指定しています"
 
+msgid "(loaded the methods namespace)"
+msgstr ""
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -1014,6 +1029,9 @@ msgstr "封印された名前空間にはインポートできません"
 
 msgid "invalid import target"
 msgstr "無効なインポート対象です"
+
+msgid "Found methods to import for function \"%s\" but not the generic itself"
+msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr ""

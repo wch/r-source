@@ -417,35 +417,36 @@ getGeneric <-
   ## If there is no definition, throws an error or returns
   ## NULL according to the value of mustFind.
   function(f, mustFind = FALSE, where = .genEnv(f, topenv(parent.frame()), package),
-           package = "") {
+           package = "")
+{
     if(is.function(f)) {
-      if(is(f, "genericFunction"))
-        return(f)
-      else if(is.primitive(f))
-        return(genericForPrimitive(.primname(f)))
-      else
-        stop("Argument f must be a string, generic function, or primitive: got an ordinary function")
+        if(is(f, "genericFunction"))
+            return(f)
+        else if(is.primitive(f))
+            return(genericForPrimitive(.primname(f)))
+        else
+            stop("Argument f must be a string, generic function, or primitive: got an ordinary function")
     }
     value <- .getGeneric( f, where, package)
     if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {
-      ## check for primitives
-      baseDef <- get(f, "package:base")
-      if(is.primitive(baseDef)) {
-          value <- genericForPrimitive(f)
-          if(!is.function(value) && mustFind)
-              stop(gettextf("methods cannot be defined for the primitive function '%s'", f), domain = NA)
-          if(is(value, "genericFunction"))
-             value <- .cacheGeneric(f, value)
-      }
-  }
+        ## check for primitives
+        baseDef <- get(f, "package:base")
+        if(is.primitive(baseDef)) {
+            value <- genericForPrimitive(f)
+            if(!is.function(value) && mustFind)
+                stop(gettextf("methods cannot be defined for the primitive function '%s'", f), domain = NA)
+            if(is(value, "genericFunction"))
+                value <- .cacheGeneric(f, value)
+        }
+    }
     if(is.function(value))
         value
     else if(mustFind)
         ## the C code will have thrown an error if f is not a single string
         stop(gettextf("no generic function found for '%s'", f), domain = NA)
     else
-      NULL
-  }
+        NULL
+}
 
 ## low-level version
 .getGeneric <- function(f, where, package = "") {
@@ -1373,4 +1374,4 @@ deletePrimMethods <- function(f, env) {
 }
 
 .primname <- function(object)
-  .Call("R_get_primname", object, PACKAGE = "methods")
+    .Call("R_get_primname", object, PACKAGE = "base")

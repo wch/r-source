@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:07\n"
+"POT-Creation-Date: 2006-09-16 09:01\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -103,6 +103,9 @@ msgid ""
 msgstr ""
 "내부의 에러: 함수'%s'의 유효한 일반적인 함수 대상을 얻지 않게 해주십시오"
 
+msgid "A function for argument \"f\" must be a generic function"
+msgstr ""
+
 msgid "the environment '%s' is locked; cannot assign methods for function '%s'"
 msgstr ""
 "환경'%s'는 lock(락)이 되었습니다; '%s'함수를 위한 메소드 지정할수가 없습니다"
@@ -151,11 +154,19 @@ msgid ""
 "invalid method definition: expected a function, got an object of class \"%s\""
 msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
 
-msgid "no generic function '%s' found"
+msgid "Function supplied as argument \"f\" must be a generic"
+msgstr ""
+
+#, fuzzy
+msgid "no generic function \"'%s\" found"
 msgstr "'%s'가 검색되어 일반적인 함수가 아닙니다"
 
-msgid "no method found for function '%s' and signature %s"
+#, fuzzy
+msgid "no method found for function \"%s\" and signature %s"
 msgstr "함수'%s' 그리고 기호 %s 때문에 검색되는 메소드가 아닙니다"
+
+msgid "no generic function '%s' found"
+msgstr "'%s'가 검색되어 일반적인 함수가 아닙니다"
 
 #, fuzzy
 msgid "No method found for function \"%s\" and signature %s"
@@ -210,6 +221,11 @@ msgstr ""
 "첫번째 인수는 generic 함수(클래스 \"%s\"의 오브젝트를 얻을수 있습니다)의 이름"
 "이어야만\n"
 "합니다"
+
+msgid ""
+"The special case of printTo=FALSE only works when a single generic function "
+"is specified"
+msgstr ""
 
 msgid ""
 "No generic function found for \"%s\"; no action taken in removeMethodsObject"
@@ -671,6 +687,11 @@ msgstr ""
 "인수 '...' 후에  generic (%s)는 인수항리스트의 마지막에 동일 자리에 메소드"
 "가\n"
 "보여지지 않으면 않됩니다"
+
+msgid ""
+"Argument f must be a string, generic function, or primitive: got an ordinary "
+"function"
+msgstr ""
 
 msgid "methods cannot be defined for the primitive function '%s'"
 msgstr "메소드는 최초의 함수 '%s'때문에 정해질수가 없습니다"
@@ -1268,6 +1289,9 @@ msgid "in the method signature for function '%s' no definition for class: %s"
 msgid_plural ""
 "in the method signature for function '%s' no definition for classes: %s"
 msgstr[0] "함수'%s'를 위한 메소드 signature으로, 클래스용 정의는 없습니다: %s"
+
+#~ msgid "no method found for function '%s' and signature %s"
+#~ msgstr "함수'%s' 그리고 기호 %s 때문에 검색되는 메소드가 아닙니다"
 
 #~ msgid "'%s' is not a function visible from '%s'"
 #~ msgstr "'%s'는 '%s'로부터 보이는 함수가 아닙니다"

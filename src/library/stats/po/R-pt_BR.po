@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:07\n"
+"POT-Creation-Date: 2006-09-16 09:01\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1256,8 +1256,20 @@ msgid "prediction from a rank-deficient fit may be misleading"
 msgstr ""
 "predição a partir de um ajuste com posto deficiente pode ser engadonara"
 
-msgid "prediction intervals are only relevant to new data"
+msgid "Predictions on current data refer to _future_ responses"
 msgstr ""
+
+msgid ""
+"Assuming prediction variance inversely proportional to weights used for "
+"fitting"
+msgstr ""
+
+msgid "Assuming constant prediction variance even though model fit is weighted"
+msgstr ""
+
+#, fuzzy
+msgid "'weights' as formula should be one-sided"
+msgstr "'weights' não pode ser negativo"
 
 msgid "'object' has no 'effects' component"
 msgstr "'object' não tem componente 'effects'"

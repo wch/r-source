@@ -902,11 +902,3 @@ SEXP R_set_method_dispatch(SEXP onOff) {
   LOGICAL_DATA(x)[0] = prev;
   return x;
 }
-
-SEXP R_get_primname(SEXP op) {
-    SEXP f;
-    f = PROTECT(allocVector(STRSXP, 1));
-    SET_STRING_ELT(f, 0, mkChar(PRIMNAME(op)));
-    UNPROTECT(1);
-    return f;
-}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:07\n"
+"POT-Creation-Date: 2006-09-16 09:01\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -668,6 +668,18 @@ msgstr "见?library 的Note部分"
 msgid "Attaching package: '%s'"
 msgstr "载入需要的程辑包：'%s'"
 
+msgid "The following object(s) are masked"
+msgstr ""
+
+msgid "_by_"
+msgstr ""
+
+msgid "from"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
 msgid "package '%s' has been merged into '%s'"
 msgstr "程辑包'%s'已经被合并到'%s'"
 
@@ -875,6 +887,9 @@ msgstr "找不到匹配的行"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x'和'by.y'设定了不同数目的列"
 
+msgid "(loaded the methods namespace)"
+msgstr ""
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -990,6 +1005,9 @@ msgstr "不能进口到已经封闭了的名字空间"
 
 msgid "invalid import target"
 msgstr "进口目标有错"
+
+msgid "Found methods to import for function \"%s\" but not the generic itself"
+msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr "没有在环境/程辑包'%s': %s里找到所要求的'methods'对象"

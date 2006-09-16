@@ -89,6 +89,8 @@ SEXP R_lazyLoadDBinsertValue(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBfetch(SEXP, SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBflush(SEXP);
 
+SEXP R_get_primname(SEXP op) ;
+
 #ifdef BYTECODE
 SEXP R_getbcprofcounts();
 SEXP R_startbcprof();

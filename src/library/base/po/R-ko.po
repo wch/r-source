@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:07\n"
+"POT-Creation-Date: 2006-09-16 09:01\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -679,6 +679,18 @@ msgstr "라이브러리?의 노트를 보아주십시오"
 msgid "Attaching package: '%s'"
 msgstr "다음의 패키지를 첨가합니다: '%s'"
 
+msgid "The following object(s) are masked"
+msgstr ""
+
+msgid "_by_"
+msgstr ""
+
+msgid "from"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
 msgid "package '%s' has been merged into '%s'"
 msgstr "패케지'%s'는 '%s'에 병합되었습니다"
 
@@ -891,6 +903,9 @@ msgstr "match 해야 할 행이 없습니다"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' 그리고 'by.y'는 다른 열수를 지정하고 있습니다"
 
+msgid "(loaded the methods namespace)"
+msgstr ""
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -1012,6 +1027,9 @@ msgstr "밀폐된 name 공간에는 import할수가 없지 않습니다"
 
 msgid "invalid import target"
 msgstr "무효인 import target입니다"
+
+msgid "Found methods to import for function \"%s\" but not the generic itself"
+msgstr ""
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr "요구된 'methods' 오브젝트는 환경/패키지 '%s'에 검색되지 않습니다 :%s"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:07\n"
-"PO-Revision-Date: 2006-09-07 11:07\n"
+"POT-Creation-Date: 2006-09-16 09:01\n"
+"PO-Revision-Date: 2006-09-16 09:01\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -681,6 +681,18 @@ msgstr "See the Note in ?library"
 msgid "Attaching package: '%s'"
 msgstr "Attaching package: ‘%s’"
 
+msgid "The following object(s) are masked"
+msgstr "The following object(s) are masked"
+
+msgid "_by_"
+msgstr "_by_"
+
+msgid "from"
+msgstr "from"
+
+msgid ":"
+msgstr ":"
+
 msgid "package '%s' has been merged into '%s'"
 msgstr "package ‘%s’ has been merged into ‘%s’"
 
@@ -891,6 +903,9 @@ msgstr "no rows to match"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "‘by.x’ and ‘by.y’ specify different numbers of columns"
 
+msgid "(loaded the methods namespace)"
+msgstr "(loaded the methods namespace)"
+
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
@@ -1005,6 +1020,9 @@ msgstr "cannot import into a sealed name space"
 
 msgid "invalid import target"
 msgstr "invalid import target"
+
+msgid "Found methods to import for function \"%s\" but not the generic itself"
+msgstr "Found methods to import for function “%s” but not the generic itself"
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr "requested ‘methods’ objects not found in environment/package '%s': %s"
