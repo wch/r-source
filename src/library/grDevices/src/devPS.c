@@ -5522,10 +5522,14 @@ static int fillAlphaIndex(int alpha, PDFDesc *pd) {
 
 /*
  * Does the version support alpha transparency?
+ * As from R 2.4.0 bump the version number so it does.
  */
 static int alphaVersion(PDFDesc *pd) {
-    return (pd->versionMajor > 1  ||
-	    (pd->versionMajor == 1 && pd->versionMinor >= 4));
+    if(pd->versionMajor == 1 && pd->versionMinor < 4) {
+	pd->versionMinor  = 4;
+	warning(_("increasing the PDF version to 1.4"));
+    }
+    return 1;
 }
 
 /*
@@ -5991,6 +5995,10 @@ static void PDF_endfile(PDFDesc *pd)
     cidnfonts = 0;
     if (pd->cidfonts) {
 	cidfontlist fontlist = pd->cidfonts;
+	if(pd->versionMajor == 1 && pd->versionMinor < 3) {
+	    pd->versionMinor  = 3;
+	    warning(_("increasing the PDF version to 1.3"));
+	}
 	while (fontlist) {
 	    for (i = 0; i < 4; i++) {
 		pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
@@ -6071,6 +6079,9 @@ static void PDF_endfile(PDFDesc *pd)
 	    pd->nobjs+1, startxref);
     fprintf(pd->pdffp, "%%%%EOF\n");
 
+    /* now seek back and update the header */
+    rewind(pd->pdffp);
+    fprintf(pd->pdffp, "%%PDF-%i.%i\n", pd->versionMajor, pd->versionMinor);
     fclose(pd->pdffp);
 }
 
@@ -6254,7 +6265,7 @@ static void PDF_Circle(double x, double y, double r,
 	PDF_SetLineStyle(gc, dd);
 	/*
 	 * Due to possible bug in Acrobat Reader for rendering
-	 * semi-transparent text, only every draw Bezier curves
+	 * semi-transparent text, only ever draw Bezier curves
 	 * regardless of circle size.
 	 */
 	{
