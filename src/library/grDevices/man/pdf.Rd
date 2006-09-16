@@ -92,12 +92,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   as a single stream.  The \R graphics model does not distinguish
   graphics objects at the level of the driver interface.
 
-  The \code{version} argument modifies the sort of PDF code that
-  gets produced.  At the moment this only concerns the production of
-  transparent output.  The version must be greater than 1.4 for
-  transparent output to be produced, and at least 1.3 if CID fonts are
-  to be used.  Specifying a lower version number may be useful if you
-  want to produce PDF output that can be viewed on older PDF viewers.
+  The \code{version} argument declares the version of PDF that gets
+  produced.  The version must be at least 1.4 for translucent output to
+  be produced, and at least 1.3 if CID fonts are to be used.  Specifying
+  a low version number (as the default) is useful if you want to produce
+  PDF output that can be viewed on older or non-Adobe PDF viewers.
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96inch.  Multiples less than 1 are allowed.  \code{pch="."} with

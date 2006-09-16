@@ -7,7 +7,7 @@
 \title{Automatic Generation of Reports}
 \description{
   \code{Sweave} provides a flexible framework for mixing text and S code
-  for automatic report generation. The basic idea is to replace the S
+  for automatic report generation.  The basic idea is to replace the S
   code with its output, such that the final document only contains the
   text and the output of the statistical anlysis. 
 }
@@ -28,41 +28,39 @@ Stangle(file, driver = Rtangle(),
 }
 \details{
   Automatic generation of reports by mixing word processing markup (like
-  latex) and S code. The S code gets replaced by its output (text or
+  latex) and S code.  The S code gets replaced by its output (text or
   graphs) in the final markup file. This allows to re-generate a report
   if the input data change and documents the code to reproduce the
   analysis in the same file that also produces the report.
 
   \code{Sweave} combines the documentation and code chunks together
-  (or their output) into a single document. \code{Stangle} extracts only
+  (or their output) into a single document.  \code{Stangle} extracts only
   the code from the Sweave file creating a valid S source file (that can
-  be run using \code{\link{source}}). Code inside \code{\\Sexpr\{\}}
+  be run using \code{\link{source}}).  Code inside \code{\\Sexpr\{\}}
   statements is ignored by \code{Stangle}.
 
-  \code{Stangle} is just a
-  frontend to \code{Sweave} using a simple driver by default, which
-  discards the documentation and concatenates all code chunks the
-  current S engine understands.
+  \code{Stangle} is just a frontend to \code{Sweave} using a simple
+  driver by default, which discards the documentation and concatenates
+  all code chunks the current S engine understands.
 }   
 \section{Hook Functions}{
   Before each code chunk is evaluated, a number of hook functions can be
-  executed. If \code{getOption("SweaveHooks")} is set,
-  it is taken to be a collection of hook functions. For each logical
-  option of a code chunk (\code{echo}, \code{print}, \ldots) a hook can
-  be specified, which is executed if and only if the respective option
-  is \code{TRUE}. Hooks must be named elements of the list returned by
+  executed.  If \code{getOption("SweaveHooks")} is set, it is taken to be
+  a collection of hook functions. For each logical option of a code chunk
+  (\code{echo}, \code{print}, \ldots) a hook can be specified, which is
+  executed if and only if the respective option is \code{TRUE}. Hooks must
+  be named elements of the list returned by
   \code{getOption("SweaveHooks")} and be functions taking no
-  arguments. E.g., if option
-  \code{"SweaveHooks"} is defined as \code{list(fig = foo)}, and
-  \code{foo} is a function, then
-  it would be executed before the code in each
-  figure chunk. This is especially useful to set defaults for the
-  graphical parameters in a series of figure chunks.
+  arguments. E.g., if option \code{"SweaveHooks"} is defined as
+  \code{list(fig = foo)}, and \code{foo} is a function, then it would be
+  executed before the code in each figure chunk. This is especially useful
+  to set defaults for the graphical parameters in a series of figure
+  chunks.
 
   Note that the user is free to define new Sweave options and associate
-  arbitrary hooks with them. E.g., one could define a hook function for
+  arbitrary hooks with them.  E.g., one could define a hook function for
   option \code{clean} that removes all objects in the global
-  environment. Then all code chunks with \code{clean=TRUE} would start
+  environment.  Then all code chunks with \code{clean = TRUE} would start
   operating on an empty workspace.
 }
 \section{Syntax Definition}{
@@ -85,6 +83,9 @@ Stangle(file, driver = Rtangle(),
 \seealso{\code{\link{RweaveLatex}}, \code{\link{Rtangle}}}
 \examples{
 testfile <- system.file("Sweave", "Sweave-test-1.Rnw", package = "utils")
+
+## enforce par(ask=FALSE)
+options(par.ask.default=FALSE)
 
 ## create a LaTeX file
 Sweave(testfile)
