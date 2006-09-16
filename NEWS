@@ -835,6 +835,9 @@ BUG FIXES
 	if DISPLAY was not set (in which case Tk is not available and
 	so the attempt is bound to fail).
 
+    o	The print() method for 'dist' objects prints a matrix even for
+	n = 2.
+
 
 
 
