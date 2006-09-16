@@ -1,6 +1,6 @@
 \name{showMethods}
 \alias{showMethods}
-\title{ Show all the methods for the specified function(s)}
+\title{Show all the methods for the specified function(s)}
 \description{
   Show a summary of the methods for one or more generic functions,
   possibly restricted to those involving specified classes.
@@ -8,16 +8,17 @@
 \usage{
 showMethods(f = character(), where = topenv(parent.frame()),
             classes = NULL, includeDefs = FALSE, inherited = TRUE,
-            showEmpty = TRUE, printTo = stdout())
+            showEmpty, printTo = stdout())
 }
 \arguments{
   \item{f}{one or more function names.  If omitted, all functions
     will be shown that match the other arguments. }
   \item{where}{Used only when \code{f} is missing, or length 0, to
-      determine which generic functions to examine.
-      If \code{where} is supplied, only the generic functions
-    returned by \code{getGenerics(where)} are eligible for printing.
-    If \code{where} is also missing, all the cached generic functions are considered.}
+    determine which generic functions to examine.  If \code{where} is
+    supplied, only the generic functions returned by
+    \code{getGenerics(where)} are eligible for printing.  If
+    \code{where} is also missing, all the cached generic functions are
+    considered.}
   \item{classes}{ If argument \code{classes} is supplied, it is a vector
     of class names that restricts the displayed results to those methods
     whose signatures include one or more of those classes. }
@@ -30,14 +31,14 @@ showMethods(f = character(), where = topenv(parent.frame()),
     See \code{\link{selectMethod}} if you want to know what method is
     dispatched for particular classes of arguments.}
   \item{showEmpty}{logical indicating whether methods with no defined
-      methods matching the other criteria
-    should be shown at all.  By default, \code{TRUE} if and only if
-    argument \code{f} is not missing.}
-
+    methods matching the other criteria should be shown at all.  By
+    default, \code{TRUE} if and only if argument \code{f} is not
+    missing.}
   \item{printTo}{The connection on which the printed information will be
-    written; by default, standard output.  If \code{printTo} is \code{FALSE}, the output will be
-    collected as a character vector and returned as the value of the
-    call to \code{showMethod}.   See \code{\link{show}}.
+    written; by default, standard output.  If \code{printTo} is
+    \code{FALSE}, the output will be collected as a character vector and
+    returned as the value of the call to \code{showMethod}.   See
+    \code{\link{show}}.
   }
 }
 \details{
