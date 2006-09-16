@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:28\n"
+"POT-Creation-Date: 2006-09-16 08:59\n"
 "PO-Revision-Date: 2006-04-15 23:36-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -135,6 +135,10 @@ msgstr "неправильный метод"
 
 msgid "invalid specification of 'breaks'"
 msgstr "неправильное указание 'breaks'"
+
+#, fuzzy
+msgid "'x' must be a numeric vector or matrix"
+msgstr "'y' должен быть числовым вектором"
 
 msgid "'x' must be an array"
 msgstr "'x' должен быть многомерной матрицей"

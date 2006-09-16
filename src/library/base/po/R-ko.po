@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-08 16:27\n"
+"POT-Creation-Date: 2006-09-16 08:59\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -681,6 +681,18 @@ msgstr "라이브러리?의 노트를 보아주십시오"
 
 msgid "Attaching package: '%s'"
 msgstr "다음의 패키지를 첨가합니다: '%s'"
+
+msgid "The following object(s) are masked"
+msgstr ""
+
+msgid "_by_"
+msgstr ""
+
+msgid "from"
+msgstr ""
+
+msgid ":"
+msgstr ""
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "패케지'%s'는 '%s'에 병합되었습니다"

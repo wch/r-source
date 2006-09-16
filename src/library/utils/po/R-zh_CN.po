@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-08 16:28\n"
+"POT-Creation-Date: 2006-09-16 09:00\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -110,12 +110,6 @@ msgstr "程序包'%s'里的DESCRIPTION文件中没有日期这一域"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "没有从程序包的DESCRIPTION文件中为'%s'确定年份"
-
-msgid "Argument m has"
-msgstr ""
-
-msgid "elements: only the first used"
-msgstr ""
 
 msgid "m < 0"
 msgstr ""
@@ -388,8 +382,15 @@ msgstr "只能用数值的指标"
 msgid "cannot create directory '%s'"
 msgstr "无法产生'%s'目录"
 
+#, fuzzy
+msgid "'code_files' should be a character vector"
+msgstr "'list'必需是为R目标对象取名的字符向量"
+
 msgid "'list' should be a character vector naming R objects"
 msgstr "'list'必需是为R目标对象取名的字符向量"
+
+msgid "'namespace' should be a single logical"
+msgstr ""
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
 msgstr ""
@@ -397,8 +398,36 @@ msgstr ""
 msgid "no R objects specified or available"
 msgstr "没有指点定的R目标对象"
 
+msgid "Creating directories ..."
+msgstr ""
+
 msgid "directory '%s' already exists"
 msgstr "已经有了'%s'这样一个目录"
+
+msgid "Creating DESCRIPTION ..."
+msgstr ""
+
+msgid "Creating NAMESPACE ..."
+msgstr ""
+
+msgid "Creating Read-and-delete-me ..."
+msgstr ""
+
+msgid "Saving functions and data ..."
+msgstr ""
+
+msgid "Copying code files ..."
+msgstr ""
+
+#, fuzzy
+msgid "Making help files ..."
+msgstr "用第一个相配…"
+
+msgid "Done."
+msgstr ""
+
+msgid "Further steps are described in '%s'."
+msgstr ""
 
 msgid "unable to access index for repository %s"
 msgstr "无法在貯藏處%s中读写索引"
@@ -536,8 +565,10 @@ msgstr "可任意选择到其他帮助文件的联结，如"
 msgid "simple examples of the most important functions"
 msgstr "给最重要的函数的一些简单例子"
 
-msgid "Optionally other keywords from doc/KEYWORDS, one per line"
-msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"
+msgid ""
+"Optionally other standard keywords, one per line, from file KEYWORDS in the "
+"R documentation directory"
+msgstr ""
 
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
@@ -612,6 +643,10 @@ msgstr "格式不对"
 msgid "last record incomplete, %d lines discarded"
 msgstr "最后一个记录不完全，%d行略不不用"
 
+#, fuzzy
+msgid "'file' must be a character string or connection"
+msgstr "'package'的值必需是字符串或NULL"
+
 msgid "transfer failure"
 msgstr "转移时出了错"
 
@@ -620,10 +655,6 @@ msgstr ""
 
 #, fuzzy
 msgid "option must be a length one character vector or NULL"
-msgstr "'package'的值必需是字符串或NULL"
-
-#, fuzzy
-msgid "'file' must be a character string or connection"
 msgstr "'package'的值必需是字符串或NULL"
 
 msgid "empty beginning of file"
@@ -755,6 +786,12 @@ msgstr "无法建立HTML程序包索引"
 msgid "cannot create HTML search index"
 msgstr "无法建立HTML搜索索引"
 
+msgid "'memory.size()' is Windows-specific"
+msgstr ""
+
+msgid "'memory.limit()' is Windows-specific"
+msgstr ""
+
 msgid "unable to find the HTML help"
 msgstr "找不到HTML帮助文件"
 
@@ -831,3 +868,6 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被重新安装"
 msgstr[1] "正在使用'%s'这个程序包，因此不会被重新安装"
+
+#~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
+#~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"

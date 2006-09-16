@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:28\n"
+"POT-Creation-Date: 2006-09-16 08:59\n"
 "PO-Revision-Date: 2006-04-18 08:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -131,6 +131,10 @@ msgstr "mauvaise méthode"
 
 msgid "invalid specification of 'breaks'"
 msgstr "valeur de 'breaks' incorrecte"
+
+#, fuzzy
+msgid "'x' must be a numeric vector or matrix"
+msgstr "'y' doit être un vecteur numérique"
 
 msgid "'x' must be an array"
 msgstr "'x' doit être un tableau"

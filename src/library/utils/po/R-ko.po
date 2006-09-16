@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-08 16:28\n"
+"POT-Creation-Date: 2006-09-16 09:00\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -106,12 +106,6 @@ msgstr "패키지 '%s'의  DESCRIPTION 파일에서 date 필드가 있습니다"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "패키지 DESCRIPTION 파일로부터'%s'때문에 year를 결정할수 없었습니다"
-
-msgid "Argument m has"
-msgstr ""
-
-msgid "elements: only the first used"
-msgstr ""
 
 msgid "m < 0"
 msgstr ""
@@ -402,8 +396,15 @@ msgstr "수치의 색인만은 사용할 수 있습니다"
 msgid "cannot create directory '%s'"
 msgstr "디렉토리 '%s'를 작성할수 없습니다"
 
+#, fuzzy
+msgid "'code_files' should be a character vector"
+msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
+
 msgid "'list' should be a character vector naming R objects"
 msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
+
+msgid "'namespace' should be a single logical"
+msgstr ""
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
 msgstr ""
@@ -411,8 +412,36 @@ msgstr ""
 msgid "no R objects specified or available"
 msgstr "지정된 R 오브젝트는 없거나 이용가능합니다"
 
+msgid "Creating directories ..."
+msgstr ""
+
 msgid "directory '%s' already exists"
 msgstr "디렉토리 '%s'는 이미 존재합니다"
+
+msgid "Creating DESCRIPTION ..."
+msgstr ""
+
+msgid "Creating NAMESPACE ..."
+msgstr ""
+
+msgid "Creating Read-and-delete-me ..."
+msgstr ""
+
+msgid "Saving functions and data ..."
+msgstr ""
+
+msgid "Copying code files ..."
+msgstr ""
+
+#, fuzzy
+msgid "Making help files ..."
+msgstr "첫번째 match를 사용해주십시오..."
+
+msgid "Done."
+msgstr ""
+
+msgid "Further steps are described in '%s'."
+msgstr ""
 
 msgid "unable to access index for repository %s"
 msgstr "reposityory %s를 위한 인덱스에 액세스 할수 없습니다"
@@ -556,7 +585,9 @@ msgstr ""
 msgid "simple examples of the most important functions"
 msgstr ""
 
-msgid "Optionally other keywords from doc/KEYWORDS, one per line"
+msgid ""
+"Optionally other standard keywords, one per line, from file KEYWORDS in the "
+"R documentation directory"
 msgstr ""
 
 msgid ""
@@ -639,6 +670,10 @@ msgstr "무효의 format입니다"
 msgid "last record incomplete, %d lines discarded"
 msgstr "마지막 불완전한 레코드 ,%d 라인이 없어져버렸습니다"
 
+#, fuzzy
+msgid "'file' must be a character string or connection"
+msgstr "'package'는 문자열이나 NULL이어야만 합니다"
+
 msgid "transfer failure"
 msgstr "전송이 실패했습니다"
 
@@ -647,10 +682,6 @@ msgstr ""
 
 #, fuzzy
 msgid "option must be a length one character vector or NULL"
-msgstr "'package'는 문자열이나 NULL이어야만 합니다"
-
-#, fuzzy
-msgid "'file' must be a character string or connection"
 msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
 msgid "empty beginning of file"
@@ -783,6 +814,12 @@ msgstr "HTML 패키지 인덱스를 작성할 수 없습니다"
 
 msgid "cannot create HTML search index"
 msgstr "HTML 탐색 인덱스를 작성할 수 없습니다"
+
+msgid "'memory.size()' is Windows-specific"
+msgstr ""
+
+msgid "'memory.limit()' is Windows-specific"
+msgstr ""
 
 msgid "unable to find the HTML help"
 msgstr "HTML help를 검색되지 못합니다"

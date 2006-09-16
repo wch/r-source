@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-16 09:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,7 +155,7 @@ msgstr ""
 msgid "Vignette dependencies not required:"
 msgstr ""
 
-msgid "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
+msgid "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests entries."
 msgstr ""
 
 msgid "Namespace dependencies not required:"
@@ -212,7 +212,7 @@ msgstr ""
 msgid "Rd files with non-standard keywords:"
 msgstr ""
 
-msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home directory)."
+msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS' in the R documentation directory)."
 msgstr ""
 
 msgid "Rd files with duplicated alias '%s':"
@@ -263,7 +263,7 @@ msgstr ""
 msgid "Malformed maintainer field."
 msgstr ""
 
-msgid "Malformed Depends or Suggests or Imports field."
+msgid "Malformed Depends or Suggests or Imports or Enhances field."
 msgstr ""
 
 msgid "Offending entries:"
@@ -308,10 +308,10 @@ msgstr ""
 msgid "package 'methods' is used but not declared"
 msgstr ""
 
-msgid "'::' or ':::' imports not declared from"
+msgid "'::' or ':::' imports not declared from:"
 msgstr ""
 
-msgid "'library' or 'require' calls not declared from"
+msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
 msgid "Found possibly global T or F in the following functions:"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:28\n"
+"POT-Creation-Date: 2006-09-16 08:59\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -120,6 +120,9 @@ msgid "wrong method"
 msgstr ""
 
 msgid "invalid specification of 'breaks'"
+msgstr ""
+
+msgid "'x' must be a numeric vector or matrix"
 msgstr ""
 
 msgid "'x' must be an array"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-16 08:59\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,6 +65,9 @@ msgstr ""
 msgid "internal error: did not get a valid generic function object for function '%s'"
 msgstr ""
 
+msgid "A function for argument \"f\" must be a generic function"
+msgstr ""
+
 msgid "the environment '%s' is locked; cannot assign methods for function '%s'"
 msgstr ""
 
@@ -92,10 +95,16 @@ msgstr ""
 msgid "invalid method definition: expected a function, got an object of class \"%s\""
 msgstr ""
 
-msgid "no generic function '%s' found"
+msgid "Function supplied as argument \"f\" must be a generic"
 msgstr ""
 
-msgid "no method found for function '%s' and signature %s"
+msgid "no generic function \"'%s\" found"
+msgstr ""
+
+msgid "no method found for function \"%s\" and signature %s"
+msgstr ""
+
+msgid "no generic function '%s' found"
 msgstr ""
 
 msgid "No method found for function \"%s\" and signature %s"
@@ -129,6 +138,9 @@ msgid "bad class specified for element %d (should be a single character string)"
 msgstr ""
 
 msgid "first argument should be the name(s) of generic functions (got object of class \"%s\")"
+msgstr ""
+
+msgid "The special case of printTo=FALSE only works when a single generic function is specified"
 msgstr ""
 
 msgid "No generic function found for \"%s\"; no action taken in removeMethodsObject"
@@ -402,6 +414,9 @@ msgid "methods can add arguments to the generic only if '...' is an argument to 
 msgstr ""
 
 msgid "arguments after '...' in the generic (%s) must appear in the method, in the same place at the end of the argument list"
+msgstr ""
+
+msgid "Argument f must be a string, generic function, or primitive: got an ordinary function"
 msgstr ""
 
 msgid "methods cannot be defined for the primitive function '%s'"

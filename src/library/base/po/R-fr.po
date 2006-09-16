@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-08 16:27\n"
+"POT-Creation-Date: 2006-09-16 08:59\n"
 "PO-Revision-Date: 2006-04-18 08:33+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -707,6 +707,18 @@ msgstr "Voyez la note dans ?library"
 
 msgid "Attaching package: '%s'"
 msgstr "Attachement du package : '%s'"
+
+msgid "The following object(s) are masked"
+msgstr ""
+
+msgid "_by_"
+msgstr ""
+
+msgid "from"
+msgstr ""
+
+msgid ":"
+msgstr ""
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "le package '%s' a été fusionné avec '%s'"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-16 08:59\n"
 "PO-Revision-Date: 2006-04-18 08:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -113,6 +113,9 @@ msgstr ""
 "erreur interne : une fonction générique valide n'est pas fournie pour la "
 "fonction '%s'"
 
+msgid "A function for argument \"f\" must be a generic function"
+msgstr ""
+
 msgid "the environment '%s' is locked; cannot assign methods for function '%s'"
 msgstr ""
 "l'environnement '%s' est verrouillé ; Impossible d'y assigner des méthodes "
@@ -165,11 +168,19 @@ msgstr ""
 "définition de méthode incorrecte : une fonction est attendue et un objet de "
 "classe \"%s\" est fourni"
 
-msgid "no generic function '%s' found"
+msgid "Function supplied as argument \"f\" must be a generic"
+msgstr ""
+
+#, fuzzy
+msgid "no generic function \"'%s\" found"
 msgstr "aucune fonction générique '%s' n'est trouvée"
 
-msgid "no method found for function '%s' and signature %s"
+#, fuzzy
+msgid "no method found for function \"%s\" and signature %s"
 msgstr "aucune méthode n'est trouvée pour la fonction '%s' et la signature %s"
+
+msgid "no generic function '%s' found"
+msgstr "aucune fonction générique '%s' n'est trouvée"
 
 #, fuzzy
 msgid "No method found for function \"%s\" and signature %s"
@@ -221,6 +232,11 @@ msgid ""
 msgstr ""
 "le premier argument doit être le ou les nom(s) des fonctions génériques (un "
 "objet de classe \"%s\" est fourni)"
+
+msgid ""
+"The special case of printTo=FALSE only works when a single generic function "
+"is specified"
+msgstr ""
 
 msgid ""
 "No generic function found for \"%s\"; no action taken in removeMethodsObject"
@@ -702,6 +718,11 @@ msgid ""
 msgstr ""
 "les arguments après '...' dans la fonction générique (%s) doivent apparaitre "
 "dans la méthode, à la même place à la fin de la liste des arguments"
+
+msgid ""
+"Argument f must be a string, generic function, or primitive: got an ordinary "
+"function"
+msgstr ""
 
 msgid "methods cannot be defined for the primitive function '%s'"
 msgstr "des méthodes ne peuvent être définies pour la fonction primitive '%s'"
@@ -1332,6 +1353,10 @@ msgstr[0] ""
 msgstr[1] ""
 "dans la signature de méthode pour la fonction '%s', il n'y a aucune "
 "définition pour les classes : %s"
+
+#~ msgid "no method found for function '%s' and signature %s"
+#~ msgstr ""
+#~ "aucune méthode n'est trouvée pour la fonction '%s' et la signature %s"
 
 #~ msgid "'%s' is not a function visible from '%s'"
 #~ msgstr "'%s' n'est pas une fonction visible depuis '%s'"
