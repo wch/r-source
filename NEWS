@@ -259,6 +259,10 @@ NEW FEATURES
 	the expressions vector with NULL.  (This is now compatible
 	with S.)
 
+    o	The 'version' argument for pdf() is now increased
+	automatically (with a warning) if features which need a higher
+	level are used.
+
     o	pie() now allows expressions for 'labels', and empty slices.
 
     o   There is a new '%.%' operator for mathematical annotations
@@ -376,7 +380,6 @@ NEW FEATURES
 
     o	warnings() is now an accessor function for 'last.warning' (which
 	is no longer stored in the workspace) with a print() method.
-
 
 
     o	The internal internet download functions have some new
