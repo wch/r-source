@@ -221,6 +221,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_isS4Object, 1),
     CALLDEF(R_setS4Object, 2),
     CALLDEF(R_do_new_object, 1),
+    CALLDEF(R_get_primname, 1),
 
     /* compression and serialization routines */
     CALLDEF(R_compress1, 1),
