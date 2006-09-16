@@ -946,7 +946,7 @@ completeSubclasses <-
             }
         }
         else
-            stop(gettextf("the '%s' list for class \"%s\", includes an undefined class \"%s\"",
+            stop(gettextf("the \"%s\" list for class \"%s\", includes an undefined class \"%s\"",
                           if(superClassCase) "superClass" else "subClass",
                           className,.className(by)),
                  domain = NA)
@@ -1474,7 +1474,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
        .identC(package, get(".packageName", topEnv)))
         return(topEnv) # kludge for source'ing package code
     if(!require(package, character.only = TRUE))
-        stop(gettextf("unable to find required package '%s'", package),
+        stop(gettextf("unable to find required package \"%s\"", package),
              domain = NA)
     value <- .asEnvironmentPackage(package)
     assign(package, value, envir = .PackageEnvironments)
@@ -1495,7 +1495,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         ## need to allow for versioned installs: prefer exact match.
         m <- charmatch(pkg, search())
         if(is.na(m))
-            stop(gettextf("Package '%s' is not loaded", package), domain = NA)
+            stop(gettextf("Package \"%s\" is not loaded", package), domain = NA)
         as.environment(search()[m])
     }
 }

@@ -46,16 +46,16 @@ setClass <-
         if(length(badContains) > 0) {
             msg <- paste(dQuote(badContains), collapse = ", ")
             if(is(try(removeClass(Class, where)), "try-error"))
-                stop(gettextf("error in contained classes (%s) for class \"%s\" and unable to remove definition from '%s'",
+                stop(gettextf("error in contained classes (%s) for class \"%s\" and unable to remove definition from \"%s\"",
                               msg, Class, getPackageName(where)), domain = NA)
             if(is.null(oldDef))
-                stop(gettextf("error in contained classes (%s) for class \"%s\"; class definition removed from '%s'",
+                stop(gettextf("error in contained classes (%s) for class \"%s\"; class definition removed from \"%s\"",
                               msg, Class, getPackageName(where)), domain = NA)
             else if(is(try(setClass(Class, oldDef, where=where)), "try-error"))
-                stop(gettextf("error in contained classes (%s) for class \"%s\" and unable to restore previous definition from '%s'",
+                stop(gettextf("error in contained classes (%s) for class \"%s\" and unable to restore previous definition from \"%s\"",
                               msg, Class, getPackageName(where)), domain = NA)
             else
-                stop(gettextf("error in contained classes (%s) for class \"%s\"; previous definition restored to '%s'",
+                stop(gettextf("error in contained classes (%s) for class \"%s\"; previous definition restored to \"%s\"",
                               msg, Class, getPackageName(where)), domain = NA)
         }
         if(sealed) {
@@ -244,7 +244,7 @@ checkSlotAssignment <- function(obj, name, value)
     ## the class environment of obj (change validObject too if a better way is found)
     ok <- possibleExtends(valueClass, slotClass, ClassDef2 = getClassDef(slotClass, where = .classEnv(ClassDef)))
     if(identical(ok, FALSE))
-       stop(gettextf("assignment of an object of class \"%s\" is not valid for slot '%s' in an object of class \"%s\"; is(value, \"%s\") is not TRUE",
+       stop(gettextf("assignment of an object of class \"%s\" is not valid for slot \"%s\" in an object of class \"%s\"; is(value, \"%s\") is not TRUE",
                      class(value),  name, class(obj), slotClass),
             domain = NA)
     else if(identical(ok, TRUE))
@@ -493,7 +493,7 @@ resetClass <- function(Class, classDef, where) {
             if(missing(classDef)) {
                 classDef <- getClassDef(Class, where)
                 if(is.null(classDef)) {
-                    warning(gettextf("class \"%s\" not found on '%s'; 'resetClass' will have no effect", Class, getPackageName(where)), domain = NA)
+                    warning(gettextf("class \"%s\" not found on \"%s\"; 'resetClass' will have no effect", Class, getPackageName(where)), domain = NA)
                     return(classDef)
                 }
             }
@@ -619,7 +619,7 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
             if(length(where) > 1) {
                 where <- where[1]
                 ## problem: 'unique'x is text passed in, so do not translate
-                warning(sprintf("multiple definitions of class \"%s\" visible; using the definition on package '%s' for %s",
+                warning(sprintf("multiple definitions of class \"%s\" visible; using the definition on package \"%s\" for %s",
                                  Class, getPackageName(where[[1]]), unique),
                         domain = NA)
             }

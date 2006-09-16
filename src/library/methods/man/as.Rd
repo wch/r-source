@@ -264,9 +264,8 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page
-  \url{http://developer.r-project.org/methodsPackage.html} and the
-  pointers from that page.
+  discussion of details see \code{?\link{Methods}}
+  and the links from that documentation.
 }
 \examples{
 ## using the definition of class "track" from \link{Classes}

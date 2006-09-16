@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-09-09 r39223)
+R version 2.5.0 Under development (unstable) (2006-09-16 r39359)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -122,7 +122,7 @@ print method
 show method
 > 
 > setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
-Creating a new generic function for 'print' in '.GlobalEnv'
+Creating a new generic function for "print" in ".GlobalEnv"
 [1] "print"
 > foo
 show method
