@@ -1,21 +1,19 @@
 combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 {
-    ##	     DATE WRITTEN: 14 April 1994	  LAST REVISED:	 10 July 1995
-    ##	     AUTHOR:  Scott Chasalow
+    ## DATE WRITTEN: 14 April 1994	    LAST REVISED:  10 July 1995
+    ## AUTHOR:	Scott Chasalow
     ##
-    ##	     DESCRIPTION:
-    ##		   Generate all combinations of the elements of x taken m at a time.
-    ##		   If x is a positive integer,	returns all combinations
-    ##		   of the elements of seq(x) taken m at a time.
-    ##		   If argument "FUN" is not null,  applies a function given
-    ##		   by the argument to each point.  If simplify is FALSE,  returns
-    ##		   a list; else returns a vector or an array.  "..." are passed
-    ##		   unchanged to function given by argument FUN,	 if any.
-    if(length(m) > 1) {
-	warning(paste("Argument m has", length(m),
-		      "elements: only the first used"))
-	m <- m[1]
-    }
+    ## DESCRIPTION:
+    ##	Generate all combinations of the elements of x taken m at a time.
+    ##	If x is a positive integer,  returns all combinations
+    ##	of the elements of seq(x) taken m at a time.
+    ##	If argument "FUN" is not null,	applies a function given
+    ##	by the argument to each point.	If simplify is FALSE,  returns
+    ##	a list; else returns a vector or an array.  "..." are passed
+    ##	unchanged to function given by argument FUN,  if any.
+
+    ##S : Change if (simplify = TRUE) return an array/matrix {not a 'vector'}
+    stopifnot(length(m) == 1)
     if(m < 0)
 	stop("m < 0")
     if(m == 0)
@@ -37,34 +35,31 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
     count <- as.integer(round(choose(n, m))) # >= 1
     if(simplify) {
 	dim.use <-
-	    if(nofun) {
-		if(count > 1)
-		    c(m, count)
-	    }
+	    if(nofun)
+		c(m, count) # matrix also when count = 1
 	    else {
 		d <- dim(r)
-		if(count > 1) {
-		    if(length(d) > 1)
-			c(d, count)
-		    else if(len.r > 1)
-			c(len.r, count)
-		}
-		else if(length(d) > 1)
-		    d
+		if(length(d) > 1)
+		    c(d, count)
+		else if(len.r > 1)
+		    c(len.r, count)
+		else # MM: *still* a matrix - a la "drop = FALSE"
+		    c(d, count)
 	    } ## NULL in all 'else' cases
-	use.arr <- !is.null(dim.use)
+##S	use.arr <- !is.null(dim.use)
     }
-    else use.arr <- FALSE
+##S	else use.arr <- FALSE
 
     if(simplify) { # use atomic vector/array instead of list
-	if(use.arr) out <- matrix(r, nrow= len.r, ncol= count) # matrix for now
-	else {
-	    if(count > 1) {
-		out <- vector(storage.mode(r), len.r * count)
-		out[1] <- r
-	    }
-	    else out <- r
-	}
+##S	if(use.arr)
+	    out <- matrix(r, nrow= len.r, ncol= count) # matrix for now
+##S	else {
+##S	    if(count > 1) {
+##S		out <- vector(storage.mode(r), len.r * count)
+##S		out[1] <- r
+##S	    }
+##S	    else out <- r
+##S	}
     }
     else {
 	out <- vector("list", count)
@@ -87,10 +82,12 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 	}
 	a[m - h + j] <- e + j
 	r <- if(nofun) x[a] else FUN(x[a], ...)
-	if(use.arr) out[,i] <- r else out[[i]] <- r
+	if(simplify) ##S if(use.arr)
+	    out[,i] <- r else out[[i]] <- r
 	i <- i + 1
     }
-    if(use.arr)	array(out, dim.use) else out
+    if(simplify) ##S if(use.arr)
+	array(out, dim.use) else out
 }
 
 

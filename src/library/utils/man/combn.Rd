@@ -1,35 +1,38 @@
 \name{combn}
 \alias{combn}
-\title{Generate All Combinations of n Elements, Taken m at a Time }
+\title{Generate All Combinations of n Elements, Taken m at a Time}
 \description{
   Generate all combinations of the elements of \code{x} taken \code{m}
   at a time.  If \code{x} is a positive integer, returns all
   combinations of the elements of \code{seq(x)} taken \code{m} at a
   time.  If argument \code{FUN} is not \code{NULL}, applies a function given
   by the argument to each point.  If simplify is FALSE,  returns
-  a list; else returns a vector or an array.  \code{...} are passed
-  unchanged to the \code{FUN} function, if specified.
+  a list; otherwise returns an \code{\link{array}}, typically a
+  \code{\link{matrix}}.  \code{...} are passed unchanged to the
+  \code{FUN} function, if specified.
 }
 \usage{
 combn(x, m, FUN = NULL, simplify = TRUE, \dots)
 }
 \arguments{
   \item{x}{vector source for combinations, or integer \code{n} for
-    \code{x <- 1:n}.}
+    \code{x <- \link{seq}(n)}.}
   \item{m}{number of elements to choose.}
   \item{FUN}{function to be applied to each combination; default
     \code{NULL} means the identity, i.e., to return the combination
     (vector of length \code{m}).}
   \item{simplify}{logical indicating if the result should be simplified
-    to a vector or \code{\link{array}}; if FALSE, the function returns a
-    \code{\link{list}}. Note that when \code{simplify=TRUE} as by
-    default, the dimension of the result is simply determined from
-    \code{FUN(\emph{<1st combination>})}, for efficiency reasons.  This
-    will badly fail if \code{FUN(u)} is not of constant length.}
+    to an \code{\link{array}} (typically a \code{\link{matrix}}); if
+    FALSE, the function returns a \code{\link{list}}.  Note that when
+    \code{simplify = TRUE} as by default, the dimension of the result is
+    simply determined from \code{FUN(\emph{<1st combination>})}, for
+    efficiency reasons.  This will badly fail if \code{FUN(u)} is not of
+    constant length.}
   \item{\dots}{optionally, further arguments to \code{FUN}.}
 }
 \value{
-  a list, vector or array, see the \code{simplify} argument above.
+  a \code{\link{list}} or \code{\link{array}} (in nondegenerate cases),
+  see the \code{simplify} argument above.
 }
 \references{
   Nijenhuis, A. and Wilf, H.S. (1978)
@@ -39,7 +42,8 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
 \author{Scott Chasalow wrote the original in 1994 for S;
   R package \pkg{combinat} and documentation by Vince Carey
   \email{stvjc@channing.harvard.edu};
-  small changes by the R core team.
+  small changes by the R core team, notably to return an array in all
+  cases of \code{simplify = TRUE}, e.g., for \code{combn(5,5)}.
 }
 \seealso{
   \code{\link{choose}} for fast computation of the \emph{number} of
