@@ -1047,9 +1047,9 @@ void	activatecontrol(control c);
  */
 
 void	settext(control c, char *newtext);
-char *	gettext(control c);
+char *	GA_gettext(control c);
 #define setname(c,newname) settext(c,newname)
-#define getname(c) gettext(c)
+#define getname(c) GA_gettext(c)
 
 void	settextfont(control c, font f);
 font	gettextfont(control c);

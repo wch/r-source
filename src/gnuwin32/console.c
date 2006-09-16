@@ -1735,8 +1735,8 @@ void consoleprint(console c)
     fh = fontheight(f);
     rr = getheight(lpr) - top;
     cc = getwidth(lpr) - 2*left;
-    strncpy(title, gettext(c), 59);
-    if (strlen(gettext(c)) > 59) strcpy(&title[56], "...");
+    strncpy(title, GA_gettext(c), 59);
+    if (strlen(GA_gettext(c)) > 59) strcpy(&title[56], "...");
     cur = currentcursor();
     setcursor(WatchCursor);
 

@@ -1,6 +1,6 @@
 /*******************************************************************************
  *  RProxy: Connector implementation between application and R language
- *  Copyright (C) 1999--2005 Thomas Baier
+ *  Copyright (C) 1999--2006 Thomas Baier
  *  Copyright 2006 R Development Core Team
  *
  *  R_Proxy_init based on rtest.c,  Copyright (C) 1998--2000
@@ -43,6 +43,7 @@
 #include <graphapp.h>
 
 #include "bdx_SEXP.h"
+#include "bdx_util.h"
 #include "SC_proxy.h"
 #include "rproxy.h"
 #include "rproxy_impl.h"
@@ -55,14 +56,9 @@
 # include <Parse.h>
 #endif
 
-struct _R_Proxy_init_parameters
-{
-  int vsize;
-  int vsize_valid;
-  int nsize;
-  int nsize_valid;
-};
+#define TRCBUFSIZE 2048
 
+struct _R_Proxy_init_parameters g_R_Proxy_init_parameters = { 0 };
 
 /* calls into the R DLL */
 extern char *getRHOME();
@@ -76,14 +72,13 @@ int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 extern SC_CharacterDevice* __output_device;
 
 /* trace to DebugView */
-
 int R_Proxy_printf(char const* pFormat,...)
 {
-  static char __tracebuf[2048];
+  static char __tracebuf[TRCBUFSIZE];
 
   va_list lArgs;
   va_start(lArgs, pFormat);
-  vsnprintf(__tracebuf, 2048, pFormat, lArgs);
+  vsnprintf(__tracebuf,TRCBUFSIZE, pFormat, lArgs);
   OutputDebugString(__tracebuf);
   return 0;
 }
@@ -111,8 +106,9 @@ R_Proxy_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 
 static void R_Proxy_WriteConsole(char *buf, int len)
 {
-  if (__output_device)
-      __output_device->vtbl->write_string (__output_device,buf);
+  if (__output_device) {
+    __output_device->vtbl->write_string (__output_device,buf);
+  }
 }
 
 static void R_Proxy_CallBack()
@@ -125,9 +121,8 @@ static void R_Proxy_Busy(int which)
     /* set a busy cursor ... in which = 1, unset if which = 0 */
 }
 
-
-#ifdef UNUSED
-/* <FIXME> unused here */
+/* 00-02-18 | baier | parse parameter string and fill parameter structure */
+/* 06-06-18 | baier | parse parameter "dm" */
 int R_Proxy_parse_parameters (char const* pParameterString,
 			      struct _R_Proxy_init_parameters* pParameterStruct)
 {
@@ -136,15 +131,123 @@ int R_Proxy_parse_parameters (char const* pParameterString,
    *
    * currently recognized parameter names (case-sensitive):
    *
-   *   NSIZE ... number of cons cells, (unsigned int) parameter
-   *   VSIZE ... size of vector heap, (unsigned int) parameter
+   *   (obsolete) NSIZE ... number of cons cells, (unsigned int) parameter
+   *   (obsolete) VSIZE ... size of vector heap, (unsigned int) parameter
+   *   dm ...... data mode (unsigned long, see below)
    */
+  int lDone = 0;
+  char const* lParameterStart = pParameterString;
+  int lIndexOfSemicolon = 0;
+  char* lTmpBuffer = NULL;
+  char* lPosOfSemicolon = NULL;
+
+  RPROXY_TRACE(printf("R_Proxy_parse_parameters(\"%s\")\n",pParameterString));
+
+  while (!lDone) {
+    /*
+     * dm: data mode?
+     * --------------
+     *
+     *   0 ... default data transfer mode
+     *   1 ... read +Inf and -Inf in double representation
+     */
+    if(strncmp (lParameterStart,"dm=",3) == 0) {
+      RPROXY_TRACE(printf("param dm found, parsing\n"));
+      lParameterStart += 3;
+      
+      lPosOfSemicolon = strchr (lParameterStart,';');
+      lIndexOfSemicolon = lPosOfSemicolon - lParameterStart;
+      
+      if (lPosOfSemicolon) {
+	lTmpBuffer = malloc (lIndexOfSemicolon + 1); /* to catch NSIZE=; */
+	strncpy (lTmpBuffer,lParameterStart,lIndexOfSemicolon);
+	*(lTmpBuffer + lIndexOfSemicolon) = 0x0;
+	bdx_set_datamode(atol(lTmpBuffer));
+	if(pParameterStruct) {
+	  pParameterStruct->dm = atol (lTmpBuffer);
+	}
+	free (lTmpBuffer);
+	lParameterStart += lIndexOfSemicolon + 1;
+      } else {
+	bdx_set_datamode(atol(lParameterStart));
+	if(pParameterStruct) {
+	  pParameterStruct->dm = atol(lParameterStart);
+	}
+	lDone = 1;
+      }
+    } else if (strncmp (lParameterStart,"REUSER",6) == 0) {
+      if(pParameterStruct) {
+	pParameterStruct->reuseR = 1;
+      }
+      lParameterStart = lParameterStart + 6;
+      if(*lParameterStart == ';') {
+	lParameterStart++;
+      }
+      RPROXY_TRACE(printf("param REUSER, rest is \"%s\"\n",
+			  lParameterStart));
+    } else {
+      lDone = 1;
+    }
+  }
+
+#if 0
+      /* NSIZE? */
+      if (strncmp (lParameterStart,"NSIZE=",6) == 0)
+	{
+	  lParameterStart += 6;
+
+	  lPosOfSemicolon = strchr (lParameterStart,';');
+	  lIndexOfSemicolon = lPosOfSemicolon - lParameterStart;
+
+	  if (lPosOfSemicolon)
+	    {
+	      lTmpBuffer = malloc (lIndexOfSemicolon + 1); /* to catch NSIZE=; */
+	      strncpy (lTmpBuffer,lParameterStart,lIndexOfSemicolon);
+	      *(lTmpBuffer + lIndexOfSemicolon) = 0x0;
+	      pParameterStruct->nsize_valid = 1;
+	      pParameterStruct->nsize = atoi(lTmpBuffer);
+	      free (lTmpBuffer);
+	      lParameterStart += lIndexOfSemicolon + 1;
+	    }
+	  else
+	    {
+	      pParameterStruct->nsize_valid = 1;
+	      pParameterStruct->nsize = atoi(lParameterStart);
+	      lDone = 1;
+	    }
+	}
+      else if (strncmp (lParameterStart,"VSIZE=",6) == 0)
+	{
+	  lParameterStart += 6;
+
+	  lPosOfSemicolon = strchr (lParameterStart,';');
+	  lIndexOfSemicolon = lPosOfSemicolon - lParameterStart;
+
+	  if (lPosOfSemicolon)
+	    {
+	      lTmpBuffer = malloc (lIndexOfSemicolon + 1); /* to catch VSIZE=; */
+	      strncpy (lTmpBuffer,lParameterStart,lIndexOfSemicolon);
+	      *(lTmpBuffer + lIndexOfSemicolon) = 0x0;
+	      pParameterStruct->vsize_valid = 1;
+	      pParameterStruct->vsize = atoi (lTmpBuffer);
+	      free (lTmpBuffer);
+	      lParameterStart += lIndexOfSemicolon + 1;
+	    }
+	  else
+	    {
+	      pParameterStruct->vsize_valid = 1;
+	      pParameterStruct->vsize = atoi (lParameterStart);
+	      lDone = 1;
+	    }
+	}
+#endif
+
   return 0;
 }
-#endif
 
 /* 00-02-18 | baier | R_Proxy_init() now takes parameter string, parse it */
 /* 03-06-01 | baier | now we add %R_HOME%\bin to %PATH% */
+/* 06-06-18 | baier | parameter parsing enabled in parent function */
 int R_Proxy_init (char const* pParameterString)
 {
   structRstart rp;
@@ -477,9 +580,7 @@ int R_Proxy_set_symbol (char const* pSymbol, BDX_Data const* pData)
   SEXP lSymbol = 0;
   SEXP lData = 0;
 
-  /*  RPROXY_TRACE(printf("calling BDX2SEXP\n")); */
-  if(BDX2SEXP(pData, &lData) != 0) {
-    /*    RPROXY_TRACE(printf("error BDX2SEXP\n")); */
+  if(BDX2SEXP(pData,&lData) != 0) {
     return SC_PROXY_ERR_UNSUPPORTEDTYPE;
   }
   /*  RPROXY_TRACE(printf("ok BDX2SEXP\n")); */
