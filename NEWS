@@ -399,6 +399,9 @@ NEW FEATURES
     o	str(<data.frame>) now outputs 'data.frame' instead of
 	`data.frame'; this may affect some strict (Package) tests.
 
+    o	str() now takes also its defaults for 'vec.len' and 'digits.d'
+	from options('str') which can be set by the new strOptions().
+
     o	symnum() has a new argument 'numeric.x' particularly useful for
 	handling 0/1 data.
 

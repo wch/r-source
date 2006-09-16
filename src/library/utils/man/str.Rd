@@ -1,21 +1,25 @@
 \name{str}
 \title{Compactly Display the Structure of an Arbitrary R Object}
+\alias{str}
+\alias{str.default}
+\alias{str.data.frame}
+\alias{strOptions}
 \usage{
 str(object, \dots)
 
 \method{str}{data.frame}(object, \dots)
 
-\method{str}{default}(object, max.level = NA, vec.len = 4, digits.d = 3,
+\method{str}{default}(object, max.level = NA,
+    vec.len  = strO$vec.len, digits.d = strO$digits.d,
     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
     width = getOption("width"), nest.lev = 0,
     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)),
                        collapse = ".."),
     comp.str="$ ", no.list = FALSE, envir = baseenv(),
-    strict.width = getOption("str")$strict.width, \dots)
+    strict.width = strO$strict.width, \dots)
+
+strOptions(strict.width = "no", digits.d = 3, vec.len = 4)
 }
-\alias{str}
-\alias{str.default}
-\alias{str.data.frame}
 \description{
   Compactly display the internal \bold{str}ucture of an \R object, a
   \dQuote{diagnostic} function and an alternative to \code{\link{summary}}
@@ -24,6 +28,9 @@ str(object, \dots)
   to compactly display the (abbreviated) contents of (possibly nested)
   lists.  The idea is to give reasonable output for \bold{any} \R
   object.  It calls \code{\link{args}} for (non-primitive) function objects.
+
+  \code{strOptions()} is a convenience function for setting
+  \code{\link{options}(str = .)}, see the examples.
 }
 \arguments{
   \item{object}{any \R object about which you want to have some
@@ -33,9 +40,12 @@ str(object, \dots)
     Default NA: Display all nesting levels.}
   \item{vec.len}{numeric (>= 0) indicating how many \dQuote{first few} elements
     are displayed of each vector.  The number is multiplied by different
-    factors (from .5 to 3) depending on the kind of vector.  Default 4.}
+    factors (from .5 to 3) depending on the kind of vector.  Defaults to
+    the \code{vec.len} component of option \code{"str"} (see
+    \code{\link{options}}) which defaults to 4.}
   \item{digits.d}{number of digits for numerical components (as for
-    \code{\link{print}}).}
+    \code{\link{print}}).  Defaults to the \code{digits.d} component of
+    option \code{"str"} which defaults to 3.}
   \item{nchar.max}{maximal number of characters to show for
     \code{\link{character}} strings.  Longer strings are truncated, see
     \code{longch} example below.}
@@ -57,8 +67,8 @@ str(object, \dots)
   \item{strict.width}{string indicating if the \code{width} argument's
     specification should be followed strictly, one of the values
     \code{c("no", "cut", "wrap")}.
-    Defaults to option \code{"str.strict.width"} (see
-    \code{\link{options}}) which defaults to \code{"no"} for back
+    Defaults to the \code{strict.width} component of option \code{"str"}
+    (see \code{\link{options}}) which defaults to \code{"no"} for back
     compatibility reasons; \code{"wrap"} uses
     \code{\link{strwrap}(*, width=width)} whereas \code{"cut"} cuts
     directly to \code{width}.  Note that a small \code{vec.length}
@@ -106,7 +116,8 @@ str(longch, nchar.max = 52)
 str(longch, strict.width = "wrap")
 
 ## Settings for narrow transcript :
-op <- options(width = 60, str = list(strict.width = "wrap"))
+op <- options(width = 60,
+	      str = strOptions(strict.width = "wrap"))
 str(lsfit(1:9,1:9))
 str(options())
 ## reset to previous:
