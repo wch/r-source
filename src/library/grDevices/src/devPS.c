@@ -5545,13 +5545,13 @@ static void PDF_SetLineColor(int color, NewDevDesc *dd)
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
     if(color != pd->current.col) {
-	if (alphaVersion(pd)) {
+	unsigned int alpha = R_ALPHA(color);
+	if (0 < alpha && alpha < 255 && alphaVersion(pd)) {
 	    /*
 	     * Apply graphics state parameter dictionary
 	     * to set alpha
 	     */
-	    fprintf(pd->pdffp, "/GS%i gs\n",
-		    colAlphaIndex(R_ALPHA(color), pd));
+	    fprintf(pd->pdffp, "/GS%i gs\n", colAlphaIndex(alpha, pd));
 	}
 	fprintf(pd->pdffp, "%.3f %.3f %.3f RG\n",
 		R_RED(color)/255.0,
@@ -5565,13 +5565,13 @@ static void PDF_SetFill(int color, NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     if(color != pd->current.fill) {
-	if (alphaVersion(pd)) {
+	unsigned int alpha = R_ALPHA(color);
+	if (0 < alpha && alpha < 255 && alphaVersion(pd)) {
 	    /*
 	     * Apply graphics state parameter dictionary
 	     * to set alpha
 	     */
-	    fprintf(pd->pdffp, "/GS%i gs\n",
-		    fillAlphaIndex(R_ALPHA(color), pd));
+	    fprintf(pd->pdffp, "/GS%i gs\n", fillAlphaIndex(alpha, pd));
 	}
 	fprintf(pd->pdffp, "%.3f %.3f %.3f rg\n",
 		   R_RED(color)/255.0,
@@ -6214,12 +6214,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int code;
 
-    /*
-     * Only try to do real transparency if version at least 1.4
-     */
-    if ((semiTransparent(gc->col) ||
-	 semiTransparent(gc->fill)) &&
-	alphaVersion(pd)) {
+    if (semiTransparent(gc->col) || semiTransparent(gc->fill)) {
 	if(pd->inText) textoff(pd);
 	PDF_SetFill(gc->fill, dd);
 	PDF_SetLineColor(gc->col, dd);
@@ -6257,9 +6252,7 @@ static void PDF_Circle(double x, double y, double r,
     /*
      * Only try to do real transparency if version at least 1.4
      */
-    if ((semiTransparent(gc->col) ||
-	 semiTransparent(gc->fill)) &&
-	alphaVersion(pd)) {
+    if (semiTransparent(gc->col) || semiTransparent(gc->fill)) {
 	PDF_SetFill(gc->fill, dd);
 	PDF_SetLineColor(gc->col, dd);
 	PDF_SetLineStyle(gc, dd);
@@ -6336,16 +6329,10 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
-    /*
-     * Only try to do real transparency if version at least 1.4
-     */
-    if ((semiTransparent(gc->col) && alphaVersion(pd)) ||
-	(R_OPAQUE(gc->col))) {
-	PDF_SetLineColor(gc->col, dd);
-	PDF_SetLineStyle(gc, dd);
-	if(pd->inText) textoff(pd);
-	fprintf(pd->pdffp, "%.2f %.2f m %.2f %.2f l S\n", x1, y1, x2, y2);
-    }
+    PDF_SetLineColor(gc->col, dd);
+    PDF_SetLineStyle(gc, dd);
+    if(pd->inText) textoff(pd);
+    fprintf(pd->pdffp, "%.2f %.2f m %.2f %.2f l S\n", x1, y1, x2, y2);
 }
 
 static void PDF_Polygon(int n, double *x, double *y,
@@ -6359,9 +6346,7 @@ static void PDF_Polygon(int n, double *x, double *y,
     /*
      * Only try to do real transparency if version at least 1.4
      */
-    if ((semiTransparent(gc->col) ||
-	 semiTransparent(gc->fill)) &&
-	alphaVersion(pd)) {
+    if (semiTransparent(gc->col) || semiTransparent(gc->fill)) {
 	if(pd->inText) textoff(pd);
 	PDF_SetFill(gc->fill, dd);
 	PDF_SetLineColor(gc->col, dd);
@@ -6413,9 +6398,7 @@ static void PDF_Polyline(int n, double *x, double *y,
     /*
      * Only try to do real transparency if version at least 1.4
      */
-    if ((semiTransparent(gc->col) ||
-	 semiTransparent(gc->fill)) &&
-	alphaVersion(pd)) {
+    if (semiTransparent(gc->col) || semiTransparent(gc->fill)) {
 	if(pd->inText) textoff(pd);
 	PDF_SetLineColor(gc->col, dd);
 	PDF_SetLineStyle(gc, dd);
@@ -6544,17 +6527,12 @@ static void PDFSimpleText(double x, double y, char *str,
     if(fabs(a) < 0.01) a = 0.0;
     if(fabs(b) < 0.01) b = 0.0;
     if(!pd->inText) texton(pd);
-    /*
-     * Only try to do real transparency if version at least 1.4
-     */
-    if (alphaVersion(pd) || (R_OPAQUE(gc->col))) {
-	PDF_SetFill(gc->col, dd);
-	fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
-		font,
-		a, b, -b, a, x, y);
-	PostScriptWriteString(pd->pdffp, str1);
-	fprintf(pd->pdffp, " Tj\n");
-    }
+    PDF_SetFill(gc->col, dd);
+    fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
+	    font,
+	    a, b, -b, a, x, y);
+    PostScriptWriteString(pd->pdffp, str1);
+    fprintf(pd->pdffp, " Tj\n");
 }
 
 #ifndef SUPPORT_MBCS
@@ -6630,20 +6608,18 @@ static void PDF_Text(double x, double y, char *str,
 	if (!cidfont)
 	    error(_("Failed to find or load PDF CID font"));
         if(!strcmp(locale2charset(NULL), cidfont->encoding)) {
-            if (alphaVersion(pd) || (R_OPAQUE(gc->col))) {
-                PDF_SetFill(gc->col, dd);
-                fprintf(pd->pdffp,
-                        "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
-			PDFfontNumber(gc->fontfamily, face, pd),
-                        a, b, -b, a, x, y);
-
-                fprintf(pd->pdffp, "<");
-                p = (unsigned char *) str;
-                while(*p)
-                    fprintf(pd->pdffp, "%02x", *p++);
-                fprintf(pd->pdffp, ">");
-                fprintf(pd->pdffp, " Tj\n");
-            }
+	    PDF_SetFill(gc->col, dd);
+	    fprintf(pd->pdffp,
+		    "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
+		    PDFfontNumber(gc->fontfamily, face, pd),
+		    a, b, -b, a, x, y);
+	    
+	    fprintf(pd->pdffp, "<");
+	    p = (unsigned char *) str;
+	    while(*p)
+		fprintf(pd->pdffp, "%02x", *p++);
+	    fprintf(pd->pdffp, ">");
+	    fprintf(pd->pdffp, " Tj\n");
             return;
         }
 
@@ -6677,17 +6653,16 @@ static void PDF_Text(double x, double y, char *str,
 	    if(status == (size_t)-1)
                 warning(_("failed in text conversion to encoding '%s'"),
 			cidfont->encoding);
-	    else
-		if (alphaVersion(pd) || (R_OPAQUE(gc->col))) {
-		    PDF_SetFill(gc->col, dd);
-		    fprintf(pd->pdffp,
-			    "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm <",
-			    PDFfontNumber(gc->fontfamily, face, pd),
-			    a, b, -b, a, x, y);
-		    for(i = 0, p = buf; i < nb - o_len; i++)
-			fprintf(pd->pdffp, "%02x", *p++);
-		    fprintf(pd->pdffp, "> Tj\n");
-		}
+	    else {
+		PDF_SetFill(gc->col, dd);
+		fprintf(pd->pdffp,
+			"/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm <",
+			PDFfontNumber(gc->fontfamily, face, pd),
+			a, b, -b, a, x, y);
+		for(i = 0, p = buf; i < nb - o_len; i++)
+		    fprintf(pd->pdffp, "%02x", *p++);
+		fprintf(pd->pdffp, "> Tj\n");
+	    }
 	    return;
 	} else {
 	    warning(_("invalid string in '%s'"), "PDF_Text");
@@ -6695,23 +6670,18 @@ static void PDF_Text(double x, double y, char *str,
 	}
     }
 
-    /*
-     * Only try to do real transparency if version at least 1.4
-     */
-    if (alphaVersion(pd) || (R_OPAQUE(gc->col))) {
-	PDF_SetFill(gc->col, dd);
-	fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
-		PDFfontNumber(gc->fontfamily, face, pd),
-		a, b, -b, a, x, y);
-	if(utf8locale && !utf8strIsASCII(str1) && face < 5) {
-	    buff = alloca(strlen(str)+1); /* Output string cannot be longer */
-	    R_CheckStack();
-	    mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd));
-	    str1 = buff;
-	}
-	PostScriptWriteString(pd->pdffp, str1);
-	fprintf(pd->pdffp, " Tj\n");
+    PDF_SetFill(gc->col, dd);
+    fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
+	    PDFfontNumber(gc->fontfamily, face, pd),
+	    a, b, -b, a, x, y);
+    if(utf8locale && !utf8strIsASCII(str1) && face < 5) {
+	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
+	R_CheckStack();
+	mbcsToSbcs(str, buff, PDFconvname(gc->fontfamily, pd));
+	str1 = buff;
     }
+    PostScriptWriteString(pd->pdffp, str1);
+    fprintf(pd->pdffp, " Tj\n");
 }
 #endif
 
