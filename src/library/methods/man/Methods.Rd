@@ -11,6 +11,7 @@
   The section \bold{How Methods Work} describes the underlying
   mechanism; \bold{Dispatch and Method Selection} provides more
   details on how class definitions determine which methods are used.
+  For additional information specifically about class definitions, see \code{?\link{Classes}}.
 }
 
 \section{How Methods Work}{

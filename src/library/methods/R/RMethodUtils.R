@@ -10,7 +10,7 @@
            genericFunction = NULL) {
       checkTrace <- function(fun, what, f) {
           if(is(fun, "traceable")) {
-              warning(gettextf("the function being used as %s in making a generic function for '%s' is currently traced; the function used will have tracing removed",
+              warning(gettextf("the function being used as %s in making a generic function for \"%s\" is currently traced; the function used will have tracing removed",
                                what, f), domain = NA)
               .untracedFunction(fun)
           }
@@ -59,7 +59,7 @@
           fdefault <- checkTrace(fdefault)
           if(!identical(formalArgs(fdefault), formalArgs(fdef)) &&
              !is.primitive(fdefault))
-              stop(gettextf("the formal arguments of the generic function for '%s' (%s) differ from those of the non-generic to be used as the default (%s)",
+              stop(gettextf("the formal arguments of the generic function for \"%s\" (%s) differ from those of the non-generic to be used as the default (%s)",
                             f, paste(formalArgs(fdef), collapse = ", "),
                             paste(formalArgs(fdefault), collapse = ", ")),
                    domain = NA)
@@ -142,10 +142,10 @@ makeStandardGeneric <-
       ## methods are prohibited)
       fgen <- genericForPrimitive(f)
       if(identical(fgen, FALSE))
-        stop(gettextf("special function '%s' is not permitted to have methods",
+        stop(gettextf("special function \"%s\" is not permitted to have methods",
                       f), domain = NA)
       if(is.null(fgen)) {
-        warning(gettextf("special function '%s' has no known argument list; will assume '(x, ...)'", f), domain = NA)
+        warning(gettextf("special function \"%s\" has no known argument list; will assume '(x, ...)'", f), domain = NA)
         ## unknown
         fgen <- function(x, ...) {}
       }
@@ -173,7 +173,7 @@ generic.skeleton <-
     if(is.null(fdefault)) {
       fdefault <- fdef
       body(fdefault) <- substitute(stop(MESSAGE, domain = NA), list(MESSAGE=
-          gettextf("invalid call in method dispatch to '%s' (no default method)", name)))
+          gettextf("invalid call in method dispatch to \"%s\" (no default method)", name)))
       environment(fdefault) <- baseenv()
     }
     skeleton[[1]] <- fdefault
@@ -220,7 +220,7 @@ getAllMethods <-
           if(length(gwhere) == 0)
             return( get(".Methods", envir = environment(fdef)))
             ##
-             ##  stop(gettextf("'%s' is not a function visible from '%s'",
+             ##  stop(gettextf("\"%s\" is not a function visible from \"%s\"",
              ##              f, getPackageName(where)), domain = NA)
           ## in detach cases, just return cached version (This code is
           ## on the way out anyway, with the arrival of methods tables)
@@ -241,11 +241,11 @@ getAllMethods <-
           fdef <- getGeneric(f, TRUE, where)
       }
       else if(is.function(fdef) && search) {
-          warning(gettextf("'%s' from '%s' is a non-generic function; no methods available", f, getPackageName(gwhere)), domain = NA)
+          warning(gettextf("\"%s\" from \"%s\" is a non-generic function; no methods available", f, getPackageName(gwhere)), domain = NA)
           return(NULL)
       }
       else
-          stop(gettextf("invalid 'fdef' for '%s' in 'getAllMethods'; expected either a 'genericFunction object' or a primitive function, got an object of class \"%s\"", f, class(fdef)), domain = NA)
+          stop(gettextf("invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a 'genericFunction object' or a primitive function, got an object of class \"%s\"", f, class(fdef)), domain = NA)
       metaname <- mlistMetaName(fdef@generic, where)
       primCase <- is.primitive(deflt)
       ## NOTE: getGroup & getGeneric have to be called with the default
@@ -434,16 +434,16 @@ getGeneric <-
         if(is.primitive(baseDef)) {
             value <- genericForPrimitive(f)
             if(!is.function(value) && mustFind)
-                stop(gettextf("methods cannot be defined for the primitive function '%s'", f), domain = NA)
+                stop(gettextf("methods cannot be defined for the primitive function \"%s\"", f), domain = NA)
             if(is(value, "genericFunction"))
                 value <- .cacheGeneric(f, value)
         }
-    }
+  }
     if(is.function(value))
         value
     else if(mustFind)
         ## the C code will have thrown an error if f is not a single string
-        stop(gettextf("no generic function found for '%s'", f), domain = NA)
+        stop(gettextf("no generic function found for \"%s\"", f), domain = NA)
     else
         NULL
 }
@@ -670,7 +670,7 @@ mlistMetaName <-
                     return(methodsPackageMetaName("M",paste(name,package, sep=":")))
                   fdef <- getGeneric(name)
                   if(!is(fdef, "genericFunction"))
-                        stop(gettextf("the methods object name for '%s' must include the name of the package that contains the generic function, but no generic function of this name was found", name), domain = NA)
+                        stop(gettextf("the methods object name for \"%s\" must include the name of the package that contains the generic function, but no generic function of this name was found", name), domain = NA)
                   }
           }
           methodsPackageMetaName("M", paste(fdef@generic, fdef@package, sep=":"))
@@ -802,7 +802,7 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
 cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.frame()),
                                   package, methods) {
     if(!is(fdef, "genericFunction")) {
-        warning(gettextf("no methods found for '%s'; 'cacheGenericsMetaData' will have no effect", f), domain = NA)
+        warning(gettextf("no methods found for \"%s\"; cacheGenericsMetaData() will have no effect", f), domain = NA)
         return(FALSE)
     }
     if(missing(package))
@@ -986,7 +986,7 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined")) {
         for(Cl in classes)
             if(is(object, Cl))
                return(object)
-        stop(gettextf("invalid value from generic function '%s', class \"%s\", expected %s", fname, class(object), paste("\"", classes, "\"", sep = "", collapse = " or ")), domain = NA)
+        stop(gettextf("invalid value from generic function \"%s\", class \"%s\", expected %s", fname, class(object), paste("\"", classes, "\"", sep = "", collapse = " or ")), domain = NA)
     }
     ## empty test is allowed
     object
@@ -1073,7 +1073,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     if(is(x, "call")) {
         if(identical(x[[1]], quote(standardGeneric))) {
             if(!identical(x[[2]], fname))
-                warning(gettextf("the body of the generic function for '%s' calls 'standardGeneric' to dispatch on a different name ('%s')!",
+                warning(gettextf("the body of the generic function for \"%s\" calls 'standardGeneric' to dispatch on a different name (\"%s\")!",
                                  fname,
                                  paste(as.character(x[[2]]), collapse = "\n")),
                         domain = NA)
@@ -1120,7 +1120,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         else if(is(mi, "MethodsList"))
             mi <- Recall(mi, f)
         else
-            stop(gettextf("internal error: Bad methods list object in fixing methods for primitive function '%s'", f), domain = NA)
+            stop(gettextf("internal error: Bad methods list object in fixing methods for primitive function \"%s\"", f), domain = NA)
         methods[[i]] <- mi
     }
     mlist@methods <- methods
@@ -1336,7 +1336,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
     }
     f <- getGeneric(group)
     if(is.null(f)) {
-        warning(gettextf("'%s' is not a generic function (or not visible here)",
+        warning(gettextf("\"%s\" is not a generic function (or not visible here)",
                          f), domain = NA)
         return(character())
     }

@@ -426,8 +426,8 @@ matchSignature <-
         if(any(unknown)) {
             unknown <- unique(sigClasses[unknown])
             warning(sprintf(ngettext(length(unknown),
-                                     "in the method signature for function '%s' no definition for class: %s",
-                                     "in the method signature for function '%s' no definition for classes: %s"),
+                                     "in the method signature for function \"%s\" no definition for class: %s",
+                                     "in the method signature for function \"%s\" no definition for classes: %s"),
                             fun@generic,
                             paste(dQuote(unknown), collapse = ", ")),
                     domain = NA)
@@ -435,7 +435,7 @@ matchSignature <-
     }
     signature <- as.list(signature)
     if(length(sigClasses) != length(signature))
-        stop(gettextf("object to use as a method signature for function '%s' does not look like a legitimate signature (a vector of single class names): there were %d class names, but %d elements in the signature object",
+        stop(gettextf("object to use as a method signature for function \"%s\" does not look like a legitimate signature (a vector of single class names): there were %d class names, but %d elements in the signature object",
                       fun@generic, length(sigClasses), length(signature)),
              domain = NA)
     if(is.null(names(signature))) {
@@ -465,7 +465,7 @@ matchSignature <-
     ## order, from the matched args in the call object.
     sigClasses <- as.character(smatch)[-1]
     if(any(is.na(which)))
-        stop(gettextf("in the method signature for function '%s' invalid argument names in the signature: %s",
+        stop(gettextf("in the method signature for function \"%s\" invalid argument names in the signature: %s",
                       fun@generic,
                       paste(snames[is.na(which)], collapse = ", ")),
              domain = NA)
@@ -569,7 +569,7 @@ promptMethods <- function(f, filename = NULL, methods)
     if(missing(methods)) {
         where <- find(mlistMetaName(f))
         if(length(where) == 0)
-            stop(gettextf("no methods found for generic '%s'", f), domain = NA)
+            stop(gettextf("no methods found for generic \"%s\"", f), domain = NA)
         where <- where[1]
         methods <- getMethods(f, where)
         if(where != 1)

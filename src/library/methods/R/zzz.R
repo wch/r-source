@@ -12,7 +12,7 @@
     if(missing(where)) {
         where <- match(paste("package:", pkgname, sep=""), search())
         if(is.na(where)) {
-            warning(gettextf("not a package name: '%s'", pkgname), domain = NA)
+            warning(gettextf("not a package name: \"%s\"", pkgname), domain = NA)
             return()
         }
         where <- as.environment(where)

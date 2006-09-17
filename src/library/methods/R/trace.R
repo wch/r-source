@@ -80,7 +80,7 @@
     if(is.null(whereF)) {
         allWhere <- findFunction(what, where = where)
         if(length(allWhere)==0)
-            stop(gettextf("no function definition for '%s' found", what),
+            stop(gettextf("no function definition for \"%s\" found", what),
                  domain = NA)
         whereF <- as.environment(allWhere[[1]])
     }
@@ -398,7 +398,7 @@ trySilent <- function(expr) {
 
 .setMethodOverBinding <- function(what, signature, method, where, verbose = TRUE) {
     if(verbose)
-        warning(gettextf("setting a method over the binding of symbol '%s' in environment/package '%s'", what, getPackageName(where)), domain = NA)
+        warning(gettextf("setting a method over the binding of symbol \"%s\" in environment/package \"%s\"", what, getPackageName(where)), domain = NA)
     if(exists(what, envir = where, inherits = FALSE)) {
         fdef <- get(what, envir = where)
         hasFunction <- is(fdef, "genericFunction")
