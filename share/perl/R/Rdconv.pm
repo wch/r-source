@@ -27,6 +27,7 @@ require  Exporter;
 @EXPORT  = qw(Rdconv);
 
 use FileHandle;
+use Text::DelimMatch;
 use Text::Tabs;
 use Text::Wrap;
 
@@ -594,16 +595,27 @@ sub transform_S3method {
     ## Note that this markup should really only be used inside \usage.
     ## NB: \w includes _ as well as [:alnum:], which R now allows in name
     my ($text) = @_;
+    my ($method, $prefix, $match, $rest);
+    my $delimround = new Text::DelimMatch("\\(", "\\)");
+    $delimround->quote('"');
+    $delimround->quote("'");
     my $S3method_RE =
       "([ \t]*)\\\\(S3)?method\{([\\w.]+)\}\{([\\w.]+)\}";
-    while($text =~ /$S3method_RE/) {
+    while($text =~ /$S3method_RE(.*)/s) {
+	$method = "method";
+	($prefix, $match, $rest) = $delimround->match($5);
+	if(($prefix eq "") && ($rest =~ m/^[ \t]*<-/)) {
+	    ## (Note that the RHS should really be called 'value', and
+	    ## that we could check for a syntacticaly valid R name.)
+	    $method = "replacement method";
+	}
 	if($4 eq "default") {
 	    $text =~
-		s/$S3method_RE/$1\#\# Default S3 method:\n$1$3/s;
+		s/$S3method_RE/$1\#\# Default S3 $method:\n$1$3/s;
 	}
 	else {
 	    $text =~
-		s/$S3method_RE/$1\#\# S3 method for class '$4':\n$1$3/s;
+		s/$S3method_RE/$1\#\# S3 $method for class '$4':\n$1$3/s;
 	}
     }
     ## Also try to handle markup for S3 methods for subscripting and
@@ -611,7 +623,7 @@ sub transform_S3method {
     $S3method_RE = "([ \t]*)\\\\(S3)?method" .
 	"\{(\\\$|\\\[\\\[?)\}\{([\\w.]+)\}\\\(([^)]+)\\\)";
     my ($str, $name, @args);
-    while($text =~ /$S3method_RE/) {
+    while($text =~ /$S3method_RE(.*)/s) {
 	## <NOTE>
 	## The hard part is to rewrite the argument list, because
 	## although something like
@@ -621,22 +633,22 @@ sub transform_S3method {
 	##   Method for class 'foo':
 	##   x[i, ..., drop = FALSE]
 	## This can be tricky if the argument list contains embedded
-	## parentheses (e.g., in default argument strings), so that a
-	## refined Text::DelimMatch analysis would be needed.  For the
-	## time being, let us be happy with what we have ...
+	## parentheses (e.g., in default argument strings), so we use
+	## Text::DelimMatch.
 	## </NOTE>
 	$str = "$1\#\# S3 method for class '$4':\n$1";
 	$name = $3;
-	@args = split(/,\s*/, $5);
-	if($name eq "\$") {
-	    ## Should really check on scalar(@args) to be 2 ...
-	    $str .= "$args[0]\$$args[1]";
-	}
-	else {
-	    $str .= "$args[0]$name" . join(", ", @args[1..$#args]);
-	    $str .= "]" x length($name);
-	}
-	$text =~ s/$S3method_RE/$str/s;
+	## The match was for something ending in a pair of balanced
+	## parentheses, which are not necessarily the matching ones.
+	($prefix, $match, $rest) = $delimround->match("($5)$6");
+	## Extract the first argument from the argument list.
+	substr($match, 1, -1) =~ m/\s*([^,]+),\s*(.*)/s;
+	## Now put things together.
+	$str .= "$1$name$2";
+	$str .= "]" x length($name) if($name ne "\$");
+	$str =~ s/method/replacement method/ if($rest =~ m/^[ \t]*<-/);
+	
+	$text =~ s/$S3method_RE.*/$str$rest/s;
     }
     ## Also try to handle markup for S3 methods for binary ops.
     $S3method_RE = "([ \t]*)\\\\(S3)?method" .
