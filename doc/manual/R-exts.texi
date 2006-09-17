@@ -878,7 +878,7 @@ The macros @code{BLAS_LIBS} and @code{FLIBS} should always be included
 @vindex SAFE_FFLAGS
 A macro containing flags which are needed to circumvent
 over-optimization of Fortran code: it is typically @samp{-g -O2
--ffloat-store} on @samp{ix86} platforms using @command{g77} or
+-ffloat-store} on @cputype{ix86} platforms using @command{g77} or
 @command{gfortran}.
 @end table
 
