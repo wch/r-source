@@ -328,13 +328,15 @@ unlink("ex.data")
 zz <- gzfile("ex.gz", "w")  # compressed file
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
-readLines(gzfile("ex.gz"))
+readLines(zz <- gzfile("ex.gz"))
+close(zz)
 unlink("ex.gz")
 
 zz <- bzfile("ex.bz2", "w")  # bzip2-ed file
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
-print(readLines(bzfile("ex.bz2")))
+print(readLines(zz <- bzfile("ex.bz2")))
+close(zz)
 unlink("ex.bz2")
 
 ## An example of a file open for reading and writing
