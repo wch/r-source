@@ -24,19 +24,32 @@ str.data.frame <- function(object, ...)
     else invisible(NextMethod("str", give.length=FALSE,...))
 }
 
+strOptions <- function(strict.width = "no", digits.d = 3, vec.len = 4)
+    list(strict.width = strict.width, digits.d = digits.d, vec.len = vec.len)
+
 str.default <-
-    function(object, max.level = NA, vec.len = 4, digits.d = 3,
+    function(object, max.level = NA, vec.len = strO$vec.len,
+             digits.d = strO$digits.d,
 	     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
 	     width = getOption("width"), nest.lev = 0,
 	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
 	     comp.str="$ ", no.list = FALSE, envir = baseenv(),
-             strict.width = getOption("str")$strict.width,
+             strict.width = strO$strict.width,
 	     ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
     ## --- see HELP file --
     ## ------------------------------------------------------------------------
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
+
+    ## Get defaults for these
+    oDefs <- c("vec.len", "digits.d", "strict.width")
+    ## from
+    strO <- getOption("str")
+    if(!is.list(strO) || !all(names(strO) %in% oDefs)) {
+	warning("invalid options('str') -- using defaults instead")
+	strO <- strOptions()
+    }
 
     strict.width <- match.arg(strict.width, choices = c("no", "cut", "wrap"))
     if(strict.width != "no") {

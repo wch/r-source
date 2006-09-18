@@ -5,13 +5,13 @@
     ## Set default options() related to functionality in 'utils' pkg
     op <- options()
     op.utils <-
-        list(help.try.all.packages = FALSE,
-             internet.info = 2,
-             pkgType = .Platform$pkgType,
-             str = list(strict.width = "no"),
-             example.ask = "default",
-             HTTPUserAgent = defaultUserAgent(),
-             menu.graphics = TRUE)
+	list(help.try.all.packages = FALSE,
+	     internet.info = 2,
+	     pkgType = .Platform$pkgType,
+	     str = list(strict.width = "no", digits.d = 3, vec.len = 4),
+	     example.ask = "default",
+	     HTTPUserAgent = defaultUserAgent(),
+	     menu.graphics = TRUE)
     extra <-
         if(.Platform$OS.type == "windows") {
             list(mailer = "none",
