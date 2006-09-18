@@ -28,7 +28,7 @@ prod(\dots, na.rm = FALSE)
   were \code{numeric(0)}.
 }
 \value{
-  The product, a numeric or complex vector or length one.
+  The product, a numeric (of type \code{"double"}) or complex vector of length one.
   \strong{NB:} the product of an empty set is one, by definition.
 }
 \references{

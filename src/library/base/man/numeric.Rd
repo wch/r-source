@@ -32,7 +32,7 @@ is.numeric(x)
   elements of the vector are all equal to \code{0}.
 
   \code{as.numeric} attempts to coerce its argument to a numeric \link{type}
-  (either integer or real).
+  (either \code{"integer"} or \code{"double"}).
   \code{as.numeric} for factors yields the codes underlying the factor
   levels, not the numeric representation of the labels, see also
   \code{\link{factor}}.

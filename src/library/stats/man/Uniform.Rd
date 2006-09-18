@@ -39,6 +39,9 @@ runif(n, min=0, max=1)
   For the case of \eqn{u := min == max}, the limit case of
   \eqn{X \equiv u}{X == u} is assumed, although there is no density in
   that case and \code{dunif} will return \code{NaN} (the error condition).
+
+  \code{runif} will not generate either of the extreme values (unless
+  \code{max = min}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
