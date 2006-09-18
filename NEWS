@@ -851,6 +851,10 @@ BUG FIXES
 	segfault on long vectors (especially with names or where
 	coercion to numeric occurred).
 
+    o	The X11() device no longer produces (apparently spurious)
+	'BadWindow (invalid Window parameter)' warnings when run from
+	Rcmdr.
+
 
 
 
