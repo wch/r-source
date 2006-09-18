@@ -77,7 +77,7 @@ NEW FEATURES
 	before) and now also preserves names.
 
 
-    o   .Deprecated and .Defunct take a new parameter, msg, that allows
+    o	.Deprecated and .Defunct take a new parameter, msg, that allows
 	for the specification of the message printed and facilitates
 	deprecation of calling sequences etc.
 
@@ -93,7 +93,7 @@ NEW FEATURES
 	necessary.  (It did not duplicate in other cases, e.g. a
 	pairlist.)
 
-    o   argsAnywhere() works like args() on non-exported functions.
+    o	argsAnywhere() works like args() on non-exported functions.
 
     o	as.data.frame() gains a '...' argument.
 
@@ -235,8 +235,8 @@ NEW FEATURES
 	and contourLines().  (PR#9205)
 
     o	options(max.print = N) where N defaults to 99999 now cuts printing
-	of large objects after about N entries.  print(x, ..., max = N)
-	does the same the for default method and those building on
+	of large objects after about N entries.	 print(x, ..., max = N)
+	does the same for the default method and those building on
 	print.default().
 
 	options("menu.graphics") controls if graphical menus should be
@@ -250,12 +250,12 @@ NEW FEATURES
 	platforms which support the LC_PAPER locale category, the
 	setting is taken first from the R_PAPERSIZE environment
 	variable at run time, then from the LC_PAPER category
-	("letter" for _US and _CA locales and "a4" otherwise).  On
+	("letter" for _US and _CA locales and "a4" otherwise).	On
 	other platforms (including Windows and older Unixen), the
 	choice is unchanged.
 
     o	package.skeleton() gains arguments 'namespace' and
-    	'code_files'.
+	'code_files'.
 
     o	par(ask=TRUE) now only applies to interactive R sessions.
 
@@ -269,7 +269,7 @@ NEW FEATURES
 
     o	pie() now allows expressions for 'labels', and empty slices.
 
-    o   There is a new '%.%' operator for mathematical annotations
+    o	There is a new '%.%' operator for mathematical annotations
 	(plotmath) which draws a centred multiplication dot
 	(a \cdot in LaTeX), thanks to Uwe Ligges.
 
@@ -300,7 +300,7 @@ NEW FEATURES
 	C-level equivalent R_RegisterFinalizerEx.
 
     o	rep() is now a primitive function and under some conditions
-	very much faster: rep.int() still a little faster (but does
+	very much faster: rep.int() is still a little faster (but does
 	less). (Because it is primitive there are minor changes to the
 	call semantics: see the help page.)
 
@@ -362,6 +362,9 @@ NEW FEATURES
     o	str(<data.frame>) now outputs 'data.frame' instead of
 	`data.frame'; this may affect some strict (Package) tests.
 
+    o	str() now takes also its defaults for 'vec.len' and 'digits.d'
+	from options('str') which can be set by the new strOptions().
+
     o	symnum() has a new argument 'numeric.x' particularly useful for
 	handling 0/1 data.
 
@@ -389,8 +392,8 @@ NEW FEATURES
     o	The internal internet download functions have some new
 	features from libxml 2.6.26.
 
-    o   There is an option "HTTPUserAgent" to set the User Agent in R
-	download requests etc.  Patch from S. Falcon.
+    o	There is an option "HTTPUserAgent" to set the User Agent in R
+	download requests etc.	Patch from S. Falcon.
 
     o	PCRE has been updated to version 6.7.
 
@@ -414,25 +417,20 @@ NEW FEATURES
 	improved to refer to JAVA_HOME, and they are now documented in
 	the R-admin manual.
 
-    o   It is (again) possible to calculate prediction intervals from
-        lm objects for the original data frame, now with a warning
-        that the intervals refer to future observations. Weighted
-        intervals have also been implemented, with user-specifiable
-        weights. Warnings are given in cases where the default 
-	behaviour might differ from user expectations. See the
-        documentation for details.
-
-
-
-    o	R CMD javareconf script has been added to allow Java
-	configuration to be updated even after R has been installed.
+    o	It is (again) possible to calculate prediction intervals from
+	"lm" objects for the original data frame, now with a warning
+	that the intervals refer to future observations.  Weighted
+	intervals have also been implemented, with user-specifiable
+	weights. Warnings are given in cases where the default
+	behaviour might differ from user expectations.  See the
+	?predict.lm for details.
 
 
 CHANGES TO S4 METHODS
 
     o	The default prototype object for S4 classes will have its own
 	internal type in 2.4.0, as opposed to being an empty list (the
-	cause of several errors in the current code).  Note that old
+	cause of several errors in the code up to 2.3.1).  Note that old
 	binary objects, including class definitions, will be
 	inconsistent with the type, and should be recreated.
 
@@ -442,7 +440,7 @@ CHANGES TO S4 METHODS
 	http://developer.r-project.org/howMethodsWork.pdf
 
     o	Objects created from an S4 class are now marked by an internal flag,
-	tested by isS4() in R and by macro IS_S4_OBJECT() in C.  This
+	tested by isS4() in R and by macro IS_S4_OBJECT() in C.	 This
 	is an efficient and reliable test, and should replace all
 	earlier heuristic tests.
 
@@ -520,7 +518,7 @@ C-LEVEL FACILITIES
 
     o	There is a new function Rf_endEmbeddedR to properly terminate
 	a session started by Rf_initEmbeddedR, and both are now
-	available on Windows as well as on Unix-alikes.  These and
+	available on Windows as well as on Unix-alikes.	 These and
 	related functions are declared in a new header <Rembedded.h>.
 
 	If R_TempDir is set when embedded R is initialized it is
@@ -528,8 +526,8 @@ C-LEVEL FACILITIES
 	`Writing R Extensions'.
 
     o	There is a new interface allowing one package to make C routines
-	available to C code in other packages.  The interface consists
-	of the routines R_RegisterCCallable and R_GetCCallable.  These
+	available to C code in other packages.	The interface consists
+	of the routines R_RegisterCCallable and R_GetCCallable.	 These
 	functions are declared in <R_ext/Rdynload.h>. This interface
 	is experimental and subject to change.
 
@@ -572,10 +570,13 @@ UTILITIES
 	creates objects in the base environment.
 
     o	New utilties R CMD Stangle and R CMD Sweave for extracting S/R
-    	code from and processing Sweave documentation, respectively.
+	code from and processing Sweave documentation, respectively.
 
     o	The DESCRIPTION file of packages may contain an 'Enhances:'
-        field.
+	field.
+
+    o	An R CMD javareconf script has been added to allow Java
+	configuration to be updated even after R has been installed.
 
 
 INSTALLATION
@@ -615,7 +616,7 @@ INSTALLATION
 	for internal BLAS, external BLAS framework and external static
 	BLAS.  An external dynamic library BLAS is NOT supported. (But
 	it can be easily used by replacing internal BLAS library file
-	later.)  MacOS X < 10.3 does not support --enable-BLAS-shlib.
+	later.)	 MacOS X < 10.3 does not support --enable-BLAS-shlib.
 
     o	Dynamic libraries and modules use a flat namespace on MacOS X
 	10.3 and higher if either Xcode tools don't support dynamic
@@ -629,10 +630,10 @@ INSTALLATION
 	built in the same way as other Unix-alikes, including with R
 	as a shared library and with a shared BLAS.
 
-    o	mac.binary package type now defaults to universal binary. If a
-	repository supports architecture-specific Mac binaries, they
-	can be requested by using "mac.binary.xxx" in contrib.url(),
-	where xxx is the desired architecture.
+    o	The "mac.binary" package type now defaults to universal
+	binary.  If a repository supports architecture-specific Mac
+	binaries, they can be requested by using "mac.binary.xxx" in
+	contrib.url(), where xxx is the desired architecture.
 
 
 BUG FIXES
@@ -642,7 +643,7 @@ BUG FIXES
 	an 'entry point' was missing the common leading underscore.)
 
     o	print() on a MBCS character string now works properly a
-	character at a time rather than a byte at time.  (This does
+	character at a time rather than a byte at time.	 (This does
 	not affect MBCSs like UTF-8 and the Windows DBCSes which have
 	non-ASCII lead bytes and always worked correctly.)
 
@@ -747,7 +748,7 @@ BUG FIXES
     o	Zero-column data frames had no names (rather than character(0)).
 
     o	by() and acf() could get confused when they used very long
-   	expressions as names.
+	expressions as names.
 
     o	residuals(<glm object>, type="working") was NA for cases with
 	zero weight (whereas they are well-defined even though the
@@ -784,7 +785,7 @@ BUG FIXES
 
     o	Command-line arguments after --encoding were ignored.
 
-    o   The check for impossible confidence levels was off by one in
+    o	The check for impossible confidence levels was off by one in
 	wilcox.test (PR#8557)
 
     o	[[ on an environment could create aliases. (PR#8457)
@@ -832,7 +833,7 @@ BUG FIXES
 
     o	Assigning to the symbol in a for() loop with a
 	list/expression/pairlist index could alter the index.  Now the
-	loop variable is explicitly read-only.  (PR#9216)
+	loop variable is explicitly read-only.	(PR#9216)
 
     o	Using old.packages() (and hence update.packages()) on an empty
 	(or non-existent) library failed with an obscure message.
