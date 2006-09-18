@@ -1062,7 +1062,9 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
 {
     char buff[1000];
     XGetErrorText(dsp, event->error_code, buff, 1000);
-    warning(_("X11 protocol error: %s"), buff);
+    /* for R commander */
+    if(strncmp(buff, "BadWindow (invalid Window parameter)", 36) != 0)
+        warning(_("X11 protocol error: %s"), buff);
     return 0;
 }
 
