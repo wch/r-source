@@ -17,10 +17,6 @@
 @include R-defs.texi
 @include version.texi
 
-@macro cputype {c}
-@samp{\c\}
-@end macro
-
 @ifinfo
 This is a guide to installation and administration for R.
 
