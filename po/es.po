@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-16 09:00+0100\n"
+"POT-Creation-Date: 2006-09-18 09:02+0100\n"
 "PO-Revision-Date: 2006-04-17 00:24+0100\n"
 "Last-Translator: Pablo E. Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
@@ -281,15 +281,15 @@ msgstr "'multi' debe ser un valor lógico"
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' debe ser un valor intero"
 
-#: src/gnuwin32/extra.c:1271
+#: src/gnuwin32/extra.c:1272
 msgid "'title' must be a character string"
 msgstr "'title' debe ser un string de caracteres"
 
-#: src/gnuwin32/extra.c:1303
+#: src/gnuwin32/extra.c:1304
 msgid "'which' must be length 1"
 msgstr "'which' debe tener longitud 1"
 
-#: src/gnuwin32/extra.c:1333 src/main/connections.c:2504
+#: src/gnuwin32/extra.c:1334 src/main/connections.c:2504
 #: src/main/connections.c:2507 src/main/connections.c:2510
 #: src/main/connections.c:2721 src/main/connections.c:2724
 #: src/main/connections.c:2728 src/main/connections.c:2731
@@ -305,24 +305,24 @@ msgstr "'which' debe tener longitud 1"
 msgid "invalid value for '%s'"
 msgstr "valor inválido para 'n'"
 
-#: src/gnuwin32/extra.c:1335 src/gnuwin32/extra.c:1337
-#: src/gnuwin32/extra.c:1377
+#: src/gnuwin32/extra.c:1336 src/gnuwin32/extra.c:1338
+#: src/gnuwin32/extra.c:1378
 msgid "invalid device"
 msgstr "dispositivo inválido"
 
-#: src/gnuwin32/extra.c:1338
+#: src/gnuwin32/extra.c:1339
 msgid "requires SDI mode"
 msgstr "modo SDI requerido"
 
-#: src/gnuwin32/extra.c:1371
+#: src/gnuwin32/extra.c:1372
 msgid "invalid graphical device number"
 msgstr "número de dispositivo gráfico no válido"
 
-#: src/gnuwin32/extra.c:1381
+#: src/gnuwin32/extra.c:1382
 msgid "bad device"
 msgstr "dispositivo defectuoso "
 
-#: src/gnuwin32/extra.c:1489 src/gnuwin32/extra.c:1497
+#: src/gnuwin32/extra.c:1490 src/gnuwin32/extra.c:1498
 msgid "invalid input in Rmbstowcs"
 msgstr "entrada no válida en Rmbstowcs"
 
@@ -2248,11 +2248,16 @@ msgstr "'use' inválido (método computacional)"
 msgid "the standard deviation is zero"
 msgstr "el desvío estándar es cero"
 
-#: src/main/cum.c:140
+#: src/main/cum.c:49
+#, fuzzy
+msgid "Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
+msgstr "Exceso de capacidad (overflow) en sum(.); use sum(as.numeric(.))"
+
+#: src/main/cum.c:181
 msgid "min/max not defined for complex numbers"
 msgstr "min/max no definido para números complejos"
 
-#: src/main/cum.c:143 src/main/cum.c:167
+#: src/main/cum.c:184 src/main/cum.c:205 src/main/cum.c:228
 msgid "unknown cumxxx function"
 msgstr "función cumxxx desconocida"
 

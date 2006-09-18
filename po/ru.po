@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-16 09:00+0100\n"
+"POT-Creation-Date: 2006-09-18 09:02+0100\n"
 "PO-Revision-Date: 2006-04-15 23:34-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -282,15 +282,15 @@ msgstr "'multi' должен быть логическим значением"
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' должен быть целым числом"
 
-#: src/gnuwin32/extra.c:1271
+#: src/gnuwin32/extra.c:1272
 msgid "'title' must be a character string"
 msgstr "'title' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1303
+#: src/gnuwin32/extra.c:1304
 msgid "'which' must be length 1"
 msgstr "'which' должен быть единичной длины"
 
-#: src/gnuwin32/extra.c:1333 src/main/connections.c:2504
+#: src/gnuwin32/extra.c:1334 src/main/connections.c:2504
 #: src/main/connections.c:2507 src/main/connections.c:2510
 #: src/main/connections.c:2721 src/main/connections.c:2724
 #: src/main/connections.c:2728 src/main/connections.c:2731
@@ -306,24 +306,24 @@ msgstr "'which' должен быть единичной длины"
 msgid "invalid value for '%s'"
 msgstr "неправильное значение 'n'"
 
-#: src/gnuwin32/extra.c:1335 src/gnuwin32/extra.c:1337
-#: src/gnuwin32/extra.c:1377
+#: src/gnuwin32/extra.c:1336 src/gnuwin32/extra.c:1338
+#: src/gnuwin32/extra.c:1378
 msgid "invalid device"
 msgstr "неправильное устройство"
 
-#: src/gnuwin32/extra.c:1338
+#: src/gnuwin32/extra.c:1339
 msgid "requires SDI mode"
 msgstr "требует SDI-вида"
 
-#: src/gnuwin32/extra.c:1371
+#: src/gnuwin32/extra.c:1372
 msgid "invalid graphical device number"
 msgstr "неправильный номер графического устройства"
 
-#: src/gnuwin32/extra.c:1381
+#: src/gnuwin32/extra.c:1382
 msgid "bad device"
 msgstr "плохое устройство"
 
-#: src/gnuwin32/extra.c:1489 src/gnuwin32/extra.c:1497
+#: src/gnuwin32/extra.c:1490 src/gnuwin32/extra.c:1498
 msgid "invalid input in Rmbstowcs"
 msgstr "неправильный ввод в Rmbstowcs"
 
@@ -2244,11 +2244,17 @@ msgstr "неправильный 'use' (метод вычисления)"
 msgid "the standard deviation is zero"
 msgstr "стандартное отклонение нулевое"
 
-#: src/main/cum.c:140
+#: src/main/cum.c:49
+#, fuzzy
+msgid "Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
+msgstr ""
+"Целочисленное переполнение в 'sum(.)'; использование 'sum(as.numeric(.))'"
+
+#: src/main/cum.c:181
 msgid "min/max not defined for complex numbers"
 msgstr "min/max не определены для комплексных чисел"
 
-#: src/main/cum.c:143 src/main/cum.c:167
+#: src/main/cum.c:184 src/main/cum.c:205 src/main/cum.c:228
 msgid "unknown cumxxx function"
 msgstr "неизвестная функция 'cumxxx'"
 

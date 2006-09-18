@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-16 09:01\n"
-"PO-Revision-Date: 2006-09-16 09:01\n"
+"POT-Creation-Date: 2006-09-18 09:06\n"
+"PO-Revision-Date: 2006-09-18 09:06\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -127,12 +127,6 @@ msgstr "no date field in DESCRIPTION file of package ‘%s’"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "could not determine year for ‘%s’ from package DESCRIPTION file"
-
-msgid "Argument m has"
-msgstr "Argument m has"
-
-msgid "elements: only the first used"
-msgstr "elements: only the first used"
 
 msgid "m < 0"
 msgstr "m < 0"

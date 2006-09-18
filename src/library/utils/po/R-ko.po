@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-16 09:01\n"
+"POT-Creation-Date: 2006-09-18 09:06\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -106,12 +106,6 @@ msgstr "패키지 '%s'의  DESCRIPTION 파일에서 date 필드가 있습니다"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "패키지 DESCRIPTION 파일로부터'%s'때문에 year를 결정할수 없었습니다"
-
-msgid "Argument m has"
-msgstr ""
-
-msgid "elements: only the first used"
-msgstr ""
 
 msgid "m < 0"
 msgstr ""
