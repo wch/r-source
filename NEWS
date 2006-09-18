@@ -458,8 +458,13 @@ NEW FEATURES
 	improved to refer to JAVA_HOME, and they are now documented in
 	the R-admin manual.
 
-    o	R CMD javareconf script has been added to allow Java
-	configuration to be updated even after R has been installed.
+    o	It is (again) possible to calculate prediction intervals from
+	"lm" objects for the original data frame, now with a warning
+	that the intervals refer to future observations.  Weighted
+	intervals have also been implemented, with user-specifiable
+	weights. Warnings are given in cases where the default
+	behaviour might differ from user expectations.  See the
+	?predict.lm for details.
 
 
 CHANGES TO S4 METHODS
@@ -611,6 +616,9 @@ UTILITIES
     o	The DESCRIPTION file of packages may contain an 'Enhances:'
 	field.
 
+    o	An R CMD javareconf script has been added to allow Java
+	configuration to be updated even after R has been installed.
+
 
 INSTALLATION
 
@@ -663,10 +671,10 @@ INSTALLATION
 	built in the same way as other Unix-alikes, including with R
 	as a shared library and with a shared BLAS.
 
-    o	mac.binary package type now defaults to universal binary. If a
-	repository supports architecture-specific Mac binaries, they
-	can be requested by using "mac.binary.xxx" in contrib.url(),
-	where xxx is the desired architecture.
+    o	The "mac.binary" package type now defaults to universal
+	binary.  If a repository supports architecture-specific Mac
+	binaries, they can be requested by using "mac.binary.xxx" in
+	contrib.url(), where xxx is the desired architecture.
 
 
 BUG FIXES
