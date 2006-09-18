@@ -178,7 +178,10 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
             ## and pass in a device-independent font name.
             ## NOTE that in order to match, we need both family name
             ## and encoding to match.
-            matchFont(postscriptFonts(family)[[1]], old$encoding)
+            pf <- postscriptFonts(family)[[1]]
+            if(is.null(pf))
+              stop(gettextf("unknown family '%s'", family), domain = NA)
+            matchFont(pf, old$encoding)
         } else
             stop("invalid 'family' argument")
         old$family <- family
@@ -248,7 +251,10 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
             ## and pass in a device-independent font name.
             ## NOTE that in order to match, we need both family name
             ## and encoding to match.
-            matchFont(pdfFonts(family)[[1]], old$encoding)
+            pf <- pdfFonts(family)[[1]]
+            if(is.null(pf))
+              stop(gettextf("unknown family '%s'", family), domain = NA)
+            matchFont(pf, old$encoding)
         } else
             stop("invalid 'family' argument")
         old$family <- family
