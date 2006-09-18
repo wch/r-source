@@ -164,6 +164,10 @@ NEW FEATURES
     o	New function combn(x, m, ..) for computing on all combinations of
 	size 'm' (for small 'm' !).
 
+    o	The cumxxx() functions now handle logical/integer arguments
+	separately from numeric ones, and so return an integer result
+	where appropriate.
+
     o	data.frame() has a new argument 'stringsAsFactor'.  This and
 	the default for read.table(as.is=) are set from the new global
 	option 'stringsAsFactors' via the utility function
@@ -876,6 +880,10 @@ BUG FIXES
 
     o	The print() method for 'dist' objects prints a matrix even for
 	n = 2.
+
+    o	The cumxxx functions were missing some PROTECTs and so could
+	segfault on long vectors (especially with names or where
+	coercion to numeric occurred).
 
 
 

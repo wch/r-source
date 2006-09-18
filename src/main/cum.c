@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -28,13 +28,28 @@
 static SEXP cumsum(SEXP x, SEXP s)
 {
     int i;
-    double sum;
-    sum = 0.0;
+    double sum = 0.0, *rx = REAL(x), *rs = REAL(s);
     for (i = 0 ; i < length(x) ; i++) {
-	if (ISNAN(REAL(x)[i]))
+	if (ISNAN(rx[i])) break;
+	sum += rx[i];
+	rs[i] = sum;
+    }
+    return s;
+}
+
+/* We need to ensure that overflow gives NA here */
+static SEXP icumsum(SEXP x, SEXP s)
+{
+    int i, *ix = INTEGER(x), *is = INTEGER(s);
+    double sum = 0.0;
+    for (i = 0 ; i < length(x) ; i++) {
+	if (ix[i] == NA_INTEGER) break;
+	sum += ix[i];
+	if(sum > INT_MAX || sum < 1 + INT_MIN) { /* INT_MIN is NA_INTEGER */
+	    warning(_("Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"));
 	    break;
-	sum += REAL(x)[i];
-	REAL(s)[i] = sum;
+	}
+	is[i] = sum;
     }
     return s;
 }
@@ -57,11 +72,11 @@ static SEXP ccumsum(SEXP x, SEXP s)
 static SEXP cumprod(SEXP x, SEXP s)
 {
     int i;
-    double prod;
+    double prod, *rx = REAL(x), *rs = REAL(s);
     prod = 1.0;
     for (i = 0 ; i < length(x) ; i++) {
-	prod *= REAL(x)[i];
-	REAL(s)[i] = prod;
+	prod *= rx[i];
+	rs[i] = prod;
     }
     return s;
 }
@@ -86,14 +101,14 @@ static SEXP ccumprod(SEXP x, SEXP s)
 static SEXP cummax(SEXP x, SEXP s)
 {
     int i;
-    double max;
+    double max, *rx = REAL(x), *rs = REAL(s);
     max = R_NegInf;
     for (i = 0 ; i < length(x) ; i++) {
-	if(ISNAN(REAL(x)[i]) || ISNAN(max))
-	    max = max + REAL(x)[i];  /* propagate NA and NaN */
+	if(ISNAN(rx[i]) || ISNAN(max))
+	    max = max + rx[i];  /* propagate NA and NaN */
 	else
-	    max = (max > REAL(x)[i]) ? max : REAL(x)[i];
-	REAL(s)[i] = max;
+	    max = (max > rx[i]) ? max : rx[i];
+	rs[i] = max;
     }
     return s;
 }
@@ -101,14 +116,38 @@ static SEXP cummax(SEXP x, SEXP s)
 static SEXP cummin(SEXP x, SEXP s)
 {
     int i;
-    double min;
+    double min, *rx = REAL(x), *rs = REAL(s);
     min = R_PosInf; /* always positive, not NA */
     for (i = 0 ; i < length(x) ; i++ ) {
-	if (ISNAN(REAL(x)[i]) || ISNAN(min))
-	    min = min + REAL(x)[i];  /* propagate NA and NaN */
+	if (ISNAN(rx[i]) || ISNAN(min))
+	    min = min + rx[i];  /* propagate NA and NaN */
 	else
-	    min = (min < REAL(x)[i]) ? min : REAL(x)[i];
-	REAL(s)[i] = min;
+	    min = (min < rx[i]) ? min : rx[i];
+	rs[i] = min;
+    }
+    return s;
+}
+
+static SEXP icummax(SEXP x, SEXP s)
+{
+    int i, *ix = INTEGER(x), *is = INTEGER(s);
+    int max = ix[0];
+    is[0] = max;
+    for (i = 1 ; i < length(x) ; i++) {
+	if(ix[i] == NA_INTEGER) break;
+	is[i] = max = (max > ix[i]) ? max : ix[i];
+    }
+    return s;
+}
+
+static SEXP icummin(SEXP x, SEXP s)
+{
+    int i, *ix = INTEGER(x), *is = INTEGER(s);
+    int min = ix[0];
+    is[0] = min;
+    for (i = 1 ; i < length(x) ; i++ ) {
+	if(ix[i] == NA_INTEGER) break;
+	is[i] = min = (min < ix[i]) ? min : ix[i];
     }
     return s;
 }
@@ -122,8 +161,10 @@ SEXP attribute_hidden do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	return ans;
     if (isComplex(CAR(args))) {
 	t = CAR(args);
-	s = allocVector(CPLXSXP, LENGTH(t));
+	PROTECT(s = allocVector(CPLXSXP, LENGTH(t)));
 	setAttrib(s, R_NamesSymbol, getAttrib(t, R_NamesSymbol));
+	UNPROTECT(1);
+	if(LENGTH(t) == 0) return s;
 	for (i = 0 ; i < length(t) ; i++) {
 	    COMPLEX(s)[i].r = NA_REAL;
 	    COMPLEX(s)[i].i = NA_REAL;
@@ -142,14 +183,34 @@ SEXP attribute_hidden do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	default:
 	    errorcall(call, _("unknown cumxxx function"));
 	}
-    }
-    else { /* Non-Complex:  here, (sh|c)ould differentiate  real / int */
-	PROTECT(t = coerceVector(CAR(args), REALSXP));
-	s = allocVector(REALSXP, LENGTH(t));
+    } else if( ( isInteger(CAR(args)) || isLogical(CAR(args)) ) &&
+	       PRIMVAL(op) != 2) {
+	PROTECT(t = coerceVector(CAR(args), INTSXP));
+	PROTECT(s = allocVector(INTSXP, LENGTH(t)));
 	setAttrib(s, R_NamesSymbol, getAttrib(t, R_NamesSymbol));
-	for(i = 0 ; i < length(t) ; i++)
-	    REAL(s)[i] = NA_REAL;
-	UNPROTECT(1);
+	UNPROTECT(2);
+	if(LENGTH(t) == 0) return s;
+	for(i = 0 ; i < LENGTH(t) ; i++) INTEGER(s)[i] = NA_INTEGER;
+	switch (PRIMVAL(op) ) {
+	case 1:	/* cumsum */
+	    return icumsum(t,s);
+	    break;
+	case 3: /* cummax */
+	    return icummax(t,s);
+	    break;
+	case 4: /* cummin */
+	    return icummin(t,s);
+	    break;
+	default:
+	    errorcall(call, _("unknown cumxxx function"));
+	}
+    } else {
+	PROTECT(t = coerceVector(CAR(args), REALSXP));
+	PROTECT(s = allocVector(REALSXP, LENGTH(t)));
+	setAttrib(s, R_NamesSymbol, getAttrib(t, R_NamesSymbol));
+	UNPROTECT(2);
+	if(LENGTH(t) == 0) return s;
+	for(i = 0 ; i < LENGTH(t) ; i++) REAL(s)[i] = NA_REAL;
 	switch (PRIMVAL(op) ) {
 	case 1:	/* cumsum */
 	    return cumsum(t,s);
