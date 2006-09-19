@@ -1709,7 +1709,7 @@ static int StringValue(int c)
 		error(_("\\uxxxx sequences not supported"));
 #else
 		wint_t val = 0; int i, ext; size_t res;
-		char buff[5]; Rboolean delim = FALSE;
+		char buff[16]; Rboolean delim = FALSE;
 		if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
 		for(i = 0; i < 4; i++) {
 		    c = xxgetc();
@@ -1743,7 +1743,7 @@ static int StringValue(int c)
 #ifdef SUPPORT_MBCS
 		else {
 		    wint_t val = 0; int i, ext; size_t res;
-		    char buff[9]; Rboolean delim = FALSE;
+		    char buff[16]; Rboolean delim = FALSE;
 		    if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
 		    for(i = 0; i < 8; i++) {
 			c = xxgetc();

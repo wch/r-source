@@ -496,7 +496,8 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(2);
     }
     else {
-	if (replace) SampleReplace(k, n, INTEGER(y));
+	/* avoid allocation for a single sample */
+	if (replace || k < 2) SampleReplace(k, n, INTEGER(y));
 	else {
 	    x = allocVector(INTSXP, n);
 	    SampleNoReplace(k, n, INTEGER(y), INTEGER(x));
