@@ -127,7 +127,10 @@
     ## following  has to be on attach , not on load, but why???
     if(.UsingMethodsTables()) {
       cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
-      cacheMetaData(.GlobalEnv, TRUE)
+      result <- try(cacheMetaData(.GlobalEnv, TRUE)) 
+      ## still attach  methods package if global env has bad objets
+      if(is(result, "try-error"))
+        warning("apparently bad method or class metadata in saved environment; move the file or remove the class/method")
     }
 }
 
