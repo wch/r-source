@@ -13,7 +13,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	    attributes(args)$names != ""
 	else
 	    rep(FALSE, length.out = length(args))
-    pars <- c(args[namedargs], pars)
+    ## pars <- c(args[namedargs], pars)
     groups <- if(is.list(x)) x else args[!namedargs]
     if(0 == (n <- length(groups)))
 	stop("invalid first argument")
@@ -48,9 +48,11 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     z <- list(stats = stats, n = ng, conf = conf, out = out, group = group,
 	      names = names)
     if(plot) {
-	bxp(z, width, varwidth = varwidth, notch = notch, log = log,
-	    border = border, boxfill = col, pars = pars,
-	    outline = outline, horizontal = horizontal, add = add, at = at)
+        do.call("bxp",
+                c(list(z, width, varwidth = varwidth, notch = notch, log = log,
+                       border = border, boxfill = col, pars = pars,
+                       outline = outline, horizontal = horizontal, add = add,
+                       at = at), args[namedargs]))
 	invisible(z)
     }
     else z

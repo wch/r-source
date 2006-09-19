@@ -865,6 +865,9 @@ BUG FIXES
     o	The plot() methods for "profile.nls" objects could get
 	confused if 'which' had been used in the profile() call. (PR#9231)
 
+    o	boxplot() did not passed named arguments (which were not
+	graphics parameters) to bxp() as documented.  (PR#9183)
+
 
 
 
