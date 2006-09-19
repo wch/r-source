@@ -865,11 +865,17 @@ BUG FIXES
     o	The plot() methods for "profile.nls" objects could get
 	confused if 'which' had been used in the profile() call. (PR#9231)
 
-    o	boxplot() did not passed named arguments (which were not
-	graphics parameters) to bxp() as documented.  (PR#9183)
+    o	boxplot() did not passed named arguments (except graphics
+	parameters) to bxp() as documented.  (PR#9183)
 
     o	Only genuinely empty statements act as 'return' in the
 	browser, not say those starting with a comment char.  (PR#9063)
+
+   o	summary.mlm() incorrectly used accessor functions to fake an
+	"lm" object.  (PR#9191)
+
+   o	prettyNum() was not preserving attributes, despite being
+	explicitly documented to. (PR#8695)
 
 
 

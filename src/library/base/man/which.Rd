@@ -21,7 +21,7 @@ which(x, arr.ind = FALSE)
   \code{(1:length(x))[x]}.
   
   If \code{arr.ind == TRUE} and \code{x} is an \code{\link{array}} (has
-  a \code{\link{dim}} attribute), the result is a matrix who's rows each
+  a \code{\link{dim}} attribute), the result is a matrix whose rows each
   are the indices of one element of \code{x}; see Examples below.
 }
 \author{Werner Stahel and Peter Holzer \email{holzer@stat.math.ethz.ch},

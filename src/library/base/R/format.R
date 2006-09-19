@@ -310,5 +310,7 @@ prettyNum <-
 		   })
 	}
     }
+    attributes(A.) <- attributes(x)
+    class(A.) <- NULL
     A.
 }

@@ -3,10 +3,9 @@ summary.mlm <- function(object, ...)
 {
     coef <- coef(object)
     ny <- ncol(coef)
-## Not right:    if(is.null(ny)) return(NextMethod("summary"))
     effects <- object$effects
-    resid <- residuals(object)
-    fitted <- fitted(object)
+    resid <- object$residuals
+    fitted <- object$fitted
     ynames <- colnames(coef)
     if(is.null(ynames)) {
 	lhs <- object$terms[[2]]
