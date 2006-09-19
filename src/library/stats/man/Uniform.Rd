@@ -40,8 +40,9 @@ runif(n, min=0, max=1)
   \eqn{X \equiv u}{X == u} is assumed, although there is no density in
   that case and \code{dunif} will return \code{NaN} (the error condition).
 
-  \code{runif} will not generate either of the extreme values (unless
-  \code{max = min}.
+  \code{runif} will not generate either of the extreme values unless
+  \code{max = min} or \code{max-min} is small compared to \code{min},
+  and in particular not for the default arguments.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
