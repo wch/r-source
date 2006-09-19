@@ -186,36 +186,31 @@ begin
     CustomMessage(\'adminprivilegesrequired\'), CustomMessage(\'adminexplanation\'));
   
   SelectOptionsPage := CreateInputOptionPage(wpSelectComponents,
-    \'Startup options\', \'Do you want to customize the startup options?\',
-    \'Please specify yes or no, then click Next.\',
-    True, False);
-  SelectOptionsPage.Add('Yes (customized startup)');
-  SelectOptionsPage.Add('No (accept defaults)');
+    CustomMessage(\'startupt'\), CustomMessage(\'startupq\'),
+    CustomMessage(\'startupi\'), True, False);
+  SelectOptionsPage.Add(CustomMessage(\'startup0\'));
+  SelectOptionsPage.Add(CustomMessage(\'startup1\'));
   SelectOptionsPage.SelectedValueIndex := 1;
   
   MDISDIPage := CreateInputOptionPage(SelectOptionsPage.ID,
-    \'Display Mode\', \'Do you prefer the MDI or SDI interface?\',
-    \'Please specify MDI or SDI, then click Next.\',
-    True, False);
-  MDISDIPage.Add('MDI (one big window)');
-  MDISDIPage.Add('SDI (separate windows)');
+    CustomMessage(\'MDIt'\), CustomMessage(\'MDIq\'),
+    CustomMessage(\'MDIi\'), True, False);
+  MDISDIPage.Add(CustomMessage(\'MDI0\'));
+  MDISDIPage.Add(CustomMessage(\'MDI1\'));
   
   HelpStylePage := CreateInputOptionPage(MDISDIPage.ID,
-    \'Help Style\', \'Which form of help display do you prefer?\',
-    \'Please specify plain text, CHM help, or HTML help, then click Next.\',
-    True, False);
-  HelpStylePage.Add(\'Plain text\');
-  HelpStylePage.Add(\'CHM help (Windows default)\');
-  HelpStylePage.Add(\'HTML help\');
-  
+    CustomMessage(\'HelpStylet'\), CustomMessage(\'HelpStyleq\'),
+    CustomMessage(\'HelpStylei\'), True, False);
+  HelpStylePage.Add(CustomMessage(\'HelpStyle0\'));
+  HelpStylePage.Add(CustomMessage(\'HelpStyle1\'));
+  HelpStylePage.Add(CustomMessage(\'HelpStyle2\'));
+   
   InternetPage := CreateInputOptionPage(HelpStylePage.ID,
-    \'Internet Access\', 
-    \'Do you want to use internet2.dll, to make use of Internet Explorer proxy settings?\',
-    \'Please specify Standard or Internet2, then click Next.\',
-    True, False);
-  InternetPage.Add(\'Standard\');
-  InternetPage.Add(\'Internet2\');
-    
+    CustomMessage(\'Internett'\), CustomMessage(\'Internetq\'),
+    CustomMessage(\'Interneti\'), True, False);
+  InternetPage.Add(CustomMessage(\'Internet0\'));
+  InternetPage.Add(CustomMessage(\'Internet1\'));    
+
   case GetPreviousData(\'MDISDI\', \'\') of
     \'MDI\': MDISDIPage.SelectedValueIndex := 0;
     \'SDI\': MDISDIPage.SelectedValueIndex := 1;
