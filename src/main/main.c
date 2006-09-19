@@ -230,60 +230,60 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 
     case PARSE_NULL:
 
-	    if (browselevel)
-		    return(-1);
-	    R_IoBufferWriteReset(&R_ConsoleIob);
-	    state->prompt_type = 1;
-	    return(1);
+	/* The intention here is to break on CR but not on other 
+	   null statements: see PR#9063 */
+	if (browselevel && !strcmp((char *) state->buf, "\n")) return -1;
+	R_IoBufferWriteReset(&R_ConsoleIob);
+	state->prompt_type = 1;
+	return(1);
 
     case PARSE_OK:
 
- 	    R_IoBufferReadReset(&R_ConsoleIob);
-	    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &state->status);
-	    if (browselevel) {
-		    browsevalue = ParseBrowser(R_CurrentExpr, rho);
-		    if(browsevalue == 1)
-			    return(-1);
-		    if(browsevalue == 2) {
-			    R_IoBufferWriteReset(&R_ConsoleIob);
-			    return(0);
-		    }
+	R_IoBufferReadReset(&R_ConsoleIob);
+	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &state->status);
+	if (browselevel) {
+	    browsevalue = ParseBrowser(R_CurrentExpr, rho);
+	    if(browsevalue == 1) return(-1);
+	    if(browsevalue == 2) {
+		R_IoBufferWriteReset(&R_ConsoleIob);
+		return(0);
 	    }
-	    R_Visible = 0;
-	    R_EvalDepth = 0;
-	    PROTECT(R_CurrentExpr);
-	    R_Busy(1);
-	    value = eval(R_CurrentExpr, rho);
-	    SET_SYMVALUE(R_LastvalueSymbol, value);
-	    wasDisplayed = R_Visible;
-	    if (R_Visible)
-		    PrintValueEnv(value, rho);
-	    if (R_CollectWarnings)
-		PrintWarnings();
-	    Rf_callToplevelHandlers(R_CurrentExpr, value, TRUE, wasDisplayed);
-	    R_CurrentExpr = value; /* Necessary? Doubt it. */
-	    UNPROTECT(1);
-	    R_IoBufferWriteReset(&R_ConsoleIob);
-	    state->prompt_type = 1;
-	    return(1);
+	}
+	R_Visible = 0;
+	R_EvalDepth = 0;
+	PROTECT(R_CurrentExpr);
+	R_Busy(1);
+	value = eval(R_CurrentExpr, rho);
+	SET_SYMVALUE(R_LastvalueSymbol, value);
+	wasDisplayed = R_Visible;
+	if (R_Visible)
+	    PrintValueEnv(value, rho);
+	if (R_CollectWarnings)
+	    PrintWarnings();
+	Rf_callToplevelHandlers(R_CurrentExpr, value, TRUE, wasDisplayed);
+	R_CurrentExpr = value; /* Necessary? Doubt it. */
+	UNPROTECT(1);
+	R_IoBufferWriteReset(&R_ConsoleIob);
+	state->prompt_type = 1;
+	return(1);
 
     case PARSE_ERROR:
 
-	    state->prompt_type = 1;
-	    parseError(R_NilValue, 0);
-	    R_IoBufferWriteReset(&R_ConsoleIob);
-	    return(1);
+	state->prompt_type = 1;
+	parseError(R_NilValue, 0);
+	R_IoBufferWriteReset(&R_ConsoleIob);
+	return(1);
 
     case PARSE_INCOMPLETE:
 
-	    R_IoBufferReadReset(&R_ConsoleIob);
-	    state->prompt_type = 2;
-	    return(2);
+	R_IoBufferReadReset(&R_ConsoleIob);
+	state->prompt_type = 2;
+	return(2);
 
     case PARSE_EOF:
 
-	    return(-1);
-	    break;
+	return(-1);
+	break;
     }
 
     return(0);
@@ -957,19 +957,20 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 {
     int rval = 0;
     if (isSymbol(CExpr)) {
-	if (!strcmp(CHAR(PRINTNAME(CExpr)), "n")) {
+	char *expr = CHAR(PRINTNAME(CExpr));
+	if (!strcmp(expr, "n")) {
 	    SET_DEBUG(rho, 1);
 	    rval = 1;
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)), "c")) {
+	if (!strcmp(expr, "c")) {
 	    rval = 1;
 	    SET_DEBUG(rho, 0);
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)), "cont")) {
+	if (!strcmp(expr, "cont")) {
 	    rval = 1;
 	    SET_DEBUG(rho, 0);
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)), "Q")) {
+	if (!strcmp(expr, "Q")) {
 
 	    /* Run onexit/cend code for everything above the target.
                The browser context is still on the stack, so any error
@@ -985,7 +986,7 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 
 	    jump_to_toplevel();
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"where")) {
+	if (!strcmp(expr, "where")) {
 	    printwhere();
 	    /* SET_DEBUG(rho, 1); */
 	    rval = 2;

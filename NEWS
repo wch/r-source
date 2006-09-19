@@ -909,6 +909,9 @@ BUG FIXES
     o	boxplot() did not passed named arguments (which were not
 	graphics parameters) to bxp() as documented.  (PR#9183)
 
+    o	Only genuinely empty statements act as 'return' in the
+	browser, not say those starting with a comment char.  (PR#9063)
+
 
 
 
