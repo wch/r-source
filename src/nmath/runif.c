@@ -29,6 +29,11 @@ double runif(double a, double b)
 
     if (a == b)
 	return a;
-    else
-	return a + (b - a) * unif_rand();
+    else {
+	double u;
+	/* This is true of all builtin generators, but protect against
+	   user-supplied ones */
+	do {u = unif_rand();} while (u <= 0 || u >= 1);
+	return a + (b - a) * u;
+    }
 }

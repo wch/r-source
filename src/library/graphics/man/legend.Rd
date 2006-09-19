@@ -60,7 +60,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     text.  Useful for y-adjustment when \code{labels} are
     \link{plotmath} expressions.}
   \item{text.width}{the width of the legend text in x (\code{"user"})
-    coordinates.
+    coordinates.  (Should be positive even for a reversed x axis.)
     Defaults to the proper value computed by \code{\link{strwidth}(legend)}.}
   \item{text.col}{the color used for the legend text.}
   \item{merge}{logical; if \code{TRUE}, \dQuote{merge} points and lines but

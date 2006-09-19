@@ -17,7 +17,7 @@ sample(x, size, replace = FALSE, prob = NULL)
     of the vector being sampled.}
 }
 \details{
-  If \code{x} has length 1, sampling takes place from
+  If \code{x} has length 1 and \code{x >= 1}, sampling takes place from
   \code{1:x}.  \emph{Note} that this convenience feature may lead to
   undesired behaviour when \code{x} is of varying length
   \code{sample(x)}.  See the \code{resample()} example below.
@@ -66,7 +66,7 @@ x <- 1:10
     sample(x[x >  9]) # oops -- length 10!
 try(sample(x[x > 10]))# error!
 
-## This is safer:
+## This is safer, but only for sampling without replacement
 resample <- function(x, size, ...)
   if(length(x) <= 1) { if(!missing(size) && size == 0) x[FALSE] else x
   } else sample(x, size, ...)

@@ -858,6 +858,13 @@ BUG FIXES
 	'BadWindow (invalid Window parameter)' warnings when run from
 	Rcmdr.
 
+    o	legend() assumed that widths and heights of strings were positive,
+	which they need not be in user coordinates with reversed axes.
+	(In part, PR#9236)
+
+    o	The plot() methods for "profile.nls" objects could get
+	confused if 'which' had been used in the profile() call. (PR#9231)
+
 
 
 
