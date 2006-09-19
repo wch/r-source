@@ -1962,4 +1962,21 @@ L
 ## both were changed < 2.4.0
 
 
+## summary.mlm misbehaved with na.action = na.exclude
+n <- 50
+x <- runif(n=n)
+y1 <- 2 * x + rnorm(n=n)
+y2 <- 5 * x + rnorm(n=n)
+y2[sample(1:n, size=5)] <- NA
+y <- cbind(y1, y2)
+fit <- lm(y ~ 1, na.action="na.exclude")
+summary(fit)
+## failed < 2.4.0
+
+
+## prettyNum lost attributes (PR#8695)
+format(matrix(1:16, 4), big.mark = ",")
+## was a vector < 2.4.0
+
+
 ### end of tests added in 2.4.0 ###
