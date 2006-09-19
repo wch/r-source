@@ -12,7 +12,7 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   \item{sub}{Sub-title (at bottom) using font and size
     \code{par("font.sub")} and color \code{par("col.sub")}.}
   \item{xlab}{X axis label using font and character expansion
-    \code{par("font.axis")} and color \code{par("col.axis")}.}
+    \code{par("font.lab")} and color \code{par("col.lab")}.}
   \item{ylab}{Y axis label, same font attributes as \code{xlab}.}
   \item{line}{specifying a value for \code{line} overrides the
     default placement of labels, and places them this many lines

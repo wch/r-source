@@ -65,18 +65,21 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
     cin <- par("cin")
     Cex <- cex * par("cex")		# = the `effective' cex for text
 
+    ## at this point we want positive width even for reversed x axis.
     if(is.null(text.width))
-	text.width <- max(strwidth(legend, units="user", cex=cex))
+	text.width <- max(abs(strwidth(legend, units="user", cex=cex)))
     else if(!is.numeric(text.width) || text.width < 0)
 	stop("'text.width' must be numeric, >= 0")
 
     xc <- Cex * xinch(cin[1], warn.log=FALSE)# [uses par("usr") and "pin"]
     yc <- Cex * yinch(cin[2], warn.log=FALSE)
+    if(xc < 0) text.width <- -text.width
 
     xchar  <- xc
     xextra <- 0
     yextra <- yc * (y.intersp - 1)
-    ymax   <- max(yc, strheight(legend, units="user", cex=cex))
+    ## watch out for reversed axis here: heights can be negative
+    ymax   <- yc * max(1, strheight(legend, units="user", cex=cex)/yc)
     ychar <- yextra + ymax
     if(trace) catn("  xchar=", xchar, "; (yextra,ychar)=", c(yextra,ychar))
 
