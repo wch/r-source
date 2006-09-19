@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-18 09:06\n"
+"POT-Creation-Date: 2006-09-19 11:55\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -692,6 +692,9 @@ msgstr "확립되지 않는 socket 입니다"
 
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frmae() data.frame로 호출되었던것입니다 -- 1까지 강제입니다"
+
+msgid "invalid options('str') -- using defaults instead"
+msgstr ""
 
 msgid "'object' does not have valid levels()"
 msgstr "'object'는 유효한 levels()을 가지고 있지 않습니다"

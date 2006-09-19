@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-18 09:06\n"
+"POT-Creation-Date: 2006-09-19 11:55\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -667,6 +667,9 @@ msgstr "套介面还没有建立"
 
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frame()被調用时使用了非数据的框--将之強制改变。"
+
+msgid "invalid options('str') -- using defaults instead"
+msgstr ""
 
 msgid "'object' does not have valid levels()"
 msgstr "'object'的levels()的值不对"
