@@ -26,6 +26,7 @@ browser()
     \item{\code{Q}}{exit the browser and the current evaluation and
       return to the top-level prompt.}
   }
+  (Leading and trailing whitespace is ignored, except for return).
 
   Anything else entered at the browser prompt is interpreted as an
   \R expression to be evaluated in the calling environment: in
