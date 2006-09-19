@@ -261,6 +261,8 @@ NEW FEATURES
 	formula passed to model.matrix() are converted to factors and
 	coded accordingly.
 
+    o	modifyList() utility, typically for housekeeping nested lists.
+
     o	x <- 1:20; y <- rnorm(x); nls(y ~ A*exp(-x^2/sig)) no longer
 	returns an unhelpful error message.  In this and similar cases, it
 	now tries a wild guess for starting values.
