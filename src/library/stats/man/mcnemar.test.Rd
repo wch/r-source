@@ -56,6 +56,6 @@ matrix(c(794, 86, 150, 570),
                        "2nd Survey" = c("Approve", "Disapprove")))
 Performance
 mcnemar.test(Performance)
-## => very strong association between the two successive ratings
+## => significant change (in fact, drop) in approval ratings
 }
 \keyword{htest}
