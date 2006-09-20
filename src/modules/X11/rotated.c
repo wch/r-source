@@ -54,7 +54,6 @@ extern int utf8locale;
 #  define HAVE_XUTF8TEXTESCAPEMENT 1
 #  define HAVE_XUTF8TEXTEXTENTS 1
 #  define HAVE_XUTF8DRAWSTRING 1
-#  define HAVE_XUTF8DRAWIMAGESTRING 1
 # endif */
 #endif
 
@@ -1515,10 +1514,10 @@ static XFontStruct * RXFontStructOfFontSet(XFontSet font)
 static int 
 XmbRotPaintAlignedString(Display *dpy, XFontSet font, 
 			 double angle, Drawable drawable, GC gc, int x, int y, 
-			 char *text, int align, int bg);
+			 char *text, int align);
 static int		
 XmbRotDrawHorizontalString(Display *dpy, XFontSet font, Drawable drawable, 
-			   GC gc, int x, int y, char *text, int align, int bg);
+			   GC gc, int x, int y, char *text, int align);
 static RotatedTextItem 
 *XmbRotRetrieveFromCache(Display *dpy, XFontSet font, double angle, char *text,
 			 int align);
@@ -1552,20 +1551,6 @@ XRfDrawString(Display *display, Drawable d, XFontSet font_set, GC gc,
 	XmbDrawString(display, d, font_set, gc, x, y, string, num_bytes);
 }
 
-static void 
-XRfDrawImageString(Display *display, Drawable d, XFontSet font_set, GC gc, 
-		   int x, int y, char *string, int num_bytes)
-{
-#ifdef HAVE_XUTF8DRAWIMAGESTRING
-    if (utf8locale)
-	Xutf8DrawImageString(display, d, font_set, gc, x, y, string, num_bytes);
-    else
-#endif
-	XmbDrawImageString(display, d, font_set, gc, x, y, string, num_bytes);
-}
-
-
-
 /* ---------------------------------------------------------------------- */
 
 
@@ -1579,7 +1564,7 @@ static int XmbRotDrawString(Display *dpy, XFontSet fontset, double angle,
 			    Drawable drawable, GC gc, int x, int y, char *str)
 {
     return (XmbRotPaintAlignedString(dpy, fontset, angle, drawable, gc,
-				     x, y, str, NONE, 0));
+				     x, y, str, NONE));
 }
 
 
@@ -1594,9 +1579,8 @@ static int XmbRotDrawString(Display *dpy, XFontSet fontset, double angle,
 static int 
 XmbRotPaintAlignedString(Display *dpy, XFontSet font, double angle,
 			 Drawable drawable, GC gc, int x, int y,
-			 char *text, int align, int bg)
+			 char *text, int align)
 {
-    int i;
     GC my_gc;
     int xp, yp;
     double hot_x, hot_y;
@@ -1625,7 +1609,7 @@ XmbRotPaintAlignedString(Display *dpy, XFontSet font, double angle,
     /* horizontal text made easy */
     if(angle==0. && style.magnify==1.)
 	return(XmbRotDrawHorizontalString(dpy, font, drawable, gc, x, y,
-					text, align, bg));
+					  text, align));
 
     /* get a rotated bitmap */
     item=XmbRotRetrieveFromCache(dpy, font, angle, text, align);
@@ -1669,46 +1653,6 @@ XmbRotPaintAlignedString(Display *dpy, XFontSet font, double angle,
     hot_xp = hot_x*cos_angle - hot_y*sin_angle;
     hot_yp = hot_x*sin_angle + hot_y*cos_angle;
 
-    /* text background will be drawn using XFillPolygon */
-    if(bg) {
-	GC depth_one_gc;
-	XPoint *xpoints;
-	Pixmap empty_stipple;
-
-	/* reserve space for XPoints */
-	xpoints=(XPoint *)malloc((unsigned)(4*item->nl*sizeof(XPoint)));
-	if(!xpoints)
-	    return 1;
-
-	/* rotate corner positions */
-	for(i=0; i<4*item->nl; i++) {
-	    xpoints[i].x=(double)x + ( (item->corners_x[i]-hot_x)*cos_angle +
-				      (item->corners_y[i]+hot_y)*sin_angle);
-	    xpoints[i].y=(double)y + (-(item->corners_x[i]-hot_x)*sin_angle +
-				      (item->corners_y[i]+hot_y)*cos_angle);
-	}
-
-	/* we want to swap foreground and background colors here;
-	   XGetGCValues() is only available in R4+ */
-
-	empty_stipple=XCreatePixmap(dpy, drawable, 1, 1, 1);
-
-	depth_one_gc=XCreateGC(dpy, empty_stipple, (unsigned long)0, 0);
-	XSetForeground(dpy, depth_one_gc, 0);
-	XFillRectangle(dpy, empty_stipple, depth_one_gc, 0, 0, 2, 2);
-
-	XSetStipple(dpy, my_gc, empty_stipple);
-	XSetFillStyle(dpy, my_gc, FillOpaqueStippled);
-
-	XFillPolygon(dpy, drawable, my_gc, xpoints, 4*item->nl, Nonconvex,
-		     CoordModeOrigin);
-
-	/* free our resources */
-	free((char *)xpoints);
-	XFreeGC(dpy, depth_one_gc);
-	XFreePixmap(dpy, empty_stipple);
-    }
-
     /* where should top left corner of bitmap go ? */
     xp=(double)x-((double)item->cols_out/2 +hot_xp);
     yp=(double)y-((double)item->rows_out/2 -hot_yp);
@@ -1731,7 +1675,7 @@ XmbRotPaintAlignedString(Display *dpy, XFontSet font, double angle,
 
 	    /* only do this if stippling requested */
 	    if((values.fill_style==FillStippled ||
-		values.fill_style==FillOpaqueStippled) && !bg) {
+		values.fill_style==FillOpaqueStippled)) {
 
 		/* opaque stipple: draw rotated text in background colour */
 		if(values.fill_style==FillOpaqueStippled) {
@@ -1832,7 +1776,7 @@ XmbRotPaintAlignedString(Display *dpy, XFontSet font, double angle,
 
 static int XmbRotDrawHorizontalString(Display *dpy, XFontSet font,
 				      Drawable drawable, GC gc, int x, int y,
-				      char *text, int align, int bg)
+				      char *text, int align)
 {
     GC my_gc;
     int nl=1, i;
@@ -1899,12 +1843,7 @@ static int XmbRotDrawHorizontalString(Display *dpy, XFontSet font,
 	    xp=x-r_log.width;
 
 	/* draw string onto bitmap */
-	if(!bg)
-	    XRfDrawString(dpy, drawable, font, my_gc, xp, yp, str3, 
-			  strlen(str3));
-	else
-	    XRfDrawImageString(dpy, drawable, font, my_gc, xp, yp, str3, 
-			       strlen(str3));
+	XRfDrawString(dpy, drawable, font, my_gc, xp, yp, str3, strlen(str3));
 
 	/* move to next line */
 	yp+=height;
