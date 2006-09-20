@@ -11,7 +11,7 @@
 
 @dircategory Programming
 @direntry
-* R Extensions: (R-exts).      R Internals.
+* R Internals: (R-ints).      R Internals.
 @end direntry
 
 @finalout
