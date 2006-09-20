@@ -699,36 +699,6 @@
    be built. */
 /* #undef HAVE_X11 */
 
-/* Define to 1 if you have the `XmbDrawImageString' function. */
-/* #undef HAVE_XMBDRAWIMAGESTRING */
-
-/* Define to 1 if you have the `XmbDrawString' function. */
-/* #undef HAVE_XMBDRAWSTRING */
-
-/* Define to 1 if you have the `XmbLookupString' function. */
-/* #undef HAVE_XMBLOOKUPSTRING */
-
-/* Define to 1 if you have the `XmbTextEscapement' function. */
-/* #undef HAVE_XMBTEXTESCAPEMENT */
-
-/* Define to 1 if you have the `XmbTextExtents' function. */
-/* #undef HAVE_XMBTEXTEXTENTS */
-
-/* Define to 1 if you have the `Xutf8DrawImageString' function. */
-/* #undef HAVE_XUTF8DRAWIMAGESTRING */
-
-/* Define to 1 if you have the `Xutf8DrawString' function. */
-/* #undef HAVE_XUTF8DRAWSTRING */
-
-/* Define to 1 if you have the `Xutf8LookupString' function. */
-/* #undef HAVE_XUTF8LOOKUPSTRING */
-
-/* Define to 1 if you have the `Xutf8TextEscapement' function. */
-/* #undef HAVE_XUTF8TEXTESCAPEMENT */
-
-/* Define to 1 if you have the `Xutf8TextExtents' function. */
-/* #undef HAVE_XUTF8TEXTEXTENTS */
-
 /* Define to 1 if you have the `__argz_count' function. */
 /* #undef HAVE___ARGZ_COUNT */
 

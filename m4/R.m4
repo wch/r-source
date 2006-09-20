@@ -1516,15 +1516,6 @@ if test -z "${no_x}"; then
   AC_DEFINE(HAVE_X11, 1,
             [Define if you have the X11 headers and libraries, and want
              the X11 GUI to be built.])
-  r_save_LIBS=${LIBS}
-  if test "$want_utf8_support" == yes ; then
-    LIBS="${LIBS} ${X_LIBS}"
-    AC_CHECK_FUNCS(Xutf8DrawString Xutf8DrawImageString Xutf8LookupString \
-                   Xutf8TextEscapement Xutf8TextExtents \
-                   XmbDrawString XmbDrawImageString XmbLookupString \
-                   XmbTextEscapement XmbTextExtents, , , [#include <X11.h>])
-    LIBS=${r_save_LIBS}
-  fi
 else
   use_X11="no"
   if test "x${with_x}" != "xno"; then
