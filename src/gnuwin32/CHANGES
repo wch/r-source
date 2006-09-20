@@ -13,16 +13,16 @@ The language for menus and messages can be set in the 'Rconsole' file and
 The initial setting for console buffering can be set in the 'Rconsole'
 file and (for future sessions) from the GUI preferences.
 
+There is a new menu item in Rgui to 'Stop all computations' which
+kills all R computations immediately, skips any on.exit conditions and
+returns to the comand prompt.
+
 The installer can set defaults for MDI/SDI display, help style, and
 use of the --internet2 startup option.  Custom builds of R can change
 these defaults.
 
 If CHM help is selected, but is not present (e.g. a package was cross-
 compiled on Unix), the help system defaults to text help.
-
-The menu items for source and load/save workspace/history and
-drag-and-drop can now be used for paths on network shares (starting
-with \\).
 
 getGraphicsEvent() now writes its prompt to the standard output stream,
 so it can be captured by sink() or capture.output().
@@ -32,13 +32,6 @@ place, so those functions are available while waiting for an event.
 
 iconv.dll has been updated to 1.11, which has some improvements for
 CJK languages under Windows (e.g. support for the Euro).
-
-Using lines of more than 1000 chars in an R file in batch mode could
-crash R.
-
-If the input line limit (1024 bytes) was exceeded whilst pasting in, a
-byte was lost and the last byte input from the keyboard was
-repeated after the paste.
 
 Rcmd and R CMD check the name of Perl scripts, so errors like
 'R CMD install' are detected.
@@ -102,6 +95,20 @@ downloads page, but it is available from
 
 http://prdownloads.sourceforge.net/mingw/mingw-runtime-3.10.tar.gz?download
 
+
+Bug fixes
+---------
+
+The menu items for source and load/save workspace/history and
+drag-and-drop can now be used for paths on network shares (starting
+with \\).
+
+Using lines of more than 1000 chars in an R file in batch mode could
+crash R.
+
+If the input line limit (1024 bytes) was exceeded whilst pasting in, a
+byte was lost and the last byte input from the keyboard was
+repeated after the paste.
 
 
 
