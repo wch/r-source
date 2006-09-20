@@ -11,7 +11,7 @@ CSOURCES = \
 	lbfgsb.c loglin.c lowess.c \
 	machar.c maxcol.c massdist.c \
 	pretty.c \
-	rcont.c \
+	rcont.c rowsum.c \
 	splines.c stem.c strsignif.c \
 	tabulate.c \
 	uncmin.c \
