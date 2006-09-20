@@ -570,6 +570,7 @@ function(package, dir, lib.loc = NULL)
     else {
         if(file_test("-d", file.path(dir, "man"))) {
             db <- Rd_db(dir = dir)
+            db <- lapply(db, Rd_pp)
             aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
             sort(unique(unlist(aliases, use.names = FALSE)))
         }
