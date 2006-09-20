@@ -202,7 +202,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     }
     if (!missing(along.with)) {
         length.out <- length(along.with)
-    }  else if (!missing(length.out)) {
+    }  else if (!is.null(length.out)) {
         if (length(length.out) != 1) stop("'length.out' must be of length 1")
         length.out <- ceiling(length.out)
     }
