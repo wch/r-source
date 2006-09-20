@@ -414,7 +414,8 @@ NEW FEATURES
     o	Sys.getlocale() and Sys.setlocale() support LC_MESSAGES,
 	LC_PAPER and LC_MEASUREMENT if the platform does.
 
-    o	Sweave has a new option 'pdf.version' for its Rweave driver.
+    o	Sweave has a new options 'pdf.encoding' and 'pdf.version' for
+	its Rweave driver.
 
     o	The character vector used by an output textConnection() has
 	a locked binding whilst the connection is open.

@@ -354,7 +354,8 @@ RweaveLatexSetup <-
                     fig=FALSE, pdf=pdf, eps=eps,
                     width=6, height=6, term=TRUE,
                     echo=echo, results="verbatim", split=split,
-                    strip.white="true", include=TRUE, pdf.version="1.1")
+                    strip.white="true", include=TRUE,
+                    pdf.version="1.1", pdf.encoding="default")
 
     ## to be on the safe side: see if defaults pass the check
     options <- RweaveLatexOptions(options)
@@ -512,7 +513,8 @@ RweaveLatexRuncode <- function(object, chunk, options)
         if(options$pdf){
             grDevices::pdf(file=paste(chunkprefix, "pdf", sep="."),
                            width=options$width, height=options$height,
-                           version=options$pdf.version)
+                           version=options$pdf.version,
+                           encoding=options$pdf.encoding)
 
             err <- try({SweaveHooks(options, run=TRUE);
                         eval(chunkexps, envir=.GlobalEnv)})
@@ -595,7 +597,8 @@ RweaveLatexOptions <- function(options)
 
     NUMOPTS <- c("width", "height")
     NOLOGOPTS <- c(NUMOPTS, "results", "prefix.string",
-                   "engine", "label", "strip.white", "pdf.version")
+                   "engine", "label", "strip.white",
+                   "pdf.version", "pdf.encoding")
 
     for(opt in names(options)){
         if(! (opt %in% NOLOGOPTS)){
