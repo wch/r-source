@@ -205,9 +205,6 @@ void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
 	      double *shrink_sml, double *high_u_fact,
 	      int *eps_correction);
 
-/* appl/rowsum.c */
-void R_rowsum(int *dim, double *na_x, double *x, double *group);
-
 /* appl/splines.c */
 void spline_coef(int *method, int *n, double *x, double *y,
 		 double *b, double *c, double *d, double *e);

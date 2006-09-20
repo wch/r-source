@@ -93,7 +93,6 @@ static R_NativePrimitiveArgType massdist_t[] = {REALSXP, REALSXP, INTSXP, REALSX
 static R_NativePrimitiveArgType R_max_col_t[] = {REALSXP, INTSXP, INTSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType R_pretty_t[] = {REALSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
-static R_NativePrimitiveArgType R_rowsum_t[] = {INTSXP, REALSXP, REALSXP, REALSXP};
 
 static R_NativePrimitiveArgType spline_coef_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType spline_eval_t[] = {INTSXP, INTSXP, REALSXP, REALSXP,
@@ -140,7 +139,6 @@ static R_CMethodDef cMethods [] = {
     CDEF(massdist),
     CDEF(R_max_col),
     CDEF(R_pretty),
-    CDEF(R_rowsum),
 
     CDEF(spline_coef),
     CDEF(spline_eval),
