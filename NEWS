@@ -884,6 +884,9 @@ BUG FIXES
 	'...' have precedence in both cases.
 
 
+    o	Using SIGUSR1 on Unix now always terminates a session, and no
+	longer is caught by browser contexts and restarts (such as try()).
+
 
 
 	**************************************************

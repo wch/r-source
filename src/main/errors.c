@@ -163,8 +163,8 @@ RETSIGTYPE attribute_hidden onsigusr1(int dummy)
     R_ParseError = 0;
 
     /* Bail out if there is a browser/try on the stack--do we really
-       want this? */
-    try_jump_to_restart();
+       want this?  No, as from R 2.4.0
+    try_jump_to_restart(); */
 
     /* Run all onexit/cend code on the stack (without stopping at
        intervening CTXT_TOPLEVEL's.  Since intervening CTXT_TOPLEVEL's
