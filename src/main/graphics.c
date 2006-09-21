@@ -4700,12 +4700,12 @@ void addDevice(DevDesc *dd)
 
     /* In case a device driver did not call R_CheckDeviceAvailable
        before starting its allocation, we complete the allocation and
-       then call killDevice here.  This insures that the device gets a
+       then call killDevice here.  This ensures that the device gets a
        chance to deallocate its resources and the current active
        device is restored to a sane value. */
     if (i == R_LastDeviceEntry) {
         killDevice(i);
-        error(_("too many devices open"));
+        error(_("too many open devices"));
     }
 }
 
