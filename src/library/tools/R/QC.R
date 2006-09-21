@@ -870,7 +870,7 @@ function(package, lib.loc = NULL)
 
     ## Build Rd data base.
     db <- Rd_db(package, lib.loc = dirname(dir))
-    db <- lapply(db, function(f) Rd_pp(f))
+    db <- lapply(db, Rd_pp)
 
     ## Need some heuristics now.  When does an Rd object document just
     ## one S4 class so that we can compare (at least) the slot names?
@@ -1009,7 +1009,7 @@ function(package, lib.loc = NULL)
 
     ## Build Rd data base.
     db <- Rd_db(package, lib.loc = dirname(dir))
-    db <- lapply(db, function(f) Rd_pp(f))
+    db <- lapply(db, Rd_pp)
 
     ## Need some heuristics now.  When does an Rd object document a
     ## data.frame (could add support for other classes later) variable
@@ -1173,7 +1173,7 @@ function(package, dir, lib.loc = NULL)
     else
         Rd_db(dir = dir)
 
-    db <- lapply(db, function(f) Rd_pp(f))
+    db <- lapply(db, Rd_pp)
     ## Do vectorized computations for metadata first.
     db_aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
     db_keywords <- lapply(db, .get_Rd_metadata_from_Rd_lines, "keyword")
