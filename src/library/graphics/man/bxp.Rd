@@ -48,7 +48,8 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     defaults on whether an x-axis label is printed for each group.}
   \item{pars,\dots}{graphical parameters (etc) can be passed as
     arguments to this function, either as a list (\code{pars}) or
-    normally(\code{\dots}), see the following.
+    normally(\code{\dots}), see the following.  (Those in \code{\dots}
+    take precedence over those in \code{pars}.)
 
     Currently, \code{yaxs} and \code{ylim} are used \sQuote{along the
       boxplot}, i.e., vertically, when \code{horizontal} is

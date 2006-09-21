@@ -79,7 +79,9 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 		pars = NULL, frame.plot = axes, horizontal = FALSE,
 		add = FALSE, at = NULL, show.names = NULL, ...)
 {
-    pars <- c(pars, list(...))
+    pars <- c(list(...), pars)
+    ## this could give duplicates, so ensure first mentioned wins.
+    pars <- pars[unique(names(pars))]
 
     bplt <- function(x, wid, stats, out, conf, notch, xlog, i)
     {
