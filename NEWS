@@ -30,13 +30,21 @@ NEW FEATURES
 	utils.
 
 
+INSTALLATION
+
+    o	The extraction of info from Subversion for an SVN checkout now
+	also works for svn >= 1.4.0.  However, on Windows the 'Last
+	Changed Date' will be in the local timezone, and not in GMT as
+	previously.
+
+
 DEPRECATED & DEFUNCT
 
     o	symbol.C() and symbol.For() are defunct, and have been
 	replaced by wrappers that give a warning.
 
-    o	Calling a builtin function with empty arguments is now always an
-	error.
+    o	Calling a builtin function with an empty argument is now always
+	an error.
 
     o	The autoloading of ts() is defunct.
 
