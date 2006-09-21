@@ -1231,12 +1231,18 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal,  R_varloc_t tmploc)
 
 static const char * const asym[] = {":=", "<-", "<<-", "="};
 
+static void tmp_cleanup(void *data)
+{
+    unbindVar(R_TmpvalSymbol, (SEXP) data);
+}
+
 
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, lhs, rhs, saverhs, tmp, tmp2;
     R_varloc_t tmploc;
     char buf[32];
+    RCNTXT cntxt;
 
     expr = CAR(args);
 
@@ -1266,6 +1272,13 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("cannot do complex assignments in base environment"));
     defineVar(R_TmpvalSymbol, R_NilValue, rho);
     tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
+    /* Now set up a context to remove it when we are done, even in the
+     * case of an error.  This all helps error() provide a better call.
+     */
+    begincontext(&cntxt, CTXT_CCODE, call, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt.cend = &tmp_cleanup;
+    cntxt.cenddata = rho;
 
     /*  Do a partial evaluation down through the LHS. */
     lhs = evalseq(CADR(expr), rho,
@@ -1306,6 +1319,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 			      CDDR(expr), tmp));
     expr = eval(expr, rho);
     UNPROTECT(5);
+    endcontext(&cntxt); /* which does not run the remove */
     unbindVar(R_TmpvalSymbol, rho);
 #ifdef CONSERVATIVE_COPYING
     return duplicate(saverhs);
@@ -1317,7 +1331,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 
-/* Defunct in in 1.5.0
+/* Defunct in 1.5.0
 SEXP attribute_hidden do_alias(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op,args);

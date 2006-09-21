@@ -935,6 +935,9 @@ BUG FIXES
 	and bxp(), and they behaved differently.  Now those passed in
 	'...' have precedence in both cases.
 
+    o	A failed subassignment could leave behind an object '*tmp*'.
+	The fix also sometimes gives better error messages.
+
 
 
 
