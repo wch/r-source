@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-16 09:00\n"
+"POT-Creation-Date: 2006-09-21 15:23\n"
 "PO-Revision-Date: 2006-04-18 09:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -244,7 +244,7 @@ msgid "'fix' requires a name"
 msgstr "'fix' necessite un nom"
 
 msgid "'form' must be a two-sided formula"
-msgstr ""
+msgstr "'form' doit être une formule ayant des membres à gauche et à droite"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr ""
@@ -635,35 +635,35 @@ msgid "Unrecognized value indicator"
 msgstr ""
 
 msgid "no lines available in input"
-msgstr ""
+msgstr "aucune ligne disponible depuis l'entrée"
 
 msgid "header and 'col.names' are of different lengths"
-msgstr ""
+msgstr "l'entête et 'col.names' n'ont pas la même longueur"
 
 msgid "more columns than column names"
-msgstr ""
+msgstr "plus de colonnes que de noms de colonnes"
 
 msgid "more column names than columns"
-msgstr ""
-
-msgid "rows are empty: giving up"
-msgstr ""
-
-msgid "not all columns named in 'colClasses' exist"
-msgstr ""
-
-msgid "invalid numeric 'as.is' expression"
-msgstr ""
-
-msgid "not all columns named in 'as.is' exist"
-msgstr ""
-
-msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr ""
+msgstr "plus de noms de colonnes que de colonnes"
 
 #, fuzzy
+msgid "rows are empty: giving up"
+msgstr "les cinq premières lignes sont vides : abandon"
+
+msgid "not all columns named in 'colClasses' exist"
+msgstr "certaines des colonnes nommées dans 'colClasses' n'existent pas"
+
+msgid "invalid numeric 'as.is' expression"
+msgstr "expression 'as.is' numérique incorrecte"
+
+msgid "not all columns named in 'as.is' exist"
+msgstr "certaines des colonnes nommées dans 'as.is' n'existent pas"
+
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr "'as.is' n'a pas la bonne longueur %d != cols = %d"
+
 msgid "invalid 'row.names' specification"
-msgstr "spécification 'agrep' incorrecte"
+msgstr "spécification de 'row.names' incorrecte"
 
 msgid "missing lengths for some fields"
 msgstr "longueur manquante pour certains champs"
@@ -689,10 +689,10 @@ msgid "option must be a length one character vector or NULL"
 msgstr "'package' doit être une chaîne de caratcères ou NULL"
 
 msgid "empty beginning of file"
-msgstr ""
+msgstr "début de fichier vide"
 
 msgid "first five rows are empty: giving up"
-msgstr ""
+msgstr "les cinq premières lignes sont vides : abandon"
 
 msgid "invalid 'socket' argument"
 msgstr "argument 'socket' incorrect"
@@ -712,6 +712,9 @@ msgstr "socket non connecté"
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frame() appelé avec un non data.frame -- forçage du type"
 
+msgid "invalid options('str') -- using defaults instead"
+msgstr ""
+
 msgid "'object' does not have valid levels()"
 msgstr "'object' n'a pas d'attribut levels() correct"
 
@@ -725,12 +728,11 @@ msgstr "impossible de restaurer l'information de type"
 msgid "no events were recorded"
 msgstr "aucun événement à enregistrer"
 
-#, fuzzy
 msgid ""
 "vignette '%s' found more than once,\n"
 "using the one found in '%s'"
 msgstr ""
-"la vignette '%d' a été trouvée plusieurs fois,\n"
+"la vignette '%s' a été trouvée plusieurs fois,\n"
 "utilisation de celle trouvée dans '%s'"
 
 msgid "vignette '%s' *not* found"
@@ -752,24 +754,22 @@ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
 msgstr ""
 
 msgid "invalid numbers in 'quote'"
-msgstr ""
+msgstr "nombres incorrects dans 'quote'"
 
-#, fuzzy
 msgid "invalid 'quote' specification"
-msgstr "spécification 'agrep' incorrecte"
+msgstr "spécification de 'quote' incorrecte"
 
 msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
+msgstr "col.names = NA n'a pas de sens lorsque row.names = FALSE"
 
-#, fuzzy
 msgid "invalid 'col.names' specification"
-msgstr "spécification 'agrep' incorrecte"
+msgstr "spécification de 'col.names' incorrecte"
 
 msgid "appending column names to file"
-msgstr ""
+msgstr "ajout des noms de colonnes dans le fichier"
 
 msgid "attempt to change '%s' ignored"
-msgstr ""
+msgstr "tentative de modification de '%s' ignorée"
 
 msgid "'subject' missing"
 msgstr "'subject' manquant"
@@ -907,5 +907,3 @@ msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
 
-#~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
-#~ msgstr "Eventuellement d'autres mots clefs de doc/KEYWORDS, un par line"
