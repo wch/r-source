@@ -1429,6 +1429,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     int   iw, ih;
     int   cw, ch;
     double dw, dw0, dh, d;
+    char buf[100];
 
     xd->kind = SCREEN;
     if (R_FINITE(user_xpinch) && user_xpinch > 0.0)
@@ -1545,9 +1546,13 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     MCHECK(xd->mpng = newmenuitem(G_("Png..."), 0, menufilebitmap));
     MCHECK(xd->mbmp = newmenuitem(G_("Bmp..."), 0, menufilebitmap));
     MCHECK(newsubmenu(xd->msubsave,G_("Jpeg")));
-    MCHECK(xd->mjpeg50 = newmenuitem(G_("50% quality..."), 0, menufilebitmap));
-    MCHECK(xd->mjpeg75 = newmenuitem(G_("75% quality..."), 0, menufilebitmap));
-    MCHECK(xd->mjpeg100 = newmenuitem(G_("100% quality..."), 0, menufilebitmap));
+    /* avoid gettext confusion with % */ 
+    snprintf(buf, 100, G_("%s quality..."), "50%");
+    MCHECK(xd->mjpeg50 = newmenuitem(buf, 0, menufilebitmap));
+    snprintf(buf, 100, G_("%s quality..."), "75%");
+    MCHECK(xd->mjpeg75 = newmenuitem(buf, 0, menufilebitmap));
+    snprintf(buf, 100, G_("%s quality..."), "100%");
+    MCHECK(xd->mjpeg100 = newmenuitem(buf, 0, menufilebitmap));
     MCHECK(newsubmenu(m, G_("Copy to the clipboard")));
     MCHECK(xd->mclpbm = newmenuitem(G_("as a Bitmap\tCTRL+C"), 0, menuclpbm));
     MCHECK(xd->mclpwm = newmenuitem(G_("as a Metafile\tCTRL+W"), 0, menuclpwm));
