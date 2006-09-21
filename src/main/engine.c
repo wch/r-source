@@ -2479,7 +2479,7 @@ void GEplayDisplayList(GEDevDesc *dd)
 	    (dd->gesd[i]->callback)(GE_RestoreState, dd, R_NilValue);
     /* Play the display list
      */
-    theList = dd->dev->displayList;
+    PROTECT(theList = dd->dev->displayList);
     plotok = 1;
     if (theList != R_NilValue) {
 	savedDevice = curDevice();
@@ -2499,6 +2499,7 @@ void GEplayDisplayList(GEDevDesc *dd)
 	}
 	selectDevice(savedDevice);
     }
+    UNPROTECT(1);
 }
 
 /****************************************************************
@@ -2570,11 +2571,11 @@ SEXP GEcreateSnapshot(GEDevDesc *dd)
     PROTECT(snapshot = allocVector(VECSXP, 1 + numGraphicsSystems));
     /* The first element of the snapshot is the display list.
      */
-    tmp = dd->dev->displayList;
-    if(!isNull(tmp)) tmp = duplicate(tmp);
-    PROTECT(tmp);
-    SET_VECTOR_ELT(snapshot, 0, tmp);
-    UNPROTECT(1);
+    if(!isNull(dd->dev->displayList)) {
+        PROTECT(tmp = duplicate(dd->dev->displayList));
+        SET_VECTOR_ELT(snapshot, 0, tmp);
+        UNPROTECT(1);
+    }
     /* For each registered system, obtain state information,
      * and store that in the snapshot.
      */

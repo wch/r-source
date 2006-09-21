@@ -301,7 +301,7 @@ SEXP FixupFont(SEXP font, int dflt)
 	for (i = 0; i < n; i++) {
 	    k = LOGICAL(font)[i];
 #ifndef Win32
-	    if (k < 1 || k > 4) k = NA_INTEGER;
+	    if (k < 1 || k > 5) k = NA_INTEGER;
 #else
 	    if (k < 1 || k > 32) k = NA_INTEGER;
 #endif
@@ -313,7 +313,7 @@ SEXP FixupFont(SEXP font, int dflt)
         for (i = 0; i < n; i++) {
             k = INTEGER(font)[i];
 #ifndef Win32
-            if (k < 1 || k > 4) k = NA_INTEGER;
+            if (k < 1 || k > 5) k = NA_INTEGER;
 #else
             if (k < 1 || k > 32) k = NA_INTEGER;
 #endif
@@ -325,7 +325,7 @@ SEXP FixupFont(SEXP font, int dflt)
 	for (i = 0; i < n; i++) {
 	    k = REAL(font)[i];
 #ifndef Win32
-	    if (k < 1 || k > 4) k = NA_INTEGER;
+	    if (k < 1 || k > 5) k = NA_INTEGER;
 #else
 	    if (k < 1 || k > 32) k = NA_INTEGER;
 #endif

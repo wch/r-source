@@ -947,6 +947,8 @@ BUG FIXES
     o	Using SIGUSR1 on Unix now always terminates a session, and no
 	longer is caught by browser contexts and restarts (such as try()).
 
+    o   In the 'graphics' package, in-line 'font=5' was being ignored
+        (report by Tom Cook).
 
 
 
