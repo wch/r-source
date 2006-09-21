@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42+0100\n"
+"POT-Creation-Date: 2006-09-21 15:21+0100\n"
 "PO-Revision-Date: 2005-12-17 10:57-0200\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -86,62 +86,66 @@ msgstr "vmethod inválido"
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "algoritmo de Burg não conseguiu encontrar correlação parcial"
 
-#: nls.c:75
+#: nls.c:104
 msgid "'control' must be a list"
 msgstr "'control' deve ser uma lista"
 
-#: nls.c:77
+#: nls.c:106
 msgid "'m' must be a list"
 msgstr "'m' deve ser uma lista"
 
-#: nls.c:83 nls.c:88 nls.c:93 nls.c:98 nls.c:103 nls.c:112 nls.c:117 nls.c:122
-#: nls.c:127 nls.c:132 nls.c:137
+#: nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:132 nls.c:173 nls.c:178
+#: nls.c:183 nls.c:188 nls.c:193 nls.c:198
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s' ausente"
 
-#: nls.c:178 nls.c:182
+#: nls.c:239
 msgid "singular gradient"
 msgstr "gradiente singular"
 
-#: nls.c:202 nls.c:207
+#: nls.c:260
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr "fator de passos %g reduzido abaixo de 'minFactor' de %g"
 
-#: nls.c:216 nls.c:218
+#: nls.c:269
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr "número de iterações excedeu o máximo de %d"
 
-#: nls.c:237
+#: nls.c:274
+msgid "converged"
+msgstr ""
+
+#: nls.c:295
 msgid "'theta' should be of type character"
 msgstr "'theta' deve ser do tipo caractere"
 
-#: nls.c:239 port.c:379
+#: nls.c:297 port.c:379
 #, fuzzy
 msgid "use of NULL environment is defunct"
 msgstr "uso do ambiente NULL é obsoleto"
 
-#: nls.c:243
+#: nls.c:301
 msgid "'rho' should be an environment"
 msgstr "'rho' deve ser um ambiente"
 
-#: nls.c:245
+#: nls.c:303
 #, fuzzy
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "argumento %s deve ser um vetor numérico com comprimento 1 ou %d"
 
-#: nls.c:262 nls.c:290
+#: nls.c:320 nls.c:348
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Obtido valor faltante ou infinito quando avaliando o modelo"
 
-#: nls.c:268
+#: nls.c:326
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "variável '%s' é inteira, não numérica"
 
-#: nls.c:270
+#: nls.c:328
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "variável '%s' não é numérica"

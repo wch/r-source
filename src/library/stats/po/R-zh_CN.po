@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-21 15:22\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1558,9 +1558,6 @@ msgstr ""
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "除非algorithm = \"port\"，上限或下限将略过不用"
 
-msgid "Convergence failure:"
-msgstr "没有收斂："
-
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "无法为\"nls\"目标对象计算REML log-likelihood"
 
@@ -2155,6 +2152,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid "Convergence failure:"
+#~ msgstr "没有收斂："
 
 #~ msgid ""
 #~ "link \"%s\" not available for binomial family, available links are \"logit"

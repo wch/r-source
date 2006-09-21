@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-07 11:42\n"
+"POT-Creation-Date: 2006-09-21 15:22\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1596,9 +1596,6 @@ msgstr ""
 "Limites superiores ou inferiores ignorados a não ser que o algoritmo seja = "
 "\"port\""
 
-msgid "Convergence failure:"
-msgstr "Falha na convergência: "
-
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "não é possível calcular verossimilhança REML para objetos \"nls\""
 
@@ -2222,6 +2219,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "parâmetro %s não ocorre na fórmula do modelo"
 msgstr[1] "parâmetros %s não ocorrem na fórmula do modelo"
+
+#~ msgid "Convergence failure:"
+#~ msgstr "Falha na convergência: "
 
 #~ msgid ""
 #~ "link \"%s\" not available for binomial family, available links are \"logit"
