@@ -181,10 +181,12 @@ sub env_path {
 ### * list_files
 
 sub list_files {
-    my $dir = $_[0];
+    my ($dir, $dirs_and_files) = @_;
     my @files;
     opendir(DIR, $dir) or die "cannot opendir $dir: $!";
-    @files = grep { -f &file_path($dir, $_) } readdir(DIR);
+    @files = readdir(DIR);
+    @files = grep { -f &file_path($dir, $_) } @files
+	unless($dirs_and_files);
     closedir(DIR);
     my @paths;
     foreach my $file (@files) {
