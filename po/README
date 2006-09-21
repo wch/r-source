@@ -42,8 +42,6 @@ Windows RGui translations
 =========================
 
 These are contained in RGui.pot, created by running 'make RGui.pot-update'.
-It needs manual adjustment in 3 instances of 50%, 75% and 100% which are
-not c-format.
 
 Translations should be called RGui-ll.po for language 'll': such a file is
 compiled by
@@ -63,5 +61,4 @@ on the command line.  (All RGui-*.gmo files will installed to the
 right places when 'make -f Makefile.win' is run in this directory,
 which is part of the main 'make' process.)
 
-To re-make all the translations use 'make update-RGui', after updating
-RGui.pot (see above).
+To re-make RGui.pot and all the translations use 'make update-RGui'.

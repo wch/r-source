@@ -478,7 +478,7 @@ Makefile: Makefile.in.in $(top_builddir)/config.status @POMAKEFILEDEPS@
 	  && CONFIG_FILES=$(subdir)/$@.in CONFIG_HEADERS= \
 	       $(SHELL) ./config.status
 
-update-RGui: Makefile remove-potcdate.sed 
+update-RGui: Makefile remove-potcdate.sed RGui.pot-update
 	@trs=`cd $(srcdir) && ls RGui-*.po 2> /dev/null`; \
 	if test -n "$${trs}"; then \
 	  for tr in $${trs}; do \
