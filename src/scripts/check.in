@@ -1098,8 +1098,8 @@ sub check_pkg {
 	$any++;
 	$log->print("Subdirectory 'exec' contains no files.\n");
     }
-    ## Subdirectory 'exec' without files?
-    if((-d "inst") && !&list_files("inst")) {
+    ## Subdirectory 'inst' without files?
+    if((-d "inst") && scalar(&list_files("inst", 1) < 3)) {
 	$log->warning() unless $any;
 	$any++;
 	$log->print("Subdirectory 'inst' contains no files.\n");
