@@ -29,6 +29,12 @@ NEW FEATURES
     o	read.table(), write.table() and allies have been moved to package
 	utils.
 
+    o	Error messages from subassignment calls are more likely to
+	give a recognizable (rather than massaged) call.
+
+    o	A few more cases of subassignment work, e.g. <raw>[] <- <list>
+	and <vector>[] <- expression, with suitable coercion of the LHS.
+
 
 INSTALLATION
 

@@ -293,7 +293,17 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level,
     case 1419:  /* real       <- vector     */
     case 1519:  /* complex    <- vector     */
     case 1619:  /* character  <- vector     */
+    case 2419:  /* raw        <- vector     */
 	*x = coerceVector(*x, VECSXP);
+	break;
+
+    case 1020:  /* logical    <- expression */
+    case 1320:  /* integer    <- expression */
+    case 1420:  /* real       <- expression */
+    case 1520:  /* complex    <- expression */
+    case 1620:  /* character  <- expression */
+    case 2420:  /* raw        <- expression */
+	*x = coerceVector(*x, EXPRSXP);
 	break;
 
     case 2001:	/* expression <- symbol	    */
@@ -327,9 +337,8 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level,
 	break;
 
     default:
-	errorcall(call, 
-		  _("incompatible types (from %s to %s) in subassignment type fix"),
-		  type2char(which%100), type2char(which/100));
+	error(_("incompatible types (from %s to %s) in subassignment type fix"),
+	      type2char(which%100), type2char(which/100));
     }
 
     if (stretch) {
@@ -434,7 +443,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     if ((TYPEOF(x) != VECSXP && TYPEOF(x) != EXPRSXP) || y != R_NilValue) {
 	if (n > 0 && ny == 0)
-	    errorcall(call, _("nothing to replace with"));
+	    error(_("nothing to replace with"));
 	if (n > 0 && n % ny)
 	    warning(_("number of items to replace is not a multiple of replacement length"));
     }
@@ -704,9 +713,9 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
        </TSL>  */
 
     if (n > 0 && ny == 0)
-	errorcall(call, _("nothing to replace with"));
+	error(_("nothing to replace with"));
     if (n > 0 && n % ny)
-	errorcall(call, _("number of items to replace is not a multiple of replacement length"));
+	error(_("number of items to replace is not a multiple of replacement length"));
 
     which = SubassignTypeFix(&x, &y, 0, 1, call);
 
@@ -970,9 +979,9 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     }
 
     if (n > 0 && ny == 0)
-	errorcall(call, _("nothing to replace with"));
+	error(_("nothing to replace with"));
     if (n > 0 && n % ny)
-	errorcall(call, _("number of items to replace is not a multiple of replacement length"));
+	error(_("number of items to replace is not a multiple of replacement length"));
 
     if (ny > 1) { /* check for NAs in indices */
 	for (i = 0; i < k; i++)
@@ -1157,9 +1166,9 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     nx = length(x);
 
     if (n > 0 && ny == 0)
-	errorcall(call, _("nothing to replace with"));
+	error(_("nothing to replace with"));
     if (n > 0 && n % ny)
-	errorcall(call, _("number of items to replace is not a multiple of replacement length"));
+	error(_("number of items to replace is not a multiple of replacement length"));
 
     if (stretch) {
 	yi = allocList(stretch - nx);
@@ -1378,7 +1387,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	errorcall(call, _("object is not subsettable"));
+	error(_("object is not subsettable"));
 	break;
     }
 
@@ -1737,7 +1746,7 @@ SEXP attribute_hidden do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho
 	xtop = x;
 	UNPROTECT(1);
     }
-    else errorcall(call, _("object is not subsettable"));
+    else error(_("object is not subsettable"));
 
     UNPROTECT(1);
     SET_NAMED(xtop, 0);
@@ -1767,7 +1776,7 @@ SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     else if(isString(nlist) )
 	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
     else {
-	errorcall(call, _("invalid subscript type"));
+	error(_("invalid subscript type"));
 	return R_NilValue; /*-Wall*/
     }
 

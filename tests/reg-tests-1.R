@@ -4491,6 +4491,18 @@ stopifnot(identical(structure(pi, a=1, b=2), structure(pi, b=2, a=1)))
 ## failed subassign could leave '*tmp*' around
 ## Parlamis Franklin, R-devel, 2006-09-20
 test <- 1:10
-try(test[2:4] <- expression(e)) # failed at least in 2.4.0
+try(test[2:4] <- ls) # fails
 stopifnot(!exists("*tmp*", where=1))
 ## was true < 2.4.0
+
+
+## Needlessly failing subassignments
+e <- 1:10
+e[2] <- expression(e)
+e <- pi
+e[2] <- expression(e)
+e <- letters
+e[2] <- expression(e)
+e <- as.raw(1:3)
+e[2] <- list(e=pi)
+## all failed < 2.4.0
