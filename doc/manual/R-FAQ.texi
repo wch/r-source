@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-09-13
+@set FAQ_DATE @value{FAQ_YEAR}-09-18
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 3
@@ -2311,6 +2311,8 @@ Johnson distributions, normal scores and generalized hypergeometric
 distributions).
 @item SwissAir
 Air quality data of Switzerland for one year in 30 min resolution.
+@item TSP
+Traveling Salesperson Problem (TSP).
 @item TWIX
 Trees WIth eXtra splits.
 @item TeachingDemos
@@ -2483,6 +2485,8 @@ Processing and Classification of protein mass spectra (SELDI) data.
 @item caTools
 Miscellaneous utility functions, including reading/writing ENVI binary
 files, a LogitBoost classifier, and a base64 encoder/decoder.
+@item cairoDevice
+Loadable CAIRO/GTK device driver.
 @item calibrate
 Calibration of biplot axes.
 @item car
@@ -2864,6 +2868,8 @@ A package for graphical modelling in R.  Defines S4 classes for
 graphical meta data and graphical models, and illustrates how
 hierarchical log-linear models may be implemented and combined with
 @strong{dynamicGraph}.
+@item gRcox
+Inference in graphical gaussian models with edge and vertex symmetries.
 @item gafit
 Genetic algorithm for curve fitting.
 @item gam
@@ -3213,6 +3219,8 @@ LS-PLS (least squares --- partial least squares) models.
 @item ltm
 Analysis of multivariate Bernoulli data using latent trait models
 (including the Rasch model) under the Item Response Theory approach.
+@item lvplot
+Letter-value box plots.
 @item mAr
 Estimation of multivariate AR models through a computationally efficient
 stepwise least-squares algorithm.
@@ -4089,8 +4097,6 @@ Package for time series analysis with emphasis on non-linear modelling.
 Routines for the analysis of non-linear time series.
 @item tsfa
 Time Series Factor Analysis.
-@item tsp
-Traveling Salesperson Problem (TSP).
 @item tuneR
 Collection of tools to analyze music, handle wave files, transcription,
 etc.
