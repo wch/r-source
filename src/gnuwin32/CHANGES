@@ -13,10 +13,6 @@ The language for menus and messages can be set in the 'Rconsole' file and
 The initial setting for console buffering can be set in the 'Rconsole'
 file and (for future sessions) from the GUI preferences.
 
-There is a new menu item in Rgui to 'Stop all computations' which
-kills all R computations immediately, skips any on.exit conditions and
-returns to the comand prompt.
-
 The installer can set defaults for MDI/SDI display, help style, and
 use of the --internet2 startup option.  Custom builds of R can change
 these defaults.
