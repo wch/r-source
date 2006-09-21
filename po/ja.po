@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-16 08:59+0100\n"
+"POT-Creation-Date: 2006-09-21 08:37+0100\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -214,9 +214,9 @@ msgstr "'loadRconsole' はRgui でしか使用することができない"
 #: src/main/scan.c:1807 src/main/scan.c:1808 src/main/scan.c:1809
 #: src/main/scan.c:1810 src/main/sort.c:793 src/main/sort.c:893
 #: src/main/sysutils.c:147 src/main/util.c:749 src/main/util.c:754
-#: src/main/util.c:762 src/main/util.c:765 src/modules/X11/devX11.c:2464
-#: src/modules/X11/devX11.c:2491 src/modules/X11/devX11.c:2496
-#: src/modules/X11/devX11.c:2501 src/unix/sys-std.c:1029
+#: src/main/util.c:762 src/main/util.c:765 src/modules/X11/devX11.c:2466
+#: src/modules/X11/devX11.c:2493 src/modules/X11/devX11.c:2498
+#: src/modules/X11/devX11.c:2503 src/unix/sys-std.c:1029
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s' の値が不正です"
@@ -1847,11 +1847,11 @@ msgstr "ファイル '%s' は bzip2 で圧縮されていないようです"
 msgid "allocation of bzfile connection failed"
 msgstr "bzfile 接続の割り当てに失敗しました"
 
-#: src/main/connections.c:1407 src/modules/X11/devX11.c:2585
+#: src/main/connections.c:1407 src/modules/X11/devX11.c:2587
 msgid "memory allocation to copy clipboard failed"
 msgstr "クリップボードのコピーでメモリ確保に失敗しました"
 
-#: src/main/connections.c:1412 src/modules/X11/devX11.c:2573
+#: src/main/connections.c:1412 src/modules/X11/devX11.c:2575
 msgid "clipboard cannot be opened or contains no text"
 msgstr "クリップボードを開くことができないか，中身がありません"
 
@@ -2241,11 +2241,18 @@ msgstr "'use' (計算法)が不正です"
 msgid "the standard deviation is zero"
 msgstr "標準偏差が0です"
 
-#: src/main/cum.c:140
+#: src/main/cum.c:49
+#, fuzzy
+msgid "Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
+msgstr ""
+"sum 関数において整数のオーバーフローがありました。sum(as.numeric(.)) を使って"
+"下さい"
+
+#: src/main/cum.c:181
 msgid "min/max not defined for complex numbers"
 msgstr "複素数に対しては min/max は定義されていません"
 
-#: src/main/cum.c:143 src/main/cum.c:167
+#: src/main/cum.c:184 src/main/cum.c:205 src/main/cum.c:228
 msgid "unknown cumxxx function"
 msgstr "未知の cumxxx 関数です"
 
@@ -2820,7 +2827,7 @@ msgstr "引数は環境でなければなりません"
 msgid "arguments must be symbolic"
 msgstr "引数はシンボルでなくてはいけません"
 
-#: src/main/envir.c:2485 src/main/random.c:34 src/main/random.c:562
+#: src/main/envir.c:2485 src/main/random.c:34 src/main/random.c:563
 msgid "invalid arguments"
 msgstr "引数(複数)が不正です"
 
@@ -3683,45 +3690,45 @@ msgstr ".RData に保存されたデータを復帰できません\n"
 msgid "During startup - "
 msgstr "起動準備中です ー"
 
-#: src/main/main.c:1097
+#: src/main/main.c:1098
 msgid "cannot quit from browser"
 msgstr "ブラウザを終了できません"
 
-#: src/main/main.c:1101
+#: src/main/main.c:1102
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "\"yes\", \"no\", \"ask\" または \"default\" のどれかが期待されています"
 
-#: src/main/main.c:1106
+#: src/main/main.c:1107
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "非対話的な使用での save=\"ask\"：コマンドラインでの既定動作が使用されます"
 
-#: src/main/main.c:1114
+#: src/main/main.c:1115
 msgid "unrecognized value of 'save'"
 msgstr "'save' の値が認識できません"
 
-#: src/main/main.c:1117
+#: src/main/main.c:1118
 msgid "invalid 'status', 0 assumed"
 msgstr "'status' が不正です。0が仮定されました"
 
-#: src/main/main.c:1122
+#: src/main/main.c:1123
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast' が不正です。FALSE が仮定されました"
 
-#: src/main/main.c:1153
+#: src/main/main.c:1154
 msgid "cannot allocate space for toplevel callback element"
 msgstr "トップレベルの callback 要素に作業空間を割り当てることができません"
 
-#: src/main/main.c:1231
+#: src/main/main.c:1232
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex に負の添字が渡されました"
 
-#: src/main/main.c:1344
+#: src/main/main.c:1345
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "トップレベルの task callback '%s' からの警告メッセージ\n"
 
-#: src/main/main.c:1404
+#: src/main/main.c:1405
 msgid "top-level task callback did not return a logical value"
 msgstr "トップレベルの task callback が論理値を返していません"
 
@@ -4692,7 +4699,7 @@ msgstr "論理的なプロットシンボルとしては NA だけが許され�
 msgid "invalid plotting symbol"
 msgstr "プロット記号が不正です"
 
-#: src/main/plot.c:335 src/modules/X11/devX11.c:1427
+#: src/main/plot.c:335 src/modules/X11/devX11.c:1429
 msgid "invalid font specification"
 msgstr "フォントの指定が不正です"
 
@@ -5178,11 +5185,11 @@ msgstr ""
 msgid "incorrect number of probabilities"
 msgstr "確率値の個数が正しくありません"
 
-#: src/main/random.c:518
+#: src/main/random.c:519
 msgid "invalid first argument 'n'"
 msgstr "一番目の引数 'n' が不正です"
 
-#: src/main/random.c:520
+#: src/main/random.c:521
 msgid "invalid second argument 'size'"
 msgstr "二番目の引数 'size' が不正です"
 
@@ -6851,102 +6858,102 @@ msgstr "X11 はフォントサイズ %d を使いました（%d が要求され�
 msgid "X11 font at size %d could not be loaded"
 msgstr "サイズ %d のX11 フォントが読み込めません"
 
-#: src/modules/X11/devX11.c:1065
+#: src/modules/X11/devX11.c:1067
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr "X11 プロトコルエラー：%s"
 
-#: src/modules/X11/devX11.c:1082
+#: src/modules/X11/devX11.c:1084
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr "X11 の致命的I/Oエラーです, 作業を保存してRを終了して下さい"
 
-#: src/modules/X11/devX11.c:1141
+#: src/modules/X11/devX11.c:1143
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 "Xlib がサポートしないロケールです。いくつかの X 機能は C ロケールで動作します"
 
-#: src/modules/X11/devX11.c:1142
+#: src/modules/X11/devX11.c:1144
 msgid "X cannot set locale modifiers"
 msgstr "X はロケール変更を設定することができません"
 
-#: src/modules/X11/devX11.c:1147
+#: src/modules/X11/devX11.c:1149
 msgid "no png support in this version of R"
 msgstr "この R のバージョンには png のサポートはありません"
 
-#: src/modules/X11/devX11.c:1153
+#: src/modules/X11/devX11.c:1155
 msgid "filename too long in png() call"
 msgstr "png 関数の呼び出しでファイル名が長すぎます"
 
-#: src/modules/X11/devX11.c:1157 src/modules/X11/devX11.c:1666
+#: src/modules/X11/devX11.c:1159 src/modules/X11/devX11.c:1668
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr "PNGファイル '%s' を開けませんでした"
 
-#: src/modules/X11/devX11.c:1168
+#: src/modules/X11/devX11.c:1170
 msgid "no jpeg support in this version of R"
 msgstr "この R のバージョンには jpeg のサポートはありません"
 
-#: src/modules/X11/devX11.c:1176
+#: src/modules/X11/devX11.c:1178
 msgid "filename too long in jpeg() call"
 msgstr "jpeg 関数の呼び出しでファイル名が長すぎます"
 
-#: src/modules/X11/devX11.c:1180 src/modules/X11/devX11.c:1673
+#: src/modules/X11/devX11.c:1182 src/modules/X11/devX11.c:1675
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr "JPEGファイル '%s' を開けませんでした"
 
-#: src/modules/X11/devX11.c:1201
+#: src/modules/X11/devX11.c:1203
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr "X11 ディスプレイ '%s' へのコネクションを開くことができません"
 
-#: src/modules/X11/devX11.c:1227
+#: src/modules/X11/devX11.c:1229
 msgid "jpeg() does not support transparency: using white bg"
 msgstr "jpeg 関数は透明な背景はサポートしていません（bg に白を使います）"
 
-#: src/modules/X11/devX11.c:1340
+#: src/modules/X11/devX11.c:1342
 msgid "unable to create X11 window"
 msgstr "X11 ウィンドウを作ることができません"
 
-#: src/modules/X11/devX11.c:1388
+#: src/modules/X11/devX11.c:1390
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d' はピクセルにはありそうも無い値です"
 
-#: src/modules/X11/devX11.c:1393
+#: src/modules/X11/devX11.c:1395
 msgid "unable to create pixmap"
 msgstr "pixmap を作れません"
 
-#: src/modules/X11/devX11.c:1466
+#: src/modules/X11/devX11.c:1468
 msgid "font family not found in X11 font database"
 msgstr "フォントファミリーが X11 フォントデータベースにありません"
 
-#: src/modules/X11/devX11.c:2398
+#: src/modules/X11/devX11.c:2400
 msgid "invalid string argument"
 msgstr "文字列引数が不正です"
 
-#: src/modules/X11/devX11.c:2433
+#: src/modules/X11/devX11.c:2435
 #, c-format
 msgid "unable to start device %s"
 msgstr "デバイス '%s' を開始できません"
 
-#: src/modules/X11/devX11.c:2460
+#: src/modules/X11/devX11.c:2462
 msgid "invalid 'width' or 'height'"
 msgstr "'width' または 'height' が不正です"
 
-#: src/modules/X11/devX11.c:2467
+#: src/modules/X11/devX11.c:2469
 msgid "invalid colortype passed to X11 driver"
 msgstr "不正な色タイプが X11 ドライバーに引き渡されました"
 
-#: src/modules/X11/devX11.c:2481
+#: src/modules/X11/devX11.c:2483
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "未知のX11カラーモデルです（モノクロを使用します）"
 
-#: src/modules/X11/devX11.c:2549
+#: src/modules/X11/devX11.c:2551
 msgid "unable to contact X11 display"
 msgstr "X11ディスプレイに接続できません"
 
-#: src/modules/X11/devX11.c:2600
+#: src/modules/X11/devX11.c:2602
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "X11Routines ストラクチャにメモリを割り当てることができません"
 

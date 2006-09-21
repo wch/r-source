@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-05-29 07:45+0100\n"
+"POT-Creation-Date: 2006-09-21 08:38+0100\n"
 "PO-Revision-Date: 2005-06-02 13:28+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -27,11 +27,11 @@ msgstr "メモリ不足: テキストをクリップボードにコピーすることができません"
 msgid "Unable to open the clipboard"
 msgstr "クリップボードを開くことができません"
 
-#: console.c:1611
+#: console.c:1620
 msgid "Insufficient memory. Please close the console"
 msgstr "メモリが不足しています.コンソールを閉じてください"
 
-#: console.c:1665 console.c:1718 preferences.c:272
+#: console.c:1674 console.c:1727 preferences.c:274
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -40,23 +40,23 @@ msgstr ""
 "フォント %s-%d-%d  が見つかりません\n"
 "システムに用意されているフォントを使います"
 
-#: console.c:1820
+#: console.c:1829
 msgid "Save selection to"
 msgstr "選択を以下にセーブします"
 
-#: console.c:1822
+#: console.c:1831
 msgid "Save console contents to"
 msgstr "コンソールの内容を以下に保存します"
 
-#: console.c:1920
+#: console.c:1929
 msgid "Scrolling.\n"
 msgstr "スクロール.\n"
 
-#: console.c:1921
+#: console.c:1930
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  キーボード: PgUp, PgDown, Ctrl+矢印, Ctrl+Home, Ctrl+End,\n"
 
-#: console.c:1922
+#: console.c:1931
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -64,76 +64,76 @@ msgstr ""
 "  マウス: スクロールバーを使います.\n"
 "\n"
 
-#: console.c:1923
+#: console.c:1932
 msgid "Editing.\n"
 msgstr "編集.\n"
 
-#: console.c:1924
+#: console.c:1933
 msgid "  Moving the cursor: \n"
 msgstr "  カーソル移動: \n"
 
-#: console.c:1925
+#: console.c:1934
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     左矢印 または Ctrl+B: 1文字戻る;\n"
 
-#: console.c:1926
+#: console.c:1935
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     右矢印 または Ctrl+F: 1文字進む;\n"
 
-#: console.c:1927
+#: console.c:1936
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home または Ctrl+A: 行頭に移動;\n"
 
-#: console.c:1928
+#: console.c:1937
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End または Ctrl+E: 行末に移動;\n"
 
-#: console.c:1929
+#: console.c:1938
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  履歴: 上矢印,下矢印,Ctrl+P, Ctrl+N\n"
 
-#: console.c:1930
+#: console.c:1939
 msgid "  Deleting:\n"
 msgstr "  消去:\n"
 
-#: console.c:1931
+#: console.c:1940
 msgid "     Del or Ctrl+D: delete current character;\n"
 msgstr "     Delete または Ctrl+D: 現在選択している文字を消去;\n"
 
-#: console.c:1932
+#: console.c:1941
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: 1つ前の文字を消去;\n"
 
-#: console.c:1933
+#: console.c:1942
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "     Ctrl+Del または Ctrl+K: 現在選択している文字から行末までの文字を全て消"
 "去.\n"
 
-#: console.c:1934
+#: console.c:1943
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: 現在の行のテキストを全て消去.\n"
 
-#: console.c:1935
+#: console.c:1944
 msgid "  Copy and paste.\n"
 msgstr "  コピー＆ペースト.\n"
 
-#: console.c:1936
+#: console.c:1945
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 "     マウスの左ボタンを押しながらマウスを使って文字列をマーク（選択）しま"
 "す.\n"
 
-#: console.c:1937
+#: console.c:1946
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "     Shift+Del (または Ctrl+C) を使って,マーク（選択）した文字列をクリップ"
 "ボードにコピーし,\n"
 
-#: console.c:1938
+#: console.c:1947
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -141,29 +141,29 @@ msgstr ""
 "     Shift+Ins (または Ctrl+V または Ctrl+Y) でクリップボードの内容（もしあれ"
 "ば）をペーストして\n"
 
-#: console.c:1939
+#: console.c:1948
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr ""
 "     ,コンソールへ出力します,また Ctrl+X でコピーした後にペーストしても構いま"
 "せん\n"
 
-#: console.c:1940
+#: console.c:1949
 msgid "  Misc:\n"
 msgstr "  その他:\n"
 
-#: console.c:1941
+#: console.c:1950
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: コンソール画面を全消去します.\n"
 
-#: console.c:1942
+#: console.c:1951
 msgid "     Ctrl+O: Toggle overwrite mode: initially off.\n"
 msgstr "     Ctrl+O: 上書きモードを切り替えます: 最初はオフです.\n"
 
-#: console.c:1943
+#: console.c:1952
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T: 現在の文字と1文字前の文字を入れ替えます.\n"
 
-#: console.c:1944
+#: console.c:1953
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -171,7 +171,7 @@ msgstr ""
 "\n"
 "注意: 何らかの入力が要求された場合にのみ,コンソールが更新されます.\n"
 
-#: console.c:1945
+#: console.c:1954
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -179,7 +179,7 @@ msgstr ""
 "  Ctrl+W で現在の機能の off/on を切り替えます.\n"
 "\n"
 
-#: console.c:1946
+#: console.c:1955
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -187,72 +187,72 @@ msgstr ""
 "ESC で計算を中断します.\n"
 "\n"
 
-#: console.c:1947
+#: console.c:1956
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "標準ウインドウズ・ホットキーを使い以下へ切りかえることができます\n"
 
-#: console.c:1948
+#: console.c:1957
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
 "グラフィックスデバイス (MDI 中の Ctrl+Tab または Ctrl+F6, SDI 中の Alt+Tab)"
 
-#: dataentry.c:219
+#: dataentry.c:220
 msgid "invalid argument"
 msgstr "無効な引数です"
 
-#: dataentry.c:266
+#: dataentry.c:267
 msgid "invalid type for value"
 msgstr "無効な型の値です"
 
-#: dataentry.c:280
+#: dataentry.c:281
 msgid "invalid device"
 msgstr "無効なデバイスです"
 
-#: dataentry.c:328
+#: dataentry.c:329
 msgid "dataentry: internal memory problem"
 msgstr "dataentry: 内部メモリに問題が発生しました"
 
-#: dataentry.c:622 dataentry.c:1116
+#: dataentry.c:623 dataentry.c:1117
 msgid "dataentry: internal memory error"
 msgstr "dataentry: 内部メモリエラーです"
 
-#: dataentry.c:741 dataentry.c:754
+#: dataentry.c:742 dataentry.c:755
 msgid "internal type error in dataentry"
 msgstr "dataentry 中の内部の型エラーです"
 
-#: dataentry.c:921
+#: dataentry.c:922
 msgid "dataentry: expression too long"
 msgstr "dataentry: 入力された式が長すぎます"
 
-#: dataentry.c:1349
+#: dataentry.c:1351
 msgid "column names cannot be blank"
 msgstr "列名は空白であってはなりません"
 
-#: dataentry.c:1393
+#: dataentry.c:1395
 msgid "Variable editor"
 msgstr "変数エディタ"
 
-#: dataentry.c:1398
+#: dataentry.c:1400
 msgid "variable name"
 msgstr "変数名"
 
-#: dataentry.c:1400
+#: dataentry.c:1402
 msgid "type"
 msgstr "型"
 
-#: dataentry.c:1504
+#: dataentry.c:1506
 msgid "Cell width(s)"
 msgstr "セル（複数）の幅"
 
-#: dataentry.c:1509
+#: dataentry.c:1511
 msgid "Cell width"
 msgstr "セルの幅"
 
-#: dataentry.c:1512
+#: dataentry.c:1514
 msgid "variable"
 msgstr "変数"
 
-#: dataentry.c:1551
+#: dataentry.c:1553
 msgid ""
 "Navigation.\n"
 "  Keyboard: cursor keys move selection\n"
@@ -296,234 +296,234 @@ msgstr ""
 "えます\n"
 "\n"
 
-#: dataentry.c:1557 dataentry.c:1651 editor.c:727 rui.c:1035
+#: dataentry.c:1559 dataentry.c:1653 editor.c:730 rui.c:1065
 msgid "Help"
 msgstr "ヘルプ"
 
-#: dataentry.c:1559
+#: dataentry.c:1561
 msgid "Copy selected cell"
 msgstr "選択中のセルをコピー"
 
-#: dataentry.c:1560
+#: dataentry.c:1562
 msgid "Paste to selected cell"
 msgstr "選択中のセルにペースト"
 
-#: dataentry.c:1561
+#: dataentry.c:1563
 msgid "Autosize column"
 msgstr "セルサイズの自動調節"
 
-#: dataentry.c:1563 pager.c:295 rui.c:760
-#: ../library/grDevices/src/devWindows.c:1601
+#: dataentry.c:1565 pager.c:295 rui.c:785
+#: ../library/grDevices/src/devWindows.c:1595
 msgid "Stay on top"
 msgstr "ウィンドウを常にトップに置く"
 
-#: dataentry.c:1565 dataentry.c:1643 pager.c:297 pager.c:460
+#: dataentry.c:1567 dataentry.c:1645 pager.c:297 pager.c:460
 msgid "Close"
 msgstr "閉じる"
 
-#: dataentry.c:1615
+#: dataentry.c:1617
 msgid "Data Editor"
 msgstr "データエディタ"
 
-#: dataentry.c:1641 editor.c:673 pager.c:452 rui.c:984
-#: ../library/grDevices/src/devWindows.c:1546
+#: dataentry.c:1643 editor.c:676 pager.c:452 rui.c:1013
+#: ../library/grDevices/src/devWindows.c:1540
 msgid "File"
 msgstr "ファイル"
 
-#: dataentry.c:1645 editor.c:691 pager.c:462 rui.c:1005
+#: dataentry.c:1647 editor.c:694 pager.c:462 rui.c:1034
 msgid "Edit"
 msgstr "編集"
 
-#: dataentry.c:1646
+#: dataentry.c:1648
 msgid "Copy  \tCTRL+C"
 msgstr "コピー  \tCTRL+C"
 
-#: dataentry.c:1647
+#: dataentry.c:1649
 msgid "Paste \tCTRL+V"
 msgstr "ペースト \tCTRL+V"
 
-#: dataentry.c:1648
+#: dataentry.c:1650
 msgid "Delete\tDEL"
 msgstr "消去 tDEL"
 
-#: dataentry.c:1650
+#: dataentry.c:1652
 msgid "Cell widths ..."
 msgstr "セルの幅 ..."
 
-#: dataentry.c:1652
+#: dataentry.c:1654
 msgid "Data editor"
 msgstr "データエディタ"
 
-#: editor.c:446 pager.c:172 pager.c:192
+#: editor.c:449 pager.c:172 pager.c:192
 msgid "No RGui console to paste to"
 msgstr "ペーストすべき RGui コンソールがありません"
 
-#: editor.c:548
+#: editor.c:551
 msgid "R EDITOR\n"
 msgstr "R エディタ\n"
 
-#: editor.c:550
+#: editor.c:553
 msgid "A standard text editor for editing and running R code.\n"
 msgstr "R コードの編集・実行用の標準テキストエディタ.\n"
 
-#: editor.c:552
+#: editor.c:555
 msgid "RUNNING COMMANDS\n"
 msgstr "コマンド実行中\n"
 
-#: editor.c:553
+#: editor.c:556
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr ""
 "カーソル行または選択中の R コードを実行するために, コードを選択してから\n"
 
-#: editor.c:554
+#: editor.c:557
 msgid "     Press Ctrl-R\n"
 msgstr "     Ctrl+R を押してください\n"
 
-#: editor.c:555
+#: editor.c:558
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr ""
 "     \"編集\" メニューから \"カーソル行または選択中の R コードを実行\" を選択"
 "して\n"
 
-#: editor.c:556
+#: editor.c:559
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr ""
 "     ツールバーの \"カーソル行または選択中の R コードを実行\" アイコンをク"
 "リックしてください\n"
 
-#: editor.c:557
+#: editor.c:560
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr ""
 "これは選択されたコマンドをコンソールにコピーし,そのコマンドを評価します\n"
 
-#: editor.c:558
+#: editor.c:561
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr "コマンドの選択がなければ現在行を実行し,\n"
 
-#: editor.c:559
+#: editor.c:562
 msgid "the cursor by one line.\n"
 msgstr "カーソルを1行進めます\n"
 
-#: editor.c:571 editor.c:646 editor.c:707
+#: editor.c:574 editor.c:649 editor.c:710
 msgid "Run line or selection"
 msgstr "カーソル行または選択中の R コードを実行"
 
-#: editor.c:573 editor.c:692
+#: editor.c:576 editor.c:695
 msgid "Undo"
 msgstr "やり直し"
 
-#: editor.c:575 editor.c:695
+#: editor.c:578 editor.c:698
 msgid "Cut"
 msgstr "カット"
 
-#: editor.c:576 editor.c:697 pager.c:290 pager.c:463 rui.c:750 rui.c:949
-#: rui.c:1006
+#: editor.c:579 editor.c:700 pager.c:290 pager.c:463 rui.c:775 rui.c:978
+#: rui.c:1035
 msgid "Copy"
 msgstr "コピー"
 
-#: editor.c:577 editor.c:699 rui.c:751 rui.c:953 rui.c:1007
+#: editor.c:580 editor.c:702 rui.c:776 rui.c:982 rui.c:1036
 msgid "Paste"
 msgstr "ペースト"
 
-#: editor.c:578 editor.c:701
+#: editor.c:581 editor.c:704
 msgid "Delete"
 msgstr "消去"
 
-#: editor.c:580 editor.c:703 pager.c:293 pager.c:469 rui.c:757 rui.c:1011
+#: editor.c:583 editor.c:706 pager.c:293 pager.c:469 rui.c:782 rui.c:1040
 msgid "Select all"
 msgstr "全て選択"
 
-#: editor.c:638 pager.c:416 rui.c:937
+#: editor.c:641 pager.c:416 rui.c:966
 msgid "Open script"
 msgstr "スクリプトを開く"
 
-#: editor.c:642
+#: editor.c:645
 msgid "Save script"
 msgstr "スクリプトを保存する"
 
-#: editor.c:650 pager.c:436 ../library/grDevices/src/devWindows.c:1514
+#: editor.c:653 pager.c:436 ../library/grDevices/src/devWindows.c:1508
 msgid "Return focus to Console"
 msgstr "コンソールに戻る"
 
-#: editor.c:653
+#: editor.c:656
 msgid "Print script"
 msgstr "スクリプトを印刷する"
 
-#: editor.c:655 pager.c:431 rui.c:965
-#: ../library/grDevices/src/devWindows.c:1508
+#: editor.c:658 pager.c:431 rui.c:994
+#: ../library/grDevices/src/devWindows.c:1502
 msgid "Print"
 msgstr "印刷"
 
-#: editor.c:674 pager.c:453 rui.c:986
+#: editor.c:677 pager.c:453 rui.c:1015
 msgid "New script"
 msgstr "新しいスクリプト"
 
-#: editor.c:676 pager.c:454 rui.c:987
+#: editor.c:679 pager.c:454 rui.c:1016
 msgid "Open script..."
 msgstr "スクリプトを開く..."
 
-#: editor.c:678 preferences.c:786
+#: editor.c:681 preferences.c:788
 msgid "Save"
 msgstr "保存"
 
-#: editor.c:680
+#: editor.c:683
 msgid "Save as..."
 msgstr "別名で保存..."
 
-#: editor.c:683 pager.c:455 rui.c:1000
-#: ../library/grDevices/src/devWindows.c:1604
+#: editor.c:686 pager.c:455 rui.c:1029
+#: ../library/grDevices/src/devWindows.c:1598
 msgid "Print..."
 msgstr "印刷..."
 
-#: editor.c:686
+#: editor.c:689
 msgid "Close script"
 msgstr "スクリプトを閉じる"
 
-#: editor.c:705 rui.c:1012
+#: editor.c:708 rui.c:1041
 msgid "Clear console"
 msgstr "コンソール画面を消去"
 
-#: editor.c:709
+#: editor.c:712
 msgid "Run all"
 msgstr "全て実行"
 
-#: editor.c:712
+#: editor.c:715
 msgid "Find..."
 msgstr "検索..."
 
-#: editor.c:714
+#: editor.c:717
 msgid "Replace..."
 msgstr "置換..."
 
-#: editor.c:717 rui.c:1016
+#: editor.c:720 rui.c:1045
 msgid "GUI preferences..."
 msgstr "GUI プリファレンス..."
 
-#: editor.c:728
+#: editor.c:731
 msgid "Editor"
 msgstr "エディタ"
 
-#: editor.c:785
+#: editor.c:788
 msgid "Maximum number of editors reached"
 msgstr "エディタ範囲の最大数に達してしまいました"
 
-#: editor.c:790
+#: editor.c:793
 msgid "Unable to create editor window"
 msgstr "エディタウインドウを作成することができません"
 
-#: editor.c:799
+#: editor.c:802
 msgid "Untitled"
 msgstr "無題"
 
-#: extra.c:804 preferences.c:788 graphapp/dialogs.c:468 graphapp/dialogs.c:563
+#: extra.c:804 preferences.c:790 graphapp/dialogs.c:505 graphapp/dialogs.c:600
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:805 preferences.c:789 graphapp/dialogs.c:442 graphapp/dialogs.c:466
-#: graphapp/dialogs.c:472 graphapp/dialogs.c:547 graphapp/dialogs.c:561
-#: graphapp/dialogs.c:567
+#: extra.c:805 preferences.c:791 graphapp/dialogs.c:479 graphapp/dialogs.c:503
+#: graphapp/dialogs.c:509 graphapp/dialogs.c:584 graphapp/dialogs.c:598
+#: graphapp/dialogs.c:604
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -535,7 +535,7 @@ msgstr "ファイルを開く際にエラーが発生しました"
 msgid "Insufficient memory to display file in internal pager"
 msgstr "内部ページャでファイルを表示するためのメモリが不足しています"
 
-#: pager.c:164 pager.c:176 pager.c:196 rui.c:211 rui.c:238
+#: pager.c:164 pager.c:176 pager.c:196 rui.c:225 rui.c:252
 msgid "No selection"
 msgstr "選択されていません"
 
@@ -547,7 +547,7 @@ msgstr "コンソールにペースト"
 msgid "Paste commands to console"
 msgstr "コマンドをコンソールにペースト"
 
-#: pager.c:457 rui.c:1001
+#: pager.c:457 rui.c:1030
 msgid "Save to File..."
 msgstr "ファイルを保存..."
 
@@ -559,7 +559,7 @@ msgstr "閲覧"
 msgid "Unable to create pager window"
 msgstr "ページャ用のウインドウを作成することができません"
 
-#: preferences.c:241
+#: preferences.c:243
 msgid ""
 "The overall console properties cannot be changed\n"
 "on a running console.\n"
@@ -571,7 +571,7 @@ msgstr ""
 "\n"
 "設定を保存して、これらをを適用するために、Rguiを再実行しなさい。\n"
 
-#: preferences.c:245
+#: preferences.c:247
 #, fuzzy
 msgid ""
 "The language for menus cannot be changed on a\n"
@@ -584,11 +584,11 @@ msgstr ""
 "\n"
 "設定を保存して、これらをを適用するために、Rguiを再実行しなさい。\n"
 
-#: preferences.c:314
+#: preferences.c:316
 msgid "Changes in pager size will not apply to any open pagers"
 msgstr "ページャーサイズの変更は、オープン済みのページャーに影響をあたえない"
 
-#: preferences.c:320
+#: preferences.c:322
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
@@ -596,302 +596,307 @@ msgstr ""
 "ページャーが開いているならば、ページャータイプを変えてはいけない\n"
 "続行しますか?"
 
-#: preferences.c:347
+#: preferences.c:349
 msgid "Select directory for file 'Rconsole'"
 msgstr "ファイル 'Rconsole' のディレクトリを選択"
 
-#: preferences.c:438
+#: preferences.c:440
 msgid "Select 'Rconsole' file"
 msgstr "ファイル 'Rconsole' を選択"
 
-#: preferences.c:633
+#: preferences.c:635
 #, c-format
 msgid "Error at line %d of file %s"
 msgstr "ファイル %2$s の %1$d 行目でエラーが発生しました"
 
-#: preferences.c:676
+#: preferences.c:678
 msgid "Rgui Configuration Editor"
 msgstr "Rgui設定エディター"
 
-#: preferences.c:785
+#: preferences.c:787
 msgid "Apply"
 msgstr "反映"
 
-#: preferences.c:787
+#: preferences.c:789
 msgid "Load"
 msgstr "ロード"
 
-#: rui.c:105
+#: rui.c:124
 msgid "Select file to source"
 msgstr "ソースファイルの選択"
 
-#: rui.c:126
+#: rui.c:145
 msgid "Select image to load"
 msgstr "ロードする image の選択"
 
-#: rui.c:141
+#: rui.c:160
 msgid "Save image in"
 msgstr "image の保存先"
 
-#: rui.c:155
+#: rui.c:175
 msgid "Load history from"
 msgstr "履歴の読み込み"
 
-#: rui.c:168
+#: rui.c:184
 msgid "Save history in"
 msgstr "履歴の保存先"
 
-#: rui.c:220 rui.c:229
+#: rui.c:234 rui.c:243
 msgid "No text available"
 msgstr "利用可能なテキストがありません"
 
-#: rui.c:278
+#: rui.c:292
 msgid "Name of data frame or matrix"
 msgstr "データフレームまたは行列の名前"
 
-#: rui.c:285
+#: rui.c:299
 #, c-format
 msgid "'%s' cannot be found"
 msgstr "'%s' が見つかりません"
 
-#: rui.c:345
+#: rui.c:365
 msgid "Are you sure?"
 msgstr "本気ですか?"
 
-#: rui.c:426
+#: rui.c:446
 msgid "Help on"
 msgstr "ヘルプ"
 
-#: rui.c:472
+#: rui.c:497
 msgid "Search help"
 msgstr "ヘルプの検索"
 
-#: rui.c:487
+#: rui.c:512
 msgid "Search for words in help list archives and documentation"
 msgstr "ヘルプリストアーカイブとドキュメンテーションを検索をする"
 
-#: rui.c:502
+#: rui.c:527
 msgid "Apropos"
 msgstr "オブジェクトの検索"
 
-#: rui.c:746
+#: rui.c:771
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr ".R, .RData そして .rda ファイルのみドラッグ＆ドロップができます"
 
-#: rui.c:752 rui.c:1008
+#: rui.c:777 rui.c:1037
 msgid "Paste commands only"
 msgstr "コマンドのみペースト"
 
-#: rui.c:753 rui.c:957
+#: rui.c:778 rui.c:986
 msgid "Copy and paste"
 msgstr "コピー＆ペースト"
 
-#: rui.c:755
+#: rui.c:780
 msgid "Clear window"
 msgstr "ウインドウの消去"
 
-#: rui.c:759 rui.c:1024
+#: rui.c:784 rui.c:1054
 msgid "Buffered output"
 msgstr "バッファに出力"
 
-#: rui.c:799
+#: rui.c:824
 msgid "Packages"
 msgstr "パッケージ"
 
-#: rui.c:800
+#: rui.c:825
 msgid "Load package..."
 msgstr "パッケージの読み込み..."
 
-#: rui.c:802
+#: rui.c:827
 msgid "Set CRAN mirror..."
 msgstr "CRAN ミラーサイトの設定..."
 
-#: rui.c:804
+#: rui.c:829
 msgid "Select repositories..."
 msgstr "ダウンロードサイトの選択..."
 
-#: rui.c:806
+#: rui.c:831
 msgid "Install package(s)..."
 msgstr "パッケージのインストール..."
 
-#: rui.c:808
+#: rui.c:833
 msgid "Update packages..."
 msgstr "パッケージの更新..."
 
-#: rui.c:811
+#: rui.c:836
 msgid "Install package(s) from local zip files..."
 msgstr "ローカルにある zip ファイルからのパッケージのインストール..."
 
-#: rui.c:838
+#: rui.c:864
 msgid "FAQ on R"
 msgstr "R の FAQ"
 
-#: rui.c:840
+#: rui.c:866
 msgid "FAQ on R for &Windows"
 msgstr "Windows 版 R の FAQ"
 
-#: rui.c:846 rui.c:849
+#: rui.c:872 rui.c:875
 msgid "Manuals (in PDF)"
 msgstr "マニュアル (PDF)"
 
-#: rui.c:873
+#: rui.c:902
 msgid "R functions (text)..."
 msgstr "R の関数 (テキスト)..."
 
-#: rui.c:875
+#: rui.c:904
 msgid "Html help"
 msgstr "Html ヘルプ"
 
-#: rui.c:877
+#: rui.c:906
 msgid "Search help..."
 msgstr "ヘルプの検索"
 
-#: rui.c:882
+#: rui.c:911
 msgid "Apropos..."
 msgstr "オブジェクトの検索"
 
-#: rui.c:884
+#: rui.c:913
 msgid "R Project home page"
 msgstr "R Project ホームページ"
 
-#: rui.c:885
+#: rui.c:914
 msgid "CRAN home page"
 msgstr "CRAN ホームページ"
 
-#: rui.c:887
+#: rui.c:916
 msgid "About"
 msgstr "R について"
 
-#: rui.c:941
+#: rui.c:970
 msgid "Load image"
 msgstr "image の読み込み"
 
-#: rui.c:945
+#: rui.c:974
 msgid "Save image"
 msgstr "image の保存"
 
-#: rui.c:961
+#: rui.c:990
 msgid "Stop current computation"
 msgstr "現在の計算を中断"
 
-#: rui.c:985
+#: rui.c:1014
 msgid "Source R code..."
 msgstr "R コードのソースを読み込み..."
 
-#: rui.c:988
+#: rui.c:1017
 msgid "Display file(s)..."
 msgstr "ファイルの表示..."
 
-#: rui.c:990
+#: rui.c:1019
 msgid "Load Workspace..."
 msgstr "作業スペースの読み込み..."
 
-#: rui.c:991
+#: rui.c:1020
 msgid "Save Workspace..."
 msgstr "作業スペースの保存..."
 
-#: rui.c:993
+#: rui.c:1022
 msgid "Load History..."
 msgstr "履歴の読み込み..."
 
-#: rui.c:995
+#: rui.c:1024
 msgid "Save History..."
 msgstr "履歴の保存..."
 
-#: rui.c:998
+#: rui.c:1027
 msgid "Change dir..."
 msgstr "ディレクトリの変更..."
 
-#: rui.c:1003
+#: rui.c:1032
 msgid "Exit"
 msgstr "終了"
 
-#: rui.c:1010
+#: rui.c:1039
 msgid "Copy and Paste"
 msgstr "コピー＆ペースト"
 
-#: rui.c:1014
+#: rui.c:1043
 msgid "Data editor..."
 msgstr "データエディタ..."
 
-#: rui.c:1018
+#: rui.c:1047
 msgid "Misc"
 msgstr "その他"
 
-#: rui.c:1019
+#: rui.c:1048
 msgid "Stop current computation           \tESC"
 msgstr "現在の計算を中断           \tESC"
 
-#: rui.c:1022
+#: rui.c:1050
+#, fuzzy
+msgid "Stop all computations"
+msgstr "現在の計算を中断"
+
+#: rui.c:1052
 msgid "Break to debugger"
 msgstr "実行を中断してデバッガーを起動"
 
-#: rui.c:1026
+#: rui.c:1056
 msgid "List objects"
 msgstr "オブジェクトの一覧"
 
-#: rui.c:1027
+#: rui.c:1057
 msgid "Remove all objects"
 msgstr "全てのオブジェクトの消去"
 
-#: rui.c:1028
+#: rui.c:1058
 msgid "List &search path"
 msgstr "search パスの一覧"
 
-#: rui.c:1036
+#: rui.c:1066
 msgid "Console"
 msgstr "コンソール"
 
-#: rui.c:1073
+#: rui.c:1103
 msgid "Select file"
 msgstr "ファイルを選択"
 
-#: rui.c:1116
+#: rui.c:1146
 msgid "'mname' is limited to 1000 bytes"
 msgstr "'mname' は半角英数字で 1000 文字までに制限されています"
 
-#: rui.c:1158
+#: rui.c:1188
 #, c-format
 msgid "menu %s does not exist"
 msgstr "メニュー %s は存在しません"
 
-#: rui.c:1212
+#: rui.c:1242
 msgid "'menu' is limited to 500 bytes"
 msgstr "'menu' は半角英数字で 500 文字までに制限されています"
 
-#: rui.c:1222
+#: rui.c:1252
 msgid "base menu does not exist"
 msgstr "base メニューが存在しません"
 
-#: rui.c:1237
+#: rui.c:1267
 msgid "failed to allocate menu"
 msgstr "メニューの割り当てに失敗しました"
 
-#: rui.c:1253 rui.c:1374
+#: rui.c:1283 rui.c:1404
 msgid "menu + item is limited to 1000 bytes"
 msgstr "menu + item は半角英数字で 1000 文字までに制限されています"
 
-#: rui.c:1261 rui.c:1343
+#: rui.c:1291 rui.c:1373
 msgid "menu does not exist"
 msgstr "メニューは存在しません"
 
-#: rui.c:1279 rui.c:1302 rui.c:1307
+#: rui.c:1309 rui.c:1332 rui.c:1337
 msgid "failed to allocate char storage"
 msgstr "char storage の割り当てに失敗しました"
 
-#: rui.c:1315
+#: rui.c:1345
 msgid "failed to allocate menuitem"
 msgstr "メニューアイテムの割り当てに失敗しました"
 
-#: rui.c:1364
+#: rui.c:1394
 msgid "menu not found"
 msgstr "メニューが見つかりません"
 
-#: rui.c:1382
+#: rui.c:1412
 msgid "menu or item does not exist"
 msgstr "メニューまたはアイテムが存在しません"
 
-#: system.c:399
+#: system.c:400
 msgid "Save workspace image?"
 msgstr "作業スペースを保存しますか?"
 
@@ -900,36 +905,36 @@ msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr ""
 "メモリが不足しています: セルをクリップボードにコピーすることができません"
 
-#: graphapp/dialogs.c:96 graphapp/dialogs.c:113 graphapp/dialogs.c:130
+#: graphapp/dialogs.c:135 graphapp/dialogs.c:152 graphapp/dialogs.c:169
 msgid "Question"
 msgstr "質問"
 
-#: graphapp/dialogs.c:150
+#: graphapp/dialogs.c:189
 msgid " Change working directory to:"
 msgstr "作業ディレクトリの変更"
 
-#: graphapp/dialogs.c:153
+#: graphapp/dialogs.c:192
 #, c-format
 msgid "Unable to set '%s' as working directory"
 msgstr "作業ディレクトリとして '%s' を設定することができません"
 
-#: graphapp/dialogs.c:363
+#: graphapp/dialogs.c:400
 msgid "Choose a folder"
 msgstr ""
 
-#: graphapp/dialogs.c:455 graphapp/dialogs.c:457
+#: graphapp/dialogs.c:492 graphapp/dialogs.c:494
 msgid "Browse"
 msgstr ""
 
-#: graphapp/dialogs.c:555
+#: graphapp/dialogs.c:592
 msgid "User"
 msgstr "ユーザー"
 
-#: graphapp/dialogs.c:556
+#: graphapp/dialogs.c:593
 msgid "Password"
 msgstr "パスワード"
 
-#: graphapp/dialogs.c:717 graphapp/dialogs.c:723
+#: graphapp/dialogs.c:754 graphapp/dialogs.c:760
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\" が見つかりません"
@@ -950,238 +955,238 @@ msgstr "タイルパターン"
 msgid "Arrange Icons"
 msgstr "アイコンの並べ替え"
 
-#: ../library/grDevices/src/devWindows.c:850
+#: ../library/grDevices/src/devWindows.c:848
 msgid "Png files (*.png)"
 msgstr "Png ファイル (*.png)"
 
-#: ../library/grDevices/src/devWindows.c:851
+#: ../library/grDevices/src/devWindows.c:849
 msgid "Portable network graphics file"
 msgstr "ポータブル・ネットワークグラフィックファイル"
 
-#: ../library/grDevices/src/devWindows.c:853
+#: ../library/grDevices/src/devWindows.c:851
 msgid "Windows bitmap files (*.bmp)"
 msgstr "Windows ビットマップファイル (*.bmp)"
 
-#: ../library/grDevices/src/devWindows.c:854
+#: ../library/grDevices/src/devWindows.c:852
 msgid "Windows bitmap file"
 msgstr "Windows ビットマップファイル"
 
-#: ../library/grDevices/src/devWindows.c:856
+#: ../library/grDevices/src/devWindows.c:854
 msgid "Jpeg files (*.jpeg,*jpg)"
 msgstr "Jpeg ファイル (*.jpeg,*jpg)"
 
-#: ../library/grDevices/src/devWindows.c:857
+#: ../library/grDevices/src/devWindows.c:855
 msgid "Jpeg file"
 msgstr "Jpeg ファイル"
 
-#: ../library/grDevices/src/devWindows.c:878
+#: ../library/grDevices/src/devWindows.c:875
 msgid "Postscript files (*.ps)"
 msgstr "ポストスクリプトファイル (*.ps)"
 
-#: ../library/grDevices/src/devWindows.c:879
+#: ../library/grDevices/src/devWindows.c:876
 msgid "Postscript file"
 msgstr "ポストスクリプトファイル"
 
-#: ../library/grDevices/src/devWindows.c:891
+#: ../library/grDevices/src/devWindows.c:887
 msgid "PDF files (*.pdf)"
 msgstr "PDF ファイル (*.pdf)"
 
-#: ../library/grDevices/src/devWindows.c:892
+#: ../library/grDevices/src/devWindows.c:888
 msgid "PDF file"
 msgstr "PDF ファイル"
 
-#: ../library/grDevices/src/devWindows.c:904
+#: ../library/grDevices/src/devWindows.c:899
 msgid "Enhanced metafiles (*.emf)"
 msgstr "Enhanced metafiles (*.emf)"
 
-#: ../library/grDevices/src/devWindows.c:905
+#: ../library/grDevices/src/devWindows.c:900
 msgid "Enhanced metafiles"
 msgstr "Enhanced metafiles"
 
-#: ../library/grDevices/src/devWindows.c:909
-#: ../library/grDevices/src/devWindows.c:2724
+#: ../library/grDevices/src/devWindows.c:903
+#: ../library/grDevices/src/devWindows.c:2721
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "選択されたファイルパスが長すぎます: 512 バイトまでです"
 
-#: ../library/grDevices/src/devWindows.c:1125
+#: ../library/grDevices/src/devWindows.c:1119
 msgid "No plot to replace!"
 msgstr "置換すべきプロットがありません!"
 
-#: ../library/grDevices/src/devWindows.c:1171
+#: ../library/grDevices/src/devWindows.c:1165
 msgid "Variable name"
 msgstr "変数名"
 
-#: ../library/grDevices/src/devWindows.c:1178
+#: ../library/grDevices/src/devWindows.c:1172
 msgid "Variable doesn't exist or doesn't contain any plots!"
 msgstr "変数が存在しないか、いかなるプロットも含んでいません!"
 
-#: ../library/grDevices/src/devWindows.c:1194
+#: ../library/grDevices/src/devWindows.c:1188
 msgid "Name of variable to save to"
 msgstr "変数名の保存"
 
-#: ../library/grDevices/src/devWindows.c:1502
+#: ../library/grDevices/src/devWindows.c:1496
 msgid "Copy to the clipboard as a metafile"
 msgstr "メタファイルとしてクリップボードにコピー"
 
-#: ../library/grDevices/src/devWindows.c:1520
-#: ../library/grDevices/src/devWindows.c:1531
+#: ../library/grDevices/src/devWindows.c:1514
+#: ../library/grDevices/src/devWindows.c:1525
 msgid "Stop locator"
 msgstr "locator を停止"
 
-#: ../library/grDevices/src/devWindows.c:1530
-#: ../library/grDevices/src/devWindows.c:1534
+#: ../library/grDevices/src/devWindows.c:1524
+#: ../library/grDevices/src/devWindows.c:1528
 msgid "Stop"
 msgstr "停止"
 
-#: ../library/grDevices/src/devWindows.c:1536
+#: ../library/grDevices/src/devWindows.c:1530
 msgid "Continue"
 msgstr "続く"
 
-#: ../library/grDevices/src/devWindows.c:1540
+#: ../library/grDevices/src/devWindows.c:1534
 msgid "Next"
 msgstr "次"
 
-#: ../library/grDevices/src/devWindows.c:1541
+#: ../library/grDevices/src/devWindows.c:1535
 msgid "Next plot"
 msgstr "次のプロット"
 
-#: ../library/grDevices/src/devWindows.c:1547
+#: ../library/grDevices/src/devWindows.c:1541
 msgid "Save as"
 msgstr "別名で保存"
 
-#: ../library/grDevices/src/devWindows.c:1548
+#: ../library/grDevices/src/devWindows.c:1542
 msgid "Metafile..."
 msgstr "Metafile..."
 
-#: ../library/grDevices/src/devWindows.c:1549
+#: ../library/grDevices/src/devWindows.c:1543
 msgid "Postscript..."
 msgstr "Postscript..."
 
-#: ../library/grDevices/src/devWindows.c:1550
+#: ../library/grDevices/src/devWindows.c:1544
 msgid "PDF..."
 msgstr "PDF..."
 
-#: ../library/grDevices/src/devWindows.c:1551
+#: ../library/grDevices/src/devWindows.c:1545
 msgid "Png..."
 msgstr "Png..."
 
-#: ../library/grDevices/src/devWindows.c:1552
+#: ../library/grDevices/src/devWindows.c:1546
 msgid "Bmp..."
 msgstr "Bmp..."
 
-#: ../library/grDevices/src/devWindows.c:1553
+#: ../library/grDevices/src/devWindows.c:1547
 msgid "Jpeg"
 msgstr "Jpeg"
 
-#: ../library/grDevices/src/devWindows.c:1554
+#: ../library/grDevices/src/devWindows.c:1548
 msgid "50% quality..."
 msgstr "50% の品質..."
 
-#: ../library/grDevices/src/devWindows.c:1555
+#: ../library/grDevices/src/devWindows.c:1549
 msgid "75% quality..."
 msgstr "75% の品質..."
 
-#: ../library/grDevices/src/devWindows.c:1556
+#: ../library/grDevices/src/devWindows.c:1550
 msgid "100% quality..."
 msgstr "100% の品質..."
 
-#: ../library/grDevices/src/devWindows.c:1557
+#: ../library/grDevices/src/devWindows.c:1551
 msgid "Copy to the clipboard"
 msgstr "クリップボードにコピー"
 
-#: ../library/grDevices/src/devWindows.c:1558
+#: ../library/grDevices/src/devWindows.c:1552
 msgid "as a Bitmap\tCTRL+C"
 msgstr "ビットマップtCTRL+C　として"
 
-#: ../library/grDevices/src/devWindows.c:1559
+#: ../library/grDevices/src/devWindows.c:1553
 msgid "as a Metafile\tCTRL+W"
 msgstr "メタファイルtCTRL+W　として"
 
-#: ../library/grDevices/src/devWindows.c:1562
+#: ../library/grDevices/src/devWindows.c:1556
 msgid "Print...\tCTRL+P"
 msgstr "印刷...\tCTRL+P"
 
-#: ../library/grDevices/src/devWindows.c:1564
+#: ../library/grDevices/src/devWindows.c:1558
 msgid "close Device"
 msgstr "デバイスを閉じる"
 
-#: ../library/grDevices/src/devWindows.c:1565
+#: ../library/grDevices/src/devWindows.c:1559
 msgid "History"
 msgstr "履歴"
 
-#: ../library/grDevices/src/devWindows.c:1566
+#: ../library/grDevices/src/devWindows.c:1560
 msgid "Recording"
 msgstr "記録"
 
-#: ../library/grDevices/src/devWindows.c:1569
+#: ../library/grDevices/src/devWindows.c:1563
 msgid "Add\tINS"
 msgstr "追加\tINS"
 
-#: ../library/grDevices/src/devWindows.c:1570
+#: ../library/grDevices/src/devWindows.c:1564
 msgid "Replace"
 msgstr "置換"
 
-#: ../library/grDevices/src/devWindows.c:1572
+#: ../library/grDevices/src/devWindows.c:1566
 msgid "Previous\tPgUp"
 msgstr "戻る\tPgUp"
 
-#: ../library/grDevices/src/devWindows.c:1573
+#: ../library/grDevices/src/devWindows.c:1567
 msgid "Next\tPgDown"
 msgstr "進む\tPgDown"
 
-#: ../library/grDevices/src/devWindows.c:1575
+#: ../library/grDevices/src/devWindows.c:1569
 msgid "Save to variable..."
 msgstr "変数へ保存..."
 
-#: ../library/grDevices/src/devWindows.c:1576
+#: ../library/grDevices/src/devWindows.c:1570
 msgid "Get from variable..."
 msgstr "変数から取得..."
 
-#: ../library/grDevices/src/devWindows.c:1578
+#: ../library/grDevices/src/devWindows.c:1572
 msgid "Clear history"
 msgstr "履歴の消去"
 
-#: ../library/grDevices/src/devWindows.c:1579
+#: ../library/grDevices/src/devWindows.c:1573
 msgid "Resize"
 msgstr "サイズ変更"
 
-#: ../library/grDevices/src/devWindows.c:1580
+#: ../library/grDevices/src/devWindows.c:1574
 msgid "R mode"
 msgstr "R モード"
 
-#: ../library/grDevices/src/devWindows.c:1582
+#: ../library/grDevices/src/devWindows.c:1576
 msgid "Fit to window"
 msgstr "ウインドウに合わせる"
 
-#: ../library/grDevices/src/devWindows.c:1584
+#: ../library/grDevices/src/devWindows.c:1578
 msgid "Fixed size"
 msgstr "固定サイズ"
 
-#: ../library/grDevices/src/devWindows.c:1591
+#: ../library/grDevices/src/devWindows.c:1585
 msgid "Copy as metafile"
 msgstr "メタファイルにコピー"
 
-#: ../library/grDevices/src/devWindows.c:1593
+#: ../library/grDevices/src/devWindows.c:1587
 msgid "Copy as bitmap"
 msgstr "ビットマップにコピー"
 
-#: ../library/grDevices/src/devWindows.c:1596
+#: ../library/grDevices/src/devWindows.c:1590
 msgid "Save as metafile..."
 msgstr "メタファイルに保存..."
 
-#: ../library/grDevices/src/devWindows.c:1598
+#: ../library/grDevices/src/devWindows.c:1592
 msgid "Save as postscript..."
 msgstr "ポストスクリプトに保存..."
 
-#: ../library/grDevices/src/devWindows.c:2458
+#: ../library/grDevices/src/devWindows.c:2456
 msgid "Locator is active"
 msgstr "Locator はアクティブです"
 
-#: ../library/grDevices/src/devWindows.c:3035
+#: ../library/grDevices/src/devWindows.c:3032
 msgid "Waiting to confirm page change..."
 msgstr "ページ変更を確認するまで待機中..."
 
-#: ../library/grDevices/src/devWindows.c:3047
+#: ../library/grDevices/src/devWindows.c:3044
 msgid "Click or hit ENTER for next page"
 msgstr "クリックまたは ENTER キーを押すと次のページに移ります"
 

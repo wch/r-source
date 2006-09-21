@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-16 08:59+0100\n"
+"POT-Creation-Date: 2006-09-21 08:37+0100\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -209,9 +209,9 @@ msgstr ""
 #: src/main/scan.c:1807 src/main/scan.c:1808 src/main/scan.c:1809
 #: src/main/scan.c:1810 src/main/sort.c:793 src/main/sort.c:893
 #: src/main/sysutils.c:147 src/main/util.c:749 src/main/util.c:754
-#: src/main/util.c:762 src/main/util.c:765 src/modules/X11/devX11.c:2464
-#: src/modules/X11/devX11.c:2491 src/modules/X11/devX11.c:2496
-#: src/modules/X11/devX11.c:2501 src/unix/sys-std.c:1029
+#: src/main/util.c:762 src/main/util.c:765 src/modules/X11/devX11.c:2466
+#: src/modules/X11/devX11.c:2493 src/modules/X11/devX11.c:2498
+#: src/modules/X11/devX11.c:2503 src/unix/sys-std.c:1029
 #, c-format
 msgid "invalid '%s' value"
 msgstr ""
@@ -1808,11 +1808,11 @@ msgstr ""
 msgid "allocation of bzfile connection failed"
 msgstr ""
 
-#: src/main/connections.c:1407 src/modules/X11/devX11.c:2585
+#: src/main/connections.c:1407 src/modules/X11/devX11.c:2587
 msgid "memory allocation to copy clipboard failed"
 msgstr ""
 
-#: src/main/connections.c:1412 src/modules/X11/devX11.c:2573
+#: src/main/connections.c:1412 src/modules/X11/devX11.c:2575
 msgid "clipboard cannot be opened or contains no text"
 msgstr ""
 
@@ -2192,11 +2192,15 @@ msgstr ""
 msgid "the standard deviation is zero"
 msgstr ""
 
-#: src/main/cum.c:140
+#: src/main/cum.c:49
+msgid "Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
+msgstr ""
+
+#: src/main/cum.c:181
 msgid "min/max not defined for complex numbers"
 msgstr ""
 
-#: src/main/cum.c:143 src/main/cum.c:167
+#: src/main/cum.c:184 src/main/cum.c:205 src/main/cum.c:228
 msgid "unknown cumxxx function"
 msgstr ""
 
@@ -2756,7 +2760,7 @@ msgstr ""
 msgid "arguments must be symbolic"
 msgstr ""
 
-#: src/main/envir.c:2485 src/main/random.c:34 src/main/random.c:562
+#: src/main/envir.c:2485 src/main/random.c:34 src/main/random.c:563
 msgid "invalid arguments"
 msgstr ""
 
@@ -3610,44 +3614,44 @@ msgstr ""
 msgid "During startup - "
 msgstr ""
 
-#: src/main/main.c:1097
+#: src/main/main.c:1098
 msgid "cannot quit from browser"
 msgstr ""
 
-#: src/main/main.c:1101
+#: src/main/main.c:1102
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 
-#: src/main/main.c:1106
+#: src/main/main.c:1107
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 
-#: src/main/main.c:1114
+#: src/main/main.c:1115
 msgid "unrecognized value of 'save'"
 msgstr ""
 
-#: src/main/main.c:1117
+#: src/main/main.c:1118
 msgid "invalid 'status', 0 assumed"
 msgstr ""
 
-#: src/main/main.c:1122
+#: src/main/main.c:1123
 msgid "invalid 'runLast', FALSE assumed"
 msgstr ""
 
-#: src/main/main.c:1153
+#: src/main/main.c:1154
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 
-#: src/main/main.c:1231
+#: src/main/main.c:1232
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr ""
 
-#: src/main/main.c:1344
+#: src/main/main.c:1345
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 
-#: src/main/main.c:1404
+#: src/main/main.c:1405
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 
@@ -4592,7 +4596,7 @@ msgstr ""
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: src/main/plot.c:335 src/modules/X11/devX11.c:1427
+#: src/main/plot.c:335 src/modules/X11/devX11.c:1429
 msgid "invalid font specification"
 msgstr ""
 
@@ -5076,11 +5080,11 @@ msgstr ""
 msgid "incorrect number of probabilities"
 msgstr ""
 
-#: src/main/random.c:518
+#: src/main/random.c:519
 msgid "invalid first argument 'n'"
 msgstr ""
 
-#: src/main/random.c:520
+#: src/main/random.c:521
 msgid "invalid second argument 'size'"
 msgstr ""
 
@@ -6693,101 +6697,101 @@ msgstr ""
 msgid "X11 font at size %d could not be loaded"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1065
+#: src/modules/X11/devX11.c:1067
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1082
+#: src/modules/X11/devX11.c:1084
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1141
+#: src/modules/X11/devX11.c:1143
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1142
+#: src/modules/X11/devX11.c:1144
 msgid "X cannot set locale modifiers"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1147
+#: src/modules/X11/devX11.c:1149
 msgid "no png support in this version of R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1153
+#: src/modules/X11/devX11.c:1155
 msgid "filename too long in png() call"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1157 src/modules/X11/devX11.c:1666
+#: src/modules/X11/devX11.c:1159 src/modules/X11/devX11.c:1668
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1168
+#: src/modules/X11/devX11.c:1170
 msgid "no jpeg support in this version of R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1176
+#: src/modules/X11/devX11.c:1178
 msgid "filename too long in jpeg() call"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1180 src/modules/X11/devX11.c:1673
+#: src/modules/X11/devX11.c:1182 src/modules/X11/devX11.c:1675
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1201
+#: src/modules/X11/devX11.c:1203
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1227
+#: src/modules/X11/devX11.c:1229
 msgid "jpeg() does not support transparency: using white bg"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1340
+#: src/modules/X11/devX11.c:1342
 msgid "unable to create X11 window"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1388
+#: src/modules/X11/devX11.c:1390
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1393
+#: src/modules/X11/devX11.c:1395
 msgid "unable to create pixmap"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1466
+#: src/modules/X11/devX11.c:1468
 msgid "font family not found in X11 font database"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2398
+#: src/modules/X11/devX11.c:2400
 msgid "invalid string argument"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2433
+#: src/modules/X11/devX11.c:2435
 #, c-format
 msgid "unable to start device %s"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2460
+#: src/modules/X11/devX11.c:2462
 msgid "invalid 'width' or 'height'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2467
+#: src/modules/X11/devX11.c:2469
 msgid "invalid colortype passed to X11 driver"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2481
+#: src/modules/X11/devX11.c:2483
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2549
+#: src/modules/X11/devX11.c:2551
 msgid "unable to contact X11 display"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2600
+#: src/modules/X11/devX11.c:2602
 msgid "cannot allocate memory for X11Routines structure"
 msgstr ""
 

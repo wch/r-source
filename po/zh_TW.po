@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-16 08:59+0100\n"
+"POT-Creation-Date: 2006-09-21 08:37+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -213,9 +213,9 @@ msgstr "'loadRconsole' 只能在 Rgui 中使用"
 #: src/main/scan.c:1807 src/main/scan.c:1808 src/main/scan.c:1809
 #: src/main/scan.c:1810 src/main/sort.c:793 src/main/sort.c:893
 #: src/main/sysutils.c:147 src/main/util.c:749 src/main/util.c:754
-#: src/main/util.c:762 src/main/util.c:765 src/modules/X11/devX11.c:2464
-#: src/modules/X11/devX11.c:2491 src/modules/X11/devX11.c:2496
-#: src/modules/X11/devX11.c:2501 src/unix/sys-std.c:1029
+#: src/main/util.c:762 src/main/util.c:765 src/modules/X11/devX11.c:2466
+#: src/modules/X11/devX11.c:2493 src/modules/X11/devX11.c:2498
+#: src/modules/X11/devX11.c:2503 src/unix/sys-std.c:1029
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s' 值不正確"
@@ -1820,11 +1820,11 @@ msgstr "檔案 '%s' 看起來不象是 bzip2 類別"
 msgid "allocation of bzfile connection failed"
 msgstr "指派 bz 檔案連結失敗"
 
-#: src/main/connections.c:1407 src/modules/X11/devX11.c:2585
+#: src/main/connections.c:1407 src/modules/X11/devX11.c:2587
 msgid "memory allocation to copy clipboard failed"
 msgstr "複製剪貼簿時記憶體指派失敗"
 
-#: src/main/connections.c:1412 src/modules/X11/devX11.c:2573
+#: src/main/connections.c:1412 src/modules/X11/devX11.c:2575
 msgid "clipboard cannot be opened or contains no text"
 msgstr "打不開剪貼簿，或是剪貼簿不含文字"
 
@@ -2209,11 +2209,16 @@ msgstr "'use' 不正確 (計算方法)"
 msgid "the standard deviation is zero"
 msgstr "標準差為零"
 
-#: src/main/cum.c:140
+#: src/main/cum.c:49
+#, fuzzy
+msgid "Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
+msgstr "sum(.) 中整數上溢；請用 sum(as.numeric(.))"
+
+#: src/main/cum.c:181
 msgid "min/max not defined for complex numbers"
 msgstr "min/max 不能適用於複數"
 
-#: src/main/cum.c:143 src/main/cum.c:167
+#: src/main/cum.c:184 src/main/cum.c:205 src/main/cum.c:228
 msgid "unknown cumxxx function"
 msgstr "不明的 cumxxx 功能"
 
@@ -2781,7 +2786,7 @@ msgstr "引數必須是環境物件"
 msgid "arguments must be symbolic"
 msgstr "引數必須為符號"
 
-#: src/main/envir.c:2485 src/main/random.c:34 src/main/random.c:562
+#: src/main/envir.c:2485 src/main/random.c:34 src/main/random.c:563
 msgid "invalid arguments"
 msgstr "引數不正確"
 
@@ -3638,44 +3643,44 @@ msgstr "不可使用 .Rdata 來復原儲存資料\n"
 msgid "During startup - "
 msgstr "於啟動期間 - "
 
-#: src/main/main.c:1097
+#: src/main/main.c:1098
 msgid "cannot quit from browser"
 msgstr "無法離開瀏覽器"
 
-#: src/main/main.c:1101
+#: src/main/main.c:1102
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "只能用 \"yes\"、\"no\"、\"ask\" 或 \"default\" 中的一個。"
 
-#: src/main/main.c:1106
+#: src/main/main.c:1107
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=\"ask\" 不能在非交互狀態時使用：改用命令列預設值"
 
-#: src/main/main.c:1114
+#: src/main/main.c:1115
 msgid "unrecognized value of 'save'"
 msgstr "沒有這種 'save' 值"
 
-#: src/main/main.c:1117
+#: src/main/main.c:1118
 msgid "invalid 'status', 0 assumed"
 msgstr "'status' 不正確, 假定為 0"
 
-#: src/main/main.c:1122
+#: src/main/main.c:1123
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast' 不正確, 假定為 FALSE"
 
-#: src/main/main.c:1153
+#: src/main/main.c:1154
 msgid "cannot allocate space for toplevel callback element"
 msgstr "無法為最高層回呼元素指派空間"
 
-#: src/main/main.c:1231
+#: src/main/main.c:1232
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "負的索引值被傳遞給 R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1344
+#: src/main/main.c:1345
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "最高層任務回呼 '%s' 產生了警告訊息\n"
 
-#: src/main/main.c:1404
+#: src/main/main.c:1405
 msgid "top-level task callback did not return a logical value"
 msgstr "最高層任務回呼沒回傳邏輯值"
 
@@ -4628,7 +4633,7 @@ msgstr "邏輯繪圖符號中只允許用 NA"
 msgid "invalid plotting symbol"
 msgstr "繪圖符號不正確"
 
-#: src/main/plot.c:335 src/modules/X11/devX11.c:1427
+#: src/main/plot.c:335 src/modules/X11/devX11.c:1429
 msgid "invalid font specification"
 msgstr "字型設定不正確"
 
@@ -5113,11 +5118,11 @@ msgstr "當 'replace = FALSE' 時不能取比總體還要大的樣本"
 msgid "incorrect number of probabilities"
 msgstr "機率數目不正確"
 
-#: src/main/random.c:518
+#: src/main/random.c:519
 msgid "invalid first argument 'n'"
 msgstr "第一引數 'n' 不正確"
 
-#: src/main/random.c:520
+#: src/main/random.c:521
 msgid "invalid second argument 'size'"
 msgstr "第二引數 'size' 不正確"
 
@@ -6760,101 +6765,101 @@ msgstr "X11 用字型大小 %d 但需要的是 %d"
 msgid "X11 font at size %d could not be loaded"
 msgstr "無法載入 X11 字型大小 %d"
 
-#: src/modules/X11/devX11.c:1065
+#: src/modules/X11/devX11.c:1067
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr "X11 協定錯誤：%s"
 
-#: src/modules/X11/devX11.c:1082
+#: src/modules/X11/devX11.c:1084
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr "X11 致命的 IO 錯誤: 請儲存工作資料，然後重新啟動 R"
 
-#: src/modules/X11/devX11.c:1141
+#: src/modules/X11/devX11.c:1143
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr "Xlib 不支援語言環境: 某些 X 作業指令將在 C 語言環境中啟動"
 
-#: src/modules/X11/devX11.c:1142
+#: src/modules/X11/devX11.c:1144
 msgid "X cannot set locale modifiers"
 msgstr "X 無法設定語言環境修飾器"
 
-#: src/modules/X11/devX11.c:1147
+#: src/modules/X11/devX11.c:1149
 msgid "no png support in this version of R"
 msgstr "本 R 版本不支援 png"
 
-#: src/modules/X11/devX11.c:1153
+#: src/modules/X11/devX11.c:1155
 msgid "filename too long in png() call"
 msgstr "png() 呼叫時檔案名稱太長"
 
-#: src/modules/X11/devX11.c:1157 src/modules/X11/devX11.c:1666
+#: src/modules/X11/devX11.c:1159 src/modules/X11/devX11.c:1668
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr "無法開啟 PNG 檔案 '%s'"
 
-#: src/modules/X11/devX11.c:1168
+#: src/modules/X11/devX11.c:1170
 msgid "no jpeg support in this version of R"
 msgstr "本 R 版本不支援 jpeg"
 
-#: src/modules/X11/devX11.c:1176
+#: src/modules/X11/devX11.c:1178
 msgid "filename too long in jpeg() call"
 msgstr "jpeg() 呼叫時檔案名稱太長"
 
-#: src/modules/X11/devX11.c:1180 src/modules/X11/devX11.c:1673
+#: src/modules/X11/devX11.c:1182 src/modules/X11/devX11.c:1675
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr "無法開啟 JPEG 檔案 '%s'"
 
-#: src/modules/X11/devX11.c:1201
+#: src/modules/X11/devX11.c:1203
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr "無法開啟連結到 X11 顯示 '%s'"
 
-#: src/modules/X11/devX11.c:1227
+#: src/modules/X11/devX11.c:1229
 msgid "jpeg() does not support transparency: using white bg"
 msgstr "jpeg() 不支援透明繪圖: 用白色的背景"
 
-#: src/modules/X11/devX11.c:1340
+#: src/modules/X11/devX11.c:1342
 msgid "unable to create X11 window"
 msgstr "無法建立 X11 視窗"
 
-#: src/modules/X11/devX11.c:1388
+#: src/modules/X11/devX11.c:1390
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'寬度=%d, 高度=%d' 是不太可能的像素值"
 
-#: src/modules/X11/devX11.c:1393
+#: src/modules/X11/devX11.c:1395
 msgid "unable to create pixmap"
 msgstr "無法建立像素圖"
 
-#: src/modules/X11/devX11.c:1466
+#: src/modules/X11/devX11.c:1468
 msgid "font family not found in X11 font database"
 msgstr "X11 字型資料庫中沒有此一字型家族"
 
-#: src/modules/X11/devX11.c:2398
+#: src/modules/X11/devX11.c:2400
 msgid "invalid string argument"
 msgstr "字串引數不正確"
 
-#: src/modules/X11/devX11.c:2433
+#: src/modules/X11/devX11.c:2435
 #, c-format
 msgid "unable to start device %s"
 msgstr "無法開啟裝置 %s"
 
-#: src/modules/X11/devX11.c:2460
+#: src/modules/X11/devX11.c:2462
 msgid "invalid 'width' or 'height'"
 msgstr "'width' 或 'height' 不正確"
 
-#: src/modules/X11/devX11.c:2467
+#: src/modules/X11/devX11.c:2469
 msgid "invalid colortype passed to X11 driver"
 msgstr "傳給 X11 驅動器的顏色類型不正確"
 
-#: src/modules/X11/devX11.c:2481
+#: src/modules/X11/devX11.c:2483
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "沒有這種 X11 顏色/顏色模型 -- 使用黑白顏色"
 
-#: src/modules/X11/devX11.c:2549
+#: src/modules/X11/devX11.c:2551
 msgid "unable to contact X11 display"
 msgstr "無法連結到 X11 顯示"
 
-#: src/modules/X11/devX11.c:2600
+#: src/modules/X11/devX11.c:2602
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "無法為 X11Routines 結構指派記憶體"
 
