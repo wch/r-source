@@ -824,9 +824,8 @@ msgid "Stop current computation           \tESC"
 msgstr "Aktuelle Berechnung abbrechen      \tESC"
 
 #: rui.c:1050
-#, fuzzy
 msgid "Stop all computations"
-msgstr "Aktuelle Berechnung abbrechen"
+msgstr "Stoppe alle Berechnungen"
 
 #: rui.c:1052
 msgid "Break to debugger"
