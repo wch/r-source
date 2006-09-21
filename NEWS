@@ -18,6 +18,9 @@ NEW FEATURES
 	options to help better analyze (non-)convergence of nls(),
 	thanks to Kate Mullen.
 
+	nls() and summary(nls()) now contain more information and also
+	print information about convergence.
+
     o	file_test() is now also available in package utils.
 	(It is now private in package tools.)
 
