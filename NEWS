@@ -938,6 +938,9 @@ BUG FIXES
     o	A failed subassignment could leave behind an object '*tmp*'.
 	The fix also sometimes gives better error messages.
 
+    o	Using SIGUSR1 on Unix now always terminates a session, and no
+	longer is caught by browser contexts and restarts (such as try()).
+
 
 
 
