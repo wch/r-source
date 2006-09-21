@@ -556,7 +556,7 @@ UTILITIES
 	  and namespace (if there is one) can each be loaded in
 	  startup code (before the standard packages are loaded).
 
-	- tests for an empty 'exec' directory.
+	- tests for empty 'exec' or 'inst' directories.
 
 	- checks if $(FLIBS) is used when $(BLAS_LIBS) is.
 
@@ -877,6 +877,11 @@ BUG FIXES
 
    o	prettyNum() was not preserving attributes, despite being
 	explicitly documented to. (PR#8695)
+
+   o	It was previously undocumented what happened if a graphical
+	parameter was passed in both '...' and 'pars' to boxplot()
+	and bxp(), and they behaved differently.  Now those passed in
+	'...' have precedence in both cases.
 
 
 
