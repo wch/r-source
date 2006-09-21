@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:37+0100\n"
+"POT-Creation-Date: 2006-09-21 09:46+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -3608,13 +3608,9 @@ msgstr "행의 유형이 부적절합니다"
 msgid "no active or default device"
 msgstr "active 또는 default 디바이스가 없습니다"
 
-#: src/main/graphics.c:4565
+#: src/main/graphics.c:4565 src/main/graphics.c:4708
 msgid "too many open devices"
 msgstr "열려있는 디바이스가 너무 많습니다"
-
-#: src/main/graphics.c:4708
-msgid "too many devices open"
-msgstr "열린 디바이스가 너무 많습니다"
 
 #: src/main/internet.c:89
 msgid "internet routines cannot be accessed in module"
@@ -7272,6 +7268,9 @@ msgstr "X11 모듈은 적재할수가 없습니다"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11를 이용할수가 없습니다"
+
+#~ msgid "too many devices open"
+#~ msgstr "열린 디바이스가 너무 많습니다"
 
 #~ msgid "supplied length is invalid"
 #~ msgstr "주어진 길이가 부적절합니다"

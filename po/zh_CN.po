@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:37+0100\n"
+"POT-Creation-Date: 2006-09-21 09:46+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -3553,12 +3553,8 @@ msgstr "行类不对"
 msgid "no active or default device"
 msgstr "没有在使用中的或缺省的设备"
 
-#: src/main/graphics.c:4565
+#: src/main/graphics.c:4565 src/main/graphics.c:4708
 msgid "too many open devices"
-msgstr "太多已经打开了的设备"
-
-#: src/main/graphics.c:4708
-msgid "too many devices open"
 msgstr "太多已经打开了的设备"
 
 #: src/main/internet.c:89
@@ -7151,6 +7147,9 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
+
+#~ msgid "too many devices open"
+#~ msgstr "太多已经打开了的设备"
 
 #~ msgid "supplied length is invalid"
 #~ msgstr "长度不对"

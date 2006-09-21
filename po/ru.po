@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:37+0100\n"
+"POT-Creation-Date: 2006-09-21 09:46+0100\n"
 "PO-Revision-Date: 2006-04-15 23:34-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -3592,13 +3592,9 @@ msgstr "неправильный тип линии"
 msgid "no active or default device"
 msgstr "нет активного или умалчиваемого устройства"
 
-#: src/main/graphics.c:4565
+#: src/main/graphics.c:4565 src/main/graphics.c:4708
 msgid "too many open devices"
 msgstr "слишком много открытых устройств"
-
-#: src/main/graphics.c:4708
-msgid "too many devices open"
-msgstr "слишком много устройств открыто"
 
 #: src/main/internet.c:89
 msgid "internet routines cannot be accessed in module"
@@ -7231,6 +7227,9 @@ msgstr "модуль X11 нельзя загрузить"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 недоступен"
+
+#~ msgid "too many devices open"
+#~ msgstr "слишком много устройств открыто"
 
 #~ msgid "supplied length is invalid"
 #~ msgstr "предоставленная длина неправильная"

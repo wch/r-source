@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:37+0100\n"
+"POT-Creation-Date: 2006-09-21 09:46+0100\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -3589,12 +3589,8 @@ msgstr "行のタイプが不正です"
 msgid "no active or default device"
 msgstr "アクティブまたはデフォルトデバイスがありません"
 
-#: src/main/graphics.c:4565
+#: src/main/graphics.c:4565 src/main/graphics.c:4708
 msgid "too many open devices"
-msgstr "開いたデバイスが多すぎます"
-
-#: src/main/graphics.c:4708
-msgid "too many devices open"
 msgstr "開いたデバイスが多すぎます"
 
 #: src/main/internet.c:89
@@ -7231,6 +7227,9 @@ msgstr "X11 モジュールをロードできません"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 が利用できません"
+
+#~ msgid "too many devices open"
+#~ msgstr "開いたデバイスが多すぎます"
 
 #~ msgid "supplied length is invalid"
 #~ msgstr "与えられた長さが不正です"

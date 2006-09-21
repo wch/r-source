@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:37+0100\n"
+"POT-Creation-Date: 2006-09-21 09:46+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -3543,12 +3543,8 @@ msgstr "無效的列類型"
 msgid "no active or default device"
 msgstr "沒有在使用中的或預設的裝置"
 
-#: src/main/graphics.c:4565
+#: src/main/graphics.c:4565 src/main/graphics.c:4708
 msgid "too many open devices"
-msgstr "太多已經開啟的裝置"
-
-#: src/main/graphics.c:4708
-msgid "too many devices open"
 msgstr "太多已經開啟的裝置"
 
 #: src/main/internet.c:89
@@ -7124,6 +7120,9 @@ msgstr "無法載入 X11 模組"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "無法使用 X11"
+
+#~ msgid "too many devices open"
+#~ msgstr "太多已經開啟的裝置"
 
 #~ msgid "supplied length is invalid"
 #~ msgstr "長度不正確"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:37+0100\n"
+"POT-Creation-Date: 2006-09-21 09:46+0100\n"
 "PO-Revision-Date: 2006-09-21 10:41+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -3560,12 +3560,8 @@ msgstr "ungültiger Linientyp"
 msgid "no active or default device"
 msgstr "kein aktives und kein Standarddevice"
 
-#: src/main/graphics.c:4565
+#: src/main/graphics.c:4565 src/main/graphics.c:4708
 msgid "too many open devices"
-msgstr "zu viele offene Devices"
-
-#: src/main/graphics.c:4708
-msgid "too many devices open"
 msgstr "zu viele offene Devices"
 
 #: src/main/internet.c:89
@@ -7204,6 +7200,9 @@ msgstr "X11 Modul kann nicht geladen werden"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
+
+#~ msgid "too many devices open"
+#~ msgstr "zu viele offene Devices"
 
 #~ msgid "supplied length is invalid"
 #~ msgstr "angegebene Länge ist ungültig"

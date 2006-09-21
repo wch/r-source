@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:37+0100\n"
+"POT-Creation-Date: 2006-09-21 09:46+0100\n"
 "PO-Revision-Date: 2006-04-18 08:23+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -3640,13 +3640,9 @@ msgstr "type de ligne incorrect"
 msgid "no active or default device"
 msgstr "pas de périphérique actif ou par défaut"
 
-#: src/main/graphics.c:4565
+#: src/main/graphics.c:4565 src/main/graphics.c:4708
 msgid "too many open devices"
 msgstr "trop de périphériques ouverts"
-
-#: src/main/graphics.c:4708
-msgid "too many devices open"
-msgstr "trop de périphériques sont ouverts"
 
 #: src/main/internet.c:89
 msgid "internet routines cannot be accessed in module"
@@ -7334,6 +7330,9 @@ msgstr "impossible de charger le module X11"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 indisponible"
+
+#~ msgid "too many devices open"
+#~ msgstr "trop de périphériques sont ouverts"
 
 #~ msgid "supplied length is invalid"
 #~ msgstr "longueur fournie incorrecte"

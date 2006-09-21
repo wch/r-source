@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:37+0100\n"
+"POT-Creation-Date: 2006-09-21 09:46+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -3606,12 +3606,8 @@ msgstr "line type non valido"
 msgid "no active or default device"
 msgstr "nessun dispositivo attivo o di default"
 
-#: src/main/graphics.c:4565
+#: src/main/graphics.c:4565 src/main/graphics.c:4708
 msgid "too many open devices"
-msgstr "troppi dispositivi aperti"
-
-#: src/main/graphics.c:4708
-msgid "too many devices open"
 msgstr "troppi dispositivi aperti"
 
 #: src/main/internet.c:89
@@ -7267,6 +7263,9 @@ msgstr "il modulo X11 non può essere caricato"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 non disponibile"
+
+#~ msgid "too many devices open"
+#~ msgstr "troppi dispositivi aperti"
 
 #~ msgid "supplied length is invalid"
 #~ msgstr "lunghezza specificata non valida"
