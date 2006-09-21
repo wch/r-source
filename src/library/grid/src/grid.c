@@ -294,17 +294,24 @@ SEXP doSetViewport(SEXP vp,
     return vp;
 }
 
-SEXP L_setviewport(SEXP vp, SEXP hasParent)
+SEXP L_setviewport(SEXP invp, SEXP hasParent)
 {
+    SEXP vp;
     /* Get the current device 
      */
     GEDevDesc *dd = getDevice();
+    /*
+     * Duplicate the viewport passed in because we are going
+     * to modify it to hell and gone.
+     */
+    PROTECT(vp = duplicate(invp));
     vp = doSetViewport(vp, !LOGICAL(hasParent)[0], TRUE, dd);
     /* Set the value of the current viewport for the current device
      * Need to do this in here so that redrawing via R BASE display
      * list works 
      */
     setGridStateElement(dd, GSS_VP, vp);
+    UNPROTECT(1);
     return R_NilValue;
 }
 
