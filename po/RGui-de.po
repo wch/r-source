@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-09-18 09:07+0100\n"
-"PO-Revision-Date: 2006-04-13 11:47+0200\n"
+"PO-Revision-Date: 2006-09-21 11:47+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -572,15 +572,14 @@ msgstr ""
 "Sichern Sie die Einstellungen und starten Sie Rgui neu.\n"
 
 #: preferences.c:247
-#, fuzzy
 msgid ""
 "The language for menus cannot be changed on a\n"
 " running console.\n"
 "\n"
 "Save the preferences and restart Rgui to apply to menus.\n"
 msgstr ""
-"Die Eigenschaften der Konsole können nicht geändert\n"
-"werden während die Konsole läuft.\n"
+"Die Sprache der Menüs können nicht bei laufender Konsole geändert\n"
+"werden.\n"
 "\n"
 "Sichern Sie die Einstellungen und starten Sie Rgui neu.\n"
 
@@ -916,11 +915,11 @@ msgstr "Kann '%s' nicht als Arbeitsverzeichnis setzen"
 
 #: graphapp/dialogs.c:400
 msgid "Choose a folder"
-msgstr ""
+msgstr "Wählen sie einen Ordner"
 
 #: graphapp/dialogs.c:492 graphapp/dialogs.c:494
 msgid "Browse"
-msgstr ""
+msgstr "Browse"
 
 #: graphapp/dialogs.c:592
 msgid "User"
