@@ -1,6 +1,6 @@
 
-R : Copyright 2006, The R Foundation for Statistical Computing
-Version 2.3.0 beta (2006-04-13 r37760)
+R version 2.4.0 beta (2006-09-22 r39471)
+Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -535,6 +535,34 @@ Waiting for profiling to be done...
 a 0.90457      NA
 b      NA 0.61016
 > 
+> ## scoping problems
+> test <- function()
++ {
++     x <- seq(0,5,len=20)
++     n <- 1
++     y <- 2*x^2 + n + rnorm(x)
++     xy <- data.frame(x=x,y=y)
++     myf <- function(x,a,b,c) a*x^b+c
++     nls(y ~ myf(x,a,b,n), data=xy, start=c(a=1,b=1), trace=TRUE)
++ }
+> test()
+8291.9 :  1 1 
+726.02 :  0.80544 2.42971 
+552.85 :  1.2900 2.1290 
+70.431 :  1.9565 1.9670 
+26.555 :  1.9788 2.0064 
+26.503 :  1.9798 2.0046 
+26.503 :  1.9799 2.0046 
+Nonlinear regression model
+  model:  y ~ myf(x, a, b, n) 
+   data:  xy 
+     a      b 
+1.9799 2.0046 
+ residual sum-of-squares: 26.503
+> ## failed to find n in 2.2.x
+> ## found wrong n in 2.3.x
+> ## finally worked in 2.4.0
+> 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  4.744 0.021 4.912 0 0 
+Time elapsed:  4.448 0.02 4.513 0 0 
 > 

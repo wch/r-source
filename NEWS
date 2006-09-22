@@ -890,6 +890,10 @@ BUG FIXES
     o   In the 'graphics' package, in-line 'font=5' was being ignored
         (report by Tom Cook).
 
+    o   nls() looke for non-parameter arguments in a function call in
+	the wrong scope (from the body of nls).
+
+
 
 	**************************************************
 	*						 *
