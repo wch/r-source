@@ -634,7 +634,7 @@ summary.nls <-
         ans$correlation <- (XtXinv * resvar)/outer(se, se)
         ans$symbolic.cor <- symbolic.cor
     }
-    if(object$call$algorithm == "port")
+    if(identical(object$call$algorithm, "port"))
 	ans$message <- object$message
     class(ans) <- "summary.nls"
     ans
@@ -642,7 +642,7 @@ summary.nls <-
 
 .p.nls.convInfo <- function(x, digits)
 {
-    if(x$call$algorithm == "port")
+    if(identical(x$call$algorithm, "port"))
 	cat("\nAlgorithm \"port\", convergence message:",
 	    x$message, "\n")
     else
