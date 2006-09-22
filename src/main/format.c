@@ -357,7 +357,7 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
 		else if (tmp.r > 0) rposinf = 1;
 		else rneginf = 1;
 	    } else {
-		if(tmp.r != 0) all_re_zero = FALSE;
+		if(x[i].r != 0) all_re_zero = FALSE;
 		scientific(&(tmp.r), &sgn, &kpower, &nsig, eps);
 
 		left = kpower + 1;
@@ -381,7 +381,7 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
 		if (ISNAN(tmp.i)) inanflag = 1;
 		else iposinf = 1;
 	    } else {
-		if(tmp.i != 0) all_im_zero = FALSE;
+		if(x[i].i != 0) all_im_zero = FALSE;
 		scientific(&(tmp.i), &sgn, &kpower, &nsig, eps);
 
 		left = kpower + 1;

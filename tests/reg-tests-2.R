@@ -1979,4 +1979,12 @@ format(matrix(1:16, 4), big.mark = ",")
 ## was a vector < 2.4.0
 
 
+## printing of complex numbers of very different magnitudes
+1e100  + 1e44i
+1e100 + pi*1i*10^(c(-100,0,1,40,100))
+## first was silly, second not rounded correctly in 2.2.0 - 2.3.1
+## We don't get them lining up, but that is a printf issue
+## that only happens for very large complex nos.
+
+
 ### end of tests added in 2.4.0 ###

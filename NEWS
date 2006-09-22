@@ -950,8 +950,13 @@ BUG FIXES
     o   In the 'graphics' package, in-line 'font=5' was being ignored
         (report by Tom Cook).
 
-    o   nls() looke for non-parameter arguments in a function call in
+    o   nls() looked for non-parameter arguments in a function call in
 	the wrong scope (from the body of nls).
+
+    o   Printing of complex numbers could misbehave when one of the
+	parts was large (so scientific notation was used) and the
+	other was so much smaller that it had no significant digits
+	and should have been printed as zero (e.g. 1e80+3e44i).
 
 
 
