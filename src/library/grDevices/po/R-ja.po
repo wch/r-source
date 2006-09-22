@@ -255,24 +255,19 @@ msgstr "'windowsFonts' 中の不正な引数です（名前がついた引数が
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
 msgstr[0] "%2$s 中の %1$s は不正な引数名です"
-msgstr[1] "%2$s 中の %1$s は不正な引数名です"
 
 msgid "differs between new and previous"
 msgid_plural "differ between new and previous"
 msgstr[0] "が新しいものと古いもので異なります"
-msgstr[1] "が新しいものと古いもので異なります"
 
 msgid "%d x value <= 0 omitted from logarithmic plot"
 msgid_plural "%d x values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
-msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
 
 msgid "%d y value <= 0 omitted from logarithmic plot"
 msgid_plural "%d y values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d 個の正でない y の値が対数プロットから除かれました"
-msgstr[1] "%d 個の正でない y の値が対数プロットから除かれました"
 
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
-msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
