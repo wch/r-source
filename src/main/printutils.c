@@ -174,12 +174,15 @@ char *EncodeReal(double x, int w, int d, int e, char cdec)
     return buff;
 }
 
+void z_prec_r(Rcomplex *r, Rcomplex *x, double digits);
+
 char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
 		    char cdec)
 {
     static char buff[NB];
     char Re[NB], *Im, *tmp;
     int  flagNegIm = 0;
+    Rcomplex y;
 
     /* IEEE allows signed zeros; strip these here */
     if (x.r == 0.0) x.r = 0.0;
@@ -189,11 +192,19 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
 	snprintf(buff, NB, "%*s%*s", R_print.gap, "", wr+wi+2,
 		CHAR(R_print.na_string));
     } else {
+	/* formatComplex rounded, but this does not, and we need to 
+	   keep it that way so we don't get strange trailing zeros.
+	   But we do want to avoid printing small exponentials that
+	   are probably garbage.
+	 */
+	z_prec_r(&y, &x, R_print.digits);
 	/* EncodeReal has static buffer, so copy */
-	tmp = EncodeReal(x.r, wr, dr, er, cdec);
+	if(y.r == 0.) tmp = EncodeReal(y.r, wr, dr, er, cdec);
+	else tmp = EncodeReal(x.r, wr, dr, er, cdec);
 	strcpy(Re, tmp);
 	if ( (flagNegIm = (x.i < 0)) ) x.i = -x.i;
-	Im = EncodeReal(x.i, wi, di, ei, cdec);
+	if(y.i == 0.) Im = EncodeReal(y.i, wi, di, ei, cdec);
+	else Im = EncodeReal(x.i, wi, di, ei, cdec);
 	snprintf(buff, NB, "%s%s%si", Re, flagNegIm ? "-" : "+", Im);
     }
     buff[NB-1] = '\0';

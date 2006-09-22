@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-09-19 r39398)
+R version 2.5.0 Under development (unstable) (2006-09-22 r39479)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5556,6 +5556,17 @@ Residual standard error: 1.735 on 44 degrees of freedom
 [3,] " 3" " 7" "11" "15"
 [4,] " 4" " 8" "12" "16"
 > ## was a vector < 2.4.0
+> 
+> 
+> ## printing of complex numbers of very different magnitudes
+> 1e100  + 1e44i
+[1] 1e+100+0e+00i
+> 1e100 + pi*1i*10^(c(-100,0,1,40,100))
+[1] 1e+100+ 0.000000e+00i 1e+100+ 0.000000e+00i 1e+100+ 0.000000e+00i
+[4] 1e+100+ 0.000000e+00i 1e+100+3.141593e+100i
+> ## first was silly, second not rounded correctly in 2.2.0 - 2.3.1
+> ## We don't get them lining up, but that is a printf issue
+> ## that only happens for very large complex nos.
 > 
 > 
 > ### end of tests added in 2.4.0 ###
