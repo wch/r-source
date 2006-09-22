@@ -612,20 +612,20 @@ INSTALLATION
 	systems (since it is not visible on some recent glibc's
 	built from the sources).
 
-    o	MacOS X 10.3 and higher now use two-level namespaces, single
+    o	MacOS X 10.4 and higher now use two-level namespaces, single
 	module in a shared library and allow undefined symbols to be
 	resolved at run-time. This implies that common symbols are now
 	allowed in package libraries. --enable-BLAS-shlib is supported
 	for internal BLAS, external BLAS framework and external static
 	BLAS.  An external dynamic library BLAS is NOT supported. (But
 	it can be easily used by replacing internal BLAS library file
-	later.)	 MacOS X < 10.3 does not support --enable-BLAS-shlib.
+	later.)	 MacOS X < 10.4 does not support --enable-BLAS-shlib.
 
     o	Dynamic libraries and modules use a flat namespace on MacOS X
-	10.3 and higher if either Xcode tools don't support dynamic
+	10.4 and higher if either Xcode tools don't support dynamic
 	lookup (Xcode < 2.3) or the FORCE_FLAT_NAMESPACE environment
 	variable is set.  (The latter was introduced temporarily for
-	testing purposes and may go away soon.)
+	testing purposes and may go away anytime.)
 
     o	configure now defaults to 'run-time linking' on AIX
 	(and AIX < 4.2 is no longer allowed), using -bexpall rather
