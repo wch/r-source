@@ -710,35 +710,36 @@ namespaceImportFrom <- function(self, ns, vars, generics) {
     else stop("invalid import target")
     which <- whichMethodMetaNames(impvars)
     if(length(which)) {
-        ## If methods are already in impenv, merge and don't import
-        delete <- integer()
-        for(i in which) {
-            methodsTable <- .mergeImportMethods(impenv, ns, impvars[[i]])
-            if(is.null(methodsTable))
-              {} # first encounter, just import it
-            else
-               { #
-                delete <- c(delete, i)
-                ## eventually mlist objects will disappear, for now
-                ## just don't import any duplicated names
-                mlname = sub("__T__","__M__", impvars[[i]], fixed=TRUE)
-                ii = match(mlname, impvars, 0)
-                if(ii > 0)
-                  delete <- c(delete, ii)
-                if(!missing(generics)) {
-                    genName <- generics[[i]]
-                    fdef <- methods:::getGeneric(genName, impenv)
-                    if(is.null(fdef))
-                      warning(gettextf("Found methods to import for function \"%s\" but not the generic itself"), genName)
-                    else
-                     methods:::.updateMethodsInTable(fdef, ns, TRUE)
-                 }
-            }
-            }
-        if(length(delete) > 0) {
-            impvars <- impvars[-delete]
-            impnames <- impnames[-delete]
-        }
+	## If methods are already in impenv, merge and don't import
+	delete <- integer()
+	for(i in which) {
+	    methodsTable <- .mergeImportMethods(impenv, ns, impvars[[i]])
+	    if(is.null(methodsTable))
+	    {} ## first encounter, just import it
+	    else { ##
+		delete <- c(delete, i)
+		## eventually mlist objects will disappear, for now
+		## just don't import any duplicated names
+		mlname = sub("__T__", "__M__", impvars[[i]], fixed=TRUE)
+		ii = match(mlname, impvars, 0)
+		if(ii > 0)
+		    delete <- c(delete, ii)
+		if(!missing(generics)) {
+		    genName <- generics[[i]]
+		    fdef <- methods:::getGeneric(genName, where = impenv)
+		    if(is.null(fdef))
+			warning(gettextf(
+					 "Found methods to import for function \"%s\" but not the generic itself",
+					 genName))
+		    else
+			methods:::.updateMethodsInTable(fdef, ns, TRUE)
+		}
+	    }
+	}
+	if(length(delete) > 0) {
+	    impvars <- impvars[-delete]
+	    impnames <- impnames[-delete]
+	}
     }
     for (n in impnames)
         if (exists(n, env = impenv, inherits = FALSE))
