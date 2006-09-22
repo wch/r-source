@@ -898,6 +898,8 @@ BUG FIXES
 	other was so much smaller that it had no significant digits
 	and should have been printed as zero (e.g. 1e80+3e44i).
 
+    o	Using install.packages with type='mac.binary' and target path
+	starting with ~ failed with a cryptic message while unpacking.
 
 
 	**************************************************
