@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:39+0100\n"
+"POT-Creation-Date: 2006-09-22 09:03+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1135,7 +1135,7 @@ msgstr "指定的向量大小太大"
 #: src/main/builtin.c:68 src/main/builtin.c:91 src/main/builtin.c:100
 #: src/main/builtin.c:226 src/main/builtin.c:253 src/main/builtin.c:283
 #: src/main/builtin.c:292 src/main/coerce.c:1400 src/main/connections.c:2043
-#: src/main/engine.c:2679 src/main/envir.c:856 src/main/envir.c:950
+#: src/main/engine.c:2680 src/main/envir.c:856 src/main/envir.c:950
 #: src/main/envir.c:1406 src/main/envir.c:1499 src/main/envir.c:1567
 #: src/main/envir.c:1683 src/main/envir.c:2323 src/main/envir.c:2376
 #: src/main/envir.c:2659 src/main/envir.c:2687 src/main/envir.c:2707
@@ -2628,19 +2628,19 @@ msgstr " .. GEPretty(.): new *up =%g >%g = x2"
 msgid "Display list redraw incomplete"
 msgstr "顯示串列重新整理時不完整"
 
-#: src/main/engine.c:2675
+#: src/main/engine.c:2676
 msgid "'expr' argument must be an expression"
 msgstr "'expr' 引數必須是運算式"
 
-#: src/main/engine.c:2677
+#: src/main/engine.c:2678
 msgid "'list' argument must be a list"
 msgstr "'list' 引數必須是串列"
 
-#: src/main/engine.c:2683
+#: src/main/engine.c:2684
 msgid "'env' argument must be an environment"
 msgstr "'env' 引數必須是環境物件"
 
-#: src/main/engine.c:2705 src/main/graphics.c:2418
+#: src/main/engine.c:2706 src/main/graphics.c:2418
 msgid "invalid graphics state"
 msgstr "繪圖狀態不正確"
 

@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:39+0100\n"
-"PO-Revision-Date: 2006-09-21 08:39+0100\n"
+"POT-Creation-Date: 2006-09-22 09:03+0100\n"
+"PO-Revision-Date: 2006-09-22 09:03+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1159,7 +1159,7 @@ msgstr "vector size specified is too large"
 #: src/main/builtin.c:68 src/main/builtin.c:91 src/main/builtin.c:100
 #: src/main/builtin.c:226 src/main/builtin.c:253 src/main/builtin.c:283
 #: src/main/builtin.c:292 src/main/coerce.c:1400 src/main/connections.c:2043
-#: src/main/engine.c:2679 src/main/envir.c:856 src/main/envir.c:950
+#: src/main/engine.c:2680 src/main/envir.c:856 src/main/envir.c:950
 #: src/main/envir.c:1406 src/main/envir.c:1499 src/main/envir.c:1567
 #: src/main/envir.c:1683 src/main/envir.c:2323 src/main/envir.c:2376
 #: src/main/envir.c:2659 src/main/envir.c:2687 src/main/envir.c:2707
@@ -2657,19 +2657,19 @@ msgstr " .. GEPretty(.): new *up = %g > %g = x2"
 msgid "Display list redraw incomplete"
 msgstr "Display list redraw incomplete"
 
-#: src/main/engine.c:2675
+#: src/main/engine.c:2676
 msgid "'expr' argument must be an expression"
 msgstr "‘expr’ argument must be an expression"
 
-#: src/main/engine.c:2677
+#: src/main/engine.c:2678
 msgid "'list' argument must be a list"
 msgstr "‘list’ argument must be a list"
 
-#: src/main/engine.c:2683
+#: src/main/engine.c:2684
 msgid "'env' argument must be an environment"
 msgstr "‘env’ argument must be an environment"
 
-#: src/main/engine.c:2705 src/main/graphics.c:2418
+#: src/main/engine.c:2706 src/main/graphics.c:2418
 msgid "invalid graphics state"
 msgstr "invalid graphics state"
 

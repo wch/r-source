@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 08:39+0100\n"
-"PO-Revision-Date: 2005-06-02 15:24+0900\n"
-"Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"POT-Creation-Date: 2006-09-22 09:03+0100\n"
+"PO-Revision-Date: 2006-09-22 09:37+0900\n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 0.10.1rc1\n"
 
 #: src/appl/approx.c:110
 msgid "approx(): invalid f value"
@@ -73,7 +74,6 @@ msgid "cannot get working directory"
 msgstr "作業ディレクトリを得ることができません"
 
 #: src/gnuwin32/extra.c:69
-#, fuzzy
 msgid "invalid 'names' in 'R_unlink'"
 msgstr "R_unlink の 'names' が不正です"
 
@@ -234,14 +234,12 @@ msgid "cannot decrease memory limit"
 msgstr "メモリー限界を減らすことができません"
 
 #: src/gnuwin32/extra.c:788
-#, fuzzy
 msgid "Select one or more"
-msgstr "選択："
+msgstr "１つ以上を選択："
 
 #: src/gnuwin32/extra.c:788
-#, fuzzy
 msgid "Select one"
-msgstr "選択："
+msgstr "１つを選択："
 
 #: src/gnuwin32/extra.c:924
 msgid "argument must be a character vector or a raw vector"
@@ -299,9 +297,9 @@ msgstr "'which' は長さ1でなくてはなりません"
 #: src/main/context.c:497 src/main/envir.c:1919 src/main/saveload.c:1942
 #: src/main/saveload.c:1945 src/main/saveload.c:1948 src/main/saveload.c:2220
 #: src/main/saveload.c:2225 src/main/saveload.c:2228
-#, fuzzy, c-format
+#, c-format
 msgid "invalid value for '%s'"
-msgstr "'n' の値が不正です"
+msgstr "'%s' の値が不正です"
 
 #: src/gnuwin32/extra.c:1336 src/gnuwin32/extra.c:1338
 #: src/gnuwin32/extra.c:1378
@@ -390,9 +388,8 @@ msgid "encoding '%s' is not recognised"
 msgstr "'%s' というエンコーディングは認識できません"
 
 #: src/gnuwin32/system.c:292
-#, fuzzy
 msgid "<ERROR: invalid input in encoding>\n"
-msgstr "<エラー : エンコード中の不正な入力>"
+msgstr "<エラー : エンコーディングに関して不正な入力がありました>\n"
 
 #: src/gnuwin32/system.c:494
 #, c-format
@@ -487,14 +484,13 @@ msgid "object is not subsettable"
 msgstr "オブジェクトは部分代入可能ではありません"
 
 #: src/include/Errormsg.h:44
-#, fuzzy
 msgid "invalid argument 'mode'"
-msgstr "引数が不正です"
+msgstr "'mode'引数が不正です"
 
 #: src/include/Errormsg.h:45
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'type' (%s) of argument"
-msgstr "引数の 'mode' が不正です"
+msgstr "引数 'type' (%s) が不正です"
 
 #: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
@@ -718,16 +714,15 @@ msgstr "このバージョンの R は，dyn.load をサポートしていませ
 #: src/main/Rdynload.c:1362
 #, c-format
 msgid "function '%s' not provided by package '%s'"
-msgstr ""
+msgstr "関数 '%s' はパッケージ '%s'では提供されていません"
 
 #: src/main/Rdynload.c:1364
-#, fuzzy
 msgid "table entry must be an external pointer"
-msgstr "外部ポインターのクラス属性は取り除けません"
+msgstr "テーブルエントリは外部ポインタでなければなりません"
 
 #: src/main/Rstrptime.h:1107
 msgid "input string is too long"
-msgstr "zipファイルのパスが長すぎます"
+msgstr "入力文字列が長すぎます"
 
 #: src/main/Rstrptime.h:1109
 msgid "invalid multibyte input string"
@@ -933,23 +928,23 @@ msgid "'x' must be numeric"
 msgstr "'x' は数値でなければなりません"
 
 #: src/main/attrib.c:64
-#, fuzzy, c-format
+#, c-format
 msgid "row names must be 'character' or 'integer', not '%s'"
-msgstr "'hostname' は長さ1の文字列ベクトルでなくてはなりません"
+msgstr "列の名前は'文字'又は'整数'です. \"%s\"ではありません."
 
 #: src/main/attrib.c:115
-#, fuzzy, c-format
+#, c-format
 msgid "getAttrib: invalid type (%s) for TAG"
-msgstr "getAttrib：TAG に対する型が不正です"
+msgstr "getAttrib：TAG に対する型(%s) が不正です"
 
 #: src/main/attrib.c:180 src/main/attrib.c:271
 msgid "attempt to set an attribute on NULL"
 msgstr "NULL に対して属性を設定しようとしました"
 
 #: src/main/attrib.c:317
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for 'names': must be vector"
-msgstr "'names' のタイプが不正です（ベクトルでなければなりません）"
+msgstr "'names' の型(%s)が不正です（ベクトルでなければなりません）"
 
 #: src/main/attrib.c:320
 #, c-format
@@ -985,9 +980,9 @@ msgid "incompatible 'names' argument"
 msgstr "'names' 引数に互換性がありません"
 
 #: src/main/attrib.c:677
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) to set 'names' attribute"
-msgstr "'names' 属性として設定するには不正な型です"
+msgstr "'names' 属性として設定するには不正な型(%s)です"
 
 #: src/main/attrib.c:744
 msgid "'dimnames' applied to non-array"
@@ -1004,9 +999,9 @@ msgstr ""
 "'dimnames' の長さ [%d] は 'dims' の長さ [%d] と同じでなくてはなりません"
 
 #: src/main/attrib.c:768
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
-msgstr "'dimnames' の型が不正です（ベクトルでなければなりません）"
+msgstr "'dimnames' の型(%s)が不正です（ベクトルでなければなりません）"
 
 #: src/main/attrib.c:771
 #, c-format
@@ -1103,9 +1098,9 @@ msgstr "イベント UpdatePS は単一の数値を必用とします"
 
 #: src/main/bind.c:268 src/main/bind.c:303 src/main/bind.c:351
 #: src/main/bind.c:419 src/main/bind.c:449
-#, fuzzy, c-format
+#, c-format
 msgid "type '%s' is unimplemented in '%s'"
-msgstr "type2str には %d 型は未実装です"
+msgstr "'%s' 型  は '%s'  型には実装されていません"
 
 #: src/main/bind.c:638
 msgid "repeated formal argument 'recursive'"
@@ -1155,7 +1150,7 @@ msgstr "指定されたベクトルのサイズが長すぎます"
 #: src/main/builtin.c:68 src/main/builtin.c:91 src/main/builtin.c:100
 #: src/main/builtin.c:226 src/main/builtin.c:253 src/main/builtin.c:283
 #: src/main/builtin.c:292 src/main/coerce.c:1400 src/main/connections.c:2043
-#: src/main/engine.c:2679 src/main/envir.c:856 src/main/envir.c:950
+#: src/main/engine.c:2680 src/main/envir.c:856 src/main/envir.c:950
 #: src/main/envir.c:1406 src/main/envir.c:1499 src/main/envir.c:1567
 #: src/main/envir.c:1683 src/main/envir.c:2323 src/main/envir.c:2376
 #: src/main/envir.c:2659 src/main/envir.c:2687 src/main/envir.c:2707
@@ -1163,7 +1158,6 @@ msgstr "指定されたベクトルのサイズが長すぎます"
 #: src/main/envir.c:3107 src/main/envir.c:3111 src/main/eval.c:3484
 #: src/main/objects.c:175 src/main/objects.c:181 src/main/saveload.c:2050
 #: src/main/saveload.c:2316 src/main/saveload.c:2365 src/main/serialize.c:2173
-#, fuzzy
 msgid "use of NULL environment is defunct"
 msgstr "NULL環境の使用は廃要素です"
 
@@ -1210,12 +1204,12 @@ msgstr "'%s' の指定が不正です"
 
 #: src/main/builtin.c:394
 msgid "non-positive 'fill' argument will be ignored"
-msgstr ""
+msgstr "正でない 'fill' 引数は無視されます "
 
 #: src/main/builtin.c:458
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
-msgstr "引数 %d は，まだ cat で取り扱えません"
+msgstr "引数 %d (タイプ '%s') は 'cat' で取り扱えません"
 
 #: src/main/builtin.c:572
 msgid "vector: zero-length 'type' argument"
@@ -1293,7 +1287,6 @@ msgid "invalid split pattern '%s'"
 msgstr "分割パターン '%s' が不正です"
 
 #: src/main/character.c:710
-#, fuzzy
 msgid "the first argument must be a character vector"
 msgstr "最初の引数は文字列ベクトルでなくてはなりません"
 
@@ -1915,14 +1908,12 @@ msgid "unsupported mode"
 msgstr "サポートされていないモードです"
 
 #: src/main/connections.c:2086
-#, fuzzy
 msgid "'con' is not a textConnection"
-msgstr "'con' はコネクションではありません"
+msgstr "'con' はテキストコネクションではありません"
 
 #: src/main/connections.c:2089
-#, fuzzy
 msgid "'con' is not an output textConnection"
-msgstr "'con' はコネクションではありません"
+msgstr "'con' は出力テキストコネクションではありません"
 
 #: src/main/connections.c:2159
 msgid "sockets are not available on this system"
@@ -2055,9 +2046,8 @@ msgid "invalid UTF-8 input in readChar()"
 msgstr "readChart 関数への不正な UTF-8 入力です"
 
 #: src/main/connections.c:3246
-#, fuzzy
 msgid "'object' is too short"
-msgstr "オブジェクトは部分代入可能ではありません"
+msgstr "'object' が短すぎます"
 
 #: src/main/connections.c:3274
 msgid ""
@@ -2152,9 +2142,8 @@ msgid "allocation of 'gzcon' connection failed"
 msgstr "'gzcon' コネクションで割り当てに失敗しました"
 
 #: src/main/connections.c:4078 src/main/connections.c:4101
-#, fuzzy
 msgid "R_decompress1 requires a raw vector"
-msgstr "R_decompress1 はスカラー文字列を要求します"
+msgstr "R_decompress1 は raw ベクトルを必要とします"
 
 #: src/main/connections.c:4085
 msgid "internal error in R_compress1"
@@ -2242,11 +2231,10 @@ msgid "the standard deviation is zero"
 msgstr "標準偏差が0です"
 
 #: src/main/cum.c:49
-#, fuzzy
 msgid "Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
 msgstr ""
-"sum 関数において整数のオーバーフローがありました。sum(as.numeric(.)) を使って"
-"下さい"
+"'cumsum' 関数において整数のオーバーフローがありました。'cumsum(as.numeric"
+"(.))' を使って下さい"
 
 #: src/main/cum.c:181
 msgid "min/max not defined for complex numbers"
@@ -2359,16 +2347,14 @@ msgid "too many arguments in foreign function call"
 msgstr "外部関数の呼び出しで引数が多すぎます"
 
 #: src/main/dotcode.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
-msgstr ""
-"関数名 %s エントリポイント \"%s%s\" はパッケージ \"%s\" の DLL の中にありませ"
-"ん"
+msgstr "%s シンボル名 \"%s\" はパッケージ \"%s\" の DLL の中にありません"
 
 #: src/main/dotcode.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "%s symbol name \"%s\" not in load table"
-msgstr "関数名 %s エントリポイント \"%s%s\" は load table にありません"
+msgstr "%s シンボル名 \"%s\" は load table にありません"
 
 #: src/main/dotcode.c:303
 #, c-format
@@ -2417,9 +2403,8 @@ msgid "re-encoding is not supported on this system"
 msgstr "このシステムでは再エンコーディングはサポートされていません"
 
 #: src/main/dotcode.c:429
-#, fuzzy
 msgid "lists must be duplicated in .C"
-msgstr ".C/.Fortran 中に文字列変数は重複していなければなりません"
+msgstr ".C 中ではリストは重複していなければなりません"
 
 #: src/main/dotcode.c:439 src/main/dotcode.c:451
 #, c-format
@@ -2466,11 +2451,11 @@ msgstr "ENCODING 引数は単一の文字列でなければなりません"
 #: src/main/dotcode.c:739
 #, c-format
 msgid "'%s' is deprecated"
-msgstr ""
+msgstr "'%s' は廃止されます"
 
 #: src/main/dotcode.c:771
 msgid "no arguments supplied"
-msgstr "引数が提供されていません"
+msgstr "引数が与えられていません"
 
 #: src/main/dotcode.c:772 src/main/seq.c:564
 msgid "too many arguments"
@@ -2669,26 +2654,26 @@ msgstr ".. GEPretty(.) : new *up = %g > %g = x2 "
 msgid "Display list redraw incomplete"
 msgstr "ディスプレイリストが不完全に再描画されました"
 
-#: src/main/engine.c:2675
+#: src/main/engine.c:2676
 msgid "'expr' argument must be an expression"
 msgstr "'expr' 引数は式でなくてはなりません"
 
-#: src/main/engine.c:2677
+#: src/main/engine.c:2678
 msgid "'list' argument must be a list"
 msgstr "'list' 引数はリストでなくてはなりません"
 
-#: src/main/engine.c:2683
+#: src/main/engine.c:2684
 msgid "'env' argument must be an environment"
 msgstr "'env' 引数は環境でなくてはなりません"
 
-#: src/main/engine.c:2705 src/main/graphics.c:2418
+#: src/main/engine.c:2706 src/main/graphics.c:2418
 msgid "invalid graphics state"
 msgstr "グラフィックスの状態が不正です"
 
 #: src/main/envir.c:112 src/main/envir.c:124
-#, fuzzy, c-format
+#, c-format
 msgid "cannot change value of locked binding for '%s'"
-msgstr "ロックされたバインディングの値は変更できません"
+msgstr "'%s' に対するロックされたバインディングの値は変更できません"
 
 #: src/main/envir.c:222 src/main/envir.c:1250
 msgid "cannot add bindings to a locked environment"
@@ -2703,18 +2688,17 @@ msgid "cannot unbind in the base namespace"
 msgstr "基本名前空間の中では切り離しはできません"
 
 #: src/main/envir.c:708
-#, fuzzy
 msgid "unbind in the base environment is unimplemented"
-msgstr "基本環境中では切り離しはできません"
+msgstr "基本環境中の unbind は未実装です"
 
 #: src/main/envir.c:710 src/main/envir.c:1446
 msgid "cannot remove bindings from a locked environment"
 msgstr "ロックされた環境からはバインディングを取り除くことはできません"
 
 #: src/main/envir.c:953
-#, fuzzy, c-format
+#, c-format
 msgid "argument to '%s' is not an environment"
-msgstr "%sに対する引数は環境ではありません"
+msgstr "'%s' に対する引数は環境ではありません"
 
 #: src/main/envir.c:1113
 #, c-format
@@ -2732,7 +2716,7 @@ msgid "argument \"%s\" is missing, with no default"
 msgstr "引数 \"%s\" がありませんし、省略時既定値もありません"
 
 #: src/main/envir.c:1195
-#, fuzzy, c-format
+#, c-format
 msgid "could not find function \"%s\""
 msgstr "関数 \"%s\" を見つけることができませんでした"
 
@@ -2751,10 +2735,9 @@ msgstr "ロックされた環境にバインディングを追加することは
 
 #: src/main/envir.c:1440
 msgid "cannot remove variables from base namespace"
-msgstr "base 名前空間からはバインディングを取り除くことはできません"
+msgstr "base 名前空間からは変数を取り除くことはできません"
 
 #: src/main/envir.c:1442
-#, fuzzy
 msgid "cannot remove variables from the base environment"
 msgstr "空の環境中から変数を除去することができません"
 
@@ -2764,7 +2747,7 @@ msgstr "空の環境中から変数を除去することができません"
 
 #: src/main/envir.c:1452
 msgid "cannot remove variables from this database"
-msgstr "データベースから変数を除去することができません"
+msgstr "このデータベースから変数を除去することができません"
 
 #: src/main/envir.c:1524
 #, c-format
@@ -2774,7 +2757,7 @@ msgstr "remove:  変数 \"%s\" は存在しませんでした"
 #: src/main/envir.c:1604
 #, c-format
 msgid "variable \"%s\" was not found"
-msgstr "変数 \"%s\" は存在しません"
+msgstr "変数 \"%s\" を見付けられませんでした"
 
 #: src/main/envir.c:1608
 #, c-format
@@ -2791,29 +2774,25 @@ msgid "second argument must be an environment"
 msgstr "二番目の引数は環境でなければなりません"
 
 #: src/main/envir.c:1693 src/main/envir.c:1701
-#, fuzzy, c-format
+#, c-format
 msgid "wrong length for '%s' argument"
-msgstr "'mode' 引数の長さが不正です"
+msgstr "'%s' 引数の長さが不正です"
 
 #: src/main/envir.c:1809
-#, fuzzy
 msgid "invalid use of 'missing'"
-msgstr "欠損値の不正な使用です"
+msgstr "'missing' の不正な使用です"
 
 #: src/main/envir.c:1834
-#, fuzzy
 msgid "'missing' can only be used for arguments"
-msgstr "missing は引数に対してだけ使えます"
+msgstr "'missing' は引数に対してだけ使えます"
 
 #: src/main/envir.c:1929
-#, fuzzy
 msgid "all elements of a list must be named"
-msgstr "attach：全ての要素に名前が必要です"
+msgstr "リスト中の全ての要素には名前が必要です"
 
 #: src/main/envir.c:1952
-#, fuzzy
 msgid "'attach' only works for lists, data frames and environments"
-msgstr "attach はリストかデータフレームにのみ有効です"
+msgstr "'attach' はリスト、データフレーム、もしくは環境にのみ有効です"
 
 #: src/main/envir.c:2035
 msgid "detaching \"package:base\" is not allowed"
@@ -2841,14 +2820,12 @@ msgid "no item called \"%s\" on the search list"
 msgstr "検索リストに \"%s\" という項目はありません"
 
 #: src/main/envir.c:2607
-#, fuzzy
 msgid "using 'as.environment(NULL)' is defunct"
-msgstr "'as.environment(NULL)'の利用は廃要素です"
+msgstr "'as.environment(NULL)'の利用は廃止されました"
 
 #: src/main/envir.c:2610
-#, fuzzy
 msgid "invalid object for 'as.environment'"
-msgstr "as.environment に対する不正なオブジェクトです"
+msgstr "'as.environment' に対する不正なオブジェクトです"
 
 #: src/main/envir.c:2634 src/main/envir.c:2661 src/main/envir.c:2689
 #: src/main/envir.c:2709 src/main/envir.c:2731 src/main/envir.c:2765
@@ -2894,11 +2871,11 @@ msgstr "'%s' の代わりに .GlobalEnv を使います"
 
 #: src/main/envir.c:3015
 msgid "namespaces not available; using .GlobalEnv"
-msgstr "ネームスペースは使えません。.GlobalEnv を使います"
+msgstr "名前空間は使えません。.GlobalEnv を使います"
 
 #: src/main/envir.c:3039
 msgid "bad name space name"
-msgstr "不正なネームスペース名です"
+msgstr "不正な名前空間名です"
 
 #: src/main/envir.c:3051
 msgid "name space already registered"
@@ -2906,7 +2883,7 @@ msgstr "ネームスペースはすでに登録されています"
 
 #: src/main/envir.c:3063
 msgid "name space not registered"
-msgstr "ネームスペースはまだ登録されていません"
+msgstr "ネームスペースは登録されていません"
 
 #: src/main/envir.c:3109
 msgid "bad import environment argument"
@@ -2941,7 +2918,7 @@ msgstr "(警告から変換されました) %s"
 #: src/main/errors.c:291
 #, c-format
 msgid "Warning in %s : "
-msgstr "%s 中で警告がありました"
+msgstr "%s 中で警告がありました："
 
 #: src/main/errors.c:295
 msgid "Warning: "
@@ -3192,7 +3169,7 @@ msgstr "左辺への代入が不正です"
 #: src/main/eval.c:1464
 #, c-format
 msgid "element %d is empty"
-msgstr ""
+msgstr "要素 %d が空です "
 
 #: src/main/eval.c:1594
 msgid "invalid formal argument list for \"function\""
@@ -3447,9 +3424,8 @@ msgid "input buffer overflow"
 msgstr "入力バッファが溢れました"
 
 #: src/main/gram.y:1709
-#, fuzzy
 msgid "\\uxxxx sequences not supported"
-msgstr "\\Uxxxxxxxx シーケンスは Windows ではサポートされません"
+msgstr "\\Uxxxx シーケンスはサポートされません"
 
 #: src/main/gram.y:1724 src/main/gram.y:1729
 msgid "invalid \\u{xxxx} sequence"
@@ -3577,9 +3553,8 @@ msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "行のタイプが不正です : 行の長さは 2,4,6,8 のいずれかにして下さい"
 
 #: src/main/graphics.c:4413
-#, fuzzy
 msgid "invalid line type: zeroes are not allowed"
-msgstr "負の長さのベクトルは許されません"
+msgstr "不正な線種：ゼロは許されません"
 
 #: src/main/graphics.c:4422 src/main/graphics.c:4430 src/main/graphics.c:4437
 msgid "invalid line type"
@@ -3756,9 +3731,9 @@ msgid "argument %d matches multiple formal arguments"
 msgstr "引数 %d が複数の仮引数に一致します"
 
 #: src/main/match.c:386
-#, fuzzy, c-format
+#, c-format
 msgid "unused argument(s) %s"
-msgstr "使われていない引数 (%s...)"
+msgstr "使われていない引数 %s"
 
 #: src/main/memory.c:936
 msgid "can only weakly reference/finalize reference objects"
@@ -3781,9 +3756,8 @@ msgid "second argument must be a function"
 msgstr "二番目の引数は関数でなければなりません"
 
 #: src/main/memory.c:1157
-#, fuzzy
 msgid "third argument must be 'TRUE' or 'FALSE'"
-msgstr "引数 'multiple' は TRUE か FALSE でなくてはなりません"
+msgstr "三番目の引数は 'TRUE' か 'FALSE' でなくてはなりません"
 
 #: src/main/memory.c:1503
 msgid "vector memory exhausted (limit reached?)"
@@ -3829,7 +3803,7 @@ msgstr "protect()：プロテクションスタックが溢れました"
 #: src/main/memory.c:2274
 #, c-format
 msgid "unprotect(): only %d protected items"
-msgstr ""
+msgstr "unprotect(): %d 個の保護された項目 "
 
 #: src/main/memory.c:2288
 msgid "unprotect_ptr: pointer not found"
@@ -3855,14 +3829,13 @@ msgid "bad value"
 msgstr "不適切な値です"
 
 #: src/main/memory.c:2774
-#, fuzzy
 msgid "memory profiling is not available on this system"
-msgstr "R プロファイルはこのシステムでは使えません"
+msgstr "メモリプロファリングはこのシステムでは使えません"
 
 #: src/main/memory.c:2844
-#, fuzzy, c-format
+#, c-format
 msgid "Rprofmem: cannot open output file '%s'"
-msgstr "Rprof: プロファイル・ファイル '%s' を開くことができません"
+msgstr "Rprofmem: ファイル '%s' を開くことができません"
 
 #: src/main/model.c:127
 msgid "invalid term in model formula"
@@ -3931,9 +3904,9 @@ msgid "overlong names in '%s'"
 msgstr "'%s' の名前が長すぎます"
 
 #: src/main/model.c:1368
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for variable '%s'"
-msgstr "軸のラベルの型が不正です"
+msgstr "型 (%s) は変数 '%s' に対しては不正です"
 
 #: src/main/model.c:1373
 #, c-format
@@ -3979,12 +3952,12 @@ msgstr "項の名前は切りつめらられるでしょう"
 
 #: src/main/model.c:1859
 msgid "complex variables are not currently allowed in model matrices"
-msgstr ""
+msgstr "モデル行列中では複素数は現在許されていません"
 
 #: src/main/model.c:1884
-#, fuzzy, c-format
+#, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
-msgstr "負の長さのベクトルは許されません"
+msgstr "タイプ '%s' の変数はモデル行列中では許されません"
 
 #: src/main/names.c:935
 msgid "string argument required"
@@ -4206,13 +4179,13 @@ msgstr ""
 "C レベルの NEW マクロが，null クラスの定義ポインタを伴って呼び出されました"
 
 #: src/main/objects.c:1299
-#, fuzzy, c-format
+#, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
-msgstr "仮想クラス (\"%s\") から C のオブジェクトを生成しようとしました"
+msgstr "仮想クラス (\"%s\") からオブジェクトを生成しようとしています"
 
 #: src/main/objects.c:1349
 msgid "'R_get_primname' called on a non-primitive"
-msgstr ""
+msgstr "'R_get_primname' がプリミティブでないものに対して呼び出されました"
 
 #: src/main/optim.c:75 src/main/optim.c:102 src/main/optim.c:186
 msgid "non-finite value supplied by optim"
@@ -4766,12 +4739,11 @@ msgid "zero length 'padj' specified"
 msgstr "長さゼロの 'padj' が指定されています"
 
 #: src/main/plot.c:1165
-#, fuzzy
 msgid "'labels' is supplied and not 'at'"
-msgstr "'label' が与えられていますが, 'at' がありません"
+msgstr "'label' が与えられていますが 'at' がありません"
 
 #: src/main/plot.c:1169
-#, fuzzy, c-format
+#, c-format
 msgid "'at' and 'labels' lengths differ, %d != %d"
 msgstr "'at' と 'label' の長さが違います。 %d != %d"
 
@@ -5139,8 +5111,7 @@ msgstr "列ラベルの数が少なすぎます"
 #, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " [getOption(\"max.print\") を越えました -- 最後の行を省略します]]\n"
 
 #: src/main/qsort.c:50
 msgid "argument is not a numeric vector"
@@ -5621,9 +5592,8 @@ msgid "NA/NaN argument"
 msgstr "引数が NA/NaN です"
 
 #: src/main/seq.c:148 src/main/seq.c:240 src/main/seq.c:243
-#, fuzzy
 msgid "invalid number of copies in rep.int()"
-msgstr "rep 関数中のコピー回数が不正です"
+msgstr "rep.int() 関数中のコピー回数が不正です"
 
 #: src/main/seq.c:231
 msgid "rep() incorrect type for second argument"
@@ -5634,43 +5604,36 @@ msgid "attempt to replicate non-vector"
 msgstr "ベクトルでないものを複製しようとしました"
 
 #: src/main/seq.c:465
-#, fuzzy
 msgid "'length.out' must be a non-negative number"
-msgstr "'gap' は，非負の整数でなくてはなりません"
+msgstr "'length.out' は非負の数値でなくてはなりません"
 
 #: src/main/seq.c:479 src/main/seq.c:518 src/main/seq.c:532
-#, fuzzy
 msgid "'from' must be finite"
-msgstr "'a' と 'b'  は有限でなければなりません"
+msgstr "'from' は有限な値でなければなりません"
 
 #: src/main/seq.c:481 src/main/seq.c:520 src/main/seq.c:550
-#, fuzzy
 msgid "'to' must be finite"
-msgstr "'a' と 'b'  は有限でなければなりません"
+msgstr "'to' は有限な値でなければなりません"
 
 #: src/main/seq.c:493
 msgid "invalid '(to - from)/by' in 'seq'"
-msgstr ""
+msgstr "'seq' 中に不正な '(to - from)/by'"
 
 #: src/main/seq.c:501
-#, fuzzy
 msgid "'by' argument is much too small"
-msgstr "'file' 引数が長過ぎます"
+msgstr "'by' 引数があまりに小さすぎます"
 
 #: src/main/seq.c:504
-#, fuzzy
 msgid "wrong sign in 'by' argument"
-msgstr "'mode' 引数の長さが不正です"
+msgstr "'by' 引数中に誤った符号"
 
 #: src/main/seq.c:534 src/main/seq.c:552
-#, fuzzy
 msgid "'by' must be finite"
-msgstr "'a' と 'b'  は有限でなければなりません"
+msgstr "'by' は有限でなければなりません"
 
 #: src/main/seq.c:595
-#, fuzzy
 msgid "argument must be non-negative"
-msgstr "引数は環境でなければなりません"
+msgstr "引数は非負でなければなりません"
 
 #: src/main/serialize.c:222 src/main/serialize.c:252 src/main/serialize.c:275
 msgid "unknown or inappropriate output format"
@@ -5802,9 +5765,8 @@ msgid "not a proper file name"
 msgstr "ファイル名が不適切です"
 
 #: src/main/serialize.c:2045
-#, fuzzy
 msgid "not a proper raw vector"
-msgstr "単一のベクトルではありません"
+msgstr "適正な raw ベクトルではありません"
 
 #: src/main/serialize.c:2049 src/main/serialize.c:2052
 msgid "file open failed"
@@ -6362,9 +6324,9 @@ msgid "object is not a matrix"
 msgstr "オブジェクトが行列ではありません"
 
 #: src/main/util.c:217 src/main/util.c:229 src/main/util.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "type %d is unimplemented in '%s'"
-msgstr "type2str には %d 型は未実装です"
+msgstr "型 %d は '%s' では未実装です"
 
 #: src/main/util.c:253
 #, c-format
@@ -6587,7 +6549,7 @@ msgstr "インターネット読み込みのタイムアウト"
 #: src/modules/internet/nanoftp.c:312 src/modules/internet/nanoftp.c:346
 #: src/modules/internet/nanoftp.c:356
 msgid "RxmlNanoFTPScanURL: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoFTPScanURL: 長すぎる (不正な？) URL"
 
 #: src/modules/internet/nanoftp.c:389
 msgid "removing FTP proxy info"
@@ -6600,7 +6562,7 @@ msgstr "FTP プロキシ '%s' を使います"
 
 #: src/modules/internet/nanoftp.c:402 src/modules/internet/nanoftp.c:431
 msgid "RxmlNanoFTPScanProxy: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoFTPScanProxy: 長すぎる (不正な？) URL"
 
 #: src/modules/internet/nanoftp.c:830
 msgid "cannot resolve host"
@@ -6634,7 +6596,7 @@ msgstr "ポート %d から listen できませんでした"
 #: src/modules/internet/nanohttp.c:363 src/modules/internet/nanohttp.c:391
 #: src/modules/internet/nanohttp.c:400
 msgid "RxmlNanoHTTPScanURL: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoHTTPScanURL: 長すぎる (不正な？) URL"
 
 #: src/modules/internet/nanohttp.c:434
 msgid "removing HTTP proxy info"
@@ -6647,7 +6609,7 @@ msgstr "HTTP プロキシ '%s' を使います"
 
 #: src/modules/internet/nanohttp.c:447 src/modules/internet/nanohttp.c:483
 msgid "RxmlNanoHTTPScanProxy: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoHTTPScanProxy: 長すぎる(不正な？) URL"
 
 #: src/modules/internet/nanohttp.c:1102
 #, c-format

@@ -3,13 +3,14 @@ msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2006-09-19 11:54\n"
-"PO-Revision-Date: 2005-03-31 08:00+0009\n"
-"Last-Translator: Nobuo Funao\n"
+"PO-Revision-Date: 2006-09-22 10:55+0900\n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 0.10.1rc1\n"
 
 msgid "'coef' must not be negative"
 msgstr "'coef' は負にはなれません"
@@ -58,13 +59,13 @@ msgid "'to' must be a colorConverter or string"
 msgstr "'to' は colorConverter または string でなければなりません"
 
 msgid "'from.ref.white' disagrees with definition of"
-msgstr "'from.ref.white' が以下の定義と一致します: "
+msgstr "'from.ref.white' が以下の定義と一致しません: "
 
 msgid "'to.ref.white' disagrees with definition of"
 msgstr "'to.ref.white' が以下の定義と一致しません："
 
 msgid "color spaces use different reference whites."
-msgstr "カラースペース(color spaces)は異なった基準白色が使われています"
+msgstr "色空間(color spaces)は異なった基準白色を使っています"
 
 msgid "cannot shut down device 1 (the null device)"
 msgstr "デバイス 1 をシャットダウンすることが出来ません（NULL デバイスです）"
@@ -95,11 +96,10 @@ msgstr "'width' と 'height' のどちらか一つを指定する必要があり
 
 msgid "dev.control() called without an open graphics device"
 msgstr ""
-"dev.control() は，グラフィックスデバイスが何も開いていないのに呼び出されまし"
-"た"
+"dev.control() が，開かれたグラフィックスデバイスがないのに呼び出されました"
 
 msgid "argument is missing with no default"
-msgstr "引数はデフォルトなしで欠損となっています"
+msgstr "引数がありませんが、省略時既定値もありません"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "'%s' 中に不正な引数があります（名前付き引数が必要です）"

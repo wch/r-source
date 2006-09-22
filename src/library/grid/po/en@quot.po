@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-08-29 06:15+0100\n"
-"PO-Revision-Date: 2006-08-29 06:15+0100\n"
+"POT-Creation-Date: 2006-09-22 09:08+0100\n"
+"PO-Revision-Date: 2006-09-22 09:08+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -42,35 +42,35 @@ msgstr ""
 msgid "Cannot clip to rotated viewport"
 msgstr "Cannot clip to rotated viewport"
 
-#: grid.c:641 grid.c:646 grid.c:735 grid.c:740
+#: grid.c:648 grid.c:653 grid.c:742 grid.c:747
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 
-#: grid.c:931
+#: grid.c:938
 msgid "attempt to plot on null device"
 msgstr "attempt to plot on null device"
 
-#: grid.c:1211
+#: grid.c:1218
 msgid "There is no layout defined"
 msgstr "There is no layout defined"
 
-#: grid.c:1431
+#: grid.c:1438
 msgid "Polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygon edge not found (zero-width or zero-height?)"
 
-#: grid.c:1440
+#: grid.c:1447
 msgid "Polygon edge not found"
 msgstr "Polygon edge not found"
 
-#: grid.c:1580
+#: grid.c:1587
 msgid "Require at least two points to draw arrow"
 msgstr "Require at least two points to draw arrow"
 
-#: grid.c:1894
+#: grid.c:1901
 msgid "Non-finite control point in Xspline"
 msgstr "Non-finite control point in Xspline"
 
-#: grid.c:3065
+#: grid.c:3072
 msgid "Unable to clip to rotated rectangle"
 msgstr "Unable to clip to rotated rectangle"
 
