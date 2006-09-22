@@ -472,15 +472,18 @@ nls <-
 	} else
 	    names(start)
 
+    env <- environment(formula)
+    if (is.null(env)) env <- parent.frame()
+
     ## Heuristics for determining which names in formula represent actual
     ## variables :
 
     ## If it is a parameter it is not a variable (nothing to guess here :-)
- if(length(pnames))
+    if(length(pnames))
         varNames <- varNames[is.na(match(varNames, pnames))]
     ## This aux.function needs to be as complicated because
     ## exists(var, data) does not work (with lists or dataframes):
-    lenVar <- function(var) tryCatch(length(eval(as.name(var), data)),
+    lenVar <- function(var) tryCatch(length(eval(as.name(var), data, env)),
 				     error = function(e) -1)
     n <- sapply(varNames, lenVar)
     if(any(not.there <- n == -1)) {
@@ -508,7 +511,7 @@ nls <-
     ## If its length is a multiple of the response or LHS of the formula,
     ## then it is probably a variable.
     ## This may fail (e.g. when LHS contains parameters):
-    respLength <- length(eval(formula[[2]], data))
+    respLength <- length(eval(formula[[2]], data, env))
     varIndex <- n %% respLength == 0
 
     mf$formula <-                # replace RHS by linear model formula
@@ -522,7 +525,7 @@ nls <-
     mf <- as.list(mf)
     if (missing(start)) start <- getInitial(formula, mf)
     for(var in varNames[!varIndex])
-        mf[[var]] <- eval(as.name(var), data)
+        mf[[var]] <- eval(as.name(var), data, env)
     wts <- if(!mWeights) model.weights(mf) else rep(1, n)
     if (any(wts < 0 | is.na(wts)))
 	stop("missing or negative weights not allowed")

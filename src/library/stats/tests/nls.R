@@ -185,4 +185,19 @@ m2 <- nls(y ~ gfun(a,b,x), algorithm = "port",
 profile(m2)
 confint(m2)
 
+## scoping problems
+test <- function()
+{
+    x <- seq(0,5,len=20)
+    n <- 1
+    y <- 2*x^2 + n + rnorm(x)
+    xy <- data.frame(x=x,y=y)
+    myf <- function(x,a,b,c) a*x^b+c
+    nls(y ~ myf(x,a,b,n), data=xy, start=c(a=1,b=1), trace=TRUE)
+}
+test()
+## failed to find n in 2.2.x
+## found wrong n in 2.3.x
+## finally worked in 2.4.0
+
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
