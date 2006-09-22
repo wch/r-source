@@ -8,12 +8,13 @@ msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-09-21 09:54+0100\n"
-"PO-Revision-Date: 2005-06-02 13:28+0900\n"
-"Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"PO-Revision-Date: 2006-09-22 15:11+0900\n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CP932\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 0.10.1rc1\n"
 
 #: console.c:879 console.c:919
 msgid "Not enough memory"
@@ -202,7 +203,7 @@ msgstr "無効な引数です"
 
 #: dataentry.c:267
 msgid "invalid type for value"
-msgstr "無効な型の値です"
+msgstr "値に対して無効な型です"
 
 #: dataentry.c:281
 msgid "invalid device"
@@ -572,17 +573,16 @@ msgstr ""
 "設定を保存して、これらをを適用するために、Rguiを再実行しなさい。\n"
 
 #: preferences.c:247
-#, fuzzy
 msgid ""
 "The language for menus cannot be changed on a\n"
 " running console.\n"
 "\n"
 "Save the preferences and restart Rgui to apply to menus.\n"
 msgstr ""
-"全体的なコンソール設定を実行中に\n"
-"変える事は出来ない\n"
+"メニューの言語設定を実行中に\n"
+"変える事はできません。\n"
 "\n"
-"設定を保存して、これらをを適用するために、Rguiを再実行しなさい。\n"
+"変更を適用するには、設定を保存してRguiを再実行してください。\n"
 
 #: preferences.c:316
 msgid "Changes in pager size will not apply to any open pagers"
@@ -853,7 +853,7 @@ msgstr "ファイルを選択"
 
 #: rui.c:1146
 msgid "'mname' is limited to 1000 bytes"
-msgstr "'mname' は半角英数字で 1000 文字までに制限されています"
+msgstr "'mname' は1000バイト分までに制限されています"
 
 #: rui.c:1188
 #, c-format
@@ -920,11 +920,11 @@ msgstr "作業ディレクトリとして '%s' を設定することができません"
 
 #: graphapp/dialogs.c:400
 msgid "Choose a folder"
-msgstr ""
+msgstr "フォルダを選択してください"
 
 #: graphapp/dialogs.c:492 graphapp/dialogs.c:494
 msgid "Browse"
-msgstr ""
+msgstr "ブラウズ"
 
 #: graphapp/dialogs.c:592
 msgid "User"
@@ -1081,9 +1081,9 @@ msgstr "Jpeg"
 #: ../library/grDevices/src/devWindows.c:1550
 #: ../library/grDevices/src/devWindows.c:1552
 #: ../library/grDevices/src/devWindows.c:1554
-#, c-format
+#, fuzzy, c-format
 msgid "%s quality..."
-msgstr "%s の品質..."
+msgstr "50% の品質..."
 
 #: ../library/grDevices/src/devWindows.c:1556
 msgid "Copy to the clipboard"
