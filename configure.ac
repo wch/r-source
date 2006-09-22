@@ -1184,7 +1184,9 @@ case "${host_os}" in
         shlib_ldflags="-bundle -undefined suppress"
         darwin_pic="${darwin_pic} -fno-common"
         ;;
-      darwin[[56]]*)
+      ## although OS X 10.3 (Panther = Darwin 7) has some useful features,
+      ## dlopen doesn't work with dylibs and RTLD_LOCAL, so we can't use them.
+      darwin[[567]]*)
 	shlib_ldflags="-flat_namespace -bundle -undefined suppress"
         darwin_pic="${darwin_pic} -fno-common"
         ;;
@@ -1674,7 +1676,7 @@ fi
 
 if test "${acx_blas_ok}" != "yes"; then
   case "${host_os}" in
-    darwin[1-6]*|aix*)
+    darwin[[1-7]]*|aix*)
       ;;
     *)
       if test "${use_blas_shlib}" = "unset"; then
