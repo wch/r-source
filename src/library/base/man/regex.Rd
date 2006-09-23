@@ -197,7 +197,7 @@
   \code{man pcrepattern} and \code{man pcreapi}) on your system or from
   the sources at
   \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}. If PCRE
-  support was compiled from the sources within \R, the PCRE version is 6.4
+  support was compiled from the sources within \R, the PCRE version is 6.7
   as described here (version \eqn{\ge}{>=} 4.0 is required if \R is
   configured to use the system's PCRE library).
 
@@ -282,13 +282,12 @@
   and recursive patterns are not covered here.
 }
 \author{
-  This help page is based on the documentation of GNU grep 2.4.2, the
-  \code{pcre} man page from PCRE 3.9 and the \code{pcrepattern} man page
-  from PCRE 4.4.
+  This help page is based on the documentation of GNU grep 2.4.2 and the
+  \code{pcrepattern} man page from PCRE 6.7.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
-  \code{\link{help.search}}, \code{\link{list.files}},
+  \code{\link{glob2rx}}, \code{\link{help.search}}, \code{\link{list.files}},
   \code{\link{ls}} and \code{\link{strsplit}}.
   
   \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html}

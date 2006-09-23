@@ -48,18 +48,21 @@ NextMethod(generic = NULL, object = NULL, \dots)
   methods for a particular generic function or class.
 
   \code{UseMethod} is a primitive function so positional matching is
-  used and names of supplied arguments are ignored.
+  used and names of supplied arguments are ignored.  It is not the only
+  means of dispatch of methods, for there are \link{internal generic}
+  functions.
 
   \code{NextMethod} invokes the next method (determined by the
-  class vector, either of the object supplied to \code{UseMethod}, or of
+  class vector, either of the object supplied to the generic, or of
   the first argument to the function containing \code{NextMethod} if a
   method was invoked directly).  Normally \code{NextMethod} is used with
   only one argument, \code{generic}, but if further arguments are
   supplied these modify the call to the next method.
 
   \code{NextMethod} should not be called except in methods called by
-  \code{UseMethod}. In particular it will not work inside anonymous
-  calling functions (eg \code{get("print.ts")(AirPassengers)}).
+  \code{UseMethod} or from internal generics (see
+  \link{InternalGenerics}).  In particular it will not work inside
+  anonymous calling functions (e.g. \code{get("print.ts")(AirPassengers)}).
 
   Name spaces can register methods for generic functions.  To support
   this, \code{UseMethod} and \code{NextMethod} search for methods in
@@ -144,7 +147,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   it is recommended to use the more flexible and robust \emph{S4} scheme
   provided in the \pkg{methods} package.
 }
-\section{Warning}{
+\section{Historical note}{
   Prior to \R 2.1.0 \code{UseMethod} accepted a call with no arguments
   and tried to deduce the generic from the context.  This was
   undocumented on the help page.  It is allowed but
