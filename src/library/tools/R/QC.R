@@ -548,11 +548,7 @@ function(package, dir, lib.loc = NULL,
 
         ## Get variable names and data set usages first, mostly for
         ## curiosity.
-        ## <NOTE>
-        ## Use '<=' as we could get 'NULL' ... although of course this
-        ## is not really a variable.
-        ind <- sapply(exprs, length) <= 1
-        ## </NOTE>
+        ind <- ! sapply(exprs, is.call)
         if(any(ind)) {
             variables_in_usages <-
                 c(variables_in_usages,
@@ -733,9 +729,10 @@ function(x, ...)
     has_only_names <- is.character(x[[1]][[1]][["code"]])
 
     format_args <- function(s) {
-        if(has_only_names) {
+        if(length(s) == 0)
+            "function()"
+        else if(has_only_names)
             paste("function(", paste(s, collapse = ", "), ")", sep = "")
-        }
         else {
             s <- paste(deparse(s), collapse = "")
             s <- gsub(" = \([,\\)]\)", "\\1", s)
