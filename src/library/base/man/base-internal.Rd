@@ -31,7 +31,7 @@
 
 testPlatformEquivalence(built, run)
 
-.isMethodsDispatchOn()
+.isMethodsDispatchOn(onOff = NULL)
 
 sys.load.image(name, quiet)
 sys.save.image(name)

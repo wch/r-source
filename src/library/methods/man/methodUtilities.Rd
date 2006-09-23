@@ -36,7 +36,7 @@ Quote()
 
 showDefault(object, oldMethods = TRUE)
 
-initMethodDispatch()
+initMethodDispatch(where = topenv(parent.frame()))
 
 methodSignatureMatrix(object, sigSlots = c("target", "defined"))
 }
