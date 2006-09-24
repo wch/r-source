@@ -26,7 +26,8 @@ wilcox.test(x, \dots)
     hypothesis, must be one of \code{"two.sided"} (default),
     \code{"greater"} or \code{"less"}.  You can specify just the initial
     letter.}
-  \item{mu}{a number specifying an optional location parameter.}
+  \item{mu}{a number specifying an optional parameter used to form the
+    null hypothesis.  See Details.}
   \item{paired}{a logical indicating whether you want a paired test.}
   \item{exact}{a logical indicating whether an exact \eqn{p}-value
     should be computed.}
@@ -55,7 +56,7 @@ wilcox.test(x, \dots)
   If only \code{x} is given, or if both \code{x} and \code{y} are given
   and \code{paired} is \code{TRUE}, a Wilcoxon signed rank test of the
   null that the distribution of \code{x} (in the one sample case) or of
-  \code{x-y} (in the paired two sample case) is symmetric about
+  \code{x - y} (in the paired two sample case) is symmetric about
   \code{mu} is performed.
 
   Otherwise, if both \code{x} and \code{y} are given and \code{paired}
@@ -63,7 +64,9 @@ wilcox.test(x, \dots)
   Mann-Whitney test: see the Note) is carried out.  In this case, the
   null hypothesis is that the distributions of \code{x} and \code{y}
   differ by a location shift of \code{mu} and the alternative is that
-  they differ by some other location shift.
+  they differ by some other location shift (and the one-sided
+  alternative \code{"greater"} is that \code{x} is shifted to the right
+  of \code{y}).
 
   By default (if \code{exact} is not specified), an exact \eqn{p}-value
   is computed if the samples contain less than 50 finite values and

@@ -16,7 +16,9 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
     string) by \code{y}.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"} (default), \code{"less"}, or
-    \code{"greater"}.  You can specify just the initial letter.}
+    \code{"greater"}.  You can specify just the initial letter of the
+    value, but the argument name must be give in full.
+    See Details for the meanings of the possible values.}
   \item{exact}{\code{NULL} or a logical indicating whether an exact
     p-value should be computed.  See Details for the meaning of
     \code{NULL}.  Not used for the one-sided two-sample case.}
@@ -41,10 +43,17 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   that the true distribution function of \code{x} is equal to, not less
   than or not greater than the hypothesized distribution function
   (one-sample case) or the distribution function of \code{y} (two-sample
-  case), respectively.
-
+  case), respectively.  This is a comparison of cumulative distribution
+  functions, and the test statistic is the maximum difference in value,
+  with the statistic in the \code{"greater"} alternative being
+  \eqn{D^+ = max_u [ F_x(u) - F_y(u) ]}.   Thus in the two-sample case
+  \code{alternative="greater"} includes distributions for which \code{x}
+  is stochastically \emph{smaller} than \code{y} (the CDF of \code{x} lies
+  above and hence to the left of that for \code{y}), in contrast to
+  \code{\link{t.test}} or \code{\link{wilcox.test}}.
+  
   Exact p-values are not available for the one-sided two-sample case, or
-  in the case of ties.  \code{exact = NULL} (the default), an exact
+  in the case of ties.  If \code{exact = NULL} (the default), an exact
   p-value is computed if the sample size if less than 100 in the
   one-sample case, and if the product of the sample sizes is less than
   10000 in the two-sample case.  Otherwise, asymptotic distributions are
@@ -75,7 +84,7 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   \emph{The Annals of Mathematical Statistics}, \bold{22}/4, 592--596.
 
   William J. Conover (1971),
-  \emph{Practical nonparametric statistics}.
+  \emph{Practical Nonparametric Statistics}.
   New York: John Wiley & Sons.
   Pages 295--301 (one-sample \dQuote{Kolmogorov} test),
   309--314 (two-sample \dQuote{Smirnov} test).
@@ -103,5 +112,13 @@ ks.test(x, y)
 ks.test(x+2, "pgamma", 3, 2) # two-sided, exact
 ks.test(x+2, "pgamma", 3, 2, exact = FALSE)
 ks.test(x+2, "pgamma", 3, 2, alternative = "gr")
+
+# test if x is stochastically larger than x2
+x2 <- rnorm(50, -1)
+plot(ecdf(x), xlim=range(c(x, x2)))
+plot(ecdf(x2), add=TRUE, lty="dashed")
+t.test(x, x2, alternative="g")
+wilcox.test(x, x2, alternative="g")
+ks.test(x, x2, alternative="l")
 }
 \keyword{htest}

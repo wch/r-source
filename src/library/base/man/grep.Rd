@@ -136,6 +136,8 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
 % the `aka' above is for ESS (and ?reg....) where a space is problematic
   of the pattern specification.
 
+  \code{\link{glob2rx}} to turn wildcard matches into regular expressions.
+  
   \code{\link{agrep}} for approximate matching.
 
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}

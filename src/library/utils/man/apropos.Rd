@@ -34,6 +34,8 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
 }
 \author{Kurt Hornik and Martin Maechler (May 1997).}
 \seealso{
+  \code{\link{glob2rx}} to convert wildcard patterns to regular expressions.
+  
   \code{\link{objects}} for listing objects from one place,
   \code{\link{help.search}} for searching the help system,
   \code{\link{search}} for the search path.
