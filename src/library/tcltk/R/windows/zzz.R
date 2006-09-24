@@ -13,7 +13,9 @@
         library.dynam("tcltk", pkg, lib)
         Sys.putenv(PATH=opath)
     }
-    .C("tcltk_start", PACKAGE="tcltk")
+    .C("tcltk_start", handle=ifelse(getWindowsHandle("Frame"),
+                                    getWindowsHandle("Console"), 0), 
+                                    PACKAGE="tcltk")
     extra <- system.file("exec", package = "tcltk")
     extra <- gsub("\\\\", "/", extra)
     addTclPath(extra)

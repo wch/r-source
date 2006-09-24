@@ -293,13 +293,25 @@ tkscale       <- function(parent, ...) tkwidget(parent, "scale", ...)
 tkscrollbar   <- function(parent, ...) tkwidget(parent, "scrollbar", ...)
 tktext        <- function(parent, ...) tkwidget(parent, "text", ...)
 
-tktoplevel    <- function(parent=.TkRoot,...) {
-    w <- tkwidget(parent,"toplevel",...)
+tktoplevel    <- function(parent=.TkRoot, ...) {
+    if(.Platform$OS.type == "windows") {
+	handle <- 0
+	if (missing(parent)) 
+	    handle <- .C("tcltk_window", handle=as.integer(handle), PACKAGE = "tcltk")$handle
+	if (handle) {
+	  use <- sprintf("0x%x", handle)
+	  w <- tkwidget(parent, "toplevel", use=use, ...)
+	} else w <- tkwidget(parent, "toplevel", ...)
+    } else 
+	w <- tkwidget(parent,"toplevel",...)
+
     ID <- .Tk.ID(w)
     tkbind(w, "<Destroy>",
            function() {
                if (exists(ID, envir=parent$env, inherits=FALSE))
-                   rm(list=ID, envir=parent$env)
+                   rm(list=ID, envir=parent$env)   
+               if (.Platform$OS.type == "windows" && handle) 
+                   .C("tcltk_window", handle=as.integer(handle), PACKAGE = "tcltk")
                tkbind(w, "<Destroy>","")
            })
     w

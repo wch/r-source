@@ -30,6 +30,7 @@ SEXP dotTclcallback(SEXP args);
 #ifdef Win32
 void tcltk_start(void);
 void tcltk_end(void);
+void tcltk_window(int*);
 #else
 void delTcl(void);
 void RTcl_ActivateConsole(void);

@@ -11,6 +11,12 @@ There is a new menu item in Rgui to 'Stop all computations' which
 kills all R computations immediately, skips any on.exit conditions and
 returns to the comand prompt.
 
+tcltk windows now appear within the MDI frame when R is run in MDI mode.
+This is incomplete.  Current known bugs:
+   -  tkwm.deiconify, tkwm.iconify, tkwm.state don't work.
+   -  clicking on some components of a window doesn't cause it to gain focus.
+   -  the initial title of the window is incorrect
+
 
 
 R 2.4.0
