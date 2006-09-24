@@ -55,6 +55,12 @@ DEPRECATED & DEFUNCT
     o	The autoloading of ts() is defunct.
 
 
+BUG FIXES
+
+    o	The alternative hypothesis in wilcox.test() was labelled by an
+	unexplained quantity 'mu' which is now spelled out.
+
+
 
 
 	**************************************************

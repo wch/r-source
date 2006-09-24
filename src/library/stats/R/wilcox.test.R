@@ -68,7 +68,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                        "greater" = psignrank(STATISTIC - 1, n, lower = FALSE),
                        "less" = psignrank(STATISTIC, n))
             if(conf.int) {
-                ## Exact confidence intervale for the median in the
+                ## Exact confidence interval for the median in the
                 ## one-sample case.  When used with paired values this
                 ## gives a confidence interval for mean(x) - mean(y).
                 x <- x + mu             # we want a conf.int for the median
@@ -404,10 +404,11 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         }
     }
 
+    names(mu) <- if(paired || !is.null(y)) "location shift" else "location"
     RVAL <- list(statistic = STATISTIC,
                  parameter = NULL,
                  p.value = as.numeric(PVAL),
-                 null.value = c(mu = mu),
+                 null.value = mu,
                  alternative = alternative,
                  method = METHOD,
                  data.name = DNAME)
