@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2004  The R Development Core Team
+ *  Copyright (C) 1999-2006  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,15 +56,17 @@ static EditorData neweditordata (int file, char *filename)
     EditorData p;
     p = (EditorData) malloc(sizeof(struct structEditorData));
     p->file = file;
-    p->filename = (char *) malloc(_MAX_PATH*sizeof(char));
+    /* need space for terminator, and to copy it */
+    p->filename = (char *) malloc((MAX_PATH+1)*sizeof(char));
     if (filename)
-	strncpy(p->filename, filename, _MAX_PATH);
+	strncpy(p->filename, filename, MAX_PATH+1);
     p->title = (char *) malloc((EDITORMAXTITLE + 1)*sizeof(char));
     p->title[EDITORMAXTITLE] = p->title[0] = '\0';
     return p;
 }
 
-void deleditordata(EditorData p){
+void deleditordata(EditorData p)
+{
     if (p->stealconsole)
 	fix_editor_up = FALSE;
     free(p->filename);
@@ -74,7 +76,8 @@ void deleditordata(EditorData p){
     free(p);
 }
 
-static void editor_set_title(editor c, char *title) {
+static void editor_set_title(editor c, char *title)
+{
     char wtitle[EDITORMAXTITLE+1];
     textbox t = getdata(c);
     EditorData p = getdata(t);
@@ -92,23 +95,25 @@ static void editor_load_file(editor c, char *name)
     textbox t = getdata(c);
     EditorData p = getdata(t);
     FILE *f;
-    char *buffer=NULL, tmp[_MAX_PATH+30];
-    long num=1, bufsize;
+    char *buffer = NULL, tmp[MAX_PATH+50];
+    long num = 1, bufsize;
+
+    /* we checked that file could be read in the caller */
     f = fopen(name, "r");
-    if (f == NULL)
-	return;
+    if (f == NULL) return;
     p->file = 1;
-    strncpy(p->filename, name, _MAX_PATH);
+    strncpy(p->filename, name, MAX_PATH+1);
     bufsize = 0;
     while (num > 0) {
-	buffer = realloc(buffer, bufsize+3000+1);
-	num = fread(buffer+bufsize, 1, 3000-1, f);
+	buffer = realloc(buffer, bufsize + 3000 + 1);
+	num = fread(buffer + bufsize, 1, 3000 - 1, f);
 	if (num >= 0) {
 	    bufsize += num;
 	    buffer[bufsize] = '\0';
 	}
 	else {
-	    snprintf(tmp, _MAX_PATH+30, "Couldn't read from file %s", name);
+	    snprintf(tmp, MAX_PATH+50, G_("Could not read from file '%s'"), 
+		     name);
 	    askok(tmp);
 	}
     }
@@ -123,13 +128,13 @@ static void editor_save_file(editor c, char *name)
 {
     textbox t = getdata(c);
     FILE *f;
-    char buf[_MAX_PATH+30];
+    char buf[MAX_PATH+30];
     if (name == NULL)
 	return;
     else {
 	f = fopen(name, "w");
 	if (f == NULL) {
-	    snprintf(buf, _MAX_PATH+30, "Couldn't save file %s", name);
+	    snprintf(buf, MAX_PATH+30, G_("Could not save file '%s'"), name);
 	    askok(buf);
 	    return;
 	}
@@ -144,13 +149,13 @@ static void editorsaveas(editor c) {
     char *current_name = (p->file ? p->filename : "");
     char *name;
     setuserfilter("R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
-    name = askfilesave("Save script as", current_name);
+    name = askfilesave(G_("Save script as"), current_name);
     if (name == NULL)
 	return;
     else {
 	editor_save_file(c, name);
 	p->file = 1;
-	strncpy(p->filename, name, _MAX_PATH);
+	strncpy(p->filename, name, MAX_PATH+1);
 	gsetmodified(t, 0);
 	editor_set_title(c, name);
 	show(c);
@@ -215,7 +220,8 @@ static void editorprint(control m)
 	if ( linep + fh >= rr ) { /* new page */
 	    if (page > 1) nextpage(lpr);
 	    sprintf(msg, "Page %d", page++);
-  	    gdrawstr(lpr, f, Black, pt(cc - gstrwidth(lpr, f, msg) - 1, top), msg);
+  	    gdrawstr(lpr, f, Black, pt(cc - gstrwidth(lpr, f, msg) - 1, top),
+		     msg);
 	    linep = top + 2*fh;
 	}
 	j = 0;
@@ -240,10 +246,12 @@ static void editorconsole(editor c)
     show(RConsole);
 }
 
-/* Remove global pointer to editor when closing an editor. Fill the gap in the array with the last editor in the list */
+/* Remove global pointer to editor when closing an editor. Fill the
+ * gap in the array with the last editor in the list */
 
-static void editorupdateglobals(editor c) {
-    int i=0;
+static void editorupdateglobals(editor c)
+{
+    int i = 0;
     if (neditors > 1) {
 	while (REditors[i] != c) ++i;
 	if (i < neditors - 1)
@@ -254,16 +262,19 @@ static void editorupdateglobals(editor c) {
 
 /* Hooks called when editor window is destroyed */
 
-static void editordel(editor c) {
+static void editordel(editor c)
+{
     editorupdateglobals(c);
 }
 
-static void textboxdel(textbox t) {
+static void textboxdel(textbox t)
+{
     EditorData p = getdata(t);
     deleditordata(p);
 }
 
-int editorchecksave(editor c) {
+int editorchecksave(editor c)
+{
     textbox t = getdata(c);
     EditorData p = getdata(t);
     int save;
@@ -329,7 +340,7 @@ static void editoropen(char *default_name)
     name = askfilename("Open script", default_name); /* returns NULL if open dialog cancelled */
     if (name) {
 	/* check if file is already open in an editor. If so, close and open again */
-	for (i=0; i<neditors; ++i) {
+	for (i = 0; i < neditors; ++i) {
 	    t = getdata(REditors[i]);
 	    p = getdata(t);
 	    if (!strcmp (name, p->filename)) {
@@ -380,7 +391,8 @@ static void editorcopy(control m)
 static void editorpaste(control m)
 {
     textbox t = getdata(m);
-    /* check whether the widget text limit needs to be increased before doing the paste */
+    /* check whether the widget text limit needs to be increased
+     * before doing the paste */
     int pastelen = getpastelength();
     checklimittext(t, pastelen + 1);
     pastetext(t);
@@ -548,18 +560,18 @@ static void editorhelp()
 {
     char s[4096];
 
-    strcpy(s,G_("R EDITOR\n"));
-    strcat(s,"\n");
-    strcat(s,G_("A standard text editor for editing and running R code.\n"));
-    strcat(s,"\n");
-    strcat(s,G_("RUNNING COMMANDS\n"));
-    strcat(s,G_("To run a line or section of R code, select the code and either\n"));
-    strcat(s,G_("     Press Ctrl-R\n"));
-    strcat(s,G_("     Select \"Run line or selection\" from the \"Edit\" menu\n"));
-    strcat(s,G_("     Press the \"Run line or selection\" icon on the toolbar\n"));
-    strcat(s,G_("This will copy the selected commands to the console and evaluate them.\n"));
-    strcat(s,G_("If there is no selection, this will just run the current line and advance\n"));
-    strcat(s,G_("the cursor by one line.\n"));
+    strcpy(s, G_("R EDITOR\n"));
+    strcat(s, "\n");
+    strcat(s, G_("A standard text editor for editing and running R code.\n"));
+    strcat(s, "\n");
+    strcat(s, G_("RUNNING COMMANDS\n"));
+    strcat(s, G_("To run a line or section of R code, select the code and either\n"));
+    strcat(s, G_("     Press Ctrl-R\n"));
+    strcat(s, G_("     Select \"Run line or selection\" from the \"Edit\" menu\n"));
+    strcat(s, G_("     Press the \"Run line or selection\" icon on the toolbar\n"));
+    strcat(s, G_("This will copy the selected commands to the console and evaluate them.\n"));
+    strcat(s, G_("If there is no selection, this will just run the current line and advance\n"));
+    strcat(s, G_("the cursor by one line.\n"));
 
     askok(s);
 }
@@ -796,6 +808,8 @@ int Rgui_Edit(char *filename, char *title, int stealconsole)
     if (strlen(filename) > 0) {
 	if (!access(filename, R_OK))
 	    editor_load_file(c, filename);
+	else
+	    R_ShowMessage(G_("Unable to open file for reading"));
 	editor_set_title(c, title);
     }
     else {

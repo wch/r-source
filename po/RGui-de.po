@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 09:54+0100\n"
+"POT-Creation-Date: 2006-09-24 07:27+0100\n"
 "PO-Revision-Date: 2006-09-21 11:47+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -296,7 +296,7 @@ msgstr ""
 "automatisch anzupassen\n"
 "\n"
 
-#: dataentry.c:1559 dataentry.c:1653 editor.c:730 rui.c:1065
+#: dataentry.c:1559 dataentry.c:1653 editor.c:742 rui.c:1065
 msgid "Help"
 msgstr "Hilfe"
 
@@ -325,12 +325,12 @@ msgstr "Schließe"
 msgid "Data Editor"
 msgstr "Dateneditor"
 
-#: dataentry.c:1643 editor.c:676 pager.c:452 rui.c:1013
+#: dataentry.c:1643 editor.c:688 pager.c:452 rui.c:1013
 #: ../library/grDevices/src/devWindows.c:1541
 msgid "File"
 msgstr "Datei"
 
-#: dataentry.c:1647 editor.c:694 pager.c:462 rui.c:1034
+#: dataentry.c:1647 editor.c:706 pager.c:462 rui.c:1034
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -354,166 +354,186 @@ msgstr "Zellenbreiten ..."
 msgid "Data editor"
 msgstr "Dateneditor"
 
-#: editor.c:449 pager.c:172 pager.c:192
+#: editor.c:115
+#, c-format
+msgid "Could not read from file '%s'"
+msgstr ""
+
+#: editor.c:137
+#, c-format
+msgid "Could not save file '%s'"
+msgstr ""
+
+#: editor.c:152
+#, fuzzy
+msgid "Save script as"
+msgstr "Speichere Skript"
+
+#: editor.c:461 pager.c:172 pager.c:192
 msgid "No RGui console to paste to"
 msgstr "Keine RGui Konsole um dort einzufügen"
 
-#: editor.c:551
+#: editor.c:563
 msgid "R EDITOR\n"
 msgstr "R Editor\n"
 
-#: editor.c:553
+#: editor.c:565
 msgid "A standard text editor for editing and running R code.\n"
 msgstr "Ein Standardtexteditor zum Bearbeiten und Laufen lassen von R Code.\n"
 
-#: editor.c:555
+#: editor.c:567
 msgid "RUNNING COMMANDS\n"
 msgstr "Befehle ausführen\n"
 
-#: editor.c:556
+#: editor.c:568
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr ""
 "Um eine Zeile oder einen Abschnitt R Code auszuführen, markiere den Code und "
 "entweder\n"
 
-#: editor.c:557
+#: editor.c:569
 msgid "     Press Ctrl-R\n"
 msgstr "     drücke Strg+R\n"
 
-#: editor.c:558
+#: editor.c:570
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr ""
 "     wähle \"Ausführung Zeile oder Auswahl\" aus dem \"Bearbeiten\" Menü\n"
 
-#: editor.c:559
+#: editor.c:571
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr ""
 "     drücke das \"Ausführung Zeile oder Auswahl\" Icon in der Toolbar\n"
 
-#: editor.c:560
+#: editor.c:572
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr ""
 "Dieses kopiert die ausgewählten Kommandos in die Konsole und führt sie aus.\n"
 
-#: editor.c:561
+#: editor.c:573
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr ""
 "Ohne markierten Text wird die aktuelle Zeile ausgeführt und der Cursor\n"
 
-#: editor.c:562
+#: editor.c:574
 msgid "the cursor by one line.\n"
 msgstr "in die nächste Zeile gesetzt.\n"
 
-#: editor.c:574 editor.c:649 editor.c:710
+#: editor.c:586 editor.c:661 editor.c:722
 msgid "Run line or selection"
 msgstr "Ausführung Zeile oder Auswahl"
 
-#: editor.c:576 editor.c:695
+#: editor.c:588 editor.c:707
 msgid "Undo"
 msgstr "Rückgängig"
 
-#: editor.c:578 editor.c:698
+#: editor.c:590 editor.c:710
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: editor.c:579 editor.c:700 pager.c:290 pager.c:463 rui.c:775 rui.c:978
+#: editor.c:591 editor.c:712 pager.c:290 pager.c:463 rui.c:775 rui.c:978
 #: rui.c:1035
 msgid "Copy"
 msgstr "Kopieren"
 
-#: editor.c:580 editor.c:702 rui.c:776 rui.c:982 rui.c:1036
+#: editor.c:592 editor.c:714 rui.c:776 rui.c:982 rui.c:1036
 msgid "Paste"
 msgstr "Einfügen"
 
-#: editor.c:581 editor.c:704
+#: editor.c:593 editor.c:716
 msgid "Delete"
 msgstr "Löschen"
 
-#: editor.c:583 editor.c:706 pager.c:293 pager.c:469 rui.c:782 rui.c:1040
+#: editor.c:595 editor.c:718 pager.c:293 pager.c:469 rui.c:782 rui.c:1040
 msgid "Select all"
 msgstr "Alles auswählen"
 
-#: editor.c:641 pager.c:416 rui.c:966
+#: editor.c:653 pager.c:416 rui.c:966
 msgid "Open script"
 msgstr "Öffne Skript"
 
-#: editor.c:645
+#: editor.c:657
 msgid "Save script"
 msgstr "Speichere Skript"
 
-#: editor.c:653 pager.c:436 ../library/grDevices/src/devWindows.c:1509
+#: editor.c:665 pager.c:436 ../library/grDevices/src/devWindows.c:1509
 msgid "Return focus to Console"
 msgstr "Gebe Fokus an Konsole zurück"
 
-#: editor.c:656
+#: editor.c:668
 msgid "Print script"
 msgstr "Drucke Skript"
 
-#: editor.c:658 pager.c:431 rui.c:994
+#: editor.c:670 pager.c:431 rui.c:994
 #: ../library/grDevices/src/devWindows.c:1503
 msgid "Print"
 msgstr "Drucken"
 
-#: editor.c:677 pager.c:453 rui.c:1015
+#: editor.c:689 pager.c:453 rui.c:1015
 msgid "New script"
 msgstr "Neues Skript"
 
-#: editor.c:679 pager.c:454 rui.c:1016
+#: editor.c:691 pager.c:454 rui.c:1016
 msgid "Open script..."
 msgstr "Öffne Skript..."
 
-#: editor.c:681 preferences.c:788
+#: editor.c:693 preferences.c:788
 msgid "Save"
 msgstr "Speichern"
 
-#: editor.c:683
+#: editor.c:695
 msgid "Save as..."
 msgstr "Speichern unter..."
 
-#: editor.c:686 pager.c:455 rui.c:1029
+#: editor.c:698 pager.c:455 rui.c:1029
 #: ../library/grDevices/src/devWindows.c:1603
 msgid "Print..."
 msgstr "Drucken..."
 
-#: editor.c:689
+#: editor.c:701
 msgid "Close script"
 msgstr "Schließe Skript"
 
-#: editor.c:708 rui.c:1041
+#: editor.c:720 rui.c:1041
 msgid "Clear console"
 msgstr "Leere Konsole"
 
-#: editor.c:712
+#: editor.c:724
 msgid "Run all"
 msgstr "Alles ausführen"
 
-#: editor.c:715
+#: editor.c:727
 msgid "Find..."
 msgstr "Finde..."
 
-#: editor.c:717
+#: editor.c:729
 msgid "Replace..."
 msgstr "Ersetze..."
 
-#: editor.c:720 rui.c:1045
+#: editor.c:732 rui.c:1045
 msgid "GUI preferences..."
 msgstr "GUI Einstellungen..."
 
-#: editor.c:731
+#: editor.c:743
 msgid "Editor"
 msgstr "Editor"
 
-#: editor.c:788
+#: editor.c:800
 msgid "Maximum number of editors reached"
 msgstr "Maximale Anzahl von Editoren erreicht"
 
-#: editor.c:793
+#: editor.c:805
 msgid "Unable to create editor window"
 msgstr "Kann kein Editor-Fenster öffnen"
 
-#: editor.c:802
+#: editor.c:812
+#, fuzzy
+msgid "Unable to open file for reading"
+msgstr "Kann Zwischenablage nicht öffnen"
+
+#: editor.c:816
 msgid "Untitled"
 msgstr "Namenlos"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 09:54+0100\n"
+"POT-Creation-Date: 2006-09-24 07:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,7 +255,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: dataentry.c:1559 dataentry.c:1653 editor.c:730 rui.c:1065
+#: dataentry.c:1559 dataentry.c:1653 editor.c:742 rui.c:1065
 msgid "Help"
 msgstr ""
 
@@ -284,12 +284,12 @@ msgstr ""
 msgid "Data Editor"
 msgstr ""
 
-#: dataentry.c:1643 editor.c:676 pager.c:452 rui.c:1013
+#: dataentry.c:1643 editor.c:688 pager.c:452 rui.c:1013
 #: ../library/grDevices/src/devWindows.c:1541
 msgid "File"
 msgstr ""
 
-#: dataentry.c:1647 editor.c:694 pager.c:462 rui.c:1034
+#: dataentry.c:1647 editor.c:706 pager.c:462 rui.c:1034
 msgid "Edit"
 msgstr ""
 
@@ -313,160 +313,178 @@ msgstr ""
 msgid "Data editor"
 msgstr ""
 
-#: editor.c:449 pager.c:172 pager.c:192
+#: editor.c:115
+#, c-format
+msgid "Could not read from file '%s'"
+msgstr ""
+
+#: editor.c:137
+#, c-format
+msgid "Could not save file '%s'"
+msgstr ""
+
+#: editor.c:152
+msgid "Save script as"
+msgstr ""
+
+#: editor.c:461 pager.c:172 pager.c:192
 msgid "No RGui console to paste to"
 msgstr ""
 
-#: editor.c:551
+#: editor.c:563
 msgid "R EDITOR\n"
 msgstr ""
 
-#: editor.c:553
+#: editor.c:565
 msgid "A standard text editor for editing and running R code.\n"
 msgstr ""
 
-#: editor.c:555
+#: editor.c:567
 msgid "RUNNING COMMANDS\n"
 msgstr ""
 
-#: editor.c:556
+#: editor.c:568
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr ""
 
-#: editor.c:557
+#: editor.c:569
 msgid "     Press Ctrl-R\n"
 msgstr ""
 
-#: editor.c:558
+#: editor.c:570
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr ""
 
-#: editor.c:559
+#: editor.c:571
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr ""
 
-#: editor.c:560
+#: editor.c:572
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr ""
 
-#: editor.c:561
+#: editor.c:573
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr ""
 
-#: editor.c:562
+#: editor.c:574
 msgid "the cursor by one line.\n"
 msgstr ""
 
-#: editor.c:574 editor.c:649 editor.c:710
+#: editor.c:586 editor.c:661 editor.c:722
 msgid "Run line or selection"
 msgstr ""
 
-#: editor.c:576 editor.c:695
+#: editor.c:588 editor.c:707
 msgid "Undo"
 msgstr ""
 
-#: editor.c:578 editor.c:698
+#: editor.c:590 editor.c:710
 msgid "Cut"
 msgstr ""
 
-#: editor.c:579 editor.c:700 pager.c:290 pager.c:463 rui.c:775 rui.c:978
+#: editor.c:591 editor.c:712 pager.c:290 pager.c:463 rui.c:775 rui.c:978
 #: rui.c:1035
 msgid "Copy"
 msgstr ""
 
-#: editor.c:580 editor.c:702 rui.c:776 rui.c:982 rui.c:1036
+#: editor.c:592 editor.c:714 rui.c:776 rui.c:982 rui.c:1036
 msgid "Paste"
 msgstr ""
 
-#: editor.c:581 editor.c:704
+#: editor.c:593 editor.c:716
 msgid "Delete"
 msgstr ""
 
-#: editor.c:583 editor.c:706 pager.c:293 pager.c:469 rui.c:782 rui.c:1040
+#: editor.c:595 editor.c:718 pager.c:293 pager.c:469 rui.c:782 rui.c:1040
 msgid "Select all"
 msgstr ""
 
-#: editor.c:641 pager.c:416 rui.c:966
+#: editor.c:653 pager.c:416 rui.c:966
 msgid "Open script"
 msgstr ""
 
-#: editor.c:645
+#: editor.c:657
 msgid "Save script"
 msgstr ""
 
-#: editor.c:653 pager.c:436 ../library/grDevices/src/devWindows.c:1509
+#: editor.c:665 pager.c:436 ../library/grDevices/src/devWindows.c:1509
 msgid "Return focus to Console"
 msgstr ""
 
-#: editor.c:656
+#: editor.c:668
 msgid "Print script"
 msgstr ""
 
-#: editor.c:658 pager.c:431 rui.c:994
+#: editor.c:670 pager.c:431 rui.c:994
 #: ../library/grDevices/src/devWindows.c:1503
 msgid "Print"
 msgstr ""
 
-#: editor.c:677 pager.c:453 rui.c:1015
+#: editor.c:689 pager.c:453 rui.c:1015
 msgid "New script"
 msgstr ""
 
-#: editor.c:679 pager.c:454 rui.c:1016
+#: editor.c:691 pager.c:454 rui.c:1016
 msgid "Open script..."
 msgstr ""
 
-#: editor.c:681 preferences.c:788
+#: editor.c:693 preferences.c:788
 msgid "Save"
 msgstr ""
 
-#: editor.c:683
+#: editor.c:695
 msgid "Save as..."
 msgstr ""
 
-#: editor.c:686 pager.c:455 rui.c:1029
+#: editor.c:698 pager.c:455 rui.c:1029
 #: ../library/grDevices/src/devWindows.c:1603
 msgid "Print..."
 msgstr ""
 
-#: editor.c:689
+#: editor.c:701
 msgid "Close script"
 msgstr ""
 
-#: editor.c:708 rui.c:1041
+#: editor.c:720 rui.c:1041
 msgid "Clear console"
 msgstr ""
 
-#: editor.c:712
+#: editor.c:724
 msgid "Run all"
 msgstr ""
 
-#: editor.c:715
+#: editor.c:727
 msgid "Find..."
 msgstr ""
 
-#: editor.c:717
+#: editor.c:729
 msgid "Replace..."
 msgstr ""
 
-#: editor.c:720 rui.c:1045
+#: editor.c:732 rui.c:1045
 msgid "GUI preferences..."
 msgstr ""
 
-#: editor.c:731
+#: editor.c:743
 msgid "Editor"
 msgstr ""
 
-#: editor.c:788
+#: editor.c:800
 msgid "Maximum number of editors reached"
 msgstr ""
 
-#: editor.c:793
+#: editor.c:805
 msgid "Unable to create editor window"
 msgstr ""
 
-#: editor.c:802
+#: editor.c:812
+msgid "Unable to open file for reading"
+msgstr ""
+
+#: editor.c:816
 msgid "Untitled"
 msgstr ""
 
