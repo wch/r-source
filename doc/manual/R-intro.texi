@@ -3309,7 +3309,7 @@ distribution under the null hypothesis.
 
 data:  A and B
 W = 89, p-value = 0.007497
-alternative hypothesis: true mu is not equal to 0
+alternative hypothesis: true location shift is not equal to 0
 
 Warning message:
 Cannot compute exact p-value with ties in: wilcox.test(A, B)
@@ -3341,7 +3341,7 @@ distribution:
 
 data:  A and B
 D = 0.5962, p-value = 0.05919
-alternative hypothesis: two.sided
+alternative hypothesis: two-sided
 
 Warning message:
 cannot compute correct p-values with ties in: ks.test(A, B)

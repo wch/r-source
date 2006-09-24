@@ -13,7 +13,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
                         + (n - j) * log(1 - x - j / n)
                         + (j - 1) * log(x + j / n)))
     }
-    
+
     alternative <- match.arg(alternative)
     DNAME <- deparse(substitute(x))
     x <- x[!is.na(x)]
@@ -45,6 +45,10 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
                             "two.sided" = max(abs(z)),
                             "greater" = max(z),
                             "less" = - min(z))
+        nm_alternative <- switch(alternative,
+                                 "two.sided" = "two-sided",
+                                 "less" = "the CDF of x lies below that of y",
+                                 "greater" = "the CDF of x lies above that of y")
         if(exact && (alternative == "two.sided") && !TIES)
             PVAL <- 1 - .C("psmirnov2x",
                            p = as.double(STATISTIC),
@@ -79,6 +83,11 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
             else
                 1 - pkolmogorov1x(STATISTIC, n)
         }
+        nm_alternative <- switch(alternative,
+                                 "two.sided" = "two-sided",
+                                 "less" = "the CDF of x lies below the null hypothesis",
+                                 "greater" = "the CDF of x lies above the null hypothesis")
+
     }
 
     names(STATISTIC) <- switch(alternative,
@@ -125,7 +134,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
 
     RVAL <- list(statistic = STATISTIC,
                  p.value = PVAL,
-                 alternative = alternative,
+                 alternative = nm_alternative,
                  method = METHOD,
                  data.name = DNAME)
     class(RVAL) <- "htest"

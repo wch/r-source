@@ -33,7 +33,7 @@ NEW FEATURES
 	give a recognizable (rather than massaged) call.
 
     o	A few more cases of subassignment work, e.g. <raw>[] <- <list>
-	and <vector>[] <- expression, with suitable coercion of the LHS.
+	and <vector>[] <- <expression>, with suitable coercion of the LHS.
 
 
 INSTALLATION
@@ -59,6 +59,9 @@ BUG FIXES
 
     o	The alternative hypothesis in wilcox.test() was labelled by an
 	unexplained quantity 'mu' which is now spelled out.
+
+	The alternative hypothesis in ks.test() is clearer both in the
+	documentation and in the result. (PR#5360)
 
 
 
@@ -890,7 +893,7 @@ BUG FIXES
 
     o	biplot() now works if there are missing values in the data.
 
-    o	biplot() now works passes par() values to all four axes (not
+    o	biplot() now passes par() values to all four axes (not
 	just those on sides 1 and 2).
 
     o	[.acf now handles an empty first index.
@@ -964,8 +967,9 @@ BUG FIXES
 	other was so much smaller that it had no significant digits
 	and should have been printed as zero (e.g. 1e80+3e44i).
 
-    o	Using install.packages with type='mac.binary' and target path
+    o	Using install.packages with type="mac.binary" and target path
 	starting with ~ failed with a cryptic message while unpacking.
+
 
 
 

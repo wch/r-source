@@ -1,5 +1,5 @@
 
-R version 2.4.0 Under development (unstable) (2006-08-05 r38802)
+R version 2.5.0 Under development (unstable) (2006-09-24 r39498)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -550,7 +550,7 @@ W = 0.9793, p-value = 0.01052
 
 data:  long 
 D = 0.0661, p-value = 0.4284
-alternative hypothesis: two.sided 
+alternative hypothesis: two-sided 
 
 Warning message:
 cannot compute correct p-values with ties in: ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long))) 
@@ -620,7 +620,7 @@ mean of x mean of y
 
 data:  A and B 
 W = 89, p-value = 0.007497
-alternative hypothesis: true mu is not equal to 0 
+alternative hypothesis: true location shift is not equal to 0 
 
 Warning message:
 cannot compute exact p-value with ties in: wilcox.test.default(A, B) 
