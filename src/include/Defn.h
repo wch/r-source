@@ -202,15 +202,6 @@ extern int putenv(char *string);
 #endif
 
 
-/* Getting the working directory */
-#if defined(HAVE_GETCWD)
-# define R_GETCWD(x, y) getcwd(x, y)
-#elif defined(Win32)
-# define R_GETCWD(x, y) GetCurrentDirectory(y, x)
-#else
-# undef R_GETCWD
-#endif
-
 /* Maximal length of an entire file name */
 #if !defined(PATH_MAX)
 # if defined(HAVE_SYS_PARAM_H)

@@ -22,12 +22,12 @@ setwd(dir)
 }
 \value{
   \code{getwd} returns a character vector, or \code{NULL} if the
-  working directory is not available on that platform.
+  working directory is not available.
 #ifdef windows
   On Windows the path returned will use \code{/} as the path separator.
 #endif
 
-  \code{setwd} returns the currrent directory, before the change,
+  \code{setwd} returns the currrent directory before the change,
   invisibly.  It will give an error if it does not succeed.
 }
 \examples{

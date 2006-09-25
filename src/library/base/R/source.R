@@ -71,7 +71,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
                 warning("'chdir = TRUE' makes no sense for a URL")
             if(!isURL && (path <- dirname(ofile)) != ".") {
                 owd <- getwd()
-                on.exit(setwd(owd), add=TRUE)
+                if(is.null(owd))
+                    warning("cannot 'chdir' as current directory is unknown")
+                else on.exit(setwd(owd), add=TRUE)
                 setwd(path)
             }
         } else {
