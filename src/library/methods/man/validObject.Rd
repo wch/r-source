@@ -23,13 +23,12 @@ setValidity(Class, method, where = topenv(parent.frame()) )
 \arguments{
   \item{object}{ Any object, but not much will happen unless the
     object's class has a formal definition.}
-  \item{test}{ If \code{test} is \code{TRUE}, and validity fails the
+  \item{test}{logical; if \code{TRUE} and validity fails, the
     function returns a vector of strings describing the problems.  If
     \code{test} is \code{FALSE} (the default) validity failure generates
     an error.}
-\item{complete}{  If \code{TRUE}, validity methods will be applied
-    recursively to any of the slots that have such methods.
-  }
+  \item{complete}{logical; if \code{TRUE}, validity methods will be
+    applied recursively to any of the slots that have such methods.}
   \item{Class}{the name or class definition of the class whose validity
     method is to be set.}
   \item{method}{a validity method;  that is, either \code{NULL} or a
@@ -38,24 +37,24 @@ setValidity(Class, method, where = topenv(parent.frame()) )
     object is valid, and one or more descriptive strings if any problems
     are found.  Unlike \code{validObject}, it should never generate an
     error.
-   }
-   \item{where}{the modified class definition will be stored in this
-     environment.}
+  }
+  \item{where}{the modified class definition will be stored in this
+    environment.}
 
-   Note that validity methods do not have to check validity of  superclasses:  the logic of \code{validObject} ensures
-   these tests are done once only.  As a consequence, if one validity
-   method wants to use another, it should extract and call the method
-   from the other definition of the other class by calling
-   \code{\link{getValidity}}:  it should \emph{not} call
-   \code{validObject}.
+  Note that validity methods do not have to check validity of
+  superclasses: the logic of \code{validObject} ensures these tests are
+  done once only.  As a consequence, if one validity method wants to use
+  another, it should extract and call the method from the other
+  definition of the other class by calling \code{\link{getValidity}}: it
+  should \emph{not} call \code{validObject}.
 }
 \details{
-  Validity testing takes place \dQuote{bottom up}:  Optionally, if\code{complete=TRUE}, the validity
-  of the object's slots, if any, is tested.  Then, in all cases, for each of the
-  classes that this class extends (the \dQuote{superclasses}), the
-  explicit validity method of that class is called, if one exists.
-  Finally, the validity method of \code{object}'s class is called, if
-  there is one.
+  Validity testing takes place \dQuote{bottom up}: Optionally, if
+  \code{complete=TRUE}, the validity of the object's slots, if any, is
+  tested.  Then, in all cases, for each of the classes that this class
+  extends (the \dQuote{superclasses}), the explicit validity method of
+  that class is called, if one exists.  Finally, the validity method of
+  \code{object}'s class is called, if there is one.
 
   Testing generally stops at the first stage of finding an error, except
   that all the slots will be examined even if a slot has failed its
@@ -73,7 +72,7 @@ setValidity(Class, method, where = topenv(parent.frame()) )
   with the corresponding strings in the error message.
 }
 \references{
-  The R package \pkg{methods} implements, with a few exceptions, the
+  The \R package \pkg{methods} implements, with a few exceptions, the
   programming interface for classes and methods in the book
   \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
   particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
@@ -120,7 +119,7 @@ setClass("trackCurve",
 setClass("twoTrack", representation(tr1 = "track", tr2 ="track"))
 
 ## validity tests are not applied recursively by default,
-## so this object is created (invalidly) 
+## so this object is created (invalidly)
 tT  <- new("twoTrack", tr2 = t2)
 
 ## A stricter test detects the problem

@@ -4486,3 +4486,11 @@ stopifnot(!identical(pairlist(a=1, b=2), pairlist(a=1, aa=2)))
 stopifnot(!identical(structure(pi, a=1, b=2), structure(pi, a=1, aa=2)))
 stopifnot(identical(structure(pi, a=1, b=2), structure(pi, b=2, a=1)))
 ## ignored names of pairlists, but tested order of attributes < 2.4.0
+
+
+## failed subassign could leave '*tmp*' around
+## Parlamis Franklin, R-devel, 2006-09-20
+test <- 1:10
+try(test[2:4] <- ls) # fails
+stopifnot(!exists("*tmp*", where=1))
+## was true < 2.4.0
