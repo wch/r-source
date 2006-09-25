@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-5   The R Development Core Team.
+ *  Copyright (C) 2000-6   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -307,8 +307,10 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!in) error(_("cannot open URL '%s'"), url);
 	out = R_fopen(R_ExpandFileName(file), mode);
 	if(!out) error(_("cannot open destfile '%s'"), file);
-	while((n = fread(buf, 1, CPBUFSIZE, in)) > 0)
-	    fwrite(buf, 1, n, out);
+	while((n = fread(buf, 1, CPBUFSIZE, in)) > 0) {
+	    size_t res = fwrite(buf, 1, n, out);
+	    if(res != n) error(_("write failed"));
+	}
 	fclose(out); fclose(in);
 
 #ifdef HAVE_INTERNET
@@ -352,7 +354,8 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    pbar.cntxt.cenddata = &pbar;
 #endif
 	    while ((len = in_R_HTTPRead(ctxt, buf, sizeof(buf))) > 0) {
-		fwrite(buf, 1, len, out);
+		size_t res = fwrite(buf, 1, len, out);
+		if(res != len) error(_("write failed"));
 		nbytes += len;
 #ifdef Win32
 		if(nbytes > guess) {
@@ -433,7 +436,8 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    
 #endif
 	    while ((len = in_R_FTPRead(ctxt, buf, sizeof(buf))) > 0) {
-		fwrite(buf, 1, len, out);
+		size_t res = fwrite(buf, 1, len, out);
+		if(res != len) error(_("write failed"));
 		nbytes += len;
 #ifdef Win32
 		if(nbytes > guess) {

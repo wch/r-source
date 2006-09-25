@@ -191,12 +191,14 @@ static void DummyTerm(FILE *fp, SaveLoadData *d)
 
 static int AsciiInInteger(FILE *fp, SaveLoadData *d)
 {
-    int x;
-    fscanf(fp, "%s", d->smbuf);
+    int x, res;
+    res = fscanf(fp, "%s", d->smbuf);
+    if(res != 1) error(_("read error"));
     if (strcmp(d->smbuf, "NA") == 0)
 	return NA_INTEGER;
     else {
-	sscanf(d->smbuf, "%d", &x);
+	res = sscanf(d->smbuf, "%d", &x);
+	if(res != 1) error(_("read error"));
 	return x;
     }
 }
@@ -204,7 +206,8 @@ static int AsciiInInteger(FILE *fp, SaveLoadData *d)
 static double AsciiInReal(FILE *fp, SaveLoadData *d)
 {
     double x;
-    fscanf(fp, "%s", d->smbuf);
+    int res = fscanf(fp, "%s", d->smbuf);
+    if(res != 1) error(_("read error"));
     if (strcmp(d->smbuf, "NA") == 0)
 	x = NA_REAL;
     else if (strcmp(d->smbuf, "Inf") == 0)
@@ -212,32 +215,40 @@ static double AsciiInReal(FILE *fp, SaveLoadData *d)
     else if (strcmp(d->smbuf, "-Inf") == 0)
 	x = R_NegInf;
     else
-	sscanf(d->smbuf, "%lg", &x);
+	res  = sscanf(d->smbuf, "%lg", &x);
+	if(res != 1) error(_("read error"));
     return x;
 }
 
 static Rcomplex AsciiInComplex(FILE *fp, SaveLoadData *d)
 {
     Rcomplex x;
-    fscanf(fp, "%s", d->smbuf);
+    int res;
+    res = fscanf(fp, "%s", d->smbuf);
+    if(res != 1) error(_("read error"));
     if (strcmp(d->smbuf, "NA") == 0)
 	x.r = NA_REAL;
     else if (strcmp(d->smbuf, "Inf") == 0)
 	x.r = R_PosInf;
     else if (strcmp(d->smbuf, "-Inf") == 0)
 	x.r = R_NegInf;
-    else
-	sscanf(d->smbuf, "%lg", &x.r);
-
-    fscanf(fp, "%s", d->smbuf);
+    else {
+	res  = sscanf(d->smbuf, "%lg", &x.r);
+	if(res != 1) error(_("read error"));
+    }
+    
+    res = fscanf(fp, "%s", d->smbuf);
+    if(res != 1) error(_("read error"));
     if (strcmp(d->smbuf, "NA") == 0)
 	x.i = NA_REAL;
     else if (strcmp(d->smbuf, "Inf") == 0)
 	x.i = R_PosInf;
     else if (strcmp(d->smbuf, "-Inf") == 0)
 	x.i = R_NegInf;
-    else
-	sscanf(d->smbuf, "%lg", &x.i);
+    else {
+	res = sscanf(d->smbuf, "%lg", &x.i);
+	if(res != 1) error(_("read error"));
+    }
     return x;
 }
 
@@ -1387,12 +1398,15 @@ static void OutIntegerAscii(FILE *fp, int x, SaveLoadData *unused)
 static int InIntegerAscii(FILE *fp, SaveLoadData *unused)
 {
     char buf[128];
-    int x;
-    fscanf(fp, "%s", buf);
+    int x, res;
+    res = fscanf(fp, "%s", buf);
+    if(res != 1) error(_("read error"));
     if (strcmp(buf, "NA") == 0)
 	return NA_INTEGER;
-    else
-	sscanf(buf, "%d", &x);
+    else {
+	res = sscanf(buf, "%d", &x);
+	if(res != 1) error(_("read error"));
+    }
     return x;
 }
 
@@ -1433,8 +1447,9 @@ static char *InStringAscii(FILE *fp, SaveLoadData *unused)
     static char *buf = NULL;
     static int buflen = 0;
     int c, d, i, j;
-    int nbytes;
-    fscanf(fp, "%d", &nbytes);
+    int nbytes, res;
+    res = fscanf(fp, "%d", &nbytes);
+    if(res != 1) error(_("read error"));
     /* FIXME : Ultimately we need to replace */
     /* this with a real string allocation. */
     /* All buffers must die! */
@@ -1500,15 +1515,19 @@ static double InDoubleAscii(FILE *fp, SaveLoadData *unused)
 {
     char buf[128];
     double x;
-    fscanf(fp, "%s", buf);
+    int res;
+    res = fscanf(fp, "%s", buf);
+    if(res != 1) error(_("read error"));
     if (strcmp(buf, "NA") == 0)
 	x = NA_REAL;
     else if (strcmp(buf, "Inf") == 0)
 	x = R_PosInf;
     else if (strcmp(buf, "-Inf") == 0)
 	x = R_NegInf;
-    else
-	sscanf(buf, "%lg", &x);
+    else {
+	res = sscanf(buf, "%lg", &x);
+	if(res != 1) error(_("read error"));
+    }
     return x;
 }
 
@@ -1747,6 +1766,8 @@ static SEXP NewXdrLoad(FILE *fp, SaveLoadData *d)
 static void R_WriteMagic(FILE *fp, int number)
 {
     unsigned char buf[5];
+    size_t res;
+
     number = abs(number);
     switch (number) {
     case R_MAGIC_ASCII_V1:   /* Version 1 - R Data, ASCII Format */
@@ -1774,7 +1795,8 @@ static void R_WriteMagic(FILE *fp, int number)
 	buf[3] = number % 10 + '0';
     }
     buf[4] = '\n';
-    fwrite((char*)buf, sizeof(char), 5, fp);
+    res = fwrite((char*)buf, sizeof(char), 5, fp);
+    if(res != 5) error(_("write failed"));
 }
 
 static int R_ReadMagic(FILE *fp)

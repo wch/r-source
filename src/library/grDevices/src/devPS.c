@@ -4545,14 +4545,17 @@ static void XFig_NewPage(R_GE_gcontext *gc,
 	if(pd->pageno > 1) XF_EndPage(pd->tmpfp);
     } else {
 	char buffer[CHUNK];
-	size_t nread;
+	size_t nread, res;
 	if(pd->pageno == 1) return;
 	XF_FileTrailer(pd->tmpfp);
 	fclose(pd->tmpfp);
 	pd->tmpfp = R_fopen(pd->tmpname, "r");
 	while(1) {
 	    nread = fread(buffer, 1, CHUNK, pd->tmpfp);
-	    if(nread > 0) fwrite(buffer, 1, nread, pd->psfp);
+	    if(nread > 0) {
+		res = fwrite(buffer, 1, nread, pd->psfp);
+		if(res != nread) error(_("write failed"));
+	    }
 	    if(nread < CHUNK) break;
 	}
 	fclose(pd->tmpfp);
@@ -4591,7 +4594,7 @@ static void XFig_NewPage(R_GE_gcontext *gc,
 static void XFig_Close(NewDevDesc *dd)
 {
     char buf[CHUNK];
-    size_t nread;
+    size_t nread, res;
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
 
     XF_FileTrailer(pd->tmpfp);
@@ -4599,7 +4602,10 @@ static void XFig_Close(NewDevDesc *dd)
     pd->tmpfp = R_fopen(pd->tmpname, "r");
     while(1) {
 	nread = fread(buf, 1, CHUNK, pd->tmpfp);
-	if(nread > 0) fwrite(buf, 1, nread, pd->psfp);
+	if(nread > 0) {
+	    res = fwrite(buf, 1, nread, pd->psfp);
+	    if(res != nread) error(_("write failed"));
+	}
 	if(nread < CHUNK) break;
     }
     fclose(pd->tmpfp);
