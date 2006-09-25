@@ -4505,4 +4505,4 @@ e <- letters
 e[2] <- expression(e)
 e <- as.raw(1:3)
 e[2] <- list(e=pi)
-## all failed < 2.4.0
+## all failed < 2.5.0
