@@ -441,7 +441,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP a, group, basename;
     SEXP callenv, defenv;
     RCNTXT *cptr;
-    int i,j,cftmp;
+    int i, j, cftmp;
 
     cptr = R_GlobalContext;
     cftmp = cptr->callflag;
@@ -681,10 +681,14 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isFunction(nextfun)) {
 	sprintf(buf, "%s.default", CHAR(STRING_ELT(generic, 0)));
 	nextfun = R_LookupMethod(install(buf), env, callenv, defenv);
+	/* If there is no default method, try the generic itself,
+	   provided it is primitive or a wrapper for a .Internal
+	   function of the same name.
+	 */
 	if (!isFunction(nextfun)) {
 	    t = install(CHAR(STRING_ELT(generic, 0)));
-	    nextfun = findVar(t,env);
-	    if (TYPEOF(nextfun)==PROMSXP)
+	    nextfun = findVar(t, env);
+	    if (TYPEOF(nextfun) == PROMSXP)
 		nextfun = eval(nextfun, env);
 	    if (!isFunction(nextfun))
 		error(_("no method to invoke"));
@@ -703,7 +707,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_STRING_ELT(s, j, duplicate(STRING_ELT(class, i++)));
     setAttrib(s, install("previous"), class);
     defineVar(install(".Class"), s, m);
-    /* It is possible that it a method was called directly that
+    /* It is possible that if a method was called directly that
 	'method' is unset */
     if (method != R_UnboundValue) {
  	/* for Ops we need `method' to be a vector */

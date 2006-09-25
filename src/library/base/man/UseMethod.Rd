@@ -103,6 +103,16 @@ NextMethod(generic = NULL, object = NULL, \dots)
   (This is a complex area, and subject to change: see the draft
   \sQuote{R Language Definition}.)
 
+  The search for methods for \code{NextMethod} is slightly different
+  from that for \code{UseMethod}.   Finding no \code{fun.default} is not
+  necessarily an error, as the search continues to the generic
+  itself. This is to pick up an \link{internal generic} like \code{[}
+  which has no separate default method, and succeeds only if the generic
+  is a \link{primitive} function or a wrapper for a
+  \code{\link{.Internal}} function of the same name.  (When a primitive
+  is called as the default method, argument matching may not work as
+  described above due to the different semantics of primitives.)
+
   You will see objects such as \code{.Generic}, \code{.Method}, and
   \code{.Class} used in methods.  These are set in the environment
   within which the method is evaluated by the dispatch mechanism, which

@@ -16,10 +16,11 @@
   The advantage of \code{.Primitive} over \code{\link{.Internal}}
   functions is the potential efficiency of argument passing.  However,
   this is done by ignoring argument names and using positional matching
-  of arguments, so this is discouraged for functions of more than one
-  argument.
+  of arguments (unless arranged differently for specific primitives such
+  as \code{\link{rep}}), so this is discouraged for functions of more
+  than one argument.
 
-  All primitve functions are in the base name space.
+  All primitive functions are in the base name space.
 }
 \seealso{
   \code{\link{.Internal}}.
