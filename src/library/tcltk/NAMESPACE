@@ -3,6 +3,7 @@ exportPattern("^tk")
 exportPattern("^.Tcl")
 exportPattern("^.Tk")
 export(addTclPath, as.tclObj, is.tclObj, is.tkwin)
+export(tclfile.dir, tclfile.tail)
 
 S3method("$", tclvar)
 S3method("$<-", tclvar)
