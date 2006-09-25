@@ -41,6 +41,10 @@ apply(X, MARGIN, FUN, \dots)
   If the calls to \code{FUN} return vectors of different lengths,
   \code{apply} returns a list of length \code{prod(dim(X)[MARGIN])} with
   \code{dim} set to \code{MARGIN} if this has length greater than one.
+
+  In all cases the result is coerced by \code{\link{as.vector}} to one
+  of the basic vector types before the dimensions are set, so that (for
+  example) factor results will be coerced to a character array.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
