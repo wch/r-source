@@ -3,6 +3,7 @@ md5sum <- function(files)
 
 .installMD5sums <- function(pkgDir, outDir = pkgDir)
 {
+    ## <FIXME> what if dot == NULL?
     dot <- getwd()
     setwd(pkgDir)
     x <- md5sum(dir(pkgDir, recursive=TRUE))
@@ -22,6 +23,7 @@ checkMD5sums <- function(pkg, dir)
     ## now split on the first space.
     xx <- sub("^([0-9a-fA-F]*)(.*)", "\\1", inlines)
     nmxx <- names(xx) <- sub("^[0-9a-fA-F]* [ |*](.*)", "\\1", inlines)
+    ## <FIXME> what if dot == NULL?
     dot <- getwd()
     setwd(dir)
     x <- md5sum(dir(dir, recursive=TRUE))

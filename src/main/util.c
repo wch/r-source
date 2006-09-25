@@ -607,21 +607,23 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP static intern_getwd()
 {
     SEXP rval = R_NilValue;
-    char buf[2 * PATH_MAX];
+    char buf[PATH_MAX+1];
 
-#ifdef R_GETCWD
-    R_GETCWD(buf, PATH_MAX);
 #ifdef Win32
-    R_fixslash(buf);
-#endif
-    rval = mkString(buf);
+    int res = GetCurrentDirectory(PATH_MAX, buf);
+    if(res > 0) {
+	R_fixslash(buf);
+	rval = mkString(buf);
+    }
+#elif defined(HAVE_GETCWD)
+    char *res = getcwd(buf, PATH_MAX);
+    if(res) rval = mkString(buf);
 #endif
     return(rval);
 }
 
 SEXP attribute_hidden do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-
     checkArity(op, args);
 
     return(intern_getwd());

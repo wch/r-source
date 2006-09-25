@@ -903,6 +903,9 @@ BUG FIXES
     o	Using install.packages with type="mac.binary" and target path
 	starting with ~ failed with a cryptic message while unpacking.
 
+    o	getwd() now works correctly when the working directory is
+	unavailable (e.g. unreadable).
+
 
 
 

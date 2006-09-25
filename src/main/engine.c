@@ -1894,6 +1894,8 @@ void GESymbol(double x, double y, int pch, double size,
 #ifdef SUPPORT_MBCS
 	    if(mbcslocale && gc->fontface != 5) {
 		int cnt = wcrtomb(str, pch, NULL);
+		if(cnt == -1)
+		    error("invalid multibyte string");
 		str[cnt] = 0;
 	    } else
 #endif
