@@ -826,7 +826,7 @@ BUG FIXES
 
     o	biplot() now works if there are missing values in the data.
 
-    o	biplot() now works passes par() values to all four axes (not
+    o	biplot() now passes par() values to all four axes (not
 	just those on sides 1 and 2).
 
     o	[.acf now handles an empty first index.
@@ -883,6 +883,8 @@ BUG FIXES
 	and bxp(), and they behaved differently.  Now those passed in
 	'...' have precedence in both cases.
 
+    o	A failed subassignment could leave behind an object '*tmp*'.
+	The fix also sometimes gives better error messages.
 
     o	Using SIGUSR1 on Unix now always terminates a session, and no
 	longer is caught by browser contexts and restarts (such as try()).
@@ -898,8 +900,10 @@ BUG FIXES
 	other was so much smaller that it had no significant digits
 	and should have been printed as zero (e.g. 1e80+3e44i).
 
-    o	Using install.packages with type='mac.binary' and target path
+    o	Using install.packages with type="mac.binary" and target path
 	starting with ~ failed with a cryptic message while unpacking.
+
+
 
 
 	**************************************************
