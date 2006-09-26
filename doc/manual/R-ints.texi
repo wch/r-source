@@ -55,7 +55,7 @@ notice identical to this one except for the removal of this paragraph
 
 @ifnottex
 @node Top, R Internal Structures, (dir), (dir)
-@top Writing R Extensions
+@top R Internals
 
 This is a guide to the internal structures of @R{} and coding standards for
 the core team working on @R{} itself.
@@ -66,12 +66,12 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* R Internal Structures::       
-* .Internal vs .Primitive::     
-* R coding standards::          
-* Testing R code::              
-* Function and variable index::  
-* Concept index::               
+* R Internal Structures::
+* .Internal vs .Primitive::
+* R coding standards::
+* Testing R code::
+* Function and variable index::
+* Concept index::
 @end menu
 @node R Internal Structures, .Internal vs .Primitive, Top, Top
 @chapter R Internal Structures
@@ -84,15 +84,15 @@ It is a work-in-progress, first begun for @R{} 2.4.0, and should be
 checked against the current version of the source code.
 
 @menu
-* SEXPs::                       
-* Environments and variable lookup::  
-* Attributes::                  
-* Contexts::                    
-* Argument evaluation::         
-* The write barrier::           
-* Serialization Formats::       
-* Internal use of global and base environments::  
-* Modules::                     
+* SEXPs::
+* Environments and variable lookup::
+* Attributes::
+* Contexts::
+* Argument evaluation::
+* The write barrier::
+* Serialization Formats::
+* Internal use of global and base environments::
+* Modules::
 @end menu
 
 @node SEXPs, Environments and variable lookup, R Internal Structures, R Internal Structures
@@ -125,10 +125,10 @@ The first five bits of the @code{sxpinfo} header specify one of up to 32
 @code{SEXPTYPE}s.
 
 @menu
-* SEXPTYPEs::                   
-* Rest of header::              
-* The 'data'::                  
-* Allocation classes::          
+* SEXPTYPEs::
+* Rest of header::
+* The 'data'::
+* Allocation classes::
 @end menu
 
 @node SEXPTYPEs, Rest of header, SEXPs, SEXPs
@@ -551,8 +551,8 @@ from the cache.  The cache is used whenever searching for variables from
 the global environment (possibly as part of a recursive search).
 
 @menu
-* Search paths::                
-* Name spaces::                 
+* Search paths::
+* Name spaces::
 @end menu
 
 @node Search paths, Name spaces, Environments and variable lookup, Environments and variable lookup
@@ -874,8 +874,8 @@ evaluate the remaining arguments.  If no method is found, the remaining
 arguments are evaluated before return to the internal generic.
 
 @menu
-* Missingness::                 
-* Dot-dot-dot arguments::       
+* Missingness::
+* Dot-dot-dot arguments::
 @end menu
 
 @node Missingness, Dot-dot-dot arguments, Argument evaluation, Argument evaluation
@@ -1071,8 +1071,8 @@ This section notes known use by the system of these environments: the
 intention is to minimize or eliminate them.
 
 @menu
-* Base environment::            
-* Global environment::          
+* Base environment::
+* Global environment::
 @end menu
 
 @node Base environment, Global environment, Internal use of global and base environments, Internal use of global and base environments
@@ -1167,7 +1167,7 @@ and needs source code not in the tarball.
 
 @item @file{iconv.dll}
 (Windows only.)  A DLL compiled via Visual C++ which contains the
-routines to convert between character sets. 
+routines to convert between character sets.
 
 @item @file{internet2.dll}
 (Windows only.)  An alternative version of the internet access routines,
