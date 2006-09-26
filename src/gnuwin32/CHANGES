@@ -117,6 +117,9 @@ If the input line limit (1024 bytes) was exceeded whilst pasting in, a
 byte was lost and the last byte input from the keyboard was
 repeated after the paste.
 
+The script editor would only load 1000 bytes if the locale in use was 
+not the system locale.  (PR#9254)
+
 
 
 R 2.3.1 patched
