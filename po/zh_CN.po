@@ -1,8 +1,8 @@
 # Chinese translations for R package
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <FeiChen@FairIsaac.com>, 2005.
-#
+# 陈斐 <feic@avaya.com>, 2006.
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
@@ -71,9 +71,8 @@ msgid "cannot get working directory"
 msgstr "找不到工作目录"
 
 #: src/gnuwin32/extra.c:69
-#, fuzzy
 msgid "invalid 'names' in 'R_unlink'"
-msgstr "R_unlink的'names'不对"
+msgstr "'R_unlink'里的'names不对"
 
 #: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
 #: src/gnuwin32/extra.c:284 src/gnuwin32/extra.c:311 src/gnuwin32/extra.c:314
@@ -178,24 +177,20 @@ msgid "unable to delete menu item (%s)"
 msgstr "无法删除菜单项(%s)"
 
 #: src/gnuwin32/extra.c:478
-#, fuzzy
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr "savehistory只能在Rgui和Rterm里有用"
+msgstr "'savehistory'只能在Rgui和Rterm里有用"
 
 #: src/gnuwin32/extra.c:493
-#, fuzzy
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr "loadhistory只能在Rgui和Rterm有用"
+msgstr "'loadhistory'只能在Rgui和Rterm有用"
 
 #: src/gnuwin32/extra.c:505 src/unix/sys-std.c:982
-#, fuzzy
 msgid "invalid timestamp"
-msgstr "标签不对"
+msgstr "时间标签不对"
 
 #: src/gnuwin32/extra.c:527
-#, fuzzy
 msgid "'loadRconsole' can only be used in Rgui"
-msgstr "loadhistory只能在Rgui和Rterm有用"
+msgstr "’loadRconsole’只能在Rgui里有用"
 
 #: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
 #: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:729
@@ -236,19 +231,16 @@ msgid "cannot decrease memory limit"
 msgstr "无法减少内存极限"
 
 #: src/gnuwin32/extra.c:788
-#, fuzzy
 msgid "Select one or more"
-msgstr "选择: "
+msgstr "选择一个或多个: "
 
 #: src/gnuwin32/extra.c:788
-#, fuzzy
 msgid "Select one"
-msgstr "选择: "
+msgstr "选择一个: "
 
 #: src/gnuwin32/extra.c:924
-#, fuzzy
 msgid "argument must be a character vector or a raw vector"
-msgstr "变元必需是长度为1的字符向量"
+msgstr "变元必需是长度为一的字符向量或原始向量"
 
 #: src/gnuwin32/extra.c:946 src/main/connections.c:1451
 msgid "Unable to open the clipboard"
@@ -259,9 +251,8 @@ msgid "Unable to write to the clipboard"
 msgstr "无法写入裁剪板"
 
 #: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
-#, fuzzy
 msgid "'path' must be a character vector"
-msgstr "'what'必需是字符向量"
+msgstr "'path'必需是字符向量"
 
 #: src/gnuwin32/extra.c:1099 src/gnuwin32/extra.c:1177
 msgid "'default' must be a character string"
@@ -303,9 +294,9 @@ msgstr "'which'的长度必需为1"
 #: src/main/context.c:497 src/main/envir.c:1919 src/main/saveload.c:1964
 #: src/main/saveload.c:1967 src/main/saveload.c:1970 src/main/saveload.c:2242
 #: src/main/saveload.c:2247 src/main/saveload.c:2250
-#, fuzzy, c-format
+#, c-format
 msgid "invalid value for '%s'"
-msgstr "'n'的值不对"
+msgstr "'%s'的值不对"
 
 #: src/gnuwin32/extra.c:1336 src/gnuwin32/extra.c:1338
 #: src/gnuwin32/extra.c:1378
@@ -394,9 +385,8 @@ msgid "encoding '%s' is not recognised"
 msgstr "编码'%s'不存在"
 
 #: src/gnuwin32/system.c:292
-#, fuzzy
 msgid "<ERROR: invalid input in encoding>\n"
-msgstr "<错误: 编码里的输入不对> "
+msgstr "<错误: 编码里的输入不对>\n"
 
 #: src/gnuwin32/system.c:494
 #, c-format
@@ -428,9 +418,9 @@ msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "警告: max-mem-size=%4.1fM太小，略过不用\n"
 
 #: src/gnuwin32/system.c:899
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
-msgstr "警告: max-mem-size=%4.1fM太小，略过不用\n"
+msgstr "警告: max-mem-size=%4.1fM太大，当作3Gb来用\n"
 
 #: src/gnuwin32/system.c:909 src/unix/system.c:307
 #, c-format
@@ -491,14 +481,13 @@ msgid "object is not subsettable"
 msgstr "目标对象无法取子集"
 
 #: src/include/Errormsg.h:44
-#, fuzzy
 msgid "invalid argument 'mode'"
-msgstr "变元不对"
+msgstr "'mode'变元不对"
 
 #: src/include/Errormsg.h:45
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'type' (%s) of argument"
-msgstr "'状态'变元不对"
+msgstr "'type'(%s)变元不对"
 
 #: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
@@ -688,9 +677,9 @@ msgid "dynamic/shared library '%s' was not loaded"
 msgstr "没有载入动态/共享图书馆'%s' "
 
 #: src/main/Rdynload.c:958
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate memory for registered native symbol (%d bytes)"
-msgstr "无法给文字链结分配内存"
+msgstr "无法给登记了的初始符号分配内存(%d字节)"
 
 #: src/main/Rdynload.c:1080
 msgid "must pass package name or DllInfo reference"
@@ -717,12 +706,11 @@ msgstr "本R版本不支持dyn.load"
 #: src/main/Rdynload.c:1362
 #, c-format
 msgid "function '%s' not provided by package '%s'"
-msgstr ""
+msgstr "程序包'%s'不提供'%s'这样的函数"
 
 #: src/main/Rdynload.c:1364
-#, fuzzy
 msgid "table entry must be an external pointer"
-msgstr "无法取消外部指针的类别"
+msgstr "桌项必需是外部指针"
 
 #: src/main/Rstrptime.h:1107
 msgid "input string is too long"
@@ -797,9 +785,9 @@ msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d数值变元的实数函数目前没有实现"
 
 #: src/main/arithmetic.c:1227
-#, fuzzy, c-format
+#, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
-msgstr "给了'atan'%d个变元，但它最多只能用两个变元"
+msgstr "给了'atan'%d个变元，但它最多只能用一个变元"
 
 #: src/main/arithmetic.c:1242 src/main/arithmetic.c:1261
 msgid "invalid second argument of length 0"
@@ -925,23 +913,23 @@ msgid "'x' must be numeric"
 msgstr "'x'必需为数值"
 
 #: src/main/attrib.c:64
-#, fuzzy, c-format
+#, c-format
 msgid "row names must be 'character' or 'integer', not '%s'"
-msgstr "'hostname'必需是长度为1的字符向量"
+msgstr "行名必需是'character'或'integer'，不能是'%s'"
 
 #: src/main/attrib.c:115
-#, fuzzy, c-format
+#, c-format
 msgid "getAttrib: invalid type (%s) for TAG"
-msgstr "getAttrib: 标记的种类不对"
+msgstr "getAttrib: 标记的种类(%s)不对"
 
 #: src/main/attrib.c:180 src/main/attrib.c:271
 msgid "attempt to set an attribute on NULL"
 msgstr "NULL是不能有属性的"
 
 #: src/main/attrib.c:317
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for 'names': must be vector"
-msgstr "'names'的种类不对: 必需是向量"
+msgstr "'names'的种类(%s)不对: 必需是向量"
 
 #: src/main/attrib.c:320
 #, c-format
@@ -977,9 +965,9 @@ msgid "incompatible 'names' argument"
 msgstr "非兼容'names'变元"
 
 #: src/main/attrib.c:677
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) to set 'names' attribute"
-msgstr "设'names'属性时种类出错"
+msgstr "设'names'属性时种类(%s)出错"
 
 #: src/main/attrib.c:744
 msgid "'dimnames' applied to non-array"
@@ -995,9 +983,9 @@ msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames'的长度[%d]必需同'dims'的长度[%d]相等"
 
 #: src/main/attrib.c:768
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
-msgstr "设'dimnames'时的种类不对(必需为向量)"
+msgstr "设'dimnames'时的种类(%s)不对(必需为向量)"
 
 #: src/main/attrib.c:771
 #, c-format
@@ -1072,11 +1060,11 @@ msgid ""
 msgstr "无法从没有槽的基本类别(\"%2$s\") 的目标对象中取得\"%1$s\"槽"
 
 #: src/main/attrib.c:1323
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
-msgstr "目标对象的类别(\"%2$s\") 没有设定，因此不能从它那儿获取槽\"%1$s\" "
+msgstr "非S4类别的目标对象(类别为\"%2$s\")没有\"%1$s\"这样的槽"
 
 #: src/main/attrib.c:1342
 msgid "invalid slot type"
@@ -1090,7 +1078,7 @@ msgstr "UpdatePS事件需要单数值"
 #: src/main/bind.c:419 src/main/bind.c:449
 #, fuzzy, c-format
 msgid "type '%s' is unimplemented in '%s'"
-msgstr "type2str目前没有实现种类%d"
+msgstr "'%s'这一种类目前还没有实现"
 
 #: src/main/bind.c:638
 msgid "repeated formal argument 'recursive'"
@@ -1149,7 +1137,7 @@ msgstr "向量size的设定太大了"
 #: src/main/objects.c:175 src/main/objects.c:181 src/main/saveload.c:2072
 #: src/main/saveload.c:2338 src/main/saveload.c:2387 src/main/serialize.c:2175
 msgid "use of NULL environment is defunct"
-msgstr ""
+msgstr "NULL环境不再有用"
 
 #: src/main/builtin.c:82 src/main/envir.c:1399 src/main/envir.c:1494
 #: src/main/envir.c:1556 src/main/envir.c:1674 src/main/paste.c:60
@@ -1174,14 +1162,12 @@ msgid "argument is not an environment"
 msgstr "变元不是环境"
 
 #: src/main/builtin.c:272
-#, fuzzy
 msgid "the empty environment has no parent"
-msgstr "引出环境变元不对"
+msgstr "无父母的空环境"
 
 #: src/main/builtin.c:289
-#, fuzzy
 msgid "can not set parent of the empty environment"
-msgstr "无法在基本环境里切断联编"
+msgstr "无法为空环境设父母环境"
 
 #: src/main/builtin.c:296
 msgid "'parent' is not an environment"
@@ -1196,12 +1182,12 @@ msgstr "'%s'设定不对"
 
 #: src/main/builtin.c:394
 msgid "non-positive 'fill' argument will be ignored"
-msgstr ""
+msgstr "略过负的'fill'变元值"
 
 #: src/main/builtin.c:458
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
-msgstr "cat目前还不能用%d变元"
+msgstr "cat目前还不能用%d(种类为'%s') 的变元"
 
 #: src/main/builtin.c:572
 msgid "vector: zero-length 'type' argument"
@@ -1279,7 +1265,6 @@ msgid "invalid split pattern '%s'"
 msgstr "split的式样'%s'不对"
 
 #: src/main/character.c:710
-#, fuzzy
 msgid "the first argument must be a character vector"
 msgstr "第一变元必需是字符向量"
 
@@ -1522,9 +1507,8 @@ msgid "first argument must be a character string or a function"
 msgstr "第一个变元必需是字符串或函数"
 
 #: src/main/coerce.c:2117
-#, fuzzy
 msgid "'envir' must be an environment"
-msgstr "'enclos'必需是环境"
+msgstr "'envir'必需是环境"
 
 #: src/main/coerce.c:2270
 msgid "invalid environment specified"
@@ -1895,14 +1879,12 @@ msgid "unsupported mode"
 msgstr "不支持此状态"
 
 #: src/main/connections.c:2086
-#, fuzzy
 msgid "'con' is not a textConnection"
 msgstr "'con'不是链结"
 
 #: src/main/connections.c:2089
-#, fuzzy
 msgid "'con' is not an output textConnection"
-msgstr "'con'不是链结"
+msgstr "'con'不是输出链结"
 
 #: src/main/connections.c:2159
 msgid "sockets are not available on this system"
@@ -2035,9 +2017,8 @@ msgid "invalid UTF-8 input in readChar()"
 msgstr "readChar()的UTF-8输入有错"
 
 #: src/main/connections.c:3246
-#, fuzzy
 msgid "'object' is too short"
-msgstr "目标对象无法取子集"
+msgstr "'object'太短"
 
 #: src/main/connections.c:3274
 msgid ""
@@ -2071,7 +2052,7 @@ msgstr "没有可以除去的汇集"
 
 #: src/main/connections.c:3490
 msgid "this platform does not support 'split=TRUE'"
-msgstr ""
+msgstr "这一版本不支持'split=TRUE'"
 
 #: src/main/connections.c:3650
 msgid ""
@@ -2121,7 +2102,7 @@ msgstr "只用读或写的二进列链结"
 
 #: src/main/connections.c:4004
 msgid "using a text-mode 'file' connection may not work correctly"
-msgstr ""
+msgstr "文字方式的'file'联结有可能会出错"
 
 #: src/main/connections.c:4007 src/main/connections.c:4011
 #: src/main/connections.c:4018 src/main/connections.c:4032
@@ -2129,7 +2110,6 @@ msgid "allocation of 'gzcon' connection failed"
 msgstr "分配'gzcon'链结失败"
 
 #: src/main/connections.c:4078 src/main/connections.c:4101
-#, fuzzy
 msgid "R_decompress1 requires a raw vector"
 msgstr "R_decompress1需要纯量字符串"
 
@@ -2219,9 +2199,8 @@ msgid "the standard deviation is zero"
 msgstr "标准差为0"
 
 #: src/main/cum.c:49
-#, fuzzy
 msgid "Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
-msgstr "sum(.)中整数上溢；请用sum(as.numeric(.))"
+msgstr "cumsum(.)中整数上溢；请用cumsum(as.numeric(.))"
 
 #: src/main/cum.c:181
 msgid "min/max not defined for complex numbers"
@@ -2333,14 +2312,14 @@ msgid "too many arguments in foreign function call"
 msgstr "外接函数调用时变元太多"
 
 #: src/main/dotcode.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "%s symbol name \"%s\" not in DLL for package \"%s\""
-msgstr "程序包'%4$s'的DLL没有\"%1$s\"登錄点\"%2$s%3$s\" "
+msgstr "程序包'%3$s'的DLL没有\"%1$s\"字符名\"%2$s\" "
 
 #: src/main/dotcode.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "%s symbol name \"%s\" not in load table"
-msgstr "载入表里没有\"%1$s\"登錄点\"%2$s%3$s\""
+msgstr "载入表里没有\"%1$s\"字符名\"%2$s\""
 
 #: src/main/dotcode.c:303
 #, c-format
@@ -2387,9 +2366,8 @@ msgid "re-encoding is not supported on this system"
 msgstr "本系统不支持编码转换"
 
 #: src/main/dotcode.c:429
-#, fuzzy
 msgid "lists must be duplicated in .C"
-msgstr "在调用.C/.Fortran时字符变数必需被复制"
+msgstr "在调用.C时串列必需被复制"
 
 #: src/main/dotcode.c:439 src/main/dotcode.c:451
 #, c-format
@@ -2436,7 +2414,7 @@ msgstr "ENCODING变元必需是单个字符串"
 #: src/main/dotcode.c:739
 #, c-format
 msgid "'%s' is deprecated"
-msgstr ""
+msgstr "'%s'不再有用"
 
 #: src/main/dotcode.c:771
 msgid "no arguments supplied"
@@ -2653,9 +2631,9 @@ msgid "invalid graphics state"
 msgstr "图形狀態不对"
 
 #: src/main/envir.c:112 src/main/envir.c:124
-#, fuzzy, c-format
+#, c-format
 msgid "cannot change value of locked binding for '%s'"
-msgstr "无法改变锁定联编的值"
+msgstr "无法改变锁定联编'%s'的值"
 
 #: src/main/envir.c:222 src/main/envir.c:1250
 msgid "cannot add bindings to a locked environment"
@@ -2670,18 +2648,17 @@ msgid "cannot unbind in the base namespace"
 msgstr "无法在基本名字空间里切断联编"
 
 #: src/main/envir.c:708
-#, fuzzy
 msgid "unbind in the base environment is unimplemented"
-msgstr "无法在基本环境里切断联编"
+msgstr "在基本环境里切断联编这功能还没有被实现"
 
 #: src/main/envir.c:710 src/main/envir.c:1446
 msgid "cannot remove bindings from a locked environment"
 msgstr "无法从锁定的环境中删除联编"
 
 #: src/main/envir.c:953
-#, fuzzy, c-format
+#, c-format
 msgid "argument to '%s' is not an environment"
-msgstr "变元不是环境"
+msgstr "变元'%s'不是环境"
 
 #: src/main/envir.c:1113
 #, c-format
@@ -2704,32 +2681,29 @@ msgid "could not find function \"%s\""
 msgstr "没有这个函数\"%s\""
 
 #: src/main/envir.c:1218
-#, fuzzy
 msgid "cannot assign values in the empty environment"
-msgstr "无法在基本环境里切断联编"
+msgstr "无法在空环境里分派数值"
 
 #: src/main/envir.c:1224 src/main/envir.c:1293
 msgid "cannot assign variables to this database"
 msgstr "无法给这个数据库指定变数"
 
 #: src/main/envir.c:1376
-#, fuzzy, c-format
+#, c-format
 msgid "cannot add binding of '%s' to the base environment"
-msgstr "无法给锁定环境加联编"
+msgstr "无法在基本环境里加联编'%s' "
 
 #: src/main/envir.c:1440
 msgid "cannot remove variables from base namespace"
 msgstr "无法从基本名字空间删除变数"
 
 #: src/main/envir.c:1442
-#, fuzzy
 msgid "cannot remove variables from the base environment"
-msgstr "无法从这个数据库中删除变数"
+msgstr "无法从这基本环境中删除变数"
 
 #: src/main/envir.c:1444
-#, fuzzy
 msgid "cannot remove variables from the empty environment"
-msgstr "无法从这个数据库中删除变数"
+msgstr "无法从空环境中删除变数"
 
 #: src/main/envir.c:1452
 msgid "cannot remove variables from this database"
@@ -2760,29 +2734,25 @@ msgid "second argument must be an environment"
 msgstr "第二变元必需是环境"
 
 #: src/main/envir.c:1693 src/main/envir.c:1701
-#, fuzzy, c-format
+#, c-format
 msgid "wrong length for '%s' argument"
-msgstr "'mode'变元的长度不对"
+msgstr "'%s'变元的长度不对"
 
 #: src/main/envir.c:1809
-#, fuzzy
 msgid "invalid use of 'missing'"
-msgstr "missing的用法不对"
+msgstr "’missing'的用法不对"
 
 #: src/main/envir.c:1834
-#, fuzzy
 msgid "'missing' can only be used for arguments"
 msgstr "missing只能用于这些变元"
 
 #: src/main/envir.c:1929
-#, fuzzy
 msgid "all elements of a list must be named"
-msgstr "attach: 所有的单元都必需有名字"
+msgstr "所有的串列都必需有名字"
 
 #: src/main/envir.c:1952
-#, fuzzy
 msgid "'attach' only works for lists, data frames and environments"
-msgstr "attach只适用于串列和数据框"
+msgstr "attach只适用于串列，数据框和环境"
 
 #: src/main/envir.c:2035
 msgid "detaching \"package:base\" is not allowed"
@@ -2811,10 +2781,9 @@ msgstr "寻找串列里没有\"%s\" "
 
 #: src/main/envir.c:2607
 msgid "using 'as.environment(NULL)' is defunct"
-msgstr ""
+msgstr "'as.environment(NULL)'不再有用"
 
 #: src/main/envir.c:2610
-#, fuzzy
 msgid "invalid object for 'as.environment'"
 msgstr "as.environment的目标对象不对"
 
@@ -3158,7 +3127,7 @@ msgstr "赋值公式左手不对"
 #: src/main/eval.c:1478
 #, c-format
 msgid "element %d is empty"
-msgstr ""
+msgstr "%d 单元是空的"
 
 #: src/main/eval.c:1608
 msgid "invalid formal argument list for \"function\""
@@ -3411,9 +3380,8 @@ msgid "input buffer overflow"
 msgstr "输入缓冲区上溢"
 
 #: src/main/gram.y:1709
-#, fuzzy
 msgid "\\uxxxx sequences not supported"
-msgstr "不支持'onMouseDown' "
+msgstr "不支持\\uxxxx这样的序列"
 
 #: src/main/gram.y:1724 src/main/gram.y:1729
 msgid "invalid \\u{xxxx} sequence"
@@ -3425,11 +3393,11 @@ msgstr "\\uxxxx 顺序不对"
 
 #: src/main/gram.y:1739
 msgid "\\Uxxxxxxxx sequences are not supported on Windows"
-msgstr ""
+msgstr "Windows不支持\\Uxxxxxxxx这样的序列"
 
 #: src/main/gram.y:1742
 msgid "\\Uxxxxxxxx sequences are only valid in multibyte locales"
-msgstr ""
+msgstr "\\Uxxxxxxxx这样的序列只在多字节的地点有用"
 
 #: src/main/gram.y:1758 src/main/gram.y:1762
 msgid "invalid \\U{xxxxxxxx} sequence"
@@ -3530,7 +3498,7 @@ msgstr "颜色设定不对"
 
 #: src/main/graphics.c:4314
 msgid "supplied color is not numeric nor character"
-msgstr ""
+msgstr "所提供的颜色值不是数值，也不是字符串"
 
 #: src/main/graphics.c:4337
 msgid "Invalid color"
@@ -3541,9 +3509,8 @@ msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "行类不对: 长度必需是2, 4, 6或8"
 
 #: src/main/graphics.c:4413
-#, fuzzy
 msgid "invalid line type: zeroes are not allowed"
-msgstr "不能有负长度向量"
+msgstr "排类别不对：不能有零值"
 
 #: src/main/graphics.c:4422 src/main/graphics.c:4430 src/main/graphics.c:4437
 msgid "invalid line type"
@@ -3634,9 +3601,8 @@ msgid "error: system commands are not supported in this version of R.\n"
 msgstr "错误: 本R版本不支持系统命令.\n"
 
 #: src/main/main.c:458
-#, fuzzy
 msgid "Error: segfault from C stack overflow\n"
-msgstr "整数堆叠上溢"
+msgstr "错误：C堆叠上溢\n"
 
 #: src/main/main.c:797
 msgid "unable to open the base package\n"
@@ -3696,14 +3662,12 @@ msgid "top-level task callback did not return a logical value"
 msgstr "最高层任务回叫没回覆逻辑值"
 
 #: src/main/mapply.c:61
-#, fuzzy
 msgid "argument 'MoreArgs' of 'mapply' is not a list"
-msgstr "变元'editor'还没有被设定"
+msgstr "'mapply'的变元'MoreArgs'不是串列"
 
 #: src/main/mapply.c:99
-#, fuzzy
 msgid "longer argument not a multiple of length of shorter"
-msgstr "长的目标对象长度不是短的目标对象长度的整倍数"
+msgstr "长变元的长度不是短变元的长度的整倍数"
 
 #: src/main/match.c:114
 msgid "invalid partial string match"
@@ -3721,9 +3685,9 @@ msgid "argument %d matches multiple formal arguments"
 msgstr "变元%d有多个与之相对应的正式变元"
 
 #: src/main/match.c:386
-#, fuzzy, c-format
+#, c-format
 msgid "unused argument(s) %s"
-msgstr "空变元(%s ...)"
+msgstr "变元(%s)无用"
 
 #: src/main/memory.c:936
 msgid "can only weakly reference/finalize reference objects"
@@ -3746,9 +3710,8 @@ msgid "second argument must be a function"
 msgstr "第二变元必需是函数"
 
 #: src/main/memory.c:1157
-#, fuzzy
 msgid "third argument must be 'TRUE' or 'FALSE'"
-msgstr "变元'multiple'的值要么是TRUE要么是FALSE"
+msgstr "第三个的值要么是TRUE要么是FALSE"
 
 #: src/main/memory.c:1503
 msgid "vector memory exhausted (limit reached?)"
@@ -3794,7 +3757,7 @@ msgstr "protect()：防护堆叠上溢"
 #: src/main/memory.c:2274
 #, c-format
 msgid "unprotect(): only %d protected items"
-msgstr ""
+msgstr "unprotect():只有%d个保护项"
 
 #: src/main/memory.c:2288
 msgid "unprotect_ptr: pointer not found"
@@ -3820,14 +3783,13 @@ msgid "bad value"
 msgstr "值不对"
 
 #: src/main/memory.c:2774
-#, fuzzy
 msgid "memory profiling is not available on this system"
-msgstr "本系统没有R程序概要分析这个功能"
+msgstr "本系统没有记忆概要分析这个功能"
 
 #: src/main/memory.c:2844
-#, fuzzy, c-format
+#, c-format
 msgid "Rprofmem: cannot open output file '%s'"
-msgstr "Rprof: 无法打开程序概要分析文件'%s'"
+msgstr "Rprofmem: 无法输出文件'%s'"
 
 #: src/main/model.c:127
 msgid "invalid term in model formula"
@@ -3896,14 +3858,14 @@ msgid "overlong names in '%s'"
 msgstr "'%s'里的名字太长"
 
 #: src/main/model.c:1368
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for variable '%s'"
-msgstr "座标標記种类不对"
+msgstr "变元'%2$s'的种类(%1$s)不对"
 
 #: src/main/model.c:1373
-#, fuzzy, c-format
+#, c-format
 msgid "variable lengths differ (found for '%s')"
-msgstr "变数的长度不一样"
+msgstr "变数的长度不一样('%s')"
 
 #: src/main/model.c:1423
 msgid "invalid result from na.action"
@@ -3918,9 +3880,9 @@ msgid "do not know how many cases"
 msgstr "案例数目不清"
 
 #: src/main/model.c:1641
-#, fuzzy, c-format
+#, c-format
 msgid "variable lengths differ (found for variable %d)"
-msgstr "变数的长度不一样"
+msgstr "变数的长度不一样(变数%d)"
 
 #: src/main/model.c:1645 src/main/model.c:1652
 #, c-format
@@ -3943,12 +3905,12 @@ msgstr "项名字太长，被缩短了"
 
 #: src/main/model.c:1859
 msgid "complex variables are not currently allowed in model matrices"
-msgstr ""
+msgstr "模型矩阵里目前不能有复数"
 
 #: src/main/model.c:1884
-#, fuzzy, c-format
+#, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
-msgstr "矩阵下标里不能有负数值"
+msgstr "模型矩阵里不能有种类为'%s'的变元"
 
 #: src/main/names.c:935
 msgid "string argument required"
@@ -4158,13 +4120,13 @@ msgid "C level NEW macro called with null class definition pointer"
 msgstr "C级的NEW宏不能用null类别定义指针来调用"
 
 #: src/main/objects.c:1303
-#, fuzzy, c-format
+#, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
-msgstr "无法从虚拟类别(\"%s\")产生C目标对象"
+msgstr "无法从虚拟类别(\"%s\")产生目标对象"
 
 #: src/main/objects.c:1353
 msgid "'R_get_primname' called on a non-primitive"
-msgstr ""
+msgstr "'R_get_primname'不能调用于非原始"
 
 #: src/main/optim.c:75 src/main/optim.c:102 src/main/optim.c:186
 msgid "non-finite value supplied by optim"
@@ -4403,24 +4365,23 @@ msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "梯度的长度或其状态不对，因此略过不用"
 
 #: src/main/par.c:170
-#, fuzzy, c-format
+#, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
 msgstr "图形参数\"%s\"的值设得不对"
 
 #: src/main/par.c:177
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
-msgstr "参数\"%s\"的长度不对"
+msgstr "图形参数\"%s\"的长度不对"
 
 #: src/main/par.c:280 src/main/par.c:704
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" cannot be set"
-msgstr "无法设定参数\"%s\""
+msgstr "无法设定图形参数\"%s\""
 
 #: src/main/par.c:344 src/main/par.c:730
-#, fuzzy
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr "参数\"%s\"的长度不对"
+msgstr "图形参数'family'最多只能有20字节"
 
 #: src/main/par.c:473
 msgid "parameter \"mfg\" has the wrong length"
@@ -4447,17 +4408,16 @@ msgid "calling par(new=) with no plot"
 msgstr "不绘图就不能调用par(new=)"
 
 #: src/main/par.c:696 src/main/par.c:1133
-#, fuzzy, c-format
+#, c-format
 msgid "graphical parameter \"%s\" is obsolete"
-msgstr "图形参数串列不对"
+msgstr "图形参数\"%s\"已过期不用了"
 
 #: src/main/par.c:700 src/main/par.c:1137
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" is not a graphical parameter"
-msgstr "图形参数不对"
+msgstr "\"%s\"不是图形参数"
 
 #: src/main/par.c:1190
-#, fuzzy
 msgid "invalid argument passed to par()"
 msgstr "传给par()的参数错误"
 
@@ -4714,14 +4674,13 @@ msgid "zero length 'padj' specified"
 msgstr "'padj'长度不能为0"
 
 #: src/main/plot.c:1165
-#, fuzzy
 msgid "'labels' is supplied and not 'at'"
 msgstr "'label'的值虽然是有了，但'at'的值却不存在"
 
 #: src/main/plot.c:1169
-#, fuzzy, c-format
+#, c-format
 msgid "'at' and 'labels' lengths differ, %d != %d"
-msgstr "'at'和'label'的长度不同，%d!=%d"
+msgstr "'at'和'label'的长度不同，%d != %d"
 
 #: src/main/plot.c:1187
 msgid "no locations are finite"
@@ -5455,15 +5414,14 @@ msgid "error writing to connection"
 msgstr "链结书写发生了错误"
 
 #: src/main/saveload.c:2346
-#, fuzzy
 msgid "no input is available"
-msgstr "没有历史功能"
+msgstr "没有输入值"
 
 #: src/main/saveload.c:2365
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
-msgstr ""
+msgstr "在通过联结进行输入时，文件头没有魔号"
 
 #: src/main/scan.c:560
 #, c-format
@@ -5572,9 +5530,8 @@ msgid "NA/NaN argument"
 msgstr "NA/NaN变元"
 
 #: src/main/seq.c:148 src/main/seq.c:240 src/main/seq.c:243
-#, fuzzy
 msgid "invalid number of copies in rep.int()"
-msgstr "rep()里的拷贝数目不对"
+msgstr "rep.int()里的拷贝数目不对"
 
 #: src/main/seq.c:231
 msgid "rep() incorrect type for second argument"
@@ -5585,43 +5542,36 @@ msgid "attempt to replicate non-vector"
 msgstr "非向量不能被复制"
 
 #: src/main/seq.c:465
-#, fuzzy
 msgid "'length.out' must be a non-negative number"
-msgstr "'gap'必需是正整数"
+msgstr "'length.out'必需是正整数"
 
 #: src/main/seq.c:479 src/main/seq.c:518 src/main/seq.c:532
-#, fuzzy
 msgid "'from' must be finite"
-msgstr "'a'和'b'的值必需是有限的"
+msgstr "'from'的值必需是有限的"
 
 #: src/main/seq.c:481 src/main/seq.c:520 src/main/seq.c:550
-#, fuzzy
 msgid "'to' must be finite"
-msgstr "'a'和'b'的值必需是有限的"
+msgstr "'to'的值必需是有限的"
 
 #: src/main/seq.c:493
 msgid "invalid '(to - from)/by' in 'seq'"
-msgstr ""
+msgstr "'seq'内的'(to - from)/by'值设得不对"
 
 #: src/main/seq.c:501
-#, fuzzy
 msgid "'by' argument is much too small"
-msgstr "'file'变元太长"
+msgstr "'by'变元太小了"
 
 #: src/main/seq.c:504
-#, fuzzy
 msgid "wrong sign in 'by' argument"
-msgstr "'mode'变元的长度不对"
+msgstr "'by'正负号不对"
 
 #: src/main/seq.c:534 src/main/seq.c:552
-#, fuzzy
 msgid "'by' must be finite"
-msgstr "'a'和'b'的值必需是有限的"
+msgstr "'by'的值必需是有限的"
 
 #: src/main/seq.c:595
-#, fuzzy
 msgid "argument must be non-negative"
-msgstr "变元必需是环境"
+msgstr "变元不能有负值"
 
 #: src/main/serialize.c:222 src/main/serialize.c:252 src/main/serialize.c:275
 msgid "unknown or inappropriate output format"
@@ -5750,9 +5700,8 @@ msgid "not a proper file name"
 msgstr "文件名字有错"
 
 #: src/main/serialize.c:2047
-#, fuzzy
 msgid "not a proper raw vector"
-msgstr "非简单向量"
+msgstr "不是原始向量"
 
 #: src/main/serialize.c:2051 src/main/serialize.c:2054
 msgid "file open failed"
@@ -5982,19 +5931,17 @@ msgid "Integer overflow in sum(.); use sum(as.numeric(.))"
 msgstr "sum(.)中整数上溢；请用sum(as.numeric(.))"
 
 #: src/main/summary.c:392
-#, fuzzy, c-format
+#, c-format
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
-msgstr "内部错误(do_summary里的'op').\t 请向专家请教"
+msgstr "内部错误(do_summary里的'op = %d').\t 请向专家请教"
 
 #: src/main/summary.c:565
-#, fuzzy
 msgid "no non-missing arguments to min; returning Inf"
-msgstr "min里没有有限的变元; 回覆Inf"
+msgstr "min里所有的变元都不存在; 回覆Inf"
 
 #: src/main/summary.c:567
-#, fuzzy
 msgid "no non-missing arguments to max; returning -Inf"
-msgstr "max里没有有限的变元；回覆-Inf"
+msgstr "max里所有的变元都不存在；回覆-Inf"
 
 #: src/main/summary.c:843
 msgid "not all arguments have the same length"
@@ -6010,9 +5957,9 @@ msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr "不能在向量/串列极限外赋值(%d加大到%d)"
 
 #: src/main/subassign.c:330
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in subassignment type fix"
-msgstr "下赋值fix种类里有不可兼容的种类(%d)"
+msgstr "下赋值fix种类里有不可兼容的种类(从%s到%s)"
 
 #: src/main/subassign.c:422 src/main/subassign.c:692 src/main/subassign.c:695
 #: src/main/subassign.c:980
@@ -6034,14 +5981,14 @@ msgid "incorrect number of subscripts on matrix"
 msgstr "矩阵里的下标数目不对"
 
 #: src/main/subassign.c:924
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
-msgstr "矩阵子集赋值里有不可兼容的种类(%d)"
+msgstr "矩阵子集赋值里有不可兼容的种类(从%s到%s)"
 
 #: src/main/subassign.c:1108
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in array subset assignment"
-msgstr "陈列子集赋值有不可兼容的种类(%d)"
+msgstr "陈列子集赋值有不可兼容的种类(从%s到%s)"
 
 #: src/main/subassign.c:1133
 msgid "invalid number of subscripts to list assign"
@@ -6082,9 +6029,9 @@ msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] 下标数目不对"
 
 #: src/main/subassign.c:1679
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (from %s to %s) in [[ assignment"
-msgstr " [[ 赋值里有不可兼容的种类(%d)"
+msgstr " [[ 赋值里有不可兼容的种类(从%s到%s)"
 
 #: src/main/subassign.c:1727
 #, c-format
@@ -6306,7 +6253,7 @@ msgstr "目标对象不是矩阵"
 #: src/main/util.c:217 src/main/util.c:229 src/main/util.c:243
 #, fuzzy, c-format
 msgid "type %d is unimplemented in '%s'"
-msgstr "type2str目前没有实现种类%d"
+msgstr "'%2$s'里的%种类还没有被实现"
 
 #: src/main/util.c:253
 #, c-format
@@ -6438,25 +6385,23 @@ msgstr "分配GVText失败"
 #: src/main/xspline.c:58
 #, c-format
 msgid "add_point - reached MAXNUMPTS (%d)"
-msgstr ""
+msgstr "add_point-达到了MAXNUMPTS所设定的值(%d)"
 
 #: src/main/xspline.c:72
 msgid "insufficient memory to allocate point array"
-msgstr ""
+msgstr "没有足够的内存以分配给数点排列"
 
 #: src/main/xspline.c:453
 msgid "There must be at least two control points"
-msgstr ""
+msgstr "至少得有两个控制点"
 
 #: src/main/xspline.c:455
-#, fuzzy
 msgid "There must be at least four control points"
-msgstr "必需有第一变元"
+msgstr "至少得有四个控制点"
 
 #: src/main/xspline.c:512
-#, fuzzy
 msgid "There must be at least three control points"
-msgstr "必需有第一变元"
+msgstr "至少得有三个控制点"
 
 #: src/modules/internet/internet.c:93
 msgid "unknown URL scheme"
@@ -6528,7 +6473,7 @@ msgstr "互联网暂停读取"
 #: src/modules/internet/nanoftp.c:312 src/modules/internet/nanoftp.c:346
 #: src/modules/internet/nanoftp.c:356
 msgid "RxmlNanoFTPScanURL: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoFTPScanURL: URL太长了(或格式不对？)"
 
 #: src/modules/internet/nanoftp.c:389
 msgid "removing FTP proxy info"
@@ -6541,7 +6486,7 @@ msgstr "用FTP代理主机'%s'"
 
 #: src/modules/internet/nanoftp.c:402 src/modules/internet/nanoftp.c:431
 msgid "RxmlNanoFTPScanProxy: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoFTPScanProxy: URL太长了(或格式不对？)"
 
 #: src/modules/internet/nanoftp.c:830
 msgid "cannot resolve host"
@@ -6575,7 +6520,7 @@ msgstr "无法从通訊埠%d听取数据"
 #: src/modules/internet/nanohttp.c:363 src/modules/internet/nanohttp.c:391
 #: src/modules/internet/nanohttp.c:400
 msgid "RxmlNanoHTTPScanURL: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoHTTPScanURL: URL太长了(或格式不对？)"
 
 #: src/modules/internet/nanohttp.c:434
 msgid "removing HTTP proxy info"
@@ -6588,7 +6533,7 @@ msgstr "用HTTP代理主机'%s'"
 
 #: src/modules/internet/nanohttp.c:447 src/modules/internet/nanohttp.c:483
 msgid "RxmlNanoHTTPScanProxy: overlong (invalid?) URL"
-msgstr ""
+msgstr " RxmlNanoHTTPScanProxy: URL太长了(或格式不对？)"
 
 #: src/modules/internet/nanohttp.c:1102
 #, c-format
@@ -6648,7 +6593,7 @@ msgstr "错误代码%d，Lapack例行程序'%s'"
 #: src/modules/lapack/Lapack.c:107 src/modules/lapack/Lapack.c:193
 #: src/modules/lapack/Lapack.c:504 src/modules/lapack/Lapack.c:557
 msgid "'x' must be a square numeric matrix"
-msgstr "'x'必需是正文形的数值矩阵"
+msgstr "'x'必需是正方形的数值矩阵"
 
 #: src/modules/lapack/Lapack.c:109 src/modules/lapack/Lapack.c:199
 #: src/modules/lapack/Lapack.c:506 src/modules/lapack/Lapack.c:563
@@ -6656,35 +6601,31 @@ msgid "invalid 'only.values'"
 msgstr "'only.values'值不对"
 
 #: src/modules/lapack/Lapack.c:271 src/modules/lapack/Lapack.c:314
-#, fuzzy
 msgid "'a' must be a complex matrix"
-msgstr "'A'必需是复数矩阵"
+msgstr "'a'必需是复数矩阵"
 
 #: src/modules/lapack/Lapack.c:273 src/modules/lapack/Lapack.c:365
 #: src/modules/lapack/Lapack.c:408
-#, fuzzy
 msgid "'b' must be a complex matrix"
-msgstr "'A'必需是复数矩阵"
+msgstr "'b'必需是复数矩阵"
 
 #: src/modules/lapack/Lapack.c:278 src/modules/lapack/Lapack.c:695
-#, fuzzy
 msgid "'a' is 0-diml"
-msgstr "'A'是0-diml"
+msgstr "'a'是0-diml"
 
 #: src/modules/lapack/Lapack.c:280 src/modules/lapack/Lapack.c:697
-#, fuzzy
 msgid "no right-hand side in 'b'"
-msgstr "'B'在等号右手没有公式"
+msgstr "'b'在等号右手没有公式"
 
 #: src/modules/lapack/Lapack.c:282 src/modules/lapack/Lapack.c:699
-#, fuzzy, c-format
+#, c-format
 msgid "'a' (%d x %d) must be square"
-msgstr "A'A' (%d x %d)必需是正文形的"
+msgstr "'a'(%d x %d)必需是正方形的"
 
 #: src/modules/lapack/Lapack.c:284 src/modules/lapack/Lapack.c:701
-#, fuzzy, c-format
+#, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
-msgstr "'B' (%dx%d)必需与A(%dx%d)相容"
+msgstr "'b' (%d x %d)必需与'a'(%d x %d)相容"
 
 #: src/modules/lapack/Lapack.c:293 src/modules/lapack/Lapack.c:631
 #: src/modules/lapack/Lapack.c:665 src/modules/lapack/Lapack.c:710
@@ -6710,14 +6651,12 @@ msgid "invalid 'trans' parameter"
 msgstr "'trans'参数不对"
 
 #: src/modules/lapack/Lapack.c:618 src/modules/lapack/Lapack.c:856
-#, fuzzy
 msgid "'a' must be a square matrix"
-msgstr "'A'必需是正文形矩阵"
+msgstr "'a'必需是正方形矩阵"
 
 #: src/modules/lapack/Lapack.c:619
-#, fuzzy
 msgid "'a' must have dims > 0"
-msgstr "'A'必需有dims > 0"
+msgstr "'a'必需有dims > 0"
 
 #: src/modules/lapack/Lapack.c:629
 #, c-format
@@ -6727,9 +6666,8 @@ msgstr "%d数位主次为非正定"
 #: src/modules/lapack/Lapack.c:637 src/modules/lapack/Lapack.c:675
 #: src/modules/lapack/Lapack.c:688 src/modules/lapack/Lapack.c:731
 #: src/modules/lapack/Lapack.c:849
-#, fuzzy
 msgid "'a' must be a numeric matrix"
-msgstr "'A'必需是数值矩阵"
+msgstr "'a'必需是数值矩阵"
 
 #: src/modules/lapack/Lapack.c:645
 msgid "'size' argument must be a positive integer"
@@ -6752,9 +6690,8 @@ msgstr "单元(%d,%d)为0, 因此无法求逆"
 
 #: src/modules/lapack/Lapack.c:690 src/modules/lapack/Lapack.c:776
 #: src/modules/lapack/Lapack.c:814
-#, fuzzy
 msgid "'b' must be a numeric matrix"
-msgstr "'A'必需是数值矩阵"
+msgstr "'b'必需是数值矩阵"
 
 #: src/modules/lapack/Lapack.c:713
 msgid "Lapack routine dgesv: system is exactly singular"
@@ -6864,7 +6801,7 @@ msgstr "无法建立X11窗口"
 #: src/modules/X11/devX11.c:1390
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
-msgstr ""
+msgstr "'width=%d, height=%d'作为象素值很有可能不对"
 
 #: src/modules/X11/devX11.c:1395
 msgid "unable to create pixmap"
@@ -6965,9 +6902,9 @@ msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..):%d次循环后还没有聚合."
 
 #: src/nmath/polygamma.c:473
-#, fuzzy, c-format
+#, c-format
 msgid "deriv = %d > %d (= n_max)\n"
-msgstr "deriv =%d >%d (= n_max)"
+msgstr "deriv = %d > %d (= n_max)\n"
 
 #: src/nmath/rmultinom.c:74
 #, c-format
@@ -7077,18 +7014,18 @@ msgid "re-encoding is not available on this system"
 msgstr "本系统没有重编码这个功能"
 
 #: src/unix/sys-std.c:871
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s', reason '%s'\n"
 "\n"
-msgstr "无法打开文件'%2$s'，因为'%1$s'"
+msgstr "无法打开文件'%s'，原因是'%s'\n"
 
 #: src/unix/sys-std.c:874
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot open file '%s'\n"
 "\n"
-msgstr "无法打开文件'%s'"
+msgstr "无法打开文件'%s'\n"
 
 #: src/unix/sys-std.c:937 src/unix/sys-std.c:959
 msgid "'file' argument is too long"
@@ -7115,12 +7052,10 @@ msgid "non-empty character argument expected"
 msgstr "需要非空字符变元"
 
 #: src/unix/sys-unix.c:273
-#, fuzzy
 msgid "'intern' must be logical and not NA"
-msgstr "'ascii’必需是逻辑值"
+msgstr "'intern’必需是逻辑，而且还不能是NA"
 
 #: src/unix/sys-unix.c:300
-#, fuzzy
 msgid "'intern=TRUE' is not implemented on this platform"
 msgstr "本系统没有实现intern=TRUE这一功能"
 
@@ -7187,20 +7122,17 @@ msgstr "没有X11平台这一功能"
 #~ msgid "cannot get binding from base namespace"
 #~ msgstr "无法从基本名字空间取得联编"
 
-#, fuzzy
 #~ msgid "locking the base environment is not supported yet"
-#~ msgstr "目前还不支持对NULL(base)环境进行锁定"
+#~ msgstr "目前还不支持对基本环境进行锁定这功能"
 
-#, fuzzy
 #~ msgid "invalid variable type for '%s'"
-#~ msgstr "变数种类不对"
+#~ msgstr "'%s'变数种类不对"
 
 #~ msgid "invalid variable type"
 #~ msgstr "变数种类不对"
 
-#, fuzzy
 #~ msgid "invalid value of '%s'"
-#~ msgstr "'n'的值不对"
+#~ msgstr "'%s'的值不对"
 
 #~ msgid "invalid value of 'which'"
 #~ msgstr "'which'的值不对"
@@ -7238,10 +7170,9 @@ msgstr "没有X11平台这一功能"
 #~ msgid "invalid value for 'split'"
 #~ msgstr "'split'的值不对"
 
-#, fuzzy
 #~ msgid ""
 #~ "graphical parameter \"%s\" can not be set in high-level plot() function"
-#~ msgstr "高层次plot()函数里不能设定参数\"%s\""
+#~ msgstr "高层次plot()函数里不能设定图形参数\"%s\""
 
 #~ msgid "R_compress1 requires a scalar string"
 #~ msgstr "R_compress1需要纯量字符串"

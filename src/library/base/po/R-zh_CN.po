@@ -1,8 +1,8 @@
 # Chinese translations for R package
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <FeiChen@FairIsaac.com>, 2005.
-#
+# 陈斐 <feic@avaya.com>, 2006.
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
@@ -109,7 +109,6 @@ msgstr "需要"
 msgid "(still attached)"
 msgstr "(仍连接着)"
 
-#, fuzzy
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "正规表现'['被换成'\\\\['"
 
@@ -218,9 +217,8 @@ msgstr "'row.names'的长度不对"
 msgid "duplicate 'row.names' are not allowed"
 msgstr "不允许有重复的'row.names'"
 
-#, fuzzy
 msgid "missing values in 'row.names' are not allowed"
-msgstr "不允许有遗漏的'row.names'"
+msgstr "'row.names'里不允许有遗漏值"
 
 msgid "invalid 'dimnames' given for data frame"
 msgstr "数据框的'dimnames'给得不对"
@@ -235,7 +233,7 @@ msgid "supplied %d row names for %d rows"
 msgstr "%d行名与%d行不相配"
 
 msgid "options('stringsAsFactors') not set to TRUE or FALSE"
-msgstr ""
+msgstr "options('stringsAsFactors') 只能取TRUE或FALSE值"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "'data.frame'变元里%d单元中行名不匹配"
@@ -328,13 +326,11 @@ msgstr "替换不存在列里的单元："
 msgid "only a single element should be replaced"
 msgstr "只能替换一个单元"
 
-#, fuzzy
 msgid "names do not match previous names"
 msgstr "名字同原来已有的名字不相对"
 
-#, fuzzy
 msgid "names do not match previous names:"
-msgstr "名字同原来已有的名字不相对"
+msgstr "名字同原来已有的名字不相对:"
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr "串列变元有错：所有变数的长度都应一致"
@@ -607,7 +603,7 @@ msgid "'zero.print' has length > 1"
 msgstr "'zero.print'的长度一定得为> 1"
 
 msgid "'zero.print' must be character, logical or NULL"
-msgstr ""
+msgstr "'zero.print'只能取字符，逻辑或NULL值"
 
 msgid "'subset' must evaluate to logical"
 msgstr "'subset'必需可以被评估成为逻辑值"
@@ -639,9 +635,8 @@ msgstr "'max.distance'的组成部分不能有负值"
 msgid "matrix should be square"
 msgstr "矩阵必需的正方形的"
 
-#, fuzzy
 msgid "'object' must be a list"
-msgstr "'subset'必需是逻辑值"
+msgstr "'object'必需是串列"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "这是R%s，程辑包'%s'需要%s %s "
@@ -655,9 +650,8 @@ msgstr "程辑包'%s'是用R版本%s 来建造的"
 msgid "package '%s' was built for %s"
 msgstr "程辑包'%s'是为%s建造的"
 
-#, fuzzy
 msgid "package '%s' is not installed for 'arch=%s'"
-msgstr "程辑包'%s'没有正确地被建造"
+msgstr "程辑包'%s'没有安装在'arch=%s'中"
 
 msgid "package '%s' has not been installed properly"
 msgstr "程辑包'%s'没有正确地被建造"
@@ -669,16 +663,16 @@ msgid "Attaching package: '%s'"
 msgstr "载入需要的程辑包：'%s'"
 
 msgid "The following object(s) are masked"
-msgstr ""
+msgstr "以下的目标对象被遮蔽"
 
 msgid "_by_"
-msgstr ""
+msgstr "_by_"
 
 msgid "from"
-msgstr ""
+msgstr "从"
 
 msgid ":"
-msgstr ""
+msgstr ":"
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "程辑包'%s'已经被合并到'%s'"
@@ -804,6 +798,8 @@ msgid ""
 "file '%s' has magic number '%s'\n"
 "   Use of save versions prior to 2 is deprecated"
 msgstr ""
+"'%s'文件的魔号是'%s'\n"
+"   在R版本2号之前的保存功能不再有用"
 
 msgid "bad 'file' argument"
 msgstr "'file'变元不对"
@@ -812,7 +808,7 @@ msgid "'file' must be specified"
 msgstr "必需设定'file'的值"
 
 msgid "Use of save versions prior to 2 is deprecated"
-msgstr ""
+msgstr "在R版本2号之前的保存功能不再有用"
 
 msgid "'file' must be non-empty string"
 msgstr "'file'的值必需是长度大于0的字符串"
@@ -833,7 +829,7 @@ msgid "invalid 'category' argument"
 msgstr "'category'变元有错"
 
 msgid "must specify formal argument names to vectorize"
-msgstr ""
+msgstr "向量化之前必需设定正式变元"
 
 msgid "'arg' should be one of"
 msgstr "'arg'应当是这些其中的一个"
@@ -874,9 +870,8 @@ msgstr "'by'的长度一定得和列的长度相同"
 msgid "'by' must match number of columns"
 msgstr "'by'的长度一定得和列的长度相同"
 
-#, fuzzy
 msgid "'by' must specify column(s) as numbers, names or logical"
-msgstr "'by'一定得指定列"
+msgstr "'by'一定得用数字，名字或逻辑值来指定列"
 
 msgid "'by' must specify valid column(s)"
 msgstr "'by'所指定的那些列有错"
@@ -888,7 +883,7 @@ msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x'和'by.y'设定了不同数目的列"
 
 msgid "(loaded the methods namespace)"
-msgstr ""
+msgstr "(载入了methods名字空间)"
 
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
@@ -896,18 +891,16 @@ msgid ""
 msgstr "追蹤函数需要方法程辑包，但在载入方法名字空间的时候出了错"
 
 msgid "Expected a single logical value for the S4 object state"
-msgstr ""
+msgstr "需要的是一个单独的S4目标对象逻辑值"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："
 
-#, fuzzy
 msgid "package '%s' has no name space and"
 msgstr "程辑包'%s'没有名字空间"
 
-#, fuzzy
 msgid "is not on the search path"
-msgstr "'%s'在搜索路径上不存在，用pos=2"
+msgstr "'%s'在搜索路径上不存在"
 
 msgid "%s failed in 'attachNamespace'"
 msgstr "'attachNamespace'里%s出错"
@@ -928,22 +921,22 @@ msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "名字空间'%s'已经在loadNamespace封條了"
 
 msgid "failed to assign RegisteredNativeSymbol for"
-msgstr ""
+msgstr "不能分配RegisteredNativeSymbol的值给"
 
 msgid "to"
-msgstr ""
+msgstr "到"
 
 msgid "since"
-msgstr ""
+msgstr "从"
 
 msgid "is already defined in the"
-msgstr ""
+msgstr "已经定义于"
 
 msgid "namespace"
 msgstr "名字空间"
 
 msgid "failed to assign NativeSymbolInfo for"
-msgstr ""
+msgstr "不能分配NativeSymbolInfo给"
 
 msgid "package '%s' does not have a name space"
 msgstr "程辑包'%s'没有名字空间"
@@ -955,13 +948,13 @@ msgid "in '%s' methods for export not found: %s"
 msgstr "用于出口的'%s'方法不存在：%s "
 
 msgid "No methods table for \""
-msgstr ""
+msgstr "没有方法列表给于"
 
 msgid "\""
-msgstr ""
+msgstr "\""
 
 msgid "Failed to find metadata object for \"%s\""
-msgstr ""
+msgstr "找不到关于\"%s\"的隐喻数据对象"
 
 msgid "in '%s' methods specified for export, but none defined: %s"
 msgstr "用于出口的'%s'方法有设定，但没有定義：%s "
@@ -978,9 +971,8 @@ msgstr "名字空间'%s'没有载入"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s出错：unloadNamespace(%s)"
 
-#, fuzzy
 msgid "name space '%s' is still used by: '%s'"
-msgstr "名字空间'%s'仍用于："
+msgstr "名字空间'%s'仍用于：'%s'"
 
 msgid "imperative name space directives are disabled"
 msgstr "強制名字指令功能被关闭"
@@ -1007,7 +999,7 @@ msgid "invalid import target"
 msgstr "进口目标有错"
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
-msgstr ""
+msgstr "\"%s\"函数有可进口方法，但找不到函数用的方法"
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr "没有在环境/程辑包'%s': %s里找到所要求的'methods'对象"
@@ -1021,19 +1013,17 @@ msgstr "出口不存在："
 msgid "package '%s' has no NAMESPACE file"
 msgstr "程辑包'%s' 没有NAMESPACE这一文件"
 
-#, fuzzy
 msgid "empty name in directive '%s' in NAMESPACE file"
-msgstr "程辑包'%s' 没有NAMESPACE这一文件"
+msgstr "NAMESPACE文件里'%s'指示中有空的名字"
 
-#, fuzzy
 msgid "duplicated symbol names"
-msgstr "重复进口名字"
+msgstr "重复字符名字"
 
 msgid "in useDynLib("
-msgstr ""
+msgstr "在useDynLib("
 
 msgid ")"
-msgstr ""
+msgstr ")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "不是'S3method'指令：%s"
@@ -1206,9 +1196,8 @@ msgstr "'solve'里的'a'是奇异矩阵"
 msgid "only square matrices can be inverted"
 msgstr "只有正方形的矩阵才能求逆"
 
-#, fuzzy
 msgid "'b' must be compatible with 'a'"
-msgstr "‘to’必需晚于‘from’"
+msgstr "‘b’必需同‘a’相容"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
 msgstr "调用solve.default于\"qr\"对象：用'qr.solve'"
@@ -1219,7 +1208,7 @@ msgstr "solve里的'a'是奇异矩阵"
 msgid ""
 "'decreasing' must be a length-1 logical vector.\n"
 "Did you intend to set 'partial'?"
-msgstr ""
+msgstr "'decreasing'必需是长度为一的向量，你是不是想设'partial'的值？"
 
 msgid "'index.return' only for non-factors"
 msgstr "'index.return'只能适用于非因子"
@@ -1243,6 +1232,8 @@ msgid ""
 "'x' must be atomic for 'sort.list'\n"
 "Have you called 'sort' on a list?"
 msgstr ""
+"'sort.list'用的'x'必需为原子值\n"
+"你是不是在串列上调用了'sort'函数？"
 
 msgid "method=\"quick\" is only for numeric 'x'"
 msgstr "method=\"quick\"只适用于数值的'x'"
@@ -1271,15 +1262,14 @@ msgstr "'chdir = TRUE'对联结来说没有任何意义"
 msgid "'%s' is not an existing file"
 msgstr "'%s'不是已经存在的文件"
 
-#, fuzzy
 msgid "is not"
-msgstr "不是TRUE"
+msgstr "不是"
 
 msgid "all"
-msgstr ""
+msgstr "所有"
 
 msgid "TRUE"
-msgstr ""
+msgstr "TRUE"
 
 msgid "incorrect value for 'x'"
 msgstr "'x'的值不对"
@@ -1345,7 +1335,7 @@ msgid "argument to 'which' is not logical"
 msgstr "'which'的变元不是逻辑值"
 
 msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
+msgstr "'quote'的值必需是'TRUE', 'FALSE'或数字这三种之一"
 
 msgid "invalid numbers in 'quote'"
 msgstr "'quote'里的数不对"
@@ -1398,7 +1388,6 @@ msgid_plural "packages %s are not loaded"
 msgstr[0] "程辑包%s没有载入"
 msgstr[1] "程辑包%s没有载入"
 
-#, fuzzy
 msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "不存在叫这个名称的程辑包"
@@ -1421,9 +1410,8 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
 
-#, fuzzy
 #~ msgid "rows are empty: giving up"
-#~ msgstr "最先的五行都是空白的：停止工作"
+#~ msgstr "所有行都是空白的：停止工作"
 
 #~ msgid "invalid argument 'n'"
 #~ msgstr "'n'变元有错"
