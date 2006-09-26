@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-09-21 08:47+0100\n"
-"PO-Revision-Date: 2006-04-15 22:53-0800\n"
+"PO-Revision-Date: 2006-09-25 02:50-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -565,17 +565,16 @@ msgstr ""
 "Сохраните настройки и перезапустите Rgui для их применения.\n"
 
 #: preferences.c:247
-#, fuzzy
 msgid ""
 "The language for menus cannot be changed on a\n"
 " running console.\n"
 "\n"
 "Save the preferences and restart Rgui to apply to menus.\n"
 msgstr ""
-"Общие настройки консоля нельзя изменить\n"
-"во время его работы.\n"
+"Язык меню нельзя изменить\n"
+"во время работы консоля.\n"
 "\n"
-"Сохраните настройки и перезапустите Rgui для их применения.\n"
+"Сохраните настройки и перезапустите Rgui для изменения меню.\n"
 
 #: preferences.c:316
 msgid "Changes in pager size will not apply to any open pagers"
@@ -912,11 +911,11 @@ msgstr "Не могу установить '%s' как рабочую папку"
 
 #: graphapp/dialogs.c:400
 msgid "Choose a folder"
-msgstr ""
+msgstr "Выбрать папку"
 
 #: graphapp/dialogs.c:492 graphapp/dialogs.c:494
 msgid "Browse"
-msgstr ""
+msgstr "Просмотр"
 
 #: graphapp/dialogs.c:592
 msgid "User"
