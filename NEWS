@@ -906,6 +906,11 @@ BUG FIXES
     o	getwd() now works correctly when the working directory is
 	unavailable (e.g. unreadable).
 
+    o	The alternative hypothesis in wilcox.test() was labelled by an
+	unexplained quantity 'mu' which is now spelled out.
+
+	The alternative hypothesis in ks.test() is clearer both in the
+	documentation and in the result. (PR#5360)
 
 
 
