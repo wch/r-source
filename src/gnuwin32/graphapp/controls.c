@@ -36,6 +36,7 @@
  */
 
 #include "internal.h"
+# define alloca(x) __builtin_alloca((x))
 
 /*
  *  Setting control call-backs.
@@ -696,8 +697,10 @@ void settext(control obj, char *text)
 		if (obj->kind & ControlObject) {
 			text = to_dos_string(text);
 			if(is_NT && (localeCP != GetACP())) {
-			    wchar_t wc[1000];
-			    mbstowcs(wc, text, 1000);
+			    wchar_t *wc;
+			    int nc = strlen(text) + 1;
+			    wc = (wchar_t*) alloca(nc*sizeof(wchar_t));
+			    mbstowcs(wc, text, nc);
 			    SetWindowTextW(obj->handle, wc);
 			} else SetWindowText(obj->handle, text);
 			discard(text);
