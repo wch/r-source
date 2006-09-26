@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2006-09-21 15:23\n"
-"PO-Revision-Date: 2006-04-15 23:41-0800\n"
+"PO-Revision-Date: 2006-09-25 04:17-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -57,22 +57,22 @@ msgid ""
 msgstr "Функции/методы использованы в объекте документации '%s', но не в коде:"
 
 msgid "Argument names in code not in docs:"
-msgstr ""
+msgstr "Имена аргументов в коде, но не в документации:"
 
 msgid "Argument names in docs not in code:"
-msgstr ""
+msgstr "Имена аргументов в документации, но не в коде:"
 
 msgid "Mismatches in argument names (first 3):"
-msgstr ""
+msgstr "Несоответствия в именах аргументов (первые 3):"
 
 msgid "Mismatches in argument names:"
-msgstr ""
+msgstr "Несоответствия в именах аргументов:"
 
 msgid "Mismatches in argument default values (first 3):"
-msgstr ""
+msgstr "Несоответствия в значениях аргументов по умолчанию (первые 3): "
 
 msgid "Mismatches in argument default values:"
-msgstr ""
+msgstr "Несоответствия в значениях аргументов по умолчанию:"
 
 msgid "Codoc mismatches from documentation object '%s':"
 msgstr "Несоответствия структуры в объекте документации '%s':"
@@ -173,7 +173,7 @@ msgid ""
 "DESCRIPTION Depends/Suggests/Imports entries."
 msgstr ""
 "Зависимости очерка (элементы \\VignetteDepends{}) должны содержаться в "
-"пунктах 'Depends/Suggests/Imports' файла DESCRIPTION."
+"пунктах 'Depends/Suggests' файла DESCRIPTION."
 
 msgid "Namespace dependencies not required:"
 msgstr "Определения пространства имен не требуются:"
@@ -229,14 +229,12 @@ msgstr "Rd-файлы с неизвестными разделами:"
 msgid "Rd files with non-standard keywords:"
 msgstr "Rd-файлы с нестандартными ключевыми словами:"
 
-#, fuzzy
 msgid ""
 "Each '\\keyword' entry should specify one of the standard keywords (as "
 "listed in file 'KEYWORDS' in the R documentation directory)."
 msgstr ""
 "Каждый вход '\\keyword' должен определять одно из стандартных ключевых слов "
-"(как перечислено в файле 'KEYWORDS.db' в папке 'doc', находящейся в домашней "
-"папке R)."
+"(как перечислено в файле 'KEYWORDS' в папке документации R)."
 
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd-файлы с двойным псевдонимом '%s':"
@@ -287,9 +285,9 @@ msgstr "Неправильно созданная версия пакета."
 msgid "Malformed maintainer field."
 msgstr "Плохо сформированное поле разработчика."
 
-#, fuzzy
 msgid "Malformed Depends or Suggests or Imports or Enhances field."
-msgstr "Плохо сформированное поле Depends или Suggests или Imports."
+msgstr ""
+"Плохо сформированное поле Depends, или Suggests, или Imports, или Enhances."
 
 msgid "Offending entries:"
 msgstr "Неправильные пункты:"
@@ -343,24 +341,23 @@ msgstr "Непереносимые флаги в переменной '%s':"
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Пропущенные связ(и) с объектом документации '%s':"
 
-#, fuzzy
 msgid "found %s"
-msgstr "найден T/F в %s"
+msgstr "найден %s"
 
 msgid "package 'methods' is used but not declared"
-msgstr ""
+msgstr "пакет 'methods' используется, но не объявлен"
 
 msgid "'::' or ':::' imports not declared from:"
-msgstr ""
+msgstr "не объявлен импорт '::' или ':::' из:"
 
 msgid "'library' or 'require' calls not declared from:"
-msgstr ""
+msgstr "не объявлены вызовы 'library' или 'require' из:"
 
 msgid "Found possibly global T or F in the following functions:"
-msgstr ""
+msgstr "Найдены возможные глобальные T или F в следующих функциях:"
 
 msgid "Found possibly global T or F in the following Rd example files:"
-msgstr ""
+msgstr "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
 
 msgid "argument 'lines' must be a character vector"
 msgstr "аргумент 'lines' должен быть текстовым вектором"

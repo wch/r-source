@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-16 08:59\n"
+"POT-Creation-Date: 2006-09-26 14:40\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1251,6 +1251,9 @@ msgid "unable to find a plausible encoding"
 msgstr "kann keine plausible Kodierung finden"
 
 msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr ""
+
+msgid "cannot 'chdir' as current directory is unknown"
 msgstr ""
 
 msgid "'chdir = TRUE' makes no sense for a connection"

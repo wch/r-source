@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-16 08:59\n"
+"POT-Creation-Date: 2006-09-26 14:40\n"
 "PO-Revision-Date: 2006-09-22 19:14+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1260,6 +1260,9 @@ msgstr "もっともらしいエンコーディングを見つけられません
 
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE' は URL に対しては意味がありません"
+
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr ""
 
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "'chdir = TRUE' はコネクションに対しては意味がありません"

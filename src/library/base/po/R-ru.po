@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-16 08:59\n"
-"PO-Revision-Date: 2006-04-16 21:00-0800\n"
+"POT-Creation-Date: 2006-09-26 14:40\n"
+"PO-Revision-Date: 2006-09-25 03:59-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgid "'symbol.For' is not needed: please remove it"
 msgstr ""
 
 msgid "'%s' is deprecated."
-msgstr "использование '%s' не одобряется."
+msgstr "'%s' не одобряется."
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 msgstr "См. help(\"Deprecated\") и help(\"%s-deprecated\")."
@@ -54,13 +54,13 @@ msgid "infinite or missing values in 'x'"
 msgstr "неопределенные или пропущенные значения в 'x'"
 
 msgid "0 extent dimensions"
-msgstr "0 протяженность измерений"
+msgstr "нулевая протяженность измерений"
 
 msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "'nu' должен быть 0, nстрока(x) или ncol(x)"
+msgstr "'nu' должен быть 0, nrow(x) или ncol(x)"
 
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "'nv' должен быть 0, nстрока(x) или ncol(x)"
+msgstr "'nv' должен быть 0, nrow(x) или ncol(x)"
 
 msgid "'all' can not be used with other deparse options"
 msgstr "'all' нельзя использовать с другими опциями разбора"
@@ -227,9 +227,8 @@ msgstr "неправильная длина 'row.names'"
 msgid "duplicate 'row.names' are not allowed"
 msgstr "одинаковые 'row.names' не разрешены"
 
-#, fuzzy
 msgid "missing values in 'row.names' are not allowed"
-msgstr "пропущенные 'row.names' не разрешены"
+msgstr "пропущенные значения в 'row.names' не разрешены"
 
 msgid "invalid 'dimnames' given for data frame"
 msgstr "для таблицы данных предложены неправильные 'dimnames'"
@@ -244,7 +243,7 @@ msgid "supplied %d row names for %d rows"
 msgstr "предложено %d имен для %d строк"
 
 msgid "options('stringsAsFactors') not set to TRUE or FALSE"
-msgstr ""
+msgstr "options('stringsAsFactors') не установлены в 'TRUE' или 'FALSE'"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "несоответствие имен строк в аргументах 'data.frame', позиция %d"
@@ -339,11 +338,9 @@ msgstr "замена элемента в несуществующей колонке:"
 msgid "only a single element should be replaced"
 msgstr "только одиночный элемент можно заменить"
 
-#, fuzzy
 msgid "names do not match previous names"
-msgstr "имена не соответствуют прежним именам:"
+msgstr "имена не соответствуют прежним именам"
 
-#, fuzzy
 msgid "names do not match previous names:"
 msgstr "имена не соответствуют прежним именам:"
 
@@ -651,9 +648,8 @@ msgstr "компоненты 'max.distance' должны быть неотрицательными"
 msgid "matrix should be square"
 msgstr "матрица должна быть квадратной"
 
-#, fuzzy
 msgid "'object' must be a list"
-msgstr "'subset' должен быть логическим"
+msgstr "'object' должен быть списком"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "Это -- R %s, а пакету '%s' нужен %s %s"
@@ -681,16 +677,16 @@ msgid "Attaching package: '%s'"
 msgstr "Присоединяю пакет: '%s'"
 
 msgid "The following object(s) are masked"
-msgstr ""
+msgstr "Следующие объект(ы) скрыты"
 
 msgid "_by_"
-msgstr ""
+msgstr "_по_"
 
 msgid "from"
-msgstr ""
+msgstr "из"
 
 msgid ":"
-msgstr ""
+msgstr ":"
 
 msgid "package '%s' has been merged into '%s'"
 msgstr "пакет '%s' был слит с '%s'"
@@ -816,6 +812,8 @@ msgid ""
 "file '%s' has magic number '%s'\n"
 "   Use of save versions prior to 2 is deprecated"
 msgstr ""
+"файл '%s' имеет магическое число '%s'\n"
+"   Использование сохраненных версий, более ранних чем 2, не одобряется"
 
 msgid "bad 'file' argument"
 msgstr "неправильный аргумент 'file'"
@@ -824,7 +822,7 @@ msgid "'file' must be specified"
 msgstr "должен быть указан 'file'"
 
 msgid "Use of save versions prior to 2 is deprecated"
-msgstr ""
+msgstr "Использование сохраненных версий, более ранних чем 2, не одобряется"
 
 msgid "'file' must be non-empty string"
 msgstr "'file' должен быть непустой строкой"
@@ -887,9 +885,9 @@ msgstr "'by' должен соответствовать номерам колонок"
 msgid "'by' must match number of columns"
 msgstr "'by' должен соответствовать числу колонок"
 
-#, fuzzy
 msgid "'by' must specify column(s) as numbers, names or logical"
-msgstr "'by' должен определять колонк(и)"
+msgstr ""
+"'by' должен определять колонк(и) как числа, имена или логические данные"
 
 msgid "'by' must specify valid column(s)"
 msgstr "'by' должен определять правильные колонк(и)"
@@ -901,7 +899,7 @@ msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' и 'by.y' определяют разные номера колонок"
 
 msgid "(loaded the methods namespace)"
-msgstr ""
+msgstr "(загружено пространство имен методов)"
 
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
@@ -911,18 +909,16 @@ msgstr ""
 "пространство имен"
 
 msgid "Expected a single logical value for the S4 object state"
-msgstr ""
+msgstr "Для состояния \"объект S4\" ожидается простое логическое значение "
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
 
-#, fuzzy
 msgid "package '%s' has no name space and"
-msgstr "пакет '%s' не имеет пространства имен"
+msgstr "пакет '%s' не имеет пространства имен и"
 
-#, fuzzy
 msgid "is not on the search path"
-msgstr "'%s' не найден в пути поиска, использую pos = 2"
+msgstr "не найден в пути поиска"
 
 msgid "%s failed in 'attachNamespace'"
 msgstr "%s не удалось в 'attachNamespace'"
@@ -970,13 +966,13 @@ msgid "in '%s' methods for export not found: %s"
 msgstr "в '%s' методы для экспорта не найдены: %s"
 
 msgid "No methods table for \""
-msgstr ""
+msgstr "Нет таблицы методов для \""
 
 msgid "\""
-msgstr ""
+msgstr "\""
 
 msgid "Failed to find metadata object for \"%s\""
-msgstr ""
+msgstr "Не удалось найти объект метаданных для \"%s\""
 
 msgid "in '%s' methods specified for export, but none defined: %s"
 msgstr "в '%s' указаны методы для экспорта, но ни один не определен: %s"
@@ -993,9 +989,8 @@ msgstr "пространство имен '%s' загружено"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s не удалось в unloadNamespace(%s)"
 
-#, fuzzy
 msgid "name space '%s' is still used by: '%s'"
-msgstr "пространство имен '%s' еще используется:"
+msgstr "пространство имен '%s' еще используется по: '%s'"
 
 msgid "imperative name space directives are disabled"
 msgstr "императивные директивы пространства имен отменены"
@@ -1022,7 +1017,7 @@ msgid "invalid import target"
 msgstr "неправильное место назначения для импорта"
 
 msgid "Found methods to import for function \"%s\" but not the generic itself"
-msgstr ""
+msgstr "Найдены методы импорта для функции \"%s\", но они сами не общие"
 
 msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr "запрошенные объекты 'methods' не найдены в окружении/пакете '%s': %s"
@@ -1200,6 +1195,8 @@ msgid ""
 "'decreasing' must be a length-1 logical vector.\n"
 "Did you intend to set 'partial'?"
 msgstr ""
+"'decreasing' должен быть логическим вектором длины-1.\n"
+"Вы собирались установить 'partial'?"
 
 msgid "'index.return' only for non-factors"
 msgstr "'index.return' -- только для не-факторов"
@@ -1223,6 +1220,8 @@ msgid ""
 "'x' must be atomic for 'sort.list'\n"
 "Have you called 'sort' on a list?"
 msgstr ""
+"'x' для 'sort.list' должен быть атомарным\n"
+"Вы вызывали 'sort' на этот список?"
 
 msgid "method=\"quick\" is only for numeric 'x'"
 msgstr "method=\"quick\" -- только для числовых 'x'"
@@ -1242,6 +1241,9 @@ msgstr "не могу найти правдоподобную кодировку"
 
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE' не имеет смысла для URL"
+
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr ""
 
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "'chdir = TRUE' не имеет смысла для соединения"
@@ -1422,6 +1424,9 @@ msgstr[2] "Предупреждения:\n"
 
 #~ msgid "invalid 'row.names' specification"
 #~ msgstr "неправильное указание 'row.names'"
+
+#~ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+#~ msgstr "'quote' должен быть 'TRUE', 'FALSE' или числом"
 
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "неправильные числа в 'quote'"
