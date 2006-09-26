@@ -29,9 +29,6 @@ NEW FEATURES
     o	read.table(), write.table() and allies have been moved to package
 	utils.
 
-    o	Error messages from subassignment calls are more likely to
-	give a recognizable (rather than massaged) call.
-
     o	A few more cases of subassignment work, e.g. <raw>[] <- <list>
 	and <vector>[] <- <expression>, with suitable coercion of the LHS.
 
@@ -56,12 +53,6 @@ DEPRECATED & DEFUNCT
 
 
 BUG FIXES
-
-    o	The alternative hypothesis in wilcox.test() was labelled by an
-	unexplained quantity 'mu' which is now spelled out.
-
-	The alternative hypothesis in ks.test() is clearer both in the
-	documentation and in the result. (PR#5360)
 
 
 
@@ -973,6 +964,11 @@ BUG FIXES
     o	getwd() now works correctly when the working directory is
 	unavailable (e.g. unreadable).
 
+    o	The alternative hypothesis in wilcox.test() was labelled by an
+	unexplained quantity 'mu' which is now spelled out.
+
+	The alternative hypothesis in ks.test() is clearer both in the
+	documentation and in the result. (PR#5360)
 
 
 
