@@ -1,8 +1,8 @@
 # Chinese translations for R package
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <FeiChen@FairIsaac.com>, 2005.
-#
+# 陈斐 <feic@avaya.com>, 2006.
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
@@ -112,20 +112,17 @@ msgstr "\"mlm\" 模型没有'drop1'方法"
 msgid "F test assumes 'quasi%s' family"
 msgstr "F检验假設'quasi%s'家族"
 
-#, fuzzy
 msgid "lower scope has term(s) %s not included in model"
-msgstr "模型里没有下範疇"
+msgstr "模型里下範疇没有这些词条%s"
 
-#, fuzzy
 msgid "upper scope does not include model term(s) %s"
-msgstr "模型里没有上範疇"
+msgstr "模型上範疇里没有这些词条%s "
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "这个模型没有AIC定义，因此不能用'step'这一功能"
 
-#, fuzzy
 msgid "'A' must be an array or table"
-msgstr "'x'必需是矩阵或是数据框"
+msgstr "'A'必需是矩阵或是数据框"
 
 msgid ""
 "length of FUN, %d,\n"
@@ -731,46 +728,33 @@ msgstr "没有设定初始值"
 msgid "unable to optimize from these starting value(s)"
 msgstr "无法用这些初始值进行最佳化运算"
 
-#, fuzzy
 msgid "invalid argument 'lambda'"
-msgstr "变元'omit'不对"
+msgstr "变元'lambda'不对"
 
 msgid "link not recognised"
 msgstr "没有这样的鏈結"
 
-#, fuzzy
 msgid "link \"%s\" not available for poisson family; available links are %s"
-msgstr ""
-"Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log\"和"
-"\"sqrt\""
+msgstr "Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "negative values not allowed for the Poisson family"
 msgstr "Poisson分布族不能用负数"
 
-#, fuzzy
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
-msgstr ""
-"quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log"
-"\"和\"sqrt\""
+msgstr "quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "negative values not allowed for the quasiPoisson family"
 msgstr "quasiPoisson分布族不能用负数"
 
-#, fuzzy
 msgid "link \"%s\" not available for gaussian family; available links are %s"
-msgstr ""
-"gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"inverse\", \"log\"和"
-"\"identity\""
+msgstr "gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "cannot find valid starting values: please specify some"
 msgstr "找不到有效的初始值: 请设定"
 
-#, fuzzy
 msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr ""
-"Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log\"和"
-"\"sqrt\""
+msgstr "binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "y值必需满足0 <= y <= 1"
@@ -788,31 +772,22 @@ msgid ""
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr "或是有两个列的矩阵，第一列是成功的计数，第二列是失败的计数"
 
-#, fuzzy
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
-msgstr ""
-"quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"identity\", \"log"
-"\"和\"sqrt\""
+msgstr "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "quasibinomial分布族中的y必需由0和1组成的向量"
 
-#, fuzzy
 msgid "link \"%s\" not available for gamma family; available links are %s"
-msgstr ""
-"gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"inverse\", \"\"log\"和"
-"\"identity\""
+msgstr "gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "non-positive values not allowed for the gamma family"
 msgstr "gamma分布族不允许有负值"
 
-#, fuzzy
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
-msgstr ""
-"gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"inverse\", \"log\"和"
-"\"identity\""
+msgstr "inverse.gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結%s"
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "inverse.gaussian分布族只允许正值"
@@ -864,13 +839,13 @@ msgid "'or' must be a single number between 0 and Inf"
 msgstr "'or'必需是在0和Inf之间的一个数值"
 
 msgid "need 2 or more non-zero row marginals"
-msgstr ""
+msgstr "至少需要多于两个非零行边"
 
 msgid "need 2 or more non-zero column marginals"
-msgstr ""
+msgstr "至少需要多于两个非零列边"
 
 msgid "'hybrid' is ignored for a 2 x 2 table"
-msgstr ""
+msgstr "'hybrid'对2x2的表无用"
 
 msgid "all groups must contain data"
 msgstr "所有的组都必需包含数据"
@@ -941,9 +916,8 @@ msgstr "'family'设定得不对"
 msgid "invalid 'method':"
 msgstr "'method'有错:"
 
-#, fuzzy
 msgid "'weights' must be a numeric vector"
-msgstr "'y'必需是数值向量"
+msgstr "'weights'必需是数值向量"
 
 msgid "negative weights not allowed"
 msgstr "不能有负重量"
@@ -1023,13 +997,13 @@ msgid ","
 msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
-msgstr ""
+msgstr "将F检验用于%s 分布族是不对的"
 
 msgid "using F test with a fixed dispersion is inappropriate"
-msgstr ""
+msgstr "将F检验用于固定疏散的分布是不对的"
 
 msgid "models with response"
-msgstr "模型带反应"
+msgstr "带反应的模型"
 
 msgid "removed because response differs from model 1"
 msgstr "被删除了，因为反应同模型1不相对"
@@ -1038,7 +1012,7 @@ msgid "models were not all fitted to the same size of dataset"
 msgstr "模型拟合时没有用同样大小的数据集"
 
 msgid "using F test with a '%s' family is inappropriate"
-msgstr ""
+msgstr "将F检验用于%s分布族是不对的"
 
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "计算离散度时0重量的观察量略过不用"
@@ -1127,9 +1101,8 @@ msgstr "'x'比内核'k'要短"
 msgid "'kernapply' is not available for object 'x'"
 msgstr "'kernapply'不适用于目标对象 'x'"
 
-#, fuzzy
 msgid "'x' is not a kernel"
-msgstr "'k'不是内核"
+msgstr "'x'不是内核"
 
 msgid "empty cluster: try a better set of initial centers"
 msgstr "空的群集: 请试试更精确一点的初始中心集"
@@ -1229,19 +1202,18 @@ msgid "prediction from a rank-deficient fit may be misleading"
 msgstr "用秩缺乏拟合来进行预测的结果很可能不可靠"
 
 msgid "Predictions on current data refer to _future_ responses"
-msgstr ""
+msgstr "用当前数据得到的预测结果对_未来_反应有用"
 
 msgid ""
 "Assuming prediction variance inversely proportional to weights used for "
 "fitting"
-msgstr ""
+msgstr "假设预测的方差同在拟和时所用的衡量成负比"
 
 msgid "Assuming constant prediction variance even though model fit is weighted"
-msgstr ""
+msgstr "虽然模型在拟和时用了衡量，但在预测时仍假定方差不变"
 
-#, fuzzy
 msgid "'weights' as formula should be one-sided"
-msgstr "'weights'不能是负数的"
+msgstr "'weights'作为公式能在公式一边"
 
 msgid "'object' has no 'effects' component"
 msgstr "'object'没有'effects'组件"
@@ -1264,9 +1236,8 @@ msgstr "'degree'必需是0, 1或2"
 msgid "both 'span' and 'enp.target' specified: 'span' will be used"
 msgstr "'span'和'enp.target'同时有设定：只用'span'的值"
 
-#, fuzzy
 msgid "invalid 'control' argument"
-msgstr "'contrasts.arg'变元不对"
+msgstr "'control'变元不对"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "只允许有1到4个従属変数"
@@ -1398,7 +1369,7 @@ msgid "type '%s' is not implemented yet"
 msgstr "还没有实现'%s'种类"
 
 msgid "this fit does not inherit from \"lm\""
-msgstr ""
+msgstr "这拟和值不是由\"lm\"继承来的"
 
 msgid "'cterms' argument must match terms in model object"
 msgstr "'cterms'变元必需同模型目标对象里的项相配"
@@ -1447,16 +1418,14 @@ msgstr "变量'%s'不是因子"
 msgid "factor '%s' has new level(s) %s"
 msgstr "因子'%s'有新的层次%s"
 
-#, fuzzy
 msgid "'offset' must be numeric"
-msgstr "'x'必需为数值"
+msgstr "'offset'必需为数值"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr "model.matrix()里的模型框和公式不相配"
 
-#, fuzzy
 msgid "variable '%s' converted to a factor"
-msgstr "变量'%s'不是因子"
+msgstr "变量'%s'被转成因子"
 
 msgid "invalid 'contrasts.arg' argument"
 msgstr "'contrasts.arg'变元不对"
@@ -1524,36 +1493,32 @@ msgstr "没有这样的参数名"
 msgid "levels truncated to positive values only"
 msgstr "层次被縮短成正值"
 
-#, fuzzy
 msgid "setVarying : 'vary' length must match length of parameters"
 msgstr "setVarying : vary的长度必需同参数的长度相符"
 
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "参数初始估计值里有奇异梯度矩阵"
 
-#, fuzzy
 msgid "'data' must be a list or an environment"
-msgstr "'newdata'必需是矩阵或是数据框"
+msgstr "'data'必需是串列或是环境"
 
-#, fuzzy
 msgid "No starting values specified"
 msgstr "没有设定初始值"
 
-#, fuzzy
 msgid "No starting values specified for some parameters."
-msgstr "没有设定初始值"
+msgstr "有些参数没有设定初始值"
 
 msgid "Intializing"
-msgstr ""
+msgstr "初始"
 
 msgid "to '1.'."
-msgstr ""
+msgstr "到'1.'."
 
 msgid "Consider specifying 'start' or using a selfStart model"
-msgstr ""
+msgstr "请考虑设'start'的值，或使用一个自我设定初始值的模型"
 
 msgid "parameters without starting value in 'data':"
-msgstr ""
+msgstr "'data'里的参数没有被设定初始值"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr "除非algorithm = \"port\"，上限或下限将略过不用"
@@ -1608,10 +1573,10 @@ msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n'必需在{1,..,%d}中"
 
 msgid "hat values (leverages) are all ="
-msgstr ""
+msgstr "所有的帽值(杠杆率) 都是"
 
 msgid "and there are no factor predictors; no plot no. 5"
-msgstr ""
+msgstr "没有因子预测变无，因此没有第五幅画表"
 
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
@@ -1652,7 +1617,7 @@ msgid "wrong number of columns in 'x'"
 msgstr "'x'里的列数不对"
 
 msgid "cannot rescale a constant/zero column to unit variance"
-msgstr ""
+msgstr "不能将常数的列/全部为零的列的方差重新调整为一"
 
 msgid "PCA applies only to numerical variables"
 msgstr "PCA只适用于数值变量"
@@ -1681,7 +1646,7 @@ msgid "'princomp' can only be used with more units than variables"
 msgstr "'princomp'只能在单位比变量多的情况下使用"
 
 msgid "cannot use cor=TRUE with a constant variable"
-msgstr ""
+msgstr "cor=TRUE不能用于常数变量用"
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "协方差矩阵不是非负定矩阵"
@@ -1734,21 +1699,17 @@ msgstr "'na.rm'如果设为FALSE的话不允许有遺漏值和NaN"
 msgid "'probs' outside [0,1]"
 msgstr "'probs'在[0,1] 外"
 
-#, fuzzy
 msgid "invalid argument 'n'"
-msgstr "变元'omit'不对"
+msgstr "变元'n'不对"
 
-#, fuzzy
 msgid "invalid argument 'r'"
-msgstr "变元'omit'不对"
+msgstr "变元'r'不对"
 
-#, fuzzy
 msgid "invalid argument 'c'"
-msgstr "变元'omit'不对"
+msgstr "变元'c'不对"
 
-#, fuzzy
 msgid "arguments 'r' and 'c' must have the same sums"
-msgstr "变元的长度必需一样"
+msgstr "变元'r'和'c'的和必需是一样的"
 
 msgid "'relevel' only for factors"
 msgstr "'relevel'只适用于因子"
@@ -1888,9 +1849,8 @@ msgstr "覆蓋機率在值域 0,1) 外"
 msgid "spline: first and last y values differ - using y[1] for both"
 msgstr "spline: 第一个和最后一个y的值不相等 -用y[1]"
 
-#, fuzzy
 msgid "'deriv' must be between 0 and 3"
-msgstr "'p'必需在0和0.5之间"
+msgstr "'deriv'必需在0和3之间"
 
 msgid "stepfun: 'x' must be ordered increasingly"
 msgstr "stepfun: 'x'必需从小到大排序"
@@ -1986,7 +1946,7 @@ msgid "time series contains internal NAs"
 msgstr "时间序列含内部NA"
 
 msgid "series is corrupt: length %d with 'tsp' implying %d"
-msgstr ""
+msgstr "系列不对：长度为%d的'tsp'意味着%d"
 
 msgid "cannot plot more than 10 series as \"multiple\""
 msgstr "无法将多于10个序列画成\"multiple\""
@@ -2035,9 +1995,8 @@ msgid ""
 "be replaced"
 msgstr "设定的值数目不是要替换值数目的倍数"
 
-#, fuzzy
 msgid "only replacement of elements is allowed"
-msgstr "提供了太多的替换值"
+msgstr "只能提供替换值"
 
 msgid "'model' must be list"
 msgstr "'model'必需是串列"
@@ -2061,7 +2020,7 @@ msgid "number of differences must be a positive integer"
 msgstr "差異数目必需是正整数"
 
 msgid "'start.innov' is too short: need %d points"
-msgstr ""
+msgstr "'start.innov'太短了，需要%d 个点"
 
 msgid "insufficient observations"
 msgstr "观察量数目不够"
@@ -2163,12 +2122,11 @@ msgstr[1] ""
 #~ "binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", "
 #~ "\"\"probit\", \"cloglog\", \"cauchit\"和\"log\""
 
-#, fuzzy
 #~ msgid ""
 #~ "link not available for quasibinomial family, available links are \"logit"
 #~ "\", \"probit\", \"cloglog\", \"cauchit\" and \"log\""
 #~ msgstr ""
-#~ "binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", "
+#~ "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", "
 #~ "\"\"probit\", \"cloglog\", \"cauchit\"和\"log\""
 
 #~ msgid ""

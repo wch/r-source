@@ -1,8 +1,8 @@
 # Chinese translations for R package
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
-# 陈斐 <FeiChen@FairIsaac.com>, 2005.
-#
+# 陈斐 <feic@avaya.com>, 2006.
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
@@ -117,9 +117,8 @@ msgstr ""
 msgid "n < m"
 msgstr ""
 
-#, fuzzy
 msgid "'FUN' must be a function or NULL"
-msgstr "'package'的值必需是字符串或NULL"
+msgstr "'FUN'的值必需是函数或NULL"
 
 msgid "'package' must be a character string or NULL"
 msgstr "'package'的值必需是字符串或NULL"
@@ -259,7 +258,7 @@ msgid "Help on topic '%s' was found in the following packages:"
 msgstr "在以下的程序包里找到了与'%s'题目有关的帮助文件:"
 
 msgid "Choose one"
-msgstr ""
+msgstr "选一个"
 
 msgid "Using the first match ..."
 msgstr "用第一个相配…"
@@ -277,7 +276,6 @@ msgstr "没有安装編譯过的HTML"
 msgid "CHM file could not be displayed"
 msgstr "无法显示CHM文件"
 
-#, fuzzy
 msgid ""
 "No CHM help for '%s' in package '%s' is available:\n"
 "the CHM file for the package is missing"
@@ -321,14 +319,14 @@ msgid "could not find package '%s'"
 msgstr "找不到程序包'%s'"
 
 msgid "no hsearch.rds meta data for package"
-msgstr ""
+msgstr "程序包里没有hsearch.rds样的隐喻数据"
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "删除所有多字節字符数据出错的分錄"
 
 msgid ""
 "no information in the data base for package '%s': need 'rebuild = TRUE'?"
-msgstr ""
+msgstr "数据库里没有关于程序包'%s'的信息：是不是需要设定'rebuild = TRUE'？"
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep'设定得不对"
@@ -339,7 +337,6 @@ msgstr "找不到'%s'这样一个程序包"
 msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
 
-#, fuzzy
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "程序包'%d'里要么没有DESCRIPTION这个文件，要么出了错"
 
@@ -382,52 +379,50 @@ msgstr "只能用数值的指标"
 msgid "cannot create directory '%s'"
 msgstr "无法产生'%s'目录"
 
-#, fuzzy
 msgid "'code_files' should be a character vector"
-msgstr "'list'必需是为R目标对象取名的字符向量"
+msgstr "'code_files'必需是字符向量"
 
 msgid "'list' should be a character vector naming R objects"
 msgstr "'list'必需是为R目标对象取名的字符向量"
 
 msgid "'namespace' should be a single logical"
-msgstr ""
+msgstr "'namespace'必需是单独逻辑值"
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr ""
+msgstr "无法通过LC_CTYPE关闭与地点有关的字符"
 
 msgid "no R objects specified or available"
 msgstr "没有指点定的R目标对象"
 
 msgid "Creating directories ..."
-msgstr ""
+msgstr "建立目录…"
 
 msgid "directory '%s' already exists"
 msgstr "已经有了'%s'这样一个目录"
 
 msgid "Creating DESCRIPTION ..."
-msgstr ""
+msgstr "建立DESCRIPTION…"
 
 msgid "Creating NAMESPACE ..."
-msgstr ""
+msgstr "建立NAMESPACE…"
 
 msgid "Creating Read-and-delete-me ..."
-msgstr ""
+msgstr "建立Read-and-delete-me…"
 
 msgid "Saving functions and data ..."
-msgstr ""
+msgstr "保存函数和数据…"
 
 msgid "Copying code files ..."
-msgstr ""
+msgstr "拷贝程序文件…"
 
-#, fuzzy
 msgid "Making help files ..."
-msgstr "用第一个相配…"
+msgstr "制造帮助文件…"
 
 msgid "Done."
-msgstr ""
+msgstr "做完了。"
 
 msgid "Further steps are described in '%s'."
-msgstr ""
+msgstr "'%s'里有详细内容"
 
 msgid "unable to access index for repository %s"
 msgstr "无法在貯藏處%s中读写索引"
@@ -568,7 +563,7 @@ msgstr "给最重要的函数的一些简单例子"
 msgid ""
 "Optionally other standard keywords, one per line, from file KEYWORDS in the "
 "R documentation directory"
-msgstr ""
+msgstr "也可以用其他标准词汇，一行一个，在R文件目录中的KEYWORDS文件里列出"
 
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
@@ -592,47 +587,46 @@ msgid "no documentation for function '%s' and signature '%s'"
 msgstr "函数'%s'和簽署'%s'没有帮助文件"
 
 msgid "No DIF data on clipboard"
-msgstr ""
+msgstr "剪贴板里没有DIF数据"
 
 msgid "row and column counts not found"
-msgstr ""
+msgstr "找不到行和列的数目"
 
 msgid "Unrecognized special data value"
-msgstr ""
+msgstr "没有这样的特殊数据值"
 
 msgid "Unrecognized value indicator"
-msgstr ""
+msgstr "没有这样的数值指示器"
 
 msgid "no lines available in input"
-msgstr ""
+msgstr "输入中没有多出的行"
 
 msgid "header and 'col.names' are of different lengths"
-msgstr ""
+msgstr "表头名称和'col.names'的长度不一样"
 
 msgid "more columns than column names"
-msgstr ""
+msgstr "列的数目比列的名字要多"
 
 msgid "more column names than columns"
-msgstr ""
+msgstr "行名比行的数目要多"
 
 msgid "rows are empty: giving up"
-msgstr ""
+msgstr "空白的行：停止运行"
 
 msgid "not all columns named in 'colClasses' exist"
-msgstr ""
+msgstr "有些'colClasses'所设定的列并不存在"
 
 msgid "invalid numeric 'as.is' expression"
-msgstr ""
+msgstr "数目'as.is' 表现不对"
 
 msgid "not all columns named in 'as.is' exist"
-msgstr ""
+msgstr "有此'as.is' 所设定的列并不存在"
 
 msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr ""
+msgstr "'as.is' 的长度不对%d  != cols = %d "
 
-#, fuzzy
 msgid "invalid 'row.names' specification"
-msgstr "'agrep'设定得不对"
+msgstr "'row.names'设定得不对"
 
 msgid "missing lengths for some fields"
 msgstr "某些域缺少长度值"
@@ -643,9 +637,8 @@ msgstr "格式不对"
 msgid "last record incomplete, %d lines discarded"
 msgstr "最后一个记录不完全，%d行略不不用"
 
-#, fuzzy
 msgid "'file' must be a character string or connection"
-msgstr "'package'的值必需是字符串或NULL"
+msgstr "'file'的值必需是字符串或联结"
 
 msgid "transfer failure"
 msgstr "转移时出了错"
@@ -653,15 +646,15 @@ msgstr "转移时出了错"
 msgid "HTTPUserAgent"
 msgstr ""
 
-#, fuzzy
 msgid "option must be a length one character vector or NULL"
-msgstr "'package'的值必需是字符串或NULL"
+msgstr "选项的值必需是字符串或NULL"
 
 msgid "empty beginning of file"
 msgstr ""
 
+#, fuzzy
 msgid "first five rows are empty: giving up"
-msgstr ""
+msgstr "空白的行：停止运行"
 
 msgid "invalid 'socket' argument"
 msgstr "'套介面'变元不对"
@@ -682,7 +675,7 @@ msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frame()被調用时使用了非数据的框--将之強制改变。"
 
 msgid "invalid options('str') -- using defaults instead"
-msgstr ""
+msgstr "options('str')不对，使用默认值"
 
 msgid "'object' does not have valid levels()"
 msgstr "'object'的levels()的值不对"
@@ -690,9 +683,8 @@ msgstr "'object'的levels()的值不对"
 msgid "'str.default': 'le' is NA"
 msgstr "'str.default': 'le'的值是NA"
 
-#, fuzzy
 msgid "profile does not contain memory information"
-msgstr "无法恢復种类的信息"
+msgstr "程序资料不包含内存信息"
 
 msgid "no events were recorded"
 msgstr "没有记录下任何事件"
@@ -701,7 +693,7 @@ msgid ""
 "vignette '%s' found more than once,\n"
 "using the one found in '%s'"
 msgstr ""
-"有多个'%s'小文品，\n"
+"有多个'%d'小文品，\n"
 "使用'%s'里的那一个"
 
 msgid "vignette '%s' *not* found"
@@ -727,14 +719,14 @@ msgstr ""
 
 #, fuzzy
 msgid "invalid 'quote' specification"
-msgstr "'agrep'设定得不对"
+msgstr "'row.names'设定得不对"
 
 msgid "col.names = NA makes no sense when row.names = FALSE"
 msgstr ""
 
 #, fuzzy
 msgid "invalid 'col.names' specification"
-msgstr "'agrep'设定得不对"
+msgstr "'row.names'设定得不对"
 
 msgid "appending column names to file"
 msgstr ""
@@ -789,10 +781,10 @@ msgid "cannot create HTML search index"
 msgstr "无法建立HTML搜索索引"
 
 msgid "'memory.size()' is Windows-specific"
-msgstr ""
+msgstr "'memory.size()'只在Windows上有用"
 
 msgid "'memory.limit()' is Windows-specific"
-msgstr ""
+msgstr "'memory.limit()'只在Windows上有用"
 
 msgid "unable to find the HTML help"
 msgstr "找不到HTML帮助文件"
