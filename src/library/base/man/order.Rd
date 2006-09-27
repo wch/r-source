@@ -53,6 +53,10 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   \code{partial} is supplied for compatibility with other
   implementations of S, but no other values are accepted and ordering is
   always complete.
+
+  Note that these functions are only defined for vectors, so any class
+  of the object supplied is ignored: this means factors are sorted on
+  their internal codes and not their printed representation.
 }
 \note{
   \code{sort.list} can get called by mistake as a method for
