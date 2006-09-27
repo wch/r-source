@@ -31,7 +31,8 @@ colnames(x) <- value
   the first component is used as the row names, and the second component
   (if any) is used for the col names.  For a data frame, \code{rownames}
   and \code{colnames} are equivalent to \code{\link{row.names}} and
-  \code{\link{names}} respectively.
+  \code{\link{names}} respectively, but the latter are preferred (and
+  can be much faster).
 
   If \code{do.NULL} is \code{FALSE}, a character vector (of length
   \code{\link{NROW}(x)} or \code{\link{NCOL}(x)}) is returned in any

@@ -86,7 +86,7 @@ default.stringsAsFactors()
   \code{\link{I}},
   \code{\link{plot.data.frame}},
   \code{\link{print.data.frame}},
-  \code{\link{row.names}},
+  \code{\link{row.names}}, \code{\link{names}} (for the column names),
   \code{\link{[.data.frame}} for subsetting methods,
   \code{\link{Math.data.frame}} etc, about
   \emph{Group} methods for \code{data.frame}s;
