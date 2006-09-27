@@ -770,7 +770,12 @@ AthlonXP chips are available in the @file{windows/contrib/ATLAS} area on
 libraries are located.  You will need to make the libraries
 yourself@footnote{We do this using the Cygwin compilers, often with
 some difficulty.}: none of the binaries we have seen are compiled for
-the correct compiler.
+the correct compiler.  Since @R{} has its own @samp{xerbla} it is best
+to delete that in ATLAS by
+
+@example
+ar d /path/to/libf77blas.a xerbla.o
+@end example
 
 Another possibility is to use AMD's AMD Core Math Library (ACML)
 @url{http://www.amd.com/acml, @code{www.amd.com/@/acml}}.  To use the

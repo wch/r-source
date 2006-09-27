@@ -18,7 +18,8 @@ merge(x, y, \dots)
       sort = TRUE, suffixes = c(".x",".y"), \dots)
 }
 \arguments{
-  \item{x, y}{data frames, or objects to be coerced to one}
+  \item{x, y}{data frames, or objects to be coerced to one.  Neither is
+    currently allowed to have zero rows.}
   \item{by, by.x, by.y}{specifications of the common columns. See Details.}
   \item{all}{logical; \code{all = L} is shorthand for \code{all.x = L} and
     \code{all.y = L}.}
@@ -68,7 +69,7 @@ merge(x, y, \dots)
   common columns, but for \code{sort=FALSE} are in an unspecified order.
   The columns are the common columns followed by the
   remaining columns in \code{x} and then those in \code{y}.  If the
-  matching involved row names, an extra character column
+  matching involved row names, an extra character column called
   \code{Row.names} is added at the left, and in all cases the result has
   no special row names.
 }
