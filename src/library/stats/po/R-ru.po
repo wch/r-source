@@ -285,10 +285,10 @@ msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr "'seasonal$order' должен быть неотрицательным числовым вектором длины 3"
 
 msgid "lengths of 'x' and 'xreg' do not match"
-msgstr "длинаs of 'x' и 'xreg' do not match"
+msgstr "длины 'x' и 'xreg' не соответствуют"
 
 msgid "wrong length for 'fixed'"
-msgstr "неправильный длина for 'fixed'"
+msgstr "неправильная длина 'fixed'"
 
 msgid "some AR parameters were fixed: setting transform.pars = FALSE"
 msgstr "некоторые параметры AR были исправлены: устанавливаю transform.pars = FALSE"
