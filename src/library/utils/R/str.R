@@ -352,7 +352,7 @@ str.default <-
 	    if(give.mode) str1 <- P0(str1, ', mode "', mod,'":')
 
 	} else if(is.logical(object)) {
-	    v.len <- 3 * v.len
+	    v.len <- 1.5 * v.len # was '3' originally (but S prints 'T' 'F' ..)
 	    format.fun <- format
 	} else if(is.numeric(object)) {
 	    iv.len <- round(2.5 * v.len)

@@ -11,6 +11,8 @@
 
 USER-VISIBLE CHANGES
 
+    o   str.default() typically prints fewer entries of logical vectors.
+
 
 NEW FEATURES
 
