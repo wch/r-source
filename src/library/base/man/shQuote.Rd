@@ -58,7 +58,7 @@ shQuote(string, type = c("sh", "csh", "cmd"))
   \code{\link{sQuote}} for quoting English text.
 }
 \examples{
-test <- "abc$def`gh`i\\j"
+test <- "abc$def`gh`i\\\\j"
 cat(shQuote(test), "\n")
 \dontrun{system(paste("echo", shQuote(test)))}
 test <- "don't do it!"
