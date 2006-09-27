@@ -61,6 +61,8 @@ is.unsorted(x, na.rm = FALSE)
   
   The sort order for character vectors will depend on the collating
   sequence of the locale in use: see \code{\link{Comparison}}.
+  The sort order for factors is the order of their levels (which is
+  particularly appropriate for ordered factors).
 
   \code{is.unsorted} returns a logical indicating if \code{x} is sorted
   increasingly, i.e., \code{is.unsorted(x)} is true if \code{any(x !=
