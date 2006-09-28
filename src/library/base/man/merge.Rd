@@ -18,8 +18,7 @@ merge(x, y, \dots)
       sort = TRUE, suffixes = c(".x",".y"), \dots)
 }
 \arguments{
-  \item{x, y}{data frames, or objects to be coerced to one.  Neither is
-    currently allowed to have zero rows.}
+  \item{x, y}{data frames, or objects to be coerced to one.}
   \item{by, by.x, by.y}{specifications of the common columns. See Details.}
   \item{all}{logical; \code{all = L} is shorthand for \code{all.x = L} and
     \code{all.y = L}.}

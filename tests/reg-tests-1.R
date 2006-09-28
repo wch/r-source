@@ -4506,3 +4506,11 @@ e[2] <- expression(e)
 e <- as.raw(1:3)
 e[2] <- list(e=pi)
 ## all failed < 2.5.0
+
+
+## merge on zero-row data frames
+L3 <- LETTERS[1:3]
+d <- data.frame(cbind(x=1, y=1), fac=sample(L3, 1, repl=TRUE))
+e <- d[-1,]
+merge(d, e, by.x = "x", by.y = "x", all.x = TRUE)
+##
