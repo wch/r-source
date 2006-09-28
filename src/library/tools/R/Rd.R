@@ -208,10 +208,10 @@ function(RdFiles)
     ## * Escaped ampersand.
     ## Hence we try getting rid of these ...
     title <- unlist(contents[ , "Title"])
-    title <- gsub("\(``\|''\)", "\"", title)
+    title <- gsub("(``|'')", "\"", title)
     title <- gsub("`", "'", title)
-    title <- gsub("\([[:alnum:]]\)--\([[:alnum:]]\)", "\\1-\\2", title)
-    title <- gsub("\\\\\&", "&", title)
+    title <- gsub("([[:alnum:]])--([[:alnum:]])", "\\1-\\2", title)
+    title <- gsub("\\\\&", "&", title)
     title <- gsub("---", "--", title)
     ## Also remove leading and trailing whitespace.
     title <- sub("^[[:space:]]+", "", title)
@@ -722,7 +722,7 @@ function(txt)
 .get_Rd_name <-
 function(txt)
 {
-    start <- regexpr("\\\\name\\{[[:space:]]*([^\}]+)[[:space:]]*\\}", txt)
+    start <- regexpr("\\\\name\\{[[:space:]]*([^}]+)[[:space:]]*\\}", txt)
     if(start == -1) return(character())
     Rd_name <- gsub("[[:space:]]+", " ",
                     substr(txt,
@@ -736,7 +736,7 @@ function(txt)
 .get_Rd_title <-
 function(txt)
 {
-    start <- regexpr("\\\\title\\{[[:space:]]*([^\}]+)[[:space:]]*\\}", txt)
+    start <- regexpr("\\\\title\\{[[:space:]]*([^}]+)[[:space:]]*\\}", txt)
     if(start == -1) return(character())
     Rd_title <- gsub("[[:space:]]+", " ",
                      substr(txt,
@@ -773,7 +773,7 @@ function(txt)
     out <- matrix(character(), nr = 0, nc = 2)
     if(length(txt) != 1) return(out)
     while((pos <-
-           regexpr("\\\\link(\\[[^\[]+\\])?\\{", txt)) != -1) {
+           regexpr("\\\\link(\\[[^[]+\\])?\\{", txt)) != -1) {
         len <- attr(pos, "match.length")
         opt <- substring(txt, pos + 6, pos + len - 3)
         txt <- substring(txt, pos + len - 1)

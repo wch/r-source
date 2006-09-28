@@ -152,7 +152,7 @@ function(file, topic)
 ### ** delimMatch
 
 delimMatch <-
-function(x, delim = c("\{", "\}"), syntax = "Rd")
+function(x, delim = c("{", "}"), syntax = "Rd")
 {
     if(!is.character(x))
         stop("argument 'x' must be a character vector")
@@ -352,8 +352,8 @@ function()
 function()
 {
     lines <- readLines(file.path(R.home("doc"), "KEYWORDS.db"))
-    lines <- grep("^.*\\\|([^:]*):.*", lines, value = TRUE)
-    lines <- sub("^.*\\\|([^:]*):.*", "\\1", lines)
+    lines <- grep("^.*\\|([^:]*):.*", lines, value = TRUE)
+    lines <- sub( "^.*\\|([^:]*):.*", "\\1", lines)
     lines
 }
 

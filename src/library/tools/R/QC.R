@@ -735,7 +735,7 @@ function(x, ...)
             paste("function(", paste(s, collapse = ", "), ")", sep = "")
         else {
             s <- paste(deparse(s), collapse = "")
-            s <- gsub(" = \([,\\)]\)", "\\1", s)
+            s <- gsub(" = ([,\\)])", "\\1", s)
             gsub("^list", "function", s)
         }
     }
@@ -909,7 +909,7 @@ function(package, lib.loc = NULL)
         txt <- unlist(sapply(txt, get_Rd_items))
         if(!length(txt)) return(character())
         ## And now strip enclosing '\code{...}:'
-        txt <- gsub("\\\\code\\{([^\}]*)\\}:?", "\\1", as.character(txt))
+        txt <- gsub("\\\\code\\{([^}]*)\\}:?", "\\1", as.character(txt))
         txt <- unlist(strsplit(txt, ", *"))
         txt <- sub("^[[:space:]]+", "", txt)
         txt <- sub("[[:space:]]+$", "", txt)

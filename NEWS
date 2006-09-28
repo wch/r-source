@@ -36,6 +36,11 @@ NEW FEATURES
 
     o	merge() now allows zero-row data frames.
 
+    o	There is a (currently experimental) warning if \ is used
+	unnecessarily in a string when being parsed,
+	e.g. "\." where probably "\\." was intended.  ("\." is valid,
+	but the same as ".".)  Thanks to Bill Dunlap for the suggestion.
+
 
 INSTALLATION
 

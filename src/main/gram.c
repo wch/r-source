@@ -3601,6 +3601,18 @@ static int StringValue(int c)
 		case '\\':
 		    c = '\\';
 		    break;
+		case '"':
+		case '\'':
+		case ' ':
+		case '\n':
+		    break;
+		case '%':
+		    warning(_("'\\%%%%' is an unrecognized escape in a character string"));
+		    break;
+		default:
+		    warning(_("'\\%c' is an unrecognized escape in a character string"), c);
+
+		    break;
 		}
 	    }
 	}

@@ -5,7 +5,7 @@
   Match delimited substrings in a character vector, with proper nesting.
 }
 \usage{
-delimMatch(x, delim = c("\{", "\}"), syntax = "Rd")
+delimMatch(x, delim = c("{", "}"), syntax = "Rd")
 }
 \arguments{
   \item{x}{a character vector.}
@@ -28,7 +28,7 @@ delimMatch(x, delim = c("\{", "\}"), syntax = "Rd")
   \code{\link{regexpr}} for \dQuote{simple} pattern matching.
 }
 \examples{
-x <- c("\value\{foo\}", "function(bar)")
+x <- c("\\value{foo}", "function(bar)")
 delimMatch(x)
 delimMatch(x, c("(", ")"))
 }

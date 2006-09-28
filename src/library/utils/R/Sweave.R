@@ -254,8 +254,8 @@ SweaveSyntConv <- function(file, syntax, output=NULL)
 
 SweaveParseOptions <- function(text, defaults=list(), check=NULL)
 {
-    x <- sub("^[[:space:]]*\(.*\)", "\\1", text)
-    x <- sub("\(.*[^[:space:]]\)[[:space:]]*$", "\\1", x)
+    x <- sub("^[[:space:]]*(.*)", "\\1", text)
+    x <- sub("(.*[^[:space:]])[[:space:]]*$", "\\1", x)
     x <- unlist(strsplit(x, "[[:space:]]*,[[:space:]]*"))
     x <- strsplit(x, "[[:space:]]*=[[:space:]]*")
 
