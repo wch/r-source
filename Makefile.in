@@ -249,6 +249,10 @@ install-R-framework:
 	      install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" \
 	      "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib"; \
 	    fi; \
+	    for rexe in `ls "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)"/Resources/bin/exec/*/R "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/exec/R" 2>/dev/null`; do \
+	     install_name_tool -change lib$${lib}.dylib \
+	     "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" "$$rexe" ; \
+	    done; \
            fi; \
           done)
 	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders && \
