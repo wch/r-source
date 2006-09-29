@@ -3734,13 +3734,29 @@ function(package, dir, lib.loc = NULL)
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1]])[1]
             if(length(e) >= 2) pkg <- deparse(e[[2]])
-            if(Call %in% c("library", "requires")) {
+            if(Call %in% c("library", "require")) {
                 ## Zelig has library()
                 if(length(e) >= 2) {
                     pkg <- sub('^"(.*)"$', '\\1', pkg)
+                    ## <NOTE>
+                    ## Using code analysis, we really don't know which
+                    ## package was called if character.only = TRUE and
+                    ## the package argument is not a string constant.
+                    ## (Btw, what if character.only is given a value
+                    ## which is an expression evaluating to TRUE?)
+                    dunno <- FALSE
+                    pos <- which(!is.na(pmatch(names(e),
+                                               "character.only")))
+                    if(length(pos)
+                       && identical(e[[pos]], TRUE)
+                       && !identical(class(e[[2]]), "character"))
+                        dunno <- TRUE
+                    ## <NOTE>
+                    ## </NOTE>
                     ## <FIXME> could be inside substitute or a variable
                     ## and is in e.g. R.oo
-                    if(! pkg %in% c(depends_suggests, common_names))
+                    if(! dunno
+                       && ! pkg %in% c(depends_suggests, common_names))
                         bad_exprs <<- c(bad_exprs, pkg)
                 }
             } else if(Call %in%  "::") {
