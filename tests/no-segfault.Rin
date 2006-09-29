@@ -29,8 +29,8 @@ misc.int <- c("browser", "bug.report", "checkCRAN",
               "menu", "repeat", "readLines",
               "package.skeleton", "trace", "recover", "rm", "remove",
               "parent.env<-")
-inet.list <- c(apropos("download\."),
-               apropos("^url\."), apropos("\.url"),
+inet.list <- c(apropos("download\\."),
+               apropos("^url\\."), apropos("\\.url"),
                apropos("packageStatus"),
                paste(c("CRAN", "install", "update", "old"),
                      "packages",sep="."))

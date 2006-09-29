@@ -421,7 +421,7 @@ remove.packages <- function(pkgs, lib, version) {
         ## for consistency with packages, need unversioned names
         ## and let .find.packages() figure out what to do.
         add <- have[have[, "Bundle"] %in% p, "Package"]
-        add <- unique(sub("_[0-9.\-]*$", "", add))
+        add <- unique(sub("_[0-9.-]*$", "", add))
         if(hv) add <- manglePackageName(add, version[p])
         pkgs <- c(pkgs, add)
     }
