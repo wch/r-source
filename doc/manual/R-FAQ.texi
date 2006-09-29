@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-09-18
+@set FAQ_DATE @value{FAQ_YEAR}-09-29
 @set REL_YEAR 2006
 @set REL_MAJOR 2
-@set REL_MINOR 3
-@set REL_PATCHLEVEL 1
+@set REL_MINOR 4
+@set REL_PATCHLEVEL 0
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -479,18 +479,18 @@ Windows @acronym{FAQ}''} for more details.
 @subsection How can R be installed (Macintosh)
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
-Apple installer package inside a disk image named @file{R.dmg}.
-Once downloaded and executed, the installer will install the current
-non-developer release of R.  RAqua is
-a native Mac OS X Darwin version of R with a R.app Mac OS X GUI.  Inside
+Apple installer package inside a disk image named @file{R.dmg}.  Once
+downloaded and executed, the installer will install the current
+non-developer release of R.  RAqua is a native Mac OS X Darwin version
+of R with a R.app Mac OS X @acronym{GUI}.  Inside
 @file{bin/macosx/powerpc/contrib/@var{x}.@var{y}} there are prebuilt
-binary packages (for powerpc version of Mac OS X) to
-be used with RAqua corresponding to the ``@var{x}.@var{y}'' release of
-R. The installation of these packages is available through the
-``Package'' menu of the R.app GUI.  This port of R for Mac OS X is
-maintained by @email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
-@url{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
-Mac OS X @acronym{FAQ}} has more details.
+binary packages (for powerpc version of Mac OS X) to be used with RAqua
+corresponding to the ``@var{x}.@var{y}'' release of R. The installation
+of these packages is available through the ``Package'' menu of the R.app
+@acronym{GUI}.  This port of R for Mac OS X is maintained by
+@email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
+@url{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
+OS X @acronym{FAQ}} has more details.
 
 The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
 (@file{hqx}) and stuffit (@file{sit}) archives for a base distribution
@@ -602,10 +602,11 @@ A ``live'' Linux distribution with a particular focus on R is
 @dfn{Quantian}, which provides a directly bootable and self-configuring
 ``Live DVD'' containing numerous applications of interests to scientists
 and researchers, including several hundred @CRAN{} and Bioconductor
-packages, the ``ESS'' extensions for Emacs, the ``JGR'' Java GUI for R,
-the Ggobi visualization tool as well as several other R interfaces. The
-@dfn{Quantian} website at @url{http://dirk.eddelbuettel.com/quantian/}
-contains more details as well download information.
+packages, the ``ESS'' extensions for Emacs, the ``JGR'' Java
+@acronym{GUI} for R, the Ggobi visualization tool as well as several
+other R interfaces. The @dfn{Quantian} website at
+@url{http://dirk.eddelbuettel.com/quantian/} contains more details as
+well download information.
 
 @node What documentation exists for R?, Citing R, Are there Unix binaries for R?, R Basics
 @section What documentation exists for R?
@@ -1685,8 +1686,8 @@ has a web page at @url{http://www.omegahat.org/CGIwithR/}.
 @url{http://www.rpad.org/Rpad, Rpad}, developed and actively maintained
 by Tom Short, provides a sophisticated environment which combines some
 of the features of the previous approaches with quite a bit of
-Javascript, allowing for a GUI-like behavior (with sortable tables,
-clickable graphics, editable output), etc.
+Javascript, allowing for a @acronym{GUI}-like behavior (with sortable
+tables, clickable graphics, editable output), etc.
 
 Jeff Horner is working on the R/Apache Integration Project which embeds
 the R interpreter inside Apache 2 (and beyond).  A tutorial and
@@ -2084,6 +2085,9 @@ forecasting.
 @c </COMMENT>
 @item MarkedPointProcess
 Non-parametric analysis of the marks of marked point processes.
+@item MasterBayes
+Maximum likelihood and Markov chain Monte Carlo methods for pedigree
+reconstruction, analysis and simulation.
 @item MatchIt
 Select matched samples of the original treated and control groups with
 similar covariate distributions.
@@ -2221,8 +2225,8 @@ Implementation of random variables by means of S4 classes and methods.
 @item RandomFields
 Creating random fields using various methods.
 @item Rcmdr
-A platform-independent basic-statistics GUI (graphical user interface)
-for R, based on the @strong{tcltk} package.
+A platform-independent basic-statistics @acronym{GUI} (graphical user
+interface) for R, based on the @strong{tcltk} package.
 @item RcppTemplate
 An illustration of the use of the Rcpp R/C++ interface library.
 @item ResistorArray
@@ -2269,14 +2273,16 @@ examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item SIN
 A SINful approach to selection of Gaussian Graphical Markov Models.
+@item SNPassoc
+SNP-based whole genome association studies.
 @item SQLiteDF
 Stores data frames and matrices in SQLite tables.
 @item SciViews
-A bundle of packages to implement a full reusable GUI API for R.
-Contains @strong{svGUI} with the main GUI features, @strong{svDialogs}
-for the dialog boxes, @strong{svIO} for data import/export,
-@strong{svMisc} with miscellaneous supporting functions, and
-@strong{svViews} providing views and report features (views are
+A bundle of packages to implement a full reusable @acronym{GUI} API for
+R.  Contains @strong{svGUI} with the main @acronym{GUI} features,
+@strong{svDialogs} for the dialog boxes, @strong{svIO} for data
+import/export, @strong{svMisc} with miscellaneous supporting functions,
+and @strong{svViews} providing views and report features (views are
 @acronym{HTML} presentations of the content of R objects, combining
 text, tables and graphs in the same document).
 @item SemiPar
@@ -2358,12 +2364,16 @@ VAriance Stabilization for regression) methods for selecting regression
 transformations.
 @item actuar
 Functions related to actuarial science applications.
+@item ada
+Performs boosting algorithms for a binary response.
 @item adabag
 Adaboost.M1 and Bagging.
 @item adapt
 Adaptive quadrature in up to 20 dimensions.
 @item ade4
 Multivariate data analysis and graphical display.
+@item ade4TkGUI
+Tcl/Tk Graphical User Interface for @strong{ade4}.
 @item adehabitat
 A collection of tools for the analysis of habitat selection by animals.
 @item adlift
@@ -2485,6 +2495,8 @@ Processing and Classification of protein mass spectra (SELDI) data.
 @item caTools
 Miscellaneous utility functions, including reading/writing ENVI binary
 files, a LogitBoost classifier, and a base64 encoder/decoder.
+@item cacheSweave
+Tools for caching Sweave computations.
 @item cairoDevice
 Loadable CAIRO/GTK device driver.
 @item calibrate
@@ -2824,6 +2836,8 @@ used for spatial prediction.
 Simple file-based hash table.
 @item financial
 Solving financial problems in R.
+@item fingerprint
+Functions to operate on binary fingerprint data.
 @item flexclust
 Flexible cluster algorithms.
 @item flexmix
@@ -2870,6 +2884,11 @@ hierarchical log-linear models may be implemented and combined with
 @strong{dynamicGraph}.
 @item gRcox
 Inference in graphical gaussian models with edge and vertex symmetries.
+@item gWidgets
+gWidgets API for building toolkit-independent, interactive
+@acronym{GUI}s.
+@item gWidgetsRGtk2
+Toolkit implementation of gWidgets for RGtk2.
 @item gafit
 Genetic algorithm for curve fitting.
 @item gam
@@ -2997,7 +3016,7 @@ Miscellaneous string utilities.
 @item gtkDevice
 GTK graphics device driver that may be used independently of the R-GNOME
 interface and can be used to create R devices as embedded components in
-a GUI using a Gtk drawing area widget, e.g., using RGtk.
+a @acronym{GUI} using a Gtk drawing area widget, e.g., using RGtk.
 @item gtools
 Various functions to help manipulate data.
 @item gvlma
@@ -3196,6 +3215,8 @@ Computation of local false discovery rates.
 Local Regression, likelihood and density estimation.
 @item lodplot
 Assorted plots of location score versus genetic map position.
+@item logcondens
+Estimate a log-concave probability density from i.i.d.@: observations.
 @item logistf
 Firth's bias reduced logistic regression approach with penalized profile
 likelihood based confidence intervals for parameter estimates.
@@ -3264,12 +3285,16 @@ interaction models.
 @item mcgibbsit
 Warnes and Raftery's MCGibbsit MCMC diagnostic.
 @item mclust
-Model-based cluster analysis: the 2002 version of MCLUST.
+Model-based clustering and normal mixture modeling including Bayesian
+regularization.
 @c <COMMENT>
 @c Moved to Archive on 2004-02-19 as requested by the maintainer.
 @c @item mclust1998
 @c Model-based cluster analysis: the 1998 version of MCLUST.
 @c </COMMENT>
+@item mclust02
+Model-based cluster analysis: the 2002 version of MCLUST.
+
 @item mcmc
 Functions for Markov Chain Monte Carlo (MCMC).
 @item mda
@@ -3578,6 +3603,8 @@ Regression (PCR).
 @c </COMMENT>
 @item plsgenomics
 PLS analyses for genomics.
+@item pmg
+Poor Man's @acronym{GUI}.
 @item poLCA
 POlytomous variable Latent Class Analysis.
 @c <COMMENT>
@@ -3652,6 +3679,8 @@ Quality Control Charts.  Shewhart quality control charts for continuous,
 attribute and count data.  Cusum and EWMA charts.  Operating
 characteristic curves.  Process capability analysis.  Pareto chart and
 cause-and-effect chart.
+@item qp
+@math{q}-order partial correlation graph search algorithm.
 @item qtl
 Analysis of experimental crosses to identify QTLs.
 @item qtlDesign
@@ -3772,6 +3801,8 @@ Simple interactive controls for R using the tcltk package.
 Recursive PARTitioning and regression trees.  @emph{Recommended}.
 @item rpart.permutation
 Permutation tests of rpart models.
+@item rpubchem
+R interface to the PubChem collection.
 @item rpvm
 R interface to PVM (Parallel Virtual Machine).  Provides interface to
 PVM APIs, and examples and documentation for its use.
@@ -4328,7 +4359,7 @@ A plugin for the Gnumeric spreadsheet that allows R functions to be
 called from cells within the sheet, automatic recalculation, etc.
 @item RGtk
 Facilities in the S language for programming graphical interfaces using
-Gtk, the Gnome GUI toolkit.
+Gtk, the Gnome @acronym{GUI} toolkit.
 @item RGtkBindingGenerator
 A meta-package which generates C and R code to provide bindings to a
 Gtk-based library.
@@ -4338,7 +4369,7 @@ the gtk+extra library such as the GtkSheet data-grid display, icon list,
 file list and directory tree.
 @item RGtkGlade
 S language bindings providing an interface to Glade, the interactive
-Gnome GUI creator.
+Gnome @acronym{GUI} creator.
 @item RGtkHTML
 A collection of S functions that provide an interface to creating and
 controlling an @HTML{} widget which can be used to display @HTML{}
@@ -4792,7 +4823,7 @@ Estimate) algorithm.
 @item prada
 Tools for analyzing and navigating data from high-throughput phenotyping
 experiments based on cellular assays and fluorescent detection.
-@item qvalue
+@item qtlvalue
 Q-value estimation for false discovery rate control.
 @item rama
 Robust Analysis of MicroArrays: robust estimation of cDNA microarray
