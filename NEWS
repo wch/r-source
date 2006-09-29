@@ -41,6 +41,12 @@ NEW FEATURES
 	e.g. "\." where probably "\\." was intended.  ("\." is valid,
 	but the same as ".".)  Thanks to Bill Dunlap for the suggestion.
 
+    o	New functions formatUL() and formatOL() in package utils for
+        formatting unordered (itemize) and ordered (enumerate) lists.
+
+    o	Manipulation of integers as roman numerals via as.roman() in
+        package utils.
+
 
 INSTALLATION
 
