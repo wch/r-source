@@ -17,7 +17,7 @@ palette(value)
   than 1 it is assumed to contain a description of the colors
   which are to make up the new palette (either by name or
   by RGB levels).
-  
+
   If \code{value} is omitted or has length 0, no change is made
   the current palette.
 
@@ -30,8 +30,9 @@ palette(value)
 \seealso{
   \code{\link{colors}} for the vector of built-in \dQuote{named} colors;
   \code{\link{hsv}}, \code{\link{gray}}, \code{\link{rainbow}},
-  \code{\link{terrain.colors}},\dots to construct colors;
-  
+  \code{\link{terrain.colors}},\dots to construct colors.
+
+  \code{\link{colorRamp}} to interpolate colors, making custom palettes;
   \code{\link{col2rgb}} for translating colors to RGB 3-vectors.
 }
 \examples{
