@@ -65,6 +65,8 @@ x \%in\% table
   \code{\link{pmatch}} and \code{\link{charmatch}} for (\emph{partial})
   string matching, \code{\link{match.arg}}, etc for function argument
   matching.
+  \code{\link{findInterval}} similarly returns a vector of positions, but
+  finds numbers within intervals, rather than exact matches.
 
   \code{\link{is.element}} for an S-compatible equivalent of \code{\%in\%}.
 }
