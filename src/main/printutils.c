@@ -192,7 +192,7 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
 	snprintf(buff, NB, "%*s%*s", R_print.gap, "", wr+wi+2,
 		CHAR(R_print.na_string));
     } else {
-	/* formatComplex rounded, but this does not, and we need to 
+	/* formatComplex rounded, but this does not, and we need to
 	   keep it that way so we don't get strange trailing zeros.
 	   But we do want to avoid printing small exponentials that
 	   are probably garbage.
@@ -638,7 +638,7 @@ void Rcons_vprintf(const char *format, va_list arg)
 	    res = R_BUFSIZE;
     }
 #endif /* HAVE_VA_COPY */
-    R_WriteConsole(p, strlen(buf));
+    R_WriteConsole(p, strlen(p));
 #ifdef HAVE_VA_COPY
     if(usedRalloc) vmaxset(vmax);
     if(usedVasprintf) free(p);
@@ -711,12 +711,10 @@ void REvprintf(const char *format, va_list arg)
 	} else vfprintf(R_Consolefile, format, arg);
     } else {
 	char buf[BUFSIZE];
-	int slen;
 
 	vsnprintf(buf, BUFSIZE, format, arg);
 	buf[BUFSIZE-1] = '\0';
-	slen = strlen(buf);
-	R_WriteConsole(buf, slen);
+	R_WriteConsole(buf, strlen(buf));
     }
 }
 
