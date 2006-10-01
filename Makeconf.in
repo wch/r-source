@@ -104,6 +104,7 @@ ALL_FFLAGS_LO = $(R_XTRA_CFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
+datarootdir = @datarootdir@
 ## only used for installing 'R'.
 bindir = @bindir@
 ## not used

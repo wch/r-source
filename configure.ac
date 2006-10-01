@@ -22,7 +22,7 @@
 ### Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ### Boston, MA 02110-1301, USA
 
-AC_PREREQ(2.59)
+AC_PREREQ(2.60)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
