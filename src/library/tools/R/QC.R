@@ -1608,9 +1608,7 @@ function(x, ...) {
         if(length(methods_with_full_name > 0)) {
             writeLines(gettextf("S3 methods shown with full name in documentation object '%s':",
                                 docObj))
-            writeLines(strwrap(paste(methods_with_full_name,
-                                     collapse = " "),
-                               indent = 2, exdent = 2))
+            .pretty_print(methods_with_full_name)
             writeLines("")
         }
     }
