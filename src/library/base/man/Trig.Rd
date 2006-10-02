@@ -43,7 +43,7 @@ atan2(y, x)
    branch cuts is standard.
 
    For \code{asin()} and \code{acos()}, there are two cuts, both along
-   the real axis: \eqn{\left(-\infty, -1\right]}{\(-Inf, 1\]} and
+   the real axis: \eqn{\left(-\infty, -1\right]}{\(-Inf, -1\]} and
    \eqn{\left[1, \infty\right)}{\[1, Inf\)}.  Functions \code{asin()}
    and \code{acos()} are continuous from above on the interval
    \eqn{\left(-\infty, -1\right]}{\(-Inf, -1\]} and continuous from
