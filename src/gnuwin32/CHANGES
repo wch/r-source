@@ -15,6 +15,13 @@ More of the messages from the script editor are translatable.
 
 
 
+R 2.4.0 patched
+===============
+
+Inno Setup >= 5.1.7 is now required to build the installer.
+
+
+
 R 2.4.0
 =======
 
