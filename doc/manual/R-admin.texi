@@ -3814,7 +3814,7 @@ suitably; ensure you have the required fonts installed.
 @section The Inno Setup installer
 
 To make the installer package (@file{@value{RWVERSION}.exe}) we require
-Inno Setup 5.1.5 or later from @url{http://jrsoftware.org,
+Inno Setup 5.1.7 or later from @url{http://jrsoftware.org,
 @code{jrsoftware.org}}.
 
 Edit file @file{src/gnuwin32/MkRules} and change @code{ISDIR} to the
