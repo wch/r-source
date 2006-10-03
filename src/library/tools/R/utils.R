@@ -548,6 +548,7 @@ function(package)
              "hist.FD", "hist.scott"),
              XML = "text.SAX",
              ape = "sort.index",
+             boot = "exp.tilt",
              car = "scatterplot.matrix",
              grDevices = "boxplot.stats",
              graphics = c("close.screen",
@@ -578,7 +579,12 @@ function(packages = NULL, FUN, ...)
     if(is.null(packages))
         packages <-
             unique(utils::installed.packages(priority = "high")[ , 1])
-    out <- lapply(packages, FUN, ...)
+    out <- lapply(packages, function(p)
+                  tryCatch(FUN(p, ...),
+                           error = function(e)
+                           noquote(paste("Error:",
+                                         conditionMessage(e)))))
+    ## (Just don't throw the error ...)
     names(out) <- packages
     out
 }
