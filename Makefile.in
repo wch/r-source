@@ -89,7 +89,7 @@ install: installdirs svnonly
 	done
 @WANT_R_FRAMEWORK_TRUE@		$(MAKE) install-R-framework
 @WANT_R_FRAMEWORK_TRUE@		@(sed 's|^LIBR =.*|LIBR = -F$(R_FRAMEWORK_DIR)/.. -framework R|' \
-@WANT_R_FRAMEWORK_TRUE@		  $(top_builddir)/etc/Makeconf > "$(rhome)/etc/Makeconf")
+@WANT_R_FRAMEWORK_TRUE@		  $(top_builddir)/etc/Makeconf > "$(rhome)/etc${R_ARCH}/Makeconf")
 @WANT_R_FRAMEWORK_TRUE@		@(sed 's/Versions\/$(FW_VERSION)\/Resources/Resources/' \
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/R > \
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/RR)
