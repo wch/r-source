@@ -1410,7 +1410,7 @@ originals.
 you have either many small data files (as in package @pkg{Devore5}) or a
 few large data files.
 @item
-@code{pkgcheck-foo} to check the package (like @code{R CMD CHECK foo}).
+@code{pkgcheck-foo} to check the package (like @code{R CMD check foo}).
 @end itemize
 
 Using this approach allows variables to be set during the build, e.g.
