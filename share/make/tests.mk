@@ -1,6 +1,6 @@
 ## ${R_HOME}/share/make/tests.mk
 
-include $(R_HOME)/etc/Makeconf
+include $(R_HOME)/etc${R_ARCH}/Makeconf
 
 makevars =
 srcdir = .
