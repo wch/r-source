@@ -1402,7 +1402,8 @@ function(package, dir, lib.loc = NULL)
             stop(gettextf("directory '%s' does not contain Rd sources",
                           dir),
                  domain = NA)
-        is_base <- basename(dir) == "base"
+        package_name <- package
+        is_base <- package_name == "base"
 
         ## Load package into code_env.
         if(!is_base)
@@ -1440,7 +1441,8 @@ function(package, dir, lib.loc = NULL)
             stop(gettextf("directory '%s' does not contain Rd sources",
                           dir),
                  domain = NA)
-        is_base <- basename(dir) == "base"
+        package_name <- basename(dir)
+        is_base <- package_name == "base"        
 
         code_env <- new.env()
         .source_assignments_in_code_dir(code_dir, code_env)
@@ -1533,6 +1535,12 @@ function(package, dir, lib.loc = NULL)
 
     db <- lapply(db, function(f) paste(Rd_pp(f), collapse = "\n"))
     names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
+
+    ## Ignore pkg-deprecated.Rd and pkg-defunct.Rd.
+    ind <- db_names %in% paste(package_name, c("deprecated", "defunct"),
+                               sep = "-")
+    db <- db[!ind]
+    db_names <- db_names[!ind]
 
     db_usage_texts <-
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
@@ -2900,7 +2908,8 @@ function(dfile)
     ##   Maintainer.
     required_fields <- c("Package", "Version", "License", "Description",
                          "Title", "Author", "Maintainer")
-    if(any(i <- which(is.na(match(required_fields, names(db))))))
+    if(any(i <- which(is.na(match(required_fields, names(db))) |
+                      is.na(db[required_fields]))))
         out$missing_required_fields <- required_fields[i]
 
     val <- package_name <- db["Package"]
@@ -3383,6 +3392,11 @@ function(txt)
     ## throw it, rather than "basically ignore" it by putting it in the
     ## bad_lines attribute.
     txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
+    ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage:
+    ## the docs say that unpaired braces in \code need to be escaped, so
+    ## let's assume that this is also true for \usage.
+    txt <- gsub("\\\\\\{", "{", txt)
+    txt <- gsub("\\\\\\}", "}", txt)
     .parse_text_as_much_as_possible(txt)
 }
 
