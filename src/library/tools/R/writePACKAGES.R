@@ -10,7 +10,7 @@ function(dir, fields = NULL,
     desc <- .build_repository_package_db(dir, fields, type, verbose)
 
     if(length(desc)) {
-        fields <- colnames(desc[[1]])
+        fields <- names(desc[[1]])
         desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
         colnames(desc) <- fields
         ## bundles do not have a Package entry in the DESCRIPTION,
@@ -67,12 +67,14 @@ function(dir, fields = NULL,
             if(verbose) message(paste(" ", files[i]))
             ## for bundles:
             con <- unz(files[i], "DESCRIPTION")
-            temp <- try(read.dcf(con, fields = fields), silent = TRUE)
+            temp <- try(read.dcf(con, fields = fields)[1, ],
+                        silent = TRUE)
             if(inherits(temp, "try-error")) {
                 close(con)
                 ## for regular packages:
                 con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
-                temp <- try(read.dcf(con, fields = fields), silent = TRUE)
+                temp <- try(read.dcf(con, fields = fields)[1, ],
+                            silent = TRUE)
                 if(inherits(temp, "try-error")) {
                     close(con)
                     next
@@ -95,7 +97,8 @@ function(dir, fields = NULL,
             p <- file.path(packages[i], "DESCRIPTION")
             temp <- try(system(paste("tar zxf", files[i], p)))
             if(!inherits(temp, "try-error")) {
-                temp <- try(read.dcf(p, fields = fields), silent = TRUE)
+                temp <- try(read.dcf(p, fields = fields)[1, ],
+                            silent = TRUE)
                 if(!inherits(temp, "try-error"))
                     db[[i]] <- temp
             }
