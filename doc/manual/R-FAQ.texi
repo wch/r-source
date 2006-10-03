@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-09-29
+@set FAQ_DATE @value{FAQ_YEAR}-10-02
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -1802,6 +1802,8 @@ binary distributions of R.)
 @item AMORE
 A MORE flexible neural network package, providing the TAO robust neural
 network algorithm.
+@item ARES
+Allelic richness estimation, with extrapolation beyond the sample size.
 @item AdaptFit
 Adaptive semiparametic regression.
 @item AlgDesign
@@ -2012,6 +2014,8 @@ Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
 @item Icens
 Functions for computing the NPMLE for censored and truncated data.
+@item InfNet
+Function that simulates an epidemic in a network of contacts.
 @item JLLprod
 Nonparametric estimation of homothetic and generalized homothetic
 production functions.
@@ -2562,9 +2566,11 @@ Variable selection for model-based clustering.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
+@item cobs99
+Constrained B-splines: outdated 1999 version.
 @item cobs
 Constrained B-splines: qualitatively constrained (regression) smoothing
-via linear programming.
+via linear programming and sparse matrices.
 @item cocorresp
 Co-correspondence analysis ordination methods for community ecology.
 @item coda
@@ -4041,6 +4047,8 @@ L2 penalized logistic regression with a stepwise variable selection.
 @item stepwise
 A stepwise approach to identifying recombination breakpoints in a
 sequence alignment.
+@item stinepack
+Stineman interpolation package.
 @item strucchange
 Various tests on structural change in linear regression models.
 @item subselect
