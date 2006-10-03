@@ -40,6 +40,7 @@ PDFLATEX = @PDFLATEX@
 PDFTEX = @PDFTEX@
 TEX = @TEX@
 
+datarootdir = @datarootdir@
 infodir = @infodir@
 INSTALL_INFO = @INSTALL_INFO@
 
