@@ -291,20 +291,6 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		} else if (!strcmp(".bat", p + strlen(p) - 4)) strcpy(cmd, "");
 		else if (!strcmp(".exe", p + strlen(p) - 4)) strcpy(cmd, "");
 		else {
-		    WIN32_FIND_DATA find_data;
-		    HANDLE fh;
-		    char tmp[MAX_PATH];
-		    strcpy(tmp, RHome); strcat(tmp, "/bin/"); strcat(tmp, p);
-		    fh = FindFirstFile(tmp, &find_data);
-		    if (fh == INVALID_HANDLE_VALUE) {
-			fprintf(stderr, "no Perl script '%s'\n", p);
-			return(28);
-		    }
-		    if(strcmp(p, find_data.cFileName)) {
-			fprintf(stderr, "no Perl script '%s'\n", p);
-			return(28);
-		    }
-		    FindClose(fh);
 		    strcpy(cmd, "perl ");
 		    strcat(cmd, RHome); strcat(cmd, "/bin/");
 		}
