@@ -20,6 +20,9 @@ R 2.4.0 patched
 
 Inno Setup >= 5.1.7 is now required to build the installer.
 
+Reverted 2.4.0 change that required case-sensitive specification of
+commands to R CMD.
+
 
 
 R 2.4.0
