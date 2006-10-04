@@ -15,6 +15,7 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
+library(grDevices)
 library(stats) # for runif
 library(grid)
 ps.options(pointsize=12)

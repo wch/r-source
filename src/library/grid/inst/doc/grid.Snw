@@ -23,6 +23,7 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
+library(grDevices)
 library(graphics) # for par
 library(stats) # for rnorm
 library(grid)

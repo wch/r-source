@@ -19,7 +19,9 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
+library(grDevices)
 library(graphics) # for plot()
+library(stats) # for runif()
 library(grid)
 ps.options(pointsize=12)
 options(width=60)
@@ -242,7 +244,7 @@ resized without the legend going crazy.
 drawDetails.mylegend <- function(x, recording) {
    x <- 0:64/64
    y <- sin(3*pi*x)
-   plot(x, y, type="l", col="blue", main = "points with bg \& legend(*, pt.bg)")
+   plot(x, y, type="l", col="blue", main = "points with bg & legend(*, pt.bg)")
    points(x, y, pch=21, bg="white")
    legend(.4,1, "sin(c x)", pch=21, pt.bg="white", lty=1, col = "blue")
 }

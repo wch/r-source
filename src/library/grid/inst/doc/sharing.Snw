@@ -11,6 +11,7 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
+library(grDevices)
 library(graphics)
 library(grid)
 ps.options(pointsize=12)
