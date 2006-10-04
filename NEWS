@@ -6,6 +6,16 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.4.0 patched
+
+
+BUG FIXES
+
+    o	Fixed warning() to use .dfltWarn intead of .dfltStop for default
+        handling (PR#9274).
+
+
+
 		CHANGES IN R VERSION 2.4.0
 
 
