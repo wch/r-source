@@ -72,7 +72,7 @@ stamp-recommended: R docs
 	@(cd src/library/Recommended && $(MAKE))
 
 vignettes: stamp-recommended
-	-@(cd src/library && $(MAKE) $@)
+	@(cd src/library && $(MAKE) $@)
 
 install: installdirs svnonly
 	@for d in $(SUBDIRS); do \
