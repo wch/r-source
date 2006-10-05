@@ -657,7 +657,7 @@ namespaceImport <- function(self, ...) {
         namespaceImportFrom(self, asNamespace(ns))
 }
 
-namespaceImportFrom <- function(self, ns, vars, generics) {
+namespaceImportFrom <- function(self, ns, vars, generics, packages) {
     addImports <- function(ns, from, what) {
         imp <- structure(list(what), names = getNamespaceName(from))
         imports <- getNamespaceImports(ns)
@@ -726,7 +726,8 @@ namespaceImportFrom <- function(self, ns, vars, generics) {
 		    delete <- c(delete, ii)
 		if(!missing(generics)) {
 		    genName <- generics[[i]]
-		    fdef <- methods:::getGeneric(genName, where = impenv)
+		    fdef <- methods:::getGeneric(genName,
+                                                 where = impenv, package = packages[[i]])
 		    if(is.null(fdef))
 			warning(gettextf(
 					 "Found methods to import for function \"%s\" but not the generic itself",
@@ -784,7 +785,7 @@ namespaceImportMethods <- function(self, ns, vars) {
            methods:::is(get(g, envir = ns), "genericFunction"))
             allVars <- c(allVars, g)
     }
-    namespaceImportFrom(self, asNamespace(ns), allVars, allFuns)
+    namespaceImportFrom(self, asNamespace(ns), allVars, allFuns, packages)
 }
 
 importIntoEnv <- function(impenv, impnames, expenv, expnames) {

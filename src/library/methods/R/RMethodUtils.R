@@ -392,6 +392,7 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
     newCall <- as.call(newCall)
     newBody <- substitute({.local <- DEF; NEWCALL},
                           list(DEF = definition, NEWCALL = newCall))
+    generic <- .copyMethodDefaults(generic, definition)
     body(generic, envir = environment(definition)) <- newBody
     generic
 }
@@ -463,6 +464,12 @@ getGeneric <-
             if(!is.null(value))
               .cacheGeneric(f, value)
         }
+    }
+    if(is.null(value) && nchar(package)>0 && !identical(package, "base")) {
+        env <- .requirePackage(package, FALSE)
+        if(is.environment(env))
+          value <- .Call("R_getGeneric", f, FALSE, env, package,
+                     PACKAGE = "methods")
     }
     value
 }
@@ -1375,3 +1382,25 @@ deletePrimMethods <- function(f, env) {
 
 .primname <- function(object)
     .Call("R_get_primname", object, PACKAGE = "base")
+
+.copyMethodDefaults <- function(generic, method) {
+    emptyDefault <- function(value) missing(value) || (is.name(value) && (nchar(as.character(value))>0))
+    fg <- formals(generic)
+    mg <- formals(method)
+    mgn <- names(mg)
+    changed <- FALSE
+    for(what in names(fg)) {
+        i <- match(what, mgn, 0)
+        if(i> 0) {
+            deflt <- mg[[i]]
+            if(!(emptyDefault(deflt) || identical(deflt, fg[[what]]))) {
+                fg[[what]] <- deflt
+                changed <- TRUE
+            }
+        }
+    }
+    if(changed)
+      formals(generic) <- fg
+    generic
+}
+
