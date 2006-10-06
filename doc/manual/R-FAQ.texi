@@ -2271,9 +2271,12 @@ especially for the wavelet and Gabor transforms of noisy signals), based
 on the book ``Practical Time-Frequency Analysis: Gabor and Wavelet
 Transforms with an Implementation in S'' by Rene Carmona, Wen L. Hwang
 and Bruno Torresani, 1998, Academic Press.
-@item SAGx
-Retrieval, preparation and analysis of data from the Affymetrix
-GeneChip.
+@c <COMMENT>
+@c Removed on 2006-10-06 as requested by the maintainer (now @BioC).
+@c @item SAGx
+@c Retrieval, preparation and analysis of data from the Affymetrix
+@c GeneChip.
+@c </COMMENT>
 @item SASmixed
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
@@ -3352,6 +3355,8 @@ Estimation/multiple imputation programs for mixed categorical and
 continuous data.
 @item mixreg
 Functions to fit mixtures of regressions.
+@item mlCopulaSelection
+Copula selection and fitting using maximum likelihood.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
