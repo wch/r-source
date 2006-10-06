@@ -1445,13 +1445,13 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 
 ## bootstrap version:  all classes and methods must be in the version of the methods
 ## package being built in the toplevel environment: MUST avoid require("methods") !
-.requirePackage <- function(package)
+.requirePackage <- function(package, mustFind = TRUE)
     topenv(parent.frame())
 
 .PackageEnvironments <- new.env(hash=TRUE) # caching for required packages
 
 ## real version of .requirePackage
-..requirePackage <- function(package) {
+..requirePackage <- function(package, mustFind = TRUE) {
     value <- package
     if(is.character(package)) {
         if(package %in% loadedNamespaces())
@@ -1473,9 +1473,13 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
     if(exists(".packageName", topEnv, inherits=TRUE) &&
        .identC(package, get(".packageName", topEnv)))
         return(topEnv) # kludge for source'ing package code
-    if(!require(package, character.only = TRUE))
-        stop(gettextf("unable to find required package \"%s\"", package),
-             domain = NA)
+    if(!require(package, character.only = TRUE)) {
+        if(mustFind)
+          stop(gettextf("unable to find required package \"%s\"", package),
+               domain = NA)
+        else
+          return(NULL)
+    }
     value <- .asEnvironmentPackage(package)
     assign(package, value, envir = .PackageEnvironments)
     value
