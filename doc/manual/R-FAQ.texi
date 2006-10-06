@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-10-02
+@set FAQ_DATE @value{FAQ_YEAR}-10-06
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2009,6 +2009,9 @@ interval-censored data.
 @item IDPmisc
 Utilities from the Institute of Data Analyses and Process Design,
 IDP/ZHW.
+@item IPSUR
+Accompanies ``Introduction to Probability and Statistics Using R'' by
+G. Andy Chang and G. Jay Kerns(in progress).
 @item ISwR
 Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
@@ -2347,6 +2350,8 @@ Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
 @item VaR
 Methods for calculation of Value at Risk (VaR).
+@item WeedMap
+Map of weed intensity.
 @item WhatIf
 Software for evaluating counterfactuals.
 @item XML
@@ -3635,6 +3640,8 @@ manipulations.
 Statistical and POPulation GENetics.
 @item portfolio
 Classes for analyzing and implementing portfolios.
+@item portfolioSim
+Framework for simulating equity portfolio strategies.
 @item powell
 Optimizes a function using Powell's UObyQA algorithm.
 @item powerpkg
@@ -3736,6 +3743,8 @@ running BUGS from R.  Support for Linux systems with Wine is emphasized.
 @item rcdd
 C Double Description for R, an interface to the CDD computational
 geometry library.
+@item rcdk
+Interface to the CDK libraries, a Java framework for cheminformatics.
 @item rcom
 R COM Client Interface and internal COM Server.
 @item rda
