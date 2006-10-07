@@ -8,7 +8,7 @@
 \usage{
 write_PACKAGES(dir, fields = NULL,
                type = c("source", "mac.binary", "win.binary"),
-               verbose = FALSE)
+               verbose = FALSE, unpacked = FALSE)
 }
 \arguments{
   \item{dir}{Character vector describing the location of the repository
@@ -32,6 +32,8 @@ write_PACKAGES(dir, fields = NULL,
   }
   \item{verbose}{logical.  Should packages be listed as they are
     processed?}
+  \item{unpacked}{a logical indicating whether the package contents are
+    available in unpacked form or not (default).}
 }
 \details{
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read

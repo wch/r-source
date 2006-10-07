@@ -1,13 +1,14 @@
 write_PACKAGES <-
 function(dir, fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
-         verbose = FALSE)
+         verbose = FALSE, unpacked = FALSE)
 {
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
     type <- match.arg(type)
 
-    desc <- .build_repository_package_db(dir, fields, type, verbose)
+    desc <- .build_repository_package_db(dir, fields, type, verbose,
+                                         unpacked)
 
     if(length(desc)) {
         fields <- names(desc[[1]])
@@ -38,8 +39,14 @@ function(dir, fields = NULL,
 .build_repository_package_db <-
 function(dir, fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
-         verbose = getOption("verbose"))
+         verbose = getOption("verbose"),
+         unpacked = FALSE)
 {
+    if(unpacked)
+        return(.build_repository_package_db_from_source_dirs(dir,
+                                                             fields,
+                                                             verbose))
+
     type <- match.arg(type)
 
     package_pattern <- switch(type,
@@ -111,3 +118,25 @@ function(dir, fields = NULL,
     db
 }
 
+.build_repository_package_db_from_source_dirs <-
+function(dir, fields = NULL, verbose = getOption("verbose"))
+{
+    dir <- file_path_as_absolute(dir)
+    fields <- unique(c(.get_standard_repository_db_fields(), fields))
+    paths <- list.files(dir, full = TRUE)
+    paths <- paths[file_test("-d", paths) &
+                   file_test("-f", file.path(paths, "DESCRIPTION"))]
+    db <- vector(length(paths), mode = "list")
+    if(verbose) message("Processing packages:")
+    for(i in seq_along(paths)) {
+        if(verbose) message(paste(" ", basename(paths[i])))
+        temp <- try(read.dcf(file.path(paths[i], "DESCRIPTION"),
+                             fields = fields)[1, ],
+                    silent = TRUE)
+        if(!inherits(temp, "try-error"))
+            db[[i]] <- temp
+    }
+    if(verbose) message("done")
+    names(db) <- basename(paths)
+    db
+}
