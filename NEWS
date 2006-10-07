@@ -14,6 +14,10 @@ BUG FIXES
     o	Fixed warning() to use .dfltWarn intead of .dfltStop for default
         handling (PR#9274).
 
+    o	R would slow down when the product of the length of a vector and
+    	the length of a character vector used to subset it exceeded 2^31.
+    	(PR#9280)
+
 
 
 		CHANGES IN R VERSION 2.4.0
