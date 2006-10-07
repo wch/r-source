@@ -82,6 +82,17 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.4.0 patched
+
+
+BUG FIXES
+
+    o	R would slow down when the product of the length of a vector and
+    	the length of a character vector used to subset it exceeded 2^31.
+    	(PR#9280)
+
+
+
 		CHANGES IN R VERSION 2.4.0
 
 
