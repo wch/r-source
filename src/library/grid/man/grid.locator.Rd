@@ -31,7 +31,7 @@ grid.locator(unit = "native")
 \author{ Paul Murrell }
 \seealso{ \code{\link{viewport}}, \code{\link{unit}},
   \code{locator} in package graphics, and for an application
-  see \code{trellis.focus} and \code{trellis.identify} in
+  see \code{trellis.focus} and \code{panel.identify} in
   package lattice.
 }
 \examples{
