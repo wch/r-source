@@ -48,14 +48,6 @@ NEW FEATURES
         package utils.
 
 
-INSTALLATION
-
-    o	The extraction of info from Subversion for an SVN checkout now
-	also works for svn >= 1.4.0.  However, on Windows the 'Last
-	Changed Date' will be in the local timezone, and not in GMT as
-	previously.
-
-
 DEPRECATED & DEFUNCT
 
     o	symbol.C() and symbol.For() are defunct, and have been
@@ -87,9 +79,20 @@ BUG FIXES
 
 BUG FIXES
 
+    o	Fixed warning() to use .dfltWarn intead of .dfltStop for default
+        handling (PR#9274).
+
     o	R would slow down when the product of the length of a vector and
     	the length of a character vector used to subset it exceeded 2^31.
     	(PR#9280)
+
+
+INSTALLATION
+
+    o	The extraction of info from Subversion for an SVN checkout now
+	also works for svn >= 1.4.0.  However, on Windows the 'Last
+	Changed Date' will be in the local timezone, and not in GMT as
+	previously.
 
 
 
