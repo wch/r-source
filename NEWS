@@ -19,6 +19,14 @@ BUG FIXES
     	(PR#9280)
 
 
+INSTALLATION
+
+    o	The extraction of info from Subversion for an SVN checkout now
+	also works for svn >= 1.4.0.  However, on Windows the 'Last
+	Changed Date' will be in the local timezone, and not in GMT as
+	previously.
+
+
 
 		CHANGES IN R VERSION 2.4.0
 
