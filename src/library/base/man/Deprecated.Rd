@@ -8,7 +8,7 @@
   should include a call to \code{.Deprecated}.
 }
 \usage{
-.Deprecated(new, package=NULL)
+.Deprecated(new, package=NULL, msg)
 }
 \arguments{
   \item{new}{
