@@ -8,7 +8,7 @@
   \code{.Defunct}.
 }
 \usage{
-.Defunct(new, package = NULL)
+.Defunct(new, package = NULL, msg)
 }
 \arguments{
   \item{new}{
@@ -17,6 +17,10 @@
   \item{package}{
     character string: The package to be used when suggesting where the
     defunct function might be listed.
+  }
+  \item{msg}{
+    character string: A message to be printed, if missing a default
+    message is used.
   }
 }
 \details{

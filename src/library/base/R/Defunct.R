@@ -1,12 +1,16 @@
-.Defunct <- function(new, package=NULL) {
-    msg <- gettextf("'%s' is defunct.\n",
+.Defunct <- function(new, package=NULL, msg) {
+    if( !missing(msg) ) {
+      msg <- gettextf("'%s' is defunct.\n",
                     as.character(sys.call(sys.parent())[[1]]))
-    if(!missing(new))
-        msg <- c(msg, gettextf("Use '%s' instead.\n", new))
-    if(!is.null(package))
-        msg <- c(msg,
+      if(!missing(new))
+          msg <- c(msg, gettextf("Use '%s' instead.\n", new))
+      if(!is.null(package))
+          msg <- c(msg,
                  gettextf("See help(\"Defunct\") and help(\"%s-defunct\").", package))
-    else msg <- c(msg, gettext("See help(\"Defunct\")"))
+      else msg <- c(msg, gettext("See help(\"Defunct\")"))
+    }
+    else msg <- as.character(msg)
+
     stop(paste(msg, collapse=""), call. = FALSE, domain = NA)
 }
 

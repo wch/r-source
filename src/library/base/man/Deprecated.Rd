@@ -18,6 +18,10 @@
     character string: The package to be used when suggesting where the
     deprecated function might be listed.
   }
+  \item{msg}{
+    character string: A message to be printed, if missing a default
+    message is used.
+ }
 }
 \details{
   \code{.Deprecated("<new name>")} is called from deprecated
