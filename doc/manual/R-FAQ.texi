@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-10-06
+@set FAQ_DATE @value{FAQ_YEAR}-10-11
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2806,6 +2806,8 @@ teaching financial engineering and computational finance
 (@url{http://www.Rmetrics.org/}).
 @item fCalendar
 The Rmetrics module for ``Date, Time and Calendars''.
+@item fEcofin
+The Rmetrics module with ``Selected economic and financial data sets''.
 @item fExtremes
 The Rmetrics module for ``Beyond the Sample, Dealing with Extreme
 Values''.
@@ -3333,8 +3335,11 @@ Multiple Fractional Polynomials.
 Routines for GAMs and other genralized ridge regression problems with
 multiple smoothing parameter selection by GCV or UBRE.
 @emph{Recommended}.
-@item micEcdat
-Data sets for micro-econometrics.
+@c <COMMENT>
+@c Removed on 2006-10-11 as requested by the maintainer.
+@c @item micEcdat
+@c Data sets for micro-econometrics.
+@c </COMMENT>
 @item micEcon
 Tools for microeconomic analysis and microeconomic modelling.
 @item mice
@@ -3392,6 +3397,8 @@ Inferences for ratios of coefficients in the general linear model.
 @c @item mscalib
 @c Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
 @c </COMMENT>
+@item msgcop
+Semiparametric Bayesian Gaussian copula estimation.
 @item msm
 Functions for fitting continuous-time Markov multi-state models to
 categorical processes observed at arbitrary times, optionally with
@@ -5303,6 +5310,7 @@ dir /opt/R/src/unix
 * How can I save the result of each iteration in a loop into a separate file?::  
 * Why are p-values not displayed when using lmer()?::  
 * Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?::  
+* Why does backslash behave strangely inside strings?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -6179,7 +6187,7 @@ Doug Bates has kindly provided an extensive response in a post to the
 r-help list, which can be reviewed at
 @uref{https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html}.
 
-@node Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?,  , Why are p-values not displayed when using lmer()?, R Miscellanea
+@node Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?, Why does backslash behave strangely inside strings?, Why are p-values not displayed when using lmer()?, R Miscellanea
 @section Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?
 
 Output from @code{polygon()} (and other functions calling
@@ -6199,6 +6207,64 @@ The unwanted effect can be removed by turning off smoothing for line
 art: use the `Edit | Preferences | Page Display | Smooth line art' menu
 in Adobe Reader 7.0.
 
+@node Why does backslash behave strangely inside strings?,  , Why are there unwanted lines between polygons in PDF output viewed in Adobe Reader?, R Miscellanea
+@section Why does backslash behave strangely inside strings?
+
+This question most often comes up in relation to file names (see
+@ref{How do file names work in Windows?})  but it also happens that
+people complain that they cannot seem to put a single @samp{\} character
+into a text string unless it happens to be followed by certain other
+characters.
+
+To understand this, you have to distinguish between character strings
+and @emph{representations} of character strings.  Mostly, the
+representation in R is just the string with a single or double quote at
+either end, but there are strings that cannot be represented that way,
+e.g., strings that themselves contains the quote character.  So
+
+@example
+> str <- "This \"text\" is quoted"
+> str
+[1] "This \"text\" is quoted"
+> cat(str, "\n")
+This "text" is quoted
+@end example
+
+@noindent
+The @emph{escape sequences} @samp{\"} and @samp{\n} represent a double
+quote and the newline character respectively. Printing text strings,
+using @code{print()} or by typing the name at the prompt will use the
+escape sequences too, but the @code{cat()} function will display the
+string as-is. Notice that @samp{"\n"} is a one-character string, not
+two; the backslash is not actually in the string, it is just generated
+in the printed representation.
+
+@example
+> nchar("\n")
+[1] 1
+> substring("\n", 1, 1)
+[1] "\n"
+@end example
+
+So how do you put a backslash in a string? For this, you have to
+escape the escape character. I.e., you have to double the backslash.
+as in
+
+@example
+> cat("\\n", "\n")
+\n
+@end example
+
+Some functions, particularly those involving regular expression
+matching, themselves use metacharacters, which may need to be escaped
+by the backslash mechanism. In those cases you may need a
+@emph{quadruple} backslash to represent a single literal one.
+
+@c <FIXME 2.5.0>
+In current versions of R (up to 2.4.0) an unknown escape sequence like
+@samp{\p} is quietly interpreted as just @samp{p}.
+The development version now emits a warning.
+@c </FIXME>
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
