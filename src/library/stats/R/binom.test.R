@@ -3,9 +3,11 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
          conf.level = 0.95)
 {
     DNAME <- deparse(substitute(x))
+    xr <- round(x)
 
-    if(any(is.na(x) || (x < 0) || (x != round(x))))
+    if(any(is.na(x) | (x < 0)) || max(abs(x-xr)) > 1e-7)
         stop("'x' must be nonnegative and integer")
+    x <- xr
     if(length(x) == 2) {
         ## x gives successes and failures
         n <- sum(x)
@@ -13,11 +15,12 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
     }
     else if(length(x) == 1) {
         ## x gives successes, n gives trials
-        if((length(n) > 1) || is.na(n) || (n < 1) || (n != round(n))
-           || (x > n))
+        nr <- round(n)
+        if((length(n) > 1) || is.na(n) || (n < 1) || abs(n-nr) > 1e-7
+           || (x > nr))
             stop("'n' must be a positive integer >= 'x'")
-
         DNAME <- paste(DNAME, "and", deparse(substitute(n)))
+        n <- nr
     }
     else
         stop("incorrect length of 'x'")

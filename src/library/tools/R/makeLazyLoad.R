@@ -98,6 +98,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
 
 data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 {
+    options(warn=1)
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
         stop(gettextf("there is no package called '%s'", package),
@@ -249,6 +250,7 @@ makeLazyLoading <-
     function(package, lib.loc = NULL, compress = TRUE,
              keep.source = getOption("keep.source.pkgs"))
 {
+    options(warn=1)
     findpack <- function(package, lib.loc) {
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if(length(pkgpath) == 0)
