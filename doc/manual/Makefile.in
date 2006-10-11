@@ -211,6 +211,7 @@ $(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-admin.dvi: $(texiincludes)
 R-data.dvi: $(texiincludes)
 R-exts.dvi: $(texiincludes)
+R-ints.dvi: $(texiincludes)
 version.texi: Makefile $(top_srcdir)/VERSION $(top_builddir)/SVN-REVISION
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
@@ -238,6 +239,7 @@ R-admin.html: $(texiincludes)
 R-data.html: $(texiincludes)
 R-exts.html: $(texiincludes)
 R-intro.html: $(texiincludes)
+R-ints.html: $(texiincludes)
 R-lang.html: $(texiincludes)
 
 info: $(OBJECTS_INFO)
@@ -245,6 +247,7 @@ R-admin.info: $(texiincludes)
 R-data.info: $(texiincludes)
 R-exts.info: $(texiincludes)
 R-intro.info: $(texiincludes)
+R-ints.info: $(texiincludes)
 R-lang.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
@@ -325,6 +328,7 @@ R-admin.pdf: $(texiincludes)
 R-data.pdf: $(texiincludes)
 R-exts.pdf: $(texiincludes)
 R-intro.pdf: stamp-images-pdf $(texiincludes)
+R-ints.pdf: $(texiincludes)
 stamp-images-pdf:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  $(MAKE) rdocdir=$(top_builddir)/doc install-images-pdf; \

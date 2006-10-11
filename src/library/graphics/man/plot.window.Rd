@@ -12,8 +12,8 @@
 plot.window(xlim, ylim, log = "", asp = NA, \dots)
 }
 \arguments{
-  \item{xlim, ylim}{numeric of length 2, giving the x and y coordinates
-    ranges.}
+  \item{xlim, ylim}{numeric vectors of length 2, giving the x and y
+    coordinates ranges.}
   \item{log}{character; indicating which axes should be in log scale.}
   \item{asp}{numeric, giving the \bold{asp}ect ratio y/x.}
   \item{\dots}{further graphical parameters as in \code{\link{par}}.
@@ -30,6 +30,9 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   \code{asp > 1} can be used to produce more accurate maps when using
   latitude and longitude.
 
+  To reverse an axis, use \code{xlim} or \code{ylim} of the form
+  \code{c(hi, lo)}.
+  
   The function attempts to produce a plausible set of scales if one or
   both of \code{xlim} and \code{ylim} is of length one or the two values
   given are identical, but it is better to avoid that case.
