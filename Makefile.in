@@ -105,7 +105,6 @@ svnonly:
 	  (cd $(srcdir); LC_ALL=C TZ=GMT svn info || echo "Revision: unknown") 2> /dev/null \
 	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p \
 	    | cut -d' ' -f1,2,3,4 > SVN-REVISION-tmp ; \
-	  fi ; \
 	  $(top_srcdir)/tools/move-if-change SVN-REVISION-tmp SVN-REVISION ; \
 	  rm -f SVN-REVISION-tmp ; \
 	else \
