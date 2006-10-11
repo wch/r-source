@@ -18,8 +18,7 @@ BUG FIXES
     	the length of a character vector used to subset it exceeded 2^31.
     	(PR#9280)
 
-
-INSTALLATION
+    o	merge() now allows zero-row data frames.
 
     o	The extraction of info from Subversion for an SVN checkout now
 	also works for svn >= 1.4.0.  However, on Windows the 'Last

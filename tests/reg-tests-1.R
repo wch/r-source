@@ -4494,3 +4494,11 @@ test <- 1:10
 try(test[2:4] <- ls) # fails
 stopifnot(!exists("*tmp*", where=1))
 ## was true < 2.4.0
+
+
+## merge on zero-row data frames
+L3 <- LETTERS[1:3]
+d <- data.frame(cbind(x=1, y=1), fac=sample(L3, 1, repl=TRUE))
+e <- d[-1,]
+merge(d, e, by.x = "x", by.y = "x", all.x = TRUE)
+##
