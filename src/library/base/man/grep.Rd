@@ -54,11 +54,12 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
   \item{useBytes}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character.  See Details.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
-    \code{gsub}.  Coerced to character if possible.  This can include
-    backreferences \code{"\\1"} to \code{"\\9"} to parenthesized
-    subexpressions of \code{pattern}.  For \code{perl = TRUE} only, it
-    can also contain \code{"\\U"} or \code{"\\L"} to convert the rest of
-    the replacement to upper or lower case.
+    \code{gsub}.  Coerced to character if possible.  For \code{fixed =
+      FALSE} this can include backreferences \code{"\\1"} to
+    \code{"\\9"} to parenthesized subexpressions of \code{pattern}.  For
+    \code{perl = TRUE} only, it can also contain \code{"\\U"} or
+    \code{"\\L"} to convert the rest of the replacement to upper or
+    lower case.
   }
 }
 \details{
