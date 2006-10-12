@@ -111,12 +111,12 @@ void attribute_hidden parseError(SEXP call, int linenum)
 
  The internal R_Parse.. functions are defined in ./gram.y (-> gram.c)
 
- .Internal( parse(file, n, text, prompt) )
+ .Internal( parse(file, n, text, prompt, srcfile) )
  If there is text then that is read and the other arguments are ignored.
 */
 SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP text, prompt, s;
+    SEXP text, prompt, s, source;
     Rconnection con;
     Rboolean wasopen;
     int ifile, num;
@@ -134,6 +134,8 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
         return(allocVector(EXPRSXP, 0));
     PROTECT(text = coerceVector(CAR(args), STRSXP));	args = CDR(args);
     prompt = CAR(args);					args = CDR(args);
+    source = CAR(args);					args = CDR(args);
+
     if (prompt == R_NilValue)
 	PROTECT(prompt);
     else
@@ -157,11 +159,10 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     else {
 	if (num == NA_INTEGER)
 	    num = 1;
-	s = R_ParseBuffer(&R_ConsoleIob, num, &status, prompt);
+	s = R_ParseBuffer(&R_ConsoleIob, num, &status, prompt, source);
 	if (status != PARSE_OK) parseError(call, 0);
     }
     UNPROTECT(2);
     return s;
 }
-
 

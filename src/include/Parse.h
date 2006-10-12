@@ -29,7 +29,7 @@
 /* Private interface */
 SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *); /* in ReplIteration,
 						       R_ReplDLLdo1 */
-SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP); /* in source.c */
+SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP, SEXP); /* in source.c */
 SEXP R_Parse1File(FILE*, int, ParseStatus *); /* in R_ReplFile */
 SEXP R_ParseFile(FILE*, int, ParseStatus *);  /* in edit.c */
 

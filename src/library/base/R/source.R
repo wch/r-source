@@ -55,7 +55,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             from_file <- TRUE
 	}
     }
-    Ne <- length(exprs <- .Internal(parse(file, n = -1, NULL, "?")))
+    Ne <- length(exprs <- .Internal(parse(file, n = -1, NULL, "?", keep.all.source = echo)))
     if (from_file) { # we are done with the file now
         close(file)
         on.exit()

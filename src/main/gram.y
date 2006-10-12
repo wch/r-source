@@ -205,6 +205,7 @@ static unsigned char SourceLine[MAXLINESIZE];
 static unsigned char *FunctionStart[MAXNEST], *SourcePtr;
 static int FunctionLevel = 0;
 static int KeepSource;
+static SEXP SrcFile;
 
 /* Soon to be defunct entry points */
 
@@ -1053,7 +1054,7 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *
  *	SEXP R_ParseVector(SEXP *text, int n, ParseStatus *status)
  *
- *	SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status)
+ *	SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SEXP srcfile)
  *
  *  Here, status is 1 for a successful parse and 0 if parsing failed
  *  for some reason.
@@ -1306,7 +1307,7 @@ static char *Prompt(SEXP prompt, int type)
 
 /* used in source.c */
 attribute_hidden
-SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt)
+SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SEXP srcfile)
 {
     SEXP rval, t;
     char *bufp, buf[1024];
@@ -1330,7 +1331,11 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt)
 	    R_IoBufferPutc(c, buffer);
 	    if (c == ';' || c == '\n') break;
 	}
+	
+	SrcFile = srcfile;
 	rval = R_Parse1Buffer(buffer, 1, status);
+	SrcFile = R_NilValue;
+	
 	switch(*status) {
 	case PARSE_NULL:
 	    break;

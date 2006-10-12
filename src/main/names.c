@@ -584,7 +584,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"select.list",	do_selectlist,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"aqua.custom.print", do_aqua_custom_print, 0, 11, 2,   {PP_FUNCALL, PREC_FN,   0}},
 #endif
-{"parse",	do_parse,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"parse",	do_parse,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"save",	do_save,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"saveToConn",	do_saveToConn,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"load",	do_load,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
